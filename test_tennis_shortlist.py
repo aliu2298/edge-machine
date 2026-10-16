@@ -31,7 +31,7 @@ assert TS.select(rows, archive, NOW, fetch)[0]==[]  # void is not a quota refund
 assert TS.day('2026-10-14T04:59:00+00:00')=='2026-10-13'
 assert TS.day('2026-10-14T05:00:00+00:00')=='2026-10-14'
 assert TS.read_book(payload(age=301),'a',NOW) is None
-assert TS.read_book(payload(qty=1),'a',NOW) is None
+assert TS.read_book(payload(qty=1),'a',NOW) is not None  # no depth floor since 2026-10-15
 assert TS.read_book(payload(p=.75),'a',NOW) is None
 assert TS.read_book({},'a',NOW) is None
 no=payload(p=.30)
@@ -65,3 +65,8 @@ try:
 finally:
     S._get,S.CHALLENGERS,T.CONSENSUS,T.snap_closing=saved
 print('PASS: shortlist ranking, book gates, Central day cap, persistent reruns, controls and Production routing')
+
+# 2026-10-15: a thin best level (7 contracts, as live UTR books show) is still eligible.
+thin = TS.read_book(payload(.72, qty=7), "a", NOW)
+assert thin and thin["ask_size"] == 7, thin
+print("thin UTR book is eligible: ok")
