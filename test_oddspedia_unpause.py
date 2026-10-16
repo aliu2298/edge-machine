@@ -17,7 +17,7 @@ STILL_PAUSED = {
     "covers", "kalshi", "scores24", "polymarket", "draftkings", "mlb_fade_streak", "nws",
     "tt_band_55_60", "olbg", "pinnacle", "cmd_tail", "btts_form_l10", "o15_form_l10",
     "sportsgambler", "tennis_combo3", "tennis_combo4", "pm_combo3", "pm_combo4",
-    "nhl_dog_pl", "gas_nochange", "espn_fpi",
+    "nhl_dog_pl", "gas_nochange",  # espn_fpi resumed 2026-10-16
 }
 
 

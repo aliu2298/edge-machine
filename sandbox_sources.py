@@ -1500,12 +1500,14 @@ PAUSED_LANES = {
     "pm_combo4": None,
     "nhl_dog_pl": None,
     "gas_nochange": None,
-    # NFL only. MLB stays.
-    "espn_fpi": {"sports": frozenset({"nfl"})},
+    # espn_fpi NFL was paused here 2026-09-25 and resumed by the owner 2026-10-16: 4-4 on 8
+    # since its 2026-09-21 reset (+28.5% after fees), 2 short of the 10-entry review.
 }
 
-# Every NFL entry, from any lane, including a source that is not listed above.
-PAUSED_SPORTS = frozenset({"nfl"})
+# Every NFL entry, from any lane, including a source that is not listed above. Emptied
+# 2026-10-16 so espn_fpi NFL can log again; the other NFL sources (polymarket, kalshi)
+# stay paused on their own lines above.
+PAUSED_SPORTS = frozenset()
 
 # Weather, and the tip lanes taken off the board with it. Stored rows stay in the
 # ledger files. No run logs a new bet on one of them, and no page renders one,
