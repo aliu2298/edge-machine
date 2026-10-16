@@ -52,6 +52,9 @@ data/market_daily.log
 # Execution state: which orders this host has sent. Operational, not the research
 # record, and the ledger publish path refuses any commit holding anything but the ledger.
 data/market_orders.json
+# the LIVE account's order state and fill check: never published
+data/market_orders_live.json
+data/market_fills_live.json
 # data/market_fills.json (the fill-v-ledger comparison) IS committed: the VPS publishes it
 # beside the ledger so the Trading page can show what the paper account did.
 

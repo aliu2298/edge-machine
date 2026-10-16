@@ -207,6 +207,7 @@ publish_ledger() {
   if ! python3 market_exec.py --reconcile; then
     echo "market_exec --reconcile failed — continuing to publish the ledger"
   fi
+  live_pass
   git add -- data/market_ledger.json
   if [ -f data/sp500.json ]; then
     git add -- data/sp500.json
@@ -260,6 +261,34 @@ publish_ledger() {
   done
   echo "could not publish after 3 attempts"
   exit 1
+}
+
+# The LIVE account (pilot from 2026-10-15: RSI(2) pullback only, $100 a position, fractional).
+# It runs only while ~/.alpaca-live.env exists. The service unit is root-owned and the service
+# user cannot edit it, so the switch is a file that user owns: create it to start, delete it to stop. The
+# file holds the pilot's settings (ALPACA_LIVE=1, ALPACA_RULES, the caps, and its own
+# ALPACA_STATE / ALPACA_FILLS), read in a subshell so none of them reach the paper pass above.
+# Never fatal, like the paper orders. Its state and fills files are gitignored and never pushed:
+# the repository is public and this is the user's own account.
+live_pass() {
+  local env_file="${HOME}/.alpaca-live.env"
+  if [ ! -f "$env_file" ]; then
+    echo "live pass: off (no ${env_file})"
+    return 0
+  fi
+  echo "=== $(date -u +%Y-%m-%dT%H:%M:%SZ) live pass (on: ${env_file}) ==="
+  (
+    set -a
+    # shellcheck disable=SC1090
+    . "$env_file"
+    set +a
+    if [ "${ALPACA_LIVE:-}" != "1" ] || [ -z "${ALPACA_STATE:-}" ] || [ -z "${ALPACA_RULES:-}" ]; then
+      echo "live pass refused: ${env_file} must set ALPACA_LIVE=1, ALPACA_RULES and its own ALPACA_STATE"
+      exit 0
+    fi
+    python3 market_exec.py --place || echo "live market_exec failed — continuing"
+    python3 market_exec.py --reconcile || echo "live market_exec --reconcile failed — continuing"
+  ) || echo "live pass failed — continuing to publish the ledger"
 }
 
 rebase_or_merge() {
