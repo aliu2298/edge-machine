@@ -92,7 +92,7 @@ ok("o15_ranked|soccer_o15_intl" in T.PAIR_OVERRIDES
 eq((S.TENNIS_3H_BAND, S.COMBO_MARKUP[2], S.TENNIS_COMBO_BAND_SINCE),
    ((0.70, 0.85), 0.0084, "2026-10-04T06:46:57+00:00"),
    "promotion touches no tennis parameter")
-eq(len(T.PAIR_OVERRIDES), 19, "five pairs before, eleven after the six, twelve with commodities, eighteen with the six of 2026-10-11, seventeen with team scores 1+ · Clubs out on 2026-10-14, nineteen with corners_under out and its three lanes in on 2026-10-15")
+eq(len(T.PAIR_OVERRIDES), 24, "five pairs before, eleven after the six, twelve with commodities, eighteen with the six of 2026-10-11, seventeen with team scores 1+ · Clubs out on 2026-10-14, nineteen with corners_under out and its three lanes in on 2026-10-15, twenty-four with the five of 2026-10-16")
 
 # The tracker moves them on its next run, and the Since-Production record starts there.
 _stages = {"pairs": {}, "events": []}
@@ -185,7 +185,9 @@ btts = _goals("liga_btts_even", "soccer_btts", "KXLALIGABTTS-26OCT10ALAATM-BTTS"
               espn_home="Alavés", espn_away="Atlético Madrid", price=0.54)
 eq(S.quote_league(btts), "La Liga", "a BTTS row maps to its league like a goals row")
 ok(T.placeable(btts) and PR.start_verified(btts), "BTTS Yes in a mapped league with an ESPN start reaches the feed")
-ok(not T.placeable(dict(btts, pick="b")), "its No is a different claim and is not published")
+# Since 2026-10-16 (btts_form_l10_fade) the No is published too, as its own claim: btts_no.
+ok(T.placeable(dict(btts, pick="b")) and T.feed_bet(dict(btts, pick="b")) == {"kind": "btts_no"},
+   "its No is published as a different claim, btts_no")
 ok(not T.placeable(dict(btts, league="Allsvenskan")), "nor an unmapped league")
 ok(not T.placeable(dict(btts, espn_home=None)), "and it still needs its fixture")
 lead = PR.lead_from_quote(btts, "liga_btts_even|soccer_btts", BUILT)

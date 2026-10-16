@@ -443,6 +443,16 @@ PAIR_OVERRIDES = {
     # Turkey over 2.5 in heavy mismatches: 1-0 on 1 (+43.8%), nothing to read. The feed
     # learned the over-2.5 Yes for it (FEED_BETS soccer_o25, total_gte 3).
     "turkey_o25_dog|soccer_o25": dict(moved_on="2026-10-11", production_at=None),
+    # Moved by hand on 2026-10-16 (Olu), on the Sandbox records since each pair's reset, after
+    # fees per contract: BTTS form fade 5-6 on 11 (+18.0%), MLS fade home 8-2 on 10 (+33.0%),
+    # team 2+ form (clubs) 7-2 on 9 (+12.1%), FTTS NO 70-80 5-1 on 6 (+10.2%), ESPN FPI NFL 4-4
+    # on 8 (+28.5%). The first three NO claims are new to the feed: btts_no, win_no and ftts_no
+    # (FEED_NO_TWIN / FEED_BETS), each the No of the exact contract the quote names.
+    "btts_form_l10_fade|soccer_btts": dict(moved_on="2026-10-16", production_at=None),
+    "mls_fade_home|soccer_p05": dict(moved_on="2026-10-16", production_at=None),
+    "team2_form_l10|soccer_team2": dict(moved_on="2026-10-16", production_at=None),
+    "ftts_no_70_80|soccer_ftts": dict(moved_on="2026-10-16", production_at=None),
+    "espn_fpi|nfl": dict(moved_on="2026-10-16", production_at=None),
 }
 
 
@@ -3217,11 +3227,22 @@ FEED_BETS = {"soccer_o15": {"kind": "total_gte", "n": 2},
              # bet is the under (the No), as on the internationals; the over is the Yes
              # twin below.
              "soccer_u35": {"kind": "total_lte", "n": 3},
-             "soccer_u35_intl": {"kind": "total_lte", "n": 3}}
+             "soccer_u35_intl": {"kind": "total_lte", "n": 3},
+             # 2026-10-16, with mls_fade_home|soccer_p05: the NO on one team's Kalshi GAME
+             # contract ("LA Galaxy wins"), i.e. that team does not win. bet.team is the team
+             # the contract names (the quote's opponent: the rule backs the other side +0.5).
+             "soccer_p05": {"kind": "win_no"},
+             # 2026-10-16, with ftts_no_70_80|soccer_ftts: the NO on a team's KX<league>FTTS leg,
+             # i.e. that team does not score first (the other team does, or nobody scores).
+             "soccer_ftts": {"kind": "ftts_no"}}
 
 # Which side of the named market each kind buys, as the Sandbox records a pick.
 FEED_SIDE = {"total_gte": "a", "team_gte": "a", "total_lte": "b", "btts": "a", "corners_lte": "b",
-             "corners_gte": "a"}
+             "corners_gte": "a", "btts_no": "b", "win_no": "b", "ftts_no": "b"}
+
+# The NO twin of a Yes domain (2026-10-16, with btts_form_l10_fade|soccer_btts): the No on the
+# same KX<league>BTTS contract, i.e. at least one side fails to score.
+FEED_NO_TWIN = {"soccer_btts": {"kind": "btts_no"}}
 
 # ONE DOMAIN, TWO CLAIMS (2026-10-08). bund_o35 backs the YES on the same KX...TOTAL-4
 # contract u35_low_scoring backs the No on, so a soccer_u35 bet is the over or the under
@@ -3280,6 +3301,9 @@ def feed_bet(q):
     twin = FEED_YES_TWIN.get(sport)
     if twin and q.get("pick") == FEED_SIDE[twin["kind"]]:
         return dict(twin)
+    twin = FEED_NO_TWIN.get(sport)
+    if twin and q.get("pick") == FEED_SIDE[twin["kind"]]:
+        return dict(twin)
     return None
 
 
@@ -3304,6 +3328,8 @@ def placeable(q):
         return (bet is not None and q.get("venue") == "kalshi_binary"
                 and S.quote_league(q) is not None and bool(q.get("espn_home") and q.get("espn_away"))
                 and (bet["kind"] != "team_gte" or bool(q.get("team")))
+                and (bet["kind"] != "win_no" or bool(q.get("opponent")))
+                and (bet["kind"] != "ftts_no" or bool(q.get("team")))
                 and (bet["kind"] != "corners_lte" or corners_strike(q.get("market_id")) is not None))
     if q.get("sport") in LADDER_SPORTS:
         # One rung of a Kalshi daily-close ladder: the Yes on the contract the quote names,
