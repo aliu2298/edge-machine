@@ -3367,15 +3367,16 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 # What the live board is actually set to, stated once so a change here is a deliberate edit
 # and not a surprise. These are judgement calls; the test only pins that they were made.
 eq(sorted(T.PAIR_OVERRIDES),
-   ["bund_o35|soccer_u35", "commod_fav_band|commodities_fav", "corners_team_fade|soccer_corners",
-    "corners_total_under|soccer_corners", "corners_ucl_fade|soccer_corners",
-    "crypto_fav_band|crypto_fav", "ere_draw|soccer", "liga_btts_even|soccer_btts",
-    "o15_form_l10|soccer_o15", "o15_ranked|soccer_o15", "o15_ranked|soccer_o15_intl",
-    "oddspedia|cricket", "team1_form_l5|soccer_team1_intl",
-    "team2_ranked|soccer_team2", "tennis_utr_shortlist_v1|tennis", "turkey_btts_dog|soccer_btts",
-    "turkey_o25_dog|soccer_o25", "u35_low_scoring|soccer_u35", "u35_low_scoring|soccer_u35_intl"],
+   ["btts_form_l10_fade|soccer_btts", "bund_o35|soccer_u35", "commod_fav_band|commodities_fav",
+    "corners_team_fade|soccer_corners", "corners_total_under|soccer_corners", "corners_ucl_fade|soccer_corners",
+    "crypto_fav_band|crypto_fav", "ere_draw|soccer", "espn_fpi|nfl", "ftts_no_70_80|soccer_ftts",
+    "liga_btts_even|soccer_btts", "mls_fade_home|soccer_p05", "o15_form_l10|soccer_o15",
+    "o15_ranked|soccer_o15", "o15_ranked|soccer_o15_intl", "oddspedia|cricket", "team1_form_l5|soccer_team1_intl",
+    "team2_form_l10|soccer_team2", "team2_ranked|soccer_team2", "tennis_utr_shortlist_v1|tennis",
+    "turkey_btts_dog|soccer_btts", "turkey_o25_dog|soccer_o25", "u35_low_scoring|soccer_u35",
+    "u35_low_scoring|soccer_u35_intl"],
    "the Production list is exactly the pairs moved there by hand, and nothing else "
-   "(team scores 1+ · Clubs out 2026-10-14)")
+   "(team scores 1+ · Clubs out 2026-10-14; five moved in 2026-10-16)")
 # pm_combo4 came OFF on 2026-10-03, not on its record: Polymarket US publishes no parlay
 # API, so in five days as a Production pair it published zero leads and never could. The
 # refusal below is why, and it must keep holding or the pair could be relisted as a label.
@@ -3423,9 +3424,8 @@ ok("combo" in T.TRADEABLE_VENUES and not T.placeable(dict(sport="tennis_combo", 
    "its legs — this one has none")
 # o15_form_l10|soccer_o15 came OFF on 2026-09-21 as the only pair behind the price, and went
 # BACK on 2026-10-08 as an Early pair (4-0 since its clock restarted); test_production_early
-# holds that listing. The pairs below stay off.
+# holds that listing. espn_fpi|nfl went back on 2026-10-16 by hand (Olu). The pairs below stay off.
 for _gone, _why in (("soccerpredictions|soccer", "its record fell level with the price the day it was listed"),
-                    ("espn_fpi|nfl", "it was staking money on four settled bets"),
                     ("espn_fpi|mlb", "it stopped beating the blind rules and demoted itself"),
                     ("tennis_combo3|tennis_combo",
                      "it could not place a bet at all — its legs must be Kalshi markets and "

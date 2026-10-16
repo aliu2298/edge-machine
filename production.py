@@ -325,6 +325,15 @@ def lead_from_quote(q, pair_key, built, kalshi=None):
             headline = f"Under {bet['n'] + 0.5:g} goals"
         elif bet["kind"] == "btts":
             headline = "Both teams to score"
+        elif bet["kind"] == "btts_no":
+            headline = "Both teams to score: No"
+        elif bet["kind"] == "win_no":
+            # The rule backs one side +0.5; the contract it buys is the other side's win, on NO.
+            bet["team"] = q["opponent"]
+            headline = f"{q['team']} +0.5 ({q['opponent']} not to win)"
+        elif bet["kind"] == "ftts_no":
+            bet["team"] = q["team"]
+            headline = f"{q['team']} not to score first"
         elif bet["kind"] == "corners_lte":
             # The No on an "N+" corners rung is N - 1 corners or fewer: under N.
             strike = T.corners_strike(q["market_id"])

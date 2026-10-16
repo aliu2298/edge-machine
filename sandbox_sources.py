@@ -3928,7 +3928,7 @@ def quote_league(q):
     # (BTTS_LEAGUES names the Turkish Super Lig, which the GAME map does not): every such
     # row was matched to an ESPN fixture before it was logged, which is what the feed
     # needs the league for.
-    if q.get("venue") == "kalshi_binary" and q.get("sport") in GOALS_SPORTS + BTTS_SPORTS + ("soccer_corners",):
+    if q.get("venue") == "kalshi_binary" and q.get("sport") in GOALS_SPORTS + BTTS_SPORTS + ("soccer_corners", "soccer_ftts"):
         return q.get("league") if q.get("league") in feed_binary_leagues() else None
     return None
 
@@ -10174,7 +10174,12 @@ def fetch_kalshi_ftts(universe, stats=None):
                     tradeable=tradeable, untraded=not any(tradeable.values()),
                     start=ko.isoformat(), date=ko.astimezone(FTTS_TZ).date().isoformat(),
                     volume=0.0, series=series, event=event, team=team, opponent=opp,
-                    league=game.get("league"), market=m, fair_yes=round(fair[side], 4),
+                    league=game.get("league") or quote_league(game), market=m, fair_yes=round(fair[side], 4),
+                    # The match-winner row's own fixture, so the Production feed can verify the
+                    # kickoff (ESPN-timed there) and name the match (2026-10-16, ftts_no_70_80).
+                    start_source=game.get("start_source"),
+                    espn_home=game.get("espn_home") or game.get("side_a"),
+                    espn_away=game.get("espn_away") or game.get("side_b"),
                     mid_a=round((ya + yb) / 2, 4) if yb is not None and yb > 0 else ya,
                     url=f"https://kalshi.com/markets/{series.lower()}"))
     if stats is not None:
