@@ -38,7 +38,7 @@ for name, q, kind, headline, team in (
         ("home not to win", win, "win_no", "San Diego FC +0.5 (LA Galaxy not to win)", "LA Galaxy"),
         ("not to score first", ftts, "ftts_no", "Ararat-Armenia not to score first", "Ararat-Armenia")):
     print(f"\n{name}")
-    check("placeable", T.placeable(q), True)
+    check("the feed can publish it", T.placeable(q), True)
     lead = PR.lead_from_quote(q, f"{q['source']}|{q['sport']}", "2026-10-17T15:00:00+00:00")
     check("the claim", (lead["bet"]["kind"], lead["bet"].get("team")), (kind, team))
     check("the headline", lead["headline"], headline)
