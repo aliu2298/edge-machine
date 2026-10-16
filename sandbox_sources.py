@@ -747,7 +747,13 @@ SOURCES = {
              "Judged against backing the under on every Kalshi match."),
     "mls_away_band": dict(
         label="MLS away side priced 0.20-0.25", kind="Rule", connected=True,
-        site="edge-machine", sports=["soccer"], baseline="favourite_population",
+        site="edge-machine", sports=[], baseline="favourite_population",
+        retired_sports={
+            "soccer": "Retired 2026-10-16 by Olu and FADED: 1 won, 8 lost on 9 settled, -57.8% "
+                      "after fees, while the other side of the same bets (home or draw, bought "
+                      "as both legs) made +9.3% after fees per contract. It now runs as "
+                      "mls_away_band_fade, the No on the away side's own win contract, on a "
+                      "fresh record."},
         note="Pre-registered 2026-09-27. Back the AWAY side on a Kalshi MLS match when the "
              "board prices it at a de-vigged 0.20-0.25, with the ask at 0.26 or less and the "
              "board holding no more than 6%. Measured on the LAST THREE SEASONS (2024-2026) "
@@ -764,6 +770,17 @@ SOURCES = {
              "included in the measurement window; that is a known weakness of reading three "
              "seasons and is stated here rather than hidden. Judged against backing the "
              "favourite on every match."),
+    "mls_away_band_fade": dict(
+        label="MLS away side priced 0.20-0.25, faded (back home or draw)", kind="Rule", connected=True,
+        site="edge-machine", sports=["soccer_p05"], baseline="population",
+        note="REGISTERED 2026-10-16 by Olu, before it logged anything. The other side of "
+             "mls_away_band: the same MLS matches (away side at a de-vigged 0.20-0.25 on the "
+             "Kalshi board, its ask 0.26 or less, the board holding no more than 6%), backing NO "
+             "on the away side's own win contract (home or draw) at the Kalshi No ask. Why: the "
+             "follow side went 1-8 on 9 settled at -57.8% after fees, and the other side of those "
+             "bets made +9.3% after fees per contract. That record is the reason for looking and "
+             "counts toward nothing here; this record starts empty. Nothing about the selection "
+             "is retuned: only the side changes."),
     "mls_fade_home": dict(
         label="MLS: fade the home side priced 0.40-0.45", kind="Rule", connected=True,
         site="edge-machine", sports=["soccer_p05"], baseline="population",
@@ -5810,6 +5827,45 @@ def fetch_mls_away_band(sport, universe=None):
     return out
 
 
+def fetch_mls_away_band_fade(sport, universe=None):
+    """mls_away_band's matches on the other side: the NO on the AWAY side's own win contract.
+
+    mls_away_band picks on the three-way `soccer` board, whose other side is two outcomes
+    (home and draw). Kalshi lists each team's win as its own contract, and the soccer_p05
+    domain carries them, so the fade is the No of the away side's contract: home or draw, in
+    one order. The match is chosen exactly as mls_away_band chooses it, on the same board.
+    Registered 2026-10-16.
+    """
+    if sport != "soccer_p05":
+        return []
+    uni = universe if universe is not None else (UNIVERSE or {})
+    picked = {_ere_code(p["market_id"]) for p in fetch_mls_away_band("soccer", uni)}
+    # The away club by fixture code, as the three-way board names it (Kalshi's side B).
+    away = {_ere_code(r.get("market_id")): r.get("side_b") for r in uni.get("soccer") or []
+            if r.get("venue") == "kalshi" and str(r.get("market_id") or "").startswith(MLS_GAME)}
+    out = []
+    begin_examined("mls_away_band_fade", sport)
+    for r in uni.get(sport) or []:
+        if r.get("venue") != "kalshi_binary" or not str(r.get("market_id") or "").startswith(MLS_GAME):
+            continue
+        note_examined("mls_away_band_fade", sport)
+        code = _ere_code(r.get("market_id"))
+        if code not in picked or not away.get(code):
+            continue
+        if r.get("untraded") or not (r.get("tradeable") or {}).get("b", True):
+            continue
+        a, b = r.get("price_a"), r.get("price_b")
+        if a is None or b is None or round(float(a) + float(b) - 1.0, 6) > MLS_MAX_HOLD:
+            continue
+        # The away side's own contract, identified POSITIVELY: its opponent (the side price_a
+        # gives) is the away club. "Not the home club" would also take any row whose name the
+        # join does not know, the home side's contract included.
+        if not mls_same_club(r.get("opponent"), away[code]):
+            continue
+        out.append(dict(market_id=r["market_id"], pick="b"))
+    return out
+
+
 def fetch_mls_fade_home(sport, universe=None):
     """Buy the NO on the HOME side's own +0.5 market when the board prices it 0.40-0.45.
 
@@ -10294,6 +10350,7 @@ CHALLENGERS = {
     "ftts_no_60_70": fetch_ftts_no_60_70,
     "team2_ranked_fade": fetch_team2_ranked_fade,
     "btts_form_l10_fade": fetch_btts_form_l10_fade,
+    "mls_away_band_fade": fetch_mls_away_band_fade,
     "crypto_fav_band": fetch_crypto_fav_band,
     "commod_fav_band": fetch_commod_fav_band,
     "team1_form_l5": fetch_team1_form_l5,

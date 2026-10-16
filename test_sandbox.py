@@ -19,6 +19,11 @@ from datetime import datetime, timedelta, timezone
 import sandbox_sources as S
 import sandbox_track as T
 
+# mls_away_band was retired and faded on 2026-10-16 (mls_away_band_fade). This file has long
+# used it as its stand-in soccer tip source, so it runs here with its soccer scope restored;
+# the retirement itself is asserted in test_mls_away_band_fade.py.
+S.SOURCES["mls_away_band"] = dict(S.SOURCES["mls_away_band"], sports=["soccer"], retired_sports={})
+
 FAILS = []
 
 
@@ -884,8 +889,10 @@ S.CHALLENGERS = {
     "mls_away_band": lambda sp: [dict(a="Leeds", b="Newcastle United", pick="draw", date=krow["date"])],
     "ere_draw": lambda sp: [dict(a="Leeds United", b="Newcastle", pick="b", date=krow["date"])],
 }
-T.publish(d, {"soccer": [krow]}, {}, verbose=False)
-S.CHALLENGERS = saved
+try:
+    T.publish(d, {"soccer": [krow]}, {}, verbose=False)
+finally:
+    S.CHALLENGERS = saved
 byq = {q["source"]: q for q in d["quotes"]}
 eq(byq["mls_away_band"]["pick"], "draw", "a Draw tip is logged as a draw")
 close(byq["mls_away_band"]["price"], 0.28, "and priced at the Tie ask")
