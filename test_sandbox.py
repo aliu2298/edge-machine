@@ -5214,9 +5214,20 @@ _ffa = T.assess(_fair, "fr", "soccer_o15", venues=T.TRADEABLE_VENUES)
 ok((_ffa["roi_fee"] or 0) < 0 and _ff["roi"] < 0,
    "so BOTH sides lose there: a fade is not the rule's return with the sign flipped")
 
-_3way = {"quotes": [dict(_fq(i, i < 5), price_draw=0.25, sport="soccer") for i in range(10)], "meta": {}}
-eq(T.faded(_3way, "fr", "soccer", venues=T.TRADEABLE_VENUES)["n"], 0,
-   "a three-way contest has no single other side, so it is not faded at all")
+# Three-way (2026-10-16): the fade of "away" buys BOTH home and draw, each at its ask with its
+# own fee, and wins whenever the away side does not. mls_away_band's cell was blank before.
+def _q3(i, result):
+    return dict(_fq(i, False, pa=0.56, pb=0.25, pick="b"), price_draw=0.24, sport="soccer",
+                result=result, status="won" if result == "b" else "lost")
+_3way = {"quotes": [_q3(0, "b"), _q3(1, "a"), _q3(2, "draw"), _q3(3, "a")], "meta": {}}
+_3f = T.faded(_3way, "fr", "soccer", venues=T.TRADEABLE_VENUES)
+_leg = lambda x: x + 0.07 * x * (1 - x)
+eq((_3f["n"], _3f["won"]), (4, 3), "a three-way fade counts every bet and wins where the pick lost")
+eq(round(_3f["roi"], 6), round(3 / (4 * (_leg(0.56) + _leg(0.24))) - 1, 6),
+   "priced as both other legs at their asks, each with its own fee")
+eq(T.faded({"quotes": [dict(_q3(9, "a"), price_draw=0.60, price_a=0.50)], "meta": {}}, "fr", "soccer",
+           venues=T.TRADEABLE_VENUES)["n"], 0,
+   "a fade whose legs cost more than the 1 it pays is not counted")
 eq(T.faded({"quotes": [], "meta": {}}, "fr")["n"], 0, "and a pair with no bets fades nothing")
 _hd = RANKB.SPORT_HEAD
 ok("If faded" in _hd, "the sport table carries the column")
