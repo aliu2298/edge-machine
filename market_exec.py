@@ -380,9 +380,9 @@ def plan(bars_by_symbol, d, rules=None, state=None):
             refused.append(dict(en, reason=f"daily new-order cap ({MAX_NEW_PER_DAY})"))
             continue
         qty = size(en, cash)
-        if qty < 1:
+        if qty <= 0:
             refused.append(dict(en, reason="one share costs more than the per-trade notional"
-                                            if (en["ref_price"] or 0) > NOTIONAL_USD
+                                            if (en["ref_price"] or 0) > NOTIONAL_USD and not FRACTIONAL
                                             else "not enough cash left"))
             continue
         orders.append(dict(en, qty=qty))

@@ -560,6 +560,18 @@ try:
     check("never past the cash", L.size({"ref_price": 226.0}, 50), 0)
     check("$0 cash is refused", L.size({"ref_price": 20.0}, 0), 0)
     check("broker fractions are kept", L._q("0.442477"), 0.442477)
+    # the planner itself must take a fractional position (a qty < 1 guard once refused them all)
+    _acct, _pos, _rules0 = L.account, L.positions, T.RULES
+    L.account = lambda: {"cash": "500", "equity": "500", "last_equity": "500", "status": "ACTIVE"}
+    L.positions = lambda: {}
+    T.RULES = {"sw_rsi2_pullback": dict(lane="swing", universe=["NVDA"], signal=lambda h: h[-1]["c"] == 226.0,
+                                        exit=_exit_never, entry="open", label="t", note="t")}
+    try:
+        _st = {"orders": {}, "meta": {}}
+        _o, _r = L.plan({"NVDA": bars(215, 200.0, last=226.0)}, {"trades": [], "signals": []}, state=_st)
+    finally:
+        L.account, L.positions, T.RULES = _acct, _pos, _rules0
+    check("the plan buys a $226 stock as a fraction", [(o["symbol"], o["qty"]) for o in _o], [("NVDA", 0.442477)])
     sent = {}
     L._call = lambda method, path, body=None: sent.setdefault("b", body) and {"id": "x", "status": "accepted"}
     try:
