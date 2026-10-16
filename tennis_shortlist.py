@@ -54,7 +54,12 @@ def read_book(payload, side, now):
     price = ask if side == "a" else 1-bid
     size = sum(n for p, n in (asks if side == "a" else bids) if abs(p-(ask if side == "a" else bid)) < 1e-9)
     cost = price + .06 * price * (1-price)  # existing paper fee model, not a fee quote
-    if not .70 <= price < .75 or size + 1e-9 < STAKE/cost:
+    # No depth floor here (2026-10-15). It wanted STAKE/cost (~135) contracts at the single best
+    # price, enough for the full $100 PAPER stake, and live UTR books hold 4-17 there with the
+    # size a few cents behind, so the rule logged nothing after Oct 14. No other sport's rule
+    # gates on depth: the record is kept at the posted price, and execution checks the book it
+    # actually trades ($1 a bet) itself. A quoted ask with any size is enough.
+    if not .70 <= price < .75 or size <= 0:
         return None
     return dict(price=round(price, 6), cost=round(cost, 6), ask_size=size,
                 spread=round(ask-bid, 6), price_a=ask, price_b=1-bid,
