@@ -7022,10 +7022,10 @@ _PAUSED_NAMES = {
     "covers", "kalshi", "scores24", "polymarket", "draftkings", "mlb_fade_streak", "nws",
     "tt_band_55_60", "olbg", "pinnacle", "cmd_tail", "btts_form_l10", "o15_form_l10",
     "sportsgambler", "tennis_combo3", "tennis_combo4", "pm_combo3", "pm_combo4",
-    "nhl_dog_pl", "gas_nochange", "espn_fpi",
+    "nhl_dog_pl", "gas_nochange",
 }
 eq(set(S.PAUSED_LANES), _PAUSED_NAMES, "the pause list is exactly the lanes the memo named")
-ok("nfl" in S.PAUSED_SPORTS, "every NFL entry is paused, from any lane")
+ok("nfl" not in S.PAUSED_SPORTS, "NFL as a sport is no longer paused (resumed 2026-10-16)")
 ok(S.lane_paused("covers", "mlb") and S.lane_paused("kalshi", "mlb") and S.lane_paused("nws", "climate"),
    "a whole-lane pause covers every sport that source logs")
 ok(S.lane_paused("scores24", "soccer") and S.lane_paused("scores24", "nfl")
@@ -7036,17 +7036,19 @@ ok(S.lane_paused("olbg", "mma") and S.lane_paused("olbg", "boxing"),
 ok(S.lane_paused("mma_fav_band", "mma") and S.lane_paused("mlb_fade_streak", "mlb")
    and S.lane_paused("nhl_rest_edge", "nhl_rest"),
    "the favourite-band, fade-the-streak and rest lanes log nothing new")
-ok(S.lane_paused("espn_fpi", "nfl") and S.lane_paused("espn_fpi", "mlb"),
-   "ESPN FPI NFL stays paused and ESPN FPI MLB is removed")
+ok(not S.lane_paused("espn_fpi", "nfl") and S.lane_paused("espn_fpi", "mlb"),
+   "ESPN FPI NFL logs again (owner, 2026-10-16) and ESPN FPI MLB stays removed")
 ok(S.lane_paused("tennis_combo3", "tennis_combo") and S.lane_paused("tennis_combo4", "tennis_combo")
    and S.lane_paused("pm_combo3", "tennis_pmcombo") and S.lane_paused("pm_combo4", "tennis_pmcombo")
    and S.lane_paused("tennis_combo2", "tennis_combo")
    and S.lane_paused("pm_combo2", "tennis_pmcombo"),
    "all previous tennis combos are paused")
-ok(S.lane_paused("polymarket_us", "nfl") and not S.lane_paused("polymarket_us", "tennis"),
-   "NFL is paused on a source that is not otherwise paused")
+ok(not S.lane_paused("polymarket_us", "nfl") and not S.lane_paused("polymarket_us", "tennis"),
+   "the NFL price baseline logs again with the sport resumed")
+ok(S.lane_paused("polymarket", "nfl") and S.lane_paused("kalshi", "nfl"),
+   "the other NFL sources stay paused on their own lines")
 ok(S.source_fully_paused("pinnacle") and S.source_fully_paused("covers")
-   and S.source_fully_paused("scores24") and S.source_fully_paused("espn_fpi")
+   and S.source_fully_paused("scores24") and not S.source_fully_paused("espn_fpi")
    and S.source_fully_paused("olbg")
    and not S.source_fully_paused("polymarket_us"),
    "a removed source logs no sport; Polymarket US still logs the sports it keeps")
@@ -7184,7 +7186,7 @@ ok(("scores24", "soccer") not in _kb and ("scores24", "nfl") not in _kb,
 ok(("olbg", "boxing") not in _kb and ("olbg", "mma") not in _kb,
    "OLBG enters on neither sport")
 ok(("espn_fpi", "mlb") not in _kb, "ESPN FPI MLB does not enter")
-ok(("espn_fpi", "nfl") not in _kb, "ESPN FPI NFL does not")
+ok(not S.lane_paused("espn_fpi", "nfl"), "ESPN FPI NFL is free to enter (resumed 2026-10-16)")
 ok(("soccerpredictions", "soccer") not in _kb and ("soccerpredictions", "nfl") not in _kb,
    "soccerpredictions enters on neither sport")
 ok(("tennis_combo2", "tennis_combo") not in _kb, "the paused 2-leg Kalshi combo does not enter")
