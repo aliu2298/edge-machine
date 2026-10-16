@@ -1,5 +1,10 @@
 {
  "closes": {
+  "btts_form_l10_fade:KXBUNDESLIGABTTS-26OCT16SGEKOE-BTTS": {
+   "at": "2026-10-16T17:35:44+00:00",
+   "lead_min": 54.3,
+   "price": 0.28
+  },
   "btts_form_l10_fade:KXEREDIVISIEBTTS-26OCT11EXCGRO-BTTS": {
    "at": "2026-10-11T14:37:27+00:00",
    "lead_min": 7.5,
@@ -99,6 +104,11 @@
    "at": "2026-10-11T15:23:08+00:00",
    "lead_min": 6.9,
    "price": 0.4
+  },
+  "bund_o35:KXBUNDESLIGATOTAL-26OCT16SGEKOE-4": {
+   "at": "2026-10-16T17:35:44+00:00",
+   "lead_min": 54.3,
+   "price": 0.55
   },
   "bund_o35_fav:KXBUNDESLIGATOTAL-26OCT10M05LEV-4": {
    "at": "2026-10-10T13:17:41+00:00",
@@ -586,9 +596,9 @@
    "price": 0.26
   },
   "ere_draw:KXEREDIVISIEGAME-26OCT16HEEEXC": {
-   "at": "2026-10-16T17:20:38+00:00",
-   "lead_min": 39.4,
-   "price": 0.21
+   "at": "2026-10-16T17:35:44+00:00",
+   "lead_min": 24.3,
+   "price": 0.22
   },
   "ftts_no_60_70:KXMLSFTTS-26OCT14CINNE-NE": {
    "at": "2026-10-14T23:24:47+00:00",
@@ -829,6 +839,11 @@
    "at": "2026-10-15T18:56:18+00:00",
    "lead_min": 3.7,
    "price": 0.94
+  },
+  "o15_form_l10:KXBUNDESLIGATOTAL-26OCT16SGEKOE-2": {
+   "at": "2026-10-16T17:35:44+00:00",
+   "lead_min": 54.3,
+   "price": 0.91
   },
   "o15_ranked:KXAFCCLTOTAL-26OCT12PAKQAD-2": {
    "at": "2026-10-12T13:38:04+00:00",
@@ -1790,6 +1805,11 @@
    "lead_min": 4.9,
    "price": 0.74
   },
+  "tennis_utr_shortlist_v1:aec-utr-shyiry-pantan-2026-10-16": {
+   "at": "2026-10-16T17:35:44+00:00",
+   "lead_min": 24.3,
+   "price": 0.73
+  },
   "turkey_btts_dog:KXSUPERLIGBTTS-26OCT09GALKAS-BTTS": {
    "at": "2026-10-09T16:49:18+00:00",
    "lead_min": 10.7,
@@ -1866,5 +1886,5 @@
    "price": 0.81
   }
  },
- "updated": "2026-10-16T17:20:38+00:00"
+ "updated": "2026-10-16T17:35:44+00:00"
 }
