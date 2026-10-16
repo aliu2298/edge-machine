@@ -531,7 +531,14 @@ def main():
 
     print("\na tracker stage pass after the roll-up")
     st = copy.deepcopy(ST)
-    T.evaluate_stages(copy.deepcopy(both), st, now=NOW, verbose=False)
+    # The scenario is a Production pair NOT on the hand-kept list, which the stage pass demotes.
+    # espn_fpi|nfl was that pair until it was listed again on 2026-10-16, so it is unlisted here.
+    _ov = T.PAIR_OVERRIDES.pop("espn_fpi|nfl", None)
+    try:
+        T.evaluate_stages(copy.deepcopy(both), st, now=NOW, verbose=False)
+    finally:
+        if _ov is not None:
+            T.PAIR_OVERRIDES["espn_fpi|nfl"] = _ov
     sandbox, weeks = _pages(both, st)
     eq(_headline(sandbox), before["headline"],
        "headline is unchanged after evaluate_stages")
