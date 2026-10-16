@@ -19,7 +19,7 @@ import sandbox_track as T
 FAILS = []
 LANES = (
     "ere_draw", "ere_o15", "bund_o35", "bund_o35_fav", "liga_btts_even",
-    "liga_u15_dog", "turkey_o25_dog", "turkey_btts_dog", "mls_away_band",
+    "liga_u15_dog", "turkey_o25_dog", "turkey_btts_dog", "mls_away_band_fade",
     "mls_fade_home",
 )
 START = (datetime.now(timezone.utc) + timedelta(days=3)).replace(microsecond=0).isoformat()
@@ -196,11 +196,12 @@ def main():
                   price_a=0.50, price_b=0.53) for i in range(3)] + [
             board(market_id=f"KXEPLBTTS-T{i}", venue="kalshi_binary",
                   price_a=0.50, price_b=0.53) for i in range(2)]}, None),
-        ("mls_away_band", "soccer", {"soccer": [
-            board(market_id=f"KXMLSGAME-M{i}", price_a=0.40, price_draw=0.30, price_b=0.32)
-            for i in range(3)] + [
-            board(market_id=f"KXEPLGAME-M{i}", price_a=0.50, price_draw=0.28, price_b=0.22)
-            for i in range(2)]}, None),
+        # mls_away_band was faded on 2026-10-16: its fade reads the soccer_p05 rows.
+        ("mls_away_band_fade", "soccer_p05", {"soccer_p05": [
+            board(market_id=f"KXMLSGAME-F{i}", venue="kalshi_binary",
+                  price_a=0.30, price_b=0.72) for i in range(3)] + [
+            board(market_id=f"KXEPLGAME-F{i}", venue="kalshi_binary",
+                  price_a=0.30, price_b=0.72) for i in range(2)]}, None),
         ("mls_fade_home", "soccer_p05", {"soccer_p05": [
             board(market_id=f"KXMLSGAME-P{i}", venue="kalshi_binary",
                   price_a=0.42, price_b=0.60) for i in range(3)] + [
