@@ -124,8 +124,11 @@ check("its stage row is the sandbox, demoted", (st["pairs"]["corners_under|socce
 feed = json.load(open("data/production_leads.json"))
 check("the feed names no corners_under lead", [k for k in feed["pairs"] if k.startswith("corners_under")], [])
 d = T.load()
-check("the three new lanes start with no bets",
-      [q["id"] for q in T.all_bets(d) if q.get("source") in ("corners_total_under", "corners_ucl_fade", "corners_team_fade")], [])
+# Read on the LIVE ledger, so it asks only about the past: nothing older than the split
+# (2026-10-15 06:29Z) is on the new lanes. Their own bets arrive from then on.
+check("the three new lanes start with no bets from before the split",
+      [q["id"] for q in T.all_bets(d) if q.get("source") in ("corners_total_under", "corners_ucl_fade", "corners_team_fade")
+       and str(q.get("logged") or "") < "2026-10-15T06:29"], [])
 check("all three new lanes are Production pairs, moved by hand on 2026-10-15",
       sorted((k, v["moved_on"]) for k, v in T.PAIR_OVERRIDES.items()
              if k.split("|")[0] in ("corners_total_under", "corners_ucl_fade", "corners_team_fade")),
