@@ -2960,8 +2960,11 @@ def faded(d, name, sport=None, venues=None):
     loses that overround plus its own fee. A fade only shows a profit where the rule is
     wrong by more than the cost of being on either side.
 
-    Three-way contests are skipped (n=0): the opposite of "back the home side" is the away
-    side AND the draw, so there is no single other side to price.
+    Three-way contests (2026-10-16): the opposite of "back the away side" is the home side
+    AND the draw. Each outcome is its own contract on these venues, so the fade is priced as
+    buying BOTH other outcomes at their asks, each with its own fee: it pays 1 whenever the
+    rule's pick fails. Until 2026-10-16 three-way pairs were skipped (n=0), which left every
+    match-result lane (mls_away_band among them) with a blank If-faded cell.
 
     Judged in the same units assess() uses, because the z is only honest if the outcomes
     are counted the way they actually fall:
@@ -2977,21 +2980,31 @@ def faded(d, name, sport=None, venues=None):
     bets = [q for q in bet_rows(d) if q["source"] == name
             and q["status"] in ("won", "lost") and not climate_excluded(q)
             and (sport is None or q["sport"] == sport)
-            and q.get("price_draw") is None and q.get("pick") in ("a", "b")
+            and q.get("pick") in (("a", "b") if q.get("price_draw") is None else ("a", "b", "draw"))
             and (venues is None or (q.get("venue") or "polymarket") in venues)]
     rows = []
     for q in bets:
-        other = "b" if q["pick"] == "a" else "a"
-        price = q.get(f"price_{other}")
-        if price:
-            p = float(price)
-            f = FEE_RATE.get(q.get("venue") or "polymarket", 0.07)
+        f = FEE_RATE.get(q.get("venue") or "polymarket", 0.07)
+        if q.get("price_draw") is None:
+            other = "b" if q["pick"] == "a" else "a"
+            legs = [q.get(f"price_{other}")]
             w = q.get("result") == other
-            rows.append(dict(q=q, p=p, fee=f, won=w,
-                             pnl=(STAKE * (1.0 / (p + f * p * (1 - p)) - 1.0)) if w else -STAKE))
+        else:
+            keys = [k for k in ("a", "b", "draw") if k != q["pick"]]
+            legs = [q.get("price_draw" if k == "draw" else f"price_{k}") for k in keys]
+            w = q.get("result") in keys
+        if not legs or not all(legs):
+            continue
+        legs = [float(x) for x in legs]
+        p = sum(legs)                                   # what the fade pays for its legs
+        c = sum(x + f * x * (1 - x) for x in legs)       # and with each leg's fee
+        if c >= 1.0:
+            continue                                     # a fade that cannot pay back its cost
+        rows.append(dict(q=q, p=p, fee=f, cost=c, won=w,
+                         pnl=(STAKE * (1.0 / c - 1.0)) if w else -STAKE))
     if not rows:
         return dict(n=0, won=0, expected=0.0, roi=None, z=0.0, outcomes=0)
-    cost = sum(r["p"] + r["fee"] * r["p"] * (1 - r["p"]) for r in rows)
+    cost = sum(r["cost"] for r in rows)
     roi = (sum(1 for r in rows if r["won"]) - cost) / cost
 
     # As in assess: follow each bet's own sport, so sport=None is not a way around this.
