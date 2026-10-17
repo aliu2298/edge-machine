@@ -854,9 +854,11 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
   }
   nav.main::after { content: ""; flex: 0 0 12px; }
   /* Phone: no menu. The group's links sit in the swipe row like every other pill. */
-  .nav-more { display: none; }
-  .nav-group, .nav-group .nav-menu, .nav-group.closed .nav-menu {
-    display: contents; position: static; border: 0; padding: 0; box-shadow: none; background: none;
+  /* !important: the desktop open-on-hover/focus rules are more specific, and a focused pill
+     in the swipe row must not pop the group out as a dropdown. */
+  .nav-more { display: none !important; }
+  .nav-group, .nav-group .nav-menu {
+    display: contents !important; position: static; border: 0; padding: 0; box-shadow: none; background: none;
   }
   nav.main::-webkit-scrollbar { display: none; height: 0; }
   nav.main.nav-fade, nav.toc.nav-fade {
