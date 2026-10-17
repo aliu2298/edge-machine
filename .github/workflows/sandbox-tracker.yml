@@ -241,6 +241,9 @@ jobs:
             if [ -f public_site/finance_daily.html ]; then
               git add public_site/finance_daily.html
             fi
+            if [ -f public_site/culture.html ]; then
+              git add public_site/culture.html
+            fi
             # The NBA board is rebuilt on the tracker clock as well as by its own job.
             if [ -f public_site/nba.html ]; then
               git add public_site/nba.html

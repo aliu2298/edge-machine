@@ -25,6 +25,7 @@ PAGES = (
     ("commodities", "Commodities", "./commodities.html"),
     ("econ_daily", "Econ Daily", "./econ_daily.html"),
     ("finance_daily", "Finance Daily", "./finance_daily.html"),
+    ("culture", "Culture", "./culture.html"),
     ("method", "Method", "./sandbox.html#method"),
 )
 SPORT_KEYS = ("nba", "soccer", "tennis", "cricket", "crypto", "commodities")
@@ -42,6 +43,7 @@ PAGE_FILES = {
     "commodities": "commodities.html",
     "econ_daily": "econ_daily.html",
     "finance_daily": "finance_daily.html",
+    "culture": "culture.html",
 }
 
 # Fixed-width segmented control. The label is the current choice (aria-pressed),
