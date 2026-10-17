@@ -1,4 +1,4 @@
-"""Soccer total-goals label rules (2026-10-17): 21 Sandbox paper lanes on Kalshi match totals.
+"""Soccer label rules (2026-10-17): 21 total-goals and 3 BTTS Sandbox paper lanes on Kalshi.
 
 Registered by Olu on 674 matches, Aug 1 - Oct 17 2026, across 12 leagues and the Nations League
 (research session 2026-10-17, memory soccer-totals-label-angles). Each team carries a label from
@@ -44,6 +44,20 @@ over 2.5, EPL 5/7, Eredivisie 4/5 over 3.5, UCL 6/9 over 3.5), and O-D- v O-D+ s
 (MLS 20/24, La Liga 8/8, Saudi 5/6, Scotland 3/3, Nations League 7/7). Kalshi totals overall
 were about fair in that sample (overs -3%, unders lose to the fee).
 
+Group BTTS — both teams to score (added 2026-10-17, same labels, window, ledger and page)
+  Kalshi KX<league>BTTS, one market per match (ticker ends "-BTTS", YES = both teams score), in
+  all 14 BTTS leagues below. Registered on 617 matches, Aug 1 - Oct 17 2026; kept only matchups
+  positive in 3+ leagues AND pooled across all of them:
+  D1  O+D- v O+D-   BTTS YES 45-75c   6 leagues (Serie A 7/9, La Liga 4/6, Bundesliga 4/5,
+                                       Eredivisie 4/4, Saudi 3/4, Ligue 1 3/3); pooled 44/64 (69%)
+                                       @61c, +10.4% after fee, z +1.34. Same matchup as the
+                                       total-goals over pattern: corroboration across markets.
+  D2  O-D- v O+D+   BTTS NO  30-60c   5 leagues (EPL 5/7, Turkey 3/5, La Liga 3/4, Ligue 1 2/3,
+                                       Scotland 3/3); pooled 25/49 @43c, +13.6%, z +1.11.
+  D3  O-D- v O+D-   BTTS YES 40-70c   4 leagues (La Liga 10/14, Serie A 4/6, Primeira 4/6, UCL
+                                       3/4); pooled 54/86 (63%) @56c, +8.2%, z +1.22.
+  Caveat: no single box reached z +2. These are B-tier: breadth across leagues, not strength.
+
 THE LINE COMES FROM THE MARKET TITLE ("Will over 2.5 goals be scored?"), never the ticker:
 Kalshi renumbered the suffix between seasons (May 2026 -4 meant over 4.5; Oct 2026 -2 means
 over 1.5). Kalshi publishes no kickoff, so a match's kickoff is ESPN's, and an event
@@ -78,9 +92,20 @@ SERIES = {
     "Saudi Pro League": "KXSAUDIPLTOTAL", "Turkish Super Lig": "KXSUPERLIGTOTAL",
     "Champions League": "KXUCLTOTAL", "UEFA Nations League": "KXUEFANLTOTAL",
 }
+# ESPN league name -> Kalshi both-teams-to-score series (Group BTTS). Primeira and the Europa
+# League have a BTTS series but no match-total rule.
+BTTS_SERIES = {
+    "Premier League": "KXEPLBTTS", "La Liga": "KXLALIGABTTS", "Bundesliga": "KXBUNDESLIGABTTS",
+    "Serie A": "KXSERIEABTTS", "Ligue 1": "KXLIGUE1BTTS", "Eredivisie": "KXEREDIVISIEBTTS",
+    "Primeira Liga": "KXLIGAPORTUGALBTTS", "Scottish Premiership": "KXSCOTTISHPREMBTTS",
+    "MLS": "KXMLSBTTS", "Saudi Pro League": "KXSAUDIPLBTTS", "Turkish Super Lig": "KXSUPERLIGBTTS",
+    "Champions League": "KXUCLBTTS", "Europa League": "KXUELBTTS", "UEFA Nations League": "KXUEFANLBTTS",
+}
+ALL = "*"                        # a rule for every league its market has a series in
 GROUPS = {"A": "Strong · repeats across leagues, or z ≥ +2",
           "B": "Supported but thin",
-          "C": "Borderline · one league, z +1 to +1.9"}
+          "C": "Borderline · one league, z +1 to +1.9",
+          "BTTS": "Both teams to score · positive in 3+ leagues and pooled; no box reached z +2 (B-tier)"}
 
 
 def _r(league, test, line, side, lo, hi, words, evidence=""):
@@ -115,6 +140,26 @@ RULES = {
     "C7": _r("Turkish Super Lig", ("pair", "O-D+", "O+D-"), 2.5, "no", 0, 0.50, "O−D+ v O+D−"),
     "C8": _r("UEFA Nations League", ("pair", "O-D+", "O-D+"), 2.5, "no", 0, 0.65, "O−D+ v O−D+"),
 }
+
+
+def _btts(test, side, lo, hi, words, evidence):
+    return dict(league=ALL, test=test, line=None, side=side, lo=lo, hi=hi, evidence=evidence,
+                market="btts", group="BTTS",
+                label=f"{words} · BTTS {side.upper()} {round(lo * 100)}-{round(hi * 100)}c")
+
+
+RULES.update({
+    "D1": _btts(("pair", "O+D-", "O+D-"), "yes", 0.45, 0.75, "O+D− v O+D−",
+                "6 leagues; pooled 44/64 @61c, +10.4%, z +1.34"),
+    "D2": _btts(("pair", "O-D-", "O+D+"), "no", 0.30, 0.60, "O−D− v O+D+",
+                "5 leagues; pooled 25/49 @43c, +13.6%, z +1.11"),
+    "D3": _btts(("pair", "O-D-", "O+D-"), "yes", 0.40, 0.70, "O−D− v O+D−",
+                "4 leagues; pooled 54/86 @56c, +8.2%, z +1.22"),
+})
+for _k, _rule in RULES.items():
+    _rule.setdefault("market", "total")
+    _rule.setdefault("group", _k[0])
+MARKETS = {"total": SERIES, "btts": BTTS_SERIES}
 
 
 def fee(p):
@@ -201,10 +246,14 @@ def matches(test, a, b):
     return (has(a, x) and has(b, y)) or (has(a, y) and has(b, x))
 
 
+def in_league(r, league):
+    return r["league"] == league or (r["league"] == ALL and league in MARKETS[r["market"]])
+
+
 def applicable(league, a, b):
     if not a or not b:
         return []
-    return [k for k, r in RULES.items() if r["league"] == league and matches(r["test"], a, b)]
+    return [k for k, r in RULES.items() if in_league(r, league) and matches(r["test"], a, b)]
 
 
 # ---------- Kalshi ----------
@@ -286,30 +335,42 @@ def find_event(f, events):
     return best[1] if best else None
 
 
-def market_at(ev, line):
+def market_at(ev, line, market="total"):
+    """The match total at `line`, or (market "btts") the one BTTS market, ticker ending -BTTS."""
     for m in ev.get("markets") or []:
-        if line_of(m) == line and m.get("status") in ("active", "open"):
+        if m.get("status") not in ("active", "open"):
+            continue
+        if market == "btts" and str(m.get("ticker") or "").endswith("-BTTS"):
+            return m
+        if market == "total" and line_of(m) == line:
             return m
     return None
+
+
+def _words(r, side):
+    return "BTTS" if r["market"] == "btts" else f"{'Over' if side == 'yes' else 'Under'} {r['line']}"
 
 
 def entry(rule, f, ev, m, px, b, a, labs, now):
     r = RULES[rule]
     side = r["side"]
-    return dict(id=f"{rule}:{ev['event_ticker']}", rule=rule, group=rule[0], league=f["league"],
+    return dict(id=f"{rule}:{ev['event_ticker']}", rule=rule, group=r["group"], league=f["league"],
                 event=ev["event_ticker"], match=f"{f['home']} v {f['away']}", start=f["kickoff"],
                 ticker=m["ticker"], line=r["line"], side=side, price=round(px, 4), bid=b, ask=a,
                 title=m.get("title") or m.get("yes_sub_title"), logged=now.isoformat(), status="open",
                 labels=dict(home=labs[0], away=labs[1]),
                 why=f"{f['home']} {labs[0]} v {f['away']} {labs[1]} · "
-                    f"{'Over' if side == 'yes' else 'Under'} {r['line']} {side.upper()} {px:.2f}")
+                    f"{_words(r, side)} {side.upper()} {px:.2f}")
 
 
-def picks_for(f, labs, ev, now):
+def picks_for(f, labs, ev, now, market=None):
+    """Entries for one fixture from one Kalshi event; `market` keeps the rules of that market only."""
     out = []
     for rule in applicable(f["league"], *labs):
         r = RULES[rule]
-        m = market_at(ev, r["line"])
+        if market and r["market"] != market:
+            continue
+        m = market_at(ev, r["line"], r["market"])
         q = quote(m) if m else None
         if not q:
             continue
@@ -326,7 +387,7 @@ def due(fixtures, now):
     """Unplayed fixtures in the rules' leagues kicking off 20-90 minutes from now."""
     out = []
     for f in fixtures:
-        if f.get("played") or f.get("league") not in SERIES:
+        if f.get("played") or not any(f.get("league") in s for s in MARKETS.values()):
             continue
         t = _ko(f)
         if t and WINDOW_MIN[0] * 60 <= (t - now).total_seconds() <= WINDOW_MIN[1] * 60:
@@ -374,22 +435,25 @@ def run(state, fixtures, now=None, fetch=D.get):
         if not applicable(f["league"], *labs):
             continue
         stats["candidates"] += 1
-        series = SERIES[f["league"]]
-        try:
-            if series not in cache:
-                cache[series] = series_events(series, fetch)
-            ev = find_event(f, cache[series])
-            if not ev:
-                continue
-            stats["matched"] += 1
-            for p in picks_for(f, labs, ev, now):
-                if p["id"] in seen:
+        found = False
+        for market in sorted({RULES[k]["market"] for k in applicable(f["league"], *labs)}):
+            series = MARKETS[market][f["league"]]
+            try:
+                if series not in cache:
+                    cache[series] = series_events(series, fetch)
+                ev = find_event(f, cache[series])
+                if not ev:
                     continue
-                state["rules"][p["rule"]]["picks"].append(p)
-                seen.add(p["id"])
-                log.append(p["id"])
-        except Exception as e:                                  # noqa: BLE001
-            errs.append(f"{f['home']} v {f['away']}: {str(e)[:80]}")
+                found = True
+                for p in picks_for(f, labs, ev, now, market):
+                    if p["id"] in seen:
+                        continue
+                    state["rules"][p["rule"]]["picks"].append(p)
+                    seen.add(p["id"])
+                    log.append(p["id"])
+            except Exception as e:                              # noqa: BLE001
+                errs.append(f"{f['home']} v {f['away']} {market}: {str(e)[:80]}")
+        stats["matched"] += found
     errs += settle(state, now, fetch)
     state["last_run"] = now.isoformat()
     state["error"] = "; ".join(errs)[:1000] or None
