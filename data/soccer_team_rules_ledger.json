@@ -1,0 +1,68 @@
+{
+ "error": null,
+ "last_run": "2026-10-17T23:39:21.048613+00:00",
+ "rules": {
+  "T1": {
+   "picks": []
+  },
+  "T2": {
+   "picks": []
+  },
+  "T3": {
+   "picks": []
+  },
+  "T4": {
+   "picks": [
+    {
+     "ask": 0.68,
+     "bid": 0.67,
+     "event": "KXMLSTEAMTOTAL-26OCT17ATXVAN",
+     "group": "B",
+     "id": "T4:KXMLSTEAMTOTAL-26OCT17ATXVAN:away",
+     "labels": {
+      "opp": "O-D+",
+      "own": "O+D-"
+     },
+     "league": "MLS",
+     "line": 1.5,
+     "logged": "2026-10-17T23:39:21.048613+00:00",
+     "match": "Austin FC v Vancouver Whitecaps",
+     "opponent": "Austin FC",
+     "price": 0.68,
+     "rule": "T4",
+     "side": "yes",
+     "start": "2026-10-18T00:30Z",
+     "status": "open",
+     "team": "Vancouver Whitecaps",
+     "team_side": "away",
+     "ticker": "KXMLSTEAMTOTAL-26OCT17ATXVAN-VAN2",
+     "title": "Will Vancouver score over 1.5 goals?",
+     "why": "Vancouver Whitecaps O+D- v Austin FC O-D+ \u00b7 2+ YES 0.68"
+    }
+   ]
+  },
+  "T5": {
+   "picks": []
+  },
+  "T6": {
+   "picks": []
+  },
+  "T7": {
+   "picks": []
+  },
+  "T8": {
+   "picks": []
+  }
+ },
+ "runs": [
+  {
+   "at": "2026-10-17T23:39:21.048613+00:00",
+   "candidates": 1,
+   "due": 3,
+   "labelled": 3,
+   "matched": 1,
+   "new": 1
+  }
+ ],
+ "version": "soccer-team-rules-v1"
+}
