@@ -1838,7 +1838,7 @@ def archive_index_html(groups, now_dt):
         "Settled Sandbox bets by week.",
         (("weeks", "Weeks"),),
         body, now_dt,
-        (("Sandbox", "../sandbox.html"), ("Archive", None)),
+        (("Overview", "../sandbox.html"), ("Archive", None)),
     )
 
 
@@ -1931,7 +1931,7 @@ def archive_week_html(slug, rows, now_dt, d=None):
         f"Sandbox bets settled in {label}.",
         (),
         body, now_dt,
-        (("Sandbox", "../sandbox.html"), ("Archive", "./index.html"),
+        (("Overview", "../sandbox.html"), ("Archive", "./index.html"),
          (_week_crumb(slug), None)),
     )
 
