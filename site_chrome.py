@@ -14,7 +14,7 @@ SITE_NAME = "Edge Machine"
 SITE_URL = "https://aliu2298.github.io/edge-machine/"
 
 PAGES = (
-    ("sandbox", "Overview", "./sandbox.html"),
+    ("sandbox", "Archives", "./sandbox.html"),
     ("production", "Production", "./production.html"),
     ("trading", "Trading", "./trading.html"),
     ("nba", "NBA", "./nba.html"),
