@@ -76,6 +76,14 @@ SOCCER_SERIES = {
     "Saudi Pro League": "KXSAUDIPLTOTAL", "Turkish Super Lig": "KXSUPERLIGTOTAL",
     "Champions League": "KXUCLTOTAL", "UEFA Nations League": "KXUEFANLTOTAL",
 }
+# soccer_rules.BTTS_SERIES (Group BTTS, 2026-10-17), copied for the same reason.
+SOCCER_BTTS_SERIES = {
+    "Premier League": "KXEPLBTTS", "La Liga": "KXLALIGABTTS", "Bundesliga": "KXBUNDESLIGABTTS",
+    "Serie A": "KXSERIEABTTS", "Ligue 1": "KXLIGUE1BTTS", "Eredivisie": "KXEREDIVISIEBTTS",
+    "Primeira Liga": "KXLIGAPORTUGALBTTS", "Scottish Premiership": "KXSCOTTISHPREMBTTS",
+    "MLS": "KXMLSBTTS", "Saudi Pro League": "KXSAUDIPLBTTS", "Turkish Super Lig": "KXSUPERLIGBTTS",
+    "Champions League": "KXUCLBTTS", "Europa League": "KXUELBTTS", "UEFA Nations League": "KXUEFANLBTTS",
+}
 CT = ZoneInfo("America/Chicago")
 FTTS_DAY = ((9, 0), (10, 30))
 LINEUP_FROM, LINEUP_TO = 60, 15          # minutes before kickoff
@@ -190,17 +198,19 @@ def soccer_kickoffs(now, fixtures=None, ledger=None):
 
     From the ESPN fixtures cache (data/streaks_raw.json) when there is one. The VPS clone has
     no cache (it is not committed), so the tracker's own goals_market quotes, which log every
-    Kalshi match total with ESPN's kickoff, fill in from data/sandbox_ledger.json. Tests pass
+    Kalshi match total with ESPN's kickoff, fill in from data/sandbox_ledger.json, and its
+    btts_market quotes do the same for the BTTS series (Group BTTS). Tests pass
     `fixtures` (and `ledger`) and read neither file."""
     starts = []
     if fixtures is None:
         fixtures = _fixtures_cache()
-        series = tuple(s + "-" for s in SOCCER_SERIES.values())
+        series = {"goals_market": tuple(s + "-" for s in SOCCER_SERIES.values()),
+                  "btts_market": tuple(s + "-" for s in SOCCER_BTTS_SERIES.values())}
         for q in (_load_ledger(ledger).get("quotes") or []):
-            if q.get("source") == "goals_market" and str(q.get("event") or "").startswith(series):
+            if q.get("source") in series and str(q.get("event") or "").startswith(series[q["source"]]):
                 starts.append(q.get("start"))
     for f in fixtures:
-        if not f.get("played") and f.get("league") in SOCCER_SERIES:
+        if not f.get("played") and (f.get("league") in SOCCER_SERIES or f.get("league") in SOCCER_BTTS_SERIES):
             starts.append(f.get("kickoff"))
     out = set()
     for v in starts:
