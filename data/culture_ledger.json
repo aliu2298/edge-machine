@@ -2,17 +2,16 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-17T02:08:03.723976+00:00",
-   "last_success": "2026-10-17T02:08:03.723976+00:00",
+   "last_run": "2026-10-17T07:00:12.848136+00:00",
+   "last_success": "2026-10-17T07:00:12.848136+00:00",
    "observations": {
-    "at": "2026-10-17T02:08:03.723976+00:00",
-    "events": 881,
+    "at": "2026-10-17T07:00:12.848136+00:00",
+    "events": 875,
     "reasons": {
-     "in band": 2,
-     "no quote or spread too wide": 62,
-     "not active": 740,
-     "outside the band": 7,
-     "outside the entry window": 11466
+     "no quote or spread too wide": 59,
+     "not active": 689,
+     "outside the band": 12,
+     "outside the entry window": 11401
     }
    },
    "picks": [
@@ -48,16 +47,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-17T02:08:03.723976+00:00",
-   "last_success": "2026-10-17T02:08:03.723976+00:00",
+   "last_run": "2026-10-17T07:00:12.848136+00:00",
+   "last_success": "2026-10-17T07:00:12.848136+00:00",
    "observations": {
-    "at": "2026-10-17T02:08:03.723976+00:00",
-    "events": 881,
+    "at": "2026-10-17T07:00:12.848136+00:00",
+    "events": 875,
     "reasons": {
-     "no quote or spread too wide": 151,
-     "not active": 740,
-     "outside the band": 67,
-     "outside the entry window": 11319
+     "no quote or spread too wide": 280,
+     "not active": 689,
+     "outside the band": 59,
+     "outside the entry window": 11133
     }
    },
    "picks": [
@@ -79,16 +78,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-17T02:08:03.723976+00:00",
-   "last_success": "2026-10-17T02:08:03.723976+00:00",
+   "last_run": "2026-10-17T07:00:12.848136+00:00",
+   "last_success": "2026-10-17T07:00:12.848136+00:00",
    "observations": {
-    "at": "2026-10-17T02:08:03.723976+00:00",
-    "events": 881,
+    "at": "2026-10-17T07:00:12.848136+00:00",
+    "events": 875,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 44,
-     "edge 5c+": 7,
+     "edge 5c+": 9,
      "edge under 5c": 3,
-     "no quote or spread too wide": 39
+     "no quote or spread too wide": 34
     }
    },
    "picks": [
@@ -203,16 +202,80 @@
      "side": "no",
      "status": "open",
      "title": "Bibi / Netanyahu"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-11-01T15:00:00Z",
+     "detail": "P(said) 0.00 \u00b7 said on 0 of the last 84 days, 15.3 days left \u00b7 edge +0.14",
+     "edge": 0.1411,
+     "event": "KXTRUMPSAYMONTH-26NOV01",
+     "id": "KXTRUMPSAYMONTH-26NOV01-EPST",
+     "logged": "2026-10-17T07:00:12.848136+00:00",
+     "model": 0.0,
+     "name": "What will Trump say in October?",
+     "price": 0.85,
+     "series": "KXTRUMPSAYMONTH",
+     "side": "no",
+     "status": "open",
+     "title": "Epstein"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-11-01T15:00:00Z",
+     "detail": "P(said) 0.53 \u00b7 said on 4 of the last 84 days, 15.3 days left \u00b7 edge +0.20",
+     "edge": 0.1998,
+     "event": "KXTRUMPSAYCOUNTRY-26NOV01",
+     "id": "KXTRUMPSAYCOUNTRY-26NOV01-UAE",
+     "logged": "2026-10-17T07:00:12.848136+00:00",
+     "model": 0.5267,
+     "name": "What countries will Trump say in October?",
+     "price": 0.26,
+     "series": "KXTRUMPSAYCOUNTRY",
+     "side": "no",
+     "status": "open",
+     "title": "UAE / United Arab Emirates"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-10-19T14:00:00Z",
+     "detail": "P(said) 0.13 \u00b7 said on 5 of the last 84 days, 2.3 days left \u00b7 edge +0.21",
+     "edge": 0.2127,
+     "event": "KXTRUMPSAY-26OCT19",
+     "id": "KXTRUMPSAY-26OCT19-TDS",
+     "logged": "2026-10-17T07:00:12.848136+00:00",
+     "model": 0.1312,
+     "name": "What will Trump say this week?",
+     "price": 0.64,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "TDS / Trump Derangement Syndrome"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-10-19T14:00:00Z",
+     "detail": "P(said) 0.00 \u00b7 said on 0 of the last 84 days, 2.3 days left \u00b7 edge +0.51",
+     "edge": 0.5126,
+     "event": "KXTRUMPSAY-26OCT19",
+     "id": "KXTRUMPSAY-26OCT19-ZACH",
+     "logged": "2026-10-17T07:00:12.848136+00:00",
+     "model": 0.0,
+     "name": "What will Trump say this week?",
+     "price": 0.47,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "Zacharia"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-17T02:08:03.723976+00:00",
-   "last_success": "2026-10-17T02:08:03.723976+00:00",
+   "last_run": "2026-10-17T07:00:12.848136+00:00",
+   "last_success": "2026-10-17T07:00:12.848136+00:00",
    "observations": {
-    "at": "2026-10-17T02:08:03.723976+00:00",
-    "events": 881,
+    "at": "2026-10-17T07:00:12.848136+00:00",
+    "events": 875,
     "reasons": {
      "collecting review pace (12h of snapshots)": 9,
      "under 20 reviews counted": 11
@@ -281,6 +344,18 @@
     "2026-09-30"
    ]
   },
+  "Epstein": {
+   "at": "2026-10-17T07:00:12.848136+00:00",
+   "days": []
+  },
+  "ExxonMobil / XOM": {
+   "at": "2026-10-17T07:00:12.848136+00:00",
+   "days": [
+    "2026-08-03",
+    "2026-09-02",
+    "2026-09-13"
+   ]
+  },
   "JPMorgan / JPM": {
    "at": "2026-10-17T01:53:04.858915+00:00",
    "days": []
@@ -303,6 +378,16 @@
    "at": "2026-10-17T01:53:04.858915+00:00",
    "days": []
   },
+  "TDS / Trump Derangement Syndrome": {
+   "at": "2026-10-17T07:00:12.848136+00:00",
+   "days": [
+    "2026-08-05",
+    "2026-09-26",
+    "2026-10-01",
+    "2026-10-02",
+    "2026-10-05"
+   ]
+  },
   "Third Term": {
    "at": "2026-10-17T01:53:04.858915+00:00",
    "days": [
@@ -313,6 +398,19 @@
   },
   "Turning Point": {
    "at": "2026-10-17T02:08:03.723976+00:00",
+   "days": []
+  },
+  "UAE / United Arab Emirates": {
+   "at": "2026-10-17T07:00:12.848136+00:00",
+   "days": [
+    "2026-08-02",
+    "2026-08-03",
+    "2026-08-20",
+    "2026-08-30"
+   ]
+  },
+  "Zacharia": {
+   "at": "2026-10-17T07:00:12.848136+00:00",
    "days": []
   }
  }
