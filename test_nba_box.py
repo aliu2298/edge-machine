@@ -411,7 +411,8 @@ def test_period_rates_and_unchanged_keys():
             eq(extra, set(), f"{want['id']} skipped game gained no keys")
         else:
             eq(extra, NEW_KEYS, f"{want['id']} adds only the eight 1Q/1H rates")
-    eq(info["keep"], (nba_pace.PRE,), "run() still fetches preseason only")
+    # Since 2026-10-17 the window rolls into the regular season (the NBA label rules read it).
+    eq(info["keep"], (nba_pace.PRE, nba_pace.REG), "run() fetches the preseason and the regular season")
     eq(len(info["calls"]), 1, "the one completed game is fetched once")
     eq(info["sleeps"], [], "no pause before the only request")
     written = json.loads(info["after"]) if info["after"] else {}
@@ -659,8 +660,8 @@ def test_regular_season_game_in_the_file():
 
     info = _run(spec, games, http)
     ok(info["error"] is None, f"a games[] list with a regular-season row runs ({info['error']})")
-    eq(info["keep"], (nba_pace.PRE,),
-       "adding the row does not change the preseason fetch filter")
+    eq(info["keep"], (nba_pace.PRE, nba_pace.REG),
+       "adding the row does not change the season fetch filter")
     blob = info["blob"] or {}
     ids = [g["id"] for g in blob.get("games") or []]
     ok("reg-9" in ids and "pre-1" in ids, "both the preseason and regular-season rows are kept")

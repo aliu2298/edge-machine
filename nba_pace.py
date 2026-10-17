@@ -718,8 +718,11 @@ def run(log=print):
     today = datetime.date.today()
     start = datetime.date(2026, 9, 29)              # ESPN's 2026-27 season start
     end = max(today + datetime.timedelta(days=10), start)
-    log(f"reading preseason {start} to {end}")
-    games = fetch_range(start, end, keep=(PRE,), log=log)
+    # From 2026-10-17 the window rolls on into the REGULAR season (owner, with the seven label
+    # rules in nba_rules.py, which are defined on exactly these rolling labels). Preseason games
+    # stay in the window until regular-season results push them out.
+    log(f"reading the 2026-27 season (preseason and regular) {start} to {end}")
+    games = fetch_range(start, end, keep=(PRE, REG), log=log)
     log(f"  {len(games)} preseason games listed "
         f"({sum(1 for g in games if g['completed'])} completed)")
 
