@@ -34,6 +34,7 @@ PAGE_HREFS = (
     'href="./commodities.html"',
     'href="./econ_daily.html"',
     'href="./finance_daily.html"',
+    'href="./culture.html"',
     'href="./sandbox.html#method"',
 )
 PAGE_LABELS = ["Sandbox", "Production", "Trading", "NBA", "Soccer", "Tennis", "Cricket", "Crypto",
