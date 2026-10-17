@@ -226,6 +226,28 @@ nav.main.nav-fade.nav-fade-left {
 }
 nav.main a:hover { color: var(--fg); background: var(--raised); text-decoration: none; }
 nav.main a[aria-current="page"] { color: var(--fg); background: var(--line); }
+/* The Markets menu (2026-10-16). From 641px up the nine market pages fold into one button
+   that names the current page; under 641px the group dissolves into the swipe row. */
+.nav-group { position: relative; display: inline-flex; flex: 0 0 auto; }
+.nav-more {
+  font: inherit; font-size: 14px; font-weight: 500; color: var(--mut);
+  background: none; border: 0; cursor: pointer;
+  padding: 6px 8px; border-radius: 999px; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.nav-more:hover { color: var(--fg); background: var(--raised); }
+.nav-more:focus-visible { outline-offset: -3px; }
+.nav-group.is-current .nav-more { color: var(--fg); background: var(--line); }
+.nav-caret { width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent;
+             border-top: 5px solid currentColor; margin-top: 1px; }
+.nav-menu {
+  display: none; position: absolute; top: calc(100% + 4px); left: 0; z-index: 60;
+  flex-direction: column; gap: 2px; min-width: 180px; padding: 6px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow);
+}
+.nav-menu a { border-radius: 8px !important; }
+.nav-group:hover .nav-menu, .nav-group:focus-within .nav-menu, .nav-group.open .nav-menu { display: flex; }
+.nav-group.closed .nav-menu { display: none; }
 .stamp { margin-left: auto; font-size: 12px; color: var(--mut); white-space: nowrap; flex: 0 0 auto; }
 nav.toc {
   max-width: var(--page-w);
@@ -831,6 +853,11 @@ html[data-view="cards"] td, html[data-view="cards"] th { position: static; left:
     -webkit-overflow-scrolling: touch;
   }
   nav.main::after { content: ""; flex: 0 0 12px; }
+  /* Phone: no menu. The group's links sit in the swipe row like every other pill. */
+  .nav-more { display: none; }
+  .nav-group, .nav-group .nav-menu, .nav-group.closed .nav-menu {
+    display: contents; position: static; border: 0; padding: 0; box-shadow: none; background: none;
+  }
   nav.main::-webkit-scrollbar { display: none; height: 0; }
   nav.main.nav-fade, nav.toc.nav-fade {
     -webkit-mask-image: linear-gradient(to right, var(--mask) calc(100% - var(--nav-fade)), transparent);
