@@ -27,6 +27,7 @@ PAGE_HREFS = (
     'href="./production.html"',
     'href="./trading.html"',
     'href="./nba.html"',
+    'href="./nfl.html"',
     'href="./soccer.html"',
     'href="./tennis.html"',
     'href="./cricket.html"',
@@ -37,7 +38,7 @@ PAGE_HREFS = (
     'href="./culture.html"',
     'href="./sandbox.html#method"',
 )
-PAGE_LABELS = ["Sandbox", "Production", "Trading", "NBA", "Soccer", "Tennis", "Cricket", "Crypto",
+PAGE_LABELS = ["Sandbox", "Production", "Trading", "NBA", "NFL", "Soccer", "Tennis", "Cricket", "Crypto",
                "Commodities", "Econ Daily", "Finance Daily", "Culture", "Method"]
 SKETCH_FAKES = (
     "Milan",

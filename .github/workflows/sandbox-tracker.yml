@@ -241,6 +241,9 @@ jobs:
             if [ -f public_site/finance_daily.html ]; then
               git add public_site/finance_daily.html
             fi
+            if [ -f public_site/nfl.html ]; then
+              git add public_site/nfl.html
+            fi
             if [ -f public_site/culture.html ]; then
               git add public_site/culture.html
             fi

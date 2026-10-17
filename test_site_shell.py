@@ -32,6 +32,7 @@ _NAV_HREFS = (
     'href="./production.html"',
     'href="./trading.html"',
     'href="./nba.html"',
+    'href="./nfl.html"',
     'href="./soccer.html"',
     'href="./tennis.html"',
     'href="./cricket.html"',
@@ -39,7 +40,7 @@ _NAV_HREFS = (
     'href="./commodities.html"',
     'href="./sandbox.html#method"',
 )
-_NAV_LABELS = ["Sandbox", "Production", "Trading", "NBA", "Soccer", "Tennis", "Cricket",
+_NAV_LABELS = ["Sandbox", "Production", "Trading", "NBA", "NFL", "Soccer", "Tennis", "Cricket",
                "Crypto", "Commodities", "Econ Daily", "Finance Daily", "Culture", "Method"]
 _CURRENT = {
     "sandbox": 'href="./sandbox.html" aria-current="page"',
