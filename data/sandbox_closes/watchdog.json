@@ -5,10 +5,20 @@
    "lead_min": 7.0,
    "price": 0.35
   },
+  "btts_form_l10_fade:KXEREDIVISIEBTTS-26OCT17ADOPSV-BTTS": {
+   "at": "2026-10-17T14:28:12+00:00",
+   "lead_min": 1.8,
+   "price": 0.42
+  },
   "btts_form_l10_fade:KXLIGUE1BTTS-26OCT11RENAUX-BTTS": {
    "at": "2026-10-11T14:37:57+00:00",
    "lead_min": 37.0,
    "price": 0.43
+  },
+  "btts_form_l10_fade:KXLIGUE1BTTS-26OCT17RCSPSG-BTTS": {
+   "at": "2026-10-17T14:28:12+00:00",
+   "lead_min": 46.8,
+   "price": 0.37
   },
   "btts_form_l10_fade:KXMLSBTTS-26OCT14CINNE-BTTS": {
    "at": "2026-10-14T22:43:11+00:00",
@@ -180,10 +190,25 @@
    "lead_min": 46.8,
    "price": 0.59
   },
+  "o15_cup_mismatch:KXTACAPORTTOTAL-26OCT17FAZESA-2": {
+   "at": "2026-10-17T14:28:12+00:00",
+   "lead_min": 1.8,
+   "price": 0.9
+  },
+  "o15_cup_mismatch:KXTACAPORTTOTAL-26OCT17LEIBRA-2": {
+   "at": "2026-10-17T14:28:12+00:00",
+   "lead_min": 31.8,
+   "price": 0.85
+  },
   "o15_form_l10:KXLALIGATOTAL-26OCT17ESPATM-2": {
    "at": "2026-10-17T11:13:11+00:00",
    "lead_min": 46.8,
    "price": 0.79
+  },
+  "o15_form_l10:KXLIGUE1TOTAL-26OCT17RCSPSG-2": {
+   "at": "2026-10-17T14:28:12+00:00",
+   "lead_min": 46.8,
+   "price": 0.9
   },
   "o15_ranked:KXLALIGATOTAL-26OCT17ESPATM-2": {
    "at": "2026-10-17T11:13:11+00:00",
@@ -195,10 +220,20 @@
    "lead_min": 40.2,
    "price": 0.82
   },
+  "o25_congestion:KXEREDIVISIETOTAL-26OCT17ADOPSV-3": {
+   "at": "2026-10-17T14:28:12+00:00",
+   "lead_min": 1.8,
+   "price": 0.29
+  },
   "o25_congestion:KXLALIGATOTAL-26OCT17ESPATM-3": {
    "at": "2026-10-17T11:13:11+00:00",
    "lead_min": 46.8,
    "price": 0.47
+  },
+  "o25_congestion:KXLIGUE1TOTAL-26OCT17RCSPSG-3": {
+   "at": "2026-10-17T14:28:12+00:00",
+   "lead_min": 46.8,
+   "price": 0.28
   },
   "o25_congestion:KXMLSTOTAL-26OCT10CHINYC-3": {
    "at": "2026-10-10T18:04:50+00:00",
@@ -431,5 +466,5 @@
    "price": 0.55
   }
  },
- "updated": "2026-10-17T11:13:11+00:00"
+ "updated": "2026-10-17T14:28:12+00:00"
 }
