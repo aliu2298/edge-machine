@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-17T17:00:13.053079+00:00",
-   "last_success": "2026-10-17T17:00:13.053079+00:00",
+   "last_run": "2026-10-17T18:00:13.575689+00:00",
+   "last_success": "2026-10-17T18:00:13.575689+00:00",
    "observations": {
-    "at": "2026-10-17T17:00:13.053079+00:00",
+    "at": "2026-10-17T18:00:13.575689+00:00",
     "events": 879,
     "reasons": {
      "no quote or spread too wide": 176,
@@ -47,16 +47,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-17T17:00:13.053079+00:00",
-   "last_success": "2026-10-17T17:00:13.053079+00:00",
+   "last_run": "2026-10-17T18:00:13.575689+00:00",
+   "last_success": "2026-10-17T18:00:13.575689+00:00",
    "observations": {
-    "at": "2026-10-17T17:00:13.053079+00:00",
+    "at": "2026-10-17T18:00:13.575689+00:00",
     "events": 879,
     "reasons": {
-     "in band": 1,
-     "no quote or spread too wide": 339,
+     "in band": 2,
+     "no quote or spread too wide": 340,
      "not active": 694,
-     "outside the band": 117,
+     "outside the band": 115,
      "outside the entry window": 11179
     }
    },
@@ -116,21 +116,35 @@
      "side": "no",
      "status": "open",
      "title": "Casa Tupka Anthemo"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-10-19T14:00:00Z",
+     "detail": "NO 0.70 \u00b7 favourite band",
+     "event": "KXTRUMPSAY-26OCT19",
+     "id": "KXTRUMPSAY-26OCT19-BIBI",
+     "logged": "2026-10-17T18:00:13.575689+00:00",
+     "name": "What will Trump say this week?",
+     "price": 0.7,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "Bibi / Netanyahu"
     }
    ]
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-17T17:00:13.053079+00:00",
-   "last_success": "2026-10-17T17:00:13.053079+00:00",
+   "last_run": "2026-10-17T18:00:13.575689+00:00",
+   "last_success": "2026-10-17T18:00:13.575689+00:00",
    "observations": {
-    "at": "2026-10-17T17:00:13.053079+00:00",
+    "at": "2026-10-17T18:00:13.575689+00:00",
     "events": 879,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 41,
-     "edge 5c+": 8,
-     "edge under 5c": 5,
-     "no quote or spread too wide": 36
+     "edge 5c+": 10,
+     "edge under 5c": 4,
+     "no quote or spread too wide": 35
     }
    },
    "picks": [
@@ -373,15 +387,31 @@
      "side": "no",
      "status": "open",
      "title": "UFO / UAP"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-10-19T14:00:00Z",
+     "detail": "P(said) 0.04 \u00b7 said on 2 of the last 84 days, 1.8 days left \u00b7 edge +0.07",
+     "edge": 0.0694,
+     "event": "KXTRUMPSAY-26OCT19",
+     "id": "KXTRUMPSAY-26OCT19-ZOHR",
+     "logged": "2026-10-17T18:00:13.575689+00:00",
+     "model": 0.0432,
+     "name": "What will Trump say this week?",
+     "price": 0.88,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "Zohran / Mamdani"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-17T17:00:13.053079+00:00",
-   "last_success": "2026-10-17T17:00:13.053079+00:00",
+   "last_run": "2026-10-17T18:00:13.575689+00:00",
+   "last_success": "2026-10-17T18:00:13.575689+00:00",
    "observations": {
-    "at": "2026-10-17T17:00:13.053079+00:00",
+    "at": "2026-10-17T18:00:13.575689+00:00",
     "events": 879,
     "reasons": {
      "edge 5c+": 6,
@@ -568,7 +598,7 @@
    ]
   },
   "Bibi / Netanyahu": {
-   "at": "2026-10-17T10:00:14.382497+00:00",
+   "at": "2026-10-17T18:00:13.575689+00:00",
    "days": [
     "2026-07-27",
     "2026-07-28",
