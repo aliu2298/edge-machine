@@ -85,6 +85,11 @@
    "lead_min": 56.9,
    "price": 0.53
   },
+  "corners_total_under:KXLALIGACORNERS-26OCT17ESPATM-9": {
+   "at": "2026-10-17T11:13:11+00:00",
+   "lead_min": 46.8,
+   "price": 0.43
+  },
   "corners_under:KXEPLTCORNERS-26OCT10CFCBOU-CFC7": {
    "at": "2026-10-10T13:06:09+00:00",
    "lead_min": 53.8,
@@ -175,10 +180,25 @@
    "lead_min": 46.8,
    "price": 0.59
   },
+  "o15_form_l10:KXLALIGATOTAL-26OCT17ESPATM-2": {
+   "at": "2026-10-17T11:13:11+00:00",
+   "lead_min": 46.8,
+   "price": 0.79
+  },
+  "o15_ranked:KXLALIGATOTAL-26OCT17ESPATM-2": {
+   "at": "2026-10-17T11:13:11+00:00",
+   "lead_min": 46.8,
+   "price": 0.79
+  },
   "o15_ranked:KXLIGUE1TOTAL-26OCT10STBANG-2": {
    "at": "2026-10-10T18:04:50+00:00",
    "lead_min": 40.2,
    "price": 0.82
+  },
+  "o25_congestion:KXLALIGATOTAL-26OCT17ESPATM-3": {
+   "at": "2026-10-17T11:13:11+00:00",
+   "lead_min": 46.8,
+   "price": 0.47
   },
   "o25_congestion:KXMLSTOTAL-26OCT10CHINYC-3": {
    "at": "2026-10-10T18:04:50+00:00",
@@ -209,6 +229,11 @@
    "at": "2026-10-10T18:04:50+00:00",
    "lead_min": 55.2,
    "price": 0.89
+  },
+  "p05_unbeaten:KXLALIGAGAME-26OCT17ESPATM-ESP": {
+   "at": "2026-10-17T11:13:11+00:00",
+   "lead_min": 46.8,
+   "price": 0.83
   },
   "p05_unbeaten:KXLIGAPORTUGALGAME-26OCT11AROESA-ESA": {
    "at": "2026-10-11T19:12:58+00:00",
@@ -406,5 +431,5 @@
    "price": 0.55
   }
  },
- "updated": "2026-10-17T06:16:39+00:00"
+ "updated": "2026-10-17T11:13:11+00:00"
 }
