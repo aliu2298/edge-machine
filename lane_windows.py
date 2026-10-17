@@ -78,6 +78,14 @@ SOCCER_SERIES = {
     "Saudi Pro League": "KXSAUDIPLTOTAL", "Turkish Super Lig": "KXSUPERLIGTOTAL",
     "Champions League": "KXUCLTOTAL", "UEFA Nations League": "KXUEFANLTOTAL",
 }
+# soccer_rules.BTTS_SERIES (Group BTTS, 2026-10-17), copied for the same reason.
+SOCCER_BTTS_SERIES = {
+    "Premier League": "KXEPLBTTS", "La Liga": "KXLALIGABTTS", "Bundesliga": "KXBUNDESLIGABTTS",
+    "Serie A": "KXSERIEABTTS", "Ligue 1": "KXLIGUE1BTTS", "Eredivisie": "KXEREDIVISIEBTTS",
+    "Primeira Liga": "KXLIGAPORTUGALBTTS", "Scottish Premiership": "KXSCOTTISHPREMBTTS",
+    "MLS": "KXMLSBTTS", "Saudi Pro League": "KXSAUDIPLBTTS", "Turkish Super Lig": "KXSUPERLIGBTTS",
+    "Champions League": "KXUCLBTTS", "Europa League": "KXUELBTTS", "UEFA Nations League": "KXUEFANLBTTS",
+}
 # soccer_team_rules.SERIES: ESPN league -> Kalshi team-total series. Copied for the same reason;
 # test_soccer_team_rules.py checks the two agree.
 SOCCER_TEAM_SERIES = {
@@ -200,20 +208,25 @@ def soccer_kickoffs(now, fixtures=None, ledger=None, series_map=None):
 
     From the ESPN fixtures cache (data/streaks_raw.json) when there is one. The VPS clone has
     no cache (it is not committed), so the tracker's own goals_market quotes, which log every
-    Kalshi match total and team total with ESPN's kickoff, fill in from data/sandbox_ledger.json.
-    Tests pass `fixtures` (and `ledger`) and read neither file. `series_map` is the lane's
-    league -> series map (SOCCER_SERIES unless given)."""
-    series_map = SOCCER_SERIES if series_map is None else series_map
+    Kalshi match total and team total with ESPN's kickoff, fill in from data/sandbox_ledger.json,
+    and its btts_market quotes do the same for the BTTS series (Group BTTS). Quotes are read by
+    event or, when they carry none, by market id. Tests pass `fixtures` (and `ledger`) and read
+    neither file. `series_map` narrows it to one lane's league -> series map (the team-scoring
+    rules); without it the total-goals and BTTS maps both count."""
+    if series_map is None:
+        maps = {"goals_market": SOCCER_SERIES, "btts_market": SOCCER_BTTS_SERIES}
+    else:
+        maps = {"goals_market": series_map}
     starts = []
     if fixtures is None:
         fixtures = _fixtures_cache()
-        series = tuple(s + "-" for s in series_map.values())
+        series = {src: tuple(s + "-" for s in mp.values()) for src, mp in maps.items()}
         for q in (_load_ledger(ledger).get("quotes") or []):
             tag = str(q.get("event") or q.get("market_id") or "")
-            if q.get("source") == "goals_market" and tag.startswith(series):
+            if q.get("source") in series and tag.startswith(series[q["source"]]):
                 starts.append(q.get("start"))
     for f in fixtures:
-        if not f.get("played") and f.get("league") in series_map:
+        if not f.get("played") and any(f.get("league") in mp for mp in maps.values()):
             starts.append(f.get("kickoff"))
     out = set()
     for v in starts:

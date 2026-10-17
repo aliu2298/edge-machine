@@ -69,19 +69,21 @@ check("fewer than 40 league team-games: no label",
 check("labels() reads both teams of a fixture", SR.labels(fx, fixture("Alpha", "Beta")), ("O-D-", "O+D+"))
 
 print("\nrule tests: unordered pairs, either-team, an O+ opponent")
+TOT = lambda *a: [k for k in SR.applicable(*a) if SR.RULES[k]["market"] == "total"]   # Group BTTS is tested below
 check("A1 MLS O-D- v O-D+ either way round",
       (SR.applicable("MLS", "O-D-", "O-D+"), SR.applicable("MLS", "O-D+", "O-D-")), (["A1"], ["A1"]))
 check("A6 EPL: an O-D- team v an O+ opponent (O+D+ or O+D-), not v O-D+",
-      (SR.applicable("Premier League", "O+D+", "O-D-"), "A6" in SR.applicable("Premier League", "O-D-", "O+D-"),
-       SR.applicable("Premier League", "O-D-", "O-D+")), (["A6"], True, []))
+      (TOT("Premier League", "O+D+", "O-D-"), "A6" in SR.applicable("Premier League", "O-D-", "O+D-"),
+       TOT("Premier League", "O-D-", "O-D+")), (["A6"], True, []))
 check("A5 Nations League: either team O-",
       ("A5" in SR.applicable("UEFA Nations League", "O+D+", "O-D+"), SR.applicable("UEFA Nations League", "O+D+", "O+D-")),
       (True, []))
-check("B3 Eredivisie: O+D- v any D- opponent", SR.applicable("Eredivisie", "O-D-", "O+D-"), ["B3"])
+check("B3 Eredivisie: O+D- v any D- opponent", TOT("Eredivisie", "O-D-", "O+D-"), ["B3"])
 check("a rule never fires outside its league", SR.applicable("Serie A", "O-D-", "O-D+"), [])
-check("EPL O+D- v O+D-: B5 only", SR.applicable("Premier League", "O+D-", "O+D-"), ["B5"])
+check("EPL O+D- v O+D-: B5 only", TOT("Premier League", "O+D-", "O+D-"), ["B5"])
 check("every rule names a league with a Kalshi series, and lane_windows has the same map",
-      (all(r["league"] in SR.SERIES for r in SR.RULES.values()), W.SOCCER_SERIES == SR.SERIES, len(SR.RULES)), (True, True, 21))
+      (all(r["league"] in SR.SERIES for r in SR.RULES.values() if r["market"] == "total"), W.SOCCER_SERIES == SR.SERIES,
+       sum(r["market"] == "total" for r in SR.RULES.values())), (True, True, 21))
 
 print("\nthe line comes from the title, never the ticker")
 m = dict(ticker="KXEPLTOTAL-26OCT18BOUSUN-2", title="Will over 1.5 goals be scored?")
@@ -164,6 +166,88 @@ check("all 21 rules are listed, in groups A, B and C",
       (all(f"<b>{k}</b>" in html for k in SR.RULES), all(f"Group {g}" in html for g in "ABC")), (True, True))
 check("and the entries table carries the match and labels", ("Alpha v Beta" in html, "O-D- v O+D+" in html), (True, True))
 check("an empty ledger says how entries arrive", "No entries yet" in SB.section({"rules": {}}), True)
+
+print("\nGroup BTTS: D1-D3 in every BTTS league, one -BTTS market per match")
+
+
+def bev(series, home, away, bid, ask, day="26OCT18"):
+    tag = f"{series}-{day}{home[:3].upper()}{away[:3].upper()}"
+    return dict(event_ticker=tag, title=f"{home} vs {away}: BTTS",
+                markets=[dict(ticker=f"{tag}-BTTS", title="Both Teams To Score", status="active",
+                              yes_bid_dollars=str(bid), yes_ask_dollars=str(ask))])
+
+
+BT = lambda *a: [k for k in SR.applicable(*a) if SR.RULES[k]["market"] == "btts"]
+check("three BTTS rules, group BTTS, and lane_windows has the same BTTS map",
+      (sorted(k for k, r in SR.RULES.items() if r["group"] == "BTTS"), W.SOCCER_BTTS_SERIES == SR.BTTS_SERIES, len(SR.BTTS_SERIES)),
+      (["D1", "D2", "D3"], True, 14))
+check("D1 O+D- v O+D-, D2 O-D- v O+D+ and D3 O-D- v O+D-, either way round",
+      (BT("Serie A", "O+D-", "O+D-"), BT("Premier League", "O+D+", "O-D-"), BT("Premier League", "O-D-", "O+D+"),
+       BT("La Liga", "O+D-", "O-D-"), BT("La Liga", "O-D-", "O+D-")), (["D1"], ["D2"], ["D2"], ["D3"], ["D3"]))
+check("BTTS rules run in leagues with no total rule (Primeira, Europa League), never outside the BTTS map",
+      (BT("Primeira Liga", "O-D-", "O+D-"), BT("Europa League", "O+D-", "O+D-"), BT("Liga MX", "O+D-", "O+D-"),
+       BT("Serie A", "O-D-", "O-D+")), (["D3"], ["D1"], [], []))
+check("Primeira and Europa League fixtures are due", len(SR.due([fixture("A", "B", league="Primeira Liga"),
+      fixture("C", "D", league="Europa League")], NOW)), 2)
+be = bev("KXSERIEABTTS", "Udinese", "Lecce", 0.0, 0.0)
+check("market_at finds the -BTTS market and never reads it as a total",
+      (SR.market_at(be, None, "btts")["ticker"].endswith("-BTTS"), SR.market_at(be, 2.5)), (True, None))
+uf = fixture("Udinese Calcio", "US Lecce", league="Serie A")
+d1 = lambda b, a: [(x["rule"], x["side"], x["price"], x["group"], x["line"]) for x in
+                   SR.picks_for(uf, ("O+D-", "O+D-"), bev("KXSERIEABTTS", "Udinese", "Lecce", b, a), NOW, "btts")]
+check("D1 buys YES at the ask: 61c in, 44c below 45c out, 77c above 75c out, 8c spread out",
+      (d1(0.60, 0.61), d1(0.43, 0.44), d1(0.75, 0.77), d1(0.50, 0.58)), ([("D1", "yes", 0.61, "BTTS", None)], [], [], []))
+ef = fixture("Everton", "Arsenal", league="Premier League")
+d2 = lambda b: [(x["rule"], x["side"], x["price"]) for x in
+                SR.picks_for(ef, ("O-D-", "O+D+"), bev("KXEPLBTTS", "Everton", "Arsenal", b, b + 0.02), NOW, "btts")]
+check("D2 buys NO at 1 - bid: bid 55c -> NO 45c in; bid 72c -> 28c out; bid 38c -> 62c out",
+      (d2(0.55), d2(0.72), d2(0.38)), ([("D2", "no", 0.45)], [], []))
+lf = fixture("Osasuna", "Racing Santander", league="La Liga")
+d3 = lambda a: [x["price"] for x in SR.picks_for(lf, ("O+D-", "O-D-"), bev("KXLALIGABTTS", "Osasuna", "Santander", a - 0.01, a), NOW, "btts")]
+check("D3 band 40-70c: 40c in, 70c in, 39c out, 71c out", (d3(0.40), d3(0.70), d3(0.39), d3(0.71)), ([0.40], [0.70], [], []))
+check("a BTTS event never makes a total-goals entry, and market='total' skips BTTS rules",
+      (SR.picks_for(fe, labs, bev("KXEPLBTTS", "Bournemouth", "Sunderland", 0.48, 0.50), NOW, "total"),
+       [x["rule"] for x in SR.picks_for(fe, labs, ev("KXEPLTOTAL", "Bournemouth", "Sunderland", lines={2.5: (0.48, 0.50)}), NOW, "btts")]),
+      ([], []))
+
+# The run: Alpha O-D- v Beta O+D+ in the EPL fires A6 (total) and D2 (BTTS) from two series.
+bk = bev("KXEPLBTTS", "Alpha", "Beta", 0.56, 0.57)
+
+
+def fake2(path):
+    if path.startswith("events?"):
+        return {"events": [kal] if "series_ticker=KXEPLTOTAL" in path else [bk] if "series_ticker=KXEPLBTTS" in path else []}
+    return {"market": {"ticker": path.split("/")[-1], "status": "finalized", "result": "yes" if "BTTS" in path else "no"}}
+
+
+st2 = {"rules": {}}
+new2 = SR.run(st2, game, NOW, fake2)
+check("one run enters A6 from the total series and D2 at NO 44c from the BTTS series",
+      (sorted(i.split(":")[0] for i in new2), st2["rules"]["D2"]["picks"][0]["price"], st2["rules"]["D2"]["picks"][0]["ticker"]),
+      (["A6", "D2"], 0.44, bk["markets"][0]["ticker"]))
+SR.run(st2, game, NOW + dt.timedelta(minutes=30), fake2)
+check("a second read freezes both: one entry per rule per match", (len(st2["rules"]["D2"]["picks"]), len(st2["rules"]["A6"]["picks"])), (1, 1))
+d2row = st2["rules"]["D2"]["picks"][0]
+check("D2 NO on a 'yes' (both scored) result loses $100", (d2row["status"], d2row["profit"]), ("lost", -100.0))
+check("the run counts the fixture as matched once", st2["runs"][0]["matched"], 1)
+yes = {"rules": {"D1": {"picks": [dict(id="y", ticker="T-BTTS", side="yes", price=0.61, status="open")]}}}
+SR.settle(yes, NOW, lambda p: {"market": {"status": "finalized", "result": "yes"}})
+check("D1 YES on a 'yes' result wins, profit after the fee",
+      (yes["rules"]["D1"]["picks"][0]["status"], yes["rules"]["D1"]["picks"][0]["profit"]),
+      ("won", round(100 * (1 / (0.61 + SR.fee(0.61)) - 1), 2)))
+pf = [fixture("P1", "P2", league="Primeira Liga", ko=dt.datetime(2026, 10, 18, 14, 0, tzinfo=UTC))]
+check("lane windows open for a Primeira kickoff (BTTS only)",
+      [k for w, k in W.due(dt.datetime(2026, 10, 18, 12, 35, tzinfo=UTC), {"quotes": []}, [], pf) if w["lane"] == "soccer_rules"], [1])
+bq = {"quotes": [dict(source="btts_market", event="KXUELBTTS-26OCT18ARAAZA", start="2026-10-18T16:00:00+00:00"),
+                 dict(source="btts_market", event="KXAFCCLBTTS-26OCT18X", start="2026-10-18T17:00:00+00:00")]}
+check("on the VPS (no fixtures cache) btts_market quotes in the BTTS series give kickoffs; other series do not",
+      [t.isoformat() for t in W.soccer_kickoffs(dt.datetime(2026, 10, 18, 12, 0, tzinfo=UTC), None, bq)
+       if t.isoformat() in ("2026-10-18T16:00:00+00:00", "2026-10-18T17:00:00+00:00")], ["2026-10-18T16:00:00+00:00"])
+bh = SB.section(st2)
+check("the page lists Group BTTS with D1-D3, all 14 leagues, the evidence and the caveat",
+      ("Group BTTS" in bh, all(f"<b>{k}</b>" in bh for k in ("D1", "D2", "D3")), "All 14 BTTS leagues" in bh,
+       "44/64 (69%) @61c" in bh, "no single box reached z +2" in bh), (True, True, True, True, True))
+check("and its BTTS entry shows the match and both labels", ("Both Teams To Score" in bh, "O-D- v O+D+" in bh), (True, True))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
