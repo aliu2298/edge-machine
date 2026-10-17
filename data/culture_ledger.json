@@ -2,16 +2,16 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-17T16:00:11.789285+00:00",
-   "last_success": "2026-10-17T16:00:11.789285+00:00",
+   "last_run": "2026-10-17T17:00:13.053079+00:00",
+   "last_success": "2026-10-17T17:00:13.053079+00:00",
    "observations": {
-    "at": "2026-10-17T16:00:11.789285+00:00",
-    "events": 874,
+    "at": "2026-10-17T17:00:13.053079+00:00",
+    "events": 879,
     "reasons": {
-     "no quote or spread too wide": 177,
+     "no quote or spread too wide": 176,
      "not active": 694,
-     "outside the band": 30,
-     "outside the entry window": 11279
+     "outside the band": 31,
+     "outside the entry window": 11429
     }
    },
    "picks": [
@@ -47,16 +47,17 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-17T16:00:11.789285+00:00",
-   "last_success": "2026-10-17T16:00:11.789285+00:00",
+   "last_run": "2026-10-17T17:00:13.053079+00:00",
+   "last_success": "2026-10-17T17:00:13.053079+00:00",
    "observations": {
-    "at": "2026-10-17T16:00:11.789285+00:00",
-    "events": 874,
+    "at": "2026-10-17T17:00:13.053079+00:00",
+    "events": 879,
     "reasons": {
+     "in band": 1,
      "no quote or spread too wide": 339,
      "not active": 694,
-     "outside the band": 118,
-     "outside the entry window": 11029
+     "outside the band": 117,
+     "outside the entry window": 11179
     }
    },
    "picks": [
@@ -120,16 +121,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-17T16:00:11.789285+00:00",
-   "last_success": "2026-10-17T16:00:11.789285+00:00",
+   "last_run": "2026-10-17T17:00:13.053079+00:00",
+   "last_success": "2026-10-17T17:00:13.053079+00:00",
    "observations": {
-    "at": "2026-10-17T16:00:11.789285+00:00",
-    "events": 874,
+    "at": "2026-10-17T17:00:13.053079+00:00",
+    "events": 879,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 40,
-     "edge 5c+": 10,
+     "already near-certain (under 10c or over 90c)": 41,
+     "edge 5c+": 8,
      "edge under 5c": 5,
-     "no quote or spread too wide": 35
+     "no quote or spread too wide": 36
     }
    },
    "picks": [
@@ -377,14 +378,14 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-17T16:00:11.789285+00:00",
-   "last_success": "2026-10-17T16:00:11.789285+00:00",
+   "last_run": "2026-10-17T17:00:13.053079+00:00",
+   "last_success": "2026-10-17T17:00:13.053079+00:00",
    "observations": {
-    "at": "2026-10-17T16:00:11.789285+00:00",
-    "events": 874,
+    "at": "2026-10-17T17:00:13.053079+00:00",
+    "events": 879,
     "reasons": {
-     "edge 5c+": 7,
-     "edge under 5c": 1,
+     "edge 5c+": 6,
+     "edge under 5c": 2,
      "under 20 reviews counted": 11
     }
    },
@@ -553,7 +554,7 @@
  "version": "culture-v1",
  "words": {
   "Australia / Australian": {
-   "at": "2026-10-17T10:00:14.382497+00:00",
+   "at": "2026-10-17T17:00:13.053079+00:00",
    "days": [
     "2026-08-07",
     "2026-09-02"
@@ -622,7 +623,7 @@
    ]
   },
   "Nobel": {
-   "at": "2026-10-17T10:00:14.382497+00:00",
+   "at": "2026-10-17T17:00:13.053079+00:00",
    "days": [
     "2026-09-04",
     "2026-10-05",
@@ -634,6 +635,12 @@
   "Peace in the Middle East": {
    "at": "2026-10-17T14:00:12.905311+00:00",
    "days": []
+  },
+  "Soleimani": {
+   "at": "2026-10-17T17:00:13.053079+00:00",
+   "days": [
+    "2026-07-28"
+   ]
   },
   "South Africa / South African": {
    "at": "2026-10-17T11:00:12.509694+00:00",
