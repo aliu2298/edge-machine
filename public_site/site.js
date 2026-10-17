@@ -137,6 +137,27 @@
   window.EdgeNav = true;
   arm(document.querySelector("nav.main"), true);
   arm(document.querySelector("nav.toc"), false);
+
+  // The Markets menu: a click toggles it for touch and keyboard; hover and focus open it with
+  // CSS alone. Escape or a click elsewhere closes it, and returns focus when it held it.
+  var group = document.querySelector(".nav-group");
+  var more = group && group.querySelector(".nav-more");
+  if (more) {
+    var set = function (open) {
+      group.classList.toggle("open", open);
+      group.classList.toggle("closed", !open);
+      more.setAttribute("aria-expanded", open ? "true" : "false");
+    };
+    more.addEventListener("click", function (e) {
+      e.stopPropagation();
+      set(more.getAttribute("aria-expanded") !== "true");
+    });
+    group.addEventListener("mouseleave", function () { group.classList.remove("closed"); });
+    document.addEventListener("click", function (e) { if (!group.contains(e.target)) set(false); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && more.getAttribute("aria-expanded") === "true") { set(false); more.focus(); }
+    });
+  }
 })();
 
 document.querySelectorAll(".folds-ctl button").forEach(function (b) {

@@ -204,31 +204,46 @@ if playwright is not None:
         ok(seen["dark"] == "rgb(11, 12, 15)" and seen["light"] == "rgb(245, 248, 244)",
            "dark is the dark page and light is the off-white page")
 
-        # The nav never clips: it wraps when squeezed from 641px up (at 900 and
-        # 768 it must), scrolls in one row at 390, and every pill can be shown.
+        # The nav never clips. From 641px up (2026-10-16) the nine market pages sit in one
+        # Markets menu, so the top row is five items on ONE line with no scroll, and the menu,
+        # opened, shows every market link whole. At 390 every page is a pill in one scrolling row.
         for width in (1070, 900, 768, 390):
             page = browser.new_page(viewport={"width": width, "height": 800})
             page.route("http://fixture.local/**", serve(pages["soccer.html"]))
             page.goto("http://fixture.local/soccer.html", wait_until="load")
             got = page.evaluate("""() => {
                 const nav = document.querySelector('nav.main');
-                const pills = [...nav.querySelectorAll('a')];
+                const all = [...nav.querySelectorAll('a')];
+                const shown = el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
+                const top = [...nav.querySelectorAll(':scope > a, :scope .nav-more')].filter(shown);
+                const pills = window.innerWidth <= 640 ? all : top;
                 const inside = pills.every(a => { a.scrollIntoView({inline: 'nearest', block: 'nearest'});
                     const r = a.getBoundingClientRect(); const n = nav.getBoundingClientRect();
                     return r.left >= n.left - 1 && r.right <= n.right + 1 && r.right <= innerWidth + 1; });
                 return { inside, overflow: document.documentElement.scrollWidth > innerWidth,
                          rows: new Set(pills.map(a => Math.round(a.getBoundingClientRect().top))).size,
-                         scrolls: nav.scrollWidth > nav.clientWidth + 1,
-                         method: pills[pills.length - 1].textContent };
+                         scrolls: nav.scrollWidth > nav.clientWidth + 1, n: all.length,
+                         method: all[all.length - 1].textContent };
             }""")
             ok(got["inside"] and not got["overflow"], f"{width}px: every page pill can be shown whole, nothing clipped ({got})")
             eq(got["method"], "Method", f"{width}px: Method is still the last pill")
             if width > 640:
-                ok(not got["scrolls"], f"{width}px: the pills do not scroll ({got})")
-                if width <= 900:
-                    ok(got["rows"] >= 2, f"{width}px: the pills wrap onto more rows ({got})")
+                ok(not got["scrolls"] and got["rows"] == 1, f"{width}px: the top row is one line, no scroll ({got})")
+                page.locator(".nav-more").click()
+                menu = page.evaluate("""() => {
+                    const links = [...document.querySelectorAll('.nav-menu a')];
+                    return { n: links.length, whole: links.every(a => { const r = a.getBoundingClientRect();
+                        return r.width > 0 && r.left >= 0 && r.right <= innerWidth + 1 && r.bottom <= innerHeight + 1; }),
+                        expanded: document.querySelector('.nav-more').getAttribute('aria-expanded') };
+                }""")
+                ok(menu["n"] == 9 and menu["whole"] and menu["expanded"] == "true",
+                   f"{width}px: the Markets menu opens with all nine market pages whole ({menu})")
+                page.keyboard.press("Escape")
+                eq(page.evaluate("document.querySelector('.nav-more').getAttribute('aria-expanded')"), "false",
+                   f"{width}px: Escape closes the menu")
             else:
-                ok(got["rows"] == 1 and got["scrolls"], f"{width}px: the pills scroll in one row ({got})")
+                ok(got["rows"] == 1 and got["scrolls"] and got["n"] == 13,
+                   f"{width}px: every page is a pill in one scrolling row ({got})")
             page.close()
 
         # One container width on every page.

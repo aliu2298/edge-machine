@@ -98,19 +98,38 @@ def title_for(page):
     return f"{SITE_NAME} · {text}"
 
 
+# The market pages sit in one "Markets" menu from 641px up (2026-10-16): thirteen pills had
+# wrapped onto two rows at 1280px and four on a tablet. Every link stays in nav.main in the same
+# order, so the phone's single swipe row (site.css, max-width 640px) still shows each one inline.
+MARKET_GROUP = ("nba", "soccer", "tennis", "cricket", "crypto", "commodities",
+                "econ_daily", "finance_daily", "culture")
+
+
 def nav(active, prefix="./"):
     """One link per page, with aria-current on exactly one.
 
-    The site root ("index") is the brand, not a pill, so no pill is current there.
+    The site root ("index") is the brand, not a pill, so no pill is current there. The
+    market pages are wrapped in a menu whose button names the current one, if any.
     """
-    parts = []
+    parts, group = [], []
     current = 0
     for key, label, href in PAGES:
         attr = ""
         if key == active:
             attr = ' aria-current="page"'
             current += 1
-        parts.append(f'<a href="{esc(_href(href, prefix))}"{attr}>{esc(label)}</a>')
+        link = f'<a href="{esc(_href(href, prefix))}"{attr}>{esc(label)}</a>'
+        if key in MARKET_GROUP:
+            group.append(link)
+            if len(group) == len(MARKET_GROUP):
+                here = next((lbl for k, lbl, _h in PAGES if k == active and k in MARKET_GROUP), None)
+                parts.append(
+                    f'<span class="nav-group{" is-current" if here else ""}">'
+                    f'<button type="button" class="nav-more" aria-expanded="false" aria-controls="nav-markets">'
+                    f'{esc(here or "Markets")}<span class="nav-caret" aria-hidden="true"></span></button>'
+                    f'<span class="nav-menu" id="nav-markets">{"".join(group)}</span></span>')
+            continue
+        parts.append(link)
     expected = 0 if active == "index" else 1
     if current != expected:
         raise ValueError(f"aria-current must mark {expected} page, got {current} for {active!r}")
