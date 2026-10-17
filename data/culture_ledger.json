@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-17T09:00:13.148002+00:00",
-   "last_success": "2026-10-17T09:00:13.148002+00:00",
+   "last_run": "2026-10-17T10:00:14.382497+00:00",
+   "last_success": "2026-10-17T10:00:14.382497+00:00",
    "observations": {
-    "at": "2026-10-17T09:00:13.148002+00:00",
+    "at": "2026-10-17T10:00:14.382497+00:00",
     "events": 875,
     "reasons": {
      "no quote or spread too wide": 59,
@@ -47,15 +47,15 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-17T09:00:13.148002+00:00",
-   "last_success": "2026-10-17T09:00:13.148002+00:00",
+   "last_run": "2026-10-17T10:00:14.382497+00:00",
+   "last_success": "2026-10-17T10:00:14.382497+00:00",
    "observations": {
-    "at": "2026-10-17T09:00:13.148002+00:00",
+    "at": "2026-10-17T10:00:14.382497+00:00",
     "events": 875,
     "reasons": {
-     "no quote or spread too wide": 277,
+     "no quote or spread too wide": 275,
      "not active": 692,
-     "outside the band": 62,
+     "outside the band": 64,
      "outside the entry window": 11130
     }
    },
@@ -78,17 +78,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-17T09:00:13.148002+00:00",
-   "last_success": "2026-10-17T09:00:13.148002+00:00",
+   "last_run": "2026-10-17T10:00:14.382497+00:00",
+   "last_success": "2026-10-17T10:00:14.382497+00:00",
    "observations": {
-    "at": "2026-10-17T09:00:13.148002+00:00",
+    "at": "2026-10-17T10:00:14.382497+00:00",
     "events": 875,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 43,
-     "edge 5c+": 7,
-     "edge under 5c": 2,
-     "no quote or spread too wide": 37,
-     "transcript search failed": 1
+     "edge 5c+": 9,
+     "edge under 5c": 3,
+     "no quote or spread too wide": 35
     }
    },
    "picks": [
@@ -283,15 +282,31 @@
      "side": "yes",
      "status": "open",
      "title": "Mastercard / MA"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-11-01T15:00:00Z",
+     "detail": "P(said) 0.31 \u00b7 said on 2 of the last 84 days, 15.2 days left \u00b7 edge +0.35",
+     "edge": 0.3477,
+     "event": "KXTRUMPSAYCOUNTRY-26NOV01",
+     "id": "KXTRUMPSAYCOUNTRY-26NOV01-AUS",
+     "logged": "2026-10-17T10:00:14.382497+00:00",
+     "model": 0.3068,
+     "name": "What countries will Trump say in October?",
+     "price": 0.33,
+     "series": "KXTRUMPSAYCOUNTRY",
+     "side": "no",
+     "status": "open",
+     "title": "Australia / Australian"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-17T09:00:13.148002+00:00",
-   "last_success": "2026-10-17T09:00:13.148002+00:00",
+   "last_run": "2026-10-17T10:00:14.382497+00:00",
+   "last_success": "2026-10-17T10:00:14.382497+00:00",
    "observations": {
-    "at": "2026-10-17T09:00:13.148002+00:00",
+    "at": "2026-10-17T10:00:14.382497+00:00",
     "events": 875,
     "reasons": {
      "collecting review pace (12h of snapshots)": 9,
@@ -325,6 +340,13 @@
  },
  "version": "culture-v1",
  "words": {
+  "Australia / Australian": {
+   "at": "2026-10-17T10:00:14.382497+00:00",
+   "days": [
+    "2026-08-07",
+    "2026-09-02"
+   ]
+  },
   "BBC": {
    "at": "2026-10-17T01:53:04.858915+00:00",
    "days": [
@@ -333,7 +355,7 @@
    ]
   },
   "Bibi / Netanyahu": {
-   "at": "2026-10-17T02:08:03.723976+00:00",
+   "at": "2026-10-17T10:00:14.382497+00:00",
    "days": [
     "2026-07-27",
     "2026-07-28",
@@ -388,7 +410,7 @@
    ]
   },
   "Nobel": {
-   "at": "2026-10-17T02:08:03.723976+00:00",
+   "at": "2026-10-17T10:00:14.382497+00:00",
    "days": [
     "2026-09-04",
     "2026-10-05",
