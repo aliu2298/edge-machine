@@ -126,5 +126,19 @@ W._fixtures_cache = lambda: []          # the VPS: no fixtures cache, and never 
 check("without a fixtures cache (the VPS) the tracker's goals_market kickoffs stand in, tracked series only",
       [t.isoformat() for t in W.soccer_kickoffs(at(2026, 10, 18, 12, 0), None, led)], ["2026-10-18T14:00:00+00:00"])
 
+print("\nsoccer team-scoring rules (2026-10-17): their own window and stamp, their own leagues")
+tg = lambda h, m: sorted(k for w, k in W.due(at(2026, 10, 18, h, m), {"quotes": []}, [], soc) if w["lane"] == "soccer_team_rules")
+check("the 14:00Z EPL/Bundesliga kickoff: read 1 at 12:35, read 2 at 13:05", (tg(12, 35), tg(13, 5), tg(13, 45)), ([1], [2], []))
+check("its stamp file", W.stamp_lines(at(2026, 10, 18, 12, 35), {"quotes": []}, [], soc).get("data/soccer_team_rules_window/request.txt"),
+      "soccer_team_rules 2026-10-18T14:00:00+00:00 read 1")
+uel = [dict(kickoff="2026-10-23T19:00Z", league="Europa League", played=False)]
+check("a Europa League kickoff opens a team-rules window",
+      "soccer_team_rules" in {w["lane"] for w, _ in W.due(at(2026, 10, 23, 17, 35), {"quotes": []}, [], uel)}, True)
+tled = {"quotes": [dict(source="goals_market", market_id="KXUELTEAMTOTAL-26OCT23ROMPLZ-ROM2", start="2026-10-23T19:00:00+00:00"),
+                   dict(source="goals_market", market_id="KXUECLTEAMTOTAL-26OCT23AAABBB-AAA1", start="2026-10-23T17:00:00+00:00")]}
+check("on the VPS the team-total quotes stand in (by market id), tracked series only",
+      [t.isoformat() for t in W.soccer_kickoffs(at(2026, 10, 23, 12, 0), None, tled, W.SOCCER_TEAM_SERIES)],
+      ["2026-10-23T19:00:00+00:00"])
+
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

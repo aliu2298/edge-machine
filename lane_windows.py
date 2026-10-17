@@ -64,6 +64,8 @@ STAMP = {
     "culture": "data/culture_window/request.txt",
     # 2026-10-17: the 21 soccer total-goals label rules (soccer_rules.py), 90-20 min before kickoff.
     "soccer_rules": "data/soccer_rules_window/request.txt",
+    # 2026-10-17: the 8 soccer team-scoring label rules (soccer_team_rules.py), same timing.
+    "soccer_team_rules": "data/soccer_team_rules_window/request.txt",
 }
 NBA_FROM, NBA_TO = 90, 20                # minutes before tip-off (nba_rules.WINDOW_MIN)
 SOCCER_FROM, SOCCER_TO = 90, 20          # minutes before kickoff (soccer_rules.WINDOW_MIN)
@@ -83,6 +85,14 @@ SOCCER_BTTS_SERIES = {
     "Primeira Liga": "KXLIGAPORTUGALBTTS", "Scottish Premiership": "KXSCOTTISHPREMBTTS",
     "MLS": "KXMLSBTTS", "Saudi Pro League": "KXSAUDIPLBTTS", "Turkish Super Lig": "KXSUPERLIGBTTS",
     "Champions League": "KXUCLBTTS", "Europa League": "KXUELBTTS", "UEFA Nations League": "KXUEFANLBTTS",
+}
+# soccer_team_rules.SERIES: ESPN league -> Kalshi team-total series. Copied for the same reason;
+# test_soccer_team_rules.py checks the two agree.
+SOCCER_TEAM_SERIES = {
+    "Premier League": "KXEPLTEAMTOTAL", "La Liga": "KXLALIGATEAMTOTAL",
+    "Bundesliga": "KXBUNDESLIGATEAMTOTAL", "Serie A": "KXSERIEATEAMTOTAL",
+    "Ligue 1": "KXLIGUE1TEAMTOTAL", "MLS": "KXMLSTEAMTOTAL",
+    "Champions League": "KXUCLTEAMTOTAL", "Europa League": "KXUELTEAMTOTAL",
 }
 CT = ZoneInfo("America/Chicago")
 FTTS_DAY = ((9, 0), (10, 30))
@@ -193,24 +203,30 @@ def _fixtures_cache():
         return []
 
 
-def soccer_kickoffs(now, fixtures=None, ledger=None):
+def soccer_kickoffs(now, fixtures=None, ledger=None, series_map=None):
     """Kickoffs within the next day of unplayed matches in the soccer rules' leagues.
 
     From the ESPN fixtures cache (data/streaks_raw.json) when there is one. The VPS clone has
     no cache (it is not committed), so the tracker's own goals_market quotes, which log every
-    Kalshi match total with ESPN's kickoff, fill in from data/sandbox_ledger.json, and its
-    btts_market quotes do the same for the BTTS series (Group BTTS). Tests pass
-    `fixtures` (and `ledger`) and read neither file."""
+    Kalshi match total and team total with ESPN's kickoff, fill in from data/sandbox_ledger.json,
+    and its btts_market quotes do the same for the BTTS series (Group BTTS). Quotes are read by
+    event or, when they carry none, by market id. Tests pass `fixtures` (and `ledger`) and read
+    neither file. `series_map` narrows it to one lane's league -> series map (the team-scoring
+    rules); without it the total-goals and BTTS maps both count."""
+    if series_map is None:
+        maps = {"goals_market": SOCCER_SERIES, "btts_market": SOCCER_BTTS_SERIES}
+    else:
+        maps = {"goals_market": series_map}
     starts = []
     if fixtures is None:
         fixtures = _fixtures_cache()
-        series = {"goals_market": tuple(s + "-" for s in SOCCER_SERIES.values()),
-                  "btts_market": tuple(s + "-" for s in SOCCER_BTTS_SERIES.values())}
+        series = {src: tuple(s + "-" for s in mp.values()) for src, mp in maps.items()}
         for q in (_load_ledger(ledger).get("quotes") or []):
-            if q.get("source") in series and str(q.get("event") or "").startswith(series[q["source"]]):
+            tag = str(q.get("event") or q.get("market_id") or "")
+            if q.get("source") in series and tag.startswith(series[q["source"]]):
                 starts.append(q.get("start"))
     for f in fixtures:
-        if not f.get("played") and (f.get("league") in SOCCER_SERIES or f.get("league") in SOCCER_BTTS_SERIES):
+        if not f.get("played") and any(f.get("league") in mp for mp in maps.values()):
             starts.append(f.get("kickoff"))
     out = set()
     for v in starts:
@@ -225,6 +241,13 @@ def soccer_windows(now, fixtures=None, ledger=None):
     return [dict(lane="soccer_rules", label=f"Soccer rules {t:%H:%M}Z kickoff", series=(), close=t,
                  start=t - dt.timedelta(minutes=SOCCER_FROM), end=t - dt.timedelta(minutes=SOCCER_TO),
                  every=READ_EVERY) for t in soccer_kickoffs(now, fixtures, ledger)]
+
+
+def soccer_team_windows(now, fixtures=None, ledger=None):
+    """One team-scoring rules window per kickoff in the team rules' leagues, same timing."""
+    return [dict(lane="soccer_team_rules", label=f"Team rules {t:%H:%M}Z kickoff", series=(), close=t,
+                 start=t - dt.timedelta(minutes=SOCCER_FROM), end=t - dt.timedelta(minutes=SOCCER_TO),
+                 every=READ_EVERY) for t in soccer_kickoffs(now, fixtures, ledger, SOCCER_TEAM_SERIES)]
 
 
 def culture_windows(now):
@@ -271,6 +294,7 @@ def windows(now, ledger=None, games=None, fixtures=None):
     out += ftts_windows(now, ledger)
     out += nba_windows(now, games)
     out += soccer_windows(now, fixtures, ledger)
+    out += soccer_team_windows(now, fixtures, ledger)
     out += culture_windows(now)
     return sorted(out, key=lambda w: (w["start"], w["lane"]))
 
