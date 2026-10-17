@@ -64,6 +64,8 @@ STAMP = {
     "culture": "data/culture_window/request.txt",
     # 2026-10-17: the 21 soccer total-goals label rules (soccer_rules.py), 90-20 min before kickoff.
     "soccer_rules": "data/soccer_rules_window/request.txt",
+    # 2026-10-17: the 8 soccer team-scoring label rules (soccer_team_rules.py), same timing.
+    "soccer_team_rules": "data/soccer_team_rules_window/request.txt",
 }
 NBA_FROM, NBA_TO = 90, 20                # minutes before tip-off (nba_rules.WINDOW_MIN)
 SOCCER_FROM, SOCCER_TO = 90, 20          # minutes before kickoff (soccer_rules.WINDOW_MIN)
@@ -75,6 +77,14 @@ SOCCER_SERIES = {
     "Scottish Premiership": "KXSCOTTISHPREMTOTAL", "MLS": "KXMLSTOTAL",
     "Saudi Pro League": "KXSAUDIPLTOTAL", "Turkish Super Lig": "KXSUPERLIGTOTAL",
     "Champions League": "KXUCLTOTAL", "UEFA Nations League": "KXUEFANLTOTAL",
+}
+# soccer_team_rules.SERIES: ESPN league -> Kalshi team-total series. Copied for the same reason;
+# test_soccer_team_rules.py checks the two agree.
+SOCCER_TEAM_SERIES = {
+    "Premier League": "KXEPLTEAMTOTAL", "La Liga": "KXLALIGATEAMTOTAL",
+    "Bundesliga": "KXBUNDESLIGATEAMTOTAL", "Serie A": "KXSERIEATEAMTOTAL",
+    "Ligue 1": "KXLIGUE1TEAMTOTAL", "MLS": "KXMLSTEAMTOTAL",
+    "Champions League": "KXUCLTEAMTOTAL", "Europa League": "KXUELTEAMTOTAL",
 }
 CT = ZoneInfo("America/Chicago")
 FTTS_DAY = ((9, 0), (10, 30))
@@ -185,22 +195,25 @@ def _fixtures_cache():
         return []
 
 
-def soccer_kickoffs(now, fixtures=None, ledger=None):
+def soccer_kickoffs(now, fixtures=None, ledger=None, series_map=None):
     """Kickoffs within the next day of unplayed matches in the soccer rules' leagues.
 
     From the ESPN fixtures cache (data/streaks_raw.json) when there is one. The VPS clone has
     no cache (it is not committed), so the tracker's own goals_market quotes, which log every
-    Kalshi match total with ESPN's kickoff, fill in from data/sandbox_ledger.json. Tests pass
-    `fixtures` (and `ledger`) and read neither file."""
+    Kalshi match total and team total with ESPN's kickoff, fill in from data/sandbox_ledger.json.
+    Tests pass `fixtures` (and `ledger`) and read neither file. `series_map` is the lane's
+    league -> series map (SOCCER_SERIES unless given)."""
+    series_map = SOCCER_SERIES if series_map is None else series_map
     starts = []
     if fixtures is None:
         fixtures = _fixtures_cache()
-        series = tuple(s + "-" for s in SOCCER_SERIES.values())
+        series = tuple(s + "-" for s in series_map.values())
         for q in (_load_ledger(ledger).get("quotes") or []):
-            if q.get("source") == "goals_market" and str(q.get("event") or "").startswith(series):
+            tag = str(q.get("event") or q.get("market_id") or "")
+            if q.get("source") == "goals_market" and tag.startswith(series):
                 starts.append(q.get("start"))
     for f in fixtures:
-        if not f.get("played") and f.get("league") in SOCCER_SERIES:
+        if not f.get("played") and f.get("league") in series_map:
             starts.append(f.get("kickoff"))
     out = set()
     for v in starts:
@@ -215,6 +228,13 @@ def soccer_windows(now, fixtures=None, ledger=None):
     return [dict(lane="soccer_rules", label=f"Soccer rules {t:%H:%M}Z kickoff", series=(), close=t,
                  start=t - dt.timedelta(minutes=SOCCER_FROM), end=t - dt.timedelta(minutes=SOCCER_TO),
                  every=READ_EVERY) for t in soccer_kickoffs(now, fixtures, ledger)]
+
+
+def soccer_team_windows(now, fixtures=None, ledger=None):
+    """One team-scoring rules window per kickoff in the team rules' leagues, same timing."""
+    return [dict(lane="soccer_team_rules", label=f"Team rules {t:%H:%M}Z kickoff", series=(), close=t,
+                 start=t - dt.timedelta(minutes=SOCCER_FROM), end=t - dt.timedelta(minutes=SOCCER_TO),
+                 every=READ_EVERY) for t in soccer_kickoffs(now, fixtures, ledger, SOCCER_TEAM_SERIES)]
 
 
 def culture_windows(now):
@@ -261,6 +281,7 @@ def windows(now, ledger=None, games=None, fixtures=None):
     out += ftts_windows(now, ledger)
     out += nba_windows(now, games)
     out += soccer_windows(now, fixtures, ledger)
+    out += soccer_team_windows(now, fixtures, ledger)
     out += culture_windows(now)
     return sorted(out, key=lambda w: (w["start"], w["lane"]))
 
