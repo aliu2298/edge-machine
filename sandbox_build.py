@@ -2355,6 +2355,14 @@ def main():
         print(f"wrote {commod_out}")
     except Exception as exc:                                    # noqa: BLE001
         print(f"::warning::commodities page not rebuilt ({type(exc).__name__}: {exc})")
+    # The Culture tab (2026-10-16): four observation lanes, own ledger (culture_track.py).
+    try:
+        import culture_build
+        culture_out = os.path.join(os.path.dirname(OUT), "culture.html")
+        _write(culture_out, culture_build.build(now=now))
+        print(f"wrote {culture_out}")
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"::warning::culture page not rebuilt ({type(exc).__name__}: {exc})")
     import daily_build
     for daily_key in daily_build.D.LANES:
         daily_out = os.path.join(os.path.dirname(OUT), daily_key + ".html")
