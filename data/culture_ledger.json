@@ -2,16 +2,16 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-17T13:00:13.350386+00:00",
-   "last_success": "2026-10-17T13:00:13.350386+00:00",
+   "last_run": "2026-10-17T14:00:12.905311+00:00",
+   "last_success": "2026-10-17T14:00:12.905311+00:00",
    "observations": {
-    "at": "2026-10-17T13:00:13.350386+00:00",
-    "events": 875,
+    "at": "2026-10-17T14:00:12.905311+00:00",
+    "events": 874,
     "reasons": {
-     "no quote or spread too wide": 58,
-     "not active": 692,
-     "outside the band": 2,
-     "outside the entry window": 11409
+     "no quote or spread too wide": 176,
+     "not active": 694,
+     "outside the band": 31,
+     "outside the entry window": 11279
     }
    },
    "picks": [
@@ -47,16 +47,17 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-17T13:00:13.350386+00:00",
-   "last_success": "2026-10-17T13:00:13.350386+00:00",
+   "last_run": "2026-10-17T14:00:12.905311+00:00",
+   "last_success": "2026-10-17T14:00:12.905311+00:00",
    "observations": {
-    "at": "2026-10-17T13:00:13.350386+00:00",
-    "events": 875,
+    "at": "2026-10-17T14:00:12.905311+00:00",
+    "events": 874,
     "reasons": {
-     "no quote or spread too wide": 276,
-     "not active": 692,
-     "outside the band": 52,
-     "outside the entry window": 11141
+     "in band": 3,
+     "no quote or spread too wide": 338,
+     "not active": 694,
+     "outside the band": 116,
+     "outside the entry window": 11029
     }
    },
    "picks": [
@@ -73,21 +74,49 @@
      "side": "no",
      "status": "open",
      "title": "Above 90"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-19T14:00:00Z",
+     "detail": "YES 0.71 \u00b7 favourite band",
+     "event": "KXRT-STRA",
+     "id": "KXRT-STRA-40",
+     "logged": "2026-10-17T14:00:12.905311+00:00",
+     "name": "Street Fighter \u00b7 Rotten Tomatoes score",
+     "price": 0.71,
+     "series": "KXRT",
+     "side": "yes",
+     "status": "open",
+     "title": "Above 40"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-19T14:00:00Z",
+     "detail": "YES 0.74 \u00b7 favourite band",
+     "event": "KXRT-WHA",
+     "id": "KXRT-WHA-70",
+     "logged": "2026-10-17T14:00:12.905311+00:00",
+     "name": "Whalefall \u00b7 Rotten Tomatoes score",
+     "price": 0.74,
+     "series": "KXRT",
+     "side": "yes",
+     "status": "open",
+     "title": "Above 70"
     }
    ]
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-17T13:00:13.350386+00:00",
-   "last_success": "2026-10-17T13:00:13.350386+00:00",
+   "last_run": "2026-10-17T14:00:12.905311+00:00",
+   "last_success": "2026-10-17T14:00:12.905311+00:00",
    "observations": {
-    "at": "2026-10-17T13:00:13.350386+00:00",
-    "events": 875,
+    "at": "2026-10-17T14:00:12.905311+00:00",
+    "events": 874,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 43,
-     "edge 5c+": 11,
+     "already near-certain (under 10c or over 90c)": 42,
+     "edge 5c+": 10,
      "edge under 5c": 3,
-     "no quote or spread too wide": 33
+     "no quote or spread too wide": 35
     }
    },
    "picks": [
@@ -335,17 +364,154 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-17T13:00:13.350386+00:00",
-   "last_success": "2026-10-17T13:00:13.350386+00:00",
+   "last_run": "2026-10-17T14:00:12.905311+00:00",
+   "last_success": "2026-10-17T14:00:12.905311+00:00",
    "observations": {
-    "at": "2026-10-17T13:00:13.350386+00:00",
-    "events": 875,
+    "at": "2026-10-17T14:00:12.905311+00:00",
+    "events": 874,
     "reasons": {
-     "collecting review pace (12h of snapshots)": 9,
+     "edge 5c+": 8,
      "under 20 reviews counted": 11
     }
    },
-   "picks": []
+   "picks": [
+    {
+     "category": "Entertainment",
+     "close": "2026-11-23T15:00:00Z",
+     "detail": "37/44 liked (84), ~0 more reviews \u00b7 P(above 82) 1.00 \u00b7 edge +0.70",
+     "edge": 0.6956,
+     "event": "KXRT-IPL",
+     "id": "KXRT-IPL-82",
+     "logged": "2026-10-17T14:00:12.905311+00:00",
+     "model": 1.0,
+     "name": "I Play Rocky \u00b7 Rotten Tomatoes score",
+     "price": 0.29,
+     "rt_url": "https://www.rottentomatoes.com/m/i_play_rocky",
+     "series": "KXRT",
+     "side": "yes",
+     "status": "open",
+     "title": "Above 82"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-11-09T15:00:00Z",
+     "detail": "84/89 liked (94), ~46 more reviews \u00b7 P(above 95) 0.25 \u00b7 edge +0.16",
+     "edge": 0.1623,
+     "event": "KXRT-WILD",
+     "id": "KXRT-WILD-95",
+     "logged": "2026-10-17T14:00:12.905311+00:00",
+     "model": 0.2474,
+     "name": "Wild Horse Nine \u00b7 Rotten Tomatoes score",
+     "price": 0.08,
+     "rt_url": "https://www.rottentomatoes.com/m/wild_horse_nine",
+     "series": "KXRT",
+     "side": "yes",
+     "status": "open",
+     "title": "Above 95"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-11-09T15:00:00Z",
+     "detail": "39/41 liked (95), ~0 more reviews \u00b7 P(above 96) 0.00 \u00b7 edge +0.31",
+     "edge": 0.3145,
+     "event": "KXRT-GOD",
+     "id": "KXRT-GOD-96",
+     "logged": "2026-10-17T14:00:12.905311+00:00",
+     "model": 0,
+     "name": "Godzilla Minus Zero \u00b7 Rotten Tomatoes score",
+     "price": 0.67,
+     "rt_url": "https://www.rottentomatoes.com/m/godzilla_minus_zero",
+     "series": "KXRT",
+     "side": "no",
+     "status": "open",
+     "title": "Above 96"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-26T14:00:00Z",
+     "detail": "21/21 liked (100), ~0 more reviews \u00b7 P(above 99) 1.00 \u00b7 edge +0.80",
+     "edge": 0.7992,
+     "event": "KXRT-WILDW",
+     "id": "KXRT-WILDW-99",
+     "logged": "2026-10-17T14:00:12.905311+00:00",
+     "model": 1.0,
+     "name": "Wildwood \u00b7 Rotten Tomatoes score",
+     "price": 0.19,
+     "rt_url": "https://www.rottentomatoes.com/m/wildwood",
+     "series": "KXRT",
+     "side": "yes",
+     "status": "open",
+     "title": "Above 99"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-19T14:00:00Z",
+     "detail": "102/103 liked (99), ~4 more reviews \u00b7 P(above 98) 0.93 \u00b7 edge +0.24",
+     "edge": 0.2415,
+     "event": "KXRT-YOUC",
+     "id": "KXRT-YOUC-98",
+     "logged": "2026-10-17T14:00:12.905311+00:00",
+     "model": 0.927,
+     "name": "You Can See Everything \u00b7 Rotten Tomatoes score",
+     "price": 0.67,
+     "rt_url": "https://www.rottentomatoes.com/m/you_can_see_everything",
+     "series": "KXRT",
+     "side": "yes",
+     "status": "open",
+     "title": "Above 98"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-19T14:00:00Z",
+     "detail": "102/143 liked (71), ~2 more reviews \u00b7 P(above 70) 0.91 \u00b7 edge +0.16",
+     "edge": 0.1612,
+     "event": "KXRT-WHA",
+     "id": "KXRT-WHA-70",
+     "logged": "2026-10-17T14:00:12.905311+00:00",
+     "model": 0.9147,
+     "name": "Whalefall \u00b7 Rotten Tomatoes score",
+     "price": 0.74,
+     "rt_url": "https://www.rottentomatoes.com/m/whalefall",
+     "series": "KXRT",
+     "side": "yes",
+     "status": "open",
+     "title": "Above 70"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-19T14:00:00Z",
+     "detail": "39/93 liked (42), ~6 more reviews \u00b7 P(above 40) 0.79 \u00b7 edge +0.07",
+     "edge": 0.0656,
+     "event": "KXRT-STRA",
+     "id": "KXRT-STRA-40",
+     "logged": "2026-10-17T14:00:12.905311+00:00",
+     "model": 0.79,
+     "name": "Street Fighter \u00b7 Rotten Tomatoes score",
+     "price": 0.71,
+     "rt_url": "https://www.rottentomatoes.com/m/street_fighter_2026",
+     "series": "KXRT",
+     "side": "yes",
+     "status": "open",
+     "title": "Above 40"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-19T14:00:00Z",
+     "detail": "69/92 liked (75), ~4 more reviews \u00b7 P(above 75) 0.31 \u00b7 edge +0.16",
+     "edge": 0.1584,
+     "event": "KXRT-SENS",
+     "id": "KXRT-SENS-75",
+     "logged": "2026-10-17T14:00:12.905311+00:00",
+     "model": 0.3141,
+     "name": "Sense and Sensibility \u00b7 Rotten Tomatoes score",
+     "price": 0.51,
+     "rt_url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026",
+     "series": "KXRT",
+     "side": "no",
+     "status": "open",
+     "title": "Above 75"
+    }
+   ]
   }
  },
  "rt_urls": {
@@ -399,13 +565,13 @@
    ]
   },
   "Ceasefire": {
-   "at": "2026-10-17T08:00:12.141319+00:00",
+   "at": "2026-10-17T14:00:12.905311+00:00",
    "days": [
     "2026-09-22"
    ]
   },
   "Cuba / Cuban": {
-   "at": "2026-10-17T08:00:12.141319+00:00",
+   "at": "2026-10-17T14:00:12.905311+00:00",
    "days": [
     "2026-07-29",
     "2026-08-10",
@@ -428,7 +594,7 @@
    ]
   },
   "JPMorgan / JPM": {
-   "at": "2026-10-17T08:00:12.141319+00:00",
+   "at": "2026-10-17T14:00:12.905311+00:00",
    "days": []
   },
   "Lisa Cook": {
@@ -436,7 +602,7 @@
    "days": []
   },
   "Mastercard / MA": {
-   "at": "2026-10-17T08:00:12.141319+00:00",
+   "at": "2026-10-17T14:00:12.905311+00:00",
    "days": [
     "2026-10-01"
    ]
@@ -452,7 +618,7 @@
    ]
   },
   "Peace in the Middle East": {
-   "at": "2026-10-17T08:00:12.141319+00:00",
+   "at": "2026-10-17T14:00:12.905311+00:00",
    "days": []
   },
   "South Africa / South African": {
@@ -470,7 +636,7 @@
    ]
   },
   "Third Term": {
-   "at": "2026-10-17T08:00:12.141319+00:00",
+   "at": "2026-10-17T14:00:12.905311+00:00",
    "days": [
     "2026-09-18",
     "2026-10-01",
