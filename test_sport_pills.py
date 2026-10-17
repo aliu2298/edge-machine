@@ -482,7 +482,9 @@ def _browser():
                    f"Tab from the brand reaches a page pill, ahead of the sport pills ({page_ring})")
                 sport_ring = None
                 steps = 0
-                for _ in range(30):
+                # 45: the Markets menu (2026-10-16) opens on focus, so its ten page links sit
+                # in the tab order between the page pills and the Running filters.
+                for _ in range(45):
                     page.keyboard.press("Tab")
                     steps += 1
                     sport_ring = page.evaluate("""() => {

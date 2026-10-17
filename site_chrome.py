@@ -18,6 +18,7 @@ PAGES = (
     ("production", "Production", "./production.html"),
     ("trading", "Trading", "./trading.html"),
     ("nba", "NBA", "./nba.html"),
+    ("nfl", "NFL", "./nfl.html"),
     ("soccer", "Soccer", "./soccer.html"),
     ("tennis", "Tennis", "./tennis.html"),
     ("cricket", "Cricket", "./cricket.html"),
@@ -28,7 +29,7 @@ PAGES = (
     ("culture", "Culture", "./culture.html"),
     ("method", "Method", "./sandbox.html#method"),
 )
-SPORT_KEYS = ("nba", "soccer", "tennis", "cricket", "crypto", "commodities")
+SPORT_KEYS = ("nba", "nfl", "soccer", "tennis", "cricket", "crypto", "commodities")
 # The file each page key is published as, for the canonical and og:url tags.
 PAGE_FILES = {
     "index": "index.html",
@@ -36,6 +37,7 @@ PAGE_FILES = {
     "production": "production.html",
     "trading": "trading.html",
     "nba": "nba.html",
+    "nfl": "nfl.html",
     "soccer": "soccer.html",
     "tennis": "tennis.html",
     "cricket": "cricket.html",
@@ -101,7 +103,7 @@ def title_for(page):
 # The market pages sit in one "Markets" menu from 641px up (2026-10-16): thirteen pills had
 # wrapped onto two rows at 1280px and four on a tablet. Every link stays in nav.main in the same
 # order, so the phone's single swipe row (site.css, max-width 640px) still shows each one inline.
-MARKET_GROUP = ("nba", "soccer", "tennis", "cricket", "crypto", "commodities",
+MARKET_GROUP = ("nba", "nfl", "soccer", "tennis", "cricket", "crypto", "commodities",
                 "econ_daily", "finance_daily", "culture")
 
 

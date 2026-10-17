@@ -236,13 +236,13 @@ if playwright is not None:
                         return r.width > 0 && r.left >= 0 && r.right <= innerWidth + 1 && r.bottom <= innerHeight + 1; }),
                         expanded: document.querySelector('.nav-more').getAttribute('aria-expanded') };
                 }""")
-                ok(menu["n"] == 9 and menu["whole"] and menu["expanded"] == "true",
-                   f"{width}px: the Markets menu opens with all nine market pages whole ({menu})")
+                ok(menu["n"] == 10 and menu["whole"] and menu["expanded"] == "true",
+                   f"{width}px: the Markets menu opens with all ten market pages whole ({menu})")
                 page.keyboard.press("Escape")
                 eq(page.evaluate("document.querySelector('.nav-more').getAttribute('aria-expanded')"), "false",
                    f"{width}px: Escape closes the menu")
             else:
-                ok(got["rows"] == 1 and got["scrolls"] and got["n"] == 13,
+                ok(got["rows"] == 1 and got["scrolls"] and got["n"] == 14,
                    f"{width}px: every page is a pill in one scrolling row ({got})")
             page.close()
 
