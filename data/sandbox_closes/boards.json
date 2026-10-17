@@ -90,6 +90,11 @@
    "lead_min": 46.5,
    "price": 0.9
   },
+  "corners_total_under:KXLALIGACORNERS-26OCT17ESPATM-9": {
+   "at": "2026-10-17T11:10:43+00:00",
+   "lead_min": 49.3,
+   "price": 0.43
+  },
   "corners_under:KXEPLTCORNERS-26OCT10CFCBOU-CFC7": {
    "at": "2026-10-10T13:03:12+00:00",
    "lead_min": 56.8,
@@ -265,10 +270,20 @@
    "lead_min": 52.0,
    "price": 0.84
   },
+  "o15_form_l10:KXLALIGATOTAL-26OCT17ESPATM-2": {
+   "at": "2026-10-17T11:10:43+00:00",
+   "lead_min": 49.3,
+   "price": 0.79
+  },
   "o15_ranked:KXCONMEBOLSUDTOTAL-26OCT14ATLTOR-2": {
    "at": "2026-10-14T21:56:48+00:00",
    "lead_min": 3.2,
    "price": 0.73
+  },
+  "o15_ranked:KXLALIGATOTAL-26OCT17ESPATM-2": {
+   "at": "2026-10-17T11:10:43+00:00",
+   "lead_min": 49.3,
+   "price": 0.79
   },
   "o15_ranked:KXLIGAPORTUGALTOTAL-26OCT09BRASPO-2": {
    "at": "2026-10-09T18:31:10+00:00",
@@ -285,6 +300,11 @@
    "lead_min": 3.2,
    "price": 0.53
   },
+  "o25_congestion:KXLALIGATOTAL-26OCT17ESPATM-3": {
+   "at": "2026-10-17T11:10:43+00:00",
+   "lead_min": 49.3,
+   "price": 0.47
+  },
   "o25_congestion:KXUCLTOTAL-26OCT13ARSLIL-3": {
    "at": "2026-10-13T18:38:48+00:00",
    "lead_min": 21.2,
@@ -300,11 +320,6 @@
    "lead_min": 52.0,
    "price": 0.3
   },
-  "oddspedia:KXT20MATCH-26OCT070700LIOGRB": {
-   "at": "2026-10-07T10:15:21+00:00",
-   "lead_min": 44.6,
-   "price": 0.21
-  },
   "oddspedia:KXT20MATCH-26OCT091130WICHPBANCHP": {
    "at": "2026-10-09T14:35:00+00:00",
    "lead_min": 55.0,
@@ -319,6 +334,11 @@
    "at": "2026-10-10T13:03:12+00:00",
    "lead_min": 56.8,
    "price": 0.47
+  },
+  "p05_unbeaten:KXLALIGAGAME-26OCT17ESPATM-ESP": {
+   "at": "2026-10-17T11:10:43+00:00",
+   "lead_min": 49.3,
+   "price": 0.83
   },
   "p05_unbeaten:KXLIGAPORTUGALGAME-26OCT09BRASPO-BRA": {
    "at": "2026-10-09T18:31:10+00:00",
@@ -561,5 +581,5 @@
    "price": 0.62
   }
  },
- "updated": "2026-10-17T04:59:40+00:00"
+ "updated": "2026-10-17T11:10:43+00:00"
 }
