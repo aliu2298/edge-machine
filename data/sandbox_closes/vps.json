@@ -80,6 +80,11 @@
    "lead_min": 5.2,
    "price": 0.27
   },
+  "btts_form_l10_fade:KXMLSBTTS-26OCT17PHICLT-BTTS": {
+   "at": "2026-10-17T17:41:08+00:00",
+   "lead_min": 48.9,
+   "price": 0.35
+  },
   "btts_form_l10_fade:KXSCOTTISHPREMBTTS-26OCT17HIBFAL-BTTS": {
    "at": "2026-10-17T13:55:23+00:00",
    "lead_min": 4.6,
@@ -840,6 +845,11 @@
    "lead_min": 3.9,
    "price": 0.23
   },
+  "mls_away_band:KXMLSGAME-26OCT17PHICLT": {
+   "at": "2026-10-17T17:41:08+00:00",
+   "lead_min": 48.9,
+   "price": 0.15
+  },
   "mls_fade_home:KXMLSGAME-26OCT10ATLCIN-ATL": {
    "at": "2026-10-10T23:23:18+00:00",
    "lead_min": 6.7,
@@ -1156,8 +1166,8 @@
    "price": 0.29
   },
   "o25_congestion:KXEREDIVISIETOTAL-26OCT17TELFEY-3": {
-   "at": "2026-10-17T17:26:07+00:00",
-   "lead_min": 33.9,
+   "at": "2026-10-17T17:41:08+00:00",
+   "lead_min": 18.9,
    "price": 0.31
   },
   "o25_congestion:KXLALIGATOTAL-26OCT17ESPATM-3": {
@@ -1189,6 +1199,11 @@
    "at": "2026-10-15T00:25:08+00:00",
    "lead_min": 4.9,
    "price": 0.36
+  },
+  "o25_congestion:KXMLSTOTAL-26OCT17PHICLT-3": {
+   "at": "2026-10-17T17:41:08+00:00",
+   "lead_min": 48.9,
+   "price": 0.27
   },
   "o25_congestion:KXSAUDIPLTOTAL-26OCT16QADABH-3": {
    "at": "2026-10-16T13:04:41+00:00",
@@ -1301,9 +1316,9 @@
    "price": 0.89
   },
   "p05_unbeaten:KXEREDIVISIEGAME-26OCT17TELFEY-TEL": {
-   "at": "2026-10-17T17:26:07+00:00",
-   "lead_min": 33.9,
-   "price": 0.9
+   "at": "2026-10-17T17:41:08+00:00",
+   "lead_min": 18.9,
+   "price": 0.89
   },
   "p05_unbeaten:KXLALIGAGAME-26OCT10RMAVIL-VIL": {
    "at": "2026-10-10T18:52:08+00:00",
@@ -2101,5 +2116,5 @@
    "price": 0.77
   }
  },
- "updated": "2026-10-17T17:26:07+00:00"
+ "updated": "2026-10-17T17:41:08+00:00"
 }
