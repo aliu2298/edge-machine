@@ -135,10 +135,10 @@ ok("nav.main a:focus-visible" in _phone_css and "outline-offset: -3px" in _phone
 try:
     trail = site_chrome.header(
         "sandbox", (), "stamp", prefix="../",
-        crumb=(("Sandbox", "../sandbox.html"), ("Archive", None), ("W39", None)))
+        crumb=(("Archives", "../sandbox.html"), ("Archive", None), ("W39", None)))
 except TypeError as exc:
     trail = f"header() raised {exc}"
-ok('class="crumbs"' in trail and "Sandbox" in trail and "Archive" in trail and "W39" in trail,
+ok('class="crumbs"' in trail and "Archives" in trail and "Archive" in trail and "W39" in trail,
    "header() can render a Sandbox › Archive › W39 breadcrumb")
 _trail_nav = re.search(r'<nav class="main"[^>]*>.*?</nav>', trail, re.S)
 ok(_trail_nav is not None and _trail_nav.group(0).count('aria-current="page"') == 1,
@@ -168,8 +168,8 @@ index_html = SB.archive_index_html({}, NOW)
 week_html = SB.archive_week_html("2026-W39", [], NOW)
 trade_html = SB.trading_page(NOW)
 root_html = site_root.root_stub(NOW)
-ok('class="crumbs"' in index_html and ">Archive<" in index_html and ">Sandbox<" in index_html,
-   "the archive index generator writes a Sandbox › Archive breadcrumb")
+ok('class="crumbs"' in index_html and ">Archive<" in index_html and ">Archives<" in index_html,
+   "the archive index generator writes an Archives › Archive breadcrumb")
 ok('id="vw"' not in index_html and 'class="toc"' not in index_html,
    "the archive index has no view toggle and no one-link section nav")
 ok('class="crumbs"' in week_html and ">W39<" in week_html and ">Archive<" in week_html,
@@ -258,7 +258,7 @@ for path in _published():
         ok(len(labels) >= 2, f"{path} section nav has {len(labels)} links")
         ok(not _toc_repeats_method(path, labels), f"{path} section nav does not repeat Method")
     if path.startswith("archive/"):
-        ok('class="crumbs"' in html and ">Sandbox<" in html and ">Archive<" in html,
+        ok('class="crumbs"' in html and ">Archives<" in html and ">Archive<" in html,
            f"{path} shows the archive breadcrumb")
         ok('class="here" aria-current="page"' in html,
            f"{path} breadcrumb current item is aria-current=page")
@@ -819,7 +819,7 @@ def browser_checks():
                         ok(not short, f"{label}: section chips are at least 44px tall"
                            + ("" if not short else f" ({short[0]})"))
                     if path.startswith("archive/"):
-                        ok("Sandbox" in got["crumb"] and "Archive" in got["crumb"],
+                        ok("Archives" in got["crumb"] and "Archive" in got["crumb"],
                            f"{label}: breadcrumb is {got['crumb']!r}")
                         ok(got["crumbCurrent"] == 1,
                            f"{label}: breadcrumb current item is aria-current=page "
