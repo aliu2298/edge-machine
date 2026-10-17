@@ -55,8 +55,8 @@ print("\nweekday and calendar rules")
 sat = at(2026, 10, 17, 12, 0)
 # An empty ledger: the lineup windows come from the real ledger's kickoffs, which this test must
 # not depend on (it read real Oct 17 fixtures once they were logged).
-lanes_sat = {(w["lane"], w["label"]) for w in W.windows(sat, ledger={"quotes": []})
-             if w["close"].date() == dt.date(2026, 10, 17)}
+lanes_sat = {(w["lane"], w["label"]) for w in W.windows(sat, ledger={"quotes": []}, games=[])
+             if w["close"].date() == dt.date(2026, 10, 17) and w["lane"] != "culture"}
 check("Saturday: crypto, gas/diesel and the first-to-score NO pick, no Treasury, index or commodity",
       sorted(l for l, _ in lanes_sat), ["crypto_fav_band", "econ_daily", "econ_daily", "ftts_no"])
 
@@ -84,7 +84,8 @@ check("an entry on another day's close does not count",
                                            for q in allc["quotes"]]}) if w["lane"] == "crypto_fav_band"], [2])
 
 print("\nstamps: one file per workflow, a crypto and a commodity read in one push")
-lines = W.stamp_lines(at(2026, 10, 13, 17, 35), ledger={"quotes": []})
+lines = W.stamp_lines(at(2026, 10, 13, 17, 35), ledger={"quotes": []}, games=[])
+lines.pop("data/culture_window/request.txt", None)      # the hourly culture read (2026-10-17), tested below
 check("17:35Z: crypto and commodities stamps both written, and the index window's daily stamp",
       sorted(lines), ["data/commodities_window/request.txt", "data/crypto_window/request.txt",
                       "data/daily_window/request.txt"])
@@ -93,6 +94,20 @@ check("the stamp names lane, close and read", lines["data/crypto_window/request.
 lines = W.stamp_lines(at(2026, 10, 13, 16, 35), ledger={"quotes": []})
 check("16:35Z: the Treasury and index reads share the daily stamp",
       lines["data/daily_window/request.txt"].count("finance_daily"), 2)
+
+
+print("\nNBA rules and culture reads (2026-10-17)")
+nba = [dict(start="2026-10-20T19:00Z", completed=False), dict(start="2026-10-20T23:30Z", completed=False),
+       dict(start="2026-10-20T20:00Z", completed=True)]
+got = lambda h, m: sorted(k for w, k in W.due(at(2026, 10, 20, h, m), {"quotes": []}, nba) if w["lane"] == "nba_rules")
+check("a 19:00Z tip: read 1 at 17:35, read 2 at 18:05, nothing at 18:45 (20 min out) or 16:00",
+      (got(17, 35), got(18, 5), got(18, 45), got(16, 0)), ([1], [2], [], []))
+check("a finished game asks for nothing", [w for w in W.nba_windows(at(2026, 10, 20, 18, 30), nba) if w["close"].hour == 20], [])
+cl = [k for w, k in W.due(at(2026, 10, 20, 9, 41), {"quotes": []}, []) if w["lane"] == "culture"]
+check("culture is read once every hour", cl, [1])
+st = W.stamp_lines(at(2026, 10, 20, 17, 35), {"quotes": []}, nba)
+check("both go to their own stamp files",
+      ("data/nba_window/request.txt" in st, "data/culture_window/request.txt" in st), (True, True))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

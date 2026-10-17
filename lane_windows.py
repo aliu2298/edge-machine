@@ -58,7 +58,12 @@ STAMP = {
     "finance_daily": "data/daily_window/request.txt",
     "ftts_no": "data/ftts_window/request.txt",
     "ftts_lineup_lag": "data/ftts_window/request.txt",
+    # 2026-10-17: GitHub's cron never fired either lane on its own (culture.yml's hourly
+    # schedule missed five hours in a row; the NBA rules need a read 20-90 min before each tip).
+    "nba_rules": "data/nba_window/request.txt",
+    "culture": "data/culture_window/request.txt",
 }
+NBA_FROM, NBA_TO = 90, 20                # minutes before tip-off (nba_rules.WINDOW_MIN)
 CT = ZoneInfo("America/Chicago")
 FTTS_DAY = ((9, 0), (10, 30))
 LINEUP_FROM, LINEUP_TO = 60, 15          # minutes before kickoff
@@ -124,6 +129,41 @@ def ftts_windows(now, ledger=None):
     return out
 
 
+def nba_tips(now, games=None):
+    """Tip-offs of labelled, unplayed NBA games within the next day (data/nba_pace.json)."""
+    if games is None:
+        try:
+            with open(os.path.join(ROOT, "data", "nba_pace.json")) as f:
+                games = json.load(f).get("games") or []
+        except (OSError, ValueError):
+            return []
+    out = set()
+    for g in games:
+        if g.get("completed") or g.get("skipped") or not g.get("start"):
+            continue
+        try:
+            t = dt.datetime.fromisoformat(str(g["start"]).replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        if now - dt.timedelta(hours=2) <= t <= now + dt.timedelta(days=1):
+            out.add(t.astimezone(dt.timezone.utc))
+    return sorted(out)
+
+
+def nba_windows(now, games=None):
+    """One NBA label-rules window per tip-off: 90 to 20 minutes before, read every 30 minutes."""
+    return [dict(lane="nba_rules", label=f"NBA rules {t:%H:%M}Z tip", series=(), close=t,
+                 start=t - dt.timedelta(minutes=NBA_FROM), end=t - dt.timedelta(minutes=NBA_TO),
+                 every=READ_EVERY) for t in nba_tips(now, games)]
+
+
+def culture_windows(now):
+    """The culture lanes read once an hour, every hour (culture.yml)."""
+    h = now.replace(minute=0, second=0, microsecond=0)
+    return [dict(lane="culture", label=f"Culture {h:%H}:00Z", series=(), close=h + dt.timedelta(hours=1),
+                 start=h, end=h + dt.timedelta(hours=1), every=dt.timedelta(hours=1), last_ask=dt.timedelta(0))]
+
+
 def ftts_day_full(day, ledger=None):
     """True once BOTH No lanes hold FTTS_NO_PICKS bets for that Central day."""
     n = {"ftts_no_70_80": 0, "ftts_no_60_70": 0}
@@ -133,7 +173,7 @@ def ftts_day_full(day, ledger=None):
     return all(v >= S.FTTS_NO_PICKS for v in n.values())
 
 
-def windows(now, ledger=None):
+def windows(now, ledger=None, games=None):
     """Every lane's windows whose close is within a day of `now`, soonest start first. UTC."""
     if now.tzinfo is None:
         now = now.replace(tzinfo=dt.timezone.utc)
@@ -159,6 +199,8 @@ def windows(now, ledger=None):
                 start=w["start"].astimezone(dt.timezone.utc),
                 end=w["end"].astimezone(dt.timezone.utc)) for w in out]
     out += ftts_windows(now, ledger)
+    out += nba_windows(now, games)
+    out += culture_windows(now)
     return sorted(out, key=lambda w: (w["start"], w["lane"]))
 
 
@@ -189,10 +231,10 @@ def entered_series(lane, close, ledger=None):
     return got
 
 
-def due(now, ledger=None):
+def due(now, ledger=None, games=None):
     """[(window, read number)] for every read to ask for at `now`."""
     out = []
-    for w in windows(now, ledger):
+    for w in windows(now, ledger, games):
         if not (w["start"] <= now <= w["end"] - w.get("last_ask", LAST_ASK)):
             continue
         k = int((now - w["start"]) / w.get("every", READ_EVERY))
@@ -206,10 +248,10 @@ def due(now, ledger=None):
     return out
 
 
-def stamp_lines(now, ledger=None):
+def stamp_lines(now, ledger=None, games=None):
     """{stamp file: stamp text} for the reads due now. One file can serve several windows."""
     lines = {}
-    for w, k in due(now, ledger):
+    for w, k in due(now, ledger, games):
         text = f"{w['lane']} {w['close'].isoformat()} read {k}"
         path = STAMP[w["lane"]]
         lines[path] = "\n".join(sorted(set((lines.get(path) or "").splitlines()) | {text})).strip()

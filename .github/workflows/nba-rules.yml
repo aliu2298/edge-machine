@@ -4,6 +4,12 @@ on:
     # Every 15 minutes: a rule enters 20-90 minutes before tip-off, and settles on Kalshi's result.
     - cron: '*/15 * * * *'
   workflow_dispatch:
+  # The VPS asks for each read by pushing a stamp (scripts/vps_window_requests.sh,
+  # lane_windows.py): GitHub's cron alone never fired this workflow (2026-10-17).
+  push:
+    branches: [main]
+    paths:
+      - "data/nba_window/**"
 permissions:
   contents: write
 concurrency:
