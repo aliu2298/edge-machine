@@ -74,8 +74,12 @@ if playwright is not None:
                 assert page.locator("[aria-current='page']").count() == 1, (sport, width)
                 # Phone pills are 44px touch targets; from 641px the pointer shell is shorter.
                 tap = 44 if width <= 640 else 24
+                # From 641px a market page is named by the Markets menu button (2026-10-16); the
+                # bar, not the menu wrapper, is the box every pill must sit inside.
                 assert page.locator("nav.main [aria-current='page']").evaluate("""(e, tap) => {
-                    const r = e.getBoundingClientRect(), n = e.parentElement.getBoundingClientRect();
+                    const btn = e.closest('.nav-group') && innerWidth > 640 ? e.closest('.nav-group').querySelector('.nav-more') : null;
+                    if (btn) e = btn;
+                    const r = e.getBoundingClientRect(), n = e.closest('nav.main').getBoundingClientRect();
                     return r.left >= n.left - 1 && r.right <= n.right + 1 && r.height >= tap
                         && r.left >= -1 && r.right <= innerWidth + 1;
                 }""", tap), (sport, width)
@@ -85,10 +89,12 @@ if playwright is not None:
                 assert page.locator(".page-menu").count() == 0 and page.locator("nav.sports").count() == 0
                 assert page.locator("nav.main a").count() == len(site_chrome.PAGES)
                 assert page.locator("nav.main a").evaluate_all(
-                    "(links, tap) => links.every(e => e.getBoundingClientRect().height >= tap)", tap)
+                    "(links, tap) => links.filter(e => innerWidth <= 640 || !e.closest('.nav-menu'))"
+                    ".every(e => e.getBoundingClientRect().height >= tap)", tap)
                 # Every page pill can be brought into view, on a phone by scrolling the row.
-                assert page.locator("nav.main a").evaluate_all("""links => links.every(a => {
-                    const nav = a.parentElement;
+                assert page.locator("nav.main a").evaluate_all("""links => links
+                    .filter(a => innerWidth <= 640 || !a.closest('.nav-menu')).every(a => {
+                    const nav = a.closest('nav.main');
                     a.scrollIntoView({block: "nearest", inline: "nearest"});
                     const r = a.getBoundingClientRect(), n = nav.getBoundingClientRect();
                     return r.left >= n.left - 1 && r.right <= n.right + 1 && r.left >= -1 && r.right <= innerWidth + 1;
