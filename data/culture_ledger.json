@@ -2,15 +2,15 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-17T15:00:12.623576+00:00",
-   "last_success": "2026-10-17T15:00:12.623576+00:00",
+   "last_run": "2026-10-17T15:57:07.900347+00:00",
+   "last_success": "2026-10-17T15:57:07.900347+00:00",
    "observations": {
-    "at": "2026-10-17T15:00:12.623576+00:00",
+    "at": "2026-10-17T15:57:07.900347+00:00",
     "events": 874,
     "reasons": {
-     "no quote or spread too wide": 178,
+     "no quote or spread too wide": 177,
      "not active": 694,
-     "outside the band": 29,
+     "outside the band": 30,
      "outside the entry window": 11279
     }
    },
@@ -47,16 +47,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-17T15:00:12.623576+00:00",
-   "last_success": "2026-10-17T15:00:12.623576+00:00",
+   "last_run": "2026-10-17T15:57:07.900347+00:00",
+   "last_success": "2026-10-17T15:57:07.900347+00:00",
    "observations": {
-    "at": "2026-10-17T15:00:12.623576+00:00",
+    "at": "2026-10-17T15:57:07.900347+00:00",
     "events": 874,
     "reasons": {
-     "in band": 4,
-     "no quote or spread too wide": 340,
+     "in band": 2,
+     "no quote or spread too wide": 339,
      "not active": 694,
-     "outside the band": 113,
+     "outside the band": 116,
      "outside the entry window": 11029
     }
    },
@@ -121,16 +121,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-17T15:00:12.623576+00:00",
-   "last_success": "2026-10-17T15:00:12.623576+00:00",
+   "last_run": "2026-10-17T15:57:07.900347+00:00",
+   "last_success": "2026-10-17T15:57:07.900347+00:00",
    "observations": {
-    "at": "2026-10-17T15:00:12.623576+00:00",
+    "at": "2026-10-17T15:57:07.900347+00:00",
     "events": 874,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 42,
-     "edge 5c+": 10,
-     "edge under 5c": 3,
-     "no quote or spread too wide": 35
+     "already near-certain (under 10c or over 90c)": 40,
+     "edge 5c+": 9,
+     "edge under 5c": 5,
+     "no quote or spread too wide": 36
     }
    },
    "picks": [
@@ -378,13 +378,14 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-17T15:00:12.623576+00:00",
-   "last_success": "2026-10-17T15:00:12.623576+00:00",
+   "last_run": "2026-10-17T15:57:07.900347+00:00",
+   "last_success": "2026-10-17T15:57:07.900347+00:00",
    "observations": {
-    "at": "2026-10-17T15:00:12.623576+00:00",
+    "at": "2026-10-17T15:57:07.900347+00:00",
     "events": 874,
     "reasons": {
-     "edge 5c+": 8,
+     "edge 5c+": 7,
+     "edge under 5c": 1,
      "under 20 reviews counted": 11
     }
    },
@@ -639,6 +640,16 @@
    "at": "2026-10-17T11:00:12.509694+00:00",
    "days": []
   },
+  "Stupid Question": {
+   "at": "2026-10-17T15:57:07.900347+00:00",
+   "days": [
+    "2026-07-27",
+    "2026-08-31",
+    "2026-09-09",
+    "2026-10-02",
+    "2026-10-05"
+   ]
+  },
   "TDS / Trump Derangement Syndrome": {
    "at": "2026-10-17T13:00:13.350386+00:00",
    "days": [
@@ -677,6 +688,13 @@
   "Zacharia": {
    "at": "2026-10-17T13:00:13.350386+00:00",
    "days": []
+  },
+  "Zohran / Mamdani": {
+   "at": "2026-10-17T15:57:07.900347+00:00",
+   "days": [
+    "2026-07-29",
+    "2026-08-14"
+   ]
   }
  }
 }
