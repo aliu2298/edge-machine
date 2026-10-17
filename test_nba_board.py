@@ -435,7 +435,7 @@ ok(nba_tab is not None and 'aria-current="page"' in nba_tab.group(0)
    and main_nav.count('aria-current="page"') == 1 and HTML.count('<nav class="main"') == 1,
    "only the NBA pill is current")
 ok('<script src="./sports.js"></script>' in HTML, "the NBA page still loads sports.js")
-ok('<nav class="toc" aria-label="On this page"><a href="#matchups">Upcoming</a><a href="#graded">Results</a><a href="#teams">Teams</a></nav>' in HTML
+ok('<nav class="toc" aria-label="On this page"><a href="#matchups">Upcoming</a><a href="#rules">Rules</a><a href="#graded">Results</a><a href="#teams">Teams</a></nav>' in HTML
    and "nba-local-nav" not in HTML,
    "the Upcoming / Results / Teams jump pills are the shared sub-nav, not a local pill bar")
 head = HTML.split('<section id="matchups">', 1)[0]
@@ -462,7 +462,7 @@ ok("button.nba-more" in js and "aria-expanded" in js, "sports.js wires the row c
 
 labelled = HTML
 ok(HTML.count('data-l=""') >= 1 and 'data-l="" data-l=' not in HTML
-   and 'data-l="1Q"' in HTML and HTML.count("<thead>") == 3,
+   and 'data-l="1Q"' in HTML and HTML.count("<thead>") == 5,      # + the Rules section's two tables (2026-10-17)
    "the page names each column for the phone cards and leaves the detail cell unlabelled")
 ok(sandbox_build.label_cells(HTML) == HTML, "labelling the page again changes nothing")
 

@@ -37,7 +37,9 @@ jobs:
     timeout-minutes: 15
 
     env:
-      STOP_AFTER: "2026-10-20"
+      # Extended 2026-10-17 by the owner: the seven NBA label rules (nba_rules.py) read these
+      # rolling labels through the regular season. Known weakness kept on purpose: WINDOW=5.
+      STOP_AFTER: "2027-06-30"
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
