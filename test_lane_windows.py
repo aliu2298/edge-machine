@@ -23,7 +23,7 @@ def at(y, mo, d, h, mi):
 
 def win(now, lane, label_part):
     """The next window of that lane whose close is still ahead of `now`."""
-    return next(w for w in W.windows(now, ledger={"quotes": []}) if w["lane"] == lane and label_part in w["label"]
+    return next(w for w in W.windows(now, ledger={"quotes": []}, games=[], fixtures=[]) if w["lane"] == lane and label_part in w["label"]
                 and w["close"] > now)
 
 
@@ -55,7 +55,7 @@ print("\nweekday and calendar rules")
 sat = at(2026, 10, 17, 12, 0)
 # An empty ledger: the lineup windows come from the real ledger's kickoffs, which this test must
 # not depend on (it read real Oct 17 fixtures once they were logged).
-lanes_sat = {(w["lane"], w["label"]) for w in W.windows(sat, ledger={"quotes": []}, games=[])
+lanes_sat = {(w["lane"], w["label"]) for w in W.windows(sat, ledger={"quotes": []}, games=[], fixtures=[])
              if w["close"].date() == dt.date(2026, 10, 17) and w["lane"] != "culture"}
 check("Saturday: crypto, gas/diesel and the first-to-score NO pick, no Treasury, index or commodity",
       sorted(l for l, _ in lanes_sat), ["crypto_fav_band", "econ_daily", "econ_daily", "ftts_no"])
@@ -63,10 +63,10 @@ check("Saturday: crypto, gas/diesel and the first-to-score NO pick, no Treasury,
 print("\nup to three reads, 30 minutes apart, none in the last 10 minutes")
 for minute, want in ((29, [1]), (35, [2]), (65, [3]), (82, []), (95, [])):
     t = at(2026, 10, 13, 17, 30) + dt.timedelta(minutes=minute - 0)
-    got = sorted(k for w, k in W.due(t, ledger={"quotes": []}) if w["lane"] == "crypto_fav_band")
+    got = sorted(k for w, k in W.due(t, ledger={"quotes": []}, games=[], fixtures=[]) if w["lane"] == "crypto_fav_band")
     check(f"crypto at window start + {minute} min -> reads {want}", got, want)
 check("before the window: nothing due",
-      [k for w, k in W.due(at(2026, 10, 13, 17, 29), ledger={"quotes": []}) if w["lane"] == "crypto_fav_band"], [])
+      [k for w, k in W.due(at(2026, 10, 13, 17, 29), ledger={"quotes": []}, games=[], fixtures=[]) if w["lane"] == "crypto_fav_band"], [])
 
 print("\na later read is not asked for once every series of that close holds an entry")
 coins = sorted(S.COINS)
@@ -76,22 +76,22 @@ allc = {"quotes": [dict(source="crypto_fav_band", bet=True, market_id=f"{c}-26OC
                    for c in coins]}
 t = at(2026, 10, 13, 18, 5)
 check("two of five coins entered: read 2 is still due",
-      [k for w, k in W.due(t, some) if w["lane"] == "crypto_fav_band"], [2])
+      [k for w, k in W.due(t, some, [], []) if w["lane"] == "crypto_fav_band"], [2])
 check("all five entered: no read is asked for",
-      [k for w, k in W.due(t, allc) if w["lane"] == "crypto_fav_band"], [])
+      [k for w, k in W.due(t, allc, [], []) if w["lane"] == "crypto_fav_band"], [])
 check("an entry on another day's close does not count",
       [k for w, k in W.due(t, {"quotes": [dict(q, market_id=q["market_id"].replace("1317", "1217"))
-                                           for q in allc["quotes"]]}) if w["lane"] == "crypto_fav_band"], [2])
+                                           for q in allc["quotes"]]}, [], []) if w["lane"] == "crypto_fav_band"], [2])
 
 print("\nstamps: one file per workflow, a crypto and a commodity read in one push")
-lines = W.stamp_lines(at(2026, 10, 13, 17, 35), ledger={"quotes": []}, games=[])
+lines = W.stamp_lines(at(2026, 10, 13, 17, 35), ledger={"quotes": []}, games=[], fixtures=[])
 lines.pop("data/culture_window/request.txt", None)      # the hourly culture read (2026-10-17), tested below
 check("17:35Z: crypto and commodities stamps both written, and the index window's daily stamp",
       sorted(lines), ["data/commodities_window/request.txt", "data/crypto_window/request.txt",
                       "data/daily_window/request.txt"])
 check("the stamp names lane, close and read", lines["data/crypto_window/request.txt"],
       "crypto_fav_band 2026-10-13T21:00:00+00:00 read 1")
-lines = W.stamp_lines(at(2026, 10, 13, 16, 35), ledger={"quotes": []})
+lines = W.stamp_lines(at(2026, 10, 13, 16, 35), ledger={"quotes": []}, games=[], fixtures=[])
 check("16:35Z: the Treasury and index reads share the daily stamp",
       lines["data/daily_window/request.txt"].count("finance_daily"), 2)
 
@@ -99,15 +99,32 @@ check("16:35Z: the Treasury and index reads share the daily stamp",
 print("\nNBA rules and culture reads (2026-10-17)")
 nba = [dict(start="2026-10-20T19:00Z", completed=False), dict(start="2026-10-20T23:30Z", completed=False),
        dict(start="2026-10-20T20:00Z", completed=True)]
-got = lambda h, m: sorted(k for w, k in W.due(at(2026, 10, 20, h, m), {"quotes": []}, nba) if w["lane"] == "nba_rules")
+got = lambda h, m: sorted(k for w, k in W.due(at(2026, 10, 20, h, m), {"quotes": []}, nba, []) if w["lane"] == "nba_rules")
 check("a 19:00Z tip: read 1 at 17:35, read 2 at 18:05, nothing at 18:45 (20 min out) or 16:00",
       (got(17, 35), got(18, 5), got(18, 45), got(16, 0)), ([1], [2], [], []))
 check("a finished game asks for nothing", [w for w in W.nba_windows(at(2026, 10, 20, 18, 30), nba) if w["close"].hour == 20], [])
-cl = [k for w, k in W.due(at(2026, 10, 20, 9, 41), {"quotes": []}, []) if w["lane"] == "culture"]
+cl = [k for w, k in W.due(at(2026, 10, 20, 9, 41), {"quotes": []}, [], []) if w["lane"] == "culture"]
 check("culture is read once every hour", cl, [1])
-st = W.stamp_lines(at(2026, 10, 20, 17, 35), {"quotes": []}, nba)
+st = W.stamp_lines(at(2026, 10, 20, 17, 35), {"quotes": []}, nba, [])
 check("both go to their own stamp files",
       ("data/nba_window/request.txt" in st, "data/culture_window/request.txt" in st), (True, True))
+
+print("\nsoccer label rules (2026-10-17): one window per kickoff, from the fixtures passed in")
+soc = [dict(kickoff="2026-10-18T14:00Z", league="Premier League", played=False),
+       dict(kickoff="2026-10-18T14:00Z", league="Bundesliga", played=False),
+       dict(kickoff="2026-10-18T16:00Z", league="Liga MX", played=False),
+       dict(kickoff="2026-10-18T18:00Z", league="MLS", played=True)]
+sg = lambda h, m: sorted(k for w, k in W.due(at(2026, 10, 18, h, m), {"quotes": []}, [], soc) if w["lane"] == "soccer_rules")
+check("two 14:00Z kickoffs share one window: read 1 at 12:35, read 2 at 13:05, nothing at 13:45",
+      (sg(12, 35), sg(13, 5), sg(13, 45)), ([1], [2], []))
+check("an untracked league or a played match asks for nothing", (sg(14, 35), sg(16, 35)), ([], []))
+check("the soccer stamp file", W.stamp_lines(at(2026, 10, 18, 12, 35), {"quotes": []}, [], soc).get("data/soccer_rules_window/request.txt"),
+      "soccer_rules 2026-10-18T14:00:00+00:00 read 1")
+led = {"quotes": [dict(source="goals_market", event="KXEPLTOTAL-26OCT18BOUSUN", start="2026-10-18T14:00:00+00:00"),
+                  dict(source="goals_market", event="KXLIGAMXTOTAL-26OCT18AMECRU", start="2026-10-18T16:00:00+00:00")]}
+W._fixtures_cache = lambda: []          # the VPS: no fixtures cache, and never the live file here
+check("without a fixtures cache (the VPS) the tracker's goals_market kickoffs stand in, tracked series only",
+      [t.isoformat() for t in W.soccer_kickoffs(at(2026, 10, 18, 12, 0), None, led)], ["2026-10-18T14:00:00+00:00"])
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
