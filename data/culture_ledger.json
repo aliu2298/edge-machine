@@ -2,15 +2,15 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-17T11:00:12.509694+00:00",
-   "last_success": "2026-10-17T11:00:12.509694+00:00",
+   "last_run": "2026-10-17T11:45:22.042095+00:00",
+   "last_success": "2026-10-17T11:45:22.042095+00:00",
    "observations": {
-    "at": "2026-10-17T11:00:12.509694+00:00",
+    "at": "2026-10-17T11:45:22.042095+00:00",
     "events": 875,
     "reasons": {
-     "no quote or spread too wide": 59,
+     "no quote or spread too wide": 60,
      "not active": 692,
-     "outside the band": 12,
+     "outside the band": 11,
      "outside the entry window": 11398
     }
    },
@@ -47,10 +47,10 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-17T11:00:12.509694+00:00",
-   "last_success": "2026-10-17T11:00:12.509694+00:00",
+   "last_run": "2026-10-17T11:45:22.042095+00:00",
+   "last_success": "2026-10-17T11:45:22.042095+00:00",
    "observations": {
-    "at": "2026-10-17T11:00:12.509694+00:00",
+    "at": "2026-10-17T11:45:22.042095+00:00",
     "events": 875,
     "reasons": {
      "no quote or spread too wide": 276,
@@ -78,10 +78,10 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-17T11:00:12.509694+00:00",
-   "last_success": "2026-10-17T11:00:12.509694+00:00",
+   "last_run": "2026-10-17T11:45:22.042095+00:00",
+   "last_success": "2026-10-17T11:45:22.042095+00:00",
    "observations": {
-    "at": "2026-10-17T11:00:12.509694+00:00",
+    "at": "2026-10-17T11:45:22.042095+00:00",
     "events": 875,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 43,
@@ -314,15 +314,31 @@
      "side": "no",
      "status": "open",
      "title": "South Africa / South African"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-11-01T15:00:00Z",
+     "detail": "P(said) 0.00 \u00b7 said on 0 of the last 84 days, 15.1 days left \u00b7 edge +0.09",
+     "edge": 0.0937,
+     "event": "KXTRUMPSAYMONTH-26NOV01",
+     "id": "KXTRUMPSAYMONTH-26NOV01-UFO",
+     "logged": "2026-10-17T11:45:22.042095+00:00",
+     "model": 0.0,
+     "name": "What will Trump say in October?",
+     "price": 0.9,
+     "series": "KXTRUMPSAYMONTH",
+     "side": "no",
+     "status": "open",
+     "title": "UFO / UAP"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-17T11:00:12.509694+00:00",
-   "last_success": "2026-10-17T11:00:12.509694+00:00",
+   "last_run": "2026-10-17T11:45:22.042095+00:00",
+   "last_success": "2026-10-17T11:45:22.042095+00:00",
    "observations": {
-    "at": "2026-10-17T11:00:12.509694+00:00",
+    "at": "2026-10-17T11:45:22.042095+00:00",
     "events": 875,
     "reasons": {
      "collecting review pace (12h of snapshots)": 9,
@@ -473,6 +489,10 @@
     "2026-08-20",
     "2026-08-30"
    ]
+  },
+  "UFO / UAP": {
+   "at": "2026-10-17T11:45:22.042095+00:00",
+   "days": []
   },
   "Zacharia": {
    "at": "2026-10-17T07:00:12.848136+00:00",
