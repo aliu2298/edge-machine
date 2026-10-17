@@ -62,8 +62,20 @@ STAMP = {
     # schedule missed five hours in a row; the NBA rules need a read 20-90 min before each tip).
     "nba_rules": "data/nba_window/request.txt",
     "culture": "data/culture_window/request.txt",
+    # 2026-10-17: the 21 soccer total-goals label rules (soccer_rules.py), 90-20 min before kickoff.
+    "soccer_rules": "data/soccer_rules_window/request.txt",
 }
 NBA_FROM, NBA_TO = 90, 20                # minutes before tip-off (nba_rules.WINDOW_MIN)
+SOCCER_FROM, SOCCER_TO = 90, 20          # minutes before kickoff (soccer_rules.WINDOW_MIN)
+# soccer_rules.SERIES: ESPN league -> Kalshi match total series. Copied, not imported, so this
+# module stays light on the VPS; test_soccer_rules.py checks the two agree.
+SOCCER_SERIES = {
+    "Premier League": "KXEPLTOTAL", "La Liga": "KXLALIGATOTAL", "Bundesliga": "KXBUNDESLIGATOTAL",
+    "Serie A": "KXSERIEATOTAL", "Ligue 1": "KXLIGUE1TOTAL", "Eredivisie": "KXEREDIVISIETOTAL",
+    "Scottish Premiership": "KXSCOTTISHPREMTOTAL", "MLS": "KXMLSTOTAL",
+    "Saudi Pro League": "KXSAUDIPLTOTAL", "Turkish Super Lig": "KXSUPERLIGTOTAL",
+    "Champions League": "KXUCLTOTAL", "UEFA Nations League": "KXUEFANLTOTAL",
+}
 CT = ZoneInfo("America/Chicago")
 FTTS_DAY = ((9, 0), (10, 30))
 LINEUP_FROM, LINEUP_TO = 60, 15          # minutes before kickoff
@@ -157,6 +169,54 @@ def nba_windows(now, games=None):
                  every=READ_EVERY) for t in nba_tips(now, games)]
 
 
+def _when(v):
+    try:
+        t = dt.datetime.fromisoformat(str(v).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return t.astimezone(dt.timezone.utc) if t.tzinfo else None
+
+
+def _fixtures_cache():
+    try:
+        with open(os.path.join(ROOT, "data", "streaks_raw.json")) as f:
+            return json.load(f).get("fixtures") or []
+    except (OSError, ValueError):
+        return []
+
+
+def soccer_kickoffs(now, fixtures=None, ledger=None):
+    """Kickoffs within the next day of unplayed matches in the soccer rules' leagues.
+
+    From the ESPN fixtures cache (data/streaks_raw.json) when there is one. The VPS clone has
+    no cache (it is not committed), so the tracker's own goals_market quotes, which log every
+    Kalshi match total with ESPN's kickoff, fill in from data/sandbox_ledger.json. Tests pass
+    `fixtures` (and `ledger`) and read neither file."""
+    starts = []
+    if fixtures is None:
+        fixtures = _fixtures_cache()
+        series = tuple(s + "-" for s in SOCCER_SERIES.values())
+        for q in (_load_ledger(ledger).get("quotes") or []):
+            if q.get("source") == "goals_market" and str(q.get("event") or "").startswith(series):
+                starts.append(q.get("start"))
+    for f in fixtures:
+        if not f.get("played") and f.get("league") in SOCCER_SERIES:
+            starts.append(f.get("kickoff"))
+    out = set()
+    for v in starts:
+        t = _when(v) if v else None
+        if t and now - dt.timedelta(hours=2) <= t <= now + dt.timedelta(days=1):
+            out.add(t)
+    return sorted(out)
+
+
+def soccer_windows(now, fixtures=None, ledger=None):
+    """One soccer label-rules window per kickoff: 90 to 20 minutes before, read every 30 minutes."""
+    return [dict(lane="soccer_rules", label=f"Soccer rules {t:%H:%M}Z kickoff", series=(), close=t,
+                 start=t - dt.timedelta(minutes=SOCCER_FROM), end=t - dt.timedelta(minutes=SOCCER_TO),
+                 every=READ_EVERY) for t in soccer_kickoffs(now, fixtures, ledger)]
+
+
 def culture_windows(now):
     """The culture lanes read once an hour, every hour (culture.yml)."""
     h = now.replace(minute=0, second=0, microsecond=0)
@@ -173,7 +233,7 @@ def ftts_day_full(day, ledger=None):
     return all(v >= S.FTTS_NO_PICKS for v in n.values())
 
 
-def windows(now, ledger=None, games=None):
+def windows(now, ledger=None, games=None, fixtures=None):
     """Every lane's windows whose close is within a day of `now`, soonest start first. UTC."""
     if now.tzinfo is None:
         now = now.replace(tzinfo=dt.timezone.utc)
@@ -200,6 +260,7 @@ def windows(now, ledger=None, games=None):
                 end=w["end"].astimezone(dt.timezone.utc)) for w in out]
     out += ftts_windows(now, ledger)
     out += nba_windows(now, games)
+    out += soccer_windows(now, fixtures, ledger)
     out += culture_windows(now)
     return sorted(out, key=lambda w: (w["start"], w["lane"]))
 
@@ -231,10 +292,10 @@ def entered_series(lane, close, ledger=None):
     return got
 
 
-def due(now, ledger=None, games=None):
+def due(now, ledger=None, games=None, fixtures=None):
     """[(window, read number)] for every read to ask for at `now`."""
     out = []
-    for w in windows(now, ledger, games):
+    for w in windows(now, ledger, games, fixtures):
         if not (w["start"] <= now <= w["end"] - w.get("last_ask", LAST_ASK)):
             continue
         k = int((now - w["start"]) / w.get("every", READ_EVERY))
@@ -248,10 +309,10 @@ def due(now, ledger=None, games=None):
     return out
 
 
-def stamp_lines(now, ledger=None, games=None):
+def stamp_lines(now, ledger=None, games=None, fixtures=None):
     """{stamp file: stamp text} for the reads due now. One file can serve several windows."""
     lines = {}
-    for w, k in due(now, ledger, games):
+    for w, k in due(now, ledger, games, fixtures):
         text = f"{w['lane']} {w['close'].isoformat()} read {k}"
         path = STAMP[w["lane"]]
         lines[path] = "\n".join(sorted(set((lines.get(path) or "").splitlines()) | {text})).strip()

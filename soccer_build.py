@@ -53,7 +53,17 @@ def build(d=None, st=None, now=None):
         venue="Kalshi", rows=rows, events=soccer_cards.events,
         rule_name=soccer_cards._rule_name, market=soccer_cards.market,
         recent=soccer_cards.recent_html, method=method(idle))
-    return SP.page(sp, d, st, now, rows=rows, idle=idle)
+    html = SP.page(sp, d, st, now, rows=rows, idle=idle)
+    return html.replace("<footer>", _rules_section() + "\n<footer>", 1)
+
+
+def _rules_section():
+    """The 21 Sandbox total-goals label rules (soccer_rules_build.py, 2026-10-17). Never breaks the page."""
+    try:
+        import soccer_rules_build
+        return soccer_rules_build.section()
+    except Exception as exc:                                    # noqa: BLE001
+        return f'<section id="label-rules"><p class="sm mut">Rules section unavailable ({type(exc).__name__}).</p></section>'
 
 
 def main():
