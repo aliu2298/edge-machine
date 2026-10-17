@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-17T07:12:08.502601+00:00",
-   "last_success": "2026-10-17T07:12:08.502601+00:00",
+   "last_run": "2026-10-17T08:00:12.141319+00:00",
+   "last_success": "2026-10-17T08:00:12.141319+00:00",
    "observations": {
-    "at": "2026-10-17T07:12:08.502601+00:00",
+    "at": "2026-10-17T08:00:12.141319+00:00",
     "events": 875,
     "reasons": {
      "no quote or spread too wide": 59,
@@ -47,15 +47,15 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-17T07:12:08.502601+00:00",
-   "last_success": "2026-10-17T07:12:08.502601+00:00",
+   "last_run": "2026-10-17T08:00:12.141319+00:00",
+   "last_success": "2026-10-17T08:00:12.141319+00:00",
    "observations": {
-    "at": "2026-10-17T07:12:08.502601+00:00",
+    "at": "2026-10-17T08:00:12.141319+00:00",
     "events": 875,
     "reasons": {
-     "no quote or spread too wide": 281,
+     "no quote or spread too wide": 278,
      "not active": 692,
-     "outside the band": 58,
+     "outside the band": 61,
      "outside the entry window": 11130
     }
    },
@@ -78,16 +78,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-17T07:12:08.502601+00:00",
-   "last_success": "2026-10-17T07:12:08.502601+00:00",
+   "last_run": "2026-10-17T08:00:12.141319+00:00",
+   "last_success": "2026-10-17T08:00:12.141319+00:00",
    "observations": {
-    "at": "2026-10-17T07:12:08.502601+00:00",
+    "at": "2026-10-17T08:00:12.141319+00:00",
     "events": 875,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 44,
-     "edge 5c+": 10,
+     "already near-certain (under 10c or over 90c)": 43,
+     "edge 5c+": 7,
      "edge under 5c": 3,
-     "no quote or spread too wide": 33
+     "no quote or spread too wide": 37
     }
    },
    "picks": [
@@ -266,15 +266,31 @@
      "side": "no",
      "status": "open",
      "title": "Zacharia"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-11-01T15:00:00Z",
+     "detail": "P(said) 0.98 \u00b7 said already this window \u00b7 edge +0.81",
+     "edge": 0.8106,
+     "event": "KXTRUMPSAYCOMPANY-26NOV01",
+     "id": "KXTRUMPSAYCOMPANY-26NOV01-MA",
+     "logged": "2026-10-17T08:00:12.141319+00:00",
+     "model": 0.98,
+     "name": "What companies will Trump say in October?",
+     "price": 0.16,
+     "series": "KXTRUMPSAYCOMPANY",
+     "side": "yes",
+     "status": "open",
+     "title": "Mastercard / MA"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-17T07:12:08.502601+00:00",
-   "last_success": "2026-10-17T07:12:08.502601+00:00",
+   "last_run": "2026-10-17T08:00:12.141319+00:00",
+   "last_success": "2026-10-17T08:00:12.141319+00:00",
    "observations": {
-    "at": "2026-10-17T07:12:08.502601+00:00",
+    "at": "2026-10-17T08:00:12.141319+00:00",
     "events": 875,
     "reasons": {
      "collecting review pace (12h of snapshots)": 9,
@@ -328,13 +344,13 @@
    ]
   },
   "Ceasefire": {
-   "at": "2026-10-17T01:53:04.858915+00:00",
+   "at": "2026-10-17T08:00:12.141319+00:00",
    "days": [
     "2026-09-22"
    ]
   },
   "Cuba / Cuban": {
-   "at": "2026-10-17T01:53:04.858915+00:00",
+   "at": "2026-10-17T08:00:12.141319+00:00",
    "days": [
     "2026-07-29",
     "2026-08-10",
@@ -357,12 +373,18 @@
    ]
   },
   "JPMorgan / JPM": {
-   "at": "2026-10-17T01:53:04.858915+00:00",
+   "at": "2026-10-17T08:00:12.141319+00:00",
    "days": []
   },
   "Lisa Cook": {
    "at": "2026-10-17T01:53:04.858915+00:00",
    "days": []
+  },
+  "Mastercard / MA": {
+   "at": "2026-10-17T08:00:12.141319+00:00",
+   "days": [
+    "2026-10-01"
+   ]
   },
   "Nobel": {
    "at": "2026-10-17T02:08:03.723976+00:00",
@@ -375,7 +397,7 @@
    ]
   },
   "Peace in the Middle East": {
-   "at": "2026-10-17T01:53:04.858915+00:00",
+   "at": "2026-10-17T08:00:12.141319+00:00",
    "days": []
   },
   "TDS / Trump Derangement Syndrome": {
@@ -389,7 +411,7 @@
    ]
   },
   "Third Term": {
-   "at": "2026-10-17T01:53:04.858915+00:00",
+   "at": "2026-10-17T08:00:12.141319+00:00",
    "days": [
     "2026-09-18",
     "2026-10-01",
