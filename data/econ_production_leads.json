@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-17T10:51:48+00:00",
+ "board_built_at": "2026-10-17T14:14:20+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -110,6 +110,41 @@
    "source": "econ_daily_fav_band",
    "sport": "econ_daily",
    "status": "hit"
+  },
+  "2026-10-17|KXAAAGASDAL-26OCT17-3.9150|Above 3.9150 at the close \u00b7 Econ Daily favourite band": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-10-17",
+   "edge_at_log": null,
+   "first_seen": "2026-10-17",
+   "headline": "Above 3.9150 at the close",
+   "home": null,
+   "id": "2026-10-17|KXAAAGASDAL-26OCT17-3.9150|Above 3.9150 at the close \u00b7 Econ Daily favourite band",
+   "kickoff": "2026-10-17T03:59Z",
+   "lane": "production",
+   "league": "Econ Daily",
+   "match": "Alabama gas price",
+   "pair": "econ_daily_fav_band|econ_daily",
+   "price_at_log": 0.77,
+   "published_at": "2026-10-17T14:14:20+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Above 3.9150 at the close",
+    "event": "KXAAAGASDAL-26OCT17",
+    "market": "KXAAAGASDAL-26OCT17-3.9150",
+    "outcome": "Above 3.9150",
+    "outcome_side": "yes",
+    "price_at_log": 0.77,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "econ_daily_fav_band:KXAAAGASDAL-26OCT17-3.9150",
+   "source": "econ_daily_fav_band",
+   "sport": "econ_daily",
+   "status": "hit"
   }
  },
  "pairs": {
@@ -120,18 +155,18 @@
    "ready_at": "2026-10-15T03:48:37+00:00",
    "route": "moved by hand on 2026-10-14",
    "routing": {
-    "leads": 3,
+    "leads": 4,
     "problem": null,
-    "routed": 3,
+    "routed": 4,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 3,
-   "sandbox_roi": -0.0929,
-   "sandbox_roi_fee": -0.1094,
+   "sandbox_n": 4,
+   "sandbox_roi": 0.005,
+   "sandbox_roi_fee": -0.0125,
    "timing": {
     "late": [],
     "timed": 0,
@@ -143,5 +178,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-17T10:51:48+00:00"
+ "updated_at": "2026-10-17T14:14:20+00:00"
 }
