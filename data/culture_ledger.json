@@ -2,16 +2,16 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-18T03:00:14.015123+00:00",
-   "last_success": "2026-10-18T03:00:14.015123+00:00",
+   "last_run": "2026-10-18T04:00:13.057876+00:00",
+   "last_success": "2026-10-18T04:00:13.057876+00:00",
    "observations": {
-    "at": "2026-10-18T03:00:14.015123+00:00",
-    "events": 882,
+    "at": "2026-10-18T04:00:13.057876+00:00",
+    "events": 878,
     "reasons": {
-     "no quote or spread too wide": 117,
+     "no quote or spread too wide": 295,
      "not active": 694,
-     "outside the band": 30,
-     "outside the entry window": 11539
+     "outside the band": 33,
+     "outside the entry window": 11298
     }
    },
    "picks": [
@@ -53,17 +53,17 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-18T03:00:14.015123+00:00",
-   "last_success": "2026-10-18T03:00:14.015123+00:00",
+   "last_run": "2026-10-18T04:00:13.057876+00:00",
+   "last_success": "2026-10-18T04:00:13.057876+00:00",
    "observations": {
-    "at": "2026-10-18T03:00:14.015123+00:00",
-    "events": 882,
+    "at": "2026-10-18T04:00:13.057876+00:00",
+    "events": 878,
     "reasons": {
-     "in band": 3,
-     "no quote or spread too wide": 341,
+     "in band": 1,
+     "no quote or spread too wide": 437,
      "not active": 694,
-     "outside the band": 113,
-     "outside the entry window": 11229
+     "outside the band": 143,
+     "outside the entry window": 11045
     }
    },
    "picks": [
@@ -172,16 +172,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-18T03:00:14.015123+00:00",
-   "last_success": "2026-10-18T03:00:14.015123+00:00",
+   "last_run": "2026-10-18T04:00:13.057876+00:00",
+   "last_success": "2026-10-18T04:00:13.057876+00:00",
    "observations": {
-    "at": "2026-10-18T03:00:14.015123+00:00",
-    "events": 882,
+    "at": "2026-10-18T04:00:13.057876+00:00",
+    "events": 878,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 44,
-     "edge 5c+": 11,
-     "edge under 5c": 5,
-     "no quote or spread too wide": 30
+     "already near-certain (under 10c or over 90c)": 45,
+     "edge 5c+": 9,
+     "edge under 5c": 4,
+     "no quote or spread too wide": 32
     }
    },
    "picks": [
@@ -493,13 +493,14 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-18T03:00:14.015123+00:00",
-   "last_success": "2026-10-18T03:00:14.015123+00:00",
+   "last_run": "2026-10-18T04:00:13.057876+00:00",
+   "last_success": "2026-10-18T04:00:13.057876+00:00",
    "observations": {
-    "at": "2026-10-18T03:00:14.015123+00:00",
-    "events": 882,
+    "at": "2026-10-18T04:00:13.057876+00:00",
+    "events": 878,
     "reasons": {
-     "edge 5c+": 8,
+     "edge 5c+": 7,
+     "edge under 5c": 1,
      "under 20 reviews counted": 11
     }
    },
@@ -681,7 +682,7 @@
    ]
   },
   "BBC": {
-   "at": "2026-10-17T22:00:12.421777+00:00",
+   "at": "2026-10-18T04:00:13.057876+00:00",
    "days": [
     "2026-08-02",
     "2026-09-18"
@@ -721,7 +722,7 @@
    "days": []
   },
   "ExxonMobil / XOM": {
-   "at": "2026-10-17T22:00:12.421777+00:00",
+   "at": "2026-10-18T04:00:13.057876+00:00",
    "days": [
     "2026-08-03",
     "2026-09-02",
