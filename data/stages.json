@@ -1488,28 +1488,19 @@
    "pair": "team2_form_l10|soccer_team2",
    "reason": "moved by hand \u2014 ready from this run",
    "to": "ready"
+  },
+  {
+   "at": "2026-10-18T03:25:56+00:00",
+   "pair": "btts_form_l10_fade|soccer_btts",
+   "reason": "taken off the Production list by hand, record kept",
+   "to": "sandbox"
   }
  ],
  "pairs": {
   "btts_form_l10_fade|soccer_btts": {
-   "by_hand": "2026-10-16",
-   "entry": {
-    "base_roi": -0.0484,
-    "clv": -0.0227,
-    "clv_n": 11,
-    "n": 11,
-    "own_roi": 0.2321,
-    "roi": 0.2321,
-    "roi_fee": 0.18,
-    "span_days": 3.5104,
-    "weeks": 0,
-    "z": 0.5833
-   },
-   "entry_since": null,
-   "promoted_at": "2026-10-16T17:17:38+00:00",
-   "ready_at": "2026-10-16T17:17:38+00:00",
-   "ready_since": "2026-10-16T17:17:38+00:00",
-   "stage": "production"
+   "demoted_at": "2026-10-18T03:25:56+00:00",
+   "since": null,
+   "stage": "sandbox"
   },
   "bund_o35|soccer_u35": {
    "by_hand": "2026-10-08",

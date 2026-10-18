@@ -448,11 +448,25 @@ PAIR_OVERRIDES = {
     # team 2+ form (clubs) 7-2 on 9 (+12.1%), FTTS NO 70-80 5-1 on 6 (+10.2%), ESPN FPI NFL 4-4
     # on 8 (+28.5%). The first three NO claims are new to the feed: btts_no, win_no and ftts_no
     # (FEED_NO_TWIN / FEED_BETS), each the No of the exact contract the quote names.
-    "btts_form_l10_fade|soccer_btts": dict(moved_on="2026-10-16", production_at=None),
+    #   btts_form_l10_fade|soccer_btts — OUT 2026-10-17, back to the Sandbox, as asked (Olu,
+    #   at the 10+ entry review). Since its 2026-10-11 registration it is 8/21 at an average
+    #   price of 0.38, -2.2% after fees, z +0.03: exactly the price, no edge, and 1-7 live on
+    #   2026-10-17. Live $1 bets stop; it keeps its whole record (PAIR_REMOVALS), no reset,
+    #   no retune.
     "mls_fade_home|soccer_p05": dict(moved_on="2026-10-16", production_at=None),
     "team2_form_l10|soccer_team2": dict(moved_on="2026-10-16", production_at=None),
     "ftts_no_70_80|soccer_ftts": dict(moved_on="2026-10-16", production_at=None),
     "espn_fpi|nfl": dict(moved_on="2026-10-16", production_at=None),
+}
+
+
+# ---- Pairs taken off the list by hand that KEEP their record (2026-10-17) -----------------
+# A by-hand removal normally restarts the Sandbox clock at the removal, so the page reads the
+# pair as new and keeps the old record only as "removed". A pair listed here instead goes back
+# to the Sandbox on the clock it carried into Production (record_since: its reset, or None for
+# its whole record), so the record it was judged on keeps growing. demoted_at is still set.
+PAIR_REMOVALS = {
+    "btts_form_l10_fade|soccer_btts": dict(removed_on="2026-10-17", keep_record=True),
 }
 
 
@@ -3950,9 +3964,12 @@ def evaluate_stages(d, st, now=None, verbose=True):
                     # brand-new source, and sandbox_build's "removed" branch -- written for
                     # exactly this -- never fires. Only the automatic net was setting it, so
                     # every by-hand removal (olbg|boxing, pm_combo4) lost its history.
-                    pair = dict(stage="sandbox", since=now_s, demoted_at=now_s)
+                    keep = (PAIR_REMOVALS.get(key) or {}).get("keep_record")
+                    pair = dict(stage="sandbox", since=record_since(pair) if keep else now_s,
+                                demoted_at=now_s)
                     changes.append(dict(pair=key, to="sandbox", at=now_s,
-                                        reason="taken off the Production list by hand"))
+                                        reason="taken off the Production list by hand"
+                                               + (", record kept" if keep else "")))
                     st["pairs"][key] = pair
                     continue
                 a = assess(d, name, sport, since=qa_since(pair, sport, key), venues=TRADEABLE_VENUES)
