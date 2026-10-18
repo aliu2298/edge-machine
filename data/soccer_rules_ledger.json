@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-18T15:31:38.930953+00:00",
+ "last_run": "2026-10-18T16:31:09.436631+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -21,11 +21,14 @@
      "line": 3.5,
      "logged": "2026-10-18T12:01:23.487602+00:00",
      "match": "Bayer Leverkusen v SC Freiburg",
+     "payout": 0.0,
      "price": 0.45,
+     "profit": -100.0,
      "rule": "A2",
+     "settled": "2026-10-18T16:31:09.436631+00:00",
      "side": "yes",
      "start": "2026-10-18T13:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXBUNDESLIGATOTAL-26OCT18LEVSCF-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Bayer Leverkusen O+D- v SC Freiburg O+D- \u00b7 Over 3.5 YES 0.45"
@@ -122,11 +125,14 @@
      "line": 3.5,
      "logged": "2026-10-18T13:16:24.064774+00:00",
      "match": "FC Groningen v Ajax Amsterdam",
+     "payout": 1.0,
      "price": 0.51,
+     "profit": 89.58,
      "rule": "B3",
+     "settled": "2026-10-18T16:31:09.436631+00:00",
      "side": "yes",
      "start": "2026-10-18T14:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXEREDIVISIETOTAL-26OCT18GROAJA-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "FC Groningen O+D- v Ajax Amsterdam O+D- \u00b7 Over 3.5 YES 0.51"
@@ -182,7 +188,31 @@
    "picks": []
   },
   "C5": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.57,
+     "bid": 0.55,
+     "event": "KXSAUDIPLTOTAL-26OCT18FATKHA",
+     "group": "C",
+     "id": "C5:KXSAUDIPLTOTAL-26OCT18FATKHA",
+     "labels": {
+      "away": "O-D+",
+      "home": "O-D+"
+     },
+     "league": "Saudi Pro League",
+     "line": 2.5,
+     "logged": "2026-10-18T16:31:09.436631+00:00",
+     "match": "Al Fateh v Al Khaleej",
+     "price": 0.45,
+     "rule": "C5",
+     "side": "no",
+     "start": "2026-10-18T18:00Z",
+     "status": "open",
+     "ticker": "KXSAUDIPLTOTAL-26OCT18FATKHA-3",
+     "title": "Will over 2.5 goals be scored?",
+     "why": "Al Fateh O-D+ v Al Khaleej O-D+ \u00b7 Under 2.5 NO 0.45"
+    }
+   ]
   },
   "C6": {
    "picks": [
@@ -256,11 +286,14 @@
      "line": null,
      "logged": "2026-10-18T12:01:23.487602+00:00",
      "match": "Bayer Leverkusen v SC Freiburg",
+     "payout": 1.0,
      "price": 0.65,
+     "profit": 50.17,
      "rule": "D1",
+     "settled": "2026-10-18T16:31:09.436631+00:00",
      "side": "yes",
      "start": "2026-10-18T13:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXBUNDESLIGABTTS-26OCT18LEVSCF-BTTS",
      "title": "Both Teams To Score",
      "why": "Bayer Leverkusen O+D- v SC Freiburg O+D- \u00b7 BTTS YES 0.65"
@@ -279,11 +312,14 @@
      "line": null,
      "logged": "2026-10-18T12:31:23.720865+00:00",
      "match": "Celtic v Heart of Midlothian",
+     "payout": 1.0,
      "price": 0.62,
+     "profit": 57.11,
      "rule": "D1",
+     "settled": "2026-10-18T16:31:09.436631+00:00",
      "side": "yes",
      "start": "2026-10-18T14:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXSCOTTISHPREMBTTS-26OCT18CELHOM-BTTS",
      "title": "Both Teams To Score",
      "why": "Celtic O+D- v Heart of Midlothian O+D- \u00b7 BTTS YES 0.62"
@@ -438,6 +474,29 @@
      "ticker": "KXLIGUE1BTTS-26OCT18HACAUX-BTTS",
      "title": "Both Teams To Score",
      "why": "Le Havre AC O-D- v AJ Auxerre O+D+ \u00b7 BTTS NO 0.41"
+    },
+    {
+     "ask": 0.58,
+     "bid": 0.57,
+     "event": "KXEREDIVISIEBTTS-26OCT18TWEFCU",
+     "group": "BTTS",
+     "id": "D2:KXEREDIVISIEBTTS-26OCT18TWEFCU",
+     "labels": {
+      "away": "O+D+",
+      "home": "O-D-"
+     },
+     "league": "Eredivisie",
+     "line": null,
+     "logged": "2026-10-18T16:31:09.436631+00:00",
+     "match": "FC Twente v FC Utrecht",
+     "price": 0.43,
+     "rule": "D2",
+     "side": "no",
+     "start": "2026-10-18T18:00Z",
+     "status": "open",
+     "ticker": "KXEREDIVISIEBTTS-26OCT18TWEFCU-BTTS",
+     "title": "Both Teams To Score",
+     "why": "FC Twente O-D- v FC Utrecht O+D+ \u00b7 BTTS NO 0.43"
     }
    ]
   },
@@ -760,6 +819,14 @@
    "labelled": 3,
    "matched": 2,
    "new": 0
+  },
+  {
+   "at": "2026-10-18T16:31:09.436631+00:00",
+   "candidates": 2,
+   "due": 3,
+   "labelled": 3,
+   "matched": 2,
+   "new": 2
   }
  ],
  "version": "soccer-rules-v1"
