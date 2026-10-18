@@ -1217,41 +1217,6 @@
    "sport": "soccer_o15",
    "status": "hit"
   },
-  "2026-10-16|Eintracht Frankfurt|FC Cologne|Over 1.5 goals \u00b7 Over 1.5 form rule": {
-   "away": "FC Cologne",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-16",
-   "edge_at_log": null,
-   "first_seen": "2026-10-15",
-   "headline": "Over 1.5 goals",
-   "home": "Eintracht Frankfurt",
-   "id": "2026-10-16|Eintracht Frankfurt|FC Cologne|Over 1.5 goals \u00b7 Over 1.5 form rule",
-   "kickoff": "2026-10-16T18:30Z",
-   "lane": "production",
-   "league": "Bundesliga",
-   "match": "Eintracht Frankfurt v FC Cologne",
-   "pair": "o15_form_l10|soccer_o15",
-   "price_at_log": 0.9,
-   "published_at": "2026-10-16T21:06:33+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXBUNDESLIGATOTAL-26OCT16SGEKOE",
-    "market": "KXBUNDESLIGATOTAL-26OCT16SGEKOE-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.9,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_form_l10:KXBUNDESLIGATOTAL-26OCT16SGEKOE-2",
-   "source": "o15_form_l10",
-   "sport": "soccer_o15",
-   "status": "miss"
-  },
   "2026-10-16|Eintracht Frankfurt|FC Cologne|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
    "away": "FC Cologne",
    "bet": {
@@ -1706,41 +1671,6 @@
    "sport": "soccer_o25",
    "status": "miss"
   },
-  "2026-10-17|Espanyol|Atl\u00e9tico Madrid|Over 1.5 goals \u00b7 Over 1.5 form rule": {
-   "away": "Atl\u00e9tico Madrid",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-15",
-   "headline": "Over 1.5 goals",
-   "home": "Espanyol",
-   "id": "2026-10-17|Espanyol|Atl\u00e9tico Madrid|Over 1.5 goals \u00b7 Over 1.5 form rule",
-   "kickoff": "2026-10-17T12:00Z",
-   "lane": "production",
-   "league": "La Liga",
-   "match": "Espanyol v Atl\u00e9tico Madrid",
-   "pair": "o15_form_l10|soccer_o15",
-   "price_at_log": 0.77,
-   "published_at": "2026-10-17T14:03:43+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXLALIGATOTAL-26OCT17ESPATM",
-    "market": "KXLALIGATOTAL-26OCT17ESPATM-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.77,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_form_l10:KXLALIGATOTAL-26OCT17ESPATM-2",
-   "source": "o15_form_l10",
-   "sport": "soccer_o15",
-   "status": "miss"
-  },
   "2026-10-17|Espanyol|Atl\u00e9tico Madrid|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Atl\u00e9tico Madrid",
    "bet": {
@@ -2019,41 +1949,6 @@
    "sport": "tennis",
    "status": "hit"
   },
-  "2026-10-17|Hamburg SV|VfB Stuttgart|Over 1.5 goals \u00b7 Over 1.5 form rule": {
-   "away": "VfB Stuttgart",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-15",
-   "headline": "Over 1.5 goals",
-   "home": "Hamburg SV",
-   "id": "2026-10-17|Hamburg SV|VfB Stuttgart|Over 1.5 goals \u00b7 Over 1.5 form rule",
-   "kickoff": "2026-10-17T13:30Z",
-   "lane": "production",
-   "league": "Bundesliga",
-   "match": "Hamburg SV v VfB Stuttgart",
-   "pair": "o15_form_l10|soccer_o15",
-   "price_at_log": 0.89,
-   "published_at": "2026-10-17T15:33:17+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXBUNDESLIGATOTAL-26OCT17HSVVFB",
-    "market": "KXBUNDESLIGATOTAL-26OCT17HSVVFB-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.89,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_form_l10:KXBUNDESLIGATOTAL-26OCT17HSVVFB-2",
-   "source": "o15_form_l10",
-   "sport": "soccer_o15",
-   "status": "miss"
-  },
   "2026-10-17|Hamburg SV|VfB Stuttgart|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
    "away": "VfB Stuttgart",
    "bet": {
@@ -2228,41 +2123,6 @@
    "sport": "soccer_corners",
    "status": "hit"
   },
-  "2026-10-17|Minnesota United FC|St. Louis CITY SC|Over 1.5 goals \u00b7 Over 1.5 form rule": {
-   "away": "St. Louis CITY SC",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-15",
-   "headline": "Over 1.5 goals",
-   "home": "Minnesota United FC",
-   "id": "2026-10-17|Minnesota United FC|St. Louis CITY SC|Over 1.5 goals \u00b7 Over 1.5 form rule",
-   "kickoff": "2026-10-17T20:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "Minnesota United FC v St. Louis CITY SC",
-   "pair": "o15_form_l10|soccer_o15",
-   "price_at_log": 0.86,
-   "published_at": "2026-10-17T23:16:53+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXMLSTOTAL-26OCT17MINSTL",
-    "market": "KXMLSTOTAL-26OCT17MINSTL-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.86,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_form_l10:KXMLSTOTAL-26OCT17MINSTL-2",
-   "source": "o15_form_l10",
-   "sport": "soccer_o15",
-   "status": "hit"
-  },
   "2026-10-17|Minnesota United FC|St. Louis CITY SC|St. Louis CITY SC +0.5 (Minnesota United FC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
    "away": "St. Louis CITY SC",
    "bet": {
@@ -2367,41 +2227,6 @@
    "sandbox_quote": "mls_fade_home:KXMLSGAME-26OCT17NECHI-NE",
    "source": "mls_fade_home",
    "sport": "soccer_p05",
-   "status": "miss"
-  },
-  "2026-10-17|New England Revolution|Chicago Fire FC|Over 1.5 goals \u00b7 Over 1.5 form rule": {
-   "away": "Chicago Fire FC",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-15",
-   "headline": "Over 1.5 goals",
-   "home": "New England Revolution",
-   "id": "2026-10-17|New England Revolution|Chicago Fire FC|Over 1.5 goals \u00b7 Over 1.5 form rule",
-   "kickoff": "2026-10-17T23:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "New England Revolution v Chicago Fire FC",
-   "pair": "o15_form_l10|soccer_o15",
-   "price_at_log": 0.87,
-   "published_at": "2026-10-18T03:39:19+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXMLSTOTAL-26OCT17NECHI",
-    "market": "KXMLSTOTAL-26OCT17NECHI-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.87,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_form_l10:KXMLSTOTAL-26OCT17NECHI-2",
-   "source": "o15_form_l10",
-   "sport": "soccer_o15",
    "status": "miss"
   },
   "2026-10-17|New York City FC|LAFC|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
@@ -2613,41 +2438,6 @@
    "source": "ere_draw",
    "sport": "soccer",
    "status": "miss"
-  },
-  "2026-10-17|Strasbourg|Paris Saint-Germain|Over 1.5 goals \u00b7 Over 1.5 form rule": {
-   "away": "Paris Saint-Germain",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-15",
-   "headline": "Over 1.5 goals",
-   "home": "Strasbourg",
-   "id": "2026-10-17|Strasbourg|Paris Saint-Germain|Over 1.5 goals \u00b7 Over 1.5 form rule",
-   "kickoff": "2026-10-17T15:15Z",
-   "lane": "production",
-   "league": "Ligue 1",
-   "match": "Strasbourg v Paris Saint-Germain",
-   "pair": "o15_form_l10|soccer_o15",
-   "price_at_log": 0.9,
-   "published_at": "2026-10-17T17:33:03+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXLIGUE1TOTAL-26OCT17RCSPSG",
-    "market": "KXLIGUE1TOTAL-26OCT17RCSPSG-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.9,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_form_l10:KXLIGUE1TOTAL-26OCT17RCSPSG-2",
-   "source": "o15_form_l10",
-   "sport": "soccer_o15",
-   "status": "hit"
   },
   "2026-10-17|Valencia|Athletic Club|Athletic Club to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
    "away": "Athletic Club",
@@ -2863,78 +2653,6 @@
    "sandbox_quote": "u35_low_scoring:KXSAUDIPLTOTAL-26OCT18FATKHA-4",
    "source": "u35_low_scoring",
    "sport": "soccer_u35",
-   "status": "pending"
-  },
-  "2026-10-18|Austin FC|Vancouver Whitecaps|Over 1.5 goals \u00b7 Over 1.5 form rule": {
-   "away": "Vancouver Whitecaps",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-18",
-   "edge_at_log": null,
-   "first_seen": "2026-10-15",
-   "headline": "Over 1.5 goals",
-   "home": "Austin FC",
-   "id": "2026-10-18|Austin FC|Vancouver Whitecaps|Over 1.5 goals \u00b7 Over 1.5 form rule",
-   "kickoff": "2026-10-18T00:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "Austin FC v Vancouver Whitecaps",
-   "pair": "o15_form_l10|soccer_o15",
-   "price_at_log": 0.87,
-   "published_at": "2026-10-18T03:39:19+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXMLSTOTAL-26OCT17ATXVAN",
-    "market": "KXMLSTOTAL-26OCT17ATXVAN-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.87,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_form_l10:KXMLSTOTAL-26OCT17ATXVAN-2",
-   "source": "o15_form_l10",
-   "sport": "soccer_o15",
-   "status": "hit"
-  },
-  "2026-10-18|Bayer Leverkusen|SC Freiburg|Over 1.5 goals \u00b7 Over 1.5 form rule": {
-   "away": "SC Freiburg",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-18",
-   "edge_at_log": null,
-   "first_seen": "2026-10-15",
-   "headline": "Over 1.5 goals",
-   "home": "Bayer Leverkusen",
-   "id": "2026-10-18|Bayer Leverkusen|SC Freiburg|Over 1.5 goals \u00b7 Over 1.5 form rule",
-   "kickoff": "2026-10-18T13:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T03:39:19+00:00",
-   "league": "Bundesliga",
-   "match": "Bayer Leverkusen v SC Freiburg",
-   "pair": "o15_form_l10|soccer_o15",
-   "price_at_log": 0.85,
-   "published_at": "2026-10-15T03:56:50+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 4893,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXBUNDESLIGATOTAL-26OCT18LEVSCF",
-    "market": "KXBUNDESLIGATOTAL-26OCT18LEVSCF-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.85,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_form_l10:KXBUNDESLIGATOTAL-26OCT18LEVSCF-2",
-   "source": "o15_form_l10",
-   "sport": "soccer_o15",
    "status": "pending"
   },
   "2026-10-18|Bayer Leverkusen|SC Freiburg|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
@@ -3234,80 +2952,6 @@
    "sport": "soccer_p05",
    "status": "pending"
   },
-  "2026-10-18|FC Cincinnati|Columbus Crew|Over 1.5 goals \u00b7 Over 1.5 form rule": {
-   "away": "Columbus Crew",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-18",
-   "edge_at_log": null,
-   "first_seen": "2026-10-15",
-   "headline": "Over 1.5 goals",
-   "home": "FC Cincinnati",
-   "id": "2026-10-18|FC Cincinnati|Columbus Crew|Over 1.5 goals \u00b7 Over 1.5 form rule",
-   "kickoff": "2026-10-18T21:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T03:39:19+00:00",
-   "league": "MLS",
-   "match": "FC Cincinnati v Columbus Crew",
-   "pair": "o15_form_l10|soccer_o15",
-   "price_at_log": 0.89,
-   "published_at": "2026-10-15T03:56:50+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 5343,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXMLSTOTAL-26OCT18CINCLB",
-    "market": "KXMLSTOTAL-26OCT18CINCLB-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.89,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_form_l10:KXMLSTOTAL-26OCT18CINCLB-2",
-   "source": "o15_form_l10",
-   "sport": "soccer_o15",
-   "status": "pending"
-  },
-  "2026-10-18|FC Groningen|Ajax Amsterdam|Over 1.5 goals \u00b7 Over 1.5 form rule": {
-   "away": "Ajax Amsterdam",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-18",
-   "edge_at_log": null,
-   "first_seen": "2026-10-15",
-   "headline": "Over 1.5 goals",
-   "home": "FC Groningen",
-   "id": "2026-10-18|FC Groningen|Ajax Amsterdam|Over 1.5 goals \u00b7 Over 1.5 form rule",
-   "kickoff": "2026-10-18T14:45Z",
-   "lane": "production",
-   "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T03:39:19+00:00",
-   "league": "Eredivisie",
-   "match": "FC Groningen v Ajax Amsterdam",
-   "pair": "o15_form_l10|soccer_o15",
-   "price_at_log": 0.91,
-   "published_at": "2026-10-15T16:30:46+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 4214,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXEREDIVISIETOTAL-26OCT18GROAJA",
-    "market": "KXEREDIVISIETOTAL-26OCT18GROAJA-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.91,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_form_l10:KXEREDIVISIETOTAL-26OCT18GROAJA-2",
-   "source": "o15_form_l10",
-   "sport": "soccer_o15",
-   "status": "pending"
-  },
   "2026-10-18|Groningen|Ajax|Draw \u00b7 Eredivisie draw band": {
    "away": "Ajax",
    "bet": {
@@ -3454,43 +3098,6 @@
    "sport": "soccer_o15",
    "status": "pending"
   },
-  "2026-10-18|NEC Nijmegen|Fortuna Sittard|Over 1.5 goals \u00b7 Over 1.5 form rule": {
-   "away": "Fortuna Sittard",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-18",
-   "edge_at_log": null,
-   "first_seen": "2026-10-15",
-   "headline": "Over 1.5 goals",
-   "home": "NEC Nijmegen",
-   "id": "2026-10-18|NEC Nijmegen|Fortuna Sittard|Over 1.5 goals \u00b7 Over 1.5 form rule",
-   "kickoff": "2026-10-18T18:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T03:39:19+00:00",
-   "league": "Eredivisie",
-   "match": "NEC Nijmegen v Fortuna Sittard",
-   "pair": "o15_form_l10|soccer_o15",
-   "price_at_log": 0.89,
-   "published_at": "2026-10-15T21:23:41+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 4116,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXEREDIVISIETOTAL-26OCT18NIJFOR",
-    "market": "KXEREDIVISIETOTAL-26OCT18NIJFOR-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.89,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_form_l10:KXEREDIVISIETOTAL-26OCT18NIJFOR-2",
-   "source": "o15_form_l10",
-   "sport": "soccer_o15",
-   "status": "pending"
-  },
   "2026-10-18|Nijmegen|Sittard|Draw \u00b7 Eredivisie draw band": {
    "away": "Sittard",
    "bet": {
@@ -3565,43 +3172,6 @@
    "sport": "soccer_o15",
    "status": "pending"
   },
-  "2026-10-18|PEC Zwolle|Go Ahead Eagles|Over 1.5 goals \u00b7 Over 1.5 form rule": {
-   "away": "Go Ahead Eagles",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-18",
-   "edge_at_log": null,
-   "first_seen": "2026-10-15",
-   "headline": "Over 1.5 goals",
-   "home": "PEC Zwolle",
-   "id": "2026-10-18|PEC Zwolle|Go Ahead Eagles|Over 1.5 goals \u00b7 Over 1.5 form rule",
-   "kickoff": "2026-10-18T10:15Z",
-   "lane": "production",
-   "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T03:39:19+00:00",
-   "league": "Eredivisie",
-   "match": "PEC Zwolle v Go Ahead Eagles",
-   "pair": "o15_form_l10|soccer_o15",
-   "price_at_log": 0.87,
-   "published_at": "2026-10-15T12:16:42+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 4198,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXEREDIVISIETOTAL-26OCT18ZWOGAE",
-    "market": "KXEREDIVISIETOTAL-26OCT18ZWOGAE-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.87,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_form_l10:KXEREDIVISIETOTAL-26OCT18ZWOGAE-2",
-   "source": "o15_form_l10",
-   "sport": "soccer_o15",
-   "status": "pending"
-  },
   "2026-10-18|Panthers|Eagles|Eagles to win \u00b7 ESPN FPI / Matchup Predictor": {
    "away": "Eagles",
    "bet": {
@@ -3638,41 +3208,6 @@
    "source": "espn_fpi",
    "sport": "nfl",
    "status": "pending"
-  },
-  "2026-10-18|Sporting Kansas City|Real Salt Lake|Over 1.5 goals \u00b7 Over 1.5 form rule": {
-   "away": "Real Salt Lake",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-18",
-   "edge_at_log": null,
-   "first_seen": "2026-10-15",
-   "headline": "Over 1.5 goals",
-   "home": "Sporting Kansas City",
-   "id": "2026-10-18|Sporting Kansas City|Real Salt Lake|Over 1.5 goals \u00b7 Over 1.5 form rule",
-   "kickoff": "2026-10-18T00:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "Sporting Kansas City v Real Salt Lake",
-   "pair": "o15_form_l10|soccer_o15",
-   "price_at_log": 0.88,
-   "published_at": "2026-10-18T03:39:19+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXMLSTOTAL-26OCT17SKCRSL",
-    "market": "KXMLSTOTAL-26OCT17SKCRSL-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.88,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_form_l10:KXMLSTOTAL-26OCT17SKCRSL-2",
-   "source": "o15_form_l10",
-   "sport": "soccer_o15",
-   "status": "hit"
   },
   "2026-10-18|Steelers|Buccaneers|Steelers to win \u00b7 ESPN FPI / Matchup Predictor": {
    "away": "Buccaneers",
@@ -3896,154 +3431,6 @@
    "sandbox_quote": "espn_fpi:aec-nfl-was-sf-2026-10-19",
    "source": "espn_fpi",
    "sport": "nfl",
-   "status": "pending"
-  },
-  "2026-10-20|FC Porto|PSV Eindhoven|Over 1.5 goals \u00b7 Over 1.5 form rule": {
-   "away": "PSV Eindhoven",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-20",
-   "edge_at_log": null,
-   "first_seen": "2026-10-16",
-   "headline": "Over 1.5 goals",
-   "home": "FC Porto",
-   "id": "2026-10-20|FC Porto|PSV Eindhoven|Over 1.5 goals \u00b7 Over 1.5 form rule",
-   "kickoff": "2026-10-20T19:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T03:39:19+00:00",
-   "league": "Champions League",
-   "match": "FC Porto v PSV Eindhoven",
-   "pair": "o15_form_l10|soccer_o15",
-   "price_at_log": 0.84,
-   "published_at": "2026-10-16T21:06:33+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 5633,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXUCLTOTAL-26OCT20FCPPSV",
-    "market": "KXUCLTOTAL-26OCT20FCPPSV-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.84,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_form_l10:KXUCLTOTAL-26OCT20FCPPSV-2",
-   "source": "o15_form_l10",
-   "sport": "soccer_o15",
-   "status": "pending"
-  },
-  "2026-10-20|Paris Saint-Germain|Barcelona|Over 1.5 goals \u00b7 Over 1.5 form rule": {
-   "away": "Barcelona",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-20",
-   "edge_at_log": null,
-   "first_seen": "2026-10-16",
-   "headline": "Over 1.5 goals",
-   "home": "Paris Saint-Germain",
-   "id": "2026-10-20|Paris Saint-Germain|Barcelona|Over 1.5 goals \u00b7 Over 1.5 form rule",
-   "kickoff": "2026-10-20T19:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T03:39:19+00:00",
-   "league": "Champions League",
-   "match": "Paris Saint-Germain v Barcelona",
-   "pair": "o15_form_l10|soccer_o15",
-   "price_at_log": 0.93,
-   "published_at": "2026-10-16T21:06:33+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 5633,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXUCLTOTAL-26OCT20PSGBAR",
-    "market": "KXUCLTOTAL-26OCT20PSGBAR-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.93,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_form_l10:KXUCLTOTAL-26OCT20PSGBAR-2",
-   "source": "o15_form_l10",
-   "sport": "soccer_o15",
-   "status": "pending"
-  },
-  "2026-10-20|VfB Stuttgart|Atl\u00e9tico Madrid|Over 1.5 goals \u00b7 Over 1.5 form rule": {
-   "away": "Atl\u00e9tico Madrid",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-20",
-   "edge_at_log": null,
-   "first_seen": "2026-10-16",
-   "headline": "Over 1.5 goals",
-   "home": "VfB Stuttgart",
-   "id": "2026-10-20|VfB Stuttgart|Atl\u00e9tico Madrid|Over 1.5 goals \u00b7 Over 1.5 form rule",
-   "kickoff": "2026-10-20T19:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T03:39:19+00:00",
-   "league": "Champions League",
-   "match": "VfB Stuttgart v Atl\u00e9tico Madrid",
-   "pair": "o15_form_l10|soccer_o15",
-   "price_at_log": 0.85,
-   "published_at": "2026-10-16T21:06:33+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 5633,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXUCLTOTAL-26OCT20VFBATM",
-    "market": "KXUCLTOTAL-26OCT20VFBATM-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.85,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_form_l10:KXUCLTOTAL-26OCT20VFBATM-2",
-   "source": "o15_form_l10",
-   "sport": "soccer_o15",
-   "status": "pending"
-  },
-  "2026-10-21|Sporting CP|LASK Linz|Over 1.5 goals \u00b7 Over 1.5 form rule": {
-   "away": "LASK Linz",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-21",
-   "edge_at_log": null,
-   "first_seen": "2026-10-17",
-   "headline": "Over 1.5 goals",
-   "home": "Sporting CP",
-   "id": "2026-10-21|Sporting CP|LASK Linz|Over 1.5 goals \u00b7 Over 1.5 form rule",
-   "kickoff": "2026-10-21T19:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T03:39:19+00:00",
-   "league": "Champions League",
-   "match": "Sporting CP v LASK Linz",
-   "pair": "o15_form_l10|soccer_o15",
-   "price_at_log": 0.9,
-   "published_at": "2026-10-17T19:20:16+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 5739,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXUCLTOTAL-26OCT21SPOASK",
-    "market": "KXUCLTOTAL-26OCT21SPOASK-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.9,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_form_l10:KXUCLTOTAL-26OCT21SPOASK-2",
-   "source": "o15_form_l10",
-   "sport": "soccer_o15",
    "status": "pending"
   }
  },
@@ -4320,31 +3707,6 @@
    "timing": {
     "late": [],
     "timed": 1,
-    "under_target": 0
-   }
-  },
-  "o15_form_l10|soccer_o15": {
-   "by_hand": "2026-10-08",
-   "entered_at": "2026-10-08T17:50:08+00:00",
-   "promoted_at": "2026-10-08T17:50:08+00:00",
-   "ready_at": "2026-10-08T17:50:08+00:00",
-   "route": "moved by hand on 2026-10-08",
-   "routing": {
-    "leads": 17,
-    "problem": null,
-    "routed": 17,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": -0.0063,
-   "sandbox_n": 8,
-   "sandbox_roi": -0.43,
-   "sandbox_roi_fee": -0.4349,
-   "timing": {
-    "late": [],
-    "timed": 9,
     "under_target": 0
    }
   },
@@ -4633,6 +3995,7 @@
    }
   }
  },
+ "pruned_at": "2026-10-18T03:46:22+00:00",
  "publication_withheld": {
   "2026-10-15|Torreense|Sunderland|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "headline": "Over 1.5 goals",

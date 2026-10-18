@@ -1494,6 +1494,12 @@
    "pair": "btts_form_l10_fade|soccer_btts",
    "reason": "taken off the Production list by hand, record kept",
    "to": "sandbox"
+  },
+  {
+   "at": "2026-10-18T03:46:22+00:00",
+   "pair": "o15_form_l10|soccer_o15",
+   "reason": "taken off the Production list by hand, record kept",
+   "to": "sandbox"
   }
  ],
  "pairs": {
@@ -1743,24 +1749,9 @@
    "stage": "sandbox"
   },
   "o15_form_l10|soccer_o15": {
-   "by_hand": "2026-10-08",
-   "entry": {
-    "base_roi": 0.0339,
-    "clv": 0.01,
-    "clv_n": 4,
-    "n": 4,
-    "own_roi": 0.1611,
-    "roi": 0.1611,
-    "roi_fee": 0.1499,
-    "span_days": 0.9792,
-    "weeks": 0,
-    "z": 0.8022
-   },
-   "entry_since": "2026-09-21T01:44:02+00:00",
-   "promoted_at": "2026-10-08T17:50:08+00:00",
-   "ready_at": "2026-10-08T17:50:08+00:00",
-   "ready_since": "2026-10-08T17:50:08+00:00",
-   "stage": "production"
+   "demoted_at": "2026-10-18T03:46:22+00:00",
+   "since": "2026-09-21T01:44:02+00:00",
+   "stage": "sandbox"
   },
   "o15_ranked|soccer_o15": {
    "by_hand": "2026-10-08",

@@ -382,7 +382,10 @@ PAIR_OVERRIDES = {
     # over 1.5 form rule, LEAGUE scope only -- not the cup or internationals twins. Back in
     # Production after its 2026-09-21 removal: 4-0 on 4, +15.0% after fees since the
     # clock restarted. The removal above still stands as the record it was taken off on.
-    "o15_form_l10|soccer_o15": dict(moved_on="2026-10-08", production_at=None),
+    #   OUT 2026-10-17, back to the Sandbox again, as asked (Olu): 26/35 at 0.85 since
+    #   2026-09-14, -13.7% after fees, z -1.85; 6/9 (-23.8%) since its 2026-09-21 reset; 0-2
+    #   (-$2.81) live, the worst live lane. It keeps the record it carried in (PAIR_REMOVALS,
+    #   since 2026-09-21), no reset, no retune. The cup and internationals scopes are untouched.
     # over 1.5 ranked, LEAGUE scope. Its internationals twin has been in Production since
     # 2026-10-01 (above); the league pair has five open bets and nothing settled.
     "o15_ranked|soccer_o15": dict(moved_on="2026-10-08", production_at=None),
@@ -467,6 +470,7 @@ PAIR_OVERRIDES = {
 # its whole record), so the record it was judged on keeps growing. demoted_at is still set.
 PAIR_REMOVALS = {
     "btts_form_l10_fade|soccer_btts": dict(removed_on="2026-10-17", keep_record=True),
+    "o15_form_l10|soccer_o15": dict(removed_on="2026-10-17", keep_record=True),
 }
 
 
