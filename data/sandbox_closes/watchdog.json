@@ -95,6 +95,11 @@
    "lead_min": 52.0,
    "price": 0.39
   },
+  "bund_o35:KXBUNDESLIGATOTAL-26OCT18BMGTSG-4": {
+   "at": "2026-10-18T14:54:23+00:00",
+   "lead_min": 35.6,
+   "price": 0.51
+  },
   "bund_o35_fav:KXBUNDESLIGATOTAL-26OCT10M05LEV-4": {
    "at": "2026-10-10T13:06:09+00:00",
    "lead_min": 23.8,
@@ -114,6 +119,11 @@
    "at": "2026-10-14T15:33:06+00:00",
    "lead_min": 56.9,
    "price": 0.53
+  },
+  "corners_total_under:KXEPLCORNERS-26OCT18NFOARS-9": {
+   "at": "2026-10-18T14:54:23+00:00",
+   "lead_min": 35.6,
+   "price": 0.44
   },
   "corners_total_under:KXLALIGACORNERS-26OCT17ESPATM-9": {
    "at": "2026-10-17T11:13:11+00:00",
@@ -154,6 +164,11 @@
    "at": "2026-10-15T00:58:55+00:00",
    "lead_min": 31.1,
    "price": 0.65
+  },
+  "ftts_no_70_80:KXEPLFTTS-26OCT18NFOARS-NFO": {
+   "at": "2026-10-18T14:54:23+00:00",
+   "lead_min": 35.6,
+   "price": 0.77
   },
   "liga_u15_dog:KXLALIGATOTAL-26OCT10RMAVIL-2": {
    "at": "2026-10-10T18:04:50+00:00",
@@ -280,6 +295,11 @@
    "lead_min": 58.5,
    "price": 0.85
   },
+  "o15_ranked:KXEPLTOTAL-26OCT18NFOARS-2": {
+   "at": "2026-10-18T14:54:23+00:00",
+   "lead_min": 35.6,
+   "price": 0.76
+  },
   "o15_ranked:KXLALIGATOTAL-26OCT17ESPATM-2": {
    "at": "2026-10-17T11:13:11+00:00",
    "lead_min": 46.8,
@@ -289,6 +309,11 @@
    "at": "2026-10-10T18:04:50+00:00",
    "lead_min": 40.2,
    "price": 0.82
+  },
+  "o25_congestion:KXBUNDESLIGATOTAL-26OCT18BMGTSG-3": {
+   "at": "2026-10-18T14:54:23+00:00",
+   "lead_min": 35.6,
+   "price": 0.29
   },
   "o25_congestion:KXEREDIVISIETOTAL-26OCT17ADOPSV-3": {
    "at": "2026-10-17T14:28:12+00:00",
@@ -314,6 +339,16 @@
    "at": "2026-10-17T14:28:12+00:00",
    "lead_min": 46.8,
    "price": 0.28
+  },
+  "o25_congestion:KXLIGUE1TOTAL-26OCT18FCLASM-3": {
+   "at": "2026-10-18T14:54:23+00:00",
+   "lead_min": 20.6,
+   "price": 0.51
+  },
+  "o25_congestion:KXLIGUE1TOTAL-26OCT18PARREN-3": {
+   "at": "2026-10-18T14:54:23+00:00",
+   "lead_min": 20.6,
+   "price": 0.43
   },
   "o25_congestion:KXMLSTOTAL-26OCT10CHINYC-3": {
    "at": "2026-10-10T18:04:50+00:00",
@@ -596,5 +631,5 @@
    "price": 0.55
   }
  },
- "updated": "2026-10-18T11:46:42+00:00"
+ "updated": "2026-10-18T14:54:23+00:00"
 }
