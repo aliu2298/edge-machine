@@ -1536,6 +1536,24 @@
    "pair": "o25_congestion|soccer_o25",
    "reason": "moved by hand \u2014 ready from this run",
    "to": "ready"
+  },
+  {
+   "at": "2026-10-18T20:40:27+00:00",
+   "evidence": {
+    "base_roi": -0.2145,
+    "clv": -0.0088,
+    "clv_n": 41,
+    "n": 41,
+    "own_roi": -0.0643,
+    "roi": -0.0643,
+    "roi_fee": -0.1026,
+    "span_days": 21.7292,
+    "weeks": 3,
+    "z": -0.1597
+   },
+   "pair": "o25_congestion|soccer_o25",
+   "reason": "fresh QA record behind the price, z -0.16",
+   "to": "sandbox"
   }
  ],
  "pairs": {
@@ -1830,24 +1848,9 @@
    "stage": "production"
   },
   "o25_congestion|soccer_o25": {
-   "by_hand": "2026-10-18",
-   "entry": {
-    "base_roi": -0.1856,
-    "clv": -0.0118,
-    "clv_n": 33,
-    "n": 33,
-    "own_roi": 0.1043,
-    "roi": 0.1043,
-    "roi_fee": 0.0586,
-    "span_days": 21.5208,
-    "weeks": 3,
-    "z": 0.6358
-   },
-   "entry_since": null,
-   "promoted_at": "2026-10-18T15:11:28+00:00",
-   "ready_at": "2026-10-18T15:11:28+00:00",
-   "ready_since": "2026-10-18T15:11:28+00:00",
-   "stage": "production"
+   "demoted_at": "2026-10-18T20:40:27+00:00",
+   "since": "2026-10-18T20:40:27+00:00",
+   "stage": "sandbox"
   },
   "oddspedia|cricket": {
    "by_hand": "2026-09-27",
@@ -2106,5 +2109,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-10-18T18:35:00+00:00"
+ "updated": "2026-10-18T20:40:27+00:00"
 }
