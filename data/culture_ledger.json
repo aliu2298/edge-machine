@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-18T16:00:12.908990+00:00",
-   "last_success": "2026-10-18T16:00:12.908990+00:00",
+   "last_run": "2026-10-18T17:00:12.962888+00:00",
+   "last_success": "2026-10-18T17:00:12.962888+00:00",
    "observations": {
-    "at": "2026-10-18T16:00:12.908990+00:00",
+    "at": "2026-10-18T17:00:12.962888+00:00",
     "events": 862,
     "reasons": {
-     "in band": 13,
-     "no quote or spread too wide": 247,
+     "in band": 12,
+     "no quote or spread too wide": 252,
      "not active": 698,
-     "outside the band": 49,
-     "outside the entry window": 11107
+     "outside the band": 45,
+     "outside the entry window": 11096
     }
    },
    "picks": [
@@ -138,17 +138,17 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-18T16:00:12.908990+00:00",
-   "last_success": "2026-10-18T16:00:12.908990+00:00",
+   "last_run": "2026-10-18T17:00:12.962888+00:00",
+   "last_success": "2026-10-18T17:00:12.962888+00:00",
    "observations": {
-    "at": "2026-10-18T16:00:12.908990+00:00",
+    "at": "2026-10-18T17:00:12.962888+00:00",
     "events": 862,
     "reasons": {
      "in band": 1,
      "no quote or spread too wide": 543,
      "not active": 698,
      "outside the band": 133,
-     "outside the entry window": 10739
+     "outside the entry window": 10728
     }
    },
    "picks": [
@@ -288,16 +288,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-18T16:00:12.908990+00:00",
-   "last_success": "2026-10-18T16:00:12.908990+00:00",
+   "last_run": "2026-10-18T17:00:12.962888+00:00",
+   "last_success": "2026-10-18T17:00:12.962888+00:00",
    "observations": {
-    "at": "2026-10-18T16:00:12.908990+00:00",
+    "at": "2026-10-18T17:00:12.962888+00:00",
     "events": 862,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 42,
+     "already near-certain (under 10c or over 90c)": 36,
      "edge 5c+": 5,
      "edge under 5c": 2,
-     "no quote or spread too wide": 35
+     "no quote or spread too wide": 41
     }
    },
    "picks": [
@@ -660,13 +660,14 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-18T16:00:12.908990+00:00",
-   "last_success": "2026-10-18T16:00:12.908990+00:00",
+   "last_run": "2026-10-18T17:00:12.962888+00:00",
+   "last_success": "2026-10-18T17:00:12.962888+00:00",
    "observations": {
-    "at": "2026-10-18T16:00:12.908990+00:00",
+    "at": "2026-10-18T17:00:12.962888+00:00",
     "events": 862,
     "reasons": {
-     "edge 5c+": 8,
+     "edge 5c+": 6,
+     "edge under 5c": 2,
      "under 20 reviews counted": 11
     }
    },
@@ -848,7 +849,7 @@
    ]
   },
   "BBC": {
-   "at": "2026-10-18T10:00:13.940892+00:00",
+   "at": "2026-10-18T17:00:12.962888+00:00",
    "days": [
     "2026-08-02",
     "2026-09-18"
@@ -896,7 +897,7 @@
    "days": []
   },
   "ExxonMobil / XOM": {
-   "at": "2026-10-18T10:00:13.940892+00:00",
+   "at": "2026-10-18T17:00:12.962888+00:00",
    "days": [
     "2026-08-03",
     "2026-09-02",
@@ -912,7 +913,7 @@
    "days": []
   },
   "Make Iran Great Again": {
-   "at": "2026-10-18T05:00:13.720513+00:00",
+   "at": "2026-10-18T17:00:12.962888+00:00",
    "days": []
   },
   "Mastercard / MA": {
