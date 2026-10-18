@@ -57,18 +57,19 @@ def build(d=None, st=None, now=None):
     return place_label_rules(html, _rules_section() + "\n" + _team_rules_section() + "\n")
 
 
-EVENTS_AT = '<section id="events"'
-TOC_AT = '<a href="#rules">Rules</a>'
+METHOD_AT = '<section id="method"'
+TOC_EVENTS = '<a href="#events">Events</a>'
 
 
 def place_label_rules(html, sections):
-    """Put the label-rule sections right after the Rules table, before the long events list,
-    and link them from the page's table of contents. Falls back to above the footer."""
-    if EVENTS_AT in html:
-        html = html.replace(EVENTS_AT, sections + EVENTS_AT, 1)
+    """Put the label-rule sections between the events list and the method fold, and link them
+    from the page's table of contents (the Events heading must stay on the first screen, so
+    they cannot sit above it). Falls back to above the footer."""
+    if METHOD_AT in html:
+        html = html.replace(METHOD_AT, sections + METHOD_AT, 1)
     else:
         html = html.replace("<footer>", sections + "<footer>", 1)
-    return html.replace(TOC_AT, TOC_AT + '<a href="#label-rules">Label rules</a><a href="#team-rules">Team scoring</a>', 1)
+    return html.replace(TOC_EVENTS, TOC_EVENTS + '<a href="#label-rules">Label rules</a><a href="#team-rules">Team scoring</a>', 1)
 
 
 def _rules_section():
