@@ -422,7 +422,7 @@ if sync_playwright is not None:
                        f"{width}px pick links have comfortable tap targets")
                     anchors = page.locator("nav.toc a").evaluate_all(
                         "links => links.map(a => a.getAttribute('href'))")
-                    eq(anchors, ["#rules", "#events", "#label-rules", "#team-rules", "#method"], f"{width}px sub-nav is Rules / Events / Label rules / Team scoring / Method")
+                    eq(anchors, ["#rules", "#events", "#label-rules", "#team-rules", "#contender-overs", "#method"], f"{width}px sub-nav is Rules / Events / Label rules / Team scoring / Contenders / Method")
                     ok(all(page.locator(a).count() == 1 for a in anchors),
                        f"{width}px sub-nav reaches unique sections")
                     eq(page.locator(".sp-day-head").first.evaluate("e => getComputedStyle(e).position"),
