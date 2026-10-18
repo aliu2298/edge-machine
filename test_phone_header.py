@@ -77,9 +77,9 @@ def _has_toggle(path):
 
 # One link, or a breadcrumb in that slot. The section nav must not be rendered.
 # Every page, the sport pages included, carries the one shell: brand, page
-# pills, stamp. Trading has a section nav since its paper sections arrived (Rules, then the gold
-# breakout, 2026-10-18; another trading section may add its own link); the NBA board's
-# Upcoming / Results / Teams nav is the shared one since the phase-3 template.
+# pills, stamp. Trading has a section nav since its paper sections arrived on 2026-10-18 (Rules,
+# the gold breakout, the Nasdaq breakout); the NBA board's Upcoming / Results / Teams nav is the
+# shared one since the phase-3 template.
 _NO_TOC = {"archive/index.html"}
 
 
@@ -177,8 +177,8 @@ ok('class="crumbs"' in week_html and ">W39<" in week_html and ">Archive<" in wee
    "a week page generator writes a Sandbox › Archive › W39 breadcrumb")
 _trade_toc = _toc(trade_html)
 _trade_labels = re.findall(r">([^<]+)</a>", _trade_toc.group(0) if _trade_toc else "")
-ok(_trade_labels[:2] == ["Rules", "Gold breakout"],
-   "Trading's section nav leads with Rules and the gold breakout (more trading sections may follow)")
+ok(_trade_labels == ["Rules", "Gold breakout", "Nasdaq breakout"],
+   f"Trading renders a Rules / Gold breakout / Nasdaq breakout section nav (2026-10-18; {_trade_labels})")
 _root_toc = _toc(root_html)
 _root_labels = re.findall(r">([^<]+)</a>", _root_toc.group(0) if _root_toc else "")
 ok(_root_labels == ["Overview", "Areas", "Attention", "Live now", "Rules"],
