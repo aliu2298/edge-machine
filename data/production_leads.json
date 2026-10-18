@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-18T07:15:21+00:00",
+ "board_built_at": "2026-10-18T10:58:38+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -19,7 +19,10 @@
   "kalshi:26OCT17FULHUL": "2026-10-17|Fulham|Hull City|7+ corners \u00b7 Fulham \u00b7 Corners team fade",
   "kalshi:26OCT17MCIIPS": "2026-10-17|Manchester City|Ipswich Town|Under 10 corners \u00b7 Corners total under",
   "kalshi:26OCT17RBBBAR": "2026-10-17|Real Betis|Barcelona|4+ corners \u00b7 Real Betis \u00b7 Corners team fade",
-  "kalshi:26OCT17VILELC": "2026-10-17|Villarreal|Elche|7+ corners \u00b7 Villarreal \u00b7 Corners team fade"
+  "kalshi:26OCT17VILELC": "2026-10-17|Villarreal|Elche|7+ corners \u00b7 Villarreal \u00b7 Corners team fade",
+  "kalshi:26OCT18BOUSUN": "2026-10-18|AFC Bournemouth|Sunderland|6+ corners \u00b7 AFC Bournemouth \u00b7 Corners team fade",
+  "kalshi:26OCT18BRICRY": "2026-10-18|Brighton & Hove Albion|Crystal Palace|Under 10 corners \u00b7 Corners total under",
+  "kalshi:26OCT18LEEMUN": "2026-10-18|Leeds United|Manchester United|Under 9 corners \u00b7 Corners total under"
  },
  "first_publish_min": 45,
  "late_publication_skipped": 2,
@@ -2581,6 +2584,44 @@
    "sport": "soccer_u35",
    "status": "hit"
   },
+  "2026-10-18|AFC Bournemouth|Sunderland|6+ corners \u00b7 AFC Bournemouth \u00b7 Corners team fade": {
+   "away": "Sunderland",
+   "bet": {
+    "kind": "corners_gte",
+    "n": 6,
+    "team": "AFC Bournemouth"
+   },
+   "date": "2026-10-18",
+   "edge_at_log": null,
+   "first_seen": "2026-10-18",
+   "headline": "6+ corners \u00b7 AFC Bournemouth",
+   "home": "AFC Bournemouth",
+   "id": "2026-10-18|AFC Bournemouth|Sunderland|6+ corners \u00b7 AFC Bournemouth \u00b7 Corners team fade",
+   "kickoff": "2026-10-18T13:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-18",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
+   "league": "Premier League",
+   "match": "AFC Bournemouth v Sunderland",
+   "pair": "corners_team_fade|soccer_corners",
+   "price_at_log": 0.51,
+   "published_at": "2026-10-18T10:58:38+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 121,
+   "route": {
+    "claim": "6+ corners \u00b7 AFC Bournemouth",
+    "event": "KXEPLTCORNERS-26OCT18BOUSUN",
+    "market": "KXEPLTCORNERS-26OCT18BOUSUN-BOU6",
+    "outcome": "Bournemouth: 6+",
+    "outcome_side": "yes",
+    "price_at_log": 0.51,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "corners_team_fade:KXEPLTCORNERS-26OCT18BOUSUN-BOU6",
+   "source": "corners_team_fade",
+   "sport": "soccer_corners",
+   "status": "pending"
+  },
   "2026-10-18|AFC Bournemouth|Sunderland|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
    "away": "Sunderland",
    "bet": {
@@ -2596,7 +2637,7 @@
    "kickoff": "2026-10-18T13:00Z",
    "lane": "production",
    "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
    "league": "Premier League",
    "match": "AFC Bournemouth v Sunderland",
    "pair": "u35_low_scoring|soccer_u35",
@@ -2633,7 +2674,7 @@
    "kickoff": "2026-10-18T18:00Z",
    "lane": "production",
    "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
    "league": "Saudi Pro League",
    "match": "Al Fateh v Al Khaleej",
    "pair": "u35_low_scoring|soccer_u35",
@@ -2670,7 +2711,7 @@
    "kickoff": "2026-10-18T13:30Z",
    "lane": "production",
    "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
    "league": "Bundesliga",
    "match": "Bayer Leverkusen v SC Freiburg",
    "pair": "bund_o35|soccer_u35",
@@ -2707,7 +2748,7 @@
    "kickoff": "2026-10-18T17:00Z",
    "lane": "production",
    "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
    "league": "NFL",
    "match": "Bears v Falcons",
    "model_prob": 0.614,
@@ -2744,7 +2785,7 @@
    "kickoff": "2026-10-18T20:25Z",
    "lane": "production",
    "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
    "league": "NFL",
    "match": "Bills v Raiders",
    "model_prob": 0.724,
@@ -2781,7 +2822,7 @@
    "kickoff": "2026-10-18T15:30Z",
    "lane": "production",
    "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
    "league": "Bundesliga",
    "match": "Borussia M\u00f6nchengladbach v TSG Hoffenheim",
    "pair": "bund_o35|soccer_u35",
@@ -2803,6 +2844,43 @@
    "sport": "soccer_u35",
    "status": "pending"
   },
+  "2026-10-18|Brighton & Hove Albion|Crystal Palace|Under 10 corners \u00b7 Corners total under": {
+   "away": "Crystal Palace",
+   "bet": {
+    "kind": "corners_lte",
+    "n": 9
+   },
+   "date": "2026-10-18",
+   "edge_at_log": null,
+   "first_seen": "2026-10-18",
+   "headline": "Under 10 corners",
+   "home": "Brighton & Hove Albion",
+   "id": "2026-10-18|Brighton & Hove Albion|Crystal Palace|Under 10 corners \u00b7 Corners total under",
+   "kickoff": "2026-10-18T13:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-18",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
+   "league": "Premier League",
+   "match": "Brighton & Hove Albion v Crystal Palace",
+   "pair": "corners_total_under|soccer_corners",
+   "price_at_log": 0.47,
+   "published_at": "2026-10-18T10:58:38+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 121,
+   "route": {
+    "claim": "Under 10 corners",
+    "event": "KXEPLCORNERS-26OCT18BRICRY",
+    "market": "KXEPLCORNERS-26OCT18BRICRY-10",
+    "outcome": "10+ corners",
+    "outcome_side": "no",
+    "price_at_log": 0.47,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "corners_total_under:KXEPLCORNERS-26OCT18BRICRY-10",
+   "source": "corners_total_under",
+   "sport": "soccer_corners",
+   "status": "pending"
+  },
   "2026-10-18|Celta Vigo|Alav\u00e9s|Celta Vigo to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
    "away": "Alav\u00e9s",
    "bet": {
@@ -2819,7 +2897,7 @@
    "kickoff": "2026-10-18T14:15Z",
    "lane": "production",
    "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
    "league": "La Liga",
    "match": "Celta Vigo v Alav\u00e9s",
    "pair": "team2_ranked|soccer_team2",
@@ -2856,7 +2934,7 @@
    "kickoff": "2026-10-18T14:15Z",
    "lane": "production",
    "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
    "league": "La Liga",
    "match": "Celta Vigo v Alav\u00e9s",
    "pair": "u35_low_scoring|soccer_u35",
@@ -2893,7 +2971,7 @@
    "kickoff": "2026-10-18T20:25Z",
    "lane": "production",
    "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
    "league": "NFL",
    "match": "Chargers v Chiefs",
    "model_prob": 0.265,
@@ -2930,7 +3008,7 @@
    "kickoff": "2026-10-18T21:00Z",
    "lane": "production",
    "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
    "league": "MLS",
    "match": "FC Cincinnati v Columbus Crew",
    "pair": "mls_fade_home|soccer_p05",
@@ -2967,7 +3045,7 @@
    "kickoff": "2026-10-18T14:45Z",
    "lane": "production",
    "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
    "league": "Eredivisie",
    "match": "Groningen v Ajax",
    "pair": "ere_draw|soccer",
@@ -3039,7 +3117,7 @@
    "kickoff": "2026-10-18T17:00Z",
    "lane": "production",
    "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
    "league": "NFL",
    "match": "Jets v Patriots",
    "model_prob": 0.792,
@@ -3076,7 +3154,7 @@
    "kickoff": "2026-10-18T18:45Z",
    "lane": "production",
    "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
    "league": "Serie A",
    "match": "Juventus v Lazio",
    "pair": "o15_ranked|soccer_o15",
@@ -3133,6 +3211,43 @@
    "sport": "soccer_p05",
    "status": "hit"
   },
+  "2026-10-18|Leeds United|Manchester United|Under 9 corners \u00b7 Corners total under": {
+   "away": "Manchester United",
+   "bet": {
+    "kind": "corners_lte",
+    "n": 8
+   },
+   "date": "2026-10-18",
+   "edge_at_log": null,
+   "first_seen": "2026-10-18",
+   "headline": "Under 9 corners",
+   "home": "Leeds United",
+   "id": "2026-10-18|Leeds United|Manchester United|Under 9 corners \u00b7 Corners total under",
+   "kickoff": "2026-10-18T13:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-18",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
+   "league": "Premier League",
+   "match": "Leeds United v Manchester United",
+   "pair": "corners_total_under|soccer_corners",
+   "price_at_log": 0.38,
+   "published_at": "2026-10-18T10:58:38+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 121,
+   "route": {
+    "claim": "Under 9 corners",
+    "event": "KXEPLCORNERS-26OCT18LEEMUN",
+    "market": "KXEPLCORNERS-26OCT18LEEMUN-9",
+    "outcome": "9+ corners",
+    "outcome_side": "no",
+    "price_at_log": 0.38,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "corners_total_under:KXEPLCORNERS-26OCT18LEEMUN-9",
+   "source": "corners_total_under",
+   "sport": "soccer_corners",
+   "status": "pending"
+  },
   "2026-10-18|Nijmegen|Sittard|Draw \u00b7 Eredivisie draw band": {
    "away": "Sittard",
    "bet": {
@@ -3148,7 +3263,7 @@
    "kickoff": "2026-10-18T18:00Z",
    "lane": "production",
    "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
    "league": "Eredivisie",
    "match": "Nijmegen v Sittard",
    "pair": "ere_draw|soccer",
@@ -3185,7 +3300,7 @@
    "kickoff": "2026-10-18T15:30Z",
    "lane": "production",
    "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
    "league": "Premier League",
    "match": "Nottingham Forest v Arsenal",
    "pair": "o15_ranked|soccer_o15",
@@ -3222,7 +3337,7 @@
    "kickoff": "2026-10-18T17:00Z",
    "lane": "production",
    "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
    "league": "NFL",
    "match": "Panthers v Eagles",
    "model_prob": 0.407,
@@ -3294,7 +3409,7 @@
    "kickoff": "2026-10-18T17:00Z",
    "lane": "production",
    "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
    "league": "NFL",
    "match": "Steelers v Buccaneers",
    "model_prob": 0.604,
@@ -3316,81 +3431,6 @@
    "sport": "nfl",
    "status": "pending"
   },
-  "2026-10-18|Udinese|Lecce|Udinese to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
-   "away": "Lecce",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "Udinese"
-   },
-   "date": "2026-10-18",
-   "edge_at_log": null,
-   "first_seen": "2026-10-17",
-   "headline": "Udinese to score 2+",
-   "home": "Udinese",
-   "id": "2026-10-18|Udinese|Lecce|Udinese to score 2+ \u00b7 Favourite to score 2+, ranked by margin",
-   "kickoff": "2026-10-18T10:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
-   "league": "Serie A",
-   "match": "Udinese v Lecce",
-   "pair": "team2_ranked|soccer_team2",
-   "price_at_log": 0.47,
-   "published_at": "2026-10-17T10:36:56+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 1433,
-   "route": {
-    "claim": "Udinese to score 2+",
-    "event": "KXSERIEATEAMTOTAL-26OCT18UDILEC",
-    "market": "KXSERIEATEAMTOTAL-26OCT18UDILEC-UDI2",
-    "outcome": "Udinese over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.47,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team2_ranked:KXSERIEATEAMTOTAL-26OCT18UDILEC-UDI2",
-   "source": "team2_ranked",
-   "sport": "soccer_team2",
-   "status": "pending"
-  },
-  "2026-10-18|Zwolle|GA Eagles|Draw \u00b7 Eredivisie draw band": {
-   "away": "GA Eagles",
-   "bet": {
-    "kind": "match_result",
-    "side": "draw"
-   },
-   "date": "2026-10-18",
-   "edge_at_log": null,
-   "first_seen": "2026-10-17",
-   "headline": "Draw",
-   "home": "Zwolle",
-   "id": "2026-10-18|Zwolle|GA Eagles|Draw \u00b7 Eredivisie draw band",
-   "kickoff": "2026-10-18T10:15Z",
-   "lane": "production",
-   "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
-   "league": "Eredivisie",
-   "match": "Zwolle v GA Eagles",
-   "pair": "ere_draw|soccer",
-   "price_at_log": 0.25,
-   "published_at": "2026-10-17T11:03:58+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 1391,
-   "route": {
-    "claim": "Draw",
-    "event": "KXEREDIVISIEGAME-26OCT18ZWOGAE",
-    "market": "KXEREDIVISIEGAME-26OCT18ZWOGAE-TIE",
-    "outcome": "Tie",
-    "outcome_side": "yes",
-    "price_at_log": 0.25,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "ere_draw:KXEREDIVISIEGAME-26OCT18ZWOGAE",
-   "source": "ere_draw",
-   "sport": "soccer",
-   "status": "pending"
-  },
   "2026-10-19|Cowboys|Packers|Cowboys to win \u00b7 ESPN FPI / Matchup Predictor": {
    "away": "Packers",
    "bet": {
@@ -3406,7 +3446,7 @@
    "kickoff": "2026-10-19T00:20Z",
    "lane": "production",
    "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
    "league": "NFL",
    "match": "Cowboys v Packers",
    "model_prob": 0.523,
@@ -3444,7 +3484,7 @@
    "kickoff": "2026-10-19T18:45Z",
    "lane": "production",
    "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
    "league": "Serie A",
    "match": "Parma v Torino",
    "pair": "team2_ranked|soccer_team2",
@@ -3481,7 +3521,7 @@
    "kickoff": "2026-10-20T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T07:15:21+00:00",
+   "last_seen_at": "2026-10-18T10:58:38+00:00",
    "league": "NFL",
    "match": "Commanders v 49ers",
    "model_prob": 0.86,
@@ -3562,9 +3602,9 @@
    "ready_at": "2026-10-15T07:20:21+00:00",
    "route": "moved by hand on 2026-10-15",
    "routing": {
-    "leads": 4,
+    "leads": 5,
     "problem": null,
-    "routed": 4,
+    "routed": 5,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -3576,7 +3616,7 @@
    "sandbox_roi_fee": 0.0829,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 2,
     "under_target": 0
    }
   },
@@ -3587,9 +3627,9 @@
    "ready_at": "2026-10-15T07:20:21+00:00",
    "route": "moved by hand on 2026-10-15",
    "routing": {
-    "leads": 2,
+    "leads": 4,
     "problem": null,
-    "routed": 2,
+    "routed": 4,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -3601,7 +3641,7 @@
    "sandbox_roi_fee": 0.1996,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 2,
     "under_target": 0
    }
   },
@@ -3662,9 +3702,9 @@
    "ready_at": "2026-10-11T19:34:45+00:00",
    "route": "moved by hand on 2026-10-11",
    "routing": {
-    "leads": 5,
+    "leads": 4,
     "problem": null,
-    "routed": 5,
+    "routed": 4,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -3676,7 +3716,7 @@
    "sandbox_roi_fee": -1.0,
    "timing": {
     "late": [],
-    "timed": 3,
+    "timed": 2,
     "under_target": 0
    }
   },
@@ -3912,9 +3952,9 @@
    "ready_at": "2026-10-11T19:34:45+00:00",
    "route": "moved by hand on 2026-10-11",
    "routing": {
-    "leads": 7,
+    "leads": 6,
     "problem": null,
-    "routed": 7,
+    "routed": 6,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -3935,7 +3975,7 @@
       "minutes": 26
      }
     ],
-    "timed": 5,
+    "timed": 4,
     "under_target": 1
    }
   },
@@ -4088,5 +4128,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-18T07:15:21+00:00"
+ "updated_at": "2026-10-18T10:58:38+00:00"
 }
