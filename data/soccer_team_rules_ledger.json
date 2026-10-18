@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-18T14:16:10.493326+00:00",
+ "last_run": "2026-10-18T14:31:43.236474+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -55,6 +55,58 @@
      "ticker": "KXBUNDESLIGATEAMTOTAL-26OCT18LEVSCF-SCF2",
      "title": "Will Freiburg score over 1.5 goals?",
      "why": "SC Freiburg O+D- v Bayer Leverkusen O+D- \u00b7 2+ YES 0.35"
+    },
+    {
+     "ask": 0.6,
+     "bid": 0.59,
+     "event": "KXSERIEATEAMTOTAL-26OCT18ACMATA",
+     "group": "A",
+     "id": "T1:KXSERIEATEAMTOTAL-26OCT18ACMATA:home",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Serie A",
+     "line": 1.5,
+     "logged": "2026-10-18T14:31:43.236474+00:00",
+     "match": "AC Milan v Atalanta",
+     "opponent": "Atalanta",
+     "price": 0.6,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-10-18T16:00Z",
+     "status": "open",
+     "team": "AC Milan",
+     "team_side": "home",
+     "ticker": "KXSERIEATEAMTOTAL-26OCT18ACMATA-ACM2",
+     "title": "Will Milan score over 1.5 goals?",
+     "why": "AC Milan O+D- v Atalanta O+D- \u00b7 2+ YES 0.60"
+    },
+    {
+     "ask": 0.3,
+     "bid": 0.29,
+     "event": "KXSERIEATEAMTOTAL-26OCT18ACMATA",
+     "group": "A",
+     "id": "T1:KXSERIEATEAMTOTAL-26OCT18ACMATA:away",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Serie A",
+     "line": 1.5,
+     "logged": "2026-10-18T14:31:43.236474+00:00",
+     "match": "AC Milan v Atalanta",
+     "opponent": "AC Milan",
+     "price": 0.3,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-10-18T16:00Z",
+     "status": "open",
+     "team": "Atalanta",
+     "team_side": "away",
+     "ticker": "KXSERIEATEAMTOTAL-26OCT18ACMATA-ATA2",
+     "title": "Will Atalanta score over 1.5 goals?",
+     "why": "Atalanta O+D- v AC Milan O+D- \u00b7 2+ YES 0.30"
     }
    ]
   },
@@ -602,6 +654,14 @@
    "labelled": 5,
    "matched": 4,
    "new": 0
+  },
+  {
+   "at": "2026-10-18T14:31:43.236474+00:00",
+   "candidates": 5,
+   "due": 6,
+   "labelled": 6,
+   "matched": 5,
+   "new": 2
   }
  ],
  "version": "soccer-team-rules-v1"
