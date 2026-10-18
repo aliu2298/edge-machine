@@ -77,9 +77,10 @@ def _has_toggle(path):
 
 # One link, or a breadcrumb in that slot. The section nav must not be rendered.
 # Every page, the sport pages included, carries the one shell: brand, page
-# pills, stamp. Trading has one section, so no section nav; the NBA board's
-# Upcoming / Results / Teams nav is the shared one since the phase-3 template.
-_NO_TOC = {"trading.html", "archive/index.html"}
+# pills, stamp. Trading has two sections since 2026-10-18 (Rules, Nasdaq breakout), so it
+# carries the section nav; the NBA board's Upcoming / Results / Teams nav is the shared one
+# since the phase-3 template.
+_NO_TOC = {"archive/index.html"}
 
 
 def _expects_toc(path):
@@ -174,7 +175,10 @@ ok('id="vw"' not in index_html and 'class="toc"' not in index_html,
    "the archive index has no view toggle and no one-link section nav")
 ok('class="crumbs"' in week_html and ">W39<" in week_html and ">Archive<" in week_html,
    "a week page generator writes a Sandbox › Archive › W39 breadcrumb")
-ok('class="toc"' not in trade_html, "Trading does not render a one-link Rules nav")
+_trade_toc = _toc(trade_html)
+_trade_labels = re.findall(r">([^<]+)</a>", _trade_toc.group(0) if _trade_toc else "")
+ok(_trade_labels == ["Rules", "Nasdaq breakout"],
+   f"Trading renders a Rules / Nasdaq breakout section nav (2026-10-18; {_trade_labels})")
 _root_toc = _toc(root_html)
 _root_labels = re.findall(r">([^<]+)</a>", _root_toc.group(0) if _root_toc else "")
 ok(_root_labels == ["Overview", "Areas", "Attention", "Live now", "Rules"],

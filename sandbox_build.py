@@ -2189,6 +2189,7 @@ def trading_page(now=None):
     """
     import market_sources as MS
     import market_track as MT
+    import nasdaq_orb_build
     now_dt = now or datetime.now(timezone.utc)
     if now_dt.tzinfo is None:
         now_dt = now_dt.replace(tzinfo=timezone.utc)
@@ -2222,13 +2223,14 @@ never the signal bar's close. Costs of {int(MS.COST_BPS_PER_SIDE)}bp a side are 
 with its lean, <i>Promising</i> or <i>Behind</i>; under {MT.EARLY_N} a rule is only <i>Too early</i>. Open <b>What this rule does</b> under a row for its definition.</div>
 </details>
 </section>
+{nasdaq_orb_build.safe_section()}
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 """
     return site_chrome.document(
         "Edge Machine · Trading",
         "Stock and ETF rules under test, judged per entry day at real prices.",
         "trading",
-        (("rules", "Rules"),),
+        (("rules", "Rules"), (nasdaq_orb_build.SECTION_ID, "Nasdaq breakout")),
         site_chrome.stamp(now_dt),
         body,
     )
