@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-18T18:01:34.062219+00:00",
+ "last_run": "2026-10-18T18:16:41.661174+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -77,11 +77,14 @@
      "logged": "2026-10-18T14:31:43.236474+00:00",
      "match": "AC Milan v Atalanta",
      "opponent": "Atalanta",
+     "payout": 1.0,
      "price": 0.6,
+     "profit": 62.13,
      "rule": "T1",
+     "settled": "2026-10-18T18:16:41.661174+00:00",
      "side": "yes",
      "start": "2026-10-18T16:00Z",
-     "status": "open",
+     "status": "won",
      "team": "AC Milan",
      "team_side": "home",
      "ticker": "KXSERIEATEAMTOTAL-26OCT18ACMATA-ACM2",
@@ -103,11 +106,14 @@
      "logged": "2026-10-18T14:31:43.236474+00:00",
      "match": "AC Milan v Atalanta",
      "opponent": "AC Milan",
+     "payout": 1.0,
      "price": 0.3,
+     "profit": 217.76,
      "rule": "T1",
+     "settled": "2026-10-18T18:16:41.661174+00:00",
      "side": "yes",
      "start": "2026-10-18T16:00Z",
-     "status": "open",
+     "status": "won",
      "team": "Atalanta",
      "team_side": "away",
      "ticker": "KXSERIEATEAMTOTAL-26OCT18ACMATA-ATA2",
@@ -850,6 +856,14 @@
   },
   {
    "at": "2026-10-18T18:01:34.062219+00:00",
+   "candidates": 3,
+   "due": 3,
+   "labelled": 3,
+   "matched": 3,
+   "new": 0
+  },
+  {
+   "at": "2026-10-18T18:16:41.661174+00:00",
    "candidates": 3,
    "due": 3,
    "labelled": 3,
