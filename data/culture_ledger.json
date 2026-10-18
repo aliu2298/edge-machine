@@ -2,16 +2,16 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-18T20:00:14.419404+00:00",
-   "last_success": "2026-10-18T20:00:14.419404+00:00",
+   "last_run": "2026-10-18T21:00:15.092165+00:00",
+   "last_success": "2026-10-18T21:00:15.092165+00:00",
    "observations": {
-    "at": "2026-10-18T20:00:14.419404+00:00",
+    "at": "2026-10-18T21:00:15.092165+00:00",
     "events": 866,
     "reasons": {
-     "in band": 8,
-     "no quote or spread too wide": 284,
+     "in band": 7,
+     "no quote or spread too wide": 281,
      "not active": 745,
-     "outside the band": 50,
+     "outside the band": 54,
      "outside the entry window": 11109
     }
    },
@@ -161,16 +161,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-18T20:00:14.419404+00:00",
-   "last_success": "2026-10-18T20:00:14.419404+00:00",
+   "last_run": "2026-10-18T21:00:15.092165+00:00",
+   "last_success": "2026-10-18T21:00:15.092165+00:00",
    "observations": {
-    "at": "2026-10-18T20:00:14.419404+00:00",
+    "at": "2026-10-18T21:00:15.092165+00:00",
     "events": 866,
     "reasons": {
-     "in band": 2,
-     "no quote or spread too wide": 604,
+     "in band": 1,
+     "no quote or spread too wide": 603,
      "not active": 745,
-     "outside the band": 164,
+     "outside the band": 166,
      "outside the entry window": 10681
     }
    },
@@ -325,16 +325,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-18T20:00:14.419404+00:00",
-   "last_success": "2026-10-18T20:00:14.419404+00:00",
+   "last_run": "2026-10-18T21:00:15.092165+00:00",
+   "last_success": "2026-10-18T21:00:15.092165+00:00",
    "observations": {
-    "at": "2026-10-18T20:00:14.419404+00:00",
+    "at": "2026-10-18T21:00:15.092165+00:00",
     "events": 866,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 38,
-     "edge 5c+": 6,
+     "already near-certain (under 10c or over 90c)": 39,
+     "edge 5c+": 7,
      "edge under 5c": 2,
-     "no quote or spread too wide": 38
+     "no quote or spread too wide": 36
     }
    },
    "picks": [
@@ -708,19 +708,34 @@
      "side": "no",
      "status": "open",
      "title": "Panama / Panamanian"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-11-01T15:00:00Z",
+     "detail": "P(said) 0.00 \u00b7 said on 0 of the last 84 days, 13.7 days left \u00b7 edge +0.59",
+     "edge": 0.5933,
+     "event": "KXTRUMPSAYCOMPANY-26NOV01",
+     "id": "KXTRUMPSAYCOMPANY-26NOV01-DE",
+     "logged": "2026-10-18T21:00:15.092165+00:00",
+     "model": 0.0,
+     "name": "What companies will Trump say in October?",
+     "price": 0.39,
+     "series": "KXTRUMPSAYCOMPANY",
+     "side": "no",
+     "status": "open",
+     "title": "Deere"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-18T20:00:14.419404+00:00",
-   "last_success": "2026-10-18T20:00:14.419404+00:00",
+   "last_run": "2026-10-18T21:00:15.092165+00:00",
+   "last_success": "2026-10-18T21:00:15.092165+00:00",
    "observations": {
-    "at": "2026-10-18T20:00:14.419404+00:00",
+    "at": "2026-10-18T21:00:15.092165+00:00",
     "events": 866,
     "reasons": {
-     "edge 5c+": 6,
-     "edge under 5c": 2,
+     "edge 5c+": 8,
      "under 20 reviews counted": 11
     }
    },
@@ -929,7 +944,7 @@
    ]
   },
   "Ceasefire": {
-   "at": "2026-10-18T15:00:12.916618+00:00",
+   "at": "2026-10-18T21:00:15.092165+00:00",
    "days": [
     "2026-09-22"
    ]
@@ -944,6 +959,10 @@
     "2026-09-26",
     "2026-09-30"
    ]
+  },
+  "Deere": {
+   "at": "2026-10-18T21:00:15.092165+00:00",
+   "days": []
   },
   "Epstein": {
    "at": "2026-10-18T14:10:00.372261+00:00",
