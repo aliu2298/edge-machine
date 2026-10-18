@@ -1219,6 +1219,10 @@ SOURCES = {
                 'record is not reset: band, window, liquidity floor and selection are the same rule.'),
         ],
         baseline="favourite_population",
+        # The population is the YES favourites of this sport only (2026-10-18): the No mirror,
+        # crypto_fav_band_below, logs NO favourites into the same sport, and without this each
+        # lane's blind rule would silently pool the other lane's contests.
+        favourite_side="a",
         # One bet per series per close token (KXBTCD + 26OCT0617), across runs.
         # one_per_day is the wrong switch: it keys on the date alone and would
         # allow only one coin that day. publish() reads this flag.
@@ -1248,6 +1252,77 @@ SOURCES = {
              "outcomes, about six weeks. A rung also needs a two-sided quote, a spread of "
              "3c or less and 25 contracts on the ask: HYPE quoted one price on fourteen "
              "consecutive strikes, which is a stale book, not a signal."),
+    "crypto_fav_band_below": dict(
+        label="Crypto favourite band, below (No 0.70-0.80 on the rung above the price, 3 hours to the close)",
+        kind="Rule", connected=True, site="edge-machine", sports=["crypto_fav"],
+        baseline="favourite_population",
+        # Judged against the NO favourites of this sport, never the YES lane's contests.
+        favourite_side="b",
+        # One bet per series per close token, the same gate crypto_fav_band uses.
+        one_per_coin_close=True,
+        note="PRE-REGISTERED 2026-10-18, before it logged anything: the mirror of "
+             "crypto_fav_band, on a fresh record and in the Sandbox only. Back the NO on a "
+             "Kalshi coin-directional rung whose NO ask is 0.70-0.80 inclusive, which is a "
+             "rung ABOVE the coin's price ('$X or above' priced 0.20-0.30), entered 2-3.5 "
+             "hours before the 17:00 ET close, measured to the contract close. ONE bet per "
+             "coin per close, the CHEAPEST in-band NO (the rung nearest the price), equal "
+             "prices to the lower ticker. Every other term is crypto_fav_band's, copied, "
+             "not retuned: the same five coins (BTC, ETH, SOL, XRP, HYPE), the same close, "
+             "the same up to three reads per window, and the same liquidity floor measured "
+             "on the NO side (a two-sided NO quote, a spread of 3c or less, 25 contracts "
+             "at the NO ask). WHY: on 727 settled Kalshi daily ladders, 2026-08-11 to "
+             "10-17, entered at close minus 3 hours with a spread of 5c or less and z "
+             "clustered by day, the 70-80c crypto favourite won on BOTH sides. Above (YES, "
+             "the existing lane): 58/69 at 74c, +11.0%, z +1.81. Below (this rule): 63/75 "
+             "at 75c, +9.4%, z +1.65 -- BTC 33/39, ETH 9/9, HYPE 7/8, SOL 9/12, XRP 5/7. "
+             "Choosing the side from the trend added nothing, so there is no trend filter. "
+             "The two sides lose on opposite moves, so together they unwind the YES lane's "
+             "long-only lean. Neither figure reached z +2, and the research window is the "
+             "one these numbers came from, so this record starts at zero. WHAT IT MUST "
+             "BEAT is the YES lane's figure, unchanged: at the taker fee the effective "
+             "price at mid-band is 0.7632, about 1.3pp over the price. An outcome is a "
+             "DAY across all coins, as for the YES lane. Judged against backing the NO "
+             "favourite on every rung this sport logged, one quote per contest. Read at "
+             "30 independent outcomes."),
+    "crypto_fav_band_60": dict(
+        label="Crypto favourite band 60 (Yes 0.60 to under 0.70, 3 hours to the close)",
+        kind="Rule", connected=True, site="edge-machine", sports=["crypto_fav"],
+        baseline="favourite_population", favourite_side="a", one_per_coin_close=True,
+        note="PRE-REGISTERED 2026-10-18, before it logged anything, on a fresh record and in "
+             "the Sandbox only: crypto_fav_band one band lower. Back the YES on the CHEAPEST "
+             "rung per coin whose YES ask is at least 0.60 and UNDER 0.70, so the band never "
+             "shares a price with the 0.70-0.80 lanes: a 0.70 rung belongs to those only, "
+             "and they keep both ends inclusive as registered. Every other term is "
+             "crypto_fav_band's: the same five coins, the 17:00 ET close, 2-3.5 hours before "
+             "it measured to the contract close, up to three reads per window, one entry per "
+             "coin per close, equal prices to the lower ticker, and the liquidity floor on "
+             "the YES side (spread 3c or less, 25 contracts at the ask). WHY: the same "
+             "727-ladder study (Kalshi daily ladders 2026-08-11 to 10-17, entry at close "
+             "minus 3 hours, spread 5c or less, z clustered by day): YES 0.60-0.70 won 37/49 "
+             "at 65c, +13.5%, z +1.53; +9.6% in the research half and +19.1% in the holdout. "
+             "For comparison YES 0.70-0.80 was 58/69, +11.0%. Below z +2, so it is read like "
+             "the others: an outcome is a day across all coins, judged against the YES "
+             "favourite on every rung this sport logged, read at 30 independent outcomes."),
+    "crypto_fav_band_below_60": dict(
+        label="Crypto favourite band 60, below (No 0.60 to under 0.70 on the rung above the price, 3 hours to the close)",
+        kind="Rule", connected=True, site="edge-machine", sports=["crypto_fav"],
+        baseline="favourite_population", favourite_side="b", one_per_coin_close=True,
+        note="PRE-REGISTERED 2026-10-18, before it logged anything, on a fresh record and in "
+             "the Sandbox only: crypto_fav_band_below one band lower. Back the NO on the "
+             "CHEAPEST rung per coin whose NO ask is at least 0.60 and UNDER 0.70, a rung "
+             "above the coin's price; the band never shares a price with the 0.70-0.80 "
+             "lanes, so a 0.70 NO belongs to crypto_fav_band_below only. Every other term is "
+             "crypto_fav_band's: the same five coins, the 17:00 ET close, 2-3.5 hours before "
+             "it measured to the contract close, up to three reads per window, one entry per "
+             "coin per close, equal prices to the lower ticker, and the liquidity floor on "
+             "the NO side (spread 3c or less, 25 contracts at the NO ask, which is the size "
+             "at the YES bid). WHY: the same 727-ladder study (Kalshi daily ladders "
+             "2026-08-11 to 10-17, entry at close minus 3 hours, spread 5c or less, z "
+             "clustered by day): NO 0.60-0.70 won 42/52 at 65c, +21.3%, z +2.50; +15.1% in "
+             "the research half and +33.1% in the holdout -- the strongest of the four "
+             "crypto bands. For comparison NO 0.70-0.80 was 63/76, +7.9% in that table. An "
+             "outcome is a day across all coins, judged against the NO favourite on every "
+             "rung this sport logged, read at 30 independent outcomes."),
     "commod_fav_band": dict(
         label="Commodities favourite band (Yes 0.70-0.80, 3 hours to the close)", kind="Rule",
         connected=True, site="edge-machine", sports=["commodities_fav"],
@@ -8302,6 +8377,99 @@ def fetch_crypto_fav_band(sport, universe=None, now=None):
 
 
 # ---------------------------------------------------------------------------
+# Crypto favourite band, below — pre-registered 2026-10-18
+# ---------------------------------------------------------------------------
+#
+# The NO mirror of fetch_crypto_fav_band: back the NO priced 0.70-0.80 on the rung ABOVE
+# the price, the cheapest in band per coin. Everything but the side is the YES lane's own
+# constants, so the two can never drift apart. The liquidity floor reads the NO book: a
+# NO ask is the YES bid's complement, and the size resting at the NO ask is the size at
+# the YES bid (Kalshi lists no separate NO size), so a 25-contract NO is 25 at the YES bid.
+def _crypto_fav_liquid_no(row):
+    """Is this rung's NO side tight and deep enough to be a real price? (ok, why)."""
+    if not (row.get("tradeable") or {}).get("b"):
+        return False, "no side not tradeable"
+    m = row.get("market") or {}
+    bid, ask = _num(m.get("no_bid_dollars")), _num(m.get("no_ask_dollars"))
+    if bid is None or ask is None:
+        return False, "no two-sided no quote"
+    if ask - bid > CRYPTO_FAV_MAX_SPREAD + 1e-9:
+        return False, f"no spread {ask - bid:.2f} over {CRYPTO_FAV_MAX_SPREAD:.2f}"
+    size = _num(m.get("no_ask_size_fp"))
+    if size is None:
+        size = _num(m.get("yes_bid_size_fp"))
+    if size is None:
+        size = _num(m.get("yes_bid_size"))
+    if size is not None and size < CRYPTO_FAV_MIN_ASK_SIZE:
+        return False, f"no ask size {size:g} under {CRYPTO_FAV_MIN_ASK_SIZE}"
+    return True, ""
+
+
+# The 0.60-0.70 band (2026-10-18) on both sides. HALF-OPEN, 0.60 <= p < 0.70, so the two
+# bands never share a price: a 0.70 rung belongs to the 0.70-0.80 lanes only, which keep
+# CRYPTO_FAV_BAND exactly as registered (both ends inclusive).
+CRYPTO_FAV_BAND_60 = (0.60, 0.70)       # lower end inclusive, upper end EXCLUSIVE
+
+
+def _crypto_band_picks(name, sport, universe, now, side, band, hi_inclusive):
+    """The cheapest in-band `side` ("a" Yes, "b" No) per coin, 2-3.5h before the 17:00 ET close.
+
+    crypto_fav_band's rule with the side and band as arguments: same close, window, one
+    per series, ties to the lower ticker, and the liquidity floor read on the side bought."""
+    if sport != "crypto_fav":
+        return []
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    lo, hi = band
+    key = f"price_{side}"
+    liquid = _crypto_fav_liquid if side == "a" else _crypto_fav_liquid_no
+    best, skipped = {}, {}
+    for r in (universe if universe is not None else (UNIVERSE or {})).get(sport) or []:
+        exp = _ladder_close(r)
+        if exp is None or exp.astimezone(CRYPTO_FAV_TZ).hour != CRYPTO_FAV_CLOSE_ET:
+            continue
+        hours = (exp - now).total_seconds() / 3600.0
+        if not (CRYPTO_FAV_MIN_H <= hours <= CRYPTO_FAV_MAX_H):
+            continue
+        price = r.get(key)
+        if price is None or r.get("price_draw") is not None or not lo <= price:
+            continue
+        if not (price <= hi if hi_inclusive else price < hi - 1e-9):
+            continue
+        ok, why = liquid(r)
+        if not ok:
+            skipped.setdefault(r.get("series"), why)
+            continue
+        cur = best.get(r.get("series"))
+        if cur is None or (price, r["market_id"]) < (cur[key], cur["market_id"]):
+            best[r.get("series")] = r
+    for series, why in sorted(skipped.items()):
+        if series not in best:
+            print(f"  {name}: skip {series}: {why}")
+    word = "Yes" if side == "a" else "No"
+    return [dict(market_id=r["market_id"], pick=side,
+                 detail=f"cheapest {word} in band {r[key]:.2f}, "
+                        f"{(_ladder_close(r) - now).total_seconds() / 3600:.1f}h to close")
+            for r in sorted(best.values(), key=lambda x: x["market_id"])]
+
+
+def fetch_crypto_fav_band_below(sport, universe=None, now=None):
+    """The cheapest No priced 0.70-0.80 (both ends inclusive) per coin."""
+    return _crypto_band_picks("crypto_fav_band_below", sport, universe, now, "b", CRYPTO_FAV_BAND, True)
+
+
+def fetch_crypto_fav_band_60(sport, universe=None, now=None):
+    """The cheapest Yes priced 0.60 to under 0.70 per coin."""
+    return _crypto_band_picks("crypto_fav_band_60", sport, universe, now, "a", CRYPTO_FAV_BAND_60, False)
+
+
+def fetch_crypto_fav_band_below_60(sport, universe=None, now=None):
+    """The cheapest No priced 0.60 to under 0.70 per coin."""
+    return _crypto_band_picks("crypto_fav_band_below_60", sport, universe, now, "b", CRYPTO_FAV_BAND_60, False)
+
+
+# ---------------------------------------------------------------------------
 # Commodities favourite band — pre-registered 2026-10-08
 # ---------------------------------------------------------------------------
 #
@@ -10352,6 +10520,9 @@ CHALLENGERS = {
     "btts_form_l10_fade": fetch_btts_form_l10_fade,
     "mls_away_band_fade": fetch_mls_away_band_fade,
     "crypto_fav_band": fetch_crypto_fav_band,
+    "crypto_fav_band_below": fetch_crypto_fav_band_below,
+    "crypto_fav_band_60": fetch_crypto_fav_band_60,
+    "crypto_fav_band_below_60": fetch_crypto_fav_band_below_60,
     "commod_fav_band": fetch_commod_fav_band,
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,

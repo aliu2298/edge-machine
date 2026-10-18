@@ -5,6 +5,7 @@ Four lanes enter a Yes at 70-80c 2-3.5 hours before a contract's CLOSE, and each
 is different:
 
     crypto_fav_band   coin ladders          17:00 ET, every day
+                      (and its siblings: _below, _60, _below_60, 2026-10-18)
     commod_fav_band   WTI                   14:30 ET, weekdays (the commodity calendar)
                       Brent, gold, silver,  17:00 ET, the commodity calendar
                       copper, natural gas
@@ -305,9 +306,19 @@ def _close_token(close):
     return f"{et:%y}{et.strftime('%b').upper()}{et:%d}{et:%H}"
 
 
+# The lanes one window reads for (2026-10-18). The crypto window serves four sibling lanes
+# (Yes and No, 0.70-0.80 and 0.60-0.70); a later read is skipped only once a series holds an
+# entry in EVERY one of them, so the Yes lane filling first never cuts off the No lanes' reads.
+WINDOW_LANES = {
+    "crypto_fav_band": ("crypto_fav_band", "crypto_fav_band_below", "crypto_fav_band_60",
+                        "crypto_fav_band_below_60"),
+    "commod_fav_band": ("commod_fav_band",),
+}
+
+
 def entered_series(lane, close, ledger=None):
-    """Series of this lane already holding an entry for this close (crypto, commodities)."""
-    if lane not in ("crypto_fav_band", "commod_fav_band"):
+    """Series holding an entry for this close in every lane the window serves (crypto, commodities)."""
+    if lane not in WINDOW_LANES:
         return set()
     if ledger is None:
         try:
@@ -316,14 +327,14 @@ def entered_series(lane, close, ledger=None):
         except (OSError, ValueError):
             return set()
     token = _close_token(close)
-    got = set()
+    got = {name: set() for name in WINDOW_LANES[lane]}
     for q in (ledger.get("quotes") or []) + (ledger.get("_archive") or []):
-        if q.get("source") != lane or not q.get("bet"):
+        if q.get("source") not in got or not q.get("bet"):
             continue
         parts = str(q.get("market_id") or "").split("-")
         if len(parts) >= 2 and parts[1].startswith(token[:7]):
-            got.add(parts[0])
-    return got
+            got[q["source"]].add(parts[0])
+    return set.intersection(*got.values())
 
 
 def due(now, ledger=None, games=None, fixtures=None):

@@ -3674,12 +3674,19 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     # every contest of the sport over the same period, one quote per contest.
     if (S.SOURCES.get(name) or {}).get("baseline") == "favourite_population" and bets:
         seen_c, fav = set(), []
+        # A one-sided ladder lane (favourite_side, 2026-10-18) is judged against the favourites
+        # on ITS side only: crypto_fav_band (Yes) and its No mirror share a sport, and the
+        # pool would otherwise hold the other lane's contests.
+        fside = (S.SOURCES.get(name) or {}).get("favourite_side")
         # The FIRST price logged for each contest, whether that row is still in the ledger or was
         # folded into the archive — so pruning never changes which price a contest is judged at.
         for q in sorted(all_bets(d), key=_logged_id):
             if (q["sport"] not in {b["sport"] for b in bets} or q.get("result") not in ("a", "b")
                     or q["market_id"] in seen_c or (since is not None and q["logged"] < since)
                     or (venues is not None and (q.get("venue") or "polymarket") not in venues)):
+                continue
+            if fside is not None and (q.get("price_a") is None or q.get("price_b") is None
+                                      or ("a" if q["price_a"] >= q["price_b"] else "b") != fside):
                 continue
             pnl_f = blind_pnl(q, "favourite")
             if pnl_f is not None:
