@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-18T11:01:39.119755+00:00",
+ "last_run": "2026-10-18T11:31:34.891373+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -18,7 +18,54 @@
    "picks": []
   },
   "A6": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.48,
+     "bid": 0.47,
+     "event": "KXEPLTOTAL-26OCT18BOUSUN",
+     "group": "A",
+     "id": "A6:KXEPLTOTAL-26OCT18BOUSUN",
+     "labels": {
+      "away": "O-D-",
+      "home": "O+D+"
+     },
+     "league": "Premier League",
+     "line": 2.5,
+     "logged": "2026-10-18T11:31:34.891373+00:00",
+     "match": "AFC Bournemouth v Sunderland",
+     "price": 0.53,
+     "rule": "A6",
+     "side": "no",
+     "start": "2026-10-18T13:00Z",
+     "status": "open",
+     "ticker": "KXEPLTOTAL-26OCT18BOUSUN-3",
+     "title": "Will over 2.5 goals be scored?",
+     "why": "AFC Bournemouth O+D+ v Sunderland O-D- \u00b7 Under 2.5 NO 0.53"
+    },
+    {
+     "ask": 0.52,
+     "bid": 0.51,
+     "event": "KXEPLTOTAL-26OCT18LEEMUN",
+     "group": "A",
+     "id": "A6:KXEPLTOTAL-26OCT18LEEMUN",
+     "labels": {
+      "away": "O+D-",
+      "home": "O-D-"
+     },
+     "league": "Premier League",
+     "line": 2.5,
+     "logged": "2026-10-18T11:31:34.891373+00:00",
+     "match": "Leeds United v Manchester United",
+     "price": 0.49,
+     "rule": "A6",
+     "side": "no",
+     "start": "2026-10-18T13:00Z",
+     "status": "open",
+     "ticker": "KXEPLTOTAL-26OCT18LEEMUN-3",
+     "title": "Will over 2.5 goals be scored?",
+     "why": "Leeds United O-D- v Manchester United O+D- \u00b7 Under 2.5 NO 0.49"
+    }
+   ]
   },
   "A7": {
    "picks": []
@@ -48,7 +95,31 @@
    "picks": []
   },
   "C3": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.6,
+     "bid": 0.59,
+     "event": "KXSERIEATOTAL-26OCT18FIOCOM",
+     "group": "C",
+     "id": "C3:KXSERIEATOTAL-26OCT18FIOCOM",
+     "labels": {
+      "away": "O+D-",
+      "home": "O+D+"
+     },
+     "league": "Serie A",
+     "line": 2.5,
+     "logged": "2026-10-18T11:31:34.891373+00:00",
+     "match": "Fiorentina v Como",
+     "price": 0.6,
+     "rule": "C3",
+     "side": "yes",
+     "start": "2026-10-18T13:00Z",
+     "status": "open",
+     "ticker": "KXSERIEATOTAL-26OCT18FIOCOM-3",
+     "title": "Will over 2.5 goals be scored?",
+     "why": "Fiorentina O+D+ v Como O+D- \u00b7 Over 2.5 YES 0.60"
+    }
+   ]
   },
   "C4": {
    "picks": []
@@ -95,6 +166,52 @@
      "ticker": "KXMLSBTTS-26OCT17HOUDAL-BTTS",
      "title": "Both Teams To Score",
      "why": "Houston Dynamo FC O-D- v FC Dallas O+D+ \u00b7 BTTS NO 0.42"
+    },
+    {
+     "ask": 0.55,
+     "bid": 0.54,
+     "event": "KXEPLBTTS-26OCT18BOUSUN",
+     "group": "BTTS",
+     "id": "D2:KXEPLBTTS-26OCT18BOUSUN",
+     "labels": {
+      "away": "O-D-",
+      "home": "O+D+"
+     },
+     "league": "Premier League",
+     "line": null,
+     "logged": "2026-10-18T11:31:34.891373+00:00",
+     "match": "AFC Bournemouth v Sunderland",
+     "price": 0.46,
+     "rule": "D2",
+     "side": "no",
+     "start": "2026-10-18T13:00Z",
+     "status": "open",
+     "ticker": "KXEPLBTTS-26OCT18BOUSUN-BTTS",
+     "title": "Both Teams To Score",
+     "why": "AFC Bournemouth O+D+ v Sunderland O-D- \u00b7 BTTS NO 0.46"
+    },
+    {
+     "ask": 0.54,
+     "bid": 0.52,
+     "event": "KXSUPERLIGBTTS-26OCT18KOCGOZ",
+     "group": "BTTS",
+     "id": "D2:KXSUPERLIGBTTS-26OCT18KOCGOZ",
+     "labels": {
+      "away": "O+D+",
+      "home": "O-D-"
+     },
+     "league": "Turkish Super Lig",
+     "line": null,
+     "logged": "2026-10-18T11:31:34.891373+00:00",
+     "match": "Kocaelispor v Goztepe",
+     "price": 0.48,
+     "rule": "D2",
+     "side": "no",
+     "start": "2026-10-18T13:00Z",
+     "status": "open",
+     "ticker": "KXSUPERLIGBTTS-26OCT18KOCGOZ-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Kocaelispor O-D- v Goztepe O+D+ \u00b7 BTTS NO 0.48"
     }
    ]
   },
@@ -125,6 +242,29 @@
      "ticker": "KXMLSBTTS-26OCT17SJNSH-BTTS",
      "title": "Both Teams To Score",
      "why": "San Jose Earthquakes O-D- v Nashville SC O+D- \u00b7 BTTS YES 0.65"
+    },
+    {
+     "ask": 0.58,
+     "bid": 0.57,
+     "event": "KXEPLBTTS-26OCT18LEEMUN",
+     "group": "BTTS",
+     "id": "D3:KXEPLBTTS-26OCT18LEEMUN",
+     "labels": {
+      "away": "O+D-",
+      "home": "O-D-"
+     },
+     "league": "Premier League",
+     "line": null,
+     "logged": "2026-10-18T11:31:34.891373+00:00",
+     "match": "Leeds United v Manchester United",
+     "price": 0.58,
+     "rule": "D3",
+     "side": "yes",
+     "start": "2026-10-18T13:00Z",
+     "status": "open",
+     "ticker": "KXEPLBTTS-26OCT18LEEMUN-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Leeds United O-D- v Manchester United O+D- \u00b7 BTTS YES 0.58"
     }
    ]
   }
@@ -233,6 +373,14 @@
    "labelled": 2,
    "matched": 0,
    "new": 0
+  },
+  {
+   "at": "2026-10-18T11:31:34.891373+00:00",
+   "candidates": 4,
+   "due": 8,
+   "labelled": 8,
+   "matched": 4,
+   "new": 6
   }
  ],
  "version": "soccer-rules-v1"
