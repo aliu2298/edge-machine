@@ -2,16 +2,16 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-18T19:00:13.716150+00:00",
-   "last_success": "2026-10-18T19:00:13.716150+00:00",
+   "last_run": "2026-10-18T19:41:13.383661+00:00",
+   "last_success": "2026-10-18T19:41:13.383661+00:00",
    "observations": {
-    "at": "2026-10-18T19:00:13.716150+00:00",
+    "at": "2026-10-18T19:41:13.383661+00:00",
     "events": 866,
     "reasons": {
-     "in band": 8,
-     "no quote or spread too wide": 250,
+     "in band": 7,
+     "no quote or spread too wide": 285,
      "not active": 745,
-     "outside the band": 51,
+     "outside the band": 50,
      "outside the entry window": 11109
     }
    },
@@ -161,16 +161,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-18T19:00:13.716150+00:00",
-   "last_success": "2026-10-18T19:00:13.716150+00:00",
+   "last_run": "2026-10-18T19:41:13.383661+00:00",
+   "last_success": "2026-10-18T19:41:13.383661+00:00",
    "observations": {
-    "at": "2026-10-18T19:00:13.716150+00:00",
+    "at": "2026-10-18T19:41:13.383661+00:00",
     "events": 866,
     "reasons": {
      "in band": 2,
-     "no quote or spread too wide": 573,
+     "no quote or spread too wide": 610,
      "not active": 745,
-     "outside the band": 162,
+     "outside the band": 158,
      "outside the entry window": 10681
     }
    },
@@ -325,16 +325,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-18T19:00:13.716150+00:00",
-   "last_success": "2026-10-18T19:00:13.716150+00:00",
+   "last_run": "2026-10-18T19:41:13.383661+00:00",
+   "last_success": "2026-10-18T19:41:13.383661+00:00",
    "observations": {
-    "at": "2026-10-18T19:00:13.716150+00:00",
+    "at": "2026-10-18T19:41:13.383661+00:00",
     "events": 866,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 38,
+     "already near-certain (under 10c or over 90c)": 37,
      "edge 5c+": 5,
      "edge under 5c": 2,
-     "no quote or spread too wide": 39
+     "no quote or spread too wide": 40
     }
    },
    "picks": [
@@ -697,14 +697,14 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-18T19:00:13.716150+00:00",
-   "last_success": "2026-10-18T19:00:13.716150+00:00",
+   "last_run": "2026-10-18T19:41:13.383661+00:00",
+   "last_success": "2026-10-18T19:41:13.383661+00:00",
    "observations": {
-    "at": "2026-10-18T19:00:13.716150+00:00",
+    "at": "2026-10-18T19:41:13.383661+00:00",
     "events": 866,
     "reasons": {
-     "edge 5c+": 6,
-     "edge under 5c": 2,
+     "edge 5c+": 7,
+     "edge under 5c": 1,
      "under 20 reviews counted": 11
     }
    },
@@ -893,7 +893,7 @@
    ]
   },
   "Bahrain / Bahraini": {
-   "at": "2026-10-18T13:00:14.205537+00:00",
+   "at": "2026-10-18T19:41:13.383661+00:00",
    "days": [
     "2026-08-20",
     "2026-08-30",
