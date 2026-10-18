@@ -59,6 +59,11 @@ SIX = {
     "liga_btts_even|soccer_btts": "La Liga BTTS in balanced matches",
     "bund_o35|soccer_u35": "Bundesliga over 3.5, every match",
 }
+# o15_form_l10|soccer_o15 came OFF Production again on 2026-10-17 (record kept). The checks
+# below replay the 2026-10-08 move, so they put its listing back for that replay only; the
+# live list is restored after the clock section and checked without it.
+_LIVE_OV = dict(T.PAIR_OVERRIDES)
+T.PAIR_OVERRIDES["o15_form_l10|soccer_o15"] = dict(moved_on=MOVE, production_at=None)
 
 # ---------------------------------------------------------------------------
 print("the six ids are in Production, moved by hand on the same day")
@@ -92,7 +97,9 @@ ok("o15_ranked|soccer_o15_intl" in T.PAIR_OVERRIDES
 eq((S.TENNIS_3H_BAND, S.COMBO_MARKUP[2], S.TENNIS_COMBO_BAND_SINCE),
    ((0.70, 0.85), 0.0084, "2026-10-04T06:46:57+00:00"),
    "promotion touches no tennis parameter")
-eq(len(T.PAIR_OVERRIDES), 23, "five pairs before, eleven after the six, twelve with commodities, eighteen with the six of 2026-10-11, seventeen with team scores 1+ · Clubs out on 2026-10-14, nineteen with corners_under out and its three lanes in on 2026-10-15, twenty-four with the five of 2026-10-16, twenty-three with btts_form_l10_fade out on 2026-10-17")
+ok("o15_form_l10|soccer_o15" not in _LIVE_OV and T.PAIR_REMOVALS["o15_form_l10|soccer_o15"]["keep_record"],
+   "o15_form_l10|soccer_o15 is off the live list since 2026-10-17, keeping its record")
+eq(len(_LIVE_OV), 22, "five pairs before, eleven after the six, twelve with commodities, eighteen with the six of 2026-10-11, seventeen with team scores 1+ · Clubs out on 2026-10-14, nineteen with corners_under out and its three lanes in on 2026-10-15, twenty-four with the five of 2026-10-16, twenty-three with btts_form_l10_fade out on 2026-10-17, twenty-two with o15_form_l10|soccer_o15 out the same day")
 
 # The tracker moves them on its next run, and the Since-Production record starts there.
 _stages = {"pairs": {}, "events": []}
@@ -466,6 +473,12 @@ ok('<td class="num">4<div class="sm mut">settled</div></td>' in row_o15,
 ok('<td class="num">30<div class="sm mut">settled</div></td>' not in row_o15, "never 30")
 row_list = next(r for r in SB.pair_list(d_o15, st_o15) if r["name"] == "o15_form_l10" and r["sport"] == "soccer_o15")
 eq(row_list["since"], CLOCK, "the row carries the clock for the league split and the pick lists")
+# 2026-10-17: taken off again, it goes back to the Sandbox on that same clock, not a new one.
+T.PAIR_OVERRIDES.clear()
+T.PAIR_OVERRIDES.update(_LIVE_OV)
+T.evaluate_stages(d_o15, st_o15, now=NOW + timedelta(days=9), verbose=False)
+eq({k: st_o15["pairs"][O15].get(k) for k in ("stage", "since")}, dict(stage="sandbox", since=CLOCK),
+   "removed 2026-10-17, it returns to the Sandbox on its 2026-09-21 clock (record kept)")
 
 # ---------------------------------------------------------------------------
 print("\ncommodities (2026-10-09): the same rung on Kalshi's daily commodity ladders")
