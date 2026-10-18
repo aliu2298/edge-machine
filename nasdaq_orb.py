@@ -3,7 +3,7 @@
 Asked for by Olu after the research of 2026-10-18 (memory gold-asia-open-breakout): a friend's
 opening-range breakout, tested on 807 days of QQQ 1-minute bars. Done without look-ahead
 (signal = a minute CLOSING beyond the range, entry = the NEXT minute's open) it is flat to
-negative; this lane watches it live anyway. Not in Production, not fed to the bot, and it does
+negative; this lane watches it live anyway. Not in Production, not on the Production feed, and it does
 not touch the Alpaca account: it reads market data only.
 
 Pre-registered variants, one row per variant per trading day, QQQ, no stop, one position:
