@@ -47,6 +47,22 @@ for name, q, kind, headline, team in (
           (q["market_id"], "no"))
     check("its Yes is not this claim", T.feed_bet(dict(q, pick="a")) == {"kind": kind}, False)
 
+print("\nunder 2.5 (2026-10-18, o25_congestion|soccer_o25): the No on the over-2.5 contract")
+o25 = dict(BASE, id="o25_congestion:KXUCLTOTAL-26OCT20ROMSLO-3", source="o25_congestion", sport="soccer_o25",
+           market_id="KXUCLTOTAL-26OCT20ROMSLO-3", league="Champions League", espn_home="AS Roma",
+           espn_away="Slovan Bratislava", price=0.27)
+check("the feed can publish it", T.placeable(o25), True)
+lead = PR.lead_from_quote(o25, "o25_congestion|soccer_o25", "2026-10-18T15:00:00+00:00")
+check("the claim is 2 goals or fewer, headlined Under 2.5", (lead["bet"], lead["headline"]),
+      ({"kind": "total_lte", "n": 2}, "Under 2.5 goals"))
+check("the No of the exact over-2.5 contract", (lead["route"]["market"], lead["route"]["outcome_side"]),
+      ("KXUCLTOTAL-26OCT20ROMSLO-3", "no"))
+check("the Yes on the same contract is still the over (turkey_o25_dog)", T.feed_bet(dict(o25, pick="a")),
+      {"kind": "total_gte", "n": 3})
+check("listed by hand 2026-10-18, Clubs only: the cup twin stays in the Sandbox",
+      (T.PAIR_OVERRIDES["o25_congestion|soccer_o25"]["moved_on"], "o25_congestion|soccer_o25_cup" in T.PAIR_OVERRIDES),
+      ("2026-10-18", False))
+
 print("\nthe five promotions of 2026-10-16 (btts_form_l10_fade out again 2026-10-17, record kept)")
 check("four of the five are still listed by hand that day",
       sorted(k for k, v in T.PAIR_OVERRIDES.items() if v["moved_on"] == "2026-10-16"),

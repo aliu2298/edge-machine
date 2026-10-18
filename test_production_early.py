@@ -99,7 +99,7 @@ eq((S.TENNIS_3H_BAND, S.COMBO_MARKUP[2], S.TENNIS_COMBO_BAND_SINCE),
    "promotion touches no tennis parameter")
 ok("o15_form_l10|soccer_o15" not in _LIVE_OV and T.PAIR_REMOVALS["o15_form_l10|soccer_o15"]["keep_record"],
    "o15_form_l10|soccer_o15 is off the live list since 2026-10-17, keeping its record")
-eq(len(_LIVE_OV), 22, "five pairs before, eleven after the six, twelve with commodities, eighteen with the six of 2026-10-11, seventeen with team scores 1+ · Clubs out on 2026-10-14, nineteen with corners_under out and its three lanes in on 2026-10-15, twenty-four with the five of 2026-10-16, twenty-three with btts_form_l10_fade out on 2026-10-17, twenty-two with o15_form_l10|soccer_o15 out the same day")
+eq(len(_LIVE_OV), 23, "five pairs before, eleven after the six, twelve with commodities, eighteen with the six of 2026-10-11, seventeen with team scores 1+ · Clubs out on 2026-10-14, nineteen with corners_under out and its three lanes in on 2026-10-15, twenty-four with the five of 2026-10-16, twenty-three with btts_form_l10_fade out on 2026-10-17, twenty-two with o15_form_l10|soccer_o15 out the same day, twenty-three with o25_congestion|soccer_o25 in on 2026-10-18")
 
 # The tracker moves them on its next run, and the Since-Production record starts there.
 _stages = {"pairs": {}, "events": []}
@@ -717,7 +717,11 @@ _o = PR.lead_from_quote(to, "turkey_o25_dog|soccer_o25", BUILT)
 eq((_o["headline"], _o["bet"], _rt(_o)),
    ("Over 2.5 goals", {"kind": "total_gte", "n": 3}, ("KXSUPERLIGTOTAL-26OCT09GALKAS-3", "yes")),
    "over 2.5 is a plain Yes, routed to the -3 contract itself")
-ok(not T.placeable(dict(to, pick="b")), "its No is not published")
+# Since 2026-10-18 (o25_congestion|soccer_o25) the No is published too, as its own claim.
+_on = PR.lead_from_quote(dict(to, pick="b"), "o25_congestion|soccer_o25", BUILT)
+eq((T.placeable(dict(to, pick="b")), _on["headline"], _on["bet"], _rt(_on)),
+   (True, "Under 2.5 goals", {"kind": "total_lte", "n": 2}, ("KXSUPERLIGTOTAL-26OCT09GALKAS-3", "no")),
+   "its No is published as under 2.5, the No of the same -3 contract")
 ok(not T.placeable(dict(to, sport="soccer_o25_cup")), "no cup twin reaches the feed")
 ok(not T.placeable(dict(tb, league="Allsvenskan")), "a league on neither map is still refused")
 

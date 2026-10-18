@@ -459,6 +459,12 @@ PAIR_OVERRIDES = {
     "mls_fade_home|soccer_p05": dict(moved_on="2026-10-16", production_at=None),
     "team2_form_l10|soccer_team2": dict(moved_on="2026-10-16", production_at=None),
     "ftts_no_70_80|soccer_ftts": dict(moved_on="2026-10-16", production_at=None),
+    # Congestion under 2.5, CLUBS scope (the cup twin stays in the Sandbox): moved by hand on
+    # 2026-10-18 by Olu, on its whole record: 30 settled, 14 won v 11.1 priced, +16.4% after
+    # fees, z +1.11, halves +37.0% then -4.1%, 20 open. Below the stamp (50 bets over 28 days,
+    # z >= 2), which was said, and waiting for 50 settled was recommended; the move is his call.
+    # The feed names its No on the over-2.5 contract (FEED_NO_TWIN soccer_o25, total_lte 2).
+    "o25_congestion|soccer_o25": dict(moved_on="2026-10-18", production_at=None),
     "espn_fpi|nfl": dict(moved_on="2026-10-16", production_at=None),
 }
 
@@ -3260,7 +3266,10 @@ FEED_SIDE = {"total_gte": "a", "team_gte": "a", "total_lte": "b", "btts": "a", "
 
 # The NO twin of a Yes domain (2026-10-16, with btts_form_l10_fade|soccer_btts): the No on the
 # same KX<league>BTTS contract, i.e. at least one side fails to score.
-FEED_NO_TWIN = {"soccer_btts": {"kind": "btts_no"}}
+FEED_NO_TWIN = {"soccer_btts": {"kind": "btts_no"},
+                # 2026-10-18, with o25_congestion|soccer_o25: the No on the same KX<league>TOTAL
+                # over-2.5 contract turkey_o25_dog backs the Yes on, i.e. 2 goals or fewer.
+                "soccer_o25": {"kind": "total_lte", "n": 2}}
 
 # ONE DOMAIN, TWO CLAIMS (2026-10-08). bund_o35 backs the YES on the same KX...TOTAL-4
 # contract u35_low_scoring backs the No on, so a soccer_u35 bet is the over or the under
