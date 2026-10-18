@@ -805,6 +805,11 @@
    "lead_min": 0.3,
    "price": 0.24
   },
+  "espn_fpi:aec-nfl-buf-lv-2026-10-18": {
+   "at": "2026-10-18T19:31:45+00:00",
+   "lead_min": 53.2,
+   "price": 0.6825
+  },
   "espn_fpi:aec-nfl-car-phi-2026-10-18": {
    "at": "2026-10-18T16:46:07+00:00",
    "lead_min": 13.9,
@@ -814,6 +819,11 @@
    "at": "2026-10-18T16:46:07+00:00",
    "lead_min": 13.9,
    "price": 0.515
+  },
+  "espn_fpi:aec-nfl-lac-kc-2026-10-18": {
+   "at": "2026-10-18T19:31:45+00:00",
+   "lead_min": 53.2,
+   "price": 0.215
   },
   "espn_fpi:aec-nfl-nyj-ne-2026-10-18": {
    "at": "2026-10-18T16:46:07+00:00",
@@ -2375,11 +2385,6 @@
    "lead_min": 20.2,
    "price": 0.76
   },
-  "tennis_fav_band_3h:aec-utr-wieluc-siepio-2026-10-06": {
-   "at": "2026-10-08T19:30:34+00:00",
-   "lead_min": 29.4,
-   "price": 0.83
-  },
   "tennis_fav_band_3h:aec-wtadb-erranipaolin-fernangibson-2026-10-11": {
    "at": "2026-10-13T04:05:35+00:00",
    "lead_min": 4.4,
@@ -2551,5 +2556,5 @@
    "price": 0.77
   }
  },
- "updated": "2026-10-18T19:01:38+00:00"
+ "updated": "2026-10-18T19:31:45+00:00"
 }
