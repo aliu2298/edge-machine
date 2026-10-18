@@ -1500,6 +1500,42 @@
    "pair": "o15_form_l10|soccer_o15",
    "reason": "taken off the Production list by hand, record kept",
    "to": "sandbox"
+  },
+  {
+   "at": "2026-10-18T15:11:28+00:00",
+   "evidence": {
+    "base_roi": -0.1856,
+    "clv": -0.0118,
+    "clv_n": 33,
+    "n": 33,
+    "own_roi": 0.1043,
+    "roi": 0.1043,
+    "roi_fee": 0.0586,
+    "span_days": 21.5208,
+    "weeks": 3,
+    "z": 0.6358
+   },
+   "pair": "o25_congestion|soccer_o25",
+   "reason": "moved to Production by hand on 2026-10-18",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-18T15:11:28+00:00",
+   "evidence": {
+    "base_roi": -0.1856,
+    "clv": -0.0118,
+    "clv_n": 33,
+    "n": 33,
+    "own_roi": 0.1043,
+    "roi": 0.1043,
+    "roi_fee": 0.0586,
+    "span_days": 21.5208,
+    "weeks": 3,
+    "z": 0.6358
+   },
+   "pair": "o25_congestion|soccer_o25",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
   }
  ],
  "pairs": {
@@ -1793,6 +1829,26 @@
    "ready_since": "2026-10-01T16:20:16+00:00",
    "stage": "production"
   },
+  "o25_congestion|soccer_o25": {
+   "by_hand": "2026-10-18",
+   "entry": {
+    "base_roi": -0.1856,
+    "clv": -0.0118,
+    "clv_n": 33,
+    "n": 33,
+    "own_roi": 0.1043,
+    "roi": 0.1043,
+    "roi_fee": 0.0586,
+    "span_days": 21.5208,
+    "weeks": 3,
+    "z": 0.6358
+   },
+   "entry_since": null,
+   "promoted_at": "2026-10-18T15:11:28+00:00",
+   "ready_at": "2026-10-18T15:11:28+00:00",
+   "ready_since": "2026-10-18T15:11:28+00:00",
+   "stage": "production"
+  },
   "oddspedia|cricket": {
    "by_hand": "2026-09-27",
    "entry": {
@@ -2050,5 +2106,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-10-18T15:06:07+00:00"
+ "updated": "2026-10-18T15:11:28+00:00"
 }
