@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-18T17:01:26.503410+00:00",
+ "last_run": "2026-10-18T17:16:20.758265+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -185,7 +185,31 @@
    ]
   },
   "C4": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.52,
+     "bid": 0.51,
+     "event": "KXSERIEATOTAL-26OCT18JUVLAZ",
+     "group": "C",
+     "id": "C4:KXSERIEATOTAL-26OCT18JUVLAZ",
+     "labels": {
+      "away": "O-D-",
+      "home": "O+D-"
+     },
+     "league": "Serie A",
+     "line": 2.5,
+     "logged": "2026-10-18T17:16:20.758265+00:00",
+     "match": "Juventus v Lazio",
+     "price": 0.52,
+     "rule": "C4",
+     "side": "yes",
+     "start": "2026-10-18T18:45Z",
+     "status": "open",
+     "ticker": "KXSERIEATOTAL-26OCT18JUVLAZ-3",
+     "title": "Will over 2.5 goals be scored?",
+     "why": "Juventus O+D- v Lazio O-D- \u00b7 Over 2.5 YES 0.52"
+    }
+   ]
   },
   "C5": {
    "picks": [
@@ -261,6 +285,29 @@
      "ticker": "KXLIGUE1TOTAL-26OCT18PARREN-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Paris FC O-D- v Stade Rennais O+D- \u00b7 Under 2.5 NO 0.43"
+    },
+    {
+     "ask": 0.57,
+     "bid": 0.56,
+     "event": "KXLIGUE1TOTAL-26OCT18OLNIC",
+     "group": "C",
+     "id": "C6:KXLIGUE1TOTAL-26OCT18OLNIC",
+     "labels": {
+      "away": "O-D-",
+      "home": "O+D-"
+     },
+     "league": "Ligue 1",
+     "line": 2.5,
+     "logged": "2026-10-18T17:16:20.758265+00:00",
+     "match": "Lyon v Nice",
+     "price": 0.44,
+     "rule": "C6",
+     "side": "no",
+     "start": "2026-10-18T18:45Z",
+     "status": "open",
+     "ticker": "KXLIGUE1TOTAL-26OCT18OLNIC-3",
+     "title": "Will over 2.5 goals be scored?",
+     "why": "Lyon O+D- v Nice O-D- \u00b7 Under 2.5 NO 0.44"
     }
    ]
   },
@@ -469,11 +516,14 @@
      "line": null,
      "logged": "2026-10-18T13:46:23.687227+00:00",
      "match": "Le Havre AC v AJ Auxerre",
+     "payout": 0.0,
      "price": 0.41,
+     "profit": -100.0,
      "rule": "D2",
+     "settled": "2026-10-18T17:16:20.758265+00:00",
      "side": "no",
      "start": "2026-10-18T15:15Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXLIGUE1BTTS-26OCT18HACAUX-BTTS",
      "title": "Both Teams To Score",
      "why": "Le Havre AC O-D- v AJ Auxerre O+D+ \u00b7 BTTS NO 0.41"
@@ -602,6 +652,52 @@
      "ticker": "KXLIGUE1BTTS-26OCT18PARREN-BTTS",
      "title": "Both Teams To Score",
      "why": "Paris FC O-D- v Stade Rennais O+D- \u00b7 BTTS YES 0.62"
+    },
+    {
+     "ask": 0.5,
+     "bid": 0.49,
+     "event": "KXSERIEABTTS-26OCT18JUVLAZ",
+     "group": "BTTS",
+     "id": "D3:KXSERIEABTTS-26OCT18JUVLAZ",
+     "labels": {
+      "away": "O-D-",
+      "home": "O+D-"
+     },
+     "league": "Serie A",
+     "line": null,
+     "logged": "2026-10-18T17:16:20.758265+00:00",
+     "match": "Juventus v Lazio",
+     "price": 0.5,
+     "rule": "D3",
+     "side": "yes",
+     "start": "2026-10-18T18:45Z",
+     "status": "open",
+     "ticker": "KXSERIEABTTS-26OCT18JUVLAZ-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Juventus O+D- v Lazio O-D- \u00b7 BTTS YES 0.50"
+    },
+    {
+     "ask": 0.59,
+     "bid": 0.58,
+     "event": "KXLIGUE1BTTS-26OCT18OLNIC",
+     "group": "BTTS",
+     "id": "D3:KXLIGUE1BTTS-26OCT18OLNIC",
+     "labels": {
+      "away": "O-D-",
+      "home": "O+D-"
+     },
+     "league": "Ligue 1",
+     "line": null,
+     "logged": "2026-10-18T17:16:20.758265+00:00",
+     "match": "Lyon v Nice",
+     "price": 0.59,
+     "rule": "D3",
+     "side": "yes",
+     "start": "2026-10-18T18:45Z",
+     "status": "open",
+     "ticker": "KXLIGUE1BTTS-26OCT18OLNIC-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Lyon O+D- v Nice O-D- \u00b7 BTTS YES 0.59"
     }
    ]
   }
@@ -838,6 +934,14 @@
    "labelled": 3,
    "matched": 2,
    "new": 0
+  },
+  {
+   "at": "2026-10-18T17:16:20.758265+00:00",
+   "candidates": 4,
+   "due": 5,
+   "labelled": 5,
+   "matched": 4,
+   "new": 4
   }
  ],
  "version": "soccer-rules-v1"
