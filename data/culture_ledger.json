@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-18T18:00:13.299416+00:00",
-   "last_success": "2026-10-18T18:00:13.299416+00:00",
+   "last_run": "2026-10-18T19:00:13.716150+00:00",
+   "last_success": "2026-10-18T19:00:13.716150+00:00",
    "observations": {
-    "at": "2026-10-18T18:00:13.299416+00:00",
-    "events": 862,
+    "at": "2026-10-18T19:00:13.716150+00:00",
+    "events": 866,
     "reasons": {
-     "in band": 10,
-     "no quote or spread too wide": 251,
-     "not active": 722,
-     "outside the band": 48,
-     "outside the entry window": 11072
+     "in band": 8,
+     "no quote or spread too wide": 250,
+     "not active": 745,
+     "outside the band": 51,
+     "outside the entry window": 11109
     }
    },
    "picks": [
@@ -58,10 +58,13 @@
      "id": "KXALBUMEQUIV-MUD26OCT15-25K",
      "logged": "2026-10-18T05:09:37.447237+00:00",
      "name": "Mud: First Week Album Equivalent Units",
+     "payout": 1.0,
      "price": 0.97,
+     "profit": 2.88,
      "series": "KXALBUMEQUIV",
+     "settled": "2026-10-18T19:00:13.716150+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Above 25K"
     },
     {
@@ -72,10 +75,13 @@
      "id": "KXALBUMEQUIV-SHE26OCT15-23K",
      "logged": "2026-10-18T06:00:12.973544+00:00",
      "name": "She\u2019s The Best: First Week Album Equivalent Units",
+     "payout": 1.0,
      "price": 0.92,
+     "profit": 8.09,
      "series": "KXALBUMEQUIV",
+     "settled": "2026-10-18T19:00:13.716150+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Above 23K"
     },
     {
@@ -86,10 +92,13 @@
      "id": "KXALBUMEQUIV-PAL26OCT15-30K",
      "logged": "2026-10-18T11:00:13.224794+00:00",
      "name": "Palace For The People: First Week Album Equivalent Units",
+     "payout": 1.0,
      "price": 0.96,
+     "profit": 3.88,
      "series": "KXALBUMEQUIV",
+     "settled": "2026-10-18T19:00:13.716150+00:00",
      "side": "yes",
-     "status": "open",
+     "status": "won",
      "title": "Above 30K"
     },
     {
@@ -152,16 +161,17 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-18T18:00:13.299416+00:00",
-   "last_success": "2026-10-18T18:00:13.299416+00:00",
+   "last_run": "2026-10-18T19:00:13.716150+00:00",
+   "last_success": "2026-10-18T19:00:13.716150+00:00",
    "observations": {
-    "at": "2026-10-18T18:00:13.299416+00:00",
-    "events": 862,
+    "at": "2026-10-18T19:00:13.716150+00:00",
+    "events": 866,
     "reasons": {
-     "no quote or spread too wide": 539,
-     "not active": 722,
-     "outside the band": 138,
-     "outside the entry window": 10704
+     "in band": 2,
+     "no quote or spread too wide": 573,
+     "not active": 745,
+     "outside the band": 162,
+     "outside the entry window": 10681
     }
    },
    "picks": [
@@ -296,21 +306,35 @@
      "side": "yes",
      "status": "open",
      "title": "AION 2"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-20T03:59:00Z",
+     "detail": "NO 0.79 \u00b7 favourite band",
+     "event": "KXYTTOPVIDEOG2D-26OCT19",
+     "id": "KXYTTOPVIDEOG2D-26OCT19-DAI",
+     "logged": "2026-10-18T19:00:13.716150+00:00",
+     "name": "Runner-Up Daily Music Video Global on YouTube: Oct 19, 2026",
+     "price": 0.79,
+     "series": "KXYTTOPVIDEOG2D",
+     "side": "no",
+     "status": "open",
+     "title": "Dai Dai"
     }
    ]
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-18T18:00:13.299416+00:00",
-   "last_success": "2026-10-18T18:00:13.299416+00:00",
+   "last_run": "2026-10-18T19:00:13.716150+00:00",
+   "last_success": "2026-10-18T19:00:13.716150+00:00",
    "observations": {
-    "at": "2026-10-18T18:00:13.299416+00:00",
-    "events": 862,
+    "at": "2026-10-18T19:00:13.716150+00:00",
+    "events": 866,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 37,
-     "edge 5c+": 7,
+     "already near-certain (under 10c or over 90c)": 38,
+     "edge 5c+": 5,
      "edge under 5c": 2,
-     "no quote or spread too wide": 38
+     "no quote or spread too wide": 39
     }
    },
    "picks": [
@@ -673,11 +697,11 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-18T18:00:13.299416+00:00",
-   "last_success": "2026-10-18T18:00:13.299416+00:00",
+   "last_run": "2026-10-18T19:00:13.716150+00:00",
+   "last_success": "2026-10-18T19:00:13.716150+00:00",
    "observations": {
-    "at": "2026-10-18T18:00:13.299416+00:00",
-    "events": 862,
+    "at": "2026-10-18T19:00:13.716150+00:00",
+    "events": 866,
     "reasons": {
      "edge 5c+": 6,
      "edge under 5c": 2,
