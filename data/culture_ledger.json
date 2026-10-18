@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-18T15:00:12.916618+00:00",
-   "last_success": "2026-10-18T15:00:12.916618+00:00",
+   "last_run": "2026-10-18T16:00:12.908990+00:00",
+   "last_success": "2026-10-18T16:00:12.908990+00:00",
    "observations": {
-    "at": "2026-10-18T15:00:12.916618+00:00",
-    "events": 864,
+    "at": "2026-10-18T16:00:12.908990+00:00",
+    "events": 862,
     "reasons": {
      "in band": 13,
-     "no quote or spread too wide": 248,
-     "not active": 697,
+     "no quote or spread too wide": 247,
+     "not active": 698,
      "outside the band": 49,
-     "outside the entry window": 11160
+     "outside the entry window": 11107
     }
    },
    "picks": [
@@ -138,17 +138,17 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-18T15:00:12.916618+00:00",
-   "last_success": "2026-10-18T15:00:12.916618+00:00",
+   "last_run": "2026-10-18T16:00:12.908990+00:00",
+   "last_success": "2026-10-18T16:00:12.908990+00:00",
    "observations": {
-    "at": "2026-10-18T15:00:12.916618+00:00",
-    "events": 864,
+    "at": "2026-10-18T16:00:12.908990+00:00",
+    "events": 862,
     "reasons": {
-     "in band": 3,
-     "no quote or spread too wide": 538,
-     "not active": 697,
-     "outside the band": 137,
-     "outside the entry window": 10792
+     "in band": 1,
+     "no quote or spread too wide": 543,
+     "not active": 698,
+     "outside the band": 133,
+     "outside the entry window": 10739
     }
    },
    "picks": [
@@ -219,10 +219,13 @@
      "id": "KXTRUMPSAY-26OCT19-BIBI",
      "logged": "2026-10-17T18:00:13.575689+00:00",
      "name": "What will Trump say this week?",
+     "payout": 0.0,
      "price": 0.7,
+     "profit": -100.0,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-18T16:00:12.908990+00:00",
      "side": "no",
-     "status": "open",
+     "status": "lost",
      "title": "Bibi / Netanyahu"
     },
     {
@@ -285,14 +288,14 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-18T15:00:12.916618+00:00",
-   "last_success": "2026-10-18T15:00:12.916618+00:00",
+   "last_run": "2026-10-18T16:00:12.908990+00:00",
+   "last_success": "2026-10-18T16:00:12.908990+00:00",
    "observations": {
-    "at": "2026-10-18T15:00:12.916618+00:00",
-    "events": 864,
+    "at": "2026-10-18T16:00:12.908990+00:00",
+    "events": 862,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 42,
-     "edge 5c+": 6,
+     "edge 5c+": 5,
      "edge under 5c": 2,
      "no quote or spread too wide": 35
     }
@@ -404,10 +407,13 @@
      "logged": "2026-10-17T02:08:03.723976+00:00",
      "model": 0.1951,
      "name": "What will Trump say this week?",
+     "payout": 0.0,
      "price": 0.72,
+     "profit": -100.0,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-18T16:00:12.908990+00:00",
      "side": "no",
-     "status": "open",
+     "status": "lost",
      "title": "Bibi / Netanyahu"
     },
     {
@@ -654,11 +660,11 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-18T15:00:12.916618+00:00",
-   "last_success": "2026-10-18T15:00:12.916618+00:00",
+   "last_run": "2026-10-18T16:00:12.908990+00:00",
+   "last_success": "2026-10-18T16:00:12.908990+00:00",
    "observations": {
-    "at": "2026-10-18T15:00:12.916618+00:00",
-    "events": 864,
+    "at": "2026-10-18T16:00:12.908990+00:00",
+    "events": 862,
     "reasons": {
      "edge 5c+": 8,
      "under 20 reviews counted": 11
@@ -898,7 +904,7 @@
    ]
   },
   "JPMorgan / JPM": {
-   "at": "2026-10-18T09:53:43.050631+00:00",
+   "at": "2026-10-18T16:00:12.908990+00:00",
    "days": []
   },
   "Lisa Cook": {
@@ -910,7 +916,7 @@
    "days": []
   },
   "Mastercard / MA": {
-   "at": "2026-10-18T09:53:43.050631+00:00",
+   "at": "2026-10-18T16:00:12.908990+00:00",
    "days": [
     "2026-10-01"
    ]
@@ -1008,7 +1014,7 @@
    "days": []
   },
   "Zacharia": {
-   "at": "2026-10-18T09:53:43.050631+00:00",
+   "at": "2026-10-18T16:00:12.908990+00:00",
    "days": []
   },
   "Zohran / Mamdani": {
