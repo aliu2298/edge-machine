@@ -1,9 +1,62 @@
 {
  "error": null,
- "last_run": "2026-10-18T11:31:41.878046+00:00",
+ "last_run": "2026-10-18T12:01:39.168055+00:00",
  "rules": {
   "T1": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.67,
+     "bid": 0.66,
+     "event": "KXBUNDESLIGATEAMTOTAL-26OCT18LEVSCF",
+     "group": "A",
+     "id": "T1:KXBUNDESLIGATEAMTOTAL-26OCT18LEVSCF:home",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Bundesliga",
+     "line": 1.5,
+     "logged": "2026-10-18T12:01:39.168055+00:00",
+     "match": "Bayer Leverkusen v SC Freiburg",
+     "opponent": "SC Freiburg",
+     "price": 0.67,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-10-18T13:30Z",
+     "status": "open",
+     "team": "Bayer Leverkusen",
+     "team_side": "home",
+     "ticker": "KXBUNDESLIGATEAMTOTAL-26OCT18LEVSCF-LEV2",
+     "title": "Will Leverkusen score over 1.5 goals?",
+     "why": "Bayer Leverkusen O+D- v SC Freiburg O+D- \u00b7 2+ YES 0.67"
+    },
+    {
+     "ask": 0.35,
+     "bid": 0.34,
+     "event": "KXBUNDESLIGATEAMTOTAL-26OCT18LEVSCF",
+     "group": "A",
+     "id": "T1:KXBUNDESLIGATEAMTOTAL-26OCT18LEVSCF:away",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Bundesliga",
+     "line": 1.5,
+     "logged": "2026-10-18T12:01:39.168055+00:00",
+     "match": "Bayer Leverkusen v SC Freiburg",
+     "opponent": "Bayer Leverkusen",
+     "price": 0.35,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-10-18T13:30Z",
+     "status": "open",
+     "team": "SC Freiburg",
+     "team_side": "away",
+     "ticker": "KXBUNDESLIGATEAMTOTAL-26OCT18LEVSCF-SCF2",
+     "title": "Will Freiburg score over 1.5 goals?",
+     "why": "SC Freiburg O+D- v Bayer Leverkusen O+D- \u00b7 2+ YES 0.35"
+    }
+   ]
   },
   "T2": {
    "picks": [
@@ -381,6 +434,14 @@
    "labelled": 6,
    "matched": 4,
    "new": 5
+  },
+  {
+   "at": "2026-10-18T12:01:39.168055+00:00",
+   "candidates": 5,
+   "due": 6,
+   "labelled": 6,
+   "matched": 5,
+   "new": 2
   }
  ],
  "version": "soccer-team-rules-v1"
