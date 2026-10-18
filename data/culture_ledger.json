@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-18T14:00:13.846021+00:00",
-   "last_success": "2026-10-18T14:00:13.846021+00:00",
+   "last_run": "2026-10-18T14:10:00.372261+00:00",
+   "last_success": "2026-10-18T14:10:00.372261+00:00",
    "observations": {
-    "at": "2026-10-18T14:00:13.846021+00:00",
+    "at": "2026-10-18T14:10:00.372261+00:00",
     "events": 864,
     "reasons": {
      "in band": 11,
@@ -119,21 +119,35 @@
      "side": "no",
      "status": "open",
      "title": "TDS / Trump Derangement Syndrome"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-19T14:00:00Z",
+     "detail": "NO 0.97 \u00b7 endgame",
+     "event": "KXRT-SENS",
+     "id": "KXRT-SENS-77",
+     "logged": "2026-10-18T14:10:00.372261+00:00",
+     "name": "Sense and Sensibility \u00b7 Rotten Tomatoes score",
+     "price": 0.97,
+     "series": "KXRT",
+     "side": "no",
+     "status": "open",
+     "title": "Above 77"
     }
    ]
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-18T14:00:13.846021+00:00",
-   "last_success": "2026-10-18T14:00:13.846021+00:00",
+   "last_run": "2026-10-18T14:10:00.372261+00:00",
+   "last_success": "2026-10-18T14:10:00.372261+00:00",
    "observations": {
-    "at": "2026-10-18T14:00:13.846021+00:00",
+    "at": "2026-10-18T14:10:00.372261+00:00",
     "events": 864,
     "reasons": {
      "in band": 3,
-     "no quote or spread too wide": 551,
+     "no quote or spread too wide": 550,
      "not active": 692,
-     "outside the band": 124,
+     "outside the band": 125,
      "outside the entry window": 10797
     }
    },
@@ -271,16 +285,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-18T14:00:13.846021+00:00",
-   "last_success": "2026-10-18T14:00:13.846021+00:00",
+   "last_run": "2026-10-18T14:10:00.372261+00:00",
+   "last_success": "2026-10-18T14:10:00.372261+00:00",
    "observations": {
-    "at": "2026-10-18T14:00:13.846021+00:00",
+    "at": "2026-10-18T14:10:00.372261+00:00",
     "events": 864,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 44,
-     "edge 5c+": 7,
+     "edge 5c+": 8,
      "edge under 5c": 5,
-     "no quote or spread too wide": 34
+     "no quote or spread too wide": 33
     }
    },
    "picks": [
@@ -640,10 +654,10 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-18T14:00:13.846021+00:00",
-   "last_success": "2026-10-18T14:00:13.846021+00:00",
+   "last_run": "2026-10-18T14:10:00.372261+00:00",
+   "last_success": "2026-10-18T14:10:00.372261+00:00",
    "observations": {
-    "at": "2026-10-18T14:00:13.846021+00:00",
+    "at": "2026-10-18T14:10:00.372261+00:00",
     "events": 864,
     "reasons": {
      "edge 5c+": 7,
@@ -873,7 +887,7 @@
    ]
   },
   "Epstein": {
-   "at": "2026-10-18T08:00:14.277395+00:00",
+   "at": "2026-10-18T14:10:00.372261+00:00",
    "days": []
   },
   "ExxonMobil / XOM": {
@@ -960,7 +974,7 @@
    "days": []
   },
   "TDS / Trump Derangement Syndrome": {
-   "at": "2026-10-18T08:00:14.277395+00:00",
+   "at": "2026-10-18T14:10:00.372261+00:00",
    "days": [
     "2026-08-05",
     "2026-09-26",
@@ -982,7 +996,7 @@
    "days": []
   },
   "UAE / United Arab Emirates": {
-   "at": "2026-10-18T08:00:14.277395+00:00",
+   "at": "2026-10-18T14:10:00.372261+00:00",
    "days": [
     "2026-08-02",
     "2026-08-03",
