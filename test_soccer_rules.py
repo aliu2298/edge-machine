@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Offline checks for the 21 soccer total-goals label rules (soccer_rules.py) and their page section."""
 import datetime as dt
+import re
 import sys
 
 import lane_windows as W
@@ -165,6 +166,18 @@ html = SB.section(st)
 check("all 21 rules are listed, in groups A, B and C",
       (all(f"<b>{k}</b>" in html for k in SR.RULES), all(f"Group {g}" in html for g in "ABC")), (True, True))
 check("and the entries table carries the match and labels", ("Alpha v Beta" in html, "O-D- v O+D+" in html), (True, True))
+# Compact layout (2026-10-18): one grid line per rule on the Rules section's own classes, the
+# figures labelled for the phone, each group a section disclosure with only Group A open.
+lines = re.findall(r'<div class="sp-line is-label" data-rule="([^"]+)">(.*?)</div>', html)
+check("label rules: one compact line per rule, no table rows", (sorted(k for k, _ in lines) == sorted(SR.RULES), "<tr><td><b>" + 'A1' in html), (True, False))
+check("label rules: every figure carries its phone label",
+      all(all(f'data-l="{l}"' in body for l in ("Settled", "Won", "ROI", "Open")) for _, body in lines), True)
+check("label rules: evidence rides muted after the definition, whole in the tooltip",
+      ('<small class="mut">' in html, 'title="' in html), (True, True))
+folds = re.findall(r'<details class="section-disclosure label-group" data-group="([^"]+)"( open)?>', html)
+check("label rules: each group is a disclosure, only Group A open", [(g, bool(o)) for g, o in folds], [("A", True), ("B", False), ("C", False), ("BTTS", False)])
+check("label rules: a group's summary carries its count and record",
+      re.search(r'<b>Group B</b><span>\d+ rules · \d+ settled · \d+ won', html) is not None, True)
 check("an empty ledger says how entries arrive", "No entries yet" in SB.section({"rules": {}}), True)
 
 print("\nGroup BTTS: D1-D3 in every BTTS league, one -BTTS market per match")

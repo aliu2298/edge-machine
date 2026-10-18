@@ -4,6 +4,7 @@ import html as _h
 import os
 
 import fmt
+import soccer_rules_build as SB
 import soccer_team_rules as TR
 
 SHORT = {"Premier League": "EPL", "Champions League": "UCL", "Europa League": "UEL"}
@@ -13,33 +14,21 @@ def esc(x):
     return _h.escape(str(x))
 
 
-def _record(picks):
-    done = [p for p in picks if p["status"] in ("won", "lost", "no_result")]
-    won = sum(p["status"] == "won" for p in done)
-    roi = sum(p.get("profit", 0) for p in done) / (100 * len(done)) if done else None
-    return len(done), won, roi
-
-
 def section(state=None):
     if state is None:
         state = TR.load() if os.path.exists(TR.PATH) else {"rules": {k: {"picks": []} for k in TR.RULES}}
     groups, recent = [], []
     for g, words in TR.GROUPS.items():
-        rows = []
+        lines, picks_g = [], []
         for key, meta in TR.RULES.items():
             if meta["group"] != g:
                 continue
             picks = (state.get("rules", {}).get(key) or {}).get("picks") or []
-            n, won, roi = _record(picks)
-            live = sum(p["status"] == "open" for p in picks)
             leagues = ", ".join(SHORT.get(x, x) for x in meta["leagues"])
-            rows.append(f'<tr><td><b>{esc(key)}</b></td><td>{esc(g)}</td><td>{esc(meta["label"])} '
-                        f'<span class="mut">· {esc(leagues)} ({esc(meta["evidence"])})</span></td>'
-                        f'<td class="num">{n}</td><td class="num">{won}</td>'
-                        f'<td class="num">{"—" if roi is None else f"{roi * 100:+.1f}%"}</td>'
-                        f'<td class="num">{live}</td></tr>')
-            recent += picks
-        groups.append(f'<tr><td colspan="7"><b>Group {esc(g)}</b> <span class="mut">· {esc(words)}</span></td></tr>' + "".join(rows))
+            lines.append(SB.rule_line(key, leagues, meta["label"], meta.get("evidence"), picks))
+            picks_g += picks
+        recent += picks_g
+        groups.append(SB.group_fold(g, words, lines, picks_g, opened=(g == "A"), scope="Leagues"))
     recent.sort(key=lambda p: p.get("start") or "", reverse=True)
     pick_rows = []
     for p in recent[:25]:
@@ -56,8 +45,7 @@ def section(state=None):
     last = state.get("last_run")
     return f"""<section id="team-rules">
 <div class="nba-section-head"><div><h2>Team scoring rules</h2><p class="shell-kicker">8 team-total label rules from 411 matches, Aug 1 – Oct 17 2026 · paper · not in Production · Kalshi price, 7% fee</p></div></div>
-<div class="tbl"><table><thead><tr><th>Rule</th><th>Group</th><th>Definition</th><th class="num">Settled</th><th class="num">Won</th><th class="num">ROI after fee</th><th class="num">Open</th></tr></thead>
-<tbody>{"".join(groups)}</tbody></table></div>
+{"".join(groups)}
 <details class="section-disclosure"><summary><b>Entries</b><span>latest 25</span></summary>
 <div class="tbl"><table><thead><tr><th>Kickoff</th><th>Match</th><th>Team</th><th>Labels</th><th>Rule</th><th>Contract</th><th>Side</th><th class="num">Price</th><th>Result</th></tr></thead>
 <tbody>{body}</tbody></table></div></details>
