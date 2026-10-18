@@ -2181,6 +2181,15 @@ def _ticks(gate):
     return passed, cells
 
 
+def gold_orb_html():
+    """The Gold Asia-open breakout paper section (gold_orb_build.py, 2026-10-18). Never breaks the page."""
+    try:
+        import gold_orb_build
+        return gold_orb_build.section()
+    except Exception as exc:                                    # noqa: BLE001
+        return f'<section id="gold-orb"><p class="sm mut">Gold breakout section unavailable ({type(exc).__name__}).</p></section>'
+
+
 def trading_page(now=None):
     """public_site/trading.html — the trading lane, on its own page.
 
@@ -2222,13 +2231,14 @@ never the signal bar's close. Costs of {int(MS.COST_BPS_PER_SIDE)}bp a side are 
 with its lean, <i>Promising</i> or <i>Behind</i>; under {MT.EARLY_N} a rule is only <i>Too early</i>. Open <b>What this rule does</b> under a row for its definition.</div>
 </details>
 </section>
+{gold_orb_html()}
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 """
     return site_chrome.document(
         "Edge Machine · Trading",
         "Stock and ETF rules under test, judged per entry day at real prices.",
         "trading",
-        (("rules", "Rules"),),
+        (("rules", "Rules"), ("gold-orb", "Gold breakout")),
         site_chrome.stamp(now_dt),
         body,
     )
