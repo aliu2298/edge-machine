@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-18T17:33:26.303466+00:00",
-   "last_success": "2026-10-18T17:33:26.303466+00:00",
+   "last_run": "2026-10-18T18:00:13.299416+00:00",
+   "last_success": "2026-10-18T18:00:13.299416+00:00",
    "observations": {
-    "at": "2026-10-18T17:33:26.303466+00:00",
+    "at": "2026-10-18T18:00:13.299416+00:00",
     "events": 862,
     "reasons": {
-     "in band": 11,
-     "no quote or spread too wide": 250,
-     "not active": 698,
+     "in band": 10,
+     "no quote or spread too wide": 251,
+     "not active": 722,
      "outside the band": 48,
-     "outside the entry window": 11096
+     "outside the entry window": 11072
     }
    },
    "picks": [
@@ -152,17 +152,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-18T17:33:26.303466+00:00",
-   "last_success": "2026-10-18T17:33:26.303466+00:00",
+   "last_run": "2026-10-18T18:00:13.299416+00:00",
+   "last_success": "2026-10-18T18:00:13.299416+00:00",
    "observations": {
-    "at": "2026-10-18T17:33:26.303466+00:00",
+    "at": "2026-10-18T18:00:13.299416+00:00",
     "events": 862,
     "reasons": {
-     "in band": 1,
-     "no quote or spread too wide": 543,
-     "not active": 698,
-     "outside the band": 133,
-     "outside the entry window": 10728
+     "no quote or spread too wide": 539,
+     "not active": 722,
+     "outside the band": 138,
+     "outside the entry window": 10704
     }
    },
    "picks": [
@@ -302,16 +301,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-18T17:33:26.303466+00:00",
-   "last_success": "2026-10-18T17:33:26.303466+00:00",
+   "last_run": "2026-10-18T18:00:13.299416+00:00",
+   "last_success": "2026-10-18T18:00:13.299416+00:00",
    "observations": {
-    "at": "2026-10-18T17:33:26.303466+00:00",
+    "at": "2026-10-18T18:00:13.299416+00:00",
     "events": 862,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 35,
-     "edge 5c+": 8,
+     "already near-certain (under 10c or over 90c)": 37,
+     "edge 5c+": 7,
      "edge under 5c": 2,
-     "no quote or spread too wide": 39
+     "no quote or spread too wide": 38
     }
    },
    "picks": [
@@ -674,10 +673,10 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-18T17:33:26.303466+00:00",
-   "last_success": "2026-10-18T17:33:26.303466+00:00",
+   "last_run": "2026-10-18T18:00:13.299416+00:00",
+   "last_success": "2026-10-18T18:00:13.299416+00:00",
    "observations": {
-    "at": "2026-10-18T17:33:26.303466+00:00",
+    "at": "2026-10-18T18:00:13.299416+00:00",
     "events": 862,
     "reasons": {
      "edge 5c+": 6,
@@ -966,7 +965,7 @@
    ]
   },
   "Peptide": {
-   "at": "2026-10-17T21:00:12.879866+00:00",
+   "at": "2026-10-18T18:00:13.299416+00:00",
    "days": []
   },
   "Soleimani": {
