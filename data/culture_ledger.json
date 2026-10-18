@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-18T01:00:14.470608+00:00",
-   "last_success": "2026-10-18T01:00:14.470608+00:00",
+   "last_run": "2026-10-18T02:00:14.049707+00:00",
+   "last_success": "2026-10-18T02:00:14.049707+00:00",
    "observations": {
-    "at": "2026-10-18T01:00:14.470608+00:00",
+    "at": "2026-10-18T02:00:14.049707+00:00",
     "events": 882,
     "reasons": {
      "no quote or spread too wide": 174,
@@ -53,17 +53,17 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-18T01:00:14.470608+00:00",
-   "last_success": "2026-10-18T01:00:14.470608+00:00",
+   "last_run": "2026-10-18T02:00:14.049707+00:00",
+   "last_success": "2026-10-18T02:00:14.049707+00:00",
    "observations": {
-    "at": "2026-10-18T01:00:14.470608+00:00",
+    "at": "2026-10-18T02:00:14.049707+00:00",
     "events": 882,
     "reasons": {
-     "in band": 3,
-     "no quote or spread too wide": 399,
+     "in band": 1,
+     "no quote or spread too wide": 345,
      "not active": 694,
-     "outside the band": 115,
-     "outside the entry window": 11169
+     "outside the band": 111,
+     "outside the entry window": 11229
     }
    },
    "picks": [
@@ -158,15 +158,15 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-18T01:00:14.470608+00:00",
-   "last_success": "2026-10-18T01:00:14.470608+00:00",
+   "last_run": "2026-10-18T02:00:14.049707+00:00",
+   "last_success": "2026-10-18T02:00:14.049707+00:00",
    "observations": {
-    "at": "2026-10-18T01:00:14.470608+00:00",
+    "at": "2026-10-18T02:00:14.049707+00:00",
     "events": 882,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 41,
-     "edge 5c+": 12,
-     "edge under 5c": 6,
+     "already near-certain (under 10c or over 90c)": 44,
+     "edge 5c+": 10,
+     "edge under 5c": 5,
      "no quote or spread too wide": 31
     }
    },
@@ -479,13 +479,14 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-18T01:00:14.470608+00:00",
-   "last_success": "2026-10-18T01:00:14.470608+00:00",
+   "last_run": "2026-10-18T02:00:14.049707+00:00",
+   "last_success": "2026-10-18T02:00:14.049707+00:00",
    "observations": {
-    "at": "2026-10-18T01:00:14.470608+00:00",
+    "at": "2026-10-18T02:00:14.049707+00:00",
     "events": 882,
     "reasons": {
-     "edge 5c+": 8,
+     "edge 5c+": 5,
+     "edge under 5c": 3,
      "under 20 reviews counted": 11
     }
    },
@@ -703,7 +704,7 @@
    ]
   },
   "Epstein": {
-   "at": "2026-10-17T20:00:12.349255+00:00",
+   "at": "2026-10-18T02:00:14.049707+00:00",
    "days": []
   },
   "ExxonMobil / XOM": {
@@ -786,7 +787,7 @@
    "days": []
   },
   "TDS / Trump Derangement Syndrome": {
-   "at": "2026-10-17T20:00:12.349255+00:00",
+   "at": "2026-10-18T02:00:14.049707+00:00",
    "days": [
     "2026-08-05",
     "2026-09-26",
@@ -808,7 +809,7 @@
    "days": []
   },
   "UAE / United Arab Emirates": {
-   "at": "2026-10-17T20:00:12.349255+00:00",
+   "at": "2026-10-18T02:00:14.049707+00:00",
    "days": [
     "2026-08-02",
     "2026-08-03",
