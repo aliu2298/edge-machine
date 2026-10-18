@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Offline checks for the 8 soccer team-scoring label rules (soccer_team_rules.py) and their page section."""
 import datetime as dt
+import re
 import sys
 
 import lane_windows as W
@@ -155,6 +156,18 @@ print("\nthe page section")
 html = TB.section(st)
 check("all 8 rules are listed, in groups A, B and C",
       (all(f"<b>{k}</b>" in html for k in TR.RULES), all(f"Group {g}" in html for g in "ABC")), (True, True))
+# Compact layout (2026-10-18): one grid line per rule on the Rules section's own classes, the
+# figures labelled for the phone, each group a section disclosure with only Group A open.
+lines = re.findall(r'<div class="sp-line is-label" data-rule="([^"]+)">(.*?)</div>', html)
+check("team rules: one compact line per rule, no table rows", (sorted(k for k, _ in lines) == sorted(TR.RULES), "<tr><td><b>" + 'T1' in html), (True, False))
+check("team rules: every figure carries its phone label",
+      all(all(f'data-l="{l}"' in body for l in ("Settled", "Won", "ROI", "Open")) for _, body in lines), True)
+check("team rules: evidence rides muted after the definition, whole in the tooltip",
+      ('<small class="mut">' in html, 'title="' in html), (True, True))
+folds = re.findall(r'<details class="section-disclosure label-group" data-group="([^"]+)"( open)?>', html)
+check("team rules: each group is a disclosure, only Group A open", [(g, bool(o)) for g, o in folds], [(g, g == "A") for g in TR.GROUPS])
+check("team rules: a group's summary carries its count and record",
+      re.search(r'<b>Group B</b><span>\d+ rules · \d+ settled · \d+ won', html) is not None, True)
 check("its own id and heading", ('<section id="team-rules">' in html, "<h2>Team scoring rules</h2>" in html), (True, True))
 check("says paper and not in Production", "paper · not in Production" in html, True)
 check("the columns", all(c in html for c in ("Settled", "Won", "ROI after fee", "Open", "latest 25")), True)

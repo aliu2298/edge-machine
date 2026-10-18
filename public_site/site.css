@@ -2004,6 +2004,24 @@ details.fold.later > summary .sm { font-weight: 500; }
 @media (max-width: 560px) {
   .sp-line, .sp-line.is-scoped { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+/* The Soccer page's label rules (soccer_rules_build.py): the Rules grid, its own columns —
+   rule · league · definition · Settled · Won · ROI after fee · Open. The research evidence
+   rides muted after the definition, whole in the tooltip. On a phone the id and league share
+   a line, the definition wraps, and the four figures keep one labelled line. */
+.sp-line.is-label { grid-template-columns: 34px 150px minmax(0, 1fr) 62px 46px 94px 46px; }
+.sp-line.is-label + .sp-line.is-label { border-top: 1px solid var(--line); }
+.sp-c-id b { font-weight: 700; }
+.sp-c-def small { font-size: 12px; }
+.label-group .sp-rules-list { margin: 0 0 4px; border: 0; background: transparent; }
+.label-group .sp-line.is-label { padding-left: 0; padding-right: 0; }
+@media (max-width: 980px) {
+  .sp-line.is-label { grid-template-columns: 34px repeat(4, minmax(0, 1fr)); gap: 2px 8px; padding-top: 7px; padding-bottom: 7px; }
+  .sp-line.is-label .sp-c-market { grid-column: 2 / -1; }
+  .sp-line.is-label .sp-c-def { grid-column: 1 / -1; white-space: normal; font-size: 13px; line-height: 1.35; }
+  .sp-line.is-label .sp-cell.num { grid-row: 3; font-size: 13px; }
+  .sp-line.is-label .sp-cell.num:nth-child(4) { grid-column: 1 / 3; }
+  .sp-line.is-label .sp-cell.num[data-l]::before { display: inline; margin-right: 4px; }
+}
 /* The chips hide with the hidden attribute; these keep their own display. */
 .sp-rule[hidden], .sp-event[hidden], .sp-pick[hidden], .sp-day[hidden], .sp-panel[hidden],
 .sp-filters[hidden], details.fold.later[hidden] { display: none; }

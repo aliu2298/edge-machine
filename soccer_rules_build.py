@@ -17,6 +17,40 @@ def _record(picks):
     return len(done), won, roi
 
 
+# One compact row per rule, on the Rules section's own grid (sport_page: .sp-rules-list,
+# .sp-line, .sp-cell with data-l for the phone labels). .is-label sets this list's columns:
+# rule · league · definition · Settled · Won · ROI after fee · Open. Shared with
+# soccer_team_rules_build.py so the two sections read alike.
+COLS = (("Settled", "Settled"), ("Won", "Won"), ("ROI after fee", "ROI"), ("Open", "Open"))
+
+
+def rule_head(scope="League"):
+    cells = "".join(f'<span class="sp-cell num">{esc(h)}</span>' for h, _ in COLS)
+    return (f'<div class="sp-line sp-head-line is-label" aria-hidden="true"><span class="sp-cell">Rule</span>'
+            f'<span class="sp-cell">{esc(scope)}</span><span class="sp-cell">Definition</span>{cells}</div>')
+
+
+def rule_line(key, scope, definition, evidence, picks):
+    n, won, roi, live = *_record(picks), sum(p["status"] == "open" for p in picks)
+    tip = f"{definition} · {evidence}" if evidence else definition
+    ev = f' <small class="mut">· {esc(evidence)}</small>' if evidence else ""
+    vals = (n, won, "—" if roi is None else f"{roi * 100:+.1f}%", live)
+    nums = "".join(f'<span class="sp-cell num" data-l="{esc(short)}">{esc(v)}</span>' for (_, short), v in zip(COLS, vals))
+    return (f'<div class="sp-line is-label" data-rule="{esc(key)}"><span class="sp-cell sp-c-id"><b>{esc(key)}</b></span>'
+            f'<span class="sp-cell sp-c-market" title="{esc(scope)}">{esc(scope)}</span>'
+            f'<span class="sp-cell sp-c-def" title="{esc(tip)}">{esc(definition)}{ev}</span>{nums}</div>')
+
+
+def group_fold(g, words, lines, picks, opened, extra="", scope="League"):
+    """One group as the page's section disclosure; its summary carries the count and the record."""
+    n, won, _roi = _record(picks)
+    live = sum(p["status"] == "open" for p in picks)
+    head = f'{len(lines)} rule{"s" if len(lines) != 1 else ""} · {n} settled · {won} won' + (f" · {live} open" if live else "")
+    return (f'<details class="section-disclosure label-group" data-group="{esc(g)}"{" open" if opened else ""}>'
+            f'<summary><b>Group {esc(g)}</b><span>{esc(head)}</span><span class="label-group-words">{esc(words)}</span></summary>'
+            f'<div class="sp-rules-list" data-list="label-{esc(g.lower())}">{rule_head(scope)}{"".join(lines)}</div>{extra}</details>')
+
+
 # Group BTTS evidence (617 matches, Aug 1 - Oct 17 2026): only matchups positive in 3+ leagues and pooled.
 BTTS_EVIDENCE = (
     ("D1", "O+D− v O+D−", "YES 45-75c", "Serie A 7/9, La Liga 4/6, Bundesliga 4/5, Eredivisie 4/4, Saudi 3/4, Ligue 1 3/3",
@@ -41,20 +75,16 @@ def section(state=None):
         state = SR.load() if os.path.exists(SR.PATH) else {"rules": {k: {"picks": []} for k in SR.RULES}}
     groups, recent = [], []
     for g, words in SR.GROUPS.items():
-        rows = []
+        lines, picks_g = [], []
         for key, meta in SR.RULES.items():
             if meta["group"] != g:
                 continue
             picks = (state.get("rules", {}).get(key) or {}).get("picks") or []
-            n, won, roi = _record(picks)
-            live = sum(p["status"] == "open" for p in picks)
-            ev = f' <span class="mut">({esc(meta["evidence"])})</span>' if meta.get("evidence") else ""
-            rows.append(f'<tr><td><b>{esc(key)}</b></td><td>{esc(f"All {len(SR.MARKETS[meta['market']])} BTTS leagues" if meta["league"] == SR.ALL else meta["league"])}</td><td>{esc(meta["label"])}{ev}</td>'
-                        f'<td class="num">{n}</td><td class="num">{won}</td>'
-                        f'<td class="num">{"—" if roi is None else f"{roi * 100:+.1f}%"}</td>'
-                        f'<td class="num">{live}</td></tr>')
-            recent += picks
-        groups.append(f'<tr><td colspan="7"><b>Group {esc(g)}</b> <span class="mut">· {esc(words)}</span></td></tr>' + "".join(rows))
+            scope = (f"All {len(SR.MARKETS[meta['market']])} BTTS leagues" if meta["league"] == SR.ALL else meta["league"])
+            lines.append(rule_line(key, scope, meta["label"], meta.get("evidence"), picks))
+            picks_g += picks
+        recent += picks_g
+        groups.append(group_fold(g, words, lines, picks_g, opened=(g == "A"), extra=BTTS_NOTE if g == "BTTS" else ""))
     recent.sort(key=lambda p: p.get("start") or "", reverse=True)
     pick_rows = []
     for p in recent[:25]:
@@ -69,9 +99,7 @@ def section(state=None):
     last = state.get("last_run")
     return f"""<section id="label-rules">
 <div class="nba-section-head"><div><h2>Sandbox rules</h2><p class="shell-kicker">21 total-goals rules from 674 matches and 3 both-teams-to-score rules from 617, Aug 1 – Oct 17 2026 · paper at the Kalshi price, 7% fee · not in Production</p></div></div>
-<div class="tbl"><table><thead><tr><th>Rule</th><th>League</th><th>Definition</th><th class="num">Settled</th><th class="num">Won</th><th class="num">ROI after fee</th><th class="num">Open</th></tr></thead>
-<tbody>{"".join(groups)}</tbody></table></div>
-{BTTS_NOTE}
+{"".join(groups)}
 <details class="section-disclosure"><summary><b>Entries</b><span>latest 25</span></summary>
 <div class="tbl"><table><thead><tr><th>Kickoff</th><th>Match</th><th>Labels</th><th>Rule</th><th>Contract</th><th>Side</th><th class="num">Price</th><th>Result</th></tr></thead>
 <tbody>{body}</tbody></table></div></details>
