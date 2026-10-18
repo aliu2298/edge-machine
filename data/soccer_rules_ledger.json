@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-18T18:16:35.486199+00:00",
+ "last_run": "2026-10-18T19:31:26.065873+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -551,11 +551,14 @@
      "line": null,
      "logged": "2026-10-18T16:31:09.436631+00:00",
      "match": "FC Twente v FC Utrecht",
+     "payout": 0.0,
      "price": 0.43,
+     "profit": -100.0,
      "rule": "D2",
+     "settled": "2026-10-18T19:31:26.065873+00:00",
      "side": "no",
      "start": "2026-10-18T18:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXEREDIVISIEBTTS-26OCT18TWEFCU-BTTS",
      "title": "Both Teams To Score",
      "why": "FC Twente O-D- v FC Utrecht O+D+ \u00b7 BTTS NO 0.43"
@@ -1011,6 +1014,14 @@
    "due": 3,
    "labelled": 3,
    "matched": 3,
+   "new": 0
+  },
+  {
+   "at": "2026-10-18T19:31:26.065873+00:00",
+   "candidates": 1,
+   "due": 1,
+   "labelled": 1,
+   "matched": 1,
    "new": 0
   }
  ],
