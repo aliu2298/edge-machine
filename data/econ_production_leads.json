@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-18T01:08:18+00:00",
+ "board_built_at": "2026-10-18T01:30:12+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -145,6 +145,80 @@
    "source": "econ_daily_fav_band",
    "sport": "econ_daily",
    "status": "hit"
+  },
+  "2026-10-18|KXAAAGASDAZ-26OCT18-4.6200|Above 4.6200 at the close \u00b7 Econ Daily favourite band": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-10-18",
+   "edge_at_log": null,
+   "first_seen": "2026-10-18",
+   "headline": "Above 4.6200 at the close",
+   "home": null,
+   "id": "2026-10-18|KXAAAGASDAZ-26OCT18-4.6200|Above 4.6200 at the close \u00b7 Econ Daily favourite band",
+   "kickoff": "2026-10-18T03:59Z",
+   "lane": "production",
+   "last_seen": "2026-10-18",
+   "last_seen_at": "2026-10-18T01:30:12+00:00",
+   "league": "Econ Daily",
+   "match": "Arizona gas price",
+   "pair": "econ_daily_fav_band|econ_daily",
+   "price_at_log": 0.8,
+   "published_at": "2026-10-18T01:30:12+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 148,
+   "route": {
+    "claim": "Above 4.6200 at the close",
+    "event": "KXAAAGASDAZ-26OCT18",
+    "market": "KXAAAGASDAZ-26OCT18-4.6200",
+    "outcome": "Above 4.6200",
+    "outcome_side": "yes",
+    "price_at_log": 0.8,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "econ_daily_fav_band:KXAAAGASDAZ-26OCT18-4.6200",
+   "source": "econ_daily_fav_band",
+   "sport": "econ_daily",
+   "status": "pending"
+  },
+  "2026-10-18|KXAAAGASDNV-26OCT18-5.3950|Above 5.3950 at the close \u00b7 Econ Daily favourite band": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-10-18",
+   "edge_at_log": null,
+   "first_seen": "2026-10-18",
+   "headline": "Above 5.3950 at the close",
+   "home": null,
+   "id": "2026-10-18|KXAAAGASDNV-26OCT18-5.3950|Above 5.3950 at the close \u00b7 Econ Daily favourite band",
+   "kickoff": "2026-10-18T03:59Z",
+   "lane": "production",
+   "last_seen": "2026-10-18",
+   "last_seen_at": "2026-10-18T01:30:12+00:00",
+   "league": "Econ Daily",
+   "match": "Nevada gas price",
+   "pair": "econ_daily_fav_band|econ_daily",
+   "price_at_log": 0.79,
+   "published_at": "2026-10-18T01:30:12+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 148,
+   "route": {
+    "claim": "Above 5.3950 at the close",
+    "event": "KXAAAGASDNV-26OCT18",
+    "market": "KXAAAGASDNV-26OCT18-5.3950",
+    "outcome": "Above 5.3950",
+    "outcome_side": "yes",
+    "price_at_log": 0.79,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "econ_daily_fav_band:KXAAAGASDNV-26OCT18-5.3950",
+   "source": "econ_daily_fav_band",
+   "sport": "econ_daily",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -155,9 +229,9 @@
    "ready_at": "2026-10-15T03:48:37+00:00",
    "route": "moved by hand on 2026-10-14",
    "routing": {
-    "leads": 4,
+    "leads": 6,
     "problem": null,
-    "routed": 4,
+    "routed": 6,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -169,7 +243,7 @@
    "sandbox_roi_fee": -0.0125,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 2,
     "under_target": 0
    }
   }
@@ -178,5 +252,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-18T01:08:18+00:00"
+ "updated_at": "2026-10-18T01:30:12+00:00"
 }
