@@ -206,8 +206,8 @@
    "price": 0.43
   },
   "bund_o35:KXBUNDESLIGATOTAL-26OCT18LEVSCF-4": {
-   "at": "2026-10-18T12:45:08+00:00",
-   "lead_min": 44.9,
+   "at": "2026-10-18T13:00:17+00:00",
+   "lead_min": 29.7,
    "price": 0.46
   },
   "bund_o35_fav:KXBUNDESLIGATOTAL-26OCT10M05LEV-4": {
@@ -1055,6 +1055,16 @@
    "lead_min": 4.6,
    "price": 0.83
   },
+  "o15_cup_mismatch:KXTACAPORTTOTAL-26OCT18ALPCAS-2": {
+   "at": "2026-10-18T13:00:17+00:00",
+   "lead_min": 59.7,
+   "price": 0.7
+  },
+  "o15_cup_mismatch:KXTACAPORTTOTAL-26OCT18FATACV-2": {
+   "at": "2026-10-18T13:00:17+00:00",
+   "lead_min": 59.7,
+   "price": 0.77
+  },
   "o15_cup_mismatch:KXUECLTOTAL-26OCT15ATAPAF-2": {
    "at": "2026-10-15T18:56:18+00:00",
    "lead_min": 3.7,
@@ -1096,8 +1106,8 @@
    "price": 0.88
   },
   "o15_form_l10:KXBUNDESLIGATOTAL-26OCT18LEVSCF-2": {
-   "at": "2026-10-18T12:45:08+00:00",
-   "lead_min": 44.9,
+   "at": "2026-10-18T13:00:17+00:00",
+   "lead_min": 29.7,
    "price": 0.87
   },
   "o15_form_l10:KXEREDIVISIETOTAL-26OCT18ZWOGAE-2": {
@@ -1234,6 +1244,21 @@
    "at": "2026-10-17T13:55:23+00:00",
    "lead_min": 4.6,
    "price": 0.83
+  },
+  "o15_ranked:KXTACAPORTTOTAL-26OCT18ALPCAS-2": {
+   "at": "2026-10-18T13:00:17+00:00",
+   "lead_min": 59.7,
+   "price": 0.7
+  },
+  "o15_ranked:KXTACAPORTTOTAL-26OCT18FATACV-2": {
+   "at": "2026-10-18T13:00:17+00:00",
+   "lead_min": 59.7,
+   "price": 0.77
+  },
+  "o15_ranked:KXTACAPORTTOTAL-26OCT18MAFSCL-2": {
+   "at": "2026-10-18T13:00:17+00:00",
+   "lead_min": 59.7,
+   "price": 0.79
   },
   "o15_ranked:KXUECLTOTAL-26OCT15EGRFCM-2": {
    "at": "2026-10-15T16:40:08+00:00",
@@ -2356,5 +2381,5 @@
    "price": 0.77
   }
  },
- "updated": "2026-10-18T12:45:08+00:00"
+ "updated": "2026-10-18T13:00:17+00:00"
 }
