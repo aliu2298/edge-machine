@@ -2,16 +2,16 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-18T22:00:14.843215+00:00",
-   "last_success": "2026-10-18T22:00:14.843215+00:00",
+   "last_run": "2026-10-18T22:36:59.311744+00:00",
+   "last_success": "2026-10-18T22:36:59.311744+00:00",
    "observations": {
-    "at": "2026-10-18T22:00:14.843215+00:00",
+    "at": "2026-10-18T22:36:59.311744+00:00",
     "events": 866,
     "reasons": {
-     "in band": 7,
+     "in band": 8,
      "no quote or spread too wide": 282,
      "not active": 745,
-     "outside the band": 53,
+     "outside the band": 52,
      "outside the entry window": 11109
     }
    },
@@ -161,16 +161,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-18T22:00:14.843215+00:00",
-   "last_success": "2026-10-18T22:00:14.843215+00:00",
+   "last_run": "2026-10-18T22:36:59.311744+00:00",
+   "last_success": "2026-10-18T22:36:59.311744+00:00",
    "observations": {
-    "at": "2026-10-18T22:00:14.843215+00:00",
+    "at": "2026-10-18T22:36:59.311744+00:00",
     "events": 866,
     "reasons": {
-     "in band": 1,
+     "in band": 2,
      "no quote or spread too wide": 604,
      "not active": 745,
-     "outside the band": 165,
+     "outside the band": 164,
      "outside the entry window": 10681
     }
    },
@@ -320,21 +320,35 @@
      "side": "no",
      "status": "open",
      "title": "Dai Dai"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-20T14:00:00Z",
+     "detail": "NO 0.80 \u00b7 favourite band",
+     "event": "KXYTVIEWSW-BAD26OCT18",
+     "id": "KXYTVIEWSW-BAD26OCT18-27.5M",
+     "logged": "2026-10-18T22:36:59.311744+00:00",
+     "name": "Bad Bunny: Highest daily view count (October 12, 2026 - October 18, 2026)",
+     "price": 0.8,
+     "series": "KXYTVIEWSW",
+     "side": "no",
+     "status": "open",
+     "title": "Above 27.5M"
     }
    ]
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-18T22:00:14.843215+00:00",
-   "last_success": "2026-10-18T22:00:14.843215+00:00",
+   "last_run": "2026-10-18T22:36:59.311744+00:00",
+   "last_success": "2026-10-18T22:36:59.311744+00:00",
    "observations": {
-    "at": "2026-10-18T22:00:14.843215+00:00",
+    "at": "2026-10-18T22:36:59.311744+00:00",
     "events": 866,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 39,
-     "edge 5c+": 7,
+     "already near-certain (under 10c or over 90c)": 42,
+     "edge 5c+": 5,
      "edge under 5c": 1,
-     "no quote or spread too wide": 37
+     "no quote or spread too wide": 36
     }
    },
    "picks": [
@@ -729,14 +743,14 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-18T22:00:14.843215+00:00",
-   "last_success": "2026-10-18T22:00:14.843215+00:00",
+   "last_run": "2026-10-18T22:36:59.311744+00:00",
+   "last_success": "2026-10-18T22:36:59.311744+00:00",
    "observations": {
-    "at": "2026-10-18T22:00:14.843215+00:00",
+    "at": "2026-10-18T22:36:59.311744+00:00",
     "events": 866,
     "reasons": {
-     "edge 5c+": 7,
-     "edge under 5c": 1,
+     "edge 5c+": 6,
+     "edge under 5c": 2,
      "under 20 reviews counted": 11
     }
    },
