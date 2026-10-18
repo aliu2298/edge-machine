@@ -2,16 +2,16 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-18T17:00:12.962888+00:00",
-   "last_success": "2026-10-18T17:00:12.962888+00:00",
+   "last_run": "2026-10-18T17:33:26.303466+00:00",
+   "last_success": "2026-10-18T17:33:26.303466+00:00",
    "observations": {
-    "at": "2026-10-18T17:00:12.962888+00:00",
+    "at": "2026-10-18T17:33:26.303466+00:00",
     "events": 862,
     "reasons": {
-     "in band": 12,
-     "no quote or spread too wide": 252,
+     "in band": 11,
+     "no quote or spread too wide": 250,
      "not active": 698,
-     "outside the band": 45,
+     "outside the band": 48,
      "outside the entry window": 11096
     }
    },
@@ -133,15 +133,29 @@
      "side": "no",
      "status": "open",
      "title": "Above 77"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-19T14:00:00Z",
+     "detail": "YES 0.90 \u00b7 endgame",
+     "event": "KXRT-YOUC",
+     "id": "KXRT-YOUC-98",
+     "logged": "2026-10-18T17:33:26.303466+00:00",
+     "name": "You Can See Everything \u00b7 Rotten Tomatoes score",
+     "price": 0.9,
+     "series": "KXRT",
+     "side": "yes",
+     "status": "open",
+     "title": "Above 98"
     }
    ]
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-18T17:00:12.962888+00:00",
-   "last_success": "2026-10-18T17:00:12.962888+00:00",
+   "last_run": "2026-10-18T17:33:26.303466+00:00",
+   "last_success": "2026-10-18T17:33:26.303466+00:00",
    "observations": {
-    "at": "2026-10-18T17:00:12.962888+00:00",
+    "at": "2026-10-18T17:33:26.303466+00:00",
     "events": 862,
     "reasons": {
      "in band": 1,
@@ -288,16 +302,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-18T17:00:12.962888+00:00",
-   "last_success": "2026-10-18T17:00:12.962888+00:00",
+   "last_run": "2026-10-18T17:33:26.303466+00:00",
+   "last_success": "2026-10-18T17:33:26.303466+00:00",
    "observations": {
-    "at": "2026-10-18T17:00:12.962888+00:00",
+    "at": "2026-10-18T17:33:26.303466+00:00",
     "events": 862,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 36,
-     "edge 5c+": 5,
+     "already near-certain (under 10c or over 90c)": 35,
+     "edge 5c+": 8,
      "edge under 5c": 2,
-     "no quote or spread too wide": 41
+     "no quote or spread too wide": 39
     }
    },
    "picks": [
@@ -660,10 +674,10 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-18T17:00:12.962888+00:00",
-   "last_success": "2026-10-18T17:00:12.962888+00:00",
+   "last_run": "2026-10-18T17:33:26.303466+00:00",
+   "last_success": "2026-10-18T17:33:26.303466+00:00",
    "observations": {
-    "at": "2026-10-18T17:00:12.962888+00:00",
+    "at": "2026-10-18T17:33:26.303466+00:00",
     "events": 862,
     "reasons": {
      "edge 5c+": 6,
@@ -966,7 +980,7 @@
    "days": []
   },
   "Stupid Question": {
-   "at": "2026-10-18T10:00:13.940892+00:00",
+   "at": "2026-10-18T17:33:26.303466+00:00",
    "days": [
     "2026-07-27",
     "2026-08-31",
