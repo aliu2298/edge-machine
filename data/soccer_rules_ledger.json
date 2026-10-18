@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-18T20:01:09.346382+00:00",
+ "last_run": "2026-10-18T22:28:40.618333+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -200,11 +200,14 @@
      "line": 2.5,
      "logged": "2026-10-18T17:16:20.758265+00:00",
      "match": "Juventus v Lazio",
+     "payout": 1.0,
      "price": 0.52,
+     "profit": 86.06,
      "rule": "C4",
+     "settled": "2026-10-18T22:28:40.618333+00:00",
      "side": "yes",
      "start": "2026-10-18T18:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXSERIEATOTAL-26OCT18JUVLAZ-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Juventus O+D- v Lazio O-D- \u00b7 Over 2.5 YES 0.52"
@@ -309,11 +312,14 @@
      "line": 2.5,
      "logged": "2026-10-18T17:16:20.758265+00:00",
      "match": "Lyon v Nice",
+     "payout": 0.0,
      "price": 0.44,
+     "profit": -100.0,
      "rule": "C6",
+     "settled": "2026-10-18T22:28:40.618333+00:00",
      "side": "no",
      "start": "2026-10-18T18:45Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXLIGUE1TOTAL-26OCT18OLNIC-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Lyon O+D- v Nice O-D- \u00b7 Under 2.5 NO 0.44"
@@ -688,11 +694,14 @@
      "line": null,
      "logged": "2026-10-18T17:16:20.758265+00:00",
      "match": "Juventus v Lazio",
+     "payout": 0.0,
      "price": 0.5,
+     "profit": -100.0,
      "rule": "D3",
+     "settled": "2026-10-18T22:28:40.618333+00:00",
      "side": "yes",
      "start": "2026-10-18T18:45Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXSERIEABTTS-26OCT18JUVLAZ-BTTS",
      "title": "Both Teams To Score",
      "why": "Juventus O+D- v Lazio O-D- \u00b7 BTTS YES 0.50"
@@ -711,11 +720,14 @@
      "line": null,
      "logged": "2026-10-18T17:16:20.758265+00:00",
      "match": "Lyon v Nice",
+     "payout": 1.0,
      "price": 0.59,
+     "profit": 64.76,
      "rule": "D3",
+     "settled": "2026-10-18T22:28:40.618333+00:00",
      "side": "yes",
      "start": "2026-10-18T18:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXLIGUE1BTTS-26OCT18OLNIC-BTTS",
      "title": "Both Teams To Score",
      "why": "Lyon O+D- v Nice O-D- \u00b7 BTTS YES 0.59"
@@ -734,11 +746,14 @@
      "line": null,
      "logged": "2026-10-18T17:31:39.528095+00:00",
      "match": "Real Madrid v Sevilla",
+     "payout": 1.0,
      "price": 0.52,
+     "profit": 86.06,
      "rule": "D3",
+     "settled": "2026-10-18T22:28:40.618333+00:00",
      "side": "yes",
      "start": "2026-10-18T19:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXLALIGABTTS-26OCT18RMASEV-BTTS",
      "title": "Both Teams To Score",
      "why": "Real Madrid O+D- v Sevilla O-D- \u00b7 BTTS YES 0.52"
@@ -1033,6 +1048,14 @@
    "due": 1,
    "labelled": 1,
    "matched": 1,
+   "new": 0
+  },
+  {
+   "at": "2026-10-18T22:28:40.618333+00:00",
+   "candidates": 0,
+   "due": 0,
+   "labelled": 0,
+   "matched": 0,
    "new": 0
   }
  ],
