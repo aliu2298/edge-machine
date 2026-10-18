@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-18T19:31:26.065873+00:00",
+ "last_run": "2026-10-18T20:01:09.346382+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -227,11 +227,14 @@
      "line": 2.5,
      "logged": "2026-10-18T16:31:09.436631+00:00",
      "match": "Al Fateh v Al Khaleej",
+     "payout": 0.0,
      "price": 0.45,
+     "profit": -100.0,
      "rule": "C5",
+     "settled": "2026-10-18T20:01:09.346382+00:00",
      "side": "no",
      "start": "2026-10-18T18:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXSAUDIPLTOTAL-26OCT18FATKHA-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Al Fateh O-D+ v Al Khaleej O-D+ \u00b7 Under 2.5 NO 0.45"
@@ -1018,6 +1021,14 @@
   },
   {
    "at": "2026-10-18T19:31:26.065873+00:00",
+   "candidates": 1,
+   "due": 1,
+   "labelled": 1,
+   "matched": 1,
+   "new": 0
+  },
+  {
+   "at": "2026-10-18T20:01:09.346382+00:00",
    "candidates": 1,
    "due": 1,
    "labelled": 1,
