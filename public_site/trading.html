@@ -27,9 +27,10 @@
 <div class="topbar">
 <a class="brand" href="./index.html">Edge Machine</a>
 <nav class="main" aria-label="Pages"><a href="./sandbox.html">Archives</a><a href="./production.html">Production</a><a href="./trading.html" aria-current="page">Trading</a><span class="nav-group"><button type="button" class="nav-more" aria-expanded="false" aria-controls="nav-markets">Markets<span class="nav-caret" aria-hidden="true"></span></button><span class="nav-menu" id="nav-markets"><a href="./nba.html">NBA</a><a href="./nfl.html">NFL</a><a href="./soccer.html">Soccer</a><a href="./tennis.html">Tennis</a><a href="./cricket.html">Cricket</a><a href="./crypto.html">Crypto</a><a href="./commodities.html">Commodities</a><a href="./econ_daily.html">Econ Daily</a><a href="./finance_daily.html">Finance Daily</a><a href="./culture.html">Culture</a></span></span><a href="./sandbox.html#method">Method</a></nav>
-<p class="stamp"><time datetime="2026-10-18T04:51:14Z">Updated Oct 17, 11:51 PM CT</time><span class="sr-only">updated 2026-10-18 04:51 UTC</span></p>
+<p class="stamp"><time datetime="2026-10-18T05:55:49Z">Updated Oct 18, 12:55 AM CT</time><span class="sr-only">updated 2026-10-18 05:55 UTC</span></p>
 </div>
 <div class="subbar">
+<nav class="toc" aria-label="On this page"><a href="#rules">Rules</a><a href="#gold-orb">Gold breakout</a></nav>
 <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch theme" title="Switch between the light and dark theme">Theme</button>
 </div>
 </header>
@@ -145,6 +146,32 @@ never the signal bar's close. Costs of 5bp a side are charged on entry and exit.
 (<i>Working</i>, <i>No edge</i> or <i>Proven</i>); from 10 it is <i>Collecting n/30</i>
 with its lean, <i>Promising</i> or <i>Behind</i>; under 10 a rule is only <i>Too early</i>. Open <b>What this rule does</b> under a row for its definition.</div>
 </details>
+</section>
+<section id="gold-orb">
+<h2>Gold Asia-open breakout (paper)</h2>
+<p class="sm"><b>Definition:</b> the first minute after 8:00 pm CT that closes beyond the 7:30–8:00 pm range (A) or the
+7:55–8:00 pm range (B) on Coinbase's GOL gold future; enter at the next minute's open, exit 15 minutes later.
+Paper · never places an order · not in Production.</p>
+<details class="fold trade-method"><summary>How the gold breakout is defined</summary>
+<div class="note sm">One contract is 1 oz. A's range is the 30-minute candle as a chart draws it; B's needs all five
+minutes to have traded. The side is the first minute within 60 minutes of 8:00 pm that closes beyond the range,
+and it is decided only once that minute has finished; no stop. Each variant is also kept from a fixed 01:00 UTC
+anchor (the China open): the same time as 8:00 pm CT until Nov 1, then 7:00 pm CST. Sunday–Thursday nights.</div>
+</details>
+<div class="tbl"><table><thead><tr><th>Variant</th><th>Anchor</th><th class="num">Settled nights</th>
+<th class="num">Won</th><th class="num">Avg gross bp</th><th class="num">Avg net bp · $</th>
+<th class="num">Avg spread bp</th><th class="num">t (net)</th></tr></thead>
+<tbody><tr><td>A · friend · 30-min range 7:30–8:00 pm</td><td>8:00 pm CT</td><td class="num">0</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr><td>A · friend · 30-min range 7:30–8:00 pm</td><td>01:00 UTC shadow</td><td class="num">0</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr><td>B · 5-min range 7:55–8:00 pm</td><td>8:00 pm CT</td><td class="num">0</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr><td>B · 5-min range 7:55–8:00 pm</td><td>01:00 UTC shadow</td><td class="num">0</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr></tbody></table></div>
+<p class="sm mut">Olu reviews at 10+ settled nights per variant. Net buys at the ask and sells at the bid
+(the book at the entry poll and the exit poll), fee: $0.10/side (CDE 2024 filing, non-professional, exchange fee only). Won = net above zero.</p>
+<div class="tbl"><table><thead><tr><th>Night</th><th>Variant</th><th>Anchor</th><th>Side</th>
+<th class="num">Entry</th><th class="num">Exit</th><th class="num">Gross bp</th>
+<th class="num">Spread bp entry / exit</th><th class="num">Net bp · $</th></tr></thead>
+<tbody><tr><td colspan="9" class="mut">No nights yet: the first is the next Sunday-to-Thursday evening, from 7:30 pm CT.</td></tr></tbody></table></div>
+<p class="sm mut">† nothing traded in the entry minute: the first open after it. * nothing traded in the exit
+minute: the last price before it. Research, look-ahead-free: the 5-minute range made +0.9bp a trade (t +0.91)
+on 500 nights and −1.2bp on the 250-night holdout, before costs; this lane measures what the venue really pays.
+Last run not yet.</p>
 </section>
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 
