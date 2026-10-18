@@ -3374,7 +3374,7 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 # What the live board is actually set to, stated once so a change here is a deliberate edit
 # and not a surprise. These are judgement calls; the test only pins that they were made.
 eq(sorted(T.PAIR_OVERRIDES),
-   ["btts_form_l10_fade|soccer_btts", "bund_o35|soccer_u35", "commod_fav_band|commodities_fav",
+   ["bund_o35|soccer_u35", "commod_fav_band|commodities_fav",
     "corners_team_fade|soccer_corners", "corners_total_under|soccer_corners", "corners_ucl_fade|soccer_corners",
     "crypto_fav_band|crypto_fav", "ere_draw|soccer", "espn_fpi|nfl", "ftts_no_70_80|soccer_ftts",
     "liga_btts_even|soccer_btts", "mls_fade_home|soccer_p05", "o15_form_l10|soccer_o15",

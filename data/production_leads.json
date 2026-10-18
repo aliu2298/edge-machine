@@ -1217,40 +1217,6 @@
    "sport": "soccer_o15",
    "status": "hit"
   },
-  "2026-10-16|Eintracht Frankfurt|FC Cologne|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs": {
-   "away": "FC Cologne",
-   "bet": {
-    "kind": "btts_no"
-   },
-   "date": "2026-10-16",
-   "edge_at_log": null,
-   "first_seen": "2026-10-12",
-   "headline": "Both teams to score: No",
-   "home": "Eintracht Frankfurt",
-   "id": "2026-10-16|Eintracht Frankfurt|FC Cologne|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs",
-   "kickoff": "2026-10-16T18:30Z",
-   "lane": "production",
-   "league": "Bundesliga",
-   "match": "Eintracht Frankfurt v FC Cologne",
-   "pair": "btts_form_l10_fade|soccer_btts",
-   "price_at_log": 0.31,
-   "published_at": "2026-10-16T21:06:33+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Both teams to score: No",
-    "event": "KXBUNDESLIGABTTS-26OCT16SGEKOE",
-    "market": "KXBUNDESLIGABTTS-26OCT16SGEKOE-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "no",
-    "price_at_log": 0.31,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "btts_form_l10_fade:KXBUNDESLIGABTTS-26OCT16SGEKOE-BTTS",
-   "source": "btts_form_l10_fade",
-   "sport": "soccer_btts",
-   "status": "hit"
-  },
   "2026-10-16|Eintracht Frankfurt|FC Cologne|Over 1.5 goals \u00b7 Over 1.5 form rule": {
    "away": "FC Cologne",
    "bet": {
@@ -1426,40 +1392,6 @@
    "sport": "crypto_fav",
    "status": "hit"
   },
-  "2026-10-16|Le Mans|Toulouse|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs": {
-   "away": "Toulouse",
-   "bet": {
-    "kind": "btts_no"
-   },
-   "date": "2026-10-16",
-   "edge_at_log": null,
-   "first_seen": "2026-10-12",
-   "headline": "Both teams to score: No",
-   "home": "Le Mans",
-   "id": "2026-10-16|Le Mans|Toulouse|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs",
-   "kickoff": "2026-10-16T18:45Z",
-   "lane": "production",
-   "league": "Ligue 1",
-   "match": "Le Mans v Toulouse",
-   "pair": "btts_form_l10_fade|soccer_btts",
-   "price_at_log": 0.43,
-   "published_at": "2026-10-16T17:17:41+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 87,
-   "route": {
-    "claim": "Both teams to score: No",
-    "event": "KXLIGUE1BTTS-26OCT16MANTFC",
-    "market": "KXLIGUE1BTTS-26OCT16MANTFC-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "no",
-    "price_at_log": 0.43,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "btts_form_l10_fade:KXLIGUE1BTTS-26OCT16MANTFC-BTTS",
-   "source": "btts_form_l10_fade",
-   "sport": "soccer_btts",
-   "status": "hit"
-  },
   "2026-10-17|1. FC Union Berlin|Borussia Dortmund|Borussia Dortmund to score 2+ \u00b7 Team scores 2+ form rule": {
    "away": "Borussia Dortmund",
    "bet": {
@@ -1529,40 +1461,6 @@
    "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT17UNIBVB-4",
    "source": "bund_o35",
    "sport": "soccer_u35",
-   "status": "miss"
-  },
-  "2026-10-17|ADO Den Haag|PSV Eindhoven|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs": {
-   "away": "PSV Eindhoven",
-   "bet": {
-    "kind": "btts_no"
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-14",
-   "headline": "Both teams to score: No",
-   "home": "ADO Den Haag",
-   "id": "2026-10-17|ADO Den Haag|PSV Eindhoven|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs",
-   "kickoff": "2026-10-17T14:30Z",
-   "lane": "production",
-   "league": "Eredivisie",
-   "match": "ADO Den Haag v PSV Eindhoven",
-   "pair": "btts_form_l10_fade|soccer_btts",
-   "price_at_log": 0.39,
-   "published_at": "2026-10-17T17:06:41+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Both teams to score: No",
-    "event": "KXEREDIVISIEBTTS-26OCT17ADOPSV",
-    "market": "KXEREDIVISIEBTTS-26OCT17ADOPSV-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "no",
-    "price_at_log": 0.39,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "btts_form_l10_fade:KXEREDIVISIEBTTS-26OCT17ADOPSV-BTTS",
-   "source": "btts_form_l10_fade",
-   "sport": "soccer_btts",
    "status": "miss"
   },
   "2026-10-17|AS Roma|Genoa|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
@@ -2191,40 +2089,6 @@
    "sport": "soccer_u35",
    "status": "miss"
   },
-  "2026-10-17|Hibernian|Falkirk|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs": {
-   "away": "Falkirk",
-   "bet": {
-    "kind": "btts_no"
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-15",
-   "headline": "Both teams to score: No",
-   "home": "Hibernian",
-   "id": "2026-10-17|Hibernian|Falkirk|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs",
-   "kickoff": "2026-10-17T14:00Z",
-   "lane": "production",
-   "league": "Scottish Premiership",
-   "match": "Hibernian v Falkirk",
-   "pair": "btts_form_l10_fade|soccer_btts",
-   "price_at_log": 0.47,
-   "published_at": "2026-10-17T16:03:47+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Both teams to score: No",
-    "event": "KXSCOTTISHPREMBTTS-26OCT17HIBFAL",
-    "market": "KXSCOTTISHPREMBTTS-26OCT17HIBFAL-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "no",
-    "price_at_log": 0.47,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "btts_form_l10_fade:KXSCOTTISHPREMBTTS-26OCT17HIBFAL-BTTS",
-   "source": "btts_form_l10_fade",
-   "sport": "soccer_btts",
-   "status": "miss"
-  },
   "2026-10-17|Hibernian|Falkirk|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
    "away": "Falkirk",
    "bet": {
@@ -2364,40 +2228,6 @@
    "sport": "soccer_corners",
    "status": "hit"
   },
-  "2026-10-17|Minnesota United FC|St. Louis CITY SC|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs": {
-   "away": "St. Louis CITY SC",
-   "bet": {
-    "kind": "btts_no"
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-13",
-   "headline": "Both teams to score: No",
-   "home": "Minnesota United FC",
-   "id": "2026-10-17|Minnesota United FC|St. Louis CITY SC|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs",
-   "kickoff": "2026-10-17T20:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "Minnesota United FC v St. Louis CITY SC",
-   "pair": "btts_form_l10_fade|soccer_btts",
-   "price_at_log": 0.39,
-   "published_at": "2026-10-17T23:16:53+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Both teams to score: No",
-    "event": "KXMLSBTTS-26OCT17MINSTL",
-    "market": "KXMLSBTTS-26OCT17MINSTL-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "no",
-    "price_at_log": 0.39,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "btts_form_l10_fade:KXMLSBTTS-26OCT17MINSTL-BTTS",
-   "source": "btts_form_l10_fade",
-   "sport": "soccer_btts",
-   "status": "miss"
-  },
   "2026-10-17|Minnesota United FC|St. Louis CITY SC|Over 1.5 goals \u00b7 Over 1.5 form rule": {
    "away": "St. Louis CITY SC",
    "bet": {
@@ -2504,40 +2334,6 @@
    "sport": "soccer_team2",
    "status": "hit"
   },
-  "2026-10-17|Philadelphia Union|Charlotte FC|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs": {
-   "away": "Charlotte FC",
-   "bet": {
-    "kind": "btts_no"
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-13",
-   "headline": "Both teams to score: No",
-   "home": "Philadelphia Union",
-   "id": "2026-10-17|Philadelphia Union|Charlotte FC|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs",
-   "kickoff": "2026-10-17T18:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "Philadelphia Union v Charlotte FC",
-   "pair": "btts_form_l10_fade|soccer_btts",
-   "price_at_log": 0.36,
-   "published_at": "2026-10-17T20:36:10+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Both teams to score: No",
-    "event": "KXMLSBTTS-26OCT17PHICLT",
-    "market": "KXMLSBTTS-26OCT17PHICLT-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "no",
-    "price_at_log": 0.36,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "btts_form_l10_fade:KXMLSBTTS-26OCT17PHICLT-BTTS",
-   "source": "btts_form_l10_fade",
-   "sport": "soccer_btts",
-   "status": "miss"
-  },
   "2026-10-17|Real Betis|Barcelona|4+ corners \u00b7 Real Betis \u00b7 Corners team fade": {
    "away": "Barcelona",
    "bet": {
@@ -2572,40 +2368,6 @@
    "sandbox_quote": "corners_team_fade:KXLALIGATCORNERS-26OCT17RBBBAR-RBB4",
    "source": "corners_team_fade",
    "sport": "soccer_corners",
-   "status": "miss"
-  },
-  "2026-10-17|SV Elversberg|FC Augsburg|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs": {
-   "away": "FC Augsburg",
-   "bet": {
-    "kind": "btts_no"
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-13",
-   "headline": "Both teams to score: No",
-   "home": "SV Elversberg",
-   "id": "2026-10-17|SV Elversberg|FC Augsburg|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs",
-   "kickoff": "2026-10-17T13:30Z",
-   "lane": "production",
-   "league": "Bundesliga",
-   "match": "SV Elversberg v FC Augsburg",
-   "pair": "btts_form_l10_fade|soccer_btts",
-   "price_at_log": 0.33,
-   "published_at": "2026-10-17T16:03:47+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Both teams to score: No",
-    "event": "KXBUNDESLIGABTTS-26OCT17SVEFCA",
-    "market": "KXBUNDESLIGABTTS-26OCT17SVEFCA-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "no",
-    "price_at_log": 0.33,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "btts_form_l10_fade:KXBUNDESLIGABTTS-26OCT17SVEFCA-BTTS",
-   "source": "btts_form_l10_fade",
-   "sport": "soccer_btts",
    "status": "miss"
   },
   "2026-10-17|SV Elversberg|FC Augsburg|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
@@ -2712,40 +2474,6 @@
    "sport": "soccer_u35",
    "status": "miss"
   },
-  "2026-10-17|Sparta Rotterdam|Willem II|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs": {
-   "away": "Willem II",
-   "bet": {
-    "kind": "btts_no"
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-14",
-   "headline": "Both teams to score: No",
-   "home": "Sparta Rotterdam",
-   "id": "2026-10-17|Sparta Rotterdam|Willem II|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs",
-   "kickoff": "2026-10-17T19:00Z",
-   "lane": "production",
-   "league": "Eredivisie",
-   "match": "Sparta Rotterdam v Willem II",
-   "pair": "btts_form_l10_fade|soccer_btts",
-   "price_at_log": 0.39,
-   "published_at": "2026-10-17T22:15:45+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Both teams to score: No",
-    "event": "KXEREDIVISIEBTTS-26OCT17SPAWIL",
-    "market": "KXEREDIVISIEBTTS-26OCT17SPAWIL-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "no",
-    "price_at_log": 0.39,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "btts_form_l10_fade:KXEREDIVISIEBTTS-26OCT17SPAWIL-BTTS",
-   "source": "btts_form_l10_fade",
-   "sport": "soccer_btts",
-   "status": "miss"
-  },
   "2026-10-17|Sparta|Willem II|Draw \u00b7 Eredivisie draw band": {
    "away": "Willem II",
    "bet": {
@@ -2779,40 +2507,6 @@
    "sandbox_quote": "ere_draw:KXEREDIVISIEGAME-26OCT17SPAWIL",
    "source": "ere_draw",
    "sport": "soccer",
-   "status": "miss"
-  },
-  "2026-10-17|Strasbourg|Paris Saint-Germain|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs": {
-   "away": "Paris Saint-Germain",
-   "bet": {
-    "kind": "btts_no"
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-13",
-   "headline": "Both teams to score: No",
-   "home": "Strasbourg",
-   "id": "2026-10-17|Strasbourg|Paris Saint-Germain|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs",
-   "kickoff": "2026-10-17T15:15Z",
-   "lane": "production",
-   "league": "Ligue 1",
-   "match": "Strasbourg v Paris Saint-Germain",
-   "pair": "btts_form_l10_fade|soccer_btts",
-   "price_at_log": 0.37,
-   "published_at": "2026-10-17T17:33:03+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Both teams to score: No",
-    "event": "KXLIGUE1BTTS-26OCT17RCSPSG",
-    "market": "KXLIGUE1BTTS-26OCT17RCSPSG-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "no",
-    "price_at_log": 0.37,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "btts_form_l10_fade:KXLIGUE1BTTS-26OCT17RCSPSG-BTTS",
-   "source": "btts_form_l10_fade",
-   "sport": "soccer_btts",
    "status": "miss"
   },
   "2026-10-17|Strasbourg|Paris Saint-Germain|Over 1.5 goals \u00b7 Over 1.5 form rule": {
@@ -2955,40 +2649,6 @@
    "sandbox_quote": "corners_team_fade:KXLALIGATCORNERS-26OCT17VILELC-VIL7",
    "source": "corners_team_fade",
    "sport": "soccer_corners",
-   "status": "hit"
-  },
-  "2026-10-17|Villarreal|Elche|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs": {
-   "away": "Elche",
-   "bet": {
-    "kind": "btts_no"
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-13",
-   "headline": "Both teams to score: No",
-   "home": "Villarreal",
-   "id": "2026-10-17|Villarreal|Elche|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs",
-   "kickoff": "2026-10-17T14:15Z",
-   "lane": "production",
-   "league": "La Liga",
-   "match": "Villarreal v Elche",
-   "pair": "btts_form_l10_fade|soccer_btts",
-   "price_at_log": 0.43,
-   "published_at": "2026-10-17T17:06:41+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Both teams to score: No",
-    "event": "KXLALIGABTTS-26OCT17VILELC",
-    "market": "KXLALIGABTTS-26OCT17VILELC-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "no",
-    "price_at_log": 0.43,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "btts_form_l10_fade:KXLALIGABTTS-26OCT17VILELC-BTTS",
-   "source": "btts_form_l10_fade",
-   "sport": "soccer_btts",
    "status": "hit"
   },
   "2026-10-17|Werder Bremen|SC Paderborn 07|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
@@ -3433,42 +3093,6 @@
    "sport": "soccer_o15",
    "status": "pending"
   },
-  "2026-10-18|FC Groningen|Ajax Amsterdam|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs": {
-   "away": "Ajax Amsterdam",
-   "bet": {
-    "kind": "btts_no"
-   },
-   "date": "2026-10-18",
-   "edge_at_log": null,
-   "first_seen": "2026-10-15",
-   "headline": "Both teams to score: No",
-   "home": "FC Groningen",
-   "id": "2026-10-18|FC Groningen|Ajax Amsterdam|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs",
-   "kickoff": "2026-10-18T14:45Z",
-   "lane": "production",
-   "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T00:57:47+00:00",
-   "league": "Eredivisie",
-   "match": "FC Groningen v Ajax Amsterdam",
-   "pair": "btts_form_l10_fade|soccer_btts",
-   "price_at_log": 0.32,
-   "published_at": "2026-10-16T17:17:41+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 2727,
-   "route": {
-    "claim": "Both teams to score: No",
-    "event": "KXEREDIVISIEBTTS-26OCT18GROAJA",
-    "market": "KXEREDIVISIEBTTS-26OCT18GROAJA-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "no",
-    "price_at_log": 0.32,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "btts_form_l10_fade:KXEREDIVISIEBTTS-26OCT18GROAJA-BTTS",
-   "source": "btts_form_l10_fade",
-   "sport": "soccer_btts",
-   "status": "pending"
-  },
   "2026-10-18|FC Groningen|Ajax Amsterdam|Over 1.5 goals \u00b7 Over 1.5 form rule": {
    "away": "Ajax Amsterdam",
    "bet": {
@@ -3617,42 +3241,6 @@
    "sport": "soccer_o15",
    "status": "pending"
   },
-  "2026-10-18|LA Galaxy|San Diego FC|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs": {
-   "away": "San Diego FC",
-   "bet": {
-    "kind": "btts_no"
-   },
-   "date": "2026-10-18",
-   "edge_at_log": null,
-   "first_seen": "2026-10-15",
-   "headline": "Both teams to score: No",
-   "home": "LA Galaxy",
-   "id": "2026-10-18|LA Galaxy|San Diego FC|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs",
-   "kickoff": "2026-10-18T02:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T00:57:47+00:00",
-   "league": "MLS",
-   "match": "LA Galaxy v San Diego FC",
-   "pair": "btts_form_l10_fade|soccer_btts",
-   "price_at_log": 0.33,
-   "published_at": "2026-10-16T17:17:41+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 1992,
-   "route": {
-    "claim": "Both teams to score: No",
-    "event": "KXMLSBTTS-26OCT17LAGSD",
-    "market": "KXMLSBTTS-26OCT17LAGSD-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "no",
-    "price_at_log": 0.33,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "btts_form_l10_fade:KXMLSBTTS-26OCT17LAGSD-BTTS",
-   "source": "btts_form_l10_fade",
-   "sport": "soccer_btts",
-   "status": "pending"
-  },
   "2026-10-18|LA Galaxy|San Diego FC|Over 1.5 goals \u00b7 Over 1.5 form rule": {
    "away": "San Diego FC",
    "bet": {
@@ -3725,42 +3313,6 @@
    "sandbox_quote": "mls_fade_home:KXMLSGAME-26OCT17LAGSD-LAG",
    "source": "mls_fade_home",
    "sport": "soccer_p05",
-   "status": "pending"
-  },
-  "2026-10-18|NEC Nijmegen|Fortuna Sittard|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs": {
-   "away": "Fortuna Sittard",
-   "bet": {
-    "kind": "btts_no"
-   },
-   "date": "2026-10-18",
-   "edge_at_log": null,
-   "first_seen": "2026-10-15",
-   "headline": "Both teams to score: No",
-   "home": "NEC Nijmegen",
-   "id": "2026-10-18|NEC Nijmegen|Fortuna Sittard|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs",
-   "kickoff": "2026-10-18T18:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T00:57:47+00:00",
-   "league": "Eredivisie",
-   "match": "NEC Nijmegen v Fortuna Sittard",
-   "pair": "btts_form_l10_fade|soccer_btts",
-   "price_at_log": 0.36,
-   "published_at": "2026-10-16T17:17:41+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 2922,
-   "route": {
-    "claim": "Both teams to score: No",
-    "event": "KXEREDIVISIEBTTS-26OCT18NIJFOR",
-    "market": "KXEREDIVISIEBTTS-26OCT18NIJFOR-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "no",
-    "price_at_log": 0.36,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "btts_form_l10_fade:KXEREDIVISIEBTTS-26OCT18NIJFOR-BTTS",
-   "source": "btts_form_l10_fade",
-   "sport": "soccer_btts",
    "status": "pending"
   },
   "2026-10-18|NEC Nijmegen|Fortuna Sittard|Over 1.5 goals \u00b7 Over 1.5 form rule": {
@@ -3983,42 +3535,6 @@
    "sandbox_quote": "mls_fade_home:KXMLSGAME-26OCT17PORCOL-POR",
    "source": "mls_fade_home",
    "sport": "soccer_p05",
-   "status": "pending"
-  },
-  "2026-10-18|Seattle Sounders FC|CF Montr\u00e9al|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs": {
-   "away": "CF Montr\u00e9al",
-   "bet": {
-    "kind": "btts_no"
-   },
-   "date": "2026-10-18",
-   "edge_at_log": null,
-   "first_seen": "2026-10-14",
-   "headline": "Both teams to score: No",
-   "home": "Seattle Sounders FC",
-   "id": "2026-10-18|Seattle Sounders FC|CF Montr\u00e9al|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs",
-   "kickoff": "2026-10-18T02:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T00:57:47+00:00",
-   "league": "MLS",
-   "match": "Seattle Sounders FC v CF Montr\u00e9al",
-   "pair": "btts_form_l10_fade|soccer_btts",
-   "price_at_log": 0.41,
-   "published_at": "2026-10-16T17:17:41+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 1992,
-   "route": {
-    "claim": "Both teams to score: No",
-    "event": "KXMLSBTTS-26OCT17SEAMTL",
-    "market": "KXMLSBTTS-26OCT17SEAMTL-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "no",
-    "price_at_log": 0.41,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "btts_form_l10_fade:KXMLSBTTS-26OCT17SEAMTL-BTTS",
-   "source": "btts_form_l10_fade",
-   "sport": "soccer_btts",
    "status": "pending"
   },
   "2026-10-18|Steelers|Buccaneers|Steelers to win \u00b7 ESPN FPI / Matchup Predictor": {
@@ -4282,42 +3798,6 @@
    "sport": "soccer_o15",
    "status": "pending"
   },
-  "2026-10-20|Paris Saint-Germain|Barcelona|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs": {
-   "away": "Barcelona",
-   "bet": {
-    "kind": "btts_no"
-   },
-   "date": "2026-10-20",
-   "edge_at_log": null,
-   "first_seen": "2026-10-17",
-   "headline": "Both teams to score: No",
-   "home": "Paris Saint-Germain",
-   "id": "2026-10-20|Paris Saint-Germain|Barcelona|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs",
-   "kickoff": "2026-10-20T19:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T00:57:47+00:00",
-   "league": "Champions League",
-   "match": "Paris Saint-Germain v Barcelona",
-   "pair": "btts_form_l10_fade|soccer_btts",
-   "price_at_log": 0.21,
-   "published_at": "2026-10-17T18:33:07+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 4346,
-   "route": {
-    "claim": "Both teams to score: No",
-    "event": "KXUCLBTTS-26OCT20PSGBAR",
-    "market": "KXUCLBTTS-26OCT20PSGBAR-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "no",
-    "price_at_log": 0.21,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "btts_form_l10_fade:KXUCLBTTS-26OCT20PSGBAR-BTTS",
-   "source": "btts_form_l10_fade",
-   "sport": "soccer_btts",
-   "status": "pending"
-  },
   "2026-10-20|Paris Saint-Germain|Barcelona|Over 1.5 goals \u00b7 Over 1.5 form rule": {
    "away": "Barcelona",
    "bet": {
@@ -4392,42 +3872,6 @@
    "sport": "soccer_o15",
    "status": "pending"
   },
-  "2026-10-21|Real Betis|Feyenoord Rotterdam|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs": {
-   "away": "Feyenoord Rotterdam",
-   "bet": {
-    "kind": "btts_no"
-   },
-   "date": "2026-10-21",
-   "edge_at_log": null,
-   "first_seen": "2026-10-17",
-   "headline": "Both teams to score: No",
-   "home": "Real Betis",
-   "id": "2026-10-21|Real Betis|Feyenoord Rotterdam|Both teams to score: No \u00b7 BTTS form rule, faded \u00b7 Clubs",
-   "kickoff": "2026-10-21T19:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-18",
-   "last_seen_at": "2026-10-18T00:57:47+00:00",
-   "league": "Champions League",
-   "match": "Real Betis v Feyenoord Rotterdam",
-   "pair": "btts_form_l10_fade|soccer_btts",
-   "price_at_log": 0.38,
-   "published_at": "2026-10-17T20:03:55+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 5696,
-   "route": {
-    "claim": "Both teams to score: No",
-    "event": "KXUCLBTTS-26OCT21RBBFEY",
-    "market": "KXUCLBTTS-26OCT21RBBFEY-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "no",
-    "price_at_log": 0.38,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "btts_form_l10_fade:KXUCLBTTS-26OCT21RBBFEY-BTTS",
-   "source": "btts_form_l10_fade",
-   "sport": "soccer_btts",
-   "status": "pending"
-  },
   "2026-10-21|Sporting CP|LASK Linz|Over 1.5 goals \u00b7 Over 1.5 form rule": {
    "away": "LASK Linz",
    "bet": {
@@ -4467,31 +3911,6 @@
   }
  },
  "pairs": {
-  "btts_form_l10_fade|soccer_btts": {
-   "by_hand": "2026-10-16",
-   "entered_at": "2026-10-16T17:17:38+00:00",
-   "promoted_at": "2026-10-16T17:17:38+00:00",
-   "ready_at": "2026-10-16T17:17:38+00:00",
-   "route": "moved by hand on 2026-10-16",
-   "routing": {
-    "leads": 16,
-    "problem": null,
-    "routed": 16,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": -0.01,
-   "sandbox_n": 10,
-   "sandbox_roi": -0.2123,
-   "sandbox_roi_fee": -0.245,
-   "timing": {
-    "late": [],
-    "timed": 7,
-    "under_target": 0
-   }
-  },
   "bund_o35|soccer_u35": {
    "by_hand": "2026-10-08",
    "entered_at": "2026-10-08T17:50:08+00:00",
@@ -5077,6 +4496,7 @@
    }
   }
  },
+ "pruned_at": "2026-10-18T03:25:56+00:00",
  "publication_withheld": {
   "2026-10-15|Torreense|Sunderland|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "headline": "Over 1.5 goals",
