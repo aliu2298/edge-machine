@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-17T23:46:11.225998+00:00",
+ "last_run": "2026-10-18T01:01:40.834151+00:00",
  "rules": {
   "T1": {
    "picks": []
@@ -9,7 +9,34 @@
    "picks": []
   },
   "T3": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.3,
+     "bid": 0.29,
+     "event": "KXMLSTEAMTOTAL-26OCT17SJNSH",
+     "group": "B",
+     "id": "T3:KXMLSTEAMTOTAL-26OCT17SJNSH:away",
+     "labels": {
+      "opp": "O-D-",
+      "own": "O+D-"
+     },
+     "league": "MLS",
+     "line": 2.5,
+     "logged": "2026-10-18T01:01:40.834151+00:00",
+     "match": "San Jose Earthquakes v Nashville SC",
+     "opponent": "San Jose Earthquakes",
+     "price": 0.3,
+     "rule": "T3",
+     "side": "yes",
+     "start": "2026-10-18T02:30Z",
+     "status": "open",
+     "team": "Nashville SC",
+     "team_side": "away",
+     "ticker": "KXMLSTEAMTOTAL-26OCT17SJNSH-NSH3",
+     "title": "Will Nashville score over 2.5 goals?",
+     "why": "Nashville SC O+D- v San Jose Earthquakes O-D- \u00b7 3+ YES 0.30"
+    }
+   ]
   },
   "T4": {
    "picks": [
@@ -38,6 +65,32 @@
      "ticker": "KXMLSTEAMTOTAL-26OCT17ATXVAN-VAN2",
      "title": "Will Vancouver score over 1.5 goals?",
      "why": "Vancouver Whitecaps O+D- v Austin FC O-D+ \u00b7 2+ YES 0.68"
+    },
+    {
+     "ask": 0.73,
+     "bid": 0.71,
+     "event": "KXMLSTEAMTOTAL-26OCT17SEAMTL",
+     "group": "B",
+     "id": "T4:KXMLSTEAMTOTAL-26OCT17SEAMTL:home",
+     "labels": {
+      "opp": "O-D+",
+      "own": "O+D-"
+     },
+     "league": "MLS",
+     "line": 1.5,
+     "logged": "2026-10-18T01:01:40.834151+00:00",
+     "match": "Seattle Sounders FC v CF Montr\u00e9al",
+     "opponent": "CF Montr\u00e9al",
+     "price": 0.73,
+     "rule": "T4",
+     "side": "yes",
+     "start": "2026-10-18T02:30Z",
+     "status": "open",
+     "team": "Seattle Sounders FC",
+     "team_side": "home",
+     "ticker": "KXMLSTEAMTOTAL-26OCT17SEAMTL-SEA2",
+     "title": "Will Seattle score over 1.5 goals?",
+     "why": "Seattle Sounders FC O+D- v CF Montr\u00e9al O-D+ \u00b7 2+ YES 0.73"
     }
    ]
   },
@@ -48,7 +101,60 @@
    "picks": []
   },
   "T7": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.33,
+     "bid": 0.32,
+     "event": "KXMLSTEAMTOTAL-26OCT17LAGSD",
+     "group": "C",
+     "id": "T7:KXMLSTEAMTOTAL-26OCT17LAGSD:home",
+     "labels": {
+      "opp": "O+D+",
+      "own": "O+D+"
+     },
+     "league": "MLS",
+     "line": 2.5,
+     "logged": "2026-10-18T01:01:40.834151+00:00",
+     "match": "LA Galaxy v San Diego FC",
+     "opponent": "San Diego FC",
+     "price": 0.68,
+     "rule": "T7",
+     "side": "no",
+     "start": "2026-10-18T02:30Z",
+     "status": "open",
+     "team": "LA Galaxy",
+     "team_side": "home",
+     "ticker": "KXMLSTEAMTOTAL-26OCT17LAGSD-LAG3",
+     "title": "Will Los Angeles G score over 2.5 goals?",
+     "why": "LA Galaxy O+D+ v San Diego FC O+D+ \u00b7 3+ NO 0.68"
+    },
+    {
+     "ask": 0.27,
+     "bid": 0.26,
+     "event": "KXMLSTEAMTOTAL-26OCT17LAGSD",
+     "group": "C",
+     "id": "T7:KXMLSTEAMTOTAL-26OCT17LAGSD:away",
+     "labels": {
+      "opp": "O+D+",
+      "own": "O+D+"
+     },
+     "league": "MLS",
+     "line": 2.5,
+     "logged": "2026-10-18T01:01:40.834151+00:00",
+     "match": "LA Galaxy v San Diego FC",
+     "opponent": "LA Galaxy",
+     "price": 0.74,
+     "rule": "T7",
+     "side": "no",
+     "start": "2026-10-18T02:30Z",
+     "status": "open",
+     "team": "San Diego FC",
+     "team_side": "away",
+     "ticker": "KXMLSTEAMTOTAL-26OCT17LAGSD-SD3",
+     "title": "Will San Diego FC score over 2.5 goals?",
+     "why": "San Diego FC O+D+ v LA Galaxy O+D+ \u00b7 3+ NO 0.74"
+    }
+   ]
   },
   "T8": {
    "picks": []
@@ -70,6 +176,14 @@
    "labelled": 3,
    "matched": 1,
    "new": 0
+  },
+  {
+   "at": "2026-10-18T01:01:40.834151+00:00",
+   "candidates": 3,
+   "due": 4,
+   "labelled": 4,
+   "matched": 3,
+   "new": 4
   }
  ],
  "version": "soccer-team-rules-v1"
