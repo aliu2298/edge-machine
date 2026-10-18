@@ -163,6 +163,15 @@ check("an empty ledger says how entries arrive", "No entries yet" in TB.section(
 check("the copy passes the audit's guarded phrases", sandbox_audit.COPY_RE.search(html + TB.section({"rules": {}})), None)
 import soccer_build
 check("the Soccer page builder adds the section", "team-rules" in soccer_build._team_rules_section(), True)
+page = soccer_build.place_label_rules(
+    '<nav class="toc" aria-label="On this page"><a href="#rules">Rules</a><a href="#events">Events</a>'
+    '<a href="#method">Method</a></nav><section id="rules"></section><section id="events" class="sp-section"></section>'
+    '<section id="method"></section><footer>', '<section id="label-rules"></section><section id="team-rules"></section>')
+check("the rule sections sit after the events list and before the method fold, not under the footer",
+      page.index('id="events"') < page.index('id="label-rules"') < page.index('id="team-rules"') < page.index('id="method"'), True)
+check("the table of contents links both", ('href="#label-rules"' in page, 'href="#team-rules"' in page), (True, True))
+check("without an events section they still land above the footer",
+      soccer_build.place_label_rules("<main></main><footer>", "<section id=\"x\"></section>"), '<main></main><section id="x"></section><footer>')
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
