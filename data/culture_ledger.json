@@ -2,14 +2,14 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-18T19:41:13.383661+00:00",
-   "last_success": "2026-10-18T19:41:13.383661+00:00",
+   "last_run": "2026-10-18T20:00:14.419404+00:00",
+   "last_success": "2026-10-18T20:00:14.419404+00:00",
    "observations": {
-    "at": "2026-10-18T19:41:13.383661+00:00",
+    "at": "2026-10-18T20:00:14.419404+00:00",
     "events": 866,
     "reasons": {
-     "in band": 7,
-     "no quote or spread too wide": 285,
+     "in band": 8,
+     "no quote or spread too wide": 284,
      "not active": 745,
      "outside the band": 50,
      "outside the entry window": 11109
@@ -161,16 +161,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-18T19:41:13.383661+00:00",
-   "last_success": "2026-10-18T19:41:13.383661+00:00",
+   "last_run": "2026-10-18T20:00:14.419404+00:00",
+   "last_success": "2026-10-18T20:00:14.419404+00:00",
    "observations": {
-    "at": "2026-10-18T19:41:13.383661+00:00",
+    "at": "2026-10-18T20:00:14.419404+00:00",
     "events": 866,
     "reasons": {
      "in band": 2,
-     "no quote or spread too wide": 610,
+     "no quote or spread too wide": 604,
      "not active": 745,
-     "outside the band": 158,
+     "outside the band": 164,
      "outside the entry window": 10681
     }
    },
@@ -325,16 +325,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-18T19:41:13.383661+00:00",
-   "last_success": "2026-10-18T19:41:13.383661+00:00",
+   "last_run": "2026-10-18T20:00:14.419404+00:00",
+   "last_success": "2026-10-18T20:00:14.419404+00:00",
    "observations": {
-    "at": "2026-10-18T19:41:13.383661+00:00",
+    "at": "2026-10-18T20:00:14.419404+00:00",
     "events": 866,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 37,
-     "edge 5c+": 5,
+     "already near-certain (under 10c or over 90c)": 38,
+     "edge 5c+": 6,
      "edge under 5c": 2,
-     "no quote or spread too wide": 40
+     "no quote or spread too wide": 38
     }
    },
    "picks": [
@@ -692,19 +692,35 @@
      "side": "no",
      "status": "open",
      "title": "Stupid Question"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-11-01T15:00:00Z",
+     "detail": "P(said) 0.15 \u00b7 said on 1 of the last 84 days, 13.8 days left \u00b7 edge +0.37",
+     "edge": 0.3704,
+     "event": "KXTRUMPSAYCOUNTRY-26NOV01",
+     "id": "KXTRUMPSAYCOUNTRY-26NOV01-PAN",
+     "logged": "2026-10-18T20:00:14.419404+00:00",
+     "model": 0.1523,
+     "name": "What countries will Trump say in October?",
+     "price": 0.46,
+     "series": "KXTRUMPSAYCOUNTRY",
+     "side": "no",
+     "status": "open",
+     "title": "Panama / Panamanian"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-18T19:41:13.383661+00:00",
-   "last_success": "2026-10-18T19:41:13.383661+00:00",
+   "last_run": "2026-10-18T20:00:14.419404+00:00",
+   "last_success": "2026-10-18T20:00:14.419404+00:00",
    "observations": {
-    "at": "2026-10-18T19:41:13.383661+00:00",
+    "at": "2026-10-18T20:00:14.419404+00:00",
     "events": 866,
     "reasons": {
-     "edge 5c+": 7,
-     "edge under 5c": 1,
+     "edge 5c+": 6,
+     "edge under 5c": 2,
      "under 20 reviews counted": 11
     }
    },
@@ -873,7 +889,7 @@
  "version": "culture-v1",
  "words": {
   "Airbnb / ABNB": {
-   "at": "2026-10-18T14:00:13.846021+00:00",
+   "at": "2026-10-18T20:00:14.419404+00:00",
    "days": [
     "2026-09-29"
    ]
@@ -973,6 +989,12 @@
     "2026-10-07",
     "2026-10-09",
     "2026-10-10"
+   ]
+  },
+  "Panama / Panamanian": {
+   "at": "2026-10-18T20:00:14.419404+00:00",
+   "days": [
+    "2026-09-22"
    ]
   },
   "Peace in the Middle East": {
