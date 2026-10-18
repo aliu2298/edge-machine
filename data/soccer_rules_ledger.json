@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-18T16:31:09.436631+00:00",
+ "last_run": "2026-10-18T17:01:26.503410+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -338,11 +338,14 @@
      "line": null,
      "logged": "2026-10-18T13:16:24.064774+00:00",
      "match": "FC Groningen v Ajax Amsterdam",
+     "payout": 1.0,
      "price": 0.71,
+     "profit": 38.04,
      "rule": "D1",
+     "settled": "2026-10-18T17:01:26.503410+00:00",
      "side": "yes",
      "start": "2026-10-18T14:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXEREDIVISIEBTTS-26OCT18GROAJA-BTTS",
      "title": "Both Teams To Score",
      "why": "FC Groningen O+D- v Ajax Amsterdam O+D- \u00b7 BTTS YES 0.71"
@@ -827,6 +830,14 @@
    "labelled": 3,
    "matched": 2,
    "new": 2
+  },
+  {
+   "at": "2026-10-18T17:01:26.503410+00:00",
+   "candidates": 2,
+   "due": 3,
+   "labelled": 3,
+   "matched": 2,
+   "new": 0
   }
  ],
  "version": "soccer-rules-v1"
