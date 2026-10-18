@@ -785,6 +785,26 @@
    "lead_min": 0.3,
    "price": 0.24
   },
+  "espn_fpi:aec-nfl-car-phi-2026-10-18": {
+   "at": "2026-10-18T16:00:57+00:00",
+   "lead_min": 59.0,
+   "price": 0.3975
+  },
+  "espn_fpi:aec-nfl-chi-atl-2026-10-18": {
+   "at": "2026-10-18T16:00:57+00:00",
+   "lead_min": 59.0,
+   "price": 0.515
+  },
+  "espn_fpi:aec-nfl-nyj-ne-2026-10-18": {
+   "at": "2026-10-18T16:00:57+00:00",
+   "lead_min": 59.0,
+   "price": 0.7575
+  },
+  "espn_fpi:aec-nfl-pit-tb-2026-10-18": {
+   "at": "2026-10-18T16:00:57+00:00",
+   "lead_min": 59.0,
+   "price": 0.55
+  },
   "ftts_no_60_70:KXMLSFTTS-26OCT14CINNE-NE": {
    "at": "2026-10-14T23:24:47+00:00",
    "lead_min": 5.2,
@@ -1406,8 +1426,8 @@
    "price": 0.32
   },
   "o25_congestion:KXLALIGATOTAL-26OCT18MCFRSO-3": {
-   "at": "2026-10-18T15:45:53+00:00",
-   "lead_min": 44.1,
+   "at": "2026-10-18T16:00:57+00:00",
+   "lead_min": 29.0,
    "price": 0.42
   },
   "o25_congestion:KXLALIGATOTAL-26OCT18RCCALA-3": {
@@ -2456,5 +2476,5 @@
    "price": 0.77
   }
  },
- "updated": "2026-10-18T15:45:53+00:00"
+ "updated": "2026-10-18T16:00:57+00:00"
 }
