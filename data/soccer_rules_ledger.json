@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-18T17:31:39.528095+00:00",
+ "last_run": "2026-10-18T17:46:09.172080+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -653,11 +653,14 @@
      "line": null,
      "logged": "2026-10-18T13:46:23.687227+00:00",
      "match": "Paris FC v Stade Rennais",
+     "payout": 1.0,
      "price": 0.62,
+     "profit": 57.11,
      "rule": "D3",
+     "settled": "2026-10-18T17:46:09.172080+00:00",
      "side": "yes",
      "start": "2026-10-18T15:15Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXLIGUE1BTTS-26OCT18PARREN-BTTS",
      "title": "Both Teams To Score",
      "why": "Paris FC O-D- v Stade Rennais O+D- \u00b7 BTTS YES 0.62"
@@ -982,6 +985,14 @@
    "labelled": 6,
    "matched": 5,
    "new": 1
+  },
+  {
+   "at": "2026-10-18T17:46:09.172080+00:00",
+   "candidates": 3,
+   "due": 3,
+   "labelled": 3,
+   "matched": 3,
+   "new": 0
   }
  ],
  "version": "soccer-rules-v1"
