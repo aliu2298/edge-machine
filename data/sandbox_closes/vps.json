@@ -290,6 +290,11 @@
    "lead_min": 4.6,
    "price": 0.48
   },
+  "corners_team_fade:KXEPLTCORNERS-26OCT18BOUSUN-BOU6": {
+   "at": "2026-10-18T12:00:05+00:00",
+   "lead_min": 59.9,
+   "price": 0.51
+  },
   "corners_team_fade:KXLALIGATCORNERS-26OCT16DEPLEV-DEP6": {
    "at": "2026-10-16T18:51:00+00:00",
    "lead_min": 9.0,
@@ -309,6 +314,16 @@
    "at": "2026-10-17T13:55:23+00:00",
    "lead_min": 4.6,
    "price": 0.43
+  },
+  "corners_total_under:KXEPLCORNERS-26OCT18BRICRY-10": {
+   "at": "2026-10-18T12:00:05+00:00",
+   "lead_min": 59.9,
+   "price": 0.46
+  },
+  "corners_total_under:KXEPLCORNERS-26OCT18LEEMUN-9": {
+   "at": "2026-10-18T12:00:05+00:00",
+   "lead_min": 59.9,
+   "price": 0.38
   },
   "corners_total_under:KXLALIGACORNERS-26OCT17ESPATM-9": {
    "at": "2026-10-17T11:54:57+00:00",
@@ -1291,9 +1306,9 @@
    "price": 0.3
   },
   "o25_congestion:KXEREDIVISIETOTAL-26OCT18CAMAZA-3": {
-   "at": "2026-10-18T11:45:00+00:00",
-   "lead_min": 45.0,
-   "price": 0.32
+   "at": "2026-10-18T12:00:05+00:00",
+   "lead_min": 29.9,
+   "price": 0.31
   },
   "o25_congestion:KXLALIGATOTAL-26OCT17ESPATM-3": {
    "at": "2026-10-17T11:54:57+00:00",
@@ -1319,6 +1334,11 @@
    "at": "2026-10-17T15:10:38+00:00",
    "lead_min": 4.4,
    "price": 0.29
+  },
+  "o25_congestion:KXLIGUE1TOTAL-26OCT18ANGOLM-3": {
+   "at": "2026-10-18T12:00:05+00:00",
+   "lead_min": 59.9,
+   "price": 0.41
   },
   "o25_congestion:KXMLSTOTAL-26OCT10CHINYC-3": {
    "at": "2026-10-10T18:21:47+00:00",
@@ -1379,6 +1399,11 @@
    "at": "2026-10-17T18:41:23+00:00",
    "lead_min": 3.6,
    "price": 0.5
+  },
+  "o25_congestion:KXSERIEATOTAL-26OCT18FIOCOM-3": {
+   "at": "2026-10-18T12:00:05+00:00",
+   "lead_min": 59.9,
+   "price": 0.41
   },
   "o25_congestion:KXSUPERLIGTOTAL-26OCT17FENALA-3": {
    "at": "2026-10-17T15:55:48+00:00",
@@ -2260,6 +2285,11 @@
    "lead_min": 8.2,
    "price": 0.58
   },
+  "u35_low_scoring:KXEPLTOTAL-26OCT18BOUSUN-4": {
+   "at": "2026-10-18T12:00:05+00:00",
+   "lead_min": 59.9,
+   "price": 0.78
+  },
   "u35_low_scoring:KXLIGAPORTUGALTOTAL-26OCT12FAMALV-4": {
    "at": "2026-10-12T19:12:27+00:00",
    "lead_min": 2.5,
@@ -2316,5 +2346,5 @@
    "price": 0.77
   }
  },
- "updated": "2026-10-18T11:45:00+00:00"
+ "updated": "2026-10-18T12:00:05+00:00"
 }
