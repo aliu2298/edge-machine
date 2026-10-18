@@ -72,13 +72,20 @@ print("\na later read is not asked for once every series of that close holds an 
 coins = sorted(S.COINS)
 some = {"quotes": [dict(source="crypto_fav_band", bet=True, market_id=f"{c}-26OCT1317-T1")
                    for c in coins[:2]]}
-allc = {"quotes": [dict(source="crypto_fav_band", bet=True, market_id=f"{c}-26OCT1317-T1")
-                   for c in coins]}
+# Every coin entered in all four sibling crypto lanes (2026-10-18): only then is a later read dropped.
+LANES4 = W.WINDOW_LANES["crypto_fav_band"]
+allc = {"quotes": [dict(source=lane, bet=True, market_id=f"{c}-26OCT1317-T1")
+                   for c in coins for lane in LANES4]}
+yes_only = {"quotes": [dict(source="crypto_fav_band", bet=True, market_id=f"{c}-26OCT1317-T1")
+                       for c in coins]}
 t = at(2026, 10, 13, 18, 5)
 check("two of five coins entered: read 2 is still due",
       [k for w, k in W.due(t, some, [], []) if w["lane"] == "crypto_fav_band"], [2])
 check("all five entered: no read is asked for",
       [k for w, k in W.due(t, allc, [], []) if w["lane"] == "crypto_fav_band"], [])
+check("all five entered in the Yes lane only: the No and 0.60-0.70 lanes still get read 2",
+      [k for w, k in W.due(t, yes_only, [], []) if w["lane"] == "crypto_fav_band"], [2])
+check("the crypto window serves four sibling lanes", len(LANES4), 4)
 check("an entry on another day's close does not count",
       [k for w, k in W.due(t, {"quotes": [dict(q, market_id=q["market_id"].replace("1317", "1217"))
                                            for q in allc["quotes"]]}, [], []) if w["lane"] == "crypto_fav_band"], [2])
