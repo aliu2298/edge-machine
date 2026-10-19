@@ -95,6 +95,10 @@ SOCCER_TEAM_SERIES = {
     "Ligue 1": "KXLIGUE1TEAMTOTAL", "MLS": "KXMLSTEAMTOTAL",
     "Champions League": "KXUCLTEAMTOTAL", "Europa League": "KXUELTEAMTOTAL",
 }
+# sa_o15.LEAGUES (Argentina & Brasileirão over 1.5, 2026-10-18), copied for the same reason;
+# test_sa_o15.py checks the two agree. The tracker logs no quotes for these series, so on the VPS
+# their kickoffs come from the schedule sa_o15.py writes into its own ledger on every run.
+SOCCER_SA_SERIES = {"Liga Profesional": "KXARGPREMDIVTOTAL", "Brasileirão": "KXBRASILEIROTOTAL"}
 CT = ZoneInfo("America/Chicago")
 FTTS_DAY = ((9, 0), (10, 30))
 LINEUP_FROM, LINEUP_TO = 60, 15          # minutes before kickoff
@@ -237,11 +241,39 @@ def soccer_kickoffs(now, fixtures=None, ledger=None, series_map=None):
     return sorted(out)
 
 
+def _sa_schedule():
+    try:
+        with open(os.path.join(ROOT, "data", "sa_o15_ledger.json")) as f:
+            return json.load(f).get("schedule") or []
+    except (OSError, ValueError):
+        return []
+
+
+def sa_kickoffs(now, fixtures=None):
+    """Kickoffs within the next day in Argentina and the Brasileirão (sa_o15, 2026-10-18).
+
+    From the fixtures passed in (tests) or, live, the ESPN cache plus sa_o15's own schedule."""
+    starts = []
+    if fixtures is None:
+        fixtures = _fixtures_cache()
+        starts += _sa_schedule()
+    starts += [f.get("kickoff") for f in fixtures if not f.get("played") and f.get("league") in SOCCER_SA_SERIES]
+    out = set()
+    for v in starts:
+        t = _when(v) if v else None
+        if t and now - dt.timedelta(hours=2) <= t <= now + dt.timedelta(days=1):
+            out.add(t)
+    return sorted(out)
+
+
 def soccer_windows(now, fixtures=None, ledger=None):
-    """One soccer label-rules window per kickoff: 90 to 20 minutes before, read every 30 minutes."""
+    """One soccer label-rules window per kickoff: 90 to 20 minutes before, read every 30 minutes.
+
+    The same stamp serves sa_o15's Argentine and Brazilian matches (soccer-rules.yml runs it)."""
+    kicks = sorted(set(soccer_kickoffs(now, fixtures, ledger)) | set(sa_kickoffs(now, fixtures)))
     return [dict(lane="soccer_rules", label=f"Soccer rules {t:%H:%M}Z kickoff", series=(), close=t,
                  start=t - dt.timedelta(minutes=SOCCER_FROM), end=t - dt.timedelta(minutes=SOCCER_TO),
-                 every=READ_EVERY) for t in soccer_kickoffs(now, fixtures, ledger)]
+                 every=READ_EVERY) for t in kicks]
 
 
 def soccer_team_windows(now, fixtures=None, ledger=None):

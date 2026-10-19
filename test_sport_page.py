@@ -153,7 +153,7 @@ ok('<p class="eyebrow">Rules under test</p>' in head and "<h1>Soccer</h1>" in he
    and '<p class="scope">Match picks and the rules that fire them · All times Central</p>' in head,
    "the head is an eyebrow, the title and one scope line ending in All times Central")
 ok('<nav class="toc" aria-label="On this page"><a href="#rules">Rules</a><a href="#events">Events</a>'
-   '<a href="#label-rules">Label rules</a><a href="#team-rules">Team scoring</a><a href="#contender-overs">Contenders</a><a href="#method">Method</a></nav>' in html,
+   '<a href="#label-rules">Label rules</a><a href="#team-rules">Team scoring</a><a href="#contender-overs">Contenders</a><a href="#sa-o15">Arg &amp; Bra</a><a href="#method">Method</a></nav>' in html,
    "the sub-nav is Rules · Events · Label rules · Team scoring · Method")
 ok(main.find('id="rules"') < main.find('id="events"') < main.find('id="method"'), "rules, then events, then the method fold")
 ok("javascript:" not in html and "&lt;script&gt;" in html, "a hostile label is escaped and a javascript: url is not a link")

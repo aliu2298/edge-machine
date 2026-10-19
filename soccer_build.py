@@ -54,7 +54,8 @@ def build(d=None, st=None, now=None):
         rule_name=soccer_cards._rule_name, market=soccer_cards.market,
         recent=soccer_cards.recent_html, method=method(idle))
     html = SP.page(sp, d, st, now, rows=rows, idle=idle)
-    return place_label_rules(html, _rules_section() + "\n" + _team_rules_section() + "\n" + _contender_section() + "\n")
+    return place_label_rules(html, _rules_section() + "\n" + _team_rules_section() + "\n" + _contender_section() + "\n"
+                             + _sa_o15_section() + "\n")
 
 
 METHOD_AT = '<section id="method"'
@@ -70,7 +71,7 @@ def place_label_rules(html, sections):
     else:
         html = html.replace("<footer>", sections + "<footer>", 1)
     return html.replace(TOC_EVENTS, TOC_EVENTS + '<a href="#label-rules">Label rules</a><a href="#team-rules">Team scoring</a>'
-                        '<a href="#contender-overs">Contenders</a>', 1)
+                        '<a href="#contender-overs">Contenders</a><a href="#sa-o15">Arg &amp; Bra</a>', 1)
 
 
 def _rules_section():
@@ -98,6 +99,15 @@ def _contender_section():
         return contender_overs_build.section()
     except Exception as exc:                                    # noqa: BLE001
         return f'<section id="contender-overs"><p class="sm mut">Contender overs unavailable ({type(exc).__name__}).</p></section>'
+
+
+def _sa_o15_section():
+    """Argentina & Brasileirão over 1.5 (sa_o15_build.py, 2026-10-18). Never breaks the page."""
+    try:
+        import sa_o15_build
+        return sa_o15_build.section()
+    except Exception as exc:                                    # noqa: BLE001
+        return f'<section id="sa-o15"><p class="sm mut">Argentina &amp; Brasileirão over 1.5 unavailable ({type(exc).__name__}).</p></section>'
 
 
 def main():
