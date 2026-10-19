@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-19T18:04:19+00:00",
+ "board_built_at": "2026-10-19T18:34:43+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -3516,7 +3516,7 @@
    "kickoff": "2026-10-19T21:05Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:04:19+00:00",
+   "last_seen_at": "2026-10-19T18:34:43+00:00",
    "league": "Crypto \u00b7 Favourite band",
    "match": "Bitcoin price on Oct 19, 2026",
    "pair": "crypto_fav_band|crypto_fav",
@@ -3553,7 +3553,7 @@
    "kickoff": "2026-10-19T21:00Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:04:19+00:00",
+   "last_seen_at": "2026-10-19T18:34:43+00:00",
    "league": "Commodities \u00b7 Favourite band",
    "match": "Natural gas close on Oct 19, 2026",
    "pair": "commod_fav_band|commodities_fav",
@@ -3575,43 +3575,6 @@
    "sport": "commodities_fav",
    "status": "pending"
   },
-  "2026-10-19|KXWTI-26OCT1914-T96.99|Above $96.99 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-19",
-   "edge_at_log": null,
-   "first_seen": "2026-10-19",
-   "headline": "Above $96.99 at the close",
-   "home": null,
-   "id": "2026-10-19|KXWTI-26OCT1914-T96.99|Above $96.99 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-10-19T18:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:04:19+00:00",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "WTI crude close on Oct 19, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.75,
-   "published_at": "2026-10-19T15:04:48+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 205,
-   "route": {
-    "claim": "Above $96.99 at the close",
-    "event": "KXWTI-26OCT1914",
-    "market": "KXWTI-26OCT1914-T96.99",
-    "outcome": "Above $96.99",
-    "outcome_side": "yes",
-    "price_at_log": 0.75,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXWTI-26OCT1914-T96.99",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
-   "status": "pending"
-  },
   "2026-10-19|Parma|Torino|Torino to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
    "away": "Torino",
    "bet": {
@@ -3628,7 +3591,7 @@
    "kickoff": "2026-10-19T18:45Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:04:19+00:00",
+   "last_seen_at": "2026-10-19T18:34:43+00:00",
    "league": "Serie A",
    "match": "Parma v Torino",
    "pair": "team2_ranked|soccer_team2",
@@ -3666,7 +3629,7 @@
    "kickoff": "2026-10-19T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:04:19+00:00",
+   "last_seen_at": "2026-10-19T18:34:43+00:00",
    "league": "Premier League",
    "match": "Tottenham Hotspur v Coventry City",
    "pair": "corners_team_fade|soccer_corners",
@@ -3703,7 +3666,7 @@
    "kickoff": "2026-10-19T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:04:19+00:00",
+   "last_seen_at": "2026-10-19T18:34:43+00:00",
    "league": "Premier League",
    "match": "Tottenham v Coventry",
    "pair": "ftts_no_70_80|soccer_ftts",
@@ -3740,7 +3703,7 @@
    "kickoff": "2026-10-20T15:00Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:04:19+00:00",
+   "last_seen_at": "2026-10-19T18:34:43+00:00",
    "league": "Saudi Pro League",
    "match": "Al Diriyah v Al Riyadh",
    "pair": "o15_ranked|soccer_o15",
@@ -3777,7 +3740,7 @@
    "kickoff": "2026-10-20T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:04:19+00:00",
+   "last_seen_at": "2026-10-19T18:34:43+00:00",
    "league": "NFL",
    "match": "Commanders v 49ers",
    "model_prob": 0.86,
@@ -3814,7 +3777,7 @@
    "kickoff": "2026-10-22T16:45Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:04:19+00:00",
+   "last_seen_at": "2026-10-19T18:34:43+00:00",
    "league": "Europa League",
    "match": "Juventus v Stade Rennais",
    "pair": "o15_ranked|soccer_o15",
@@ -3851,7 +3814,7 @@
    "kickoff": "2026-10-22T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:04:19+00:00",
+   "last_seen_at": "2026-10-19T18:34:43+00:00",
    "league": "Europa League",
    "match": "Olympiacos v Sparta Prague",
    "pair": "o15_ranked|soccer_o15",
@@ -3888,7 +3851,7 @@
    "kickoff": "2026-10-23T18:00Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:04:19+00:00",
+   "last_seen_at": "2026-10-19T18:34:43+00:00",
    "league": "Eredivisie",
    "match": "GA Eagles v Telstar",
    "pair": "ere_draw|soccer",
@@ -3925,7 +3888,7 @@
    "kickoff": "2026-10-23T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:04:19+00:00",
+   "last_seen_at": "2026-10-19T18:34:43+00:00",
    "league": "NFL",
    "match": "Patriots v Bears",
    "model_prob": 0.436,
@@ -3946,6 +3909,43 @@
    "source": "espn_fpi",
    "sport": "nfl",
    "status": "pending"
+  },
+  "2026-10-23|VfB Stuttgart|Borussia M\u00f6nchengladbach|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
+   "away": "Borussia M\u00f6nchengladbach",
+   "bet": {
+    "kind": "total_gte",
+    "n": 4
+   },
+   "date": "2026-10-23",
+   "edge_at_log": null,
+   "first_seen": "2026-10-19",
+   "headline": "Over 3.5 goals",
+   "home": "VfB Stuttgart",
+   "id": "2026-10-23|VfB Stuttgart|Borussia M\u00f6nchengladbach|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
+   "kickoff": "2026-10-23T18:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-19",
+   "last_seen_at": "2026-10-19T18:34:43+00:00",
+   "league": "Bundesliga",
+   "match": "VfB Stuttgart v Borussia M\u00f6nchengladbach",
+   "pair": "bund_o35|soccer_u35",
+   "price_at_log": 0.57,
+   "published_at": "2026-10-19T18:34:43+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5755,
+   "route": {
+    "claim": "Over 3.5 goals",
+    "event": "KXBUNDESLIGATOTAL-26OCT23VFBBMG",
+    "market": "KXBUNDESLIGATOTAL-26OCT23VFBBMG-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.57,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT23VFBBMG-4",
+   "source": "bund_o35",
+   "sport": "soccer_u35",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -3956,9 +3956,9 @@
    "ready_at": "2026-10-08T17:50:08+00:00",
    "route": "moved by hand on 2026-10-08",
    "routing": {
-    "leads": 9,
+    "leads": 10,
     "problem": null,
-    "routed": 9,
+    "routed": 10,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -3970,7 +3970,7 @@
    "sandbox_roi_fee": -0.1719,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -3981,9 +3981,9 @@
    "ready_at": "2026-10-09T04:31:34+00:00",
    "route": "moved by hand on 2026-10-09",
    "routing": {
-    "leads": 13,
+    "leads": 12,
     "problem": null,
-    "routed": 13,
+    "routed": 12,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -3995,7 +3995,7 @@
    "sandbox_roi_fee": 0.2972,
    "timing": {
     "late": [],
-    "timed": 6,
+    "timed": 5,
     "under_target": 0
    }
   },
@@ -4577,5 +4577,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-19T18:04:19+00:00"
+ "updated_at": "2026-10-19T18:34:43+00:00"
 }
