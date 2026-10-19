@@ -236,17 +236,6 @@
    "symbol": "IBKR"
   },
   {
-   "qty": 6,
-   "rules": [
-    {
-     "id": "sw_rsi2_pullback|ICE|2026-10-14",
-     "qty": 6,
-     "rule": "sw_rsi2_pullback"
-    }
-   ],
-   "symbol": "ICE"
-  },
-  {
    "qty": 3,
    "rules": [
     {
@@ -414,7 +403,7 @@
    "symbol": "PWR"
   },
   {
-   "qty": 4,
+   "qty": 5,
    "rules": [
     {
      "id": "etf_double7|QQQ|2026-10-13",
@@ -428,6 +417,11 @@
     },
     {
      "id": "etf_double7|QQQ|2026-10-15",
+     "qty": 1,
+     "rule": "etf_double7"
+    },
+    {
+     "id": "etf_double7|QQQ|2026-10-16",
      "qty": 1,
      "rule": "etf_double7"
     },
@@ -512,13 +506,13 @@
  ],
  "in_flight": [
   {
-   "client_order_id": "em-e6aa6773-e018-5fe7-8ec6-ec755d535081",
+   "client_order_id": "em-2ce0d315-9d48-5225-8c4e-78912bdc989c",
    "filled_at": "",
    "price": null,
    "qty": 0,
    "side": "buy",
    "status": "accepted",
-   "symbol": "QQQ"
+   "symbol": "IWM"
   }
  ],
  "orphans": [
@@ -535,6 +529,17 @@
  "rows": [
   {
    "fill": null,
+   "id": "sw_gap_down_reversal|DAL|2026-10-09",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_gap_down_reversal",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "DAL"
+  },
+  {
+   "fill": null,
    "id": "sw_rsi2_pullback|DE|2026-10-09",
    "ledger": 621.24,
    "qty": 0,
@@ -546,14 +551,25 @@
   },
   {
    "fill": null,
-   "id": "sw_rsi2_pullback|ICE|2026-10-14",
+   "id": "sw_rsi2_pullback|DVN|2026-10-15",
    "ledger": null,
    "qty": 0,
    "rule": "sw_rsi2_pullback",
    "side": "sell",
    "slip_bps": null,
    "status": "accepted",
-   "symbol": "ICE"
+   "symbol": "DVN"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|FANG|2026-10-15",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "FANG"
   },
   {
    "fill": null,
@@ -1524,6 +1540,32 @@
    "slip_bps": -51.66,
    "status": "filled",
    "symbol": "SWKS"
+  },
+  {
+   "day": "2026-10-19",
+   "fill": 718.84,
+   "filled_at": "2026-10-19T13:31:38",
+   "id": "etf_double7|QQQ|2026-10-16",
+   "ledger": 719.56,
+   "qty": 1,
+   "rule": "etf_double7",
+   "side": "buy",
+   "slip_bps": -10.01,
+   "status": "filled",
+   "symbol": "QQQ"
+  },
+  {
+   "day": "2026-10-19",
+   "fill": 160.05,
+   "filled_at": "2026-10-19T13:32:29",
+   "id": "sw_rsi2_pullback|ICE|2026-10-14",
+   "ledger": 160.19,
+   "qty": 6,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 8.74,
+   "status": "filled",
+   "symbol": "ICE"
   }
  ],
  "summary": {
@@ -1531,8 +1573,8 @@
   "best_bps": -138.65,
   "by_rule": {
    "etf_double7": {
-    "mean_bps": -7.53,
-    "n": 4
+    "mean_bps": -8.03,
+    "n": 5
    },
    "etf_ibs_band": {
     "mean_bps": -5.25,
@@ -1543,24 +1585,24 @@
     "n": 24
    },
    "sw_rsi2_pullback": {
-    "mean_bps": 15.71,
-    "n": 37
+    "mean_bps": 15.53,
+    "n": 38
    }
   },
-  "fills": 67,
+  "fills": 69,
   "in_flight": 1,
-  "mean_bps": 11.26,
+  "mean_bps": 10.92,
   "median_bps": 4.53,
   "orders": {
-   "filled": 68,
-   "sent": 80,
+   "filled": 70,
+   "sent": 84,
    "since": "2026-10-12",
    "unfilled": 10,
-   "working": 2
+   "working": 4
   },
   "orphans": 1,
-  "unfilled": 11,
+  "unfilled": 13,
   "worst_bps": 154.54
  },
- "updated": "2026-10-16T20:11:21+00:00"
+ "updated": "2026-10-19T20:12:27+00:00"
 }
