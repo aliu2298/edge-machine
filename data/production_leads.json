@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-19T11:23:27+00:00",
+ "board_built_at": "2026-10-19T14:04:30+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -3516,7 +3516,7 @@
    "kickoff": "2026-10-19T18:45Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T11:23:27+00:00",
+   "last_seen_at": "2026-10-19T14:04:30+00:00",
    "league": "Serie A",
    "match": "Parma v Torino",
    "pair": "team2_ranked|soccer_team2",
@@ -3538,6 +3538,43 @@
    "sport": "soccer_team2",
    "status": "pending"
   },
+  "2026-10-19|Tottenham|Coventry|Coventry not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge": {
+   "away": "Coventry",
+   "bet": {
+    "kind": "ftts_no",
+    "team": "Coventry"
+   },
+   "date": "2026-10-19",
+   "edge_at_log": null,
+   "first_seen": "2026-10-19",
+   "headline": "Coventry not to score first",
+   "home": "Tottenham",
+   "id": "2026-10-19|Tottenham|Coventry|Coventry not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge",
+   "kickoff": "2026-10-19T19:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-19",
+   "last_seen_at": "2026-10-19T14:04:30+00:00",
+   "league": "Premier League",
+   "match": "Tottenham v Coventry",
+   "pair": "ftts_no_70_80|soccer_ftts",
+   "price_at_log": 0.72,
+   "published_at": "2026-10-19T14:04:30+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 295,
+   "route": {
+    "claim": "Coventry not to score first",
+    "event": "KXEPLFTTS-26OCT19TOTCOV",
+    "market": "KXEPLFTTS-26OCT19TOTCOV-COV",
+    "outcome": "Coventry City",
+    "outcome_side": "no",
+    "price_at_log": 0.72,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "ftts_no_70_80:KXEPLFTTS-26OCT19TOTCOV-COV",
+   "source": "ftts_no_70_80",
+   "sport": "soccer_ftts",
+   "status": "pending"
+  },
   "2026-10-20|Commanders|49ers|49ers to win \u00b7 ESPN FPI / Matchup Predictor": {
    "away": "49ers",
    "bet": {
@@ -3553,7 +3590,7 @@
    "kickoff": "2026-10-20T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T11:23:27+00:00",
+   "last_seen_at": "2026-10-19T14:04:30+00:00",
    "league": "NFL",
    "match": "Commanders v 49ers",
    "model_prob": 0.86,
@@ -3590,7 +3627,7 @@
    "kickoff": "2026-10-22T16:45Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T11:23:27+00:00",
+   "last_seen_at": "2026-10-19T14:04:30+00:00",
    "league": "Europa League",
    "match": "Juventus v Stade Rennais",
    "pair": "o15_ranked|soccer_o15",
@@ -3627,7 +3664,7 @@
    "kickoff": "2026-10-22T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T11:23:27+00:00",
+   "last_seen_at": "2026-10-19T14:04:30+00:00",
    "league": "Europa League",
    "match": "Olympiacos v Sparta Prague",
    "pair": "o15_ranked|soccer_o15",
@@ -3664,7 +3701,7 @@
    "kickoff": "2026-10-23T18:00Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T11:23:27+00:00",
+   "last_seen_at": "2026-10-19T14:04:30+00:00",
    "league": "Eredivisie",
    "match": "GA Eagles v Telstar",
    "pair": "ere_draw|soccer",
@@ -3701,7 +3738,7 @@
    "kickoff": "2026-10-23T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T11:23:27+00:00",
+   "last_seen_at": "2026-10-19T14:04:30+00:00",
    "league": "NFL",
    "match": "Patriots v Bears",
    "model_prob": 0.436,
@@ -3932,9 +3969,9 @@
    "ready_at": "2026-10-16T17:17:38+00:00",
    "route": "moved by hand on 2026-10-16",
    "routing": {
-    "leads": 1,
+    "leads": 2,
     "problem": null,
-    "routed": 1,
+    "routed": 2,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -3946,7 +3983,7 @@
    "sandbox_roi_fee": 0.3272,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -4344,5 +4381,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-19T11:23:27+00:00"
+ "updated_at": "2026-10-19T14:04:30+00:00"
 }
