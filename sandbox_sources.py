@@ -745,6 +745,21 @@ SOURCES = {
              "counted across all competitions gave the same answer. Not significant across the 10 "
              "rules tried (13% of shuffled worlds), and all since mid-August — the Sandbox decides. "
              "Judged against backing the under on every Kalshi match."),
+    "u35_low_o15": dict(
+        label="Low-scoring picks → over 1.5 (clubs)", kind="Rule", connected=True,
+        site="edge-machine", sports=["soccer_o15"], baseline="population",
+        note="Pre-registered 2026-10-18 by Olu, before it logged anything. The SAME matches "
+             "u35_low_scoring selects (both teams scored 1 or fewer in 7+ of their last 10 games in "
+             "this competition, 10+ games each, ESPN results strictly before kickoff), backed the "
+             "other way: YES on Kalshi's Over 1.5 at the Yes ask (the line read from the market's "
+             "own wording), Yes book 5c wide or tighter. Club competitions only, Champions and "
+             "Europa League included; national teams were priced right (Nations League 14/19, "
+             "-0.9%). Why: those matches still reached 2+ goals 95 times in 117 (81%) at about "
+             "72c, about +11% after fees, z about +2.3, across 21 leagues; the live lane's own "
+             "club matches went 21/24 at 79c (+9.6%). It is POST-HOC, found after seeing the "
+             "under-3.5 lane win 19 of 19, so that record counts toward nothing here: this record "
+             "starts empty and is a forward test. Judged against backing the over on every "
+             "Kalshi match."),
     "mls_away_band": dict(
         label="MLS away side priced 0.20-0.25", kind="Rule", connected=True,
         site="edge-machine", sports=[], baseline="favourite_population",
@@ -7984,18 +7999,44 @@ def fetch_o25_congestion(sport, universe=None, fixtures=None):
 U35_WINDOW, U35_MIN, U35_MAX_SCORED = 10, 7, 1
 
 
+def u35_low_selected(r, ko, fixtures):
+    """u35_low_scoring's trigger for one match row: BOTH teams scored 1 or fewer in 7+ of their
+    last 10 games in this competition, each with 10+ such games (ESPN, strictly before `ko`).
+    Shared by u35_low_scoring and u35_low_o15, so the two lanes select exactly the same matches."""
+    low = lambda gf, ga: gf <= U35_MAX_SCORED
+    lg = _form_league(r)
+    h, _hn, hall = team_form(fixtures, r.get("espn_home"), ko, low, U35_WINDOW, league=lg)
+    a, _an, aall = team_form(fixtures, r.get("espn_away"), ko, low, U35_WINDOW, league=lg)
+    return min(hall, aall) >= U35_WINDOW and h >= U35_MIN and a >= U35_MIN
+
+
 def fetch_u35_low_scoring(sport, universe=None, fixtures=None):
     """Back UNDER 3.5 (No on Kalshi's Over 3.5) where BOTH teams scored 1 or fewer in 7+ of their
     last 10 games in this competition, each with 10+ such games."""
     fixtures = _espn_fixtures() if fixtures is None else fixtures
-    low = lambda gf, ga: gf <= U35_MAX_SCORED
+    return [dict(market_id=r["market_id"], pick="b")
+            for r, ko in _rule_rows(sport, universe) if u35_low_selected(r, ko, fixtures)]
+
+
+U35_O15_SPORTS = ("soccer_o15",)        # clubs only: national teams were priced right
+U35_O15_MAX_SPREAD = 0.05
+
+
+def fetch_u35_low_o15(sport, universe=None, fixtures=None):
+    """Back OVER 1.5 (Yes on Kalshi's Over 1.5) on the matches u35_low_scoring selects, clubs only,
+    at the Yes ask with the Yes book 5c wide or tighter."""
+    if sport not in U35_O15_SPORTS:
+        return []
+    fixtures = _espn_fixtures() if fixtures is None else fixtures
     out = []
     for r, ko in _rule_rows(sport, universe):
-        lg = _form_league(r)
-        h, _hn, hall = team_form(fixtures, r.get("espn_home"), ko, low, U35_WINDOW, league=lg)
-        a, _an, aall = team_form(fixtures, r.get("espn_away"), ko, low, U35_WINDOW, league=lg)
-        if min(hall, aall) >= U35_WINDOW and h >= U35_MIN and a >= U35_MIN:
-            out.append(dict(market_id=r["market_id"], pick="b"))
+        ask, mid = r.get("price_a"), r.get("mid_a")
+        if not (r.get("tradeable") or {}).get("a") or ask is None or mid is None:
+            continue
+        if ask - (2 * mid - ask) > U35_O15_MAX_SPREAD + 1e-9:   # bid = 2 * mid - ask
+            continue
+        if u35_low_selected(r, ko, fixtures):
+            out.append(dict(market_id=r["market_id"], pick="a"))
     return out
 
 
@@ -10537,6 +10578,7 @@ CHALLENGERS = {
     "ere_o15": fetch_ere_o15,
     "ere_draw": fetch_ere_draw,
     "u35_low_scoring": fetch_u35_low_scoring,
+    "u35_low_o15": fetch_u35_low_o15,
     "o25_congestion": fetch_o25_congestion,
     "pin_totals": fetch_pin_totals,
     "p05_unbeaten": fetch_p05_unbeaten,
