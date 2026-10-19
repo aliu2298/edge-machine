@@ -3616,12 +3616,24 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     # (a coin ladder's rungs move together, 22 state gas series do not). The statistic is the
     # mean day return over its own standard error, and the dispersion across days carries the
     # correlation without assuming it. cmd_tail reads t +0.34, which is its +0.28%.
+    #
+    # FLOORED AT THE PRICE'S OWN SPREAD (2026-10-19). A handful of days that all win at similar
+    # prices have almost no dispersion, so the sample sd collapses and the t explodes:
+    # commod_fav_band read z +14.52 on five 5-0 market-days at 0.76. A fairly priced day backed at
+    # its average price p returns 1/p - 1 or -1, a spread of sqrt((1 - p) / p) per stake when its
+    # rungs move as one (the most a day can spread, and the coin and metal ladders nearly do).
+    # The sd used is never below that, so a few lucky days read as what they are (five 5-0 days
+    # at 0.76 give +1.27, the binomial answer) while a record whose days really disperse, like
+    # cmd_tail's, keeps its own sample sd.
     day_t = None
     if day_collapsed or sport in S.DAY_CLUSTERED:
         rets = [q["pnl"] / STAKE for q in bets]
         if len(rets) > 1:
             mean_r = sum(rets) / len(rets)
             sd = (sum((x - mean_r) ** 2 for x in rets) / (len(rets) - 1)) ** 0.5
+            prices = [float(q["price"]) for q in bets if q.get("price") and 0 < float(q["price"]) < 1]
+            floor = (sum((1 - p) / p for p in prices) / len(prices)) ** 0.5 if prices else 0.0
+            sd = max(sd, floor)
             day_t = (mean_r / (sd / len(rets) ** 0.5)) if sd else 0.0
     # `won` and `expected` above are the whole record, and stay that way for the hit rate and
     # the money. The z is taken only over the clusters cluster_stats kept, so a contradictory

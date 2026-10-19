@@ -590,6 +590,9 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
                    + sum(a['open'] for a in areas if a['key'] in ('econ_daily','finance_daily')),
                    landed=(n_won, n_settled), healthy=(healthy, len(areas)), attention=len(attention)),
         areas=areas, attention=attention, live=live, scorecard=scorecard,
+        # Production outside the scorecard's pair rows: Econ Daily's favourite band publishes
+        # through its own feed (daily_production), so it is in the tile's count and not a row.
+        prod_outside=(["Econ Daily favourite band"] if daily is not None else []),
         runs_read=runs is not None, status_read=status is not None,
     )
 
@@ -611,7 +614,7 @@ def scorecard_rows(pair_rows):
         unit = SP.settled_unit(r)
         out.append(dict(
             row=r, name=B.rule_name(r), sport=r["sport"],
-            sport_label=S.SPORTS.get(r["sport"], r["sport"]), href=_rule_href(r["sport"]),
+            sport_label=B.side_label(r), href=_rule_href(r["sport"]),
             stage="production" if r.get("prod") else "sandbox",
             open=int(r.get("open") or 0), n=n, n_price=n_price, unit=unit,
             n_bets=int(a.get("n_bets") or n), won=int(a.get("won") or 0),
@@ -698,16 +701,22 @@ def _scorecard_row(e):
             f'<td class="cc-verdict">{SP.verdict_badge(r)}</td></tr>')
 
 
-def _scorecard_html(entries):
+def _scorecard_html(entries, outside=()):
     if not entries:
         return '<p class="shell-empty">No rule has a record yet.</p>'
     counts = scorecard_counts(entries)
+    # The tile above counts every pair in Production; the chip counts the rows listed here.
+    # Say what the difference is rather than leave two numbers to disagree.
+    outside_note = (f'<p class="sm mut cc-prod-note">Production {counts["production"]} lists the sports pairs; '
+                    f'{" and ".join(esc(x) for x in outside)} is also in Production through its own feed, '
+                    f'which makes the {counts["production"] + len(outside)} in the tile above.</p>' if outside else "")
     chips = "".join(
         f'<button type="button" data-value="{key}" aria-pressed="{"true" if key == "all" else "false"}">'
         f'{esc(label)} <span class="count">{counts[key]}</span></button>'
         for key, label in SCORECARD_FILTERS)
     rows = "".join(_scorecard_row(e) for e in entries)
     return f"""<nav class="sp-filter cc-filter" aria-label="Rules" data-controls="scorecard-table">{chips}</nav>
+{outside_note}
 <div class="tbl"><table class="cc-scorecard" id="scorecard-table">
 <thead><tr><th>Rule</th><th>Stage</th><th class="num">Open</th><th class="num">Settled</th>
 <th class="num">Record</th><th class="num">Won v priced</th><th class="num">ROI after fees</th>
@@ -825,7 +834,7 @@ def page(now, d=None, st=None, blob=None, nba=None, market=None, closes=None, ru
 
 <section id="scorecard" aria-labelledby="scorecard-title" class="cc-scorecard-section">
 <div class="pane-head"><h2 id="scorecard-title">Rule scorecard</h2> <span class="mut sm">· {len(m['scorecard'])} rules</span></div>
-{_scorecard_html(m['scorecard'])}
+{_scorecard_html(m['scorecard'], m.get('prod_outside') or ())}
 </section>
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 """

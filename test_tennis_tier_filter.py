@@ -720,8 +720,9 @@ def _wired_pairs(d, st, include_retired=False):
             reset_row = bool(pair.get("since")) and bool(
                 T.assess(d, name, sport, venues=T.TRADEABLE_VENUES)["n"])
             scope = next((x for x in S.SCOPE_LABEL if str(sport).endswith(x)), "")
+            # A Production pair is listed whether or not it has bet (2026-10-19).
             if (group is None and name != "tennis_utr_shortlist_v1" and not scope
-                    and name not in T.CONSENSUS and not reset_row):
+                    and name not in T.CONSENSUS and not reset_row and pair.get("stage") != "production"):
                 continue
             out.add(f"{name}|{sport}")
     return out
