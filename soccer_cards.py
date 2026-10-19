@@ -108,8 +108,10 @@ def _market_name(base, fam="Soccer"):
 
 
 def market(d, row):
-    """The market column: 'Over 1.5', 'BTTS', 'Corners'."""
-    return _market_name(B._base_sport(row["sport"]))
+    """The market column: 'Over 1.5', 'BTTS', 'Corners', worded for the side the rule bets
+    ('Over 3.5' for bund_o35 on the Under 3.5 market, B.side_words)."""
+    base = B._base_sport(row["sport"])
+    return B.side_words(base, row.get("side"), _market_name(base))
 
 
 def _fixture_label(q):

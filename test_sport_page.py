@@ -55,7 +55,7 @@ def _quote(i, source, sport, status, start, label, price=0.55, bet=True,
     won = status == "won"
     return dict(
         id=f"{source}:{sport}:{i}:{status}:{label}", source=source, sport=sport, bet=bet, status=status,
-        pick="b", price=price, result=("a" if won else "b") if status in ("won", "lost") else None,
+        pick="a", price=price, result=("a" if won else "b") if status in ("won", "lost") else None,
         venue=venue, pnl=(round(100 * (1 / price - 1), 2) if won else -100.0) if status in ("won", "lost") else None,
         start=when.isoformat(), logged=(when - timedelta(hours=2)).isoformat(), date=when.date().isoformat(),
         settled=(when + timedelta(hours=3)).isoformat() if status in ("won", "lost") else None,

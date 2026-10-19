@@ -858,6 +858,48 @@ def _fade_book(d, pair):
     return out
 
 
+# ------------------------------------------------------------------ the side a lane bets
+# A sport key names a MARKET, and its label names one side of it: "Under 3.5" is soccer_u35's
+# No, "Over 1.5" is soccer_o15's Yes (sandbox_track.feed_pick). A lane can back the other side
+# of the same market -- bund_o35 backs the Yes on soccer_u35, which is OVER 3.5 -- and printing
+# the sport label beside it said the opposite of the bet (2026-10-19). side_label() words the
+# market for the side the lane actually takes.
+def pair_sides(d):
+    """{(source, sport): "a" or "b"}, the side a pair backs on Yes/No markets, by majority."""
+    votes = {}
+    for q in T.bet_rows(d) + [q for q in (d.get("quotes") or []) if q.get("bet")]:
+        if q.get("pick") in ("a", "b") and str(q.get("side_b")) == "No":
+            c = votes.setdefault((q.get("source"), q.get("sport")), {"a": 0, "b": 0})
+            c[q["pick"]] += 1
+    return {k: ("a" if v["a"] >= v["b"] else "b") for k, v in votes.items()}
+
+
+def side_words(sport, side, words=None):
+    """The market words for `side` of `sport`: 'Under 3.5' -> 'Over 3.5', 'BTTS' -> 'BTTS · No'.
+
+    Unchanged when the side is the one the label already names, when the side is unknown, or
+    when the label states no side at all ('Corners', 'First to score', 'Team +0.5')."""
+    words = S.SPORTS.get(sport, sport) if words is None else words
+    base = _base_sport(sport)
+    named = T.feed_pick(base) or T.feed_pick(sport) or "a"
+    if side not in ("a", "b") or side == named:
+        return words
+    if "Over " in words or "Under " in words:
+        return words.replace("Over ", "\0").replace("Under ", "Over ").replace("\0", "Under ")
+    if named == "a":
+        # Next to the market, ahead of a scope ("Team 2+ · No · Internationals").
+        for scope in (" · Cups", " · Internationals"):
+            if words.endswith(scope):
+                return f"{words[:-len(scope)]} · No{scope}"
+        return f"{words} · No"
+    return words
+
+
+def side_label(row):
+    """A pair row's sport label, worded for the side it bets (see side_words)."""
+    return side_words(row["sport"], row.get("side"))
+
+
 def pair_list(d, st, include_retired=False):
     """Every (source, sport) pair that has bet, with its record and verdict.
 
@@ -867,6 +909,7 @@ def pair_list(d, st, include_retired=False):
     still covers them.
     """
     out = []
+    sides = pair_sides(d)
     for name, meta in S.SOURCES.items():
         if name in S.REMOVED_SOURCES:
             continue
@@ -895,8 +938,11 @@ def pair_list(d, st, include_retired=False):
             # "removed" branch below exists for exactly this and never got the chance to run.
             reset_row = bool(T.record_since(pair)) and bool(
                 T.assess(d, name, sport, venues=T.TRADEABLE_VENUES)["n"])
+            # A Production pair is always listed (2026-10-19): corners_ucl_fade went in by hand
+            # on 2026-10-15 and had not bet yet, so the Home scorecard counted 21 in Production
+            # while the header tile and the feed counted 22.
             if (group is None and name != "tennis_utr_shortlist_v1" and not _scope(sport)
-                    and name not in T.CONSENSUS and not reset_row):
+                    and name not in T.CONSENSUS and not reset_row and pair.get("stage") != "production"):
                 continue
             # A pair taken out of Production restarts its count, which on its own reads as a
             # brand-new source ("Too early", nothing settled) and hides the record it was removed on.
@@ -915,6 +961,9 @@ def pair_list(d, st, include_retired=False):
             if sport in gone:
                 v = "retired"
             out.append(dict(name=name, sport=sport, meta=meta, a=a, open=open_n, last=last,
+                            # Before its first bet a lane's side is read off its name: every
+                            # "_fade" lane backs the No (team2_ranked_fade, corners_ucl_fade).
+                            side=sides.get((name, sport)) or ("b" if name.endswith("_fade") else None),
                             fade=T.faded(_fade_book(d, pair), name, sport, venues=T.TRADEABLE_VENUES),
                             gone=gone.get(sport), prod=pair.get("stage") == "production",
                             moved=str(pair.get("by_hand") or pair.get("promoted_at") or "")[:10],

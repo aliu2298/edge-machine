@@ -332,7 +332,8 @@ eq(len(prows), 2, "a Production rule is a row in the Production list")
 eq(len(rule_rows(prod_rules.split('id="sandbox"', 1)[1])), len(rows) - 2, "and leaves the Sandbox list")
 ok(all(r["stage"] == "production" for r in prows), "its rows carry the Production stage for the chips")
 ok("Team scores 1+ form rule · Cups" in [r["full_name"] for r in prows], "a scoped twin carries its scope in its full name")
-ok("Team 1+" in [r["cells"]["Market"] for r in prows], "a row names the market the rule trades")
+# The fixture's picks are No sides, so the market reads for that side (2026-10-19, B.side_words).
+ok("Team 1+ · No" in [r["cells"]["Market"] for r in prows], "a row names the market the rule trades, on the side it bets")
 empty_rules = _section(empty_html, "rules")
 ok("No soccer rule is in Production." in empty_rules and 'data-list="sandbox"' in empty_rules,
    "an empty ledger still lists the wired cup and international twins as Sandbox rows, and says nothing is in Production")
