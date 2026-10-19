@@ -1,9 +1,46 @@
 {
  "error": null,
- "last_run": "2026-10-19T18:16:28.353373+00:00",
+ "last_run": "2026-10-19T20:31:42.723543+00:00",
  "rules": {
   "ARG": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.7,
+     "bid": 0.69,
+     "event": "KXARGPREMDIVTOTAL-26OCT19NOBCC",
+     "id": "ARG:KXARGPREMDIVTOTAL-26OCT19NOBCC",
+     "league": "Liga Profesional",
+     "line": 1.5,
+     "logged": "2026-10-19T20:31:42.723543+00:00",
+     "match": "Newell's Old Boys v Central C\u00f3rdoba (Santiago del Estero)",
+     "price": 0.7,
+     "rule": "ARG",
+     "side": "yes",
+     "start": "2026-10-19T22:00Z",
+     "status": "open",
+     "ticker": "KXARGPREMDIVTOTAL-26OCT19NOBCC-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Argentina over 1.5 YES 0.70"
+    },
+    {
+     "ask": 0.63,
+     "bid": 0.62,
+     "event": "KXARGPREMDIVTOTAL-26OCT19CASBAR",
+     "id": "ARG:KXARGPREMDIVTOTAL-26OCT19CASBAR",
+     "league": "Liga Profesional",
+     "line": 1.5,
+     "logged": "2026-10-19T20:31:42.723543+00:00",
+     "match": "Sarmiento (Jun\u00edn) v Barracas Central",
+     "price": 0.63,
+     "rule": "ARG",
+     "side": "yes",
+     "start": "2026-10-19T22:00Z",
+     "status": "open",
+     "ticker": "KXARGPREMDIVTOTAL-26OCT19CASBAR-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Argentina over 1.5 YES 0.63"
+    }
+   ]
   },
   "BRA": {
    "picks": []
@@ -128,6 +165,13 @@
    "matched": 0,
    "new": 0,
    "quoted": 0
+  },
+  {
+   "at": "2026-10-19T20:31:42.723543+00:00",
+   "due": 2,
+   "matched": 2,
+   "new": 2,
+   "quoted": 2
   }
  ],
  "schedule": [
