@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-19T19:00:15.226916+00:00",
-   "last_success": "2026-10-19T19:00:15.226916+00:00",
+   "last_run": "2026-10-19T20:00:14.999031+00:00",
+   "last_success": "2026-10-19T20:00:14.999031+00:00",
    "observations": {
-    "at": "2026-10-19T19:00:15.226916+00:00",
-    "events": 862,
+    "at": "2026-10-19T20:00:14.999031+00:00",
+    "events": 867,
     "reasons": {
-     "in band": 5,
-     "no quote or spread too wide": 369,
-     "not active": 674,
-     "outside the band": 54,
-     "outside the entry window": 10775
+     "in band": 3,
+     "no quote or spread too wide": 372,
+     "not active": 675,
+     "outside the band": 53,
+     "outside the entry window": 10850
     }
    },
    "picks": [
@@ -344,17 +344,17 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-19T19:00:15.226916+00:00",
-   "last_success": "2026-10-19T19:00:15.226916+00:00",
+   "last_run": "2026-10-19T20:00:14.999031+00:00",
+   "last_success": "2026-10-19T20:00:14.999031+00:00",
    "observations": {
-    "at": "2026-10-19T19:00:15.226916+00:00",
-    "events": 862,
+    "at": "2026-10-19T20:00:14.999031+00:00",
+    "events": 867,
     "reasons": {
-     "in band": 2,
-     "no quote or spread too wide": 384,
-     "not active": 674,
-     "outside the band": 112,
-     "outside the entry window": 10705
+     "in band": 1,
+     "no quote or spread too wide": 379,
+     "not active": 675,
+     "outside the band": 118,
+     "outside the entry window": 10780
     }
    },
    "picks": [
@@ -568,16 +568,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-19T19:00:15.226916+00:00",
-   "last_success": "2026-10-19T19:00:15.226916+00:00",
+   "last_run": "2026-10-19T20:00:14.999031+00:00",
+   "last_success": "2026-10-19T20:00:14.999031+00:00",
    "observations": {
-    "at": "2026-10-19T19:00:15.226916+00:00",
-    "events": 862,
+    "at": "2026-10-19T20:00:14.999031+00:00",
+    "events": 867,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 31,
+     "already near-certain (under 10c or over 90c)": 35,
      "edge 5c+": 7,
      "edge under 5c": 2,
-     "no quote or spread too wide": 59
+     "no quote or spread too wide": 55
     }
    },
    "picks": [
@@ -1121,15 +1121,15 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-19T19:00:15.226916+00:00",
-   "last_success": "2026-10-19T19:00:15.226916+00:00",
+   "last_run": "2026-10-19T20:00:14.999031+00:00",
+   "last_success": "2026-10-19T20:00:14.999031+00:00",
    "observations": {
-    "at": "2026-10-19T19:00:15.226916+00:00",
-    "events": 862,
+    "at": "2026-10-19T20:00:14.999031+00:00",
+    "events": 867,
     "reasons": {
      "collecting review pace (12h of snapshots)": 1,
      "edge 5c+": 4,
-     "under 20 reviews counted": 11
+     "under 20 reviews counted": 16
     }
    },
    "picks": [
@@ -1285,19 +1285,24 @@
   }
  },
  "rt_urls": {
+  "KXRT-ANG": "https://www.rottentomatoes.com/m/the_angry_birds_movie_3",
   "KXRT-AVE": "https://www.rottentomatoes.com/m/avengers_doomsday",
   "KXRT-CAT": "https://www.rottentomatoes.com/m/the_cat_in_the_hat",
   "KXRT-CLA": "https://www.rottentomatoes.com/m/clayface",
   "KXRT-DUNE": "https://www.rottentomatoes.com/m/dune_part_three",
   "KXRT-EBE": "https://www.rottentomatoes.com/m/ebenezer_2026",
+  "KXRT-FOC": "https://www.rottentomatoes.com/m/focker_in_law",
   "KXRT-GOD": "https://www.rottentomatoes.com/m/godzilla_minus_zero",
   "KXRT-HEX": "https://www.rottentomatoes.com/m/hexed_2026",
   "KXRT-HOWT": "https://www.rottentomatoes.com/m/how_to_rob_a_bank_2026",
   "KXRT-HUN": "https://www.rottentomatoes.com/m/the_hunger_games_sunrise_on_the_reaping",
   "KXRT-IPL": "https://www.rottentomatoes.com/m/i_play_rocky",
+  "KXRT-JUM": "https://www.rottentomatoes.com/m/jumanji_open_world",
   "KXRT-KLA": "https://www.rottentomatoes.com/m/klara_and_the_sun",
   "KXRT-SENS": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026",
   "KXRT-STRA": "https://www.rottentomatoes.com/m/street_fighter_2026",
+  "KXRT-VIO": "https://www.rottentomatoes.com/m/violent_night_2",
+  "KXRT-WER": "https://www.rottentomatoes.com/m/werwulf",
   "KXRT-WHA": "https://www.rottentomatoes.com/m/whalefall",
   "KXRT-WIC": "https://www.rottentomatoes.com/m/wicker",
   "KXRT-WILD": "https://www.rottentomatoes.com/m/wild_horse_nine",
@@ -1398,7 +1403,7 @@
    "days": []
   },
   "Epstein": {
-   "at": "2026-10-18T14:10:00.372261+00:00",
+   "at": "2026-10-19T20:00:14.999031+00:00",
    "days": []
   },
   "ExxonMobil / XOM": {
@@ -1498,7 +1503,7 @@
    "days": []
   },
   "Soleimani": {
-   "at": "2026-10-17T17:00:13.053079+00:00",
+   "at": "2026-10-19T20:00:14.999031+00:00",
    "days": [
     "2026-07-28"
    ]
@@ -1532,7 +1537,7 @@
    ]
   },
   "Third Term": {
-   "at": "2026-10-17T14:00:12.905311+00:00",
+   "at": "2026-10-19T20:00:14.999031+00:00",
    "days": [
     "2026-09-18",
     "2026-10-01",
