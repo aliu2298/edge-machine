@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-19T15:00:17.989052+00:00",
-   "last_success": "2026-10-19T15:00:17.989052+00:00",
+   "last_run": "2026-10-19T16:00:14.057450+00:00",
+   "last_success": "2026-10-19T16:00:14.057450+00:00",
    "observations": {
-    "at": "2026-10-19T15:00:17.989052+00:00",
-    "events": 840,
+    "at": "2026-10-19T16:00:14.057450+00:00",
+    "events": 854,
     "reasons": {
-     "in band": 5,
-     "no quote or spread too wide": 365,
-     "not active": 707,
-     "outside the band": 58,
-     "outside the entry window": 10430
+     "in band": 6,
+     "no quote or spread too wide": 366,
+     "not active": 670,
+     "outside the band": 56,
+     "outside the entry window": 10659
     }
    },
    "picks": [
@@ -109,10 +109,13 @@
      "id": "KXRT-STRA-42",
      "logged": "2026-10-18T14:00:13.846021+00:00",
      "name": "Street Fighter \u00b7 Rotten Tomatoes score",
+     "payout": 1.0,
      "price": 0.93,
+     "profit": 7.0,
      "series": "KXRT",
+     "settled": "2026-10-19T16:00:14.057450+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Above 42"
     },
     {
@@ -137,10 +140,13 @@
      "id": "KXRT-SENS-77",
      "logged": "2026-10-18T14:10:00.372261+00:00",
      "name": "Sense and Sensibility \u00b7 Rotten Tomatoes score",
+     "payout": 1.0,
      "price": 0.97,
+     "profit": 2.88,
      "series": "KXRT",
+     "settled": "2026-10-19T16:00:14.057450+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Above 77"
     },
     {
@@ -151,10 +157,13 @@
      "id": "KXRT-YOUC-98",
      "logged": "2026-10-18T17:33:26.303466+00:00",
      "name": "You Can See Everything \u00b7 Rotten Tomatoes score",
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 10.34,
      "series": "KXRT",
+     "settled": "2026-10-19T16:00:14.057450+00:00",
      "side": "yes",
-     "status": "open",
+     "status": "won",
      "title": "Above 98"
     },
     {
@@ -193,10 +202,13 @@
      "id": "KXRT-WHA-70",
      "logged": "2026-10-19T10:00:14.067345+00:00",
      "name": "Whalefall \u00b7 Rotten Tomatoes score",
+     "payout": 1.0,
      "price": 0.92,
+     "profit": 8.09,
      "series": "KXRT",
+     "settled": "2026-10-19T16:00:14.057450+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Above 70"
     },
     {
@@ -254,22 +266,63 @@
      "side": "yes",
      "status": "open",
      "title": "Above 11.25M"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-20T14:00:00Z",
+     "detail": "NO 0.95 \u00b7 endgame",
+     "event": "KXYTVIEWSW-ARI26OCT18",
+     "id": "KXYTVIEWSW-ARI26OCT18-14.5M",
+     "logged": "2026-10-19T16:00:14.057450+00:00",
+     "name": "Ariana Grande: Highest daily view count (October 12, 2026 - October 18, 2026)",
+     "price": 0.95,
+     "series": "KXYTVIEWSW",
+     "side": "no",
+     "status": "open",
+     "title": "Above 14.5M"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-20T14:00:00Z",
+     "detail": "YES 0.93 \u00b7 endgame",
+     "event": "KXYTVIEWSW-MOR26OCT18",
+     "id": "KXYTVIEWSW-MOR26OCT18-4.5M",
+     "logged": "2026-10-19T16:00:14.057450+00:00",
+     "name": "Morgan Wallen: Highest daily view count (October 12, 2026 - October 18, 2026)",
+     "price": 0.93,
+     "series": "KXYTVIEWSW",
+     "side": "yes",
+     "status": "open",
+     "title": "Above 4.5M"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-20T14:00:00Z",
+     "detail": "YES 0.93 \u00b7 endgame",
+     "event": "KXYTVIEWSW-TAY26OCT18",
+     "id": "KXYTVIEWSW-TAY26OCT18-15.6M",
+     "logged": "2026-10-19T16:00:14.057450+00:00",
+     "name": "Taylor Swift: Highest daily view count (October 12, 2026 - October 18, 2026)",
+     "price": 0.93,
+     "series": "KXYTVIEWSW",
+     "side": "yes",
+     "status": "open",
+     "title": "Above 15.6M"
     }
    ]
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-19T15:00:17.989052+00:00",
-   "last_success": "2026-10-19T15:00:17.989052+00:00",
+   "last_run": "2026-10-19T16:00:14.057450+00:00",
+   "last_success": "2026-10-19T16:00:14.057450+00:00",
    "observations": {
-    "at": "2026-10-19T15:00:17.989052+00:00",
-    "events": 840,
+    "at": "2026-10-19T16:00:14.057450+00:00",
+    "events": 854,
     "reasons": {
-     "in band": 1,
      "no quote or spread too wide": 344,
-     "not active": 707,
-     "outside the band": 93,
-     "outside the entry window": 10420
+     "not active": 670,
+     "outside the band": 94,
+     "outside the entry window": 10649
     }
    },
    "picks": [
@@ -298,10 +351,13 @@
      "id": "KXRT-STRA-40",
      "logged": "2026-10-17T14:00:12.905311+00:00",
      "name": "Street Fighter \u00b7 Rotten Tomatoes score",
+     "payout": 1.0,
      "price": 0.71,
+     "profit": 38.04,
      "series": "KXRT",
+     "settled": "2026-10-19T16:00:14.057450+00:00",
      "side": "yes",
-     "status": "open",
+     "status": "won",
      "title": "Above 40"
     },
     {
@@ -312,10 +368,13 @@
      "id": "KXRT-WHA-70",
      "logged": "2026-10-17T14:00:12.905311+00:00",
      "name": "Whalefall \u00b7 Rotten Tomatoes score",
+     "payout": 0.0,
      "price": 0.74,
+     "profit": -100.0,
      "series": "KXRT",
+     "settled": "2026-10-19T16:00:14.057450+00:00",
      "side": "yes",
-     "status": "open",
+     "status": "lost",
      "title": "Above 70"
     },
     {
@@ -360,10 +419,13 @@
      "id": "KXRT-YOUC-98",
      "logged": "2026-10-17T18:50:53.630444+00:00",
      "name": "You Can See Everything \u00b7 Rotten Tomatoes score",
+     "payout": 1.0,
      "price": 0.71,
+     "profit": 38.04,
      "series": "KXRT",
+     "settled": "2026-10-19T16:00:14.057450+00:00",
      "side": "yes",
-     "status": "open",
+     "status": "won",
      "title": "Above 98"
     },
     {
@@ -391,10 +453,13 @@
      "id": "KXRT-SENS-75",
      "logged": "2026-10-18T05:09:37.447237+00:00",
      "name": "Sense and Sensibility \u00b7 Rotten Tomatoes score",
+     "payout": 1.0,
      "price": 0.7,
+     "profit": 39.92,
      "series": "KXRT",
+     "settled": "2026-10-19T16:00:14.057450+00:00",
      "side": "yes",
-     "status": "open",
+     "status": "won",
      "title": "Above 75"
     },
     {
@@ -443,16 +508,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-19T15:00:17.989052+00:00",
-   "last_success": "2026-10-19T15:00:17.989052+00:00",
+   "last_run": "2026-10-19T16:00:14.057450+00:00",
+   "last_success": "2026-10-19T16:00:14.057450+00:00",
    "observations": {
-    "at": "2026-10-19T15:00:17.989052+00:00",
-    "events": 840,
+    "at": "2026-10-19T16:00:14.057450+00:00",
+    "events": 854,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 27,
-     "edge 5c+": 8,
+     "already near-certain (under 10c or over 90c)": 29,
+     "edge 5c+": 10,
      "edge under 5c": 2,
-     "no quote or spread too wide": 64
+     "no quote or spread too wide": 60
     }
    },
    "picks": [
@@ -906,16 +971,64 @@
      "side": "no",
      "status": "open",
      "title": "Antifa"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-11-01T15:00:00Z",
+     "detail": "P(said) 0.14 \u00b7 said on 1 of the last 84 days, 13.0 days left \u00b7 edge +0.25",
+     "edge": 0.2493,
+     "event": "KXTRUMPSAYMONTH-26NOV01",
+     "id": "KXTRUMPSAYMONTH-26NOV01-ANTI",
+     "logged": "2026-10-19T16:00:14.057450+00:00",
+     "model": 0.1437,
+     "name": "What will Trump say in October?",
+     "price": 0.59,
+     "series": "KXTRUMPSAYMONTH",
+     "side": "no",
+     "status": "open",
+     "title": "Antifa"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-10-26T14:00:00Z",
+     "detail": "P(said) 0.15 \u00b7 said on 2 of the last 84 days, 6.9 days left \u00b7 edge +0.08",
+     "edge": 0.0834,
+     "event": "KXTRUMPSAY-26OCT26",
+     "id": "KXTRUMPSAY-26OCT26-ZOHR",
+     "logged": "2026-10-19T16:00:14.057450+00:00",
+     "model": 0.1535,
+     "name": "What will Trump say this week?",
+     "price": 0.75,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "Zohran / Mamdani"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-10-26T14:00:00Z",
+     "detail": "P(said) 0.00 \u00b7 said on 0 of the last 84 days, 6.9 days left \u00b7 edge +0.07",
+     "edge": 0.0654,
+     "event": "KXTRUMPSAY-26OCT26",
+     "id": "KXTRUMPSAY-26OCT26-GOLD",
+     "logged": "2026-10-19T16:00:14.057450+00:00",
+     "model": 0.0,
+     "name": "What will Trump say this week?",
+     "price": 0.93,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "Golden Dome"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-19T15:00:17.989052+00:00",
-   "last_success": "2026-10-19T15:00:17.989052+00:00",
+   "last_run": "2026-10-19T16:00:14.057450+00:00",
+   "last_success": "2026-10-19T16:00:14.057450+00:00",
    "observations": {
-    "at": "2026-10-19T15:00:17.989052+00:00",
-    "events": 840,
+    "at": "2026-10-19T16:00:14.057450+00:00",
+    "events": 854,
     "reasons": {
      "edge 5c+": 4,
      "under 20 reviews counted": 11
@@ -1000,11 +1113,14 @@
      "logged": "2026-10-17T14:00:12.905311+00:00",
      "model": 0.927,
      "name": "You Can See Everything \u00b7 Rotten Tomatoes score",
+     "payout": 1.0,
      "price": 0.67,
+     "profit": 45.88,
      "rt_url": "https://www.rottentomatoes.com/m/you_can_see_everything",
      "series": "KXRT",
+     "settled": "2026-10-19T16:00:14.057450+00:00",
      "side": "yes",
-     "status": "open",
+     "status": "won",
      "title": "Above 98"
     },
     {
@@ -1017,11 +1133,14 @@
      "logged": "2026-10-17T14:00:12.905311+00:00",
      "model": 0.9147,
      "name": "Whalefall \u00b7 Rotten Tomatoes score",
+     "payout": 0.0,
      "price": 0.74,
+     "profit": -100.0,
      "rt_url": "https://www.rottentomatoes.com/m/whalefall",
      "series": "KXRT",
+     "settled": "2026-10-19T16:00:14.057450+00:00",
      "side": "yes",
-     "status": "open",
+     "status": "lost",
      "title": "Above 70"
     },
     {
@@ -1034,11 +1153,14 @@
      "logged": "2026-10-17T14:00:12.905311+00:00",
      "model": 0.79,
      "name": "Street Fighter \u00b7 Rotten Tomatoes score",
+     "payout": 1.0,
      "price": 0.71,
+     "profit": 38.04,
      "rt_url": "https://www.rottentomatoes.com/m/street_fighter_2026",
      "series": "KXRT",
+     "settled": "2026-10-19T16:00:14.057450+00:00",
      "side": "yes",
-     "status": "open",
+     "status": "won",
      "title": "Above 40"
     },
     {
@@ -1051,11 +1173,14 @@
      "logged": "2026-10-17T14:00:12.905311+00:00",
      "model": 0.3141,
      "name": "Sense and Sensibility \u00b7 Rotten Tomatoes score",
+     "payout": 0.0,
      "price": 0.51,
+     "profit": -100.0,
      "rt_url": "https://www.rottentomatoes.com/m/sense_and_sensibility_2026",
      "series": "KXRT",
+     "settled": "2026-10-19T16:00:14.057450+00:00",
      "side": "no",
-     "status": "open",
+     "status": "lost",
      "title": "Above 75"
     }
    ]
@@ -1185,6 +1310,10 @@
     "2026-09-13"
    ]
   },
+  "Golden Dome": {
+   "at": "2026-10-19T16:00:14.057450+00:00",
+   "days": []
+  },
   "JPMorgan / JPM": {
    "at": "2026-10-19T11:00:14.440958+00:00",
    "days": []
@@ -1306,7 +1435,7 @@
    "days": []
   },
   "Zohran / Mamdani": {
-   "at": "2026-10-17T22:00:12.421777+00:00",
+   "at": "2026-10-19T16:00:14.057450+00:00",
    "days": [
     "2026-07-29",
     "2026-08-14"
