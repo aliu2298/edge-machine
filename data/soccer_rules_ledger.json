@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-19T02:21:27.038446+00:00",
+ "last_run": "2026-10-19T13:46:40.306464+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -1063,6 +1063,14 @@
    "candidates": 0,
    "due": 0,
    "labelled": 0,
+   "matched": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-10-19T13:46:40.306464+00:00",
+   "candidates": 0,
+   "due": 1,
+   "labelled": 1,
    "matched": 0,
    "new": 0
   }
