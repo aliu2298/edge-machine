@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-19T22:01:27.521423+00:00",
+ "last_run": "2026-10-19T22:46:38.860586+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -39,6 +39,24 @@
      "ticker": "KXARGPREMDIVTOTAL-26OCT19CASBAR-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Argentina over 1.5 YES 0.63"
+    },
+    {
+     "ask": 0.65,
+     "bid": 0.64,
+     "event": "KXARGPREMDIVTOTAL-26OCT19RIEUNI",
+     "id": "ARG:KXARGPREMDIVTOTAL-26OCT19RIEUNI",
+     "league": "Liga Profesional",
+     "line": 1.5,
+     "logged": "2026-10-19T22:46:38.860586+00:00",
+     "match": "Deportivo Riestra v Uni\u00f3n (Santa Fe)",
+     "price": 0.65,
+     "rule": "ARG",
+     "side": "yes",
+     "start": "2026-10-20T00:15Z",
+     "status": "open",
+     "ticker": "KXARGPREMDIVTOTAL-26OCT19RIEUNI-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Argentina over 1.5 YES 0.65"
     }
    ]
   },
@@ -212,10 +230,16 @@
    "matched": 1,
    "new": 0,
    "quoted": 1
+  },
+  {
+   "at": "2026-10-19T22:46:38.860586+00:00",
+   "due": 1,
+   "matched": 1,
+   "new": 1,
+   "quoted": 1
   }
  ],
  "schedule": [
-  "2026-10-19T22:00:00+00:00",
   "2026-10-19T23:00:00+00:00",
   "2026-10-20T00:15:00+00:00",
   "2026-10-23T21:30:00+00:00",
