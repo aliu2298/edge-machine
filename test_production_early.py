@@ -99,7 +99,7 @@ eq((S.TENNIS_3H_BAND, S.COMBO_MARKUP[2], S.TENNIS_COMBO_BAND_SINCE),
    "promotion touches no tennis parameter")
 ok("o15_form_l10|soccer_o15" not in _LIVE_OV and T.PAIR_REMOVALS["o15_form_l10|soccer_o15"]["keep_record"],
    "o15_form_l10|soccer_o15 is off the live list since 2026-10-17, keeping its record")
-eq(len(_LIVE_OV), 23, "five pairs before, eleven after the six, twelve with commodities, eighteen with the six of 2026-10-11, seventeen with team scores 1+ · Clubs out on 2026-10-14, nineteen with corners_under out and its three lanes in on 2026-10-15, twenty-four with the five of 2026-10-16, twenty-three with btts_form_l10_fade out on 2026-10-17, twenty-two with o15_form_l10|soccer_o15 out the same day, twenty-three with o25_congestion|soccer_o25 in on 2026-10-18")
+eq(len(_LIVE_OV), 22, "five pairs before, eleven after the six, twelve with commodities, eighteen with the six of 2026-10-11, seventeen with team scores 1+ · Clubs out on 2026-10-14, nineteen with corners_under out and its three lanes in on 2026-10-15, twenty-four with the five of 2026-10-16, twenty-three with btts_form_l10_fade out on 2026-10-17, twenty-two with o15_form_l10|soccer_o15 out the same day, twenty-three with o25_congestion|soccer_o25 in on 2026-10-18, twenty-two with it out on 2026-10-19")
 
 # The tracker moves them on its next run, and the Since-Production record starts there.
 _stages = {"pairs": {}, "events": []}

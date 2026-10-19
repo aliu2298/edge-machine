@@ -59,9 +59,9 @@ check("the No of the exact over-2.5 contract", (lead["route"]["market"], lead["r
       ("KXUCLTOTAL-26OCT20ROMSLO-3", "no"))
 check("the Yes on the same contract is still the over (turkey_o25_dog)", T.feed_bet(dict(o25, pick="a")),
       {"kind": "total_gte", "n": 3})
-check("listed by hand 2026-10-18, Clubs only: the cup twin stays in the Sandbox",
-      (T.PAIR_OVERRIDES["o25_congestion|soccer_o25"]["moved_on"], "o25_congestion|soccer_o25_cup" in T.PAIR_OVERRIDES),
-      ("2026-10-18", False))
+check("listed 2026-10-18 and removed 2026-10-19; the cup twin was never listed",
+      ("o25_congestion|soccer_o25" in T.PAIR_OVERRIDES, T.PAIR_REMOVALS["o25_congestion|soccer_o25"]["removed_on"],
+       "o25_congestion|soccer_o25_cup" in T.PAIR_OVERRIDES), (False, "2026-10-19", False))
 
 print("\nthe five promotions of 2026-10-16 (btts_form_l10_fade out again 2026-10-17, record kept)")
 check("four of the five are still listed by hand that day",
@@ -81,6 +81,30 @@ _rm2 = {"pairs": {"pm_combo4|tennis_pmcombo": dict(stage="production", promoted_
 T.evaluate_stages({"quotes": []}, _rm2, now=datetime(2026, 10, 18, 6, tzinfo=timezone.utc), verbose=False)
 check("an ordinary removal still restarts the clock at the removal",
       _rm2["pairs"].get("pm_combo4|tennis_pmcombo", {}).get("since"), "2026-10-18T06:00:00+00:00")
+print("\na same-day listing cannot undo the net's demotion (the 2026-10-18 flip-flop)")
+check("o25_congestion|soccer_o25 is off the list and goes back keeping its record",
+      ("o25_congestion|soccer_o25" in T.PAIR_OVERRIDES, T.PAIR_REMOVALS["o25_congestion|soccer_o25"]["keep_record"]),
+      (False, True))
+_FF = "pm_combo4|tennis_pmcombo"          # any registered pair; the override is put in for this check only
+_saved = dict(T.PAIR_OVERRIDES)
+T.PAIR_OVERRIDES[_FF] = dict(moved_on="2026-10-18", production_at=None)
+_ff = {"pairs": {_FF: dict(stage="sandbox", since="2026-10-18T22:32:01+00:00", demoted_at="2026-10-18T22:32:01+00:00")},
+       "events": []}
+for _h in (1, 4, 8):                      # three tracker runs after the net's demotion
+    T.evaluate_stages({"quotes": []}, _ff, now=datetime(2026, 10, 19, _h, tzinfo=timezone.utc), verbose=False)
+check("demoted by the net on the listing's own day: the stale override never re-promotes it",
+      (_ff["pairs"][_FF]["stage"], [e["to"] for e in _ff["events"] if e["pair"] == _FF]), ("sandbox", []))
+T.PAIR_OVERRIDES[_FF] = dict(moved_on="2026-10-19", production_at=None)
+T.evaluate_stages({"quotes": []}, _ff, now=datetime(2026, 10, 19, 12, tzinfo=timezone.utc), verbose=False)
+check("a listing dated AFTER the demotion is a new decision and does move it",
+      _ff["pairs"][_FF]["stage"], "production")
+T.PAIR_OVERRIDES.clear()
+T.PAIR_OVERRIDES.update(_saved)
+_rm3 = {"pairs": {"o25_congestion|soccer_o25": dict(stage="sandbox", since=None, demoted_at="2026-10-19T02:23:41+00:00")},
+        "events": []}
+T.evaluate_stages({"quotes": []}, _rm3, now=datetime(2026, 10, 19, 12, tzinfo=timezone.utc), verbose=False)
+check("with the live list, o25_congestion stays in the Sandbox on its whole record",
+      {k: _rm3["pairs"]["o25_congestion|soccer_o25"].get(k) for k in ("stage", "since")}, dict(stage="sandbox", since=None))
 check("ESPN FPI NFL is not paused", S.lane_paused("espn_fpi", "nfl"), False)
 check("FTTS rows map to a league like a goals row", S.quote_league(ftts), "Europa League")
 
