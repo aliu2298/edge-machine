@@ -459,12 +459,12 @@ PAIR_OVERRIDES = {
     "mls_fade_home|soccer_p05": dict(moved_on="2026-10-16", production_at=None),
     "team2_form_l10|soccer_team2": dict(moved_on="2026-10-16", production_at=None),
     "ftts_no_70_80|soccer_ftts": dict(moved_on="2026-10-16", production_at=None),
-    # Congestion under 2.5, CLUBS scope (the cup twin stays in the Sandbox): moved by hand on
-    # 2026-10-18 by Olu, on its whole record: 30 settled, 14 won v 11.1 priced, +16.4% after
-    # fees, z +1.11, halves +37.0% then -4.1%, 20 open. Below the stamp (50 bets over 28 days,
-    # z >= 2), which was said, and waiting for 50 settled was recommended; the move is his call.
-    # The feed names its No on the over-2.5 contract (FEED_NO_TWIN soccer_o25, total_lte 2).
-    "o25_congestion|soccer_o25": dict(moved_on="2026-10-18", production_at=None),
+    # Congestion under 2.5, CLUBS scope: moved by hand on 2026-10-18 (30 settled, +16.4% after
+    # fees, z +1.11, below the stamp) and OUT again the same week, as asked (Olu, 2026-10-19):
+    # 43 settled, 15-28, -14.4% after fees, a 3-14 day on 2026-10-18, Eredivisie 0-6. The net
+    # had demoted it three times and this listing re-promoted it twice (see evaluate_stages:
+    # a same-day listing no longer cancels a demotion). Kept in PAIR_REMOVALS, whole record.
+    # FEED_NO_TWIN soccer_o25 stays: it is per market type, and nothing else uses it today.
     "espn_fpi|nfl": dict(moved_on="2026-10-16", production_at=None),
 }
 
@@ -477,6 +477,7 @@ PAIR_OVERRIDES = {
 PAIR_REMOVALS = {
     "btts_form_l10_fade|soccer_btts": dict(removed_on="2026-10-17", keep_record=True),
     "o15_form_l10|soccer_o15": dict(removed_on="2026-10-17", keep_record=True),
+    "o25_congestion|soccer_o25": dict(removed_on="2026-10-19", keep_record=True),
 }
 
 
@@ -3956,7 +3957,12 @@ def evaluate_stages(d, st, now=None, verbose=True):
             # demotion known — while an older listing cannot resurrect a pair demoted since.
             # The demotion also reset the pair's clock, so cancelling it restores the whole
             # record: what a pair did in the Sandbox counts towards Production.
-            if ov and pair.get("demoted_at") and ov["moved_on"] >= str(pair["demoted_at"])[:10]:
+            # STRICTLY after (2026-10-19): moved_on is a date and demoted_at an instant, so a
+            # listing dated the same day cannot be known to postdate the demotion. With >= the
+            # net's same-day demotion of o25_congestion|soccer_o25 was cancelled by the very
+            # listing it had just overruled, and the pair flip-flopped Production <-> Sandbox
+            # on 2026-10-18. Re-listing after a demotion takes a later date.
+            if ov and pair.get("demoted_at") and ov["moved_on"] > str(pair["demoted_at"])[:10]:
                 pair = {k: v for k, v in pair.items() if k not in ("demoted_at", "since")}
 
             if pair["stage"] == "sandbox":
