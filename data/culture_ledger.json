@@ -2,16 +2,16 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-19T10:00:14.067345+00:00",
-   "last_success": "2026-10-19T10:00:14.067345+00:00",
+   "last_run": "2026-10-19T11:00:14.440958+00:00",
+   "last_success": "2026-10-19T11:00:14.440958+00:00",
    "observations": {
-    "at": "2026-10-19T10:00:14.067345+00:00",
+    "at": "2026-10-19T11:00:14.440958+00:00",
     "events": 853,
     "reasons": {
      "in band": 3,
-     "no quote or spread too wide": 240,
+     "no quote or spread too wide": 241,
      "not active": 722,
-     "outside the band": 69,
+     "outside the band": 68,
      "outside the entry window": 10855
     }
    },
@@ -203,16 +203,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-19T10:00:14.067345+00:00",
-   "last_success": "2026-10-19T10:00:14.067345+00:00",
+   "last_run": "2026-10-19T11:00:14.440958+00:00",
+   "last_success": "2026-10-19T11:00:14.440958+00:00",
    "observations": {
-    "at": "2026-10-19T10:00:14.067345+00:00",
+    "at": "2026-10-19T11:00:14.440958+00:00",
     "events": 853,
     "reasons": {
      "in band": 1,
-     "no quote or spread too wide": 445,
+     "no quote or spread too wide": 439,
      "not active": 722,
-     "outside the band": 120,
+     "outside the band": 126,
      "outside the entry window": 10601
     }
    },
@@ -381,15 +381,15 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-19T10:00:14.067345+00:00",
-   "last_success": "2026-10-19T10:00:14.067345+00:00",
+   "last_run": "2026-10-19T11:00:14.440958+00:00",
+   "last_success": "2026-10-19T11:00:14.440958+00:00",
    "observations": {
-    "at": "2026-10-19T10:00:14.067345+00:00",
+    "at": "2026-10-19T11:00:14.440958+00:00",
     "events": 853,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 24,
+     "already near-certain (under 10c or over 90c)": 23,
      "closes within 6h": 21,
-     "edge 5c+": 8,
+     "edge 5c+": 9,
      "edge under 5c": 1,
      "no quote or spread too wide": 30
     }
@@ -797,19 +797,35 @@
      "side": "no",
      "status": "open",
      "title": "Belgium / Belgian"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-11-01T15:00:00Z",
+     "detail": "P(said) 0.00 \u00b7 said on 0 of the last 84 days, 13.2 days left \u00b7 edge +0.07",
+     "edge": 0.0654,
+     "event": "KXTRUMPSAYCOMPANY-26NOV01",
+     "id": "KXTRUMPSAYCOMPANY-26NOV01-BLAC",
+     "logged": "2026-10-19T11:00:14.440958+00:00",
+     "model": 0.0,
+     "name": "What companies will Trump say in October?",
+     "price": 0.93,
+     "series": "KXTRUMPSAYCOMPANY",
+     "side": "no",
+     "status": "open",
+     "title": "BlackRock"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-19T10:00:14.067345+00:00",
-   "last_success": "2026-10-19T10:00:14.067345+00:00",
+   "last_run": "2026-10-19T11:00:14.440958+00:00",
+   "last_success": "2026-10-19T11:00:14.440958+00:00",
    "observations": {
-    "at": "2026-10-19T10:00:14.067345+00:00",
+    "at": "2026-10-19T11:00:14.440958+00:00",
     "events": 853,
     "reasons": {
-     "edge 5c+": 6,
-     "edge under 5c": 2,
+     "edge 5c+": 5,
+     "edge under 5c": 3,
      "under 20 reviews counted": 11
     }
    },
@@ -1021,6 +1037,10 @@
     "2026-10-07"
    ]
   },
+  "BlackRock": {
+   "at": "2026-10-19T11:00:14.440958+00:00",
+   "days": []
+  },
   "Ceasefire": {
    "at": "2026-10-18T21:00:15.092165+00:00",
    "days": [
@@ -1055,7 +1075,7 @@
    ]
   },
   "JPMorgan / JPM": {
-   "at": "2026-10-19T05:00:12.941471+00:00",
+   "at": "2026-10-19T11:00:14.440958+00:00",
    "days": []
   },
   "Lisa Cook": {
