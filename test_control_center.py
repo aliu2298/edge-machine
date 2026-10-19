@@ -283,18 +283,39 @@ ok(m["runs_read"], "the model knows the runs were read")
 eq(_model(_ledger([], lane_reads=read_now), runs=runs[1:])["attention"], [], "only the newest completed run per workflow counts, and PR tests are not watched")
 ok(not _model(_ledger([], lane_reads=read_now))["runs_read"], "runs=None means not read, not green")
 
-# A closing-price writer gone quiet.
+# A closing-price writer gone quiet. A writer rewrites its file only when it snapshots or prunes,
+# so it is listed only when a bet came due since its last write with no closing price from any
+# writer; a retired writer (mac) is never listed.
 closes = {"vps": (NOW - timedelta(minutes=20)).isoformat(), "watchdog": (NOW - timedelta(hours=5)).isoformat(),
-          "boards": (NOW - timedelta(hours=2)).isoformat(), "mac": (NOW - timedelta(days=5)).isoformat()}
+          "boards": (NOW - timedelta(hours=2)).isoformat(), "mac": (NOW - timedelta(days=5)).isoformat(),
+          "close": (NOW - timedelta(hours=5)).isoformat()}
 m = _model(_ledger([], lane_reads=read_now), closes=closes)
-eq(sorted(i["text"].split(" ")[3] for i in m["attention"] if i["kind"] == "venue"), ["mac", "watchdog"],
-   "the watchdog (hourly, 5h quiet) and the mac writer (5d) are listed; vps and boards are inside their intervals")
-ok(any("expected within 3h" in i["text"] and "5h ago" in i["text"] for i in m["attention"]), "each names its age and its interval")
-ok(any("5d ago" in i["text"] and "48h" in i["text"] for i in m["attention"]), "an unknown writer is read on the default interval")
+eq([i for i in m["attention"] if i["kind"] == "venue"], [],
+   "nothing came due: a 5h-quiet watchdog and close job are idle, not broken, and mac is retired")
+missed = _q(11, "oddspedia", "cricket", "open", hours=-3, label="India vs England", venue="polymarket_us")
+m = _model(_ledger([missed], lane_reads=read_now), closes=closes)
+eq(sorted(i["text"].split(" ")[3] for i in m["attention"] if i["kind"] == "venue"), ["close", "watchdog"],
+   "a bet came due 3h ago with no closing price: the two writers quiet for 5h are listed; vps and boards are inside "
+   "their intervals, and mac is retired")
+ok(any("expected within 3h" in i["text"] and "5h ago" in i["text"] and "1 bet came due since with no closing price" in i["text"]
+       for i in m["attention"]), "each names its age, its interval and the missed bet")
+covered = dict(missed, close_at=(NOW - timedelta(hours=3, minutes=10)).isoformat())
+eq([i for i in _model(_ledger([covered], lane_reads=read_now), closes=closes)["attention"] if i["kind"] == "venue"], [],
+   "the same bet with a closing price from another writer inside 60 minutes of its start: nothing to list")
+late = dict(missed, close_at=(NOW - timedelta(hours=1)).isoformat())
+eq(len([i for i in _model(_ledger([late], lane_reads=read_now), closes=closes)["attention"] if i["kind"] == "venue"]), 2,
+   "a price taken after the start is not a closing price")
+odd = {"elsewhere": (NOW - timedelta(days=5)).isoformat()}
+old_bet = _q(12, "oddspedia", "cricket", "open", hours=-60, label="A vs B", venue="polymarket_us")
+ok(any("5d ago" in i["text"] and "48h" in i["text"] for i in _model(_ledger([old_bet], lane_reads=read_now), closes=odd)["attention"]),
+   "an unknown writer is read on the default interval")
 eq(CC.VENUE_WRITERS, {"vps": 2, "watchdog": 3, "close": 2, "boards": 7}, "the writers' intervals")
+eq(sorted(CC.RETIRED_WRITERS), ["mac"], "the retired writers")
 
-# All together: counts and the tile.
-m = _model(_ledger([overdue], coverage=cov_dark, lane_reads=read_now), st_p, runs=runs, closes=closes)
+# All together: counts and the tile. The overdue bet started 48h ago with no closing price, so the
+# two writers quiet for 3 days missed it.
+quiet = dict(closes, watchdog=(NOW - timedelta(days=3)).isoformat(), close=(NOW - timedelta(days=3)).isoformat())
+m = _model(_ledger([overdue], coverage=cov_dark, lane_reads=read_now), st_p, runs=runs, closes=quiet)
 eq([i["kind"] for i in m["attention"]], ["overdue", "feed", "paused", "run", "venue", "venue"],
    "items are listed in a fixed order: open past start, feeds, pairs, runs, writers")
 eq(m["tiles"]["attention"], 6, "the tile counts them")
@@ -345,7 +366,7 @@ print("\nthe page")
 # ---------------------------------------------------------------------------
 blob = {"leads": {}, "pairs": {}}
 html = CC.page(NOW, d=_ledger([overdue, quotes[0]], coverage=cov_dark, lane_reads=read_now), st=st_p, blob=blob,
-               nba=nba, market=market, closes=closes, runs=runs)
+               nba=nba, market=market, closes=quiet, runs=runs)
 ok(html.startswith("<!doctype html>") and "<title>Edge Machine · Home</title>" in html, "the root is a full page titled Home")
 ok('<link rel="stylesheet" href="./control.css">' in html and 'href="./site.css"' in html,
    "it links the shared stylesheet and the Control Center's own")

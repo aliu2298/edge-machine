@@ -94,6 +94,19 @@ EXPECTED = {
 # the boards refresh every 3 hours. A writer not named here is read on the default.
 VENUE_WRITERS = {"vps": 2, "watchdog": 3, "close": 2, "boards": 7}
 DEFAULT_WRITER_HOURS = 48
+# A writer only rewrites its file when it snapshotted or pruned something (sandbox_close.main),
+# so a quiet file is normal whenever no bet came due: overnight, or on a Sunday with nothing
+# closing. A writer past its interval is listed only when a bet's deadline passed since its
+# last write and the bet has no closing price from ANY writer (2026-10-19: "close" read "5h ago"
+# on a Sunday night with nothing due while vps.json was 15 minutes old).
+# Writers that no longer run are not watched at all. Their files stay: the tracker merges every
+# file in data/sandbox_closes/, and their snapshots are already on the ledger's bets (close_at).
+RETIRED_WRITERS = {
+    # The Mac's launchd agent (scripts/com.aliu.edge-machine-closes.plist) is not loaded; edge-vps
+    # runs the same local_closes.sh as writer "vps" since 2026-10-06. Last write 2026-10-06.
+    "mac": "replaced by vps on 2026-10-06",
+}
+CLOSE_LEAD = timedelta(minutes=60)   # sandbox_close.CLOSE_WINDOW_MIN: a snapshot this close counts
 # A Production pair this close to the stale-pair demotion is named.
 NEAR_DEMOTION_DAYS = 7
 LATE_LEAD_HOURS = 48          # a lead published too late to act on is listed this long after its kickoff
@@ -480,16 +493,37 @@ def _attention(d, st, pairs, now, closes, runs, status=None, status_note=None, b
                                   href=run.get("url") or "./production.html"))
     for writer, updated in sorted((closes or {}).items()):
         at = _utc(updated)
-        if at is None:
+        if at is None or writer in RETIRED_WRITERS:
             continue
         allowed = VENUE_WRITERS.get(writer, DEFAULT_WRITER_HOURS)
         age = _hours(at, now)
-        if age > allowed:
+        if age <= allowed:
+            continue
+        missed = missed_closes(d, at, now)
+        if missed:
             items.append(dict(kind="venue", area=None,
                               text=f"closing prices from {writer} last written {_age_text(age)} ago "
-                                   f"(expected within {allowed}h)",
+                                   f"(expected within {allowed}h) · {len(missed)} bet{'s' if len(missed) != 1 else ''} "
+                                   f"came due since with no closing price",
                               href="./sandbox.html"))
     return items
+
+
+def missed_closes(d, since, now):
+    """Bets whose close deadline fell in (since, now] with no snapshot from any writer inside
+    CLOSE_LEAD of it (the tracker merges every writer's file into close_at)."""
+    out = []
+    for q in (d or {}).get("quotes") or []:
+        if not q.get("bet") or not q.get("pick") or S.removed_row(q) or q.get("note") == T.KALSHI_UNPLACEABLE:
+            continue
+        dl = T.close_deadline(q)
+        if dl is None or not since < dl <= now:
+            continue
+        got = _utc(q.get("close_at"))
+        if got is not None and dl - CLOSE_LEAD <= got <= dl:
+            continue
+        out.append(q)
+    return out
 
 
 def _age_text(hours):
