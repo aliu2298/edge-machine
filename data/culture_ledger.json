@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-19T20:00:14.999031+00:00",
-   "last_success": "2026-10-19T20:00:14.999031+00:00",
+   "last_run": "2026-10-19T21:00:14.144266+00:00",
+   "last_success": "2026-10-19T21:00:14.144266+00:00",
    "observations": {
-    "at": "2026-10-19T20:00:14.999031+00:00",
+    "at": "2026-10-19T21:00:14.144266+00:00",
     "events": 867,
     "reasons": {
-     "in band": 3,
-     "no quote or spread too wide": 372,
-     "not active": 675,
+     "in band": 2,
+     "no quote or spread too wide": 373,
+     "not active": 677,
      "outside the band": 53,
-     "outside the entry window": 10850
+     "outside the entry window": 10852
     }
    },
    "picks": [
@@ -344,17 +344,17 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-19T20:00:14.999031+00:00",
-   "last_success": "2026-10-19T20:00:14.999031+00:00",
+   "last_run": "2026-10-19T21:00:14.144266+00:00",
+   "last_success": "2026-10-19T21:00:14.144266+00:00",
    "observations": {
-    "at": "2026-10-19T20:00:14.999031+00:00",
+    "at": "2026-10-19T21:00:14.144266+00:00",
     "events": 867,
     "reasons": {
-     "in band": 1,
-     "no quote or spread too wide": 379,
-     "not active": 675,
-     "outside the band": 118,
-     "outside the entry window": 10780
+     "in band": 2,
+     "no quote or spread too wide": 377,
+     "not active": 677,
+     "outside the band": 119,
+     "outside the entry window": 10782
     }
    },
    "picks": [
@@ -563,21 +563,35 @@
      "side": "no",
      "status": "open",
      "title": "Dai Dai"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-20T03:59:00Z",
+     "detail": "NO 0.77 \u00b7 favourite band",
+     "event": "KXYTTOPVIDEO2D-26OCT19",
+     "id": "KXYTTOPVIDEO2D-26OCT19-TAT",
+     "logged": "2026-10-19T21:00:14.144266+00:00",
+     "name": "Runner-Up Daily Music Video USA on YouTube: Oct 19, 2026",
+     "price": 0.77,
+     "series": "KXYTTOPVIDEO2D",
+     "side": "no",
+     "status": "open",
+     "title": "Tate McRae - Housewife (Official Video)"
     }
    ]
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-19T20:00:14.999031+00:00",
-   "last_success": "2026-10-19T20:00:14.999031+00:00",
+   "last_run": "2026-10-19T21:00:14.144266+00:00",
+   "last_success": "2026-10-19T21:00:14.144266+00:00",
    "observations": {
-    "at": "2026-10-19T20:00:14.999031+00:00",
+    "at": "2026-10-19T21:00:14.144266+00:00",
     "events": 867,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 35,
-     "edge 5c+": 7,
-     "edge under 5c": 2,
-     "no quote or spread too wide": 55
+     "already near-certain (under 10c or over 90c)": 36,
+     "edge 5c+": 9,
+     "edge under 5c": 1,
+     "no quote or spread too wide": 53
     }
    },
    "picks": [
@@ -1116,15 +1130,47 @@
      "side": "no",
      "status": "open",
      "title": "Prediction Market / Predictive Market"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-10-26T14:00:00Z",
+     "detail": "P(said) 0.08 \u00b7 said on 1 of the last 84 days, 6.7 days left \u00b7 edge +0.13",
+     "edge": 0.1308,
+     "event": "KXTRUMPSAY-26OCT26",
+     "id": "KXTRUMPSAY-26OCT26-TOMA",
+     "logged": "2026-10-19T21:00:14.144266+00:00",
+     "model": 0.0772,
+     "name": "What will Trump say this week?",
+     "price": 0.78,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "Tomahawk"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-10-26T14:00:00Z",
+     "detail": "P(said) 0.00 \u00b7 said on 0 of the last 84 days, 6.7 days left \u00b7 edge +0.10",
+     "edge": 0.1031,
+     "event": "KXTRUMPSAY-26OCT26",
+     "id": "KXTRUMPSAY-26OCT26-ZACH",
+     "logged": "2026-10-19T21:00:14.144266+00:00",
+     "model": 0.0,
+     "name": "What will Trump say this week?",
+     "price": 0.89,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "Zacharia"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-19T20:00:14.999031+00:00",
-   "last_success": "2026-10-19T20:00:14.999031+00:00",
+   "last_run": "2026-10-19T21:00:14.144266+00:00",
+   "last_success": "2026-10-19T21:00:14.144266+00:00",
    "observations": {
-    "at": "2026-10-19T20:00:14.999031+00:00",
+    "at": "2026-10-19T21:00:14.144266+00:00",
     "events": 867,
     "reasons": {
      "collecting review pace (12h of snapshots)": 1,
@@ -1544,6 +1590,12 @@
     "2026-10-03"
    ]
   },
+  "Tomahawk": {
+   "at": "2026-10-19T21:00:14.144266+00:00",
+   "days": [
+    "2026-07-31"
+   ]
+  },
   "Turning Point": {
    "at": "2026-10-19T19:00:15.226916+00:00",
    "days": []
@@ -1562,7 +1614,7 @@
    "days": []
   },
   "Zacharia": {
-   "at": "2026-10-18T22:00:14.843215+00:00",
+   "at": "2026-10-19T21:00:14.144266+00:00",
    "days": []
   },
   "Zohran / Mamdani": {
