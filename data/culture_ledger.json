@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-19T18:00:14.596178+00:00",
-   "last_success": "2026-10-19T18:00:14.596178+00:00",
+   "last_run": "2026-10-19T19:00:15.226916+00:00",
+   "last_success": "2026-10-19T19:00:15.226916+00:00",
    "observations": {
-    "at": "2026-10-19T18:00:14.596178+00:00",
-    "events": 857,
+    "at": "2026-10-19T19:00:15.226916+00:00",
+    "events": 862,
     "reasons": {
      "in band": 5,
-     "no quote or spread too wide": 368,
-     "not active": 673,
-     "outside the band": 55,
-     "outside the entry window": 10698
+     "no quote or spread too wide": 369,
+     "not active": 674,
+     "outside the band": 54,
+     "outside the entry window": 10775
     }
    },
    "picks": [
@@ -344,16 +344,17 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-19T18:00:14.596178+00:00",
-   "last_success": "2026-10-19T18:00:14.596178+00:00",
+   "last_run": "2026-10-19T19:00:15.226916+00:00",
+   "last_success": "2026-10-19T19:00:15.226916+00:00",
    "observations": {
-    "at": "2026-10-19T18:00:14.596178+00:00",
-    "events": 857,
+    "at": "2026-10-19T19:00:15.226916+00:00",
+    "events": 862,
     "reasons": {
-     "no quote or spread too wide": 350,
-     "not active": 673,
-     "outside the band": 88,
-     "outside the entry window": 10688
+     "in band": 2,
+     "no quote or spread too wide": 384,
+     "not active": 674,
+     "outside the band": 112,
+     "outside the entry window": 10705
     }
    },
    "picks": [
@@ -534,21 +535,49 @@
      "side": "no",
      "status": "open",
      "title": "Above 27.5M"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-21T03:59:00Z",
+     "detail": "NO 0.80 \u00b7 favourite band",
+     "event": "KXDWTSELIMINATION-26OCT21",
+     "id": "KXDWTSELIMINATION-26OCT21-TCAM",
+     "logged": "2026-10-19T19:00:15.226916+00:00",
+     "name": "Dancing with the Stars \u00b7 Episode 7 Elimination",
+     "price": 0.8,
+     "series": "KXDWTSELIMINATION",
+     "side": "no",
+     "status": "open",
+     "title": "Tyler Cameron"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-21T03:59:00Z",
+     "detail": "NO 0.80 \u00b7 favourite band",
+     "event": "KXYTTOPVIDEOG2D-26OCT20",
+     "id": "KXYTTOPVIDEOG2D-26OCT20-DAI",
+     "logged": "2026-10-19T19:00:15.226916+00:00",
+     "name": "Runner-Up Daily Music Video Global on YouTube: Oct 20, 2026",
+     "price": 0.8,
+     "series": "KXYTTOPVIDEOG2D",
+     "side": "no",
+     "status": "open",
+     "title": "Dai Dai"
     }
    ]
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-19T18:00:14.596178+00:00",
-   "last_success": "2026-10-19T18:00:14.596178+00:00",
+   "last_run": "2026-10-19T19:00:15.226916+00:00",
+   "last_success": "2026-10-19T19:00:15.226916+00:00",
    "observations": {
-    "at": "2026-10-19T18:00:14.596178+00:00",
-    "events": 857,
+    "at": "2026-10-19T19:00:15.226916+00:00",
+    "events": 862,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 29,
-     "edge 5c+": 6,
-     "edge under 5c": 1,
-     "no quote or spread too wide": 63
+     "already near-certain (under 10c or over 90c)": 31,
+     "edge 5c+": 7,
+     "edge under 5c": 2,
+     "no quote or spread too wide": 59
     }
    },
    "picks": [
@@ -1092,11 +1121,11 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-19T18:00:14.596178+00:00",
-   "last_success": "2026-10-19T18:00:14.596178+00:00",
+   "last_run": "2026-10-19T19:00:15.226916+00:00",
+   "last_success": "2026-10-19T19:00:15.226916+00:00",
    "observations": {
-    "at": "2026-10-19T18:00:14.596178+00:00",
-    "events": 857,
+    "at": "2026-10-19T19:00:15.226916+00:00",
+    "events": 862,
     "reasons": {
      "collecting review pace (12h of snapshots)": 1,
      "edge 5c+": 4,
@@ -1307,7 +1336,7 @@
    ]
   },
   "BBC": {
-   "at": "2026-10-19T12:00:15.962690+00:00",
+   "at": "2026-10-19T19:00:15.226916+00:00",
    "days": [
     "2026-08-02",
     "2026-09-18"
@@ -1383,6 +1412,29 @@
   "Golden Dome": {
    "at": "2026-10-19T16:00:14.057450+00:00",
    "days": []
+  },
+  "Golf / Golfer / Golfing": {
+   "at": "2026-10-19T19:00:15.226916+00:00",
+   "days": [
+    "2026-07-28",
+    "2026-08-21",
+    "2026-08-30",
+    "2026-09-02",
+    "2026-09-04",
+    "2026-09-12",
+    "2026-09-13",
+    "2026-09-17",
+    "2026-09-26",
+    "2026-09-27",
+    "2026-09-30",
+    "2026-10-01",
+    "2026-10-02",
+    "2026-10-03",
+    "2026-10-05",
+    "2026-10-07",
+    "2026-10-14",
+    "2026-10-16"
+   ]
   },
   "JPMorgan / JPM": {
    "at": "2026-10-19T17:00:15.680945+00:00",
@@ -1488,7 +1540,7 @@
    ]
   },
   "Turning Point": {
-   "at": "2026-10-17T02:08:03.723976+00:00",
+   "at": "2026-10-19T19:00:15.226916+00:00",
    "days": []
   },
   "UAE / United Arab Emirates": {
