@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-19T21:00:14.144266+00:00",
-   "last_success": "2026-10-19T21:00:14.144266+00:00",
+   "last_run": "2026-10-19T22:00:13.601206+00:00",
+   "last_success": "2026-10-19T22:00:13.601206+00:00",
    "observations": {
-    "at": "2026-10-19T21:00:14.144266+00:00",
-    "events": 867,
+    "at": "2026-10-19T22:00:13.601206+00:00",
+    "events": 869,
     "reasons": {
-     "in band": 2,
-     "no quote or spread too wide": 373,
-     "not active": 677,
-     "outside the band": 53,
-     "outside the entry window": 10852
+     "in band": 3,
+     "no quote or spread too wide": 371,
+     "not active": 675,
+     "outside the band": 54,
+     "outside the entry window": 10911
     }
    },
    "picks": [
@@ -344,17 +344,17 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-19T21:00:14.144266+00:00",
-   "last_success": "2026-10-19T21:00:14.144266+00:00",
+   "last_run": "2026-10-19T22:00:13.601206+00:00",
+   "last_success": "2026-10-19T22:00:13.601206+00:00",
    "observations": {
-    "at": "2026-10-19T21:00:14.144266+00:00",
-    "events": 867,
+    "at": "2026-10-19T22:00:13.601206+00:00",
+    "events": 869,
     "reasons": {
-     "in band": 2,
-     "no quote or spread too wide": 377,
-     "not active": 677,
-     "outside the band": 119,
-     "outside the entry window": 10782
+     "in band": 1,
+     "no quote or spread too wide": 373,
+     "not active": 675,
+     "outside the band": 124,
+     "outside the entry window": 10841
     }
    },
    "picks": [
@@ -582,16 +582,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-19T21:00:14.144266+00:00",
-   "last_success": "2026-10-19T21:00:14.144266+00:00",
+   "last_run": "2026-10-19T22:00:13.601206+00:00",
+   "last_success": "2026-10-19T22:00:13.601206+00:00",
    "observations": {
-    "at": "2026-10-19T21:00:14.144266+00:00",
-    "events": 867,
+    "at": "2026-10-19T22:00:13.601206+00:00",
+    "events": 869,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 36,
      "edge 5c+": 9,
-     "edge under 5c": 1,
-     "no quote or spread too wide": 53
+     "edge under 5c": 2,
+     "no quote or spread too wide": 52
     }
    },
    "picks": [
@@ -1167,11 +1167,11 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-19T21:00:14.144266+00:00",
-   "last_success": "2026-10-19T21:00:14.144266+00:00",
+   "last_run": "2026-10-19T22:00:13.601206+00:00",
+   "last_success": "2026-10-19T22:00:13.601206+00:00",
    "observations": {
-    "at": "2026-10-19T21:00:14.144266+00:00",
-    "events": 867,
+    "at": "2026-10-19T22:00:13.601206+00:00",
+    "events": 869,
     "reasons": {
      "collecting review pace (12h of snapshots)": 1,
      "edge 5c+": 4,
@@ -1374,7 +1374,7 @@
    ]
   },
   "Antifa": {
-   "at": "2026-10-19T15:00:17.989052+00:00",
+   "at": "2026-10-19T22:00:13.601206+00:00",
    "days": [
     "2026-09-22"
    ]
@@ -1394,7 +1394,7 @@
    ]
   },
   "Bahrain / Bahraini": {
-   "at": "2026-10-19T15:00:17.989052+00:00",
+   "at": "2026-10-19T22:00:13.601206+00:00",
    "days": [
     "2026-08-20",
     "2026-08-30",
