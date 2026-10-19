@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-19T13:00:14.118390+00:00",
-   "last_success": "2026-10-19T13:00:14.118390+00:00",
+   "last_run": "2026-10-19T14:00:15.293239+00:00",
+   "last_success": "2026-10-19T14:00:15.293239+00:00",
    "observations": {
-    "at": "2026-10-19T13:00:14.118390+00:00",
-    "events": 853,
+    "at": "2026-10-19T14:00:15.293239+00:00",
+    "events": 848,
     "reasons": {
-     "in band": 1,
-     "no quote or spread too wide": 150,
-     "not active": 722,
-     "outside the band": 33,
-     "outside the entry window": 10983
+     "in band": 4,
+     "no quote or spread too wide": 363,
+     "not active": 751,
+     "outside the band": 61,
+     "outside the entry window": 10603
     }
    },
    "picks": [
@@ -198,22 +198,50 @@
      "side": "no",
      "status": "open",
      "title": "Above 70"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-20T03:59:00Z",
+     "detail": "NO 0.95 \u00b7 endgame",
+     "event": "KXNETFLIXRANKSHOWRUNNERUP-26OCT19",
+     "id": "KXNETFLIXRANKSHOWRUNNERUP-26OCT19-EAS",
+     "logged": "2026-10-19T14:00:15.293239+00:00",
+     "name": "#2 US Netflix Show this week?",
+     "price": 0.95,
+     "series": "KXNETFLIXRANKSHOWRUNNERUP",
+     "side": "no",
+     "status": "open",
+     "title": "East of Eden: Limited Series"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-20T14:00:00Z",
+     "detail": "NO 0.90 \u00b7 endgame",
+     "event": "KXYTVIEWSW-BAD26OCT18",
+     "id": "KXYTVIEWSW-BAD26OCT18-28.0M",
+     "logged": "2026-10-19T14:00:15.293239+00:00",
+     "name": "Bad Bunny: Highest daily view count (October 12, 2026 - October 18, 2026)",
+     "price": 0.9,
+     "series": "KXYTVIEWSW",
+     "side": "no",
+     "status": "open",
+     "title": "Above 28M"
     }
    ]
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-19T13:00:14.118390+00:00",
-   "last_success": "2026-10-19T13:00:14.118390+00:00",
+   "last_run": "2026-10-19T14:00:15.293239+00:00",
+   "last_success": "2026-10-19T14:00:15.293239+00:00",
    "observations": {
-    "at": "2026-10-19T13:00:14.118390+00:00",
-    "events": 853,
+    "at": "2026-10-19T14:00:15.293239+00:00",
+    "events": 848,
     "reasons": {
      "in band": 1,
-     "no quote or spread too wide": 348,
-     "not active": 722,
-     "outside the band": 89,
-     "outside the entry window": 10729
+     "no quote or spread too wide": 347,
+     "not active": 751,
+     "outside the band": 90,
+     "outside the entry window": 10593
     }
    },
    "picks": [
@@ -381,14 +409,13 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-19T13:00:14.118390+00:00",
-   "last_success": "2026-10-19T13:00:14.118390+00:00",
+   "last_run": "2026-10-19T14:00:15.293239+00:00",
+   "last_success": "2026-10-19T14:00:15.293239+00:00",
    "observations": {
-    "at": "2026-10-19T13:00:14.118390+00:00",
-    "events": 853,
+    "at": "2026-10-19T14:00:15.293239+00:00",
+    "events": 848,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 24,
-     "closes within 6h": 21,
      "edge 5c+": 8,
      "edge under 5c": 2,
      "no quote or spread too wide": 29
@@ -834,14 +861,13 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-19T13:00:14.118390+00:00",
-   "last_success": "2026-10-19T13:00:14.118390+00:00",
+   "last_run": "2026-10-19T14:00:15.293239+00:00",
+   "last_success": "2026-10-19T14:00:15.293239+00:00",
    "observations": {
-    "at": "2026-10-19T13:00:14.118390+00:00",
-    "events": 853,
+    "at": "2026-10-19T14:00:15.293239+00:00",
+    "events": 848,
     "reasons": {
-     "edge 5c+": 5,
-     "edge under 5c": 3,
+     "edge 5c+": 4,
      "under 20 reviews counted": 11
     }
    },
