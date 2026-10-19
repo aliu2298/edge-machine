@@ -1,0 +1,128 @@
+{
+ "last_run": "2026-10-19T01:18:08.459606+00:00",
+ "nights": [
+  {
+   "anchor": "ct_2000",
+   "anchor_at": "2026-10-19T01:00:00+00:00",
+   "entry_at": "2026-10-19T01:03:00+00:00",
+   "entry_book": {
+    "ask": 4192.7,
+    "ask_size": 2.0,
+    "at": "2026-10-19T01:03:04.347086Z",
+    "bid": 4192.4,
+    "bid_size": 6.0
+   },
+   "entry_late": false,
+   "entry_px": 4193.1,
+   "entry_spread_bp": 0.716,
+   "exit_at": "2026-10-19T01:18:00+00:00",
+   "exit_book": {
+    "ask": 4194.6,
+    "ask_size": 34.0,
+    "at": "2026-10-19T01:18:02.876841Z",
+    "bid": 4194.1,
+    "bid_size": 10.0
+   },
+   "exit_carried": true,
+   "exit_px": 4190.9,
+   "exit_spread_bp": 1.192,
+   "fill_in": 4192.4,
+   "fill_out": 4194.6,
+   "gross_bp": 5.247,
+   "gross_usd": 2.2,
+   "id": "A:ct_2000:2026-10-18",
+   "net_bp": -5.724,
+   "net_usd": -2.4,
+   "night": "2026-10-18",
+   "product": "GOL-25NOV26-CDE",
+   "range_high": 4197.9,
+   "range_low": 4192.1,
+   "settled_at": "2026-10-19T01:18:03.229249+00:00",
+   "shadow": false,
+   "side": "short",
+   "signal_at": "2026-10-19T01:02:00+00:00",
+   "status": "settled",
+   "variant": "A"
+  },
+  {
+   "anchor": "utc_0100",
+   "anchor_at": "2026-10-19T01:00:00+00:00",
+   "entry_at": "2026-10-19T01:03:00+00:00",
+   "entry_book": {
+    "ask": 4192.7,
+    "ask_size": 2.0,
+    "at": "2026-10-19T01:03:04.347086Z",
+    "bid": 4192.4,
+    "bid_size": 6.0
+   },
+   "entry_late": false,
+   "entry_px": 4193.1,
+   "entry_spread_bp": 0.716,
+   "exit_at": "2026-10-19T01:18:00+00:00",
+   "exit_book": {
+    "ask": 4194.6,
+    "ask_size": 34.0,
+    "at": "2026-10-19T01:18:02.876841Z",
+    "bid": 4194.1,
+    "bid_size": 10.0
+   },
+   "exit_carried": true,
+   "exit_px": 4190.9,
+   "exit_spread_bp": 1.192,
+   "fill_in": 4192.4,
+   "fill_out": 4194.6,
+   "gross_bp": 5.247,
+   "gross_usd": 2.2,
+   "id": "A:utc_0100:2026-10-18",
+   "net_bp": -5.724,
+   "net_usd": -2.4,
+   "night": "2026-10-18",
+   "product": "GOL-25NOV26-CDE",
+   "range_high": 4197.9,
+   "range_low": 4192.1,
+   "settled_at": "2026-10-19T01:18:03.229249+00:00",
+   "shadow": true,
+   "side": "short",
+   "signal_at": "2026-10-19T01:02:00+00:00",
+   "status": "settled",
+   "variant": "A"
+  },
+  {
+   "anchor": "ct_2000",
+   "anchor_at": "2026-10-19T01:00:00+00:00",
+   "id": "B:ct_2000:2026-10-18",
+   "night": "2026-10-18",
+   "product": "GOL-25NOV26-CDE",
+   "settled_at": "2026-10-19T01:02:01.323701+00:00",
+   "shadow": false,
+   "status": "no_range",
+   "variant": "B"
+  },
+  {
+   "anchor": "utc_0100",
+   "anchor_at": "2026-10-19T01:00:00+00:00",
+   "id": "B:utc_0100:2026-10-18",
+   "night": "2026-10-18",
+   "product": "GOL-25NOV26-CDE",
+   "settled_at": "2026-10-19T01:02:01.323701+00:00",
+   "shadow": true,
+   "status": "no_range",
+   "variant": "B"
+  }
+ ],
+ "runs": [
+  {
+   "at": "2026-10-19T00:54:02.680010+00:00",
+   "night": "2026-10-18",
+   "product": "GOL-25NOV26-CDE",
+   "read_errors": 1,
+   "statuses": {
+    "A:ct_2000": "settled",
+    "A:utc_0100": "settled",
+    "B:ct_2000": "no_range",
+    "B:utc_0100": "no_range"
+   }
+  }
+ ],
+ "version": "gold-orb-v2"
+}
