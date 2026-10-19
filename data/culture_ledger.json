@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-19T17:00:15.680945+00:00",
-   "last_success": "2026-10-19T17:00:15.680945+00:00",
+   "last_run": "2026-10-19T17:46:35.723852+00:00",
+   "last_success": "2026-10-19T17:46:35.723852+00:00",
    "observations": {
-    "at": "2026-10-19T17:00:15.680945+00:00",
-    "events": 855,
+    "at": "2026-10-19T17:46:35.723852+00:00",
+    "events": 856,
     "reasons": {
-     "in band": 6,
-     "no quote or spread too wide": 369,
-     "not active": 671,
-     "outside the band": 53,
-     "outside the entry window": 10671
+     "in band": 3,
+     "no quote or spread too wide": 371,
+     "not active": 676,
+     "outside the band": 54,
+     "outside the entry window": 10685
     }
    },
    "picks": [
@@ -126,10 +126,13 @@
      "id": "KXTRUMPSAY-26OCT19-TDS",
      "logged": "2026-10-18T14:00:13.846021+00:00",
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.91,
+     "profit": 9.2,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-19T17:46:35.723852+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "TDS / Trump Derangement Syndrome"
     },
     {
@@ -327,16 +330,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-19T17:00:15.680945+00:00",
-   "last_success": "2026-10-19T17:00:15.680945+00:00",
+   "last_run": "2026-10-19T17:46:35.723852+00:00",
+   "last_success": "2026-10-19T17:46:35.723852+00:00",
    "observations": {
-    "at": "2026-10-19T17:00:15.680945+00:00",
-    "events": 855,
+    "at": "2026-10-19T17:46:35.723852+00:00",
+    "events": 856,
     "reasons": {
-     "no quote or spread too wide": 350,
-     "not active": 671,
-     "outside the band": 88,
-     "outside the entry window": 10661
+     "no quote or spread too wide": 357,
+     "not active": 676,
+     "outside the band": 81,
+     "outside the entry window": 10675
     }
    },
    "picks": [
@@ -522,16 +525,15 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-19T17:00:15.680945+00:00",
-   "last_success": "2026-10-19T17:00:15.680945+00:00",
+   "last_run": "2026-10-19T17:46:35.723852+00:00",
+   "last_success": "2026-10-19T17:46:35.723852+00:00",
    "observations": {
-    "at": "2026-10-19T17:00:15.680945+00:00",
-    "events": 855,
+    "at": "2026-10-19T17:46:35.723852+00:00",
+    "events": 856,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 33,
+     "already near-certain (under 10c or over 90c)": 29,
      "edge 5c+": 7,
-     "edge under 5c": 3,
-     "no quote or spread too wide": 58
+     "no quote or spread too wide": 63
     }
    },
    "picks": [
@@ -593,10 +595,13 @@
      "logged": "2026-10-17T01:53:04.858915+00:00",
      "model": 0.0296,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.83,
+     "profit": 19.07,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-19T17:46:35.723852+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Ceasefire"
     },
     {
@@ -609,10 +614,13 @@
      "logged": "2026-10-17T01:53:04.858915+00:00",
      "model": 0.0,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.92,
+     "profit": 8.09,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-19T17:46:35.723852+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Lisa Cook"
     },
     {
@@ -692,10 +700,13 @@
      "logged": "2026-10-17T07:00:12.848136+00:00",
      "model": 0.1312,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.64,
+     "profit": 52.41,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-19T17:46:35.723852+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "TDS / Trump Derangement Syndrome"
     },
     {
@@ -708,10 +719,13 @@
      "logged": "2026-10-17T07:00:12.848136+00:00",
      "model": 0.0,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.47,
+     "profit": 105.15,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-19T17:46:35.723852+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Zacharia"
     },
     {
@@ -788,10 +802,13 @@
      "logged": "2026-10-17T18:00:13.575689+00:00",
      "model": 0.0432,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.88,
+     "profit": 12.69,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-19T17:46:35.723852+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Zohran / Mamdani"
     },
     {
@@ -804,10 +821,13 @@
      "logged": "2026-10-17T19:00:13.008748+00:00",
      "model": 0.0631,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.87,
+     "profit": 13.91,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-19T17:46:35.723852+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Third Term"
     },
     {
@@ -884,10 +904,13 @@
      "logged": "2026-10-18T13:00:14.205537+00:00",
      "model": 0.0619,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.88,
+     "profit": 12.69,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-19T17:46:35.723852+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Stupid Question"
     },
     {
@@ -1054,11 +1077,11 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-19T17:00:15.680945+00:00",
-   "last_success": "2026-10-19T17:00:15.680945+00:00",
+   "last_run": "2026-10-19T17:46:35.723852+00:00",
+   "last_success": "2026-10-19T17:46:35.723852+00:00",
    "observations": {
-    "at": "2026-10-19T17:00:15.680945+00:00",
-    "events": 855,
+    "at": "2026-10-19T17:46:35.723852+00:00",
+    "events": 856,
     "reasons": {
      "edge 5c+": 4,
      "under 20 reviews counted": 11
