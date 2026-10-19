@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-19T02:29:03+00:00",
+ "board_built_at": "2026-10-19T05:47:11+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -1186,6 +1186,41 @@
    "sandbox_quote": "crypto_fav_band:KXETHD-26OCT1617-T2379.99",
    "source": "crypto_fav_band",
    "sport": "crypto_fav",
+   "status": "hit"
+  },
+  "2026-10-16|KXWTI-26OCT1614-T94.99|Above $94.99 at the close \u00b7 Commodities favourite band": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-10-16",
+   "edge_at_log": null,
+   "first_seen": "2026-10-16",
+   "headline": "Above $94.99 at the close",
+   "home": null,
+   "id": "2026-10-16|KXWTI-26OCT1614-T94.99|Above $94.99 at the close \u00b7 Commodities favourite band",
+   "kickoff": "2026-10-16T18:30Z",
+   "lane": "production",
+   "league": "Commodities \u00b7 Favourite band",
+   "match": "WTI crude close on Oct 16, 2026",
+   "pair": "commod_fav_band|commodities_fav",
+   "price_at_log": 0.8,
+   "published_at": "2026-10-19T05:47:11+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Above $94.99 at the close",
+    "event": "KXWTI-26OCT1614",
+    "market": "KXWTI-26OCT1614-T94.99",
+    "outcome": "Above $94.99",
+    "outcome_side": "yes",
+    "price_at_log": 0.8,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "commod_fav_band:KXWTI-26OCT1614-T94.99",
+   "source": "commod_fav_band",
+   "sport": "commodities_fav",
    "status": "hit"
   },
   "2026-10-17|1. FC Union Berlin|Borussia Dortmund|Borussia Dortmund to score 2+ \u00b7 Team scores 2+ form rule": {
@@ -3430,6 +3465,41 @@
    "sport": "soccer",
    "status": "miss"
   },
+  "2026-10-19|Cowboys|Packers|Cowboys to win \u00b7 ESPN FPI / Matchup Predictor": {
+   "away": "Packers",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-10-19",
+   "edge_at_log": 0.0505,
+   "first_seen": "2026-10-16",
+   "headline": "Cowboys to win",
+   "home": "Cowboys",
+   "id": "2026-10-19|Cowboys|Packers|Cowboys to win \u00b7 ESPN FPI / Matchup Predictor",
+   "kickoff": "2026-10-19T00:20Z",
+   "lane": "production",
+   "league": "NFL",
+   "match": "Cowboys v Packers",
+   "model_prob": 0.523,
+   "pair": "espn_fpi|nfl",
+   "price_at_log": 0.4725,
+   "published_at": "2026-10-19T05:47:11+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Cowboys to win",
+    "market": "aec-nfl-dal-gb-2026-10-18",
+    "outcome": "Cowboys",
+    "outcome_side": "yes",
+    "price_at_log": 0.4725,
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "espn_fpi:aec-nfl-dal-gb-2026-10-18",
+   "source": "espn_fpi",
+   "sport": "nfl",
+   "status": "miss"
+  },
   "2026-10-19|Parma|Torino|Torino to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
    "away": "Torino",
    "bet": {
@@ -3446,7 +3516,7 @@
    "kickoff": "2026-10-19T18:45Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T02:29:03+00:00",
+   "last_seen_at": "2026-10-19T05:47:11+00:00",
    "league": "Serie A",
    "match": "Parma v Torino",
    "pair": "team2_ranked|soccer_team2",
@@ -3483,7 +3553,7 @@
    "kickoff": "2026-10-20T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T02:29:03+00:00",
+   "last_seen_at": "2026-10-19T05:47:11+00:00",
    "league": "NFL",
    "match": "Commanders v 49ers",
    "model_prob": 0.86,
@@ -3520,7 +3590,7 @@
    "kickoff": "2026-10-22T16:45Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T02:29:03+00:00",
+   "last_seen_at": "2026-10-19T05:47:11+00:00",
    "league": "Europa League",
    "match": "Juventus v Stade Rennais",
    "pair": "o15_ranked|soccer_o15",
@@ -3557,7 +3627,7 @@
    "kickoff": "2026-10-22T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T02:29:03+00:00",
+   "last_seen_at": "2026-10-19T05:47:11+00:00",
    "league": "Europa League",
    "match": "Olympiacos v Sparta Prague",
    "pair": "o15_ranked|soccer_o15",
@@ -3594,7 +3664,7 @@
    "kickoff": "2026-10-23T18:00Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T02:29:03+00:00",
+   "last_seen_at": "2026-10-19T05:47:11+00:00",
    "league": "Eredivisie",
    "match": "GA Eagles v Telstar",
    "pair": "ere_draw|soccer",
@@ -3631,7 +3701,7 @@
    "kickoff": "2026-10-23T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T02:29:03+00:00",
+   "last_seen_at": "2026-10-19T05:47:11+00:00",
    "league": "NFL",
    "match": "Patriots v Bears",
    "model_prob": 0.436,
@@ -3687,18 +3757,18 @@
    "ready_at": "2026-10-09T04:31:34+00:00",
    "route": "moved by hand on 2026-10-09",
    "routing": {
-    "leads": 10,
+    "leads": 11,
     "problem": null,
-    "routed": 10,
+    "routed": 11,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": 0.0931,
-   "sandbox_n": 4,
-   "sandbox_roi": 0.3365,
-   "sandbox_roi_fee": 0.3134,
+   "sandbox_clv": 0.1125,
+   "sandbox_n": 5,
+   "sandbox_roi": 0.3192,
+   "sandbox_roi_fee": 0.2972,
    "timing": {
     "late": [],
     "timed": 4,
@@ -3837,18 +3907,18 @@
    "ready_at": "2026-10-16T17:17:38+00:00",
    "route": "moved by hand on 2026-10-16",
    "routing": {
-    "leads": 8,
+    "leads": 9,
     "problem": null,
-    "routed": 8,
+    "routed": 9,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": 0.0071,
-   "sandbox_n": 6,
-   "sandbox_roi": 0.0878,
-   "sandbox_roi_fee": 0.0632,
+   "sandbox_clv": 0.0118,
+   "sandbox_n": 7,
+   "sandbox_roi": -0.0676,
+   "sandbox_roi_fee": -0.0887,
    "timing": {
     "late": [],
     "timed": 2,
@@ -4274,5 +4344,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-19T02:29:03+00:00"
+ "updated_at": "2026-10-19T05:47:11+00:00"
 }
