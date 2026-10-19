@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-19T18:34:43+00:00",
+ "board_built_at": "2026-10-19T21:31:46+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -31,112 +31,6 @@
  "first_publish_min": 45,
  "late_publication_skipped": 7,
  "leads": {
-  "2026-10-12|FC Famalicao|Alverca|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
-   "away": "Alverca",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-12",
-   "edge_at_log": null,
-   "first_seen": "2026-10-09",
-   "headline": "Over 1.5 goals",
-   "home": "FC Famalicao",
-   "id": "2026-10-12|FC Famalicao|Alverca|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
-   "kickoff": "2026-10-12T19:15Z",
-   "lane": "production",
-   "league": "Primeira Liga",
-   "match": "FC Famalicao v Alverca",
-   "pair": "o15_ranked|soccer_o15",
-   "price_at_log": 0.75,
-   "published_at": "2026-10-09T21:21:29+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 4193,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXLIGAPORTUGALTOTAL-26OCT12FAMALV",
-    "market": "KXLIGAPORTUGALTOTAL-26OCT12FAMALV-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.75,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_ranked:KXLIGAPORTUGALTOTAL-26OCT12FAMALV-2",
-   "source": "o15_ranked",
-   "sport": "soccer_o15",
-   "status": "hit"
-  },
-  "2026-10-12|FC Famalicao|Alverca|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
-   "away": "Alverca",
-   "bet": {
-    "kind": "total_lte",
-    "n": 3
-   },
-   "date": "2026-10-12",
-   "edge_at_log": null,
-   "first_seen": "2026-10-09",
-   "headline": "Under 3.5 goals",
-   "home": "FC Famalicao",
-   "id": "2026-10-12|FC Famalicao|Alverca|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
-   "kickoff": "2026-10-12T19:15Z",
-   "lane": "production",
-   "league": "Primeira Liga",
-   "match": "FC Famalicao v Alverca",
-   "pair": "u35_low_scoring|soccer_u35",
-   "price_at_log": 0.76,
-   "published_at": "2026-10-09T21:21:29+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 4193,
-   "route": {
-    "claim": "Under 3.5 goals",
-    "event": "KXLIGAPORTUGALTOTAL-26OCT12FAMALV",
-    "market": "KXLIGAPORTUGALTOTAL-26OCT12FAMALV-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "no",
-    "price_at_log": 0.76,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "u35_low_scoring:KXLIGAPORTUGALTOTAL-26OCT12FAMALV-4",
-   "source": "u35_low_scoring",
-   "sport": "soccer_u35",
-   "status": "miss"
-  },
-  "2026-10-12|Levante|Sevilla|Sevilla to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
-   "away": "Sevilla",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "Sevilla"
-   },
-   "date": "2026-10-12",
-   "edge_at_log": null,
-   "first_seen": "2026-10-12",
-   "headline": "Sevilla to score 2+",
-   "home": "Levante",
-   "id": "2026-10-12|Levante|Sevilla|Sevilla to score 2+ \u00b7 Favourite to score 2+, ranked by margin",
-   "kickoff": "2026-10-12T19:00Z",
-   "lane": "production",
-   "league": "La Liga",
-   "match": "Levante v Sevilla",
-   "pair": "team2_ranked|soccer_team2",
-   "price_at_log": 0.33,
-   "published_at": "2026-10-12T17:49:35+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 70,
-   "route": {
-    "claim": "Sevilla to score 2+",
-    "event": "KXLALIGATEAMTOTAL-26OCT12LEVSEV",
-    "market": "KXLALIGATEAMTOTAL-26OCT12LEVSEV-SEV2",
-    "outcome": "Sevilla over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.33,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team2_ranked:KXLALIGATEAMTOTAL-26OCT12LEVSEV-SEV2",
-   "source": "team2_ranked",
-   "sport": "soccer_team2",
-   "status": "hit"
-  },
   "2026-10-13|Arsenal|Lille|Arsenal to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
    "away": "Lille",
    "bet": {
@@ -3501,80 +3395,6 @@
    "sport": "nfl",
    "status": "miss"
   },
-  "2026-10-19|KXBTCD-26OCT1917-T81749.99|$81,750 or above at the close \u00b7 Crypto favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-19",
-   "edge_at_log": null,
-   "first_seen": "2026-10-19",
-   "headline": "$81,750 or above at the close",
-   "home": null,
-   "id": "2026-10-19|KXBTCD-26OCT1917-T81749.99|$81,750 or above at the close \u00b7 Crypto favourite band",
-   "kickoff": "2026-10-19T21:05Z",
-   "lane": "production",
-   "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:34:43+00:00",
-   "league": "Crypto \u00b7 Favourite band",
-   "match": "Bitcoin price on Oct 19, 2026",
-   "pair": "crypto_fav_band|crypto_fav",
-   "price_at_log": 0.71,
-   "published_at": "2026-10-19T18:04:19+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 180,
-   "route": {
-    "claim": "$81,750 or above at the close",
-    "event": "KXBTCD-26OCT1917",
-    "market": "KXBTCD-26OCT1917-T81749.99",
-    "outcome": "$81,750 or above",
-    "outcome_side": "yes",
-    "price_at_log": 0.71,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "crypto_fav_band:KXBTCD-26OCT1917-T81749.99",
-   "source": "crypto_fav_band",
-   "sport": "crypto_fav",
-   "status": "pending"
-  },
-  "2026-10-19|KXNATGASD-26OCT1917-T3.320|Above $3.320 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-19",
-   "edge_at_log": null,
-   "first_seen": "2026-10-19",
-   "headline": "Above $3.320 at the close",
-   "home": null,
-   "id": "2026-10-19|KXNATGASD-26OCT1917-T3.320|Above $3.320 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-10-19T21:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:34:43+00:00",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "Natural gas close on Oct 19, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.78,
-   "published_at": "2026-10-19T17:35:08+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 204,
-   "route": {
-    "claim": "Above $3.320 at the close",
-    "event": "KXNATGASD-26OCT1917",
-    "market": "KXNATGASD-26OCT1917-T3.320",
-    "outcome": "Above $3.320",
-    "outcome_side": "yes",
-    "price_at_log": 0.78,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXNATGASD-26OCT1917-T3.320",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
-   "status": "pending"
-  },
   "2026-10-19|Parma|Torino|Torino to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
    "away": "Torino",
    "bet": {
@@ -3590,8 +3410,6 @@
    "id": "2026-10-19|Parma|Torino|Torino to score 2+ \u00b7 Favourite to score 2+, ranked by margin",
    "kickoff": "2026-10-19T18:45Z",
    "lane": "production",
-   "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:34:43+00:00",
    "league": "Serie A",
    "match": "Parma v Torino",
    "pair": "team2_ranked|soccer_team2",
@@ -3611,7 +3429,7 @@
    "sandbox_quote": "team2_ranked:KXSERIEATEAMTOTAL-26OCT19PARTOR-TOR2",
    "source": "team2_ranked",
    "sport": "soccer_team2",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-19|Tottenham Hotspur|Coventry City|7+ corners \u00b7 Tottenham Hotspur \u00b7 Corners team fade": {
    "away": "Coventry City",
@@ -3628,8 +3446,6 @@
    "id": "2026-10-19|Tottenham Hotspur|Coventry City|7+ corners \u00b7 Tottenham Hotspur \u00b7 Corners team fade",
    "kickoff": "2026-10-19T19:00Z",
    "lane": "production",
-   "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:34:43+00:00",
    "league": "Premier League",
    "match": "Tottenham Hotspur v Coventry City",
    "pair": "corners_team_fade|soccer_corners",
@@ -3649,7 +3465,7 @@
    "sandbox_quote": "corners_team_fade:KXEPLTCORNERS-26OCT19TOTCOV-TOT7",
    "source": "corners_team_fade",
    "sport": "soccer_corners",
-   "status": "pending"
+   "status": "miss"
   },
   "2026-10-19|Tottenham|Coventry|Coventry not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge": {
    "away": "Coventry",
@@ -3665,8 +3481,6 @@
    "id": "2026-10-19|Tottenham|Coventry|Coventry not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge",
    "kickoff": "2026-10-19T19:00Z",
    "lane": "production",
-   "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:34:43+00:00",
    "league": "Premier League",
    "match": "Tottenham v Coventry",
    "pair": "ftts_no_70_80|soccer_ftts",
@@ -3686,7 +3500,7 @@
    "sandbox_quote": "ftts_no_70_80:KXEPLFTTS-26OCT19TOTCOV-COV",
    "source": "ftts_no_70_80",
    "sport": "soccer_ftts",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-20|Al Diriyah|Al Riyadh|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Al Riyadh",
@@ -3703,7 +3517,7 @@
    "kickoff": "2026-10-20T15:00Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:34:43+00:00",
+   "last_seen_at": "2026-10-19T21:31:46+00:00",
    "league": "Saudi Pro League",
    "match": "Al Diriyah v Al Riyadh",
    "pair": "o15_ranked|soccer_o15",
@@ -3740,7 +3554,7 @@
    "kickoff": "2026-10-20T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:34:43+00:00",
+   "last_seen_at": "2026-10-19T21:31:46+00:00",
    "league": "NFL",
    "match": "Commanders v 49ers",
    "model_prob": 0.86,
@@ -3777,7 +3591,7 @@
    "kickoff": "2026-10-22T16:45Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:34:43+00:00",
+   "last_seen_at": "2026-10-19T21:31:46+00:00",
    "league": "Europa League",
    "match": "Juventus v Stade Rennais",
    "pair": "o15_ranked|soccer_o15",
@@ -3814,7 +3628,7 @@
    "kickoff": "2026-10-22T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:34:43+00:00",
+   "last_seen_at": "2026-10-19T21:31:46+00:00",
    "league": "Europa League",
    "match": "Olympiacos v Sparta Prague",
    "pair": "o15_ranked|soccer_o15",
@@ -3836,6 +3650,42 @@
    "sport": "soccer_o15",
    "status": "pending"
   },
+  "2026-10-23|Alav\u00e9s|M\u00e1laga|Both teams to score \u00b7 La Liga BTTS in balanced matches": {
+   "away": "M\u00e1laga",
+   "bet": {
+    "kind": "btts"
+   },
+   "date": "2026-10-23",
+   "edge_at_log": null,
+   "first_seen": "2026-10-19",
+   "headline": "Both teams to score",
+   "home": "Alav\u00e9s",
+   "id": "2026-10-23|Alav\u00e9s|M\u00e1laga|Both teams to score \u00b7 La Liga BTTS in balanced matches",
+   "kickoff": "2026-10-23T19:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-19",
+   "last_seen_at": "2026-10-19T21:31:46+00:00",
+   "league": "La Liga",
+   "match": "Alav\u00e9s v M\u00e1laga",
+   "pair": "liga_btts_even|soccer_btts",
+   "price_at_log": 0.5,
+   "published_at": "2026-10-19T21:31:46+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5608,
+   "route": {
+    "claim": "Both teams to score",
+    "event": "KXLALIGABTTS-26OCT23ALAMCF",
+    "market": "KXLALIGABTTS-26OCT23ALAMCF-BTTS",
+    "outcome": "Both Teams To Score",
+    "outcome_side": "yes",
+    "price_at_log": 0.5,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "liga_btts_even:KXLALIGABTTS-26OCT23ALAMCF-BTTS",
+   "source": "liga_btts_even",
+   "sport": "soccer_btts",
+   "status": "pending"
+  },
   "2026-10-23|GA Eagles|Telstar|Draw \u00b7 Eredivisie draw band": {
    "away": "Telstar",
    "bet": {
@@ -3851,7 +3701,7 @@
    "kickoff": "2026-10-23T18:00Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:34:43+00:00",
+   "last_seen_at": "2026-10-19T21:31:46+00:00",
    "league": "Eredivisie",
    "match": "GA Eagles v Telstar",
    "pair": "ere_draw|soccer",
@@ -3888,7 +3738,7 @@
    "kickoff": "2026-10-23T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:34:43+00:00",
+   "last_seen_at": "2026-10-19T21:31:46+00:00",
    "league": "NFL",
    "match": "Patriots v Bears",
    "model_prob": 0.436,
@@ -3925,7 +3775,7 @@
    "kickoff": "2026-10-23T18:30Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T18:34:43+00:00",
+   "last_seen_at": "2026-10-19T21:31:46+00:00",
    "league": "Bundesliga",
    "match": "VfB Stuttgart v Borussia M\u00f6nchengladbach",
    "pair": "bund_o35|soccer_u35",
@@ -3981,9 +3831,9 @@
    "ready_at": "2026-10-09T04:31:34+00:00",
    "route": "moved by hand on 2026-10-09",
    "routing": {
-    "leads": 12,
+    "leads": 11,
     "problem": null,
-    "routed": 12,
+    "routed": 11,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -3995,7 +3845,7 @@
    "sandbox_roi_fee": 0.2972,
    "timing": {
     "late": [],
-    "timed": 5,
+    "timed": 4,
     "under_target": 0
    }
   },
@@ -4014,10 +3864,10 @@
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": -0.0017,
-   "sandbox_n": 6,
-   "sandbox_roi": -0.25,
-   "sandbox_roi_fee": -0.2781,
+   "sandbox_clv": -0.0,
+   "sandbox_n": 7,
+   "sandbox_roi": -0.3571,
+   "sandbox_roi_fee": -0.3812,
    "timing": {
     "late": [],
     "timed": 2,
@@ -4081,9 +3931,9 @@
    "ready_at": "2026-10-08T17:50:08+00:00",
    "route": "moved by hand on 2026-10-08",
    "routing": {
-    "leads": 9,
+    "leads": 8,
     "problem": null,
-    "routed": 9,
+    "routed": 8,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -4095,7 +3945,7 @@
    "sandbox_roi_fee": -0.1445,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 0,
     "under_target": 0
    }
   },
@@ -4164,10 +4014,10 @@
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": 0.02,
-   "sandbox_n": 1,
-   "sandbox_roi": 0.3514,
-   "sandbox_roi_fee": 0.3272,
+   "sandbox_clv": 0.005,
+   "sandbox_n": 2,
+   "sandbox_roi": 0.3701,
+   "sandbox_roi_fee": 0.3447,
    "timing": {
     "late": [],
     "timed": 1,
@@ -4181,9 +4031,9 @@
    "ready_at": "2026-10-08T17:50:08+00:00",
    "route": "moved by hand on 2026-10-08",
    "routing": {
-    "leads": 0,
+    "leads": 1,
     "problem": null,
-    "routed": 0,
+    "routed": 1,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -4195,7 +4045,7 @@
    "sandbox_roi_fee": 0.7941,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -4231,9 +4081,9 @@
    "ready_at": "2026-10-08T17:50:08+00:00",
    "route": "moved by hand on 2026-10-08",
    "routing": {
-    "leads": 12,
+    "leads": 11,
     "problem": null,
-    "routed": 12,
+    "routed": 11,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -4245,7 +4095,7 @@
    "sandbox_roi_fee": 0.0364,
    "timing": {
     "late": [],
-    "timed": 6,
+    "timed": 5,
     "under_target": 0
    }
   },
@@ -4356,18 +4206,18 @@
    "ready_at": "2026-10-11T19:34:45+00:00",
    "route": "moved by hand on 2026-10-11",
    "routing": {
-    "leads": 7,
+    "leads": 6,
     "problem": null,
-    "routed": 7,
+    "routed": 6,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": 0.0017,
-   "sandbox_n": 6,
-   "sandbox_roi": 0.3957,
-   "sandbox_roi_fee": 0.3467,
+   "sandbox_clv": -0.0,
+   "sandbox_n": 7,
+   "sandbox_roi": 0.5723,
+   "sandbox_roi_fee": 0.5146,
    "timing": {
     "late": [
      {
@@ -4379,7 +4229,7 @@
       "minutes": 26
      }
     ],
-    "timed": 3,
+    "timed": 2,
     "under_target": 1
    }
   },
@@ -4465,9 +4315,9 @@
    "ready_at": "2026-10-11T19:34:45+00:00",
    "route": "moved by hand on 2026-10-11",
    "routing": {
-    "leads": 10,
+    "leads": 9,
     "problem": null,
-    "routed": 10,
+    "routed": 9,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -4479,7 +4329,7 @@
    "sandbox_roi_fee": 0.0032,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 0,
     "under_target": 0
    }
   },
@@ -4577,5 +4427,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-19T18:34:43+00:00"
+ "updated_at": "2026-10-19T21:31:46+00:00"
 }
