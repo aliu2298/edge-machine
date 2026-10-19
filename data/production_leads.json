@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-19T14:04:30+00:00",
+ "board_built_at": "2026-10-19T14:34:57+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -28,7 +28,7 @@
   "kalshi:26OCT18RMASEV": "2026-10-18|Real Madrid|Sevilla|Under 10 corners \u00b7 Corners total under"
  },
  "first_publish_min": 45,
- "late_publication_skipped": 6,
+ "late_publication_skipped": 7,
  "leads": {
   "2026-10-12|FC Famalicao|Alverca|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Alverca",
@@ -3516,7 +3516,7 @@
    "kickoff": "2026-10-19T18:45Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T14:04:30+00:00",
+   "last_seen_at": "2026-10-19T14:34:57+00:00",
    "league": "Serie A",
    "match": "Parma v Torino",
    "pair": "team2_ranked|soccer_team2",
@@ -3553,7 +3553,7 @@
    "kickoff": "2026-10-19T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T14:04:30+00:00",
+   "last_seen_at": "2026-10-19T14:34:57+00:00",
    "league": "Premier League",
    "match": "Tottenham v Coventry",
    "pair": "ftts_no_70_80|soccer_ftts",
@@ -3590,7 +3590,7 @@
    "kickoff": "2026-10-20T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T14:04:30+00:00",
+   "last_seen_at": "2026-10-19T14:34:57+00:00",
    "league": "NFL",
    "match": "Commanders v 49ers",
    "model_prob": 0.86,
@@ -3627,7 +3627,7 @@
    "kickoff": "2026-10-22T16:45Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T14:04:30+00:00",
+   "last_seen_at": "2026-10-19T14:34:57+00:00",
    "league": "Europa League",
    "match": "Juventus v Stade Rennais",
    "pair": "o15_ranked|soccer_o15",
@@ -3664,7 +3664,7 @@
    "kickoff": "2026-10-22T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T14:04:30+00:00",
+   "last_seen_at": "2026-10-19T14:34:57+00:00",
    "league": "Europa League",
    "match": "Olympiacos v Sparta Prague",
    "pair": "o15_ranked|soccer_o15",
@@ -3701,7 +3701,7 @@
    "kickoff": "2026-10-23T18:00Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T14:04:30+00:00",
+   "last_seen_at": "2026-10-19T14:34:57+00:00",
    "league": "Eredivisie",
    "match": "GA Eagles v Telstar",
    "pair": "ere_draw|soccer",
@@ -3738,7 +3738,7 @@
    "kickoff": "2026-10-23T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-19",
-   "last_seen_at": "2026-10-19T14:04:30+00:00",
+   "last_seen_at": "2026-10-19T14:34:57+00:00",
    "league": "NFL",
    "match": "Patriots v Bears",
    "model_prob": 0.436,
@@ -4376,10 +4376,19 @@
    "pair": "o25_congestion|soccer_o25",
    "reason": "less than 45 minutes left at first publication",
    "withheld_at": "2026-10-18T15:11:30+00:00"
+  },
+  "2026-10-19|Al Fayha|Al Ahli|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
+   "headline": "Over 1.5 goals",
+   "id": "2026-10-19|Al Fayha|Al Ahli|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
+   "kickoff": "2026-10-19T15:05Z",
+   "match": "Al Fayha v Al Ahli",
+   "pair": "o15_ranked|soccer_o15",
+   "reason": "less than 45 minutes left at first publication",
+   "withheld_at": "2026-10-19T14:34:57+00:00"
   }
  },
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-19T14:04:30+00:00"
+ "updated_at": "2026-10-19T14:34:57+00:00"
 }
