@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-19T14:00:15.293239+00:00",
-   "last_success": "2026-10-19T14:00:15.293239+00:00",
+   "last_run": "2026-10-19T15:00:17.989052+00:00",
+   "last_success": "2026-10-19T15:00:17.989052+00:00",
    "observations": {
-    "at": "2026-10-19T14:00:15.293239+00:00",
-    "events": 848,
+    "at": "2026-10-19T15:00:17.989052+00:00",
+    "events": 840,
     "reasons": {
-     "in band": 4,
-     "no quote or spread too wide": 363,
-     "not active": 751,
-     "outside the band": 61,
-     "outside the entry window": 10603
+     "in band": 5,
+     "no quote or spread too wide": 365,
+     "not active": 707,
+     "outside the band": 58,
+     "outside the entry window": 10430
     }
    },
    "picks": [
@@ -226,22 +226,50 @@
      "side": "no",
      "status": "open",
      "title": "Above 28M"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-20T03:59:00Z",
+     "detail": "NO 0.91 \u00b7 endgame",
+     "event": "KXSTEAMTOPSELLER-26OCT20",
+     "id": "KXSTEAMTOPSELLER-26OCT20-AIO",
+     "logged": "2026-10-19T15:00:17.989052+00:00",
+     "name": "Steam: Weekly Top Seller ",
+     "price": 0.91,
+     "series": "KXSTEAMTOPSELLER",
+     "side": "no",
+     "status": "open",
+     "title": "AION 2"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-20T14:00:00Z",
+     "detail": "YES 0.97 \u00b7 endgame",
+     "event": "KXYTVIEWSW-DRA26OCT18",
+     "id": "KXYTVIEWSW-DRA26OCT18-11.25M",
+     "logged": "2026-10-19T15:00:17.989052+00:00",
+     "name": "Drake: Highest daily view count (October 12, 2026 - October 18, 2026)",
+     "price": 0.97,
+     "series": "KXYTVIEWSW",
+     "side": "yes",
+     "status": "open",
+     "title": "Above 11.25M"
     }
    ]
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-19T14:00:15.293239+00:00",
-   "last_success": "2026-10-19T14:00:15.293239+00:00",
+   "last_run": "2026-10-19T15:00:17.989052+00:00",
+   "last_success": "2026-10-19T15:00:17.989052+00:00",
    "observations": {
-    "at": "2026-10-19T14:00:15.293239+00:00",
-    "events": 848,
+    "at": "2026-10-19T15:00:17.989052+00:00",
+    "events": 840,
     "reasons": {
      "in band": 1,
-     "no quote or spread too wide": 347,
-     "not active": 751,
-     "outside the band": 90,
-     "outside the entry window": 10593
+     "no quote or spread too wide": 344,
+     "not active": 707,
+     "outside the band": 93,
+     "outside the entry window": 10420
     }
    },
    "picks": [
@@ -298,10 +326,13 @@
      "id": "KXYTTOPVIDEOG2D-26OCT17-CAS",
      "logged": "2026-10-17T15:00:12.623576+00:00",
      "name": "Runner-Up Daily Music Video Global on YouTube: Oct 17, 2026",
+     "payout": 0.0,
      "price": 0.8,
+     "profit": -100.0,
      "series": "KXYTTOPVIDEOG2D",
+     "settled": "2026-10-19T15:00:17.989052+00:00",
      "side": "no",
-     "status": "open",
+     "status": "lost",
      "title": "Casa Tupka Anthemo"
     },
     {
@@ -343,10 +374,13 @@
      "id": "KXSETLIST-VS26OCT19-HOO",
      "logged": "2026-10-18T03:00:14.015123+00:00",
      "name": "KATSEYE \u00b7 Songs performed at the Victoria's Secret Fashion Show",
+     "payout": 1.0,
      "price": 0.73,
+     "profit": 34.45,
      "series": "KXSETLIST",
+     "settled": "2026-10-19T15:00:17.989052+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Hooti Frutti"
     },
     {
@@ -409,16 +443,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-19T14:00:15.293239+00:00",
-   "last_success": "2026-10-19T14:00:15.293239+00:00",
+   "last_run": "2026-10-19T15:00:17.989052+00:00",
+   "last_success": "2026-10-19T15:00:17.989052+00:00",
    "observations": {
-    "at": "2026-10-19T14:00:15.293239+00:00",
-    "events": 848,
+    "at": "2026-10-19T15:00:17.989052+00:00",
+    "events": 840,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 24,
+     "already near-certain (under 10c or over 90c)": 27,
      "edge 5c+": 8,
      "edge under 5c": 2,
-     "no quote or spread too wide": 29
+     "no quote or spread too wide": 64
     }
    },
    "picks": [
@@ -856,16 +890,32 @@
      "side": "no",
      "status": "open",
      "title": "ChatGPT / OpenAI"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-10-26T14:00:00Z",
+     "detail": "P(said) 0.08 \u00b7 said on 1 of the last 84 days, 7.0 days left \u00b7 edge +0.12",
+     "edge": 0.1184,
+     "event": "KXTRUMPSAY-26OCT26",
+     "id": "KXTRUMPSAY-26OCT26-ANTI",
+     "logged": "2026-10-19T15:00:17.989052+00:00",
+     "model": 0.08,
+     "name": "What will Trump say this week?",
+     "price": 0.79,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "Antifa"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-19T14:00:15.293239+00:00",
-   "last_success": "2026-10-19T14:00:15.293239+00:00",
+   "last_run": "2026-10-19T15:00:17.989052+00:00",
+   "last_success": "2026-10-19T15:00:17.989052+00:00",
    "observations": {
-    "at": "2026-10-19T14:00:15.293239+00:00",
-    "events": 848,
+    "at": "2026-10-19T15:00:17.989052+00:00",
+    "events": 840,
     "reasons": {
      "edge 5c+": 4,
      "under 20 reviews counted": 11
@@ -1048,6 +1098,12 @@
     "2026-09-27"
    ]
   },
+  "Antifa": {
+   "at": "2026-10-19T15:00:17.989052+00:00",
+   "days": [
+    "2026-09-22"
+   ]
+  },
   "Australia / Australian": {
    "at": "2026-10-18T07:00:15.088415+00:00",
    "days": [
@@ -1063,7 +1119,7 @@
    ]
   },
   "Bahrain / Bahraini": {
-   "at": "2026-10-19T08:00:15.918246+00:00",
+   "at": "2026-10-19T15:00:17.989052+00:00",
    "days": [
     "2026-08-20",
     "2026-08-30",
@@ -1183,7 +1239,7 @@
    ]
   },
   "Peptide": {
-   "at": "2026-10-19T08:00:15.918246+00:00",
+   "at": "2026-10-19T15:00:17.989052+00:00",
    "days": []
   },
   "Soleimani": {
