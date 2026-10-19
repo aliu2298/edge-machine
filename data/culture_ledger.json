@@ -2,16 +2,16 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-19T09:00:14.490186+00:00",
-   "last_success": "2026-10-19T09:00:14.490186+00:00",
+   "last_run": "2026-10-19T10:00:14.067345+00:00",
+   "last_success": "2026-10-19T10:00:14.067345+00:00",
    "observations": {
-    "at": "2026-10-19T09:00:14.490186+00:00",
+    "at": "2026-10-19T10:00:14.067345+00:00",
     "events": 853,
     "reasons": {
-     "in band": 4,
-     "no quote or spread too wide": 237,
-     "not active": 729,
-     "outside the band": 71,
+     "in band": 3,
+     "no quote or spread too wide": 240,
+     "not active": 722,
+     "outside the band": 69,
      "outside the entry window": 10855
     }
    },
@@ -184,21 +184,35 @@
      "side": "no",
      "status": "open",
      "title": "Xamdam Sobirov - Peshta / \u0425\u0430\u043c\u0434\u0430\u043c \u0421\u043e\u0431\u0438\u0440\u043e\u0432 - \u041f\u0435\u0448\u0442\u0430 / Video Klip"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-19T14:00:00Z",
+     "detail": "NO 0.92 \u00b7 endgame",
+     "event": "KXRT-WHA",
+     "id": "KXRT-WHA-70",
+     "logged": "2026-10-19T10:00:14.067345+00:00",
+     "name": "Whalefall \u00b7 Rotten Tomatoes score",
+     "price": 0.92,
+     "series": "KXRT",
+     "side": "no",
+     "status": "open",
+     "title": "Above 70"
     }
    ]
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-19T09:00:14.490186+00:00",
-   "last_success": "2026-10-19T09:00:14.490186+00:00",
+   "last_run": "2026-10-19T10:00:14.067345+00:00",
+   "last_success": "2026-10-19T10:00:14.067345+00:00",
    "observations": {
-    "at": "2026-10-19T09:00:14.490186+00:00",
+    "at": "2026-10-19T10:00:14.067345+00:00",
     "events": 853,
     "reasons": {
      "in band": 1,
-     "no quote or spread too wide": 441,
-     "not active": 729,
-     "outside the band": 124,
+     "no quote or spread too wide": 445,
+     "not active": 722,
+     "outside the band": 120,
      "outside the entry window": 10601
     }
    },
@@ -367,18 +381,17 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-19T09:00:14.490186+00:00",
-   "last_success": "2026-10-19T09:00:14.490186+00:00",
+   "last_run": "2026-10-19T10:00:14.067345+00:00",
+   "last_success": "2026-10-19T10:00:14.067345+00:00",
    "observations": {
-    "at": "2026-10-19T09:00:14.490186+00:00",
+    "at": "2026-10-19T10:00:14.067345+00:00",
     "events": 853,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 24,
      "closes within 6h": 21,
-     "edge 5c+": 7,
+     "edge 5c+": 8,
      "edge under 5c": 1,
-     "no quote or spread too wide": 30,
-     "transcript search failed": 1
+     "no quote or spread too wide": 30
     }
    },
    "picks": [
@@ -789,14 +802,14 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-19T09:00:14.490186+00:00",
-   "last_success": "2026-10-19T09:00:14.490186+00:00",
+   "last_run": "2026-10-19T10:00:14.067345+00:00",
+   "last_success": "2026-10-19T10:00:14.067345+00:00",
    "observations": {
-    "at": "2026-10-19T09:00:14.490186+00:00",
+    "at": "2026-10-19T10:00:14.067345+00:00",
     "events": 853,
     "reasons": {
-     "edge 5c+": 7,
-     "edge under 5c": 1,
+     "edge 5c+": 6,
+     "edge under 5c": 2,
      "under 20 reviews counted": 11
     }
    },
@@ -965,7 +978,7 @@
  "version": "culture-v1",
  "words": {
   "Airbnb / ABNB": {
-   "at": "2026-10-19T03:00:15.440084+00:00",
+   "at": "2026-10-19T10:00:14.067345+00:00",
    "days": [
     "2026-09-29"
    ]
@@ -1026,7 +1039,7 @@
    ]
   },
   "Deere": {
-   "at": "2026-10-19T03:00:15.440084+00:00",
+   "at": "2026-10-19T10:00:14.067345+00:00",
    "days": []
   },
   "Epstein": {
@@ -1082,7 +1095,7 @@
    ]
   },
   "Peace in the Middle East": {
-   "at": "2026-10-19T02:00:12.591564+00:00",
+   "at": "2026-10-19T10:00:14.067345+00:00",
    "days": []
   },
   "Pelosi": {
