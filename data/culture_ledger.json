@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-20T01:17:47.737258+00:00",
-   "last_success": "2026-10-20T01:17:47.737258+00:00",
+   "last_run": "2026-10-20T02:00:14.206819+00:00",
+   "last_success": "2026-10-20T02:00:14.206819+00:00",
    "observations": {
-    "at": "2026-10-20T01:17:47.737258+00:00",
+    "at": "2026-10-20T02:00:14.206819+00:00",
     "events": 871,
     "reasons": {
-     "in band": 3,
+     "in band": 4,
      "no quote or spread too wide": 375,
-     "not active": 677,
-     "outside the band": 50,
-     "outside the entry window": 10933
+     "not active": 697,
+     "outside the band": 49,
+     "outside the entry window": 10913
     }
    },
    "picks": [
@@ -339,22 +339,36 @@
      "side": "yes",
      "status": "open",
      "title": "Above 15M"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-20T03:59:00Z",
+     "detail": "NO 0.91 \u00b7 endgame",
+     "event": "KXYTDAILYTOPVIDEOG-26OCT19",
+     "id": "KXYTDAILYTOPVIDEOG-26OCT19-CAS",
+     "logged": "2026-10-20T02:00:14.206819+00:00",
+     "name": "Top Daily Music Video Global on YouTube: Oct 19, 2026",
+     "price": 0.91,
+     "series": "KXYTDAILYTOPVIDEOG",
+     "side": "no",
+     "status": "open",
+     "title": "Casa Tupka Anthemo"
     }
    ]
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-20T01:17:47.737258+00:00",
-   "last_success": "2026-10-20T01:17:47.737258+00:00",
+   "last_run": "2026-10-20T02:00:14.206819+00:00",
+   "last_success": "2026-10-20T02:00:14.206819+00:00",
    "observations": {
-    "at": "2026-10-20T01:17:47.737258+00:00",
+    "at": "2026-10-20T02:00:14.206819+00:00",
     "events": 871,
     "reasons": {
      "in band": 1,
-     "no quote or spread too wide": 381,
-     "not active": 677,
-     "outside the band": 116,
-     "outside the entry window": 10863
+     "no quote or spread too wide": 222,
+     "not active": 697,
+     "outside the band": 91,
+     "outside the entry window": 11027
     }
    },
    "picks": [
@@ -582,15 +596,15 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-20T01:17:47.737258+00:00",
-   "last_success": "2026-10-20T01:17:47.737258+00:00",
+   "last_run": "2026-10-20T02:00:14.206819+00:00",
+   "last_success": "2026-10-20T02:00:14.206819+00:00",
    "observations": {
-    "at": "2026-10-20T01:17:47.737258+00:00",
+    "at": "2026-10-20T02:00:14.206819+00:00",
     "events": 871,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 40,
-     "edge 5c+": 8,
-     "no quote or spread too wide": 51
+     "edge 5c+": 10,
+     "no quote or spread too wide": 49
     }
    },
    "picks": [
@@ -1214,10 +1228,10 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-20T01:17:47.737258+00:00",
-   "last_success": "2026-10-20T01:17:47.737258+00:00",
+   "last_run": "2026-10-20T02:00:14.206819+00:00",
+   "last_success": "2026-10-20T02:00:14.206819+00:00",
    "observations": {
-    "at": "2026-10-20T01:17:47.737258+00:00",
+    "at": "2026-10-20T02:00:14.206819+00:00",
     "events": 871,
     "reasons": {
      "collecting review pace (12h of snapshots)": 1,
@@ -1681,7 +1695,7 @@
    "days": []
   },
   "Zohran / Mamdani": {
-   "at": "2026-10-19T16:00:14.057450+00:00",
+   "at": "2026-10-20T02:00:14.206819+00:00",
    "days": [
     "2026-07-29",
     "2026-08-14"
