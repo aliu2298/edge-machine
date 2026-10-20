@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-20T13:00:14.132059+00:00",
-   "last_success": "2026-10-20T13:00:14.132059+00:00",
+   "last_run": "2026-10-20T14:00:15.691314+00:00",
+   "last_success": "2026-10-20T14:00:15.691314+00:00",
    "observations": {
-    "at": "2026-10-20T13:00:14.132059+00:00",
+    "at": "2026-10-20T14:00:15.691314+00:00",
     "events": 857,
     "reasons": {
      "in band": 4,
      "no quote or spread too wide": 26,
-     "not active": 677,
+     "not active": 930,
      "outside the band": 40,
-     "outside the entry window": 11133
+     "outside the entry window": 10880
     }
    },
    "picks": [
@@ -400,16 +400,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-20T13:00:14.132059+00:00",
-   "last_success": "2026-10-20T13:00:14.132059+00:00",
+   "last_run": "2026-10-20T14:00:15.691314+00:00",
+   "last_success": "2026-10-20T14:00:15.691314+00:00",
    "observations": {
-    "at": "2026-10-20T13:00:14.132059+00:00",
+    "at": "2026-10-20T14:00:15.691314+00:00",
     "events": 857,
     "reasons": {
-     "no quote or spread too wide": 26,
-     "not active": 677,
-     "outside the band": 44,
-     "outside the entry window": 11133
+     "no quote or spread too wide": 29,
+     "not active": 930,
+     "outside the band": 54,
+     "outside the entry window": 10867
     }
    },
    "picks": [
@@ -637,16 +637,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-20T13:00:14.132059+00:00",
-   "last_success": "2026-10-20T13:00:14.132059+00:00",
+   "last_run": "2026-10-20T14:00:15.691314+00:00",
+   "last_success": "2026-10-20T14:00:15.691314+00:00",
    "observations": {
-    "at": "2026-10-20T13:00:14.132059+00:00",
+    "at": "2026-10-20T14:00:15.691314+00:00",
     "events": 857,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 42,
-     "edge 5c+": 16,
-     "edge under 5c": 5,
-     "no quote or spread too wide": 36
+     "already near-certain (under 10c or over 90c)": 33,
+     "edge 5c+": 14,
+     "edge under 5c": 6,
+     "no quote or spread too wide": 37
     }
    },
    "picks": [
@@ -1366,10 +1366,10 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-20T13:00:14.132059+00:00",
-   "last_success": "2026-10-20T13:00:14.132059+00:00",
+   "last_run": "2026-10-20T14:00:15.691314+00:00",
+   "last_success": "2026-10-20T14:00:15.691314+00:00",
    "observations": {
-    "at": "2026-10-20T13:00:14.132059+00:00",
+    "at": "2026-10-20T14:00:15.691314+00:00",
     "events": 857,
     "reasons": {
      "edge 5c+": 5,
@@ -1602,7 +1602,7 @@
    ]
   },
   "BBC": {
-   "at": "2026-10-20T08:00:14.285390+00:00",
+   "at": "2026-10-20T14:00:15.691314+00:00",
    "days": [
     "2026-08-02",
     "2026-09-18"
@@ -1621,7 +1621,7 @@
    "days": []
   },
   "Bibi / Netanyahu": {
-   "at": "2026-10-20T08:00:14.285390+00:00",
+   "at": "2026-10-20T14:00:15.691314+00:00",
    "days": [
     "2026-07-28",
     "2026-07-31",
@@ -1832,7 +1832,7 @@
    ]
   },
   "Rigged Election / Stolen Election": {
-   "at": "2026-10-20T08:00:14.285390+00:00",
+   "at": "2026-10-20T14:00:15.691314+00:00",
    "days": [
     "2026-09-12",
     "2026-09-30",
@@ -1891,7 +1891,7 @@
    ]
   },
   "Turning Point": {
-   "at": "2026-10-20T08:00:14.285390+00:00",
+   "at": "2026-10-20T14:00:15.691314+00:00",
    "days": []
   },
   "UAE / United Arab Emirates": {
@@ -1916,7 +1916,7 @@
    "days": []
   },
   "Zohran / Mamdani": {
-   "at": "2026-10-20T08:00:14.285390+00:00",
+   "at": "2026-10-20T14:00:15.691314+00:00",
    "days": [
     "2026-07-29",
     "2026-08-14"
