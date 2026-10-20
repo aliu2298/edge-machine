@@ -181,8 +181,14 @@ ok(B.pct(live["roi_fee"], sign=True) in tiles[3], "the ROI tile is that window's
 whole = prod_row["a"]
 ok(whole["n"] >= live["n"], "the whole Sandbox record is at least the since-Production one")
 no_prod = soccer_build.build(d, {"pairs": {}}, NOW)
-ok("<b>—</b><span>Production record · no rule in Production</span>" in no_prod
-   and "ROI after fees · no rule in Production" in no_prod, "with no rule in Production the tiles say so")
+ok("<span>Sandbox record · paper" in no_prod and "ROI after fees · Sandbox, paper" in no_prod
+   and "no rule in Production" not in no_prod, "with no rule in Production the tiles are the Sandbox's, labelled paper")
+# The pool is the live Sandbox rules' own records: baselines, retired rows and Production rows are out.
+_r = lambda n, won, roi, **kw: dict(dict(a=dict(n=n, won=won, n_price=0, roi_fee=roi), meta={"kind": "Rule"}), **kw)
+_pool, _live = SP.sandbox_record([_r(10, 7, 0.10), _r(30, 20, -0.10), _r(5, 5, 0.5, meta={"kind": "Baseline"}),
+                                  _r(8, 1, -0.8, v="retired"), _r(9, 9, 0.9, gone="x"), _r(4, 4, 0.4, prod=True)])
+eq((_pool["n"], _pool["won"], round(_pool["roi_fee"], 4), len(_live)), (40, 27, -0.05, 2),
+   "pooled n-weighted across the live Sandbox rules only (the rows' own ROI after fees)")
 two = dict(st, pairs=dict(st["pairs"], **{"o15_ranked|soccer_o15": {"stage": "production", "by_hand": "2026-09-20",
                                                                      "promoted_at": "2026-09-20T00:00:00+00:00"}}))
 two_html = soccer_build.build(d, two, NOW)

@@ -202,8 +202,8 @@ print("\ntiles")
 tiles = re.findall(r'<div class="tile">(.*?)</div>', main, re.S)
 eq(len(tiles), 4, "four stat tiles")
 labels = [re.search(r"<span>(.*?)</span>", t).group(1) for t in tiles]
-eq(labels, ["open picks", "active rules", "Production record · no rule in Production", "ROI after fees · no rule in Production"],
-   "with nothing in Production the record and ROI tiles say so")
+eq([re.sub(r" · \d+ no result$", "", x) for x in labels], ["open picks", "active rules", "Sandbox record · paper", "ROI after fees · Sandbox, paper"],
+   "with nothing in Production the record and ROI tiles are the Sandbox's, labelled paper")
 open_n = sum(1 for q in d["quotes"] if str(q["sport"]).startswith("tennis")
              and q["bet"] and q["status"] == "open")
 eq(_text(tiles[0]), f"{open_n} open picks", "open picks counts every open tennis bet")

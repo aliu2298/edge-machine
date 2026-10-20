@@ -95,7 +95,11 @@ fav = C._fav_row(rows)
 a = fav["a"]
 ok(">1</b><span>open picks" in cells[0], "open picks counts the open bet")
 ok(">1</b><span>active rules" in cells[1], "the one rule is active")
-ok("<b>—</b><span>Production record · no rule in Production</span>" in cells[2], "not in Production, so the record tile says so")
+_won, _n = int(a.get("won") or 0), int(a.get("n") or 0)
+ok(f"<b>{_won}–{_n - _won}</b><span>Sandbox record · paper" in cells[2] if _n else "<b>—</b><span>Sandbox record · paper" in cells[2],
+   "not in Production, so the record tile is the Sandbox rule's own record, labelled paper (2026-10-20)")
+ok("ROI after fees · Sandbox, paper" in cells[3] and "Production" not in cells[2] + cells[3],
+   "and the ROI tile is the Sandbox's, never implying Production")
 eq(a.get("unit"), "market-day", "the Sandbox counts this lane in market-days")
 
 print("\nrules: one row")
@@ -169,7 +173,7 @@ ok('data-list="sandbox"' in empty_rule and 'data-verdict="waiting">Too early<' i
    and '<span class="sp-cell num" data-l="Record"><span class="mut">—</span></span>' in empty_rule and "Yes ask 70–80¢" in empty_rule,
    "before the first bet the row is the registration itself: no record, the Sandbox's waiting verdict")
 ok("No commodities favourite-band record yet." not in empty, "the page never says it has no rule")
-ok(">0</b><span>open picks" in empty and "<b>—</b><span>Production record" in empty, "empty tiles")
+ok(">0</b><span>open picks" in empty and "<b>—</b><span>Sandbox record · paper" in empty, "empty tiles: nothing settled is a dash")
 ok("Last scan not recorded · no scanner coverage stored" in empty, "no scan is said once")
 with patch.object(S, "COMMOD_FAV_BAND", (0.6, 0.9)), patch.object(S, "COMMOD_FAV_MAX_SPREAD", 0.04):
     const = C.build(ledger, stages, NOW)

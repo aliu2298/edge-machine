@@ -265,6 +265,16 @@ def since_production(d, st, rows):
     return production._group_record(lives), names
 
 
+def sandbox_record(rows):
+    """One record across this family's live Sandbox rules, for a page with no rule in Production
+    (2026-10-20). Each row's own record pooled, so the ROI after fees is the rows' own (per
+    contract), and a day-clustered family (crypto, commodities) stays per market-day as its rows
+    are. Baselines and retired rows are left out: they are not rules under test."""
+    live = [r for r in rows if not r.get("prod") and not r.get("gone") and r.get("v") != "retired"
+            and (r.get("meta") or {}).get("kind") != "Baseline"]
+    return production._group_record([r["a"] for r in live]), live
+
+
 def tiles_html(sp, d, st, rows, open_n):
     active = sum(1 for r in rows if (r["a"].get("n") or r["a"].get("n_price") or r.get("open")))
     rec, prod_rows = since_production(d, st, rows)
@@ -282,8 +292,18 @@ def tiles_html(sp, d, st, rows, open_n):
             roi = '<b class="mut">—</b>'
         roi_tile = f'<div class="tile">{roi}<span>ROI after fees · since Production</span></div>'
     else:
-        rec_tile = '<div class="tile"><b>—</b><span>Production record · no rule in Production</span></div>'
-        roi_tile = '<div class="tile"><b class="mut">—</b><span>ROI after fees · no rule in Production</span></div>'
+        # No rule in Production: the Sandbox's own record, labelled as paper so Production is
+        # never implied. An em dash only when nothing in the Sandbox has settled either.
+        import tennis_cards
+        rec, live = sandbox_record(rows)
+        rec_tile = tennis_cards.record_tile(rec, "Sandbox record · paper")
+        n = int(rec.get("n") or 0) + int(rec.get("n_price") or 0)
+        if n and rec.get("roi_fee") is not None:
+            klass = "mut" if int(rec.get("n") or 0) < production.EARLY_N else fmt.tone(rec["roi_fee"], ".1f", 100)
+            roi = f'<b class="{klass}">{B.pct(rec["roi_fee"], sign=True)}</b>'
+        else:
+            roi = '<b class="mut">—</b>'
+        roi_tile = f'<div class="tile">{roi}<span>ROI after fees · Sandbox, paper</span></div>'
     return (
         '<div class="tiles sp-tiles">'
         f'<div class="tile"><b>{open_n}</b><span>open picks</span></div>'
