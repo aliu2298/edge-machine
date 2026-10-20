@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-20T21:00:16.140915+00:00",
-   "last_success": "2026-10-20T21:00:16.140915+00:00",
+   "last_run": "2026-10-20T22:00:13.566263+00:00",
+   "last_success": "2026-10-20T22:00:13.566263+00:00",
    "observations": {
-    "at": "2026-10-20T21:00:16.140915+00:00",
-    "events": 848,
+    "at": "2026-10-20T22:00:13.566263+00:00",
+    "events": 850,
     "reasons": {
-     "in band": 3,
-     "no quote or spread too wide": 48,
-     "not active": 696,
-     "outside the band": 20,
-     "outside the entry window": 10995
+     "in band": 2,
+     "no quote or spread too wide": 54,
+     "not active": 716,
+     "outside the band": 15,
+     "outside the entry window": 10997
     }
    },
    "picks": [
@@ -228,10 +228,13 @@
      "id": "KXNETFLIXRANKSHOWRUNNERUP-26OCT19-EAS",
      "logged": "2026-10-19T14:00:15.293239+00:00",
      "name": "#2 US Netflix Show this week?",
+     "payout": 1.0,
      "price": 0.95,
+     "profit": 4.9,
      "series": "KXNETFLIXRANKSHOWRUNNERUP",
+     "settled": "2026-10-20T22:00:13.566263+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "East of Eden: Limited Series"
     },
     {
@@ -433,16 +436,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-20T21:00:16.140915+00:00",
-   "last_success": "2026-10-20T21:00:16.140915+00:00",
+   "last_run": "2026-10-20T22:00:13.566263+00:00",
+   "last_success": "2026-10-20T22:00:13.566263+00:00",
    "observations": {
-    "at": "2026-10-20T21:00:16.140915+00:00",
-    "events": 848,
+    "at": "2026-10-20T22:00:13.566263+00:00",
+    "events": 850,
     "reasons": {
-     "no quote or spread too wide": 105,
-     "not active": 696,
-     "outside the band": 39,
-     "outside the entry window": 10922
+     "no quote or spread too wide": 109,
+     "not active": 716,
+     "outside the band": 35,
+     "outside the entry window": 10924
     }
    },
    "picks": [
@@ -710,16 +713,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-20T21:00:16.140915+00:00",
-   "last_success": "2026-10-20T21:00:16.140915+00:00",
+   "last_run": "2026-10-20T22:00:13.566263+00:00",
+   "last_success": "2026-10-20T22:00:13.566263+00:00",
    "observations": {
-    "at": "2026-10-20T21:00:16.140915+00:00",
-    "events": 848,
+    "at": "2026-10-20T22:00:13.566263+00:00",
+    "events": 850,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 34,
-     "edge 5c+": 14,
-     "edge under 5c": 2,
-     "no quote or spread too wide": 40
+     "already near-certain (under 10c or over 90c)": 35,
+     "edge 5c+": 16,
+     "edge under 5c": 3,
+     "no quote or spread too wide": 36
     }
    },
    "picks": [
@@ -1466,16 +1469,32 @@
      "side": "no",
      "status": "open",
      "title": "Ceasefire"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-10-26T14:00:00Z",
+     "detail": "P(said) 0.13 \u00b7 said on 2 of the last 84 days, 5.7 days left \u00b7 edge +0.39",
+     "edge": 0.395,
+     "event": "KXTRUMPSAY-26OCT26",
+     "id": "KXTRUMPSAY-26OCT26-VIVE",
+     "logged": "2026-10-20T22:00:13.566263+00:00",
+     "model": 0.1276,
+     "name": "What will Trump say this week?",
+     "price": 0.46,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "Vivek / Ramaswamy"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-20T21:00:16.140915+00:00",
-   "last_success": "2026-10-20T21:00:16.140915+00:00",
+   "last_run": "2026-10-20T22:00:13.566263+00:00",
+   "last_success": "2026-10-20T22:00:13.566263+00:00",
    "observations": {
-    "at": "2026-10-20T21:00:16.140915+00:00",
-    "events": 848,
+    "at": "2026-10-20T22:00:13.566263+00:00",
+    "events": 850,
     "reasons": {
      "edge 5c+": 5,
      "under 20 reviews counted": 16
@@ -1788,7 +1807,7 @@
    ]
   },
   "ChatGPT / OpenAI": {
-   "at": "2026-10-20T12:00:15.185541+00:00",
+   "at": "2026-10-20T22:00:13.566263+00:00",
    "days": [
     "2026-09-29"
    ]
@@ -2010,7 +2029,7 @@
    "days": []
   },
   "UAE / United Arab Emirates": {
-   "at": "2026-10-20T12:00:15.185541+00:00",
+   "at": "2026-10-20T22:00:13.566263+00:00",
    "days": [
     "2026-08-02",
     "2026-08-03",
@@ -2026,12 +2045,19 @@
    "at": "2026-10-20T20:00:15.270408+00:00",
    "days": []
   },
+  "Vivek / Ramaswamy": {
+   "at": "2026-10-20T22:00:13.566263+00:00",
+   "days": [
+    "2026-10-03",
+    "2026-10-12"
+   ]
+  },
   "Zacharia": {
    "at": "2026-10-20T13:00:14.132059+00:00",
    "days": []
   },
   "Zohran / Mamdani": {
-   "at": "2026-10-20T14:00:15.691314+00:00",
+   "at": "2026-10-20T22:00:13.566263+00:00",
    "days": [
     "2026-07-29",
     "2026-08-14"
