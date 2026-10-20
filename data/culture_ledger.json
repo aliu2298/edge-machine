@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-20T12:14:26.052088+00:00",
-   "last_success": "2026-10-20T12:14:26.052088+00:00",
+   "last_run": "2026-10-20T13:00:14.132059+00:00",
+   "last_success": "2026-10-20T13:00:14.132059+00:00",
    "observations": {
-    "at": "2026-10-20T12:14:26.052088+00:00",
+    "at": "2026-10-20T13:00:14.132059+00:00",
     "events": 857,
     "reasons": {
      "in band": 4,
-     "no quote or spread too wide": 206,
+     "no quote or spread too wide": 26,
      "not active": 677,
-     "outside the band": 104,
-     "outside the entry window": 10889
+     "outside the band": 40,
+     "outside the entry window": 11133
     }
    },
    "picks": [
@@ -400,15 +400,15 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-20T12:14:26.052088+00:00",
-   "last_success": "2026-10-20T12:14:26.052088+00:00",
+   "last_run": "2026-10-20T13:00:14.132059+00:00",
+   "last_success": "2026-10-20T13:00:14.132059+00:00",
    "observations": {
-    "at": "2026-10-20T12:14:26.052088+00:00",
+    "at": "2026-10-20T13:00:14.132059+00:00",
     "events": 857,
     "reasons": {
-     "no quote or spread too wide": 25,
+     "no quote or spread too wide": 26,
      "not active": 677,
-     "outside the band": 45,
+     "outside the band": 44,
      "outside the entry window": 11133
     }
    },
@@ -637,16 +637,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-20T12:14:26.052088+00:00",
-   "last_success": "2026-10-20T12:14:26.052088+00:00",
+   "last_run": "2026-10-20T13:00:14.132059+00:00",
+   "last_success": "2026-10-20T13:00:14.132059+00:00",
    "observations": {
-    "at": "2026-10-20T12:14:26.052088+00:00",
+    "at": "2026-10-20T13:00:14.132059+00:00",
     "events": 857,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 40,
-     "edge 5c+": 18,
-     "edge under 5c": 6,
-     "no quote or spread too wide": 35
+     "already near-certain (under 10c or over 90c)": 42,
+     "edge 5c+": 16,
+     "edge under 5c": 5,
+     "no quote or spread too wide": 36
     }
    },
    "picks": [
@@ -1366,10 +1366,10 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-20T12:14:26.052088+00:00",
-   "last_success": "2026-10-20T12:14:26.052088+00:00",
+   "last_run": "2026-10-20T13:00:14.132059+00:00",
+   "last_success": "2026-10-20T13:00:14.132059+00:00",
    "observations": {
-    "at": "2026-10-20T12:14:26.052088+00:00",
+    "at": "2026-10-20T13:00:14.132059+00:00",
     "events": 857,
     "reasons": {
      "edge 5c+": 5,
@@ -1912,7 +1912,7 @@
    "days": []
   },
   "Zacharia": {
-   "at": "2026-10-20T04:00:14.608456+00:00",
+   "at": "2026-10-20T13:00:14.132059+00:00",
    "days": []
   },
   "Zohran / Mamdani": {
