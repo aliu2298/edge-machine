@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-20T15:46:27.125241+00:00",
+ "last_run": "2026-10-20T17:31:29.811506+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -39,7 +39,31 @@
    "picks": []
   },
   "A4": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.63,
+     "bid": 0.62,
+     "event": "KXSAUDIPLTOTAL-26OCT20ALNNEO",
+     "group": "A",
+     "id": "A4:KXSAUDIPLTOTAL-26OCT20ALNNEO",
+     "labels": {
+      "away": "O+D-",
+      "home": "O+D-"
+     },
+     "league": "Saudi Pro League",
+     "line": 2.5,
+     "logged": "2026-10-20T17:31:29.811506+00:00",
+     "match": "Al Nassr v Neom SC",
+     "price": 0.63,
+     "rule": "A4",
+     "side": "yes",
+     "start": "2026-10-20T18:00Z",
+     "status": "open",
+     "ticker": "KXSAUDIPLTOTAL-26OCT20ALNNEO-3",
+     "title": "Will over 2.5 goals be scored?",
+     "why": "Al Nassr O+D- v Neom SC O+D- \u00b7 Over 2.5 YES 0.63"
+    }
+   ]
   },
   "A5": {
    "picks": []
@@ -101,7 +125,54 @@
    ]
   },
   "A7": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.4,
+     "bid": 0.39,
+     "event": "KXUCLTOTAL-26OCT20FCPPSV",
+     "group": "A",
+     "id": "A7:KXUCLTOTAL-26OCT20FCPPSV",
+     "labels": {
+      "away": "O+D-",
+      "home": "O+D-"
+     },
+     "league": "Champions League",
+     "line": 3.5,
+     "logged": "2026-10-20T17:31:29.811506+00:00",
+     "match": "FC Porto v PSV Eindhoven",
+     "price": 0.4,
+     "rule": "A7",
+     "side": "yes",
+     "start": "2026-10-20T19:00Z",
+     "status": "open",
+     "ticker": "KXUCLTOTAL-26OCT20FCPPSV-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "FC Porto O+D- v PSV Eindhoven O+D- \u00b7 Over 3.5 YES 0.40"
+    },
+    {
+     "ask": 0.4,
+     "bid": 0.39,
+     "event": "KXUCLTOTAL-26OCT20NAPBOG",
+     "group": "A",
+     "id": "A7:KXUCLTOTAL-26OCT20NAPBOG",
+     "labels": {
+      "away": "O+D-",
+      "home": "O-D-"
+     },
+     "league": "Champions League",
+     "line": 3.5,
+     "logged": "2026-10-20T17:31:29.811506+00:00",
+     "match": "Napoli v Bodo/Glimt",
+     "price": 0.4,
+     "rule": "A7",
+     "side": "yes",
+     "start": "2026-10-20T19:00Z",
+     "status": "open",
+     "ticker": "KXUCLTOTAL-26OCT20NAPBOG-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Napoli O-D- v Bodo/Glimt O+D- \u00b7 Over 3.5 YES 0.40"
+    }
+   ]
   },
   "B1": {
    "picks": []
@@ -463,6 +534,52 @@
      "ticker": "KXSUPERLIGBTTS-26OCT19TRABES-BTTS",
      "title": "Both Teams To Score",
      "why": "Trabzonspor O+D- v Besiktas O+D- \u00b7 BTTS YES 0.69"
+    },
+    {
+     "ask": 0.55,
+     "bid": 0.54,
+     "event": "KXSAUDIPLBTTS-26OCT20ALNNEO",
+     "group": "BTTS",
+     "id": "D1:KXSAUDIPLBTTS-26OCT20ALNNEO",
+     "labels": {
+      "away": "O+D-",
+      "home": "O+D-"
+     },
+     "league": "Saudi Pro League",
+     "line": null,
+     "logged": "2026-10-20T17:31:29.811506+00:00",
+     "match": "Al Nassr v Neom SC",
+     "price": 0.55,
+     "rule": "D1",
+     "side": "yes",
+     "start": "2026-10-20T18:00Z",
+     "status": "open",
+     "ticker": "KXSAUDIPLBTTS-26OCT20ALNNEO-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Al Nassr O+D- v Neom SC O+D- \u00b7 BTTS YES 0.55"
+    },
+    {
+     "ask": 0.59,
+     "bid": 0.58,
+     "event": "KXUCLBTTS-26OCT20FCPPSV",
+     "group": "BTTS",
+     "id": "D1:KXUCLBTTS-26OCT20FCPPSV",
+     "labels": {
+      "away": "O+D-",
+      "home": "O+D-"
+     },
+     "league": "Champions League",
+     "line": null,
+     "logged": "2026-10-20T17:31:29.811506+00:00",
+     "match": "FC Porto v PSV Eindhoven",
+     "price": 0.59,
+     "rule": "D1",
+     "side": "yes",
+     "start": "2026-10-20T19:00Z",
+     "status": "open",
+     "ticker": "KXUCLBTTS-26OCT20FCPPSV-BTTS",
+     "title": "Both Teams To Score",
+     "why": "FC Porto O+D- v PSV Eindhoven O+D- \u00b7 BTTS YES 0.59"
     }
    ]
   },
@@ -861,19 +978,80 @@
      "ticker": "KXSAUDIPLBTTS-26OCT19HILHAZ-BTTS",
      "title": "Both Teams To Score",
      "why": "Al Hilal O+D- v Al Hazem O-D- \u00b7 BTTS YES 0.40"
+    },
+    {
+     "ask": 0.59,
+     "bid": 0.58,
+     "event": "KXSAUDIPLBTTS-26OCT20ITTITJ",
+     "group": "BTTS",
+     "id": "D3:KXSAUDIPLBTTS-26OCT20ITTITJ",
+     "labels": {
+      "away": "O+D-",
+      "home": "O-D-"
+     },
+     "league": "Saudi Pro League",
+     "line": null,
+     "logged": "2026-10-20T17:31:29.811506+00:00",
+     "match": "Al Ettifaq v Al Ittihad",
+     "price": 0.59,
+     "rule": "D3",
+     "side": "yes",
+     "start": "2026-10-20T18:00Z",
+     "status": "open",
+     "ticker": "KXSAUDIPLBTTS-26OCT20ITTITJ-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Al Ettifaq O-D- v Al Ittihad O+D- \u00b7 BTTS YES 0.59"
+    },
+    {
+     "ask": 0.49,
+     "bid": 0.48,
+     "event": "KXUCLBTTS-26OCT20MCIAEK",
+     "group": "BTTS",
+     "id": "D3:KXUCLBTTS-26OCT20MCIAEK",
+     "labels": {
+      "away": "O-D-",
+      "home": "O+D-"
+     },
+     "league": "Champions League",
+     "line": null,
+     "logged": "2026-10-20T17:31:29.811506+00:00",
+     "match": "Manchester City v AEK Athens",
+     "price": 0.49,
+     "rule": "D3",
+     "side": "yes",
+     "start": "2026-10-20T19:00Z",
+     "status": "open",
+     "ticker": "KXUCLBTTS-26OCT20MCIAEK-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Manchester City O+D- v AEK Athens O-D- \u00b7 BTTS YES 0.49"
+    },
+    {
+     "ask": 0.62,
+     "bid": 0.61,
+     "event": "KXUCLBTTS-26OCT20NAPBOG",
+     "group": "BTTS",
+     "id": "D3:KXUCLBTTS-26OCT20NAPBOG",
+     "labels": {
+      "away": "O+D-",
+      "home": "O-D-"
+     },
+     "league": "Champions League",
+     "line": null,
+     "logged": "2026-10-20T17:31:29.811506+00:00",
+     "match": "Napoli v Bodo/Glimt",
+     "price": 0.62,
+     "rule": "D3",
+     "side": "yes",
+     "start": "2026-10-20T19:00Z",
+     "status": "open",
+     "ticker": "KXUCLBTTS-26OCT20NAPBOG-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Napoli O-D- v Bodo/Glimt O+D- \u00b7 BTTS YES 0.62"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-18T12:31:23.720865+00:00",
-   "candidates": 6,
-   "due": 8,
-   "labelled": 8,
-   "matched": 6,
-   "new": 1
-  },
   {
    "at": "2026-10-18T12:46:43.248997+00:00",
    "candidates": 2,
@@ -1273,6 +1451,14 @@
    "labelled": 0,
    "matched": 0,
    "new": 0
+  },
+  {
+   "at": "2026-10-20T17:31:29.811506+00:00",
+   "candidates": 6,
+   "due": 9,
+   "labelled": 8,
+   "matched": 6,
+   "new": 8
   }
  ],
  "version": "soccer-rules-v1"
