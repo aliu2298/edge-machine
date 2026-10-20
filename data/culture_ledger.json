@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-20T15:00:15.195747+00:00",
-   "last_success": "2026-10-20T15:00:15.195747+00:00",
+   "last_run": "2026-10-20T16:00:15.007761+00:00",
+   "last_success": "2026-10-20T16:00:15.007761+00:00",
    "observations": {
-    "at": "2026-10-20T15:00:15.195747+00:00",
-    "events": 841,
+    "at": "2026-10-20T16:00:15.007761+00:00",
+    "events": 840,
     "reasons": {
-     "in band": 3,
-     "no quote or spread too wide": 26,
-     "not active": 686,
+     "in band": 5,
+     "no quote or spread too wide": 24,
+     "not active": 687,
      "outside the band": 42,
-     "outside the entry window": 10887
+     "outside the entry window": 10881
     }
    },
    "picks": [
@@ -403,17 +403,17 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-20T15:00:15.195747+00:00",
-   "last_success": "2026-10-20T15:00:15.195747+00:00",
+   "last_run": "2026-10-20T16:00:15.007761+00:00",
+   "last_success": "2026-10-20T16:00:15.007761+00:00",
    "observations": {
-    "at": "2026-10-20T15:00:15.195747+00:00",
-    "events": 841,
+    "at": "2026-10-20T16:00:15.007761+00:00",
+    "events": 840,
     "reasons": {
-     "in band": 1,
-     "no quote or spread too wide": 29,
-     "not active": 686,
-     "outside the band": 54,
-     "outside the entry window": 10874
+     "in band": 2,
+     "no quote or spread too wide": 27,
+     "not active": 687,
+     "outside the band": 55,
+     "outside the entry window": 10868
     }
    },
    "picks": [
@@ -639,21 +639,35 @@
      "side": "no",
      "status": "open",
      "title": "Tate McRae - Housewife (Official Video)"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-21T03:59:00Z",
+     "detail": "NO 0.73 \u00b7 favourite band",
+     "event": "KXYTTOPVIDEO2D-26OCT20",
+     "id": "KXYTTOPVIDEO2D-26OCT20-DAI",
+     "logged": "2026-10-20T16:00:15.007761+00:00",
+     "name": "Runner-Up Daily Music Video USA on YouTube: Oct 20, 2026",
+     "price": 0.73,
+     "series": "KXYTTOPVIDEO2D",
+     "side": "no",
+     "status": "open",
+     "title": "Dai Dai"
     }
    ]
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-20T15:00:15.195747+00:00",
-   "last_success": "2026-10-20T15:00:15.195747+00:00",
+   "last_run": "2026-10-20T16:00:15.007761+00:00",
+   "last_success": "2026-10-20T16:00:15.007761+00:00",
    "observations": {
-    "at": "2026-10-20T15:00:15.195747+00:00",
-    "events": 841,
+    "at": "2026-10-20T16:00:15.007761+00:00",
+    "events": 840,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 33,
-     "edge 5c+": 16,
-     "edge under 5c": 5,
-     "no quote or spread too wide": 36
+     "edge 5c+": 14,
+     "edge under 5c": 4,
+     "no quote or spread too wide": 39
     }
    },
    "picks": [
@@ -1368,19 +1382,34 @@
      "side": "no",
      "status": "open",
      "title": "Houthi"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-10-26T14:00:00Z",
+     "detail": "P(said) 0.30 \u00b7 said on 5 of the last 84 days, 5.9 days left \u00b7 edge +0.29",
+     "edge": 0.2889,
+     "event": "KXTRUMPSAY-26OCT26",
+     "id": "KXTRUMPSAY-26OCT26-AUTO",
+     "logged": "2026-10-20T16:00:15.007761+00:00",
+     "model": 0.3045,
+     "name": "What will Trump say this week?",
+     "price": 0.39,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "Autopen / Auto Pen"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-20T15:00:15.195747+00:00",
-   "last_success": "2026-10-20T15:00:15.195747+00:00",
+   "last_run": "2026-10-20T16:00:15.007761+00:00",
+   "last_success": "2026-10-20T16:00:15.007761+00:00",
    "observations": {
-    "at": "2026-10-20T15:00:15.195747+00:00",
-    "events": 841,
+    "at": "2026-10-20T16:00:15.007761+00:00",
+    "events": 840,
     "reasons": {
-     "edge 5c+": 4,
-     "edge under 5c": 1,
+     "edge 5c+": 5,
      "under 20 reviews counted": 16
     }
    },
@@ -1597,7 +1626,7 @@
    ]
   },
   "Antifa": {
-   "at": "2026-10-20T10:00:14.694799+00:00",
+   "at": "2026-10-20T16:00:15.007761+00:00",
    "days": [
     "2026-09-22"
    ]
@@ -1609,6 +1638,16 @@
     "2026-09-02"
    ]
   },
+  "Autopen / Auto Pen": {
+   "at": "2026-10-20T16:00:15.007761+00:00",
+   "days": [
+    "2026-07-29",
+    "2026-08-11",
+    "2026-09-16",
+    "2026-09-24",
+    "2026-10-13"
+   ]
+  },
   "BBC": {
    "at": "2026-10-20T14:00:15.691314+00:00",
    "days": [
@@ -1617,7 +1656,7 @@
    ]
   },
   "Bahrain / Bahraini": {
-   "at": "2026-10-20T10:00:14.694799+00:00",
+   "at": "2026-10-20T16:00:15.007761+00:00",
    "days": [
     "2026-08-20",
     "2026-08-30",
@@ -1705,7 +1744,7 @@
    ]
   },
   "Cybersecurity / Cyber Security": {
-   "at": "2026-10-20T10:00:14.694799+00:00",
+   "at": "2026-10-20T16:00:15.007761+00:00",
    "days": []
   },
   "Deere": {
@@ -1713,7 +1752,7 @@
    "days": []
   },
   "Epstein": {
-   "at": "2026-10-20T10:00:14.694799+00:00",
+   "at": "2026-10-20T16:00:15.007761+00:00",
    "days": []
   },
   "Ethanol": {
@@ -1794,7 +1833,7 @@
    ]
   },
   "Nobel": {
-   "at": "2026-10-20T10:00:14.694799+00:00",
+   "at": "2026-10-20T16:00:15.007761+00:00",
    "days": [
     "2026-09-04",
     "2026-10-05",
@@ -1862,7 +1901,7 @@
    "days": []
   },
   "Stupid Question": {
-   "at": "2026-10-20T10:00:14.694799+00:00",
+   "at": "2026-10-20T16:00:15.007761+00:00",
    "days": [
     "2026-08-31",
     "2026-09-09",
@@ -1885,7 +1924,7 @@
    ]
   },
   "Third Term": {
-   "at": "2026-10-20T10:00:14.694799+00:00",
+   "at": "2026-10-20T16:00:15.007761+00:00",
    "days": [
     "2026-09-18",
     "2026-10-01",
@@ -1893,7 +1932,7 @@
    ]
   },
   "Tomahawk": {
-   "at": "2026-10-20T10:00:14.694799+00:00",
+   "at": "2026-10-20T16:00:15.007761+00:00",
    "days": [
     "2026-07-31"
    ]
