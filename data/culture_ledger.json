@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-20T11:00:14.500584+00:00",
-   "last_success": "2026-10-20T11:00:14.500584+00:00",
+   "last_run": "2026-10-20T12:00:15.185541+00:00",
+   "last_success": "2026-10-20T12:00:15.185541+00:00",
    "observations": {
-    "at": "2026-10-20T11:00:14.500584+00:00",
-    "events": 860,
+    "at": "2026-10-20T12:00:15.185541+00:00",
+    "events": 857,
     "reasons": {
      "in band": 4,
-     "no quote or spread too wide": 200,
-     "not active": 728,
-     "outside the band": 110,
-     "outside the entry window": 10923
+     "no quote or spread too wide": 198,
+     "not active": 677,
+     "outside the band": 112,
+     "outside the entry window": 10889
     }
    },
    "picks": [
@@ -400,16 +400,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-20T11:00:14.500584+00:00",
-   "last_success": "2026-10-20T11:00:14.500584+00:00",
+   "last_run": "2026-10-20T12:00:15.185541+00:00",
+   "last_success": "2026-10-20T12:00:15.185541+00:00",
    "observations": {
-    "at": "2026-10-20T11:00:14.500584+00:00",
-    "events": 860,
+    "at": "2026-10-20T12:00:15.185541+00:00",
+    "events": 857,
     "reasons": {
-     "no quote or spread too wide": 181,
-     "not active": 728,
-     "outside the band": 133,
-     "outside the entry window": 10923
+     "no quote or spread too wide": 25,
+     "not active": 677,
+     "outside the band": 45,
+     "outside the entry window": 11133
     }
    },
    "picks": [
@@ -637,16 +637,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-20T11:00:14.500584+00:00",
-   "last_success": "2026-10-20T11:00:14.500584+00:00",
+   "last_run": "2026-10-20T12:00:15.185541+00:00",
+   "last_success": "2026-10-20T12:00:15.185541+00:00",
    "observations": {
-    "at": "2026-10-20T11:00:14.500584+00:00",
-    "events": 860,
+    "at": "2026-10-20T12:00:15.185541+00:00",
+    "events": 857,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 39,
-     "edge 5c+": 15,
+     "already near-certain (under 10c or over 90c)": 40,
+     "edge 5c+": 17,
      "edge under 5c": 5,
-     "no quote or spread too wide": 40
+     "no quote or spread too wide": 37
     }
    },
    "picks": [
@@ -1345,16 +1345,32 @@
      "side": "no",
      "status": "open",
      "title": "Bibi / Netanyahu"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-10-26T14:00:00Z",
+     "detail": "P(said) 0.00 \u00b7 said on 0 of the last 84 days, 6.1 days left \u00b7 edge +0.59",
+     "edge": 0.5933,
+     "event": "KXTRUMPSAY-26OCT26",
+     "id": "KXTRUMPSAY-26OCT26-HOUT",
+     "logged": "2026-10-20T12:00:15.185541+00:00",
+     "model": 0.0,
+     "name": "What will Trump say this week?",
+     "price": 0.39,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "Houthi"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-20T11:00:14.500584+00:00",
-   "last_success": "2026-10-20T11:00:14.500584+00:00",
+   "last_run": "2026-10-20T12:00:15.185541+00:00",
+   "last_success": "2026-10-20T12:00:15.185541+00:00",
    "observations": {
-    "at": "2026-10-20T11:00:14.500584+00:00",
-    "events": 860,
+    "at": "2026-10-20T12:00:15.185541+00:00",
+    "events": 857,
     "reasons": {
      "edge 5c+": 5,
      "under 20 reviews counted": 16
@@ -1657,7 +1673,7 @@
    ]
   },
   "ChatGPT / OpenAI": {
-   "at": "2026-10-19T22:38:41.687946+00:00",
+   "at": "2026-10-20T12:00:15.185541+00:00",
    "days": [
     "2026-09-29"
    ]
@@ -1734,6 +1750,10 @@
     "2026-10-14",
     "2026-10-16"
    ]
+  },
+  "Houthi": {
+   "at": "2026-10-20T12:00:15.185541+00:00",
+   "days": []
   },
   "JPMorgan / JPM": {
    "at": "2026-10-20T06:00:17.672978+00:00",
@@ -1875,7 +1895,7 @@
    "days": []
   },
   "UAE / United Arab Emirates": {
-   "at": "2026-10-20T00:00:14.975986+00:00",
+   "at": "2026-10-20T12:00:15.185541+00:00",
    "days": [
     "2026-08-02",
     "2026-08-03",
