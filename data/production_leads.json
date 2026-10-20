@@ -876,42 +876,6 @@
    "sport": "soccer_team2",
    "status": "hit"
   },
-  "2026-10-16|Deportivo|Levante|6+ corners \u00b7 Deportivo \u00b7 Corners team fade": {
-   "away": "Levante",
-   "bet": {
-    "kind": "corners_gte",
-    "n": 6,
-    "team": "Deportivo"
-   },
-   "date": "2026-10-16",
-   "edge_at_log": null,
-   "first_seen": "2026-10-16",
-   "headline": "6+ corners \u00b7 Deportivo",
-   "home": "Deportivo",
-   "id": "2026-10-16|Deportivo|Levante|6+ corners \u00b7 Deportivo \u00b7 Corners team fade",
-   "kickoff": "2026-10-16T19:00Z",
-   "lane": "production",
-   "league": "La Liga",
-   "match": "Deportivo v Levante",
-   "pair": "corners_team_fade|soccer_corners",
-   "price_at_log": 0.48,
-   "published_at": "2026-10-16T17:17:41+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 102,
-   "route": {
-    "claim": "6+ corners \u00b7 Deportivo",
-    "event": "KXLALIGATCORNERS-26OCT16DEPLEV",
-    "market": "KXLALIGATCORNERS-26OCT16DEPLEV-DEP6",
-    "outcome": "Deportivo De La Coruna: 6+",
-    "outcome_side": "yes",
-    "price_at_log": 0.48,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "corners_team_fade:KXLALIGATCORNERS-26OCT16DEPLEV-DEP6",
-   "source": "corners_team_fade",
-   "sport": "soccer_corners",
-   "status": "miss"
-  },
   "2026-10-16|Deportivo|Levante|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Levante",
    "bet": {
@@ -946,41 +910,6 @@
    "source": "o15_ranked",
    "sport": "soccer_o15",
    "status": "hit"
-  },
-  "2026-10-16|Eintracht Frankfurt|FC Cologne|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
-   "away": "FC Cologne",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-10-16",
-   "edge_at_log": null,
-   "first_seen": "2026-10-12",
-   "headline": "Over 3.5 goals",
-   "home": "Eintracht Frankfurt",
-   "id": "2026-10-16|Eintracht Frankfurt|FC Cologne|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
-   "kickoff": "2026-10-16T18:30Z",
-   "lane": "production",
-   "league": "Bundesliga",
-   "match": "Eintracht Frankfurt v FC Cologne",
-   "pair": "bund_o35|soccer_u35",
-   "price_at_log": 0.51,
-   "published_at": "2026-10-16T21:06:33+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXBUNDESLIGATOTAL-26OCT16SGEKOE",
-    "market": "KXBUNDESLIGATOTAL-26OCT16SGEKOE-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.51,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT16SGEKOE-4",
-   "source": "bund_o35",
-   "sport": "soccer_u35",
-   "status": "miss"
   },
   "2026-10-16|Heerenveen|Excelsior|Draw \u00b7 Eredivisie draw band": {
    "away": "Excelsior",
@@ -1158,41 +1087,6 @@
    "sport": "soccer_team2",
    "status": "miss"
   },
-  "2026-10-17|1. FC Union Berlin|Borussia Dortmund|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
-   "away": "Borussia Dortmund",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-13",
-   "headline": "Over 3.5 goals",
-   "home": "1. FC Union Berlin",
-   "id": "2026-10-17|1. FC Union Berlin|Borussia Dortmund|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
-   "kickoff": "2026-10-17T13:30Z",
-   "lane": "production",
-   "league": "Bundesliga",
-   "match": "1. FC Union Berlin v Borussia Dortmund",
-   "pair": "bund_o35|soccer_u35",
-   "price_at_log": 0.43,
-   "published_at": "2026-10-17T16:03:47+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXBUNDESLIGATOTAL-26OCT17UNIBVB",
-    "market": "KXBUNDESLIGATOTAL-26OCT17UNIBVB-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.43,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT17UNIBVB-4",
-   "source": "bund_o35",
-   "sport": "soccer_u35",
-   "status": "miss"
-  },
   "2026-10-17|AS Roma|Genoa|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Genoa",
    "bet": {
@@ -1263,41 +1157,6 @@
    "sport": "soccer_u35",
    "status": "miss"
   },
-  "2026-10-17|Bayern Munich|RB Leipzig|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
-   "away": "RB Leipzig",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-13",
-   "headline": "Over 3.5 goals",
-   "home": "Bayern Munich",
-   "id": "2026-10-17|Bayern Munich|RB Leipzig|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
-   "kickoff": "2026-10-17T16:30Z",
-   "lane": "production",
-   "league": "Bundesliga",
-   "match": "Bayern Munich v RB Leipzig",
-   "pair": "bund_o35|soccer_u35",
-   "price_at_log": 0.69,
-   "published_at": "2026-10-17T18:33:07+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXBUNDESLIGATOTAL-26OCT17BMURBL",
-    "market": "KXBUNDESLIGATOTAL-26OCT17BMURBL-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.69,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT17BMURBL-4",
-   "source": "bund_o35",
-   "sport": "soccer_u35",
-   "status": "hit"
-  },
   "2026-10-17|Djakouris, Antreas|Ung, Nile|Djakouris, Antreas to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
    "away": "Ung, Nile",
    "bet": {
@@ -1331,40 +1190,6 @@
    "source": "tennis_utr_shortlist_v1",
    "sport": "tennis",
    "status": "hit"
-  },
-  "2026-10-17|Erzurum BB|Eyupspor|Both teams to score \u00b7 Turkey BTTS in heavy mismatches": {
-   "away": "Eyupspor",
-   "bet": {
-    "kind": "btts"
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-17",
-   "headline": "Both teams to score",
-   "home": "Erzurum BB",
-   "id": "2026-10-17|Erzurum BB|Eyupspor|Both teams to score \u00b7 Turkey BTTS in heavy mismatches",
-   "kickoff": "2026-10-17T10:30Z",
-   "lane": "production",
-   "league": "Turkish Super Lig",
-   "match": "Erzurum BB v Eyupspor",
-   "pair": "turkey_btts_dog|soccer_btts",
-   "price_at_log": 0.45,
-   "published_at": "2026-10-17T13:04:07+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Both teams to score",
-    "event": "KXSUPERLIGBTTS-26OCT17ERZEYU",
-    "market": "KXSUPERLIGBTTS-26OCT17ERZEYU-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "yes",
-    "price_at_log": 0.45,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "turkey_btts_dog:KXSUPERLIGBTTS-26OCT17ERZEYU-BTTS",
-   "source": "turkey_btts_dog",
-   "sport": "soccer_btts",
-   "status": "miss"
   },
   "2026-10-17|Erzurum BB|Eyupspor|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Eyupspor",
@@ -1400,41 +1225,6 @@
    "source": "o15_ranked",
    "sport": "soccer_o15",
    "status": "hit"
-  },
-  "2026-10-17|Erzurum BB|Eyupspor|Over 2.5 goals \u00b7 Turkey over 2.5 in heavy mismatches": {
-   "away": "Eyupspor",
-   "bet": {
-    "kind": "total_gte",
-    "n": 3
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-17",
-   "headline": "Over 2.5 goals",
-   "home": "Erzurum BB",
-   "id": "2026-10-17|Erzurum BB|Eyupspor|Over 2.5 goals \u00b7 Turkey over 2.5 in heavy mismatches",
-   "kickoff": "2026-10-17T10:30Z",
-   "lane": "production",
-   "league": "Turkish Super Lig",
-   "match": "Erzurum BB v Eyupspor",
-   "pair": "turkey_o25_dog|soccer_o25",
-   "price_at_log": 0.46,
-   "published_at": "2026-10-17T13:04:07+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 2.5 goals",
-    "event": "KXSUPERLIGTOTAL-26OCT17ERZEYU",
-    "market": "KXSUPERLIGTOTAL-26OCT17ERZEYU-3",
-    "outcome": "Over 2.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.46,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "turkey_o25_dog:KXSUPERLIGTOTAL-26OCT17ERZEYU-3",
-   "source": "turkey_o25_dog",
-   "sport": "soccer_o25",
-   "status": "miss"
   },
   "2026-10-17|Espanyol|Atl\u00e9tico Madrid|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Atl\u00e9tico Madrid",
@@ -1506,180 +1296,6 @@
    "sport": "soccer_corners",
    "status": "miss"
   },
-  "2026-10-17|Fenerbahce|Alanyaspor|Both teams to score \u00b7 Turkey BTTS in heavy mismatches": {
-   "away": "Alanyaspor",
-   "bet": {
-    "kind": "btts"
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-16",
-   "headline": "Both teams to score",
-   "home": "Fenerbahce",
-   "id": "2026-10-17|Fenerbahce|Alanyaspor|Both teams to score \u00b7 Turkey BTTS in heavy mismatches",
-   "kickoff": "2026-10-17T16:00Z",
-   "lane": "production",
-   "league": "Turkish Super Lig",
-   "match": "Fenerbahce v Alanyaspor",
-   "pair": "turkey_btts_dog|soccer_btts",
-   "price_at_log": 0.49,
-   "published_at": "2026-10-17T18:03:13+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Both teams to score",
-    "event": "KXSUPERLIGBTTS-26OCT17FENALA",
-    "market": "KXSUPERLIGBTTS-26OCT17FENALA-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "yes",
-    "price_at_log": 0.49,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "turkey_btts_dog:KXSUPERLIGBTTS-26OCT17FENALA-BTTS",
-   "source": "turkey_btts_dog",
-   "sport": "soccer_btts",
-   "status": "miss"
-  },
-  "2026-10-17|Fenerbahce|Alanyaspor|Over 2.5 goals \u00b7 Turkey over 2.5 in heavy mismatches": {
-   "away": "Alanyaspor",
-   "bet": {
-    "kind": "total_gte",
-    "n": 3
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-16",
-   "headline": "Over 2.5 goals",
-   "home": "Fenerbahce",
-   "id": "2026-10-17|Fenerbahce|Alanyaspor|Over 2.5 goals \u00b7 Turkey over 2.5 in heavy mismatches",
-   "kickoff": "2026-10-17T16:00Z",
-   "lane": "production",
-   "league": "Turkish Super Lig",
-   "match": "Fenerbahce v Alanyaspor",
-   "pair": "turkey_o25_dog|soccer_o25",
-   "price_at_log": 0.63,
-   "published_at": "2026-10-17T18:03:13+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 2.5 goals",
-    "event": "KXSUPERLIGTOTAL-26OCT17FENALA",
-    "market": "KXSUPERLIGTOTAL-26OCT17FENALA-3",
-    "outcome": "Over 2.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.63,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "turkey_o25_dog:KXSUPERLIGTOTAL-26OCT17FENALA-3",
-   "source": "turkey_o25_dog",
-   "sport": "soccer_o25",
-   "status": "hit"
-  },
-  "2026-10-17|Fulham|Hull City|7+ corners \u00b7 Fulham \u00b7 Corners team fade": {
-   "away": "Hull City",
-   "bet": {
-    "kind": "corners_gte",
-    "n": 7,
-    "team": "Fulham"
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-17",
-   "headline": "7+ corners \u00b7 Fulham",
-   "home": "Fulham",
-   "id": "2026-10-17|Fulham|Hull City|7+ corners \u00b7 Fulham \u00b7 Corners team fade",
-   "kickoff": "2026-10-17T14:00Z",
-   "lane": "production",
-   "league": "Premier League",
-   "match": "Fulham v Hull City",
-   "pair": "corners_team_fade|soccer_corners",
-   "price_at_log": 0.5,
-   "published_at": "2026-10-17T16:03:47+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "7+ corners \u00b7 Fulham",
-    "event": "KXEPLTCORNERS-26OCT17FULHUL",
-    "market": "KXEPLTCORNERS-26OCT17FULHUL-FUL7",
-    "outcome": "Fulham: 7+",
-    "outcome_side": "yes",
-    "price_at_log": 0.5,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "corners_team_fade:KXEPLTCORNERS-26OCT17FULHUL-FUL7",
-   "source": "corners_team_fade",
-   "sport": "soccer_corners",
-   "status": "hit"
-  },
-  "2026-10-17|Genclerbirligi|Galatasaray|Both teams to score \u00b7 Turkey BTTS in heavy mismatches": {
-   "away": "Galatasaray",
-   "bet": {
-    "kind": "btts"
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-16",
-   "headline": "Both teams to score",
-   "home": "Genclerbirligi",
-   "id": "2026-10-17|Genclerbirligi|Galatasaray|Both teams to score \u00b7 Turkey BTTS in heavy mismatches",
-   "kickoff": "2026-10-17T13:00Z",
-   "lane": "production",
-   "league": "Turkish Super Lig",
-   "match": "Genclerbirligi v Galatasaray",
-   "pair": "turkey_btts_dog|soccer_btts",
-   "price_at_log": 0.57,
-   "published_at": "2026-10-17T15:03:27+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Both teams to score",
-    "event": "KXSUPERLIGBTTS-26OCT17GENGAL",
-    "market": "KXSUPERLIGBTTS-26OCT17GENGAL-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "yes",
-    "price_at_log": 0.57,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "turkey_btts_dog:KXSUPERLIGBTTS-26OCT17GENGAL-BTTS",
-   "source": "turkey_btts_dog",
-   "sport": "soccer_btts",
-   "status": "miss"
-  },
-  "2026-10-17|Genclerbirligi|Galatasaray|Over 2.5 goals \u00b7 Turkey over 2.5 in heavy mismatches": {
-   "away": "Galatasaray",
-   "bet": {
-    "kind": "total_gte",
-    "n": 3
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-16",
-   "headline": "Over 2.5 goals",
-   "home": "Genclerbirligi",
-   "id": "2026-10-17|Genclerbirligi|Galatasaray|Over 2.5 goals \u00b7 Turkey over 2.5 in heavy mismatches",
-   "kickoff": "2026-10-17T13:00Z",
-   "lane": "production",
-   "league": "Turkish Super Lig",
-   "match": "Genclerbirligi v Galatasaray",
-   "pair": "turkey_o25_dog|soccer_o25",
-   "price_at_log": 0.66,
-   "published_at": "2026-10-17T15:03:27+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 2.5 goals",
-    "event": "KXSUPERLIGTOTAL-26OCT17GENGAL",
-    "market": "KXSUPERLIGTOTAL-26OCT17GENGAL-3",
-    "outcome": "Over 2.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.66,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "turkey_o25_dog:KXSUPERLIGTOTAL-26OCT17GENGAL-3",
-   "source": "turkey_o25_dog",
-   "sport": "soccer_o25",
-   "status": "miss"
-  },
   "2026-10-17|Goodman, Elena|Magrini, Matilde|Magrini, Matilde to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
    "away": "Magrini, Matilde",
    "bet": {
@@ -1713,41 +1329,6 @@
    "source": "tennis_utr_shortlist_v1",
    "sport": "tennis",
    "status": "hit"
-  },
-  "2026-10-17|Hamburg SV|VfB Stuttgart|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
-   "away": "VfB Stuttgart",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-13",
-   "headline": "Over 3.5 goals",
-   "home": "Hamburg SV",
-   "id": "2026-10-17|Hamburg SV|VfB Stuttgart|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
-   "kickoff": "2026-10-17T13:30Z",
-   "lane": "production",
-   "league": "Bundesliga",
-   "match": "Hamburg SV v VfB Stuttgart",
-   "pair": "bund_o35|soccer_u35",
-   "price_at_log": 0.49,
-   "published_at": "2026-10-17T15:33:17+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXBUNDESLIGATOTAL-26OCT17HSVVFB",
-    "market": "KXBUNDESLIGATOTAL-26OCT17HSVVFB-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.49,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT17HSVVFB-4",
-   "source": "bund_o35",
-   "sport": "soccer_u35",
-   "status": "miss"
   },
   "2026-10-17|Hibernian|Falkirk|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
    "away": "Falkirk",
@@ -2029,77 +1610,6 @@
    "sport": "soccer_u35",
    "status": "hit"
   },
-  "2026-10-17|Real Betis|Barcelona|4+ corners \u00b7 Real Betis \u00b7 Corners team fade": {
-   "away": "Barcelona",
-   "bet": {
-    "kind": "corners_gte",
-    "n": 4,
-    "team": "Real Betis"
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-17",
-   "headline": "4+ corners \u00b7 Real Betis",
-   "home": "Real Betis",
-   "id": "2026-10-17|Real Betis|Barcelona|4+ corners \u00b7 Real Betis \u00b7 Corners team fade",
-   "kickoff": "2026-10-17T16:00Z",
-   "lane": "production",
-   "league": "La Liga",
-   "match": "Real Betis v Barcelona",
-   "pair": "corners_team_fade|soccer_corners",
-   "price_at_log": 0.59,
-   "published_at": "2026-10-17T18:33:07+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "4+ corners \u00b7 Real Betis",
-    "event": "KXLALIGATCORNERS-26OCT17RBBBAR",
-    "market": "KXLALIGATCORNERS-26OCT17RBBBAR-RBB4",
-    "outcome": "Real Betis: 4+",
-    "outcome_side": "yes",
-    "price_at_log": 0.59,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "corners_team_fade:KXLALIGATCORNERS-26OCT17RBBBAR-RBB4",
-   "source": "corners_team_fade",
-   "sport": "soccer_corners",
-   "status": "miss"
-  },
-  "2026-10-17|SV Elversberg|FC Augsburg|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
-   "away": "FC Augsburg",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-13",
-   "headline": "Over 3.5 goals",
-   "home": "SV Elversberg",
-   "id": "2026-10-17|SV Elversberg|FC Augsburg|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
-   "kickoff": "2026-10-17T13:30Z",
-   "lane": "production",
-   "league": "Bundesliga",
-   "match": "SV Elversberg v FC Augsburg",
-   "pair": "bund_o35|soccer_u35",
-   "price_at_log": 0.47,
-   "published_at": "2026-10-17T16:03:47+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXBUNDESLIGATOTAL-26OCT17SVEFCA",
-    "market": "KXBUNDESLIGATOTAL-26OCT17SVEFCA-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.47,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT17SVEFCA-4",
-   "source": "bund_o35",
-   "sport": "soccer_u35",
-   "status": "hit"
-  },
   "2026-10-17|Saito, Kazuki|Suzuki, Eita|Suzuki, Eita to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
    "away": "Suzuki, Eita",
    "bet": {
@@ -2133,41 +1643,6 @@
    "source": "tennis_utr_shortlist_v1",
    "sport": "tennis",
    "status": "hit"
-  },
-  "2026-10-17|Schalke 04|Mainz|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
-   "away": "Mainz",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-13",
-   "headline": "Over 3.5 goals",
-   "home": "Schalke 04",
-   "id": "2026-10-17|Schalke 04|Mainz|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
-   "kickoff": "2026-10-17T13:30Z",
-   "lane": "production",
-   "league": "Bundesliga",
-   "match": "Schalke 04 v Mainz",
-   "pair": "bund_o35|soccer_u35",
-   "price_at_log": 0.39,
-   "published_at": "2026-10-17T15:33:17+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXBUNDESLIGATOTAL-26OCT17SCHM05",
-    "market": "KXBUNDESLIGATOTAL-26OCT17SCHM05-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.39,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT17SCHM05-4",
-   "source": "bund_o35",
-   "sport": "soccer_u35",
-   "status": "miss"
   },
   "2026-10-17|Sparta|Willem II|Draw \u00b7 Eredivisie draw band": {
    "away": "Willem II",
@@ -2275,113 +1750,6 @@
    "sport": "soccer_o15",
    "status": "miss"
   },
-  "2026-10-17|Villarreal|Elche|7+ corners \u00b7 Villarreal \u00b7 Corners team fade": {
-   "away": "Elche",
-   "bet": {
-    "kind": "corners_gte",
-    "n": 7,
-    "team": "Villarreal"
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-17",
-   "headline": "7+ corners \u00b7 Villarreal",
-   "home": "Villarreal",
-   "id": "2026-10-17|Villarreal|Elche|7+ corners \u00b7 Villarreal \u00b7 Corners team fade",
-   "kickoff": "2026-10-17T14:15Z",
-   "lane": "production",
-   "league": "La Liga",
-   "match": "Villarreal v Elche",
-   "pair": "corners_team_fade|soccer_corners",
-   "price_at_log": 0.4,
-   "published_at": "2026-10-17T17:06:41+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "7+ corners \u00b7 Villarreal",
-    "event": "KXLALIGATCORNERS-26OCT17VILELC",
-    "market": "KXLALIGATCORNERS-26OCT17VILELC-VIL7",
-    "outcome": "Villarreal: 7+",
-    "outcome_side": "yes",
-    "price_at_log": 0.4,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "corners_team_fade:KXLALIGATCORNERS-26OCT17VILELC-VIL7",
-   "source": "corners_team_fade",
-   "sport": "soccer_corners",
-   "status": "hit"
-  },
-  "2026-10-17|Werder Bremen|SC Paderborn 07|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
-   "away": "SC Paderborn 07",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-13",
-   "headline": "Over 3.5 goals",
-   "home": "Werder Bremen",
-   "id": "2026-10-17|Werder Bremen|SC Paderborn 07|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
-   "kickoff": "2026-10-17T13:30Z",
-   "lane": "production",
-   "league": "Bundesliga",
-   "match": "Werder Bremen v SC Paderborn 07",
-   "pair": "bund_o35|soccer_u35",
-   "price_at_log": 0.42,
-   "published_at": "2026-10-17T15:33:17+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXBUNDESLIGATOTAL-26OCT17SVWPAD",
-    "market": "KXBUNDESLIGATOTAL-26OCT17SVWPAD-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.42,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT17SVWPAD-4",
-   "source": "bund_o35",
-   "sport": "soccer_u35",
-   "status": "hit"
-  },
-  "2026-10-18|AFC Bournemouth|Sunderland|6+ corners \u00b7 AFC Bournemouth \u00b7 Corners team fade": {
-   "away": "Sunderland",
-   "bet": {
-    "kind": "corners_gte",
-    "n": 6,
-    "team": "AFC Bournemouth"
-   },
-   "date": "2026-10-18",
-   "edge_at_log": null,
-   "first_seen": "2026-10-18",
-   "headline": "6+ corners \u00b7 AFC Bournemouth",
-   "home": "AFC Bournemouth",
-   "id": "2026-10-18|AFC Bournemouth|Sunderland|6+ corners \u00b7 AFC Bournemouth \u00b7 Corners team fade",
-   "kickoff": "2026-10-18T13:00Z",
-   "lane": "production",
-   "league": "Premier League",
-   "match": "AFC Bournemouth v Sunderland",
-   "pair": "corners_team_fade|soccer_corners",
-   "price_at_log": 0.51,
-   "published_at": "2026-10-18T15:19:59+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "6+ corners \u00b7 AFC Bournemouth",
-    "event": "KXEPLTCORNERS-26OCT18BOUSUN",
-    "market": "KXEPLTCORNERS-26OCT18BOUSUN-BOU6",
-    "outcome": "Bournemouth: 6+",
-    "outcome_side": "yes",
-    "price_at_log": 0.51,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "corners_team_fade:KXEPLTCORNERS-26OCT18BOUSUN-BOU6",
-   "source": "corners_team_fade",
-   "sport": "soccer_corners",
-   "status": "miss"
-  },
   "2026-10-18|AFC Bournemouth|Sunderland|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
    "away": "Sunderland",
    "bet": {
@@ -2449,41 +1817,6 @@
    },
    "sandbox_quote": "u35_low_scoring:KXSAUDIPLTOTAL-26OCT18FATKHA-4",
    "source": "u35_low_scoring",
-   "sport": "soccer_u35",
-   "status": "miss"
-  },
-  "2026-10-18|Bayer Leverkusen|SC Freiburg|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
-   "away": "SC Freiburg",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-10-18",
-   "edge_at_log": null,
-   "first_seen": "2026-10-14",
-   "headline": "Over 3.5 goals",
-   "home": "Bayer Leverkusen",
-   "id": "2026-10-18|Bayer Leverkusen|SC Freiburg|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
-   "kickoff": "2026-10-18T13:30Z",
-   "lane": "production",
-   "league": "Bundesliga",
-   "match": "Bayer Leverkusen v SC Freiburg",
-   "pair": "bund_o35|soccer_u35",
-   "price_at_log": 0.43,
-   "published_at": "2026-10-18T17:20:29+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXBUNDESLIGATOTAL-26OCT18LEVSCF",
-    "market": "KXBUNDESLIGATOTAL-26OCT18LEVSCF-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.43,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT18LEVSCF-4",
-   "source": "bund_o35",
    "sport": "soccer_u35",
    "status": "miss"
   },
@@ -2556,41 +1889,6 @@
    "source": "espn_fpi",
    "sport": "nfl",
    "status": "hit"
-  },
-  "2026-10-18|Borussia M\u00f6nchengladbach|TSG Hoffenheim|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
-   "away": "TSG Hoffenheim",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-10-18",
-   "edge_at_log": null,
-   "first_seen": "2026-10-14",
-   "headline": "Over 3.5 goals",
-   "home": "Borussia M\u00f6nchengladbach",
-   "id": "2026-10-18|Borussia M\u00f6nchengladbach|TSG Hoffenheim|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
-   "kickoff": "2026-10-18T15:30Z",
-   "lane": "production",
-   "league": "Bundesliga",
-   "match": "Borussia M\u00f6nchengladbach v TSG Hoffenheim",
-   "pair": "bund_o35|soccer_u35",
-   "price_at_log": 0.49,
-   "published_at": "2026-10-18T18:05:06+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXBUNDESLIGATOTAL-26OCT18BMGTSG",
-    "market": "KXBUNDESLIGATOTAL-26OCT18BMGTSG-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.49,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT18BMGTSG-4",
-   "source": "bund_o35",
-   "sport": "soccer_u35",
-   "status": "miss"
   },
   "2026-10-18|Brighton & Hove Albion|Crystal Palace|Under 10 corners \u00b7 Corners total under": {
    "away": "Crystal Palace",
@@ -3540,42 +2838,6 @@
    "sport": "soccer_team2",
    "status": "hit"
   },
-  "2026-10-19|Tottenham Hotspur|Coventry City|7+ corners \u00b7 Tottenham Hotspur \u00b7 Corners team fade": {
-   "away": "Coventry City",
-   "bet": {
-    "kind": "corners_gte",
-    "n": 7,
-    "team": "Tottenham Hotspur"
-   },
-   "date": "2026-10-19",
-   "edge_at_log": null,
-   "first_seen": "2026-10-19",
-   "headline": "7+ corners \u00b7 Tottenham Hotspur",
-   "home": "Tottenham Hotspur",
-   "id": "2026-10-19|Tottenham Hotspur|Coventry City|7+ corners \u00b7 Tottenham Hotspur \u00b7 Corners team fade",
-   "kickoff": "2026-10-19T19:00Z",
-   "lane": "production",
-   "league": "Premier League",
-   "match": "Tottenham Hotspur v Coventry City",
-   "pair": "corners_team_fade|soccer_corners",
-   "price_at_log": 0.52,
-   "published_at": "2026-10-19T15:04:48+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 235,
-   "route": {
-    "claim": "7+ corners \u00b7 Tottenham Hotspur",
-    "event": "KXEPLTCORNERS-26OCT19TOTCOV",
-    "market": "KXEPLTCORNERS-26OCT19TOTCOV-TOT7",
-    "outcome": "Tottenham: 7+",
-    "outcome_side": "yes",
-    "price_at_log": 0.52,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "corners_team_fade:KXEPLTCORNERS-26OCT19TOTCOV-TOT7",
-   "source": "corners_team_fade",
-   "sport": "soccer_corners",
-   "status": "miss"
-  },
   "2026-10-19|Tottenham|Coventry|Coventry not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge": {
    "away": "Coventry",
    "bet": {
@@ -3646,44 +2908,6 @@
    "sport": "nfl",
    "status": "hit"
   },
-  "2026-10-20|FC Porto|PSV Eindhoven|6+ corners \u00b7 FC Porto \u00b7 Corners team fade": {
-   "away": "PSV Eindhoven",
-   "bet": {
-    "kind": "corners_gte",
-    "n": 6,
-    "team": "FC Porto"
-   },
-   "date": "2026-10-20",
-   "edge_at_log": null,
-   "first_seen": "2026-10-20",
-   "headline": "6+ corners \u00b7 FC Porto",
-   "home": "FC Porto",
-   "id": "2026-10-20|FC Porto|PSV Eindhoven|6+ corners \u00b7 FC Porto \u00b7 Corners team fade",
-   "kickoff": "2026-10-20T19:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T15:06:04+00:00",
-   "league": "Champions League",
-   "match": "FC Porto v PSV Eindhoven",
-   "pair": "corners_team_fade|soccer_corners",
-   "price_at_log": 0.48,
-   "published_at": "2026-10-20T15:06:04+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 233,
-   "route": {
-    "claim": "6+ corners \u00b7 FC Porto",
-    "event": "KXUCLTCORNERS-26OCT20FCPPSV",
-    "market": "KXUCLTCORNERS-26OCT20FCPPSV-FCP6",
-    "outcome": "Porto: 6+",
-    "outcome_side": "yes",
-    "price_at_log": 0.48,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "corners_team_fade:KXUCLTCORNERS-26OCT20FCPPSV-FCP6",
-   "source": "corners_team_fade",
-   "sport": "soccer_corners",
-   "status": "pending"
-  },
   "2026-10-20|KXWTI-26OCT2014-T95.49|Above $95.49 at the close \u00b7 Commodities favourite band": {
    "away": null,
    "bet": {
@@ -3719,44 +2943,6 @@
    "sandbox_quote": "commod_fav_band:KXWTI-26OCT2014-T95.49",
    "source": "commod_fav_band",
    "sport": "commodities_fav",
-   "status": "pending"
-  },
-  "2026-10-20|Liverpool|Villarreal|7+ corners \u00b7 Liverpool \u00b7 Corners team fade": {
-   "away": "Villarreal",
-   "bet": {
-    "kind": "corners_gte",
-    "n": 7,
-    "team": "Liverpool"
-   },
-   "date": "2026-10-20",
-   "edge_at_log": null,
-   "first_seen": "2026-10-20",
-   "headline": "7+ corners \u00b7 Liverpool",
-   "home": "Liverpool",
-   "id": "2026-10-20|Liverpool|Villarreal|7+ corners \u00b7 Liverpool \u00b7 Corners team fade",
-   "kickoff": "2026-10-20T19:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T15:06:04+00:00",
-   "league": "Champions League",
-   "match": "Liverpool v Villarreal",
-   "pair": "corners_team_fade|soccer_corners",
-   "price_at_log": 0.44,
-   "published_at": "2026-10-20T15:06:04+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 233,
-   "route": {
-    "claim": "7+ corners \u00b7 Liverpool",
-    "event": "KXUCLTCORNERS-26OCT20LFCVIL",
-    "market": "KXUCLTCORNERS-26OCT20LFCVIL-LFC7",
-    "outcome": "Liverpool: 7+",
-    "outcome_side": "yes",
-    "price_at_log": 0.44,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "corners_team_fade:KXUCLTCORNERS-26OCT20LFCVIL-LFC7",
-   "source": "corners_team_fade",
-   "sport": "soccer_corners",
    "status": "pending"
   },
   "2026-10-20|Manchester City|AEK Athens|10+ corners \u00b7 Corners total fade, Champions League": {
@@ -4053,43 +3239,6 @@
    "sport": "nfl",
    "status": "pending"
   },
-  "2026-10-23|VfB Stuttgart|Borussia M\u00f6nchengladbach|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
-   "away": "Borussia M\u00f6nchengladbach",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-10-23",
-   "edge_at_log": null,
-   "first_seen": "2026-10-19",
-   "headline": "Over 3.5 goals",
-   "home": "VfB Stuttgart",
-   "id": "2026-10-23|VfB Stuttgart|Borussia M\u00f6nchengladbach|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
-   "kickoff": "2026-10-23T18:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T15:06:04+00:00",
-   "league": "Bundesliga",
-   "match": "VfB Stuttgart v Borussia M\u00f6nchengladbach",
-   "pair": "bund_o35|soccer_u35",
-   "price_at_log": 0.57,
-   "published_at": "2026-10-19T18:34:43+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 5755,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXBUNDESLIGATOTAL-26OCT23VFBBMG",
-    "market": "KXBUNDESLIGATOTAL-26OCT23VFBBMG-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.57,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT23VFBBMG-4",
-   "source": "bund_o35",
-   "sport": "soccer_u35",
-   "status": "pending"
-  },
   "2026-10-24|Den Haag|Heerenveen|Draw \u00b7 Eredivisie draw band": {
    "away": "Heerenveen",
    "bet": {
@@ -4125,191 +3274,6 @@
    "sandbox_quote": "ere_draw:KXEREDIVISIEGAME-26OCT24ADOHEE",
    "source": "ere_draw",
    "sport": "soccer",
-   "status": "pending"
-  },
-  "2026-10-24|FC Augsburg|1. FC Union Berlin|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
-   "away": "1. FC Union Berlin",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-10-24",
-   "edge_at_log": null,
-   "first_seen": "2026-10-20",
-   "headline": "Over 3.5 goals",
-   "home": "FC Augsburg",
-   "id": "2026-10-24|FC Augsburg|1. FC Union Berlin|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
-   "kickoff": "2026-10-24T13:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T15:06:04+00:00",
-   "league": "Bundesliga",
-   "match": "FC Augsburg v 1. FC Union Berlin",
-   "pair": "bund_o35|soccer_u35",
-   "price_at_log": 0.44,
-   "published_at": "2026-10-20T13:37:02+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 5752,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXBUNDESLIGATOTAL-26OCT24FCAUNI",
-    "market": "KXBUNDESLIGATOTAL-26OCT24FCAUNI-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.44,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT24FCAUNI-4",
-   "source": "bund_o35",
-   "sport": "soccer_u35",
-   "status": "pending"
-  },
-  "2026-10-24|FC Cologne|Schalke 04|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
-   "away": "Schalke 04",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-10-24",
-   "edge_at_log": null,
-   "first_seen": "2026-10-20",
-   "headline": "Over 3.5 goals",
-   "home": "FC Cologne",
-   "id": "2026-10-24|FC Cologne|Schalke 04|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
-   "kickoff": "2026-10-24T13:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T15:06:04+00:00",
-   "league": "Bundesliga",
-   "match": "FC Cologne v Schalke 04",
-   "pair": "bund_o35|soccer_u35",
-   "price_at_log": 0.39,
-   "published_at": "2026-10-20T13:37:02+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 5752,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXBUNDESLIGATOTAL-26OCT24KOESCH",
-    "market": "KXBUNDESLIGATOTAL-26OCT24KOESCH-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.39,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT24KOESCH-4",
-   "source": "bund_o35",
-   "sport": "soccer_u35",
-   "status": "pending"
-  },
-  "2026-10-24|Mainz|Werder Bremen|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
-   "away": "Werder Bremen",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-10-24",
-   "edge_at_log": null,
-   "first_seen": "2026-10-20",
-   "headline": "Over 3.5 goals",
-   "home": "Mainz",
-   "id": "2026-10-24|Mainz|Werder Bremen|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
-   "kickoff": "2026-10-24T13:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T15:06:04+00:00",
-   "league": "Bundesliga",
-   "match": "Mainz v Werder Bremen",
-   "pair": "bund_o35|soccer_u35",
-   "price_at_log": 0.41,
-   "published_at": "2026-10-20T13:37:02+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 5752,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXBUNDESLIGATOTAL-26OCT24M05SVW",
-    "market": "KXBUNDESLIGATOTAL-26OCT24M05SVW-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.41,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT24M05SVW-4",
-   "source": "bund_o35",
-   "sport": "soccer_u35",
-   "status": "pending"
-  },
-  "2026-10-24|RB Leipzig|SV Elversberg|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
-   "away": "SV Elversberg",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-10-24",
-   "edge_at_log": null,
-   "first_seen": "2026-10-20",
-   "headline": "Over 3.5 goals",
-   "home": "RB Leipzig",
-   "id": "2026-10-24|RB Leipzig|SV Elversberg|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
-   "kickoff": "2026-10-24T13:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T15:06:04+00:00",
-   "league": "Bundesliga",
-   "match": "RB Leipzig v SV Elversberg",
-   "pair": "bund_o35|soccer_u35",
-   "price_at_log": 0.58,
-   "published_at": "2026-10-20T13:37:02+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 5752,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXBUNDESLIGATOTAL-26OCT24RBLSVE",
-    "market": "KXBUNDESLIGATOTAL-26OCT24RBLSVE-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.58,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT24RBLSVE-4",
-   "source": "bund_o35",
-   "sport": "soccer_u35",
-   "status": "pending"
-  },
-  "2026-10-24|SC Paderborn 07|Hamburg SV|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match": {
-   "away": "Hamburg SV",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-10-24",
-   "edge_at_log": null,
-   "first_seen": "2026-10-20",
-   "headline": "Over 3.5 goals",
-   "home": "SC Paderborn 07",
-   "id": "2026-10-24|SC Paderborn 07|Hamburg SV|Over 3.5 goals \u00b7 Bundesliga over 3.5, every match",
-   "kickoff": "2026-10-24T13:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T15:06:04+00:00",
-   "league": "Bundesliga",
-   "match": "SC Paderborn 07 v Hamburg SV",
-   "pair": "bund_o35|soccer_u35",
-   "price_at_log": 0.4,
-   "published_at": "2026-10-20T13:37:02+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 5752,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXBUNDESLIGATOTAL-26OCT24PADHSV",
-    "market": "KXBUNDESLIGATOTAL-26OCT24PADHSV-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.4,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "bund_o35:KXBUNDESLIGATOTAL-26OCT24PADHSV-4",
-   "source": "bund_o35",
-   "sport": "soccer_u35",
    "status": "pending"
   },
   "2026-10-24|Utrecht|Zwolle|Draw \u00b7 Eredivisie draw band": {
@@ -4351,31 +3315,6 @@
   }
  },
  "pairs": {
-  "bund_o35|soccer_u35": {
-   "by_hand": "2026-10-08",
-   "entered_at": "2026-10-08T17:50:08+00:00",
-   "promoted_at": "2026-10-08T17:50:08+00:00",
-   "ready_at": "2026-10-08T17:50:08+00:00",
-   "route": "moved by hand on 2026-10-08",
-   "routing": {
-    "leads": 15,
-    "problem": null,
-    "routed": 15,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": -0.0056,
-   "sandbox_n": 18,
-   "sandbox_roi": -0.144,
-   "sandbox_roi_fee": -0.1719,
-   "timing": {
-    "late": [],
-    "timed": 6,
-    "under_target": 0
-   }
-  },
   "commod_fav_band|commodities_fav": {
    "by_hand": "2026-10-09",
    "entered_at": "2026-10-09T04:31:34+00:00",
@@ -4398,31 +3337,6 @@
    "timing": {
     "late": [],
     "timed": 5,
-    "under_target": 0
-   }
-  },
-  "corners_team_fade|soccer_corners": {
-   "by_hand": "2026-10-15",
-   "entered_at": "2026-10-15T07:20:21+00:00",
-   "promoted_at": "2026-10-15T07:20:21+00:00",
-   "ready_at": "2026-10-15T07:20:21+00:00",
-   "route": "moved by hand on 2026-10-15",
-   "routing": {
-    "leads": 8,
-    "problem": null,
-    "routed": 8,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": -0.0,
-   "sandbox_n": 7,
-   "sandbox_roi": -0.3571,
-   "sandbox_roi_fee": -0.3812,
-   "timing": {
-    "late": [],
-    "timed": 4,
     "under_target": 0
    }
   },
@@ -4810,56 +3724,6 @@
     "under_target": 1
    }
   },
-  "turkey_btts_dog|soccer_btts": {
-   "by_hand": "2026-10-11",
-   "entered_at": "2026-10-11T19:34:45+00:00",
-   "promoted_at": "2026-10-11T19:34:45+00:00",
-   "ready_at": "2026-10-11T19:34:45+00:00",
-   "route": "moved by hand on 2026-10-11",
-   "routing": {
-    "leads": 3,
-    "problem": null,
-    "routed": 3,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": 0.01,
-   "sandbox_n": 3,
-   "sandbox_roi": -1.0,
-   "sandbox_roi_fee": -1.0,
-   "timing": {
-    "late": [],
-    "timed": 0,
-    "under_target": 0
-   }
-  },
-  "turkey_o25_dog|soccer_o25": {
-   "by_hand": "2026-10-11",
-   "entered_at": "2026-10-11T19:34:45+00:00",
-   "promoted_at": "2026-10-11T19:34:45+00:00",
-   "ready_at": "2026-10-11T19:34:45+00:00",
-   "route": "moved by hand on 2026-10-11",
-   "routing": {
-    "leads": 3,
-    "problem": null,
-    "routed": 3,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": 0.0167,
-   "sandbox_n": 3,
-   "sandbox_roi": -0.4709,
-   "sandbox_roi_fee": -0.4843,
-   "timing": {
-    "late": [],
-    "timed": 0,
-    "under_target": 0
-   }
-  },
   "u35_low_scoring|soccer_u35": {
    "by_hand": "2026-10-11",
    "entered_at": "2026-10-11T19:34:45+00:00",
@@ -4911,6 +3775,7 @@
    }
   }
  },
+ "pruned_at": "2026-10-20T16:42:43+00:00",
  "publication_withheld": {
   "2026-10-15|Torreense|Sunderland|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "headline": "Over 1.5 goals",

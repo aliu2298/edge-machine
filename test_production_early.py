@@ -62,8 +62,11 @@ SIX = {
 # o15_form_l10|soccer_o15 came OFF Production again on 2026-10-17 (record kept). The checks
 # below replay the 2026-10-08 move, so they put its listing back for that replay only; the
 # live list is restored after the clock section and checked without it.
+# bund_o35|soccer_u35 came off on 2026-10-20 the same way, and so did the two Turkey pairs of
+# 2026-10-11 (put back for their own replay below).
 _LIVE_OV = dict(T.PAIR_OVERRIDES)
 T.PAIR_OVERRIDES["o15_form_l10|soccer_o15"] = dict(moved_on=MOVE, production_at=None)
+T.PAIR_OVERRIDES["bund_o35|soccer_u35"] = dict(moved_on=MOVE, production_at=None)
 
 # ---------------------------------------------------------------------------
 print("the six ids are in Production, moved by hand on the same day")
@@ -99,7 +102,10 @@ eq((S.TENNIS_3H_BAND, S.COMBO_MARKUP[2], S.TENNIS_COMBO_BAND_SINCE),
    "promotion touches no tennis parameter")
 ok("o15_form_l10|soccer_o15" not in _LIVE_OV and T.PAIR_REMOVALS["o15_form_l10|soccer_o15"]["keep_record"],
    "o15_form_l10|soccer_o15 is off the live list since 2026-10-17, keeping its record")
-eq(len(_LIVE_OV), 22, "five pairs before, eleven after the six, twelve with commodities, eighteen with the six of 2026-10-11, seventeen with team scores 1+ · Clubs out on 2026-10-14, nineteen with corners_under out and its three lanes in on 2026-10-15, twenty-four with the five of 2026-10-16, twenty-three with btts_form_l10_fade out on 2026-10-17, twenty-two with o15_form_l10|soccer_o15 out the same day, twenty-three with o25_congestion|soccer_o25 in on 2026-10-18, twenty-two with it out on 2026-10-19")
+_OUT_1020 = ("corners_team_fade|soccer_corners", "turkey_o25_dog|soccer_o25", "turkey_btts_dog|soccer_btts", "bund_o35|soccer_u35")
+eq([(k in _LIVE_OV, T.PAIR_REMOVALS[k]["removed_on"], T.PAIR_REMOVALS[k]["keep_record"]) for k in _OUT_1020],
+   [(False, "2026-10-20", True)] * 4, "the four soccer lanes out on 2026-10-20 are off the live list, keeping their records")
+eq(len(_LIVE_OV), 18, "five pairs before, eleven after the six, twelve with commodities, eighteen with the six of 2026-10-11, seventeen with team scores 1+ · Clubs out on 2026-10-14, nineteen with corners_under out and its three lanes in on 2026-10-15, twenty-four with the five of 2026-10-16, twenty-three with btts_form_l10_fade out on 2026-10-17, twenty-two with o15_form_l10|soccer_o15 out the same day, twenty-three with o25_congestion|soccer_o25 in on 2026-10-18, twenty-two with it out on 2026-10-19, eighteen with four soccer lanes out on 2026-10-20")
 
 # The tracker moves them on its next run, and the Since-Production record starts there.
 _stages = {"pairs": {}, "events": []}
@@ -629,6 +635,9 @@ SIX2 = {
     "turkey_o25_dog|soccer_o25": "Turkey over 2.5 in heavy mismatches",
 }
 MOVE2 = "2026-10-11"
+# The two Turkey pairs left Production on 2026-10-20 (record kept); their listing is replayed here.
+for _k in ("turkey_btts_dog|soccer_btts", "turkey_o25_dog|soccer_o25"):
+    T.PAIR_OVERRIDES[_k] = dict(moved_on=MOVE2, production_at=None)
 # corners_under was the sixth: it left Production on 2026-10-15 (three corners lanes replaced it).
 ok("corners_under|soccer_corners" not in T.PAIR_OVERRIDES, "corners_under, listed that day, is out since 2026-10-15")
 for key, name in SIX2.items():
@@ -648,6 +657,11 @@ _st2 = {"pairs": {}, "events": []}
 T.evaluate_stages({"quotes": []}, _st2, now=NOW, verbose=False)
 for key in SIX2:
     eq((_st2["pairs"][key]["stage"], _st2["pairs"][key]["by_hand"]), ("production", MOVE2), f"{key} moves on the next run")
+T.PAIR_OVERRIDES.clear()
+T.PAIR_OVERRIDES.update(_LIVE_OV)
+T.evaluate_stages({"quotes": []}, _st2, now=NOW + timedelta(days=12), verbose=False)
+eq([(_st2["pairs"][k]["stage"], _st2["pairs"][k]["since"]) for k in ("turkey_btts_dog|soccer_btts", "turkey_o25_dog|soccer_o25")],
+   [("sandbox", None)] * 2, "taken off on 2026-10-20, both return to the Sandbox on their whole records")
 
 print("\nthe feed expresses each of them")
 # Under 3.5, clubs: the No on the league over-3.5 contract, as the internationals pair.
