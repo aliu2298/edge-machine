@@ -182,166 +182,23 @@
       "catalog": [
         {
           "lane": "econ_daily",
-          "name": "Oklahoma gas price",
-          "series": "KXAAAGASDOK",
+          "name": "Florida gas price",
+          "series": "KXAAAGASDFL",
           "sources": [
             {
               "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=OK"
+              "url": "https://gasprices.aaa.com/?state=FL"
             }
           ]
         },
         {
           "lane": "econ_daily",
-          "name": "Truflation Deadlift Index",
-          "series": "KXTRUFDEAD",
-          "sources": [
-            {
-              "name": "Truflation",
-              "url": "https://truflation.com/marketplace/deadlift-index"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Maine gas price",
-          "series": "KXAAAGASDME",
+          "name": "Illinois gas price",
+          "series": "KXAAAGASDIL",
           "sources": [
             {
               "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=ME"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "New Hampshire gas price",
-          "series": "KXAAAGASDNH",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=NH"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Wyoming gas price",
-          "series": "KXAAAGASDWY",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=WY"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Colorado gas price",
-          "series": "KXAAAGASDCO",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=CO"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "West Virginia gas price",
-          "series": "KXAAAGASDWV",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=WV"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "California gas price",
-          "series": "KXAAAGASDCA",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=CA"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "U.S. Dollar/Japanese yen exchange rate",
-          "series": "KXJPY",
-          "sources": [
-            {
-              "name": "International Monetary Fund",
-              "url": "https://www.imf.org/external/np/fin/data/rms_rep.aspx"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Wisconsin gas price",
-          "series": "KXAAAGASDWI",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=WI"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Massachusetts gas price",
-          "series": "KXAAAGASDMA",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=MA"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "New Mexico gas price",
-          "series": "KXAAAGASDNM",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=NM"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Utah gas price",
-          "series": "KXAAAGASDUT",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=UT"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Iowa gas price",
-          "series": "KXAAAGASDIA",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=IA"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Hawaii gas price",
-          "series": "KXAAAGASDHI",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=HI"
+              "url": "https://gasprices.aaa.com/?state=IL"
             }
           ]
         },
@@ -358,12 +215,23 @@
         },
         {
           "lane": "econ_daily",
-          "name": "Daily SOFR",
-          "series": "KXSOFRD",
+          "name": "New Mexico gas price",
+          "series": "KXAAAGASDNM",
           "sources": [
             {
-              "name": "Federal Reserve Bank of New York",
-              "url": "https://www.newyorkfed.org/markets/reference-rates/sofr"
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=NM"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "US gas price up",
+          "series": "KXAAAGASD",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/"
             }
           ]
         },
@@ -380,12 +248,12 @@
         },
         {
           "lane": "econ_daily",
-          "name": "Oregon gas price",
-          "series": "KXAAAGASDOR",
+          "name": "Delaware gas price",
+          "series": "KXAAAGASDDE",
           "sources": [
             {
               "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=OR"
+              "url": "https://gasprices.aaa.com/?state=DE"
             }
           ]
         },
@@ -402,111 +270,23 @@
         },
         {
           "lane": "econ_daily",
-          "name": "North Carolina gas price",
-          "series": "KXAAAGASDNC",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=NC"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "New York gas price",
-          "series": "KXAAAGASDNY",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=NY"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Ohio gas price",
-          "series": "KXAAAGASDOH",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=OH"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Nevada gas price",
-          "series": "KXAAAGASDNV",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=NV"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Idaho gas price",
-          "series": "KXAAAGASDID",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=ID"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Truflation EV",
-          "series": "KXTRUEV",
-          "sources": [
-            {
-              "name": "Truflation",
-              "url": "https://truflation.com/marketplace/ev-index"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Minnesota gas price",
-          "series": "KXAAAGASDMN",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=MN"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Connecticut gas price",
-          "series": "KXAAAGASDCT",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=CT"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "North Dakota gas price",
-          "series": "KXAAAGASDND",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=ND"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
           "name": "New Jersey gas prices",
           "series": "KXAAAGASDNJ",
           "sources": [
             {
               "name": "AAA",
               "url": "https://gasprices.aaa.com/?state=NJ"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Pennsylvania gas price",
+          "series": "KXAAAGASDPA",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=PA"
             }
           ]
         },
@@ -523,23 +303,397 @@
         },
         {
           "lane": "econ_daily",
-          "name": "Maryland gas price",
-          "series": "KXAAAGASDMD",
+          "name": "California gas price",
+          "series": "KXAAAGASDCA",
           "sources": [
             {
               "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=MD"
+              "url": "https://gasprices.aaa.com/?state=CA"
             }
           ]
         },
         {
           "lane": "econ_daily",
-          "name": "Louisiana gas price",
-          "series": "KXAAAGASDLA",
+          "name": "Washington gas price",
+          "series": "KXAAAGASDWA",
           "sources": [
             {
               "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=LA"
+              "url": "https://gasprices.aaa.com/?state=WA"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Nevada gas price",
+          "series": "KXAAAGASDNV",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=NV"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Daily Diesel Price",
+          "series": "KXDIESELD",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Georgia gas price",
+          "series": "KXAAAGASDGA",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=GA"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Hawaii gas price",
+          "series": "KXAAAGASDHI",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=HI"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Nebraska gas price",
+          "series": "KXAAAGASDNE",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=NE"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "TX gas price",
+          "series": "KXAAAGASDTX",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=TX"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "U.S. Dollar/Japanese yen exchange rate",
+          "series": "KXJPY",
+          "sources": [
+            {
+              "name": "International Monetary Fund",
+              "url": "https://www.imf.org/external/np/fin/data/rms_rep.aspx"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Massachusetts gas price",
+          "series": "KXAAAGASDMA",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=MA"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Daily SOFR",
+          "series": "KXSOFRD",
+          "sources": [
+            {
+              "name": "Federal Reserve Bank of New York",
+              "url": "https://www.newyorkfed.org/markets/reference-rates/sofr"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Kansas gas price",
+          "series": "KXAAAGASDKS",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=KS"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "New Hampshire gas price",
+          "series": "KXAAAGASDNH",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=NH"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "West Virginia gas price",
+          "series": "KXAAAGASDWV",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=WV"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Wyoming gas price",
+          "series": "KXAAAGASDWY",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=WY"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Tennessee gas price",
+          "series": "KXAAAGASDTN",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=TN"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Wisconsin gas price",
+          "series": "KXAAAGASDWI",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=WI"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Idaho gas price",
+          "series": "KXAAAGASDID",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=ID"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Truflation Bitcoin Purchasing Power Index",
+          "series": "KXTRUFBPPI",
+          "sources": [
+            {
+              "name": "Truflation Bitcoin Purchasing Power Index",
+              "url": "https://truflation.com/marketplace/btc-pp-index"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Truflation US CPI Inflation Index",
+          "series": "KXTRUFCPI",
+          "sources": [
+            {
+              "name": "Truflation",
+              "url": "https://truflation.com/marketplace/us-inflation-rate"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "New York gas price",
+          "series": "KXAAAGASDNY",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=NY"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "North Dakota gas price",
+          "series": "KXAAAGASDND",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=ND"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Virginia gas price",
+          "series": "KXAAAGASDVA",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=VA"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "South Dakota gas price",
+          "series": "KXAAAGASDSD",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=SD"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Indiana gas price",
+          "series": "KXAAAGASDIN",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=IN"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Colorado gas price",
+          "series": "KXAAAGASDCO",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=CO"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Minnesota gas price",
+          "series": "KXAAAGASDMN",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=MN"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Mississippi gas price",
+          "series": "KXAAAGASDMS",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=MS"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Utah gas price",
+          "series": "KXAAAGASDUT",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=UT"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Rhode Island gas price",
+          "series": "KXAAAGASDRI",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=RI"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "South Carolina gas price",
+          "series": "KXAAAGASDSC",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=SC"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Truflation EV",
+          "series": "KXTRUEV",
+          "sources": [
+            {
+              "name": "Truflation",
+              "url": "https://truflation.com/marketplace/ev-index"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Truflation Deadlift Index",
+          "series": "KXTRUFDEAD",
+          "sources": [
+            {
+              "name": "Truflation",
+              "url": "https://truflation.com/marketplace/deadlift-index"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Alaska gas price",
+          "series": "KXAAAGASDAK",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=AK"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Truflation AI & DePIN Index",
+          "series": "KXTRUFAIDP",
+          "sources": [
+            {
+              "name": "Truflation",
+              "url": "https://truflation.com/marketplace/ai-index"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Connecticut gas price",
+          "series": "KXAAAGASDCT",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=CT"
             }
           ]
         },
@@ -567,188 +721,12 @@
         },
         {
           "lane": "econ_daily",
-          "name": "Delaware gas price",
-          "series": "KXAAAGASDDE",
+          "name": "Oregon gas price",
+          "series": "KXAAAGASDOR",
           "sources": [
             {
               "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=DE"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "South Dakota gas price",
-          "series": "KXAAAGASDSD",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=SD"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Alaska gas price",
-          "series": "KXAAAGASDAK",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=AK"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Truflation US CPI Inflation Index",
-          "series": "KXTRUFCPI",
-          "sources": [
-            {
-              "name": "Truflation",
-              "url": "https://truflation.com/marketplace/us-inflation-rate"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Kentucky gas price",
-          "series": "KXAAAGASDKY",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=KY"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Washington gas price",
-          "series": "KXAAAGASDWA",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=WA"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Nebraska gas price",
-          "series": "KXAAAGASDNE",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=NE"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Truflation Bitcoin Purchasing Power Index",
-          "series": "KXTRUFBPPI",
-          "sources": [
-            {
-              "name": "Truflation Bitcoin Purchasing Power Index",
-              "url": "https://truflation.com/marketplace/btc-pp-index"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Tennessee gas price",
-          "series": "KXAAAGASDTN",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=TN"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Daily TSA passenger screenings",
-          "series": "KXTSAD",
-          "sources": [
-            {
-              "name": "Transportation Security Administration",
-              "url": "https://www.tsa.gov/travel/passenger-volumes"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Truflation AI & DePIN Index",
-          "series": "KXTRUFAIDP",
-          "sources": [
-            {
-              "name": "Truflation",
-              "url": "https://truflation.com/marketplace/ai-index"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Illinois gas price",
-          "series": "KXAAAGASDIL",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=IL"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Daily Diesel Price",
-          "series": "KXDIESELD",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Florida gas price",
-          "series": "KXAAAGASDFL",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=FL"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Georgia gas price",
-          "series": "KXAAAGASDGA",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=GA"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Arizona gas price",
-          "series": "KXAAAGASDAZ",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=AZ"
-            }
-          ]
-        },
-        {
-          "lane": "econ_daily",
-          "name": "Indiana gas price",
-          "series": "KXAAAGASDIN",
-          "sources": [
-            {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=IN"
+              "url": "https://gasprices.aaa.com/?state=OR"
             }
           ]
         },
@@ -765,23 +743,34 @@
         },
         {
           "lane": "econ_daily",
-          "name": "US gas price up",
-          "series": "KXAAAGASD",
+          "name": "Oklahoma gas price",
+          "series": "KXAAAGASDOK",
           "sources": [
             {
               "name": "AAA",
-              "url": "https://gasprices.aaa.com/"
+              "url": "https://gasprices.aaa.com/?state=OK"
             }
           ]
         },
         {
           "lane": "econ_daily",
-          "name": "Rhode Island gas price",
-          "series": "KXAAAGASDRI",
+          "name": "North Carolina gas price",
+          "series": "KXAAAGASDNC",
           "sources": [
             {
               "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=RI"
+              "url": "https://gasprices.aaa.com/?state=NC"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Louisiana gas price",
+          "series": "KXAAAGASDLA",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=LA"
             }
           ]
         },
@@ -798,509 +787,88 @@
         },
         {
           "lane": "econ_daily",
-          "name": "Virginia gas price",
-          "series": "KXAAAGASDVA",
+          "name": "Maine gas price",
+          "series": "KXAAAGASDME",
           "sources": [
             {
               "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=VA"
+              "url": "https://gasprices.aaa.com/?state=ME"
             }
           ]
         },
         {
           "lane": "econ_daily",
-          "name": "Mississippi gas price",
-          "series": "KXAAAGASDMS",
+          "name": "Kentucky gas price",
+          "series": "KXAAAGASDKY",
           "sources": [
             {
               "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=MS"
+              "url": "https://gasprices.aaa.com/?state=KY"
             }
           ]
         },
         {
           "lane": "econ_daily",
-          "name": "TX gas price",
-          "series": "KXAAAGASDTX",
+          "name": "Iowa gas price",
+          "series": "KXAAAGASDIA",
           "sources": [
             {
               "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=TX"
+              "url": "https://gasprices.aaa.com/?state=IA"
             }
           ]
         },
         {
           "lane": "econ_daily",
-          "name": "Kansas gas price",
-          "series": "KXAAAGASDKS",
+          "name": "Maryland gas price",
+          "series": "KXAAAGASDMD",
           "sources": [
             {
               "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=KS"
+              "url": "https://gasprices.aaa.com/?state=MD"
             }
           ]
         },
         {
           "lane": "econ_daily",
-          "name": "South Carolina gas price",
-          "series": "KXAAAGASDSC",
+          "name": "Daily TSA passenger screenings",
+          "series": "KXTSAD",
           "sources": [
             {
-              "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=SC"
+              "name": "Transportation Security Administration",
+              "url": "https://www.tsa.gov/travel/passenger-volumes"
             }
           ]
         },
         {
           "lane": "econ_daily",
-          "name": "Pennsylvania gas price",
-          "series": "KXAAAGASDPA",
+          "name": "Ohio gas price",
+          "series": "KXAAAGASDOH",
           "sources": [
             {
               "name": "AAA",
-              "url": "https://gasprices.aaa.com/?state=PA"
+              "url": "https://gasprices.aaa.com/?state=OH"
+            }
+          ]
+        },
+        {
+          "lane": "econ_daily",
+          "name": "Arizona gas price",
+          "series": "KXAAAGASDAZ",
+          "sources": [
+            {
+              "name": "AAA",
+              "url": "https://gasprices.aaa.com/?state=AZ"
             }
           ]
         }
       ],
       "error": null,
-      "last_run": "2026-10-20T16:00:14.962235+00:00",
-      "last_success": "2026-10-20T16:00:14.962235+00:00",
+      "last_run": "2026-10-20T16:30:13.688745+00:00",
+      "last_success": "2026-10-20T16:30:13.688745+00:00",
       "observations": [
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDOK"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXTRUFDEAD"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDME"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDNH"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDWY"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDCO"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDWV"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDCA"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXJPY"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDWI"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDMA"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDNM"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDUT"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDIA"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDHI"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDMO"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXSOFRD"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDAL"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDOR"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXTRUFBFST"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDNC"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDNY"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDOH"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDNV"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDID"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXTRUEV"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDMN"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDCT"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDND"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDNJ"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDMI"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDMD"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDLA"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXTXERCOTPEAKD"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDMT"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDDE"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDSD"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDAK"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXTRUFCPI"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDKY"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDWA"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDNE"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXTRUFBPPI"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDTN"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXTSAD"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXTRUFAIDP"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDIL"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 21,
-          "reasons": {
-            "Outside entry window": 21
-          },
-          "series": "KXDIESELD"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
           "listed": 27,
           "reasons": {
@@ -1309,43 +877,34 @@
           "series": "KXAAAGASDFL"
         },
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
           "listed": 17,
           "reasons": {
             "Outside entry window": 17
           },
-          "series": "KXAAAGASDGA"
+          "series": "KXAAAGASDIL"
         },
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
           "listed": 17,
           "reasons": {
             "Outside entry window": 17
           },
-          "series": "KXAAAGASDAZ"
+          "series": "KXAAAGASDMO"
         },
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
           "listed": 17,
           "reasons": {
             "Outside entry window": 17
           },
-          "series": "KXAAAGASDIN"
+          "series": "KXAAAGASDNM"
         },
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 17,
-          "reasons": {
-            "Outside entry window": 17
-          },
-          "series": "KXAAAGASDVT"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
           "listed": 17,
           "reasons": {
@@ -1354,43 +913,124 @@
           "series": "KXAAAGASD"
         },
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
           "listed": 17,
           "reasons": {
             "Outside entry window": 17
           },
-          "series": "KXAAAGASDRI"
+          "series": "KXAAAGASDAL"
         },
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
           "listed": 17,
           "reasons": {
             "Outside entry window": 17
           },
-          "series": "KXAAAGASDAR"
+          "series": "KXAAAGASDDE"
         },
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXTRUFBFST"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
           "listed": 17,
           "reasons": {
             "Outside entry window": 17
           },
-          "series": "KXAAAGASDVA"
+          "series": "KXAAAGASDNJ"
         },
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
           "listed": 17,
           "reasons": {
             "Outside entry window": 17
           },
-          "series": "KXAAAGASDMS"
+          "series": "KXAAAGASDPA"
         },
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDMI"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDCA"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDWA"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDNV"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 21,
+          "reasons": {
+            "Outside entry window": 21
+          },
+          "series": "KXDIESELD"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDGA"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDHI"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDNE"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
           "listed": 17,
           "reasons": {
@@ -1399,7 +1039,34 @@
           "series": "KXAAAGASDTX"
         },
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXJPY"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDMA"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXSOFRD"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
           "listed": 17,
           "reasons": {
@@ -1408,7 +1075,169 @@
           "series": "KXAAAGASDKS"
         },
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDNH"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDWV"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDWY"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDTN"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDWI"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDID"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXTRUFBPPI"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXTRUFCPI"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDNY"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDND"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDVA"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDSD"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDIN"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDCO"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDMN"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDMS"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDUT"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDRI"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
           "listed": 17,
           "reasons": {
@@ -1417,13 +1246,184 @@
           "series": "KXAAAGASDSC"
         },
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXTRUEV"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXTRUFDEAD"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
           "listed": 17,
           "reasons": {
             "Outside entry window": 17
           },
-          "series": "KXAAAGASDPA"
+          "series": "KXAAAGASDAK"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXTRUFAIDP"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDCT"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXTXERCOTPEAKD"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDMT"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDOR"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDVT"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDOK"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDNC"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDLA"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDAR"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDME"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDKY"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDIA"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDMD"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXTSAD"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDOH"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 17,
+          "reasons": {
+            "Outside entry window": 17
+          },
+          "series": "KXAAAGASDAZ"
         }
       ],
       "picks": [
@@ -1743,12 +1743,12 @@
       "catalog": [
         {
           "lane": "finance_daily",
-          "name": "NDQDUD",
-          "series": "KXNDQDUD",
+          "name": "GBPUSD daily up down",
+          "series": "KXGBPUSDD",
           "sources": [
             {
-              "name": "For example, Google Finance",
-              "url": "https://www.google.com/finance/quote/.INX:INDEXSP?hl=en"
+              "name": "ICE",
+              "url": "https://www.ice.com/forex"
             }
           ]
         },
@@ -1765,12 +1765,45 @@
         },
         {
           "lane": "finance_daily",
+          "name": "NZDUSD Daily",
+          "series": "KXNZDUSDAD",
+          "sources": [
+            {
+              "name": "Pyth - NZDUSD",
+              "url": "https://app.pyth.com/explore/FX.NZD%2FUSD?returnUrl=%2Fexplore%3Fsearch%3Dnzdusd%26state%3Dstable"
+            }
+          ]
+        },
+        {
+          "lane": "finance_daily",
+          "name": "USDNOK Daily ",
+          "series": "KXUSDNOKAD",
+          "sources": [
+            {
+              "name": "Pyth - USDNOK",
+              "url": "https://app.pyth.com/explore/FX.USD%2FNOK?returnUrl=%2Fexplore%3Fsearch%3Dusdnok%26state%3Dstable"
+            }
+          ]
+        },
+        {
+          "lane": "finance_daily",
           "name": "INXDUD",
           "series": "KXINXDUD",
           "sources": [
             {
               "name": "For example, Google Finance",
               "url": "https://www.google.com/finance/quote/.INX:INDEXSP?hl=en"
+            }
+          ]
+        },
+        {
+          "lane": "finance_daily",
+          "name": "USDBRL Daily ",
+          "series": "KXUSDBRLAD",
+          "sources": [
+            {
+              "name": "Pyth - USDBRL",
+              "url": "https://app.pyth.com/explore/FX.USD%2FBRL?returnUrl=%2Fexplore%3Fsearch%3DUSDBRL%26state%3Dstable"
             }
           ]
         },
@@ -1787,67 +1820,34 @@
         },
         {
           "lane": "finance_daily",
-          "name": "USD/JPY daily range",
-          "series": "KXUSDJPY",
+          "name": "EURUSD daily ",
+          "series": "KXEURUSDAD",
           "sources": [
             {
-              "name": "ICE ",
-              "url": "https://www.tradingview.com/symbols/USDJPY/?exchange=FX_IDC"
+              "name": "Pyth - EURUSD",
+              "url": "https://app.pyth.com/explore/FX.EUR%2FUSD?returnUrl=%2Fexplore%3Fsearch%3DEURUSD%26state%3Dstable"
             }
           ]
         },
         {
           "lane": "finance_daily",
-          "name": "S&P 500 above/below",
-          "series": "KXINXU",
+          "name": "UST 5 Year Daily",
+          "series": "KXUST5A",
+          "sources": [
+            {
+              "name": "U.S. Department of the Treasury",
+              "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026"
+            }
+          ]
+        },
+        {
+          "lane": "finance_daily",
+          "name": "S&P 500 range",
+          "series": "KXINX",
           "sources": [
             {
               "name": "For example, Google Finance",
               "url": "https://www.google.com/finance/quote/.INX:INDEXSP?hl=en"
-            }
-          ]
-        },
-        {
-          "lane": "finance_daily",
-          "name": "EURUSD daily up down",
-          "series": "KXEURUSDD",
-          "sources": [
-            {
-              "name": "ICE",
-              "url": "https://www.ice.com/forex"
-            }
-          ]
-        },
-        {
-          "lane": "finance_daily",
-          "name": "USDCAD Daily",
-          "series": "KXUSDCADAD",
-          "sources": [
-            {
-              "name": "Pyth - USDCAD",
-              "url": "https://app.pyth.com/explore/FX.USD%2FCAD?returnUrl=%2Fexplore%3Fsearch%3Dusdcad%26state%3Dstable"
-            }
-          ]
-        },
-        {
-          "lane": "finance_daily",
-          "name": "GBPUSD Daily",
-          "series": "KXGBPUSDAD",
-          "sources": [
-            {
-              "name": "Pyth - GBPUSD",
-              "url": "https://app.pyth.com/explore/FX.GBP%2FUSD?returnUrl=%2Fexplore%3Fsearch%3Dgbpusd%26state%3Dstable"
-            }
-          ]
-        },
-        {
-          "lane": "finance_daily",
-          "name": "NZDUSD Daily",
-          "series": "KXNZDUSDAD",
-          "sources": [
-            {
-              "name": "Pyth - NZDUSD",
-              "url": "https://app.pyth.com/explore/FX.NZD%2FUSD?returnUrl=%2Fexplore%3Fsearch%3Dnzdusd%26state%3Dstable"
             }
           ]
         },
@@ -1864,19 +1864,8 @@
         },
         {
           "lane": "finance_daily",
-          "name": "UST 2 Year Daily",
-          "series": "KXUST2A",
-          "sources": [
-            {
-              "name": "U.S. Department of the Treasury",
-              "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026"
-            }
-          ]
-        },
-        {
-          "lane": "finance_daily",
-          "name": "Nasdaq range",
-          "series": "KXNASDAQ100",
+          "name": "Nasdaq above/below",
+          "series": "KXNASDAQ100U",
           "sources": [
             {
               "name": "For example, Google Finance",
@@ -1897,12 +1886,12 @@
         },
         {
           "lane": "finance_daily",
-          "name": "EUR/USD daily range",
-          "series": "KXEURUSD",
+          "name": "S&P 500 above/below",
+          "series": "KXINXU",
           "sources": [
             {
-              "name": "ICE ",
-              "url": "https://www.tradingview.com/symbols/EURUSD/?exchange=FX_IDC"
+              "name": "For example, Google Finance",
+              "url": "https://www.google.com/finance/quote/.INX:INDEXSP?hl=en"
             }
           ]
         },
@@ -1919,8 +1908,41 @@
         },
         {
           "lane": "finance_daily",
-          "name": "Nasdaq above/below",
-          "series": "KXNASDAQ100U",
+          "name": "British Pound/US Dollar exchange rate ",
+          "series": "KXGBP",
+          "sources": [
+            {
+              "name": "International Monetary Fund",
+              "url": "https://www.imf.org/external/np/fin/data/rms_rep.aspx"
+            }
+          ]
+        },
+        {
+          "lane": "finance_daily",
+          "name": "Nasdaq up",
+          "series": "KXNASDAQ100Z",
+          "sources": [
+            {
+              "name": "For example, Google Finance",
+              "url": "https://www.google.com/finance/quote/NDX:INDEXNASDAQ?hl=en"
+            }
+          ]
+        },
+        {
+          "lane": "finance_daily",
+          "name": "USDCHF Weekly",
+          "series": "KXUSDCHFAD",
+          "sources": [
+            {
+              "name": "Pyth - USDCHF",
+              "url": "https://app.pyth.com/explore/FX.USD%2FCHF?returnUrl=%2Fexplore%3Fsearch%3Dusdchf%26state%3Dstable"
+            }
+          ]
+        },
+        {
+          "lane": "finance_daily",
+          "name": "Nasdaq range",
+          "series": "KXNASDAQ100",
           "sources": [
             {
               "name": "For example, Google Finance",
@@ -1941,17 +1963,6 @@
         },
         {
           "lane": "finance_daily",
-          "name": "British Pound/US Dollar exchange rate ",
-          "series": "KXGBP",
-          "sources": [
-            {
-              "name": "International Monetary Fund",
-              "url": "https://www.imf.org/external/np/fin/data/rms_rep.aspx"
-            }
-          ]
-        },
-        {
-          "lane": "finance_daily",
           "name": "S&P 500 up",
           "series": "KXINXZ",
           "sources": [
@@ -1963,8 +1974,8 @@
         },
         {
           "lane": "finance_daily",
-          "name": "S&P 500 range",
-          "series": "KXINX",
+          "name": "NDQDUD",
+          "series": "KXNDQDUD",
           "sources": [
             {
               "name": "For example, Google Finance",
@@ -1974,67 +1985,12 @@
         },
         {
           "lane": "finance_daily",
-          "name": "USDJPY Daily",
-          "series": "KXUSDJPYAD",
-          "sources": [
-            {
-              "name": "Pyth - USDJPY",
-              "url": "https://app.pyth.com/explore/FX.USD%2FJPY?returnUrl=%2Fexplore%3Fsearch%3Dusdjpy%26state%3Dstable"
-            }
-          ]
-        },
-        {
-          "lane": "finance_daily",
-          "name": "Nasdaq up",
-          "series": "KXNASDAQ100Z",
-          "sources": [
-            {
-              "name": "For example, Google Finance",
-              "url": "https://www.google.com/finance/quote/NDX:INDEXNASDAQ?hl=en"
-            }
-          ]
-        },
-        {
-          "lane": "finance_daily",
-          "name": "GBPUSD daily up down",
-          "series": "KXGBPUSDD",
-          "sources": [
-            {
-              "name": "ICE",
-              "url": "https://www.ice.com/forex"
-            }
-          ]
-        },
-        {
-          "lane": "finance_daily",
-          "name": "USDCHF Weekly",
-          "series": "KXUSDCHFAD",
-          "sources": [
-            {
-              "name": "Pyth - USDCHF",
-              "url": "https://app.pyth.com/explore/FX.USD%2FCHF?returnUrl=%2Fexplore%3Fsearch%3Dusdchf%26state%3Dstable"
-            }
-          ]
-        },
-        {
-          "lane": "finance_daily",
-          "name": "UST 7 Year Daily",
-          "series": "KXUST7A",
+          "name": "UST 2 Year Daily",
+          "series": "KXUST2A",
           "sources": [
             {
               "name": "U.S. Department of the Treasury",
               "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026"
-            }
-          ]
-        },
-        {
-          "lane": "finance_daily",
-          "name": "USDNOK Daily ",
-          "series": "KXUSDNOKAD",
-          "sources": [
-            {
-              "name": "Pyth - USDNOK",
-              "url": "https://app.pyth.com/explore/FX.USD%2FNOK?returnUrl=%2Fexplore%3Fsearch%3Dusdnok%26state%3Dstable"
             }
           ]
         },
@@ -2051,12 +2007,12 @@
         },
         {
           "lane": "finance_daily",
-          "name": "UST 5 Year Daily",
-          "series": "KXUST5A",
+          "name": "S&P 500 close above/below",
+          "series": "KXINXAB",
           "sources": [
             {
-              "name": "U.S. Department of the Treasury",
-              "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026"
+              "name": "For example, Google Finance",
+              "url": "https://www.google.com/finance/quote/.INX:INDEXSP?hl=en"
             }
           ]
         },
@@ -2073,23 +2029,34 @@
         },
         {
           "lane": "finance_daily",
-          "name": "USDBRL Daily ",
-          "series": "KXUSDBRLAD",
+          "name": "USD/JPY daily range",
+          "series": "KXUSDJPY",
           "sources": [
             {
-              "name": "Pyth - USDBRL",
-              "url": "https://app.pyth.com/explore/FX.USD%2FBRL?returnUrl=%2Fexplore%3Fsearch%3DUSDBRL%26state%3Dstable"
+              "name": "ICE ",
+              "url": "https://www.tradingview.com/symbols/USDJPY/?exchange=FX_IDC"
             }
           ]
         },
         {
           "lane": "finance_daily",
-          "name": "EURUSD daily ",
-          "series": "KXEURUSDAD",
+          "name": "USDCAD Daily",
+          "series": "KXUSDCADAD",
           "sources": [
             {
-              "name": "Pyth - EURUSD",
-              "url": "https://app.pyth.com/explore/FX.EUR%2FUSD?returnUrl=%2Fexplore%3Fsearch%3DEURUSD%26state%3Dstable"
+              "name": "Pyth - USDCAD",
+              "url": "https://app.pyth.com/explore/FX.USD%2FCAD?returnUrl=%2Fexplore%3Fsearch%3Dusdcad%26state%3Dstable"
+            }
+          ]
+        },
+        {
+          "lane": "finance_daily",
+          "name": "EURUSD daily up down",
+          "series": "KXEURUSDD",
+          "sources": [
+            {
+              "name": "ICE",
+              "url": "https://www.ice.com/forex"
             }
           ]
         },
@@ -2106,229 +2073,55 @@
         },
         {
           "lane": "finance_daily",
-          "name": "S&P 500 close above/below",
-          "series": "KXINXAB",
+          "name": "USDJPY Daily",
+          "series": "KXUSDJPYAD",
           "sources": [
             {
-              "name": "For example, Google Finance",
-              "url": "https://www.google.com/finance/quote/.INX:INDEXSP?hl=en"
+              "name": "Pyth - USDJPY",
+              "url": "https://app.pyth.com/explore/FX.USD%2FJPY?returnUrl=%2Fexplore%3Fsearch%3Dusdjpy%26state%3Dstable"
+            }
+          ]
+        },
+        {
+          "lane": "finance_daily",
+          "name": "EUR/USD daily range",
+          "series": "KXEURUSD",
+          "sources": [
+            {
+              "name": "ICE ",
+              "url": "https://www.tradingview.com/symbols/EURUSD/?exchange=FX_IDC"
+            }
+          ]
+        },
+        {
+          "lane": "finance_daily",
+          "name": "UST 7 Year Daily",
+          "series": "KXUST7A",
+          "sources": [
+            {
+              "name": "U.S. Department of the Treasury",
+              "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026"
+            }
+          ]
+        },
+        {
+          "lane": "finance_daily",
+          "name": "GBPUSD Daily",
+          "series": "KXGBPUSDAD",
+          "sources": [
+            {
+              "name": "Pyth - GBPUSD",
+              "url": "https://app.pyth.com/explore/FX.GBP%2FUSD?returnUrl=%2Fexplore%3Fsearch%3Dgbpusd%26state%3Dstable"
             }
           ]
         }
       ],
       "error": null,
-      "last_run": "2026-10-20T16:00:14.962235+00:00",
-      "last_success": "2026-10-20T16:00:14.962235+00:00",
+      "last_run": "2026-10-20T16:30:13.688745+00:00",
+      "last_success": "2026-10-20T16:30:13.688745+00:00",
       "observations": [
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXNDQDUD"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXTNOTED"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 1,
-          "reasons": {
-            "Outside entry window": 1
-          },
-          "series": "KXINXDUD"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 1,
-          "reasons": {
-            "Outside entry window": 1
-          },
-          "series": "KXNASDAQDUD"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXUSDJPY"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 240,
-          "reasons": {
-            "Outside entry window": 180,
-            "Unverified index closing clock": 60
-          },
-          "series": "KXINXU"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXEURUSDD"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXUSDCADAD"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXGBPUSDAD"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXNZDUSDAD"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXEUROIMF"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 15,
-          "reasons": {
-            "Outside entry window": 15
-          },
-          "series": "KXUST2A"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 60,
-          "reasons": {
-            "Not an active above-threshold binary contract": 58,
-            "Outside entry window": 2
-          },
-          "series": "KXNASDAQ100"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXUSDJPYD"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXEURUSD"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXAUDUSDAD"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 1600,
-          "reasons": {
-            "Outside entry window": 1200,
-            "Unverified index closing clock": 400
-          },
-          "series": "KXNASDAQ100U"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 15,
-          "reasons": {
-            "Outside entry window": 15
-          },
-          "series": "KXUST30A"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXGBP"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {},
-          "series": "KXINXZ"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 60,
-          "reasons": {
-            "Not an active above-threshold binary contract": 58,
-            "Outside entry window": 2
-          },
-          "series": "KXINX"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXUSDJPYAD"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {},
-          "series": "KXNASDAQ100Z"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
           "listed": 0,
           "reasons": {
@@ -2337,25 +2130,25 @@
           "series": "KXGBPUSDD"
         },
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
           "listed": 0,
           "reasons": {
             "Unsupported or already-observed outcome": 1
           },
-          "series": "KXUSDCHFAD"
+          "series": "KXTNOTED"
         },
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
-          "listed": 15,
+          "listed": 0,
           "reasons": {
-            "Outside entry window": 15
+            "Unsupported or already-observed outcome": 1
           },
-          "series": "KXUST7A"
+          "series": "KXNZDUSDAD"
         },
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
           "listed": 0,
           "reasons": {
@@ -2364,34 +2157,16 @@
           "series": "KXUSDNOKAD"
         },
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
-          "listed": 15,
+          "listed": 1,
           "reasons": {
-            "Outside entry window": 15
+            "Price or spread gate": 1
           },
-          "series": "KXUST10A"
+          "series": "KXINXDUD"
         },
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 15,
-          "reasons": {
-            "Outside entry window": 15
-          },
-          "series": "KXUST5A"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
-          "eligible": 0,
-          "listed": 0,
-          "reasons": {
-            "Unsupported or already-observed outcome": 1
-          },
-          "series": "KXUSDINRAD"
-        },
-        {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
           "listed": 0,
           "reasons": {
@@ -2400,7 +2175,16 @@
           "series": "KXUSDBRLAD"
         },
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 1,
+          "reasons": {
+            "Price or spread gate": 1
+          },
+          "series": "KXNASDAQDUD"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
           "listed": 0,
           "reasons": {
@@ -2409,7 +2193,198 @@
           "series": "KXEURUSDAD"
         },
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 15,
+          "reasons": {
+            "Outside entry window": 15
+          },
+          "series": "KXUST5A"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 60,
+          "reasons": {
+            "Not an active above-threshold binary contract": 58,
+            "Outside entry window": 1,
+            "Price or spread gate": 1
+          },
+          "series": "KXINX"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXEUROIMF"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 1600,
+          "reasons": {
+            "Outside entry window": 800,
+            "Price or spread gate": 400,
+            "Unverified index closing clock": 400
+          },
+          "series": "KXNASDAQ100U"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXUSDJPYD"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 240,
+          "reasons": {
+            "Outside entry window": 120,
+            "Price or spread gate": 60,
+            "Unverified index closing clock": 60
+          },
+          "series": "KXINXU"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXAUDUSDAD"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXGBP"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {},
+          "series": "KXNASDAQ100Z"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXUSDCHFAD"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 60,
+          "reasons": {
+            "Not an active above-threshold binary contract": 58,
+            "Outside entry window": 1,
+            "Price or spread gate": 1
+          },
+          "series": "KXNASDAQ100"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 15,
+          "reasons": {
+            "Outside entry window": 15
+          },
+          "series": "KXUST30A"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {},
+          "series": "KXINXZ"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXNDQDUD"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 15,
+          "reasons": {
+            "Outside entry window": 15
+          },
+          "series": "KXUST2A"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 15,
+          "reasons": {
+            "Outside entry window": 15
+          },
+          "series": "KXUST10A"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {},
+          "series": "KXINXAB"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXUSDINRAD"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXUSDJPY"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXUSDCADAD"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXEURUSDD"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
           "listed": 0,
           "reasons": {
@@ -2418,11 +2393,40 @@
           "series": "KX2YTEST"
         },
         {
-          "at": "2026-10-20T16:00:14.962235+00:00",
+          "at": "2026-10-20T16:30:13.688745+00:00",
           "eligible": 0,
           "listed": 0,
-          "reasons": {},
-          "series": "KXINXAB"
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXUSDJPYAD"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXEURUSD"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 15,
+          "reasons": {
+            "Outside entry window": 15
+          },
+          "series": "KXUST7A"
+        },
+        {
+          "at": "2026-10-20T16:30:13.688745+00:00",
+          "eligible": 0,
+          "listed": 0,
+          "reasons": {
+            "Unsupported or already-observed outcome": 1
+          },
+          "series": "KXGBPUSDAD"
         }
       ],
       "picks": [
