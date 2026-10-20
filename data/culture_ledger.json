@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-20T22:00:13.566263+00:00",
-   "last_success": "2026-10-20T22:00:13.566263+00:00",
+   "last_run": "2026-10-20T23:00:15.594218+00:00",
+   "last_success": "2026-10-20T23:00:15.594218+00:00",
    "observations": {
-    "at": "2026-10-20T22:00:13.566263+00:00",
-    "events": 850,
+    "at": "2026-10-20T23:00:15.594218+00:00",
+    "events": 849,
     "reasons": {
-     "in band": 2,
-     "no quote or spread too wide": 54,
-     "not active": 716,
-     "outside the band": 15,
-     "outside the entry window": 10997
+     "in band": 3,
+     "no quote or spread too wide": 63,
+     "not active": 696,
+     "outside the band": 5,
+     "outside the entry window": 10990
     }
    },
    "picks": [
@@ -436,16 +436,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-20T22:00:13.566263+00:00",
-   "last_success": "2026-10-20T22:00:13.566263+00:00",
+   "last_run": "2026-10-20T23:00:15.594218+00:00",
+   "last_success": "2026-10-20T23:00:15.594218+00:00",
    "observations": {
-    "at": "2026-10-20T22:00:13.566263+00:00",
-    "events": 850,
+    "at": "2026-10-20T23:00:15.594218+00:00",
+    "events": 849,
     "reasons": {
      "no quote or spread too wide": 109,
-     "not active": 716,
+     "not active": 696,
      "outside the band": 35,
-     "outside the entry window": 10924
+     "outside the entry window": 10917
     }
    },
    "picks": [
@@ -713,16 +713,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-20T22:00:13.566263+00:00",
-   "last_success": "2026-10-20T22:00:13.566263+00:00",
+   "last_run": "2026-10-20T23:00:15.594218+00:00",
+   "last_success": "2026-10-20T23:00:15.594218+00:00",
    "observations": {
-    "at": "2026-10-20T22:00:13.566263+00:00",
-    "events": 850,
+    "at": "2026-10-20T23:00:15.594218+00:00",
+    "events": 849,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 35,
+     "already near-certain (under 10c or over 90c)": 34,
      "edge 5c+": 16,
      "edge under 5c": 3,
-     "no quote or spread too wide": 36
+     "no quote or spread too wide": 37
     }
    },
    "picks": [
@@ -1485,16 +1485,48 @@
      "side": "no",
      "status": "open",
      "title": "Vivek / Ramaswamy"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-11-01T15:00:00Z",
+     "detail": "P(said) 0.00 \u00b7 said on 0 of the last 84 days, 11.7 days left \u00b7 edge +0.22",
+     "edge": 0.2176,
+     "event": "KXTRUMPSAYMONTH-26NOV01",
+     "id": "KXTRUMPSAYMONTH-26NOV01-GOLD",
+     "logged": "2026-10-20T23:00:15.594218+00:00",
+     "model": 0.0,
+     "name": "What will Trump say in October?",
+     "price": 0.77,
+     "series": "KXTRUMPSAYMONTH",
+     "side": "no",
+     "status": "open",
+     "title": "Golden Dome"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-11-01T15:00:00Z",
+     "detail": "P(said) 0.00 \u00b7 said on 0 of the last 84 days, 11.7 days left \u00b7 edge +0.10",
+     "edge": 0.1031,
+     "event": "KXTRUMPSAYCOMPANY-26NOV01",
+     "id": "KXTRUMPSAYCOMPANY-26NOV01-VERI",
+     "logged": "2026-10-20T23:00:15.594218+00:00",
+     "model": 0.0,
+     "name": "What companies will Trump say in October?",
+     "price": 0.89,
+     "series": "KXTRUMPSAYCOMPANY",
+     "side": "no",
+     "status": "open",
+     "title": "Verizon"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-20T22:00:13.566263+00:00",
-   "last_success": "2026-10-20T22:00:13.566263+00:00",
+   "last_run": "2026-10-20T23:00:15.594218+00:00",
+   "last_success": "2026-10-20T23:00:15.594218+00:00",
    "observations": {
-    "at": "2026-10-20T22:00:13.566263+00:00",
-    "events": 850,
+    "at": "2026-10-20T23:00:15.594218+00:00",
+    "events": 849,
     "reasons": {
      "edge 5c+": 5,
      "under 20 reviews counted": 16
@@ -1713,7 +1745,7 @@
    ]
   },
   "Antifa": {
-   "at": "2026-10-20T16:00:15.007761+00:00",
+   "at": "2026-10-20T23:00:15.594218+00:00",
    "days": [
     "2026-09-22"
    ]
@@ -1743,7 +1775,7 @@
    ]
   },
   "Bahrain / Bahraini": {
-   "at": "2026-10-20T16:00:15.007761+00:00",
+   "at": "2026-10-20T23:00:15.594218+00:00",
    "days": [
     "2026-08-20",
     "2026-08-30",
@@ -1839,7 +1871,7 @@
    "days": []
   },
   "Epstein": {
-   "at": "2026-10-20T16:00:15.007761+00:00",
+   "at": "2026-10-20T23:00:15.594218+00:00",
    "days": []
   },
   "Ethanol": {
@@ -1859,7 +1891,7 @@
    ]
   },
   "Golden Dome": {
-   "at": "2026-10-19T16:00:14.057450+00:00",
+   "at": "2026-10-20T23:00:15.594218+00:00",
    "days": []
   },
   "Golf / Golfer / Golfing": {
@@ -1914,13 +1946,13 @@
    ]
   },
   "Netflix / NFLX": {
-   "at": "2026-10-17T23:00:12.887577+00:00",
+   "at": "2026-10-20T23:00:15.594218+00:00",
    "days": [
     "2026-09-02"
    ]
   },
   "Nobel": {
-   "at": "2026-10-20T16:00:15.007761+00:00",
+   "at": "2026-10-20T23:00:15.594218+00:00",
    "days": [
     "2026-09-04",
     "2026-10-05",
@@ -2019,7 +2051,7 @@
    ]
   },
   "Tomahawk": {
-   "at": "2026-10-20T16:00:15.007761+00:00",
+   "at": "2026-10-20T23:00:15.594218+00:00",
    "days": [
     "2026-07-31"
    ]
@@ -2043,6 +2075,10 @@
   },
   "Uranium": {
    "at": "2026-10-20T20:00:15.270408+00:00",
+   "days": []
+  },
+  "Verizon": {
+   "at": "2026-10-20T23:00:15.594218+00:00",
    "days": []
   },
   "Vivek / Ramaswamy": {
