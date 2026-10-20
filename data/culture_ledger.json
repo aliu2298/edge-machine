@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-20T16:00:15.007761+00:00",
-   "last_success": "2026-10-20T16:00:15.007761+00:00",
+   "last_run": "2026-10-20T17:00:13.862090+00:00",
+   "last_success": "2026-10-20T17:00:13.862090+00:00",
    "observations": {
-    "at": "2026-10-20T16:00:15.007761+00:00",
-    "events": 840,
+    "at": "2026-10-20T17:00:13.862090+00:00",
+    "events": 841,
     "reasons": {
-     "in band": 5,
-     "no quote or spread too wide": 24,
-     "not active": 687,
-     "outside the band": 42,
-     "outside the entry window": 10881
+     "in band": 3,
+     "no quote or spread too wide": 23,
+     "not active": 689,
+     "outside the band": 45,
+     "outside the entry window": 10894
     }
    },
    "picks": [
@@ -403,17 +403,17 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-20T16:00:15.007761+00:00",
-   "last_success": "2026-10-20T16:00:15.007761+00:00",
+   "last_run": "2026-10-20T17:00:13.862090+00:00",
+   "last_success": "2026-10-20T17:00:13.862090+00:00",
    "observations": {
-    "at": "2026-10-20T16:00:15.007761+00:00",
-    "events": 840,
+    "at": "2026-10-20T17:00:13.862090+00:00",
+    "events": 841,
     "reasons": {
-     "in band": 2,
-     "no quote or spread too wide": 27,
-     "not active": 687,
-     "outside the band": 55,
-     "outside the entry window": 10868
+     "in band": 3,
+     "no quote or spread too wide": 25,
+     "not active": 689,
+     "outside the band": 56,
+     "outside the entry window": 10881
     }
    },
    "picks": [
@@ -653,21 +653,35 @@
      "side": "no",
      "status": "open",
      "title": "Dai Dai"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-21T03:59:00Z",
+     "detail": "NO 0.71 \u00b7 favourite band",
+     "event": "KXYTDAILYTOPVIDEOG-26OCT20",
+     "id": "KXYTDAILYTOPVIDEOG-26OCT20-CAS",
+     "logged": "2026-10-20T17:00:13.862090+00:00",
+     "name": "Top Daily Music Video Global on YouTube: Oct 20, 2026",
+     "price": 0.71,
+     "series": "KXYTDAILYTOPVIDEOG",
+     "side": "no",
+     "status": "open",
+     "title": "Casa Tupka Anthemo"
     }
    ]
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-20T16:00:15.007761+00:00",
-   "last_success": "2026-10-20T16:00:15.007761+00:00",
+   "last_run": "2026-10-20T17:00:13.862090+00:00",
+   "last_success": "2026-10-20T17:00:13.862090+00:00",
    "observations": {
-    "at": "2026-10-20T16:00:15.007761+00:00",
-    "events": 840,
+    "at": "2026-10-20T17:00:13.862090+00:00",
+    "events": 841,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 33,
-     "edge 5c+": 14,
+     "already near-certain (under 10c or over 90c)": 32,
+     "edge 5c+": 16,
      "edge under 5c": 4,
-     "no quote or spread too wide": 39
+     "no quote or spread too wide": 38
     }
    },
    "picks": [
@@ -1403,11 +1417,11 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-20T16:00:15.007761+00:00",
-   "last_success": "2026-10-20T16:00:15.007761+00:00",
+   "last_run": "2026-10-20T17:00:13.862090+00:00",
+   "last_success": "2026-10-20T17:00:13.862090+00:00",
    "observations": {
-    "at": "2026-10-20T16:00:15.007761+00:00",
-    "events": 840,
+    "at": "2026-10-20T17:00:13.862090+00:00",
+    "events": 841,
     "reasons": {
      "edge 5c+": 5,
      "under 20 reviews counted": 16
@@ -1862,7 +1876,7 @@
    ]
   },
   "Peptide": {
-   "at": "2026-10-19T15:00:17.989052+00:00",
+   "at": "2026-10-20T17:00:13.862090+00:00",
    "days": []
   },
   "Prediction Market / Predictive Market": {
