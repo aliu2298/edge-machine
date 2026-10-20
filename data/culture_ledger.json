@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-20T14:00:15.691314+00:00",
-   "last_success": "2026-10-20T14:00:15.691314+00:00",
+   "last_run": "2026-10-20T15:00:15.195747+00:00",
+   "last_success": "2026-10-20T15:00:15.195747+00:00",
    "observations": {
-    "at": "2026-10-20T14:00:15.691314+00:00",
-    "events": 857,
+    "at": "2026-10-20T15:00:15.195747+00:00",
+    "events": 841,
     "reasons": {
-     "in band": 4,
+     "in band": 3,
      "no quote or spread too wide": 26,
-     "not active": 930,
-     "outside the band": 40,
-     "outside the entry window": 10880
+     "not active": 686,
+     "outside the band": 42,
+     "outside the entry window": 10887
     }
    },
    "picks": [
@@ -250,10 +250,13 @@
      "id": "KXSTEAMTOPSELLER-26OCT20-AIO",
      "logged": "2026-10-19T15:00:17.989052+00:00",
      "name": "Steam: Weekly Top Seller ",
+     "payout": 1.0,
      "price": 0.91,
+     "profit": 9.2,
      "series": "KXSTEAMTOPSELLER",
+     "settled": "2026-10-20T15:00:15.195747+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "AION 2"
     },
     {
@@ -400,16 +403,17 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-20T14:00:15.691314+00:00",
-   "last_success": "2026-10-20T14:00:15.691314+00:00",
+   "last_run": "2026-10-20T15:00:15.195747+00:00",
+   "last_success": "2026-10-20T15:00:15.195747+00:00",
    "observations": {
-    "at": "2026-10-20T14:00:15.691314+00:00",
-    "events": 857,
+    "at": "2026-10-20T15:00:15.195747+00:00",
+    "events": 841,
     "reasons": {
+     "in band": 1,
      "no quote or spread too wide": 29,
-     "not active": 930,
+     "not active": 686,
      "outside the band": 54,
-     "outside the entry window": 10867
+     "outside the entry window": 10874
     }
    },
    "picks": [
@@ -557,10 +561,13 @@
      "id": "KXSTEAMTOPSELLER-26OCT20-AIO",
      "logged": "2026-10-18T11:00:13.224794+00:00",
      "name": "Steam: Weekly Top Seller ",
+     "payout": 0.0,
      "price": 0.75,
+     "profit": -100.0,
      "series": "KXSTEAMTOPSELLER",
+     "settled": "2026-10-20T15:00:15.195747+00:00",
      "side": "yes",
-     "status": "open",
+     "status": "lost",
      "title": "AION 2"
     },
     {
@@ -637,16 +644,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-20T14:00:15.691314+00:00",
-   "last_success": "2026-10-20T14:00:15.691314+00:00",
+   "last_run": "2026-10-20T15:00:15.195747+00:00",
+   "last_success": "2026-10-20T15:00:15.195747+00:00",
    "observations": {
-    "at": "2026-10-20T14:00:15.691314+00:00",
-    "events": 857,
+    "at": "2026-10-20T15:00:15.195747+00:00",
+    "events": 841,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 33,
-     "edge 5c+": 14,
-     "edge under 5c": 6,
-     "no quote or spread too wide": 37
+     "edge 5c+": 16,
+     "edge under 5c": 5,
+     "no quote or spread too wide": 36
     }
    },
    "picks": [
@@ -1366,13 +1373,14 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-20T14:00:15.691314+00:00",
-   "last_success": "2026-10-20T14:00:15.691314+00:00",
+   "last_run": "2026-10-20T15:00:15.195747+00:00",
+   "last_success": "2026-10-20T15:00:15.195747+00:00",
    "observations": {
-    "at": "2026-10-20T14:00:15.691314+00:00",
-    "events": 857,
+    "at": "2026-10-20T15:00:15.195747+00:00",
+    "events": 841,
     "reasons": {
-     "edge 5c+": 5,
+     "edge 5c+": 4,
+     "edge under 5c": 1,
      "under 20 reviews counted": 16
     }
    },
