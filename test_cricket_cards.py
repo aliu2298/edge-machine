@@ -247,7 +247,8 @@ print("\nempty ledger")
 empty = cricket_build.build({"quotes": []}, {"pairs": {}}, NOW)
 ok("No cricket rule is in Production." in empty and 'data-empty="next"' in empty and "rule-card" not in empty
    and 'class="sp-pick' not in empty, "an empty ledger says so and draws no pick")
-ok("<b>0</b><span>open picks" in empty and "<b>—</b><span>Production record" in empty, "the tiles are zero and dashes")
+ok("<b>0</b><span>open picks" in empty and "<b>—</b><span>Sandbox record · paper" in empty
+   and '<b class="mut">—</b><span>ROI after fees · Sandbox, paper' in empty, "the tiles are zero and dashes")
 
 print("\nsoccer and tennis stay on their own pages")
 soc = soccer_build.build(d, st, NOW)
