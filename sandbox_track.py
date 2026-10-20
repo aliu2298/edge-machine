@@ -396,7 +396,8 @@ PAIR_OVERRIDES = {
     # Nothing settled, nine bets open. It backs the YES on the same over-3.5 contract the
     # under-3.5 rule backs the No on, so the league under-3.5 domain now carries two
     # publishable claims and the pick tells them apart (FEED_YES_TWIN).
-    "bund_o35|soccer_u35": dict(moved_on="2026-10-08", production_at=None),
+    #   bund_o35|soccer_u35 — OUT 2026-10-20, back to the Sandbox, as asked (Olu): 8/18 on the
+    #   tradeable venues, -17.2% after fees, z -0.37. Whole record kept (PAIR_REMOVALS).
     # 2026-10-09, as asked: the commodities favourite band, the crypto question asked of
     # Kalshi's daily commodity ladders (KXWTI, KXBRENTD, KXGOLDD, KXSILVERD, KXCOPPERD,
     # KXNATGASD), registered 2026-10-08 and EARLY like the six above. Its whole record
@@ -422,7 +423,9 @@ PAIR_OVERRIDES = {
     # of a corners rung (FEED_YES_TWIN corners_gte); the total under is the NO, as before.
     "corners_total_under|soccer_corners": dict(moved_on="2026-10-15", production_at=None),
     "corners_ucl_fade|soccer_corners": dict(moved_on="2026-10-15", production_at=None),
-    "corners_team_fade|soccer_corners": dict(moved_on="2026-10-15", production_at=None),
+    #   corners_team_fade|soccer_corners — OUT 2026-10-20, back to the Sandbox, as asked (Olu):
+    #   2/7, -38.1% after fees, z -0.85. Whole record kept (PAIR_REMOVALS). corners_ucl_fade and
+    #   corners_total_under stay listed.
     # corners under form rule: 8-6 on 14 matches (35 rungs), +4.4% after fees, +1.4c
     # against the close, 3 open. The feed learned the corners rung for it: the NO on a
     # Kalshi total-corner or team-corner "N+" contract (FEED_BETS soccer_corners, kind
@@ -438,14 +441,16 @@ PAIR_OVERRIDES = {
     # Turkey BTTS in heavy mismatches: 1-0 on 1 (+86.1%), nothing to read. BTTS reached the
     # feed on 2026-10-08; the Turkish Super Lig is a BTTS-board league and not a GAME-map
     # one, so quote_league now accepts either map's leagues for a yes/no row.
-    "turkey_btts_dog|soccer_btts": dict(moved_on="2026-10-11", production_at=None),
+    #   turkey_btts_dog|soccer_btts — OUT 2026-10-20, back to the Sandbox, as asked (Olu): 1/4,
+    #   -53.5% after fees, z -1.03. Whole record kept (PAIR_REMOVALS).
     # favourite to score 2+, ranked by margin, CLUBS scope (the internationals twin was
     # retired and faded on 2026-10-11, and is not listed): 1-0 on 1 (+105%), nothing to
     # read. The feed names its Yes on the team-total contract (FEED_BETS soccer_team2).
     "team2_ranked|soccer_team2": dict(moved_on="2026-10-11", production_at=None),
     # Turkey over 2.5 in heavy mismatches: 1-0 on 1 (+43.8%), nothing to read. The feed
     # learned the over-2.5 Yes for it (FEED_BETS soccer_o25, total_gte 3).
-    "turkey_o25_dog|soccer_o25": dict(moved_on="2026-10-11", production_at=None),
+    #   turkey_o25_dog|soccer_o25 — OUT 2026-10-20, back to the Sandbox, as asked (Olu): 2/4,
+    #   -25.4% after fees, z -0.45. Whole record kept (PAIR_REMOVALS).
     # Moved by hand on 2026-10-16 (Olu), on the Sandbox records since each pair's reset, after
     # fees per contract: BTTS form fade 5-6 on 11 (+18.0%), MLS fade home 8-2 on 10 (+33.0%),
     # team 2+ form (clubs) 7-2 on 9 (+12.1%), FTTS NO 70-80 5-1 on 6 (+10.2%), ESPN FPI NFL 4-4
@@ -478,6 +483,12 @@ PAIR_REMOVALS = {
     "btts_form_l10_fade|soccer_btts": dict(removed_on="2026-10-17", keep_record=True),
     "o15_form_l10|soccer_o15": dict(removed_on="2026-10-17", keep_record=True),
     "o25_congestion|soccer_o25": dict(removed_on="2026-10-19", keep_record=True),
+    # 2026-10-20, as asked (Olu): four soccer lanes out on their whole records. No override is
+    # left for any of them, so nothing can re-promote them on the removal's own day (#176).
+    "corners_team_fade|soccer_corners": dict(removed_on="2026-10-20", keep_record=True),
+    "turkey_o25_dog|soccer_o25": dict(removed_on="2026-10-20", keep_record=True),
+    "turkey_btts_dog|soccer_btts": dict(removed_on="2026-10-20", keep_record=True),
+    "bund_o35|soccer_u35": dict(removed_on="2026-10-20", keep_record=True),
 }
 
 

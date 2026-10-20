@@ -1668,6 +1668,30 @@
    "pair": "o25_congestion|soccer_o25",
    "reason": "taken off the Production list by hand, record kept",
    "to": "sandbox"
+  },
+  {
+   "at": "2026-10-20T16:42:42+00:00",
+   "pair": "turkey_btts_dog|soccer_btts",
+   "reason": "taken off the Production list by hand, record kept",
+   "to": "sandbox"
+  },
+  {
+   "at": "2026-10-20T16:42:42+00:00",
+   "pair": "turkey_o25_dog|soccer_o25",
+   "reason": "taken off the Production list by hand, record kept",
+   "to": "sandbox"
+  },
+  {
+   "at": "2026-10-20T16:42:42+00:00",
+   "pair": "bund_o35|soccer_u35",
+   "reason": "taken off the Production list by hand, record kept",
+   "to": "sandbox"
+  },
+  {
+   "at": "2026-10-20T16:42:42+00:00",
+   "pair": "corners_team_fade|soccer_corners",
+   "reason": "taken off the Production list by hand, record kept",
+   "to": "sandbox"
   }
  ],
  "pairs": {
@@ -1677,24 +1701,9 @@
    "stage": "sandbox"
   },
   "bund_o35|soccer_u35": {
-   "by_hand": "2026-10-08",
-   "entry": {
-    "base_roi": null,
-    "clv": null,
-    "clv_n": 0,
-    "n": 0,
-    "own_roi": null,
-    "roi": null,
-    "roi_fee": null,
-    "span_days": 0.0,
-    "weeks": 0,
-    "z": 0.0
-   },
-   "entry_since": null,
-   "promoted_at": "2026-10-08T17:50:08+00:00",
-   "ready_at": "2026-10-08T17:50:08+00:00",
-   "ready_since": "2026-10-08T17:50:08+00:00",
-   "stage": "production"
+   "demoted_at": "2026-10-20T16:42:42+00:00",
+   "since": null,
+   "stage": "sandbox"
   },
   "commod_fav_band|commodities_fav": {
    "by_hand": "2026-10-09",
@@ -1717,24 +1726,9 @@
    "stage": "production"
   },
   "corners_team_fade|soccer_corners": {
-   "by_hand": "2026-10-15",
-   "entry": {
-    "base_roi": null,
-    "clv": null,
-    "clv_n": 0,
-    "n": 0,
-    "own_roi": null,
-    "roi": null,
-    "roi_fee": null,
-    "span_days": 0.0,
-    "weeks": 0,
-    "z": 0.0
-   },
-   "entry_since": null,
-   "promoted_at": "2026-10-15T07:20:21+00:00",
-   "ready_at": "2026-10-15T07:20:21+00:00",
-   "ready_since": "2026-10-15T07:20:21+00:00",
-   "stage": "production"
+   "demoted_at": "2026-10-20T16:42:42+00:00",
+   "since": null,
+   "stage": "sandbox"
   },
   "corners_total_under|soccer_corners": {
    "by_hand": "2026-10-15",
@@ -2143,44 +2137,14 @@
    "stage": "production"
   },
   "turkey_btts_dog|soccer_btts": {
-   "by_hand": "2026-10-11",
-   "entry": {
-    "base_roi": -0.0225,
-    "clv": 0.03,
-    "clv_n": 1,
-    "n": 1,
-    "own_roi": 0.9231,
-    "roi": 0.9231,
-    "roi_fee": 0.8606,
-    "span_days": 0.0,
-    "weeks": 0,
-    "z": 0.9608
-   },
-   "entry_since": null,
-   "promoted_at": "2026-10-11T19:34:45+00:00",
-   "ready_at": "2026-10-11T19:34:45+00:00",
-   "ready_since": "2026-10-11T19:34:45+00:00",
-   "stage": "production"
+   "demoted_at": "2026-10-20T16:42:42+00:00",
+   "since": null,
+   "stage": "sandbox"
   },
   "turkey_o25_dog|soccer_o25": {
-   "by_hand": "2026-10-11",
-   "entry": {
-    "base_roi": 0.1218,
-    "clv": 0.0,
-    "clv_n": 1,
-    "n": 1,
-    "own_roi": 0.4706,
-    "roi": 0.4706,
-    "roi_fee": 0.4384,
-    "span_days": 0.0,
-    "weeks": 0,
-    "z": 0.686
-   },
-   "entry_since": null,
-   "promoted_at": "2026-10-11T19:34:45+00:00",
-   "ready_at": "2026-10-11T19:34:45+00:00",
-   "ready_since": "2026-10-11T19:34:45+00:00",
-   "stage": "production"
+   "demoted_at": "2026-10-20T16:42:42+00:00",
+   "since": null,
+   "stage": "sandbox"
   },
   "u35_low_scoring|soccer_u35": {
    "by_hand": "2026-10-11",
@@ -2223,5 +2187,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-10-20T15:06:03+00:00"
+ "updated": "2026-10-20T16:42:42+00:00"
 }
