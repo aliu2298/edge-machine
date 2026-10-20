@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-20T18:36:56+00:00",
+ "board_built_at": "2026-10-20T21:38:23+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -35,147 +35,6 @@
  "first_publish_min": 45,
  "late_publication_skipped": 7,
  "leads": {
-  "2026-10-13|Arsenal|Lille|Arsenal to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
-   "away": "Lille",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "Arsenal"
-   },
-   "date": "2026-10-13",
-   "edge_at_log": null,
-   "first_seen": "2026-10-13",
-   "headline": "Arsenal to score 2+",
-   "home": "Arsenal",
-   "id": "2026-10-13|Arsenal|Lille|Arsenal to score 2+ \u00b7 Favourite to score 2+, ranked by margin",
-   "kickoff": "2026-10-13T19:00Z",
-   "lane": "production",
-   "league": "Champions League",
-   "match": "Arsenal v Lille",
-   "pair": "team2_ranked|soccer_team2",
-   "price_at_log": 0.74,
-   "published_at": "2026-10-13T18:33:55+00:00",
-   "published_late": true,
-   "published_min_before_kickoff": 26,
-   "route": {
-    "claim": "Arsenal to score 2+",
-    "event": "KXUCLTEAMTOTAL-26OCT13ARSLIL",
-    "market": "KXUCLTEAMTOTAL-26OCT13ARSLIL-ARS2",
-    "outcome": "Arsenal over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.74,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team2_ranked:KXUCLTEAMTOTAL-26OCT13ARSLIL-ARS2",
-   "source": "team2_ranked",
-   "sport": "soccer_team2",
-   "status": "hit"
-  },
-  "2026-10-13|KXBRENTD-26OCT1317-T103|Above $103 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-13",
-   "edge_at_log": null,
-   "first_seen": "2026-10-13",
-   "headline": "Above $103 at the close",
-   "home": null,
-   "id": "2026-10-13|KXBRENTD-26OCT1317-T103|Above $103 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-10-13T21:00Z",
-   "lane": "production",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "Brent crude close on Oct 13, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.72,
-   "published_at": "2026-10-13T18:33:55+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 146,
-   "route": {
-    "claim": "Above $103 at the close",
-    "event": "KXBRENTD-26OCT1317",
-    "market": "KXBRENTD-26OCT1317-T103",
-    "outcome": "Above $103",
-    "outcome_side": "yes",
-    "price_at_log": 0.72,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXBRENTD-26OCT1317-T103",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
-   "status": "hit"
-  },
-  "2026-10-13|KXGOLDD-26OCT1317-T4154|Above $4154 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-13",
-   "edge_at_log": null,
-   "first_seen": "2026-10-13",
-   "headline": "Above $4154 at the close",
-   "home": null,
-   "id": "2026-10-13|KXGOLDD-26OCT1317-T4154|Above $4154 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-10-13T21:00Z",
-   "lane": "production",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "Gold close on Oct 13, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.73,
-   "published_at": "2026-10-13T18:33:55+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 146,
-   "route": {
-    "claim": "Above $4154 at the close",
-    "event": "KXGOLDD-26OCT1317",
-    "market": "KXGOLDD-26OCT1317-T4154",
-    "outcome": "Above $4154",
-    "outcome_side": "yes",
-    "price_at_log": 0.73,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXGOLDD-26OCT1317-T4154",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
-   "status": "hit"
-  },
-  "2026-10-13|KXNATGASD-26OCT1317-T3.510|Above $3.510 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-13",
-   "edge_at_log": null,
-   "first_seen": "2026-10-13",
-   "headline": "Above $3.510 at the close",
-   "home": null,
-   "id": "2026-10-13|KXNATGASD-26OCT1317-T3.510|Above $3.510 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-10-13T21:00Z",
-   "lane": "production",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "Natural gas close on Oct 13, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.76,
-   "published_at": "2026-10-13T17:33:55+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 206,
-   "route": {
-    "claim": "Above $3.510 at the close",
-    "event": "KXNATGASD-26OCT1317",
-    "market": "KXNATGASD-26OCT1317-T3.510",
-    "outcome": "Above $3.510",
-    "outcome_side": "yes",
-    "price_at_log": 0.76,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXNATGASD-26OCT1317-T3.510",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
-   "status": "hit"
-  },
   "2026-10-14|D.C. United|Red Bull New York|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
    "away": "Red Bull New York",
    "bet": {
@@ -2803,42 +2662,6 @@
    "sport": "soccer_o15",
    "status": "miss"
   },
-  "2026-10-20|Bockelmann Evans, Felix|Machado, Miguel Angel|Machado, Miguel Angel to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
-   "away": "Machado, Miguel Angel",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-10-20",
-   "edge_at_log": null,
-   "first_seen": "2026-10-20",
-   "headline": "Machado, Miguel Angel to win",
-   "home": "Bockelmann Evans, Felix",
-   "id": "2026-10-20|Bockelmann Evans, Felix|Machado, Miguel Angel|Machado, Miguel Angel to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles",
-   "kickoff": "2026-10-20T20:10Z",
-   "lane": "production",
-   "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T18:36:56+00:00",
-   "league": "Tennis",
-   "match": "Bockelmann Evans, Felix v Machado, Miguel Angel",
-   "pair": "tennis_utr_shortlist_v1|tennis",
-   "price_at_log": 0.72,
-   "published_at": "2026-10-20T18:30:53+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 99,
-   "route": {
-    "claim": "Machado, Miguel Angel to win",
-    "market": "aec-utr-bocfel-macang-2026-10-19",
-    "outcome": "Machado, Miguel Angel",
-    "outcome_side": "no",
-    "price_at_log": 0.72,
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "tennis_utr_shortlist_v1:aec-utr-bocfel-macang-2026-10-19",
-   "source": "tennis_utr_shortlist_v1",
-   "sport": "tennis",
-   "status": "pending"
-  },
   "2026-10-20|Commanders|49ers|49ers to win \u00b7 ESPN FPI / Matchup Predictor": {
    "away": "49ers",
    "bet": {
@@ -2874,154 +2697,6 @@
    "sport": "nfl",
    "status": "hit"
   },
-  "2026-10-20|KXBRENTD-26OCT2017-T104.50|Above $104.50 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-20",
-   "edge_at_log": null,
-   "first_seen": "2026-10-20",
-   "headline": "Above $104.50 at the close",
-   "home": null,
-   "id": "2026-10-20|KXBRENTD-26OCT2017-T104.50|Above $104.50 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-10-20T21:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T18:36:56+00:00",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "Brent crude close on Oct 20, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.72,
-   "published_at": "2026-10-20T17:35:43+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 204,
-   "route": {
-    "claim": "Above $104.50 at the close",
-    "event": "KXBRENTD-26OCT2017",
-    "market": "KXBRENTD-26OCT2017-T104.50",
-    "outcome": "Above $104.50",
-    "outcome_side": "yes",
-    "price_at_log": 0.72,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXBRENTD-26OCT2017-T104.50",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
-   "status": "pending"
-  },
-  "2026-10-20|KXBTCD-26OCT2017-T82499.99|$82,500 or above at the close \u00b7 Crypto favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-20",
-   "edge_at_log": null,
-   "first_seen": "2026-10-20",
-   "headline": "$82,500 or above at the close",
-   "home": null,
-   "id": "2026-10-20|KXBTCD-26OCT2017-T82499.99|$82,500 or above at the close \u00b7 Crypto favourite band",
-   "kickoff": "2026-10-20T21:05Z",
-   "lane": "production",
-   "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T18:36:56+00:00",
-   "league": "Crypto \u00b7 Favourite band",
-   "match": "Bitcoin price on Oct 20, 2026",
-   "pair": "crypto_fav_band|crypto_fav",
-   "price_at_log": 0.7,
-   "published_at": "2026-10-20T18:05:25+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 179,
-   "route": {
-    "claim": "$82,500 or above at the close",
-    "event": "KXBTCD-26OCT2017",
-    "market": "KXBTCD-26OCT2017-T82499.99",
-    "outcome": "$82,500 or above",
-    "outcome_side": "yes",
-    "price_at_log": 0.7,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "crypto_fav_band:KXBTCD-26OCT2017-T82499.99",
-   "source": "crypto_fav_band",
-   "sport": "crypto_fav",
-   "status": "pending"
-  },
-  "2026-10-20|KXNATGASD-26OCT2017-T3.280|Above $3.280 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-20",
-   "edge_at_log": null,
-   "first_seen": "2026-10-20",
-   "headline": "Above $3.280 at the close",
-   "home": null,
-   "id": "2026-10-20|KXNATGASD-26OCT2017-T3.280|Above $3.280 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-10-20T21:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T18:36:56+00:00",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "Natural gas close on Oct 20, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.7,
-   "published_at": "2026-10-20T17:35:43+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 204,
-   "route": {
-    "claim": "Above $3.280 at the close",
-    "event": "KXNATGASD-26OCT2017",
-    "market": "KXNATGASD-26OCT2017-T3.280",
-    "outcome": "Above $3.280",
-    "outcome_side": "yes",
-    "price_at_log": 0.7,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXNATGASD-26OCT2017-T3.280",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
-   "status": "pending"
-  },
-  "2026-10-20|KXSILVERD-26OCT2017-T57.75|Above $57.75 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-20",
-   "edge_at_log": null,
-   "first_seen": "2026-10-20",
-   "headline": "Above $57.75 at the close",
-   "home": null,
-   "id": "2026-10-20|KXSILVERD-26OCT2017-T57.75|Above $57.75 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-10-20T21:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T18:36:56+00:00",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "Silver close on Oct 20, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.78,
-   "published_at": "2026-10-20T18:05:25+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 174,
-   "route": {
-    "claim": "Above $57.75 at the close",
-    "event": "KXSILVERD-26OCT2017",
-    "market": "KXSILVERD-26OCT2017-T57.75",
-    "outcome": "Above $57.75",
-    "outcome_side": "yes",
-    "price_at_log": 0.78,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXSILVERD-26OCT2017-T57.75",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
-   "status": "pending"
-  },
   "2026-10-20|Manchester City|AEK Athens|10+ corners \u00b7 Corners total fade, Champions League": {
    "away": "AEK Athens",
    "bet": {
@@ -3036,8 +2711,6 @@
    "id": "2026-10-20|Manchester City|AEK Athens|10+ corners \u00b7 Corners total fade, Champions League",
    "kickoff": "2026-10-20T19:00Z",
    "lane": "production",
-   "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T18:36:56+00:00",
    "league": "Champions League",
    "match": "Manchester City v AEK Athens",
    "pair": "corners_ucl_fade|soccer_corners",
@@ -3057,7 +2730,7 @@
    "sandbox_quote": "corners_ucl_fade:KXUCLCORNERS-26OCT20MCIAEK-10",
    "source": "corners_ucl_fade",
    "sport": "soccer_corners",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-20|Paris Saint-Germain|Barcelona|9+ corners \u00b7 Corners total fade, Champions League": {
    "away": "Barcelona",
@@ -3073,8 +2746,6 @@
    "id": "2026-10-20|Paris Saint-Germain|Barcelona|9+ corners \u00b7 Corners total fade, Champions League",
    "kickoff": "2026-10-20T19:00Z",
    "lane": "production",
-   "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T18:36:56+00:00",
    "league": "Champions League",
    "match": "Paris Saint-Germain v Barcelona",
    "pair": "corners_ucl_fade|soccer_corners",
@@ -3094,7 +2765,7 @@
    "sandbox_quote": "corners_ucl_fade:KXUCLCORNERS-26OCT20PSGBAR-9",
    "source": "corners_ucl_fade",
    "sport": "soccer_corners",
-   "status": "pending"
+   "status": "miss"
   },
   "2026-10-20|Vaccari, Ludovico|Tramolay, Leonard|Vaccari, Ludovico to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
    "away": "Tramolay, Leonard",
@@ -3110,8 +2781,6 @@
    "id": "2026-10-20|Vaccari, Ludovico|Tramolay, Leonard|Vaccari, Ludovico to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles",
    "kickoff": "2026-10-20T19:00Z",
    "lane": "production",
-   "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T18:36:56+00:00",
    "league": "Tennis",
    "match": "Vaccari, Ludovico v Tramolay, Leonard",
    "pair": "tennis_utr_shortlist_v1|tennis",
@@ -3130,7 +2799,7 @@
    "sandbox_quote": "tennis_utr_shortlist_v1:aec-utr-vaclud-traleo-2026-10-19",
    "source": "tennis_utr_shortlist_v1",
    "sport": "tennis",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-10-22|Al Fateh|Al Shabab|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
    "away": "Al Shabab",
@@ -3147,7 +2816,7 @@
    "kickoff": "2026-10-22T14:45Z",
    "lane": "production",
    "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T18:36:56+00:00",
+   "last_seen_at": "2026-10-20T21:38:23+00:00",
    "league": "Saudi Pro League",
    "match": "Al Fateh v Al Shabab",
    "pair": "u35_low_scoring|soccer_u35",
@@ -3184,7 +2853,7 @@
    "kickoff": "2026-10-22T16:45Z",
    "lane": "production",
    "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T18:36:56+00:00",
+   "last_seen_at": "2026-10-20T21:38:23+00:00",
    "league": "Europa League",
    "match": "Juventus v Stade Rennais",
    "pair": "o15_ranked|soccer_o15",
@@ -3206,6 +2875,44 @@
    "sport": "soccer_o15",
    "status": "pending"
   },
+  "2026-10-22|Olympiacos|Sparta Prague|Olympiacos to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
+   "away": "Sparta Prague",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "Olympiacos"
+   },
+   "date": "2026-10-22",
+   "edge_at_log": null,
+   "first_seen": "2026-10-20",
+   "headline": "Olympiacos to score 2+",
+   "home": "Olympiacos",
+   "id": "2026-10-22|Olympiacos|Sparta Prague|Olympiacos to score 2+ \u00b7 Favourite to score 2+, ranked by margin",
+   "kickoff": "2026-10-22T19:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-20",
+   "last_seen_at": "2026-10-20T21:38:23+00:00",
+   "league": "Europa League",
+   "match": "Olympiacos v Sparta Prague",
+   "pair": "team2_ranked|soccer_team2",
+   "price_at_log": 0.62,
+   "published_at": "2026-10-20T21:38:23+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 2721,
+   "route": {
+    "claim": "Olympiacos to score 2+",
+    "event": "KXUELTEAMTOTAL-26OCT22OLYSPA",
+    "market": "KXUELTEAMTOTAL-26OCT22OLYSPA-OLY2",
+    "outcome": "Olympiacos over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.62,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "team2_ranked:KXUELTEAMTOTAL-26OCT22OLYSPA-OLY2",
+   "source": "team2_ranked",
+   "sport": "soccer_team2",
+   "status": "pending"
+  },
   "2026-10-22|Olympiacos|Sparta Prague|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "away": "Sparta Prague",
    "bet": {
@@ -3221,7 +2928,7 @@
    "kickoff": "2026-10-22T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T18:36:56+00:00",
+   "last_seen_at": "2026-10-20T21:38:23+00:00",
    "league": "Europa League",
    "match": "Olympiacos v Sparta Prague",
    "pair": "o15_ranked|soccer_o15",
@@ -3257,7 +2964,7 @@
    "kickoff": "2026-10-23T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T18:36:56+00:00",
+   "last_seen_at": "2026-10-20T21:38:23+00:00",
    "league": "La Liga",
    "match": "Alav\u00e9s v M\u00e1laga",
    "pair": "liga_btts_even|soccer_btts",
@@ -3294,7 +3001,7 @@
    "kickoff": "2026-10-23T18:00Z",
    "lane": "production",
    "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T18:36:56+00:00",
+   "last_seen_at": "2026-10-20T21:38:23+00:00",
    "league": "Eredivisie",
    "match": "GA Eagles v Telstar",
    "pair": "ere_draw|soccer",
@@ -3331,7 +3038,7 @@
    "kickoff": "2026-10-23T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T18:36:56+00:00",
+   "last_seen_at": "2026-10-20T21:38:23+00:00",
    "league": "NFL",
    "match": "Patriots v Bears",
    "model_prob": 0.436,
@@ -3368,7 +3075,7 @@
    "kickoff": "2026-10-24T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T18:36:56+00:00",
+   "last_seen_at": "2026-10-20T21:38:23+00:00",
    "league": "Eredivisie",
    "match": "Den Haag v Heerenveen",
    "pair": "ere_draw|soccer",
@@ -3390,6 +3097,43 @@
    "sport": "soccer",
    "status": "pending"
   },
+  "2026-10-24|Lazio|Parma|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
+   "away": "Parma",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-10-24",
+   "edge_at_log": null,
+   "first_seen": "2026-10-20",
+   "headline": "Over 1.5 goals",
+   "home": "Lazio",
+   "id": "2026-10-24|Lazio|Parma|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
+   "kickoff": "2026-10-24T18:45Z",
+   "lane": "production",
+   "last_seen": "2026-10-20",
+   "last_seen_at": "2026-10-20T21:38:23+00:00",
+   "league": "Serie A",
+   "match": "Lazio v Parma",
+   "pair": "o15_ranked|soccer_o15",
+   "price_at_log": 0.76,
+   "published_at": "2026-10-20T21:38:23+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5586,
+   "route": {
+    "claim": "Over 1.5 goals",
+    "event": "KXSERIEATOTAL-26OCT24LAZPAR",
+    "market": "KXSERIEATOTAL-26OCT24LAZPAR-2",
+    "outcome": "Over 1.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.76,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "o15_ranked:KXSERIEATOTAL-26OCT24LAZPAR-2",
+   "source": "o15_ranked",
+   "sport": "soccer_o15",
+   "status": "pending"
+  },
   "2026-10-24|Utrecht|Zwolle|Draw \u00b7 Eredivisie draw band": {
    "away": "Zwolle",
    "bet": {
@@ -3405,7 +3149,7 @@
    "kickoff": "2026-10-24T14:30Z",
    "lane": "production",
    "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T18:36:56+00:00",
+   "last_seen_at": "2026-10-20T21:38:23+00:00",
    "league": "Eredivisie",
    "match": "Utrecht v Zwolle",
    "pair": "ere_draw|soccer",
@@ -3436,9 +3180,9 @@
    "ready_at": "2026-10-09T04:31:34+00:00",
    "route": "moved by hand on 2026-10-09",
    "routing": {
-    "leads": 15,
+    "leads": 9,
     "problem": null,
-    "routed": 15,
+    "routed": 9,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -3450,7 +3194,7 @@
    "sandbox_roi_fee": 0.2954,
    "timing": {
     "late": [],
-    "timed": 6,
+    "timed": 0,
     "under_target": 0
    }
   },
@@ -3494,10 +3238,10 @@
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": null,
-   "sandbox_n": 0,
-   "sandbox_roi": null,
-   "sandbox_roi_fee": null,
+   "sandbox_clv": 0.0,
+   "sandbox_n": 2,
+   "sandbox_roi": -0.0741,
+   "sandbox_roi_fee": -0.103,
    "timing": {
     "late": [],
     "timed": 2,
@@ -3511,9 +3255,9 @@
    "ready_at": "2026-10-08T17:50:08+00:00",
    "route": "moved by hand on 2026-10-08",
    "routing": {
-    "leads": 10,
+    "leads": 9,
     "problem": null,
-    "routed": 10,
+    "routed": 9,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -3525,7 +3269,7 @@
    "sandbox_roi_fee": -0.0789,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 0,
     "under_target": 0
    }
   },
@@ -3661,9 +3405,9 @@
    "ready_at": "2026-10-08T17:50:08+00:00",
    "route": "moved by hand on 2026-10-08",
    "routing": {
-    "leads": 11,
+    "leads": 12,
     "problem": null,
-    "routed": 11,
+    "routed": 12,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -3675,7 +3419,7 @@
    "sandbox_roi_fee": -0.0245,
    "timing": {
     "late": [],
-    "timed": 4,
+    "timed": 5,
     "under_target": 0
    }
   },
@@ -3714,15 +3458,15 @@
     "leads": 2,
     "problem": null,
     "routed": 2,
-    "unlisted": 0,
+    "unlisted": 1,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": 0.0275,
-   "sandbox_n": 4,
-   "sandbox_roi": 0.0837,
-   "sandbox_roi_fee": 0.0609,
+   "sandbox_clv": 0.032,
+   "sandbox_n": 5,
+   "sandbox_roi": -0.133,
+   "sandbox_roi_fee": -0.1513,
    "timing": {
     "late": [],
     "timed": 0,
@@ -3799,18 +3543,9 @@
    "sandbox_roi": 0.5723,
    "sandbox_roi_fee": 0.5146,
    "timing": {
-    "late": [
-     {
-      "addressed": true,
-      "headline": "Arsenal to score 2+",
-      "id": "2026-10-13|Arsenal|Lille|Arsenal to score 2+ \u00b7 Favourite to score 2+, ranked by margin",
-      "kickoff": "2026-10-13T19:00Z",
-      "match": "Arsenal v Lille",
-      "minutes": 26
-     }
-    ],
+    "late": [],
     "timed": 2,
-    "under_target": 1
+    "under_target": 0
    }
   },
   "tennis_utr_shortlist_v1|tennis": {
@@ -3820,21 +3555,21 @@
    "ready_at": "2026-10-14T04:38:55+00:00",
    "route": "moved by hand on 2026-10-14",
    "routing": {
-    "leads": 6,
+    "leads": 5,
     "problem": null,
-    "routed": 6,
+    "routed": 5,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": -0.004,
-   "sandbox_n": 5,
-   "sandbox_roi": 0.1155,
-   "sandbox_roi_fee": 0.0968,
+   "sandbox_clv": -0.0017,
+   "sandbox_n": 6,
+   "sandbox_roi": 0.1548,
+   "sandbox_roi_fee": 0.1358,
    "timing": {
     "late": [],
-    "timed": 2,
+    "timed": 1,
     "under_target": 1
    }
   },
@@ -3955,7 +3690,7 @@
   }
  },
  "stage": "production",
- "unlisted_skipped": 0,
+ "unlisted_skipped": 1,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-20T18:36:56+00:00"
+ "updated_at": "2026-10-20T21:38:23+00:00"
 }
