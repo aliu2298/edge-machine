@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-19T23:00:13.507278+00:00",
-   "last_success": "2026-10-19T23:00:13.507278+00:00",
+   "last_run": "2026-10-20T00:00:14.975986+00:00",
+   "last_success": "2026-10-20T00:00:14.975986+00:00",
    "observations": {
-    "at": "2026-10-19T23:00:13.507278+00:00",
-    "events": 870,
+    "at": "2026-10-20T00:00:14.975986+00:00",
+    "events": 872,
     "reasons": {
-     "in band": 1,
-     "no quote or spread too wide": 371,
-     "not active": 675,
-     "outside the band": 56,
-     "outside the entry window": 10922
+     "in band": 4,
+     "no quote or spread too wide": 375,
+     "not active": 677,
+     "outside the band": 49,
+     "outside the entry window": 10946
     }
    },
    "picks": [
@@ -344,17 +344,17 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-19T23:00:13.507278+00:00",
-   "last_success": "2026-10-19T23:00:13.507278+00:00",
+   "last_run": "2026-10-20T00:00:14.975986+00:00",
+   "last_success": "2026-10-20T00:00:14.975986+00:00",
    "observations": {
-    "at": "2026-10-19T23:00:13.507278+00:00",
-    "events": 870,
+    "at": "2026-10-20T00:00:14.975986+00:00",
+    "events": 872,
     "reasons": {
      "in band": 1,
-     "no quote or spread too wide": 374,
-     "not active": 675,
-     "outside the band": 123,
-     "outside the entry window": 10852
+     "no quote or spread too wide": 382,
+     "not active": 677,
+     "outside the band": 115,
+     "outside the entry window": 10876
     }
    },
    "picks": [
@@ -582,15 +582,15 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-19T23:00:13.507278+00:00",
-   "last_success": "2026-10-19T23:00:13.507278+00:00",
+   "last_run": "2026-10-20T00:00:14.975986+00:00",
+   "last_success": "2026-10-20T00:00:14.975986+00:00",
    "observations": {
-    "at": "2026-10-19T23:00:13.507278+00:00",
-    "events": 870,
+    "at": "2026-10-20T00:00:14.975986+00:00",
+    "events": 872,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 36,
-     "edge 5c+": 11,
-     "edge under 5c": 2,
+     "edge 5c+": 12,
+     "edge under 5c": 1,
      "no quote or spread too wide": 50
     }
    },
@@ -1178,16 +1178,32 @@
      "side": "no",
      "status": "open",
      "title": "Uranium"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-10-26T14:00:00Z",
+     "detail": "P(said) 0.39 \u00b7 said on 6 of the last 84 days, 6.6 days left \u00b7 edge +0.09",
+     "edge": 0.0864,
+     "event": "KXTRUMPSAY-26OCT26",
+     "id": "KXTRUMPSAY-26OCT26-CUBA",
+     "logged": "2026-10-20T00:00:14.975986+00:00",
+     "model": 0.3861,
+     "name": "What will Trump say this week?",
+     "price": 0.51,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "Cuba / Cuban"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-19T23:00:13.507278+00:00",
-   "last_success": "2026-10-19T23:00:13.507278+00:00",
+   "last_run": "2026-10-20T00:00:14.975986+00:00",
+   "last_success": "2026-10-20T00:00:14.975986+00:00",
    "observations": {
-    "at": "2026-10-19T23:00:13.507278+00:00",
-    "events": 870,
+    "at": "2026-10-20T00:00:14.975986+00:00",
+    "events": 872,
     "reasons": {
      "collecting review pace (12h of snapshots)": 1,
      "edge 5c+": 4,
@@ -1450,7 +1466,7 @@
    ]
   },
   "Cuba / Cuban": {
-   "at": "2026-10-17T23:00:12.887577+00:00",
+   "at": "2026-10-20T00:00:14.975986+00:00",
    "days": [
     "2026-07-29",
     "2026-08-10",
@@ -1504,7 +1520,7 @@
    ]
   },
   "JPMorgan / JPM": {
-   "at": "2026-10-19T17:00:15.680945+00:00",
+   "at": "2026-10-20T00:00:14.975986+00:00",
    "days": []
   },
   "Lisa Cook": {
@@ -1544,7 +1560,7 @@
    ]
   },
   "Peace in the Middle East": {
-   "at": "2026-10-19T17:00:15.680945+00:00",
+   "at": "2026-10-20T00:00:14.975986+00:00",
    "days": []
   },
   "Pelosi": {
@@ -1617,7 +1633,7 @@
    "days": []
   },
   "UAE / United Arab Emirates": {
-   "at": "2026-10-19T08:00:15.918246+00:00",
+   "at": "2026-10-20T00:00:14.975986+00:00",
    "days": [
     "2026-08-02",
     "2026-08-03",
