@@ -1,12 +1,58 @@
 {
  "error": null,
- "last_run": "2026-10-20T18:06:32.143404+00:00",
+ "last_run": "2026-10-20T21:30:14.379496+00:00",
  "rules": {
   "R1": {
-   "picks": []
+   "picks": [
+    {
+     "game": "401909089",
+     "id": "R1:KXNBATEAMTOTAL-26OCT20PHINYK-PHI110",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O-D+",
+      "home": "O-D+",
+      "home_h1": "O-D+"
+     },
+     "logged": "2026-10-20T21:30:14.379496+00:00",
+     "match": "PHI @ NY",
+     "price": 0.67,
+     "rule": "R1",
+     "side": "yes",
+     "start": "2026-10-20T23:00Z",
+     "status": "open",
+     "strike": 109.5,
+     "team": "PHI",
+     "ticker": "KXNBATEAMTOTAL-26OCT20PHINYK-PHI110",
+     "title": "Philadelphia over 109.5 points",
+     "why": "PHI O+D+ v NY O-D+ \u00b7 110+ YES 0.67"
+    }
+   ]
   },
   "R2": {
-   "picks": []
+   "picks": [
+    {
+     "game": "401909089",
+     "id": "R2:KXNBATEAMTOTAL-26OCT20PHINYK-PHI116",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O-D+",
+      "home": "O-D+",
+      "home_h1": "O-D+"
+     },
+     "logged": "2026-10-20T21:30:14.379496+00:00",
+     "match": "PHI @ NY",
+     "price": 0.44,
+     "rule": "R2",
+     "side": "yes",
+     "start": "2026-10-20T23:00Z",
+     "status": "open",
+     "strike": 115.5,
+     "team": "PHI",
+     "ticker": "KXNBATEAMTOTAL-26OCT20PHINYK-PHI116",
+     "title": "Philadelphia over 115.5 points",
+     "why": "PHI O+D+ v NY O-D+ \u00b7 115+ YES 0.44"
+    }
+   ]
   },
   "R3": {
    "picks": []
@@ -62,6 +108,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT20BOSDET-BOS104",
      "title": "Boston over 103.5 points",
      "why": "BOS O+D- v DET O+D- \u00b7 105+ YES 0.76"
+    },
+    {
+     "game": "401909089",
+     "id": "R6:KXNBATEAMTOTAL-26OCT20PHINYK-PHI106",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O-D+",
+      "home": "O-D+",
+      "home_h1": "O-D+"
+     },
+     "logged": "2026-10-20T21:30:14.379496+00:00",
+     "match": "PHI @ NY",
+     "price": 0.8,
+     "rule": "R6",
+     "side": "yes",
+     "start": "2026-10-20T23:00Z",
+     "status": "open",
+     "strike": 105.5,
+     "team": "PHI",
+     "ticker": "KXNBATEAMTOTAL-26OCT20PHINYK-PHI106",
+     "title": "Philadelphia over 105.5 points",
+     "why": "PHI O+D+ v NY O-D+ \u00b7 105+ YES 0.80"
     }
    ]
   },
@@ -244,6 +312,11 @@
    "at": "2026-10-20T18:06:32.143404+00:00",
    "due": 1,
    "new": 0
+  },
+  {
+   "at": "2026-10-20T21:30:14.379496+00:00",
+   "due": 1,
+   "new": 3
   }
  ],
  "version": "nba-rules-v1"
