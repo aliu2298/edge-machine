@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-20T03:00:15.009599+00:00",
-   "last_success": "2026-10-20T03:00:15.009599+00:00",
+   "last_run": "2026-10-20T04:00:14.608456+00:00",
+   "last_success": "2026-10-20T04:00:14.608456+00:00",
    "observations": {
-    "at": "2026-10-20T03:00:15.009599+00:00",
-    "events": 871,
+    "at": "2026-10-20T04:00:14.608456+00:00",
+    "events": 860,
     "reasons": {
-     "in band": 1,
-     "no quote or spread too wide": 217,
+     "in band": 5,
+     "no quote or spread too wide": 245,
      "not active": 728,
-     "outside the band": 26,
-     "outside the entry window": 11066
+     "outside the band": 64,
+     "outside the entry window": 10927
     }
    },
    "picks": [
@@ -353,22 +353,50 @@
      "side": "no",
      "status": "open",
      "title": "Casa Tupka Anthemo"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-21T03:59:00Z",
+     "detail": "NO 0.90 \u00b7 endgame",
+     "event": "KXDWTSELIMINATION-26OCT21",
+     "id": "KXDWTSELIMINATION-26OCT21-TAT",
+     "logged": "2026-10-20T04:00:14.608456+00:00",
+     "name": "Dancing with the Stars \u00b7 Episode 7 Elimination",
+     "price": 0.9,
+     "series": "KXDWTSELIMINATION",
+     "side": "no",
+     "status": "open",
+     "title": "Tatyana Ali"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-21T03:59:00Z",
+     "detail": "NO 0.93 \u00b7 endgame",
+     "event": "KXYTTOPVIDEOG2D-26OCT20",
+     "id": "KXYTTOPVIDEOG2D-26OCT20-XAM",
+     "logged": "2026-10-20T04:00:14.608456+00:00",
+     "name": "Runner-Up Daily Music Video Global on YouTube: Oct 20, 2026",
+     "price": 0.93,
+     "series": "KXYTTOPVIDEOG2D",
+     "side": "no",
+     "status": "open",
+     "title": "Xamdam Sobirov - Peshta / \u0425\u0430\u043c\u0434\u0430\u043c \u0421\u043e\u0431\u0438\u0440\u043e\u0432 - \u041f\u0435\u0448\u0442\u0430 / Video Klip"
     }
    ]
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-20T03:00:15.009599+00:00",
-   "last_success": "2026-10-20T03:00:15.009599+00:00",
+   "last_run": "2026-10-20T04:00:14.608456+00:00",
+   "last_success": "2026-10-20T04:00:14.608456+00:00",
    "observations": {
-    "at": "2026-10-20T03:00:15.009599+00:00",
-    "events": 871,
+    "at": "2026-10-20T04:00:14.608456+00:00",
+    "events": 860,
     "reasons": {
-     "in band": 1,
-     "no quote or spread too wide": 226,
+     "in band": 2,
+     "no quote or spread too wide": 232,
      "not active": 728,
-     "outside the band": 87,
-     "outside the entry window": 10996
+     "outside the band": 80,
+     "outside the entry window": 10927
     }
    },
    "picks": [
@@ -596,16 +624,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-20T03:00:15.009599+00:00",
-   "last_success": "2026-10-20T03:00:15.009599+00:00",
+   "last_run": "2026-10-20T04:00:14.608456+00:00",
+   "last_success": "2026-10-20T04:00:14.608456+00:00",
    "observations": {
-    "at": "2026-10-20T03:00:15.009599+00:00",
-    "events": 871,
+    "at": "2026-10-20T04:00:14.608456+00:00",
+    "events": 860,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 40,
-     "edge 5c+": 11,
-     "edge under 5c": 4,
-     "no quote or spread too wide": 44
+     "edge 5c+": 14,
+     "edge under 5c": 2,
+     "no quote or spread too wide": 43
     }
    },
    "picks": [
@@ -1240,16 +1268,48 @@
      "side": "no",
      "status": "open",
      "title": "Peace in the Middle East"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-10-26T14:00:00Z",
+     "detail": "P(said) 0.21 \u00b7 said on 3 of the last 84 days, 6.4 days left \u00b7 edge +0.57",
+     "edge": 0.5703,
+     "event": "KXTRUMPSAY-26OCT26",
+     "id": "KXTRUMPSAY-26OCT26-ETHA",
+     "logged": "2026-10-20T04:00:14.608456+00:00",
+     "model": 0.2081,
+     "name": "What will Trump say this week?",
+     "price": 0.21,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "Ethanol"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-10-26T14:00:00Z",
+     "detail": "P(said) 0.00 \u00b7 said on 0 of the last 84 days, 6.4 days left \u00b7 edge +0.12",
+     "edge": 0.1221,
+     "event": "KXTRUMPSAY-26OCT26",
+     "id": "KXTRUMPSAY-26OCT26-CYBE",
+     "logged": "2026-10-20T04:00:14.608456+00:00",
+     "model": 0.0,
+     "name": "What will Trump say this week?",
+     "price": 0.87,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "Cybersecurity / Cyber Security"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-20T03:00:15.009599+00:00",
-   "last_success": "2026-10-20T03:00:15.009599+00:00",
+   "last_run": "2026-10-20T04:00:14.608456+00:00",
+   "last_success": "2026-10-20T04:00:14.608456+00:00",
    "observations": {
-    "at": "2026-10-20T03:00:15.009599+00:00",
-    "events": 871,
+    "at": "2026-10-20T04:00:14.608456+00:00",
+    "events": 860,
     "reasons": {
      "collecting review pace (12h of snapshots)": 1,
      "edge 5c+": 4,
@@ -1452,7 +1512,7 @@
    ]
   },
   "Antifa": {
-   "at": "2026-10-19T22:00:13.601206+00:00",
+   "at": "2026-10-20T04:00:14.608456+00:00",
    "days": [
     "2026-09-22"
    ]
@@ -1472,7 +1532,7 @@
    ]
   },
   "Bahrain / Bahraini": {
-   "at": "2026-10-19T22:00:13.601206+00:00",
+   "at": "2026-10-20T04:00:14.608456+00:00",
    "days": [
     "2026-08-20",
     "2026-08-30",
@@ -1498,6 +1558,37 @@
   "BlackRock": {
    "at": "2026-10-19T11:00:14.440958+00:00",
    "days": []
+  },
+  "Blockade": {
+   "at": "2026-10-20T04:00:14.608456+00:00",
+   "days": [
+    "2026-07-28",
+    "2026-08-03",
+    "2026-08-04",
+    "2026-08-06",
+    "2026-08-10",
+    "2026-08-14",
+    "2026-08-17",
+    "2026-08-19",
+    "2026-08-21",
+    "2026-08-26",
+    "2026-08-27",
+    "2026-08-28",
+    "2026-08-30",
+    "2026-09-08",
+    "2026-09-12",
+    "2026-09-16",
+    "2026-09-22",
+    "2026-09-26",
+    "2026-10-01",
+    "2026-10-02",
+    "2026-10-03",
+    "2026-10-05",
+    "2026-10-06",
+    "2026-10-09",
+    "2026-10-14",
+    "2026-10-16"
+   ]
   },
   "Ceasefire": {
    "at": "2026-10-18T21:00:15.092165+00:00",
@@ -1529,6 +1620,10 @@
     "2026-09-30"
    ]
   },
+  "Cybersecurity / Cyber Security": {
+   "at": "2026-10-20T04:00:14.608456+00:00",
+   "days": []
+  },
   "Deere": {
    "at": "2026-10-19T17:00:15.680945+00:00",
    "days": []
@@ -1536,6 +1631,14 @@
   "Epstein": {
    "at": "2026-10-20T03:00:15.009599+00:00",
    "days": []
+  },
+  "Ethanol": {
+   "at": "2026-10-20T04:00:14.608456+00:00",
+   "days": [
+    "2026-09-18",
+    "2026-09-21",
+    "2026-09-28"
+   ]
   },
   "ExxonMobil / XOM": {
    "at": "2026-10-18T17:00:12.962888+00:00",
@@ -1665,9 +1768,8 @@
    "days": []
   },
   "Stupid Question": {
-   "at": "2026-10-18T17:33:26.303466+00:00",
+   "at": "2026-10-20T04:00:14.608456+00:00",
    "days": [
-    "2026-07-27",
     "2026-08-31",
     "2026-09-09",
     "2026-10-02",
@@ -1724,7 +1826,7 @@
    "days": []
   },
   "Zacharia": {
-   "at": "2026-10-19T21:00:14.144266+00:00",
+   "at": "2026-10-20T04:00:14.608456+00:00",
    "days": []
   },
   "Zohran / Mamdani": {
