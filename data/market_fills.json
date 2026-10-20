@@ -43,13 +43,8 @@
    "symbol": "CSCO"
   },
   {
-   "qty": 37,
+   "qty": 25,
    "rules": [
-    {
-     "id": "sw_gap_down_reversal|DAL|2026-10-09",
-     "qty": 12,
-     "rule": "sw_gap_down_reversal"
-    },
     {
      "id": "sw_rsi2_pullback|DAL|2026-10-09",
      "qty": 12,
@@ -111,17 +106,6 @@
    "symbol": "DELL"
   },
   {
-   "qty": 20,
-   "rules": [
-    {
-     "id": "sw_rsi2_pullback|DVN|2026-10-15",
-     "qty": 20,
-     "rule": "sw_rsi2_pullback"
-    }
-   ],
-   "symbol": "DVN"
-  },
-  {
    "qty": 2,
    "rules": [
     {
@@ -131,17 +115,6 @@
     }
    ],
    "symbol": "ETN"
-  },
-  {
-   "qty": 5,
-   "rules": [
-    {
-     "id": "sw_rsi2_pullback|FANG|2026-10-15",
-     "qty": 5,
-     "rule": "sw_rsi2_pullback"
-    }
-   ],
-   "symbol": "FANG"
   },
   {
    "qty": 19,
@@ -258,10 +231,15 @@
    "symbol": "INTC"
   },
   {
-   "qty": 3,
+   "qty": 6,
    "rules": [
     {
      "id": "etf_ibs_band|IWM|2026-10-14",
+     "qty": 3,
+     "rule": "etf_ibs_band"
+    },
+    {
+     "id": "etf_ibs_band|IWM|2026-10-19",
      "qty": 3,
      "rule": "etf_ibs_band"
     }
@@ -506,13 +484,22 @@
  ],
  "in_flight": [
   {
-   "client_order_id": "em-2ce0d315-9d48-5225-8c4e-78912bdc989c",
+   "client_order_id": "em-009a618b-da9e-5a2f-8e8f-bce503265382",
    "filled_at": "",
    "price": null,
    "qty": 0,
    "side": "buy",
    "status": "accepted",
-   "symbol": "IWM"
+   "symbol": "DHR"
+  },
+  {
+   "client_order_id": "em-c21a544b-4940-5ccc-a566-a6d3c6e900bf",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "STLD"
   }
  ],
  "orphans": [
@@ -529,10 +516,32 @@
  "rows": [
   {
    "fill": null,
-   "id": "sw_gap_down_reversal|DAL|2026-10-09",
+   "id": "etf_ibs_band|IWM|2026-10-14",
    "ledger": null,
    "qty": 0,
-   "rule": "sw_gap_down_reversal",
+   "rule": "etf_ibs_band",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "IWM"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|DAL|2026-10-09",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "DAL"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|DAL|2026-10-14",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
    "side": "sell",
    "slip_bps": null,
    "status": "accepted",
@@ -551,25 +560,14 @@
   },
   {
    "fill": null,
-   "id": "sw_rsi2_pullback|DVN|2026-10-15",
+   "id": "sw_rsi2_pullback|ILMN|2026-10-13",
    "ledger": null,
    "qty": 0,
    "rule": "sw_rsi2_pullback",
    "side": "sell",
    "slip_bps": null,
    "status": "accepted",
-   "symbol": "DVN"
-  },
-  {
-   "fill": null,
-   "id": "sw_rsi2_pullback|FANG|2026-10-15",
-   "ledger": null,
-   "qty": 0,
-   "rule": "sw_rsi2_pullback",
-   "side": "sell",
-   "slip_bps": null,
-   "status": "accepted",
-   "symbol": "FANG"
+   "symbol": "ILMN"
   },
   {
    "fill": null,
@@ -1566,6 +1564,58 @@
    "slip_bps": 8.74,
    "status": "filled",
    "symbol": "ICE"
+  },
+  {
+   "day": "2026-10-20",
+   "fill": 271.88,
+   "filled_at": "2026-10-20T13:31:32",
+   "id": "etf_ibs_band|IWM|2026-10-19",
+   "ledger": 271.54,
+   "qty": 3,
+   "rule": "etf_ibs_band",
+   "side": "buy",
+   "slip_bps": 12.52,
+   "status": "filled",
+   "symbol": "IWM"
+  },
+  {
+   "day": "2026-10-20",
+   "fill": 74.081667,
+   "filled_at": "2026-10-20T13:31:46",
+   "id": "sw_gap_down_reversal|DAL|2026-10-09",
+   "ledger": 74.29,
+   "qty": 12,
+   "rule": "sw_gap_down_reversal",
+   "side": "sell",
+   "slip_bps": 28.04,
+   "status": "filled",
+   "symbol": "DAL"
+  },
+  {
+   "day": "2026-10-20",
+   "fill": 51.37,
+   "filled_at": "2026-10-20T13:31:03",
+   "id": "sw_rsi2_pullback|DVN|2026-10-15",
+   "ledger": 51.435,
+   "qty": 20,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 12.64,
+   "status": "filled",
+   "symbol": "DVN"
+  },
+  {
+   "day": "2026-10-20",
+   "fill": 205.2,
+   "filled_at": "2026-10-20T13:32:02",
+   "id": "sw_rsi2_pullback|FANG|2026-10-15",
+   "ledger": 205.525,
+   "qty": 5,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 15.81,
+   "status": "filled",
+   "symbol": "FANG"
   }
  ],
  "summary": {
@@ -1577,32 +1627,32 @@
     "n": 5
    },
    "etf_ibs_band": {
-    "mean_bps": -5.25,
-    "n": 2
+    "mean_bps": 0.68,
+    "n": 3
    },
    "sw_gap_down_reversal": {
-    "mean_bps": 8.91,
-    "n": 24
+    "mean_bps": 9.67,
+    "n": 25
    },
    "sw_rsi2_pullback": {
-    "mean_bps": 15.53,
-    "n": 38
+    "mean_bps": 15.46,
+    "n": 40
    }
   },
-  "fills": 69,
-  "in_flight": 1,
-  "mean_bps": 10.92,
-  "median_bps": 4.53,
+  "fills": 73,
+  "in_flight": 2,
+  "mean_bps": 11.27,
+  "median_bps": 8.74,
   "orders": {
-   "filled": 70,
-   "sent": 84,
+   "filled": 74,
+   "sent": 90,
    "since": "2026-10-12",
    "unfilled": 10,
-   "working": 4
+   "working": 6
   },
   "orphans": 1,
-  "unfilled": 13,
+  "unfilled": 14,
   "worst_bps": 154.54
  },
- "updated": "2026-10-19T20:12:27+00:00"
+ "updated": "2026-10-20T20:12:00+00:00"
 }
