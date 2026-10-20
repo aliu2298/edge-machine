@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-19T18:16:44.078920+00:00",
+ "last_run": "2026-10-20T15:16:26.303893+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -714,11 +714,14 @@
      "logged": "2026-10-19T17:31:11.533231+00:00",
      "match": "Getafe v Rayo Vallecano",
      "opponent": "Getafe",
+     "payout": 1.0,
      "price": 0.74,
+     "profit": 32.72,
      "rule": "T8",
+     "settled": "2026-10-20T15:16:26.303893+00:00",
      "side": "no",
      "start": "2026-10-19T19:00Z",
-     "status": "open",
+     "status": "won",
      "team": "Rayo Vallecano",
      "team_side": "away",
      "ticker": "KXLALIGATEAMTOTAL-26OCT19GETRVC-RVC2",
@@ -1007,6 +1010,14 @@
    "due": 3,
    "labelled": 3,
    "matched": 1,
+   "new": 0
+  },
+  {
+   "at": "2026-10-20T15:16:26.303893+00:00",
+   "candidates": 0,
+   "due": 2,
+   "labelled": 0,
+   "matched": 0,
    "new": 0
   }
  ],
