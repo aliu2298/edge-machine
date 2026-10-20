@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-20T13:32:25.869475+00:00",
+ "last_run": "2026-10-20T17:30:16.458951+00:00",
  "rules": {
   "R1": {
    "picks": []
@@ -18,10 +18,100 @@
    "picks": []
   },
   "R6": {
-   "picks": []
+   "picks": [
+    {
+     "game": "401909088",
+     "id": "R6:KXNBATEAMTOTAL-26OCT20BOSDET-DET105",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O+D-",
+      "home": "O+D-",
+      "home_h1": "O+D+"
+     },
+     "logged": "2026-10-20T17:30:16.458951+00:00",
+     "match": "BOS @ DET",
+     "price": 0.71,
+     "rule": "R6",
+     "side": "yes",
+     "start": "2026-10-20T19:00Z",
+     "status": "open",
+     "strike": 104.5,
+     "team": "DET",
+     "ticker": "KXNBATEAMTOTAL-26OCT20BOSDET-DET105",
+     "title": "Detroit over 104.5 points",
+     "why": "DET O+D- v BOS O+D- \u00b7 105+ YES 0.71"
+    },
+    {
+     "game": "401909088",
+     "id": "R6:KXNBATEAMTOTAL-26OCT20BOSDET-BOS104",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O+D-",
+      "home": "O+D-",
+      "home_h1": "O+D+"
+     },
+     "logged": "2026-10-20T17:30:16.458951+00:00",
+     "match": "BOS @ DET",
+     "price": 0.76,
+     "rule": "R6",
+     "side": "yes",
+     "start": "2026-10-20T19:00Z",
+     "status": "open",
+     "strike": 103.5,
+     "team": "BOS",
+     "ticker": "KXNBATEAMTOTAL-26OCT20BOSDET-BOS104",
+     "title": "Boston over 103.5 points",
+     "why": "BOS O+D- v DET O+D- \u00b7 105+ YES 0.76"
+    }
+   ]
   },
   "R7": {
-   "picks": []
+   "picks": [
+    {
+     "game": "401909088",
+     "id": "R7:KXNBATEAMTOTAL-26OCT20BOSDET-DET109",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O+D-",
+      "home": "O+D-",
+      "home_h1": "O+D+"
+     },
+     "logged": "2026-10-20T17:30:16.458951+00:00",
+     "match": "BOS @ DET",
+     "price": 0.44,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-10-20T19:00Z",
+     "status": "open",
+     "strike": 108.5,
+     "team": "DET",
+     "ticker": "KXNBATEAMTOTAL-26OCT20BOSDET-DET109",
+     "title": "Detroit over 108.5 points",
+     "why": "DET O+D- v BOS O+D- \u00b7 both D\u2212 \u00b7 110+ NO 0.44"
+    },
+    {
+     "game": "401909088",
+     "id": "R7:KXNBATEAMTOTAL-26OCT20BOSDET-BOS110",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O+D-",
+      "home": "O+D-",
+      "home_h1": "O+D+"
+     },
+     "logged": "2026-10-20T17:30:16.458951+00:00",
+     "match": "BOS @ DET",
+     "price": 0.46,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-10-20T19:00Z",
+     "status": "open",
+     "strike": 109.5,
+     "team": "BOS",
+     "ticker": "KXNBATEAMTOTAL-26OCT20BOSDET-BOS110",
+     "title": "Boston over 109.5 points",
+     "why": "BOS O+D- v DET O+D- \u00b7 both D\u2212 \u00b7 110+ NO 0.46"
+    }
+   ]
   }
  },
  "runs": [
@@ -139,6 +229,11 @@
    "at": "2026-10-20T13:32:25.869475+00:00",
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-10-20T17:30:16.458951+00:00",
+   "due": 1,
+   "new": 4
   }
  ],
  "version": "nba-rules-v1"
