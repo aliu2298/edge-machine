@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-20T03:30:13+00:00",
+ "board_built_at": "2026-10-20T07:40:25+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -250,43 +250,6 @@
    "source": "econ_daily_fav_band",
    "sport": "econ_daily",
    "status": "hit"
-  },
-  "2026-10-20|KXAAAGASDOK-26OCT20-3.9450|Above 3.9450 at the close \u00b7 Econ Daily favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-20",
-   "edge_at_log": null,
-   "first_seen": "2026-10-20",
-   "headline": "Above 3.9450 at the close",
-   "home": null,
-   "id": "2026-10-20|KXAAAGASDOK-26OCT20-3.9450|Above 3.9450 at the close \u00b7 Econ Daily favourite band",
-   "kickoff": "2026-10-20T03:59Z",
-   "lane": "production",
-   "last_seen": "2026-10-20",
-   "last_seen_at": "2026-10-20T03:30:13+00:00",
-   "league": "Econ Daily",
-   "match": "Oklahoma gas price",
-   "pair": "econ_daily_fav_band|econ_daily",
-   "price_at_log": 0.71,
-   "published_at": "2026-10-20T00:30:17+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 208,
-   "route": {
-    "claim": "Above 3.9450 at the close",
-    "event": "KXAAAGASDOK-26OCT20",
-    "market": "KXAAAGASDOK-26OCT20-3.9450",
-    "outcome": "Above 3.9450",
-    "outcome_side": "yes",
-    "price_at_log": 0.71,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "econ_daily_fav_band:KXAAAGASDOK-26OCT20-3.9450",
-   "source": "econ_daily_fav_band",
-   "sport": "econ_daily",
-   "status": "pending"
   }
  },
  "pairs": {
@@ -297,9 +260,9 @@
    "ready_at": "2026-10-15T03:48:37+00:00",
    "route": "moved by hand on 2026-10-14",
    "routing": {
-    "leads": 8,
+    "leads": 7,
     "problem": null,
-    "routed": 8,
+    "routed": 7,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -311,7 +274,7 @@
    "sandbox_roi_fee": -0.0576,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 0,
     "under_target": 0
    }
   }
@@ -320,5 +283,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-20T03:30:13+00:00"
+ "updated_at": "2026-10-20T07:40:25+00:00"
 }
