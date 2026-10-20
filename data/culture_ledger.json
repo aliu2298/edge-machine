@@ -2,16 +2,16 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-20T05:00:13.450184+00:00",
-   "last_success": "2026-10-20T05:00:13.450184+00:00",
+   "last_run": "2026-10-20T06:00:17.672978+00:00",
+   "last_success": "2026-10-20T06:00:17.672978+00:00",
    "observations": {
-    "at": "2026-10-20T05:00:13.450184+00:00",
+    "at": "2026-10-20T06:00:17.672978+00:00",
     "events": 860,
     "reasons": {
-     "in band": 5,
-     "no quote or spread too wide": 231,
+     "in band": 4,
+     "no quote or spread too wide": 200,
      "not active": 728,
-     "outside the band": 78,
+     "outside the band": 110,
      "outside the entry window": 10927
     }
    },
@@ -386,16 +386,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-20T05:00:13.450184+00:00",
-   "last_success": "2026-10-20T05:00:13.450184+00:00",
+   "last_run": "2026-10-20T06:00:17.672978+00:00",
+   "last_success": "2026-10-20T06:00:17.672978+00:00",
    "observations": {
-    "at": "2026-10-20T05:00:13.450184+00:00",
+    "at": "2026-10-20T06:00:17.672978+00:00",
     "events": 860,
     "reasons": {
      "in band": 1,
-     "no quote or spread too wide": 212,
+     "no quote or spread too wide": 181,
      "not active": 728,
-     "outside the band": 101,
+     "outside the band": 132,
      "outside the entry window": 10927
     }
    },
@@ -624,16 +624,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-20T05:00:13.450184+00:00",
-   "last_success": "2026-10-20T05:00:13.450184+00:00",
+   "last_run": "2026-10-20T06:00:17.672978+00:00",
+   "last_success": "2026-10-20T06:00:17.672978+00:00",
    "observations": {
-    "at": "2026-10-20T05:00:13.450184+00:00",
+    "at": "2026-10-20T06:00:17.672978+00:00",
     "events": 860,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 41,
-     "edge 5c+": 14,
-     "edge under 5c": 6,
-     "no quote or spread too wide": 38
+     "already near-certain (under 10c or over 90c)": 42,
+     "edge 5c+": 13,
+     "edge under 5c": 7,
+     "no quote or spread too wide": 37
     }
    },
    "picks": [
@@ -1321,14 +1321,13 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-20T05:00:13.450184+00:00",
-   "last_success": "2026-10-20T05:00:13.450184+00:00",
+   "last_run": "2026-10-20T06:00:17.672978+00:00",
+   "last_success": "2026-10-20T06:00:17.672978+00:00",
    "observations": {
-    "at": "2026-10-20T05:00:13.450184+00:00",
+    "at": "2026-10-20T06:00:17.672978+00:00",
     "events": 860,
     "reasons": {
-     "collecting review pace (12h of snapshots)": 1,
-     "edge 5c+": 4,
+     "edge 5c+": 5,
      "under 20 reviews counted": 16
     }
    },
@@ -1480,6 +1479,23 @@
      "side": "no",
      "status": "lost",
      "title": "Above 75"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-26T14:00:00Z",
+     "detail": "36/39 liked (92), ~13 more reviews \u00b7 P(above 90) 0.64 \u00b7 edge +0.20",
+     "edge": 0.1961,
+     "event": "KXRT-WIC",
+     "id": "KXRT-WIC-90",
+     "logged": "2026-10-20T06:00:17.672978+00:00",
+     "model": 0.6433,
+     "name": "Wicker \u00b7 Rotten Tomatoes score",
+     "price": 0.43,
+     "rt_url": "https://www.rottentomatoes.com/m/wicker",
+     "series": "KXRT",
+     "side": "yes",
+     "status": "open",
+     "title": "Above 90"
     }
    ]
   }
@@ -1626,7 +1642,7 @@
    ]
   },
   "Cuba / Cuban": {
-   "at": "2026-10-20T00:00:14.975986+00:00",
+   "at": "2026-10-20T06:00:17.672978+00:00",
    "days": [
     "2026-07-29",
     "2026-08-10",
@@ -1692,7 +1708,7 @@
    ]
   },
   "JPMorgan / JPM": {
-   "at": "2026-10-20T00:00:14.975986+00:00",
+   "at": "2026-10-20T06:00:17.672978+00:00",
    "days": []
   },
   "Lisa Cook": {
@@ -1738,7 +1754,7 @@
    ]
   },
   "Peace in the Middle East": {
-   "at": "2026-10-20T00:00:14.975986+00:00",
+   "at": "2026-10-20T06:00:17.672978+00:00",
    "days": []
   },
   "Pelosi": {
@@ -1844,7 +1860,7 @@
    "days": []
   },
   "Uranium": {
-   "at": "2026-10-19T23:00:13.507278+00:00",
+   "at": "2026-10-20T06:00:17.672978+00:00",
    "days": []
   },
   "Zacharia": {
