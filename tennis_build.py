@@ -40,7 +40,17 @@ def build(d=None, st=None, now=None):
         rule_name=tennis_cards.rule_name, market=tennis_cards.market,
         definition=tennis_cards.definition, recent=tennis_cards.recent_html,
         method=tennis_cards.method(idle_html))
-    return SP.page(sp, d, st, now, rows=rows, idle=idle)
+    return _atp_totals(SP.page(sp, d, st, now, rows=rows, idle=idle))
+
+
+def _atp_totals(html):
+    """tennis_atp_low_over (tennis_totals_build.py, 2026-10-21) in the Sandbox rules list,
+    from its own ledger. Never breaks the page."""
+    try:
+        import tennis_totals_build
+        return tennis_totals_build.place(html)
+    except Exception:                                           # noqa: BLE001
+        return html
 
 
 def main():

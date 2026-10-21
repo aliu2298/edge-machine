@@ -273,12 +273,19 @@ print("\nrules")
 rules = _section(main, "rules")
 ok("No tennis rule is in Production." in rules, "with nothing in Production the cards say so")
 rule_rows = _rule_rows(rules)
+# tennis_atp_low_over (2026-10-21) is an own-ledger paper row (tennis_totals_build), appended last.
+import tennis_totals_build as TTB
+own = [x for x in rule_rows if x[0] == "tennis_atp_low_over"]
+eq(len(own), 1, "the ATP total games paper row is in the Sandbox list once")
+ok(bool(rule_rows) and rule_rows[-1][0] == "tennis_atp_low_over", "and it sits last in the list")
+rule_rows = [x for x in rule_rows if x[0] != "tennis_atp_low_over"]
 eq(len(rule_rows), len(rows), f"one row per tennis lane ({len(rows)})")
 by_name = {r["name"]: r for r in rows}
 order = [s_ for s_, _sp, _b in rule_rows]
 eq(order, [r["name"] for r in sorted(rows, key=SP.sandbox_order)], "rows run by evidence, the too-early ones sunk")
-ok(f'· {len(rows)} rules · {sum(1 for r in rows if SP.is_early(r))} too early to read · by evidence' in rules,
-   "the fold's summary counts the rows and the too-early ones")
+own_early = 1 if TTB._early(TTB.row_data()) else 0
+ok(f'· {len(rows) + 1} rules · {sum(1 for r in rows if SP.is_early(r)) + own_early} too early to read · by evidence' in rules,
+   "the fold's summary counts the rows (the ATP totals row too) and the too-early ones")
 head = re.search(r'<div class="sp-line sp-head-line" aria-hidden="true">(.*?)</div>', rules, re.S)
 eq(re.findall(r'<span class="sp-cell[^"]*">([^<]*)</span>', head.group(1)) if head else None,
    ["Rule", "Market", "Record", "ROI after fees", "Won v priced", "Evidence", "Verdict"],
