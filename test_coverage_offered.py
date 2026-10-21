@@ -89,14 +89,14 @@ def main():
        "MLS bands, ceilings, hold and series are unchanged")
     eq(sorted(T.PAIR_OVERRIDES),
        ["commod_fav_band|commodities_fav",
-        "corners_total_under|soccer_corners", "corners_ucl_fade|soccer_corners",
+        "corners_total_under|soccer_corners",
         "crypto_eth_fav_both|crypto_fav", "crypto_fav_band_below|crypto_fav", "crypto_sol_fav_both|crypto_fav", "ere_draw|soccer", "espn_fpi|nfl", "ftts_no_70_80|soccer_ftts",
         "liga_btts_even|soccer_btts", "mls_fade_home|soccer_p05",
         "o15_ranked|soccer_o15", "o15_ranked|soccer_o15_intl", "oddspedia|cricket", "team1_form_l5|soccer_team1_intl",
         "team2_form_l10|soccer_team2", "team2_ranked|soccer_team2", "tennis_utr_shortlist_v1|tennis",
         "u35_low_scoring|soccer_u35",
         "u35_low_scoring|soccer_u35_intl"],
-       "PAIR_OVERRIDES is the twenty pairs moved by hand (crypto_fav_band out and three crypto angle lanes in 2026-10-20; four soccer lanes out 2026-10-20: corners_team_fade, the two Turkey dog lanes and bund_o35; team scores 1+ · Clubs out 2026-10-14; corners_under out and its three replacement lanes in 2026-10-15; five more 2026-10-16; btts_form_l10_fade and o15_form_l10|soccer_o15 out 2026-10-17; o25_congestion|soccer_o25 in 2026-10-18 and out 2026-10-19): the six of 2026-10-08, "
+       "PAIR_OVERRIDES is the nineteen pairs moved by hand (corners_ucl_fade out 2026-10-21; crypto_fav_band out and three crypto angle lanes in 2026-10-20; four soccer lanes out 2026-10-20: corners_team_fade, the two Turkey dog lanes and bund_o35; team scores 1+ · Clubs out 2026-10-14; corners_under out and its three replacement lanes in 2026-10-15; five more 2026-10-16; btts_form_l10_fade and o15_form_l10|soccer_o15 out 2026-10-17; o25_congestion|soccer_o25 in 2026-10-18 and out 2026-10-19): the six of 2026-10-08, "
        "commodities on 2026-10-09 and the six of 2026-10-11 included")
 
     print("\n0 of 0 — nothing offered")

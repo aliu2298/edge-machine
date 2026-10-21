@@ -1806,6 +1806,12 @@
    "pair": "crypto_sol_fav_both|crypto_fav",
    "reason": "moved by hand \u2014 ready from this run",
    "to": "ready"
+  },
+  {
+   "at": "2026-10-21T02:37:06+00:00",
+   "pair": "corners_ucl_fade|soccer_corners",
+   "reason": "taken off the Production list by hand, record kept",
+   "to": "sandbox"
   }
  ],
  "pairs": {
@@ -1865,24 +1871,9 @@
    "stage": "production"
   },
   "corners_ucl_fade|soccer_corners": {
-   "by_hand": "2026-10-15",
-   "entry": {
-    "base_roi": null,
-    "clv": null,
-    "clv_n": 0,
-    "n": 0,
-    "own_roi": null,
-    "roi": null,
-    "roi_fee": null,
-    "span_days": 0.0,
-    "weeks": 0,
-    "z": 0.0
-   },
-   "entry_since": null,
-   "promoted_at": "2026-10-15T07:20:21+00:00",
-   "ready_at": "2026-10-15T07:20:21+00:00",
-   "ready_since": "2026-10-15T07:20:21+00:00",
-   "stage": "production"
+   "demoted_at": "2026-10-21T02:37:06+00:00",
+   "since": null,
+   "stage": "sandbox"
   },
   "corners_under|soccer_corners": {
    "demoted_at": "2026-10-15T06:13:04+00:00",
@@ -2346,5 +2337,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-10-21T02:32:49+00:00"
+ "updated": "2026-10-21T02:37:06+00:00"
 }

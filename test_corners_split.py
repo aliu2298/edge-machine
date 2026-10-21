@@ -129,12 +129,12 @@ d = T.load()
 check("the three new lanes start with no bets from before the split",
       [q["id"] for q in T.all_bets(d) if q.get("source") in ("corners_total_under", "corners_ucl_fade", "corners_team_fade")
        and str(q.get("logged") or "") < "2026-10-15T06:29"], [])
-check("the three new lanes went to Production by hand on 2026-10-15; corners_team_fade came out on 2026-10-20",
+check("the three new lanes went to Production by hand on 2026-10-15; corners_team_fade came out on 2026-10-20, corners_ucl_fade on 2026-10-21",
       (sorted((k, v["moved_on"]) for k, v in T.PAIR_OVERRIDES.items()
               if k.split("|")[0] in ("corners_total_under", "corners_ucl_fade", "corners_team_fade")),
-       T.PAIR_REMOVALS["corners_team_fade|soccer_corners"]),
-      ([("corners_total_under|soccer_corners", "2026-10-15"), ("corners_ucl_fade|soccer_corners", "2026-10-15")],
-       dict(removed_on="2026-10-20", keep_record=True)))
+       T.PAIR_REMOVALS["corners_team_fade|soccer_corners"], T.PAIR_REMOVALS["corners_ucl_fade|soccer_corners"]),
+      ([("corners_total_under|soccer_corners", "2026-10-15")],
+       dict(removed_on="2026-10-20", keep_record=True), dict(removed_on="2026-10-21", keep_record=True)))
 print("\nthe feed: a fade is the YES of the exact rung, the under the NO")
 q = dict(id="corners_team_fade:KXEPLTCORNERS-26OCT17ARSCHE-ARS5", source="corners_team_fade", sport="soccer_corners",
          market_id="KXEPLTCORNERS-26OCT17ARSCHE-ARS5", pick="a", price=0.42, venue="kalshi_binary",
