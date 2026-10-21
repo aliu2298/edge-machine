@@ -67,6 +67,8 @@ SIX = {
 _LIVE_OV = dict(T.PAIR_OVERRIDES)
 T.PAIR_OVERRIDES["o15_form_l10|soccer_o15"] = dict(moved_on=MOVE, production_at=None)
 T.PAIR_OVERRIDES["bund_o35|soccer_u35"] = dict(moved_on=MOVE, production_at=None)
+# crypto_fav_band|crypto_fav came off on 2026-10-20 too, replaced by three crypto angle lanes.
+T.PAIR_OVERRIDES["crypto_fav_band|crypto_fav"] = dict(moved_on=MOVE, production_at=None)
 
 # ---------------------------------------------------------------------------
 print("the six ids are in Production, moved by hand on the same day")
@@ -105,7 +107,7 @@ ok("o15_form_l10|soccer_o15" not in _LIVE_OV and T.PAIR_REMOVALS["o15_form_l10|s
 _OUT_1020 = ("corners_team_fade|soccer_corners", "turkey_o25_dog|soccer_o25", "turkey_btts_dog|soccer_btts", "bund_o35|soccer_u35")
 eq([(k in _LIVE_OV, T.PAIR_REMOVALS[k]["removed_on"], T.PAIR_REMOVALS[k]["keep_record"]) for k in _OUT_1020],
    [(False, "2026-10-20", True)] * 4, "the four soccer lanes out on 2026-10-20 are off the live list, keeping their records")
-eq(len(_LIVE_OV), 18, "five pairs before, eleven after the six, twelve with commodities, eighteen with the six of 2026-10-11, seventeen with team scores 1+ · Clubs out on 2026-10-14, nineteen with corners_under out and its three lanes in on 2026-10-15, twenty-four with the five of 2026-10-16, twenty-three with btts_form_l10_fade out on 2026-10-17, twenty-two with o15_form_l10|soccer_o15 out the same day, twenty-three with o25_congestion|soccer_o25 in on 2026-10-18, twenty-two with it out on 2026-10-19, eighteen with four soccer lanes out on 2026-10-20")
+eq(len(_LIVE_OV), 20, "five pairs before, eleven after the six, twelve with commodities, eighteen with the six of 2026-10-11, seventeen with team scores 1+ · Clubs out on 2026-10-14, nineteen with corners_under out and its three lanes in on 2026-10-15, twenty-four with the five of 2026-10-16, twenty-three with btts_form_l10_fade out on 2026-10-17, twenty-two with o15_form_l10|soccer_o15 out the same day, twenty-three with o25_congestion|soccer_o25 in on 2026-10-18, twenty-two with it out on 2026-10-19, eighteen with four soccer lanes out on 2026-10-20, twenty with crypto_fav_band out and three crypto angle lanes in the same day")
 
 # The tracker moves them on its next run, and the Since-Production record starts there.
 _stages = {"pairs": {}, "events": []}
@@ -277,7 +279,11 @@ eq(T.LADDER_SPORTS, ("crypto_fav", "commodities_fav", "econ_daily"), "the ladder
 ok(T.placeable(rung), "a Kalshi ladder rung's Yes reaches the feed")
 ok(PR.start_verified(rung), "its close is a term of the contract, so it needs no outside verification")
 ok(not PR.start_verified(dict(rung, start="not a time")), "but a rung with no readable close is held back")
-ok(not T.placeable(dict(rung, pick="b")), "the No side is never the rule's bet")
+ok(T.placeable(dict(rung, pick="b")), "since 2026-10-20 the No of the rung reaches the feed too (the below and both-sides lanes)")
+_no = PR.lead_from_quote(dict(rung, pick="b", price=0.74, source="crypto_fav_band_below"), "crypto_fav_band_below|crypto_fav", BUILT)
+eq((_no["headline"], _no["bet"], _no["route"]["outcome_side"], _no["route"]["market"], _no["route"]["outcome"]),
+   ("Below $82,750 at the close", {"kind": "ladder", "side": "no"}, "no", "KXBTCD-26OCT0817-T82749.99", "$82,750 or above"),
+   "the No names the same contract, outcome_side no, and reads as the close landing below the rung")
 ok(not T.placeable(dict(rung, venue="polymarket_us")), "and only Kalshi lists the ladder")
 lead = PR.lead_from_quote(rung, "crypto_fav_band|crypto_fav", BUILT)
 eq(lead["headline"], "$82,750 or above at the close", "the lead names the rung as the venue does")

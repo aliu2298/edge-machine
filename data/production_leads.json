@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-21T00:36:26+00:00",
+ "board_built_at": "2026-10-21T00:47:17+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -60,7 +60,6 @@
     "claim": "Under 3.5 goals",
     "event": "KXMLSTOTAL-26OCT14DCUNYRB",
     "market": "KXMLSTOTAL-26OCT14DCUNYRB-4",
-    "outcome": "Over 3.5 goals scored",
     "outcome_side": "no",
     "price_at_log": 0.58,
     "venue": "kalshi"
@@ -139,76 +138,6 @@
    "sport": "commodities_fav",
    "status": "hit"
   },
-  "2026-10-14|KXBTCD-26OCT1417-T81249.99|$81,250 or above at the close \u00b7 Crypto favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-14",
-   "edge_at_log": null,
-   "first_seen": "2026-10-14",
-   "headline": "$81,250 or above at the close",
-   "home": null,
-   "id": "2026-10-14|KXBTCD-26OCT1417-T81249.99|$81,250 or above at the close \u00b7 Crypto favourite band",
-   "kickoff": "2026-10-14T21:05Z",
-   "lane": "production",
-   "league": "Crypto \u00b7 Favourite band",
-   "match": "Bitcoin price on Oct 14, 2026",
-   "pair": "crypto_fav_band|crypto_fav",
-   "price_at_log": 0.72,
-   "published_at": "2026-10-14T23:12:26+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "$81,250 or above at the close",
-    "event": "KXBTCD-26OCT1417",
-    "market": "KXBTCD-26OCT1417-T81249.99",
-    "outcome": "$81,250 or above",
-    "outcome_side": "yes",
-    "price_at_log": 0.72,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "crypto_fav_band:KXBTCD-26OCT1417-T81249.99",
-   "source": "crypto_fav_band",
-   "sport": "crypto_fav",
-   "status": "hit"
-  },
-  "2026-10-14|KXETHD-26OCT1417-T2419.99|$2,420 or above at the close \u00b7 Crypto favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-14",
-   "edge_at_log": null,
-   "first_seen": "2026-10-14",
-   "headline": "$2,420 or above at the close",
-   "home": null,
-   "id": "2026-10-14|KXETHD-26OCT1417-T2419.99|$2,420 or above at the close \u00b7 Crypto favourite band",
-   "kickoff": "2026-10-14T21:05Z",
-   "lane": "production",
-   "league": "Crypto \u00b7 Favourite band",
-   "match": "Ethereum price at Oct 14, 2026 at 5pm EDT",
-   "pair": "crypto_fav_band|crypto_fav",
-   "price_at_log": 0.8,
-   "published_at": "2026-10-14T23:12:26+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "$2,420 or above at the close",
-    "event": "KXETHD-26OCT1417",
-    "market": "KXETHD-26OCT1417-T2419.99",
-    "outcome": "$2,420 or above",
-    "outcome_side": "yes",
-    "price_at_log": 0.8,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "crypto_fav_band:KXETHD-26OCT1417-T2419.99",
-   "source": "crypto_fav_band",
-   "sport": "crypto_fav",
-   "status": "miss"
-  },
   "2026-10-14|KXGOLDD-26OCT1417-T4077|Above $4077 at the close \u00b7 Commodities favourite band": {
    "away": null,
    "bet": {
@@ -277,41 +206,6 @@
    "sandbox_quote": "commod_fav_band:KXSILVERD-26OCT1417-T55.50",
    "source": "commod_fav_band",
    "sport": "commodities_fav",
-   "status": "hit"
-  },
-  "2026-10-14|KXSOLD-26OCT1417-T103.9999|$104 or above at the close \u00b7 Crypto favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-14",
-   "edge_at_log": null,
-   "first_seen": "2026-10-14",
-   "headline": "$104 or above at the close",
-   "home": null,
-   "id": "2026-10-14|KXSOLD-26OCT1417-T103.9999|$104 or above at the close \u00b7 Crypto favourite band",
-   "kickoff": "2026-10-14T21:05Z",
-   "lane": "production",
-   "league": "Crypto \u00b7 Favourite band",
-   "match": "SOL price on Oct 14, 2026",
-   "pair": "crypto_fav_band|crypto_fav",
-   "price_at_log": 0.76,
-   "published_at": "2026-10-14T23:12:26+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "$104 or above at the close",
-    "event": "KXSOLD-26OCT1417",
-    "market": "KXSOLD-26OCT1417-T103.9999",
-    "outcome": "$104 or above",
-    "outcome_side": "yes",
-    "price_at_log": 0.76,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "crypto_fav_band:KXSOLD-26OCT1417-T103.9999",
-   "source": "crypto_fav_band",
-   "sport": "crypto_fav",
    "status": "hit"
   },
   "2026-10-14|KXWTI-26OCT1414-T94.99|Above $94.99 at the close \u00b7 Commodities favourite band": {
@@ -418,41 +312,6 @@
    "source": "u35_low_scoring",
    "sport": "soccer_u35",
    "status": "hit"
-  },
-  "2026-10-15|KXBTCD-26OCT1517-T81999.99|$82,000 or above at the close \u00b7 Crypto favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-15",
-   "edge_at_log": null,
-   "first_seen": "2026-10-15",
-   "headline": "$82,000 or above at the close",
-   "home": null,
-   "id": "2026-10-15|KXBTCD-26OCT1517-T81999.99|$82,000 or above at the close \u00b7 Crypto favourite band",
-   "kickoff": "2026-10-15T21:05Z",
-   "lane": "production",
-   "league": "Crypto \u00b7 Favourite band",
-   "match": "Bitcoin price on Oct 15, 2026",
-   "pair": "crypto_fav_band|crypto_fav",
-   "price_at_log": 0.73,
-   "published_at": "2026-10-16T01:17:09+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "$82,000 or above at the close",
-    "event": "KXBTCD-26OCT1517",
-    "market": "KXBTCD-26OCT1517-T81999.99",
-    "outcome": "$82,000 or above",
-    "outcome_side": "yes",
-    "price_at_log": 0.73,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "crypto_fav_band:KXBTCD-26OCT1517-T81999.99",
-   "source": "crypto_fav_band",
-   "sport": "crypto_fav",
-   "status": "miss"
   },
   "2026-10-15|KXNATGASD-26OCT1517-T3.490|Above $3.490 at the close \u00b7 Commodities favourite band": {
    "away": null,
@@ -584,7 +443,6 @@
     "claim": "Under 3.5 goals",
     "event": "KXMLSTOTAL-26OCT14RSLSJ",
     "market": "KXMLSTOTAL-26OCT14RSLSJ-4",
-    "outcome": "Over 3.5 goals scored",
     "outcome_side": "no",
     "price_at_log": 0.57,
     "venue": "kalshi"
@@ -699,76 +557,6 @@
    "source": "ere_draw",
    "sport": "soccer",
    "status": "miss"
-  },
-  "2026-10-16|KXBTCD-26OCT1617-T80499.99|$80,500 or above at the close \u00b7 Crypto favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-16",
-   "edge_at_log": null,
-   "first_seen": "2026-10-16",
-   "headline": "$80,500 or above at the close",
-   "home": null,
-   "id": "2026-10-16|KXBTCD-26OCT1617-T80499.99|$80,500 or above at the close \u00b7 Crypto favourite band",
-   "kickoff": "2026-10-16T21:05Z",
-   "lane": "production",
-   "league": "Crypto \u00b7 Favourite band",
-   "match": "Bitcoin price on Oct 16, 2026",
-   "pair": "crypto_fav_band|crypto_fav",
-   "price_at_log": 0.76,
-   "published_at": "2026-10-17T01:19:02+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "$80,500 or above at the close",
-    "event": "KXBTCD-26OCT1617",
-    "market": "KXBTCD-26OCT1617-T80499.99",
-    "outcome": "$80,500 or above",
-    "outcome_side": "yes",
-    "price_at_log": 0.76,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "crypto_fav_band:KXBTCD-26OCT1617-T80499.99",
-   "source": "crypto_fav_band",
-   "sport": "crypto_fav",
-   "status": "hit"
-  },
-  "2026-10-16|KXETHD-26OCT1617-T2379.99|$2,380 or above at the close \u00b7 Crypto favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-16",
-   "edge_at_log": null,
-   "first_seen": "2026-10-16",
-   "headline": "$2,380 or above at the close",
-   "home": null,
-   "id": "2026-10-16|KXETHD-26OCT1617-T2379.99|$2,380 or above at the close \u00b7 Crypto favourite band",
-   "kickoff": "2026-10-16T21:05Z",
-   "lane": "production",
-   "league": "Crypto \u00b7 Favourite band",
-   "match": "Ethereum price at Oct 16, 2026 at 5pm EDT",
-   "pair": "crypto_fav_band|crypto_fav",
-   "price_at_log": 0.79,
-   "published_at": "2026-10-17T01:19:02+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "$2,380 or above at the close",
-    "event": "KXETHD-26OCT1617",
-    "market": "KXETHD-26OCT1617-T2379.99",
-    "outcome": "$2,380 or above",
-    "outcome_side": "yes",
-    "price_at_log": 0.79,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "crypto_fav_band:KXETHD-26OCT1617-T2379.99",
-   "source": "crypto_fav_band",
-   "sport": "crypto_fav",
-   "status": "hit"
   },
   "2026-10-16|KXWTI-26OCT1614-T94.99|Above $94.99 at the close \u00b7 Commodities favourite band": {
    "away": null,
@@ -1151,41 +939,6 @@
    "sandbox_quote": "tennis_utr_shortlist_v1:aec-utr-hirtai-shtale-2026-10-17",
    "source": "tennis_utr_shortlist_v1",
    "sport": "tennis",
-   "status": "hit"
-  },
-  "2026-10-17|KXBTCD-26OCT1717-T80999.99|$81,000 or above at the close \u00b7 Crypto favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-17",
-   "headline": "$81,000 or above at the close",
-   "home": null,
-   "id": "2026-10-17|KXBTCD-26OCT1717-T80999.99|$81,000 or above at the close \u00b7 Crypto favourite band",
-   "kickoff": "2026-10-17T21:05Z",
-   "lane": "production",
-   "league": "Crypto \u00b7 Favourite band",
-   "match": "Bitcoin price on Oct 17, 2026",
-   "pair": "crypto_fav_band|crypto_fav",
-   "price_at_log": 0.8,
-   "published_at": "2026-10-17T23:16:53+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "$81,000 or above at the close",
-    "event": "KXBTCD-26OCT1717",
-    "market": "KXBTCD-26OCT1717-T80999.99",
-    "outcome": "$81,000 or above",
-    "outcome_side": "yes",
-    "price_at_log": 0.8,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "crypto_fav_band:KXBTCD-26OCT1717-T80999.99",
-   "source": "crypto_fav_band",
-   "sport": "crypto_fav",
    "status": "hit"
   },
   "2026-10-17|Manchester City|Ipswich Town|Under 10 corners \u00b7 Corners total under": {
@@ -1960,41 +1713,6 @@
    "sport": "soccer_o15",
    "status": "hit"
   },
-  "2026-10-18|KXBTCD-26OCT1817-T80999.99|$81,000 or above at the close \u00b7 Crypto favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-18",
-   "edge_at_log": null,
-   "first_seen": "2026-10-18",
-   "headline": "$81,000 or above at the close",
-   "home": null,
-   "id": "2026-10-18|KXBTCD-26OCT1817-T80999.99|$81,000 or above at the close \u00b7 Crypto favourite band",
-   "kickoff": "2026-10-18T21:05Z",
-   "lane": "production",
-   "league": "Crypto \u00b7 Favourite band",
-   "match": "Bitcoin price on Oct 18, 2026",
-   "pair": "crypto_fav_band|crypto_fav",
-   "price_at_log": 0.7,
-   "published_at": "2026-10-19T01:11:49+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "$81,000 or above at the close",
-    "event": "KXBTCD-26OCT1817",
-    "market": "KXBTCD-26OCT1817-T80999.99",
-    "outcome": "$81,000 or above",
-    "outcome_side": "yes",
-    "price_at_log": 0.7,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "crypto_fav_band:KXBTCD-26OCT1817-T80999.99",
-   "source": "crypto_fav_band",
-   "sport": "crypto_fav",
-   "status": "miss"
-  },
   "2026-10-18|LA Galaxy|San Diego FC|San Diego FC +0.5 (LA Galaxy not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
    "away": "San Diego FC",
    "bet": {
@@ -2125,7 +1843,6 @@
     "claim": "Nottingham Forest not to score first",
     "event": "KXEPLFTTS-26OCT18NFOARS",
     "market": "KXEPLFTTS-26OCT18NFOARS-NFO",
-    "outcome": "Nottingham Forest",
     "outcome_side": "no",
     "price_at_log": 0.74,
     "venue": "kalshi"
@@ -2451,41 +2168,6 @@
    "sport": "nfl",
    "status": "miss"
   },
-  "2026-10-19|KXBTCD-26OCT1917-T81749.99|$81,750 or above at the close \u00b7 Crypto favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-19",
-   "edge_at_log": null,
-   "first_seen": "2026-10-19",
-   "headline": "$81,750 or above at the close",
-   "home": null,
-   "id": "2026-10-19|KXBTCD-26OCT1917-T81749.99|$81,750 or above at the close \u00b7 Crypto favourite band",
-   "kickoff": "2026-10-19T21:05Z",
-   "lane": "production",
-   "league": "Crypto \u00b7 Favourite band",
-   "match": "Bitcoin price on Oct 19, 2026",
-   "pair": "crypto_fav_band|crypto_fav",
-   "price_at_log": 0.71,
-   "published_at": "2026-10-20T01:47:40+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "$81,750 or above at the close",
-    "event": "KXBTCD-26OCT1917",
-    "market": "KXBTCD-26OCT1917-T81749.99",
-    "outcome": "$81,750 or above",
-    "outcome_side": "yes",
-    "price_at_log": 0.71,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "crypto_fav_band:KXBTCD-26OCT1917-T81749.99",
-   "source": "crypto_fav_band",
-   "sport": "crypto_fav",
-   "status": "hit"
-  },
   "2026-10-19|KXNATGASD-26OCT1917-T3.320|Above $3.320 at the close \u00b7 Commodities favourite band": {
    "away": null,
    "bet": {
@@ -2617,7 +2299,6 @@
     "claim": "Coventry not to score first",
     "event": "KXEPLFTTS-26OCT19TOTCOV",
     "market": "KXEPLFTTS-26OCT19TOTCOV-COV",
-    "outcome": "Coventry City",
     "outcome_side": "no",
     "price_at_log": 0.72,
     "venue": "kalshi"
@@ -2764,41 +2445,6 @@
    "sandbox_quote": "commod_fav_band:KXBRENTD-26OCT2017-T104.50",
    "source": "commod_fav_band",
    "sport": "commodities_fav",
-   "status": "hit"
-  },
-  "2026-10-20|KXBTCD-26OCT2017-T82499.99|$82,500 or above at the close \u00b7 Crypto favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-20",
-   "edge_at_log": null,
-   "first_seen": "2026-10-20",
-   "headline": "$82,500 or above at the close",
-   "home": null,
-   "id": "2026-10-20|KXBTCD-26OCT2017-T82499.99|$82,500 or above at the close \u00b7 Crypto favourite band",
-   "kickoff": "2026-10-20T21:05Z",
-   "lane": "production",
-   "league": "Crypto \u00b7 Favourite band",
-   "match": "Bitcoin price on Oct 20, 2026",
-   "pair": "crypto_fav_band|crypto_fav",
-   "price_at_log": 0.7,
-   "published_at": "2026-10-20T23:13:14+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "$82,500 or above at the close",
-    "event": "KXBTCD-26OCT2017",
-    "market": "KXBTCD-26OCT2017-T82499.99",
-    "outcome": "$82,500 or above",
-    "outcome_side": "yes",
-    "price_at_log": 0.7,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "crypto_fav_band:KXBTCD-26OCT2017-T82499.99",
-   "source": "crypto_fav_band",
-   "sport": "crypto_fav",
    "status": "hit"
   },
   "2026-10-20|KXNATGASD-26OCT2017-T3.280|Above $3.280 at the close \u00b7 Commodities favourite band": {
@@ -2990,7 +2636,7 @@
    "kickoff": "2026-10-22T14:45Z",
    "lane": "production",
    "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T00:36:26+00:00",
+   "last_seen_at": "2026-10-21T00:47:17+00:00",
    "league": "Saudi Pro League",
    "match": "Al Fateh v Al Shabab",
    "pair": "u35_low_scoring|soccer_u35",
@@ -3027,7 +2673,7 @@
    "kickoff": "2026-10-22T16:45Z",
    "lane": "production",
    "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T00:36:26+00:00",
+   "last_seen_at": "2026-10-21T00:47:17+00:00",
    "league": "Europa League",
    "match": "Juventus v Stade Rennais",
    "pair": "o15_ranked|soccer_o15",
@@ -3065,7 +2711,7 @@
    "kickoff": "2026-10-22T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T00:36:26+00:00",
+   "last_seen_at": "2026-10-21T00:47:17+00:00",
    "league": "Europa League",
    "match": "Olympiacos v Sparta Prague",
    "pair": "team2_ranked|soccer_team2",
@@ -3102,7 +2748,7 @@
    "kickoff": "2026-10-22T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T00:36:26+00:00",
+   "last_seen_at": "2026-10-21T00:47:17+00:00",
    "league": "Europa League",
    "match": "Olympiacos v Sparta Prague",
    "pair": "o15_ranked|soccer_o15",
@@ -3138,7 +2784,7 @@
    "kickoff": "2026-10-23T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T00:36:26+00:00",
+   "last_seen_at": "2026-10-21T00:47:17+00:00",
    "league": "La Liga",
    "match": "Alav\u00e9s v M\u00e1laga",
    "pair": "liga_btts_even|soccer_btts",
@@ -3175,7 +2821,7 @@
    "kickoff": "2026-10-23T18:00Z",
    "lane": "production",
    "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T00:36:26+00:00",
+   "last_seen_at": "2026-10-21T00:47:17+00:00",
    "league": "Eredivisie",
    "match": "GA Eagles v Telstar",
    "pair": "ere_draw|soccer",
@@ -3212,7 +2858,7 @@
    "kickoff": "2026-10-23T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T00:36:26+00:00",
+   "last_seen_at": "2026-10-21T00:47:17+00:00",
    "league": "NFL",
    "match": "Patriots v Bears",
    "model_prob": 0.436,
@@ -3249,7 +2895,7 @@
    "kickoff": "2026-10-24T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T00:36:26+00:00",
+   "last_seen_at": "2026-10-21T00:47:17+00:00",
    "league": "Eredivisie",
    "match": "Den Haag v Heerenveen",
    "pair": "ere_draw|soccer",
@@ -3286,7 +2932,7 @@
    "kickoff": "2026-10-24T18:45Z",
    "lane": "production",
    "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T00:36:26+00:00",
+   "last_seen_at": "2026-10-21T00:47:17+00:00",
    "league": "Serie A",
    "match": "Lazio v Parma",
    "pair": "o15_ranked|soccer_o15",
@@ -3323,7 +2969,7 @@
    "kickoff": "2026-10-24T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T00:36:26+00:00",
+   "last_seen_at": "2026-10-21T00:47:17+00:00",
    "league": "MLS",
    "match": "Orlando City SC v New York City FC",
    "pair": "mls_fade_home|soccer_p05",
@@ -3360,7 +3006,7 @@
    "kickoff": "2026-10-24T14:30Z",
    "lane": "production",
    "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T00:36:26+00:00",
+   "last_seen_at": "2026-10-21T00:47:17+00:00",
    "league": "Eredivisie",
    "match": "Utrecht v Zwolle",
    "pair": "ere_draw|soccer",
@@ -3397,7 +3043,7 @@
    "kickoff": "2026-10-25T13:30Z",
    "lane": "production",
    "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T00:36:26+00:00",
+   "last_seen_at": "2026-10-21T00:47:17+00:00",
    "league": "Eredivisie",
    "match": "Eindhoven v Feyenoord",
    "pair": "ere_draw|soccer",
@@ -3434,7 +3080,7 @@
    "kickoff": "2026-10-25T00:30Z",
    "lane": "production",
    "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T00:36:26+00:00",
+   "last_seen_at": "2026-10-21T00:47:17+00:00",
    "league": "MLS",
    "match": "Sporting Kansas City v Austin FC",
    "pair": "mls_fade_home|soccer_p05",
@@ -3533,25 +3179,75 @@
     "under_target": 0
    }
   },
-  "crypto_fav_band|crypto_fav": {
-   "by_hand": "2026-10-08",
-   "entered_at": "2026-10-08T17:50:08+00:00",
-   "promoted_at": "2026-10-08T17:50:08+00:00",
-   "ready_at": "2026-10-08T17:50:08+00:00",
-   "route": "moved by hand on 2026-10-08",
+  "crypto_eth_fav_both|crypto_fav": {
+   "by_hand": "2026-10-20",
+   "entered_at": "2026-10-21T00:47:16+00:00",
+   "promoted_at": "2026-10-21T00:47:16+00:00",
+   "ready_at": "2026-10-21T00:47:16+00:00",
+   "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 10,
+    "leads": 0,
     "problem": null,
-    "routed": 10,
+    "routed": 0,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": 0.0244,
-   "sandbox_n": 9,
-   "sandbox_roi": -0.0085,
-   "sandbox_roi_fee": -0.0258,
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null,
+   "timing": {
+    "late": [],
+    "timed": 0,
+    "under_target": 0
+   }
+  },
+  "crypto_fav_band_below|crypto_fav": {
+   "by_hand": "2026-10-20",
+   "entered_at": "2026-10-21T00:47:16+00:00",
+   "promoted_at": "2026-10-21T00:47:16+00:00",
+   "ready_at": "2026-10-21T00:47:16+00:00",
+   "route": "moved by hand on 2026-10-20",
+   "routing": {
+    "leads": 0,
+    "problem": null,
+    "routed": 0,
+    "unlisted": 0,
+    "unrouted": 0,
+    "unverified": 0,
+    "why": []
+   },
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null,
+   "timing": {
+    "late": [],
+    "timed": 0,
+    "under_target": 0
+   }
+  },
+  "crypto_sol_fav_both|crypto_fav": {
+   "by_hand": "2026-10-20",
+   "entered_at": "2026-10-21T00:47:16+00:00",
+   "promoted_at": "2026-10-21T00:47:16+00:00",
+   "ready_at": "2026-10-21T00:47:16+00:00",
+   "route": "moved by hand on 2026-10-20",
+   "routing": {
+    "leads": 0,
+    "problem": null,
+    "routed": 0,
+    "unlisted": 0,
+    "unrouted": 0,
+    "unverified": 0,
+    "why": []
+   },
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null,
    "timing": {
     "late": [],
     "timed": 0,
@@ -3977,5 +3673,5 @@
  "stage": "production",
  "unlisted_skipped": 1,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-21T00:36:26+00:00"
+ "updated_at": "2026-10-21T00:47:17+00:00"
 }

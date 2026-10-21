@@ -70,7 +70,8 @@ eq({k: S.SOURCES[k]["favourite_side"] for k in ("crypto_fav_band",) + NEW},
    {"crypto_fav_band": "a", "crypto_fav_band_below": "b", "crypto_fav_band_60": "a", "crypto_fav_band_below_60": "b"},
    "each lane's population is the favourites on its own side")
 eq(S.CRYPTO_FAV_BAND_60, (0.60, 0.70), "the lower band is 0.60 to 0.70, the upper end exclusive")
-ok(all(lane + "|crypto_fav" not in T.PAIR_OVERRIDES for lane in NEW), "none of the three is listed for Production")
+eq([lane for lane in NEW if lane + "|crypto_fav" in T.PAIR_OVERRIDES], ["crypto_fav_band_below"],
+   "of the three, only the below lane is listed for Production (2026-10-20, as angle 4); the 60 bands stay in the Sandbox")
 ok(all(S.CHALLENGERS.get(lane) for lane in NEW), "all three fetchers are wired")
 ok("63/75 at 75c, +9.4%, z +1.65" in S.SOURCES["crypto_fav_band_below"]["note"], "the below note cites its research")
 ok("42/52 at 65c, +21.3%, z +2.50" in S.SOURCES["crypto_fav_band_below_60"]["note"], "the below-60 note cites its research")
