@@ -21,6 +21,10 @@ and the first-to-score lanes (2026-10-14), timed to the CENTRAL day and to each 
     ftts_no_*         the day's pick        09:00-10:30 CT, reads at 09:00, 09:30, 10:00
     ftts_lineup_lag   each kickoff K        K-60 to K-15 min, reads at K-60 and K-40
 
+and the ATP total-games lane (tennis_atp_low_over, 2026-10-21), timed to each ESPN start K:
+
+    tennis_totals     each ATP start K      K-45 to K-15 min, asked every 15 min until K-25
+
 GitHub's cron cannot hold a 90-minute window, so the VPS asks for each read by pushing one
 line to a stamp file (scripts/vps_window_requests.sh). This module is the one place that
 says when those reads are, computed from each lane's own constants so a schedule can
@@ -74,7 +78,13 @@ STAMP = {
     "soccer_rules": "data/soccer_rules_window/request.txt",
     # 2026-10-17: the 8 soccer team-scoring label rules (soccer_team_rules.py), same timing.
     "soccer_team_rules": "data/soccer_team_rules_window/request.txt",
+    # 2026-10-21: tennis_atp_low_over (tennis_totals.py), 45-15 min before each ATP start.
+    "tennis_totals": "data/tennis_totals_window/request.txt",
 }
+# tennis_totals.WINDOW_MIN (15, 45), copied; test_tennis_totals.py checks the two agree.
+TENNIS_FROM, TENNIS_TO = 45, 15          # minutes before the ESPN start
+TENNIS_EVERY = dt.timedelta(minutes=15)  # the VPS asks every 15 minutes
+TENNIS_LAST_ASK = dt.timedelta(minutes=10)
 NBA_FROM, NBA_TO = 90, 20                # minutes before tip-off (nba_rules.WINDOW_MIN)
 SOCCER_FROM, SOCCER_TO = 90, 20          # minutes before kickoff (soccer_rules.WINDOW_MIN)
 # soccer_rules.SERIES: ESPN league -> Kalshi match total series. Copied, not imported, so this
@@ -309,6 +319,40 @@ def culture_windows(now):
                  start=h, end=h + dt.timedelta(hours=1), every=dt.timedelta(hours=1), last_ask=dt.timedelta(0))]
 
 
+def tennis_starts(now):
+    """Valid ATP singles starts in the next day (tennis_atp_low_over, 2026-10-21), read live.
+
+    ESPN's ATP scoreboard is read here directly (one request a day-page, stdlib only) because a
+    tennis start moves through the day as the order of play runs; the schedule the lane writes into
+    its own ledger is the fallback when ESPN cannot be read. Only main() calls this, so windows()
+    and the tests never touch the network."""
+    import tennis_totals as TT
+    try:
+        starts = TT.schedule(TT.espn_matches(now), now)
+    except Exception:                                           # noqa: BLE001
+        try:
+            with open(TT.PATH) as f:
+                starts = json.load(f).get("schedule") or []
+        except (OSError, ValueError):
+            starts = []
+    out = set()
+    for v in starts:
+        t = _when(v) if v else None
+        if t and now - dt.timedelta(hours=2) <= t <= now + dt.timedelta(days=1):
+            out.add(t)
+    return sorted(out)
+
+
+def tennis_windows(now, starts=None):
+    """One window per distinct ATP start: 45 to 15 minutes before, read every 15 minutes.
+
+    The last ask is 10 minutes before the window ends, so a read lands by K-15 with the run's own
+    start-up time. `starts` None (tests, the plain listing) means no tennis windows."""
+    return [dict(lane="tennis_totals", label=f"ATP totals {t:%H:%M}Z start", series=(), close=t,
+                 start=t - dt.timedelta(minutes=TENNIS_FROM), end=t - dt.timedelta(minutes=TENNIS_TO),
+                 every=TENNIS_EVERY, last_ask=TENNIS_LAST_ASK) for t in (starts or ())]
+
+
 def ftts_day_full(day, ledger=None):
     """True once BOTH No lanes hold FTTS_NO_PICKS bets for that Central day."""
     n = {"ftts_no_70_80": 0, "ftts_no_60_70": 0}
@@ -318,7 +362,7 @@ def ftts_day_full(day, ledger=None):
     return all(v >= S.FTTS_NO_PICKS for v in n.values())
 
 
-def windows(now, ledger=None, games=None, fixtures=None):
+def windows(now, ledger=None, games=None, fixtures=None, tennis=None):
     """Every lane's windows whose close is within a day of `now`, soonest start first. UTC."""
     if now.tzinfo is None:
         now = now.replace(tzinfo=dt.timezone.utc)
@@ -358,6 +402,7 @@ def windows(now, ledger=None, games=None, fixtures=None):
     out += soccer_windows(now, fixtures, ledger)
     out += soccer_team_windows(now, fixtures, ledger)
     out += culture_windows(now)
+    out += tennis_windows(now, tennis)
     return sorted(out, key=lambda w: (w["start"], w["lane"]))
 
 
@@ -399,10 +444,10 @@ def entered_series(lane, close, ledger=None):
     return set.intersection(*got.values())
 
 
-def due(now, ledger=None, games=None, fixtures=None):
+def due(now, ledger=None, games=None, fixtures=None, tennis=None):
     """[(window, read number)] for every read to ask for at `now`."""
     out = []
-    for w in windows(now, ledger, games, fixtures):
+    for w in windows(now, ledger, games, fixtures, tennis):
         if not (w["start"] <= now <= w["end"] - w.get("last_ask", LAST_ASK)):
             continue
         k = int((now - w["start"]) / w.get("every", READ_EVERY))
@@ -416,10 +461,10 @@ def due(now, ledger=None, games=None, fixtures=None):
     return out
 
 
-def stamp_lines(now, ledger=None, games=None, fixtures=None):
+def stamp_lines(now, ledger=None, games=None, fixtures=None, tennis=None):
     """{stamp file: stamp text} for the reads due now. One file can serve several windows."""
     lines = {}
-    for w, k in due(now, ledger, games, fixtures):
+    for w, k in due(now, ledger, games, fixtures, tennis):
         text = f"{w['lane']} {w['close'].isoformat()} read {k}"
         path = STAMP[w["lane"]]
         lines[path] = "\n".join(sorted(set((lines.get(path) or "").splitlines()) | {text})).strip()
@@ -430,7 +475,7 @@ def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
     now = dt.datetime.now(dt.timezone.utc)
     if "--due" in argv:
-        for path, text in sorted(stamp_lines(now).items()):
+        for path, text in sorted(stamp_lines(now, tennis=tennis_starts(now)).items()):
             print(f"{path}\t{text.replace(chr(10), ' | ')}")
         return 0
     for w in windows(now):
