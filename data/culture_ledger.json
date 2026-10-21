@@ -2,14 +2,16 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-21T03:00:13.993155+00:00",
-   "last_success": "2026-10-21T03:00:13.993155+00:00",
+   "last_run": "2026-10-21T04:00:14.458332+00:00",
+   "last_success": "2026-10-21T04:00:14.458332+00:00",
    "observations": {
-    "at": "2026-10-21T03:00:13.993155+00:00",
-    "events": 858,
+    "at": "2026-10-21T04:00:14.458332+00:00",
+    "events": 853,
     "reasons": {
+     "no quote or spread too wide": 45,
      "not active": 711,
-     "outside the entry window": 11127
+     "outside the band": 15,
+     "outside the entry window": 10996
     }
    },
    "picks": [
@@ -433,16 +435,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-21T03:00:13.993155+00:00",
-   "last_success": "2026-10-21T03:00:13.993155+00:00",
+   "last_run": "2026-10-21T04:00:14.458332+00:00",
+   "last_success": "2026-10-21T04:00:14.458332+00:00",
    "observations": {
-    "at": "2026-10-21T03:00:13.993155+00:00",
-    "events": 858,
+    "at": "2026-10-21T04:00:14.458332+00:00",
+    "events": 853,
     "reasons": {
-     "no quote or spread too wide": 50,
+     "no quote or spread too wide": 88,
      "not active": 711,
-     "outside the band": 23,
-     "outside the entry window": 11054
+     "outside the band": 15,
+     "outside the entry window": 10953
     }
    },
    "picks": [
@@ -710,16 +712,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-21T03:00:13.993155+00:00",
-   "last_success": "2026-10-21T03:00:13.993155+00:00",
+   "last_run": "2026-10-21T04:00:14.458332+00:00",
+   "last_success": "2026-10-21T04:00:14.458332+00:00",
    "observations": {
-    "at": "2026-10-21T03:00:13.993155+00:00",
-    "events": 858,
+    "at": "2026-10-21T04:00:14.458332+00:00",
+    "events": 853,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 34,
-     "edge 5c+": 13,
-     "edge under 5c": 4,
-     "no quote or spread too wide": 39
+     "already near-certain (under 10c or over 90c)": 33,
+     "edge 5c+": 11,
+     "edge under 5c": 3,
+     "no quote or spread too wide": 43
     }
    },
    "picks": [
@@ -1535,11 +1537,11 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-21T03:00:13.993155+00:00",
-   "last_success": "2026-10-21T03:00:13.993155+00:00",
+   "last_run": "2026-10-21T04:00:14.458332+00:00",
+   "last_success": "2026-10-21T04:00:14.458332+00:00",
    "observations": {
-    "at": "2026-10-21T03:00:13.993155+00:00",
-    "events": 858,
+    "at": "2026-10-21T04:00:14.458332+00:00",
+    "events": 853,
     "reasons": {
      "edge 5c+": 6,
      "under 20 reviews counted": 15
@@ -1874,7 +1876,7 @@
    ]
   },
   "Crypto / Bitcoin": {
-   "at": "2026-10-20T10:00:14.694799+00:00",
+   "at": "2026-10-21T04:00:14.458332+00:00",
    "days": [
     "2026-08-06",
     "2026-08-19"
@@ -2111,7 +2113,7 @@
    "days": []
   },
   "Vivek / Ramaswamy": {
-   "at": "2026-10-20T22:00:13.566263+00:00",
+   "at": "2026-10-21T04:00:14.458332+00:00",
    "days": [
     "2026-10-03",
     "2026-10-12"
@@ -2122,7 +2124,7 @@
    "days": []
   },
   "Zohran / Mamdani": {
-   "at": "2026-10-20T22:00:13.566263+00:00",
+   "at": "2026-10-21T04:00:14.458332+00:00",
    "days": [
     "2026-07-29",
     "2026-08-14"
