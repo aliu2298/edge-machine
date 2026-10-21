@@ -588,6 +588,15 @@ def _rules_section():
         return f'<section id="rules"><p class="sm mut">Rules section unavailable ({esc(type(exc).__name__)}).</p></section>'
 
 
+def _value_section():
+    """The value lanes and the ladder tracker (nba_value_build.py, 2026-10-21). Never breaks the board."""
+    try:
+        import nba_value_build
+        return nba_value_build.section()
+    except Exception as exc:                                    # noqa: BLE001
+        return f'<section id="value"><p class="sm mut">Value section unavailable ({esc(type(exc).__name__)}).</p></section>'
+
+
 def build(blob=None, now=None):
     if blob is None:
         with open(SRC, encoding="utf-8") as fh:
@@ -620,6 +629,7 @@ def build(blob=None, now=None):
 <p class="nba-accuracy" id="accuracy">{esc(accuracy_line(graded))}</p>
 </section>
 {_rules_section()}
+{_value_section()}
 <section id="graded">
 <details class="section-disclosure nba-results"><summary><b>Results · last 24 hours</b><span>{len(graded)} graded</span></summary>
 <p class="sm mut">Expected / actual combined points; the small signed number is the file's own error.</p>
@@ -642,7 +652,8 @@ def build(blob=None, now=None):
         "Edge Machine · NBA",
         "NBA matchups, pace labels, and combined expectations. Preseason. No bets.",
         "nba",
-        (("matchups", "Upcoming"), ("rules", "Rules"), ("graded", "Results"), ("teams", "Teams")),
+        (("matchups", "Upcoming"), ("rules", "Rules"), ("value", "Value"), ("ladder", "Ladder"),
+         ("graded", "Results"), ("teams", "Teams")),
         C.stamp(clock),
         body,
         scripts=("./tables.js",),
