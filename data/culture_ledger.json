@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-21T00:00:13.992375+00:00",
-   "last_success": "2026-10-21T00:00:13.992375+00:00",
+   "last_run": "2026-10-21T00:08:23.699982+00:00",
+   "last_success": "2026-10-21T00:08:23.699982+00:00",
    "observations": {
-    "at": "2026-10-21T00:00:13.992375+00:00",
-    "events": 850,
+    "at": "2026-10-21T00:08:23.699982+00:00",
+    "events": 858,
     "reasons": {
-     "in band": 4,
+     "in band": 3,
      "no quote or spread too wide": 64,
      "not active": 711,
-     "outside the band": 3,
-     "outside the entry window": 10976
+     "outside the band": 4,
+     "outside the entry window": 11056
     }
    },
    "picks": [
@@ -436,16 +436,17 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-21T00:00:13.992375+00:00",
-   "last_success": "2026-10-21T00:00:13.992375+00:00",
+   "last_run": "2026-10-21T00:08:23.699982+00:00",
+   "last_success": "2026-10-21T00:08:23.699982+00:00",
    "observations": {
-    "at": "2026-10-21T00:00:13.992375+00:00",
-    "events": 850,
+    "at": "2026-10-21T00:08:23.699982+00:00",
+    "events": 858,
     "reasons": {
-     "no quote or spread too wide": 115,
+     "in band": 1,
+     "no quote or spread too wide": 111,
      "not active": 711,
-     "outside the band": 29,
-     "outside the entry window": 10903
+     "outside the band": 32,
+     "outside the entry window": 10983
     }
    },
    "picks": [
@@ -713,16 +714,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-21T00:00:13.992375+00:00",
-   "last_success": "2026-10-21T00:00:13.992375+00:00",
+   "last_run": "2026-10-21T00:08:23.699982+00:00",
+   "last_success": "2026-10-21T00:08:23.699982+00:00",
    "observations": {
-    "at": "2026-10-21T00:00:13.992375+00:00",
-    "events": 850,
+    "at": "2026-10-21T00:08:23.699982+00:00",
+    "events": 858,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 34,
-     "edge 5c+": 14,
-     "edge under 5c": 2,
-     "no quote or spread too wide": 40
+     "edge 5c+": 15,
+     "edge under 5c": 3,
+     "no quote or spread too wide": 38
     }
    },
    "picks": [
@@ -1522,11 +1523,11 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-21T00:00:13.992375+00:00",
-   "last_success": "2026-10-21T00:00:13.992375+00:00",
+   "last_run": "2026-10-21T00:08:23.699982+00:00",
+   "last_success": "2026-10-21T00:08:23.699982+00:00",
    "observations": {
-    "at": "2026-10-21T00:00:13.992375+00:00",
-    "events": 850,
+    "at": "2026-10-21T00:08:23.699982+00:00",
+    "events": 858,
     "reasons": {
      "edge 5c+": 6,
      "under 20 reviews counted": 15
@@ -1879,7 +1880,7 @@
    ]
   },
   "Cybersecurity / Cyber Security": {
-   "at": "2026-10-20T16:00:15.007761+00:00",
+   "at": "2026-10-21T00:08:23.699982+00:00",
    "days": []
   },
   "Deere": {
@@ -1891,7 +1892,7 @@
    "days": []
   },
   "Ethanol": {
-   "at": "2026-10-20T18:00:14.822919+00:00",
+   "at": "2026-10-21T00:08:23.699982+00:00",
    "days": [
     "2026-09-18",
     "2026-09-21",
@@ -1934,7 +1935,7 @@
    ]
   },
   "Houthi": {
-   "at": "2026-10-20T12:00:15.185541+00:00",
+   "at": "2026-10-21T00:08:23.699982+00:00",
    "days": []
   },
   "JPMorgan / JPM": {
@@ -2036,7 +2037,7 @@
    "days": []
   },
   "Stupid Question": {
-   "at": "2026-10-20T16:00:15.007761+00:00",
+   "at": "2026-10-21T00:08:23.699982+00:00",
    "days": [
     "2026-08-31",
     "2026-09-09",
