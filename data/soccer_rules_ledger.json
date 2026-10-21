@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-21T17:01:41.358080+00:00",
+ "last_run": "2026-10-21T17:31:37.637172+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -203,6 +203,98 @@
      "ticker": "KXUCLTOTAL-26OCT21COMMUN-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Como O+D- v Manchester United O-D- \u00b7 Over 3.5 YES 0.41"
+    },
+    {
+     "ask": 0.4,
+     "bid": 0.39,
+     "event": "KXUCLTOTAL-26OCT21BMUARS",
+     "group": "A",
+     "id": "A7:KXUCLTOTAL-26OCT21BMUARS",
+     "labels": {
+      "away": "O-D-",
+      "home": "O+D-"
+     },
+     "league": "Champions League",
+     "line": 3.5,
+     "logged": "2026-10-21T17:31:37.637172+00:00",
+     "match": "Bayern Munich v Arsenal",
+     "price": 0.4,
+     "rule": "A7",
+     "side": "yes",
+     "start": "2026-10-21T19:00Z",
+     "status": "open",
+     "ticker": "KXUCLTOTAL-26OCT21BMUARS-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Bayern Munich O+D- v Arsenal O-D- \u00b7 Over 3.5 YES 0.40"
+    },
+    {
+     "ask": 0.48,
+     "bid": 0.47,
+     "event": "KXUCLTOTAL-26OCT21BRURCL",
+     "group": "A",
+     "id": "A7:KXUCLTOTAL-26OCT21BRURCL",
+     "labels": {
+      "away": "O-D-",
+      "home": "O+D-"
+     },
+     "league": "Champions League",
+     "line": 3.5,
+     "logged": "2026-10-21T17:31:37.637172+00:00",
+     "match": "Club Brugge v Lens",
+     "price": 0.48,
+     "rule": "A7",
+     "side": "yes",
+     "start": "2026-10-21T19:00Z",
+     "status": "open",
+     "ticker": "KXUCLTOTAL-26OCT21BRURCL-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Club Brugge O+D- v Lens O-D- \u00b7 Over 3.5 YES 0.48"
+    },
+    {
+     "ask": 0.51,
+     "bid": 0.5,
+     "event": "KXUCLTOTAL-26OCT21RBBFEY",
+     "group": "A",
+     "id": "A7:KXUCLTOTAL-26OCT21RBBFEY",
+     "labels": {
+      "away": "O+D-",
+      "home": "O+D-"
+     },
+     "league": "Champions League",
+     "line": 3.5,
+     "logged": "2026-10-21T17:31:37.637172+00:00",
+     "match": "Real Betis v Feyenoord Rotterdam",
+     "price": 0.51,
+     "rule": "A7",
+     "side": "yes",
+     "start": "2026-10-21T19:00Z",
+     "status": "open",
+     "ticker": "KXUCLTOTAL-26OCT21RBBFEY-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Real Betis O+D- v Feyenoord Rotterdam O+D- \u00b7 Over 3.5 YES 0.51"
+    },
+    {
+     "ask": 0.54,
+     "bid": 0.53,
+     "event": "KXUCLTOTAL-26OCT21SPOASK",
+     "group": "A",
+     "id": "A7:KXUCLTOTAL-26OCT21SPOASK",
+     "labels": {
+      "away": "O+D-",
+      "home": "O+D-"
+     },
+     "league": "Champions League",
+     "line": 3.5,
+     "logged": "2026-10-21T17:31:37.637172+00:00",
+     "match": "Sporting CP v LASK Linz",
+     "price": 0.54,
+     "rule": "A7",
+     "side": "yes",
+     "start": "2026-10-21T19:00Z",
+     "status": "open",
+     "ticker": "KXUCLTOTAL-26OCT21SPOASK-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Sporting CP O+D- v LASK Linz O+D- \u00b7 Over 3.5 YES 0.54"
     }
    ]
   },
@@ -618,6 +710,75 @@
      "ticker": "KXUCLBTTS-26OCT20FCPPSV-BTTS",
      "title": "Both Teams To Score",
      "why": "FC Porto O+D- v PSV Eindhoven O+D- \u00b7 BTTS YES 0.59"
+    },
+    {
+     "ask": 0.69,
+     "bid": 0.68,
+     "event": "KXUCLBTTS-26OCT21RBBFEY",
+     "group": "BTTS",
+     "id": "D1:KXUCLBTTS-26OCT21RBBFEY",
+     "labels": {
+      "away": "O+D-",
+      "home": "O+D-"
+     },
+     "league": "Champions League",
+     "line": null,
+     "logged": "2026-10-21T17:31:37.637172+00:00",
+     "match": "Real Betis v Feyenoord Rotterdam",
+     "price": 0.69,
+     "rule": "D1",
+     "side": "yes",
+     "start": "2026-10-21T19:00Z",
+     "status": "open",
+     "ticker": "KXUCLBTTS-26OCT21RBBFEY-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Real Betis O+D- v Feyenoord Rotterdam O+D- \u00b7 BTTS YES 0.69"
+    },
+    {
+     "ask": 0.67,
+     "bid": 0.66,
+     "event": "KXUCLBTTS-26OCT21RMARBL",
+     "group": "BTTS",
+     "id": "D1:KXUCLBTTS-26OCT21RMARBL",
+     "labels": {
+      "away": "O+D-",
+      "home": "O+D-"
+     },
+     "league": "Champions League",
+     "line": null,
+     "logged": "2026-10-21T17:31:37.637172+00:00",
+     "match": "Real Madrid v RB Leipzig",
+     "price": 0.67,
+     "rule": "D1",
+     "side": "yes",
+     "start": "2026-10-21T19:00Z",
+     "status": "open",
+     "ticker": "KXUCLBTTS-26OCT21RMARBL-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Real Madrid O+D- v RB Leipzig O+D- \u00b7 BTTS YES 0.67"
+    },
+    {
+     "ask": 0.63,
+     "bid": 0.62,
+     "event": "KXUCLBTTS-26OCT21SPOASK",
+     "group": "BTTS",
+     "id": "D1:KXUCLBTTS-26OCT21SPOASK",
+     "labels": {
+      "away": "O+D-",
+      "home": "O+D-"
+     },
+     "league": "Champions League",
+     "line": null,
+     "logged": "2026-10-21T17:31:37.637172+00:00",
+     "match": "Sporting CP v LASK Linz",
+     "price": 0.63,
+     "rule": "D1",
+     "side": "yes",
+     "start": "2026-10-21T19:00Z",
+     "status": "open",
+     "ticker": "KXUCLBTTS-26OCT21SPOASK-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Sporting CP O+D- v LASK Linz O+D- \u00b7 BTTS YES 0.63"
     }
    ]
   },
@@ -1140,19 +1301,80 @@
      "ticker": "KXUCLBTTS-26OCT21COMMUN-BTTS",
      "title": "Both Teams To Score",
      "why": "Como O+D- v Manchester United O-D- \u00b7 BTTS YES 0.67"
+    },
+    {
+     "ask": 0.61,
+     "bid": 0.6,
+     "event": "KXUCLBTTS-26OCT21AVLVIK",
+     "group": "BTTS",
+     "id": "D3:KXUCLBTTS-26OCT21AVLVIK",
+     "labels": {
+      "away": "O+D-",
+      "home": "O-D-"
+     },
+     "league": "Champions League",
+     "line": null,
+     "logged": "2026-10-21T17:31:37.637172+00:00",
+     "match": "Aston Villa v Viking FK",
+     "price": 0.61,
+     "rule": "D3",
+     "side": "yes",
+     "start": "2026-10-21T19:00Z",
+     "status": "open",
+     "ticker": "KXUCLBTTS-26OCT21AVLVIK-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Aston Villa O-D- v Viking FK O+D- \u00b7 BTTS YES 0.61"
+    },
+    {
+     "ask": 0.66,
+     "bid": 0.65,
+     "event": "KXUCLBTTS-26OCT21BMUARS",
+     "group": "BTTS",
+     "id": "D3:KXUCLBTTS-26OCT21BMUARS",
+     "labels": {
+      "away": "O-D-",
+      "home": "O+D-"
+     },
+     "league": "Champions League",
+     "line": null,
+     "logged": "2026-10-21T17:31:37.637172+00:00",
+     "match": "Bayern Munich v Arsenal",
+     "price": 0.66,
+     "rule": "D3",
+     "side": "yes",
+     "start": "2026-10-21T19:00Z",
+     "status": "open",
+     "ticker": "KXUCLBTTS-26OCT21BMUARS-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Bayern Munich O+D- v Arsenal O-D- \u00b7 BTTS YES 0.66"
+    },
+    {
+     "ask": 0.69,
+     "bid": 0.68,
+     "event": "KXUCLBTTS-26OCT21BRURCL",
+     "group": "BTTS",
+     "id": "D3:KXUCLBTTS-26OCT21BRURCL",
+     "labels": {
+      "away": "O-D-",
+      "home": "O+D-"
+     },
+     "league": "Champions League",
+     "line": null,
+     "logged": "2026-10-21T17:31:37.637172+00:00",
+     "match": "Club Brugge v Lens",
+     "price": 0.69,
+     "rule": "D3",
+     "side": "yes",
+     "start": "2026-10-21T19:00Z",
+     "status": "open",
+     "ticker": "KXUCLBTTS-26OCT21BRURCL-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Club Brugge O+D- v Lens O-D- \u00b7 BTTS YES 0.69"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-18T14:01:42.582553+00:00",
-   "candidates": 4,
-   "due": 6,
-   "labelled": 6,
-   "matched": 4,
-   "new": 0
-  },
   {
    "at": "2026-10-18T14:16:41.126571+00:00",
    "candidates": 4,
@@ -1552,6 +1774,14 @@
    "labelled": 1,
    "matched": 1,
    "new": 0
+  },
+  {
+   "at": "2026-10-21T17:31:37.637172+00:00",
+   "candidates": 7,
+   "due": 8,
+   "labelled": 7,
+   "matched": 7,
+   "new": 10
   }
  ],
  "version": "soccer-rules-v1"
