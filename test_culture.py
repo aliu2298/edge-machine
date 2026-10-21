@@ -108,5 +108,91 @@ full["lanes"]["rt_model"]["picks"] = [dict(id="KXRT-STRA-42", event="KXRT-STRA",
                                            logged=NOW.isoformat(), status="open", detail="37/87")]
 check("a pick shows on the page", "Street Fighter" in KB.build(full, now=NOW), True)
 
+print("\none market, one side, one lane (2026-10-20)")
+
+
+def pk(t, side, ev="EV", logged="2026-10-16T18:00:00+00:00", status="open", profit=None, **kw):
+    return dict(dict(id=t, event=ev, side=side, price=0.75, logged=logged, status=status, profit=profit,
+                     close="2026-10-18T00:00:00+00:00", title=t, name=ev, series=str(t).split("-")[0]), **kw)
+
+
+st = {"lanes": {k: {"picks": []} for k in K.LANES}}
+st["lanes"]["rt_model"]["picks"].append(pk("KXRT-WHA-70", "yes", "KXRT-WHA", status="lost", profit=-100.0))
+c = __import__("collections").Counter()
+K.record(st["lanes"]["culture_endgame"], [pk("KXRT-WHA-70", "no", "KXRT-WHA")], by="event", state=st,
+         key="culture_endgame", counts=c)
+check("a ticker any lane holds, even settled, is skipped and counted 'held by'",
+      (len(st["lanes"]["culture_endgame"]["picks"]), dict(c)), (0, {"held by rt_model": 1}))
+c.clear()
+K.record(st["lanes"]["culture_fav_band"], [pk("KXRT-WHA-80", "no", "KXRT-WHA")], by="event", state=st,
+         key="culture_fav_band", counts=c)
+check("another rung of the same RT film bet the other way is a conflict",
+      (len(st["lanes"]["culture_fav_band"]["picks"]), dict(c)), (0, {"conflicts with rt_model in the same event": 1}))
+c.clear()
+K.record(st["lanes"]["culture_fav_band"], [pk("KXRT-WHA-60", "yes", "KXRT-WHA")], by="event", state=st,
+         key="culture_fav_band", counts=c)
+check("the same direction on another rung is not a conflict", len(st["lanes"]["culture_fav_band"]["picks"]), 1)
+st["lanes"]["mentions_rate"]["picks"].append(pk("KXTRUMPSAY-26OCT19-BIBI", "no", "KXTRUMPSAY-26OCT19"))
+c.clear()
+K.record(st["lanes"]["culture_endgame"], [pk("KXTRUMPSAY-26OCT19-TARI", "yes", "KXTRUMPSAY-26OCT19")], by="event",
+         state=st, key="culture_endgame", counts=c)
+check("opposite sides on two DIFFERENT words of one mention event are separate questions",
+      (len(st["lanes"]["culture_endgame"]["picks"]), dict(c)), (1, {}))
+check("the strike is read off an RT ticker when the row carries none", K.strike_of(pk("KXRT-SENS-75", "yes")), (75.0, "greater"))
+check("priority within a scan: mentions, endgame, RT model, favourite band", K.PRIORITY,
+      ("mentions_rate", "culture_endgame", "rt_model", "culture_fav_band"))
+
+# A run where two lanes see the same market in one scan: the higher-priority lane gets it.
+ev = dict(event_ticker="KXSTEAMTOPSELLER-26OCT20", series_ticker="KXSTEAMTOPSELLER", title="Steam", category="Entertainment",
+          markets=[mkt("KXSTEAMTOPSELLER-26OCT20-AIO", 0.05, 0.07, 10, "KXSTEAMTOPSELLER-26OCT20")])
+
+
+def fake(path):
+    if path.startswith("events"):
+        return {"events": [ev], "cursor": ""}
+    return {"market": {}}
+
+
+_real_band = K.band_picks
+# Both band lanes offered the SAME market in one scan (the bands are disjoint, so stub them).
+K.band_picks = lambda events, now, band, spread, hours, lane: (
+    [K.entry(ev["markets"][0], ev, "no" if lane == "endgame" else "yes", 0.9, now)], __import__("collections").Counter())
+try:
+    rs = K.run({"lanes": {k: {"picks": [], "observations": {}, "error": None} for k in K.LANES}}, {}, now=NOW,
+               fetch=fake, webfetch=lambda *a, **k: (_ for _ in ()).throw(RuntimeError("offline")))
+finally:
+    K.band_picks = _real_band
+got = {k: [(p["id"], p["side"]) for p in v["picks"]] for k, v in rs["lanes"].items() if v["picks"]}
+check("one scan, two lanes on one market: endgame (higher priority) takes it, the favourite band never does", got,
+      {"culture_endgame": [("KXSTEAMTOPSELLER-26OCT20-AIO", "no")]})
+check("and the favourite band's scan counts why",
+      rs["lanes"]["culture_fav_band"]["observations"]["reasons"], {"held by culture_endgame": 1})
+
+print("\nrt_model never claims certainty")
+check("P is clamped to 0.05-0.95", K.P_CLAMP, (0.05, 0.95))
+_saved = (K.rt_counts, K.expected_reviews, K.p_above)
+rev = dict(event_ticker="KXRT-IPL", series_ticker="KXRT", title="I Play Rocky", category="Entertainment",
+           markets=[mkt("KXRT-IPL-82", 0.27, 0.29, 30, "KXRT-IPL", floor_strike=82, strike_type="greater")])
+try:
+    K.rt_counts = lambda url, fetch=None: (90, 100, 90)
+    K.expected_reviews = lambda hist, count, hours: 10
+    for raw, want in ((1.0, 0.95), (0.0, 0.05)):
+        K.p_above = lambda *a, _r=raw: _r
+        out, _c = K.rt_picks([rev], NOW, {"rt_urls": {"KXRT-IPL": "u"}}, {}, fetch=None)
+        check(f"a raw P of {raw:.2f} is used as {want:.2f}", [p.get("model") for p in out], [want])
+finally:
+    K.rt_counts, K.expected_reviews, K.p_above = _saved
+
+print("\nthe headline counts each market once")
+dup = {"lanes": {k: {"picks": []} for k in K.LANES}}
+dup["lanes"]["rt_model"]["picks"].append(pk("KXRT-SENS-75", "no", logged="2026-10-17T10:00:00+00:00", status="lost", profit=-100.0))
+dup["lanes"]["culture_fav_band"]["picks"].append(pk("KXRT-SENS-75", "yes", logged="2026-10-17T12:00:00+00:00", status="won", profit=30.0))
+dup["lanes"]["culture_endgame"]["picks"].append(pk("KXOTHER-1", "no", logged="2026-10-17T12:00:00+00:00", status="won", profit=8.0))
+rec, note = KB.pooled(dup)
+check("two lanes on one ticker count once (the earliest pick), plus the other market",
+      (rec["n"], rec["won"], round(rec["roi_fee"], 3), note), (2, 1, -0.46, "each market once"))
+html = KB.build(dup, NOW)
+check("the tile says so", "Sandbox record · paper · each market once" in html, True)
+
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

@@ -65,6 +65,11 @@ MENTION_SERIES = ("KXTRUMPSAY", "KXTRUMPSAYMONTH", "KXTRUMPSAYCOMPANY", "KXTRUMP
 RT_SERIES = ("KXRT", "KXRTTV")
 RATE_DAYS = 84
 RT_MIN_REVIEWS = 20
+P_CLAMP = (0.05, 0.95)          # rt_model never claims more certainty than this (2026-10-20)
+# One market, one side, one lane (2026-10-20). Before a lane logs, every Culture lane's picks,
+# open or settled, are checked for that ticker; within one scan the lanes run in this order,
+# so the more specific claim gets a market first.
+PRIORITY = ("mentions_rate", "culture_endgame", "rt_model", "culture_fav_band")
 FACTBASE = ("https://rollcall.com/wp-json/factbase/v1/search?media=&type=&sort=date&location=all"
             "&place=all&format=json&page={page}&q={q}")
 
@@ -115,6 +120,9 @@ def quote(m):
 
 
 def entry(m, ev, side, price, now, detail="", **extra):
+    if isinstance(m.get("floor_strike"), (int, float)) and m.get("strike_type"):
+        extra.setdefault("strike", m["floor_strike"])
+        extra.setdefault("strike_type", m["strike_type"])
     return dict(id=m["ticker"], event=m.get("event_ticker") or ev.get("event_ticker"),
                 series=ev.get("series_ticker"), name=ev.get("title") or m.get("title"),
                 title=m.get("yes_sub_title") or m.get("title"), side=side, price=round(price, 4),
@@ -363,7 +371,7 @@ def rt_picks(events, now, state, snaps, fetch=web):
             future = expected_reviews(hist, count, (close - now).total_seconds() / 3600)
             if future is None:
                 continue
-            p = p_above(liked, count, future, m["floor_strike"])
+            p = min(max(p_above(liked, count, future, m["floor_strike"]), P_CLAMP[0]), P_CLAMP[1])
             no_px = round(1 - q[0], 4)
             for side, px, e in (("yes", q[1], p - (q[1] + fee(q[1]))), ("no", no_px, (1 - p) - (no_px + fee(no_px)))):
                 if best is None or e > best[0]:
@@ -389,13 +397,61 @@ def culture_events(fetch=D.get):
     return [e for e in evs if e.get("category") in CATEGORIES]
 
 
-def record(lane, picks, by="event"):
-    """Freeze each new pick once: one per event (bands, RT) or per market (mentions)."""
+def strike_of(row):
+    """(strike, type) for a ladder rung: stored on the row, else the KXRT/KXRTTV ticker's suffix."""
+    if isinstance(row.get("strike"), (int, float)):
+        return float(row["strike"]), row.get("strike_type") or "greater"
+    if row.get("series") in RT_SERIES or str(row.get("id", "")).split("-")[0] in RT_SERIES:
+        tail = str(row.get("id", "")).rsplit("-", 1)[-1]
+        try:
+            return float(tail), "greater"
+        except ValueError:
+            return None
+    return None
+
+
+def conflicts(a, b):
+    """Do two picks on DIFFERENT rungs of one ladder event bet in contradictory directions?
+    YES on "above s" is bullish and NO on it bearish; a bullish and a bearish pick on one
+    ladder is the same quantity bet both ways. Events without strikes (a word list, a chart
+    of items) are not ladders: their markets are separate questions."""
+    if a.get("event") != b.get("event") or a.get("id") == b.get("id"):
+        return False
+    sa, sb = strike_of(a), strike_of(b)
+    if not sa or not sb:
+        return False
+    return a["side"] != b["side"]
+
+
+def record(lane, picks, by="event", state=None, key=None, counts=None):
+    """Freeze each new pick once: one per event (bands, RT) or per market (mentions).
+
+    With `state` (the run passes it), a market any Culture lane already holds, open or settled,
+    is skipped and counted "held by <lane>", and so is a pick that bets a ladder event the
+    other way to a pick already held on it ("conflicts with <lane>")."""
     have = {x[by] for x in lane["picks"]}
+    held = {}
+    if state is not None:
+        for name, other in state["lanes"].items():
+            for x in other["picks"]:
+                held.setdefault(x["id"], (name, x))
     for p in picks:
-        if p[by] not in have:
-            lane["picks"].append(p)
-            have.add(p[by])
+        if p[by] in have:
+            continue
+        if state is not None:
+            owner = held.get(p["id"])
+            if owner and owner[0] != key:
+                if counts is not None:
+                    counts[f"held by {owner[0]}"] += 1
+                continue
+            clash = next((n for n, x in held.values() if conflicts(p, x)), None)
+            if clash:
+                if counts is not None:
+                    counts[f"conflicts with {clash} in the same event"] += 1
+                continue
+            held[p["id"]] = (key, p)
+        lane["picks"].append(p)
+        have.add(p[by])
 
 
 def settle(lane, now, fetch=D.get):
@@ -434,12 +490,14 @@ def run(state, snaps, now=None, fetch=D.get, webfetch=web):
         "mentions_rate": lambda: mention_picks(events, now, state, webfetch),
         "rt_model": lambda: rt_picks(events, now, state, snaps, webfetch),
     }
-    for key, step in steps.items():
+    for key in PRIORITY:
+        step = steps[key]
         lane = state["lanes"][key]
         errs = []
         try:
             picks, counts = step()
-            record(lane, picks, by="id" if key == "mentions_rate" else "event")
+            record(lane, picks, by="id" if key == "mentions_rate" else "event", state=state, key=key,
+                   counts=counts)
             lane["observations"] = dict(at=now.isoformat(), events=len(events), reasons=dict(counts))
         except Exception as e:                                  # noqa: BLE001
             errs.append("scan: " + type(e).__name__ + ": " + str(e)[:160])

@@ -87,6 +87,9 @@ def spec(**kw):
         market=None, unit=lambda row: str((row.get("a") or {}).get("unit") or "bet"),
         method=None, open_picks=None, scoped=True, events=lambda d, rows, now: [],
         extra_rows=lambda d, rows: [],
+        # pooled(rows) -> (record, note): a family whose lanes can share a market pools its own
+        # way (Culture counts each market once); None pools the rows (sandbox_record).
+        pooled=None,
     )
     out.update(kw)
     return out
@@ -295,8 +298,8 @@ def tiles_html(sp, d, st, rows, open_n):
         # No rule in Production: the Sandbox's own record, labelled as paper so Production is
         # never implied. An em dash only when nothing in the Sandbox has settled either.
         import tennis_cards
-        rec, live = sandbox_record(rows)
-        rec_tile = tennis_cards.record_tile(rec, "Sandbox record · paper")
+        rec, note = sp["pooled"](rows) if sp.get("pooled") else (sandbox_record(rows)[0], "")
+        rec_tile = tennis_cards.record_tile(rec, "Sandbox record · paper" + (f" · {note}" if note else ""))
         n = int(rec.get("n") or 0) + int(rec.get("n_price") or 0)
         if n and rec.get("roi_fee") is not None:
             klass = "mut" if int(rec.get("n") or 0) < production.EARLY_N else fmt.tone(rec["roi_fee"], ".1f", 100)
