@@ -2,15 +2,15 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-21T06:00:16.696999+00:00",
-   "last_success": "2026-10-21T06:00:16.696999+00:00",
+   "last_run": "2026-10-21T07:00:14.003770+00:00",
+   "last_success": "2026-10-21T07:00:14.003770+00:00",
    "observations": {
-    "at": "2026-10-21T06:00:16.696999+00:00",
+    "at": "2026-10-21T07:00:14.003770+00:00",
     "events": 854,
     "reasons": {
-     "no quote or spread too wide": 34,
+     "no quote or spread too wide": 44,
      "not active": 711,
-     "outside the band": 26,
+     "outside the band": 16,
      "outside the entry window": 11001
     }
    },
@@ -438,15 +438,15 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-21T06:00:16.696999+00:00",
-   "last_success": "2026-10-21T06:00:16.696999+00:00",
+   "last_run": "2026-10-21T07:00:14.003770+00:00",
+   "last_success": "2026-10-21T07:00:14.003770+00:00",
    "observations": {
-    "at": "2026-10-21T06:00:16.696999+00:00",
+    "at": "2026-10-21T07:00:14.003770+00:00",
     "events": 854,
     "reasons": {
-     "no quote or spread too wide": 77,
+     "no quote or spread too wide": 86,
      "not active": 711,
-     "outside the band": 26,
+     "outside the band": 17,
      "outside the entry window": 10958
     }
    },
@@ -718,16 +718,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-21T06:00:16.696999+00:00",
-   "last_success": "2026-10-21T06:00:16.696999+00:00",
+   "last_run": "2026-10-21T07:00:14.003770+00:00",
+   "last_success": "2026-10-21T07:00:14.003770+00:00",
    "observations": {
-    "at": "2026-10-21T06:00:16.696999+00:00",
+    "at": "2026-10-21T07:00:14.003770+00:00",
     "events": 854,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 34,
-     "edge 5c+": 13,
-     "edge under 5c": 1,
-     "no quote or spread too wide": 42
+     "edge 5c+": 10,
+     "edge under 5c": 2,
+     "no quote or spread too wide": 44
     }
    },
    "picks": [
@@ -1559,10 +1559,10 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-21T06:00:16.696999+00:00",
-   "last_success": "2026-10-21T06:00:16.696999+00:00",
+   "last_run": "2026-10-21T07:00:14.003770+00:00",
+   "last_success": "2026-10-21T07:00:14.003770+00:00",
    "observations": {
-    "at": "2026-10-21T06:00:16.696999+00:00",
+    "at": "2026-10-21T07:00:14.003770+00:00",
     "events": 854,
     "reasons": {
      "edge 5c+": 6,
@@ -1915,7 +1915,7 @@
    ]
   },
   "Cybersecurity / Cyber Security": {
-   "at": "2026-10-21T00:08:23.699982+00:00",
+   "at": "2026-10-21T07:00:14.003770+00:00",
    "days": []
   },
   "Deere": {
@@ -1970,7 +1970,7 @@
    ]
   },
   "Houthi": {
-   "at": "2026-10-21T00:08:23.699982+00:00",
+   "at": "2026-10-21T07:00:14.003770+00:00",
    "days": []
   },
   "JPMorgan / JPM": {
