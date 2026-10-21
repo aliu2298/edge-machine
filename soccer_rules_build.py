@@ -70,6 +70,9 @@ BTTS_NOTE = ('<details class="section-disclosure"><summary><b>Group BTTS evidenc
                'match; YES means both teams score.</p></details>')
 
 
+PRODUCTION_KEYS = ("A7", "A6", "D3")
+
+
 def section(state=None):
     if state is None:
         state = SR.load() if os.path.exists(SR.PATH) else {"rules": {k: {"picks": []} for k in SR.RULES}}
@@ -81,7 +84,9 @@ def section(state=None):
                 continue
             picks = (state.get("rules", {}).get(key) or {}).get("picks") or []
             scope = (f"All {len(SR.MARKETS[meta['market']])} BTTS leagues" if meta["league"] == SR.ALL else meta["league"])
-            lines.append(rule_line(key, scope, meta["label"], meta.get("evidence"), picks))
+            # A7, A6 and D3 moved to Production by hand 2026-10-21 (soccer_rules_production).
+            label = meta["label"] + (" · Production since 2026-10-21" if key in PRODUCTION_KEYS else "")
+            lines.append(rule_line(key, scope, label, meta.get("evidence"), picks))
             picks_g += picks
         recent += picks_g
         groups.append(group_fold(g, words, lines, picks_g, opened=(g == "A"), extra=BTTS_NOTE if g == "BTTS" else ""))

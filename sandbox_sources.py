@@ -4629,7 +4629,7 @@ def scoped_rule(source, sport=None):
     """
     meta = SOURCES.get(source)
     if not meta:
-        return str(source or "")
+        return OWN_LEDGER_LABELS.get(source, str(source or ""))
     name = str(meta.get("label") or source).split(" (")[0].strip()
     if sport is None or len(rule_scopes(source)) < 2:
         return name
@@ -4646,10 +4646,26 @@ SCOPE_NOTE = {
 BTTS_SPORTS = ("soccer_btts", "soccer_btts_cup", "soccer_btts_intl")
 
 
+# Leagues only an own-ledger Production rule publishes in (soccer_rules_production, 2026-10-21):
+# Argentina's KXARGPREMDIVTOTAL rows carry ESPN's "Liga Profesional", tied to their ESPN fixture
+# by sa_o15's exact matcher before they were logged.
+FEED_EXTRA_LEAGUES = {"Liga Profesional"}
+# Display names for Production pairs that run on their own ledgers, not in SOURCES (Econ Daily,
+# Trump mentions, the soccer label rules): a page or a lead names them by these.
+OWN_LEDGER_LABELS = {
+    "mentions_rate": "Trump mentions",
+    "sr_a7": "UCL either team O+D− · over 3.5",
+    "sr_a6": "EPL O−D− v an O+ opponent · under 2.5",
+    "sr_d3": "O−D− v O+D− · both teams to score",
+    "sa_o15_arg": "Argentina over 1.5",
+}
+
+
 def feed_binary_leagues():
     """The leagues a Kalshi yes/no row (goals, BTTS, corners) may name for the feed: the
-    GAME map's and the BTTS board's. Read at call time: both maps are defined below."""
-    return set(KALSHI_GAME_LEAGUES.values()) | set(BTTS_LEAGUES.values())
+    GAME map's and the BTTS board's, plus FEED_EXTRA_LEAGUES. Read at call time: both maps
+    are defined below."""
+    return set(KALSHI_GAME_LEAGUES.values()) | set(BTTS_LEAGUES.values()) | FEED_EXTRA_LEAGUES
 
 BTTS_FORM_WINDOW = 10
 BTTS_FORM_MIN = 7
