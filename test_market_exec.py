@@ -64,8 +64,10 @@ EXIT_RULES = {
 print("which rules may be executed at all")
 ok, skipped = X.executable_rules()
 check("etf_overnight is excluded", "etf_overnight" in skipped, True)
-check("  ...because it enters at the close",
-      "close" in skipped.get("etf_overnight", ""), True)
+check("  ...because it is off the board since 2026-10-20 (it also entered at the close)",
+      skipped.get("etf_overnight"), "removed from the board")
+check("none of the four rules removed 2026-10-20 is executable",
+      [n for n in ("sw_gap_down_reversal", "etf_ibs_band", "etf_tom", "etf_overnight") if n in ok], [])
 check("the open-entry swing rules are executable",
       sorted(ok) == sorted(n for n, r in T.RULES.items()
                            if not T.rule_removed(n) and r.get("lane") == "swing"

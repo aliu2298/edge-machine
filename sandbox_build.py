@@ -1748,6 +1748,14 @@ def load_fills(path=None):
     return rep if isinstance(rep, dict) and isinstance(rep.get("summary"), dict) else None
 
 
+def _rule_tag(name):
+    """A rule's id on the execution line, or "removed rule" for one off the board: its shares
+    can still be held at the broker (an exit is never sent for a removed rule), but the page
+    does not name a rule it no longer shows (2026-10-20)."""
+    import market_track as MT
+    return "removed rule" if MT.rule_removed(name) else name
+
+
 def _shared_tags(held):
     """'DAL 24: [sw_gap_down_reversal 12] [sw_rsi2_pullback 12]' for each stock two or more
     rules hold: one position at the broker, one trade per rule in the record. One small
@@ -1757,10 +1765,16 @@ def _shared_tags(held):
         parts = h.get("rules") or []
         if len({p.get("rule") for p in parts}) < 2:
             continue
-        badges = " ".join(f'<span class="badge">{esc(p.get("rule"))} {int(p.get("qty") or 0)}</span>'
+        badges = " ".join(f'<span class="badge">{esc(_rule_tag(p.get("rule")))} {int(p.get("qty") or 0)}</span>'
                           for p in parts)
         tags.append(f'<span class="trade-shared">{esc(h.get("symbol"))} {int(h.get("qty") or 0)}: {badges}</span>')
     return " · ".join(tags)
+
+
+def _close_entry_on_board():
+    """True while a rule still on the board enters at the close (none since 2026-10-20)."""
+    import market_track as MT
+    return any(r.get("entry") == "close" and not MT.rule_removed(n) for n, r in MT.RULES.items())
 
 
 def trade_exec_html(fills):
@@ -1785,7 +1799,7 @@ def trade_exec_html(fills):
     held = fills.get("held") or []
     held_li = "".join(
         f'<li>{esc(h.get("symbol"))} {int(h.get("qty") or 0)}: '
-        + esc(", ".join(f'{p.get("rule")} {int(p.get("qty") or 0)}' for p in h.get("rules") or []))
+        + esc(", ".join(f'{_rule_tag(p.get("rule"))} {int(p.get("qty") or 0)}' for p in h.get("rules") or []))
         + '</li>' for h in held)
     cost = ("nothing filled against a recorded price yet" if not s.get("fills") else
             f'{int(s["fills"])} fills matched to the record, measured cost '
@@ -1801,8 +1815,9 @@ def trade_exec_html(fills):
         f'sized separately. {esc(cost)}. {drift}</p>'
         + (f'<p class="sm">Held now, by rule:</p><ul class="sm">{held_li}</ul>' if held_li else
            '<p class="sm">Nothing is held now.</p>')
-        + f'<p class="sm mut">The overnight rule is {esc(RECORD_ONLY)}.'
-        + (f' Fill check published {esc(_ct_phrase(updated))}.' if updated else "")
+        + '<p class="sm mut">'
+        + (f'The overnight rule is {esc(RECORD_ONLY)}. ' if _close_entry_on_board() else "")
+        + (f'Fill check published {esc(_ct_phrase(updated))}.' if updated else "")
         + '</p></details>')
     return (f'<p class="sm trade-exec">{head}{(" · held by two rules: " + tags) if tags else ""}</p>{detail}')
 

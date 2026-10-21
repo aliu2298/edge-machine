@@ -718,6 +718,7 @@ def case_save_stamps_sha():
             removed = {
                 "cr_btc_2200", "dt_intraday_mom", "sw_52w_breakout", "sw_ma_cross_rsi",
                 "cr_trend20", "dt_orb30", "dt_orb30_long", "dt_vwap_reclaim",
+                "sw_gap_down_reversal", "etf_ibs_band", "etf_tom", "etf_overnight",   # 2026-10-20
             }
             eq(MT.REMOVED_RULES, removed, "REMOVED_RULES is unchanged")
         finally:

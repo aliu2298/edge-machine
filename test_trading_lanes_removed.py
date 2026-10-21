@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Eight retired trading rules taken off the board the same way a Sandbox lane is.
+"""Twelve retired trading rules taken off the board the same way a Sandbox lane is: the eight
+of 2026-10-04 and four swing rules of 2026-10-20.
 
 They do not render, and they do not log or grade a new trade. The rows already
 in the ledger stay, count and content. A rule with no trades that is not in
@@ -31,6 +32,11 @@ EIGHT = (
     "dt_orb30",
     "dt_orb30_long",
     "dt_vwap_reclaim",
+    # 2026-10-20, as asked (Olu)
+    "sw_gap_down_reversal",
+    "etf_ibs_band",
+    "etf_tom",
+    "etf_overnight",
 )
 # Closed and open counts on the ledger this test reads. The headline is the
 # sum of the rules that stay.
@@ -43,6 +49,10 @@ LANE_COUNTS = {
     "dt_orb30": (158, 0),
     "dt_orb30_long": (56, 0),
     "dt_vwap_reclaim": (153, 0),
+    "sw_gap_down_reversal": (18, 26),
+    "etf_ibs_band": (6, 8),
+    "etf_tom": (1, 0),
+    "etf_overnight": (38, 0),
 }
 KEPT = "sw_rsi2_pullback"
 
@@ -105,12 +115,12 @@ def _board_tiles(trades):
     return closed, opened
 
 
-print("\nthe eight retired rules are the removed set")
+print("\nthe twelve retired rules are the removed set")
 removed = getattr(MT, "REMOVED_RULES", None)
 ok(removed is not None and set(removed) == set(EIGHT),
-   "exactly these eight rules are removed")
+   "exactly these twelve rules are removed")
 retired = {name for name, meta in MT.RULES.items() if meta.get("retired")}
-ok(retired == set(EIGHT), "every retired trading rule is one of the eight, and no other rule is")
+ok(retired == set(EIGHT), "every retired trading rule is one of the twelve, and no other rule is")
 gate = getattr(MT, "rule_removed", lambda _name: False)
 ok(all(gate(name) for name in EIGHT), "the entry gate blocks each of the eight")
 ok(not gate(KEPT), "a rule still on the board is not blocked")
@@ -177,10 +187,11 @@ rise = []
 for i in range(215):
     p = 100 + i * 0.1
     rise.append(bar(_day(i), p, p * 1.01, p * 0.99, p))
-rise.append(bar("2025-08-04", 121.0, 122, 120, 121.5))
+rise.append(bar("2025-08-04", 121.0, 122, 118, 118.5))   # a 7-day closing low above the 200-day: Double 7s
+rise.append(bar("2025-08-05", 118.6, 119, 118, 118.8))   # the next open it enters at
 n_kept = MT.scan({"SPY": rise}, kept_book)
-ok(n_kept > 0 and any(t.get("rule") == "etf_overnight" for t in kept_book["trades"]),
-   "the overnight rule, which is not removed, still logs a trade")
+ok(n_kept > 0 and all(t.get("rule") in MT.ACTIVE for t in kept_book["trades"]),
+   "a rule still on the board still logs a trade")
 ok(all(t.get("rule") not in set(EIGHT) for t in kept_book["trades"]),
    "that same scan does not log one of the eight")
 

@@ -118,18 +118,13 @@ eq(X.held_positions(partial_rep["rows"] + [partial_sell])[0]["qty"], 8,
 active_buy = dict(partial_rep["rows"][0], status="partially_filled")
 eq(X.held_positions([active_buy])[0]["qty"], 11, "active partial fills also count as held shares")
 
-print("\nthe overnight rule is record only")
+print("\nthe overnight rule was record only, and is off the board since 2026-10-20")
 eq(MT.RULES["etf_overnight"].get("entry"), "close", "the overnight rule enters at the close")
-eq(X.executable_rules()[1].get("etf_overnight"),
-   "enters at the close — needs a market-on-close order before 15:50 ET",
-   "market_exec does not send it")
+eq(X.executable_rules()[1].get("etf_overnight"), "removed from the board", "market_exec does not send it")
 md = MT.load()
 rows = SB.trading_rows(md)
-night = rows[rows.find("Swing · etf_overnight"):]
-night = night[:night.find("</td>")]
-ok(SB.RECORD_ONLY in night and SB.RECORD_ONLY == "record only — not sent to Alpaca (needs a market-on-close order)",
-   "its row says: record only — not sent to Alpaca (needs a market-on-close order)")
-eq(rows.count(SB.RECORD_ONLY), 1, "and no other row says it")
+ok("etf_overnight" not in rows and MT.RULES["etf_overnight"]["label"] not in rows, "and its row is gone from the page")
+eq(rows.count(SB.RECORD_ONLY), 0, "so no row says record only")
 
 print("\nthe page: what runs it, what the table is, what Alpaca did")
 fills = dict(rep, updated="2026-10-13T20:31:00+00:00")
@@ -144,18 +139,20 @@ line = SB.trade_exec_html(fills)
 head = re.search(r'<p class="sm trade-exec">(.*?)</p>', line).group(1)
 ok(head.startswith("Alpaca paper execution since Oct 10: 6 sent · 4 filled · 1 unfilled · 1 waiting for the open"),
    "one line: since the first order, sent · filled · unfilled, and what is still waiting")
-ok('<span class="trade-shared">DAL 24: <span class="badge">sw_gap_down_reversal 12</span> '
+ok('<span class="trade-shared">DAL 24: <span class="badge">removed rule 12</span> '
    '<span class="badge">sw_rsi2_pullback 12</span></span>' in head,
-   "a stock two rules hold is tagged with each rule's share, one badge per rule")
+   "a stock two rules hold is tagged with each rule's share, one badge per rule; a rule off the "
+   "board since 2026-10-20 (sw_gap_down_reversal) reads as a removed rule")
+ok("sw_gap_down_reversal" not in line, "and is not named anywhere on the line or in the fold")
 ok("SPY" not in head, "a stock one rule held is not tagged")
 fold = line[line.find('<details class="fold trade-exec-detail">'):]
 ok(fold.startswith('<details class="fold trade-exec-detail"><summary>Execution detail</summary>'),
    "the detail is in a fold")
 ok("<details open" not in line, "and the fold is closed on load")
-ok("DAL 24: sw_gap_down_reversal 12, sw_rsi2_pullback 12" in fold, "the fold lists what is held, by rule")
+ok("DAL 24: removed rule 12, sw_rsi2_pullback 12" in fold, "the fold lists what is held, by rule")
 ok("4 fills matched to the record" in fold and "against the 5bp the record assumes" in fold,
    "and the measured cost against the assumed one")
-ok(SB.RECORD_ONLY in fold, "and names the overnight rule as record only")
+ok(SB.RECORD_ONLY not in fold, "and no longer names the overnight rule: it is off the board since 2026-10-20")
 ok("Fill check published 3:31 PM CT Oct 13." in fold, "and when the report was published, in CT once")
 orphan = dict(fills, summary=dict(fills["summary"], orphans=2))
 ok("2 fill(s) have no trade in the record" in SB.trade_exec_html(orphan), "a fill with no trade is flagged")
