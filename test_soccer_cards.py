@@ -428,7 +428,9 @@ if sync_playwright is not None:
                        f"{width}px sub-nav reaches unique sections")
                     eq(page.locator(".sp-day-head").first.evaluate("e => getComputedStyle(e).position"),
                        "sticky", f"{width}px day head is sticky")
-                    page.locator("details.sp-sandbox > summary").click()
+                    # Open the Sandbox fold if it is closed (it opens on load with at most one Production rule).
+                    if not page.locator("details.sp-sandbox").evaluate("e => e.open"):
+                        page.locator("details.sp-sandbox > summary").click()
                     eq(page.locator(".sp-details-body:visible").count(), 0, f"{width}px every Rule details fold starts closed")
                     page.locator('[data-list="sandbox"] details.sp-rule > summary').first.click()
                     eq(page.locator(".sp-details-body:visible").count(), 1, f"{width}px a row opens its one Rule details fold")

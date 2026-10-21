@@ -192,7 +192,34 @@ rec, note = KB.pooled(dup)
 check("two lanes on one ticker count once (the earliest pick), plus the other market",
       (rec["n"], rec["won"], round(rec["roi_fee"], 3), note), (2, 1, -0.46, "each market once"))
 html = KB.build(dup, NOW)
-check("the tile says so", "Sandbox record · paper · each market once" in html, True)
+check("Trump mentions is in Production (2026-10-20), so the record tiles are its since-Production record",
+      ("since Production · Trump mentions" in html, "Sandbox record · paper" in html), (True, False))
+
+
+print("\nthe page: Trump mentions in Production, closes not starts (2026-10-21)")
+import re as _re
+pg = {"lanes": {k: {"picks": [], "last_success": "2026-10-16T17:00:00+00:00"} for k in K.LANES}}
+pg["lanes"]["mentions_rate"]["picks"].append(pk("KXTRUMPSAY-26OCT20-WALL", "no", "KXTRUMPSAY-26OCT20",
+                                               logged="2026-10-21T01:00:00+00:00", close="2026-10-25T00:00:00+00:00",
+                                               status="won", profit=30.0, settled="2026-10-22T00:00:00+00:00"))
+pg["lanes"]["culture_fav_band"]["picks"].append(pk("KXOSC-1", "yes", close="2026-10-30T00:00:00+00:00"))
+LATER = dt.datetime(2026, 10, 23, 18, 0, tzinfo=UTC)
+ph = KB.build(pg, LATER)
+pt = _re.sub(r"\s+", " ", _re.sub(r"<[^>]+>", " ", ph))
+check("the header counts Trump mentions as Production", "1 in Production · 3 in the Sandbox" in pt, True)
+check("it is a row of the Production list, not of the Sandbox fold",
+      'data-list="production"' in ph and 'data-source="mentions_rate"' in ph.split('data-list="production"', 1)[1].split('id="sandbox"', 1)[0],
+      True)
+check("and 'No culture rule is in Production' is gone", "No culture rule is in Production" in pt, False)
+check("the record tiles are its since-Production record: 1 won", ("since Production · Trump mentions" in pt, "1–0" in pt), (True, True))
+check("'too early to read' counts the three Sandbox lanes only", "3 rules · 3 too early to read" in pt, True)
+check("each chip says what the row is", (pt.count("Production · since 2026-10-20"), pt.count("Observing · paper")), (1, 3))
+check("the Sandbox fold is open on load, so the records show", 'id="sandbox" open>' in ph, True)
+check("the empty Next 24h speaks of closing and the culture scan, not a missing read",
+      ("No pick closes in the next 24 hours: the last culture scan" in pt, "no read is stored" in pt, "No pick starts" in pt),
+      (True, False, False))
+check("a pick closing in the next 24 hours is in Next 24h",
+      "No pick closes" in _re.sub(r"<[^>]+>", " ", KB.build(pg, dt.datetime(2026, 10, 29, 6, 0, tzinfo=UTC))), False)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

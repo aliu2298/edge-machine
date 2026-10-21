@@ -35,6 +35,8 @@ import site_chrome as C
 NEXT_H = 24
 DONE_DAYS = 14
 EVIDENCE_FLOOR = T.READ_FLOOR      # "Evidence 4/30"
+SANDBOX_OPEN_MAX_PROD = 1             # the Sandbox fold opens on load with this many Production rules or fewer
+SANDBOX_OPEN_MAX_ROWS = 4             # ... and this many Sandbox rules or fewer, so Events stays on the first screen
 TOO_EARLY_N = B.EARLY_N            # under this many settled, a Sandbox row is too early
 # The verdicts a Sandbox row carries while it has too little to say. Phase 4
 # owns the vocabulary; this file only reads it.
@@ -90,6 +92,13 @@ def spec(**kw):
         # pooled(rows) -> (record, note): a family whose lanes can share a market pools its own
         # way (Culture counts each market once); None pools the rows (sandbox_record).
         pooled=None,
+        # deadline: True when an event's time is a CLOSE, not a start (Culture's markets close; a
+        # Trump mentions market closes the moment the word is said). The empty states then speak
+        # of closing, not starting; the buckets already key on the event time either way.
+        deadline=False,
+        # empty_reason(d, rows, idle, now) -> str: why nothing is due in the next 24 hours, for a
+        # family that keeps its own ledger and not the tracker's coverage (None: coverage_reason).
+        empty_reason=None,
     )
     out.update(kw)
     return out
@@ -259,7 +268,10 @@ def since_production(d, st, rows):
     for row in rows:
         if not row.get("prod"):
             continue
-        key = f'{row["name"]}|{row["sport"]}'
+        # A row may name its stage key (`pair`): an own-ledger Production lane (Culture's Trump
+        # mentions, the Econ Daily lanes) is staged under its feed's pair, not "<name>|<page key>",
+        # and its builder passes that adapter's quotes and pairs as `d` and `st`.
+        key = row.get("pair") or f'{row["name"]}|{row["sport"]}'
         pair = pairs.get(key) or {}
         if production.entered_at(pair) is None:
             continue
@@ -474,7 +486,12 @@ def rules_html(sp, d, rows, now, ev_list):
         count = f'{len(sand)} rule{"s" if len(sand) != 1 else ""}'
         if n_early:
             count += f' · {n_early} too early to read'
-        sand_html = (f'<details class="fold sp-sandbox" id="sandbox"><summary><h3>Sandbox rules</h3>'
+        # Open on load when the family has at most one Production rule and a short Sandbox list
+        # (2026-10-21): with the Production list empty or a single row, a closed fold hid every
+        # record on the page (Culture and Finance Daily read as blank). A longer Sandbox list stays
+        # folded so the Events heading keeps its place on the first screen (tennis, cricket).
+        opened = " open" if (len(prod) <= SANDBOX_OPEN_MAX_PROD and len(sand) <= SANDBOX_OPEN_MAX_ROWS) else ""
+        sand_html = (f'<details class="fold sp-sandbox" id="sandbox"{opened}><summary><h3>Sandbox rules</h3>'
                      f'<span class="sm mut">· {esc(count)} · by evidence</span></summary>'
                      f'<div class="sp-rules-list" data-list="sandbox">{list_head(scoped)}{body}</div></details>')
     else:
@@ -668,11 +685,14 @@ def events_html(sp, d, rows, now, ev_list, idle):
         f'aria-controls="events-{key}" id="tab-{key}">{label} <span class="sp-count">{counts[key]}</span></button>'
         for key, label in (("next", f"Next {NEXT_H}h"), ("live", "In progress"), ("done", f"Completed · {DONE_DAYS} days")))
     # Next 24h.
+    verb, noun = ("closes", "close") if sp.get("deadline") else ("starts", "start")
     if nxt:
         next_body = _days_html(sp, nxt, now, "next")
     else:
-        next_body = (f'<p class="sp-empty" data-empty="next">No pick starts in the next {NEXT_H} hours: '
-                     f'{esc(coverage_reason(sp, d, rows, idle, now))}.</p>')
+        why = (sp["empty_reason"](d, rows, idle, now) if sp.get("empty_reason")
+               else coverage_reason(sp, d, rows, idle, now))
+        next_body = (f'<p class="sp-empty" data-empty="next">No pick {verb} in the next {NEXT_H} hours: '
+                     f'{esc(why)}.</p>')
     if later:
         n = _count(later)
         next_body += (f'<details class="fold later"><summary>Later<span class="sm mut"> · {n} pick{"s" if n != 1 else ""} '
@@ -682,8 +702,9 @@ def events_html(sp, d, rows, now, ev_list, idle):
         live_body = _days_html(sp, live, now, "live")
     else:
         soon = nxt[0] if nxt else (later[0] if later else None)
-        tail = f" Next start {fmt.when(soon['when'])}." if soon and soon["when"] else ""
-        live_body = f'<p class="sp-empty" data-empty="live">Nothing is in progress: no open pick has started and not settled.{esc(tail)}</p>'
+        tail = f" Next {noun} {fmt.when(soon['when'])}." if soon and soon["when"] else ""
+        state = "passed its close" if sp.get("deadline") else "started"
+        live_body = f'<p class="sp-empty" data-empty="live">Nothing is in progress: no open pick has {state} and not settled.{esc(tail)}</p>'
     # Completed.
     if done:
         done_body = _days_html(sp, done, now, "done", newest_first=True)
