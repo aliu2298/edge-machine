@@ -269,6 +269,8 @@ RULES = {
              "Momentum is the one anomaly with decades of out-of-sample evidence; the open "
              "question is whether it survives 10bp of round-trip cost at this holding period."),
     "sw_gap_down_reversal": dict(
+        retired="2026-10-20: removed by choice — "
+                "18 closed trades on 8 entry days, -3.94% a day (-4.10% v SPY), t -0.95, 26 open",
         lane="swing", label="Gap-down reversal above the 200-day", signal=_sw_gap_reversal,
         exit=_sw_gap_exit,
         note="Pre-registered 2026-09-19. Buy the next open when a stock in an uptrend (prior "
@@ -288,6 +290,8 @@ RULES = {
              "risk-adjusted terms over a cycle while lagging in strong bull markets — this lane "
              "measures it against SPY over the identical days, which is the test that settles it."),
     "etf_ibs_band": dict(
+        retired="2026-10-20: removed by choice — "
+                "6 closed trades on 4 entry days, -0.05% a day, t -0.15, 8 open",
         lane="swing", label="IBS mean reversion below the 10-day band", signal=_etf_ibs_band,
         exit=_etf_ibs_exit, universe="etf", bench="cash", live_from=LIVE_2026_09_23,
         note="Pre-registered 2026-09-22. On SPY, QQQ, IWM and DIA: buy the next open when the "
@@ -307,6 +311,8 @@ RULES = {
              "working on the main indices; it lags buy-and-hold only because it sits out most "
              "days, which is why it is judged against cash, not against SPY over its own days."),
     "etf_tom": dict(
+        retired="2026-10-20: removed by choice — "
+                "1 closed trade, +1.43%",
         lane="swing", label="Turn of the month", signal=_etf_tom, exit=_etf_tom_exit,
         universe=["SPY"], bench="cash", live_from=LIVE_2026_09_23,
         note="Pre-registered 2026-09-22. Buy SPY at the open of the month's last trading day, "
@@ -315,6 +321,8 @@ RULES = {
              "it has largely faded in US stocks over the past decade while persisting in index "
              "futures. That disagreement is exactly what a forward record settles."),
     "etf_overnight": dict(
+        retired="2026-10-20: removed by choice — "
+                "38 trades on 19 entry days, -0.12% a day, t -0.99",
         lane="swing", label="Overnight hold (buy the close, sell the open)", signal=_etf_overnight,
         exit=_etf_overnight_exit, universe=["SPY", "QQQ"], bench="cash", entry="close",
         live_from=LIVE_2026_09_23,
@@ -404,6 +412,11 @@ REMOVED_RULES = frozenset({
     "dt_orb30",
     "dt_orb30_long",
     "dt_vwap_reclaim",
+    # 2026-10-20, as asked (Olu): four more swing rules off the board, records kept.
+    "sw_gap_down_reversal",
+    "etf_ibs_band",
+    "etf_tom",
+    "etf_overnight",
 })
 
 

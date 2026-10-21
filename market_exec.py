@@ -22,13 +22,15 @@ data/market_orders.json.
 
 What it deliberately does NOT trade:
 
-  * `etf_overnight`, which enters at the signal bar's CLOSE. A market-on-close order has to be
-    in before 15:50 ET and the daily runner starts at 16:10, after the close it would need to
-    trade. Executing it would need its own earlier timer; logging it as skipped is honest,
-    quietly entering at the next open instead would be a different rule.
+  * a rule that enters at the signal bar's CLOSE (`entry="close"`; etf_overnight was the one,
+    removed from the board on 2026-10-20). A market-on-close order has to be in before 15:50 ET
+    and the daily runner starts at 16:10, after the close it would need to trade. Executing it
+    would need its own earlier timer; logging it as skipped is honest, quietly entering at the
+    next open instead would be a different rule.
   * the crypto and intraday-day lanes. Crypto never opens, so "the next open" has no meaning,
     and the day lane works off 5-minute bars on a different lifecycle.
-  * any rule removed from the board, matching market_track.rule_removed.
+  * any rule removed from the board, matching market_track.rule_removed. Its open trades are
+    not graded, so no exit is sent for them either: shares it already holds are left as they are.
 
 Usage:
     python3 market_exec.py                 what WOULD be sent (default: nothing is placed)

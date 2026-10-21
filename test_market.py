@@ -190,17 +190,12 @@ ok_(T._etf_tom([bar("2026-12-30", 1, 1, 1, 1)]),
 eq(T.next_trading_day(datetime.date(2026, 9, 4)), datetime.date(2026, 9, 8), "Labor Day is skipped")
 eq(T._etf_tom_exit([1, 2, 3, 4], None), 2, "held the last day and three more, out at the fourth's open")
 
+# etf_overnight entered at the signal day's close and left at the next open; it is off the board
+# since 2026-10-20, so a scan handed it logs nothing (market_track.rule_removed).
 _ob = {"SPY": series(215, step=0.1) + [bar("2025-08-04", 121.0, 122, 120, 121.5)]}
 _od = {"trades": [], "meta": {}}
 T.scan(_ob, _od, rules={"etf_overnight": T.RULES["etf_overnight"]})
-_sig = _ob["SPY"][-2]
-_o1 = [t for t in _od["trades"] if t["signal_day"] == _sig["t"][:10]][0]
-eq((_o1["entry_day"], _o1["entry"]), (_sig["t"][:10], _sig["c"]),
-   "the overnight rule enters at the signal day's own close")
-T.grade(_ob, _od, rules={"etf_overnight": T.RULES["etf_overnight"]})
-_o1 = [t for t in _od["trades"] if t["id"] == _o1["id"]][0]
-eq((_o1["exit_day"], _o1["exit"], _o1["bench_ret"]), ("2025-08-04", 121.0, 0.0),
-   "and leaves at the next morning's open, judged against cash")
+eq(_od["trades"], [], "the overnight rule, removed 2026-10-20, logs nothing even when the scan is handed it")
 
 _ct = series(30, start=100, step=-0.5) + [bar("2025-02-01", 90, 99, 89, 98.0)]
 ok_(T._cr_trend(_ct), "a close crossing above the 20-day average fires the crypto trend rule")
