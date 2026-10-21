@@ -220,7 +220,7 @@ ok(not odd["open"] and "A public tipster community" in odd["body"], "the registr
 ok('<h4 class="sp-details-sub">Recent picks · 2 open</h4>' in odd["body"] and _shown("Alpha v Beta soonest") in odd["body"]
    and _shown("KeptSettled oddspedia 0") in odd["body"] and "GhostPrereset" not in odd["body"],
    "recent picks are in the fold, on the lane clock")
-fold = re.search(r'<details class="fold sp-sandbox" id="sandbox"><summary>(.*?)</summary>(.*)', rules, re.S)
+fold = re.search(r'<details class="fold sp-sandbox" id="sandbox"(?: open)?><summary>(.*?)</summary>(.*)', rules, re.S)
 ok(fold is not None, "the Sandbox rules are one fold")
 srows = rule_rows(fold.group(2)) if fold else []
 order = [r["source"] for r in srows]
