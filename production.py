@@ -22,7 +22,8 @@ data/production_leads.json is the machine-readable feed. It has the Leads ledger
     {"kind": "team_gte", "n": 1 | 2, "team": ...} / {"kind": "total_lte", "n": 3} /
     {"kind": "btts"} — the Leads board's own bet vocabulary; {"kind": "combo", ...} for a
     basket of Kalshi legs; and since 2026-10-08 {"kind": "ladder", "side": "yes"} for one
-    rung of a Kalshi daily-close ladder, the contract and the rung named in the route
+    rung of a Kalshi daily-close ladder, the contract and the rung named in the route (and
+    since 2026-10-20 {"kind": "ladder", "side": "no"}, the No of that contract, outcome_side "no")
   * status pending / hit / miss / void / price from the Sandbox settlement.
     A price payout is the amount the venue paid. It is not a hit, a miss, or a void.
   * last_seen_at == board_built_at on every lead still open; a lead whose pair has left
@@ -360,8 +361,16 @@ def lead_from_quote(q, pair_key, built, kalshi=None):
         # venue names ("$82,750 or above"), so the lead reads as the ticket would.
         home = away = None
         contest = ladder_contest(q)
-        headline = f"{q['side_a']} at the close"
-        bet = {"kind": "ladder", "side": "yes"}
+        if q.get("pick") == "b":
+            # The No of the rung: the close lands BELOW it. kalshi_route names the same contract
+            # with outcome_side "no", at the No's own price.
+            rung = str(q["side_a"])
+            below = rung[:-len(" or above")] if rung.endswith(" or above") else None
+            headline = f"Below {below} at the close" if below else f"Not {rung} at the close"
+            bet = {"kind": "ladder", "side": "no"}
+        else:
+            headline = f"{q['side_a']} at the close"
+            bet = {"kind": "ladder", "side": "yes"}
     elif True:
         home, away = q["side_a"], q["side_b"]
         side = {"a": "home", "b": "away", "draw": "draw"}[q["pick"]]

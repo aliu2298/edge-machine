@@ -3376,13 +3376,13 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 eq(sorted(T.PAIR_OVERRIDES),
    ["commod_fav_band|commodities_fav",
     "corners_total_under|soccer_corners", "corners_ucl_fade|soccer_corners",
-    "crypto_fav_band|crypto_fav", "ere_draw|soccer", "espn_fpi|nfl", "ftts_no_70_80|soccer_ftts",
+    "crypto_eth_fav_both|crypto_fav", "crypto_fav_band_below|crypto_fav", "crypto_sol_fav_both|crypto_fav", "ere_draw|soccer", "espn_fpi|nfl", "ftts_no_70_80|soccer_ftts",
     "liga_btts_even|soccer_btts", "mls_fade_home|soccer_p05",
     "o15_ranked|soccer_o15", "o15_ranked|soccer_o15_intl", "oddspedia|cricket", "team1_form_l5|soccer_team1_intl",
     "team2_form_l10|soccer_team2", "team2_ranked|soccer_team2", "tennis_utr_shortlist_v1|tennis",
     "u35_low_scoring|soccer_u35",
     "u35_low_scoring|soccer_u35_intl"],
-   "the Production list is exactly the pairs moved there by hand, and nothing else (four soccer lanes out 2026-10-20) "
+   "the Production list is exactly the pairs moved there by hand, and nothing else (four soccer lanes out, crypto_fav_band swapped for three crypto angle lanes, 2026-10-20) "
    "(team scores 1+ · Clubs out 2026-10-14; five moved in 2026-10-16)")
 # pm_combo4 came OFF on 2026-10-03, not on its record: Polymarket US publishes no parlay
 # API, so in five days as a Production pair it published zero leads and never could. The
