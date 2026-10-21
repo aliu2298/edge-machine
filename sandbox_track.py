@@ -402,9 +402,10 @@ PAIR_OVERRIDES = {
     #   2026-09-14, -13.7% after fees, z -1.85; 6/9 (-23.8%) since its 2026-09-21 reset; 0-2
     #   (-$2.81) live, the worst live lane. It keeps the record it carried in (PAIR_REMOVALS,
     #   since 2026-09-21), no reset, no retune. The cup and internationals scopes are untouched.
-    # over 1.5 ranked, LEAGUE scope. Its internationals twin has been in Production since
-    # 2026-10-01 (above); the league pair has five open bets and nothing settled.
-    "o15_ranked|soccer_o15": dict(moved_on="2026-10-08", production_at=None),
+    # over 1.5 ranked, LEAGUE scope (Clubs): moved 2026-10-08, OUT 2026-10-21, back to the
+    # Sandbox as asked (Olu), on its whole record: 13 won of 17 on the tradeable venues against
+    # 13.16 priced, -2.5% after fees, z -0.09 -- exactly the price. Kept in PAIR_REMOVALS; the
+    # internationals twin (above) stays in Production.
     # La Liga BTTS in balanced matches: nothing settled, one bet open. The feed learned
     # BTTS for it (FEED_BETS soccer_btts): Yes on Kalshi's KXLALIGABTTS contract.
     "liga_btts_even|soccer_btts": dict(moved_on="2026-10-08", production_at=None),
@@ -506,6 +507,7 @@ PAIR_REMOVALS = {
     "corners_team_fade|soccer_corners": dict(removed_on="2026-10-20", keep_record=True),
     "turkey_o25_dog|soccer_o25": dict(removed_on="2026-10-20", keep_record=True),
     "turkey_btts_dog|soccer_btts": dict(removed_on="2026-10-20", keep_record=True),
+    "o15_ranked|soccer_o15": dict(removed_on="2026-10-21", keep_record=True),
     "bund_o35|soccer_u35": dict(removed_on="2026-10-20", keep_record=True),
     # 2026-10-21, as asked (Olu): the Champions League corners total fade, out on its whole
     # record (1/2, -10.3% after fees). Its override is gone, so nothing re-promotes it on the

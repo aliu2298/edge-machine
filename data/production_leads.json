@@ -384,41 +384,6 @@
    "sport": "commodities_fav",
    "status": "hit"
   },
-  "2026-10-15|NEC Nijmegen|Levski Sofia|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
-   "away": "Levski Sofia",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-15",
-   "edge_at_log": null,
-   "first_seen": "2026-10-12",
-   "headline": "Over 1.5 goals",
-   "home": "NEC Nijmegen",
-   "id": "2026-10-15|NEC Nijmegen|Levski Sofia|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
-   "kickoff": "2026-10-15T19:00Z",
-   "lane": "production",
-   "league": "Europa League",
-   "match": "NEC Nijmegen v Levski Sofia",
-   "pair": "o15_ranked|soccer_o15",
-   "price_at_log": 0.79,
-   "published_at": "2026-10-12T16:07:17+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 4492,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXUELTOTAL-26OCT15NIJLEV",
-    "market": "KXUELTOTAL-26OCT15NIJLEV-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.79,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_ranked:KXUELTOTAL-26OCT15NIJLEV-2",
-   "source": "o15_ranked",
-   "sport": "soccer_o15",
-   "status": "hit"
-  },
   "2026-10-15|Real Salt Lake|San Jose Earthquakes|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
    "away": "San Jose Earthquakes",
    "bet": {
@@ -488,41 +453,6 @@
    "sandbox_quote": "team2_ranked:KXUELTEAMTOTAL-26OCT15TORSUN-SUN2",
    "source": "team2_ranked",
    "sport": "soccer_team2",
-   "status": "hit"
-  },
-  "2026-10-16|Deportivo|Levante|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
-   "away": "Levante",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-16",
-   "edge_at_log": null,
-   "first_seen": "2026-10-12",
-   "headline": "Over 1.5 goals",
-   "home": "Deportivo",
-   "id": "2026-10-16|Deportivo|Levante|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
-   "kickoff": "2026-10-16T19:00Z",
-   "lane": "production",
-   "league": "La Liga",
-   "match": "Deportivo v Levante",
-   "pair": "o15_ranked|soccer_o15",
-   "price_at_log": 0.75,
-   "published_at": "2026-10-12T21:27:56+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 5612,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXLALIGATOTAL-26OCT16DEPLEV",
-    "market": "KXLALIGATOTAL-26OCT16DEPLEV-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.75,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_ranked:KXLALIGATOTAL-26OCT16DEPLEV-2",
-   "source": "o15_ranked",
-   "sport": "soccer_o15",
    "status": "hit"
   },
   "2026-10-16|Heerenveen|Excelsior|Draw \u00b7 Eredivisie draw band": {
@@ -631,41 +561,6 @@
    "sport": "soccer_team2",
    "status": "miss"
   },
-  "2026-10-17|AS Roma|Genoa|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
-   "away": "Genoa",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-13",
-   "headline": "Over 1.5 goals",
-   "home": "AS Roma",
-   "id": "2026-10-17|AS Roma|Genoa|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
-   "kickoff": "2026-10-17T18:45Z",
-   "lane": "production",
-   "league": "Serie A",
-   "match": "AS Roma v Genoa",
-   "pair": "o15_ranked|soccer_o15",
-   "price_at_log": 0.8,
-   "published_at": "2026-10-17T22:15:45+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXSERIEATOTAL-26OCT17ROMGEN",
-    "market": "KXSERIEATOTAL-26OCT17ROMGEN-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.8,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_ranked:KXSERIEATOTAL-26OCT17ROMGEN-2",
-   "source": "o15_ranked",
-   "sport": "soccer_o15",
-   "status": "hit"
-  },
   "2026-10-17|Aberdeen|St Mirren|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
    "away": "St Mirren",
    "bet": {
@@ -734,76 +629,6 @@
    "source": "tennis_utr_shortlist_v1",
    "sport": "tennis",
    "status": "hit"
-  },
-  "2026-10-17|Erzurum BB|Eyupspor|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
-   "away": "Eyupspor",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-16",
-   "headline": "Over 1.5 goals",
-   "home": "Erzurum BB",
-   "id": "2026-10-17|Erzurum BB|Eyupspor|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
-   "kickoff": "2026-10-17T10:30Z",
-   "lane": "production",
-   "league": "Turkish Super Lig",
-   "match": "Erzurum BB v Eyupspor",
-   "pair": "o15_ranked|soccer_o15",
-   "price_at_log": 0.73,
-   "published_at": "2026-10-17T13:04:07+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXSUPERLIGTOTAL-26OCT17ERZEYU",
-    "market": "KXSUPERLIGTOTAL-26OCT17ERZEYU-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.73,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_ranked:KXSUPERLIGTOTAL-26OCT17ERZEYU-2",
-   "source": "o15_ranked",
-   "sport": "soccer_o15",
-   "status": "hit"
-  },
-  "2026-10-17|Espanyol|Atl\u00e9tico Madrid|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
-   "away": "Atl\u00e9tico Madrid",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-13",
-   "headline": "Over 1.5 goals",
-   "home": "Espanyol",
-   "id": "2026-10-17|Espanyol|Atl\u00e9tico Madrid|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
-   "kickoff": "2026-10-17T12:00Z",
-   "lane": "production",
-   "league": "La Liga",
-   "match": "Espanyol v Atl\u00e9tico Madrid",
-   "pair": "o15_ranked|soccer_o15",
-   "price_at_log": 0.77,
-   "published_at": "2026-10-17T14:03:43+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXLALIGATOTAL-26OCT17ESPATM",
-    "market": "KXLALIGATOTAL-26OCT17ESPATM-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.77,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_ranked:KXLALIGATOTAL-26OCT17ESPATM-2",
-   "source": "o15_ranked",
-   "sport": "soccer_o15",
-   "status": "miss"
   },
   "2026-10-17|Espanyol|Atl\u00e9tico Madrid|Under 9 corners \u00b7 Corners total under": {
    "away": "Atl\u00e9tico Madrid",
@@ -1222,41 +1047,6 @@
    "sandbox_quote": "team2_ranked:KXLALIGATEAMTOTAL-26OCT17VCFATH-ATH2",
    "source": "team2_ranked",
    "sport": "soccer_team2",
-   "status": "miss"
-  },
-  "2026-10-17|Venezia|Napoli|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
-   "away": "Napoli",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-17",
-   "edge_at_log": null,
-   "first_seen": "2026-10-14",
-   "headline": "Over 1.5 goals",
-   "home": "Venezia",
-   "id": "2026-10-17|Venezia|Napoli|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
-   "kickoff": "2026-10-17T13:00Z",
-   "lane": "production",
-   "league": "Serie A",
-   "match": "Venezia v Napoli",
-   "pair": "o15_ranked|soccer_o15",
-   "price_at_log": 0.8,
-   "published_at": "2026-10-17T15:03:27+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXSERIEATOTAL-26OCT17VENNAP",
-    "market": "KXSERIEATOTAL-26OCT17VENNAP-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.8,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_ranked:KXSERIEATOTAL-26OCT17VENNAP-2",
-   "source": "o15_ranked",
-   "sport": "soccer_o15",
    "status": "miss"
   },
   "2026-10-18|AFC Bournemouth|Sunderland|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
@@ -1680,41 +1470,6 @@
    "sport": "nfl",
    "status": "hit"
   },
-  "2026-10-18|Juventus|Lazio|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
-   "away": "Lazio",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-18",
-   "edge_at_log": null,
-   "first_seen": "2026-10-15",
-   "headline": "Over 1.5 goals",
-   "home": "Juventus",
-   "id": "2026-10-18|Juventus|Lazio|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
-   "kickoff": "2026-10-18T18:45Z",
-   "lane": "production",
-   "league": "Serie A",
-   "match": "Juventus v Lazio",
-   "pair": "o15_ranked|soccer_o15",
-   "price_at_log": 0.77,
-   "published_at": "2026-10-18T22:26:34+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXSERIEATOTAL-26OCT18JUVLAZ",
-    "market": "KXSERIEATOTAL-26OCT18JUVLAZ-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.77,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_ranked:KXSERIEATOTAL-26OCT18JUVLAZ-2",
-   "source": "o15_ranked",
-   "sport": "soccer_o15",
-   "status": "hit"
-  },
   "2026-10-18|LA Galaxy|San Diego FC|San Diego FC +0.5 (LA Galaxy not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
    "away": "San Diego FC",
    "bet": {
@@ -1854,41 +1609,6 @@
    "source": "ftts_no_70_80",
    "sport": "soccer_ftts",
    "status": "hit"
-  },
-  "2026-10-18|Nottingham Forest|Arsenal|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
-   "away": "Arsenal",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-18",
-   "edge_at_log": null,
-   "first_seen": "2026-10-14",
-   "headline": "Over 1.5 goals",
-   "home": "Nottingham Forest",
-   "id": "2026-10-18|Nottingham Forest|Arsenal|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
-   "kickoff": "2026-10-18T15:30Z",
-   "lane": "production",
-   "league": "Premier League",
-   "match": "Nottingham Forest v Arsenal",
-   "pair": "o15_ranked|soccer_o15",
-   "price_at_log": 0.75,
-   "published_at": "2026-10-18T18:05:06+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXEPLTOTAL-26OCT18NFOARS",
-    "market": "KXEPLTOTAL-26OCT18NFOARS-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.75,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_ranked:KXEPLTOTAL-26OCT18NFOARS-2",
-   "source": "o15_ranked",
-   "sport": "soccer_o15",
-   "status": "miss"
   },
   "2026-10-18|Nottingham Forest|Arsenal|Under 9 corners \u00b7 Corners total under": {
    "away": "Arsenal",
@@ -2312,41 +2032,6 @@
    "sport": "soccer_ftts",
    "status": "hit"
   },
-  "2026-10-20|Al Diriyah|Al Riyadh|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
-   "away": "Al Riyadh",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-20",
-   "edge_at_log": null,
-   "first_seen": "2026-10-19",
-   "headline": "Over 1.5 goals",
-   "home": "Al Diriyah",
-   "id": "2026-10-20|Al Diriyah|Al Riyadh|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
-   "kickoff": "2026-10-20T15:00Z",
-   "lane": "production",
-   "league": "Saudi Pro League",
-   "match": "Al Diriyah v Al Riyadh",
-   "pair": "o15_ranked|soccer_o15",
-   "price_at_log": 0.8,
-   "published_at": "2026-10-20T17:16:52+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXSAUDIPLTOTAL-26OCT20DIRRIY",
-    "market": "KXSAUDIPLTOTAL-26OCT20DIRRIY-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.8,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_ranked:KXSAUDIPLTOTAL-26OCT20DIRRIY-2",
-   "source": "o15_ranked",
-   "sport": "soccer_o15",
-   "status": "miss"
-  },
   "2026-10-20|Bockelmann Evans, Felix|Machado, Miguel Angel|Machado, Miguel Angel to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
    "away": "Machado, Miguel Angel",
    "bet": {
@@ -2627,43 +2312,6 @@
    "sport": "soccer_u35",
    "status": "pending"
   },
-  "2026-10-22|Juventus|Stade Rennais|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
-   "away": "Stade Rennais",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-22",
-   "edge_at_log": null,
-   "first_seen": "2026-10-18",
-   "headline": "Over 1.5 goals",
-   "home": "Juventus",
-   "id": "2026-10-22|Juventus|Stade Rennais|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
-   "kickoff": "2026-10-22T16:45Z",
-   "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T02:49:21+00:00",
-   "league": "Europa League",
-   "match": "Juventus v Stade Rennais",
-   "pair": "o15_ranked|soccer_o15",
-   "price_at_log": 0.8,
-   "published_at": "2026-10-18T20:40:27+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 5524,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXUELTOTAL-26OCT22JUVREN",
-    "market": "KXUELTOTAL-26OCT22JUVREN-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.8,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_ranked:KXUELTOTAL-26OCT22JUVREN-2",
-   "source": "o15_ranked",
-   "sport": "soccer_o15",
-   "status": "pending"
-  },
   "2026-10-22|Olympiacos|Sparta Prague|Olympiacos to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
    "away": "Sparta Prague",
    "bet": {
@@ -2700,43 +2348,6 @@
    "sandbox_quote": "team2_ranked:KXUELTEAMTOTAL-26OCT22OLYSPA-OLY2",
    "source": "team2_ranked",
    "sport": "soccer_team2",
-   "status": "pending"
-  },
-  "2026-10-22|Olympiacos|Sparta Prague|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
-   "away": "Sparta Prague",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-22",
-   "edge_at_log": null,
-   "first_seen": "2026-10-18",
-   "headline": "Over 1.5 goals",
-   "home": "Olympiacos",
-   "id": "2026-10-22|Olympiacos|Sparta Prague|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
-   "kickoff": "2026-10-22T19:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T02:49:21+00:00",
-   "league": "Europa League",
-   "match": "Olympiacos v Sparta Prague",
-   "pair": "o15_ranked|soccer_o15",
-   "price_at_log": 0.8,
-   "published_at": "2026-10-18T20:40:27+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 5659,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXUELTOTAL-26OCT22OLYSPA",
-    "market": "KXUELTOTAL-26OCT22OLYSPA-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.8,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_ranked:KXUELTOTAL-26OCT22OLYSPA-2",
-   "source": "o15_ranked",
-   "sport": "soccer_o15",
    "status": "pending"
   },
   "2026-10-23|Alav\u00e9s|M\u00e1laga|Both teams to score \u00b7 La Liga BTTS in balanced matches": {
@@ -2884,43 +2495,6 @@
    "sandbox_quote": "ere_draw:KXEREDIVISIEGAME-26OCT24ADOHEE",
    "source": "ere_draw",
    "sport": "soccer",
-   "status": "pending"
-  },
-  "2026-10-24|Lazio|Parma|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
-   "away": "Parma",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-24",
-   "edge_at_log": null,
-   "first_seen": "2026-10-20",
-   "headline": "Over 1.5 goals",
-   "home": "Lazio",
-   "id": "2026-10-24|Lazio|Parma|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
-   "kickoff": "2026-10-24T18:45Z",
-   "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T02:49:21+00:00",
-   "league": "Serie A",
-   "match": "Lazio v Parma",
-   "pair": "o15_ranked|soccer_o15",
-   "price_at_log": 0.76,
-   "published_at": "2026-10-20T21:38:23+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 5586,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXSERIEATOTAL-26OCT24LAZPAR",
-    "market": "KXSERIEATOTAL-26OCT24LAZPAR-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.76,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "o15_ranked:KXSERIEATOTAL-26OCT24LAZPAR-2",
-   "source": "o15_ranked",
-   "sport": "soccer_o15",
    "status": "pending"
   },
   "2026-10-24|Orlando City SC|New York City FC|New York City FC +0.5 (Orlando City SC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
@@ -3360,31 +2934,6 @@
     "under_target": 0
    }
   },
-  "o15_ranked|soccer_o15": {
-   "by_hand": "2026-10-08",
-   "entered_at": "2026-10-08T17:50:08+00:00",
-   "promoted_at": "2026-10-08T17:50:08+00:00",
-   "ready_at": "2026-10-08T17:50:08+00:00",
-   "route": "moved by hand on 2026-10-08",
-   "routing": {
-    "leads": 12,
-    "problem": null,
-    "routed": 12,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": -0.0035,
-   "sandbox_n": 17,
-   "sandbox_roi": -0.0089,
-   "sandbox_roi_fee": -0.0245,
-   "timing": {
-    "late": [],
-    "timed": 5,
-    "under_target": 0
-   }
-  },
   "o15_ranked|soccer_o15_intl": {
    "by_hand": "2026-10-01",
    "entered_at": "2026-10-01T16:20:16+00:00",
@@ -3586,6 +3135,7 @@
    }
   }
  },
+ "pruned_at": "2026-10-21T02:50:44+00:00",
  "publication_withheld": {
   "2026-10-15|Torreense|Sunderland|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "headline": "Over 1.5 goals",

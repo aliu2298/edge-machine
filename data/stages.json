@@ -1812,6 +1812,12 @@
    "pair": "corners_ucl_fade|soccer_corners",
    "reason": "taken off the Production list by hand, record kept",
    "to": "sandbox"
+  },
+  {
+   "at": "2026-10-21T02:50:44+00:00",
+   "pair": "o15_ranked|soccer_o15",
+   "reason": "taken off the Production list by hand, record kept",
+   "to": "sandbox"
   }
  ],
  "pairs": {
@@ -2066,24 +2072,9 @@
    "stage": "sandbox"
   },
   "o15_ranked|soccer_o15": {
-   "by_hand": "2026-10-08",
-   "entry": {
-    "base_roi": null,
-    "clv": null,
-    "clv_n": 0,
-    "n": 0,
-    "own_roi": null,
-    "roi": null,
-    "roi_fee": null,
-    "span_days": 0.0,
-    "weeks": 0,
-    "z": 0.0
-   },
-   "entry_since": null,
-   "promoted_at": "2026-10-08T17:50:08+00:00",
-   "ready_at": "2026-10-08T17:50:08+00:00",
-   "ready_since": "2026-10-08T17:50:08+00:00",
-   "stage": "production"
+   "demoted_at": "2026-10-21T02:50:44+00:00",
+   "since": null,
+   "stage": "sandbox"
   },
   "o15_ranked|soccer_o15_intl": {
    "by_hand": "2026-10-01",
