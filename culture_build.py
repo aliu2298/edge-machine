@@ -22,6 +22,22 @@ def _row(key, lane):
                        roi_fee=sum(r.get("profit", 0) for r in settled) / (100 * len(settled)) if settled else None))
 
 
+def pooled(state):
+    """The Culture headline record, each MARKET once (2026-10-20). Before the one-market rule two
+    lanes could hold the same ticker, sometimes on opposite sides; the ledger keeps both rows,
+    and this counts the earliest-logged pick per ticker. -> (record, note)."""
+    first = {}
+    for key in K.LANES:
+        for r in state["lanes"][key]["picks"]:
+            if r["id"] not in first or r["logged"] < first[r["id"]]["logged"]:
+                first[r["id"]] = r
+    settled = [r for r in first.values() if r["status"] != "open"]
+    binary = [r for r in settled if r["status"] in ("won", "lost")]
+    rec = dict(n=len(binary), n_price=len(settled) - len(binary), won=sum(r["status"] == "won" for r in binary),
+               roi_fee=sum(r.get("profit", 0) for r in settled) / (100 * len(settled)) if settled else None)
+    return rec, "each market once"
+
+
 def build(state=None, now=None):
     state = state if state is not None else K.load()
     now = SP.as_utc(now)
@@ -76,7 +92,7 @@ def build(state=None, now=None):
                    scope="Culture · Sandbox · paper only", venue="Kalshi", rows=rows, events=events,
                    rule_name=lambda r: K.LANES[r["name"]], market=lambda d, r: "Kalshi",
                    definition=definition, recent=recent, method=method, scoped=False,
-                   unit=lambda r: "contract")
+                   unit=lambda r: "contract", pooled=lambda _rows: pooled(state))
     html = SP.page(spec, {"quotes": [], "coverage": {}}, {"pairs": {}}, now, rows=rows)
     for row in rows:
         html = html.replace(SP.verdict_badge(row), '<span class="sig w">Observing · paper</span>')
