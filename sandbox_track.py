@@ -372,7 +372,20 @@ PAIR_OVERRIDES = {
     # market-days. Nothing can be read from two days, and the lane's own note says a day
     # is one draw, not five. Listed so its daily-close leads publish; the feed learned the
     # ladder rung for it (LADDER_SPORTS), since placeable() had refused every crypto bet.
-    "crypto_fav_band|crypto_fav": dict(moved_on="2026-10-08", production_at=None),
+    #   crypto_fav_band|crypto_fav — OUT 2026-10-20, back to the Sandbox, as asked (Olu): live
+    #   8-3, +2.4%; replaced in Production by three crypto angle lanes (below). Whole record kept
+    #   (PAIR_REMOVALS).
+    # 2026-10-20, as asked (Olu): three crypto angle lanes, from a 335-ladder study (Kalshi daily
+    # 17:00 ET coin ladders 2026-08-11 to 10-17, 3h before the close, spread <= 5c, after the 7%
+    # fee, z clustered by day). The below lane is the existing Sandbox mirror (No 0.70-0.80, all
+    # coins): 62/73 at 75c, +11.3%, z +2.03, live 3-0; its Since-Production record starts at this
+    # listing. The two both-sides coin lanes are new and enter on empty records (Early badge):
+    # ETH 28/30 at 69c, +31.9%, z +3.76; SOL 32/38 at 72c, +15.5%, z +1.92, on the window they
+    # were found on. The feed learned the No of a ladder rung for them ({"kind": "ladder",
+    # "side": "no"}). The below lane takes a shared No rung first; the coin lanes yield it.
+    "crypto_fav_band_below|crypto_fav": dict(moved_on="2026-10-20", production_at=None),
+    "crypto_eth_fav_both|crypto_fav": dict(moved_on="2026-10-20", production_at=None),
+    "crypto_sol_fav_both|crypto_fav": dict(moved_on="2026-10-20", production_at=None),
     # tennis 2-leg combo, the KALSHI basket (tennis_combo2, NOT pm_combo2 on Polymarket
     # US, which placeable() still refuses): 6-4 on 10 baskets since the 2026-10-04 reset,
     # +2.7% after fees, -2.1c a basket against the close. The tennis rules are FROZEN
@@ -489,6 +502,8 @@ PAIR_REMOVALS = {
     "turkey_o25_dog|soccer_o25": dict(removed_on="2026-10-20", keep_record=True),
     "turkey_btts_dog|soccer_btts": dict(removed_on="2026-10-20", keep_record=True),
     "bund_o35|soccer_u35": dict(removed_on="2026-10-20", keep_record=True),
+    # The crypto Yes band, replaced by three angle lanes the same day (see PAIR_OVERRIDES).
+    "crypto_fav_band|crypto_fav": dict(removed_on="2026-10-20", keep_record=True),
 }
 
 
@@ -1479,6 +1494,21 @@ def publish(d, universe, coverage, verbose=True, now=None):
         key = _coin_close(q.get("market_id"))
         if key:
             coin_close.setdefault(src, set()).add(key)
+    # A both-sides ladder lane (one_per_coin_close_side, 2026-10-20): one bet per coin per close
+    # PER SIDE, so its YES and its NO on one close are both allowed and a second of either is not.
+    coin_close_side = {}
+    # One market, one lane (yields_to): a rung (market and side) a lane named in the source's
+    # yields_to already holds is skipped, and the source's next candidate is tried instead.
+    held_by = {}
+    _yielded = {h for m in S.SOURCES.values() for h in (m.get("yields_to") or ())}
+    for q in d["quotes"] + (d.get("_archive") or []):
+        src = q.get("source")
+        if (S.SOURCES.get(src) or {}).get("one_per_coin_close_side"):
+            key = _coin_close(q.get("market_id"))
+            if key:
+                coin_close_side.setdefault(src, set()).add((key, q.get("pick")))
+        if src in _yielded and q.get("bet"):
+            held_by.setdefault(src, set()).add((q.get("market_id"), q.get("pick")))
     # A corners selection never changes on a refresh, even if the old row has
     # settled, voided, or moved to the archive. Total and team rungs share a key.
     corners_fixtures = {S.corners_fixture_key(q)
@@ -1695,6 +1725,17 @@ def publish(d, universe, coverage, verbose=True, now=None):
                     key = _coin_close(mid)
                     if key and key in coin_close.get(name, ()):
                         continue
+                if (S.SOURCES.get(name) or {}).get("one_per_coin_close_side"):
+                    _side = opinion[1] if opinion and opinion[0] == "pick" else None
+                    key = _coin_close(mid)
+                    if key and (key, _side) in coin_close_side.get(name, ()):
+                        continue
+                    holder = next((h for h in (S.SOURCES[name].get("yields_to") or ())
+                                   if (mid, _side) in held_by.get(h, ())), None)
+                    if holder:
+                        if verbose:
+                            print(f"  {name}: {mid} {'No' if _side == 'b' else 'Yes'} held by {holder}")
+                        continue
                 if (S.SOURCES.get(name) or {}).get("one_per_corners_fixture"):
                     fixture = S.corners_fixture_key(r)
                     if fixture is None or fixture in corners_fixtures:
@@ -1804,6 +1845,12 @@ def publish(d, universe, coverage, verbose=True, now=None):
                     key = _coin_close(mid)
                     if key:
                         coin_close.setdefault(name, set()).add(key)
+                if (S.SOURCES.get(name) or {}).get("one_per_coin_close_side"):
+                    key = _coin_close(mid)
+                    if key:
+                        coin_close_side.setdefault(name, set()).add((key, d["quotes"][-1].get("pick")))
+                if bet and name in _yielded:
+                    held_by.setdefault(name, set()).add((mid, d["quotes"][-1].get("pick")))
                 if bet and (S.SOURCES.get(name) or {}).get("one_per_corners_fixture"):
                     corners_fixtures.add(S.corners_fixture_key(r))
                 added += 1
@@ -3376,8 +3423,10 @@ def placeable(q):
                 and (bet["kind"] != "corners_lte" or corners_strike(q.get("market_id")) is not None))
     if q.get("sport") in LADDER_SPORTS:
         # One rung of a Kalshi daily-close ladder: the Yes on the contract the quote names,
-        # whose side_a is the rung ("$82,750 or above"). The close is in the contract.
-        return (q.get("pick") == "a" and q.get("venue") == "kalshi_binary"
+        # whose side_a is the rung ("$82,750 or above"). The close is in the contract. The No of
+        # that same contract (2026-10-20: crypto_fav_band_below and the both-sides coin lanes in
+        # Production) is the claim that the close lands below the rung.
+        return (q.get("pick") in ("a", "b") and q.get("venue") == "kalshi_binary"
                 and bool(q.get("market_id")) and bool(q.get("side_a")))
     # A basket. It is publishable because the feed can say exactly what to ask for -- the
     # legs, which side of each, and the most it is worth paying -- even though there is no

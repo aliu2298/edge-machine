@@ -29,8 +29,14 @@ What it deliberately does NOT trade:
     next open instead would be a different rule.
   * the crypto and intraday-day lanes. Crypto never opens, so "the next open" has no meaning,
     and the day lane works off 5-minute bars on a different lifecycle.
-  * any rule removed from the board, matching market_track.rule_removed. Its open trades are
-    not graded, so no exit is sent for them either: shares it already holds are left as they are.
+  * any rule removed from the board, matching market_track.rule_removed: no new entry is ever
+    planned or sent for one. The four removed on 2026-10-20 (market_track.EXIT_ONLY_RULES) are
+    EXIT-ONLY: their open trades still grade, so their sells are still sent on each rule's own
+    exit until they hold nothing (exit_rules). A filled buy of theirs with no ledger row (an
+    ORPHAN: sent the evening before removal, and the record no longer logs that rule) is sold
+    on the same rule's exit counted from its entry open, and marked as an orphan in the state
+    and the fill check. Nothing is ever cancelled. The eight removed earlier were never traded
+    here and get nothing at all.
 
 Usage:
     python3 market_exec.py                 what WOULD be sent (default: nothing is placed)
@@ -216,6 +222,24 @@ def executable_rules(rules=None):
     return out, skipped
 
 
+def exit_rules(rules=None):
+    """The rules whose open trades this module may SELL: every executable rule, and the
+    exit-only removed rules (market_track.EXIT_ONLY_RULES), within this account's ALPACA_RULES.
+    Entries never read this: pending_entries goes through executable_rules alone."""
+    rules = rules or T.RULES
+    out, _ = executable_rules(rules)
+    out = dict(out)
+    for name, rule in rules.items():
+        if not T.rule_exit_only(name) or rule.get("exit") is None:
+            continue
+        if ONLY_RULES and name not in ONLY_RULES:
+            continue
+        if rule.get("lane") != LANE:
+            continue
+        out[name] = rule
+    return out
+
+
 # How each rule ranks its own signals when more fire than the caps allow: LOWER is stronger.
 # RSI(2) pullback: the lowest 2-period RSI first, the deepest pullback in an uptrend.
 RANK = {"sw_rsi2_pullback": lambda h: T.rsi([b["c"] for b in h], 2)}
@@ -252,8 +276,11 @@ def pending_entries(bars_by_symbol, d, rules=None):
 
 
 def pending_exits(bars_by_symbol, d, rules=None):
-    """Open trades whose exit triggered on the LAST bar — `grade` leaves these for tomorrow."""
-    rules, _ = executable_rules(rules)
+    """Open trades whose exit triggered on the LAST bar — `grade` leaves these for tomorrow.
+
+    Includes the exit-only removed rules' open trades (exit_rules), never a new entry of theirs.
+    """
+    rules = exit_rules(rules)
     out = []
     for t in d["trades"]:
         if t["status"] != "open":
@@ -274,6 +301,103 @@ def pending_exits(bars_by_symbol, d, rules=None):
         out.append(dict(id=t["id"], rule=t["rule"], symbol=t["symbol"], action="sell",
                         entry_day=t["entry_day"], ref_price=float(bars[-1]["c"])))
     return sorted(out, key=lambda x: (x["rule"], x["symbol"]))
+
+
+# A closed exit-only trade whose sell never went out (a missed run: `grade` closed the row the
+# next day, so pending_exits no longer sees it) is sold late rather than stranded. Only rows
+# closed from the day exit-only mode began, so the older record is not re-read every night.
+EXIT_ONLY_SINCE = "2026-10-21"
+
+
+def overdue_exits(bars_by_symbol, d, rules=None):
+    """Exit-only trades the ledger has CLOSED from EXIT_ONLY_SINCE on. plan() sells one only
+    when its buy filled and no sell was ever placed; otherwise it is dropped without a note."""
+    rules = exit_rules(rules)
+    out = []
+    for t in d["trades"]:
+        if t.get("status") != "closed" or not T.rule_exit_only(t.get("rule")):
+            continue
+        if t["rule"] not in rules or (t.get("exit_day") or "") < EXIT_ONLY_SINCE:
+            continue
+        bars = bars_by_symbol.get(t["symbol"]) or []
+        out.append(dict(id=t["id"], rule=t["rule"], symbol=t["symbol"], action="sell",
+                        entry_day=t["entry_day"], overdue=True,
+                        ref_price=float(bars[-1]["c"]) if bars else float(t.get("exit") or 0)))
+    return sorted(out, key=lambda x: (x["rule"], x["symbol"], x["id"]))
+
+
+def _candidate_days(today=None, back=130):
+    """Weekdays in the last `back` days, newest first: every day a signal could have been on."""
+    today = today or datetime.date.today()
+    out = []
+    for i in range(back + 1):
+        day = today - datetime.timedelta(days=i)
+        if day.weekday() < 5:
+            out.append(day.isoformat())
+    return out
+
+
+def _order_day(o):
+    """The day an order was sent (or filled): a signal behind it is on or before this day."""
+    for key in ("submitted_at", "created_at", "filled_at"):
+        v = str(o.get(key) or "")[:10]
+        try:
+            return datetime.date.fromisoformat(v)
+        except ValueError:
+            continue
+    return None
+
+
+def orphan_trade(cid, symbol, action="buy", today=None, rules=None):
+    """-> (rule, trade id) when `cid` is an exit-only rule's order on `symbol`, else None.
+
+    The client_order_id is uuid5(trade id, side) and the trade id is rule|symbol|signal day, so
+    an order with no ledger row is identified by trying each exit-only rule on each recent day.
+    """
+    if not symbol:
+        return None
+    names = sorted(n for n in (rules or T.RULES) if T.rule_exit_only(n))
+    for day in _candidate_days(today):
+        for name in names:
+            tid = T.trade_id(name, symbol, day)
+            if client_order_id(tid, action) == cid:
+                return name, tid
+    return None
+
+
+def orphan_exits(bars_by_symbol, d, ex, rules=None, today=None):
+    """Filled exit-only buys with NO ledger row, whose rule's exit has triggered.
+
+    The rule's own exit, counted from the open after the signal day (where the ledger would
+    have entered), so a sw_gap_down_reversal orphan is sold on the evening of its 5th session
+    after entry and leaves at the next open. Due today or overdue: either way it is sold,
+    since nothing else will ever sell it.
+    """
+    rules_ok = exit_rules(rules)
+    known = {client_order_id(t["id"], "buy") for t in d["trades"]}
+    out = []
+    for cid, o in sorted(ex.items()):
+        if o.get("side") != "buy" or cid in known or float(o.get("filled_qty") or 0) <= 0:
+            continue
+        hit = orphan_trade(cid, o.get("symbol"), "buy", _order_day(o) or today, rules)
+        if not hit or hit[0] not in rules_ok:
+            continue
+        name, tid = hit
+        signal_day = tid.rsplit("|", 1)[1]
+        bars = bars_by_symbol.get(o.get("symbol")) or []
+        idx = next((i for i, b in enumerate(bars) if T._day(b) > signal_day), None)
+        if idx is None:
+            continue
+        after = bars[idx + 1:]
+        k = rules_ok[name]["exit"](after, dict(hist=bars[:idx + 1]))
+        if k is None:
+            continue
+        out.append(dict(id=tid, rule=name, symbol=o.get("symbol"), action="sell",
+                        entry_day=T._day(bars[idx]), orphan=True,
+                        qty_filled=_q(o.get("filled_qty")), ref_price=float(bars[-1]["c"]),
+                        note=f"orphan fill, no ledger row: {name} exit after "
+                             f"{min(k + 1, len(after))} session(s) from {T._day(bars[idx])}"))
+    return out
 
 
 def _q(x):
@@ -344,15 +468,29 @@ def plan(bars_by_symbol, d, rules=None, state=None):
         return bool(o) and o.get("status") not in ("canceled", "expired", "rejected")
 
     sold, bought = committed(s, "sell"), committed(s, "buy")
-    for ex_ in pending_exits(bars_by_symbol, d, rules):
+    # Scheduled exits first, then the exit-only catch-ups: an overdue closed row, and an orphan
+    # fill. A catch-up that is already sold or never bought is dropped without a note, because
+    # it is looked at again every night.
+    exits = pending_exits(bars_by_symbol, d, rules)
+    seen_ids = {e["id"] for e in exits}
+    for extra in overdue_exits(bars_by_symbol, d, rules) + orphan_exits(bars_by_symbol, d, ex, rules):
+        if extra["id"] not in seen_ids:
+            seen_ids.add(extra["id"])
+            exits.append(extra)
+    for ex_ in exits:
+        quiet = ex_.get("overdue") or ex_.get("orphan")
         if ex_["id"] in sold or live_at_exchange(ex_["id"], "sell"):
-            refused.append(dict(ex_, reason="a sell for this trade is already placed"))
+            if not quiet:
+                refused.append(dict(ex_, reason="a sell for this trade is already placed"))
             continue
-        q = mine.get(ex_["id"])
+        q = mine.get(ex_["id"]) or ex_.pop("qty_filled", None)
+        ex_.pop("qty_filled", None)
         if not q:
             # Not in this host's file — ask the broker whether the buy filled anywhere.
             bo = at_exchange(ex_["id"], "buy")
             q = _q((bo or {}).get("filled_qty")) or None
+        if not q and quiet:
+            continue
         if not q:
             # The ledger is in this trade and this module never filled it. Normal while the
             # account catches up with a record that started months earlier; never silent.
@@ -658,6 +796,16 @@ def reconcile(d=None, days=120):
         # An expired/canceled order can still own shares (e.g. SWKS filled 11/13).
         # The broker's executed quantity, not the terminal status, determines a fill.
         if float(o.get("filled_qty") or 0) > 0:
+            # An exit-only rule's fill with no ledger row (market_track.EXIT_ONLY_RULES): still
+            # an orphan, but named, and counted in what is held so its sell nets it out.
+            hit = orphan_trade(cid, o.get("symbol"), o.get("side") or "buy", _order_day(o))
+            if hit:
+                row.update(rule=hit[0], id=hit[1], exit_only=True)
+                rows.append(dict(id=hit[1], rule=hit[0], symbol=o.get("symbol"),
+                                 side=o.get("side"), status=o.get("status"), ledger=None,
+                                 fill=row["price"], slip_bps=None, qty=_q(o.get("filled_qty")),
+                                 filled_at=row["filled_at"], day=row["filled_at"][:10],
+                                 orphan=True))
             orphans.append(row)
         elif o.get("status") not in ("canceled", "expired", "rejected"):
             in_flight.append(row)
@@ -877,6 +1025,9 @@ def main(argv=None):
     print(f"rules     : {len(rules_ok)} executable — {', '.join(sorted(rules_ok))}")
     for name, why in sorted(skipped.items()):
         print(f"    skip  {name:22} {why}")
+    xo = sorted(set(exit_rules()) - set(rules_ok))
+    if xo:
+        print(f"exit-only : {', '.join(xo)} — sells their open trades, never a new entry")
 
     d = T.load()
     bars = _fetch_bars()
@@ -894,7 +1045,10 @@ def main(argv=None):
           f"{'   (DRY RUN — nothing sent; use --place)' if dry else ''}")
     for o in sells + buys:
         print(f"    {o['action']:4} {o['symbol']:6} {o['qty']:>5} @ ~{o['ref_price']:.2f}  "
-              f"[{o['rule']}]")
+              f"[{o['rule']}]"
+              + ("  exit-only" if T.rule_exit_only(o["rule"]) else "")
+              + (f"  ({o['note']})" if o.get("note") else "")
+              + ("  (overdue: ledger already closed it)" if o.get("overdue") else ""))
     if refused:
         print(f"refused   : {len(refused)}")
         for r in refused[:20]:

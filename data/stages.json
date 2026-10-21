@@ -1692,6 +1692,120 @@
    "pair": "corners_team_fade|soccer_corners",
    "reason": "taken off the Production list by hand, record kept",
    "to": "sandbox"
+  },
+  {
+   "at": "2026-10-21T00:47:16+00:00",
+   "pair": "crypto_fav_band|crypto_fav",
+   "reason": "taken off the Production list by hand, record kept",
+   "to": "sandbox"
+  },
+  {
+   "at": "2026-10-21T00:47:16+00:00",
+   "evidence": {
+    "base_roi": 0.211,
+    "clv": 0.075,
+    "clv_n": 3,
+    "n": 3,
+    "own_roi": 0.3258,
+    "roi": 0.3258,
+    "roi_fee": 0.3034,
+    "span_days": 2.0,
+    "weeks": 0,
+    "z": 0.9904
+   },
+   "pair": "crypto_fav_band_below|crypto_fav",
+   "reason": "moved to Production by hand on 2026-10-20",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-21T00:47:16+00:00",
+   "evidence": {
+    "base_roi": 0.211,
+    "clv": 0.075,
+    "clv_n": 3,
+    "n": 3,
+    "own_roi": 0.3258,
+    "roi": 0.3258,
+    "roi_fee": 0.3034,
+    "span_days": 2.0,
+    "weeks": 0,
+    "z": 0.9904
+   },
+   "pair": "crypto_fav_band_below|crypto_fav",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
+  },
+  {
+   "at": "2026-10-21T00:47:16+00:00",
+   "evidence": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "pair": "crypto_eth_fav_both|crypto_fav",
+   "reason": "moved to Production by hand on 2026-10-20",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-21T00:47:16+00:00",
+   "evidence": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "pair": "crypto_eth_fav_both|crypto_fav",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
+  },
+  {
+   "at": "2026-10-21T00:47:16+00:00",
+   "evidence": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "pair": "crypto_sol_fav_both|crypto_fav",
+   "reason": "moved to Production by hand on 2026-10-20",
+   "to": "production"
+  },
+  {
+   "at": "2026-10-21T00:47:16+00:00",
+   "evidence": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "pair": "crypto_sol_fav_both|crypto_fav",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
   }
  ],
  "pairs": {
@@ -1780,24 +1894,69 @@
    "since": "2026-10-12T00:00:00+00:00",
    "stage": "sandbox"
   },
-  "crypto_fav_band|crypto_fav": {
-   "by_hand": "2026-10-08",
+  "crypto_eth_fav_both|crypto_fav": {
+   "by_hand": "2026-10-20",
    "entry": {
-    "base_roi": 0.2661,
-    "clv": 0.08,
-    "clv_n": 2,
-    "n": 2,
-    "own_roi": 0.2661,
-    "roi": 0.2661,
-    "roi_fee": 0.2477,
-    "span_days": 1.0,
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
     "weeks": 0,
-    "z": 16.5763
+    "z": 0.0
    },
    "entry_since": null,
-   "promoted_at": "2026-10-08T17:50:08+00:00",
-   "ready_at": "2026-10-08T17:50:08+00:00",
-   "ready_since": "2026-10-08T17:50:08+00:00",
+   "promoted_at": "2026-10-21T00:47:16+00:00",
+   "ready_at": "2026-10-21T00:47:16+00:00",
+   "ready_since": "2026-10-21T00:47:16+00:00",
+   "stage": "production"
+  },
+  "crypto_fav_band_below|crypto_fav": {
+   "by_hand": "2026-10-20",
+   "entry": {
+    "base_roi": 0.211,
+    "clv": 0.075,
+    "clv_n": 3,
+    "n": 3,
+    "own_roi": 0.3258,
+    "roi": 0.3258,
+    "roi_fee": 0.3034,
+    "span_days": 2.0,
+    "weeks": 0,
+    "z": 0.9904
+   },
+   "entry_since": null,
+   "promoted_at": "2026-10-21T00:47:16+00:00",
+   "ready_at": "2026-10-21T00:47:16+00:00",
+   "ready_since": "2026-10-21T00:47:16+00:00",
+   "stage": "production"
+  },
+  "crypto_fav_band|crypto_fav": {
+   "demoted_at": "2026-10-21T00:47:16+00:00",
+   "since": null,
+   "stage": "sandbox"
+  },
+  "crypto_sol_fav_both|crypto_fav": {
+   "by_hand": "2026-10-20",
+   "entry": {
+    "base_roi": null,
+    "clv": null,
+    "clv_n": 0,
+    "n": 0,
+    "own_roi": null,
+    "roi": null,
+    "roi_fee": null,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.0
+   },
+   "entry_since": null,
+   "promoted_at": "2026-10-21T00:47:16+00:00",
+   "ready_at": "2026-10-21T00:47:16+00:00",
+   "ready_since": "2026-10-21T00:47:16+00:00",
    "stage": "production"
   },
   "ere_draw|soccer": {
@@ -2187,5 +2346,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-10-21T00:36:25+00:00"
+ "updated": "2026-10-21T00:47:16+00:00"
 }

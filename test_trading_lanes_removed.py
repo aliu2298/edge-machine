@@ -2,9 +2,12 @@
 """Twelve retired trading rules taken off the board the same way a Sandbox lane is: the eight
 of 2026-10-04 and four swing rules of 2026-10-20.
 
-They do not render, and they do not log or grade a new trade. The rows already
-in the ledger stay, count and content. A rule with no trades that is not in
-the removed set still renders. No network, and nothing is written.
+They do not render, and they never log or send a new trade. The rows already
+in the ledger stay, count and content, except that the four of 2026-10-20 are
+EXIT-ONLY: their open rows still close on each rule's own exit, market_exec
+still sells their paper shares, and an orphan fill of theirs (no ledger row) is
+sold on the same exit. A rule with no trades that is not in the removed set
+still renders. No network, and nothing is written.
 """
 import copy
 import datetime
@@ -55,6 +58,8 @@ LANE_COUNTS = {
     "etf_overnight": (38, 0),
 }
 KEPT = "sw_rsi2_pullback"
+# The four removed 2026-10-20 had paper positions at Alpaca: they still exit, never enter.
+EXIT_ONLY = ("sw_gap_down_reversal", "etf_ibs_band", "etf_tom", "etf_overnight")
 
 
 def ok(cond, why):
@@ -130,6 +135,12 @@ ledger = MT.load()
 snapshot = copy.deepcopy(ledger["trades"])
 for name, (want_closed, want_open) in LANE_COUNTS.items():
     rows, closed, opened = _counts(snapshot, name)
+    if name in EXIT_ONLY:
+        # Exit-only: open rows close on the rule's own exit, so only the total is fixed.
+        ok(len(rows) == want_closed + want_open and closed >= want_closed
+           and closed + opened == len(rows),
+           f"{name} keeps its {want_closed + want_open} rows (open ones may only close)")
+        continue
     eq((closed, opened, len(rows)), (want_closed, want_open, want_closed + want_open),
        f"{name} still has {want_closed} closed and {want_open} open")
 
@@ -223,6 +234,181 @@ finally:
     MT.RULES = saved_rules
 ok("Empty untested lane" in shown, "a rule with no trades still renders")
 ok("zz_empty_untested" in shown, "and its id is on the page")
+
+print("\nthe four removed 2026-10-20 are exit-only; the eight before them are not")
+eq(set(getattr(MT, "EXIT_ONLY_RULES", ())), set(EXIT_ONLY), "EXIT_ONLY_RULES is exactly the four")
+ok(all(MT.rule_exit_only(n) and MT.rule_removed(n) for n in EXIT_ONLY),
+   "each of the four is removed AND exit-only")
+ok(not any(MT.rule_exit_only(n) for n in EIGHT if n not in EXIT_ONLY),
+   "none of the eight removed 2026-10-04 is exit-only")
+ok(not MT.rule_exit_only(KEPT), "a rule on the board is not exit-only")
+
+import market_exec as X
+
+
+def weekdays(n, first=datetime.date(2026, 1, 5)):
+    out, d = [], first
+    while len(out) < n:
+        if d.weekday() < 5:
+            out.append(d.isoformat())
+        d += datetime.timedelta(days=1)
+    return out
+
+
+# A clean gap-down reversal: a slow rise above the 200-day, then a 5% gap down that closes up.
+DAYS = weekdays(260)
+gap = [bar(DAYS[i], 100 + i * 0.1, 100 + i * 0.1 + 0.5, 100 + i * 0.1 - 0.5, 100 + i * 0.1)
+       for i in range(230)]
+pc = gap[-1]["c"]
+gap.append(bar(DAYS[230], pc * 0.95, pc * 0.98, pc * 0.94, pc * 0.97))   # the signal bar
+ok(MT._sw_gap_reversal(gap), "the fixture fires sw_gap_down_reversal on its last bar")
+
+print("\nan exit-only rule never opens a new trade")
+GAP_RULES = {"sw_gap_down_reversal": MT.RULES["sw_gap_down_reversal"]}
+never = {"trades": [], "meta": {}}
+with_next = gap + [bar(DAYS[231], pc * 0.97, pc * 0.99, pc * 0.96, pc * 0.98)]
+eq(MT.scan({"STLD": with_next}, never, rules=GAP_RULES), 0,
+   "scan logs nothing for it when its signal fires with the next open in")
+MT.scan({"STLD": with_next}, never, rules=MT.RULES)
+eq([t["rule"] for t in never["trades"] if MT.rule_removed(t["rule"])], [],
+   "nor when handed every rule (a rule on the board may still take it)")
+eq(X.pending_entries({"STLD": gap}, never, rules=GAP_RULES), [],
+   "market_exec plans no entry for it on a last-bar signal")
+eq(X.pending_entries({"STLD": gap}, never), [], "nor from the full rule set")
+ok("sw_gap_down_reversal" in X.executable_rules()[1]
+   and "sw_gap_down_reversal" not in X.executable_rules()[0],
+   "it is still not an executable (entry) rule")
+ok(set(EXIT_ONLY) - {"etf_overnight"} <= set(X.exit_rules()),
+   "its exits are sent (exit_rules) — etf_overnight aside, which never bought at Alpaca")
+ok(not any(n in X.exit_rules() for n in EIGHT if n not in EXIT_ONLY),
+   "the eight removed 2026-10-04 get no exits either")
+
+print("\nan exit-only rule exits its open trades on its own schedule")
+
+
+def open_row(rule, sym, entry_day, entry=100.0):
+    return dict(id=MT.trade_id(rule, sym, "sig"), rule=rule, lane="swing", symbol=sym,
+                signal_day="sig", entry_day=entry_day, entry=entry, status="open", exit=None,
+                exit_day=None, ret_gross=None, ret_net=None, bench_ret=None, bars_held=None)
+
+
+def flat_bars(days, px=100.0):
+    return [bar(d, px, px + 1, px - 1, px) for d in days]
+
+
+E = 210
+sw = flat_bars(DAYS[:E + 1 + 5])                     # entry day + 5 sessions after it
+book_sw = {"trades": [open_row("sw_gap_down_reversal", "DELL", DAYS[E])], "meta": {}}
+eq(MT.grade({"DELL": sw, "SPY": sw}, book_sw), 0, "after 5 sessions the row is still open")
+pend = X.pending_exits({"DELL": sw}, book_sw)
+eq([(p["symbol"], p["action"]) for p in pend], [("DELL", "sell")],
+   "and market_exec queues its sell for the next open that evening")
+sw6 = flat_bars(DAYS[:E + 1 + 6])
+eq(MT.grade({"DELL": sw6, "SPY": sw6}, book_sw), 1, "the next run closes it")
+t = book_sw["trades"][0]
+eq((t["status"], t["exit_day"], t["bars_held"]), ("closed", DAYS[E + 6], 5),
+   "at the open after 5 sessions held, as registered")
+eq(X.pending_exits({"DELL": sw6}, book_sw), [], "and no second sell is planned")
+
+ibs = flat_bars(DAYS[:E + 1 + 3])
+ibs[E + 3] = bar(DAYS[E + 3], 100, 102, 99, 101.5)  # first close above the prior day's high
+book_ibs = {"trades": [open_row("etf_ibs_band", "IWM", DAYS[E])], "meta": {}}
+eq(X.pending_exits({"IWM": ibs}, book_ibs)[0]["symbol"], "IWM",
+   "etf_ibs_band sells the evening of the first close above the prior high")
+ibs.append(bar(DAYS[E + 4], 101, 101, 101, 101))
+eq(MT.grade({"IWM": ibs, "SPY": ibs}, book_ibs), 1, "and the ledger closes it the next run")
+eq(book_ibs["trades"][0]["exit_day"], DAYS[E + 4], "at that next open")
+cap = flat_bars(DAYS[:E + 1 + 11])
+book_cap = {"trades": [open_row("etf_ibs_band", "QQQ", DAYS[E])], "meta": {}}
+MT.grade({"QQQ": cap, "SPY": cap}, book_cap)
+eq((book_cap["trades"][0]["status"], book_cap["trades"][0]["bars_held"]), ("closed", 10),
+   "with no trigger it leaves after 10 sessions")
+
+print("\nthe account side: the sell goes out, a buy never does, an orphan is sold after 5 sessions")
+_saved = (X.positions, X.account, X.exchange_orders)
+try:
+    # The DELL row due tonight is held 2 shares; STLD is a filled buy with no ledger row (the
+    # order sent the evening before the rule came off); a fresh gap signal also fires tonight.
+    stld_tid = MT.trade_id("sw_gap_down_reversal", "STLD", DAYS[E - 1])
+    stld_cid = X.client_order_id(stld_tid, "buy")
+    dell_tid = book_sw["trades"][0]["id"]
+    EXO = {X.client_order_id(dell_tid, "buy"): {"side": "buy", "symbol": "DELL",
+                                                "status": "filled", "filled_qty": "2"},
+           stld_cid: {"side": "buy", "symbol": "STLD", "status": "filled", "filled_qty": "4",
+                      "filled_avg_price": "100", "filled_at": DAYS[E] + "T13:30:01Z"}}
+    X.exchange_orders = lambda days=120: EXO
+    X.positions = lambda: {"DELL": {"qty": "2"}, "STLD": {"qty": "4"}}
+    X.account = lambda: {"cash": "50000", "equity": "100000", "last_equity": "100000"}
+    st = {"orders": [], "meta": {}}
+    live_row = open_row("sw_gap_down_reversal", "DELL", DAYS[E])
+    led = {"trades": [live_row], "meta": {}}
+    stld4 = flat_bars(DAYS[:E + 1 + 4])
+    orders, refused = X.plan({"DELL": sw, "STLD": stld4, "GGG": gap}, led, state=st)
+    eq([(o["symbol"], o["action"], o["qty"]) for o in orders if o["action"] == "sell"],
+       [("DELL", "sell", 2)], "4 sessions after entry: DELL's scheduled sell, no orphan sell yet")
+    ok(not [o for o in orders + refused if o["action"] == "buy" and MT.rule_removed(o["rule"])],
+       "no entry is planned or refused for the exit-only rule at all")
+    ok(any(o["action"] == "buy" and o["rule"] == KEPT for o in orders),
+       "while a rule on the board still buys the same bar")
+    stld5 = flat_bars(DAYS[:E + 1 + 5])
+    orders, refused = X.plan({"DELL": sw, "STLD": stld5, "GGG": gap}, led, state=st)
+    got = {(o["symbol"], o["action"], o["qty"]) for o in orders if o["action"] == "sell"}
+    eq(got, {("DELL", "sell", 2), ("STLD", "sell", 4)},
+       "5 sessions after entry the orphan STLD is sold too, all 4 shares")
+    orph = next(o for o in orders if o["symbol"] == "STLD")
+    eq((orph["id"], orph.get("orphan")), (stld_tid, True),
+       "under the trade id its buy was sent with, marked as an orphan")
+    ok("orphan fill, no ledger row" in orph.get("note", "") and "5 session" in orph["note"],
+       "and the reason is recorded with it")
+    EXO[X.client_order_id(stld_tid, "sell")] = {"side": "sell", "symbol": "STLD",
+                                                "status": "accepted", "filled_qty": "0"}
+    orders, refused = X.plan({"DELL": sw, "STLD": stld5}, led, state=st)
+    eq([o["symbol"] for o in orders], ["DELL"], "once its sell is placed the orphan is not re-sold")
+    ok(not [r for r in refused if r["symbol"] == "STLD"], "and is not reported every night")
+    # A missed run: the ledger closed DELL without its sell going out. Sold late, not stranded.
+    closed_row = dict(live_row, status="closed", exit_day="2026-10-22", exit=100.0)
+    orders, _ = X.plan({"DELL": sw6}, {"trades": [closed_row], "meta": {}}, state=st)
+    eq([(o["symbol"], o.get("overdue")) for o in orders], [("DELL", True)],
+       "an exit-only row closed with no sell placed is sold the next run")
+    EXO[X.client_order_id(dell_tid, "sell")] = {"side": "sell", "symbol": "DELL",
+                                                "status": "filled", "filled_qty": "2"}
+    orders, refused = X.plan({"DELL": sw6}, {"trades": [closed_row], "meta": {}}, state=st)
+    eq((orders, refused), ([], []), "once sold, the rule is dormant: nothing planned, nothing noted")
+    # The fill check names the orphan and counts it as held until its sell fills.
+    del EXO[X.client_order_id(stld_tid, "sell")]
+    rep = X.reconcile(d=led)
+    o_row = next(o for o in rep["orphans"] if o["symbol"] == "STLD")
+    eq((o_row.get("rule"), o_row.get("id"), o_row.get("exit_only")),
+       ("sw_gap_down_reversal", stld_tid, True), "the fill check names the orphan's rule")
+    held = {h["symbol"]: h["qty"] for h in rep["held"]}
+    eq(held.get("STLD"), 4, "and counts its 4 shares as held")
+    EXO[X.client_order_id(stld_tid, "sell")] = {"side": "sell", "symbol": "STLD",
+                                                "status": "filled", "filled_qty": "4",
+                                                "filled_at": DAYS[E + 6] + "T13:30:02Z"}
+    rep = X.reconcile(d=led)
+    ok("STLD" not in {h["symbol"] for h in rep["held"]}, "until its sell fills")
+    # The live pilot trades sw_rsi2_pullback alone: no exit-only rule is ever sold there.
+    _only = X.ONLY_RULES
+    X.ONLY_RULES = {KEPT}
+    try:
+        ok(not any(MT.rule_exit_only(n) for n in X.exit_rules()),
+           "an account limited by ALPACA_RULES sells no exit-only rule")
+    finally:
+        X.ONLY_RULES = _only
+finally:
+    X.positions, X.account, X.exchange_orders = _saved
+
+print("\nthe execution line counts the exits without naming the rule")
+fills = {"summary": {"orders": {"sent": 3, "filled": 3, "unfilled": 0, "working": 0}, "fills": 0},
+         "held": [{"symbol": "DELL", "qty": 2,
+                   "rules": [{"rule": "sw_gap_down_reversal", "id": "x", "qty": 2}]}]}
+line = SB.trade_exec_html(fills, 3)
+ok("removed rule · exiting (3 open)" in line, "it says 'removed rule · exiting (3 open)'")
+ok(not any(n in line for n in EIGHT), "and names none of the removed rules")
+ok("exiting" not in SB.trade_exec_html(fills, 0), "nothing is said once nothing is open")
+eq(MT.exiting({"trades": [open_row("etf_ibs_band", "IWM", "d"), open_row("sw_52w_breakout", "A", "d"),
+                          dict(open_row("sw_gap_down_reversal", "B", "d"), status="closed")]}), 1,
+   "exiting() counts only the exit-only rules' open rows")
 
 print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'trading lane removal passed'}")
 for item in FAILS:

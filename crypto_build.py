@@ -28,13 +28,18 @@ OUT = os.path.join(ROOT, "public_site", "crypto.html")
 SPORTS = ("crypto_fav",)
 SOURCE = "crypto_fav_band"
 # The four sibling lanes (2026-10-18): the Yes and No favourite, in the 0.70-0.80 band and the
-# 0.60-0.70 band below it. Each is its own Sandbox row; only the first is in Production.
-LANES = ("crypto_fav_band", "crypto_fav_band_below", "crypto_fav_band_60", "crypto_fav_band_below_60")
+# 0.60-0.70 band below it; and the two both-sides coin lanes (2026-10-20), ETH and SOL, Yes and
+# No 0.60-0.80. Each is its own row. In Production since 2026-10-20: the below lane and the two
+# coin lanes (crypto_fav_band went back to the Sandbox that day).
+LANES = ("crypto_fav_band", "crypto_fav_band_below", "crypto_fav_band_60", "crypto_fav_band_below_60",
+         "crypto_eth_fav_both", "crypto_sol_fav_both")
 RULE_NAMES = {
     "crypto_fav_band": "Favourite band · 3h to the close",
     "crypto_fav_band_below": "Favourite band, below · No 0.70–0.80",
     "crypto_fav_band_60": "Favourite band 60 · Yes 0.60–0.70",
     "crypto_fav_band_below_60": "Favourite band 60, below · No 0.60–0.70",
+    "crypto_eth_fav_both": "ETH favourite, both sides · Yes and No 0.60–0.80",
+    "crypto_sol_fav_both": "SOL favourite, both sides · Yes and No 0.60–0.80",
 }
 COIN_LABELS = {"bitcoin": "BTC", "ethereum": "ETH", "solana": "SOL",
                "ripple": "XRP", "hyperliquid": "HYPE"}
@@ -197,6 +202,17 @@ def _scan_status(d, now):
 # ------------------------------------------------------------------ the rule
 def params(source=SOURCE):
     """The four entry parameters, as (name, value), from the registered constants."""
+    if source in ("crypto_eth_fav_both", "crypto_sol_fav_both"):
+        lo, hi = S.CRYPTO_BOTH_BAND
+        coin = "ETH" if "eth" in source else "SOL"
+        return (
+            ("Entry", f"{coin} only: Yes ask and No ask {lo * 100:g}–{hi * 100:g}¢, "
+                      f"{S.CRYPTO_FAV_MIN_H:g}–{S.CRYPTO_FAV_MAX_H:g}h before the close"),
+            ("Selection", "cheapest qualifying rung on each side, one Yes and one No a close; "
+                          "a No the below lane holds goes to the next cheapest"),
+            ("Liquidity", f"≤{S.CRYPTO_FAV_MAX_SPREAD * 100:g}¢ spread, {S.CRYPTO_FAV_MIN_ASK_SIZE:g}+ at the ask on the side bought"),
+            ("Close", f"{S.CRYPTO_FAV_CLOSE_ET:02d}:00 ET"),
+        )
     below = "below" in source
     lo, hi = S.CRYPTO_FAV_BAND_60 if source.endswith("_60") else S.CRYPTO_FAV_BAND
     band = (f"{lo * 100:g}¢ to under {hi * 100:g}¢" if source.endswith("_60") else f"{lo * 100:g}–{hi * 100:g}¢")
@@ -209,7 +225,7 @@ def params(source=SOURCE):
     )
 
 
-def registered_row(source=SOURCE):
+def registered_row(source=SOURCE, st=None):
     """The lane as registered, before the Sandbox lists it.
 
     pair_list gives a pair a row once it has bet. Until then the page still has a
@@ -218,7 +234,11 @@ def registered_row(source=SOURCE):
     ledger has not produced.
     """
     meta = S.SOURCES.get(source) or {}
-    return dict(name=source, sport="crypto_fav", meta=meta, prod=False, open=0, since=None,
+    # In Production when the stage registry says so (a lane listed straight into Production
+    # before its first bet, 2026-10-20), never from the override list alone.
+    stage = (((st or {}).get("pairs") or {}).get(f"{source}|crypto_fav") or {}).get("stage")
+    return dict(name=source, sport="crypto_fav", meta=meta, prod=stage == "production",
+                open=0, since=None,
                 v="waiting", a=dict(n=0, won=0, expected=0.0, roi_fee=None, n_bets=0, unit="market-day"))
 
 
@@ -226,7 +246,7 @@ def page_rows(d, st):
     """The Sandbox rows, and the registration of each sibling lane that has not bet yet."""
     rows = crypto_rows(d, st)
     have = {r.get("name") for r in rows}
-    return rows + [registered_row(name) for name in LANES if name not in have]
+    return rows + [registered_row(name, st) for name in LANES if name not in have]
 
 
 def rule_name(row):

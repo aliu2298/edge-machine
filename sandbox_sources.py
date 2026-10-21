@@ -1338,6 +1338,60 @@ SOURCES = {
              "crypto bands. For comparison NO 0.70-0.80 was 63/76, +7.9% in that table. An "
              "outcome is a day across all coins, judged against the NO favourite on every "
              "rung this sport logged, read at 30 independent outcomes."),
+    "crypto_eth_fav_both": dict(
+        label="Crypto ETH favourite, both sides (Yes and No 0.60-0.80, 3 hours to the close)",
+        kind="Rule", connected=True, site="edge-machine", sports=["crypto_fav"],
+        baseline="favourite_population",
+        # Both sides: one YES and one NO per close (one_per_coin_close_side), so the blind
+        # population is the favourites on either side (no favourite_side).
+        one_per_coin_close_side=True,
+        coin_series=("KXETHD",),
+        yields_to=("crypto_fav_band_below",),
+        note="PRE-REGISTERED 2026-10-20, before it logged anything, on a fresh record, and "
+             "moved straight into Production on Olu's decision. ETH only (KXETHD). Back "
+             "the cheapest YES rung whose YES ask is 0.60-0.80 inclusive AND the cheapest NO rung "
+             "whose NO ask is 0.60-0.80 inclusive, so up to TWO bets per close, one a side. Every "
+             "other term is crypto_fav_band's, copied, not retuned: the 17:00 ET close, entered "
+             "2-3.5 hours before it measured to the contract close, up to three reads per window, "
+             "one entry per side per close, equal prices to the lower ticker, and the liquidity "
+             "floor on the side bought (a two-sided quote, a spread of 3c or less, 25 contracts at "
+             "the ask). ONE MARKET, ONE LANE: a NO rung crypto_fav_band_below (No 0.70-0.80, all "
+             "coins) already holds is skipped, logged as held by that lane, and the next cheapest "
+             "in-band NO is taken if there is one. ""WHY: on 335 settled Kalshi daily 17:00 ET coin ladders, 2026-08-11 to "
+             "10-17, priced 3 hours before the close with a spread of 5c or less, after the 7% "
+             "fee, z clustered by day: 28/30 (93%) at 69c, +31.9%, z +3.76; halves +44% and +23%; YES side z +2.54, NO side z +2.88. CAVEAT, said plainly: the backtest window is the "
+             "one this angle was FOUND on, on one coin, so the figure is a description of that "
+             "window and not a forecast; this record starts at zero and is what judges it. An "
+             "outcome is a DAY, as for every crypto lane. Judged against backing the favourite "
+             "on every rung this sport logged, one quote per contest. Read at 30 independent "
+             "outcomes."),
+    "crypto_sol_fav_both": dict(
+        label="Crypto SOL favourite, both sides (Yes and No 0.60-0.80, 3 hours to the close)",
+        kind="Rule", connected=True, site="edge-machine", sports=["crypto_fav"],
+        baseline="favourite_population",
+        # Both sides: one YES and one NO per close (one_per_coin_close_side), so the blind
+        # population is the favourites on either side (no favourite_side).
+        one_per_coin_close_side=True,
+        coin_series=("KXSOLD",),
+        yields_to=("crypto_fav_band_below",),
+        note="PRE-REGISTERED 2026-10-20, before it logged anything, on a fresh record, and "
+             "moved straight into Production on Olu's decision. SOL only (KXSOLD). Back "
+             "the cheapest YES rung whose YES ask is 0.60-0.80 inclusive AND the cheapest NO rung "
+             "whose NO ask is 0.60-0.80 inclusive, so up to TWO bets per close, one a side. Every "
+             "other term is crypto_fav_band's, copied, not retuned: the 17:00 ET close, entered "
+             "2-3.5 hours before it measured to the contract close, up to three reads per window, "
+             "one entry per side per close, equal prices to the lower ticker, and the liquidity "
+             "floor on the side bought (a two-sided quote, a spread of 3c or less, 25 contracts at "
+             "the ask). ONE MARKET, ONE LANE: a NO rung crypto_fav_band_below (No 0.70-0.80, all "
+             "coins) already holds is skipped, logged as held by that lane, and the next cheapest "
+             "in-band NO is taken if there is one. ""WHY: on 335 settled Kalshi daily 17:00 ET coin ladders, 2026-08-11 to "
+             "10-17, priced 3 hours before the close with a spread of 5c or less, after the 7% "
+             "fee, z clustered by day: 32/38 (84%) at 72c, +15.5%, z +1.92; halves +11% and +25%. CAVEAT, said plainly: the backtest window is the "
+             "one this angle was FOUND on, on one coin, so the figure is a description of that "
+             "window and not a forecast; this record starts at zero and is what judges it. An "
+             "outcome is a DAY, as for every crypto lane. Judged against backing the favourite "
+             "on every rung this sport logged, one quote per contest. Read at 30 independent "
+             "outcomes."),
     "commod_fav_band": dict(
         label="Commodities favourite band (Yes 0.70-0.80, 3 hours to the close)", kind="Rule",
         connected=True, site="edge-machine", sports=["commodities_fav"],
@@ -8516,6 +8570,70 @@ def fetch_crypto_fav_band_below_60(sport, universe=None, now=None):
 
 
 # ---------------------------------------------------------------------------
+# One coin's favourite on BOTH sides, 0.60-0.80 — pre-registered 2026-10-20
+# ---------------------------------------------------------------------------
+CRYPTO_BOTH_BAND = (0.60, 0.80)         # BOTH ends inclusive, on each side
+
+
+def _crypto_both_picks(name, sport, universe, now, series):
+    """The cheapest in-band YES and every in-band NO (cheapest first) of one coin, 2-3.5h
+    before the 17:00 ET close. publish() takes the first YES and the first NO that no lane in
+    the source's yields_to already holds (one_per_coin_close_side)."""
+    if sport != "crypto_fav":
+        return []
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    lo, hi = CRYPTO_BOTH_BAND
+    yes, nos, skipped = None, [], {}
+    for r in (universe if universe is not None else (UNIVERSE or {})).get(sport) or []:
+        if r.get("series") not in series:
+            continue
+        exp = _ladder_close(r)
+        if exp is None or exp.astimezone(CRYPTO_FAV_TZ).hour != CRYPTO_FAV_CLOSE_ET:
+            continue
+        hours = (exp - now).total_seconds() / 3600.0
+        if not (CRYPTO_FAV_MIN_H <= hours <= CRYPTO_FAV_MAX_H) or r.get("price_draw") is not None:
+            continue
+        pa, pb = r.get("price_a"), r.get("price_b")
+        if pa is not None and lo - 1e-9 <= pa <= hi + 1e-9:
+            ok, why = _crypto_fav_liquid(r)
+            if ok:
+                if yes is None or (pa, r["market_id"]) < (yes["price_a"], yes["market_id"]):
+                    yes = r
+            else:
+                skipped.setdefault(("Yes", r.get("series")), why)
+        if pb is not None and lo - 1e-9 <= pb <= hi + 1e-9:
+            ok, why = _crypto_fav_liquid_no(r)
+            if ok:
+                nos.append(r)
+            else:
+                skipped.setdefault(("No", r.get("series")), why)
+    for (side, ser), why in sorted(skipped.items()):
+        print(f"  {name}: skip {side} {ser}: {why}")
+    hrs = lambda r: (_ladder_close(r) - now).total_seconds() / 3600
+    out = []
+    if yes is not None:
+        out.append(dict(market_id=yes["market_id"], pick="a",
+                        detail=f"cheapest Yes in band {yes['price_a']:.2f}, {hrs(yes):.1f}h to close"))
+    for i, r in enumerate(sorted(nos, key=lambda x: (x["price_b"], x["market_id"]))):
+        out.append(dict(market_id=r["market_id"], pick="b",
+                        detail=(f"{'cheapest' if i == 0 else 'next cheapest'} No in band "
+                                f"{r['price_b']:.2f}, {hrs(r):.1f}h to close")))
+    return out
+
+
+def fetch_crypto_eth_fav_both(sport, universe=None, now=None):
+    """ETH: the cheapest Yes and the cheapest free No priced 0.60-0.80."""
+    return _crypto_both_picks("crypto_eth_fav_both", sport, universe, now, ("KXETHD",))
+
+
+def fetch_crypto_sol_fav_both(sport, universe=None, now=None):
+    """SOL: the cheapest Yes and the cheapest free No priced 0.60-0.80."""
+    return _crypto_both_picks("crypto_sol_fav_both", sport, universe, now, ("KXSOLD",))
+
+
+# ---------------------------------------------------------------------------
 # Commodities favourite band — pre-registered 2026-10-08
 # ---------------------------------------------------------------------------
 #
@@ -10569,6 +10687,8 @@ CHALLENGERS = {
     "crypto_fav_band_below": fetch_crypto_fav_band_below,
     "crypto_fav_band_60": fetch_crypto_fav_band_60,
     "crypto_fav_band_below_60": fetch_crypto_fav_band_below_60,
+    "crypto_eth_fav_both": fetch_crypto_eth_fav_both,
+    "crypto_sol_fav_both": fetch_crypto_sol_fav_both,
     "commod_fav_band": fetch_commod_fav_band,
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,
