@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-20T22:00:13.908321+00:00",
+ "last_run": "2026-10-21T00:00:13.045890+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -55,7 +55,52 @@
    ]
   },
   "R3": {
-   "picks": []
+   "picks": [
+    {
+     "game": "401909090",
+     "id": "R3:KXNBATEAMTOTAL-26OCT20OKCSAS-SAS115",
+     "labels": {
+      "away": "O-D+",
+      "away_h1": "O+D-",
+      "home": "O-D-",
+      "home_h1": "O+D-"
+     },
+     "logged": "2026-10-21T00:00:13.045890+00:00",
+     "match": "OKC @ SA",
+     "price": 0.48,
+     "rule": "R3",
+     "side": "no",
+     "start": "2026-10-21T01:30Z",
+     "status": "open",
+     "strike": 114.5,
+     "team": "SA",
+     "ticker": "KXNBATEAMTOTAL-26OCT20OKCSAS-SAS115",
+     "title": "San Antonio over 114.5 points",
+     "why": "SA O-D- v OKC O-D+ \u00b7 115+ NO 0.48"
+    },
+    {
+     "game": "401909090",
+     "id": "R3:KXNBATEAMTOTAL-26OCT20OKCSAS-OKC115",
+     "labels": {
+      "away": "O-D+",
+      "away_h1": "O+D-",
+      "home": "O-D-",
+      "home_h1": "O+D-"
+     },
+     "logged": "2026-10-21T00:00:13.045890+00:00",
+     "match": "OKC @ SA",
+     "price": 0.46,
+     "rule": "R3",
+     "side": "no",
+     "start": "2026-10-21T01:30Z",
+     "status": "open",
+     "strike": 114.5,
+     "team": "OKC",
+     "ticker": "KXNBATEAMTOTAL-26OCT20OKCSAS-OKC115",
+     "title": "Oklahoma City over 114.5 points",
+     "why": "OKC O-D+ v SA O-D- \u00b7 115+ NO 0.46"
+    }
+   ]
   },
   "R4": {
    "picks": []
@@ -339,6 +384,11 @@
    "at": "2026-10-20T22:00:13.908321+00:00",
    "due": 1,
    "new": 0
+  },
+  {
+   "at": "2026-10-21T00:00:13.045890+00:00",
+   "due": 1,
+   "new": 2
   }
  ],
  "version": "nba-rules-v1"
