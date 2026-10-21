@@ -57,8 +57,20 @@ sat = at(2026, 10, 17, 12, 0)
 # not depend on (it read real Oct 17 fixtures once they were logged).
 lanes_sat = {(w["lane"], w["label"]) for w in W.windows(sat, ledger={"quotes": []}, games=[], fixtures=[])
              if w["close"].date() == dt.date(2026, 10, 17) and w["lane"] != "culture"}
-check("Saturday: crypto, gas/diesel and the first-to-score NO pick, no Treasury, index or commodity",
-      sorted(l for l, _ in lanes_sat), ["crypto_fav_band", "econ_daily", "econ_daily", "ftts_no"])
+check("Saturday: crypto, gas/diesel (and the near-certain YES hour) and the first-to-score NO pick, "
+      "no Treasury, index or commodity",
+      sorted(l for l, _ in lanes_sat), ["crypto_fav_band", "econ_daily", "econ_daily", "econ_nc_yes", "ftts_no"])
+
+print("\nthe near-certain YES lane (2026-10-20): 75-45 min before 23:59 ET, reads 10 min apart")
+nc = [w for w in W.windows(at(2026, 10, 21, 2, 0), ledger={"quotes": []}, games=[], fixtures=[])
+      if w["lane"] == "econ_nc_yes" and w["close"] == at(2026, 10, 21, 3, 59)]
+check("one window, 02:44-03:14Z for the 03:59Z close", [(w["start"], w["end"]) for w in nc],
+      [(at(2026, 10, 21, 2, 44), at(2026, 10, 21, 3, 14))])
+for minute, want in ((1, [1]), (16, [2]), (25, [3]), (27, [])):
+    t = at(2026, 10, 21, 2, 44) + dt.timedelta(minutes=minute)
+    got = [k for w, k in W.due(t, ledger={"quotes": []}, games=[], fixtures=[]) if w["lane"] == "econ_nc_yes"]
+    check(f"near-certain YES at window start + {minute} min -> reads {want}", got, want)
+check("its stamp file", W.STAMP["econ_nc_yes"], "data/daily_window/request.txt")
 
 print("\nup to three reads, 30 minutes apart, none in the last 10 minutes")
 for minute, want in ((29, [1]), (35, [2]), (65, [3]), (82, []), (95, [])):

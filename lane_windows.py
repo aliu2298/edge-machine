@@ -62,6 +62,8 @@ STAMP = {
     "commod_nc": "data/commodities_window/request.txt",
     "econ_daily": "data/daily_window/request.txt",
     "finance_daily": "data/daily_window/request.txt",
+    # 2026-10-20: the near-certain YES lane's last-hour window (daily_track.NC_LANES).
+    "econ_nc_yes": "data/daily_window/request.txt",
     "ftts_no": "data/ftts_window/request.txt",
     "ftts_lineup_lag": "data/ftts_window/request.txt",
     # 2026-10-17: GitHub's cron never fired either lane on its own (culture.yml's hourly
@@ -117,6 +119,13 @@ DAILY_CLOSES = (
     ("finance_daily", "Treasury yields", (15, 30), WEEKDAYS),
     ("finance_daily", "S&P 500 / Nasdaq-100", (16, 0), WEEKDAYS),
 )
+# The near-certain YES lane (2026-10-20) enters 75 to 45 minutes before the 23:59 ET close that
+# AAA national gas and, since 2026-10-18, diesel both settle on. Its NO twin uses the 2-3.5h
+# econ_daily window above. Reads every 10 minutes; the VPS asks every 15, so a window gets two.
+NC_YES_CLOSE = (23, 59)
+NC_YES_FROM, NC_YES_TO = 75, 45          # minutes before the close (daily_track.NC_LANES)
+NC_YES_EVERY = dt.timedelta(minutes=10)
+NC_YES_LAST_ASK = dt.timedelta(minutes=5)
 assert (S.CRYPTO_FAV_MIN_H, S.CRYPTO_FAV_MAX_H) == (MIN_H, MAX_H)
 assert (S.COMMOD_FAV_MIN_H, S.COMMOD_FAV_MAX_H) == (MIN_H, MAX_H)
 # The near-certain lanes' last-hour window: 75 to 45 minutes before the close. Thirty minutes
@@ -336,6 +345,11 @@ def windows(now, ledger=None, games=None, fixtures=None):
                 continue
             close = dt.datetime(day.year, day.month, day.day, h, m, tzinfo=ET)
             out.append(_window(lane, f"{label} {h:02d}:{m:02d} ET", close))
+        close = dt.datetime(day.year, day.month, day.day, *NC_YES_CLOSE, tzinfo=ET)
+        out.append(dict(lane="econ_nc_yes", label="Near-certain YES (gas, diesel) 23:59 ET", series=(),
+                        close=close, start=close - dt.timedelta(minutes=NC_YES_FROM),
+                        end=close - dt.timedelta(minutes=NC_YES_TO), every=NC_YES_EVERY,
+                        last_ask=NC_YES_LAST_ASK))
     out = [dict(w, close=w["close"].astimezone(dt.timezone.utc),
                 start=w["start"].astimezone(dt.timezone.utc),
                 end=w["end"].astimezone(dt.timezone.utc)) for w in out]

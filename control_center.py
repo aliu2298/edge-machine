@@ -42,6 +42,7 @@ import os
 import urllib.request
 from datetime import timedelta, timezone
 
+import daily_track as D
 import fmt
 import production
 import sandbox_build as B
@@ -590,13 +591,14 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
     healthy = sum(1 for a in areas if a["status"] == "healthy")
     return dict(
         now=now,
-        tiles=dict(pairs=len(pairs)+(1 if daily is not None else 0)+(1 if culture is not None else 0), open=sum(1 for q in rows if q.get("status") == "open")
+        tiles=dict(pairs=len(pairs)+(len(daily_production.pairs()) if daily is not None else 0)+(1 if culture is not None else 0), open=sum(1 for q in rows if q.get("status") == "open")
                    + sum(a['open'] for a in areas if a['key'] in ('econ_daily','finance_daily')),
                    landed=(n_won, n_settled), healthy=(healthy, len(areas)), attention=len(attention)),
         areas=areas, attention=attention, live=live, scorecard=scorecard,
-        # Production outside the scorecard's pair rows: Econ Daily's favourite band publishes
-        # through its own feed (daily_production), so it is in the tile's count and not a row.
-        prod_outside=(["Econ Daily favourite band"] if daily is not None else [])
+        # Production outside the scorecard's pair rows: Econ Daily's two near-certain lanes
+        # (2026-10-20) and Trump mentions publish through their own feeds (daily_production,
+        # culture), so they are in the tile's count and not rows.
+        prod_outside=(["Econ Daily " + D.NC_LANES[k]["label"] for k in D.NC_ORDER] if daily is not None else [])
                      + (["Trump mentions"] if culture is not None else []),
         runs_read=runs is not None, status_read=status is not None,
     )
@@ -713,7 +715,8 @@ def _scorecard_html(entries, outside=()):
     # The tile above counts every pair in Production; the chip counts the rows listed here.
     # Say what the difference is rather than leave two numbers to disagree.
     outside_note = (f'<p class="sm mut cc-prod-note">Production {counts["production"]} lists the sports pairs; '
-                    f'{" and ".join(esc(x) for x in outside)} is also in Production through its own feed, '
+                    f'{" and ".join(esc(x) for x in outside)} {"is" if len(outside) == 1 else "are"} also in Production through '
+                    f'{"its" if len(outside) == 1 else "their"} own feed, '
                     f'which makes the {counts["production"] + len(outside)} in the tile above.</p>' if outside else "")
     chips = "".join(
         f'<button type="button" data-value="{key}" aria-pressed="{"true" if key == "all" else "false"}">'
