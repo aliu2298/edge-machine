@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-21T22:30:14.376915+00:00",
+ "last_run": "2026-10-21T23:00:14.466193+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -189,6 +189,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT21CHITOR-CHI114",
      "title": "Chicago over 113.5 points",
      "why": "CHI O+D- v TOR O+D+ \u00b7 115+ YES 0.51"
+    },
+    {
+     "game": "401909840",
+     "id": "R2:KXNBATEAMTOTAL-26OCT21DALHOU-DAL115",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O-D+",
+      "home": "O+D-",
+      "home_h1": "O+D-"
+     },
+     "logged": "2026-10-21T23:00:14.466193+00:00",
+     "match": "DAL @ HOU",
+     "price": 0.36,
+     "rule": "R2",
+     "side": "yes",
+     "start": "2026-10-22T00:30Z",
+     "status": "open",
+     "strike": 114.5,
+     "team": "DAL",
+     "ticker": "KXNBATEAMTOTAL-26OCT21DALHOU-DAL115",
+     "title": "Dallas over 114.5 points",
+     "why": "DAL O+D+ v HOU O+D- \u00b7 115+ YES 0.36"
     }
    ]
   },
@@ -265,6 +287,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT21MILWAS-MIL115",
      "title": "Milwaukee over 114.5 points",
      "why": "MIL O-D+ v WSH O-D+ \u00b7 115+ NO 0.42"
+    },
+    {
+     "game": "401909836",
+     "id": "R3:KXNBATEAMTOTAL-26OCT21CHABKN-CHA114",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O-D-",
+      "home": "O+D+",
+      "home_h1": "O+D+"
+     },
+     "logged": "2026-10-21T23:00:14.466193+00:00",
+     "match": "CHA @ BKN",
+     "price": 0.61,
+     "rule": "R3",
+     "side": "no",
+     "start": "2026-10-21T23:30Z",
+     "status": "open",
+     "strike": 113.5,
+     "team": "CHA",
+     "ticker": "KXNBATEAMTOTAL-26OCT21CHABKN-CHA114",
+     "title": "Charlotte over 113.5 points",
+     "why": "CHA O-D- v BKN O+D+ \u00b7 115+ NO 0.61"
     }
    ]
   },
@@ -461,6 +505,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT21CHITOR-CHI106",
      "title": "Chicago over 105.5 points",
      "why": "CHI O+D- v TOR O+D+ \u00b7 105+ YES 0.77"
+    },
+    {
+     "game": "401909840",
+     "id": "R6:KXNBATEAMTOTAL-26OCT21DALHOU-DAL105",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O-D+",
+      "home": "O+D-",
+      "home_h1": "O+D-"
+     },
+     "logged": "2026-10-21T23:00:14.466193+00:00",
+     "match": "DAL @ HOU",
+     "price": 0.71,
+     "rule": "R6",
+     "side": "yes",
+     "start": "2026-10-22T00:30Z",
+     "status": "open",
+     "strike": 104.5,
+     "team": "DAL",
+     "ticker": "KXNBATEAMTOTAL-26OCT21DALHOU-DAL105",
+     "title": "Dallas over 104.5 points",
+     "why": "DAL O+D+ v HOU O+D- \u00b7 105+ YES 0.71"
     }
    ]
   },
@@ -719,6 +785,11 @@
    "at": "2026-10-21T22:30:14.376915+00:00",
    "due": 7,
    "new": 2
+  },
+  {
+   "at": "2026-10-21T23:00:14.466193+00:00",
+   "due": 6,
+   "new": 3
   }
  ],
  "version": "nba-rules-v1"
