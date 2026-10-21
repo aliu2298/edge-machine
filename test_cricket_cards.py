@@ -307,8 +307,8 @@ def browser_checks():
             })""")
             ok(not state["overflow"] and state["sticky"] == "sticky" and state["card"] == "grid",
                "at 1280px the list has sticky day heads, the Production rule is one row, nothing scrolls sideways")
-            ok(not state["moreOpen"] and not state["sandboxOpen"] and not state["methodOpen"],
-               "the Rule details fold, the Sandbox fold and the method start closed")
+            ok(not state["moreOpen"] and not state["methodOpen"], "the Rule details fold and the method start closed")
+            ok(state["sandboxOpen"], "with one Production rule the Sandbox fold starts open (2026-10-21), its records shown")
             # Open the Sandbox fold if it is closed (it opens on load with at most one Production rule).
             if not page.locator("details.sp-sandbox").evaluate("e => e.open"):
                 page.locator("details.sp-sandbox > summary").click()
