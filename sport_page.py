@@ -36,6 +36,7 @@ NEXT_H = 24
 DONE_DAYS = 14
 EVIDENCE_FLOOR = T.READ_FLOOR      # "Evidence 4/30"
 SANDBOX_OPEN_MAX_PROD = 1             # the Sandbox fold opens on load with this many Production rules or fewer
+SANDBOX_OPEN_MAX_ROWS = 4             # ... and this many Sandbox rules or fewer, so Events stays on the first screen
 TOO_EARLY_N = B.EARLY_N            # under this many settled, a Sandbox row is too early
 # The verdicts a Sandbox row carries while it has too little to say. Phase 4
 # owns the vocabulary; this file only reads it.
@@ -485,11 +486,11 @@ def rules_html(sp, d, rows, now, ev_list):
         count = f'{len(sand)} rule{"s" if len(sand) != 1 else ""}'
         if n_early:
             count += f' · {n_early} too early to read'
-        # Open on load when the family has at most one Production rule (2026-10-21): with the
-        # Production list empty or a single row, a closed fold hid every record on the page
-        # (Culture and Finance Daily read as blank). A family with a fuller Production list keeps
-        # the Sandbox folded under it.
-        opened = " open" if len(prod) <= SANDBOX_OPEN_MAX_PROD else ""
+        # Open on load when the family has at most one Production rule and a short Sandbox list
+        # (2026-10-21): with the Production list empty or a single row, a closed fold hid every
+        # record on the page (Culture and Finance Daily read as blank). A longer Sandbox list stays
+        # folded so the Events heading keeps its place on the first screen (tennis, cricket).
+        opened = " open" if (len(prod) <= SANDBOX_OPEN_MAX_PROD and len(sand) <= SANDBOX_OPEN_MAX_ROWS) else ""
         sand_html = (f'<details class="fold sp-sandbox" id="sandbox"{opened}><summary><h3>Sandbox rules</h3>'
                      f'<span class="sm mut">· {esc(count)} · by evidence</span></summary>'
                      f'<div class="sp-rules-list" data-list="sandbox">{list_head(scoped)}{body}</div></details>')

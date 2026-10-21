@@ -250,10 +250,15 @@ print("\nthe Sandbox rows")
 fold = re.search(r'<details class="fold sp-sandbox" id="sandbox"(?: open)?><summary>(.*?)</summary>(.*)', rules, re.S)
 ok(fold is not None and "<h3>Sandbox rules</h3>" in fold.group(1), "the Sandbox rules are one fold")
 _np = sum(1 for r in rows if r.get("prod"))
-ok(('id="sandbox" open>' in rules) == (_np <= SP.SANDBOX_OPEN_MAX_PROD),
-   "it opens on load only when the family has at most one Production rule (2026-10-21)")
-ok('id="sandbox" open>' in _section(no_prod.split("<main", 1)[-1], "rules"),
-   "with no Production rule the Sandbox fold is open, so the records show without a click")
+_ns = sum(1 for r in rows if not r.get("prod"))
+ok(('id="sandbox" open>' in rules) == (_np <= SP.SANDBOX_OPEN_MAX_PROD and _ns <= SP.SANDBOX_OPEN_MAX_ROWS),
+   "it opens on load only with at most one Production rule and a short Sandbox list (2026-10-21)")
+_few = SP.rules_html(SP.spec(family="Soccer", rule_name=lambda r: r["name"]), d,
+                     [dict(r, prod=False) for r in rows[:SP.SANDBOX_OPEN_MAX_ROWS]], NOW, [])
+ok('id="sandbox" open>' in _few, "with no Production rule and a short list the Sandbox fold is open, records shown")
+_many = SP.rules_html(SP.spec(family="Soccer", rule_name=lambda r: r["name"]), d,
+                      [dict(r, prod=False) for r in rows[:SP.SANDBOX_OPEN_MAX_ROWS + 1]], NOW, [])
+ok('id="sandbox" open>' not in _many, "a longer list stays folded, so Events keeps its place on the first screen")
 sand = [r for r in rows if not r.get("prod")]
 n_early = sum(1 for r in sand if SP.is_early(r))
 ok(f"· {len(sand)} rules · {n_early} too early to read · by evidence" in fold.group(1), "the summary counts the rows and the too-early ones")
