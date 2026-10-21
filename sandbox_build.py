@@ -1750,7 +1750,7 @@ def load_fills(path=None):
 
 def _rule_tag(name):
     """A rule's id on the execution line, or "removed rule" for one off the board: its shares
-    can still be held at the broker (an exit is never sent for a removed rule), but the page
+    can still be held at the broker (an exit-only rule is still selling them), but the page
     does not name a rule it no longer shows (2026-10-20)."""
     import market_track as MT
     return "removed rule" if MT.rule_removed(name) else name
@@ -1777,12 +1777,13 @@ def _close_entry_on_board():
     return any(r.get("entry") == "close" and not MT.rule_removed(n) for n, r in MT.RULES.items())
 
 
-def trade_exec_html(fills):
+def trade_exec_html(fills, exiting=0):
     """The one-line Alpaca execution count, and its closed detail fold.
 
     The counts are the fill check's (market_exec.order_counts): every order sent, how many
     filled, how many finished with nothing filled, and how many are still working. Where two
-    rules hold the same stock the line tags each rule's share.
+    rules hold the same stock the line tags each rule's share. `exiting` is the open ledger
+    rows on the exit-only removed rules (market_track.exiting): the line counts them, unnamed.
     """
     orders = ((fills or {}).get("summary") or {}).get("orders")
     if not orders:
@@ -1794,6 +1795,8 @@ def trade_exec_html(fills):
             f'{int(orders.get("unfilled") or 0)} unfilled')
     if orders.get("working"):
         head += f' · {int(orders["working"])} waiting for the open'
+    if exiting:
+        head += f' · removed rule · exiting ({int(exiting)} open)'
     tags = _shared_tags(fills.get("held"))
     s = fills["summary"]
     held = fills.get("held") or []
@@ -2272,7 +2275,7 @@ def trading_page(now=None):
     trade_note = (f'<p class="sm trade-source">Run by {esc(TRADE_RUNNER)}. The table is each '
                   f'rule\'s <b>paper record</b> since its registration, every signal at the bar\'s '
                   f'open; it is not the Alpaca account.</p>'
-                  f'{trade_exec_html(load_fills())}')
+                  f'{trade_exec_html(load_fills(), MT.exiting(md))}')
     body = f"""<h1>Trading</h1>
 <p class="lede">Stock and ETF rules under test, judged per entry day. Paper only.</p>
 <div class="tiles">
