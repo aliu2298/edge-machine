@@ -20,6 +20,7 @@
 #   data/soccer_rules_window/**                        -> soccer-rules.yml (2026-10-17)
 #   data/soccer_team_rules_window/**                   -> soccer-team-rules.yml (2026-10-17)
 #   data/tennis_totals_window/**                       -> tennis-totals.yml (2026-10-21)
+#   data/nfl_tt_window/**                              -> nfl-tt.yml (2026-10-21)
 #
 # The stamp names the close and the read number, so git is the once-per-read guard: the
 # second 15-minute run inside a read finds nothing to commit, and every later run is a free
@@ -54,7 +55,7 @@ fi
 while IFS=$'\t' read -r path text; do
   [ -z "$path" ] && continue
   case "$path" in
-    data/crypto_window/request.txt|data/commodities_window/request.txt|data/daily_window/request.txt|data/ftts_window/request.txt|data/nba_window/request.txt|data/culture_window/request.txt|data/soccer_rules_window/request.txt|data/soccer_team_rules_window/request.txt|data/tennis_totals_window/request.txt) ;;
+    data/crypto_window/request.txt|data/commodities_window/request.txt|data/daily_window/request.txt|data/ftts_window/request.txt|data/nba_window/request.txt|data/culture_window/request.txt|data/soccer_rules_window/request.txt|data/soccer_team_rules_window/request.txt|data/tennis_totals_window/request.txt|data/nfl_tt_window/request.txt) ;;
     *) echo "$(stamp) refusing unexpected stamp path $path"; exit 1 ;;
   esac
   mkdir -p "$(dirname "$path")"
