@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-21T12:00:13.869697+00:00",
-   "last_success": "2026-10-21T12:00:13.869697+00:00",
+   "last_run": "2026-10-21T13:00:16.632936+00:00",
+   "last_success": "2026-10-21T13:00:16.632936+00:00",
    "observations": {
-    "at": "2026-10-21T12:00:13.869697+00:00",
+    "at": "2026-10-21T13:00:16.632936+00:00",
     "events": 854,
     "reasons": {
      "no quote or spread too wide": 44,
@@ -438,10 +438,10 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-21T12:00:13.869697+00:00",
-   "last_success": "2026-10-21T12:00:13.869697+00:00",
+   "last_run": "2026-10-21T13:00:16.632936+00:00",
+   "last_success": "2026-10-21T13:00:16.632936+00:00",
    "observations": {
-    "at": "2026-10-21T12:00:13.869697+00:00",
+    "at": "2026-10-21T13:00:16.632936+00:00",
     "events": 854,
     "reasons": {
      "no quote or spread too wide": 87,
@@ -718,16 +718,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-21T12:00:13.869697+00:00",
-   "last_success": "2026-10-21T12:00:13.869697+00:00",
+   "last_run": "2026-10-21T13:00:16.632936+00:00",
+   "last_success": "2026-10-21T13:00:16.632936+00:00",
    "observations": {
-    "at": "2026-10-21T12:00:13.869697+00:00",
+    "at": "2026-10-21T13:00:16.632936+00:00",
     "events": 854,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 32,
-     "edge 5c+": 11,
-     "edge under 5c": 3,
-     "no quote or spread too wide": 44
+     "edge 5c+": 17,
+     "edge under 5c": 2,
+     "no quote or spread too wide": 39
     }
    },
    "picks": [
@@ -1554,15 +1554,31 @@
      "side": "no",
      "status": "open",
      "title": "TDS / Trump Derangement Syndrome"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-10-26T14:00:00Z",
+     "detail": "P(said) 0.11 \u00b7 said on 2 of the last 84 days, 5.0 days left \u00b7 edge +0.32",
+     "edge": 0.3183,
+     "event": "KXTRUMPSAY-26OCT26",
+     "id": "KXTRUMPSAY-26OCT26-CRYP",
+     "logged": "2026-10-21T13:00:16.632936+00:00",
+     "model": 0.1144,
+     "name": "What will Trump say this week?",
+     "price": 0.55,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "Crypto / Bitcoin"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-21T12:00:13.869697+00:00",
-   "last_success": "2026-10-21T12:00:13.869697+00:00",
+   "last_run": "2026-10-21T13:00:16.632936+00:00",
+   "last_success": "2026-10-21T13:00:16.632936+00:00",
    "observations": {
-    "at": "2026-10-21T12:00:13.869697+00:00",
+    "at": "2026-10-21T13:00:16.632936+00:00",
     "events": 854,
     "reasons": {
      "edge 5c+": 6,
@@ -1855,7 +1871,7 @@
    "days": []
   },
   "Blockade": {
-   "at": "2026-10-21T06:00:16.696999+00:00",
+   "at": "2026-10-21T13:00:16.632936+00:00",
    "days": [
     "2026-08-03",
     "2026-08-04",
@@ -1897,14 +1913,14 @@
    ]
   },
   "Crypto / Bitcoin": {
-   "at": "2026-10-21T04:00:14.458332+00:00",
+   "at": "2026-10-21T13:00:16.632936+00:00",
    "days": [
     "2026-08-06",
     "2026-08-19"
    ]
   },
   "Cuba / Cuban": {
-   "at": "2026-10-21T06:00:16.696999+00:00",
+   "at": "2026-10-21T13:00:16.632936+00:00",
    "days": [
     "2026-07-29",
     "2026-08-10",
@@ -1915,7 +1931,7 @@
    ]
   },
   "Cybersecurity / Cyber Security": {
-   "at": "2026-10-21T07:00:14.003770+00:00",
+   "at": "2026-10-21T13:00:16.632936+00:00",
    "days": []
   },
   "Deere": {
@@ -1927,7 +1943,7 @@
    "days": []
   },
   "Ethanol": {
-   "at": "2026-10-21T00:08:23.699982+00:00",
+   "at": "2026-10-21T13:00:16.632936+00:00",
    "days": [
     "2026-09-18",
     "2026-09-21",
