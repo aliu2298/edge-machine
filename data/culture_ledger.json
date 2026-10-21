@@ -2,16 +2,16 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-21T01:00:15.426386+00:00",
-   "last_success": "2026-10-21T01:00:15.426386+00:00",
+   "last_run": "2026-10-21T01:13:51.136908+00:00",
+   "last_success": "2026-10-21T01:13:51.136908+00:00",
    "observations": {
-    "at": "2026-10-21T01:00:15.426386+00:00",
+    "at": "2026-10-21T01:13:51.136908+00:00",
     "events": 858,
     "reasons": {
-     "in band": 3,
-     "no quote or spread too wide": 62,
+     "in band": 2,
+     "no quote or spread too wide": 64,
      "not active": 711,
-     "outside the band": 6,
+     "outside the band": 5,
      "outside the entry window": 11056
     }
    },
@@ -436,16 +436,15 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-21T01:00:15.426386+00:00",
-   "last_success": "2026-10-21T01:00:15.426386+00:00",
+   "last_run": "2026-10-21T01:13:51.136908+00:00",
+   "last_success": "2026-10-21T01:13:51.136908+00:00",
    "observations": {
-    "at": "2026-10-21T01:00:15.426386+00:00",
+    "at": "2026-10-21T01:13:51.136908+00:00",
     "events": 858,
     "reasons": {
-     "in band": 1,
-     "no quote or spread too wide": 111,
+     "no quote or spread too wide": 115,
      "not active": 711,
-     "outside the band": 32,
+     "outside the band": 29,
      "outside the entry window": 10983
     }
    },
@@ -714,16 +713,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-21T01:00:15.426386+00:00",
-   "last_success": "2026-10-21T01:00:15.426386+00:00",
+   "last_run": "2026-10-21T01:13:51.136908+00:00",
+   "last_success": "2026-10-21T01:13:51.136908+00:00",
    "observations": {
-    "at": "2026-10-21T01:00:15.426386+00:00",
+    "at": "2026-10-21T01:13:51.136908+00:00",
     "events": 858,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 34,
-     "edge 5c+": 14,
+     "edge 5c+": 17,
      "edge under 5c": 3,
-     "no quote or spread too wide": 39
+     "no quote or spread too wide": 36
     }
    },
    "picks": [
@@ -1518,15 +1517,31 @@
      "side": "no",
      "status": "open",
      "title": "Verizon"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-10-26T14:00:00Z",
+     "detail": "P(said) 0.24 \u00b7 said on 4 of the last 84 days, 5.5 days left \u00b7 edge +0.13",
+     "edge": 0.127,
+     "event": "KXTRUMPSAY-26OCT26",
+     "id": "KXTRUMPSAY-26OCT26-RANK",
+     "logged": "2026-10-21T01:13:51.136908+00:00",
+     "model": 0.2366,
+     "name": "What will Trump say this week?",
+     "price": 0.62,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "Ranked Choice / Ranked-Choice"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-21T01:00:15.426386+00:00",
-   "last_success": "2026-10-21T01:00:15.426386+00:00",
+   "last_run": "2026-10-21T01:13:51.136908+00:00",
+   "last_success": "2026-10-21T01:13:51.136908+00:00",
    "observations": {
-    "at": "2026-10-21T01:00:15.426386+00:00",
+    "at": "2026-10-21T01:13:51.136908+00:00",
     "events": 858,
     "reasons": {
      "edge 5c+": 6,
@@ -1850,7 +1865,7 @@
    ]
   },
   "Ceasefire": {
-   "at": "2026-10-20T17:32:11.140646+00:00",
+   "at": "2026-10-21T01:13:51.136908+00:00",
    "days": [
     "2026-09-22"
    ]
@@ -1985,7 +2000,7 @@
    ]
   },
   "Peace in the Middle East": {
-   "at": "2026-10-20T19:00:16.179838+00:00",
+   "at": "2026-10-21T01:13:51.136908+00:00",
    "days": []
   },
   "Pelosi": {
@@ -2006,7 +2021,7 @@
    "days": []
   },
   "Ranked Choice / Ranked-Choice": {
-   "at": "2026-10-20T03:00:15.009599+00:00",
+   "at": "2026-10-21T01:13:51.136908+00:00",
    "days": [
     "2026-09-02",
     "2026-10-13",
