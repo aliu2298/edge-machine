@@ -25,10 +25,18 @@ jobs:
         with:
           python-version: '3.12'
       - name: Tests
-        run: python3 test_daily_research.py
+        run: |
+          python3 test_daily_research.py
+          python3 test_finance_nc.py
       - name: Public market observations and paper settlement
         id: collect
         run: python3 daily_track.py
+      # finance_spx_nc_no (2026-10-20): the S&P near-certain NO paper lane, its own ledger,
+      # read in the same 16:00 ET window. A failure here never blocks saving the other records.
+      - name: S&P near-certain NO paper lane
+        if: ${{ !cancelled() && (steps.collect.outcome == 'success' || steps.collect.outcome == 'failure') }}
+        continue-on-error: true
+        run: python3 finance_nc.py
       - name: Publish Econ Daily Production feed
         if: ${{ !cancelled() && (steps.collect.outcome == 'success' || steps.collect.outcome == 'failure') }}
         run: python3 daily_production.py
@@ -40,6 +48,10 @@ jobs:
           git config user.name "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
           git add data/daily_ledger.json data/econ_production_leads.json
+          if [ -f data/finance_nc_ledger.json ]; then
+            python3 -c 'import json; json.load(open("data/finance_nc_ledger.json"))'
+            git add data/finance_nc_ledger.json
+          fi
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Daily paper research observations"
           for attempt in 1 2 3; do
