@@ -400,7 +400,8 @@ RULES = {
 }
 # Taken off every page 2026-10-04, the same way a removed Sandbox lane is.
 # Five were retired by choice and three by the rule (50 closed trades, behind
-# SPY). A removed rule does not log, grade, or render. The ledger keeps every
+# SPY). A removed rule does not log, grade, or render (the four of 2026-10-20 still grade
+# and exit the trades they already had: EXIT_ONLY_RULES below). The ledger keeps every
 # trade it already has. A rule with no trades that is not in this set still
 # renders: emptiness is not removal.
 REMOVED_RULES = frozenset({
@@ -423,6 +424,33 @@ REMOVED_RULES = frozenset({
 def rule_removed(name):
     """True when this trading rule is off the board. Its rows stay in the ledger."""
     return name in REMOVED_RULES
+
+
+# EXIT-ONLY (2026-10-20). The four rules removed that day still had trades open in the ledger
+# and shares held at the Alpaca PAPER account, which began executing on 2026-10-10. Removing a
+# rule must not strand them, so these four keep GRADING the rows they already have, on their
+# own registered exit, and market_exec keeps sending the matching sells. They never scan, log
+# or send a new entry, and they stay off every page. Once a rule here has no open row and no
+# paper shares it is fully dormant. The eight removed 2026-10-04 are NOT in this set: they were
+# never traded at Alpaca and their open rows stay exactly as they are.
+EXIT_ONLY_RULES = frozenset({
+    "sw_gap_down_reversal",
+    "etf_ibs_band",
+    "etf_tom",
+    "etf_overnight",
+})
+
+
+def rule_exit_only(name):
+    """True for a removed rule that still grades and exits the trades it already has."""
+    return name in EXIT_ONLY_RULES and name in REMOVED_RULES
+
+
+def exiting(d):
+    """Open ledger rows on the exit-only rules: what they still have to leave."""
+    return sum(1 for t in d.get("trades", [])
+               if t.get("status") == "open" and rule_exit_only(t.get("rule"))
+               and not t.get("research"))
 
 
 # A retired rule is not scanned. REMOVED_RULES is what the pages and the
@@ -728,12 +756,18 @@ def scan(bars_by_symbol, d, now=None, rules=None, research_before=None):
 
 
 def grade(bars_by_symbol, d, rules=None):
-    """Close every open trade whose exit has happened. Returns the count closed."""
+    """Close every open trade whose exit has happened. Returns the count closed.
+
+    A removed rule's trades are left as they are, except the exit-only rules' (EXIT_ONLY_RULES):
+    those still close on their own registered exit.
+    """
     rules = rules or RULES
     bench = {_day(b): b for b in bars_by_symbol.get(BENCH, [])}
     closed = 0
     for t in d["trades"]:
-        if t["status"] != "open" or rule_removed(t.get("rule")):
+        if t["status"] != "open":
+            continue
+        if rule_removed(t.get("rule")) and not rule_exit_only(t.get("rule")):
             continue
         bars = bars_by_symbol.get(t["symbol"]) or []
         idx = next((i for i, b in enumerate(bars) if _day(b) == t["entry_day"]), None)
