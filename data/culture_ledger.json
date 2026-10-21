@@ -2,16 +2,16 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-21T19:38:58.613788+00:00",
-   "last_success": "2026-10-21T19:38:58.613788+00:00",
+   "last_run": "2026-10-21T20:00:16.180354+00:00",
+   "last_success": "2026-10-21T20:00:16.180354+00:00",
    "observations": {
-    "at": "2026-10-21T19:38:58.613788+00:00",
-    "events": 868,
+    "at": "2026-10-21T20:00:16.180354+00:00",
+    "events": 867,
     "reasons": {
      "no quote or spread too wide": 67,
-     "not active": 700,
+     "not active": 702,
      "outside the band": 6,
-     "outside the entry window": 11193
+     "outside the entry window": 11165
     }
    },
    "picks": [
@@ -438,16 +438,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-21T19:38:58.613788+00:00",
-   "last_success": "2026-10-21T19:38:58.613788+00:00",
+   "last_run": "2026-10-21T20:00:16.180354+00:00",
+   "last_success": "2026-10-21T20:00:16.180354+00:00",
    "observations": {
-    "at": "2026-10-21T19:38:58.613788+00:00",
-    "events": 868,
+    "at": "2026-10-21T20:00:16.180354+00:00",
+    "events": 867,
     "reasons": {
-     "no quote or spread too wide": 157,
-     "not active": 700,
-     "outside the band": 6,
-     "outside the entry window": 11103
+     "no quote or spread too wide": 135,
+     "not active": 702,
+     "outside the band": 28,
+     "outside the entry window": 11075
     }
    },
    "picks": [
@@ -718,16 +718,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-21T19:38:58.613788+00:00",
-   "last_success": "2026-10-21T19:38:58.613788+00:00",
+   "last_run": "2026-10-21T20:00:16.180354+00:00",
+   "last_success": "2026-10-21T20:00:16.180354+00:00",
    "observations": {
-    "at": "2026-10-21T19:38:58.613788+00:00",
-    "events": 868,
+    "at": "2026-10-21T20:00:16.180354+00:00",
+    "events": 867,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 29,
      "edge 5c+": 14,
-     "edge under 5c": 1,
-     "no quote or spread too wide": 42
+     "edge under 5c": 2,
+     "no quote or spread too wide": 41
     }
    },
    "picks": [
@@ -1607,14 +1607,13 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-21T19:38:58.613788+00:00",
-   "last_success": "2026-10-21T19:38:58.613788+00:00",
+   "last_run": "2026-10-21T20:00:16.180354+00:00",
+   "last_success": "2026-10-21T20:00:16.180354+00:00",
    "observations": {
-    "at": "2026-10-21T19:38:58.613788+00:00",
-    "events": 868,
+    "at": "2026-10-21T20:00:16.180354+00:00",
+    "events": 867,
     "reasons": {
-     "edge 5c+": 6,
-     "edge under 5c": 1,
+     "edge 5c+": 7,
      "under 20 reviews counted": 14
     }
    },
@@ -1880,7 +1879,7 @@
    ]
   },
   "Autopen / Auto Pen": {
-   "at": "2026-10-21T14:00:14.703246+00:00",
+   "at": "2026-10-21T20:00:16.180354+00:00",
    "days": [
     "2026-07-29",
     "2026-08-11",
@@ -2092,7 +2091,7 @@
    ]
   },
   "Peace in the Middle East": {
-   "at": "2026-10-21T14:00:14.703246+00:00",
+   "at": "2026-10-21T20:00:16.180354+00:00",
    "days": []
   },
   "Pelosi": {
@@ -2198,7 +2197,7 @@
    "days": []
   },
   "Uranium": {
-   "at": "2026-10-20T20:00:15.270408+00:00",
+   "at": "2026-10-21T20:00:16.180354+00:00",
    "days": []
   },
   "Verizon": {
@@ -2213,7 +2212,7 @@
    ]
   },
   "Zacharia": {
-   "at": "2026-10-21T14:00:14.703246+00:00",
+   "at": "2026-10-21T20:00:16.180354+00:00",
    "days": []
   },
   "Zohran / Mamdani": {
