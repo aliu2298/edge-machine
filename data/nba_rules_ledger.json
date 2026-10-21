@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-21T22:02:26.076357+00:00",
+ "last_run": "2026-10-21T22:30:14.376915+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -269,7 +269,52 @@
    ]
   },
   "R4": {
-   "picks": []
+   "picks": [
+    {
+     "game": "401909838",
+     "id": "R4:KXNBATEAMTOTAL-26OCT21UTAMEM-MEM104",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O+D+",
+      "home": "O-D-",
+      "home_h1": "O+D-"
+     },
+     "logged": "2026-10-21T22:30:14.376915+00:00",
+     "match": "UTAH @ MEM",
+     "price": 0.06,
+     "rule": "R4",
+     "side": "no",
+     "start": "2026-10-22T00:00Z",
+     "status": "open",
+     "strike": 103.5,
+     "team": "MEM",
+     "ticker": "KXNBATEAMTOTAL-26OCT21UTAMEM-MEM104",
+     "title": "Memphis over 103.5 points",
+     "why": "MEM O-D- v UTAH O-D- \u00b7 cheapest NO 0.06 at 103.5"
+    },
+    {
+     "game": "401909838",
+     "id": "R4:KXNBATEAMTOTAL-26OCT21UTAMEM-UTA103",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O+D+",
+      "home": "O-D-",
+      "home_h1": "O+D-"
+     },
+     "logged": "2026-10-21T22:30:14.376915+00:00",
+     "match": "UTAH @ MEM",
+     "price": 0.07,
+     "rule": "R4",
+     "side": "no",
+     "start": "2026-10-22T00:00Z",
+     "status": "open",
+     "strike": 102.5,
+     "team": "UTAH",
+     "ticker": "KXNBATEAMTOTAL-26OCT21UTAMEM-UTA103",
+     "title": "Utah over 102.5 points",
+     "why": "UTAH O-D- v MEM O-D- \u00b7 cheapest NO 0.07 at 102.5"
+    }
+   ]
   },
   "R5": {
    "picks": []
@@ -669,6 +714,11 @@
    "at": "2026-10-21T22:02:26.076357+00:00",
    "due": 5,
    "new": 0
+  },
+  {
+   "at": "2026-10-21T22:30:14.376915+00:00",
+   "due": 7,
+   "new": 2
   }
  ],
  "version": "nba-rules-v1"
