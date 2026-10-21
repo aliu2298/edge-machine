@@ -4230,7 +4230,7 @@ ELIMINATED = {
 # z read +10.40 where the honest figure on one-day-one-result is +0.24. Any nested ladder
 # belongs here, and cluster_stats in sandbox_track now refuses to produce a z for a record
 # that is mostly such clusters rather than quietly returning one.
-DAY_CLUSTERED = ("commodities", "crypto", "crypto_fav", "commodities_fav", "soccer_corners")
+DAY_CLUSTERED = ("commodities", "crypto", "crypto_fav", "commodities_fav", "soccer_corners", "culture_mentions")
 
 
 def market_day(q):
@@ -4257,6 +4257,11 @@ def market_day(q):
         # Every total- and team-corner rung of one match is one result (per MATCH, not per day).
         code = (str(q.get("market_id") or "").split("-") + ["", ""])[1]
         return f"CORNERS|{code}"
+    if q.get("sport") == "culture_mentions":
+        # Every word of one "What will Trump say" event is one result (2026-10-20, with
+        # mentions_rate in Production): the words share one week's speeches, are not exclusive
+        # (he can say all of them), and the Oct 19 event's eight NOs priced to more than 1.
+        return f"MENTIONS|{q.get('event') or str(q.get('market_id') or '').rsplit('-', 1)[0]}"
     fam = "KXAAAGASD" if series.startswith("KXAAAGASD") else series
     return f"{fam}|{str(q.get('date') or '').replace('-', '')}"
 

@@ -235,7 +235,8 @@ def inputs(runs=False, opener=None):
     """Everything the model reads beside the ledger, the stages and the feed."""
     return dict(nba=_read_json(NBA_PATH), market=_read_json(MARKET_PATH),
                 closes=closes_updated(), runs=fetch_runs(opener) if runs else None,
-                status=_read_json(STATUS_PATH), daily=_read_json(os.path.join(ROOT, 'data', 'daily_ledger.json')))
+                status=_read_json(STATUS_PATH), daily=_read_json(os.path.join(ROOT, 'data', 'daily_ledger.json')),
+                culture=_read_json(os.path.join(ROOT, 'data', 'culture_ledger.json')))
 
 
 def current_status(status, d):
@@ -532,7 +533,7 @@ def _age_text(hours):
     return f"{int(hours)}h"
 
 
-def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, status=None, daily=None):
+def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, status=None, daily=None, culture=None):
     """The Control Center as data. Pure: everything it reads is an argument.
 
     `status` is data/status.json as read (inputs()); it is used only when it
@@ -580,19 +581,23 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
     if daily is not None:
         import daily_production
         live_d, live_st, live_blob = daily_production.page_inputs(d, st, blob, daily, now=now)
+    if culture is not None:
+        import culture_production
+        live_d, live_st, live_blob = culture_production.page_inputs(live_d, live_st, live_blob, culture, now=now)
     live = shell_build._running_body(live_d, live_st, live_blob, now)
     n_open, n_settled, n_won = live["roll_counts"]
     scorecard = scorecard_rows(pair_rows)
     healthy = sum(1 for a in areas if a["status"] == "healthy")
     return dict(
         now=now,
-        tiles=dict(pairs=len(pairs)+(1 if daily is not None else 0), open=sum(1 for q in rows if q.get("status") == "open")
+        tiles=dict(pairs=len(pairs)+(1 if daily is not None else 0)+(1 if culture is not None else 0), open=sum(1 for q in rows if q.get("status") == "open")
                    + sum(a['open'] for a in areas if a['key'] in ('econ_daily','finance_daily')),
                    landed=(n_won, n_settled), healthy=(healthy, len(areas)), attention=len(attention)),
         areas=areas, attention=attention, live=live, scorecard=scorecard,
         # Production outside the scorecard's pair rows: Econ Daily's favourite band publishes
         # through its own feed (daily_production), so it is in the tile's count and not a row.
-        prod_outside=(["Econ Daily favourite band"] if daily is not None else []),
+        prod_outside=(["Econ Daily favourite band"] if daily is not None else [])
+                     + (["Trump mentions"] if culture is not None else []),
         runs_read=runs is not None, status_read=status is not None,
     )
 
@@ -746,7 +751,7 @@ def _attention_html(items):
 
 
 def page(now, d=None, st=None, blob=None, nba=None, market=None, closes=None, runs=None, extra=None,
-         status=None, daily=None):
+         status=None, daily=None, culture=None):
     """public_site/index.html. `extra` is the dict `inputs()` returns, for the tracker build."""
     when = shell_build._now(now)
     d, st, blob = shell_build._load(d, st, blob)
@@ -757,7 +762,9 @@ def page(now, d=None, st=None, blob=None, nba=None, market=None, closes=None, ru
         runs = extra.get("runs") if runs is None else runs
         status = extra.get("status") if status is None else status
         daily = extra.get("daily") if daily is None else daily
-    m = model(d, st, blob, when, nba=nba, market=market, closes=closes, runs=runs, status=status, daily=daily)
+        culture = extra.get("culture") if culture is None else culture
+    m = model(d, st, blob, when, nba=nba, market=market, closes=closes, runs=runs, status=status, daily=daily,
+              culture=culture)
     tiles = m["tiles"]
     n_won, n_settled = tiles["landed"]
     healthy, total = tiles["healthy"]

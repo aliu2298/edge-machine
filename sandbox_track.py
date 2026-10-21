@@ -3278,6 +3278,10 @@ TRADEABLE_VENUES = ("polymarket_us", "kalshi", "kalshi_binary", "combo")
 # refuses the bet — a T20 can begin well after the listed time, and a wrong start
 # is worse than no start. Polymarket US carries its own.
 ROUTED_SPORTS = ("tennis", "mlb", "nfl", "mma", "boxing", "cricket")
+# A Kalshi "What will Trump say" contract (2026-10-20, with mentions_rate|culture_mentions, published
+# by culture_production.py): YES that he says the word before the close, or its NO. The lead names
+# the exact contract; its close is a deadline the venue can bring forward (it closes on the word).
+MENTION_SPORTS = ("culture_mentions",)
 # start_source values that mean a real start time, not the venue's estimate.
 # kalshi_milestone is cricket and MMA only, each after its own checker agrees.
 VERIFIED_STARTS = ("tennisexplorer", "espn", "mlb", "kalshi_milestone")
@@ -3435,6 +3439,10 @@ def placeable(q):
             and q.get("price") and 0 < float(q["price"]) < 1
             and all(l.get("venue") == "kalshi" and l.get("market_id") and l.get("pick") in ("a", "b")
                     and l.get("name") for l in legs))
+    if q.get("sport") in MENTION_SPORTS:
+        return (q.get("pick") in ("a", "b") and q.get("venue") == "kalshi_binary"
+                and str(q.get("market_id") or "").startswith("KXTRUMPSAY")
+                and q.get("price") is not None and 0 < float(q["price"]) < 1)
     if q.get("sport") in ROUTED_SPORTS:
         # A contest with no league table to look a fixture up in: the lead carries the market
         # it was priced on and which outcome to back. Polymarket US lists a match as ONE

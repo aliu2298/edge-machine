@@ -27,19 +27,21 @@ jobs:
         run: python3 test_culture.py
       - name: Culture markets, Rotten Tomatoes snapshots and paper settlement
         run: python3 culture_track.py
+      - name: Trump mentions Production feed (mentions_rate, 2026-10-20)
+        run: python3 culture_production.py
       - name: Save records
         run: |
           set -euo pipefail
-          python3 -c 'import json; json.load(open("data/culture_ledger.json")); json.load(open("data/rt_snapshots.json"))'
+          python3 -c 'import json; json.load(open("data/culture_ledger.json")); json.load(open("data/rt_snapshots.json")); json.load(open("data/culture_production_leads.json"))'
           git config user.name "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
-          git add data/culture_ledger.json data/rt_snapshots.json
+          git add data/culture_ledger.json data/rt_snapshots.json data/culture_production_leads.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Culture paper research observations"
           for attempt in 1 2 3; do
             if git push origin HEAD:main; then exit 0; fi
             git fetch origin main
-            # Only this workflow owns these two files.
+            # Only this workflow owns these three files.
             git rebase origin/main
           done
           exit 1

@@ -76,7 +76,9 @@ def build(state=None, now=None):
     def method(_d, _rows, _now):
         inner = ('<p class="sm">Four observation lanes on Kalshi culture markets, registered 2026-10-16 to '
                  'watch, not to trade. Paper entries at the ask with Kalshi\'s 7% fee, settled on Kalshi\'s '
-                 'own result. Nothing here is in Production.</p>'
+                 'own result. Trump mentions has been in Production since 2026-10-20, moved by hand; its '
+                 'full record stays here and the Production page counts it from that day. The other three '
+                 'lanes are paper only.</p>'
                  '<p class="sm">Measured before the build on 4,558 settled culture markets (Aug 11 – Oct 16): '
                  '24h before the close about 70% sit under 5c or over 95c, so the favourite band held 8 events '
                  'in two months (7-1, z +0.94) and the 90-97c end 57 (98.2% won, z +1.20). Kalshi closes a '
@@ -94,6 +96,18 @@ def build(state=None, now=None):
                    definition=definition, recent=recent, method=method, scoped=False,
                    unit=lambda r: "contract", pooled=lambda _rows: pooled(state))
     html = SP.page(spec, {"quotes": [], "coverage": {}}, {"pairs": {}}, now, rows=rows)
+    import culture_production as CP
+    # The Production chip goes inside the mentions row's own block (every row's badge is the
+    # same string, and the page sorts rows by evidence, so a first-match replace could miss).
+    start = html.find(f'<details class="sp-rule')
+    mine = html.find(f'data-source="{CP.SOURCE}"', start)
+    if mine != -1:
+        head = html.rfind('<details class="sp-rule', 0, mine)
+        end = html.find("</details>", mine)
+        block = html[head:end]
+        for row in rows:
+            block = block.replace(SP.verdict_badge(row), '<span class="sig w">Production · since 2026-10-20</span>')
+        html = html[:head] + block + html[end:]
     for row in rows:
         html = html.replace(SP.verdict_badge(row), '<span class="sig w">Observing · paper</span>')
     return html
