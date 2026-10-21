@@ -2,17 +2,17 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-20T23:00:15.594218+00:00",
-   "last_success": "2026-10-20T23:00:15.594218+00:00",
+   "last_run": "2026-10-21T00:00:13.992375+00:00",
+   "last_success": "2026-10-21T00:00:13.992375+00:00",
    "observations": {
-    "at": "2026-10-20T23:00:15.594218+00:00",
-    "events": 849,
+    "at": "2026-10-21T00:00:13.992375+00:00",
+    "events": 850,
     "reasons": {
-     "in band": 3,
-     "no quote or spread too wide": 63,
-     "not active": 696,
-     "outside the band": 5,
-     "outside the entry window": 10990
+     "in band": 4,
+     "no quote or spread too wide": 64,
+     "not active": 711,
+     "outside the band": 3,
+     "outside the entry window": 10976
     }
    },
    "picks": [
@@ -436,16 +436,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-20T23:00:15.594218+00:00",
-   "last_success": "2026-10-20T23:00:15.594218+00:00",
+   "last_run": "2026-10-21T00:00:13.992375+00:00",
+   "last_success": "2026-10-21T00:00:13.992375+00:00",
    "observations": {
-    "at": "2026-10-20T23:00:15.594218+00:00",
-    "events": 849,
+    "at": "2026-10-21T00:00:13.992375+00:00",
+    "events": 850,
     "reasons": {
-     "no quote or spread too wide": 109,
-     "not active": 696,
-     "outside the band": 35,
-     "outside the entry window": 10917
+     "no quote or spread too wide": 115,
+     "not active": 711,
+     "outside the band": 29,
+     "outside the entry window": 10903
     }
    },
    "picks": [
@@ -713,16 +713,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-20T23:00:15.594218+00:00",
-   "last_success": "2026-10-20T23:00:15.594218+00:00",
+   "last_run": "2026-10-21T00:00:13.992375+00:00",
+   "last_success": "2026-10-21T00:00:13.992375+00:00",
    "observations": {
-    "at": "2026-10-20T23:00:15.594218+00:00",
-    "events": 849,
+    "at": "2026-10-21T00:00:13.992375+00:00",
+    "events": 850,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 34,
-     "edge 5c+": 16,
-     "edge under 5c": 3,
-     "no quote or spread too wide": 37
+     "edge 5c+": 14,
+     "edge under 5c": 2,
+     "no quote or spread too wide": 40
     }
    },
    "picks": [
@@ -1522,14 +1522,14 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-20T23:00:15.594218+00:00",
-   "last_success": "2026-10-20T23:00:15.594218+00:00",
+   "last_run": "2026-10-21T00:00:13.992375+00:00",
+   "last_success": "2026-10-21T00:00:13.992375+00:00",
    "observations": {
-    "at": "2026-10-20T23:00:15.594218+00:00",
-    "events": 849,
+    "at": "2026-10-21T00:00:13.992375+00:00",
+    "events": 850,
     "reasons": {
-     "edge 5c+": 5,
-     "under 20 reviews counted": 16
+     "edge 5c+": 6,
+     "under 20 reviews counted": 15
     }
    },
    "picks": [
@@ -1697,6 +1697,23 @@
      "side": "yes",
      "status": "open",
      "title": "Above 90"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-26T14:00:00Z",
+     "detail": "5/20 liked (25), ~22 more reviews \u00b7 P(above 25) 0.54 \u00b7 edge +0.09",
+     "edge": 0.0879,
+     "event": "KXRT-KLA",
+     "id": "KXRT-KLA-25",
+     "logged": "2026-10-21T00:00:13.992375+00:00",
+     "model": 0.536,
+     "name": "Klara and the Sun \u00b7 Rotten Tomatoes score",
+     "price": 0.36,
+     "rt_url": "https://www.rottentomatoes.com/m/klara_and_the_sun",
+     "series": "KXRT",
+     "side": "no",
+     "status": "open",
+     "title": "Above 25"
     }
    ]
   }
@@ -1802,9 +1819,8 @@
    "days": []
   },
   "Blockade": {
-   "at": "2026-10-20T17:32:11.140646+00:00",
+   "at": "2026-10-21T00:00:13.992375+00:00",
    "days": [
-    "2026-07-28",
     "2026-08-03",
     "2026-08-04",
     "2026-08-06",
@@ -1852,7 +1868,7 @@
    ]
   },
   "Cuba / Cuban": {
-   "at": "2026-10-20T12:14:26.052088+00:00",
+   "at": "2026-10-21T00:00:13.992375+00:00",
    "days": [
     "2026-07-29",
     "2026-08-10",
