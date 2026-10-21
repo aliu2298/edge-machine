@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-21T01:00:14+00:00",
+ "board_built_at": "2026-10-21T01:30:14+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -301,7 +301,7 @@
    "kickoff": "2026-10-21T03:59Z",
    "lane": "production",
    "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T01:00:14+00:00",
+   "last_seen_at": "2026-10-21T01:30:14+00:00",
    "league": "Econ Daily",
    "match": "Georgia gas price",
    "pair": "econ_daily_fav_band|econ_daily",
@@ -323,6 +323,43 @@
    "sport": "econ_daily",
    "status": "pending"
   },
+  "2026-10-21|KXAAAGASDID-26OCT21-4.7700|Above 4.7700 at the close \u00b7 Econ Daily favourite band": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-10-21",
+   "edge_at_log": null,
+   "first_seen": "2026-10-21",
+   "headline": "Above 4.7700 at the close",
+   "home": null,
+   "id": "2026-10-21|KXAAAGASDID-26OCT21-4.7700|Above 4.7700 at the close \u00b7 Econ Daily favourite band",
+   "kickoff": "2026-10-21T03:59Z",
+   "lane": "production",
+   "last_seen": "2026-10-21",
+   "last_seen_at": "2026-10-21T01:30:14+00:00",
+   "league": "Econ Daily",
+   "match": "Idaho gas price",
+   "pair": "econ_daily_fav_band|econ_daily",
+   "price_at_log": 0.77,
+   "published_at": "2026-10-21T01:30:14+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 148,
+   "route": {
+    "claim": "Above 4.7700 at the close",
+    "event": "KXAAAGASDID-26OCT21",
+    "market": "KXAAAGASDID-26OCT21-4.7700",
+    "outcome": "Above 4.7700",
+    "outcome_side": "yes",
+    "price_at_log": 0.77,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "econ_daily_fav_band:KXAAAGASDID-26OCT21-4.7700",
+   "source": "econ_daily_fav_band",
+   "sport": "econ_daily",
+   "status": "pending"
+  },
   "2026-10-21|KXAAAGASDMT-26OCT21-4.4500|Above 4.4500 at the close \u00b7 Econ Daily favourite band": {
    "away": null,
    "bet": {
@@ -338,7 +375,7 @@
    "kickoff": "2026-10-21T03:59Z",
    "lane": "production",
    "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T01:00:14+00:00",
+   "last_seen_at": "2026-10-21T01:30:14+00:00",
    "league": "Econ Daily",
    "match": "Montana gas price",
    "pair": "econ_daily_fav_band|econ_daily",
@@ -375,7 +412,7 @@
    "kickoff": "2026-10-21T03:59Z",
    "lane": "production",
    "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T01:00:14+00:00",
+   "last_seen_at": "2026-10-21T01:30:14+00:00",
    "league": "Econ Daily",
    "match": "Nebraska gas price",
    "pair": "econ_daily_fav_band|econ_daily",
@@ -412,7 +449,7 @@
    "kickoff": "2026-10-21T03:59Z",
    "lane": "production",
    "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T01:00:14+00:00",
+   "last_seen_at": "2026-10-21T01:30:14+00:00",
    "league": "Econ Daily",
    "match": "New Hampshire gas price",
    "pair": "econ_daily_fav_band|econ_daily",
@@ -449,7 +486,7 @@
    "kickoff": "2026-10-21T03:59Z",
    "lane": "production",
    "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T01:00:14+00:00",
+   "last_seen_at": "2026-10-21T01:30:14+00:00",
    "league": "Econ Daily",
    "match": "South Dakota gas price",
    "pair": "econ_daily_fav_band|econ_daily",
@@ -470,6 +507,43 @@
    "source": "econ_daily_fav_band",
    "sport": "econ_daily",
    "status": "pending"
+  },
+  "2026-10-21|KXAAAGASDWY-26OCT21-4.4550|Above 4.4550 at the close \u00b7 Econ Daily favourite band": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-10-21",
+   "edge_at_log": null,
+   "first_seen": "2026-10-21",
+   "headline": "Above 4.4550 at the close",
+   "home": null,
+   "id": "2026-10-21|KXAAAGASDWY-26OCT21-4.4550|Above 4.4550 at the close \u00b7 Econ Daily favourite band",
+   "kickoff": "2026-10-21T03:59Z",
+   "lane": "production",
+   "last_seen": "2026-10-21",
+   "last_seen_at": "2026-10-21T01:30:14+00:00",
+   "league": "Econ Daily",
+   "match": "Wyoming gas price",
+   "pair": "econ_daily_fav_band|econ_daily",
+   "price_at_log": 0.7,
+   "published_at": "2026-10-21T01:30:14+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 148,
+   "route": {
+    "claim": "Above 4.4550 at the close",
+    "event": "KXAAAGASDWY-26OCT21",
+    "market": "KXAAAGASDWY-26OCT21-4.4550",
+    "outcome": "Above 4.4550",
+    "outcome_side": "yes",
+    "price_at_log": 0.7,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "econ_daily_fav_band:KXAAAGASDWY-26OCT21-4.4550",
+   "source": "econ_daily_fav_band",
+   "sport": "econ_daily",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -480,9 +554,9 @@
    "ready_at": "2026-10-15T03:48:37+00:00",
    "route": "moved by hand on 2026-10-14",
    "routing": {
-    "leads": 13,
+    "leads": 15,
     "problem": null,
-    "routed": 13,
+    "routed": 15,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -494,7 +568,7 @@
    "sandbox_roi_fee": -0.0029,
    "timing": {
     "late": [],
-    "timed": 5,
+    "timed": 7,
     "under_target": 0
    }
   }
@@ -503,5 +577,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-21T01:00:14+00:00"
+ "updated_at": "2026-10-21T01:30:14+00:00"
 }

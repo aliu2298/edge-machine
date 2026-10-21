@@ -1,0 +1,19 @@
+{
+  "baseline": [],
+  "error": null,
+  "key": "finance_spx_nc_no",
+  "last_run": "2026-10-21T01:30:30.032824+00:00",
+  "last_success": "2026-10-21T01:30:30.032824+00:00",
+  "observation": {
+    "at": "2026-10-21T01:30:30.032824+00:00",
+    "eligible": 0,
+    "listed": 420,
+    "reasons": {
+      "Not the 16:00 ET event": 360,
+      "Outside entry window": 60
+    }
+  },
+  "picks": [],
+  "registered": "2026-10-20",
+  "version": "finance-nc-v1"
+}
