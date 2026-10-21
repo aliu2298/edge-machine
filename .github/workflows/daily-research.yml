@@ -32,10 +32,10 @@ jobs:
         id: collect
         run: python3 daily_track.py
       # finance_spx_nc_no (2026-10-20): the S&P near-certain NO paper lane, its own ledger,
-      # read in the same 16:00 ET window. A failure here never blocks saving the other records.
+      # read in the same 16:00 ET window. A failure here fails the job visibly; the steps below
+      # still run (their own `if`), so the other records are saved either way.
       - name: S&P near-certain NO paper lane
         if: ${{ !cancelled() && (steps.collect.outcome == 'success' || steps.collect.outcome == 'failure') }}
-        continue-on-error: true
         run: python3 finance_nc.py
       - name: Publish Econ Daily Production feed
         if: ${{ !cancelled() && (steps.collect.outcome == 'success' || steps.collect.outcome == 'failure') }}
