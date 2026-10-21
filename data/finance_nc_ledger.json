@@ -63,14 +63,14 @@
   ],
   "error": null,
   "key": "finance_spx_nc_no",
-  "last_run": "2026-10-21T18:42:49.736988+00:00",
-  "last_success": "2026-10-21T18:42:49.736988+00:00",
+  "last_run": "2026-10-21T22:25:11.104394+00:00",
+  "last_success": "2026-10-21T22:25:11.104394+00:00",
   "observation": {
-    "at": "2026-10-21T18:42:49.736988+00:00",
+    "at": "2026-10-21T22:25:11.104394+00:00",
     "eligible": 0,
-    "listed": 120,
+    "listed": 420,
     "reasons": {
-      "Not the 16:00 ET event": 60,
+      "Not the 16:00 ET event": 360,
       "Outside entry window": 60
     }
   },
