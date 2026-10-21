@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-21T18:01:47.159014+00:00",
+ "last_run": "2026-10-21T21:31:27.200992+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -195,11 +195,14 @@
      "line": 3.5,
      "logged": "2026-10-21T15:16:45.026576+00:00",
      "match": "Como v Manchester United",
+     "payout": 1.0,
      "price": 0.41,
+     "profit": 134.23,
      "rule": "A7",
+     "settled": "2026-10-21T21:31:27.200992+00:00",
      "side": "yes",
      "start": "2026-10-21T16:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUCLTOTAL-26OCT21COMMUN-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Como O+D- v Manchester United O-D- \u00b7 Over 3.5 YES 0.41"
@@ -218,11 +221,14 @@
      "line": 3.5,
      "logged": "2026-10-21T17:31:37.637172+00:00",
      "match": "Bayern Munich v Arsenal",
+     "payout": 1.0,
      "price": 0.4,
+     "profit": 139.92,
      "rule": "A7",
+     "settled": "2026-10-21T21:31:27.200992+00:00",
      "side": "yes",
      "start": "2026-10-21T19:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUCLTOTAL-26OCT21BMUARS-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Bayern Munich O+D- v Arsenal O-D- \u00b7 Over 3.5 YES 0.40"
@@ -241,11 +247,14 @@
      "line": 3.5,
      "logged": "2026-10-21T17:31:37.637172+00:00",
      "match": "Club Brugge v Lens",
+     "payout": 0.0,
      "price": 0.48,
+     "profit": -100.0,
      "rule": "A7",
+     "settled": "2026-10-21T21:31:27.200992+00:00",
      "side": "yes",
      "start": "2026-10-21T19:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXUCLTOTAL-26OCT21BRURCL-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Club Brugge O+D- v Lens O-D- \u00b7 Over 3.5 YES 0.48"
@@ -264,11 +273,14 @@
      "line": 3.5,
      "logged": "2026-10-21T17:31:37.637172+00:00",
      "match": "Real Betis v Feyenoord Rotterdam",
+     "payout": 0.0,
      "price": 0.51,
+     "profit": -100.0,
      "rule": "A7",
+     "settled": "2026-10-21T21:31:27.200992+00:00",
      "side": "yes",
      "start": "2026-10-21T19:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXUCLTOTAL-26OCT21RBBFEY-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Real Betis O+D- v Feyenoord Rotterdam O+D- \u00b7 Over 3.5 YES 0.51"
@@ -287,11 +299,14 @@
      "line": 3.5,
      "logged": "2026-10-21T17:31:37.637172+00:00",
      "match": "Sporting CP v LASK Linz",
+     "payout": 1.0,
      "price": 0.54,
+     "profit": 79.41,
      "rule": "A7",
+     "settled": "2026-10-21T21:31:27.200992+00:00",
      "side": "yes",
      "start": "2026-10-21T19:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUCLTOTAL-26OCT21SPOASK-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Sporting CP O+D- v LASK Linz O+D- \u00b7 Over 3.5 YES 0.54"
@@ -299,7 +314,31 @@
    ]
   },
   "B1": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.55,
+     "bid": 0.54,
+     "event": "KXMLSTOTAL-26OCT21CINDCU",
+     "group": "B",
+     "id": "B1:KXMLSTOTAL-26OCT21CINDCU",
+     "labels": {
+      "away": "O-D+",
+      "home": "O-D+"
+     },
+     "league": "MLS",
+     "line": 3.5,
+     "logged": "2026-10-21T21:31:27.200992+00:00",
+     "match": "FC Cincinnati v D.C. United",
+     "price": 0.46,
+     "rule": "B1",
+     "side": "no",
+     "start": "2026-10-21T23:00Z",
+     "status": "open",
+     "ticker": "KXMLSTOTAL-26OCT21CINDCU-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "FC Cincinnati O-D+ v D.C. United O-D+ \u00b7 Under 3.5 NO 0.46"
+    }
+   ]
   },
   "B2": {
    "picks": []
@@ -725,11 +764,14 @@
      "line": null,
      "logged": "2026-10-21T17:31:37.637172+00:00",
      "match": "Real Betis v Feyenoord Rotterdam",
+     "payout": 0.0,
      "price": 0.69,
+     "profit": -100.0,
      "rule": "D1",
+     "settled": "2026-10-21T21:31:27.200992+00:00",
      "side": "yes",
      "start": "2026-10-21T19:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXUCLBTTS-26OCT21RBBFEY-BTTS",
      "title": "Both Teams To Score",
      "why": "Real Betis O+D- v Feyenoord Rotterdam O+D- \u00b7 BTTS YES 0.69"
@@ -748,11 +790,14 @@
      "line": null,
      "logged": "2026-10-21T17:31:37.637172+00:00",
      "match": "Real Madrid v RB Leipzig",
+     "payout": 1.0,
      "price": 0.67,
+     "profit": 45.88,
      "rule": "D1",
+     "settled": "2026-10-21T21:31:27.200992+00:00",
      "side": "yes",
      "start": "2026-10-21T19:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUCLBTTS-26OCT21RMARBL-BTTS",
      "title": "Both Teams To Score",
      "why": "Real Madrid O+D- v RB Leipzig O+D- \u00b7 BTTS YES 0.67"
@@ -771,11 +816,14 @@
      "line": null,
      "logged": "2026-10-21T17:31:37.637172+00:00",
      "match": "Sporting CP v LASK Linz",
+     "payout": 1.0,
      "price": 0.63,
+     "profit": 54.72,
      "rule": "D1",
+     "settled": "2026-10-21T21:31:27.200992+00:00",
      "side": "yes",
      "start": "2026-10-21T19:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUCLBTTS-26OCT21SPOASK-BTTS",
      "title": "Both Teams To Score",
      "why": "Sporting CP O+D- v LASK Linz O+D- \u00b7 BTTS YES 0.63"
@@ -980,11 +1028,14 @@
      "line": null,
      "logged": "2026-10-21T16:31:27.360176+00:00",
      "match": "Levante v Athletic Club",
+     "payout": 0.0,
      "price": 0.49,
+     "profit": -100.0,
      "rule": "D2",
+     "settled": "2026-10-21T21:31:27.200992+00:00",
      "side": "no",
      "start": "2026-10-21T18:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXLALIGABTTS-26OCT21LEVATH-BTTS",
      "title": "Both Teams To Score",
      "why": "Levante O+D+ v Athletic Club O-D- \u00b7 BTTS NO 0.49"
@@ -1293,11 +1344,14 @@
      "line": null,
      "logged": "2026-10-21T15:16:45.026576+00:00",
      "match": "Como v Manchester United",
+     "payout": 1.0,
      "price": 0.67,
+     "profit": 45.88,
      "rule": "D3",
+     "settled": "2026-10-21T21:31:27.200992+00:00",
      "side": "yes",
      "start": "2026-10-21T16:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUCLBTTS-26OCT21COMMUN-BTTS",
      "title": "Both Teams To Score",
      "why": "Como O+D- v Manchester United O-D- \u00b7 BTTS YES 0.67"
@@ -1316,11 +1370,14 @@
      "line": null,
      "logged": "2026-10-21T17:31:37.637172+00:00",
      "match": "Aston Villa v Viking FK",
+     "payout": 1.0,
      "price": 0.61,
+     "profit": 59.58,
      "rule": "D3",
+     "settled": "2026-10-21T21:31:27.200992+00:00",
      "side": "yes",
      "start": "2026-10-21T19:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUCLBTTS-26OCT21AVLVIK-BTTS",
      "title": "Both Teams To Score",
      "why": "Aston Villa O-D- v Viking FK O+D- \u00b7 BTTS YES 0.61"
@@ -1339,11 +1396,14 @@
      "line": null,
      "logged": "2026-10-21T17:31:37.637172+00:00",
      "match": "Bayern Munich v Arsenal",
+     "payout": 1.0,
      "price": 0.66,
+     "profit": 47.99,
      "rule": "D3",
+     "settled": "2026-10-21T21:31:27.200992+00:00",
      "side": "yes",
      "start": "2026-10-21T19:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUCLBTTS-26OCT21BMUARS-BTTS",
      "title": "Both Teams To Score",
      "why": "Bayern Munich O+D- v Arsenal O-D- \u00b7 BTTS YES 0.66"
@@ -1362,11 +1422,14 @@
      "line": null,
      "logged": "2026-10-21T17:31:37.637172+00:00",
      "match": "Club Brugge v Lens",
+     "payout": 0.0,
      "price": 0.69,
+     "profit": -100.0,
      "rule": "D3",
+     "settled": "2026-10-21T21:31:27.200992+00:00",
      "side": "yes",
      "start": "2026-10-21T19:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXUCLBTTS-26OCT21BRURCL-BTTS",
      "title": "Both Teams To Score",
      "why": "Club Brugge O+D- v Lens O-D- \u00b7 BTTS YES 0.69"
@@ -1375,14 +1438,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-18T14:31:19.585539+00:00",
-   "candidates": 4,
-   "due": 7,
-   "labelled": 7,
-   "matched": 4,
-   "new": 1
-  },
   {
    "at": "2026-10-18T14:46:40.444288+00:00",
    "candidates": 4,
@@ -1782,6 +1837,14 @@
    "labelled": 6,
    "matched": 6,
    "new": 0
+  },
+  {
+   "at": "2026-10-21T21:31:27.200992+00:00",
+   "candidates": 1,
+   "due": 1,
+   "labelled": 1,
+   "matched": 1,
+   "new": 1
   }
  ],
  "version": "soccer-rules-v1"
