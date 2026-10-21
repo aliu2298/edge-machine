@@ -308,7 +308,8 @@ def lead_from_quote(q, pair_key, built, kalshi=None):
     ko = _kickoff(q)
     if ko is None:
         raise ValueError("kickoff is missing or out of range")
-    label = S.SOURCES.get(q["source"], {}).get("label", q["source"]).split(" (")[0]
+    label = (S.SOURCES.get(q["source"], {}).get("label")
+             or S.OWN_LEDGER_LABELS.get(q["source"]) or q["source"]).split(" (")[0]
     date = ko.date().isoformat()
     if q.get("venue") == "combo":
         legs = q.get("legs") or []
@@ -1197,7 +1198,7 @@ def sport_chips(groups):
             'data-controls="coming-up recent">' + "".join(parts) + "</nav>")
 
 
-def page(d, st, blob, style, now=None, daily=None, culture=None):
+def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=None):
     """public_site/production.html — shares the Sandbox stylesheet.
 
     Organised as the questions a visitor actually asks, in order: what is in Production and on
@@ -1215,6 +1216,11 @@ def page(d, st, blob, style, now=None, daily=None, culture=None):
         # ledger through its own feed the same way (culture_production).
         import culture_production
         d, st, blob = culture_production.page_inputs(d, st, blob, culture, now=now_dt)
+    if soccer_rules is not None:
+        # The four soccer rules moved by hand 2026-10-21 (soccer_rules_production), from their
+        # own ledgers: (soccer_rules_ledger, sa_o15_ledger).
+        import soccer_rules_production
+        d, st, blob = soccer_rules_production.page_inputs(d, st, blob, *soccer_rules, now=now_dt)
     # Headlines and the lead list use the page copy. The record on each card
     # is assessed on the unfiltered ledger, the same one the tracker reads,
     # so a hidden row cannot move a kept pair's numbers.

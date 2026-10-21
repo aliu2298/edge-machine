@@ -237,7 +237,15 @@ def inputs(runs=False, opener=None):
     return dict(nba=_read_json(NBA_PATH), market=_read_json(MARKET_PATH),
                 closes=closes_updated(), runs=fetch_runs(opener) if runs else None,
                 status=_read_json(STATUS_PATH), daily=_read_json(os.path.join(ROOT, 'data', 'daily_ledger.json')),
-                culture=_read_json(os.path.join(ROOT, 'data', 'culture_ledger.json')))
+                culture=_read_json(os.path.join(ROOT, 'data', 'culture_ledger.json')),
+                soccer_rules=_soccer_rules_states())
+
+
+def _soccer_rules_states():
+    """(soccer_rules_ledger, sa_o15_ledger) for the four own-ledger soccer Production rules, or None."""
+    a = _read_json(os.path.join(ROOT, 'data', 'soccer_rules_ledger.json'))
+    b = _read_json(os.path.join(ROOT, 'data', 'sa_o15_ledger.json'))
+    return (a, b) if a is not None and b is not None else None
 
 
 def current_status(status, d):
@@ -534,7 +542,8 @@ def _age_text(hours):
     return f"{int(hours)}h"
 
 
-def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, status=None, daily=None, culture=None):
+def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, status=None, daily=None, culture=None,
+          soccer_rules=None):
     """The Control Center as data. Pure: everything it reads is an argument.
 
     `status` is data/status.json as read (inputs()); it is used only when it
@@ -585,13 +594,18 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
     if culture is not None:
         import culture_production
         live_d, live_st, live_blob = culture_production.page_inputs(live_d, live_st, live_blob, culture, now=now)
+    sr_names = []
+    if soccer_rules is not None:
+        import soccer_rules_production
+        live_d, live_st, live_blob = soccer_rules_production.page_inputs(live_d, live_st, live_blob, *soccer_rules, now=now)
+        sr_names = [n for _s, _sp, n in soccer_rules_production.PAIRS.values()]
     live = shell_build._running_body(live_d, live_st, live_blob, now)
     n_open, n_settled, n_won = live["roll_counts"]
     scorecard = scorecard_rows(pair_rows)
     healthy = sum(1 for a in areas if a["status"] == "healthy")
     return dict(
         now=now,
-        tiles=dict(pairs=len(pairs)+(len(daily_production.pairs()) if daily is not None else 0)+(1 if culture is not None else 0), open=sum(1 for q in rows if q.get("status") == "open")
+        tiles=dict(pairs=len(pairs)+(len(daily_production.pairs()) if daily is not None else 0)+(1 if culture is not None else 0)+len(sr_names), open=sum(1 for q in rows if q.get("status") == "open")
                    + sum(a['open'] for a in areas if a['key'] in ('econ_daily','finance_daily')),
                    landed=(n_won, n_settled), healthy=(healthy, len(areas)), attention=len(attention)),
         areas=areas, attention=attention, live=live, scorecard=scorecard,
@@ -599,7 +613,8 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
         # (2026-10-20) and Trump mentions publish through their own feeds (daily_production,
         # culture), so they are in the tile's count and not rows.
         prod_outside=(["Econ Daily " + D.NC_LANES[k]["label"] for k in D.NC_ORDER] if daily is not None else [])
-                     + (["Trump mentions"] if culture is not None else []),
+                     + (["Trump mentions"] if culture is not None else [])
+                     + sr_names,
         runs_read=runs is not None, status_read=status is not None,
     )
 
@@ -754,7 +769,7 @@ def _attention_html(items):
 
 
 def page(now, d=None, st=None, blob=None, nba=None, market=None, closes=None, runs=None, extra=None,
-         status=None, daily=None, culture=None):
+         status=None, daily=None, culture=None, soccer_rules=None):
     """public_site/index.html. `extra` is the dict `inputs()` returns, for the tracker build."""
     when = shell_build._now(now)
     d, st, blob = shell_build._load(d, st, blob)
@@ -766,8 +781,9 @@ def page(now, d=None, st=None, blob=None, nba=None, market=None, closes=None, ru
         status = extra.get("status") if status is None else status
         daily = extra.get("daily") if daily is None else daily
         culture = extra.get("culture") if culture is None else culture
+        soccer_rules = extra.get("soccer_rules") if soccer_rules is None else soccer_rules
     m = model(d, st, blob, when, nba=nba, market=market, closes=closes, runs=runs, status=status, daily=daily,
-              culture=culture)
+              culture=culture, soccer_rules=soccer_rules)
     tiles = m["tiles"]
     n_won, n_settled = tiles["landed"]
     healthy, total = tiles["healthy"]
