@@ -309,7 +309,9 @@ def browser_checks():
                "at 1280px the list has sticky day heads, the Production rule is one row, nothing scrolls sideways")
             ok(not state["moreOpen"] and not state["sandboxOpen"] and not state["methodOpen"],
                "the Rule details fold, the Sandbox fold and the method start closed")
-            page.locator("details.sp-sandbox > summary").click()
+            # Open the Sandbox fold if it is closed (it opens on load with at most one Production rule).
+            if not page.locator("details.sp-sandbox").evaluate("e => e.open"):
+                page.locator("details.sp-sandbox > summary").click()
             page.wait_for_timeout(40)
             ok(page.locator('details.sp-rule[data-source="cricket_consensus"]').is_visible(), "the Sandbox fold shows the never-fired rule")
             page.locator('[data-list="sandbox"] details.sp-rule > summary').first.click()

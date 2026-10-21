@@ -231,7 +231,9 @@ if playwright is not None:
             eq(page.locator(".sp-day-head:visible").first.evaluate("e => getComputedStyle(e).position"), "sticky",
                f"{width}px the day head is sticky")
             eq(page.locator("#method > details[open]").count(), 0, f"{width}px method starts closed")
-            page.locator("details.sp-sandbox > summary").click()
+            # Open the Sandbox fold if it is closed (it opens on load with at most one Production rule).
+            if not page.locator("details.sp-sandbox").evaluate("e => e.open"):
+                page.locator("details.sp-sandbox > summary").click()
             ok(page.locator("details.sp-rule .sp-params:visible").count() == 0, f"{width}px the parameters start hidden")
             page.locator("details.sp-rule > summary").first.click()
             ok(page.locator("details.sp-rule").first.locator(".sp-params").is_visible(), f"{width}px opening the row reveals the parameters")

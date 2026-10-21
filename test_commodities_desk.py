@@ -208,7 +208,9 @@ if playwright is not None:
             ok(page.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), f"{width}px no sideways scroll")
             eq(page.locator(".sp-pick:visible").count(), 2, f"{width}px the Next 24h tab shows two lines")
             eq(page.locator("#method > details[open]").count(), 0, f"{width}px method starts closed")
-            page.locator("details.sp-sandbox > summary").click()
+            # Open the Sandbox fold if it is closed (it opens on load with at most one Production rule).
+            if not page.locator("details.sp-sandbox").evaluate("e => e.open"):
+                page.locator("details.sp-sandbox > summary").click()
             page.locator("details.sp-rule > summary").first.click()
             ok(page.locator("details.sp-rule").first.locator(".sp-params").is_visible(), f"{width}px opening the row reveals the parameters")
             page.locator("#method > details > summary").click()
