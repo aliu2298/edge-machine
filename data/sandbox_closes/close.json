@@ -45,6 +45,11 @@
    "lead_min": 49.2,
    "price": 0.45
   },
+  "btts_form_l10_fade:KXUCLBTTS-26OCT21RBBFEY-BTTS": {
+   "at": "2026-10-21T18:15:08+00:00",
+   "lead_min": 44.9,
+   "price": 0.33
+  },
   "bund_o35:KXBUNDESLIGATOTAL-26OCT17BMURBL-4": {
    "at": "2026-10-17T16:25:28+00:00",
    "lead_min": 4.5,
@@ -100,6 +105,21 @@
    "lead_min": 13.0,
    "price": 0.49
   },
+  "corners_team_fade:KXUCLTCORNERS-26OCT21AVLVIK-AVL7": {
+   "at": "2026-10-21T18:15:08+00:00",
+   "lead_min": 44.9,
+   "price": 0.58
+  },
+  "corners_team_fade:KXUCLTCORNERS-26OCT21RBBFEY-RBB5": {
+   "at": "2026-10-21T18:15:08+00:00",
+   "lead_min": 44.9,
+   "price": 0.6
+  },
+  "corners_team_fade:KXUCLTCORNERS-26OCT21RMARBL-RMA7": {
+   "at": "2026-10-21T18:15:08+00:00",
+   "lead_min": 44.9,
+   "price": 0.51
+  },
   "corners_total_under:KXEPLCORNERS-26OCT17MCIIPS-10": {
    "at": "2026-10-17T13:10:49+00:00",
    "lead_min": 49.2,
@@ -114,6 +134,16 @@
    "at": "2026-10-18T18:03:48+00:00",
    "lead_min": 56.2,
    "price": 0.43
+  },
+  "corners_ucl_fade:KXUCLCORNERS-26OCT21SPOASK-9": {
+   "at": "2026-10-21T18:15:08+00:00",
+   "lead_min": 44.9,
+   "price": 0.66
+  },
+  "crypto_eth_fav_both:KXETHD-26OCT2117-T2509.99": {
+   "at": "2026-10-21T18:15:08+00:00",
+   "lead_min": 49.9,
+   "price": 0.6
   },
   "crypto_fav_band:KXBTCD-26OCT1517-T81999.99": {
    "at": "2026-10-15T18:37:51+00:00",
@@ -130,10 +160,40 @@
    "lead_min": 16.4,
    "price": 0.98
   },
+  "crypto_fav_band:KXBTCD-26OCT2117-T84249.99": {
+   "at": "2026-10-21T18:15:08+00:00",
+   "lead_min": 49.9,
+   "price": 0.85
+  },
   "crypto_fav_band:KXETHD-26OCT1617-T2379.99": {
    "at": "2026-10-16T18:46:57+00:00",
    "lead_min": 18.0,
    "price": 0.89
+  },
+  "crypto_fav_band:KXXRPD-26OCT2117-T1.3799": {
+   "at": "2026-10-21T18:15:08+00:00",
+   "lead_min": 49.9,
+   "price": 0.86
+  },
+  "crypto_fav_band_60:KXBTCD-26OCT2117-T84499.99": {
+   "at": "2026-10-21T18:15:08+00:00",
+   "lead_min": 49.9,
+   "price": 0.66
+  },
+  "crypto_fav_band_60:KXETHD-26OCT2117-T2509.99": {
+   "at": "2026-10-21T18:15:08+00:00",
+   "lead_min": 49.9,
+   "price": 0.6
+  },
+  "crypto_fav_band_below:KXBTCD-26OCT2117-T84749.99": {
+   "at": "2026-10-21T18:15:08+00:00",
+   "lead_min": 49.9,
+   "price": 0.61
+  },
+  "crypto_fav_band_below_60:KXBTCD-26OCT2117-T84749.99": {
+   "at": "2026-10-21T18:15:08+00:00",
+   "lead_min": 49.9,
+   "price": 0.61
   },
   "ere_draw:KXEREDIVISIEGAME-26OCT17SPAWIL": {
    "at": "2026-10-17T18:48:33+00:00",
@@ -310,6 +370,11 @@
    "lead_min": 23.6,
    "price": 0.9
   },
+  "o15_form_l10:KXUCLTOTAL-26OCT21SPOASK-2": {
+   "at": "2026-10-21T18:15:08+00:00",
+   "lead_min": 44.9,
+   "price": 0.91
+  },
   "o15_ranked:KXAFCCLTOTAL-26OCT13KYORAT-2": {
    "at": "2026-10-13T09:21:07+00:00",
    "lead_min": 38.9,
@@ -320,20 +385,10 @@
    "lead_min": 38.9,
    "price": 0.75
   },
-  "o15_ranked:KXLALIGATOTAL-26OCT11RBBOSA-2": {
-   "at": "2026-10-11T15:36:44+00:00",
-   "lead_min": 53.3,
-   "price": 0.82
-  },
   "o15_ranked:KXLALIGATOTAL-26OCT16DEPLEV-2": {
    "at": "2026-10-16T18:46:57+00:00",
    "lead_min": 13.0,
    "price": 0.76
-  },
-  "o15_ranked:KXSERIEATOTAL-26OCT11SASACM-2": {
-   "at": "2026-10-11T15:36:44+00:00",
-   "lead_min": 23.3,
-   "price": 0.81
   },
   "o15_ranked:KXSERIEATOTAL-26OCT18JUVLAZ-2": {
    "at": "2026-10-18T18:03:48+00:00",
@@ -474,11 +529,6 @@
    "at": "2026-10-17T13:10:49+00:00",
    "lead_min": 49.2,
    "price": 0.62
-  },
-  "p05_unbeaten:KXLALIGAGAME-26OCT11RBBOSA-OSA": {
-   "at": "2026-10-11T15:36:44+00:00",
-   "lead_min": 53.3,
-   "price": 0.87
   },
   "p05_unbeaten:KXMLSGAME-26OCT14DALSEA-SEA": {
    "at": "2026-10-14T23:53:49+00:00",
@@ -631,5 +681,5 @@
    "price": 0.67
   }
  },
- "updated": "2026-10-21T01:59:53+00:00"
+ "updated": "2026-10-21T18:15:08+00:00"
 }
