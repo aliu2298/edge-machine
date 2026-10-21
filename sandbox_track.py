@@ -507,6 +507,13 @@ PAIR_REMOVALS = {
     "bund_o35|soccer_u35": dict(removed_on="2026-10-20", keep_record=True),
     # The crypto Yes band, replaced by three angle lanes the same day (see PAIR_OVERRIDES).
     "crypto_fav_band|crypto_fav": dict(removed_on="2026-10-20", keep_record=True),
+    # 2026-10-20, as asked (Olu): the Econ Daily favourite band (YES 70-80c, 3h to the close)
+    # back to the Sandbox on its whole record, 6-2 at -0.3% after fees live, which is the price
+    # and no edge. Its Production listing lived in daily_production.pairs() (the daily collector
+    # keeps its own registry), and that listing is gone, so nothing re-promotes it on the
+    # removal's own day (#176). Replaced in Production by econ_nc_yes and econ_nc_no, the two
+    # near-certain lanes pre-registered the same day on a fresh record (daily_track.NC_LANES).
+    "econ_daily_fav_band|econ_daily": dict(removed_on="2026-10-20", keep_record=True),
 }
 
 

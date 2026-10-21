@@ -1682,7 +1682,25 @@ SOURCES["econ_daily_fav_band"] = dict(
     note="Owner-promoted 2026-10-14. The daily-v1 rule on supported daily economic "
          "above-threshold contracts: YES 70–80 cents, spread at most 3 cents, 25+ "
          "contracts at the ask, 2–3.5 hours before the verified contract close. "
-         "One frozen entry per event. Paper performance is not an account fill record.")
+         "One frozen entry per event. Paper performance is not an account fill record. "
+         "Back to the Sandbox 2026-10-20 on its whole record (6-2, -0.3% after fees at the time), "
+         "replaced in Production by the two near-certain lanes below.")
+# Pre-registered 2026-10-20 (Olu), both in Production from that day on a fresh record. Collected
+# by daily_track.nc_run, published by daily_production. AAA national gas and diesel only.
+SOURCES["econ_nc_yes"] = dict(
+    label="Near-certain · last hour · YES", kind="Rule", connected=True,
+    site="kalshi.com", sports=["econ_daily"], baseline="population",
+    note="Pre-registered 2026-10-20. YES on the cheapest KXAAAGASD / KXDIESELD rung whose YES "
+         "ask is 90-98c inclusive, 75-45 minutes before the verified close; spread at most "
+         "3c, 25+ contracts at the YES ask, one entry per event, ties to the lower ticker. "
+         "Thin payoff: one loss costs about 16 wins.")
+SOURCES["econ_nc_no"] = dict(
+    label="Near-certain · 3h · NO", kind="Rule", connected=True,
+    site="kalshi.com", sports=["econ_daily"], baseline="population",
+    note="Pre-registered 2026-10-20. NO on the cheapest KXAAAGASD / KXDIESELD rung whose NO "
+         "ask (1 - YES bid) is 85-95c inclusive, 3.5-2 hours before the verified close; "
+         "spread at most 3c, 25+ contracts at the NO ask, one entry per event, ties to the "
+         "lower ticker. Thin payoff: one loss costs about 10 wins.")
 
 PAUSED_LANES = {
     # Owner stopped the previous tennis rules on 2026-10-14. Keep history and grading.

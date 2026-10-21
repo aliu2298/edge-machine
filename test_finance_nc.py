@@ -148,8 +148,9 @@ ok('Pre-registered 2026-10-20' in html and '45/46' in html, 'the registration is
 empty_html = B.build('finance_daily', state, NOW, nc=N.empty())
 ok('<b>—</b><span>Sandbox record · paper' in empty_html, 'before any settled entry the record tile is a dash')
 econ = B.build('econ_daily', state, NOW)
-ok('Production · paper record' in econ and 'near-certain' not in econ and 'data-verdict="retired"' not in econ,
-   'Econ Daily is unchanged')
+ok('Production · paper record' in econ and 'Near-certain · last hour · YES' in econ
+   and 'data-verdict="retired"' not in econ and 'S&amp;P near-certain' not in econ,
+   'Econ Daily carries its own near-certain lanes (2026-10-20), none of Finance Daily\'s')
 
 print()
 if fails:
