@@ -2521,76 +2521,6 @@
    "sport": "commodities_fav",
    "status": "hit"
   },
-  "2026-10-20|Manchester City|AEK Athens|10+ corners \u00b7 Corners total fade, Champions League": {
-   "away": "AEK Athens",
-   "bet": {
-    "kind": "corners_gte",
-    "n": 10
-   },
-   "date": "2026-10-20",
-   "edge_at_log": null,
-   "first_seen": "2026-10-20",
-   "headline": "10+ corners",
-   "home": "Manchester City",
-   "id": "2026-10-20|Manchester City|AEK Athens|10+ corners \u00b7 Corners total fade, Champions League",
-   "kickoff": "2026-10-20T19:00Z",
-   "lane": "production",
-   "league": "Champions League",
-   "match": "Manchester City v AEK Athens",
-   "pair": "corners_ucl_fade|soccer_corners",
-   "price_at_log": 0.54,
-   "published_at": "2026-10-20T15:06:04+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 233,
-   "route": {
-    "claim": "10+ corners",
-    "event": "KXUCLCORNERS-26OCT20MCIAEK",
-    "market": "KXUCLCORNERS-26OCT20MCIAEK-10",
-    "outcome": "10+ corners",
-    "outcome_side": "yes",
-    "price_at_log": 0.54,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "corners_ucl_fade:KXUCLCORNERS-26OCT20MCIAEK-10",
-   "source": "corners_ucl_fade",
-   "sport": "soccer_corners",
-   "status": "hit"
-  },
-  "2026-10-20|Paris Saint-Germain|Barcelona|9+ corners \u00b7 Corners total fade, Champions League": {
-   "away": "Barcelona",
-   "bet": {
-    "kind": "corners_gte",
-    "n": 9
-   },
-   "date": "2026-10-20",
-   "edge_at_log": null,
-   "first_seen": "2026-10-20",
-   "headline": "9+ corners",
-   "home": "Paris Saint-Germain",
-   "id": "2026-10-20|Paris Saint-Germain|Barcelona|9+ corners \u00b7 Corners total fade, Champions League",
-   "kickoff": "2026-10-20T19:00Z",
-   "lane": "production",
-   "league": "Champions League",
-   "match": "Paris Saint-Germain v Barcelona",
-   "pair": "corners_ucl_fade|soccer_corners",
-   "price_at_log": 0.63,
-   "published_at": "2026-10-20T15:06:04+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 233,
-   "route": {
-    "claim": "9+ corners",
-    "event": "KXUCLCORNERS-26OCT20PSGBAR",
-    "market": "KXUCLCORNERS-26OCT20PSGBAR-9",
-    "outcome": "9+ corners",
-    "outcome_side": "yes",
-    "price_at_log": 0.63,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "corners_ucl_fade:KXUCLCORNERS-26OCT20PSGBAR-9",
-   "source": "corners_ucl_fade",
-   "sport": "soccer_corners",
-   "status": "miss"
-  },
   "2026-10-20|Vaccari, Ludovico|Tramolay, Leonard|Vaccari, Ludovico to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
    "away": "Tramolay, Leonard",
    "bet": {
@@ -3195,31 +3125,6 @@
     "under_target": 0
    }
   },
-  "corners_ucl_fade|soccer_corners": {
-   "by_hand": "2026-10-15",
-   "entered_at": "2026-10-15T07:20:21+00:00",
-   "promoted_at": "2026-10-15T07:20:21+00:00",
-   "ready_at": "2026-10-15T07:20:21+00:00",
-   "route": "moved by hand on 2026-10-15",
-   "routing": {
-    "leads": 2,
-    "problem": null,
-    "routed": 2,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": 0.0,
-   "sandbox_n": 2,
-   "sandbox_roi": -0.0741,
-   "sandbox_roi_fee": -0.103,
-   "timing": {
-    "late": [],
-    "timed": 2,
-    "under_target": 0
-   }
-  },
   "crypto_eth_fav_both|crypto_fav": {
    "by_hand": "2026-10-20",
    "entered_at": "2026-10-21T00:47:16+00:00",
@@ -3646,6 +3551,7 @@
    }
   }
  },
+ "pruned_at": "2026-10-21T02:37:07+00:00",
  "publication_withheld": {
   "2026-10-15|Torreense|Sunderland|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
    "headline": "Over 1.5 goals",

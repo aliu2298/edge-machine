@@ -438,10 +438,12 @@ PAIR_OVERRIDES = {
     # into Production, on empty records (the Early badge says so). The two fades are the YES
     # of a corners rung (FEED_YES_TWIN corners_gte); the total under is the NO, as before.
     "corners_total_under|soccer_corners": dict(moved_on="2026-10-15", production_at=None),
-    "corners_ucl_fade|soccer_corners": dict(moved_on="2026-10-15", production_at=None),
+    #   corners_ucl_fade|soccer_corners — OUT 2026-10-21, back to the Sandbox, as asked (Olu):
+    #   1/2 on the tradeable venues (both on the 2026-10-20 Champions League night), -10.3% after
+    #   fees, z -0.08. Whole record kept (PAIR_REMOVALS).
     #   corners_team_fade|soccer_corners — OUT 2026-10-20, back to the Sandbox, as asked (Olu):
-    #   2/7, -38.1% after fees, z -0.85. Whole record kept (PAIR_REMOVALS). corners_ucl_fade and
-    #   corners_total_under stay listed.
+    #   2/7, -38.1% after fees, z -0.85. Whole record kept (PAIR_REMOVALS). corners_total_under
+    #   stays listed.
     # corners under form rule: 8-6 on 14 matches (35 rungs), +4.4% after fees, +1.4c
     # against the close, 3 open. The feed learned the corners rung for it: the NO on a
     # Kalshi total-corner or team-corner "N+" contract (FEED_BETS soccer_corners, kind
@@ -505,6 +507,10 @@ PAIR_REMOVALS = {
     "turkey_o25_dog|soccer_o25": dict(removed_on="2026-10-20", keep_record=True),
     "turkey_btts_dog|soccer_btts": dict(removed_on="2026-10-20", keep_record=True),
     "bund_o35|soccer_u35": dict(removed_on="2026-10-20", keep_record=True),
+    # 2026-10-21, as asked (Olu): the Champions League corners total fade, out on its whole
+    # record (1/2, -10.3% after fees). Its override is gone, so nothing re-promotes it on the
+    # removal's own day (#176). corners_total_under stays in Production.
+    "corners_ucl_fade|soccer_corners": dict(removed_on="2026-10-21", keep_record=True),
     # The crypto Yes band, replaced by three angle lanes the same day (see PAIR_OVERRIDES).
     "crypto_fav_band|crypto_fav": dict(removed_on="2026-10-20", keep_record=True),
     # 2026-10-20, as asked (Olu): the Econ Daily favourite band (YES 70-80c, 3h to the close)
