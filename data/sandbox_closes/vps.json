@@ -196,9 +196,9 @@
    "price": 0.86
   },
   "commod_fav_band:KXBRENTD-26OCT2117-T104.50": {
-   "at": "2026-10-21T19:36:54+00:00",
-   "lead_min": 53.1,
-   "price": 0.96
+   "at": "2026-10-21T19:51:58+00:00",
+   "lead_min": 38.0,
+   "price": 0.98
   },
   "commod_fav_band:KXGOLDD-26OCT1317-T4154": {
    "at": "2026-10-13T18:59:08+00:00",
@@ -231,9 +231,9 @@
    "price": 0.98
   },
   "commod_fav_band:KXNATGASD-26OCT2117-T3.160": {
-   "at": "2026-10-21T19:36:54+00:00",
-   "lead_min": 53.1,
-   "price": 0.75
+   "at": "2026-10-21T19:51:58+00:00",
+   "lead_min": 38.0,
+   "price": 0.68
   },
   "commod_fav_band:KXSILVERD-26OCT1417-T55.50": {
    "at": "2026-10-14T18:50:08+00:00",
@@ -246,9 +246,9 @@
    "price": 0.63
   },
   "commod_fav_band:KXSILVERD-26OCT2117-T57.50": {
-   "at": "2026-10-21T19:36:54+00:00",
-   "lead_min": 53.1,
-   "price": 0.92
+   "at": "2026-10-21T19:51:58+00:00",
+   "lead_min": 38.0,
+   "price": 0.98
   },
   "commod_fav_band:KXWTI-26OCT1314-T93.49": {
    "at": "2026-10-13T16:27:36+00:00",
@@ -285,10 +285,35 @@
    "lead_min": 8.9,
    "price": 0.97
   },
+  "commod_nc_no:KXBRENTD-26OCT2117-T107": {
+   "at": "2026-10-21T19:51:58+00:00",
+   "lead_min": 38.0,
+   "price": 0.98
+  },
+  "commod_nc_no:KXGOLDD-26OCT2117-T4142": {
+   "at": "2026-10-21T19:51:58+00:00",
+   "lead_min": 38.0,
+   "price": 0.91
+  },
+  "commod_nc_no:KXNATGASD-26OCT2117-T3.190": {
+   "at": "2026-10-21T19:51:58+00:00",
+   "lead_min": 38.0,
+   "price": 0.9
+  },
+  "commod_nc_no:KXSILVERD-26OCT2117-T58.25": {
+   "at": "2026-10-21T19:51:58+00:00",
+   "lead_min": 38.0,
+   "price": 0.98
+  },
   "commod_nc_no:KXWTI-26OCT2114-T97.49": {
    "at": "2026-10-21T17:51:07+00:00",
    "lead_min": 8.9,
    "price": 0.87
+  },
+  "commod_nc_yes:KXNATGASD-26OCT2117-T3.140": {
+   "at": "2026-10-21T19:51:58+00:00",
+   "lead_min": 38.0,
+   "price": 0.97
   },
   "corners_team_fade:KXEPLTCORNERS-26OCT17FULHUL-FUL7": {
    "at": "2026-10-17T13:55:23+00:00",
@@ -2206,5 +2231,5 @@
    "price": 0.68
   }
  },
- "updated": "2026-10-21T19:36:54+00:00"
+ "updated": "2026-10-21T19:51:58+00:00"
 }
