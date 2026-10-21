@@ -2,16 +2,16 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-21T17:00:19.040186+00:00",
-   "last_success": "2026-10-21T17:00:19.040186+00:00",
+   "last_run": "2026-10-21T18:00:16.401599+00:00",
+   "last_success": "2026-10-21T18:00:16.401599+00:00",
    "observations": {
-    "at": "2026-10-21T17:00:19.040186+00:00",
-    "events": 859,
+    "at": "2026-10-21T18:00:16.401599+00:00",
+    "events": 864,
     "reasons": {
      "no quote or spread too wide": 66,
-     "not active": 699,
+     "not active": 700,
      "outside the band": 7,
-     "outside the entry window": 11051
+     "outside the entry window": 11133
     }
    },
    "picks": [
@@ -438,16 +438,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-21T17:00:19.040186+00:00",
-   "last_success": "2026-10-21T17:00:19.040186+00:00",
+   "last_run": "2026-10-21T18:00:16.401599+00:00",
+   "last_success": "2026-10-21T18:00:16.401599+00:00",
    "observations": {
-    "at": "2026-10-21T17:00:19.040186+00:00",
-    "events": 859,
+    "at": "2026-10-21T18:00:16.401599+00:00",
+    "events": 864,
     "reasons": {
-     "no quote or spread too wide": 96,
-     "not active": 699,
+     "no quote or spread too wide": 156,
+     "not active": 700,
      "outside the band": 7,
-     "outside the entry window": 11021
+     "outside the entry window": 11043
     }
    },
    "picks": [
@@ -718,16 +718,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-21T17:00:19.040186+00:00",
-   "last_success": "2026-10-21T17:00:19.040186+00:00",
+   "last_run": "2026-10-21T18:00:16.401599+00:00",
+   "last_success": "2026-10-21T18:00:16.401599+00:00",
    "observations": {
-    "at": "2026-10-21T17:00:19.040186+00:00",
-    "events": 859,
+    "at": "2026-10-21T18:00:16.401599+00:00",
+    "events": 864,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 29,
-     "edge 5c+": 16,
+     "edge 5c+": 19,
      "edge under 5c": 4,
-     "no quote or spread too wide": 37
+     "no quote or spread too wide": 34
     }
    },
    "picks": [
@@ -1570,19 +1570,34 @@
      "side": "no",
      "status": "open",
      "title": "Crypto / Bitcoin"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-11-01T15:00:00Z",
+     "detail": "P(said) 0.00 \u00b7 said on 0 of the last 84 days, 10.9 days left \u00b7 edge +0.41",
+     "edge": 0.4128,
+     "event": "KXTRUMPSAYCOMPANY-26NOV01",
+     "id": "KXTRUMPSAYCOMPANY-26NOV01-ORCL",
+     "logged": "2026-10-21T18:00:16.401599+00:00",
+     "model": 0.0,
+     "name": "What companies will Trump say in October?",
+     "price": 0.57,
+     "series": "KXTRUMPSAYCOMPANY",
+     "side": "no",
+     "status": "open",
+     "title": "Oracle / ORCL"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-21T17:00:19.040186+00:00",
-   "last_success": "2026-10-21T17:00:19.040186+00:00",
+   "last_run": "2026-10-21T18:00:16.401599+00:00",
+   "last_success": "2026-10-21T18:00:16.401599+00:00",
    "observations": {
-    "at": "2026-10-21T17:00:19.040186+00:00",
-    "events": 859,
+    "at": "2026-10-21T18:00:16.401599+00:00",
+    "events": 864,
     "reasons": {
-     "edge 5c+": 5,
-     "edge under 5c": 1,
+     "edge 5c+": 6,
      "under 20 reviews counted": 15
     }
    },
@@ -1816,7 +1831,7 @@
    ]
   },
   "Antifa": {
-   "at": "2026-10-21T12:00:13.869697+00:00",
+   "at": "2026-10-21T18:00:16.401599+00:00",
    "days": [
     "2026-09-22"
    ]
@@ -1858,7 +1873,7 @@
    "days": []
   },
   "Bibi / Netanyahu": {
-   "at": "2026-10-21T11:00:15.693110+00:00",
+   "at": "2026-10-21T18:00:16.401599+00:00",
    "days": [
     "2026-07-31",
     "2026-09-13",
@@ -2030,6 +2045,10 @@
     "2026-10-10"
    ]
   },
+  "Oracle / ORCL": {
+   "at": "2026-10-21T18:00:16.401599+00:00",
+   "days": []
+  },
   "Panama / Panamanian": {
    "at": "2026-10-19T03:00:15.440084+00:00",
    "days": [
@@ -2058,7 +2077,7 @@
    "days": []
   },
   "Ranked Choice / Ranked-Choice": {
-   "at": "2026-10-21T08:00:14.467607+00:00",
+   "at": "2026-10-21T18:00:16.401599+00:00",
    "days": [
     "2026-09-02",
     "2026-10-13",
@@ -2089,7 +2108,7 @@
    "days": []
   },
   "Stupid Question": {
-   "at": "2026-10-21T12:00:13.869697+00:00",
+   "at": "2026-10-21T18:00:16.401599+00:00",
    "days": [
     "2026-08-31",
     "2026-09-09",
@@ -2130,7 +2149,7 @@
    "days": []
   },
   "UAE / United Arab Emirates": {
-   "at": "2026-10-20T22:00:13.566263+00:00",
+   "at": "2026-10-21T18:00:16.401599+00:00",
    "days": [
     "2026-08-02",
     "2026-08-03",
