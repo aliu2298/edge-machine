@@ -2,16 +2,16 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-21T04:00:14.458332+00:00",
-   "last_success": "2026-10-21T04:00:14.458332+00:00",
+   "last_run": "2026-10-21T05:00:13.544337+00:00",
+   "last_success": "2026-10-21T05:00:13.544337+00:00",
    "observations": {
-    "at": "2026-10-21T04:00:14.458332+00:00",
-    "events": 853,
+    "at": "2026-10-21T05:00:13.544337+00:00",
+    "events": 854,
     "reasons": {
-     "no quote or spread too wide": 45,
+     "no quote or spread too wide": 34,
      "not active": 711,
-     "outside the band": 15,
-     "outside the entry window": 10996
+     "outside the band": 26,
+     "outside the entry window": 11001
     }
    },
    "picks": [
@@ -397,10 +397,13 @@
      "id": "KXDWTSELIMINATION-26OCT21-TAT",
      "logged": "2026-10-20T04:00:14.608456+00:00",
      "name": "Dancing with the Stars \u00b7 Episode 7 Elimination",
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 10.34,
      "series": "KXDWTSELIMINATION",
+     "settled": "2026-10-21T05:00:13.544337+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Tatyana Ali"
     },
     {
@@ -435,16 +438,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-21T04:00:14.458332+00:00",
-   "last_success": "2026-10-21T04:00:14.458332+00:00",
+   "last_run": "2026-10-21T05:00:13.544337+00:00",
+   "last_success": "2026-10-21T05:00:13.544337+00:00",
    "observations": {
-    "at": "2026-10-21T04:00:14.458332+00:00",
-    "events": 853,
+    "at": "2026-10-21T05:00:13.544337+00:00",
+    "events": 854,
     "reasons": {
-     "no quote or spread too wide": 88,
+     "no quote or spread too wide": 77,
      "not active": 711,
-     "outside the band": 15,
-     "outside the entry window": 10953
+     "outside the band": 26,
+     "outside the entry window": 10958
     }
    },
    "picks": [
@@ -643,10 +646,13 @@
      "id": "KXDWTSELIMINATION-26OCT21-TCAM",
      "logged": "2026-10-19T19:00:15.226916+00:00",
      "name": "Dancing with the Stars \u00b7 Episode 7 Elimination",
+     "payout": 1.0,
      "price": 0.8,
+     "profit": 23.27,
      "series": "KXDWTSELIMINATION",
+     "settled": "2026-10-21T05:00:13.544337+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Tyler Cameron"
     },
     {
@@ -712,16 +718,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-21T04:00:14.458332+00:00",
-   "last_success": "2026-10-21T04:00:14.458332+00:00",
+   "last_run": "2026-10-21T05:00:13.544337+00:00",
+   "last_success": "2026-10-21T05:00:13.544337+00:00",
    "observations": {
-    "at": "2026-10-21T04:00:14.458332+00:00",
-    "events": 853,
+    "at": "2026-10-21T05:00:13.544337+00:00",
+    "events": 854,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 33,
-     "edge 5c+": 11,
-     "edge under 5c": 3,
-     "no quote or spread too wide": 43
+     "already near-certain (under 10c or over 90c)": 34,
+     "edge 5c+": 13,
+     "edge under 5c": 1,
+     "no quote or spread too wide": 42
     }
    },
    "picks": [
@@ -1532,16 +1538,32 @@
      "side": "no",
      "status": "open",
      "title": "Ranked Choice / Ranked-Choice"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-10-26T14:00:00Z",
+     "detail": "P(said) 0.28 \u00b7 said on 5 of the last 84 days, 5.4 days left \u00b7 edge +0.20",
+     "edge": 0.2015,
+     "event": "KXTRUMPSAY-26OCT26",
+     "id": "KXTRUMPSAY-26OCT26-TDS",
+     "logged": "2026-10-21T05:00:13.544337+00:00",
+     "model": 0.281,
+     "name": "What will Trump say this week?",
+     "price": 0.5,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "TDS / Trump Derangement Syndrome"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-21T04:00:14.458332+00:00",
-   "last_success": "2026-10-21T04:00:14.458332+00:00",
+   "last_run": "2026-10-21T05:00:13.544337+00:00",
+   "last_success": "2026-10-21T05:00:13.544337+00:00",
    "observations": {
-    "at": "2026-10-21T04:00:14.458332+00:00",
-    "events": 853,
+    "at": "2026-10-21T05:00:13.544337+00:00",
+    "events": 854,
     "reasons": {
      "edge 5c+": 6,
      "under 20 reviews counted": 15
@@ -1819,9 +1841,8 @@
    "days": []
   },
   "Bibi / Netanyahu": {
-   "at": "2026-10-20T14:00:15.691314+00:00",
+   "at": "2026-10-21T05:00:13.544337+00:00",
    "days": [
-    "2026-07-28",
     "2026-07-31",
     "2026-09-13",
     "2026-09-26",
@@ -2064,7 +2085,7 @@
    "days": []
   },
   "TDS / Trump Derangement Syndrome": {
-   "at": "2026-10-18T14:10:00.372261+00:00",
+   "at": "2026-10-21T05:00:13.544337+00:00",
    "days": [
     "2026-08-05",
     "2026-09-26",
