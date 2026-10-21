@@ -1405,6 +1405,10 @@ SOURCES = {
                 'record is not reset: band, window, liquidity floor and selection are the same rule.'),
         ],
         baseline="favourite_population",
+        # Scoped to its own side and band (2026-10-20, with commod_nc_yes/_no in the same
+        # sport). A guard, not a change: every row this sport logged before that date is
+        # this lane's own 0.70-0.80 Yes, so its blind rule reads exactly as it did.
+        favourite_side="a", favourite_band=(0.70, 0.80),
         # One bet per series per close token (KXWTI + 26OCT0814), across runs, the
         # same gate crypto_fav_band uses. publish() reads this flag.
         one_per_coin_close=True,
@@ -1460,6 +1464,66 @@ SOURCES = {
              "read; this lane stores the bid, ask and ask size of every rung it takes, "
              "and commodities_ladders.md carries the pre-market snapshot and the open "
              "question."),
+    "commod_nc_yes": dict(
+        label="Commodities near-certain, Yes (Yes 0.90-0.98, the last hour to the close)",
+        kind="Rule", connected=True, site="edge-machine", sports=["commodities_fav"],
+        baseline="favourite_population",
+        # Judged against the YES favourites this sport logged inside ITS band only, so the
+        # 70-80c lane's contests and the No lane's never enter its blind rule.
+        favourite_side="a", favourite_band=(0.90, 0.98),
+        one_per_coin_close=True, store_book=True,
+        note="PRE-REGISTERED 2026-10-20, before it logged anything, on a fresh record, in the "
+             "Sandbox only and on paper only. Back the YES on a Kalshi daily commodity 'above "
+             "$X' rung whose YES ask is 0.90-0.98 inclusive, entered 1 hour before that "
+             "series' close: the window is 75 to 45 minutes before it, read up to three "
+             "times inside it. ONE bet per commodity per close, the CHEAPEST in-band YES (the "
+             "rung nearest the price), equal prices to the lower ticker. Every other term is "
+             "commod_fav_band's, copied and not retuned: the six series (WTI, Brent, gold, "
+             "silver, copper, natural gas), the closes (WTI 14:30 ET, the rest 17:00 ET), "
+             "Eastern-time windows, trading days only, a two-sided quote with a spread of 3c "
+             "or less and 25 contracts at the ask, settlement on Kalshi's own result, the 7% "
+             "taker fee, and an outcome per market-day, clustered by day. ONE MARKET, ONE "
+             "LANE across the commodity lanes, in the order commod_fav_band, commod_nc_yes, "
+             "commod_nc_no. WHY: on 229 settled Kalshi daily commodity ladders, 47 trading "
+             "days 2026-08-11 to 10-15, cheapest in-band contract per event, spread 5c or "
+             "less, after the fee and z clustered by day, YES 0.90-0.98 at 1 hour before the "
+             "close won 148/152, 97% at 94c, +3.5%, z +2.65, and held in both halves (split "
+             "2026-09-14): +5% and +2%. The same band at 3 hours LOST (-1.8%), so the edge "
+             "is only in the last hour. CAVEAT: a thin edge, about 3c per win, where one "
+             "loss costs about 16 wins. The research window is the one the angle was found "
+             "on, so the record starts from zero. Read at 30 independent market-days, "
+             "judged against backing every in-band rung in the window (the blind baseline "
+             "the other lanes use)."),
+    "commod_nc_no": dict(
+        label="Commodities near-certain, No (No 0.90-0.98, the last hour to the close)",
+        kind="Rule", connected=True, site="edge-machine", sports=["commodities_fav"],
+        baseline="favourite_population",
+        # Judged against the NO favourites this sport logged inside ITS band only.
+        favourite_side="b", favourite_band=(0.90, 0.98),
+        one_per_coin_close=True, store_book=True,
+        note="PRE-REGISTERED 2026-10-20, before it logged anything, on a fresh record, in the "
+             "Sandbox only and on paper only: commod_nc_yes on the NO side. Back the NO on a "
+             "Kalshi daily commodity 'above $X' rung whose NO ask (1 - the Yes bid) is "
+             "0.90-0.98 inclusive, entered 1 hour before that series' close: the window is "
+             "75 to 45 minutes before it, read up to three times inside it. ONE bet per "
+             "commodity per close, the CHEAPEST in-band NO (the rung nearest the price), "
+             "equal prices to the lower ticker. Every other term is commod_fav_band's, "
+             "copied and not retuned: the six series, the closes (WTI 14:30 ET, the rest "
+             "17:00 ET), Eastern-time windows, trading days only, a two-sided NO quote with a "
+             "spread of 3c or less and 25 contracts at the NO ask (the size at the Yes bid), "
+             "settlement on Kalshi's own result, the 7% taker fee, and an outcome per "
+             "market-day, clustered by day. ONE MARKET, ONE LANE across the commodity lanes, "
+             "in the order commod_fav_band, commod_nc_yes, commod_nc_no; a rung cannot be "
+             "90c+ on both sides, but the guard is applied anyway. WHY: on 229 settled Kalshi "
+             "daily commodity ladders, 47 trading days 2026-08-11 to 10-15, cheapest in-band "
+             "contract per event, spread 5c or less, after the fee and z clustered by day, NO "
+             "0.90-0.98 at 1 hour before the close won 150/155, 97% at 94c, +2.7%, z +2.09, "
+             "and held in both halves (split 2026-09-14): +2% and +3%. The same band at 3 "
+             "hours LOST (-3.3%), so the edge is only in the last hour. CAVEAT: a thin edge, "
+             "about 3c per win, where one loss costs about 16 wins. The research window is "
+             "the one the angle was found on, so the record starts from zero. Read at 30 "
+             "independent market-days, judged against backing every in-band rung in the "
+             "window (the blind baseline the other lanes use)."),
     "spot": dict(
         label="Spot price (no-change baseline)", kind="Baseline", connected=False,
         retired="2026-10-05: ANSWERED, which is why it is retired rather than eliminated. "
@@ -4315,9 +4379,14 @@ KALSHI_BINARY = {
     # keeps only the close inside its window. COMMOD_FAV_SERIES is defined further
     # down with the rule's constants; the names are repeated here so the universe is
     # built from the same six series the rule reads.
+    # lead_h 0.5 since 2026-10-20 (was 2): the near-certain lanes (commod_nc_yes/_no) read
+    # 75-45 minutes before the close, and a 2h lead dropped every rung they could take. Each
+    # lane still keeps only the rungs inside its own window, so commod_fav_band's 2-3.5h
+    # selection is unchanged; the one side effect is that its open bets' closing price is
+    # now snapped up to 30 minutes before the close instead of 2 hours.
     "commodities_fav": dict(series=["KXWTI", "KXBRENTD", "KXGOLDD", "KXSILVERD",
                                     "KXCOPPERD", "KXNATGASD"],
-                            lead_h=2, cap=1200, ladders_per_series=2),
+                            lead_h=0.5, cap=1200, ladders_per_series=2),
     "economics":   dict(category="Economics",   freq=("daily",), lead_h=6, cap=30),
     # Seven commodity ladders a day (WTI, Brent, gold, silver, copper, natural gas, retail
     # gasoline), each 20-65 strikes: take the soonest ladder of each, not 80 of the first.
@@ -8784,7 +8853,7 @@ def _commod_fav_liquid(row):
     return True, ""
 
 
-def fetch_commod_fav_band(sport, universe=None, now=None):
+def fetch_commod_fav_band(sport, universe=None, now=None, quiet=False):
     """The lowest in-band Yes per commodity, 2-3.5h before that series' close."""
     if sport != "commodities_fav":
         return []
@@ -8826,12 +8895,187 @@ def fetch_commod_fav_band(sport, universe=None, now=None):
         if cur is None or (price, r["market_id"]) < (cur["price_a"], cur["market_id"]):
             best[series] = r
     for series, why in sorted(skipped.items()):
-        if series not in best:
+        if series not in best and not quiet:
             print(f"  commod_fav_band: skip {series}: {why}")
     return [dict(market_id=r["market_id"], pick="a",
                  detail=f"lowest in band {r['price_a']:.2f}, "
                         f"{(_ladder_close(r) - now).total_seconds() / 3600:.1f}h to close")
             for r in sorted(best.values(), key=lambda x: x["market_id"])]
+
+
+# ---------------------------------------------------------------------------
+# Commodities near-certain, last hour — pre-registered 2026-10-20
+# ---------------------------------------------------------------------------
+#
+# Two Sandbox paper lanes beside commod_fav_band on the same six daily "above $X" ladders:
+# commod_nc_yes backs the YES whose ask is 0.90-0.98 and commod_nc_no the NO whose ask
+# (1 - the Yes bid) is 0.90-0.98, both ends inclusive, entered 75 to 45 minutes before that
+# series' close. The cheapest in-band contract per commodity is taken (the rung nearest the
+# price), equal prices to the lower ticker. Every other term is commod_fav_band's, held as
+# separate constants for the reason the commodity lane gives for copying crypto's: a retune
+# of one lane must never silently retune another. The series, closes, calendar, clustering
+# and liquidity floor (two-sided, 3c or less, 25 at the ask of the side bought) are the same.
+#
+# ONE MARKET, ONE LANE across the commodity lanes, in the order commod_fav_band, then
+# commod_nc_yes, then commod_nc_no. The bands and windows cannot meet (70-80c at 2-3.5h
+# against 90-98c in the last hour, and a rung cannot be 90c+ on both sides at once), so
+# the guard is expected never to bind; it is applied anyway, here for the same read and
+# in publish() against every market already held (ONE_LANE_SPORTS in sandbox_track).
+COMMOD_NC_BAND = (0.90, 0.98)           # BOTH ends inclusive
+COMMOD_NC_FROM_MIN = 75                 # the window opens 75 minutes before the close
+COMMOD_NC_TO_MIN = 45                   # and shuts 45 minutes before it
+COMMOD_NC_MAX_SPREAD = 0.03
+COMMOD_NC_MIN_ASK_SIZE = 25
+COMMOD_NC_READ_DAYS = 30
+COMMOD_NC_LANES = ("commod_nc_yes", "commod_nc_no")
+# The order markets are claimed in when two commodity lanes could hold one rung.
+COMMOD_LANE_PRIORITY = ("commod_fav_band", "commod_nc_yes", "commod_nc_no")
+
+
+def commod_nc_windows(now):
+    """The near-certain lanes' entry windows around `now`, soonest first.
+
+    [(label, series, window_start, window_end, close)] in UTC, one per distinct close
+    time, rolled to the next trading day once today's has shut (as commod_fav_windows)."""
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    et = now.astimezone(COMMOD_FAV_TZ)
+    groups = {}
+    for series in COMMOD_FAV_SERIES:
+        groups.setdefault(commod_fav_close_et(series), []).append(series)
+    out = []
+    for (hour, minute), series in sorted(groups.items()):
+        day = et.date()
+        for _ in range(10):
+            close = et.replace(year=day.year, month=day.month, day=day.day, hour=hour,
+                               minute=minute, second=0, microsecond=0)
+            end = close - timedelta(minutes=COMMOD_NC_TO_MIN)
+            if commod_fav_trading_day(day, series[0]) and et <= end:
+                break
+            day += timedelta(days=1)
+        start = close - timedelta(minutes=COMMOD_NC_FROM_MIN)
+        label = f"{hour:02d}:{minute:02d} ET close"
+        out.append((label, series, start.astimezone(timezone.utc),
+                    end.astimezone(timezone.utc), close.astimezone(timezone.utc)))
+    out.sort(key=lambda w: w[2])
+    return out
+
+
+def commod_side_book(row, side):
+    """(bid, ask, ask size) of one side of a commodity rung, from the row's own market.
+
+    The Yes side is the Yes book. The No side is Kalshi's No quote when the market carries
+    one, else the Yes book's complement (No ask = 1 - Yes bid, No bid = 1 - Yes ask), and its
+    size is the size resting at the Yes bid: Kalshi lists no separate No size."""
+    m = row.get("market") or {}
+    if side == "a":
+        size = _num(m.get("yes_ask_size_fp"))
+        if size is None:
+            size = _num(m.get("yes_ask_size"))
+        return _num(m.get("yes_bid_dollars")), _num(m.get("yes_ask_dollars")), size
+    ybid, yask = _num(m.get("yes_bid_dollars")), _num(m.get("yes_ask_dollars"))
+    bid, ask = _num(m.get("no_bid_dollars")), _num(m.get("no_ask_dollars"))
+    if ask is None and ybid is not None:
+        ask = round(1 - ybid, 4)
+    if bid is None and yask is not None:
+        bid = round(1 - yask, 4)
+    size = _num(m.get("no_ask_size_fp"))
+    if size is None:
+        size = _num(m.get("yes_bid_size_fp"))
+    if size is None:
+        size = _num(m.get("yes_bid_size"))
+    return bid, ask, size
+
+
+def _commod_nc_liquid(row, side):
+    """Is this rung's `side` tight and deep enough to be a real price? (ok, why)."""
+    word = "yes" if side == "a" else "no"
+    if not (row.get("tradeable") or {}).get(side):
+        return False, f"{word} side not tradeable"
+    bid, ask, size = commod_side_book(row, side)
+    if bid is None or ask is None:
+        return False, f"no two-sided {word} quote"
+    if ask - bid > COMMOD_NC_MAX_SPREAD + 1e-9:
+        return False, f"{word} spread {ask - bid:.2f} over {COMMOD_NC_MAX_SPREAD:.2f}"
+    if size is not None and size < COMMOD_NC_MIN_ASK_SIZE:
+        return False, f"{word} ask size {size:g} under {COMMOD_NC_MIN_ASK_SIZE}"
+    return True, ""
+
+
+def _commod_nc_best(name, side, sport, universe, now, quiet=False):
+    """{series: row}: the cheapest in-band `side` per commodity inside the last-hour window."""
+    if sport != "commodities_fav":
+        return {}
+    lo, hi = COMMOD_NC_BAND
+    key = f"price_{side}"
+    best, skipped = {}, {}
+    for r in (universe if universe is not None else (UNIVERSE or {})).get(sport) or []:
+        series = r.get("series")
+        if series not in COMMOD_FAV_SERIES or r.get("sport") != sport:
+            continue
+        exp = _ladder_close(r)
+        if exp is None:
+            continue
+        local = exp.astimezone(COMMOD_FAV_TZ)
+        if (local.hour, local.minute) != commod_fav_close_et(series):
+            continue
+        if not commod_fav_trading_day(local.date(), series):
+            skipped.setdefault(series, f"{local.date()} is not a trading day for {series}")
+            continue
+        minutes = (exp - now).total_seconds() / 60.0
+        if not (COMMOD_NC_TO_MIN - 1e-9 <= minutes <= COMMOD_NC_FROM_MIN + 1e-9):
+            continue
+        price = r.get(key)
+        if price is None or r.get("price_draw") is not None:
+            continue
+        # 1e-9 either side: both ends are inclusive, and 0.98 must not fall out to float error.
+        if not (lo - 1e-9 <= price <= hi + 1e-9):
+            continue
+        ok, why = _commod_nc_liquid(r, side)
+        if not ok:
+            skipped.setdefault(series, why)
+            continue
+        cur = best.get(series)
+        if cur is None or (price, r["market_id"]) < (cur[key], cur["market_id"]):
+            best[series] = r
+    if not quiet:
+        for series, why in sorted(skipped.items()):
+            if series not in best:
+                print(f"  {name}: skip {series}: {why}")
+    return best
+
+
+def _commod_nc_picks(name, side, sport, universe, now):
+    """The lane's picks, minus any market a higher-priority commodity lane takes this read."""
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    best = _commod_nc_best(name, side, sport, universe, now)
+    taken = set()
+    for other in COMMOD_LANE_PRIORITY[:COMMOD_LANE_PRIORITY.index(name)]:
+        if other == "commod_fav_band":
+            taken |= {p["market_id"] for p in fetch_commod_fav_band(sport, universe, now, quiet=True)}
+        else:
+            o_side = "a" if other == "commod_nc_yes" else "b"
+            taken |= {r["market_id"] for r in
+                      _commod_nc_best(other, o_side, sport, universe, now, quiet=True).values()}
+    key = f"price_{side}"
+    word = "Yes" if side == "a" else "No"
+    return [dict(market_id=r["market_id"], pick=side,
+                 detail=f"cheapest {word} in band {r[key]:.2f}, "
+                        f"{(_ladder_close(r) - now).total_seconds() / 60:.0f}m to close")
+            for r in sorted(best.values(), key=lambda x: x["market_id"])
+            if r["market_id"] not in taken]
+
+
+def fetch_commod_nc_yes(sport, universe=None, now=None):
+    """The cheapest Yes priced 0.90-0.98 (both ends inclusive) per commodity, 75-45 min out."""
+    return _commod_nc_picks("commod_nc_yes", "a", sport, universe, now)
+
+
+def fetch_commod_nc_no(sport, universe=None, now=None):
+    """The cheapest No priced 0.90-0.98 (both ends inclusive) per commodity, 75-45 min out."""
+    return _commod_nc_picks("commod_nc_no", "b", sport, universe, now)
 
 
 def fetch_spot(domain):
@@ -10690,6 +10934,10 @@ CHALLENGERS = {
     "crypto_eth_fav_both": fetch_crypto_eth_fav_both,
     "crypto_sol_fav_both": fetch_crypto_sol_fav_both,
     "commod_fav_band": fetch_commod_fav_band,
+    # After commod_fav_band, in COMMOD_LANE_PRIORITY order: publish() logs in this order,
+    # so a market two commodity lanes could hold goes to the earlier one.
+    "commod_nc_yes": fetch_commod_nc_yes,
+    "commod_nc_no": fetch_commod_nc_no,
     "team1_form_l5": fetch_team1_form_l5,
     "team2_form_l10": fetch_team2_form_l10,
     "mls_away_band": fetch_mls_away_band,

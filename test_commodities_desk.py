@@ -74,7 +74,7 @@ print("page shape")
 html = C.build(ledger, stages, NOW)
 main = html.split("<main", 1)[-1].split("</main>", 1)[0]
 ok("<h1>Commodities</h1>" in html, "the title is Commodities")
-ok("Daily favourite-band picks on Kalshi commodity closes · All times Central" in html, "the one scope line")
+ok("Daily favourite-band and near-certain picks on Kalshi commodity closes · All times Central" in html, "the one scope line")
 for anchor in ("rules", "events", "method"):
     ok(f'id="{anchor}"' in html and f'href="#{anchor}"' in html, f"section and sub-nav pill for #{anchor}")
 ok(html.find('id="rules"') < html.find('id="events"') < html.find('id="method"'),

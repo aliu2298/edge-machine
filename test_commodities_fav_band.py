@@ -79,7 +79,8 @@ for s in ("KXBRENTD", "KXGOLDD", "KXSILVERD", "KXCOPPERD", "KXNATGASD"):
     eq(S.commod_fav_close_et(s), (17, 0), f"{s} closes at 17:00 Eastern")
 eq(S.KALSHI_BINARY["commodities_fav"]["series"], list(S.COMMOD_FAV_SERIES),
    "the universe is built from the same six series")
-eq(S.KALSHI_BINARY["commodities_fav"]["lead_h"], 2, "the domain accepts rungs 2h out")
+eq(S.KALSHI_BINARY["commodities_fav"]["lead_h"], 0.5,
+   "the domain accepts rungs 30 minutes out (2h until the near-certain lanes, 2026-10-20); the lane keeps 2-3.5h")
 ok(S.KALSHI_BINARY["commodities_fav"]["ladders_per_series"] >= 2, "today's and tomorrow's ladder both enter")
 eq(S.SOURCES["commod_fav_band"]["sports"], ["commodities_fav"],
    "the lane has its own sport, so its record never pools with the commodity price baseline")

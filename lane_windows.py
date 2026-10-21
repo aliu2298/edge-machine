@@ -9,6 +9,8 @@ is different:
     commod_fav_band   WTI                   14:30 ET, weekdays (the commodity calendar)
                       Brent, gold, silver,  17:00 ET, the commodity calendar
                       copper, natural gas
+    commod_nc         the same six closes   75-45 min before the close (commod_nc_yes/_no,
+                      2026-10-20), read every 10 minutes, so a 15-minute cron asks twice
     econ_daily        AAA gas               23:59 ET, every day
                       diesel                01:59 ET, every day
     finance_daily     Treasury yields       15:30 ET, weekdays
@@ -55,6 +57,9 @@ MIN_H, MAX_H = 2.0, 3.5
 STAMP = {
     "crypto_fav_band": "data/crypto_window/request.txt",
     "commod_fav_band": "data/commodities_window/request.txt",
+    # The near-certain commodity lanes (2026-10-20) share the commodity stamp: the tracker
+    # workflow already triggers on it, and one run serves every lane whose window is open.
+    "commod_nc": "data/commodities_window/request.txt",
     "econ_daily": "data/daily_window/request.txt",
     "finance_daily": "data/daily_window/request.txt",
     "ftts_no": "data/ftts_window/request.txt",
@@ -114,6 +119,11 @@ DAILY_CLOSES = (
 )
 assert (S.CRYPTO_FAV_MIN_H, S.CRYPTO_FAV_MAX_H) == (MIN_H, MAX_H)
 assert (S.COMMOD_FAV_MIN_H, S.COMMOD_FAV_MAX_H) == (MIN_H, MAX_H)
+# The near-certain lanes' last-hour window: 75 to 45 minutes before the close. Thirty minutes
+# hold three reads only 10 minutes apart, and the last is asked for 5 minutes before the end.
+NC_FROM, NC_TO = S.COMMOD_NC_FROM_MIN, S.COMMOD_NC_TO_MIN
+NC_EVERY = dt.timedelta(minutes=10)
+NC_LAST_ASK = dt.timedelta(minutes=5)
 
 
 def _window(lane, label, close, series=()):
@@ -316,6 +326,11 @@ def windows(now, ledger=None, games=None, fixtures=None):
                 continue
             close = dt.datetime(day.year, day.month, day.day, h, m, tzinfo=ET)
             out.append(_window("commod_fav_band", f"Commodities {h:02d}:{m:02d} ET", close, series))
+            out.append(dict(lane="commod_nc", label=f"Commodities last hour {h:02d}:{m:02d} ET",
+                            series=tuple(series), close=close,
+                            start=close - dt.timedelta(minutes=NC_FROM),
+                            end=close - dt.timedelta(minutes=NC_TO),
+                            every=NC_EVERY, last_ask=NC_LAST_ASK))
         for lane, label, (h, m), weekdays in DAILY_CLOSES:
             if day.weekday() not in weekdays:
                 continue
@@ -345,6 +360,7 @@ WINDOW_LANES = {
     "crypto_fav_band": ("crypto_fav_band", "crypto_fav_band_below", "crypto_fav_band_60",
                         "crypto_fav_band_below_60"),
     "commod_fav_band": ("commod_fav_band",),
+    "commod_nc": S.COMMOD_NC_LANES,
 }
 
 
