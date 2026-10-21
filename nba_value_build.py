@@ -75,6 +75,7 @@ def lanes_html(state):
 <details class="section-disclosure"><summary><b>Entries</b><span>latest 30</span></summary>
 <div class="tbl"><table><thead><tr><th>Tip</th><th>Game</th><th>Lane</th><th>Rung</th><th>Side</th><th class="num">Price</th><th class="num">Model P</th><th class="num">Edge</th><th>Result</th></tr></thead>
 <tbody>{body}</tbody></table></div></details>
+{_checks_html(state)}
 <details class="section-disclosure"><summary><b>Rules and pre-registration</b><span>registered {esc(V.REGISTERED)}</span></summary>
 {defs}<p class="sm mut">The 24h lanes are the same rule, looked at 26-18 hours before tip. {esc(V.PREREG)}</p></details>
 <p class="sm mut">Last scan {esc(fmt.when(last) if last else "not yet")}{(" · " + esc(state["error"])) if state.get("error") else ""}.</p>
@@ -112,6 +113,34 @@ def _cal_rows(cal):
                    for lo, hi, n, mp, hr, ask in cal) or '<tr><td colspan="6" class="mut">No settled two-sided rung yet.</td></tr>'
 
 
+def _gap_line(gaps, unit):
+    if not gaps:
+        return "Model v Kalshi: no two-sided ladder 1h before tip yet"
+    md = T.median(gaps)
+    return (f"Model v Kalshi 1h before tip: median gap {md:+.1f} points (model mu minus Kalshi's median line, "
+            f"{len(gaps)} {unit}{'s' if len(gaps) != 1 else ''}, mean {sum(gaps) / len(gaps):+.1f}); "
+            f"below zero the model sits under the market")
+
+
+def _checks_html(state):
+    rows = []
+    for key, c in sorted((state.get("checks") or {}).items(), reverse=True)[:16]:
+        lane, night = key.rsplit(":", 1)
+        gap = "—" if c.get("gap_mean") is None else f"{c['gap_mean']:+.1f}"
+        share = "—" if c.get("share") is None else f"{c['share'] * 100:.0f}%"
+        rows.append(f'<tr><td>{esc(night)}</td><td>{esc(lane)}</td><td class="num">{c.get("games", 0)}</td>'
+                    f'<td class="num">{gap}</td><td class="num">{c.get("yes", 0)}/{c.get("no", 0)}</td>'
+                    f'<td class="num">{share}</td><td>{esc("ok" if c.get("ok") else c.get("reason") or "blocked")}</td></tr>')
+    body = "".join(rows) or '<tr><td colspan="7" class="mut">No night checked yet.</td></tr>'
+    return ('<details class="section-disclosure"><summary><b>Level guard</b><span>by night</span></summary>'
+            '<p class="sm mut">Before a lane\'s first look on a night, the whole slate is checked: if the model\'s '
+            'mean mu sits more than 4 points (1Q: 3) from Kalshi\'s median lines, or more than 80% of 5+ would-be '
+            'picks are one side, the night is logged as a model level mismatch and that lane enters nothing.</p>'
+            '<div class="tbl"><table><thead><tr><th>Night</th><th>Lane</th><th class="num">Games</th>'
+            '<th class="num">Model − Kalshi</th><th class="num">YES/NO</th><th class="num">One side</th>'
+            f'<th>Verdict</th></tr></thead><tbody>{body}</tbody></table></div></details>')
+
+
 def _ask_line(cal):
     if not cal:
         return "no settled two-sided rung yet"
@@ -133,6 +162,7 @@ def tracker_html(track):
                 f"{d['moved']} moved 2c or more, and {_pct(d['matched'])} of those moved the way the rung settled")
 
     last = track.get("last_run")
+    gaps = T.level_gaps(tr)
     return f"""<section id="ladder">
 <div class="nba-section-head"><div><h2>Ladder tracker</h2><p class="shell-kicker">Every finished game's Kalshi team-total and 1Q ladders, 24h to 1h before tip · observation, no bets</p></div>
 <span class="nba-count">{s["games"]} game{"s" if s["games"] != 1 else ""} · {s["rungs"]} rungs</span></div>
@@ -140,10 +170,12 @@ def tracker_html(track):
 <p class="sm mut">Every rung quoted two-sided 1 hour before tip: the model's P against how often it hit and Kalshi's average YES ask, by model-P bucket. Where the hit rate runs above the ask, Kalshi priced the over too low; where it tracks the model's P, the model holds.</p>
 <div class="tbl"><table><thead>{CAL_HEAD}</thead>
 <tbody>{_cal_rows(cal_tt)}</tbody></table></div>
+<p class="sm">{esc(_gap_line(gaps["tt"], "team"))}.</p>
 <p class="sm mut">By Kalshi's ask instead: {esc(_ask_line(cal_tt_ask))}.</p>
 <details class="section-disclosure"><summary><b>Calibration · 1st-quarter totals</b><span>{sum(r[2] for r in cal_q1)} rungs</span></summary>
 <div class="tbl"><table><thead>{CAL_HEAD}</thead>
 <tbody>{_cal_rows(cal_q1)}</tbody></table></div>
+<p class="sm">{esc(_gap_line(gaps["q1"], "game"))}.</p>
 <p class="sm mut">By Kalshi's ask instead: {esc(_ask_line(cal_q1_ask))}.</p></details>
 <h3>Team climb and drift</h3>
 <p class="sm mut">Climb is points minus Kalshi's 50c line (the rung whose 1h mid is nearest 0.50); beat is how often the team cleared it. Opp. climb is the opponents' climb against their own line. Ask drift is the average YES ask change from 24h to 1h on that team's rungs with a 1h mid of 15-85c; line move is the 50c line at 1h minus at 24h, in points.</p>

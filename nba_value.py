@@ -42,6 +42,14 @@ SETTLEMENT. Kalshi's official result, profit per $100 after the 7% taker fee. St
   independent-bets variance.
 BLIND BASELINE (per lane): the YES on every rung with the same two-sided 3c quote and a YES ask of
   0.25-0.92 at that lane's look, one entry per rung.
+LEVEL ANCHOR AND GUARD (added the evening of 2026-10-21, before any entry). The 2025-26 prior is
+  re-anchored to the 2026-27 scoring level: team prior = level now + (team 2025-26 - league 2025-26),
+  level now = the 2026-27 preseason plus regular-season games so far (nba_ladder_track.level_now).
+  Before a lane's first look on a game night the whole slate is checked; if the model's mean mu sits
+  more than 4 points (1Q: 3) from Kalshi's median lines, or more than 80% of 5+ would-be picks are
+  one side, the night is logged as "model level mismatch" and that lane enters nothing (nor its
+  baseline) that night. The 2026-10-21 slate (10 of 13 team-total picks NO) is observed only; the
+  first night entered is 2026-10-22 (FIRST_NIGHT).
 WHY 18-26h. Team-total ladders open about 48 hours before tip; the 1Q ladder for the 2026-10-21
   slate opened about 20 hours before a 7pm ET tip, so a 20-26h window would have had no 1Q ladder
   to look at. The early window is 18-26h for both, and the look is the first read with a ladder.
@@ -79,6 +87,10 @@ PRICE = (0.25, 0.92)
 FEE = 0.07
 EPS = 1e-9
 SCHEDULE_DAYS = 3
+# The first game night the lanes may enter (2026-10-21, Olu): the level anchor and guard were added
+# that evening, after the 2026-10-21 slate showed 10 of 13 team-total picks as NO, so that slate
+# is observed by the tracker but never entered.
+FIRST_NIGHT = "2026-10-22"
 BASE = {lane: "base_" + lane for lane in LANES}
 CT = ZoneInfo("America/Chicago")
 NAMES = {TT_1H: "NBA team total · model value · 1h", TT_24H: "NBA team total · model value · 24h",
@@ -107,7 +119,11 @@ PREREG = (
     "87/80/68, 119+ 93/87/78. Caveats: no historical Kalshi NBA team-total prices exist, so this is the "
     "first test of whether Kalshi's prices sit below the model; early-season shrinkage leans on last "
     "season's averages; the model's own calibration must hold. Read at 10+ settled entries for review, "
-    "30 for a verdict.")
+    "30 for a verdict. Added the evening of 2026-10-21, before any entry: each team's 2025-26 prior is "
+    "re-anchored to the 2026-27 scoring level (preseason plus regular season so far: team prior = level now "
+    "+ (team 2025-26 − league 2025-26)); a level guard skips a lane's whole night when the model's mean mu "
+    "sits more than 4 points (1Q: 3) from Kalshi's median lines or more than 80% of 5+ would-be picks are "
+    "one side; the first night entered is 2026-10-22.")
 
 
 def fee(p):
@@ -121,7 +137,7 @@ def cost(p):
 def empty():
     return {"version": "nba-value-v1", "registered": REGISTERED,
             "rules": {k: {"picks": []} for k in (*LANES, *BASE.values())},
-            "looks": {}, "runs": [], "schedule": []}
+            "looks": {}, "checks": {}, "runs": [], "schedule": []}
 
 
 def load(path=PATH):
@@ -232,7 +248,8 @@ def in_window(lane, g, now):
 
 
 def due(lane, games, now):
-    return [g for g in games.values() if not g.get("completed") and in_window(lane, g, now)]
+    return [g for g in games.values() if not g.get("completed") and in_window(lane, g, now)
+            and (T.night(g) or "") >= FIRST_NIGHT]
 
 
 def schedule(games, now):
@@ -321,6 +338,82 @@ def stats(picks):
 
 # ---------- the run ----------
 
+# ---------- the level guard (2026-10-21) ----------
+# The model's level can sit away from the market's for reasons it cannot see (rosters, rule or
+# pace changes). Before a lane's first look on a night, the whole slate is checked; a night that
+# fails is logged as "model level mismatch" and that lane takes no entries (nor baseline) on it.
+GAP_MAX = {"tt": 4.0, "q1": 3.0}        # |mean(model mu - Kalshi's median line)|, points
+SIDE_MAX = 0.80                         # share of the slate's would-be picks on one side
+SIDE_MIN_N = 5
+
+
+def market_median(rows):
+    """The line where Kalshi's YES mid crosses 0.50, interpolated between rungs, from [(line, mid)].
+
+    Outside the quoted range it is the nearest rung's line; None with no rung."""
+    rows = sorted(rows)
+    if not rows:
+        return None
+    for (l1, m1), (l2, m2) in zip(rows, rows[1:]):
+        if m1 >= 0.5 >= m2 and m1 != m2:
+            return l1 + (m1 - 0.5) / (m1 - m2) * (l2 - l1)
+    return min(rows, key=lambda r: (abs(r[1] - 0.5), r[0]))[0]
+
+
+def ladder_medians(ms, g, kind):
+    """{unit: Kalshi's median line} from the two-sided YES mids of one event's rungs."""
+    by = {}
+    for m in ms:
+        if str(m.get("status") or "").lower() not in ("active", "open"):
+            continue
+        s = T.strike(m)
+        b, a = D.number(m.get("yes_bid_dollars")), D.number(m.get("yes_ask_dollars"))
+        if s is None or b is None or a is None or not 0 < b < a < 1:
+            continue
+        unit = T.team_of(m.get("ticker"), g) if kind == "tt" else "game"
+        if unit:
+            by.setdefault(unit, []).append((s, (a + b) / 2))
+    return {u: market_median(r) for u, r in by.items()}
+
+
+def check_verdict(gaps, sides, kind):
+    """(ok, reason, mean gap, one-side share) for a night's gaps and would-be pick sides."""
+    mean = sum(gaps) / len(gaps) if gaps else None
+    share = max(sides.count("yes"), sides.count("no")) / len(sides) if sides else None
+    if mean is not None and abs(mean) > GAP_MAX[kind]:
+        return False, f"model level mismatch: model {mean:+.1f} pts v Kalshi's median line", mean, share
+    if len(sides) >= SIDE_MIN_N and share > SIDE_MAX + EPS:
+        side = "YES" if sides.count("yes") >= sides.count("no") else "NO"
+        return False, f"model level mismatch: {share:.0%} of {len(sides)} picks are {side}", mean, share
+    return True, None, mean, share
+
+
+def slate_check(lane, night, games, now, fetch, pri, cache):
+    """The night's level check for one lane, over every unplayed game of that night with a ladder."""
+    kind = KIND[lane]
+    gaps, sides, n = [], [], 0
+    for g in sorted(games.values(), key=lambda g: (str(g.get("start")), g["id"])):
+        t = T.start_of(g)
+        if g.get("completed") or T.night(g) != night or t is None or t < now:
+            continue
+        if (kind, g["id"]) not in cache:
+            cache[(kind, g["id"])] = T.event_markets(SERIES[kind], g, fetch)
+        ev, ms = cache[(kind, g["id"])]
+        if not ev:
+            continue
+        n += 1
+        model = T.model_for(g, games, pri, at=now)
+        for unit, med in ladder_medians(ms, g, kind).items():
+            mu = model["mu"].get(unit) if kind == "tt" else model.get("mu_q1")
+            if med is not None and mu is not None:
+                gaps.append(mu - med)
+        sides += [c["side"] for c in best(candidates(ms, g, kind, model)).values()]
+    ok, reason, mean, share = check_verdict(gaps, sides, kind)
+    return dict(at=now.isoformat(), games=n, gaps=len(gaps), gap_mean=None if mean is None else round(mean, 2),
+                picks=len(sides), yes=sides.count("yes"), no=sides.count("no"),
+                share=None if share is None else round(share, 3), ok=ok, reason=reason)
+
+
 def run(state, track_state, now=None, fetch=D.get, pri=None):
     """Look at every due game for every lane, then settle. Returns the new lane entry ids."""
     now = now or dt.datetime.now(dt.timezone.utc)
@@ -349,6 +442,21 @@ def run(state, track_state, now=None, fetch=D.get, pri=None):
             if not ev or not has_ladder(ms):
                 continue                                       # no ladder yet: a later read looks
             model = T.model_for(g, games, pri, at=now)
+            ckey = f"{lane}:{T.night(g)}"
+            if ckey not in state.setdefault("checks", {}):
+                try:
+                    state["checks"][ckey] = slate_check(lane, T.night(g), games, now, fetch, pri, cache)
+                except Exception as e:                          # noqa: BLE001
+                    errs.append(f"{ckey} check: {str(e)[:80]}")
+                    continue
+            chk = state["checks"][ckey]
+            if not chk["ok"]:
+                state["looks"][f"{lane}:{g['id']}"] = dict(at=now.isoformat(), event=ev, picks=[], baseline=0,
+                                                           blocked=chk["reason"], mu=model.get("mu"),
+                                                           mu_q1=model.get("mu_q1"))
+                st["looked"] += 1
+                st["blocked"] = st.get("blocked", 0) + 1
+                continue
             picks, base = look(state, lane, g, ms, ev, model, now)
             st["looked"] += 1
             for p in picks + base:

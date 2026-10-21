@@ -325,13 +325,59 @@ check("only NBA teams' regular-season games", sorted(ts["games"]), ["9001"])
 row = ts["tracked"]["9001"]
 check("tracked: points, 1Q, both ladders", (row["pts"], row["q1"]["NY"], row["tt"]["event"], row["q1_ladder"]["event"]),
       ({"NY": 120, "SA": 104}, 30, EV_TT, EV_Q1))
-check("the model at the tip is stored", sorted(row["model"]), ["mu", "mu_q1", "n", "sd", "sd_q1"])
+check("the model at the tip is stored, with its level", sorted(row["model"]), ["level", "mu", "mu_q1", "n", "sd", "sd_q1"])
 check("a game night", row["night"], "2026-10-28")
 n_before = len(ts["tracked"])
 T.run(ts, dt.datetime(2026, 10, 29, 13, tzinfo=UTC), tfetch, day_rows, pri=pri26)
 check("tracked once", len(ts["tracked"]), n_before)
 hist = T.history_rows(ts["games"], before=TIP)
 check("the game is not in its own model (before the tip)", hist, [])
+
+print("\nthe level anchor: team prior = level now + (team 2025-26 - league 2025-26)")
+pri2 = {"A": dict(n=82, off=120.0, dfn=110.0, q1_off=30.0, q1_dfn=28.0),
+        "B": dict(n=82, off=110.0, dfn=120.0, q1_off=28.0, q1_dfn=30.0)}
+check("the prior's level", M.prior_level(pri2), (115.0, 58.0))
+sh = M.shift_prior(pri2, 118.0, 62.0)
+check("every rate moves by the level change (+3, 1Q +2 per side)",
+      (sh["A"]["off"], sh["A"]["dfn"], sh["B"]["q1_off"], sh["B"]["q1_dfn"]), (123.0, 113.0, 30.0, 32.0))
+check("the spread between teams is kept", sh["A"]["off"] - sh["B"]["off"], 10.0)
+check("a level of None changes nothing", M.shift_prior(pri2, None, None), pri2)
+pre_rows = [("2026-10-05T23:00Z", 230, 60), ("2026-10-06T23:00Z", 240, 56)]
+lv = T.level_now({"9001": dict(GAME, completed=True, pts_home=120, pts_away=100, q1_home=30, q1_away=28)},
+                 before=TIP + dt.timedelta(hours=5), pre=pre_rows)
+check("level now: preseason plus regular-season games", (lv[0], lv[1], lv[2]), ((230 + 240 + 220) / 6, (60 + 56 + 58) / 3, 3))
+check("a game after the cut is not in the level", T.level_now({"9001": dict(GAME, completed=True, pts_home=120, pts_away=100,
+      q1_home=30, q1_away=28)}, before=TIP, pre=pre_rows)[2], 2)
+
+check("no entries before the first night (the 2026-10-21 slate is observed only)",
+      V.due(V.TT_1H, {"x": dict(GAME, id="x", start="2026-10-21T23:30Z")}, dt.datetime(2026, 10, 21, 22, 15, tzinfo=UTC)), [])
+check("the first night is 2026-10-22", V.FIRST_NIGHT, "2026-10-22")
+
+print("\nthe level guard")
+near("market median interpolates the 0.50 crossing", V.market_median([(109.5, 0.61), (113.5, 0.47), (117.5, 0.34)]),
+     109.5 + (0.61 - 0.5) / (0.61 - 0.47) * 4)
+check("outside the quoted range: the nearest rung", V.market_median([(109.5, 0.3), (113.5, 0.2)]), 109.5)
+check("a gap over 4 points blocks", V.check_verdict([-5.0, -4.5, -3.0], ["no", "yes"], "tt")[0], False)
+check("...and says so", V.check_verdict([-5.0, -4.5, -3.0], ["no"], "tt")[1].startswith("model level mismatch"), True)
+check("a 1Q gap over 3 blocks", V.check_verdict([-3.5], [], "q1")[0], False)
+check("12 of 13 one side blocks", V.check_verdict([-1.0], ["no"] * 12 + ["yes"], "tt")[0], False)
+check("4 of 4 one side is too few to judge", V.check_verdict([-1.0], ["no"] * 4, "tt")[0], True)
+check("80% exactly passes", V.check_verdict([0.5], ["no"] * 4 + ["yes"], "tt")[0], True)
+biased = dict(MODEL, mu={"NY": 107.0, "SA": 104.0})
+T.model_for = lambda *a, **k: biased
+sb = V.empty()
+V.run(sb, dict(games={"9001": GAME}), TIP - dt.timedelta(minutes=75), fake({EV_TT: tt, EV_Q1: q1}), pri={})
+T.model_for = _model_for
+chk = sb["checks"][f"{V.TT_1H}:2026-10-28"]
+check("a model 6-8 points under the market: the night is a mismatch", (chk["ok"], chk["reason"][:20]), (False, "model level mismatch"))
+check("...no entries and no baseline that night", (sb["rules"][V.TT_1H]["picks"], sb["rules"][V.BASE[V.TT_1H]]["picks"]), ([], []))
+check("...but the look is used and logged", sb["looks"][f"{V.TT_1H}:9001"]["blocked"][:20], "model level mismatch")
+lg_ = T.level_gaps(tracked)
+check("tracker gaps need a stored model", lg_, {"tt": [], "q1": []})
+tracked["1"]["model"] = dict(mu={"NY": 112.0, "SA": 110.0}, mu_q1=60.0)
+lg_ = T.level_gaps(tracked)
+near("tracker gap: NY mu 112 v the nearest-50c rung 113.5 (both mids under 0.50)", lg_["tt"][0], -1.5)
+check("median", T.median([3, 1, 2, 10]), 2.5)
 
 print("\nthe page sections")
 html = VB.section(state, dict(tracked=tracked, games={}, last_run=None))

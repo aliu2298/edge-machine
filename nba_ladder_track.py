@@ -152,11 +152,49 @@ def history_rows(games, before=None):
     return out
 
 
-def model_for(g, games, pri=None, at=None):
-    """nba_value_model.game_model for one game, from this season's games before `at` (default the tip)."""
+PACE = os.path.join(ROOT, "data", "nba_pace.json")
+_PRE = []
+
+
+def preseason_games(path=PACE):
+    """2026-27 preseason games with a final and a 1Q total (nba_pace.json), read once: [(start, ft, q1)]."""
+    if not _PRE:
+        try:
+            with open(path) as f:
+                rows = json.load(f).get("games") or []
+        except (OSError, ValueError):
+            rows = []
+        _PRE.append([(r.get("start"), r["act_ft"], r["act_q1"]) for r in rows
+                     if r.get("act_ft") is not None and r.get("act_q1") is not None
+                     and str(r.get("day") or "") < SEASON_START.isoformat()])
+    return _PRE[0]
+
+
+def level_now(games, before=None, pre=None):
+    """(points per team-game, 1Q game total, games) of the 2026-27 environment: the preseason plus
+    the regular-season games completed before `before`."""
+    pre = preseason_games() if pre is None else pre
+    ft = [x[1] for x in pre]
+    q1 = [x[2] for x in pre]
+    for r in history_rows(games, before):
+        ft.append(r["pts_home"] + r["pts_away"])
+        q1.append(r["q1_home"] + r["q1_away"])
+    if not ft:
+        return None, None, 0
+    return sum(ft) / (2 * len(ft)), sum(q1) / len(q1), len(ft)
+
+
+def model_for(g, games, pri=None, at=None, pre=None):
+    """nba_value_model.game_model for one game, from this season's games before `at` (default the tip).
+
+    The 2025-26 prior is first re-anchored to the 2026-27 scoring level (level_now)."""
     pri = M.prior() if pri is None else pri
     cut = at or start_of(g)
-    return M.game_model(g["home"], g["away"], pri, M.current_sums(history_rows(games, cut)))
+    lp, lq, _n = level_now(games, cut, pre)
+    model = M.game_model(g["home"], g["away"], M.shift_prior(pri, lp, lq) if pri else pri,
+                         M.current_sums(history_rows(games, cut)))
+    model["level"] = dict(pts=None if lp is None else round(lp, 2), q1=None if lq is None else round(lq, 2), games=_n)
+    return model
 
 
 # ---------- Kalshi: events, rungs, quotes ----------
@@ -287,7 +325,7 @@ def track(state, now, fetch=D.get, pri=None):
                          pts={g["home"]: g["pts_home"], g["away"]: g["pts_away"]},
                          q1={g["home"]: g["q1_home"], g["away"]: g["q1_away"]},
                          model=dict(mu={k: _r(v) for k, v in model["mu"].items()}, mu_q1=_r(model["mu_q1"]),
-                                    sd=model["sd"], sd_q1=model["sd_q1"],
+                                    sd=model["sd"], sd_q1=model["sd_q1"], level=model.get("level"),
                                     n={t: model["form"][t]["n"] for t in model["form"]}),
                          tt=tt, q1_ladder=q1, tracked=now.isoformat(), final=bool(settled))
         new.append(gid)
@@ -411,6 +449,41 @@ def calibration(tracked, kind="tt", h="1", by="model"):
             out.append((lo, min(hi, 1.0), len(b), _avg([x[0] for x in b]), _avg([x[1] for x in b]),
                         _avg([x[2] for x in b])))
     return out
+
+
+def median_line(rungs, h="1"):
+    """The line where the two-sided YES mid crosses 0.50 at `h` hours, interpolated, else None."""
+    rows = sorted((r["line"], mid(r["q"][h])) for r in rungs if two_sided(r["q"].get(h)))
+    if not rows:
+        return None
+    for (l1, m1), (l2, m2) in zip(rows, rows[1:]):
+        if m1 >= 0.5 >= m2 and m1 != m2:
+            return l1 + (m1 - 0.5) / (m1 - m2) * (l2 - l1)
+    return min(rows, key=lambda r: (abs(r[1] - 0.5), r[0]))[0]
+
+
+def level_gaps(tracked, h="1"):
+    """{"tt": [model mu - Kalshi's median line], "q1": [...]} per team (1Q per game) at `h` hours."""
+    out = {"tt": [], "q1": []}
+    for row in tracked.values():
+        m = row.get("model") or {}
+        for team in (row["home"], row["away"]):
+            med = median_line([x for x in (row.get("tt") or {}).get("rungs") or [] if x["team"] == team], h)
+            mu = (m.get("mu") or {}).get(team)
+            if med is not None and mu is not None:
+                out["tt"].append(round(mu - med, 2))
+        med = median_line((row.get("q1_ladder") or {}).get("rungs") or [], h)
+        if med is not None and m.get("mu_q1") is not None:
+            out["q1"].append(round(m["mu_q1"] - med, 2))
+    return out
+
+
+def median(xs):
+    xs = sorted(xs)
+    if not xs:
+        return None
+    k = len(xs) // 2
+    return xs[k] if len(xs) % 2 else (xs[k - 1] + xs[k]) / 2
 
 
 def summary(state):

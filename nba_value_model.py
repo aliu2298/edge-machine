@@ -171,6 +171,29 @@ def mu_q1(home, away, lg, b=None):
     return 2 * L + b * sum(v - L for v in vals)
 
 
+def prior_level(pri):
+    """(points per team-game, 1Q game total) of a prior: its league means."""
+    if not pri:
+        return None, None
+    v = list(pri.values())
+    pts = (sum(x["off"] for x in v) + sum(x["dfn"] for x in v)) / (2 * len(v))
+    q1 = (sum(x["q1_off"] for x in v) + sum(x["q1_dfn"] for x in v)) / len(v)
+    return pts, q1
+
+
+def shift_prior(pri, level_pts=None, level_q1=None):
+    """The prior re-anchored to the current scoring level (2026-10-21, Olu's main session).
+
+    team prior = level now + (team's 2025-26 rate - 2025-26 league rate), for scoring and allowing,
+    full game and 1Q (a 1Q game-total level is split evenly between the two sides). A level of
+    None leaves that part unchanged."""
+    p_pts, p_q1 = prior_level(pri)
+    dp = 0.0 if level_pts is None or p_pts is None else level_pts - p_pts
+    dq = 0.0 if level_q1 is None or p_q1 is None else (level_q1 - p_q1) / 2
+    return {t: dict(v, off=v["off"] + dp, dfn=v["dfn"] + dp, q1_off=v["q1_off"] + dq, q1_dfn=v["q1_dfn"] + dq)
+            for t, v in pri.items()}
+
+
 def game_model(home, away, pri, cur_sums, k=K):
     """The model for one game: both teams' mu and the 1Q mu, with each team's form."""
     fh, fa = form(home, pri, cur_sums, k), form(away, pri, cur_sums, k)

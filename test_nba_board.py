@@ -467,7 +467,7 @@ ok("button.nba-more" in js and "aria-expanded" in js, "sports.js wires the row c
 
 labelled = HTML
 ok(HTML.count('data-l=""') >= 1 and 'data-l="" data-l=' not in HTML
-   and 'data-l="1Q"' in HTML and HTML.count("<thead>") == 10,     # + Rules (2) and the value lanes (2) and ladder tracker (3), 2026-10-21
+   and 'data-l="1Q"' in HTML and HTML.count("<thead>") == 11,     # + Rules (2), the value lanes (3) and the ladder tracker (3), 2026-10-21
    "the page names each column for the phone cards and leaves the detail cell unlabelled")
 ok(sandbox_build.label_cells(HTML) == HTML, "labelling the page again changes nothing")
 
