@@ -27,6 +27,9 @@ def fetch(path):
     if path.startswith('markets?'):return {'markets':[market(),market('KXINX-26OCT12-T5900')]}
     if '/orderbook' in path:return book
     return {'market':market(path.split('/')[-1])}
+# The shared scan logic, read on a Financials series with the lane un-retired for the check;
+# the retirement itself is tested in test_finance_nc.py (2026-10-20).
+_retired=D.RETIRED; D.RETIRED={}
 D.run(state,fetch,now);lane=state['lanes']['finance_daily']
 assert len(lane['picks'])==1 and len(lane['baseline'])==2
 assert lane['picks'][0]['id']=='KXINX-26OCT12-T5900' # deterministic tie
@@ -39,6 +42,7 @@ def missing_book(path):
     if 'orderbook' in path:raise RuntimeError('book unavailable')
     return fetch(path)
 D.run(fresh,missing_book,now);assert fresh['lanes']['finance_daily']['picks']==[]
+D.RETIRED=_retired
 for key in D.LANES:
     html=B.build(key,state,now);assert D.LANES[key] in html and 'Scan reasons' in html
     assert 'data/daily_ledger' not in html

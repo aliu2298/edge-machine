@@ -23,6 +23,13 @@ RULE = ('YES 70–80¢; spread ≤3¢; 25+ contracts at the ask; entry 2–3.5 h
         'before a verified supported close. Cheapest qualifying above-threshold '
         'contract per event, ties by ticker. One frozen paper entry per event. '
         'Ranges, weekly contracts, publication-lag rates and already-observed outcomes excluded.')
+# Retired Sandbox lanes: the scan still reads (its coverage table stays honest) but logs no new
+# entry or baseline row, and every row already in the ledger is kept exactly as it is.
+#   finance_daily (Favourite band · 3h to the close, YES 70-80c) — RETIRED 2026-10-20. Research on
+#   94 settled KXINXU/KXNASDAQ100U 16:00 ET ladders, Aug 14-Oct 20 2026, at the same settings gave
+#   54/78 @73c, -6.4% after fee, halves -28% / +9%; the YES side loses in 8 of 9 price bands.
+#   Replaced in the Sandbox by finance_spx_nc_no (finance_nc.py). econ_daily is not affected.
+RETIRED = {'finance_daily': '2026-10-20'}
 INDICES = {'KXINXDUD', 'KXNASDAQDUD', 'KXINXAB', 'KXINX', 'KXNASDAQ100', 'KXNASDAQ100Z', 'KXINXZ',
            'KXINXU', 'KXNASDAQ100U'}
 # The S&P 500 and Nasdaq-100 "above X" ladders (2026-10-16). Kalshi files them as HOURLY series
@@ -172,6 +179,7 @@ def run(state, fetch=get, now=None):
             # No candidate is recorded if any book or page failed: no partial ranking.
             obs=dict(series=series,at=stamp,listed=len(markets),eligible=len(candidates),reasons=dict(counts))
             lane['observations']=[x for x in lane['observations'] if x['series']!=series]+[obs]
+            if meta['lane'] in RETIRED: continue
             for m,q in candidates:
                 if any(x['id']==m['ticker'] for x in lane['baseline']): continue
                 lane['baseline'].append(dict(id=m['ticker'],event=m['event_ticker'],series=series,name=meta['name'],
