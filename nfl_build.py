@@ -46,7 +46,17 @@ def build(d=None, st=None, now=None):
         venue="Polymarket US", rows=rows, events=CC.events, rule_name=CC.rule_name,
         market=CC.market, definition=SP.default_definition, recent=CC.recent_html,
         method=method(idle_html))
-    return SP.page(sp, d, st, now, rows=rows, idle=idle)
+    return _team_totals(SP.page(sp, d, st, now, rows=rows, idle=idle))
+
+
+def _team_totals(html):
+    """nfl_tt_over_3545 and nfl_tt_over_main (nfl_tt_build.py, 2026-10-21) in the Sandbox rules
+    list, from their own ledger. Never breaks the page."""
+    try:
+        import nfl_tt_build
+        return nfl_tt_build.place(html)
+    except Exception:                                           # noqa: BLE001
+        return html
 
 
 def main():
