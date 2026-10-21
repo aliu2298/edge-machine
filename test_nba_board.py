@@ -258,7 +258,12 @@ ok("11.1" in away and "12.2" in away and "O-D-" in away and "Slow offense · str
    "the away column shows the stored rates, the code and its meaning")
 ok("13.3" in home and "14.4" in home and "O+D+" in home, "the home column shows the stored rates and label")
 ok("Scored 11.1 · allowed 12.2" in _text(away), "rates read Scored X · allowed Y")
-ok("Nets" not in HTML and "Brooklyn" not in HTML, "a team with no stored full name is not given one")
+# The Sandbox rule sections quote Kalshi's own contract titles ("Brooklyn over 103.5 points"),
+# which are the venue's words, not a name the board gave a team: judge the board without them.
+_board = HTML
+for _sid in ("rules", "value", "ladder"):
+    _board = _board.replace(_section(HTML, _sid), "")
+ok("Nets" not in _board and "Brooklyn" not in _board, "a team with no stored full name is not given one")
 ok("tempo" not in HTML and "Combined expectations" not in HTML and "<meter" not in HTML
    and "<progress" not in HTML and "data-pct" not in HTML,
    "no bars, meters, or expectation tracks anywhere on the page")
@@ -435,7 +440,7 @@ ok(nba_tab is not None and 'aria-current="page"' in nba_tab.group(0)
    and main_nav.count('aria-current="page"') == 1 and HTML.count('<nav class="main"') == 1,
    "only the NBA pill is current")
 ok('<script src="./sports.js"></script>' in HTML, "the NBA page still loads sports.js")
-ok('<nav class="toc" aria-label="On this page"><a href="#matchups">Upcoming</a><a href="#rules">Rules</a><a href="#graded">Results</a><a href="#teams">Teams</a></nav>' in HTML
+ok('<nav class="toc" aria-label="On this page"><a href="#matchups">Upcoming</a><a href="#rules">Rules</a><a href="#value">Value</a><a href="#ladder">Ladder</a><a href="#graded">Results</a><a href="#teams">Teams</a></nav>' in HTML
    and "nba-local-nav" not in HTML,
    "the Upcoming / Results / Teams jump pills are the shared sub-nav, not a local pill bar")
 head = HTML.split('<section id="matchups">', 1)[0]
@@ -462,7 +467,7 @@ ok("button.nba-more" in js and "aria-expanded" in js, "sports.js wires the row c
 
 labelled = HTML
 ok(HTML.count('data-l=""') >= 1 and 'data-l="" data-l=' not in HTML
-   and 'data-l="1Q"' in HTML and HTML.count("<thead>") == 5,      # + the Rules section's two tables (2026-10-17)
+   and 'data-l="1Q"' in HTML and HTML.count("<thead>") == 11,     # + Rules (2), the value lanes (3) and the ladder tracker (3), 2026-10-21
    "the page names each column for the phone cards and leaves the detail cell unlabelled")
 ok(sandbox_build.label_cells(HTML) == HTML, "labelling the page again changes nothing")
 
