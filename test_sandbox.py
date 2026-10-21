@@ -1277,8 +1277,13 @@ ok("climate" not in S.SOURCES["polymarket"]["sports"],
 
 eq(S.KALSHI_BINARY["climate"]["lead_h"], 12,
    "a daily temperature market is only taken with half a day of uncertainty left")
-ok(all(cfg["lead_h"] >= 2 for cfg in S.KALSHI_BINARY.values()),
+ok(all(cfg["lead_h"] >= 2 for k, cfg in S.KALSHI_BINARY.items() if k != "commodities_fav"),
    "no domain logs a forecast against a market that is about to expire")
+# commodities_fav logs no forecast, only pre-registered price bands; the near-certain lanes
+# (2026-10-20) enter 75-45 minutes before the close, so its universe keeps rungs 30 minutes out.
+ok(S.KALSHI_BINARY["commodities_fav"]["lead_h"] * 60 <= S.COMMOD_NC_TO_MIN
+   and S.KALSHI_BINARY["commodities_fav"]["lead_h"] >= 0.5,
+   "the commodity band lanes' universe reaches the last-hour window and no closer than 30 minutes")
 
 # ---------------------------------------------------------------------------
 

@@ -99,7 +99,10 @@ PRICE_CEIL = 0.95    # single fluke pays 50x and one lucky pick would own the bo
 # 0.97+ — so capping them at 0.95 would not make the rule safer, it would leave it unmeasured.
 # The risk is handled where it belongs instead: the ROI is after fees, a day's whole ladder
 # shares one outcome cluster (one draw, not twenty), and nothing in this domain is published.
-PRICE_CEIL_BY_SPORT = {"commodities": 0.995}
+# commodities_fav 0.98 since 2026-10-20: the near-certain lanes (commod_nc_yes/_no) back
+# 0.90-0.98 in the last hour before the close, a pre-registered tail band. The 70-80c lane
+# in the same sport cannot log above 0.80, so its bets are unaffected.
+PRICE_CEIL_BY_SPORT = {"commodities": 0.995, "commodities_fav": 0.98}
 
 
 def price_band(sport):
@@ -1421,15 +1424,20 @@ def _retire_replaced_kalshi(d, row, stamp, now):
 _COIN_CLOSE_RE = re.compile(r"^([A-Z0-9]+)-(\d{2}[A-Z]{3}\d{4})(?:-|$)")
 
 
-def _book_fields(r):
+def _book_fields(r, pick="a"):
     """bid, ask and ask size from a Kalshi universe row's own market, for a lane that
-    registers store_book. Missing numbers stay out rather than being written as None."""
-    m = r.get("market") or {}
+    registers store_book. Missing numbers stay out rather than being written as None.
+    The book is the side bought: the Yes book for a Yes, the No book for a No
+    (commod_nc_no, 2026-10-20; S.commod_side_book says how the No side is read)."""
+    if pick == "b":
+        bid, ask, size = S.commod_side_book(r, "b")
+    else:
+        m = r.get("market") or {}
+        bid, ask = S._num(m.get("yes_bid_dollars")), S._num(m.get("yes_ask_dollars"))
+        size = S._num(m.get("yes_ask_size_fp"))
+        if size is None:
+            size = S._num(m.get("yes_ask_size"))
     out = {}
-    bid, ask = S._num(m.get("yes_bid_dollars")), S._num(m.get("yes_ask_dollars"))
-    size = S._num(m.get("yes_ask_size_fp"))
-    if size is None:
-        size = S._num(m.get("yes_ask_size"))
     if bid is not None:
         out["bid"] = round(bid, 4)
     if ask is not None:
@@ -1437,6 +1445,11 @@ def _book_fields(r):
     if size is not None:
         out["ask_size"] = size
     return out
+
+
+# Sports where one market belongs to one lane (see publish). commodities_fav: commod_fav_band,
+# commod_nc_yes and commod_nc_no, claimed in that order (2026-10-20).
+ONE_LANE_SPORTS = ("commodities_fav",)
 
 
 def _coin_close(market_id):
@@ -1509,6 +1522,14 @@ def publish(d, universe, coverage, verbose=True, now=None):
                 coin_close_side.setdefault(src, set()).add((key, q.get("pick")))
         if src in _yielded and q.get("bet"):
             held_by.setdefault(src, set()).add((q.get("market_id"), q.get("pick")))
+    # ONE MARKET, ONE LANE in a sport listed in ONE_LANE_SPORTS (the commodity lanes,
+    # 2026-10-20): a market any lane of that sport already holds as a bet, in the ledger,
+    # the archive or earlier in this pass, is never logged by another. The pass logs in
+    # CHALLENGERS order, which is S.COMMOD_LANE_PRIORITY for the commodity lanes.
+    one_lane = {}
+    for q in d["quotes"] + (d.get("_archive") or []):
+        if q.get("bet") and q.get("sport") in ONE_LANE_SPORTS and q.get("status") != "void":
+            one_lane.setdefault(q["sport"], set()).add(q.get("market_id"))
     # A corners selection never changes on a refresh, even if the old row has
     # settled, voided, or moved to the archive. Total and team rungs share a key.
     corners_fixtures = {S.corners_fixture_key(q)
@@ -1740,6 +1761,8 @@ def publish(d, universe, coverage, verbose=True, now=None):
                     fixture = S.corners_fixture_key(r)
                     if fixture is None or fixture in corners_fixtures:
                         continue
+                if sport in ONE_LANE_SPORTS and mid in one_lane.get(sport, ()):
+                    continue
                 # Strictly before the start, for every source and every venue, checked at
                 # the moment of logging. The venue feeds keep a contest for five minutes
                 # past its start to absorb clock skew, and that window let a tip on Al
@@ -1832,7 +1855,7 @@ def publish(d, universe, coverage, verbose=True, now=None):
                     **({"tour": r.get("tour")} if r.get("tour") in S.TENNIS_TIERS else {}),
                     # The book a rung was taken at, for a lane that registers
                     # store_book (commod_fav_band). Every other lane's row is as before.
-                    **(_book_fields(r) if (S.SOURCES.get(name) or {}).get("store_book") else {}),
+                    **(_book_fields(r, pick) if (S.SOURCES.get(name) or {}).get("store_book") else {}),
                     # Pinnacle only: was this a contest nothing else had covered? That is
                     # the Pinnacle-versus-venue rule's own lane, reported separately.
                     uncovered=(mid not in (covered.get(sport) or set())
@@ -1853,6 +1876,8 @@ def publish(d, universe, coverage, verbose=True, now=None):
                     held_by.setdefault(name, set()).add((mid, d["quotes"][-1].get("pick")))
                 if bet and (S.SOURCES.get(name) or {}).get("one_per_corners_fixture"):
                     corners_fixtures.add(S.corners_fixture_key(r))
+                if bet and sport in ONE_LANE_SPORTS:
+                    one_lane.setdefault(sport, set()).add(mid)
                 added += 1
 
     snapped = snap_closing(d, universe)
@@ -3759,6 +3784,9 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
         # on ITS side only: crypto_fav_band (Yes) and its No mirror share a sport, and the
         # pool would otherwise hold the other lane's contests.
         fside = (S.SOURCES.get(name) or {}).get("favourite_side")
+        # And inside ITS band (favourite_band, 2026-10-20): the commodity lanes share a sport
+        # at 0.70-0.80 and 0.90-0.98, and "every in-band rung" means this lane's band.
+        fband = (S.SOURCES.get(name) or {}).get("favourite_band")
         # The FIRST price logged for each contest, whether that row is still in the ledger or was
         # folded into the archive — so pruning never changes which price a contest is judged at.
         for q in sorted(all_bets(d), key=_logged_id):
@@ -3769,6 +3797,10 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
             if fside is not None and (q.get("price_a") is None or q.get("price_b") is None
                                       or ("a" if q["price_a"] >= q["price_b"] else "b") != fside):
                 continue
+            if fband is not None:
+                fp = max(q.get("price_a") or 0.0, q.get("price_b") or 0.0)
+                if not (fband[0] - 1e-9 <= fp <= fband[1] + 1e-9):
+                    continue
             pnl_f = blind_pnl(q, "favourite")
             if pnl_f is not None:
                 seen_c.add(q["market_id"])
