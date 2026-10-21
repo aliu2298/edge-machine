@@ -142,6 +142,10 @@ def start_verified(q):
                     if isinstance(l, dict)
                     and l.get("start_source", "kalshi_milestone") == "kalshi_milestone"]
         return bool(carriers) and all(l.get("sport") == "cricket" for l in carriers)
+    if q.get("sport") in T.MENTION_SPORTS:
+        # A mentions contract's "start" is its close, a term of the contract; it can only come
+        # EARLIER (Kalshi closes it the moment the word is said), never later.
+        return _kickoff(q) is not None
     if q.get("sport") in T.LADDER_SPORTS:
         # A daily-close ladder has no kickoff to confirm: its "start" is the close the
         # contract is written on, published by Kalshi as a term of the contract (the
@@ -354,6 +358,14 @@ def lead_from_quote(q, pair_key, built, kalshi=None):
                 headline = f"{strike}+ corners"
         else:
             headline = f"Over {bet['n'] - 0.5:g} goals"
+    elif q["sport"] in T.MENTION_SPORTS:
+        # One word on a "What will Trump say" contract: YES that he says it before the close,
+        # NO that he does not. The contest is the event ("What will Trump say this week?").
+        home = away = None
+        contest = q.get("label") or q["market_id"]
+        word = q.get("side_a") or q["market_id"]
+        headline = f'Trump says "{word}"' if q["pick"] == "a" else f'Trump does not say "{word}"'
+        bet = {"kind": "mention" if q["pick"] == "a" else "mention_no", "subject": word}
     elif q["sport"] in T.LADDER_SPORTS:
         # One rung of a daily-close ladder. No two sides to name: the contest is the
         # coin's close ("Bitcoin price on Oct 7, 2026") and the claim is the rung the
@@ -392,9 +404,10 @@ def lead_from_quote(q, pair_key, built, kalshi=None):
         "id": (f"{date}|{q['market_id']}|{headline} · {label}" if home is None
                else f"{date}|{home}|{away}|{headline} · {label}"),
         "date": date, "kickoff": ko.strftime("%Y-%m-%dT%H:%MZ"),
-        "league": S.quote_league(q) or (S.SPORTS.get(q["sport"])
-                                        if q["sport"] in T.ROUTED_SPORTS + T.LADDER_SPORTS else None),
-        "match": (contest if q["sport"] in T.LADDER_SPORTS else headline) if home is None else f"{home} v {away}",
+        "league": ("Trump mentions" if q["sport"] in T.MENTION_SPORTS
+                   else S.quote_league(q) or (S.SPORTS.get(q["sport"])
+                                              if q["sport"] in T.ROUTED_SPORTS + T.LADDER_SPORTS else None)),
+        "match": (contest if q["sport"] in T.LADDER_SPORTS + T.MENTION_SPORTS else headline) if home is None else f"{home} v {away}",
         "home": home, "away": away, "headline": headline,
         "bet": bet,
         "status": STATUS.get(q["status"], "void"),
@@ -1175,7 +1188,7 @@ def sport_chips(groups):
             'data-controls="coming-up recent">' + "".join(parts) + "</nav>")
 
 
-def page(d, st, blob, style, now=None, daily=None):
+def page(d, st, blob, style, now=None, daily=None, culture=None):
     """public_site/production.html — shares the Sandbox stylesheet.
 
     Organised as the questions a visitor actually asks, in order: what is in Production and on
@@ -1188,6 +1201,11 @@ def page(d, st, blob, style, now=None, daily=None):
     if daily is not None:
         import daily_production
         d, st, blob = daily_production.page_inputs(d, st, blob, daily, now=now_dt)
+    if culture is not None:
+        # Trump mentions (mentions_rate), moved by hand 2026-10-20, publishes from the Culture
+        # ledger through its own feed the same way (culture_production).
+        import culture_production
+        d, st, blob = culture_production.page_inputs(d, st, blob, culture, now=now_dt)
     # Headlines and the lead list use the page copy. The record on each card
     # is assessed on the unfiltered ledger, the same one the tracker reads,
     # so a hidden row cannot move a kept pair's numbers.
