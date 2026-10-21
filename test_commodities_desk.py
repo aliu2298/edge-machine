@@ -210,7 +210,7 @@ if playwright is not None:
             eq(page.locator("#method > details[open]").count(), 0, f"{width}px method starts closed")
             page.locator("details.sp-sandbox > summary").click()
             page.locator("details.sp-rule > summary").first.click()
-            ok(page.locator("details.sp-rule .sp-params").is_visible(), f"{width}px opening the row reveals the parameters")
+            ok(page.locator("details.sp-rule").first.locator(".sp-params").is_visible(), f"{width}px opening the row reveals the parameters")
             page.locator("#method > details > summary").click()
             ok(page.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), f"{width}px still fits with both open")
             eq(page.locator("nav.toc a").evaluate_all("a => a.map(x => x.getAttribute('href'))"),
