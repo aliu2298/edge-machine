@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-21T15:30:16.404546+00:00",
+ "last_run": "2026-10-21T16:15:16.253398+00:00",
  "registered": "2026-10-21",
  "rules": {
   "baseline": {
@@ -88,11 +88,14 @@
      "line": 17.5,
      "logged": "2026-10-21T11:45:14.051102+00:00",
      "match": "Jacob Fearnley v Clement Chidekh",
+     "payout": 1.0,
      "price": 0.91,
+     "profit": 9.2,
      "rule": "baseline",
+     "settled": "2026-10-21T16:15:16.253398+00:00",
      "side": "yes",
      "start": "2026-10-21T12:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXATPGTOTAL-26OCT21CHIFEA-18",
      "title": "Over 17.5 games",
      "tournament": "BNP Paribas Fortis European Open",
@@ -227,11 +230,14 @@
      "line": 17.5,
      "logged": "2026-10-21T11:45:14.051102+00:00",
      "match": "Jacob Fearnley v Clement Chidekh",
+     "payout": 1.0,
      "price": 0.91,
+     "profit": 9.2,
      "rule": "tennis_atp_low_over",
+     "settled": "2026-10-21T16:15:16.253398+00:00",
      "side": "yes",
      "start": "2026-10-21T12:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXATPGTOTAL-26OCT21CHIFEA-18",
      "title": "Over 17.5 games",
      "tournament": "BNP Paribas Fortis European Open",
@@ -490,10 +496,17 @@
    "entered": 0,
    "matched": 1,
    "new": 0
+  },
+  {
+   "at": "2026-10-21T16:15:16.253398+00:00",
+   "baseline": 0,
+   "due": 1,
+   "entered": 0,
+   "matched": 1,
+   "new": 0
   }
  ],
  "schedule": [
-  "2026-10-21T16:00:00+00:00",
   "2026-10-21T17:00:00+00:00",
   "2026-10-21T17:30:00+00:00",
   "2026-10-21T18:30:00+00:00",
