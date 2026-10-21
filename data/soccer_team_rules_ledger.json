@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-21T15:46:46.293715+00:00",
+ "last_run": "2026-10-21T16:31:41.590651+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -843,6 +843,32 @@
      "ticker": "KXLALIGATEAMTOTAL-26OCT19GETRVC-RVC2",
      "title": "Will Vallecano score over 1.5 goals?",
      "why": "Rayo Vallecano O+D+ v Getafe O-D- \u00b7 2+ NO 0.74"
+    },
+    {
+     "ask": 0.29,
+     "bid": 0.27,
+     "event": "KXLALIGATEAMTOTAL-26OCT21LEVATH",
+     "group": "C",
+     "id": "T8:KXLALIGATEAMTOTAL-26OCT21LEVATH:home",
+     "labels": {
+      "opp": "O-D-",
+      "own": "O+D+"
+     },
+     "league": "La Liga",
+     "line": 1.5,
+     "logged": "2026-10-21T16:31:41.590651+00:00",
+     "match": "Levante v Athletic Club",
+     "opponent": "Athletic Club",
+     "price": 0.73,
+     "rule": "T8",
+     "side": "no",
+     "start": "2026-10-21T18:00Z",
+     "status": "open",
+     "team": "Levante",
+     "team_side": "home",
+     "ticker": "KXLALIGATEAMTOTAL-26OCT21LEVATH-LEV2",
+     "title": "Will Levante score over 1.5 goals?",
+     "why": "Levante O+D+ v Athletic Club O-D- \u00b7 2+ NO 0.73"
     }
    ]
   }
@@ -1175,6 +1201,14 @@
    "labelled": 2,
    "matched": 0,
    "new": 0
+  },
+  {
+   "at": "2026-10-21T16:31:41.590651+00:00",
+   "candidates": 1,
+   "due": 1,
+   "labelled": 1,
+   "matched": 1,
+   "new": 1
   }
  ],
  "version": "soccer-team-rules-v1"
