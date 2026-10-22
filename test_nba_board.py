@@ -302,7 +302,10 @@ ok("112.3 / 140" in _text(gcells[3]) and "+5.0" in gcells[3] and "err-ok" in gce
 ok("227.9 / 210" in _text(gcells[4]) and "+4.0" in gcells[4] and f"{MINUS}17.9" not in HTML,
    "FT shows the file's +4.0")
 ok("nba-more" not in gs, "a results row has no detail chevron")
-ok('data-away="MIA"' not in HTML and "9.9" not in HTML, "a completed game older than 24h is not a row")
+# Its numbers are looked for in the game sections only: the Rules and value sections read live ledgers,
+# and a "-9.9%" ROI there (2026-10-22) is not this game (the check failed on main for that reason).
+_games = "".join(m.group(0) for m in re.finditer(r'<section id="(?:matchups|graded)">.*?</section>', HTML, re.S))
+ok('data-away="MIA"' not in HTML and "9.9" not in _games, "a completed game older than 24h is not a row")
 ok("<b>Warriors</b>" not in HTML, "a stored full name is never injected raw")
 
 coloured = N.build({"window": 5, "games": [
@@ -440,7 +443,7 @@ ok(nba_tab is not None and 'aria-current="page"' in nba_tab.group(0)
    and main_nav.count('aria-current="page"') == 1 and HTML.count('<nav class="main"') == 1,
    "only the NBA pill is current")
 ok('<script src="./sports.js"></script>' in HTML, "the NBA page still loads sports.js")
-ok('<nav class="toc" aria-label="On this page"><a href="#matchups">Upcoming</a><a href="#rules">Rules</a><a href="#value">Value</a><a href="#ladder">Ladder</a><a href="#graded">Results</a><a href="#teams">Teams</a></nav>' in HTML
+ok('<nav class="toc" aria-label="On this page"><a href="#matchups">Upcoming</a><a href="#rules">Rules</a><a href="#value">Value</a><a href="#ladder">Ladder</a><a href="#safe-card">Safe Card</a><a href="#graded">Results</a><a href="#teams">Teams</a></nav>' in HTML
    and "nba-local-nav" not in HTML,
    "the Upcoming / Results / Teams jump pills are the shared sub-nav, not a local pill bar")
 head = HTML.split('<section id="matchups">', 1)[0]
@@ -466,8 +469,18 @@ js = open(os.path.join(ROOT, "public_site", "sports.js"), encoding="utf-8").read
 ok("button.nba-more" in js and "aria-expanded" in js, "sports.js wires the row chevron")
 
 labelled = HTML
+
+
+def _safe_card_theads(html):
+    m = re.search(r'<section id="safe-card">.*?</section>', html, re.S)
+    return m.group(0).count("<thead>") if m else 0
+
+
 ok(HTML.count('data-l=""') >= 1 and 'data-l="" data-l=' not in HTML
-   and 'data-l="1Q"' in HTML and HTML.count("<thead>") == 11,     # + Rules (2), the value lanes (3) and the ladder tracker (3), 2026-10-21
+   and 'data-l="1Q"' in HTML
+   # + Rules (2), the value lanes (3) and the ladder tracker (3), 2026-10-21; the Safe Card's own
+   # tables (2026-10-22) read the live ledger, so they are counted apart.
+   and HTML.count("<thead>") - _safe_card_theads(HTML) == 11,
    "the page names each column for the phone cards and leaves the detail cell unlabelled")
 ok(sandbox_build.label_cells(HTML) == HTML, "labelling the page again changes nothing")
 
