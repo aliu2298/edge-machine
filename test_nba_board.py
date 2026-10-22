@@ -302,7 +302,10 @@ ok("112.3 / 140" in _text(gcells[3]) and "+5.0" in gcells[3] and "err-ok" in gce
 ok("227.9 / 210" in _text(gcells[4]) and "+4.0" in gcells[4] and f"{MINUS}17.9" not in HTML,
    "FT shows the file's +4.0")
 ok("nba-more" not in gs, "a results row has no detail chevron")
-ok('data-away="MIA"' not in HTML and "9.9" not in HTML, "a completed game older than 24h is not a row")
+# Its numbers are looked for in the game sections only: the Rules and value sections read live ledgers,
+# and a "-9.9%" ROI there (2026-10-22) is not this game (the check failed on main for that reason).
+_games = "".join(m.group(0) for m in re.finditer(r'<section id="(?:matchups|graded)">.*?</section>', HTML, re.S))
+ok('data-away="MIA"' not in HTML and "9.9" not in _games, "a completed game older than 24h is not a row")
 ok("<b>Warriors</b>" not in HTML, "a stored full name is never injected raw")
 
 coloured = N.build({"window": 5, "games": [
