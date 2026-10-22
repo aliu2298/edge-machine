@@ -15,18 +15,18 @@
   },
   "commodities_fav": {
    "commod_fav_band": {
-    "offered": 260,
+    "offered": 220,
     "picked": 0
    },
    "commod_nc_no": {
-    "offered": 260,
-    "picked": 0
+    "offered": 220,
+    "picked": 2
    },
    "commod_nc_yes": {
-    "offered": 260,
-    "picked": 0
+    "offered": 220,
+    "picked": 2
    },
-   "kalshi_venue": 260
+   "kalshi_venue": 220
   },
   "cricket": {
    "cricket_consensus": {
@@ -105,7 +105,7 @@
     "offered": 9,
     "picked": 5
    },
-   "kalshi_venue": 321,
+   "kalshi_venue": 297,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -295,11 +295,11 @@
    "kalshi_venue": 192,
    "mls_away_band_fade": {
     "offered": 28,
-    "picked": 0
+    "picked": 1
    },
    "mls_fade_home": {
     "offered": 28,
-    "picked": 0
+    "picked": 3
    }
   },
   "soccer_p05_cup": {
@@ -438,8 +438,8 @@
   "tennis": {
    "kalshi_venue": 23,
    "polymarket_us": 40,
-   "polymarket_us_listed": 238,
-   "polymarket_us_priced": 108,
+   "polymarket_us_listed": 237,
+   "polymarket_us_priced": 109,
    "tennis_utr_shortlist_v1": {
     "offered": 0,
     "picked": 0
@@ -456,48 +456,49 @@
  },
  "feed_status": {
   "oddspedia": "ok",
-  "pin_totals": "ok"
+  "pin_totals": "ok",
+  "pinnacle": "down: HTTP 429 on /sports/soccer_portugal_primeira_liga/events"
  },
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-10-22T19:37:15+00:00",
-   "commodities": "2026-10-22T19:37:15+00:00",
-   "commodities_fav": "2026-10-22T19:37:15+00:00",
-   "cricket": "2026-10-22T19:37:15+00:00",
-   "crypto": "2026-10-22T19:37:15+00:00",
-   "crypto_fav": "2026-10-22T19:37:15+00:00",
-   "economics": "2026-10-22T19:37:15+00:00",
-   "finance": "2026-10-22T19:37:15+00:00",
-   "mma": "2026-10-22T19:37:15+00:00",
-   "nfl": "2026-10-22T19:37:15+00:00",
-   "nhl_pl": "2026-10-22T19:37:15+00:00",
-   "nhl_rest": "2026-10-22T19:37:15+00:00",
-   "soccer": "2026-10-22T19:37:15+00:00",
-   "soccer_btts": "2026-10-22T19:37:15+00:00",
-   "soccer_btts_cup": "2026-10-22T19:37:15+00:00",
-   "soccer_corners": "2026-10-22T19:37:15+00:00",
+   "boxing": "2026-10-22T19:48:13+00:00",
+   "commodities": "2026-10-22T19:48:13+00:00",
+   "commodities_fav": "2026-10-22T19:48:13+00:00",
+   "cricket": "2026-10-22T19:48:13+00:00",
+   "crypto": "2026-10-22T19:48:13+00:00",
+   "crypto_fav": "2026-10-22T19:48:13+00:00",
+   "economics": "2026-10-22T19:48:13+00:00",
+   "finance": "2026-10-22T19:48:13+00:00",
+   "mma": "2026-10-22T19:48:13+00:00",
+   "nfl": "2026-10-22T19:48:13+00:00",
+   "nhl_pl": "2026-10-22T19:48:13+00:00",
+   "nhl_rest": "2026-10-22T19:48:13+00:00",
+   "soccer": "2026-10-22T19:48:13+00:00",
+   "soccer_btts": "2026-10-22T19:48:13+00:00",
+   "soccer_btts_cup": "2026-10-22T19:48:13+00:00",
+   "soccer_corners": "2026-10-22T19:48:13+00:00",
    "soccer_ftts": "2026-10-19T18:33:38+00:00",
-   "soccer_o15": "2026-10-22T19:37:15+00:00",
-   "soccer_o15_cup": "2026-10-22T19:37:15+00:00",
-   "soccer_o25": "2026-10-22T19:37:15+00:00",
-   "soccer_o25_cup": "2026-10-22T19:37:15+00:00",
-   "soccer_p05": "2026-10-22T19:37:15+00:00",
-   "soccer_p05_cup": "2026-10-22T19:37:15+00:00",
-   "soccer_team1": "2026-10-22T19:37:15+00:00",
+   "soccer_o15": "2026-10-22T19:48:13+00:00",
+   "soccer_o15_cup": "2026-10-22T19:48:13+00:00",
+   "soccer_o25": "2026-10-22T19:48:13+00:00",
+   "soccer_o25_cup": "2026-10-22T19:48:13+00:00",
+   "soccer_p05": "2026-10-22T19:48:13+00:00",
+   "soccer_p05_cup": "2026-10-22T19:48:13+00:00",
+   "soccer_team1": "2026-10-22T19:48:13+00:00",
    "soccer_team1_cup": "2026-10-22T18:37:56+00:00",
-   "soccer_team2": "2026-10-22T19:37:15+00:00",
+   "soccer_team2": "2026-10-22T19:48:13+00:00",
    "soccer_team2_cup": "2026-10-22T18:37:56+00:00",
-   "soccer_u35": "2026-10-22T19:37:15+00:00",
-   "soccer_u35_cup": "2026-10-22T19:37:15+00:00",
-   "tennis": "2026-10-22T19:37:15+00:00",
+   "soccer_u35": "2026-10-22T19:48:13+00:00",
+   "soccer_u35_cup": "2026-10-22T19:48:13+00:00",
+   "tennis": "2026-10-22T19:48:13+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "odds_api": {
    "allowance": 1,
-   "at": "2026-10-22T19:37:15+00:00",
+   "at": "2026-10-22T19:48:13+00:00",
    "calls": 1,
-   "remaining": 179,
+   "remaining": 178,
    "totals_on": [
     {
      "empty": {
@@ -617,7 +618,7 @@
      ]
     }
    ],
-   "used": 321
+   "used": 322
   },
   "outages": [
    {
@@ -636,14 +637,14 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 560,
+  "runs": 561,
   "tennis_shortlist": {
    "audit": [],
-   "checked_at": "2026-10-22T19:37:15.509991+00:00",
+   "checked_at": "2026-10-22T19:48:13.399559+00:00",
    "daily_limit": 3,
    "day": "2026-10-22"
   },
-  "updated": "2026-10-22T19:38:44+00:00"
+  "updated": "2026-10-22T19:49:30+00:00"
  },
  "quotes": [
   {
@@ -336116,7 +336117,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.22,
    "date": "2026-10-23",
    "edge": null,
@@ -336433,7 +336434,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.93,
    "date": "2026-10-23",
    "edge": null,
@@ -338408,7 +338409,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.4075,
    "date": "2026-10-23",
    "edge": 0.0335,
@@ -351867,7 +351868,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.57,
    "date": "2026-10-23",
    "edge": null,
@@ -352729,7 +352730,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.49,
    "date": "2026-10-23",
    "edge": null,
@@ -357180,7 +357181,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.22,
    "date": "2026-10-24",
    "edge": null,
@@ -357341,8 +357342,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
-   "close_price": 0.71,
+   "close_at": "2026-10-22T19:48:13+00:00",
+   "close_price": 0.7,
    "date": "2026-10-23",
    "edge": null,
    "espn_away": "Estudiantes de La Plata",
@@ -362674,7 +362675,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.26,
    "date": "2026-10-24",
    "edge": null,
@@ -364101,7 +364102,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.47,
    "date": "2026-10-24",
    "edge": null,
@@ -364141,7 +364142,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.4,
    "date": "2026-10-24",
    "edge": null,
@@ -364523,7 +364524,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.87,
    "date": "2026-10-24",
    "edge": null,
@@ -365247,7 +365248,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.43,
    "date": "2026-10-24",
    "edge": null,
@@ -365287,7 +365288,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.38,
    "date": "2026-10-24",
    "edge": null,
@@ -365327,7 +365328,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.41,
    "date": "2026-10-24",
    "edge": null,
@@ -365367,7 +365368,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.39,
    "date": "2026-10-24",
    "edge": null,
@@ -365407,7 +365408,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.57,
    "date": "2026-10-24",
    "edge": null,
@@ -365447,7 +365448,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.38,
    "date": "2026-10-24",
    "edge": null,
@@ -365487,7 +365488,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.39,
    "date": "2026-10-24",
    "edge": null,
@@ -369945,7 +369946,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.39,
    "date": "2026-10-24",
    "edge": null,
@@ -370023,7 +370024,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.81,
    "date": "2026-10-24",
    "edge": null,
@@ -376497,7 +376498,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.51,
    "date": "2026-10-24",
    "edge": null,
@@ -379752,7 +379753,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.83,
    "date": "2026-10-24",
    "edge": null,
@@ -383442,7 +383443,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.87,
    "date": "2026-10-23",
    "edge": null,
@@ -383482,7 +383483,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.83,
    "date": "2026-10-24",
    "edge": null,
@@ -383522,7 +383523,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.87,
    "date": "2026-10-24",
    "edge": null,
@@ -383562,7 +383563,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.77,
    "date": "2026-10-24",
    "edge": null,
@@ -383602,7 +383603,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.19,
    "date": "2026-10-24",
    "edge": null,
@@ -383986,7 +383987,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.37,
    "date": "2026-10-24",
    "edge": null,
@@ -384026,7 +384027,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.46,
    "date": "2026-10-24",
    "edge": null,
@@ -384066,7 +384067,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.29,
    "date": "2026-10-24",
    "edge": null,
@@ -387250,7 +387251,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.82,
    "date": "2026-10-24",
    "edge": null,
@@ -389849,7 +389850,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.23,
    "date": "2026-10-25",
    "edge": null,
@@ -390008,7 +390009,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.38,
    "date": "2026-10-24",
    "edge": null,
@@ -390162,7 +390163,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.88,
    "date": "2026-10-24",
    "edge": null,
@@ -390830,7 +390831,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.59,
    "date": "2026-10-24",
    "edge": null,
@@ -391935,7 +391936,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.34,
    "date": "2026-10-25",
    "edge": null,
@@ -392165,7 +392166,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.85,
    "date": "2026-10-25",
    "edge": null,
@@ -392205,7 +392206,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.86,
    "date": "2026-10-25",
    "edge": null,
@@ -393025,7 +393026,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.78,
    "date": "2026-10-25",
    "edge": null,
@@ -393067,7 +393068,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.56,
    "date": "2026-10-25",
    "edge": null,
@@ -394391,7 +394392,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.31,
    "date": "2026-10-25",
    "edge": null,
@@ -394819,7 +394820,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.57,
    "date": "2026-10-25",
    "edge": null,
@@ -395446,7 +395447,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.26,
    "date": "2026-10-24",
    "edge": null,
@@ -399894,7 +399895,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.44,
    "date": "2026-10-25",
    "edge": null,
@@ -400010,7 +400011,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.88,
    "date": "2026-10-25",
    "edge": null,
@@ -400050,7 +400051,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.68,
    "date": "2026-10-25",
    "edge": null,
@@ -400242,7 +400243,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.81,
    "date": "2026-10-25",
    "edge": null,
@@ -403804,7 +403805,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.83,
    "date": "2026-10-25",
    "edge": null,
@@ -405949,7 +405950,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.89,
    "date": "2026-10-25",
    "edge": null,
@@ -406485,7 +406486,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.5,
    "date": "2026-10-25",
    "edge": null,
@@ -406525,7 +406526,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.66,
    "date": "2026-10-24",
    "edge": null,
@@ -411453,7 +411454,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.87,
    "date": "2026-10-24",
    "edge": null,
@@ -411493,7 +411494,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.82,
    "date": "2026-10-24",
    "edge": null,
@@ -413046,7 +413047,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.25,
    "date": "2026-10-25",
    "edge": null,
@@ -413357,7 +413358,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.41,
    "date": "2026-10-25",
    "edge": null,
@@ -413397,7 +413398,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.36,
    "date": "2026-10-25",
    "edge": null,
@@ -413779,7 +413780,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.87,
    "date": "2026-10-24",
    "edge": null,
@@ -413819,7 +413820,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.81,
    "date": "2026-10-25",
    "edge": null,
@@ -413859,7 +413860,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.93,
    "date": "2026-10-25",
    "edge": null,
@@ -413899,7 +413900,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.78,
    "date": "2026-10-25",
    "edge": null,
@@ -413939,7 +413940,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.74,
    "date": "2026-10-25",
    "edge": null,
@@ -413979,7 +413980,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.72,
    "date": "2026-10-25",
    "edge": null,
@@ -414903,7 +414904,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.6,
    "date": "2026-10-25",
    "edge": null,
@@ -414943,7 +414944,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.76,
    "date": "2026-10-25",
    "edge": null,
@@ -414983,7 +414984,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.77,
    "date": "2026-10-25",
    "edge": null,
@@ -419764,7 +419765,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.36,
    "date": "2026-10-24",
    "edge": null,
@@ -421069,7 +421070,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.78,
    "date": "2026-10-24",
    "edge": null,
@@ -421267,7 +421268,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.71,
    "date": "2026-10-24",
    "edge": null,
@@ -421631,8 +421632,8 @@
    "price_b": 0.46,
    "price_draw": null,
    "prob_a": 0.545,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-10-22T19:48:57+00:00",
    "side_a": "Matheus Pucinelli de Almeida",
    "side_b": "Nicolas Jarry",
    "source": "polymarket_us",
@@ -421641,7 +421642,7 @@
    "stake": 0.0,
    "start": "2026-10-21T21:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "atpch",
    "tour": "atpch",
    "uncovered": null,
@@ -421652,7 +421653,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.49,
    "date": "2026-10-25",
    "edge": null,
@@ -421988,7 +421989,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.89,
    "date": "2026-10-25",
    "edge": null,
@@ -422142,7 +422143,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.34,
    "date": "2026-10-24",
    "edge": null,
@@ -422182,7 +422183,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.42,
    "date": "2026-10-25",
    "edge": null,
@@ -424022,7 +424023,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.24,
    "date": "2026-10-25",
    "edge": null,
@@ -424716,7 +424717,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.34,
    "date": "2026-10-25",
    "edge": null,
@@ -424756,7 +424757,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.43,
    "date": "2026-10-25",
    "edge": null,
@@ -424796,7 +424797,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.25,
    "date": "2026-10-24",
    "edge": null,
@@ -424836,7 +424837,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.49,
    "date": "2026-10-24",
    "edge": null,
@@ -424876,7 +424877,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.44,
    "date": "2026-10-24",
    "edge": null,
@@ -424916,7 +424917,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.33,
    "date": "2026-10-25",
    "edge": null,
@@ -424956,7 +424957,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.5,
    "date": "2026-10-25",
    "edge": null,
@@ -424996,7 +424997,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.24,
    "date": "2026-10-25",
    "edge": null,
@@ -425036,7 +425037,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.41,
    "date": "2026-10-25",
    "edge": null,
@@ -426835,7 +426836,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.38,
    "date": "2026-10-26",
    "edge": null,
@@ -427071,7 +427072,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.51,
    "date": "2026-10-23",
    "edge": null,
@@ -428639,7 +428640,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.2825,
    "date": "2026-10-25",
    "edge": 0.061,
@@ -428740,8 +428741,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
-   "close_price": 0.4575,
+   "close_at": "2026-10-22T19:48:13+00:00",
+   "close_price": 0.46,
    "date": "2026-10-25",
    "edge": 0.04,
    "id": "espn_fpi:aec-nfl-cle-ten-2026-10-25",
@@ -428775,7 +428776,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.59,
    "date": "2026-10-25",
    "edge": 0.08,
@@ -428810,7 +428811,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.585,
    "date": "2026-10-25",
    "edge": 0.204,
@@ -428845,7 +428846,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.805,
    "date": "2026-10-25",
    "edge": 0.0335,
@@ -428946,7 +428947,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.3825,
    "date": "2026-10-25",
    "edge": 0.036,
@@ -428981,7 +428982,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.43,
    "date": "2026-10-26",
    "edge": 0.107,
@@ -432087,7 +432088,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.38,
    "date": "2026-10-25",
    "edge": null,
@@ -432165,7 +432166,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.85,
    "date": "2026-10-25",
    "edge": null,
@@ -436411,7 +436412,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.33,
    "date": "2026-10-25",
    "edge": null,
@@ -436565,7 +436566,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.89,
    "date": "2026-10-25",
    "edge": null,
@@ -438218,7 +438219,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.25,
    "date": "2026-10-25",
    "edge": null,
@@ -438339,7 +438340,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.37,
    "date": "2026-10-25",
    "edge": null,
@@ -438455,7 +438456,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.91,
    "date": "2026-10-25",
    "edge": null,
@@ -439207,7 +439208,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.73,
    "date": "2026-10-25",
    "edge": null,
@@ -439879,8 +439880,8 @@
    "price_b": 0.54,
    "price_draw": null,
    "prob_a": 0.465,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-10-22T19:49:25+00:00",
    "side_a": "Abe - Yoshioka",
    "side_b": "Brantmeier - Tanguilig",
    "source": "polymarket_us",
@@ -439889,7 +439890,7 @@
    "stake": 0.0,
    "start": "2026-10-22T17:18:40+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfwo",
    "uncovered": null,
    "untraded": false,
@@ -440869,7 +440870,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.78,
    "date": "2026-10-25",
    "edge": null,
@@ -441109,7 +441110,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.74,
    "date": "2026-10-24",
    "edge": null,
@@ -441627,8 +441628,8 @@
    "ask_size": 565.0,
    "bet": true,
    "bid": 0.69,
-   "close_at": "2026-10-22T19:37:15+00:00",
-   "close_price": 0.21,
+   "close_at": "2026-10-22T19:43:39+00:00",
+   "close_price": 0.14,
    "date": "2026-10-22",
    "edge": null,
    "id": "commod_fav_band:KXSILVERD-26OCT2217-T54.75",
@@ -441905,8 +441906,8 @@
    "ask_size": 26.0,
    "bet": true,
    "bid": 0.77,
-   "close_at": "2026-10-22T19:37:15+00:00",
-   "close_price": 0.93,
+   "close_at": "2026-10-22T19:48:13+00:00",
+   "close_price": 0.92,
    "date": "2026-10-22",
    "edge": null,
    "id": "commod_fav_band:KXBRENTD-26OCT2217-T108",
@@ -441943,8 +441944,8 @@
    "ask_size": 565.0,
    "bet": true,
    "bid": 0.77,
-   "close_at": "2026-10-22T19:37:15+00:00",
-   "close_price": 0.15,
+   "close_at": "2026-10-22T19:48:13+00:00",
+   "close_price": 0.07,
    "date": "2026-10-22",
    "edge": null,
    "id": "commod_fav_band:KXGOLDD-26OCT2217-T4033",
@@ -442130,7 +442131,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.74,
    "date": "2026-10-25",
    "edge": null,
@@ -442322,7 +442323,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.77,
    "date": "2026-10-25",
    "edge": null,
@@ -442978,7 +442979,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.34,
    "date": "2026-10-25",
    "edge": null,
@@ -443018,7 +443019,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.43,
    "date": "2026-10-25",
    "edge": null,
@@ -443058,7 +443059,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.31,
    "date": "2026-10-25",
    "edge": null,
@@ -443098,7 +443099,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.39,
    "date": "2026-10-25",
    "edge": null,
@@ -443138,7 +443139,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.34,
    "date": "2026-10-25",
    "edge": null,
@@ -443178,7 +443179,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.56,
    "date": "2026-10-25",
    "edge": null,
@@ -443218,7 +443219,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.49,
    "date": "2026-10-25",
    "edge": null,
@@ -443258,8 +443259,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
-   "close_price": 0.34,
+   "close_at": "2026-10-22T19:48:13+00:00",
+   "close_price": 0.35,
    "date": "2026-10-25",
    "edge": null,
    "espn_away": "FC Twente",
@@ -443618,7 +443619,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.64,
    "date": "2026-10-24",
    "edge": null,
@@ -443660,7 +443661,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-22T19:37:15+00:00",
+   "close_at": "2026-10-22T19:48:13+00:00",
    "close_price": 0.64,
    "date": "2026-10-24",
    "edge": null,
@@ -444160,6 +444161,194 @@
    "untraded": false,
    "url": "https://polymarket.us/event/itfme-mikhal-kuache-2026-10-23",
    "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-24",
+   "edge": -0.04,
+   "espn_away": "Deportivo",
+   "espn_home": "Atl\u00e9tico Madrid",
+   "event": "KXLALIGATEAMTOTAL-26OCT24ATMDEP",
+   "id": "goals_market:KXLALIGATEAMTOTAL-26OCT24ATMDEP-DEP1",
+   "kalshi_title": "Deportivo De La Coruna over 0.5 goals",
+   "label": "Atl\u00e9tico Madrid v Deportivo: Deportivo to score 1+",
+   "league": "La Liga",
+   "liquidity": null,
+   "logged": "2026-10-22T19:48:13+00:00",
+   "market_id": "KXLALIGATEAMTOTAL-26OCT24ATMDEP-DEP1",
+   "opponent": "Atl\u00e9tico Madrid",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.52,
+   "price_b": 0.56,
+   "price_draw": null,
+   "prob_a": 0.48,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_team1",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-10-24T19:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "Deportivo",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxlaligateamtotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-23",
+   "edge": -0.01,
+   "id": "polymarket_us:aec-utr-grzosk-bedrya-2026-10-23",
+   "label": "Grzegorzewski, Oskar vs Bedwick, Ryan",
+   "liquidity": null,
+   "logged": "2026-10-22T19:48:13+00:00",
+   "market_id": "aec-utr-grzosk-bedrya-2026-10-23",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.55,
+   "price_b": 0.47,
+   "price_draw": null,
+   "prob_a": 0.54,
+   "result": null,
+   "settled": null,
+   "side_a": "Grzegorzewski, Oskar",
+   "side_b": "Bedwick, Ryan",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.02,
+   "stake": 0.0,
+   "start": "2026-10-23T01:30:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "utr",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/utr-grzosk-bedrya-2026-10-23",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "ask": 0.91,
+   "ask_size": 524.0,
+   "bet": true,
+   "bid": 0.89,
+   "close_at": "2026-10-22T19:48:13+00:00",
+   "close_price": 0.91,
+   "date": "2026-10-22",
+   "edge": null,
+   "id": "commod_nc_yes:KXGOLDD-26OCT2217-T4013",
+   "label": "Will the gold close price be above 4013 USD/t.oz on October 22, 2026 at 5:00 PM EDT?",
+   "liquidity": null,
+   "logged": "2026-10-22T19:48:13+00:00",
+   "market_id": "KXGOLDD-26OCT2217-T4013",
+   "pick": "a",
+   "pnl": 0.0,
+   "price": 0.91,
+   "price_a": 0.91,
+   "price_b": 0.11,
+   "price_draw": null,
+   "prob_a": null,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $4013",
+   "side_b": "No",
+   "source": "commod_nc_yes",
+   "sport": "commodities_fav",
+   "spread": null,
+   "stake": 100.0,
+   "start": "2026-10-22T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxgoldd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "ask": 0.97,
+   "ask_size": 141.98,
+   "bet": true,
+   "bid": 0.94,
+   "close_at": "2026-10-22T19:48:13+00:00",
+   "close_price": 0.97,
+   "date": "2026-10-22",
+   "edge": null,
+   "id": "commod_nc_no:KXBRENTD-26OCT2217-T109.50",
+   "label": "Will the brent crude oil close price be above 109.50 USD/Bbl on October 22, 2026 at 5:00 P",
+   "liquidity": null,
+   "logged": "2026-10-22T19:48:13+00:00",
+   "market_id": "KXBRENTD-26OCT2217-T109.50",
+   "pick": "b",
+   "pnl": 0.0,
+   "price": 0.97,
+   "price_a": 0.06,
+   "price_b": 0.97,
+   "price_draw": null,
+   "prob_a": null,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $109.50",
+   "side_b": "No",
+   "source": "commod_nc_no",
+   "sport": "commodities_fav",
+   "spread": null,
+   "stake": 100.0,
+   "start": "2026-10-22T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxbrentd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "ask": 0.95,
+   "ask_size": 3694.29,
+   "bet": true,
+   "bid": 0.94,
+   "close_at": "2026-10-22T19:48:13+00:00",
+   "close_price": 0.95,
+   "date": "2026-10-22",
+   "edge": null,
+   "id": "commod_nc_no:KXGOLDD-26OCT2217-T4063",
+   "label": "Will the gold close price be above 4063 USD/t.oz on October 22, 2026 at 5:00 PM EDT?",
+   "liquidity": null,
+   "logged": "2026-10-22T19:48:13+00:00",
+   "market_id": "KXGOLDD-26OCT2217-T4063",
+   "pick": "b",
+   "pnl": 0.0,
+   "price": 0.95,
+   "price_a": 0.06,
+   "price_b": 0.95,
+   "price_draw": null,
+   "prob_a": null,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $4063",
+   "side_b": "No",
+   "source": "commod_nc_no",
+   "sport": "commodities_fav",
+   "spread": null,
+   "stake": 100.0,
+   "start": "2026-10-22T21:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxgoldd",
+   "venue": "kalshi_binary",
    "venue_start": null
   }
  ],
