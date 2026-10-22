@@ -597,6 +597,15 @@ def _value_section():
         return f'<section id="value"><p class="sm mut">Value section unavailable ({esc(type(exc).__name__)}).</p></section>'
 
 
+def _safe_card_section():
+    """The NBA Safe Card (nba_safe_card_build.py, 2026-10-22). Never breaks the board."""
+    try:
+        import nba_safe_card_build
+        return nba_safe_card_build.section()
+    except Exception as exc:                                    # noqa: BLE001
+        return f'<section id="safe-card"><p class="sm mut">Safe Card unavailable ({esc(type(exc).__name__)}).</p></section>'
+
+
 def build(blob=None, now=None):
     if blob is None:
         with open(SRC, encoding="utf-8") as fh:
@@ -630,6 +639,7 @@ def build(blob=None, now=None):
 </section>
 {_rules_section()}
 {_value_section()}
+{_safe_card_section()}
 <section id="graded">
 <details class="section-disclosure nba-results"><summary><b>Results · last 24 hours</b><span>{len(graded)} graded</span></summary>
 <p class="sm mut">Expected / actual combined points; the small signed number is the file's own error.</p>
@@ -652,7 +662,7 @@ def build(blob=None, now=None):
         "Edge Machine · NBA",
         "NBA matchups, pace labels, and combined expectations. Preseason. No bets.",
         "nba",
-        (("matchups", "Upcoming"), ("rules", "Rules"), ("value", "Value"), ("ladder", "Ladder"),
+        (("matchups", "Upcoming"), ("rules", "Rules"), ("value", "Value"), ("ladder", "Ladder"), ("safe-card", "Safe Card"),
          ("graded", "Results"), ("teams", "Teams")),
         C.stamp(clock),
         body,
