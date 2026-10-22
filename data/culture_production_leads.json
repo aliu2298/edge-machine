@@ -1,12 +1,12 @@
 {
- "board_built_at": "2026-10-21T23:00:14+00:00",
+ "board_built_at": "2026-10-22T00:00:15+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
  "first_publish_min": 45,
  "late_publication_skipped": 0,
  "leads": {
-  "2026-10-26|KXTRUMPSAY-26OCT26-ANTI|Trump does not say \"Antifa\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-ANTI|Trump does not say \"Antifa\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -17,18 +17,18 @@
    "first_seen": "2026-10-19",
    "headline": "Trump does not say \"Antifa\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-ANTI|Trump does not say \"Antifa\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-ANTI|Trump does not say \"Antifa\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.79,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 8008,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump does not say \"Antifa\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -43,7 +43,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-10-26|KXTRUMPSAY-26OCT26-AUTO|Trump does not say \"Autopen / Auto Pen\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-AUTO|Trump does not say \"Autopen / Auto Pen\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -54,18 +54,18 @@
    "first_seen": "2026-10-20",
    "headline": "Trump does not say \"Autopen / Auto Pen\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-AUTO|Trump does not say \"Autopen / Auto Pen\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-AUTO|Trump does not say \"Autopen / Auto Pen\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.39,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 8008,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump does not say \"Autopen / Auto Pen\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -80,7 +80,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-10-26|KXTRUMPSAY-26OCT26-BIBI|Trump does not say \"Bibi / Netanyahu\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-BIBI|Trump does not say \"Bibi / Netanyahu\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -91,18 +91,18 @@
    "first_seen": "2026-10-20",
    "headline": "Trump does not say \"Bibi / Netanyahu\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-BIBI|Trump does not say \"Bibi / Netanyahu\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-BIBI|Trump does not say \"Bibi / Netanyahu\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.29,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 8008,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump does not say \"Bibi / Netanyahu\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -117,7 +117,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-10-26|KXTRUMPSAY-26OCT26-BLOC|Trump says \"Blockade\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-BLOC|Trump says \"Blockade\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention",
@@ -128,18 +128,18 @@
    "first_seen": "2026-10-20",
    "headline": "Trump says \"Blockade\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-BLOC|Trump says \"Blockade\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-BLOC|Trump says \"Blockade\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.81,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 8008,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump says \"Blockade\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -154,7 +154,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-10-26|KXTRUMPSAY-26OCT26-CEAS|Trump does not say \"Ceasefire\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-CEAS|Trump does not say \"Ceasefire\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -165,18 +165,18 @@
    "first_seen": "2026-10-20",
    "headline": "Trump does not say \"Ceasefire\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-CEAS|Trump does not say \"Ceasefire\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-CEAS|Trump does not say \"Ceasefire\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.48,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 8008,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump does not say \"Ceasefire\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -191,7 +191,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-10-26|KXTRUMPSAY-26OCT26-CRYP|Trump does not say \"Crypto / Bitcoin\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-CRYP|Trump does not say \"Crypto / Bitcoin\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -202,18 +202,18 @@
    "first_seen": "2026-10-21",
    "headline": "Trump does not say \"Crypto / Bitcoin\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-CRYP|Trump does not say \"Crypto / Bitcoin\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-CRYP|Trump does not say \"Crypto / Bitcoin\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.55,
-   "published_at": "2026-10-21T13:00:16+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 7259,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump does not say \"Crypto / Bitcoin\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -228,7 +228,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-10-26|KXTRUMPSAY-26OCT26-CUBA|Trump does not say \"Cuba / Cuban\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-CUBA|Trump does not say \"Cuba / Cuban\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -239,18 +239,18 @@
    "first_seen": "2026-10-20",
    "headline": "Trump does not say \"Cuba / Cuban\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-CUBA|Trump does not say \"Cuba / Cuban\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-CUBA|Trump does not say \"Cuba / Cuban\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.51,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 8008,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump does not say \"Cuba / Cuban\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -265,7 +265,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-10-26|KXTRUMPSAY-26OCT26-CYBE|Trump does not say \"Cybersecurity / Cyber Security\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-CYBE|Trump does not say \"Cybersecurity / Cyber Security\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -276,18 +276,18 @@
    "first_seen": "2026-10-20",
    "headline": "Trump does not say \"Cybersecurity / Cyber Security\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-CYBE|Trump does not say \"Cybersecurity / Cyber Security\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-CYBE|Trump does not say \"Cybersecurity / Cyber Security\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.87,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 8008,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump does not say \"Cybersecurity / Cyber Security\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -302,7 +302,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-10-26|KXTRUMPSAY-26OCT26-ETHA|Trump does not say \"Ethanol\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-ETHA|Trump does not say \"Ethanol\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -313,18 +313,18 @@
    "first_seen": "2026-10-20",
    "headline": "Trump does not say \"Ethanol\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-ETHA|Trump does not say \"Ethanol\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-ETHA|Trump does not say \"Ethanol\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.21,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 8008,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump does not say \"Ethanol\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -339,7 +339,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-10-26|KXTRUMPSAY-26OCT26-GOLD|Trump does not say \"Golden Dome\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-GOLD|Trump does not say \"Golden Dome\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -350,18 +350,18 @@
    "first_seen": "2026-10-19",
    "headline": "Trump does not say \"Golden Dome\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-GOLD|Trump does not say \"Golden Dome\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-GOLD|Trump does not say \"Golden Dome\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.93,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 8008,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump does not say \"Golden Dome\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -376,7 +376,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-10-26|KXTRUMPSAY-26OCT26-HOUT|Trump does not say \"Houthi\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-HOUT|Trump does not say \"Houthi\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -387,18 +387,18 @@
    "first_seen": "2026-10-20",
    "headline": "Trump does not say \"Houthi\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-HOUT|Trump does not say \"Houthi\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-HOUT|Trump does not say \"Houthi\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.39,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 8008,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump does not say \"Houthi\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -413,7 +413,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-10-26|KXTRUMPSAY-26OCT26-NOBE|Trump does not say \"Nobel\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-NOBE|Trump does not say \"Nobel\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -424,18 +424,18 @@
    "first_seen": "2026-10-21",
    "headline": "Trump does not say \"Nobel\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-NOBE|Trump does not say \"Nobel\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-NOBE|Trump does not say \"Nobel\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.68,
-   "published_at": "2026-10-21T19:00:15+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 6899,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump does not say \"Nobel\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -450,7 +450,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-10-26|KXTRUMPSAY-26OCT26-PEAC|Trump does not say \"Peace in the Middle East\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-PEAC|Trump does not say \"Peace in the Middle East\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -461,18 +461,18 @@
    "first_seen": "2026-10-20",
    "headline": "Trump does not say \"Peace in the Middle East\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-PEAC|Trump does not say \"Peace in the Middle East\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-PEAC|Trump does not say \"Peace in the Middle East\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.93,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 8008,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump does not say \"Peace in the Middle East\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -487,7 +487,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-10-26|KXTRUMPSAY-26OCT26-PRED|Trump does not say \"Prediction Market / Predictive Market\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-PRED|Trump does not say \"Prediction Market / Predictive Market\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -498,18 +498,18 @@
    "first_seen": "2026-10-19",
    "headline": "Trump does not say \"Prediction Market / Predictive Market\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-PRED|Trump does not say \"Prediction Market / Predictive Market\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-PRED|Trump does not say \"Prediction Market / Predictive Market\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.9,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 8008,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump does not say \"Prediction Market / Predictive Market\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -524,7 +524,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-10-26|KXTRUMPSAY-26OCT26-RANK|Trump does not say \"Ranked Choice / Ranked-Choice\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-RANK|Trump does not say \"Ranked Choice / Ranked-Choice\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -535,18 +535,18 @@
    "first_seen": "2026-10-21",
    "headline": "Trump does not say \"Ranked Choice / Ranked-Choice\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-RANK|Trump does not say \"Ranked Choice / Ranked-Choice\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-RANK|Trump does not say \"Ranked Choice / Ranked-Choice\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.62,
-   "published_at": "2026-10-21T01:13:51+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 7966,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump does not say \"Ranked Choice / Ranked-Choice\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -561,7 +561,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-10-26|KXTRUMPSAY-26OCT26-RIGG|Trump does not say \"Rigged Election / Stolen Election\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-RIGG|Trump does not say \"Rigged Election / Stolen Election\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -572,18 +572,18 @@
    "first_seen": "2026-10-20",
    "headline": "Trump does not say \"Rigged Election / Stolen Election\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-RIGG|Trump does not say \"Rigged Election / Stolen Election\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-RIGG|Trump does not say \"Rigged Election / Stolen Election\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.18,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 8008,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump does not say \"Rigged Election / Stolen Election\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -598,7 +598,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-10-26|KXTRUMPSAY-26OCT26-TDS|Trump does not say \"TDS / Trump Derangement Syndrome\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-TDS|Trump does not say \"TDS / Trump Derangement Syndrome\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -609,18 +609,18 @@
    "first_seen": "2026-10-21",
    "headline": "Trump does not say \"TDS / Trump Derangement Syndrome\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-TDS|Trump does not say \"TDS / Trump Derangement Syndrome\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-TDS|Trump does not say \"TDS / Trump Derangement Syndrome\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.5,
-   "published_at": "2026-10-21T05:00:13+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 7739,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump does not say \"TDS / Trump Derangement Syndrome\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -635,7 +635,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-10-26|KXTRUMPSAY-26OCT26-TOMA|Trump does not say \"Tomahawk\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-TOMA|Trump does not say \"Tomahawk\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -646,18 +646,18 @@
    "first_seen": "2026-10-19",
    "headline": "Trump does not say \"Tomahawk\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-TOMA|Trump does not say \"Tomahawk\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-TOMA|Trump does not say \"Tomahawk\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.78,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 8008,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump does not say \"Tomahawk\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -672,7 +672,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-10-26|KXTRUMPSAY-26OCT26-URAN|Trump does not say \"Uranium\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-URAN|Trump does not say \"Uranium\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -683,18 +683,18 @@
    "first_seen": "2026-10-19",
    "headline": "Trump does not say \"Uranium\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-URAN|Trump does not say \"Uranium\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-URAN|Trump does not say \"Uranium\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.85,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 8008,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump does not say \"Uranium\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -709,7 +709,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-10-26|KXTRUMPSAY-26OCT26-VIVE|Trump does not say \"Vivek / Ramaswamy\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-VIVE|Trump does not say \"Vivek / Ramaswamy\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -720,18 +720,18 @@
    "first_seen": "2026-10-20",
    "headline": "Trump does not say \"Vivek / Ramaswamy\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-VIVE|Trump does not say \"Vivek / Ramaswamy\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-VIVE|Trump does not say \"Vivek / Ramaswamy\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.46,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 8008,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump does not say \"Vivek / Ramaswamy\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -746,7 +746,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-10-26|KXTRUMPSAY-26OCT26-ZACH|Trump does not say \"Zacharia\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-ZACH|Trump does not say \"Zacharia\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -757,18 +757,18 @@
    "first_seen": "2026-10-19",
    "headline": "Trump does not say \"Zacharia\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-ZACH|Trump does not say \"Zacharia\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-ZACH|Trump does not say \"Zacharia\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.89,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 8008,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump does not say \"Zacharia\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -783,7 +783,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-10-26|KXTRUMPSAY-26OCT26-ZOHR|Trump does not say \"Zohran / Mamdani\" \u00b7 mentions_rate": {
+  "2026-10-26|KXTRUMPSAY-26OCT26-ZOHR|Trump does not say \"Zohran / Mamdani\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -794,18 +794,18 @@
    "first_seen": "2026-10-19",
    "headline": "Trump does not say \"Zohran / Mamdani\"",
    "home": null,
-   "id": "2026-10-26|KXTRUMPSAY-26OCT26-ZOHR|Trump does not say \"Zohran / Mamdani\" \u00b7 mentions_rate",
+   "id": "2026-10-26|KXTRUMPSAY-26OCT26-ZOHR|Trump does not say \"Zohran / Mamdani\" \u00b7 Trump mentions",
    "kickoff": "2026-10-26T14:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say this week?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.75,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 8008,
+   "published_min_before_kickoff": 6599,
    "route": {
     "claim": "Trump does not say \"Zohran / Mamdani\"",
     "event": "KXTRUMPSAY-26OCT26",
@@ -820,7 +820,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-BBC|Trump does not say \"BBC\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-BBC|Trump does not say \"BBC\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -831,18 +831,18 @@
    "first_seen": "2026-10-17",
    "headline": "Trump does not say \"BBC\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-BBC|Trump does not say \"BBC\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-BBC|Trump does not say \"BBC\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What companies will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.46,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"BBC\"",
     "event": "KXTRUMPSAYCOMPANY-26NOV01",
@@ -857,7 +857,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-BLAC|Trump does not say \"BlackRock\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-BLAC|Trump does not say \"BlackRock\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -868,18 +868,18 @@
    "first_seen": "2026-10-19",
    "headline": "Trump does not say \"BlackRock\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-BLAC|Trump does not say \"BlackRock\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-BLAC|Trump does not say \"BlackRock\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What companies will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.93,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"BlackRock\"",
     "event": "KXTRUMPSAYCOMPANY-26NOV01",
@@ -894,7 +894,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-CHAT|Trump does not say \"ChatGPT / OpenAI\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-CHAT|Trump does not say \"ChatGPT / OpenAI\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -905,18 +905,18 @@
    "first_seen": "2026-10-19",
    "headline": "Trump does not say \"ChatGPT / OpenAI\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-CHAT|Trump does not say \"ChatGPT / OpenAI\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-CHAT|Trump does not say \"ChatGPT / OpenAI\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What companies will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.34,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"ChatGPT / OpenAI\"",
     "event": "KXTRUMPSAYCOMPANY-26NOV01",
@@ -931,7 +931,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-DE|Trump does not say \"Deere\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-DE|Trump does not say \"Deere\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -942,18 +942,18 @@
    "first_seen": "2026-10-18",
    "headline": "Trump does not say \"Deere\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-DE|Trump does not say \"Deere\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-DE|Trump does not say \"Deere\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What companies will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.39,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"Deere\"",
     "event": "KXTRUMPSAYCOMPANY-26NOV01",
@@ -968,7 +968,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-JPM|Trump does not say \"JPMorgan / JPM\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-JPM|Trump does not say \"JPMorgan / JPM\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -979,18 +979,18 @@
    "first_seen": "2026-10-17",
    "headline": "Trump does not say \"JPMorgan / JPM\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-JPM|Trump does not say \"JPMorgan / JPM\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-JPM|Trump does not say \"JPMorgan / JPM\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What companies will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.81,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"JPMorgan / JPM\"",
     "event": "KXTRUMPSAYCOMPANY-26NOV01",
@@ -1005,7 +1005,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-MA|Trump says \"Mastercard / MA\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-MA|Trump says \"Mastercard / MA\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention",
@@ -1016,18 +1016,18 @@
    "first_seen": "2026-10-17",
    "headline": "Trump says \"Mastercard / MA\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-MA|Trump says \"Mastercard / MA\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-MA|Trump says \"Mastercard / MA\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What companies will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.16,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump says \"Mastercard / MA\"",
     "event": "KXTRUMPSAYCOMPANY-26NOV01",
@@ -1042,7 +1042,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-ORCL|Trump does not say \"Oracle / ORCL\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-ORCL|Trump does not say \"Oracle / ORCL\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -1053,18 +1053,18 @@
    "first_seen": "2026-10-21",
    "headline": "Trump does not say \"Oracle / ORCL\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-ORCL|Trump does not say \"Oracle / ORCL\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-ORCL|Trump does not say \"Oracle / ORCL\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What companies will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.57,
-   "published_at": "2026-10-21T18:00:16+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 15659,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"Oracle / ORCL\"",
     "event": "KXTRUMPSAYCOMPANY-26NOV01",
@@ -1079,7 +1079,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-TPUSA|Trump does not say \"Turning Point\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-TPUSA|Trump does not say \"Turning Point\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -1090,18 +1090,18 @@
    "first_seen": "2026-10-17",
    "headline": "Trump does not say \"Turning Point\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-TPUSA|Trump does not say \"Turning Point\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-TPUSA|Trump does not say \"Turning Point\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What companies will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.69,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"Turning Point\"",
     "event": "KXTRUMPSAYCOMPANY-26NOV01",
@@ -1116,7 +1116,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-VERI|Trump does not say \"Verizon\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-VERI|Trump does not say \"Verizon\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -1127,18 +1127,18 @@
    "first_seen": "2026-10-20",
    "headline": "Trump does not say \"Verizon\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-VERI|Trump does not say \"Verizon\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYCOMPANY-26NOV01-VERI|Trump does not say \"Verizon\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What companies will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.89,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"Verizon\"",
     "event": "KXTRUMPSAYCOMPANY-26NOV01",
@@ -1153,7 +1153,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-AUS|Trump does not say \"Australia / Australian\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-AUS|Trump does not say \"Australia / Australian\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -1164,18 +1164,18 @@
    "first_seen": "2026-10-17",
    "headline": "Trump does not say \"Australia / Australian\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-AUS|Trump does not say \"Australia / Australian\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-AUS|Trump does not say \"Australia / Australian\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What countries will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.33,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"Australia / Australian\"",
     "event": "KXTRUMPSAYCOUNTRY-26NOV01",
@@ -1190,7 +1190,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-BEL|Trump does not say \"Belgium / Belgian\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-BEL|Trump does not say \"Belgium / Belgian\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -1201,18 +1201,18 @@
    "first_seen": "2026-10-19",
    "headline": "Trump does not say \"Belgium / Belgian\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-BEL|Trump does not say \"Belgium / Belgian\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-BEL|Trump does not say \"Belgium / Belgian\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What countries will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.82,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"Belgium / Belgian\"",
     "event": "KXTRUMPSAYCOUNTRY-26NOV01",
@@ -1227,7 +1227,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-BHR|Trump does not say \"Bahrain / Bahraini\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-BHR|Trump does not say \"Bahrain / Bahraini\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -1238,18 +1238,18 @@
    "first_seen": "2026-10-18",
    "headline": "Trump does not say \"Bahrain / Bahraini\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-BHR|Trump does not say \"Bahrain / Bahraini\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-BHR|Trump does not say \"Bahrain / Bahraini\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What countries will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.41,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"Bahrain / Bahraini\"",
     "event": "KXTRUMPSAYCOUNTRY-26NOV01",
@@ -1264,7 +1264,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-PAN|Trump does not say \"Panama / Panamanian\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-PAN|Trump does not say \"Panama / Panamanian\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -1275,18 +1275,18 @@
    "first_seen": "2026-10-18",
    "headline": "Trump does not say \"Panama / Panamanian\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-PAN|Trump does not say \"Panama / Panamanian\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-PAN|Trump does not say \"Panama / Panamanian\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What countries will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.46,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"Panama / Panamanian\"",
     "event": "KXTRUMPSAYCOUNTRY-26NOV01",
@@ -1301,7 +1301,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-RSA|Trump does not say \"South Africa / South African\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-RSA|Trump does not say \"South Africa / South African\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -1312,18 +1312,18 @@
    "first_seen": "2026-10-17",
    "headline": "Trump does not say \"South Africa / South African\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-RSA|Trump does not say \"South Africa / South African\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-RSA|Trump does not say \"South Africa / South African\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What countries will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.64,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"South Africa / South African\"",
     "event": "KXTRUMPSAYCOUNTRY-26NOV01",
@@ -1338,7 +1338,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-SDN|Trump does not say \"Sudan / Sudanese\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-SDN|Trump does not say \"Sudan / Sudanese\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -1349,18 +1349,18 @@
    "first_seen": "2026-10-18",
    "headline": "Trump does not say \"Sudan / Sudanese\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-SDN|Trump does not say \"Sudan / Sudanese\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-SDN|Trump does not say \"Sudan / Sudanese\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What countries will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.81,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"Sudan / Sudanese\"",
     "event": "KXTRUMPSAYCOUNTRY-26NOV01",
@@ -1375,7 +1375,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-UAE|Trump does not say \"UAE / United Arab Emirates\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-UAE|Trump does not say \"UAE / United Arab Emirates\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -1386,18 +1386,18 @@
    "first_seen": "2026-10-17",
    "headline": "Trump does not say \"UAE / United Arab Emirates\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-UAE|Trump does not say \"UAE / United Arab Emirates\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYCOUNTRY-26NOV01-UAE|Trump does not say \"UAE / United Arab Emirates\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What countries will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.26,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"UAE / United Arab Emirates\"",
     "event": "KXTRUMPSAYCOUNTRY-26NOV01",
@@ -1412,7 +1412,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYMONTH-26NOV01-ANTI|Trump does not say \"Antifa\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYMONTH-26NOV01-ANTI|Trump does not say \"Antifa\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -1423,18 +1423,18 @@
    "first_seen": "2026-10-19",
    "headline": "Trump does not say \"Antifa\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYMONTH-26NOV01-ANTI|Trump does not say \"Antifa\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYMONTH-26NOV01-ANTI|Trump does not say \"Antifa\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.59,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"Antifa\"",
     "event": "KXTRUMPSAYMONTH-26NOV01",
@@ -1449,7 +1449,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYMONTH-26NOV01-EPST|Trump does not say \"Epstein\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYMONTH-26NOV01-EPST|Trump does not say \"Epstein\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -1460,18 +1460,18 @@
    "first_seen": "2026-10-17",
    "headline": "Trump does not say \"Epstein\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYMONTH-26NOV01-EPST|Trump does not say \"Epstein\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYMONTH-26NOV01-EPST|Trump does not say \"Epstein\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.85,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"Epstein\"",
     "event": "KXTRUMPSAYMONTH-26NOV01",
@@ -1486,7 +1486,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYMONTH-26NOV01-GOLD|Trump does not say \"Golden Dome\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYMONTH-26NOV01-GOLD|Trump does not say \"Golden Dome\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -1497,18 +1497,18 @@
    "first_seen": "2026-10-20",
    "headline": "Trump does not say \"Golden Dome\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYMONTH-26NOV01-GOLD|Trump does not say \"Golden Dome\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYMONTH-26NOV01-GOLD|Trump does not say \"Golden Dome\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.77,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"Golden Dome\"",
     "event": "KXTRUMPSAYMONTH-26NOV01",
@@ -1523,7 +1523,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYMONTH-26NOV01-MAKE|Trump does not say \"Make Iran Great Again\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYMONTH-26NOV01-MAKE|Trump does not say \"Make Iran Great Again\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -1534,18 +1534,18 @@
    "first_seen": "2026-10-18",
    "headline": "Trump does not say \"Make Iran Great Again\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYMONTH-26NOV01-MAKE|Trump does not say \"Make Iran Great Again\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYMONTH-26NOV01-MAKE|Trump does not say \"Make Iran Great Again\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.94,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"Make Iran Great Again\"",
     "event": "KXTRUMPSAYMONTH-26NOV01",
@@ -1560,7 +1560,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYMONTH-26NOV01-PEAC|Trump does not say \"Peace in the Middle East\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYMONTH-26NOV01-PEAC|Trump does not say \"Peace in the Middle East\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -1571,18 +1571,18 @@
    "first_seen": "2026-10-17",
    "headline": "Trump does not say \"Peace in the Middle East\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYMONTH-26NOV01-PEAC|Trump does not say \"Peace in the Middle East\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYMONTH-26NOV01-PEAC|Trump does not say \"Peace in the Middle East\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.82,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"Peace in the Middle East\"",
     "event": "KXTRUMPSAYMONTH-26NOV01",
@@ -1597,7 +1597,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYMONTH-26NOV01-PEPT|Trump does not say \"Peptide\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYMONTH-26NOV01-PEPT|Trump does not say \"Peptide\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -1608,18 +1608,18 @@
    "first_seen": "2026-10-17",
    "headline": "Trump does not say \"Peptide\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYMONTH-26NOV01-PEPT|Trump does not say \"Peptide\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYMONTH-26NOV01-PEPT|Trump does not say \"Peptide\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.92,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"Peptide\"",
     "event": "KXTRUMPSAYMONTH-26NOV01",
@@ -1634,7 +1634,7 @@
    "sport": "culture_mentions",
    "status": "pending"
   },
-  "2026-11-01|KXTRUMPSAYMONTH-26NOV01-UFO|Trump does not say \"UFO / UAP\" \u00b7 mentions_rate": {
+  "2026-11-01|KXTRUMPSAYMONTH-26NOV01-UFO|Trump does not say \"UFO / UAP\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
     "kind": "mention_no",
@@ -1645,18 +1645,18 @@
    "first_seen": "2026-10-17",
    "headline": "Trump does not say \"UFO / UAP\"",
    "home": null,
-   "id": "2026-11-01|KXTRUMPSAYMONTH-26NOV01-UFO|Trump does not say \"UFO / UAP\" \u00b7 mentions_rate",
+   "id": "2026-11-01|KXTRUMPSAYMONTH-26NOV01-UFO|Trump does not say \"UFO / UAP\" \u00b7 Trump mentions",
    "kickoff": "2026-11-01T15:00Z",
    "lane": "production",
-   "last_seen": "2026-10-21",
-   "last_seen_at": "2026-10-21T23:00:14+00:00",
+   "last_seen": "2026-10-22",
+   "last_seen_at": "2026-10-22T00:00:15+00:00",
    "league": "Trump mentions",
    "match": "What will Trump say in October?",
    "pair": "mentions_rate|culture_mentions",
    "price_at_log": 0.9,
-   "published_at": "2026-10-21T00:32:00+00:00",
+   "published_at": "2026-10-22T00:00:15+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 16708,
+   "published_min_before_kickoff": 15299,
    "route": {
     "claim": "Trump does not say \"UFO / UAP\"",
     "event": "KXTRUMPSAYMONTH-26NOV01",
@@ -1703,5 +1703,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-21T23:00:14+00:00"
+ "updated_at": "2026-10-22T00:00:15+00:00"
 }
