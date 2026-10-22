@@ -1260,11 +1260,6 @@
    "lead_min": 8.5,
    "price": 0.91
   },
-  "o15_ranked:KXAFCCLTOTAL-26OCT12PAKQAD-2": {
-   "at": "2026-10-12T13:38:04+00:00",
-   "lead_min": 6.9,
-   "price": 0.84
-  },
   "o15_ranked:KXAFCCLTOTAL-26OCT13KYORAT-2": {
    "at": "2026-10-13T09:53:38+00:00",
    "lead_min": 6.4,
@@ -1381,9 +1376,9 @@
    "price": 0.8
   },
   "o15_ranked:KXUECLTOTAL-26OCT22ALMPAN-2": {
-   "at": "2026-10-22T13:37:24+00:00",
-   "lead_min": 52.6,
-   "price": 0.77
+   "at": "2026-10-22T13:52:39+00:00",
+   "lead_min": 37.3,
+   "price": 0.78
   },
   "o15_ranked:KXUELTOTAL-26OCT15NIJLEV-2": {
    "at": "2026-10-15T18:56:18+00:00",
@@ -1399,11 +1394,6 @@
    "at": "2026-10-12T18:11:18+00:00",
    "lead_min": 3.7,
    "price": 0.27
-  },
-  "o25_congestion:KXAFCCLTOTAL-26OCT12PAKQAD-3": {
-   "at": "2026-10-12T13:38:04+00:00",
-   "lead_min": 6.9,
-   "price": 0.37
   },
   "o25_congestion:KXAFCCLTOTAL-26OCT13ITJSAH-3": {
    "at": "2026-10-13T18:13:48+00:00",
@@ -2110,6 +2100,11 @@
    "lead_min": 4.9,
    "price": 0.66
   },
+  "u35_low_o15:KXSAUDIPLTOTAL-26OCT22FATSHA-2": {
+   "at": "2026-10-22T13:52:39+00:00",
+   "lead_min": 52.3,
+   "price": 0.83
+  },
   "u35_low_scoring:KXEPLTOTAL-26OCT18BOUSUN-4": {
    "at": "2026-10-18T12:45:08+00:00",
    "lead_min": 14.9,
@@ -2150,6 +2145,11 @@
    "lead_min": 13.6,
    "price": 0.66
   },
+  "u35_low_scoring:KXSAUDIPLTOTAL-26OCT22FATSHA-4": {
+   "at": "2026-10-22T13:52:39+00:00",
+   "lead_min": 52.3,
+   "price": 0.61
+  },
   "u35_low_scoring:KXSCOTTISHPREMTOTAL-26OCT17ABEMIR-4": {
    "at": "2026-10-17T13:55:23+00:00",
    "lead_min": 4.6,
@@ -2161,5 +2161,5 @@
    "price": 0.68
   }
  },
- "updated": "2026-10-22T13:37:24+00:00"
+ "updated": "2026-10-22T13:52:39+00:00"
 }
