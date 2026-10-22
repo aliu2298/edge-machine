@@ -290,6 +290,16 @@
    "lead_min": 52.0,
    "price": 0.84
   },
+  "o15_cup_mismatch:KXUECLTOTAL-26OCT22FKJBRI-2": {
+   "at": "2026-10-22T15:58:38+00:00",
+   "lead_min": 46.4,
+   "price": 0.87
+  },
+  "o15_cup_mismatch:KXUECLTOTAL-26OCT22TRAHOM-2": {
+   "at": "2026-10-22T15:58:38+00:00",
+   "lead_min": 46.4,
+   "price": 0.89
+  },
   "o15_form_l10:KXLALIGATOTAL-26OCT17ESPATM-2": {
    "at": "2026-10-17T11:10:43+00:00",
    "lead_min": 49.3,
@@ -334,6 +344,26 @@
    "at": "2026-10-15T15:52:58+00:00",
    "lead_min": 52.0,
    "price": 0.8
+  },
+  "o15_ranked:KXUECLTOTAL-26OCT22KAZSKB-2": {
+   "at": "2026-10-22T15:58:38+00:00",
+   "lead_min": 46.4,
+   "price": 0.75
+  },
+  "o15_ranked:KXUECLTOTAL-26OCT22PAFRFC-2": {
+   "at": "2026-10-22T15:58:38+00:00",
+   "lead_min": 46.4,
+   "price": 0.77
+  },
+  "o15_ranked:KXUELTOTAL-26OCT22JUVREN-2": {
+   "at": "2026-10-22T15:58:38+00:00",
+   "lead_min": 46.4,
+   "price": 0.83
+  },
+  "o15_ranked:KXUELTOTAL-26OCT22LPOSUN-2": {
+   "at": "2026-10-22T15:58:38+00:00",
+   "lead_min": 46.4,
+   "price": 0.79
   },
   "o25_congestion:KXBUNDESLIGATOTAL-26OCT18BMGTSG-3": {
    "at": "2026-10-18T15:13:55+00:00",
@@ -420,10 +450,20 @@
    "lead_min": 41.5,
    "price": 0.37
   },
+  "o25_congestion:KXUECLTOTAL-26OCT22GETLUG-3": {
+   "at": "2026-10-22T15:58:38+00:00",
+   "lead_min": 46.4,
+   "price": 0.59
+  },
   "o25_congestion:KXUELTOTAL-26OCT15SPALSK-3": {
    "at": "2026-10-15T15:52:58+00:00",
    "lead_min": 52.0,
    "price": 0.3
+  },
+  "o25_congestion:KXUELTOTAL-26OCT22DINNIJ-3": {
+   "at": "2026-10-22T15:58:38+00:00",
+   "lead_min": 46.4,
+   "price": 0.38
   },
   "p05_unbeaten:KXLALIGAGAME-26OCT17ESPATM-ESP": {
    "at": "2026-10-17T11:10:43+00:00",
@@ -485,10 +525,30 @@
    "lead_min": 52.0,
    "price": 0.47
   },
+  "team2_ranked:KXUECLTEAMTOTAL-26OCT22FKJBRI-BRI2": {
+   "at": "2026-10-22T15:58:38+00:00",
+   "lead_min": 46.4,
+   "price": 0.8
+  },
+  "team2_ranked:KXUECLTEAMTOTAL-26OCT22GETLUG-GET2": {
+   "at": "2026-10-22T15:58:38+00:00",
+   "lead_min": 46.4,
+   "price": 0.39
+  },
   "team2_ranked:KXUELTEAMTOTAL-26OCT15TORSUN-SUN2": {
    "at": "2026-10-15T15:52:58+00:00",
    "lead_min": 52.0,
    "price": 0.69
+  },
+  "team2_ranked:KXUELTEAMTOTAL-26OCT22FTCTOR-FTC2": {
+   "at": "2026-10-22T15:58:38+00:00",
+   "lead_min": 46.4,
+   "price": 0.69
+  },
+  "team2_ranked:KXUELTEAMTOTAL-26OCT22JUVREN-JUV2": {
+   "at": "2026-10-22T15:58:38+00:00",
+   "lead_min": 46.4,
+   "price": 0.67
   },
   "tennis_fav_band_3h:aec-utr-duoamy-torcam-2026-10-14": {
    "at": "2026-10-14T00:36:52+00:00",
@@ -561,5 +621,5 @@
    "price": 0.67
   }
  },
- "updated": "2026-10-22T08:53:55+00:00"
+ "updated": "2026-10-22T15:58:38+00:00"
 }
