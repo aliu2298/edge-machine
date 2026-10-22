@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-22T05:00:15.858578+00:00",
-   "last_success": "2026-10-22T05:00:15.858578+00:00",
+   "last_run": "2026-10-22T06:00:14.143033+00:00",
+   "last_success": "2026-10-22T06:00:14.143033+00:00",
    "observations": {
-    "at": "2026-10-22T05:00:15.858578+00:00",
+    "at": "2026-10-22T06:00:14.143033+00:00",
     "events": 861,
     "reasons": {
      "no quote or spread too wide": 102,
@@ -444,10 +444,10 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-22T05:00:15.858578+00:00",
-   "last_success": "2026-10-22T05:00:15.858578+00:00",
+   "last_run": "2026-10-22T06:00:14.143033+00:00",
+   "last_success": "2026-10-22T06:00:14.143033+00:00",
    "observations": {
-    "at": "2026-10-22T05:00:15.858578+00:00",
+    "at": "2026-10-22T06:00:14.143033+00:00",
     "events": 861,
     "reasons": {
      "no quote or spread too wide": 102,
@@ -733,16 +733,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-22T05:00:15.858578+00:00",
-   "last_success": "2026-10-22T05:00:15.858578+00:00",
+   "last_run": "2026-10-22T06:00:14.143033+00:00",
+   "last_success": "2026-10-22T06:00:14.143033+00:00",
    "observations": {
-    "at": "2026-10-22T05:00:15.858578+00:00",
+    "at": "2026-10-22T06:00:14.143033+00:00",
     "events": 861,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 34,
-     "edge 5c+": 17,
-     "edge under 5c": 1,
-     "no quote or spread too wide": 34
+     "edge 5c+": 14,
+     "edge under 5c": 3,
+     "no quote or spread too wide": 35
     }
    },
    "picks": [
@@ -1638,14 +1638,13 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-22T05:00:15.858578+00:00",
-   "last_success": "2026-10-22T05:00:15.858578+00:00",
+   "last_run": "2026-10-22T06:00:14.143033+00:00",
+   "last_success": "2026-10-22T06:00:14.143033+00:00",
    "observations": {
-    "at": "2026-10-22T05:00:15.858578+00:00",
+    "at": "2026-10-22T06:00:14.143033+00:00",
     "events": 861,
     "reasons": {
-     "edge 5c+": 6,
-     "edge under 5c": 1,
+     "edge 5c+": 7,
      "under 20 reviews counted": 14
     }
    },
@@ -2018,6 +2017,12 @@
   "Deere": {
    "at": "2026-10-19T17:00:15.680945+00:00",
    "days": []
+  },
+  "DoorDash / DASH": {
+   "at": "2026-10-22T06:00:14.143033+00:00",
+   "days": [
+    "2026-09-22"
+   ]
   },
   "Epstein": {
    "at": "2026-10-22T00:00:15.149568+00:00",
