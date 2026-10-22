@@ -80,10 +80,43 @@ card, reason = SC.pick_card(legs4)
 check("one leg per game, best edge first, stops at 4 legs once odds pass 1.70",
       ([x["ticker"] for x in card], round(SC.odds_of(card), 2), reason), (["a-0.09", "b-0.07", "c-0.06", "d-0.05"], 1.83, None))
 check("three legs at 84c+ cannot reach 1.70", round(SC.odds_of([S("x", 0, 0.84)] * 3), 3) < 1.70, True)
-check("fewer than 3 games survive: no card",
-      SC.pick_card([S("a", .05, .84), S("b", .05, .84)])[1].startswith("no card tonight: only 2 games"), True)
+check("fewer than 3 legs can go on: no card",
+      SC.pick_card([S("a", .05, .84), S("b", .05, .84)])[1], "no card tonight: only 2 legs can go on a card "
+      "(a card needs 3 to 4 legs, one per game)")
 short = SC.pick_card([S(g, .05, .95) for g in "abcd"])
 check("four legs short of 1.70: no card with the reason", (short[0], "short of 1.70x" in short[1]), ([], True))
+
+print("\nsmall slates (amendment 2026-10-22): up to 2 legs a game, never same-direction implied pairs")
+check("cap: 2 a game under 4 games, 1 from 4", [SC.per_game_cap(n) for n in (1, 2, 3, 4, 9)], [2, 2, 2, 1, 1])
+Lg = lambda g, kind, side, edge, price=0.86, unit="game": dict(game=g, match=g, kind=kind, unit=unit, side=side,
+                                                                edge=edge, price=price, ticker=f"{g}-{kind}-{unit}-{side}")
+pair = lambda a, b: SC.pair_ok(a, b)[0]
+check("refused: game total + team total, same direction",
+      (pair(Lg("x", "game", "no", .1), Lg("x", "tt", "no", .1, unit="PHI")), pair(Lg("x", "game", "yes", .1), Lg("x", "tt", "yes", .1, unit="PHI"))),
+      (False, False))
+check("refused: 1H + game, and 1Q + 1H, same direction",
+      (pair(Lg("x", "h1", "no", .1), Lg("x", "game", "no", .1)), pair(Lg("x", "q1", "yes", .1), Lg("x", "h1", "yes", .1))), (False, False))
+check("refused: the same market twice", pair(Lg("x", "game", "no", .1), Lg("x", "game", "yes", .1)), False)
+check("allowed: team OVER + 1Q UNDER; home and away team OVERs; 1Q OVER + game UNDER; game + team opposite ways",
+      (pair(Lg("x", "tt", "yes", .1, unit="PHI"), Lg("x", "q1", "no", .1)),
+       pair(Lg("x", "tt", "yes", .1, unit="PHI"), Lg("x", "tt", "yes", .1, unit="CLE")),
+       pair(Lg("x", "q1", "yes", .1), Lg("x", "game", "no", .1)),
+       pair(Lg("x", "game", "no", .1), Lg("x", "tt", "yes", .1, unit="PHI"))), (True, True, True, True))
+small = [Lg("A", "game", "no", .09), Lg("A", "tt", "no", .085, unit="PHI"), Lg("A", "q1", "yes", .08),
+         Lg("B", "h1", "no", .07), Lg("B", "q1", "no", .065), Lg("B", "q1", "yes", .06), Lg("B", "game", "no", .05)]
+card2, why2 = SC.pick_card(small, cap=2)
+check("small slate: best edge first, implied pairs skipped (A game+team unders, B 1Q+1H unders), two a game, four legs",
+      [x["ticker"] for x in card2], ["A-game-game-no", "A-q1-game-yes", "B-h1-game-no", "B-q1-game-yes"])
+card1, why1 = SC.pick_card(small, cap=1)
+check("the same legs on a big-slate cap: one a game, no card", (card1, why1.startswith("no card tonight: only 2 legs")), ([], True))
+r_card = dict(legs=[dict(x, p=0.93) for x in card2], odds=1.83, reason=None)
+txt = SC.card_rationale(r_card, dict(quoted=9, band=8, safety=7, value=6, labels=6, clean=6))
+check("the card says which game gave two legs, and that the combo assumes independence",
+      ("2 legs from A: small slate, legs not same-direction." in txt, "2 legs from B" in txt, "(assumes legs independent)" in txt),
+      (True, True, True))
+check("a one-leg-per-game card says neither",
+      "independent" in SC.card_rationale(dict(r_card, legs=[dict(Lg(g, "game", "no", .1), p=.93) for g in "abcd"]),
+                                         dict(quoted=9, band=8, safety=7, value=6, labels=6, clean=6)), False)
 
 print("\nthe level guard")
 check("model 4.5 pts off Kalshi's median: mismatch",
@@ -156,8 +189,15 @@ two = {k: GAMES[k] for k in ("g0", "g1")}
 st3 = SC.empty()
 st3["preseason"] = []
 SC.run(st3, two, NOW, fetch, pri={}, labs_all=LABS)
-check("a two-game slate: no card, and why", st3["cards"]["2026-10-22"]["reason"],
-      "no card tonight: only 2 games on the slate (a card needs 3 to 4 legs, one per game)")
+check("a two-game slate with only game-total legs: one per game (the same market twice is refused), no card",
+      (st3["cards"]["2026-10-22"]["per_game_cap"], st3["cards"]["2026-10-22"]["reason"]),
+      (2, "no card tonight: only 2 legs can go on a card (a card needs 3 to 4 legs, up to two per game)"))
+one = {"g0": GAMES["g0"]}
+st4 = SC.empty()
+st4["preseason"] = []
+SC.run(st4, one, NOW, fetch, pri={}, labs_all=LABS)
+check("a one-game slate cannot make 3 legs", st4["cards"]["2026-10-22"]["reason"],
+      "no card tonight: only 1 game on the slate (a card needs 3 to 4 legs, at most 2 per game)")
 
 print("\nlane windows: the VPS asks 90-60 minutes before each tip")
 tips = [dt.datetime(2026, 10, 22, 23, 0, tzinfo=UTC)]

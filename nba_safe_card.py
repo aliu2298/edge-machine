@@ -48,6 +48,15 @@ UTAH@MEM 1H O104.5 @87c, GS@LAL game U253.5 @86c, combined odds 1.87, model comb
 card at the 95% line went 64/73 days. Caveat: the model sits about 2 points below Kalshi's lines
 this season, so the funnel leans to unders, which is what the level guard is for. Read at 20+ cards.
 
+AMENDMENT 2026-10-22 (Olu, before the first card): on a slate of fewer than 4 games a game may
+supply up to 2 legs (still 3-4 legs, combined odds 1.70+, ranked by edge); on 4+ games, one leg per
+game as before. Two legs of one game must be different markets (a team total of each team counts as
+two), and never a pair where one largely implies the other in the same direction: game total with a
+team total, 1H with the game total, or 1Q with 1H, both overs or both unders, is refused. Allowed,
+e.g.: team total OVER + 1Q UNDER; home and away team-total OVERs; 1Q OVER + game UNDER. The card says
+which game gave two legs and why, and its combo chance (the product of P) then assumes the legs are
+independent. The 84-95c band is unchanged. The funnel logs the surviving legs per game.
+
 How it runs: nba-safe-card.yml, asked for by the VPS 90-60 minutes before each tip
 (lane_windows.nba_safe_windows, scripts/vps_window_requests.sh), with an hourly fallback that settles.
 """
@@ -291,22 +300,44 @@ def odds_of(legs):
     return 1 / prod if prod > 0 else None
 
 
-def pick_card(survivors):
-    """(legs, reason): best edge first, one leg per game, until odds >= 1.70 with 3-4 legs."""
-    by_game = {}
-    for leg in sorted(survivors, key=lambda x: (-x["edge"], x["price"], x["ticker"], x["side"])):
-        by_game.setdefault(leg["game"], leg)
-    ranked = sorted(by_game.values(), key=lambda x: (-x["edge"], x["price"], x["ticker"]))
-    if len(ranked) < LEGS_MIN:
-        return [], (f"no card tonight: only {len(ranked)} game{'s' if len(ranked) != 1 else ''} with a surviving leg "
-                    f"(a card needs {LEGS_MIN} to {LEGS_MAX} legs, one per game)")
+# AMENDED 2026-10-22 (Olu): on a slate of fewer than 4 games a game may supply up to 2 legs.
+SMALL_SLATE = 4
+# Two legs of one game where one largely implies the other in the same direction are refused:
+# {game, team total}, {1H, game}, {1Q, 1H}, both overs or both unders.
+IMPLIES = ({"game", "tt"}, {"h1", "game"}, {"q1", "h1"})
+
+
+def per_game_cap(n_games):
+    return 2 if n_games < SMALL_SLATE else 1
+
+
+def pair_ok(a, b):
+    """(ok, why) for two legs of the same game (the 2026-10-22 correlation guard)."""
+    if a["kind"] == b["kind"] and a["unit"] == b["unit"]:
+        return False, "the same market"
+    if a["side"] == b["side"] and {a["kind"], b["kind"]} in IMPLIES:
+        return False, f"{MARKET_WORD[a['kind']] or 'team total'} and {MARKET_WORD[b['kind']] or 'team total'} in the same direction"
+    return True, None
+
+
+def pick_card(survivors, cap=1):
+    """(legs, reason): best edge first, at most `cap` legs per game (two only where pair_ok allows),
+    until odds >= 1.70 with 3-4 legs."""
+    ranked = sorted(survivors, key=lambda x: (-x["edge"], x["price"], x["ticker"], x["side"]))
     card = []
     for leg in ranked:
+        mine = [x for x in card if x["game"] == leg["game"]]
+        if len(mine) >= cap or not all(pair_ok(x, leg)[0] for x in mine):
+            continue
         card.append(leg)
         if len(card) >= LEGS_MIN and odds_of(card) >= ODDS_MIN - EPS:
             return card, None
         if len(card) == LEGS_MAX:
             break
+    each = "one per game" if cap == 1 else "up to two per game"
+    if len(card) < LEGS_MIN:
+        return [], (f"no card tonight: only {len(card)} leg{'s' if len(card) != 1 else ''} can go on a card "
+                    f"(a card needs {LEGS_MIN} to {LEGS_MAX} legs, {each})")
     return [], (f"no card tonight: {len(card)} legs reach only {odds_of(card):.2f}x, short of {ODDS_MIN:.2f}x "
                 f"(prices 84-95c need four legs)")
 
@@ -352,7 +383,13 @@ def card_rationale(card, counts):
     combo = 1.0
     for leg in card["legs"]:
         combo *= leg["p"]
-    return (f"{len(card['legs'])} legs, combined odds {card['odds']:.2f}, the model's combo chance {combo * 100:.0f}%. "
+    by = {}
+    for leg in card["legs"]:
+        by.setdefault(leg["match"], []).append(leg)
+    shared = [m for m, ls in by.items() if len(ls) > 1]
+    two = "".join(f" 2 legs from {m}: small slate, legs not same-direction." for m in shared)
+    indep = " (assumes legs independent)" if shared else ""
+    return (f"{len(card['legs'])} legs, combined odds {card['odds']:.2f}, the model's combo chance {combo * 100:.0f}%{indep}.{two} "
             f"Funnel: {counts['quoted']} sides quoted → {counts['band']} in 84-95c → {counts['safety']} model ≥0.90 → "
             f"{counts['value']} with value → {counts['labels']} labels → {counts['clean']} clean → {len(card['legs'])} on the card.")
 
@@ -413,11 +450,12 @@ def build(night, games, now, fetch, pri, labs_all, pre_rows):
     label_sides = [leg["side"] for leg in logged if "labels" in leg["passed"]]
     ok, reason, gap, share = level_check(medians, mu_team, label_sides)
     card_legs = []
-    if len(todo) < LEGS_MIN:
+    cap = per_game_cap(len(todo))
+    if len(todo) * cap < LEGS_MIN:
         reason = (f"no card tonight: only {len(todo)} game{'s' if len(todo) != 1 else ''} on the slate "
-                  f"(a card needs {LEGS_MIN} to {LEGS_MAX} legs, one per game)")
+                  f"(a card needs {LEGS_MIN} to {LEGS_MAX} legs, at most {cap} per game)")
     elif ok:
-        card_legs, reason = pick_card(survivors)
+        card_legs, reason = pick_card(survivors, cap)
     chosen = {(leg["ticker"], leg["side"]) for leg in card_legs}
     for leg in logged:
         if (leg["ticker"], leg["side"]) in chosen:
@@ -431,6 +469,9 @@ def build(night, games, now, fetch, pri, labs_all, pre_rows):
                 legs=card_legs, odds=None if not card_legs else round(odds_of(card_legs), 3),
                 combo_p=None if not card_legs else round(math.prod(leg["p"] for leg in card_legs), 4),
                 reason=reason, status="open" if card_legs else "no_card", counts=dict(counts, card=len(card_legs)),
+                per_game_cap=cap, survivors_by_game={m: sum(1 for x in survivors if x["match"] == m)
+                                                     for m in sorted({x["match"] for x in survivors})},
+                legs_by_game={m: sum(1 for x in card_legs if x["match"] == m) for m in sorted({x["match"] for x in card_legs})},
                 guard=dict(ok=ok, gap=None if gap is None else round(gap, 2), share=None if share is None else round(share, 3)),
                 candidates=[leg for leg in logged if "card" not in leg["passed"]])
     ft = first_tip(games, night)
