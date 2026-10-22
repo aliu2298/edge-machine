@@ -9,7 +9,7 @@ Nothing here is in Production and nothing is placed. One frozen entry per rule p
   R1  O+ team                 team total 110+   YES   60-80c  (not when both teams are D-: R7)
   R2  O+ team                 team total 115+   YES   <=60c   (not when both teams are D-: R7)
   R3  O- team                 team total 115+   NO    40-65c
-  R4  O-D- v O-D-             team total 100-110, the cheapest NO   NO   <=45c
+  R4  O-D- v O-D-             team total 100-110, the cheapest NO   NO   25-45c (floor from 2026-10-22)
   R5  either team O-D- (1H)   first half 115+   NO    35-60c
   R6  O+ team                 team total 105+   YES   <=85c
   R7  both teams D-           team total 110+ or 115+, the NO nearer 50c   NO   40-60c
@@ -21,6 +21,12 @@ Evidence, preseason only and small: R1 41/51 at 110+, R2 33/51 at 115+, R3 13/22
 19/26 weak-v-weak, R4 5/10 at 27c, R5 8/12 on real Kalshi prices, R6 21/22, R7 ~31 team-games.
 Team-points prices in that evidence were ESTIMATED from sportsbook lines; these lanes are the
 first test on real Kalshi team-total prices.
+
+R4 PRICE FLOOR, 2026-10-22 (Olu): R4 took the cheapest NO with no lower bound, so on 2026-10-21 it
+bought penny longshots (NO on Memphis over 103.5 at 0.06 and Utah over 102.5 at 0.07, both lost),
+which Olu has ruled out. Its research price was about 27c. From 2026-10-22 a candidate's NO must
+be 0.25-0.45 inclusive; the cheapest of those is taken, ties to the higher strike as before.
+Ledger rows logged before the floor are left as they are.
 """
 import datetime as dt
 import json
@@ -28,6 +34,8 @@ import os
 import urllib.parse
 
 import daily_track as D
+
+R4_NO_BAND = (0.25, 0.45)    # R4's NO price, both ends inclusive; the 0.25 floor from 2026-10-22
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 PATH = os.path.join(ROOT, "data", "nba_rules_ledger.json")
@@ -45,7 +53,7 @@ RULES = {
     "R1": dict(label="O+ team · team total 110+ · YES 60-80c", market=TEAM),
     "R2": dict(label="O+ team · team total 115+ · YES ≤60c", market=TEAM),
     "R3": dict(label="O− team · team total 115+ · NO 40-65c", market=TEAM),
-    "R4": dict(label="O−D− v O−D− · team total 100-110 · cheapest NO ≤45c", market=TEAM),
+    "R4": dict(label="O−D− v O−D− · team total 100-110 · cheapest NO 25-45c", market=TEAM),
     "R5": dict(label="Either team O−D− (1st half) · 1H total 115+ · NO 35-60c", market=HALF),
     "R6": dict(label="O+ team · team total 105+ · YES ≤85c", market=TEAM),
     "R7": dict(label="Both teams D− · team total 110+/115+ · NO 40-60c", market=TEAM),
@@ -139,7 +147,9 @@ def team_picks(g, ms, now):
             cands = []
             for m in mine:
                 k, q = m.get("floor_strike"), quote(m)
-                if isinstance(k, (int, float)) and 98.5 <= k <= 110.5 and q and 1 - q[0] <= 0.45:
+                # NO 0.25-0.45 inclusive: the 25c floor applies from 2026-10-22 (module docstring).
+                if (isinstance(k, (int, float)) and 98.5 <= k <= 110.5 and q
+                        and R4_NO_BAND[0] - 1e-9 <= 1 - q[0] <= R4_NO_BAND[1] + 1e-9):
                     cands.append((round(1 - q[0], 4), k, m))
             if cands:
                 px, k, m = min(cands, key=lambda c: (c[0], -c[1]))
