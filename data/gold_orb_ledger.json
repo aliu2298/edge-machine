@@ -1,5 +1,5 @@
 {
- "last_run": "2026-10-21T01:16:07.347403+00:00",
+ "last_run": "2026-10-22T01:16:05.575559+00:00",
  "nights": [
   {
    "anchor": "ct_2000",
@@ -324,6 +324,114 @@
    "shadow": true,
    "status": "no_range",
    "variant": "B"
+  },
+  {
+   "anchor": "ct_2000",
+   "anchor_at": "2026-10-22T01:00:00+00:00",
+   "entry_at": "2026-10-22T01:01:00+00:00",
+   "entry_book": {
+    "ask": 4130.6,
+    "ask_size": 11.0,
+    "at": "2026-10-22T01:01:02.740451Z",
+    "bid": 4130.2,
+    "bid_size": 1.0
+   },
+   "entry_late": false,
+   "entry_px": 4129.5,
+   "entry_spread_bp": 0.968,
+   "exit_at": "2026-10-22T01:16:00+00:00",
+   "exit_book": {
+    "ask": 4132.7,
+    "ask_size": 34.0,
+    "at": "2026-10-22T01:16:00.414995Z",
+    "bid": 4132.2,
+    "bid_size": 6.0
+   },
+   "exit_carried": false,
+   "exit_px": 4132.5,
+   "exit_spread_bp": 1.21,
+   "fill_in": 4130.2,
+   "fill_out": 4132.7,
+   "gross_bp": -7.265,
+   "gross_usd": -3.0,
+   "id": "A:ct_2000:2026-10-21",
+   "net_bp": -6.538,
+   "net_usd": -2.7,
+   "night": "2026-10-21",
+   "product": "GOL-25NOV26-CDE",
+   "range_high": 4135.5,
+   "range_low": 4130.7,
+   "settled_at": "2026-10-22T01:16:00.305934+00:00",
+   "shadow": false,
+   "side": "short",
+   "signal_at": "2026-10-22T01:00:00+00:00",
+   "status": "settled",
+   "variant": "A"
+  },
+  {
+   "anchor": "utc_0100",
+   "anchor_at": "2026-10-22T01:00:00+00:00",
+   "entry_at": "2026-10-22T01:01:00+00:00",
+   "entry_book": {
+    "ask": 4130.6,
+    "ask_size": 11.0,
+    "at": "2026-10-22T01:01:02.740451Z",
+    "bid": 4130.2,
+    "bid_size": 1.0
+   },
+   "entry_late": false,
+   "entry_px": 4129.5,
+   "entry_spread_bp": 0.968,
+   "exit_at": "2026-10-22T01:16:00+00:00",
+   "exit_book": {
+    "ask": 4132.7,
+    "ask_size": 34.0,
+    "at": "2026-10-22T01:16:00.414995Z",
+    "bid": 4132.2,
+    "bid_size": 6.0
+   },
+   "exit_carried": false,
+   "exit_px": 4132.5,
+   "exit_spread_bp": 1.21,
+   "fill_in": 4130.2,
+   "fill_out": 4132.7,
+   "gross_bp": -7.265,
+   "gross_usd": -3.0,
+   "id": "A:utc_0100:2026-10-21",
+   "net_bp": -6.538,
+   "net_usd": -2.7,
+   "night": "2026-10-21",
+   "product": "GOL-25NOV26-CDE",
+   "range_high": 4135.5,
+   "range_low": 4130.7,
+   "settled_at": "2026-10-22T01:16:00.305934+00:00",
+   "shadow": true,
+   "side": "short",
+   "signal_at": "2026-10-22T01:00:00+00:00",
+   "status": "settled",
+   "variant": "A"
+  },
+  {
+   "anchor": "ct_2000",
+   "anchor_at": "2026-10-22T01:00:00+00:00",
+   "id": "B:ct_2000:2026-10-21",
+   "night": "2026-10-21",
+   "product": "GOL-25NOV26-CDE",
+   "settled_at": "2026-10-22T01:02:01.487225+00:00",
+   "shadow": false,
+   "status": "no_range",
+   "variant": "B"
+  },
+  {
+   "anchor": "utc_0100",
+   "anchor_at": "2026-10-22T01:00:00+00:00",
+   "id": "B:utc_0100:2026-10-21",
+   "night": "2026-10-21",
+   "product": "GOL-25NOV26-CDE",
+   "settled_at": "2026-10-22T01:02:01.487225+00:00",
+   "shadow": true,
+   "status": "no_range",
+   "variant": "B"
   }
  ],
  "runs": [
@@ -354,6 +462,18 @@
   {
    "at": "2026-10-21T00:54:02.582313+00:00",
    "night": "2026-10-20",
+   "product": "GOL-25NOV26-CDE",
+   "read_errors": 0,
+   "statuses": {
+    "A:ct_2000": "settled",
+    "A:utc_0100": "settled",
+    "B:ct_2000": "no_range",
+    "B:utc_0100": "no_range"
+   }
+  },
+  {
+   "at": "2026-10-22T00:54:02.822030+00:00",
+   "night": "2026-10-21",
    "product": "GOL-25NOV26-CDE",
    "read_errors": 0,
    "statuses": {
