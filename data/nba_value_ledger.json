@@ -1,5 +1,17 @@
 {
  "checks": {
+  "nba_1q_value_24h:2026-10-22": {
+   "at": "2026-10-22T00:00:24.620307+00:00",
+   "games": 2,
+   "gap_mean": 4.44,
+   "gaps": 2,
+   "no": 0,
+   "ok": false,
+   "picks": 0,
+   "reason": "model level mismatch: model +4.4 pts v Kalshi's median line",
+   "share": null,
+   "yes": 0
+  },
   "nba_tt_value_24h:2026-10-22": {
    "at": "2026-10-21T22:34:17.991590+00:00",
    "games": 2,
@@ -14,8 +26,32 @@
   }
  },
  "error": null,
- "last_run": "2026-10-21T23:30:24.142005+00:00",
+ "last_run": "2026-10-22T00:00:24.620307+00:00",
  "looks": {
+  "nba_1q_value_24h:401909093": {
+   "at": "2026-10-22T00:00:24.620307+00:00",
+   "baseline": 0,
+   "blocked": "model level mismatch: model +4.4 pts v Kalshi's median line",
+   "event": "KXNBA1QTOTAL-26OCT22CLEPHI",
+   "mu": {
+    "CLE": 116.4267992962258,
+    "PHI": 114.90331149134771
+   },
+   "mu_q1": 57.906287220284455,
+   "picks": []
+  },
+  "nba_1q_value_24h:401909094": {
+   "at": "2026-10-22T00:00:24.620307+00:00",
+   "baseline": 0,
+   "blocked": "model level mismatch: model +4.4 pts v Kalshi's median line",
+   "event": "KXNBA1QTOTAL-26OCT22DENOKC",
+   "mu": {
+    "DEN": 112.6000431986648,
+    "OKC": 119.74883994663227
+   },
+   "mu_q1": 57.96726283004055,
+   "picks": []
+  },
   "nba_tt_value_24h:401909093": {
    "at": "2026-10-21T22:34:17.991590+00:00",
    "baseline": 15,
@@ -686,10 +722,18 @@
    "entered": 0,
    "looked": 1,
    "new": 0
+  },
+  {
+   "at": "2026-10-22T00:00:24.620307+00:00",
+   "baseline": 0,
+   "blocked": 2,
+   "due": 2,
+   "entered": 0,
+   "looked": 2,
+   "new": 0
   }
  ],
  "schedule": [
-  "2026-10-21T23:00:00+00:00",
   "2026-10-21T23:30:00+00:00",
   "2026-10-22T00:00:00+00:00",
   "2026-10-22T00:30:00+00:00",
