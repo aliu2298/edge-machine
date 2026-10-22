@@ -86,6 +86,8 @@ def section(state=None):
             scope = (f"All {len(SR.MARKETS[meta['market']])} BTTS leagues" if meta["league"] == SR.ALL else meta["league"])
             # A7, A6 and D3 moved to Production by hand 2026-10-21 (soccer_rules_production).
             label = meta["label"] + (" · Production since 2026-10-21" if key in PRODUCTION_KEYS else "")
+            if key == "D3":                    # 2026-10-22: the UEL stays Sandbox paper (soccer_rules_production)
+                label += " (not the Europa League: paper there)"
             lines.append(rule_line(key, scope, label, meta.get("evidence"), picks))
             picks_g += picks
         recent += picks_g
