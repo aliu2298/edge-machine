@@ -2,16 +2,15 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-22T16:00:16.314807+00:00",
-   "last_success": "2026-10-22T16:00:16.314807+00:00",
+   "last_run": "2026-10-22T17:00:20.054111+00:00",
+   "last_success": "2026-10-22T17:00:20.054111+00:00",
    "observations": {
-    "at": "2026-10-22T16:00:16.314807+00:00",
-    "events": 855,
+    "at": "2026-10-22T17:00:20.054111+00:00",
+    "events": 854,
     "reasons": {
-     "no quote or spread too wide": 88,
+     "no quote or spread too wide": 90,
      "not active": 694,
-     "outside the band": 2,
-     "outside the entry window": 10881
+     "outside the entry window": 10869
     }
    },
    "picks": [
@@ -444,16 +443,15 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-22T16:00:16.314807+00:00",
-   "last_success": "2026-10-22T16:00:16.314807+00:00",
+   "last_run": "2026-10-22T17:00:20.054111+00:00",
+   "last_success": "2026-10-22T17:00:20.054111+00:00",
    "observations": {
-    "at": "2026-10-22T16:00:16.314807+00:00",
-    "events": 855,
+    "at": "2026-10-22T17:00:20.054111+00:00",
+    "events": 854,
     "reasons": {
-     "no quote or spread too wide": 89,
+     "no quote or spread too wide": 91,
      "not active": 694,
-     "outside the band": 2,
-     "outside the entry window": 10880
+     "outside the entry window": 10868
     }
    },
    "picks": [
@@ -733,16 +731,17 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-22T16:00:16.314807+00:00",
-   "last_success": "2026-10-22T16:00:16.314807+00:00",
+   "last_run": "2026-10-22T17:00:20.054111+00:00",
+   "last_success": "2026-10-22T17:00:20.054111+00:00",
    "observations": {
-    "at": "2026-10-22T16:00:16.314807+00:00",
-    "events": 855,
+    "at": "2026-10-22T17:00:20.054111+00:00",
+    "events": 854,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 31,
-     "edge 5c+": 14,
-     "edge under 5c": 2,
-     "no quote or spread too wide": 36
+     "edge 5c+": 12,
+     "edge under 5c": 3,
+     "no quote or spread too wide": 34,
+     "transcript search failed": 3
     }
    },
    "picks": [
@@ -1420,10 +1419,13 @@
      "logged": "2026-10-20T05:00:13.450184+00:00",
      "model": 0.9057,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.81,
+     "profit": 21.84,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-22T17:00:20.054111+00:00",
      "side": "yes",
-     "status": "open",
+     "status": "won",
      "title": "Blockade"
     },
     {
@@ -1500,10 +1502,13 @@
      "logged": "2026-10-20T22:00:13.566263+00:00",
      "model": 0.1276,
      "name": "What will Trump say this week?",
+     "payout": 0.0,
      "price": 0.46,
+     "profit": -100.0,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-22T17:00:20.054111+00:00",
      "side": "no",
-     "status": "open",
+     "status": "lost",
      "title": "Vivek / Ramaswamy"
     },
     {
@@ -1612,10 +1617,13 @@
      "logged": "2026-10-21T19:00:15.280476+00:00",
      "model": 0.2548,
      "name": "What will Trump say this week?",
+     "payout": 0.0,
      "price": 0.68,
+     "profit": -100.0,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-22T17:00:20.054111+00:00",
      "side": "no",
-     "status": "open",
+     "status": "lost",
      "title": "Nobel"
     },
     {
@@ -1638,11 +1646,11 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-22T16:00:16.314807+00:00",
-   "last_success": "2026-10-22T16:00:16.314807+00:00",
+   "last_run": "2026-10-22T17:00:20.054111+00:00",
+   "last_success": "2026-10-22T17:00:20.054111+00:00",
    "observations": {
-    "at": "2026-10-22T16:00:16.314807+00:00",
-    "events": 855,
+    "at": "2026-10-22T17:00:20.054111+00:00",
+    "events": 854,
     "reasons": {
      "edge 5c+": 5,
      "edge under 5c": 2,
