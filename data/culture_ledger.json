@@ -2,16 +2,16 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-22T15:00:16.823293+00:00",
-   "last_success": "2026-10-22T15:00:16.823293+00:00",
+   "last_run": "2026-10-22T16:00:16.314807+00:00",
+   "last_success": "2026-10-22T16:00:16.314807+00:00",
    "observations": {
-    "at": "2026-10-22T15:00:16.823293+00:00",
-    "events": 865,
+    "at": "2026-10-22T16:00:16.314807+00:00",
+    "events": 855,
     "reasons": {
      "no quote or spread too wide": 88,
-     "not active": 721,
+     "not active": 694,
      "outside the band": 2,
-     "outside the entry window": 11056
+     "outside the entry window": 10881
     }
    },
    "picks": [
@@ -444,16 +444,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-22T15:00:16.823293+00:00",
-   "last_success": "2026-10-22T15:00:16.823293+00:00",
+   "last_run": "2026-10-22T16:00:16.314807+00:00",
+   "last_success": "2026-10-22T16:00:16.314807+00:00",
    "observations": {
-    "at": "2026-10-22T15:00:16.823293+00:00",
-    "events": 865,
+    "at": "2026-10-22T16:00:16.314807+00:00",
+    "events": 855,
     "reasons": {
      "no quote or spread too wide": 89,
-     "not active": 721,
+     "not active": 694,
      "outside the band": 2,
-     "outside the entry window": 11055
+     "outside the entry window": 10880
     }
    },
    "picks": [
@@ -733,16 +733,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-22T15:00:16.823293+00:00",
-   "last_success": "2026-10-22T15:00:16.823293+00:00",
+   "last_run": "2026-10-22T16:00:16.314807+00:00",
+   "last_success": "2026-10-22T16:00:16.314807+00:00",
    "observations": {
-    "at": "2026-10-22T15:00:16.823293+00:00",
-    "events": 865,
+    "at": "2026-10-22T16:00:16.314807+00:00",
+    "events": 855,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 33,
-     "edge 5c+": 12,
+     "already near-certain (under 10c or over 90c)": 31,
+     "edge 5c+": 14,
      "edge under 5c": 2,
-     "no quote or spread too wide": 39
+     "no quote or spread too wide": 36
     }
    },
    "picks": [
@@ -1638,14 +1638,14 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-22T15:00:16.823293+00:00",
-   "last_success": "2026-10-22T15:00:16.823293+00:00",
+   "last_run": "2026-10-22T16:00:16.314807+00:00",
+   "last_success": "2026-10-22T16:00:16.314807+00:00",
    "observations": {
-    "at": "2026-10-22T15:00:16.823293+00:00",
-    "events": 865,
+    "at": "2026-10-22T16:00:16.314807+00:00",
+    "events": 855,
     "reasons": {
-     "edge 5c+": 6,
-     "edge under 5c": 1,
+     "edge 5c+": 5,
+     "edge under 5c": 2,
      "under 20 reviews counted": 14
     }
    },
@@ -2016,7 +2016,7 @@
    "days": []
   },
   "Deere": {
-   "at": "2026-10-19T17:00:15.680945+00:00",
+   "at": "2026-10-22T16:00:16.314807+00:00",
    "days": []
   },
   "DoorDash / DASH": {
@@ -2220,7 +2220,7 @@
    "days": []
   },
   "UAE / United Arab Emirates": {
-   "at": "2026-10-22T10:00:15.410963+00:00",
+   "at": "2026-10-22T16:00:16.314807+00:00",
    "days": [
     "2026-08-02",
     "2026-08-03",
@@ -2248,7 +2248,7 @@
    ]
   },
   "Zacharia": {
-   "at": "2026-10-22T10:00:15.410963+00:00",
+   "at": "2026-10-22T16:00:16.314807+00:00",
    "days": []
   },
   "Zohran / Mamdani": {
