@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-22T01:52:16.452771+00:00",
-   "last_success": "2026-10-22T01:52:16.452771+00:00",
+   "last_run": "2026-10-22T02:00:16.091727+00:00",
+   "last_success": "2026-10-22T02:00:16.091727+00:00",
    "observations": {
-    "at": "2026-10-22T01:52:16.452771+00:00",
+    "at": "2026-10-22T02:00:16.091727+00:00",
     "events": 865,
     "reasons": {
      "no quote or spread too wide": 73,
@@ -443,16 +443,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-22T01:52:16.452771+00:00",
-   "last_success": "2026-10-22T01:52:16.452771+00:00",
+   "last_run": "2026-10-22T02:00:16.091727+00:00",
+   "last_success": "2026-10-22T02:00:16.091727+00:00",
    "observations": {
-    "at": "2026-10-22T01:52:16.452771+00:00",
+    "at": "2026-10-22T02:00:16.091727+00:00",
     "events": 865,
     "reasons": {
-     "no quote or spread too wide": 162,
+     "no quote or spread too wide": 102,
      "not active": 731,
      "outside the band": 1,
-     "outside the entry window": 11011
+     "outside the entry window": 11071
     }
    },
    "picks": [
@@ -732,10 +732,10 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-22T01:52:16.452771+00:00",
-   "last_success": "2026-10-22T01:52:16.452771+00:00",
+   "last_run": "2026-10-22T02:00:16.091727+00:00",
+   "last_success": "2026-10-22T02:00:16.091727+00:00",
    "observations": {
-    "at": "2026-10-22T01:52:16.452771+00:00",
+    "at": "2026-10-22T02:00:16.091727+00:00",
     "events": 865,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 33,
@@ -1637,10 +1637,10 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-22T01:52:16.452771+00:00",
-   "last_success": "2026-10-22T01:52:16.452771+00:00",
+   "last_run": "2026-10-22T02:00:16.091727+00:00",
+   "last_success": "2026-10-22T02:00:16.091727+00:00",
    "observations": {
-    "at": "2026-10-22T01:52:16.452771+00:00",
+    "at": "2026-10-22T02:00:16.091727+00:00",
     "events": 865,
     "reasons": {
      "edge 5c+": 7,
@@ -2089,7 +2089,7 @@
    ]
   },
   "Mastercard / MA": {
-   "at": "2026-10-18T16:00:12.908990+00:00",
+   "at": "2026-10-22T02:00:16.091727+00:00",
    "days": [
     "2026-10-01"
    ]
