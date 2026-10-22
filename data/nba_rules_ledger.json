@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-22T19:19:27.854348+00:00",
+ "last_run": "2026-10-22T21:30:15.870737+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -103,6 +103,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT21CHITOR-CHI110",
      "title": "Chicago over 109.5 points",
      "why": "CHI O+D- v TOR O+D+ \u00b7 110+ YES 0.66"
+    },
+    {
+     "game": "401909093",
+     "id": "R1:KXNBATEAMTOTAL-26OCT22CLEPHI-CLE111",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O-D+",
+      "home": "O-D+",
+      "home_h1": "O-D+"
+     },
+     "logged": "2026-10-22T21:30:15.870737+00:00",
+     "match": "CLE @ PHI",
+     "price": 0.73,
+     "rule": "R1",
+     "side": "yes",
+     "start": "2026-10-22T23:00Z",
+     "status": "open",
+     "strike": 110.5,
+     "team": "CLE",
+     "ticker": "KXNBATEAMTOTAL-26OCT22CLEPHI-CLE111",
+     "title": "Cleveland over 110.5 points",
+     "why": "CLE O+D+ v PHI O-D+ \u00b7 110+ YES 0.73"
     }
    ]
   },
@@ -833,11 +855,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-17T06:36:50.136292+00:00",
-   "due": 0,
-   "new": 0
-  },
-  {
    "at": "2026-10-17T11:10:07.826196+00:00",
    "due": 0,
    "new": 0
@@ -1086,6 +1103,11 @@
    "at": "2026-10-22T19:19:27.854348+00:00",
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-10-22T21:30:15.870737+00:00",
+   "due": 1,
+   "new": 1
   }
  ],
  "version": "nba-rules-v1"
