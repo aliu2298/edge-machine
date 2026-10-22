@@ -1,7 +1,7 @@
 {
  "board_built_at": "2026-10-22T03:30:13+00:00",
- "collector_error": null,
- "collector_healthy": true,
+ "collector_error": "Settlement retained: KXDIESELD-26OCT22-T6.320: HTTP Error 503: Service Unavailable",
+ "collector_healthy": false,
  "corners_selections": {},
  "first_publish_min": 45,
  "late_publication_skipped": 0,
@@ -650,43 +650,6 @@
    "source": "econ_nc_yes",
    "sport": "econ_daily",
    "status": "hit"
-  },
-  "2026-10-22|KXDIESELD-26OCT22-T6.320|Not Above $6.320 at the close \u00b7 Near-certain \u00b7 3h \u00b7 NO": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "no"
-   },
-   "date": "2026-10-22",
-   "edge_at_log": null,
-   "first_seen": "2026-10-22",
-   "headline": "Not Above $6.320 at the close",
-   "home": null,
-   "id": "2026-10-22|KXDIESELD-26OCT22-T6.320|Not Above $6.320 at the close \u00b7 Near-certain \u00b7 3h \u00b7 NO",
-   "kickoff": "2026-10-22T03:59Z",
-   "lane": "production",
-   "last_seen": "2026-10-22",
-   "last_seen_at": "2026-10-22T03:30:13+00:00",
-   "league": "Econ Daily",
-   "match": "Diesel price (daily)",
-   "pair": "econ_nc_no|econ_daily",
-   "price_at_log": 0.95,
-   "published_at": "2026-10-22T00:30:13+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 208,
-   "route": {
-    "claim": "Not Above $6.320 at the close",
-    "event": "KXDIESELD-26OCT22",
-    "market": "KXDIESELD-26OCT22-T6.320",
-    "outcome": "Above $6.320",
-    "outcome_side": "no",
-    "price_at_log": 0.95,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "econ_nc_no:KXDIESELD-26OCT22-T6.320",
-   "source": "econ_nc_no",
-   "sport": "econ_daily",
-   "status": "pending"
   }
  },
  "pairs": {
@@ -697,9 +660,9 @@
    "ready_at": "2026-10-20T05:00:00+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 2,
+    "leads": 1,
     "problem": null,
-    "routed": 2,
+    "routed": 1,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -711,7 +674,7 @@
    "sandbox_roi_fee": 0.115,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 0,
     "under_target": 0
    }
   },
