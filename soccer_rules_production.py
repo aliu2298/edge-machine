@@ -37,6 +37,13 @@ PAIRS = {
     "ARG": ("sa_o15_arg", "soccer_o15", "Argentina over 1.5"),
 }
 LABELS = {src: name for src, _sport, name in PAIRS.values()}
+# Leagues a rule logs in but does NOT publish to Production. 2026-10-22, as asked (Olu), before
+# Europa League matchday 3: D3 replayed on 2026-27 UEL games (labels from each team's last 10
+# competitive matches, against the UEL mean of 1.37 goals per team) went 3/10, -47% (league phase
+# 2/5) -- in the UEL the O-D- side often fails to score -- and its research edge was La Liga, Serie
+# A, Primeira and the UCL. soccer_rules.py still logs D3 there, so the UEL keeps being measured
+# as Sandbox paper on the same ledger; it is simply never a Production lead.
+NOT_PUBLISHED = {"D3": {"Europa League"}}
 
 
 def pairs():
@@ -79,6 +86,9 @@ def quotes(rules_state, sa_state):
     out = []
     for rule in ("A7", "A6", "D3"):
         for r in ((rules_state.get("rules") or {}).get(rule) or {}).get("picks") or []:
+            if r.get("league") in NOT_PUBLISHED.get(rule, ()) or (
+                    rule == "D3" and str(r.get("ticker") or "").startswith("KXUELBTTS")):
+                continue
             q = _quote(rule, r, r.get("league"))
             if q:
                 out.append(q)

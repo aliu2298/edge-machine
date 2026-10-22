@@ -81,6 +81,18 @@ stale = dict(rules, last_run=(NOW - dt.timedelta(hours=5)).isoformat())
 check("a stale rules read publishes no A7/A6/D3 lead, Argentina still does",
       sorted(l["pair"] for l in RP.feed(stale, sa, now=NOW)["leads"].values()), ["sa_o15_arg|soccer_o15"])
 
+print("\nD3 is not published in the Europa League (2026-10-22); it is still logged there as paper")
+uel = dict(rules, rules=dict(rules["rules"], D3={"picks": rules["rules"]["D3"]["picks"] + [
+    pick("D3", "KXUELBTTS-26OCT22CELCEL-BTTS", "Celtic v Celta Vigo", "Europa League", "yes", 0.55, None,
+         start="2026-10-22T19:00Z")]}))
+check("a D3 Europa League entry is never a quote", any(q["market_id"].startswith("KXUELBTTS") for q in RP.quotes(uel, sa)), False)
+check("nor a lead", any(l["route"]["market"].startswith("KXUELBTTS") for l in RP.feed(uel, sa, now=NOW)["leads"].values()), False)
+check("D3 in every other league still publishes", "KXLALIGABTTS-26OCT25GETOSA-BTTS" in
+      {l["route"]["market"] for l in RP.feed(uel, sa, now=NOW)["leads"].values()}, True)
+import soccer_rules as SRM
+check("soccer_rules still runs D3 in the Europa League (Sandbox paper)", SRM.in_league(SRM.RULES["D3"], "Europa League"), True)
+check("the Soccer page says so", "not the Europa League" in __import__("soccer_rules_build").section(uel), True)
+
 print("\nthe pages")
 html = P.page({"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}, "", now=NOW, soccer_rules=(rules, sa))
 check("the Production page lists the four rules by name", all(n in html for n in RP.LABELS.values()), True)
