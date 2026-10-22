@@ -58,6 +58,17 @@ ww = game("O-D-", "O-D-")
 r4 = NR.team_picks(ww, [mkt("SA", 101.5, .62, .64), mkt("SA", 104.5, .55, .58), mkt("SA", 109.5, .40, .42)], NOW)
 check("weak v weak: R4 takes the cheapest NO between 100 and 110, at 45c or less",
       [(p["rule"], p["strike"], p["price"]) for p in r4 if p["rule"] == "R4" and p["team"] == "SA"], [("R4", 101.5, 0.38)])
+r4no = lambda *noes: [(p["strike"], p["price"]) for p in NR.team_picks(
+    ww, [mkt("SA", 100.5 + i, round(1 - n, 2), round(1 - n + 0.02, 2)) for i, n in enumerate(noes)], NOW)
+    if p["rule"] == "R4" and p["team"] == "SA"]
+check("R4 floor (2026-10-22): a NO at 0.24 is refused", r4no(0.24), [])
+check("  0.25 is accepted", r4no(0.25), [(100.5, 0.25)])
+check("  0.45 is accepted", r4no(0.45), [(100.5, 0.45)])
+check("  0.46 is refused", r4no(0.46), [])
+check("  the cheapest at or above the floor is picked: 0.06 and 0.07 pennies skipped, 0.31 over 0.38",
+      r4no(0.06, 0.07, 0.38, 0.31), [(103.5, 0.31)])
+check("  equal prices go to the higher strike", r4no(0.30, 0.30), [(101.5, 0.3)])
+check("the label says NO 25-45c", NR.RULES["R4"]["label"], "O−D− v O−D− · team total 100-110 · cheapest NO 25-45c")
 h1 = [dict(ticker="KXNBA1HTOTAL-26OCT20HOUSAS-114", floor_strike=114.5, status="active",
            yes_bid_dollars="0.52", yes_ask_dollars="0.55")]
 check("R5: an O-D- first-half label, 115+ NO at 48c", [(p["rule"], p["price"]) for p in NR.half_picks(game("O+D+", "O+D+", home_h1="O-D-"), h1, NOW)],
