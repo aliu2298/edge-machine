@@ -1,11 +1,11 @@
 {
  "lanes": {
   "culture_endgame": {
-   "error": "events: HTTP Error 503: Service Unavailable",
-   "last_run": "2026-10-22T07:58:03.181182+00:00",
-   "last_success": "2026-10-22T07:00:16.557137+00:00",
+   "error": null,
+   "last_run": "2026-10-22T08:00:15.379339+00:00",
+   "last_success": "2026-10-22T08:00:15.379339+00:00",
    "observations": {
-    "at": "2026-10-22T07:00:16.557137+00:00",
+    "at": "2026-10-22T08:00:15.379339+00:00",
     "events": 861,
     "reasons": {
      "no quote or spread too wide": 102,
@@ -443,11 +443,11 @@
    ]
   },
   "culture_fav_band": {
-   "error": "events: HTTP Error 503: Service Unavailable",
-   "last_run": "2026-10-22T07:58:03.181182+00:00",
-   "last_success": "2026-10-22T07:00:16.557137+00:00",
+   "error": null,
+   "last_run": "2026-10-22T08:00:15.379339+00:00",
+   "last_success": "2026-10-22T08:00:15.379339+00:00",
    "observations": {
-    "at": "2026-10-22T07:00:16.557137+00:00",
+    "at": "2026-10-22T08:00:15.379339+00:00",
     "events": 861,
     "reasons": {
      "no quote or spread too wide": 102,
@@ -732,17 +732,17 @@
    ]
   },
   "mentions_rate": {
-   "error": "events: HTTP Error 503: Service Unavailable",
-   "last_run": "2026-10-22T07:58:03.181182+00:00",
-   "last_success": "2026-10-22T07:00:16.557137+00:00",
+   "error": null,
+   "last_run": "2026-10-22T08:00:15.379339+00:00",
+   "last_success": "2026-10-22T08:00:15.379339+00:00",
    "observations": {
-    "at": "2026-10-22T07:00:16.557137+00:00",
+    "at": "2026-10-22T08:00:15.379339+00:00",
     "events": 861,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 35,
-     "edge 5c+": 12,
+     "already near-certain (under 10c or over 90c)": 34,
+     "edge 5c+": 11,
      "edge under 5c": 3,
-     "no quote or spread too wide": 36
+     "no quote or spread too wide": 38
     }
    },
    "picks": [
@@ -1637,11 +1637,11 @@
    ]
   },
   "rt_model": {
-   "error": "events: HTTP Error 503: Service Unavailable",
-   "last_run": "2026-10-22T07:58:03.181182+00:00",
-   "last_success": "2026-10-22T07:00:16.557137+00:00",
+   "error": null,
+   "last_run": "2026-10-22T08:00:15.379339+00:00",
+   "last_success": "2026-10-22T08:00:15.379339+00:00",
    "observations": {
-    "at": "2026-10-22T07:00:16.557137+00:00",
+    "at": "2026-10-22T08:00:15.379339+00:00",
     "events": 861,
     "reasons": {
      "edge 5c+": 6,
@@ -1939,7 +1939,7 @@
    "days": []
   },
   "Bibi / Netanyahu": {
-   "at": "2026-10-22T01:52:16.452771+00:00",
+   "at": "2026-10-22T08:00:15.379339+00:00",
    "days": [
     "2026-07-31",
     "2026-09-13",
@@ -1995,7 +1995,7 @@
    ]
   },
   "Crypto / Bitcoin": {
-   "at": "2026-10-22T01:52:16.452771+00:00",
+   "at": "2026-10-22T08:00:15.379339+00:00",
    "days": [
     "2026-08-06",
     "2026-08-19"
@@ -2030,7 +2030,7 @@
    "days": []
   },
   "Ethanol": {
-   "at": "2026-10-22T01:52:16.452771+00:00",
+   "at": "2026-10-22T08:00:15.379339+00:00",
    "days": [
     "2026-09-18",
     "2026-09-21",
@@ -2140,7 +2140,7 @@
    ]
   },
   "Peptide": {
-   "at": "2026-10-22T01:00:16.040711+00:00",
+   "at": "2026-10-22T08:00:15.379339+00:00",
    "days": []
   },
   "Prediction Market / Predictive Market": {
