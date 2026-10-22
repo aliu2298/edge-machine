@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-21T22:01:42.150366+00:00",
+ "last_run": "2026-10-22T15:16:41.709997+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -802,6 +802,58 @@
      "ticker": "KXSERIEATEAMTOTAL-26OCT18FIOCOM-COM2",
      "title": "Will Como score over 1.5 goals?",
      "why": "Como O+D- v Fiorentina O+D+ \u00b7 2+ YES 0.54"
+    },
+    {
+     "ask": 0.67,
+     "bid": 0.66,
+     "event": "KXUELTEAMTOTAL-26OCT22JUVREN",
+     "group": "B",
+     "id": "T5:KXUELTEAMTOTAL-26OCT22JUVREN:home",
+     "labels": {
+      "opp": "O+D+",
+      "own": "O+D-"
+     },
+     "league": "Europa League",
+     "line": 1.5,
+     "logged": "2026-10-22T15:16:41.709997+00:00",
+     "match": "Juventus v Stade Rennais",
+     "opponent": "Stade Rennais",
+     "price": 0.67,
+     "rule": "T5",
+     "side": "yes",
+     "start": "2026-10-22T16:45Z",
+     "status": "open",
+     "team": "Juventus",
+     "team_side": "home",
+     "ticker": "KXUELTEAMTOTAL-26OCT22JUVREN-JUV2",
+     "title": "Will Juventus score over 1.5 goals?",
+     "why": "Juventus O+D- v Stade Rennais O+D+ \u00b7 2+ YES 0.67"
+    },
+    {
+     "ask": 0.38,
+     "bid": 0.37,
+     "event": "KXUELTEAMTOTAL-26OCT22STUOLM",
+     "group": "B",
+     "id": "T5:KXUELTEAMTOTAL-26OCT22STUOLM:home",
+     "labels": {
+      "opp": "O+D+",
+      "own": "O+D-"
+     },
+     "league": "Europa League",
+     "line": 1.5,
+     "logged": "2026-10-22T15:16:41.709997+00:00",
+     "match": "SK Sturm Graz v Marseille",
+     "opponent": "Marseille",
+     "price": 0.38,
+     "rule": "T5",
+     "side": "yes",
+     "start": "2026-10-22T16:45Z",
+     "status": "open",
+     "team": "SK Sturm Graz",
+     "team_side": "home",
+     "ticker": "KXUELTEAMTOTAL-26OCT22STUOLM-STU2",
+     "title": "Will Sturm Graz score over 1.5 goals?",
+     "why": "SK Sturm Graz O+D- v Marseille O+D+ \u00b7 2+ YES 0.38"
     }
    ]
   },
@@ -1426,6 +1478,14 @@
    "labelled": 1,
    "matched": 0,
    "new": 0
+  },
+  {
+   "at": "2026-10-22T15:16:41.709997+00:00",
+   "candidates": 2,
+   "due": 8,
+   "labelled": 3,
+   "matched": 2,
+   "new": 2
   }
  ],
  "version": "soccer-team-rules-v1"
