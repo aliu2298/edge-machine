@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-22T15:46:14.567774+00:00",
+ "last_run": "2026-10-22T17:31:39.053954+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -854,6 +854,58 @@
      "ticker": "KXUELTEAMTOTAL-26OCT22STUOLM-STU2",
      "title": "Will Sturm Graz score over 1.5 goals?",
      "why": "SK Sturm Graz O+D- v Marseille O+D+ \u00b7 2+ YES 0.38"
+    },
+    {
+     "ask": 0.54,
+     "bid": 0.53,
+     "event": "KXUELTEAMTOTAL-26OCT22BESCRY",
+     "group": "B",
+     "id": "T5:KXUELTEAMTOTAL-26OCT22BESCRY:home",
+     "labels": {
+      "opp": "O+D+",
+      "own": "O+D-"
+     },
+     "league": "Europa League",
+     "line": 1.5,
+     "logged": "2026-10-22T17:31:39.053954+00:00",
+     "match": "Besiktas v Crystal Palace",
+     "opponent": "Crystal Palace",
+     "price": 0.54,
+     "rule": "T5",
+     "side": "yes",
+     "start": "2026-10-22T19:00Z",
+     "status": "open",
+     "team": "Besiktas",
+     "team_side": "home",
+     "ticker": "KXUELTEAMTOTAL-26OCT22BESCRY-BES2",
+     "title": "Will Besiktas score over 1.5 goals?",
+     "why": "Besiktas O+D- v Crystal Palace O+D+ \u00b7 2+ YES 0.54"
+    },
+    {
+     "ask": 0.42,
+     "bid": 0.41,
+     "event": "KXUELTEAMTOTAL-26OCT22TSGOL",
+     "group": "B",
+     "id": "T5:KXUELTEAMTOTAL-26OCT22TSGOL:away",
+     "labels": {
+      "opp": "O+D+",
+      "own": "O+D-"
+     },
+     "league": "Europa League",
+     "line": 1.5,
+     "logged": "2026-10-22T17:31:39.053954+00:00",
+     "match": "TSG Hoffenheim v Lyon",
+     "opponent": "TSG Hoffenheim",
+     "price": 0.42,
+     "rule": "T5",
+     "side": "yes",
+     "start": "2026-10-22T19:00Z",
+     "status": "open",
+     "team": "Lyon",
+     "team_side": "away",
+     "ticker": "KXUELTEAMTOTAL-26OCT22TSGOL-OL2",
+     "title": "Will Lyon score over 1.5 goals?",
+     "why": "Lyon O+D- v TSG Hoffenheim O+D+ \u00b7 2+ YES 0.42"
     }
    ]
   },
@@ -1494,6 +1546,14 @@
    "labelled": 3,
    "matched": 2,
    "new": 0
+  },
+  {
+   "at": "2026-10-22T17:31:39.053954+00:00",
+   "candidates": 2,
+   "due": 10,
+   "labelled": 6,
+   "matched": 2,
+   "new": 2
   }
  ],
  "version": "soccer-team-rules-v1"
