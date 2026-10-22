@@ -25,8 +25,8 @@
    "yes": 0
   }
  },
- "error": null,
- "last_run": "2026-10-22T06:30:26.615663+00:00",
+ "error": "base_nba_tt_value_24h:KXNBATEAMTOTAL-26OCT22CLEPHI-PHI117: HTTP Error 503: Service Unavailable; base_nba_tt_value_24h:KXNBATEAMTOTAL-26OCT22CLEPHI-PHI115: HTTP Error 503: Service Unavailable; base_nba_tt_value_24h:KXNBATEAMTOTAL-26OCT22CLEPHI-CLE113: HTTP Error 503: Service Unavailable; base_nba_tt_value_24h:KXNBATEAMTOTAL-26OCT22CLEPHI-CLE111: HTTP Error 503: Service Unavailable; base_nba_tt_value_24h:KXNBATEAMTOTAL-26OCT22CLEPHI-PHI119: HTTP Error 503: Service Unavailable; base_nba_tt_value_24h:KXNBATEAMTOTAL-26OCT22CLEPHI-PHI123: HTTP Error 503: Service Unavailable; base_nba_tt_value_24h:KXNBATEAMTOTAL-26OCT22CLEPHI-CLE125: HTTP Error 503: Service Unavailable; base_nba_tt_value_24h:KXNBATEAMTOTAL-26OCT22CLEPHI-PHI125: HTTP Error 503: Service Unavailable; base_nba_tt_value_24h:KXNBATEAMTOTAL-26OCT22CLEPHI-PHI127: HTTP Error 503: Service Unavailable; base_nba_tt_value_24h:KXNBATEAMTOTAL-26OCT22CLEPHI-PHI113: HTTP Error 503: Service Unavailable; base_nba_tt_value_24h:KXNBATEAMTOTAL-26O",
+ "last_run": "2026-10-22T07:41:02.691970+00:00",
  "looks": {
   "nba_1q_value_24h:401909093": {
    "at": "2026-10-22T00:00:24.620307+00:00",
@@ -846,6 +846,14 @@
   },
   {
    "at": "2026-10-22T06:30:26.615663+00:00",
+   "baseline": 0,
+   "due": 0,
+   "entered": 0,
+   "looked": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-10-22T07:41:02.691970+00:00",
    "baseline": 0,
    "due": 0,
    "entered": 0,
