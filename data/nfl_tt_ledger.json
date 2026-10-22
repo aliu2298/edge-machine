@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-22T23:00:18.961203+00:00",
+ "last_run": "2026-10-22T23:15:15.718547+00:00",
  "registered": "2026-10-21",
  "rules": {
   "baseline": {
@@ -779,6 +779,14 @@
    "entered": 3,
    "matched": 1,
    "new": 3
+  },
+  {
+   "at": "2026-10-22T23:15:15.718547+00:00",
+   "baseline": 0,
+   "due": 1,
+   "entered": 0,
+   "matched": 1,
+   "new": 0
   }
  ],
  "schedule": [
