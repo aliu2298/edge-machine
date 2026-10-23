@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-23T16:30:19.048686+00:00",
+ "last_run": "2026-10-23T17:15:14.807850+00:00",
  "registered": "2026-10-21",
  "rules": {
   "baseline": {
@@ -376,11 +376,14 @@
      "line": 18.5,
      "logged": "2026-10-23T13:15:16.541786+00:00",
      "match": "Jiri Lehecka v Tallon Griekspoor",
+     "payout": 1.0,
      "price": 0.92,
+     "profit": 8.09,
      "rule": "baseline",
+     "settled": "2026-10-23T17:15:14.807850+00:00",
      "side": "yes",
      "start": "2026-10-23T14:00:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXATPGTOTAL-26OCT23GRILEH-19",
      "title": "Over 18.5 games",
      "tournament": "BNP Paribas Fortis European Open",
@@ -397,11 +400,14 @@
      "line": 19.5,
      "logged": "2026-10-23T13:45:15.146681+00:00",
      "match": "Karen Khachanov v Alexander Bublik",
+     "payout": 1.0,
      "price": 0.85,
+     "profit": 16.42,
      "rule": "baseline",
+     "settled": "2026-10-23T17:15:14.807850+00:00",
      "side": "yes",
      "start": "2026-10-23T14:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXATPGTOTAL-26OCT23BUBKHA-20",
      "title": "Over 19.5 games",
      "tournament": "Almaty Open",
@@ -448,6 +454,27 @@
      "title": "Over 18.5 games",
      "tournament": "Grand Prix Auvergne-Rh\u00f4ne-Alpes",
      "why": "over 18.5 YES 0.91"
+    },
+    {
+     "ask": 0.87,
+     "ask_size": 6811.0,
+     "bid": 0.83,
+     "espn_id": "185064",
+     "event": "KXATPGTOTAL-26OCT23STRBER",
+     "id": "baseline:KXATPGTOTAL-26OCT23STRBER-19",
+     "lead_min": 44.8,
+     "line": 18.5,
+     "logged": "2026-10-23T17:15:14.807850+00:00",
+     "match": "Zizou Bergs v Jan-Lennard Struff",
+     "price": 0.87,
+     "rule": "baseline",
+     "side": "yes",
+     "start": "2026-10-23T18:00:00+00:00",
+     "status": "open",
+     "ticker": "KXATPGTOTAL-26OCT23STRBER-19",
+     "title": "Over 18.5 games",
+     "tournament": "BNP Paribas Fortis European Open",
+     "why": "over 18.5 YES 0.87"
     }
    ]
   },
@@ -824,11 +851,14 @@
      "line": 18.5,
      "logged": "2026-10-23T13:15:16.541786+00:00",
      "match": "Jiri Lehecka v Tallon Griekspoor",
+     "payout": 1.0,
      "price": 0.92,
+     "profit": 8.09,
      "rule": "tennis_atp_low_over",
+     "settled": "2026-10-23T17:15:14.807850+00:00",
      "side": "yes",
      "start": "2026-10-23T14:00:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXATPGTOTAL-26OCT23GRILEH-19",
      "title": "Over 18.5 games",
      "tournament": "BNP Paribas Fortis European Open",
@@ -845,11 +875,14 @@
      "line": 19.5,
      "logged": "2026-10-23T13:45:15.146681+00:00",
      "match": "Karen Khachanov v Alexander Bublik",
+     "payout": 1.0,
      "price": 0.85,
+     "profit": 16.42,
      "rule": "tennis_atp_low_over",
+     "settled": "2026-10-23T17:15:14.807850+00:00",
      "side": "yes",
      "start": "2026-10-23T14:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXATPGTOTAL-26OCT23BUBKHA-20",
      "title": "Over 19.5 games",
      "tournament": "Almaty Open",
@@ -896,19 +929,32 @@
      "title": "Over 18.5 games",
      "tournament": "Grand Prix Auvergne-Rh\u00f4ne-Alpes",
      "why": "over 18.5 YES 0.91"
+    },
+    {
+     "ask": 0.87,
+     "ask_size": 6811.0,
+     "bid": 0.83,
+     "espn_id": "185064",
+     "event": "KXATPGTOTAL-26OCT23STRBER",
+     "id": "tennis_atp_low_over:KXATPGTOTAL-26OCT23STRBER",
+     "lead_min": 44.8,
+     "line": 18.5,
+     "logged": "2026-10-23T17:15:14.807850+00:00",
+     "match": "Zizou Bergs v Jan-Lennard Struff",
+     "price": 0.87,
+     "rule": "tennis_atp_low_over",
+     "side": "yes",
+     "start": "2026-10-23T18:00:00+00:00",
+     "status": "open",
+     "ticker": "KXATPGTOTAL-26OCT23STRBER-19",
+     "title": "Over 18.5 games",
+     "tournament": "BNP Paribas Fortis European Open",
+     "why": "over 18.5 YES 0.87"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-22T01:35:24.792903+00:00",
-   "baseline": 0,
-   "due": 0,
-   "entered": 0,
-   "matched": 0,
-   "new": 0
-  },
   {
    "at": "2026-10-22T05:45:14.418132+00:00",
    "baseline": 0,
@@ -1308,15 +1354,29 @@
    "entered": 0,
    "matched": 1,
    "new": 0
+  },
+  {
+   "at": "2026-10-23T17:15:14.807850+00:00",
+   "baseline": 1,
+   "due": 1,
+   "entered": 1,
+   "matched": 1,
+   "new": 1
   }
  ],
  "schedule": [
-  "2026-10-23T16:45:00+00:00",
-  "2026-10-23T17:00:00+00:00",
   "2026-10-23T18:00:00+00:00",
   "2026-10-23T18:30:00+00:00",
+  "2026-10-24T09:00:00+00:00",
+  "2026-10-24T09:30:00+00:00",
   "2026-10-24T10:00:00+00:00",
-  "2026-10-24T14:00:00+00:00"
+  "2026-10-24T10:30:00+00:00",
+  "2026-10-24T11:00:00+00:00",
+  "2026-10-24T12:00:00+00:00",
+  "2026-10-24T12:30:00+00:00",
+  "2026-10-24T13:00:00+00:00",
+  "2026-10-24T14:00:00+00:00",
+  "2026-10-24T16:00:00+00:00"
  ],
  "version": "tennis-totals-v1"
 }
