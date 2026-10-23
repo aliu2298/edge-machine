@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-23T22:01:26.869320+00:00",
+ "last_run": "2026-10-23T22:46:18.801254+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -102,6 +102,24 @@
      "ticker": "KXARGPREMDIVTOTAL-26OCT23GEMPLA-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Argentina over 1.5 YES 0.68"
+    },
+    {
+     "ask": 0.64,
+     "bid": 0.63,
+     "event": "KXARGPREMDIVTOTAL-26OCT23TIGTUC",
+     "id": "ARG:KXARGPREMDIVTOTAL-26OCT23TIGTUC",
+     "league": "Liga Profesional",
+     "line": 1.5,
+     "logged": "2026-10-23T22:46:18.801254+00:00",
+     "match": "Tigre v Atl\u00e9tico Tucum\u00e1n",
+     "price": 0.64,
+     "rule": "ARG",
+     "side": "yes",
+     "start": "2026-10-24T00:15Z",
+     "status": "open",
+     "ticker": "KXARGPREMDIVTOTAL-26OCT23TIGTUC-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Argentina over 1.5 YES 0.64"
     }
    ]
   },
@@ -150,13 +168,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-19T17:46:40.618762+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "quoted": 0
-  },
   {
    "at": "2026-10-19T18:01:12.517770+00:00",
    "due": 0,
@@ -505,6 +516,13 @@
    "due": 1,
    "matched": 1,
    "new": 0,
+   "quoted": 1
+  },
+  {
+   "at": "2026-10-23T22:46:18.801254+00:00",
+   "due": 1,
+   "matched": 1,
+   "new": 1,
    "quoted": 1
   }
  ],
