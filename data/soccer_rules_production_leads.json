@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-23T17:31:25+00:00",
+ "board_built_at": "2026-10-23T17:46:23+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sa_o15_arg": true,
@@ -25,7 +25,7 @@
    "kickoff": "2026-10-23T18:00Z",
    "lane": "production",
    "last_seen": "2026-10-23",
-   "last_seen_at": "2026-10-23T17:31:25+00:00",
+   "last_seen_at": "2026-10-23T17:46:23+00:00",
    "league": "Saudi Pro League",
    "match": "Al Ahli v Al Khaleej",
    "pair": "sr_d3|soccer_btts",
@@ -46,6 +46,40 @@
    "source": "sr_d3",
    "sport": "soccer_btts",
    "status": "pending"
+  },
+  "2026-10-23|Al Ittihad|Al Diriyah|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
+   "away": "Al Diriyah",
+   "bet": {
+    "kind": "btts"
+   },
+   "date": "2026-10-23",
+   "edge_at_log": null,
+   "first_seen": "2026-10-23",
+   "headline": "Both teams to score",
+   "home": "Al Ittihad",
+   "id": "2026-10-23|Al Ittihad|Al Diriyah|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score",
+   "kickoff": "2026-10-23T15:30Z",
+   "lane": "production",
+   "league": "Saudi Pro League",
+   "match": "Al Ittihad v Al Diriyah",
+   "pair": "sr_d3|soccer_btts",
+   "price_at_log": 0.64,
+   "published_at": "2026-10-23T17:46:23+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Both teams to score",
+    "event": "KXSAUDIPLBTTS-26OCT23ITJDIR",
+    "market": "KXSAUDIPLBTTS-26OCT23ITJDIR-BTTS",
+    "outcome": "Both Teams To Score",
+    "outcome_side": "yes",
+    "price_at_log": 0.64,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_d3:KXSAUDIPLBTTS-26OCT23ITJDIR-BTTS",
+   "source": "sr_d3",
+   "sport": "soccer_btts",
+   "status": "miss"
   }
  },
  "pairs": {
@@ -131,18 +165,18 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 1,
+    "leads": 2,
     "problem": null,
-    "routed": 1,
+    "routed": 2,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 0,
-   "sandbox_roi": null,
-   "sandbox_roi_fee": null,
+   "sandbox_n": 1,
+   "sandbox_roi": -1.0,
+   "sandbox_roi_fee": -1.0,
    "timing": {
     "late": [],
     "timed": 1,
@@ -154,5 +188,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-23T17:31:25+00:00"
+ "updated_at": "2026-10-23T17:46:23+00:00"
 }
