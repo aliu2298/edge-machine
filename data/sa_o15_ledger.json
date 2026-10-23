@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-23T20:31:38.547041+00:00",
+ "last_run": "2026-10-23T21:31:43.161433+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -127,18 +127,29 @@
      "ticker": "KXBRASILEIROTOTAL-26OCT19CORVIT-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Brasileir\u00e3o over 1.5 YES 0.72"
+    },
+    {
+     "ask": 0.88,
+     "bid": 0.87,
+     "event": "KXBRASILEIROTOTAL-26OCT23CRUCR",
+     "id": "BRA:KXBRASILEIROTOTAL-26OCT23CRUCR",
+     "league": "Brasileir\u00e3o",
+     "line": 1.5,
+     "logged": "2026-10-23T21:31:43.161433+00:00",
+     "match": "Cruzeiro v Remo",
+     "price": 0.88,
+     "rule": "BRA",
+     "side": "yes",
+     "start": "2026-10-23T23:00Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROTOTAL-26OCT23CRUCR-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Brasileir\u00e3o over 1.5 YES 0.88"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-19T17:16:23.035792+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "quoted": 0
-  },
   {
    "at": "2026-10-19T17:31:37.258635+00:00",
    "due": 0,
@@ -488,10 +499,16 @@
    "matched": 2,
    "new": 0,
    "quoted": 2
+  },
+  {
+   "at": "2026-10-23T21:31:43.161433+00:00",
+   "due": 1,
+   "matched": 1,
+   "new": 1,
+   "quoted": 1
   }
  ],
  "schedule": [
-  "2026-10-23T21:00:00+00:00",
   "2026-10-23T21:30:00+00:00",
   "2026-10-23T23:00:00+00:00",
   "2026-10-24T00:15:00+00:00",

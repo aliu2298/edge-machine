@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-23T20:31:38.016392+00:00",
+ "last_run": "2026-10-23T21:31:42.756548+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -51,11 +51,14 @@
      "line": 3.5,
      "logged": "2026-10-23T17:31:23.499666+00:00",
      "match": "Alav\u00e9s v M\u00e1laga",
+     "payout": 1.0,
      "price": 0.76,
+     "profit": 29.4,
      "rule": "A3",
+     "settled": "2026-10-23T21:31:42.756548+00:00",
      "side": "no",
      "start": "2026-10-23T19:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXLALIGATOTAL-26OCT23ALAMCF-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Alav\u00e9s O-D- v M\u00e1laga O-D+ \u00b7 Under 3.5 NO 0.76"
@@ -1211,11 +1214,14 @@
      "line": null,
      "logged": "2026-10-23T17:16:10.736140+00:00",
      "match": "Torino v Monza",
+     "payout": 0.0,
      "price": 0.41,
+     "profit": -100.0,
      "rule": "D2",
+     "settled": "2026-10-23T21:31:42.756548+00:00",
      "side": "no",
      "start": "2026-10-23T18:45Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXSERIEABTTS-26OCT23TORMON-BTTS",
      "title": "Both Teams To Score",
      "why": "Torino O-D- v Monza O+D+ \u00b7 BTTS NO 0.41"
@@ -1697,14 +1703,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-19T17:16:22.214548+00:00",
-   "candidates": 1,
-   "due": 3,
-   "labelled": 3,
-   "matched": 1,
-   "new": 0
-  },
-  {
    "at": "2026-10-19T17:31:36.379422+00:00",
    "candidates": 2,
    "due": 5,
@@ -2098,6 +2096,14 @@
   },
   {
    "at": "2026-10-23T20:31:38.016392+00:00",
+   "candidates": 0,
+   "due": 0,
+   "labelled": 0,
+   "matched": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-10-23T21:31:42.756548+00:00",
    "candidates": 0,
    "due": 0,
    "labelled": 0,
