@@ -170,6 +170,11 @@
    "lead_min": 14.7,
    "price": 0.46
   },
+  "bund_o35:KXBUNDESLIGATOTAL-26OCT23VFBBMG-4": {
+   "at": "2026-10-23T17:31:38+00:00",
+   "lead_min": 58.4,
+   "price": 0.56
+  },
   "bund_o35_fav:KXBUNDESLIGATOTAL-26OCT17SCHM05-4": {
    "at": "2026-10-17T13:25:17+00:00",
    "lead_min": 4.7,
@@ -296,9 +301,9 @@
    "price": 0.99
   },
   "commod_fav_band:KXWTI-26OCT2314-T102.49": {
-   "at": "2026-10-23T17:16:38+00:00",
-   "lead_min": 43.4,
-   "price": 0.76
+   "at": "2026-10-23T17:31:38+00:00",
+   "lead_min": 28.4,
+   "price": 0.88
   },
   "commod_nc_no:KXBRENTD-26OCT2117-T107": {
    "at": "2026-10-21T20:07:08+00:00",
@@ -340,6 +345,11 @@
    "lead_min": 3.0,
    "price": 0.83
   },
+  "commod_nc_no:KXWTI-26OCT2314-T103.49": {
+   "at": "2026-10-23T17:31:38+00:00",
+   "lead_min": 28.4,
+   "price": 0.78
+  },
   "commod_nc_yes:KXGOLDD-26OCT2217-T4013": {
    "at": "2026-10-22T20:29:36+00:00",
    "lead_min": 0.4,
@@ -369,6 +379,11 @@
    "at": "2026-10-22T17:56:58+00:00",
    "lead_min": 3.0,
    "price": 0.98
+  },
+  "commod_nc_yes:KXWTI-26OCT2314-T101.99": {
+   "at": "2026-10-23T17:31:38+00:00",
+   "lead_min": 28.4,
+   "price": 0.96
   },
   "corners_team_fade:KXEPLTCORNERS-26OCT17FULHUL-FUL7": {
    "at": "2026-10-17T13:55:23+00:00",
@@ -856,9 +871,9 @@
    "price": 0.24
   },
   "ere_draw:KXEREDIVISIEGAME-26OCT23GAETEL": {
-   "at": "2026-10-23T17:16:38+00:00",
-   "lead_min": 43.4,
-   "price": 0.2
+   "at": "2026-10-23T17:31:38+00:00",
+   "lead_min": 28.4,
+   "price": 0.21
   },
   "espn_fpi:aec-nfl-buf-lv-2026-10-18": {
    "at": "2026-10-18T20:16:55+00:00",
@@ -1301,8 +1316,8 @@
    "price": 0.9
   },
   "o15_form_l10:KXSAUDIPLTOTAL-26OCT23QADHIL-2": {
-   "at": "2026-10-23T17:16:38+00:00",
-   "lead_min": 43.4,
+   "at": "2026-10-23T17:31:38+00:00",
+   "lead_min": 28.4,
    "price": 0.87
   },
   "o15_form_l10:KXUCLTOTAL-26OCT20FCPPSV-2": {
@@ -2236,5 +2251,5 @@
    "price": 0.68
   }
  },
- "updated": "2026-10-23T17:16:38+00:00"
+ "updated": "2026-10-23T17:31:38+00:00"
 }
