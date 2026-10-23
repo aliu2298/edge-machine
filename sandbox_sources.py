@@ -4273,6 +4273,14 @@ def outcome_cluster(q):
     """Quotes that cannot all win together share a cluster. A Kalshi yes/no ladder (one
     series, one day) is a set of mutually exclusive buckets — at most one can land — so two
     bets on New York's high for Sep 13 are one draw of the weather, not two."""
+    # A row day_units collapsed is one market-day outcome already: its own cluster, never cut
+    # at a "-" (2026-10-23: two mentions weeks, MENTIONS_KXTRUMPSAY-26OCT19 and -26OCT26, were
+    # cut to one key and read as one degenerate cluster).
+    if q.get("rungs") is not None and q.get("id"):
+        return q["id"]
+    # A Trump-mentions word is its own question, not one bucket of an exclusive set.
+    if q.get("sport") in EVENT_CLUSTERED and q.get("market_id"):
+        return str(q["market_id"])
     # Not the soccer goals markets: both sides of a team total can land, and one over-1.5
     # market is the whole event.
     if q.get("venue") == "kalshi_binary" and q.get("market_id") and q.get("sport") not in GOALS_SPORTS:
@@ -4312,7 +4320,23 @@ ELIMINATED = {
 # z read +10.40 where the honest figure on one-day-one-result is +0.24. Any nested ladder
 # belongs here, and cluster_stats in sandbox_track now refuses to produce a z for a record
 # that is mostly such clusters rather than quietly returning one.
-DAY_CLUSTERED = ("commodities", "crypto", "crypto_fav", "commodities_fav", "soccer_corners", "culture_mentions")
+DAY_CLUSTERED = ("commodities", "crypto", "crypto_fav", "commodities_fav", "soccer_corners")
+# Judged PER WORD with the variance clustered by event (2026-10-23). A "What will Trump say" word
+# is its own yes/no question: the words of one week are not nested rungs that land together and
+# not exclusive buckets (he can say all of them, or none), so neither the market-day collapse
+# nor the exclusive-bucket cluster describes them. Each word settles on its own wording, which is
+# what is bet and what the record should count. What the words do share is one week of speeches,
+# so their results correlate a little; sandbox_track.assess counts every word and takes the z on
+# a variance clustered by event, never below the independent-bets variance (as nba_value does by
+# game night). culture_mentions sat in DAY_CLUSTERED until 2026-10-23, keyed per event, and broke
+# the build once a second week settled: both weeks' collapsed units carried a "-" in their ids,
+# outcome_cluster cut it, and the two weeks (0.78 + 0.65) became one cluster summing past 1.
+EVENT_CLUSTERED = ("culture_mentions",)
+
+
+def event_key(q):
+    """The event a bet's contract belongs to: KXTRUMPSAY-26OCT19-CEAS -> KXTRUMPSAY-26OCT19."""
+    return q.get("event") or str(q.get("market_id") or "").rsplit("-", 1)[0]
 
 
 def market_day(q):

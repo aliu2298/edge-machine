@@ -3161,12 +3161,16 @@ def faded(d, name, sport=None, venues=None):
         clusters.setdefault(S.outcome_cluster(r["q"]), []).append(
             (r["q"]["price"], r["p"], r["won"]))
     c = cluster_stats(clusters)
+    var = c["var"]
+    ev_var = event_clustered_var([(r["q"], r["p"], r["won"]) for r in rows])    # per-word sports
+    if ev_var is not None:
+        var = max(var, ev_var)
     # n and roi stay over every bet: the money is the money. Only the z is taken over the
     # clusters that survived, and `dropped` says how many did not.
     return dict(n=len(rows), won=sum(1 for r in rows if r["won"]),
                 expected=sum(r["p"] for r in rows), roi=roi, outcomes=c["outcomes"],
                 z_dropped=c["dropped"],
-                z=(c["won"] - c["expected"]) / c["var"] ** 0.5 if c["var"] > 0 else 0.0)
+                z=(c["won"] - c["expected"]) / var ** 0.5 if var > 0 else 0.0)
 
 
 # ---- Per-competition records (2026-09-22) ---------------------------------------------------
@@ -3646,6 +3650,22 @@ def clv_read(n, t):
     return "ahead" if t >= CLV_T else "behind" if t <= -CLV_T else "level"
 
 
+def event_clustered_var(rows):
+    """The event-clustered variance of a win count, or None when no row is per-word clustered.
+
+    rows: (quote, price, won). Each S.EVENT_CLUSTERED event contributes (sum of won - price)^2
+    over its words; every other row its own price * (1 - price)."""
+    if not any(q.get("sport") in S.EVENT_CLUSTERED for q, _p, _w in rows):
+        return None
+    events, var = {}, 0.0
+    for q, p, w in rows:
+        if q.get("sport") in S.EVENT_CLUSTERED:
+            events.setdefault(S.event_key(q), []).append((float(p), w))
+        else:
+            var += float(p) * (1 - float(p))
+    return var + sum(sum(w - p for p, w in rs) ** 2 for rs in events.values())
+
+
 def assess(d, name, sport=None, since=None, venues=None, until=None):
     """Judge one source (optionally in one sport) against APPROVAL.
 
@@ -3711,6 +3731,13 @@ def assess(d, name, sport=None, since=None, venues=None, until=None):
     c = cluster_stats(clusters)
     var = c["var"]
     n_eff = c["outcomes"]
+    # Per-word sports (S.EVENT_CLUSTERED, the Trump mentions): the z's variance is clustered by
+    # event, the squared sum of (won - price) over each event's words, and never below the
+    # independent-bets variance, so a week whose words all came in together counts as the one
+    # week of speeches it was.
+    ev_var = event_clustered_var([(q, q["price"], q["status"] == "won") for q in bets])
+    if ev_var is not None:
+        var = max(var, ev_var)
     # A COLLAPSED DAY is not a 0/1 draw at the rung price, and scoring it as one is what read
     # cmd_tail at z -4.81 while its money was flat. day_units marks a day "won" when its
     # AVERAGE P/L is positive, which needs nearly every rung to land: on a 213-rung gas day
