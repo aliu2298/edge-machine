@@ -2,14 +2,15 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-23T03:00:13.922373+00:00",
-   "last_success": "2026-10-23T03:00:13.922373+00:00",
+   "last_run": "2026-10-23T04:00:13.789050+00:00",
+   "last_success": "2026-10-23T04:00:13.789050+00:00",
    "observations": {
-    "at": "2026-10-23T03:00:13.922373+00:00",
-    "events": 895,
+    "at": "2026-10-23T04:00:13.789050+00:00",
+    "events": 889,
     "reasons": {
-     "not active": 713,
-     "outside the entry window": 11223
+     "no quote or spread too wide": 60,
+     "not active": 758,
+     "outside the entry window": 11028
     }
    },
    "picks": [
@@ -456,15 +457,15 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-23T03:00:13.922373+00:00",
-   "last_success": "2026-10-23T03:00:13.922373+00:00",
+   "last_run": "2026-10-23T04:00:13.789050+00:00",
+   "last_success": "2026-10-23T04:00:13.789050+00:00",
    "observations": {
-    "at": "2026-10-23T03:00:13.922373+00:00",
-    "events": 895,
+    "at": "2026-10-23T04:00:13.789050+00:00",
+    "events": 889,
     "reasons": {
      "no quote or spread too wide": 61,
-     "not active": 713,
-     "outside the entry window": 11162
+     "not active": 758,
+     "outside the entry window": 11027
     }
    },
    "picks": [
@@ -758,15 +759,15 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-23T03:00:13.922373+00:00",
-   "last_success": "2026-10-23T03:00:13.922373+00:00",
+   "last_run": "2026-10-23T04:00:13.789050+00:00",
+   "last_success": "2026-10-23T04:00:13.789050+00:00",
    "observations": {
-    "at": "2026-10-23T03:00:13.922373+00:00",
-    "events": 895,
+    "at": "2026-10-23T04:00:13.789050+00:00",
+    "events": 889,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 33,
-     "no quote or spread too wide": 33,
-     "transcript search failed": 17
+     "already near-certain (under 10c or over 90c)": 34,
+     "no quote or spread too wide": 34,
+     "transcript search failed": 15
     }
    },
    "picks": [
@@ -1671,14 +1672,14 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-23T03:00:13.922373+00:00",
-   "last_success": "2026-10-23T03:00:13.922373+00:00",
+   "last_run": "2026-10-23T04:00:13.789050+00:00",
+   "last_success": "2026-10-23T04:00:13.789050+00:00",
    "observations": {
-    "at": "2026-10-23T03:00:13.922373+00:00",
-    "events": 895,
+    "at": "2026-10-23T04:00:13.789050+00:00",
+    "events": 889,
     "reasons": {
-     "edge 5c+": 5,
-     "edge under 5c": 2,
+     "edge 5c+": 4,
+     "edge under 5c": 3,
      "under 20 reviews counted": 14
     }
    },
