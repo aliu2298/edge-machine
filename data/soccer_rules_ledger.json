@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-22T18:01:11.166408+00:00",
+ "last_run": "2026-10-23T12:01:43.938166+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -845,11 +845,14 @@
      "line": null,
      "logged": "2026-10-22T15:16:11.974486+00:00",
      "match": "OFI Crete v Bayer Leverkusen",
+     "payout": 0.0,
      "price": 0.53,
+     "profit": -100.0,
      "rule": "D1",
+     "settled": "2026-10-23T12:01:43.938166+00:00",
      "side": "yes",
      "start": "2026-10-22T16:45Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXUELBTTS-26OCT22OFILEV-BTTS",
      "title": "Both Teams To Score",
      "why": "OFI Crete O+D- v Bayer Leverkusen O+D- \u00b7 BTTS YES 0.53"
@@ -868,11 +871,14 @@
      "line": null,
      "logged": "2026-10-22T17:31:12.541923+00:00",
      "match": "AFC Bournemouth v AC Milan",
+     "payout": 0.0,
      "price": 0.58,
+     "profit": -100.0,
      "rule": "D1",
+     "settled": "2026-10-23T12:01:43.938166+00:00",
      "side": "yes",
      "start": "2026-10-22T19:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXUELBTTS-26OCT22BOUACM-BTTS",
      "title": "Both Teams To Score",
      "why": "AFC Bournemouth O+D- v AC Milan O+D- \u00b7 BTTS YES 0.58"
@@ -891,11 +897,14 @@
      "line": null,
      "logged": "2026-10-22T17:31:12.541923+00:00",
      "match": "Omonia Nicosia v Benfica",
+     "payout": 1.0,
      "price": 0.52,
+     "profit": 86.06,
      "rule": "D1",
+     "settled": "2026-10-23T12:01:43.938166+00:00",
      "side": "yes",
      "start": "2026-10-22T19:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUELBTTS-26OCT22OMOBEN-BTTS",
      "title": "Both Teams To Score",
      "why": "Omonia Nicosia O+D- v Benfica O+D- \u00b7 BTTS YES 0.52"
@@ -1520,11 +1529,14 @@
      "line": null,
      "logged": "2026-10-22T17:31:12.541923+00:00",
      "match": "Celtic v Celta Vigo",
+     "payout": 1.0,
      "price": 0.63,
+     "profit": 54.72,
      "rule": "D3",
+     "settled": "2026-10-23T12:01:43.938166+00:00",
      "side": "yes",
      "start": "2026-10-22T19:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUELBTTS-26OCT22CELRCC-BTTS",
      "title": "Both Teams To Score",
      "why": "Celtic O+D- v Celta Vigo O-D- \u00b7 BTTS YES 0.63"
@@ -1533,14 +1545,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-18T19:31:26.065873+00:00",
-   "candidates": 1,
-   "due": 1,
-   "labelled": 1,
-   "matched": 1,
-   "new": 0
-  },
   {
    "at": "2026-10-18T20:01:09.346382+00:00",
    "candidates": 1,
@@ -1939,6 +1943,14 @@
    "due": 10,
    "labelled": 6,
    "matched": 3,
+   "new": 0
+  },
+  {
+   "at": "2026-10-23T12:01:43.938166+00:00",
+   "candidates": 0,
+   "due": 1,
+   "labelled": 1,
+   "matched": 0,
    "new": 0
   }
  ],
