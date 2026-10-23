@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-22T18:01:29.214557+00:00",
+ "last_run": "2026-10-23T17:01:15.290607+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -818,11 +818,14 @@
      "logged": "2026-10-22T15:16:41.709997+00:00",
      "match": "Juventus v Stade Rennais",
      "opponent": "Stade Rennais",
+     "payout": 1.0,
      "price": 0.67,
+     "profit": 45.88,
      "rule": "T5",
+     "settled": "2026-10-23T17:01:15.290607+00:00",
      "side": "yes",
      "start": "2026-10-22T16:45Z",
-     "status": "open",
+     "status": "won",
      "team": "Juventus",
      "team_side": "home",
      "ticker": "KXUELTEAMTOTAL-26OCT22JUVREN-JUV2",
@@ -844,11 +847,14 @@
      "logged": "2026-10-22T15:16:41.709997+00:00",
      "match": "SK Sturm Graz v Marseille",
      "opponent": "Marseille",
+     "payout": 0.0,
      "price": 0.38,
+     "profit": -100.0,
      "rule": "T5",
+     "settled": "2026-10-23T17:01:15.290607+00:00",
      "side": "yes",
      "start": "2026-10-22T16:45Z",
-     "status": "open",
+     "status": "lost",
      "team": "SK Sturm Graz",
      "team_side": "home",
      "ticker": "KXUELTEAMTOTAL-26OCT22STUOLM-STU2",
@@ -870,11 +876,14 @@
      "logged": "2026-10-22T17:31:39.053954+00:00",
      "match": "Besiktas v Crystal Palace",
      "opponent": "Crystal Palace",
+     "payout": 1.0,
      "price": 0.54,
+     "profit": 79.41,
      "rule": "T5",
+     "settled": "2026-10-23T17:01:15.290607+00:00",
      "side": "yes",
      "start": "2026-10-22T19:00Z",
-     "status": "open",
+     "status": "won",
      "team": "Besiktas",
      "team_side": "home",
      "ticker": "KXUELTEAMTOTAL-26OCT22BESCRY-BES2",
@@ -896,11 +905,14 @@
      "logged": "2026-10-22T17:31:39.053954+00:00",
      "match": "TSG Hoffenheim v Lyon",
      "opponent": "TSG Hoffenheim",
+     "payout": 0.0,
      "price": 0.42,
+     "profit": -100.0,
      "rule": "T5",
+     "settled": "2026-10-23T17:01:15.290607+00:00",
      "side": "yes",
      "start": "2026-10-22T19:00Z",
-     "status": "open",
+     "status": "lost",
      "team": "Lyon",
      "team_side": "away",
      "ticker": "KXUELTEAMTOTAL-26OCT22TSGOL-OL2",
@@ -968,6 +980,32 @@
      "ticker": "KXSERIEATEAMTOTAL-26OCT18FIOCOM-FIO3",
      "title": "Will Fiorentina score over 2.5 goals?",
      "why": "Fiorentina O+D+ v Como O+D- \u00b7 3+ NO 0.87"
+    },
+    {
+     "ask": 0.1,
+     "bid": 0.09,
+     "event": "KXBUNDESLIGATEAMTOTAL-26OCT23VFBBMG",
+     "group": "C",
+     "id": "T6:KXBUNDESLIGATEAMTOTAL-26OCT23VFBBMG:away",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D+"
+     },
+     "league": "Bundesliga",
+     "line": 2.5,
+     "logged": "2026-10-23T17:01:15.290607+00:00",
+     "match": "VfB Stuttgart v Borussia M\u00f6nchengladbach",
+     "opponent": "VfB Stuttgart",
+     "price": 0.91,
+     "rule": "T6",
+     "side": "no",
+     "start": "2026-10-23T18:30Z",
+     "status": "open",
+     "team": "Borussia M\u00f6nchengladbach",
+     "team_side": "away",
+     "ticker": "KXBUNDESLIGATEAMTOTAL-26OCT23VFBBMG-BMG3",
+     "title": "Will M\u00b4gladbach score over 2.5 goals?",
+     "why": "Borussia M\u00f6nchengladbach O+D+ v VfB Stuttgart O+D- \u00b7 3+ NO 0.91"
     }
    ]
   },
@@ -1155,14 +1193,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-17T23:39:21.048613+00:00",
-   "candidates": 1,
-   "due": 3,
-   "labelled": 3,
-   "matched": 1,
-   "new": 1
-  },
   {
    "at": "2026-10-17T23:46:11.225998+00:00",
    "candidates": 1,
@@ -1562,6 +1592,14 @@
    "labelled": 6,
    "matched": 2,
    "new": 0
+  },
+  {
+   "at": "2026-10-23T17:01:15.290607+00:00",
+   "candidates": 1,
+   "due": 1,
+   "labelled": 1,
+   "matched": 1,
+   "new": 1
   }
  ],
  "version": "soccer-team-rules-v1"
