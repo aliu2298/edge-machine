@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-23T22:38:29.133188+00:00",
-   "last_success": "2026-10-23T22:38:29.133188+00:00",
+   "last_run": "2026-10-23T23:00:15.746649+00:00",
+   "last_success": "2026-10-23T23:00:15.746649+00:00",
    "observations": {
-    "at": "2026-10-23T22:38:29.133188+00:00",
+    "at": "2026-10-23T23:00:15.746649+00:00",
     "events": 964,
     "reasons": {
      "no quote or spread too wide": 61,
@@ -460,10 +460,10 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-23T22:38:29.133188+00:00",
-   "last_success": "2026-10-23T22:38:29.133188+00:00",
+   "last_run": "2026-10-23T23:00:15.746649+00:00",
+   "last_success": "2026-10-23T23:00:15.746649+00:00",
    "observations": {
-    "at": "2026-10-23T22:38:29.133188+00:00",
+    "at": "2026-10-23T23:00:15.746649+00:00",
     "events": 964,
     "reasons": {
      "no quote or spread too wide": 210,
@@ -780,16 +780,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-23T22:38:29.133188+00:00",
-   "last_success": "2026-10-23T22:38:29.133188+00:00",
+   "last_run": "2026-10-23T23:00:15.746649+00:00",
+   "last_success": "2026-10-23T23:00:15.746649+00:00",
    "observations": {
-    "at": "2026-10-23T22:38:29.133188+00:00",
+    "at": "2026-10-23T23:00:15.746649+00:00",
     "events": 964,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 19,
-     "edge 5c+": 8,
+     "edge 5c+": 9,
      "edge under 5c": 2,
-     "no quote or spread too wide": 39
+     "no quote or spread too wide": 38
     }
    },
    "picks": [
@@ -1732,10 +1732,10 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-23T22:38:29.133188+00:00",
-   "last_success": "2026-10-23T22:38:29.133188+00:00",
+   "last_run": "2026-10-23T23:00:15.746649+00:00",
+   "last_success": "2026-10-23T23:00:15.746649+00:00",
    "observations": {
-    "at": "2026-10-23T22:38:29.133188+00:00",
+    "at": "2026-10-23T23:00:15.746649+00:00",
     "events": 964,
     "reasons": {
      "collecting review pace (12h of snapshots)": 1,
