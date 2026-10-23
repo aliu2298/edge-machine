@@ -254,6 +254,8 @@ def stage_badges(row):
         bits.append('<span class="badge stage">Combo</span>')
     if row.get("gone") or row.get("v") == "retired":
         bits.append('<span class="badge stage">Retired</span>')
+    if row.get("unavailable"):
+        bits.append(f'<span class="badge neg">{esc(row["unavailable"])}</span>')
     return " ".join(bits)
 
 
@@ -374,6 +376,8 @@ def row_badges(row):
         bits.append('<span class="badge stage">Combo</span>')
     if row.get("gone") or row.get("v") == "retired":
         bits.append('<span class="badge stage">Retired</span>')
+    if row.get("unavailable"):
+        bits.append(f'<span class="badge neg">{esc(row["unavailable"])}</span>')
     return " ".join(bits)
 
 

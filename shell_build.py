@@ -633,6 +633,13 @@ def _lane_board(d, st, pair_key, cache):
             d, st, source, sport)
     except (KeyError, TypeError):
         return found
+    except T.DegenerateCluster as exc:  # one pair's record must not take the page down
+        # The card says why it has no numbers and a ::warning:: names the pair. The cause
+        # still raises in test_sandbox.py and the live ledger checks. Only the record's own
+        # guard is caught here: any other error from pair_status still raises
+        # (test_shell_cards.py).
+        found["verdict"] = production.record_unavailable(pair_key, exc)
+        return found
     # The Early badge the Production page and the sport pages print for this pair,
     # present only while there is one.
     try:

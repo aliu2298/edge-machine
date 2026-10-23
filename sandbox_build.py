@@ -925,7 +925,18 @@ def pair_list(d, st, include_retired=False):
                 continue
             if sport in retired and not include_retired:
                 continue
-            group, a, _qa, open_n, last, pair = pair_status(d, st, name, sport)
+            unavailable = None
+            try:
+                group, a, _qa, open_n, last, pair = pair_status(d, st, name, sport)
+            except Exception as exc:  # one pair's record must not take every page down
+                # The audit (include_retired) still raises, as do test_sandbox.py and the live
+                # ledger checks, so the cause stays visible. A page row says why it is empty.
+                if include_retired:
+                    raise
+                unavailable = production.record_unavailable(f"{name}|{sport}", exc)
+                pair = (st.get("pairs") or {}).get(f"{name}|{sport}") or {}
+                group, open_n, last = None, 0, ""
+                a = T.assess({"quotes": []}, name, sport)
             # A cup or international twin is listed from the day it is wired, so it can be
             # reviewed before its first qualifying match; other pairs appear once they bet.
             # A consensus row is listed from the day it is wired too: it only ever bets where
@@ -936,12 +947,12 @@ def pair_list(d, st, include_retired=False):
             # 2026-10-03 with no ongoing volume and disappeared from the page outright, while
             # olbg|boxing survived its own removal only because boxing kept betting. The
             # "removed" branch below exists for exactly this and never got the chance to run.
-            reset_row = bool(T.record_since(pair)) and bool(
+            reset_row = bool(T.record_since(pair)) and not unavailable and bool(
                 T.assess(d, name, sport, venues=T.TRADEABLE_VENUES)["n"])
             # A Production pair is always listed (2026-10-19): corners_ucl_fade went in by hand
             # on 2026-10-15 and had not bet yet, so the Home scorecard counted 21 in Production
             # while the header tile and the feed counted 22.
-            if (group is None and name != "tennis_utr_shortlist_v1" and not _scope(sport)
+            if (group is None and not unavailable and name != "tennis_utr_shortlist_v1" and not _scope(sport)
                     and name not in T.CONSENSUS and not reset_row and pair.get("stage") != "production"):
                 continue
             # A pair taken out of Production restarts its count, which on its own reads as a
@@ -964,7 +975,9 @@ def pair_list(d, st, include_retired=False):
                             # Before its first bet a lane's side is read off its name: every
                             # "_fade" lane backs the No (team2_ranked_fade, corners_ucl_fade).
                             side=sides.get((name, sport)) or ("b" if name.endswith("_fade") else None),
-                            fade=T.faded(_fade_book(d, pair), name, sport, venues=T.TRADEABLE_VENUES),
+                            fade=(None if unavailable else
+                                  T.faded(_fade_book(d, pair), name, sport, venues=T.TRADEABLE_VENUES)),
+                            unavailable=unavailable,
                             gone=gone.get(sport), prod=pair.get("stage") == "production",
                             moved=str(pair.get("by_hand") or pair.get("promoted_at") or "")[:10],
                             # "Early · N bets" while a pair moved on or after
