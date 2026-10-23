@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-23T12:31:26.635155+00:00",
+ "last_run": "2026-10-23T14:01:38.705085+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -1540,19 +1540,34 @@
      "ticker": "KXUELBTTS-26OCT22CELRCC-BTTS",
      "title": "Both Teams To Score",
      "why": "Celtic O+D- v Celta Vigo O-D- \u00b7 BTTS YES 0.63"
+    },
+    {
+     "ask": 0.64,
+     "bid": 0.63,
+     "event": "KXSAUDIPLBTTS-26OCT23ITJDIR",
+     "group": "BTTS",
+     "id": "D3:KXSAUDIPLBTTS-26OCT23ITJDIR",
+     "labels": {
+      "away": "O-D-",
+      "home": "O+D-"
+     },
+     "league": "Saudi Pro League",
+     "line": null,
+     "logged": "2026-10-23T14:01:38.705085+00:00",
+     "match": "Al Ittihad v Al Diriyah",
+     "price": 0.64,
+     "rule": "D3",
+     "side": "yes",
+     "start": "2026-10-23T15:30Z",
+     "status": "open",
+     "ticker": "KXSAUDIPLBTTS-26OCT23ITJDIR-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Al Ittihad O+D- v Al Diriyah O-D- \u00b7 BTTS YES 0.64"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-18T22:28:40.618333+00:00",
-   "candidates": 0,
-   "due": 0,
-   "labelled": 0,
-   "matched": 0,
-   "new": 0
-  },
   {
    "at": "2026-10-19T02:21:27.038446+00:00",
    "candidates": 0,
@@ -1952,6 +1967,14 @@
    "labelled": 1,
    "matched": 0,
    "new": 0
+  },
+  {
+   "at": "2026-10-23T14:01:38.705085+00:00",
+   "candidates": 1,
+   "due": 1,
+   "labelled": 1,
+   "matched": 1,
+   "new": 1
   }
  ],
  "version": "soccer-rules-v1"

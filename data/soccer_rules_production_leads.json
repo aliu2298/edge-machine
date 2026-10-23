@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-23T12:31:26+00:00",
+ "board_built_at": "2026-10-23T14:01:39+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sa_o15_arg": true,
@@ -10,7 +10,44 @@
  "corners_selections": {},
  "first_publish_min": 45,
  "late_publication_skipped": 0,
- "leads": {},
+ "leads": {
+  "2026-10-23|Al Ittihad|Al Diriyah|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
+   "away": "Al Diriyah",
+   "bet": {
+    "kind": "btts"
+   },
+   "date": "2026-10-23",
+   "edge_at_log": null,
+   "first_seen": "2026-10-23",
+   "headline": "Both teams to score",
+   "home": "Al Ittihad",
+   "id": "2026-10-23|Al Ittihad|Al Diriyah|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score",
+   "kickoff": "2026-10-23T15:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-23",
+   "last_seen_at": "2026-10-23T14:01:39+00:00",
+   "league": "Saudi Pro League",
+   "match": "Al Ittihad v Al Diriyah",
+   "pair": "sr_d3|soccer_btts",
+   "price_at_log": 0.64,
+   "published_at": "2026-10-23T14:01:39+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Both teams to score",
+    "event": "KXSAUDIPLBTTS-26OCT23ITJDIR",
+    "market": "KXSAUDIPLBTTS-26OCT23ITJDIR-BTTS",
+    "outcome": "Both Teams To Score",
+    "outcome_side": "yes",
+    "price_at_log": 0.64,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_d3:KXSAUDIPLBTTS-26OCT23ITJDIR-BTTS",
+   "source": "sr_d3",
+   "sport": "soccer_btts",
+   "status": "pending"
+  }
+ },
  "pairs": {
   "sa_o15_arg|soccer_o15": {
    "by_hand": "2026-10-21",
@@ -94,9 +131,9 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 0,
+    "leads": 1,
     "problem": null,
-    "routed": 0,
+    "routed": 1,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -108,7 +145,7 @@
    "sandbox_roi_fee": null,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   }
@@ -117,5 +154,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-23T12:31:26+00:00"
+ "updated_at": "2026-10-23T14:01:39+00:00"
 }
