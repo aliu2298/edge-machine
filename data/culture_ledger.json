@@ -2,15 +2,15 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-23T19:00:15.926801+00:00",
-   "last_success": "2026-10-23T19:00:15.926801+00:00",
+   "last_run": "2026-10-23T20:00:14.888217+00:00",
+   "last_success": "2026-10-23T20:00:14.888217+00:00",
    "observations": {
-    "at": "2026-10-23T19:00:15.926801+00:00",
-    "events": 963,
+    "at": "2026-10-23T20:00:14.888217+00:00",
+    "events": 966,
     "reasons": {
      "no quote or spread too wide": 61,
      "not active": 716,
-     "outside the entry window": 12046
+     "outside the entry window": 12074
     }
    },
    "picks": [
@@ -447,26 +447,29 @@
      "id": "KXYTDAILYTOPVIDEOG-26OCT22-DAI",
      "logged": "2026-10-22T21:00:15.443964+00:00",
      "name": "Top Daily Music Video Global on YouTube: Oct 22, 2026",
+     "payout": 0.0,
      "price": 0.97,
+     "profit": -100.0,
      "series": "KXYTDAILYTOPVIDEOG",
+     "settled": "2026-10-23T20:00:14.888217+00:00",
      "side": "no",
-     "status": "open",
+     "status": "lost",
      "title": "Dai Dai"
     }
    ]
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-23T19:00:15.926801+00:00",
-   "last_success": "2026-10-23T19:00:15.926801+00:00",
+   "last_run": "2026-10-23T20:00:14.888217+00:00",
+   "last_success": "2026-10-23T20:00:14.888217+00:00",
    "observations": {
-    "at": "2026-10-23T19:00:15.926801+00:00",
-    "events": 963,
+    "at": "2026-10-23T20:00:14.888217+00:00",
+    "events": 966,
     "reasons": {
      "no quote or spread too wide": 215,
      "not active": 716,
      "outside the band": 55,
-     "outside the entry window": 11837
+     "outside the entry window": 11865
     }
    },
    "picks": [
@@ -750,26 +753,29 @@
      "id": "KXYTTOPVIDEOG2D-26OCT22-CAS",
      "logged": "2026-10-22T18:00:15.855226+00:00",
      "name": "Runner-Up Daily Music Video Global on YouTube: Oct 22, 2026",
+     "payout": 0.0,
      "price": 0.79,
+     "profit": -100.0,
      "series": "KXYTTOPVIDEOG2D",
+     "settled": "2026-10-23T20:00:14.888217+00:00",
      "side": "no",
-     "status": "open",
+     "status": "lost",
      "title": "Casa Tupka Anthemo"
     }
    ]
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-23T19:00:15.926801+00:00",
-   "last_success": "2026-10-23T19:00:15.926801+00:00",
+   "last_run": "2026-10-23T20:00:14.888217+00:00",
+   "last_success": "2026-10-23T20:00:14.888217+00:00",
    "observations": {
-    "at": "2026-10-23T19:00:15.926801+00:00",
-    "events": 963,
+    "at": "2026-10-23T20:00:14.888217+00:00",
+    "events": 966,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 19,
+     "already near-certain (under 10c or over 90c)": 20,
      "edge 5c+": 6,
      "edge under 5c": 1,
-     "no quote or spread too wide": 44
+     "no quote or spread too wide": 43
     }
    },
    "picks": [
@@ -1690,15 +1696,15 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-23T19:00:15.926801+00:00",
-   "last_success": "2026-10-23T19:00:15.926801+00:00",
+   "last_run": "2026-10-23T20:00:14.888217+00:00",
+   "last_success": "2026-10-23T20:00:14.888217+00:00",
    "observations": {
-    "at": "2026-10-23T19:00:15.926801+00:00",
-    "events": 963,
+    "at": "2026-10-23T20:00:14.888217+00:00",
+    "events": 966,
     "reasons": {
      "collecting review pace (12h of snapshots)": 1,
-     "edge 5c+": 4,
-     "edge under 5c": 3,
+     "edge 5c+": 6,
+     "edge under 5c": 1,
      "under 20 reviews counted": 15
     }
    },
@@ -1953,7 +1959,7 @@
    ]
   },
   "Antifa": {
-   "at": "2026-10-23T12:00:16.459544+00:00",
+   "at": "2026-10-23T20:00:14.888217+00:00",
    "days": [
     "2026-09-22"
    ]
@@ -1994,7 +2000,7 @@
    "days": []
   },
   "Bibi / Netanyahu": {
-   "at": "2026-10-23T11:00:16.447635+00:00",
+   "at": "2026-10-23T20:00:14.888217+00:00",
    "days": [
     "2026-07-31",
     "2026-09-13",
@@ -2195,7 +2201,7 @@
    ]
   },
   "Peptide": {
-   "at": "2026-10-23T11:00:16.447635+00:00",
+   "at": "2026-10-23T20:00:14.888217+00:00",
    "days": []
   },
   "Prediction Market / Predictive Market": {
