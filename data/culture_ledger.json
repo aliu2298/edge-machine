@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-23T20:00:14.888217+00:00",
-   "last_success": "2026-10-23T20:00:14.888217+00:00",
+   "last_run": "2026-10-23T21:00:16.065080+00:00",
+   "last_success": "2026-10-23T21:00:16.065080+00:00",
    "observations": {
-    "at": "2026-10-23T20:00:14.888217+00:00",
+    "at": "2026-10-23T21:00:16.065080+00:00",
     "events": 966,
     "reasons": {
      "no quote or spread too wide": 61,
@@ -460,15 +460,15 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-23T20:00:14.888217+00:00",
-   "last_success": "2026-10-23T20:00:14.888217+00:00",
+   "last_run": "2026-10-23T21:00:16.065080+00:00",
+   "last_success": "2026-10-23T21:00:16.065080+00:00",
    "observations": {
-    "at": "2026-10-23T20:00:14.888217+00:00",
+    "at": "2026-10-23T21:00:16.065080+00:00",
     "events": 966,
     "reasons": {
-     "no quote or spread too wide": 215,
+     "no quote or spread too wide": 214,
      "not active": 716,
-     "outside the band": 55,
+     "outside the band": 56,
      "outside the entry window": 11865
     }
    },
@@ -766,16 +766,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-23T20:00:14.888217+00:00",
-   "last_success": "2026-10-23T20:00:14.888217+00:00",
+   "last_run": "2026-10-23T21:00:16.065080+00:00",
+   "last_success": "2026-10-23T21:00:16.065080+00:00",
    "observations": {
-    "at": "2026-10-23T20:00:14.888217+00:00",
+    "at": "2026-10-23T21:00:16.065080+00:00",
     "events": 966,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 20,
-     "edge 5c+": 6,
+     "already near-certain (under 10c or over 90c)": 19,
+     "edge 5c+": 8,
      "edge under 5c": 1,
-     "no quote or spread too wide": 43
+     "no quote or spread too wide": 42
     }
    },
    "picks": [
@@ -1691,20 +1691,35 @@
      "side": "no",
      "status": "open",
      "title": "Marijuana / Weed / Cannabis"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-10-26T14:00:00Z",
+     "detail": "P(said) 0.00 \u00b7 said on 0 of the last 84 days, 2.7 days left \u00b7 edge +0.12",
+     "edge": 0.1221,
+     "event": "KXTRUMPSAY-26OCT26",
+     "id": "KXTRUMPSAY-26OCT26-UFO",
+     "logged": "2026-10-23T21:00:16.065080+00:00",
+     "model": 0.0,
+     "name": "What will Trump say this week?",
+     "price": 0.87,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "UFO / UAP"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-23T20:00:14.888217+00:00",
-   "last_success": "2026-10-23T20:00:14.888217+00:00",
+   "last_run": "2026-10-23T21:00:16.065080+00:00",
+   "last_success": "2026-10-23T21:00:16.065080+00:00",
    "observations": {
-    "at": "2026-10-23T20:00:14.888217+00:00",
+    "at": "2026-10-23T21:00:16.065080+00:00",
     "events": 966,
     "reasons": {
      "collecting review pace (12h of snapshots)": 1,
-     "edge 5c+": 6,
-     "edge under 5c": 1,
+     "edge 5c+": 7,
      "under 20 reviews counted": 15
     }
    },
@@ -1972,7 +1987,7 @@
    ]
   },
   "Autopen / Auto Pen": {
-   "at": "2026-10-23T13:49:33.744489+00:00",
+   "at": "2026-10-23T21:00:16.065080+00:00",
    "days": [
     "2026-08-11",
     "2026-09-16",
@@ -2290,7 +2305,7 @@
    ]
   },
   "UFO / UAP": {
-   "at": "2026-10-18T06:00:12.973544+00:00",
+   "at": "2026-10-23T21:00:16.065080+00:00",
    "days": []
   },
   "Uranium": {
@@ -2298,7 +2313,7 @@
    "days": []
   },
   "Verizon": {
-   "at": "2026-10-23T11:00:16.447635+00:00",
+   "at": "2026-10-23T21:00:16.065080+00:00",
    "days": []
   },
   "Vivek / Ramaswamy": {
@@ -2309,7 +2324,7 @@
    ]
   },
   "Zacharia": {
-   "at": "2026-10-22T16:00:16.314807+00:00",
+   "at": "2026-10-23T21:00:16.065080+00:00",
    "days": []
   },
   "Zohran / Mamdani": {
