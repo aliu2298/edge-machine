@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-23T18:16:13.531263+00:00",
+ "last_run": "2026-10-23T19:31:12.856958+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -66,6 +66,24 @@
      "ticker": "KXARGPREMDIVTOTAL-26OCT19RIEUNI-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Argentina over 1.5 YES 0.65"
+    },
+    {
+     "ask": 0.76,
+     "bid": 0.75,
+     "event": "KXARGPREMDIVTOTAL-26OCT23GLPCAS",
+     "id": "ARG:KXARGPREMDIVTOTAL-26OCT23GLPCAS",
+     "league": "Liga Profesional",
+     "line": 1.5,
+     "logged": "2026-10-23T19:31:12.856958+00:00",
+     "match": "Gimnasia La Plata v Sarmiento (Jun\u00edn)",
+     "price": 0.76,
+     "rule": "ARG",
+     "side": "yes",
+     "start": "2026-10-23T21:00Z",
+     "status": "open",
+     "ticker": "KXARGPREMDIVTOTAL-26OCT23GLPCAS-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Argentina over 1.5 YES 0.76"
     }
    ]
   },
@@ -96,13 +114,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-19T16:01:14.107495+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "quoted": 0
-  },
   {
    "at": "2026-10-19T16:31:38.544767+00:00",
    "due": 0,
@@ -452,6 +463,13 @@
    "matched": 0,
    "new": 0,
    "quoted": 0
+  },
+  {
+   "at": "2026-10-23T19:31:12.856958+00:00",
+   "due": 1,
+   "matched": 1,
+   "new": 1,
+   "quoted": 1
   }
  ],
  "schedule": [
