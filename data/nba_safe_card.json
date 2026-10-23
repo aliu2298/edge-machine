@@ -334,12 +334,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.95,
+     "profit": 0.049,
      "rationale": "CLE@PHI 1H OVER 98.5 @95c: model 92.1% (mu 116.9, line -18.4 below mu); edge -2.9c",
      "sd": 13.0,
+     "settled": "2026-10-23T01:01:29.841413+00:00",
      "side": "yes",
      "start": "2026-10-22T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1HTOTAL-26OCT22CLEPHI-99",
      "unit": "game"
     },
@@ -357,12 +360,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.86,
+     "profit": 0.1515,
      "rationale": "CLE@PHI 1H OVER 104.5 @86c: model 83.0% (mu 116.9, line -12.4 below mu); edge -3.0c",
      "sd": 13.0,
+     "settled": "2026-10-23T01:01:29.841413+00:00",
      "side": "yes",
      "start": "2026-10-22T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1HTOTAL-26OCT22CLEPHI-105",
      "unit": "game"
     },
@@ -1265,7 +1271,7 @@
   }
  },
  "error": null,
- "last_run": "2026-10-23T00:15:19.974697+00:00",
+ "last_run": "2026-10-23T01:01:29.841413+00:00",
  "preseason": [
   {
    "pts": 105,
@@ -1979,6 +1985,10 @@
   },
   {
    "at": "2026-10-23T00:15:19.974697+00:00",
+   "built": []
+  },
+  {
+   "at": "2026-10-23T01:01:29.841413+00:00",
    "built": []
   }
  ],
