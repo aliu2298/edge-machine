@@ -1198,6 +1198,25 @@ def sport_chips(groups):
             'data-controls="coming-up recent">' + "".join(parts) + "</nav>")
 
 
+def record_unavailable(pair_key, exc):
+    """'record unavailable: ExceptionType: short reason' for one pair, and a GitHub
+    ::warning:: naming it. A page builder calls this when one pair's record raised, so that
+    pair's row says why and every other row still builds."""
+    reason = " ".join(str(exc).split())
+    if len(reason) > 160:
+        reason = reason[:157] + "..."
+    note = f"record unavailable: {type(exc).__name__}" + (f": {reason}" if reason else "")
+    print(f"::warning title=Record unavailable::{pair_key}: {note}", flush=True)
+    return note
+
+
+def unavailable_row(key, label, sport_label, note):
+    """The Production table row for a pair whose record could not be read."""
+    return (f'<tr class="unavailable" data-pair="{esc(key)}"><td><b>{esc(label)}</b>'
+            f'<div class="sm mut">{esc(sport_label)}</div></td>'
+            f'<td colspan="8" class="neg">{esc(note)}</td></tr>')
+
+
 def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=None):
     """public_site/production.html — shares the Sandbox stylesheet.
 
@@ -1259,77 +1278,71 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
     groups = {}
     for key, pair in sorted(pairs.items(), key=lambda kv: (sport_of(kv[0]), name(kv[0]))):
         source, sport = key.split("|", 1)
-        since = entered_at(pair)
-        # The SAME window the Sandbox page reads (the pair's stage clock), so the two pages
-        # never show two different records for one rule.
-        whole = T.assess(raw, source, sport, since=T.record_since(pair), venues=T.TRADEABLE_VENUES)
-        live = _assess_since_kickoff(raw, key, pair)
-        mine = [l for l in leads if l.get("pair") == key]
-        to_come = sum(1 for l in mine if l in upcoming)
-        clv = fmt.signed_cents(whole["clv"])
-        # WHY the Since-Production record is empty, which "none yet" alone hid. Three pairs
-        # read "— none yet" at once and they meant three different things: one had two bets
-        # running and nothing settled, one had logged nothing in two days, and one cannot be
-        # executed at all. A pair idling is a thing to act on; a pair waiting is not, and the
-        # column has to tell them apart.
-        # Same inclusive kickoff test as _assess_since_kickoff. Open and priced-out
-        # rows never enter the settled record, and the note under it counts the contest.
-        mine_since = []
-        for q in (raw.get("quotes") or []):
-            if q.get("source") != source or q.get("sport") != sport:
-                continue
-            ko = _kickoff(q)
-            if ko is not None and since is not None and ko.isoformat() >= since:
-                mine_since.append(q)
-        open_since = sum(1 for q in mine_since if q.get("bet") and q.get("status") == "open")
-        # PICKED BUT NOT BACKED is its own state, and the first version of this cell missed
-        # it. team1_form_l5 on the internationals read "nothing in 2d" while it had picked
-        # Spain to score at 0.99 and the Netherlands at 0.97 -- both refused by PRICE_CEIL,
-        # which is the rule working, not idling. A lane declining on price has an opinion;
-        # a lane seeing no board has none, and the column must not call them the same thing.
-        priced_out = sum(1 for q in mine_since if not q.get("bet"))
-        # REACHABLE: of this pair's bets, how many the feed could ever publish. A pair can be
-        # promoted on a record only partly visible downstream -- cricket was moved on +142.8%
-        # across 30 bets of which 11 were reachable, and those 11 return +270% while the other
-        # 19 return +2.5%. Two lanes under one name. Nothing on this page said so, so it had
-        # to be dug out. The gate still judges the whole record; this only shows the gap.
-        # bet_rows, not all_bets. Two cases are counted once. An id in both the
-        # live ledger and the archive, for example from a bad merge, keeps the
-        # live row. An id repeated inside the archive, for example a doubled
-        # archive file, keeps the first archive copy. save() writes the ledger
-        # before the archive, so a crash between those writes leaves the row in
-        # retired and not in the archive file. It does not leave a duplicate.
-        # all_bets stays the raw list everywhere else (the feed, the day check,
-        # the audit).
-        all_bets = [q for q in T.bet_rows(raw)
-                    if q.get("source") == source and q.get("sport") == sport and q.get("bet")]
-        reach_n = sum(1 for q in all_bets if T.placeable(q))
-        reach = (f"{reach_n} of {len(all_bets)}" if all_bets else "—")
-        reach_tone = "" if not all_bets or reach_n == len(all_bets) else "neg"
-        state, why = pair_health(key, all_bets, len(mine), (blob.get("pairs") or None),
-                                 routing=((blob.get("pairs") or {}).get(key) or {}).get("routing"),
-                                 timing=((blob.get("pairs") or {}).get(key) or {}).get("timing"))
-        light = ("<b class=\"pos\">\u25cf</b>" if state == "ok" else "<b class=\"neg\">\u25cf</b>")
-        idle_days = _days_since(since)
-        if live["n"]:
-            since_note = f"{live['n']} settled"
-        elif open_since:
-            since_note = f"{open_since} running"
-        elif priced_out:
-            since_note = f"{priced_out} priced out"
-        elif idle_days is not None:
-            since_note = f"nothing in {idle_days}d"
-        else:
-            since_note = "none yet"
-        early = early_state(pair, live["n"])
-        if early:
-            n_early += 1
-        group = groups.setdefault(sport_group(sport), dict(rows=[], lives=[], to_come=0, early=0))
-        group["lives"].append(live)
-        group["to_come"] += to_come
-        group["early"] += 1 if early else 0
-        group["rows"].append(len(cards))
-        cards.append(f"""<tr>
+        try:
+            since = entered_at(pair)
+            # The SAME window the Sandbox page reads (the pair's stage clock), so the two pages
+            # never show two different records for one rule.
+            whole = T.assess(raw, source, sport, since=T.record_since(pair), venues=T.TRADEABLE_VENUES)
+            live = _assess_since_kickoff(raw, key, pair)
+            mine = [l for l in leads if l.get("pair") == key]
+            to_come = sum(1 for l in mine if l in upcoming)
+            clv = fmt.signed_cents(whole["clv"])
+            # WHY the Since-Production record is empty, which "none yet" alone hid. Three pairs
+            # read "— none yet" at once and they meant three different things: one had two bets
+            # running and nothing settled, one had logged nothing in two days, and one cannot be
+            # executed at all. A pair idling is a thing to act on; a pair waiting is not, and the
+            # column has to tell them apart.
+            # Same inclusive kickoff test as _assess_since_kickoff. Open and priced-out
+            # rows never enter the settled record, and the note under it counts the contest.
+            mine_since = []
+            for q in (raw.get("quotes") or []):
+                if q.get("source") != source or q.get("sport") != sport:
+                    continue
+                ko = _kickoff(q)
+                if ko is not None and since is not None and ko.isoformat() >= since:
+                    mine_since.append(q)
+            open_since = sum(1 for q in mine_since if q.get("bet") and q.get("status") == "open")
+            # PICKED BUT NOT BACKED is its own state, and the first version of this cell missed
+            # it. team1_form_l5 on the internationals read "nothing in 2d" while it had picked
+            # Spain to score at 0.99 and the Netherlands at 0.97 -- both refused by PRICE_CEIL,
+            # which is the rule working, not idling. A lane declining on price has an opinion;
+            # a lane seeing no board has none, and the column must not call them the same thing.
+            priced_out = sum(1 for q in mine_since if not q.get("bet"))
+            # REACHABLE: of this pair's bets, how many the feed could ever publish. A pair can be
+            # promoted on a record only partly visible downstream -- cricket was moved on +142.8%
+            # across 30 bets of which 11 were reachable, and those 11 return +270% while the other
+            # 19 return +2.5%. Two lanes under one name. Nothing on this page said so, so it had
+            # to be dug out. The gate still judges the whole record; this only shows the gap.
+            # bet_rows, not all_bets. Two cases are counted once. An id in both the
+            # live ledger and the archive, for example from a bad merge, keeps the
+            # live row. An id repeated inside the archive, for example a doubled
+            # archive file, keeps the first archive copy. save() writes the ledger
+            # before the archive, so a crash between those writes leaves the row in
+            # retired and not in the archive file. It does not leave a duplicate.
+            # all_bets stays the raw list everywhere else (the feed, the day check,
+            # the audit).
+            all_bets = [q for q in T.bet_rows(raw)
+                        if q.get("source") == source and q.get("sport") == sport and q.get("bet")]
+            reach_n = sum(1 for q in all_bets if T.placeable(q))
+            reach = (f"{reach_n} of {len(all_bets)}" if all_bets else "—")
+            reach_tone = "" if not all_bets or reach_n == len(all_bets) else "neg"
+            state, why = pair_health(key, all_bets, len(mine), (blob.get("pairs") or None),
+                                     routing=((blob.get("pairs") or {}).get(key) or {}).get("routing"),
+                                     timing=((blob.get("pairs") or {}).get(key) or {}).get("timing"))
+            light = ("<b class=\"pos\">\u25cf</b>" if state == "ok" else "<b class=\"neg\">\u25cf</b>")
+            idle_days = _days_since(since)
+            if live["n"]:
+                since_note = f"{live['n']} settled"
+            elif open_since:
+                since_note = f"{open_since} running"
+            elif priced_out:
+                since_note = f"{priced_out} priced out"
+            elif idle_days is not None:
+                since_note = f"nothing in {idle_days}d"
+            else:
+                since_note = "none yet"
+            early = early_state(pair, live["n"])
+            card = f"""<tr>
 <td><b>{esc(name(key))}</b>{early_html(early)}<div class="sm mut">{esc(sport_of(key))} · moved {esc(str(pair.get('by_hand') or since or '')[:10])}</div></td>
 <td class="num">{whole['n']}<div class="sm mut">settled</div></td>
 <td class="num"><span class="{tone(whole['roi_fee'], whole['n'])}">{pct(whole['roi_fee'])}</span><div class="sm mut">after fees</div></td>
@@ -1338,7 +1351,22 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
 <td class="num"><span class="{tone(live['roi_fee'], live['n'] >= EARLY_N)}">{pct(live['roi_fee'])}</span>{'<div class="sm mut">too early</div>' if 0 < live['n'] < EARLY_N else ''}</td>
 <td class="num light">{light} <span class="sm mut">{esc(why)}</span></td>
 <td class="num"><span class="{reach_tone}">{reach}</span><div class="sm mut">reachable</div></td>
-<td class="num"><b>{to_come}</b></td></tr>""")
+<td class="num"><b>{to_come}</b></td></tr>"""
+        except Exception as exc:  # one pair's record must not take the page down
+            # The build keeps going with this pair's row saying why it has no numbers, and a
+            # ::warning:: names it in the run. The cause still raises everywhere it is tested
+            # (test_sandbox.py, SANDBOX_TEST_GROUP=live), so it stays visible.
+            groups.setdefault(sport_group(sport), dict(rows=[], lives=[], to_come=0, early=0))["rows"].append(len(cards))
+            cards.append(unavailable_row(key, name(key), sport_of(key), record_unavailable(key, exc)))
+            continue
+        if early:
+            n_early += 1
+        group = groups.setdefault(sport_group(sport), dict(rows=[], lives=[], to_come=0, early=0))
+        group["lives"].append(live)
+        group["to_come"] += to_come
+        group["early"] += 1 if early else 0
+        group["rows"].append(len(cards))
+        cards.append(card)
     pairs_head = """<tr><th rowspan="2">Pair</th><th colspan="3" class="grp">Sandbox record (US exchanges)</th>
 <th colspan="2" class="grp">Since Production</th><th rowspan="2" class="num">Live</th><th rowspan="2" class="num">Reaches<br>the feed</th><th rowspan="2" class="num">Leads<br>to come</th></tr>
 <tr><th class="num">Bets</th><th class="num">ROI</th><th class="num">CLV</th><th class="num">Record</th><th class="num">ROI</th></tr>"""
