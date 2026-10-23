@@ -2,15 +2,15 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-23T13:49:33.744489+00:00",
-   "last_success": "2026-10-23T13:49:33.744489+00:00",
+   "last_run": "2026-10-23T14:00:16.651652+00:00",
+   "last_success": "2026-10-23T14:00:16.651652+00:00",
    "observations": {
-    "at": "2026-10-23T13:49:33.744489+00:00",
-    "events": 892,
+    "at": "2026-10-23T14:00:16.651652+00:00",
+    "events": 954,
     "reasons": {
-     "no quote or spread too wide": 60,
+     "no quote or spread too wide": 61,
      "not active": 716,
-     "outside the entry window": 11100
+     "outside the entry window": 11913
     }
    },
    "picks": [
@@ -457,15 +457,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-23T13:49:33.744489+00:00",
-   "last_success": "2026-10-23T13:49:33.744489+00:00",
+   "last_run": "2026-10-23T14:00:16.651652+00:00",
+   "last_success": "2026-10-23T14:00:16.651652+00:00",
    "observations": {
-    "at": "2026-10-23T13:49:33.744489+00:00",
-    "events": 892,
+    "at": "2026-10-23T14:00:16.651652+00:00",
+    "events": 954,
     "reasons": {
-     "no quote or spread too wide": 61,
+     "no quote or spread too wide": 153,
      "not active": 716,
-     "outside the entry window": 11099
+     "outside the band": 57,
+     "outside the entry window": 11764
     }
    },
    "picks": [
@@ -759,16 +760,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-23T13:49:33.744489+00:00",
-   "last_success": "2026-10-23T13:49:33.744489+00:00",
+   "last_run": "2026-10-23T14:00:16.651652+00:00",
+   "last_success": "2026-10-23T14:00:16.651652+00:00",
    "observations": {
-    "at": "2026-10-23T13:49:33.744489+00:00",
-    "events": 892,
+    "at": "2026-10-23T14:00:16.651652+00:00",
+    "events": 954,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 20,
+     "already near-certain (under 10c or over 90c)": 18,
      "edge 5c+": 10,
      "edge under 5c": 2,
-     "no quote or spread too wide": 38
+     "no quote or spread too wide": 40
     }
    },
    "picks": [
@@ -1689,14 +1690,14 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-23T13:49:33.744489+00:00",
-   "last_success": "2026-10-23T13:49:33.744489+00:00",
+   "last_run": "2026-10-23T14:00:16.651652+00:00",
+   "last_success": "2026-10-23T14:00:16.651652+00:00",
    "observations": {
-    "at": "2026-10-23T13:49:33.744489+00:00",
-    "events": 892,
+    "at": "2026-10-23T14:00:16.651652+00:00",
+    "events": 954,
     "reasons": {
-     "edge 5c+": 6,
-     "edge under 5c": 1,
+     "edge 5c+": 5,
+     "edge under 5c": 2,
      "under 20 reviews counted": 14
     }
    },
