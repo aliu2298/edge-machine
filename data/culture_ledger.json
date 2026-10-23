@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-23T00:00:17.662747+00:00",
-   "last_success": "2026-10-23T00:00:17.662747+00:00",
+   "last_run": "2026-10-23T01:00:13.721931+00:00",
+   "last_success": "2026-10-23T01:00:13.721931+00:00",
    "observations": {
-    "at": "2026-10-23T00:00:17.662747+00:00",
+    "at": "2026-10-23T01:00:13.721931+00:00",
     "events": 895,
     "reasons": {
      "no quote or spread too wide": 89,
@@ -458,15 +458,15 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-23T00:00:17.662747+00:00",
-   "last_success": "2026-10-23T00:00:17.662747+00:00",
+   "last_run": "2026-10-23T01:00:13.721931+00:00",
+   "last_success": "2026-10-23T01:00:13.721931+00:00",
    "observations": {
-    "at": "2026-10-23T00:00:17.662747+00:00",
+    "at": "2026-10-23T01:00:13.721931+00:00",
     "events": 895,
     "reasons": {
-     "no quote or spread too wide": 138,
+     "no quote or spread too wide": 150,
      "not active": 713,
-     "outside the band": 13,
+     "outside the band": 1,
      "outside the entry window": 11072
     }
    },
@@ -761,15 +761,15 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-23T00:00:17.662747+00:00",
-   "last_success": "2026-10-23T00:00:17.662747+00:00",
+   "last_run": "2026-10-23T01:00:13.721931+00:00",
+   "last_success": "2026-10-23T01:00:13.721931+00:00",
    "observations": {
-    "at": "2026-10-23T00:00:17.662747+00:00",
+    "at": "2026-10-23T01:00:13.721931+00:00",
     "events": 895,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 31,
-     "no quote or spread too wide": 35,
-     "transcript search failed": 17
+     "already near-certain (under 10c or over 90c)": 33,
+     "no quote or spread too wide": 32,
+     "transcript search failed": 18
     }
    },
    "picks": [
@@ -1674,14 +1674,14 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-23T00:00:17.662747+00:00",
-   "last_success": "2026-10-23T00:00:17.662747+00:00",
+   "last_run": "2026-10-23T01:00:13.721931+00:00",
+   "last_success": "2026-10-23T01:00:13.721931+00:00",
    "observations": {
-    "at": "2026-10-23T00:00:17.662747+00:00",
+    "at": "2026-10-23T01:00:13.721931+00:00",
     "events": 895,
     "reasons": {
-     "edge 5c+": 6,
-     "edge under 5c": 1,
+     "edge 5c+": 5,
+     "edge under 5c": 2,
      "under 20 reviews counted": 14
     }
    },
