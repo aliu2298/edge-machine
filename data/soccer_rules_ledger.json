@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-23T17:16:10.736140+00:00",
+ "last_run": "2026-10-23T17:31:23.499666+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -36,7 +36,31 @@
    ]
   },
   "A3": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.25,
+     "bid": 0.24,
+     "event": "KXLALIGATOTAL-26OCT23ALAMCF",
+     "group": "A",
+     "id": "A3:KXLALIGATOTAL-26OCT23ALAMCF",
+     "labels": {
+      "away": "O-D+",
+      "home": "O-D-"
+     },
+     "league": "La Liga",
+     "line": 3.5,
+     "logged": "2026-10-23T17:31:23.499666+00:00",
+     "match": "Alav\u00e9s v M\u00e1laga",
+     "price": 0.76,
+     "rule": "A3",
+     "side": "no",
+     "start": "2026-10-23T19:00Z",
+     "status": "open",
+     "ticker": "KXLALIGATOTAL-26OCT23ALAMCF-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Alav\u00e9s O-D- v M\u00e1laga O-D+ \u00b7 Under 3.5 NO 0.76"
+    }
+   ]
   },
   "A4": {
    "picks": [
@@ -1661,14 +1685,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-19T14:31:26.500056+00:00",
-   "candidates": 0,
-   "due": 1,
-   "labelled": 1,
-   "matched": 0,
-   "new": 0
-  },
-  {
    "at": "2026-10-19T14:46:41.532188+00:00",
    "candidates": 0,
    "due": 0,
@@ -2066,6 +2082,14 @@
    "due": 6,
    "labelled": 6,
    "matched": 3,
+   "new": 1
+  },
+  {
+   "at": "2026-10-23T17:31:23.499666+00:00",
+   "candidates": 4,
+   "due": 8,
+   "labelled": 8,
+   "matched": 4,
    "new": 1
   }
  ],
