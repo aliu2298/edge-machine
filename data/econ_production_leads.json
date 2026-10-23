@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-23T07:37:46+00:00",
+ "board_built_at": "2026-10-23T13:31:22+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -577,6 +577,76 @@
    "source": "econ_nc_no",
    "sport": "econ_daily",
    "status": "hit"
+  },
+  "2026-10-23|KXAAAGASD-26OCT23-4.2900|Above 4.2900 at the close \u00b7 Near-certain \u00b7 last hour \u00b7 YES": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-10-23",
+   "edge_at_log": null,
+   "first_seen": "2026-10-23",
+   "headline": "Above 4.2900 at the close",
+   "home": null,
+   "id": "2026-10-23|KXAAAGASD-26OCT23-4.2900|Above 4.2900 at the close \u00b7 Near-certain \u00b7 last hour \u00b7 YES",
+   "kickoff": "2026-10-23T03:59Z",
+   "lane": "production",
+   "league": "Econ Daily",
+   "match": "US gas price (AAA national average)",
+   "pair": "econ_nc_yes|econ_daily",
+   "price_at_log": 0.95,
+   "published_at": "2026-10-23T13:31:22+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Above 4.2900 at the close",
+    "event": "KXAAAGASD-26OCT23",
+    "market": "KXAAAGASD-26OCT23-4.2900",
+    "outcome": "Above 4.2900",
+    "outcome_side": "yes",
+    "price_at_log": 0.95,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "econ_nc_yes:KXAAAGASD-26OCT23-4.2900",
+   "source": "econ_nc_yes",
+   "sport": "econ_daily",
+   "status": "hit"
+  },
+  "2026-10-23|KXAAAGASD-26OCT23-4.2950|Not Above 4.2950 at the close \u00b7 Near-certain \u00b7 3h \u00b7 NO": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-10-23",
+   "edge_at_log": null,
+   "first_seen": "2026-10-23",
+   "headline": "Not Above 4.2950 at the close",
+   "home": null,
+   "id": "2026-10-23|KXAAAGASD-26OCT23-4.2950|Not Above 4.2950 at the close \u00b7 Near-certain \u00b7 3h \u00b7 NO",
+   "kickoff": "2026-10-23T03:59Z",
+   "lane": "production",
+   "league": "Econ Daily",
+   "match": "US gas price (AAA national average)",
+   "pair": "econ_nc_no|econ_daily",
+   "price_at_log": 0.86,
+   "published_at": "2026-10-23T13:31:22+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Not Above 4.2950 at the close",
+    "event": "KXAAAGASD-26OCT23",
+    "market": "KXAAAGASD-26OCT23-4.2950",
+    "outcome": "Above 4.2950",
+    "outcome_side": "no",
+    "price_at_log": 0.86,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "econ_nc_no:KXAAAGASD-26OCT23-4.2950",
+   "source": "econ_nc_no",
+   "sport": "econ_daily",
+   "status": "hit"
   }
  },
  "pairs": {
@@ -587,18 +657,18 @@
    "ready_at": "2026-10-20T05:00:00+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 2,
+    "leads": 3,
     "problem": null,
-    "routed": 2,
+    "routed": 3,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 2,
-   "sandbox_roi": 0.0881,
-   "sandbox_roi_fee": 0.082,
+   "sandbox_n": 3,
+   "sandbox_roi": 0.113,
+   "sandbox_roi_fee": 0.1052,
    "timing": {
     "late": [],
     "timed": 0,
@@ -612,18 +682,18 @@
    "ready_at": "2026-10-20T05:00:00+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 2,
+    "leads": 3,
     "problem": null,
-    "routed": 2,
+    "routed": 3,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 2,
-   "sandbox_roi": 0.0311,
-   "sandbox_roi_fee": 0.0289,
+   "sandbox_n": 3,
+   "sandbox_roi": 0.0382,
+   "sandbox_roi_fee": 0.0356,
    "timing": {
     "late": [],
     "timed": 0,
@@ -635,5 +705,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-23T07:37:46+00:00"
+ "updated_at": "2026-10-23T13:31:22+00:00"
 }
