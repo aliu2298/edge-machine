@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-23T14:31:42.317889+00:00",
+ "last_run": "2026-10-23T16:31:42.899663+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -65,6 +65,29 @@
      "ticker": "KXSAUDIPLTOTAL-26OCT20ALNNEO-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Al Nassr O+D- v Neom SC O+D- \u00b7 Over 2.5 YES 0.63"
+    },
+    {
+     "ask": 0.69,
+     "bid": 0.68,
+     "event": "KXSAUDIPLTOTAL-26OCT23QADHIL",
+     "group": "A",
+     "id": "A4:KXSAUDIPLTOTAL-26OCT23QADHIL",
+     "labels": {
+      "away": "O+D-",
+      "home": "O+D-"
+     },
+     "league": "Saudi Pro League",
+     "line": 2.5,
+     "logged": "2026-10-23T16:31:42.899663+00:00",
+     "match": "Al Qadsiah v Al Hilal",
+     "price": 0.69,
+     "rule": "A4",
+     "side": "yes",
+     "start": "2026-10-23T18:00Z",
+     "status": "open",
+     "ticker": "KXSAUDIPLTOTAL-26OCT23QADHIL-3",
+     "title": "Will over 2.5 goals be scored?",
+     "why": "Al Qadsiah O+D- v Al Hilal O+D- \u00b7 Over 2.5 YES 0.69"
     }
    ]
   },
@@ -908,6 +931,29 @@
      "ticker": "KXUELBTTS-26OCT22OMOBEN-BTTS",
      "title": "Both Teams To Score",
      "why": "Omonia Nicosia O+D- v Benfica O+D- \u00b7 BTTS YES 0.52"
+    },
+    {
+     "ask": 0.69,
+     "bid": 0.68,
+     "event": "KXSAUDIPLBTTS-26OCT23QADHIL",
+     "group": "BTTS",
+     "id": "D1:KXSAUDIPLBTTS-26OCT23QADHIL",
+     "labels": {
+      "away": "O+D-",
+      "home": "O+D-"
+     },
+     "league": "Saudi Pro League",
+     "line": null,
+     "logged": "2026-10-23T16:31:42.899663+00:00",
+     "match": "Al Qadsiah v Al Hilal",
+     "price": 0.69,
+     "rule": "D1",
+     "side": "yes",
+     "start": "2026-10-23T18:00Z",
+     "status": "open",
+     "ticker": "KXSAUDIPLBTTS-26OCT23QADHIL-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Al Qadsiah O+D- v Al Hilal O+D- \u00b7 BTTS YES 0.69"
     }
    ]
   },
@@ -1563,19 +1609,34 @@
      "ticker": "KXSAUDIPLBTTS-26OCT23ITJDIR-BTTS",
      "title": "Both Teams To Score",
      "why": "Al Ittihad O+D- v Al Diriyah O-D- \u00b7 BTTS YES 0.64"
+    },
+    {
+     "ask": 0.55,
+     "bid": 0.54,
+     "event": "KXSAUDIPLBTTS-26OCT22AASKHA",
+     "group": "BTTS",
+     "id": "D3:KXSAUDIPLBTTS-26OCT22AASKHA",
+     "labels": {
+      "away": "O-D-",
+      "home": "O+D-"
+     },
+     "league": "Saudi Pro League",
+     "line": null,
+     "logged": "2026-10-23T16:31:42.899663+00:00",
+     "match": "Al Ahli v Al Khaleej",
+     "price": 0.55,
+     "rule": "D3",
+     "side": "yes",
+     "start": "2026-10-23T18:00Z",
+     "status": "open",
+     "ticker": "KXSAUDIPLBTTS-26OCT22AASKHA-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Al Ahli O+D- v Al Khaleej O-D- \u00b7 BTTS YES 0.55"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-19T13:46:40.306464+00:00",
-   "candidates": 0,
-   "due": 1,
-   "labelled": 1,
-   "matched": 0,
-   "new": 0
-  },
   {
    "at": "2026-10-19T14:01:10.615980+00:00",
    "candidates": 0,
@@ -1975,6 +2036,14 @@
    "labelled": 1,
    "matched": 1,
    "new": 0
+  },
+  {
+   "at": "2026-10-23T16:31:42.899663+00:00",
+   "candidates": 2,
+   "due": 4,
+   "labelled": 4,
+   "matched": 2,
+   "new": 3
   }
  ],
  "version": "soccer-rules-v1"

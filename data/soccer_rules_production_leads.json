@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-23T14:31:42+00:00",
+ "board_built_at": "2026-10-23T16:31:44+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sa_o15_arg": true,
@@ -11,8 +11,8 @@
  "first_publish_min": 45,
  "late_publication_skipped": 0,
  "leads": {
-  "2026-10-23|Al Ittihad|Al Diriyah|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
-   "away": "Al Diriyah",
+  "2026-10-23|Al Ahli|Al Khaleej|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
+   "away": "Al Khaleej",
    "bet": {
     "kind": "btts"
    },
@@ -20,29 +20,29 @@
    "edge_at_log": null,
    "first_seen": "2026-10-23",
    "headline": "Both teams to score",
-   "home": "Al Ittihad",
-   "id": "2026-10-23|Al Ittihad|Al Diriyah|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score",
-   "kickoff": "2026-10-23T15:30Z",
+   "home": "Al Ahli",
+   "id": "2026-10-23|Al Ahli|Al Khaleej|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score",
+   "kickoff": "2026-10-23T18:00Z",
    "lane": "production",
    "last_seen": "2026-10-23",
-   "last_seen_at": "2026-10-23T14:31:42+00:00",
+   "last_seen_at": "2026-10-23T16:31:44+00:00",
    "league": "Saudi Pro League",
-   "match": "Al Ittihad v Al Diriyah",
+   "match": "Al Ahli v Al Khaleej",
    "pair": "sr_d3|soccer_btts",
-   "price_at_log": 0.64,
-   "published_at": "2026-10-23T14:01:39+00:00",
+   "price_at_log": 0.55,
+   "published_at": "2026-10-23T16:31:44+00:00",
    "published_late": false,
    "published_min_before_kickoff": 88,
    "route": {
     "claim": "Both teams to score",
-    "event": "KXSAUDIPLBTTS-26OCT23ITJDIR",
-    "market": "KXSAUDIPLBTTS-26OCT23ITJDIR-BTTS",
+    "event": "KXSAUDIPLBTTS-26OCT22AASKHA",
+    "market": "KXSAUDIPLBTTS-26OCT22AASKHA-BTTS",
     "outcome": "Both Teams To Score",
     "outcome_side": "yes",
-    "price_at_log": 0.64,
+    "price_at_log": 0.55,
     "venue": "kalshi"
    },
-   "sandbox_quote": "sr_d3:KXSAUDIPLBTTS-26OCT23ITJDIR-BTTS",
+   "sandbox_quote": "sr_d3:KXSAUDIPLBTTS-26OCT22AASKHA-BTTS",
    "source": "sr_d3",
    "sport": "soccer_btts",
    "status": "pending"
@@ -154,5 +154,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-23T14:31:42+00:00"
+ "updated_at": "2026-10-23T16:31:44+00:00"
 }
