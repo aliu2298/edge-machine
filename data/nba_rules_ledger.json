@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-23T22:28:43.071048+00:00",
+ "last_run": "2026-10-23T22:30:13.345815+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -238,6 +238,50 @@
      "ticker": "KXNBATEAMTOTAL-26OCT23MINORL-MIN110",
      "title": "Minnesota over 109.5 points",
      "why": "MIN O+D+ v ORL O+D+ \u00b7 110+ YES 0.74"
+    },
+    {
+     "game": "401909847",
+     "id": "R1:KXNBATEAMTOTAL-26OCT23DETMIA-MIA111",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O-D+",
+      "home": "O+D+",
+      "home_h1": "O+D+"
+     },
+     "logged": "2026-10-23T22:30:13.345815+00:00",
+     "match": "DET @ MIA",
+     "price": 0.73,
+     "rule": "R1",
+     "side": "yes",
+     "start": "2026-10-24T00:00Z",
+     "status": "open",
+     "strike": 110.5,
+     "team": "MIA",
+     "ticker": "KXNBATEAMTOTAL-26OCT23DETMIA-MIA111",
+     "title": "Miami over 110.5 points",
+     "why": "MIA O+D+ v DET O+D- \u00b7 110+ YES 0.73"
+    },
+    {
+     "game": "401909847",
+     "id": "R1:KXNBATEAMTOTAL-26OCT23DETMIA-DET110",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O-D+",
+      "home": "O+D+",
+      "home_h1": "O+D+"
+     },
+     "logged": "2026-10-23T22:30:13.345815+00:00",
+     "match": "DET @ MIA",
+     "price": 0.79,
+     "rule": "R1",
+     "side": "yes",
+     "start": "2026-10-24T00:00Z",
+     "status": "open",
+     "strike": 109.5,
+     "team": "DET",
+     "ticker": "KXNBATEAMTOTAL-26OCT23DETMIA-DET110",
+     "title": "Detroit over 109.5 points",
+     "why": "DET O+D- v MIA O+D+ \u00b7 110+ YES 0.79"
     }
    ]
   },
@@ -455,6 +499,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT23MINORL-MIN116",
      "title": "Minnesota over 115.5 points",
      "why": "MIN O+D+ v ORL O+D+ \u00b7 115+ YES 0.56"
+    },
+    {
+     "game": "401909847",
+     "id": "R2:KXNBATEAMTOTAL-26OCT23DETMIA-DET116",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O-D+",
+      "home": "O+D+",
+      "home_h1": "O+D+"
+     },
+     "logged": "2026-10-23T22:30:13.345815+00:00",
+     "match": "DET @ MIA",
+     "price": 0.6,
+     "rule": "R2",
+     "side": "yes",
+     "start": "2026-10-24T00:00Z",
+     "status": "open",
+     "strike": 115.5,
+     "team": "DET",
+     "ticker": "KXNBATEAMTOTAL-26OCT23DETMIA-DET116",
+     "title": "Detroit over 115.5 points",
+     "why": "DET O+D- v MIA O+D+ \u00b7 115+ YES 0.60"
     }
    ]
   },
@@ -1282,11 +1348,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-19T02:26:10.525428+00:00",
-   "due": 0,
-   "new": 0
-  },
-  {
    "at": "2026-10-19T07:59:08.648170+00:00",
    "due": 0,
    "new": 0
@@ -1535,6 +1596,11 @@
    "at": "2026-10-23T22:28:43.071048+00:00",
    "due": 5,
    "new": 0
+  },
+  {
+   "at": "2026-10-23T22:30:13.345815+00:00",
+   "due": 6,
+   "new": 3
   }
  ],
  "version": "nba-rules-v1"
