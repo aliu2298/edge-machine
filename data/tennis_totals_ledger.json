@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-23T18:45:14.693354+00:00",
+ "last_run": "2026-10-23T22:17:55.755926+00:00",
  "registered": "2026-10-21",
  "rules": {
   "baseline": {
@@ -448,11 +448,14 @@
      "line": 18.5,
      "logged": "2026-10-23T16:15:16.597120+00:00",
      "match": "Brandon Nakashima v Flavio Cobolli",
+     "payout": 1.0,
      "price": 0.91,
+     "profit": 9.2,
      "rule": "baseline",
+     "settled": "2026-10-23T22:17:55.755926+00:00",
      "side": "yes",
      "start": "2026-10-23T17:00:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXATPGTOTAL-26OCT23COBNAK-19",
      "title": "Over 18.5 games",
      "tournament": "Grand Prix Auvergne-Rh\u00f4ne-Alpes",
@@ -469,11 +472,14 @@
      "line": 18.5,
      "logged": "2026-10-23T17:15:14.807850+00:00",
      "match": "Zizou Bergs v Jan-Lennard Struff",
+     "payout": 1.0,
      "price": 0.87,
+     "profit": 13.91,
      "rule": "baseline",
+     "settled": "2026-10-23T22:17:55.755926+00:00",
      "side": "yes",
      "start": "2026-10-23T18:00:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXATPGTOTAL-26OCT23STRBER-19",
      "title": "Over 18.5 games",
      "tournament": "BNP Paribas Fortis European Open",
@@ -947,11 +953,14 @@
      "line": 18.5,
      "logged": "2026-10-23T16:15:16.597120+00:00",
      "match": "Brandon Nakashima v Flavio Cobolli",
+     "payout": 1.0,
      "price": 0.91,
+     "profit": 9.2,
      "rule": "tennis_atp_low_over",
+     "settled": "2026-10-23T22:17:55.755926+00:00",
      "side": "yes",
      "start": "2026-10-23T17:00:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXATPGTOTAL-26OCT23COBNAK-19",
      "title": "Over 18.5 games",
      "tournament": "Grand Prix Auvergne-Rh\u00f4ne-Alpes",
@@ -968,11 +977,14 @@
      "line": 18.5,
      "logged": "2026-10-23T17:15:14.807850+00:00",
      "match": "Zizou Bergs v Jan-Lennard Struff",
+     "payout": 1.0,
      "price": 0.87,
+     "profit": 13.91,
      "rule": "tennis_atp_low_over",
+     "settled": "2026-10-23T22:17:55.755926+00:00",
      "side": "yes",
      "start": "2026-10-23T18:00:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXATPGTOTAL-26OCT23STRBER-19",
      "title": "Over 18.5 games",
      "tournament": "BNP Paribas Fortis European Open",
@@ -1003,14 +1015,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-22T10:00:15.624280+00:00",
-   "baseline": 0,
-   "due": 1,
-   "entered": 0,
-   "matched": 1,
-   "new": 0
-  },
   {
    "at": "2026-10-22T10:15:14.858174+00:00",
    "baseline": 0,
@@ -1410,11 +1414,17 @@
    "entered": 0,
    "matched": 1,
    "new": 0
+  },
+  {
+   "at": "2026-10-23T22:17:55.755926+00:00",
+   "baseline": 0,
+   "due": 0,
+   "entered": 0,
+   "matched": 0,
+   "new": 0
   }
  ],
  "schedule": [
-  "2026-10-23T18:55:00+00:00",
-  "2026-10-23T19:15:00+00:00",
   "2026-10-24T09:00:00+00:00",
   "2026-10-24T09:30:00+00:00",
   "2026-10-24T10:00:00+00:00",
@@ -1425,7 +1435,8 @@
   "2026-10-24T13:00:00+00:00",
   "2026-10-24T13:30:00+00:00",
   "2026-10-24T14:00:00+00:00",
-  "2026-10-24T16:00:00+00:00"
+  "2026-10-24T16:00:00+00:00",
+  "2026-10-24T16:30:00+00:00"
  ],
  "version": "tennis-totals-v1"
 }
