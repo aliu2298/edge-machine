@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-23T18:16:37.227673+00:00",
+ "last_run": "2026-10-24T10:01:41.479677+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -409,6 +409,58 @@
      "ticker": "KXUCLTEAMTOTAL-26OCT21SPOASK-ASK2",
      "title": "Will LASK score over 1.5 goals?",
      "why": "LASK Linz O+D- v Sporting CP O+D- \u00b7 2+ YES 0.30"
+    },
+    {
+     "ask": 0.38,
+     "bid": 0.36,
+     "event": "KXEPLTEAMTOTAL-26OCT24AVLMCI",
+     "group": "A",
+     "id": "T1:KXEPLTEAMTOTAL-26OCT24AVLMCI:home",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Premier League",
+     "line": 1.5,
+     "logged": "2026-10-24T10:01:41.479677+00:00",
+     "match": "Aston Villa v Manchester City",
+     "opponent": "Manchester City",
+     "price": 0.38,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-10-24T11:30Z",
+     "status": "open",
+     "team": "Aston Villa",
+     "team_side": "home",
+     "ticker": "KXEPLTEAMTOTAL-26OCT24AVLMCI-AVL2",
+     "title": "Will Aston Villa score over 1.5 goals?",
+     "why": "Aston Villa O+D- v Manchester City O+D- \u00b7 2+ YES 0.38"
+    },
+    {
+     "ask": 0.68,
+     "bid": 0.67,
+     "event": "KXEPLTEAMTOTAL-26OCT24AVLMCI",
+     "group": "A",
+     "id": "T1:KXEPLTEAMTOTAL-26OCT24AVLMCI:away",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Premier League",
+     "line": 1.5,
+     "logged": "2026-10-24T10:01:41.479677+00:00",
+     "match": "Aston Villa v Manchester City",
+     "opponent": "Aston Villa",
+     "price": 0.68,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-10-24T11:30Z",
+     "status": "open",
+     "team": "Manchester City",
+     "team_side": "away",
+     "ticker": "KXEPLTEAMTOTAL-26OCT24AVLMCI-MCI2",
+     "title": "Will Manchester City score over 1.5 goals?",
+     "why": "Manchester City O+D- v Aston Villa O+D- \u00b7 2+ YES 0.68"
     }
    ]
   },
@@ -516,11 +568,14 @@
      "logged": "2026-10-23T17:31:11.396321+00:00",
      "match": "Alav\u00e9s v M\u00e1laga",
      "opponent": "M\u00e1laga",
+     "payout": 1.0,
      "price": 0.48,
+     "profit": 101.02,
      "rule": "T2",
+     "settled": "2026-10-24T10:01:41.479677+00:00",
      "side": "no",
      "start": "2026-10-23T19:00Z",
-     "status": "open",
+     "status": "won",
      "team": "Alav\u00e9s",
      "team_side": "home",
      "ticker": "KXLALIGATEAMTOTAL-26OCT23ALAMCF-ALA2",
@@ -1022,11 +1077,14 @@
      "logged": "2026-10-23T17:01:15.290607+00:00",
      "match": "VfB Stuttgart v Borussia M\u00f6nchengladbach",
      "opponent": "VfB Stuttgart",
+     "payout": 0.0,
      "price": 0.91,
+     "profit": -100.0,
      "rule": "T6",
+     "settled": "2026-10-24T10:01:41.479677+00:00",
      "side": "no",
      "start": "2026-10-23T18:30Z",
-     "status": "open",
+     "status": "lost",
      "team": "Borussia M\u00f6nchengladbach",
      "team_side": "away",
      "ticker": "KXBUNDESLIGATEAMTOTAL-26OCT23VFBBMG-BMG3",
@@ -1219,14 +1277,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-18T10:31:25.058530+00:00",
-   "candidates": 0,
-   "due": 1,
-   "labelled": 1,
-   "matched": 0,
-   "new": 0
-  },
   {
    "at": "2026-10-18T11:01:12.282541+00:00",
    "candidates": 0,
@@ -1626,6 +1676,14 @@
    "labelled": 4,
    "matched": 1,
    "new": 0
+  },
+  {
+   "at": "2026-10-24T10:01:41.479677+00:00",
+   "candidates": 1,
+   "due": 1,
+   "labelled": 1,
+   "matched": 1,
+   "new": 2
   }
  ],
  "version": "soccer-team-rules-v1"
