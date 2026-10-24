@@ -26,7 +26,10 @@ def section(state=None):
         picks = (state.get("rules", {}).get(key) or {}).get("picks") or []
         n, won, roi = _record(picks)
         live = sum(p["status"] == "open" for p in picks)
-        rows.append(f'<tr><td><b>{esc(key)}</b></td><td>{esc(meta["label"])}</td>'
+        gone = NR.RETIRED.get(key)
+        tag = (f' <span class="badge stage">Retired {esc(gone["on"])}</span>'
+               f'<div class="sm mut">{esc(gone["reason"])}. Its entries stay below and settle.</div>') if gone else ""
+        rows.append(f'<tr{" class=\"mut\"" if gone else ""}><td><b>{esc(key)}</b></td><td>{esc(meta["label"])}{tag}</td>'
                     f'<td class="num">{n}</td><td class="num">{won}</td>'
                     f'<td class="num">{"—" if roi is None else f"{roi * 100:+.1f}%"}</td>'
                     f'<td class="num">{live}</td></tr>')
@@ -42,8 +45,9 @@ def section(state=None):
                          f'<td class="num">{p["price"] * 100:.0f}c</td><td>{esc(res + money)}</td></tr>')
     body = "".join(pick_rows) or '<tr><td colspan="8" class="mut">No entries yet: rules enter 20–90 minutes before tip-off once Kalshi lists the game\'s team-total and first-half markets.</td></tr>'
     last = state.get("last_run")
+    retired_note = f" ({len(NR.RETIRED)} retired)" if NR.RETIRED else ""
     return f"""<section id="rules">
-<div class="nba-section-head"><div><h2>Sandbox rules</h2><p class="shell-kicker">Seven label rules from the 2026-27 preseason · paper at the Kalshi ask, 7% fee · not in Production</p></div></div>
+<div class="nba-section-head"><div><h2>Sandbox rules</h2><p class="shell-kicker">Seven label rules from the 2026-27 preseason{retired_note} · paper at the Kalshi ask, 7% fee · not in Production</p></div></div>
 <div class="tbl"><table><thead><tr><th>Rule</th><th>Definition</th><th class="num">Settled</th><th class="num">Won</th><th class="num">ROI after fee</th><th class="num">Open</th></tr></thead>
 <tbody>{"".join(rows)}</tbody></table></div>
 <details class="section-disclosure"><summary><b>Entries</b><span>latest 25</span></summary>

@@ -7,7 +7,7 @@ charged for it. Paper only, at the Kalshi ask with the 7% fee, settled on Kalshi
 Nothing here is in Production and nothing is placed. One frozen entry per rule per team per game.
 
   R1  O+ team                 team total 110+   YES   60-80c  (not when both teams are D-: R7)
-  R2  O+ team                 team total 115+   YES   <=60c   (not when both teams are D-: R7)
+  R2  O+ team                 team total 115+   YES   <=60c   RETIRED from 2026-10-24 (see RETIRED)
   R3  O- team                 team total 115+   NO    40-65c
   R4  O-D- v O-D-             team total 100-110, the cheapest NO   NO   25-45c (floor from 2026-10-22)
   R5  either team O-D- (1H)   first half 115+   NO    35-60c
@@ -35,6 +35,13 @@ import urllib.parse
 
 import daily_track as D
 
+# Rules retired by hand: no new entry from the dated day on (Eastern), the ledger rows stay and
+# keep settling, and the NBA page shows the rule as Retired with this reason. R1 keeps standing
+# aside when both teams are D- (that is R7's line), exactly as before; only R2's entry is skipped.
+RETIRED = {
+    "R2": dict(on="2026-10-24",
+               reason="3/10, −41% after fees (pooled by cost); overs priced above hit rate in the ladder tracker"),
+}
 R4_NO_BAND = (0.25, 0.45)    # R4's NO price, both ends inclusive; the 0.25 floor from 2026-10-22
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -58,6 +65,12 @@ RULES = {
     "R6": dict(label="O+ team · team total 105+ · YES ≤85c", market=TEAM),
     "R7": dict(label="Both teams D− · team total 110+/115+ · NO 40-60c", market=TEAM),
 }
+
+
+def retired(rule, now):
+    """True once `rule` is retired as of `now` (its dated day, Eastern, or later)."""
+    r = RETIRED.get(rule)
+    return bool(r) and now.astimezone(ET).date().isoformat() >= r["on"]
 
 
 def fee(p):
@@ -126,6 +139,8 @@ def team_picks(g, ms, now):
         why = f"{team} {own} v {opp} {theirs}"
 
         def take(rule, line, side, lo, hi):
+            if retired(rule, now):
+                return
             m = rung(mine, line)
             if not m:
                 return

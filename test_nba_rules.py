@@ -69,6 +69,36 @@ check("  the cheapest at or above the floor is picked: 0.06 and 0.07 pennies ski
       r4no(0.06, 0.07, 0.38, 0.31), [(103.5, 0.31)])
 check("  equal prices go to the higher strike", r4no(0.30, 0.30), [(101.5, 0.3)])
 check("the label says NO 25-45c", NR.RULES["R4"]["label"], "O−D− v O−D− · team total 100-110 · cheapest NO 25-45c")
+print("\nR2 retired from 2026-10-24: no new entries, rows kept, R1/R6/R7 unchanged")
+THEN = dt.datetime(2026, 10, 23, 22, 0, tzinfo=UTC)          # the day before
+ON = dt.datetime(2026, 10, 24, 22, 0, tzinfo=UTC)
+op = game("O+D+", "O-D+")
+opm = [mkt("SA", 104.5, .80, .82), mkt("SA", 109.5, .68, .70), mkt("SA", 114.5, .50, .53)]
+rules_at = lambda g_, ms_, when: sorted((p["rule"], p["strike"], p["price"]) for p in NR.team_picks(g_, ms_, when) if p["team"] == "SA")
+check("the day before, R2 still enters (115+ YES at 53c)", ("R2", 114.5, 0.53) in rules_at(op, opm, THEN), True)
+check("from 2026-10-24 R2 enters nothing", [r for r in rules_at(op, opm, ON) if r[0] == "R2"], [])
+check("  and R1 and R6 are exactly as before",
+      [r for r in rules_at(op, opm, ON) if r[0] != "R2"], [r for r in rules_at(op, opm, THEN) if r[0] != "R2"])
+check("Eastern date: 03:00Z on Oct 24 is still Oct 23 in New York, so R2 is not yet retired",
+      NR.retired("R2", dt.datetime(2026, 10, 24, 3, 0, tzinfo=UTC)), False)
+check("  and 05:00Z on Oct 24 is retired", NR.retired("R2", dt.datetime(2026, 10, 24, 5, 0, tzinfo=UTC)), True)
+check("no other rule is retired", sorted(NR.RETIRED), ["R2"])
+dd2 = game("O+D-", "O-D-")
+d7 = [mkt("SA", 109.5, .52, .55), mkt("SA", 114.5, .40, .42), mkt("HOU", 109.5, .45, .48)]
+check("both D-: R1 and R2 stand aside and R7 fires, before and after the retirement",
+      rules_at(dd2, d7, THEN) == rules_at(dd2, d7, ON) and [r[0] for r in rules_at(dd2, d7, ON)] == ["R7"], True)
+st_r2 = {"rules": {k: {"picks": []} for k in NR.RULES}}
+st_r2["rules"]["R2"]["picks"].append(dict(id="R2:old", rule="R2", game="g0", team="SA", status="lost", profit=-100.0, price=0.5,
+                                          side="yes", match="a @ b", start="2026-10-20T00:00:00+00:00", ticker="T-old"))
+before = [dict(p) for p in st_r2["rules"]["R2"]["picks"]]
+gm = game("O+D+", "O-D+")
+NR.run(st_r2, [gm], ON, lambda path: {"markets": []})
+check("run() leaves the existing R2 rows exactly as they were", st_r2["rules"]["R2"]["picks"], before)
+html_r2 = NB.section(st_r2)
+check("the NBA page shows R2 as Retired with its dated reason and its final record",
+      ("Retired 2026-10-24" in html_r2, "overs priced above hit rate in the ladder tracker" in html_r2, "(1 retired)" in html_r2),
+      (True, True, True))
+
 h1 = [dict(ticker="KXNBA1HTOTAL-26OCT20HOUSAS-114", floor_strike=114.5, status="active",
            yes_bid_dollars="0.52", yes_ask_dollars="0.55")]
 check("R5: an O-D- first-half label, 115+ NO at 48c", [(p["rule"], p["price"]) for p in NR.half_picks(game("O+D+", "O+D+", home_h1="O-D-"), h1, NOW)],
