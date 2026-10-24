@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-24T18:16:46+00:00",
+ "board_built_at": "2026-10-24T18:31:12+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sa_o15_arg": true,
@@ -232,7 +232,7 @@
    "kickoff": "2026-10-24T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-24",
-   "last_seen_at": "2026-10-24T18:16:46+00:00",
+   "last_seen_at": "2026-10-24T18:31:12+00:00",
    "league": "La Liga",
    "match": "Atl\u00e9tico Madrid v Deportivo",
    "pair": "sr_d3|soccer_btts",
@@ -254,6 +254,41 @@
    "sport": "soccer_btts",
    "status": "pending"
   },
+  "2026-10-24|Chelsea|Tottenham Hotspur|Under 2.5 goals \u00b7 EPL O\u2212D\u2212 v an O+ opponent \u00b7 under 2.5": {
+   "away": "Tottenham Hotspur",
+   "bet": {
+    "kind": "total_lte",
+    "n": 2
+   },
+   "date": "2026-10-24",
+   "edge_at_log": null,
+   "first_seen": "2026-10-24",
+   "headline": "Under 2.5 goals",
+   "home": "Chelsea",
+   "id": "2026-10-24|Chelsea|Tottenham Hotspur|Under 2.5 goals \u00b7 EPL O\u2212D\u2212 v an O+ opponent \u00b7 under 2.5",
+   "kickoff": "2026-10-24T16:30Z",
+   "lane": "production",
+   "league": "Premier League",
+   "match": "Chelsea v Tottenham Hotspur",
+   "pair": "sr_a6|soccer_o25",
+   "price_at_log": 0.39,
+   "published_at": "2026-10-24T18:31:12+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Under 2.5 goals",
+    "event": "KXEPLTOTAL-26OCT24CFCTOT",
+    "market": "KXEPLTOTAL-26OCT24CFCTOT-3",
+    "outcome": "Over 2.5 goals scored",
+    "outcome_side": "no",
+    "price_at_log": 0.39,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_a6:KXEPLTOTAL-26OCT24CFCTOT-3",
+   "source": "sr_a6",
+   "sport": "soccer_o25",
+   "status": "hit"
+  },
   "2026-10-24|Gil Vicente|FC Porto|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
    "away": "FC Porto",
    "bet": {
@@ -268,7 +303,7 @@
    "kickoff": "2026-10-24T19:30Z",
    "lane": "production",
    "last_seen": "2026-10-24",
-   "last_seen_at": "2026-10-24T18:16:46+00:00",
+   "last_seen_at": "2026-10-24T18:31:12+00:00",
    "league": "Primeira Liga",
    "match": "Gil Vicente v FC Porto",
    "pair": "sr_d3|soccer_btts",
@@ -358,6 +393,43 @@
    "sport": "soccer_btts",
    "status": "miss"
   },
+  "2026-10-24|Talleres (C\u00f3rdoba)|Defensa y Justicia|Over 1.5 goals \u00b7 Argentina over 1.5": {
+   "away": "Defensa y Justicia",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-10-24",
+   "edge_at_log": null,
+   "first_seen": "2026-10-24",
+   "headline": "Over 1.5 goals",
+   "home": "Talleres (C\u00f3rdoba)",
+   "id": "2026-10-24|Talleres (C\u00f3rdoba)|Defensa y Justicia|Over 1.5 goals \u00b7 Argentina over 1.5",
+   "kickoff": "2026-10-24T20:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-24",
+   "last_seen_at": "2026-10-24T18:31:12+00:00",
+   "league": "Liga Profesional",
+   "match": "Talleres (C\u00f3rdoba) v Defensa y Justicia",
+   "pair": "sa_o15_arg|soccer_o15",
+   "price_at_log": 0.71,
+   "published_at": "2026-10-24T18:31:12+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Over 1.5 goals",
+    "event": "KXARGPREMDIVTOTAL-26OCT24CATDYJ",
+    "market": "KXARGPREMDIVTOTAL-26OCT24CATDYJ-2",
+    "outcome": "Over 1.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.71,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT24CATDYJ-2",
+   "source": "sa_o15_arg",
+   "sport": "soccer_o15",
+   "status": "pending"
+  },
   "2026-10-24|Tigre|Atl\u00e9tico Tucum\u00e1n|Over 1.5 goals \u00b7 Argentina over 1.5": {
    "away": "Atl\u00e9tico Tucum\u00e1n",
    "bet": {
@@ -402,9 +474,9 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 3,
+    "leads": 4,
     "problem": null,
-    "routed": 3,
+    "routed": 4,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -416,7 +488,7 @@
    "sandbox_roi_fee": -0.0892,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 2,
     "under_target": 0
    }
   },
@@ -427,18 +499,18 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 1,
+    "leads": 2,
     "problem": null,
-    "routed": 1,
+    "routed": 2,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 1,
-   "sandbox_roi": 1.0947,
-   "sandbox_roi_fee": 1.0947,
+   "sandbox_n": 2,
+   "sandbox_roi": 1.2769,
+   "sandbox_roi_fee": 1.2769,
    "timing": {
     "late": [],
     "timed": 0,
@@ -500,5 +572,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-24T18:16:46+00:00"
+ "updated_at": "2026-10-24T18:31:12+00:00"
 }
