@@ -35,6 +35,11 @@
    "lead_min": 4.5,
    "price": 0.41
   },
+  "btts_form_l10_fade:KXLALIGABTTS-26OCT24RVCELC-BTTS": {
+   "at": "2026-10-24T11:04:41+00:00",
+   "lead_min": 55.3,
+   "price": 0.46
+  },
   "btts_form_l10_fade:KXLIGUE1BTTS-26OCT16MANTFC-BTTS": {
    "at": "2026-10-16T18:35:57+00:00",
    "lead_min": 9.0,
@@ -405,6 +410,11 @@
    "lead_min": 11.9,
    "price": 0.5
   },
+  "corners_team_fade:KXLALIGATCORNERS-26OCT24RVCELC-RVC6": {
+   "at": "2026-10-24T11:04:41+00:00",
+   "lead_min": 55.3,
+   "price": 0.54
+  },
   "corners_team_fade:KXUCLTCORNERS-26OCT20FCPPSV-FCP6": {
    "at": "2026-10-20T18:46:38+00:00",
    "lead_min": 13.4,
@@ -464,6 +474,11 @@
    "at": "2026-10-23T18:48:08+00:00",
    "lead_min": 11.9,
    "price": 0.51
+  },
+  "corners_total_under:KXEPLCORNERS-26OCT24AVLMCI-8": {
+   "at": "2026-10-24T11:04:41+00:00",
+   "lead_min": 25.3,
+   "price": 0.24
   },
   "corners_total_under:KXLALIGACORNERS-26OCT17ESPATM-9": {
    "at": "2026-10-17T11:54:57+00:00",
@@ -969,6 +984,11 @@
    "at": "2026-10-23T18:48:08+00:00",
    "lead_min": 11.9,
    "price": 0.47
+  },
+  "liga_btts_even:KXLALIGABTTS-26OCT24RVCELC-BTTS": {
+   "at": "2026-10-24T11:04:41+00:00",
+   "lead_min": 55.3,
+   "price": 0.55
   },
   "liga_u15_dog:KXLALIGATOTAL-26OCT18RMASEV-2": {
    "at": "2026-10-18T18:46:35+00:00",
@@ -1491,8 +1511,8 @@
    "price": 0.28
   },
   "o25_congestion:KXEPLTOTAL-26OCT24AVLMCI-3": {
-   "at": "2026-10-24T10:49:39+00:00",
-   "lead_min": 40.3,
+   "at": "2026-10-24T11:04:41+00:00",
+   "lead_min": 25.3,
    "price": 0.29
   },
   "o25_congestion:KXEREDIVISIETOTAL-26OCT17ADOPSV-3": {
@@ -2015,6 +2035,11 @@
    "lead_min": 4.7,
    "price": 0.74
   },
+  "tennis_utr_shortlist_v1:aec-utr-popale-ursaur-2026-10-24": {
+   "at": "2026-10-24T11:04:41+00:00",
+   "lead_min": 25.3,
+   "price": 0.71
+  },
   "tennis_utr_shortlist_v1:aec-utr-rosabr-almalf-2026-10-19": {
    "at": "2026-10-20T15:59:00+00:00",
    "lead_min": 1.0,
@@ -2126,5 +2151,5 @@
    "price": 0.68
   }
  },
- "updated": "2026-10-24T10:49:39+00:00"
+ "updated": "2026-10-24T11:04:41+00:00"
 }
