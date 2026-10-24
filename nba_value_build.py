@@ -41,19 +41,39 @@ def _record(a):
             f"z {a['z']:+.2f} ({a['nights']} night{'s' if a['nights'] != 1 else ''}) · ROI {roi} after fee")
 
 
+def compare_html(state):
+    """'Value lane v fade control' (2026-10-24): each side's ROI on the nights both have settled entries."""
+    bits = []
+    for variant in ("1h", "24h"):
+        c = V.compare_nights(state, variant)
+        if c is None:
+            bits.append(f"{variant}: no night yet where both the value lane and the control have a settled entry")
+            continue
+        v, f = c["value"], c["fade"]
+        roi = lambda a: "—" if a["roi_fee"] is None else f"{a['roi_fee'] * 100:+.1f}%"
+        bits.append(f"{variant}: value lane {roi(v)} ({v['won']}/{v['n']}) v fade control {roi(f)} ({f['won']}/{f['n']}) "
+                    f"on {c['nights']} common night{'s' if c['nights'] != 1 else ''}")
+    return ("Value lane v fade control, same nights, ROI after the fee: " + "; ".join(bits)
+            + ". The control has no model and may hold the same ticker as the value lane; each is counted independently.")
+
+
 def lanes_html(state):
     rows = []
-    for lane in (V.TT_1H, V.TT_24H, V.Q1_1H, V.Q1_24H):
-        a, b = V.stats(_picks(state, lane)), V.stats(_picks(state, V.BASE[lane]))
+    for lane in (V.TT_1H, V.TT_24H, V.Q1_1H, V.Q1_24H, V.FADE_1H, V.FADE_24H):
+        control = lane in V.CONTROLS
+        a, b = V.stats(_picks(state, lane)), V.stats(_picks(state, V.BASE.get(lane, lane)))
         roi = "—" if a["roi_fee"] is None else f"{a['roi_fee'] * 100:+.1f}%"
         broi = "—" if b["roi_fee"] is None else f"{b['roi_fee'] * 100:+.1f}%"
         n = a["n"] + a["n_price"]
-        read = "verdict at 30" if n >= 30 else "review at 10+" if n >= 10 else "too early to read"
+        nights = f"{a['nights']} night{'s' if a['nights'] != 1 else ''} · {V.ladders(_picks(state, lane))} team-ladders"
+        read = ("read at 30 nights" if control else "verdict at 30" if n >= 30 else "review at 10+" if n >= 10 else "too early to read")
+        if control:
+            broi, read = "control (no baseline)", f"{read} · {nights}"
         rows.append(f'<tr data-source="{esc(lane)}"><td><b>{esc(V.NAMES[lane])}</b><br><span class="sm mut">{esc(lane)}</span></td>'
                     f'<td class="num">{n}</td><td class="num">{a["won"]}</td><td class="num">{a["expected"]:.1f}</td>'
                     f'<td class="num">{a["z"]:+.2f}</td><td class="num">{roi}</td><td class="num">{a["open"]}</td>'
-                    f'<td class="num">{b["n"] + b["n_price"]} · {broi}</td><td>{esc(read)}</td></tr>')
-    recent = sorted((p for lane in V.LANES for p in _picks(state, lane)),
+                    f'<td class="num">{broi if control else f"{b['n'] + b['n_price']} · {broi}"}</td><td>{esc(read)}</td></tr>')
+    recent = sorted((p for lane in V.LANES + V.CONTROLS for p in _picks(state, lane)),
                     key=lambda p: (p.get("start") or "", p.get("rule"), p.get("unit")), reverse=True)[:30]
     ent = []
     for p in recent:
@@ -62,22 +82,25 @@ def lanes_html(state):
         ent.append(f'<tr><td>{esc(fmt.when(p["start"]))}</td><td>{esc(p["match"])}</td><td>{esc(p["rule"])}</td>'
                    f'<td>{esc(p["unit"])} {"over" if p["side"] == "yes" else "under"} {esc(p["line"])}</td>'
                    f'<td>{esc(p["side"].upper())}</td><td class="num">{p["price"] * 100:.0f}c</td>'
-                   f'<td class="num">{p["p"]:.2f}</td><td class="num">{p["edge"]:+.3f}</td><td>{esc(res + money)}</td></tr>')
+                   f'<td class="num">{"—" if p.get("p") is None else f"{p['p']:.2f}"}</td>'
+                   f'<td class="num">{"—" if p.get("edge") is None else f"{p['edge']:+.3f}"}</td><td>{esc(res + money)}</td></tr>')
     body = "".join(ent) or ('<tr><td colspan="9" class="mut">No entries yet: each lane looks once per game, '
                             '26-18 hours or 90-60 minutes before tip, and enters only at an edge of 0.05 or more '
                             'after the fee.</td></tr>')
-    defs = "".join(f'<p class="sm"><b>{esc(V.NAMES[k])}</b>: {esc(V.DEFINITION[k])}</p>' for k in (V.TT_1H, V.Q1_1H))
+    defs = "".join(f'<p class="sm"><b>{esc(V.NAMES[k])}</b>: {esc(V.DEFINITION[k])}</p>' for k in (V.TT_1H, V.Q1_1H, V.FADE_1H))
     last = state.get("last_run")
     return f"""<section id="value">
 <div class="nba-section-head"><div><h2>Value lanes</h2><p class="shell-kicker">Model probability v the Kalshi price · team totals and 1st-quarter totals · paper at the ask, 7% fee · not in Production</p></div></div>
 <div class="tbl"><table><thead><tr><th>Lane</th><th class="num">Settled</th><th class="num">Won</th><th class="num">Priced</th><th class="num">z (by night)</th><th class="num">ROI after fee</th><th class="num">Open</th><th class="num">Blind baseline</th><th>Read</th></tr></thead>
 <tbody>{"".join(rows)}</tbody></table></div>
+<p class="sm">{esc(compare_html(state))}</p>
 <details class="section-disclosure"><summary><b>Entries</b><span>latest 30</span></summary>
 <div class="tbl"><table><thead><tr><th>Tip</th><th>Game</th><th>Lane</th><th>Rung</th><th>Side</th><th class="num">Price</th><th class="num">Model P</th><th class="num">Edge</th><th>Result</th></tr></thead>
 <tbody>{body}</tbody></table></div></details>
 {_checks_html(state)}
 <details class="section-disclosure"><summary><b>Rules and pre-registration</b><span>registered {esc(V.REGISTERED)}</span></summary>
-{defs}<p class="sm mut">The 24h lanes are the same rule, looked at 26-18 hours before tip. {esc(V.PREREG)}</p></details>
+{defs}<p class="sm mut">The 24h lanes are the same rule, looked at 26-18 hours before tip. {esc(V.PREREG)}</p>
+<p class="sm mut">{esc(V.FADE_PREREG)}</p></details>
 <p class="sm mut">Last scan {esc(fmt.when(last) if last else "not yet")}{(" · " + esc(state["error"])) if state.get("error") else ""}.</p>
 </section>"""
 
