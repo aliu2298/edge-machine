@@ -156,6 +156,13 @@ def payout(m):
 # the lower ticker, a verified close, Kalshi's official result, the 7% fee, per-market-day stats.
 # ONE MARKET, ONE LANE: a ticker either lane already holds (open or settled) is never logged by
 # the other; within a scan econ_nc_yes runs first, so it takes a contested rung.
+# ONE LADDER, ONE DIRECTION A NIGHT (amended 2026-10-24, Olu): the two lanes read the same event
+# (KXAAAGASD-26OCT24, a commodity's ladder that night) at different hours, and on adjacent rungs in
+# opposite directions they together bet the price lands inside a half-cent window (Oct 20 gas: YES
+# >4.2600 + NO >4.2650, both won; Oct 22 gas the same; Oct 23 diesel: YES >6.330 won, NO >6.335 @87c
+# LOST). Whichever lane holds an event first keeps it: the other skips that event and logs why
+# ("held by econ_nc_no (opposite side, same ladder)"). The NO lane's 3h window opens first, so in
+# practice it holds, and the YES lane skips. Events from 2026-10-24 on; past rows are not rewritten.
 # Diesel's close moved from 01:59 ET on its target date to 23:59 ET the evening before
 # (Kalshi, from KXDIESELD-26OCT18), the AAA gas clock; both are accepted, each verified
 # against the ticker's target date.
@@ -169,6 +176,14 @@ NC_LANES = {
 }
 NC_SPREAD, NC_SIZE, NC_FEE = 0.03, 25, 0.07
 NC_REGISTERED = '2026-10-20'
+NC_AMENDED = '2026-10-24'
+NC_OPPOSITE_FROM = dt.date(2026, 10, 24)   # the first event date the one-direction rule applies to
+NC_AMENDMENT = ('Amendment 2026-10-24: one commodity ladder, one direction a night. If the other near-certain lane '
+                'already holds an entry on the same event (the same ladder, the same night), this lane skips that '
+                'event and logs "held by <lane> (opposite side, same ladder)"; whoever holds first wins, which in '
+                'practice is the NO lane, whose window opens first. Applies to events from 2026-10-24; past rows '
+                'stand. Why: on adjacent rungs in opposite directions the two lanes together bet the price lands in '
+                'a half-cent window (Oct 23 diesel: YES >6.330 won, NO >6.335 at 87¢ lost).')
 NC_RULE = {
     'econ_nc_yes': ('YES on the cheapest rung whose YES ask is 90–98¢ inclusive, 75–45 minutes before '
                     'a verified close; AAA national gas (KXAAAGASD) and diesel (KXDIESELD) daily ladders '
@@ -191,6 +206,29 @@ NC_RESEARCH = {
 }
 NC_WHY = ('Why: gas and diesel move cents a day, so near-certain rungs are underpriced, and longshots '
           'under 30¢ lose 40–87% on both sides.')
+def nc_event_date(event):
+    """The target date in an event ticker (KXAAAGASD-26OCT24 -> 2026-10-24), or None."""
+    code = re.match(r'^(\d{2})([A-Z]{3})(\d{2})$', str(event or '').split('-')[-1])
+    if not code or code[2] not in MONTHS:
+        return None
+    try:
+        return dt.date(2000 + int(code[1]), MONTHS[code[2]], int(code[3]))
+    except ValueError:
+        return None
+
+
+def nc_opposite_holder(nc, lane, event):
+    """The OTHER near-certain lane holding an entry on this event, or None (2026-10-24): one ladder, one
+    direction a night. Only events from NC_OPPOSITE_FROM; earlier ones are never touched."""
+    day = nc_event_date(event)
+    if day is None or day < NC_OPPOSITE_FROM:
+        return None
+    for other, rows in nc.items():
+        if other != lane and any(r.get('event') == event for r in (rows.get('picks') or [])):
+            return other
+    return None
+
+
 NC_CAVEAT = {
     'econ_nc_yes': ('Caveat: a thin payoff. One loss costs about 16 wins. The record starts from zero, and '
                     'the research window is the one the angle came from.'),
@@ -318,6 +356,14 @@ def nc_run(state, fetch=get, now=None, stamp=None):
                 logged = 0
                 for event in sorted({m['event_ticker'] for m, q in candidates}):
                     if event in taken:
+                        continue
+                    holder = nc_opposite_holder(nc, key, event)
+                    if holder:
+                        reason = 'held by %s (opposite side, same ladder)' % holder
+                        counts[reason] += 1
+                        lane.setdefault('skips', []).append(dict(event=event, series=series, reason=reason, at=stamp,
+                                                                  held_by=holder))
+                        lane['skips'] = lane['skips'][-100:]
                         continue
                     free = [(m, q) for m, q in candidates if m['event_ticker'] == event and m['ticker'] not in held]
                     if not free:

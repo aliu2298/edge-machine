@@ -78,6 +78,21 @@ def old_quotes(state):
     return out
 
 
+def _opposite_earlier(nc, lane, r):
+    """True when the other near-certain lane logged a row on this event BEFORE this one (2026-10-24: one
+    ladder, one direction a night; the lane itself skips, this is the feed's own guard). Events from
+    D.NC_OPPOSITE_FROM only, so rows published earlier are never withdrawn."""
+    day=D.nc_event_date(r.get('event'))
+    if day is None or day < D.NC_OPPOSITE_FROM:return False
+    mine=str(r.get('logged') or '')
+    for other,rows in nc.items():
+        if other==lane:continue
+        for x in (rows or {}).get('picks') or []:
+            if x.get('event')==r.get('event') and str(x.get('logged') or '')<mine:return True
+            if x.get('event')==r.get('event') and str(x.get('logged') or '')==mine and lane=='econ_nc_yes':return True
+    return False
+
+
 def quotes(state):
     """The near-certain lanes' rows as ledger quotes; never copied into the Sandbox ledger.
     A row that does not meet its own lane's registered terms is not published."""
@@ -95,6 +110,7 @@ def quotes(state):
                     or (spec['side']=='no' and (D.number(r.get('yes_bid')) is None or D.number(r.get('yes_ask')) is None))):
                 continue
             if r.get('status') not in ('open','won','lost','no_result'):continue
+            if _opposite_earlier(nc,lane,r):continue       # one ladder, one direction a night (2026-10-24)
             status=r['status']
             payout=r.get('payout',1 if status=='won' else 0 if status=='lost' else None)
             out.append(_row(lane,r,price,bid,size,'a' if spec['side']=='yes' else 'b',payout))

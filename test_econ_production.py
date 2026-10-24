@@ -222,4 +222,91 @@ class NearCertainCollector(unittest.TestCase):
         self.assertAlmostEqual(p['profit'],round(100*(1/(.88+.07*.88*.12)-1),2))
 
 
+
+class OneDirectionANight(unittest.TestCase):
+    """2026-10-24 (Olu): one commodity ladder, one direction a night. Whichever near-certain lane holds an
+    event first keeps it; the other skips that event and logs why. Events from 2026-10-24 on."""
+    NO_AT=dt.datetime(2026,10,25,0,59,tzinfo=dt.timezone.utc)      # NO window, close 23:59 ET Oct 24
+    YES_AT=dt.datetime(2026,10,25,2,59,tzinfo=dt.timezone.utc)     # YES window
+    fetcher=NearCertainCollector.fetcher
+
+    def market(self,series,strike,bid,ask,day='24'):
+        ev=f'{series}-26OCT{day}'
+        close=f'2026-10-{int(day)+1}T03:59:00Z'
+        return dict(ticker=f'{ev}-{strike}',event_ticker=ev,status='active',market_type='binary',strike_type='greater',
+                    title='Will average gas prices be above?',open_time='2026-10-23T14:00Z',close_time=close,
+                    yes_bid_dollars=str(bid),yes_ask_dollars=str(ask),yes_sub_title=f'Above {strike}')
+
+    def ladder(self,diesel_no=True,day='24'):
+        gas=[self.market('KXAAAGASD','4.2700',.02,.03,day),self.market('KXAAAGASD','4.2650',.10,.12,day),
+             self.market('KXAAAGASD','4.2600',.93,.94,day),self.market('KXAAAGASD','4.2550',.96,.97,day)]
+        # Diesel: a NO-eligible rung (6.320, NO ask .88) and a YES-eligible rung (6.315); without the NO rung
+        # the NO lane has nothing on diesel, so the YES lane is free there.
+        dsl=[self.market('KXDIESELD','T6.315',.90,.91,day)]
+        dsl.append(self.market('KXDIESELD','T6.320',.12,.14,day) if diesel_no else self.market('KXDIESELD','T6.320',.02,.04,day))
+        return gas+dsl
+
+    def run_both(self,markets):
+        s={'lanes':{}};f=self.fetcher(markets)
+        D.nc_run(s,f,self.NO_AT)
+        D.nc_run(s,f,self.YES_AT)
+        return s
+
+    def test_no_held_so_yes_skips_the_same_event_and_logs_why(self):
+        s=self.run_both(self.ladder())
+        self.assertEqual(sorted(p['id'] for p in s['nc']['econ_nc_no']['picks']),
+                         ['KXAAAGASD-26OCT24-4.2650','KXDIESELD-26OCT24-T6.320'])
+        self.assertEqual(s['nc']['econ_nc_yes']['picks'],[])
+        reason='held by econ_nc_no (opposite side, same ladder)'
+        obs={o['series']:o for o in s['nc']['econ_nc_yes']['observations']}
+        self.assertEqual(obs['KXAAAGASD']['reasons'].get(reason),1)
+        self.assertEqual(obs['KXDIESELD']['reasons'].get(reason),1)
+        self.assertEqual(sorted((k['event'],k['reason'],k['held_by']) for k in s['nc']['econ_nc_yes']['skips']),
+                         [('KXAAAGASD-26OCT24',reason,'econ_nc_no'),('KXDIESELD-26OCT24',reason,'econ_nc_no')])
+
+    def test_a_different_commodity_is_not_affected(self):
+        s=self.run_both(self.ladder(diesel_no=False))
+        self.assertEqual([p['id'] for p in s['nc']['econ_nc_no']['picks']],['KXAAAGASD-26OCT24-4.2650'])
+        self.assertEqual([p['id'] for p in s['nc']['econ_nc_yes']['picks']],['KXDIESELD-26OCT24-T6.315'])
+        self.assertEqual([k['event'] for k in s['nc']['econ_nc_yes']['skips']],['KXAAAGASD-26OCT24'])
+
+    def test_whoever_holds_first_wins_so_a_held_yes_stops_the_no_lane(self):
+        s={'lanes':{}};D.nc_state(s)['econ_nc_yes']['picks'].append(
+            dict(id='KXAAAGASD-26OCT24-4.2600',event='KXAAAGASD-26OCT24',side='yes',status='open',price=.94))
+        D.nc_run(s,self.fetcher(self.ladder()),self.NO_AT)
+        self.assertEqual([p['id'] for p in s['nc']['econ_nc_no']['picks']],['KXDIESELD-26OCT24-T6.320'])
+        self.assertEqual(s['nc']['econ_nc_no']['skips'][0]['reason'],'held by econ_nc_yes (opposite side, same ladder)')
+
+    def test_events_before_2026_10_24_are_untouched(self):
+        s={'lanes':{}};f=self.fetcher(self.ladder(day='23'))
+        D.nc_run(s,f,dt.datetime(2026,10,24,0,59,tzinfo=dt.timezone.utc))
+        D.nc_run(s,f,dt.datetime(2026,10,24,2,59,tzinfo=dt.timezone.utc))
+        self.assertTrue(s['nc']['econ_nc_no']['picks'] and s['nc']['econ_nc_yes']['picks'])
+        self.assertEqual(s['nc']['econ_nc_yes'].get('skips'),None)
+        self.assertEqual((D.nc_event_date('KXAAAGASD-26OCT24'),D.nc_event_date('KXAAAGASD')),(dt.date(2026,10,24),None))
+
+    def test_the_feed_publishes_only_the_holder_and_never_withdraws_past_rows(self):
+        n24=dict(logged='2026-10-25T00:59:00+00:00',close='2026-10-25T03:59:00Z')
+        y24=dict(logged='2026-10-25T02:59:00+00:00',close='2026-10-25T03:59:00Z')
+        no=no_row(id='KXAAAGASD-26OCT24-4.2650',event='KXAAAGASD-26OCT24',series='KXAAAGASD',price=.9,bid=.88,yes_bid=.1,yes_ask=.12,**n24)
+        yes=yes_row(id='KXAAAGASD-26OCT24-4.2600',event='KXAAAGASD-26OCT24',**y24)
+        s={'lanes':{},'nc':{'econ_nc_yes':dict(picks=[yes],observations=[],error=None),'econ_nc_no':dict(picks=[no],observations=[],error=None)}}
+        self.assertEqual([q['source'] for q in DP.quotes(s)],['econ_nc_no'])
+        # the same pair on an Oct 23 event stays published, both rows (past rows are not rewritten)
+        no3=dict(no,id='KXAAAGASD-26OCT23-4.2650',event='KXAAAGASD-26OCT23');yes3=dict(yes,id='KXAAAGASD-26OCT23-4.2600',event='KXAAAGASD-26OCT23')
+        s['nc']['econ_nc_no']['picks'],s['nc']['econ_nc_yes']['picks']=[no3],[yes3]
+        self.assertEqual(sorted(q['source'] for q in DP.quotes(s)),['econ_nc_no','econ_nc_yes'])
+        # a different commodity the same night is not affected
+        dsl=yes_row(id='KXDIESELD-26OCT24-T6.315',event='KXDIESELD-26OCT24',series='KXDIESELD',name='Diesel price (daily)',**y24)
+        s['nc']['econ_nc_no']['picks'],s['nc']['econ_nc_yes']['picks']=[no],[dsl]
+        self.assertEqual(sorted(q['source'] for q in DP.quotes(s)),['econ_nc_no','econ_nc_yes'])
+
+    def test_the_amendment_is_in_the_pre_registered_text(self):
+        self.assertIn('Amendment 2026-10-24',D.NC_AMENDMENT)
+        self.assertIn('one direction a night',D.NC_AMENDMENT)
+        self.assertEqual(D.NC_AMENDED,'2026-10-24')
+        src=open('daily_build.py').read()
+        self.assertIn('D.NC_AMENDMENT',src)               # both lanes' note on the Econ page carries it
+
+
 if __name__=='__main__':unittest.main()
