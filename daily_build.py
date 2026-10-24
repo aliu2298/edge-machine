@@ -66,7 +66,7 @@ def build(key, state=None, now=None, nc=None):
         for name, spec in D.NC_LANES.items():
             picks = near[name]['picks']
             a, _days = _record(picks)
-            rows.append(dict(name=name, sport=key, meta={'label':spec['label'], 'note':D.NC_RULE[name],
+            rows.append(dict(name=name, sport=key, meta={'label':spec['label'], 'note':D.NC_RULE[name]+' '+D.NC_AMENDMENT,
                                                          'frozen':D.NC_REGISTERED},
                              prod=True, open=sum(r['status']=='open' for r in picks), since=None, v='waiting', a=a))
             lane_picks[name] = picks
@@ -124,10 +124,10 @@ def build(key, state=None, now=None, nc=None):
             params = [('Entry', f'{side} {lo*100:.0f}–{hi*100:.0f}¢ inclusive, {spec["window"]}'),
                       ('Series', 'AAA national gas (KXAAAGASD) and diesel (KXDIESELD) daily ladders'),
                       ('Selection', 'Cheapest qualifying rung per event; ties to the lower ticker; '
-                                    'one market, one lane (this pair and its twin never hold the same rung; the last-hour YES takes it first)'),
+                                    'one market, one lane (this pair and its twin never hold the same rung), and from 2026-10-24 one ladder, one direction a night: if the other lane already holds the event, this lane skips it'),
                       ('Liquidity', f'≤3¢ spread, 25+ contracts at the {side} ask'),
                       ('Record', 'Production from 2026-10-20, fresh record · official Kalshi settlement · 7% fee')]
-            note = ' '.join((D.NC_RULE[r['name']], D.NC_RESEARCH[r['name']], D.NC_WHY, D.NC_CAVEAT[r['name']]))
+            note = ' '.join((D.NC_RULE[r['name']], D.NC_RESEARCH[r['name']], D.NC_WHY, D.NC_CAVEAT[r['name']], D.NC_AMENDMENT))
         else:
             params = [('Entry','YES 70–80¢, 2–3.5h before the close'),
                       ('Selection','Cheapest qualifying threshold per event; ties by ticker'),
