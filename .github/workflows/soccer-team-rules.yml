@@ -23,17 +23,21 @@ jobs:
         with:
           python-version: '3.12'
       - name: Tests
-        run: python3 test_soccer_team_rules.py
+        run: python3 test_soccer_team_rules.py && python3 test_soccer_team_rules_production.py
       - name: Enter due matches and settle
         # Fetches the ESPN fixtures (data/streaks_raw.json, not committed) for the labels.
         run: python3 soccer_team_rules.py
+      - name: Team rules Production feed (T1; 2026-10-24)
+        # Right after the read above, so an entry 90-20 minutes before kickoff is published
+        # while there is time to act on it (production.FIRST_PUBLISH_MIN).
+        run: python3 soccer_team_rules_production.py
       - name: Save records
         run: |
           set -euo pipefail
-          python3 -c 'import json; json.load(open("data/soccer_team_rules_ledger.json"))'
+          python3 -c 'import json; json.load(open("data/soccer_team_rules_ledger.json")); json.load(open("data/soccer_team_rules_production_leads.json"))'
           git config user.name "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
-          git add data/soccer_team_rules_ledger.json
+          git add data/soccer_team_rules_ledger.json data/soccer_team_rules_production_leads.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Soccer team scoring rules paper observations"
           for attempt in 1 2 3; do

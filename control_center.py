@@ -239,7 +239,8 @@ def inputs(runs=False, opener=None):
                 status=_read_json(STATUS_PATH), daily=_read_json(os.path.join(ROOT, 'data', 'daily_ledger.json')),
                 culture=_read_json(os.path.join(ROOT, 'data', 'culture_ledger.json')),
                 soccer_rules=_soccer_rules_states(),
-                nba_value=_read_json(os.path.join(ROOT, 'data', 'nba_value_ledger.json')))
+                nba_value=_read_json(os.path.join(ROOT, 'data', 'nba_value_ledger.json')),
+                soccer_team_rules=_read_json(os.path.join(ROOT, 'data', 'soccer_team_rules_ledger.json')))
 
 
 def _soccer_rules_states():
@@ -544,7 +545,7 @@ def _age_text(hours):
 
 
 def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, status=None, daily=None, culture=None,
-          soccer_rules=None, nba_value=None):
+          soccer_rules=None, nba_value=None, soccer_team_rules=None):
     """The Control Center as data. Pure: everything it reads is an argument.
 
     `status` is data/status.json as read (inputs()); it is used only when it
@@ -604,6 +605,12 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
         import nba_value_production
         live_d, live_st, live_blob = nba_value_production.page_inputs(live_d, live_st, live_blob, nba_value, now=now)
         sr_names = sr_names + list(nba_value_production.PAIRS.values())
+    if soccer_team_rules is not None:
+        # T1, moved by hand 2026-10-24 (soccer_team_rules_production), from its own ledger.
+        import soccer_team_rules_production
+        live_d, live_st, live_blob = soccer_team_rules_production.page_inputs(live_d, live_st, live_blob,
+                                                                              soccer_team_rules, now=now)
+        sr_names += [n for _s, _sp, n in soccer_team_rules_production.PAIRS.values()]
     live = shell_build._running_body(live_d, live_st, live_blob, now)
     n_open, n_settled, n_won = live["roll_counts"]
     scorecard = scorecard_rows(pair_rows)
@@ -774,7 +781,7 @@ def _attention_html(items):
 
 
 def page(now, d=None, st=None, blob=None, nba=None, market=None, closes=None, runs=None, extra=None,
-         status=None, daily=None, culture=None, soccer_rules=None, nba_value=None):
+         status=None, daily=None, culture=None, soccer_rules=None, nba_value=None, soccer_team_rules=None):
     """public_site/index.html. `extra` is the dict `inputs()` returns, for the tracker build."""
     when = shell_build._now(now)
     d, st, blob = shell_build._load(d, st, blob)
@@ -788,8 +795,9 @@ def page(now, d=None, st=None, blob=None, nba=None, market=None, closes=None, ru
         culture = extra.get("culture") if culture is None else culture
         soccer_rules = extra.get("soccer_rules") if soccer_rules is None else soccer_rules
         nba_value = extra.get("nba_value") if nba_value is None else nba_value
+        soccer_team_rules = extra.get("soccer_team_rules") if soccer_team_rules is None else soccer_team_rules
     m = model(d, st, blob, when, nba=nba, market=market, closes=closes, runs=runs, status=status, daily=daily,
-              culture=culture, soccer_rules=soccer_rules, nba_value=nba_value)
+              culture=culture, soccer_rules=soccer_rules, nba_value=nba_value, soccer_team_rules=soccer_team_rules)
     tiles = m["tiles"]
     n_won, n_settled = tiles["landed"]
     healthy, total = tiles["healthy"]

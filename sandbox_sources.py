@@ -4698,6 +4698,7 @@ OWN_LEDGER_LABELS = {
     "sa_o15_arg": "Argentina over 1.5",
     "nba_tt_value_24h": "NBA team total value · 24h before tip",
     "nba_tt_value_1h": "NBA team total value · 1h before tip",
+    "st_t1": "O+D− v O+D− · team 2+ goals",
 }
 
 

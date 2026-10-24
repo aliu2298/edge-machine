@@ -16,8 +16,9 @@ entry. The league is the Kalshi series' league, so a UCL match uses UCL fixtures
 Unlike the match-total rules the pair is ORDERED: `own` is the team the contract is about and
 `opp` its opponent. 2+ is the "over 1.5" rung, 3+ is "over 2.5".
 
-Paper only, at the Kalshi price with the 7% fee, settled on Kalshi's own result. Nothing here
-is in Production and nothing is placed. One frozen entry per rule, team and match, taken 90 to
+Paper, at the Kalshi price with the 7% fee, settled on Kalshi's own result. Nothing here places
+an order. T1 alone moved to Production by hand on 2026-10-24 (soccer_team_rules_production
+publishes its entries from this ledger as live $1 leads); T2-T8 stay Sandbox paper. One frozen entry per rule, team and match, taken 90 to
 20 minutes before the ESPN kickoff, spread 5c or less, price 3-97c. YES pays the ask; NO pays
 1 - the YES bid.
 
@@ -157,6 +158,7 @@ def entry(rule, f, ev, m, team, px, b, a, labs, now):
                 event=ev["event_ticker"], match=f"{f['home']} v {f['away']}", team=own, opponent=opp,
                 team_side=team, start=f["kickoff"], ticker=m["ticker"], line=r["line"], side=r["side"],
                 price=round(px, 4), bid=b, ask=a, title=m.get("title") or m.get("yes_sub_title"),
+                sub=m.get("yes_sub_title"),
                 logged=now.isoformat(), status="open", labels=dict(own=own_lab, opp=opp_lab),
                 why=f"{own} {own_lab} v {opp} {opp_lab} · {r['goals']}+ {r['side'].upper()} {px:.2f}")
 
