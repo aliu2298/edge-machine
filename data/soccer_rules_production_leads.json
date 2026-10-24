@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-24T17:46:45+00:00",
+ "board_built_at": "2026-10-24T18:01:17+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sa_o15_arg": true,
@@ -232,7 +232,7 @@
    "kickoff": "2026-10-24T19:00Z",
    "lane": "production",
    "last_seen": "2026-10-24",
-   "last_seen_at": "2026-10-24T17:46:45+00:00",
+   "last_seen_at": "2026-10-24T18:01:17+00:00",
    "league": "La Liga",
    "match": "Atl\u00e9tico Madrid v Deportivo",
    "pair": "sr_d3|soccer_btts",
@@ -250,6 +250,42 @@
     "venue": "kalshi"
    },
    "sandbox_quote": "sr_d3:KXLALIGABTTS-26OCT24ATMDEP-BTTS",
+   "source": "sr_d3",
+   "sport": "soccer_btts",
+   "status": "pending"
+  },
+  "2026-10-24|Gil Vicente|FC Porto|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
+   "away": "FC Porto",
+   "bet": {
+    "kind": "btts"
+   },
+   "date": "2026-10-24",
+   "edge_at_log": null,
+   "first_seen": "2026-10-24",
+   "headline": "Both teams to score",
+   "home": "Gil Vicente",
+   "id": "2026-10-24|Gil Vicente|FC Porto|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score",
+   "kickoff": "2026-10-24T19:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-24",
+   "last_seen_at": "2026-10-24T18:01:17+00:00",
+   "league": "Primeira Liga",
+   "match": "Gil Vicente v FC Porto",
+   "pair": "sr_d3|soccer_btts",
+   "price_at_log": 0.47,
+   "published_at": "2026-10-24T18:01:17+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Both teams to score",
+    "event": "KXLIGAPORTUGALBTTS-26OCT24GILFCP",
+    "market": "KXLIGAPORTUGALBTTS-26OCT24GILFCP-BTTS",
+    "outcome": "Both Teams To Score",
+    "outcome_side": "yes",
+    "price_at_log": 0.47,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_d3:KXLIGAPORTUGALBTTS-26OCT24GILFCP-BTTS",
    "source": "sr_d3",
    "sport": "soccer_btts",
    "status": "pending"
@@ -441,9 +477,9 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 6,
+    "leads": 7,
     "problem": null,
-    "routed": 6,
+    "routed": 7,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -455,7 +491,7 @@
    "sandbox_roi_fee": -0.338,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 2,
     "under_target": 0
    }
   }
@@ -464,5 +500,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-24T17:46:45+00:00"
+ "updated_at": "2026-10-24T18:01:17+00:00"
 }

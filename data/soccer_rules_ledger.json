@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-24T17:46:43.415731+00:00",
+ "last_run": "2026-10-24T18:01:14.606109+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -515,7 +515,31 @@
    "picks": []
   },
   "C1": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.44,
+     "bid": 0.43,
+     "event": "KXMLSTOTAL-26OCT24CLBTOR",
+     "group": "C",
+     "id": "C1:KXMLSTOTAL-26OCT24CLBTOR",
+     "labels": {
+      "away": "O+D+",
+      "home": "O+D-"
+     },
+     "league": "MLS",
+     "line": 3.5,
+     "logged": "2026-10-24T18:01:14.606109+00:00",
+     "match": "Columbus Crew v Toronto FC",
+     "price": 0.44,
+     "rule": "C1",
+     "side": "yes",
+     "start": "2026-10-24T19:30Z",
+     "status": "open",
+     "ticker": "KXMLSTOTAL-26OCT24CLBTOR-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Columbus Crew O+D- v Toronto FC O+D+ \u00b7 Over 3.5 YES 0.44"
+    }
+   ]
   },
   "C2": {
    "picks": []
@@ -757,11 +781,14 @@
      "line": 2.5,
      "logged": "2026-10-24T14:31:37.180848+00:00",
      "match": "Samsunspor v Amed SFK",
+     "payout": 0.0,
      "price": 0.48,
+     "profit": -100.0,
      "rule": "C7",
+     "settled": "2026-10-24T18:01:14.606109+00:00",
      "side": "no",
      "start": "2026-10-24T16:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXSUPERLIGTOTAL-26OCT24SAMAMS-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Samsunspor O-D+ v Amed SFK O+D- \u00b7 Under 2.5 NO 0.48"
@@ -2045,19 +2072,34 @@
      "ticker": "KXLALIGABTTS-26OCT24ATMDEP-BTTS",
      "title": "Both Teams To Score",
      "why": "Atl\u00e9tico Madrid O+D- v Deportivo O-D- \u00b7 BTTS YES 0.49"
+    },
+    {
+     "ask": 0.47,
+     "bid": 0.45,
+     "event": "KXLIGAPORTUGALBTTS-26OCT24GILFCP",
+     "group": "BTTS",
+     "id": "D3:KXLIGAPORTUGALBTTS-26OCT24GILFCP",
+     "labels": {
+      "away": "O+D-",
+      "home": "O-D-"
+     },
+     "league": "Primeira Liga",
+     "line": null,
+     "logged": "2026-10-24T18:01:14.606109+00:00",
+     "match": "Gil Vicente v FC Porto",
+     "price": 0.47,
+     "rule": "D3",
+     "side": "yes",
+     "start": "2026-10-24T19:30Z",
+     "status": "open",
+     "ticker": "KXLIGAPORTUGALBTTS-26OCT24GILFCP-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Gil Vicente O-D- v FC Porto O+D- \u00b7 BTTS YES 0.47"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-22T16:31:12.890493+00:00",
-   "candidates": 0,
-   "due": 0,
-   "labelled": 0,
-   "matched": 0,
-   "new": 0
-  },
   {
    "at": "2026-10-22T17:01:12.911036+00:00",
    "candidates": 0,
@@ -2457,6 +2499,14 @@
    "labelled": 4,
    "matched": 1,
    "new": 0
+  },
+  {
+   "at": "2026-10-24T18:01:14.606109+00:00",
+   "candidates": 3,
+   "due": 6,
+   "labelled": 6,
+   "matched": 3,
+   "new": 2
   }
  ],
  "version": "soccer-rules-v1"
