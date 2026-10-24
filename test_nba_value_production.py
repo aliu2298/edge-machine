@@ -95,7 +95,7 @@ before = copy.deepcopy(st)
 NP.feed(st, now=NOW)
 NP.quotes(st)
 check("the adapter never writes the ledger it reads", st, before)
-check("placeable: the feed's gate accepts the NO", T.placeable(qs[no["id"]]), True)
+check("the feed's publish gate accepts the NO", T.placeable(qs[no["id"]]), True)
 check("start_verified: an ESPN tip is verified; a missing source is not",
       (PR.start_verified(qs[no["id"]]), PR.start_verified(dict(qs[no["id"]], start_source=None))), (True, False))
 
