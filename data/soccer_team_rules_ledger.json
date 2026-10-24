@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-24T17:46:41.659630+00:00",
+ "last_run": "2026-10-24T18:01:25.557557+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -1164,6 +1164,32 @@
      "ticker": "KXLIGUE1TEAMTOTAL-26OCT24RCLPAR-PAR2",
      "title": "Will Paris FC score over 1.5 goals?",
      "why": "Paris FC O+D- v Lens O+D+ \u00b7 2+ YES 0.44"
+    },
+    {
+     "ask": 0.65,
+     "bid": 0.63,
+     "event": "KXMLSTEAMTOTAL-26OCT24CLBTOR",
+     "group": "B",
+     "id": "T5:KXMLSTEAMTOTAL-26OCT24CLBTOR:home",
+     "labels": {
+      "opp": "O+D+",
+      "own": "O+D-"
+     },
+     "league": "MLS",
+     "line": 1.5,
+     "logged": "2026-10-24T18:01:25.557557+00:00",
+     "match": "Columbus Crew v Toronto FC",
+     "opponent": "Toronto FC",
+     "price": 0.65,
+     "rule": "T5",
+     "side": "yes",
+     "start": "2026-10-24T19:30Z",
+     "status": "open",
+     "team": "Columbus Crew",
+     "team_side": "home",
+     "ticker": "KXMLSTEAMTOTAL-26OCT24CLBTOR-CLB2",
+     "title": "Will Columbus score over 1.5 goals?",
+     "why": "Columbus Crew O+D- v Toronto FC O+D+ \u00b7 2+ YES 0.65"
     }
    ]
   },
@@ -1368,6 +1394,32 @@
      "ticker": "KXBUNDESLIGATEAMTOTAL-26OCT24BVBSGE-SGE3",
      "title": "Will Frankfurt score over 2.5 goals?",
      "why": "Eintracht Frankfurt O+D+ v Borussia Dortmund O+D- \u00b7 3+ NO 0.90"
+    },
+    {
+     "ask": 0.15,
+     "bid": 0.11,
+     "event": "KXMLSTEAMTOTAL-26OCT24CLBTOR",
+     "group": "C",
+     "id": "T6:KXMLSTEAMTOTAL-26OCT24CLBTOR:away",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D+"
+     },
+     "league": "MLS",
+     "line": 2.5,
+     "logged": "2026-10-24T18:01:25.557557+00:00",
+     "match": "Columbus Crew v Toronto FC",
+     "opponent": "Columbus Crew",
+     "price": 0.89,
+     "rule": "T6",
+     "side": "no",
+     "start": "2026-10-24T19:30Z",
+     "status": "open",
+     "team": "Toronto FC",
+     "team_side": "away",
+     "ticker": "KXMLSTEAMTOTAL-26OCT24CLBTOR-TOR3",
+     "title": "Will Toronto score over 2.5 goals?",
+     "why": "Toronto FC O+D+ v Columbus Crew O+D- \u00b7 3+ NO 0.89"
     }
    ]
   },
@@ -1610,14 +1662,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-18T18:01:34.062219+00:00",
-   "candidates": 3,
-   "due": 3,
-   "labelled": 3,
-   "matched": 3,
-   "new": 0
-  },
   {
    "at": "2026-10-18T18:16:41.661174+00:00",
    "candidates": 3,
@@ -2017,6 +2061,14 @@
    "labelled": 3,
    "matched": 2,
    "new": 0
+  },
+  {
+   "at": "2026-10-24T18:01:25.557557+00:00",
+   "candidates": 3,
+   "due": 4,
+   "labelled": 4,
+   "matched": 3,
+   "new": 2
   }
  ],
  "version": "soccer-team-rules-v1"
