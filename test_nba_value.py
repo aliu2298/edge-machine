@@ -206,7 +206,8 @@ T.model_for = lambda *a, **k: MODEL                           # the fixed model 
 fetch = fake({EV_TT: tt, EV_Q1: q1})
 now24 = TIP - dt.timedelta(hours=24)
 new = V.run(state, track, now24, fetch, pri={})
-check("24h lanes looked", sorted(k.split(":")[0] for k in state["looks"]), [V.Q1_24H, V.TT_24H])
+check("24h lanes looked (the fade control among them, 2026-10-24)", sorted(k.split(":")[0] for k in state["looks"]),
+      [V.Q1_24H, V.FADE_24H, V.TT_24H])
 pick24 = {p["unit"]: p for p in state["rules"][V.TT_24H]["picks"]}
 check("one 24h team-total entry per team at most", len(pick24) == len(state["rules"][V.TT_24H]["picks"]), True)
 again = V.run(state, track, now24 + dt.timedelta(hours=1), fetch, pri={})
@@ -382,6 +383,8 @@ chk = sb["checks"][f"{V.TT_1H}:2026-10-28"]
 check("a model 6-8 points under the market (past 8 on this ladder): the night is a mismatch", (chk["ok"], chk["reason"][:20]), (False, "model level mismatch"))
 check("...no entries and no baseline that night", (sb["rules"][V.TT_1H]["picks"], sb["rules"][V.BASE[V.TT_1H]]["picks"]), ([], []))
 check("...but the look is used and logged", sb["looks"][f"{V.TT_1H}:9001"]["blocked"][:20], "model level mismatch")
+check("...while the fade control, a pure market read, is not skipped on the model's level",
+      (len(sb["rules"][V.FADE_1H]["picks"]), f"{V.FADE_1H}:2026-10-28" in sb["checks"]), (2, True))
 lg_ = T.level_gaps(tracked)
 check("tracker gaps need a stored model", lg_, {"tt": [], "q1": []})
 tracked["1"]["model"] = dict(mu={"NY": 112.0, "SA": 110.0}, mu_q1=60.0)
@@ -418,6 +421,67 @@ check("the guard table shows the lean label and the warning, not a block", ("mod
 check("the dated amendment is in the module text and the pre-registered text on the page",
       ("AMENDMENT 2026-10-24" in V.__doc__, "AMENDMENT 2026-10-24" in V.PREREG, "AMENDMENT 2026-10-24" in VB.section(state, T.empty())),
       (True, True, True))
+
+print("\nthe fade control: nba_tt_fade_overs (2026-10-24)")
+fp = V.fade_picks(tt, GAME)
+check("per team, the rung with a YES ask of 0.50-0.80 nearest 0.65: NY 109.5 (the only one in band), SA 107.5 (0.72 beats 0.57)",
+      {u: c["line"] for u, c in fp.items()}, {"NY": 109.5, "SA": 107.5})
+check("the bet is the NO at 1 - the bid", {u: (c["side"], c["price"]) for u, c in fp.items()}, {"NY": ("no", 0.40), "SA": ("no", 0.30)})
+check("no model, no edge on the entry", (fp["NY"]["p"], fp["NY"]["edge"], fp["NY"]["mu"]), (None, None, None))
+band = [mk(f"{EV_TT}-NYK100", 99.5, 0.78, 0.80), mk(f"{EV_TT}-NYK104", 103.5, 0.47, 0.49)]
+check("a YES ask of exactly 0.80 is in band, 0.49 is out", {c["line"] for c in V.fade_picks(band, GAME).values()}, {99.5})
+check("0.50 is in band, 0.81 is out",
+      ({c["line"] for c in V.fade_picks([mk(f"{EV_TT}-NYK100", 99.5, 0.78, 0.81), mk(f"{EV_TT}-NYK104", 103.5, 0.47, 0.50)], GAME).values()}),
+      {103.5})
+tied = [mk(f"{EV_TT}-NYK100", 99.5, 0.69, 0.70), mk(f"{EV_TT}-NYK104", 103.5, 0.59, 0.60)]
+check("0.70 and 0.60 are both 0.05 from 0.65: the higher strike", V.fade_picks(tied, GAME)["NY"]["line"], 103.5)
+check("a spread over 3c is not quoted", V.fade_picks([mk(f"{EV_TT}-NYK100", 99.5, 0.60, 0.64)], GAME), {})
+check("one-sided or closed rungs are skipped",
+      V.fade_picks([mk(f"{EV_TT}-NYK100", 99.5, None, 0.62), mk(f"{EV_TT}-NYK104", 103.5, 0.60, 0.62, status="closed")], GAME), {})
+fade24 = state["rules"][V.FADE_24H]["picks"]
+check("24h control: one entry per team per game, the first read inside 18-26h",
+      sorted((p["unit"], p["line"], p["side"]) for p in fade24), [("NY", 109.5, "no"), ("SA", 107.5, "no")])
+check("1h control entered in its window and a later read adds nothing",
+      sorted(p["unit"] for p in state["rules"][V.FADE_1H]["picks"]), ["NY", "SA"])
+check("one frozen entry per team per game", len({p["id"] for p in fade24}), len(fade24))
+sa_value = [p for p in state["rules"][V.TT_24H]["picks"] if p["unit"] == "SA"]
+check("'one market, one lane' does not apply to it: the control holds the same ticker as the value lane",
+      (bool(sa_value), sa_value[0]["ticker"] == next(p["ticker"] for p in fade24 if p["unit"] == "SA")), (True, True))
+check("and the value lanes' held set ignores the control", all(not t.endswith("fade") for t in V.held(state)), True)
+check("the control uses the lanes' own windows", (V.WINDOW_MIN[V.FADE_1H], V.WINDOW_MIN[V.FADE_24H]), (V.WINDOW_MIN[V.TT_1H], V.WINDOW_MIN[V.TT_24H]))
+check("ledger keys exist for both variants", all(k in V.empty()["rules"] for k in V.CONTROLS), True)
+
+
+def pk(lane, night, game, unit, price, won):
+    return dict(id=f"{lane}:{game}:{unit}", rule=lane, game=game, unit=unit, ticker=f"T-{game}-{unit}", side="no", price=price,
+                status="won" if won else "lost", night=night, p=None, edge=None, start=f"{night}T23:00:00+00:00",
+                profit=round(100 * ((1 if won else 0) / V.cost(price) - 1), 2), match="A @ B", line=100.5, bid=.6, ask=.62)
+
+
+night_state = V.empty()
+night_state["rules"][V.FADE_24H]["picks"] = [pk(V.FADE_24H, "2026-10-26", g, u, 0.40, True) for g in ("1", "2") for u in ("NY", "SA")] \
+    + [pk(V.FADE_24H, "2026-10-27", "3", "NY", 0.40, False)]
+fs_ = V.stats(night_state["rules"][V.FADE_24H]["picks"])
+iid_ = sum(.4 * .6 for _ in range(5))
+check("z is clustered by game night: four wins on one night are one draw's variance, never below the independent",
+      round(fs_["z"], 4), round((4 - 5 * .4) / max(iid_, (4 * .6 - 0) ** 2 + (-.4) ** 2) ** .5, 4))
+check("...and two nights, five team-ladders", (fs_["nights"], V.ladders(night_state["rules"][V.FADE_24H]["picks"])), (2, 5))
+night_state["rules"][V.TT_24H]["picks"] = [pk(V.TT_24H, "2026-10-26", "1", "NY", 0.45, True), pk(V.TT_24H, "2026-10-28", "9", "NY", 0.45, False)]
+cmp_ = V.compare_nights(night_state, "24h")
+check("value lane v fade control on the SAME nights only (2026-10-26)",
+      (cmp_["nights"], cmp_["value"]["n"], cmp_["fade"]["n"]), (1, 1, 4))
+check("no common night: no comparison", V.compare_nights(V.empty(), "1h"), None)
+vb = VB.section(night_state, T.empty())
+check("the page: a row beside nba_tt_value with the control's name and its team-ladder count",
+      ("NBA team total · fade the over (YES 50-80c) · 24h" in vb, "5 team-ladders" in vb, "control (no baseline)" in vb), (True, True, True))
+check("the page: the value lane v fade control line, ROI each, same nights",
+      ("Value lane v fade control, same nights" in vb, "24h: value lane" in vb, "on 1 common night" in vb), (True, True, True))
+check("the page: the pre-registration, dated, and the no-model note",
+      ("PRE-REGISTERED 2026-10-24" in vb, "may hold the same ticker" in vb, "Read at 30 nights" in vb), (True, True, True))
+check("an entry with no model prints a dash for P and edge", "<td class=\"num\">—</td><td class=\"num\">—</td>" in vb, True)
+check("the control's public copy passes the guard", sandbox_audit.COPY_RE.search(vb + V.FADE_PREREG + V.FADE_RULE), None)
+check("the control is Sandbox only: not a Sandbox-ledger source, not in Production",
+      all(l not in __import__("sandbox_sources").SOURCES and l not in open("production.py").read() for l in V.CONTROLS), True)
 
 print("\nthe page sections")
 html = VB.section(state, dict(tracked=tracked, games={}, last_run=None))

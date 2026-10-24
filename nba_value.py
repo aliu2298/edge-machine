@@ -67,6 +67,18 @@ picks on one side is logged as a lean label ("model leans under: ... Kalshi line
 above results season to date") and the lane still looks. A model-Kalshi gap over 4 points (1Q: 3) is a
 warning; only a gap over 8 points (1Q: 6) is a data problem that skips the night. Past entries stand.
 
+CONTROL LANE nba_tt_fade_overs (2026-10-24, Olu): "NBA team total · fade the over (YES 50-80c)", in two
+variants (_1h: 60-90 minutes before tip; _24h: 18-26 hours) on the same windows, ledger, settlement
+and page section as the value lanes, as the pure MARKET CONTROL for nba_tt_value ("does the value
+lane beat just fading Kalshi's overs?"). For every team in every game: the KXNBATEAMTOTAL rung whose
+YES ask is 0.50-0.80 (both ends in) and nearest 0.65 (a tie to the higher strike), on a two-sided
+quote with a spread of 3c or less; buy the NO at 1 - the bid. One frozen entry per team per game,
+one look per game. No model, no labels, no level guard (a control is never skipped on the model's
+level; its level-gap check is logged all the same). It may hold the same ticker a value lane holds:
+"one market, one lane" does not apply to it, and both are counted independently. z clustered by game
+night, as for the value lanes; the page also shows the count of team-ladders. Kalshi's result, 7% fee.
+Fresh record from 2026-10-24: nothing back-filled.
+
 How it runs: nba-value.yml, hourly (settles, tracks, refreshes the tip schedule) and asked for by
 the VPS from inside each tip's two windows (scripts/vps_window_requests.sh, lane_windows).
 """
@@ -85,9 +97,16 @@ PATH = os.path.join(ROOT, "data", "nba_value_ledger.json")
 REGISTERED = "2026-10-21"
 TT_1H, TT_24H, Q1_1H, Q1_24H = "nba_tt_value_1h", "nba_tt_value_24h", "nba_1q_value_1h", "nba_1q_value_24h"
 LANES = (TT_24H, TT_1H, Q1_24H, Q1_1H)       # look order inside one run: the early lanes first
-KIND = {TT_1H: "tt", TT_24H: "tt", Q1_1H: "q1", Q1_24H: "q1"}
+# The CONTROL lane (2026-10-24): nba_tt_fade_overs, the pure market control for the team-total value
+# lanes. No model, no labels, no level guard; it may hold the same ticker a value lane holds.
+FADE_1H, FADE_24H = "nba_tt_fade_overs_1h", "nba_tt_fade_overs_24h"
+CONTROLS = (FADE_24H, FADE_1H)
+KIND = {TT_1H: "tt", TT_24H: "tt", Q1_1H: "q1", Q1_24H: "q1", FADE_1H: "tt", FADE_24H: "tt"}
 SERIES = {"tt": T.SERIES_TT, "q1": T.SERIES_Q1}
-WINDOW_MIN = {TT_1H: (60, 90), Q1_1H: (60, 90), TT_24H: (18 * 60, 26 * 60), Q1_24H: (18 * 60, 26 * 60)}
+WINDOW_MIN = {TT_1H: (60, 90), Q1_1H: (60, 90), TT_24H: (18 * 60, 26 * 60), Q1_24H: (18 * 60, 26 * 60),
+              FADE_1H: (60, 90), FADE_24H: (18 * 60, 26 * 60)}
+FADE_BAND = (0.50, 0.80)         # the YES ask the control fades, both ends inclusive
+FADE_NEAR = 0.65                 # the rung nearest this ask, a tie to the higher strike
 EDGE_MIN = 0.05
 MAX_SPREAD = 0.03
 PRICE = (0.25, 0.92)
@@ -101,7 +120,9 @@ FIRST_NIGHT = "2026-10-22"
 BASE = {lane: "base_" + lane for lane in LANES}
 CT = ZoneInfo("America/Chicago")
 NAMES = {TT_1H: "NBA team total · model value · 1h", TT_24H: "NBA team total · model value · 24h",
-         Q1_1H: "NBA 1Q total · model value · 1h", Q1_24H: "NBA 1Q total · model value · 24h"}
+         Q1_1H: "NBA 1Q total · model value · 1h", Q1_24H: "NBA 1Q total · model value · 24h",
+         FADE_1H: "NBA team total · fade the over (YES 50-80c) · 1h",
+         FADE_24H: "NBA team total · fade the over (YES 50-80c) · 24h"}
 _MODEL = ("Model: team points ~ Normal(mu, 11.83), 1Q game total ~ Normal(mu_q1, 8.28); each team's "
           "rates blend its 2025-26 per-game average with this season's at weight n/(n+8); "
           "mu = L + 0.894·((scoring − L) + (opponent allowing − L)) ± 0.85 home/away, "
@@ -111,11 +132,27 @@ _RULE = ("Per {unit}, the single best side and rung by fee-adjusted edge P − (
          "(the first read in the window with a ladder), one frozen entry per {unit}; a ticker another "
          "lane of this family holds is skipped. Kalshi's result, 7% fee, z clustered by game night. "
          "Blind baseline: the YES on every rung at 0.25-0.92 with the same quote at the look. Paper, Sandbox only.")
+FADE_RULE = ("Per team per game, the rung whose YES ask is 0.50-0.80 and nearest 0.65 (a tie to the higher strike), "
+             "two-sided quote with spread ≤3c; buy the NO at 1 − the bid. One look per game (the first read in the "
+             "window with a ladder), one frozen entry per team per game. No model, no labels, no level guard. It may "
+             "hold the same ticker a value lane holds; the two are counted independently. Kalshi's result, 7% fee, "
+             "z clustered by game night. Paper, Sandbox only.")
+FADE_PREREG = (
+    "CONTROL LANE, PRE-REGISTERED 2026-10-24. The blind YES baselines in the value lanes lost: team totals 24h "
+    "65/165 (−26%), 1h 6/50 (−80%), 1Q 1h −18%. Fading them at 1 − bid made money: team totals 24h 100/165 "
+    "(+16%); best, fading the YES at 50-80c (NO at 29-48c: +20% to +49%); 1Q fade +13%. Fading a near-certain "
+    "YES at 80c or more lost (1Q 1/17). The ladder tracker shows teams scoring 3.5 points below Kalshi's 50c "
+    "line on 56 team-games. Caveats: about 4 nights, heavily clustered (one low-scoring night wins every rung of a "
+    "ladder); the edge should shrink as Kalshi recalibrates. The control is the yardstick for the team-total value "
+    "lanes: it has no model and no labels, so the page can show whether the value lane beats just fading Kalshi's "
+    "overs. Read at 30 nights.")
 DEFINITION = {
     TT_1H: "Kalshi NBA team totals (KXNBATEAMTOTAL), entered 60-90 min before tip. " + _MODEL + _RULE.format(unit="team"),
     TT_24H: "Kalshi NBA team totals (KXNBATEAMTOTAL), entered 18-26 h before tip. " + _MODEL + _RULE.format(unit="team"),
     Q1_1H: "Kalshi NBA 1st-quarter game total (KXNBA1QTOTAL), entered 60-90 min before tip. " + _MODEL + _RULE.format(unit="game"),
     Q1_24H: "Kalshi NBA 1st-quarter game total (KXNBA1QTOTAL), entered 18-26 h before tip. " + _MODEL + _RULE.format(unit="game"),
+    FADE_1H: "Kalshi NBA team totals (KXNBATEAMTOTAL), entered 60-90 min before tip. Control: fade the over. " + FADE_RULE,
+    FADE_24H: "Kalshi NBA team totals (KXNBATEAMTOTAL), entered 18-26 h before tip. Control: fade the over. " + FADE_RULE,
 }
 PREREG = (
     "PRE-REGISTERED 2026-10-21. Fitted on 2024-25 and checked out of sample on 2025-26, point-in-time: "
@@ -146,7 +183,7 @@ def cost(p):
 
 def empty():
     return {"version": "nba-value-v1", "registered": REGISTERED,
-            "rules": {k: {"picks": []} for k in (*LANES, *BASE.values())},
+            "rules": {k: {"picks": []} for k in (*LANES, *CONTROLS, *BASE.values())},
             "looks": {}, "checks": {}, "runs": [], "schedule": []}
 
 
@@ -274,10 +311,32 @@ def schedule(games, now):
 
 # ---------- entries ----------
 
+# ---------- the control lane: fade the over (2026-10-24) ----------
+
+def fade_picks(ms, g):
+    """{team: the rung to fade}: per team, the rung whose YES ask is 0.50-0.80 (both ends in) and nearest
+    0.65, a tie to the higher strike, on a two-sided quote with a spread of 3c or less; the bet is the NO
+    at 1 - the bid. No model, no labels."""
+    best_by = {}
+    for m in ms:
+        if str(m.get("status") or "").lower() not in ("active", "open"):
+            continue
+        s, q = T.strike(m), quote(m)
+        unit = T.team_of(m.get("ticker"), g)
+        if s is None or q is None or unit is None or not FADE_BAND[0] - EPS <= q[1] <= FADE_BAND[1] + EPS:
+            continue
+        key = (round(abs(q[1] - FADE_NEAR), 6), -s)
+        if unit not in best_by or key < best_by[unit][0]:
+            best_by[unit] = (key, dict(unit=unit, ticker=m["ticker"], line=s, side="no", price=round(1 - q[0], 4),
+                                       p=None, edge=None, bid=q[0], ask=q[1], mu=None,
+                                       title=m.get("yes_sub_title") or m.get("title")))
+    return {u: v[1] for u, v in best_by.items()}
+
+
 def entry(lane, g, c, now, ev):
     t = T.start_of(g)
     unit = c["unit"]
-    eid = f"{lane}:{g['id']}:{unit}" if lane in LANES else f"{lane}:{c['ticker']}"
+    eid = f"{lane}:{g['id']}:{unit}" if lane in LANES + CONTROLS else f"{lane}:{c['ticker']}"
     side_word = "over" if c["side"] == "yes" else "under"
     who = unit if unit != "game" else "1Q"
     return dict(id=eid, rule=lane, game=g["id"], event=ev, ticker=c["ticker"], unit=unit, line=c["line"],
@@ -297,6 +356,12 @@ def held(state):
 def look(state, lane, g, ms, ev, model, now):
     """One lane's look at one game: (entries, baseline entries). Records the look."""
     kind = KIND[lane]
+    if lane in CONTROLS:
+        # The control takes the rung it takes whoever else holds the ticker: it is counted on its own.
+        picks = [entry(lane, g, c, now, ev) for _u, c in sorted(fade_picks(ms, g).items())]
+        state["looks"][f"{lane}:{g['id']}"] = dict(at=now.isoformat(), event=ev, picks=[p["id"] for p in picks],
+                                                   baseline=0, mu=model.get("mu"), mu_q1=model.get("mu_q1"))
+        return picks, []
     taken = held(state)
     picks = [entry(lane, g, c, now, ev) for _u, c in sorted(best(candidates(ms, g, kind, model, taken)).items())]
     base = [entry(BASE[lane], g, c, now, ev) for c in baseline(ms, g, kind, model)]
@@ -324,6 +389,28 @@ def settle(state, now, fetch):
             except Exception as e:                              # noqa: BLE001
                 errs.append(row["id"] + ": " + str(e)[:80])
     return errs
+
+
+def compare_nights(state, variant):
+    """The team-total value lane against the fade control on the SAME nights (2026-10-24).
+
+    variant "1h" or "24h". Only nights where both lanes have a settled entry count. Returns
+    dict(nights, value, fade) with each side's stats() over those nights, or None for no common night."""
+    v_lane, f_lane = (TT_1H, FADE_1H) if variant == "1h" else (TT_24H, FADE_24H)
+    pick = lambda lane: [p for p in ((state.get("rules") or {}).get(lane) or {}).get("picks") or []
+                         if p["status"] in ("won", "lost", "no_result")]
+    nights = lambda ps: {p.get("night") for p in ps}
+    vp, fp = pick(v_lane), pick(f_lane)
+    both = nights(vp) & nights(fp)
+    if not both:
+        return None
+    return dict(nights=len(both), value=stats([p for p in vp if p.get("night") in both]),
+                fade=stats([p for p in fp if p.get("night") in both]))
+
+
+def ladders(picks):
+    """Distinct team-ladders (game, team) the picks cover: the control holds one entry per ladder."""
+    return len({(p["game"], p["unit"]) for p in picks})
 
 
 def stats(picks):
@@ -447,7 +534,7 @@ def slate_check(lane, night, games, now, fetch, pri, cache, season_gap=None):
 def run(state, track_state, now=None, fetch=D.get, pri=None, season_gap=None):
     """Look at every due game for every lane, then settle. Returns the new lane entry ids."""
     now = now or dt.datetime.now(dt.timezone.utc)
-    for k in (*LANES, *BASE.values()):
+    for k in (*LANES, *CONTROLS, *BASE.values()):
         state["rules"].setdefault(k, {"picks": []})
     state.setdefault("looks", {})
     games = track_state.get("games") or {}
@@ -456,7 +543,7 @@ def run(state, track_state, now=None, fetch=D.get, pri=None, season_gap=None):
     log, errs = [], []
     st = dict(due=0, looked=0, entered=0, baseline=0)
     cache = {}
-    for lane in LANES:
+    for lane in LANES + CONTROLS:
         for g in sorted(due(lane, games, now), key=lambda g: (str(g.get("start")), g["id"])):
             if f"{lane}:{g['id']}" in state["looks"]:
                 continue
@@ -480,7 +567,7 @@ def run(state, track_state, now=None, fetch=D.get, pri=None, season_gap=None):
                     errs.append(f"{ckey} check: {str(e)[:80]}")
                     continue
             chk = state["checks"][ckey]
-            if not chk["ok"]:
+            if not chk["ok"] and lane not in CONTROLS:          # a control is a market read: never skipped on the model's level
                 state["looks"][f"{lane}:{g['id']}"] = dict(at=now.isoformat(), event=ev, picks=[], baseline=0,
                                                            blocked=chk["reason"], mu=model.get("mu"),
                                                            mu_q1=model.get("mu_q1"))
@@ -494,7 +581,7 @@ def run(state, track_state, now=None, fetch=D.get, pri=None, season_gap=None):
                     continue
                 state["rules"][p["rule"]]["picks"].append(p)
                 seen.add(p["id"])
-                if p["rule"] in LANES:
+                if p["rule"] in LANES + CONTROLS:
                     log.append(p["id"])
                     st["entered"] += 1
                 else:
