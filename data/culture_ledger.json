@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-24T04:00:15.134878+00:00",
-   "last_success": "2026-10-24T04:00:15.134878+00:00",
+   "last_run": "2026-10-24T05:00:12.641456+00:00",
+   "last_success": "2026-10-24T05:00:12.641456+00:00",
    "observations": {
-    "at": "2026-10-24T04:00:15.134878+00:00",
+    "at": "2026-10-24T05:00:12.641456+00:00",
     "events": 959,
     "reasons": {
      "no quote or spread too wide": 61,
@@ -474,15 +474,15 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-24T04:00:15.134878+00:00",
-   "last_success": "2026-10-24T04:00:15.134878+00:00",
+   "last_run": "2026-10-24T05:00:12.641456+00:00",
+   "last_success": "2026-10-24T05:00:12.641456+00:00",
    "observations": {
-    "at": "2026-10-24T04:00:15.134878+00:00",
+    "at": "2026-10-24T05:00:12.641456+00:00",
     "events": 959,
     "reasons": {
-     "no quote or spread too wide": 292,
+     "no quote or spread too wide": 293,
      "not active": 718,
-     "outside the band": 77,
+     "outside the band": 76,
      "outside the entry window": 11648
     }
    },
@@ -810,16 +810,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-24T04:00:15.134878+00:00",
-   "last_success": "2026-10-24T04:00:15.134878+00:00",
+   "last_run": "2026-10-24T05:00:12.641456+00:00",
+   "last_success": "2026-10-24T05:00:12.641456+00:00",
    "observations": {
-    "at": "2026-10-24T04:00:15.134878+00:00",
+    "at": "2026-10-24T05:00:12.641456+00:00",
     "events": 959,
     "reasons": {
      "already near-certain (under 10c or over 90c)": 20,
-     "edge 5c+": 10,
-     "edge under 5c": 3,
-     "no quote or spread too wide": 35
+     "edge 5c+": 16,
+     "edge under 5c": 4,
+     "no quote or spread too wide": 28
     }
    },
    "picks": [
@@ -1757,15 +1757,31 @@
      "side": "no",
      "status": "open",
      "title": "UFO / UAP"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-11-01T15:00:00Z",
+     "detail": "P(said) 0.00 \u00b7 said on 0 of the last 84 days, 8.4 days left \u00b7 edge +0.14",
+     "edge": 0.1411,
+     "event": "KXTRUMPSAYCOUNTRY-26NOV01",
+     "id": "KXTRUMPSAYCOUNTRY-26NOV01-PRY",
+     "logged": "2026-10-24T05:00:12.641456+00:00",
+     "model": 0.0,
+     "name": "What countries will Trump say in October?",
+     "price": 0.85,
+     "series": "KXTRUMPSAYCOUNTRY",
+     "side": "no",
+     "status": "open",
+     "title": "Paraguay / Paraguayan"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-24T04:00:15.134878+00:00",
-   "last_success": "2026-10-24T04:00:15.134878+00:00",
+   "last_run": "2026-10-24T05:00:12.641456+00:00",
+   "last_success": "2026-10-24T05:00:12.641456+00:00",
    "observations": {
-    "at": "2026-10-24T04:00:15.134878+00:00",
+    "at": "2026-10-24T05:00:12.641456+00:00",
     "events": 959,
     "reasons": {
      "collecting review pace (12h of snapshots)": 1,
@@ -2047,7 +2063,7 @@
    ]
   },
   "BBC": {
-   "at": "2026-10-22T12:00:16.041333+00:00",
+   "at": "2026-10-24T05:00:12.641456+00:00",
    "days": [
     "2026-08-02",
     "2026-09-18"
@@ -2146,7 +2162,7 @@
    "days": []
   },
   "DoorDash / DASH": {
-   "at": "2026-10-22T12:00:16.041333+00:00",
+   "at": "2026-10-24T05:00:12.641456+00:00",
    "days": [
     "2026-09-22"
    ]
@@ -2172,7 +2188,7 @@
    ]
   },
   "Golden Dome": {
-   "at": "2026-10-21T22:00:15.150054+00:00",
+   "at": "2026-10-24T05:00:12.641456+00:00",
    "days": []
   },
   "Golf / Golfer / Golfing": {
@@ -2252,6 +2268,10 @@
     "2026-09-22"
    ]
   },
+  "Paraguay / Paraguayan": {
+   "at": "2026-10-24T05:00:12.641456+00:00",
+   "days": []
+  },
   "Peace in the Middle East": {
    "at": "2026-10-24T01:00:14.425176+00:00",
    "days": []
@@ -2301,7 +2321,7 @@
    ]
   },
   "South Africa / South African": {
-   "at": "2026-10-17T11:00:12.509694+00:00",
+   "at": "2026-10-24T05:00:12.641456+00:00",
    "days": []
   },
   "Stupid Question": {
