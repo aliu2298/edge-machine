@@ -40,10 +40,12 @@ def card_html(card):
                 'night\'s first tip.</p>')
     night = card["night"]
     if not card.get("legs"):
-        return (f'<p><b>{esc(night)}</b> · no card · {esc(card.get("reason") or "")}</p>'
+        notes = "".join(f'<p class="sm"><b>{esc(t)}</b></p>' for t in (card.get("lean"), card.get("warning")) if t)
+        return (notes + f'<p><b>{esc(night)}</b> · no card · {esc(card.get("reason") or "")}</p>'
                 f'<p class="sm mut">{esc(card.get("rationale") or "")}</p>')
     status = {"open": "open", "won": "won", "lost": "lost", "no_result": "no result"}.get(card["status"], card["status"])
-    head = (f'<p><b>{esc(night)}</b> · {len(card["legs"])} legs · combined odds {card["odds"]:.2f} · '
+    notes = "".join(f'<p class="sm"><b>{esc(t)}</b></p>' for t in (card.get("lean"), card.get("warning")) if t)
+    head = (notes + f'<p><b>{esc(night)}</b> · {len(card["legs"])} legs · combined odds {card["odds"]:.2f} · '
             f'model combo chance {card["combo_p"] * 100:.0f}% · {esc(status)}</p>')
     rows = "".join(_leg_row(leg) for leg in card["legs"])
     return (head + f'<p class="sm mut">{esc(card.get("rationale") or "")}</p>'
@@ -98,8 +100,9 @@ def section(state=None):
 <tbody>{hist_html}</tbody></table></div></details>
 <details class="section-disclosure"><summary><b>Rules and pre-registration</b><span>registered {esc(SC.REGISTERED)}</span></summary>
 <p class="sm">Markets: Kalshi NBA team totals (both teams), 1st-quarter, 1st-half and full-game totals, every rung both ways (over at the YES ask, under at 1 − the YES bid). Model P: Normal with the value model's mu; sd 11.83 team, 8.28 1Q, 18.9 game (fitted 18.44, out of sample 19.11), 1H at 0.505 × the game mu with sd 13.0 (not fitted: no first-half history).</p>
-<p class="sm">Funnel: (1) price 84-95c, two-sided, spread ≤3c; (2) model P ≥ 0.90; (3) P ≥ price + 3c; (4) labels agree: team over own O+ and opponent D+, under own O− and opponent D−; game over both D+, under both D−; 1Q and 1H over both O+, under both O−; (5) team totals: the team cleared (or stayed under) the line in 8 of its last 10; (6) best edge first, one leg per game, until combined odds ≥ 1.70 with 3-4 legs (up to two per game on slates under 4 games); (7) level guard: no card when the model sits more than 4 points from Kalshi's median team-total lines or more than 80% of 5+ label survivors are one side. Built once, 60-90 minutes before the slate's first tip; each leg's price is read again 60-90 minutes before its own tip.</p>
+<p class="sm">Funnel: (1) price 84-95c, two-sided, spread ≤3c; (2) model P ≥ 0.90; (3) P ≥ price + 3c; (4) labels agree: team over own O+ and opponent D+, under own O− and opponent D−; game over both D+, under both D−; 1Q and 1H over both O+, under both O−; (5) team totals: the team cleared (or stayed under) the line in 8 of its last 10; (6) best edge first, one leg per game, until combined odds ≥ 1.70 with 3-4 legs (up to two per game on slates under 4 games); (7) level check (amended 2026-10-24): a gap over 8 points, or no level to compare, blocks the card; a gap over 4 points is a warning; more than 80% of 5+ label survivors on one side is a lean label, not a block. Built once, 60-90 minutes before the slate's first tip; each leg's price is read again 60-90 minutes before its own tip.</p>
 <p class="sm mut">Pre-registered 2026-10-22. Wednesday 2026-10-21's back-run: 62 legs after steps 1-3, 16 after labels; card PHX@POR game U249.5 @84c, MIL@WSH 1Q U68.5 @85c, UTAH@MEM 1H O104.5 @87c, GS@LAL game U253.5 @86c, combined odds 1.87, model combo chance about 70%. 2025-26 backtest: the model's 95% lines hit 94.4-94.9%; a label-filtered daily 3-leg card at the 95% line went 64/73 days. Caveat: the model sits about 2 points below Kalshi's lines this season, so the funnel leans to unders, which is what the level guard is for. Read at 20+ cards.</p>
+<p class="sm mut">Amendment 2026-10-24: the model's own season-data level stays the driver; Kalshi's slate level is logged as a check (Ladder tracker, "Model level v Kalshi level"). A one-sided slate no longer blocks the card: it carries a label, "model leans under: Kalshi lines running X pts above results season to date". Only a data problem blocks (no level to compare, or a model-Kalshi gap over 8 points); a gap over 4 points is a warning.</p>
 <p class="sm mut">Amendment 2026-10-22 (before the first card): on a slate of fewer than 4 games a game may give up to 2 legs (still 3-4 legs at 1.70+, ranked by edge); two legs of one game must be different markets and never same-direction pairs where one implies the other (game with a team total, 1H with the game, 1Q with 1H). The combo chance then assumes the legs are independent. The 84-95c band is unchanged.</p></details>
 <p class="sm mut">Last scan {esc(fmt.when(last) if last else "not yet")}{(" · " + esc(state["error"])) if state.get("error") else ""}.</p>
 </section>"""

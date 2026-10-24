@@ -357,19 +357,29 @@ print("\nthe level guard")
 near("market median interpolates the 0.50 crossing", V.market_median([(109.5, 0.61), (113.5, 0.47), (117.5, 0.34)]),
      109.5 + (0.61 - 0.5) / (0.61 - 0.47) * 4)
 check("outside the quoted range: the nearest rung", V.market_median([(109.5, 0.3), (113.5, 0.2)]), 109.5)
-check("a gap over 4 points blocks", V.check_verdict([-5.0, -4.5, -3.0], ["no", "yes"], "tt")[0], False)
-check("...and says so", V.check_verdict([-5.0, -4.5, -3.0], ["no"], "tt")[1].startswith("model level mismatch"), True)
-check("a 1Q gap over 3 blocks", V.check_verdict([-3.5], [], "q1")[0], False)
-check("12 of 13 one side blocks", V.check_verdict([-1.0], ["no"] * 12 + ["yes"], "tt")[0], False)
-check("4 of 4 one side is too few to judge", V.check_verdict([-1.0], ["no"] * 4, "tt")[0], True)
-check("80% exactly passes", V.check_verdict([0.5], ["no"] * 4 + ["yes"], "tt")[0], True)
-biased = dict(MODEL, mu={"NY": 107.0, "SA": 104.0})
+# Amended 2026-10-24: the model's season-data level drives and Kalshi's is a CHECK. A gap over 4 points
+# is a warning, a one-sided night a lean label; only a gap over 8 points (1Q: 6) is a data problem.
+v1 = V.check_verdict([-5.0, -4.5, -3.0], ["no", "yes"], "tt")
+check("a gap over 4 points is a warning, not a block", (v1[0], v1[5][:8]), (True, "warning:"))
+check("a gap over 8 points blocks, and says why", (V.check_verdict([-9.0, -8.5], ["no"], "tt")[0],
+      V.check_verdict([-9.0, -8.5], ["no"], "tt")[1].startswith("model level mismatch")), (False, True))
+check("a 1Q gap over 3 warns and over 6 blocks", (V.check_verdict([-3.5], [], "q1")[0], V.check_verdict([-3.5], [], "q1")[5] is not None,
+      V.check_verdict([-6.5], [], "q1")[0]), (True, True, False))
+GAPS = dict(n=56, avg=-3.5, beat=0.46)
+v2 = V.check_verdict([-1.0], ["no"] * 12 + ["yes"], "tt", GAPS)
+check("12 of 13 one side no longer blocks: a lean label with the season gap", (v2[0], v2[4]),
+      (True, "model leans under: 92% of 13 would-be picks; Kalshi lines running 3.5 pts above results season to date (56 team-games)"))
+check("4 of 4 one side is too few to label", V.check_verdict([-1.0], ["no"] * 4, "tt")[4], None)
+check("80% exactly: no label", V.check_verdict([0.5], ["no"] * 4 + ["yes"], "tt")[4], None)
+check("an over-leaning night is labelled over; no gap yet says so", V.check_verdict([0.5], ["yes"] * 6, "tt")[4],
+      "model leans over: 100% of 6 would-be picks, no season-to-date results gap yet")
+biased = dict(MODEL, mu={"NY": 99.0, "SA": 96.0})
 T.model_for = lambda *a, **k: biased
 sb = V.empty()
 V.run(sb, dict(games={"9001": GAME}), TIP - dt.timedelta(minutes=75), fake({EV_TT: tt, EV_Q1: q1}), pri={})
 T.model_for = _model_for
 chk = sb["checks"][f"{V.TT_1H}:2026-10-28"]
-check("a model 6-8 points under the market: the night is a mismatch", (chk["ok"], chk["reason"][:20]), (False, "model level mismatch"))
+check("a model 6-8 points under the market (past 8 on this ladder): the night is a mismatch", (chk["ok"], chk["reason"][:20]), (False, "model level mismatch"))
 check("...no entries and no baseline that night", (sb["rules"][V.TT_1H]["picks"], sb["rules"][V.BASE[V.TT_1H]]["picks"]), ([], []))
 check("...but the look is used and logged", sb["looks"][f"{V.TT_1H}:9001"]["blocked"][:20], "model level mismatch")
 lg_ = T.level_gaps(tracked)
@@ -378,6 +388,36 @@ tracked["1"]["model"] = dict(mu={"NY": 112.0, "SA": 110.0}, mu_q1=60.0)
 lg_ = T.level_gaps(tracked)
 near("tracker gap: NY mu 112 v the nearest-50c rung 113.5 (both mids under 0.50)", lg_["tt"][0], -1.5)
 check("median", T.median([3, 1, 2, 10]), 2.5)
+
+print("\nthe model's level against Kalshi's, stored per night (2026-10-24)")
+tracked["1"]["model"]["level"] = dict(pts=114.5, q1=57.0, games=9)
+lv = T.night_levels(tracked)["2026-10-28"]
+check("both levels and the gap per night: team totals and 1Q",
+      (lv["model_tt"], lv["gap_tt"] == round(lv["model_tt"] - lv["kalshi_tt"], 2), lv["season_tt"], lv["tt_n"], lv["games"]),
+      (111.0, True, 114.5, 2, 1))
+check("...and what the teams scored", lv["actual_tt"], 112.0)
+sc_ = T.season_climb(tracked)
+check("season to date: teams v Kalshi's 50c line", (sc_["n"], round(sc_["avg"], 1)),
+      (2, round(sum(c[4] for c in T.climbs(tracked)) / 2, 1)))
+st_run = T.empty()
+st_run["tracked"] = {k: dict(v, final=True) for k, v in tracked.items()}
+st_run["backfilled"] = True
+T.run(st_run, dt.datetime(2026, 10, 29, 12, tzinfo=UTC), fetch=lambda p: {"markets": []}, fetch_day=lambda d: [], pri={})
+check("the tracker stores both levels and the season gap on every run",
+      (st_run["levels"]["2026-10-28"]["gap_tt"], st_run["season_climb"]["n"]), (lv["gap_tt"], 2))
+trk = dict(tracked=tracked, games={}, last_run=None)
+check("the page table renders the levels", ("Model level v Kalshi level" in VB.levels_html(trk), "2026-10-28" in VB.levels_html(trk),
+      "teams v Kalshi" in VB.levels_html(trk)), (True, True, True))
+check("an empty tracker says so", "No finished night yet" in VB.levels_html(T.empty()), True)
+warn_state = V.empty()
+warn_state["checks"][f"{V.TT_1H}:2026-10-28"] = dict(ok=True, games=4, gap_mean=-5.1, yes=0, no=7, share=1.0,
+      lean="model leans under: 100% of 7 would-be picks", warning="warning: model -5.1 pts v Kalshi's median line (over 4)")
+wh = VB.section(warn_state, T.empty())
+check("the guard table shows the lean label and the warning, not a block", ("model leans under" in wh, "warning: model -5.1" in wh), (True, True))
+
+check("the dated amendment is in the module text and the pre-registered text on the page",
+      ("AMENDMENT 2026-10-24" in V.__doc__, "AMENDMENT 2026-10-24" in V.PREREG, "AMENDMENT 2026-10-24" in VB.section(state, T.empty())),
+      (True, True, True))
 
 print("\nthe page sections")
 html = VB.section(state, dict(tracked=tracked, games={}, last_run=None))

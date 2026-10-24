@@ -27,6 +27,11 @@ THE DERIVED TABLES (shown in the NBA page's Ladder tracker section, nba_value_bu
               2c or more pointed the way the rung settled; and the 50c line's move in points.
   calibration the model's P against the hit rate against Kalshi's average YES ask, by model-P
               bucket, on every rung two-sided 1h before tip.
+  levels      (2026-10-24) per game night, the model's mean mu against the mean of Kalshi's
+              interpolated 50c lines (team totals; 1Q totals), the gap and what the teams scored,
+              stored in state["levels"]; state["season_climb"] is the season-to-date points minus
+              Kalshi's 50c line. A CHECK on the model's season-data level: the model's level is never
+              moved to Kalshi's (the 2026-10-24 decision; points ran below Kalshi's lines).
 """
 import datetime as dt
 import json
@@ -478,6 +483,65 @@ def level_gaps(tracked, h="1"):
     return out
 
 
+def season_climb(tracked):
+    """Season to date, every tracked team-game: {n, avg, beat} of points minus Kalshi's 50c team-total
+    line (the Safe Card's lean label reads it: a negative average is Kalshi's lines above the results)."""
+    c = [x[4] for x in climbs(tracked)]
+    return dict(n=len(c), avg=_avg(c), beat=_rate([x > 0 for x in c]))
+
+
+def night_levels(tracked, h="1"):
+    """{night: the model's level, Kalshi's level and the gap, team totals and 1Q} (2026-10-24).
+
+    The CHECK on the model's season-data level, never a driver: per game night, the mean model mu
+    against the mean of Kalshi's interpolated 50c lines `h` hours before tip (team totals per team,
+    the 1Q game total per game), the gap, and what the teams actually scored. `season` is the season
+    level the model was anchored to (preseason plus regular-season games so far)."""
+    nights = {}
+    for row in tracked.values():
+        n = nights.setdefault(row.get("night"), dict(tt=[], q1=[], pts=[], q1_pts=[], season=[], games=0, climb=[]))
+        n["games"] += 1
+        m = row.get("model") or {}
+        lad = (row.get("tt") or {}).get("rungs") or []
+        for team in (row["home"], row["away"]):
+            mine = [x for x in lad if x["team"] == team]
+            med, mu, pts = median_line(mine, h), (m.get("mu") or {}).get(team), (row.get("pts") or {}).get(team)
+            if med is not None and mu is not None:
+                n["tt"].append((mu, med))
+                if pts is not None:
+                    n["pts"].append(pts)
+            r = line50(mine, h)
+            if r and pts is not None:
+                n["climb"].append(pts - r["line"])
+        med = median_line((row.get("q1_ladder") or {}).get("rungs") or [], h)
+        if med is not None and m.get("mu_q1") is not None:
+            n["q1"].append((m["mu_q1"], med))
+            q1 = row.get("q1") or {}
+            if len(q1) == 2 and None not in q1.values():
+                n["q1_pts"].append(sum(q1.values()))
+        lv = (m.get("level") or {}).get("pts")
+        if lv is not None:
+            n["season"].append(lv)
+
+    def level(pairs):
+        if not pairs:
+            return None, None, None
+        mu, k = _avg([a for a, _b in pairs]), _avg([b for _a, b in pairs])
+        return round(mu, 2), round(k, 2), round(mu - k, 2)
+
+    out = {}
+    for night, n in sorted(nights.items(), key=lambda kv: str(kv[0])):
+        mu, kal, gap = level(n["tt"])
+        qmu, qkal, qgap = level(n["q1"])
+        out[night] = dict(games=n["games"], tt_n=len(n["tt"]), model_tt=mu, kalshi_tt=kal, gap_tt=gap,
+                          actual_tt=None if not n["pts"] else round(_avg(n["pts"]), 2),
+                          climb_tt=None if not n["climb"] else round(_avg(n["climb"]), 2),
+                          season_tt=None if not n["season"] else round(_avg(n["season"]), 2),
+                          q1_n=len(n["q1"]), model_q1=qmu, kalshi_q1=qkal, gap_q1=qgap,
+                          actual_q1=None if not n["q1_pts"] else round(_avg(n["q1_pts"]), 2))
+    return out
+
+
 def median(xs):
     xs = sorted(xs)
     if not xs:
@@ -498,6 +562,9 @@ def run(state, now=None, fetch=D.get, fetch_day=_espn_day, pri=None):
     errs = refresh_games(state, now, fetch_day)
     new, e2 = track(state, now, fetch, pri)
     errs += e2
+    # The model's level against Kalshi's, per night (2026-10-24): a check, not a driver.
+    state["levels"] = night_levels(state.get("tracked") or {})
+    state["season_climb"] = season_climb(state.get("tracked") or {})
     state["last_run"] = now.isoformat()
     state["error"] = "; ".join(errs)[:1000] or None
     state["runs"] = (state.get("runs") or [])[-50:] + [dict(at=now.isoformat(), new=len(new), **summary(state))]

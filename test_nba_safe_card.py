@@ -118,12 +118,24 @@ check("a one-leg-per-game card says neither",
       "independent" in SC.card_rationale(dict(r_card, legs=[dict(Lg(g, "game", "no", .1), p=.93) for g in "abcd"]),
                                          dict(quoted=9, band=8, safety=7, value=6, labels=6, clean=6)), False)
 
-print("\nthe level guard")
-check("model 4.5 pts off Kalshi's median: mismatch",
-      SC.level_check({"PHI": 115.0}, {"PHI": 110.5}, ["no"])[1].startswith("no card tonight: model level mismatch"), True)
-check("5 of 5 survivors unders: mismatch", "100% of 5 label survivors are unders" in SC.level_check({}, {}, ["no"] * 5)[1], True)
-check("4 of 5 (80%): fine", SC.level_check({}, {}, ["no"] * 4 + ["yes"])[0], True)
-check("2 survivors both unders: under the 5-pick floor, fine", SC.level_check({}, {}, ["no"] * 2)[0], True)
+print("\nthe level check (amended 2026-10-24): a lean label, not a block")
+GAPS = dict(n=56, avg=-3.5, beat=0.46)
+lc = lambda med, mu, sides, g=GAPS: SC.level_check(med, mu, sides, g)
+check("a gap over 8 points is a data problem: no card",
+      (lc({"PHI": 120.0}, {"PHI": 110.5}, ["no"])["ok"], lc({"PHI": 120.0}, {"PHI": 110.5}, ["no"])["reason"].startswith("no card tonight: model level")),
+      (False, True))
+check("a gap over 4 points is a warning, the card still builds",
+      (lc({"PHI": 115.0}, {"PHI": 110.5}, ["no"])["ok"], lc({"PHI": 115.0}, {"PHI": 110.5}, ["no"])["warning"][:8]), (True, "warning:"))
+check("no Kalshi level to compare: no card (a data problem)", lc({}, {}, ["no"] * 5)["ok"], False)
+allun = lc({"PHI": 111.0}, {"PHI": 110.5}, ["no"] * 14)
+check("14 of 14 label survivors unders: builds, with the lean label and the season gap",
+      (allun["ok"], allun["lean"]), (True, "model leans under: Kalshi lines running 3.5 pts above results season to date (56 team-games)"))
+check("over-leaning, and Kalshi's lines below results", lc({"PHI": 111.0}, {"PHI": 110.5}, ["yes"] * 6, dict(n=10, avg=2.0, beat=.6))["lean"],
+      "model leans over: Kalshi lines running 2.0 pts below results season to date (10 team-games)")
+check("no season gap yet: the label says so", lc({"PHI": 111.0}, {"PHI": 110.5}, ["no"] * 5, None)["lean"],
+      "model leans under: no season-to-date results gap yet")
+check("4 of 5 (80%) or 2 survivors: no label", (lc({"PHI": 111.0}, {"PHI": 110.5}, ["no"] * 4 + ["yes"])["lean"],
+      lc({"PHI": 111.0}, {"PHI": 110.5}, ["no"] * 2)["lean"]), (None, None))
 
 print("\nrationale text")
 r = SC.rationale(dict(match="PHX@POR", kind="game", unit="game", side="no", line=249.5, price=0.84, p=0.916, mu=223.5,
@@ -148,6 +160,10 @@ def fetch(path):
         ev = path.split("event_ticker=")[1].split("&")[0]
         if ev.startswith("KXNBATOTAL-26OCT22"):
             return {"markets": [dict(m, ticker=f"{ev}-{m['ticker']}") for m in LADDER]}
+        if ev.startswith("KXNBATEAMTOTAL-26OCT22"):          # a level to compare: Kalshi's 50c line is 110.5
+            return {"markets": [mk(f"{ev}-{SC.T.NR.E2K.get(t, t)}{int(line)}", line, round(mid - .01, 2), round(mid + .01, 2))
+                                for t in ("PHI", "CLE", "OKC", "DEN", "LAL", "GS", "MEM", "UTAH")
+                                for line, mid in ((109.5, .55), (111.5, .45))]}
         return {"markets": []}
     t = path.split("/", 1)[1]
     if t in results:
@@ -198,6 +214,31 @@ st4["preseason"] = []
 SC.run(st4, one, NOW, fetch, pri={}, labs_all=LABS)
 check("a one-game slate cannot make 3 legs", st4["cards"]["2026-10-22"]["reason"],
       "no card tonight: only 1 game on the slate (a card needs 3 to 4 legs, at most 2 per game)")
+
+print("\nan all-under night builds a card with the lean label (2026-10-24)")
+results.clear()
+LADDER[:] = [mk("GAME-250", 249.5, 0.13, 0.15), mk("GAME-252", 251.5, 0.11, 0.13), mk("GAME-254", 253.5, 0.09, 0.11)]
+st5 = SC.empty()
+st5["preseason"] = []
+GAPS = dict(n=56, avg=-3.5, beat=0.46)
+SC.run(st5, GAMES, NOW, fetch, pri={}, labs_all=LABS, season_gap=GAPS)
+c5 = st5["cards"]["2026-10-22"]
+check("14 under legs survive and all of them lean one way, yet the card still builds",
+      (c5["status"], len(c5["legs"]), {x["side"] for x in c5["legs"]}, c5["guard"]["ok"]), ("open", 4, {"no"}, True))
+check("the lean label names the season gap", c5["lean"],
+      "model leans under: Kalshi lines running 3.5 pts above results season to date (56 team-games)")
+check("and the card rationale names it", "model leans under: Kalshi lines running 3.5 pts above results" in c5["rationale"], True)
+check("the page shows the label above the card", "model leans under" in SB.section(st5), True)
+check("an unlabelled night carries no lean", state["cards"]["2026-10-22"].get("lean"), None)
+st6 = SC.empty()
+st6["preseason"] = []
+SC.run(st6, GAMES, NOW, lambda path: {"markets": []} if "KXNBATEAMTOTAL" in path else fetch(path), pri={}, labs_all=LABS)
+check("no Kalshi team-total level at all: no card, a data problem",
+      st6["cards"]["2026-10-22"]["reason"].startswith("no card tonight: no Kalshi team-total level"), True)
+
+check("the dated amendment is in the pre-registered text and on the page",
+      ("AMENDMENT 2026-10-24" in SC.__doc__, "Amendment 2026-10-24" in SB.section(st5), "season-data level stays the driver" in SC.__doc__),
+      (True, True, True))
 
 print("\nlane windows: the VPS asks 90-60 minutes before each tip")
 tips = [dt.datetime(2026, 10, 22, 23, 0, tzinfo=UTC)]
