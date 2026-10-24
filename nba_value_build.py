@@ -122,6 +122,39 @@ def _gap_line(gaps, unit):
             f"below zero the model sits under the market")
 
 
+def _verdict(c):
+    """ok, with the lean label and any warning (2026-10-24), or the data problem that blocked the night."""
+    if not c.get("ok"):
+        return c.get("reason") or "blocked"
+    return " · ".join(["ok"] + [t for t in (c.get("lean"), c.get("warning")) if t])
+
+
+def levels_html(track):
+    """The model's level against Kalshi's, per night (2026-10-24): a check, never a driver."""
+    tr = track.get("tracked") or {}
+    lv = track.get("levels") or T.night_levels(tr)
+    sc = track.get("season_climb") or T.season_climb(tr)
+    f1 = lambda v: "—" if v is None else f"{v:.1f}"
+    fs = lambda v: "—" if v is None else f"{v:+.1f}"
+    rows = "".join(
+        f'<tr><td>{esc(n)}</td><td class="num">{v["games"]}</td><td class="num">{f1(v["season_tt"])}</td>'
+        f'<td class="num">{f1(v["model_tt"])}</td><td class="num">{f1(v["kalshi_tt"])}</td><td class="num">{fs(v["gap_tt"])}</td>'
+        f'<td class="num">{f1(v["actual_tt"])}</td><td class="num">{fs(v["climb_tt"])}</td>'
+        f'<td class="num">{f1(v["model_q1"])}</td><td class="num">{f1(v["kalshi_q1"])}</td><td class="num">{fs(v["gap_q1"])}</td>'
+        f'<td class="num">{f1(v["actual_q1"])}</td></tr>' for n, v in sorted(lv.items(), reverse=True)[:14])
+    rows = rows or '<tr><td colspan="12" class="mut">No finished night yet.</td></tr>'
+    if sc.get("n"):
+        line = (f"Season to date, teams v Kalshi's 50c team-total line: {sc['avg']:+.1f} pts on {sc['n']} team-games, "
+                f"{sc['beat'] * 100:.0f}% beat it. A negative number is Kalshi's lines running above the results.")
+    else:
+        line = "Season to date, teams v Kalshi's 50c team-total line: no tracked game yet."
+    return f"""<h3>Model level v Kalshi level</h3>
+<p class="sm mut">Per game night, 1 hour before tip: the model's mean points per team (its own season-data level, preseason plus games so far, drives it) against the mean of Kalshi's interpolated 50c lines, and what the teams scored. The model's level is never moved to Kalshi's; the gap is a check on which of the two is right. Team totals in points per team, 1Q in points per game.</p>
+<div class="tbl"><table><thead><tr><th>Night</th><th class="num">Games</th><th class="num">Season level</th><th class="num">Model</th><th class="num">Kalshi</th><th class="num">Gap</th><th class="num">Scored</th><th class="num">Scored − Kalshi</th><th class="num">1Q model</th><th class="num">1Q Kalshi</th><th class="num">1Q gap</th><th class="num">1Q scored</th></tr></thead>
+<tbody>{rows}</tbody></table></div>
+<p class="sm">{esc(line)}</p>"""
+
+
 def _checks_html(state):
     rows = []
     for key, c in sorted((state.get("checks") or {}).items(), reverse=True)[:16]:
@@ -130,12 +163,13 @@ def _checks_html(state):
         share = "—" if c.get("share") is None else f"{c['share'] * 100:.0f}%"
         rows.append(f'<tr><td>{esc(night)}</td><td>{esc(lane)}</td><td class="num">{c.get("games", 0)}</td>'
                     f'<td class="num">{gap}</td><td class="num">{c.get("yes", 0)}/{c.get("no", 0)}</td>'
-                    f'<td class="num">{share}</td><td>{esc("ok" if c.get("ok") else c.get("reason") or "blocked")}</td></tr>')
+                    f'<td class="num">{share}</td><td>{esc(_verdict(c))}</td></tr>')
     body = "".join(rows) or '<tr><td colspan="7" class="mut">No night checked yet.</td></tr>'
     return ('<details class="section-disclosure"><summary><b>Level guard</b><span>by night</span></summary>'
-            '<p class="sm mut">Before a lane\'s first look on a night, the whole slate is checked: if the model\'s '
-            'mean mu sits more than 4 points (1Q: 3) from Kalshi\'s median lines, or more than 80% of 5+ would-be '
-            'picks are one side, the night is logged as a model level mismatch and that lane enters nothing.</p>'
+            '<p class="sm mut">Before a lane\'s first look on a night, the whole slate is checked (amended 2026-10-24: '
+            'the model\'s own level drives, Kalshi\'s is the check). More than 80% of 5+ would-be picks on one side '
+            'is logged as a lean label and the lane still looks; a model-Kalshi gap over 4 points (1Q: 3) is a '
+            'warning; only a gap over 8 points (1Q: 6) is a data problem that skips the night.</p>'
             '<div class="tbl"><table><thead><tr><th>Night</th><th>Lane</th><th class="num">Games</th>'
             '<th class="num">Model − Kalshi</th><th class="num">YES/NO</th><th class="num">One side</th>'
             f'<th>Verdict</th></tr></thead><tbody>{body}</tbody></table></div></details>')
@@ -166,6 +200,7 @@ def tracker_html(track):
     return f"""<section id="ladder">
 <div class="nba-section-head"><div><h2>Ladder tracker</h2><p class="shell-kicker">Every finished game's Kalshi team-total and 1Q ladders, 24h to 1h before tip · observation, no bets</p></div>
 <span class="nba-count">{s["games"]} game{"s" if s["games"] != 1 else ""} · {s["rungs"]} rungs</span></div>
+{levels_html(track)}
 <h3>Calibration · team totals</h3>
 <p class="sm mut">Every rung quoted two-sided 1 hour before tip: the model's P against how often it hit and Kalshi's average YES ask, by model-P bucket. Where the hit rate runs above the ask, Kalshi priced the over too low; where it tracks the model's P, the model holds.</p>
 <div class="tbl"><table><thead>{CAL_HEAD}</thead>

@@ -60,6 +60,13 @@ CAVEATS. There is no historical Kalshi NBA team-total price data, so this is the
   NBA page shows it against Kalshi's prices. Read at 10+ settled entries for Olu's review and at
   30 for a verdict.
 
+AMENDMENT 2026-10-24 (Olu): the model's own season-data level stays the driver (no change to mu);
+Kalshi's slate level is logged as a CHECK (nba_ladder_track.night_levels, "Model level v Kalshi level"
+on the NBA page). The level guard no longer skips a one-sided night: more than 80% of 5+ would-be
+picks on one side is logged as a lean label ("model leans under: ... Kalshi lines running X pts
+above results season to date") and the lane still looks. A model-Kalshi gap over 4 points (1Q: 3) is a
+warning; only a gap over 8 points (1Q: 6) is a data problem that skips the night. Past entries stand.
+
 How it runs: nba-value.yml, hourly (settles, tracks, refreshes the tip schedule) and asked for by
 the VPS from inside each tip's two windows (scripts/vps_window_requests.sh, lane_windows).
 """
@@ -123,7 +130,10 @@ PREREG = (
     "re-anchored to the 2026-27 scoring level (preseason plus regular season so far: team prior = level now "
     "+ (team 2025-26 − league 2025-26)); a level guard skips a lane's whole night when the model's mean mu "
     "sits more than 4 points (1Q: 3) from Kalshi's median lines or more than 80% of 5+ would-be picks are "
-    "one side; the first night entered is 2026-10-22.")
+    "one side; the first night entered is 2026-10-22. AMENDMENT 2026-10-24: the model's season-data level stays "
+    "the driver and Kalshi's slate level is logged as a check; a one-sided night is logged with a lean label "
+    "instead of skipping the lane, a gap over 4 points (1Q: 3) is a warning, and only a gap over 8 points "
+    "(1Q: 6) skips the night. Past entries stand.")
 
 
 def fee(p):
@@ -342,7 +352,8 @@ def stats(picks):
 # The model's level can sit away from the market's for reasons it cannot see (rosters, rule or
 # pace changes). Before a lane's first look on a night, the whole slate is checked; a night that
 # fails is logged as "model level mismatch" and that lane takes no entries (nor baseline) on it.
-GAP_MAX = {"tt": 4.0, "q1": 3.0}        # |mean(model mu - Kalshi's median line)|, points
+GAP_MAX = {"tt": 4.0, "q1": 3.0}        # |mean(model mu - Kalshi's median line)|, points: a WARNING since 2026-10-24
+GAP_BLOCK = {"tt": 8.0, "q1": 6.0}      # past this the level is a data problem: the lane skips the night
 SIDE_MAX = 0.80                         # share of the slate's would-be picks on one side
 SIDE_MIN_N = 5
 
@@ -376,19 +387,38 @@ def ladder_medians(ms, g, kind):
     return {u: market_median(r) for u, r in by.items()}
 
 
-def check_verdict(gaps, sides, kind):
-    """(ok, reason, mean gap, one-side share) for a night's gaps and would-be pick sides."""
+def lean_label(sides, season_gap=None):
+    """'model leans under: ...' when 5+ would-be picks are more than 80% one side, else None (2026-10-24)."""
+    n = len(sides)
+    if n < SIDE_MIN_N:
+        return None
+    yes, no = sides.count("yes"), sides.count("no")
+    if max(yes, no) / n <= SIDE_MAX + EPS:
+        return None
+    word = "under" if no > yes else "over"
+    if not season_gap or not season_gap.get("n") or season_gap.get("avg") is None:
+        return f"model leans {word}: {max(yes, no) / n:.0%} of {n} would-be picks, no season-to-date results gap yet"
+    avg = season_gap["avg"]
+    return (f"model leans {word}: {max(yes, no) / n:.0%} of {n} would-be picks; Kalshi lines running {abs(avg):.1f} pts "
+            f"{'above' if avg < 0 else 'below'} results season to date ({season_gap['n']} team-games)")
+
+
+def check_verdict(gaps, sides, kind, season_gap=None):
+    """(ok, reason, mean gap, one-side share, lean, warning) for a night's gaps and would-be pick sides.
+
+    Amended 2026-10-24: Kalshi's level is a CHECK, the model's season-data level the driver. A one-sided
+    night no longer skips the lane: it is logged with a lean label. A gap past GAP_MAX is a warning; only
+    a gap past GAP_BLOCK (a data problem) blocks."""
     mean = sum(gaps) / len(gaps) if gaps else None
     share = max(sides.count("yes"), sides.count("no")) / len(sides) if sides else None
-    if mean is not None and abs(mean) > GAP_MAX[kind]:
-        return False, f"model level mismatch: model {mean:+.1f} pts v Kalshi's median line", mean, share
-    if len(sides) >= SIDE_MIN_N and share > SIDE_MAX + EPS:
-        side = "YES" if sides.count("yes") >= sides.count("no") else "NO"
-        return False, f"model level mismatch: {share:.0%} of {len(sides)} picks are {side}", mean, share
-    return True, None, mean, share
+    if mean is not None and abs(mean) > GAP_BLOCK[kind]:
+        return False, f"model level mismatch: model {mean:+.1f} pts v Kalshi's median line (a data problem)", mean, share, None, None
+    warning = (f"warning: model {mean:+.1f} pts v Kalshi's median line (over {GAP_MAX[kind]:g})"
+               if mean is not None and abs(mean) > GAP_MAX[kind] else None)
+    return True, None, mean, share, lean_label(sides, season_gap), warning
 
 
-def slate_check(lane, night, games, now, fetch, pri, cache):
+def slate_check(lane, night, games, now, fetch, pri, cache, season_gap=None):
     """The night's level check for one lane, over every unplayed game of that night with a ladder."""
     kind = KIND[lane]
     gaps, sides, n = [], [], 0
@@ -408,13 +438,13 @@ def slate_check(lane, night, games, now, fetch, pri, cache):
             if med is not None and mu is not None:
                 gaps.append(mu - med)
         sides += [c["side"] for c in best(candidates(ms, g, kind, model)).values()]
-    ok, reason, mean, share = check_verdict(gaps, sides, kind)
+    ok, reason, mean, share, lean, warning = check_verdict(gaps, sides, kind, season_gap)
     return dict(at=now.isoformat(), games=n, gaps=len(gaps), gap_mean=None if mean is None else round(mean, 2),
                 picks=len(sides), yes=sides.count("yes"), no=sides.count("no"),
-                share=None if share is None else round(share, 3), ok=ok, reason=reason)
+                share=None if share is None else round(share, 3), ok=ok, reason=reason, lean=lean, warning=warning)
 
 
-def run(state, track_state, now=None, fetch=D.get, pri=None):
+def run(state, track_state, now=None, fetch=D.get, pri=None, season_gap=None):
     """Look at every due game for every lane, then settle. Returns the new lane entry ids."""
     now = now or dt.datetime.now(dt.timezone.utc)
     for k in (*LANES, *BASE.values()):
@@ -445,7 +475,7 @@ def run(state, track_state, now=None, fetch=D.get, pri=None):
             ckey = f"{lane}:{T.night(g)}"
             if ckey not in state.setdefault("checks", {}):
                 try:
-                    state["checks"][ckey] = slate_check(lane, T.night(g), games, now, fetch, pri, cache)
+                    state["checks"][ckey] = slate_check(lane, T.night(g), games, now, fetch, pri, cache, season_gap)
                 except Exception as e:                          # noqa: BLE001
                     errs.append(f"{ckey} check: {str(e)[:80]}")
                     continue
@@ -521,7 +551,7 @@ def main(argv=None):
         return 0
     errs = T.run(track_state, now)                  # ESPN games, then the tracker
     state = load()
-    new = run(state, track_state, now)
+    new = run(state, track_state, now, season_gap=T.season_climb(track_state.get("tracked") or {}))
     T.save(track_state)
     tmp = PATH + ".tmp"
     with open(tmp, "w") as f:

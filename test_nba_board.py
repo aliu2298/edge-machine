@@ -480,9 +480,10 @@ def _safe_card_theads(html):
 
 ok(HTML.count('data-l=""') >= 1 and 'data-l="" data-l=' not in HTML
    and 'data-l="1Q"' in HTML
-   # + Rules (2), the value lanes (3) and the ladder tracker (3), 2026-10-21; the Safe Card's own
-   # tables (2026-10-22) read the live ledger, so they are counted apart.
-   and HTML.count("<thead>") - _safe_card_theads(HTML) == 11,
+   # + Rules (2), the value lanes (3) and the ladder tracker (3), 2026-10-21; + the ladder tracker's
+   # Model level v Kalshi level table (1), 2026-10-24; the Safe Card's own tables (2026-10-22) read
+   # the live ledger, so they are counted apart.
+   and HTML.count("<thead>") - _safe_card_theads(HTML) == 12,
    "the page names each column for the phone cards and leaves the detail cell unlabelled")
 ok(sandbox_build.label_cells(HTML) == HTML, "labelling the page again changes nothing")
 

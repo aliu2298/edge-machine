@@ -32,9 +32,8 @@ THE FUNNEL (the count after each step is logged every night):
      odds reach 1.70 with at least 3 legs, at most 4. Four legs short of 1.70, or fewer than 3
      survivors, is "no card tonight" with the reason. (Arithmetic: three legs at 0.84 or more give
      at most 1.687, so in practice a card is four legs from four games.)
-  7. Level guard (as nba_value): if the slate's mean model-minus-Kalshi-median gap on team totals is
-     more than 4 points, or more than 80% of 5+ step-4 survivors are one side, "no card tonight:
-     model level mismatch".
+  7. Level check (amended 2026-10-24, below): the slate's mean model-minus-Kalshi-median gap on team
+     totals; a data problem blocks, a one-sided slate is a lean label.
 TIMING: built once, the first read 20-90 minutes before the slate's first tip, from the prices at
   that moment (legs for later games are priced then too). The price is read again 60-90 minutes
   before each leg's own tip as "price at tip", for comparison. The card is frozen once published.
@@ -56,6 +55,14 @@ team total, 1H with the game total, or 1Q with 1H, both overs or both unders, is
 e.g.: team total OVER + 1Q UNDER; home and away team-total OVERs; 1Q OVER + game UNDER. The card says
 which game gave two legs and why, and its combo chance (the product of P) then assumes the legs are
 independent. The 84-95c band is unchanged. The funnel logs the surviving legs per game.
+
+AMENDMENT 2026-10-24 (Olu): the model's own season-data level stays the driver (no change to mu);
+Kalshi's slate level is logged as a CHECK (nba_ladder_track.night_levels). Step 7 no longer blocks a
+one-sided slate: more than 80% of 5+ label survivors on one side becomes a LABEL on the card, "model
+leans under (or over): Kalshi lines running X pts above (below) results season to date" (the
+season-to-date average of points minus Kalshi's 50c team-total line), named in the card rationale.
+Only a data problem blocks: no model or Kalshi team-total level to compare, or a gap over 8 points.
+A gap over 4 points is a warning on the card.
 
 How it runs: nba-safe-card.yml, asked for by the VPS 90-60 minutes before each tip
 (lane_windows.nba_safe_windows, scripts/vps_window_requests.sh), with an hourly fallback that settles.
@@ -91,8 +98,9 @@ VALUE_MIN = 0.03
 ODDS_MIN = 1.70
 LEGS_MIN, LEGS_MAX = 3, 4
 CLEAN_N, CLEAN_SHARE, CLEAN_MIN_GAMES = 10, 0.8, 5
-GAP_MAX = 4.0
-SIDE_MAX, SIDE_MIN_N = 0.80, 5
+GAP_WARN = 4.0            # model v Kalshi's team-total level: a warning on the card
+GAP_BLOCK = 8.0           # beyond this the level itself is a data problem: no card
+SIDE_MAX, SIDE_MIN_N = 0.80, 5   # one side this often among 5+ label survivors: a lean LABEL, no block
 BUILD_MIN = (20, 90)           # minutes before the slate's first tip: the card is built at the first read in here
 TIP_MIN = (60, 90)             # minutes before a leg's own tip: "price at tip"
 FEE = 0.07
@@ -342,19 +350,43 @@ def pick_card(survivors, cap=1):
                 f"(prices 84-95c need four legs)")
 
 
-def level_check(medians, mu_by_team, survivor_sides):
-    """(ok, reason, mean gap, one-side share) for the slate (step 7)."""
+def lean_text(side, season_gap):
+    """The lean label: which way the model leans, and what the results say about Kalshi's lines.
+
+    season_gap is nba_ladder_track.season_climb: points minus Kalshi's 50c team-total line, season to
+    date (a negative average is Kalshi's lines running above the results)."""
+    word = "under" if side == "no" else "over"
+    if not season_gap or not season_gap.get("n") or season_gap.get("avg") is None:
+        return f"model leans {word}: no season-to-date results gap yet"
+    avg = season_gap["avg"]
+    return (f"model leans {word}: Kalshi lines running {abs(avg):.1f} pts {'above' if avg < 0 else 'below'} "
+            f"results season to date ({season_gap['n']} team-games)")
+
+
+def level_check(medians, mu_by_team, survivor_sides, season_gap=None):
+    """The slate's level check (step 7), 2026-10-24: dict(ok, reason, gap, share, lean, warning).
+
+    The model's season-data level drives and Kalshi's is the check. A one-sided slate is no longer
+    blocked: it becomes a lean LABEL on the card. Only a data problem blocks: no model or Kalshi
+    team-total level to compare, or a gap over 8 points. A gap over 4 points is a warning."""
     gaps = [mu_by_team[t] - medians[t] for t in medians if t in mu_by_team and medians[t] is not None
             and mu_by_team[t] is not None]
     mean = sum(gaps) / len(gaps) if gaps else None
     n = len(survivor_sides)
     share = max(survivor_sides.count("yes"), survivor_sides.count("no")) / n if n else None
-    if mean is not None and abs(mean) > GAP_MAX + EPS:
-        return False, f"no card tonight: model level mismatch (model {mean:+.1f} pts v Kalshi's median team-total lines)", mean, share
+    out = dict(ok=True, reason=None, gap=mean, share=share, lean=None, warning=None)
+    if mean is None:
+        out.update(ok=False, reason="no card tonight: no Kalshi team-total level to compare with the model (a data problem)")
+        return out
+    if abs(mean) > GAP_BLOCK + EPS:
+        out.update(ok=False, reason=f"no card tonight: model level {mean:+.1f} pts from Kalshi's team-total lines "
+                                    f"(over {GAP_BLOCK:g}: a data problem)")
+        return out
+    if abs(mean) > GAP_WARN + EPS:
+        out["warning"] = f"warning: model {mean:+.1f} pts from Kalshi's team-total lines (over {GAP_WARN:g})"
     if n >= SIDE_MIN_N and share > SIDE_MAX + EPS:
-        side = "unders" if survivor_sides.count("no") > survivor_sides.count("yes") else "overs"
-        return False, f"no card tonight: model level mismatch ({share:.0%} of {n} label survivors are {side})", mean, share
-    return True, None, mean, share
+        out["lean"] = lean_text("no" if survivor_sides.count("no") > survivor_sides.count("yes") else "yes", season_gap)
+    return out
 
 
 def rationale(leg):
@@ -376,8 +408,9 @@ def rationale(leg):
 
 
 def card_rationale(card, counts):
+    note = "".join(f" {t}." for t in (card.get("lean"), card.get("warning")) if t)
     if not card["legs"]:
-        return (f"{card['reason']}. Funnel: {counts['quoted']} sides quoted → {counts['band']} in 84-95c → "
+        return (f"{card['reason']}.{note} Funnel: {counts['quoted']} sides quoted → {counts['band']} in 84-95c → "
                 f"{counts['safety']} model ≥0.90 → {counts['value']} with value → {counts['labels']} labels → "
                 f"{counts['clean']} clean.")
     combo = 1.0
@@ -389,7 +422,7 @@ def card_rationale(card, counts):
     shared = [m for m, ls in by.items() if len(ls) > 1]
     two = "".join(f" 2 legs from {m}: small slate, legs not same-direction." for m in shared)
     indep = " (assumes legs independent)" if shared else ""
-    return (f"{len(card['legs'])} legs, combined odds {card['odds']:.2f}, the model's combo chance {combo * 100:.0f}%{indep}.{two} "
+    return (f"{len(card['legs'])} legs, combined odds {card['odds']:.2f}, the model's combo chance {combo * 100:.0f}%{indep}.{two}{note} "
             f"Funnel: {counts['quoted']} sides quoted → {counts['band']} in 84-95c → {counts['safety']} model ≥0.90 → "
             f"{counts['value']} with value → {counts['labels']} labels → {counts['clean']} clean → {len(card['legs'])} on the card.")
 
@@ -431,8 +464,8 @@ def first_tip(games, night):
     return min(ts) if ts else None
 
 
-def build(night, games, now, fetch, pri, labs_all, pre_rows):
-    """The card for one night, from the prices now."""
+def build(night, games, now, fetch, pri, labs_all, pre_rows, season_gap=None):
+    """The card for one night, from the prices now. `season_gap`: nba_ladder_track.season_climb."""
     todo = slate(games, night, now)
     pts = team_points(games, pre_rows, now)
     legs, medians, mu_team = [], {}, {}
@@ -448,7 +481,8 @@ def build(night, games, now, fetch, pri, labs_all, pre_rows):
     logged, counts = funnel(legs, {g["id"]: g for g in todo}, labs_all, pts)
     survivors = [leg for leg in logged if leg["cut"] is None]
     label_sides = [leg["side"] for leg in logged if "labels" in leg["passed"]]
-    ok, reason, gap, share = level_check(medians, mu_team, label_sides)
+    chk = level_check(medians, mu_team, label_sides, season_gap)
+    ok, reason, gap, share = chk["ok"], chk["reason"], chk["gap"], chk["share"]
     card_legs = []
     cap = per_game_cap(len(todo))
     if len(todo) * cap < LEGS_MIN:
@@ -472,7 +506,9 @@ def build(night, games, now, fetch, pri, labs_all, pre_rows):
                 per_game_cap=cap, survivors_by_game={m: sum(1 for x in survivors if x["match"] == m)
                                                      for m in sorted({x["match"] for x in survivors})},
                 legs_by_game={m: sum(1 for x in card_legs if x["match"] == m) for m in sorted({x["match"] for x in card_legs})},
-                guard=dict(ok=ok, gap=None if gap is None else round(gap, 2), share=None if share is None else round(share, 3)),
+                guard=dict(ok=ok, gap=None if gap is None else round(gap, 2), share=None if share is None else round(share, 3),
+                           lean=chk["lean"], warning=chk["warning"]),
+                lean=chk["lean"], warning=chk["warning"],
                 candidates=[leg for leg in logged if "card" not in leg["passed"]])
     ft = first_tip(games, night)
     card["first_tip"] = ft.isoformat() if ft else None
@@ -544,7 +580,7 @@ def schedule(games, now):
     return sorted(out)
 
 
-def run(state, games, now=None, fetch=D.get, pri=None, labs_all=None, fetch_day=None):
+def run(state, games, now=None, fetch=D.get, pri=None, labs_all=None, fetch_day=None, season_gap=None):
     """Build tonight's card when its window is open, log tip prices, settle. Returns new card nights."""
     now = now or dt.datetime.now(dt.timezone.utc)
     state.setdefault("cards", {})
@@ -563,7 +599,7 @@ def run(state, games, now=None, fetch=D.get, pri=None, labs_all=None, fetch_day=
             continue
         try:
             pre_rows = preseason(state, fetch_day)
-            state["cards"][night] = build(night, games, now, fetch, pri, labs_all, pre_rows)
+            state["cards"][night] = build(night, games, now, fetch, pri, labs_all, pre_rows, season_gap)
             built.append(night)
         except Exception as e:                                  # noqa: BLE001
             errs.append(f"{night} build: {str(e)[:120]}")
@@ -616,10 +652,10 @@ def main(argv=None):
     if "--build-now" in argv:                       # a dry run: build tonight's card at this moment, write to --out
         night = argv[argv.index("--build-now") + 1]
         state["cards"][night] = build(night, track.get("games") or {}, now, D.get, M.prior(), labels_by_game(),
-                                      preseason(state))
+                                      preseason(state), T.season_climb(track.get("tracked") or {}))
         new = [night]
     else:
-        new = run(state, track.get("games") or {}, now)
+        new = run(state, track.get("games") or {}, now, season_gap=T.season_climb(track.get("tracked") or {}))
     tmp = out + ".tmp"
     with open(tmp, "w") as f:
         json.dump(state, f, indent=1, sort_keys=True)
