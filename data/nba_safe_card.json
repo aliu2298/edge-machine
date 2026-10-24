@@ -2397,12 +2397,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.85,
+     "profit": 0.1642,
      "rationale": "NY@BOS NY team total OVER 98.5 @85c: model 76.6% (mu 107.1, line -8.6 below mu); edge -8.3c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23NYKBOS-NYK99",
      "unit": "NY"
     },
@@ -2420,12 +2423,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.85,
+     "profit": 0.1642,
      "rationale": "NY@BOS BOS team total UNDER 123.5 @85c: model 87.9% (mu 109.6, line +13.9 above mu); edge +2.9c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23NYKBOS-BOS124",
      "unit": "BOS"
     },
@@ -2444,12 +2450,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.92,
+     "profit": 0.0809,
      "rationale": "NY@BOS BOS team total UNDER 127.5 @92c: model 93.4% (mu 109.6, line +17.9 above mu); edge +1.4c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23NYKBOS-BOS128",
      "unit": "BOS"
     },
@@ -2467,12 +2476,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.94,
+     "profit": 0.0594,
      "rationale": "NY@BOS BOS team total OVER 95.5 @94c: model 88.4% (mu 109.6, line -14.1 below mu); edge -5.6c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23NYKBOS-BOS96",
      "unit": "BOS"
     },
@@ -2491,12 +2503,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.95,
+     "profit": 0.049,
      "rationale": "NY@BOS NY team total UNDER 128.5 @95c: model 96.5% (mu 107.1, line +21.4 above mu); edge +1.5c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23NYKBOS-NYK129",
      "unit": "NY"
     },
@@ -2515,12 +2530,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.94,
+     "profit": 0.0594,
      "rationale": "NY@BOS BOS team total UNDER 129.5 @94c: model 95.3% (mu 109.6, line +19.9 above mu); edge +1.3c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23NYKBOS-BOS130",
      "unit": "BOS"
     },
@@ -2539,12 +2557,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.93,
+     "profit": 0.07,
      "rationale": "NY@BOS NY team total UNDER 126.5 @93c: model 94.9% (mu 107.1, line +19.4 above mu); edge +1.9c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23NYKBOS-NYK127",
      "unit": "NY"
     },
@@ -2562,12 +2583,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.95,
+     "profit": 0.049,
      "rationale": "NY@BOS NY team total OVER 92.5 @95c: model 89.1% (mu 107.1, line -14.6 below mu); edge -5.9c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23NYKBOS-NYK93",
      "unit": "NY"
     },
@@ -2585,12 +2609,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.88,
+     "profit": 0.1269,
      "rationale": "NY@BOS BOS team total OVER 99.5 @88c: model 80.5% (mu 109.6, line -10.1 below mu); edge -7.5c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23NYKBOS-BOS100",
      "unit": "BOS"
     },
@@ -2609,12 +2636,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 0.1034,
      "rationale": "NY@BOS NY team total UNDER 124.5 @90c: model 92.9% (mu 107.1, line +17.4 above mu); edge +2.9c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23NYKBOS-NYK125",
      "unit": "NY"
     },
@@ -2633,12 +2663,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.88,
+     "profit": 0.1269,
      "rationale": "NY@BOS BOS team total UNDER 125.5 @88c: model 91.0% (mu 109.6, line +15.9 above mu); edge +3.0c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23NYKBOS-BOS126",
      "unit": "BOS"
     },
@@ -2664,12 +2697,15 @@
       "labels",
       "clean"
      ],
+     "payout": 1.0,
      "price": 0.87,
+     "profit": 0.1391,
      "rationale": "NY@BOS NY team total UNDER 122.5 @87c: model 90.3% (mu 107.1, line +15.4 above mu); labels NY O\u2212D+ v O+D\u2212 (attack and opposing defence agree); stayed under 122.5 in 6/6; edge +3.3c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23NYKBOS-NYK123",
      "unit": "NY"
     },
@@ -2687,12 +2723,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.89,
+     "profit": 0.115,
      "rationale": "NY@BOS NY team total OVER 96.5 @89c: model 81.5% (mu 107.1, line -10.6 below mu); edge -7.5c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23NYKBOS-NYK97",
      "unit": "NY"
     },
@@ -2710,12 +2749,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.91,
+     "profit": 0.092,
      "rationale": "NY@BOS BOS team total OVER 97.5 @91c: model 84.8% (mu 109.6, line -12.1 below mu); edge -6.2c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23NYKBOS-BOS98",
      "unit": "BOS"
     },
@@ -2733,12 +2775,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.94,
+     "profit": 0.0594,
      "rationale": "NY@BOS NY team total OVER 94.5 @94c: model 85.7% (mu 107.1, line -12.6 below mu); edge -8.3c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23NYKBOS-NYK95",
      "unit": "NY"
     },
@@ -3102,12 +3147,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.86,
+     "profit": 0.1515,
      "rationale": "NY@BOS game UNDER 239.5 @86c: model 88.6% (mu 216.8, line +22.7 above mu); edge +2.6c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23NYKBOS-240",
      "unit": "game"
     },
@@ -3128,12 +3176,15 @@
       "safety",
       "value"
      ],
+     "payout": 1.0,
      "price": 0.88,
+     "profit": 0.1269,
      "rationale": "NY@BOS game UNDER 243.5 @88c: model 92.2% (mu 216.8, line +26.7 above mu); labels O\u2212D+ v O+D\u2212 (both defences agree); edge +4.2c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23NYKBOS-244",
      "unit": "game"
     },
@@ -3151,12 +3202,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.86,
+     "profit": 0.1515,
      "rationale": "NY@BOS game OVER 203.5 @86c: model 75.8% (mu 216.8, line -13.3 below mu); edge -10.2c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23NYKBOS-204",
      "unit": "game"
     },
@@ -3174,12 +3228,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.89,
+     "profit": 0.115,
      "rationale": "NY@BOS game OVER 201.5 @89c: model 79.0% (mu 216.8, line -15.3 below mu); edge -10.0c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23NYKBOS-202",
      "unit": "game"
     },
@@ -3197,12 +3254,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.94,
+     "profit": 0.0594,
      "rationale": "NY@BOS game OVER 195.5 @94c: model 87.0% (mu 216.8, line -21.3 below mu); edge -7.0c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23NYKBOS-196",
      "unit": "game"
     },
@@ -3221,12 +3281,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.88,
+     "profit": 0.1269,
      "rationale": "NY@BOS game UNDER 241.5 @88c: model 90.5% (mu 216.8, line +24.7 above mu); edge +2.5c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23NYKBOS-242",
      "unit": "game"
     },
@@ -3245,12 +3308,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.94,
+     "profit": 0.0594,
      "rationale": "NY@BOS game UNDER 249.5 @94c: model 95.8% (mu 216.8, line +32.7 above mu); edge +1.8c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23NYKBOS-250",
      "unit": "game"
     },
@@ -3269,12 +3335,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.93,
+     "profit": 0.07,
      "rationale": "NY@BOS game UNDER 247.5 @93c: model 94.8% (mu 216.8, line +30.7 above mu); edge +1.8c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23NYKBOS-248",
      "unit": "game"
     },
@@ -3292,12 +3361,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.91,
+     "profit": 0.092,
      "rationale": "NY@BOS game OVER 199.5 @91c: model 81.9% (mu 216.8, line -17.3 below mu); edge -9.1c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23NYKBOS-200",
      "unit": "game"
     },
@@ -3318,12 +3390,15 @@
       "safety",
       "value"
      ],
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 0.1034,
      "rationale": "NY@BOS game UNDER 245.5 @90c: model 93.6% (mu 216.8, line +28.7 above mu); labels O\u2212D+ v O+D\u2212 (both defences agree); edge +3.6c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23NYKBOS-246",
      "unit": "game"
     },
@@ -3341,12 +3416,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.93,
+     "profit": 0.07,
      "rationale": "NY@BOS game OVER 197.5 @93c: model 84.6% (mu 216.8, line -19.3 below mu); edge -8.4c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23NYKBOS-198",
      "unit": "game"
     },
@@ -3364,12 +3442,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.92,
+     "profit": 0.0809,
      "rationale": "ATL@CHA ATL team total OVER 99.5 @92c: model 87.7% (mu 113.2, line -13.7 below mu); edge -4.3c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23ATLCHA-ATL100",
      "unit": "ATL"
     },
@@ -3387,12 +3468,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.89,
+     "profit": 0.115,
      "rationale": "ATL@CHA CHA team total UNDER 126.5 @89c: model 79.3% (mu 116.8, line +9.7 above mu); edge -9.7c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23ATLCHA-CHA127",
      "unit": "CHA"
     },
@@ -3411,12 +3495,15 @@
       "band",
       "safety"
      ],
+     "payout": 0.0,
      "price": 0.93,
+     "profit": -1.0,
      "rationale": "ATL@CHA CHA team total OVER 96.5 @93c: model 95.7% (mu 116.8, line -20.3 below mu); edge +2.7c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATEAMTOTAL-26OCT23ATLCHA-CHA97",
      "unit": "CHA"
     },
@@ -3434,12 +3521,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.92,
+     "profit": 0.0809,
      "rationale": "ATL@CHA CHA team total UNDER 128.5 @92c: model 83.8% (mu 116.8, line +11.7 above mu); edge -8.2c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23ATLCHA-CHA129",
      "unit": "CHA"
     },
@@ -3457,12 +3547,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.85,
+     "profit": 0.1642,
      "rationale": "ATL@CHA CHA team total UNDER 124.5 @85c: model 74.1% (mu 116.8, line +7.7 above mu); edge -10.9c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23ATLCHA-CHA125",
      "unit": "CHA"
     },
@@ -3480,12 +3573,15 @@
      "passed": [
       "band"
      ],
+     "payout": 0.0,
      "price": 0.87,
+     "profit": -1.0,
      "rationale": "ATL@CHA ATL team total UNDER 127.5 @87c: model 88.6% (mu 113.2, line +14.3 above mu); edge +1.6c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATEAMTOTAL-26OCT23ATLCHA-ATL128",
      "unit": "ATL"
     },
@@ -3506,12 +3602,15 @@
       "safety",
       "value"
      ],
+     "payout": 0.0,
      "price": 0.9,
+     "profit": -1.0,
      "rationale": "ATL@CHA CHA team total OVER 98.5 @90c: model 94.0% (mu 116.8, line -18.3 below mu); labels CHA O\u2212D\u2212 v O+D+ (attack and opposing defence agree); edge +4.0c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATEAMTOTAL-26OCT23ATLCHA-CHA99",
      "unit": "CHA"
     },
@@ -3529,12 +3628,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.89,
+     "profit": 0.115,
      "rationale": "ATL@CHA ATL team total OVER 101.5 @89c: model 83.9% (mu 113.2, line -11.7 below mu); edge -5.1c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23ATLCHA-ATL102",
      "unit": "ATL"
     },
@@ -3553,12 +3655,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.93,
+     "profit": 0.07,
      "rationale": "ATL@CHA ATL team total UNDER 131.5 @93c: model 93.9% (mu 113.2, line +18.3 above mu); edge +0.9c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23ATLCHA-ATL132",
      "unit": "ATL"
     },
@@ -3576,12 +3681,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.94,
+     "profit": 0.0594,
      "rationale": "ATL@CHA CHA team total UNDER 130.5 @94c: model 87.6% (mu 116.8, line +13.7 above mu); edge -6.4c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23ATLCHA-CHA131",
      "unit": "CHA"
     },
@@ -3602,12 +3710,15 @@
       "safety",
       "value"
      ],
+     "payout": 0.0,
      "price": 0.86,
+     "profit": -1.0,
      "rationale": "ATL@CHA CHA team total OVER 100.5 @86c: model 91.6% (mu 116.8, line -16.3 below mu); labels CHA O\u2212D\u2212 v O+D+ (attack and opposing defence agree); edge +5.6c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATEAMTOTAL-26OCT23ATLCHA-CHA101",
      "unit": "CHA"
     },
@@ -3626,12 +3737,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 0.1034,
      "rationale": "ATL@CHA ATL team total UNDER 129.5 @90c: model 91.6% (mu 113.2, line +16.3 above mu); edge +1.6c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23ATLCHA-ATL130",
      "unit": "ATL"
     },
@@ -3650,12 +3764,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.95,
+     "profit": 0.049,
      "rationale": "ATL@CHA ATL team total OVER 97.5 @95c: model 90.8% (mu 113.2, line -15.7 below mu); edge -4.2c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23ATLCHA-ATL98",
      "unit": "ATL"
     },
@@ -3832,12 +3949,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.94,
+     "profit": 0.0594,
      "rationale": "ATL@CHA game OVER 201.5 @94c: model 93.5% (mu 230.1, line -28.6 below mu); edge -0.5c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23ATLCHA-202",
      "unit": "game"
     },
@@ -3856,12 +3976,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.95,
+     "profit": 0.049,
      "rationale": "ATL@CHA game UNDER 255.5 @95c: model 91.1% (mu 230.1, line +25.4 above mu); edge -3.9c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23ATLCHA-256",
      "unit": "game"
     },
@@ -3880,12 +4003,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.91,
+     "profit": 0.092,
      "rationale": "ATL@CHA game OVER 205.5 @91c: model 90.3% (mu 230.1, line -24.6 below mu); edge -0.7c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23ATLCHA-206",
      "unit": "game"
     },
@@ -3903,12 +4029,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.93,
+     "profit": 0.07,
      "rationale": "ATL@CHA game UNDER 253.5 @93c: model 89.3% (mu 230.1, line +23.4 above mu); edge -3.7c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23ATLCHA-254",
      "unit": "game"
     },
@@ -3926,12 +4055,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 0.1034,
      "rationale": "ATL@CHA game UNDER 249.5 @90c: model 84.8% (mu 230.1, line +19.4 above mu); edge -5.2c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23ATLCHA-250",
      "unit": "game"
     },
@@ -3949,12 +4081,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.92,
+     "profit": 0.0809,
      "rationale": "ATL@CHA game UNDER 251.5 @92c: model 87.2% (mu 230.1, line +21.4 above mu); edge -4.8c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23ATLCHA-252",
      "unit": "game"
     },
@@ -3972,12 +4107,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.88,
+     "profit": 0.1269,
      "rationale": "ATL@CHA game OVER 207.5 @88c: model 88.4% (mu 230.1, line -22.6 below mu); edge +0.4c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23ATLCHA-208",
      "unit": "game"
     },
@@ -3995,12 +4133,15 @@
      "passed": [
       "band"
      ],
+     "payout": 0.0,
      "price": 0.85,
+     "profit": -1.0,
      "rationale": "ATL@CHA game OVER 209.5 @85c: model 86.2% (mu 230.1, line -20.6 below mu); edge +1.2c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATOTAL-26OCT23ATLCHA-210",
      "unit": "game"
     },
@@ -4019,12 +4160,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.95,
+     "profit": 0.049,
      "rationale": "ATL@CHA game OVER 199.5 @95c: model 94.7% (mu 230.1, line -30.6 below mu); edge -0.3c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23ATLCHA-200",
      "unit": "game"
     },
@@ -4042,12 +4186,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.88,
+     "profit": 0.1269,
      "rationale": "ATL@CHA game UNDER 247.5 @88c: model 82.2% (mu 230.1, line +17.4 above mu); edge -5.8c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23ATLCHA-248",
      "unit": "game"
     },
@@ -4066,12 +4213,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.93,
+     "profit": 0.07,
      "rationale": "ATL@CHA game OVER 203.5 @93c: model 92.0% (mu 230.1, line -26.6 below mu); edge -1.0c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23ATLCHA-204",
      "unit": "game"
     },
@@ -4089,12 +4239,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 0.1034,
      "rationale": "DAL@IND DAL team total UNDER 131.5 @90c: model 89.6% (mu 116.6, line +14.9 above mu); edge -0.4c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23DALIND-DAL132",
      "unit": "DAL"
     },
@@ -4112,12 +4265,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.89,
+     "profit": 0.115,
      "rationale": "DAL@IND DAL team total OVER 103.5 @89c: model 86.6% (mu 116.6, line -13.1 below mu); edge -2.4c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23DALIND-DAL104",
      "unit": "DAL"
     },
@@ -4135,12 +4291,15 @@
      "passed": [
       "band"
      ],
+     "payout": 0.0,
      "price": 0.92,
+     "profit": -1.0,
      "rationale": "DAL@IND IND team total OVER 108.5 @92c: model 79.9% (mu 118.4, line -9.9 below mu); edge -12.1c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATEAMTOTAL-26OCT23DALIND-IND109",
      "unit": "IND"
     },
@@ -4161,12 +4320,15 @@
       "safety",
       "value"
      ],
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 0.1034,
      "rationale": "DAL@IND IND team total UNDER 138.5 @90c: model 95.5% (mu 118.4, line +20.1 above mu); labels IND O+D+ v O\u2212D+ (attack and opposing defence agree); edge +5.5c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23DALIND-IND139",
      "unit": "IND"
     },
@@ -4187,12 +4349,15 @@
       "safety",
       "value"
      ],
+     "payout": 1.0,
      "price": 0.87,
+     "profit": 0.1391,
      "rationale": "DAL@IND IND team total UNDER 136.5 @87c: model 93.7% (mu 118.4, line +18.1 above mu); labels IND O+D+ v O\u2212D+ (attack and opposing defence agree); edge +6.7c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23DALIND-IND137",
      "unit": "IND"
     },
@@ -4210,12 +4375,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.86,
+     "profit": 0.1515,
      "rationale": "DAL@IND DAL team total UNDER 129.5 @86c: model 86.2% (mu 116.6, line +12.9 above mu); edge +0.2c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23DALIND-DAL130",
      "unit": "DAL"
     },
@@ -4233,12 +4401,15 @@
      "passed": [
       "band"
      ],
+     "payout": 0.0,
      "price": 0.85,
+     "profit": -1.0,
      "rationale": "DAL@IND IND team total OVER 112.5 @85c: model 69.2% (mu 118.4, line -5.9 below mu); edge -15.8c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATEAMTOTAL-26OCT23DALIND-IND113",
      "unit": "IND"
     },
@@ -4256,12 +4427,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.92,
+     "profit": 0.0809,
      "rationale": "DAL@IND DAL team total OVER 101.5 @92c: model 89.9% (mu 116.6, line -15.1 below mu); edge -2.1c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23DALIND-DAL102",
      "unit": "DAL"
     },
@@ -4280,12 +4454,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.95,
+     "profit": 0.049,
      "rationale": "DAL@IND DAL team total OVER 99.5 @95c: model 92.6% (mu 116.6, line -17.1 below mu); edge -2.4c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23DALIND-DAL100",
      "unit": "DAL"
     },
@@ -4303,12 +4480,15 @@
      "passed": [
       "band"
      ],
+     "payout": 0.0,
      "price": 0.89,
+     "profit": -1.0,
      "rationale": "DAL@IND IND team total OVER 110.5 @89c: model 74.9% (mu 118.4, line -7.9 below mu); edge -14.1c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATEAMTOTAL-26OCT23DALIND-IND111",
      "unit": "IND"
     },
@@ -4326,12 +4506,15 @@
      "passed": [
       "band"
      ],
+     "payout": 0.0,
      "price": 0.95,
+     "profit": -1.0,
      "rationale": "DAL@IND IND team total OVER 106.5 @95c: model 84.3% (mu 118.4, line -11.9 below mu); edge -10.7c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATEAMTOTAL-26OCT23DALIND-IND107",
      "unit": "IND"
     },
@@ -4350,12 +4533,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.89,
+     "profit": 0.115,
      "rationale": "DAL@IND 1H UNDER 136.5 @89c: model 91.5% (mu 118.7, line +17.8 above mu); edge +2.5c",
      "sd": 13.0,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1HTOTAL-26OCT23DALIND-137",
      "unit": "game"
     },
@@ -4374,12 +4560,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 0.1034,
      "rationale": "DAL@IND game UNDER 262.5 @90c: model 92.7% (mu 235.0, line +27.5 above mu); edge +2.7c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23DALIND-263",
      "unit": "game"
     },
@@ -4397,12 +4586,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.93,
+     "profit": 0.07,
      "rationale": "DAL@IND game OVER 216.5 @93c: model 83.7% (mu 235.0, line -18.5 below mu); edge -9.3c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23DALIND-217",
      "unit": "game"
     },
@@ -4420,12 +4612,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.88,
+     "profit": 0.1269,
      "rationale": "DAL@IND game OVER 220.5 @88c: model 77.9% (mu 235.0, line -14.5 below mu); edge -10.1c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23DALIND-221",
      "unit": "game"
     },
@@ -4443,12 +4638,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.85,
+     "profit": 0.1642,
      "rationale": "DAL@IND game UNDER 258.5 @85c: model 89.3% (mu 235.0, line +23.5 above mu); edge +4.3c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23DALIND-259",
      "unit": "game"
     },
@@ -4466,12 +4664,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.95,
+     "profit": 0.049,
      "rationale": "DAL@IND game OVER 212.5 @95c: model 88.3% (mu 235.0, line -22.5 below mu); edge -6.7c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23DALIND-213",
      "unit": "game"
     },
@@ -4492,12 +4693,15 @@
       "safety",
       "value"
      ],
+     "payout": 1.0,
      "price": 0.88,
+     "profit": 0.1269,
      "rationale": "DAL@IND game UNDER 260.5 @88c: model 91.1% (mu 235.0, line +25.5 above mu); labels O\u2212D+ v O+D+ (both defences agree); edge +3.1c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23DALIND-261",
      "unit": "game"
     },
@@ -4515,12 +4719,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.85,
+     "profit": 0.1642,
      "rationale": "DAL@IND game OVER 222.5 @85c: model 74.7% (mu 235.0, line -12.5 below mu); edge -10.3c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23DALIND-223",
      "unit": "game"
     },
@@ -4538,12 +4745,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.94,
+     "profit": 0.0594,
      "rationale": "DAL@IND game OVER 214.5 @94c: model 86.1% (mu 235.0, line -20.5 below mu); edge -7.9c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23DALIND-215",
      "unit": "game"
     },
@@ -4561,12 +4771,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 0.1034,
      "rationale": "DAL@IND game OVER 218.5 @90c: model 80.9% (mu 235.0, line -16.5 below mu); edge -9.1c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23DALIND-219",
      "unit": "game"
     },
@@ -4585,12 +4798,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.89,
+     "profit": 0.115,
      "rationale": "MIN@ORL ORL team total UNDER 131.5 @89c: model 91.7% (mu 115.1, line +16.4 above mu); edge +2.7c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23MINORL-ORL132",
      "unit": "ORL"
     },
@@ -4609,12 +4825,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 0.1034,
      "rationale": "MIN@ORL MIN team total OVER 103.5 @90c: model 90.1% (mu 118.8, line -15.3 below mu); edge +0.1c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23MINORL-MIN104",
      "unit": "MIN"
     },
@@ -4633,12 +4852,15 @@
       "band",
       "safety"
      ],
+     "payout": 0.0,
      "price": 0.95,
+     "profit": -1.0,
      "rationale": "MIN@ORL ORL team total OVER 99.5 @95c: model 90.7% (mu 115.1, line -15.6 below mu); edge -4.3c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATEAMTOTAL-26OCT23MINORL-ORL100",
      "unit": "ORL"
     },
@@ -4657,12 +4879,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.93,
+     "profit": 0.07,
      "rationale": "MIN@ORL MIN team total OVER 101.5 @93c: model 92.8% (mu 118.8, line -17.3 below mu); edge -0.2c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23MINORL-MIN102",
      "unit": "MIN"
     },
@@ -4680,12 +4905,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.85,
+     "profit": 0.1642,
      "rationale": "MIN@ORL ORL team total UNDER 129.5 @85c: model 88.8% (mu 115.1, line +14.4 above mu); edge +3.8c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23MINORL-ORL130",
      "unit": "ORL"
     },
@@ -4703,12 +4931,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.92,
+     "profit": 0.0809,
      "rationale": "MIN@ORL MIN team total UNDER 133.5 @92c: model 89.4% (mu 118.8, line +14.7 above mu); edge -2.6c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23MINORL-MIN134",
      "unit": "MIN"
     },
@@ -4726,12 +4957,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.89,
+     "profit": 0.115,
      "rationale": "MIN@ORL MIN team total UNDER 131.5 @89c: model 85.9% (mu 118.8, line +12.7 above mu); edge -3.1c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23MINORL-MIN132",
      "unit": "MIN"
     },
@@ -4749,12 +4983,15 @@
      "passed": [
       "band"
      ],
+     "payout": 0.0,
      "price": 0.86,
+     "profit": -1.0,
      "rationale": "MIN@ORL ORL team total OVER 105.5 @86c: model 79.2% (mu 115.1, line -9.6 below mu); edge -6.8c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATEAMTOTAL-26OCT23MINORL-ORL106",
      "unit": "ORL"
     },
@@ -4772,12 +5009,15 @@
      "passed": [
       "band"
      ],
+     "payout": 0.0,
      "price": 0.93,
+     "profit": -1.0,
      "rationale": "MIN@ORL ORL team total OVER 101.5 @93c: model 87.5% (mu 115.1, line -13.6 below mu); edge -5.5c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATEAMTOTAL-26OCT23MINORL-ORL102",
      "unit": "ORL"
     },
@@ -4795,12 +5035,15 @@
      "passed": [
       "band"
      ],
+     "payout": 0.0,
      "price": 0.9,
+     "profit": -1.0,
      "rationale": "MIN@ORL ORL team total OVER 103.5 @90c: model 83.7% (mu 115.1, line -11.6 below mu); edge -6.3c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATEAMTOTAL-26OCT23MINORL-ORL104",
      "unit": "ORL"
     },
@@ -4819,12 +5062,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.94,
+     "profit": 0.0594,
      "rationale": "MIN@ORL ORL team total UNDER 135.5 @94c: model 95.8% (mu 115.1, line +20.4 above mu); edge +1.8c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23MINORL-ORL136",
      "unit": "ORL"
     },
@@ -4842,12 +5088,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.85,
+     "profit": 0.1642,
      "rationale": "MIN@ORL MIN team total UNDER 129.5 @85c: model 81.8% (mu 118.8, line +10.7 above mu); edge -3.2c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23MINORL-MIN130",
      "unit": "MIN"
     },
@@ -4866,12 +5115,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.94,
+     "profit": 0.0594,
      "rationale": "MIN@ORL MIN team total UNDER 135.5 @94c: model 92.2% (mu 118.8, line +16.7 above mu); edge -1.8c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23MINORL-MIN136",
      "unit": "MIN"
     },
@@ -4889,12 +5141,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.85,
+     "profit": 0.1642,
      "rationale": "MIN@ORL MIN team total OVER 105.5 @85c: model 86.9% (mu 118.8, line -13.3 below mu); edge +1.9c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23MINORL-MIN106",
      "unit": "MIN"
     },
@@ -4913,12 +5168,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.92,
+     "profit": 0.0809,
      "rationale": "MIN@ORL ORL team total UNDER 133.5 @92c: model 94.0% (mu 115.1, line +18.4 above mu); edge +2.0c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23MINORL-ORL134",
      "unit": "ORL"
     },
@@ -4936,12 +5194,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.86,
+     "profit": 0.1515,
      "rationale": "MIN@ORL game UNDER 253.5 @86c: model 85.0% (mu 233.9, line +19.6 above mu); edge -0.9c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23MINORL-254",
      "unit": "game"
     },
@@ -4960,12 +5221,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 0.1034,
      "rationale": "MIN@ORL game UNDER 259.5 @90c: model 91.2% (mu 233.9, line +25.6 above mu); edge +1.2c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23MINORL-260",
      "unit": "game"
     },
@@ -4983,12 +5247,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 0.1034,
      "rationale": "MIN@ORL game UNDER 257.5 @90c: model 89.4% (mu 233.9, line +23.6 above mu); edge -0.6c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23MINORL-258",
      "unit": "game"
     },
@@ -5006,12 +5273,15 @@
      "passed": [
       "band"
      ],
+     "payout": 0.0,
      "price": 0.91,
+     "profit": -1.0,
      "rationale": "MIN@ORL game OVER 213.5 @91c: model 85.9% (mu 233.9, line -20.4 below mu); edge -5.1c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATOTAL-26OCT23MINORL-214",
      "unit": "game"
     },
@@ -5030,12 +5300,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.95,
+     "profit": 0.049,
      "rationale": "MIN@ORL game UNDER 265.5 @95c: model 95.3% (mu 233.9, line +31.6 above mu); edge +0.3c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23MINORL-266",
      "unit": "game"
     },
@@ -5054,12 +5327,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.94,
+     "profit": 0.0594,
      "rationale": "MIN@ORL game UNDER 263.5 @94c: model 94.2% (mu 233.9, line +29.6 above mu); edge +0.1c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23MINORL-264",
      "unit": "game"
     },
@@ -5077,12 +5353,15 @@
      "passed": [
       "band"
      ],
+     "payout": 0.0,
      "price": 0.85,
+     "profit": -1.0,
      "rationale": "MIN@ORL game OVER 217.5 @85c: model 80.7% (mu 233.9, line -16.4 below mu); edge -4.3c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATOTAL-26OCT23MINORL-218",
      "unit": "game"
     },
@@ -5100,12 +5379,15 @@
      "passed": [
       "band"
      ],
+     "payout": 0.0,
      "price": 0.92,
+     "profit": -1.0,
      "rationale": "MIN@ORL game OVER 211.5 @92c: model 88.2% (mu 233.9, line -22.4 below mu); edge -3.8c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATOTAL-26OCT23MINORL-212",
      "unit": "game"
     },
@@ -5123,12 +5405,15 @@
      "passed": [
       "band"
      ],
+     "payout": 0.0,
      "price": 0.87,
+     "profit": -1.0,
      "rationale": "MIN@ORL game OVER 215.5 @87c: model 83.4% (mu 233.9, line -18.4 below mu); edge -3.6c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATOTAL-26OCT23MINORL-216",
      "unit": "game"
     },
@@ -5147,12 +5432,15 @@
       "band",
       "safety"
      ],
+     "payout": 0.0,
      "price": 0.94,
+     "profit": -1.0,
      "rationale": "MIN@ORL game OVER 209.5 @94c: model 90.1% (mu 233.9, line -24.4 below mu); edge -3.9c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATOTAL-26OCT23MINORL-210",
      "unit": "game"
     },
@@ -5171,12 +5459,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.94,
+     "profit": 0.0594,
      "rationale": "MIN@ORL game UNDER 261.5 @94c: model 92.8% (mu 233.9, line +27.6 above mu); edge -1.2c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23MINORL-262",
      "unit": "game"
     },
@@ -5194,12 +5485,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.88,
+     "profit": 0.1269,
      "rationale": "MIN@ORL game UNDER 255.5 @88c: model 87.4% (mu 233.9, line +21.6 above mu); edge -0.6c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23MINORL-256",
      "unit": "game"
     },
@@ -5220,12 +5514,15 @@
       "safety",
       "value"
      ],
+     "payout": 1.0,
      "price": 0.84,
+     "profit": 0.1773,
      "rationale": "TOR@WSH WSH team total UNDER 126.5 @84c: model 92.5% (mu 109.5, line +17.0 above mu); labels WSH O+D\u2212 v O+D\u2212 (attack and opposing defence agree); edge +8.5c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23TORWAS-WAS127",
      "unit": "WSH"
     },
@@ -5244,12 +5541,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.95,
+     "profit": 0.049,
      "rationale": "TOR@WSH TOR team total OVER 105.5 @95c: model 92.6% (mu 122.6, line -17.1 below mu); edge -2.4c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23TORWAS-TOR106",
      "unit": "TOR"
     },
@@ -5267,12 +5567,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.89,
+     "profit": 0.115,
      "rationale": "TOR@WSH TOR team total OVER 109.5 @89c: model 86.7% (mu 122.6, line -13.1 below mu); edge -2.3c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23TORWAS-TOR110",
      "unit": "TOR"
     },
@@ -5290,12 +5593,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.94,
+     "profit": 0.0594,
      "rationale": "TOR@WSH WSH team total OVER 98.5 @94c: model 82.4% (mu 109.5, line -11.0 below mu); edge -11.6c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23TORWAS-WAS99",
      "unit": "WSH"
     },
@@ -5313,12 +5619,15 @@
      "passed": [
       "band"
      ],
+     "payout": 0.0,
      "price": 0.86,
+     "profit": -1.0,
      "rationale": "TOR@WSH WSH team total OVER 102.5 @86c: model 72.3% (mu 109.5, line -7.0 below mu); edge -13.7c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATEAMTOTAL-26OCT23TORWAS-WAS103",
      "unit": "WSH"
     },
@@ -5336,12 +5645,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.86,
+     "profit": 0.1515,
      "rationale": "TOR@WSH TOR team total UNDER 135.5 @86c: model 86.1% (mu 122.6, line +12.9 above mu); edge +0.1c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23TORWAS-TOR136",
      "unit": "TOR"
     },
@@ -5362,12 +5674,15 @@
       "safety",
       "value"
      ],
+     "payout": 1.0,
      "price": 0.89,
+     "profit": 0.115,
      "rationale": "TOR@WSH WSH team total UNDER 128.5 @89c: model 94.6% (mu 109.5, line +19.0 above mu); labels WSH O+D\u2212 v O+D\u2212 (attack and opposing defence agree); edge +5.6c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23TORWAS-WAS129",
      "unit": "WSH"
     },
@@ -5388,12 +5703,15 @@
       "safety",
       "value"
      ],
+     "payout": 1.0,
      "price": 0.92,
+     "profit": 0.0809,
      "rationale": "TOR@WSH WSH team total UNDER 130.5 @92c: model 96.2% (mu 109.5, line +21.0 above mu); labels WSH O+D\u2212 v O+D\u2212 (attack and opposing defence agree); edge +4.2c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23TORWAS-WAS131",
      "unit": "WSH"
     },
@@ -5411,12 +5729,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.93,
+     "profit": 0.07,
      "rationale": "TOR@WSH TOR team total OVER 107.5 @93c: model 90.0% (mu 122.6, line -15.1 below mu); edge -3.0c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23TORWAS-TOR108",
      "unit": "TOR"
     },
@@ -5434,12 +5755,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.85,
+     "profit": 0.1642,
      "rationale": "TOR@WSH TOR team total OVER 111.5 @85c: model 82.7% (mu 122.6, line -11.1 below mu); edge -2.3c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23TORWAS-TOR112",
      "unit": "TOR"
     },
@@ -5460,12 +5784,15 @@
       "safety",
       "value"
      ],
+     "payout": 1.0,
      "price": 0.94,
+     "profit": 0.0594,
      "rationale": "TOR@WSH WSH team total UNDER 132.5 @94c: model 97.4% (mu 109.5, line +23.0 above mu); labels WSH O+D\u2212 v O+D\u2212 (attack and opposing defence agree); edge +3.4c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23TORWAS-WAS133",
      "unit": "WSH"
     },
@@ -5483,12 +5810,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 0.1034,
      "rationale": "TOR@WSH WSH team total OVER 100.5 @90c: model 77.7% (mu 109.5, line -9.0 below mu); edge -12.3c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23TORWAS-WAS101",
      "unit": "WSH"
     },
@@ -5506,12 +5836,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 0.1034,
      "rationale": "TOR@WSH TOR team total UNDER 137.5 @90c: model 89.5% (mu 122.6, line +14.9 above mu); edge -0.5c",
      "sd": 11.83,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATEAMTOTAL-26OCT23TORWAS-TOR138",
      "unit": "TOR"
     },
@@ -5608,12 +5941,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.94,
+     "profit": 0.0594,
      "rationale": "TOR@WSH 1H UNDER 132.5 @94c: model 88.0% (mu 117.2, line +15.3 above mu); edge -6.0c",
      "sd": 13.0,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1HTOTAL-26OCT23TORWAS-133",
      "unit": "game"
     },
@@ -5632,12 +5968,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 0.1034,
      "rationale": "TOR@WSH 1H OVER 100.5 @90c: model 90.1% (mu 117.2, line -16.7 below mu); edge +0.1c",
      "sd": 13.0,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1HTOTAL-26OCT23TORWAS-101",
      "unit": "game"
     },
@@ -5655,12 +5994,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.91,
+     "profit": 0.092,
      "rationale": "TOR@WSH 1H UNDER 130.5 @91c: model 84.6% (mu 117.2, line +13.3 above mu); edge -6.4c",
      "sd": 13.0,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1HTOTAL-26OCT23TORWAS-131",
      "unit": "game"
     },
@@ -5678,12 +6020,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.88,
+     "profit": 0.1269,
      "rationale": "TOR@WSH 1H UNDER 128.5 @88c: model 80.7% (mu 117.2, line +11.3 above mu); edge -7.3c",
      "sd": 13.0,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1HTOTAL-26OCT23TORWAS-129",
      "unit": "game"
     },
@@ -5701,12 +6046,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.84,
+     "profit": 0.1773,
      "rationale": "TOR@WSH 1H UNDER 126.5 @84c: model 76.2% (mu 117.2, line +9.3 above mu); edge -7.8c",
      "sd": 13.0,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1HTOTAL-26OCT23TORWAS-127",
      "unit": "game"
     },
@@ -5724,12 +6072,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.85,
+     "profit": 0.1642,
      "rationale": "TOR@WSH 1H OVER 102.5 @85c: model 87.2% (mu 117.2, line -14.7 below mu); edge +2.1c",
      "sd": 13.0,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1HTOTAL-26OCT23TORWAS-103",
      "unit": "game"
     },
@@ -5748,12 +6099,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.94,
+     "profit": 0.0594,
      "rationale": "TOR@WSH 1H OVER 98.5 @94c: model 92.5% (mu 117.2, line -18.7 below mu); edge -1.5c",
      "sd": 13.0,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1HTOTAL-26OCT23TORWAS-99",
      "unit": "game"
     },
@@ -5772,12 +6126,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.94,
+     "profit": 0.0594,
      "rationale": "TOR@WSH game UNDER 263.5 @94c: model 95.1% (mu 232.2, line +31.3 above mu); edge +1.1c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23TORWAS-264",
      "unit": "game"
     },
@@ -5795,12 +6152,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.93,
+     "profit": 0.07,
      "rationale": "TOR@WSH game OVER 213.5 @93c: model 83.8% (mu 232.2, line -18.7 below mu); edge -9.2c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23TORWAS-214",
      "unit": "game"
     },
@@ -5819,12 +6179,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.91,
+     "profit": 0.092,
      "rationale": "TOR@WSH game UNDER 261.5 @91c: model 94.0% (mu 232.2, line +29.3 above mu); edge +3.0c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23TORWAS-262",
      "unit": "game"
     },
@@ -5843,12 +6206,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 0.1034,
      "rationale": "TOR@WSH game UNDER 259.5 @90c: model 92.6% (mu 232.2, line +27.3 above mu); edge +2.6c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23TORWAS-260",
      "unit": "game"
     },
@@ -5866,12 +6232,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.95,
+     "profit": 0.049,
      "rationale": "TOR@WSH game OVER 209.5 @95c: model 88.5% (mu 232.2, line -22.7 below mu); edge -6.5c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23TORWAS-210",
      "unit": "game"
     },
@@ -5889,12 +6258,15 @@
      "passed": [
       "band"
      ],
+     "payout": 0.0,
      "price": 0.91,
+     "profit": -1.0,
      "rationale": "TOR@WSH game OVER 215.5 @91c: model 81.1% (mu 232.2, line -16.7 below mu); edge -9.9c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATOTAL-26OCT23TORWAS-216",
      "unit": "game"
     },
@@ -5912,12 +6284,15 @@
      "passed": [
       "band"
      ],
+     "payout": 0.0,
      "price": 0.86,
+     "profit": -1.0,
      "rationale": "TOR@WSH game OVER 219.5 @86c: model 74.8% (mu 232.2, line -12.7 below mu); edge -11.2c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATOTAL-26OCT23TORWAS-220",
      "unit": "game"
     },
@@ -5935,12 +6310,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.85,
+     "profit": 0.1642,
      "rationale": "TOR@WSH game UNDER 255.5 @85c: model 89.2% (mu 232.2, line +23.3 above mu); edge +4.2c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23TORWAS-256",
      "unit": "game"
     },
@@ -5963,12 +6341,15 @@
       "labels",
       "clean"
      ],
+     "payout": 1.0,
      "price": 0.87,
+     "profit": 0.1391,
      "rationale": "TOR@WSH game UNDER 257.5 @87c: model 91.0% (mu 232.2, line +25.3 above mu); labels O+D\u2212 v O+D\u2212 (both defences agree); edge +4.0c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23TORWAS-258",
      "unit": "game"
     },
@@ -5986,12 +6367,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.94,
+     "profit": 0.0594,
      "rationale": "TOR@WSH game OVER 211.5 @94c: model 86.3% (mu 232.2, line -20.7 below mu); edge -7.7c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT23TORWAS-212",
      "unit": "game"
     },
@@ -6009,12 +6393,15 @@
      "passed": [
       "band"
      ],
+     "payout": 0.0,
      "price": 0.88,
+     "profit": -1.0,
      "rationale": "TOR@WSH game OVER 217.5 @88c: model 78.1% (mu 232.2, line -14.7 below mu); edge -9.9c",
      "sd": 18.9,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBATOTAL-26OCT23TORWAS-218",
      "unit": "game"
     },
@@ -6368,12 +6755,15 @@
       "safety",
       "value"
      ],
+     "payout": 1.0,
      "price": 0.92,
+     "profit": 0.0809,
      "rationale": "DET@MIA 1Q UNDER 73.5 @92c: model 95.8% (mu 59.2, line +14.3 above mu); labels q1 O\u2212D+ v O+D+ (both attacks agree); edge +3.8c",
      "sd": 8.28,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-24T00:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT23DETMIA-74",
      "unit": "game"
     },
@@ -6392,12 +6782,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 0.1034,
      "rationale": "DET@MIA 1H UNDER 135.5 @90c: model 90.8% (mu 118.3, line +17.2 above mu); edge +0.8c",
      "sd": 13.0,
+     "settled": "2026-10-24T02:00:27.200675+00:00",
      "side": "no",
      "start": "2026-10-24T00:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1HTOTAL-26OCT23DETMIA-136",
      "unit": "game"
     },
@@ -9736,7 +10129,7 @@
   }
  },
  "error": null,
- "last_run": "2026-10-24T00:45:22.994223+00:00",
+ "last_run": "2026-10-24T02:00:27.200675+00:00",
  "preseason": [
   {
    "pts": 105,
@@ -10517,10 +10910,13 @@
   {
    "at": "2026-10-24T00:45:22.994223+00:00",
    "built": []
+  },
+  {
+   "at": "2026-10-24T02:00:27.200675+00:00",
+   "built": []
   }
  ],
  "schedule": [
-  "2026-10-24T00:00:00+00:00",
   "2026-10-24T01:30:00+00:00",
   "2026-10-24T02:00:00+00:00",
   "2026-10-24T22:00:00+00:00",
