@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-24T22:01:11.559335+00:00",
+ "last_run": "2026-10-24T22:31:13.229317+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -352,18 +352,29 @@
      "ticker": "KXBRASILEIROTOTAL-26OCT24CHAFLU-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Brasileir\u00e3o over 1.5 YES 0.77"
+    },
+    {
+     "ask": 0.85,
+     "bid": 0.83,
+     "event": "KXBRASILEIROTOTAL-26OCT24SANBAH",
+     "id": "BRA:KXBRASILEIROTOTAL-26OCT24SANBAH",
+     "league": "Brasileir\u00e3o",
+     "line": 1.5,
+     "logged": "2026-10-24T22:31:13.229317+00:00",
+     "match": "Santos v Bahia",
+     "price": 0.85,
+     "rule": "BRA",
+     "side": "yes",
+     "start": "2026-10-25T00:00Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROTOTAL-26OCT24SANBAH-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Brasileir\u00e3o over 1.5 YES 0.85"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-23T17:46:23.408809+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "quoted": 0
-  },
   {
    "at": "2026-10-23T18:01:46.071797+00:00",
    "due": 0,
@@ -713,10 +724,16 @@
    "matched": 1,
    "new": 0,
    "quoted": 1
+  },
+  {
+   "at": "2026-10-24T22:31:13.229317+00:00",
+   "due": 1,
+   "matched": 1,
+   "new": 1,
+   "quoted": 1
   }
  ],
  "schedule": [
-  "2026-10-24T22:15:00+00:00",
   "2026-10-24T22:30:00+00:00",
   "2026-10-25T00:00:00+00:00",
   "2026-10-25T00:30:00+00:00",
