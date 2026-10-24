@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-24T15:31:42.758203+00:00",
+ "last_run": "2026-10-24T15:46:09.551659+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -1924,11 +1924,14 @@
      "line": null,
      "logged": "2026-10-24T12:01:41.422665+00:00",
      "match": "Mainz v Werder Bremen",
+     "payout": 1.0,
      "price": 0.63,
+     "profit": 54.72,
      "rule": "D3",
+     "settled": "2026-10-24T15:46:09.551659+00:00",
      "side": "yes",
      "start": "2026-10-24T13:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXBUNDESLIGABTTS-26OCT24M05SVW-BTTS",
      "title": "Both Teams To Score",
      "why": "Mainz O+D- v Werder Bremen O-D- \u00b7 BTTS YES 0.63"
@@ -1983,14 +1986,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-21T17:31:37.637172+00:00",
-   "candidates": 7,
-   "due": 8,
-   "labelled": 7,
-   "matched": 7,
-   "new": 10
-  },
   {
    "at": "2026-10-21T18:01:47.159014+00:00",
    "candidates": 6,
@@ -2389,6 +2384,14 @@
    "due": 7,
    "labelled": 7,
    "matched": 3,
+   "new": 0
+  },
+  {
+   "at": "2026-10-24T15:46:09.551659+00:00",
+   "candidates": 1,
+   "due": 5,
+   "labelled": 5,
+   "matched": 1,
    "new": 0
   }
  ],
