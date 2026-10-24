@@ -71,21 +71,27 @@ check("four of the five are still listed by hand that day",
 check("btts_form_l10_fade|soccer_btts is off the list and goes back keeping its record",
       ("btts_form_l10_fade|soccer_btts" in T.PAIR_OVERRIDES, T.PAIR_REMOVALS["btts_form_l10_fade|soccer_btts"]["keep_record"]),
       (False, True))
-_rm = {"pairs": {"btts_form_l10_fade|soccer_btts": dict(stage="production", promoted_at="2026-10-16T17:17:38+00:00",
-                                                        entry_since=None, by_hand="2026-10-16")}, "events": []}
+check("and since 2026-10-24 it is retired: off the run, its rows kept",
+      ("soccer_btts" in S.SOURCES["btts_form_l10_fade"]["sports"],
+       "soccer_btts" in S.SOURCES["btts_form_l10_fade"]["retired_sports"]), (False, True))
+# The kept-record removal itself, on a pair of the same kind that still runs (turkey_btts_dog,
+# out 2026-10-20 keeping its record): evaluate_stages only walks the live scopes.
+_KR = "turkey_btts_dog|soccer_btts"
+_rm = {"pairs": {_KR: dict(stage="production", promoted_at="2026-10-16T17:17:38+00:00",
+                           entry_since=None, by_hand="2026-10-16")}, "events": []}
 T.evaluate_stages({"quotes": []}, _rm, now=datetime(2026, 10, 18, 6, tzinfo=timezone.utc), verbose=False)
 check("a kept-record removal returns to the Sandbox on its old clock (None = whole record), demoted_at set",
-      {k: _rm["pairs"]["btts_form_l10_fade|soccer_btts"].get(k) for k in ("stage", "since", "demoted_at")},
+      {k: _rm["pairs"][_KR].get(k) for k in ("stage", "since", "demoted_at")},
       dict(stage="sandbox", since=None, demoted_at="2026-10-18T06:00:00+00:00"))
-_rm2 = {"pairs": {"pm_combo4|tennis_pmcombo": dict(stage="production", promoted_at="2026-10-01T00:00:00+00:00")}, "events": []}
+_rm2 = {"pairs": {"ere_o15|soccer_o15": dict(stage="production", promoted_at="2026-10-01T00:00:00+00:00")}, "events": []}
 T.evaluate_stages({"quotes": []}, _rm2, now=datetime(2026, 10, 18, 6, tzinfo=timezone.utc), verbose=False)
 check("an ordinary removal still restarts the clock at the removal",
-      _rm2["pairs"].get("pm_combo4|tennis_pmcombo", {}).get("since"), "2026-10-18T06:00:00+00:00")
+      _rm2["pairs"].get("ere_o15|soccer_o15", {}).get("since"), "2026-10-18T06:00:00+00:00")
 print("\na same-day listing cannot undo the net's demotion (the 2026-10-18 flip-flop)")
 check("o25_congestion|soccer_o25 is off the list and goes back keeping its record",
       ("o25_congestion|soccer_o25" in T.PAIR_OVERRIDES, T.PAIR_REMOVALS["o25_congestion|soccer_o25"]["keep_record"]),
       (False, True))
-_FF = "pm_combo4|tennis_pmcombo"          # any registered pair; the override is put in for this check only
+_FF = "ere_o15|soccer_o15"          # any live registered pair (pm_combo4 retired 2026-10-24); the override is put in for this check only
 _saved = dict(T.PAIR_OVERRIDES)
 T.PAIR_OVERRIDES[_FF] = dict(moved_on="2026-10-18", production_at=None)
 _ff = {"pairs": {_FF: dict(stage="sandbox", since="2026-10-18T22:32:01+00:00", demoted_at="2026-10-18T22:32:01+00:00")},

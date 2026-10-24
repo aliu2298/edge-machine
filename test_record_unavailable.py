@@ -43,7 +43,7 @@ def _bet(i, source, sport, hours, status="won", price=0.6):
     )
 
 
-BAD, GOOD = "o15_form_l10|soccer_o15", "oddspedia|cricket"
+BAD, GOOD = "u35_low_o15|soccer_o15", "oddspedia|cricket"   # BAD: any live rule (o15_form_l10 retired 2026-10-24)
 PAIRS = {
     BAD: {"stage": "production", "by_hand": "2026-10-01", "ready_at": "2026-10-01T00:00:00+00:00"},
     GOOD: {"stage": "production", "by_hand": "2026-10-01", "ready_at": "2026-10-01T00:00:00+00:00"},
@@ -71,7 +71,7 @@ try:
     printed = out.getvalue()
     ok("record unavailable: DegenerateCluster: 1 of 1 outcome clusters" in html,
        "the raising pair's row says record unavailable with the exception type and reason")
-    ok('data-pair="o15_form_l10|soccer_o15"' in html, "the warning row names the pair")
+    ok('data-pair="u35_low_o15|soccer_o15"' in html, "the warning row names the pair")
     ok("Oddspedia" in html or "oddspedia" in html.lower(), "the other pair still renders")
     ok(html.count('class="unavailable"') == 1, "only the raising pair is marked unavailable")
     ok(f"::warning title=Record unavailable::{BAD}: record unavailable: DegenerateCluster" in printed,

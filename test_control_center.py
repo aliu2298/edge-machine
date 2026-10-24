@@ -169,15 +169,15 @@ eq(_area(stamped, "soccer")["last_read"], NOW - timedelta(hours=1),
 # ---------------------------------------------------------------------------
 print("\nthe cards' counts")
 # ---------------------------------------------------------------------------
-quotes = [
-    _q(1, "o15_ranked", "soccer_o15", "open", hours=6),            # next 24h
-    _q(2, "o15_ranked", "soccer_o15", "open", hours=30),           # open, later
-    _q(3, "o15_ranked", "soccer_o15", "won", hours=-48),           # settled inside 14d
-    _q(4, "o15_ranked", "soccer_o15", "lost", hours=-24 * 20),     # settled outside 14d
+quotes = [   # o15_ranked · Internationals: the Production scope (Clubs and Cups retired 2026-10-24)
+    _q(1, "o15_ranked", "soccer_o15_intl", "open", hours=6),            # next 24h
+    _q(2, "o15_ranked", "soccer_o15_intl", "open", hours=30),           # open, later
+    _q(3, "o15_ranked", "soccer_o15_intl", "won", hours=-48),           # settled inside 14d
+    _q(4, "o15_ranked", "soccer_o15_intl", "lost", hours=-24 * 20),     # settled outside 14d
     _q(5, "tennis_fav_band_3h", "tennis", "open", hours=2, market_id="KXATPMATCH-26OCT12AAABBB-A"),
     _q(6, "oddspedia", "cricket", "won", hours=-12),
 ]
-st = {"pairs": {"o15_ranked|soccer_o15": {"stage": "production", "by_hand": "2026-10-08",
+st = {"pairs": {"o15_ranked|soccer_o15_intl": {"stage": "production", "by_hand": "2026-10-08",
                                            "ready_at": "2026-10-08T17:50:08+00:00",
                                            "promoted_at": "2026-10-08T17:50:08+00:00"}}}
 counts = _model(_ledger(quotes, lane_reads=read_now), st)

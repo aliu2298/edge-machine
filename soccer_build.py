@@ -52,7 +52,9 @@ def build(d=None, st=None, now=None):
         family=FAMILY, key=KEY, title=TITLE, description=DESCRIPTION, scope=SCOPE,
         venue="Kalshi", rows=rows, events=soccer_cards.events,
         rule_name=soccer_cards._rule_name, market=soccer_cards.market,
-        recent=soccer_cards.recent_html, method=method(idle))
+        recent=soccer_cards.recent_html, method=method(idle),
+        # Retired by hand (2026-10-24 and before): their own fold, final record and reason.
+        retired=sport_tab.retired_rows(d, st, FAMILY))
     html = SP.page(sp, d, st, now, rows=rows, idle=idle)
     return place_label_rules(html, _rules_section() + "\n" + _team_rules_section() + "\n" + _contender_section() + "\n"
                              + _sa_o15_section() + "\n")

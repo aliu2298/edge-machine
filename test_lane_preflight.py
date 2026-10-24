@@ -170,21 +170,18 @@ def _one(results, lane, series, kind):
 
 def test_map_uses_lane_constants():
     _need()
-    print("\nmap is the ten lanes' own constants")
+    print("\nmap is the eight lanes' own constants (bund_o35 and bund_o35_fav retired 2026-10-24)")
     by = {}
     for lane, series, kind in P.checks():
         by.setdefault(lane, []).append((series, kind))
     eq(list(by), [
-        "ere_draw", "ere_o15", "bund_o35", "bund_o35_fav", "liga_btts_even",
+        "ere_draw", "ere_o15", "liga_btts_even",
         "liga_u15_dog", "turkey_o25_dog", "turkey_btts_dog", "mls_away_band",
         "mls_fade_home",
-    ], "the ten lanes, in matchday order, and no others")
+    ], "the eight lanes, in matchday order, and no others (the two Bundesliga lanes are retired)")
     eq(by["ere_draw"], [(S.ERE_DRAW_SERIES, "three_way")], "ere_draw reads ERE_DRAW_SERIES")
     eq(by["ere_o15"], [(S.ERE_O15_TOTAL, "total"), (S.ERE_O15_GAME, "three_way")],
        "ere_o15 reads ERE_O15_TOTAL and ERE_O15_GAME")
-    eq(by["bund_o35"], [(S.BUND_O35_TOTAL, "total"), (S.BUND_O35_GAME, "three_way")],
-       "bund_o35 reads BUND_O35_TOTAL and BUND_O35_GAME")
-    eq(by["bund_o35_fav"], by["bund_o35"], "bund_o35_fav reads the same two series")
     eq(by["liga_btts_even"], [(S.LIGA_BTTS, "btts"), (S.LIGA_GAME, "three_way")],
        "liga_btts_even reads LIGA_BTTS and LIGA_GAME")
     eq(by["liga_u15_dog"], [(S.LIGA_TOTAL, "total"), (S.LIGA_GAME, "three_way")],
@@ -197,14 +194,12 @@ def test_map_uses_lane_constants():
     eq(by["mls_fade_home"], [(S.MLS_GAME, "three_way"), (S.MLS_GAME, "p05")],
        "mls_fade_home reads MLS_GAME on the three-way board and the +0.5 board")
     eq(P.board_sport("ere_o15", "total"), "soccer_o15", "ere_o15's total is the over-1.5 board")
-    eq(P.board_sport("bund_o35", "total"), "soccer_u35", "bund_o35's total is the over-3.5 board")
     eq(P.board_sport("turkey_o25_dog", "total"), "soccer_o25", "turkey_o25_dog's total is the over-2.5 board")
     eq(P.board_sport("liga_btts_even", "btts"), "soccer_btts", "liga_btts_even reads the BTTS board")
     eq(P.board_sport("mls_fade_home", "p05"), "soccer_p05", "mls_fade_home reads the +0.5 board")
     eq(P.board_sport("ere_draw", "three_way"), "soccer", "a three-way series is the soccer board")
     for lane, kind, sport in (
             ("ere_o15", "total", "soccer_o15"),
-            ("bund_o35", "total", "soccer_u35"),
             ("liga_btts_even", "btts", "soccer_btts"),
             ("mls_fade_home", "p05", "soccer_p05"),
             ("ere_draw", "three_way", "soccer")):
@@ -274,10 +269,8 @@ def test_listed_reaches_the_board():
     eq(fade["state"], "listed", "an in-window MLS game reaches the +0.5 board")
     away = _one(results, "mls_away_band", S.MLS_GAME, "three_way")
     eq(away["state"], "listed", "the same MLS game reaches the three-way board")
-    bund = _one(results, "bund_o35", S.BUND_O35_TOTAL, "total")
-    eq(bund["state"], "listed", "an in-window over 3.5 reaches bund_o35")
-    fav = _one(results, "bund_o35_fav", S.BUND_O35_TOTAL, "total")
-    eq(fav["state"], "listed", "bund_o35_fav names that same total")
+    eq([r for r in results if r.get("lane") in ("bund_o35", "bund_o35_fav")], [],
+       "the retired Bundesliga lanes are not checked, even with their total listed")
     ok("::error::" not in text, "listed markets print no error")
     ok(text.startswith("2026-10-02T12:00Z lane pre-flight"), "the report is stamped in UTC")
 

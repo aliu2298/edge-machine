@@ -212,8 +212,13 @@ def main():
     for name, sport, universe, pick_sport in cases:
         seen.append(name)
         d = run(name, universe)
-        eq(cell(d, sport, name), {"picked": 0, "offered": 3},
-           f"{name} records 0 of 3: the three series rows, not the two from another league")
+        if sport not in S.SOURCES[name]["sports"]:
+            # Retired 2026-10-24 (bund_o35, bund_o35_fav): off the run, so no cell at all.
+            eq(cell(d, sport, name), None, f"{name} is retired: not fetched, so no coverage cell")
+            eq([q for q in d["quotes"] if q["source"] == name], [], f"{name} is retired: it logs nothing")
+        else:
+            eq(cell(d, sport, name), {"picked": 0, "offered": 3},
+               f"{name} records 0 of 3: the three series rows, not the two from another league")
         picks = S.CHALLENGERS[name](pick_sport or sport, universe=universe)
         eq(picks, [], f"{name} qualifies none of those rows")
     eq(seen, list(LANES), "the ten league lanes are the ones this counts")

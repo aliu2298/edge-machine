@@ -52,7 +52,7 @@ Group BTTS — both teams to score (added 2026-10-17, same labels, window, ledge
                                        Eredivisie 4/4, Saudi 3/4, Ligue 1 3/3); pooled 44/64 (69%)
                                        @61c, +10.4% after fee, z +1.34. Same matchup as the
                                        total-goals over pattern: corroboration across markets.
-  D2  O-D- v O+D+   BTTS NO  30-60c   5 leagues (EPL 5/7, Turkey 3/5, La Liga 3/4, Ligue 1 2/3,
+  D2  O-D- v O+D+   BTTS NO  30-60c   RETIRED from 2026-10-24 (see RETIRED). 5 leagues (EPL 5/7, Turkey 3/5, La Liga 3/4, Ligue 1 2/3,
                                        Scotland 3/3); pooled 25/49 @43c, +13.6%, z +1.11.
   D3  O-D- v O+D-   BTTS YES 40-70c   4 leagues (La Liga 10/14, Serie A 4/6, Primeira 4/6, UCL
                                        3/4); pooled 54/86 (63%) @56c, +8.2%, z +1.22.
@@ -160,6 +160,25 @@ for _k, _rule in RULES.items():
     _rule.setdefault("market", "total")
     _rule.setdefault("group", _k[0])
 MARKETS = {"total": SERIES, "btts": BTTS_SERIES}
+
+# Rules retired by hand: no new entry from the dated day on (Eastern), the ledger rows stay and
+# keep settling, and the Soccer page's label-rules section shows the rule as Retired with this
+# reason. Every other rule, A7/A6/D3 in Production included, behaves exactly as before.
+RETIRED = {
+    "D2": dict(on="2026-10-24",
+               reason="3/11, −39.4% after fees on the paper record"),
+}
+
+
+def retired(rule, now):
+    """True once `rule` is retired as of `now` (its dated day, Eastern, or later)."""
+    r = RETIRED.get(rule)
+    return bool(r) and now.astimezone(ET).date().isoformat() >= r["on"]
+
+
+def live_rules(league, a, b, now):
+    """applicable() minus the rules retired as of `now`."""
+    return [k for k in applicable(league, a, b) if not retired(k, now)]
 
 
 def fee(p):
@@ -366,7 +385,7 @@ def entry(rule, f, ev, m, px, b, a, labs, now):
 def picks_for(f, labs, ev, now, market=None):
     """Entries for one fixture from one Kalshi event; `market` keeps the rules of that market only."""
     out = []
-    for rule in applicable(f["league"], *labs):
+    for rule in live_rules(f["league"], *labs, now):
         r = RULES[rule]
         if market and r["market"] != market:
             continue
@@ -432,11 +451,11 @@ def run(state, fixtures, now=None, fetch=D.get):
         if not all(labs):
             continue
         stats["labelled"] += 1
-        if not applicable(f["league"], *labs):
+        if not live_rules(f["league"], *labs, now):
             continue
         stats["candidates"] += 1
         found = False
-        for market in sorted({RULES[k]["market"] for k in applicable(f["league"], *labs)}):
+        for market in sorted({RULES[k]["market"] for k in live_rules(f["league"], *labs, now)}):
             series = MARKETS[market][f["league"]]
             try:
                 if series not in cache:

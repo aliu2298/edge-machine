@@ -65,6 +65,31 @@ def family_rows(d, st, family):
             if B.family(r["sport"]) == family and not B.eliminated(r)]
 
 
+def retired_rows(d, st, family):
+    """The family's RETIRED pairs, each with its record and dated reason (`gone`).
+
+    Listed apart from the live rules (sport_page's Retired fold), so a retired record never
+    pools with a live one in the tiles or the Sandbox count. A pair that never fired is listed
+    too, with an empty record; eliminated pairs stay in the Sandbox's own list.
+
+    The record is the one the page read (its clock, record_since). A pair whose clock was
+    restarted BY its removal from Production and that logged nothing after it (team scores 1+
+    · Clubs, corners_under) would read empty, so it shows the record up to that removal: the
+    one it stopped on.
+    """
+    out = []
+    for r in B.pair_list(d, st, show_retired=True):
+        if r["v"] != "retired" or B.family(r["sport"]) != family or B.eliminated(r):
+            continue
+        pair = ((st or {}).get("pairs") or {}).get(f'{r["name"]}|{r["sport"]}') or {}
+        cut = pair.get("demoted_at")
+        if (cut and pair.get("since") == cut and not r["a"].get("n") and not r["a"].get("n_price")
+                and not r.get("open")):
+            r = dict(r, since=None, a=T.assess(d, r["name"], r["sport"], until=cut, venues=T.TRADEABLE_VENUES))
+        out.append(r)
+    return out
+
+
 def preflight_report(path=PREFLIGHT, now=None):
     """(by_lane, note). Never raises: a missing file is a stated absence, not a crash."""
     now = now or datetime.datetime.now(datetime.timezone.utc)

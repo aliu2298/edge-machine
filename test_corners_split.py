@@ -100,15 +100,26 @@ try:
     S.CHALLENGERS = {"corners_team_fade": S.fetch_corners_team_fade}
     T._started = lambda r, now: False
     S._espn_fixtures = lambda: []
+    _tf_sports = S.SOURCES["corners_team_fade"]["sports"]
     try:
+        # Retired 2026-10-24: off the run, so it logs nothing ...
+        led0 = {"quotes": [], "meta": {}, "coverage": {}}
+        with um.patch.object(S, "datetime", wraps=S.datetime) as m:
+            m.now.side_effect = lambda tz=None: NOW
+            T.publish(led0, fade_only, {}, verbose=False)
+        check("retired 2026-10-24: the team fade logs nothing new",
+              [q for q in led0["quotes"] if q["source"] == "corners_team_fade"], [])
+        # ... and, as registered, it booked the YES at the YES ask (its rows settle that way).
+        S.SOURCES["corners_team_fade"]["sports"] = ["soccer_corners"]
         led2 = {"quotes": [], "meta": {}, "coverage": {}}
         with um.patch.object(S, "datetime", wraps=S.datetime) as m:
             m.now.side_effect = lambda tz=None: NOW
             T.publish(led2, fade_only, {}, verbose=False)
     finally:
         S.CHALLENGERS, T._started, S._espn_fixtures = _ch, _st, _fx
+        S.SOURCES["corners_team_fade"]["sports"] = _tf_sports
     fb = [q for q in led2["quotes"] if q["source"] == "corners_team_fade" and q["bet"]]
-    check("a team fade is booked on YES at the YES ask", [(q["pick"], q["price"]) for q in fb], [("a", 0.42)])
+    check("as registered, a team fade was booked on YES at the YES ask", [(q["pick"], q["price"]) for q in fb], [("a", 0.42)])
     won = dict(fb[0], status="won", result="a")
     check("and settles as a YES: a win when the team reaches N", T.pnl_after_fee(won) > 0, True)
 finally:

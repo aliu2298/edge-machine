@@ -99,6 +99,10 @@ def spec(**kw):
         # empty_reason(d, rows, idle, now) -> str: why nothing is due in the next 24 hours, for a
         # family that keeps its own ledger and not the tracker's coverage (None: coverage_reason).
         empty_reason=None,
+        # retired: rows for rules retired by hand (sport_tab.retired_rows), drawn in their own
+        # folded list under the Sandbox with the record they stopped on and the dated reason.
+        # They count in no tile and no Sandbox total.
+        retired=(),
     )
     out.update(kw)
     return out
@@ -513,7 +517,23 @@ def rules_html(sp, d, rows, now, ev_list):
         count = f'{len(prod)} in Production · {len(sand) - n_retired} active in the Sandbox · {n_retired} retired'
     return (f'<section id="rules" class="sp-section">'
             f'<div class="sp-section-head"><h2>Rules</h2><span class="sm mut">{esc(count)}</span></div>'
-            f'{prod_html}{sand_html}</section>')
+            f'{prod_html}{sand_html}{retired_html(sp, d, now, scoped)}</section>')
+
+
+def retired_html(sp, d, now, scoped):
+    """Rules retired by hand: folded, below the Sandbox, each row its final record and why."""
+    gone = sorted(sp.get("retired") or (), key=lambda r: (-int(r["a"].get("n") or 0), sp_name(r)))
+    if not gone:
+        return ""
+    body = "".join(
+        rule_row(sp, d, r, now, scoped)
+        + f'<p class="sm mut sp-retired-why" data-source="{esc(r["name"])}" data-sport="{esc(r["sport"])}">'
+          f'{esc(r.get("gone") or "")}</p>'
+        for r in gone)
+    n = f'{len(gone)} rule{"s" if len(gone) != 1 else ""}'
+    return (f'<details class="fold sp-retired" id="retired"><summary><h3>Retired rules</h3>'
+            f'<span class="sm mut">· {esc(n)} · final records · no new entries</span></summary>'
+            f'<div class="sp-rules-list" data-list="retired">{list_head(scoped)}{body}</div></details>')
 
 
 # ------------------------------------------------------------------ the events

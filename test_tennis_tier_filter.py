@@ -374,7 +374,7 @@ def _frozen_overlaps():
 # pair is the same edit; the test does not require it.
 LOOKED_AT_SHA256 = "323618ead3340efcbbe70a5752c94581db3bb63fc4911a1446d56067967f7920"
 OVERLAPS_SHA256 = "0f3c41a83d4cdf24ac17661616e3dac44c3151e1da5501b67eb8d76c16875419"
-SETTLED_PAIRS_SHA256 = "08ec49ffd432366afff598280384b7bcd31743d54da3fa0e9ef031e506f8c444"
+SETTLED_PAIRS_SHA256 = "f02759c35ee7732bfea452d765c0f016a57d7ab0e967c4195e32ad27093d2165"   # 2026-10-24: ten retired pairs left the list
 
 
 def _check_frozen_note(rows):
@@ -914,11 +914,15 @@ def main():
     first_leaked = next(iter(leaked), None)
     ok(not leaked, "no refused-tour bet is a row on the sandbox page or an archive page"
        + (f" — {len(leaked)} rows, first {first_leaked}" if first_leaked else ""))
+    # Retired 2026-10-24 (all but tennis_combo2): off the Sandbox page, their rows are the
+    # Tennis page's Retired fold (pair_list show_retired), read on the same clock.
+    by_any = {r["name"]: r for r in SB.pair_list(d, st, show_retired=True)}
     for name in ("tennis_fav_band_3h", "tennis_combo2", "tennis_combo3",
                  "tennis_combo4", "pm_combo2", "pm_combo3"):
-        sport = _lane_sport(name)
-        row = by_name.get(name) or {}
-        ok(bool(row), f"{name} still renders")
+        sport = _lane_sport(name) or next(iter((S.SOURCES[name].get("retired_sports") or {})), None)
+        retired = sport in (S.SOURCES[name].get("retired_sports") or {})
+        row = by_any.get(name) or {}
+        ok(bool(row), f"{name} still renders" + (" (in the Retired fold)" if retired else ""))
         want_n = len(_kept_settled_since(d, name, sport, since))
         eq((row.get("a") or {}).get("n"), want_n,
            f"{name}'s record n is its kept-tour bets settled since the clock")
@@ -926,8 +930,9 @@ def main():
         eq(row.get("open"), len(opens),
            f"{name}'s open column is its kept-tour open bets")
         if want_n == 0:
-            eq(row.get("v"), "waiting",
-               f"{name} with nothing settled since the clock is Waiting")
+            eq(row.get("v"), "retired" if retired else "waiting",
+               f"{name} with nothing settled since the clock is "
+               + ("Retired" if retired else "Waiting"))
         eq((row.get("fade") or {}).get("n"), _fade_count(d, name, sport, since),
            f"{name}'s If-faded n is the kept-tour bets settled since the clock")
         for q in opens:
@@ -951,14 +956,16 @@ def main():
     eq(other["n"], len(p4), "T.faded() on pm_combo4 counts those same baskets")
     label = "Tennis 3-leg combo on Polymarket US"
     table_rows = [part for part in html.split("<tr>") if label in part.split("</tr>", 1)[0]]
+    # Still a row in the source-wide approval table; its pair is retired (2026-10-24), so it
+    # has no pair row and the Too early check below does not apply.
     ok(bool(table_rows), "pm_combo3 is on the sandbox page")
     if ((by_name.get("pm_combo3") or {}).get("a") or {}).get("n") == 0:
         ok(any('data-verdict="waiting">Too early<' in part for part in table_rows),
            "an empty pm_combo3 record renders as Too early")
 
     print("\na post-reset kept bet counts, and a dropped tour does not")
-    fx = _reset_fixture()
-    fx_rows = {r["name"]: r for r in SB.pair_list(fx, _reset_stages())}
+    fx = _reset_fixture()   # the 3h lane is retired (2026-10-24): its row is the Retired fold one
+    fx_rows = {r["name"]: r for r in SB.pair_list(fx, _reset_stages(), show_retired=True)}
     fx_lane = fx_rows.get("tennis_fav_band_3h") or {"a": {}, "fade": {}}
     eq((fx_lane["a"].get("n"), fx_lane["a"].get("won")),
        (1, 1), "only the post-reset kept-tour bet is in the 3-hour record")

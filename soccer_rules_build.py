@@ -30,13 +30,16 @@ def rule_head(scope="League"):
             f'<span class="sp-cell">{esc(scope)}</span><span class="sp-cell">Definition</span>{cells}</div>')
 
 
-def rule_line(key, scope, definition, evidence, picks):
+def rule_line(key, scope, definition, evidence, picks, retired=None):
     n, won, roi, live = *_record(picks), sum(p["status"] == "open" for p in picks)
     tip = f"{definition} · {evidence}" if evidence else definition
     ev = f' <small class="mut">· {esc(evidence)}</small>' if evidence else ""
     vals = (n, won, "—" if roi is None else f"{roi * 100:+.1f}%", live)
     nums = "".join(f'<span class="sp-cell num" data-l="{esc(short)}">{esc(v)}</span>' for (_, short), v in zip(COLS, vals))
-    return (f'<div class="sp-line is-label" data-rule="{esc(key)}"><span class="sp-cell sp-c-id"><b>{esc(key)}</b></span>'
+    tag = (f' <span class="badge stage">Retired</span>' if retired else "")
+    return (f'<div class="sp-line is-label{" mut" if retired else ""}" data-rule="{esc(key)}"'
+            f'{" data-retired=\"" + esc(retired["on"]) + "\"" if retired else ""}>'
+            f'<span class="sp-cell sp-c-id"><b>{esc(key)}</b>{tag}</span>'
             f'<span class="sp-cell sp-c-market" title="{esc(scope)}">{esc(scope)}</span>'
             f'<span class="sp-cell sp-c-def" title="{esc(tip)}">{esc(definition)}{ev}</span>{nums}</div>')
 
@@ -88,7 +91,10 @@ def section(state=None):
             label = meta["label"] + (" · Production since 2026-10-21" if key in PRODUCTION_KEYS else "")
             if key == "D3":                    # 2026-10-22: the UEL stays Sandbox paper (soccer_rules_production)
                 label += " (not the Europa League: paper there)"
-            lines.append(rule_line(key, scope, label, meta.get("evidence"), picks))
+            gone = SR.RETIRED.get(key)
+            if gone:                           # retired by hand: no new entries, rows kept
+                label += f" · Retired {gone['on']}: {gone['reason']}. Its entries stay and settle"
+            lines.append(rule_line(key, scope, label, meta.get("evidence"), picks, retired=gone))
             picks_g += picks
         recent += picks_g
         groups.append(group_fold(g, words, lines, picks_g, opened=(g == "A"), extra=BTTS_NOTE if g == "BTTS" else ""))
@@ -104,8 +110,9 @@ def section(state=None):
                          f'<td class="num">{p["price"] * 100:.0f}c</td><td>{esc(res + money)}</td></tr>')
     body = "".join(pick_rows) or '<tr><td colspan="8" class="mut">No entries yet: rules enter 20–90 minutes before kickoff once both teams carry a label and Kalshi quotes the match total inside the rule\'s price range.</td></tr>'
     last = state.get("last_run")
+    retired_note = f" ({len(SR.RETIRED)} retired: {', '.join(SR.RETIRED)})" if SR.RETIRED else ""
     return f"""<section id="label-rules">
-<div class="nba-section-head"><div><h2>Sandbox rules</h2><p class="shell-kicker">21 total-goals rules from 674 matches and 3 both-teams-to-score rules from 617, Aug 1 – Oct 17 2026 · paper at the Kalshi price, 7% fee · not in Production</p></div></div>
+<div class="nba-section-head"><div><h2>Sandbox rules</h2><p class="shell-kicker">21 total-goals rules from 674 matches and 3 both-teams-to-score rules from 617, Aug 1 – Oct 17 2026{retired_note} · paper at the Kalshi price, 7% fee · not in Production</p></div></div>
 {"".join(groups)}
 <details class="section-disclosure"><summary><b>Entries</b><span>latest 25</span></summary>
 <div class="tbl"><table><thead><tr><th>Kickoff</th><th>Match</th><th>Labels</th><th>Rule</th><th>Contract</th><th>Side</th><th class="num">Price</th><th>Result</th></tr></thead>

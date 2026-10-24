@@ -63,7 +63,8 @@ ok(B.side_words("soccer_corners", "a") == "Soccer · Corners", "a label that nam
 ok(B.side_words("soccer_p05", "b") == "Soccer · Team +0.5", "Team +0.5 is the No it names")
 ok(B.side_words("soccer_u35", None) == "Soccer · Under 3.5", "no bets yet: the sport label as it is")
 ld = {"meta": {}, "quotes": [bet("bund_o35", "soccer_u35", "KXBUNDESLIGATOTAL-26OCT18LEVSCF-4", "2026-10-18", 0.45, True)]}
-row = next(r for r in B.pair_list(ld, {"pairs": {}}) if r["name"] == "bund_o35")
+# bund_o35 is retired (2026-10-24): its row is the Soccer page's Retired fold, which reads the same side.
+row = next(r for r in B.pair_list(ld, {"pairs": {}}, show_retired=True) if r["name"] == "bund_o35")
 ok((row["side"], B.side_label(row), SC.market(ld, row)) == ("a", "Soccer · Over 3.5", "Over 3.5"),
    f"bund_o35 reads Over 3.5 in the scorecard and on the Soccer page ({B.side_label(row)!r}, {SC.market(ld, row)!r})")
 fade = next(r for r in B.pair_list({"meta": {}, "quotes": []}, {"pairs": {}}) if r["name"] == "team2_ranked_fade")

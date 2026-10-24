@@ -168,7 +168,8 @@ check("all 21 rules are listed, in groups A, B and C",
 check("and the entries table carries the match and labels", ("Alpha v Beta" in html, "O-D- v O+D+" in html), (True, True))
 # Compact layout (2026-10-18): one grid line per rule on the Rules section's own classes, the
 # figures labelled for the phone, each group a section disclosure with only Group A open.
-lines = re.findall(r'<div class="sp-line is-label" data-rule="([^"]+)">(.*?)</div>', html)
+# A retired rule (D2, 2026-10-24) keeps its line, muted and dated: class "sp-line is-label mut".
+lines = re.findall(r'<div class="sp-line is-label[^"]*" data-rule="([^"]+)"[^>]*>(.*?)</div>', html)
 check("label rules: one compact line per rule, no table rows", (sorted(k for k, _ in lines) == sorted(SR.RULES), "<tr><td><b>" + 'A1' in html), (True, False))
 check("label rules: every figure carries its phone label",
       all(all(f'data-l="{l}"' in body for l in ("Settled", "Won", "ROI", "Open")) for _, body in lines), True)

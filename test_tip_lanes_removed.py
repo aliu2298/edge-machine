@@ -145,8 +145,9 @@ def _no_removed_band_name(pages):
     note = S.SOURCES["tennis_fav_band_3h"]["note"]
     ok(rule in note, "the 3-hour note states the rule on its own")
     ok(bare.search(note) is None, "the 3-hour note does not name tennis_fav_band")
-    ok(rule in html_lib.unescape(pages["sandbox.html"]),
-       "the sandbox page prints that note")
+    # Retired 2026-10-24: off the Sandbox page, its definition is in the Tennis page's Retired fold.
+    ok(rule in html_lib.unescape(pages["tennis.html"]),
+       "the tennis page prints that note (the 3h lane, retired, in its Retired fold)")
     for name, html in sorted(named.items()):
         m = bare.search(html)
         if m:
@@ -228,7 +229,9 @@ def main():
     for name in ("tennis_fav_band_3h", "tennis_combo2", "tennis_combo3", "tennis_combo4",
                  "pm_combo2", "pm_combo3", "pm_combo4", "pin_totals",
                  "oddspedia", "cmd_market"):
-        ok(name not in S.REMOVED_SOURCES and not S.lane_removed(name, S.SOURCES[name]["sports"][0]),
+        # A scope retired on 2026-10-24 is still registered (retired_sports), and not removed.
+        _sp = (S.SOURCES[name]["sports"] or list(S.SOURCES[name].get("retired_sports") or {}))[0]
+        ok(name not in S.REMOVED_SOURCES and not S.lane_removed(name, _sp),
            f"{name} is not a removed lane")
     for name in ("olbg", "mma_fav_band", "mlb_fade_streak", "nhl_rest_edge"):
         ok(name in S.REMOVED_SOURCES and S.lane_removed(name, S.SOURCES[name]["sports"][0]),
@@ -490,10 +493,14 @@ def _kept_lane_numbers():
     """
     # The real lane is off the board. This fixture still needs a kept
     # favourite-population row, so it lifts that one source for the check only.
+    # The tennis 3h band, the other kept row here, was retired on 2026-10-24; it runs again
+    # for this check only (sport_rows_testlib.running_again).
+    import sport_rows_testlib
     saved_removed = S.REMOVED_SOURCES
     S.REMOVED_SOURCES = frozenset(n for n in saved_removed if n != "mma_fav_band")
     try:
-        _kept_lane_numbers_body()
+        with sport_rows_testlib.running_again("tennis_fav_band_3h|tennis"):
+            _kept_lane_numbers_body()
     finally:
         S.REMOVED_SOURCES = saved_removed
 

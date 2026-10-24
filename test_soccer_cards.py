@@ -86,10 +86,10 @@ def _settled(source, sport, n=4, won=3, price=0.60):
 def _fixture():
     """Several markets, open picks across three days, and one stored fixture with no stake."""
     quotes = []
-    quotes += _settled("o15_form_l10", "soccer_o15", n=6, won=4)
-    quotes += _settled("o15_ranked", "soccer_o15", n=4, won=1, price=0.70)
-    quotes += _settled("o15_form_l10", "soccer_o15_cup", n=3, won=2)
-    quotes += _settled("btts_form_l10_fade", "soccer_btts", n=5, won=2, price=0.48)
+    quotes += _settled("u35_low_o15", "soccer_o15", n=6, won=4)
+    quotes += _settled("o15_ranked", "soccer_o15_intl", n=4, won=1, price=0.70)
+    quotes += _settled("team2_form_l10", "soccer_team2_cup", n=3, won=2)
+    quotes += _settled("liga_btts_even", "soccer_btts", n=5, won=2, price=0.48)
     quotes += _settled("corners_total_under", "soccer_corners", n=4, won=3, price=0.52)
     soon = [
         (1, "Alpha v Beta soonest"),
@@ -99,11 +99,11 @@ def _fixture():
         (30, "Iota v Kappa fifth and later"),
     ]
     for i, (hours, label) in enumerate(soon):
-        quotes.append(_quote(100 + i, "o15_form_l10", "soccer_o15", "open", hours, label))
+        quotes.append(_quote(100 + i, "u35_low_o15", "soccer_o15", "open", hours, label))
     quotes.append(_quote(
-        200, "o15_ranked", "soccer_o15", "open", 20, "Lambda v Mu ranked"))
+        200, "o15_ranked", "soccer_o15_intl", "open", 20, "Lambda v Mu ranked"))
     quotes.append(_quote(
-        300, "btts_form_l10_fade", "soccer_btts", "open", 40, "Nu v Xi btts"))
+        300, "liga_btts_even", "soccer_btts", "open", 40, "Nu v Xi btts"))
     # Open, past 48 hours: in the Later fold like any other open pick.
     quotes.append(_quote(
         400, "corners_total_under", "soccer_corners", "open", 80, "Omicron v Pi later"))
@@ -229,19 +229,19 @@ ok('class="sp-pick is-watch"' in page_events and ">watching<" in page_events,
    "an unstaked fixture reads 'watching' in the pick column")
 ok(_absent("Far Side v Later", html), "an unstaked fixture past 48 hours is not on the page")
 alpha = _event(page_events, "Alpha vs Beta soonest")
-ok('<span class="sp-pick-rule">Over 1.5 form rule · Clubs</span>' in alpha, "the rule name is printed, muted, after the price")
+ok('<span class="sp-pick-rule">Low-scoring picks → over 1.5</span>' in alpha, "the rule name is printed, muted, after the price")
 ok('<span class="sp-price">55¢</span>' in alpha, "the price is the stored ask in cents")
 ok(page_events.count("<article") == 0, "no boxes per fixture")
 ok('class="sp-day-head"' in page_events, "day heads carry the sticky class")
 
 print("\nevents: the pick in words")
-over = _quote(900, "o15_form_l10", "soccer_o15", "open", 30, "City v United: over 1.5 goals")
+over = _quote(900, "u35_low_o15", "soccer_o15", "open", 30, "City v United: over 1.5 goals")
 over.update(pick="a", url="https://kalshi.com/markets/over")
 eq(C.pick_text(over), "Over 1.5", "a Yes on an over market is 'Over 1.5'")
 eq(C.pick_text(dict(over, pick="b")), "Under 1.5", "a No on an over market is 'Under 1.5'")
 under35 = _quote(901, "u35_low_scoring", "soccer_u35", "open", 30, "Genoa v Fiorentina: over 3.5 goals")
 eq(C.pick_text(under35), "Under 3.5", "the under-3.5 rule's No reads 'Under 3.5'")
-btts = _quote(902, "btts_form_l10_fade", "soccer_btts", "open", 30, "City v United: both teams to score")
+btts = _quote(902, "liga_btts_even", "soccer_btts", "open", 30, "City v United: both teams to score")
 btts.update(pick="a", url="https://kalshi.com/markets/btts")
 eq(C.pick_text(btts), "BTTS yes", "a Yes on both teams to score is 'BTTS yes'")
 eq(C.pick_text(dict(btts, pick="b")), "BTTS no", "a No on both teams to score is 'BTTS no'")
@@ -257,7 +257,7 @@ winner = _quote(906, "mls_away_band", "soccer", "open", 30, "Saint Louis vs Los 
 winner.update(side_a="Saint Louis", side_b="Los Angeles G", pick="b")
 eq(C.pick_text(winner), "Los Angeles G to win", "a match-winner pick names the side")
 eq(C.pick_text(dict(winner, pick="draw")), "Draw", "a draw pick is 'Draw'")
-odd = _quote(907, "o15_form_l10", "soccer_o15", "open", 30, "Ajax v PSV: something new")
+odd = _quote(907, "u35_low_o15", "soccer_o15", "open", 30, "Ajax v PSV: something new")
 eq(C.pick_text(odd), "No: something new", "an unrecognised title keeps the venue's words with the side")
 ok("Under 3.5 · No" not in html and " · Yes" not in page_events, "no rule · market · side triple on a row")
 
@@ -276,9 +276,9 @@ eq(sorted(p["href"] for p in merged["picks"]), sorted([S.market_url(over), S.mar
 ok(next(r for r in recs if r["label"] == "City vs United" and r is not merged)["sub"] == "Other League",
    "the competition is the row's sub-line")
 
-past = _quote(910, "o15_form_l10", "soccer_o15", "open", -30, "Past match")
-today_pick = _quote(911, "o15_form_l10", "soccer_o15", "open", 1, "Today match")
-later_pick = _quote(913, "o15_form_l10", "soccer_o15", "open", 72, "Later match")
+past = _quote(910, "u35_low_o15", "soccer_o15", "open", -30, "Past match")
+today_pick = _quote(911, "u35_low_o15", "soccer_o15", "open", 1, "Today match")
+later_pick = _quote(913, "u35_low_o15", "soccer_o15", "open", 72, "Later match")
 unknown = dict(over, id="unknown", label="Unknown match", start="unreadable")
 bucket_data = {"quotes": [past, today_pick, later_pick, unknown]}
 bucket_rows = _rows(bucket_data, {"pairs": {}})
@@ -296,7 +296,10 @@ ok('data-empty="next"' in empty_html and 'data-empty="done"' in empty_html, "an 
 
 print("\nrules: a row per rule, the words folded")
 from sport_rows_testlib import rule_rows, text as row_text
-rules = _section(html, "rules")
+# The live rules only: the Retired rules fold (2026-10-24) closes the section and is checked
+# in test_retired_2026_10_24.py.
+_RETIRED_FOLD = '<details class="fold sp-retired"'
+rules = _section(html, "rules").split(_RETIRED_FOLD, 1)[0]
 ok('class="sp-rules-list" data-list="sandbox"' in rules, "the Sandbox rules are one list")
 head_line = re.search(r'<div class="sp-line sp-head-line[^"]*" aria-hidden="true">(.*?)</div>', rules.split('id="sandbox"', 1)[-1], re.S)
 eq(re.findall(r'<span class="sp-cell[^"]*">([^<]*)</span>', head_line.group(1)) if head_line else None,
@@ -322,10 +325,10 @@ ok(early == sorted(early), "the too-early rows (under 10 settled) are sunk under
 ok(all(by_n[i] >= by_n[i + 1] for i in range(len(by_n) - 1) if early[i] == early[i + 1]),
    "within each band, more evidence comes first")
 
-prod_st = {"pairs": {"o15_ranked|soccer_o15": {"stage": "production", "by_hand": "2026-09-20", "promoted_at": "2026-09-20T00:00:00+00:00"},
+prod_st = {"pairs": {"o15_ranked|soccer_o15_intl": {"stage": "production", "by_hand": "2026-09-20", "promoted_at": "2026-09-20T00:00:00+00:00"},
                      "team1_form_l5|soccer_team1_cup": {"stage": "production", "by_hand": "2026-09-20", "promoted_at": "2026-09-20T00:00:00+00:00"}}}
 prod_html = soccer_build.build(d, prod_st, NOW)
-prod_rules = _section(prod_html, "rules")
+prod_rules = _section(prod_html, "rules").split(_RETIRED_FOLD, 1)[0]
 prod_list = prod_rules.split('class="sp-rules-list sp-prod"', 1)[1].split('id="sandbox"', 1)[0]
 prows = rule_rows(prod_list)
 eq(len(prows), 2, "a Production rule is a row in the Production list")

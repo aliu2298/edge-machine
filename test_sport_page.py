@@ -29,6 +29,16 @@ FAILS = []
 ROOT = os.path.dirname(os.path.abspath(__file__))
 NOW = datetime.datetime(2026, 10, 5, 16, 0, tzinfo=timezone.utc)   # 11:00 AM CT, Mon Oct 5
 
+# The fixture is the Soccer page on 2026-10-05, built on lanes that were RETIRED on 2026-10-24
+# (o15_form_l10 on every scope, o15_ranked Clubs and Cups, btts_form_l10_fade). This file tests
+# the page template, not the lane list, so their scopes run again for this script only;
+# test_retired_2026_10_24 holds the retirement itself.
+for _src in ("o15_form_l10", "o15_ranked", "btts_form_l10_fade"):
+    _gone = S.SOURCES[_src].get("retired_sports") or {}
+    _back = [sp for sp, why in _gone.items() if why.startswith("Retired 2026-10-24")]
+    S.SOURCES[_src]["sports"] = list(S.SOURCES[_src]["sports"]) + [sp for sp in _back if sp not in S.SOURCES[_src]["sports"]]
+    S.SOURCES[_src]["retired_sports"] = {sp: why for sp, why in _gone.items() if sp not in _back}
+
 
 def ok(cond, msg):
     print(f"  {'ok  ' if cond else 'FAIL'} {msg}")
@@ -247,7 +257,8 @@ for gone in ('class="card sp-rule"', '<div class="sp-stat', "sp-cards", "Full re
     ok(gone not in html, f"the page no longer prints {gone!r}")
 
 print("\nthe Sandbox rows")
-fold = re.search(r'<details class="fold sp-sandbox" id="sandbox"(?: open)?><summary>(.*?)</summary>(.*)', rules, re.S)
+# The Sandbox fold ends where the Retired rules fold (2026-10-24) begins, if there is one.
+fold = re.search(r'<details class="fold sp-sandbox" id="sandbox"(?: open)?><summary>(.*?)</summary>(.*?)(?=<details class="fold sp-retired"|\Z)', rules, re.S)
 ok(fold is not None and "<h3>Sandbox rules</h3>" in fold.group(1), "the Sandbox rules are one fold")
 _np = sum(1 for r in rows if r.get("prod"))
 _ns = sum(1 for r in rows if not r.get("prod"))

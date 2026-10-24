@@ -9,8 +9,14 @@ import sandbox_sources as S
 import sport_page as SP
 import tennis_cards as C
 import tennis_build
+import sport_rows_testlib
 
 NOW = datetime.datetime(2026, 10, 7, 12, tzinfo=datetime.timezone.utc)   # 7 AM CT
+# The 3h band was retired on 2026-10-24; this file tests match identity and the tabs on a
+# 2026-10-07 fixture, so the lane runs again for this script only (the handle is kept, since
+# a dropped one restores the retirement at once).
+_REPLAY = sport_rows_testlib.running_again("tennis_fav_band_3h|tennis")
+_REPLAY.__enter__()
 
 
 def row(name):

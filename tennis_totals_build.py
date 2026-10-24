@@ -20,6 +20,10 @@ EMPTY_SANDBOX = '<p class="sp-empty" data-empty="sandbox">'
 # The Sandbox fold closes the Rules section (sport_page.rules_html); a rule row's own fold ends
 # "</div></details>" too, so the list's end is found with the section close after it.
 LIST_END = "</div></details></section>"
+# Since 2026-10-24 a Retired rules fold may follow the Sandbox fold; the list then ends right
+# before it.
+RETIRED_FOLD = '<details class="fold sp-retired"'
+FOLD_END = "</div></details>"
 SANDBOX_COUNT = re.compile(r'(?<=<h3>Sandbox rules</h3><span class="sm mut">)· (\d+) rules?')
 SANDBOX_COUNT_DONE = re.compile(r'(<h3>Sandbox rules</h3><span class="sm mut">· \d+ rules)')
 EARLY_COUNT = re.compile(r'(?<=rules )· (\d+) too early to read')
@@ -117,7 +121,9 @@ def place(html, state=None):
         row = f'<p class="sm mut" data-source="{esc(TT.LANE)}">{esc(NAME)} unavailable ({type(exc).__name__}).</p>'
     i = html.find(SANDBOX_LIST)
     if i >= 0:
-        end = html.find(LIST_END, i)
+        k = html.find(RETIRED_FOLD, i)
+        end = (k - len(FOLD_END) if k >= 0 and html[k - len(FOLD_END):k] == FOLD_END
+               else html.find(LIST_END, i))
         if end >= 0:
             early = _early(row_data(state))
             head = SANDBOX_COUNT.sub(lambda m: f"· {int(m.group(1)) + 1} rules", html[:i], count=1)

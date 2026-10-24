@@ -117,6 +117,25 @@ ESPN_PATHS = {
 # Kalshi series tickers, verified returning open markets on 2026-09-09.
 KALSHI_SERIES = {"nfl": "KXNFLGAME", "mlb": "KXMLBGAME", "tennis": "KXATPMATCH"}
 
+# The closing words of every 2026-10-24 soccer retirement (Olu): a retired scope moves from
+# `sports` to `retired_sports`, so the run never fetches it and it logs nothing new, while its
+# ledger rows stay and its open bets go on settling. The Soccer page lists it as Retired.
+RETIRED_TAIL = (" No new entries from 2026-10-24; its rows stay on file and its open bets "
+                "still settle.")
+RETIRED_ON_2026_10_24 = (
+    "o15_cup_mismatch|soccer_o15_cup", "o15_ranked|soccer_o15_cup", "o15_ranked|soccer_o15",
+    "ftts_no_60_70|soccer_ftts", "o25_congestion|soccer_o25", "o25_congestion|soccer_o25_cup",
+    "o15_form_l10|soccer_o15", "o15_form_l10|soccer_o15_cup", "o15_form_l10|soccer_o15_intl",
+    "btts_form_l10_fade|soccer_btts", "bund_o35|soccer_u35", "bund_o35_fav|soccer_u35",
+    "corners_team_fade|soccer_corners",
+)
+# The tennis Sandbox lanes retired the same day (Olu). Kept: the Kalshi 2-leg combo
+# (tennis_combo2, paused), the UTR shortlist (Production) and tennis_totals.py's own lane.
+TENNIS_RETIRED_ON_2026_10_24 = (
+    "tennis_fav_band_3h|tennis", "pm_combo2|tennis_pmcombo", "pm_combo3|tennis_pmcombo",
+    "pm_combo4|tennis_pmcombo", "tennis_combo3|tennis_combo", "tennis_combo4|tennis_combo",
+)
+
 # The registry. `connected` is the honest bit: it says whether this run can actually
 # reach the source, not whether the site exists.
 SOURCES = {
@@ -223,7 +242,10 @@ SOURCES = {
              "number before that many independent outcomes have settled."),
     "btts_form_l10_fade": dict(
         label="BTTS form rule, faded · Clubs (back No)", kind="Rule", connected=True,
-        site="edge-machine", sports=["soccer_btts"], baseline="population",
+        site="edge-machine", sports=[], baseline="population",
+        retired_sports={
+            "soccer_btts": "Retired 2026-10-24 by Olu: 12 won, 21 lost on 33 settled, -8.5% after "
+                           "fees, z -0.11 -- the price, and no edge." + RETIRED_TAIL},
         note="REGISTERED 2026-10-11 by Olu, before it logged anything. The other side of "
              "btts_form_l10 on Clubs: the same matches (both teams saw both teams score in 7+ "
              "of their last 10 competitive games, ESPN results strictly before kickoff), "
@@ -300,7 +322,11 @@ SOURCES = {
              "period, so it only counts if this band beats favourites in general."),
     "tennis_fav_band_3h": dict(
         label="Tennis favourite band, entered within 3 hours of the start", kind="Rule",
-        connected=True, site="edge-machine", sports=["tennis"], baseline="favourite_population",
+        connected=True, site="edge-machine", sports=[], baseline="favourite_population",
+        retired_sports={
+            "tennis": "Retired 2026-10-24 by Olu: 72 won, 25 lost (+3 no result) on 97 settled "
+                      "since its 2026-10-02 reset, -4.9% after fees, z -0.54 -- no edge. Paused "
+                      "since 2026-10-14." + RETIRED_TAIL},
         note=(
              'PAPER TEST, registered 2026-09-25. Back the player priced 0.70-0.85, only when the entry '
              'is within 3 hours of the scheduled start. The tour has to be ATP, WTA Doubles, or UTR. '
@@ -372,7 +398,10 @@ SOURCES = {
         frozen="2026-10-08"),
     "tennis_combo3": dict(
         label="Tennis 3-leg combo (favourite-band legs)", kind="Rule", connected=True,
-        site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
+        site="edge-machine", sports=[], baseline="favourite_population",
+        retired_sports={
+            "tennis_combo": "Retired 2026-10-24 by Olu: no basket since its 2026-10-04 reset, and "
+                            "paused since 2026-10-14. It never fired on the current record." + RETIRED_TAIL},
         note=(
              "Cut each day's favourite-band legs, in start-time order, into consecutive baskets of 3 "
              'and buy each basket as ONE combo contract, which pays only if all 3 win. A combo '
@@ -406,7 +435,10 @@ SOURCES = {
         frozen="2026-10-08"),
     "tennis_combo4": dict(
         label="Tennis 4-leg combo (favourite-band legs)", kind="Rule", connected=True,
-        site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
+        site="edge-machine", sports=[], baseline="favourite_population",
+        retired_sports={
+            "tennis_combo": "Retired 2026-10-24 by Olu: never built a basket, and paused since "
+                            "2026-10-14." + RETIRED_TAIL},
         note=(
              "The same construction as the 2- and 3-leg rules at four legs: each day's favourite-band "
              'legs, in start-time order, cut into consecutive baskets of four, each bought as ONE '
@@ -432,7 +464,11 @@ SOURCES = {
         frozen="2026-10-08"),
     "pm_combo2": dict(
         label="Tennis 2-leg combo on Polymarket US", kind="Rule", connected=True,
-        site="edge-machine", sports=["tennis_pmcombo"], baseline="favourite_population",
+        site="edge-machine", sports=[], baseline="favourite_population",
+        retired_sports={
+            "tennis_pmcombo": "Retired 2026-10-24 by Olu: 17 won, 15 lost (+4 no result) on 32 "
+                              "settled baskets since its 2026-10-04 reset, -12.3% after fees, "
+                              "z -0.81 -- no edge. Paused since 2026-10-14." + RETIRED_TAIL},
         note=(
              'PRE-REGISTERED 2026-09-24. The same basket the Kalshi combo rules build, cut from '
              'Polymarket US legs instead. Built because that is where the legs are: after the '
@@ -460,7 +496,10 @@ SOURCES = {
         frozen="2026-10-08"),
     "pm_combo3": dict(
         label="Tennis 3-leg combo on Polymarket US", kind="Rule", connected=True,
-        site="edge-machine", sports=["tennis_pmcombo"], baseline="favourite_population",
+        site="edge-machine", sports=[], baseline="favourite_population",
+        retired_sports={
+            "tennis_pmcombo": "Retired 2026-10-24 by Olu: never built a basket, and paused since "
+                              "2026-10-14." + RETIRED_TAIL},
         note=(
              "PRE-REGISTERED 2026-09-24. Three legs of the same construction -- each day's in-band "
              'Polymarket US legs in start-time order, cut into consecutive baskets of three, each '
@@ -481,7 +520,11 @@ SOURCES = {
         frozen="2026-10-08"),
     "pm_combo4": dict(
         label="Tennis 4-leg combo on Polymarket US", kind="Rule", connected=True,
-        site="edge-machine", sports=["tennis_pmcombo"], baseline="favourite_population",
+        site="edge-machine", sports=[], baseline="favourite_population",
+        retired_sports={
+            "tennis_pmcombo": "Retired 2026-10-24 by Olu: no basket since its 2026-10-03 reset "
+                              "(4 before it, out of Production 2026-10-03), and paused since "
+                              "2026-10-14." + RETIRED_TAIL},
         note=(
              'PRE-REGISTERED 2026-09-24. Four legs, same construction, same extrapolated and '
              'unmeasured markup as the 3-leg rule. Four legs compound both the edge and the error '
@@ -537,7 +580,15 @@ SOURCES = {
              "backing Yes on every listed match of that market over the same period."),
     "o15_form_l10": dict(
         label="Over 1.5 form rule (both teams 9+ of last 10)", kind="Rule", connected=True,
-        site="edge-machine", sports=["soccer_o15", "soccer_o15_cup", "soccer_o15_intl"], baseline="population",
+        site="edge-machine", sports=[], baseline="population",
+        retired_sports={
+            "soccer_o15": "Retired 2026-10-24 by Olu: 28 won, 6 lost on 34 settled since its "
+                          "2026-09-21 reset, -5.7% after fees, z -0.68 -- an 82% hit rate bought at "
+                          "an average 0.86 is a losing one." + RETIRED_TAIL,
+            "soccer_o15_cup": "Retired 2026-10-24 by Olu with the Clubs scope. Paused before it "
+                              "logged a bet, so it has no record.",
+            "soccer_o15_intl": "Retired 2026-10-24 by Olu with the Clubs scope: 4 won, 3 lost on 7 "
+                               "settled, -26.1% after fees; already paused, its last entry 2026-09-24."},
         note="Pre-registered 2026-09-14 from research fixed before it ran. Back over 1.5 at the "
              "Kalshi ask where BOTH teams' games went over 1.5 in at least 9 of their last 10 "
              "competitive games (10+ games each, ESPN results strictly before kickoff). "
@@ -576,7 +627,14 @@ SOURCES = {
              "score-2+ market."),
     "o15_ranked": dict(
         label="Over 1.5, ranked: the day's top 2 mismatches under 0.80", kind="Rule", connected=True,
-        site="edge-machine", sports=["soccer_o15", "soccer_o15_cup", "soccer_o15_intl"],
+        # Internationals only from 2026-10-24: that scope is in Production and is untouched.
+        site="edge-machine", sports=["soccer_o15_intl"],
+        retired_sports={
+            "soccer_o15": "Retired 2026-10-24 by Olu, after leaving Production on 2026-10-21: 16 "
+                          "won, 5 lost on 21 settled, -3.0% after fees, z -0.16 -- exactly the "
+                          "price." + RETIRED_TAIL,
+            "soccer_o15_cup": "Retired 2026-10-24 by Olu: 11 won, 6 lost on 17 settled, -18.2% "
+                              "after fees, z -1.30." + RETIRED_TAIL},
         baseline="population",
         note="PRE-REGISTERED 2026-09-24, before it logged anything. Every other over-1.5 rule "
              "here is a THRESHOLD -- it takes every match clearing a bar and lands on their "
@@ -599,7 +657,11 @@ SOURCES = {
              "on every listed over-1.5 market, which is the only question it asks."),
     "o15_cup_mismatch": dict(
         label="Cup mismatch over 1.5 rule (favourite 0.70+ to win)", kind="Rule", connected=True,
-        site="edge-machine", sports=["soccer_o15_cup"], baseline="population",
+        site="edge-machine", sports=[], baseline="population",
+        retired_sports={
+            "soccer_o15_cup": "Retired 2026-10-24 by Olu: 15 won, 9 lost on 24 settled, -27.7% "
+                              "after fees, z -2.96 -- the mismatch tells the cup over price "
+                              "nothing it does not already hold." + RETIRED_TAIL},
         note="Pre-registered 2026-09-21, before it logged anything. Back over 1.5 at the Kalshi "
              "ask in any cup tie the Sandbox lists where one side's own price to win outright is "
              "0.70 or more at the midpoint, read from the same tie's match-winner markets in the "
@@ -710,8 +772,12 @@ SOURCES = {
              "question is closed. Every listed game is backed, so nothing here is selected."),
     "o25_congestion": dict(
         label="Congestion under 2.5 rule (one side's 2nd game in 4 days)", kind="Rule",
-        connected=True, site="edge-machine", sports=["soccer_o25", "soccer_o25_cup"],
+        connected=True, site="edge-machine", sports=[],
         retired_sports={
+            "soccer_o25": "Retired 2026-10-24 by Olu, after leaving Production on 2026-10-19: 21 "
+                          "won, 39 lost on 60 settled, -13.6% after fees, z -0.44." + RETIRED_TAIL,
+            "soccer_o25_cup": "Retired 2026-10-24 by Olu with the Clubs scope: 3 won, 6 lost on 9 "
+                              "settled, -24.9% after fees, z -0.64." + RETIRED_TAIL,
             "soccer_o25_intl": "Retired 2026-10-11 by Olu: 7 won, 10 lost on 17 settled, -29.1% after "
                                "fees, and backing the other side of the same bets lost too (-1.9% "
                                "after fees per contract, -9.7% at $100 a bet). It loses both ways."},
@@ -969,7 +1035,10 @@ SOURCES = {
              "figures above: if the reversal is real, this lane should lose."),
     "bund_o35": dict(
         label="Bundesliga over 3.5, every match", kind="Rule", connected=True,
-        site="edge-machine", sports=["soccer_u35"], baseline="population",
+        site="edge-machine", sports=[], baseline="population",
+        retired_sports={
+            "soccer_u35": "Retired 2026-10-24 by Olu, after leaving Production on 2026-10-20: 11 "
+                          "won, 14 lost on 25 settled, -17.5% after fees, z -0.44." + RETIRED_TAIL},
         note="WINDOW, stated because it differs from the rest: this lane is specified on FOUR "
              "seasons (2022/23-2025/26), not the three every other league lane here uses. That "
              "is not an oversight and the two are not interchangeable — the finding IS the "
@@ -1001,7 +1070,10 @@ SOURCES = {
              "so. Judged against backing the over on every match of this market."),
     "bund_o35_fav": dict(
         label="Bundesliga over 3.5, favourite priced 2.00-2.60", kind="Rule", connected=True,
-        site="edge-machine", sports=["soccer_u35"], baseline="population",
+        site="edge-machine", sports=[], baseline="population",
+        retired_sports={
+            "soccer_u35": "Retired 2026-10-24 by Olu with bund_o35, the same bet: 1 won, 4 lost on "
+                          "5 settled, -52.0% after fees, z -0.90." + RETIRED_TAIL},
         note="Pre-registered 2026-09-26 as the companion to bund_o35 and the REPLACEMENT for "
              "bund_o35_draw, retired the same day. Identical bet — over 3.5 on a Kalshi "
              "Bundesliga match, 6% hold cap — but only where that fixture's own three-way "
@@ -1100,7 +1172,10 @@ SOURCES = {
              "settled Kalshi matches (-1.1%). Read at 30 settled."),
     "ftts_no_60_70": dict(
         label="First to score, NO at 0.60-0.70, best 5 a day by model edge", kind="Rule",
-        connected=True, site="edge-machine", sports=["soccer_ftts"], baseline="population",
+        connected=True, site="edge-machine", sports=[], baseline="population",
+        retired_sports={
+            "soccer_ftts": "Retired 2026-10-24 by Olu: 6 won, 4 lost on 10 settled, -9.1% after "
+                           "fees, z -0.28. The 0.70-0.80 lane is untouched." + RETIRED_TAIL},
         one_per_event=True, day_cap=5,
         note="REGISTERED 2026-10-14 by Olu, before it logged anything. The same rule as "
              "ftts_no_70_80 with the NO ask at 0.60 up to but NOT including 0.70 (a 0.70 NO is the "
@@ -1208,7 +1283,11 @@ SOURCES = {
              "already bet is never entered again. Read at 30 settled."),
     "corners_team_fade": dict(
         label="Corners team fade (Yes on the team rung the under model picks)", kind="Rule",
-        connected=True, site="edge-machine", sports=["soccer_corners"], baseline="population",
+        connected=True, site="edge-machine", sports=[], baseline="population",
+        retired_sports={
+            "soccer_corners": "Retired 2026-10-24 by Olu, after leaving Production on 2026-10-20: "
+                              "6 won, 13 lost on 19 settled, -36.3% after fees, z -1.47."
+                              + RETIRED_TAIL},
         one_per_corners_fixture=True, day_cap=5,
         note="REGISTERED 2026-10-15 by Olu, before it logged anything. TEAM corner rungs only "
              "('Team: N+'). Start from the selection corners_under's team-under signal would make -- "

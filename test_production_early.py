@@ -71,6 +71,14 @@ T.PAIR_OVERRIDES["o15_ranked|soccer_o15"] = dict(moved_on=MOVE, production_at=No
 T.PAIR_OVERRIDES["bund_o35|soccer_u35"] = dict(moved_on=MOVE, production_at=None)
 # crypto_fav_band|crypto_fav came off on 2026-10-20 too, replaced by three crypto angle lanes.
 T.PAIR_OVERRIDES["crypto_fav_band|crypto_fav"] = dict(moved_on=MOVE, production_at=None)
+# o15_form_l10|soccer_o15, o15_ranked|soccer_o15 and bund_o35|soccer_u35 were RETIRED on
+# 2026-10-24 (off the run; test_retired_2026_10_24 holds that). This file replays
+# 2026-10-08 to 2026-10-20, when all three still ran, so their scopes are put back on the run
+# for this script only.
+for _src, _sp in (("o15_form_l10", "soccer_o15"), ("o15_ranked", "soccer_o15"), ("bund_o35", "soccer_u35")):
+    if _sp not in S.SOURCES[_src]["sports"]:
+        S.SOURCES[_src]["sports"] = list(S.SOURCES[_src]["sports"]) + [_sp]
+    S.SOURCES[_src]["retired_sports"] = {k: v for k, v in S.SOURCES[_src]["retired_sports"].items() if k != _sp}
 
 # ---------------------------------------------------------------------------
 print("the six ids are in Production, moved by hand on the same day")
@@ -83,7 +91,9 @@ for key, name in SIX.items():
     source, sport = key.split("|", 1)
     meta = S.SOURCES.get(source) or {}
     eq(str(meta.get("label", "")).split(" (")[0], name, f"{source} is the rule named {name!r}")
-    ok(sport in (meta.get("sports") or []), f"{sport} is a scope {source} is registered on")
+    # A scope retired since (o15_form_l10, o15_ranked and bund_o35 on 2026-10-24) is still registered.
+    ok(sport in (meta.get("sports") or []) or sport in (meta.get("retired_sports") or {}),
+       f"{sport} is a scope {source} is registered on")
     ok(meta.get("connected") and meta.get("kind") == "Rule", f"{source} is a connected rule")
 # Each display name maps to ONE rule id. The ambiguous neighbours are named here so the
 # listing cannot drift onto them.
