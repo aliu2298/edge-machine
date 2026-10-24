@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-24T12:01:42+00:00",
+ "board_built_at": "2026-10-24T12:31:11+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sa_o15_arg": true,
@@ -149,6 +149,79 @@
    "sport": "soccer_o15",
    "status": "hit"
   },
+  "2026-10-24|Arsenal|Everton|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
+   "away": "Everton",
+   "bet": {
+    "kind": "btts"
+   },
+   "date": "2026-10-24",
+   "edge_at_log": null,
+   "first_seen": "2026-10-24",
+   "headline": "Both teams to score",
+   "home": "Arsenal",
+   "id": "2026-10-24|Arsenal|Everton|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score",
+   "kickoff": "2026-10-24T14:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-24",
+   "last_seen_at": "2026-10-24T12:31:11+00:00",
+   "league": "Premier League",
+   "match": "Arsenal v Everton",
+   "pair": "sr_d3|soccer_btts",
+   "price_at_log": 0.48,
+   "published_at": "2026-10-24T12:31:11+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Both teams to score",
+    "event": "KXEPLBTTS-26OCT24ARSEVE",
+    "market": "KXEPLBTTS-26OCT24ARSEVE-BTTS",
+    "outcome": "Both Teams To Score",
+    "outcome_side": "yes",
+    "price_at_log": 0.48,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_d3:KXEPLBTTS-26OCT24ARSEVE-BTTS",
+   "source": "sr_d3",
+   "sport": "soccer_btts",
+   "status": "pending"
+  },
+  "2026-10-24|Arsenal|Everton|Under 2.5 goals \u00b7 EPL O\u2212D\u2212 v an O+ opponent \u00b7 under 2.5": {
+   "away": "Everton",
+   "bet": {
+    "kind": "total_lte",
+    "n": 2
+   },
+   "date": "2026-10-24",
+   "edge_at_log": null,
+   "first_seen": "2026-10-24",
+   "headline": "Under 2.5 goals",
+   "home": "Arsenal",
+   "id": "2026-10-24|Arsenal|Everton|Under 2.5 goals \u00b7 EPL O\u2212D\u2212 v an O+ opponent \u00b7 under 2.5",
+   "kickoff": "2026-10-24T14:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-24",
+   "last_seen_at": "2026-10-24T12:31:11+00:00",
+   "league": "Premier League",
+   "match": "Arsenal v Everton",
+   "pair": "sr_a6|soccer_o25",
+   "price_at_log": 0.46,
+   "published_at": "2026-10-24T12:31:11+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Under 2.5 goals",
+    "event": "KXEPLTOTAL-26OCT24ARSEVE",
+    "market": "KXEPLTOTAL-26OCT24ARSEVE-3",
+    "outcome": "Over 2.5 goals scored",
+    "outcome_side": "no",
+    "price_at_log": 0.46,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_a6:KXEPLTOTAL-26OCT24ARSEVE-3",
+   "source": "sr_a6",
+   "sport": "soccer_o25",
+   "status": "pending"
+  },
   "2026-10-24|Mainz|Werder Bremen|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
    "away": "Werder Bremen",
    "bet": {
@@ -163,7 +236,7 @@
    "kickoff": "2026-10-24T13:30Z",
    "lane": "production",
    "last_seen": "2026-10-24",
-   "last_seen_at": "2026-10-24T12:01:42+00:00",
+   "last_seen_at": "2026-10-24T12:31:11+00:00",
    "league": "Bundesliga",
    "match": "Mainz v Werder Bremen",
    "pair": "sr_d3|soccer_btts",
@@ -181,6 +254,42 @@
     "venue": "kalshi"
    },
    "sandbox_quote": "sr_d3:KXBUNDESLIGABTTS-26OCT24M05SVW-BTTS",
+   "source": "sr_d3",
+   "sport": "soccer_btts",
+   "status": "pending"
+  },
+  "2026-10-24|Rangers|St Johnstone|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
+   "away": "St Johnstone",
+   "bet": {
+    "kind": "btts"
+   },
+   "date": "2026-10-24",
+   "edge_at_log": null,
+   "first_seen": "2026-10-24",
+   "headline": "Both teams to score",
+   "home": "Rangers",
+   "id": "2026-10-24|Rangers|St Johnstone|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score",
+   "kickoff": "2026-10-24T14:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-24",
+   "last_seen_at": "2026-10-24T12:31:11+00:00",
+   "league": "Scottish Premiership",
+   "match": "Rangers v St Johnstone",
+   "pair": "sr_d3|soccer_btts",
+   "price_at_log": 0.45,
+   "published_at": "2026-10-24T12:31:11+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Both teams to score",
+    "event": "KXSCOTTISHPREMBTTS-26OCT24RFCJOH",
+    "market": "KXSCOTTISHPREMBTTS-26OCT24RFCJOH-BTTS",
+    "outcome": "Both Teams To Score",
+    "outcome_side": "yes",
+    "price_at_log": 0.45,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_d3:KXSCOTTISHPREMBTTS-26OCT24RFCJOH-BTTS",
    "source": "sr_d3",
    "sport": "soccer_btts",
    "status": "pending"
@@ -254,9 +363,9 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 0,
+    "leads": 1,
     "problem": null,
-    "routed": 0,
+    "routed": 1,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -268,7 +377,7 @@
    "sandbox_roi_fee": null,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -304,9 +413,9 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 3,
+    "leads": 5,
     "problem": null,
-    "routed": 3,
+    "routed": 5,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -318,7 +427,7 @@
    "sandbox_roi_fee": -0.1187,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 3,
     "under_target": 0
    }
   }
@@ -327,5 +436,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-24T12:01:42+00:00"
+ "updated_at": "2026-10-24T12:31:11+00:00"
 }
