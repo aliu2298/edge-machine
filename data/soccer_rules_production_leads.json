@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-24T13:16:42+00:00",
+ "board_built_at": "2026-10-24T13:31:44+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sa_o15_arg": true,
@@ -163,7 +163,7 @@
    "kickoff": "2026-10-24T14:00Z",
    "lane": "production",
    "last_seen": "2026-10-24",
-   "last_seen_at": "2026-10-24T13:16:42+00:00",
+   "last_seen_at": "2026-10-24T13:31:44+00:00",
    "league": "Premier League",
    "match": "Arsenal v Everton",
    "pair": "sr_d3|soccer_btts",
@@ -200,7 +200,7 @@
    "kickoff": "2026-10-24T14:00Z",
    "lane": "production",
    "last_seen": "2026-10-24",
-   "last_seen_at": "2026-10-24T13:16:42+00:00",
+   "last_seen_at": "2026-10-24T13:31:44+00:00",
    "league": "Premier League",
    "match": "Arsenal v Everton",
    "pair": "sr_a6|soccer_o25",
@@ -222,42 +222,6 @@
    "sport": "soccer_o25",
    "status": "pending"
   },
-  "2026-10-24|Mainz|Werder Bremen|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
-   "away": "Werder Bremen",
-   "bet": {
-    "kind": "btts"
-   },
-   "date": "2026-10-24",
-   "edge_at_log": null,
-   "first_seen": "2026-10-24",
-   "headline": "Both teams to score",
-   "home": "Mainz",
-   "id": "2026-10-24|Mainz|Werder Bremen|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score",
-   "kickoff": "2026-10-24T13:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-24",
-   "last_seen_at": "2026-10-24T13:16:42+00:00",
-   "league": "Bundesliga",
-   "match": "Mainz v Werder Bremen",
-   "pair": "sr_d3|soccer_btts",
-   "price_at_log": 0.63,
-   "published_at": "2026-10-24T12:01:42+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 88,
-   "route": {
-    "claim": "Both teams to score",
-    "event": "KXBUNDESLIGABTTS-26OCT24M05SVW",
-    "market": "KXBUNDESLIGABTTS-26OCT24M05SVW-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "yes",
-    "price_at_log": 0.63,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "sr_d3:KXBUNDESLIGABTTS-26OCT24M05SVW-BTTS",
-   "source": "sr_d3",
-   "sport": "soccer_btts",
-   "status": "pending"
-  },
   "2026-10-24|Rangers|St Johnstone|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
    "away": "St Johnstone",
    "bet": {
@@ -272,7 +236,7 @@
    "kickoff": "2026-10-24T14:00Z",
    "lane": "production",
    "last_seen": "2026-10-24",
-   "last_seen_at": "2026-10-24T13:16:42+00:00",
+   "last_seen_at": "2026-10-24T13:31:44+00:00",
    "league": "Scottish Premiership",
    "match": "Rangers v St Johnstone",
    "pair": "sr_d3|soccer_btts",
@@ -413,9 +377,9 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 5,
+    "leads": 4,
     "problem": null,
-    "routed": 5,
+    "routed": 4,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -427,7 +391,7 @@
    "sandbox_roi_fee": -0.1187,
    "timing": {
     "late": [],
-    "timed": 3,
+    "timed": 2,
     "under_target": 0
    }
   }
@@ -436,5 +400,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-24T13:16:42+00:00"
+ "updated_at": "2026-10-24T13:31:44+00:00"
 }
