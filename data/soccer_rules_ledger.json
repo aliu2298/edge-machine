@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-24T16:16:09.123787+00:00",
+ "last_run": "2026-10-24T16:31:26.050021+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -630,6 +630,29 @@
      "ticker": "KXSAUDIPLTOTAL-26OCT24AKHITT-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Al Kholood O-D+ v Al Ettifaq O-D+ \u00b7 Under 2.5 NO 0.45"
+    },
+    {
+     "ask": 0.51,
+     "bid": 0.5,
+     "event": "KXSAUDIPLTOTAL-26OCT24RIYALT",
+     "group": "C",
+     "id": "C5:KXSAUDIPLTOTAL-26OCT24RIYALT",
+     "labels": {
+      "away": "O-D+",
+      "home": "O-D+"
+     },
+     "league": "Saudi Pro League",
+     "line": 2.5,
+     "logged": "2026-10-24T16:31:26.050021+00:00",
+     "match": "Al Riyadh v Al Taawoun",
+     "price": 0.5,
+     "rule": "C5",
+     "side": "no",
+     "start": "2026-10-24T18:00Z",
+     "status": "open",
+     "ticker": "KXSAUDIPLTOTAL-26OCT24RIYALT-3",
+     "title": "Will over 2.5 goals be scored?",
+     "why": "Al Riyadh O-D+ v Al Taawoun O-D+ \u00b7 Under 2.5 NO 0.50"
     }
    ]
   },
@@ -1412,11 +1435,14 @@
      "line": null,
      "logged": "2026-10-24T12:46:10.612935+00:00",
      "match": "Racing Santander v Espanyol",
+     "payout": 0.0,
      "price": 0.37,
+     "profit": -100.0,
      "rule": "D2",
+     "settled": "2026-10-24T16:31:26.050021+00:00",
      "side": "no",
      "start": "2026-10-24T14:15Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXLALIGABTTS-26OCT24SANESP-BTTS",
      "title": "Both Teams To Score",
      "why": "Racing Santander O+D+ v Espanyol O-D- \u00b7 BTTS NO 0.37"
@@ -1999,14 +2025,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-21T22:01:20.622790+00:00",
-   "candidates": 1,
-   "due": 1,
-   "labelled": 1,
-   "matched": 1,
-   "new": 0
-  },
-  {
    "at": "2026-10-22T02:24:13.706716+00:00",
    "candidates": 0,
    "due": 0,
@@ -2405,6 +2423,14 @@
    "labelled": 3,
    "matched": 0,
    "new": 0
+  },
+  {
+   "at": "2026-10-24T16:31:26.050021+00:00",
+   "candidates": 1,
+   "due": 3,
+   "labelled": 3,
+   "matched": 1,
+   "new": 1
   }
  ],
  "version": "soccer-rules-v1"
