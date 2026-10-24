@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-24T17:16:10.463742+00:00",
+ "last_run": "2026-10-24T17:31:36.755470+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -817,6 +817,32 @@
      "ticker": "KXLALIGATEAMTOTAL-26OCT18RMASEV-RMA3",
      "title": "Will Real Madrid score over 2.5 goals?",
      "why": "Real Madrid O+D- v Sevilla O-D- \u00b7 3+ YES 0.55"
+    },
+    {
+     "ask": 0.46,
+     "bid": 0.45,
+     "event": "KXLALIGATEAMTOTAL-26OCT24ATMDEP",
+     "group": "B",
+     "id": "T3:KXLALIGATEAMTOTAL-26OCT24ATMDEP:home",
+     "labels": {
+      "opp": "O-D-",
+      "own": "O+D-"
+     },
+     "league": "La Liga",
+     "line": 2.5,
+     "logged": "2026-10-24T17:31:36.755470+00:00",
+     "match": "Atl\u00e9tico Madrid v Deportivo",
+     "opponent": "Deportivo",
+     "price": 0.46,
+     "rule": "T3",
+     "side": "yes",
+     "start": "2026-10-24T19:00Z",
+     "status": "open",
+     "team": "Atl\u00e9tico Madrid",
+     "team_side": "home",
+     "ticker": "KXLALIGATEAMTOTAL-26OCT24ATMDEP-ATM3",
+     "title": "Will Atletico score over 2.5 goals?",
+     "why": "Atl\u00e9tico Madrid O+D- v Deportivo O-D- \u00b7 3+ YES 0.46"
     }
    ]
   },
@@ -1585,14 +1611,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-18T17:31:12.404354+00:00",
-   "candidates": 3,
-   "due": 3,
-   "labelled": 3,
-   "matched": 3,
-   "new": 1
-  },
-  {
    "at": "2026-10-18T17:46:25.150357+00:00",
    "candidates": 3,
    "due": 3,
@@ -1990,6 +2008,14 @@
    "due": 2,
    "labelled": 2,
    "matched": 1,
+   "new": 1
+  },
+  {
+   "at": "2026-10-24T17:31:36.755470+00:00",
+   "candidates": 2,
+   "due": 3,
+   "labelled": 3,
+   "matched": 2,
    "new": 1
   }
  ],
