@@ -2756,12 +2756,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.93,
+     "profit": 0.07,
      "rationale": "NY@BOS 1Q OVER 46.5 @93c: model 88.5% (mu 56.5, line -10.0 below mu); edge -4.5c",
      "sd": 8.28,
+     "settled": "2026-10-24T00:15:21.589773+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT23NYKBOS-47",
      "unit": "game"
     },
@@ -2780,12 +2783,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 0.1034,
      "rationale": "NY@BOS 1Q UNDER 68.5 @90c: model 92.7% (mu 56.5, line +12.0 above mu); edge +2.7c",
      "sd": 8.28,
+     "settled": "2026-10-24T00:15:21.589773+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT23NYKBOS-69",
      "unit": "game"
     },
@@ -2803,12 +2809,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.87,
+     "profit": 0.1391,
      "rationale": "NY@BOS 1Q OVER 48.5 @87c: model 83.2% (mu 56.5, line -8.0 below mu); edge -3.8c",
      "sd": 8.28,
+     "settled": "2026-10-24T00:15:21.589773+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT23NYKBOS-49",
      "unit": "game"
     },
@@ -2827,12 +2836,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.94,
+     "profit": 0.0594,
      "rationale": "NY@BOS 1Q UNDER 70.5 @94c: model 95.5% (mu 56.5, line +14.0 above mu); edge +1.5c",
      "sd": 8.28,
+     "settled": "2026-10-24T00:15:21.589773+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT23NYKBOS-71",
      "unit": "game"
     },
@@ -2850,12 +2862,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.86,
+     "profit": 0.1515,
      "rationale": "NY@BOS 1Q UNDER 66.5 @86c: model 88.7% (mu 56.5, line +10.0 above mu); edge +2.7c",
      "sd": 8.28,
+     "settled": "2026-10-24T00:15:21.589773+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT23NYKBOS-67",
      "unit": "game"
     },
@@ -3634,12 +3649,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.91,
+     "profit": 0.092,
      "rationale": "ATL@CHA 1Q OVER 48.5 @91c: model 89.8% (mu 59.0, line -10.5 below mu); edge -1.2c",
      "sd": 8.28,
+     "settled": "2026-10-24T00:15:21.589773+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT23ATLCHA-49",
      "unit": "game"
     },
@@ -3658,12 +3676,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.95,
+     "profit": 0.049,
      "rationale": "ATL@CHA 1Q OVER 46.5 @95c: model 93.5% (mu 59.0, line -12.5 below mu); edge -1.5c",
      "sd": 8.28,
+     "settled": "2026-10-24T00:15:21.589773+00:00",
      "side": "yes",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT23ATLCHA-47",
      "unit": "game"
     },
@@ -3681,12 +3702,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.88,
+     "profit": 0.1269,
      "rationale": "ATL@CHA 1Q UNDER 68.5 @88c: model 87.4% (mu 59.0, line +9.5 above mu); edge -0.6c",
      "sd": 8.28,
+     "settled": "2026-10-24T00:15:21.589773+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT23ATLCHA-69",
      "unit": "game"
     },
@@ -3705,12 +3729,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.92,
+     "profit": 0.0809,
      "rationale": "ATL@CHA 1Q UNDER 70.5 @92c: model 91.7% (mu 59.0, line +11.5 above mu); edge -0.3c",
      "sd": 8.28,
+     "settled": "2026-10-24T00:15:21.589773+00:00",
      "side": "no",
      "start": "2026-10-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT23ATLCHA-71",
      "unit": "game"
     },
@@ -9679,7 +9706,7 @@
   }
  },
  "error": null,
- "last_run": "2026-10-24T00:00:24.146749+00:00",
+ "last_run": "2026-10-24T00:15:21.589773+00:00",
  "preseason": [
   {
    "pts": 105,
@@ -10447,6 +10474,10 @@
   },
   {
    "at": "2026-10-24T00:00:24.146749+00:00",
+   "built": []
+  },
+  {
+   "at": "2026-10-24T00:15:21.589773+00:00",
    "built": []
   }
  ],
