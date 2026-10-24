@@ -169,7 +169,9 @@ check("team rules: each group is a disclosure, only Group A open", [(g, bool(o))
 check("team rules: a group's summary carries its count and record",
       re.search(r'<b>Group B</b><span>\d+ rules · \d+ settled · \d+ won', html) is not None, True)
 check("its own id and heading", ('<section id="team-rules">' in html, "<h2>Team scoring rules</h2>" in html), (True, True))
-check("says paper and not in Production", "paper · not in Production" in html, True)
+check("says paper, T1 alone in Production since 2026-10-24",
+      ("T1 in Production since 2026-10-24, the other seven paper" in html,
+       [k for k, body in lines if "Production since 2026-10-24" in body]), (True, ["T1"]))
 check("the columns", all(c in html for c in ("Settled", "Won", "ROI after fee", "Open", "latest 25")), True)
 check("entries carry the team and labels", ("Alpha v Beta" in html, "O+D- v O+D-" in html), (True, True))
 check("an empty ledger says how entries arrive", "No entries yet" in TB.section({"rules": {}}), True)

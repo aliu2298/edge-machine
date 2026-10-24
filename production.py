@@ -1231,7 +1231,7 @@ def unavailable_row(key, label, sport_label, note):
             f'<td colspan="8" class="neg">{esc(note)}</td></tr>')
 
 
-def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=None, nba_value=None):
+def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=None, nba_value=None, soccer_team_rules=None):
     """public_site/production.html — shares the Sandbox stylesheet.
 
     Organised as the questions a visitor actually asks, in order: what is in Production and on
@@ -1259,6 +1259,11 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
         # their own ledger (nba_value_ledger).
         import nba_value_production
         d, st, blob = nba_value_production.page_inputs(d, st, blob, nba_value, now=now_dt)
+    if soccer_team_rules is not None:
+        # Team-scoring rule T1, moved by hand 2026-10-24 (soccer_team_rules_production), from its
+        # own ledger (data/soccer_team_rules_ledger.json).
+        import soccer_team_rules_production
+        d, st, blob = soccer_team_rules_production.page_inputs(d, st, blob, soccer_team_rules, now=now_dt)
     # Headlines and the lead list use the page copy. The record on each card
     # is assessed on the unfiltered ledger, the same one the tracker reads,
     # so a hidden row cannot move a kept pair's numbers.

@@ -1,0 +1,49 @@
+{
+ "bands": {
+  "st_t1|soccer_team2": [
+   0.03,
+   0.97
+  ]
+ },
+ "board_built_at": "2026-10-24T20:31:42+00:00",
+ "collector_error": null,
+ "collector_healthy": {
+  "st_t1": true
+ },
+ "corners_selections": {},
+ "first_publish_min": 45,
+ "late_publication_skipped": 0,
+ "leads": {},
+ "pairs": {
+  "st_t1|soccer_team2": {
+   "by_hand": "2026-10-24",
+   "entered_at": "2026-10-24T22:00:00+00:00",
+   "promoted_at": "2026-10-24T22:00:00+00:00",
+   "ready_at": "2026-10-24T22:00:00+00:00",
+   "route": "moved by hand on 2026-10-24",
+   "routing": {
+    "leads": 0,
+    "problem": null,
+    "routed": 0,
+    "unlisted": 0,
+    "unrouted": 0,
+    "unverified": 0,
+    "why": []
+   },
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null,
+   "timing": {
+    "late": [],
+    "timed": 0,
+    "under_target": 0
+   }
+  }
+ },
+ "publication_withheld": {},
+ "stage": "production",
+ "unlisted_skipped": 0,
+ "unverified_kickoff_skipped": 0,
+ "updated_at": "2026-10-24T20:31:42+00:00"
+}
