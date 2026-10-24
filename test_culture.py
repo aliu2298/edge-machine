@@ -74,7 +74,7 @@ gl = []
 mp2, mc2 = K.mention_picks([dict(mev[0], markets=[mkt("KXTRUMPSAY-26OCT19-MAM", 0.50, 0.53, 72, "KXTRUMPSAY-26OCT19",
                                                       custom_strike={"Word": "Mamdani"})])], NOW, {"words": {}}, fb, log=gl)
 check("at 50-53c the NO is refused by the news guard, with its reason logged",
-      (mp2, mc2["news guard (YES mid over 0.50, model under 0.20)"], [g["reason"] for g in gl]),
+      (mp2, mc2["news guard (YES mid over 0.50, model under 0.25)"], [g["reason"] for g in gl]),
       ([], 1, ["news guard: market 0.52 v model 0.04"]))
 
 print("\nRotten Tomatoes: title, page counts, rounding, the model")
@@ -299,14 +299,24 @@ LOSSES = {"Ethanol": (0.21, 0.2081), "Deere": (0.39, 0.0), "Vivek": (0.46, 0.127
 got = {w: K.news_guard("no", round(1 - px + 0.01, 2), p) for w, (px, p) in LOSSES.items()}
 check("the guard refuses Deere (market 0.62 v model 0.00) and Vivek (0.55 v 0.13), with the reason",
       (got["Deere"], got["Vivek"]), ("news guard: market 0.62 v model 0.00", "news guard: market 0.55 v model 0.13"))
-check("as specified it does NOT refuse Ethanol (model 0.21, not under 0.20), nor Nobel (market 0.33) or "
-      "Bibi (market 0.29), whose YES sat under 0.50", (got["Ethanol"], got["Nobel"], got["Bibi"]), (None, None, None))
+check("threshold raised to 0.25 (2026-10-24): Ethanol (model 0.208) is now refused too",
+      (got["Ethanol"], K.news_guard("no", 0.79, 0.208)),
+      ("news guard: market 0.80 v model 0.21", "news guard: market 0.79 v model 0.21"))
+check("Nobel (market 0.33) and Bibi (market 0.29) still pass: their YES sat under 0.50", (got["Nobel"], got["Bibi"]), (None, None))
 check("a normal NO is allowed: YES mid 0.30, model 0.05", K.news_guard("no", 0.30, 0.05), None)
-check("the edges of the guard: mid exactly 0.50 or model exactly 0.20 pass, and a YES is never guarded",
-      (K.news_guard("no", 0.50, 0.05), K.news_guard("no", 0.70, 0.20), K.news_guard("yes", 0.70, 0.05)), (None, None, None))
+check("the model edge: 0.249 is refused, exactly 0.25 and 0.26 pass (market over 0.50)",
+      (K.news_guard("no", 0.70, 0.249), K.news_guard("no", 0.70, 0.25), K.news_guard("no", 0.70, 0.26)),
+      ("news guard: market 0.70 v model 0.25", None, None))
+check("the market edge is unchanged: mid exactly 0.50 passes, 0.51 is guarded; a YES is never guarded",
+      (K.news_guard("no", 0.50, 0.05), K.news_guard("no", 0.51, 0.05) is not None, K.news_guard("yes", 0.70, 0.05)),
+      (None, True, None))
+check("the thresholds are the registered ones: market 0.50, model 0.25, edge cap 0.25",
+      (K.NEWS_GUARD, K.EDGE_CAP), (dict(market_over=0.50, model_under=0.25), 0.25))
 check("the edge cap: 0.59 -> 0.25 capped, 0.10 and 0.25 unchanged, 0.03 still under the 5c threshold",
       (K.capped(0.59), K.capped(0.10), K.capped(0.25), K.capped(0.03)[0] < K.EDGE_MIN), ((0.25, True), (0.10, False), (0.25, False), True))
-check("the amendment is dated in the lane's registered text", "Amended 2026-10-24" in K.RULES["mentions_rate"], True)
+check("the amendment is dated in the lane's registered text, with the raised threshold",
+      ("Amended 2026-10-24" in K.RULES["mentions_rate"], "0.25 (news guard, raised from 0.20 on 2026-10-24" in K.RULES["mentions_rate"],
+       "under 0.20" in K.RULES["mentions_rate"]), (True, True, False))
 
 print("\nthe Culture page with three lanes retired")
 real = K.load()

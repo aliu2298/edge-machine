@@ -69,16 +69,18 @@ RULES = {
 # suddenly become news; the 5 settled losses to that day were all NOs (Ethanol, Deere, Vivek,
 # Nobel, Bibi). Before any entry:
 #   news guard  a NO is refused when Kalshi's own P(said) (the YES mid) is over 0.50 and the
-#               model's is under 0.20; the reason is kept in the scan ("news guard: market ...")
+#               model's is under 0.25 (threshold raised to 0.25 on 2026-10-24, from 0.20: Ethanol,
+#               YES 0.79 against a model 0.208, was the case it missed); the reason is kept in the
+#               scan ("news guard: market ...")
 #   edge cap    the model edge that meets the 5c threshold (and is published as the lead's edge,
 #               which anything ranking leads reads) is capped at 0.25; the raw edge is kept on
 #               the entry as edge_raw and the detail says "edge capped"
 # Entries logged before the amendment are not rewritten.
 AMENDED = "2026-10-24"
-NEWS_GUARD = dict(market_over=0.50, model_under=0.20)
+NEWS_GUARD = dict(market_over=0.50, model_under=0.25)
 EDGE_CAP = 0.25
 RULES["mentions_rate"] += (f" Amended {AMENDED}: a NO is refused when Kalshi's YES mid is over 0.50 and P is under "
-                           "0.20 (news guard: a word that has just become news reads low in an 84-day rate), and "
+                           "0.25 (news guard, raised from 0.20 on 2026-10-24: a word that has just become news reads low in an 84-day rate), and "
                            "the edge that meets the 5c threshold and ranks the entry is capped at 0.25 (a larger "
                            "one is logged as edge capped). Entries before the amendment are unchanged.")
 # Lanes retired by hand (2026-10-24, Olu): no new entry from the dated day on (Eastern), the
@@ -119,7 +121,7 @@ def retired(key, now):
 
 def news_guard(side, yes_mid, p):
     """The 2026-10-24 news guard: -> the refusal reason for a NO the market prices as likely
-    said (YES mid over 0.50) while the model reads it unlikely (P under 0.20), else None."""
+    said (YES mid over 0.50) while the model reads it unlikely (P under 0.25), else None."""
     if side == "no" and yes_mid > NEWS_GUARD["market_over"] and p < NEWS_GUARD["model_under"]:
         return f"news guard: market {yes_mid:.2f} v model {p:.2f}"
     return None
@@ -307,7 +309,7 @@ def mention_picks(events, now, state, fetch=web, log=None):
             mid = round((q[0] + q[1]) / 2, 4)
             refused = news_guard(side, mid, p)
             if refused:
-                counts["news guard (YES mid over 0.50, model under 0.20)"] += 1
+                counts["news guard (YES mid over 0.50, model under 0.25)"] += 1
                 if log is not None:
                     log.append(dict(id=m["ticker"], word=word, side=side, reason=refused))
                 continue
