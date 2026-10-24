@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-24T18:31:12+00:00",
+ "board_built_at": "2026-10-24T19:01:38+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sa_o15_arg": true,
@@ -218,42 +218,6 @@
    "sport": "soccer_o25",
    "status": "hit"
   },
-  "2026-10-24|Atl\u00e9tico Madrid|Deportivo|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
-   "away": "Deportivo",
-   "bet": {
-    "kind": "btts"
-   },
-   "date": "2026-10-24",
-   "edge_at_log": null,
-   "first_seen": "2026-10-24",
-   "headline": "Both teams to score",
-   "home": "Atl\u00e9tico Madrid",
-   "id": "2026-10-24|Atl\u00e9tico Madrid|Deportivo|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score",
-   "kickoff": "2026-10-24T19:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-24",
-   "last_seen_at": "2026-10-24T18:31:12+00:00",
-   "league": "La Liga",
-   "match": "Atl\u00e9tico Madrid v Deportivo",
-   "pair": "sr_d3|soccer_btts",
-   "price_at_log": 0.49,
-   "published_at": "2026-10-24T17:31:44+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 88,
-   "route": {
-    "claim": "Both teams to score",
-    "event": "KXLALIGABTTS-26OCT24ATMDEP",
-    "market": "KXLALIGABTTS-26OCT24ATMDEP-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "yes",
-    "price_at_log": 0.49,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "sr_d3:KXLALIGABTTS-26OCT24ATMDEP-BTTS",
-   "source": "sr_d3",
-   "sport": "soccer_btts",
-   "status": "pending"
-  },
   "2026-10-24|Chelsea|Tottenham Hotspur|Under 2.5 goals \u00b7 EPL O\u2212D\u2212 v an O+ opponent \u00b7 under 2.5": {
    "away": "Tottenham Hotspur",
    "bet": {
@@ -303,7 +267,7 @@
    "kickoff": "2026-10-24T19:30Z",
    "lane": "production",
    "last_seen": "2026-10-24",
-   "last_seen_at": "2026-10-24T18:31:12+00:00",
+   "last_seen_at": "2026-10-24T19:01:38+00:00",
    "league": "Primeira Liga",
    "match": "Gil Vicente v FC Porto",
    "pair": "sr_d3|soccer_btts",
@@ -408,7 +372,7 @@
    "kickoff": "2026-10-24T20:00Z",
    "lane": "production",
    "last_seen": "2026-10-24",
-   "last_seen_at": "2026-10-24T18:31:12+00:00",
+   "last_seen_at": "2026-10-24T19:01:38+00:00",
    "league": "Liga Profesional",
    "match": "Talleres (C\u00f3rdoba) v Defensa y Justicia",
    "pair": "sa_o15_arg|soccer_o15",
@@ -549,9 +513,9 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 7,
+    "leads": 6,
     "problem": null,
-    "routed": 7,
+    "routed": 6,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -563,7 +527,7 @@
    "sandbox_roi_fee": -0.338,
    "timing": {
     "late": [],
-    "timed": 2,
+    "timed": 1,
     "under_target": 0
    }
   }
@@ -572,5 +536,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-24T18:31:12+00:00"
+ "updated_at": "2026-10-24T19:01:38+00:00"
 }
