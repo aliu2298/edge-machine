@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-24T19:12:49.355637+00:00",
+ "last_run": "2026-10-24T20:30:14.070080+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -303,6 +303,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT23DETMIA-DET110",
      "title": "Detroit over 109.5 points",
      "why": "DET O+D- v MIA O+D+ \u00b7 110+ YES 0.79"
+    },
+    {
+     "game": "401909853",
+     "id": "R1:KXNBATEAMTOTAL-26OCT24MIACHA-MIA111",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O+D+",
+      "home": "O-D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-24T20:30:14.070080+00:00",
+     "match": "MIA @ CHA",
+     "price": 0.67,
+     "rule": "R1",
+     "side": "yes",
+     "start": "2026-10-24T22:00Z",
+     "status": "open",
+     "strike": 110.5,
+     "team": "MIA",
+     "ticker": "KXNBATEAMTOTAL-26OCT24MIACHA-MIA111",
+     "title": "Miami over 110.5 points",
+     "why": "MIA O+D+ v CHA O-D- \u00b7 110+ YES 0.67"
     }
    ]
   },
@@ -557,6 +579,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT23DETMIA-DET116",
      "title": "Detroit over 115.5 points",
      "why": "DET O+D- v MIA O+D+ \u00b7 115+ YES 0.60"
+    },
+    {
+     "game": "401909853",
+     "id": "R2:KXNBATEAMTOTAL-26OCT24MIACHA-MIA115",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O+D+",
+      "home": "O-D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-24T20:30:14.070080+00:00",
+     "match": "MIA @ CHA",
+     "price": 0.56,
+     "rule": "R2",
+     "side": "yes",
+     "start": "2026-10-24T22:00Z",
+     "status": "open",
+     "strike": 114.5,
+     "team": "MIA",
+     "ticker": "KXNBATEAMTOTAL-26OCT24MIACHA-MIA115",
+     "title": "Miami over 114.5 points",
+     "why": "MIA O+D+ v CHA O-D- \u00b7 115+ YES 0.56"
     }
    ]
   },
@@ -861,6 +905,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT23PORSAC-SAC116",
      "title": "Sacramento over 115.5 points",
      "why": "SAC O-D+ v POR O+D- \u00b7 115+ NO 0.64"
+    },
+    {
+     "game": "401909853",
+     "id": "R3:KXNBATEAMTOTAL-26OCT24MIACHA-CHA116",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O+D+",
+      "home": "O-D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-24T20:30:14.070080+00:00",
+     "match": "MIA @ CHA",
+     "price": 0.6,
+     "rule": "R3",
+     "side": "no",
+     "start": "2026-10-24T22:00Z",
+     "status": "open",
+     "strike": 115.5,
+     "team": "CHA",
+     "ticker": "KXNBATEAMTOTAL-26OCT24MIACHA-CHA116",
+     "title": "Charlotte over 115.5 points",
+     "why": "CHA O-D- v MIA O+D+ \u00b7 115+ NO 0.60"
     }
    ]
   },
@@ -1019,6 +1085,28 @@
      "ticker": "KXNBA1HTOTAL-26OCT23ATLCHA-115",
      "title": "Over 114.5 points",
      "why": "1H ATL O+D+ @ CHA O-D- \u00b7 115+ NO 0.45"
+    },
+    {
+     "game": "401909853",
+     "id": "R5:KXNBA1HTOTAL-26OCT24MIACHA-114",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O+D+",
+      "home": "O-D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-24T20:30:14.070080+00:00",
+     "match": "MIA @ CHA",
+     "price": 0.38,
+     "rule": "R5",
+     "side": "no",
+     "start": "2026-10-24T22:00Z",
+     "status": "open",
+     "strike": 113.5,
+     "team": "game",
+     "ticker": "KXNBA1HTOTAL-26OCT24MIACHA-114",
+     "title": "Over 113.5 points",
+     "why": "1H MIA O+D+ @ CHA O-D- \u00b7 115+ NO 0.38"
     }
    ]
   },
@@ -1398,6 +1486,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT23MEMGSW-MEM106",
      "title": "Memphis over 105.5 points",
      "why": "MEM O+D- v GS O-D- \u00b7 105+ YES 0.83"
+    },
+    {
+     "game": "401909853",
+     "id": "R6:KXNBATEAMTOTAL-26OCT24MIACHA-MIA105",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O+D+",
+      "home": "O-D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-24T20:30:14.070080+00:00",
+     "match": "MIA @ CHA",
+     "price": 0.84,
+     "rule": "R6",
+     "side": "yes",
+     "start": "2026-10-24T22:00Z",
+     "status": "open",
+     "strike": 104.5,
+     "team": "MIA",
+     "ticker": "KXNBATEAMTOTAL-26OCT24MIACHA-MIA105",
+     "title": "Miami over 104.5 points",
+     "why": "MIA O+D+ v CHA O-D- \u00b7 105+ YES 0.84"
     }
    ]
   },
@@ -1708,11 +1818,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-20T21:30:14.379496+00:00",
-   "due": 1,
-   "new": 3
-  },
-  {
    "at": "2026-10-20T21:34:06.699822+00:00",
    "due": 1,
    "new": 0
@@ -1961,6 +2066,11 @@
    "at": "2026-10-24T19:12:49.355637+00:00",
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-10-24T20:30:14.070080+00:00",
+   "due": 1,
+   "new": 5
   }
  ],
  "version": "nba-rules-v1"
