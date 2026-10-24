@@ -64,6 +64,17 @@ season-to-date average of points minus Kalshi's 50c team-total line), named in t
 Only a data problem blocks: no model or Kalshi team-total level to compare, or a gap over 8 points.
 A gap over 4 points is a warning on the card.
 
+AMENDMENT 2026-10-24 (Olu), label step, until 2026-11-15 (Eastern): step 4 needs ONE side's label to
+back the leg, not both. Team total OVER: own O+ OR opponent D+; UNDER: own O- OR opponent D-. Game
+total OVER: at least one D+; UNDER: at least one D-. 1Q/1H OVER: at least one O+; UNDER: at least
+one O-. The rule is chosen by the card's game night (LABEL_RULE_LOOSE_UNTIL = 2026-11-15): nights
+before it use the loose rule, the night of 2026-11-15 and every later one the strict rule above,
+automatically. A leg carries "labels: both agree" or "labels: one side (early-season rule)"; ranking
+is by edge as before with a small bonus (BOTH_BONUS, half a cent) for both-agree legs; the funnel
+counts both-agree and one-side survivors separately, and the page splits their hit rates, so the
+two can be compared later. Cards already built are not rewritten: a leg with no label mode passed
+under the strict rule and counts as both-agree.
+
 How it runs: nba-safe-card.yml, asked for by the VPS 90-60 minutes before each tip
 (lane_windows.nba_safe_windows, scripts/vps_window_requests.sh), with an hourly fallback that settles.
 """
@@ -107,6 +118,10 @@ FEE = 0.07
 EPS = 1e-9
 SCHEDULE_DAYS = 3
 PRESEASON = (dt.date(2026, 10, 2), dt.date(2026, 10, 19))
+LABEL_RULE_LOOSE_UNTIL = "2026-11-15"   # Eastern game nights before this use the one-side label rule
+BOTH_BONUS = 0.005                      # ranking edge bonus for a leg whose labels BOTH agree
+LABEL_BOTH = "labels: both agree"
+LABEL_ONE = "labels: one side (early-season rule)"
 STEPS = ("band", "safety", "value", "labels", "clean", "card")
 STEP_WORDS = {"band": "1 price 84-95c", "safety": "2 model P ≥ 0.90", "value": "3 P ≥ price + 3c",
               "labels": "4 labels agree", "clean": "5 clean 8/10 (team totals)", "card": "6 on the card"}
@@ -210,24 +225,41 @@ def _d(lab):
     return (lab or "")[2:].replace("−", "-")
 
 
-def labels_agree(leg, g, labs):
-    """(ok, words) for step 4: the labels the leg's market reads, and whether they back its side."""
+def loose_labels(night):
+    """Does the one-side label rule apply to this Eastern game night? (Amendment 2026-10-24.)"""
+    return bool(night) and str(night) < LABEL_RULE_LOOSE_UNTIL
+
+
+def label_check(leg, g, labs, loose=False):
+    """(ok, words, mode) for step 4. `mode` is "both" when both labels the leg's market reads back its
+    side, "one" when exactly one does (a pass only under the loose rule), None when none does or a
+    label is missing. Strict: both. Loose: at least one."""
     k = LABEL_KEY[leg["kind"]]
     h, a = labs.get(f"home_{k}"), labs.get(f"away_{k}")
     if not h or not a:
-        return False, "no labels"
+        return False, "no labels", None
     over = leg["side"] == "yes"
     if leg["kind"] == "tt":
         own, opp = (h, a) if leg["unit"] == g["home"] else (a, h)
-        ok = (_o(own) == "O+" and _d(opp) == "D+") if over else (_o(own) == "O-" and _d(opp) == "D-")
+        parts = [_o(own) == ("O+" if over else "O-"), _d(opp) == ("D+" if over else "D-")]
         words = f"{leg['unit']} {own} v {opp}"
     elif leg["kind"] == "game":
-        ok = (_d(h) == "D+" and _d(a) == "D+") if over else (_d(h) == "D-" and _d(a) == "D-")
+        want = "D+" if over else "D-"
+        parts = [_d(h) == want, _d(a) == want]
         words = f"{a} v {h}"
     else:
-        ok = (_o(h) == "O+" and _o(a) == "O+") if over else (_o(h) == "O-" and _o(a) == "O-")
+        want = "O+" if over else "O-"
+        parts = [_o(h) == want, _o(a) == want]
         words = f"{k} {a} v {h}"
-    return ok, words.replace("-", "−")
+    mode = "both" if all(parts) else "one" if any(parts) else None
+    ok = mode == "both" or (loose and mode == "one")
+    return ok, words.replace("-", "−"), mode
+
+
+def labels_agree(leg, g, labs):
+    """(ok, words) for step 4 under the STRICT rule: both labels back the leg's side."""
+    ok, words, _mode = label_check(leg, g, labs, loose=False)
+    return ok, words
 
 
 def team_points(track_games, preseason_rows, before):
@@ -260,9 +292,11 @@ def clean(leg, pts):
 
 # ---------- the funnel and the card ----------
 
-def funnel(legs, games, labs_all, pts):
-    """Run steps 1-5 over every leg. Returns (logged legs with `passed` and `cut`, counts)."""
-    counts = dict(quoted=len(legs), band=0, safety=0, value=0, labels=0, clean=0)
+def funnel(legs, games, labs_all, pts, loose=False):
+    """Run steps 1-5 over every leg. Returns (logged legs with `passed` and `cut`, counts).
+    `loose`: the one-side label rule (Amendment 2026-10-24); counts then also split the labels
+    survivors into labels_both and labels_one."""
+    counts = dict(quoted=len(legs), band=0, safety=0, value=0, labels=0, clean=0, labels_both=0, labels_one=0)
     logged = []
     for leg in legs:
         if not in_band(leg["price"]):
@@ -280,13 +314,16 @@ def funnel(legs, games, labs_all, pts):
             else:
                 leg["passed"].append("value")
                 counts["value"] += 1
-                ok, words = labels_agree(leg, g, labs_all.get(str(g["id"])) or {})
+                ok, words, mode = label_check(leg, g, labs_all.get(str(g["id"])) or {}, loose)
                 leg["labels"] = words
                 if not ok:
                     leg["cut"] = "labels"
                 else:
                     leg["passed"].append("labels")
                     counts["labels"] += 1
+                    counts["labels_both" if mode == "both" else "labels_one"] += 1
+                    leg["label_mode"] = mode
+                    leg["label_note"] = LABEL_BOTH if mode == "both" else LABEL_ONE
                     if leg["kind"] == "tt":
                         ok, words, hits, n = clean(leg, pts)
                         leg.update(clean=words, clean_hits=hits, clean_n=n)
@@ -331,7 +368,8 @@ def pair_ok(a, b):
 def pick_card(survivors, cap=1):
     """(legs, reason): best edge first, at most `cap` legs per game (two only where pair_ok allows),
     until odds >= 1.70 with 3-4 legs."""
-    ranked = sorted(survivors, key=lambda x: (-x["edge"], x["price"], x["ticker"], x["side"]))
+    ranked = sorted(survivors, key=lambda x: (-(x["edge"] + (BOTH_BONUS if x.get("label_mode") == "both" else 0.0)),
+                                              x["price"], x["ticker"], x["side"]))
     card = []
     for leg in ranked:
         mine = [x for x in card if x["game"] == leg["game"]]
@@ -400,18 +438,30 @@ def rationale(leg):
     if leg.get("labels"):
         held = {"tt": "attack and opposing defence agree", "game": "both defences agree",
                 "q1": "both attacks agree", "h1": "both attacks agree"}[leg["kind"]]
-        bits.append(f"labels {leg['labels']} ({held})")
+        if leg.get("label_mode") == "one":
+            bits.append(f"{LABEL_ONE}: {leg['labels']}")
+        elif leg.get("label_mode") == "both":
+            bits.append(f"{LABEL_BOTH}: {leg['labels']} ({held})")
+        else:
+            bits.append(f"labels {leg['labels']} ({held})")
     if leg.get("clean"):
         bits.append(leg["clean"])
     bits.append(f"edge {leg['edge'] * 100:+.1f}c")
     return "; ".join(bits)
 
 
+def _label_words(counts):
+    """'6 labels' or, under the loose rule, '6 labels (2 both agree, 4 one side)'."""
+    if counts.get("labels_one") or counts.get("labels_both"):
+        return f"{counts['labels']} labels ({counts.get('labels_both', 0)} both agree, {counts.get('labels_one', 0)} one side)"
+    return f"{counts['labels']} labels"
+
+
 def card_rationale(card, counts):
     note = "".join(f" {t}." for t in (card.get("lean"), card.get("warning")) if t)
     if not card["legs"]:
         return (f"{card['reason']}.{note} Funnel: {counts['quoted']} sides quoted → {counts['band']} in 84-95c → "
-                f"{counts['safety']} model ≥0.90 → {counts['value']} with value → {counts['labels']} labels → "
+                f"{counts['safety']} model ≥0.90 → {counts['value']} with value → {_label_words(counts)} → "
                 f"{counts['clean']} clean.")
     combo = 1.0
     for leg in card["legs"]:
@@ -424,7 +474,7 @@ def card_rationale(card, counts):
     indep = " (assumes legs independent)" if shared else ""
     return (f"{len(card['legs'])} legs, combined odds {card['odds']:.2f}, the model's combo chance {combo * 100:.0f}%{indep}.{two}{note} "
             f"Funnel: {counts['quoted']} sides quoted → {counts['band']} in 84-95c → {counts['safety']} model ≥0.90 → "
-            f"{counts['value']} with value → {counts['labels']} labels → {counts['clean']} clean → {len(card['legs'])} on the card.")
+            f"{counts['value']} with value → {_label_words(counts)} → {counts['clean']} clean → {len(card['legs'])} on the card.")
 
 
 # ---------- preseason points (for the clean check) ----------
@@ -478,7 +528,8 @@ def build(night, games, now, fetch, pri, labs_all, pre_rows, season_gap=None):
             legs += legs_for(g, kind, ms, model)
             if kind == "tt":
                 medians.update(NV.ladder_medians(ms, g, "tt"))
-    logged, counts = funnel(legs, {g["id"]: g for g in todo}, labs_all, pts)
+    loose = loose_labels(night)
+    logged, counts = funnel(legs, {g["id"]: g for g in todo}, labs_all, pts, loose=loose)
     survivors = [leg for leg in logged if leg["cut"] is None]
     label_sides = [leg["side"] for leg in logged if "labels" in leg["passed"]]
     chk = level_check(medians, mu_team, label_sides, season_gap)
@@ -503,7 +554,8 @@ def build(night, games, now, fetch, pri, labs_all, pre_rows, season_gap=None):
                 legs=card_legs, odds=None if not card_legs else round(odds_of(card_legs), 3),
                 combo_p=None if not card_legs else round(math.prod(leg["p"] for leg in card_legs), 4),
                 reason=reason, status="open" if card_legs else "no_card", counts=dict(counts, card=len(card_legs)),
-                per_game_cap=cap, survivors_by_game={m: sum(1 for x in survivors if x["match"] == m)
+                per_game_cap=cap, label_rule="loose" if loose else "strict",
+                survivors_by_game={m: sum(1 for x in survivors if x["match"] == m)
                                                      for m in sorted({x["match"] for x in survivors})},
                 legs_by_game={m: sum(1 for x in card_legs if x["match"] == m) for m in sorted({x["match"] for x in card_legs})},
                 guard=dict(ok=ok, gap=None if gap is None else round(gap, 2), share=None if share is None else round(share, 3),
@@ -634,7 +686,17 @@ def records(state):
         if rows:
             calib.append(dict(lo=lo, hi=min(hi, 1.0), n=len(rows), won=sum(leg["status"] == "won" for leg in rows),
                               p=sum(leg["p"] for leg in rows) / len(rows)))
-    return dict(cards=len(played), won=sum(c["status"] == "won" for c in done), lost=sum(c["status"] == "lost" for c in done),
+    # Every logged leg that passed the labels and settled, split by how many labels backed it (a leg
+    # logged before the 2026-10-24 amendment has no mode: it passed under the strict rule, so both).
+    modes = {}
+    for m in ("both", "one"):
+        rows = [leg for leg in every if "labels" in (leg.get("passed") or []) and leg.get("status") in ("won", "lost")
+                and (leg.get("label_mode") or "both") == m]
+        modes[m] = dict(n=len(rows), won=sum(leg["status"] == "won" for leg in rows),
+                        price=sum(leg["price"] for leg in rows) / len(rows) if rows else None,
+                        p=sum(leg["p"] for leg in rows) / len(rows) if rows else None)
+    return dict(cards=len(played), label_modes=modes,
+                won=sum(c["status"] == "won" for c in done), lost=sum(c["status"] == "lost" for c in done),
                 open=sum(c["status"] == "open" for c in played), no_card=sum(1 for c in cards if not c.get("legs")),
                 profit=sum(c.get("profit") or 0 for c in done),
                 legs=len(legs_done), legs_won=sum(leg["status"] == "won" for leg in legs_done),
