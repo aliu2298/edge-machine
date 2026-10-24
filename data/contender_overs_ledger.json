@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-24T21:31:37.303718+00:00",
+ "last_run": "2026-10-24T21:46:14.024561+00:00",
  "rules": {
   "O15": {
    "picks": [
@@ -36,11 +36,14 @@
      "line": 1.5,
      "logged": "2026-10-24T18:01:16.113375+00:00",
      "match": "Gil Vicente v FC Porto",
+     "payout": 0.0,
      "price": 0.76,
+     "profit": -100.0,
      "rule": "O15",
+     "settled": "2026-10-24T21:46:14.024561+00:00",
      "side": "yes",
      "start": "2026-10-24T19:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXLIGAPORTUGALTOTAL-26OCT24GILFCP-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Porto in a top-3 title spot \u00b7 over 1.5 YES 0.76"
@@ -81,11 +84,14 @@
      "line": 2.5,
      "logged": "2026-10-24T18:01:16.113375+00:00",
      "match": "Gil Vicente v FC Porto",
+     "payout": 0.0,
      "price": 0.52,
+     "profit": -100.0,
      "rule": "O25",
+     "settled": "2026-10-24T21:46:14.024561+00:00",
      "side": "yes",
      "start": "2026-10-24T19:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXLIGAPORTUGALTOTAL-26OCT24GILFCP-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Porto in a top-3 title spot \u00b7 over 2.5 YES 0.52"
@@ -126,11 +132,14 @@
      "line": 3.5,
      "logged": "2026-10-24T18:01:16.113375+00:00",
      "match": "Gil Vicente v FC Porto",
+     "payout": 0.0,
      "price": 0.29,
+     "profit": -100.0,
      "rule": "O35",
+     "settled": "2026-10-24T21:46:14.024561+00:00",
      "side": "yes",
      "start": "2026-10-24T19:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXLIGAPORTUGALTOTAL-26OCT24GILFCP-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Porto in a top-3 title spot \u00b7 over 3.5 YES 0.29"
@@ -139,13 +148,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-23T17:16:11.759285+00:00",
-   "due": 1,
-   "matched": 1,
-   "new": 0,
-   "qualifying": 0
-  },
   {
    "at": "2026-10-23T17:31:25.085767+00:00",
    "due": 1,
@@ -491,6 +493,13 @@
   },
   {
    "at": "2026-10-24T21:31:37.303718+00:00",
+   "due": 0,
+   "matched": 0,
+   "new": 0,
+   "qualifying": 0
+  },
+  {
+   "at": "2026-10-24T21:46:14.024561+00:00",
    "due": 0,
    "matched": 0,
    "new": 0,
