@@ -2,15 +2,15 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-24T02:00:14.129234+00:00",
-   "last_success": "2026-10-24T02:00:14.129234+00:00",
+   "last_run": "2026-10-24T03:00:14.267446+00:00",
+   "last_success": "2026-10-24T03:00:14.267446+00:00",
    "observations": {
-    "at": "2026-10-24T02:00:14.129234+00:00",
+    "at": "2026-10-24T03:00:14.267446+00:00",
     "events": 963,
     "reasons": {
-     "no quote or spread too wide": 61,
+     "no quote or spread too wide": 1,
      "not active": 718,
-     "outside the entry window": 12016
+     "outside the entry window": 12076
     }
    },
    "picks": [
@@ -474,15 +474,16 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-24T02:00:14.129234+00:00",
-   "last_success": "2026-10-24T02:00:14.129234+00:00",
+   "last_run": "2026-10-24T03:00:14.267446+00:00",
+   "last_success": "2026-10-24T03:00:14.267446+00:00",
    "observations": {
-    "at": "2026-10-24T02:00:14.129234+00:00",
+    "at": "2026-10-24T03:00:14.267446+00:00",
     "events": 963,
     "reasons": {
-     "no quote or spread too wide": 155,
+     "in band": 1,
+     "no quote or spread too wide": 150,
      "not active": 718,
-     "outside the band": 55,
+     "outside the band": 59,
      "outside the entry window": 11867
     }
    },
@@ -789,21 +790,37 @@
      "side": "yes",
      "status": "open",
      "title": "Dai Dai"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-25T14:00:00Z",
+     "detail": "NO 0.76 \u00b7 favourite band",
+     "event": "KXALBUMEQUIV-NOB26OCT22",
+     "id": "KXALBUMEQUIV-NOB26OCT22-9K",
+     "logged": "2026-10-24T03:00:14.267446+00:00",
+     "name": "No Bad Memories: First Week Album Equivalent Units",
+     "price": 0.76,
+     "series": "KXALBUMEQUIV",
+     "side": "no",
+     "status": "open",
+     "strike": 9000,
+     "strike_type": "greater",
+     "title": "Above 9K"
     }
    ]
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-24T02:00:14.129234+00:00",
-   "last_success": "2026-10-24T02:00:14.129234+00:00",
+   "last_run": "2026-10-24T03:00:14.267446+00:00",
+   "last_success": "2026-10-24T03:00:14.267446+00:00",
    "observations": {
-    "at": "2026-10-24T02:00:14.129234+00:00",
+    "at": "2026-10-24T03:00:14.267446+00:00",
     "events": 963,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 21,
+     "already near-certain (under 10c or over 90c)": 19,
      "edge 5c+": 11,
-     "edge under 5c": 2,
-     "no quote or spread too wide": 34
+     "edge under 5c": 3,
+     "no quote or spread too wide": 35
     }
    },
    "picks": [
@@ -1746,10 +1763,10 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-24T02:00:14.129234+00:00",
-   "last_success": "2026-10-24T02:00:14.129234+00:00",
+   "last_run": "2026-10-24T03:00:14.267446+00:00",
+   "last_success": "2026-10-24T03:00:14.267446+00:00",
    "observations": {
-    "at": "2026-10-24T02:00:14.129234+00:00",
+    "at": "2026-10-24T03:00:14.267446+00:00",
     "events": 963,
     "reasons": {
      "collecting review pace (12h of snapshots)": 1,
@@ -2050,9 +2067,8 @@
    "days": []
   },
   "Bibi / Netanyahu": {
-   "at": "2026-10-23T20:00:14.888217+00:00",
+   "at": "2026-10-24T03:00:14.267446+00:00",
    "days": [
-    "2026-07-31",
     "2026-09-13",
     "2026-09-26",
     "2026-09-30",
@@ -2060,7 +2076,7 @@
    ]
   },
   "BlackRock": {
-   "at": "2026-10-22T14:06:21.165758+00:00",
+   "at": "2026-10-24T03:00:14.267446+00:00",
    "days": []
   },
   "Blockade": {
@@ -2200,7 +2216,7 @@
    "days": []
   },
   "Marijuana / Weed / Cannabis": {
-   "at": "2026-10-23T18:00:16.886807+00:00",
+   "at": "2026-10-24T03:00:14.267446+00:00",
    "days": [
     "2026-10-09"
    ]
