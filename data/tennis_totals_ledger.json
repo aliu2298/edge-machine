@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-24T15:45:13.723526+00:00",
+ "last_run": "2026-10-24T16:00:14.101815+00:00",
  "registered": "2026-10-21",
  "rules": {
   "baseline": {
@@ -544,11 +544,14 @@
      "line": 18.5,
      "logged": "2026-10-24T12:15:15.384639+00:00",
      "match": "Alexander Bublik v Daniil Medvedev",
+     "payout": 0.59,
      "price": 0.9,
+     "profit": -34.9,
      "rule": "baseline",
+     "settled": "2026-10-24T16:00:14.101815+00:00",
      "side": "yes",
      "start": "2026-10-24T13:00:00+00:00",
-     "status": "open",
+     "status": "no_result",
      "ticker": "KXATPGTOTAL-26OCT24MEDBUB-19",
      "title": "Over 18.5 games",
      "tournament": "Almaty Open",
@@ -1160,11 +1163,14 @@
      "line": 18.5,
      "logged": "2026-10-24T12:15:15.384639+00:00",
      "match": "Alexander Bublik v Daniil Medvedev",
+     "payout": 0.59,
      "price": 0.9,
+     "profit": -34.9,
      "rule": "tennis_atp_low_over",
+     "settled": "2026-10-24T16:00:14.101815+00:00",
      "side": "yes",
      "start": "2026-10-24T13:00:00+00:00",
-     "status": "open",
+     "status": "no_result",
      "ticker": "KXATPGTOTAL-26OCT24MEDBUB-19",
      "title": "Over 18.5 games",
      "tournament": "Almaty Open",
@@ -1237,14 +1243,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-23T07:39:12.147435+00:00",
-   "baseline": 0,
-   "due": 1,
-   "entered": 0,
-   "matched": 1,
-   "new": 0
-  },
   {
    "at": "2026-10-23T08:45:16.888029+00:00",
    "baseline": 0,
@@ -1644,6 +1642,14 @@
    "entered": 1,
    "matched": 1,
    "new": 1
+  },
+  {
+   "at": "2026-10-24T16:00:14.101815+00:00",
+   "baseline": 0,
+   "due": 1,
+   "entered": 0,
+   "matched": 1,
+   "new": 0
   }
  ],
  "schedule": [
