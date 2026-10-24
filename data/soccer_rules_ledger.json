@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-24T20:01:25.199532+00:00",
+ "last_run": "2026-10-24T20:31:20.583919+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -675,11 +675,14 @@
      "line": 2.5,
      "logged": "2026-10-24T16:31:26.050021+00:00",
      "match": "Al Riyadh v Al Taawoun",
+     "payout": 0.0,
      "price": 0.5,
+     "profit": -100.0,
      "rule": "C5",
+     "settled": "2026-10-24T20:31:20.583919+00:00",
      "side": "no",
      "start": "2026-10-24T18:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXSAUDIPLTOTAL-26OCT24RIYALT-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Al Riyadh O-D+ v Al Taawoun O-D+ \u00b7 Under 2.5 NO 0.50"
@@ -2110,14 +2113,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-23T12:31:26.635155+00:00",
-   "candidates": 0,
-   "due": 1,
-   "labelled": 1,
-   "matched": 0,
-   "new": 0
-  },
-  {
    "at": "2026-10-23T14:01:38.705085+00:00",
    "candidates": 1,
    "due": 1,
@@ -2511,6 +2506,14 @@
   },
   {
    "at": "2026-10-24T20:01:25.199532+00:00",
+   "candidates": 1,
+   "due": 1,
+   "labelled": 1,
+   "matched": 1,
+   "new": 0
+  },
+  {
+   "at": "2026-10-24T20:31:20.583919+00:00",
    "candidates": 1,
    "due": 1,
    "labelled": 1,
