@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-24T21:36:29.917143+00:00",
+ "last_run": "2026-10-24T22:00:14.824770+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -1508,6 +1508,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT24MIACHA-MIA105",
      "title": "Miami over 104.5 points",
      "why": "MIA O+D+ v CHA O-D- \u00b7 105+ YES 0.84"
+    },
+    {
+     "game": "401909854",
+     "id": "R6:KXNBATEAMTOTAL-26OCT24BKNCLE-BKN104",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O+D+",
+      "home": "O+D+",
+      "home_h1": "O+D+"
+     },
+     "logged": "2026-10-24T22:00:14.824770+00:00",
+     "match": "BKN @ CLE",
+     "price": 0.69,
+     "rule": "R6",
+     "side": "yes",
+     "start": "2026-10-24T23:30Z",
+     "status": "open",
+     "strike": 103.5,
+     "team": "BKN",
+     "ticker": "KXNBATEAMTOTAL-26OCT24BKNCLE-BKN104",
+     "title": "Brooklyn over 103.5 points",
+     "why": "BKN O+D+ v CLE O+D+ \u00b7 105+ YES 0.69"
     }
    ]
   },
@@ -1818,11 +1840,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-21T00:07:32.420965+00:00",
-   "due": 1,
-   "new": 0
-  },
-  {
    "at": "2026-10-21T00:30:12.763773+00:00",
    "due": 1,
    "new": 0
@@ -2071,6 +2088,11 @@
    "at": "2026-10-24T21:36:29.917143+00:00",
    "due": 1,
    "new": 0
+  },
+  {
+   "at": "2026-10-24T22:00:14.824770+00:00",
+   "due": 2,
+   "new": 1
   }
  ],
  "version": "nba-rules-v1"
