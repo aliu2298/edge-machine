@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-24T09:31:11.260799+00:00",
+ "last_run": "2026-10-24T10:01:43.116088+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -987,6 +987,29 @@
      "ticker": "KXSAUDIPLBTTS-26OCT23QADHIL-BTTS",
      "title": "Both Teams To Score",
      "why": "Al Qadsiah O+D- v Al Hilal O+D- \u00b7 BTTS YES 0.69"
+    },
+    {
+     "ask": 0.67,
+     "bid": 0.66,
+     "event": "KXEPLBTTS-26OCT24AVLMCI",
+     "group": "BTTS",
+     "id": "D1:KXEPLBTTS-26OCT24AVLMCI",
+     "labels": {
+      "away": "O+D-",
+      "home": "O+D-"
+     },
+     "league": "Premier League",
+     "line": null,
+     "logged": "2026-10-24T10:01:43.116088+00:00",
+     "match": "Aston Villa v Manchester City",
+     "price": 0.67,
+     "rule": "D1",
+     "side": "yes",
+     "start": "2026-10-24T11:30Z",
+     "status": "open",
+     "ticker": "KXEPLBTTS-26OCT24AVLMCI-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Aston Villa O+D- v Manchester City O+D- \u00b7 BTTS YES 0.67"
     }
    ]
   },
@@ -1703,14 +1726,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-19T21:01:40.913343+00:00",
-   "candidates": 0,
-   "due": 0,
-   "labelled": 0,
-   "matched": 0,
-   "new": 0
-  },
-  {
    "at": "2026-10-19T21:31:43.289705+00:00",
    "candidates": 0,
    "due": 0,
@@ -2109,6 +2124,14 @@
    "labelled": 1,
    "matched": 1,
    "new": 0
+  },
+  {
+   "at": "2026-10-24T10:01:43.116088+00:00",
+   "candidates": 2,
+   "due": 2,
+   "labelled": 2,
+   "matched": 2,
+   "new": 1
   }
  ],
  "version": "soccer-rules-v1"
