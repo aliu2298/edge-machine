@@ -257,8 +257,7 @@ for gone in ('class="card sp-rule"', '<div class="sp-stat', "sp-cards", "Full re
     ok(gone not in html, f"the page no longer prints {gone!r}")
 
 print("\nthe Sandbox rows")
-# The Sandbox fold ends where the Retired rules fold (2026-10-24) begins, if there is one.
-fold = re.search(r'<details class="fold sp-sandbox" id="sandbox"(?: open)?><summary>(.*?)</summary>(.*?)(?=<details class="fold sp-retired"|\Z)', rules, re.S)
+fold = re.search(r'<details class="fold sp-sandbox" id="sandbox"(?: open)?><summary>(.*?)</summary>(.*)', rules, re.S)
 ok(fold is not None and "<h3>Sandbox rules</h3>" in fold.group(1), "the Sandbox rules are one fold")
 _np = sum(1 for r in rows if r.get("prod"))
 _ns = sum(1 for r in rows if not r.get("prod"))

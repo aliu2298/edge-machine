@@ -296,10 +296,7 @@ ok('data-empty="next"' in empty_html and 'data-empty="done"' in empty_html, "an 
 
 print("\nrules: a row per rule, the words folded")
 from sport_rows_testlib import rule_rows, text as row_text
-# The live rules only: the Retired rules fold (2026-10-24) closes the section and is checked
-# in test_retired_2026_10_24.py.
-_RETIRED_FOLD = '<details class="fold sp-retired"'
-rules = _section(html, "rules").split(_RETIRED_FOLD, 1)[0]
+rules = _section(html, "rules")
 ok('class="sp-rules-list" data-list="sandbox"' in rules, "the Sandbox rules are one list")
 head_line = re.search(r'<div class="sp-line sp-head-line[^"]*" aria-hidden="true">(.*?)</div>', rules.split('id="sandbox"', 1)[-1], re.S)
 eq(re.findall(r'<span class="sp-cell[^"]*">([^<]*)</span>', head_line.group(1)) if head_line else None,
@@ -328,7 +325,7 @@ ok(all(by_n[i] >= by_n[i + 1] for i in range(len(by_n) - 1) if early[i] == early
 prod_st = {"pairs": {"o15_ranked|soccer_o15_intl": {"stage": "production", "by_hand": "2026-09-20", "promoted_at": "2026-09-20T00:00:00+00:00"},
                      "team1_form_l5|soccer_team1_cup": {"stage": "production", "by_hand": "2026-09-20", "promoted_at": "2026-09-20T00:00:00+00:00"}}}
 prod_html = soccer_build.build(d, prod_st, NOW)
-prod_rules = _section(prod_html, "rules").split(_RETIRED_FOLD, 1)[0]
+prod_rules = _section(prod_html, "rules")
 prod_list = prod_rules.split('class="sp-rules-list sp-prod"', 1)[1].split('id="sandbox"', 1)[0]
 prows = rule_rows(prod_list)
 eq(len(prows), 2, "a Production rule is a row in the Production list")
