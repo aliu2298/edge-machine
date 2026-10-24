@@ -900,13 +900,15 @@ def side_label(row):
     return side_words(row["sport"], row.get("side"))
 
 
-def pair_list(d, st, include_retired=False):
+def pair_list(d, st, include_retired=False, show_retired=False):
     """Every (source, sport) pair that has bet, with its record and verdict.
 
     Retired pairs are OFF the pages (2026-10-10, by Olu): each was judged under rules that
     no longer run, and listing its record beside a live rule's mixed old results with new.
     Their bets stay in the ledger. The audit passes include_retired=True so its raw recount
-    still covers them.
+    still covers them. show_retired=True adds the retired pairs as rows (v "retired", `gone`
+    the dated reason) WITHOUT the audit's extras, for a page that lists them in their own
+    Retired fold, apart from the live rules (the Soccer page, 2026-10-24).
     """
     out = []
     sides = pair_sides(d)
@@ -919,11 +921,11 @@ def pair_list(d, st, include_retired=False):
         retired = dict(
             {sp: why for sp, why in (meta.get("retired_sports") or {}).items()},
             **({sp: meta["retired"] for sp in meta["sports"]} if not meta["connected"] and meta.get("retired") else {}))
-        gone = retired if include_retired else {}
+        gone = retired if (include_retired or show_retired) else {}
         for sport in sports + [sp for sp in gone if sp not in sports]:
             if S.lane_removed(name, sport):
                 continue
-            if sport in retired and not include_retired:
+            if sport in retired and not (include_retired or show_retired):
                 continue
             unavailable = None
             try:
@@ -952,8 +954,11 @@ def pair_list(d, st, include_retired=False):
             # A Production pair is always listed (2026-10-19): corners_ucl_fade went in by hand
             # on 2026-10-15 and had not bet yet, so the Home scorecard counted 21 in Production
             # while the header tile and the feed counted 22.
+            # A retired pair asked for by a page's Retired fold (show_retired) is listed even with
+            # no bet: retiring a lane that never fired is still a decision the page records.
             if (group is None and not unavailable and name != "tennis_utr_shortlist_v1" and not _scope(sport)
-                    and name not in T.CONSENSUS and not reset_row and pair.get("stage") != "production"):
+                    and name not in T.CONSENSUS and not reset_row and pair.get("stage") != "production"
+                    and not (show_retired and sport in gone)):
                 continue
             # A pair taken out of Production restarts its count, which on its own reads as a
             # brand-new source ("Too early", nothing settled) and hides the record it was removed on.

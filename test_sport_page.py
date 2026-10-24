@@ -29,6 +29,16 @@ FAILS = []
 ROOT = os.path.dirname(os.path.abspath(__file__))
 NOW = datetime.datetime(2026, 10, 5, 16, 0, tzinfo=timezone.utc)   # 11:00 AM CT, Mon Oct 5
 
+# The fixture is the Soccer page on 2026-10-05, built on lanes that were RETIRED on 2026-10-24
+# (o15_form_l10 on every scope, o15_ranked Clubs and Cups, btts_form_l10_fade). This file tests
+# the page template, not the lane list, so their scopes run again for this script only;
+# test_retired_2026_10_24 holds the retirement itself.
+for _src in ("o15_form_l10", "o15_ranked", "btts_form_l10_fade"):
+    _gone = S.SOURCES[_src].get("retired_sports") or {}
+    _back = [sp for sp, why in _gone.items() if why.startswith("Retired 2026-10-24")]
+    S.SOURCES[_src]["sports"] = list(S.SOURCES[_src]["sports"]) + [sp for sp in _back if sp not in S.SOURCES[_src]["sports"]]
+    S.SOURCES[_src]["retired_sports"] = {sp: why for sp, why in _gone.items() if sp not in _back}
+
 
 def ok(cond, msg):
     print(f"  {'ok  ' if cond else 'FAIL'} {msg}")

@@ -99,6 +99,10 @@ def spec(**kw):
         # empty_reason(d, rows, idle, now) -> str: why nothing is due in the next 24 hours, for a
         # family that keeps its own ledger and not the tracker's coverage (None: coverage_reason).
         empty_reason=None,
+        # retired: rows for rules retired by hand (sport_tab.retired_rows), drawn in their own
+        # folded list under the Sandbox with the record they stopped on and the dated reason.
+        # They count in no tile and no Sandbox total.
+        retired=(),
     )
     out.update(kw)
     return out
@@ -516,6 +520,24 @@ def rules_html(sp, d, rows, now, ev_list):
             f'{prod_html}{sand_html}</section>')
 
 
+def retired_html(sp, d, now):
+    """Rules retired by hand: their own folded section after Events (so the first screen keeps
+    Rules and the Events heading), each row its final record and its dated reason."""
+    gone = sorted(sp.get("retired") or (), key=lambda r: (-int(r["a"].get("n") or 0), sp_name(r)))
+    if not gone:
+        return ""
+    scoped = sp["scoped"] and len(scopes_present(gone)) > 1
+    body = "".join(
+        rule_row(sp, d, r, now, scoped)
+        + f'<p class="sm mut sp-retired-why" data-source="{esc(r["name"])}" data-sport="{esc(r["sport"])}">'
+          f'{esc(r.get("gone") or "")}</p>'
+        for r in gone)
+    n = f'{len(gone)} rule{"s" if len(gone) != 1 else ""}'
+    return (f'<section id="retired" class="sp-section"><details class="fold sp-retired"><summary><h3>Retired rules</h3>'
+            f'<span class="sm mut">· {esc(n)} · final records · no new entries</span></summary>'
+            f'<div class="sp-rules-list" data-list="retired">{list_head(scoped)}{body}</div></details></section>')
+
+
 # ------------------------------------------------------------------ the events
 STATE_WORD = {"open": ("upcoming", "is-next"), "watch": ("watching", "is-watch"),
               "won": ("W", "is-won"), "lost": ("L", "is-lost"), "void": ("Void", "is-void"),
@@ -761,6 +783,7 @@ def body(sp, d, st, now, rows=None, idle=()):
         f'{filters_html(sp, rows)}\n'
         f'{rules_html(sp, d, rows, now, ev_list)}\n'
         f'{events_html(sp, d, rows, now, ev_list, idle)}\n'
+        f'{retired_html(sp, d, now)}\n'
         f'{method_html(label, hint, inner, opened)}\n'
         f'<footer>{FOOT}</footer>\n')
 

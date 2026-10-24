@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Pre-flight for the ten league lanes, from their own series constants.
+"""Pre-flight for the league lanes (eight since 2026-10-24), from their own series constants.
 
 Each lane reads one or two Kalshi series (a total or BTTS contract, and the
 three-way board it joins). Those tickers live on sandbox_sources — ERE_DRAW_SERIES,
@@ -86,7 +86,7 @@ class ProbeError(RuntimeError):
 
 
 def checks():
-    """(lane, series, kind) for the ten lanes, from the module constants.
+    """(lane, series, kind) for the eight lanes, from the module constants.
 
     kind is which board that series has to reach:
       three_way  the soccer moneyline fetch_kalshi_venue fills
@@ -98,10 +98,7 @@ def checks():
         ("ere_draw", S.ERE_DRAW_SERIES, "three_way"),
         ("ere_o15", S.ERE_O15_TOTAL, "total"),
         ("ere_o15", S.ERE_O15_GAME, "three_way"),
-        ("bund_o35", S.BUND_O35_TOTAL, "total"),
-        ("bund_o35", S.BUND_O35_GAME, "three_way"),
-        ("bund_o35_fav", S.BUND_O35_TOTAL, "total"),
-        ("bund_o35_fav", S.BUND_O35_GAME, "three_way"),
+        # bund_o35 and bund_o35_fav retired 2026-10-24: nothing reads their series now.
         ("liga_btts_even", S.LIGA_BTTS, "btts"),
         ("liga_btts_even", S.LIGA_GAME, "three_way"),
         ("liga_u15_dog", S.LIGA_TOTAL, "total"),

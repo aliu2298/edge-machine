@@ -2998,16 +2998,20 @@ try:
 finally:
     S.CHALLENGERS = _saved_ch4
 _bq_on = {(q["source"], q["market_id"]): q for q in _db_on["quotes"]}
-_rq = _bq_on[("btts_form_l10_fade", "KXEPLBTTS-26SEP15HOTWAR-BTTS")]
-_hot = next(r for r in _brows if r["market_id"] == "KXEPLBTTS-26SEP15HOTWAR-BTTS")
-eq((_rq["bet"], _rq["pick"], _rq["price"]), (True, "b", _hot["price_b"]),
-   "the faded rule books the same match on No, at the No ask")
+# 2026-10-24: the fade is retired too, so publish enters nothing for it; its selector still
+# names the same match on the No side.
+ok(not [q for q in _db_on["quotes"] if q["source"] == "btts_form_l10_fade"],
+   "btts_form_l10_fade is retired (2026-10-24): publish enters nothing")
+eq([(p["market_id"], p["pick"]) for p in S.fetch_btts_form_l10_fade("soccer_btts", universe={"soccer_btts": _brows}, fixtures=_fx_all)
+    if p["market_id"] == "KXEPLBTTS-26SEP15HOTWAR-BTTS"], [("KXEPLBTTS-26SEP15HOTWAR-BTTS", "b")],
+   "the faded selector names the same match on No")
 ok(not any(q["bet"] for q in _db_on["quotes"] if q["source"] == "btts_market"),
    "the market's own price never bets")
 ok("soccer_btts" not in S.SOURCES["btts_form_l10"]["sports"]
    and "soccer_btts" in S.SOURCES["btts_form_l10"]["retired_sports"],
    "the follow side's Clubs scope is retired, its reason recorded")
-eq(S.SOURCES["btts_form_l10_fade"]["sports"], ["soccer_btts"], "the fade runs on Clubs only")
+eq((S.SOURCES["btts_form_l10_fade"]["sports"], list(S.SOURCES["btts_form_l10_fade"]["retired_sports"])), ([], ["soccer_btts"]),
+   "the fade ran on Clubs only, and is retired there (2026-10-24)")
 eq(S._other_side([dict(market_id="x", pick="a"), dict(market_id="y", pick="b"), dict(market_id="z")]),
    [dict(market_id="x", pick="b"), dict(market_id="y", pick="a")],
    "the other side flips a and b and drops a pick with no side")
@@ -3459,6 +3463,11 @@ print("\na pair moved by hand after a demotion")
 # makes these assertions fail the day it is (tennis_fav_band was retired 2026-09-27). The 3h
 # variant is the same sport and the same baseline, and nothing here is about either lane.
 _STAGE_PAIR = "tennis_fav_band_3h|tennis"
+# tennis_fav_band_3h was retired too, on 2026-10-24, and tennis has no other connected
+# Sandbox rule. The lane is put back on the run for this block only (running_again).
+import sport_rows_testlib as _TL
+_stage_replay = _TL.running_again(_STAGE_PAIR)
+_stage_replay.__enter__()
 
 
 def _tq(i, won=True, source="tennis_fav_band_3h", bet=True, market=None):
@@ -3499,6 +3508,8 @@ T.evaluate_stages(_tl, _ts3, now=datetime(2026, 9, 17, 23, tzinfo=timezone.utc),
 eq(_ts3["pairs"][_STAGE_PAIR]["stage"], "sandbox",
    "…but losing to the price still sends it back, moved by hand or not")
 T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_tov)
+_stage_replay.__exit__(None, None, None)
+ok(_STAGE_PAIR.split("|")[1] not in S.SOURCES["tennis_fav_band_3h"]["sports"], "and the 3h lane is retired again after the replay")
 
 # ---------------------------------------------------------------------------
 print("\nthe feed publishes on the contest, not on when the bet was written down")
@@ -4699,9 +4710,12 @@ eq([p["market_id"] for p in S.fetch_o15_form_l10("soccer_o15_cup", universe=_cro
    ["KXEFLCUPTOTAL-26SEP15GOALEA-2"], "the Over 1.5 rule reads the cup domain with the same thresholds")
 eq((S._form_league({"comp": "cup", "league": "EFL Cup"}), S._form_league({"league": "Serie A"})),
    (None, "Serie A"), "cup and international pairs count form across all competitions; league pairs as before")
-for _src in ("o15_form_l10", "team2_form_l10", "u35_low_scoring"):
+for _src in ("team2_form_l10", "u35_low_scoring"):
     _base = S.SOURCES[_src]["sports"][0]
     eq(S.SOURCES[_src]["sports"], [_base, _base + "_cup", _base + "_intl"], f"{_src} runs as league, Cups and Internationals pairs")
+# o15_form_l10 was registered on all three and retired on all three 2026-10-24.
+eq((S.SOURCES["o15_form_l10"]["sports"], list(S.SOURCES["o15_form_l10"]["retired_sports"])),
+   ([], ["soccer_o15", "soccer_o15_cup", "soccer_o15_intl"]), "o15_form_l10 is retired on all three scopes")
 # Retired scopes (2026-10-11 and 2026-10-14): the twins that remain keep running.
 eq(S.SOURCES["team1_form_l5"]["sports"], ["soccer_team1_cup", "soccer_team1_intl"],
    "team1_form_l5 runs Cups and Internationals; Clubs retired 2026-10-14")
@@ -4908,7 +4922,7 @@ ok(T.PAIR_REMOVALS["corners_team_fade|soccer_corners"]["keep_record"]
 
 
 print("\nSoccer by-competition counts match the card window and the card's units")
-# o15_form_l10|soccer_o15 keeps the stage clock the card already reads. Corners has no
+# A live over-1.5 lane (u35_low_o15; o15_form_l10 was retired 2026-10-24) keeps the stage clock the card already reads. Corners has no
 # clock; its card n is matches (day_units), and the panel used to count rungs.
 _O15_SINCE = "2026-09-21T01:44:02+00:00"
 _PRE = "2026-09-14T02:51:18+00:00"
@@ -4933,13 +4947,13 @@ def _panel_bet(i, source, sport, logged, league, status="won", pnl=None, market_
 
 _panel_q = []
 for _i in range(4):
-    _panel_q.append(_panel_bet(_i, "o15_form_l10", "soccer_o15", _POST, "MLS"))
+    _panel_q.append(_panel_bet(_i, "u35_low_o15", "soccer_o15", _POST, "MLS"))
 for _i in range(2):
-    _panel_q.append(_panel_bet(10 + _i, "o15_form_l10", "soccer_o15", _PRE, "MLS"))
+    _panel_q.append(_panel_bet(10 + _i, "u35_low_o15", "soccer_o15", _PRE, "MLS"))
 for _i in range(4):
-    _panel_q.append(_panel_bet(20 + _i, "o15_form_l10", "soccer_o15", _PRE, "GhostPreLeague"))
+    _panel_q.append(_panel_bet(20 + _i, "u35_low_o15", "soccer_o15", _PRE, "GhostPreLeague"))
 _panel_q.append(_panel_bet(
-    90, "o15_form_l10", "soccer_o15", _PRE, "PriceGhost", status="settled", pnl=40.0,
+    90, "u35_low_o15", "soccer_o15", _PRE, "PriceGhost", status="settled", pnl=40.0,
     result="price", settle_px=0.8))
 # 8 matches, 11 rungs. Match 0's three rungs average a win; match 1's two average a loss
 # (the mean P/L is zero). The other six are one winning rung each.
@@ -4954,13 +4968,13 @@ for _code, _pnls in _corner_specs:
             market_id=f"KXEPLCORNERS-{_code}-{_rung_i}"))
         _rung_i += 1
 _panel_d = {"quotes": _panel_q}
-_panel_st = {"pairs": {"o15_form_l10|soccer_o15": {"since": _O15_SINCE}}, "events": []}
+_panel_st = {"pairs": {"u35_low_o15|soccer_o15": {"since": _O15_SINCE}}, "events": []}
 _panel_rows = SB.pair_list(_panel_d, _panel_st)
-_panel_o15 = next(r for r in _panel_rows if r["name"] == "o15_form_l10" and r["sport"] == "soccer_o15")
+_panel_o15 = next(r for r in _panel_rows if r["name"] == "u35_low_o15" and r["sport"] == "soccer_o15")
 _panel_cu = next(r for r in _panel_rows if r["name"] == "corners_total_under" and r["sport"] == "soccer_corners")
 eq(_panel_o15.get("since"), _O15_SINCE, "the lane row carries the stage clock the card already uses")
 eq(_panel_o15["a"]["n"], 4, "the over-1.5 card counts only the four bets logged after the reset")
-_o15_parts = T.league_split(_panel_d, "o15_form_l10", "soccer_o15", venues=T.TRADEABLE_VENUES,
+_o15_parts = T.league_split(_panel_d, "u35_low_o15", "soccer_o15", venues=T.TRADEABLE_VENUES,
                             since=_panel_o15["since"])
 eq(sum(sp["n"] for sp in _o15_parts), _panel_o15["a"]["n"],
    "the competition split's settled total is the card's post-reset n")
@@ -5364,7 +5378,8 @@ ok(not S.fetch_o15_cup_mismatch("soccer_o15_cup", _cmu5),
 _cmu6 = {"soccer_o15_cup": [_cm_total("26SEP27BIGSML")],
          "soccer_p05_cup": [dict(_cm_win("26SEP27BIGSML", "BIG", 0.78), untraded=False, tradeable={"a": True})]}
 ok(S.fetch_o15_cup_mismatch("soccer_o15_cup", _cmu6), "the same favourite on a real book is")
-eq(S.SOURCES["o15_cup_mismatch"]["sports"], ["soccer_o15_cup"], "it is a cup rule only")
+eq((S.SOURCES["o15_cup_mismatch"]["sports"], list(S.SOURCES["o15_cup_mismatch"]["retired_sports"])), ([], ["soccer_o15_cup"]),
+   "it is a cup rule only, retired there 2026-10-24")
 ok("o15_cup_mismatch" in S.CHALLENGERS and ("o15_cup_mismatch", "soccer_o15_cup") not in S.ELIMINATED
    and "o15_cup_mismatch|soccer_o15_cup" not in T.PAIR_OVERRIDES, "wired, in the Sandbox, nowhere near Production")
 ok(S.CUP_FRAGS.get("COPADELREY") == "Copa del Rey" and S.CUP_FRAGS.get("COUPEDEFRANCE") == "Coupe de France",
@@ -5902,8 +5917,10 @@ eq(S.PM_COMBO_MEASURED, {2: True, 3: False, 4: False},
    "number in the lane and the flag is what says so")
 ok("tennis_pmcombo" in S.SPORTS and all(k in S.SOURCES for k in ("pm_combo2", "pm_combo3", "pm_combo4")),
    "the domain and all three rungs are registered, so the board judges them")
-ok(all(S.SOURCES[k]["sports"] == ["tennis_pmcombo"] for k in ("pm_combo2", "pm_combo3", "pm_combo4")),
-   "and each claims only its own domain")
+# Retired 2026-10-24: each scope moved to retired_sports, still on its own domain only.
+ok(all(S.SOURCES[k]["sports"] == [] and list(S.SOURCES[k]["retired_sports"]) == ["tennis_pmcombo"]
+       for k in ("pm_combo2", "pm_combo3", "pm_combo4")),
+   "and each claims only its own domain (retired there 2026-10-24)")
 eq(sorted(T.COMBO_SPORTS), ["tennis_combo", "tennis_pmcombo"],
    "both lanes are known to combo_used_legs — a lane missing from it does not fail loudly, "
    "it silently re-logs the same basket every three hours")
@@ -7656,8 +7673,9 @@ eq((S.fetch_bund_o35("soccer_o15", universe=_bu), S.fetch_bund_o35_fav("soccer_o
    ([], []), "both lanes are over-3.5 only — the series ticker is shared with other goal lines")
 
 for _n in ("bund_o35", "bund_o35_fav"):
-    eq((S.SOURCES[_n]["sports"], S.SOURCES[_n]["baseline"]), (["soccer_u35"], "population"),
-       f"{_n} is registered on the over-3.5 domain, judged against the population")
+    eq((S.SOURCES[_n]["sports"], list(S.SOURCES[_n]["retired_sports"]), S.SOURCES[_n]["baseline"]),
+       ([], ["soccer_u35"], "population"),
+       f"{_n} was registered on the over-3.5 domain, judged against the population, and retired 2026-10-24")
     ok(not S.lane_paused(_n, "soccer_u35"), f"{_n} is not paused")
 ok("z +3.01" in S.SOURCES["bund_o35"]["note"] and "z -0.09" in S.SOURCES["bund_o35"]["note"],
    "the wide lane's note pins both the recent result and the flat early era that dates it")

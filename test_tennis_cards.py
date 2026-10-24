@@ -19,10 +19,17 @@ import sandbox_build as B
 import sandbox_sources as S
 import sandbox_track as T
 import sport_page as SP
+import sport_rows_testlib
 
 FAILS = []
 ROOT = os.path.dirname(os.path.abspath(__file__))
 NOW = datetime.datetime(2026, 10, 5, 16, 0, tzinfo=timezone.utc)   # 11:00 AM CT
+
+# The fixture is the Tennis page on 2026-10-05, built on lanes retired on 2026-10-24. This file
+# tests the page template, not the lane list, so they run again for this script only;
+# test_retired_2026_10_24.py holds the retirement.
+_REPLAY = sport_rows_testlib.running_again(*S.TENNIS_RETIRED_ON_2026_10_24)   # kept: a dropped handle restores
+_REPLAY.__enter__()
 
 
 def _head_sha():

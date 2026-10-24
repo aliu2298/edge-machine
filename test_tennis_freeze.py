@@ -65,8 +65,11 @@ DIGESTS = {
 
 def digest(name):
     meta = S.SOURCES[name]
+    # The markets a rule is REGISTERED on, live or retired: retiring a scope (six of these on
+    # 2026-10-24) moves it to retired_sports and edits nothing in the definition.
+    markets = list(meta.get("sports") or []) + list((meta.get("retired_sports") or {}).keys())
     text = "\n".join([
-        str(meta.get("label")), ",".join(meta.get("sports") or []), str(meta.get("kind")),
+        str(meta.get("label")), ",".join(markets), str(meta.get("kind")),
         str(meta.get("note")), "\n".join(str(c) for c in meta.get("changes") or [])])
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 

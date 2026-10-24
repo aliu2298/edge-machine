@@ -246,7 +246,11 @@ def _cases():
     t_p = _row("aec-atp-alpha-beta-2026-10-03", "polymarket_us", "Alex Alpha", "Blake Beta",
                0.79, 0.23, near, sport="tennis")
     tennis = {"quotes": [], "meta": {}, "coverage": {}}
-    _publish(tennis, {"tennis": [t_k, t_p]})
+    # The 3h lane was retired on 2026-10-24; this asks about venue booking, so it runs again
+    # for this one publish (sport_rows_testlib.running_again).
+    import sport_rows_testlib
+    with sport_rows_testlib.running_again("tennis_fav_band_3h|tennis"):
+        _publish(tennis, {"tennis": [t_k, t_p]})
     tennis_bets = _bets(tennis, "tennis_fav_band_3h")
     eq([(q["venue"], q["market_id"]) for q in tennis_bets], [("kalshi", t_k["market_id"])],
        "the 3-hour favourite band still books the first venue, which is Kalshi when it is listed first")

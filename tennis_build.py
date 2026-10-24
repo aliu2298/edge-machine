@@ -39,7 +39,9 @@ def build(d=None, st=None, now=None):
         venue="Kalshi or Polymarket US", rows=rows, events=tennis_cards.events,
         rule_name=tennis_cards.rule_name, market=tennis_cards.market,
         definition=tennis_cards.definition, recent=tennis_cards.recent_html,
-        method=tennis_cards.method(idle_html))
+        method=tennis_cards.method(idle_html),
+        # Retired by hand (2026-10-24): their own fold, final record and reason.
+        retired=sport_tab.retired_rows(d, st, FAMILY))
     return _atp_totals(SP.page(sp, d, st, now, rows=rows, idle=idle))
 
 

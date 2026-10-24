@@ -461,8 +461,14 @@ def nba_safe_windows(now, tips=None):
 
 
 def ftts_day_full(day, ledger=None):
-    """True once BOTH No lanes hold FTTS_NO_PICKS bets for that Central day."""
-    n = {"ftts_no_70_80": 0, "ftts_no_60_70": 0}
+    """True once every LIVE No lane holds FTTS_NO_PICKS bets for that Central day.
+
+    A retired lane (ftts_no_60_70, 2026-10-24) logs nothing, so counting it would keep the
+    window open all morning for a lane that can never fill."""
+    n = {k: 0 for k in ("ftts_no_70_80", "ftts_no_60_70")
+         if "soccer_ftts" in (S.SOURCES.get(k) or {}).get("sports", ())}
+    if not n:
+        return True
     for q in (_load_ledger(ledger).get("quotes") or []):
         if q.get("source") in n and q.get("bet") and q.get("date") == day:
             n[q["source"]] += 1

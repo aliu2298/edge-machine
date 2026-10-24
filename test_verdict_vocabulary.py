@@ -192,14 +192,15 @@ ok('href="./soccer.html"' in prod_tr and 'href="./crypto.html"' in crypto_tr, "e
 eq(CC._scorecard_html([]), '<p class="shell-empty">No rule has a record yet.</p>', "no rules, one line")
 
 print("\nthe scorecard on the Control Center")
-q = dict(id="o15_ranked:soccer_o15:1", source="o15_ranked", sport="soccer_o15", bet=True, status="won",
+# o15_ranked · Internationals: the Production scope (Clubs retired 2026-10-24).
+q = dict(id="o15_ranked:soccer_o15_intl:1", source="o15_ranked", sport="soccer_o15_intl", bet=True, status="won",
          pick="a", price=0.6, venue="kalshi_binary", market_id="KXEPLTOTAL-26OCT05AAABBB-2",
          label="Alpha v Beta: over 1.5 goals", side_a="Yes", side_b="No",
          start="2026-10-05T14:00:00+00:00", logged="2026-10-05T06:00:00+00:00", date="2026-10-05",
          stake=100.0, pnl=66.67, result="a", settled="2026-10-05T17:00:00+00:00",
          league="Premier League", espn_home="Alpha", espn_away="Beta", start_source="espn")
 d = {"quotes": [q], "coverage": {}, "meta": {"updated": NOW.isoformat()}}
-st = {"pairs": {"o15_ranked|soccer_o15": {"stage": "production", "by_hand": "2026-10-01",
+st = {"pairs": {"o15_ranked|soccer_o15_intl": {"stage": "production", "by_hand": "2026-10-01",
                                           "ready_at": "2026-10-01T00:00:00+00:00",
                                           "promoted_at": "2026-10-01T00:00:00+00:00"}}}
 m = CC.model(d, st, {"leads": {}, "pairs": {}}, NOW, nba={}, market={}, closes={})
