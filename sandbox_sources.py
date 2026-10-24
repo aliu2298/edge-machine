@@ -4682,7 +4682,13 @@ OWN_LEDGER_LABELS = {
     "sr_a6": "EPL O−D− v an O+ opponent · under 2.5",
     "sr_d3": "O−D− v O+D− · both teams to score",
     "sa_o15_arg": "Argentina over 1.5",
+    "nba_tt_value_24h": "NBA team total value · 24h before tip",
+    "nba_tt_value_1h": "NBA team total value · 1h before tip",
 }
+
+
+# The sport word a Production pair on its own ledger shows where S.SPORTS has no domain for it.
+OWN_LEDGER_SPORTS = {"nba_tt": "NBA team totals"}
 
 
 def feed_binary_leagues():

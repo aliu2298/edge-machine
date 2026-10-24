@@ -143,6 +143,10 @@ def start_verified(q):
                     if isinstance(l, dict)
                     and l.get("start_source", "kalshi_milestone") == "kalshi_milestone"]
         return bool(carriers) and all(l.get("sport") == "cricket" for l in carriers)
+    if q.get("sport") in T.NBA_TT_SPORTS:
+        # An NBA tip is ESPN's own scheduled time (nba_value reads it from the scoreboard); a
+        # row with no readable tip is held back like any other.
+        return _kickoff(q) is not None and q.get("start_source") == "espn"
     if q.get("sport") in T.MENTION_SPORTS:
         # A mentions contract's "start" is its close, a term of the contract; it can only come
         # EARLIER (Kalshi closes it the moment the word is said), never later.
@@ -360,6 +364,15 @@ def lead_from_quote(q, pair_key, built, kalshi=None):
                 headline = f"{strike}+ corners"
         else:
             headline = f"Over {bet['n'] - 0.5:g} goals"
+    elif q["sport"] in T.NBA_TT_SPORTS:
+        # One team's total on a Kalshi NBA game: YES that it scores OVER the line, or its NO (under).
+        # The contest is the game; the claim names the team and the exact line.
+        home = away = None
+        contest = q.get("label") or q["market_id"]
+        line = float(q["line"])
+        team = str(q.get("team_name") or q.get("kalshi_title", "").split(" over ")[0])
+        headline = f"{team} over {line:g} points" if q["pick"] == "a" else f"{team} under {line:g} points"
+        bet = {"kind": "nba_tt" if q["pick"] == "a" else "nba_tt_no", "n": line, "team": team}
     elif q["sport"] in T.MENTION_SPORTS:
         # One word on a "What will Trump say" contract: YES that he says it before the close,
         # NO that he does not. The contest is the event ("What will Trump say this week?").
@@ -415,9 +428,10 @@ def lead_from_quote(q, pair_key, built, kalshi=None):
                else f"{date}|{home}|{away}|{headline} · {label}"),
         "date": date, "kickoff": ko.strftime("%Y-%m-%dT%H:%MZ"),
         "league": ("Trump mentions" if q["sport"] in T.MENTION_SPORTS
+                   else "NBA" if q["sport"] in T.NBA_TT_SPORTS
                    else S.quote_league(q) or (S.SPORTS.get(q["sport"])
                                               if q["sport"] in T.ROUTED_SPORTS + T.LADDER_SPORTS else None)),
-        "match": (contest if q["sport"] in T.LADDER_SPORTS + T.MENTION_SPORTS else headline) if home is None else f"{home} v {away}",
+        "match": (contest if q["sport"] in T.LADDER_SPORTS + T.MENTION_SPORTS + T.NBA_TT_SPORTS else headline) if home is None else f"{home} v {away}",
         "home": home, "away": away, "headline": headline,
         "bet": bet,
         "status": STATUS.get(q["status"], "void"),
@@ -1217,7 +1231,7 @@ def unavailable_row(key, label, sport_label, note):
             f'<td colspan="8" class="neg">{esc(note)}</td></tr>')
 
 
-def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=None):
+def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=None, nba_value=None):
     """public_site/production.html — shares the Sandbox stylesheet.
 
     Organised as the questions a visitor actually asks, in order: what is in Production and on
@@ -1240,6 +1254,11 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
         # own ledgers: (soccer_rules_ledger, sa_o15_ledger).
         import soccer_rules_production
         d, st, blob = soccer_rules_production.page_inputs(d, st, blob, *soccer_rules, now=now_dt)
+    if nba_value is not None:
+        # The two NBA team-total value lanes moved by hand 2026-10-24 (nba_value_production), from
+        # their own ledger (nba_value_ledger).
+        import nba_value_production
+        d, st, blob = nba_value_production.page_inputs(d, st, blob, nba_value, now=now_dt)
     # Headlines and the lead list use the page copy. The record on each card
     # is assessed on the unfiltered ledger, the same one the tracker reads,
     # so a hidden row cannot move a kept pair's numbers.
@@ -1250,7 +1269,8 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
     # ("Team scores 1+ form rule · Clubs" and "· Internationals"). The pair key and
     # the lead ids keep the plain label.
     name = lambda key: S.scoped_rule(*(key.split("|", 1) + [None])[:2]) if "|" in key else S.scoped_rule(key)
-    sport_of = lambda key: S.SPORTS.get(key.split("|")[1], "Econ Daily" if key.endswith("|econ_daily") else key.split("|")[1])
+    sport_of = lambda key: S.SPORTS.get(key.split("|")[1], "Econ Daily" if key.endswith("|econ_daily")
+                                        else S.OWN_LEDGER_SPORTS.get(key.split("|")[1], key.split("|")[1]))
     label = lambda key: f"{name(key)} · {sport_of(key)}"
     pct = lambda x: fmt.pct(x, digits=1, sign=True)
     tone = lambda x, n: _tone(x, n, digits=1)

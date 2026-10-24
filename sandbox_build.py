@@ -2372,7 +2372,8 @@ def production_and_index(now, d, st, blob, extra=None):
     extra = extra if extra is not None else control_center.inputs()
     prod = label_cells(production.page(d, st, blob, "", now=now,
                                        daily=extra.get("daily"), culture=extra.get("culture"),
-                                       soccer_rules=extra.get("soccer_rules")))
+                                       soccer_rules=extra.get("soccer_rules"),
+                                       nba_value=extra.get("nba_value")))
     index = control_center.page(now, d=d, st=st, blob=blob, extra=extra)
     return prod, index
 
