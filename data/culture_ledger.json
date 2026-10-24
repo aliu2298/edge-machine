@@ -2,15 +2,16 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-24T21:12:02.247851+00:00",
-   "last_success": "2026-10-24T21:12:02.247851+00:00",
+   "last_run": "2026-10-24T22:00:15.867195+00:00",
+   "last_success": "2026-10-24T22:00:15.867195+00:00",
    "observations": {
-    "at": "2026-10-24T21:12:02.247851+00:00",
+    "at": "2026-10-24T22:00:15.867195+00:00",
     "events": 961,
     "reasons": {
+     "in band": 1,
      "no quote or spread too wide": 172,
      "not active": 721,
-     "outside the band": 37,
+     "outside the band": 36,
      "outside the entry window": 11828
     }
    },
@@ -518,22 +519,36 @@
      "strike": 10000,
      "strike_type": "greater",
      "title": "Above 10K"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-25T03:59:00Z",
+     "detail": "NO 0.94 \u00b7 endgame",
+     "event": "KXYTDAILYTOPVIDEOG-26OCT24",
+     "id": "KXYTDAILYTOPVIDEOG-26OCT24-DAI",
+     "logged": "2026-10-24T22:00:15.867195+00:00",
+     "name": "Top Daily Music Video Global on YouTube: Oct 24, 2026",
+     "price": 0.94,
+     "series": "KXYTDAILYTOPVIDEOG",
+     "side": "no",
+     "status": "open",
+     "title": "Dai Dai"
     }
    ]
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-24T21:12:02.247851+00:00",
-   "last_success": "2026-10-24T21:12:02.247851+00:00",
+   "last_run": "2026-10-24T22:00:15.867195+00:00",
+   "last_success": "2026-10-24T22:00:15.867195+00:00",
    "observations": {
-    "at": "2026-10-24T21:12:02.247851+00:00",
+    "at": "2026-10-24T22:00:15.867195+00:00",
     "events": 961,
     "reasons": {
      "held by mentions_rate": 1,
-     "in band": 2,
-     "no quote or spread too wide": 339,
+     "in band": 1,
+     "no quote or spread too wide": 342,
      "not active": 721,
-     "outside the band": 137,
+     "outside the band": 135,
      "outside the entry window": 11559
     }
    },
@@ -877,16 +892,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-24T21:12:02.247851+00:00",
-   "last_success": "2026-10-24T21:12:02.247851+00:00",
+   "last_run": "2026-10-24T22:00:15.867195+00:00",
+   "last_success": "2026-10-24T22:00:15.867195+00:00",
    "observations": {
-    "at": "2026-10-24T21:12:02.247851+00:00",
+    "at": "2026-10-24T22:00:15.867195+00:00",
     "events": 961,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 23,
-     "edge 5c+": 9,
+     "already near-certain (under 10c or over 90c)": 22,
+     "edge 5c+": 13,
      "edge under 5c": 1,
-     "no quote or spread too wide": 35
+     "no quote or spread too wide": 32
     }
    },
    "picks": [
@@ -1840,15 +1855,31 @@
      "side": "no",
      "status": "open",
      "title": "Paraguay / Paraguayan"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-11-01T15:00:00Z",
+     "detail": "P(said) 0.17 \u00b7 said on 2 of the last 84 days, 7.7 days left \u00b7 edge +0.10",
+     "edge": 0.0964,
+     "event": "KXTRUMPSAYMONTH-26NOV01",
+     "id": "KXTRUMPSAYMONTH-26NOV01-FAT",
+     "logged": "2026-10-24T22:00:15.867195+00:00",
+     "model": 0.1695,
+     "name": "What will Trump say in October?",
+     "price": 0.72,
+     "series": "KXTRUMPSAYMONTH",
+     "side": "no",
+     "status": "open",
+     "title": "Fat shot / Ozempic"
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-24T21:12:02.247851+00:00",
-   "last_success": "2026-10-24T21:12:02.247851+00:00",
+   "last_run": "2026-10-24T22:00:15.867195+00:00",
+   "last_success": "2026-10-24T22:00:15.867195+00:00",
    "observations": {
-    "at": "2026-10-24T21:12:02.247851+00:00",
+    "at": "2026-10-24T22:00:15.867195+00:00",
     "events": 961,
     "reasons": {
      "edge 5c+": 7,
@@ -2132,7 +2163,7 @@
    ]
   },
   "Australia / Australian": {
-   "at": "2026-10-18T07:00:15.088415+00:00",
+   "at": "2026-10-24T22:00:15.867195+00:00",
    "days": [
     "2026-08-07",
     "2026-09-02"
@@ -2148,7 +2179,7 @@
    ]
   },
   "BBC": {
-   "at": "2026-10-24T05:00:12.641456+00:00",
+   "at": "2026-10-24T22:00:15.867195+00:00",
    "days": [
     "2026-08-02",
     "2026-09-18"
@@ -2176,7 +2207,7 @@
    ]
   },
   "BlackRock": {
-   "at": "2026-10-24T10:00:15.007459+00:00",
+   "at": "2026-10-24T22:00:15.867195+00:00",
    "days": []
   },
   "Blockade": {
@@ -2247,7 +2278,7 @@
    "days": []
   },
   "DoorDash / DASH": {
-   "at": "2026-10-24T05:00:12.641456+00:00",
+   "at": "2026-10-24T22:00:15.867195+00:00",
    "days": [
     "2026-09-22"
    ]
@@ -2270,6 +2301,13 @@
     "2026-08-03",
     "2026-09-02",
     "2026-09-13"
+   ]
+  },
+  "Fat shot / Ozempic": {
+   "at": "2026-10-24T22:00:15.867195+00:00",
+   "days": [
+    "2026-08-31",
+    "2026-09-02"
    ]
   },
   "Golden Dome": {
@@ -2354,7 +2392,7 @@
    ]
   },
   "Paraguay / Paraguayan": {
-   "at": "2026-10-24T05:00:12.641456+00:00",
+   "at": "2026-10-24T22:00:15.867195+00:00",
    "days": []
   },
   "Peace in the Middle East": {
@@ -2371,7 +2409,7 @@
    ]
   },
   "Peptide": {
-   "at": "2026-10-23T20:00:14.888217+00:00",
+   "at": "2026-10-24T22:00:15.867195+00:00",
    "days": []
   },
   "Prediction Market / Predictive Market": {
@@ -2406,7 +2444,7 @@
    ]
   },
   "South Africa / South African": {
-   "at": "2026-10-24T05:00:12.641456+00:00",
+   "at": "2026-10-24T22:00:15.867195+00:00",
    "days": []
   },
   "Stupid Question": {
