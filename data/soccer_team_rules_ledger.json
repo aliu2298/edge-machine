@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-24T18:31:41.450807+00:00",
+ "last_run": "2026-10-24T20:01:44.788295+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -849,6 +849,32 @@
      "ticker": "KXLALIGATEAMTOTAL-26OCT24ATMDEP-ATM3",
      "title": "Will Atletico score over 2.5 goals?",
      "why": "Atl\u00e9tico Madrid O+D- v Deportivo O-D- \u00b7 3+ YES 0.46"
+    },
+    {
+     "ask": 0.39,
+     "bid": 0.38,
+     "event": "KXMLSTEAMTOTAL-26OCT24NYRBMIA",
+     "group": "B",
+     "id": "T3:KXMLSTEAMTOTAL-26OCT24NYRBMIA:away",
+     "labels": {
+      "opp": "O-D-",
+      "own": "O+D-"
+     },
+     "league": "MLS",
+     "line": 2.5,
+     "logged": "2026-10-24T20:01:44.788295+00:00",
+     "match": "Red Bull New York v Inter Miami CF",
+     "opponent": "Red Bull New York",
+     "price": 0.39,
+     "rule": "T3",
+     "side": "yes",
+     "start": "2026-10-24T21:30Z",
+     "status": "open",
+     "team": "Inter Miami CF",
+     "team_side": "away",
+     "ticker": "KXMLSTEAMTOTAL-26OCT24NYRBMIA-MIA3",
+     "title": "Will Miami score over 2.5 goals?",
+     "why": "Inter Miami CF O+D- v Red Bull New York O-D- \u00b7 3+ YES 0.39"
     }
    ]
   },
@@ -956,11 +982,14 @@
      "logged": "2026-10-24T16:01:44.409136+00:00",
      "match": "CF Montr\u00e9al v Nashville SC",
      "opponent": "CF Montr\u00e9al",
+     "payout": 1.0,
      "price": 0.65,
+     "profit": 50.17,
      "rule": "T4",
+     "settled": "2026-10-24T20:01:44.788295+00:00",
      "side": "yes",
      "start": "2026-10-24T17:30Z",
-     "status": "open",
+     "status": "won",
      "team": "Nashville SC",
      "team_side": "away",
      "ticker": "KXMLSTEAMTOTAL-26OCT24MTLNSH-NSH2",
@@ -1675,14 +1704,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-18T20:01:40.329321+00:00",
-   "candidates": 1,
-   "due": 1,
-   "labelled": 1,
-   "matched": 1,
-   "new": 0
-  },
-  {
    "at": "2026-10-19T15:01:16.312641+00:00",
    "candidates": 0,
    "due": 1,
@@ -2081,6 +2102,14 @@
    "labelled": 2,
    "matched": 2,
    "new": 0
+  },
+  {
+   "at": "2026-10-24T20:01:44.788295+00:00",
+   "candidates": 1,
+   "due": 1,
+   "labelled": 1,
+   "matched": 1,
+   "new": 1
   }
  ],
  "version": "soccer-team-rules-v1"
