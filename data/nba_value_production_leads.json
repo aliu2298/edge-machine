@@ -1,11 +1,50 @@
 {
- "board_built_at": "2026-10-24T21:30:25+00:00",
+ "board_built_at": "2026-10-24T22:13:08+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
  "first_publish_min": 45,
  "late_publication_skipped": 2,
  "leads": {
+  "2026-10-24|KXNBATEAMTOTAL-26OCT24BKNCLE-BKN108|Brooklyn under 107.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt_no",
+    "n": 107.5,
+    "team": "Brooklyn"
+   },
+   "date": "2026-10-24",
+   "edge_at_log": 0.1023,
+   "first_seen": "2026-10-24",
+   "headline": "Brooklyn under 107.5 points",
+   "home": null,
+   "id": "2026-10-24|KXNBATEAMTOTAL-26OCT24BKNCLE-BKN108|Brooklyn under 107.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-24T23:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-24",
+   "last_seen_at": "2026-10-24T22:13:08+00:00",
+   "league": "NBA",
+   "match": "BKN @ CLE",
+   "model_prob": 0.5897,
+   "pair": "nba_tt_value_1h|nba_tt",
+   "price_at_log": 0.47,
+   "published_at": "2026-10-24T22:13:08+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 76,
+   "route": {
+    "claim": "Brooklyn under 107.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT24BKNCLE",
+    "market": "KXNBATEAMTOTAL-26OCT24BKNCLE-BKN108",
+    "outcome": "Brooklyn over 107.5 points",
+    "outcome_side": "no",
+    "price_at_log": 0.47,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_1h:401909854:BKN",
+   "source": "nba_tt_value_1h",
+   "sport": "nba_tt",
+   "status": "pending"
+  },
   "2026-10-24|KXNBATEAMTOTAL-26OCT24BKNCLE-BKN110|Brooklyn under 109.5 points \u00b7 NBA team total value \u00b7 24h before tip": {
    "away": null,
    "bet": {
@@ -22,7 +61,7 @@
    "kickoff": "2026-10-24T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-24",
-   "last_seen_at": "2026-10-24T21:30:25+00:00",
+   "last_seen_at": "2026-10-24T22:13:08+00:00",
    "league": "NBA",
    "match": "BKN @ CLE",
    "model_prob": 0.6563,
@@ -61,7 +100,7 @@
    "kickoff": "2026-10-24T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-24",
-   "last_seen_at": "2026-10-24T21:30:25+00:00",
+   "last_seen_at": "2026-10-24T22:13:08+00:00",
    "league": "NBA",
    "match": "BKN @ CLE",
    "model_prob": 0.5657,
@@ -84,6 +123,84 @@
    "sport": "nba_tt",
    "status": "pending"
   },
+  "2026-10-24|KXNBATEAMTOTAL-26OCT24BKNCLE-CLE124|Cleveland under 123.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt_no",
+    "n": 123.5,
+    "team": "Cleveland"
+   },
+   "date": "2026-10-24",
+   "edge_at_log": 0.0539,
+   "first_seen": "2026-10-24",
+   "headline": "Cleveland under 123.5 points",
+   "home": null,
+   "id": "2026-10-24|KXNBATEAMTOTAL-26OCT24BKNCLE-CLE124|Cleveland under 123.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-24T23:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-24",
+   "last_seen_at": "2026-10-24T22:13:08+00:00",
+   "league": "NBA",
+   "match": "BKN @ CLE",
+   "model_prob": 0.6904,
+   "pair": "nba_tt_value_1h|nba_tt",
+   "price_at_log": 0.62,
+   "published_at": "2026-10-24T22:13:08+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 76,
+   "route": {
+    "claim": "Cleveland under 123.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT24BKNCLE",
+    "market": "KXNBATEAMTOTAL-26OCT24BKNCLE-CLE124",
+    "outcome": "Cleveland over 123.5 points",
+    "outcome_side": "no",
+    "price_at_log": 0.62,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_1h:401909854:CLE",
+   "source": "nba_tt_value_1h",
+   "sport": "nba_tt",
+   "status": "pending"
+  },
+  "2026-10-24|KXNBATEAMTOTAL-26OCT24MILPHI-PHI124|Philadelphia under 123.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt_no",
+    "n": 123.5,
+    "team": "Philadelphia"
+   },
+   "date": "2026-10-24",
+   "edge_at_log": 0.1532,
+   "first_seen": "2026-10-24",
+   "headline": "Philadelphia under 123.5 points",
+   "home": null,
+   "id": "2026-10-24|KXNBATEAMTOTAL-26OCT24MILPHI-PHI124|Philadelphia under 123.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-24T23:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-24",
+   "last_seen_at": "2026-10-24T22:13:08+00:00",
+   "league": "NBA",
+   "match": "MIL @ PHI",
+   "model_prob": 0.6607,
+   "pair": "nba_tt_value_1h|nba_tt",
+   "price_at_log": 0.49,
+   "published_at": "2026-10-24T22:13:08+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 76,
+   "route": {
+    "claim": "Philadelphia under 123.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT24MILPHI",
+    "market": "KXNBATEAMTOTAL-26OCT24MILPHI-PHI124",
+    "outcome": "Philadelphia over 123.5 points",
+    "outcome_side": "no",
+    "price_at_log": 0.49,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_1h:401909855:PHI",
+   "source": "nba_tt_value_1h",
+   "sport": "nba_tt",
+   "status": "pending"
+  },
   "2026-10-25|KXNBATEAMTOTAL-26OCT24WASCHI-WAS121|Washington under 120.5 points \u00b7 NBA team total value \u00b7 24h before tip": {
    "away": null,
    "bet": {
@@ -100,7 +217,7 @@
    "kickoff": "2026-10-25T00:00Z",
    "lane": "production",
    "last_seen": "2026-10-24",
-   "last_seen_at": "2026-10-24T21:30:25+00:00",
+   "last_seen_at": "2026-10-24T22:13:08+00:00",
    "league": "NBA",
    "match": "WSH @ CHI",
    "model_prob": 0.552,
@@ -132,9 +249,9 @@
    "ready_at": "2026-10-24T22:13:00+00:00",
    "route": "moved by hand on 2026-10-24",
    "routing": {
-    "leads": 0,
+    "leads": 3,
     "problem": null,
-    "routed": 0,
+    "routed": 3,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -146,7 +263,7 @@
    "sandbox_roi_fee": null,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 3,
     "under_target": 0
    }
   },
@@ -199,5 +316,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-24T21:30:25+00:00"
+ "updated_at": "2026-10-24T22:13:08+00:00"
 }
