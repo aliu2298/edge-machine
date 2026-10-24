@@ -145,6 +145,11 @@
    "lead_min": 13.0,
    "price": 0.49
   },
+  "corners_team_fade:KXLALIGATCORNERS-26OCT24ATMDEP-ATM7": {
+   "at": "2026-10-24T18:59:10+00:00",
+   "lead_min": 0.8,
+   "price": 0.54
+  },
   "corners_team_fade:KXUCLTCORNERS-26OCT21AVLVIK-AVL7": {
    "at": "2026-10-21T18:15:08+00:00",
    "lead_min": 44.9,
@@ -185,6 +190,11 @@
    "lead_min": 49.9,
    "price": 0.6
   },
+  "crypto_eth_fav_both:KXETHD-26OCT2417-T2319.99": {
+   "at": "2026-10-24T18:59:10+00:00",
+   "lead_min": 5.8,
+   "price": 0.14
+  },
   "crypto_fav_band:KXBTCD-26OCT1517-T81999.99": {
    "at": "2026-10-15T18:37:51+00:00",
    "lead_min": 27.1,
@@ -205,10 +215,20 @@
    "lead_min": 49.9,
    "price": 0.85
   },
+  "crypto_fav_band:KXBTCD-26OCT2417-T79749.99": {
+   "at": "2026-10-24T18:59:10+00:00",
+   "lead_min": 5.8,
+   "price": 0.97
+  },
   "crypto_fav_band:KXETHD-26OCT1617-T2379.99": {
    "at": "2026-10-16T18:46:57+00:00",
    "lead_min": 18.0,
    "price": 0.89
+  },
+  "crypto_fav_band:KXSOLD-26OCT2417-T99.9999": {
+   "at": "2026-10-24T18:59:10+00:00",
+   "lead_min": 5.8,
+   "price": 0.92
   },
   "crypto_fav_band:KXXRPD-26OCT2117-T1.3799": {
    "at": "2026-10-21T18:15:08+00:00",
@@ -220,6 +240,11 @@
    "lead_min": 49.9,
    "price": 0.66
   },
+  "crypto_fav_band_60:KXBTCD-26OCT2417-T79999.99": {
+   "at": "2026-10-24T18:59:10+00:00",
+   "lead_min": 5.8,
+   "price": 0.92
+  },
   "crypto_fav_band_60:KXETHD-26OCT2117-T2509.99": {
    "at": "2026-10-21T18:15:08+00:00",
    "lead_min": 49.9,
@@ -230,10 +255,35 @@
    "lead_min": 49.9,
    "price": 0.61
   },
+  "crypto_fav_band_below:KXBTCD-26OCT2417-T80499.99": {
+   "at": "2026-10-24T18:59:10+00:00",
+   "lead_min": 5.8,
+   "price": 0.55
+  },
+  "crypto_fav_band_below:KXHYPED-26OCT2417-T75.9999": {
+   "at": "2026-10-24T18:59:10+00:00",
+   "lead_min": 5.8,
+   "price": 0.46
+  },
   "crypto_fav_band_below_60:KXBTCD-26OCT2117-T84749.99": {
    "at": "2026-10-21T18:15:08+00:00",
    "lead_min": 49.9,
    "price": 0.61
+  },
+  "crypto_fav_band_below_60:KXBTCD-26OCT2417-T80249.99": {
+   "at": "2026-10-24T18:59:10+00:00",
+   "lead_min": 5.8,
+   "price": 0.23
+  },
+  "crypto_fav_band_below_60:KXETHD-26OCT2417-T2319.99": {
+   "at": "2026-10-24T18:59:10+00:00",
+   "lead_min": 5.8,
+   "price": 0.14
+  },
+  "crypto_sol_fav_both:KXSOLD-26OCT2417-T99.9999": {
+   "at": "2026-10-24T18:59:10+00:00",
+   "lead_min": 5.8,
+   "price": 0.92
   },
   "ere_draw:KXEREDIVISIEGAME-26OCT17SPAWIL": {
    "at": "2026-10-17T18:48:33+00:00",
@@ -244,6 +294,11 @@
    "at": "2026-10-23T17:01:08+00:00",
    "lead_min": 58.9,
    "price": 0.2
+  },
+  "ere_draw:KXEREDIVISIEGAME-26OCT24ADOHEE": {
+   "at": "2026-10-24T18:59:10+00:00",
+   "lead_min": 0.8,
+   "price": 0.26
   },
   "ere_draw:KXEREDIVISIEGAME-26OCT24WILCAM": {
    "at": "2026-10-24T16:13:59+00:00",
@@ -300,6 +355,11 @@
    "lead_min": 56.2,
    "price": 0.13
   },
+  "liga_u15_dog:KXLALIGATOTAL-26OCT24ATMDEP-2": {
+   "at": "2026-10-24T18:59:10+00:00",
+   "lead_min": 0.8,
+   "price": 0.15
+  },
   "mls_away_band:KXMLSGAME-26OCT14DALSEA": {
    "at": "2026-10-14T23:53:49+00:00",
    "lead_min": 36.2,
@@ -324,6 +384,11 @@
    "at": "2026-10-17T23:24:17+00:00",
    "lead_min": 5.7,
    "price": 0.79
+  },
+  "mls_away_band_fade:KXMLSGAME-26OCT24CLBTOR-TOR": {
+   "at": "2026-10-24T18:59:10+00:00",
+   "lead_min": 30.8,
+   "price": 0.81
   },
   "mls_fade_home:KXMLSGAME-26OCT14STLVAN-STL": {
    "at": "2026-10-14T23:53:49+00:00",
@@ -405,6 +470,11 @@
    "lead_min": 31.0,
    "price": 0.84
   },
+  "o15_form_l10:KXLALIGATOTAL-26OCT24ATMDEP-2": {
+   "at": "2026-10-24T18:59:10+00:00",
+   "lead_min": 0.8,
+   "price": 0.86
+  },
   "o15_form_l10:KXMLSTOTAL-26OCT17LAGSD-2": {
    "at": "2026-10-18T01:30:33+00:00",
    "lead_min": 59.4,
@@ -419,6 +489,11 @@
    "at": "2026-10-18T20:36:22+00:00",
    "lead_min": 23.6,
    "price": 0.9
+  },
+  "o15_form_l10:KXMLSTOTAL-26OCT24CLBTOR-2": {
+   "at": "2026-10-24T18:59:10+00:00",
+   "lead_min": 30.8,
+   "price": 0.85
   },
   "o15_form_l10:KXSAUDIPLTOTAL-26OCT23QADHIL-2": {
    "at": "2026-10-23T17:01:08+00:00",
@@ -701,5 +776,5 @@
    "price": 0.67
   }
  },
- "updated": "2026-10-24T16:13:59+00:00"
+ "updated": "2026-10-24T18:59:10+00:00"
 }
