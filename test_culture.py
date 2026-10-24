@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Offline checks for the culture lanes (culture_track.py) and the Culture tab (culture_build.py)."""
 import datetime as dt
+import html as _html
 import json
 import sys
 
@@ -62,12 +63,19 @@ check("said inside this market's window reads 0.98",
       K.mention_prob(["2026-10-15"], NOW - dt.timedelta(days=2), NOW + dt.timedelta(days=3), NOW)[0], 0.98)
 mev = [dict(event_ticker="KXTRUMPSAY-26OCT19", series_ticker="KXTRUMPSAY", title="Trump say", category="Mentions",
             markets=[mkt("KXTRUMPSAY-26OCT19-ICE", 0.99, 1.0, 72, "KXTRUMPSAY-26OCT19", custom_strike={"Word": "Iceland"}),
-                     mkt("KXTRUMPSAY-26OCT19-MAM", 0.50, 0.53, 72, "KXTRUMPSAY-26OCT19", custom_strike={"Word": "Mamdani"})])]
+                     mkt("KXTRUMPSAY-26OCT19-MAM", 0.45, 0.48, 72, "KXTRUMPSAY-26OCT19", custom_strike={"Word": "Mamdani"})])]
 st = {"words": {}}
 mp, mc = K.mention_picks(mev, NOW, st, fb)
 check("a 99c market is skipped as already near-certain", mc["already near-certain (under 10c or over 90c)"], 1)
-check("a word said once in 84 days, at 50c with three days left, is a NO", [(x["id"][-3:], x["side"]) for x in mp],
+check("a word said once in 84 days, at 45-48c with three days left, is a NO", [(x["id"][-3:], x["side"]) for x in mp],
       [("MAM", "no")])
+# The same word at 50-53c (YES mid 0.515) is the news guard's case from 2026-10-24 (model 0.04).
+gl = []
+mp2, mc2 = K.mention_picks([dict(mev[0], markets=[mkt("KXTRUMPSAY-26OCT19-MAM", 0.50, 0.53, 72, "KXTRUMPSAY-26OCT19",
+                                                      custom_strike={"Word": "Mamdani"})])], NOW, {"words": {}}, fb, log=gl)
+check("at 50-53c the NO is refused by the news guard, with its reason logged",
+      (mp2, mc2["news guard (YES mid over 0.50, model under 0.20)"], [g["reason"] for g in gl]),
+      ([], 1, ["news guard: market 0.52 v model 0.04"]))
 
 print("\nRotten Tomatoes: title, page counts, rounding, the model")
 check("Kalshi's title, without the suffix", K.rt_name({}, {"title": "Street Fighter Rotten Tomatoes score?"}), "Street Fighter")
@@ -220,6 +228,110 @@ check("the empty Next 24h speaks of closing and the culture scan, not a missing 
       (True, False, False))
 check("a pick closing in the next 24 hours is in Next 24h",
       "No pick closes" in _re.sub(r"<[^>]+>", " ", KB.build(pg, dt.datetime(2026, 10, 29, 6, 0, tzinfo=UTC))), False)
+
+print("\n2026-10-24: three lanes retired, mentions_rate news guard and edge cap")
+RET = dt.datetime(2026, 10, 24, 18, 0, tzinfo=UTC)
+check("the three Sandbox lanes are retired on 2026-10-24, mentions_rate is not",
+      ({k: K.retired(k, RET) for k in K.LANES}, K.retired("culture_endgame", dt.datetime(2026, 10, 24, 3, 0, tzinfo=UTC))),
+      ({"culture_fav_band": True, "culture_endgame": True, "mentions_rate": False, "rt_model": True}, False))
+check("the one-market priority list is unchanged", K.PRIORITY,
+      ("mentions_rate", "culture_endgame", "rt_model", "culture_fav_band"))
+
+
+def ledger_with_rows():
+    s = {"lanes": {k: {"picks": [], "observations": {}, "error": None} for k in K.LANES}, "rt_urls": {}, "words": {}}
+    for k in ("culture_endgame", "culture_fav_band", "rt_model"):
+        s["lanes"][k]["picks"] += [pk(f"{k}-OLD", "yes", logged="2026-10-20T00:00:00+00:00", status="won", profit=5.0),
+                                   pk(f"{k}-OPEN", "yes", f"{k}-EV", logged="2026-10-21T00:00:00+00:00")]
+    return s
+
+
+ret_state = ledger_with_rows()
+before = json.loads(json.dumps({k: ret_state["lanes"][k]["picks"] for k in K.LANES}))
+offer = dict(event_ticker="KXOSC-26", series_ticker="KXOSC", title="Oscars", category="Entertainment",
+             markets=[mkt("KXOSC-26-A", 0.74, 0.76, 10, "KXOSC-26"), mkt("KXOSC-26-B", 0.93, 0.94, 10, "KXOSC-26")])
+word = dict(event_ticker="KXTRUMPSAY-26OCT26", series_ticker="KXTRUMPSAY", title="Trump say", category="Mentions",
+            markets=[mkt("KXTRUMPSAY-26OCT26-MAM", 0.45, 0.48, 72, "KXTRUMPSAY-26OCT26", custom_strike={"Word": "Mamdani"},
+                         open_time="2026-10-19T14:00:00Z",
+                         close_time=(RET + dt.timedelta(hours=72)).isoformat())])
+calls = []
+_saved_steps = (K.band_picks, K.rt_picks)
+K.band_picks = lambda *a, **k: (calls.append("band"), _saved_steps[0](*a, **k))[1]
+K.rt_picks = lambda *a, **k: (calls.append("rt"), _saved_steps[1](*a, **k))[1]
+
+
+def ret_fetch(path):
+    if path.startswith("events"):
+        return {"events": [offer, word], "cursor": ""}
+    t = urllib.parse.unquote(path.split("/")[-1])
+    if t.endswith("-OPEN"):
+        return {"market": {"ticker": t, "status": "finalized", "result": "no"}}
+    return {"market": {"ticker": t, "status": "active"}}
+
+
+import urllib.parse
+snaps = {}
+fb_ret = lambda url: json.dumps({"data": []})            # the word is never in the transcripts: P(said) 0
+try:
+    K.run(ret_state, snaps, now=RET, fetch=ret_fetch, webfetch=fb_ret)
+finally:
+    K.band_picks, K.rt_picks = _saved_steps
+for k in ("culture_endgame", "culture_fav_band", "rt_model"):
+    picks = ret_state["lanes"][k]["picks"]
+    check(f"{k}: retired, it logs nothing new and keeps both rows", [p["id"] for p in picks],
+          [p["id"] for p in before[k]])
+    check(f"{k}: its open pick still settles (a NO result: the YES loses)", [p["status"] for p in picks], ["won", "lost"])
+    check(f"{k}: the scan says retired", (ret_state["lanes"][k]["observations"].get("retired"),
+                                          ret_state["lanes"][k]["error"]), ("2026-10-24", None))
+check("no band scan and no Rotten Tomatoes scan ran, so no snapshot was taken", (calls, snaps), ([], {}))
+check("mentions_rate still logs on its own (the priority list with only it active)",
+      [(p["id"], p["side"]) for p in ret_state["lanes"]["mentions_rate"]["picks"]], [("KXTRUMPSAY-26OCT26-MAM", "no")])
+mm = ret_state["lanes"]["mentions_rate"]["picks"][0]
+check("its edge is capped at 0.25 (model edge 0.43), the raw edge kept and the detail says so",
+      (mm["edge"], mm["edge_raw"] > 0.25, "edge capped" in mm["detail"], mm["model"], mm["yes_mid"]),
+      (0.25, True, True, 0.0, 0.465))
+check("and the scan counts the cap", ret_state["lanes"]["mentions_rate"]["observations"]["reasons"].get("edge capped"), 1)
+
+# The five settled losses to 2026-10-24, as the ledger recorded them: NO price, so YES bid = 1 - price;
+# the spread is unknown, so the YES mid is read at the bid plus 1c (a 2c spread).
+LOSSES = {"Ethanol": (0.21, 0.2081), "Deere": (0.39, 0.0), "Vivek": (0.46, 0.1276),
+          "Nobel": (0.68, 0.2548), "Bibi": (0.72, 0.1951)}
+got = {w: K.news_guard("no", round(1 - px + 0.01, 2), p) for w, (px, p) in LOSSES.items()}
+check("the guard refuses Deere (market 0.62 v model 0.00) and Vivek (0.55 v 0.13), with the reason",
+      (got["Deere"], got["Vivek"]), ("news guard: market 0.62 v model 0.00", "news guard: market 0.55 v model 0.13"))
+check("as specified it does NOT refuse Ethanol (model 0.21, not under 0.20), nor Nobel (market 0.33) or "
+      "Bibi (market 0.29), whose YES sat under 0.50", (got["Ethanol"], got["Nobel"], got["Bibi"]), (None, None, None))
+check("a normal NO is allowed: YES mid 0.30, model 0.05", K.news_guard("no", 0.30, 0.05), None)
+check("the edges of the guard: mid exactly 0.50 or model exactly 0.20 pass, and a YES is never guarded",
+      (K.news_guard("no", 0.50, 0.05), K.news_guard("no", 0.70, 0.20), K.news_guard("yes", 0.70, 0.05)), (None, None, None))
+check("the edge cap: 0.59 -> 0.25 capped, 0.10 and 0.25 unchanged, 0.03 still under the 5c threshold",
+      (K.capped(0.59), K.capped(0.10), K.capped(0.25), K.capped(0.03)[0] < K.EDGE_MIN), ((0.25, True), (0.10, False), (0.25, False), True))
+check("the amendment is dated in the lane's registered text", "Amended 2026-10-24" in K.RULES["mentions_rate"], True)
+
+print("\nthe Culture page with three lanes retired")
+real = K.load()
+for when in (RET, dt.datetime.now(UTC)):
+    rh = KB.build(real, when)
+    rt = _re.sub(r"\s+", " ", _re.sub(r"<[^>]+>", " ", rh))
+    check(f"the live ledger builds at {when:%Y-%m-%d %H:%M}: 1 in Production, 0 active, 3 retired",
+          ("1 in Production · 0 active in the Sandbox · 3 retired" in rt, rh.count('data-verdict="retired"'),
+           rt.count("Retired · 2026-10-24"), "Production · since 2026-10-20" in rt, "Observing · paper" in rt),
+          (True, 3, 3, True, False))
+check("each retired row keeps its record and gives the dated reason", all(
+    f"Retired 2026-10-24 at {K.RETIRED[k]['at']}: {K.RETIRED[k]['reason']}" in _html.unescape(rh) for k in K.RETIRED), True)
+small = ledger_with_rows()
+for k in K.RETIRED:
+    small["lanes"][k]["picks"][0]["payout"] = 1.0
+sh = _html.unescape(KB.build(small, RET))
+check("a retired row's details give its record now, per contract, and what is left open",
+      sh.count("record now 1/1 won, +31.0% after fees per contract") + sh.count("1 open pick still settles"), 6)
+check("the tiles: 1 active rule, the since-Production record", ('<b>1</b><span>active rules' in rh,
+                                                               "since Production · Trump mentions" in rt), (True, True))
+check("the Sandbox fold counts them as retired, not too early", "· 3 rules · 3 retired · by evidence" in rt, True)
+check("the amendment is on the page", "amended 2026-10-24" in rt, True)
+fin = KB.build(ledger_with_rows(), RET)
+check("a small ledger renders with three retired lanes too", ("0 active in the Sandbox · 3 retired" in fin,
+                                                              fin.count("Retired · 2026-10-24")), (True, 3))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

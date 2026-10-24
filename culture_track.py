@@ -17,6 +17,12 @@ so the 0.70-0.80 band held 8 events in two months (7-1, +18%, z +0.94) and 0.90-
 mentions_rate prices what is still to come. Rotten Tomatoes counts are not kept historically, so
 rt_model's snapshots (data/rt_snapshots.json) ARE the collector; its model is uncalibrated until
 they accumulate. Every record is paper, at the ask, with Kalshi's 7% fee; nothing is promoted.
+
+2026-10-24 (Olu): culture_endgame, culture_fav_band and rt_model are RETIRED (RETIRED below): they
+log nothing new, their rows stay and their open picks still settle. The Rotten Tomatoes collector
+(data/rt_snapshots.json) served rt_model alone, so it stopped with it; the file is kept as it was.
+mentions_rate, in Production since 2026-10-20, gained a news guard and an edge cap the same day
+(NEWS_GUARD, EDGE_CAP; amendment in RULES).
 """
 import datetime as dt
 import html as _html
@@ -59,6 +65,37 @@ RULES = {
                 "collector's own measured pace, halved; no bet until 12h of snapshots exist). The rung with the largest edge after fee, 5c+, "
                 "20+ reviews counted. One frozen entry per film.",
 }
+# Amendment 2026-10-24 (Olu), mentions_rate. The 84-day transcript rate misses a word that has
+# suddenly become news; the 5 settled losses to that day were all NOs (Ethanol, Deere, Vivek,
+# Nobel, Bibi). Before any entry:
+#   news guard  a NO is refused when Kalshi's own P(said) (the YES mid) is over 0.50 and the
+#               model's is under 0.20; the reason is kept in the scan ("news guard: market ...")
+#   edge cap    the model edge that meets the 5c threshold (and is published as the lead's edge,
+#               which anything ranking leads reads) is capped at 0.25; the raw edge is kept on
+#               the entry as edge_raw and the detail says "edge capped"
+# Entries logged before the amendment are not rewritten.
+AMENDED = "2026-10-24"
+NEWS_GUARD = dict(market_over=0.50, model_under=0.20)
+EDGE_CAP = 0.25
+RULES["mentions_rate"] += (f" Amended {AMENDED}: a NO is refused when Kalshi's YES mid is over 0.50 and P is under "
+                           "0.20 (news guard: a word that has just become news reads low in an 84-day rate), and "
+                           "the edge that meets the 5c threshold and ranks the entry is capped at 0.25 (a larger "
+                           "one is logged as edge capped). Entries before the amendment are unchanged.")
+# Lanes retired by hand (2026-10-24, Olu): no new entry from the dated day on (Eastern), the
+# ledger rows stay and open picks keep settling, and the Culture page shows the lane as Retired
+# with its final record and this reason. A retired lane's scan does not run at all (rt_model's
+# was also the Rotten Tomatoes collector, so the snapshots stop with it).
+# `at` is the record Olu read when he retired it (after fees, per contract: pooled by cost).
+RETIRED = {
+    "culture_endgame": dict(on="2026-10-24", at="24/26 won, −1.8% after fees",
+                            reason="the 0.90-0.97 favourites won at about their price, and one loss costs "
+                                   "about 19 wins, so the fee is never earned back"),
+    "culture_fav_band": dict(on="2026-10-24", at="9/17 won, −30.9% after fees",
+                             reason="the 0.70-0.80 favourites won about half the time, far under their price"),
+    "rt_model": dict(on="2026-10-24", at="2/4 won, −25.7% after fees",
+                     reason="the Rotten Tomatoes model lost at its own edges; its snapshot collector "
+                            "served this lane alone and stopped with it"),
+}
 FAV_BAND, FAV_SPREAD, FAV_HOURS = (0.70, 0.80), 0.05, (2, 48)
 END_BAND, END_SPREAD, END_HOURS = (0.90, 0.97), 0.03, (1, 24)
 MENTION_SERIES = ("KXTRUMPSAY", "KXTRUMPSAYMONTH", "KXTRUMPSAYCOMPANY", "KXTRUMPSAYCOUNTRY")
@@ -72,6 +109,25 @@ P_CLAMP = (0.05, 0.95)          # rt_model never claims more certainty than this
 PRIORITY = ("mentions_rate", "culture_endgame", "rt_model", "culture_fav_band")
 FACTBASE = ("https://rollcall.com/wp-json/factbase/v1/search?media=&type=&sort=date&location=all"
             "&place=all&format=json&page={page}&q={q}")
+
+
+def retired(key, now):
+    """True once lane `key` is retired as of `now` (its dated day, Eastern, or later)."""
+    r = RETIRED.get(key)
+    return bool(r) and now.astimezone(D.ET).date().isoformat() >= r["on"]
+
+
+def news_guard(side, yes_mid, p):
+    """The 2026-10-24 news guard: -> the refusal reason for a NO the market prices as likely
+    said (YES mid over 0.50) while the model reads it unlikely (P under 0.20), else None."""
+    if side == "no" and yes_mid > NEWS_GUARD["market_over"] and p < NEWS_GUARD["model_under"]:
+        return f"news guard: market {yes_mid:.2f} v model {p:.2f}"
+    return None
+
+
+def capped(edge):
+    """(edge used, capped?) under the 2026-10-24 edge cap."""
+    return (EDGE_CAP, True) if edge > EDGE_CAP else (edge, False)
 
 
 def fee(p):
@@ -208,7 +264,7 @@ def mention_prob(days, opened, close, now):
     return 1 - (1 - r) ** left, f"said on {len(days)} of the last {RATE_DAYS} days, {left:.1f} days left"
 
 
-def mention_picks(events, now, state, fetch=web):
+def mention_picks(events, now, state, fetch=web, log=None):
     counts, out = Counter(), []
     cache = state.setdefault("words", {})
     for ev in events:
@@ -243,13 +299,26 @@ def mention_picks(events, now, state, fetch=web):
             yes_edge = p - (q[1] + fee(q[1]))
             no_px = round(1 - q[0], 4)
             no_edge = (1 - p) - (no_px + fee(no_px))
-            side, px, edge = ("yes", q[1], yes_edge) if yes_edge >= no_edge else ("no", no_px, no_edge)
+            side, px, raw = ("yes", q[1], yes_edge) if yes_edge >= no_edge else ("no", no_px, no_edge)
+            edge, cap = capped(raw)
             if edge < EDGE_MIN - 1e-9:
                 counts["edge under 5c"] += 1
                 continue
+            mid = round((q[0] + q[1]) / 2, 4)
+            refused = news_guard(side, mid, p)
+            if refused:
+                counts["news guard (YES mid over 0.50, model under 0.20)"] += 1
+                if log is not None:
+                    log.append(dict(id=m["ticker"], word=word, side=side, reason=refused))
+                continue
             counts["edge 5c+"] += 1
-            out.append(entry(m, ev, side, px, now, detail=f"P(said) {p:.2f} · {why} · edge {edge:+.2f}",
-                             model=round(p, 4), edge=round(edge, 4)))
+            extra = dict(model=round(p, 4), edge=round(edge, 4), yes_mid=mid)
+            note = f"edge {edge:+.2f}"
+            if cap:
+                counts["edge capped"] += 1
+                extra["edge_raw"] = round(raw, 4)
+                note = f"edge {edge:+.2f} (edge capped: model edge {raw:+.2f})"
+            out.append(entry(m, ev, side, px, now, detail=f"P(said) {p:.2f} · {why} · {note}", **extra))
     return out, counts
 
 
@@ -490,17 +559,27 @@ def run(state, snaps, now=None, fetch=D.get, webfetch=web):
         "mentions_rate": lambda: mention_picks(events, now, state, webfetch),
         "rt_model": lambda: rt_picks(events, now, state, snaps, webfetch),
     }
+    guarded = []
+    steps["mentions_rate"] = lambda: mention_picks(events, now, state, webfetch, log=guarded)
     for key in PRIORITY:
         step = steps[key]
         lane = state["lanes"][key]
         errs = []
-        try:
-            picks, counts = step()
-            record(lane, picks, by="id" if key == "mentions_rate" else "event", state=state, key=key,
-                   counts=counts)
-            lane["observations"] = dict(at=now.isoformat(), events=len(events), reasons=dict(counts))
-        except Exception as e:                                  # noqa: BLE001
-            errs.append("scan: " + type(e).__name__ + ": " + str(e)[:160])
+        if retired(key, now):
+            # Retired: no scan, no new entry (and for rt_model no Rotten Tomatoes snapshot); the
+            # rows it holds still claim their markets for the one-market rule, and still settle.
+            lane["observations"] = dict(at=now.isoformat(), events=len(events), retired=RETIRED[key]["on"],
+                                        reasons={})
+        else:
+            try:
+                picks, counts = step()
+                record(lane, picks, by="id" if key == "mentions_rate" else "event", state=state, key=key,
+                       counts=counts)
+                lane["observations"] = dict(at=now.isoformat(), events=len(events), reasons=dict(counts))
+                if key == "mentions_rate":
+                    lane["observations"]["news_guard"] = list(guarded)
+            except Exception as e:                              # noqa: BLE001
+                errs.append("scan: " + type(e).__name__ + ": " + str(e)[:160])
         errs += settle(lane, now, fetch)
         lane["error"] = "; ".join(errs)[:1200] or None
         if not lane["error"]:

@@ -293,7 +293,9 @@ def sandbox_record(rows):
 
 
 def tiles_html(sp, d, st, rows, open_n):
-    active = sum(1 for r in rows if (r["a"].get("n") or r["a"].get("n_price") or r.get("open")))
+    # A retired rule (v "retired", 2026-10-24) is not active, whatever its record holds.
+    active = sum(1 for r in rows if r.get("v") != "retired"
+                 and (r["a"].get("n") or r["a"].get("n_price") or r.get("open")))
     rec, prod_rows = since_production(d, st, rows)
     if prod_rows:
         who = (sp["rule_name"](prod_rows[0]) if len(prod_rows) == 1
@@ -484,12 +486,17 @@ def rules_html(sp, d, rows, now, ev_list):
                      f'{list_head(scoped, "Production rule")}{shown}{more}</div>')
     else:
         prod_html = f'<p class="sp-empty" data-empty="production">No {family} rule is in Production.</p>'
-    n_early = sum(1 for r in sand if is_early(r))
+    # Retired rules (v "retired") stay in the Sandbox list, last, and are counted apart: they are
+    # not under test, so neither "too early to read" nor "in the Sandbox" counts them (2026-10-24).
+    n_retired = sum(1 for r in sand if r.get("v") == "retired")
+    n_early = sum(1 for r in sand if is_early(r) and r.get("v") != "retired")
     if sand:
         body = "".join(rule_row(sp, d, r, now, scoped, ev_list) for r in sand)
         count = f'{len(sand)} rule{"s" if len(sand) != 1 else ""}'
         if n_early:
             count += f' · {n_early} too early to read'
+        if n_retired:
+            count += f' · {n_retired} retired'
         # Open on load when the family has at most one Production rule and a short Sandbox list
         # (2026-10-21): with the Production list empty or a single row, a closed fold hid every
         # record on the page (Culture and Finance Daily read as blank). A longer Sandbox list stays
@@ -502,6 +509,8 @@ def rules_html(sp, d, rows, now, ev_list):
         sand_html = f'<p class="sp-empty" data-empty="sandbox">No {family} rule is in the Sandbox.</p>'
     count = (f'{len(prod)} in Production · {len(sand)} in the Sandbox' if rows
              else "no rule has a record yet")
+    if rows and n_retired:
+        count = f'{len(prod)} in Production · {len(sand) - n_retired} active in the Sandbox · {n_retired} retired'
     return (f'<section id="rules" class="sp-section">'
             f'<div class="sp-section-head"><h2>Rules</h2><span class="sm mut">{esc(count)}</span></div>'
             f'{prod_html}{sand_html}</section>')
