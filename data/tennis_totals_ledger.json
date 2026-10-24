@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-23T22:17:55.755926+00:00",
+ "last_run": "2026-10-24T00:46:42.977607+00:00",
  "registered": "2026-10-21",
  "rules": {
   "baseline": {
@@ -496,11 +496,14 @@
      "line": 17.5,
      "logged": "2026-10-23T17:45:14.989854+00:00",
      "match": "Lorenzo Musetti v Luca Van Assche",
+     "payout": 1.0,
      "price": 0.84,
+     "profit": 17.73,
      "rule": "baseline",
+     "settled": "2026-10-24T00:46:42.977607+00:00",
      "side": "yes",
      "start": "2026-10-23T18:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXATPGTOTAL-26OCT23VANMUS-18",
      "title": "Over 17.5 games",
      "tournament": "Grand Prix Auvergne-Rh\u00f4ne-Alpes",
@@ -1001,11 +1004,14 @@
      "line": 17.5,
      "logged": "2026-10-23T17:45:14.989854+00:00",
      "match": "Lorenzo Musetti v Luca Van Assche",
+     "payout": 1.0,
      "price": 0.84,
+     "profit": 17.73,
      "rule": "tennis_atp_low_over",
+     "settled": "2026-10-24T00:46:42.977607+00:00",
      "side": "yes",
      "start": "2026-10-23T18:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXATPGTOTAL-26OCT23VANMUS-18",
      "title": "Over 17.5 games",
      "tournament": "Grand Prix Auvergne-Rh\u00f4ne-Alpes",
@@ -1015,14 +1021,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-22T10:15:14.858174+00:00",
-   "baseline": 0,
-   "due": 1,
-   "entered": 0,
-   "matched": 1,
-   "new": 0
-  },
   {
    "at": "2026-10-22T10:30:16.355598+00:00",
    "baseline": 0,
@@ -1417,6 +1415,14 @@
   },
   {
    "at": "2026-10-23T22:17:55.755926+00:00",
+   "baseline": 0,
+   "due": 0,
+   "entered": 0,
+   "matched": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-10-24T00:46:42.977607+00:00",
    "baseline": 0,
    "due": 0,
    "entered": 0,
