@@ -257,7 +257,7 @@ def lane_rows(d, lane="commod_fav_band"):
 
 d = temp_ledger()
 a1 = publish_lane(d, ladder + two[4:], FIVE_NOW)
-eq(a1, 2, "gold and silver each log one rung")
+eq(a1, 2, "gold and silver each log a row (since 2026-10-24 one is entered and the other cut by the gold/silver cap)")
 row = next(q for q in lane_rows(d) if q["market_id"] == "KXGOLDD-26OCT0817-T4016")
 eq((row["bid"], row["ask"], row["ask_size"]), (0.70, 0.71, 200), "the row stores bid, ask and ask size")
 eq(row["price"], 0.71, "at the ask it was taken at")
@@ -279,6 +279,87 @@ publish_lane(d, [coin], FIVE_NOW, lane="crypto_fav_band", sport="crypto_fav")
 crypto_row = lane_rows(d, "crypto_fav_band")
 ok(len(crypto_row) == 1 and not any(k in crypto_row[0] for k in ("bid", "ask", "ask_size")),
    "a crypto row logged through the same publish keeps its shape")
+
+print("\ngold/silver cap (amendment 2026-10-24): at most ONE entry per close across KXGOLDD and KXSILVERD")
+GOLD, SILVER = "KXGOLDD", "KXSILVERD"
+gold = lambda price, edge=None, **kw: dict(rung(GOLD, "4033", price, **kw), **({"edge": edge} if edge is not None else {}))
+silver = lambda price, edge=None, **kw: dict(rung(SILVER, "54.75", price, **kw), **({"edge": edge} if edge is not None else {}))
+gid, sid = "KXGOLDD-26OCT0817-T4033", "KXSILVERD-26OCT0817-T54.75"
+
+
+def state(rows_by_read):
+    """Publish each read in order into a fresh ledger; -> (ledger, {market id: row})."""
+    led = temp_ledger()
+    for i, rows in enumerate(rows_by_read):
+        publish_lane(led, rows, FIVE_NOW + datetime.timedelta(minutes=25 * i))
+    return led, {q["market_id"]: q for q in lane_rows(led)}
+
+
+eq(ids([gold(0.78), silver(0.71)], FIVE_NOW), [gid, sid], "the scanner still returns both: the cap is applied when the entry is logged")
+led, rows = state([[gold(0.78), silver(0.71)]])
+eq((rows[sid]["bet"], rows[gid]["bet"], rows[gid].get("cut")), (True, False, "gold/silver cap: Silver taken"),
+   "both qualify, equal edge: the cheaper ask (silver 71c v gold 78c) is kept; gold is logged as a non-bet with the reason")
+eq((rows[gid]["stake"], rows[gid]["price"], rows[sid].get("cut")), (0.0, 0.78, None),
+   "the cut row is stakeless, keeps its price for the record, and the kept row carries no cut")
+led, rows = state([[gold(0.71), silver(0.78)]])
+eq((rows[gid]["bet"], rows[sid]["bet"], rows[sid].get("cut")), (True, False, "gold/silver cap: Gold taken"),
+   "gold cheaper: gold is kept, silver cut")
+led, rows = state([[gold(0.74), silver(0.74)]])
+eq((rows[gid]["bet"], rows[sid]["bet"], rows[sid].get("cut")), (True, False, "gold/silver cap: Gold taken"),
+   "still tied on the ask: gold")
+led, rows = state([[gold(0.74, edge=0.01), silver(0.78, edge=0.05)]])
+eq((rows[sid]["bet"], rows[gid]["bet"], rows[gid].get("cut")), (True, False, "gold/silver cap: Silver taken"),
+   "a larger edge over its price wins before the ask does (a row that carries one)")
+led, rows = state([[gold(0.74)]])
+eq((len(rows), rows[gid]["bet"], rows[gid].get("cut")), (1, True, None), "only gold qualifies: unchanged, no cut")
+led, rows = state([[silver(0.74)]])
+eq((len(rows), rows[sid]["bet"], rows[sid].get("cut")), (1, True, None), "only silver qualifies: unchanged, no cut")
+led, rows = state([[gold(0.74)], [silver(0.71)]])
+eq((rows[gid]["bet"], rows[sid]["bet"], rows[sid].get("cut")), (True, False, "gold/silver cap: Gold taken"),
+   "gold entered at an earlier read of the close: a cheaper silver at the next read is cut")
+led, rows = state([[silver(0.74)], [gold(0.71)]])
+eq((rows[sid]["bet"], rows[gid]["bet"], rows[gid].get("cut")), (True, False, "gold/silver cap: Silver taken"),
+   "silver entered first: a cheaper gold at the next read is cut (no switching)")
+nxt_day = FIVE_CLOSE + datetime.timedelta(days=4)
+led = temp_ledger()
+publish_lane(led, [gold(0.74)], FIVE_NOW)
+publish_lane(led, [silver(0.74, start=nxt_day, token="26OCT1217")], FIVE_NOW + datetime.timedelta(days=4))
+eq(sorted(q["bet"] for q in lane_rows(led)), [True, True],
+   "gold on one close and silver on the next trading day's are both entered: the cap is per close")
+wti = rung("KXWTI", "98", 0.74)
+brent = rung("KXBRENTD", "95", 0.74)
+copper = rung("KXCOPPERD", "5", 0.74)
+led = temp_ledger()
+publish_lane(led, [wti], WTI_NOW)
+publish_lane(led, [brent, copper, gold(0.74)], FIVE_NOW)
+eq(sorted((q["market_id"].split("-")[0], q["bet"]) for q in lane_rows(led)),
+   [("KXBRENTD", True), ("KXCOPPERD", True), ("KXGOLDD", True), ("KXWTI", True)], "the other series are untouched by the cap")
+led, rows = state([[gold(0.78), silver(0.71)]])
+cut_pair = [q for q in lane_rows(led) if q.get("cut")]
+eq((len(cut_pair), len([q for q in lane_rows(led) if q.get("bet")])), (1, 1), "one bet and one cut row for the close")
+eq(T.bet_rows(led) and [q["market_id"] for q in T.bet_rows(led) if q["source"] == "commod_fav_band"], [sid],
+   "the pages count the kept bet only; the Production feed reads bet rows, so it carries the kept one")
+
+old = temp_ledger()
+for q in (gold(0.78), silver(0.71)):                 # a close logged BEFORE the amendment: both entered
+    old["quotes"].append(dict(id=f"commod_fav_band:{q['market_id']}", source="commod_fav_band", sport="commodities_fav",
+                              market_id=q["market_id"], bet=True, stake=100.0, status="lost", pick="a", price=q["price_a"],
+                              result="b", pnl=-100.0, date="2026-10-01", start="2026-10-01T21:00:00+00:00",
+                              logged="2026-10-01T18:30:00+00:00", venue="kalshi_binary", price_a=q["price_a"], price_b=q["price_b"]))
+before = json.dumps(old["quotes"], sort_keys=True)
+publish_lane(old, [gold(0.74)], FIVE_NOW)
+eq(json.dumps(old["quotes"][:2], sort_keys=True), json.dumps(json.loads(before), sort_keys=True),
+   "past rows are not rewritten: both bets of an earlier close stand as logged")
+
+print("\nthe near-certain lanes and the amendment text")
+eq([bool(S.SOURCES[n].get("one_per_close_group")) for n in ("commod_fav_band", "commod_nc_yes", "commod_nc_no")],
+   [True, False, False], "only the favourite band is capped; commod_nc_yes and commod_nc_no are unchanged")
+eq(S.COMMOD_CLOSE_CAPS, (("KXGOLDD", "KXSILVERD"),), "the group is gold and silver, gold first")
+note = " ".join(S.SOURCES["commod_fav_band"]["changes"])
+ok("AMENDMENT 2026-10-24" in note and "gold/silver cap: <other> taken" in note and "Past rows are not rewritten" in note,
+   "the dated amendment is in the lane's registered text, with the reason string and the no-rewrite statement")
+import sandbox_audit
+ok(sandbox_audit.COPY_RE.search(note) is None, "the amendment text passes the public-copy guard")
 
 print()
 if FAILS:

@@ -1467,6 +1467,49 @@ def _book_fields(r, pick="a"):
 ONE_LANE_SPORTS = ("commodities_fav",)
 
 
+def _close_group_cuts(name, sport, probs, by_id, prior):
+    """{market id: reason} for the picks a per-close group cap cuts this pass (2026-10-24).
+
+    A source that sets one_per_close_group (commod_fav_band) may enter only ONE series of each
+    S.COMMOD_CLOSE_CAPS group per close (gold and silver: +0.89, same direction 90% of days). An
+    entry any earlier read already logged on that close wins; among picks new this pass the larger
+    edge over its price is kept (a bare pick carries none, so equal), then the cheaper ask, then the
+    first series of the group (gold). The rest are logged as non-bets with "gold/silver cap:
+    <series> taken"."""
+    if not (S.SOURCES.get(name) or {}).get("one_per_close_group"):
+        return {}
+    short = S.COMMOD_FAV_SHORT
+    held = {}                                                   # (group, token) -> series already entered
+    for q in prior.get((name, sport), ()):
+        key = _coin_close(q.get("market_id"))
+        if key and q.get("bet") and q.get("status") != "void":
+            for gi, group in enumerate(S.COMMOD_CLOSE_CAPS):
+                if key[0] in group:
+                    held.setdefault((gi, key[1]), key[0])
+    fresh = {}                                                  # (group, token) -> [(rank, mid, series)]
+    for mid, opinion in probs.items():
+        key = _coin_close(mid)
+        r = by_id.get(mid)
+        if not key or r is None or opinion[0] != "pick":
+            continue
+        for gi, group in enumerate(S.COMMOD_CLOSE_CAPS):
+            if key[0] not in group:
+                continue
+            ask = r.get("price_a") if opinion[1] == "a" else r.get("price_b")
+            edge = r.get("edge") or 0.0
+            fresh.setdefault((gi, key[1]), []).append(
+                ((-edge, ask if ask is not None else 9.0, group.index(key[0])), mid, key[0]))
+    cuts = {}
+    for gk, cands in fresh.items():
+        winner = held.get(gk)
+        if winner is None:
+            winner = min(cands)[2]
+        for _rank, mid, series in cands:
+            if series != winner:
+                cuts[mid] = f"gold/silver cap: {short.get(winner, winner)} taken"
+    return cuts
+
+
 def _coin_close(market_id):
     """Series and close token from a Kalshi coin ticker, or None.
 
@@ -1700,6 +1743,7 @@ def publish(d, universe, coverage, verbose=True, now=None):
             for r in selected:
                 by_id[r["market_id"]] = r
         for name, probs in source_probs.items():
+            cap_cuts = _close_group_cuts(name, sport, probs, by_id, prior)
             for mid, opinion in probs.items():
                 # A pause stops a new entry and nothing else. Logging the row with
                 # the stake cleared would still consume the one quote a source gets
@@ -1824,6 +1868,9 @@ def publish(d, universe, coverage, verbose=True, now=None):
                 lo, hi = price_band(sport)
                 bet = bool(pick and has_edge and not r["untraded"] and tradeable
                            and price is not None and lo <= price <= hi)
+                cut = cap_cuts.get(mid)
+                if cut:
+                    bet = False                                 # logged, not entered: what the cap cut
                 # Retire the Kalshi row only in the same pass that logs its
                 # Polymarket US replacement. The retired time is the clock from
                 # the start of publish; `logged` on the new row is `at`.
@@ -1843,6 +1890,7 @@ def publish(d, universe, coverage, verbose=True, now=None):
                     price=round(price, 4) if pick and price is not None else None,
                     bet=bet, stake=STAKE if bet else 0.0, untraded=r["untraded"],
                     venue=r.get("venue", "polymarket"),
+                    **({"cut": cut} if cut else {}),
                     spread=r.get("spread"), liquidity=r.get("liquidity"),
                     **({k: r[k] for k in ("ask_size", "cost", "book_at")}
                        if name == "tennis_utr_shortlist_v1" else {}),

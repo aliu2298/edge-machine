@@ -1397,6 +1397,17 @@ SOURCES = {
         connected=True, site="edge-machine", sports=["commodities_fav"],
         changes=[
             (
+                'AMENDMENT 2026-10-24 (Olu): at most ONE entry per close across KXGOLDD and KXSILVERD '
+                'combined, because gold and silver move together (+0.89, the same direction on 90% of '
+                'days in the lane\'s own research) and on 2026-10-22 both lost the same day (silver '
+                'above 54.75 at 71c, gold above 4033 at 78c). If both qualify the larger edge over its '
+                'price is kept, equal edge the cheaper ask, still tied gold; this lane carries no model '
+                'probability, so its edge is equal on every rung and in practice the cheaper ask is kept, '
+                'then gold. An entry already logged at an earlier read of the same close wins. The one '
+                'cut is logged as a non-bet row with the reason "gold/silver cap: <other> taken" so the '
+                'record shows what the cap cut. Past rows are not rewritten; every other term, and the '
+                'near-certain lanes, are unchanged.'),
+            (
                 'READS 2026-10-13: up to three reads per window, 30 minutes apart, asked for by the '
                 'VPS from lane_windows.py; a later read is skipped once every series of that close '
                 'has an entry, and the one-entry-per-series-per-close rule is unchanged. The 2-3.5h '
@@ -1412,6 +1423,9 @@ SOURCES = {
         # One bet per series per close token (KXWTI + 26OCT0814), across runs, the
         # same gate crypto_fav_band uses. publish() reads this flag.
         one_per_coin_close=True,
+        # AMENDED 2026-10-24: at most ONE entry per close across gold and silver combined
+        # (COMMOD_CLOSE_CAPS; applied in publish()). Past rows are not rewritten.
+        one_per_close_group=True,
         # Store the book the rung was taken at (bid, ask, ask size). The ledger has
         # never kept ask size, so the 25-contract floor could not be checked against
         # history; this lane's rows carry it so the first weeks answer that. Read by
@@ -8797,6 +8811,9 @@ COMMOD_FAV_SHORT = {"KXWTI": "WTI", "KXBRENTD": "Brent", "KXGOLDD": "Gold",
 COMMOD_FAV_CORRELATION = {("KXGOLDD", "KXSILVERD"): 0.89, ("KXWTI", "KXBRENTD"): 0.84,
                           ("KXGOLDD", "KXCOPPERD"): 0.70, ("KXSILVERD", "KXCOPPERD"): 0.85}
 COMMOD_FAV_BAND = (0.70, 0.80)          # BOTH ends inclusive, as crypto
+# Series that may not both be entered on one close (2026-10-24, commod_fav_band only). Listed in
+# the order the tie is broken after price: gold first.
+COMMOD_CLOSE_CAPS = (("KXGOLDD", "KXSILVERD"),)
 COMMOD_FAV_TZ = ZoneInfo("America/New_York")
 # Close hour in Eastern per series. WTI is the exception; everything else is 17:00.
 # Matched in Eastern, not UTC, for the reason CRYPTO_FAV_CLOSE_ET gives.
