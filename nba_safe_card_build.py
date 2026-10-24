@@ -68,6 +68,11 @@ def section(state=None):
         f'<tr><td>{esc(SC.STEP_WORDS[s["step"]])}</td><td class="num">{s["n"]}</td>'
         f'<td class="num">{_pct(s["won"], s["n"])}</td>'
         f'<td class="num">{_c(s["price"])}</td><td class="num">{_c(s["p"], unit="%")}</td></tr>' for s in r["steps"])
+    lm = r["label_modes"]
+    modes = "".join(
+        f'<tr><td>{esc(name)}</td><td class="num">{lm[k]["n"]}</td><td class="num">{_pct(lm[k]["won"], lm[k]["n"])}</td>'
+        f'<td class="num">{_c(lm[k]["price"])}</td><td class="num">{_c(lm[k]["p"], unit="%")}</td></tr>'
+        for k, name in (("both", "Both labels agree"), ("one", "One side (early-season rule)")))
     calib = "".join(
         f'<tr><td>{c["lo"] * 100:.0f}-{c["hi"] * 100:.0f}%</td><td class="num">{c["n"]}</td>'
         f'<td class="num">{c["p"] * 100:.1f}%</td><td class="num">{_pct(c["won"], c["n"])}</td></tr>' for c in r["calibration"]
@@ -92,6 +97,9 @@ def section(state=None):
 <details class="section-disclosure"><summary><b>Which filter mattered</b><span>hit rate of the legs that passed each step, cut later or not</span></summary>
 <div class="tbl"><table><thead><tr><th>Passed step</th><th class="num">Settled</th><th class="num">Hit</th><th class="num">Avg price</th><th class="num">Avg model P</th></tr></thead>
 <tbody>{steps}</tbody></table></div></details>
+<details class="section-disclosure"><summary><b>Both labels v one side</b><span>legs that passed step 4, settled</span></summary>
+<div class="tbl"><table><thead><tr><th>Labels</th><th class="num">Settled</th><th class="num">Hit</th><th class="num">Avg price</th><th class="num">Avg model P</th></tr></thead>
+<tbody>{modes}</tbody></table></div></details>
 <details class="section-disclosure"><summary><b>Model calibration</b><span>card legs</span></summary>
 <div class="tbl"><table><thead><tr><th>Model P</th><th class="num">Legs</th><th class="num">Avg P</th><th class="num">Hit</th></tr></thead>
 <tbody>{calib}</tbody></table></div></details>
@@ -100,8 +108,9 @@ def section(state=None):
 <tbody>{hist_html}</tbody></table></div></details>
 <details class="section-disclosure"><summary><b>Rules and pre-registration</b><span>registered {esc(SC.REGISTERED)}</span></summary>
 <p class="sm">Markets: Kalshi NBA team totals (both teams), 1st-quarter, 1st-half and full-game totals, every rung both ways (over at the YES ask, under at 1 − the YES bid). Model P: Normal with the value model's mu; sd 11.83 team, 8.28 1Q, 18.9 game (fitted 18.44, out of sample 19.11), 1H at 0.505 × the game mu with sd 13.0 (not fitted: no first-half history).</p>
-<p class="sm">Funnel: (1) price 84-95c, two-sided, spread ≤3c; (2) model P ≥ 0.90; (3) P ≥ price + 3c; (4) labels agree: team over own O+ and opponent D+, under own O− and opponent D−; game over both D+, under both D−; 1Q and 1H over both O+, under both O−; (5) team totals: the team cleared (or stayed under) the line in 8 of its last 10; (6) best edge first, one leg per game, until combined odds ≥ 1.70 with 3-4 legs (up to two per game on slates under 4 games); (7) level check (amended 2026-10-24): a gap over 8 points, or no level to compare, blocks the card; a gap over 4 points is a warning; more than 80% of 5+ label survivors on one side is a lean label, not a block. Built once, 60-90 minutes before the slate's first tip; each leg's price is read again 60-90 minutes before its own tip.</p>
+<p class="sm">Funnel: (1) price 84-95c, two-sided, spread ≤3c; (2) model P ≥ 0.90; (3) P ≥ price + 3c; (4) labels agree: team over own O+ and opponent D+, under own O− and opponent D−; game over both D+, under both D−; 1Q and 1H over both O+, under both O− (one side is enough before 2026-11-15, see the amendment below); (5) team totals: the team cleared (or stayed under) the line in 8 of its last 10; (6) best edge first, one leg per game, until combined odds ≥ 1.70 with 3-4 legs (up to two per game on slates under 4 games); (7) level check (amended 2026-10-24): a gap over 8 points, or no level to compare, blocks the card; a gap over 4 points is a warning; more than 80% of 5+ label survivors on one side is a lean label, not a block. Built once, 60-90 minutes before the slate's first tip; each leg's price is read again 60-90 minutes before its own tip.</p>
 <p class="sm mut">Pre-registered 2026-10-22. Wednesday 2026-10-21's back-run: 62 legs after steps 1-3, 16 after labels; card PHX@POR game U249.5 @84c, MIL@WSH 1Q U68.5 @85c, UTAH@MEM 1H O104.5 @87c, GS@LAL game U253.5 @86c, combined odds 1.87, model combo chance about 70%. 2025-26 backtest: the model's 95% lines hit 94.4-94.9%; a label-filtered daily 3-leg card at the 95% line went 64/73 days. Caveat: the model sits about 2 points below Kalshi's lines this season, so the funnel leans to unders, which is what the level guard is for. Read at 20+ cards.</p>
+<p class="sm mut">Amendment 2026-10-24 (label step): until 2026-11-15 (Eastern game nights before it) ONE side's label is enough: team total over own O+ or opponent D+, under own O− or opponent D−; game total over at least one D+, under at least one D−; 1Q/1H over at least one O+, under at least one O−. From the night of 2026-11-15 the strict rule above applies again, automatically. A leg says "labels: both agree" or "labels: one side (early-season rule)"; ranking is by edge with a half-cent bonus for both-agree legs; the funnel counts both and one-side survivors, and "Both labels v one side" compares their hit rates. Cards already built are not rewritten.</p>
 <p class="sm mut">Amendment 2026-10-24: the model's own season-data level stays the driver; Kalshi's slate level is logged as a check (Ladder tracker, "Model level v Kalshi level"). A one-sided slate no longer blocks the card: it carries a label, "model leans under: Kalshi lines running X pts above results season to date". Only a data problem blocks (no level to compare, or a model-Kalshi gap over 8 points); a gap over 4 points is a warning.</p>
 <p class="sm mut">Amendment 2026-10-22 (before the first card): on a slate of fewer than 4 games a game may give up to 2 legs (still 3-4 legs at 1.70+, ranked by edge); two legs of one game must be different markets and never same-direction pairs where one implies the other (game with a team total, 1H with the game, 1Q with 1H). The combo chance then assumes the legs are independent. The 84-95c band is unchanged.</p></details>
 <p class="sm mut">Last scan {esc(fmt.when(last) if last else "not yet")}{(" · " + esc(state["error"])) if state.get("error") else ""}.</p>

@@ -183,7 +183,8 @@ check("75 minutes before the first tip: tonight's card", (built, card["status"],
 check("four game UNDER 249.5 legs at 87c, odds 1.75",
       ({(x["kind"], x["side"], x["line"], x["price"]) for x in card["legs"]}, card["odds"]),
       ({("game", "no", 249.5, 0.87)}, round(1 / 0.87 ** 4, 3)))
-check("the funnel counts are logged", sorted(card["counts"]), ["band", "card", "clean", "labels", "quoted", "safety", "value"])
+check("the funnel counts are logged, labels split into both-agree and one-side (2026-10-24)", sorted(card["counts"]),
+      ["band", "card", "clean", "labels", "labels_both", "labels_one", "quoted", "safety", "value"])
 check("every leg the funnel looked at is logged with a cut reason, or is on the card",
       all(x["cut"] for x in card["candidates"]) and all(x["cut"] is None for x in card["legs"]), True)
 SC.run(state, GAMES, NOW + dt.timedelta(minutes=10), fetch, pri={}, labs_all=LABS)
@@ -239,6 +240,123 @@ check("no Kalshi team-total level at all: no card, a data problem",
 check("the dated amendment is in the pre-registered text and on the page",
       ("AMENDMENT 2026-10-24" in SC.__doc__, "Amendment 2026-10-24" in SB.section(st5), "season-data level stays the driver" in SC.__doc__),
       (True, True, True))
+
+print("\nthe label step, loosened until 2026-11-15 (amendment 2026-10-24): one side's label is enough")
+chk = lambda kind, side, unit="game", l=labs, loose=True: SC.label_check(leg(kind, side, unit), G, l, loose)
+# PHI (home) ft O+D+, CLE (away) ft O-D-; q1 PHI O+D- CLE O+D+; h1 PHI O-D+ CLE O-D-.
+check("team OVER PHI: own O+ yes, opponent CLE D- no -> one side: passes loose, not strict",
+      (chk("tt", "yes", "PHI")[::2], chk("tt", "yes", "PHI", loose=False)[0]), ((True, "one"), False))
+check("team OVER CLE: own O- no, opponent PHI D+ yes -> one side (the opponent's defence alone)",
+      chk("tt", "yes", "CLE")[::2], (True, "one"))
+check("team UNDER CLE: own O- yes, opponent PHI D+ no -> one side; team UNDER PHI: own O+ no, opponent CLE D- yes -> one side",
+      (chk("tt", "no", "CLE")[::2], chk("tt", "no", "PHI")[::2]), ((True, "one"), (True, "one")))
+check("team OVER with both (own O+ and opponent D+): both agree",
+      chk("tt", "yes", "PHI", dict(labs, away_ft="O-D+"))[::2], (True, "both"))
+check("team total with neither label: no pass even when loose",
+      chk("tt", "yes", "PHI", dict(labs, home_ft="O-D-"))[::2], (False, None))
+check("game OVER: one D+ (PHI D+, CLE D-) passes loose; game UNDER: one D- passes",
+      (chk("game", "yes")[::2], chk("game", "no")[::2]), ((True, "one"), (True, "one")))
+check("game OVER with both D+ and UNDER with both D-: both agree; neither: no",
+      (chk("game", "yes", l=dict(labs, away_ft="O-D+"))[::2], chk("game", "no", l=dict(labs, home_ft="O+D-"))[::2],
+       chk("game", "yes", l=dict(labs, home_ft="O+D-"))[::2]), ((True, "both"), (True, "both"), (False, None)))
+oneq = dict(labs, away_q1="O-D+", away_h1="O+D-")
+check("1Q OVER with one O+ (PHI O+, CLE O-): passes loose; 1Q UNDER with one O-: passes",
+      (chk("q1", "yes", l=oneq)[::2], chk("q1", "no", l=oneq)[::2]), ((True, "one"), (True, "one")))
+check("1H OVER with one O+ (CLE O+, PHI O-): passes loose; 1H UNDER with one O-: passes",
+      (chk("h1", "yes", l=oneq)[::2], chk("h1", "no", l=oneq)[::2]), ((True, "one"), (True, "one")))
+check("1Q/1H with neither: no", (chk("q1", "no")[::2], chk("h1", "yes")[::2]), ((False, None), (False, None)))
+check("a missing label is no pass, loose or strict", (chk("game", "yes", l={})[::2], chk("game", "yes", l={"home_ft": "O+D+"})[::2]),
+      ((False, None), (False, None)))
+check("the strict wrapper labels_agree is unchanged: both labels needed",
+      (SC.labels_agree(leg("game", "yes"), G, labs)[0], SC.labels_agree(leg("game", "yes"), G, dict(labs, away_ft="O-D+"))[0]), (False, True))
+
+print("\nthe rule changes back by itself on 2026-11-15 (Eastern game night)")
+check("loose through the night of 2026-11-14, strict from 2026-11-15",
+      [SC.loose_labels(n) for n in ("2026-10-22", "2026-11-14", "2026-11-15", "2026-11-16", "2027-01-05")],
+      [True, True, False, False, False])
+check("the constant", SC.LABEL_RULE_LOOSE_UNTIL, "2026-11-15")
+
+print("\nthe funnel: one-side survivors counted apart, strict cuts them")
+FG = dict(id="g1", home="PHI", away="CLE", start="2026-10-22T23:00Z", completed=False)
+flegs = lambda: [dict(game="g1", kind="game", unit="game", side="no", line=249.5, price=0.86, p=0.93, ticker="ONE", match="CLE@PHI", mu=225.0),
+                 dict(game="g1", kind="game", unit="game", side="no", line=251.5, price=0.86, p=0.93, ticker="BOTH", match="CLE@PHI", mu=225.0)]
+mixed = {"g1": dict(home_ft="O+D-", away_ft="O+D+")}               # game UNDER: PHI D- yes, CLE D+ no -> one
+both_labs = {"g1": dict(home_ft="O+D-", away_ft="O+D-")}
+lg, cn = SC.funnel(flegs(), {"g1": FG}, mixed, {}, loose=True)
+check("loose: both legs pass on one side; counts split, legs carry the mode and the note",
+      (cn["labels"], cn["labels_one"], cn["labels_both"], lg[0]["label_mode"], lg[0]["label_note"]),
+      (2, 2, 0, "one", "labels: one side (early-season rule)"))
+lg, cn = SC.funnel(flegs(), {"g1": FG}, both_labs, {}, loose=True)
+check("loose, both labels agree: both-agree count and the note", (cn["labels_both"], cn["labels_one"], lg[0]["label_note"]),
+      (2, 0, "labels: both agree"))
+lg, cn = SC.funnel(flegs(), {"g1": FG}, mixed, {}, loose=False)
+check("strict: the same one-side legs are cut at labels", (cn["labels"], [x["cut"] for x in lg]), (0, ["labels", "labels"]))
+
+print("\nthe leg text and the ranking tie-break")
+r3 = SC.rationale(dict(match="CLE@PHI", kind="game", unit="game", side="no", line=249.5, price=0.86, p=0.93, mu=225.0, edge=0.07,
+                       labels="CLE O+D+ v PHI O+D−", label_mode="one", label_note=SC.LABEL_ONE))
+r4 = SC.rationale(dict(match="CLE@PHI", kind="game", unit="game", side="no", line=249.5, price=0.86, p=0.93, mu=225.0, edge=0.07,
+                       labels="CLE O+D− v PHI O+D−", label_mode="both", label_note=SC.LABEL_BOTH))
+check("a one-side leg says so in its rationale", "labels: one side (early-season rule): CLE O+D+ v PHI O+D−" in r3, True)
+check("a both-agree leg says so, with what held", "labels: both agree: CLE O+D− v PHI O+D− (both defences agree)" in r4, True)
+T4 = lambda g, edge, mode: dict(game=g, edge=edge, price=0.86, ticker=f"{g}", side="no", label_mode=mode)
+order = lambda surv: [x["ticker"] for x in SC.pick_card(surv)[0]]
+check("within half a cent, the both-agree leg ranks first (one 8.5c v both 8.2c)",
+      order([T4("a", .085, "one"), T4("b", .082, "both"), T4("c", .05, "both"), T4("d", .04, "both")])[:2], ["b", "a"])
+check("beyond the bonus, edge decides (one 9.0c v both 8.2c)",
+      order([T4("a", .090, "one"), T4("b", .082, "both"), T4("c", .05, "both"), T4("d", .04, "both")])[:2], ["a", "b"])
+check("legs with no mode (cards before the amendment) rank by edge alone",
+      order([dict(T4("a", .085, None)), dict(T4("b", .082, None)), T4("c", .05, None), T4("d", .04, None)])[:2], ["a", "b"])
+
+print("\nbuild: loose on 2026-10-22, strict when the date is past")
+results.clear()
+LABS_ONE = {gid: dict(home_ft="O-D-", away_ft="O+D+", home_q1="O-D-", away_q1="O+D+", home_h1="O-D-", away_h1="O+D+") for gid in GAMES}
+st7 = SC.empty()
+st7["preseason"] = []
+SC.run(st7, GAMES, NOW, fetch, pri={}, labs_all=LABS_ONE)
+c7 = st7["cards"]["2026-10-22"]
+check("loose: one-side game UNDER legs build the card, marked as the early-season rule",
+      (c7["label_rule"], c7["status"], len(c7["legs"]), {x["label_mode"] for x in c7["legs"]}), ("loose", "open", 4, {"one"}))
+check("the funnel counts show one-side survivors and no both-agree", (c7["counts"]["labels_one"] > 0, c7["counts"]["labels_both"]), (True, 0))
+check("each leg's rationale and the card's funnel line say so",
+      (all("labels: one side (early-season rule)" in x["rationale"] for x in c7["legs"]), "one side)" in c7["rationale"]), (True, True))
+_until = SC.LABEL_RULE_LOOSE_UNTIL
+SC.LABEL_RULE_LOOSE_UNTIL = "2026-10-22"                              # tonight is now on or after the cut-over
+try:
+    st8 = SC.empty()
+    st8["preseason"] = []
+    SC.run(st8, GAMES, NOW, fetch, pri={}, labs_all=LABS_ONE)
+finally:
+    SC.LABEL_RULE_LOOSE_UNTIL = _until
+c8 = st8["cards"]["2026-10-22"]
+check("strict after the date: the same labels cut every leg, no card", (c8["label_rule"], c8["status"], c8["counts"]["labels"]),
+      ("strict", "no_card", 0))
+st9 = SC.empty()
+st9["preseason"] = []
+SC.run(st9, GAMES, NOW, fetch, pri={}, labs_all=LABS)
+c9 = st9["cards"]["2026-10-22"]
+check("both labels agreeing builds the same card in either rule, every leg 'both agree'",
+      (c9["status"], {x["label_mode"] for x in c9["legs"]}, c9["counts"]["labels_one"]), ("open", {"both"}, 0))
+
+print("\nthe record splits both-agree from one-side; old legs count as both")
+def done_leg(mode, status, price=0.86):
+    d = dict(passed=["band", "safety", "value", "labels"], status=status, price=price, p=0.93)
+    if mode:
+        d["label_mode"] = mode
+    return d
+rec_state = {"cards": {"n1": {"legs": [], "candidates": [done_leg("one", "won"), done_leg("one", "lost"), done_leg("both", "won"),
+                                          done_leg(None, "won"), done_leg("one", "open")], "status": "no_card"}}}
+lm = SC.records(rec_state)["label_modes"]
+check("one-side 1 of 2, both-agree 2 of 2 (the unmoded old leg), open legs left out",
+      ((lm["one"]["n"], lm["one"]["won"]), (lm["both"]["n"], lm["both"]["won"])), ((2, 1), (2, 2)))
+page7 = SB.section(st7)
+check("the page shows the split, the leg note and the dated amendment",
+      ("Both labels v one side" in page7, "labels: one side (early-season rule)" in page7, "Amendment 2026-10-24 (label step)" in page7,
+       "2026-11-15" in page7), (True, True, True, True))
+check("the pre-registered text and the module doc carry the amendment; the original step 4 stays",
+      ("AMENDMENT 2026-10-24 (Olu), label step" in SC.__doc__, "own O+ and opponent D+" in SC.__doc__, "LABEL_RULE_LOOSE_UNTIL" in SC.__doc__),
+      (True, True, True))
+check("public copy passes the guard", sandbox_audit.COPY_RE.search(page7 + SC.__doc__) is None, True)
 
 print("\nlane windows: the VPS asks 90-60 minutes before each tip")
 tips = [dt.datetime(2026, 10, 22, 23, 0, tzinfo=UTC)]
