@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-24T18:16:42.715799+00:00",
+ "last_run": "2026-10-24T18:31:41.450807+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -1390,11 +1390,14 @@
      "logged": "2026-10-24T15:01:35.788083+00:00",
      "match": "Borussia Dortmund v Eintracht Frankfurt",
      "opponent": "Borussia Dortmund",
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 10.34,
      "rule": "T6",
+     "settled": "2026-10-24T18:31:41.450807+00:00",
      "side": "no",
      "start": "2026-10-24T16:30Z",
-     "status": "open",
+     "status": "won",
      "team": "Eintracht Frankfurt",
      "team_side": "away",
      "ticker": "KXBUNDESLIGATEAMTOTAL-26OCT24BVBSGE-SGE3",
@@ -1653,11 +1656,14 @@
      "logged": "2026-10-24T15:01:35.788083+00:00",
      "match": "Chelsea v Tottenham Hotspur",
      "opponent": "Tottenham Hotspur",
+     "payout": 1.0,
      "price": 0.43,
+     "profit": 123.64,
      "rule": "T8",
+     "settled": "2026-10-24T18:31:41.450807+00:00",
      "side": "no",
      "start": "2026-10-24T16:30Z",
-     "status": "open",
+     "status": "won",
      "team": "Chelsea",
      "team_side": "home",
      "ticker": "KXEPLTEAMTOTAL-26OCT24CFCTOT-CFC2",
@@ -1668,14 +1674,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-18T19:31:20.075631+00:00",
-   "candidates": 1,
-   "due": 1,
-   "labelled": 1,
-   "matched": 1,
-   "new": 1
-  },
   {
    "at": "2026-10-18T20:01:40.329321+00:00",
    "candidates": 1,
@@ -2074,6 +2072,14 @@
    "due": 4,
    "labelled": 4,
    "matched": 3,
+   "new": 0
+  },
+  {
+   "at": "2026-10-24T18:31:41.450807+00:00",
+   "candidates": 2,
+   "due": 2,
+   "labelled": 2,
+   "matched": 2,
    "new": 0
   }
  ],
