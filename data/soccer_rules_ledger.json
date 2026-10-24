@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-24T16:01:10.926772+00:00",
+ "last_run": "2026-10-24T16:16:09.123787+00:00",
  "rules": {
   "A1": {
    "picks": []
@@ -192,11 +192,14 @@
      "line": 2.5,
      "logged": "2026-10-24T12:31:10.307988+00:00",
      "match": "Arsenal v Everton",
+     "payout": 1.0,
      "price": 0.46,
+     "profit": 109.47,
      "rule": "A6",
+     "settled": "2026-10-24T16:16:09.123787+00:00",
      "side": "no",
      "start": "2026-10-24T14:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXEPLTOTAL-26OCT24ARSEVE-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Arsenal O+D- v Everton O-D- \u00b7 Under 2.5 NO 0.46"
@@ -491,11 +494,14 @@
      "line": 3.5,
      "logged": "2026-10-24T12:31:10.307988+00:00",
      "match": "Dundee United v Aberdeen",
+     "payout": 0.0,
      "price": 0.68,
+     "profit": -100.0,
      "rule": "B4",
+     "settled": "2026-10-24T16:16:09.123787+00:00",
      "side": "no",
      "start": "2026-10-24T14:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXSCOTTISHPREMTOTAL-26OCT24DUUABE-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Dundee United O-D- v Aberdeen O-D- \u00b7 Under 3.5 NO 0.68"
@@ -1950,11 +1956,14 @@
      "line": null,
      "logged": "2026-10-24T12:31:10.307988+00:00",
      "match": "Arsenal v Everton",
+     "payout": 0.0,
      "price": 0.48,
+     "profit": -100.0,
      "rule": "D3",
+     "settled": "2026-10-24T16:16:09.123787+00:00",
      "side": "yes",
      "start": "2026-10-24T14:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXEPLBTTS-26OCT24ARSEVE-BTTS",
      "title": "Both Teams To Score",
      "why": "Arsenal O+D- v Everton O-D- \u00b7 BTTS YES 0.48"
@@ -1973,11 +1982,14 @@
      "line": null,
      "logged": "2026-10-24T12:31:10.307988+00:00",
      "match": "Rangers v St Johnstone",
+     "payout": 0.0,
      "price": 0.45,
+     "profit": -100.0,
      "rule": "D3",
+     "settled": "2026-10-24T16:16:09.123787+00:00",
      "side": "yes",
      "start": "2026-10-24T14:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXSCOTTISHPREMBTTS-26OCT24RFCJOH-BTTS",
      "title": "Both Teams To Score",
      "why": "Rangers O+D- v St Johnstone O-D- \u00b7 BTTS YES 0.45"
@@ -1986,14 +1998,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-21T21:31:27.200992+00:00",
-   "candidates": 1,
-   "due": 1,
-   "labelled": 1,
-   "matched": 1,
-   "new": 1
-  },
   {
    "at": "2026-10-21T22:01:20.622790+00:00",
    "candidates": 1,
@@ -2392,6 +2396,14 @@
    "due": 6,
    "labelled": 6,
    "matched": 1,
+   "new": 0
+  },
+  {
+   "at": "2026-10-24T16:16:09.123787+00:00",
+   "candidates": 0,
+   "due": 3,
+   "labelled": 3,
+   "matched": 0,
    "new": 0
   }
  ],

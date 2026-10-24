@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-24T16:01:13+00:00",
+ "board_built_at": "2026-10-24T16:16:10+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sa_o15_arg": true,
@@ -149,6 +149,112 @@
    "sport": "soccer_o15",
    "status": "hit"
   },
+  "2026-10-24|Arsenal|Everton|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
+   "away": "Everton",
+   "bet": {
+    "kind": "btts"
+   },
+   "date": "2026-10-24",
+   "edge_at_log": null,
+   "first_seen": "2026-10-24",
+   "headline": "Both teams to score",
+   "home": "Arsenal",
+   "id": "2026-10-24|Arsenal|Everton|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score",
+   "kickoff": "2026-10-24T14:00Z",
+   "lane": "production",
+   "league": "Premier League",
+   "match": "Arsenal v Everton",
+   "pair": "sr_d3|soccer_btts",
+   "price_at_log": 0.48,
+   "published_at": "2026-10-24T16:16:10+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Both teams to score",
+    "event": "KXEPLBTTS-26OCT24ARSEVE",
+    "market": "KXEPLBTTS-26OCT24ARSEVE-BTTS",
+    "outcome": "Both Teams To Score",
+    "outcome_side": "yes",
+    "price_at_log": 0.48,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_d3:KXEPLBTTS-26OCT24ARSEVE-BTTS",
+   "source": "sr_d3",
+   "sport": "soccer_btts",
+   "status": "miss"
+  },
+  "2026-10-24|Arsenal|Everton|Under 2.5 goals \u00b7 EPL O\u2212D\u2212 v an O+ opponent \u00b7 under 2.5": {
+   "away": "Everton",
+   "bet": {
+    "kind": "total_lte",
+    "n": 2
+   },
+   "date": "2026-10-24",
+   "edge_at_log": null,
+   "first_seen": "2026-10-24",
+   "headline": "Under 2.5 goals",
+   "home": "Arsenal",
+   "id": "2026-10-24|Arsenal|Everton|Under 2.5 goals \u00b7 EPL O\u2212D\u2212 v an O+ opponent \u00b7 under 2.5",
+   "kickoff": "2026-10-24T14:00Z",
+   "lane": "production",
+   "league": "Premier League",
+   "match": "Arsenal v Everton",
+   "pair": "sr_a6|soccer_o25",
+   "price_at_log": 0.46,
+   "published_at": "2026-10-24T16:16:10+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Under 2.5 goals",
+    "event": "KXEPLTOTAL-26OCT24ARSEVE",
+    "market": "KXEPLTOTAL-26OCT24ARSEVE-3",
+    "outcome": "Over 2.5 goals scored",
+    "outcome_side": "no",
+    "price_at_log": 0.46,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_a6:KXEPLTOTAL-26OCT24ARSEVE-3",
+   "source": "sr_a6",
+   "sport": "soccer_o25",
+   "status": "hit"
+  },
+  "2026-10-24|Banfield|Lan\u00fas|Over 1.5 goals \u00b7 Argentina over 1.5": {
+   "away": "Lan\u00fas",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-10-24",
+   "edge_at_log": null,
+   "first_seen": "2026-10-24",
+   "headline": "Over 1.5 goals",
+   "home": "Banfield",
+   "id": "2026-10-24|Banfield|Lan\u00fas|Over 1.5 goals \u00b7 Argentina over 1.5",
+   "kickoff": "2026-10-24T17:45Z",
+   "lane": "production",
+   "last_seen": "2026-10-24",
+   "last_seen_at": "2026-10-24T16:16:10+00:00",
+   "league": "Liga Profesional",
+   "match": "Banfield v Lan\u00fas",
+   "pair": "sa_o15_arg|soccer_o15",
+   "price_at_log": 0.68,
+   "published_at": "2026-10-24T16:16:10+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Over 1.5 goals",
+    "event": "KXARGPREMDIVTOTAL-26OCT24BANLAN",
+    "market": "KXARGPREMDIVTOTAL-26OCT24BANLAN-2",
+    "outcome": "Over 1.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.68,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT24BANLAN-2",
+   "source": "sa_o15_arg",
+   "sport": "soccer_o15",
+   "status": "pending"
+  },
   "2026-10-24|Chelsea|Tottenham Hotspur|Under 2.5 goals \u00b7 EPL O\u2212D\u2212 v an O+ opponent \u00b7 under 2.5": {
    "away": "Tottenham Hotspur",
    "bet": {
@@ -164,7 +270,7 @@
    "kickoff": "2026-10-24T16:30Z",
    "lane": "production",
    "last_seen": "2026-10-24",
-   "last_seen_at": "2026-10-24T16:01:13+00:00",
+   "last_seen_at": "2026-10-24T16:16:10+00:00",
    "league": "Premier League",
    "match": "Chelsea v Tottenham Hotspur",
    "pair": "sr_a6|soccer_o25",
@@ -220,6 +326,40 @@
    "sport": "soccer_btts",
    "status": "hit"
   },
+  "2026-10-24|Rangers|St Johnstone|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
+   "away": "St Johnstone",
+   "bet": {
+    "kind": "btts"
+   },
+   "date": "2026-10-24",
+   "edge_at_log": null,
+   "first_seen": "2026-10-24",
+   "headline": "Both teams to score",
+   "home": "Rangers",
+   "id": "2026-10-24|Rangers|St Johnstone|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score",
+   "kickoff": "2026-10-24T14:00Z",
+   "lane": "production",
+   "league": "Scottish Premiership",
+   "match": "Rangers v St Johnstone",
+   "pair": "sr_d3|soccer_btts",
+   "price_at_log": 0.45,
+   "published_at": "2026-10-24T16:16:10+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Both teams to score",
+    "event": "KXSCOTTISHPREMBTTS-26OCT24RFCJOH",
+    "market": "KXSCOTTISHPREMBTTS-26OCT24RFCJOH-BTTS",
+    "outcome": "Both Teams To Score",
+    "outcome_side": "yes",
+    "price_at_log": 0.45,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_d3:KXSCOTTISHPREMBTTS-26OCT24RFCJOH-BTTS",
+   "source": "sr_d3",
+   "sport": "soccer_btts",
+   "status": "miss"
+  },
   "2026-10-24|Tigre|Atl\u00e9tico Tucum\u00e1n|Over 1.5 goals \u00b7 Argentina over 1.5": {
    "away": "Atl\u00e9tico Tucum\u00e1n",
    "bet": {
@@ -264,9 +404,9 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 3,
+    "leads": 4,
     "problem": null,
-    "routed": 3,
+    "routed": 4,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -278,7 +418,7 @@
    "sandbox_roi_fee": -0.0892,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 2,
     "under_target": 0
    }
   },
@@ -289,18 +429,18 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 1,
+    "leads": 2,
     "problem": null,
-    "routed": 1,
+    "routed": 2,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 0,
-   "sandbox_roi": null,
-   "sandbox_roi_fee": null,
+   "sandbox_n": 1,
+   "sandbox_roi": 1.0947,
+   "sandbox_roi_fee": 1.0947,
    "timing": {
     "late": [],
     "timed": 1,
@@ -339,18 +479,18 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 3,
+    "leads": 5,
     "problem": null,
-    "routed": 3,
+    "routed": 5,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 3,
-   "sandbox_roi": 0.1033,
-   "sandbox_roi_fee": 0.1033,
+   "sandbox_n": 5,
+   "sandbox_roi": -0.338,
+   "sandbox_roi_fee": -0.338,
    "timing": {
     "late": [],
     "timed": 0,
@@ -362,5 +502,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-24T16:01:13+00:00"
+ "updated_at": "2026-10-24T16:16:10+00:00"
 }
