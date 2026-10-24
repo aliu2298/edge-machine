@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-24T19:01:38.451797+00:00",
+ "last_run": "2026-10-24T20:01:26.282364+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -139,11 +139,14 @@
      "line": 1.5,
      "logged": "2026-10-24T16:16:10.957561+00:00",
      "match": "Banfield v Lan\u00fas",
+     "payout": 1.0,
      "price": 0.68,
+     "profit": 43.84,
      "rule": "ARG",
+     "settled": "2026-10-24T20:01:26.282364+00:00",
      "side": "yes",
      "start": "2026-10-24T17:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXARGPREMDIVTOTAL-26OCT24BANLAN-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Argentina over 1.5 YES 0.68"
@@ -265,18 +268,47 @@
      "ticker": "KXBRASILEIROTOTAL-26OCT24VITCAP-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Brasileir\u00e3o over 1.5 YES 0.75"
+    },
+    {
+     "ask": 0.79,
+     "bid": 0.78,
+     "event": "KXBRASILEIROTOTAL-26OCT24PALRBB",
+     "id": "BRA:KXBRASILEIROTOTAL-26OCT24PALRBB",
+     "league": "Brasileir\u00e3o",
+     "line": 1.5,
+     "logged": "2026-10-24T20:01:26.282364+00:00",
+     "match": "Palmeiras v Red Bull Bragantino",
+     "price": 0.79,
+     "rule": "BRA",
+     "side": "yes",
+     "start": "2026-10-24T21:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROTOTAL-26OCT24PALRBB-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Brasileir\u00e3o over 1.5 YES 0.79"
+    },
+    {
+     "ask": 0.75,
+     "bid": 0.73,
+     "event": "KXBRASILEIROTOTAL-26OCT24VDGCOR",
+     "id": "BRA:KXBRASILEIROTOTAL-26OCT24VDGCOR",
+     "league": "Brasileir\u00e3o",
+     "line": 1.5,
+     "logged": "2026-10-24T20:01:26.282364+00:00",
+     "match": "Vasco da Gama v Corinthians",
+     "price": 0.75,
+     "rule": "BRA",
+     "side": "yes",
+     "start": "2026-10-24T21:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROTOTAL-26OCT24VDGCOR-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Brasileir\u00e3o over 1.5 YES 0.75"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-23T12:01:44.670927+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "quoted": 0
-  },
   {
    "at": "2026-10-23T12:31:26.868607+00:00",
    "due": 0,
@@ -626,11 +658,16 @@
    "matched": 4,
    "new": 0,
    "quoted": 4
+  },
+  {
+   "at": "2026-10-24T20:01:26.282364+00:00",
+   "due": 2,
+   "matched": 2,
+   "new": 2,
+   "quoted": 2
   }
  ],
  "schedule": [
-  "2026-10-24T19:30:00+00:00",
-  "2026-10-24T20:00:00+00:00",
   "2026-10-24T21:30:00+00:00",
   "2026-10-24T22:15:00+00:00",
   "2026-10-24T22:30:00+00:00",
