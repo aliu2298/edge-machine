@@ -11,6 +11,7 @@ import os
 import fmt
 import nba_ladder_track as T
 import nba_value as V
+import nba_value_production as NP
 
 
 def esc(x):
@@ -69,7 +70,9 @@ def lanes_html(state):
         read = ("read at 30 nights" if control else "verdict at 30" if n >= 30 else "review at 10+" if n >= 10 else "too early to read")
         if control:
             broi, read = "control (no baseline)", f"{read} · {nights}"
-        rows.append(f'<tr data-source="{esc(lane)}"><td><b>{esc(V.NAMES[lane])}</b><br><span class="sm mut">{esc(lane)}</span></td>'
+        prod = (' <span class="badge stage production">Production</span>'
+                if lane in NP.PAIRS else "")
+        rows.append(f'<tr data-source="{esc(lane)}"><td><b>{esc(V.NAMES[lane])}</b>{prod}<br><span class="sm mut">{esc(lane)}</span></td>'
                     f'<td class="num">{n}</td><td class="num">{a["won"]}</td><td class="num">{a["expected"]:.1f}</td>'
                     f'<td class="num">{a["z"]:+.2f}</td><td class="num">{roi}</td><td class="num">{a["open"]}</td>'
                     f'<td class="num">{broi if control else f"{b['n'] + b['n_price']} · {broi}"}</td><td>{esc(read)}</td></tr>')
@@ -90,7 +93,7 @@ def lanes_html(state):
     defs = "".join(f'<p class="sm"><b>{esc(V.NAMES[k])}</b>: {esc(V.DEFINITION[k])}</p>' for k in (V.TT_1H, V.Q1_1H, V.FADE_1H))
     last = state.get("last_run")
     return f"""<section id="value">
-<div class="nba-section-head"><div><h2>Value lanes</h2><p class="shell-kicker">Model probability v the Kalshi price · team totals and 1st-quarter totals · paper at the ask, 7% fee · not in Production</p></div></div>
+<div class="nba-section-head"><div><h2>Value lanes</h2><p class="shell-kicker">Model probability v the Kalshi price · team totals and 1st-quarter totals · paper at the ask, 7% fee · the two team-total lanes are in Production since {esc(NP.MOVED_ON)}, the rest are not</p></div></div>
 <div class="tbl"><table><thead><tr><th>Lane</th><th class="num">Settled</th><th class="num">Won</th><th class="num">Priced</th><th class="num">z (by night)</th><th class="num">ROI after fee</th><th class="num">Open</th><th class="num">Blind baseline</th><th>Read</th></tr></thead>
 <tbody>{"".join(rows)}</tbody></table></div>
 <p class="sm">{esc(compare_html(state))}</p>

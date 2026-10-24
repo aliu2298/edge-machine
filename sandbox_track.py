@@ -3326,6 +3326,10 @@ ROUTED_SPORTS = ("tennis", "mlb", "nfl", "mma", "boxing", "cricket")
 # by culture_production.py): YES that he says the word before the close, or its NO. The lead names
 # the exact contract; its close is a deadline the venue can bring forward (it closes on the word).
 MENTION_SPORTS = ("culture_mentions",)
+# A Kalshi NBA team-total rung (2026-10-24, with nba_tt_value_24h / nba_tt_value_1h, published by
+# nba_value_production.py): YES that the team scores over the line, or its NO. The lead names the
+# exact contract (KXNBATEAMTOTAL-26OCT22CLEPHI-PHI115) and its line; the game's tip is the kickoff.
+NBA_TT_SPORTS = ("nba_tt",)
 # start_source values that mean a real start time, not the venue's estimate.
 # kalshi_milestone is cricket and MMA only, each after its own checker agrees.
 VERIFIED_STARTS = ("tennisexplorer", "espn", "mlb", "kalshi_milestone")
@@ -3483,6 +3487,11 @@ def placeable(q):
             and q.get("price") and 0 < float(q["price"]) < 1
             and all(l.get("venue") == "kalshi" and l.get("market_id") and l.get("pick") in ("a", "b")
                     and l.get("name") for l in legs))
+    if q.get("sport") in NBA_TT_SPORTS:
+        return (q.get("pick") in ("a", "b") and q.get("venue") == "kalshi_binary"
+                and str(q.get("market_id") or "").startswith("KXNBATEAMTOTAL-")
+                and bool(q.get("kalshi_title")) and q.get("line") is not None
+                and q.get("price") is not None and 0 < float(q["price"]) < 1)
     if q.get("sport") in MENTION_SPORTS:
         return (q.get("pick") in ("a", "b") and q.get("venue") == "kalshi_binary"
                 and str(q.get("market_id") or "").startswith("KXTRUMPSAY")

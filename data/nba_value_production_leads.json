@@ -1,0 +1,203 @@
+{
+ "board_built_at": "2026-10-24T21:30:25+00:00",
+ "collector_error": null,
+ "collector_healthy": true,
+ "corners_selections": {},
+ "first_publish_min": 45,
+ "late_publication_skipped": 2,
+ "leads": {
+  "2026-10-24|KXNBATEAMTOTAL-26OCT24BKNCLE-BKN110|Brooklyn under 109.5 points \u00b7 NBA team total value \u00b7 24h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt_no",
+    "n": 109.5,
+    "team": "Brooklyn"
+   },
+   "date": "2026-10-24",
+   "edge_at_log": 0.1789,
+   "first_seen": "2026-10-24",
+   "headline": "Brooklyn under 109.5 points",
+   "home": null,
+   "id": "2026-10-24|KXNBATEAMTOTAL-26OCT24BKNCLE-BKN110|Brooklyn under 109.5 points \u00b7 NBA team total value \u00b7 24h before tip",
+   "kickoff": "2026-10-24T23:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-24",
+   "last_seen_at": "2026-10-24T21:30:25+00:00",
+   "league": "NBA",
+   "match": "BKN @ CLE",
+   "model_prob": 0.6563,
+   "pair": "nba_tt_value_24h|nba_tt",
+   "price_at_log": 0.46,
+   "published_at": "2026-10-24T21:30:25+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 119,
+   "route": {
+    "claim": "Brooklyn under 109.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT24BKNCLE",
+    "market": "KXNBATEAMTOTAL-26OCT24BKNCLE-BKN110",
+    "outcome": "Brooklyn over 109.5 points",
+    "outcome_side": "no",
+    "price_at_log": 0.46,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_24h:401909854:BKN",
+   "source": "nba_tt_value_24h",
+   "sport": "nba_tt",
+   "status": "pending"
+  },
+  "2026-10-24|KXNBATEAMTOTAL-26OCT24BKNCLE-CLE120|Cleveland under 119.5 points \u00b7 NBA team total value \u00b7 24h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt_no",
+    "n": 119.5,
+    "team": "Cleveland"
+   },
+   "date": "2026-10-24",
+   "edge_at_log": 0.1286,
+   "first_seen": "2026-10-24",
+   "headline": "Cleveland under 119.5 points",
+   "home": null,
+   "id": "2026-10-24|KXNBATEAMTOTAL-26OCT24BKNCLE-CLE120|Cleveland under 119.5 points \u00b7 NBA team total value \u00b7 24h before tip",
+   "kickoff": "2026-10-24T23:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-24",
+   "last_seen_at": "2026-10-24T21:30:25+00:00",
+   "league": "NBA",
+   "match": "BKN @ CLE",
+   "model_prob": 0.5657,
+   "pair": "nba_tt_value_24h|nba_tt",
+   "price_at_log": 0.42,
+   "published_at": "2026-10-24T21:30:25+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 119,
+   "route": {
+    "claim": "Cleveland under 119.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT24BKNCLE",
+    "market": "KXNBATEAMTOTAL-26OCT24BKNCLE-CLE120",
+    "outcome": "Cleveland over 119.5 points",
+    "outcome_side": "no",
+    "price_at_log": 0.42,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_24h:401909854:CLE",
+   "source": "nba_tt_value_24h",
+   "sport": "nba_tt",
+   "status": "pending"
+  },
+  "2026-10-25|KXNBATEAMTOTAL-26OCT24WASCHI-WAS121|Washington under 120.5 points \u00b7 NBA team total value \u00b7 24h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt_no",
+    "n": 120.5,
+    "team": "Washington"
+   },
+   "date": "2026-10-25",
+   "edge_at_log": 0.0746,
+   "first_seen": "2026-10-24",
+   "headline": "Washington under 120.5 points",
+   "home": null,
+   "id": "2026-10-25|KXNBATEAMTOTAL-26OCT24WASCHI-WAS121|Washington under 120.5 points \u00b7 NBA team total value \u00b7 24h before tip",
+   "kickoff": "2026-10-25T00:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-24",
+   "last_seen_at": "2026-10-24T21:30:25+00:00",
+   "league": "NBA",
+   "match": "WSH @ CHI",
+   "model_prob": 0.552,
+   "pair": "nba_tt_value_24h|nba_tt",
+   "price_at_log": 0.46,
+   "published_at": "2026-10-24T21:30:25+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 149,
+   "route": {
+    "claim": "Washington under 120.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT24WASCHI",
+    "market": "KXNBATEAMTOTAL-26OCT24WASCHI-WAS121",
+    "outcome": "Washington over 120.5 points",
+    "outcome_side": "no",
+    "price_at_log": 0.46,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_24h:401909857:WSH",
+   "source": "nba_tt_value_24h",
+   "sport": "nba_tt",
+   "status": "pending"
+  }
+ },
+ "pairs": {
+  "nba_tt_value_1h|nba_tt": {
+   "by_hand": "2026-10-24",
+   "entered_at": "2026-10-24T22:13:00+00:00",
+   "promoted_at": "2026-10-24T22:13:00+00:00",
+   "ready_at": "2026-10-24T22:13:00+00:00",
+   "route": "moved by hand on 2026-10-24",
+   "routing": {
+    "leads": 0,
+    "problem": null,
+    "routed": 0,
+    "unlisted": 0,
+    "unrouted": 0,
+    "unverified": 0,
+    "why": []
+   },
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null,
+   "timing": {
+    "late": [],
+    "timed": 0,
+    "under_target": 0
+   }
+  },
+  "nba_tt_value_24h|nba_tt": {
+   "by_hand": "2026-10-24",
+   "entered_at": "2026-10-24T22:13:00+00:00",
+   "promoted_at": "2026-10-24T22:13:00+00:00",
+   "ready_at": "2026-10-24T22:13:00+00:00",
+   "route": "moved by hand on 2026-10-24",
+   "routing": {
+    "leads": 3,
+    "problem": null,
+    "routed": 3,
+    "unlisted": 0,
+    "unrouted": 0,
+    "unverified": 0,
+    "why": []
+   },
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null,
+   "timing": {
+    "late": [],
+    "timed": 3,
+    "under_target": 0
+   }
+  }
+ },
+ "publication_withheld": {
+  "2026-10-24|KXNBATEAMTOTAL-26OCT24MIACHA-CHA114|Charlotte over 113.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "headline": "Charlotte over 113.5 points",
+   "id": "2026-10-24|KXNBATEAMTOTAL-26OCT24MIACHA-CHA114|Charlotte over 113.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-24T22:00Z",
+   "match": "MIA @ CHA",
+   "pair": "nba_tt_value_1h|nba_tt",
+   "reason": "less than 45 minutes left at first publication",
+   "withheld_at": "2026-10-24T21:30:25+00:00"
+  },
+  "2026-10-24|KXNBATEAMTOTAL-26OCT24MIACHA-MIA113|Miami under 112.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "headline": "Miami under 112.5 points",
+   "id": "2026-10-24|KXNBATEAMTOTAL-26OCT24MIACHA-MIA113|Miami under 112.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-24T22:00Z",
+   "match": "MIA @ CHA",
+   "pair": "nba_tt_value_1h|nba_tt",
+   "reason": "less than 45 minutes left at first publication",
+   "withheld_at": "2026-10-24T21:30:25+00:00"
+  }
+ },
+ "stage": "production",
+ "unlisted_skipped": 0,
+ "unverified_kickoff_skipped": 0,
+ "updated_at": "2026-10-24T21:30:25+00:00"
+}
