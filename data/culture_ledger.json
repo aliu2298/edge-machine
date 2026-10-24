@@ -2,15 +2,16 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-24T14:00:13.969764+00:00",
-   "last_success": "2026-10-24T14:00:13.969764+00:00",
+   "last_run": "2026-10-24T14:54:35.381516+00:00",
+   "last_success": "2026-10-24T14:54:35.381516+00:00",
    "observations": {
-    "at": "2026-10-24T14:00:13.969764+00:00",
+    "at": "2026-10-24T14:54:35.381516+00:00",
     "events": 959,
     "reasons": {
-     "no quote or spread too wide": 168,
+     "in band": 1,
+     "no quote or spread too wide": 170,
      "not active": 721,
-     "outside the band": 41,
+     "outside the band": 38,
      "outside the entry window": 11798
     }
    },
@@ -470,22 +471,39 @@
      "side": "no",
      "status": "open",
      "title": "Casa Tupka Anthemo"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-25T14:00:00Z",
+     "detail": "YES 0.97 \u00b7 endgame",
+     "event": "KXALBUMEQUIV-DOP26OCT22",
+     "id": "KXALBUMEQUIV-DOP26OCT22-23K",
+     "logged": "2026-10-24T14:54:35.381516+00:00",
+     "name": "Dopamine Chamber: First Week Album Equivalent Units",
+     "price": 0.97,
+     "series": "KXALBUMEQUIV",
+     "side": "yes",
+     "status": "open",
+     "strike": 23000,
+     "strike_type": "greater",
+     "title": "Above 23K"
     }
    ]
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-24T14:00:13.969764+00:00",
-   "last_success": "2026-10-24T14:00:13.969764+00:00",
+   "last_run": "2026-10-24T14:54:35.381516+00:00",
+   "last_success": "2026-10-24T14:54:35.381516+00:00",
    "observations": {
-    "at": "2026-10-24T14:00:13.969764+00:00",
+    "at": "2026-10-24T14:54:35.381516+00:00",
     "events": 959,
     "reasons": {
      "held by mentions_rate": 1,
-     "in band": 2,
-     "no quote or spread too wide": 311,
+     "held by rt_model": 1,
+     "in band": 4,
+     "no quote or spread too wide": 312,
      "not active": 721,
-     "outside the band": 135,
+     "outside the band": 132,
      "outside the entry window": 11559
     }
    },
@@ -808,21 +826,37 @@
      "strike": 9000,
      "strike_type": "greater",
      "title": "Above 9K"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-10-26T14:00:00Z",
+     "detail": "YES 0.73 \u00b7 favourite band",
+     "event": "KXRT-CLA",
+     "id": "KXRT-CLA-75",
+     "logged": "2026-10-24T14:54:35.381516+00:00",
+     "name": "Clayface \u00b7 Rotten Tomatoes score",
+     "price": 0.73,
+     "series": "KXRT",
+     "side": "yes",
+     "status": "open",
+     "strike": 75,
+     "strike_type": "greater",
+     "title": "Above 75"
     }
    ]
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-24T14:00:13.969764+00:00",
-   "last_success": "2026-10-24T14:00:13.969764+00:00",
+   "last_run": "2026-10-24T14:54:35.381516+00:00",
+   "last_success": "2026-10-24T14:54:35.381516+00:00",
    "observations": {
-    "at": "2026-10-24T14:00:13.969764+00:00",
+    "at": "2026-10-24T14:54:35.381516+00:00",
     "events": 959,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 21,
+     "already near-certain (under 10c or over 90c)": 20,
      "edge 5c+": 11,
      "edge under 5c": 1,
-     "no quote or spread too wide": 35
+     "no quote or spread too wide": 36
     }
    },
    "picks": [
@@ -1781,13 +1815,14 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-24T14:00:13.969764+00:00",
-   "last_success": "2026-10-24T14:00:13.969764+00:00",
+   "last_run": "2026-10-24T14:54:35.381516+00:00",
+   "last_success": "2026-10-24T14:54:35.381516+00:00",
    "observations": {
-    "at": "2026-10-24T14:00:13.969764+00:00",
+    "at": "2026-10-24T14:54:35.381516+00:00",
     "events": 959,
     "reasons": {
-     "edge 5c+": 8,
+     "edge 5c+": 6,
+     "edge under 5c": 2,
      "under 20 reviews counted": 15
     }
    },
@@ -2188,7 +2223,7 @@
    ]
   },
   "Epstein": {
-   "at": "2026-10-24T08:00:16.941187+00:00",
+   "at": "2026-10-24T14:54:35.381516+00:00",
    "days": []
   },
   "Ethanol": {
@@ -2235,7 +2270,7 @@
    ]
   },
   "Houthi": {
-   "at": "2026-10-24T08:00:16.941187+00:00",
+   "at": "2026-10-24T14:54:35.381516+00:00",
    "days": []
   },
   "JPMorgan / JPM": {
@@ -2293,7 +2328,7 @@
    "days": []
   },
   "Peace in the Middle East": {
-   "at": "2026-10-24T08:00:16.941187+00:00",
+   "at": "2026-10-24T14:54:35.381516+00:00",
    "days": []
   },
   "Pelosi": {
@@ -2345,7 +2380,7 @@
    "days": []
   },
   "Stupid Question": {
-   "at": "2026-10-24T08:00:16.941187+00:00",
+   "at": "2026-10-24T14:54:35.381516+00:00",
    "days": [
     "2026-08-31",
     "2026-09-09",
@@ -2358,7 +2393,7 @@
    "days": []
   },
   "TDS / Trump Derangement Syndrome": {
-   "at": "2026-10-24T08:00:16.941187+00:00",
+   "at": "2026-10-24T14:54:35.381516+00:00",
    "days": [
     "2026-08-05",
     "2026-09-26",
@@ -2376,7 +2411,7 @@
    ]
   },
   "Tomahawk": {
-   "at": "2026-10-24T08:00:16.941187+00:00",
+   "at": "2026-10-24T14:54:35.381516+00:00",
    "days": []
   },
   "Turning Point": {
@@ -2416,7 +2451,7 @@
    "days": []
   },
   "Zohran / Mamdani": {
-   "at": "2026-10-24T08:00:16.941187+00:00",
+   "at": "2026-10-24T14:54:35.381516+00:00",
    "days": [
     "2026-08-14"
    ]
