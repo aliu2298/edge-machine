@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-24T06:28:27.269748+00:00",
-   "last_success": "2026-10-24T06:28:27.269748+00:00",
+   "last_run": "2026-10-24T07:00:14.277448+00:00",
+   "last_success": "2026-10-24T07:00:14.277448+00:00",
    "observations": {
-    "at": "2026-10-24T06:28:27.269748+00:00",
+    "at": "2026-10-24T07:00:14.277448+00:00",
     "events": 959,
     "reasons": {
      "no quote or spread too wide": 61,
@@ -474,15 +474,15 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-24T06:28:27.269748+00:00",
-   "last_success": "2026-10-24T06:28:27.269748+00:00",
+   "last_run": "2026-10-24T07:00:14.277448+00:00",
+   "last_success": "2026-10-24T07:00:14.277448+00:00",
    "observations": {
-    "at": "2026-10-24T06:28:27.269748+00:00",
+    "at": "2026-10-24T07:00:14.277448+00:00",
     "events": 959,
     "reasons": {
-     "no quote or spread too wide": 289,
+     "no quote or spread too wide": 287,
      "not active": 718,
-     "outside the band": 80,
+     "outside the band": 82,
      "outside the entry window": 11648
     }
    },
@@ -810,16 +810,16 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-24T06:28:27.269748+00:00",
-   "last_success": "2026-10-24T06:28:27.269748+00:00",
+   "last_run": "2026-10-24T07:00:14.277448+00:00",
+   "last_success": "2026-10-24T07:00:14.277448+00:00",
    "observations": {
-    "at": "2026-10-24T06:28:27.269748+00:00",
+    "at": "2026-10-24T07:00:14.277448+00:00",
     "events": 959,
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 21,
+     "already near-certain (under 10c or over 90c)": 22,
      "edge 5c+": 16,
      "edge under 5c": 3,
-     "no quote or spread too wide": 28
+     "no quote or spread too wide": 27
     }
    },
    "picks": [
@@ -1778,14 +1778,13 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-24T06:28:27.269748+00:00",
-   "last_success": "2026-10-24T06:28:27.269748+00:00",
+   "last_run": "2026-10-24T07:00:14.277448+00:00",
+   "last_success": "2026-10-24T07:00:14.277448+00:00",
    "observations": {
-    "at": "2026-10-24T06:28:27.269748+00:00",
+    "at": "2026-10-24T07:00:14.277448+00:00",
     "events": 959,
     "reasons": {
-     "collecting review pace (12h of snapshots)": 1,
-     "edge 5c+": 6,
+     "edge 5c+": 7,
      "edge under 5c": 1,
      "under 20 reviews counted": 15
     }
@@ -1991,6 +1990,25 @@
      "strike": 70,
      "strike_type": "greater",
      "title": "Above 70"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-11-02T15:00:00Z",
+     "detail": "67/69 liked (97), ~55 more reviews \u00b7 P(above 92) 0.95 \u00b7 edge +0.11",
+     "edge": 0.1101,
+     "event": "KXRT-ONL",
+     "id": "KXRT-ONL-92",
+     "logged": "2026-10-24T07:00:14.277448+00:00",
+     "model": 0.95,
+     "name": "The Only Living Pickpocket in New York \u00b7 Rotten Tomatoes score",
+     "price": 0.83,
+     "rt_url": "https://www.rottentomatoes.com/m/the_only_living_pickpocket_in_new_york",
+     "series": "KXRT",
+     "side": "yes",
+     "status": "open",
+     "strike": 92,
+     "strike_type": "greater",
+     "title": "Above 92"
     }
    ]
   }
