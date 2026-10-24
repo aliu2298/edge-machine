@@ -122,7 +122,7 @@
   }
  },
  "error": null,
- "last_run": "2026-10-24T03:30:25.747544+00:00",
+ "last_run": "2026-10-24T04:00:22.653776+00:00",
  "looks": {
   "nba_1q_value_1h:401909093": {
    "at": "2026-10-22T21:30:27.005288+00:00",
@@ -433,6 +433,66 @@
     "SAC": 107.19887673210476
    },
    "mu_q1": 59.45921173401827,
+   "picks": []
+  },
+  "nba_1q_value_24h:401909854": {
+   "at": "2026-10-24T04:00:22.653776+00:00",
+   "baseline": 0,
+   "blocked": "model level mismatch: model +5.9 pts v Kalshi's median line",
+   "event": "KXNBA1QTOTAL-26OCT24BKNCLE",
+   "mu": {
+    "BKN": 104.74011118042922,
+    "CLE": 117.54363963571379
+   },
+   "mu_q1": 56.23001313741308,
+   "picks": []
+  },
+  "nba_1q_value_24h:401909855": {
+   "at": "2026-10-24T04:00:22.653776+00:00",
+   "baseline": 0,
+   "blocked": "model level mismatch: model +5.9 pts v Kalshi's median line",
+   "event": "KXNBA1QTOTAL-26OCT24MILPHI",
+   "mu": {
+    "MIL": 109.58870693765749,
+    "PHI": 118.5475508400965
+   },
+   "mu_q1": 56.22042645781812,
+   "picks": []
+  },
+  "nba_1q_value_24h:401909856": {
+   "at": "2026-10-24T04:00:22.653776+00:00",
+   "baseline": 0,
+   "blocked": "model level mismatch: model +5.9 pts v Kalshi's median line",
+   "event": "KXNBA1QTOTAL-26OCT24HOUATL",
+   "mu": {
+    "ATL": 115.41205052245799,
+    "HOU": 113.09327653871817
+   },
+   "mu_q1": 57.16912223663999,
+   "picks": []
+  },
+  "nba_1q_value_24h:401909857": {
+   "at": "2026-10-24T04:00:22.653776+00:00",
+   "baseline": 0,
+   "blocked": "model level mismatch: model +5.9 pts v Kalshi's median line",
+   "event": "KXNBA1QTOTAL-26OCT24WASCHI",
+   "mu": {
+    "CHI": 122.09738498643796,
+    "WSH": 118.95390205960871
+   },
+   "mu_q1": 57.917987433427875,
+   "picks": []
+  },
+  "nba_1q_value_24h:401909858": {
+   "at": "2026-10-24T04:00:22.653776+00:00",
+   "baseline": 0,
+   "blocked": "model level mismatch: model +5.9 pts v Kalshi's median line",
+   "event": "KXNBA1QTOTAL-26OCT24SASDAL",
+   "mu": {
+    "DAL": 111.631572140638,
+    "SA": 119.2754732083234
+   },
+   "mu_q1": 60.13430491858729,
    "picks": []
   },
   "nba_1q_value_24h:401909859": {
@@ -10051,14 +10111,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-22T21:00:27.119382+00:00",
-   "baseline": 65,
-   "due": 11,
-   "entered": 7,
-   "looked": 6,
-   "new": 7
-  },
-  {
    "at": "2026-10-22T21:30:27.005288+00:00",
    "baseline": 32,
    "due": 7,
@@ -10463,6 +10515,15 @@
    "entered": 0,
    "looked": 5,
    "new": 0
+  },
+  {
+   "at": "2026-10-24T04:00:22.653776+00:00",
+   "baseline": 0,
+   "blocked": 5,
+   "due": 5,
+   "entered": 0,
+   "looked": 5,
+   "new": 0
   }
  ],
  "schedule": [
@@ -10476,7 +10537,13 @@
   "2026-10-25T22:00:00+00:00",
   "2026-10-25T23:00:00+00:00",
   "2026-10-25T23:30:00+00:00",
-  "2026-10-26T01:00:00+00:00"
+  "2026-10-26T01:00:00+00:00",
+  "2026-10-26T23:00:00+00:00",
+  "2026-10-26T23:30:00+00:00",
+  "2026-10-27T00:00:00+00:00",
+  "2026-10-27T00:30:00+00:00",
+  "2026-10-27T01:00:00+00:00",
+  "2026-10-27T02:00:00+00:00"
  ],
  "version": "nba-value-v1"
 }
