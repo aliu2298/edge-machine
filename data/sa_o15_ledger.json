@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-24T23:01:13.639877+00:00",
+ "last_run": "2026-10-24T23:31:37.364085+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -344,11 +344,14 @@
      "line": 1.5,
      "logged": "2026-10-24T20:01:26.282364+00:00",
      "match": "Vasco da Gama v Corinthians",
+     "payout": 1.0,
      "price": 0.75,
+     "profit": 31.04,
      "rule": "BRA",
+     "settled": "2026-10-24T23:31:37.364085+00:00",
      "side": "yes",
      "start": "2026-10-24T21:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXBRASILEIROTOTAL-26OCT24VDGCOR-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Brasileir\u00e3o over 1.5 YES 0.75"
@@ -393,13 +396,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-23T18:16:13.531263+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "quoted": 0
-  },
   {
    "at": "2026-10-23T19:31:12.856958+00:00",
    "due": 1,
@@ -748,6 +744,13 @@
    "due": 2,
    "matched": 2,
    "new": 1,
+   "quoted": 2
+  },
+  {
+   "at": "2026-10-24T23:31:37.364085+00:00",
+   "due": 2,
+   "matched": 2,
+   "new": 0,
    "quoted": 2
   }
  ],
