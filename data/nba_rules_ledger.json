@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-23T23:00:15.691400+00:00",
+ "last_run": "2026-10-24T00:00:15.278380+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -747,6 +747,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT23DALIND-DAL114",
      "title": "Dallas over 113.5 points",
      "why": "DAL O-D+ v IND O+D+ \u00b7 115+ NO 0.40"
+    },
+    {
+     "game": "401909096",
+     "id": "R3:KXNBATEAMTOTAL-26OCT23HOUSAS-SAS115",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O+D-",
+      "home": "O-D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-24T00:00:15.278380+00:00",
+     "match": "HOU @ SA",
+     "price": 0.48,
+     "rule": "R3",
+     "side": "no",
+     "start": "2026-10-24T01:30Z",
+     "status": "open",
+     "strike": 114.5,
+     "team": "SA",
+     "ticker": "KXNBATEAMTOTAL-26OCT23HOUSAS-SAS115",
+     "title": "San Antonio over 114.5 points",
+     "why": "SA O-D- v HOU O+D- \u00b7 115+ NO 0.48"
     }
    ]
   },
@@ -1169,6 +1191,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT23MINORL-MIN106",
      "title": "Minnesota over 105.5 points",
      "why": "MIN O+D+ v ORL O+D+ \u00b7 105+ YES 0.85"
+    },
+    {
+     "game": "401909096",
+     "id": "R6:KXNBATEAMTOTAL-26OCT23HOUSAS-HOU104",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O+D-",
+      "home": "O-D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-24T00:00:15.278380+00:00",
+     "match": "HOU @ SA",
+     "price": 0.73,
+     "rule": "R6",
+     "side": "yes",
+     "start": "2026-10-24T01:30Z",
+     "status": "open",
+     "strike": 103.5,
+     "team": "HOU",
+     "ticker": "KXNBATEAMTOTAL-26OCT23HOUSAS-HOU104",
+     "title": "Houston over 103.5 points",
+     "why": "HOU O+D- v SA O-D- \u00b7 105+ YES 0.73"
     }
    ]
   },
@@ -1345,16 +1389,55 @@
      "ticker": "KXNBATEAMTOTAL-26OCT23TORWAS-WAS115",
      "title": "Washington over 114.5 points",
      "why": "WSH O+D- v TOR O+D- \u00b7 both D\u2212 \u00b7 115+ NO 0.51"
+    },
+    {
+     "game": "401909096",
+     "id": "R7:KXNBATEAMTOTAL-26OCT23HOUSAS-SAS115",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O+D-",
+      "home": "O-D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-24T00:00:15.278380+00:00",
+     "match": "HOU @ SA",
+     "price": 0.48,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-10-24T01:30Z",
+     "status": "open",
+     "strike": 114.5,
+     "team": "SA",
+     "ticker": "KXNBATEAMTOTAL-26OCT23HOUSAS-SAS115",
+     "title": "San Antonio over 114.5 points",
+     "why": "SA O-D- v HOU O+D- \u00b7 both D\u2212 \u00b7 115+ NO 0.48"
+    },
+    {
+     "game": "401909096",
+     "id": "R7:KXNBATEAMTOTAL-26OCT23HOUSAS-HOU110",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O+D-",
+      "home": "O-D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-24T00:00:15.278380+00:00",
+     "match": "HOU @ SA",
+     "price": 0.48,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-10-24T01:30Z",
+     "status": "open",
+     "strike": 109.5,
+     "team": "HOU",
+     "ticker": "KXNBATEAMTOTAL-26OCT23HOUSAS-HOU110",
+     "title": "Houston over 109.5 points",
+     "why": "HOU O+D- v SA O-D- \u00b7 both D\u2212 \u00b7 110+ NO 0.48"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-19T15:20:35.553923+00:00",
-   "due": 0,
-   "new": 0
-  },
   {
    "at": "2026-10-19T20:39:38.075646+00:00",
    "due": 0,
@@ -1604,6 +1687,11 @@
    "at": "2026-10-23T23:00:15.691400+00:00",
    "due": 1,
    "new": 0
+  },
+  {
+   "at": "2026-10-24T00:00:15.278380+00:00",
+   "due": 2,
+   "new": 4
   }
  ],
  "version": "nba-rules-v1"
