@@ -55,6 +55,10 @@ def quotes(state):
             result=("price" if status == "settled" else "a" if (status == "won") == (pick == "a") else "b")
                    if status != "open" else None,
             settle_px=payout, settled=r.get("settled"), prob_a=None, edge=r.get("edge"),
+            # The model's P(said) at entry (2026-10-24), carried on the lead's bet as p_said so a
+            # follower's news guard can refuse a NO the market now prices as likely said. Not prob_a:
+            # that would make the lead a model pair (model_prob) for every follower reading it.
+            p_said=D.number(r.get("model")),
             untraded=False, start_source="contract_close", url="", series=r.get("series")))
     return out
 

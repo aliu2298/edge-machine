@@ -25,7 +25,7 @@ jobs:
           python-version: '3.12'
       - name: Tests
         run: python3 test_culture.py
-      - name: Culture markets, Rotten Tomatoes snapshots and paper settlement
+      - name: Culture markets and paper settlement (Rotten Tomatoes snapshots stopped with rt_model, 2026-10-24)
         run: python3 culture_track.py
       - name: Trump mentions Production feed (mentions_rate, 2026-10-20)
         run: python3 culture_production.py

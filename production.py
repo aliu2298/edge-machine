@@ -381,6 +381,10 @@ def lead_from_quote(q, pair_key, built, kalshi=None):
         word = q.get("side_a") or q["market_id"]
         headline = f'Trump says "{word}"' if q["pick"] == "a" else f'Trump does not say "{word}"'
         bet = {"kind": "mention" if q["pick"] == "a" else "mention_no", "subject": word}
+        # The model's P(said) at entry (2026-10-24): a follower refuses a mention_no whose YES mid
+        # is over 0.50 while this is under 0.20 (the news guard, culture_track.NEWS_GUARD).
+        if isinstance(q.get("p_said"), (int, float)):
+            bet["p_said"] = round(float(q["p_said"]), 4)
     elif q["sport"] in T.LADDER_SPORTS:
         # One rung of a daily-close ladder. No two sides to name: the contest is the
         # coin's close ("Bitcoin price on Oct 7, 2026") and the claim is the rung the

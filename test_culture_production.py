@@ -31,7 +31,7 @@ state = {"lanes": {k: {"picks": [], "observations": {}, "error": None} for k in 
                                                                               "mentions_rate", "rt_model")}}
 lane = state["lanes"]["mentions_rate"]
 lane["last_success"] = (NOW - dt.timedelta(minutes=20)).isoformat()
-lane["picks"] += [pick("KXTRUMPSAY-26OCT26-ANTI", "Antifa", "no", 0.79),
+lane["picks"] += [pick("KXTRUMPSAY-26OCT26-ANTI", "Antifa", "no", 0.79, model=0.08),
                   pick("KXTRUMPSAY-26OCT26-TARI", "Tariff", "yes", 0.62),
                   pick("KXTRUMPSAY-26OCT19-BIBI", "Bibi", "no", 0.80, status="lost", close="2026-10-19T14:00:00Z",
                        logged="2026-10-17T10:00:00+00:00", profit=-100.0, payout=1),
@@ -60,8 +60,11 @@ check("two open leads; the Oct 19 one closed before Production and is not a lead
 no = leads["KXTRUMPSAY-26OCT26-ANTI"]
 check("the NO lead: kind mention_no, the No of the exact contract, headline in words",
       (no["bet"], no["route"]["outcome_side"], no["route"]["price_at_log"], no["headline"], no["league"]),
-      ({"kind": "mention_no", "subject": "Antifa"}, "no", 0.79, 'Trump does not say "Antifa"', "Trump mentions"))
+      ({"kind": "mention_no", "subject": "Antifa", "p_said": 0.08}, "no", 0.79, 'Trump does not say "Antifa"', "Trump mentions"))
+check("the feed carries the model's P(said) on the bet (2026-10-24), not as model_prob",
+      (no["bet"].get("p_said"), "model_prob" in no), (0.08, False))
 yes = leads["KXTRUMPSAY-26OCT26-TARI"]
+check("an entry with no model P carries no p_said", "p_said" in yes["bet"], False)
 check("the YES lead: kind mention, outcome_side yes", (yes["bet"]["kind"], yes["route"]["outcome_side"], yes["route"]["outcome"]),
       ("mention", "yes", "Tariff"))
 stale = dict(state, lanes=dict(state["lanes"], mentions_rate=dict(lane, last_success=(NOW - dt.timedelta(hours=5)).isoformat())))
