@@ -143,10 +143,11 @@ def build(state=None, now=None):
                  (f'<p class="sm">Retired by hand: no new entries, their rows stay and their open picks '
                   f'still settle.</p><ul class="sm">{retired_html}</ul>' if gone else '') +
                  (f'<p class="sm">Trump mentions, amended {e(K.AMENDED)}: a NO is refused when Kalshi\'s YES mid '
-                  'is over 0.50 and the model\'s P(said) under 0.20 (the news guard, for a word that has just '
+                  'is over 0.50 and the model\'s P(said) under 0.25 (the news guard, for a word that has just '
                   'become news and so reads low in an 84-day rate; prompted by the lane\'s five settled losses '
-                  'to that day, all NOs: Ethanol, Deere, Vivek, Nobel, Bibi), and the edge that meets the 5c '
-                  'threshold is capped at 0.25. Entries logged before the amendment are unchanged.</p>'
+                  'to that day, all NOs: Ethanol, Deere, Vivek, Nobel, Bibi; threshold raised to 0.25 on '
+                  '2026-10-24, from 0.20), and the edge that meets the 5c threshold is capped at 0.25. Entries '
+                  'logged before the amendment are unchanged.</p>'
                   if now.date().isoformat() >= K.AMENDED else '') +
                  '<p class="sm">Measured before the build on 4,558 settled culture markets (Aug 11 – Oct 16): '
                  '24h before the close about 70% sit under 5c or over 95c, so the favourite band held 8 events '
