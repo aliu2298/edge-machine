@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-24T11:11:03+00:00",
+ "board_built_at": "2026-10-24T14:36:59+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -611,6 +611,111 @@
    "source": "econ_nc_no",
    "sport": "econ_daily",
    "status": "hit"
+  },
+  "2026-10-24|KXAAAGASD-26OCT24-4.3000|Not Above 4.3000 at the close \u00b7 Near-certain \u00b7 3h \u00b7 NO": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-10-24",
+   "edge_at_log": null,
+   "first_seen": "2026-10-24",
+   "headline": "Not Above 4.3000 at the close",
+   "home": null,
+   "id": "2026-10-24|KXAAAGASD-26OCT24-4.3000|Not Above 4.3000 at the close \u00b7 Near-certain \u00b7 3h \u00b7 NO",
+   "kickoff": "2026-10-24T03:59Z",
+   "lane": "production",
+   "league": "Econ Daily",
+   "match": "US gas price (AAA national average)",
+   "pair": "econ_nc_no|econ_daily",
+   "price_at_log": 0.94,
+   "published_at": "2026-10-24T14:36:59+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Not Above 4.3000 at the close",
+    "event": "KXAAAGASD-26OCT24",
+    "market": "KXAAAGASD-26OCT24-4.3000",
+    "outcome": "Above 4.3000",
+    "outcome_side": "no",
+    "price_at_log": 0.94,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "econ_nc_no:KXAAAGASD-26OCT24-4.3000",
+   "source": "econ_nc_no",
+   "sport": "econ_daily",
+   "status": "hit"
+  },
+  "2026-10-24|KXDIESELD-26OCT24-T6.330|Above $6.330 at the close \u00b7 Near-certain \u00b7 last hour \u00b7 YES": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-10-24",
+   "edge_at_log": null,
+   "first_seen": "2026-10-24",
+   "headline": "Above $6.330 at the close",
+   "home": null,
+   "id": "2026-10-24|KXDIESELD-26OCT24-T6.330|Above $6.330 at the close \u00b7 Near-certain \u00b7 last hour \u00b7 YES",
+   "kickoff": "2026-10-24T03:59Z",
+   "lane": "production",
+   "league": "Econ Daily",
+   "match": "Diesel price (daily)",
+   "pair": "econ_nc_yes|econ_daily",
+   "price_at_log": 0.96,
+   "published_at": "2026-10-24T14:36:59+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Above $6.330 at the close",
+    "event": "KXDIESELD-26OCT24",
+    "market": "KXDIESELD-26OCT24-T6.330",
+    "outcome": "Above $6.330",
+    "outcome_side": "yes",
+    "price_at_log": 0.96,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "econ_nc_yes:KXDIESELD-26OCT24-T6.330",
+   "source": "econ_nc_yes",
+   "sport": "econ_daily",
+   "status": "hit"
+  },
+  "2026-10-24|KXDIESELD-26OCT24-T6.335|Not Above $6.335 at the close \u00b7 Near-certain \u00b7 3h \u00b7 NO": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-10-24",
+   "edge_at_log": null,
+   "first_seen": "2026-10-24",
+   "headline": "Not Above $6.335 at the close",
+   "home": null,
+   "id": "2026-10-24|KXDIESELD-26OCT24-T6.335|Not Above $6.335 at the close \u00b7 Near-certain \u00b7 3h \u00b7 NO",
+   "kickoff": "2026-10-24T03:59Z",
+   "lane": "production",
+   "league": "Econ Daily",
+   "match": "Diesel price (daily)",
+   "pair": "econ_nc_no|econ_daily",
+   "price_at_log": 0.87,
+   "published_at": "2026-10-24T14:36:59+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Not Above $6.335 at the close",
+    "event": "KXDIESELD-26OCT24",
+    "market": "KXDIESELD-26OCT24-T6.335",
+    "outcome": "Above $6.335",
+    "outcome_side": "no",
+    "price_at_log": 0.87,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "econ_nc_no:KXDIESELD-26OCT24-T6.335",
+   "source": "econ_nc_no",
+   "sport": "econ_daily",
+   "status": "miss"
   }
  },
  "pairs": {
@@ -621,18 +726,18 @@
    "ready_at": "2026-10-20T05:00:00+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 3,
+    "leads": 5,
     "problem": null,
-    "routed": 3,
+    "routed": 5,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 3,
-   "sandbox_roi": 0.113,
-   "sandbox_roi_fee": 0.1052,
+   "sandbox_n": 5,
+   "sandbox_roi": -0.1194,
+   "sandbox_roi_fee": -0.125,
    "timing": {
     "late": [],
     "timed": 0,
@@ -646,18 +751,18 @@
    "ready_at": "2026-10-20T05:00:00+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 3,
+    "leads": 4,
     "problem": null,
-    "routed": 3,
+    "routed": 4,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 3,
-   "sandbox_roi": 0.0382,
-   "sandbox_roi_fee": 0.0356,
+   "sandbox_n": 4,
+   "sandbox_roi": 0.0391,
+   "sandbox_roi_fee": 0.0364,
    "timing": {
     "late": [],
     "timed": 0,
@@ -669,5 +774,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-24T11:11:03+00:00"
+ "updated_at": "2026-10-24T14:36:59+00:00"
 }
