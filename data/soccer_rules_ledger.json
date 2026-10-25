@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-25T01:32:01.158380+00:00",
+ "last_run": "2026-10-25T04:43:25.745638+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -1289,11 +1289,14 @@
      "line": null,
      "logged": "2026-10-24T22:01:10.642253+00:00",
      "match": "Philadelphia Union v New England Revolution",
+     "payout": 1.0,
      "price": 0.63,
+     "profit": 54.72,
      "rule": "D1",
+     "settled": "2026-10-25T04:43:25.745638+00:00",
      "side": "yes",
      "start": "2026-10-24T23:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXMLSBTTS-26OCT24PHINE-BTTS",
      "title": "Both Teams To Score",
      "why": "Philadelphia Union O+D- v New England Revolution O+D- \u00b7 BTTS YES 0.63"
@@ -2230,11 +2233,14 @@
      "line": null,
      "logged": "2026-10-25T01:01:28.452433+00:00",
      "match": "Colorado Rapids v Vancouver Whitecaps",
+     "payout": 0.0,
      "price": 0.59,
+     "profit": -100.0,
      "rule": "D3",
+     "settled": "2026-10-25T04:43:25.745638+00:00",
      "side": "yes",
      "start": "2026-10-25T01:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXMLSBTTS-26OCT24COLVAN-BTTS",
      "title": "Both Teams To Score",
      "why": "Colorado Rapids O-D- v Vancouver Whitecaps O+D- \u00b7 BTTS YES 0.59"
@@ -2253,11 +2259,14 @@
      "line": null,
      "logged": "2026-10-25T01:01:28.452433+00:00",
      "match": "Real Salt Lake v St. Louis CITY SC",
+     "payout": 0.0,
      "price": 0.65,
+     "profit": -100.0,
      "rule": "D3",
+     "settled": "2026-10-25T04:43:25.745638+00:00",
      "side": "yes",
      "start": "2026-10-25T01:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXMLSBTTS-26OCT24RSLSTL-BTTS",
      "title": "Both Teams To Score",
      "why": "Real Salt Lake O-D- v St. Louis CITY SC O+D- \u00b7 BTTS YES 0.65"
@@ -2266,14 +2275,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-23T20:31:38.016392+00:00",
-   "candidates": 0,
-   "due": 0,
-   "labelled": 0,
-   "matched": 0,
-   "new": 0
-  },
   {
    "at": "2026-10-23T21:31:42.756548+00:00",
    "candidates": 0,
@@ -2672,6 +2673,14 @@
    "due": 2,
    "labelled": 2,
    "matched": 1,
+   "new": 0
+  },
+  {
+   "at": "2026-10-25T04:43:25.745638+00:00",
+   "candidates": 0,
+   "due": 0,
+   "labelled": 0,
+   "matched": 0,
    "new": 0
   }
  ],
