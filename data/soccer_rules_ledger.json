@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-25T04:43:25.745638+00:00",
+ "last_run": "2026-10-25T09:46:23.751477+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -586,11 +586,14 @@
      "line": 3.5,
      "logged": "2026-10-25T01:01:28.452433+00:00",
      "match": "San Diego FC v Seattle Sounders FC",
+     "payout": 1.0,
      "price": 0.48,
+     "profit": 101.02,
      "rule": "C1",
+     "settled": "2026-10-25T09:46:23.751477+00:00",
      "side": "yes",
      "start": "2026-10-25T02:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXMLSTOTAL-26OCT24SDSEA-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "San Diego FC O+D+ v Seattle Sounders FC O+D- \u00b7 Over 3.5 YES 0.48"
@@ -2276,14 +2279,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-23T21:31:42.756548+00:00",
-   "candidates": 0,
-   "due": 0,
-   "labelled": 0,
-   "matched": 0,
-   "new": 0
-  },
-  {
    "at": "2026-10-23T22:01:26.659332+00:00",
    "candidates": 0,
    "due": 0,
@@ -2680,6 +2675,14 @@
    "candidates": 0,
    "due": 0,
    "labelled": 0,
+   "matched": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-10-25T09:46:23.751477+00:00",
+   "candidates": 0,
+   "due": 1,
+   "labelled": 1,
    "matched": 0,
    "new": 0
   }
