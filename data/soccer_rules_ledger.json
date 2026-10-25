@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-25T15:01:21.953390+00:00",
+ "last_run": "2026-10-25T15:16:41.622141+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -1434,11 +1434,14 @@
      "line": null,
      "logged": "2026-10-25T12:01:42.605220+00:00",
      "match": "PSV Eindhoven v Feyenoord Rotterdam",
+     "payout": 1.0,
      "price": 0.74,
+     "profit": 32.72,
      "rule": "D1",
+     "settled": "2026-10-25T15:16:41.622141+00:00",
      "side": "yes",
      "start": "2026-10-25T13:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXEREDIVISIEBTTS-26OCT25PSVFEY-BTTS",
      "title": "Both Teams To Score",
      "why": "PSV Eindhoven O+D- v Feyenoord Rotterdam O+D- \u00b7 BTTS YES 0.74"
@@ -2487,14 +2490,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-24T14:01:10.472308+00:00",
-   "candidates": 1,
-   "due": 3,
-   "labelled": 3,
-   "matched": 1,
-   "new": 0
-  },
-  {
    "at": "2026-10-24T14:16:37.043550+00:00",
    "candidates": 1,
    "due": 1,
@@ -2893,6 +2888,14 @@
    "labelled": 10,
    "matched": 2,
    "new": 2
+  },
+  {
+   "at": "2026-10-25T15:16:41.622141+00:00",
+   "candidates": 2,
+   "due": 9,
+   "labelled": 9,
+   "matched": 2,
+   "new": 0
   }
  ],
  "version": "soccer-rules-v1"
