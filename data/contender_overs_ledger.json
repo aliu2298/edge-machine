@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-25T14:01:42.255847+00:00",
+ "last_run": "2026-10-25T14:16:16.313480+00:00",
  "rules": {
   "O15": {
    "picks": [
@@ -89,6 +89,47 @@
      "ticker": "KXEREDIVISIETOTAL-26OCT25PSVFEY-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Eindhoven, Feyenoord in a top-3 title spot \u00b7 over 1.5 YES 0.91"
+    },
+    {
+     "ask": 0.9,
+     "bid": 0.88,
+     "contenders": [
+      {
+       "ask": 0.53,
+       "bid": 0.3,
+       "mid": 0.415,
+       "team": "Eindhoven"
+      },
+      {
+       "ask": 0.44,
+       "bid": 0.32,
+       "mid": 0.38,
+       "team": "Feyenoord"
+      },
+      {
+       "ask": 0.17,
+       "bid": 0.11,
+       "mid": 0.14,
+       "team": "Ajax"
+      }
+     ],
+     "contenders_in": [
+      "Ajax"
+     ],
+     "event": "KXEREDIVISIETOTAL-26OCT25SPAAJA",
+     "id": "O15:KXEREDIVISIETOTAL-26OCT25SPAAJA",
+     "league": "Eredivisie",
+     "line": 1.5,
+     "logged": "2026-10-25T14:16:16.313480+00:00",
+     "match": "Sparta Rotterdam v Ajax Amsterdam",
+     "price": 0.9,
+     "rule": "O15",
+     "side": "yes",
+     "start": "2026-10-25T15:45Z",
+     "status": "open",
+     "ticker": "KXEREDIVISIETOTAL-26OCT25SPAAJA-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Ajax in a top-3 title spot \u00b7 over 1.5 YES 0.90"
     }
    ]
   },
@@ -179,6 +220,47 @@
      "ticker": "KXEREDIVISIETOTAL-26OCT25PSVFEY-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Eindhoven, Feyenoord in a top-3 title spot \u00b7 over 2.5 YES 0.75"
+    },
+    {
+     "ask": 0.73,
+     "bid": 0.72,
+     "contenders": [
+      {
+       "ask": 0.53,
+       "bid": 0.3,
+       "mid": 0.415,
+       "team": "Eindhoven"
+      },
+      {
+       "ask": 0.44,
+       "bid": 0.32,
+       "mid": 0.38,
+       "team": "Feyenoord"
+      },
+      {
+       "ask": 0.17,
+       "bid": 0.11,
+       "mid": 0.14,
+       "team": "Ajax"
+      }
+     ],
+     "contenders_in": [
+      "Ajax"
+     ],
+     "event": "KXEREDIVISIETOTAL-26OCT25SPAAJA",
+     "id": "O25:KXEREDIVISIETOTAL-26OCT25SPAAJA",
+     "league": "Eredivisie",
+     "line": 2.5,
+     "logged": "2026-10-25T14:16:16.313480+00:00",
+     "match": "Sparta Rotterdam v Ajax Amsterdam",
+     "price": 0.73,
+     "rule": "O25",
+     "side": "yes",
+     "start": "2026-10-25T15:45Z",
+     "status": "open",
+     "ticker": "KXEREDIVISIETOTAL-26OCT25SPAAJA-3",
+     "title": "Will over 2.5 goals be scored?",
+     "why": "Ajax in a top-3 title spot \u00b7 over 2.5 YES 0.73"
     }
    ]
   },
@@ -269,18 +351,52 @@
      "ticker": "KXEREDIVISIETOTAL-26OCT25PSVFEY-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Eindhoven, Feyenoord in a top-3 title spot \u00b7 over 3.5 YES 0.55"
+    },
+    {
+     "ask": 0.53,
+     "bid": 0.51,
+     "contenders": [
+      {
+       "ask": 0.53,
+       "bid": 0.3,
+       "mid": 0.415,
+       "team": "Eindhoven"
+      },
+      {
+       "ask": 0.44,
+       "bid": 0.32,
+       "mid": 0.38,
+       "team": "Feyenoord"
+      },
+      {
+       "ask": 0.17,
+       "bid": 0.11,
+       "mid": 0.14,
+       "team": "Ajax"
+      }
+     ],
+     "contenders_in": [
+      "Ajax"
+     ],
+     "event": "KXEREDIVISIETOTAL-26OCT25SPAAJA",
+     "id": "O35:KXEREDIVISIETOTAL-26OCT25SPAAJA",
+     "league": "Eredivisie",
+     "line": 3.5,
+     "logged": "2026-10-25T14:16:16.313480+00:00",
+     "match": "Sparta Rotterdam v Ajax Amsterdam",
+     "price": 0.53,
+     "rule": "O35",
+     "side": "yes",
+     "start": "2026-10-25T15:45Z",
+     "status": "open",
+     "ticker": "KXEREDIVISIETOTAL-26OCT25SPAAJA-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Ajax in a top-3 title spot \u00b7 over 3.5 YES 0.53"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-24T13:01:27.862256+00:00",
-   "due": 2,
-   "matched": 2,
-   "new": 0,
-   "qualifying": 0
-  },
   {
    "at": "2026-10-24T13:16:41.652057+00:00",
    "due": 2,
@@ -630,6 +746,13 @@
    "matched": 1,
    "new": 0,
    "qualifying": 0
+  },
+  {
+   "at": "2026-10-25T14:16:16.313480+00:00",
+   "due": 2,
+   "matched": 2,
+   "new": 3,
+   "qualifying": 1
   }
  ],
  "version": "contender-overs-v1"
