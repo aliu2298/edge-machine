@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-25T19:16:34.898693+00:00",
+ "last_run": "2026-10-25T23:31:40.202677+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -2000,11 +2000,14 @@
      "logged": "2026-10-25T16:01:46.990186+00:00",
      "match": "Real Sociedad v Levante",
      "opponent": "Levante",
+     "payout": 1.0,
      "price": 0.62,
+     "profit": 57.11,
      "rule": "T7",
+     "settled": "2026-10-25T23:31:40.202677+00:00",
      "side": "no",
      "start": "2026-10-25T17:30Z",
-     "status": "open",
+     "status": "won",
      "sub": "Real Sociedad over 2.5 goals",
      "team": "Real Sociedad",
      "team_side": "home",
@@ -2027,11 +2030,14 @@
      "logged": "2026-10-25T16:01:46.990186+00:00",
      "match": "Real Sociedad v Levante",
      "opponent": "Real Sociedad",
+     "payout": 1.0,
      "price": 0.91,
+     "profit": 9.2,
      "rule": "T7",
+     "settled": "2026-10-25T23:31:40.202677+00:00",
      "side": "no",
      "start": "2026-10-25T17:30Z",
-     "status": "open",
+     "status": "won",
      "sub": "Levante over 2.5 goals",
      "team": "Levante",
      "team_side": "away",
@@ -2281,14 +2287,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-24T11:01:28.418071+00:00",
-   "candidates": 1,
-   "due": 2,
-   "labelled": 2,
-   "matched": 1,
-   "new": 0
-  },
   {
    "at": "2026-10-24T11:31:41.804005+00:00",
    "candidates": 1,
@@ -2686,6 +2684,14 @@
    "candidates": 0,
    "due": 2,
    "labelled": 2,
+   "matched": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-10-25T23:31:40.202677+00:00",
+   "candidates": 0,
+   "due": 1,
+   "labelled": 1,
    "matched": 0,
    "new": 0
   }
