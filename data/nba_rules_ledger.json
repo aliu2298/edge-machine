@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-25T00:30:14.532085+00:00",
+ "last_run": "2026-10-25T01:00:13.765318+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -315,11 +315,14 @@
      },
      "logged": "2026-10-24T20:30:14.070080+00:00",
      "match": "MIA @ CHA",
+     "payout": 0.0,
      "price": 0.67,
+     "profit": -100.0,
      "rule": "R1",
+     "settled": "2026-10-25T01:00:13.765318+00:00",
      "side": "yes",
      "start": "2026-10-24T22:00Z",
-     "status": "open",
+     "status": "lost",
      "strike": 110.5,
      "team": "MIA",
      "ticker": "KXNBATEAMTOTAL-26OCT24MIACHA-MIA111",
@@ -591,11 +594,14 @@
      },
      "logged": "2026-10-24T20:30:14.070080+00:00",
      "match": "MIA @ CHA",
+     "payout": 0.0,
      "price": 0.56,
+     "profit": -100.0,
      "rule": "R2",
+     "settled": "2026-10-25T01:00:13.765318+00:00",
      "side": "yes",
      "start": "2026-10-24T22:00Z",
-     "status": "open",
+     "status": "lost",
      "strike": 114.5,
      "team": "MIA",
      "ticker": "KXNBATEAMTOTAL-26OCT24MIACHA-MIA115",
@@ -917,11 +923,14 @@
      },
      "logged": "2026-10-24T20:30:14.070080+00:00",
      "match": "MIA @ CHA",
+     "payout": 1.0,
      "price": 0.6,
+     "profit": 62.13,
      "rule": "R3",
+     "settled": "2026-10-25T01:00:13.765318+00:00",
      "side": "no",
      "start": "2026-10-24T22:00Z",
-     "status": "open",
+     "status": "won",
      "strike": 115.5,
      "team": "CHA",
      "ticker": "KXNBATEAMTOTAL-26OCT24MIACHA-CHA116",
@@ -1567,11 +1576,14 @@
      },
      "logged": "2026-10-24T20:30:14.070080+00:00",
      "match": "MIA @ CHA",
+     "payout": 1.0,
      "price": 0.84,
+     "profit": 17.73,
      "rule": "R6",
+     "settled": "2026-10-25T01:00:13.765318+00:00",
      "side": "yes",
      "start": "2026-10-24T22:00Z",
-     "status": "open",
+     "status": "won",
      "strike": 104.5,
      "team": "MIA",
      "ticker": "KXNBATEAMTOTAL-26OCT24MIACHA-MIA105",
@@ -1997,11 +2009,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-21T22:00:13.939183+00:00",
-   "due": 5,
-   "new": 6
-  },
-  {
    "at": "2026-10-21T22:02:26.076357+00:00",
    "due": 5,
    "new": 0
@@ -2250,6 +2257,11 @@
    "at": "2026-10-25T00:30:14.532085+00:00",
    "due": 2,
    "new": 1
+  },
+  {
+   "at": "2026-10-25T01:00:13.765318+00:00",
+   "due": 1,
+   "new": 0
   }
  ],
  "version": "nba-rules-v1"
