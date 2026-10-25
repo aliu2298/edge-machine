@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-25T09:52:37+00:00",
+ "board_built_at": "2026-10-25T14:25:57+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -609,6 +609,41 @@
    "source": "econ_nc_no",
    "sport": "econ_daily",
    "status": "miss"
+  },
+  "2026-10-25|KXAAAGASD-26OCT25-4.2950|Not Above 4.2950 at the close \u00b7 Near-certain \u00b7 3h \u00b7 NO": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-10-25",
+   "edge_at_log": null,
+   "first_seen": "2026-10-25",
+   "headline": "Not Above 4.2950 at the close",
+   "home": null,
+   "id": "2026-10-25|KXAAAGASD-26OCT25-4.2950|Not Above 4.2950 at the close \u00b7 Near-certain \u00b7 3h \u00b7 NO",
+   "kickoff": "2026-10-25T03:59Z",
+   "lane": "production",
+   "league": "Econ Daily",
+   "match": "US gas price (AAA national average)",
+   "pair": "econ_nc_no|econ_daily",
+   "price_at_log": 0.95,
+   "published_at": "2026-10-25T14:25:57+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Not Above 4.2950 at the close",
+    "event": "KXAAAGASD-26OCT25",
+    "market": "KXAAAGASD-26OCT25-4.2950",
+    "outcome": "Above 4.2950",
+    "outcome_side": "no",
+    "price_at_log": 0.95,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "econ_nc_no:KXAAAGASD-26OCT25-4.2950",
+   "source": "econ_nc_no",
+   "sport": "econ_daily",
+   "status": "hit"
   }
  },
  "pairs": {
@@ -619,18 +654,18 @@
    "ready_at": "2026-10-20T05:00:00+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 5,
+    "leads": 6,
     "problem": null,
-    "routed": 5,
+    "routed": 6,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 5,
-   "sandbox_roi": -0.1194,
-   "sandbox_roi_fee": -0.125,
+   "sandbox_n": 6,
+   "sandbox_roi": -0.0908,
+   "sandbox_roi_fee": -0.096,
    "timing": {
     "late": [],
     "timed": 0,
@@ -667,5 +702,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-25T09:52:37+00:00"
+ "updated_at": "2026-10-25T14:25:57+00:00"
 }
