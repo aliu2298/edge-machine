@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-25T21:00:13.889198+00:00",
+ "last_run": "2026-10-25T21:30:15.288473+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -1077,6 +1077,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT25LALUTA-UTA116",
      "title": "Utah over 115.5 points",
      "why": "UTAH O-D+ v LAL O-D- \u00b7 115+ NO 0.50"
+    },
+    {
+     "game": "401909863",
+     "id": "R3:KXNBATEAMTOTAL-26OCT25ORLNYK-NYK114",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O+D+",
+      "home": "O-D+",
+      "home_h1": "O-D+"
+     },
+     "logged": "2026-10-25T21:30:15.288473+00:00",
+     "match": "ORL @ NY",
+     "price": 0.43,
+     "rule": "R3",
+     "side": "no",
+     "start": "2026-10-25T23:00Z",
+     "status": "open",
+     "strike": 113.5,
+     "team": "NY",
+     "ticker": "KXNBATEAMTOTAL-26OCT25ORLNYK-NYK114",
+     "title": "New York over 113.5 points",
+     "why": "NY O-D+ v ORL O+D+ \u00b7 115+ NO 0.43"
     }
    ]
   },
@@ -1181,6 +1203,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT23LACLAL-LAC101",
      "title": "Los Angeles C over 100.5 points",
      "why": "LAC O-D- v LAL O-D- \u00b7 cheapest NO 0.25 at 100.5"
+    },
+    {
+     "game": "401909865",
+     "id": "R4:KXNBATEAMTOTAL-26OCT25LACOKC-LAC100",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O-D-",
+      "home": "O-D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-25T21:30:15.288473+00:00",
+     "match": "LAC @ OKC",
+     "price": 0.38,
+     "rule": "R4",
+     "side": "no",
+     "start": "2026-10-25T23:00Z",
+     "status": "open",
+     "strike": 99.5,
+     "team": "LAC",
+     "ticker": "KXNBATEAMTOTAL-26OCT25LACOKC-LAC100",
+     "title": "Los Angeles C over 99.5 points",
+     "why": "LAC O-D- v OKC O-D- \u00b7 cheapest NO 0.38 at 99.5"
     }
    ]
   },
@@ -1761,6 +1805,50 @@
      "ticker": "KXNBATEAMTOTAL-26OCT25INDBKN-BKN104",
      "title": "Brooklyn over 103.5 points",
      "why": "BKN O+D+ v IND O+D+ \u00b7 105+ YES 0.79"
+    },
+    {
+     "game": "401909863",
+     "id": "R6:KXNBATEAMTOTAL-26OCT25ORLNYK-ORL106",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O+D+",
+      "home": "O-D+",
+      "home_h1": "O-D+"
+     },
+     "logged": "2026-10-25T21:30:15.288473+00:00",
+     "match": "ORL @ NY",
+     "price": 0.62,
+     "rule": "R6",
+     "side": "yes",
+     "start": "2026-10-25T23:00Z",
+     "status": "open",
+     "strike": 105.5,
+     "team": "ORL",
+     "ticker": "KXNBATEAMTOTAL-26OCT25ORLNYK-ORL106",
+     "title": "Orlando over 105.5 points",
+     "why": "ORL O+D+ v NY O-D+ \u00b7 105+ YES 0.62"
+    },
+    {
+     "game": "401909864",
+     "id": "R6:KXNBATEAMTOTAL-26OCT25TORMIN-MIN104",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O+D-",
+      "home": "O+D-",
+      "home_h1": "O+D-"
+     },
+     "logged": "2026-10-25T21:30:15.288473+00:00",
+     "match": "TOR @ MIN",
+     "price": 0.85,
+     "rule": "R6",
+     "side": "yes",
+     "start": "2026-10-25T23:00Z",
+     "status": "open",
+     "strike": 103.5,
+     "team": "MIN",
+     "ticker": "KXNBATEAMTOTAL-26OCT25TORMIN-MIN104",
+     "title": "Minnesota over 103.5 points",
+     "why": "MIN O+D- v TOR O+D- \u00b7 105+ YES 0.85"
     }
    ]
   },
@@ -2115,16 +2203,55 @@
      "ticker": "KXNBATEAMTOTAL-26OCT24HOUATL-HOU116",
      "title": "Houston over 115.5 points",
      "why": "HOU O+D- v ATL O+D- \u00b7 both D\u2212 \u00b7 115+ NO 0.59"
+    },
+    {
+     "game": "401909864",
+     "id": "R7:KXNBATEAMTOTAL-26OCT25TORMIN-MIN116",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O+D-",
+      "home": "O+D-",
+      "home_h1": "O+D-"
+     },
+     "logged": "2026-10-25T21:30:15.288473+00:00",
+     "match": "TOR @ MIN",
+     "price": 0.53,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-10-25T23:00Z",
+     "status": "open",
+     "strike": 115.5,
+     "team": "MIN",
+     "ticker": "KXNBATEAMTOTAL-26OCT25TORMIN-MIN116",
+     "title": "Minnesota over 115.5 points",
+     "why": "MIN O+D- v TOR O+D- \u00b7 both D\u2212 \u00b7 115+ NO 0.53"
+    },
+    {
+     "game": "401909864",
+     "id": "R7:KXNBATEAMTOTAL-26OCT25TORMIN-TOR116",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O+D-",
+      "home": "O+D-",
+      "home_h1": "O+D-"
+     },
+     "logged": "2026-10-25T21:30:15.288473+00:00",
+     "match": "TOR @ MIN",
+     "price": 0.52,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-10-25T23:00Z",
+     "status": "open",
+     "strike": 115.5,
+     "team": "TOR",
+     "ticker": "KXNBATEAMTOTAL-26OCT25TORMIN-TOR116",
+     "title": "Toronto over 115.5 points",
+     "why": "TOR O+D- v MIN O+D- \u00b7 both D\u2212 \u00b7 115+ NO 0.52"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-22T05:20:51.205933+00:00",
-   "due": 0,
-   "new": 0
-  },
   {
    "at": "2026-10-22T10:21:57.085027+00:00",
    "due": 0,
@@ -2374,6 +2501,11 @@
    "at": "2026-10-25T21:00:13.889198+00:00",
    "due": 1,
    "new": 1
+  },
+  {
+   "at": "2026-10-25T21:30:15.288473+00:00",
+   "due": 4,
+   "new": 6
   }
  ],
  "version": "nba-rules-v1"
