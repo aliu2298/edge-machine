@@ -2,11 +2,11 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-25T18:00:14.672742+00:00",
-   "last_success": "2026-10-25T18:00:14.672742+00:00",
+   "last_run": "2026-10-25T19:00:15.013101+00:00",
+   "last_success": "2026-10-25T19:00:15.013101+00:00",
    "observations": {
-    "at": "2026-10-25T18:00:14.672742+00:00",
-    "events": 962,
+    "at": "2026-10-25T19:00:15.013101+00:00",
+    "events": 961,
     "reasons": {},
     "retired": "2026-10-24"
    },
@@ -475,10 +475,13 @@
      "id": "KXALBUMEQUIV-DOP26OCT22-23K",
      "logged": "2026-10-24T14:54:35.381516+00:00",
      "name": "Dopamine Chamber: First Week Album Equivalent Units",
+     "payout": 1.0,
      "price": 0.97,
+     "profit": 2.88,
      "series": "KXALBUMEQUIV",
+     "settled": "2026-10-25T19:00:15.013101+00:00",
      "side": "yes",
-     "status": "open",
+     "status": "won",
      "strike": 23000,
      "strike_type": "greater",
      "title": "Above 23K"
@@ -491,10 +494,13 @@
      "id": "KXALBUMSTREAMS-DOP26OCT22-10.0M",
      "logged": "2026-10-24T16:00:15.499676+00:00",
      "name": "Dopamine Chamber: First Week Streams",
+     "payout": 1.0,
      "price": 0.96,
+     "profit": 3.88,
      "series": "KXALBUMSTREAMS",
+     "settled": "2026-10-25T19:00:15.013101+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "strike": 10000000,
      "strike_type": "greater",
      "title": "Above 10M"
@@ -507,10 +513,13 @@
      "id": "KXALBUMEQUIV-COO26OCT22-10K",
      "logged": "2026-10-24T19:00:13.931359+00:00",
      "name": "Cookie Happened: First Week Album Equivalent Units",
+     "payout": 1.0,
      "price": 0.97,
+     "profit": 2.88,
      "series": "KXALBUMEQUIV",
+     "settled": "2026-10-25T19:00:15.013101+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "strike": 10000,
      "strike_type": "greater",
      "title": "Above 10K"
@@ -533,11 +542,11 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-25T18:00:14.672742+00:00",
-   "last_success": "2026-10-25T18:00:14.672742+00:00",
+   "last_run": "2026-10-25T19:00:15.013101+00:00",
+   "last_success": "2026-10-25T19:00:15.013101+00:00",
    "observations": {
-    "at": "2026-10-25T18:00:14.672742+00:00",
-    "events": 962,
+    "at": "2026-10-25T19:00:15.013101+00:00",
+    "events": 961,
     "reasons": {},
     "retired": "2026-10-24"
    },
@@ -853,10 +862,13 @@
      "id": "KXALBUMEQUIV-NOB26OCT22-9K",
      "logged": "2026-10-24T03:00:14.267446+00:00",
      "name": "No Bad Memories: First Week Album Equivalent Units",
+     "payout": 0.0,
      "price": 0.76,
+     "profit": -100.0,
      "series": "KXALBUMEQUIV",
+     "settled": "2026-10-25T19:00:15.013101+00:00",
      "side": "no",
-     "status": "open",
+     "status": "lost",
      "strike": 9000,
      "strike_type": "greater",
      "title": "Above 9K"
@@ -881,18 +893,17 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-25T18:00:14.672742+00:00",
-   "last_success": "2026-10-25T18:00:14.672742+00:00",
+   "last_run": "2026-10-25T19:00:15.013101+00:00",
+   "last_success": "2026-10-25T19:00:15.013101+00:00",
    "observations": {
-    "at": "2026-10-25T18:00:14.672742+00:00",
-    "events": 962,
+    "at": "2026-10-25T19:00:15.013101+00:00",
+    "events": 961,
     "news_guard": [],
     "reasons": {
      "already near-certain (under 10c or over 90c)": 17,
-     "edge 5c+": 9,
-     "edge capped": 1,
+     "edge 5c+": 6,
      "edge under 5c": 2,
-     "no quote or spread too wide": 32
+     "no quote or spread too wide": 35
     }
    },
    "picks": [
@@ -1899,11 +1910,11 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-25T18:00:14.672742+00:00",
-   "last_success": "2026-10-25T18:00:14.672742+00:00",
+   "last_run": "2026-10-25T19:00:15.013101+00:00",
+   "last_success": "2026-10-25T19:00:15.013101+00:00",
    "observations": {
-    "at": "2026-10-25T18:00:14.672742+00:00",
-    "events": 962,
+    "at": "2026-10-25T19:00:15.013101+00:00",
+    "events": 961,
     "reasons": {},
     "retired": "2026-10-24"
    },
