@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-25T18:46:11.135717+00:00",
+ "last_run": "2026-10-25T19:01:45.210852+00:00",
  "rules": {
   "O15": {
    "picks": [
@@ -136,6 +136,47 @@
      "ticker": "KXEREDIVISIETOTAL-26OCT25SPAAJA-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Ajax in a top-3 title spot \u00b7 over 1.5 YES 0.90"
+    },
+    {
+     "ask": 0.89,
+     "bid": 0.88,
+     "contenders": [
+      {
+       "ask": 0.55,
+       "bid": 0.43,
+       "mid": 0.49,
+       "team": "Porto"
+      },
+      {
+       "ask": 0.38,
+       "bid": 0.31,
+       "mid": 0.345,
+       "team": "SL Benfica"
+      },
+      {
+       "ask": 0.12,
+       "bid": 0.09,
+       "mid": 0.105,
+       "team": "Sporting CP"
+      }
+     ],
+     "contenders_in": [
+      "Sporting CP"
+     ],
+     "event": "KXLIGAPORTUGALTOTAL-26OCT25SPOACV",
+     "id": "O15:KXLIGAPORTUGALTOTAL-26OCT25SPOACV",
+     "league": "Primeira Liga",
+     "line": 1.5,
+     "logged": "2026-10-25T19:01:45.210852+00:00",
+     "match": "Sporting CP v Acad\u00e9mico de Viseu",
+     "price": 0.89,
+     "rule": "O15",
+     "side": "yes",
+     "start": "2026-10-25T20:30Z",
+     "status": "open",
+     "ticker": "KXLIGAPORTUGALTOTAL-26OCT25SPOACV-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Sporting CP in a top-3 title spot \u00b7 over 1.5 YES 0.89"
     }
    ]
   },
@@ -273,6 +314,47 @@
      "ticker": "KXEREDIVISIETOTAL-26OCT25SPAAJA-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Ajax in a top-3 title spot \u00b7 over 2.5 YES 0.73"
+    },
+    {
+     "ask": 0.72,
+     "bid": 0.71,
+     "contenders": [
+      {
+       "ask": 0.55,
+       "bid": 0.43,
+       "mid": 0.49,
+       "team": "Porto"
+      },
+      {
+       "ask": 0.38,
+       "bid": 0.31,
+       "mid": 0.345,
+       "team": "SL Benfica"
+      },
+      {
+       "ask": 0.12,
+       "bid": 0.09,
+       "mid": 0.105,
+       "team": "Sporting CP"
+      }
+     ],
+     "contenders_in": [
+      "Sporting CP"
+     ],
+     "event": "KXLIGAPORTUGALTOTAL-26OCT25SPOACV",
+     "id": "O25:KXLIGAPORTUGALTOTAL-26OCT25SPOACV",
+     "league": "Primeira Liga",
+     "line": 2.5,
+     "logged": "2026-10-25T19:01:45.210852+00:00",
+     "match": "Sporting CP v Acad\u00e9mico de Viseu",
+     "price": 0.72,
+     "rule": "O25",
+     "side": "yes",
+     "start": "2026-10-25T20:30Z",
+     "status": "open",
+     "ticker": "KXLIGAPORTUGALTOTAL-26OCT25SPOACV-3",
+     "title": "Will over 2.5 goals be scored?",
+     "why": "Sporting CP in a top-3 title spot \u00b7 over 2.5 YES 0.72"
     }
    ]
   },
@@ -410,18 +492,52 @@
      "ticker": "KXEREDIVISIETOTAL-26OCT25SPAAJA-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Ajax in a top-3 title spot \u00b7 over 3.5 YES 0.53"
+    },
+    {
+     "ask": 0.5,
+     "bid": 0.49,
+     "contenders": [
+      {
+       "ask": 0.55,
+       "bid": 0.43,
+       "mid": 0.49,
+       "team": "Porto"
+      },
+      {
+       "ask": 0.38,
+       "bid": 0.31,
+       "mid": 0.345,
+       "team": "SL Benfica"
+      },
+      {
+       "ask": 0.12,
+       "bid": 0.09,
+       "mid": 0.105,
+       "team": "Sporting CP"
+      }
+     ],
+     "contenders_in": [
+      "Sporting CP"
+     ],
+     "event": "KXLIGAPORTUGALTOTAL-26OCT25SPOACV",
+     "id": "O35:KXLIGAPORTUGALTOTAL-26OCT25SPOACV",
+     "league": "Primeira Liga",
+     "line": 3.5,
+     "logged": "2026-10-25T19:01:45.210852+00:00",
+     "match": "Sporting CP v Acad\u00e9mico de Viseu",
+     "price": 0.5,
+     "rule": "O35",
+     "side": "yes",
+     "start": "2026-10-25T20:30Z",
+     "status": "open",
+     "ticker": "KXLIGAPORTUGALTOTAL-26OCT25SPOACV-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Sporting CP in a top-3 title spot \u00b7 over 3.5 YES 0.50"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-24T17:31:44.437312+00:00",
-   "due": 1,
-   "matched": 1,
-   "new": 0,
-   "qualifying": 0
-  },
   {
    "at": "2026-10-24T17:46:44.831426+00:00",
    "due": 1,
@@ -771,6 +887,13 @@
    "matched": 0,
    "new": 0,
    "qualifying": 0
+  },
+  {
+   "at": "2026-10-25T19:01:45.210852+00:00",
+   "due": 1,
+   "matched": 1,
+   "new": 3,
+   "qualifying": 1
   }
  ],
  "version": "contender-overs-v1"

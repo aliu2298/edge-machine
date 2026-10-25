@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-25T18:46:10.488305+00:00",
+ "last_run": "2026-10-25T19:01:44.402831+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -2554,19 +2554,34 @@
      "ticker": "KXEPLBTTS-26OCT25HULBRE-BTTS",
      "title": "Both Teams To Score",
      "why": "Hull City O-D- v Brentford O+D- \u00b7 BTTS YES 0.58"
+    },
+    {
+     "ask": 0.53,
+     "bid": 0.52,
+     "event": "KXLIGAPORTUGALBTTS-26OCT25SPOACV",
+     "group": "BTTS",
+     "id": "D3:KXLIGAPORTUGALBTTS-26OCT25SPOACV",
+     "labels": {
+      "away": "O-D-",
+      "home": "O+D-"
+     },
+     "league": "Primeira Liga",
+     "line": null,
+     "logged": "2026-10-25T19:01:44.402831+00:00",
+     "match": "Sporting CP v Acad\u00e9mico de Viseu",
+     "price": 0.53,
+     "rule": "D3",
+     "side": "yes",
+     "start": "2026-10-25T20:30Z",
+     "status": "open",
+     "ticker": "KXLIGAPORTUGALBTTS-26OCT25SPOACV-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Sporting CP O+D- v Acad\u00e9mico de Viseu O-D- \u00b7 BTTS YES 0.53"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-24T17:31:43.139833+00:00",
-   "candidates": 2,
-   "due": 5,
-   "labelled": 5,
-   "matched": 2,
-   "new": 1
-  },
   {
    "at": "2026-10-24T17:46:43.415731+00:00",
    "candidates": 1,
@@ -2966,6 +2981,14 @@
    "labelled": 2,
    "matched": 0,
    "new": 0
+  },
+  {
+   "at": "2026-10-25T19:01:44.402831+00:00",
+   "candidates": 1,
+   "due": 3,
+   "labelled": 3,
+   "matched": 1,
+   "new": 1
   }
  ],
  "version": "soccer-rules-v1"
