@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-25T12:00:16.285269+00:00",
+ "last_run": "2026-10-25T12:45:14.048871+00:00",
  "registered": "2026-10-21",
  "rules": {
   "baseline": {
@@ -640,11 +640,14 @@
      "line": 17.5,
      "logged": "2026-10-25T09:15:13.584254+00:00",
      "match": "Nikoloz Basilashvili v Daniil Medvedev",
+     "payout": 1.0,
      "price": 0.86,
+     "profit": 15.15,
      "rule": "baseline",
+     "settled": "2026-10-25T12:45:14.048871+00:00",
      "side": "yes",
      "start": "2026-10-25T10:00:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXATPGTOTAL-26OCT25MEDBAS-18",
      "title": "Over 17.5 games",
      "tournament": "Almaty Open",
@@ -1289,11 +1292,14 @@
      "line": 17.5,
      "logged": "2026-10-25T09:15:13.584254+00:00",
      "match": "Nikoloz Basilashvili v Daniil Medvedev",
+     "payout": 1.0,
      "price": 0.86,
+     "profit": 15.15,
      "rule": "tennis_atp_low_over",
+     "settled": "2026-10-25T12:45:14.048871+00:00",
      "side": "yes",
      "start": "2026-10-25T10:00:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXATPGTOTAL-26OCT25MEDBAS-18",
      "title": "Over 17.5 games",
      "tournament": "Almaty Open",
@@ -1303,14 +1309,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-23T16:30:19.048686+00:00",
-   "baseline": 0,
-   "due": 1,
-   "entered": 0,
-   "matched": 1,
-   "new": 0
-  },
   {
    "at": "2026-10-23T17:15:14.807850+00:00",
    "baseline": 1,
@@ -1709,6 +1707,14 @@
    "due": 1,
    "entered": 0,
    "matched": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-10-25T12:45:14.048871+00:00",
+   "baseline": 0,
+   "due": 2,
+   "entered": 0,
+   "matched": 1,
    "new": 0
   }
  ],
