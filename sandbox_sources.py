@@ -4424,7 +4424,15 @@ DAY_CLUSTERED = ("commodities", "crypto", "crypto_fav", "commodities_fav", "socc
 # game night). culture_mentions sat in DAY_CLUSTERED until 2026-10-23, keyed per event, and broke
 # the build once a second week settled: both weeks' collapsed units carried a "-" in their ids,
 # outcome_cluster cut it, and the two weeks (0.78 + 0.65) became one cluster summing past 1.
-EVENT_CLUSTERED = ("culture_mentions",)
+#
+# nba_tt joined 2026-10-25 (the NBA team-total value lanes in Production). A team's total is its own
+# question: both teams' overs of one game can land together, and so can a team's rungs, so a game's bets
+# are not an exclusive set. outcome_cluster used to key a Kalshi yes/no ladder by its EVENT (the game), so
+# the 1h lane's Brooklyn under 107.5 (0.47) and Cleveland under 123.5 (0.62) became one cluster summing
+# past 1, DegenerateCluster was raised, and the Production feed failed every run from 03:00Z on Oct 25.
+# Each bet is now its own outcome (a lane holds one rung per team-game, so that is one per team ladder)
+# and the z's variance is clustered by game event, never below the independent-bets variance.
+EVENT_CLUSTERED = ("culture_mentions", "nba_tt")
 
 
 def event_key(q):

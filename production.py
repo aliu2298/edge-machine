@@ -488,7 +488,20 @@ def _assess_since_kickoff(d, key, pair):
 
 def _sandbox_record(d, key, since):
     # `since` is entered_at(pair). The record counts the contest, not the log.
-    a = _assess_since_kickoff(d, key, {"ready_at": since})
+    #
+    # ONE PAIR'S RECORD MUST NOT TAKE THE FEED DOWN (2026-10-25). The record is a courtesy beside the
+    # leads, and a follower reads the leads: when the NBA team-total pairs' record raised
+    # DegenerateCluster the whole nba_value feed failed every run for hours while live orders
+    # depended on it. The failure is named (a ::warning:: and a `record_error`), the pair's record
+    # fields are None, and every other pair and every lead is published as before. The cause still
+    # raises wherever it is tested (test_sandbox.py), so it stays visible.
+    try:
+        a = _assess_since_kickoff(d, key, {"ready_at": since})
+    except Exception as exc:                                   # noqa: BLE001
+        print(f"::warning title=Record unavailable::{key}: {type(exc).__name__}: {' '.join(str(exc).split())[:160]}",
+              flush=True)
+        return {"sandbox_n": None, "sandbox_roi": None, "sandbox_roi_fee": None, "sandbox_clv": None,
+                "record_error": f"{type(exc).__name__}"}
     r = lambda x: round(x, 4) if isinstance(x, float) else x
     return {"sandbox_n": a["n"], "sandbox_roi": r(a["roi"]), "sandbox_roi_fee": r(a["roi_fee"]),
             "sandbox_clv": r(a["clv"])}
