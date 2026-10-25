@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-25T23:30:24+00:00",
+ "board_built_at": "2026-10-25T23:45:24+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -450,6 +450,43 @@
    "sport": "nba_tt",
    "status": "hit"
   },
+  "2026-10-25|KXNBATEAMTOTAL-26OCT25LALUTA-LAL125|Los Angeles L over 124.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt",
+    "n": 124.5,
+    "team": "Los Angeles L"
+   },
+   "date": "2026-10-25",
+   "edge_at_log": 0.0975,
+   "first_seen": "2026-10-25",
+   "headline": "Los Angeles L over 124.5 points",
+   "home": null,
+   "id": "2026-10-25|KXNBATEAMTOTAL-26OCT25LALUTA-LAL125|Los Angeles L over 124.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-25T21:00Z",
+   "lane": "production",
+   "league": "NBA",
+   "match": "LAL @ UTAH",
+   "model_prob": 0.5244,
+   "pair": "nba_tt_value_1h|nba_tt",
+   "price_at_log": 0.41,
+   "published_at": "2026-10-25T23:45:24+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Los Angeles L over 124.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT25LALUTA",
+    "market": "KXNBATEAMTOTAL-26OCT25LALUTA-LAL125",
+    "outcome": "Los Angeles L over 124.5 points",
+    "outcome_side": "yes",
+    "price_at_log": 0.41,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_1h:401909861:LAL",
+   "source": "nba_tt_value_1h",
+   "sport": "nba_tt",
+   "status": "hit"
+  },
   "2026-10-26|KXNBATEAMTOTAL-26OCT25MEMSAC-SAC114|Sacramento under 113.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
    "away": null,
    "bet": {
@@ -466,7 +503,7 @@
    "kickoff": "2026-10-26T01:00Z",
    "lane": "production",
    "last_seen": "2026-10-25",
-   "last_seen_at": "2026-10-25T23:30:24+00:00",
+   "last_seen_at": "2026-10-25T23:45:24+00:00",
    "league": "NBA",
    "match": "MEM @ SAC",
    "model_prob": 0.5066,
@@ -498,18 +535,18 @@
    "ready_at": "2026-10-24T22:13:00+00:00",
    "route": "moved by hand on 2026-10-24",
    "routing": {
-    "leads": 10,
+    "leads": 11,
     "problem": null,
-    "routed": 10,
+    "routed": 11,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 9,
-   "sandbox_roi": -0.5504,
-   "sandbox_roi_fee": -0.5504,
+   "sandbox_n": 10,
+   "sandbox_roi": -0.3611,
+   "sandbox_roi_fee": -0.3611,
    "timing": {
     "late": [],
     "timed": 1,
@@ -565,5 +602,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-25T23:30:24+00:00"
+ "updated_at": "2026-10-25T23:45:24+00:00"
 }
