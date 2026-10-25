@@ -2,11 +2,11 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-25T02:00:14.492233+00:00",
-   "last_success": "2026-10-25T02:00:14.492233+00:00",
+   "last_run": "2026-10-25T03:00:14.669995+00:00",
+   "last_success": "2026-10-25T03:00:14.669995+00:00",
    "observations": {
-    "at": "2026-10-25T02:00:14.492233+00:00",
-    "events": 961,
+    "at": "2026-10-25T03:00:14.669995+00:00",
+    "events": 960,
     "reasons": {},
     "retired": "2026-10-24"
    },
@@ -533,11 +533,11 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-25T02:00:14.492233+00:00",
-   "last_success": "2026-10-25T02:00:14.492233+00:00",
+   "last_run": "2026-10-25T03:00:14.669995+00:00",
+   "last_success": "2026-10-25T03:00:14.669995+00:00",
    "observations": {
-    "at": "2026-10-25T02:00:14.492233+00:00",
-    "events": 961,
+    "at": "2026-10-25T03:00:14.669995+00:00",
+    "events": 960,
     "reasons": {},
     "retired": "2026-10-24"
    },
@@ -881,31 +881,25 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-25T02:00:14.492233+00:00",
-   "last_success": "2026-10-25T02:00:14.492233+00:00",
+   "last_run": "2026-10-25T03:00:14.669995+00:00",
+   "last_success": "2026-10-25T03:00:14.669995+00:00",
    "observations": {
-    "at": "2026-10-25T02:00:14.492233+00:00",
-    "events": 961,
+    "at": "2026-10-25T03:00:14.669995+00:00",
+    "events": 960,
     "news_guard": [
      {
       "id": "KXTRUMPSAYCOUNTRY-26NOV01-AUS",
       "reason": "news guard: market 0.72 v model 0.17",
       "side": "no",
       "word": "Australia / Australian"
-     },
-     {
-      "id": "KXTRUMPSAY-26OCT26-BIBI",
-      "reason": "news guard: market 0.68 v model 0.07",
-      "side": "no",
-      "word": "Bibi / Netanyahu"
      }
     ],
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 26,
-     "edge 5c+": 12,
+     "already near-certain (under 10c or over 90c)": 19,
+     "edge 5c+": 10,
      "edge under 5c": 1,
-     "news guard (YES mid over 0.50, model under 0.25)": 2,
-     "no quote or spread too wide": 27
+     "news guard (YES mid over 0.50, model under 0.25)": 1,
+     "no quote or spread too wide": 29
     }
    },
    "picks": [
@@ -1880,11 +1874,11 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-25T02:00:14.492233+00:00",
-   "last_success": "2026-10-25T02:00:14.492233+00:00",
+   "last_run": "2026-10-25T03:00:14.669995+00:00",
+   "last_success": "2026-10-25T03:00:14.669995+00:00",
    "observations": {
-    "at": "2026-10-25T02:00:14.492233+00:00",
-    "events": 961,
+    "at": "2026-10-25T03:00:14.669995+00:00",
+    "events": 960,
     "reasons": {},
     "retired": "2026-10-24"
    },
@@ -2397,7 +2391,7 @@
    "days": []
   },
   "Peace in the Middle East": {
-   "at": "2026-10-24T21:00:13.350048+00:00",
+   "at": "2026-10-25T03:00:14.669995+00:00",
    "days": []
   },
   "Pelosi": {
@@ -2449,7 +2443,7 @@
    "days": []
   },
   "Stupid Question": {
-   "at": "2026-10-24T21:00:13.350048+00:00",
+   "at": "2026-10-25T03:00:14.669995+00:00",
    "days": [
     "2026-08-31",
     "2026-09-09",
@@ -2462,7 +2456,7 @@
    "days": []
   },
   "TDS / Trump Derangement Syndrome": {
-   "at": "2026-10-24T21:00:13.350048+00:00",
+   "at": "2026-10-25T03:00:14.669995+00:00",
    "days": [
     "2026-08-05",
     "2026-09-26",
