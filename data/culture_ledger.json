@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-25T12:00:14.246174+00:00",
-   "last_success": "2026-10-25T12:00:14.246174+00:00",
+   "last_run": "2026-10-25T13:00:15.141635+00:00",
+   "last_success": "2026-10-25T13:00:15.141635+00:00",
    "observations": {
-    "at": "2026-10-25T12:00:14.246174+00:00",
+    "at": "2026-10-25T13:00:15.141635+00:00",
     "events": 956,
     "reasons": {},
     "retired": "2026-10-24"
@@ -533,10 +533,10 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-25T12:00:14.246174+00:00",
-   "last_success": "2026-10-25T12:00:14.246174+00:00",
+   "last_run": "2026-10-25T13:00:15.141635+00:00",
+   "last_success": "2026-10-25T13:00:15.141635+00:00",
    "observations": {
-    "at": "2026-10-25T12:00:14.246174+00:00",
+    "at": "2026-10-25T13:00:15.141635+00:00",
     "events": 956,
     "reasons": {},
     "retired": "2026-10-24"
@@ -881,17 +881,18 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-25T12:00:14.246174+00:00",
-   "last_success": "2026-10-25T12:00:14.246174+00:00",
+   "last_run": "2026-10-25T13:00:15.141635+00:00",
+   "last_success": "2026-10-25T13:00:15.141635+00:00",
    "observations": {
-    "at": "2026-10-25T12:00:14.246174+00:00",
+    "at": "2026-10-25T13:00:15.141635+00:00",
     "events": 956,
     "news_guard": [],
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 16,
-     "edge 5c+": 9,
+     "already near-certain (under 10c or over 90c)": 19,
+     "edge 5c+": 11,
      "edge capped": 1,
-     "no quote or spread too wide": 35
+     "edge under 5c": 1,
+     "no quote or spread too wide": 29
     }
    },
    "picks": [
@@ -1876,15 +1877,32 @@
      "side": "no",
      "status": "open",
      "title": "Fat shot / Ozempic"
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-11-01T15:00:00Z",
+     "detail": "P(said) 0.23 \u00b7 said on 3 of the last 84 days, 7.1 days left \u00b7 edge +0.06",
+     "edge": 0.0582,
+     "event": "KXTRUMPSAYCOUNTRY-26NOV01",
+     "id": "KXTRUMPSAYCOUNTRY-26NOV01-KUW",
+     "logged": "2026-10-25T13:00:15.141635+00:00",
+     "model": 0.2271,
+     "name": "What countries will Trump say in October?",
+     "price": 0.7,
+     "series": "KXTRUMPSAYCOUNTRY",
+     "side": "no",
+     "status": "open",
+     "title": "Kuwait / Kuwaiti",
+     "yes_mid": 0.325
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-25T12:00:14.246174+00:00",
-   "last_success": "2026-10-25T12:00:14.246174+00:00",
+   "last_run": "2026-10-25T13:00:15.141635+00:00",
+   "last_success": "2026-10-25T13:00:15.141635+00:00",
    "observations": {
-    "at": "2026-10-25T12:00:14.246174+00:00",
+    "at": "2026-10-25T13:00:15.141635+00:00",
     "events": 956,
     "reasons": {},
     "retired": "2026-10-24"
@@ -2280,7 +2298,7 @@
    "days": []
   },
   "DoorDash / DASH": {
-   "at": "2026-10-25T05:00:14.087486+00:00",
+   "at": "2026-10-25T13:00:15.141635+00:00",
    "days": [
     "2026-09-22"
    ]
@@ -2346,6 +2364,14 @@
   "JPMorgan / JPM": {
    "at": "2026-10-20T19:00:16.179838+00:00",
    "days": []
+  },
+  "Kuwait / Kuwaiti": {
+   "at": "2026-10-25T13:00:15.141635+00:00",
+   "days": [
+    "2026-08-20",
+    "2026-08-30",
+    "2026-09-22"
+   ]
   },
   "Lisa Cook": {
    "at": "2026-10-17T21:00:12.879866+00:00",
@@ -2481,7 +2507,7 @@
    ]
   },
   "Tomahawk": {
-   "at": "2026-10-24T21:12:02.247851+00:00",
+   "at": "2026-10-25T13:00:15.141635+00:00",
    "days": []
   },
   "Turning Point": {
