@@ -2208,6 +2208,8 @@ def _sandbox_html(d, st, now_dt, full=None):
 </details>
 </section>
 
+{chaos_html()}
+
 <section id="reference">
 <details class="sec"><summary><h2>Reference</h2></summary>
 <details class="ref"><summary>Declared but not connected ({n_unconnected})</summary>
@@ -2242,6 +2244,7 @@ A positive ROI under {MIN_N} settled bets is not a finding.</div></details>
         ("archive", "Archive"),
         ("summary", "What it says"),
         ("by-sport", "By sport"),
+        ("chaos", "Chaos"),
         ("reference", "Reference"),
     )
     return site_chrome.document(
@@ -2273,6 +2276,15 @@ def gold_orb_html():
         return gold_orb_build.section()
     except Exception as exc:                                    # noqa: BLE001
         return f'<section id="gold-orb"><p class="sm mut">Gold breakout section unavailable ({type(exc).__name__}).</p></section>'
+
+
+def chaos_html():
+    """The Chaos section: in-play take-profit lanes replayed nightly (chaos_build.py, 2026-10-25). Never breaks the page."""
+    try:
+        import chaos_build
+        return chaos_build.section()
+    except Exception as exc:                                    # noqa: BLE001
+        return f'<section id="chaos"><p class="sm mut">Chaos section unavailable ({type(exc).__name__}).</p></section>'
 
 
 def trading_page(now=None):
