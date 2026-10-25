@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-25T12:01:42.824378+00:00",
+ "last_run": "2026-10-25T12:31:41.195557+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -525,6 +525,60 @@
      "ticker": "KXSERIEATEAMTOTAL-26OCT24NAPROM-ROM2",
      "title": "Will Roma score over 1.5 goals?",
      "why": "AS Roma O+D- v Napoli O+D- \u00b7 2+ YES 0.41"
+    },
+    {
+     "ask": 0.55,
+     "bid": 0.54,
+     "event": "KXEPLTEAMTOTAL-26OCT25LFCBRI",
+     "group": "A",
+     "id": "T1:KXEPLTEAMTOTAL-26OCT25LFCBRI:home",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Premier League",
+     "line": 1.5,
+     "logged": "2026-10-25T12:31:41.195557+00:00",
+     "match": "Liverpool v Brighton & Hove Albion",
+     "opponent": "Brighton & Hove Albion",
+     "price": 0.55,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-10-25T14:00Z",
+     "status": "open",
+     "sub": "Liverpool over 1.5 goals",
+     "team": "Liverpool",
+     "team_side": "home",
+     "ticker": "KXEPLTEAMTOTAL-26OCT25LFCBRI-LFC2",
+     "title": "Will Liverpool score over 1.5 goals?",
+     "why": "Liverpool O+D- v Brighton & Hove Albion O+D- \u00b7 2+ YES 0.55"
+    },
+    {
+     "ask": 0.42,
+     "bid": 0.41,
+     "event": "KXEPLTEAMTOTAL-26OCT25LFCBRI",
+     "group": "A",
+     "id": "T1:KXEPLTEAMTOTAL-26OCT25LFCBRI:away",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Premier League",
+     "line": 1.5,
+     "logged": "2026-10-25T12:31:41.195557+00:00",
+     "match": "Liverpool v Brighton & Hove Albion",
+     "opponent": "Liverpool",
+     "price": 0.42,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-10-25T14:00Z",
+     "status": "open",
+     "sub": "Brighton over 1.5 goals",
+     "team": "Brighton & Hove Albion",
+     "team_side": "away",
+     "ticker": "KXEPLTEAMTOTAL-26OCT25LFCBRI-BRI2",
+     "title": "Will Brighton score over 1.5 goals?",
+     "why": "Brighton & Hove Albion O+D- v Liverpool O+D- \u00b7 2+ YES 0.42"
     }
    ]
   },
@@ -1386,6 +1440,33 @@
      "ticker": "KXMLSTEAMTOTAL-26OCT24SDSEA-SEA2",
      "title": "Will Seattle score over 1.5 goals?",
      "why": "Seattle Sounders FC O+D- v San Diego FC O+D+ \u00b7 2+ YES 0.49"
+    },
+    {
+     "ask": 0.46,
+     "bid": 0.45,
+     "event": "KXSERIEATEAMTOTAL-26OCT25ATAFRO",
+     "group": "B",
+     "id": "T5:KXSERIEATEAMTOTAL-26OCT25ATAFRO:away",
+     "labels": {
+      "opp": "O+D+",
+      "own": "O+D-"
+     },
+     "league": "Serie A",
+     "line": 1.5,
+     "logged": "2026-10-25T12:31:41.195557+00:00",
+     "match": "Atalanta v Frosinone",
+     "opponent": "Atalanta",
+     "price": 0.46,
+     "rule": "T5",
+     "side": "yes",
+     "start": "2026-10-25T14:00Z",
+     "status": "open",
+     "sub": "Frosinone over 1.5 goals",
+     "team": "Frosinone",
+     "team_side": "away",
+     "ticker": "KXSERIEATEAMTOTAL-26OCT25ATAFRO-FRO2",
+     "title": "Will Frosinone score over 1.5 goals?",
+     "why": "Frosinone O+D- v Atalanta O+D+ \u00b7 2+ YES 0.46"
     }
    ]
   },
@@ -1652,6 +1733,60 @@
      "ticker": "KXMLSTEAMTOTAL-26OCT24SDSEA-SD3",
      "title": "Will San Diego FC score over 2.5 goals?",
      "why": "San Diego FC O+D+ v Seattle Sounders FC O+D- \u00b7 3+ NO 0.72"
+    },
+    {
+     "ask": 0.2,
+     "bid": 0.19,
+     "event": "KXEPLTEAMTOTAL-26OCT25MUNBOU",
+     "group": "C",
+     "id": "T6:KXEPLTEAMTOTAL-26OCT25MUNBOU:home",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D+"
+     },
+     "league": "Premier League",
+     "line": 2.5,
+     "logged": "2026-10-25T12:31:41.195557+00:00",
+     "match": "Manchester United v AFC Bournemouth",
+     "opponent": "AFC Bournemouth",
+     "price": 0.81,
+     "rule": "T6",
+     "side": "no",
+     "start": "2026-10-25T14:00Z",
+     "status": "open",
+     "sub": "Manchester United over 2.5 goals",
+     "team": "Manchester United",
+     "team_side": "home",
+     "ticker": "KXEPLTEAMTOTAL-26OCT25MUNBOU-MUN3",
+     "title": "Will Manchester United score over 2.5 goals?",
+     "why": "Manchester United O+D+ v AFC Bournemouth O+D- \u00b7 3+ NO 0.81"
+    },
+    {
+     "ask": 0.37,
+     "bid": 0.35,
+     "event": "KXSERIEATEAMTOTAL-26OCT25ATAFRO",
+     "group": "C",
+     "id": "T6:KXSERIEATEAMTOTAL-26OCT25ATAFRO:home",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D+"
+     },
+     "league": "Serie A",
+     "line": 2.5,
+     "logged": "2026-10-25T12:31:41.195557+00:00",
+     "match": "Atalanta v Frosinone",
+     "opponent": "Frosinone",
+     "price": 0.65,
+     "rule": "T6",
+     "side": "no",
+     "start": "2026-10-25T14:00Z",
+     "status": "open",
+     "sub": "Atalanta over 2.5 goals",
+     "team": "Atalanta",
+     "team_side": "home",
+     "ticker": "KXSERIEATEAMTOTAL-26OCT25ATAFRO-ATA3",
+     "title": "Will Atalanta score over 2.5 goals?",
+     "why": "Atalanta O+D+ v Frosinone O+D- \u00b7 3+ NO 0.65"
     }
    ]
   },
@@ -1897,14 +2032,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-21T16:31:41.590651+00:00",
-   "candidates": 1,
-   "due": 1,
-   "labelled": 1,
-   "matched": 1,
-   "new": 1
-  },
   {
    "at": "2026-10-21T17:01:44.995657+00:00",
    "candidates": 1,
@@ -2304,6 +2431,14 @@
    "labelled": 1,
    "matched": 0,
    "new": 0
+  },
+  {
+   "at": "2026-10-25T12:31:41.195557+00:00",
+   "candidates": 3,
+   "due": 8,
+   "labelled": 8,
+   "matched": 3,
+   "new": 5
   }
  ],
  "version": "soccer-team-rules-v1"
