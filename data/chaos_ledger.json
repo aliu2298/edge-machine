@@ -1,5 +1,5 @@
 {
- "error": "nba_tt_cheap_tp30 KXNBATEAMTOTAL-26OCT24WASCHI: HTTP Error 404: Not Found; nba_tt_cheap_tp30 KXNBATEAMTOTAL-26OCT24SASDAL: HTTP Error 404: Not Found; nba_tt_cheap_tp30 KXNBATEAMTOTAL-26OCT24MILPHI: HTTP Error 404: Not Found; nba_tt_cheap_tp30 KXNBATEAMTOTAL-26OCT24MIACHA: HTTP Error 404: Not Found; nba_tt_cheap_tp30 KXNBATEAMTOTAL-26OCT24HOUATL: HTTP Error 404: Not Found; nba_tt_cheap_tp30 KXNBATEAMTOTAL-26OCT24BKNCLE: HTTP Error 404: Not Found",
+ "error": null,
  "lanes": {
   "atp_coinflip_tp30": {
    "caution": "",
@@ -205,7 +205,15 @@
    "label": "NBA team-total cheap rungs \u00b7 sell +30%",
    "note": "Each team's rungs priced 10-40c, bought 1h and 24h before the tip, with a resting sell at +30%. A loss-cutter test for the failing NBA team-total lanes. Rungs of one game move together: z is clustered by night, which is at least as strict as by game.",
    "registered": "2026-10-25T04:00:26.997081+00:00",
-   "replayed": {},
+   "replayed": {
+    "KXNBATEAMTOTAL-26OCT24BKNCLE": "before the lane's first night",
+    "KXNBATEAMTOTAL-26OCT24HOUATL": "before the lane's first night",
+    "KXNBATEAMTOTAL-26OCT24MIACHA": "before the lane's first night",
+    "KXNBATEAMTOTAL-26OCT24MILPHI": "before the lane's first night",
+    "KXNBATEAMTOTAL-26OCT24NOPDEN": "before the lane's first night",
+    "KXNBATEAMTOTAL-26OCT24SASDAL": "before the lane's first night",
+    "KXNBATEAMTOTAL-26OCT24WASCHI": "before the lane's first night"
+   },
    "series": [
     "KXNBATEAMTOTAL"
    ],
@@ -215,7 +223,7 @@
    "watch": false
   }
  },
- "last_run": "2026-10-25T04:00:26.997081+00:00",
+ "last_run": "2026-10-25T04:10:13.972482+00:00",
  "runs": [
   {
    "at": "2026-10-25T04:00:26.997081+00:00",
@@ -225,6 +233,10 @@
     "challenger_dog_tp30": 0,
     "nba_ml_dog_tp50": 0
    }
+  },
+  {
+   "at": "2026-10-25T04:10:13.972482+00:00",
+   "new": {}
   }
  ],
  "version": "chaos-v2"
