@@ -1,0 +1,45 @@
+name: Chaos replay paper research
+on:
+  schedule:
+    # Nightly, after the late games have settled. GitHub's cron is unreliable in this repo, so the
+    # VPS also asks (scripts/vps_window_requests.sh, lane_windows.chaos_windows): 04:00-05:30 ET.
+    - cron: '17 9 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "data/chaos_window/**"
+permissions:
+  contents: write
+concurrency:
+  group: chaos
+  cancel-in-progress: false
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Tests
+        run: python3 test_chaos.py
+      - name: Replay settled events for every registered chaos lane (own ledger; none registered yet writes nothing new)
+        run: python3 chaos_replay.py
+      - name: Save records
+        run: |
+          set -euo pipefail
+          if [ ! -f data/chaos_ledger.json ]; then exit 0; fi
+          python3 -c 'import json; json.load(open("data/chaos_ledger.json"))'
+          git config user.name "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+          git add data/chaos_ledger.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Chaos replay paper observations"
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then exit 0; fi
+            git fetch origin main
+            git rebase origin/main
+          done
+          exit 1

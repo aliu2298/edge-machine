@@ -56,7 +56,7 @@ sat = at(2026, 10, 17, 12, 0)
 # An empty ledger: the lineup windows come from the real ledger's kickoffs, which this test must
 # not depend on (it read real Oct 17 fixtures once they were logged).
 lanes_sat = {(w["lane"], w["label"]) for w in W.windows(sat, ledger={"quotes": []}, games=[], fixtures=[])
-             if w["close"].date() == dt.date(2026, 10, 17) and w["lane"] != "culture"}
+             if w["close"].date() == dt.date(2026, 10, 17) and w["lane"] not in ("culture", "chaos")}
 check("Saturday: crypto, gas/diesel (and the near-certain YES hour) and the first-to-score NO pick, "
       "no Treasury, index or commodity",
       sorted(l for l, _ in lanes_sat), ["crypto_fav_band", "econ_daily", "econ_daily", "econ_nc_yes", "ftts_no"])

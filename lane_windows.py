@@ -96,6 +96,8 @@ STAMP = {
     "nba_value": "data/nba_value_window/request.txt",
     # 2026-10-22: the NBA Safe Card (nba_safe_card.py), 90-60 min before each tip.
     "nba_safe_card": "data/nba_safe_card_window/request.txt",
+    # 2026-10-25: the chaos replay (chaos_replay.py), once a night after the games have settled.
+    "chaos": "data/chaos_window/request.txt",
 }
 # nfl_tt.WINDOW_MIN (45, 75), copied; test_nfl_tt.py checks the two agree.
 NFL_FROM, NFL_TO = 75, 45                # minutes before the ESPN kickoff
@@ -460,6 +462,22 @@ def nba_safe_windows(now, tips=None):
                  every=NBA_VALUE_1H_EVERY, last_ask=NBA_VALUE_1H_LAST_ASK) for t in tips or ()]
 
 
+CHAOS_AT = (4, 0)                        # ET: after the late games settle
+CHAOS_EVERY = dt.timedelta(minutes=30)
+
+
+def chaos_windows(now):
+    """One window a night, 04:00-05:30 ET, read up to three times 30 minutes apart (a replay only does
+    the events that have settled since the last one, so a repeat read is cheap)."""
+    et = now.astimezone(ET)
+    out = []
+    for day in (et.date() - dt.timedelta(days=1), et.date(), et.date() + dt.timedelta(days=1)):
+        start = dt.datetime(day.year, day.month, day.day, *CHAOS_AT, tzinfo=ET).astimezone(dt.timezone.utc)
+        out.append(dict(lane="chaos", label=f"Chaos replay {day}", series=(), close=start + dt.timedelta(hours=2),
+                        start=start, end=start + dt.timedelta(minutes=90), every=CHAOS_EVERY))
+    return out
+
+
 def ftts_day_full(day, ledger=None):
     """True once every LIVE No lane holds FTTS_NO_PICKS bets for that Central day.
 
@@ -519,6 +537,7 @@ def windows(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, 
     out += nfl_windows(now, nfl)
     out += nba_value_windows(now, nba_value)
     out += nba_safe_windows(now, nba_safe)
+    out += chaos_windows(now)
     return sorted(out, key=lambda w: (w["start"], w["lane"]))
 
 
