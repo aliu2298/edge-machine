@@ -86,6 +86,20 @@
    "warning": null,
    "yes": 2
   },
+  "nba_tt_fade_overs_24h:2026-10-25": {
+   "at": "2026-10-25T01:30:24.083540+00:00",
+   "games": 4,
+   "gap_mean": 16.15,
+   "gaps": 4,
+   "lean": null,
+   "no": 0,
+   "ok": false,
+   "picks": 0,
+   "reason": "model level mismatch: model +16.2 pts v Kalshi's median line (a data problem)",
+   "share": null,
+   "warning": null,
+   "yes": 0
+  },
   "nba_tt_value_1h:2026-10-22": {
    "at": "2026-10-22T21:30:27.005288+00:00",
    "games": 2,
@@ -157,10 +171,24 @@
    "reason": null,
    "share": null,
    "yes": 0
+  },
+  "nba_tt_value_24h:2026-10-25": {
+   "at": "2026-10-25T01:30:24.083540+00:00",
+   "games": 4,
+   "gap_mean": 16.15,
+   "gaps": 4,
+   "lean": null,
+   "no": 0,
+   "ok": false,
+   "picks": 0,
+   "reason": "model level mismatch: model +16.2 pts v Kalshi's median line (a data problem)",
+   "share": null,
+   "warning": null,
+   "yes": 0
   }
  },
  "error": null,
- "last_run": "2026-10-25T01:17:44.734438+00:00",
+ "last_run": "2026-10-25T01:30:24.083540+00:00",
  "looks": {
   "nba_1q_value_1h:401909093": {
    "at": "2026-10-22T21:30:27.005288+00:00",
@@ -753,6 +781,28 @@
     "nba_tt_fade_overs_1h:401909860:PHX"
    ]
   },
+  "nba_tt_fade_overs_24h:401909861": {
+   "at": "2026-10-25T01:30:24.083540+00:00",
+   "baseline": 0,
+   "event": "KXNBATEAMTOTAL-26OCT25LALUTA",
+   "mu": {
+    "LAL": 125.03605243435221,
+    "UTAH": 115.07262316605951
+   },
+   "mu_q1": 60.29829840543174,
+   "picks": []
+  },
+  "nba_tt_fade_overs_24h:401909862": {
+   "at": "2026-10-25T01:30:24.083540+00:00",
+   "baseline": 0,
+   "event": "KXNBATEAMTOTAL-26OCT25INDBKN",
+   "mu": {
+    "BKN": 111.22412279284221,
+    "IND": 111.28135368715115
+   },
+   "mu_q1": 58.03709276128906,
+   "picks": []
+  },
   "nba_tt_value_1h:401909093": {
    "at": "2026-10-22T21:30:27.005288+00:00",
    "baseline": 25,
@@ -1301,6 +1351,30 @@
     "PHX": 110.84227378205523
    },
    "mu_q1": 56.646002297304676,
+   "picks": []
+  },
+  "nba_tt_value_24h:401909861": {
+   "at": "2026-10-25T01:30:24.083540+00:00",
+   "baseline": 0,
+   "blocked": "model level mismatch: model +16.2 pts v Kalshi's median line (a data problem)",
+   "event": "KXNBATEAMTOTAL-26OCT25LALUTA",
+   "mu": {
+    "LAL": 125.03605243435221,
+    "UTAH": 115.07262316605951
+   },
+   "mu_q1": 60.29829840543174,
+   "picks": []
+  },
+  "nba_tt_value_24h:401909862": {
+   "at": "2026-10-25T01:30:24.083540+00:00",
+   "baseline": 0,
+   "blocked": "model level mismatch: model +16.2 pts v Kalshi's median line (a data problem)",
+   "event": "KXNBATEAMTOTAL-26OCT25INDBKN",
+   "mu": {
+    "BKN": 111.22412279284221,
+    "IND": 111.28135368715115
+   },
+   "mu_q1": 58.03709276128906,
    "picks": []
   }
  },
@@ -15492,14 +15566,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-23T22:17:15.922838+00:00",
-   "baseline": 0,
-   "due": 10,
-   "entered": 0,
-   "looked": 0,
-   "new": 0
-  },
-  {
    "at": "2026-10-23T22:30:27.227991+00:00",
    "baseline": 5,
    "blocked": 1,
@@ -15903,10 +15969,18 @@
    "entered": 0,
    "looked": 0,
    "new": 0
+  },
+  {
+   "at": "2026-10-25T01:30:24.083540+00:00",
+   "baseline": 0,
+   "blocked": 2,
+   "due": 21,
+   "entered": 0,
+   "looked": 4,
+   "new": 0
   }
  ],
  "schedule": [
-  "2026-10-25T00:30:00+00:00",
   "2026-10-25T01:00:00+00:00",
   "2026-10-25T02:00:00+00:00",
   "2026-10-25T21:00:00+00:00",
