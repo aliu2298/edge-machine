@@ -9,11 +9,12 @@ on the 5-minute range), but it filled at the range edge and judged both-sides mi
 high/low, which is look-ahead; re-run look-ahead-free the same cell is +0.9bp (t +0.91) and -1.2bp.
 Olu kept the lane anyway as a MEASUREMENT ("build both plans, let's see what turns up"): what do
 the two versions really net at Coinbase Derivatives' gold future (GOL-<expiry>-CDE, 1 oz), and
-what is that venue's real spread at 8 pm CT? Two pre-registered variants, not retuned:
-    A  "friend"  range = the 30-minute candle 7:30-8:00 pm CT (America/Chicago, follows DST)
-    B  "5-min"   range = the five minutes 7:55-8:00 pm CT
-    signal  the first minute after 8:00 pm that CLOSES above the range high (LONG) or below the
-            range low (SHORT), within 60 minutes; decided only once that minute has finished
+what is that venue's real spread at that hour? Two pre-registered variants, not retuned:
+    A  "friend"  range = the 30-minute candle 7:30-8:00 pm CST = 01:30-02:00 UTC, FIXED
+    B  "5-min"   range = the five minutes 7:55-8:00 pm CST = 01:55-02:00 UTC
+    signal  the first minute after 8:00 pm CST (02:00 UTC) that CLOSES above the range high (LONG) or
+            below the range low (SHORT), within 60 minutes (to 03:00 UTC); decided only once that
+            minute has finished
     entry   the NEXT minute's open
     exit    the close 15 minutes after entry (the close of the 15th minute held); no stop
 A's range is the 30-minute candle as a chart draws it, from whatever traded; B keeps its
@@ -21,14 +22,24 @@ pre-registered skip, every one of its five minutes must have traded (Coinbase pr
 for a minute with a trade).
 
 Nights are Sunday to Thursday (Chicago dates). Outcomes that are not a trade are logged:
-    no_range    B: a minute of 7:55-7:59 has no candle; A: nothing traded 7:30-7:59
-    no_break    no minute closed beyond the range by 9:00 pm CT
+    no_range    B: a minute of the last five before the anchor has no candle; A: nothing traded in the 30
+    no_break    no minute closed beyond the range within 60 minutes of the anchor
 Two returns a trade, in bp of the entry price and in $ a contract:
     gross   side * (exit - entry), entry at the next minute's open
     net     at the venue: buy at the ask and sell at the bid, at entry and at exit (the book at the
             entry poll and at the exit poll), minus the fee a contract a side on both sides
-SHADOW: each variant is also logged from a fixed 01:00 UTC anchor (the China open). Under daylight
-time 01:00 UTC IS 8:00 pm CT; from Nov 1 it is 7:00 pm CST, so the anchors split.
+AMENDMENT 2026-10-24 (Olu): fixed to 7:30 pm CST (01:30 UTC) per the original spec; the earlier
+DST-following 7:30 pm CDT anchor was an hour early. The primary anchor is therefore the fixed UTC
+range 01:30-02:00 UTC ("utc_0130", anchor instant 02:00 UTC), the same instant all year: 8:30 pm CDT
+until Nov 1, 7:30 pm CST after. The 01:00 UTC China-open SHADOW ("utc_0100", range 00:30-01:00 UTC) is
+kept as the second anchor. The DST-following 8:00 pm America/Chicago anchor ("ct_2000") is RETIRED
+2026-10-24: its rows stay, labelled retired, and it logs nothing new. Nights are still Sunday to
+Thursday by Chicago date; a night's anchors are on the next UTC day.
+BACKFILL 2026-10-24: every past night since the lane started (2026-10-18) was re-run at the new
+01:30 UTC anchor from Coinbase's historical 1-minute candles for the same contract (GOL-25NOV26-CDE).
+Coinbase publishes no historical book, so those rows carry `backfilled` and "candles only, no
+spread": they show on the page with their gross return and are kept out of every net-after-spread
+statistic.
 
 The live run (`--run`) is time-critical, so it runs on edge-vps from a user crontab
 (scripts/vps_gold_orb.sh), not on GitHub's cron. Olu reviews at 10+ settled nights per variant.
@@ -52,12 +63,14 @@ CONTRACT = "GOL"                  # Coinbase Derivatives gold futures, GOL-<expi
 CONTRACT_OZ = 1
 BREAK_MIN, HOLD_MIN = 60, 15
 # variant -> (range minutes before the anchor, minutes that must have traded, page name)
-VARIANTS = {"A": (30, 1, "A · friend · 30-min range 7:30–8:00 pm"),
-            "B": (5, 5, "B · 5-min range 7:55–8:00 pm")}
-ANCHOR_CT = (20, 0)               # 8:00 pm America/Chicago
-SHADOW_UTC = (1, 0)               # 01:00 UTC, the China open
+VARIANTS = {"A": (30, 1, "A · friend · 30-min range 7:30–8:00 pm CST"),
+            "B": (5, 5, "B · 5-min range 7:55–8:00 pm CST")}
+ANCHOR_UTC = (2, 0)               # 02:00 UTC: the end of the fixed 7:30-8:00 pm CST range (01:30-02:00 UTC)
+SHADOW_UTC = (1, 0)               # 01:00 UTC, the China open (range 00:30-01:00 UTC)
+RETIRED_ANCHORS = {"ct_2000": "2026-10-24"}   # the DST-following 8:00 pm CT anchor, off from this day
 NIGHTS = (6, 0, 1, 2, 3)          # Sun-Thu, Chicago date
-POLL_S = 5
+POLL_S = 5                        # the pre-anchor wait step
+POLL_PAST_S = 2                   # polls land this many seconds after each minute boundary
 RANGE_GRACE_S = 120               # a 7:59 candle can lag the clock; no_range only after this
 # Fee a contract a side, in $. Source: Coinbase Derivatives' fee schedule filed with the CFTC in
 # 2024 (cftc.gov/filings/orgrules/rules051624991.pdf), "Gold Futures" $0.10 per side for
@@ -75,11 +88,15 @@ def is_night(day):
 
 
 def anchors(day):
-    """[(anchor key, anchor instant UTC, shadow?)] for the Chicago night `day`."""
-    main = dt.datetime(day.year, day.month, day.day, *ANCHOR_CT, tzinfo=CT).astimezone(UTC)
+    """[(anchor key, anchor instant UTC, shadow?)] for the Chicago night `day`.
+
+    Both are FIXED UTC instants on the next UTC day, so they are the same in October (CDT) and
+    November (CST): "utc_0130" is the end of the 7:30-8:00 pm CST range (02:00 UTC), "utc_0100"
+    the China-open shadow (01:00 UTC). The DST-following "ct_2000" is retired (RETIRED_ANCHORS)."""
     nxt = day + dt.timedelta(days=1)
+    main = dt.datetime(nxt.year, nxt.month, nxt.day, *ANCHOR_UTC, tzinfo=UTC)
     shadow = dt.datetime(nxt.year, nxt.month, nxt.day, *SHADOW_UTC, tzinfo=UTC)
-    return [("ct_2000", main, False), ("utc_0100", shadow, True)]
+    return [("utc_0130", main, False), ("utc_0100", shadow, True)]
 
 
 def night_of(now):
@@ -88,6 +105,15 @@ def night_of(now):
 
 
 # ---------- the rule, on candles ----------
+
+def to_next_poll(now):
+    """Seconds to sleep so the next poll lands POLL_PAST_S after a minute boundary: a minute is judged
+    only once it has finished, so the book seen on a poll just after the boundary is the one an order
+    at the next minute's open would meet. Never less than one second."""
+    past = now.second + now.microsecond / 1e6
+    wait = 60.0 - past + POLL_PAST_S
+    return max(1.0, wait - 60.0 if wait > 60.0 else wait)
+
 
 def minute(t):
     return int(t.timestamp()) // 60 * 60
@@ -229,6 +255,27 @@ def summary(rows):
                 net_usd=sum(r["net_usd"] for r in done) / n)
 
 
+def gross_summary(rows):
+    """Settled rows with a gross return and NO book (the 2026-10-24 backfill): n, win % on the gross
+    return, the average gross bp. They never enter `summary`, which is the net-after-spread statistic."""
+    done = [r for r in rows if r.get("status") == "settled" and r.get("backfilled") and r.get("gross_bp") is not None]
+    n = len(done)
+    if not n:
+        return dict(n=0, win=None, gross=None)
+    return dict(n=n, win=sum(r["gross_bp"] > 0 for r in done) / n, gross=sum(r["gross_bp"] for r in done) / n)
+
+
+def retire_anchors(state):
+    """Stamp the retired anchors' rows (their rows stay; nothing new is logged on them)."""
+    n = 0
+    for r in state["nights"]:
+        day = RETIRED_ANCHORS.get(r.get("anchor"))
+        if day and r.get("retired") != day:
+            r["retired"] = day
+            n += 1
+    return n
+
+
 # ---------- one poll: advance a row ----------
 
 def step(row, cm, book, now, product):
@@ -322,6 +369,44 @@ def book_top(product, fetch=get):
                 ask_size=f(ask.get("size")), at=b.get("time"))
 
 
+# ---------- the backfill (2026-10-24) ----------
+
+BACKFILL_FROM = "2026-10-18"        # the first night the lane ran
+BACKFILL_PRODUCT = "GOL-25NOV26-CDE"
+BACKFILL_BASIS = "candles only, no spread"
+
+
+def backfill(state, product=BACKFILL_PRODUCT, since=BACKFILL_FROM, until=None, fetch=get, log=print):
+    """Re-run every past night at the CURRENT anchors from Coinbase's historical 1-minute candles.
+
+    Coinbase publishes no historical book, so a backfilled row has a gross return and no spread or
+    net: it is flagged `backfilled` with BACKFILL_BASIS and is kept out of the net statistics. A row
+    that already exists (the live shadow rows, or an earlier backfill) is never touched. A night is
+    done only once its whole window (signal hour, hold, margin) has passed. -> the new rows."""
+    until = until or dt.datetime.now(UTC)
+    day, last = dt.date.fromisoformat(since), night_of(until)
+    new = []
+    while day <= last:
+        if is_night(day):
+            for key, anchor, shadow in anchors(day):
+                if any(r["id"] == f"{v}:{key}:{day.isoformat()}" for r in state["nights"] for v in VARIANTS):
+                    continue
+                horizon = anchor + dt.timedelta(minutes=BREAK_MIN + 1 + HOLD_MIN + 2)
+                if horizon > until:
+                    continue
+                cm = candles(product, anchor - dt.timedelta(minutes=max(v[0] for v in VARIANTS.values()) + 1),
+                             horizon + dt.timedelta(minutes=1), fetch)
+                for v in VARIANTS:
+                    row = row_for(state, day, v, key, anchor, shadow)
+                    step(row, cm, None, horizon, product)
+                    row.update(backfilled=True, basis=BACKFILL_BASIS, backfilled_on="2026-10-24")
+                    new.append(row)
+                    log(f"backfilled {row['id']}: {row['status']}"
+                        + (f" {row['side']} gross {row['gross_bp']:+.1f}bp" if row.get("gross_bp") is not None else ""))
+        day += dt.timedelta(days=1)
+    return new
+
+
 # ---------- the live run ----------
 
 def run(state, now_fn=lambda: dt.datetime.now(UTC), fetch=get, sleep=time.sleep, path=None, log=print):
@@ -350,6 +435,13 @@ def run(state, now_fn=lambda: dt.datetime.now(UTC), fetch=get, sleep=time.sleep,
         if now < first - dt.timedelta(seconds=1):
             sleep(min(POLL_S, max(0.5, (first - now).total_seconds())))
             continue
+        # Between anchors (the shadow resolved, the 02:00 UTC anchor still ahead) nothing can change:
+        # wait for it instead of polling Coinbase every few seconds for an hour.
+        waiting = [dt.datetime.fromisoformat(r["anchor_at"]) for r in rows if r["status"] == "pending"]
+        if waiting and not any(r["status"] in ("ranged", "open") for r in rows) \
+                and now < min(waiting) - dt.timedelta(seconds=10):
+            sleep(min(30.0, (min(waiting) - now).total_seconds() - 5))
+            continue
         try:
             cm = candles(product, first - dt.timedelta(minutes=longest + 1), now + dt.timedelta(minutes=1), fetch)
             book = book_top(product, fetch)
@@ -361,7 +453,7 @@ def run(state, now_fn=lambda: dt.datetime.now(UTC), fetch=get, sleep=time.sleep,
         except Exception as e:                                    # noqa: BLE001
             errors += 1
             log(f"{now:%H:%M:%SZ} read failed: {str(e)[:120]}")
-        sleep(POLL_S)
+        sleep(to_next_poll(now_fn()))
     for r in rows:
         if r["status"] in ("pending", "ranged", "open"):
             r.update(status="error", error="run ended before the row resolved", settled_at=now_fn().isoformat())
@@ -376,13 +468,20 @@ def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
     out = argv[argv.index("--out") + 1] if "--out" in argv else PATH
     src = argv[argv.index("--from") + 1] if "--from" in argv else out
-    if "--run" not in argv:
+    if "--run" not in argv and "--backfill" not in argv:
         st = load(src)
         for v in VARIANTS:
             for k, _a, _s in anchors(dt.date.today()):
                 print(v, k, summary([r for r in st["nights"] if r.get("variant") == v and r.get("anchor") == k]))
         return 0
     state = load(src)
+    if "--backfill" in argv:
+        product = argv[argv.index("--product") + 1] if "--product" in argv else BACKFILL_PRODUCT
+        n_retired = retire_anchors(state)
+        new = backfill(state, product)
+        save(state, out)
+        print(f"backfilled {len(new)} rows, retired-anchor rows stamped {n_retired}")
+        return 0
     rows = run(state, path=out)
     save(state, out)
     print("done", [(r["id"], r["status"], r.get("net_bp")) for r in rows])

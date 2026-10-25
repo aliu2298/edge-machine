@@ -6,16 +6,19 @@
 # Sandbox Tracker's next page build shows it.
 #
 # Live on edge-vps as a USER CRONTAB (no root on that box; see edge-crypto.service for why). The box
-# runs UTC and the night has two anchors, 8:00 pm America/Chicago and the fixed 01:00 UTC
-# shadow, so ONE start time covers both seasons: 00:54 UTC is 7:54 pm CDT and 6:54 pm CST,
-# six minutes before the earlier anchor either way (after Nov 1 the run waits from 6:54 pm CST
-# for the 7:00 pm shadow, then the 8:00 pm anchor). The 7:30 pm range is read back from
-# Coinbase's candles, so the run need not be up for it. Mon-Fri UTC = Sun-Thu evenings in Chicago.
+# runs UTC and both anchors are FIXED UTC instants on the night's next UTC day (2026-10-24: the primary
+# anchor was the DST-following 8:00 pm CT, an hour early against the 7:30 pm CST spec):
+#   01:00 UTC  the China-open shadow  (range 00:30-01:00 UTC)
+#   02:00 UTC  the primary            (range 01:30-02:00 UTC = 7:30-8:00 pm CST; 8:30-9:00 pm CDT until Nov 1)
+# so ONE start time covers both seasons: 00:54 UTC is 7:54 pm CDT and 6:54 pm CST, six minutes before
+# the earliest anchor either way. The ranges are read back from Coinbase's candles, so the run need not
+# be up for them. gold_orb.py waits between anchors without polling and ends at the last anchor + 60 min
+# of signal + 1 + 15 min hold + 5 margin = 03:21 UTC, which the loop computes from the anchors itself.
+# Mon-Fri UTC = Sun-Thu evenings in Chicago.
 #   54 0 * * 1-5 /home/<user>/edge-machine-closes/scripts/vps_gold_orb.sh >> ~/edge-gold-orb.log 2>&1
-# gold_orb.py itself refuses a non Sun-Thu night and stops once both anchors resolve (by about
-# 9:20 pm CT at the latest).
+# gold_orb.py itself refuses a non Sun-Thu night.
 #
-# The run lasts up to 2.5 hours in a clone that local_closes.sh and vps_window_requests.sh pull,
+# The run lasts about 2.5 hours (00:54-03:21 UTC) in a clone that local_closes.sh and vps_window_requests.sh pull,
 # commit and push every 15 minutes. So the night is written OUTSIDE the clone ($WORK) while it
 # runs — an uncommitted change to a tracked file would make their `git pull --rebase` fail —
 # and the shared lock is held only for the pull at the start and the commit and push at the end.
