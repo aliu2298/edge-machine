@@ -95,6 +95,11 @@
    "lead_min": 16.0,
    "price": 0.52
   },
+  "bund_o35:KXBUNDESLIGATOTAL-26OCT25TSGLEV-4": {
+   "at": "2026-10-25T13:54:45+00:00",
+   "lead_min": 35.2,
+   "price": 0.53
+  },
   "bund_o35_fav:KXBUNDESLIGATOTAL-26OCT17SCHM05-4": {
    "at": "2026-10-17T13:10:49+00:00",
    "lead_min": 19.2,
@@ -169,6 +174,11 @@
    "at": "2026-10-18T14:51:03+00:00",
    "lead_min": 38.9,
    "price": 0.44
+  },
+  "corners_total_under:KXEPLCORNERS-26OCT25MUNBOU-10": {
+   "at": "2026-10-25T13:54:45+00:00",
+   "lead_min": 5.2,
+   "price": 0.47
   },
   "corners_total_under:KXLALIGACORNERS-26OCT18RMASEV-10": {
    "at": "2026-10-18T18:03:48+00:00",
@@ -455,6 +465,16 @@
    "lead_min": 19.2,
    "price": 0.88
   },
+  "o15_form_l10:KXBUNDESLIGATOTAL-26OCT25TSGLEV-2": {
+   "at": "2026-10-25T13:54:45+00:00",
+   "lead_min": 35.2,
+   "price": 0.9
+  },
+  "o15_form_l10:KXEPLTOTAL-26OCT25MUNBOU-2": {
+   "at": "2026-10-25T13:54:45+00:00",
+   "lead_min": 5.2,
+   "price": 0.78
+  },
   "o15_form_l10:KXEREDIVISIETOTAL-26OCT24WILCAM-2": {
    "at": "2026-10-24T16:13:59+00:00",
    "lead_min": 31.0,
@@ -580,6 +600,11 @@
    "lead_min": 16.0,
    "price": 0.28
   },
+  "o25_congestion:KXBUNDESLIGATOTAL-26OCT25TSGLEV-3": {
+   "at": "2026-10-25T13:54:45+00:00",
+   "lead_min": 35.2,
+   "price": 0.27
+  },
   "o25_congestion:KXEPLTOTAL-26OCT17BRELFC-3": {
    "at": "2026-10-17T13:10:49+00:00",
    "lead_min": 49.2,
@@ -589,6 +614,16 @@
    "at": "2026-10-17T13:10:49+00:00",
    "lead_min": 49.2,
    "price": 0.27
+  },
+  "o25_congestion:KXEPLTOTAL-26OCT25CRYNEW-3": {
+   "at": "2026-10-25T13:54:45+00:00",
+   "lead_min": 5.2,
+   "price": 0.43
+  },
+  "o25_congestion:KXEPLTOTAL-26OCT25MUNBOU-3": {
+   "at": "2026-10-25T13:54:45+00:00",
+   "lead_min": 5.2,
+   "price": 0.47
   },
   "o25_congestion:KXEREDIVISIETOTAL-26OCT18CAMAZA-3": {
    "at": "2026-10-18T11:41:00+00:00",
@@ -620,6 +655,11 @@
    "lead_min": 23.9,
    "price": 0.43
   },
+  "o25_congestion:KXLIGUE1TOTAL-26OCT25ASMLIL-3": {
+   "at": "2026-10-25T13:54:45+00:00",
+   "lead_min": 5.2,
+   "price": 0.46
+  },
   "o25_congestion:KXMLSTOTAL-26OCT17NECHI-3": {
    "at": "2026-10-17T23:24:17+00:00",
    "lead_min": 5.7,
@@ -640,6 +680,11 @@
    "lead_min": 59.4,
    "price": 0.33
   },
+  "o25_congestion:KXSCOTTISHPREMTOTAL-26OCT25MOTHOM-3": {
+   "at": "2026-10-25T13:54:45+00:00",
+   "lead_min": 5.2,
+   "price": 0.4
+  },
   "o25_congestion:KXSERIEATOTAL-26OCT18JUVLAZ-3": {
    "at": "2026-10-18T18:03:48+00:00",
    "lead_min": 41.2,
@@ -649,6 +694,11 @@
    "at": "2026-10-24T12:12:53+00:00",
    "lead_min": 47.1,
    "price": 0.31
+  },
+  "o25_congestion:KXSERIEATOTAL-26OCT25ATAFRO-3": {
+   "at": "2026-10-25T13:54:45+00:00",
+   "lead_min": 5.2,
+   "price": 0.27
   },
   "o25_congestion:KXUECLTOTAL-26OCT15ATAPAF-3": {
    "at": "2026-10-15T18:37:51+00:00",
@@ -756,5 +806,5 @@
    "price": 0.67
   }
  },
- "updated": "2026-10-25T04:34:27+00:00"
+ "updated": "2026-10-25T13:54:45+00:00"
 }
