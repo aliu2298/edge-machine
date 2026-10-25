@@ -11021,12 +11021,15 @@
       "safety",
       "value"
      ],
+     "payout": 1.0,
      "price": 0.91,
+     "profit": 0.092,
      "rationale": "BKN@CLE 1Q UNDER 70.5 @91c: model 95.6% (mu 56.4, line +14.1 above mu); labels q1 O+D+ v O+D\u2212 (both attacks agree); edge +4.6c",
      "sd": 8.28,
+     "settled": "2026-10-25T00:30:25.727209+00:00",
      "side": "no",
      "start": "2026-10-24T23:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT24BKNCLE-71",
      "unit": "game"
     },
@@ -12592,7 +12595,7 @@
   }
  },
  "error": null,
- "last_run": "2026-10-24T23:45:34.989204+00:00",
+ "last_run": "2026-10-25T00:30:25.727209+00:00",
  "preseason": [
   {
    "pts": 105,
@@ -13443,10 +13446,13 @@
   {
    "at": "2026-10-24T23:45:34.989204+00:00",
    "built": []
+  },
+  {
+   "at": "2026-10-25T00:30:25.727209+00:00",
+   "built": []
   }
  ],
  "schedule": [
-  "2026-10-24T23:30:00+00:00",
   "2026-10-25T00:00:00+00:00",
   "2026-10-25T00:30:00+00:00",
   "2026-10-25T01:00:00+00:00",
