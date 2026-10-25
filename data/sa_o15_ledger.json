@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-25T18:16:43.314914+00:00",
+ "last_run": "2026-10-25T18:31:12.662548+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -231,6 +231,24 @@
      "ticker": "KXARGPREMDIVTOTAL-26OCT25CAACAB-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Argentina over 1.5 YES 0.70"
+    },
+    {
+     "ask": 0.66,
+     "bid": 0.65,
+     "event": "KXARGPREMDIVTOTAL-26OCT25CAIBOC",
+     "id": "ARG:KXARGPREMDIVTOTAL-26OCT25CAIBOC",
+     "league": "Liga Profesional",
+     "line": 1.5,
+     "logged": "2026-10-25T18:31:12.662548+00:00",
+     "match": "Independiente v Boca Juniors",
+     "price": 0.66,
+     "rule": "ARG",
+     "side": "yes",
+     "start": "2026-10-25T20:00Z",
+     "status": "open",
+     "ticker": "KXARGPREMDIVTOTAL-26OCT25CAIBOC-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Argentina over 1.5 YES 0.66"
     }
    ]
   },
@@ -429,13 +447,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-24T17:02:05.309118+00:00",
-   "due": 1,
-   "matched": 1,
-   "new": 0,
-   "quoted": 1
-  },
   {
    "at": "2026-10-24T17:16:40.615130+00:00",
    "due": 1,
@@ -785,6 +796,13 @@
    "matched": 0,
    "new": 0,
    "quoted": 0
+  },
+  {
+   "at": "2026-10-25T18:31:12.662548+00:00",
+   "due": 1,
+   "matched": 1,
+   "new": 1,
+   "quoted": 1
   }
  ],
  "schedule": [

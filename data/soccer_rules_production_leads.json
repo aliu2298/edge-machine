@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-25T18:16:43+00:00",
+ "board_built_at": "2026-10-25T18:31:12+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sa_o15_arg": true,
@@ -598,6 +598,43 @@
    "sport": "soccer_o25",
    "status": "hit"
   },
+  "2026-10-25|Independiente|Boca Juniors|Over 1.5 goals \u00b7 Argentina over 1.5": {
+   "away": "Boca Juniors",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-10-25",
+   "edge_at_log": null,
+   "first_seen": "2026-10-25",
+   "headline": "Over 1.5 goals",
+   "home": "Independiente",
+   "id": "2026-10-25|Independiente|Boca Juniors|Over 1.5 goals \u00b7 Argentina over 1.5",
+   "kickoff": "2026-10-25T20:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-25",
+   "last_seen_at": "2026-10-25T18:31:12+00:00",
+   "league": "Liga Profesional",
+   "match": "Independiente v Boca Juniors",
+   "pair": "sa_o15_arg|soccer_o15",
+   "price_at_log": 0.66,
+   "published_at": "2026-10-25T18:31:12+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Over 1.5 goals",
+    "event": "KXARGPREMDIVTOTAL-26OCT25CAIBOC",
+    "market": "KXARGPREMDIVTOTAL-26OCT25CAIBOC-2",
+    "outcome": "Over 1.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.66,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT25CAIBOC-2",
+   "source": "sa_o15_arg",
+   "sport": "soccer_o15",
+   "status": "pending"
+  },
   "2026-10-25|Rosario Central|Hurac\u00e1n|Over 1.5 goals \u00b7 Argentina over 1.5": {
    "away": "Hurac\u00e1n",
    "bet": {
@@ -642,9 +679,9 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 7,
+    "leads": 8,
     "problem": null,
-    "routed": 7,
+    "routed": 8,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -656,7 +693,7 @@
    "sandbox_roi_fee": 0.0044,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 2,
     "under_target": 0
    }
   },
@@ -759,5 +796,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-25T18:16:43+00:00"
+ "updated_at": "2026-10-25T18:31:12+00:00"
 }
