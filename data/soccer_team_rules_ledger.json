@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-25T16:31:09.818376+00:00",
+ "last_run": "2026-10-25T18:16:09.910193+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -804,11 +804,14 @@
      "logged": "2026-10-25T14:46:35.581366+00:00",
      "match": "Angers v Lorient",
      "opponent": "Angers",
+     "payout": 1.0,
      "price": 0.61,
+     "profit": 59.58,
      "rule": "T2",
+     "settled": "2026-10-25T18:16:09.910193+00:00",
      "side": "no",
      "start": "2026-10-25T16:15Z",
-     "status": "open",
+     "status": "won",
      "sub": "Lorient over 1.5 goals",
      "team": "Lorient",
      "team_side": "away",
@@ -1899,11 +1902,14 @@
      "logged": "2026-10-25T13:01:42.701443+00:00",
      "match": "TSG Hoffenheim v Bayer Leverkusen",
      "opponent": "Bayer Leverkusen",
+     "payout": 0.0,
      "price": 0.77,
+     "profit": -100.0,
      "rule": "T6",
+     "settled": "2026-10-25T18:16:09.910193+00:00",
      "side": "no",
      "start": "2026-10-25T14:30Z",
-     "status": "open",
+     "status": "lost",
      "sub": "Hoffenheim over 2.5 goals",
      "team": "TSG Hoffenheim",
      "team_side": "home",
@@ -2220,11 +2226,14 @@
      "logged": "2026-10-25T13:46:35.805105+00:00",
      "match": "Celta Vigo v Real Betis",
      "opponent": "Celta Vigo",
+     "payout": 1.0,
      "price": 0.55,
+     "profit": 76.27,
      "rule": "T8",
+     "settled": "2026-10-25T18:16:09.910193+00:00",
      "side": "no",
      "start": "2026-10-25T15:15Z",
-     "status": "open",
+     "status": "won",
      "sub": "Real Betis over 1.5 goals",
      "team": "Real Betis",
      "team_side": "away",
@@ -2263,14 +2272,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-23T17:46:29.462502+00:00",
-   "candidates": 2,
-   "due": 5,
-   "labelled": 5,
-   "matched": 2,
-   "new": 0
-  },
   {
    "at": "2026-10-23T18:01:15.655946+00:00",
    "candidates": 2,
@@ -2669,6 +2670,14 @@
    "due": 2,
    "labelled": 2,
    "matched": 1,
+   "new": 0
+  },
+  {
+   "at": "2026-10-25T18:16:09.910193+00:00",
+   "candidates": 0,
+   "due": 1,
+   "labelled": 1,
+   "matched": 0,
    "new": 0
   }
  ],
