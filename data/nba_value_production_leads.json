@@ -1,90 +1,11 @@
 {
- "board_built_at": "2026-10-25T01:30:24+00:00",
+ "board_built_at": "2026-10-25T02:00:25+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
  "first_publish_min": 45,
  "late_publication_skipped": 2,
- "leads": {
-  "2026-10-25|KXNBATEAMTOTAL-26OCT24GSWPHX-GSW109|Golden State over 108.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
-   "away": null,
-   "bet": {
-    "kind": "nba_tt",
-    "n": 108.5,
-    "team": "Golden State"
-   },
-   "date": "2026-10-25",
-   "edge_at_log": 0.1031,
-   "first_seen": "2026-10-25",
-   "headline": "Golden State over 108.5 points",
-   "home": null,
-   "id": "2026-10-25|KXNBATEAMTOTAL-26OCT24GSWPHX-GSW109|Golden State over 108.5 points \u00b7 NBA team total value \u00b7 1h before tip",
-   "kickoff": "2026-10-25T02:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-25",
-   "last_seen_at": "2026-10-25T01:30:24+00:00",
-   "league": "NBA",
-   "match": "GS @ PHX",
-   "model_prob": 0.5199,
-   "pair": "nba_tt_value_1h|nba_tt",
-   "price_at_log": 0.4,
-   "published_at": "2026-10-25T00:30:24+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 89,
-   "route": {
-    "claim": "Golden State over 108.5 points",
-    "event": "KXNBATEAMTOTAL-26OCT24GSWPHX",
-    "market": "KXNBATEAMTOTAL-26OCT24GSWPHX-GSW109",
-    "outcome": "Golden State over 108.5 points",
-    "outcome_side": "yes",
-    "price_at_log": 0.4,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "nba_tt_value_1h:401909860:GS",
-   "source": "nba_tt_value_1h",
-   "sport": "nba_tt",
-   "status": "pending"
-  },
-  "2026-10-25|KXNBATEAMTOTAL-26OCT24GSWPHX-PHX115|Phoenix under 114.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
-   "away": null,
-   "bet": {
-    "kind": "nba_tt_no",
-    "n": 114.5,
-    "team": "Phoenix"
-   },
-   "date": "2026-10-25",
-   "edge_at_log": 0.1645,
-   "first_seen": "2026-10-25",
-   "headline": "Phoenix under 114.5 points",
-   "home": null,
-   "id": "2026-10-25|KXNBATEAMTOTAL-26OCT24GSWPHX-PHX115|Phoenix under 114.5 points \u00b7 NBA team total value \u00b7 1h before tip",
-   "kickoff": "2026-10-25T02:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-25",
-   "last_seen_at": "2026-10-25T01:30:24+00:00",
-   "league": "NBA",
-   "match": "GS @ PHX",
-   "model_prob": 0.6318,
-   "pair": "nba_tt_value_1h|nba_tt",
-   "price_at_log": 0.45,
-   "published_at": "2026-10-25T00:30:24+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 89,
-   "route": {
-    "claim": "Phoenix under 114.5 points",
-    "event": "KXNBATEAMTOTAL-26OCT24GSWPHX",
-    "market": "KXNBATEAMTOTAL-26OCT24GSWPHX-PHX115",
-    "outcome": "Phoenix over 114.5 points",
-    "outcome_side": "no",
-    "price_at_log": 0.45,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "nba_tt_value_1h:401909860:PHX",
-   "source": "nba_tt_value_1h",
-   "sport": "nba_tt",
-   "status": "pending"
-  }
- },
+ "leads": {},
  "pairs": {
   "nba_tt_value_1h|nba_tt": {
    "by_hand": "2026-10-24",
@@ -93,9 +14,9 @@
    "ready_at": "2026-10-24T22:13:00+00:00",
    "route": "moved by hand on 2026-10-24",
    "routing": {
-    "leads": 2,
+    "leads": 0,
     "problem": null,
-    "routed": 2,
+    "routed": 0,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -107,7 +28,7 @@
    "sandbox_roi_fee": null,
    "timing": {
     "late": [],
-    "timed": 2,
+    "timed": 0,
     "under_target": 0
    }
   },
@@ -160,5 +81,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-25T01:30:24+00:00"
+ "updated_at": "2026-10-25T02:00:25+00:00"
 }

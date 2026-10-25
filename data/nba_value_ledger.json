@@ -188,7 +188,7 @@
   }
  },
  "error": null,
- "last_run": "2026-10-25T01:30:24.083540+00:00",
+ "last_run": "2026-10-25T02:00:25.715644+00:00",
  "looks": {
   "nba_1q_value_1h:401909093": {
    "at": "2026-10-22T21:30:27.005288+00:00",
@@ -803,6 +803,62 @@
    "mu_q1": 58.03709276128906,
    "picks": []
   },
+  "nba_tt_fade_overs_24h:401909863": {
+   "at": "2026-10-25T02:00:25.715644+00:00",
+   "baseline": 0,
+   "event": "KXNBATEAMTOTAL-26OCT25ORLNYK",
+   "mu": {
+    "NY": 115.14857244610653,
+    "ORL": 107.63657415048503
+   },
+   "mu_q1": 56.35072273690397,
+   "picks": [
+    "nba_tt_fade_overs_24h:401909863:NY",
+    "nba_tt_fade_overs_24h:401909863:ORL"
+   ]
+  },
+  "nba_tt_fade_overs_24h:401909864": {
+   "at": "2026-10-25T02:00:25.715644+00:00",
+   "baseline": 0,
+   "event": "KXNBATEAMTOTAL-26OCT25TORMIN",
+   "mu": {
+    "MIN": 112.93356462947416,
+    "TOR": 111.39492072703514
+   },
+   "mu_q1": 56.71903011274881,
+   "picks": [
+    "nba_tt_fade_overs_24h:401909864:MIN",
+    "nba_tt_fade_overs_24h:401909864:TOR"
+   ]
+  },
+  "nba_tt_fade_overs_24h:401909865": {
+   "at": "2026-10-25T02:00:25.715644+00:00",
+   "baseline": 0,
+   "event": "KXNBATEAMTOTAL-26OCT25LACOKC",
+   "mu": {
+    "LAC": 104.1469792636205,
+    "OKC": 113.63350121484002
+   },
+   "mu_q1": 57.61171303957808,
+   "picks": [
+    "nba_tt_fade_overs_24h:401909865:LAC",
+    "nba_tt_fade_overs_24h:401909865:OKC"
+   ]
+  },
+  "nba_tt_fade_overs_24h:401909867": {
+   "at": "2026-10-25T02:00:25.715644+00:00",
+   "baseline": 0,
+   "event": "KXNBATEAMTOTAL-26OCT25MEMSAC",
+   "mu": {
+    "MEM": 119.27302316605955,
+    "SAC": 113.11454511727905
+   },
+   "mu_q1": 59.93366425909028,
+   "picks": [
+    "nba_tt_fade_overs_24h:401909867:MEM",
+    "nba_tt_fade_overs_24h:401909867:SAC"
+   ]
+  },
   "nba_tt_value_1h:401909093": {
    "at": "2026-10-22T21:30:27.005288+00:00",
    "baseline": 25,
@@ -1375,6 +1431,54 @@
     "IND": 111.28135368715115
    },
    "mu_q1": 58.03709276128906,
+   "picks": []
+  },
+  "nba_tt_value_24h:401909863": {
+   "at": "2026-10-25T02:00:25.715644+00:00",
+   "baseline": 0,
+   "blocked": "model level mismatch: model +16.2 pts v Kalshi's median line (a data problem)",
+   "event": "KXNBATEAMTOTAL-26OCT25ORLNYK",
+   "mu": {
+    "NY": 115.14857244610653,
+    "ORL": 107.63657415048503
+   },
+   "mu_q1": 56.35072273690397,
+   "picks": []
+  },
+  "nba_tt_value_24h:401909864": {
+   "at": "2026-10-25T02:00:25.715644+00:00",
+   "baseline": 0,
+   "blocked": "model level mismatch: model +16.2 pts v Kalshi's median line (a data problem)",
+   "event": "KXNBATEAMTOTAL-26OCT25TORMIN",
+   "mu": {
+    "MIN": 112.93356462947416,
+    "TOR": 111.39492072703514
+   },
+   "mu_q1": 56.71903011274881,
+   "picks": []
+  },
+  "nba_tt_value_24h:401909865": {
+   "at": "2026-10-25T02:00:25.715644+00:00",
+   "baseline": 0,
+   "blocked": "model level mismatch: model +16.2 pts v Kalshi's median line (a data problem)",
+   "event": "KXNBATEAMTOTAL-26OCT25LACOKC",
+   "mu": {
+    "LAC": 104.1469792636205,
+    "OKC": 113.63350121484002
+   },
+   "mu_q1": 57.61171303957808,
+   "picks": []
+  },
+  "nba_tt_value_24h:401909867": {
+   "at": "2026-10-25T02:00:25.715644+00:00",
+   "baseline": 0,
+   "blocked": "model level mismatch: model +16.2 pts v Kalshi's median line (a data problem)",
+   "event": "KXNBATEAMTOTAL-26OCT25MEMSAC",
+   "mu": {
+    "MEM": 119.27302316605955,
+    "SAC": 113.11454511727905
+   },
+   "mu_q1": 59.93366425909028,
    "picks": []
   }
  },
@@ -4222,11 +4326,14 @@
      "mu": 57.45,
      "night": "2026-10-24",
      "p": 0.5459,
+     "payout": 0.0,
      "price": 0.51,
+     "profit": -100.0,
      "rule": "base_nba_1q_value_1h",
+     "settled": "2026-10-25T02:00:25.715644+00:00",
      "side": "yes",
      "start": "2026-10-25T00:30:00+00:00",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBA1QTOTAL-26OCT24HOUATL-57",
      "title": "Over 56.5 points",
      "unit": "game",
@@ -4246,11 +4353,14 @@
      "mu": 57.45,
      "night": "2026-10-24",
      "p": 0.6394,
+     "payout": 1.0,
      "price": 0.6,
+     "profit": 62.13,
      "rule": "base_nba_1q_value_1h",
+     "settled": "2026-10-25T02:00:25.715644+00:00",
      "side": "yes",
      "start": "2026-10-25T00:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT24HOUATL-55",
      "title": "Over 54.5 points",
      "unit": "game",
@@ -4270,11 +4380,14 @@
      "mu": 59.29,
      "night": "2026-10-24",
      "p": 0.3946,
+     "payout": 1.0,
      "price": 0.52,
+     "profit": 86.06,
      "rule": "base_nba_1q_value_1h",
+     "settled": "2026-10-25T02:00:25.715644+00:00",
      "side": "yes",
      "start": "2026-10-25T01:00:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT24NOPDEN-62",
      "title": "Over 61.5 points",
      "unit": "game",
@@ -4294,11 +4407,14 @@
      "mu": 59.29,
      "night": "2026-10-24",
      "p": 0.5854,
+     "payout": 1.0,
      "price": 0.7,
+     "profit": 39.92,
      "rule": "base_nba_1q_value_1h",
+     "settled": "2026-10-25T02:00:25.715644+00:00",
      "side": "yes",
      "start": "2026-10-25T01:00:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT24NOPDEN-58",
      "title": "Over 57.5 points",
      "unit": "game",
@@ -4318,11 +4434,14 @@
      "mu": 59.29,
      "night": "2026-10-24",
      "p": 0.4897,
+     "payout": 1.0,
      "price": 0.61,
+     "profit": 59.58,
      "rule": "base_nba_1q_value_1h",
+     "settled": "2026-10-25T02:00:25.715644+00:00",
      "side": "yes",
      "start": "2026-10-25T01:00:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT24NOPDEN-60",
      "title": "Over 59.5 points",
      "unit": "game",
@@ -14372,11 +14491,14 @@
      "mu": 59.29,
      "night": "2026-10-24",
      "p": 0.6054,
+     "payout": 0.0,
      "price": 0.51,
+     "profit": -100.0,
      "rule": "nba_1q_value_1h",
+     "settled": "2026-10-25T02:00:25.715644+00:00",
      "side": "no",
      "start": "2026-10-25T01:00:00+00:00",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBA1QTOTAL-26OCT24NOPDEN-62",
      "title": "Over 61.5 points",
      "unit": "game",
@@ -14752,7 +14874,200 @@
    ]
   },
   "nba_tt_fade_overs_24h": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.55,
+     "bid": 0.52,
+     "edge": null,
+     "event": "KXNBATEAMTOTAL-26OCT25ORLNYK",
+     "game": "401909863",
+     "id": "nba_tt_fade_overs_24h:401909863:NY",
+     "lead_min": 1259.6,
+     "line": 115.5,
+     "logged": "2026-10-25T02:00:25.715644+00:00",
+     "match": "ORL @ NY",
+     "mu": null,
+     "night": "2026-10-25",
+     "p": null,
+     "price": 0.48,
+     "rule": "nba_tt_fade_overs_24h",
+     "side": "no",
+     "start": "2026-10-25T23:00:00+00:00",
+     "status": "open",
+     "ticker": "KXNBATEAMTOTAL-26OCT25ORLNYK-NYK116",
+     "title": "New York over 115.5 points",
+     "unit": "NY",
+     "why": "NY under 115.5 NO 0.48"
+    },
+    {
+     "ask": 0.54,
+     "bid": 0.51,
+     "edge": null,
+     "event": "KXNBATEAMTOTAL-26OCT25ORLNYK",
+     "game": "401909863",
+     "id": "nba_tt_fade_overs_24h:401909863:ORL",
+     "lead_min": 1259.6,
+     "line": 107.5,
+     "logged": "2026-10-25T02:00:25.715644+00:00",
+     "match": "ORL @ NY",
+     "mu": null,
+     "night": "2026-10-25",
+     "p": null,
+     "price": 0.49,
+     "rule": "nba_tt_fade_overs_24h",
+     "side": "no",
+     "start": "2026-10-25T23:00:00+00:00",
+     "status": "open",
+     "ticker": "KXNBATEAMTOTAL-26OCT25ORLNYK-ORL108",
+     "title": "Orlando over 107.5 points",
+     "unit": "ORL",
+     "why": "ORL under 107.5 NO 0.49"
+    },
+    {
+     "ask": 0.56,
+     "bid": 0.53,
+     "edge": null,
+     "event": "KXNBATEAMTOTAL-26OCT25TORMIN",
+     "game": "401909864",
+     "id": "nba_tt_fade_overs_24h:401909864:MIN",
+     "lead_min": 1259.6,
+     "line": 115.5,
+     "logged": "2026-10-25T02:00:25.715644+00:00",
+     "match": "TOR @ MIN",
+     "mu": null,
+     "night": "2026-10-25",
+     "p": null,
+     "price": 0.47,
+     "rule": "nba_tt_fade_overs_24h",
+     "side": "no",
+     "start": "2026-10-25T23:00:00+00:00",
+     "status": "open",
+     "ticker": "KXNBATEAMTOTAL-26OCT25TORMIN-MIN116",
+     "title": "Minnesota over 115.5 points",
+     "unit": "MIN",
+     "why": "MIN under 115.5 NO 0.47"
+    },
+    {
+     "ask": 0.59,
+     "bid": 0.56,
+     "edge": null,
+     "event": "KXNBATEAMTOTAL-26OCT25TORMIN",
+     "game": "401909864",
+     "id": "nba_tt_fade_overs_24h:401909864:TOR",
+     "lead_min": 1259.6,
+     "line": 113.5,
+     "logged": "2026-10-25T02:00:25.715644+00:00",
+     "match": "TOR @ MIN",
+     "mu": null,
+     "night": "2026-10-25",
+     "p": null,
+     "price": 0.44,
+     "rule": "nba_tt_fade_overs_24h",
+     "side": "no",
+     "start": "2026-10-25T23:00:00+00:00",
+     "status": "open",
+     "ticker": "KXNBATEAMTOTAL-26OCT25TORMIN-TOR114",
+     "title": "Toronto over 113.5 points",
+     "unit": "TOR",
+     "why": "TOR under 113.5 NO 0.44"
+    },
+    {
+     "ask": 0.58,
+     "bid": 0.55,
+     "edge": null,
+     "event": "KXNBATEAMTOTAL-26OCT25LACOKC",
+     "game": "401909865",
+     "id": "nba_tt_fade_overs_24h:401909865:LAC",
+     "lead_min": 1259.6,
+     "line": 101.5,
+     "logged": "2026-10-25T02:00:25.715644+00:00",
+     "match": "LAC @ OKC",
+     "mu": null,
+     "night": "2026-10-25",
+     "p": null,
+     "price": 0.45,
+     "rule": "nba_tt_fade_overs_24h",
+     "side": "no",
+     "start": "2026-10-25T23:00:00+00:00",
+     "status": "open",
+     "ticker": "KXNBATEAMTOTAL-26OCT25LACOKC-LAC102",
+     "title": "Los Angeles C over 101.5 points",
+     "unit": "LAC",
+     "why": "LAC under 101.5 NO 0.45"
+    },
+    {
+     "ask": 0.6,
+     "bid": 0.57,
+     "edge": null,
+     "event": "KXNBATEAMTOTAL-26OCT25LACOKC",
+     "game": "401909865",
+     "id": "nba_tt_fade_overs_24h:401909865:OKC",
+     "lead_min": 1259.6,
+     "line": 115.5,
+     "logged": "2026-10-25T02:00:25.715644+00:00",
+     "match": "LAC @ OKC",
+     "mu": null,
+     "night": "2026-10-25",
+     "p": null,
+     "price": 0.43,
+     "rule": "nba_tt_fade_overs_24h",
+     "side": "no",
+     "start": "2026-10-25T23:00:00+00:00",
+     "status": "open",
+     "ticker": "KXNBATEAMTOTAL-26OCT25LACOKC-OKC116",
+     "title": "Oklahoma City over 115.5 points",
+     "unit": "OKC",
+     "why": "OKC under 115.5 NO 0.43"
+    },
+    {
+     "ask": 0.58,
+     "bid": 0.55,
+     "edge": null,
+     "event": "KXNBATEAMTOTAL-26OCT25MEMSAC",
+     "game": "401909867",
+     "id": "nba_tt_fade_overs_24h:401909867:MEM",
+     "lead_min": 1379.6,
+     "line": 118.5,
+     "logged": "2026-10-25T02:00:25.715644+00:00",
+     "match": "MEM @ SAC",
+     "mu": null,
+     "night": "2026-10-25",
+     "p": null,
+     "price": 0.45,
+     "rule": "nba_tt_fade_overs_24h",
+     "side": "no",
+     "start": "2026-10-26T01:00:00+00:00",
+     "status": "open",
+     "ticker": "KXNBATEAMTOTAL-26OCT25MEMSAC-MEM119",
+     "title": "Memphis over 118.5 points",
+     "unit": "MEM",
+     "why": "MEM under 118.5 NO 0.45"
+    },
+    {
+     "ask": 0.5,
+     "bid": 0.47,
+     "edge": null,
+     "event": "KXNBATEAMTOTAL-26OCT25MEMSAC",
+     "game": "401909867",
+     "id": "nba_tt_fade_overs_24h:401909867:SAC",
+     "lead_min": 1379.6,
+     "line": 113.5,
+     "logged": "2026-10-25T02:00:25.715644+00:00",
+     "match": "MEM @ SAC",
+     "mu": null,
+     "night": "2026-10-25",
+     "p": null,
+     "price": 0.53,
+     "rule": "nba_tt_fade_overs_24h",
+     "side": "no",
+     "start": "2026-10-26T01:00:00+00:00",
+     "status": "open",
+     "ticker": "KXNBATEAMTOTAL-26OCT25MEMSAC-SAC114",
+     "title": "Sacramento over 113.5 points",
+     "unit": "SAC",
+     "why": "SAC under 113.5 NO 0.53"
+    }
+   ]
   },
   "nba_tt_value_1h": {
    "picks": [
@@ -15566,15 +15881,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-23T22:30:27.227991+00:00",
-   "baseline": 5,
-   "blocked": 1,
-   "due": 14,
-   "entered": 1,
-   "looked": 2,
-   "new": 1
-  },
-  {
    "at": "2026-10-23T22:45:25.473047+00:00",
    "baseline": 0,
    "due": 12,
@@ -15978,10 +16284,18 @@
    "entered": 0,
    "looked": 4,
    "new": 0
+  },
+  {
+   "at": "2026-10-25T02:00:25.715644+00:00",
+   "baseline": 0,
+   "blocked": 4,
+   "due": 17,
+   "entered": 8,
+   "looked": 8,
+   "new": 8
   }
  ],
  "schedule": [
-  "2026-10-25T01:00:00+00:00",
   "2026-10-25T02:00:00+00:00",
   "2026-10-25T21:00:00+00:00",
   "2026-10-25T22:00:00+00:00",
