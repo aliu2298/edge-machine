@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-25T01:00:14.289259+00:00",
-   "last_success": "2026-10-25T01:00:14.289259+00:00",
+   "last_run": "2026-10-25T02:00:14.492233+00:00",
+   "last_success": "2026-10-25T02:00:14.492233+00:00",
    "observations": {
-    "at": "2026-10-25T01:00:14.289259+00:00",
+    "at": "2026-10-25T02:00:14.492233+00:00",
     "events": 961,
     "reasons": {},
     "retired": "2026-10-24"
@@ -533,10 +533,10 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-25T01:00:14.289259+00:00",
-   "last_success": "2026-10-25T01:00:14.289259+00:00",
+   "last_run": "2026-10-25T02:00:14.492233+00:00",
+   "last_success": "2026-10-25T02:00:14.492233+00:00",
    "observations": {
-    "at": "2026-10-25T01:00:14.289259+00:00",
+    "at": "2026-10-25T02:00:14.492233+00:00",
     "events": 961,
     "reasons": {},
     "retired": "2026-10-24"
@@ -881,10 +881,10 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-25T01:00:14.289259+00:00",
-   "last_success": "2026-10-25T01:00:14.289259+00:00",
+   "last_run": "2026-10-25T02:00:14.492233+00:00",
+   "last_success": "2026-10-25T02:00:14.492233+00:00",
    "observations": {
-    "at": "2026-10-25T01:00:14.289259+00:00",
+    "at": "2026-10-25T02:00:14.492233+00:00",
     "events": 961,
     "news_guard": [
      {
@@ -892,14 +892,20 @@
       "reason": "news guard: market 0.72 v model 0.17",
       "side": "no",
       "word": "Australia / Australian"
+     },
+     {
+      "id": "KXTRUMPSAY-26OCT26-BIBI",
+      "reason": "news guard: market 0.68 v model 0.07",
+      "side": "no",
+      "word": "Bibi / Netanyahu"
      }
     ],
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 25,
-     "edge 5c+": 10,
-     "edge under 5c": 2,
-     "news guard (YES mid over 0.50, model under 0.25)": 1,
-     "no quote or spread too wide": 30
+     "already near-certain (under 10c or over 90c)": 26,
+     "edge 5c+": 12,
+     "edge under 5c": 1,
+     "news guard (YES mid over 0.50, model under 0.25)": 2,
+     "no quote or spread too wide": 27
     }
    },
    "picks": [
@@ -1874,10 +1880,10 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-25T01:00:14.289259+00:00",
-   "last_success": "2026-10-25T01:00:14.289259+00:00",
+   "last_run": "2026-10-25T02:00:14.492233+00:00",
+   "last_success": "2026-10-25T02:00:14.492233+00:00",
    "observations": {
-    "at": "2026-10-25T01:00:14.289259+00:00",
+    "at": "2026-10-25T02:00:14.492233+00:00",
     "events": 961,
     "reasons": {},
     "retired": "2026-10-24"
@@ -2333,7 +2339,7 @@
    ]
   },
   "Houthi": {
-   "at": "2026-10-24T14:54:35.381516+00:00",
+   "at": "2026-10-25T02:00:14.492233+00:00",
    "days": []
   },
   "JPMorgan / JPM": {
