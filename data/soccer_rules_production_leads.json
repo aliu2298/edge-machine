@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-24T23:31:37+00:00",
+ "board_built_at": "2026-10-25T01:01:29+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sa_o15_arg": true,
@@ -9,7 +9,7 @@
  },
  "corners_selections": {},
  "first_publish_min": 45,
- "late_publication_skipped": 0,
+ "late_publication_skipped": 2,
  "leads": {
   "2026-10-23|Al Ahli|Al Khaleej|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
    "away": "Al Khaleej",
@@ -424,6 +424,41 @@
    "sport": "soccer_btts",
    "status": "miss"
   },
+  "2026-10-24|San Lorenzo|Newell's Old Boys|Over 1.5 goals \u00b7 Argentina over 1.5": {
+   "away": "Newell's Old Boys",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-10-24",
+   "edge_at_log": null,
+   "first_seen": "2026-10-24",
+   "headline": "Over 1.5 goals",
+   "home": "San Lorenzo",
+   "id": "2026-10-24|San Lorenzo|Newell's Old Boys|Over 1.5 goals \u00b7 Argentina over 1.5",
+   "kickoff": "2026-10-24T22:15Z",
+   "lane": "production",
+   "league": "Liga Profesional",
+   "match": "San Lorenzo v Newell's Old Boys",
+   "pair": "sa_o15_arg|soccer_o15",
+   "price_at_log": 0.61,
+   "published_at": "2026-10-25T01:01:29+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Over 1.5 goals",
+    "event": "KXARGPREMDIVTOTAL-26OCT24SLANOB",
+    "market": "KXARGPREMDIVTOTAL-26OCT24SLANOB-2",
+    "outcome": "Over 1.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.61,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT24SLANOB-2",
+   "source": "sa_o15_arg",
+   "sport": "soccer_o15",
+   "status": "miss"
+  },
   "2026-10-24|Talleres (C\u00f3rdoba)|Defensa y Justicia|Over 1.5 goals \u00b7 Argentina over 1.5": {
    "away": "Defensa y Justicia",
    "bet": {
@@ -493,43 +528,6 @@
    "source": "sa_o15_arg",
    "sport": "soccer_o15",
    "status": "miss"
-  },
-  "2026-10-25|Rosario Central|Hurac\u00e1n|Over 1.5 goals \u00b7 Argentina over 1.5": {
-   "away": "Hurac\u00e1n",
-   "bet": {
-    "kind": "total_gte",
-    "n": 2
-   },
-   "date": "2026-10-25",
-   "edge_at_log": null,
-   "first_seen": "2026-10-24",
-   "headline": "Over 1.5 goals",
-   "home": "Rosario Central",
-   "id": "2026-10-25|Rosario Central|Hurac\u00e1n|Over 1.5 goals \u00b7 Argentina over 1.5",
-   "kickoff": "2026-10-25T00:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-24",
-   "last_seen_at": "2026-10-24T23:31:37+00:00",
-   "league": "Liga Profesional",
-   "match": "Rosario Central v Hurac\u00e1n",
-   "pair": "sa_o15_arg|soccer_o15",
-   "price_at_log": 0.66,
-   "published_at": "2026-10-24T23:01:13+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 88,
-   "route": {
-    "claim": "Over 1.5 goals",
-    "event": "KXARGPREMDIVTOTAL-26OCT24CARCHUR",
-    "market": "KXARGPREMDIVTOTAL-26OCT24CARCHUR-2",
-    "outcome": "Over 1.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.66,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT24CARCHUR-2",
-   "source": "sa_o15_arg",
-   "sport": "soccer_o15",
-   "status": "pending"
   }
  },
  "pairs": {
@@ -549,12 +547,12 @@
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 5,
-   "sandbox_roi": 0.1102,
-   "sandbox_roi_fee": 0.1102,
+   "sandbox_n": 6,
+   "sandbox_roi": -0.0748,
+   "sandbox_roi_fee": -0.0748,
    "timing": {
     "late": [],
-    "timed": 2,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -634,9 +632,28 @@
    }
   }
  },
- "publication_withheld": {},
+ "publication_withheld": {
+  "2026-10-25|Colorado Rapids|Vancouver Whitecaps|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
+   "headline": "Both teams to score",
+   "id": "2026-10-25|Colorado Rapids|Vancouver Whitecaps|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score",
+   "kickoff": "2026-10-25T01:30Z",
+   "match": "Colorado Rapids v Vancouver Whitecaps",
+   "pair": "sr_d3|soccer_btts",
+   "reason": "less than 45 minutes left at first publication",
+   "withheld_at": "2026-10-25T01:01:29+00:00"
+  },
+  "2026-10-25|Real Salt Lake|St. Louis CITY SC|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
+   "headline": "Both teams to score",
+   "id": "2026-10-25|Real Salt Lake|St. Louis CITY SC|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score",
+   "kickoff": "2026-10-25T01:30Z",
+   "match": "Real Salt Lake v St. Louis CITY SC",
+   "pair": "sr_d3|soccer_btts",
+   "reason": "less than 45 minutes left at first publication",
+   "withheld_at": "2026-10-25T01:01:29+00:00"
+  }
+ },
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-24T23:31:37+00:00"
+ "updated_at": "2026-10-25T01:01:29+00:00"
 }

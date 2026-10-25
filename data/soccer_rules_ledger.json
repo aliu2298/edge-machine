@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-24T23:31:36.890124+00:00",
+ "last_run": "2026-10-25T01:01:28.452433+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -568,6 +568,29 @@
      "ticker": "KXMLSTOTAL-26OCT24CLBTOR-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Columbus Crew O+D- v Toronto FC O+D+ \u00b7 Over 3.5 YES 0.44"
+    },
+    {
+     "ask": 0.48,
+     "bid": 0.47,
+     "event": "KXMLSTOTAL-26OCT24SDSEA",
+     "group": "C",
+     "id": "C1:KXMLSTOTAL-26OCT24SDSEA",
+     "labels": {
+      "away": "O+D-",
+      "home": "O+D+"
+     },
+     "league": "MLS",
+     "line": 3.5,
+     "logged": "2026-10-25T01:01:28.452433+00:00",
+     "match": "San Diego FC v Seattle Sounders FC",
+     "price": 0.48,
+     "rule": "C1",
+     "side": "yes",
+     "start": "2026-10-25T02:30Z",
+     "status": "open",
+     "ticker": "KXMLSTOTAL-26OCT24SDSEA-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "San Diego FC O+D+ v Seattle Sounders FC O+D- \u00b7 Over 3.5 YES 0.48"
     }
    ]
   },
@@ -2186,19 +2209,57 @@
      "ticker": "KXLIGAPORTUGALBTTS-26OCT24GILFCP-BTTS",
      "title": "Both Teams To Score",
      "why": "Gil Vicente O-D- v FC Porto O+D- \u00b7 BTTS YES 0.47"
+    },
+    {
+     "ask": 0.59,
+     "bid": 0.58,
+     "event": "KXMLSBTTS-26OCT24COLVAN",
+     "group": "BTTS",
+     "id": "D3:KXMLSBTTS-26OCT24COLVAN",
+     "labels": {
+      "away": "O+D-",
+      "home": "O-D-"
+     },
+     "league": "MLS",
+     "line": null,
+     "logged": "2026-10-25T01:01:28.452433+00:00",
+     "match": "Colorado Rapids v Vancouver Whitecaps",
+     "price": 0.59,
+     "rule": "D3",
+     "side": "yes",
+     "start": "2026-10-25T01:30Z",
+     "status": "open",
+     "ticker": "KXMLSBTTS-26OCT24COLVAN-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Colorado Rapids O-D- v Vancouver Whitecaps O+D- \u00b7 BTTS YES 0.59"
+    },
+    {
+     "ask": 0.65,
+     "bid": 0.64,
+     "event": "KXMLSBTTS-26OCT24RSLSTL",
+     "group": "BTTS",
+     "id": "D3:KXMLSBTTS-26OCT24RSLSTL",
+     "labels": {
+      "away": "O+D-",
+      "home": "O-D-"
+     },
+     "league": "MLS",
+     "line": null,
+     "logged": "2026-10-25T01:01:28.452433+00:00",
+     "match": "Real Salt Lake v St. Louis CITY SC",
+     "price": 0.65,
+     "rule": "D3",
+     "side": "yes",
+     "start": "2026-10-25T01:30Z",
+     "status": "open",
+     "ticker": "KXMLSBTTS-26OCT24RSLSTL-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Real Salt Lake O-D- v St. Louis CITY SC O+D- \u00b7 BTTS YES 0.65"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-23T19:31:12.132856+00:00",
-   "candidates": 0,
-   "due": 0,
-   "labelled": 0,
-   "matched": 0,
-   "new": 0
-  },
   {
    "at": "2026-10-23T20:01:42.594399+00:00",
    "candidates": 0,
@@ -2598,6 +2659,14 @@
    "labelled": 3,
    "matched": 0,
    "new": 0
+  },
+  {
+   "at": "2026-10-25T01:01:28.452433+00:00",
+   "candidates": 3,
+   "due": 4,
+   "labelled": 4,
+   "matched": 3,
+   "new": 3
   }
  ],
  "version": "soccer-rules-v1"
