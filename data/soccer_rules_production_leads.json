@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-25T12:01:43+00:00",
+ "board_built_at": "2026-10-25T12:31:43+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sa_o15_arg": true,
@@ -529,6 +529,79 @@
    "sport": "soccer_o15",
    "status": "miss"
   },
+  "2026-10-25|Hull City|Brentford|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
+   "away": "Brentford",
+   "bet": {
+    "kind": "btts"
+   },
+   "date": "2026-10-25",
+   "edge_at_log": null,
+   "first_seen": "2026-10-25",
+   "headline": "Both teams to score",
+   "home": "Hull City",
+   "id": "2026-10-25|Hull City|Brentford|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score",
+   "kickoff": "2026-10-25T14:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-25",
+   "last_seen_at": "2026-10-25T12:31:43+00:00",
+   "league": "Premier League",
+   "match": "Hull City v Brentford",
+   "pair": "sr_d3|soccer_btts",
+   "price_at_log": 0.58,
+   "published_at": "2026-10-25T12:31:43+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Both teams to score",
+    "event": "KXEPLBTTS-26OCT25HULBRE",
+    "market": "KXEPLBTTS-26OCT25HULBRE-BTTS",
+    "outcome": "Both Teams To Score",
+    "outcome_side": "yes",
+    "price_at_log": 0.58,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_d3:KXEPLBTTS-26OCT25HULBRE-BTTS",
+   "source": "sr_d3",
+   "sport": "soccer_btts",
+   "status": "pending"
+  },
+  "2026-10-25|Hull City|Brentford|Under 2.5 goals \u00b7 EPL O\u2212D\u2212 v an O+ opponent \u00b7 under 2.5": {
+   "away": "Brentford",
+   "bet": {
+    "kind": "total_lte",
+    "n": 2
+   },
+   "date": "2026-10-25",
+   "edge_at_log": null,
+   "first_seen": "2026-10-25",
+   "headline": "Under 2.5 goals",
+   "home": "Hull City",
+   "id": "2026-10-25|Hull City|Brentford|Under 2.5 goals \u00b7 EPL O\u2212D\u2212 v an O+ opponent \u00b7 under 2.5",
+   "kickoff": "2026-10-25T14:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-25",
+   "last_seen_at": "2026-10-25T12:31:43+00:00",
+   "league": "Premier League",
+   "match": "Hull City v Brentford",
+   "pair": "sr_a6|soccer_o25",
+   "price_at_log": 0.43,
+   "published_at": "2026-10-25T12:31:43+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Under 2.5 goals",
+    "event": "KXEPLTOTAL-26OCT25HULBRE",
+    "market": "KXEPLTOTAL-26OCT25HULBRE-3",
+    "outcome": "Over 2.5 goals scored",
+    "outcome_side": "no",
+    "price_at_log": 0.43,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_a6:KXEPLTOTAL-26OCT25HULBRE-3",
+   "source": "sr_a6",
+   "sport": "soccer_o25",
+   "status": "pending"
+  },
   "2026-10-25|Rosario Central|Hurac\u00e1n|Over 1.5 goals \u00b7 Argentina over 1.5": {
    "away": "Hurac\u00e1n",
    "bet": {
@@ -598,9 +671,9 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 2,
+    "leads": 3,
     "problem": null,
-    "routed": 2,
+    "routed": 3,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -612,7 +685,7 @@
    "sandbox_roi_fee": 1.2769,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -648,9 +721,9 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 7,
+    "leads": 8,
     "problem": null,
-    "routed": 7,
+    "routed": 8,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -662,7 +735,7 @@
    "sandbox_roi_fee": -0.6322,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   }
@@ -690,5 +763,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-25T12:01:43+00:00"
+ "updated_at": "2026-10-25T12:31:43+00:00"
 }
