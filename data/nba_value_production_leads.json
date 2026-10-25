@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-24T23:45:23+00:00",
+ "board_built_at": "2026-10-25T00:00:30+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -21,8 +21,8 @@
    "id": "2026-10-25|KXNBATEAMTOTAL-26OCT24NOPDEN-DEN125|Denver under 124.5 points \u00b7 NBA team total value \u00b7 1h before tip",
    "kickoff": "2026-10-25T01:00Z",
    "lane": "production",
-   "last_seen": "2026-10-24",
-   "last_seen_at": "2026-10-24T23:45:23+00:00",
+   "last_seen": "2026-10-25",
+   "last_seen_at": "2026-10-25T00:00:30+00:00",
    "league": "NBA",
    "match": "NO @ DEN",
    "model_prob": 0.5812,
@@ -44,191 +44,10 @@
    "source": "nba_tt_value_1h",
    "sport": "nba_tt",
    "status": "pending"
-  },
-  "2026-10-25|KXNBATEAMTOTAL-26OCT24SASDAL-DAL109|Dallas over 108.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
-   "away": null,
-   "bet": {
-    "kind": "nba_tt",
-    "n": 108.5,
-    "team": "Dallas"
-   },
-   "date": "2026-10-25",
-   "edge_at_log": 0.1373,
-   "first_seen": "2026-10-24",
-   "headline": "Dallas over 108.5 points",
-   "home": null,
-   "id": "2026-10-25|KXNBATEAMTOTAL-26OCT24SASDAL-DAL109|Dallas over 108.5 points \u00b7 NBA team total value \u00b7 1h before tip",
-   "kickoff": "2026-10-25T00:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-24",
-   "last_seen_at": "2026-10-24T23:45:23+00:00",
-   "league": "NBA",
-   "match": "SA @ DAL",
-   "model_prob": 0.6147,
-   "pair": "nba_tt_value_1h|nba_tt",
-   "price_at_log": 0.46,
-   "published_at": "2026-10-24T22:30:21+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 89,
-   "route": {
-    "claim": "Dallas over 108.5 points",
-    "event": "KXNBATEAMTOTAL-26OCT24SASDAL",
-    "market": "KXNBATEAMTOTAL-26OCT24SASDAL-DAL109",
-    "outcome": "Dallas over 108.5 points",
-    "outcome_side": "yes",
-    "price_at_log": 0.46,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "nba_tt_value_1h:401909858:DAL",
-   "source": "nba_tt_value_1h",
-   "sport": "nba_tt",
-   "status": "pending"
-  },
-  "2026-10-25|KXNBATEAMTOTAL-26OCT24SASDAL-SAS121|San Antonio under 120.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
-   "away": null,
-   "bet": {
-    "kind": "nba_tt_no",
-    "n": 120.5,
-    "team": "San Antonio"
-   },
-   "date": "2026-10-25",
-   "edge_at_log": 0.123,
-   "first_seen": "2026-10-24",
-   "headline": "San Antonio under 120.5 points",
-   "home": null,
-   "id": "2026-10-25|KXNBATEAMTOTAL-26OCT24SASDAL-SAS121|San Antonio under 120.5 points \u00b7 NBA team total value \u00b7 1h before tip",
-   "kickoff": "2026-10-25T00:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-24",
-   "last_seen_at": "2026-10-24T23:45:23+00:00",
-   "league": "NBA",
-   "match": "SA @ DAL",
-   "model_prob": 0.56,
-   "pair": "nba_tt_value_1h|nba_tt",
-   "price_at_log": 0.42,
-   "published_at": "2026-10-24T22:30:21+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 89,
-   "route": {
-    "claim": "San Antonio under 120.5 points",
-    "event": "KXNBATEAMTOTAL-26OCT24SASDAL",
-    "market": "KXNBATEAMTOTAL-26OCT24SASDAL-SAS121",
-    "outcome": "San Antonio over 120.5 points",
-    "outcome_side": "no",
-    "price_at_log": 0.42,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "nba_tt_value_1h:401909858:SA",
-   "source": "nba_tt_value_1h",
-   "sport": "nba_tt",
-   "status": "pending"
-  },
-  "2026-10-25|KXNBATEAMTOTAL-26OCT24WASCHI-WAS121|Washington under 120.5 points \u00b7 NBA team total value \u00b7 24h before tip": {
-   "away": null,
-   "bet": {
-    "kind": "nba_tt_no",
-    "n": 120.5,
-    "team": "Washington"
-   },
-   "date": "2026-10-25",
-   "edge_at_log": 0.0746,
-   "first_seen": "2026-10-24",
-   "headline": "Washington under 120.5 points",
-   "home": null,
-   "id": "2026-10-25|KXNBATEAMTOTAL-26OCT24WASCHI-WAS121|Washington under 120.5 points \u00b7 NBA team total value \u00b7 24h before tip",
-   "kickoff": "2026-10-25T00:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-24",
-   "last_seen_at": "2026-10-24T23:45:23+00:00",
-   "league": "NBA",
-   "match": "WSH @ CHI",
-   "model_prob": 0.552,
-   "pair": "nba_tt_value_24h|nba_tt",
-   "price_at_log": 0.46,
-   "published_at": "2026-10-24T21:30:25+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 149,
-   "route": {
-    "claim": "Washington under 120.5 points",
-    "event": "KXNBATEAMTOTAL-26OCT24WASCHI",
-    "market": "KXNBATEAMTOTAL-26OCT24WASCHI-WAS121",
-    "outcome": "Washington over 120.5 points",
-    "outcome_side": "no",
-    "price_at_log": 0.46,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "nba_tt_value_24h:401909857:WSH",
-   "source": "nba_tt_value_24h",
-   "sport": "nba_tt",
-   "status": "pending"
-  },
-  "2026-10-25|KXNBATEAMTOTAL-26OCT24WASCHI-WAS125|Washington under 124.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
-   "away": null,
-   "bet": {
-    "kind": "nba_tt_no",
-    "n": 124.5,
-    "team": "Washington"
-   },
-   "date": "2026-10-25",
-   "edge_at_log": 0.0719,
-   "first_seen": "2026-10-24",
-   "headline": "Washington under 124.5 points",
-   "home": null,
-   "id": "2026-10-25|KXNBATEAMTOTAL-26OCT24WASCHI-WAS125|Washington under 124.5 points \u00b7 NBA team total value \u00b7 1h before tip",
-   "kickoff": "2026-10-25T00:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-24",
-   "last_seen_at": "2026-10-24T23:45:23+00:00",
-   "league": "NBA",
-   "match": "WSH @ CHI",
-   "model_prob": 0.6788,
-   "pair": "nba_tt_value_1h|nba_tt",
-   "price_at_log": 0.59,
-   "published_at": "2026-10-24T22:30:21+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 89,
-   "route": {
-    "claim": "Washington under 124.5 points",
-    "event": "KXNBATEAMTOTAL-26OCT24WASCHI",
-    "market": "KXNBATEAMTOTAL-26OCT24WASCHI-WAS125",
-    "outcome": "Washington over 124.5 points",
-    "outcome_side": "no",
-    "price_at_log": 0.59,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "nba_tt_value_1h:401909857:WSH",
-   "source": "nba_tt_value_1h",
-   "sport": "nba_tt",
-   "status": "pending"
   }
  },
  "pairs": {
   "nba_tt_value_1h|nba_tt": {
-   "by_hand": "2026-10-24",
-   "entered_at": "2026-10-24T22:13:00+00:00",
-   "promoted_at": "2026-10-24T22:13:00+00:00",
-   "ready_at": "2026-10-24T22:13:00+00:00",
-   "route": "moved by hand on 2026-10-24",
-   "routing": {
-    "leads": 4,
-    "problem": null,
-    "routed": 4,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": null,
-   "sandbox_n": 0,
-   "sandbox_roi": null,
-   "sandbox_roi_fee": null,
-   "timing": {
-    "late": [],
-    "timed": 4,
-    "under_target": 0
-   }
-  },
-  "nba_tt_value_24h|nba_tt": {
    "by_hand": "2026-10-24",
    "entered_at": "2026-10-24T22:13:00+00:00",
    "promoted_at": "2026-10-24T22:13:00+00:00",
@@ -250,6 +69,31 @@
    "timing": {
     "late": [],
     "timed": 1,
+    "under_target": 0
+   }
+  },
+  "nba_tt_value_24h|nba_tt": {
+   "by_hand": "2026-10-24",
+   "entered_at": "2026-10-24T22:13:00+00:00",
+   "promoted_at": "2026-10-24T22:13:00+00:00",
+   "ready_at": "2026-10-24T22:13:00+00:00",
+   "route": "moved by hand on 2026-10-24",
+   "routing": {
+    "leads": 0,
+    "problem": null,
+    "routed": 0,
+    "unlisted": 0,
+    "unrouted": 0,
+    "unverified": 0,
+    "why": []
+   },
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null,
+   "timing": {
+    "late": [],
+    "timed": 0,
     "under_target": 0
    }
   }
@@ -277,5 +121,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-24T23:45:23+00:00"
+ "updated_at": "2026-10-25T00:00:30+00:00"
 }
