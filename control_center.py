@@ -544,6 +544,33 @@ def _age_text(hours):
     return f"{int(hours)}h"
 
 
+def running_inputs(d, st, blob, now, daily=None, culture=None, soccer_rules=None, nba_value=None,
+                   soccer_team_rules=None):
+    """(d, st, blob) with every own-feed Production lane merged in, as the Running list reads them.
+
+    Econ Daily, Trump mentions, the soccer rules, the NBA value lanes and T1 publish from their
+    own ledgers, not data/production_leads.json. A started open bet drops off every feed, so the
+    Running list sees it only as a quote here. Pure: the objects passed in are untouched.
+    """
+    if daily is not None:
+        import daily_production
+        d, st, blob = daily_production.page_inputs(d, st, blob, daily, now=now)
+    if culture is not None:
+        import culture_production
+        d, st, blob = culture_production.page_inputs(d, st, blob, culture, now=now)
+    if soccer_rules is not None:
+        import soccer_rules_production
+        d, st, blob = soccer_rules_production.page_inputs(d, st, blob, *soccer_rules, now=now)
+    if nba_value is not None:
+        import nba_value_production
+        d, st, blob = nba_value_production.page_inputs(d, st, blob, nba_value, now=now)
+    if soccer_team_rules is not None:
+        # T1, moved by hand 2026-10-24 (soccer_team_rules_production), from its own ledger.
+        import soccer_team_rules_production
+        d, st, blob = soccer_team_rules_production.page_inputs(d, st, blob, soccer_team_rules, now=now)
+    return d, st, blob
+
+
 def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, status=None, daily=None, culture=None,
           soccer_rules=None, nba_value=None, soccer_team_rules=None):
     """The Control Center as data. Pure: everything it reads is an argument.
@@ -589,27 +616,20 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
                            and now < _utc(x['close']) <= now+timedelta(hours=NEXT_HOURS) for x in picks),
                 coverage=f"{len(lane.get('catalog') or [])} series · "+("Production" if key=="econ_daily" else "paper only"), last_read=last,
                 status=status_word, items=daily_items))
-    live_d, live_st, live_blob = d, st, blob
+    live_d, live_st, live_blob = running_inputs(d, st, blob, now, daily=daily, culture=culture,
+                                                soccer_rules=soccer_rules, nba_value=nba_value,
+                                                soccer_team_rules=soccer_team_rules)
     if daily is not None:
-        import daily_production
-        live_d, live_st, live_blob = daily_production.page_inputs(d, st, blob, daily, now=now)
-    if culture is not None:
-        import culture_production
-        live_d, live_st, live_blob = culture_production.page_inputs(live_d, live_st, live_blob, culture, now=now)
+        import daily_production  # the pairs tile counts its lanes
     sr_names = []
     if soccer_rules is not None:
         import soccer_rules_production
-        live_d, live_st, live_blob = soccer_rules_production.page_inputs(live_d, live_st, live_blob, *soccer_rules, now=now)
         sr_names = [n for _s, _sp, n in soccer_rules_production.PAIRS.values()]
     if nba_value is not None:
         import nba_value_production
-        live_d, live_st, live_blob = nba_value_production.page_inputs(live_d, live_st, live_blob, nba_value, now=now)
         sr_names = sr_names + list(nba_value_production.PAIRS.values())
     if soccer_team_rules is not None:
-        # T1, moved by hand 2026-10-24 (soccer_team_rules_production), from its own ledger.
         import soccer_team_rules_production
-        live_d, live_st, live_blob = soccer_team_rules_production.page_inputs(live_d, live_st, live_blob,
-                                                                              soccer_team_rules, now=now)
         sr_names += [n for _s, _sp, n in soccer_team_rules_production.PAIRS.values()]
     live = shell_build._running_body(live_d, live_st, live_blob, now)
     n_open, n_settled, n_won = live["roll_counts"]

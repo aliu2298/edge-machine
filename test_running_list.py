@@ -1106,6 +1106,65 @@ for name in sorted(os.listdir(wf_dir)):
     eq(stale, [], f"{name} does not describe index.html as a redirect stub")
 
 
+import control_center
+
+
+def _live_with_open_bet(contests, name):
+    """The page's own rule: a contest is Live while ANY Production bet on it is open.
+
+    The bet can be the main feed's or an own-feed lane's (Econ Daily, Trump mentions, the
+    soccer rules, the NBA value lanes, T1); `contests` must be built from
+    control_center.running_inputs so the own-feed lanes are in it.
+    """
+    return any(fmt.contest(contest["match"] or "—") == name and contest["bucket"] == "live"
+               and any(bet.get("status") == "Open" for bet in contest["bets"])
+               for contest in contests)
+
+
+print("\nown-feed open bet beside a settled main-feed lead")
+# 2026-10-25 04:00Z: the main feed's mls_fade_home lead on Real Salt Lake v St. Louis CITY SC had
+# settled while the soccer-rules feed's sr_d3 bet on the same match was still open. The page
+# showed the contest Live (right: a Production bet on it was open); the committed-page check
+# exempted only open MAIN-feed leads, so it demanded Settled and went red until the bet settled.
+_own_now = datetime.datetime(2026, 10, 25, 4, 0, tzinfo=timezone.utc)
+_own_name = "Real Salt Lake vs St. Louis CITY SC"
+_own_blob = _blob([_lead("rsl-stl", "Real Salt Lake", "St. Louis CITY SC", "2026-10-25T01:30:00Z", "miss",
+                         "mls_fade_home|soccer_p05", "soccer_p05", 0.60, "MLS")])
+
+
+def _own_rules(status):
+    pick = dict(match="Real Salt Lake v St. Louis CITY SC", league="MLS", event="KXMLSBTTS-26OCT24RSLSTL",
+                ticker="KXMLSBTTS-26OCT24RSLSTL", start="2026-10-25T01:30:00+00:00",
+                logged="2026-10-24T23:00:00+00:00", price=0.65, side="yes", status=status,
+                profit=35.0 if status == "won" else 0, payout=1.0 if status == "won" else None,
+                settled="2026-10-25T04:30:00+00:00" if status == "won" else None)
+    return ({"rules": {"D3": {"picks": [pick]}}, "last_run": "2026-10-25T03:55:00+00:00"},
+            {"rules": {}, "last_run": "2026-10-25T03:55:00+00:00"})
+
+
+def _own_contests(soccer_rules):
+    inputs = control_center.running_inputs({"quotes": []}, {"pairs": {}}, _own_blob, _own_now,
+                                           soccer_rules=soccer_rules)
+    return shell_build.contests_from_lanes(shell_build.collect_lanes(*inputs, _own_now), _own_now)
+
+
+_main_only = _own_contests(None)
+_with_open = _own_contests(_own_rules("open"))
+_with_won = _own_contests(_own_rules("won"))
+_by = lambda contests: [c for c in contests if fmt.contest(c["match"] or "—") == _own_name]
+eq([c["bucket"] for c in _by(_main_only)], ["settled"], "the settled main-feed lead alone is Settled")
+ok(not _live_with_open_bet(_main_only, _own_name), "and is not exempt from the Settled check")
+eq([(c["bucket"], c["n_bets"]) for c in _by(_with_open)], [("live", 2)],
+   "an open own-feed bet beside it makes the one contest Live, with both bets")
+ok(_live_with_open_bet(_with_open, _own_name),
+   "that contest is exempt from the Settled check though its main-feed lead settled")
+eq([c["bucket"] for c in _by(_with_won)], ["settled"], "once the own-feed bet settles the contest is Settled")
+ok(not _live_with_open_bet(_with_won, _own_name), "and the exemption ends with it")
+ok(control_center.running_inputs({"quotes": []}, {"pairs": {}}, _own_blob, _own_now)
+   == ({"quotes": []}, {"pairs": {}}, _own_blob),
+   "running_inputs with no own-feed state is the main feed alone")
+
+
 print("\ncommitted shell")
 _committed = open(os.path.join(ROOT, "public_site", "index.html"), encoding="utf-8").read()
 _committed_rows = _rows(_committed)
@@ -1192,10 +1251,12 @@ _model = []
 if _clock_m is not None:
     _when = datetime.datetime.strptime(
         _clock_m.group(1), "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
-    _model = shell_build.contests_from_lanes(
-        shell_build.collect_lanes(
-            shell_build.T.load(), shell_build.T.load_stages(), production.load_feed(), _when),
-        _when)
+    # The same inputs index.html renders Running from: the main feed plus every own-feed lane.
+    _extra = control_center.inputs()
+    _live_inputs = control_center.running_inputs(
+        shell_build.T.load(), shell_build.T.load_stages(), production.load_feed(), _when,
+        **{key: _extra.get(key) for key in ("daily", "culture", "soccer_rules", "nba_value", "soccer_team_rules")})
+    _model = shell_build.contests_from_lanes(shell_build.collect_lanes(*_live_inputs, _when), _when)
 _model_keys = []
 for _contest in _model:
     _model_keys.append((
@@ -1232,7 +1293,9 @@ for _name, _headline, _status in _prod_rows:
         continue  # not in this feed, or outside the 14-day window at the build clock
     if any(lead.get("status") == "pending" and k is not None and k <= _when
            for lead, k in zip(_same, _kicks)):
-        continue  # a Live contest with an open bet is exempt
+        continue  # a Live contest with an open main-feed bet is exempt
+    if _live_with_open_bet(_model, _name):
+        continue  # so is one Live on an open own-feed bet (soccer rules, NBA value, culture, T1, Econ)
     _hits = _by_name.get(_name, [])
     eq(len(_hits), 1, f"production recent lead {_name} is one Running row")
     if len(_hits) != 1:
