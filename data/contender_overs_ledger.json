@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-25T16:31:27.740364+00:00",
+ "last_run": "2026-10-25T16:46:12.932369+00:00",
  "rules": {
   "O15": {
    "picks": [
@@ -125,11 +125,14 @@
      "line": 1.5,
      "logged": "2026-10-25T14:16:16.313480+00:00",
      "match": "Sparta Rotterdam v Ajax Amsterdam",
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 10.34,
      "rule": "O15",
+     "settled": "2026-10-25T16:46:12.932369+00:00",
      "side": "yes",
      "start": "2026-10-25T15:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXEREDIVISIETOTAL-26OCT25SPAAJA-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Ajax in a top-3 title spot \u00b7 over 1.5 YES 0.90"
@@ -406,13 +409,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-24T15:31:44.741990+00:00",
-   "due": 2,
-   "matched": 2,
-   "new": 0,
-   "qualifying": 0
-  },
   {
    "at": "2026-10-24T15:46:11.164800+00:00",
    "due": 2,
@@ -758,6 +754,13 @@
   },
   {
    "at": "2026-10-25T16:31:27.740364+00:00",
+   "due": 2,
+   "matched": 2,
+   "new": 0,
+   "qualifying": 0
+  },
+  {
+   "at": "2026-10-25T16:46:12.932369+00:00",
    "due": 2,
    "matched": 2,
    "new": 0,
