@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-25T22:30:14.147277+00:00",
+ "last_run": "2026-10-25T23:30:13.057950+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -1143,6 +1143,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT25DETPHI-PHI114",
      "title": "Philadelphia over 113.5 points",
      "why": "PHI O-D+ v DET O+D- \u00b7 115+ NO 0.52"
+    },
+    {
+     "game": "401909867",
+     "id": "R3:KXNBATEAMTOTAL-26OCT25MEMSAC-SAC116",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O+D-",
+      "home": "O-D+",
+      "home_h1": "O-D+"
+     },
+     "logged": "2026-10-25T23:30:13.057950+00:00",
+     "match": "MEM @ SAC",
+     "price": 0.49,
+     "rule": "R3",
+     "side": "no",
+     "start": "2026-10-26T01:00Z",
+     "status": "open",
+     "strike": 115.5,
+     "team": "SAC",
+     "ticker": "KXNBATEAMTOTAL-26OCT25MEMSAC-SAC116",
+     "title": "Sacramento over 115.5 points",
+     "why": "SAC O-D+ v MEM O-D- \u00b7 115+ NO 0.49"
     }
    ]
   },
@@ -2363,11 +2385,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-22T21:30:15.870737+00:00",
-   "due": 1,
-   "new": 1
-  },
-  {
    "at": "2026-10-22T22:00:15.442333+00:00",
    "due": 1,
    "new": 0
@@ -2616,6 +2633,11 @@
    "at": "2026-10-25T22:30:14.147277+00:00",
    "due": 4,
    "new": 0
+  },
+  {
+   "at": "2026-10-25T23:30:13.057950+00:00",
+   "due": 1,
+   "new": 1
   }
  ],
  "version": "nba-rules-v1"
