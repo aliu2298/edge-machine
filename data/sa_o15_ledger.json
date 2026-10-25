@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-25T16:01:44.032811+00:00",
+ "last_run": "2026-10-25T16:16:36.594734+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -213,6 +213,24 @@
      "ticker": "KXARGPREMDIVTOTAL-26OCT24CARCHUR-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Argentina over 1.5 YES 0.66"
+    },
+    {
+     "ask": 0.7,
+     "bid": 0.69,
+     "event": "KXARGPREMDIVTOTAL-26OCT25CAACAB",
+     "id": "ARG:KXARGPREMDIVTOTAL-26OCT25CAACAB",
+     "league": "Liga Profesional",
+     "line": 1.5,
+     "logged": "2026-10-25T16:16:36.594734+00:00",
+     "match": "Aldosivi v Belgrano (C\u00f3rdoba)",
+     "price": 0.7,
+     "rule": "ARG",
+     "side": "yes",
+     "start": "2026-10-25T17:45Z",
+     "status": "open",
+     "ticker": "KXARGPREMDIVTOTAL-26OCT25CAACAB-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Argentina over 1.5 YES 0.70"
     }
    ]
   },
@@ -411,13 +429,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-24T15:01:44.856032+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "quoted": 0
-  },
   {
    "at": "2026-10-24T15:16:23.969161+00:00",
    "due": 0,
@@ -767,6 +778,13 @@
    "matched": 0,
    "new": 0,
    "quoted": 0
+  },
+  {
+   "at": "2026-10-25T16:16:36.594734+00:00",
+   "due": 1,
+   "matched": 1,
+   "new": 1,
+   "quoted": 1
   }
  ],
  "schedule": [

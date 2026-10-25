@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-25T16:01:42.380714+00:00",
+ "last_run": "2026-10-25T16:16:35.447771+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -629,11 +629,14 @@
      "line": 2.5,
      "logged": "2026-10-25T12:31:41.076468+00:00",
      "match": "Liverpool v Brighton & Hove Albion",
+     "payout": 0.0,
      "price": 0.63,
+     "profit": -100.0,
      "rule": "B5",
+     "settled": "2026-10-25T16:16:35.447771+00:00",
      "side": "yes",
      "start": "2026-10-25T14:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXEPLTOTAL-26OCT25LFCBRI-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Liverpool O+D- v Brighton & Hove Albion O+D- \u00b7 Over 2.5 YES 0.63"
@@ -1466,11 +1469,14 @@
      "line": null,
      "logged": "2026-10-25T12:31:41.076468+00:00",
      "match": "Liverpool v Brighton & Hove Albion",
+     "payout": 0.0,
      "price": 0.66,
+     "profit": -100.0,
      "rule": "D1",
+     "settled": "2026-10-25T16:16:35.447771+00:00",
      "side": "yes",
      "start": "2026-10-25T14:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXEPLBTTS-26OCT25LFCBRI-BTTS",
      "title": "Both Teams To Score",
      "why": "Liverpool O+D- v Brighton & Hove Albion O+D- \u00b7 BTTS YES 0.66"
@@ -2482,11 +2488,14 @@
      "line": null,
      "logged": "2026-10-25T12:31:41.076468+00:00",
      "match": "Hull City v Brentford",
+     "payout": 1.0,
      "price": 0.58,
+     "profit": 67.49,
      "rule": "D3",
+     "settled": "2026-10-25T16:16:35.447771+00:00",
      "side": "yes",
      "start": "2026-10-25T14:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXEPLBTTS-26OCT25HULBRE-BTTS",
      "title": "Both Teams To Score",
      "why": "Hull City O-D- v Brentford O+D- \u00b7 BTTS YES 0.58"
@@ -2495,14 +2504,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-24T15:01:42.770410+00:00",
-   "candidates": 3,
-   "due": 5,
-   "labelled": 5,
-   "matched": 3,
-   "new": 2
-  },
   {
    "at": "2026-10-24T15:16:20.986892+00:00",
    "candidates": 3,
@@ -2901,6 +2902,14 @@
    "due": 4,
    "labelled": 4,
    "matched": 1,
+   "new": 0
+  },
+  {
+   "at": "2026-10-25T16:16:35.447771+00:00",
+   "candidates": 0,
+   "due": 2,
+   "labelled": 2,
+   "matched": 0,
    "new": 0
   }
  ],
