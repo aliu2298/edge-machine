@@ -1,0 +1,231 @@
+{
+ "error": "nba_tt_cheap_tp30 KXNBATEAMTOTAL-26OCT24WASCHI: HTTP Error 404: Not Found; nba_tt_cheap_tp30 KXNBATEAMTOTAL-26OCT24SASDAL: HTTP Error 404: Not Found; nba_tt_cheap_tp30 KXNBATEAMTOTAL-26OCT24MILPHI: HTTP Error 404: Not Found; nba_tt_cheap_tp30 KXNBATEAMTOTAL-26OCT24MIACHA: HTTP Error 404: Not Found; nba_tt_cheap_tp30 KXNBATEAMTOTAL-26OCT24HOUATL: HTTP Error 404: Not Found; nba_tt_cheap_tp30 KXNBATEAMTOTAL-26OCT24BKNCLE: HTTP Error 404: Not Found",
+ "lanes": {
+  "atp_coinflip_tp30": {
+   "caution": "",
+   "duration_min": 120,
+   "entry_hours": [
+    1
+   ],
+   "headline": "tp30",
+   "id": "atp_coinflip_tp30",
+   "label": "ATP coin-flip \u00b7 sell +30%",
+   "note": "One player (the cheaper ask) priced 40-60c an hour before the match, with a resting sell at +30%. Start from the first in-play price movement.",
+   "registered": "2026-10-25T04:00:26.997081+00:00",
+   "replayed": {
+    "KXATPMATCH-26OCT24BAEMPE": "before the lane's first night",
+    "KXATPMATCH-26OCT24BASTSI": 0,
+    "KXATPMATCH-26OCT24BERALT": 0,
+    "KXATPMATCH-26OCT24BERPAU": 0,
+    "KXATPMATCH-26OCT24CERGRI": 0,
+    "KXATPMATCH-26OCT24CERSVA": "before the lane's first night",
+    "KXATPMATCH-26OCT24COBMUS": 0,
+    "KXATPMATCH-26OCT24FARBRU": 0,
+    "KXATPMATCH-26OCT24FEACAR": 0,
+    "KXATPMATCH-26OCT24FILSTR": 0,
+    "KXATPMATCH-26OCT24GIRHAN": 0,
+    "KXATPMATCH-26OCT24KECHIJ": 0,
+    "KXATPMATCH-26OCT24KOPNEU": "before the lane's first night",
+    "KXATPMATCH-26OCT24KOVDUC": "before the lane's first night",
+    "KXATPMATCH-26OCT24MARSOR": 0,
+    "KXATPMATCH-26OCT24MEDBUB": 0,
+    "KXATPMATCH-26OCT24MOLMED": "before the lane's first night",
+    "KXATPMATCH-26OCT24MOUMAC": "before the lane's first night",
+    "KXATPMATCH-26OCT24PAUFRI": 0,
+    "KXATPMATCH-26OCT24SCHDRO": 0,
+    "KXATPMATCH-26OCT24TIRMAN": "before the lane's first night",
+    "KXATPMATCH-26OCT24VALSON": "before the lane's first night"
+   },
+   "series": [
+    "KXATPMATCH"
+   ],
+   "since": "2026-10-25",
+   "skipped": {},
+   "trades": [],
+   "watch": true
+  },
+  "cfb_dog_tp50": {
+   "caution": "",
+   "duration_min": 210,
+   "entry_hours": [
+    1,
+    24
+   ],
+   "headline": "tp50",
+   "id": "cfb_dog_tp50",
+   "label": "College football underdog \u00b7 sell +50%",
+   "note": "A side priced 10-40c, bought 1h and 24h before kickoff, with a resting sell at +50%.",
+   "registered": "2026-10-25T04:00:26.997081+00:00",
+   "replayed": {
+    "KXNCAAFGAME-26OCT24ALBYURI": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24ARPBFAMU": 0,
+    "KXNCAAFGAME-26OCT24BSUWSU": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24BUCKHC": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24BUTDRKE": 0,
+    "KXNCAAFGAME-26OCT24CAMPME": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24CHATWCU": 0,
+    "KXNCAAFGAME-26OCT24CHSLINW": 0,
+    "KXNCAAFGAME-26OCT24CHSOTNST": 0,
+    "KXNCAAFGAME-26OCT24COLGRICH": 0,
+    "KXNCAAFGAME-26OCT24CORBRWN": 0,
+    "KXNCAAFGAME-26OCT24DARTCLMB": 0,
+    "KXNCAAFGAME-26OCT24ETSUVMI": 0,
+    "KXNCAAFGAME-26OCT24GASTARST": 0,
+    "KXNCAAFGAME-26OCT24GTWNWM": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24HAWNIU": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24HCULAM": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24HOWMORG": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24INDMICH": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24INSTILST": 0,
+    "KXNCAAFGAME-26OCT24JKSTCOOK": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24LAFFOR": 0,
+    "KXNCAAFGAME-26OCT24LEHVILL": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24LSUAUB": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24MCNSIW": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24MHURMU": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24MISSTEX": 0,
+    "KXNCAAFGAME-26OCT24MONMHAMP": 0,
+    "KXNCAAFGAME-26OCT24MURRSDST": 0,
+    "KXNCAAFGAME-26OCT24NHCCCSU": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24NICHNWST": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24NORFSCST": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24PEAYUNA": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24PREVALP": 0,
+    "KXNCAAFGAME-26OCT24PRINHARV": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24PRSTIDST": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24PVETAM": 0,
+    "KXNCAAFGAME-26OCT24SACBALL": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24SAMFUR": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24SDSUCSU": 0,
+    "KXNCAAFGAME-26OCT24SELASFA": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24SEMOEIU": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24SJSUNEV": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24SOUTXSO": 0,
+    "KXNCAAFGAME-26OCT24STETMORE": 0,
+    "KXNCAAFGAME-26OCT24STNHLIU": 0,
+    "KXNCAAFGAME-26OCT24STONBRY": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24SUUIDHO": 0,
+    "KXNCAAFGAME-26OCT24TARLUWGA": 0,
+    "KXNCAAFGAME-26OCT24TNTCCIT": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24TXAMALA": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24ULMTROY": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24UNCOUCD": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24UNDSDAK": 0,
+    "KXNCAAFGAME-26OCT24UNHMRMK": 0,
+    "KXNCAAFGAME-26OCT24UNISIU": 0,
+    "KXNCAAFGAME-26OCT24UNTNAVY": 0,
+    "KXNCAAFGAME-26OCT24USDDAY": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24USTMRST": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24USUTXST": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24UTMWIU": 0,
+    "KXNCAAFGAME-26OCT24UTRGVCARK": 0,
+    "KXNCAAFGAME-26OCT24UTUCP": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24UWFLEKY": 0,
+    "KXNCAAFGAME-26OCT24WAGDUQ": "before the lane's first night",
+    "KXNCAAFGAME-26OCT24WEBMTST": 0
+   },
+   "series": [
+    "KXNCAAFGAME"
+   ],
+   "since": "2026-10-25",
+   "skipped": {},
+   "trades": [],
+   "watch": false
+  },
+  "challenger_dog_tp30": {
+   "caution": "",
+   "duration_min": 120,
+   "entry_hours": [
+    1
+   ],
+   "headline": "tp30",
+   "id": "challenger_dog_tp30",
+   "label": "Challenger underdog \u00b7 sell +30%",
+   "note": "A Challenger player priced 10-40c an hour before the match, with a resting sell at +30%. Start from the first in-play price movement (Kalshi's occurrence time is near the END). 24h books are empty, so 1h only.",
+   "registered": "2026-10-25T04:00:26.997081+00:00",
+   "replayed": {
+    "KXATPCHALLENGERMATCH-26OCT24BRODEB": "before the lane's first night",
+    "KXATPCHALLENGERMATCH-26OCT24GULMOL": 0,
+    "KXATPCHALLENGERMATCH-26OCT24HEIPDA": 0,
+    "KXATPCHALLENGERMATCH-26OCT24IMAISO": 0,
+    "KXATPCHALLENGERMATCH-26OCT24JONBLA": "before the lane's first night",
+    "KXATPCHALLENGERMATCH-26OCT24KACKIM": "before the lane's first night",
+    "KXATPCHALLENGERMATCH-26OCT24KOPROM": 0,
+    "KXATPCHALLENGERMATCH-26OCT24MELABO": "before the lane's first night",
+    "KXATPCHALLENGERMATCH-26OCT24ROCRIB": 0,
+    "KXATPCHALLENGERMATCH-26OCT24SCHCUI": "before the lane's first night",
+    "KXATPCHALLENGERMATCH-26OCT24SHIFAN": 0,
+    "KXATPCHALLENGERMATCH-26OCT24TRURIT": 0
+   },
+   "series": [
+    "KXATPCHALLENGERMATCH"
+   ],
+   "since": "2026-10-25",
+   "skipped": {},
+   "trades": [],
+   "watch": false
+  },
+  "nba_ml_dog_tp50": {
+   "caution": "In the research HOLD beat the sell (+12% v +1%, n18): read this lane against its hold row.",
+   "duration_min": 160,
+   "entry_hours": [
+    1
+   ],
+   "headline": "tp50",
+   "id": "nba_ml_dog_tp50",
+   "label": "NBA moneyline underdog \u00b7 sell +50%",
+   "note": "A team priced 10-40c an hour before the tip, with a resting sell at +50%.",
+   "registered": "2026-10-25T04:00:26.997081+00:00",
+   "replayed": {
+    "KXNBAGAME-26OCT24BKNCLE": "before the lane's first night",
+    "KXNBAGAME-26OCT24HOUATL": 0,
+    "KXNBAGAME-26OCT24MIACHA": 0,
+    "KXNBAGAME-26OCT24MILPHI": "before the lane's first night",
+    "KXNBAGAME-26OCT24NOPDEN": "before the lane's first night",
+    "KXNBAGAME-26OCT24SASDAL": "before the lane's first night",
+    "KXNBAGAME-26OCT24WASCHI": 0
+   },
+   "series": [
+    "KXNBAGAME"
+   ],
+   "since": "2026-10-25",
+   "skipped": {},
+   "trades": [],
+   "watch": false
+  },
+  "nba_tt_cheap_tp30": {
+   "caution": "",
+   "duration_min": 160,
+   "entry_hours": [
+    1,
+    24
+   ],
+   "headline": "tp30",
+   "id": "nba_tt_cheap_tp30",
+   "label": "NBA team-total cheap rungs \u00b7 sell +30%",
+   "note": "Each team's rungs priced 10-40c, bought 1h and 24h before the tip, with a resting sell at +30%. A loss-cutter test for the failing NBA team-total lanes. Rungs of one game move together: z is clustered by night, which is at least as strict as by game.",
+   "registered": "2026-10-25T04:00:26.997081+00:00",
+   "replayed": {},
+   "series": [
+    "KXNBATEAMTOTAL"
+   ],
+   "since": "2026-10-25",
+   "skipped": {},
+   "trades": [],
+   "watch": false
+  }
+ },
+ "last_run": "2026-10-25T04:00:26.997081+00:00",
+ "runs": [
+  {
+   "at": "2026-10-25T04:00:26.997081+00:00",
+   "new": {
+    "atp_coinflip_tp30": 0,
+    "cfb_dog_tp50": 0,
+    "challenger_dog_tp30": 0,
+    "nba_ml_dog_tp50": 0
+   }
+  }
+ ],
+ "version": "chaos-v2"
+}
