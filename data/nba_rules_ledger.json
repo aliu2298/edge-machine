@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-25T21:43:17.570607+00:00",
+ "last_run": "2026-10-25T22:00:13.943841+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -372,6 +372,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT25INDBKN-IND111",
      "title": "Indiana over 110.5 points",
      "why": "IND O+D+ v BKN O+D+ \u00b7 110+ YES 0.78"
+    },
+    {
+     "game": "401909866",
+     "id": "R1:KXNBATEAMTOTAL-26OCT25DETPHI-DET110",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O-D-",
+      "home": "O-D+",
+      "home_h1": "O-D+"
+     },
+     "logged": "2026-10-25T22:00:13.943841+00:00",
+     "match": "DET @ PHI",
+     "price": 0.61,
+     "rule": "R1",
+     "side": "yes",
+     "start": "2026-10-25T23:30Z",
+     "status": "open",
+     "strike": 109.5,
+     "team": "DET",
+     "ticker": "KXNBATEAMTOTAL-26OCT25DETPHI-DET110",
+     "title": "Detroit over 109.5 points",
+     "why": "DET O+D- v PHI O-D+ \u00b7 110+ YES 0.61"
     }
    ]
   },
@@ -1099,6 +1121,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT25ORLNYK-NYK114",
      "title": "New York over 113.5 points",
      "why": "NY O-D+ v ORL O+D+ \u00b7 115+ NO 0.43"
+    },
+    {
+     "game": "401909866",
+     "id": "R3:KXNBATEAMTOTAL-26OCT25DETPHI-PHI114",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O-D-",
+      "home": "O-D+",
+      "home_h1": "O-D+"
+     },
+     "logged": "2026-10-25T22:00:13.943841+00:00",
+     "match": "DET @ PHI",
+     "price": 0.52,
+     "rule": "R3",
+     "side": "no",
+     "start": "2026-10-25T23:30Z",
+     "status": "open",
+     "strike": 113.5,
+     "team": "PHI",
+     "ticker": "KXNBATEAMTOTAL-26OCT25DETPHI-PHI114",
+     "title": "Philadelphia over 113.5 points",
+     "why": "PHI O-D+ v DET O+D- \u00b7 115+ NO 0.52"
     }
    ]
   },
@@ -1304,6 +1348,28 @@
      "ticker": "KXNBA1HTOTAL-26OCT24MIACHA-114",
      "title": "Over 113.5 points",
      "why": "1H MIA O+D+ @ CHA O-D- \u00b7 115+ NO 0.38"
+    },
+    {
+     "game": "401909866",
+     "id": "R5:KXNBA1HTOTAL-26OCT25DETPHI-115",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O-D-",
+      "home": "O-D+",
+      "home_h1": "O-D+"
+     },
+     "logged": "2026-10-25T22:00:13.943841+00:00",
+     "match": "DET @ PHI",
+     "price": 0.45,
+     "rule": "R5",
+     "side": "no",
+     "start": "2026-10-25T23:30Z",
+     "status": "open",
+     "strike": 114.5,
+     "team": "game",
+     "ticker": "KXNBA1HTOTAL-26OCT25DETPHI-115",
+     "title": "Over 114.5 points",
+     "why": "1H DET O-D- @ PHI O-D+ \u00b7 115+ NO 0.45"
     }
    ]
   },
@@ -1871,6 +1937,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT25TORMIN-TOR104",
      "title": "Toronto over 103.5 points",
      "why": "TOR O+D- v MIN O+D- \u00b7 105+ YES 0.85"
+    },
+    {
+     "game": "401909866",
+     "id": "R6:KXNBATEAMTOTAL-26OCT25DETPHI-DET106",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O-D-",
+      "home": "O-D+",
+      "home_h1": "O-D+"
+     },
+     "logged": "2026-10-25T22:00:13.943841+00:00",
+     "match": "DET @ PHI",
+     "price": 0.79,
+     "rule": "R6",
+     "side": "yes",
+     "start": "2026-10-25T23:30Z",
+     "status": "open",
+     "strike": 105.5,
+     "team": "DET",
+     "ticker": "KXNBATEAMTOTAL-26OCT25DETPHI-DET106",
+     "title": "Detroit over 105.5 points",
+     "why": "DET O+D- v PHI O-D+ \u00b7 105+ YES 0.79"
     }
    ]
   },
@@ -2275,11 +2363,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-22T15:25:37.935742+00:00",
-   "due": 0,
-   "new": 0
-  },
-  {
    "at": "2026-10-22T19:19:27.854348+00:00",
    "due": 0,
    "new": 0
@@ -2528,6 +2611,11 @@
    "at": "2026-10-25T21:43:17.570607+00:00",
    "due": 3,
    "new": 1
+  },
+  {
+   "at": "2026-10-25T22:00:13.943841+00:00",
+   "due": 4,
+   "new": 4
   }
  ],
  "version": "nba-rules-v1"
