@@ -10784,12 +10784,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.93,
+     "profit": 0.07,
      "rationale": "MIA@CHA game UNDER 254.5 @93c: model 89.5% (mu 230.8, line +23.7 above mu); edge -3.5c",
      "sd": 18.9,
+     "settled": "2026-10-25T00:45:29.513098+00:00",
      "side": "no",
      "start": "2026-10-24T22:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT24MIACHA-255",
      "unit": "game"
     },
@@ -10807,12 +10810,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 0.1034,
      "rationale": "MIA@CHA game UNDER 252.5 @90c: model 87.5% (mu 230.8, line +21.7 above mu); edge -2.5c",
      "sd": 18.9,
+     "settled": "2026-10-25T00:45:29.513098+00:00",
      "side": "no",
      "start": "2026-10-24T22:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBATOTAL-26OCT24MIACHA-253",
      "unit": "game"
     },
@@ -12595,7 +12601,7 @@
   }
  },
  "error": null,
- "last_run": "2026-10-25T00:33:42.513932+00:00",
+ "last_run": "2026-10-25T00:45:29.513098+00:00",
  "preseason": [
   {
    "pts": 105,
@@ -13453,6 +13459,10 @@
   },
   {
    "at": "2026-10-25T00:33:42.513932+00:00",
+   "built": []
+  },
+  {
+   "at": "2026-10-25T00:45:29.513098+00:00",
    "built": []
   }
  ],
