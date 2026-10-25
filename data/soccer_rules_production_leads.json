@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-25T19:31:42+00:00",
+ "board_built_at": "2026-10-25T20:46:37+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sa_o15_arg": true,
@@ -529,6 +529,41 @@
    "sport": "soccer_o15",
    "status": "miss"
   },
+  "2026-10-25|Aldosivi|Belgrano (C\u00f3rdoba)|Over 1.5 goals \u00b7 Argentina over 1.5": {
+   "away": "Belgrano (C\u00f3rdoba)",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-10-25",
+   "edge_at_log": null,
+   "first_seen": "2026-10-25",
+   "headline": "Over 1.5 goals",
+   "home": "Aldosivi",
+   "id": "2026-10-25|Aldosivi|Belgrano (C\u00f3rdoba)|Over 1.5 goals \u00b7 Argentina over 1.5",
+   "kickoff": "2026-10-25T17:45Z",
+   "lane": "production",
+   "league": "Liga Profesional",
+   "match": "Aldosivi v Belgrano (C\u00f3rdoba)",
+   "pair": "sa_o15_arg|soccer_o15",
+   "price_at_log": 0.7,
+   "published_at": "2026-10-25T20:46:37+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Over 1.5 goals",
+    "event": "KXARGPREMDIVTOTAL-26OCT25CAACAB",
+    "market": "KXARGPREMDIVTOTAL-26OCT25CAACAB-2",
+    "outcome": "Over 1.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.7,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT25CAACAB-2",
+   "source": "sa_o15_arg",
+   "sport": "soccer_o15",
+   "status": "miss"
+  },
   "2026-10-25|Hull City|Brentford|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
    "away": "Brentford",
    "bet": {
@@ -598,8 +633,8 @@
    "sport": "soccer_o25",
    "status": "hit"
   },
-  "2026-10-25|Independiente|Boca Juniors|Over 1.5 goals \u00b7 Argentina over 1.5": {
-   "away": "Boca Juniors",
+  "2026-10-25|River Plate|Racing Club|Over 1.5 goals \u00b7 Argentina over 1.5": {
+   "away": "Racing Club",
    "bet": {
     "kind": "total_gte",
     "n": 2
@@ -608,29 +643,29 @@
    "edge_at_log": null,
    "first_seen": "2026-10-25",
    "headline": "Over 1.5 goals",
-   "home": "Independiente",
-   "id": "2026-10-25|Independiente|Boca Juniors|Over 1.5 goals \u00b7 Argentina over 1.5",
-   "kickoff": "2026-10-25T20:00Z",
+   "home": "River Plate",
+   "id": "2026-10-25|River Plate|Racing Club|Over 1.5 goals \u00b7 Argentina over 1.5",
+   "kickoff": "2026-10-25T22:15Z",
    "lane": "production",
    "last_seen": "2026-10-25",
-   "last_seen_at": "2026-10-25T19:31:42+00:00",
+   "last_seen_at": "2026-10-25T20:46:37+00:00",
    "league": "Liga Profesional",
-   "match": "Independiente v Boca Juniors",
+   "match": "River Plate v Racing Club",
    "pair": "sa_o15_arg|soccer_o15",
-   "price_at_log": 0.66,
-   "published_at": "2026-10-25T18:31:12+00:00",
+   "price_at_log": 0.77,
+   "published_at": "2026-10-25T20:46:37+00:00",
    "published_late": false,
    "published_min_before_kickoff": 88,
    "route": {
     "claim": "Over 1.5 goals",
-    "event": "KXARGPREMDIVTOTAL-26OCT25CAIBOC",
-    "market": "KXARGPREMDIVTOTAL-26OCT25CAIBOC-2",
+    "event": "KXARGPREMDIVTOTAL-26OCT25RIVRAC",
+    "market": "KXARGPREMDIVTOTAL-26OCT25RIVRAC-2",
     "outcome": "Over 1.5 goals scored",
     "outcome_side": "yes",
-    "price_at_log": 0.66,
+    "price_at_log": 0.77,
     "venue": "kalshi"
    },
-   "sandbox_quote": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT25CAIBOC-2",
+   "sandbox_quote": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT25RIVRAC-2",
    "source": "sa_o15_arg",
    "sport": "soccer_o15",
    "status": "pending"
@@ -669,42 +704,6 @@
    "source": "sa_o15_arg",
    "sport": "soccer_o15",
    "status": "hit"
-  },
-  "2026-10-25|Sporting CP|Acad\u00e9mico de Viseu|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
-   "away": "Acad\u00e9mico de Viseu",
-   "bet": {
-    "kind": "btts"
-   },
-   "date": "2026-10-25",
-   "edge_at_log": null,
-   "first_seen": "2026-10-25",
-   "headline": "Both teams to score",
-   "home": "Sporting CP",
-   "id": "2026-10-25|Sporting CP|Acad\u00e9mico de Viseu|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score",
-   "kickoff": "2026-10-25T20:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-25",
-   "last_seen_at": "2026-10-25T19:31:42+00:00",
-   "league": "Primeira Liga",
-   "match": "Sporting CP v Acad\u00e9mico de Viseu",
-   "pair": "sr_d3|soccer_btts",
-   "price_at_log": 0.53,
-   "published_at": "2026-10-25T19:01:46+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 88,
-   "route": {
-    "claim": "Both teams to score",
-    "event": "KXLIGAPORTUGALBTTS-26OCT25SPOACV",
-    "market": "KXLIGAPORTUGALBTTS-26OCT25SPOACV-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "yes",
-    "price_at_log": 0.53,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "sr_d3:KXLIGAPORTUGALBTTS-26OCT25SPOACV-BTTS",
-   "source": "sr_d3",
-   "sport": "soccer_btts",
-   "status": "pending"
   }
  },
  "pairs": {
@@ -715,18 +714,18 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 8,
+    "leads": 9,
     "problem": null,
-    "routed": 8,
+    "routed": 9,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 7,
-   "sandbox_roi": 0.0044,
-   "sandbox_roi_fee": 0.0044,
+   "sandbox_n": 8,
+   "sandbox_roi": -0.1211,
+   "sandbox_roi_fee": -0.1211,
    "timing": {
     "late": [],
     "timed": 2,
@@ -790,9 +789,9 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 9,
+    "leads": 8,
     "problem": null,
-    "routed": 9,
+    "routed": 8,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -804,7 +803,7 @@
    "sandbox_roi_fee": -0.5015,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 0,
     "under_target": 0
    }
   }
@@ -832,5 +831,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-25T19:31:42+00:00"
+ "updated_at": "2026-10-25T20:46:37+00:00"
 }
