@@ -7,7 +7,7 @@ SELL at a target. The in-play swings either fill that sell or the position settl
 bought during the event: no dip, wave or momentum triggers (the in-play entries E0-E3 of the first
 draft are withdrawn). Nothing here trades and nothing polls live: every lane is SIMULATED nightly
 from Kalshi's 1-minute candles of events that have already settled, using only the minutes up to
-each decision. PAPER ONLY: no Production listing, no PAIR_OVERRIDES, no bot. Its own ledger,
+each decision. PAPER ONLY: no Production listing, no PAIR_OVERRIDES, no live orders. Its own ledger,
 data/chaos_ledger.json.
 
 THE ENGINE. A lane is a config (chaos_lanes.py is where lanes plug in; Phase 1 ships none):
