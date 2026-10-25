@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-25T15:16:43.150711+00:00",
+ "last_run": "2026-10-25T15:31:47.723069+00:00",
  "rules": {
   "O15": {
    "picks": [
@@ -81,11 +81,14 @@
      "line": 1.5,
      "logged": "2026-10-25T12:01:43.310964+00:00",
      "match": "PSV Eindhoven v Feyenoord Rotterdam",
+     "payout": 1.0,
      "price": 0.91,
+     "profit": 9.2,
      "rule": "O15",
+     "settled": "2026-10-25T15:31:47.723069+00:00",
      "side": "yes",
      "start": "2026-10-25T13:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXEREDIVISIETOTAL-26OCT25PSVFEY-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Eindhoven, Feyenoord in a top-3 title spot \u00b7 over 1.5 YES 0.91"
@@ -212,11 +215,14 @@
      "line": 2.5,
      "logged": "2026-10-25T12:01:43.310964+00:00",
      "match": "PSV Eindhoven v Feyenoord Rotterdam",
+     "payout": 0.0,
      "price": 0.75,
+     "profit": -100.0,
      "rule": "O25",
+     "settled": "2026-10-25T15:31:47.723069+00:00",
      "side": "yes",
      "start": "2026-10-25T13:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXEREDIVISIETOTAL-26OCT25PSVFEY-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Eindhoven, Feyenoord in a top-3 title spot \u00b7 over 2.5 YES 0.75"
@@ -343,11 +349,14 @@
      "line": 3.5,
      "logged": "2026-10-25T12:01:43.310964+00:00",
      "match": "PSV Eindhoven v Feyenoord Rotterdam",
+     "payout": 0.0,
      "price": 0.55,
+     "profit": -100.0,
      "rule": "O35",
+     "settled": "2026-10-25T15:31:47.723069+00:00",
      "side": "yes",
      "start": "2026-10-25T13:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXEREDIVISIETOTAL-26OCT25PSVFEY-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Eindhoven, Feyenoord in a top-3 title spot \u00b7 over 3.5 YES 0.55"
@@ -397,13 +406,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-24T14:16:38.054277+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "qualifying": 0
-  },
   {
    "at": "2026-10-24T14:31:38.752530+00:00",
    "due": 0,
@@ -753,6 +755,13 @@
    "matched": 1,
    "new": 0,
    "qualifying": 1
+  },
+  {
+   "at": "2026-10-25T15:31:47.723069+00:00",
+   "due": 0,
+   "matched": 0,
+   "new": 0,
+   "qualifying": 0
   }
  ],
  "version": "contender-overs-v1"
