@@ -388,10 +388,22 @@ def settled_result(m):
 def fetch_candles(series, event, markets, start_ts, end_ts, fetch, archived):
     """{ticker: [candle, ...]} for the event's markets over [start_ts, end_ts]."""
     if not archived:
-        d = fetch(f"series/{series}/events/{event}/candlesticks?start_ts={start_ts}&end_ts={end_ts}&period_interval=1")
+        try:
+            d = fetch(f"series/{series}/events/{event}/candlesticks?start_ts={start_ts}&end_ts={end_ts}&period_interval=1")
+        except Exception:                       # some series (team totals) have no event-level candles: go per market
+            d = {}
         got = dict(zip(d.get("market_tickers") or [], d.get("market_candlesticks") or []))
         if any(got.values()):
             return got
+        out = {}
+        for m in markets:
+            try:
+                x = fetch(f"series/{series}/markets/{m['ticker']}/candlesticks?start_ts={start_ts}&end_ts={end_ts}&period_interval=1")
+            except Exception:
+                x = {}
+            out[m["ticker"]] = x.get("candlesticks") or x.get("market_candlesticks") or []
+        if any(out.values()):
+            return out
     out = {}
     for m in markets:
         d = fetch(f"historical/markets/{m['ticker']}/candlesticks?start_ts={start_ts}&end_ts={end_ts}&period_interval=1")
