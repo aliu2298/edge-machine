@@ -100,6 +100,11 @@
    "lead_min": 14.9,
    "price": 0.36
   },
+  "btts_form_l10_fade:KXMLSBTTS-26OCT24PORCLT-BTTS": {
+   "at": "2026-10-25T01:33:03+00:00",
+   "lead_min": 56.9,
+   "price": 0.31
+  },
   "btts_form_l10_fade:KXMLSBTTS-26OCT24SKCATX-BTTS": {
    "at": "2026-10-25T00:16:38+00:00",
    "lead_min": 13.4,
@@ -885,16 +890,6 @@
    "lead_min": 6.9,
    "price": 0.765
   },
-  "ftts_no_60_70:KXMLSFTTS-26OCT14COLMIN-MIN": {
-   "at": "2026-10-15T01:26:08+00:00",
-   "lead_min": 3.9,
-   "price": 0.65
-  },
-  "ftts_no_60_70:KXMLSFTTS-26OCT14RSLSJ-SJ": {
-   "at": "2026-10-15T01:26:08+00:00",
-   "lead_min": 3.9,
-   "price": 0.65
-  },
   "ftts_no_60_70:KXUELFTTS-26OCT15DINRSC-RSC": {
    "at": "2026-10-15T18:56:18+00:00",
    "lead_min": 3.7,
@@ -960,16 +955,6 @@
    "lead_min": 3.5,
    "price": 0.15
   },
-  "mls_away_band:KXMLSGAME-26OCT14COLMIN": {
-   "at": "2026-10-15T01:26:08+00:00",
-   "lead_min": 3.9,
-   "price": 0.23
-  },
-  "mls_away_band:KXMLSGAME-26OCT14RSLSJ": {
-   "at": "2026-10-15T01:26:08+00:00",
-   "lead_min": 3.9,
-   "price": 0.23
-  },
   "mls_away_band:KXMLSGAME-26OCT17ORLDCU": {
    "at": "2026-10-17T23:27:19+00:00",
    "lead_min": 2.7,
@@ -1009,11 +994,6 @@
    "at": "2026-10-25T00:16:38+00:00",
    "lead_min": 13.4,
    "price": 0.77
-  },
-  "mls_fade_home:KXMLSGAME-26OCT14COLMIN-COL": {
-   "at": "2026-10-15T01:26:08+00:00",
-   "lead_min": 3.9,
-   "price": 0.48
   },
   "mls_fade_home:KXMLSGAME-26OCT14SDHOU-SD": {
    "at": "2026-10-15T02:27:28+00:00",
@@ -1064,6 +1044,11 @@
    "at": "2026-10-25T01:17:48+00:00",
    "lead_min": 12.2,
    "price": 0.51
+  },
+  "mls_fade_home:KXMLSGAME-26OCT24SDSEA-SD": {
+   "at": "2026-10-25T01:33:03+00:00",
+   "lead_min": 56.9,
+   "price": 0.57
   },
   "mls_fade_home:KXMLSGAME-26OCT24SKCATX-SKC": {
    "at": "2026-10-25T00:16:38+00:00",
@@ -1875,6 +1860,11 @@
    "lead_min": 4.5,
    "price": 0.68
   },
+  "team2_form_l10:KXMLSTEAMTOTAL-26OCT24PORCLT-CLT2": {
+   "at": "2026-10-25T01:33:03+00:00",
+   "lead_min": 56.9,
+   "price": 0.47
+  },
   "team2_form_l10:KXUELTEAMTOTAL-26OCT15TSGBES-BES2": {
    "at": "2026-10-15T18:56:18+00:00",
    "lead_min": 3.7,
@@ -2110,11 +2100,6 @@
    "lead_min": 14.5,
    "price": 0.83
   },
-  "u35_low_scoring:KXMLSTOTAL-26OCT14RSLSJ-4": {
-   "at": "2026-10-15T01:26:08+00:00",
-   "lead_min": 3.9,
-   "price": 0.55
-  },
   "u35_low_scoring:KXMLSTOTAL-26OCT17NYCLAFC-4": {
    "at": "2026-10-17T23:27:19+00:00",
    "lead_min": 2.7,
@@ -2156,5 +2141,5 @@
    "price": 0.65
   }
  },
- "updated": "2026-10-25T01:17:48+00:00"
+ "updated": "2026-10-25T01:33:03+00:00"
 }
