@@ -57,7 +57,7 @@ check("a week whose 8 words all came in together reads as one week, not 8 coin f
 check("each word is its own cluster; the event key groups the variance",
       (S.outcome_cluster(week1[0]), S.event_key(week1[0])), ("KXTRUMPSAY-26OCT19-CEAS", W1))
 check("the mentions sport is per word, not market-day", ("culture_mentions" in S.DAY_CLUSTERED, S.EVENT_CLUSTERED),
-      (False, ("culture_mentions",)))
+      (False, ("culture_mentions", "nba_tt")))
 
 print("\nthe ladder guard is intact")
 ladder = [dict(id=f"x:{i}", source="spot", sport="climate", market_id=f"KXHIGHNY-26OCT{10 + i}-T{j}", venue="kalshi_binary",

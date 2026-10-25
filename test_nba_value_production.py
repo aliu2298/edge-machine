@@ -116,5 +116,70 @@ check("the Control Center counts them and names them", (m["tiles"]["pairs"], m["
 check("the copy passes the audit's guarded phrases", sandbox_audit.COPY_RE.search(html + open("nba_value_production.py").read()), None)
 check("the OWN_LEDGER_LABELS name both sources", all(l in S.OWN_LEDGER_LABELS for l in NP.PAIRS), True)
 
+print("\nclustering: a team's total is its own question (2026-10-25: the feed failed every run from 03:00Z)")
+import io
+import contextlib
+game = dict(rule=NV.TT_1H, game="g7", match="BKN @ CLE", start="2026-10-24T23:30:00+00:00", logged="2026-10-24T22:30:00+00:00",
+            event="KXNBATEAMTOTAL-26OCT24BKNCLE", side="no", status="won", payout=1.0, profit=100.0, p=0.6, edge=0.1,
+            settled="2026-10-25T02:00:00+00:00")
+bkn = dict(game, id=f"{NV.TT_1H}:g7:BKN", unit="BKN", title="Brooklyn over 107.5 points", line=107.5, price=0.47,
+           ticker="KXNBATEAMTOTAL-26OCT24BKNCLE-BKN108")
+cle = dict(game, id=f"{NV.TT_1H}:g7:CLE", unit="CLE", title="Cleveland over 123.5 points", line=123.5, price=0.62,
+           ticker="KXNBATEAMTOTAL-26OCT24BKNCLE-CLE124")
+two = state([], [bkn, cle], last="2026-10-25T03:00:00+00:00")
+qs2 = NP.quotes(two)
+d2 = {"quotes": qs2, "coverage": {}, "meta": {}}
+a = T.assess(d2, NV.TT_1H, "nba_tt")
+check("both teams' rungs of one game (prices 0.47 + 0.62 = 1.09) are two outcomes, not one degenerate cluster",
+      (a["n"], a.get("outcomes", a["n"])), (2, 2))
+check("nba_tt is judged per bet with the variance clustered by game event", "nba_tt" in S.EVENT_CLUSTERED, True)
+check("each bet is its own cluster", sorted(S.outcome_cluster(q) for q in qs2),
+      ["KXNBATEAMTOTAL-26OCT24BKNCLE-BKN108", "KXNBATEAMTOTAL-26OCT24BKNCLE-CLE124"])
+rows2 = [(q, q["price"], q["status"] == "won") for q in qs2]
+indep = sum(q["price"] * (1 - q["price"]) for q in qs2)
+check("the game's two teams share a variance term: the event-clustered variance is the squared sum of (won - price), above the independent one",
+      (round(T.event_clustered_var(rows2), 4), round(indep, 4)), (round((0.53 + 0.38) ** 2, 4), round(indep, 4)))
+saved = S.EVENT_CLUSTERED
+S.EVENT_CLUSTERED = ("culture_mentions",)
+try:
+    raised = None
+    try:
+        T.assess(d2, NV.TT_1H, "nba_tt")
+    except T.DegenerateCluster as e:
+        raised = str(e)[:40]
+    check("regression: with nba_tt grouped by game as before, the same two bets raise DegenerateCluster", raised is not None, True)
+finally:
+    S.EVENT_CLUSTERED = saved
+b2 = NP.feed(two, now=dt.datetime(2026, 10, 25, 3, 5, tzinfo=UTC))
+check("the feed builds and the pair's record counts both teams", (b2["pairs"][f"{NV.TT_1H}|nba_tt"]["sandbox_n"],
+                                                                   b2["pairs"][f"{NV.TT_1H}|nba_tt"].get("record_error")), (2, None))
+
+print("\none pair's record raising does not take the feed down")
+orig_assess = PR._assess_since_kickoff
+
+
+def boom(d, key, pair):
+    if key.startswith(NV.TT_24H):
+        raise T.DegenerateCluster("1 of 4 outcome clusters hold several bets whose prices sum to 1 or more")
+    return orig_assess(d, key, pair)
+
+
+PR._assess_since_kickoff = boom
+buf = io.StringIO()
+try:
+    with contextlib.redirect_stdout(buf):
+        b3 = NP.feed(state([no], [yes]), now=NOW)
+finally:
+    PR._assess_since_kickoff = orig_assess
+check("the feed is still built, both pairs listed, every lead published",
+      (sorted(b3["pairs"]), sorted(l["bet"]["kind"] for l in b3["leads"].values() if l["status"] == "pending")),
+      (sorted(NP.pairs()), ["nba_tt", "nba_tt_no"]))
+p24, p1 = b3["pairs"][f"{NV.TT_24H}|nba_tt"], b3["pairs"][f"{NV.TT_1H}|nba_tt"]
+check("the failed pair says so and carries no numbers; the other pair keeps its record",
+      (p24["record_error"], p24["sandbox_n"], p24["sandbox_roi_fee"], "record_error" in p1, p1["sandbox_n"]),
+      ("DegenerateCluster", None, None, False, 0))
+check("and a ::warning:: names the pair in the run", f"::warning title=Record unavailable::{NV.TT_24H}|nba_tt" in buf.getvalue(), True)
+check("the committed ledger builds a feed", NP.feed(NV.load(), now=dt.datetime(2026, 10, 25, 3, 5, tzinfo=UTC))["pairs"] is not None, True)
+
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
