@@ -40,6 +40,11 @@
    "lead_min": 1.5,
    "price": 0.42
   },
+  "btts_form_l10_fade:KXEREDIVISIEBTTS-26OCT25NIJGRO-BTTS": {
+   "at": "2026-10-25T12:30:05+00:00",
+   "lead_min": 59.9,
+   "price": 0.3
+  },
   "btts_form_l10_fade:KXLALIGABTTS-26OCT17VILELC-BTTS": {
    "at": "2026-10-17T14:10:27+00:00",
    "lead_min": 4.5,
@@ -850,6 +855,16 @@
    "lead_min": 5.0,
    "price": 0.26
   },
+  "ere_draw:KXEREDIVISIEGAME-26OCT25NIJGRO": {
+   "at": "2026-10-25T12:30:05+00:00",
+   "lead_min": 59.9,
+   "price": 0.24
+  },
+  "ere_draw:KXEREDIVISIEGAME-26OCT25PSVFEY": {
+   "at": "2026-10-25T12:30:05+00:00",
+   "lead_min": 59.9,
+   "price": 0.23
+  },
   "espn_fpi:aec-nfl-buf-lv-2026-10-18": {
    "at": "2026-10-18T20:16:55+00:00",
    "lead_min": 8.1,
@@ -1189,6 +1204,11 @@
    "at": "2026-10-25T11:13:28+00:00",
    "lead_min": 1.5,
    "price": 0.79
+  },
+  "o15_form_l10:KXEREDIVISIETOTAL-26OCT25NIJGRO-2": {
+   "at": "2026-10-25T12:30:05+00:00",
+   "lead_min": 59.9,
+   "price": 0.89
   },
   "o15_form_l10:KXLALIGATOTAL-26OCT17ESPATM-2": {
    "at": "2026-10-17T11:54:57+00:00",
@@ -1539,6 +1559,11 @@
    "at": "2026-10-18T17:46:21+00:00",
    "lead_min": 13.6,
    "price": 0.32
+  },
+  "o25_congestion:KXEREDIVISIETOTAL-26OCT25NIJGRO-3": {
+   "at": "2026-10-25T12:30:05+00:00",
+   "lead_min": 59.9,
+   "price": 0.31
   },
   "o25_congestion:KXLALIGATOTAL-26OCT17ESPATM-3": {
    "at": "2026-10-17T11:54:57+00:00",
@@ -2086,8 +2111,8 @@
    "price": 0.66
   },
   "u35_low_o15:KXLALIGATOTAL-26OCT25ATHGET-2": {
-   "at": "2026-10-25T12:14:08+00:00",
-   "lead_min": 45.9,
+   "at": "2026-10-25T12:30:05+00:00",
+   "lead_min": 29.9,
    "price": 0.71
   },
   "u35_low_o15:KXSAUDIPLTOTAL-26OCT22FATSHA-2": {
@@ -2116,8 +2141,8 @@
    "price": 0.83
   },
   "u35_low_scoring:KXLALIGATOTAL-26OCT25ATHGET-4": {
-   "at": "2026-10-25T12:14:08+00:00",
-   "lead_min": 45.9,
+   "at": "2026-10-25T12:30:05+00:00",
+   "lead_min": 29.9,
    "price": 0.76
   },
   "u35_low_scoring:KXMLSTOTAL-26OCT17NYCLAFC-4": {
@@ -2161,5 +2186,5 @@
    "price": 0.65
   }
  },
- "updated": "2026-10-25T12:14:08+00:00"
+ "updated": "2026-10-25T12:30:05+00:00"
 }
