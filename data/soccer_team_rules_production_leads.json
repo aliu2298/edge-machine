@@ -5,7 +5,7 @@
    0.97
   ]
  },
- "board_built_at": "2026-10-25T18:31:28+00:00",
+ "board_built_at": "2026-10-25T18:46:40+00:00",
  "collector_error": null,
  "collector_healthy": {
   "st_t1": true
@@ -85,6 +85,78 @@
    "source": "st_t1",
    "sport": "soccer_team2",
    "status": "hit"
+  },
+  "2026-10-25|SC Freiburg|Bayern Munich|Bayern Munich to score 2+ \u00b7 O+D\u2212 v O+D\u2212 \u00b7 team 2+ goals": {
+   "away": "Bayern Munich",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "Bayern Munich"
+   },
+   "date": "2026-10-25",
+   "edge_at_log": null,
+   "first_seen": "2026-10-25",
+   "headline": "Bayern Munich to score 2+",
+   "home": "SC Freiburg",
+   "id": "2026-10-25|SC Freiburg|Bayern Munich|Bayern Munich to score 2+ \u00b7 O+D\u2212 v O+D\u2212 \u00b7 team 2+ goals",
+   "kickoff": "2026-10-25T16:30Z",
+   "lane": "production",
+   "league": "Bundesliga",
+   "match": "SC Freiburg v Bayern Munich",
+   "pair": "st_t1|soccer_team2",
+   "price_at_log": 0.74,
+   "published_at": "2026-10-25T18:46:40+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Bayern Munich to score 2+",
+    "event": "KXBUNDESLIGATEAMTOTAL-26OCT25SCFBMU",
+    "market": "KXBUNDESLIGATEAMTOTAL-26OCT25SCFBMU-BMU2",
+    "outcome": "Bayern Munich over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.74,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "st_t1:KXBUNDESLIGATEAMTOTAL-26OCT25SCFBMU-BMU2",
+   "source": "st_t1",
+   "sport": "soccer_team2",
+   "status": "hit"
+  },
+  "2026-10-25|SC Freiburg|Bayern Munich|SC Freiburg to score 2+ \u00b7 O+D\u2212 v O+D\u2212 \u00b7 team 2+ goals": {
+   "away": "Bayern Munich",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "SC Freiburg"
+   },
+   "date": "2026-10-25",
+   "edge_at_log": null,
+   "first_seen": "2026-10-25",
+   "headline": "SC Freiburg to score 2+",
+   "home": "SC Freiburg",
+   "id": "2026-10-25|SC Freiburg|Bayern Munich|SC Freiburg to score 2+ \u00b7 O+D\u2212 v O+D\u2212 \u00b7 team 2+ goals",
+   "kickoff": "2026-10-25T16:30Z",
+   "lane": "production",
+   "league": "Bundesliga",
+   "match": "SC Freiburg v Bayern Munich",
+   "pair": "st_t1|soccer_team2",
+   "price_at_log": 0.38,
+   "published_at": "2026-10-25T18:46:40+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "SC Freiburg to score 2+",
+    "event": "KXBUNDESLIGATEAMTOTAL-26OCT25SCFBMU",
+    "market": "KXBUNDESLIGATEAMTOTAL-26OCT25SCFBMU-SCF2",
+    "outcome": "Freiburg over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.38,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "st_t1:KXBUNDESLIGATEAMTOTAL-26OCT25SCFBMU-SCF2",
+   "source": "st_t1",
+   "sport": "soccer_team2",
+   "status": "miss"
   }
  },
  "pairs": {
@@ -95,18 +167,18 @@
    "ready_at": "2026-10-24T22:00:00+00:00",
    "route": "moved by hand on 2026-10-24",
    "routing": {
-    "leads": 2,
+    "leads": 4,
     "problem": null,
-    "routed": 2,
+    "routed": 4,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 2,
-   "sandbox_roi": -0.1187,
-   "sandbox_roi_fee": -0.1187,
+   "sandbox_n": 4,
+   "sandbox_roi": -0.2275,
+   "sandbox_roi_fee": -0.2275,
    "timing": {
     "late": [],
     "timed": 0,
@@ -118,5 +190,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-25T18:31:28+00:00"
+ "updated_at": "2026-10-25T18:46:40+00:00"
 }
