@@ -23,6 +23,10 @@ log nothing new, their rows stay and their open picks still settle. The Rotten T
 (data/rt_snapshots.json) served rt_model alone, so it stopped with it; the file is kept as it was.
 mentions_rate, in Production since 2026-10-20, gained a news guard and an edge cap the same day
 (NEWS_GUARD, EDGE_CAP; amendment in RULES).
+
+2026-10-26 (Olu): mentions_rate is back in the Sandbox (culture_production.DEMOTED_ON), on its
+whole record, and amended again from that day: a NO priced under 0.60 is refused (NO_FLOOR), and
+the monthly and company series are no longer entered (EXCLUDED_SERIES). Amendment in RULES.
 """
 import datetime as dt
 import html as _html
@@ -83,6 +87,34 @@ RULES["mentions_rate"] += (f" Amended {AMENDED}: a NO is refused when Kalshi's Y
                            "0.25 (news guard, raised from 0.20 on 2026-10-24: a word that has just become news reads low in an 84-day rate), and "
                            "the edge that meets the 5c threshold and ranks the entry is capped at 0.25 (a larger "
                            "one is logged as edge capped). Entries before the amendment are unchanged.")
+# Amendment 2026-10-26 (Olu), mentions_rate, on its Sandbox record of 35 settled (23 won, -4.7% after
+# fees): the NOs under 0.80 were 20 bets at -7.7%, 0.80-0.90 -7.9%, 0.90-0.95 5/5 +8.5%. The
+# losses were mostly contrarian NOs at 18-51c on words that became news (Cuba, Netanyahu,
+# Ceasefire, Rigged Election, Vivek, Ethanol, Nobel), which the news guard did not catch because
+# the model read 21-43%. The monthly (KXTRUMPSAYMONTH, Epstein) and company (KXTRUMPSAYCOMPANY,
+# Deere) markets were 0/2. From AMENDED_2_AT on (2026-10-26, 12:00 CT), before any entry:
+#   NO floor         a NO priced under 0.60 is refused: no bet against a word the market prices as
+#                    more than 40% likely to be said
+#   series excluded  KXTRUMPSAYMONTH and KXTRUMPSAYCOMPANY are not entered
+# The news guard and the edge cap stay as they are. Entries logged before the amendment are not
+# rewritten: they stay on the ledger and settle, and the page reads the record before and after.
+# Every entry logged under the amendment carries amended="2026-10-26", which is how the page tells
+# the two records apart (not the logged time: a scan from the old code can still run after it).
+AMENDED_2 = "2026-10-26"
+AMENDED_2_AT = "2026-10-26T17:00:00+00:00"
+NO_FLOOR = 0.60
+EXCLUDED_SERIES = ("KXTRUMPSAYMONTH", "KXTRUMPSAYCOMPANY")
+RULES["mentions_rate"] += (f" Amended {AMENDED_2}: a NO priced under {NO_FLOOR:.2f} is refused (no bet against a word "
+                           "the market prices as more than 40% likely), and the monthly (KXTRUMPSAYMONTH) and company "
+                           "(KXTRUMPSAYCOMPANY) series are no longer entered; the news guard and the edge cap are "
+                           "unchanged. Entries before the amendment are unchanged.")
+
+
+def amended_2(now):
+    """True from the 2026-10-26 amendment (AMENDED_2_AT) on."""
+    return now >= D.instant(AMENDED_2_AT)
+
+
 # Lanes retired by hand (2026-10-24, Olu): no new entry from the dated day on (Eastern), the
 # ledger rows stay and open picks keep settling, and the Culture page shows the lane as Retired
 # with its final record and this reason. A retired lane's scan does not run at all (rt_model's
@@ -272,6 +304,9 @@ def mention_picks(events, now, state, fetch=web, log=None):
     for ev in events:
         if ev.get("series_ticker") not in MENTION_SERIES:
             continue
+        if ev.get("series_ticker") in EXCLUDED_SERIES and amended_2(now):
+            counts["monthly or company series (excluded 2026-10-26)"] += len(ev.get("markets") or [])
+            continue
         for m in ev.get("markets") or []:
             if m.get("status") not in ("active", "open"):
                 continue
@@ -306,6 +341,9 @@ def mention_picks(events, now, state, fetch=web, log=None):
             if edge < EDGE_MIN - 1e-9:
                 counts["edge under 5c"] += 1
                 continue
+            if side == "no" and px < NO_FLOOR - 1e-9 and amended_2(now):
+                counts[f"NO under {NO_FLOOR:.2f} (floor 2026-10-26)"] += 1
+                continue
             mid = round((q[0] + q[1]) / 2, 4)
             refused = news_guard(side, mid, p)
             if refused:
@@ -315,6 +353,8 @@ def mention_picks(events, now, state, fetch=web, log=None):
                 continue
             counts["edge 5c+"] += 1
             extra = dict(model=round(p, 4), edge=round(edge, 4), yes_mid=mid)
+            if amended_2(now):
+                extra["amended"] = AMENDED_2
             note = f"edge {edge:+.2f}"
             if cap:
                 counts["edge capped"] += 1

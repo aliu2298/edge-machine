@@ -27,7 +27,7 @@ jobs:
         run: python3 test_culture.py
       - name: Culture markets and paper settlement (Rotten Tomatoes snapshots stopped with rt_model, 2026-10-24)
         run: python3 culture_track.py
-      - name: Trump mentions Production feed (mentions_rate, 2026-10-20)
+      - name: Trump mentions feed (mentions_rate; Production 2026-10-20 to 2026-10-26, now graded leads only)
         run: python3 culture_production.py
       - name: Save records
         run: |

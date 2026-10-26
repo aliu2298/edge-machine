@@ -522,6 +522,12 @@ PAIR_REMOVALS = {
     # removal's own day (#176). Replaced in Production by econ_nc_yes and econ_nc_no, the two
     # near-certain lanes pre-registered the same day on a fresh record (daily_track.NC_LANES).
     "econ_daily_fav_band|econ_daily": dict(removed_on="2026-10-20", keep_record=True),
+    # 2026-10-26, as asked (Olu): Trump mentions back to the Sandbox on its whole record (Sandbox
+    # 35 settled, 23 won, -4.7% after fees; the contrarian NOs under 0.80 lost on words that became
+    # news). Its listing lived in culture_production.pairs() (the Culture ledger keeps its own
+    # registry), which lists nothing from culture_production.DEMOTED_AT, so nothing re-promotes it
+    # on the removal's own day (#176). Amended the same day in the Sandbox (culture_track.AMENDED_2).
+    "mentions_rate|culture_mentions": dict(removed_on="2026-10-26", keep_record=True),
 }
 
 

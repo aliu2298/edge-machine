@@ -14,7 +14,22 @@ KEY = "culture"
 # Lanes in Production on their own ledger (2026-10-20: Trump mentions, published by
 # culture_production.py on its own feed). The page reads them as Production rows through the
 # adapter's pair, quotes and stage, the way any own-ledger Production lane is shown.
+# 2026-10-26: Trump mentions is back in the Sandbox (CP.DEMOTED_ON), so from CP.DEMOTED_AT on
+# nothing is listed and it is an ordinary Sandbox row again, chipped "Removed from Production".
 PRODUCTION = {CP.SOURCE: CP.PAIR}
+
+
+def production(now=None):
+    """The lanes in Production at `now`: Trump mentions from 2026-10-20 until CP.DEMOTED_AT."""
+    return dict(PRODUCTION) if CP.listed(now) else {}
+
+
+def amendment_split(picks):
+    """The 2026-10-26 amendment's before/after records (per contract, after fees): an entry logged
+    under it carries amended="2026-10-26" (culture_track.AMENDED_2)."""
+    before = [r for r in picks if r.get("amended") != K.AMENDED_2]
+    after = [r for r in picks if r.get("amended") == K.AMENDED_2]
+    return per_contract(before), per_contract(after), sum(r["status"] == "open" for r in before)
 
 
 def retired_note(key):
@@ -33,14 +48,15 @@ def per_contract(picks):
     return sum(r["status"] == "won" for r in binary), len(binary), roi
 
 
-def _row(key, lane, now=None):
+def _row(key, lane, now=None, prod=None):
     picks = lane["picks"]
     settled = [r for r in picks if r["status"] != "open"]
     binary = [r for r in settled if r["status"] in ("won", "lost")]
     gone = now is not None and K.retired(key, now)
     note = K.RULES[key] + (" " + retired_note(key) if gone else "")
+    prod = production(now) if prod is None else prod
     return dict(name=key, sport=KEY, meta={"label": K.LANES[key], "note": note},
-                prod=key in PRODUCTION, pair=PRODUCTION.get(key), open=sum(r["status"] == "open" for r in picks), since=None,
+                prod=key in prod, pair=prod.get(key), open=sum(r["status"] == "open" for r in picks), since=None,
                 v="retired" if gone else "waiting",
                 a=dict(n=len(binary), n_price=len(settled) - len(binary),
                        won=sum(r["status"] == "won" for r in binary),
@@ -54,8 +70,9 @@ def pooled(state, now=None):
     lanes could hold the same ticker, sometimes on opposite sides; the ledger keeps both rows,
     and this counts the earliest-logged pick per ticker. -> (record, note)."""
     first = {}
+    prod = production(now)
     for key in K.LANES:
-        if key in PRODUCTION:
+        if key in prod:
             continue                    # a Sandbox record: the Production lane is counted on its own
         if now is not None and K.retired(key, now):
             continue
@@ -72,7 +89,8 @@ def pooled(state, now=None):
 def build(state=None, now=None):
     state = state if state is not None else K.load()
     now = SP.as_utc(now)
-    rows = [_row(k, state["lanes"][k], now) for k in K.LANES]
+    prod = production(now)
+    rows = [_row(k, state["lanes"][k], now, prod) for k in K.LANES]
     gone = [k for k in K.LANES if K.retired(k, now)]
     by = {r["name"]: r for r in rows}
     e = C.esc
@@ -115,7 +133,17 @@ def build(state=None, now=None):
         guarded = (lane.get("observations") or {}).get("news_guard") or []
         if guarded:
             txt += ("; " if txt else "") + "; ".join(f"{g.get('word')}: {g.get('reason')}" for g in guarded[:8])
-        return ('<p class="sm mut">Last successful scan ' + e(fmt.when(last) if last else "not yet") +
+        extra = ""
+        if row["name"] == CP.SOURCE and not CP.listed(now):
+            rec = lambda r: (f"{r[0]}/{r[1]} won, {r[2] * 100:+.1f}% after fees per contract".replace("-", "−")
+                             if r[1] and r[2] is not None else "nothing settled yet")
+            pre, post, pre_open = amendment_split(lane["picks"])
+            extra = (f'<p class="sm"><b>Removed from Production {e(CP.DEMOTED_ON)}</b> (moved {e(CP.MOVED_ON)}), '
+                     f'back in the Sandbox on its whole record. {e(CP.removed_note(state).split(": ", 1)[1])}</p>'
+                     f'<p class="sm">Before the {e(K.AMENDED_2)} amendment: {e(rec(pre))}'
+                     f'{f", {pre_open} still open" if pre_open else ""}. From {e(K.AMENDED_2)} (NO floor '
+                     f'{K.NO_FLOOR:.2f}, monthly and company series out): {e(rec(post))}.</p>')
+        return extra + ('<p class="sm mut">Last successful scan ' + e(fmt.when(last) if last else "not yet") +
                 (' · ' + e(txt) if txt else '') + '</p>' +
                 ('<p role="status" class="sm">' + e(lane["error"]) + ' · existing records retained.</p>'
                  if lane.get("error") else ''))
@@ -135,11 +163,16 @@ def build(state=None, now=None):
         retired_html = "".join(
             f'<li>{e(K.LANES[k])}: retired {e(K.RETIRED[k]["on"])} at {e(K.RETIRED[k]["at"])}; '
             f'{e(K.RETIRED[k]["reason"])}.</li>' for k in gone)
+        listed = CP.listed(now)
         inner = ('<p class="sm">Four observation lanes on Kalshi culture markets, registered 2026-10-16 to '
                  'watch, not to trade. Paper entries at the ask with Kalshi\'s 7% fee, settled on Kalshi\'s '
-                 'own result. Trump mentions has been in Production since 2026-10-20, moved by hand; its '
-                 'full record stays here and the Production page counts it from that day. The other three '
-                 'lanes are paper only.</p>' +
+                 'own result. ' +
+                 ('Trump mentions has been in Production since 2026-10-20, moved by hand; its '
+                  'full record stays here and the Production page counts it from that day. The other three '
+                  'lanes are paper only.' if listed else
+                  f'Trump mentions was in Production from {CP.MOVED_ON} to {CP.DEMOTED_ON}, moved by hand both '
+                  'ways; it is back in the Sandbox on its whole record, and every lane here is paper only.') +
+                 '</p>' +
                  (f'<p class="sm">Retired by hand: no new entries, their rows stay and their open picks '
                   f'still settle.</p><ul class="sm">{retired_html}</ul>' if gone else '') +
                  (f'<p class="sm">Trump mentions, amended {e(K.AMENDED)}: a NO is refused when Kalshi\'s YES mid '
@@ -149,6 +182,15 @@ def build(state=None, now=None):
                   '2026-10-24, from 0.20), and the edge that meets the 5c threshold is capped at 0.25. Entries '
                   'logged before the amendment are unchanged.</p>'
                   if now.date().isoformat() >= K.AMENDED else '') +
+                 (f'<p class="sm">Trump mentions, amended {e(K.AMENDED_2)}, back in the Sandbox: a NO priced under '
+                  f'{K.NO_FLOOR:.2f} is refused (no bet against a word the market prices as more than 40% likely '
+                  'to be said), and the monthly (KXTRUMPSAYMONTH) and company (KXTRUMPSAYCOMPANY) series are no '
+                  'longer entered; the news guard and the edge cap are unchanged. Prompted by its Sandbox record '
+                  'to that day, 35 settled, 23 won, \u22124.7% after fees: the NOs under 0.80 lost (\u22127.7% on 20), the '
+                  '0.90-0.95 NOs won 5 of 5, and the losses were mostly contrarian NOs at 18-51c on words that '
+                  'became news while the model read 21-43%. Entries logged before the amendment stay and settle; '
+                  'the row\'s details give the record before and after it.</p>'
+                  if now.date().isoformat() >= K.AMENDED_2 else '') +
                  '<p class="sm">Measured before the build on 4,558 settled culture markets (Aug 11 – Oct 16): '
                  '24h before the close about 70% sit under 5c or over 95c, so the favourite band held 8 events '
                  'in two months (7-1, z +0.94) and the 90-97c end 57 (98.2% won, z +1.20). Kalshi closes a '
@@ -162,9 +204,12 @@ def build(state=None, now=None):
 
     spec = SP.spec(family="Culture", key=KEY, title="Edge Machine · Culture",
                    description="Kalshi culture markets: favourite bands, Trump mentions and Rotten Tomatoes.",
-                   scope=("Culture · Trump mentions in Production, three lanes on paper" if not gone else
-                          f"Culture · Trump mentions in Production, {len(gone)} lane{'s' if len(gone) != 1 else ''} "
-                          f"retired {K.RETIRED[gone[0]]['on']}"),
+                   scope=(("Culture · Trump mentions in Production, three lanes on paper" if not gone else
+                           f"Culture · Trump mentions in Production, {len(gone)} lane{'s' if len(gone) != 1 else ''} "
+                           f"retired {K.RETIRED[gone[0]]['on']}") if prod else
+                          f"Culture · Trump mentions on paper, out of Production {CP.DEMOTED_ON}"
+                          + (f", {len(gone)} lane{'s' if len(gone) != 1 else ''} retired {K.RETIRED[gone[0]]['on']}"
+                             if gone else "")),
                    venue="Kalshi", rows=rows, events=events,
                    rule_name=lambda r: K.LANES[r["name"]], market=lambda d, r: "Kalshi",
                    definition=definition, recent=recent, method=method, scoped=False,
@@ -172,7 +217,7 @@ def build(state=None, now=None):
                    deadline=True, empty_reason=empty_reason)
     # The Production lane's own quotes and stage, so the template's since-Production tiles and
     # the Production list read it like any staged pair (culture_production is read-only).
-    html = SP.page(spec, {"quotes": CP.quotes(state), "coverage": {}}, {"pairs": CP.pairs()}, now, rows=rows)
+    html = SP.page(spec, {"quotes": CP.quotes(state), "coverage": {}}, {"pairs": CP.pairs(now)}, now, rows=rows)
     # Each row's verdict chip says what it is: Production since its move, observing on paper, or
     # retired on its day (the reason in its tooltip and its details). Replaced inside each row's
     # own block, the row named by the block's data-source.
@@ -190,6 +235,9 @@ def build(state=None, now=None):
             gone_on = K.RETIRED[row["name"]]
             chip = (f'<span class="sig x" data-verdict="retired" title="{e(gone_on["reason"])}">'
                     f'Retired · {e(gone_on["on"])}</span>')
+        elif row is not None and row["name"] == CP.SOURCE and not CP.listed(now):
+            chip = (f'<span class="sig x" data-verdict="removed" title="Back in the Sandbox on its whole record, '
+                    f'amended {K.AMENDED_2}">Removed from Production · {CP.DEMOTED_ON}</span>')
         else:
             chip = (f'<span class="sig w">Production · since {CP.MOVED_ON}</span>' if prod
                     else '<span class="sig w">Observing · paper</span>')

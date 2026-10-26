@@ -320,13 +320,21 @@ check("the amendment is dated in the lane's registered text, with the raised thr
 
 print("\nthe Culture page with three lanes retired")
 real = K.load()
-for when in (RET, dt.datetime.now(UTC)):
+OUT = dt.datetime(2026, 10, 26, 18, 0, tzinfo=UTC)          # after Trump mentions left Production
+pages_at = {}
+for when in (RET, OUT):
     rh = KB.build(real, when)
     rt = _re.sub(r"\s+", " ", _re.sub(r"<[^>]+>", " ", rh))
-    check(f"the live ledger builds at {when:%Y-%m-%d %H:%M}: 1 in Production, 0 active, 3 retired",
-          ("1 in Production · 0 active in the Sandbox · 3 retired" in rt, rh.count('data-verdict="retired"'),
-           rt.count("Retired · 2026-10-24"), "Production · since 2026-10-20" in rt, "Observing · paper" in rt),
-          (True, 3, 3, True, False))
+    pages_at[when] = (rh, rt)
+    listed = when < OUT
+    check(f"the live ledger builds at {when:%Y-%m-%d %H:%M}: " + ("1 in Production, 0 active" if listed else
+          "0 in Production, 1 active (back in the Sandbox 2026-10-26)") + ", 3 retired",
+          (("1 in Production · 0 active in the Sandbox · 3 retired" if listed else
+            "0 in Production · 1 active in the Sandbox · 3 retired") in rt, rh.count('data-verdict="retired"'),
+           rt.count("Retired · 2026-10-24"), "Production · since 2026-10-20" in rt, "Observing · paper" in rt,
+           "Removed from Production · 2026-10-26" in rt),
+          (True, 3, 3, listed, False, not listed))
+rh, rt = pages_at[RET]
 check("each retired row keeps its record and gives the dated reason", all(
     f"Retired 2026-10-24 at {K.RETIRED[k]['at']}: {K.RETIRED[k]['reason']}" in _html.unescape(rh) for k in K.RETIRED), True)
 small = ledger_with_rows()
@@ -335,13 +343,98 @@ for k in K.RETIRED:
 sh = _html.unescape(KB.build(small, RET))
 check("a retired row's details give its record now, per contract, and what is left open",
       sh.count("record now 1/1 won, +31.0% after fees per contract") + sh.count("1 open pick still settles"), 6)
-check("the tiles: 1 active rule, the since-Production record", ('<b>1</b><span>active rules' in rh,
+check("the tiles: 1 active rule, the since-Production record (2026-10-24)", ('<b>1</b><span>active rules' in rh,
                                                                "since Production · Trump mentions" in rt), (True, True))
 check("the Sandbox fold counts them as retired, not too early", "· 3 rules · 3 retired · by evidence" in rt, True)
 check("the amendment is on the page", "amended 2026-10-24" in rt, True)
+rh, rt = pages_at[OUT]
+check("2026-10-26: the tiles are the Sandbox record, the fold holds Trump mentions as a Sandbox rule",
+      ('<b>1</b><span>active rules' in rh, "since Production · Trump mentions" in rt, "Sandbox record · paper" in rt,
+       "· 4 rules · 1 too early to read · 3 retired · by evidence" in rt), (True, False, True, True))
+check("2026-10-26: the page names both amendments and when it left Production",
+      ("amended 2026-10-24" in rt, "amended 2026-10-26, back in the Sandbox" in rt,
+       "Removed from Production 2026-10-26 (moved 2026-10-20)" in rt), (True, True, True))
 fin = KB.build(ledger_with_rows(), RET)
 check("a small ledger renders with three retired lanes too", ("0 active in the Sandbox · 3 retired" in fin,
                                                               fin.count("Retired · 2026-10-24")), (True, 3))
+
+print("\n2026-10-26: back in the Sandbox, the NO floor and the monthly/company series out")
+AM = dt.datetime(2026, 10, 26, 18, 0, tzinfo=UTC)                # after the amendment (17:00Z)
+PRE = dt.datetime(2026, 10, 26, 16, 0, tzinfo=UTC)               # the same day, before it
+check("the amendment's registered terms", (K.AMENDED_2, K.AMENDED_2_AT, K.NO_FLOOR, K.EXCLUDED_SERIES),
+      ("2026-10-26", "2026-10-26T17:00:00+00:00", 0.60, ("KXTRUMPSAYMONTH", "KXTRUMPSAYCOMPANY")))
+check("it is live from 17:00Z on 2026-10-26, not before",
+      (K.amended_2(PRE), K.amended_2(dt.datetime(2026, 10, 26, 17, 0, tzinfo=UTC)), K.amended_2(AM)), (False, True, True))
+check("the news guard and the edge cap are unchanged", (K.NEWS_GUARD, K.EDGE_CAP),
+      (dict(market_over=0.50, model_under=0.25), 0.25))
+check("the amendment is dated in the lane's registered text",
+      ("Amended 2026-10-26: a NO priced under 0.60 is refused" in K.RULES["mentions_rate"],
+       "KXTRUMPSAYMONTH" in K.RULES["mentions_rate"], "KXTRUMPSAYCOMPANY" in K.RULES["mentions_rate"],
+       "Amended 2026-10-24" in K.RULES["mentions_rate"]), (True, True, True, True))
+fb_am = lambda url: json.dumps({"data": [dict(date="2026-10-10", candidate="Donald Trump", text="Mamdani is a disaster")]
+                                if "page=1&" in url else []})
+_often = [(dt.date(2026, 10, 25) - dt.timedelta(days=i)).isoformat() for i in range(0, 80, 2)]
+fb_often = lambda url: json.dumps({"data": [dict(date=d, candidate="Donald Trump", text="Tariff, tariff") for d in _often]
+                                   if "page=1&" in url else []})
+
+
+def wm(series, code, bid, ask, word="Mamdani", at=AM):
+    ev = f"{series}-26NOV01"
+    return dict(event_ticker=ev, series_ticker=series, title="Trump say", category="Mentions",
+                markets=[dict(ticker=f"{ev}-{code}", event_ticker=ev, status="active", yes_bid_dollars=str(bid),
+                              yes_ask_dollars=str(ask), close_time=(at + dt.timedelta(hours=72)).isoformat(),
+                              open_time=(at - dt.timedelta(days=1)).isoformat(), custom_strike={"Word": word})])
+
+
+def scan(evs, at=AM, fetch=fb_am):
+    out, c = K.mention_picks(evs, at, {"words": {}}, fetch)
+    return [(p["id"].split("-")[-1], p["side"], p["price"], p.get("amended")) for p in out], dict(c)
+
+
+got, c = scan([wm("KXTRUMPSAY", "LOW", 0.45, 0.48)])
+check("a NO at 0.55 (YES 45-48c, model 0.04) is refused by the floor, and the scan counts it",
+      (got, c.get("NO under 0.60 (floor 2026-10-26)")), ([], 1))
+got, _c = scan([wm("KXTRUMPSAY", "EDGE", 0.40, 0.42)])
+check("a NO at exactly 0.60 passes, stamped with the amendment", got, [("EDGE", "no", 0.6, "2026-10-26")])
+got, _c = scan([wm("KXTRUMPSAY", "OK", 0.30, 0.32)])
+check("a NO at 0.70 passes, stamped", got, [("OK", "no", 0.7, "2026-10-26")])
+got, _c = scan([wm("KXTRUMPSAY", "TARI", 0.30, 0.33, word="Tariff")], fetch=fb_often)
+check("the floor is NO-only: a YES at 0.33 is still bought", got, [("TARI", "yes", 0.33, "2026-10-26")])
+got, c = scan([wm("KXTRUMPSAYMONTH", "OK", 0.30, 0.32), wm("KXTRUMPSAYCOMPANY", "OK", 0.30, 0.32),
+               wm("KXTRUMPSAYCOUNTRY", "OK", 0.30, 0.32)])
+check("the monthly and company series are not entered; the country series still is",
+      (got, c.get("monthly or company series (excluded 2026-10-26)")),
+      ([("OK", "no", 0.7, "2026-10-26")], 2))
+got, _c = scan([wm("KXTRUMPSAY", "LOW", 0.45, 0.48, at=PRE), wm("KXTRUMPSAYMONTH", "OK", 0.30, 0.32, at=PRE)], at=PRE)
+check("before 17:00Z the old rule still runs: the 0.55 NO and the monthly market, neither stamped",
+      got, [("LOW", "no", 0.55, None), ("OK", "no", 0.7, None)])
+# The floor sits before the news guard: a NO the market prices over 0.50 is never cheaper than 0.50,
+# so every news-guard case under 0.60 is now the floor's.
+got, c = scan([wm("KXTRUMPSAY", "NEWS", 0.50, 0.53)])
+check("a 0.50 NO (YES mid 0.515) is the floor's refusal now, not the guard's",
+      (got, c.get("NO under 0.60 (floor 2026-10-26)"), c.get("news guard (YES mid over 0.50, model under 0.25)")),
+      ([], 1, None))
+
+print("\n2026-10-26: existing rows untouched, the record split at the amendment")
+rows = [pk("KXTRUMPSAY-26OCT26-A", "no", logged="2026-10-25T10:00:00+00:00", status="lost", profit=-100.0, payout=0, price=0.30),
+        pk("KXTRUMPSAY-26OCT26-B", "no", logged="2026-10-26T16:41:00+00:00", status="open", price=0.13),
+        pk("KXTRUMPSAY-26NOV02-C", "no", logged="2026-10-26T17:41:00+00:00", status="won", profit=10.0, payout=1,
+           price=0.88, amended="2026-10-26")]
+amst = {"lanes": {k: {"picks": [], "observations": {}, "error": None} for k in K.LANES}, "words": {}}
+amst["lanes"]["mentions_rate"]["picks"] = json.loads(json.dumps(rows))
+pre, post, pre_open = KB.amendment_split(amst["lanes"]["mentions_rate"]["picks"])
+check("before: the unstamped rows (a 13c NO logged the same morning stays open); after: the stamped one",
+      (pre[:2], post[:2], pre_open), ((0, 1), (1, 1), 1))
+held = json.loads(json.dumps(amst["lanes"]["mentions_rate"]["picks"]))
+K.run(amst, {}, now=AM, fetch=lambda path: {"events": [], "cursor": ""} if path.startswith("events")
+      else {"market": {"ticker": path.split("/")[-1], "status": "active"}}, webfetch=fb_am)
+check("a scan after the amendment leaves every existing row as it was (open ones still open)",
+      [(r["id"], r["status"], r["price"]) for r in amst["lanes"]["mentions_rate"]["picks"]],
+      [(r["id"], r["status"], r["price"]) for r in held])
+ah = _re.sub(r"\s+", " ", _re.sub(r"<[^>]+>", " ", _html.unescape(KB.build(amst, AM))))
+check("the row's details give the record before and after the amendment",
+      ("Before the 2026-10-26 amendment: 0/1 won" in ah, "1 still open" in ah,
+       "From 2026-10-26 (NO floor 0.60, monthly and company series out): 1/1 won" in ah), (True, True, True))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

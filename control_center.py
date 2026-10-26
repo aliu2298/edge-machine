@@ -631,13 +631,20 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
     if soccer_team_rules is not None:
         import soccer_team_rules_production
         sr_names += [n for _s, _sp, n in soccer_team_rules_production.PAIRS.values()]
+    # Trump mentions publishes through its own feed while it is listed (2026-10-20 to 2026-10-26);
+    # out of Production it is named once, with the day it left and the record it left on.
+    culture_listed, culture_left = False, []
+    if culture is not None:
+        import culture_production
+        culture_listed = culture_production.listed(now)
+        culture_left = [] if culture_listed else [culture_production.removed_note(culture)]
     live = shell_build._running_body(live_d, live_st, live_blob, now)
     n_open, n_settled, n_won = live["roll_counts"]
     scorecard = scorecard_rows(pair_rows)
     healthy = sum(1 for a in areas if a["status"] == "healthy")
     return dict(
         now=now,
-        tiles=dict(pairs=len(pairs)+(len(daily_production.pairs()) if daily is not None else 0)+(1 if culture is not None else 0)+len(sr_names), open=sum(1 for q in rows if q.get("status") == "open")
+        tiles=dict(pairs=len(pairs)+(len(daily_production.pairs()) if daily is not None else 0)+(1 if culture_listed else 0)+len(sr_names), open=sum(1 for q in rows if q.get("status") == "open")
                    + sum(a['open'] for a in areas if a['key'] in ('econ_daily','finance_daily')),
                    landed=(n_won, n_settled), healthy=(healthy, len(areas)), attention=len(attention)),
         areas=areas, attention=attention, live=live, scorecard=scorecard,
@@ -645,8 +652,9 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
         # (2026-10-20) and Trump mentions publish through their own feeds (daily_production,
         # culture), so they are in the tile's count and not rows.
         prod_outside=(["Econ Daily " + D.NC_LANES[k]["label"] for k in D.NC_ORDER] if daily is not None else [])
-                     + (["Trump mentions"] if culture is not None else [])
+                     + (["Trump mentions"] if culture_listed else [])
                      + sr_names,
+        prod_left=culture_left,
         runs_read=runs is not None, status_read=status is not None,
     )
 
@@ -755,7 +763,7 @@ def _scorecard_row(e):
             f'<td class="cc-verdict">{SP.verdict_badge(r)}</td></tr>')
 
 
-def _scorecard_html(entries, outside=()):
+def _scorecard_html(entries, outside=(), left=()):
     if not entries:
         return '<p class="shell-empty">No rule has a record yet.</p>'
     counts = scorecard_counts(entries)
@@ -765,6 +773,8 @@ def _scorecard_html(entries, outside=()):
                     f'{" and ".join(esc(x) for x in outside)} {"is" if len(outside) == 1 else "are"} also in Production through '
                     f'{"its" if len(outside) == 1 else "their"} own feed, '
                     f'which makes the {counts["production"] + len(outside)} in the tile above.</p>' if outside else "")
+    # Own-feed lanes taken out of Production by hand (Trump mentions, 2026-10-26): not in any count.
+    outside_note += "".join(f'<p class="sm mut cc-prod-left">{esc(x)}</p>' for x in left)
     chips = "".join(
         f'<button type="button" data-value="{key}" aria-pressed="{"true" if key == "all" else "false"}">'
         f'{esc(label)} <span class="count">{counts[key]}</span></button>'
@@ -894,7 +904,7 @@ def page(now, d=None, st=None, blob=None, nba=None, market=None, closes=None, ru
 
 <section id="scorecard" aria-labelledby="scorecard-title" class="cc-scorecard-section">
 <div class="pane-head"><h2 id="scorecard-title">Rule scorecard</h2> <span class="mut sm">· {len(m['scorecard'])} rules</span></div>
-{_scorecard_html(m['scorecard'], m.get('prod_outside') or ())}
+{_scorecard_html(m['scorecard'], m.get('prod_outside') or (), m.get('prod_left') or ())}
 </section>
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 """
