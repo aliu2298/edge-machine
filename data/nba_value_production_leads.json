@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-26T00:00:26+00:00",
+ "board_built_at": "2026-10-26T00:30:23+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -503,7 +503,7 @@
    "kickoff": "2026-10-26T01:00Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T00:00:26+00:00",
+   "last_seen_at": "2026-10-26T00:30:23+00:00",
    "league": "NBA",
    "match": "MEM @ SAC",
    "model_prob": 0.5066,
@@ -523,6 +523,45 @@
    },
    "sandbox_quote": "nba_tt_value_1h:401909867:SAC",
    "source": "nba_tt_value_1h",
+   "sport": "nba_tt",
+   "status": "pending"
+  },
+  "2026-10-26|KXNBATEAMTOTAL-26OCT26CHIBOS-BOS122|Boston under 121.5 points \u00b7 NBA team total value \u00b7 24h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt_no",
+    "n": 121.5,
+    "team": "Boston"
+   },
+   "date": "2026-10-26",
+   "edge_at_log": 0.0719,
+   "first_seen": "2026-10-26",
+   "headline": "Boston under 121.5 points",
+   "home": null,
+   "id": "2026-10-26|KXNBATEAMTOTAL-26OCT26CHIBOS-BOS122|Boston under 121.5 points \u00b7 NBA team total value \u00b7 24h before tip",
+   "kickoff": "2026-10-26T23:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-26",
+   "last_seen_at": "2026-10-26T00:30:23+00:00",
+   "league": "NBA",
+   "match": "CHI @ BOS",
+   "model_prob": 0.4988,
+   "pair": "nba_tt_value_24h|nba_tt",
+   "price_at_log": 0.41,
+   "published_at": "2026-10-26T00:30:23+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 1379,
+   "route": {
+    "claim": "Boston under 121.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT26CHIBOS",
+    "market": "KXNBATEAMTOTAL-26OCT26CHIBOS-BOS122",
+    "outcome": "Boston over 121.5 points",
+    "outcome_side": "no",
+    "price_at_log": 0.41,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_24h:401909870:BOS",
+   "source": "nba_tt_value_24h",
    "sport": "nba_tt",
    "status": "pending"
   }
@@ -560,9 +599,9 @@
    "ready_at": "2026-10-24T22:13:00+00:00",
    "route": "moved by hand on 2026-10-24",
    "routing": {
-    "leads": 3,
+    "leads": 4,
     "problem": null,
-    "routed": 3,
+    "routed": 4,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -574,7 +613,7 @@
    "sandbox_roi_fee": -1.0,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   }
@@ -602,5 +641,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-26T00:00:26+00:00"
+ "updated_at": "2026-10-26T00:30:23+00:00"
 }
