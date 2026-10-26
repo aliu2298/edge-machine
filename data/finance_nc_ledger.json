@@ -269,19 +269,50 @@
       "status": "won",
       "title": "NO \u00b7 7,660 or above",
       "yes_bid": 0.07
+    },
+    {
+      "bid": 0.95,
+      "close": "2026-10-26T20:00:00Z",
+      "event": "KXINXU-26OCT26H1600",
+      "id": "KXINXU-26OCT26H1600-T7714.9999",
+      "logged": "2026-10-26T16:30:29.910989+00:00",
+      "name": "S&P 500 above/below",
+      "price": 0.97,
+      "series": "KXINXU",
+      "side": "no",
+      "size": 159.0,
+      "status": "open",
+      "title": "NO \u00b7 7,715 or above",
+      "yes_bid": 0.03
+    },
+    {
+      "bid": 0.9,
+      "close": "2026-10-26T20:00:00Z",
+      "event": "KXINXU-26OCT26H1600",
+      "id": "KXINXU-26OCT26H1600-T7704.9999",
+      "logged": "2026-10-26T16:30:29.910989+00:00",
+      "name": "S&P 500 above/below",
+      "price": 0.93,
+      "series": "KXINXU",
+      "side": "no",
+      "size": 178.0,
+      "status": "open",
+      "title": "NO \u00b7 7,705 or above",
+      "yes_bid": 0.07
     }
   ],
   "error": null,
   "key": "finance_spx_nc_no",
-  "last_run": "2026-10-26T16:00:31.767295+00:00",
-  "last_success": "2026-10-26T16:00:31.767295+00:00",
+  "last_run": "2026-10-26T16:30:29.910989+00:00",
+  "last_success": "2026-10-26T16:30:29.910989+00:00",
   "observation": {
-    "at": "2026-10-26T16:00:31.767295+00:00",
-    "eligible": 0,
-    "listed": 300,
+    "at": "2026-10-26T16:30:29.910989+00:00",
+    "eligible": 2,
+    "listed": 240,
     "reasons": {
-      "Not the 16:00 ET event": 240,
-      "Outside entry window": 60
+      "Not the 16:00 ET event": 180,
+      "Order-book price, spread, depth or two-sided gate": 2,
+      "Price or spread gate": 56
     }
   },
   "picks": [
@@ -338,6 +369,21 @@
       "status": "won",
       "title": "NO \u00b7 7,670 or above",
       "yes_bid": 0.1
+    },
+    {
+      "bid": 0.9,
+      "close": "2026-10-26T20:00:00Z",
+      "event": "KXINXU-26OCT26H1600",
+      "id": "KXINXU-26OCT26H1600-T7704.9999",
+      "logged": "2026-10-26T16:30:29.910989+00:00",
+      "name": "S&P 500 above/below",
+      "price": 0.93,
+      "series": "KXINXU",
+      "side": "no",
+      "size": 178.0,
+      "status": "open",
+      "title": "NO \u00b7 7,705 or above",
+      "yes_bid": 0.07
     }
   ],
   "registered": "2026-10-20",
