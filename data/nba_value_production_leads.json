@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-26T21:45:22+00:00",
+ "board_built_at": "2026-10-26T22:00:28+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -725,7 +725,7 @@
    "kickoff": "2026-10-26T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T21:45:22+00:00",
+   "last_seen_at": "2026-10-26T22:00:28+00:00",
    "league": "NBA",
    "match": "CHI @ BOS",
    "model_prob": 0.4988,
@@ -748,6 +748,84 @@
    "sport": "nba_tt",
    "status": "pending"
   },
+  "2026-10-26|KXNBATEAMTOTAL-26OCT26CHIBOS-BOS124|Boston under 123.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt_no",
+    "n": 123.5,
+    "team": "Boston"
+   },
+   "date": "2026-10-26",
+   "edge_at_log": 0.0627,
+   "first_seen": "2026-10-26",
+   "headline": "Boston under 123.5 points",
+   "home": null,
+   "id": "2026-10-26|KXNBATEAMTOTAL-26OCT26CHIBOS-BOS124|Boston under 123.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-26T23:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-26",
+   "last_seen_at": "2026-10-26T22:00:28+00:00",
+   "league": "NBA",
+   "match": "CHI @ BOS",
+   "model_prob": 0.5702,
+   "pair": "nba_tt_value_1h|nba_tt",
+   "price_at_log": 0.49,
+   "published_at": "2026-10-26T22:00:28+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 89,
+   "route": {
+    "claim": "Boston under 123.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT26CHIBOS",
+    "market": "KXNBATEAMTOTAL-26OCT26CHIBOS-BOS124",
+    "outcome": "Boston over 123.5 points",
+    "outcome_side": "no",
+    "price_at_log": 0.49,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_1h:401909870:BOS",
+   "source": "nba_tt_value_1h",
+   "sport": "nba_tt",
+   "status": "pending"
+  },
+  "2026-10-26|KXNBATEAMTOTAL-26OCT26DALMIA-MIA123|Miami under 122.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt_no",
+    "n": 122.5,
+    "team": "Miami"
+   },
+   "date": "2026-10-26",
+   "edge_at_log": 0.0856,
+   "first_seen": "2026-10-26",
+   "headline": "Miami under 122.5 points",
+   "home": null,
+   "id": "2026-10-26|KXNBATEAMTOTAL-26OCT26DALMIA-MIA123|Miami under 122.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-26T23:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-26",
+   "last_seen_at": "2026-10-26T22:00:28+00:00",
+   "league": "NBA",
+   "match": "DAL @ MIA",
+   "model_prob": 0.5428,
+   "pair": "nba_tt_value_1h|nba_tt",
+   "price_at_log": 0.44,
+   "published_at": "2026-10-26T22:00:28+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 89,
+   "route": {
+    "claim": "Miami under 122.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT26DALMIA",
+    "market": "KXNBATEAMTOTAL-26OCT26DALMIA-MIA123",
+    "outcome": "Miami over 122.5 points",
+    "outcome_side": "no",
+    "price_at_log": 0.44,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_1h:401909871:MIA",
+   "source": "nba_tt_value_1h",
+   "sport": "nba_tt",
+   "status": "pending"
+  },
   "2026-10-26|KXNBATEAMTOTAL-26OCT26MINCLE-CLE116|Cleveland under 115.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
    "away": null,
    "bet": {
@@ -764,7 +842,7 @@
    "kickoff": "2026-10-26T23:00Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T21:45:22+00:00",
+   "last_seen_at": "2026-10-26T22:00:28+00:00",
    "league": "NBA",
    "match": "MIN @ CLE",
    "model_prob": 0.5547,
@@ -803,7 +881,7 @@
    "kickoff": "2026-10-26T23:00Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T21:45:22+00:00",
+   "last_seen_at": "2026-10-26T22:00:28+00:00",
    "league": "NBA",
    "match": "MIN @ CLE",
    "model_prob": 0.6311,
@@ -842,7 +920,7 @@
    "kickoff": "2026-10-26T23:00Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T21:45:22+00:00",
+   "last_seen_at": "2026-10-26T22:00:28+00:00",
    "league": "NBA",
    "match": "WSH @ CHA",
    "model_prob": 0.5905,
@@ -881,7 +959,7 @@
    "kickoff": "2026-10-26T23:00Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T21:45:22+00:00",
+   "last_seen_at": "2026-10-26T22:00:28+00:00",
    "league": "NBA",
    "match": "WSH @ CHA",
    "model_prob": 0.5534,
@@ -913,9 +991,9 @@
    "ready_at": "2026-10-24T22:13:00+00:00",
    "route": "moved by hand on 2026-10-24",
    "routing": {
-    "leads": 20,
+    "leads": 22,
     "problem": null,
-    "routed": 20,
+    "routed": 22,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -927,7 +1005,7 @@
    "sandbox_roi_fee": -0.0362,
    "timing": {
     "late": [],
-    "timed": 4,
+    "timed": 6,
     "under_target": 0
    }
   },
@@ -980,5 +1058,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-26T21:45:22+00:00"
+ "updated_at": "2026-10-26T22:00:28+00:00"
 }
