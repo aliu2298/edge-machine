@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-26T15:19:40+00:00",
+ "board_built_at": "2026-10-26T16:15:55+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -35,7 +35,8 @@
   "kalshi:26OCT24ARSEVE": "2026-10-24|Arsenal|Everton|Under 9 corners \u00b7 Corners total under",
   "kalshi:26OCT24AVLMCI": "2026-10-24|Aston Villa|Manchester City|Under 8 corners \u00b7 Corners total under",
   "kalshi:26OCT25BARRMA": "2026-10-25|Barcelona|Real Madrid|Under 10 corners \u00b7 Corners total under",
-  "kalshi:26OCT25MUNBOU": "2026-10-25|Manchester United|AFC Bournemouth|Under 10 corners \u00b7 Corners total under"
+  "kalshi:26OCT25MUNBOU": "2026-10-25|Manchester United|AFC Bournemouth|Under 10 corners \u00b7 Corners total under",
+  "kalshi:26OCT26SEVOSA": "2026-10-26|Sevilla|Osasuna|Under 8 corners \u00b7 Corners total under"
  },
  "first_publish_min": 45,
  "late_publication_skipped": 8,
@@ -3065,7 +3066,7 @@
    "kickoff": "2026-10-26T18:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T15:19:40+00:00",
+   "last_seen_at": "2026-10-26T16:15:55+00:00",
    "league": "Commodities \u00b7 Favourite band",
    "match": "WTI crude close on Oct 26, 2026",
    "pair": "commod_fav_band|commodities_fav",
@@ -3101,7 +3102,7 @@
    "kickoff": "2026-10-26T20:00Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T15:19:40+00:00",
+   "last_seen_at": "2026-10-26T16:15:55+00:00",
    "league": "La Liga",
    "match": "Sevilla v Osasuna",
    "pair": "liga_btts_even|soccer_btts",
@@ -3139,7 +3140,7 @@
    "kickoff": "2026-10-26T20:00Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T15:19:40+00:00",
+   "last_seen_at": "2026-10-26T16:15:55+00:00",
    "league": "La Liga",
    "match": "Sevilla v Osasuna",
    "pair": "team2_ranked|soccer_team2",
@@ -3161,6 +3162,43 @@
    "sport": "soccer_team2",
    "status": "pending"
   },
+  "2026-10-26|Sevilla|Osasuna|Under 8 corners \u00b7 Corners total under": {
+   "away": "Osasuna",
+   "bet": {
+    "kind": "corners_lte",
+    "n": 7
+   },
+   "date": "2026-10-26",
+   "edge_at_log": null,
+   "first_seen": "2026-10-26",
+   "headline": "Under 8 corners",
+   "home": "Sevilla",
+   "id": "2026-10-26|Sevilla|Osasuna|Under 8 corners \u00b7 Corners total under",
+   "kickoff": "2026-10-26T20:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-26",
+   "last_seen_at": "2026-10-26T16:15:55+00:00",
+   "league": "La Liga",
+   "match": "Sevilla v Osasuna",
+   "pair": "corners_total_under|soccer_corners",
+   "price_at_log": 0.36,
+   "published_at": "2026-10-26T16:15:55+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 224,
+   "route": {
+    "claim": "Under 8 corners",
+    "event": "KXLALIGACORNERS-26OCT26SEVOSA",
+    "market": "KXLALIGACORNERS-26OCT26SEVOSA-8",
+    "outcome": "8+ corners",
+    "outcome_side": "no",
+    "price_at_log": 0.36,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "corners_total_under:KXLALIGACORNERS-26OCT26SEVOSA-8",
+   "source": "corners_total_under",
+   "sport": "soccer_corners",
+   "status": "pending"
+  },
   "2026-10-27|Cowboys|Eagles|Cowboys to win \u00b7 ESPN FPI / Matchup Predictor": {
    "away": "Eagles",
    "bet": {
@@ -3176,7 +3214,7 @@
    "kickoff": "2026-10-27T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T15:19:40+00:00",
+   "last_seen_at": "2026-10-26T16:15:55+00:00",
    "league": "NFL",
    "match": "Cowboys v Eagles",
    "model_prob": 0.694,
@@ -3213,7 +3251,7 @@
    "kickoff": "2026-10-28T17:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T15:19:40+00:00",
+   "last_seen_at": "2026-10-26T16:15:55+00:00",
    "league": "Serie A",
    "match": "Parma v Udinese",
    "pair": "u35_low_scoring|soccer_u35",
@@ -3250,7 +3288,7 @@
    "kickoff": "2026-10-28T19:45Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T15:19:40+00:00",
+   "last_seen_at": "2026-10-26T16:15:55+00:00",
    "league": "Scottish Premiership",
    "match": "St Mirren v Hibernian",
    "pair": "u35_low_scoring|soccer_u35",
@@ -3287,7 +3325,7 @@
    "kickoff": "2026-10-29T00:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T15:19:40+00:00",
+   "last_seen_at": "2026-10-26T16:15:55+00:00",
    "league": "MLS",
    "match": "FC Dallas v Columbus Crew",
    "pair": "mls_fade_home|soccer_p05",
@@ -3324,7 +3362,7 @@
    "kickoff": "2026-10-29T02:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T15:19:40+00:00",
+   "last_seen_at": "2026-10-26T16:15:55+00:00",
    "league": "MLS",
    "match": "San Jose Earthquakes v Colorado Rapids",
    "pair": "mls_fade_home|soccer_p05",
@@ -3361,7 +3399,7 @@
    "kickoff": "2026-10-29T02:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T15:19:40+00:00",
+   "last_seen_at": "2026-10-26T16:15:55+00:00",
    "league": "MLS",
    "match": "San Jose Earthquakes v Colorado Rapids",
    "pair": "u35_low_scoring|soccer_u35",
@@ -3398,7 +3436,7 @@
    "kickoff": "2026-10-30T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T15:19:40+00:00",
+   "last_seen_at": "2026-10-26T16:15:55+00:00",
    "league": "NFL",
    "match": "Panthers v Packers",
    "model_prob": 0.393,
@@ -3454,9 +3492,9 @@
    "ready_at": "2026-10-15T07:20:21+00:00",
    "route": "moved by hand on 2026-10-15",
    "routing": {
-    "leads": 4,
+    "leads": 5,
     "problem": null,
-    "routed": 4,
+    "routed": 5,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -3468,7 +3506,7 @@
    "sandbox_roi_fee": 0.0088,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 2,
     "under_target": 0
    }
   },
@@ -3813,9 +3851,9 @@
     "why": []
    },
    "sandbox_clv": 0.0,
-   "sandbox_n": 14,
-   "sandbox_roi": -0.0278,
-   "sandbox_roi_fee": -0.0439,
+   "sandbox_n": 15,
+   "sandbox_roi": -0.008,
+   "sandbox_roi_fee": -0.0244,
    "timing": {
     "late": [],
     "timed": 3,
@@ -3950,5 +3988,5 @@
  "stage": "production",
  "unlisted_skipped": 1,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-26T15:19:40+00:00"
+ "updated_at": "2026-10-26T16:15:55+00:00"
 }
