@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-26T15:00:16.386191+00:00",
-   "last_success": "2026-10-26T15:00:16.386191+00:00",
+   "last_run": "2026-10-26T15:28:41.542296+00:00",
+   "last_success": "2026-10-26T15:28:41.542296+00:00",
    "observations": {
-    "at": "2026-10-26T15:00:16.386191+00:00",
+    "at": "2026-10-26T15:28:41.542296+00:00",
     "events": 946,
     "reasons": {},
     "retired": "2026-10-24"
@@ -542,10 +542,10 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-26T15:00:16.386191+00:00",
-   "last_success": "2026-10-26T15:00:16.386191+00:00",
+   "last_run": "2026-10-26T15:28:41.542296+00:00",
+   "last_success": "2026-10-26T15:28:41.542296+00:00",
    "observations": {
-    "at": "2026-10-26T15:00:16.386191+00:00",
+    "at": "2026-10-26T15:28:41.542296+00:00",
     "events": 946,
     "reasons": {},
     "retired": "2026-10-24"
@@ -881,10 +881,13 @@
      "id": "KXRT-CLA-75",
      "logged": "2026-10-24T14:54:35.381516+00:00",
      "name": "Clayface \u00b7 Rotten Tomatoes score",
+     "payout": 1.0,
      "price": 0.73,
+     "profit": 34.45,
      "series": "KXRT",
+     "settled": "2026-10-26T15:28:41.542296+00:00",
      "side": "yes",
-     "status": "open",
+     "status": "won",
      "strike": 75,
      "strike_type": "greater",
      "title": "Above 75"
@@ -893,17 +896,17 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-26T15:00:16.386191+00:00",
-   "last_success": "2026-10-26T15:00:16.386191+00:00",
+   "last_run": "2026-10-26T15:28:41.542296+00:00",
+   "last_success": "2026-10-26T15:28:41.542296+00:00",
    "observations": {
-    "at": "2026-10-26T15:00:16.386191+00:00",
+    "at": "2026-10-26T15:28:41.542296+00:00",
     "events": 946,
     "news_guard": [],
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 13,
-     "edge 5c+": 12,
-     "edge under 5c": 3,
-     "no quote or spread too wide": 49
+     "already near-certain (under 10c or over 90c)": 14,
+     "edge 5c+": 11,
+     "edge under 5c": 2,
+     "no quote or spread too wide": 50
     }
    },
    "picks": [
@@ -2077,15 +2080,32 @@
      "status": "open",
      "title": "Peace in the Middle East",
      "yes_mid": 0.14
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-11-02T15:00:00Z",
+     "detail": "P(said) 0.08 \u00b7 said on 1 of the last 84 days, 7.0 days left \u00b7 edge +0.18",
+     "edge": 0.176,
+     "event": "KXTRUMPSAY-26NOV02",
+     "id": "KXTRUMPSAY-26NOV02-EPST",
+     "logged": "2026-10-26T15:28:41.542296+00:00",
+     "model": 0.0802,
+     "name": "What will Trump say this week?",
+     "price": 0.73,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "Epstein",
+     "yes_mid": 0.28
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-26T15:00:16.386191+00:00",
-   "last_success": "2026-10-26T15:00:16.386191+00:00",
+   "last_run": "2026-10-26T15:28:41.542296+00:00",
+   "last_success": "2026-10-26T15:28:41.542296+00:00",
    "observations": {
-    "at": "2026-10-26T15:00:16.386191+00:00",
+    "at": "2026-10-26T15:28:41.542296+00:00",
     "events": 946,
     "reasons": {},
     "retired": "2026-10-24"
@@ -2152,11 +2172,14 @@
      "logged": "2026-10-17T14:00:12.905311+00:00",
      "model": 1.0,
      "name": "Wildwood \u00b7 Rotten Tomatoes score",
+     "payout": 1.0,
      "price": 0.19,
+     "profit": 398.07,
      "rt_url": "https://www.rottentomatoes.com/m/wildwood",
      "series": "KXRT",
+     "settled": "2026-10-26T15:28:41.542296+00:00",
      "side": "yes",
-     "status": "open",
+     "status": "won",
      "title": "Above 99"
     },
     {
@@ -2283,11 +2306,14 @@
      "logged": "2026-10-21T19:38:58.613788+00:00",
      "model": 0.95,
      "name": "Clayface \u00b7 Rotten Tomatoes score",
+     "payout": 1.0,
      "price": 0.49,
+     "profit": 97.05,
      "rt_url": "https://www.rottentomatoes.com/m/clayface",
      "series": "KXRT",
+     "settled": "2026-10-26T15:28:41.542296+00:00",
      "side": "yes",
-     "status": "open",
+     "status": "won",
      "strike": 70,
      "strike_type": "greater",
      "title": "Above 70"
@@ -2502,8 +2528,10 @@
    ]
   },
   "Epstein": {
-   "at": "2026-10-24T14:54:35.381516+00:00",
-   "days": []
+   "at": "2026-10-26T15:28:41.542296+00:00",
+   "days": [
+    "2026-10-24"
+   ]
   },
   "Ethanol": {
    "at": "2026-10-22T14:00:16.844797+00:00",
