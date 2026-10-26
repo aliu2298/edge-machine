@@ -142,6 +142,20 @@
    "warning": null,
    "yes": 0
   },
+  "nba_tt_fade_overs_24h:2026-10-26": {
+   "at": "2026-10-26T00:00:26.413834+00:00",
+   "games": 2,
+   "gap_mean": 0.48,
+   "gaps": 2,
+   "lean": null,
+   "no": 0,
+   "ok": true,
+   "picks": 0,
+   "reason": null,
+   "share": null,
+   "warning": null,
+   "yes": 0
+  },
   "nba_tt_value_1h:2026-10-22": {
    "at": "2026-10-22T21:30:27.005288+00:00",
    "games": 2,
@@ -241,10 +255,24 @@
    "share": null,
    "warning": null,
    "yes": 0
+  },
+  "nba_tt_value_24h:2026-10-26": {
+   "at": "2026-10-26T00:00:26.413834+00:00",
+   "games": 2,
+   "gap_mean": 0.48,
+   "gaps": 2,
+   "lean": null,
+   "no": 0,
+   "ok": true,
+   "picks": 0,
+   "reason": null,
+   "share": null,
+   "warning": null,
+   "yes": 0
   }
  },
  "error": null,
- "last_run": "2026-10-25T23:45:24.430390+00:00",
+ "last_run": "2026-10-26T00:00:26.413834+00:00",
  "looks": {
   "nba_1q_value_1h:401909093": {
    "at": "2026-10-22T21:30:27.005288+00:00",
@@ -1121,6 +1149,17 @@
     "nba_tt_fade_overs_24h:401909867:SAC"
    ]
   },
+  "nba_tt_fade_overs_24h:401909868": {
+   "at": "2026-10-26T00:00:26.413834+00:00",
+   "baseline": 0,
+   "event": "KXNBATEAMTOTAL-26OCT26WASCHA",
+   "mu": {
+    "CHA": 119.31316950333913,
+    "WSH": 110.01912515744114
+   },
+   "mu_q1": 57.933517852868,
+   "picks": []
+  },
   "nba_tt_value_1h:401909093": {
    "at": "2026-10-22T21:30:27.005288+00:00",
    "baseline": 25,
@@ -1843,6 +1882,17 @@
     "SAC": 113.11454511727905
    },
    "mu_q1": 59.93366425909028,
+   "picks": []
+  },
+  "nba_tt_value_24h:401909868": {
+   "at": "2026-10-26T00:00:26.413834+00:00",
+   "baseline": 0,
+   "event": "KXNBATEAMTOTAL-26OCT26WASCHA",
+   "mu": {
+    "CHA": 119.31316950333913,
+    "WSH": 110.01912515744114
+   },
+   "mu_q1": 57.933517852868,
    "picks": []
   }
  },
@@ -5050,11 +5100,14 @@
      "mu": 56.35,
      "night": "2026-10-25",
      "p": 0.3975,
+     "payout": 0.0,
      "price": 0.5,
+     "profit": -100.0,
      "rule": "base_nba_1q_value_1h",
+     "settled": "2026-10-26T00:00:26.413834+00:00",
      "side": "yes",
      "start": "2026-10-25T23:00:00+00:00",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBA1QTOTAL-26OCT25ORLNYK-59",
      "title": "Over 58.5 points",
      "unit": "game",
@@ -5074,11 +5127,14 @@
      "mu": 56.72,
      "night": "2026-10-25",
      "p": 0.5105,
+     "payout": 0.0,
      "price": 0.52,
+     "profit": -100.0,
      "rule": "base_nba_1q_value_1h",
+     "settled": "2026-10-26T00:00:26.413834+00:00",
      "side": "yes",
      "start": "2026-10-25T23:00:00+00:00",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBA1QTOTAL-26OCT25TORMIN-57",
      "title": "Over 56.5 points",
      "unit": "game",
@@ -5098,11 +5154,14 @@
      "mu": 57.61,
      "night": "2026-10-25",
      "p": 0.4097,
+     "payout": 0.0,
      "price": 0.29,
+     "profit": -100.0,
      "rule": "base_nba_1q_value_1h",
+     "settled": "2026-10-26T00:00:26.413834+00:00",
      "side": "yes",
      "start": "2026-10-25T23:00:00+00:00",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBA1QTOTAL-26OCT25LACOKC-60",
      "title": "Over 59.5 points",
      "unit": "game",
@@ -19007,11 +19066,14 @@
      "mu": 56.35,
      "night": "2026-10-25",
      "p": 0.6025,
+     "payout": 1.0,
      "price": 0.53,
+     "profit": 82.67,
      "rule": "nba_1q_value_1h",
+     "settled": "2026-10-26T00:00:26.413834+00:00",
      "side": "no",
      "start": "2026-10-25T23:00:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT25ORLNYK-59",
      "title": "Over 58.5 points",
      "unit": "game",
@@ -19031,11 +19093,14 @@
      "mu": 57.61,
      "night": "2026-10-25",
      "p": 0.4097,
+     "payout": 0.0,
      "price": 0.29,
+     "profit": -100.0,
      "rule": "nba_1q_value_1h",
+     "settled": "2026-10-26T00:00:26.413834+00:00",
      "side": "yes",
      "start": "2026-10-25T23:00:00+00:00",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXNBA1QTOTAL-26OCT25LACOKC-60",
      "title": "Over 59.5 points",
      "unit": "game",
@@ -21033,14 +21098,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-24T14:37:28.086095+00:00",
-   "baseline": 0,
-   "due": 0,
-   "entered": 0,
-   "looked": 0,
-   "new": 0
-  },
-  {
    "at": "2026-10-24T18:13:00.446169+00:00",
    "baseline": 0,
    "due": 0,
@@ -21442,10 +21499,17 @@
    "entered": 0,
    "looked": 0,
    "new": 0
+  },
+  {
+   "at": "2026-10-26T00:00:26.413834+00:00",
+   "baseline": 0,
+   "due": 27,
+   "entered": 0,
+   "looked": 2,
+   "new": 0
   }
  ],
  "schedule": [
-  "2026-10-25T23:00:00+00:00",
   "2026-10-25T23:30:00+00:00",
   "2026-10-26T01:00:00+00:00",
   "2026-10-26T23:00:00+00:00",
