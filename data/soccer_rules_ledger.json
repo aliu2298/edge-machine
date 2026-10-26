@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-26T17:01:27.691049+00:00",
+ "last_run": "2026-10-26T17:16:28.257629+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -1026,11 +1026,14 @@
      "line": 2.5,
      "logged": "2026-10-26T14:31:12.157470+00:00",
      "match": "Caykur Rizespor v Trabzonspor",
+     "payout": 0.0,
      "price": 0.38,
+     "profit": -100.0,
      "rule": "C7",
+     "settled": "2026-10-26T17:16:28.257629+00:00",
      "side": "no",
      "start": "2026-10-26T16:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXSUPERLIGTOTAL-26OCT26RIZTRA-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Caykur Rizespor O-D+ v Trabzonspor O+D- \u00b7 Under 2.5 NO 0.38"
@@ -1587,6 +1590,29 @@
      "ticker": "KXEREDIVISIEBTTS-26OCT25AZATWE-BTTS",
      "title": "Both Teams To Score",
      "why": "AZ Alkmaar O+D- v FC Twente O+D- \u00b7 BTTS YES 0.68"
+    },
+    {
+     "ask": 0.48,
+     "bid": 0.47,
+     "event": "KXLIGAPORTUGALBTTS-26OCT26SCLBEN",
+     "group": "BTTS",
+     "id": "D1:KXLIGAPORTUGALBTTS-26OCT26SCLBEN",
+     "labels": {
+      "away": "O+D-",
+      "home": "O+D-"
+     },
+     "league": "Primeira Liga",
+     "line": null,
+     "logged": "2026-10-26T17:16:28.257629+00:00",
+     "match": "Santa Clara v Benfica",
+     "price": 0.48,
+     "rule": "D1",
+     "side": "yes",
+     "start": "2026-10-26T18:45Z",
+     "status": "open",
+     "ticker": "KXLIGAPORTUGALBTTS-26OCT26SCLBEN-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Santa Clara O+D- v Benfica O+D- \u00b7 BTTS YES 0.48"
     }
    ]
   },
@@ -2615,14 +2641,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-24T21:31:37.012514+00:00",
-   "candidates": 0,
-   "due": 0,
-   "labelled": 0,
-   "matched": 0,
-   "new": 0
-  },
-  {
    "at": "2026-10-24T21:46:13.852872+00:00",
    "candidates": 0,
    "due": 0,
@@ -3021,6 +3039,14 @@
    "labelled": 1,
    "matched": 0,
    "new": 0
+  },
+  {
+   "at": "2026-10-26T17:16:28.257629+00:00",
+   "candidates": 1,
+   "due": 2,
+   "labelled": 2,
+   "matched": 1,
+   "new": 1
   }
  ],
  "version": "soccer-rules-v1"
