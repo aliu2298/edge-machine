@@ -144,7 +144,8 @@ def _ledger_settled(now):
     pairs = (T.load_stages().get("pairs") or {})
     today = fmt.chicago(now).date()
     recent, older = [], []
-    for q in d["quotes"]:
+    # bet_rows, not d["quotes"]: a settled bet rolled into the archive is still on a page.
+    for q in T.bet_rows(d):
         if (not q.get("bet") or q.get("status") not in HIST or T.climate_excluded(q)
                 or S.removed_row(q) or S.tennis_refused_row(q)):
             continue
@@ -584,7 +585,7 @@ for _name, _page in _fx_archive.items():
 for _fid in _flag_ids:
     ok(_fid not in _fx_running and _fid not in _fx_recent and _fid not in _fx_older,
        f"{_fid} is on none of Running, Recently settled, or an archive page")
-_want_record = _record_settled(_fx_quotes)
+_want_record = _record_settled(T.bet_rows(_fx))
 _got_record = _shown_settled(_fx_page)
 eq(_got_record, _want_record,
    "the settled-on-record count leaves weather out")
@@ -619,7 +620,7 @@ def _headline_count(quotes):
 
 _head_page = SB.label_cells(SB.build(now=NOW))
 _head_blurb = _section(_head_page, "recently-settled")
-_head_want = _headline_count(T.load()["quotes"])
+_head_want = _headline_count(T.bet_rows(T.load()))
 ok(_head_want in _head_blurb,
    "the headline counts settled and void with weather left out")
 ok("city-day" not in _head_blurb,

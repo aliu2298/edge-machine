@@ -85,7 +85,19 @@ jobs:
           for f in "${tests[@]}"; do
             echo "=== $f ==="
             log="$(mktemp)"
-            python3 "$f" | tee "$log"
+            # A single 3MB line once made GitHub drop the rest of the job log,
+            # the failure and its exit status included. $log keeps the full
+            # output; the job log shows each line cut to 4000 characters.
+            rc=0
+            python3 "$f" 2>&1 | tee "$log" | cut -c1-4000 || rc=$?
+            echo "--- $f exited $rc"
+            if [ "$rc" -ne 0 ]; then
+              echo "::error::$f exited $rc"
+              if grep -q -F "FAIL" "$log"; then
+                grep -m 20 -F "FAIL" "$log" | cut -c1-500
+              fi
+              exit "$rc"
+            fi
             # Every current browser test uses require_browser(), which already
             # exits 1 under REQUIRE_BROWSER=1. This stays as a guard for a
             # future test that copies the old warn-and-return skip and exits 0.

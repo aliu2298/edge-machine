@@ -35,8 +35,42 @@ def ok(cond, msg):
         FAILS.append(msg)
 
 
+# A check on a whole-ledger dict once printed a 3MB line, and GitHub dropped the
+# rest of the job log after it, FAIL lines and exit status included.
+_REPR_CAP = 400
+
+
+def _brief(x):
+    r = repr(x)
+    return r if len(r) <= _REPR_CAP else f"{r[:_REPR_CAP]}... [{len(r):,} chars, {len(x) if hasattr(x, '__len__') else '?'} items]"
+
+
+def _diff(a, b):
+    """The first few keys or members that differ, when a and b are big dicts or sets."""
+    if isinstance(a, dict) and isinstance(b, dict):
+        keys = sorted((k for k in a.keys() | b.keys() if a.get(k, _MISSING) != b.get(k, _MISSING)), key=repr)
+        return "; differs at " + ", ".join(
+            f"{k!r}: {a.get(k, _MISSING)!r} v {b.get(k, _MISSING)!r}" for k in keys[:5]
+        )[:_REPR_CAP * 2] + (f" (+{len(keys) - 5} more)" if len(keys) > 5 else "")
+    if isinstance(a, (set, frozenset)) and isinstance(b, (set, frozenset)):
+        return f"; extra {_brief(sorted(a - b, key=repr)[:5])}, missing {_brief(sorted(b - a, key=repr)[:5])}"
+    return ""
+
+
+class _Absent:
+    def __repr__(self):
+        return "<absent>"
+
+
+_MISSING = _Absent()
+
+
 def eq(a, b, msg):
-    ok(a == b, f"{msg} (got {a!r}, want {b!r})")
+    same = a == b
+    detail = f"got {_brief(a)}, want {_brief(b)}"
+    if not same and len(detail) > _REPR_CAP:
+        detail += _diff(a, b)
+    ok(same, f"{msg} ({detail})")
 
 
 def close(a, b, msg, tol=1e-6):
