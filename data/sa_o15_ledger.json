@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-26T19:01:47.914923+00:00",
+ "last_run": "2026-10-26T20:31:27.554615+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -318,6 +318,24 @@
      "ticker": "KXARGPREMDIVTOTAL-26OCT25CCVEL-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Argentina over 1.5 YES 0.72"
+    },
+    {
+     "ask": 0.7,
+     "bid": 0.69,
+     "event": "KXARGPREMDIVTOTAL-26OCT26UNIELP",
+     "id": "ARG:KXARGPREMDIVTOTAL-26OCT26UNIELP",
+     "league": "Liga Profesional",
+     "line": 1.5,
+     "logged": "2026-10-26T20:31:27.554615+00:00",
+     "match": "Uni\u00f3n (Santa Fe) v Estudiantes de La Plata",
+     "price": 0.7,
+     "rule": "ARG",
+     "side": "yes",
+     "start": "2026-10-26T22:00Z",
+     "status": "open",
+     "ticker": "KXARGPREMDIVTOTAL-26OCT26UNIELP-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Argentina over 1.5 YES 0.70"
     }
    ]
   },
@@ -516,13 +534,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T01:01:29.854940+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "quoted": 0
-  },
   {
    "at": "2026-10-25T01:32:02.712124+00:00",
    "due": 0,
@@ -872,6 +883,13 @@
    "matched": 0,
    "new": 0,
    "quoted": 0
+  },
+  {
+   "at": "2026-10-26T20:31:27.554615+00:00",
+   "due": 1,
+   "matched": 1,
+   "new": 1,
+   "quoted": 1
   }
  ],
  "schedule": [

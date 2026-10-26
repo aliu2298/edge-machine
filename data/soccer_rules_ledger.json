@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-26T19:01:46.783892+00:00",
+ "last_run": "2026-10-26T20:31:26.493626+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -1629,11 +1629,14 @@
      "line": null,
      "logged": "2026-10-26T17:16:28.257629+00:00",
      "match": "Santa Clara v Benfica",
+     "payout": 1.0,
      "price": 0.48,
+     "profit": 101.02,
      "rule": "D1",
+     "settled": "2026-10-26T20:31:26.493626+00:00",
      "side": "yes",
      "start": "2026-10-26T18:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXLIGAPORTUGALBTTS-26OCT26SCLBEN-BTTS",
      "title": "Both Teams To Score",
      "why": "Santa Clara O+D- v Benfica O+D- \u00b7 BTTS YES 0.48"
@@ -2688,14 +2691,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-25T01:01:28.452433+00:00",
-   "candidates": 3,
-   "due": 4,
-   "labelled": 4,
-   "matched": 3,
-   "new": 3
-  },
-  {
    "at": "2026-10-25T01:32:01.158380+00:00",
    "candidates": 1,
    "due": 2,
@@ -3093,6 +3088,14 @@
    "due": 2,
    "labelled": 2,
    "matched": 1,
+   "new": 0
+  },
+  {
+   "at": "2026-10-26T20:31:26.493626+00:00",
+   "candidates": 0,
+   "due": 0,
+   "labelled": 0,
+   "matched": 0,
    "new": 0
   }
  ],
