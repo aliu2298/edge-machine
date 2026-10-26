@@ -60,10 +60,20 @@
    "lead_min": 56.0,
    "price": 0.91
   },
+  "commod_fav_band:KXBRENTD-26OCT2617-T110.50": {
+   "at": "2026-10-26T20:11:34+00:00",
+   "lead_min": 18.4,
+   "price": 0.48
+  },
   "commod_fav_band:KXGOLDD-26OCT2217-T4033": {
    "at": "2026-10-22T19:34:01+00:00",
    "lead_min": 56.0,
    "price": 0.16
+  },
+  "commod_fav_band:KXGOLDD-26OCT2617-T4014": {
+   "at": "2026-10-26T20:11:34+00:00",
+   "lead_min": 18.4,
+   "price": 0.41
   },
   "commod_fav_band:KXSILVERD-26OCT2217-T54.75": {
    "at": "2026-10-22T19:34:01+00:00",
@@ -80,6 +90,11 @@
    "lead_min": 29.0,
    "price": 0.88
   },
+  "commod_nc_no:KXGOLDD-26OCT2617-T4024": {
+   "at": "2026-10-26T20:11:34+00:00",
+   "lead_min": 18.4,
+   "price": 0.98
+  },
   "commod_nc_no:KXWTI-26OCT2114-T97.49": {
    "at": "2026-10-21T17:42:18+00:00",
    "lead_min": 17.7,
@@ -89,6 +104,21 @@
    "at": "2026-10-23T17:31:02+00:00",
    "lead_min": 29.0,
    "price": 0.78
+  },
+  "commod_nc_yes:KXBRENTD-26OCT2617-T109.50": {
+   "at": "2026-10-26T20:11:34+00:00",
+   "lead_min": 18.4,
+   "price": 0.99
+  },
+  "commod_nc_yes:KXGOLDD-26OCT2617-T4004": {
+   "at": "2026-10-26T20:11:34+00:00",
+   "lead_min": 18.4,
+   "price": 0.95
+  },
+  "commod_nc_yes:KXSILVERD-26OCT2617-T53.75": {
+   "at": "2026-10-26T20:11:34+00:00",
+   "lead_min": 18.4,
+   "price": 0.91
   },
   "commod_nc_yes:KXWTI-26OCT2314-T101.99": {
    "at": "2026-10-23T17:31:02+00:00",
@@ -169,11 +199,6 @@
    "at": "2026-10-23T18:10:47+00:00",
    "lead_min": 54.2,
    "price": 0.63
-  },
-  "ere_draw:KXEREDIVISIEGAME-26OCT16HEEEXC": {
-   "at": "2026-10-16T17:00:59+00:00",
-   "lead_min": 59.0,
-   "price": 0.21
   },
   "ere_draw:KXEREDIVISIEGAME-26OCT23GAETEL": {
    "at": "2026-10-23T17:31:02+00:00",
@@ -551,5 +576,5 @@
    "price": 0.74
   }
  },
- "updated": "2026-10-25T23:37:57+00:00"
+ "updated": "2026-10-26T20:11:34+00:00"
 }
