@@ -1261,11 +1261,16 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
     if daily is not None:
         import daily_production
         d, st, blob = daily_production.page_inputs(d, st, blob, daily, now=now_dt)
+    left_html = ""
     if culture is not None:
         # Trump mentions (mentions_rate), moved by hand 2026-10-20, publishes from the Culture
-        # ledger through its own feed the same way (culture_production).
+        # ledger through its own feed the same way (culture_production). Out of Production on
+        # 2026-10-26: page_inputs adds nothing, and the Pairs section says when it left.
         import culture_production
         d, st, blob = culture_production.page_inputs(d, st, blob, culture, now=now_dt)
+        if not culture_production.listed(now_dt):
+            left_html = f'<p class="sm mut prod-left">{esc(culture_production.removed_note(culture))}</p>\n'
+
     if soccer_rules is not None:
         # The four soccer rules moved by hand 2026-10-21 (soccer_rules_production), from their
         # own ledgers: (soccer_rules_ledger, sa_o15_ledger).
@@ -1539,7 +1544,7 @@ and its record since it entered Production. Under {EARLY_N} settled bets an ROI 
 +117%, and means nothing yet. A pair moved on or after {EARLY_STATE_SINCE} carries an <b>Early</b> badge with its
 settled count until it reaches {EARLY_N}. CLV is the closing price minus the price at logging: positive means its
 leads got dearer after they were published.</p>
-{pairs_html}</details>
+{left_html}{pairs_html}</details>
 </section>
 
 {chips}

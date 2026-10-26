@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Offline checks for the Trump mentions Production feed (culture_production.py, 2026-10-20)."""
 import datetime as dt
+import json
 import sys
 
 import culture_build as KB
@@ -81,6 +82,48 @@ check("the Production page lists the pair and its NO lead in words",
       ("Trump mentions" in html, 'Trump does not say "Antifa"' in html or "Trump does not say &quot;Antifa&quot;" in html), (True, True))
 check("the Culture page says the lane is in Production", "Production · since 2026-10-20" in KB.build(state, NOW), True)
 check("no guarded public phrase in the leads", sandbox_audit.COPY_RE.findall(" ".join(l["headline"] for l in f["leads"].values())), [])
+
+print("\n2026-10-26: back to the Sandbox, the Production record kept")
+OUT = dt.datetime(2026, 10, 26, 18, 0, tzinfo=UTC)
+check("listed until 16:40Z on 2026-10-26 (the follower's switch went off then), not after",
+      (CP.listed(dt.datetime(2026, 10, 26, 16, 39, tzinfo=UTC)), CP.listed(dt.datetime(2026, 10, 26, 16, 40, tzinfo=UTC)),
+       CP.listed(OUT), CP.DEMOTED_ON), (True, False, False, "2026-10-26"))
+check("no Production listing is left, so nothing re-promotes it", (CP.pairs(OUT), CP.pairs(NOW) == {CP.PAIR: CP.pairs(NOW)[CP.PAIR]}),
+      ({}, True))
+check("sandbox_track names the removal, record kept", T.PAIR_REMOVALS[CP.PAIR], dict(removed_on="2026-10-26", keep_record=True))
+out_state = json.loads(json.dumps(state))
+ol = out_state["lanes"]["mentions_rate"]
+ol["last_success"] = (OUT - dt.timedelta(minutes=20)).isoformat()
+ol["picks"] += [pick("KXTRUMPSAY-26OCT26-WALL", "Wall", "no", 0.85, status="won", logged="2026-10-22T10:00:00+00:00",
+                     close="2026-10-26T14:00:00Z", profit=13.2, payout=0),
+                pick("KXTRUMPSAY-26NOV02-NEWA", "New", "no", 0.88, close="2026-11-02T14:00:00Z",
+                     logged="2026-10-26T17:41:00+00:00", amended="2026-10-26")]
+fo = CP.feed(out_state, now=OUT)
+check("the feed lists no pair and names no open lead", (fo["pairs"], [l for l in fo["leads"].values() if l.get("status") == "pending"]),
+      ({}, []))
+check("its Production-era settled lead stays, for grading only (lane retired); the pre-Production one does not",
+      sorted((l["route"]["market"], l.get("lane"), l.get("retired_on")) for l in fo["leads"].values()),
+      [("KXTRUMPSAY-26OCT26-WALL", "retired", "2026-10-26")])
+check("the record it left Production on: entries logged while listed",
+      {k: v for k, v in CP.removed_record(out_state).items() if k != "roi"}, dict(won=1, lost=0, settled=1, open=2))
+d0, st0, b0 = {"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}
+check("page inputs add nothing once it is out", CP.page_inputs(d0, st0, b0, out_state, now=OUT), (d0, st0, b0))
+ph = P.page({"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}, "", now=OUT, culture=out_state)
+check("the Production page says when it left and on what record, and lists no Trump mentions pair",
+      ("Trump mentions left Production on 2026-10-26 (moved 2026-10-20)" in ph, "<b>0</b><span>pairs in Production" in ph,
+       "Trump does not say" in ph), (True, True, False))
+import control_center as CC
+m = CC.model({"quotes": [], "coverage": {}}, {"pairs": {}}, {"leads": {}, "pairs": {}}, OUT, culture=out_state)
+check("the Control Center: not counted, not named as in Production, named as removed on 2026-10-26",
+      (m["tiles"]["pairs"], "Trump mentions" in m["prod_outside"], [x[:52] for x in m["prod_left"]]),
+      (0, False, ["Trump mentions left Production on 2026-10-26 (moved "]))
+m_in = CC.model({"quotes": [], "coverage": {}}, {"pairs": {}}, {"leads": {}, "pairs": {}}, NOW, culture=state)
+check("  and on 2026-10-21 it was counted and named", (m_in["tiles"]["pairs"], m_in["prod_outside"], m_in["prod_left"]),
+      (1, ["Trump mentions"], []))
+kh = KB.build(out_state, OUT)
+check("the Culture page chips it Removed from Production, a Sandbox row",
+      ("Removed from Production · 2026-10-26" in kh, "Production · since 2026-10-20" in kh), (True, False))
+check("no guarded public phrase in the removal note", sandbox_audit.COPY_RE.findall(CP.removed_note(out_state)), [])
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
