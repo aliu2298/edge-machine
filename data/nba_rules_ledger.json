@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-26T19:39:35.096938+00:00",
+ "last_run": "2026-10-26T21:30:15.257938+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -403,6 +403,72 @@
      "ticker": "KXNBATEAMTOTAL-26OCT25DETPHI-DET110",
      "title": "Detroit over 109.5 points",
      "why": "DET O+D- v PHI O-D+ \u00b7 110+ YES 0.61"
+    },
+    {
+     "game": "401909868",
+     "id": "R1:KXNBATEAMTOTAL-26OCT26WASCHA-WAS110",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O-D+",
+      "home": "O-D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-26T21:30:15.257938+00:00",
+     "match": "WSH @ CHA",
+     "price": 0.63,
+     "rule": "R1",
+     "side": "yes",
+     "start": "2026-10-26T23:00Z",
+     "status": "open",
+     "strike": 109.5,
+     "team": "WSH",
+     "ticker": "KXNBATEAMTOTAL-26OCT26WASCHA-WAS110",
+     "title": "Washington over 109.5 points",
+     "why": "WSH O+D+ v CHA O-D- \u00b7 110+ YES 0.63"
+    },
+    {
+     "game": "401909869",
+     "id": "R1:KXNBATEAMTOTAL-26OCT26MINCLE-CLE110",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O+D-",
+      "home": "O+D+",
+      "home_h1": "O+D+"
+     },
+     "logged": "2026-10-26T21:30:15.257938+00:00",
+     "match": "MIN @ CLE",
+     "price": 0.78,
+     "rule": "R1",
+     "side": "yes",
+     "start": "2026-10-26T23:00Z",
+     "status": "open",
+     "strike": 109.5,
+     "team": "CLE",
+     "ticker": "KXNBATEAMTOTAL-26OCT26MINCLE-CLE110",
+     "title": "Cleveland over 109.5 points",
+     "why": "CLE O+D+ v MIN O+D- \u00b7 110+ YES 0.78"
+    },
+    {
+     "game": "401909869",
+     "id": "R1:KXNBATEAMTOTAL-26OCT26MINCLE-MIN110",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O+D-",
+      "home": "O+D+",
+      "home_h1": "O+D+"
+     },
+     "logged": "2026-10-26T21:30:15.257938+00:00",
+     "match": "MIN @ CLE",
+     "price": 0.65,
+     "rule": "R1",
+     "side": "yes",
+     "start": "2026-10-26T23:00Z",
+     "status": "open",
+     "strike": 109.5,
+     "team": "MIN",
+     "ticker": "KXNBATEAMTOTAL-26OCT26MINCLE-MIN110",
+     "title": "Minnesota over 109.5 points",
+     "why": "MIN O+D- v CLE O+D+ \u00b7 110+ YES 0.65"
     }
    ]
   },
@@ -1186,6 +1252,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT25MEMSAC-SAC116",
      "title": "Sacramento over 115.5 points",
      "why": "SAC O-D+ v MEM O-D- \u00b7 115+ NO 0.49"
+    },
+    {
+     "game": "401909868",
+     "id": "R3:KXNBATEAMTOTAL-26OCT26WASCHA-CHA115",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O-D+",
+      "home": "O-D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-26T21:30:15.257938+00:00",
+     "match": "WSH @ CHA",
+     "price": 0.48,
+     "rule": "R3",
+     "side": "no",
+     "start": "2026-10-26T23:00Z",
+     "status": "open",
+     "strike": 114.5,
+     "team": "CHA",
+     "ticker": "KXNBATEAMTOTAL-26OCT26WASCHA-CHA115",
+     "title": "Charlotte over 114.5 points",
+     "why": "CHA O-D- v WSH O+D+ \u00b7 115+ NO 0.48"
     }
    ]
   },
@@ -1419,6 +1507,28 @@
      "ticker": "KXNBA1HTOTAL-26OCT25DETPHI-115",
      "title": "Over 114.5 points",
      "why": "1H DET O-D- @ PHI O-D+ \u00b7 115+ NO 0.45"
+    },
+    {
+     "game": "401909868",
+     "id": "R5:KXNBA1HTOTAL-26OCT26WASCHA-115",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O-D+",
+      "home": "O-D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-26T21:30:15.257938+00:00",
+     "match": "WSH @ CHA",
+     "price": 0.43,
+     "rule": "R5",
+     "side": "no",
+     "start": "2026-10-26T23:00Z",
+     "status": "open",
+     "strike": 114.5,
+     "team": "game",
+     "ticker": "KXNBA1HTOTAL-26OCT26WASCHA-115",
+     "title": "Over 114.5 points",
+     "why": "1H WSH O-D+ @ CHA O-D- \u00b7 115+ NO 0.43"
     }
    ]
   },
@@ -2023,6 +2133,50 @@
      "ticker": "KXNBATEAMTOTAL-26OCT25DETPHI-DET106",
      "title": "Detroit over 105.5 points",
      "why": "DET O+D- v PHI O-D+ \u00b7 105+ YES 0.79"
+    },
+    {
+     "game": "401909868",
+     "id": "R6:KXNBATEAMTOTAL-26OCT26WASCHA-WAS104",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O-D+",
+      "home": "O-D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-26T21:30:15.257938+00:00",
+     "match": "WSH @ CHA",
+     "price": 0.8,
+     "rule": "R6",
+     "side": "yes",
+     "start": "2026-10-26T23:00Z",
+     "status": "open",
+     "strike": 103.5,
+     "team": "WSH",
+     "ticker": "KXNBATEAMTOTAL-26OCT26WASCHA-WAS104",
+     "title": "Washington over 103.5 points",
+     "why": "WSH O+D+ v CHA O-D- \u00b7 105+ YES 0.80"
+    },
+    {
+     "game": "401909869",
+     "id": "R6:KXNBATEAMTOTAL-26OCT26MINCLE-MIN106",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O+D-",
+      "home": "O+D+",
+      "home_h1": "O+D+"
+     },
+     "logged": "2026-10-26T21:30:15.257938+00:00",
+     "match": "MIN @ CLE",
+     "price": 0.77,
+     "rule": "R6",
+     "side": "yes",
+     "start": "2026-10-26T23:00Z",
+     "status": "open",
+     "strike": 105.5,
+     "team": "MIN",
+     "ticker": "KXNBATEAMTOTAL-26OCT26MINCLE-MIN106",
+     "title": "Minnesota over 105.5 points",
+     "why": "MIN O+D- v CLE O+D+ \u00b7 105+ YES 0.77"
     }
    ]
   },
@@ -2433,11 +2587,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-23T10:30:12.359567+00:00",
-   "due": 0,
-   "new": 0
-  },
-  {
    "at": "2026-10-23T15:27:24.275011+00:00",
    "due": 0,
    "new": 0
@@ -2686,6 +2835,11 @@
    "at": "2026-10-26T19:39:35.096938+00:00",
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-10-26T21:30:15.257938+00:00",
+   "due": 2,
+   "new": 7
   }
  ],
  "version": "nba-rules-v1"
