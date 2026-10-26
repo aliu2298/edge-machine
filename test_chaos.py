@@ -51,8 +51,11 @@ near("...at 0.6251", L, 0.6251, 1e-3)
 check("a +50% target from 0.90 cannot be reached", C.target_price(0.90, 0.50), None)
 S = C.stop_price(0.50)
 near("the -50% stop loses half after both fees", (S - C.taker_fee(S)) / C.cost(0.50) - 1, -0.50, 1e-3)
-check("eight exits: hold and +20/30/50, each with and without the -50% stop",
-      sorted(C.EXITS), ["hold", "hold_stop50", "tp20", "tp20_stop50", "tp30", "tp30_stop50", "tp50", "tp50_stop50"])
+check("ten exits: hold and +20/30/50/100, each with and without the -50% stop",
+      sorted(C.EXITS), ["hold", "hold_stop50", "tp100", "tp100_stop50", "tp20", "tp20_stop50", "tp30", "tp30_stop50", "tp50", "tp50_stop50"])
+L100 = C.target_price(0.30, 1.00)
+near("the +100% limit returns 100% after both fees", (L100 - C.maker_fee(L100)) / C.cost(0.30) - 1, 1.00, 1e-3)
+check("a +100% target from 0.55 is unreachable (needs 0.99+): held", C.target_price(0.55, 1.00), None)
 check("entry times default to 1 and 24 hours before the start", C.ENTRY_HOURS, (1, 24))
 check("variant keys carry the entry time; the control is the same entry held with the same stop",
       (C.vkey(1, "tp20"), C.split_key("t24h_tp30_stop50"), C.control_of("t1h_tp20"), C.control_of("t24h_tp50_stop50"), C.control_of("t1h_hold")),
@@ -200,7 +203,7 @@ check("every trade is bought 1h or 24h before the start, never in play",
 check("every trade carries its variant, the start it was timed from and how that was found",
       all(t["variant"] == C.vkey(t["hours"], t["exit_key"]) and t["start_how"] == "lane source" for t in Ls["trades"]), True)
 sets = {(t["hours"], t["exit_key"]) for t in Ls["trades"]}
-check("both entry times and all eight exits are recorded from the same entries", len(sets), 16)
+check("both entry times and all ten exits are recorded from the same entries", len(sets), 20)
 aaa_hold = [t for t in Ls["trades"] if t["ticker"].endswith("AAA") and t["side"] == "yes" and t["variant"] == "t1h_hold"][0]
 aaa_tp = [t for t in Ls["trades"] if t["ticker"].endswith("AAA") and t["side"] == "yes" and t["variant"] == "t1h_tp30"][0]
 check("the same entry: held it wins to 1; the +30% sell fills in play when the bid runs to 0.78+",
@@ -244,6 +247,19 @@ check("its own ledger file, not the Sandbox's", (C.PATH.endswith("data/chaos_led
 only1 = dict(lane, id="t_one", entry_hours=(1,))
 C.run(st, [only1], NOW, fetch)
 check("a lane may buy at one entry time only", {t["hours"] for t in st["lanes"]["t_one"]["trades"]}, {1})
+
+print("\nbackfill: a new exit variant reaches entries already on the ledger")
+bf = C.empty()
+C.run(bf, [lane], NOW, fetch)
+Lb = bf["lanes"]["t_lane"]
+full = len(Lb["trades"])
+dropped = [t for t in Lb["trades"] if t["exit_key"] == "tp100" or t["exit_key"] == "tp100_stop50"]
+Lb["trades"] = [t for t in Lb["trades"] if t not in dropped]
+kept = [dict(t) for t in Lb["trades"]]
+C.run(bf, [lane], NOW + dt.timedelta(hours=3), fetch)
+check("the missing +100% variants are added for the recorded entries", (len(Lb["trades"]), len(dropped) > 0), (full, True))
+check("nothing already recorded was changed", Lb["trades"][:len(kept)], kept)
+check("a second run adds nothing", (C.run(bf, [lane], NOW + dt.timedelta(hours=4), fetch), len(Lb["trades"])), ({}, full))
 
 print("\nthe start when the lane has no source of its own")
 nosrc = dict(lane, id="t_path")

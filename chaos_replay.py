@@ -28,7 +28,7 @@ THE ENGINE. A lane is a config (chaos_lanes.py is where lanes plug in; Phase 1 s
 ENTRY: at start - h hours (h in entry_hours) buy the picked side at the ask at the first tight quote
 (spread 3c or less) in the 15 minutes from then, only while still before the start. One trade per
 market, side and entry time. A market with no quote that early has no trade at that time.
-EXITS, all from the same entry, in parallel (variants): a resting limit sell at +20%, +30% or +50% ROI
+EXITS, all from the same entry, in parallel (variants): a resting limit sell at +20%, +30%, +50% or +100% ROI
 after fees, or none (hold to settlement); each with no stop or a -50% stop. The limit rests from the
 entry on, pre-game and in play. A sell fills only when the side's bid trades 1c through the limit
 inside a minute (the limit price is then the fill); a stop fills at the stop price, or the minute's
@@ -69,7 +69,7 @@ TAKER, MAKER = 0.07, 0.0175
 MAX_SPREAD = 0.03
 ASK_RANGE = (0.02, 0.98)
 FILL_MARGIN = 0.01             # a limit sell fills when the bid trades this far through it
-TARGETS = (0.20, 0.30, 0.50)
+TARGETS = (0.20, 0.30, 0.50, 1.00)
 STOP = -0.50
 ENTRY_HOURS = (1, 24)
 ENTRY_GRACE_MIN = 15           # the first tight quote within this many minutes of the entry time
@@ -492,6 +492,30 @@ def lane_state(state, lane, now):
     return L
 
 
+def _backfill(L, lane, now, fetch, errs):
+    """Re-replay events whose entries lack an exit variant added since (e.g. +100%) and append ONLY the missing
+    variants of the entries already recorded; nothing existing is edited. Skips an event that has no recorded entry."""
+    by_event = {}
+    for t in L["trades"]:
+        by_event.setdefault(t["event"], set()).add(t["exit_key"])
+    todo = [e for e, ks in by_event.items() if set(EXITS) - ks][:MAX_EVENTS_PER_RUN]
+    for event in todo:
+        have = {(t["ticker"], t["side"], t["hours"], t["exit_key"]) for t in L["trades"] if t["event"] == event}
+        entries = {(a, b, c) for a, b, c, _ in have}
+        series = next((x for x in lane["series"] if event.startswith(x + "-")), None)
+        if not series:
+            continue
+        try:
+            trades, note = replay_event(lane, series, event, fetch, now)
+        except Exception as e:                                  # noqa: BLE001
+            errs.append(f"{lane['id']} backfill {event}: {str(e)[:80]}")
+            continue
+        if note:
+            continue
+        L["trades"] += [t for t in trades if (t["ticker"], t["side"], t["hours"]) in entries
+                        and (t["ticker"], t["side"], t["hours"], t["exit_key"]) not in have]
+
+
 def run(state, lanes, now=None, fetch=D.get):
     """Replay every settled, not yet replayed event of every lane. Returns {lane id: new trades}."""
     now = now or dt.datetime.now(UTC)
@@ -528,6 +552,10 @@ def run(state, lanes, now=None, fetch=D.get):
                 L["replayed"][event] = len({(t["ticker"], t["side"]) for t in trades})
                 new.setdefault(lane["id"], []).extend(trades)
                 done += 1
+    for lane in lanes:                                          # new exit variants reach entries already on the ledger
+        L = state["lanes"].get(lane["id"])
+        if L:
+            _backfill(L, lane, now, fetch, errs)
     state["last_run"] = now.isoformat()
     state["error"] = "; ".join(errs)[:1000] or None
     state["runs"] = (state.get("runs") or [])[-50:] + [dict(at=now.isoformat(), new={k: len(v) for k, v in new.items()})]
