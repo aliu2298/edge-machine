@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-26T14:00:15.624871+00:00",
-   "last_success": "2026-10-26T14:00:15.624871+00:00",
+   "last_run": "2026-10-26T15:00:16.386191+00:00",
+   "last_success": "2026-10-26T15:00:16.386191+00:00",
    "observations": {
-    "at": "2026-10-26T14:00:15.624871+00:00",
+    "at": "2026-10-26T15:00:16.386191+00:00",
     "events": 946,
     "reasons": {},
     "retired": "2026-10-24"
@@ -542,10 +542,10 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-26T14:00:15.624871+00:00",
-   "last_success": "2026-10-26T14:00:15.624871+00:00",
+   "last_run": "2026-10-26T15:00:16.386191+00:00",
+   "last_success": "2026-10-26T15:00:16.386191+00:00",
    "observations": {
-    "at": "2026-10-26T14:00:15.624871+00:00",
+    "at": "2026-10-26T15:00:16.386191+00:00",
     "events": 946,
     "reasons": {},
     "retired": "2026-10-24"
@@ -893,18 +893,17 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-26T14:00:15.624871+00:00",
-   "last_success": "2026-10-26T14:00:15.624871+00:00",
+   "last_run": "2026-10-26T15:00:16.386191+00:00",
+   "last_success": "2026-10-26T15:00:16.386191+00:00",
    "observations": {
-    "at": "2026-10-26T14:00:15.624871+00:00",
+    "at": "2026-10-26T15:00:16.386191+00:00",
     "events": 946,
     "news_guard": [],
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 12,
+     "already near-certain (under 10c or over 90c)": 13,
      "edge 5c+": 12,
-     "edge capped": 1,
      "edge under 5c": 3,
-     "no quote or spread too wide": 50
+     "no quote or spread too wide": 49
     }
    },
    "picks": [
@@ -1380,10 +1379,13 @@
      "logged": "2026-10-19T15:00:17.989052+00:00",
      "model": 0.08,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.79,
+     "profit": 24.75,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-26T15:00:16.386191+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Antifa"
     },
     {
@@ -1412,10 +1414,13 @@
      "logged": "2026-10-19T16:00:14.057450+00:00",
      "model": 0.1535,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.75,
+     "profit": 31.04,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-26T15:00:16.386191+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Zohran / Mamdani"
     },
     {
@@ -1428,10 +1433,13 @@
      "logged": "2026-10-19T16:00:14.057450+00:00",
      "model": 0.0,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.93,
+     "profit": 7.0,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-26T15:00:16.386191+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Golden Dome"
     },
     {
@@ -1444,10 +1452,13 @@
      "logged": "2026-10-19T17:00:15.680945+00:00",
      "model": 0.0,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 10.34,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-26T15:00:16.386191+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Prediction Market / Predictive Market"
     },
     {
@@ -1460,10 +1471,13 @@
      "logged": "2026-10-19T21:00:14.144266+00:00",
      "model": 0.0772,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.78,
+     "profit": 26.26,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-26T15:00:16.386191+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Tomahawk"
     },
     {
@@ -1476,10 +1490,13 @@
      "logged": "2026-10-19T21:00:14.144266+00:00",
      "model": 0.0,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.89,
+     "profit": 11.5,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-26T15:00:16.386191+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Zacharia"
     },
     {
@@ -1492,10 +1509,13 @@
      "logged": "2026-10-19T23:00:13.507278+00:00",
      "model": 0.0,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.85,
+     "profit": 16.42,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-26T15:00:16.386191+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Uranium"
     },
     {
@@ -1546,10 +1566,13 @@
      "logged": "2026-10-20T03:00:15.009599+00:00",
      "model": 0.0,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.93,
+     "profit": 7.0,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-26T15:00:16.386191+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Peace in the Middle East"
     },
     {
@@ -1638,10 +1661,13 @@
      "logged": "2026-10-20T12:00:15.185541+00:00",
      "model": 0.0,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.39,
+     "profit": 145.91,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-26T15:00:16.386191+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Houthi"
     },
     {
@@ -1654,10 +1680,13 @@
      "logged": "2026-10-20T16:00:15.007761+00:00",
      "model": 0.3045,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.39,
+     "profit": 145.91,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-26T15:00:16.386191+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Autopen / Auto Pen"
     },
     {
@@ -1759,10 +1788,13 @@
      "logged": "2026-10-21T05:00:13.544337+00:00",
      "model": 0.281,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.5,
+     "profit": 93.24,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-26T15:00:16.386191+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "TDS / Trump Derangement Syndrome"
     },
     {
@@ -1775,10 +1807,13 @@
      "logged": "2026-10-21T13:00:16.632936+00:00",
      "model": 0.1144,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.55,
+     "profit": 76.27,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-26T15:00:16.386191+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Crypto / Bitcoin"
     },
     {
@@ -1826,10 +1861,13 @@
      "logged": "2026-10-22T01:00:16.040711+00:00",
      "model": 0.1987,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.73,
+     "profit": 34.45,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-26T15:00:16.386191+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Stupid Question"
     },
     {
@@ -1842,10 +1880,13 @@
      "logged": "2026-10-23T05:00:12.903043+00:00",
      "model": 0.0396,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 10.34,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-26T15:00:16.386191+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "Marijuana / Weed / Cannabis"
     },
     {
@@ -1858,10 +1899,13 @@
      "logged": "2026-10-23T21:00:16.065080+00:00",
      "model": 0.0,
      "name": "What will Trump say this week?",
+     "payout": 1.0,
      "price": 0.87,
+     "profit": 13.91,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-26T15:00:16.386191+00:00",
      "side": "no",
-     "status": "open",
+     "status": "won",
      "title": "UFO / UAP"
     },
     {
@@ -2016,15 +2060,32 @@
      "status": "open",
      "title": "Vivek / Ramaswamy",
      "yes_mid": 0.89
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-11-02T15:00:00Z",
+     "detail": "P(said) 0.00 \u00b7 said on 0 of the last 84 days, 7.0 days left \u00b7 edge +0.11",
+     "edge": 0.1126,
+     "event": "KXTRUMPSAY-26NOV02",
+     "id": "KXTRUMPSAY-26NOV02-PEAC",
+     "logged": "2026-10-26T15:00:16.386191+00:00",
+     "model": 0.0,
+     "name": "What will Trump say this week?",
+     "price": 0.88,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "Peace in the Middle East",
+     "yes_mid": 0.14
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-26T14:00:15.624871+00:00",
-   "last_success": "2026-10-26T14:00:15.624871+00:00",
+   "last_run": "2026-10-26T15:00:16.386191+00:00",
+   "last_success": "2026-10-26T15:00:16.386191+00:00",
    "observations": {
-    "at": "2026-10-26T14:00:15.624871+00:00",
+    "at": "2026-10-26T15:00:16.386191+00:00",
     "events": 946,
     "reasons": {},
     "retired": "2026-10-24"
@@ -2383,7 +2444,7 @@
    ]
   },
   "Caterpillar": {
-   "at": "2026-10-26T08:00:16.385935+00:00",
+   "at": "2026-10-26T15:00:16.386191+00:00",
    "days": []
   },
   "Ceasefire": {
@@ -2453,7 +2514,7 @@
    ]
   },
   "ExxonMobil / XOM": {
-   "at": "2026-10-18T17:00:12.962888+00:00",
+   "at": "2026-10-26T15:00:16.386191+00:00",
    "days": [
     "2026-08-03",
     "2026-09-02",
@@ -2511,7 +2572,7 @@
    ]
   },
   "JPMorgan / JPM": {
-   "at": "2026-10-26T08:07:48.751049+00:00",
+   "at": "2026-10-26T15:00:16.386191+00:00",
    "days": []
   },
   "Kuwait / Kuwaiti": {
@@ -2682,7 +2743,7 @@
    "days": []
   },
   "Turning Point": {
-   "at": "2026-10-26T08:00:16.385935+00:00",
+   "at": "2026-10-26T15:00:16.386191+00:00",
    "days": []
   },
   "UAE / United Arab Emirates": {
