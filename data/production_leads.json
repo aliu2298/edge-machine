@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-26T02:25:27+00:00",
+ "board_built_at": "2026-10-26T02:34:22+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -2946,6 +2946,42 @@
    "sport": "soccer_u35",
    "status": "hit"
   },
+  "2026-10-26|Jaisinghani, Raghav|Singh, Svarmanyu|Jaisinghani, Raghav to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
+   "away": "Singh, Svarmanyu",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-10-26",
+   "edge_at_log": null,
+   "first_seen": "2026-10-26",
+   "headline": "Jaisinghani, Raghav to win",
+   "home": "Jaisinghani, Raghav",
+   "id": "2026-10-26|Jaisinghani, Raghav|Singh, Svarmanyu|Jaisinghani, Raghav to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles",
+   "kickoff": "2026-10-26T03:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-26",
+   "last_seen_at": "2026-10-26T02:34:22+00:00",
+   "league": "Tennis",
+   "match": "Jaisinghani, Raghav v Singh, Svarmanyu",
+   "pair": "tennis_utr_shortlist_v1|tennis",
+   "price_at_log": 0.7,
+   "published_at": "2026-10-26T02:34:22+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 55,
+   "route": {
+    "claim": "Jaisinghani, Raghav to win",
+    "market": "aec-utr-jairag-sinsva-2026-10-25",
+    "outcome": "Jaisinghani, Raghav",
+    "outcome_side": "yes",
+    "price_at_log": 0.7,
+    "venue": "polymarket_us"
+   },
+   "sandbox_quote": "tennis_utr_shortlist_v1:aec-utr-jairag-sinsva-2026-10-25",
+   "source": "tennis_utr_shortlist_v1",
+   "sport": "tennis",
+   "status": "pending"
+  },
   "2026-10-26|Sevilla|Osasuna|Both teams to score \u00b7 La Liga BTTS in balanced matches": {
    "away": "Osasuna",
    "bet": {
@@ -2960,7 +2996,7 @@
    "kickoff": "2026-10-26T20:00Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T02:25:27+00:00",
+   "last_seen_at": "2026-10-26T02:34:22+00:00",
    "league": "La Liga",
    "match": "Sevilla v Osasuna",
    "pair": "liga_btts_even|soccer_btts",
@@ -2998,7 +3034,7 @@
    "kickoff": "2026-10-26T20:00Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T02:25:27+00:00",
+   "last_seen_at": "2026-10-26T02:34:22+00:00",
    "league": "La Liga",
    "match": "Sevilla v Osasuna",
    "pair": "team2_ranked|soccer_team2",
@@ -3035,7 +3071,7 @@
    "kickoff": "2026-10-27T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T02:25:27+00:00",
+   "last_seen_at": "2026-10-26T02:34:22+00:00",
    "league": "NFL",
    "match": "Cowboys v Eagles",
    "model_prob": 0.694,
@@ -3072,7 +3108,7 @@
    "kickoff": "2026-10-28T17:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T02:25:27+00:00",
+   "last_seen_at": "2026-10-26T02:34:22+00:00",
    "league": "Serie A",
    "match": "Parma v Udinese",
    "pair": "u35_low_scoring|soccer_u35",
@@ -3109,7 +3145,7 @@
    "kickoff": "2026-10-28T19:45Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T02:25:27+00:00",
+   "last_seen_at": "2026-10-26T02:34:22+00:00",
    "league": "Scottish Premiership",
    "match": "St Mirren v Hibernian",
    "pair": "u35_low_scoring|soccer_u35",
@@ -3146,7 +3182,7 @@
    "kickoff": "2026-10-29T00:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T02:25:27+00:00",
+   "last_seen_at": "2026-10-26T02:34:22+00:00",
    "league": "MLS",
    "match": "FC Dallas v Columbus Crew",
    "pair": "mls_fade_home|soccer_p05",
@@ -3183,7 +3219,7 @@
    "kickoff": "2026-10-29T02:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T02:25:27+00:00",
+   "last_seen_at": "2026-10-26T02:34:22+00:00",
    "league": "MLS",
    "match": "San Jose Earthquakes v Colorado Rapids",
    "pair": "mls_fade_home|soccer_p05",
@@ -3220,7 +3256,7 @@
    "kickoff": "2026-10-29T02:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T02:25:27+00:00",
+   "last_seen_at": "2026-10-26T02:34:22+00:00",
    "league": "MLS",
    "match": "San Jose Earthquakes v Colorado Rapids",
    "pair": "u35_low_scoring|soccer_u35",
@@ -3257,7 +3293,7 @@
    "kickoff": "2026-10-30T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T02:25:27+00:00",
+   "last_seen_at": "2026-10-26T02:34:22+00:00",
    "league": "NFL",
    "match": "Panthers v Packers",
    "model_prob": 0.393,
@@ -3663,9 +3699,9 @@
    "ready_at": "2026-10-14T04:38:55+00:00",
    "route": "moved by hand on 2026-10-14",
    "routing": {
-    "leads": 8,
+    "leads": 9,
     "problem": null,
-    "routed": 8,
+    "routed": 9,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -3677,8 +3713,8 @@
    "sandbox_roi_fee": -0.0674,
    "timing": {
     "late": [],
-    "timed": 2,
-    "under_target": 1
+    "timed": 3,
+    "under_target": 2
    }
   },
   "u35_low_scoring|soccer_u35": {
@@ -3809,5 +3845,5 @@
  "stage": "production",
  "unlisted_skipped": 1,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-26T02:25:27+00:00"
+ "updated_at": "2026-10-26T02:34:22+00:00"
 }
