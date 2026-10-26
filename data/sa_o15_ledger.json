@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-26T22:01:24.405399+00:00",
+ "last_run": "2026-10-26T22:46:11.376673+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -336,6 +336,24 @@
      "ticker": "KXARGPREMDIVTOTAL-26OCT26UNIELP-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Argentina over 1.5 YES 0.70"
+    },
+    {
+     "ask": 0.61,
+     "bid": 0.6,
+     "event": "KXARGPREMDIVTOTAL-26OCT26IACCRIE",
+     "id": "ARG:KXARGPREMDIVTOTAL-26OCT26IACCRIE",
+     "league": "Liga Profesional",
+     "line": 1.5,
+     "logged": "2026-10-26T22:46:11.376673+00:00",
+     "match": "Instituto (C\u00f3rdoba) v Deportivo Riestra",
+     "price": 0.61,
+     "rule": "ARG",
+     "side": "yes",
+     "start": "2026-10-27T00:15Z",
+     "status": "open",
+     "ticker": "KXARGPREMDIVTOTAL-26OCT26IACCRIE-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Argentina over 1.5 YES 0.61"
     }
    ]
   },
@@ -570,13 +588,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T10:01:27.152012+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "quoted": 0
-  },
   {
    "at": "2026-10-25T10:16:37.633105+00:00",
    "due": 0,
@@ -926,10 +937,16 @@
    "matched": 2,
    "new": 0,
    "quoted": 2
+  },
+  {
+   "at": "2026-10-26T22:46:11.376673+00:00",
+   "due": 1,
+   "matched": 1,
+   "new": 1,
+   "quoted": 1
   }
  ],
  "schedule": [
-  "2026-10-26T22:30:00+00:00",
   "2026-10-26T23:00:00+00:00",
   "2026-10-27T00:15:00+00:00",
   "2026-10-27T22:00:00+00:00",
