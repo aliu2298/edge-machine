@@ -76,6 +76,7 @@ ENTRY_GRACE_MIN = 15           # the first tight quote within this many minutes 
 FETCH_BEFORE_H = 24 + 9        # candles from this many hours before the close (an entry 24h before the start)
 ONSET_LAG_MIN = 18
 ONSET_ROLL, ONSET_SUM, ONSET_KEEP = 10, 0.10, 0.08
+MIN_NIGHTS_Z = 3               # z is night-clustered: fewer clusters than this has no meaningful variance
 REVIEW_N, PROMOTE_N = 10, 30
 MAX_EVENTS_PER_RUN = 40        # per lane, per run: a backlog finishes over the next runs
 VERSION = "chaos-v2"
@@ -569,7 +570,7 @@ def _rows(trades, variant):
 
 
 def stats(rows):
-    """n, hit rate, ROI after fees (sum profit / sum cost), z by night, nights, per-reason counts."""
+    """n, hit rate, ROI after fees (sum profit / sum cost), z by night (None under 3 nights or a degenerate variance), nights, per-reason counts."""
     n = len(rows)
     if not n:
         return dict(n=0, won=0, hit=None, roi=None, z=None, nights=0, reasons={})
@@ -587,7 +588,7 @@ def stats(rows):
     for t in rows:
         reasons[t["reason"]] = reasons.get(t["reason"], 0) + 1
     return dict(n=n, won=sum(1 for t in rows if t["won"]), hit=sum(1 for t in rows if t["won"]) / n, roi=roi,
-                z=(mean / se if se > 0 else 0.0), nights=len(nights), reasons=reasons)
+                z=(mean / se if len(nights) >= MIN_NIGHTS_Z and se > 1e-6 else None), nights=len(nights), reasons=reasons)
 
 
 def variants_of(L):
