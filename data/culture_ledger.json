@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-26T05:00:16.356623+00:00",
-   "last_success": "2026-10-26T05:00:16.356623+00:00",
+   "last_run": "2026-10-26T06:00:14.558384+00:00",
+   "last_success": "2026-10-26T06:00:14.558384+00:00",
    "observations": {
-    "at": "2026-10-26T05:00:16.356623+00:00",
+    "at": "2026-10-26T06:00:14.558384+00:00",
     "events": 950,
     "reasons": {},
     "retired": "2026-10-24"
@@ -542,10 +542,10 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-26T05:00:16.356623+00:00",
-   "last_success": "2026-10-26T05:00:16.356623+00:00",
+   "last_run": "2026-10-26T06:00:14.558384+00:00",
+   "last_success": "2026-10-26T06:00:14.558384+00:00",
    "observations": {
-    "at": "2026-10-26T05:00:16.356623+00:00",
+    "at": "2026-10-26T06:00:14.558384+00:00",
     "events": 950,
     "reasons": {},
     "retired": "2026-10-24"
@@ -893,18 +893,17 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-26T05:00:16.356623+00:00",
-   "last_success": "2026-10-26T05:00:16.356623+00:00",
+   "last_run": "2026-10-26T06:00:14.558384+00:00",
+   "last_success": "2026-10-26T06:00:14.558384+00:00",
    "observations": {
-    "at": "2026-10-26T05:00:16.356623+00:00",
+    "at": "2026-10-26T06:00:14.558384+00:00",
     "events": 950,
     "news_guard": [],
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 13,
+     "already near-certain (under 10c or over 90c)": 11,
      "edge 5c+": 10,
-     "edge capped": 1,
-     "edge under 5c": 2,
-     "no quote or spread too wide": 69
+     "edge under 5c": 3,
+     "no quote or spread too wide": 70
     }
    },
    "picks": [
@@ -1944,15 +1943,32 @@
      "status": "open",
      "title": "Qualcomm / QCOM",
      "yes_mid": 0.125
+    },
+    {
+     "category": "Mentions",
+     "close": "2026-11-01T15:00:00Z",
+     "detail": "P(said) 0.14 \u00b7 said on 2 of the last 84 days, 6.4 days left \u00b7 edge +0.15",
+     "edge": 0.1526,
+     "event": "KXTRUMPSAYCOMPANY-26NOV01",
+     "id": "KXTRUMPSAYCOMPANY-26NOV01-ANTH",
+     "logged": "2026-10-26T06:00:14.558384+00:00",
+     "model": 0.1424,
+     "name": "What companies will Trump say in October?",
+     "price": 0.69,
+     "series": "KXTRUMPSAYCOMPANY",
+     "side": "no",
+     "status": "open",
+     "title": "Anthropic / Claude",
+     "yes_mid": 0.315
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-26T05:00:16.356623+00:00",
-   "last_success": "2026-10-26T05:00:16.356623+00:00",
+   "last_run": "2026-10-26T06:00:14.558384+00:00",
+   "last_success": "2026-10-26T06:00:14.558384+00:00",
    "observations": {
-    "at": "2026-10-26T05:00:16.356623+00:00",
+    "at": "2026-10-26T06:00:14.558384+00:00",
     "events": 950,
     "reasons": {},
     "retired": "2026-10-24"
@@ -2220,14 +2236,14 @@
    ]
   },
   "Anthropic / Claude": {
-   "at": "2026-10-19T12:00:15.962690+00:00",
+   "at": "2026-10-26T06:00:14.558384+00:00",
    "days": [
     "2026-09-10",
     "2026-09-27"
    ]
   },
   "Antifa": {
-   "at": "2026-10-25T23:33:10.784951+00:00",
+   "at": "2026-10-26T06:00:14.558384+00:00",
    "days": [
     "2026-09-22"
    ]
@@ -2322,6 +2338,17 @@
     "2026-09-29"
    ]
   },
+  "Chevron / CVX": {
+   "at": "2026-10-26T06:00:14.558384+00:00",
+   "days": [
+    "2026-08-03",
+    "2026-08-31",
+    "2026-09-02",
+    "2026-09-09",
+    "2026-09-13",
+    "2026-09-26"
+   ]
+  },
   "Crypto / Bitcoin": {
    "at": "2026-10-22T14:00:16.844797+00:00",
    "days": [
@@ -2374,7 +2401,7 @@
    ]
   },
   "Fat shot / Ozempic": {
-   "at": "2026-10-25T18:00:14.672742+00:00",
+   "at": "2026-10-26T06:00:14.558384+00:00",
    "days": [
     "2026-08-31",
     "2026-09-02"
@@ -2500,7 +2527,7 @@
    ]
   },
   "Paraguay / Paraguayan": {
-   "at": "2026-10-25T23:33:10.784951+00:00",
+   "at": "2026-10-26T06:00:14.558384+00:00",
    "days": []
   },
   "Peace in the Middle East": {
