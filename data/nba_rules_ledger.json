@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-26T21:30:15.257938+00:00",
+ "last_run": "2026-10-26T22:00:15.569604+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -1274,6 +1274,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT26WASCHA-CHA115",
      "title": "Charlotte over 114.5 points",
      "why": "CHA O-D- v WSH O+D+ \u00b7 115+ NO 0.48"
+    },
+    {
+     "game": "401909871",
+     "id": "R3:KXNBATEAMTOTAL-26OCT26DALMIA-DAL115",
+     "labels": {
+      "away": "O-D+",
+      "away_h1": "O-D+",
+      "home": "O+D+",
+      "home_h1": "O+D+"
+     },
+     "logged": "2026-10-26T22:00:15.569604+00:00",
+     "match": "DAL @ MIA",
+     "price": 0.44,
+     "rule": "R3",
+     "side": "no",
+     "start": "2026-10-26T23:30Z",
+     "status": "open",
+     "strike": 114.5,
+     "team": "DAL",
+     "ticker": "KXNBATEAMTOTAL-26OCT26DALMIA-DAL115",
+     "title": "Dallas over 114.5 points",
+     "why": "DAL O-D+ v MIA O+D+ \u00b7 115+ NO 0.44"
     }
    ]
   },
@@ -1529,6 +1551,28 @@
      "ticker": "KXNBA1HTOTAL-26OCT26WASCHA-115",
      "title": "Over 114.5 points",
      "why": "1H WSH O-D+ @ CHA O-D- \u00b7 115+ NO 0.43"
+    },
+    {
+     "game": "401909870",
+     "id": "R5:KXNBA1HTOTAL-26OCT26CHIBOS-114",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O+D-",
+      "home": "O+D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-26T22:00:15.569604+00:00",
+     "match": "CHI @ BOS",
+     "price": 0.51,
+     "rule": "R5",
+     "side": "no",
+     "start": "2026-10-26T23:30Z",
+     "status": "open",
+     "strike": 113.5,
+     "team": "game",
+     "ticker": "KXNBA1HTOTAL-26OCT26CHIBOS-114",
+     "title": "Over 113.5 points",
+     "why": "1H CHI O+D- @ BOS O-D- \u00b7 115+ NO 0.51"
     }
    ]
   },
@@ -2177,6 +2221,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT26MINCLE-MIN106",
      "title": "Minnesota over 105.5 points",
      "why": "MIN O+D- v CLE O+D+ \u00b7 105+ YES 0.77"
+    },
+    {
+     "game": "401909870",
+     "id": "R6:KXNBATEAMTOTAL-26OCT26CHIBOS-CHI105",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O+D-",
+      "home": "O+D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-26T22:00:15.569604+00:00",
+     "match": "CHI @ BOS",
+     "price": 0.66,
+     "rule": "R6",
+     "side": "yes",
+     "start": "2026-10-26T23:30Z",
+     "status": "open",
+     "strike": 104.5,
+     "team": "CHI",
+     "ticker": "KXNBATEAMTOTAL-26OCT26CHIBOS-CHI105",
+     "title": "Chicago over 104.5 points",
+     "why": "CHI O+D+ v BOS O+D- \u00b7 105+ YES 0.66"
     }
    ]
   },
@@ -2587,11 +2653,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-23T15:27:24.275011+00:00",
-   "due": 0,
-   "new": 0
-  },
-  {
    "at": "2026-10-23T18:30:15.300694+00:00",
    "due": 1,
    "new": 1
@@ -2840,6 +2901,11 @@
    "at": "2026-10-26T21:30:15.257938+00:00",
    "due": 2,
    "new": 7
+  },
+  {
+   "at": "2026-10-26T22:00:15.569604+00:00",
+   "due": 4,
+   "new": 3
   }
  ],
  "version": "nba-rules-v1"
