@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-26T23:15:26+00:00",
+ "board_built_at": "2026-10-26T23:30:24+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -709,123 +709,6 @@
    "sport": "nba_tt",
    "status": "hit"
   },
-  "2026-10-26|KXNBATEAMTOTAL-26OCT26CHIBOS-BOS122|Boston under 121.5 points \u00b7 NBA team total value \u00b7 24h before tip": {
-   "away": null,
-   "bet": {
-    "kind": "nba_tt_no",
-    "n": 121.5,
-    "team": "Boston"
-   },
-   "date": "2026-10-26",
-   "edge_at_log": 0.0719,
-   "first_seen": "2026-10-26",
-   "headline": "Boston under 121.5 points",
-   "home": null,
-   "id": "2026-10-26|KXNBATEAMTOTAL-26OCT26CHIBOS-BOS122|Boston under 121.5 points \u00b7 NBA team total value \u00b7 24h before tip",
-   "kickoff": "2026-10-26T23:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T23:15:26+00:00",
-   "league": "NBA",
-   "match": "CHI @ BOS",
-   "model_prob": 0.4988,
-   "pair": "nba_tt_value_24h|nba_tt",
-   "price_at_log": 0.41,
-   "published_at": "2026-10-26T00:30:23+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 1379,
-   "route": {
-    "claim": "Boston under 121.5 points",
-    "event": "KXNBATEAMTOTAL-26OCT26CHIBOS",
-    "market": "KXNBATEAMTOTAL-26OCT26CHIBOS-BOS122",
-    "outcome": "Boston over 121.5 points",
-    "outcome_side": "no",
-    "price_at_log": 0.41,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "nba_tt_value_24h:401909870:BOS",
-   "source": "nba_tt_value_24h",
-   "sport": "nba_tt",
-   "status": "pending"
-  },
-  "2026-10-26|KXNBATEAMTOTAL-26OCT26CHIBOS-BOS124|Boston under 123.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
-   "away": null,
-   "bet": {
-    "kind": "nba_tt_no",
-    "n": 123.5,
-    "team": "Boston"
-   },
-   "date": "2026-10-26",
-   "edge_at_log": 0.0627,
-   "first_seen": "2026-10-26",
-   "headline": "Boston under 123.5 points",
-   "home": null,
-   "id": "2026-10-26|KXNBATEAMTOTAL-26OCT26CHIBOS-BOS124|Boston under 123.5 points \u00b7 NBA team total value \u00b7 1h before tip",
-   "kickoff": "2026-10-26T23:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T23:15:26+00:00",
-   "league": "NBA",
-   "match": "CHI @ BOS",
-   "model_prob": 0.5702,
-   "pair": "nba_tt_value_1h|nba_tt",
-   "price_at_log": 0.49,
-   "published_at": "2026-10-26T22:00:28+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 89,
-   "route": {
-    "claim": "Boston under 123.5 points",
-    "event": "KXNBATEAMTOTAL-26OCT26CHIBOS",
-    "market": "KXNBATEAMTOTAL-26OCT26CHIBOS-BOS124",
-    "outcome": "Boston over 123.5 points",
-    "outcome_side": "no",
-    "price_at_log": 0.49,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "nba_tt_value_1h:401909870:BOS",
-   "source": "nba_tt_value_1h",
-   "sport": "nba_tt",
-   "status": "pending"
-  },
-  "2026-10-26|KXNBATEAMTOTAL-26OCT26DALMIA-MIA123|Miami under 122.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
-   "away": null,
-   "bet": {
-    "kind": "nba_tt_no",
-    "n": 122.5,
-    "team": "Miami"
-   },
-   "date": "2026-10-26",
-   "edge_at_log": 0.0856,
-   "first_seen": "2026-10-26",
-   "headline": "Miami under 122.5 points",
-   "home": null,
-   "id": "2026-10-26|KXNBATEAMTOTAL-26OCT26DALMIA-MIA123|Miami under 122.5 points \u00b7 NBA team total value \u00b7 1h before tip",
-   "kickoff": "2026-10-26T23:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T23:15:26+00:00",
-   "league": "NBA",
-   "match": "DAL @ MIA",
-   "model_prob": 0.5428,
-   "pair": "nba_tt_value_1h|nba_tt",
-   "price_at_log": 0.44,
-   "published_at": "2026-10-26T22:00:28+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 89,
-   "route": {
-    "claim": "Miami under 122.5 points",
-    "event": "KXNBATEAMTOTAL-26OCT26DALMIA",
-    "market": "KXNBATEAMTOTAL-26OCT26DALMIA-MIA123",
-    "outcome": "Miami over 122.5 points",
-    "outcome_side": "no",
-    "price_at_log": 0.44,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "nba_tt_value_1h:401909871:MIA",
-   "source": "nba_tt_value_1h",
-   "sport": "nba_tt",
-   "status": "pending"
-  },
   "2026-10-27|KXNBATEAMTOTAL-26OCT26INDMIL-IND122|Indiana under 121.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
    "away": null,
    "bet": {
@@ -842,7 +725,7 @@
    "kickoff": "2026-10-27T00:00Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T23:15:26+00:00",
+   "last_seen_at": "2026-10-26T23:30:24+00:00",
    "league": "NBA",
    "match": "IND @ MIL",
    "model_prob": 0.6217,
@@ -865,6 +748,45 @@
    "sport": "nba_tt",
    "status": "pending"
   },
+  "2026-10-27|KXNBATEAMTOTAL-26OCT26MEMUTA-MEM120|Memphis over 119.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt",
+    "n": 119.5,
+    "team": "Memphis"
+   },
+   "date": "2026-10-27",
+   "edge_at_log": 0.139,
+   "first_seen": "2026-10-26",
+   "headline": "Memphis over 119.5 points",
+   "home": null,
+   "id": "2026-10-27|KXNBATEAMTOTAL-26OCT26MEMUTA-MEM120|Memphis over 119.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-27T01:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-26",
+   "last_seen_at": "2026-10-26T23:30:24+00:00",
+   "league": "NBA",
+   "match": "MEM @ UTAH",
+   "model_prob": 0.6365,
+   "pair": "nba_tt_value_1h|nba_tt",
+   "price_at_log": 0.48,
+   "published_at": "2026-10-26T23:30:24+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 89,
+   "route": {
+    "claim": "Memphis over 119.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT26MEMUTA",
+    "market": "KXNBATEAMTOTAL-26OCT26MEMUTA-MEM120",
+    "outcome": "Memphis over 119.5 points",
+    "outcome_side": "yes",
+    "price_at_log": 0.48,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_1h:401909875:MEM",
+   "source": "nba_tt_value_1h",
+   "sport": "nba_tt",
+   "status": "pending"
+  },
   "2026-10-27|KXNBATEAMTOTAL-26OCT26PHXOKC-PHX104|Phoenix under 103.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
    "away": null,
    "bet": {
@@ -881,7 +803,7 @@
    "kickoff": "2026-10-27T00:00Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T23:15:26+00:00",
+   "last_seen_at": "2026-10-26T23:30:24+00:00",
    "league": "NBA",
    "match": "PHX @ OKC",
    "model_prob": 0.5849,
@@ -913,9 +835,9 @@
    "ready_at": "2026-10-24T22:13:00+00:00",
    "route": "moved by hand on 2026-10-24",
    "routing": {
-    "leads": 20,
+    "leads": 19,
     "problem": null,
-    "routed": 20,
+    "routed": 19,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -927,7 +849,7 @@
    "sandbox_roi_fee": -0.0362,
    "timing": {
     "late": [],
-    "timed": 4,
+    "timed": 3,
     "under_target": 0
    }
   },
@@ -938,9 +860,9 @@
    "ready_at": "2026-10-24T22:13:00+00:00",
    "route": "moved by hand on 2026-10-24",
    "routing": {
-    "leads": 4,
+    "leads": 3,
     "problem": null,
-    "routed": 4,
+    "routed": 3,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -952,7 +874,7 @@
    "sandbox_roi_fee": -1.0,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 0,
     "under_target": 0
    }
   }
@@ -980,5 +902,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-26T23:15:26+00:00"
+ "updated_at": "2026-10-26T23:30:24+00:00"
 }
