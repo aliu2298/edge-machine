@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-26T14:33:41+00:00",
+ "board_built_at": "2026-10-26T15:15:07+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -38,7 +38,7 @@
   "kalshi:26OCT25MUNBOU": "2026-10-25|Manchester United|AFC Bournemouth|Under 10 corners \u00b7 Corners total under"
  },
  "first_publish_min": 45,
- "late_publication_skipped": 9,
+ "late_publication_skipped": 8,
  "leads": {
   "2026-10-19|KXNATGASD-26OCT1917-T3.320|Above $3.320 at the close \u00b7 Commodities favourite band": {
    "away": null,
@@ -3050,6 +3050,43 @@
    "sport": "tennis",
    "status": "hit"
   },
+  "2026-10-26|KXWTI-26OCT2614-T100.49|Above $100.49 at the close \u00b7 Commodities favourite band": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-10-26",
+   "edge_at_log": null,
+   "first_seen": "2026-10-26",
+   "headline": "Above $100.49 at the close",
+   "home": null,
+   "id": "2026-10-26|KXWTI-26OCT2614-T100.49|Above $100.49 at the close \u00b7 Commodities favourite band",
+   "kickoff": "2026-10-26T18:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-26",
+   "last_seen_at": "2026-10-26T15:15:07+00:00",
+   "league": "Commodities \u00b7 Favourite band",
+   "match": "WTI crude close on Oct 26, 2026",
+   "pair": "commod_fav_band|commodities_fav",
+   "price_at_log": 0.73,
+   "published_at": "2026-10-26T15:15:07+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 194,
+   "route": {
+    "claim": "Above $100.49 at the close",
+    "event": "KXWTI-26OCT2614",
+    "market": "KXWTI-26OCT2614-T100.49",
+    "outcome": "Above $100.49",
+    "outcome_side": "yes",
+    "price_at_log": 0.73,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "commod_fav_band:KXWTI-26OCT2614-T100.49",
+   "source": "commod_fav_band",
+   "sport": "commodities_fav",
+   "status": "pending"
+  },
   "2026-10-26|Sevilla|Osasuna|Both teams to score \u00b7 La Liga BTTS in balanced matches": {
    "away": "Osasuna",
    "bet": {
@@ -3064,7 +3101,7 @@
    "kickoff": "2026-10-26T20:00Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T14:33:41+00:00",
+   "last_seen_at": "2026-10-26T15:15:07+00:00",
    "league": "La Liga",
    "match": "Sevilla v Osasuna",
    "pair": "liga_btts_even|soccer_btts",
@@ -3102,7 +3139,7 @@
    "kickoff": "2026-10-26T20:00Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T14:33:41+00:00",
+   "last_seen_at": "2026-10-26T15:15:07+00:00",
    "league": "La Liga",
    "match": "Sevilla v Osasuna",
    "pair": "team2_ranked|soccer_team2",
@@ -3139,7 +3176,7 @@
    "kickoff": "2026-10-27T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T14:33:41+00:00",
+   "last_seen_at": "2026-10-26T15:15:07+00:00",
    "league": "NFL",
    "match": "Cowboys v Eagles",
    "model_prob": 0.694,
@@ -3176,7 +3213,7 @@
    "kickoff": "2026-10-28T17:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T14:33:41+00:00",
+   "last_seen_at": "2026-10-26T15:15:07+00:00",
    "league": "Serie A",
    "match": "Parma v Udinese",
    "pair": "u35_low_scoring|soccer_u35",
@@ -3213,7 +3250,7 @@
    "kickoff": "2026-10-28T19:45Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T14:33:41+00:00",
+   "last_seen_at": "2026-10-26T15:15:07+00:00",
    "league": "Scottish Premiership",
    "match": "St Mirren v Hibernian",
    "pair": "u35_low_scoring|soccer_u35",
@@ -3250,7 +3287,7 @@
    "kickoff": "2026-10-29T00:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T14:33:41+00:00",
+   "last_seen_at": "2026-10-26T15:15:07+00:00",
    "league": "MLS",
    "match": "FC Dallas v Columbus Crew",
    "pair": "mls_fade_home|soccer_p05",
@@ -3287,7 +3324,7 @@
    "kickoff": "2026-10-29T02:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T14:33:41+00:00",
+   "last_seen_at": "2026-10-26T15:15:07+00:00",
    "league": "MLS",
    "match": "San Jose Earthquakes v Colorado Rapids",
    "pair": "mls_fade_home|soccer_p05",
@@ -3324,7 +3361,7 @@
    "kickoff": "2026-10-29T02:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T14:33:41+00:00",
+   "last_seen_at": "2026-10-26T15:15:07+00:00",
    "league": "MLS",
    "match": "San Jose Earthquakes v Colorado Rapids",
    "pair": "u35_low_scoring|soccer_u35",
@@ -3361,7 +3398,7 @@
    "kickoff": "2026-10-30T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T14:33:41+00:00",
+   "last_seen_at": "2026-10-26T15:15:07+00:00",
    "league": "NFL",
    "match": "Panthers v Packers",
    "model_prob": 0.393,
@@ -3392,9 +3429,9 @@
    "ready_at": "2026-10-09T04:31:34+00:00",
    "route": "moved by hand on 2026-10-09",
    "routing": {
-    "leads": 15,
+    "leads": 16,
     "problem": null,
-    "routed": 15,
+    "routed": 16,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -3406,7 +3443,7 @@
    "sandbox_roi_fee": 0.245,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -3837,15 +3874,6 @@
   }
  },
  "publication_withheld": {
-  "2026-10-19|Al Fayha|Al Ahli|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80": {
-   "headline": "Over 1.5 goals",
-   "id": "2026-10-19|Al Fayha|Al Ahli|Over 1.5 goals \u00b7 Over 1.5, ranked: the day's top 2 mismatches under 0.80",
-   "kickoff": "2026-10-19T15:05Z",
-   "match": "Al Fayha v Al Ahli",
-   "pair": "o15_ranked|soccer_o15",
-   "reason": "less than 45 minutes left at first publication",
-   "withheld_at": "2026-10-19T14:34:57+00:00"
-  },
   "2026-10-21|McElnea, Harrison|Dominguez Alonso, Jose|Dominguez Alonso, Jose to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
    "headline": "Dominguez Alonso, Jose to win",
    "id": "2026-10-21|McElnea, Harrison|Dominguez Alonso, Jose|Dominguez Alonso, Jose to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles",
@@ -3922,5 +3950,5 @@
  "stage": "production",
  "unlisted_skipped": 1,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-26T14:33:41+00:00"
+ "updated_at": "2026-10-26T15:15:07+00:00"
 }
