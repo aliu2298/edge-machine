@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-26T20:31:27.554615+00:00",
+ "last_run": "2026-10-26T21:01:28.299849+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -529,18 +529,29 @@
      "ticker": "KXBRASILEIROTOTAL-26OCT24SANBAH-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Brasileir\u00e3o over 1.5 YES 0.85"
+    },
+    {
+     "ask": 0.75,
+     "bid": 0.74,
+     "event": "KXBRASILEIROTOTAL-26OCT26CFCGPA",
+     "id": "BRA:KXBRASILEIROTOTAL-26OCT26CFCGPA",
+     "league": "Brasileir\u00e3o",
+     "line": 1.5,
+     "logged": "2026-10-26T21:01:28.299849+00:00",
+     "match": "Coritiba v Gr\u00eamio",
+     "price": 0.75,
+     "rule": "BRA",
+     "side": "yes",
+     "start": "2026-10-26T22:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROTOTAL-26OCT26CFCGPA-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Brasileir\u00e3o over 1.5 YES 0.75"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T01:32:02.712124+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "quoted": 0
-  },
   {
    "at": "2026-10-25T04:43:26.324551+00:00",
    "due": 0,
@@ -890,6 +901,13 @@
    "matched": 1,
    "new": 1,
    "quoted": 1
+  },
+  {
+   "at": "2026-10-26T21:01:28.299849+00:00",
+   "due": 2,
+   "matched": 2,
+   "new": 1,
+   "quoted": 2
   }
  ],
  "schedule": [
