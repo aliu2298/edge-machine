@@ -323,7 +323,13 @@ near("ROI after fees = sum profit / sum cost", s_["roi"], (4 * 0.2 - 2 * 0.1) / 
 check("trades, hit rate, nights", (s_["n"], round(s_["hit"], 3), s_["nights"]), (6, 0.667, 2))
 one_night = C.stats([tr_("n1", 0.1), tr_("n1", 0.12), tr_("n1", 0.09), tr_("n1", 0.11)])
 iid_z = (0.105) / ((sum((x - 0.105) ** 2 for x in [0.1, 0.12, 0.09, 0.11]) / 3) ** .5 / 2)
-check("one night is not many independent trades: z stays at the independent-trades level or below", one_night["z"] <= iid_z + 1e-6, True)
+check("one night is not many independent trades: no z at all", one_night["z"], None)
+two = C.stats([tr_("n1", 0.1), tr_("n1", 0.1), tr_("n2", 0.1), tr_("n2", 0.1)])
+check("under 3 nights z is None, however tight the rows", (two["z"], two["nights"]), (None, 2))
+same = C.stats([tr_("n%d" % i, 0.1) for i in range(5)])
+check("identical rows (degenerate variance) have no z", same["z"], None)
+check("3 or more nights with spread give a z", C.stats([tr_("n%d" % i, r) for i, r in enumerate([0.3, -0.1, 0.2, 0.4])])["z"] is not None, True)
+check("the page shows a dash, not a blown-up z", "+3999" not in CB.variant_table(dict(entry_hours=[1], trades=[tr_("n1", 0.1)] * 4)), True)
 check("an empty variant has no stats", C.stats([])["roi"], None)
 mk_lane = lambda n, tp_roi, hold_roi, nights=9: dict(entry_hours=[1], trades=[
     tr_("n%d" % (i % nights), tp_roi, v="t1h_tp20", ex="tp20") for i in range(n)] + [
