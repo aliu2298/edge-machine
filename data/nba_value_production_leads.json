@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-26T00:30:23+00:00",
+ "board_built_at": "2026-10-26T01:00:25+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -450,6 +450,43 @@
    "sport": "nba_tt",
    "status": "hit"
   },
+  "2026-10-25|KXNBATEAMTOTAL-26OCT25INDBKN-IND117|Indiana under 116.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt_no",
+    "n": 116.5,
+    "team": "Indiana"
+   },
+   "date": "2026-10-25",
+   "edge_at_log": 0.2076,
+   "first_seen": "2026-10-25",
+   "headline": "Indiana under 116.5 points",
+   "home": null,
+   "id": "2026-10-25|KXNBATEAMTOTAL-26OCT25INDBKN-IND117|Indiana under 116.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-25T22:00Z",
+   "lane": "production",
+   "league": "NBA",
+   "match": "IND @ BKN",
+   "model_prob": 0.6345,
+   "pair": "nba_tt_value_1h|nba_tt",
+   "price_at_log": 0.41,
+   "published_at": "2026-10-26T01:00:25+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Indiana under 116.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT25INDBKN",
+    "market": "KXNBATEAMTOTAL-26OCT25INDBKN-IND117",
+    "outcome": "Indiana over 116.5 points",
+    "outcome_side": "no",
+    "price_at_log": 0.41,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_1h:401909862:IND",
+   "source": "nba_tt_value_1h",
+   "sport": "nba_tt",
+   "status": "miss"
+  },
   "2026-10-25|KXNBATEAMTOTAL-26OCT25LALUTA-LAL125|Los Angeles L over 124.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
    "away": null,
    "bet": {
@@ -487,45 +524,6 @@
    "sport": "nba_tt",
    "status": "hit"
   },
-  "2026-10-26|KXNBATEAMTOTAL-26OCT25MEMSAC-SAC114|Sacramento under 113.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
-   "away": null,
-   "bet": {
-    "kind": "nba_tt_no",
-    "n": 113.5,
-    "team": "Sacramento"
-   },
-   "date": "2026-10-26",
-   "edge_at_log": 0.0696,
-   "first_seen": "2026-10-25",
-   "headline": "Sacramento under 113.5 points",
-   "home": null,
-   "id": "2026-10-26|KXNBATEAMTOTAL-26OCT25MEMSAC-SAC114|Sacramento under 113.5 points \u00b7 NBA team total value \u00b7 1h before tip",
-   "kickoff": "2026-10-26T01:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T00:30:23+00:00",
-   "league": "NBA",
-   "match": "MEM @ SAC",
-   "model_prob": 0.5066,
-   "pair": "nba_tt_value_1h|nba_tt",
-   "price_at_log": 0.42,
-   "published_at": "2026-10-25T23:30:24+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 89,
-   "route": {
-    "claim": "Sacramento under 113.5 points",
-    "event": "KXNBATEAMTOTAL-26OCT25MEMSAC",
-    "market": "KXNBATEAMTOTAL-26OCT25MEMSAC-SAC114",
-    "outcome": "Sacramento over 113.5 points",
-    "outcome_side": "no",
-    "price_at_log": 0.42,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "nba_tt_value_1h:401909867:SAC",
-   "source": "nba_tt_value_1h",
-   "sport": "nba_tt",
-   "status": "pending"
-  },
   "2026-10-26|KXNBATEAMTOTAL-26OCT26CHIBOS-BOS122|Boston under 121.5 points \u00b7 NBA team total value \u00b7 24h before tip": {
    "away": null,
    "bet": {
@@ -542,7 +540,7 @@
    "kickoff": "2026-10-26T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T00:30:23+00:00",
+   "last_seen_at": "2026-10-26T01:00:25+00:00",
    "league": "NBA",
    "match": "CHI @ BOS",
    "model_prob": 0.4988,
@@ -583,12 +581,12 @@
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 10,
-   "sandbox_roi": -0.3611,
-   "sandbox_roi_fee": -0.3611,
+   "sandbox_n": 11,
+   "sandbox_roi": -0.4192,
+   "sandbox_roi_fee": -0.4192,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 0,
     "under_target": 0
    }
   },
@@ -641,5 +639,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-26T00:30:23+00:00"
+ "updated_at": "2026-10-26T01:00:25+00:00"
 }
