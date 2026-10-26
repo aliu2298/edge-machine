@@ -314,14 +314,29 @@
       "status": "open",
       "title": "NO \u00b7 7,710 or above",
       "yes_bid": 0.03
+    },
+    {
+      "bid": 0.89,
+      "close": "2026-10-26T20:00:00Z",
+      "event": "KXINXU-26OCT26H1600",
+      "id": "KXINXU-26OCT26H1600-T7699.9999",
+      "logged": "2026-10-26T17:30:33.835712+00:00",
+      "name": "S&P 500 above/below",
+      "price": 0.91,
+      "series": "KXINXU",
+      "side": "no",
+      "size": 42.0,
+      "status": "open",
+      "title": "NO \u00b7 7,700 or above",
+      "yes_bid": 0.09
     }
   ],
   "error": null,
   "key": "finance_spx_nc_no",
-  "last_run": "2026-10-26T17:00:33.701094+00:00",
-  "last_success": "2026-10-26T17:00:33.701094+00:00",
+  "last_run": "2026-10-26T17:30:33.835712+00:00",
+  "last_success": "2026-10-26T17:30:33.835712+00:00",
   "observation": {
-    "at": "2026-10-26T17:00:33.701094+00:00",
+    "at": "2026-10-26T17:30:33.835712+00:00",
     "eligible": 2,
     "listed": 180,
     "reasons": {
