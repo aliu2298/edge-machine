@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-26T02:00:28+00:00",
+ "board_built_at": "2026-10-26T02:30:24+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -450,6 +450,43 @@
    "sport": "nba_tt",
    "status": "hit"
   },
+  "2026-10-25|KXNBATEAMTOTAL-26OCT25DETPHI-DET110|Detroit over 109.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt",
+    "n": 109.5,
+    "team": "Detroit"
+   },
+   "date": "2026-10-25",
+   "edge_at_log": 0.0786,
+   "first_seen": "2026-10-25",
+   "headline": "Detroit over 109.5 points",
+   "home": null,
+   "id": "2026-10-25|KXNBATEAMTOTAL-26OCT25DETPHI-DET110|Detroit over 109.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-25T23:30Z",
+   "lane": "production",
+   "league": "NBA",
+   "match": "DET @ PHI",
+   "model_prob": 0.7053,
+   "pair": "nba_tt_value_1h|nba_tt",
+   "price_at_log": 0.61,
+   "published_at": "2026-10-26T02:30:24+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Detroit over 109.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT25DETPHI",
+    "market": "KXNBATEAMTOTAL-26OCT25DETPHI-DET110",
+    "outcome": "Detroit over 109.5 points",
+    "outcome_side": "yes",
+    "price_at_log": 0.61,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_1h:401909866:DET",
+   "source": "nba_tt_value_1h",
+   "sport": "nba_tt",
+   "status": "miss"
+  },
   "2026-10-25|KXNBATEAMTOTAL-26OCT25INDBKN-IND117|Indiana under 116.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
    "away": null,
    "bet": {
@@ -651,7 +688,7 @@
    "kickoff": "2026-10-26T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T02:00:28+00:00",
+   "last_seen_at": "2026-10-26T02:30:24+00:00",
    "league": "NBA",
    "match": "CHI @ BOS",
    "model_prob": 0.4988,
@@ -683,18 +720,18 @@
    "ready_at": "2026-10-24T22:13:00+00:00",
    "route": "moved by hand on 2026-10-24",
    "routing": {
-    "leads": 14,
+    "leads": 15,
     "problem": null,
-    "routed": 14,
+    "routed": 15,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 14,
-   "sandbox_roi": -0.062,
-   "sandbox_roi_fee": -0.062,
+   "sandbox_n": 15,
+   "sandbox_roi": -0.1245,
+   "sandbox_roi_fee": -0.1245,
    "timing": {
     "late": [],
     "timed": 0,
@@ -750,5 +787,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-26T02:00:28+00:00"
+ "updated_at": "2026-10-26T02:30:24+00:00"
 }
