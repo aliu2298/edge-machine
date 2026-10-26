@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-26T19:23:31+00:00",
+ "board_built_at": "2026-10-26T21:30:25+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -725,7 +725,7 @@
    "kickoff": "2026-10-26T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T19:23:31+00:00",
+   "last_seen_at": "2026-10-26T21:30:25+00:00",
    "league": "NBA",
    "match": "CHI @ BOS",
    "model_prob": 0.4988,
@@ -747,6 +747,162 @@
    "source": "nba_tt_value_24h",
    "sport": "nba_tt",
    "status": "pending"
+  },
+  "2026-10-26|KXNBATEAMTOTAL-26OCT26MINCLE-CLE116|Cleveland under 115.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt_no",
+    "n": 115.5,
+    "team": "Cleveland"
+   },
+   "date": "2026-10-26",
+   "edge_at_log": 0.1076,
+   "first_seen": "2026-10-26",
+   "headline": "Cleveland under 115.5 points",
+   "home": null,
+   "id": "2026-10-26|KXNBATEAMTOTAL-26OCT26MINCLE-CLE116|Cleveland under 115.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-26T23:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-26",
+   "last_seen_at": "2026-10-26T21:30:25+00:00",
+   "league": "NBA",
+   "match": "MIN @ CLE",
+   "model_prob": 0.5547,
+   "pair": "nba_tt_value_1h|nba_tt",
+   "price_at_log": 0.43,
+   "published_at": "2026-10-26T21:30:25+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 89,
+   "route": {
+    "claim": "Cleveland under 115.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT26MINCLE",
+    "market": "KXNBATEAMTOTAL-26OCT26MINCLE-CLE116",
+    "outcome": "Cleveland over 115.5 points",
+    "outcome_side": "no",
+    "price_at_log": 0.43,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_1h:401909869:CLE",
+   "source": "nba_tt_value_1h",
+   "sport": "nba_tt",
+   "status": "pending"
+  },
+  "2026-10-26|KXNBATEAMTOTAL-26OCT26MINCLE-MIN114|Minnesota over 113.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt",
+    "n": 113.5,
+    "team": "Minnesota"
+   },
+   "date": "2026-10-26",
+   "edge_at_log": 0.0936,
+   "first_seen": "2026-10-26",
+   "headline": "Minnesota over 113.5 points",
+   "home": null,
+   "id": "2026-10-26|KXNBATEAMTOTAL-26OCT26MINCLE-MIN114|Minnesota over 113.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-26T23:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-26",
+   "last_seen_at": "2026-10-26T21:30:25+00:00",
+   "league": "NBA",
+   "match": "MIN @ CLE",
+   "model_prob": 0.6311,
+   "pair": "nba_tt_value_1h|nba_tt",
+   "price_at_log": 0.52,
+   "published_at": "2026-10-26T21:30:25+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 89,
+   "route": {
+    "claim": "Minnesota over 113.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT26MINCLE",
+    "market": "KXNBATEAMTOTAL-26OCT26MINCLE-MIN114",
+    "outcome": "Minnesota over 113.5 points",
+    "outcome_side": "yes",
+    "price_at_log": 0.52,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_1h:401909869:MIN",
+   "source": "nba_tt_value_1h",
+   "sport": "nba_tt",
+   "status": "pending"
+  },
+  "2026-10-26|KXNBATEAMTOTAL-26OCT26WASCHA-CHA117|Charlotte over 116.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt",
+    "n": 116.5,
+    "team": "Charlotte"
+   },
+   "date": "2026-10-26",
+   "edge_at_log": 0.1131,
+   "first_seen": "2026-10-26",
+   "headline": "Charlotte over 116.5 points",
+   "home": null,
+   "id": "2026-10-26|KXNBATEAMTOTAL-26OCT26WASCHA-CHA117|Charlotte over 116.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-26T23:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-26",
+   "last_seen_at": "2026-10-26T21:30:25+00:00",
+   "league": "NBA",
+   "match": "WSH @ CHA",
+   "model_prob": 0.5905,
+   "pair": "nba_tt_value_1h|nba_tt",
+   "price_at_log": 0.46,
+   "published_at": "2026-10-26T21:30:25+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 89,
+   "route": {
+    "claim": "Charlotte over 116.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT26WASCHA",
+    "market": "KXNBATEAMTOTAL-26OCT26WASCHA-CHA117",
+    "outcome": "Charlotte over 116.5 points",
+    "outcome_side": "yes",
+    "price_at_log": 0.46,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_1h:401909868:CHA",
+   "source": "nba_tt_value_1h",
+   "sport": "nba_tt",
+   "status": "pending"
+  },
+  "2026-10-26|KXNBATEAMTOTAL-26OCT26WASCHA-WAS112|Washington under 111.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt_no",
+    "n": 111.5,
+    "team": "Washington"
+   },
+   "date": "2026-10-26",
+   "edge_at_log": 0.0861,
+   "first_seen": "2026-10-26",
+   "headline": "Washington under 111.5 points",
+   "home": null,
+   "id": "2026-10-26|KXNBATEAMTOTAL-26OCT26WASCHA-WAS112|Washington under 111.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-26T23:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-26",
+   "last_seen_at": "2026-10-26T21:30:25+00:00",
+   "league": "NBA",
+   "match": "WSH @ CHA",
+   "model_prob": 0.5534,
+   "pair": "nba_tt_value_1h|nba_tt",
+   "price_at_log": 0.45,
+   "published_at": "2026-10-26T21:30:25+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 89,
+   "route": {
+    "claim": "Washington under 111.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT26WASCHA",
+    "market": "KXNBATEAMTOTAL-26OCT26WASCHA-WAS112",
+    "outcome": "Washington over 111.5 points",
+    "outcome_side": "no",
+    "price_at_log": 0.45,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_1h:401909868:WSH",
+   "source": "nba_tt_value_1h",
+   "sport": "nba_tt",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -757,9 +913,9 @@
    "ready_at": "2026-10-24T22:13:00+00:00",
    "route": "moved by hand on 2026-10-24",
    "routing": {
-    "leads": 16,
+    "leads": 20,
     "problem": null,
-    "routed": 16,
+    "routed": 20,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -771,7 +927,7 @@
    "sandbox_roi_fee": -0.0362,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 4,
     "under_target": 0
    }
   },
@@ -824,5 +980,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-26T19:23:31+00:00"
+ "updated_at": "2026-10-26T21:30:25+00:00"
 }
