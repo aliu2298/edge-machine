@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-26T17:34:16+00:00",
+ "board_built_at": "2026-10-26T18:04:55+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -3051,6 +3051,43 @@
    "sport": "tennis",
    "status": "hit"
   },
+  "2026-10-26|KXBRENTD-26OCT2617-T110.50|Above $110.50 at the close \u00b7 Commodities favourite band": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-10-26",
+   "edge_at_log": null,
+   "first_seen": "2026-10-26",
+   "headline": "Above $110.50 at the close",
+   "home": null,
+   "id": "2026-10-26|KXBRENTD-26OCT2617-T110.50|Above $110.50 at the close \u00b7 Commodities favourite band",
+   "kickoff": "2026-10-26T21:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-26",
+   "last_seen_at": "2026-10-26T18:04:55+00:00",
+   "league": "Commodities \u00b7 Favourite band",
+   "match": "Brent crude close on Oct 26, 2026",
+   "pair": "commod_fav_band|commodities_fav",
+   "price_at_log": 0.76,
+   "published_at": "2026-10-26T18:04:55+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 175,
+   "route": {
+    "claim": "Above $110.50 at the close",
+    "event": "KXBRENTD-26OCT2617",
+    "market": "KXBRENTD-26OCT2617-T110.50",
+    "outcome": "Above $110.50",
+    "outcome_side": "yes",
+    "price_at_log": 0.76,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "commod_fav_band:KXBRENTD-26OCT2617-T110.50",
+   "source": "commod_fav_band",
+   "sport": "commodities_fav",
+   "status": "pending"
+  },
   "2026-10-26|KXBTCD-26OCT2617-T80499.99|Below $80,500 at the close \u00b7 Crypto favourite band, below": {
    "away": null,
    "bet": {
@@ -3066,7 +3103,7 @@
    "kickoff": "2026-10-26T21:05Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T17:34:16+00:00",
+   "last_seen_at": "2026-10-26T18:04:55+00:00",
    "league": "Crypto \u00b7 Favourite band",
    "match": "Bitcoin price on Oct 26, 2026",
    "pair": "crypto_fav_band_below|crypto_fav",
@@ -3088,6 +3125,80 @@
    "sport": "crypto_fav",
    "status": "pending"
   },
+  "2026-10-26|KXETHD-26OCT2617-T2339.99|Below $2,340 at the close \u00b7 Crypto favourite band, below": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-10-26",
+   "edge_at_log": null,
+   "first_seen": "2026-10-26",
+   "headline": "Below $2,340 at the close",
+   "home": null,
+   "id": "2026-10-26|KXETHD-26OCT2617-T2339.99|Below $2,340 at the close \u00b7 Crypto favourite band, below",
+   "kickoff": "2026-10-26T21:05Z",
+   "lane": "production",
+   "last_seen": "2026-10-26",
+   "last_seen_at": "2026-10-26T18:04:55+00:00",
+   "league": "Crypto \u00b7 Favourite band",
+   "match": "Ethereum price at Oct 26, 2026 at 5pm EDT",
+   "pair": "crypto_fav_band_below|crypto_fav",
+   "price_at_log": 0.8,
+   "published_at": "2026-10-26T18:04:55+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 180,
+   "route": {
+    "claim": "Below $2,340 at the close",
+    "event": "KXETHD-26OCT2617",
+    "market": "KXETHD-26OCT2617-T2339.99",
+    "outcome": "$2,340 or above",
+    "outcome_side": "no",
+    "price_at_log": 0.8,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "crypto_fav_band_below:KXETHD-26OCT2617-T2339.99",
+   "source": "crypto_fav_band_below",
+   "sport": "crypto_fav",
+   "status": "pending"
+  },
+  "2026-10-26|KXGOLDD-26OCT2617-T4014|Above $4014 at the close \u00b7 Commodities favourite band": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-10-26",
+   "edge_at_log": null,
+   "first_seen": "2026-10-26",
+   "headline": "Above $4014 at the close",
+   "home": null,
+   "id": "2026-10-26|KXGOLDD-26OCT2617-T4014|Above $4014 at the close \u00b7 Commodities favourite band",
+   "kickoff": "2026-10-26T21:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-26",
+   "last_seen_at": "2026-10-26T18:04:55+00:00",
+   "league": "Commodities \u00b7 Favourite band",
+   "match": "Gold close on Oct 26, 2026",
+   "pair": "commod_fav_band|commodities_fav",
+   "price_at_log": 0.74,
+   "published_at": "2026-10-26T18:04:55+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 175,
+   "route": {
+    "claim": "Above $4014 at the close",
+    "event": "KXGOLDD-26OCT2617",
+    "market": "KXGOLDD-26OCT2617-T4014",
+    "outcome": "Above $4014",
+    "outcome_side": "yes",
+    "price_at_log": 0.74,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "commod_fav_band:KXGOLDD-26OCT2617-T4014",
+   "source": "commod_fav_band",
+   "sport": "commodities_fav",
+   "status": "pending"
+  },
   "2026-10-26|KXWTI-26OCT2614-T100.49|Above $100.49 at the close \u00b7 Commodities favourite band": {
    "away": null,
    "bet": {
@@ -3103,7 +3214,7 @@
    "kickoff": "2026-10-26T18:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T17:34:16+00:00",
+   "last_seen_at": "2026-10-26T18:04:55+00:00",
    "league": "Commodities \u00b7 Favourite band",
    "match": "WTI crude close on Oct 26, 2026",
    "pair": "commod_fav_band|commodities_fav",
@@ -3139,7 +3250,7 @@
    "kickoff": "2026-10-26T20:00Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T17:34:16+00:00",
+   "last_seen_at": "2026-10-26T18:04:55+00:00",
    "league": "La Liga",
    "match": "Sevilla v Osasuna",
    "pair": "liga_btts_even|soccer_btts",
@@ -3177,7 +3288,7 @@
    "kickoff": "2026-10-26T20:00Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T17:34:16+00:00",
+   "last_seen_at": "2026-10-26T18:04:55+00:00",
    "league": "La Liga",
    "match": "Sevilla v Osasuna",
    "pair": "team2_ranked|soccer_team2",
@@ -3214,7 +3325,7 @@
    "kickoff": "2026-10-26T20:00Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T17:34:16+00:00",
+   "last_seen_at": "2026-10-26T18:04:55+00:00",
    "league": "La Liga",
    "match": "Sevilla v Osasuna",
    "pair": "corners_total_under|soccer_corners",
@@ -3251,7 +3362,7 @@
    "kickoff": "2026-10-27T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T17:34:16+00:00",
+   "last_seen_at": "2026-10-26T18:04:55+00:00",
    "league": "NFL",
    "match": "Cowboys v Eagles",
    "model_prob": 0.694,
@@ -3288,7 +3399,7 @@
    "kickoff": "2026-10-28T17:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T17:34:16+00:00",
+   "last_seen_at": "2026-10-26T18:04:55+00:00",
    "league": "Serie A",
    "match": "Parma v Udinese",
    "pair": "u35_low_scoring|soccer_u35",
@@ -3325,7 +3436,7 @@
    "kickoff": "2026-10-28T19:45Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T17:34:16+00:00",
+   "last_seen_at": "2026-10-26T18:04:55+00:00",
    "league": "Scottish Premiership",
    "match": "St Mirren v Hibernian",
    "pair": "u35_low_scoring|soccer_u35",
@@ -3362,7 +3473,7 @@
    "kickoff": "2026-10-29T00:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T17:34:16+00:00",
+   "last_seen_at": "2026-10-26T18:04:55+00:00",
    "league": "MLS",
    "match": "FC Dallas v Columbus Crew",
    "pair": "mls_fade_home|soccer_p05",
@@ -3399,7 +3510,7 @@
    "kickoff": "2026-10-29T02:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T17:34:16+00:00",
+   "last_seen_at": "2026-10-26T18:04:55+00:00",
    "league": "MLS",
    "match": "San Jose Earthquakes v Colorado Rapids",
    "pair": "mls_fade_home|soccer_p05",
@@ -3436,7 +3547,7 @@
    "kickoff": "2026-10-29T02:30Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T17:34:16+00:00",
+   "last_seen_at": "2026-10-26T18:04:55+00:00",
    "league": "MLS",
    "match": "San Jose Earthquakes v Colorado Rapids",
    "pair": "u35_low_scoring|soccer_u35",
@@ -3473,7 +3584,7 @@
    "kickoff": "2026-10-30T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T17:34:16+00:00",
+   "last_seen_at": "2026-10-26T18:04:55+00:00",
    "league": "NFL",
    "match": "Panthers v Packers",
    "model_prob": 0.393,
@@ -3504,9 +3615,9 @@
    "ready_at": "2026-10-09T04:31:34+00:00",
    "route": "moved by hand on 2026-10-09",
    "routing": {
-    "leads": 16,
+    "leads": 18,
     "problem": null,
-    "routed": 16,
+    "routed": 18,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -3518,7 +3629,7 @@
    "sandbox_roi_fee": 0.245,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 3,
     "under_target": 0
    }
   },
@@ -3579,9 +3690,9 @@
    "ready_at": "2026-10-21T00:47:16+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 8,
+    "leads": 9,
     "problem": null,
-    "routed": 8,
+    "routed": 9,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -3593,7 +3704,7 @@
    "sandbox_roi_fee": 0.1986,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 2,
     "under_target": 0
    }
   },
@@ -4025,5 +4136,5 @@
  "stage": "production",
  "unlisted_skipped": 1,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-26T17:34:16+00:00"
+ "updated_at": "2026-10-26T18:04:55+00:00"
 }
