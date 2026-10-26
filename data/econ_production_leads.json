@@ -1,47 +1,11 @@
 {
- "board_built_at": "2026-10-26T03:30:14+00:00",
+ "board_built_at": "2026-10-26T06:20:52+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
  "first_publish_min": 45,
  "late_publication_skipped": 0,
  "leads": {
-  "2026-10-19|KXAAAGASDMO-26OCT19-3.9300|Above 3.9300 at the close \u00b7 Econ Daily favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-19",
-   "edge_at_log": null,
-   "first_seen": "2026-10-19",
-   "headline": "Above 3.9300 at the close",
-   "home": null,
-   "id": "2026-10-19|KXAAAGASDMO-26OCT19-3.9300|Above 3.9300 at the close \u00b7 Econ Daily favourite band",
-   "kickoff": "2026-10-19T03:59Z",
-   "lane": "retired",
-   "league": "Econ Daily",
-   "match": "Missouri gas price",
-   "pair": "econ_daily_fav_band|econ_daily",
-   "price_at_log": 0.7,
-   "published_at": "2026-10-19T16:00:14+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "retired_on": "2026-10-20",
-   "route": {
-    "claim": "Above 3.9300 at the close",
-    "event": "KXAAAGASDMO-26OCT19",
-    "market": "KXAAAGASDMO-26OCT19-3.9300",
-    "outcome": "Above 3.9300",
-    "outcome_side": "yes",
-    "price_at_log": 0.7,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "econ_daily_fav_band:KXAAAGASDMO-26OCT19-3.9300",
-   "source": "econ_daily_fav_band",
-   "sport": "econ_daily",
-   "status": "hit"
-  },
   "2026-10-20|KXAAAGASDOK-26OCT20-3.9450|Above 3.9450 at the close \u00b7 Econ Daily favourite band": {
    "away": null,
    "bet": {
@@ -702,5 +666,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-26T03:30:14+00:00"
+ "updated_at": "2026-10-26T06:20:52+00:00"
 }
