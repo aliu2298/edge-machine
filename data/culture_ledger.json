@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-26T22:00:15.482671+00:00",
-   "last_success": "2026-10-26T22:00:15.482671+00:00",
+   "last_run": "2026-10-26T23:00:15.748214+00:00",
+   "last_success": "2026-10-26T23:00:15.748214+00:00",
    "observations": {
-    "at": "2026-10-26T22:00:15.482671+00:00",
+    "at": "2026-10-26T23:00:15.748214+00:00",
     "events": 976,
     "reasons": {},
     "retired": "2026-10-24"
@@ -542,10 +542,10 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-26T22:00:15.482671+00:00",
-   "last_success": "2026-10-26T22:00:15.482671+00:00",
+   "last_run": "2026-10-26T23:00:15.748214+00:00",
+   "last_success": "2026-10-26T23:00:15.748214+00:00",
    "observations": {
-    "at": "2026-10-26T22:00:15.482671+00:00",
+    "at": "2026-10-26T23:00:15.748214+00:00",
     "events": 976,
     "reasons": {},
     "retired": "2026-10-24"
@@ -896,19 +896,19 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-26T22:00:15.482671+00:00",
-   "last_success": "2026-10-26T22:00:15.482671+00:00",
+   "last_run": "2026-10-26T23:00:15.748214+00:00",
+   "last_success": "2026-10-26T23:00:15.748214+00:00",
    "observations": {
-    "at": "2026-10-26T22:00:15.482671+00:00",
+    "at": "2026-10-26T23:00:15.748214+00:00",
     "events": 976,
     "news_guard": [],
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 6,
-     "edge 5c+": 3,
+     "already near-certain (under 10c or over 90c)": 7,
+     "edge 5c+": 4,
      "edge capped": 1,
      "edge under 5c": 1,
      "monthly or company series (excluded 2026-10-26)": 76,
-     "no quote or spread too wide": 36
+     "no quote or spread too wide": 34
     }
    },
    "picks": [
@@ -1973,10 +1973,13 @@
      "logged": "2026-10-26T05:00:16.356623+00:00",
      "model": 0.4755,
      "name": "What will Trump say this week?",
+     "payout": 0.0,
      "price": 0.21,
+     "profit": -100.0,
      "series": "KXTRUMPSAY",
+     "settled": "2026-10-26T23:00:15.748214+00:00",
      "side": "no",
-     "status": "open",
+     "status": "lost",
      "title": "Ilhan / Omar",
      "yes_mid": 0.8
     },
@@ -2158,10 +2161,10 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-26T22:00:15.482671+00:00",
-   "last_success": "2026-10-26T22:00:15.482671+00:00",
+   "last_run": "2026-10-26T23:00:15.748214+00:00",
+   "last_success": "2026-10-26T23:00:15.748214+00:00",
    "observations": {
-    "at": "2026-10-26T22:00:15.482671+00:00",
+    "at": "2026-10-26T23:00:15.748214+00:00",
     "events": 976,
     "reasons": {},
     "retired": "2026-10-24"
@@ -2765,7 +2768,7 @@
    "days": []
   },
   "Prediction Market / Predictive Market": {
-   "at": "2026-10-26T13:00:27.184961+00:00",
+   "at": "2026-10-26T23:00:15.748214+00:00",
    "days": []
   },
   "Qualcomm / QCOM": {
