@@ -2,11 +2,11 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-26T00:00:14.879114+00:00",
-   "last_success": "2026-10-26T00:00:14.879114+00:00",
+   "last_run": "2026-10-26T01:00:16.048301+00:00",
+   "last_success": "2026-10-26T01:00:16.048301+00:00",
    "observations": {
-    "at": "2026-10-26T00:00:14.879114+00:00",
-    "events": 961,
+    "at": "2026-10-26T01:00:16.048301+00:00",
+    "events": 962,
     "reasons": {},
     "retired": "2026-10-24"
    },
@@ -542,11 +542,11 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-26T00:00:14.879114+00:00",
-   "last_success": "2026-10-26T00:00:14.879114+00:00",
+   "last_run": "2026-10-26T01:00:16.048301+00:00",
+   "last_success": "2026-10-26T01:00:16.048301+00:00",
    "observations": {
-    "at": "2026-10-26T00:00:14.879114+00:00",
-    "events": 961,
+    "at": "2026-10-26T01:00:16.048301+00:00",
+    "events": 962,
     "reasons": {},
     "retired": "2026-10-24"
    },
@@ -893,18 +893,18 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-26T00:00:14.879114+00:00",
-   "last_success": "2026-10-26T00:00:14.879114+00:00",
+   "last_run": "2026-10-26T01:00:16.048301+00:00",
+   "last_success": "2026-10-26T01:00:16.048301+00:00",
    "observations": {
-    "at": "2026-10-26T00:00:14.879114+00:00",
-    "events": 961,
+    "at": "2026-10-26T01:00:16.048301+00:00",
+    "events": 962,
     "news_guard": [],
     "reasons": {
-     "already near-certain (under 10c or over 90c)": 21,
-     "edge 5c+": 7,
+     "already near-certain (under 10c or over 90c)": 15,
+     "edge 5c+": 8,
      "edge capped": 1,
      "edge under 5c": 1,
-     "no quote or spread too wide": 31
+     "no quote or spread too wide": 35
     }
    },
    "picks": [
@@ -1911,11 +1911,11 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-26T00:00:14.879114+00:00",
-   "last_success": "2026-10-26T00:00:14.879114+00:00",
+   "last_run": "2026-10-26T01:00:16.048301+00:00",
+   "last_success": "2026-10-26T01:00:16.048301+00:00",
    "observations": {
-    "at": "2026-10-26T00:00:14.879114+00:00",
-    "events": 961,
+    "at": "2026-10-26T01:00:16.048301+00:00",
+    "events": 962,
     "reasons": {},
     "retired": "2026-10-24"
    },
@@ -2523,7 +2523,7 @@
    "days": []
   },
   "Turning Point": {
-   "at": "2026-10-23T11:00:16.447635+00:00",
+   "at": "2026-10-26T01:00:16.048301+00:00",
    "days": []
   },
   "UAE / United Arab Emirates": {
