@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-26T00:01:11.594306+00:00",
+ "last_run": "2026-10-26T18:01:30.445568+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -645,6 +645,60 @@
      "ticker": "KXBUNDESLIGATEAMTOTAL-26OCT25SCFBMU-BMU2",
      "title": "Will Bayern Munich score over 1.5 goals?",
      "why": "Bayern Munich O+D- v SC Freiburg O+D- \u00b7 2+ YES 0.74"
+    },
+    {
+     "ask": 0.78,
+     "bid": 0.77,
+     "event": "KXLIGUE1TEAMTOTAL-26OCT26PSGOL",
+     "group": "A",
+     "id": "T1:KXLIGUE1TEAMTOTAL-26OCT26PSGOL:home",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Ligue 1",
+     "line": 1.5,
+     "logged": "2026-10-26T18:01:30.445568+00:00",
+     "match": "Paris Saint-Germain v Lyon",
+     "opponent": "Lyon",
+     "price": 0.78,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-10-26T19:30Z",
+     "status": "open",
+     "sub": "PSG over 1.5 goals",
+     "team": "Paris Saint-Germain",
+     "team_side": "home",
+     "ticker": "KXLIGUE1TEAMTOTAL-26OCT26PSGOL-PSG2",
+     "title": "Will PSG score over 1.5 goals?",
+     "why": "Paris Saint-Germain O+D- v Lyon O+D- \u00b7 2+ YES 0.78"
+    },
+    {
+     "ask": 0.27,
+     "bid": 0.26,
+     "event": "KXLIGUE1TEAMTOTAL-26OCT26PSGOL",
+     "group": "A",
+     "id": "T1:KXLIGUE1TEAMTOTAL-26OCT26PSGOL:away",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Ligue 1",
+     "line": 1.5,
+     "logged": "2026-10-26T18:01:30.445568+00:00",
+     "match": "Paris Saint-Germain v Lyon",
+     "opponent": "Paris Saint-Germain",
+     "price": 0.27,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-10-26T19:30Z",
+     "status": "open",
+     "sub": "Lyon over 1.5 goals",
+     "team": "Lyon",
+     "team_side": "away",
+     "ticker": "KXLIGUE1TEAMTOTAL-26OCT26PSGOL-OL2",
+     "title": "Will Lyon score over 1.5 goals?",
+     "why": "Lyon O+D- v Paris Saint-Germain O+D- \u00b7 2+ YES 0.27"
     }
    ]
   },
@@ -2288,14 +2342,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-24T12:01:26.105197+00:00",
-   "candidates": 2,
-   "due": 7,
-   "labelled": 7,
-   "matched": 2,
-   "new": 1
-  },
-  {
    "at": "2026-10-24T12:31:09.457314+00:00",
    "candidates": 3,
    "due": 9,
@@ -2694,6 +2740,14 @@
    "labelled": 1,
    "matched": 0,
    "new": 0
+  },
+  {
+   "at": "2026-10-26T18:01:30.445568+00:00",
+   "candidates": 1,
+   "due": 1,
+   "labelled": 1,
+   "matched": 1,
+   "new": 2
   }
  ],
  "version": "soccer-team-rules-v1"

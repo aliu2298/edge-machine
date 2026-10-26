@@ -5,7 +5,7 @@
    0.97
   ]
  },
- "board_built_at": "2026-10-26T00:01:11+00:00",
+ "board_built_at": "2026-10-26T18:01:30+00:00",
  "collector_error": null,
  "collector_healthy": {
   "st_t1": true
@@ -157,6 +157,82 @@
    "source": "st_t1",
    "sport": "soccer_team2",
    "status": "miss"
+  },
+  "2026-10-26|Paris Saint-Germain|Lyon|Lyon to score 2+ \u00b7 O+D\u2212 v O+D\u2212 \u00b7 team 2+ goals": {
+   "away": "Lyon",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "Lyon"
+   },
+   "date": "2026-10-26",
+   "edge_at_log": null,
+   "first_seen": "2026-10-26",
+   "headline": "Lyon to score 2+",
+   "home": "Paris Saint-Germain",
+   "id": "2026-10-26|Paris Saint-Germain|Lyon|Lyon to score 2+ \u00b7 O+D\u2212 v O+D\u2212 \u00b7 team 2+ goals",
+   "kickoff": "2026-10-26T19:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-26",
+   "last_seen_at": "2026-10-26T18:01:30+00:00",
+   "league": "Ligue 1",
+   "match": "Paris Saint-Germain v Lyon",
+   "pair": "st_t1|soccer_team2",
+   "price_at_log": 0.27,
+   "published_at": "2026-10-26T18:01:30+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Lyon to score 2+",
+    "event": "KXLIGUE1TEAMTOTAL-26OCT26PSGOL",
+    "market": "KXLIGUE1TEAMTOTAL-26OCT26PSGOL-OL2",
+    "outcome": "Lyon over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.27,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "st_t1:KXLIGUE1TEAMTOTAL-26OCT26PSGOL-OL2",
+   "source": "st_t1",
+   "sport": "soccer_team2",
+   "status": "pending"
+  },
+  "2026-10-26|Paris Saint-Germain|Lyon|Paris Saint-Germain to score 2+ \u00b7 O+D\u2212 v O+D\u2212 \u00b7 team 2+ goals": {
+   "away": "Lyon",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "Paris Saint-Germain"
+   },
+   "date": "2026-10-26",
+   "edge_at_log": null,
+   "first_seen": "2026-10-26",
+   "headline": "Paris Saint-Germain to score 2+",
+   "home": "Paris Saint-Germain",
+   "id": "2026-10-26|Paris Saint-Germain|Lyon|Paris Saint-Germain to score 2+ \u00b7 O+D\u2212 v O+D\u2212 \u00b7 team 2+ goals",
+   "kickoff": "2026-10-26T19:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-26",
+   "last_seen_at": "2026-10-26T18:01:30+00:00",
+   "league": "Ligue 1",
+   "match": "Paris Saint-Germain v Lyon",
+   "pair": "st_t1|soccer_team2",
+   "price_at_log": 0.78,
+   "published_at": "2026-10-26T18:01:30+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Paris Saint-Germain to score 2+",
+    "event": "KXLIGUE1TEAMTOTAL-26OCT26PSGOL",
+    "market": "KXLIGUE1TEAMTOTAL-26OCT26PSGOL-PSG2",
+    "outcome": "PSG over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.78,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "st_t1:KXLIGUE1TEAMTOTAL-26OCT26PSGOL-PSG2",
+   "source": "st_t1",
+   "sport": "soccer_team2",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -167,9 +243,9 @@
    "ready_at": "2026-10-24T22:00:00+00:00",
    "route": "moved by hand on 2026-10-24",
    "routing": {
-    "leads": 4,
+    "leads": 6,
     "problem": null,
-    "routed": 4,
+    "routed": 6,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -181,7 +257,7 @@
    "sandbox_roi_fee": -0.2275,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 2,
     "under_target": 0
    }
   }
@@ -190,5 +266,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-26T00:01:11+00:00"
+ "updated_at": "2026-10-26T18:01:30+00:00"
 }
