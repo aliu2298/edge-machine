@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-27T22:15:26+00:00",
+ "board_built_at": "2026-10-27T22:30:28+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -1095,7 +1095,7 @@
    "kickoff": "2026-10-27T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T22:15:26+00:00",
+   "last_seen_at": "2026-10-27T22:30:28+00:00",
    "league": "NBA",
    "match": "BKN @ BOS",
    "model_prob": 0.5638,
@@ -1134,7 +1134,7 @@
    "kickoff": "2026-10-27T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T22:15:26+00:00",
+   "last_seen_at": "2026-10-27T22:30:28+00:00",
    "league": "NBA",
    "match": "BKN @ BOS",
    "model_prob": 0.6295,
@@ -1173,7 +1173,7 @@
    "kickoff": "2026-10-28T00:00Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T22:15:26+00:00",
+   "last_seen_at": "2026-10-27T22:30:28+00:00",
    "league": "NBA",
    "match": "DET @ NY",
    "model_prob": 0.6515,
@@ -1196,6 +1196,45 @@
    "sport": "nba_tt",
    "status": "pending"
   },
+  "2026-10-28|KXNBATEAMTOTAL-26OCT27DETNYK-DET109|Detroit over 108.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt",
+    "n": 108.5,
+    "team": "Detroit"
+   },
+   "date": "2026-10-28",
+   "edge_at_log": 0.0801,
+   "first_seen": "2026-10-27",
+   "headline": "Detroit over 108.5 points",
+   "home": null,
+   "id": "2026-10-28|KXNBATEAMTOTAL-26OCT27DETNYK-DET109|Detroit over 108.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-28T00:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-27",
+   "last_seen_at": "2026-10-27T22:30:28+00:00",
+   "league": "NBA",
+   "match": "DET @ NY",
+   "model_prob": 0.5876,
+   "pair": "nba_tt_value_1h|nba_tt",
+   "price_at_log": 0.49,
+   "published_at": "2026-10-27T22:30:28+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 89,
+   "route": {
+    "claim": "Detroit over 108.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT27DETNYK",
+    "market": "KXNBATEAMTOTAL-26OCT27DETNYK-DET109",
+    "outcome": "Detroit over 108.5 points",
+    "outcome_side": "yes",
+    "price_at_log": 0.49,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_1h:401909878:DET",
+   "source": "nba_tt_value_1h",
+   "sport": "nba_tt",
+   "status": "pending"
+  },
   "2026-10-28|KXNBATEAMTOTAL-26OCT27DETNYK-NYK109|New York under 108.5 points \u00b7 NBA team total value \u00b7 24h before tip": {
    "away": null,
    "bet": {
@@ -1212,7 +1251,7 @@
    "kickoff": "2026-10-28T00:00Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T22:15:26+00:00",
+   "last_seen_at": "2026-10-27T22:30:28+00:00",
    "league": "NBA",
    "match": "DET @ NY",
    "model_prob": 0.5498,
@@ -1235,6 +1274,45 @@
    "sport": "nba_tt",
    "status": "pending"
   },
+  "2026-10-28|KXNBATEAMTOTAL-26OCT27DETNYK-NYK111|New York under 110.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt_no",
+    "n": 110.5,
+    "team": "New York"
+   },
+   "date": "2026-10-28",
+   "edge_at_log": 0.1278,
+   "first_seen": "2026-10-27",
+   "headline": "New York under 110.5 points",
+   "home": null,
+   "id": "2026-10-28|KXNBATEAMTOTAL-26OCT27DETNYK-NYK111|New York under 110.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-28T00:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-27",
+   "last_seen_at": "2026-10-27T22:30:28+00:00",
+   "league": "NBA",
+   "match": "DET @ NY",
+   "model_prob": 0.6153,
+   "pair": "nba_tt_value_1h|nba_tt",
+   "price_at_log": 0.47,
+   "published_at": "2026-10-27T22:30:28+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 89,
+   "route": {
+    "claim": "New York under 110.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT27DETNYK",
+    "market": "KXNBATEAMTOTAL-26OCT27DETNYK-NYK111",
+    "outcome": "New York over 110.5 points",
+    "outcome_side": "no",
+    "price_at_log": 0.47,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_1h:401909878:NY",
+   "source": "nba_tt_value_1h",
+   "sport": "nba_tt",
+   "status": "pending"
+  },
   "2026-10-28|KXNBATEAMTOTAL-26OCT27PORLAL-LAL119|Los Angeles L under 118.5 points \u00b7 NBA team total value \u00b7 24h before tip": {
    "away": null,
    "bet": {
@@ -1251,7 +1329,7 @@
    "kickoff": "2026-10-28T03:00Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T22:15:26+00:00",
+   "last_seen_at": "2026-10-27T22:30:28+00:00",
    "league": "NBA",
    "match": "POR @ LAL",
    "model_prob": 0.5449,
@@ -1274,6 +1352,45 @@
    "sport": "nba_tt",
    "status": "pending"
   },
+  "2026-10-28|KXNBATEAMTOTAL-26OCT27SACSAS-SAS125|San Antonio under 124.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt_no",
+    "n": 124.5,
+    "team": "San Antonio"
+   },
+   "date": "2026-10-28",
+   "edge_at_log": 0.0559,
+   "first_seen": "2026-10-27",
+   "headline": "San Antonio under 124.5 points",
+   "home": null,
+   "id": "2026-10-28|KXNBATEAMTOTAL-26OCT27SACSAS-SAS125|San Antonio under 124.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-28T00:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-27",
+   "last_seen_at": "2026-10-27T22:30:28+00:00",
+   "league": "NBA",
+   "match": "SAC @ SA",
+   "model_prob": 0.5333,
+   "pair": "nba_tt_value_1h|nba_tt",
+   "price_at_log": 0.46,
+   "published_at": "2026-10-27T22:30:28+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 89,
+   "route": {
+    "claim": "San Antonio under 124.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT27SACSAS",
+    "market": "KXNBATEAMTOTAL-26OCT27SACSAS-SAS125",
+    "outcome": "San Antonio over 124.5 points",
+    "outcome_side": "no",
+    "price_at_log": 0.46,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_1h:401909879:SA",
+   "source": "nba_tt_value_1h",
+   "sport": "nba_tt",
+   "status": "pending"
+  },
   "2026-10-28|KXNBATEAMTOTAL-26OCT28PHIIND-PHI117|Philadelphia under 116.5 points \u00b7 NBA team total value \u00b7 24h before tip": {
    "away": null,
    "bet": {
@@ -1290,7 +1407,7 @@
    "kickoff": "2026-10-28T23:00Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T22:15:26+00:00",
+   "last_seen_at": "2026-10-27T22:30:28+00:00",
    "league": "NBA",
    "match": "PHI @ IND",
    "model_prob": 0.5268,
@@ -1322,9 +1439,9 @@
    "ready_at": "2026-10-24T22:13:00+00:00",
    "route": "moved by hand on 2026-10-24",
    "routing": {
-    "leads": 26,
+    "leads": 29,
     "problem": null,
-    "routed": 26,
+    "routed": 29,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1336,7 +1453,7 @@
    "sandbox_roi_fee": -0.0584,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 4,
     "under_target": 0
    }
   },
@@ -1389,5 +1506,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-27T22:15:26+00:00"
+ "updated_at": "2026-10-27T22:30:28+00:00"
 }
