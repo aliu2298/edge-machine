@@ -93,6 +93,20 @@ def _exits():
 
 
 EXITS = _exits()                # hold, hold_stop50, tp20, tp20_stop50, tp30, ... tp50_stop50
+# The cheap-side SPLIT exit (2026-10-27, Olu: "the cheap-side split is the standard"): half the stake
+# rests at 2x the entry ask, half at 3x, each capped at 0.98; a leg fills only when a TRADE prints at or
+# above it (the candle's price.high, never the bid); a leg not filled is held to settlement. Maker fee
+# on a filled leg. Every lane carries it beside its own targets (LANE_EXITS); a lane that recorded
+# entries before it gains the split variant by the additive backfill below, its rows unedited.
+SPLIT = "split"
+SPLIT_LEGS = ((2.0, 0.5), (3.0, 0.5))
+SPLIT_CAP = 0.98
+LANE_EXITS = tuple(EXITS) + (SPLIT,)
+
+
+def lane_exits(lane):
+    """The exit keys a lane is replayed with: its own `exits`, else every target and the split."""
+    return tuple(lane.get("exits") or LANE_EXITS)
 
 
 def vkey(hours, exit_key):
@@ -105,6 +119,8 @@ def split_key(key):
 
 
 def exit_label(key):
+    if key == SPLIT:
+        return "split: half at 2x, half at 3x"
     v = EXITS[key]
     base = "hold to settlement" if v["tp"] is None else f"sell at +{round(v['tp'] * 100)}%"
     return base + ("" if v["stop"] is None else f", stop {round(v['stop'] * 100)}%")
@@ -118,6 +134,8 @@ def variant_label(key):
 def control_of(key):
     """The variant a key is judged against: the same entry time and stop, held to settlement."""
     h, ex = split_key(key)
+    if ex == SPLIT:
+        return vkey(h, "hold")
     return vkey(h, "hold" + ("" if EXITS[ex]["stop"] is None else f"_stop{round(-EXITS[ex]['stop'] * 100)}"))
 
 
@@ -177,8 +195,9 @@ def normalise(c):
     """One candle -> dict(ts, bid, ask, bid_lo, bid_hi, ask_lo, ask_hi) in YES terms, or None."""
     ts = c.get("end_period_ts")
     yb, ya = c.get("yes_bid") or {}, c.get("yes_ask") or {}
+    px = c.get("price") or {}
     row = dict(ts=ts, bid=_f(yb, "close"), ask=_f(ya, "close"), bid_lo=_f(yb, "low"), bid_hi=_f(yb, "high"),
-               ask_lo=_f(ya, "low"), ask_hi=_f(ya, "high"))
+               ask_lo=_f(ya, "low"), ask_hi=_f(ya, "high"), px_hi=_f(px, "high"), px_lo=_f(px, "low"))
     if not isinstance(ts, (int, float)) or row["bid"] is None or row["ask"] is None:
         return None
     for k in ("bid_lo", "bid_hi"):
@@ -203,21 +222,25 @@ def dense(candles, start_ts, end_ts):
                 out.append(dict(last))
             else:
                 out.append(dict(ts=t, bid=last["bid"], ask=last["ask"], bid_lo=last["bid"], bid_hi=last["bid"],
-                                ask_lo=last["ask"], ask_hi=last["ask"]))
+                                ask_lo=last["ask"], ask_hi=last["ask"], px_hi=None, px_lo=None))
         t += 60
     return out
 
 
 def view(m, side):
-    """A minute row seen from one side: ask / bid at the close, and the minute's bid high/low."""
+    """A minute row seen from one side: ask / bid at the close, the minute's bid high/low, and the
+    minute's TRADED high (traded_hi: YES price.high, or 1 - price.low for the NO; None without a trade)."""
     if side == "yes":
-        return dict(ts=m["ts"], ask=m["ask"], bid=m["bid"], bid_hi=m["bid_hi"], bid_lo=m["bid_lo"], ask_lo=m["ask_lo"])
+        return dict(ts=m["ts"], ask=m["ask"], bid=m["bid"], bid_hi=m["bid_hi"], bid_lo=m["bid_lo"], ask_lo=m["ask_lo"],
+                    traded_hi=m.get("px_hi"))
+    lo = m.get("px_lo")
     return dict(ts=m["ts"], ask=round(1 - m["bid"], 4), bid=round(1 - m["ask"], 4), bid_hi=round(1 - m["ask_lo"], 4),
-                bid_lo=round(1 - m["ask_hi"], 4), ask_lo=round(1 - m["bid_hi"], 4))
+                bid_lo=round(1 - m["ask_hi"], 4), ask_lo=round(1 - m["bid_hi"], 4),
+                traded_hi=None if lo is None else round(1 - lo, 4))
 
 
-def tight(v):
-    return v["bid"] > 0 and v["ask"] - v["bid"] <= MAX_SPREAD + EPS and ASK_RANGE[0] - EPS <= v["ask"] <= ASK_RANGE[1] + EPS
+def tight(v, spread=MAX_SPREAD):
+    return v["bid"] > 0 and v["ask"] - v["bid"] <= spread + EPS and ASK_RANGE[0] - EPS <= v["ask"] <= ASK_RANGE[1] + EPS
 
 
 # ---------- the start of the event ----------
@@ -240,14 +263,14 @@ def detect_onset(minutes, lag_min=ONSET_LAG_MIN):
 
 # ---------- one trade ----------
 
-def entry_index(vs, target_ts, start_ts):
+def entry_index(vs, target_ts, start_ts, spread=MAX_SPREAD):
     """The minute to buy at: the first tight quote from target_ts within the grace window, before the start."""
     for i, v in enumerate(vs):
         if v["ts"] < target_ts:
             continue
         if v["ts"] > target_ts + ENTRY_GRACE_MIN * 60 or v["ts"] >= start_ts:
             return None
-        if tight(v):
+        if tight(v, spread):
             return i
     return None
 
@@ -281,23 +304,51 @@ def _trade(vs, i, won_side, var):
                 unreachable=(var["tp"] is not None and tp is None))
 
 
-def simulate(minutes, side, result, start_ts, hours, exit_key):
+def split_targets(entry):
+    return [(m, w, round(min(entry * m, SPLIT_CAP), 2)) for m, w in SPLIT_LEGS]
+
+
+def _split_trade(vs, i, won_side):
+    """The cheap-side split from minute i: two resting legs, filled only on a traded print at or above
+    each target; a leg not filled is held to settlement."""
+    entry = vs[i]["ask"]
+    c = cost(entry)
+    pay = 1.0 if won_side else 0.0
+    legs, proceeds = [], 0.0
+    for mult, share, target in split_targets(entry):
+        fill = next((j for j in range(i + 1, len(vs)) if vs[j].get("traded_hi") is not None
+                     and vs[j]["traded_hi"] >= target - EPS), None)
+        legs.append(dict(multiple=mult, target=target, filled_ts=vs[fill]["ts"] if fill is not None else None))
+        proceeds += share * ((target - maker_fee(target)) if fill is not None else pay)
+    last = max([l["filled_ts"] for l in legs if l["filled_ts"]] or [vs[-1]["ts"]])
+    if any(l["filled_ts"] is None for l in legs):
+        last = vs[-1]["ts"]
+    return dict(entry_i=i, entry_ts=vs[i]["ts"], entry=round(entry, 4), exit_i=None, exit_ts=last,
+                exit=None, reason="split", cost=round(c, 5), profit=round(proceeds - c, 5),
+                roi=round((proceeds - c) / c, 4), won=proceeds > c, target=None, stop=None, unreachable=False,
+                legs=legs, filled_2x=legs[0]["filled_ts"] is not None, filled_3x=legs[1]["filled_ts"] is not None,
+                side_won=won_side)
+
+
+def simulate(minutes, side, result, start_ts, hours, exit_key, spread=MAX_SPREAD):
     """One variant's trade in one market and side: bought `hours` before start_ts, exited per exit_key.
     Returns [trade] or [] when there is no tight quote at that time."""
     vs = [view(m, side) for m in minutes]
-    i = entry_index(vs, start_ts - int(hours * 3600), start_ts)
+    i = entry_index(vs, start_ts - int(hours * 3600), start_ts, spread)
     if i is None or i >= len(vs) - 1:
         return []
+    if exit_key == SPLIT:
+        return [_split_trade(vs, i, result == side)]
     return [_trade(vs, i, result == side, EXITS[exit_key])]
 
 
 # ---------- pickers: which market and side a lane buys ----------
 
-def band_picker(lo, hi, sides=("yes", "no")):
-    """Any side whose ask at the entry time is in [lo, hi] (and tight)."""
+def band_picker(lo, hi, sides=("yes", "no"), spread=MAX_SPREAD):
+    """Any side whose ask at the entry time is in [lo, hi] (and tight: spread at most `spread`)."""
     def pick(ctx):
         return [(t, s) for t in ctx["tickers"] for s in sides
-                if (v := ctx["entry_view"](t, s)) and tight(v) and lo - EPS <= v["ask"] <= hi + EPS]
+                if (v := ctx["entry_view"](t, s)) and tight(v, spread) and lo - EPS <= v["ask"] <= hi + EPS]
     return pick
 
 
@@ -447,21 +498,22 @@ def replay_event(lane, series, event, fetch, now=None):
         return None, "no start time"
     start_ts -= start_ts % 60
     night = night_of(start_ts)
+    spread = lane.get("max_spread", MAX_SPREAD)
     trades = []
     for hours in lane.get("entry_hours") or ENTRY_HOURS:
         target = start_ts - int(hours * 3600)
 
         def entry_view(t, s, target=target):
             ms = mins.get(t) or []
-            i = entry_index([view(m, "yes") for m in ms], target, start_ts)
+            i = entry_index([view(m, "yes") for m in ms], target, start_ts, spread)
             return view(ms[i], s) if i is not None else None
         ctx = dict(ctx0, entry_view=entry_view, start_ts=start_ts, hours=hours)
         for ticker, side in dict.fromkeys(lane["picker"](ctx) or []):
             ms = mins.get(ticker)
             if not ms:
                 continue
-            for ex in EXITS:
-                for t in simulate(ms, side, results[ticker], start_ts, hours, ex):
+            for ex in lane_exits(lane):
+                for t in simulate(ms, side, results[ticker], start_ts, hours, ex, spread):
                     trades.append(dict(t, variant=vkey(hours, ex), hours=hours, exit_key=ex, event=event, ticker=ticker,
                                        side=side, night=night, start_ts=start_ts, start_how=how))
     return trades, None
@@ -490,6 +542,11 @@ def lane_state(state, lane, now):
             series=list(lane["series"]), entry_hours=list(lane.get("entry_hours") or ENTRY_HOURS),
             duration_min=lane.get("duration_min"), note=lane.get("note") or "", headline=lane.get("headline"),
             caution=lane.get("caution") or "", watch=bool(lane.get("watch")), replayed={}, trades=[], skipped={})
+    # The lane's exits as configured now (the split joined every lane on 2026-10-27; additive only).
+    L["exits"] = list(lane_exits(lane))
+    for k in ("label", "note", "headline", "first"):
+        if lane.get(k) is not None:
+            L[k] = lane[k]
     return L
 
 
@@ -499,7 +556,7 @@ def _backfill(L, lane, now, fetch, errs):
     by_event = {}
     for t in L["trades"]:
         by_event.setdefault(t["event"], set()).add(t["exit_key"])
-    todo = [e for e, ks in by_event.items() if set(EXITS) - ks][:MAX_EVENTS_PER_RUN]
+    todo = [e for e, ks in by_event.items() if set(lane_exits(lane)) - ks][:MAX_EVENTS_PER_RUN]
     for event in todo:
         have = {(t["ticker"], t["side"], t["hours"], t["exit_key"]) for t in L["trades"] if t["event"] == event}
         entries = {(a, b, c) for a, b, c, _ in have}
@@ -592,7 +649,7 @@ def stats(rows):
 
 
 def variants_of(L):
-    return [vkey(h, ex) for h in (L.get("entry_hours") or ENTRY_HOURS) for ex in EXITS]
+    return [vkey(h, ex) for h in (L.get("entry_hours") or ENTRY_HOURS) for ex in (L.get("exits") or EXITS)]
 
 
 def lane_table(L):

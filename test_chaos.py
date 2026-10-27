@@ -203,7 +203,7 @@ check("every trade is bought 1h or 24h before the start, never in play",
 check("every trade carries its variant, the start it was timed from and how that was found",
       all(t["variant"] == C.vkey(t["hours"], t["exit_key"]) and t["start_how"] == "lane source" for t in Ls["trades"]), True)
 sets = {(t["hours"], t["exit_key"]) for t in Ls["trades"]}
-check("both entry times and all ten exits are recorded from the same entries", len(sets), 20)
+check("both entry times and all ten exits plus the split (2026-10-27) are recorded from the same entries", len(sets), 22)
 aaa_hold = [t for t in Ls["trades"] if t["ticker"].endswith("AAA") and t["side"] == "yes" and t["variant"] == "t1h_hold"][0]
 aaa_tp = [t for t in Ls["trades"] if t["ticker"].endswith("AAA") and t["side"] == "yes" and t["variant"] == "t1h_tp30"][0]
 check("the same entry: held it wins to 1; the +30% sell fills in play when the bid runs to 0.78+",
@@ -222,13 +222,14 @@ old["lanes"]["old_lane"] = dict(id="old_lane", trades=[dict(variant="t1h_hold", 
 C.run(old, [lane], NOW, fetch)
 check("an older lane's rows in the same ledger are never edited or deleted", len(old["lanes"]["old_lane"]["trades"]), 1)
 check("a lane before its first night is not replayed", C.run(C.empty(), [dict(lane, since="2026-10-26")], NOW, fetch), {})
-check("the five approved lanes are registered, each with fresh record from 2026-10-25",
-      ([l["id"] for l in chaos_lanes.LANES], {l["since"] for l in chaos_lanes.LANES}),
-      (["challenger_dog_tp30", "cfb_dog_tp50", "atp_coinflip_tp30", "nba_tt_cheap_tp30", "nba_ml_dog_tp50"], {"2026-10-25"}))
+check("the five approved lanes are registered, each with fresh record from 2026-10-25; the cheap-side split lane first, from 2026-10-26",
+      ([l["id"] for l in chaos_lanes.LANES], [l["since"] for l in chaos_lanes.LANES]),
+      (["challenger_cheap_split", "challenger_dog_tp30", "cfb_dog_tp50", "atp_coinflip_tp30", "nba_tt_cheap_tp30", "nba_ml_dog_tp50"],
+       ["2026-10-26"] + ["2026-10-25"] * 5))
 LD = {l["id"]: l for l in chaos_lanes.LANES}
 check("entry times and headlines as approved",
       [(l["entry_hours"], l["headline"]) for l in chaos_lanes.LANES],
-      [((1,), "tp30"), ((1, 24), "tp50"), ((1,), "tp30"), ((1, 24), "tp30"), ((1,), "tp50")])
+      [((1,), "split"), ((1,), "tp30"), ((1, 24), "tp50"), ((1,), "tp30"), ((1, 24), "tp30"), ((1,), "tp50")])
 check("the coin-flip lane is a watch lane; the NBA moneyline lane carries the hold-beat-the-sell caution",
       (LD["atp_coinflip_tp30"]["watch"], "HOLD beat the sell" in LD["nba_ml_dog_tp50"]["caution"]), (True, True))
 ctx2 = dict(event=EV, tickers=[EV + "-AAA", EV + "-BBB"],

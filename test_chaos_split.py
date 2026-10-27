@@ -1,0 +1,127 @@
+#!/usr/bin/env python3
+"""The cheap-side split in the chaos engine (2026-10-27): challenger_cheap_split, the split exit on every
+lane (additive), and the Chaos section with split v hold first."""
+import copy
+import re
+import sys
+
+import chaos_build as CB
+import chaos_lanes
+import chaos_replay as C
+import sandbox_audit
+
+FAILS = []
+
+
+def check(label, got, want):
+    ok = got == want
+    print(f"  {'ok  ' if ok else 'FAIL'} {label}" + ("" if ok else f" (got {got!r}, want {want!r})"))
+    if not ok:
+        FAILS.append(label)
+
+
+T0 = 1_800_000_000 - 1_800_000_000 % 60
+
+
+def minute(k, bid, ask, px_hi=None, px_lo=None):
+    return dict(ts=T0 + 60 * k, bid=bid, ask=ask, bid_lo=bid, bid_hi=bid, ask_lo=ask, ask_hi=ask, px_hi=px_hi, px_lo=px_lo)
+
+
+print("the split exit")
+check("its terms: half at 2x, half at 3x, cap 0.98; every lane carries it after the old exits",
+      (C.SPLIT_LEGS, C.SPLIT_CAP, C.LANE_EXITS[-1], set(C.EXITS) < set(C.LANE_EXITS)), (((2.0, 0.5), (3.0, 0.5)), 0.98, "split", True))
+check("targets from the ask paid, capped", (C.split_targets(0.20), C.split_targets(0.40)),
+      ([(2.0, 0.5, 0.4), (3.0, 0.5, 0.6)], [(2.0, 0.5, 0.8), (3.0, 0.5, 0.98)]))
+# Entry at minute 0 (YES 0.18/0.20). A bid of 0.45 never fills a leg; a traded 0.40 fills the 2x; nothing at 0.60.
+mins = [minute(0, 0.18, 0.20), minute(1, 0.45, 0.47), minute(2, 0.30, 0.33, px_hi=0.40), minute(3, 0.10, 0.12, px_hi=0.15)]
+vs = [C.view(m, "yes") for m in mins]
+t = C._split_trade(vs, 0, False)
+fin = 0.20 + 0.07 * 0.20 * 0.80
+check("only a traded print fills a leg (a bid of 0.45 does not); 2x filled, 3x held to a loss",
+      (t["filled_2x"], t["filled_3x"], t["legs"][0]["filled_ts"] == T0 + 120, round(t["profit"], 5)),
+      (True, False, True, round(0.5 * (0.40 - 0.0175 * 0.40 * 0.60) - fin, 5)))
+t_won = C._split_trade(vs, 0, True)
+check("the 3x leg held to a YES win is paid 1", round(t_won["profit"], 5),
+      round(0.5 * (0.40 - 0.0175 * 0.40 * 0.60) + 0.5 - fin, 5))
+no = [C.view(m, "no") for m in [minute(0, 0.80, 0.82), minute(1, 0.60, 0.62, px_lo=0.60)]]
+check("the NO side reads the YES traded low: NO entry 0.20, the 2x (0.40) fills when YES trades at 0.60 or under",
+      (no[0]["ask"], C._split_trade(no, 0, False)["filled_2x"]), (0.2, True))
+check("a minute with no trade carries none forward", C.dense([dict(end_period_ts=T0, yes_bid=dict(close_dollars="0.1"),
+      yes_ask=dict(close_dollars="0.12"), price=dict(high_dollars="0.5"))], T0, T0 + 120)[1]["px_hi"], None)
+
+print("\nchallenger_cheap_split")
+L0 = next(l for l in chaos_lanes.LANES if l["id"] == "challenger_cheap_split")
+check("its terms: Challenger only, 1h, 5c spread, exits hold and split, first on the page, fresh from 2026-10-26",
+      (L0["series"], L0["entry_hours"], L0["max_spread"], L0["exits"], L0["headline"], L0["first"], L0["since"], L0["duration_min"]),
+      (["KXATPCHALLENGERMATCH"], (1,), 0.05, ("hold", "split"), "split", True, "2026-10-26", 120))
+check("the start as challenger_dog_tp30 (no own source: the price path, else close minus 120 minutes)",
+      ("start" in L0, next(l for l in chaos_lanes.LANES if l["id"] == "challenger_dog_tp30").get("start")), (False, None))
+views = {"A": dict(ask=0.22, bid=0.18), "B": dict(ask=0.80, bid=0.77), "C": dict(ask=0.12, bid=0.10), "D": dict(ask=0.25, bid=0.19)}
+ctx = dict(tickers=list(views), entry_view=lambda t, s: views[t])
+check("the picker: YES 0.15-0.30 with a 5c spread or less (A at 4c in, D at 6c out, C under 0.15 out)",
+      L0["picker"](ctx), [("A", "yes")])
+check("the variants are the two exits only", C.variants_of(dict(entry_hours=[1], exits=["hold", "split"])), ["t1h_hold", "t1h_split"])
+check("a split's control is the same entry held", C.control_of("t1h_split"), "t1h_hold")
+
+print("\nthe split joins the older lanes additively")
+old = dict(id="old", series=["KXX"], entry_hours=(1,), exits=None)
+L = dict(trades=[dict(event="KXX-26OCT25A", ticker="T1", side="yes", hours=1, exit_key=k, variant=f"t1h_{k}", roi=0.1)
+                 for k in C.EXITS], replayed={"KXX-26OCT25A": 1})
+before = copy.deepcopy(L["trades"])
+_saved = C.replay_event
+C.replay_event = lambda lane, series, event, fetch, now=None: (
+    [dict(event=event, ticker="T1", side="yes", hours=1, exit_key=k, variant=f"t1h_{k}", roi=9.9) for k in C.LANE_EXITS]
+    + [dict(event=event, ticker="T9", side="yes", hours=1, exit_key="split", variant="t1h_split", roi=9.9)], None)
+try:
+    C._backfill(L, old, None, None, [])
+finally:
+    C.replay_event = _saved
+check("only the missing split of a recorded entry is appended; every old row is unchanged; no new entry",
+      (L["trades"][:len(before)] == before, [(t["ticker"], t["exit_key"]) for t in L["trades"][len(before):]]),
+      (True, [("T1", "split")]))
+
+print("\nthe Chaos section")
+
+
+def tr(lane, k, roi, won, night="2026-10-26", f2=False, f3=False, hours=1, ticker="T1"):
+    return dict(event="E-" + ticker, ticker=ticker, side="yes", hours=hours, exit_key=k, variant=f"t{hours}h_{k}", roi=roi,
+                profit=roi * 0.2, cost=0.2, won=won, night=night, reason="split" if k == "split" else "settled",
+                entry=0.2, entry_ts=T0, filled_2x=f2, filled_3x=f3)
+
+
+state = {"lanes": {
+    "challenger_dog_tp30": dict(id="challenger_dog_tp30", label="Challenger underdog · sell +30%", since="2026-10-25",
+                                entry_hours=[1], exits=list(C.LANE_EXITS), series=["KXATPCHALLENGERMATCH"], replayed={"a": 1},
+                                trades=[tr(0, "hold", -1.0, False), tr(0, "tp30", 0.3, True)]),
+    "challenger_cheap_split": dict(id="challenger_cheap_split", label="Challenger cheap side · split 2x / 3x", first=True,
+                                   since="2026-10-26", entry_hours=[1], exits=["hold", "split"], series=["KXATPCHALLENGERMATCH"],
+                                   replayed={"b": 1}, trades=[tr(0, "hold", 1.5, True), tr(0, "split", 1.0, True, f2=True, f3=True)])},
+    "last_run": "2026-10-27T09:00:00+00:00"}
+h = CB.section(state)
+text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", h))
+check("the standard header", all(x in text for x in ("Cheap side + resting take-profit", "rest a split sell, half at 2x and half at 3x",
+                                                  "a fill counts only on a traded print", "every lane next to the same entries held")), True)
+summ = h[h.find('class="chaos-summary"'):h.find("</table>", h.find('class="chaos-summary"'))]
+check("the summary: challenger_cheap_split first, then the others in their order",
+      re.findall(r'data-lane="([^"]+)"', summ), ["challenger_cheap_split", "challenger_dog_tp30"])
+check("its columns", [re.sub(r"<[^>]+>", "", x) for x in re.findall(r"<th[^>]*>(.*?)</th>", summ)],
+      ["Lane", "Entries", "Settled", "Won", "Split ROI", "Hold ROI", "Legs filled 2x / 3x", "Status"])
+check("the new lane's row: 1 entry, 1 settled, 1 won, +100% split, +150% hold, legs 1 / 1, review at 10",
+      "Challenger cheap side · split 2x / 3x 1 1 1 +100.0% +150.0% 1 / 1 1 settled · review at 10, decide at 30" in text, True)
+check("an older lane without split rows yet shows — for split, and says the split is being added",
+      ("Challenger underdog · sell +30% 1 1 0 — −100.0%" in text.replace("-100.0%", "−100.0%"),
+       "the split joined this lane on 2026-10-27 and is being added to its earlier entries" in text), (True, True))
+cards = re.findall(r'<details class="section-disclosure" data-lane="([^"]+)" open>', h)
+check("the cards in the same order", cards, ["challenger_cheap_split", "challenger_dog_tp30"])
+old_card = h[h.find('data-lane="challenger_dog_tp30" open'):]
+check("each card shows split v hold first; the old targets sit in a collapsed Other exits block",
+      (old_card.find("Split v hold") < old_card.find("<summary><b>Other exits</b>"),
+       '<details class="section-disclosure"><summary><b>Other exits</b>' in old_card, "sell at +30%" in old_card), (True, True, True))
+new_card = h[h.find('data-lane="challenger_cheap_split" open'):h.find('data-lane="challenger_dog_tp30" open')]
+check("the split lane has no Other exits block (it carries only hold and split)", "Other exits" in new_card, False)
+check("tables stay header-row tables for the phone labels", ("<thead>" not in h, h.count("<table") == h.count('<div class="tbl"><table')),
+      (True, True))
+check("public copy passes the guard", sandbox_audit.COPY_RE.search(text), None)
+
+print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
+sys.exit(1 if FAILS else 0)

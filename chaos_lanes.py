@@ -92,6 +92,17 @@ DOG = C.band_picker(0.10, 0.40, ("yes",))
 FIRST_NIGHT = "2026-10-25"          # approved 2026-10-24: every record starts fresh from here
 
 LANES = [
+    # 2026-10-27 (Olu): the cheap-side split as the chaos standard. A Challenger player whose YES ask is
+    # 0.15-0.30 (spread 5c or less) about an hour before the match, start found as for
+    # challenger_dog_tp30 (the first in-play price movement); SPLIT half at 2x, half at 3x of the ask
+    # (cap 0.98), filled only on a traded print, else held; HOLD on the same entries. Research (Olu,
+    # real asks, 149 settled matches): 21 entries, 7 won, 14 reached 2x; split +43% (z 1.7, halves
+    # +44% / +42%), hold +24%. 3-15c and the ATP main tour lost. Fresh record from 2026-10-26.
+    dict(id="challenger_cheap_split", label="Challenger cheap side · split 2x / 3x", series=["KXATPCHALLENGERMATCH"],
+         picker=C.band_picker(0.15, 0.30, ("yes",), spread=0.05), max_spread=0.05, entry_hours=(1,),
+         exits=("hold", C.SPLIT), headline=C.SPLIT, first=True, since="2026-10-26", duration_min=120,
+         note="A Challenger player priced 15-30c (spread 5c or less) an hour before the match, with a split resting sell: "
+              "half at 2x, half at 3x of the ask paid. Start from the first in-play price movement, as challenger_dog_tp30."),
     dict(id="challenger_dog_tp30", label="Challenger underdog · sell +30%", series=["KXATPCHALLENGERMATCH"], picker=DOG,
          entry_hours=(1,), headline="tp30", since=FIRST_NIGHT, duration_min=120,
          note="A Challenger player priced 10-40c an hour before the match, with a resting sell at +30%. Start from the first in-play price movement (Kalshi's occurrence time is near the END). 24h books are empty, so 1h only."),
