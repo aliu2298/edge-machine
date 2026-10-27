@@ -14,7 +14,6 @@ Paper only. The ledgers are written by culture_track.py, culture_production.py a
 (culture.yml, hourly); this page reads them.
 """
 import os
-import re
 
 import culture_production as CP
 import culture_track as K
@@ -29,7 +28,6 @@ DESCRIPTION = ("Kalshi culture markets on paper: cheap side + resting take-profi
                "sales, beside the same entries held.")
 # The cheap-side lanes, in page order (weekly mentions strict, wide; monthly strict, wide; album YES, NO).
 CHEAP = (MS.STRICT, MS.WIDE, MS.MONTH, MS.MONTH_WIDE, MS.ALBUM, MS.ALBUM_NO)
-SHORT = {cfg["lane"]: cfg["label"] for cfg in CHEAP}      # the card titles, the same words in the summary
 SECTIONS = (("standard", "Standard"), ("lanes", "Lanes"), ("models", "Model lanes"), ("archive", "Archive"))
 # The old lanes, shown in the Archive only (2026-10-27).
 ARCHIVE = ("mentions_rate", "culture_endgame", "culture_fav_band")
@@ -73,47 +71,13 @@ def _rec(r):
             if n and roi is not None else "nothing settled yet")
 
 
-def status(settled):
-    """Where a lane stands against the review rule: review at 10 settled, decide at 30."""
-    if settled >= MS.DECIDE_AT:
-        return f"{settled} settled · decide now (30 reached)"
-    if settled >= MS.REVIEW_AT:
-        return f"{settled} settled · review due (10 reached) · decide at 30"
-    return f"{settled} settled · review at 10, decide at 30"
-
-
-def avg_spread(state):
-    sp = [e["spread"] for e in state.get("entries") or [] if e.get("spread") is not None]
-    return sum(sp) / len(sp) if sp else None
-
-
-def _sp(x):
-    return MS._px(x) if x is not None else "—"
+status = MS.status          # the review rule's status line (moved to mentions_split, 2026-10-27)
 
 
 def summary(states, esc):
-    """One row per cheap-side lane."""
-    rows = []
-    for cfg in CHEAP:
-        st = states[cfg["lane"]]
-        r = MS.record(st.get("entries") or [])
-        rows.append(
-            f'<tr><td><a href="#{esc(cfg["anchor"])}">{esc(SHORT[cfg["lane"]])}</a></td>'
-            f'<td class="num">{r["entries"]}</td><td class="num">{r["settled"]}</td><td class="num">{r["won"]}</td>'
-            f'<td class="num">{MS._pct(r["roi"])}</td><td class="num">{MS._pct(r["roi_held"])}</td>'
-            f'<td class="num">{r["filled_2x"]} / {r["filled_3x"]}</td><td class="num">{_sp(avg_spread(st))}</td>'
-            f'<td>{esc(status(r["settled"]))}</td></tr>')
-    spread_line = " · ".join(
-        f'{w} mentions, strict v wide average spread paid {_sp(avg_spread(states[a["lane"]]))} v '
-        f'{_sp(avg_spread(states[b["lane"]]))}'
-        for a, b, w in ((MS.STRICT, MS.WIDE, "Weekly"), (MS.MONTH, MS.MONTH_WIDE, "Monthly")))
-    return ('<div class="tbl"><table class="culture-summary"><thead><tr><th>Lane</th><th class="num">Entries</th>'
-            '<th class="num">Settled</th><th class="num">Won</th><th class="num">Split ROI</th><th class="num">Hold ROI</th>'
-            '<th class="num">Legs filled 2x / 3x</th><th class="num">Avg spread paid</th><th>Status</th></tr></thead>'
-            f'<tbody>{"".join(rows)}</tbody></table></div>'
-            f'<p class="sm mut" id="spread-paid">{esc(spread_line)}. ROI is after fees, the mean per entry (equal '
-            'stake); split ROI counts entries whose two legs are resolved, hold ROI entries whose market has '
-            'settled.</p>')
+    """One row per cheap-side lane, and the strict v wide spread line for the mention lanes."""
+    return MS.summary(CHEAP, states, esc, pairs=((MS.STRICT, MS.WIDE, "Weekly mentions"),
+                                                  (MS.MONTH, MS.MONTH_WIDE, "Monthly mentions")))
 
 
 def model_lanes(state, now, esc):
@@ -164,27 +128,7 @@ def archive(state, now, esc):
             f'<ul class="sm">{"".join(out)}</ul></details>')
 
 
-_TABLE = re.compile(r"<table([^>]*)>(.*?)</table>", re.S)
-
-
-def label_cells(page):
-    """Name every body cell for its column (data-l), for the phone layout, which stacks each row into
-    a card under 760px. sandbox_build.label_cells leaves tables that already have a <thead> alone,
-    and every table here has one, so the Culture page labels its own (one header row, no colspans
-    except a full-width "No entry yet." row, which is left as it is)."""
-    def table(m):
-        body = m.group(2)
-        heads = [re.sub(r"<[^>]+>", "", x) for x in re.findall(r"<th[^>]*>(.*?)</th>", body.split("</thead>", 1)[0], re.S)]
-        if "</thead>" not in body:
-            return m.group(0)
-        head, rest = body.split("</thead>", 1)
-
-        def row(rm):
-            cells = iter(heads)
-            return re.sub(r"<td(?![^>]*colspan)([^>]*)>", lambda c: f'<td{c.group(1)} data-l="{C.esc(next(cells, ""))}">',
-                          rm.group(0))
-        return f"<table{m.group(1)}>{head}</thead>" + re.sub(r"<tr>.*?</tr>", row, rest, flags=re.S) + "</table>"
-    return _TABLE.sub(table, page)
+label_cells = MS.label_cells   # phone labels for tables with a <thead> (moved to mentions_split)
 
 
 def build(state=None, now=None, split_state=None, wide_state=None, month_state=None, month_wide_state=None,

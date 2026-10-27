@@ -88,7 +88,9 @@ for gone in ("progressbar", "crypto-hero", "<meter", "<progress", "tn-pick", "cr
     ok(gone not in html, f"the page does not print {gone!r}")
 
 print("\ntiles")
-cells = re.findall(r'<div class="tile">(.*?)</div>', main)
+# The cheap-side section (2026-10-27) carries its own lane cards' tiles; the page's header tiles
+# are the ones before it.
+cells = re.findall(r'<div class="tile">(.*?)</div>', main.split('id="cheap-side"', 1)[0])
 eq(len(cells), 4, "four stat tiles")
 rows = C.commod_rows(ledger, stages)
 fav = C._fav_row(rows)

@@ -30,8 +30,10 @@ Each entry's ROI is per contract after fees; the lane ROI is the mean over entri
 entry), beside the same entries held to settlement and with the 2x leg only, for comparison.
 """
 import datetime as dt
+import html as _html
 import json
 import os
+import re
 
 import daily_track as D
 
@@ -139,6 +141,41 @@ ALBUM_NO = dict(ALBUM, lane="album_cheap_no", label="Album · cheap NO",
                 rule=ALBUM_NO_RULE, anchor="album-cheap-no",
                 skip="no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h")
 LANES = (STRICT, WIDE, MONTH, MONTH_WIDE, ALBUM, ALBUM_NO)
+
+# COMMODITIES (2026-10-27, Olu): the same cheap-side standard on two daily commodity ladders, shown
+# on the Commodities page and read by daily-research.yml (`python3 mentions_split.py commodities`),
+# which already reads the gas ladder hourly. Entry is replayed from minute candles, so no window
+# stamp is needed: an hourly read finds the first in-band minute after the fact. Only the series'
+# OPEN events are listed (open_only; KXWTI keeps a long monthly-style event too), plus any event a
+# lane already holds until it settles; an event that opened more than 7 days before the lane first
+# saw it is not backfilled (its opening minute candles are no longer served).
+#   wti_cheap_yes   KXWTI: YES ask 0.15-0.30, spread 5c or less. Research (Olu, real asks, last 60
+#                   events): 216 bets, 72 won; split +29% (z 1.8, halves +40 / +19), hold +36%.
+#   gas_cheap_no    KXAAAGASD: NO ask (1 - YES bid) 0.15-0.30, spread 5c or less; a NO leg fills when
+#                   the YES traded low is at or under 1 - target. Research: 118 bets, 29 won; split +30%
+#                   (z 2.3, halves +27 / +32), hold -3%.
+# Every 3-15c band lost, so neither lane enters under 0.15.
+_COMMOD_RULE = ("{series} only. For each rung, the first minute quote inside 6h of its open with a spread of 5c or "
+                "less and a {side} ask of 0.15-0.30{no_def}: buy {side} at that ask (never under 0.15: that band "
+                "lost). HOLD: held to settlement. SPLIT, on the same entries: half resting at 2x, half at 3x of the "
+                "ask paid, each capped at 0.98, filled only when a trade prints at or above it{no_fill}, else "
+                "held. Taker fee in, maker fee out.")
+WTI = dict(WIDE, lane="wti_cheap_yes", label="WTI oil · cheap YES (15-30c)",
+           path=os.path.join(ROOT, "data", "wti_cheap_yes_ledger.json"), spread=0.05, band=(0.15, 0.30),
+           band_in_quote=True, series="KXWTI", start="2026-10-27T04:00:00+00:00", registered="2026-10-27",
+           backfill_open=True, open_only=True, backfill_days=7, anchor="wti-cheap-yes",
+           rule=_COMMOD_RULE.format(series="KXWTI (WTI daily)", side="YES", no_def="", no_fill=""),
+           skip="no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+           backfill="every event still open when the lane first ran (opened in the last 7 days) is replayed "
+                    "from its opening candles", compare_id=None, unit="Event", item="Rung")
+GAS = dict(WTI, lane="gas_cheap_no", label="AAA gas · cheap NO (15-30c)", side="no",
+           path=os.path.join(ROOT, "data", "gas_cheap_no_ledger.json"), series="KXAAAGASD", anchor="gas-cheap-no",
+           rule=_COMMOD_RULE.format(series="KXAAAGASD (AAA national gas daily)", side="NO",
+                                    no_def=" (1 - the YES bid)", no_fill=" on the NO side (the YES traded low at "
+                                                                          "or under 1 - the target)"),
+           skip="no quote with a 5c spread and a NO ask of 0.15-0.30 inside 6h")
+COMMOD_LANES = (WTI, GAS)
+GROUPS = {"culture": LANES, "commodities": COMMOD_LANES}
 
 
 def fee(p, rate):
@@ -263,8 +300,20 @@ def load(path=None, cfg=STRICT):
     return s
 
 
-def events(fetch, series=SERIES):
-    return D.pages(f"events?series_ticker={series}&with_nested_markets=true&limit=200", "events", fetch)
+def events(fetch, series=SERIES, open_only=False):
+    return D.pages(f"events?series_ticker={series}{'&status=open' if open_only else ''}&with_nested_markets=true"
+                   "&limit=200", "events", fetch)
+
+
+def held_events(state, listed, fetch):
+    """The events a lane holds an unsettled entry on that the open-events list no longer carries."""
+    out = []
+    for tick in sorted({e["event"] for e in state["entries"] if not done(e)} - set(listed)):
+        d = fetch(f"events/{tick}?with_nested_markets=true")
+        ev = dict(d.get("event") or {}, event_ticker=tick)
+        ev["markets"] = (d.get("event") or {}).get("markets") or d.get("markets") or []
+        out.append(ev)
+    return out
 
 
 def candles(event, start_ts, end_ts, fetch, minutes=60, series=SERIES):
@@ -279,7 +328,10 @@ def run(state, now=None, fetch=D.get, cfg=STRICT):
     start_ts = _ts(cfg["start"])
     obs = dict(at=now.isoformat(), events=0, entered=0, skipped=0, filled=0, waiting=0)
     have = {e["id"] for e in state["entries"]}
-    for ev in events(fetch, cfg["series"]):
+    evs = events(fetch, cfg["series"], cfg.get("open_only", False))
+    if cfg.get("open_only"):
+        evs = evs + held_events(state, [x.get("event_ticker") for x in evs], fetch)
+    for ev in evs:
         tick = ev.get("event_ticker")
         ms = [m for m in ev.get("markets") or [] if _ts(m.get("open_time"))]
         if not ms:
@@ -290,6 +342,10 @@ def run(state, now=None, fetch=D.get, cfg=STRICT):
             # and then kept (state["events"]) until everything on it settles.
             if not (cfg.get("backfill_open") and (tick in state["events"]
                                                   or any(m.get("status") in ("active", "open") for m in ms))):
+                continue
+            # backfill_days: only events opened that recently (older opening candles are not served).
+            if (tick not in state["events"] and cfg.get("backfill_days") is not None
+                    and min(_ts(m["open_time"]) for m in ms) < now_ts - cfg["backfill_days"] * 86400):
                 continue
         state["events"].setdefault(tick, now.isoformat())
         obs["events"] += 1
@@ -391,8 +447,10 @@ def weeks(entries):
     return [(k, record(v)) for k, v in sorted(out.items(), reverse=True)]
 
 
-def main():
-    for cfg in LANES:
+def main(argv=None):
+    import sys
+    argv = sys.argv[1:] if argv is None else argv
+    for cfg in GROUPS[argv[0] if argv else "culture"]:
         state = load(cfg=cfg)
         try:
             run(state, cfg=cfg)
@@ -490,3 +548,72 @@ def section(state, esc, cfg=STRICT):
             + (" (" + "; ".join(f"{k}: {v}" for k, v in sorted(why.items())) + ")" if why else "")
             + (f'. Last read {esc(str(state.get("last_success"))[:16].replace("T", " "))}Z' if state.get("last_success") else ". Not read yet")
             + (f' · {esc(state["error"])}' if state.get("error") else "") + '.</p></section>')
+
+
+# ------------------------------------------------------------------ shared page parts (2026-10-27)
+def status(settled):
+    """Where a lane stands against the review rule: review at 10 settled, decide at 30."""
+    if settled >= DECIDE_AT:
+        return f"{settled} settled · decide now (30 reached)"
+    if settled >= REVIEW_AT:
+        return f"{settled} settled · review due (10 reached) · decide at 30"
+    return f"{settled} settled · review at 10, decide at 30"
+
+
+def avg_spread(state):
+    sp = [e["spread"] for e in state.get("entries") or [] if e.get("spread") is not None]
+    return sum(sp) / len(sp) if sp else None
+
+
+def _sp(x):
+    return _px(x) if x is not None else "—"
+
+
+def summary(cfgs, states, esc, pairs=()):
+    """The cheap-side summary table: one row per lane in `cfgs` (states keyed by lane id), then, for each
+    (strict, wide, name) in `pairs`, the strict v wide average spread paid."""
+    rows = []
+    for cfg in cfgs:
+        st = states[cfg["lane"]]
+        r = record(st.get("entries") or [])
+        rows.append(
+            f'<tr><td><a href="#{esc(cfg["anchor"])}">{esc(cfg["label"])}</a></td>'
+            f'<td class="num">{r["entries"]}</td><td class="num">{r["settled"]}</td><td class="num">{r["won"]}</td>'
+            f'<td class="num">{_pct(r["roi"])}</td><td class="num">{_pct(r["roi_held"])}</td>'
+            f'<td class="num">{r["filled_2x"]} / {r["filled_3x"]}</td><td class="num">{_sp(avg_spread(st))}</td>'
+            f'<td>{esc(status(r["settled"]))}</td></tr>')
+    spread_line = "".join(
+        f'{w}, strict v wide average spread paid {_sp(avg_spread(states[a["lane"]]))} v '
+        f'{_sp(avg_spread(states[b["lane"]]))}. '
+        for a, b, w in pairs)
+    return ('<div class="tbl"><table class="culture-summary"><thead><tr><th>Lane</th><th class="num">Entries</th>'
+            '<th class="num">Settled</th><th class="num">Won</th><th class="num">Split ROI</th><th class="num">Hold ROI</th>'
+            '<th class="num">Legs filled 2x / 3x</th><th class="num">Avg spread paid</th><th>Status</th></tr></thead>'
+            f'<tbody>{"".join(rows)}</tbody></table></div>'
+            f'<p class="sm mut" id="spread-paid">{esc(spread_line)}ROI is after fees, the mean per entry (equal '
+            'stake); split ROI counts entries whose two legs are resolved, hold ROI entries whose market has '
+            'settled.</p>')
+
+
+_esc = lambda x: _html.escape(str(x), quote=True)
+_TABLE = re.compile(r"<table([^>]*)>(.*?)</table>", re.S)
+
+
+def label_cells(page):
+    """Name every body cell for its column (data-l), for the phone layout, which stacks each row into
+    a card under 760px. sandbox_build.label_cells leaves tables that already have a <thead> alone,
+    and every table here has one, so the Culture page labels its own (one header row, no colspans
+    except a full-width "No entry yet." row, which is left as it is)."""
+    def table(m):
+        body = m.group(2)
+        heads = [re.sub(r"<[^>]+>", "", x) for x in re.findall(r"<th[^>]*>(.*?)</th>", body.split("</thead>", 1)[0], re.S)]
+        if "</thead>" not in body:
+            return m.group(0)
+        head, rest = body.split("</thead>", 1)
+
+        def row(rm):
+            cells = iter(heads)
+            return re.sub(r"<td(?![^>]*colspan)([^>]*)>", lambda c: f'<td{c.group(1)} data-l="{_esc(next(cells, ""))}">',
+                          rm.group(0))
+        return f"<table{m.group(1)}>{head}</thead>" + re.sub(r"<tr>.*?</tr>", row, rest, flags=re.S) + "</table>"
+    return _TABLE.sub(table, page)
