@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-27T01:00:20+00:00",
+ "board_built_at": "2026-10-27T01:30:25+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -708,6 +708,80 @@
    "source": "nba_tt_value_1h",
    "sport": "nba_tt",
    "status": "hit"
+  },
+  "2026-10-26|KXNBATEAMTOTAL-26OCT26WASCHA-CHA117|Charlotte over 116.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt",
+    "n": 116.5,
+    "team": "Charlotte"
+   },
+   "date": "2026-10-26",
+   "edge_at_log": 0.1131,
+   "first_seen": "2026-10-26",
+   "headline": "Charlotte over 116.5 points",
+   "home": null,
+   "id": "2026-10-26|KXNBATEAMTOTAL-26OCT26WASCHA-CHA117|Charlotte over 116.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-26T23:00Z",
+   "lane": "production",
+   "league": "NBA",
+   "match": "WSH @ CHA",
+   "model_prob": 0.5905,
+   "pair": "nba_tt_value_1h|nba_tt",
+   "price_at_log": 0.46,
+   "published_at": "2026-10-27T01:30:25+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Charlotte over 116.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT26WASCHA",
+    "market": "KXNBATEAMTOTAL-26OCT26WASCHA-CHA117",
+    "outcome": "Charlotte over 116.5 points",
+    "outcome_side": "yes",
+    "price_at_log": 0.46,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_1h:401909868:CHA",
+   "source": "nba_tt_value_1h",
+   "sport": "nba_tt",
+   "status": "miss"
+  },
+  "2026-10-26|KXNBATEAMTOTAL-26OCT26WASCHA-WAS112|Washington under 111.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt_no",
+    "n": 111.5,
+    "team": "Washington"
+   },
+   "date": "2026-10-26",
+   "edge_at_log": 0.0861,
+   "first_seen": "2026-10-26",
+   "headline": "Washington under 111.5 points",
+   "home": null,
+   "id": "2026-10-26|KXNBATEAMTOTAL-26OCT26WASCHA-WAS112|Washington under 111.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-26T23:00Z",
+   "lane": "production",
+   "league": "NBA",
+   "match": "WSH @ CHA",
+   "model_prob": 0.5534,
+   "pair": "nba_tt_value_1h|nba_tt",
+   "price_at_log": 0.45,
+   "published_at": "2026-10-27T01:30:25+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Washington under 111.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT26WASCHA",
+    "market": "KXNBATEAMTOTAL-26OCT26WASCHA-WAS112",
+    "outcome": "Washington over 111.5 points",
+    "outcome_side": "no",
+    "price_at_log": 0.45,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_1h:401909868:WSH",
+   "source": "nba_tt_value_1h",
+   "sport": "nba_tt",
+   "status": "hit"
   }
  },
  "pairs": {
@@ -718,18 +792,18 @@
    "ready_at": "2026-10-24T22:13:00+00:00",
    "route": "moved by hand on 2026-10-24",
    "routing": {
-    "leads": 16,
+    "leads": 18,
     "problem": null,
-    "routed": 16,
+    "routed": 18,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 16,
-   "sandbox_roi": -0.0362,
-   "sandbox_roi_fee": -0.0362,
+   "sandbox_n": 18,
+   "sandbox_roi": -0.0244,
+   "sandbox_roi_fee": -0.0244,
    "timing": {
     "late": [],
     "timed": 0,
@@ -785,5 +859,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-27T01:00:20+00:00"
+ "updated_at": "2026-10-27T01:30:25+00:00"
 }
