@@ -2,11 +2,11 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-27T01:00:14.938831+00:00",
-   "last_success": "2026-10-27T01:00:14.938831+00:00",
+   "last_run": "2026-10-27T02:00:16.500458+00:00",
+   "last_success": "2026-10-27T02:00:16.500458+00:00",
    "observations": {
-    "at": "2026-10-27T01:00:14.938831+00:00",
-    "events": 980,
+    "at": "2026-10-27T02:00:16.500458+00:00",
+    "events": 976,
     "reasons": {},
     "retired": "2026-10-24"
    },
@@ -542,11 +542,11 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-27T01:00:14.938831+00:00",
-   "last_success": "2026-10-27T01:00:14.938831+00:00",
+   "last_run": "2026-10-27T02:00:16.500458+00:00",
+   "last_success": "2026-10-27T02:00:16.500458+00:00",
    "observations": {
-    "at": "2026-10-27T01:00:14.938831+00:00",
-    "events": 980,
+    "at": "2026-10-27T02:00:16.500458+00:00",
+    "events": 976,
     "reasons": {},
     "retired": "2026-10-24"
    },
@@ -896,19 +896,18 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-27T01:00:14.938831+00:00",
-   "last_success": "2026-10-27T01:00:14.938831+00:00",
+   "last_run": "2026-10-27T02:00:16.500458+00:00",
+   "last_success": "2026-10-27T02:00:16.500458+00:00",
    "observations": {
-    "at": "2026-10-27T01:00:14.938831+00:00",
-    "events": 980,
+    "at": "2026-10-27T02:00:16.500458+00:00",
+    "events": 976,
     "news_guard": [],
     "reasons": {
      "NO under 0.60 (floor 2026-10-26)": 2,
      "already near-certain (under 10c or over 90c)": 11,
-     "edge 5c+": 3,
-     "edge under 5c": 1,
+     "edge 5c+": 2,
      "monthly or company series (excluded 2026-10-26)": 76,
-     "no quote or spread too wide": 29
+     "no quote or spread too wide": 31
     }
    },
    "picks": [
@@ -2161,11 +2160,11 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-27T01:00:14.938831+00:00",
-   "last_success": "2026-10-27T01:00:14.938831+00:00",
+   "last_run": "2026-10-27T02:00:16.500458+00:00",
+   "last_success": "2026-10-27T02:00:16.500458+00:00",
    "observations": {
-    "at": "2026-10-27T01:00:14.938831+00:00",
-    "events": 980,
+    "at": "2026-10-27T02:00:16.500458+00:00",
+    "events": 976,
     "reasons": {
      "under 20 reviews counted": 15,
      "within 1 point of the line": 5
@@ -2491,7 +2490,7 @@
    "days": []
   },
   "Bibi / Netanyahu": {
-   "at": "2026-10-26T18:00:17.779499+00:00",
+   "at": "2026-10-27T02:00:16.500458+00:00",
    "days": [
     "2026-09-13",
     "2026-09-26",
