@@ -347,7 +347,8 @@ check("the stop variants are judged against hold with the same stop", C.control_
 print("\nthe Sandbox section")
 empty_html = CB.section(C.empty())
 check("no lane registered says so", ('id="chaos"' in empty_html, "No chaos lane is registered yet" in empty_html), (True, True))
-html = CB.section(st)
+# The Chaos section is an index since 2026-10-27; each lane's card is on its sport page (CB.lane_html).
+html = CB.section(st) + "".join(CB.lane_html(L) for L in st["lanes"].values())
 check("a lane's section: its name, the fresh-record note, every entry time and exit",
       ("Test lane" in html, "fresh record since 2026-10-24" in html, all(C.variant_label(k) in html for k in C.variants_of(Ls))), (True, True, True))
 check("lane v hold control: the control column and the v hold column", ("Hold control" in html, "v hold" in html), (True, True))

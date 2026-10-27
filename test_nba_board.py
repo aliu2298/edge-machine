@@ -445,9 +445,9 @@ ok(nba_tab is not None and 'aria-current="page"' in nba_tab.group(0)
    and main_nav.count('aria-current="page"') == 1 and HTML.count('<nav class="main"') == 1,
    "only the NBA pill is current")
 ok('<script src="./sports.js"></script>' in HTML, "the NBA page still loads sports.js")
-ok('<nav class="toc" aria-label="On this page"><a href="#matchups">Upcoming</a><a href="#rules">Rules</a><a href="#value">Value</a><a href="#ladder">Ladder</a><a href="#safe-card">Safe Card</a><a href="#graded">Results</a><a href="#teams">Teams</a></nav>' in HTML
+ok('<nav class="toc" aria-label="On this page"><a href="#cheap-side">Cheap side</a><a href="#matchups">Upcoming</a><a href="#rules">Rules</a><a href="#value">Value</a><a href="#ladder">Ladder</a><a href="#safe-card">Safe Card</a><a href="#graded">Results</a><a href="#teams">Teams</a></nav>' in HTML
    and "nba-local-nav" not in HTML,
-   "the Upcoming / Results / Teams jump pills are the shared sub-nav, not a local pill bar")
+   "the Cheap side / Upcoming / Results / Teams jump pills are the shared sub-nav, not a local pill bar")
 head = HTML.split('<section id="matchups">', 1)[0]
 ok("<h1>NBA</h1>" in head and '<p class="eyebrow">Research board</p>' in head
    and '<p class="scope">Expected combined points · tip times Central</p>' in head
@@ -474,8 +474,13 @@ labelled = HTML
 
 
 def _safe_card_theads(html):
-    m = re.search(r'<section id="safe-card">.*?</section>', html, re.S)
-    return m.group(0).count("<thead>") if m else 0
+    """The live-ledger tables, counted apart: the Safe Card's (2026-10-22) and the cheap-side section's
+    (the chaos lanes' home, 2026-10-27)."""
+    n = 0
+    for sec in ("safe-card", "cheap-side"):
+        m = re.search(rf'<section id="{sec}">.*?</section>', html, re.S)
+        n += m.group(0).count("<thead>") if m else 0
+    return n
 
 
 ok(HTML.count('data-l=""') >= 1 and 'data-l="" data-l=' not in HTML

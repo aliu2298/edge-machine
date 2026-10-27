@@ -662,7 +662,7 @@ def build(blob=None, now=None):
         "Edge Machine · NBA",
         "NBA matchups, pace labels, and combined expectations. Preseason. No bets.",
         "nba",
-        (("matchups", "Upcoming"), ("rules", "Rules"), ("value", "Value"), ("ladder", "Ladder"), ("safe-card", "Safe Card"),
+        (("cheap-side", "Cheap side"), ("matchups", "Upcoming"), ("rules", "Rules"), ("value", "Value"), ("ladder", "Ladder"), ("safe-card", "Safe Card"),
          ("graded", "Results"), ("teams", "Teams")),
         C.stamp(clock),
         body,
@@ -672,6 +672,9 @@ def build(blob=None, now=None):
     # Every cell named for its column and the header rows in <thead>, so the
     # phone cards work on this page however it is written out.
     import sandbox_build
+    # nba_ml_dog_tp50 and nba_tt_cheap_tp30's home (2026-10-27): the cheap-side section at the top.
+    import chaos_build
+    page = chaos_build.place(page, "nba", before='<section id="matchups"')
     return sandbox_build.label_cells(page)
 
 

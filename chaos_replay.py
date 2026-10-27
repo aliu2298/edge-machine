@@ -546,6 +546,10 @@ def lane_state(state, lane, now):
             caution=lane.get("caution") or "", watch=bool(lane.get("watch")), replayed={}, trades=[], skipped={})
     # The lane's exits as configured now (the split joined every lane on 2026-10-27; additive only).
     L["exits"] = list(lane_exits(lane))
+    # Retired by hand (lane["retired"] = dict(on, at, reason)): kept on the record for the pages; no event
+    # from its `on` night is replayed. Nothing already recorded is touched.
+    if lane.get("retired"):
+        L["retired"] = dict(lane["retired"])
     for k in ("label", "note", "headline", "first"):
         if lane.get(k) is not None:
             L[k] = lane[k]
@@ -593,6 +597,8 @@ def run(state, lanes, now=None, fetch=D.get):
             for event in events:
                 day = event_date(event)
                 if event in L["replayed"] or event in L["skipped"] or day is None or day < since - dt.timedelta(days=1):
+                    continue
+                if lane.get("retired") and day.isoformat() >= lane["retired"]["on"]:
                     continue
                 if done >= MAX_EVENTS_PER_RUN:
                     break

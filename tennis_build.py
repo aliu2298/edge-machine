@@ -49,14 +49,8 @@ def _cheap_side(html):
     """The tennis chaos lanes as the page's "Cheap side + resting take-profit" section, at the top of the
     page before the rules (2026-10-27: the tennis strategy now). From data/chaos_ledger.json, the same
     records as the Sandbox's Chaos section. Never breaks the page."""
-    try:
-        import chaos_build
-        import sandbox_build
-        # Labelled here (phone cards), not only by the Sandbox build's pass, so every caller of build() gets it.
-        sec = sandbox_build.label_cells(chaos_build.tennis_section())
-        return html.replace('<section id="rules"', sec + '<section id="rules"', 1)
-    except Exception:                                           # noqa: BLE001
-        return html
+    import chaos_build
+    return chaos_build.place(html, "tennis", before='<section id="rules"')
 
 
 def _atp_totals(html):

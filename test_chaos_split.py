@@ -90,34 +90,39 @@ def tr(lane, k, roi, won, night="2026-10-26", f2=False, f3=False, hours=1, ticke
 
 
 state = {"lanes": {
-    "challenger_dog_tp30": dict(id="challenger_dog_tp30", label="Challenger underdog · sell +30%", since="2026-10-25",
+    "atp_coinflip_tp30": dict(id="atp_coinflip_tp30", label="ATP coin-flip · sell +30%", since="2026-10-25",
                                 entry_hours=[1], exits=list(C.LANE_EXITS), series=["KXATPCHALLENGERMATCH"], replayed={"a": 1},
                                 trades=[tr(0, "hold", -1.0, False), tr(0, "tp30", 0.3, True)]),
     "challenger_cheap_split": dict(id="challenger_cheap_split", label="Challenger cheap side · split 2x / 3x", first=True,
                                    since="2026-10-26", entry_hours=[1], exits=["hold", "split"], series=["KXATPCHALLENGERMATCH"],
                                    replayed={"b": 1}, trades=[tr(0, "hold", 1.5, True), tr(0, "split", 1.0, True, f2=True, f3=True)])},
     "last_run": "2026-10-27T09:00:00+00:00"}
-h = CB.section(state)
+# The Sandbox's Chaos section is an index (2026-10-27); the summary and cards render on the sport page.
+h = CB.sport_section("tennis", state)
 text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", h))
-check("the standard header", all(x in text for x in ("Cheap side + resting take-profit", "rest a split sell, half at 2x and half at 3x",
-                                                  "a fill counts only on a traded print", "every lane next to the same entries held")), True)
+check("the standard header", all(x in text for x in ("Cheap side + resting take-profit", "Rest a split sell: half at 2x, half at 3x.",
+                                                  "A fill counts only on a traded print.", "Every lane is shown next to the same entries held.")), True)
 summ = h[h.find('class="chaos-summary"'):h.find("</table>", h.find('class="chaos-summary"'))]
-check("the summary: challenger_cheap_split first, then the others in their order",
-      re.findall(r'data-lane="([^"]+)"', summ), ["challenger_cheap_split", "challenger_dog_tp30"])
+check("the summary: challenger_cheap_split first, then the other tennis lane",
+      re.findall(r'data-lane="([^"]+)"', summ), ["challenger_cheap_split", "atp_coinflip_tp30"])
 check("its columns", [re.sub(r"<[^>]+>", "", x) for x in re.findall(r"<th[^>]*>(.*?)</th>", summ)],
-      ["Lane", "Entries", "Settled", "Won", "Split ROI", "Hold ROI", "Legs filled 2x / 3x", "Status"])
+      ["Lane", "Entries", "Settled", "Won", "Split ROI", "Hold ROI", "Legs filled 2x / 3x", "Avg spread paid", "Status"])
 check("the new lane's row: 1 entry, 1 settled, 1 won, +100% split, +150% hold, legs 1 / 1, review at 10",
-      "Challenger cheap side · split 2x / 3x 1 1 1 +100.0% +150.0% 1 / 1 1 settled · review at 10, decide at 30" in text, True)
+      "Challenger cheap side · split 2x / 3x 1 1 1 +100.0% +150.0% 1 / 1 — 1 settled · review at 10, decide at 30" in text, True)
 check("an older lane without split rows yet shows — for split, and says the split is being added",
-      ("Challenger underdog · sell +30% 1 1 0 — −100.0%" in text.replace("-100.0%", "−100.0%"),
+      ("ATP coin-flip · sell +30% 1 1 0 — −100.0%" in text.replace("-100.0%", "−100.0%"),
        "the split joined this lane on 2026-10-27 and is being added to its earlier entries" in text), (True, True))
+idx = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", CB.section(state)))
+check("the Sandbox's Chaos section is an index: rows and links to the sport pages, no cards",
+      ("Challenger cheap side · split 2x / 3x Tennis 1 1 +100.0% +150.0%" in idx, 'href="./tennis.html#cheap-side"' in CB.section(state),
+       "Split v hold" in CB.section(state)), (True, True, False))
 cards = re.findall(r'<details class="section-disclosure" data-lane="([^"]+)" open>', h)
-check("the cards in the same order", cards, ["challenger_cheap_split", "challenger_dog_tp30"])
-old_card = h[h.find('data-lane="challenger_dog_tp30" open'):]
+check("the cards in the same order", cards, ["challenger_cheap_split", "atp_coinflip_tp30"])
+old_card = h[h.find('data-lane="atp_coinflip_tp30" open'):]
 check("each card shows split v hold first; the old targets sit in a collapsed Other exits block",
       (old_card.find("Split v hold") < old_card.find("<summary><b>Other exits</b>"),
        '<details class="section-disclosure"><summary><b>Other exits</b>' in old_card, "sell at +30%" in old_card), (True, True, True))
-new_card = h[h.find('data-lane="challenger_cheap_split" open'):h.find('data-lane="challenger_dog_tp30" open')]
+new_card = h[h.find('data-lane="challenger_cheap_split" open'):h.find('data-lane="atp_coinflip_tp30" open')]
 check("the split lane has no Other exits block (it carries only hold and split)", "Other exits" in new_card, False)
 check("tables stay header-row tables for the phone labels", ("<thead>" not in h, h.count("<table") == h.count('<div class="tbl"><table')),
       (True, True))

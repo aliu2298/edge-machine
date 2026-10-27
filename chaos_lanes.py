@@ -103,8 +103,11 @@ LANES = [
          exits=("hold", C.SPLIT), headline=C.SPLIT, first=True, since="2026-10-26", duration_min=120,
          note="A Challenger player priced 15-30c (spread 5c or less) an hour before the match, with a split resting sell: "
               "half at 2x, half at 3x of the ask paid. Start from the first in-play price movement, as challenger_dog_tp30."),
+    # RETIRED 2026-10-27 (Olu): no new entries from that night on; its rows stay on the ledger as they are.
     dict(id="challenger_dog_tp30", label="Challenger underdog · sell +30%", series=["KXATPCHALLENGERMATCH"], picker=DOG,
          entry_hours=(1,), headline="tp30", since=FIRST_NIGHT, duration_min=120,
+         retired=dict(on="2026-10-27", at="45 settled, 13 won; hold -3.2%, split -7.9%, every target exit negative",
+                      reason="superseded by challenger_cheap_split (the 15-30c band)"),
          note="A Challenger player priced 10-40c an hour before the match, with a resting sell at +30%. Start from the first in-play price movement (Kalshi's occurrence time is near the END). 24h books are empty, so 1h only."),
     dict(id="cfb_dog_tp50", label="College football underdog · sell +50%", series=["KXNCAAFGAME"], picker=DOG,
          entry_hours=(1, 24), headline="tp50", since=FIRST_NIGHT, duration_min=210, start=espn_start("football/college-football"),
