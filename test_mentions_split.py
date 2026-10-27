@@ -417,9 +417,9 @@ check("their terms: KXWTI YES / KXAAAGASD NO, 15-30c, 5c spread, open events onl
         c["path"].rsplit("/", 1)[-1]) for c in (WT, GS)],
       [("wti_cheap_yes", "KXWTI", "yes", (0.15, 0.30), 0.05, True, 7, "wti_cheap_yes_ledger.json"),
        ("gas_cheap_no", "KXAAAGASD", "no", (0.15, 0.30), 0.05, True, 7, "gas_cheap_no_ledger.json")])
-check("the groups: culture runs the six culture lanes, commodities the two commodity lanes",
+check("the groups: culture runs the six culture lanes, commodities the commodity lanes",
       ([c["lane"] for c in M.GROUPS["commodities"]], WT in M.GROUPS["culture"], len(M.GROUPS["culture"])),
-      (["wti_cheap_yes", "gas_cheap_no"], False, 6))
+      (["wti_cheap_yes", "gas_cheap_no", "gas_week_cheap_no"], False, 6))
 check("never under 0.15: a tight 0.12 is passed over for a tight 0.18; 0.30 is in, 0.31 out",
       (M.entry_quote([tc(3, 0.09, 0.12), tc(6, 0.14, 0.18)], O, WT)[2], M.entry_quote([tc(3, 0.26, 0.30)], O, WT)[2],
        M.entry_quote([tc(3, 0.27, 0.31)], O, WT)), (0.18, 0.30, None))
@@ -475,6 +475,25 @@ check("the Commodities page: the cheap-side section before the Events, the summa
        'data-l="Split ROI"' in sec, "review at 10, decide at 30" in stx), (True,) * 8)
 check("the existing commodities rules are still on the page", all(n in gh_ for n in CB.RULE_NAMES.values()), True)
 check("no guarded public phrase in the commodities section", sandbox_audit.COPY_RE.findall(stx), [])
+
+print("\nthe weekly gas lane (2026-10-27): gas_week_cheap_no on KXAAAGASW, the wide rule")
+GW = M.GAS_WEEK
+check("its terms: KXAAAGASW, NO, 15-30c, 10c spread, open events only, own ledger, third commodity lane",
+      (GW["lane"], GW["series"], GW["side"], GW["band"], GW["spread"], GW["open_only"], GW["path"].rsplit("/", 1)[-1],
+       [c["lane"] for c in M.GROUPS["commodities"]]),
+      ("gas_week_cheap_no", "KXAAAGASW", "no", (0.15, 0.30), 0.10, True, "gas_week_cheap_no_ledger.json",
+       ["wti_cheap_yes", "gas_cheap_no", "gas_week_cheap_no"]))
+check("the wide rule: a 10c spread at NO 0.23 enters (the daily gas lane, 5c, would not)",
+      (M.entry_quote([tc(3, 0.77, 0.87)], O, GW)[1:3], M.entry_quote([tc(3, 0.77, 0.87)], O, M.GAS)), ((0.13, 0.23), None))
+check("its rule text says 10c and that it is small and slow",
+      ("a spread of 10c or less" in GW["rule"], "about 3 entries a week" in GW["rule"], "5c" in GW["rule"]), (True, True, False))
+gw_h = CB.build()
+gsec = gw_h[gw_h.find('id="cheap-side"'):gw_h.find('<section id="events"')]
+gtx = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", gsec))
+check("the Commodities page: a summary row and its card after gas_cheap_no, with the small-and-slow note",
+      ("AAA gas weekly · cheap NO (15-30c, 10c spread)" in gtx,
+       gsec.find('id="gas-cheap-no"') < gsec.find('id="gas-week-note"') < gsec.find('id="gas-week-cheap-no"'),
+       "about 3 entries a week, so 10 settled takes about a month. Review at 10, decide at 30." in gtx), (True, True, True))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

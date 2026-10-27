@@ -324,7 +324,10 @@ def cheap_side(states=None):
              '<p class="sm mut">Sandbox, paper only, fresh records from the first entry: review at 10 settled, decide at '
              '30. The same engine and wording as the Culture page.</p>'
              + MS.summary(MS.COMMOD_LANES, states, e)
-             + "".join(MS.section(states[cfg["lane"]], e, cfg) for cfg in MS.COMMOD_LANES) + '</section>')
+             + "".join((('<p class="sm" id="gas-week-note"><b>The weekly gas lane is small and slow: about 3 entries a '
+                         'week, so 10 settled takes about a month. Review at 10, decide at 30.</b></p>')
+                        if cfg is MS.GAS_WEEK else "") + MS.section(states[cfg["lane"]], e, cfg)
+                       for cfg in MS.COMMOD_LANES) + '</section>')
     return MS.label_cells(inner)
 
 
