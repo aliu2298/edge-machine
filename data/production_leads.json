@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-27T14:35:30+00:00",
+ "board_built_at": "2026-10-27T15:09:42+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -39,7 +39,7 @@
   "kalshi:26OCT26SEVOSA": "2026-10-26|Sevilla|Osasuna|Under 8 corners \u00b7 Corners total under"
  },
  "first_publish_min": 45,
- "late_publication_skipped": 9,
+ "late_publication_skipped": 10,
  "leads": {
   "2026-10-20|Bockelmann Evans, Felix|Machado, Miguel Angel|Machado, Miguel Angel to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
    "away": "Machado, Miguel Angel",
@@ -3190,6 +3190,43 @@
    "sport": "nfl",
    "status": "hit"
   },
+  "2026-10-27|KXWTI-26OCT2714-T99.49|Above $99.49 at the close \u00b7 Commodities favourite band": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-10-27",
+   "edge_at_log": null,
+   "first_seen": "2026-10-27",
+   "headline": "Above $99.49 at the close",
+   "home": null,
+   "id": "2026-10-27|KXWTI-26OCT2714-T99.49|Above $99.49 at the close \u00b7 Commodities favourite band",
+   "kickoff": "2026-10-27T18:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-27",
+   "last_seen_at": "2026-10-27T15:09:42+00:00",
+   "league": "Commodities \u00b7 Favourite band",
+   "match": "WTI crude close on Oct 27, 2026",
+   "pair": "commod_fav_band|commodities_fav",
+   "price_at_log": 0.71,
+   "published_at": "2026-10-27T15:09:42+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 200,
+   "route": {
+    "claim": "Above $99.49 at the close",
+    "event": "KXWTI-26OCT2714",
+    "market": "KXWTI-26OCT2714-T99.49",
+    "outcome": "Above $99.49",
+    "outcome_side": "yes",
+    "price_at_log": 0.71,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "commod_fav_band:KXWTI-26OCT2714-T99.49",
+   "source": "commod_fav_band",
+   "sport": "commodities_fav",
+   "status": "pending"
+  },
   "2026-10-28|Charlotte FC|CF Montr\u00e9al|Charlotte FC to score 2+ \u00b7 Team scores 2+ form rule": {
    "away": "CF Montr\u00e9al",
    "bet": {
@@ -3206,7 +3243,7 @@
    "kickoff": "2026-10-28T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T14:35:30+00:00",
+   "last_seen_at": "2026-10-27T15:09:42+00:00",
    "league": "MLS",
    "match": "Charlotte FC v CF Montr\u00e9al",
    "pair": "team2_form_l10|soccer_team2",
@@ -3244,7 +3281,7 @@
    "kickoff": "2026-10-28T19:45Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T14:35:30+00:00",
+   "last_seen_at": "2026-10-27T15:09:42+00:00",
    "league": "Serie A",
    "match": "Genoa v Juventus",
    "pair": "team2_ranked|soccer_team2",
@@ -3282,7 +3319,7 @@
    "kickoff": "2026-10-28T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T14:35:30+00:00",
+   "last_seen_at": "2026-10-27T15:09:42+00:00",
    "league": "MLS",
    "match": "Inter Miami CF v FC Cincinnati",
    "pair": "team2_form_l10|soccer_team2",
@@ -3319,7 +3356,7 @@
    "kickoff": "2026-10-28T17:30Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T14:35:30+00:00",
+   "last_seen_at": "2026-10-27T15:09:42+00:00",
    "league": "Serie A",
    "match": "Parma v Udinese",
    "pair": "u35_low_scoring|soccer_u35",
@@ -3356,7 +3393,7 @@
    "kickoff": "2026-10-28T19:45Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T14:35:30+00:00",
+   "last_seen_at": "2026-10-27T15:09:42+00:00",
    "league": "Scottish Premiership",
    "match": "St Mirren v Hibernian",
    "pair": "u35_low_scoring|soccer_u35",
@@ -3394,7 +3431,7 @@
    "kickoff": "2026-10-28T17:30Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T14:35:30+00:00",
+   "last_seen_at": "2026-10-27T15:09:42+00:00",
    "league": "Serie A",
    "match": "Venezia v Internazionale",
    "pair": "team2_form_l10|soccer_team2",
@@ -3431,7 +3468,7 @@
    "kickoff": "2026-10-29T00:30Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T14:35:30+00:00",
+   "last_seen_at": "2026-10-27T15:09:42+00:00",
    "league": "MLS",
    "match": "FC Dallas v Columbus Crew",
    "pair": "mls_fade_home|soccer_p05",
@@ -3469,7 +3506,7 @@
    "kickoff": "2026-10-29T00:30Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T14:35:30+00:00",
+   "last_seen_at": "2026-10-27T15:09:42+00:00",
    "league": "MLS",
    "match": "Minnesota United FC v Sporting Kansas City",
    "pair": "team2_form_l10|soccer_team2",
@@ -3506,7 +3543,7 @@
    "kickoff": "2026-10-29T02:30Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T14:35:30+00:00",
+   "last_seen_at": "2026-10-27T15:09:42+00:00",
    "league": "MLS",
    "match": "San Jose Earthquakes v Colorado Rapids",
    "pair": "mls_fade_home|soccer_p05",
@@ -3543,7 +3580,7 @@
    "kickoff": "2026-10-29T02:30Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T14:35:30+00:00",
+   "last_seen_at": "2026-10-27T15:09:42+00:00",
    "league": "MLS",
    "match": "San Jose Earthquakes v Colorado Rapids",
    "pair": "u35_low_scoring|soccer_u35",
@@ -3581,7 +3618,7 @@
    "kickoff": "2026-10-29T00:30Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T14:35:30+00:00",
+   "last_seen_at": "2026-10-27T15:09:42+00:00",
    "league": "MLS",
    "match": "St. Louis CITY SC v Portland Timbers",
    "pair": "team2_form_l10|soccer_team2",
@@ -3618,7 +3655,7 @@
    "kickoff": "2026-10-30T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T14:35:30+00:00",
+   "last_seen_at": "2026-10-27T15:09:42+00:00",
    "league": "NFL",
    "match": "Panthers v Packers",
    "model_prob": 0.393,
@@ -3655,7 +3692,7 @@
    "kickoff": "2026-10-31T20:00Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T14:35:30+00:00",
+   "last_seen_at": "2026-10-27T15:09:42+00:00",
    "league": "Eredivisie",
    "match": "Ajax v Alkmaar",
    "pair": "ere_draw|soccer",
@@ -3692,7 +3729,7 @@
    "kickoff": "2026-10-31T20:00Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T14:35:30+00:00",
+   "last_seen_at": "2026-10-27T15:09:42+00:00",
    "league": "Eredivisie",
    "match": "Cambuur v GA Eagles",
    "pair": "ere_draw|soccer",
@@ -3729,7 +3766,7 @@
    "kickoff": "2026-10-31T17:45Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T14:35:30+00:00",
+   "last_seen_at": "2026-10-27T15:09:42+00:00",
    "league": "Eredivisie",
    "match": "Heerenveen v Nijmegen",
    "pair": "ere_draw|soccer",
@@ -3760,9 +3797,9 @@
    "ready_at": "2026-10-09T04:31:34+00:00",
    "route": "moved by hand on 2026-10-09",
    "routing": {
-    "leads": 16,
+    "leads": 17,
     "problem": null,
-    "routed": 16,
+    "routed": 17,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -3774,7 +3811,7 @@
    "sandbox_roi_fee": 0.2128,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -4277,6 +4314,15 @@
    "reason": "less than 45 minutes left at first publication",
    "withheld_at": "2026-10-26T12:49:50+00:00"
   },
+  "2026-10-27|Lorenzetti, James|Kemp, Harrison|Kemp, Harrison to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
+   "headline": "Kemp, Harrison to win",
+   "id": "2026-10-27|Lorenzetti, James|Kemp, Harrison|Kemp, Harrison to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles",
+   "kickoff": "2026-10-27T15:30Z",
+   "match": "Lorenzetti, James v Kemp, Harrison",
+   "pair": "tennis_utr_shortlist_v1|tennis",
+   "reason": "less than 45 minutes left at first publication",
+   "withheld_at": "2026-10-27T15:09:42+00:00"
+  },
   "2026-10-27|Polakovicova, Adela|Wirglerova, Simona|Wirglerova, Simona to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
    "headline": "Wirglerova, Simona to win",
    "id": "2026-10-27|Polakovicova, Adela|Wirglerova, Simona|Wirglerova, Simona to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles",
@@ -4290,5 +4336,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-27T14:35:30+00:00"
+ "updated_at": "2026-10-27T15:09:42+00:00"
 }
