@@ -24,24 +24,28 @@ jobs:
         with:
           python-version: '3.12'
       - name: Tests
-        run: python3 test_culture.py
+        run: |
+          python3 test_culture.py
+          python3 test_mentions_split.py
       - name: Culture markets, paper settlement and Rotten Tomatoes snapshots (rt_model revived 2026-10-26)
         run: python3 culture_track.py
       - name: Trump mentions feed (mentions_rate; Production 2026-10-20 to 2026-10-26, now graded leads only)
         run: python3 culture_production.py
+      - name: Trump mentions cheap YES split (mentions_cheap_yes_split, Sandbox paper, 2026-10-27)
+        run: python3 mentions_split.py
       - name: Save records
         run: |
           set -euo pipefail
-          python3 -c 'import json; json.load(open("data/culture_ledger.json")); json.load(open("data/rt_snapshots.json")); json.load(open("data/culture_production_leads.json"))'
+          python3 -c 'import json; json.load(open("data/culture_ledger.json")); json.load(open("data/rt_snapshots.json")); json.load(open("data/culture_production_leads.json")); json.load(open("data/mentions_split_ledger.json"))'
           git config user.name "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
-          git add data/culture_ledger.json data/rt_snapshots.json data/culture_production_leads.json
+          git add data/culture_ledger.json data/rt_snapshots.json data/culture_production_leads.json data/mentions_split_ledger.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Culture paper research observations"
           for attempt in 1 2 3; do
             if git push origin HEAD:main; then exit 0; fi
             git fetch origin main
-            # Only this workflow owns these three files.
+            # Only this workflow owns these four files.
             git rebase origin/main
           done
           exit 1

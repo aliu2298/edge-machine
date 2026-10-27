@@ -4,6 +4,7 @@ import os
 
 import culture_production as CP
 import culture_track as K
+import mentions_split as MS
 import fmt
 import site_chrome as C
 import sport_page as SP
@@ -107,7 +108,7 @@ def pooled(state, now=None):
     return rec, "each market once"
 
 
-def build(state=None, now=None):
+def build(state=None, now=None, split_state=None):
     state = state if state is not None else K.load()
     now = SP.as_utc(now)
     prod = production(now)
@@ -283,7 +284,11 @@ def build(state=None, now=None):
             block = block.replace(SP.verdict_badge(row), chip)
         out.append(html[pos:head] + block)
         pos = end
-    return "".join(out) + html[pos:]
+    page = "".join(out) + html[pos:]
+    # The cheap-YES split lane (2026-10-27, mentions_split.py), on its own ledger: its card sits
+    # beside the rules, before the Method.
+    split = MS.section(split_state if split_state is not None else MS.load(), e)
+    return page.replace('<section id="method"', split + '<section id="method"', 1)
 
 
 def main():
