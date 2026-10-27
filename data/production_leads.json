@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-27T00:42:12+00:00",
+ "board_built_at": "2026-10-27T02:04:39+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -3120,6 +3120,44 @@
    "sport": "soccer_corners",
    "status": "miss"
   },
+  "2026-10-28|Charlotte FC|CF Montr\u00e9al|Charlotte FC to score 2+ \u00b7 Team scores 2+ form rule": {
+   "away": "CF Montr\u00e9al",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "Charlotte FC"
+   },
+   "date": "2026-10-28",
+   "edge_at_log": null,
+   "first_seen": "2026-10-27",
+   "headline": "Charlotte FC to score 2+",
+   "home": "Charlotte FC",
+   "id": "2026-10-28|Charlotte FC|CF Montr\u00e9al|Charlotte FC to score 2+ \u00b7 Team scores 2+ form rule",
+   "kickoff": "2026-10-28T23:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-27",
+   "last_seen_at": "2026-10-27T02:04:39+00:00",
+   "league": "MLS",
+   "match": "Charlotte FC v CF Montr\u00e9al",
+   "pair": "team2_form_l10|soccer_team2",
+   "price_at_log": 0.71,
+   "published_at": "2026-10-27T02:04:39+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 2725,
+   "route": {
+    "claim": "Charlotte FC to score 2+",
+    "event": "KXMLSTEAMTOTAL-26OCT28CLTMTL",
+    "market": "KXMLSTEAMTOTAL-26OCT28CLTMTL-CLT2",
+    "outcome": "Charlotte over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.71,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "team2_form_l10:KXMLSTEAMTOTAL-26OCT28CLTMTL-CLT2",
+   "source": "team2_form_l10",
+   "sport": "soccer_team2",
+   "status": "pending"
+  },
   "2026-10-28|Genoa|Juventus|Juventus to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
    "away": "Juventus",
    "bet": {
@@ -3136,7 +3174,7 @@
    "kickoff": "2026-10-28T19:45Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T00:42:12+00:00",
+   "last_seen_at": "2026-10-27T02:04:39+00:00",
    "league": "Serie A",
    "match": "Genoa v Juventus",
    "pair": "team2_ranked|soccer_team2",
@@ -3174,7 +3212,7 @@
    "kickoff": "2026-10-28T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T00:42:12+00:00",
+   "last_seen_at": "2026-10-27T02:04:39+00:00",
    "league": "MLS",
    "match": "Inter Miami CF v FC Cincinnati",
    "pair": "team2_form_l10|soccer_team2",
@@ -3211,7 +3249,7 @@
    "kickoff": "2026-10-28T17:30Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T00:42:12+00:00",
+   "last_seen_at": "2026-10-27T02:04:39+00:00",
    "league": "Serie A",
    "match": "Parma v Udinese",
    "pair": "u35_low_scoring|soccer_u35",
@@ -3248,7 +3286,7 @@
    "kickoff": "2026-10-28T19:45Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T00:42:12+00:00",
+   "last_seen_at": "2026-10-27T02:04:39+00:00",
    "league": "Scottish Premiership",
    "match": "St Mirren v Hibernian",
    "pair": "u35_low_scoring|soccer_u35",
@@ -3286,7 +3324,7 @@
    "kickoff": "2026-10-28T17:30Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T00:42:12+00:00",
+   "last_seen_at": "2026-10-27T02:04:39+00:00",
    "league": "Serie A",
    "match": "Venezia v Internazionale",
    "pair": "team2_form_l10|soccer_team2",
@@ -3323,7 +3361,7 @@
    "kickoff": "2026-10-29T00:30Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T00:42:12+00:00",
+   "last_seen_at": "2026-10-27T02:04:39+00:00",
    "league": "MLS",
    "match": "FC Dallas v Columbus Crew",
    "pair": "mls_fade_home|soccer_p05",
@@ -3345,6 +3383,44 @@
    "sport": "soccer_p05",
    "status": "pending"
   },
+  "2026-10-29|Minnesota United FC|Sporting Kansas City|Minnesota United FC to score 2+ \u00b7 Team scores 2+ form rule": {
+   "away": "Sporting Kansas City",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "Minnesota United FC"
+   },
+   "date": "2026-10-29",
+   "edge_at_log": null,
+   "first_seen": "2026-10-27",
+   "headline": "Minnesota United FC to score 2+",
+   "home": "Minnesota United FC",
+   "id": "2026-10-29|Minnesota United FC|Sporting Kansas City|Minnesota United FC to score 2+ \u00b7 Team scores 2+ form rule",
+   "kickoff": "2026-10-29T00:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-27",
+   "last_seen_at": "2026-10-27T02:04:39+00:00",
+   "league": "MLS",
+   "match": "Minnesota United FC v Sporting Kansas City",
+   "pair": "team2_form_l10|soccer_team2",
+   "price_at_log": 0.76,
+   "published_at": "2026-10-27T02:04:39+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 2785,
+   "route": {
+    "claim": "Minnesota United FC to score 2+",
+    "event": "KXMLSTEAMTOTAL-26OCT28MINSKC",
+    "market": "KXMLSTEAMTOTAL-26OCT28MINSKC-MIN2",
+    "outcome": "Minnesota over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.76,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "team2_form_l10:KXMLSTEAMTOTAL-26OCT28MINSKC-MIN2",
+   "source": "team2_form_l10",
+   "sport": "soccer_team2",
+   "status": "pending"
+  },
   "2026-10-29|San Jose Earthquakes|Colorado Rapids|Colorado Rapids +0.5 (San Jose Earthquakes not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
    "away": "Colorado Rapids",
    "bet": {
@@ -3360,7 +3436,7 @@
    "kickoff": "2026-10-29T02:30Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T00:42:12+00:00",
+   "last_seen_at": "2026-10-27T02:04:39+00:00",
    "league": "MLS",
    "match": "San Jose Earthquakes v Colorado Rapids",
    "pair": "mls_fade_home|soccer_p05",
@@ -3397,7 +3473,7 @@
    "kickoff": "2026-10-29T02:30Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T00:42:12+00:00",
+   "last_seen_at": "2026-10-27T02:04:39+00:00",
    "league": "MLS",
    "match": "San Jose Earthquakes v Colorado Rapids",
    "pair": "u35_low_scoring|soccer_u35",
@@ -3419,6 +3495,44 @@
    "sport": "soccer_u35",
    "status": "pending"
   },
+  "2026-10-29|St. Louis CITY SC|Portland Timbers|St. Louis CITY SC to score 2+ \u00b7 Team scores 2+ form rule": {
+   "away": "Portland Timbers",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "St. Louis CITY SC"
+   },
+   "date": "2026-10-29",
+   "edge_at_log": null,
+   "first_seen": "2026-10-27",
+   "headline": "St. Louis CITY SC to score 2+",
+   "home": "St. Louis CITY SC",
+   "id": "2026-10-29|St. Louis CITY SC|Portland Timbers|St. Louis CITY SC to score 2+ \u00b7 Team scores 2+ form rule",
+   "kickoff": "2026-10-29T00:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-27",
+   "last_seen_at": "2026-10-27T02:04:39+00:00",
+   "league": "MLS",
+   "match": "St. Louis CITY SC v Portland Timbers",
+   "pair": "team2_form_l10|soccer_team2",
+   "price_at_log": 0.67,
+   "published_at": "2026-10-27T02:04:39+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 2785,
+   "route": {
+    "claim": "St. Louis CITY SC to score 2+",
+    "event": "KXMLSTEAMTOTAL-26OCT28STLPOR",
+    "market": "KXMLSTEAMTOTAL-26OCT28STLPOR-STL2",
+    "outcome": "Saint Louis over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.67,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "team2_form_l10:KXMLSTEAMTOTAL-26OCT28STLPOR-STL2",
+   "source": "team2_form_l10",
+   "sport": "soccer_team2",
+   "status": "pending"
+  },
   "2026-10-30|Panthers|Packers|Panthers to win \u00b7 ESPN FPI / Matchup Predictor": {
    "away": "Packers",
    "bet": {
@@ -3434,7 +3548,7 @@
    "kickoff": "2026-10-30T00:15Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T00:42:12+00:00",
+   "last_seen_at": "2026-10-27T02:04:39+00:00",
    "league": "NFL",
    "match": "Panthers v Packers",
    "model_prob": 0.393,
@@ -3471,7 +3585,7 @@
    "kickoff": "2026-10-31T20:00Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T00:42:12+00:00",
+   "last_seen_at": "2026-10-27T02:04:39+00:00",
    "league": "Eredivisie",
    "match": "Ajax v Alkmaar",
    "pair": "ere_draw|soccer",
@@ -3508,7 +3622,7 @@
    "kickoff": "2026-10-31T20:00Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T00:42:12+00:00",
+   "last_seen_at": "2026-10-27T02:04:39+00:00",
    "league": "Eredivisie",
    "match": "Cambuur v GA Eagles",
    "pair": "ere_draw|soccer",
@@ -3545,7 +3659,7 @@
    "kickoff": "2026-10-31T17:45Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T00:42:12+00:00",
+   "last_seen_at": "2026-10-27T02:04:39+00:00",
    "league": "Eredivisie",
    "match": "Heerenveen v Nijmegen",
    "pair": "ere_draw|soccer",
@@ -3901,9 +4015,9 @@
    "ready_at": "2026-10-16T17:17:38+00:00",
    "route": "moved by hand on 2026-10-16",
    "routing": {
-    "leads": 5,
+    "leads": 8,
     "problem": null,
-    "routed": 5,
+    "routed": 8,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -3915,7 +4029,7 @@
    "sandbox_roi_fee": 0.0561,
    "timing": {
     "late": [],
-    "timed": 2,
+    "timed": 5,
     "under_target": 0
    }
   },
@@ -4097,5 +4211,5 @@
  "stage": "production",
  "unlisted_skipped": 1,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-27T00:42:12+00:00"
+ "updated_at": "2026-10-27T02:04:39+00:00"
 }
