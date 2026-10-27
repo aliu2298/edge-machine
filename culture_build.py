@@ -108,7 +108,7 @@ def pooled(state, now=None):
     return rec, "each market once"
 
 
-def build(state=None, now=None, split_state=None, wide_state=None):
+def build(state=None, now=None, split_state=None, wide_state=None, month_state=None, month_wide_state=None):
     state = state if state is not None else K.load()
     now = SP.as_utc(now)
     prod = production(now)
@@ -291,6 +291,12 @@ def build(state=None, now=None, split_state=None, wide_state=None):
     wide = wide_state if wide_state is not None else MS.load(cfg=MS.WIDE)
     # The wide twin (2026-10-27) beside the strict lane, with one line comparing them.
     split = MS.section(strict, e) + MS.compare(strict, wide, e) + MS.section(wide, e, MS.WIDE)
+    # The monthly market (KXTRUMPSAYMONTH, 2026-10-27): the same two lanes on their own records.
+    month = month_state if month_state is not None else MS.load(cfg=MS.MONTH)
+    month_wide = month_wide_state if month_wide_state is not None else MS.load(cfg=MS.MONTH_WIDE)
+    split += (MS.section(month, e, MS.MONTH)
+              + MS.compare(month, month_wide, e, anchor=MS.MONTH["compare_id"], title="Monthly · strict v wide")
+              + MS.section(month_wide, e, MS.MONTH_WIDE))
     return page.replace('<section id="method"', split + '<section id="method"', 1)
 
 

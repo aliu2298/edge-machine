@@ -74,7 +74,33 @@ WIDE = dict(lane="mentions_cheap_yes_split_wide", label="Trump mentions · cheap
             path=os.path.join(ROOT, "data", "mentions_split_wide_ledger.json"), spread=0.10,
             band_in_quote=True, rule=WIDE_RULE, anchor="mentions-split-wide",
             skip="no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h", last_trade=True)
-LANES = (STRICT, WIDE)
+WEEK_NOTE = "the week of KXTRUMPSAY-26NOV02 (opened 2026-10-26 04:00Z) is replayed from its opening candles"
+for _c in (STRICT, WIDE):
+    _c.update(series=SERIES, start=START, registered=REGISTERED, backfill=WEEK_NOTE, compare_id="mentions-split-compare")
+
+# The MONTHLY market (2026-10-27, Olu): both lanes, the same rules, on KXTRUMPSAYMONTH ("What will Trump
+# say in <month>?"; the event closes at the start of the next month, so 26NOV01 is October). Separate
+# lane ids, ledgers and fresh records; never KXTRUMPSAYCOMPANY. Research basis (Olu, 14 settled months,
+# opening price = the first hour's traded close): cheap YES 3-15c split +116%, 8 of 9 months up;
+# 15-30c split +52%, 6 of 9; 3-30c split positive in 10 of 11 months; cheap NO at 15-50c lost.
+# KXTRUMPSAYMONTH-26NOV01 (October) opened 2026-10-01 14:00Z and its opening candles were still
+# served when the lanes were built, so it is the backfill.
+MONTH_SERIES = "KXTRUMPSAYMONTH"
+MONTH_START = "2026-10-01T14:00:00+00:00"
+MONTH_REGISTERED = "2026-10-27"
+MONTH_NOTE = ("the month of KXTRUMPSAYMONTH-26NOV01 (October, opened 2026-10-01 14:00Z) is replayed from its "
+              "opening candles")
+_monthly = lambda r: r.replace("Weekly KXTRUMPSAY only.", "Monthly KXTRUMPSAYMONTH only.").replace(
+    "per word per week", "per word per month")
+MONTH = dict(STRICT, lane="mentions_month_split", label="Trump mentions, monthly · cheap YES split",
+             path=os.path.join(ROOT, "data", "mentions_month_split_ledger.json"), rule=_monthly(RULE),
+             anchor="mentions-month-split", series=MONTH_SERIES, start=MONTH_START,
+             registered=MONTH_REGISTERED, backfill=MONTH_NOTE, compare_id="mentions-month-split-compare")
+MONTH_WIDE = dict(WIDE, lane="mentions_month_split_wide", label="Trump mentions, monthly · cheap YES split, wide entry",
+                  path=os.path.join(ROOT, "data", "mentions_month_split_wide_ledger.json"), rule=_monthly(WIDE_RULE),
+                  anchor="mentions-month-split-wide", series=MONTH_SERIES, start=MONTH_START,
+                  registered=MONTH_REGISTERED, backfill=MONTH_NOTE, compare_id="mentions-month-split-compare")
+LANES = (STRICT, WIDE, MONTH, MONTH_WIDE)
 
 
 def fee(p, rate):
@@ -189,12 +215,12 @@ def load(path=None, cfg=STRICT):
     return s
 
 
-def events(fetch):
-    return D.pages(f"events?series_ticker={SERIES}&with_nested_markets=true&limit=200", "events", fetch)
+def events(fetch, series=SERIES):
+    return D.pages(f"events?series_ticker={series}&with_nested_markets=true&limit=200", "events", fetch)
 
 
-def candles(event, start_ts, end_ts, fetch, minutes=60):
-    d = fetch(f"series/{SERIES}/events/{event}/candlesticks?start_ts={start_ts}&end_ts={end_ts}"
+def candles(event, start_ts, end_ts, fetch, minutes=60, series=SERIES):
+    d = fetch(f"series/{series}/events/{event}/candlesticks?start_ts={start_ts}&end_ts={end_ts}"
               f"&period_interval={minutes}")
     return dict(zip(d.get("market_tickers") or [], d.get("market_candlesticks") or []))
 
@@ -202,10 +228,10 @@ def candles(event, start_ts, end_ts, fetch, minutes=60):
 def run(state, now=None, fetch=D.get, cfg=STRICT):
     now = now or dt.datetime.now(dt.timezone.utc)
     now_ts = int(now.timestamp())
-    start_ts = _ts(START)
+    start_ts = _ts(cfg["start"])
     obs = dict(at=now.isoformat(), events=0, entered=0, skipped=0, filled=0, waiting=0)
     have = {e["id"] for e in state["entries"]}
-    for ev in events(fetch):
+    for ev in events(fetch, cfg["series"]):
         tick = ev.get("event_ticker")
         ms = [m for m in ev.get("markets") or [] if _ts(m.get("open_time"))]
         if not ms or min(_ts(m["open_time"]) for m in ms) < start_ts:
@@ -218,9 +244,9 @@ def run(state, now=None, fetch=D.get, cfg=STRICT):
                    and now_ts >= _ts(m["open_time"]) + 3600]
         if pending:
             hi = min(now_ts, max(_ts(m["open_time"]) for m in pending) + ENTRY_WINDOW_H * 3600 + 60)
-            entry_cs = candles(tick, lo, hi - hi % 60, fetch, minutes=1)
+            entry_cs = candles(tick, lo, hi - hi % 60, fetch, minutes=1, series=cfg["series"])
         if pending or any(not done(e) for e in mine):
-            cs = candles(tick, lo, now_ts - now_ts % 60, fetch)
+            cs = candles(tick, lo, now_ts - now_ts % 60, fetch, series=cfg["series"])
         by = {m["ticker"]: m for m in ms}
         for m in pending:
             o = _ts(m["open_time"])
@@ -333,7 +359,7 @@ def _px(x):
     return "—" if x is None else f"{x:.2f}".replace("-", "\u2212")
 
 
-def compare(strict, wide, esc):
+def compare(strict, wide, esc, anchor="mentions-split-compare", title="Strict v wide"):
     """Strict v wide, one line: entries, ROI after fees, average spread paid (ask - bid at entry)."""
     def part(name, st):
         es = st.get("entries") or []
@@ -341,7 +367,7 @@ def compare(strict, wide, esc):
         sp = [e["spread"] for e in es if e.get("spread") is not None]
         return (f"{name}: {r['entries']} entr{'y' if r['entries'] == 1 else 'ies'}, ROI after fees {_pct(r['roi'])} "
                 f"({r['resolved']} resolved), average spread paid {_px(sum(sp) / len(sp)) if sp else '—'}")
-    return (f'<p class="sm" id="mentions-split-compare"><b>Strict v wide</b> · {esc(part("strict (5c)", strict))} · '
+    return (f'<p class="sm" id="{anchor}"><b>{esc(title)}</b> · {esc(part("strict (5c)", strict))} · '
             f'{esc(part("wide (10c)", wide))}.</p>')
 
 
@@ -389,8 +415,7 @@ def section(state, esc, cfg=STRICT):
     cols = 11 if cfg["last_trade"] else 9
     return (f'<section id="{cfg["anchor"]}"><h2>{esc(cfg["label"])}</h2>'
             f'<p class="sm"><b>Sandbox · paper · fresh record from its first entry · review at {REVIEW_AT}, decide at '
-            f'{DECIDE_AT}</b> ({r["resolved"]} resolved). Registered {REGISTERED}; the week of '
-            f'KXTRUMPSAY-26NOV02 (opened 2026-10-26 04:00Z) is replayed from its opening candles.</p>'
+            f'{DECIDE_AT}</b> ({r["resolved"]} resolved). Registered {cfg["registered"]}; {cfg["backfill"]}.</p>'
             f'<p class="sm">{esc(cfg["rule"])}</p><div class="tiles">{tiles}</div>'
             '<p class="sm mut">ROI is per contract after fees, the mean over resolved entries (equal stake per entry). '
             'Held: the same entries to settlement. 2x only: the same entries with one sell at 2x.</p>'
