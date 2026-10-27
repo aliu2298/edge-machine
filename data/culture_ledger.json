@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-27T04:00:20.868742+00:00",
-   "last_success": "2026-10-27T04:00:20.868742+00:00",
+   "last_run": "2026-10-27T05:00:18.459907+00:00",
+   "last_success": "2026-10-27T05:00:18.459907+00:00",
    "observations": {
-    "at": "2026-10-27T04:00:20.868742+00:00",
+    "at": "2026-10-27T05:00:18.459907+00:00",
     "events": 965,
     "reasons": {},
     "retired": "2026-10-24"
@@ -542,10 +542,10 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-27T04:00:20.868742+00:00",
-   "last_success": "2026-10-27T04:00:20.868742+00:00",
+   "last_run": "2026-10-27T05:00:18.459907+00:00",
+   "last_success": "2026-10-27T05:00:18.459907+00:00",
    "observations": {
-    "at": "2026-10-27T04:00:20.868742+00:00",
+    "at": "2026-10-27T05:00:18.459907+00:00",
     "events": 965,
     "reasons": {},
     "retired": "2026-10-24"
@@ -896,18 +896,18 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-27T04:00:20.868742+00:00",
-   "last_success": "2026-10-27T04:00:20.868742+00:00",
+   "last_run": "2026-10-27T05:00:18.459907+00:00",
+   "last_success": "2026-10-27T05:00:18.459907+00:00",
    "observations": {
-    "at": "2026-10-27T04:00:20.868742+00:00",
+    "at": "2026-10-27T05:00:18.459907+00:00",
     "events": 965,
     "news_guard": [],
     "reasons": {
-     "NO under 0.60 (floor 2026-10-26)": 1,
-     "already near-certain (under 10c or over 90c)": 14,
-     "edge 5c+": 3,
+     "already near-certain (under 10c or over 90c)": 15,
+     "edge 5c+": 2,
+     "edge under 5c": 2,
      "monthly or company series (excluded 2026-10-26)": 76,
-     "no quote or spread too wide": 27
+     "no quote or spread too wide": 26
     }
    },
    "picks": [
@@ -2173,15 +2173,33 @@
      "status": "open",
      "title": "Antifa",
      "yes_mid": 0.285
+    },
+    {
+     "amended": "2026-10-26",
+     "category": "Mentions",
+     "close": "2026-11-02T15:00:00Z",
+     "detail": "P(said) 0.07 \u00b7 said on 1 of the last 84 days, 6.4 days left \u00b7 edge +0.23",
+     "edge": 0.2308,
+     "event": "KXTRUMPSAY-26NOV02",
+     "id": "KXTRUMPSAY-26NOV02-ZOHR",
+     "logged": "2026-10-27T05:00:18.459907+00:00",
+     "model": 0.074,
+     "name": "What will Trump say this week?",
+     "price": 0.68,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "Zohran / Mamdani",
+     "yes_mid": 0.345
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-27T04:00:20.868742+00:00",
-   "last_success": "2026-10-27T04:00:20.868742+00:00",
+   "last_run": "2026-10-27T05:00:18.459907+00:00",
+   "last_success": "2026-10-27T05:00:18.459907+00:00",
    "observations": {
-    "at": "2026-10-27T04:00:20.868742+00:00",
+    "at": "2026-10-27T05:00:18.459907+00:00",
     "events": 965,
     "reasons": {
      "under 20 reviews counted": 15,
@@ -2707,7 +2725,7 @@
    "days": []
   },
   "Marijuana / Weed / Cannabis": {
-   "at": "2026-10-26T20:00:24.174929+00:00",
+   "at": "2026-10-27T05:00:18.459907+00:00",
    "days": [
     "2026-10-09"
    ]
