@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-26T23:16:13.506474+00:00",
+ "last_run": "2026-10-27T11:16:30.406961+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -328,11 +328,14 @@
      "line": 1.5,
      "logged": "2026-10-26T20:31:27.554615+00:00",
      "match": "Uni\u00f3n (Santa Fe) v Estudiantes de La Plata",
+     "payout": 1.0,
      "price": 0.7,
+     "profit": 39.92,
      "rule": "ARG",
+     "settled": "2026-10-27T11:16:30.406961+00:00",
      "side": "yes",
      "start": "2026-10-26T22:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXARGPREMDIVTOTAL-26OCT26UNIELP-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Argentina over 1.5 YES 0.70"
@@ -346,11 +349,14 @@
      "line": 1.5,
      "logged": "2026-10-26T22:46:11.376673+00:00",
      "match": "Instituto (C\u00f3rdoba) v Deportivo Riestra",
+     "payout": 0.0,
      "price": 0.61,
+     "profit": -100.0,
      "rule": "ARG",
+     "settled": "2026-10-27T11:16:30.406961+00:00",
      "side": "yes",
      "start": "2026-10-27T00:15Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXARGPREMDIVTOTAL-26OCT26IACCRIE-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Argentina over 1.5 YES 0.61"
@@ -557,11 +563,14 @@
      "line": 1.5,
      "logged": "2026-10-26T21:01:28.299849+00:00",
      "match": "Coritiba v Gr\u00eamio",
+     "payout": 0.0,
      "price": 0.75,
+     "profit": -100.0,
      "rule": "BRA",
+     "settled": "2026-10-27T11:16:30.406961+00:00",
      "side": "yes",
      "start": "2026-10-26T22:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXBRASILEIROTOTAL-26OCT26CFCGPA-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Brasileir\u00e3o over 1.5 YES 0.75"
@@ -575,11 +584,14 @@
      "line": 1.5,
      "logged": "2026-10-26T21:31:42.313993+00:00",
      "match": "Flamengo v Atl\u00e9tico-MG",
+     "payout": 1.0,
      "price": 0.84,
+     "profit": 17.73,
      "rule": "BRA",
+     "settled": "2026-10-27T11:16:30.406961+00:00",
      "side": "yes",
      "start": "2026-10-26T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXBRASILEIROTOTAL-26OCT26FLAATL-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Brasileir\u00e3o over 1.5 YES 0.84"
@@ -588,13 +600,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T10:31:27.952661+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "quoted": 0
-  },
   {
    "at": "2026-10-25T10:46:10.739740+00:00",
    "due": 0,
@@ -944,10 +949,16 @@
    "matched": 1,
    "new": 0,
    "quoted": 1
+  },
+  {
+   "at": "2026-10-27T11:16:30.406961+00:00",
+   "due": 0,
+   "matched": 0,
+   "new": 0,
+   "quoted": 0
   }
  ],
  "schedule": [
-  "2026-10-27T00:15:00+00:00",
   "2026-10-27T22:00:00+00:00",
   "2026-10-28T22:30:00+00:00",
   "2026-10-29T00:30:00+00:00",

@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-26T23:16:13+00:00",
+ "board_built_at": "2026-10-27T11:16:30+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sa_o15_arg": true,
@@ -842,6 +842,41 @@
    "sport": "soccer_o15",
    "status": "hit"
   },
+  "2026-10-26|Uni\u00f3n (Santa Fe)|Estudiantes de La Plata|Over 1.5 goals \u00b7 Argentina over 1.5": {
+   "away": "Estudiantes de La Plata",
+   "bet": {
+    "kind": "total_gte",
+    "n": 2
+   },
+   "date": "2026-10-26",
+   "edge_at_log": null,
+   "first_seen": "2026-10-26",
+   "headline": "Over 1.5 goals",
+   "home": "Uni\u00f3n (Santa Fe)",
+   "id": "2026-10-26|Uni\u00f3n (Santa Fe)|Estudiantes de La Plata|Over 1.5 goals \u00b7 Argentina over 1.5",
+   "kickoff": "2026-10-26T22:00Z",
+   "lane": "production",
+   "league": "Liga Profesional",
+   "match": "Uni\u00f3n (Santa Fe) v Estudiantes de La Plata",
+   "pair": "sa_o15_arg|soccer_o15",
+   "price_at_log": 0.7,
+   "published_at": "2026-10-27T11:16:30+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Over 1.5 goals",
+    "event": "KXARGPREMDIVTOTAL-26OCT26UNIELP",
+    "market": "KXARGPREMDIVTOTAL-26OCT26UNIELP-2",
+    "outcome": "Over 1.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.7,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT26UNIELP-2",
+   "source": "sa_o15_arg",
+   "sport": "soccer_o15",
+   "status": "hit"
+  },
   "2026-10-27|Instituto (C\u00f3rdoba)|Deportivo Riestra|Over 1.5 goals \u00b7 Argentina over 1.5": {
    "away": "Deportivo Riestra",
    "bet": {
@@ -856,8 +891,6 @@
    "id": "2026-10-27|Instituto (C\u00f3rdoba)|Deportivo Riestra|Over 1.5 goals \u00b7 Argentina over 1.5",
    "kickoff": "2026-10-27T00:15Z",
    "lane": "production",
-   "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T23:16:13+00:00",
    "league": "Liga Profesional",
    "match": "Instituto (C\u00f3rdoba) v Deportivo Riestra",
    "pair": "sa_o15_arg|soccer_o15",
@@ -877,7 +910,7 @@
    "sandbox_quote": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT26IACCRIE-2",
    "source": "sa_o15_arg",
    "sport": "soccer_o15",
-   "status": "pending"
+   "status": "miss"
   }
  },
  "pairs": {
@@ -888,18 +921,18 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 13,
+    "leads": 14,
     "problem": null,
-    "routed": 13,
+    "routed": 14,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 12,
-   "sandbox_roi": -0.1654,
-   "sandbox_roi_fee": -0.1654,
+   "sandbox_n": 14,
+   "sandbox_roi": -0.1847,
+   "sandbox_roi_fee": -0.1847,
    "timing": {
     "late": [],
     "timed": 4,
@@ -1005,5 +1038,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-26T23:16:13+00:00"
+ "updated_at": "2026-10-27T11:16:30+00:00"
 }
