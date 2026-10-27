@@ -46,7 +46,10 @@ def build(d=None, st=None, now=None):
         venue="Polymarket US", rows=rows, events=CC.events, rule_name=CC.rule_name,
         market=CC.market, definition=SP.default_definition, recent=CC.recent_html,
         method=method(idle_html))
-    return _team_totals(SP.page(sp, d, st, now, rows=rows, idle=idle))
+    # cfb_dog_tp50's home (2026-10-27): the cheap-side section near the top, before the rules.
+    import chaos_build
+    return chaos_build.place(_team_totals(SP.page(sp, d, st, now, rows=rows, idle=idle)), "nfl",
+                             before='<section id="rules"')
 
 
 def _team_totals(html):

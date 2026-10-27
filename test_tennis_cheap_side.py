@@ -50,20 +50,24 @@ check("the standard header", all(x in text for x in ("Cheap side + resting take-
       "Buy the cheap player about an hour before the match, at the real ask.", "Rest a split sell: half at 2x, half at 3x.",
       "A fill counts only on a traded print.", "Every lane is shown next to the same entries held.")), True)
 summ = h[h.find('class="chaos-summary"'):h.find("</table>", h.find('class="chaos-summary"'))]
-check("the summary: the three tennis lanes, challenger_cheap_split first; no NBA lane",
-      re.findall(r'data-lane="([^"]+)"', summ), ["challenger_cheap_split", "challenger_dog_tp30", "atp_coinflip_tp30"])
+check("the summary: the active tennis lanes, challenger_cheap_split first; no NBA lane; challenger_dog_tp30 retired 2026-10-27",
+      re.findall(r'data-lane="([^"]+)"', summ), ["challenger_cheap_split", "atp_coinflip_tp30"])
 check("its columns include the average spread paid",
       [re.sub(r"<[^>]+>", "", x) for x in re.findall(r"<th[^>]*>(.*?)</th>", summ)],
       ["Lane", "Entries", "Settled", "Won", "Split ROI", "Hold ROI", "Legs filled 2x / 3x", "Avg spread paid", "Status"])
 check("the cheap-split row: +100% split, +150% hold, legs 1 / 1, spread 0.04, review at 10",
       "Challenger cheap side · split 2x / 3x 1 1 1 +100.0% +150.0% 1 / 1 0.04 1 settled · review at 10, decide at 30" in text, True)
-check("a row without a recorded spread shows —", "Challenger underdog · sell +30% 1 1 0 -100.0% -100.0% 0 / 0 —" in text, True)
+check("a row without a recorded spread shows —", "ATP coin-flip · sell +30% 1 1 1 +30.0% +50.0% 1 / 0 —" in text, True)
 cards = re.findall(r'<details class="section-disclosure" data-lane="([^"]+)" open>', h)
 check("cards in the same order, with trade lists", (cards, h.count("<summary><b>Trades</b>")),
-      (["challenger_cheap_split", "challenger_dog_tp30", "atp_coinflip_tp30"], 3))
+      (["challenger_cheap_split", "atp_coinflip_tp30"], 2))
 check("the older lanes' targets sit in a collapsed Other exits block, after split v hold",
       (h.count("<summary><b>Other exits</b>"), all(c.find("Split v hold") < c.find("Other exits") for c in
-       h.split('<details class="section-disclosure" data-lane=')[1:] if "Other exits" in c)), (2, True))
+       h.split('<details class="section-disclosure" data-lane=')[1:] if "Other exits" in c)), (1, True))
+check("challenger_dog_tp30 is in a collapsed Retired block with its one-line record",
+      ('<details class="section-disclosure" id="cheap-side-retired">' in h,
+       "Retired 2026-10-27 at 45 settled, 13 won; hold -3.2%, split -7.9%, every target exit negative: superseded by "
+       "challenger_cheap_split (the 15-30c band)." in text), (True, True))
 check("it links to the Chaos section, and reads the same ledger (nothing copied)",
       ('href="./sandbox.html#chaos"' in h, state["lanes"]["challenger_cheap_split"]["trades"][0]["roi"]), (True, 1.5))
 check("public copy passes the guard", sandbox_audit.COPY_RE.search(text), None)

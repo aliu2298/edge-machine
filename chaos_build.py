@@ -151,36 +151,121 @@ def lane_html(L):
 <details class="section-disclosure"><summary><b>Trades</b><span>latest 30 entries · split, T target, S stop, H held to settlement</span></summary>{trade_list(L)}</details></details>"""
 
 
-# The tennis chaos lanes, shown on the Tennis page as its cheap-side section (2026-10-27, Olu: "On the
-# tennis page I don't see the cheap strategy"). The same ledger rows as the Chaos section, read twice,
-# never copied: challenger_cheap_split first.
-TENNIS = ("challenger_cheap_split", "challenger_dog_tp30", "atp_coinflip_tp30")
+# Every chaos lane lives on its own sport page (2026-10-27, Olu: "Each strategy needs to be under its own
+# sport/event"): a "Cheap side + resting take-profit" section near the top of that page, read from
+# data/chaos_ledger.json (the same records, never copied). The Sandbox's Chaos section is an index
+# that links to them. A lane not listed here would have no home: test_sport_cheap_homes checks.
+HOMES = {
+    "tennis": ("challenger_cheap_split", "challenger_dog_tp30", "atp_coinflip_tp30"),
+    "nba": ("nba_ml_dog_tp50", "nba_tt_cheap_tp30"),
+    "nfl": ("cfb_dog_tp50",),
+}
+HOME_OF = {lane: page for page, lanes in HOMES.items() for lane in lanes}
+TENNIS = HOMES["tennis"]
+PAGE_LABEL = {"tennis": "Tennis", "nba": "NBA", "nfl": "NFL · College football"}
+_BUY = {"tennis": "Buy the cheap player about an hour before the match, at the real ask.",
+        "nba": "Buy the cheap side before the tip (1h, and 24h for the team totals), at the real ask.",
+        "nfl": "College football: buy the underdog 1h and 24h before kickoff, at the real ask."}
+
+
+def with_config(state):
+    """The ledger's lanes with each registered lane's retirement (chaos_lanes) applied, so a page shows a
+    retirement from the day it is registered, before the next replay writes it. A copy: never saved."""
+    lanes = dict(state.get("lanes") or {})
+    try:
+        import chaos_lanes
+        for cfg in chaos_lanes.LANES:
+            if cfg.get("retired") and cfg["id"] in lanes:
+                lanes[cfg["id"]] = dict(lanes[cfg["id"]], retired=dict(cfg["retired"]))
+    except Exception:                                           # noqa: BLE001
+        pass
+    return dict(state, lanes=lanes)
+
+
+def home_href(lane_id):
+    page = HOME_OF.get(lane_id)
+    return f"./{page}.html#cheap-side" if page else None
+
+
+def sport_section(page, state=None):
+    """A sport page's "Cheap side + resting take-profit" section: its chaos lanes, split v hold first."""
+    if state is None:
+        state = C.load() if os.path.exists(C.PATH) else C.empty()
+    have = with_config(state).get("lanes") or {}
+    every = [have[k] for k in HOMES[page] if k in have]
+    lanes = [L for L in every if not L.get("retired")]
+    gone = [L for L in every if L.get("retired")]
+    body = (summary(lanes, spread=True) + "".join(lane_html(L) for L in lanes)) if lanes else (
+        '<p class="sm mut">No cheap-side lane on this page has replayed yet.</p>')
+    if gone:
+        body += retired_block(gone)
+    block = ('<h3>College football</h3><p class="sm mut">The college football lane sits on the NFL page: '
+             'it is the same football markets, and the site has no college football page.</p>' if page == "nfl" else "")
+    return f"""<section id="cheap-side">
+<h2>Cheap side + resting take-profit</h2>
+<ul class="sm"><li>{esc(_BUY[page])}</li>
+<li>Rest a split sell: half at 2x, half at 3x.</li><li>A fill counts only on a traded print.</li>
+<li>Every lane is shown next to the same entries held.</li></ul>
+<p class="sm mut">Sandbox, paper only, replayed nightly from Kalshi's 1-minute candles: review at {C.REVIEW_N} settled, decide at {C.PROMOTE_N}. Every cheap-side lane is listed in the <a href="./sandbox.html#chaos">Sandbox's Chaos index</a>, which links here; the records are the same. The average spread paid is recorded from 2026-10-27.</p>
+{block}{body}
+</section>"""
+
+
+def retired_line(L):
+    g = L["retired"]
+    return f"Retired {g['on']} at {g['at']}: {g['reason']}. Its rows stay; nothing new from that night on."
+
+
+def retired_block(lanes):
+    """Retired chaos lanes, collapsed, one line each with the record they were retired on."""
+    items = "".join(f'<li data-lane="{esc(L["id"])}"><b>{esc(L.get("label") or L["id"])}</b> ({esc(L["id"])}): '
+                    f'{esc(retired_line(L))}</li>' for L in lanes)
+    return (f'<details class="section-disclosure" id="cheap-side-retired"><summary><b>Retired</b><span>{len(lanes)} '
+            f'lane{"s" if len(lanes) != 1 else ""} · kept, not deleted</span></summary><ul class="sm">{items}</ul></details>')
 
 
 def tennis_section(state=None):
-    """The Tennis page's "Cheap side + resting take-profit" section, from data/chaos_ledger.json."""
-    if state is None:
-        state = C.load() if os.path.exists(C.PATH) else C.empty()
-    have = state.get("lanes") or {}
-    lanes = [have[k] for k in TENNIS if k in have]
-    body = (summary(lanes, spread=True) + "".join(lane_html(L) for L in lanes)) if lanes else (
-        '<p class="sm mut">No tennis cheap-side lane has replayed yet.</p>')
-    return f"""<section id="cheap-side">
-<h2>Cheap side + resting take-profit</h2>
-<ul class="sm"><li>Buy the cheap player about an hour before the match, at the real ask.</li>
-<li>Rest a split sell: half at 2x, half at 3x.</li><li>A fill counts only on a traded print.</li>
-<li>Every lane is shown next to the same entries held.</li></ul>
-<p class="sm mut">Sandbox, paper only, replayed nightly from Kalshi's 1-minute candles: review at {C.REVIEW_N} settled, decide at {C.PROMOTE_N}. These are the tennis lanes of the Chaos section on the <a href="./sandbox.html#chaos">Sandbox page</a>, the same records. The average spread paid is recorded from 2026-10-27.</p>
-{body}
-</section>"""
+    return sport_section("tennis", state)
+
+
+def place(html, page, state=None, before=None):
+    """Insert the page's cheap-side section near the top: before `before` (an opening tag), else before
+    the first top-level <section id=...> in <main>. Never breaks the page."""
+    try:
+        import sandbox_build
+        # Labelled here (phone cards), so every caller of a page's build() gets the phone layout.
+        sec = sandbox_build.label_cells(sport_section(page, state))
+        at = html.find(before) if before else html.find("<section id=", html.find("<main"))
+        return html[:at] + sec + html[at:] if at >= 0 else html
+    except Exception:                                           # noqa: BLE001
+        return html
+
+
+def index(lanes):
+    """The Sandbox's Chaos index: one row per lane, its headline numbers and a link to its home."""
+    rows = []
+    for L in lanes:
+        r = split_hold(L)
+        href = home_href(L["id"])
+        page = PAGE_LABEL.get(HOME_OF.get(L["id"]), "—")
+        link = f'<a href="{esc(href)}">{esc(page)}</a>' if href else esc(page)
+        rows.append(f'<tr data-lane="{esc(L["id"])}"><td><b>{esc(L.get("label") or L["id"])}</b></td><td>{link}</td>'
+                    f'<td class="num">{r["entries"]}</td><td class="num">{r["won"]}</td>'
+                    f'<td class="num">{_pct(r["split"], sign=True) if r["n_split"] else "—"}</td>'
+                    f'<td class="num">{_pct(r["hold"], sign=True)}</td>'
+                    f'<td>{esc("retired " + L["retired"]["on"] if L.get("retired") else MS.status(r["settled"]))}</td></tr>')
+    return ('<div class="tbl"><table class="chaos-index"><tr><th>Lane</th><th>Page</th><th class="num">Entries</th>'
+            '<th class="num">Won</th><th class="num">Split ROI</th><th class="num">Hold ROI</th><th>Status</th></tr>'
+            + "".join(rows) + "</table></div>")
 
 
 def section(state=None):
     if state is None:
         state = C.load() if os.path.exists(C.PATH) else C.empty()
-    lanes = ordered(list((state.get("lanes") or {}).values()))
+    lanes = ordered(list((with_config(state).get("lanes") or {}).values()))
     last = state.get("last_run")
-    body = (summary(lanes) + "".join(lane_html(L) for L in lanes)) if lanes else (
+    # An index (2026-10-27): each lane's full card lives on its sport page (HOMES).
+    body = index(lanes) if lanes else (
         '<p class="sm mut">No chaos lane is registered yet. The engine is built; each lane plugs in as a config '
         '(chaos_lanes.py) and starts a fresh record from its first replayed night.</p>')
     return f"""<section id="chaos">
@@ -191,6 +276,6 @@ def section(state=None):
 <p class="sm">A lane buys before the event starts, at a set time before it (1 hour before, and a 24-hour variant), at the ask on the first tight quote (spread 3c or less, 5c for the cheap-side lane). The standard exit is the split: half the stake rests at 2x the entry ask and half at 3x, each capped at 0.98, and a leg fills only when a trade prints at or above it; a leg not filled is held to Kalshi's settlement. Nothing is bought during the event. The start comes from the lane's own kickoff source where it has one, otherwise from the price path.</p>
 <p class="sm">Other exits, from the same entry: a resting limit sell at +20%, +30%, +50% or +100% ROI after fees, each with no stop or a −50% stop. Those sells fill when the bid trades 1c through the limit inside a minute; a minute touching both the stop and the limit takes the stop. Fees: taker 0.07·p(1−p) on entry and on a stop, maker 0.0175·p(1−p) on a limit exit or a filled split leg.</p>
 <p class="sm">The control is the same entry held to settlement. A variant is flagged for review at {C.REVIEW_N} trades; promotion needs {C.PROMOTE_N} AND a better ROI than its hold control. z is clustered by night, never below the independent-trades z. Every lane's record starts fresh from its first replayed night and never inherits an older lane's rows; the split was added to the older lanes on 2026-10-27 by replaying their recorded entries, nothing edited or removed.</p></details>
-<p class="sm">The tennis lanes are also the cheap-side section of the <a href="./tennis.html#cheap-side">Tennis page</a> (the same records).</p>
+<p class="sm">Each lane's card (split v hold, its other exits, its trades) is on its own page: tennis lanes on the <a href="./tennis.html#cheap-side">Tennis page</a>, NBA lanes on the <a href="./nba.html#cheap-side">NBA page</a>, college football on the <a href="./nfl.html#cheap-side">NFL page</a>.</p>
 <p class="sm mut">Last replay {esc(last or 'not yet')}{(' · ' + esc(state['error'])) if state.get('error') else ''}.</p>
 </section>"""
