@@ -109,7 +109,7 @@ def pooled(state, now=None):
 
 
 def build(state=None, now=None, split_state=None, wide_state=None, month_state=None, month_wide_state=None,
-          album_state=None):
+          album_state=None, album_no_state=None):
     state = state if state is not None else K.load()
     now = SP.as_utc(now)
     prod = production(now)
@@ -299,7 +299,11 @@ def build(state=None, now=None, split_state=None, wide_state=None, month_state=N
               + MS.compare(month, month_wide, e, anchor=MS.MONTH["compare_id"], title="Monthly · strict v wide")
               + MS.section(month_wide, e, MS.MONTH_WIDE))
     # Album sales (KXALBUMEQUIV, 2026-10-27): cheap rungs, HOLD v SPLIT on the same entries.
-    split += MS.section(album_state if album_state is not None else MS.load(cfg=MS.ALBUM), e, MS.ALBUM)
+    album = album_state if album_state is not None else MS.load(cfg=MS.ALBUM)
+    album_no = album_no_state if album_no_state is not None else MS.load(cfg=MS.ALBUM_NO)
+    # Cheap YES and cheap NO on separate records (2026-10-27), one summary row each, then each card.
+    split += (MS.album_summary(album, album_no, e) + MS.section(album, e, MS.ALBUM)
+              + MS.section(album_no, e, MS.ALBUM_NO))
     return page.replace('<section id="method"', split + '<section id="method"', 1)
 
 

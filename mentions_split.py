@@ -121,7 +121,39 @@ ALBUM = dict(WIDE, lane="album_cheap_rungs", label="Album sales · cheap rungs, 
              skip="no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
              backfill="every event still open when the lane first ran is replayed from its opening candles "
                       "where Kalshi still serves them", compare_id=None, unit="Event", item="Rung")
-LANES = (STRICT, WIDE, MONTH, MONTH_WIDE, ALBUM)
+# Cheap NO on the same ladders (2026-10-27, Olu), album_cheap_no, a SEPARATE record: the first minute
+# quote inside 6h of the rung's open with a spread of 10c or less (the wide rule) and a NO ask
+# (1 - YES bid) of 0.03-0.15; NO bought at that ask (never 0.15-0.30, the band that lost). HOLD and
+# SPLIT on the same entries; a NO leg fills when a trade prints at or above it on the NO side, i.e.
+# the YES price.low_dollars at or under 1 - target. Research basis (Olu, real asks, 45 events): wide
+# 3-15c 20 bets, 8 won, hold +318% (z 2.6), split +67% (z 2.8), halves +54% / +77%; strict 3-15c 42
+# bets, 11 won, hold +209%. Album ladders tested too confident: both tails won more than priced.
+ALBUM_NO_RULE = ("KXALBUMEQUIV only. For each rung, the first minute quote inside 6h of its open with a spread "
+                 "of 10c or less and a NO ask (1 - the YES bid) of 0.03-0.15: buy NO at that ask (never "
+                 "0.15-0.30). One entry per rung. HOLD: held to settlement. SPLIT, on the same entries: half "
+                 "resting at 2x, half at 3x the NO ask paid, each capped at 0.98, filled only when a trade prints "
+                 "at or above it on the NO side (the YES traded low at or under 1 - the target), else held. "
+                 "Taker fee in, maker fee out.")
+ALBUM_NO = dict(ALBUM, lane="album_cheap_no", label="Album sales · cheap NO rungs, HOLD v SPLIT",
+                path=os.path.join(ROOT, "data", "album_cheap_no_ledger.json"), spread=0.10, side="no",
+                rule=ALBUM_NO_RULE, anchor="album-cheap-no",
+                skip="no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h")
+LANES = (STRICT, WIDE, MONTH, MONTH_WIDE, ALBUM, ALBUM_NO)
+
+
+def album_summary(yes_state, no_state, esc):
+    """Cheap YES and cheap NO as separate rows: entries, won, ROI after fees HOLD v SPLIT."""
+    rows = "".join(
+        f'<tr><td>{esc(name)}</td><td class="num">{r["entries"]}</td><td class="num">{r["settled"]}</td>'
+        f'<td class="num">{r["won"]}</td><td class="num">{_pct(r["roi_held"])}</td><td class="num">{_pct(r["roi"])}</td></tr>'
+        for name, r in (("Cheap YES (5c spread, YES ask 0.03-0.15)", record(yes_state.get("entries") or [])),
+                        ("Cheap NO (10c spread, NO ask 0.03-0.15)", record(no_state.get("entries") or []))))
+    return ('<section id="album-summary"><h2>Album sales · cheap rungs</h2>'
+            '<p class="sm"><b>Album ladders tested too confident: both tails won more than priced.</b> Two Sandbox paper '
+            'lanes on separate records, each with HOLD and SPLIT on the same entries; review at 10, decide at 30.</p>'
+            '<div class="tbl"><table><thead><tr><th>Lane</th><th class="num">Entries</th><th class="num">Settled</th>'
+            '<th class="num">Won</th><th class="num">ROI after fees · HOLD</th><th class="num">ROI after fees · SPLIT</th>'
+            f'</tr></thead><tbody>{rows}</tbody></table></div></section>')
 
 
 def fee(p, rate):
@@ -159,13 +191,17 @@ def entry_quote(candles, open_ts, cfg=STRICT, detail=False):
         if end > open_ts + ENTRY_WINDOW_H * 3600:
             break
         traded += _num(c.get("volume_fp")) or 0.0
+        no = cfg.get("side", "yes") == "no"
         px = _num((c.get("price") or {}).get("close_dollars"))
         if px is not None:
-            last = (px, end)
+            last = (round(1 - px, 4) if no else px, end)
         bid = _num((c.get("yes_bid") or {}).get("close_dollars"))
         ask = _num((c.get("yes_ask") or {}).get("close_dollars"))
         if bid is None or ask is None or not 0 < ask <= 1 or ask - bid > cfg["spread"] + 1e-9:
             continue
+        # A NO lane (album_cheap_no) buys the NO: its ask is 1 - the YES bid, its bid 1 - the YES ask.
+        if no:
+            bid, ask = round(1 - ask, 4), round(1 - bid, 4)
         band = cfg.get("band", BAND)
         if cfg["band_in_quote"] and not band[0] - 1e-9 <= ask <= band[1] + 1e-9:
             continue
@@ -173,28 +209,33 @@ def entry_quote(candles, open_ts, cfg=STRICT, detail=False):
     return None
 
 
-def fill_of(candles, entry_ts, target):
-    """(end_ts, target) of the first candle after the entry whose traded high reaches the target."""
+def fill_of(candles, entry_ts, target, side="yes"):
+    """(end_ts, target) of the first candle after the entry whose traded high reaches the target. For
+    a NO the traded NO high is 1 - the YES traded low: it fills when YES price.low <= 1 - target."""
     for c in sorted(candles, key=lambda c: c.get("end_period_ts") or 0):
         end = c.get("end_period_ts")
         if not end or end <= entry_ts:
             continue
-        hi = _num((c.get("price") or {}).get("high_dollars"))
+        if side == "no":
+            lo = _num((c.get("price") or {}).get("low_dollars"))
+            hi = None if lo is None else 1 - lo
+        else:
+            hi = _num((c.get("price") or {}).get("high_dollars"))
         if hi is not None and hi >= target - 1e-9:
             return end, target
     return None
 
 
-def book_size(book, price):
-    """YES contracts offered at or under `price`: the NO bids at or over 1 - price."""
-    levels = ((book or {}).get("orderbook_fp") or {}).get("no_dollars") or []
+def book_size(book, price, side="yes"):
+    """Contracts of `side` offered at or under `price`: the other side's bids at or over 1 - price."""
+    levels = ((book or {}).get("orderbook_fp") or {}).get("yes_dollars" if side == "no" else "no_dollars") or []
     return round(sum(float(q) for p, q in levels if float(p) >= 1 - price - 1e-9), 2)
 
 
-def settled_payout(m):
-    """1 or 0 once Kalshi has settled the market, else None."""
+def settled_payout(m, side="yes"):
+    """1 or 0 for `side` once Kalshi has settled the market, else None."""
     if m.get("status") in ("finalized", "settled") and m.get("result") in ("yes", "no"):
-        return 1.0 if m["result"] == "yes" else 0.0
+        return 1.0 if m["result"] == side else 0.0
     return None
 
 
@@ -302,7 +343,7 @@ def run(state, now=None, fetch=D.get, cfg=STRICT):
                                                    at=_iso(end))
                 obs["skipped"] += 1
                 continue
-            e = dict(id=m["ticker"], event=tick, word=word, side="yes", entry_at=_iso(end), price=ask,
+            e = dict(id=m["ticker"], event=tick, word=word, side=cfg.get("side", "yes"), entry_at=_iso(end), price=ask,
                      bid=bid, spread=round(ask - bid, 4), traded_to_entry=vol, logged=now.isoformat(),
                      legs=[dict(multiple=mult, share=w, target=t) for mult, w, t in targets(ask)], payout=None)
             if cfg["last_trade"]:
@@ -310,7 +351,7 @@ def run(state, now=None, fetch=D.get, cfg=STRICT):
                          spread_cost=round(ask - last_px, 4) if last_px is not None else None)
             if now_ts - end <= LIVE_BOOK_H * 3600:
                 try:
-                    e["book_size"] = book_size(fetch(f"markets/{m['ticker']}/orderbook"), ask)
+                    e["book_size"] = book_size(fetch(f"markets/{m['ticker']}/orderbook"), ask, cfg.get("side", "yes"))
                     e["book_at"] = now.isoformat()
                 except Exception:                              # noqa: BLE001
                     e["book_size"] = None
@@ -324,11 +365,11 @@ def run(state, now=None, fetch=D.get, cfg=STRICT):
             c = [x for x in (cs or {}).get(e["id"]) or [] if (x.get("end_period_ts") or 0) <= now_ts]
             for leg in e["legs"]:
                 if not leg.get("filled_at"):
-                    f = fill_of(c, _ts(e["entry_at"]), leg["target"])
+                    f = fill_of(c, _ts(e["entry_at"]), leg["target"], e.get("side", "yes"))
                     if f:
                         leg["filled_at"], leg["fill_px"] = _iso(f[0]), f[1]
                         obs["filled"] += 1
-            pay = settled_payout(by.get(e["id"]) or {})
+            pay = settled_payout(by.get(e["id"]) or {}, e.get("side", "yes"))
             if pay is not None:
                 e["payout"] = pay
                 e["settled"] = e.get("settled") or now.isoformat()
@@ -451,7 +492,7 @@ def section(state, esc, cfg=STRICT):
     unit, item = cfg.get("unit", "Week"), cfg.get("item", "Word")
     head = (f'<thead><tr><th>{unit}</th><th class="num">Entries</th><th class="num">2x filled</th><th class="num">3x filled</th>'
             '<th class="num">Resolved</th><th class="num">ROI split</th><th class="num">Held</th><th class="num">2x only</th></tr></thead>')
-    thead = (f'<thead><tr><th>{unit}</th><th>{item}</th><th>Entry (UTC)</th><th class="num">YES ask paid</th>'
+    thead = (f'<thead><tr><th>{unit}</th><th>{item}</th><th>Entry (UTC)</th><th class="num">{cfg.get("side", "yes").upper()} ask paid</th>'
              + ('<th class="num">Last trade</th><th class="num">Cost of the spread</th>' if cfg["last_trade"] else "")
              + '<th>Size</th><th>2x leg</th><th>3x leg</th><th class="num">P/L per contract</th><th class="num">ROI</th></tr></thead>')
     cols = 11 if cfg["last_trade"] else 9

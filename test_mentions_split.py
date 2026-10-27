@@ -228,7 +228,7 @@ check("the comparison: entries, ROI after fees and the average spread paid, stri
       re.search(r"Strict v wide · strict \(5c\): 2 entries, ROI after fees [^,]+ \(2 resolved\), average spread paid 0\.03 · "
                 r"wide \(10c\): 3 entries, ROI after fees — \(0 resolved\), average spread paid 0\.06", wt) is not None, True)
 check("the wide card names its own rule and the review note",
-      ("whose spread is 10c or less and whose YES ask is 0.03-0.30" in wt and wt.count("review at 10, decide at 30") == 5), True)
+      ("whose spread is 10c or less and whose YES ask is 0.03-0.30" in wt and wt.count("review at 10, decide at 30") == 7), True)
 check("no guarded public phrase on the page cards", sandbox_audit.COPY_RE.findall(
       wh[wh.find('id="mentions-split"'):wh.find('<section id="method"')]), [])
 
@@ -239,10 +239,10 @@ check("monthly lanes: their own ids, ledgers, series and start; the same entry r
       [("mentions_month_split", "KXTRUMPSAYMONTH", "2026-10-01T14:00:00+00:00", 0.05, False, False, "mentions_month_split_ledger.json"),
        ("mentions_month_split_wide", "KXTRUMPSAYMONTH", "2026-10-01T14:00:00+00:00", 0.10, True, True,
         "mentions_month_split_wide_ledger.json")])
-check("five lanes (four mention, one album), and no company series anywhere",
+check("six lanes (four mention, two album), and no company series anywhere",
       ([c["lane"] for c in M.LANES], any("COMPANY" in c["series"] for c in M.LANES)),
       (["mentions_cheap_yes_split", "mentions_cheap_yes_split_wide", "mentions_month_split", "mentions_month_split_wide",
-        "album_cheap_rungs"], False))
+        "album_cheap_rungs", "album_cheap_no"], False))
 check("the weekly lanes still read KXTRUMPSAY from 2026-10-26", (M.STRICT["series"], M.WIDE["series"], M.STRICT["start"]),
       ("KXTRUMPSAY", "KXTRUMPSAY", "2026-10-26T04:00:00+00:00"))
 check("the monthly rule text names its own series and a month", ("Monthly KXTRUMPSAYMONTH only." in M.MONTH["rule"],
@@ -352,6 +352,63 @@ check("the album card: entries, won, HOLD v SPLIT, per-event rows and the trade 
        "Rung" in at, "KXALBUMEQUIV-FRE26NOV12" in at, "Above 300K" in at, "review at 10, decide at 30" in at),
       (True,) * 9)
 check("no guarded public phrase on the album card", sandbox_audit.COPY_RE.findall(card_a), [])
+
+print("\ncheap NO on the album ladders (2026-10-27): album_cheap_no, a separate record")
+N = M.ALBUM_NO
+check("its terms: the NO side, 10c spread, NO ask 0.03-0.15, its own ledger and lane id",
+      (N["lane"], N["side"], N["spread"], N["band"], N["series"], N["path"].rsplit("/", 1)[-1], N in M.LANES, M.ALBUM.get("side", "yes")),
+      ("album_cheap_no", "no", 0.10, (0.03, 0.15), "KXALBUMEQUIV", "album_cheap_no_ledger.json", True, "yes"))
+# YES 0.88/0.94 -> NO bid 0.06, NO ask 0.12 (6c spread); YES 0.70/0.78 -> NO ask 0.30 (out of band).
+q = M.entry_quote([tc(4, 0.70, 0.78, px=0.75), tc(8, 0.88, 0.94, px=0.90, vol=5)], O, N, detail=True)
+check("the NO ask is 1 - the YES bid, the NO bid 1 - the YES ask; the last trade in NO terms; 0.30 passed over",
+      q, (O + 480, 0.06, 0.12, 5.0, (0.1, O + 480)))
+check("an 11c spread is too wide; a NO ask of 0.16 is out of band",
+      (M.entry_quote([tc(5, 0.87, 0.98)], O, N), M.entry_quote([tc(5, 0.84, 0.90)], O, N)), (None, None))
+lows = [dict(end_period_ts=O + 600, price=dict(low_dollars="0.60")), dict(end_period_ts=O + 7200, price=dict(low_dollars="0.75")),
+        dict(end_period_ts=O + 9000, price=dict(low_dollars="0.74"))]
+check("a NO leg at 0.26 fills when the YES traded low is 0.74 or under, after the entry (not on the YES high)",
+      (M.fill_of(lows, O + 600, 0.26, "no"), M.fill_of(lows, O + 600, 0.26)), ((O + 9000, 0.26), None))
+nb = {"orderbook_fp": {"yes_dollars": [["0.8500", "4"], ["0.8800", "6"], ["0.9000", "2"]], "no_dollars": []}}
+check("NO offered at or under 0.12 = YES bids at 0.88 or more", M.book_size(nb, 0.12, "no"), 8.0)
+check("settlement pays the NO on a 'no' result", (M.settled_payout(dict(status="finalized", result="no"), "no"),
+      M.settled_payout(dict(status="finalized", result="yes"), "no")), (1.0, 0.0))
+NOEV = dict(event_ticker="KXALBUMEQUIV-FRE26NOV12", markets=[
+    dict(ticker="KXALBUMEQUIV-FRE26NOV12-60K", open_time=AOLD.isoformat(), status="active", result="", yes_sub_title="Above 60K")])
+
+
+def nfake(path, evs=None):
+    if path.startswith("events?"):
+        return {"events": evs or [NOEV], "cursor": ""}
+    if "candlesticks" in path:
+        if path.endswith("period_interval=1"):
+            return {"market_tickers": ["KXALBUMEQUIV-FRE26NOV12-60K"],
+                    "market_candlesticks": [[dict(tc(30, 0.93, 0.97), end_period_ts=AO + 1800)]]}
+        return {"market_tickers": ["KXALBUMEQUIV-FRE26NOV12-60K"],
+                "market_candlesticks": [[dict(end_period_ts=AO + 7200, price=dict(low_dollars="0.86"))]]}
+    if path.endswith("/orderbook"):
+        return nb
+    raise AssertionError(path)
+
+
+ns = M.load("/nonexistent/no.json", cfg=N)
+M.run(ns, now=dt.datetime(2026, 10, 27, 3, 0, tzinfo=UTC), fetch=nfake, cfg=N)
+n0 = ns["entries"][0]
+check("the run: NO bought at 0.07 (YES bid 0.93), 2x leg (0.14) filled by the YES low 0.86, 3x (0.21) resting",
+      (n0["side"], n0["price"], [(l["target"], bool(l.get("filled_at"))) for l in n0["legs"]]),
+      ("no", 0.07, [(0.14, True), (0.21, False)]))
+M.run(ns, now=dt.datetime(2026, 11, 20, tzinfo=UTC), cfg=N,
+      fetch=lambda p: nfake(p, [dict(NOEV, markets=[dict(NOEV["markets"][0], status="finalized", result="no")])]))
+check("settled NO: won, HOLD and SPLIT graded", (n0["payout"], n0["roi_held"] > 0, n0["roi"] > 0, M.record(ns["entries"])["won"]),
+      (1.0, True, True, 1))
+nh = KB.build(split_state=st, wide_state=ws, month_state=ms_, month_wide_state=ms_, album_state=als, album_no_state=ns)
+nt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", nh))
+check("the page: a summary with cheap YES and cheap NO as separate rows, the note, then each card",
+      ("Album ladders tested too confident: both tails won more than priced." in nt,
+       "Cheap YES (5c spread, YES ask 0.03-0.15) 1 1 1" in nt, "Cheap NO (10c spread, NO ask 0.03-0.15) 1 1 1" in nt,
+       nh.find('id="album-summary"') < nh.find('id="album-cheap-rungs"') < nh.find('id="album-cheap-no"') < nh.find('<section id="method"'),
+       "NO ask paid" in nt), (True, True, True, True, True))
+check("no guarded public phrase on the album cards", sandbox_audit.COPY_RE.findall(
+      nh[nh.find('id="album-summary"'):nh.find('<section id="method"')]), [])
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
