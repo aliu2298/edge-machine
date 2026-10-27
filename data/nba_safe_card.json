@@ -18714,12 +18714,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.92,
+     "profit": 0.0809,
      "rationale": "CHI@BOS 1Q UNDER 69.5 @92c: model 93.5% (mu 56.9, line +12.6 above mu); edge +1.5c",
      "sd": 8.28,
+     "settled": "2026-10-27T00:30:42.284031+00:00",
      "side": "no",
      "start": "2026-10-26T23:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT26CHIBOS-70",
      "unit": "game"
     },
@@ -18737,12 +18740,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.84,
+     "profit": 0.1773,
      "rationale": "CHI@BOS 1Q OVER 49.5 @84c: model 81.6% (mu 56.9, line -7.4 below mu); edge -2.4c",
      "sd": 8.28,
+     "settled": "2026-10-27T00:30:42.284031+00:00",
      "side": "yes",
      "start": "2026-10-26T23:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT26CHIBOS-50",
      "unit": "game"
     },
@@ -18760,12 +18766,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.91,
+     "profit": 0.092,
      "rationale": "CHI@BOS 1Q OVER 47.5 @91c: model 87.3% (mu 56.9, line -9.4 below mu); edge -3.7c",
      "sd": 8.28,
+     "settled": "2026-10-27T00:30:42.284031+00:00",
      "side": "yes",
      "start": "2026-10-26T23:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT26CHIBOS-48",
      "unit": "game"
     },
@@ -18784,12 +18793,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.95,
+     "profit": 0.049,
      "rationale": "CHI@BOS 1Q UNDER 71.5 @95c: model 96.1% (mu 56.9, line +14.6 above mu); edge +1.1c",
      "sd": 8.28,
+     "settled": "2026-10-27T00:30:42.284031+00:00",
      "side": "no",
      "start": "2026-10-26T23:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT26CHIBOS-72",
      "unit": "game"
     },
@@ -18807,12 +18819,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.88,
+     "profit": 0.1269,
      "rationale": "CHI@BOS 1Q UNDER 67.5 @88c: model 89.9% (mu 56.9, line +10.6 above mu); edge +1.9c",
      "sd": 8.28,
+     "settled": "2026-10-27T00:30:42.284031+00:00",
      "side": "no",
      "start": "2026-10-26T23:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT26CHIBOS-68",
      "unit": "game"
     },
@@ -23301,7 +23316,7 @@
   }
  },
  "error": null,
- "last_run": "2026-10-27T00:05:59.324429+00:00",
+ "last_run": "2026-10-27T00:30:42.284031+00:00",
  "preseason": [
   {
    "pts": 105,
@@ -23972,10 +23987,6 @@
  "registered": "2026-10-22",
  "runs": [
   {
-   "at": "2026-10-24T02:00:27.200675+00:00",
-   "built": []
-  },
-  {
    "at": "2026-10-24T07:36:57.526936+00:00",
    "built": []
   },
@@ -24180,10 +24191,13 @@
   {
    "at": "2026-10-27T00:05:59.324429+00:00",
    "built": []
+  },
+  {
+   "at": "2026-10-27T00:30:42.284031+00:00",
+   "built": []
   }
  ],
  "schedule": [
-  "2026-10-26T23:30:00+00:00",
   "2026-10-27T00:00:00+00:00",
   "2026-10-27T00:30:00+00:00",
   "2026-10-27T01:00:00+00:00",
