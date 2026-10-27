@@ -100,7 +100,28 @@ MONTH_WIDE = dict(WIDE, lane="mentions_month_split_wide", label="Trump mentions,
                   path=os.path.join(ROOT, "data", "mentions_month_split_wide_ledger.json"), rule=_monthly(WIDE_RULE),
                   anchor="mentions-month-split-wide", series=MONTH_SERIES, start=MONTH_START,
                   registered=MONTH_REGISTERED, backfill=MONTH_NOTE, compare_id="mentions-month-split-compare")
-LANES = (STRICT, WIDE, MONTH, MONTH_WIDE)
+# Album sales (2026-10-27, Olu): album_cheap_rungs on Kalshi's first-week album-equivalent-unit
+# ladders, KXALBUMEQUIV ("Above 20K" ...). One entry per rung: the first minute quote inside 6h of
+# the rung's open with a spread of 5c or less AND a YES ask of 0.03-0.15, YES bought at that ask.
+# 0.15-0.30 is never entered (research: 0/20 won). Two variants on the SAME entries, side by side:
+# HOLD to settlement (roi_held) and SPLIT (half at 2x, half at 3x, trade-print fills, else held;
+# roi). Research basis (Olu, real asks, 45 settled events, 483 rungs): 3-15c strict 89 entries, 17
+# won; hold +259%, split +55% (z 1.6; older / newer half +33% / +99%); 3-15c wide split +56%;
+# 15-30c split -84%. Backfill: every event still open when the lane first ran, from its opening
+# candles where they are served (backfill_open).
+ALBUM_RULE = ("KXALBUMEQUIV only. For each rung, the first minute quote inside 6h of its open with a spread "
+              "of 5c or less and a YES ask of 0.03-0.15: buy YES at that ask (never 0.15-0.30). One entry per "
+              "rung. HOLD: held to settlement. SPLIT, on the same entries: half resting at 2x, half at 3x the "
+              "ask paid, each capped at 0.98, filled only when a trade prints at or above it (the candle's "
+              "traded high, never the bid), else held. Taker fee in, maker fee out.")
+ALBUM = dict(WIDE, lane="album_cheap_rungs", label="Album sales · cheap rungs, HOLD v SPLIT",
+             path=os.path.join(ROOT, "data", "album_cheap_rungs_ledger.json"), spread=0.05, band=(0.03, 0.15),
+             band_in_quote=True, rule=ALBUM_RULE, anchor="album-cheap-rungs", series="KXALBUMEQUIV",
+             start="2026-10-27T03:00:00+00:00", registered="2026-10-27", backfill_open=True, hold_variant=True,
+             skip="no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+             backfill="every event still open when the lane first ran is replayed from its opening candles "
+                      "where Kalshi still serves them", compare_id=None, unit="Event", item="Rung")
+LANES = (STRICT, WIDE, MONTH, MONTH_WIDE, ALBUM)
 
 
 def fee(p, rate):
@@ -145,7 +166,8 @@ def entry_quote(candles, open_ts, cfg=STRICT, detail=False):
         ask = _num((c.get("yes_ask") or {}).get("close_dollars"))
         if bid is None or ask is None or not 0 < ask <= 1 or ask - bid > cfg["spread"] + 1e-9:
             continue
-        if cfg["band_in_quote"] and not BAND[0] - 1e-9 <= ask <= BAND[1] + 1e-9:
+        band = cfg.get("band", BAND)
+        if cfg["band_in_quote"] and not band[0] - 1e-9 <= ask <= band[1] + 1e-9:
             continue
         return (end, bid, ask, round(traded, 2)) + ((last,) if detail else ())
     return None
@@ -234,8 +256,16 @@ def run(state, now=None, fetch=D.get, cfg=STRICT):
     for ev in events(fetch, cfg["series"]):
         tick = ev.get("event_ticker")
         ms = [m for m in ev.get("markets") or [] if _ts(m.get("open_time"))]
-        if not ms or min(_ts(m["open_time"]) for m in ms) < start_ts:
+        if not ms:
             continue
+        if min(_ts(m["open_time"]) for m in ms) < start_ts:
+            # A lane that backfills OPEN events (album_cheap_rungs): an event that opened before the
+            # lane's start is taken only if it still had an open market when the lane first saw it,
+            # and then kept (state["events"]) until everything on it settles.
+            if not (cfg.get("backfill_open") and (tick in state["events"]
+                                                  or any(m.get("status") in ("active", "open") for m in ms))):
+                continue
+        state["events"].setdefault(tick, now.isoformat())
         obs["events"] += 1
         lo = min(_ts(m["open_time"]) for m in ms)
         cs, entry_cs = None, None
@@ -243,8 +273,14 @@ def run(state, now=None, fetch=D.get, cfg=STRICT):
         pending = [m for m in ms if m["ticker"] not in have and m["ticker"] not in state["skips"]
                    and now_ts >= _ts(m["open_time"]) + 3600]
         if pending:
-            hi = min(now_ts, max(_ts(m["open_time"]) for m in pending) + ENTRY_WINDOW_H * 3600 + 60)
-            entry_cs = candles(tick, lo, hi - hi % 60, fetch, minutes=1, series=cfg["series"])
+            # Minute candles per opening time (a ladder can add rungs days after its first ones).
+            entry_cs = {}
+            for o_ in sorted({_ts(m["open_time"]) for m in pending}):
+                hi = min(now_ts, o_ + ENTRY_WINDOW_H * 3600 + 60)
+                got = candles(tick, o_, hi - hi % 60, fetch, minutes=1, series=cfg["series"])
+                for m in pending:
+                    if _ts(m["open_time"]) == o_:
+                        entry_cs[m["ticker"]] = got.get(m["ticker"]) or []
         if pending or any(not done(e) for e in mine):
             cs = candles(tick, lo, now_ts - now_ts % 60, fetch, series=cfg["series"])
         by = {m["ticker"]: m for m in ms}
@@ -260,7 +296,8 @@ def run(state, now=None, fetch=D.get, cfg=STRICT):
                     obs["waiting"] += 1
                 continue
             end, bid, ask, vol, (last_px, last_at) = q
-            if not BAND[0] - 1e-9 <= ask <= BAND[1] + 1e-9:
+            band = cfg.get("band", BAND)
+            if not band[0] - 1e-9 <= ask <= band[1] + 1e-9:
                 state["skips"][m["ticker"]] = dict(event=tick, word=word, reason=f"YES ask {ask:.2f} outside 0.03-0.30",
                                                    at=_iso(end))
                 obs["skipped"] += 1
@@ -313,7 +350,8 @@ def record(entries):
     held = [e["roi_held"] for e in graded if e.get("roi_held") is not None]
     two = [e["roi_2x"] for e in graded if e.get("roi_2x") is not None]
     mean = lambda xs: sum(xs) / len(xs) if xs else None
-    return dict(entries=len(entries), resolved=len(graded),
+    return dict(entries=len(entries), resolved=len(graded), won=sum(e.get("payout") == 1 for e in entries),
+                settled=sum(e.get("payout") is not None for e in entries),
                 filled_2x=sum(bool(e["legs"][0].get("filled_at")) for e in entries),
                 filled_3x=sum(bool(e["legs"][1].get("filled_at")) for e in entries),
                 roi=mean([e["roi"] for e in graded]), roi_held=mean(held), n_held=len(held),
@@ -380,10 +418,13 @@ def section(state, esc, cfg=STRICT):
     es = state.get("entries") or []
     r = record(es)
     o = state.get("observations") or {}
-    tiles = "".join(f'<div class="tile"><b>{esc(str(v))}</b><span>{esc(k)}</span></div>' for k, v in (
-        ("entries", r["entries"]), ("2x legs filled", r["filled_2x"]), ("3x legs filled", r["filled_3x"]),
-        ("ROI after fees · split", _pct(r["roi"])), ("same entries held", _pct(r["roi_held"])),
-        ("same entries, 2x leg only", _pct(r["roi_2x"]))))
+    shown = ((("entries", r["entries"]), ("settled", r["settled"]), ("won", r["won"]),
+              ("ROI after fees · HOLD", _pct(r["roi_held"])), ("ROI after fees · SPLIT", _pct(r["roi"])),
+              ("2x / 3x legs filled", f'{r["filled_2x"]} / {r["filled_3x"]}')) if cfg.get("hold_variant") else
+             (("entries", r["entries"]), ("2x legs filled", r["filled_2x"]), ("3x legs filled", r["filled_3x"]),
+              ("ROI after fees · split", _pct(r["roi"])), ("same entries held", _pct(r["roi_held"])),
+              ("same entries, 2x leg only", _pct(r["roi_2x"]))))
+    tiles = "".join(f'<div class="tile"><b>{esc(str(v))}</b><span>{esc(k)}</span></div>' for k, v in shown)
     wk = "".join(f'<tr><td>{esc(k)}</td><td class="num">{w["entries"]}</td><td class="num">{w["filled_2x"]}</td>'
                  f'<td class="num">{w["filled_3x"]}</td><td class="num">{w["resolved"]}</td>'
                  f'<td class="num">{_pct(w["roi"])}</td><td class="num">{_pct(w["roi_held"])}</td>'
@@ -407,9 +448,10 @@ def section(state, esc, cfg=STRICT):
     for v in skips.values():
         k = cfg["skip"] if v["reason"].startswith("no quote") else "YES ask outside 0.03-0.30"
         why[k] = why.get(k, 0) + 1
-    head = ('<thead><tr><th>Week</th><th class="num">Entries</th><th class="num">2x filled</th><th class="num">3x filled</th>'
+    unit, item = cfg.get("unit", "Week"), cfg.get("item", "Word")
+    head = (f'<thead><tr><th>{unit}</th><th class="num">Entries</th><th class="num">2x filled</th><th class="num">3x filled</th>'
             '<th class="num">Resolved</th><th class="num">ROI split</th><th class="num">Held</th><th class="num">2x only</th></tr></thead>')
-    thead = ('<thead><tr><th>Week</th><th>Word</th><th>Entry (UTC)</th><th class="num">YES ask paid</th>'
+    thead = (f'<thead><tr><th>{unit}</th><th>{item}</th><th>Entry (UTC)</th><th class="num">YES ask paid</th>'
              + ('<th class="num">Last trade</th><th class="num">Cost of the spread</th>' if cfg["last_trade"] else "")
              + '<th>Size</th><th>2x leg</th><th>3x leg</th><th class="num">P/L per contract</th><th class="num">ROI</th></tr></thead>')
     cols = 11 if cfg["last_trade"] else 9
