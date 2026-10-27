@@ -498,6 +498,9 @@ if tennis_build is not None and SB is not None:
     _fx, _fx_st = _sport_fixture()
     _now = datetime.datetime(2026, 10, 4, 18, tzinfo=timezone.utc)
     _ten = tennis_build.build(_fx, _fx_st, _now)
+    # The cheap-side section (2026-10-27) reads the live chaos ledger, not this fixture; its numbers
+    # are not the fixture's, so the fixture checks below read the page without it.
+    _ten = re.sub(r'<section id="cheap-side">.*?</section>', "", _ten, count=1, flags=re.S)
     _cri = cricket_build.build(_fx, _fx_st, _now)
     _soc = soccer_build.build(_fx, _fx_st, _now)
     _check_sport_tab("Tennis", _ten, _fx, _fx_st)

@@ -298,7 +298,8 @@ def _trade(vs, i, won_side, var):
         proceeds = exit_p - taker_fee(exit_p)
     else:
         proceeds = exit_p - maker_fee(exit_p)
-    return dict(entry_i=i, entry_ts=vs[i]["ts"], entry=round(entry, 4), exit_i=exit_i, exit_ts=vs[exit_i]["ts"],
+    return dict(entry_i=i, entry_ts=vs[i]["ts"], entry=round(entry, 4), spread=round(entry - vs[i]["bid"], 4),
+                exit_i=exit_i, exit_ts=vs[exit_i]["ts"],
                 exit=round(exit_p, 4), reason=reason, cost=round(c, 5), profit=round(proceeds - c, 5),
                 roi=round((proceeds - c) / c, 4), won=proceeds > c, target=tp, stop=stop,
                 unreachable=(var["tp"] is not None and tp is None))
@@ -323,7 +324,8 @@ def _split_trade(vs, i, won_side):
     last = max([l["filled_ts"] for l in legs if l["filled_ts"]] or [vs[-1]["ts"]])
     if any(l["filled_ts"] is None for l in legs):
         last = vs[-1]["ts"]
-    return dict(entry_i=i, entry_ts=vs[i]["ts"], entry=round(entry, 4), exit_i=None, exit_ts=last,
+    return dict(entry_i=i, entry_ts=vs[i]["ts"], entry=round(entry, 4), spread=round(entry - vs[i]["bid"], 4),
+                exit_i=None, exit_ts=last,
                 exit=None, reason="split", cost=round(c, 5), profit=round(proceeds - c, 5),
                 roi=round((proceeds - c) / c, 4), won=proceeds > c, target=None, stop=None, unreachable=False,
                 legs=legs, filled_2x=legs[0]["filled_ts"] is not None, filled_3x=legs[1]["filled_ts"] is not None,

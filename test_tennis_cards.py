@@ -199,7 +199,7 @@ for gone in ('id="today"', 'id="upcoming"', 'id="in-play"', 'id="combos"', "No t
              "rule-card", "rule-grid", "tennis-combo-grid", "How each rule is defined", "Match center",
              "tn-pick", "tn-rules", "tn-system"):
     ok(gone not in main, f"{gone} is gone")
-ok(main.count("<h2>") == 2, "two headings: Rules and Events; Method is a fold")
+ok(main.count("<h2>") == 3, "three headings: Cheap side + resting take-profit (2026-10-27), Rules and Events; Method is a fold")
 ok("<script" not in main.lower(), "the page body does not grow an inline script")
 ok("javascript:" not in html, "a javascript: url is not written")
 ok("&lt;script&gt;" in html, "a hostile label is escaped")
