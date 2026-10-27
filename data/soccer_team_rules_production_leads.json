@@ -5,7 +5,7 @@
    0.97
   ]
  },
- "board_built_at": "2026-10-26T19:01:29+00:00",
+ "board_built_at": "2026-10-27T16:01:40+00:00",
  "collector_error": null,
  "collector_healthy": {
   "st_t1": true
@@ -173,8 +173,6 @@
    "id": "2026-10-26|Paris Saint-Germain|Lyon|Lyon to score 2+ \u00b7 O+D\u2212 v O+D\u2212 \u00b7 team 2+ goals",
    "kickoff": "2026-10-26T19:30Z",
    "lane": "production",
-   "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T19:01:29+00:00",
    "league": "Ligue 1",
    "match": "Paris Saint-Germain v Lyon",
    "pair": "st_t1|soccer_team2",
@@ -194,7 +192,7 @@
    "sandbox_quote": "st_t1:KXLIGUE1TEAMTOTAL-26OCT26PSGOL-OL2",
    "source": "st_t1",
    "sport": "soccer_team2",
-   "status": "pending"
+   "status": "miss"
   },
   "2026-10-26|Paris Saint-Germain|Lyon|Paris Saint-Germain to score 2+ \u00b7 O+D\u2212 v O+D\u2212 \u00b7 team 2+ goals": {
    "away": "Lyon",
@@ -211,8 +209,6 @@
    "id": "2026-10-26|Paris Saint-Germain|Lyon|Paris Saint-Germain to score 2+ \u00b7 O+D\u2212 v O+D\u2212 \u00b7 team 2+ goals",
    "kickoff": "2026-10-26T19:30Z",
    "lane": "production",
-   "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T19:01:29+00:00",
    "league": "Ligue 1",
    "match": "Paris Saint-Germain v Lyon",
    "pair": "st_t1|soccer_team2",
@@ -232,7 +228,7 @@
    "sandbox_quote": "st_t1:KXLIGUE1TEAMTOTAL-26OCT26PSGOL-PSG2",
    "source": "st_t1",
    "sport": "soccer_team2",
-   "status": "pending"
+   "status": "hit"
   }
  },
  "pairs": {
@@ -252,9 +248,9 @@
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 4,
-   "sandbox_roi": -0.2275,
-   "sandbox_roi_fee": -0.2275,
+   "sandbox_n": 6,
+   "sandbox_roi": -0.2746,
+   "sandbox_roi_fee": -0.2746,
    "timing": {
     "late": [],
     "timed": 2,
@@ -266,5 +262,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-26T19:01:29+00:00"
+ "updated_at": "2026-10-27T16:01:40+00:00"
 }
