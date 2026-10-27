@@ -2,11 +2,11 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-27T13:35:05.759547+00:00",
-   "last_success": "2026-10-27T13:35:05.759547+00:00",
+   "last_run": "2026-10-27T14:00:18.911190+00:00",
+   "last_success": "2026-10-27T14:00:18.911190+00:00",
    "observations": {
-    "at": "2026-10-27T13:35:05.759547+00:00",
-    "events": 963,
+    "at": "2026-10-27T14:00:18.911190+00:00",
+    "events": 947,
     "reasons": {},
     "retired": "2026-10-24"
    },
@@ -542,11 +542,11 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-27T13:35:05.759547+00:00",
-   "last_success": "2026-10-27T13:35:05.759547+00:00",
+   "last_run": "2026-10-27T14:00:18.911190+00:00",
+   "last_success": "2026-10-27T14:00:18.911190+00:00",
    "observations": {
-    "at": "2026-10-27T13:35:05.759547+00:00",
-    "events": 963,
+    "at": "2026-10-27T14:00:18.911190+00:00",
+    "events": 947,
     "reasons": {},
     "retired": "2026-10-24"
    },
@@ -896,19 +896,19 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-27T13:35:05.759547+00:00",
-   "last_success": "2026-10-27T13:35:05.759547+00:00",
+   "last_run": "2026-10-27T14:00:18.911190+00:00",
+   "last_success": "2026-10-27T14:00:18.911190+00:00",
    "observations": {
-    "at": "2026-10-27T13:35:05.759547+00:00",
-    "events": 963,
+    "at": "2026-10-27T14:00:18.911190+00:00",
+    "events": 947,
     "news_guard": [],
     "reasons": {
+     "NO under 0.60 (floor 2026-10-26)": 2,
      "already near-certain (under 10c or over 90c)": 14,
-     "edge 5c+": 6,
+     "edge 5c+": 5,
      "edge under 5c": 2,
      "monthly or company series (excluded 2026-10-26)": 76,
-     "no quote or spread too wide": 21,
-     "transcript search failed": 2
+     "no quote or spread too wide": 22
     }
    },
    "picks": [
@@ -2233,14 +2233,14 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-27T13:35:05.759547+00:00",
-   "last_success": "2026-10-27T13:35:05.759547+00:00",
+   "last_run": "2026-10-27T14:00:18.911190+00:00",
+   "last_success": "2026-10-27T14:00:18.911190+00:00",
    "observations": {
-    "at": "2026-10-27T13:35:05.759547+00:00",
-    "events": 963,
+    "at": "2026-10-27T14:00:18.911190+00:00",
+    "events": 947,
     "reasons": {
-     "edge 5c+": 3,
-     "edge under 5c": 2,
+     "edge 5c+": 4,
+     "edge under 5c": 1,
      "under 20 reviews counted": 15,
      "within 1 point of the line": 5
     }
@@ -2776,7 +2776,7 @@
    ]
   },
   "Melania": {
-   "at": "2026-10-27T00:00:15.831099+00:00",
+   "at": "2026-10-27T14:00:18.911190+00:00",
    "days": [
     "2026-08-05",
     "2026-08-24",
@@ -2924,7 +2924,7 @@
    "days": []
   },
   "UAE / United Arab Emirates": {
-   "at": "2026-10-27T00:37:53.225033+00:00",
+   "at": "2026-10-27T14:00:18.911190+00:00",
    "days": [
     "2026-08-20",
     "2026-08-30"
