@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-27T00:00:16.749463+00:00",
+ "last_run": "2026-10-27T00:30:14.522722+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -513,6 +513,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT26MEMUTA-MEM110",
      "title": "Memphis over 109.5 points",
      "why": "MEM O+D- v UTAH O+D+ \u00b7 110+ YES 0.78"
+    },
+    {
+     "game": "401909875",
+     "id": "R1:KXNBATEAMTOTAL-26OCT26MEMUTA-UTA111",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O+D-",
+      "home": "O+D+",
+      "home_h1": "O+D+"
+     },
+     "logged": "2026-10-27T00:30:14.522722+00:00",
+     "match": "MEM @ UTAH",
+     "price": 0.75,
+     "rule": "R1",
+     "side": "yes",
+     "start": "2026-10-27T01:00Z",
+     "status": "open",
+     "strike": 110.5,
+     "team": "UTAH",
+     "ticker": "KXNBATEAMTOTAL-26OCT26MEMUTA-UTA111",
+     "title": "Utah over 110.5 points",
+     "why": "UTAH O+D+ v MEM O+D- \u00b7 110+ YES 0.75"
     }
    ]
   },
@@ -1362,6 +1384,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT26PHXOKC-OKC114",
      "title": "Oklahoma City over 113.5 points",
      "why": "OKC O-D- v PHX O-D+ \u00b7 115+ NO 0.45"
+    },
+    {
+     "game": "401909876",
+     "id": "R3:KXNBATEAMTOTAL-26OCT26GSWDEN-GSW115",
+     "labels": {
+      "away": "O-D+",
+      "away_h1": "O-D+",
+      "home": "O+D+",
+      "home_h1": "O-D+"
+     },
+     "logged": "2026-10-27T00:30:14.522722+00:00",
+     "match": "GS @ DEN",
+     "price": 0.51,
+     "rule": "R3",
+     "side": "no",
+     "start": "2026-10-27T02:00Z",
+     "status": "open",
+     "strike": 114.5,
+     "team": "GS",
+     "ticker": "KXNBATEAMTOTAL-26OCT26GSWDEN-GSW115",
+     "title": "Golden State over 114.5 points",
+     "why": "GS O-D+ v DEN O+D+ \u00b7 115+ NO 0.51"
     }
    ]
   },
@@ -2807,11 +2851,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-23T22:28:43.071048+00:00",
-   "due": 5,
-   "new": 0
-  },
-  {
    "at": "2026-10-23T22:30:13.345815+00:00",
    "due": 6,
    "new": 3
@@ -3060,6 +3099,11 @@
    "at": "2026-10-27T00:00:16.749463+00:00",
    "due": 2,
    "new": 0
+  },
+  {
+   "at": "2026-10-27T00:30:14.522722+00:00",
+   "due": 2,
+   "new": 2
   }
  ],
  "version": "nba-rules-v1"
