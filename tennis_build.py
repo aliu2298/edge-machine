@@ -51,7 +51,10 @@ def _cheap_side(html):
     records as the Sandbox's Chaos section. Never breaks the page."""
     try:
         import chaos_build
-        return html.replace('<section id="rules"', chaos_build.tennis_section() + '<section id="rules"', 1)
+        import sandbox_build
+        # Labelled here (phone cards), not only by the Sandbox build's pass, so every caller of build() gets it.
+        sec = sandbox_build.label_cells(chaos_build.tennis_section())
+        return html.replace('<section id="rules"', sec + '<section id="rules"', 1)
     except Exception:                                           # noqa: BLE001
         return html
 
