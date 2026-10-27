@@ -116,8 +116,11 @@ LANES = [
          picker=C.one_per_event(C.band_picker(0.40, 0.60, ("yes",))), entry_hours=(1,), headline="tp30", watch=True,
          since=FIRST_NIGHT, duration_min=120,
          note="One player (the cheaper ask) priced 40-60c an hour before the match, with a resting sell at +30%. Start from the first in-play price movement."),
+    # RETIRED 2026-10-27 (Olu): no new entries from that night on; its rows stay on the ledger as they are.
     dict(id="nba_tt_cheap_tp30", label="NBA team-total cheap rungs · sell +30%", series=["KXNBATEAMTOTAL"], picker=DOG,
          entry_hours=(1, 24), headline="tp30", since=FIRST_NIGHT, duration_min=160, start=espn_start("basketball/nba"),
+         retired=dict(on="2026-10-27", at="145 settled, 26 won; hold -29.4%, split -37.8%, +30% sell -38.8%, every exit negative",
+                      reason="past 30 and losing under every exit"),
          note="Each team's rungs priced 10-40c, bought 1h and 24h before the tip, with a resting sell at +30%. A loss-cutter test for the failing NBA team-total lanes. Rungs of one game move together: z is clustered by night, which is at least as strict as by game."),
     dict(id="nba_ml_dog_tp50", label="NBA moneyline underdog · sell +50%", series=["KXNBAGAME"], picker=DOG,
          entry_hours=(1,), headline="tp50", since=FIRST_NIGHT, duration_min=160, start=espn_start("basketball/nba"),

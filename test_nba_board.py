@@ -299,7 +299,7 @@ ok("57.3 / 55" in _text(gcells[2]) and f"{MINUS}1.5" in gcells[2] and "err-ok" i
 # Looked for in the game rows only: the Rules, value and Safe Card sections read live ledgers and
 # can print any figure (a live "-2.3" there failed this check on 2026-10-23).
 ok(f"{MINUS}2.3" not in GRADED and "-2.3" not in GRADED, "the error is never actual minus expected")
-ok("112.3 / 140" in _text(gcells[3]) and "+5.0" in gcells[3] and "err-ok" in gcells[3] and "27.7" not in HTML,
+ok("112.3 / 140" in _text(gcells[3]) and "+5.0" in gcells[3] and "err-ok" in gcells[3] and "27.7" not in GRADED,
    "1H shows the file's +5.0 (on the ±5 line, green), not 27.7")
 ok("227.9 / 210" in _text(gcells[4]) and "+4.0" in gcells[4] and f"{MINUS}17.9" not in HTML,
    "FT shows the file's +4.0")
