@@ -1,0 +1,174 @@
+#!/usr/bin/env python3
+"""Offline checks for the cheap-YES split lane on the weekly Trump-mention market (mentions_split.py)."""
+import datetime as dt
+import re
+import sys
+
+import culture_build as KB
+import mentions_split as M
+import sandbox_audit
+import site_chrome as C
+
+FAILS = []
+UTC = dt.timezone.utc
+OPEN = dt.datetime(2026, 10, 26, 4, 0, tzinfo=UTC)
+O = int(OPEN.timestamp())
+
+
+def check(label, got, want):
+    ok = got == want
+    print(f"  {'ok  ' if ok else 'FAIL'} {label}" + ("" if ok else f" (got {got!r}, want {want!r})"))
+    if not ok:
+        FAILS.append(label)
+
+
+def mc(mins, bid, ask, vol=0, hi=None):
+    """A candle ending `mins` minutes after the open."""
+    c = dict(end_period_ts=O + mins * 60, volume_fp=str(vol),
+             yes_bid=dict(close_dollars=str(bid), high_dollars=str(bid)), yes_ask=dict(close_dollars=str(ask)),
+             price=dict(high_dollars=None if hi is None else str(hi)))
+    return c
+
+
+print("the rule's terms")
+check("registered terms", (M.SERIES, M.BAND, M.MAX_SPREAD, M.ENTRY_WINDOW_H, M.LEGS, M.CAP, M.TAKER, M.MAKER,
+                           M.START, M.REVIEW_AT, M.DECIDE_AT),
+      ("KXTRUMPSAY", (0.03, 0.30), 0.05, 6, ((2.0, 0.5), (3.0, 0.5)), 0.98, 0.07, 0.0175,
+       "2026-10-26T04:00:00+00:00", 10, 30))
+check("targets at 2x and 3x, capped at 0.98", [M.targets(p) for p in (0.23, 0.30, 0.40)],
+      [[(2.0, 0.5, 0.46), (3.0, 0.5, 0.69)], [(2.0, 0.5, 0.6), (3.0, 0.5, 0.9)], [(2.0, 0.5, 0.8), (3.0, 0.5, 0.98)]])
+
+print("\nentry: the first quote with a 5c spread inside 6h")
+cs = [mc(10, 0.10, 0.20, vol=4), mc(30, 0.17, 0.21, vol=6), mc(40, 0.18, 0.20, vol=9)]
+check("wide quotes are passed over; the first tight one, with the contracts traded up to it",
+      M.entry_quote(cs, O), (O + 30 * 60, 0.17, 0.21, 10.0))
+check("exactly 5c is tight", M.entry_quote([mc(5, 0.10, 0.15)], O)[2], 0.15)
+check("nothing tight inside 6h: no entry (a tight quote at 6h01 is too late)",
+      (M.entry_quote([mc(10, 0.1, 0.3), mc(361, 0.1, 0.12)], O), M.entry_quote([mc(360, 0.1, 0.12)], O)[0] - O),
+      (None, 360 * 60))
+check("a candle at the open itself is not after it", M.entry_quote([mc(0, 0.1, 0.12)], O), None)
+
+print("\nfills: a trade at or above the target, never the bid")
+leg_c = [mc(30, 0.40, 0.42, hi=0.50), mc(120, 0.40, 0.45, hi=0.45), mc(180, 0.47, 0.49, hi=None),
+         mc(240, 0.30, 0.31, hi=0.46)]
+entry_ts = O + 30 * 60
+check("the entry's own candle does not count; a bid at 0.47 is not a fill; a 0.46 print is",
+      M.fill_of(leg_c, entry_ts, 0.46), (O + 240 * 60, 0.46))
+check("nothing printed at 0.69: unfilled", M.fill_of(leg_c, entry_ts, 0.69), None)
+book = {"orderbook_fp": {"no_dollars": [["0.7500", "10"], ["0.7700", "5.5"], ["0.8000", "3"]], "yes_dollars": []}}
+check("book size: YES offered at or under 0.23 = NO bids at 0.77 or more", M.book_size(book, 0.23), 8.5)
+
+print("\ngrading: split, held and 2x only, after fees")
+fin = lambda p: p + 0.07 * p * (1 - p)
+out = lambda t: t - 0.0175 * t * (1 - t)
+
+
+def ent(price, f2=None, f3=None, payout=None):
+    e = dict(price=price, legs=[dict(multiple=m, share=w, target=t) for m, w, t in M.targets(price)], payout=payout)
+    for leg, f in zip(e["legs"], (f2, f3)):
+        if f:
+            leg["filled_at"], leg["fill_px"] = f, leg["target"]
+        elif payout is not None:
+            leg["settled_px"] = payout
+    return M.grade(e)
+
+
+a = ent(0.23, "2026-10-27T05:00:00+00:00", "2026-10-28T05:00:00+00:00")
+check("both legs filled before settlement: graded, held waits for the settlement",
+      (a["status"], round(a["pnl"], 4), "roi_held" in a, round(a["roi_2x"], 4)),
+      ("filled", round(0.5 * out(0.46) + 0.5 * out(0.69) - fin(0.23), 4), False,
+       round((out(0.46) - fin(0.23)) / fin(0.23), 4)))
+b = ent(0.23, "2026-10-27T05:00:00+00:00", None, payout=0.0)
+check("2x filled, 3x held to a NO: half the stake back at 0.46, half lost; held -100%",
+      (b["status"], round(b["pnl"], 4), b["roi_held"]), ("settled", round(0.5 * out(0.46) - fin(0.23), 4), -1.0))
+c = ent(0.10, None, None, payout=1.0)
+check("neither filled and the word was said: both legs paid at 1", round(c["roi"], 4), round((1 - fin(0.10)) / fin(0.10), 4))
+d = ent(0.10)
+check("an unresolved leg leaves it open, with no P/L", (d["status"], d.get("pnl")), ("open", None))
+rec = M.record([a, b, c, d])
+check("the record: 4 entries, 3 resolved, legs 2/1, the held figure over the 2 settled only",
+      (rec["entries"], rec["resolved"], rec["filled_2x"], rec["filled_3x"], rec["n_held"]), (4, 3, 2, 1, 2))
+check("ROI is the mean over resolved entries (equal stake)", round(rec["roi"], 6), round((a["roi"] + b["roi"] + c["roi"]) / 3, 6))
+
+print("\nthe run: backfill, skips, the live book read, settlement")
+
+
+def word(code, word_, status="active", result="", opened=OPEN):
+    return dict(ticker=f"KXTRUMPSAY-26NOV02-{code}", open_time=opened.isoformat(), status=status, result=result,
+                custom_strike={"Word": word_})
+
+
+MKTS = [word("PEAC", "Peace"), word("CHEA", "Cheap"), word("PENY", "Penny"), word("WIDE", "Wide"), word("DEAR", "Dear"),
+        word("LATE", "Late", opened=OPEN + dt.timedelta(hours=30))]
+MIN = {"KXTRUMPSAY-26NOV02-PEAC": [mc(10, 0.10, 0.30), mc(93, 0.19, 0.23, vol=2)],
+       "KXTRUMPSAY-26NOV02-CHEA": [mc(5, 0.03, 0.05)],
+       "KXTRUMPSAY-26NOV02-PENY": [mc(5, 0.01, 0.02)],
+       "KXTRUMPSAY-26NOV02-WIDE": [mc(5, 0.10, 0.25)],
+       "KXTRUMPSAY-26NOV02-DEAR": [mc(5, 0.29, 0.31)]}
+HOUR = {"KXTRUMPSAY-26NOV02-PEAC": [mc(120, 0.4, 0.45, hi=0.46), mc(600, 0.6, 0.7, hi=0.70)],
+        "KXTRUMPSAY-26NOV02-CHEA": [mc(60, 0.04, 0.05, hi=0.09)]}
+OLD = dict(event_ticker="KXTRUMPSAY-26OCT26", markets=[dict(ticker="KXTRUMPSAY-26OCT26-X", open_time="2026-10-19T04:00:00Z",
+                                                            status="finalized", result="yes")])
+calls = []
+
+
+def fake(path, mkts=None):
+    calls.append(path)
+    if path.startswith("events?"):
+        assert "series_ticker=KXTRUMPSAY&" in path
+        return {"events": [dict(event_ticker="KXTRUMPSAY-26NOV02", markets=mkts or MKTS), OLD], "cursor": ""}
+    if "candlesticks" in path:
+        src = MIN if path.endswith("period_interval=1") else HOUR
+        end = int(path.split("end_ts=")[1].split("&")[0])
+        return {"market_tickers": list(src), "market_candlesticks": [[c for c in v if c["end_period_ts"] <= end]
+                                                                      for v in src.values()]}
+    if path.endswith("/orderbook"):
+        return book
+    raise AssertionError(path)
+
+
+st = M.load("/nonexistent/ledger.json")
+EARLY = OPEN + dt.timedelta(hours=2)
+M.run(st, now=EARLY, fetch=fake)
+check("2h after the open: PEAC (0.23) and CHEA (0.05) entered; the late-opening word not yet open",
+      sorted((e["word"], e["price"]) for e in st["entries"]), [("Cheap", 0.05), ("Peace", 0.23)])
+check("an entry read within 2h carries the book at the entry price (none offered at 0.05), and the contracts traded to it",
+      [(e["word"], e.get("book_size"), e["traded_to_entry"]) for e in sorted(st["entries"], key=lambda e: e["word"])],
+      [("Cheap", 0.0, 0.0), ("Peace", 8.5, 2.0)])
+check("outside the band is skipped at once (0.02 and 0.31); a wide quote waits for the window",
+      (sorted((v["word"], v["reason"]) for v in st["skips"].values()), st["observations"]["waiting"]),
+      ([("Dear", "YES ask 0.31 outside 0.03-0.30"), ("Penny", "YES ask 0.02 outside 0.03-0.30")], 1))
+check("the earlier week (opened before the lane's start) is never touched",
+      any("26OCT26" in c for c in calls), False)
+check("fills read off the traded high: PEAC 2x filled in the 2h candle, CHEA's 0.09 print below its 0.10",
+      [(e["word"], [bool(l.get("filled_at")) for l in e["legs"]]) for e in sorted(st["entries"], key=lambda e: e["word"])],
+      [("Cheap", [False, False]), ("Peace", [True, False])])
+LATER = OPEN + dt.timedelta(hours=12)
+M.run(st, now=LATER, fetch=fake)
+check("12h on: PEAC's 3x (0.69) filled by the 0.70 print; the wide word skipped after 6h; entries never re-made",
+      ([bool(l.get("filled_at")) for l in next(e for e in st["entries"] if e["word"] == "Peace")["legs"]],
+       st["skips"]["KXTRUMPSAY-26NOV02-WIDE"]["reason"], len(st["entries"])),
+      ([True, True], "no quote with a 5c spread inside 6h", 2))
+calls.clear()
+SETTLED = [dict(m, status="finalized", result="no") if m["ticker"].endswith(("PEAC", "CHEA")) else m for m in MKTS]
+M.run(st, now=OPEN + dt.timedelta(days=7), fetch=lambda p: fake(p, SETTLED))
+pe, ch = (next(e for e in st["entries"] if e["word"] == w) for w in ("Peace", "Cheap"))
+check("settled NO: PEAC keeps both fills (held would have lost); CHEA held both legs to 0",
+      (pe["status"], pe["roi_held"], ch["status"], ch["roi"], [l.get("settled_px") for l in ch["legs"]]),
+      ("settled", -1.0, "settled", -1.0, [0.0, 0.0]))
+check("no book is read for an entry made long after its time", calls.count("markets/KXTRUMPSAY-26NOV02-LATE/orderbook"), 0)
+
+print("\nthe Culture page card")
+h = KB.build(split_state=st)
+card = h[h.find('<section id="mentions-split"'):h.find('<section id="method"')]
+t = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", card))
+check("it sits on the Culture page before the Method, with the review note and the comparisons",
+      (bool(card), "review at 10, decide at 30" in t, "same entries held" in t, "same entries, 2x leg only" in t,
+       "2x legs filled" in t, "3x legs filled" in t), (True, True, True, True, True, True))
+check("per-week row and the trade list name the words, the entry price and the size",
+      ("KXTRUMPSAY-26NOV02 2 1 1 2" in t, "Peace" in t, "0.23" in t, "2 traded to entry · 8.5 on the book" in t), (True, True, True, True))
+check("an empty ledger renders", "No entry yet." in M.section(M.load("/nonexistent/x.json"), C.esc), True)
+check("no guarded public phrase on the card or in the module", sandbox_audit.COPY_RE.findall(card + open("mentions_split.py").read()), [])
+
+print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
+sys.exit(1 if FAILS else 0)
