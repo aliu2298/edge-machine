@@ -228,9 +228,61 @@ check("the comparison: entries, ROI after fees and the average spread paid, stri
       re.search(r"Strict v wide · strict \(5c\): 2 entries, ROI after fees [^,]+ \(2 resolved\), average spread paid 0\.03 · "
                 r"wide \(10c\): 3 entries, ROI after fees — \(0 resolved\), average spread paid 0\.06", wt) is not None, True)
 check("the wide card names its own rule and the review note",
-      ("whose spread is 10c or less and whose YES ask is 0.03-0.30" in wt and wt.count("review at 10, decide at 30") == 2), True)
+      ("whose spread is 10c or less and whose YES ask is 0.03-0.30" in wt and wt.count("review at 10, decide at 30") == 4), True)
 check("no guarded public phrase on the page cards", sandbox_audit.COPY_RE.findall(
       wh[wh.find('id="mentions-split"'):wh.find('<section id="method"')]), [])
+
+print("\nthe monthly market (2026-10-27): both lanes on KXTRUMPSAYMONTH, separate records")
+check("monthly lanes: their own ids, ledgers, series and start; the same entry rules as the weekly twins",
+      [(c["lane"], c["series"], c["start"], c["spread"], c["band_in_quote"], c["last_trade"], c["path"].rsplit("/", 1)[-1])
+       for c in (M.MONTH, M.MONTH_WIDE)],
+      [("mentions_month_split", "KXTRUMPSAYMONTH", "2026-10-01T14:00:00+00:00", 0.05, False, False, "mentions_month_split_ledger.json"),
+       ("mentions_month_split_wide", "KXTRUMPSAYMONTH", "2026-10-01T14:00:00+00:00", 0.10, True, True,
+        "mentions_month_split_wide_ledger.json")])
+check("four lanes, and no company series anywhere",
+      ([c["lane"] for c in M.LANES], any("COMPANY" in c["series"] for c in M.LANES)),
+      (["mentions_cheap_yes_split", "mentions_cheap_yes_split_wide", "mentions_month_split", "mentions_month_split_wide"], False))
+check("the weekly lanes still read KXTRUMPSAY from 2026-10-26", (M.STRICT["series"], M.WIDE["series"], M.STRICT["start"]),
+      ("KXTRUMPSAY", "KXTRUMPSAY", "2026-10-26T04:00:00+00:00"))
+check("the monthly rule text names its own series and a month", ("Monthly KXTRUMPSAYMONTH only." in M.MONTH["rule"],
+      "per word per month" in M.MONTH_WIDE["rule"], "Weekly" in M.MONTH["rule"]), (True, True, False))
+MOPEN = dt.datetime(2026, 10, 1, 14, 0, tzinfo=UTC)
+MO = int(MOPEN.timestamp())
+mcalls = []
+MM = [dict(ticker="KXTRUMPSAYMONTH-26NOV01-UFO", open_time=MOPEN.isoformat(), status="active", result="",
+           custom_strike={"Word": "UFO"})]
+
+
+def mfake(path):
+    mcalls.append(path)
+    if path.startswith("events?"):
+        return {"events": [dict(event_ticker="KXTRUMPSAYMONTH-26NOV01", markets=MM)], "cursor": ""}
+    if "candlesticks" in path:
+        c = dict(end_period_ts=MO + 600, volume_fp="4", yes_bid=dict(close_dollars="0.10"), yes_ask=dict(close_dollars="0.14"),
+                 price=dict(close_dollars="0.12", high_dollars="0.12"))
+        later = dict(c, end_period_ts=MO + 7200, price=dict(close_dollars="0.30", high_dollars="0.30"))
+        return {"market_tickers": ["KXTRUMPSAYMONTH-26NOV01-UFO"], "market_candlesticks": [[c, later]]}
+    if path.endswith("/orderbook"):
+        return book
+    raise AssertionError(path)
+
+
+for cfg in (M.MONTH, M.MONTH_WIDE):
+    ms_ = M.load("/nonexistent/m.json", cfg=cfg)
+    M.run(ms_, now=MOPEN + dt.timedelta(days=3), fetch=mfake, cfg=cfg)
+    e0 = ms_["entries"][0]
+    check(f"{cfg['lane']}: reads the monthly series and enters UFO at 0.14 (2x 0.28 filled by the 0.30 print)",
+          (e0["id"], e0["price"], e0["legs"][0].get("fill_px"), e0.get("last_trade"), ms_["lane"]),
+          ("KXTRUMPSAYMONTH-26NOV01-UFO", 0.14, 0.28, 0.12 if cfg["last_trade"] else None, cfg["lane"]))
+check("every call went to the monthly series, none to the weekly or company one",
+      (all("KXTRUMPSAYMONTH" in c for c in mcalls if "series" in c), any("COMPANY" in c for c in mcalls)), (True, False))
+mh = KB.build(split_state=st, wide_state=ws, month_state=ms_, month_wide_state=ms_)
+order = [mh.find(f'id="{a}"') for a in ("mentions-split", "mentions-split-compare", "mentions-split-wide", "mentions-month-split",
+                                        "mentions-month-split-compare", "mentions-month-split-wide")] + [mh.find('<section id="method"')]
+mt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", mh))
+check("the page: weekly cards, then the monthly strict card, its comparison line and the monthly wide card",
+      (all(x > 0 for x in order), order == sorted(order), "Monthly · strict v wide" in mt,
+       "KXTRUMPSAYMONTH-26NOV01 (October, opened 2026-10-01 14:00Z)" in mt), (True, True, True, True))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
