@@ -28,6 +28,7 @@ jobs:
         run: |
           python3 test_daily_research.py
           python3 test_finance_nc.py
+          python3 test_mentions_split.py
       - name: Public market observations and paper settlement
         id: collect
         run: python3 daily_track.py
@@ -37,6 +38,12 @@ jobs:
       - name: S&P near-certain NO paper lane
         if: ${{ !cancelled() && (steps.collect.outcome == 'success' || steps.collect.outcome == 'failure') }}
         run: python3 finance_nc.py
+      # Cheap side + resting take-profit on the commodity ladders (2026-10-27): wti_cheap_yes and
+      # gas_cheap_no, the culture split engine (mentions_split.py), their own ledgers. Entries are
+      # replayed from minute candles, so the hourly read needs no window stamp.
+      - name: Commodity cheap-side paper lanes (WTI cheap YES, gas cheap NO)
+        if: ${{ !cancelled() && (steps.collect.outcome == 'success' || steps.collect.outcome == 'failure') }}
+        run: python3 mentions_split.py commodities
       - name: Publish Econ Daily Production feed
         if: ${{ !cancelled() && (steps.collect.outcome == 'success' || steps.collect.outcome == 'failure') }}
         run: python3 daily_production.py
@@ -52,6 +59,12 @@ jobs:
             python3 -c 'import json; json.load(open("data/finance_nc_ledger.json"))'
             git add data/finance_nc_ledger.json
           fi
+          for f in data/wti_cheap_yes_ledger.json data/gas_cheap_no_ledger.json; do
+            if [ -f "$f" ]; then
+              python3 -c 'import json, sys; json.load(open(sys.argv[1]))' "$f"
+              git add "$f"
+            fi
+          done
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Daily paper research observations"
           for attempt in 1 2 3; do

@@ -410,5 +410,71 @@ check("the page: the summary has cheap YES and cheap NO as separate rows; the no
 check("no guarded public phrase on the album cards", sandbox_audit.COPY_RE.findall(
       nh[nh.find('id="album-note"'):nh.find('<section id="models"')]), [])
 
+print("\ncommodities (2026-10-27): wti_cheap_yes and gas_cheap_no on the same engine")
+WT, GS = M.WTI, M.GAS
+check("their terms: KXWTI YES / KXAAAGASD NO, 15-30c, 5c spread, open events only, 7-day backfill, own ledgers",
+      [(c["lane"], c["series"], c.get("side", "yes"), c["band"], c["spread"], c["open_only"], c["backfill_days"],
+        c["path"].rsplit("/", 1)[-1]) for c in (WT, GS)],
+      [("wti_cheap_yes", "KXWTI", "yes", (0.15, 0.30), 0.05, True, 7, "wti_cheap_yes_ledger.json"),
+       ("gas_cheap_no", "KXAAAGASD", "no", (0.15, 0.30), 0.05, True, 7, "gas_cheap_no_ledger.json")])
+check("the groups: culture runs the six culture lanes, commodities the two commodity lanes",
+      ([c["lane"] for c in M.GROUPS["commodities"]], WT in M.GROUPS["culture"], len(M.GROUPS["culture"])),
+      (["wti_cheap_yes", "gas_cheap_no"], False, 6))
+check("never under 0.15: a tight 0.12 is passed over for a tight 0.18; 0.30 is in, 0.31 out",
+      (M.entry_quote([tc(3, 0.09, 0.12), tc(6, 0.14, 0.18)], O, WT)[2], M.entry_quote([tc(3, 0.26, 0.30)], O, WT)[2],
+       M.entry_quote([tc(3, 0.27, 0.31)], O, WT)), (0.18, 0.30, None))
+check("gas NO: YES 0.80/0.83 is a NO ask of 0.20 (3c spread)", M.entry_quote([tc(3, 0.80, 0.83)], O, GS)[1:3], (0.17, 0.2))
+COPEN = dt.datetime(2026, 10, 26, 23, 30, tzinfo=UTC)
+CO = int(COPEN.timestamp())
+ccalls = []
+WEV = dict(event_ticker="KXWTI-26OCT2814", markets=[dict(ticker="KXWTI-26OCT2814-T104", open_time=COPEN.isoformat(),
+                                                        status="active", result="", yes_sub_title="Above $104")])
+OLDW = dict(event_ticker="KXWTI-26NOV03", markets=[dict(ticker="KXWTI-26NOV03-T60", open_time="2026-05-06T14:00:00Z",
+                                                       status="active", result="", yes_sub_title="Above $60")])
+
+
+def cfake(path, listed=None, single=None):
+    ccalls.append(path)
+    if path.startswith("events?"):
+        assert "series_ticker=KXWTI&status=open&" in path
+        return {"events": [WEV, OLDW] if listed is None else listed, "cursor": ""}
+    if path.startswith("events/"):
+        return {"event": dict(event_ticker=path.split("/")[1].split("?")[0]), "markets": single["markets"]}
+    if "candlesticks" in path:
+        if path.endswith("period_interval=1"):
+            return {"market_tickers": ["KXWTI-26OCT2814-T104"],
+                    "market_candlesticks": [[dict(tc(1, 0.17, 0.21, px=0.20, vol=3), end_period_ts=CO + 60)]]}
+        return {"market_tickers": ["KXWTI-26OCT2814-T104"],
+                "market_candlesticks": [[dict(end_period_ts=CO + 7200, price=dict(high_dollars="0.42"))]]}
+    if path.endswith("/orderbook"):
+        return book
+    raise AssertionError(path)
+
+
+cs_ = M.load("/nonexistent/wti.json", cfg=WT)
+M.run(cs_, now=COPEN + dt.timedelta(hours=1), fetch=cfake, cfg=WT)
+check("WTI: only the open events are listed; the May event is past the 7-day backfill; T104 entered at 0.21",
+      (sorted(cs_["events"]), [(e["word"], e["price"], e["last_trade"]) for e in cs_["entries"]]),
+      (["KXWTI-26OCT2814"], [("Above $104", 0.21, 0.2)]))
+check("its legs rest: the 0.42 print lies after this read (a candle past now is never used)",
+      [bool(l.get("filled_at")) for l in cs_["entries"][0]["legs"]], [False, False])
+done_ev = dict(WEV, markets=[dict(WEV["markets"][0], status="finalized", result="yes")])
+ccalls.clear()
+M.run(cs_, now=COPEN + dt.timedelta(days=2), fetch=lambda p: cfake(p, listed=[], single=done_ev), cfg=WT)
+check("once the event leaves the open list, the held entry's event is read on its own and settles",
+      ("events/KXWTI-26OCT2814?with_nested_markets=true" in ccalls, cs_["entries"][0]["payout"],
+       cs_["entries"][0]["roi_held"] > 0, [bool(l.get("filled_at")) for l in cs_["entries"][0]["legs"]]),
+      (True, 1.0, True, [True, False]))
+import commodities_build as CB
+gh_ = CB.build()
+sec = gh_[gh_.find('id="cheap-side"'):gh_.find('<section id="events"')]
+stx = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", sec))
+check("the Commodities page: the cheap-side section before the Events, the summary and both cards, phone labels",
+      (bool(sec), "Cheap side + resting take-profit" in stx, "WTI oil · cheap YES (15-30c)" in stx,
+       "AAA gas · cheap NO (15-30c)" in stx, 'id="wti-cheap-yes"' in sec, 'id="gas-cheap-no"' in sec,
+       'data-l="Split ROI"' in sec, "review at 10, decide at 30" in stx), (True,) * 8)
+check("the existing commodities rules are still on the page", all(n in gh_ for n in CB.RULE_NAMES.values()), True)
+check("no guarded public phrase in the commodities section", sandbox_audit.COPY_RE.findall(stx), [])
+
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

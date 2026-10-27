@@ -305,7 +305,27 @@ def build(d=None, st=None, now=None):
         rows=rows, events=events, rule_name=rule_name, market=market,
         definition=definition, recent=recent_html, method=method, scoped=False,
         unit=lambda row: "market-day")
-    return SP.page(sp, d, st, now, rows=rows)
+    html = SP.page(sp, d, st, now, rows=rows)
+    # The cheap-side lanes (2026-10-27), their own ledgers, before the Events. The existing lanes
+    # above are untouched.
+    return html.replace('<section id="events"', cheap_side() + '<section id="events"', 1)
+
+
+def cheap_side(states=None):
+    """The Commodities page's "Cheap side + resting take-profit" section (2026-10-27): the Culture
+    page's summary table and lane cards for wti_cheap_yes and gas_cheap_no (mentions_split engine)."""
+    import mentions_split as MS
+    states = states or {cfg["lane"]: MS.load(cfg=cfg) for cfg in MS.COMMOD_LANES}
+    e = C.esc
+    inner = ('<section id="cheap-side"><h2>Cheap side + resting take-profit</h2>'
+             '<ul class="sm"><li>Buy the cheap side when a ladder rung opens, at the real ask.</li>'
+             '<li>Rest a split sell: half at 2x, half at 3x.</li><li>A fill counts only on a traded print.</li>'
+             '<li>Every lane is shown next to the same entries held.</li></ul>'
+             '<p class="sm mut">Sandbox, paper only, fresh records from the first entry: review at 10 settled, decide at '
+             '30. The same engine and wording as the Culture page.</p>'
+             + MS.summary(MS.COMMOD_LANES, states, e)
+             + "".join(MS.section(states[cfg["lane"]], e, cfg) for cfg in MS.COMMOD_LANES) + '</section>')
+    return MS.label_cells(inner)
 
 
 def main():

@@ -72,7 +72,7 @@ w0 = text(rows[0])
 check("the weekly strict row: 2 entries, 2 settled, 1 won, legs 1 / 0, 4c spread, the review status",
       ("2 2 1" in w0, "1 / 0" in w0, "0.04" in w0, "2 settled · review at 10, decide at 30" in w0), (True, True, True, True))
 check("strict v wide average spread paid, for the mention lanes",
-      "Weekly mentions, strict v wide average spread paid 0.04 v 0.10 · Monthly mentions, strict v wide average spread paid — v —" in t,
+      "Weekly mentions, strict v wide average spread paid 0.04 v 0.10. Monthly mentions, strict v wide average spread paid — v —." in t,
       True)
 check("status moves at 10 and 30", (KB.status(9), KB.status(10), KB.status(30)),
       ("9 settled · review at 10, decide at 30", "10 settled · review due (10 reached) · decide at 30",
