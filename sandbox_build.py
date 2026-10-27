@@ -2483,6 +2483,14 @@ def main():
         print(f"wrote {culture_out}")
     except Exception as exc:                                    # noqa: BLE001
         print(f"::warning::culture page not rebuilt ({type(exc).__name__}: {exc})")
+    # The Fights page (2026-10-26): boxing and UFC cheap-side lanes, own ledgers (fights_split.py).
+    try:
+        import fights_build
+        fights_out = os.path.join(os.path.dirname(OUT), "fights.html")
+        _write(fights_out, fights_build.build(now=now))
+        print(f"wrote {fights_out}")
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"::warning::fights page not rebuilt ({type(exc).__name__}: {exc})")
     import daily_build
     for daily_key in daily_build.D.LANES:
         daily_out = os.path.join(os.path.dirname(OUT), daily_key + ".html")

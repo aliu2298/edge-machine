@@ -244,9 +244,10 @@ def entry_quote(candles, open_ts, cfg=STRICT, detail=False):
     return None
 
 
-def fill_of(candles, entry_ts, target, side="yes"):
+def fill_of(candles, entry_ts, target, side="yes", detail=False):
     """(end_ts, target) of the first candle after the entry whose traded high reaches the target. For
-    a NO the traded NO high is 1 - the YES traded low: it fills when YES price.low <= 1 - target."""
+    a NO the traded NO high is 1 - the YES traded low: it fills when YES price.low <= 1 - target.
+    With detail (the fights lanes, 2026-10-27) a 3rd item: the contracts traded in that candle."""
     for c in sorted(candles, key=lambda c: c.get("end_period_ts") or 0):
         end = c.get("end_period_ts")
         if not end or end <= entry_ts:
@@ -257,7 +258,7 @@ def fill_of(candles, entry_ts, target, side="yes"):
         else:
             hi = _num((c.get("price") or {}).get("high_dollars"))
         if hi is not None and hi >= target - 1e-9:
-            return end, target
+            return (end, target, _num(c.get("volume_fp"))) if detail else (end, target)
     return None
 
 
@@ -524,7 +525,9 @@ def section(state, esc, cfg=STRICT):
                  f'<td class="num">{w["filled_3x"]}</td><td class="num">{w["resolved"]}</td>'
                  f'<td class="num">{_pct(w["roi"])}</td><td class="num">{_pct(w["roi_held"])}</td>'
                  f'<td class="num">{_pct(w["roi_2x"])}</td></tr>' for k, w in weeks(es))
-    leg = lambda l: (f'{l["target"]:.2f} filled {esc(l["filled_at"][:16].replace("T", " "))}Z' if l.get("filled_at")
+    leg = lambda l: (f'{l["target"]:.2f} filled {esc(l["filled_at"][:16].replace("T", " "))}Z'
+                     + (f', {l["fill_volume"]:g} traded that minute' if l.get("fill_volume") is not None else "")
+                     if l.get("filled_at")
                      else f'{l["target"]:.2f} held, settled {l["settled_px"]:.0f}' if l.get("settled_px") is not None
                      else f'{l["target"]:.2f} resting')
     size = lambda e: (f'{e["traded_to_entry"]:g} traded to entry' if e.get("traded_to_entry") is not None else "") + (
@@ -540,7 +543,7 @@ def section(state, esc, cfg=STRICT):
     skips = state.get("skips") or {}
     why = {}
     for v in skips.values():
-        k = cfg["skip"] if v["reason"].startswith("no quote") else "YES ask outside 0.03-0.30"
+        k = cfg["skip"] if v["reason"].startswith("no quote") else cfg.get("outside_text", "YES ask outside 0.03-0.30")
         why[k] = why.get(k, 0) + 1
     unit, item = cfg.get("unit", "Week"), cfg.get("item", "Word")
     head = (f'<thead><tr><th>{unit}</th><th class="num">Entries</th><th class="num">2x filled</th><th class="num">3x filled</th>'
@@ -557,7 +560,7 @@ def section(state, esc, cfg=STRICT):
             'Held: the same entries to settlement. 2x only: the same entries with one sell at 2x.</p>'
             f'<div class="tbl"><table>{head}<tbody>{wk or "<tr><td colspan=8>No entry yet.</td></tr>"}</tbody></table></div>'
             f'<div class="tbl"><table>{thead}<tbody>{trades or f"<tr><td colspan={cols}>No entry yet.</td></tr>"}</tbody></table></div>'
-            f'<p class="sm mut">Words skipped: {len(skips)}'
+            f'<p class="sm mut">{cfg.get("skipped_noun", "Words")} skipped: {len(skips)}'
             + (" (" + "; ".join(f"{k}: {v}" for k, v in sorted(why.items())) + ")" if why else "")
             + (f'. Last read {esc(str(state.get("last_success"))[:16].replace("T", " "))}Z' if state.get("last_success") else ". Not read yet")
             + (f' · {esc(state["error"])}' if state.get("error") else "") + '.</p></section>')
