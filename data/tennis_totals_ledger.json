@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-27T19:00:17.565976+00:00",
+ "last_run": "2026-10-27T21:22:35.226745+00:00",
  "registered": "2026-10-21",
  "rules": {
   "baseline": {
@@ -952,11 +952,14 @@
      "line": 18.5,
      "logged": "2026-10-27T16:15:17.629908+00:00",
      "match": "Aleksandar Kovacevic v Ben Shelton",
+     "payout": 1.0,
      "price": 0.91,
+     "profit": 9.2,
      "rule": "baseline",
+     "settled": "2026-10-27T21:22:35.226745+00:00",
      "side": "yes",
      "start": "2026-10-27T17:00:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXATPGTOTAL-26OCT27SHEKOV-19",
      "title": "Over 18.5 games",
      "tournament": "Swiss Indoors Basel",
@@ -1934,11 +1937,14 @@
      "line": 18.5,
      "logged": "2026-10-27T16:15:17.629908+00:00",
      "match": "Aleksandar Kovacevic v Ben Shelton",
+     "payout": 1.0,
      "price": 0.91,
+     "profit": 9.2,
      "rule": "tennis_atp_low_over",
+     "settled": "2026-10-27T21:22:35.226745+00:00",
      "side": "yes",
      "start": "2026-10-27T17:00:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXATPGTOTAL-26OCT27SHEKOV-19",
      "title": "Over 18.5 games",
      "tournament": "Swiss Indoors Basel",
@@ -1969,14 +1975,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T11:42:10.482690+00:00",
-   "baseline": 0,
-   "due": 3,
-   "entered": 0,
-   "matched": 0,
-   "new": 0
-  },
   {
    "at": "2026-10-25T11:45:13.659188+00:00",
    "baseline": 0,
@@ -2376,10 +2374,17 @@
    "entered": 0,
    "matched": 2,
    "new": 0
+  },
+  {
+   "at": "2026-10-27T21:22:35.226745+00:00",
+   "baseline": 0,
+   "due": 0,
+   "entered": 0,
+   "matched": 0,
+   "new": 0
   }
  ],
  "schedule": [
-  "2026-10-27T19:30:00+00:00",
   "2026-10-28T11:30:00+00:00",
   "2026-10-28T12:30:00+00:00",
   "2026-10-28T13:00:00+00:00",
