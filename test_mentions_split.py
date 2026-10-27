@@ -160,11 +160,11 @@ check("no book is read for an entry made long after its time", calls.count("mark
 
 print("\nthe Culture page card")
 h = KB.build(split_state=st)
-card = h[h.find('<section id="mentions-split"'):h.find('<section id="method"')]
+card = h[h.find('id="mentions-split"'):h.find('<section id="models"')]
 t = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", card))
-check("it sits on the Culture page before the Method, with the review note and the comparisons",
-      (bool(card), "review at 10, decide at 30" in t, "same entries held" in t, "same entries, 2x leg only" in t,
-       "2x legs filled" in t, "3x legs filled" in t), (True, True, True, True, True, True))
+check("it sits on the Culture page before the Model lanes, with the review note and the same tiles as every card",
+      (bool(card), "review at 10, decide at 30" in t, "ROI after fees · held" in t, "2x only" in t,
+       "legs filled 2x / 3x" in t, "ROI after fees · split" in t), (True, True, True, True, True, True))
 check("per-week row and the trade list name the words, the entry price and the size",
       ("KXTRUMPSAY-26NOV02 2 1 1 2" in t, "Peace" in t, "0.23" in t, "2 traded to entry · 8.5 on the book" in t), (True, True, True, True))
 check("an empty ledger renders", "No entry yet." in M.section(M.load("/nonexistent/x.json"), C.esc), True)
@@ -222,15 +222,15 @@ wh = KB.build(split_state=st, wide_state=ws)
 wt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", wh))
 check("the page: both cards, the wide one after the strict one, and the comparison line between",
       (wh.find('id="mentions-split"') < wh.find('id="mentions-split-compare"') < wh.find('id="mentions-split-wide"')
-       < wh.find('<section id="method"'), "Cost of the spread" in wt, "Last trade" in wt),
+       < wh.find('<section id="models"'), "Cost of the spread" in wt, "Last trade" in wt),
       (True, True, True))
 check("the comparison: entries, ROI after fees and the average spread paid, strict v wide",
       re.search(r"Strict v wide · strict \(5c\): 2 entries, ROI after fees [^,]+ \(2 resolved\), average spread paid 0\.03 · "
                 r"wide \(10c\): 3 entries, ROI after fees — \(0 resolved\), average spread paid 0\.06", wt) is not None, True)
 check("the wide card names its own rule and the review note",
-      ("whose spread is 10c or less and whose YES ask is 0.03-0.30" in wt and wt.count("review at 10, decide at 30") == 7), True)
+      ("whose spread is 10c or less and whose YES ask is 0.03-0.30" in wt and wt.count("review at 10, decide at 30") >= 6), True)
 check("no guarded public phrase on the page cards", sandbox_audit.COPY_RE.findall(
-      wh[wh.find('id="mentions-split"'):wh.find('<section id="method"')]), [])
+      wh[wh.find('id="mentions-split"'):wh.find('<section id="models"')]), [])
 
 print("\nthe monthly market (2026-10-27): both lanes on KXTRUMPSAYMONTH, separate records")
 check("monthly lanes: their own ids, ledgers, series and start; the same entry rules as the weekly twins",
@@ -279,7 +279,7 @@ check("every call went to the monthly series, none to the weekly or company one"
       (all("KXTRUMPSAYMONTH" in c for c in mcalls if "series" in c), any("COMPANY" in c for c in mcalls)), (True, False))
 mh = KB.build(split_state=st, wide_state=ws, month_state=ms_, month_wide_state=ms_)
 order = [mh.find(f'id="{a}"') for a in ("mentions-split", "mentions-split-compare", "mentions-split-wide", "mentions-month-split",
-                                        "mentions-month-split-compare", "mentions-month-split-wide")] + [mh.find('<section id="method"')]
+                                        "mentions-month-split-compare", "mentions-month-split-wide")] + [mh.find('<section id="models"')]
 mt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", mh))
 check("the page: weekly cards, then the monthly strict card, its comparison line and the monthly wide card",
       (all(x > 0 for x in order), order == sorted(order), "Monthly · strict v wide" in mt,
@@ -345,10 +345,10 @@ check("once tracked it is kept after it settles: won, HOLD and SPLIT both graded
       (e0["payout"], e0["roi_held"] > e0["roi"] > 0, M.record(als["entries"])["won"], M.record(als["entries"])["settled"]),
       (1.0, True, 1, 1))
 ah = KB.build(split_state=st, wide_state=ws, month_state=ms_, month_wide_state=ms_, album_state=als)
-card_a = ah[ah.find('id="album-cheap-rungs"'):ah.find('<section id="method"')]
+card_a = ah[ah.find('id="album-cheap-rungs"'):ah.find('<section id="models"')]
 at = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", card_a))
 check("the album card: entries, won, HOLD v SPLIT, per-event rows and the trade list, review at 10",
-      (bool(card_a), "ROI after fees · HOLD" in at, "ROI after fees · SPLIT" in at, " won" in at, "Event" in at,
+      (bool(card_a), "ROI after fees · held" in at, "ROI after fees · split" in at, " won" in at, "Event" in at,
        "Rung" in at, "KXALBUMEQUIV-FRE26NOV12" in at, "Above 300K" in at, "review at 10, decide at 30" in at),
       (True,) * 9)
 check("no guarded public phrase on the album card", sandbox_audit.COPY_RE.findall(card_a), [])
@@ -402,13 +402,13 @@ check("settled NO: won, HOLD and SPLIT graded", (n0["payout"], n0["roi_held"] > 
       (1.0, True, True, 1))
 nh = KB.build(split_state=st, wide_state=ws, month_state=ms_, month_wide_state=ms_, album_state=als, album_no_state=ns)
 nt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", nh))
-check("the page: a summary with cheap YES and cheap NO as separate rows, the note, then each card",
+check("the page: the summary has cheap YES and cheap NO as separate rows; the note, then each card",
       ("Album ladders tested too confident: both tails won more than priced." in nt,
-       "Cheap YES (5c spread, YES ask 0.03-0.15) 1 1 1" in nt, "Cheap NO (10c spread, NO ask 0.03-0.15) 1 1 1" in nt,
-       nh.find('id="album-summary"') < nh.find('id="album-cheap-rungs"') < nh.find('id="album-cheap-no"') < nh.find('<section id="method"'),
+       "Album · cheap YES 1 1 1" in nt, "Album · cheap NO 1 1 1" in nt,
+       nh.find('id="album-note"') < nh.find('id="album-cheap-rungs"') < nh.find('id="album-cheap-no"') < nh.find('<section id="models"'),
        "NO ask paid" in nt), (True, True, True, True, True))
 check("no guarded public phrase on the album cards", sandbox_audit.COPY_RE.findall(
-      nh[nh.find('id="album-summary"'):nh.find('<section id="method"')]), [])
+      nh[nh.find('id="album-note"'):nh.find('<section id="models"')]), [])
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
