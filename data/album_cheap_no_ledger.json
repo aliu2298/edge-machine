@@ -1,0 +1,996 @@
+{
+ "entries": [
+  {
+   "bid": 0.0,
+   "entry_at": "2026-10-20T22:53:00+00:00",
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "id": "KXALBUMEQUIV-FRE26NOV12-20K",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.1
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.15
+    }
+   ],
+   "logged": "2026-10-27T03:09:50.419359+00:00",
+   "payout": null,
+   "price": 0.05,
+   "side": "no",
+   "spread": 0.05,
+   "spread_cost": null,
+   "status": "open",
+   "traded_to_entry": 0.0,
+   "word": "Above 20K"
+  },
+  {
+   "bid": 0.0,
+   "entry_at": "2026-10-20T22:53:00+00:00",
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "id": "KXALBUMEQUIV-FRE26NOV12-40K",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.08
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.12
+    }
+   ],
+   "logged": "2026-10-27T03:09:50.419359+00:00",
+   "payout": null,
+   "price": 0.04,
+   "side": "no",
+   "spread": 0.04,
+   "spread_cost": null,
+   "status": "open",
+   "traded_to_entry": 0.0,
+   "word": "Above 40K"
+  },
+  {
+   "bid": 0.03,
+   "entry_at": "2026-10-20T22:53:00+00:00",
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "id": "KXALBUMEQUIV-FRE26NOV12-60K",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "fill_px": 0.14,
+     "filled_at": "2026-10-21T03:00:00+00:00",
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.14
+    },
+    {
+     "fill_px": 0.21,
+     "filled_at": "2026-10-21T03:00:00+00:00",
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.21
+    }
+   ],
+   "logged": "2026-10-27T03:09:50.419359+00:00",
+   "payout": null,
+   "pnl": 0.0979,
+   "price": 0.07,
+   "roi": 1.3136,
+   "roi_2x": 0.8495,
+   "side": "no",
+   "spread": 0.04,
+   "spread_cost": null,
+   "status": "filled",
+   "traded_to_entry": 0.0,
+   "word": "Above 60K"
+  },
+  {
+   "bid": 0.06,
+   "entry_at": "2026-10-20T23:17:00+00:00",
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "id": "KXALBUMEQUIV-FRE26NOV12-80K",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "fill_px": 0.28,
+     "filled_at": "2026-10-21T04:00:00+00:00",
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.28
+    },
+    {
+     "fill_px": 0.42,
+     "filled_at": "2026-10-21T04:00:00+00:00",
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.42
+    }
+   ],
+   "logged": "2026-10-27T03:09:50.419359+00:00",
+   "payout": null,
+   "pnl": 0.1977,
+   "price": 0.14,
+   "roi": 1.3318,
+   "roi_2x": 0.8627,
+   "side": "no",
+   "spread": 0.08,
+   "spread_cost": null,
+   "status": "filled",
+   "traded_to_entry": 0.0,
+   "word": "Above 80K"
+  },
+  {
+   "bid": 0.04,
+   "entry_at": "2026-10-23T18:42:00+00:00",
+   "event": "KXALBUMEQUIV-PRESSPLAY26OCT29",
+   "id": "KXALBUMEQUIV-PRESSPLAY26OCT29-15K",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.16
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.24
+    }
+   ],
+   "logged": "2026-10-27T03:09:50.419359+00:00",
+   "payout": null,
+   "price": 0.08,
+   "side": "no",
+   "spread": 0.04,
+   "spread_cost": null,
+   "status": "open",
+   "traded_to_entry": 0.0,
+   "word": "Above 15K"
+  },
+  {
+   "bid": 0.13,
+   "entry_at": "2026-10-07T20:56:00+00:00",
+   "event": "KXALBUMEQUIV-WAT26OCT29",
+   "id": "KXALBUMEQUIV-WAT26OCT29-5K",
+   "last_trade": 0.14,
+   "last_trade_at": "2026-10-07T20:56:00+00:00",
+   "legs": [
+    {
+     "fill_px": 0.28,
+     "filled_at": "2026-10-07T21:00:00+00:00",
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.28
+    },
+    {
+     "fill_px": 0.42,
+     "filled_at": "2026-10-07T21:00:00+00:00",
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.42
+    }
+   ],
+   "logged": "2026-10-27T03:09:50.419359+00:00",
+   "payout": null,
+   "pnl": 0.1977,
+   "price": 0.14,
+   "roi": 1.3318,
+   "roi_2x": 0.8627,
+   "side": "no",
+   "spread": 0.01,
+   "spread_cost": 0.0,
+   "status": "filled",
+   "traded_to_entry": 169.0,
+   "word": "Above 5K"
+  },
+  {
+   "bid": 0.03,
+   "entry_at": "2026-10-23T22:05:00+00:00",
+   "event": "KXALBUMEQUIV-LUH26OCT29",
+   "id": "KXALBUMEQUIV-LUH26OCT29-15K",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "fill_px": 0.12,
+     "filled_at": "2026-10-24T00:00:00+00:00",
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.12
+    },
+    {
+     "fill_px": 0.18,
+     "filled_at": "2026-10-24T00:00:00+00:00",
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.18
+    }
+   ],
+   "logged": "2026-10-27T03:09:50.419359+00:00",
+   "payout": null,
+   "pnl": 0.0838,
+   "price": 0.06,
+   "roi": 1.311,
+   "roi_2x": 0.8476,
+   "side": "no",
+   "spread": 0.03,
+   "spread_cost": null,
+   "status": "filled",
+   "traded_to_entry": 0.0,
+   "word": "Above 15K"
+  }
+ ],
+ "error": null,
+ "events": {
+  "KXALBUMEQUIV-BLEACH26NOV05": "2026-10-27T03:09:50.419359+00:00",
+  "KXALBUMEQUIV-CARNAVAL26NOV19": "2026-10-27T03:09:50.419359+00:00",
+  "KXALBUMEQUIV-DEVOTION26NOV19": "2026-10-27T03:09:50.419359+00:00",
+  "KXALBUMEQUIV-DREAM26NOV12": "2026-10-27T03:09:50.419359+00:00",
+  "KXALBUMEQUIV-EVE26NOV05": "2026-10-27T03:09:50.419359+00:00",
+  "KXALBUMEQUIV-FOR26NOV05": "2026-10-27T03:09:50.419359+00:00",
+  "KXALBUMEQUIV-FRE26NOV12": "2026-10-27T03:09:50.419359+00:00",
+  "KXALBUMEQUIV-GTA626NOV26": "2026-10-27T03:09:50.419359+00:00",
+  "KXALBUMEQUIV-HEAVYCROWN26OCT29": "2026-10-27T03:09:50.419359+00:00",
+  "KXALBUMEQUIV-HUN26NOV19": "2026-10-27T03:09:50.419359+00:00",
+  "KXALBUMEQUIV-LUH26OCT29": "2026-10-27T03:09:50.419359+00:00",
+  "KXALBUMEQUIV-MUSE26OCT29": "2026-10-27T03:09:50.419359+00:00",
+  "KXALBUMEQUIV-PRESSPLAY26OCT29": "2026-10-27T03:09:50.419359+00:00",
+  "KXALBUMEQUIV-REBECCA26NOV19": "2026-10-27T03:09:50.419359+00:00",
+  "KXALBUMEQUIV-SWALLOW26NOV12": "2026-10-27T03:09:50.419359+00:00",
+  "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:50.419359+00:00"
+ },
+ "lane": "album_cheap_no",
+ "last_success": "2026-10-27T03:09:50.419359+00:00",
+ "observations": {
+  "at": "2026-10-27T03:09:50.419359+00:00",
+  "entered": 7,
+  "events": 16,
+  "filled": 8,
+  "skipped": 146,
+  "waiting": 0
+ },
+ "skips": {
+  "KXALBUMEQUIV-BLEACH26NOV05-10K": {
+   "event": "KXALBUMEQUIV-BLEACH26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 10K"
+  },
+  "KXALBUMEQUIV-BLEACH26NOV05-12K": {
+   "event": "KXALBUMEQUIV-BLEACH26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 12K"
+  },
+  "KXALBUMEQUIV-BLEACH26NOV05-15K": {
+   "event": "KXALBUMEQUIV-BLEACH26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 15K"
+  },
+  "KXALBUMEQUIV-BLEACH26NOV05-3K": {
+   "event": "KXALBUMEQUIV-BLEACH26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 3K"
+  },
+  "KXALBUMEQUIV-BLEACH26NOV05-5K": {
+   "event": "KXALBUMEQUIV-BLEACH26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 5K"
+  },
+  "KXALBUMEQUIV-BLEACH26NOV05-8K": {
+   "event": "KXALBUMEQUIV-BLEACH26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 8K"
+  },
+  "KXALBUMEQUIV-CARNAVAL26NOV19-100K": {
+   "event": "KXALBUMEQUIV-CARNAVAL26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 100K"
+  },
+  "KXALBUMEQUIV-CARNAVAL26NOV19-125K": {
+   "event": "KXALBUMEQUIV-CARNAVAL26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 125K"
+  },
+  "KXALBUMEQUIV-CARNAVAL26NOV19-25K": {
+   "event": "KXALBUMEQUIV-CARNAVAL26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 25K"
+  },
+  "KXALBUMEQUIV-CARNAVAL26NOV19-30K": {
+   "event": "KXALBUMEQUIV-CARNAVAL26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 30K"
+  },
+  "KXALBUMEQUIV-CARNAVAL26NOV19-40K": {
+   "event": "KXALBUMEQUIV-CARNAVAL26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 40K"
+  },
+  "KXALBUMEQUIV-CARNAVAL26NOV19-50K": {
+   "event": "KXALBUMEQUIV-CARNAVAL26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 50K"
+  },
+  "KXALBUMEQUIV-CARNAVAL26NOV19-60K": {
+   "event": "KXALBUMEQUIV-CARNAVAL26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 60K"
+  },
+  "KXALBUMEQUIV-CARNAVAL26NOV19-70K": {
+   "event": "KXALBUMEQUIV-CARNAVAL26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 70K"
+  },
+  "KXALBUMEQUIV-CARNAVAL26NOV19-80K": {
+   "event": "KXALBUMEQUIV-CARNAVAL26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 80K"
+  },
+  "KXALBUMEQUIV-CARNAVAL26NOV19-90K": {
+   "event": "KXALBUMEQUIV-CARNAVAL26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 90K"
+  },
+  "KXALBUMEQUIV-DEVOTION26NOV19-10K": {
+   "event": "KXALBUMEQUIV-DEVOTION26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 10K"
+  },
+  "KXALBUMEQUIV-DEVOTION26NOV19-12K": {
+   "event": "KXALBUMEQUIV-DEVOTION26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 12K"
+  },
+  "KXALBUMEQUIV-DEVOTION26NOV19-15K": {
+   "event": "KXALBUMEQUIV-DEVOTION26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 15K"
+  },
+  "KXALBUMEQUIV-DEVOTION26NOV19-18K": {
+   "event": "KXALBUMEQUIV-DEVOTION26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 18K"
+  },
+  "KXALBUMEQUIV-DEVOTION26NOV19-20K": {
+   "event": "KXALBUMEQUIV-DEVOTION26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 20K"
+  },
+  "KXALBUMEQUIV-DEVOTION26NOV19-25K": {
+   "event": "KXALBUMEQUIV-DEVOTION26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 25K"
+  },
+  "KXALBUMEQUIV-DREAM26NOV12-20K": {
+   "event": "KXALBUMEQUIV-DREAM26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 20K"
+  },
+  "KXALBUMEQUIV-DREAM26NOV12-25K": {
+   "event": "KXALBUMEQUIV-DREAM26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 25K"
+  },
+  "KXALBUMEQUIV-DREAM26NOV12-30K": {
+   "event": "KXALBUMEQUIV-DREAM26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 30K"
+  },
+  "KXALBUMEQUIV-DREAM26NOV12-35K": {
+   "event": "KXALBUMEQUIV-DREAM26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 35K"
+  },
+  "KXALBUMEQUIV-DREAM26NOV12-40K": {
+   "event": "KXALBUMEQUIV-DREAM26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 40K"
+  },
+  "KXALBUMEQUIV-DREAM26NOV12-45K": {
+   "event": "KXALBUMEQUIV-DREAM26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 45K"
+  },
+  "KXALBUMEQUIV-DREAM26NOV12-50K": {
+   "event": "KXALBUMEQUIV-DREAM26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 50K"
+  },
+  "KXALBUMEQUIV-EVE26NOV05-100K": {
+   "event": "KXALBUMEQUIV-EVE26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 100K"
+  },
+  "KXALBUMEQUIV-EVE26NOV05-15K": {
+   "event": "KXALBUMEQUIV-EVE26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 15K"
+  },
+  "KXALBUMEQUIV-EVE26NOV05-20K": {
+   "event": "KXALBUMEQUIV-EVE26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 20K"
+  },
+  "KXALBUMEQUIV-EVE26NOV05-25K": {
+   "event": "KXALBUMEQUIV-EVE26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 25K"
+  },
+  "KXALBUMEQUIV-EVE26NOV05-30K": {
+   "event": "KXALBUMEQUIV-EVE26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 30K"
+  },
+  "KXALBUMEQUIV-EVE26NOV05-40K": {
+   "event": "KXALBUMEQUIV-EVE26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 40K"
+  },
+  "KXALBUMEQUIV-EVE26NOV05-50K": {
+   "event": "KXALBUMEQUIV-EVE26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 50K"
+  },
+  "KXALBUMEQUIV-EVE26NOV05-75K": {
+   "event": "KXALBUMEQUIV-EVE26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 75K"
+  },
+  "KXALBUMEQUIV-FOR26NOV05-10K": {
+   "event": "KXALBUMEQUIV-FOR26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 10K"
+  },
+  "KXALBUMEQUIV-FOR26NOV05-12K": {
+   "event": "KXALBUMEQUIV-FOR26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 12K"
+  },
+  "KXALBUMEQUIV-FOR26NOV05-15K": {
+   "event": "KXALBUMEQUIV-FOR26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 15K"
+  },
+  "KXALBUMEQUIV-FOR26NOV05-2K": {
+   "event": "KXALBUMEQUIV-FOR26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 2K"
+  },
+  "KXALBUMEQUIV-FOR26NOV05-5K": {
+   "event": "KXALBUMEQUIV-FOR26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 5K"
+  },
+  "KXALBUMEQUIV-FOR26NOV05-7K": {
+   "event": "KXALBUMEQUIV-FOR26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 7K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-100K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 100K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-120K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 120K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-140K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 140K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-160K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 160K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-180K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 180K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-200K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 200K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-220K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 220K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-240K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 240K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-260K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 260K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-280K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 280K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-300K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 300K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-320K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 320K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-340K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 340K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-360K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 360K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-380K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 380K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-400K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 400K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-100K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 100K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-120K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 120K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-140K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 140K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-160K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 160K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-180K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 180K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-200K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 200K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-20K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 20K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-220K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 220K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-240K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 240K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-260K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 260K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-280K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 280K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-300K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 300K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-320K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 320K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-340K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 340K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-360K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 360K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-380K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 380K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-400K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 400K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-40K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 40K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-60K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 60K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-80K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 80K"
+  },
+  "KXALBUMEQUIV-HEAVYCROWN26OCT29-15K": {
+   "event": "KXALBUMEQUIV-HEAVYCROWN26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 15K"
+  },
+  "KXALBUMEQUIV-HEAVYCROWN26OCT29-20K": {
+   "event": "KXALBUMEQUIV-HEAVYCROWN26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 20K"
+  },
+  "KXALBUMEQUIV-HEAVYCROWN26OCT29-25K": {
+   "event": "KXALBUMEQUIV-HEAVYCROWN26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 25K"
+  },
+  "KXALBUMEQUIV-HEAVYCROWN26OCT29-30K": {
+   "event": "KXALBUMEQUIV-HEAVYCROWN26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 30K"
+  },
+  "KXALBUMEQUIV-HEAVYCROWN26OCT29-35K": {
+   "event": "KXALBUMEQUIV-HEAVYCROWN26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 35K"
+  },
+  "KXALBUMEQUIV-HEAVYCROWN26OCT29-40K": {
+   "event": "KXALBUMEQUIV-HEAVYCROWN26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 40K"
+  },
+  "KXALBUMEQUIV-HUN26NOV19-15K": {
+   "event": "KXALBUMEQUIV-HUN26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 15K"
+  },
+  "KXALBUMEQUIV-HUN26NOV19-20K": {
+   "event": "KXALBUMEQUIV-HUN26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 20K"
+  },
+  "KXALBUMEQUIV-HUN26NOV19-25K": {
+   "event": "KXALBUMEQUIV-HUN26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 25K"
+  },
+  "KXALBUMEQUIV-HUN26NOV19-30K": {
+   "event": "KXALBUMEQUIV-HUN26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 30K"
+  },
+  "KXALBUMEQUIV-HUN26NOV19-40K": {
+   "event": "KXALBUMEQUIV-HUN26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 40K"
+  },
+  "KXALBUMEQUIV-HUN26NOV19-50K": {
+   "event": "KXALBUMEQUIV-HUN26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 50K"
+  },
+  "KXALBUMEQUIV-HUN26NOV19-60K": {
+   "event": "KXALBUMEQUIV-HUN26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 60K"
+  },
+  "KXALBUMEQUIV-HUN26NOV19-80K": {
+   "event": "KXALBUMEQUIV-HUN26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 80K"
+  },
+  "KXALBUMEQUIV-LUH26OCT29-20K": {
+   "event": "KXALBUMEQUIV-LUH26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 20K"
+  },
+  "KXALBUMEQUIV-LUH26OCT29-25K": {
+   "event": "KXALBUMEQUIV-LUH26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 25K"
+  },
+  "KXALBUMEQUIV-LUH26OCT29-30K": {
+   "event": "KXALBUMEQUIV-LUH26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 30K"
+  },
+  "KXALBUMEQUIV-LUH26OCT29-35K": {
+   "event": "KXALBUMEQUIV-LUH26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 35K"
+  },
+  "KXALBUMEQUIV-LUH26OCT29-40K": {
+   "event": "KXALBUMEQUIV-LUH26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 40K"
+  },
+  "KXALBUMEQUIV-LUH26OCT29-45K": {
+   "event": "KXALBUMEQUIV-LUH26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 45K"
+  },
+  "KXALBUMEQUIV-LUH26OCT29-50K": {
+   "event": "KXALBUMEQUIV-LUH26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 50K"
+  },
+  "KXALBUMEQUIV-MUSE26OCT29-10K": {
+   "event": "KXALBUMEQUIV-MUSE26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 10K"
+  },
+  "KXALBUMEQUIV-MUSE26OCT29-12K": {
+   "event": "KXALBUMEQUIV-MUSE26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 12K"
+  },
+  "KXALBUMEQUIV-MUSE26OCT29-15K": {
+   "event": "KXALBUMEQUIV-MUSE26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 15K"
+  },
+  "KXALBUMEQUIV-MUSE26OCT29-18K": {
+   "event": "KXALBUMEQUIV-MUSE26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 18K"
+  },
+  "KXALBUMEQUIV-MUSE26OCT29-20K": {
+   "event": "KXALBUMEQUIV-MUSE26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 20K"
+  },
+  "KXALBUMEQUIV-MUSE26OCT29-8K": {
+   "event": "KXALBUMEQUIV-MUSE26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 8K"
+  },
+  "KXALBUMEQUIV-PRESSPLAY26OCT29-100K": {
+   "event": "KXALBUMEQUIV-PRESSPLAY26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 100K"
+  },
+  "KXALBUMEQUIV-PRESSPLAY26OCT29-20K": {
+   "event": "KXALBUMEQUIV-PRESSPLAY26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 20K"
+  },
+  "KXALBUMEQUIV-PRESSPLAY26OCT29-25K": {
+   "event": "KXALBUMEQUIV-PRESSPLAY26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 25K"
+  },
+  "KXALBUMEQUIV-PRESSPLAY26OCT29-30K": {
+   "event": "KXALBUMEQUIV-PRESSPLAY26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 30K"
+  },
+  "KXALBUMEQUIV-PRESSPLAY26OCT29-35K": {
+   "event": "KXALBUMEQUIV-PRESSPLAY26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 35K"
+  },
+  "KXALBUMEQUIV-PRESSPLAY26OCT29-40K": {
+   "event": "KXALBUMEQUIV-PRESSPLAY26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 40K"
+  },
+  "KXALBUMEQUIV-PRESSPLAY26OCT29-45K": {
+   "event": "KXALBUMEQUIV-PRESSPLAY26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 45K"
+  },
+  "KXALBUMEQUIV-PRESSPLAY26OCT29-50K": {
+   "event": "KXALBUMEQUIV-PRESSPLAY26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 50K"
+  },
+  "KXALBUMEQUIV-PRESSPLAY26OCT29-55K": {
+   "event": "KXALBUMEQUIV-PRESSPLAY26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 55K"
+  },
+  "KXALBUMEQUIV-PRESSPLAY26OCT29-60K": {
+   "event": "KXALBUMEQUIV-PRESSPLAY26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 60K"
+  },
+  "KXALBUMEQUIV-PRESSPLAY26OCT29-70K": {
+   "event": "KXALBUMEQUIV-PRESSPLAY26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 70K"
+  },
+  "KXALBUMEQUIV-PRESSPLAY26OCT29-80K": {
+   "event": "KXALBUMEQUIV-PRESSPLAY26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 80K"
+  },
+  "KXALBUMEQUIV-PRESSPLAY26OCT29-90K": {
+   "event": "KXALBUMEQUIV-PRESSPLAY26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 90K"
+  },
+  "KXALBUMEQUIV-REBECCA26NOV19-10K": {
+   "event": "KXALBUMEQUIV-REBECCA26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 10K"
+  },
+  "KXALBUMEQUIV-REBECCA26NOV19-12K": {
+   "event": "KXALBUMEQUIV-REBECCA26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 12K"
+  },
+  "KXALBUMEQUIV-REBECCA26NOV19-15K": {
+   "event": "KXALBUMEQUIV-REBECCA26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 15K"
+  },
+  "KXALBUMEQUIV-REBECCA26NOV19-20K": {
+   "event": "KXALBUMEQUIV-REBECCA26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 20K"
+  },
+  "KXALBUMEQUIV-REBECCA26NOV19-2K": {
+   "event": "KXALBUMEQUIV-REBECCA26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 2K"
+  },
+  "KXALBUMEQUIV-REBECCA26NOV19-5K": {
+   "event": "KXALBUMEQUIV-REBECCA26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 5K"
+  },
+  "KXALBUMEQUIV-REBECCA26NOV19-8K": {
+   "event": "KXALBUMEQUIV-REBECCA26NOV19",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 8K"
+  },
+  "KXALBUMEQUIV-SWALLOW26NOV12-10K": {
+   "event": "KXALBUMEQUIV-SWALLOW26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 10K"
+  },
+  "KXALBUMEQUIV-SWALLOW26NOV12-12K": {
+   "event": "KXALBUMEQUIV-SWALLOW26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 12K"
+  },
+  "KXALBUMEQUIV-SWALLOW26NOV12-15K": {
+   "event": "KXALBUMEQUIV-SWALLOW26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 15K"
+  },
+  "KXALBUMEQUIV-SWALLOW26NOV12-1K": {
+   "event": "KXALBUMEQUIV-SWALLOW26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 1K"
+  },
+  "KXALBUMEQUIV-SWALLOW26NOV12-3K": {
+   "event": "KXALBUMEQUIV-SWALLOW26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 3K"
+  },
+  "KXALBUMEQUIV-SWALLOW26NOV12-5K": {
+   "event": "KXALBUMEQUIV-SWALLOW26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 5K"
+  },
+  "KXALBUMEQUIV-SWALLOW26NOV12-8K": {
+   "event": "KXALBUMEQUIV-SWALLOW26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 8K"
+  },
+  "KXALBUMEQUIV-WAT26OCT29-100K": {
+   "event": "KXALBUMEQUIV-WAT26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 100K"
+  },
+  "KXALBUMEQUIV-WAT26OCT29-10K": {
+   "event": "KXALBUMEQUIV-WAT26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 10K"
+  },
+  "KXALBUMEQUIV-WAT26OCT29-15K": {
+   "event": "KXALBUMEQUIV-WAT26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 15K"
+  },
+  "KXALBUMEQUIV-WAT26OCT29-20K": {
+   "event": "KXALBUMEQUIV-WAT26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 20K"
+  },
+  "KXALBUMEQUIV-WAT26OCT29-25K": {
+   "event": "KXALBUMEQUIV-WAT26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 25K"
+  },
+  "KXALBUMEQUIV-WAT26OCT29-30K": {
+   "event": "KXALBUMEQUIV-WAT26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 30K"
+  },
+  "KXALBUMEQUIV-WAT26OCT29-35K": {
+   "event": "KXALBUMEQUIV-WAT26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 35K"
+  },
+  "KXALBUMEQUIV-WAT26OCT29-40K": {
+   "event": "KXALBUMEQUIV-WAT26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 40K"
+  },
+  "KXALBUMEQUIV-WAT26OCT29-50K": {
+   "event": "KXALBUMEQUIV-WAT26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 50K"
+  },
+  "KXALBUMEQUIV-WAT26OCT29-60K": {
+   "event": "KXALBUMEQUIV-WAT26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 60K"
+  },
+  "KXALBUMEQUIV-WAT26OCT29-70K": {
+   "event": "KXALBUMEQUIV-WAT26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 70K"
+  },
+  "KXALBUMEQUIV-WAT26OCT29-80K": {
+   "event": "KXALBUMEQUIV-WAT26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 80K"
+  },
+  "KXALBUMEQUIV-WAT26OCT29-90K": {
+   "event": "KXALBUMEQUIV-WAT26OCT29",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 90K"
+  }
+ }
+}
