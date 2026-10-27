@@ -1,0 +1,224 @@
+{
+ "entries": [
+  {
+   "bid": 0.19,
+   "entry_at": "2026-10-26T05:33:00+00:00",
+   "event": "KXTRUMPSAY-26NOV02",
+   "id": "KXTRUMPSAY-26NOV02-PEAC",
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.46
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.69
+    }
+   ],
+   "logged": "2026-10-27T02:11:58.323347+00:00",
+   "payout": null,
+   "price": 0.23,
+   "side": "yes",
+   "spread": 0.04,
+   "status": "open",
+   "traded_to_entry": 0.0,
+   "word": "Peace in the Middle East"
+  }
+ ],
+ "error": null,
+ "events": {},
+ "lane": "mentions_cheap_yes_split",
+ "last_success": "2026-10-27T02:11:58.323347+00:00",
+ "observations": {
+  "at": "2026-10-27T02:11:58.323347+00:00",
+  "entered": 1,
+  "events": 1,
+  "filled": 0,
+  "skipped": 34,
+  "waiting": 0
+ },
+ "skips": {
+  "KXTRUMPSAY-26NOV02-ANTI": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Antifa"
+  },
+  "KXTRUMPSAY-26NOV02-AUTO": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Autopen / Auto Pen"
+  },
+  "KXTRUMPSAY-26NOV02-BIBI": {
+   "at": "2026-10-26T04:16:00+00:00",
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "YES ask 0.81 outside 0.03-0.30",
+   "word": "Bibi / Netanyahu"
+  },
+  "KXTRUMPSAY-26NOV02-BLOC": {
+   "at": "2026-10-26T04:16:00+00:00",
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "YES ask 0.76 outside 0.03-0.30",
+   "word": "Blockade"
+  },
+  "KXTRUMPSAY-26NOV02-CANA": {
+   "at": "2026-10-26T04:16:00+00:00",
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "YES ask 0.81 outside 0.03-0.30",
+   "word": "Canada / Canadian"
+  },
+  "KXTRUMPSAY-26NOV02-CEAS": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Ceasefire"
+  },
+  "KXTRUMPSAY-26NOV02-CRYP": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Crypto / Bitcoin"
+  },
+  "KXTRUMPSAY-26NOV02-CUBA": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Cuba / Cuban"
+  },
+  "KXTRUMPSAY-26NOV02-CYBE": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Cybersecurity / Cyber Security"
+  },
+  "KXTRUMPSAY-26NOV02-DIES": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Diesel"
+  },
+  "KXTRUMPSAY-26NOV02-DIVI": {
+   "at": "2026-10-26T04:46:00+00:00",
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "YES ask 0.95 outside 0.03-0.30",
+   "word": "Dividend / Stimulus"
+  },
+  "KXTRUMPSAY-26NOV02-EPST": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Epstein"
+  },
+  "KXTRUMPSAY-26NOV02-ETHA": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Ethanol"
+  },
+  "KXTRUMPSAY-26NOV02-GOLD": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Golden Dome"
+  },
+  "KXTRUMPSAY-26NOV02-HOUT": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Houthi"
+  },
+  "KXTRUMPSAY-26NOV02-ILHA": {
+   "at": "2026-10-26T04:16:00+00:00",
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "YES ask 0.76 outside 0.03-0.30",
+   "word": "Ilhan / Omar"
+  },
+  "KXTRUMPSAY-26NOV02-MAKE": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Make Iran Great Again"
+  },
+  "KXTRUMPSAY-26NOV02-MARI": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Marijuana / Weed / Cannabis"
+  },
+  "KXTRUMPSAY-26NOV02-MELA": {
+   "at": "2026-10-26T04:16:00+00:00",
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "YES ask 0.76 outside 0.03-0.30",
+   "word": "Melania"
+  },
+  "KXTRUMPSAY-26NOV02-MOON": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Moon"
+  },
+  "KXTRUMPSAY-26NOV02-MORT": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Mortgage"
+  },
+  "KXTRUMPSAY-26NOV02-NOBE": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Nobel"
+  },
+  "KXTRUMPSAY-26NOV02-PRED": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Prediction Market / Predictive Market"
+  },
+  "KXTRUMPSAY-26NOV02-RANK": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Ranked Choice / Ranked-Choice"
+  },
+  "KXTRUMPSAY-26NOV02-REFI": {
+   "at": "2026-10-26T05:50:00+00:00",
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "YES ask 0.46 outside 0.03-0.30",
+   "word": "Refinery"
+  },
+  "KXTRUMPSAY-26NOV02-RIGG": {
+   "at": "2026-10-26T04:48:00+00:00",
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "YES ask 0.95 outside 0.03-0.30",
+   "word": "Rigged Election / Stolen Election"
+  },
+  "KXTRUMPSAY-26NOV02-SOLE": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Soleimani"
+  },
+  "KXTRUMPSAY-26NOV02-SUPE": {
+   "at": "2026-10-26T04:59:00+00:00",
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "YES ask 0.95 outside 0.03-0.30",
+   "word": "Superintelligence / Super Intelligence"
+  },
+  "KXTRUMPSAY-26NOV02-THIR": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Third Term"
+  },
+  "KXTRUMPSAY-26NOV02-TOMA": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Tomahawk"
+  },
+  "KXTRUMPSAY-26NOV02-UFO": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "UFO / UAP"
+  },
+  "KXTRUMPSAY-26NOV02-URAN": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Uranium"
+  },
+  "KXTRUMPSAY-26NOV02-VIVE": {
+   "at": "2026-10-26T04:16:00+00:00",
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "YES ask 0.81 outside 0.03-0.30",
+   "word": "Vivek / Ramaswamy"
+  },
+  "KXTRUMPSAY-26NOV02-ZOHR": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 5c spread inside 6h",
+   "word": "Zohran / Mamdani"
+  }
+ }
+}
