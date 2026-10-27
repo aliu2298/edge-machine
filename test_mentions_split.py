@@ -170,5 +170,67 @@ check("per-week row and the trade list name the words, the entry price and the s
 check("an empty ledger renders", "No entry yet." in M.section(M.load("/nonexistent/x.json"), C.esc), True)
 check("no guarded public phrase on the card or in the module", sandbox_audit.COPY_RE.findall(card + open("mentions_split.py").read()), [])
 
+print("\nthe wide twin (2026-10-27): spread 10c or less AND an ask of 0.03-0.30, at the ask paid")
+
+
+def tc(mins, bid, ask, px=None, vol=0):
+    c = mc(mins, bid, ask, vol=vol)
+    c["price"] = dict(close_dollars=None if px is None else str(px), high_dollars=None if px is None else str(px))
+    return c
+
+
+W = M.WIDE
+check("its terms differ from the strict lane's only in the entry",
+      (W["lane"], W["spread"], W["band_in_quote"], W["last_trade"], W["path"].endswith("mentions_split_wide_ledger.json"),
+       M.STRICT["spread"], M.STRICT["band_in_quote"], M.STRICT["path"] == M.PATH),
+      ("mentions_cheap_yes_split_wide", 0.10, True, True, True, 0.05, False, True))
+seq = [tc(3, 0.05, 0.25, px=0.20, vol=2), tc(5, 0.10, 0.18, vol=1), tc(9, 0.19, 0.21)]
+check("an 8c quote at 0.18 is the wide entry; the strict lane waits for the 2c one",
+      (M.entry_quote(seq, O, W, detail=True), M.entry_quote(seq, O)),
+      ((O + 300, 0.10, 0.18, 3.0, (0.20, O + 180)), (O + 540, 0.19, 0.21, 3.0)))
+check("exactly 10c is in; 11c is not",
+      (M.entry_quote([tc(5, 0.08, 0.18)], O, W) is not None, M.entry_quote([tc(5, 0.07, 0.18)], O, W)), (True, None))
+out_band = [tc(5, 0.30, 0.35, px=0.33), tc(7, 0.22, 0.30)]
+check("a tight quote outside the band is passed over (the strict lane would skip the word on it)",
+      (M.entry_quote(out_band, O, W, detail=True)[:3], M.entry_quote(out_band, O)[2]), ((O + 420, 0.22, 0.30), 0.35))
+check("no trade yet: the last trade is (None, None)", M.entry_quote([tc(5, 0.10, 0.18)], O, W, detail=True)[4], (None, None))
+
+WMIN = {"KXTRUMPSAY-26NOV02-PEAC": [tc(10, 0.10, 0.30), tc(20, 0.14, 0.22, px=0.25, vol=3), tc(93, 0.19, 0.23)],
+        "KXTRUMPSAY-26NOV02-CHEA": [tc(5, 0.03, 0.05)],
+        "KXTRUMPSAY-26NOV02-WIDE": [tc(5, 0.10, 0.25, px=0.12), tc(9, 0.15, 0.24)],
+        "KXTRUMPSAY-26NOV02-DEAR": [tc(5, 0.29, 0.31), tc(8, 0.25, 0.32)]}
+
+
+def wfake(path):
+    if "candlesticks" in path and path.endswith("period_interval=1"):
+        return {"market_tickers": list(WMIN), "market_candlesticks": list(WMIN.values())}
+    return fake(path)
+
+
+ws = M.load("/nonexistent/wide.json", cfg=W)
+M.run(ws, now=OPEN + dt.timedelta(hours=7), fetch=wfake, cfg=W)
+got = sorted((e["word"], e["price"], e["spread"], e.get("last_trade"), e.get("spread_cost")) for e in ws["entries"])
+check("backfill: PEAC at 0.22 (8c, last trade 0.25), CHEA, WIDE at 0.24 (9c, last trade 0.12, the spread cost 12c)",
+      got, [("Cheap", 0.05, 0.02, None, None), ("Peace", 0.22, 0.08, 0.25, -0.03), ("Wide", 0.24, 0.09, 0.12, 0.12)])
+check("legs at 2x and 3x of the ask paid", [l["target"] for l in next(e for e in ws["entries"] if e["word"] == "Wide")["legs"]],
+      [0.48, 0.72])
+check("DEAR never quoted inside the band within 10c: skipped with the wide reason; PENY too",
+      sorted((v["word"], v["reason"]) for v in ws["skips"].values())[:1],
+      [("Dear", "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h")])
+check("the strict lane's entries are not the wide lane's (separate ledgers)", ws["lane"], "mentions_cheap_yes_split_wide")
+wh = KB.build(split_state=st, wide_state=ws)
+wt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", wh))
+check("the page: both cards, the wide one after the strict one, and the comparison line between",
+      (wh.find('id="mentions-split"') < wh.find('id="mentions-split-compare"') < wh.find('id="mentions-split-wide"')
+       < wh.find('<section id="method"'), "Cost of the spread" in wt, "Last trade" in wt),
+      (True, True, True))
+check("the comparison: entries, ROI after fees and the average spread paid, strict v wide",
+      re.search(r"Strict v wide · strict \(5c\): 2 entries, ROI after fees [^,]+ \(2 resolved\), average spread paid 0\.03 · "
+                r"wide \(10c\): 3 entries, ROI after fees — \(0 resolved\), average spread paid 0\.06", wt) is not None, True)
+check("the wide card names its own rule and the review note",
+      ("whose spread is 10c or less and whose YES ask is 0.03-0.30" in wt and wt.count("review at 10, decide at 30") == 2), True)
+check("no guarded public phrase on the page cards", sandbox_audit.COPY_RE.findall(
+      wh[wh.find('id="mentions-split"'):wh.find('<section id="method"')]), [])
+
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
