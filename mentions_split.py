@@ -174,7 +174,20 @@ GAS = dict(WTI, lane="gas_cheap_no", label="AAA gas · cheap NO (15-30c)", side=
                                     no_def=" (1 - the YES bid)", no_fill=" on the NO side (the YES traded low at "
                                                                           "or under 1 - the target)"),
            skip="no quote with a 5c spread and a NO ask of 0.15-0.30 inside 6h")
-COMMOD_LANES = (WTI, GAS)
+# gas_week_cheap_no (2026-10-27, Olu): the daily gas cheap-NO edge on the WEEKLY gas ladder,
+# KXAAAGASW ("US gas prices this week"), wide rule: NO ask 0.15-0.30, spread 10c or less. Research
+# (Olu, real asks, last 10 settled weeks): 33 entries, 11 won; split +60% (z 2.1, halves +98% / +43%),
+# hold +40%; strict 5c split +55% (z 1.7). A small, slow lane: about 3 entries a week.
+GAS_WEEK = dict(GAS, lane="gas_week_cheap_no", label="AAA gas weekly · cheap NO (15-30c, 10c spread)",
+                path=os.path.join(ROOT, "data", "gas_week_cheap_no_ledger.json"), series="KXAAAGASW",
+                spread=0.10, anchor="gas-week-cheap-no",
+                rule=_COMMOD_RULE.format(series="KXAAAGASW (US gas prices, weekly)", side="NO",
+                                         no_def=" (1 - the YES bid)",
+                                         no_fill=" on the NO side (the YES traded low at or under 1 - the target)"
+                                         ).replace("a spread of 5c or less", "a spread of 10c or less")
+                     + " A small, slow lane: about 3 entries a week.",
+                skip="no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h")
+COMMOD_LANES = (WTI, GAS, GAS_WEEK)
 GROUPS = {"culture": LANES, "commodities": COMMOD_LANES}
 
 
