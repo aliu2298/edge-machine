@@ -295,6 +295,11 @@
    "lead_min": 0.2,
    "price": 0.99
   },
+  "commod_fav_band:KXWTI-26OCT2714-T99.49": {
+   "at": "2026-10-27T17:07:08+00:00",
+   "lead_min": 52.9,
+   "price": 0.87
+  },
   "commod_nc_no:KXBRENTD-26OCT2117-T107": {
    "at": "2026-10-21T20:07:08+00:00",
    "lead_min": 22.9,
@@ -1706,9 +1711,9 @@
    "price": 0.5
   },
   "o25_congestion:KXSERIEATOTAL-26OCT27SASLAZ-3": {
-   "at": "2026-10-27T16:51:51+00:00",
-   "lead_min": 38.1,
-   "price": 0.44
+   "at": "2026-10-27T17:07:08+00:00",
+   "lead_min": 22.9,
+   "price": 0.41
   },
   "o25_congestion:KXUCLTOTAL-26OCT20FCPPSV-3": {
    "at": "2026-10-20T18:46:38+00:00",
@@ -2141,5 +2146,5 @@
    "price": 0.65
   }
  },
- "updated": "2026-10-27T16:51:51+00:00"
+ "updated": "2026-10-27T17:07:08+00:00"
 }
