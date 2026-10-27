@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-27T23:00:29+00:00",
+ "board_built_at": "2026-10-27T23:30:27+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -1079,84 +1079,6 @@
    "sport": "nba_tt",
    "status": "miss"
   },
-  "2026-10-27|KXNBATEAMTOTAL-26OCT27BKNBOS-BKN102|Brooklyn under 101.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
-   "away": null,
-   "bet": {
-    "kind": "nba_tt_no",
-    "n": 101.5,
-    "team": "Brooklyn"
-   },
-   "date": "2026-10-27",
-   "edge_at_log": 0.147,
-   "first_seen": "2026-10-27",
-   "headline": "Brooklyn under 101.5 points",
-   "home": null,
-   "id": "2026-10-27|KXNBATEAMTOTAL-26OCT27BKNBOS-BKN102|Brooklyn under 101.5 points \u00b7 NBA team total value \u00b7 1h before tip",
-   "kickoff": "2026-10-27T23:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T23:00:29+00:00",
-   "league": "NBA",
-   "match": "BKN @ BOS",
-   "model_prob": 0.5638,
-   "pair": "nba_tt_value_1h|nba_tt",
-   "price_at_log": 0.4,
-   "published_at": "2026-10-27T22:00:28+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 89,
-   "route": {
-    "claim": "Brooklyn under 101.5 points",
-    "event": "KXNBATEAMTOTAL-26OCT27BKNBOS",
-    "market": "KXNBATEAMTOTAL-26OCT27BKNBOS-BKN102",
-    "outcome": "Brooklyn over 101.5 points",
-    "outcome_side": "no",
-    "price_at_log": 0.4,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "nba_tt_value_1h:401909877:BKN",
-   "source": "nba_tt_value_1h",
-   "sport": "nba_tt",
-   "status": "pending"
-  },
-  "2026-10-27|KXNBATEAMTOTAL-26OCT27BKNBOS-BKN104|Brooklyn under 103.5 points \u00b7 NBA team total value \u00b7 24h before tip": {
-   "away": null,
-   "bet": {
-    "kind": "nba_tt_no",
-    "n": 103.5,
-    "team": "Brooklyn"
-   },
-   "date": "2026-10-27",
-   "edge_at_log": 0.1522,
-   "first_seen": "2026-10-27",
-   "headline": "Brooklyn under 103.5 points",
-   "home": null,
-   "id": "2026-10-27|KXNBATEAMTOTAL-26OCT27BKNBOS-BKN104|Brooklyn under 103.5 points \u00b7 NBA team total value \u00b7 24h before tip",
-   "kickoff": "2026-10-27T23:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T23:00:29+00:00",
-   "league": "NBA",
-   "match": "BKN @ BOS",
-   "model_prob": 0.6295,
-   "pair": "nba_tt_value_24h|nba_tt",
-   "price_at_log": 0.46,
-   "published_at": "2026-10-27T02:30:22+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 1259,
-   "route": {
-    "claim": "Brooklyn under 103.5 points",
-    "event": "KXNBATEAMTOTAL-26OCT27BKNBOS",
-    "market": "KXNBATEAMTOTAL-26OCT27BKNBOS-BKN104",
-    "outcome": "Brooklyn over 103.5 points",
-    "outcome_side": "no",
-    "price_at_log": 0.46,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "nba_tt_value_24h:401909877:BKN",
-   "source": "nba_tt_value_24h",
-   "sport": "nba_tt",
-   "status": "pending"
-  },
   "2026-10-28|KXNBATEAMTOTAL-26OCT27DETNYK-DET107|Detroit over 106.5 points \u00b7 NBA team total value \u00b7 24h before tip": {
    "away": null,
    "bet": {
@@ -1173,7 +1095,7 @@
    "kickoff": "2026-10-28T00:00Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T23:00:29+00:00",
+   "last_seen_at": "2026-10-27T23:30:27+00:00",
    "league": "NBA",
    "match": "DET @ NY",
    "model_prob": 0.6515,
@@ -1212,7 +1134,7 @@
    "kickoff": "2026-10-28T00:00Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T23:00:29+00:00",
+   "last_seen_at": "2026-10-27T23:30:27+00:00",
    "league": "NBA",
    "match": "DET @ NY",
    "model_prob": 0.5876,
@@ -1251,7 +1173,7 @@
    "kickoff": "2026-10-28T00:00Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T23:00:29+00:00",
+   "last_seen_at": "2026-10-27T23:30:27+00:00",
    "league": "NBA",
    "match": "DET @ NY",
    "model_prob": 0.5498,
@@ -1290,7 +1212,7 @@
    "kickoff": "2026-10-28T00:00Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T23:00:29+00:00",
+   "last_seen_at": "2026-10-27T23:30:27+00:00",
    "league": "NBA",
    "match": "DET @ NY",
    "model_prob": 0.6153,
@@ -1329,7 +1251,7 @@
    "kickoff": "2026-10-28T03:00Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T23:00:29+00:00",
+   "last_seen_at": "2026-10-27T23:30:27+00:00",
    "league": "NBA",
    "match": "POR @ LAL",
    "model_prob": 0.5449,
@@ -1368,7 +1290,7 @@
    "kickoff": "2026-10-28T00:00Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T23:00:29+00:00",
+   "last_seen_at": "2026-10-27T23:30:27+00:00",
    "league": "NBA",
    "match": "SAC @ SA",
    "model_prob": 0.5333,
@@ -1407,7 +1329,7 @@
    "kickoff": "2026-10-28T23:00Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T23:00:29+00:00",
+   "last_seen_at": "2026-10-27T23:30:27+00:00",
    "league": "NBA",
    "match": "PHI @ IND",
    "model_prob": 0.5268,
@@ -1439,9 +1361,9 @@
    "ready_at": "2026-10-24T22:13:00+00:00",
    "route": "moved by hand on 2026-10-24",
    "routing": {
-    "leads": 29,
+    "leads": 28,
     "problem": null,
-    "routed": 29,
+    "routed": 28,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1453,7 +1375,7 @@
    "sandbox_roi_fee": -0.0584,
    "timing": {
     "late": [],
-    "timed": 4,
+    "timed": 3,
     "under_target": 0
    }
   },
@@ -1464,9 +1386,9 @@
    "ready_at": "2026-10-24T22:13:00+00:00",
    "route": "moved by hand on 2026-10-24",
    "routing": {
-    "leads": 9,
+    "leads": 8,
     "problem": null,
-    "routed": 9,
+    "routed": 8,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1478,7 +1400,7 @@
    "sandbox_roi_fee": -1.0,
    "timing": {
     "late": [],
-    "timed": 5,
+    "timed": 4,
     "under_target": 0
    }
   }
@@ -1506,5 +1428,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-27T23:00:29+00:00"
+ "updated_at": "2026-10-27T23:30:27+00:00"
 }
