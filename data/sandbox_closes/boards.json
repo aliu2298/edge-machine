@@ -20,11 +20,6 @@
    "lead_min": 40.8,
    "price": 0.38
   },
-  "btts_form_l10_fade:KXLIGUE1BTTS-26OCT17RCSPSG-BTTS": {
-   "at": "2026-10-17T14:48:43+00:00",
-   "lead_min": 26.3,
-   "price": 0.36
-  },
   "btts_form_l10_fade:KXLIGUE1BTTS-26OCT25AUXMAN-BTTS": {
    "at": "2026-10-25T15:49:50+00:00",
    "lead_min": 25.2,
@@ -265,11 +260,6 @@
    "lead_min": 46.8,
    "price": 0.55
   },
-  "o15_cup_mismatch:KXTACAPORTTOTAL-26OCT17LEIBRA-2": {
-   "at": "2026-10-17T14:48:43+00:00",
-   "lead_min": 11.3,
-   "price": 0.82
-  },
   "o15_cup_mismatch:KXUECLTOTAL-26OCT22FKJBRI-2": {
    "at": "2026-10-22T15:58:38+00:00",
    "lead_min": 46.4,
@@ -289,11 +279,6 @@
    "at": "2026-10-24T16:14:46+00:00",
    "lead_min": 30.2,
    "price": 0.84
-  },
-  "o15_form_l10:KXLIGUE1TOTAL-26OCT17RCSPSG-2": {
-   "at": "2026-10-17T14:48:43+00:00",
-   "lead_min": 26.3,
-   "price": 0.9
   },
   "o15_form_l10:KXLIGUE1TOTAL-26OCT25AUXMAN-2": {
    "at": "2026-10-25T15:49:50+00:00",
@@ -404,11 +389,6 @@
    "at": "2026-10-25T16:49:14+00:00",
    "lead_min": 40.8,
    "price": 0.34
-  },
-  "o25_congestion:KXLIGUE1TOTAL-26OCT17RCSPSG-3": {
-   "at": "2026-10-17T14:48:43+00:00",
-   "lead_min": 26.3,
-   "price": 0.28
   },
   "o25_congestion:KXLIGUE1TOTAL-26OCT18FCLASM-3": {
    "at": "2026-10-18T15:13:55+00:00",
@@ -525,6 +505,11 @@
    "lead_min": 21.9,
    "price": 0.71
   },
+  "tennis_utr_shortlist_v1:aec-utr-chaeli-bhapar-2026-10-26": {
+   "at": "2026-10-27T15:32:38+00:00",
+   "lead_min": 27.4,
+   "price": 0.71
+  },
   "tennis_utr_shortlist_v1:aec-utr-djaant-ungnil-2026-10-17": {
    "at": "2026-10-17T20:58:11+00:00",
    "lead_min": 31.8,
@@ -586,5 +571,5 @@
    "price": 0.67
   }
  },
- "updated": "2026-10-27T13:08:24+00:00"
+ "updated": "2026-10-27T15:32:38+00:00"
 }
