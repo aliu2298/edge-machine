@@ -68,9 +68,9 @@ WIDE_RULE = ("Weekly KXTRUMPSAY only. The first minute quote inside 6h of a word
              "at entry: half at 2x, half at 3x the ask paid, each capped at 0.98. A leg fills only when a "
              "trade prints at or above its target (the candle's traded high, never the bid); an unfilled "
              "leg is held to settlement. Taker fee in, maker fee out. One entry per word per week.")
-STRICT = dict(lane=LANE, label=LABEL, path=PATH, spread=MAX_SPREAD, band_in_quote=False, rule=RULE,
+STRICT = dict(lane=LANE, label="Weekly mentions · strict (5c)", path=PATH, spread=MAX_SPREAD, band_in_quote=False, rule=RULE,
               anchor="mentions-split", skip="no quote with a 5c spread inside 6h", last_trade=False)
-WIDE = dict(lane="mentions_cheap_yes_split_wide", label="Trump mentions · cheap YES split, wide entry",
+WIDE = dict(lane="mentions_cheap_yes_split_wide", label="Weekly mentions · wide (10c)",
             path=os.path.join(ROOT, "data", "mentions_split_wide_ledger.json"), spread=0.10,
             band_in_quote=True, rule=WIDE_RULE, anchor="mentions-split-wide",
             skip="no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h", last_trade=True)
@@ -92,11 +92,11 @@ MONTH_NOTE = ("the month of KXTRUMPSAYMONTH-26NOV01 (October, opened 2026-10-01 
               "opening candles")
 _monthly = lambda r: r.replace("Weekly KXTRUMPSAY only.", "Monthly KXTRUMPSAYMONTH only.").replace(
     "per word per week", "per word per month")
-MONTH = dict(STRICT, lane="mentions_month_split", label="Trump mentions, monthly · cheap YES split",
+MONTH = dict(STRICT, lane="mentions_month_split", label="Monthly mentions · strict (5c)",
              path=os.path.join(ROOT, "data", "mentions_month_split_ledger.json"), rule=_monthly(RULE),
              anchor="mentions-month-split", series=MONTH_SERIES, start=MONTH_START,
              registered=MONTH_REGISTERED, backfill=MONTH_NOTE, compare_id="mentions-month-split-compare")
-MONTH_WIDE = dict(WIDE, lane="mentions_month_split_wide", label="Trump mentions, monthly · cheap YES split, wide entry",
+MONTH_WIDE = dict(WIDE, lane="mentions_month_split_wide", label="Monthly mentions · wide (10c)",
                   path=os.path.join(ROOT, "data", "mentions_month_split_wide_ledger.json"), rule=_monthly(WIDE_RULE),
                   anchor="mentions-month-split-wide", series=MONTH_SERIES, start=MONTH_START,
                   registered=MONTH_REGISTERED, backfill=MONTH_NOTE, compare_id="mentions-month-split-compare")
@@ -114,7 +114,7 @@ ALBUM_RULE = ("KXALBUMEQUIV only. For each rung, the first minute quote inside 6
               "rung. HOLD: held to settlement. SPLIT, on the same entries: half resting at 2x, half at 3x the "
               "ask paid, each capped at 0.98, filled only when a trade prints at or above it (the candle's "
               "traded high, never the bid), else held. Taker fee in, maker fee out.")
-ALBUM = dict(WIDE, lane="album_cheap_rungs", label="Album sales · cheap rungs, HOLD v SPLIT",
+ALBUM = dict(WIDE, lane="album_cheap_rungs", label="Album · cheap YES",
              path=os.path.join(ROOT, "data", "album_cheap_rungs_ledger.json"), spread=0.05, band=(0.03, 0.15),
              band_in_quote=True, rule=ALBUM_RULE, anchor="album-cheap-rungs", series="KXALBUMEQUIV",
              start="2026-10-27T03:00:00+00:00", registered="2026-10-27", backfill_open=True, hold_variant=True,
@@ -134,26 +134,11 @@ ALBUM_NO_RULE = ("KXALBUMEQUIV only. For each rung, the first minute quote insid
                  "resting at 2x, half at 3x the NO ask paid, each capped at 0.98, filled only when a trade prints "
                  "at or above it on the NO side (the YES traded low at or under 1 - the target), else held. "
                  "Taker fee in, maker fee out.")
-ALBUM_NO = dict(ALBUM, lane="album_cheap_no", label="Album sales · cheap NO rungs, HOLD v SPLIT",
+ALBUM_NO = dict(ALBUM, lane="album_cheap_no", label="Album · cheap NO",
                 path=os.path.join(ROOT, "data", "album_cheap_no_ledger.json"), spread=0.10, side="no",
                 rule=ALBUM_NO_RULE, anchor="album-cheap-no",
                 skip="no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h")
 LANES = (STRICT, WIDE, MONTH, MONTH_WIDE, ALBUM, ALBUM_NO)
-
-
-def album_summary(yes_state, no_state, esc):
-    """Cheap YES and cheap NO as separate rows: entries, won, ROI after fees HOLD v SPLIT."""
-    rows = "".join(
-        f'<tr><td>{esc(name)}</td><td class="num">{r["entries"]}</td><td class="num">{r["settled"]}</td>'
-        f'<td class="num">{r["won"]}</td><td class="num">{_pct(r["roi_held"])}</td><td class="num">{_pct(r["roi"])}</td></tr>'
-        for name, r in (("Cheap YES (5c spread, YES ask 0.03-0.15)", record(yes_state.get("entries") or [])),
-                        ("Cheap NO (10c spread, NO ask 0.03-0.15)", record(no_state.get("entries") or []))))
-    return ('<section id="album-summary"><h2>Album sales · cheap rungs</h2>'
-            '<p class="sm"><b>Album ladders tested too confident: both tails won more than priced.</b> Two Sandbox paper '
-            'lanes on separate records, each with HOLD and SPLIT on the same entries; review at 10, decide at 30.</p>'
-            '<div class="tbl"><table><thead><tr><th>Lane</th><th class="num">Entries</th><th class="num">Settled</th>'
-            '<th class="num">Won</th><th class="num">ROI after fees · HOLD</th><th class="num">ROI after fees · SPLIT</th>'
-            f'</tr></thead><tbody>{rows}</tbody></table></div></section>')
 
 
 def fee(p, rate):
@@ -459,12 +444,10 @@ def section(state, esc, cfg=STRICT):
     es = state.get("entries") or []
     r = record(es)
     o = state.get("observations") or {}
-    shown = ((("entries", r["entries"]), ("settled", r["settled"]), ("won", r["won"]),
-              ("ROI after fees · HOLD", _pct(r["roi_held"])), ("ROI after fees · SPLIT", _pct(r["roi"])),
-              ("2x / 3x legs filled", f'{r["filled_2x"]} / {r["filled_3x"]}')) if cfg.get("hold_variant") else
-             (("entries", r["entries"]), ("2x legs filled", r["filled_2x"]), ("3x legs filled", r["filled_3x"]),
-              ("ROI after fees · split", _pct(r["roi"])), ("same entries held", _pct(r["roi_held"])),
-              ("same entries, 2x leg only", _pct(r["roi_2x"]))))
+    # One tile set for every cheap-side card (the Culture page redo, 2026-10-27).
+    shown = (("entries", r["entries"]), ("settled", r["settled"]), ("won", r["won"]),
+             ("ROI after fees · split", _pct(r["roi"])), ("ROI after fees · held", _pct(r["roi_held"])),
+             ("legs filled 2x / 3x", f'{r["filled_2x"]} / {r["filled_3x"]}'))
     tiles = "".join(f'<div class="tile"><b>{esc(str(v))}</b><span>{esc(k)}</span></div>' for k, v in shown)
     wk = "".join(f'<tr><td>{esc(k)}</td><td class="num">{w["entries"]}</td><td class="num">{w["filled_2x"]}</td>'
                  f'<td class="num">{w["filled_3x"]}</td><td class="num">{w["resolved"]}</td>'
@@ -478,8 +461,7 @@ def section(state, esc, cfg=STRICT):
     trades = "".join(
         f'<tr><td>{esc(e["event"].rsplit("-", 1)[-1])}</td><td>{esc(e["word"])}</td>'
         f'<td>{esc(e["entry_at"][:16].replace("T", " "))}Z</td><td class="num">{e["price"]:.2f}</td>'
-        + (f'<td class="num">{_px(e.get("last_trade"))}</td><td class="num">{_px(e.get("spread_cost"))}</td>'
-           if cfg["last_trade"] else "") +
+        + f'<td class="num">{_px(e.get("last_trade"))}</td><td class="num">{_px(e.get("spread_cost"))}</td>' +
         f'<td>{esc(size(e))}</td><td>{esc(leg(e["legs"][0]))}</td><td>{esc(leg(e["legs"][1]))}</td>'
         f'<td class="num">{_pl(e.get("pnl"))}</td>'
         f'<td class="num">{_pct(e.get("roi"))}</td></tr>'
@@ -493,10 +475,10 @@ def section(state, esc, cfg=STRICT):
     head = (f'<thead><tr><th>{unit}</th><th class="num">Entries</th><th class="num">2x filled</th><th class="num">3x filled</th>'
             '<th class="num">Resolved</th><th class="num">ROI split</th><th class="num">Held</th><th class="num">2x only</th></tr></thead>')
     thead = (f'<thead><tr><th>{unit}</th><th>{item}</th><th>Entry (UTC)</th><th class="num">{cfg.get("side", "yes").upper()} ask paid</th>'
-             + ('<th class="num">Last trade</th><th class="num">Cost of the spread</th>' if cfg["last_trade"] else "")
+             + '<th class="num">Last trade</th><th class="num">Cost of the spread</th>'
              + '<th>Size</th><th>2x leg</th><th>3x leg</th><th class="num">P/L per contract</th><th class="num">ROI</th></tr></thead>')
-    cols = 11 if cfg["last_trade"] else 9
-    return (f'<section id="{cfg["anchor"]}"><h2>{esc(cfg["label"])}</h2>'
+    cols = 11
+    return (f'<section class="lane-card" id="{cfg["anchor"]}"><h3>{esc(cfg["label"])}</h3>'
             f'<p class="sm"><b>Sandbox · paper · fresh record from its first entry · review at {REVIEW_AT}, decide at '
             f'{DECIDE_AT}</b> ({r["resolved"]} resolved). Registered {cfg["registered"]}; {cfg["backfill"]}.</p>'
             f'<p class="sm">{esc(cfg["rule"])}</p><div class="tiles">{tiles}</div>'

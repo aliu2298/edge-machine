@@ -108,13 +108,8 @@ check("the win is paid after the fee", lane["picks"][0]["profit"], round(100 * (
 print("\nthe Culture tab")
 check("Culture is in the site navigation", any(k == "culture" for k, _l, _u in C.PAGES), True)
 empty = KB.build({"lanes": {k: {"picks": [], "observations": {}, "error": None} for k in K.LANES}}, now=NOW)
-check("an empty ledger still builds the page with all four lanes",
-      all(K.LANES[k] in empty for k in K.LANES) and "Observing · paper" in empty, True)
-full = {"lanes": {k: {"picks": [], "observations": {}, "error": None} for k in K.LANES}}
-full["lanes"]["rt_model"]["picks"] = [dict(id="KXRT-STRA-42", event="KXRT-STRA", series="KXRT", name="Street Fighter",
-                                           title="Above 42", side="yes", price=0.45, close=(NOW + dt.timedelta(days=2)).isoformat(),
-                                           logged=NOW.isoformat(), status="open", detail="37/87")]
-check("a pick shows on the page", "Street Fighter" in KB.build(full, now=NOW), True)
+check("an empty ledger still builds the page: the standard, the lanes, the model lanes, the archive",
+      all(f'id="{i}"' in empty for i in ("standard", "lanes", "models", "archive")), True)
 
 print("\none market, one side, one lane (2026-10-20)")
 
@@ -191,43 +186,7 @@ try:
 finally:
     K.rt_counts, K.expected_reviews, K.p_above = _saved
 
-print("\nthe headline counts each market once")
-dup = {"lanes": {k: {"picks": []} for k in K.LANES}}
-dup["lanes"]["rt_model"]["picks"].append(pk("KXRT-SENS-75", "no", logged="2026-10-17T10:00:00+00:00", status="lost", profit=-100.0))
-dup["lanes"]["culture_fav_band"]["picks"].append(pk("KXRT-SENS-75", "yes", logged="2026-10-17T12:00:00+00:00", status="won", profit=30.0))
-dup["lanes"]["culture_endgame"]["picks"].append(pk("KXOTHER-1", "no", logged="2026-10-17T12:00:00+00:00", status="won", profit=8.0))
-rec, note = KB.pooled(dup)
-check("two lanes on one ticker count once (the earliest pick), plus the other market",
-      (rec["n"], rec["won"], round(rec["roi_fee"], 3), note), (2, 1, -0.46, "each market once"))
-html = KB.build(dup, NOW)
-check("Trump mentions is in Production (2026-10-20), so the record tiles are its since-Production record",
-      ("since Production · Trump mentions" in html, "Sandbox record · paper" in html), (True, False))
-
-
-print("\nthe page: Trump mentions in Production, closes not starts (2026-10-21)")
 import re as _re
-pg = {"lanes": {k: {"picks": [], "last_success": "2026-10-16T17:00:00+00:00"} for k in K.LANES}}
-pg["lanes"]["mentions_rate"]["picks"].append(pk("KXTRUMPSAY-26OCT20-WALL", "no", "KXTRUMPSAY-26OCT20",
-                                               logged="2026-10-21T01:00:00+00:00", close="2026-10-25T00:00:00+00:00",
-                                               status="won", profit=30.0, settled="2026-10-22T00:00:00+00:00"))
-pg["lanes"]["culture_fav_band"]["picks"].append(pk("KXOSC-1", "yes", close="2026-10-30T00:00:00+00:00"))
-LATER = dt.datetime(2026, 10, 23, 18, 0, tzinfo=UTC)
-ph = KB.build(pg, LATER)
-pt = _re.sub(r"\s+", " ", _re.sub(r"<[^>]+>", " ", ph))
-check("the header counts Trump mentions as Production", "1 in Production · 3 in the Sandbox" in pt, True)
-check("it is a row of the Production list, not of the Sandbox fold",
-      'data-list="production"' in ph and 'data-source="mentions_rate"' in ph.split('data-list="production"', 1)[1].split('id="sandbox"', 1)[0],
-      True)
-check("and 'No culture rule is in Production' is gone", "No culture rule is in Production" in pt, False)
-check("the record tiles are its since-Production record: 1 won", ("since Production · Trump mentions" in pt, "1–0" in pt), (True, True))
-check("'too early to read' counts the three Sandbox lanes only", "3 rules · 3 too early to read" in pt, True)
-check("each chip says what the row is", (pt.count("Production · since 2026-10-20"), pt.count("Observing · paper")), (1, 3))
-check("the Sandbox fold is open on load, so the records show", 'id="sandbox" open>' in ph, True)
-check("the empty Next 24h speaks of closing and the culture scan, not a missing read",
-      ("No pick closes in the next 24 hours: the last culture scan" in pt, "no read is stored" in pt, "No pick starts" in pt),
-      (True, False, False))
-check("a pick closing in the next 24 hours is in Next 24h",
-      "No pick closes" in _re.sub(r"<[^>]+>", " ", KB.build(pg, dt.datetime(2026, 10, 29, 6, 0, tzinfo=UTC))), False)
 
 print("\n2026-10-24: three lanes retired, mentions_rate news guard and edge cap")
 RET = dt.datetime(2026, 10, 24, 18, 0, tzinfo=UTC)
@@ -318,45 +277,25 @@ check("the amendment is dated in the lane's registered text, with the raised thr
       ("Amended 2026-10-24" in K.RULES["mentions_rate"], "0.25 (news guard, raised from 0.20 on 2026-10-24" in K.RULES["mentions_rate"],
        "under 0.20" in K.RULES["mentions_rate"]), (True, True, False))
 
-print("\nthe Culture page with three lanes retired")
+print("\nthe Culture page's Archive: the old lanes, one line each, records kept")
 real = K.load()
 OUT = dt.datetime(2026, 10, 26, 18, 0, tzinfo=UTC)          # after Trump mentions left Production
-pages_at = {}
-for when in (RET, OUT):
-    rh = KB.build(real, when)
-    rt = _re.sub(r"\s+", " ", _re.sub(r"<[^>]+>", " ", rh))
-    pages_at[when] = (rh, rt)
-    listed = when < OUT
-    check(f"the live ledger builds at {when:%Y-%m-%d %H:%M}: " + ("1 in Production, 0 active" if listed else
-          "0 in Production, 1 active (back in the Sandbox 2026-10-26)") + ", 3 retired",
-          (("1 in Production · 0 active in the Sandbox · 3 retired" if listed else
-            "0 in Production · 1 active in the Sandbox · 3 retired") in rt, rh.count('data-verdict="retired"'),
-           rt.count("Retired · 2026-10-24"), "Production · since 2026-10-20" in rt, "Observing · paper" in rt,
-           "Removed from Production · 2026-10-26" in rt),
-          (True, 3, 3, listed, False, not listed))
-rh, rt = pages_at[RET]
-check("each retired row keeps its record and gives the dated reason", all(
-    f"Retired 2026-10-24 at {K.RETIRED[k]['at']}: {K.RETIRED[k]['reason']}" in _html.unescape(rh) for k in K.RETIRED), True)
+rt = _re.sub(r"\s+", " ", _re.sub(r"<[^>]+>", " ", _html.unescape(KB.build(real, OUT))))
+_rh = KB.build(real, OUT)
+arch = _re.sub(r"\s+", " ", _re.sub(r"<[^>]+>", " ", _html.unescape(_rh[_rh.find('id="archive"'):])))
+check("the live ledger builds; the Archive names mentions_rate, culture_endgame and culture_fav_band, not rt_model",
+      ("(mentions_rate)" in arch, "(culture_endgame)" in arch, "(culture_fav_band)" in arch, "(rt_model)" in arch), (True, True, True, False))
+check("each retired lane carries its dated retirement and record",
+      all(f"retired 2026-10-24 at {K.RETIRED[k]['at']}" in arch for k in ("culture_endgame", "culture_fav_band")), True)
 small = ledger_with_rows()
 for k in K.RETIRED:
     small["lanes"][k]["picks"][0]["payout"] = 1.0
-sh = _html.unescape(KB.build(small, RET))
-check("a retired row's details give its record now, per contract, and what is left open",
-      sh.count("record now 1/1 won, +31.0% after fees per contract") + sh.count("1 open pick still settles"), 6)
-check("the tiles: 1 active rule, the since-Production record (2026-10-24)", ('<b>1</b><span>active rules' in rh,
-                                                               "since Production · Trump mentions" in rt), (True, True))
-check("the Sandbox fold counts them as retired, not too early", "· 3 rules · 3 retired · by evidence" in rt, True)
-check("the amendment is on the page", "amended 2026-10-24" in rt, True)
-rh, rt = pages_at[OUT]
-check("2026-10-26: the tiles are the Sandbox record, the fold holds Trump mentions as a Sandbox rule",
-      ('<b>1</b><span>active rules' in rh, "since Production · Trump mentions" in rt, "Sandbox record · paper" in rt,
-       "· 4 rules · 1 too early to read · 3 retired · by evidence" in rt), (True, False, True, True))
-check("2026-10-26: the page names both amendments and when it left Production",
-      ("amended 2026-10-24" in rt, "amended 2026-10-26, back in the Sandbox" in rt,
-       "Removed from Production 2026-10-26 (moved 2026-10-20)" in rt), (True, True, True))
-fin = KB.build(ledger_with_rows(), RET)
-check("a small ledger renders with three retired lanes too", ("0 active in the Sandbox · 3 retired" in fin,
-                                                              fin.count("Retired · 2026-10-24")), (True, 3))
+sh = _re.sub(r"\s+", " ", _re.sub(r"<[^>]+>", " ", _html.unescape(KB.build(small, RET))))
+check("a retired lane's line gives its record now, per contract, and what still settles",
+      sh.count("record now 1/1 won, +31.0% after fees per contract; 1 open still settling"), 2)
+check("mentions_rate is in the Archive as out of Production 2026-10-26, still logging on paper",
+      "in Production 2026-10-20 to 2026-10-26, still logging on paper in the Sandbox under its 2026-10-26 amendment" in arch, True)
+check("the Archive is collapsed", '<details class="fold sec" id="archive">' in KB.build(real, OUT), True)
 
 print("\n2026-10-26: back in the Sandbox, the NO floor and the monthly/company series out")
 AM = dt.datetime(2026, 10, 26, 18, 0, tzinfo=UTC)                # after the amendment (17:00Z)
@@ -432,9 +371,8 @@ check("a scan after the amendment leaves every existing row as it was (open ones
       [(r["id"], r["status"], r["price"]) for r in amst["lanes"]["mentions_rate"]["picks"]],
       [(r["id"], r["status"], r["price"]) for r in held])
 ah = _re.sub(r"\s+", " ", _re.sub(r"<[^>]+>", " ", _html.unescape(KB.build(amst, AM))))
-check("the row's details give the record before and after the amendment",
-      ("Before the 2026-10-26 amendment: 0/1 won" in ah, "1 still open" in ah,
-       "From 2026-10-26 (NO floor 0.60, monthly and company series out): 1/1 won" in ah), (True, True, True))
+check("its Archive line gives the record before and after the amendment, and what is open",
+      ("before the amendment 0/1 won" in ah, "from it 1/1 won" in ah, "; 1 open." in ah), (True, True, True))
 
 print("\n2026-10-26: rt_model revived on a fresh record, its snapshot collector back on")
 REV = dt.datetime(2026, 10, 27, 1, 0, tzinfo=UTC)               # after the revival (00:00Z)
@@ -524,21 +462,18 @@ check("the fresh record is the stamped entry alone", [p["id"] for p in K.fresh("
       ["KXRT-NEW-82"])
 new_rec, old_rec, old_open = KB.history_split("rt_model", rv["lanes"]["rt_model"]["picks"])
 check("history_split: revived 1/1; history 1/2 with one still open", (new_rec[:2], old_rec[:2], old_open), ((1, 1), (1, 2), 1))
-row = KB._row("rt_model", rv["lanes"]["rt_model"], REV)
-check("the row's record counts the revived entry only, and it is an active Sandbox row",
-      (row["a"]["n"], row["a"]["won"], row["open"], row["v"], "Revived 2026-10-26 · fresh record · review at 10" in row["meta"]["note"]),
-      (1, 1, 0, "waiting", True))
-check("the pooled Sandbox record leaves the history out", KB.pooled(rv, REV)[0]["n"], 1)
-rvh = _re.sub(r"\s+", " ", _re.sub(r"<[^>]+>", " ", _html.unescape(KB.build(rv, REV))))
-check("the page: active again with the note, both records apart, two lanes still retired",
-      ("Observing · paper · revived 2026-10-26 · fresh record · review at 10" in rvh,
-       "Revived record: 1/1 won" in rvh,
-       "Pre-retirement history (retired 2026-10-24 at 2/4 won, −25.7% after fees, not counted): 1/2 won" in rvh,
-       "1 still open" in rvh, rvh.count("Retired · 2026-10-24"), "2 active in the Sandbox · 2 retired" in rvh),
-      (True, True, True, True, 2, True))
+_rv = KB.build(rv, REV)
+_txt = lambda h: _re.sub(r"\s+", " ", _re.sub(r"<[^>]+>", " ", _html.unescape(h)))
+models = _txt(_rv[_rv.find('id="models"'):_rv.find('id="archive"')])
+rvh = _txt(_rv)
+check("the page: rt_model under Model lanes with the note, both records apart; not in the Archive",
+      ("revived 2026-10-26 · fresh record · review at 10" in models, "Revived record: 1/1 won" in models,
+       "Pre-retirement history (retired 2026-10-24 at 2/4 won, −25.7% after fees, not counted): 1/2 won" in models,
+       "1 still open" in models, "(rt_model)" in _txt(_rv[_rv.find('id="archive"'):])), (True, True, True, True, False))
 check("the ledger rows are untouched by the page", rv["lanes"]["rt_model"]["picks"], held_rt)
-check("before the revival the page still shows all three retired",
-      _re.sub(r"<[^>]+>", " ", KB.build(rv, EVE)).count("Retired · 2026-10-24"), 3)
+check("before the revival the Model lanes line says retired, with the revival time",
+      "Rotten Tomatoes model · retired 2026-10-24; revived from 2026-10-27 00:00Z." in
+      _re.sub(r"\s+", " ", _re.sub(r"<[^>]+>", " ", KB.build(rv, EVE))), True)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

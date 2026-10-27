@@ -80,7 +80,7 @@ check("page inputs add the pair and its quotes without touching the originals",
 html = P.page({"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}, "", now=NOW, culture=state)
 check("the Production page lists the pair and its NO lead in words",
       ("Trump mentions" in html, 'Trump does not say "Antifa"' in html or "Trump does not say &quot;Antifa&quot;" in html), (True, True))
-check("the Culture page says the lane is in Production", "Production · since 2026-10-20" in KB.build(state, NOW), True)
+check("the Culture page's Archive says the lane is in Production (2026-10-21)", "in Production since 2026-10-20" in KB.build(state, NOW), True)
 check("no guarded public phrase in the leads", sandbox_audit.COPY_RE.findall(" ".join(l["headline"] for l in f["leads"].values())), [])
 
 print("\n2026-10-26: back to the Sandbox, the Production record kept")
@@ -121,8 +121,8 @@ m_in = CC.model({"quotes": [], "coverage": {}}, {"pairs": {}}, {"leads": {}, "pa
 check("  and on 2026-10-21 it was counted and named", (m_in["tiles"]["pairs"], m_in["prod_outside"], m_in["prod_left"]),
       (1, ["Trump mentions"], []))
 kh = KB.build(out_state, OUT)
-check("the Culture page chips it Removed from Production, a Sandbox row",
-      ("Removed from Production · 2026-10-26" in kh, "Production · since 2026-10-20" in kh), (True, False))
+check("the Culture page's Archive says it left Production on 2026-10-26 and still logs on paper",
+      ("in Production 2026-10-20 to 2026-10-26, still logging on paper" in kh, "in Production since 2026-10-20" in kh), (True, False))
 check("no guarded public phrase in the removal note", sandbox_audit.COPY_RE.findall(CP.removed_note(out_state)), [])
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
