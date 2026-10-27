@@ -13,7 +13,7 @@ bid high), an unfilled leg is held to settlement, HOLD is recorded on the same e
 card and summary; only the entry differs, because a fight has a start rather than an open.
 
 THE START. Kalshi publishes each fight's scheduled start as a milestone (milestones endpoint,
-related_event_ticker; type boxing_match / mma_match; start_date). That is the clock a live bot
+related_event_ticker; type boxing_match / mma_match; start_date). That is the clock a live system
 would have, so the entry is replayed from it, never from the price path: the first minute candle
 ending in the 15 minutes after (start - 60 minutes) whose closing quote has a spread of 5c or less
 and whose YES ask is in the lane's band. No such minute: the fighter is skipped, with the reason.
