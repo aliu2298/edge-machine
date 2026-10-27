@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-26T23:55:55+00:00",
+ "board_built_at": "2026-10-27T00:00:27+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -709,45 +709,6 @@
    "sport": "nba_tt",
    "status": "hit"
   },
-  "2026-10-27|KXNBATEAMTOTAL-26OCT26INDMIL-IND122|Indiana under 121.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
-   "away": null,
-   "bet": {
-    "kind": "nba_tt_no",
-    "n": 121.5,
-    "team": "Indiana"
-   },
-   "date": "2026-10-27",
-   "edge_at_log": 0.1042,
-   "first_seen": "2026-10-26",
-   "headline": "Indiana under 121.5 points",
-   "home": null,
-   "id": "2026-10-27|KXNBATEAMTOTAL-26OCT26INDMIL-IND122|Indiana under 121.5 points \u00b7 NBA team total value \u00b7 1h before tip",
-   "kickoff": "2026-10-27T00:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T23:55:55+00:00",
-   "league": "NBA",
-   "match": "IND @ MIL",
-   "model_prob": 0.6217,
-   "pair": "nba_tt_value_1h|nba_tt",
-   "price_at_log": 0.5,
-   "published_at": "2026-10-26T22:30:27+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 89,
-   "route": {
-    "claim": "Indiana under 121.5 points",
-    "event": "KXNBATEAMTOTAL-26OCT26INDMIL",
-    "market": "KXNBATEAMTOTAL-26OCT26INDMIL-IND122",
-    "outcome": "Indiana over 121.5 points",
-    "outcome_side": "no",
-    "price_at_log": 0.5,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "nba_tt_value_1h:401909872:IND",
-   "source": "nba_tt_value_1h",
-   "sport": "nba_tt",
-   "status": "pending"
-  },
   "2026-10-27|KXNBATEAMTOTAL-26OCT26MEMUTA-MEM120|Memphis over 119.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
    "away": null,
    "bet": {
@@ -763,8 +724,8 @@
    "id": "2026-10-27|KXNBATEAMTOTAL-26OCT26MEMUTA-MEM120|Memphis over 119.5 points \u00b7 NBA team total value \u00b7 1h before tip",
    "kickoff": "2026-10-27T01:00Z",
    "lane": "production",
-   "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T23:55:55+00:00",
+   "last_seen": "2026-10-27",
+   "last_seen_at": "2026-10-27T00:00:27+00:00",
    "league": "NBA",
    "match": "MEM @ UTAH",
    "model_prob": 0.6365,
@@ -786,45 +747,6 @@
    "source": "nba_tt_value_1h",
    "sport": "nba_tt",
    "status": "pending"
-  },
-  "2026-10-27|KXNBATEAMTOTAL-26OCT26PHXOKC-PHX104|Phoenix under 103.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
-   "away": null,
-   "bet": {
-    "kind": "nba_tt_no",
-    "n": 103.5,
-    "team": "Phoenix"
-   },
-   "date": "2026-10-27",
-   "edge_at_log": 0.1681,
-   "first_seen": "2026-10-26",
-   "headline": "Phoenix under 103.5 points",
-   "home": null,
-   "id": "2026-10-27|KXNBATEAMTOTAL-26OCT26PHXOKC-PHX104|Phoenix under 103.5 points \u00b7 NBA team total value \u00b7 1h before tip",
-   "kickoff": "2026-10-27T00:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-26",
-   "last_seen_at": "2026-10-26T23:55:55+00:00",
-   "league": "NBA",
-   "match": "PHX @ OKC",
-   "model_prob": 0.5849,
-   "pair": "nba_tt_value_1h|nba_tt",
-   "price_at_log": 0.4,
-   "published_at": "2026-10-26T22:30:27+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 89,
-   "route": {
-    "claim": "Phoenix under 103.5 points",
-    "event": "KXNBATEAMTOTAL-26OCT26PHXOKC",
-    "market": "KXNBATEAMTOTAL-26OCT26PHXOKC-PHX104",
-    "outcome": "Phoenix over 103.5 points",
-    "outcome_side": "no",
-    "price_at_log": 0.4,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "nba_tt_value_1h:401909873:PHX",
-   "source": "nba_tt_value_1h",
-   "sport": "nba_tt",
-   "status": "pending"
   }
  },
  "pairs": {
@@ -835,9 +757,9 @@
    "ready_at": "2026-10-24T22:13:00+00:00",
    "route": "moved by hand on 2026-10-24",
    "routing": {
-    "leads": 19,
+    "leads": 17,
     "problem": null,
-    "routed": 19,
+    "routed": 17,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -849,7 +771,7 @@
    "sandbox_roi_fee": -0.0362,
    "timing": {
     "late": [],
-    "timed": 3,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -902,5 +824,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-26T23:55:55+00:00"
+ "updated_at": "2026-10-27T00:00:27+00:00"
 }
