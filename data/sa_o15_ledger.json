@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-27T18:46:42.252690+00:00",
+ "last_run": "2026-10-27T20:31:14.156877+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -360,6 +360,24 @@
      "ticker": "KXARGPREMDIVTOTAL-26OCT26IACCRIE-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Argentina over 1.5 YES 0.61"
+    },
+    {
+     "ask": 0.69,
+     "bid": 0.68,
+     "event": "KXARGPREMDIVTOTAL-26OCT27ARGIRM",
+     "id": "ARG:KXARGPREMDIVTOTAL-26OCT27ARGIRM",
+     "league": "Liga Profesional",
+     "line": 1.5,
+     "logged": "2026-10-27T20:31:14.156877+00:00",
+     "match": "Argentinos Juniors v Independiente Rivadavia",
+     "price": 0.69,
+     "rule": "ARG",
+     "side": "yes",
+     "start": "2026-10-27T22:00Z",
+     "status": "open",
+     "ticker": "KXARGPREMDIVTOTAL-26OCT27ARGIRM-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Argentina over 1.5 YES 0.69"
     }
    ]
   },
@@ -600,13 +618,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T13:01:14.260355+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "quoted": 0
-  },
   {
    "at": "2026-10-25T13:31:45.133980+00:00",
    "due": 0,
@@ -956,6 +967,13 @@
    "matched": 0,
    "new": 0,
    "quoted": 0
+  },
+  {
+   "at": "2026-10-27T20:31:14.156877+00:00",
+   "due": 1,
+   "matched": 1,
+   "new": 1,
+   "quoted": 1
   }
  ],
  "schedule": [

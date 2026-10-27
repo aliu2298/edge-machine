@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-27T18:46:41.367317+00:00",
+ "last_run": "2026-10-27T20:31:13.529664+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -803,11 +803,14 @@
      "line": 2.5,
      "logged": "2026-10-27T16:01:48.346342+00:00",
      "match": "Sassuolo v Lazio",
+     "payout": 1.0,
      "price": 0.57,
+     "profit": 70.31,
      "rule": "C3",
+     "settled": "2026-10-27T20:31:13.529664+00:00",
      "side": "yes",
      "start": "2026-10-27T17:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXSERIEATOTAL-26OCT27SASLAZ-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Sassuolo O+D+ v Lazio O+D- \u00b7 Over 2.5 YES 0.57"
@@ -2789,14 +2792,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-25T13:01:11.875216+00:00",
-   "candidates": 4,
-   "due": 11,
-   "labelled": 11,
-   "matched": 4,
-   "new": 0
-  },
-  {
    "at": "2026-10-25T13:31:43.548663+00:00",
    "candidates": 3,
    "due": 9,
@@ -3194,6 +3189,14 @@
    "due": 2,
    "labelled": 2,
    "matched": 2,
+   "new": 0
+  },
+  {
+   "at": "2026-10-27T20:31:13.529664+00:00",
+   "candidates": 0,
+   "due": 0,
+   "labelled": 0,
+   "matched": 0,
    "new": 0
   }
  ],
