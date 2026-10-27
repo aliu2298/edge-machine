@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-27T16:31:13+00:00",
+ "board_built_at": "2026-10-27T18:16:47+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sa_o15_arg": true,
@@ -877,6 +877,42 @@
    "sport": "soccer_o15",
    "status": "hit"
   },
+  "2026-10-27|AS Roma|Cagliari|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
+   "away": "Cagliari",
+   "bet": {
+    "kind": "btts"
+   },
+   "date": "2026-10-27",
+   "edge_at_log": null,
+   "first_seen": "2026-10-27",
+   "headline": "Both teams to score",
+   "home": "AS Roma",
+   "id": "2026-10-27|AS Roma|Cagliari|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score",
+   "kickoff": "2026-10-27T19:45Z",
+   "lane": "production",
+   "last_seen": "2026-10-27",
+   "last_seen_at": "2026-10-27T18:16:47+00:00",
+   "league": "Serie A",
+   "match": "AS Roma v Cagliari",
+   "pair": "sr_d3|soccer_btts",
+   "price_at_log": 0.41,
+   "published_at": "2026-10-27T18:16:47+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Both teams to score",
+    "event": "KXSERIEABTTS-26OCT27ROMCAG",
+    "market": "KXSERIEABTTS-26OCT27ROMCAG-BTTS",
+    "outcome": "Both Teams To Score",
+    "outcome_side": "yes",
+    "price_at_log": 0.41,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_d3:KXSERIEABTTS-26OCT27ROMCAG-BTTS",
+   "source": "sr_d3",
+   "sport": "soccer_btts",
+   "status": "pending"
+  },
   "2026-10-27|Instituto (C\u00f3rdoba)|Deportivo Riestra|Over 1.5 goals \u00b7 Argentina over 1.5": {
    "away": "Deportivo Riestra",
    "bet": {
@@ -911,6 +947,42 @@
    "source": "sa_o15_arg",
    "sport": "soccer_o15",
    "status": "miss"
+  },
+  "2026-10-27|Torino|Como|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
+   "away": "Como",
+   "bet": {
+    "kind": "btts"
+   },
+   "date": "2026-10-27",
+   "edge_at_log": null,
+   "first_seen": "2026-10-27",
+   "headline": "Both teams to score",
+   "home": "Torino",
+   "id": "2026-10-27|Torino|Como|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score",
+   "kickoff": "2026-10-27T19:45Z",
+   "lane": "production",
+   "last_seen": "2026-10-27",
+   "last_seen_at": "2026-10-27T18:16:47+00:00",
+   "league": "Serie A",
+   "match": "Torino v Como",
+   "pair": "sr_d3|soccer_btts",
+   "price_at_log": 0.6,
+   "published_at": "2026-10-27T18:16:47+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Both teams to score",
+    "event": "KXSERIEABTTS-26OCT27TORCOM",
+    "market": "KXSERIEABTTS-26OCT27TORCOM-BTTS",
+    "outcome": "Both Teams To Score",
+    "outcome_side": "yes",
+    "price_at_log": 0.6,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_d3:KXSERIEABTTS-26OCT27TORCOM-BTTS",
+   "source": "sr_d3",
+   "sport": "soccer_btts",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -996,9 +1068,9 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 9,
+    "leads": 11,
     "problem": null,
-    "routed": 9,
+    "routed": 11,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1010,7 +1082,7 @@
    "sandbox_roi_fee": -0.3808,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 2,
     "under_target": 0
    }
   }
@@ -1038,5 +1110,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-27T16:31:13+00:00"
+ "updated_at": "2026-10-27T18:16:47+00:00"
 }
