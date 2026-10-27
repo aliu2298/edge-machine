@@ -1,26 +1,53 @@
 {
  "held": [
   {
-   "qty": 6,
+   "qty": 14,
    "rules": [
     {
-     "id": "sw_rsi2_pullback|COP|2026-10-22",
-     "qty": 6,
+     "id": "sw_rsi2_pullback|CNC|2026-10-26",
+     "qty": 14,
      "rule": "sw_rsi2_pullback"
     }
    ],
-   "symbol": "COP"
+   "symbol": "CNC"
   },
   {
-   "qty": 2,
+   "qty": 5,
    "rules": [
     {
      "id": "sw_rsi2_pullback|COR|2026-10-22",
      "qty": 2,
      "rule": "sw_rsi2_pullback"
+    },
+    {
+     "id": "sw_rsi2_pullback|COR|2026-10-26",
+     "qty": 3,
+     "rule": "sw_rsi2_pullback"
     }
    ],
    "symbol": "COR"
+  },
+  {
+   "qty": 14,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|CTSH|2026-10-26",
+     "qty": 14,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "CTSH"
+  },
+  {
+   "qty": 10,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|CVS|2026-10-26",
+     "qty": 10,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "CVS"
   },
   {
    "qty": 5,
@@ -34,15 +61,26 @@
    "symbol": "DASH"
   },
   {
-   "qty": 20,
+   "qty": 7,
    "rules": [
     {
-     "id": "sw_rsi2_pullback|DVN|2026-10-22",
-     "qty": 20,
+     "id": "sw_rsi2_pullback|DG|2026-10-26",
+     "qty": 7,
      "rule": "sw_rsi2_pullback"
     }
    ],
-   "symbol": "DVN"
+   "symbol": "DG"
+  },
+  {
+   "qty": 9,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|DIS|2026-10-26",
+     "qty": 9,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "DIS"
   },
   {
    "qty": 36,
@@ -64,6 +102,39 @@
     }
    ],
    "symbol": "DXCM"
+  },
+  {
+   "qty": 8,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|EBAY|2026-10-26",
+     "qty": 8,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "EBAY"
+  },
+  {
+   "qty": 5,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|EFX|2026-10-26",
+     "qty": 5,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "EFX"
+  },
+  {
+   "qty": 2,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|ELV|2026-10-26",
+     "qty": 2,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "ELV"
   },
   {
    "qty": 27,
@@ -115,6 +186,17 @@
    "symbol": "HLT"
   },
   {
+   "qty": 6,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|ICE|2026-10-26",
+     "qty": 6,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "ICE"
+  },
+  {
    "qty": 3,
    "rules": [
     {
@@ -124,17 +206,6 @@
     }
    ],
    "symbol": "ILMN"
-  },
-  {
-   "qty": 3,
-   "rules": [
-    {
-     "id": "etf_ibs_band|IWM|2026-10-19",
-     "qty": 3,
-     "rule": "etf_ibs_band"
-    }
-   ],
-   "symbol": "IWM"
   },
   {
    "qty": 5,
@@ -159,6 +230,17 @@
    "symbol": "LRCX"
   },
   {
+   "qty": 1,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|MA|2026-10-26",
+     "qty": 1,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "MA"
+  },
+  {
    "qty": 2,
    "rules": [
     {
@@ -173,6 +255,39 @@
    "qty": 1,
    "rules": [
     {
+     "id": "sw_rsi2_pullback|MCK|2026-10-26",
+     "qty": 1,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "MCK"
+  },
+  {
+   "qty": 15,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|MDLZ|2026-10-26",
+     "qty": 15,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "MDLZ"
+  },
+  {
+   "qty": 10,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|MDT|2026-10-26",
+     "qty": 10,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "MDT"
+  },
+  {
+   "qty": 1,
+   "rules": [
+    {
      "id": "sw_rsi2_pullback|META|2026-10-23",
      "qty": 1,
      "rule": "sw_rsi2_pullback"
@@ -181,13 +296,19 @@
    "symbol": "META"
   },
   {
-   "qty": 4,
+   "qty": 13,
    "rules": [
     {
-     "id": "sw_rsi2_pullback|MPC|2026-10-22",
-     "qty": 2,
+     "id": "sw_rsi2_pullback|MO|2026-10-26",
+     "qty": 13,
      "rule": "sw_rsi2_pullback"
-    },
+    }
+   ],
+   "symbol": "MO"
+  },
+  {
+   "qty": 2,
+   "rules": [
     {
      "id": "sw_rsi2_pullback|MPC|2026-10-23",
      "qty": 2,
@@ -197,22 +318,32 @@
    "symbol": "MPC"
   },
   {
-   "qty": 6,
+   "qty": 13,
    "rules": [
     {
      "id": "sw_rsi2_pullback|MRK|2026-10-23",
      "qty": 6,
+     "rule": "sw_rsi2_pullback"
+    },
+    {
+     "id": "sw_rsi2_pullback|MRK|2026-10-26",
+     "qty": 7,
      "rule": "sw_rsi2_pullback"
     }
    ],
    "symbol": "MRK"
   },
   {
-   "qty": 4,
+   "qty": 9,
    "rules": [
     {
      "id": "sw_rsi2_pullback|MRNA|2026-10-23",
      "qty": 4,
+     "rule": "sw_rsi2_pullback"
+    },
+    {
+     "id": "sw_rsi2_pullback|MRNA|2026-10-26",
+     "qty": 5,
      "rule": "sw_rsi2_pullback"
     }
    ],
@@ -230,24 +361,30 @@
    "symbol": "NVDA"
   },
   {
-   "qty": 16,
+   "qty": 33,
    "rules": [
     {
-     "id": "sw_rsi2_pullback|OXY|2026-10-22",
-     "qty": 16,
+     "id": "sw_rsi2_pullback|PFE|2026-10-26",
+     "qty": 33,
      "rule": "sw_rsi2_pullback"
     }
    ],
-   "symbol": "OXY"
+   "symbol": "PFE"
   },
   {
    "qty": 6,
    "rules": [
     {
-     "id": "sw_rsi2_pullback|PSX|2026-10-22",
-     "qty": 3,
+     "id": "sw_rsi2_pullback|PG|2026-10-26",
+     "qty": 6,
      "rule": "sw_rsi2_pullback"
-    },
+    }
+   ],
+   "symbol": "PG"
+  },
+  {
+   "qty": 3,
+   "rules": [
     {
      "id": "sw_rsi2_pullback|PSX|2026-10-23",
      "qty": 3,
@@ -255,6 +392,17 @@
     }
    ],
    "symbol": "PSX"
+  },
+  {
+   "qty": 18,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|PYPL|2026-10-26",
+     "qty": 18,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "PYPL"
   },
   {
    "qty": 6,
@@ -366,106 +514,7 @@
  ],
  "in_flight": [
   {
-   "client_order_id": "em-f7c4e2d0-4c77-594c-8949-9c0f1b86e44b",
-   "filled_at": "",
-   "price": null,
-   "qty": 0,
-   "side": "buy",
-   "status": "accepted",
-   "symbol": "PYPL"
-  },
-  {
-   "client_order_id": "em-f866dc50-4432-5b7c-87e3-65943a459487",
-   "filled_at": "",
-   "price": null,
-   "qty": 0,
-   "side": "buy",
-   "status": "accepted",
-   "symbol": "PG"
-  },
-  {
-   "client_order_id": "em-988c8ba6-624f-5331-9dc2-697e7a1d915b",
-   "filled_at": "",
-   "price": null,
-   "qty": 0,
-   "side": "buy",
-   "status": "accepted",
-   "symbol": "PFE"
-  },
-  {
-   "client_order_id": "em-eaed0cc1-a97c-55b5-bf9d-1a492f051431",
-   "filled_at": "",
-   "price": null,
-   "qty": 0,
-   "side": "buy",
-   "status": "accepted",
-   "symbol": "MRNA"
-  },
-  {
-   "client_order_id": "em-125e155c-cd3a-5898-bddc-af5749220336",
-   "filled_at": "",
-   "price": null,
-   "qty": 0,
-   "side": "buy",
-   "status": "accepted",
-   "symbol": "MRK"
-  },
-  {
-   "client_order_id": "em-9c59add3-a673-5174-a9c2-7c8c59096d12",
-   "filled_at": "",
-   "price": null,
-   "qty": 0,
-   "side": "buy",
-   "status": "accepted",
-   "symbol": "MO"
-  },
-  {
-   "client_order_id": "em-41fa259e-db27-5b9e-b19c-e96a26fad7ae",
-   "filled_at": "",
-   "price": null,
-   "qty": 0,
-   "side": "buy",
-   "status": "accepted",
-   "symbol": "MDT"
-  },
-  {
-   "client_order_id": "em-3b955bd3-9d11-59fb-b4da-ba1bfd9b58fc",
-   "filled_at": "",
-   "price": null,
-   "qty": 0,
-   "side": "buy",
-   "status": "accepted",
-   "symbol": "MDLZ"
-  },
-  {
-   "client_order_id": "em-662604af-6932-58d9-bdcf-e5400c335d5d",
-   "filled_at": "",
-   "price": null,
-   "qty": 0,
-   "side": "buy",
-   "status": "accepted",
-   "symbol": "MCK"
-  },
-  {
-   "client_order_id": "em-d5df275e-5793-5db2-8afe-d585e2e371be",
-   "filled_at": "",
-   "price": null,
-   "qty": 0,
-   "side": "buy",
-   "status": "accepted",
-   "symbol": "MA"
-  },
-  {
-   "client_order_id": "em-56fc5c97-7173-55d5-bfd6-23296cd4c065",
-   "filled_at": "",
-   "price": null,
-   "qty": 0,
-   "side": "buy",
-   "status": "accepted",
-   "symbol": "ICE"
-  },
-  {
-   "client_order_id": "em-ea868b12-4a64-5533-b061-9102082e88ac",
+   "client_order_id": "em-58ac387f-1969-5919-aa8d-5e6b4f37f3e7",
    "filled_at": "",
    "price": null,
    "qty": 0,
@@ -474,25 +523,7 @@
    "symbol": "ELV"
   },
   {
-   "client_order_id": "em-c0bbce42-46d8-5ed7-97ea-6c68501af5ce",
-   "filled_at": "",
-   "price": null,
-   "qty": 0,
-   "side": "buy",
-   "status": "accepted",
-   "symbol": "EFX"
-  },
-  {
-   "client_order_id": "em-cfd17573-65e0-52c4-ac21-77202c476425",
-   "filled_at": "",
-   "price": null,
-   "qty": 0,
-   "side": "buy",
-   "status": "accepted",
-   "symbol": "EBAY"
-  },
-  {
-   "client_order_id": "em-8438b966-a9e4-573f-b983-1a4bd7fa84ba",
+   "client_order_id": "em-fe2bfc4c-1a63-5d19-8268-0d84423b6dea",
    "filled_at": "",
    "price": null,
    "qty": 0,
@@ -501,16 +532,25 @@
    "symbol": "DIS"
   },
   {
-   "client_order_id": "em-231764b7-07e6-531f-9ecb-4dcbc2ccc432",
+   "client_order_id": "em-54d75bcf-b7b8-5bb1-aa86-e10ced276d90",
    "filled_at": "",
    "price": null,
    "qty": 0,
    "side": "buy",
    "status": "accepted",
-   "symbol": "DG"
+   "symbol": "DE"
   },
   {
-   "client_order_id": "em-f7c9ce0f-b348-56f3-b8fe-60fb0dcc47d8",
+   "client_order_id": "em-a13c8bbf-3e3f-5a01-8059-5354239c73c8",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "CVX"
+  },
+  {
+   "client_order_id": "em-abbb98b6-6851-50c5-95bc-1ef84f15b677",
    "filled_at": "",
    "price": null,
    "qty": 0,
@@ -519,7 +559,7 @@
    "symbol": "CVS"
   },
   {
-   "client_order_id": "em-41a7eca8-05e0-599c-b2f8-960f050d9021",
+   "client_order_id": "em-ce57f535-ffaa-5e3d-9c70-69bbcdbe64d8",
    "filled_at": "",
    "price": null,
    "qty": 0,
@@ -528,22 +568,13 @@
    "symbol": "CTSH"
   },
   {
-   "client_order_id": "em-97f812e7-ad16-5784-a462-6c51d2ee2484",
+   "client_order_id": "em-adafe482-70e3-58c7-b510-3ca59a1ba29f",
    "filled_at": "",
    "price": null,
    "qty": 0,
    "side": "buy",
    "status": "accepted",
-   "symbol": "COR"
-  },
-  {
-   "client_order_id": "em-67f6ce40-93ac-5ca2-aaab-195f157152d9",
-   "filled_at": "",
-   "price": null,
-   "qty": 0,
-   "side": "buy",
-   "status": "accepted",
-   "symbol": "CNC"
+   "symbol": "CRM"
   }
  ],
  "orphans": [
@@ -572,28 +603,6 @@
  "rows": [
   {
    "fill": null,
-   "id": "etf_ibs_band|IWM|2026-10-19",
-   "ledger": null,
-   "qty": 0,
-   "rule": "etf_ibs_band",
-   "side": "sell",
-   "slip_bps": null,
-   "status": "accepted",
-   "symbol": "IWM"
-  },
-  {
-   "fill": null,
-   "id": "sw_rsi2_pullback|COP|2026-10-22",
-   "ledger": null,
-   "qty": 0,
-   "rule": "sw_rsi2_pullback",
-   "side": "sell",
-   "slip_bps": null,
-   "status": "accepted",
-   "symbol": "COP"
-  },
-  {
-   "fill": null,
    "id": "sw_rsi2_pullback|DE|2026-10-09",
    "ledger": 621.24,
    "qty": 0,
@@ -605,14 +614,47 @@
   },
   {
    "fill": null,
-   "id": "sw_rsi2_pullback|DVN|2026-10-22",
+   "id": "sw_rsi2_pullback|FCX|2026-10-13",
    "ledger": null,
    "qty": 0,
    "rule": "sw_rsi2_pullback",
    "side": "sell",
    "slip_bps": null,
    "status": "accepted",
-   "symbol": "DVN"
+   "symbol": "FCX"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|FCX|2026-10-14",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "FCX"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|FLEX|2026-10-13",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "FLEX"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|ILMN|2026-10-23",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "ILMN"
   },
   {
    "fill": null,
@@ -638,6 +680,17 @@
   },
   {
    "fill": null,
+   "id": "sw_rsi2_pullback|KLAC|2026-10-13",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "KLAC"
+  },
+  {
+   "fill": null,
    "id": "sw_rsi2_pullback|LRCX|2026-10-09",
    "ledger": 314.25,
    "qty": 0,
@@ -645,6 +698,17 @@
    "side": "buy",
    "slip_bps": null,
    "status": "expired",
+   "symbol": "LRCX"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|LRCX|2026-10-14",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
    "symbol": "LRCX"
   },
   {
@@ -660,17 +724,6 @@
   },
   {
    "fill": null,
-   "id": "sw_rsi2_pullback|MPC|2026-10-22",
-   "ledger": null,
-   "qty": 0,
-   "rule": "sw_rsi2_pullback",
-   "side": "sell",
-   "slip_bps": null,
-   "status": "accepted",
-   "symbol": "MPC"
-  },
-  {
-   "fill": null,
    "id": "sw_rsi2_pullback|NVDA|2026-10-09",
    "ledger": 228.69,
    "qty": 0,
@@ -682,25 +735,14 @@
   },
   {
    "fill": null,
-   "id": "sw_rsi2_pullback|OXY|2026-10-22",
+   "id": "sw_rsi2_pullback|NVDA|2026-10-23",
    "ledger": null,
    "qty": 0,
    "rule": "sw_rsi2_pullback",
    "side": "sell",
    "slip_bps": null,
    "status": "accepted",
-   "symbol": "OXY"
-  },
-  {
-   "fill": null,
-   "id": "sw_rsi2_pullback|PSX|2026-10-22",
-   "ledger": null,
-   "qty": 0,
-   "rule": "sw_rsi2_pullback",
-   "side": "sell",
-   "slip_bps": null,
-   "status": "accepted",
-   "symbol": "PSX"
+   "symbol": "NVDA"
   },
   {
    "fill": null,
@@ -737,6 +779,17 @@
   },
   {
    "fill": null,
+   "id": "sw_rsi2_pullback|TMO|2026-10-23",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "TMO"
+  },
+  {
+   "fill": null,
    "id": "sw_rsi2_pullback|TXN|2026-10-09",
    "ledger": 280.36,
    "qty": 0,
@@ -745,6 +798,17 @@
    "slip_bps": null,
    "status": "expired",
    "symbol": "TXN"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|WAB|2026-10-23",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "WAB"
   },
   {
    "day": "2026-10-12",
@@ -2735,6 +2799,344 @@
    "slip_bps": 51.48,
    "status": "filled",
    "symbol": "WAB"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 278.02,
+   "filled_at": "2026-10-27T13:30:22",
+   "id": "etf_ibs_band|IWM|2026-10-19",
+   "ledger": 277.97,
+   "qty": 3,
+   "rule": "etf_ibs_band",
+   "side": "sell",
+   "slip_bps": -1.8,
+   "status": "filled",
+   "symbol": "IWM"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 68.285714,
+   "filled_at": "2026-10-27T13:32:53",
+   "id": "sw_rsi2_pullback|CNC|2026-10-26",
+   "ledger": 66.78,
+   "qty": 14,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 225.47,
+   "status": "filled",
+   "symbol": "CNC"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 151.05,
+   "filled_at": "2026-10-27T13:31:03",
+   "id": "sw_rsi2_pullback|COP|2026-10-22",
+   "ledger": 151.13,
+   "qty": 6,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 5.29,
+   "status": "filled",
+   "symbol": "COP"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 330.403333,
+   "filled_at": "2026-10-27T13:32:28",
+   "id": "sw_rsi2_pullback|COR|2026-10-26",
+   "ledger": 328.975,
+   "qty": 3,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 43.42,
+   "status": "filled",
+   "symbol": "COR"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 68.492857,
+   "filled_at": "2026-10-27T13:33:00",
+   "id": "sw_rsi2_pullback|CTSH|2026-10-26",
+   "ledger": 68.3,
+   "qty": 14,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 28.24,
+   "status": "filled",
+   "symbol": "CTSH"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 92.65,
+   "filled_at": "2026-10-27T13:30:27",
+   "id": "sw_rsi2_pullback|CVS|2026-10-26",
+   "ledger": 92.5,
+   "qty": 10,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 16.22,
+   "status": "filled",
+   "symbol": "CVS"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 127.925714,
+   "filled_at": "2026-10-27T13:31:50",
+   "id": "sw_rsi2_pullback|DG|2026-10-26",
+   "ledger": 127.405,
+   "qty": 7,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 40.87,
+   "status": "filled",
+   "symbol": "DG"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 110.165556,
+   "filled_at": "2026-10-27T13:32:52",
+   "id": "sw_rsi2_pullback|DIS|2026-10-26",
+   "ledger": 110.24,
+   "qty": 9,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": -6.75,
+   "status": "filled",
+   "symbol": "DIS"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 51.5105,
+   "filled_at": "2026-10-27T13:32:19",
+   "id": "sw_rsi2_pullback|DVN|2026-10-22",
+   "ledger": 51.51,
+   "qty": 20,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": -0.1,
+   "status": "filled",
+   "symbol": "DVN"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 119.12375,
+   "filled_at": "2026-10-27T13:32:46",
+   "id": "sw_rsi2_pullback|EBAY|2026-10-26",
+   "ledger": 118.495,
+   "qty": 8,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 53.06,
+   "status": "filled",
+   "symbol": "EBAY"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 180.296,
+   "filled_at": "2026-10-27T13:32:40",
+   "id": "sw_rsi2_pullback|EFX|2026-10-26",
+   "ledger": 179.12,
+   "qty": 5,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 65.65,
+   "status": "filled",
+   "symbol": "EFX"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 431.52,
+   "filled_at": "2026-10-27T13:30:12",
+   "id": "sw_rsi2_pullback|ELV|2026-10-26",
+   "ledger": 431.63,
+   "qty": 2,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": -2.55,
+   "status": "filled",
+   "symbol": "ELV"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 161.01,
+   "filled_at": "2026-10-27T13:31:26",
+   "id": "sw_rsi2_pullback|ICE|2026-10-26",
+   "ledger": 159.77,
+   "qty": 6,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 77.61,
+   "status": "filled",
+   "symbol": "ICE"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 612.01,
+   "filled_at": "2026-10-27T13:31:35",
+   "id": "sw_rsi2_pullback|MA|2026-10-26",
+   "ledger": 611.12,
+   "qty": 1,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 14.56,
+   "status": "filled",
+   "symbol": "MA"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 999.99,
+   "filled_at": "2026-10-27T13:30:15",
+   "id": "sw_rsi2_pullback|MCK|2026-10-26",
+   "ledger": 991.66,
+   "qty": 1,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 84.0,
+   "status": "filled",
+   "symbol": "MCK"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 62.478,
+   "filled_at": "2026-10-27T13:31:51",
+   "id": "sw_rsi2_pullback|MDLZ|2026-10-26",
+   "ledger": 62.5,
+   "qty": 15,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": -3.52,
+   "status": "filled",
+   "symbol": "MDLZ"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 94.37,
+   "filled_at": "2026-10-27T13:30:38",
+   "id": "sw_rsi2_pullback|MDT|2026-10-26",
+   "ledger": 94.155,
+   "qty": 10,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 22.83,
+   "status": "filled",
+   "symbol": "MDT"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 72.841539,
+   "filled_at": "2026-10-27T13:32:53",
+   "id": "sw_rsi2_pullback|MO|2026-10-26",
+   "ledger": 72.55,
+   "qty": 13,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 40.18,
+   "status": "filled",
+   "symbol": "MO"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 465.43,
+   "filled_at": "2026-10-27T13:32:07",
+   "id": "sw_rsi2_pullback|MPC|2026-10-22",
+   "ledger": 466.92,
+   "qty": 2,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 31.91,
+   "status": "filled",
+   "symbol": "MPC"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 140.335714,
+   "filled_at": "2026-10-27T13:31:49",
+   "id": "sw_rsi2_pullback|MRK|2026-10-26",
+   "ledger": 140.07,
+   "qty": 7,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 18.97,
+   "status": "filled",
+   "symbol": "MRK"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 192.404,
+   "filled_at": "2026-10-27T13:32:18",
+   "id": "sw_rsi2_pullback|MRNA|2026-10-26",
+   "ledger": 193.235,
+   "qty": 5,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": -43.0,
+   "status": "filled",
+   "symbol": "MRNA"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 63.904375,
+   "filled_at": "2026-10-27T13:32:38",
+   "id": "sw_rsi2_pullback|OXY|2026-10-22",
+   "ledger": 63.71,
+   "qty": 16,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": -30.51,
+   "status": "filled",
+   "symbol": "OXY"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 29.562424,
+   "filled_at": "2026-10-27T13:33:00",
+   "id": "sw_rsi2_pullback|PFE|2026-10-26",
+   "ledger": 29.52,
+   "qty": 33,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 14.37,
+   "status": "filled",
+   "symbol": "PFE"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 159.4,
+   "filled_at": "2026-10-27T13:31:23",
+   "id": "sw_rsi2_pullback|PG|2026-10-26",
+   "ledger": 158.755,
+   "qty": 6,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 40.63,
+   "status": "filled",
+   "symbol": "PG"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 286.22,
+   "filled_at": "2026-10-27T13:31:46",
+   "id": "sw_rsi2_pullback|PSX|2026-10-22",
+   "ledger": 286.45,
+   "qty": 3,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 8.03,
+   "status": "filled",
+   "symbol": "PSX"
+  },
+  {
+   "day": "2026-10-27",
+   "fill": 55.74,
+   "filled_at": "2026-10-27T13:31:27",
+   "id": "sw_rsi2_pullback|PYPL|2026-10-26",
+   "ledger": 55.41,
+   "qty": 18,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 59.56,
+   "status": "filled",
+   "symbol": "PYPL"
   }
  ],
  "summary": {
@@ -2746,32 +3148,32 @@
     "n": 8
    },
    "etf_ibs_band": {
-    "mean_bps": 0.68,
-    "n": 5
+    "mean_bps": 0.27,
+    "n": 6
    },
    "sw_gap_down_reversal": {
     "mean_bps": 16.43,
     "n": 48
    },
    "sw_rsi2_pullback": {
-    "mean_bps": 27.77,
-    "n": 91
+    "mean_bps": 28.72,
+    "n": 116
    }
   },
-  "fills": 152,
-  "in_flight": 20,
-  "mean_bps": 21.47,
-  "median_bps": 13.96,
+  "fills": 178,
+  "in_flight": 7,
+  "mean_bps": 22.84,
+  "median_bps": 14.85,
   "orders": {
-   "filled": 154,
-   "sent": 190,
+   "filled": 180,
+   "sent": 206,
    "since": "2026-10-12",
    "unfilled": 10,
-   "working": 26
+   "working": 16
   },
   "orphans": 2,
-  "unfilled": 16,
+  "unfilled": 19,
   "worst_bps": 414.27
  },
- "updated": "2026-10-26T20:11:43+00:00"
+ "updated": "2026-10-27T20:12:19+00:00"
 }
