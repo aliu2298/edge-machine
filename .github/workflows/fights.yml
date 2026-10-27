@@ -1,0 +1,48 @@
+name: Fights paper research
+on:
+  schedule:
+    # Hourly. Entry is replayed from minute candles after the fact, so no window stamp is needed and a
+    # missed run only delays an entry (minute candles are served for about a week).
+    - cron: '23 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: fights-research
+  cancel-in-progress: false
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Tests
+        run: |
+          python3 test_fights_split.py
+          python3 test_mentions_split.py
+      - name: Boxing and UFC cheap-side lanes (Sandbox paper, 2026-10-26): entry an hour before each scheduled start, trade-print fills
+        run: python3 fights_split.py
+      - name: Save records
+        run: |
+          set -euo pipefail
+          python3 -c 'import json; json.load(open("data/boxing_cheap_dog_ledger.json")); json.load(open("data/ufc_dog_ledger.json"))'
+          git config user.name "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+          git add data/boxing_cheap_dog_ledger.json data/ufc_dog_ledger.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Fights paper research observations"
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              # a push by the workflow token does not start the page build: ask for it so the page carries this ledger
+              GH_TOKEN=${{ github.token }} gh workflow run sandbox-tracker.yml --ref main || true
+              exit 0
+            fi
+            git fetch origin main
+            # Only this workflow owns these two files.
+            git rebase origin/main
+          done
+          exit 1

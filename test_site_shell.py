@@ -41,7 +41,7 @@ _NAV_HREFS = (
     'href="./sandbox.html#method"',
 )
 _NAV_LABELS = ["Archives", "Production", "Trading", "NBA", "NFL", "Soccer", "Tennis", "Cricket",
-               "Crypto", "Commodities", "Econ Daily", "Finance Daily", "Culture", "Method"]
+               "Crypto", "Commodities", "Econ Daily", "Finance Daily", "Culture", "Fights", "Method"]
 _CURRENT = {
     "sandbox": 'href="./sandbox.html" aria-current="page"',
     "production": 'href="./production.html" aria-current="page"',
