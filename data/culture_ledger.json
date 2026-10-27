@@ -2,11 +2,11 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-27T21:00:22.217289+00:00",
-   "last_success": "2026-10-27T21:00:22.217289+00:00",
+   "last_run": "2026-10-27T22:00:20.640695+00:00",
+   "last_success": "2026-10-27T22:00:20.640695+00:00",
    "observations": {
-    "at": "2026-10-27T21:00:22.217289+00:00",
-    "events": 949,
+    "at": "2026-10-27T22:00:20.640695+00:00",
+    "events": 958,
     "reasons": {},
     "retired": "2026-10-24"
    },
@@ -548,11 +548,11 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-27T21:00:22.217289+00:00",
-   "last_success": "2026-10-27T21:00:22.217289+00:00",
+   "last_run": "2026-10-27T22:00:20.640695+00:00",
+   "last_success": "2026-10-27T22:00:20.640695+00:00",
    "observations": {
-    "at": "2026-10-27T21:00:22.217289+00:00",
-    "events": 949,
+    "at": "2026-10-27T22:00:20.640695+00:00",
+    "events": 958,
     "reasons": {},
     "retired": "2026-10-24"
    },
@@ -905,19 +905,19 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-27T21:00:22.217289+00:00",
-   "last_success": "2026-10-27T21:00:22.217289+00:00",
+   "last_run": "2026-10-27T22:00:20.640695+00:00",
+   "last_success": "2026-10-27T22:00:20.640695+00:00",
    "observations": {
-    "at": "2026-10-27T21:00:22.217289+00:00",
-    "events": 949,
+    "at": "2026-10-27T22:00:20.640695+00:00",
+    "events": 958,
     "news_guard": [],
     "reasons": {
-     "NO under 0.60 (floor 2026-10-26)": 2,
-     "already near-certain (under 10c or over 90c)": 8,
-     "edge 5c+": 4,
+     "NO under 0.60 (floor 2026-10-26)": 1,
+     "already near-certain (under 10c or over 90c)": 9,
+     "edge 5c+": 5,
      "edge under 5c": 3,
      "monthly or company series (excluded 2026-10-26)": 76,
-     "no quote or spread too wide": 21
+     "no quote or spread too wide": 20
     }
    },
    "picks": [
@@ -2260,11 +2260,11 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-27T21:00:22.217289+00:00",
-   "last_success": "2026-10-27T21:00:22.217289+00:00",
+   "last_run": "2026-10-27T22:00:20.640695+00:00",
+   "last_success": "2026-10-27T22:00:20.640695+00:00",
    "observations": {
-    "at": "2026-10-27T21:00:22.217289+00:00",
-    "events": 949,
+    "at": "2026-10-27T22:00:20.640695+00:00",
+    "events": 958,
     "reasons": {
      "edge 5c+": 4,
      "edge under 5c": 1,
@@ -2959,7 +2959,7 @@
    ]
   },
   "UFO / UAP": {
-   "at": "2026-10-27T15:00:19.729361+00:00",
+   "at": "2026-10-27T22:00:20.640695+00:00",
    "days": []
   },
   "Uranium": {

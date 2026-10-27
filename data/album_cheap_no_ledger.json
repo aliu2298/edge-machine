@@ -292,6 +292,37 @@
    "status": "open",
    "traded_to_entry": 0.0,
    "word": "Above 8K"
+  },
+  {
+   "bid": 0.03,
+   "book_at": "2026-10-27T22:00:46.491137+00:00",
+   "book_size": 0,
+   "entry_at": "2026-10-27T21:44:00+00:00",
+   "event": "KXALBUMEQUIV-HEAVYCROWN26OCT29",
+   "id": "KXALBUMEQUIV-HEAVYCROWN26OCT29-27K",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.12
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.18
+    }
+   ],
+   "logged": "2026-10-27T22:00:46.491137+00:00",
+   "payout": null,
+   "price": 0.06,
+   "side": "no",
+   "spread": 0.03,
+   "spread_cost": null,
+   "status": "open",
+   "traded_to_entry": 0.0,
+   "word": "Above 27K"
   }
  ],
  "error": null,
@@ -314,14 +345,14 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:50.419359+00:00"
  },
  "lane": "album_cheap_no",
- "last_success": "2026-10-27T21:00:47.923495+00:00",
+ "last_success": "2026-10-27T22:00:46.491137+00:00",
  "observations": {
-  "at": "2026-10-27T21:00:47.923495+00:00",
-  "entered": 0,
+  "at": "2026-10-27T22:00:46.491137+00:00",
+  "entered": 1,
   "events": 16,
   "filled": 0,
   "skipped": 0,
-  "waiting": 1
+  "waiting": 0
  },
  "skips": {
   "KXALBUMEQUIV-BLEACH26NOV05-10K": {
