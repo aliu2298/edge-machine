@@ -1939,6 +1939,21 @@
    "note": "A Challenger player priced 15-30c (spread 5c or less) an hour before the match, with a split resting sell: half at 2x, half at 3x of the ask paid. Start from the first in-play price movement, as challenger_dog_tp30.",
    "registered": "2026-10-27T04:18:46.728452+00:00",
    "replayed": {
+    "KXATPCHALLENGERMATCH-26OCT25ARUBER": 0,
+    "KXATPCHALLENGERMATCH-26OCT25BARHEC": "before the lane's first night",
+    "KXATPCHALLENGERMATCH-26OCT25BINHUR": 0,
+    "KXATPCHALLENGERMATCH-26OCT25BINJIA": "before the lane's first night",
+    "KXATPCHALLENGERMATCH-26OCT25BLAHAM": 0,
+    "KXATPCHALLENGERMATCH-26OCT25BOBKEL": 0,
+    "KXATPCHALLENGERMATCH-26OCT25BORDEM": 0,
+    "KXATPCHALLENGERMATCH-26OCT25BOUDOM": 0,
+    "KXATPCHALLENGERMATCH-26OCT25BROBLA": 0,
+    "KXATPCHALLENGERMATCH-26OCT25CASKUS": "before the lane's first night",
+    "KXATPCHALLENGERMATCH-26OCT25CASPEL": 0,
+    "KXATPCHALLENGERMATCH-26OCT25CASROD": 0,
+    "KXATPCHALLENGERMATCH-26OCT25CATKUZ": "before the lane's first night",
+    "KXATPCHALLENGERMATCH-26OCT25CLAHUE": 0,
+    "KXATPCHALLENGERMATCH-26OCT25DELLEI": "before the lane's first night",
     "KXATPCHALLENGERMATCH-26OCT25DELMCD": 0,
     "KXATPCHALLENGERMATCH-26OCT25ECHKAO": 0,
     "KXATPCHALLENGERMATCH-26OCT25FELBOU": 0,
@@ -2028,6 +2043,9 @@
     "KXATPCHALLENGERMATCH-26OCT26SUNDEM": 1,
     "KXATPCHALLENGERMATCH-26OCT26TOBSAL": 1,
     "KXATPCHALLENGERMATCH-26OCT26YOUOST": 0,
+    "KXATPCHALLENGERMATCH-26OCT27ATMMAT": 0,
+    "KXATPCHALLENGERMATCH-26OCT27DELBIN": 0,
+    "KXATPCHALLENGERMATCH-26OCT27HONYIB": 1,
     "KXATPCHALLENGERMATCH-26OCT27ZHAMAY": 0
    },
    "series": [
@@ -2492,6 +2510,73 @@
      "unreachable": false,
      "variant": "t1h_split",
      "won": false
+    },
+    {
+     "cost": 0.19033,
+     "entry": 0.18,
+     "entry_i": 672,
+     "entry_ts": 1793072580,
+     "event": "KXATPCHALLENGERMATCH-26OCT27HONYIB",
+     "exit": 1.0,
+     "exit_i": 839,
+     "exit_key": "hold",
+     "exit_ts": 1793082600,
+     "hours": 1,
+     "night": "2026-10-27",
+     "profit": 0.80967,
+     "reason": "settled",
+     "roi": 4.254,
+     "side": "yes",
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1793076180,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26OCT27HONYIB-HON",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": true
+    },
+    {
+     "cost": 0.19033,
+     "entry": 0.18,
+     "entry_i": 672,
+     "entry_ts": 1793072580,
+     "event": "KXATPCHALLENGERMATCH-26OCT27HONYIB",
+     "exit": null,
+     "exit_i": null,
+     "exit_key": "split",
+     "exit_ts": 1793080560,
+     "filled_2x": true,
+     "filled_3x": true,
+     "hours": 1,
+     "legs": [
+      {
+       "filled_ts": 1793078340,
+       "multiple": 2.0,
+       "target": 0.36
+      },
+      {
+       "filled_ts": 1793080560,
+       "multiple": 3.0,
+       "target": 0.54
+      }
+     ],
+     "night": "2026-10-27",
+     "profit": 0.25548,
+     "reason": "split",
+     "roi": 1.3423,
+     "side": "yes",
+     "side_won": true,
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1793076180,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26OCT27HONYIB-HON",
+     "unreachable": false,
+     "variant": "t1h_split",
+     "won": true
     }
    ],
    "watch": false
@@ -61827,7 +61912,7 @@
    "watch": false
   }
  },
- "last_run": "2026-10-27T06:01:16.288007+00:00",
+ "last_run": "2026-10-27T08:00:17.205656+00:00",
  "runs": [
   {
    "at": "2026-10-25T04:00:26.997081+00:00",
@@ -61923,6 +62008,12 @@
     "challenger_dog_tp30": 33,
     "nba_ml_dog_tp50": 11,
     "nba_tt_cheap_tp30": 132
+   }
+  },
+  {
+   "at": "2026-10-27T08:00:17.205656+00:00",
+   "new": {
+    "challenger_cheap_split": 2
    }
   }
  ],
