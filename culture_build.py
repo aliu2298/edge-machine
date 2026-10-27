@@ -32,6 +32,20 @@ def amendment_split(picks):
     return per_contract(before), per_contract(after), sum(r["status"] == "open" for r in before)
 
 
+def revival_note(key):
+    """The revived lane's short note (2026-10-26): its day, a fresh record, and when it is read again."""
+    r = K.REVIVED[key]
+    return f"revived {r['on']} · fresh record · review at {r['review']}"
+
+
+def history_split(key, picks):
+    """A revived lane: (its fresh record, its pre-retirement history, history still open)."""
+    fresh = K.fresh(key, picks)
+    ids = {id(r) for r in fresh}
+    old = [r for r in picks if id(r) not in ids]
+    return per_contract(fresh), per_contract(old), sum(r["status"] == "open" for r in old)
+
+
 def retired_note(key):
     gone = K.RETIRED[key]
     return (f"Retired {gone['on']} at {gone['at']}: {gone['reason']}. No new entries from that day; its "
@@ -49,11 +63,17 @@ def per_contract(picks):
 
 
 def _row(key, lane, now=None, prod=None):
-    picks = lane["picks"]
+    back = now is not None and K.revived(key, now)
+    # A revived lane is judged on its fresh record only (2026-10-26); the rows before it are history.
+    picks = K.fresh(key, lane["picks"]) if back else lane["picks"]
     settled = [r for r in picks if r["status"] != "open"]
     binary = [r for r in settled if r["status"] in ("won", "lost")]
     gone = now is not None and K.retired(key, now)
     note = K.RULES[key] + (" " + retired_note(key) if gone else "")
+    if back:
+        g, r = K.RETIRED.get(key) or {}, K.REVIVED[key]
+        note += (f" {revival_note(key).capitalize()}: {r['why']}. It had been retired {g.get('on')} at {g.get('at')}"
+                 f" ({g.get('reason')}); those rows stay as its pre-retirement history.") if g else ""
     prod = production(now) if prod is None else prod
     return dict(name=key, sport=KEY, meta={"label": K.LANES[key], "note": note},
                 prod=key in prod, pair=prod.get(key), open=sum(r["status"] == "open" for r in picks), since=None,
@@ -76,7 +96,8 @@ def pooled(state, now=None):
             continue                    # a Sandbox record: the Production lane is counted on its own
         if now is not None and K.retired(key, now):
             continue
-        for r in state["lanes"][key]["picks"]:
+        picks = state["lanes"][key]["picks"]
+        for r in (K.fresh(key, picks) if now is not None and K.revived(key, now) else picks):
             if r["id"] not in first or r["logged"] < first[r["id"]]["logged"]:
                 first[r["id"]] = r
     settled = [r for r in first.values() if r["status"] != "open"]
@@ -134,7 +155,15 @@ def build(state=None, now=None):
         if guarded:
             txt += ("; " if txt else "") + "; ".join(f"{g.get('word')}: {g.get('reason')}" for g in guarded[:8])
         extra = ""
-        if row["name"] == CP.SOURCE and not CP.listed(now):
+        if K.revived(row["name"], now):
+            g = K.RETIRED.get(row["name"]) or {}
+            rec = lambda r: (f"{r[0]}/{r[1]} won, {r[2] * 100:+.1f}% after fees per contract".replace("-", "−")
+                             if r[1] and r[2] is not None else "nothing settled yet")
+            new, old, old_open = history_split(row["name"], lane["picks"])
+            extra = (f'<p class="sm"><b>{e(revival_note(row["name"]).capitalize())}</b>. Revived record: {e(rec(new))}. '
+                     f'Pre-retirement history (retired {e(g.get("on", ""))} at {e(g.get("at", ""))}, not counted): '
+                     f'{e(rec(old))}{f", {old_open} still open" if old_open else ""}.</p>')
+        elif row["name"] == CP.SOURCE and not CP.listed(now):
             rec = lambda r: (f"{r[0]}/{r[1]} won, {r[2] * 100:+.1f}% after fees per contract".replace("-", "−")
                              if r[1] and r[2] is not None else "nothing settled yet")
             pre, post, pre_open = amendment_split(lane["picks"])
@@ -175,6 +204,12 @@ def build(state=None, now=None):
                  '</p>' +
                  (f'<p class="sm">Retired by hand: no new entries, their rows stay and their open picks '
                   f'still settle.</p><ul class="sm">{retired_html}</ul>' if gone else '') +
+                 "".join(f'<p class="sm">{e(K.LANES[k])}, {e(revival_note(k))}: retired {e(K.RETIRED[k]["on"])} at '
+                         f'{e(K.RETIRED[k]["at"])}, back in the Sandbox because {e(K.REVIVED[k]["why"])}. Its Rotten '
+                         'Tomatoes snapshot collector runs again with it, hourly. From the revival a rung whose '
+                         'current score is within 1 point of its line is skipped. Only entries logged from the '
+                         'revival count; the rows before it are shown as its pre-retirement history.</p>'
+                         for k in K.REVIVED if K.revived(k, now)) +
                  (f'<p class="sm">Trump mentions, amended {e(K.AMENDED)}: a NO is refused when Kalshi\'s YES mid '
                   'is over 0.50 and the model\'s P(said) under 0.25 (the news guard, for a word that has just '
                   'become news and so reads low in an 84-day rate; prompted by the lane\'s five settled losses '
@@ -238,6 +273,9 @@ def build(state=None, now=None):
         elif row is not None and row["name"] == CP.SOURCE and not CP.listed(now):
             chip = (f'<span class="sig x" data-verdict="removed" title="Back in the Sandbox on its whole record, '
                     f'amended {K.AMENDED_2}">Removed from Production · {CP.DEMOTED_ON}</span>')
+        elif row is not None and K.revived(row["name"], now):
+            chip = (f'<span class="sig w" data-verdict="revived" title="{e(K.REVIVED[row["name"]]["why"])}">'
+                    f'Observing · paper · {e(revival_note(row["name"]))}</span>')
         else:
             chip = (f'<span class="sig w">Production · since {CP.MOVED_ON}</span>' if prod
                     else '<span class="sig w">Observing · paper</span>')
