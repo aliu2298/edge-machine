@@ -93,14 +93,20 @@ def split_hold(L, hours=None):
     return dict(entries=len({(t["event"], t["ticker"], t["side"], t["hours"]) for t in (sp or hd)}), settled=len(hd),
                 won=h["won"], filled_2x=sum(1 for t in sp if t.get("filled_2x")),
                 filled_3x=sum(1 for t in sp if t.get("filled_3x")), split=a["roi"], hold=h["roi"], z=a["z"],
-                n_split=len(sp))
+                n_split=len(sp), spread=(lambda xs: sum(xs) / len(xs) if xs else None)(
+                    [t["spread"] for t in (sp or hd) if t.get("spread") is not None]))
 
 
 def ordered(lanes):
     return sorted(lanes, key=lambda L: (not L.get("first"), list(lanes).index(L)))
 
 
-def summary(lanes):
+def _spread(x):
+    return "—" if x is None else f"{x:.2f}"
+
+
+def summary(lanes, spread=False):
+    """One row per lane; with `spread`, the average spread paid at entry (recorded from 2026-10-27)."""
     rows = []
     for L in lanes:
         r = split_hold(L)
@@ -108,10 +114,13 @@ def summary(lanes):
                     f'<td class="num">{r["entries"]}</td><td class="num">{r["settled"]}</td><td class="num">{r["won"]}</td>'
                     f'<td class="num">{_pct(r["split"], sign=True) if r["n_split"] else "—"}</td>'
                     f'<td class="num">{_pct(r["hold"], sign=True)}</td>'
-                    f'<td class="num">{r["filled_2x"]} / {r["filled_3x"]}</td><td>{esc(MS.status(r["settled"]))}</td></tr>')
+                    f'<td class="num">{r["filled_2x"]} / {r["filled_3x"]}</td>'
+                    + (f'<td class="num">{_spread(r["spread"])}</td>' if spread else "")
+                    + f'<td>{esc(MS.status(r["settled"]))}</td></tr>')
     return ('<div class="tbl"><table class="chaos-summary"><tr><th>Lane</th><th class="num">Entries</th>'
             '<th class="num">Settled</th><th class="num">Won</th><th class="num">Split ROI</th><th class="num">Hold ROI</th>'
-            '<th class="num">Legs filled 2x / 3x</th><th>Status</th></tr>' + "".join(rows) + "</table></div>")
+            '<th class="num">Legs filled 2x / 3x</th>' + ('<th class="num">Avg spread paid</th>' if spread else "")
+            + '<th>Status</th></tr>' + "".join(rows) + "</table></div>")
 
 
 def split_table(L):
@@ -142,6 +151,30 @@ def lane_html(L):
 <details class="section-disclosure"><summary><b>Trades</b><span>latest 30 entries · split, T target, S stop, H held to settlement</span></summary>{trade_list(L)}</details></details>"""
 
 
+# The tennis chaos lanes, shown on the Tennis page as its cheap-side section (2026-10-27, Olu: "On the
+# tennis page I don't see the cheap strategy"). The same ledger rows as the Chaos section, read twice,
+# never copied: challenger_cheap_split first.
+TENNIS = ("challenger_cheap_split", "challenger_dog_tp30", "atp_coinflip_tp30")
+
+
+def tennis_section(state=None):
+    """The Tennis page's "Cheap side + resting take-profit" section, from data/chaos_ledger.json."""
+    if state is None:
+        state = C.load() if os.path.exists(C.PATH) else C.empty()
+    have = state.get("lanes") or {}
+    lanes = [have[k] for k in TENNIS if k in have]
+    body = (summary(lanes, spread=True) + "".join(lane_html(L) for L in lanes)) if lanes else (
+        '<p class="sm mut">No tennis cheap-side lane has replayed yet.</p>')
+    return f"""<section id="cheap-side">
+<h2>Cheap side + resting take-profit</h2>
+<ul class="sm"><li>Buy the cheap player about an hour before the match, at the real ask.</li>
+<li>Rest a split sell: half at 2x, half at 3x.</li><li>A fill counts only on a traded print.</li>
+<li>Every lane is shown next to the same entries held.</li></ul>
+<p class="sm mut">Sandbox, paper only, replayed nightly from Kalshi's 1-minute candles: review at {C.REVIEW_N} settled, decide at {C.PROMOTE_N}. These are the tennis lanes of the Chaos section on the <a href="./sandbox.html#chaos">Sandbox page</a>, the same records. The average spread paid is recorded from 2026-10-27.</p>
+{body}
+</section>"""
+
+
 def section(state=None):
     if state is None:
         state = C.load() if os.path.exists(C.PATH) else C.empty()
@@ -158,5 +191,6 @@ def section(state=None):
 <p class="sm">A lane buys before the event starts, at a set time before it (1 hour before, and a 24-hour variant), at the ask on the first tight quote (spread 3c or less, 5c for the cheap-side lane). The standard exit is the split: half the stake rests at 2x the entry ask and half at 3x, each capped at 0.98, and a leg fills only when a trade prints at or above it; a leg not filled is held to Kalshi's settlement. Nothing is bought during the event. The start comes from the lane's own kickoff source where it has one, otherwise from the price path.</p>
 <p class="sm">Other exits, from the same entry: a resting limit sell at +20%, +30%, +50% or +100% ROI after fees, each with no stop or a −50% stop. Those sells fill when the bid trades 1c through the limit inside a minute; a minute touching both the stop and the limit takes the stop. Fees: taker 0.07·p(1−p) on entry and on a stop, maker 0.0175·p(1−p) on a limit exit or a filled split leg.</p>
 <p class="sm">The control is the same entry held to settlement. A variant is flagged for review at {C.REVIEW_N} trades; promotion needs {C.PROMOTE_N} AND a better ROI than its hold control. z is clustered by night, never below the independent-trades z. Every lane's record starts fresh from its first replayed night and never inherits an older lane's rows; the split was added to the older lanes on 2026-10-27 by replaying their recorded entries, nothing edited or removed.</p></details>
+<p class="sm">The tennis lanes are also the cheap-side section of the <a href="./tennis.html#cheap-side">Tennis page</a> (the same records).</p>
 <p class="sm mut">Last replay {esc(last or 'not yet')}{(' · ' + esc(state['error'])) if state.get('error') else ''}.</p>
 </section>"""
