@@ -10,6 +10,7 @@ import html as _h
 import os
 
 import chaos_replay as C
+import mentions_split as MS
 
 
 def esc(x):
@@ -35,9 +36,11 @@ FLAG_WORDS = {"too early": "too early", "review": "review (10+)", "promotable": 
               "control": "control"}
 
 
-def variant_table(L):
+def variant_table(L, skip=()):
     rows = []
     for key, v in C.lane_table(L).items():
+        if C.split_key(key)[1] in skip:
+            continue
         a, c = v["lane"], v["control"]
         ctl = "the control" if c is None else f"{_pct(c['roi'], sign=True)} · {c['n']}"
         rows.append(f'<tr data-variant="{esc(key)}"><td><b>{esc(C.variant_label(key))}</b></td>'
@@ -56,7 +59,7 @@ def variant_table(L):
 def _cell(t):
     if t is None:
         return "—"
-    word = {"target": "T", "stop": "S", "settled": "H"}[t["reason"]]
+    word = {"target": "T", "stop": "S", "settled": "H", "split": "split"}[t["reason"]]
     return f"{t['roi'] * 100:+.0f}% {word}"
 
 
@@ -65,7 +68,7 @@ def trade_list(L, limit=30):
     for t in L.get("trades") or []:
         groups.setdefault((t["event"], t["ticker"], t["side"], t["hours"]), {})[t["exit_key"]] = t
     recent = sorted(groups.items(), key=lambda kv: next(iter(kv[1].values()))["entry_ts"], reverse=True)[:limit]
-    keys = list(C.EXITS)
+    keys = [C.SPLIT] + [k for k in (L.get("exits") or C.EXITS) if k != C.SPLIT]
     head = ('<tr><th>Night</th><th>Market</th><th>Side</th><th class="num">Entry</th>'
             + "".join(f'<th class="num">{esc(k.replace("_stop50", "+stop"))}</th>' for k in keys) + "</tr>")
     rows = []
@@ -74,35 +77,86 @@ def trade_list(L, limit=30):
         rows.append(f'<tr><td>{esc(first["night"])}</td><td>{esc(ticker.split("-", 1)[-1])}</td><td>{esc(side.upper())}</td>'
                     f'<td class="num">{hours}h before · {_clock(first["entry_ts"])} · {first["entry"] * 100:.0f}c</td>'
                     + "".join(f'<td class="num">{esc(_cell(by.get(k)))}</td>' for k in keys) + "</tr>")
-    body = "".join(rows) or '<tr><td colspan="12" class="mut">No trade yet.</td></tr>'
+    body = "".join(rows) or f'<tr><td colspan="{4 + len(keys)}" class="mut">No trade yet.</td></tr>'
     return f'<div class="tbl"><table>{head}{body}</table></div>'
+
+
+def _by(L, exit_key, hours=None):
+    return [t for t in L.get("trades") or [] if t["exit_key"] == exit_key and (hours is None or t["hours"] == hours)]
+
+
+def split_hold(L, hours=None):
+    """The cheap-side split v the same entries held: entries, won (held), legs filled 2x / 3x, split ROI,
+    hold ROI (each after fees, sum of profit over sum of cost), split z by night."""
+    sp, hd = _by(L, C.SPLIT, hours), _by(L, "hold", hours)
+    a, h = C.stats(sp), C.stats(hd)
+    return dict(entries=len({(t["event"], t["ticker"], t["side"], t["hours"]) for t in (sp or hd)}), settled=len(hd),
+                won=h["won"], filled_2x=sum(1 for t in sp if t.get("filled_2x")),
+                filled_3x=sum(1 for t in sp if t.get("filled_3x")), split=a["roi"], hold=h["roi"], z=a["z"],
+                n_split=len(sp))
+
+
+def ordered(lanes):
+    return sorted(lanes, key=lambda L: (not L.get("first"), list(lanes).index(L)))
+
+
+def summary(lanes):
+    rows = []
+    for L in lanes:
+        r = split_hold(L)
+        rows.append(f'<tr data-lane="{esc(L["id"])}"><td><b>{esc(L.get("label") or L["id"])}</b></td>'
+                    f'<td class="num">{r["entries"]}</td><td class="num">{r["settled"]}</td><td class="num">{r["won"]}</td>'
+                    f'<td class="num">{_pct(r["split"], sign=True) if r["n_split"] else "—"}</td>'
+                    f'<td class="num">{_pct(r["hold"], sign=True)}</td>'
+                    f'<td class="num">{r["filled_2x"]} / {r["filled_3x"]}</td><td>{esc(MS.status(r["settled"]))}</td></tr>')
+    return ('<div class="tbl"><table class="chaos-summary"><tr><th>Lane</th><th class="num">Entries</th>'
+            '<th class="num">Settled</th><th class="num">Won</th><th class="num">Split ROI</th><th class="num">Hold ROI</th>'
+            '<th class="num">Legs filled 2x / 3x</th><th>Status</th></tr>' + "".join(rows) + "</table></div>")
+
+
+def split_table(L):
+    """SPLIT v HOLD first, a row per entry time."""
+    rows = []
+    for h in L.get("entry_hours") or C.ENTRY_HOURS:
+        r = split_hold(L, h)
+        rows.append(f'<tr><td><b>{esc(C.variant_label(C.vkey(h, C.SPLIT)))}</b></td><td class="num">{r["entries"]}</td><td class="num">{r["won"]}</td>'
+                    f'<td class="num">{r["filled_2x"]} / {r["filled_3x"]}</td>'
+                    f'<td class="num">{_pct(r["split"], sign=True) if r["n_split"] else "—"}</td>'
+                    f'<td class="num">{_pct(r["hold"], sign=True)}</td><td class="num">{_num(r["z"], 1, "", 2)}</td></tr>')
+    return ('<div class="tbl"><table class="chaos-split"><tr><th>Entry</th><th class="num">Entries</th><th class="num">Won</th>'
+            '<th class="num">Legs filled 2x / 3x</th><th class="num">Split ROI</th><th class="num">Hold ROI</th>'
+            '<th class="num">Split z (by night)</th></tr>' + "".join(rows) + "</table></div>")
 
 
 def lane_html(L):
     trades = L.get("trades") or []
     entries = len({(t["event"], t["ticker"], t["side"], t["hours"]) for t in trades})
     hours = ", ".join(f"{h}h" for h in L.get("entry_hours") or C.ENTRY_HOURS)
+    others = [k for k in (L.get("exits") or C.EXITS) if k not in (C.SPLIT, "hold")]
+    pending = C.SPLIT in (L.get("exits") or ()) and not _by(L, C.SPLIT) and trades
     return f"""<details class="section-disclosure" data-lane="{esc(L['id'])}" open><summary><b>{esc(L.get('label') or L['id'])}</b><span>{len(L.get('replayed') or {})} events · {entries} entries · fresh record since {esc(L.get('since'))}</span></summary>
-<p class="sm">{esc(L.get('note') or '')}{(' <b>Headline: ' + esc(C.exit_label(L['headline'])) + ' v hold.</b>') if L.get('headline') else ''}{(' <b>WATCH lane.</b>') if L.get('watch') else ''}{(' <b>' + esc(L['caution']) + '</b>') if L.get('caution') else ''} Bought {esc(hours)} before the start with a resting limit sell. Series {esc(', '.join(L.get('series') or []))}.</p>
-{variant_table(L)}
-<details class="section-disclosure"><summary><b>Trades</b><span>latest 30 entries · T target, S stop, H held to settlement</span></summary>{trade_list(L)}</details></details>"""
+<p class="sm">{esc(L.get('note') or '')}{(' <b>WATCH lane.</b>') if L.get('watch') else ''}{(' <b>' + esc(L['caution']) + '</b>') if L.get('caution') else ''} Bought {esc(hours)} before the start. Series {esc(', '.join(L.get('series') or []))}. Review at {C.REVIEW_N}, decide at {C.PROMOTE_N}.</p>
+<p class="sm"><b>Split v hold</b>{(' · the split joined this lane on 2026-10-27 and is being added to its earlier entries, newest events first') if pending else ''}</p>
+{split_table(L)}
+{f'<details class="section-disclosure"><summary><b>Other exits</b><span>{len(others)} variants · the original targets and stops, each against its hold control</span></summary>{variant_table(L, skip=(C.SPLIT,))}</details>' if others else ''}
+<details class="section-disclosure"><summary><b>Trades</b><span>latest 30 entries · split, T target, S stop, H held to settlement</span></summary>{trade_list(L)}</details></details>"""
 
 
 def section(state=None):
     if state is None:
         state = C.load() if os.path.exists(C.PATH) else C.empty()
-    lanes = list((state.get("lanes") or {}).values())
+    lanes = ordered(list((state.get("lanes") or {}).values()))
     last = state.get("last_run")
-    body = "".join(lane_html(L) for L in lanes) or (
+    body = (summary(lanes) + "".join(lane_html(L) for L in lanes)) if lanes else (
         '<p class="sm mut">No chaos lane is registered yet. The engine is built; each lane plugs in as a config '
         '(chaos_lanes.py) and starts a fresh record from its first replayed night.</p>')
     return f"""<section id="chaos">
 <h2>Chaos</h2>
-<p class="shell-kicker">Take-profit lanes: buy before the start, rest a limit sell at a target · replayed nightly from Kalshi's 1-minute candles, point-in-time, no live orders · paper · not in Production</p>
+<p class="shell-kicker">Cheap side + resting take-profit · buy before the start at the real ask · rest a split sell, half at 2x and half at 3x · a fill counts only on a traded print · every lane next to the same entries held · replayed nightly from Kalshi's 1-minute candles · paper · not in Production</p>
 {body}
 <details class="section-disclosure"><summary><b>How a lane is replayed</b><span>entries, exits, fees, control</span></summary>
-<p class="sm">A lane buys before the event starts, at a set time before it (1 hour before, and a 24-hour variant), at the ask on the first tight quote (spread 3c or less), and at the same moment rests a limit sell at +20%, +30%, +50% or +100% ROI after fees. The swings during the event either fill that sell or the position settles. Nothing is bought during the event. The start comes from the lane's own kickoff source where it has one, otherwise from the price path.</p>
-<p class="sm">Exits, all from the same entry: the resting limit sell at +20%, +30%, +50% or +100%, or none; each with no stop or a −50% stop; otherwise held to Kalshi's settlement. A target that would need a price of 0.99 or more cannot be reached, so that entry is held. A sell fills only when the bid trades 1c through the limit inside a minute; a minute touching both the stop and the limit takes the stop. Fees: taker 0.07·p(1−p) on entry and on a stop, maker 0.0175·p(1−p) on a limit exit.</p>
-<p class="sm">The control is the same entry held to settlement, so every lane shows hold against each target (a stop variant against hold with the same stop). A variant is flagged for review at {C.REVIEW_N} trades; promotion needs {C.PROMOTE_N} AND a better ROI than its hold control. z is clustered by night, never below the independent-trades z. Every lane's record starts fresh from its first replayed night and never inherits an older lane's rows.</p></details>
+<p class="sm">A lane buys before the event starts, at a set time before it (1 hour before, and a 24-hour variant), at the ask on the first tight quote (spread 3c or less, 5c for the cheap-side lane). The standard exit is the split: half the stake rests at 2x the entry ask and half at 3x, each capped at 0.98, and a leg fills only when a trade prints at or above it; a leg not filled is held to Kalshi's settlement. Nothing is bought during the event. The start comes from the lane's own kickoff source where it has one, otherwise from the price path.</p>
+<p class="sm">Other exits, from the same entry: a resting limit sell at +20%, +30%, +50% or +100% ROI after fees, each with no stop or a −50% stop. Those sells fill when the bid trades 1c through the limit inside a minute; a minute touching both the stop and the limit takes the stop. Fees: taker 0.07·p(1−p) on entry and on a stop, maker 0.0175·p(1−p) on a limit exit or a filled split leg.</p>
+<p class="sm">The control is the same entry held to settlement. A variant is flagged for review at {C.REVIEW_N} trades; promotion needs {C.PROMOTE_N} AND a better ROI than its hold control. z is clustered by night, never below the independent-trades z. Every lane's record starts fresh from its first replayed night and never inherits an older lane's rows; the split was added to the older lanes on 2026-10-27 by replaying their recorded entries, nothing edited or removed.</p></details>
 <p class="sm mut">Last replay {esc(last or 'not yet')}{(' · ' + esc(state['error'])) if state.get('error') else ''}.</p>
 </section>"""

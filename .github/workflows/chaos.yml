@@ -25,7 +25,9 @@ jobs:
         with:
           python-version: '3.12'
       - name: Tests
-        run: python3 test_chaos.py
+        run: |
+          python3 test_chaos.py
+          python3 test_chaos_split.py
       - name: Replay settled events for every registered chaos lane (own ledger; none registered yet writes nothing new)
         run: python3 chaos_replay.py
       - name: Save records
