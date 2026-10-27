@@ -24,7 +24,7 @@ jobs:
         run: |
           python3 test_fights_split.py
           python3 test_mentions_split.py
-      - name: Boxing and UFC cheap-side lanes (Sandbox paper, 2026-10-26): entry an hour before each scheduled start, trade-print fills
+      - name: Boxing and UFC cheap-side lanes (Sandbox paper since 2026-10-26, entry an hour before each scheduled start, trade-print fills)
         run: python3 fights_split.py
       - name: Save records
         run: |
