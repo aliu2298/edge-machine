@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-27T03:30:24+00:00",
+ "board_built_at": "2026-10-27T04:00:26+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -1005,6 +1005,43 @@
    "sport": "nba_tt",
    "status": "hit"
   },
+  "2026-10-27|KXNBATEAMTOTAL-26OCT26MEMUTA-MEM120|Memphis over 119.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt",
+    "n": 119.5,
+    "team": "Memphis"
+   },
+   "date": "2026-10-27",
+   "edge_at_log": 0.139,
+   "first_seen": "2026-10-26",
+   "headline": "Memphis over 119.5 points",
+   "home": null,
+   "id": "2026-10-27|KXNBATEAMTOTAL-26OCT26MEMUTA-MEM120|Memphis over 119.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-27T01:00Z",
+   "lane": "production",
+   "league": "NBA",
+   "match": "MEM @ UTAH",
+   "model_prob": 0.6365,
+   "pair": "nba_tt_value_1h|nba_tt",
+   "price_at_log": 0.48,
+   "published_at": "2026-10-27T04:00:26+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Memphis over 119.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT26MEMUTA",
+    "market": "KXNBATEAMTOTAL-26OCT26MEMUTA-MEM120",
+    "outcome": "Memphis over 119.5 points",
+    "outcome_side": "yes",
+    "price_at_log": 0.48,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_1h:401909875:MEM",
+   "source": "nba_tt_value_1h",
+   "sport": "nba_tt",
+   "status": "miss"
+  },
   "2026-10-27|KXNBATEAMTOTAL-26OCT26PHXOKC-PHX104|Phoenix under 103.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
    "away": null,
    "bet": {
@@ -1058,7 +1095,7 @@
    "kickoff": "2026-10-27T23:30Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T03:30:24+00:00",
+   "last_seen_at": "2026-10-27T04:00:26+00:00",
    "league": "NBA",
    "match": "BKN @ BOS",
    "model_prob": 0.6295,
@@ -1097,7 +1134,7 @@
    "kickoff": "2026-10-28T00:00Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T03:30:24+00:00",
+   "last_seen_at": "2026-10-27T04:00:26+00:00",
    "league": "NBA",
    "match": "DET @ NY",
    "model_prob": 0.6515,
@@ -1136,7 +1173,7 @@
    "kickoff": "2026-10-28T00:00Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T03:30:24+00:00",
+   "last_seen_at": "2026-10-27T04:00:26+00:00",
    "league": "NBA",
    "match": "DET @ NY",
    "model_prob": 0.5498,
@@ -1175,7 +1212,7 @@
    "kickoff": "2026-10-28T03:00Z",
    "lane": "production",
    "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T03:30:24+00:00",
+   "last_seen_at": "2026-10-27T04:00:26+00:00",
    "league": "NBA",
    "match": "POR @ LAL",
    "model_prob": 0.5449,
@@ -1207,18 +1244,18 @@
    "ready_at": "2026-10-24T22:13:00+00:00",
    "route": "moved by hand on 2026-10-24",
    "routing": {
-    "leads": 24,
+    "leads": 25,
     "problem": null,
-    "routed": 24,
+    "routed": 25,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 24,
-   "sandbox_roi": -0.0192,
-   "sandbox_roi_fee": -0.0192,
+   "sandbox_n": 25,
+   "sandbox_roi": -0.0584,
+   "sandbox_roi_fee": -0.0584,
    "timing": {
     "late": [],
     "timed": 0,
@@ -1274,5 +1311,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-27T03:30:24+00:00"
+ "updated_at": "2026-10-27T04:00:26+00:00"
 }
