@@ -8,8 +8,8 @@
   fixture and from the committed ledger.
 - Outside a closed fold, nothing in the Rules section is a sentence: no text run
   there is longer than a short line (MAX_WORDS words).
-- In Chromium at 1366x768, the Events heading is on the first screen on Soccer and
-  Tennis, as published and with every soccer rule promoted at once (the "Show N
+- In Chromium at 1366x768, the lead heading is on the first screen on Soccer and
+  Tennis (the cheap-side section where a page has one, 2026-10-27; else Events), as published and with every soccer rule promoted at once (the "Show N
   more" fold holds the rest); no definition is visible until a row is opened, and
   opening one shows it.
 """
@@ -199,7 +199,9 @@ if playwright is not None:
                 page.route("http://fixture.local/**", serve(markup))
                 page.goto("http://fixture.local/sport.html", wait_until="load")
                 got = page.evaluate("""() => {
-                    const h = document.querySelector('#events h2').getBoundingClientRect();
+                    // 2026-10-27 (Olu): a page with a cheap-side section leads with it, so that is the
+                    // heading that must be on the first screen; Events follows it.
+                    const h = (document.querySelector('#cheap-side h2') || document.querySelector('#events h2')).getBoundingClientRect();
                     const words = [...document.querySelectorAll('.sp-def, .sp-params, .sp-changes, .sp-details-body, .rule-picks')]
                         .filter(e => e.checkVisibility()).length;
                     return { top: Math.round(h.top), bottom: Math.round(h.bottom), inner: innerHeight, words,
@@ -207,7 +209,8 @@ if playwright is not None:
                 }""")
                 ok(not errors, f"{label} ({scheme}): no page error")
                 ok(got["bottom"] <= got["inner"],
-                   f"{label} ({scheme}): the Events heading is on the first screen (bottom {got['bottom']}px of {got['inner']})")
+                   f"{label} ({scheme}): the lead heading (the cheap-side section where there is one, else Events) "
+                   f"is on the first screen (bottom {got['bottom']}px of {got['inner']})")
                 ok(got["words"] == 0, f"{label} ({scheme}): no definition is visible on load ({got['words']})")
                 ok(not got["overflow"], f"{label} ({scheme}): nothing scrolls sideways")
                 if scheme == "light" and not label.startswith("published"):
