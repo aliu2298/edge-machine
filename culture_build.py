@@ -108,7 +108,7 @@ def pooled(state, now=None):
     return rec, "each market once"
 
 
-def build(state=None, now=None, split_state=None):
+def build(state=None, now=None, split_state=None, wide_state=None):
     state = state if state is not None else K.load()
     now = SP.as_utc(now)
     prod = production(now)
@@ -287,7 +287,10 @@ def build(state=None, now=None, split_state=None):
     page = "".join(out) + html[pos:]
     # The cheap-YES split lane (2026-10-27, mentions_split.py), on its own ledger: its card sits
     # beside the rules, before the Method.
-    split = MS.section(split_state if split_state is not None else MS.load(), e)
+    strict = split_state if split_state is not None else MS.load()
+    wide = wide_state if wide_state is not None else MS.load(cfg=MS.WIDE)
+    # The wide twin (2026-10-27) beside the strict lane, with one line comparing them.
+    split = MS.section(strict, e) + MS.compare(strict, wide, e) + MS.section(wide, e, MS.WIDE)
     return page.replace('<section id="method"', split + '<section id="method"', 1)
 
 

@@ -58,6 +58,24 @@ RULE = ("Weekly KXTRUMPSAY only. When a word's market opens, the first quote wit
         "when a trade prints at or above its target (the candle's traded high, never the bid); an "
         "unfilled leg is held to settlement. Taker fee in, maker fee out. One entry per word per week.")
 
+# The wide twin (2026-10-27, Olu, "option 2"): identical except the entry. The first minute quote
+# inside 6h of the open whose spread is 10c or less AND whose YES ask is 0.03-0.30; YES bought at
+# that ask, the price actually paid, with the legs at 2x and 3x of it. Each entry also records the
+# last trade at or before that minute, so the page can show the cost of the spread (ask - last
+# trade). Its own ledger and a fresh record from its first entry; the strict lane is unchanged.
+WIDE_RULE = ("Weekly KXTRUMPSAY only. The first minute quote inside 6h of a word's open whose spread is "
+             "10c or less and whose YES ask is 0.03-0.30: buy YES at that ask. A split resting sell placed "
+             "at entry: half at 2x, half at 3x the ask paid, each capped at 0.98. A leg fills only when a "
+             "trade prints at or above its target (the candle's traded high, never the bid); an unfilled "
+             "leg is held to settlement. Taker fee in, maker fee out. One entry per word per week.")
+STRICT = dict(lane=LANE, label=LABEL, path=PATH, spread=MAX_SPREAD, band_in_quote=False, rule=RULE,
+              anchor="mentions-split", skip="no quote with a 5c spread inside 6h", last_trade=False)
+WIDE = dict(lane="mentions_cheap_yes_split_wide", label="Trump mentions · cheap YES split, wide entry",
+            path=os.path.join(ROOT, "data", "mentions_split_wide_ledger.json"), spread=0.10,
+            band_in_quote=True, rule=WIDE_RULE, anchor="mentions-split-wide",
+            skip="no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h", last_trade=True)
+LANES = (STRICT, WIDE)
+
 
 def fee(p, rate):
     return rate * p * (1 - p)
@@ -81,10 +99,12 @@ def targets(price):
     return [(m, w, round(min(price * m, CAP), 2)) for m, w in LEGS]
 
 
-def entry_quote(candles, open_ts):
+def entry_quote(candles, open_ts, cfg=STRICT, detail=False):
     """The first (minute) candle ending inside (open, open + 6h] whose closing quote has a spread of
-    5c or less -> (end_ts, yes_bid, yes_ask, contracts traded from the open to then), or None."""
-    traded = 0.0
+    5c or less (the wide lane: 10c or less and a YES ask of 0.03-0.30) -> (end_ts, yes_bid, yes_ask,
+    contracts traded from the open to then), or None. With detail, a 5th item: (the last trade at or
+    before that minute, its candle's end) or (None, None)."""
+    traded, last = 0.0, (None, None)
     for c in sorted(candles, key=lambda c: c.get("end_period_ts") or 0):
         end = c.get("end_period_ts")
         if not end or end <= open_ts:
@@ -92,11 +112,16 @@ def entry_quote(candles, open_ts):
         if end > open_ts + ENTRY_WINDOW_H * 3600:
             break
         traded += _num(c.get("volume_fp")) or 0.0
+        px = _num((c.get("price") or {}).get("close_dollars"))
+        if px is not None:
+            last = (px, end)
         bid = _num((c.get("yes_bid") or {}).get("close_dollars"))
         ask = _num((c.get("yes_ask") or {}).get("close_dollars"))
-        if bid is None or ask is None or not 0 < ask <= 1 or ask - bid > MAX_SPREAD + 1e-9:
+        if bid is None or ask is None or not 0 < ask <= 1 or ask - bid > cfg["spread"] + 1e-9:
             continue
-        return end, bid, ask, round(traded, 2)
+        if cfg["band_in_quote"] and not BAND[0] - 1e-9 <= ask <= BAND[1] + 1e-9:
+            continue
+        return (end, bid, ask, round(traded, 2)) + ((last,) if detail else ())
     return None
 
 
@@ -150,13 +175,14 @@ def done(e):
     return e.get("payout") is not None
 
 
-def load(path=PATH):
+def load(path=None, cfg=STRICT):
+    path = path or cfg["path"]
     try:
         with open(path) as f:
             s = json.load(f)
     except FileNotFoundError:
         s = {}
-    s.setdefault("lane", LANE)
+    s.setdefault("lane", cfg["lane"])
     s.setdefault("entries", [])
     s.setdefault("skips", {})
     s.setdefault("events", {})
@@ -173,7 +199,7 @@ def candles(event, start_ts, end_ts, fetch, minutes=60):
     return dict(zip(d.get("market_tickers") or [], d.get("market_candlesticks") or []))
 
 
-def run(state, now=None, fetch=D.get):
+def run(state, now=None, fetch=D.get, cfg=STRICT):
     now = now or dt.datetime.now(dt.timezone.utc)
     now_ts = int(now.timestamp())
     start_ts = _ts(START)
@@ -198,16 +224,16 @@ def run(state, now=None, fetch=D.get):
         by = {m["ticker"]: m for m in ms}
         for m in pending:
             o = _ts(m["open_time"])
-            q = entry_quote(entry_cs.get(m["ticker"]) or [], o)
+            q = entry_quote(entry_cs.get(m["ticker"]) or [], o, cfg, detail=True)
             word = (m.get("custom_strike") or {}).get("Word") or m.get("yes_sub_title") or m["ticker"]
             if q is None:
                 if now_ts >= o + ENTRY_WINDOW_H * 3600:
-                    state["skips"][m["ticker"]] = dict(event=tick, word=word, reason="no quote with a 5c spread inside 6h")
+                    state["skips"][m["ticker"]] = dict(event=tick, word=word, reason=cfg["skip"])
                     obs["skipped"] += 1
                 else:
                     obs["waiting"] += 1
                 continue
-            end, bid, ask, vol = q
+            end, bid, ask, vol, (last_px, last_at) = q
             if not BAND[0] - 1e-9 <= ask <= BAND[1] + 1e-9:
                 state["skips"][m["ticker"]] = dict(event=tick, word=word, reason=f"YES ask {ask:.2f} outside 0.03-0.30",
                                                    at=_iso(end))
@@ -216,6 +242,9 @@ def run(state, now=None, fetch=D.get):
             e = dict(id=m["ticker"], event=tick, word=word, side="yes", entry_at=_iso(end), price=ask,
                      bid=bid, spread=round(ask - bid, 4), traded_to_entry=vol, logged=now.isoformat(),
                      legs=[dict(multiple=mult, share=w, target=t) for mult, w, t in targets(ask)], payout=None)
+            if cfg["last_trade"]:
+                e.update(last_trade=last_px, last_trade_at=_iso(last_at) if last_at else None,
+                         spread_cost=round(ask - last_px, 4) if last_px is not None else None)
             if now_ts - end <= LIVE_BOOK_H * 3600:
                 try:
                     e["book_size"] = book_size(fetch(f"markets/{m['ticker']}/orderbook"), ask)
@@ -273,19 +302,21 @@ def weeks(entries):
 
 
 def main():
-    state = load()
-    try:
-        run(state)
-    except Exception as e:                                     # noqa: BLE001
-        state["error"] = (type(e).__name__ + ": " + str(e))[:300]
-    os.makedirs(os.path.dirname(PATH), exist_ok=True)
-    tmp = PATH + ".tmp"
-    with open(tmp, "w") as f:
-        json.dump(state, f, indent=1, sort_keys=True)
-        f.write("\n")
-    os.replace(tmp, PATH)
-    o = state.get("observations") or {}
-    print(LANE, "entries", len(state["entries"]), "skips", len(state["skips"]), "this run", o, "error", state.get("error"))
+    for cfg in LANES:
+        state = load(cfg=cfg)
+        try:
+            run(state, cfg=cfg)
+        except Exception as e:                                 # noqa: BLE001
+            state["error"] = (type(e).__name__ + ": " + str(e))[:300]
+        os.makedirs(os.path.dirname(cfg["path"]), exist_ok=True)
+        tmp = cfg["path"] + ".tmp"
+        with open(tmp, "w") as f:
+            json.dump(state, f, indent=1, sort_keys=True)
+            f.write("\n")
+        os.replace(tmp, cfg["path"])
+        o = state.get("observations") or {}
+        print(cfg["lane"], "entries", len(state["entries"]), "skips", len(state["skips"]), "this run", o,
+              "error", state.get("error"))
     return 0
 
 
@@ -298,11 +329,27 @@ def _pct(x):
     return "—" if x is None else f"{x * 100:+.1f}%".replace("-", "−")
 
 
+def _px(x):
+    return "—" if x is None else f"{x:.2f}".replace("-", "\u2212")
+
+
+def compare(strict, wide, esc):
+    """Strict v wide, one line: entries, ROI after fees, average spread paid (ask - bid at entry)."""
+    def part(name, st):
+        es = st.get("entries") or []
+        r = record(es)
+        sp = [e["spread"] for e in es if e.get("spread") is not None]
+        return (f"{name}: {r['entries']} entr{'y' if r['entries'] == 1 else 'ies'}, ROI after fees {_pct(r['roi'])} "
+                f"({r['resolved']} resolved), average spread paid {_px(sum(sp) / len(sp)) if sp else '—'}")
+    return (f'<p class="sm" id="mentions-split-compare"><b>Strict v wide</b> · {esc(part("strict (5c)", strict))} · '
+            f'{esc(part("wide (10c)", wide))}.</p>')
+
+
 def _pl(x):
     return "—" if x is None else f"{x:+.3f}".replace("-", "\u2212")
 
 
-def section(state, esc):
+def section(state, esc, cfg=STRICT):
     """The lane's card on the Culture page: tiles, per-week rows and the trade list."""
     es = state.get("entries") or []
     r = record(es)
@@ -323,6 +370,8 @@ def section(state, esc):
     trades = "".join(
         f'<tr><td>{esc(e["event"].rsplit("-", 1)[-1])}</td><td>{esc(e["word"])}</td>'
         f'<td>{esc(e["entry_at"][:16].replace("T", " "))}Z</td><td class="num">{e["price"]:.2f}</td>'
+        + (f'<td class="num">{_px(e.get("last_trade"))}</td><td class="num">{_px(e.get("spread_cost"))}</td>'
+           if cfg["last_trade"] else "") +
         f'<td>{esc(size(e))}</td><td>{esc(leg(e["legs"][0]))}</td><td>{esc(leg(e["legs"][1]))}</td>'
         f'<td class="num">{_pl(e.get("pnl"))}</td>'
         f'<td class="num">{_pct(e.get("roi"))}</td></tr>'
@@ -330,21 +379,23 @@ def section(state, esc):
     skips = state.get("skips") or {}
     why = {}
     for v in skips.values():
-        k = "no quote with a 5c spread inside 6h" if v["reason"].startswith("no quote") else "YES ask outside 0.03-0.30"
+        k = cfg["skip"] if v["reason"].startswith("no quote") else "YES ask outside 0.03-0.30"
         why[k] = why.get(k, 0) + 1
     head = ('<thead><tr><th>Week</th><th class="num">Entries</th><th class="num">2x filled</th><th class="num">3x filled</th>'
             '<th class="num">Resolved</th><th class="num">ROI split</th><th class="num">Held</th><th class="num">2x only</th></tr></thead>')
-    thead = ('<thead><tr><th>Week</th><th>Word</th><th>Entry (UTC)</th><th class="num">YES</th><th>Size</th>'
-             '<th>2x leg</th><th>3x leg</th><th class="num">P/L per contract</th><th class="num">ROI</th></tr></thead>')
-    return (f'<section id="mentions-split"><h2>{esc(LABEL)}</h2>'
+    thead = ('<thead><tr><th>Week</th><th>Word</th><th>Entry (UTC)</th><th class="num">YES ask paid</th>'
+             + ('<th class="num">Last trade</th><th class="num">Cost of the spread</th>' if cfg["last_trade"] else "")
+             + '<th>Size</th><th>2x leg</th><th>3x leg</th><th class="num">P/L per contract</th><th class="num">ROI</th></tr></thead>')
+    cols = 11 if cfg["last_trade"] else 9
+    return (f'<section id="{cfg["anchor"]}"><h2>{esc(cfg["label"])}</h2>'
             f'<p class="sm"><b>Sandbox · paper · fresh record from its first entry · review at {REVIEW_AT}, decide at '
             f'{DECIDE_AT}</b> ({r["resolved"]} resolved). Registered {REGISTERED}; the week of '
             f'KXTRUMPSAY-26NOV02 (opened 2026-10-26 04:00Z) is replayed from its opening candles.</p>'
-            f'<p class="sm">{esc(RULE)}</p><div class="tiles">{tiles}</div>'
+            f'<p class="sm">{esc(cfg["rule"])}</p><div class="tiles">{tiles}</div>'
             '<p class="sm mut">ROI is per contract after fees, the mean over resolved entries (equal stake per entry). '
             'Held: the same entries to settlement. 2x only: the same entries with one sell at 2x.</p>'
             f'<div class="tbl"><table>{head}<tbody>{wk or "<tr><td colspan=8>No entry yet.</td></tr>"}</tbody></table></div>'
-            f'<div class="tbl"><table>{thead}<tbody>{trades or "<tr><td colspan=9>No entry yet.</td></tr>"}</tbody></table></div>'
+            f'<div class="tbl"><table>{thead}<tbody>{trades or f"<tr><td colspan={cols}>No entry yet.</td></tr>"}</tbody></table></div>'
             f'<p class="sm mut">Words skipped: {len(skips)}'
             + (" (" + "; ".join(f"{k}: {v}" for k, v in sorted(why.items())) + ")" if why else "")
             + (f'. Last read {esc(str(state.get("last_success"))[:16].replace("T", " "))}Z' if state.get("last_success") else ". Not read yet")
