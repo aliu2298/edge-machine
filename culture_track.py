@@ -21,6 +21,14 @@ they accumulate. Every record is paper, at the ask, with Kalshi's 7% fee; nothin
 2026-10-24 (Olu): culture_endgame, culture_fav_band and rt_model are RETIRED (RETIRED below): they
 log nothing new, their rows stay and their open picks still settle. The Rotten Tomatoes collector
 (data/rt_snapshots.json) served rt_model alone, so it stopped with it; the file is kept as it was.
+
+2026-10-26 (Olu): rt_model is REVIVED (REVIVED below) on a fresh record, and with it the Rotten
+Tomatoes snapshot collector (rt_picks appends the hourly snapshot; a retired lane's scan never ran).
+Its open bets had kept settling after the retirement: 7 settled, 5 won, +32.4% after fees, both
+losses coin flips on the line. From the revival a rung whose current score is within 1 point of
+its line is skipped (RT_LINE_GAP; amendment in RULES). Entries logged from the revival carry
+revived="2026-10-26"; only they make the revived record, and the rows before stay as its
+pre-retirement history.
 mentions_rate, in Production since 2026-10-20, gained a news guard and an edge cap the same day
 (NEWS_GUARD, EDGE_CAP; amendment in RULES).
 
@@ -115,6 +123,42 @@ def amended_2(now):
     return now >= D.instant(AMENDED_2_AT)
 
 
+# Lanes revived by hand (2026-10-26, Olu): a lane named here is live again from `at` on, and its
+# RETIRED entry stays as the dated history of the retirement. A revived lane starts a FRESH record:
+# entries logged from `at` carry revived=<on>, and the page counts only those as its record, showing
+# the rows before it separately as its pre-retirement history. `review` is the settled count at
+# which Olu reads it again.
+REVIVED = {
+    "rt_model": dict(on="2026-10-26", at="2026-10-27T00:00:00+00:00", review=10,
+                     why="its open bets kept settling after the retirement, 7 settled, 5 won, +32.4% after "
+                         "fees; both losses were coin flips on the line (Above 70 at 71, the NO on Above 75 "
+                         "at 75)"),
+}
+# Amendment 2026-10-26 (Olu), rt_model, with the revival: a rung is skipped when the current score
+# (liked / reviews x 100, unrounded) is within RT_LINE_GAP points of its line, both of the lane's
+# losses to that day having been coin flips on the line. The scan counts it ("within 1 point of the line").
+RT_LINE_GAP = 1.0
+RULES["rt_model"] += (f" Amended {REVIVED['rt_model']['on']} (revived on a fresh record): a rung is skipped when the "
+                      "current score (liked / reviews x 100) is within 1 point of its line (|score - line| <= 1).")
+
+
+def revived(key, now):
+    """True from lane `key`'s revival (REVIVED[key]['at']) on."""
+    r = REVIVED.get(key)
+    return bool(r) and now >= D.instant(r["at"])
+
+
+def fresh(key, picks):
+    """A revived lane's record: only the entries logged under the revival (revived=<on>)."""
+    r = REVIVED.get(key)
+    return [p for p in picks if p.get("revived") == r["on"]] if r else list(picks)
+
+
+def near_line(liked, count, strike):
+    """The 2026-10-26 rt_model skip: the current score within RT_LINE_GAP points of the line."""
+    return abs(100.0 * liked / count - float(strike)) <= RT_LINE_GAP + 1e-9
+
+
 # Lanes retired by hand (2026-10-24, Olu): no new entry from the dated day on (Eastern), the
 # ledger rows stay and open picks keep settling, and the Culture page shows the lane as Retired
 # with its final record and this reason. A retired lane's scan does not run at all (rt_model's
@@ -146,9 +190,10 @@ FACTBASE = ("https://rollcall.com/wp-json/factbase/v1/search?media=&type=&sort=d
 
 
 def retired(key, now):
-    """True once lane `key` is retired as of `now` (its dated day, Eastern, or later)."""
+    """True once lane `key` is retired as of `now` (its dated day, Eastern, or later), and not yet
+    revived (REVIVED: live again from its `at`, the retirement kept as history)."""
     r = RETIRED.get(key)
-    return bool(r) and now.astimezone(D.ET).date().isoformat() >= r["on"]
+    return bool(r) and now.astimezone(D.ET).date().isoformat() >= r["on"] and not revived(key, now)
 
 
 def news_guard(side, yes_mid, p):
@@ -423,9 +468,13 @@ def expected_reviews(history, count, hours_left):
     five weeks to go, read 92% on a rung the market held at 39c)."""
     pts = [(ts(h["at"]), h["count"]) for h in history if h.get("count")]
     pts = [p for p in pts if p[0]]
-    if not pts or (pts[-1][0] - pts[0][0]).total_seconds() < 12 * 3600:
+    if not pts:
         return None
     recent = [p for p in pts if (pts[-1][0] - p[0]).total_seconds() <= 24 * 3600] or pts
+    # The 12h must be inside the last 24h (2026-10-26): after the collector's two-day stop the old
+    # snapshots spanned 12h while the last 24h held one read, which would read as no pace at all.
+    if (recent[-1][0] - recent[0][0]).total_seconds() < 12 * 3600:
+        return None
     a, b = recent[0], recent[-1]
     hours = max(1.0, (b[0] - a[0]).total_seconds() / 3600)
     per_h = max(0.0, (b[1] - a[1]) / hours)
@@ -474,10 +523,14 @@ def rt_picks(events, now, state, snaps, fetch=web):
             counts["under 20 reviews counted"] += 1
             continue
         liked, count, _score = got
-        best = None
+        best, near = None, 0
+        amended = revived("rt_model", now)
         for m in ms:
             close, q = ts(m.get("close_time")), quote(m)
             if not close or close <= now or not q or q[1] - q[0] > 0.05 + 1e-9:
+                continue
+            if amended and near_line(liked, count, m["floor_strike"]):
+                near += 1
                 continue
             future = expected_reviews(hist, count, (close - now).total_seconds() / 3600)
             if future is None:
@@ -487,8 +540,11 @@ def rt_picks(events, now, state, snaps, fetch=web):
             for side, px, e in (("yes", q[1], p - (q[1] + fee(q[1]))), ("no", no_px, (1 - p) - (no_px + fee(no_px)))):
                 if best is None or e > best[0]:
                     best = (e, side, px, p, m, future)
+        if near:
+            counts["within 1 point of the line"] += near
         if not best:
-            counts["collecting review pace (12h of snapshots)"] += 1
+            if not near:
+                counts["collecting review pace (12h of snapshots)"] += 1
             continue
         if best[0] < EDGE_MIN - 1e-9:
             counts["edge under 5c"] += 1
@@ -498,7 +554,8 @@ def rt_picks(events, now, state, snaps, fetch=web):
         out.append(entry(m, ev, side, px, now,
                          detail=(f"{liked}/{count} liked ({displayed(liked, count)}), ~{future} more reviews · "
                                  f"P(above {m['floor_strike']:g}) {p:.2f} · edge {e:+.2f}"),
-                         model=round(p, 4), edge=round(e, 4), rt_url=urls[key]))
+                         model=round(p, 4), edge=round(e, 4), rt_url=urls[key],
+                         **({"revived": REVIVED["rt_model"]["on"]} if amended else {})))
     return out, counts
 
 

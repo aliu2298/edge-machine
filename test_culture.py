@@ -436,5 +436,109 @@ check("the row's details give the record before and after the amendment",
       ("Before the 2026-10-26 amendment: 0/1 won" in ah, "1 still open" in ah,
        "From 2026-10-26 (NO floor 0.60, monthly and company series out): 1/1 won" in ah), (True, True, True))
 
+print("\n2026-10-26: rt_model revived on a fresh record, its snapshot collector back on")
+REV = dt.datetime(2026, 10, 27, 1, 0, tzinfo=UTC)               # after the revival (00:00Z)
+EVE = dt.datetime(2026, 10, 26, 23, 0, tzinfo=UTC)              # the same evening, before it
+check("the revival's registered terms; the retirement stays as dated history",
+      (K.REVIVED["rt_model"]["on"], K.REVIVED["rt_model"]["at"], K.REVIVED["rt_model"]["review"], K.RT_LINE_GAP,
+       K.RETIRED["rt_model"]["on"], K.RETIRED["rt_model"]["at"]),
+      ("2026-10-26", "2026-10-27T00:00:00+00:00", 10, 1.0, "2026-10-24", "2/4 won, −25.7% after fees"))
+check("retired until the revival, live from it; the other two stay retired",
+      ({k: K.retired(k, EVE) for k in K.LANES}, {k: K.retired(k, REV) for k in K.LANES}),
+      ({"culture_fav_band": True, "culture_endgame": True, "mentions_rate": False, "rt_model": True},
+       {"culture_fav_band": True, "culture_endgame": True, "mentions_rate": False, "rt_model": False}))
+check("the amendment is dated in the lane's registered text",
+      "Amended 2026-10-26 (revived on a fresh record): a rung is skipped when the current score (liked / reviews x 100) "
+      "is within 1 point of its line" in K.RULES["rt_model"], True)
+check("the 1-point skip: Above 70 at 71 and the Above 75 at 75 (both losses), 69 v 70; not 72 v 70 or 73.5 v 75",
+      [K.near_line(l, 100, s) for l, s in ((71, 70), (75, 75), (69, 70), (72, 70))] + [K.near_line(147, 200, 75)],
+      [True, True, True, False, False])
+check("exactly 1 point (76 of 100 v 75) is skipped",
+      K.near_line(76, 100, 75), True)
+
+_rs = (K.rt_counts, K.expected_reviews, K.p_above)
+lad = dict(event_ticker="KXRT-REV", series_ticker="KXRT", title="Revival Film", category="Entertainment",
+           markets=[dict(ticker=f"KXRT-REV-{s}", event_ticker="KXRT-REV", status="active", yes_bid_dollars=str(b),
+                         yes_ask_dollars=str(a), close_time=(REV + dt.timedelta(hours=30)).isoformat(),
+                         floor_strike=s, strike_type="greater")
+                    for s, b, a in ((90, 0.50, 0.53), (82, 0.27, 0.29))])
+try:
+    K.rt_counts = lambda url, fetch=None: (181, 200, 91)       # score 90.5: within 1 of 90, 8.5 over 82
+    K.expected_reviews = lambda hist, count, hours: 10
+    K.p_above = lambda liked, count, future, strike: 0.95 if strike == 82 else 0.50
+    out, c = K.rt_picks([lad], REV, {"rt_urls": {"KXRT-REV": "u"}}, {}, fetch=None)
+    check("after the revival: the 90 rung (score 90.5) is skipped and counted, the 82 rung is entered, stamped",
+          ([(p["id"], p["side"], p.get("revived")) for p in out], c.get("within 1 point of the line")),
+          ([("KXRT-REV-82", "yes", "2026-10-26")], 1))
+    only = dict(lad, markets=[lad["markets"][0]])
+    out, c = K.rt_picks([only], REV, {"rt_urls": {"KXRT-REV": "u"}}, {}, fetch=None)
+    check("a ladder whose only rung sits on the line logs nothing, and is not read as 'collecting pace'",
+          (out, c.get("within 1 point of the line"), c.get("collecting review pace (12h of snapshots)")), ([], 1, None))
+    K.p_above = lambda liked, count, future, strike: 0.95
+    out, c = K.rt_picks([only], EVE, {"rt_urls": {"KXRT-REV": "u"}}, {}, fetch=None)
+    check("before the revival the skip does not apply and nothing is stamped",
+          [(p["id"], p.get("revived")) for p in out], [("KXRT-REV-90", None)])
+finally:
+    K.rt_counts, K.expected_reviews, K.p_above = _rs
+
+_h = lambda hrs_ago, n: dict(at=(REV - dt.timedelta(hours=hrs_ago)).isoformat(), count=n)
+check("the pace needs 12h inside the last 24h: two-day-old snapshots and one fresh read give no pace yet",
+      (K.expected_reviews([_h(70, 100), _h(56, 110), _h(0, 120)], 120, 30),
+       K.expected_reviews([_h(14, 100), _h(0, 128)], 128, 30)), (None, 30))
+
+print("\n2026-10-26: the collector runs again with the lane")
+rt_ev = dict(lad, markets=[dict(lad["markets"][1])])
+srch = ('<search-page-media-row><a href="https://www.rottentomatoes.com/m/revival_film" slot="title">Revival Film</a>'
+        '</search-page-media-row>')
+pg_rt = '"criticsScore":{"likedCount":181,"reviewCount":200,"score":"91"}'
+web_rt = lambda url: srch if "search?" in url else pg_rt
+fetch_rt = lambda path: ({"events": [rt_ev], "cursor": ""} if path.startswith("events")
+                         else {"market": {"ticker": path.split("/")[-1], "status": "active"}})
+fresh_state = lambda: {"lanes": {k: {"picks": [], "observations": {}, "error": None} for k in K.LANES},
+                       "rt_urls": {}, "words": {}}
+for when, want in ((EVE, False), (REV, True)):
+    snaps_rt, st_rt = {}, fresh_state()
+    K.run(st_rt, snaps_rt, now=when, fetch=fetch_rt, webfetch=web_rt)
+    got = snaps_rt.get("KXRT-REV") or []
+    check(f"{when:%Y-%m-%d %H:%MZ}: " + ("the snapshot collector runs" if want else "still retired, no snapshot"),
+          (len(got) == 1, (got[0]["liked"], got[0]["count"]) if got else None,
+           st_rt["lanes"]["rt_model"]["observations"].get("retired")),
+          (True, (181, 200), None) if want else (False, None, "2026-10-24"))
+check("  and the first revived scan says why it waits: 12h of snapshots before any bet",
+      st_rt["lanes"]["rt_model"]["observations"]["reasons"], {"collecting review pace (12h of snapshots)": 1})
+wf = open(".github/workflows/culture.yml").read()
+check("culture.yml runs the scan hourly and saves the snapshots",
+      ("cron: '41 * * * *'" in wf, "run: python3 culture_track.py" in wf, "data/rt_snapshots.json" in wf.split("git add", 1)[1]),
+      (True, True, True))
+
+print("\n2026-10-26: the fresh record and the pre-retirement history, apart")
+rv = fresh_state()
+rv["lanes"]["rt_model"]["picks"] = [
+    pk("KXRT-OLD-70", "yes", "KXRT-OLD", logged="2026-10-20T00:00:00+00:00", status="lost", profit=-100.0, payout=0),
+    pk("KXRT-OLD-60", "yes", "KXRT-OLD", logged="2026-10-21T00:00:00+00:00", status="won", profit=30.0, payout=1),
+    pk("KXRT-OLD2-80", "no", "KXRT-OLD2", logged="2026-10-22T00:00:00+00:00"),
+    pk("KXRT-NEW-82", "yes", "KXRT-NEW", logged="2026-10-27T01:00:00+00:00", status="won", profit=30.0, payout=1,
+       revived="2026-10-26")]
+held_rt = json.loads(json.dumps(rv["lanes"]["rt_model"]["picks"]))
+check("the fresh record is the stamped entry alone", [p["id"] for p in K.fresh("rt_model", rv["lanes"]["rt_model"]["picks"])],
+      ["KXRT-NEW-82"])
+new_rec, old_rec, old_open = KB.history_split("rt_model", rv["lanes"]["rt_model"]["picks"])
+check("history_split: revived 1/1; history 1/2 with one still open", (new_rec[:2], old_rec[:2], old_open), ((1, 1), (1, 2), 1))
+row = KB._row("rt_model", rv["lanes"]["rt_model"], REV)
+check("the row's record counts the revived entry only, and it is an active Sandbox row",
+      (row["a"]["n"], row["a"]["won"], row["open"], row["v"], "Revived 2026-10-26 · fresh record · review at 10" in row["meta"]["note"]),
+      (1, 1, 0, "waiting", True))
+check("the pooled Sandbox record leaves the history out", KB.pooled(rv, REV)[0]["n"], 1)
+rvh = _re.sub(r"\s+", " ", _re.sub(r"<[^>]+>", " ", _html.unescape(KB.build(rv, REV))))
+check("the page: active again with the note, both records apart, two lanes still retired",
+      ("Observing · paper · revived 2026-10-26 · fresh record · review at 10" in rvh,
+       "Revived record: 1/1 won" in rvh,
+       "Pre-retirement history (retired 2026-10-24 at 2/4 won, −25.7% after fees, not counted): 1/2 won" in rvh,
+       "1 still open" in rvh, rvh.count("Retired · 2026-10-24"), "2 active in the Sandbox · 2 retired" in rvh),
+      (True, True, True, True, 2, True))
+check("the ledger rows are untouched by the page", rv["lanes"]["rt_model"]["picks"], held_rt)
+check("before the revival the page still shows all three retired",
+      _re.sub(r"<[^>]+>", " ", KB.build(rv, EVE)).count("Retired · 2026-10-24"), 3)
+
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
