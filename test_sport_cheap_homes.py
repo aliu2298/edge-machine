@@ -89,6 +89,12 @@ finally:
     C.list_events, C.replay_event = _le, _re
 check("no event from its retirement night on is replayed; the night before still is", seen, ["KXATPCHALLENGERMATCH-26OCT26AAABBB"])
 check("the ledger carries the retirement", st["lanes"]["challenger_dog_tp30"]["retired"]["on"], "2026-10-27")
+tt = next(x for x in chaos_lanes.LANES if x["id"] == "nba_tt_cheap_tp30")
+check("nba_tt_cheap_tp30 retired 2026-10-27 with its record", (tt["retired"]["on"], "145 settled, 26 won" in tt["retired"]["at"]),
+      ("2026-10-27", True))
+check("the NBA page keeps nba_ml_dog_tp50 open and folds nba_tt_cheap_tp30 into Retired",
+      (folded(pages["nba"], '<details class="section-disclosure" data-lane="nba_ml_dog_tp50" open>'),
+       folded(pages["nba"], '<li data-lane="nba_tt_cheap_tp30"')), (False, True))
 
 print("\nCulture, Commodities and Fights: every active cheap-side lane visible")
 import commodities_build
