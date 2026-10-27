@@ -1,0 +1,269 @@
+{
+ "entries": [
+  {
+   "bid": 0.08,
+   "entry_at": "2026-10-26T06:02:00+00:00",
+   "event": "KXTRUMPSAY-26NOV02",
+   "id": "KXTRUMPSAY-26NOV02-ANTI",
+   "last_trade": 0.28,
+   "last_trade_at": "2026-10-26T05:18:00+00:00",
+   "legs": [
+    {
+     "fill_px": 0.36,
+     "filled_at": "2026-10-26T21:00:00+00:00",
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.36
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.54
+    }
+   ],
+   "logged": "2026-10-27T02:26:25.590977+00:00",
+   "payout": null,
+   "price": 0.18,
+   "side": "yes",
+   "spread": 0.1,
+   "spread_cost": -0.1,
+   "status": "open",
+   "traded_to_entry": 1.08,
+   "word": "Antifa"
+  },
+  {
+   "bid": 0.19,
+   "entry_at": "2026-10-26T05:33:00+00:00",
+   "event": "KXTRUMPSAY-26NOV02",
+   "id": "KXTRUMPSAY-26NOV02-PEAC",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.46
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.69
+    }
+   ],
+   "logged": "2026-10-27T02:26:25.590977+00:00",
+   "payout": null,
+   "price": 0.23,
+   "side": "yes",
+   "spread": 0.04,
+   "spread_cost": null,
+   "status": "open",
+   "traded_to_entry": 0.0,
+   "word": "Peace in the Middle East"
+  },
+  {
+   "bid": 0.09,
+   "entry_at": "2026-10-26T05:22:00+00:00",
+   "event": "KXTRUMPSAY-26NOV02",
+   "id": "KXTRUMPSAY-26NOV02-CYBE",
+   "last_trade": 0.23,
+   "last_trade_at": "2026-10-26T05:17:00+00:00",
+   "legs": [
+    {
+     "fill_px": 0.38,
+     "filled_at": "2026-10-26T09:00:00+00:00",
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.38
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.57
+    }
+   ],
+   "logged": "2026-10-27T02:26:25.590977+00:00",
+   "payout": null,
+   "price": 0.19,
+   "side": "yes",
+   "spread": 0.1,
+   "spread_cost": -0.04,
+   "status": "open",
+   "traded_to_entry": 1.03,
+   "word": "Cybersecurity / Cyber Security"
+  }
+ ],
+ "error": null,
+ "events": {},
+ "lane": "mentions_cheap_yes_split_wide",
+ "last_success": "2026-10-27T02:26:25.590977+00:00",
+ "observations": {
+  "at": "2026-10-27T02:26:25.590977+00:00",
+  "entered": 3,
+  "events": 1,
+  "filled": 2,
+  "skipped": 32,
+  "waiting": 0
+ },
+ "skips": {
+  "KXTRUMPSAY-26NOV02-AUTO": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Autopen / Auto Pen"
+  },
+  "KXTRUMPSAY-26NOV02-BIBI": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Bibi / Netanyahu"
+  },
+  "KXTRUMPSAY-26NOV02-BLOC": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Blockade"
+  },
+  "KXTRUMPSAY-26NOV02-CANA": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Canada / Canadian"
+  },
+  "KXTRUMPSAY-26NOV02-CEAS": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Ceasefire"
+  },
+  "KXTRUMPSAY-26NOV02-CRYP": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Crypto / Bitcoin"
+  },
+  "KXTRUMPSAY-26NOV02-CUBA": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Cuba / Cuban"
+  },
+  "KXTRUMPSAY-26NOV02-DIES": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Diesel"
+  },
+  "KXTRUMPSAY-26NOV02-DIVI": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Dividend / Stimulus"
+  },
+  "KXTRUMPSAY-26NOV02-EPST": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Epstein"
+  },
+  "KXTRUMPSAY-26NOV02-ETHA": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Ethanol"
+  },
+  "KXTRUMPSAY-26NOV02-GOLD": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Golden Dome"
+  },
+  "KXTRUMPSAY-26NOV02-HOUT": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Houthi"
+  },
+  "KXTRUMPSAY-26NOV02-ILHA": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Ilhan / Omar"
+  },
+  "KXTRUMPSAY-26NOV02-MAKE": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Make Iran Great Again"
+  },
+  "KXTRUMPSAY-26NOV02-MARI": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Marijuana / Weed / Cannabis"
+  },
+  "KXTRUMPSAY-26NOV02-MELA": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Melania"
+  },
+  "KXTRUMPSAY-26NOV02-MOON": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Moon"
+  },
+  "KXTRUMPSAY-26NOV02-MORT": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Mortgage"
+  },
+  "KXTRUMPSAY-26NOV02-NOBE": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Nobel"
+  },
+  "KXTRUMPSAY-26NOV02-PRED": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Prediction Market / Predictive Market"
+  },
+  "KXTRUMPSAY-26NOV02-RANK": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Ranked Choice / Ranked-Choice"
+  },
+  "KXTRUMPSAY-26NOV02-REFI": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Refinery"
+  },
+  "KXTRUMPSAY-26NOV02-RIGG": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Rigged Election / Stolen Election"
+  },
+  "KXTRUMPSAY-26NOV02-SOLE": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Soleimani"
+  },
+  "KXTRUMPSAY-26NOV02-SUPE": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Superintelligence / Super Intelligence"
+  },
+  "KXTRUMPSAY-26NOV02-THIR": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Third Term"
+  },
+  "KXTRUMPSAY-26NOV02-TOMA": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Tomahawk"
+  },
+  "KXTRUMPSAY-26NOV02-UFO": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "UFO / UAP"
+  },
+  "KXTRUMPSAY-26NOV02-URAN": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Uranium"
+  },
+  "KXTRUMPSAY-26NOV02-VIVE": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Vivek / Ramaswamy"
+  },
+  "KXTRUMPSAY-26NOV02-ZOHR": {
+   "event": "KXTRUMPSAY-26NOV02",
+   "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
+   "word": "Zohran / Mamdani"
+  }
+ }
+}
