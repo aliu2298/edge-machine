@@ -405,15 +405,14 @@
   ],
   "error": null,
   "key": "finance_spx_nc_no",
-  "last_run": "2026-10-27T17:30:41.941544+00:00",
-  "last_success": "2026-10-27T17:30:41.941544+00:00",
+  "last_run": "2026-10-27T19:28:01.773413+00:00",
+  "last_success": "2026-10-27T19:28:01.773413+00:00",
   "observation": {
-    "at": "2026-10-27T17:30:41.941544+00:00",
-    "eligible": 2,
-    "listed": 210,
+    "at": "2026-10-27T19:28:01.773413+00:00",
+    "eligible": 0,
+    "listed": 70,
     "reasons": {
-      "Not the 16:00 ET event": 140,
-      "Price or spread gate": 68
+      "Outside entry window": 70
     }
   },
   "picks": [
