@@ -237,11 +237,15 @@
    "last_trade_at": "2026-10-28T16:35:00+00:00",
    "legs": [
     {
+     "fill_px": 0.3,
+     "filled_at": "2026-10-28T23:00:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.3
     },
     {
+     "fill_px": 0.45,
+     "filled_at": "2026-10-28T23:00:00+00:00",
      "multiple": 3.0,
      "share": 0.5,
      "target": 0.45
@@ -249,11 +253,14 @@
    ],
    "logged": "2026-10-28T17:00:37.282983+00:00",
    "payout": null,
+   "pnl": 0.2121,
    "price": 0.15,
+   "roi": 1.3344,
+   "roi_2x": 0.8646,
    "side": "no",
    "spread": 0.03,
    "spread_cost": 0.08,
-   "status": "open",
+   "status": "filled",
    "traded_to_entry": 8509.32,
    "word": "Above 4.2250"
   }
@@ -265,13 +272,13 @@
   "KXAAAGASD-26OCT29": "2026-10-28T13:05:29.619697+00:00"
  },
  "lane": "gas_cheap_no",
- "last_success": "2026-10-28T18:54:07.038893+00:00",
+ "last_success": "2026-10-28T23:17:01.063274+00:00",
  "observations": {
-  "at": "2026-10-28T18:54:07.038893+00:00",
+  "at": "2026-10-28T23:17:01.063274+00:00",
   "entered": 0,
   "events": 1,
-  "filled": 0,
-  "skipped": 15,
+  "filled": 2,
+  "skipped": 0,
   "waiting": 0
  },
  "skips": {
