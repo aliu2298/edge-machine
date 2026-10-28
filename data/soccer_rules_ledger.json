@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-27T21:01:44.092306+00:00",
+ "last_run": "2026-10-28T00:20:50.502597+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -859,11 +859,14 @@
      "line": 2.5,
      "logged": "2026-10-27T18:16:46.242487+00:00",
      "match": "AS Roma v Cagliari",
+     "payout": 1.0,
      "price": 0.55,
+     "profit": 76.27,
      "rule": "C4",
+     "settled": "2026-10-28T00:20:50.502597+00:00",
      "side": "yes",
      "start": "2026-10-27T19:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXSERIEATOTAL-26OCT27ROMCAG-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "AS Roma O+D- v Cagliari O-D- \u00b7 Over 2.5 YES 0.55"
@@ -2755,11 +2758,14 @@
      "line": null,
      "logged": "2026-10-27T18:16:46.242487+00:00",
      "match": "AS Roma v Cagliari",
+     "payout": 1.0,
      "price": 0.41,
+     "profit": 134.23,
      "rule": "D3",
+     "settled": "2026-10-28T00:20:50.502597+00:00",
      "side": "yes",
      "start": "2026-10-27T19:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXSERIEABTTS-26OCT27ROMCAG-BTTS",
      "title": "Both Teams To Score",
      "why": "AS Roma O+D- v Cagliari O-D- \u00b7 BTTS YES 0.41"
@@ -2778,11 +2784,14 @@
      "line": null,
      "logged": "2026-10-27T18:16:46.242487+00:00",
      "match": "Torino v Como",
+     "payout": 1.0,
      "price": 0.6,
+     "profit": 62.13,
      "rule": "D3",
+     "settled": "2026-10-28T00:20:50.502597+00:00",
      "side": "yes",
      "start": "2026-10-27T19:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXSERIEABTTS-26OCT27TORCOM-BTTS",
      "title": "Both Teams To Score",
      "why": "Torino O-D- v Como O+D- \u00b7 BTTS YES 0.60"
@@ -2791,14 +2800,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T13:46:36.278851+00:00",
-   "candidates": 0,
-   "due": 2,
-   "labelled": 2,
-   "matched": 0,
-   "new": 0
-  },
   {
    "at": "2026-10-25T14:01:41.353537+00:00",
    "candidates": 0,
@@ -3193,6 +3194,14 @@
   },
   {
    "at": "2026-10-27T21:01:44.092306+00:00",
+   "candidates": 0,
+   "due": 0,
+   "labelled": 0,
+   "matched": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-10-28T00:20:50.502597+00:00",
    "candidates": 0,
    "due": 0,
    "labelled": 0,
