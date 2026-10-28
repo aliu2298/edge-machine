@@ -32984,6 +32984,8 @@
       "card"
      ],
      "price": 0.85,
+     "price_at_tip": 0.85,
+     "price_at_tip_at": "2026-10-28T22:30:38.306525+00:00",
      "rationale": "DEN@NO 1H OVER 104.5 @85c: model 92.8% (mu 123.5, line -19.0 below mu); labels: one side (early-season rule): h1 O\u2212D+ v O+D\u2212; edge +7.8c",
      "sd": 13.0,
      "side": "yes",
@@ -33015,6 +33017,8 @@
       "card"
      ],
      "price": 0.87,
+     "price_at_tip": 0.87,
+     "price_at_tip_at": "2026-10-28T22:30:38.306525+00:00",
      "rationale": "GS@MIN 1H OVER 96.5 @87c: model 94.2% (mu 116.9, line -20.4 below mu); labels: both agree: h1 O+D+ v O+D\u2212 (both attacks agree); edge +7.2c",
      "sd": 13.0,
      "side": "yes",
@@ -33046,6 +33050,8 @@
       "card"
      ],
      "price": 0.88,
+     "price_at_tip": 0.88,
+     "price_at_tip_at": "2026-10-28T22:30:38.306525+00:00",
      "rationale": "NY@CHI 1Q UNDER 70.5 @88c: model 95.0% (mu 56.9, line +13.6 above mu); labels: both agree: q1 O\u2212D\u2212 v O\u2212D+ (both attacks agree); edge +7.0c",
      "sd": 8.28,
      "side": "no",
@@ -33083,7 +33089,7 @@
   }
  },
  "error": null,
- "last_run": "2026-10-28T22:15:21.141198+00:00",
+ "last_run": "2026-10-28T22:30:38.306525+00:00",
  "preseason": [
   {
    "pts": 105,
@@ -33754,10 +33760,6 @@
  "registered": "2026-10-22",
  "runs": [
   {
-   "at": "2026-10-25T05:21:57.909913+00:00",
-   "built": []
-  },
-  {
    "at": "2026-10-25T10:10:28.025303+00:00",
    "built": []
   },
@@ -33963,6 +33965,10 @@
   },
   {
    "at": "2026-10-28T22:15:21.141198+00:00",
+   "built": []
+  },
+  {
+   "at": "2026-10-28T22:30:38.306525+00:00",
    "built": []
   }
  ],
