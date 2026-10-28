@@ -67,6 +67,8 @@
    "last_trade_at": "2026-10-26T16:18:00+00:00",
    "legs": [
     {
+     "fill_px": 0.6,
+     "filled_at": "2026-10-28T04:00:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.6
@@ -129,12 +131,12 @@
   "KXAAAGASW-26NOV02": "2026-10-27T03:52:13.491824+00:00"
  },
  "lane": "gas_week_cheap_no",
- "last_success": "2026-10-28T03:30:36.568231+00:00",
+ "last_success": "2026-10-28T05:51:00.849099+00:00",
  "observations": {
-  "at": "2026-10-28T03:30:36.568231+00:00",
+  "at": "2026-10-28T05:51:00.849099+00:00",
   "entered": 0,
   "events": 1,
-  "filled": 0,
+  "filled": 1,
   "skipped": 0,
   "waiting": 0
  },

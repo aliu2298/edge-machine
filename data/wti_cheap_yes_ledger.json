@@ -404,14 +404,14 @@
   "KXWTI-26OCT2914": "2026-10-27T23:49:22.229612+00:00"
  },
  "lane": "wti_cheap_yes",
- "last_success": "2026-10-28T03:30:34.876309+00:00",
+ "last_success": "2026-10-28T05:50:58.983855+00:00",
  "observations": {
-  "at": "2026-10-28T03:30:34.876309+00:00",
+  "at": "2026-10-28T05:50:58.983855+00:00",
   "entered": 0,
   "events": 2,
   "filled": 0,
-  "skipped": 0,
-  "waiting": 24
+  "skipped": 24,
+  "waiting": 0
  },
  "skips": {
   "KXWTI-26OCT2714-T100.49": {
@@ -676,6 +676,126 @@
   },
   "KXWTI-26OCT2814-T99.99": {
    "event": "KXWTI-26OCT2814",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $99.99"
+  },
+  "KXWTI-26OCT2914-T100.49": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $100.49"
+  },
+  "KXWTI-26OCT2914-T100.99": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $100.99"
+  },
+  "KXWTI-26OCT2914-T101.49": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $101.49"
+  },
+  "KXWTI-26OCT2914-T104.99": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $104.99"
+  },
+  "KXWTI-26OCT2914-T105.49": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $105.49"
+  },
+  "KXWTI-26OCT2914-T105.99": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $105.99"
+  },
+  "KXWTI-26OCT2914-T106.49": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $106.49"
+  },
+  "KXWTI-26OCT2914-T106.99": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $106.99"
+  },
+  "KXWTI-26OCT2914-T92.49": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $92.49"
+  },
+  "KXWTI-26OCT2914-T92.99": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $92.99"
+  },
+  "KXWTI-26OCT2914-T93.49": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $93.49"
+  },
+  "KXWTI-26OCT2914-T93.99": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $93.99"
+  },
+  "KXWTI-26OCT2914-T94.49": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $94.49"
+  },
+  "KXWTI-26OCT2914-T94.99": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $94.99"
+  },
+  "KXWTI-26OCT2914-T95.49": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $95.49"
+  },
+  "KXWTI-26OCT2914-T95.99": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $95.99"
+  },
+  "KXWTI-26OCT2914-T96.49": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $96.49"
+  },
+  "KXWTI-26OCT2914-T96.99": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $96.99"
+  },
+  "KXWTI-26OCT2914-T97.49": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $97.49"
+  },
+  "KXWTI-26OCT2914-T97.99": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $97.99"
+  },
+  "KXWTI-26OCT2914-T98.49": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $98.49"
+  },
+  "KXWTI-26OCT2914-T98.99": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $98.99"
+  },
+  "KXWTI-26OCT2914-T99.49": {
+   "event": "KXWTI-26OCT2914",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
+   "word": "Above $99.49"
+  },
+  "KXWTI-26OCT2914-T99.99": {
+   "event": "KXWTI-26OCT2914",
    "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 inside 6h",
    "word": "Above $99.99"
   }
