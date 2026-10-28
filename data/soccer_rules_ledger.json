@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-28T16:31:33.174678+00:00",
+ "last_run": "2026-10-28T18:16:41.173984+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -639,6 +639,52 @@
      "ticker": "KXSCOTTISHPREMTOTAL-26OCT24DUUABE-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Dundee United O-D- v Aberdeen O-D- \u00b7 Under 3.5 NO 0.68"
+    },
+    {
+     "ask": 0.3,
+     "bid": 0.29,
+     "event": "KXSCOTTISHPREMTOTAL-26OCT28ABEFAL",
+     "group": "B",
+     "id": "B4:KXSCOTTISHPREMTOTAL-26OCT28ABEFAL",
+     "labels": {
+      "away": "O-D-",
+      "home": "O-D-"
+     },
+     "league": "Scottish Premiership",
+     "line": 3.5,
+     "logged": "2026-10-28T18:16:41.173984+00:00",
+     "match": "Aberdeen v Falkirk",
+     "price": 0.71,
+     "rule": "B4",
+     "side": "no",
+     "start": "2026-10-28T19:45Z",
+     "status": "open",
+     "ticker": "KXSCOTTISHPREMTOTAL-26OCT28ABEFAL-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Aberdeen O-D- v Falkirk O-D- \u00b7 Under 3.5 NO 0.71"
+    },
+    {
+     "ask": 0.38,
+     "bid": 0.36,
+     "event": "KXSCOTTISHPREMTOTAL-26OCT28DUNKIL",
+     "group": "B",
+     "id": "B4:KXSCOTTISHPREMTOTAL-26OCT28DUNKIL",
+     "labels": {
+      "away": "O-D+",
+      "home": "O-D-"
+     },
+     "league": "Scottish Premiership",
+     "line": 3.5,
+     "logged": "2026-10-28T18:16:41.173984+00:00",
+     "match": "Dundee v Kilmarnock",
+     "price": 0.64,
+     "rule": "B4",
+     "side": "no",
+     "start": "2026-10-28T19:45Z",
+     "status": "open",
+     "ticker": "KXSCOTTISHPREMTOTAL-26OCT28DUNKIL-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Dundee O-D- v Kilmarnock O-D+ \u00b7 Under 3.5 NO 0.64"
     }
    ]
   },
@@ -893,6 +939,29 @@
      "ticker": "KXSERIEATOTAL-26OCT28ACMBFC-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "AC Milan O+D- v Bologna O-D- \u00b7 Over 2.5 YES 0.48"
+    },
+    {
+     "ask": 0.39,
+     "bid": 0.38,
+     "event": "KXSERIEATOTAL-26OCT28GENJUV",
+     "group": "C",
+     "id": "C4:KXSERIEATOTAL-26OCT28GENJUV",
+     "labels": {
+      "away": "O+D-",
+      "home": "O-D-"
+     },
+     "league": "Serie A",
+     "line": 2.5,
+     "logged": "2026-10-28T18:16:41.173984+00:00",
+     "match": "Genoa v Juventus",
+     "price": 0.39,
+     "rule": "C4",
+     "side": "yes",
+     "start": "2026-10-28T19:45Z",
+     "status": "open",
+     "ticker": "KXSERIEATOTAL-26OCT28GENJUV-3",
+     "title": "Will over 2.5 goals be scored?",
+     "why": "Genoa O-D- v Juventus O+D- \u00b7 Over 2.5 YES 0.39"
     }
    ]
   },
@@ -2841,19 +2910,57 @@
      "ticker": "KXSERIEABTTS-26OCT28ACMBFC-BTTS",
      "title": "Both Teams To Score",
      "why": "AC Milan O+D- v Bologna O-D- \u00b7 BTTS YES 0.50"
+    },
+    {
+     "ask": 0.44,
+     "bid": 0.42,
+     "event": "KXSERIEABTTS-26OCT28GENJUV",
+     "group": "BTTS",
+     "id": "D3:KXSERIEABTTS-26OCT28GENJUV",
+     "labels": {
+      "away": "O+D-",
+      "home": "O-D-"
+     },
+     "league": "Serie A",
+     "line": null,
+     "logged": "2026-10-28T18:16:41.173984+00:00",
+     "match": "Genoa v Juventus",
+     "price": 0.44,
+     "rule": "D3",
+     "side": "yes",
+     "start": "2026-10-28T19:45Z",
+     "status": "open",
+     "ticker": "KXSERIEABTTS-26OCT28GENJUV-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Genoa O-D- v Juventus O+D- \u00b7 BTTS YES 0.44"
+    },
+    {
+     "ask": 0.59,
+     "bid": 0.58,
+     "event": "KXSCOTTISHPREMBTTS-26OCT28CELDUU",
+     "group": "BTTS",
+     "id": "D3:KXSCOTTISHPREMBTTS-26OCT28CELDUU",
+     "labels": {
+      "away": "O-D-",
+      "home": "O+D-"
+     },
+     "league": "Scottish Premiership",
+     "line": null,
+     "logged": "2026-10-28T18:16:41.173984+00:00",
+     "match": "Celtic v Dundee United",
+     "price": 0.59,
+     "rule": "D3",
+     "side": "yes",
+     "start": "2026-10-28T19:45Z",
+     "status": "open",
+     "ticker": "KXSCOTTISHPREMBTTS-26OCT28CELDUU-BTTS",
+     "title": "Both Teams To Score",
+     "why": "Celtic O+D- v Dundee United O-D- \u00b7 BTTS YES 0.59"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T14:31:10.135818+00:00",
-   "candidates": 0,
-   "due": 4,
-   "labelled": 4,
-   "matched": 0,
-   "new": 0
-  },
   {
    "at": "2026-10-25T14:46:11.072005+00:00",
    "candidates": 1,
@@ -3253,6 +3360,14 @@
    "labelled": 3,
    "matched": 1,
    "new": 0
+  },
+  {
+   "at": "2026-10-28T18:16:41.173984+00:00",
+   "candidates": 4,
+   "due": 7,
+   "labelled": 7,
+   "matched": 4,
+   "new": 5
   }
  ],
  "version": "soccer-rules-v1"
