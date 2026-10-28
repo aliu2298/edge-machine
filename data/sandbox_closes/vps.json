@@ -885,16 +885,6 @@
    "lead_min": 8.1,
    "price": 0.6825
   },
-  "espn_fpi:aec-nfl-car-phi-2026-10-18": {
-   "at": "2026-10-18T16:46:07+00:00",
-   "lead_min": 13.9,
-   "price": 0.41
-  },
-  "espn_fpi:aec-nfl-chi-atl-2026-10-18": {
-   "at": "2026-10-18T16:46:07+00:00",
-   "lead_min": 13.9,
-   "price": 0.515
-  },
   "espn_fpi:aec-nfl-cle-ten-2026-10-25": {
    "at": "2026-10-25T16:48:58+00:00",
    "lead_min": 11.0,
@@ -939,16 +929,6 @@
    "at": "2026-10-25T16:48:58+00:00",
    "lead_min": 11.0,
    "price": 0.8075
-  },
-  "espn_fpi:aec-nfl-nyj-ne-2026-10-18": {
-   "at": "2026-10-18T16:46:07+00:00",
-   "lead_min": 13.9,
-   "price": 0.7575
-  },
-  "espn_fpi:aec-nfl-pit-tb-2026-10-18": {
-   "at": "2026-10-18T16:46:07+00:00",
-   "lead_min": 13.9,
-   "price": 0.5525
   },
   "espn_fpi:aec-nfl-sf-atl-2026-10-25": {
    "at": "2026-10-25T16:48:58+00:00",
@@ -1491,8 +1471,8 @@
    "price": 0.41
   },
   "o25_congestion:KXSERIEATOTAL-26OCT28PARUDI-3": {
-   "at": "2026-10-28T16:42:01+00:00",
-   "lead_min": 48.0,
+   "at": "2026-10-28T16:57:08+00:00",
+   "lead_min": 32.9,
    "price": 0.54
   },
   "o25_congestion:KXUCLTOTAL-26OCT20FCPPSV-3": {
@@ -1570,6 +1550,11 @@
    "lead_min": 6.7,
    "price": 0.79
   },
+  "p05_unbeaten:KXKNVBCUPGAME-26OCT28SPAFOR-SPA": {
+   "at": "2026-10-28T16:57:08+00:00",
+   "lead_min": 47.9,
+   "price": 0.49
+  },
   "p05_unbeaten:KXUECLGAME-26OCT22BRAKAA-BRA": {
    "at": "2026-10-22T18:58:08+00:00",
    "lead_min": 1.9,
@@ -1606,8 +1591,8 @@
    "price": 0.46
   },
   "team2_form_l10:KXSERIEATEAMTOTAL-26OCT28VENINT-INT2": {
-   "at": "2026-10-28T16:42:01+00:00",
-   "lead_min": 48.0,
+   "at": "2026-10-28T16:57:08+00:00",
+   "lead_min": 32.9,
    "price": 0.75
   },
   "team2_ranked:KXAFCCLTEAMTOTAL-26OCT28KASPOH-KAS2": {
@@ -1646,13 +1631,13 @@
    "price": 0.6
   },
   "team2_ranked:KXSERIEATEAMTOTAL-26OCT28PARUDI-PAR2": {
-   "at": "2026-10-28T16:42:01+00:00",
-   "lead_min": 48.0,
+   "at": "2026-10-28T16:57:08+00:00",
+   "lead_min": 32.9,
    "price": 0.35
   },
   "team2_ranked:KXSERIEATEAMTOTAL-26OCT28PARUDI-UDI2": {
-   "at": "2026-10-28T16:42:01+00:00",
-   "lead_min": 48.0,
+   "at": "2026-10-28T16:57:08+00:00",
+   "lead_min": 32.9,
    "price": 0.37
   },
   "team2_ranked:KXUECLTEAMTOTAL-26OCT22FKJBRI-BRI2": {
@@ -1841,9 +1826,9 @@
    "price": 0.81
   },
   "u35_low_o15:KXSERIEATOTAL-26OCT28PARUDI-2": {
-   "at": "2026-10-28T16:42:01+00:00",
-   "lead_min": 48.0,
-   "price": 0.73
+   "at": "2026-10-28T16:57:08+00:00",
+   "lead_min": 32.9,
+   "price": 0.74
   },
   "u35_low_scoring:KXEFLCUPTOTAL-26OCT27BRAPET-4": {
    "at": "2026-10-27T19:39:08+00:00",
@@ -1896,10 +1881,10 @@
    "price": 0.65
   },
   "u35_low_scoring:KXSERIEATOTAL-26OCT28PARUDI-4": {
-   "at": "2026-10-28T16:42:01+00:00",
-   "lead_min": 48.0,
+   "at": "2026-10-28T16:57:08+00:00",
+   "lead_min": 32.9,
    "price": 0.76
   }
  },
- "updated": "2026-10-28T16:42:01+00:00"
+ "updated": "2026-10-28T16:57:08+00:00"
 }
