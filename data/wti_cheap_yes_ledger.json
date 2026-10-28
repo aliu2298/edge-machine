@@ -10,22 +10,29 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.6
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.9
     }
    ],
    "logged": "2026-10-27T03:36:13.254634+00:00",
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.3147,
    "price": 0.3,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-10-28T02:45:32.663800+00:00",
    "side": "yes",
    "spread": 0.04,
    "spread_cost": null,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Above $105.99"
   },
@@ -397,9 +404,9 @@
   "KXWTI-26OCT2914": "2026-10-27T23:49:22.229612+00:00"
  },
  "lane": "wti_cheap_yes",
- "last_success": "2026-10-28T02:30:36.783925+00:00",
+ "last_success": "2026-10-28T02:45:32.663800+00:00",
  "observations": {
-  "at": "2026-10-28T02:30:36.783925+00:00",
+  "at": "2026-10-28T02:45:32.663800+00:00",
   "entered": 0,
   "events": 3,
   "filled": 0,
