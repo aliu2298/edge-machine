@@ -56,6 +56,7 @@ def build(d=None, st=None, now=None):
         # Retired by hand (2026-10-24 and before): their own fold, final record and reason.
         retired=sport_tab.retired_rows(d, st, FAMILY))
     html = SP.page(sp, d, st, now, rows=rows, idle=idle)
+    html = _cheap_side(html)
     return place_label_rules(html, _rules_section() + "\n" + _team_rules_section() + "\n" + _contender_section() + "\n"
                              + _sa_o15_section() + "\n")
 
@@ -74,6 +75,16 @@ def place_label_rules(html, sections):
         html = html.replace("<footer>", sections + "<footer>", 1)
     return html.replace(TOC_EVENTS, TOC_EVENTS + '<a href="#label-rules">Label rules</a><a href="#team-rules">Team scoring</a>'
                         '<a href="#contender-overs">Contenders</a><a href="#sa-o15">Arg &amp; Bra</a>', 1)
+
+
+def _cheap_side(html):
+    """o35_cheap_no_wave (o35_cheap_no_build.py, 2026-10-28) as the page's cheap-side section, near the top.
+    Never breaks the page."""
+    try:
+        import o35_cheap_no_build
+        return o35_cheap_no_build.place(html)
+    except Exception:                                           # noqa: BLE001
+        return html
 
 
 def _rules_section():
