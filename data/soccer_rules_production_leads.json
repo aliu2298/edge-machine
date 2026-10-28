@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-28T00:20:50+00:00",
+ "board_built_at": "2026-10-28T16:01:51+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sr_a6": true,
@@ -488,6 +488,42 @@
    "source": "sr_d3",
    "sport": "soccer_btts",
    "status": "hit"
+  },
+  "2026-10-28|AC Milan|Bologna|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
+   "away": "Bologna",
+   "bet": {
+    "kind": "btts"
+   },
+   "date": "2026-10-28",
+   "edge_at_log": null,
+   "first_seen": "2026-10-28",
+   "headline": "Both teams to score",
+   "home": "AC Milan",
+   "id": "2026-10-28|AC Milan|Bologna|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score",
+   "kickoff": "2026-10-28T17:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-28",
+   "last_seen_at": "2026-10-28T16:01:51+00:00",
+   "league": "Serie A",
+   "match": "AC Milan v Bologna",
+   "pair": "sr_d3|soccer_btts",
+   "price_at_log": 0.5,
+   "published_at": "2026-10-28T16:01:51+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Both teams to score",
+    "event": "KXSERIEABTTS-26OCT28ACMBFC",
+    "market": "KXSERIEABTTS-26OCT28ACMBFC-BTTS",
+    "outcome": "Both Teams To Score",
+    "outcome_side": "yes",
+    "price_at_log": 0.5,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_d3:KXSERIEABTTS-26OCT28ACMBFC-BTTS",
+   "source": "sr_d3",
+   "sport": "soccer_btts",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -548,9 +584,9 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 11,
+    "leads": 12,
     "problem": null,
-    "routed": 11,
+    "routed": 12,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -562,7 +598,7 @@
    "sandbox_roi_fee": -0.1711,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   }
@@ -590,5 +626,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-28T00:20:50+00:00"
+ "updated_at": "2026-10-28T16:01:51+00:00"
 }
