@@ -5,6 +5,7 @@ Moved to Production by hand by Olu on 2026-10-21, on small samples, with live $1
   A6   Premier League, O-D- team v O+ opponent  under 2.5 NO <=55c    2/2,   +$0.95
   D3   O-D- v O+D-, 14 BTTS leagues             BTTS YES 40-70c       11/15, +$2.01
   ARG  Argentina over 1.5, every league match   over 1.5 YES at ask   3/3,   +$0.97
+       -- OUT of Production 2026-10-27 (live 8-6, -18.5%), back to the Sandbox with its record.
 (Brasileirao, sa_o15's other row, stays in the Sandbox.)
 
 These rules run on their own ledgers (data/soccer_rules_ledger.json, data/sa_o15_ledger.json), so
@@ -34,7 +35,6 @@ PAIRS = {
     "A7": ("sr_a7", "soccer_u35", "UCL either team O+D− · over 3.5"),
     "A6": ("sr_a6", "soccer_o25", "EPL O−D− v an O+ opponent · under 2.5"),
     "D3": ("sr_d3", "soccer_btts", "O−D− v O+D− · both teams to score"),
-    "ARG": ("sa_o15_arg", "soccer_o15", "Argentina over 1.5"),
 }
 LABELS = {src: name for src, _sport, name in PAIRS.values()}
 # Leagues a rule logs in but does NOT publish to Production. 2026-10-22, as asked (Olu), before
@@ -92,11 +92,8 @@ def quotes(rules_state, sa_state):
             q = _quote(rule, r, r.get("league"))
             if q:
                 out.append(q)
-    for r in ((sa_state.get("rules") or {}).get("ARG") or {}).get("picks") or []:
-        # sa_o15 logs ESPN's league name ("Liga Profesional"); the feed's soccer leagues name it so.
-        q = _quote("ARG", r, r.get("league") or "Liga Profesional")
-        if q:
-            out.append(q)
+    # Argentina over 1.5 (sa_o15's ARG row) left Production 2026-10-27, as asked (Olu): back to the
+    # Sandbox, still collecting in data/sa_o15_ledger.json; nothing of it is published here any more.
     return out
 
 
@@ -109,8 +106,7 @@ def feed(rules_state, sa_state, now=None, previous=None):
     import production as P
     now = now or dt.datetime.now(dt.timezone.utc)
     rows = quotes(rules_state, sa_state)
-    ok = {"sa_o15_arg": _healthy(sa_state, now)}
-    ok.update({PAIRS[k][0]: _healthy(rules_state, now) for k in ("A7", "A6", "D3")})
+    ok = {PAIRS[k][0]: _healthy(rules_state, now) for k in ("A7", "A6", "D3")}
     # A stale or failed read keeps the settled history but publishes no actionable entry.
     rows = [r for r in rows if r["status"] != "open" or ok.get(r["source"])]
     stamps = [D.instant(s.get("last_run")) for s in (rules_state, sa_state)]

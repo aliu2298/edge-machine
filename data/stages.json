@@ -1818,6 +1818,48 @@
    "pair": "o15_ranked|soccer_o15",
    "reason": "taken off the Production list by hand, record kept",
    "to": "sandbox"
+  },
+  {
+   "at": "2026-10-28T00:18:18+00:00",
+   "pair": "espn_fpi|nfl",
+   "reason": "taken off the Production list by hand, record kept",
+   "to": "sandbox"
+  },
+  {
+   "at": "2026-10-28T00:18:18+00:00",
+   "pair": "oddspedia|cricket",
+   "reason": "taken off the Production list by hand, record kept",
+   "to": "sandbox"
+  },
+  {
+   "at": "2026-10-28T00:18:18+00:00",
+   "pair": "u35_low_scoring|soccer_u35",
+   "reason": "taken off the Production list by hand, record kept",
+   "to": "sandbox"
+  },
+  {
+   "at": "2026-10-28T00:18:18+00:00",
+   "pair": "corners_total_under|soccer_corners",
+   "reason": "taken off the Production list by hand, record kept",
+   "to": "sandbox"
+  },
+  {
+   "at": "2026-10-28T00:18:18+00:00",
+   "pair": "crypto_eth_fav_both|crypto_fav",
+   "reason": "taken off the Production list by hand, record kept",
+   "to": "sandbox"
+  },
+  {
+   "at": "2026-10-28T00:18:18+00:00",
+   "pair": "crypto_sol_fav_both|crypto_fav",
+   "reason": "taken off the Production list by hand, record kept",
+   "to": "sandbox"
+  },
+  {
+   "at": "2026-10-28T00:18:18+00:00",
+   "pair": "tennis_utr_shortlist_v1|tennis",
+   "reason": "taken off the Production list by hand, record kept",
+   "to": "sandbox"
   }
  ],
  "pairs": {
@@ -1857,24 +1899,9 @@
    "stage": "sandbox"
   },
   "corners_total_under|soccer_corners": {
-   "by_hand": "2026-10-15",
-   "entry": {
-    "base_roi": null,
-    "clv": null,
-    "clv_n": 0,
-    "n": 0,
-    "own_roi": null,
-    "roi": null,
-    "roi_fee": null,
-    "span_days": 0.0,
-    "weeks": 0,
-    "z": 0.0
-   },
-   "entry_since": null,
-   "promoted_at": "2026-10-15T07:20:21+00:00",
-   "ready_at": "2026-10-15T07:20:21+00:00",
-   "ready_since": "2026-10-15T07:20:21+00:00",
-   "stage": "production"
+   "demoted_at": "2026-10-28T00:18:18+00:00",
+   "since": null,
+   "stage": "sandbox"
   },
   "corners_ucl_fade|soccer_corners": {
    "demoted_at": "2026-10-21T02:37:06+00:00",
@@ -1892,24 +1919,9 @@
    "stage": "sandbox"
   },
   "crypto_eth_fav_both|crypto_fav": {
-   "by_hand": "2026-10-20",
-   "entry": {
-    "base_roi": null,
-    "clv": null,
-    "clv_n": 0,
-    "n": 0,
-    "own_roi": null,
-    "roi": null,
-    "roi_fee": null,
-    "span_days": 0.0,
-    "weeks": 0,
-    "z": 0.0
-   },
-   "entry_since": null,
-   "promoted_at": "2026-10-21T00:47:16+00:00",
-   "ready_at": "2026-10-21T00:47:16+00:00",
-   "ready_since": "2026-10-21T00:47:16+00:00",
-   "stage": "production"
+   "demoted_at": "2026-10-28T00:18:18+00:00",
+   "since": null,
+   "stage": "sandbox"
   },
   "crypto_fav_band_below|crypto_fav": {
    "by_hand": "2026-10-20",
@@ -1937,24 +1949,9 @@
    "stage": "sandbox"
   },
   "crypto_sol_fav_both|crypto_fav": {
-   "by_hand": "2026-10-20",
-   "entry": {
-    "base_roi": null,
-    "clv": null,
-    "clv_n": 0,
-    "n": 0,
-    "own_roi": null,
-    "roi": null,
-    "roi_fee": null,
-    "span_days": 0.0,
-    "weeks": 0,
-    "z": 0.0
-   },
-   "entry_since": null,
-   "promoted_at": "2026-10-21T00:47:16+00:00",
-   "ready_at": "2026-10-21T00:47:16+00:00",
-   "ready_since": "2026-10-21T00:47:16+00:00",
-   "stage": "production"
+   "demoted_at": "2026-10-28T00:18:18+00:00",
+   "since": null,
+   "stage": "sandbox"
   },
   "ere_draw|soccer": {
    "by_hand": "2026-10-11",
@@ -1982,24 +1979,9 @@
    "stage": "sandbox"
   },
   "espn_fpi|nfl": {
-   "by_hand": "2026-10-16",
-   "entry": {
-    "base_roi": 0.7633,
-    "clv": -0.0037,
-    "clv_n": 8,
-    "n": 8,
-    "own_roi": 0.3332,
-    "roi": 0.3332,
-    "roi_fee": 0.2851,
-    "span_days": 1.3021,
-    "weeks": 0,
-    "z": 0.1758
-   },
-   "entry_since": "2026-09-21T02:05:59+00:00",
-   "promoted_at": "2026-10-16T17:17:38+00:00",
-   "ready_at": "2026-10-16T17:17:38+00:00",
-   "ready_since": "2026-10-16T17:17:38+00:00",
-   "stage": "production"
+   "demoted_at": "2026-10-28T00:18:18+00:00",
+   "since": "2026-09-21T02:05:59+00:00",
+   "stage": "sandbox"
   },
   "ftts_no_70_80|soccer_ftts": {
    "by_hand": "2026-10-16",
@@ -2102,26 +2084,9 @@
    "stage": "sandbox"
   },
   "oddspedia|cricket": {
-   "by_hand": "2026-09-27",
-   "entry": {
-    "base_roi": 1.9232,
-    "clv": 0.1,
-    "clv_n": 9,
-    "n": 12,
-    "own_roi": 2.0333,
-    "roi": 2.0333,
-    "roi_fee": 1.9007,
-    "span_days": 12.1042,
-    "weeks": 1,
-    "z": 2.2155
-   },
-   "entry_since": "2026-10-12T00:00:00+00:00",
-   "promoted_at": "2026-09-28T02:59:44+00:00",
-   "ready_at": "2026-09-28T02:59:44+00:00",
-   "ready_since": "2026-09-28T02:59:44+00:00",
-   "reset": "RESET 2026-10-08: this rule's cricket record counts from 2026-10-12T00:00:00+00:00, and nothing logged before that instant counts toward its record, ROI, verdict or Production record. Why: the 47-row audit found two Polymarket US entries (Amsterdam Flames at 7c on Sep 16, Belfast Wolves at 11c on Sep 19) whose prices were 48-64c by the start and which made up $2,138 of Oddspedia's $2,354 gross, plus the earlier side-swap voids; the record could not be trusted, so it restarts. Every row stays on file, no settled row changes and nothing is voided.",
+   "demoted_at": "2026-10-28T00:18:18+00:00",
    "since": "2026-10-12T00:00:00+00:00",
-   "stage": "production"
+   "stage": "sandbox"
   },
   "olbg|boxing": {
    "demoted_at": "2026-09-28T02:59:44+00:00",
@@ -2257,25 +2222,9 @@
    "stage": "sandbox"
   },
   "tennis_utr_shortlist_v1|tennis": {
-   "by_hand": "2026-10-14",
-   "entry": {
-    "base_roi": null,
-    "clv": null,
-    "clv_n": 0,
-    "n": 0,
-    "own_roi": null,
-    "roi": null,
-    "roi_fee": null,
-    "span_days": 0.0,
-    "weeks": 0,
-    "z": 0.0
-   },
-   "entry_since": "2026-10-14T04:38:55+00:00",
-   "promoted_at": "2026-10-14T04:38:55+00:00",
-   "ready_at": "2026-10-14T04:38:55+00:00",
-   "ready_since": "2026-10-14T04:38:55+00:00",
-   "research_only": true,
-   "stage": "production"
+   "demoted_at": "2026-10-28T00:18:18+00:00",
+   "since": "2026-10-14T04:38:55+00:00",
+   "stage": "sandbox"
   },
   "turkey_btts_dog|soccer_btts": {
    "demoted_at": "2026-10-20T16:42:42+00:00",
@@ -2288,24 +2237,9 @@
    "stage": "sandbox"
   },
   "u35_low_scoring|soccer_u35": {
-   "by_hand": "2026-10-11",
-   "entry": {
-    "base_roi": -0.0537,
-    "clv": -0.0223,
-    "clv_n": 13,
-    "n": 13,
-    "own_roi": 0.188,
-    "roi": 0.188,
-    "roi_fee": 0.1646,
-    "span_days": 25.8194,
-    "weeks": 3,
-    "z": 1.0789
-   },
-   "entry_since": null,
-   "promoted_at": "2026-10-11T19:34:45+00:00",
-   "ready_at": "2026-10-11T19:34:45+00:00",
-   "ready_since": "2026-10-11T19:34:45+00:00",
-   "stage": "production"
+   "demoted_at": "2026-10-28T00:18:18+00:00",
+   "since": null,
+   "stage": "sandbox"
   },
   "u35_low_scoring|soccer_u35_intl": {
    "by_hand": "2026-10-04",
@@ -2328,5 +2262,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-10-27T23:51:58+00:00"
+ "updated": "2026-10-28T00:18:18+00:00"
 }

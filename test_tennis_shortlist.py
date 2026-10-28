@@ -43,7 +43,7 @@ assert TS.select(rows, [], NOW, lambda mid: {})[0]==[]
 for old in ['tennis_fav_band','tennis_fav_band_3h','tennis_combo2','tennis_combo3','tennis_combo4','pm_combo2','pm_combo3','pm_combo4']:
     assert S.source_fully_paused(old)
 assert 'tennis_combo2|tennis_combo' not in T.PAIR_OVERRIDES
-assert 'tennis_utr_shortlist_v1|tennis' in T.PAIR_OVERRIDES
+assert 'tennis_utr_shortlist_v1|tennis' not in T.PAIR_OVERRIDES  # back in the Sandbox 2026-10-27
 
 # Exercise the actual publisher with public calls replaced by deterministic fixtures.
 saved=(S._get,S.CHALLENGERS,T.CONSENSUS,T.snap_closing)

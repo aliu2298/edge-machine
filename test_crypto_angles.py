@@ -131,10 +131,16 @@ publish_all(d4, eth2, RUN_1, lanes=BOTH)
 eq([(q["market_id"].rsplit("-T", 1)[1], q["pick"]) for q in d4["quotes"] if q["source"] == "crypto_eth_fav_both"],
    [("4000", "a"), ("4100", "b")], "with nothing held, the cheapest No is its own")
 
-print("\nProduction: crypto_fav_band out, the three angle lanes in")
+print("\nProduction: crypto_fav_band out, the three angle lanes in (ETH and SOL back out 2026-10-27)")
 eq(sorted(k for k in T.PAIR_OVERRIDES if k.endswith("|crypto_fav")),
-   ["crypto_eth_fav_both|crypto_fav", "crypto_fav_band_below|crypto_fav", "crypto_sol_fav_both|crypto_fav"],
-   "the three angle lanes are the crypto Production pairs")
+   ["crypto_fav_band_below|crypto_fav"],
+   "the below lane is the one crypto Production pair left")
+eq({k: T.PAIR_REMOVALS[k] for k in ("crypto_eth_fav_both|crypto_fav", "crypto_sol_fav_both|crypto_fav")},
+   {k: dict(removed_on="2026-10-27", keep_record=True) for k in ("crypto_eth_fav_both|crypto_fav", "crypto_sol_fav_both|crypto_fav")},
+   "ETH and SOL are back in the Sandbox keeping their records")
+# The 2026-10-20 move, replayed: the two were listed that day.
+for _k in ("crypto_eth_fav_both|crypto_fav", "crypto_sol_fav_both|crypto_fav"):
+    T.PAIR_OVERRIDES[_k] = dict(moved_on="2026-10-20", production_at=None)
 eq({k: T.PAIR_OVERRIDES[k]["moved_on"] for k in T.PAIR_OVERRIDES if k.endswith("|crypto_fav")},
    {k: "2026-10-20" for k in ("crypto_eth_fav_both|crypto_fav", "crypto_fav_band_below|crypto_fav", "crypto_sol_fav_both|crypto_fav")},
    "all listed 2026-10-20")
@@ -148,6 +154,8 @@ eq({k: (st["pairs"][k]["stage"], st["pairs"][k].get("since")) for k in sorted(st
    "one run moves all four: the band back on its whole record, the three in")
 T.evaluate_stages({"quotes": []}, st, now=datetime.datetime(2026, 10, 21, 2, tzinfo=timezone.utc), verbose=False)
 eq(st["pairs"]["crypto_fav_band|crypto_fav"]["stage"], "sandbox", "and the band does not flip back on a later run")
+for _k in ("crypto_eth_fav_both|crypto_fav", "crypto_sol_fav_both|crypto_fav"):
+    del T.PAIR_OVERRIDES[_k]
 
 print("\nthe feed: the No of a ladder rung")
 q = dict(rung("KXSOLD", 190, 0.27), id="crypto_sol_fav_both:KXSOLD-26OCT0617-T190", source="crypto_sol_fav_both", pick="b",

@@ -3418,15 +3418,13 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 # and not a surprise. These are judgement calls; the test only pins that they were made.
 eq(sorted(T.PAIR_OVERRIDES),
    ["commod_fav_band|commodities_fav",
-    "corners_total_under|soccer_corners",
-    "crypto_eth_fav_both|crypto_fav", "crypto_fav_band_below|crypto_fav", "crypto_sol_fav_both|crypto_fav", "ere_draw|soccer", "espn_fpi|nfl", "ftts_no_70_80|soccer_ftts",
+    "crypto_fav_band_below|crypto_fav", "ere_draw|soccer", "ftts_no_70_80|soccer_ftts",
     "liga_btts_even|soccer_btts", "mls_fade_home|soccer_p05",
-    "o15_ranked|soccer_o15_intl", "oddspedia|cricket", "team1_form_l5|soccer_team1_intl",
-    "team2_form_l10|soccer_team2", "team2_ranked|soccer_team2", "tennis_utr_shortlist_v1|tennis",
-    "u35_low_scoring|soccer_u35",
+    "o15_ranked|soccer_o15_intl", "team1_form_l5|soccer_team1_intl",
+    "team2_form_l10|soccer_team2", "team2_ranked|soccer_team2",
     "u35_low_scoring|soccer_u35_intl"],
    "the Production list is exactly the pairs moved there by hand, and nothing else (corners_ucl_fade out 2026-10-21; four soccer lanes out, crypto_fav_band swapped for three crypto angle lanes, 2026-10-20) "
-   "(team scores 1+ · Clubs out 2026-10-14; five moved in 2026-10-16)")
+   "(team scores 1+ · Clubs out 2026-10-14; five moved in 2026-10-16; seven lanes back to the Sandbox 2026-10-27)")
 # pm_combo4 came OFF on 2026-10-03, not on its record: Polymarket US publishes no parlay
 # API, so in five days as a Production pair it published zero leads and never could. The
 # refusal below is why, and it must keep holding or the pair could be relisted as a label.
@@ -3875,7 +3873,8 @@ ok("legs live on" in _tfb["retired"],
 # ---------------------------------------------------------------------------
 print("\ncricket reaches the Production feed")
 ok("cricket" in T.ROUTED_SPORTS, "cricket is a routed sport, so a lead carries the venue's market")
-ok("oddspedia|cricket" in T.PAIR_OVERRIDES, "and the pair is listed in Production")
+ok("oddspedia|cricket" not in T.PAIR_OVERRIDES and T.PAIR_REMOVALS["oddspedia|cricket"]["keep_record"],
+   "and the pair came back out 2026-10-27, keeping its record")
 # The reason it was listed early, and the caveat, have to be written down where the listing
 # is — the ROI is +203% and +214pp of that is two longshots landing.
 _povsrc = open(_os.path.join(_os.path.dirname(_os.path.abspath(T.__file__)),
@@ -4947,9 +4946,9 @@ ok("1 match · 3 bets" in SB._row(dict(name="corners_under", sport="soccer_corne
 ok("corners_under|soccer_corners" not in T.PAIR_OVERRIDES and not S.SOURCES["corners_under"]["connected"],
    "the corners rule left Production and stopped on 2026-10-15")
 eq(sorted(k for k, v in T.PAIR_OVERRIDES.items() if k.startswith("corners_") and v["moved_on"] == "2026-10-15"),
-   ["corners_total_under|soccer_corners"],
+   [],
    "and its three lanes went to Production that day; corners_team_fade came back out on 2026-10-20, "
-   "corners_ucl_fade on 2026-10-21")
+   "corners_ucl_fade on 2026-10-21, corners_total_under on 2026-10-27")
 ok(T.PAIR_REMOVALS["corners_team_fade|soccer_corners"]["keep_record"]
    and T.PAIR_REMOVALS["corners_ucl_fade|soccer_corners"] == dict(removed_on="2026-10-21", keep_record=True),
    "keeping their records")

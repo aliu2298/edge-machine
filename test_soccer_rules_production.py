@@ -43,16 +43,16 @@ sa = {"last_run": (NOW - dt.timedelta(minutes=20)).isoformat(), "error": None, "
     "BRA": {"picks": [pick("BRA", "KXBRASILEIROTOTAL-26OCT22FLAPAL-2", "Flamengo v Palmeiras", "Brasileirão",
                            "yes", 0.74, 1.5)]}}}
 
-print("only the four rules, on the existing soccer claims")
+print("only the three rules, on the existing soccer claims (Argentina left Production 2026-10-27)")
 qs = RP.quotes(rules, sa)
-check("A7, A6, D3 and Argentina; never D1 or the Brasileirão",
-      sorted({q["source"] for q in qs}), ["sa_o15_arg", "sr_a6", "sr_a7", "sr_d3"])
+check("A7, A6 and D3; never D1, Argentina or the Brasileirão",
+      sorted({q["source"] for q in qs}), ["sr_a6", "sr_a7", "sr_d3"])
 by = {q["market_id"]: q for q in qs}
 check("each on its claim domain and side",
       [(by[t]["sport"], by[t]["pick"]) for t in ("KXUCLTOTAL-26OCT22ARSBAY-4", "KXEPLTOTAL-26OCT25EVEBUR-3",
-                                                  "KXLALIGABTTS-26OCT25GETOSA-BTTS", "KXARGPREMDIVTOTAL-26OCT22RIVBOC-2")],
-      [("soccer_u35", "a"), ("soccer_o25", "b"), ("soccer_btts", "a"), ("soccer_o15", "a")])
-check("all four may be published, on an ESPN-verified start", [(T.placeable(q), P.start_verified(q)) for q in qs],
+                                                  "KXLALIGABTTS-26OCT25GETOSA-BTTS")],
+      [("soccer_u35", "a"), ("soccer_o25", "b"), ("soccer_btts", "a")])
+check("all three may be published, on an ESPN-verified start", [(T.placeable(q), P.start_verified(q)) for q in qs],
       [(True, True)] * len(qs))
 check("Argentina's league is a feed league now, and only it was added", (
     "Liga Profesional" in S.feed_binary_leagues(), S.FEED_EXTRA_LEAGUES), (True, {"Liga Profesional"}))
@@ -60,9 +60,9 @@ check("Argentina's league is a feed league now, and only it was added", (
 print("\nthe leads: the exact contract and side")
 f = RP.feed(rules, sa, now=NOW)
 leads = {l["route"]["market"]: l for l in f["leads"].values()}
-check("four pairs listed, moved by hand 2026-10-21",
+check("three pairs listed, moved by hand 2026-10-21",
       (sorted(f["pairs"]), {v["by_hand"] for v in f["pairs"].values()}),
-      (["sa_o15_arg|soccer_o15", "sr_a6|soccer_o25", "sr_a7|soccer_u35", "sr_d3|soccer_btts"], {"2026-10-21"}))
+      (["sr_a6|soccer_o25", "sr_a7|soccer_u35", "sr_d3|soccer_btts"], {"2026-10-21"}))
 check("A7: over 3.5 is the Yes of the -4 contract, named as Kalshi names it",
       (leads["KXUCLTOTAL-26OCT22ARSBAY-4"]["bet"], leads["KXUCLTOTAL-26OCT22ARSBAY-4"]["route"]["outcome_side"],
        leads["KXUCLTOTAL-26OCT22ARSBAY-4"]["route"]["outcome"]), ({"kind": "total_gte", "n": 4}, "yes", "Over 3.5 goals scored"))
@@ -71,15 +71,13 @@ check("A6: under 2.5 is the No of the over-2.5 contract",
       ({"kind": "total_lte", "n": 2}, "no"))
 check("D3: the Yes of the BTTS contract", (leads["KXLALIGABTTS-26OCT25GETOSA-BTTS"]["bet"]["kind"],
                                             leads["KXLALIGABTTS-26OCT25GETOSA-BTTS"]["route"]["outcome"]), ("btts", "Both Teams To Score"))
-check("ARG: over 1.5 is the Yes of the over-1.5 contract",
-      (leads["KXARGPREMDIVTOTAL-26OCT22RIVBOC-2"]["bet"], leads["KXARGPREMDIVTOTAL-26OCT22RIVBOC-2"]["league"]),
-      ({"kind": "total_gte", "n": 2}, "Liga Profesional"))
+check("ARG is not a lead any more: it is back in the Sandbox", "KXARGPREMDIVTOTAL-26OCT22RIVBOC-2" in leads, False)
 check("the settled D3 entry closed before Production, so it is not a lead", "KXSERIEABTTS-26OCT19UDILEC-BTTS" in leads, False)
 check("each lead names its rule", sorted({l["id"].split(" · ", 1)[1] for l in f["leads"].values()}),
       sorted(RP.LABELS.values()))
 stale = dict(rules, last_run=(NOW - dt.timedelta(hours=5)).isoformat())
-check("a stale rules read publishes no A7/A6/D3 lead, Argentina still does",
-      sorted(l["pair"] for l in RP.feed(stale, sa, now=NOW)["leads"].values()), ["sa_o15_arg|soccer_o15"])
+check("a stale rules read publishes no A7/A6/D3 lead",
+      sorted(l["pair"] for l in RP.feed(stale, sa, now=NOW)["leads"].values()), [])
 
 print("\nD3 is not published in the Europa League (2026-10-22); it is still logged there as paper")
 uel = dict(rules, rules=dict(rules["rules"], D3={"picks": rules["rules"]["D3"]["picks"] + [
@@ -95,12 +93,13 @@ check("the Soccer page says so", "not the Europa League" in __import__("soccer_r
 
 print("\nthe pages")
 html = P.page({"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}, "", now=NOW, soccer_rules=(rules, sa))
-check("the Production page lists the four rules by name", all(n in html for n in RP.LABELS.values()), True)
+check("the Production page lists the three rules by name", all(n in html for n in RP.LABELS.values()), True)
 check("the display names are the registered ones", all(S.OWN_LEDGER_LABELS[k] == v for k, v in RP.LABELS.items()), True)
 import soccer_rules_build as SB
 import sa_o15_build as SAB
-check("the Soccer page marks A7, A6, D3 and Argentina as in Production",
-      (SB.section(rules).count("Production since 2026-10-21") >= 3, "Production since 2026-10-21" in SAB.section(sa)), (True, True))
+check("the Soccer page marks A7, A6 and D3 as in Production; Argentina is back in the Sandbox",
+      (SB.section(rules).count("Production since 2026-10-21") >= 3, "Production since 2026-10-21" in SAB.section(sa),
+       "back in the Sandbox" in SAB.section(sa)), (True, False, True))
 check("no guarded public phrase in the leads",
       sandbox_audit.COPY_RE.findall(" ".join(l["headline"] + " " + l["id"] for l in f["leads"].values())), [])
 

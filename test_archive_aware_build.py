@@ -533,12 +533,17 @@ def main():
     st = copy.deepcopy(ST)
     # The scenario is a Production pair NOT on the hand-kept list, which the stage pass demotes.
     # espn_fpi|nfl was that pair until it was listed again on 2026-10-16, so it is unlisted here.
+    # It is also in PAIR_REMOVALS since 2026-10-27 (kept record), which would keep its clock; the
+    # scenario wants the plain demotion that restarts it.
     _ov = T.PAIR_OVERRIDES.pop("espn_fpi|nfl", None)
+    _rm = T.PAIR_REMOVALS.pop("espn_fpi|nfl", None)
     try:
         T.evaluate_stages(copy.deepcopy(both), st, now=NOW, verbose=False)
     finally:
         if _ov is not None:
             T.PAIR_OVERRIDES["espn_fpi|nfl"] = _ov
+        if _rm is not None:
+            T.PAIR_REMOVALS["espn_fpi|nfl"] = _rm
     sandbox, weeks = _pages(both, st)
     eq(_headline(sandbox), before["headline"],
        "headline is unchanged after evaluate_stages")

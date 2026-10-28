@@ -111,41 +111,6 @@
    "sport": "crypto_fav",
    "status": "hit"
   },
-  "2026-10-21|KXETHD-26OCT2117-T2509.99|$2,510 or above at the close \u00b7 Crypto ETH favourite, both sides": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-21",
-   "edge_at_log": null,
-   "first_seen": "2026-10-21",
-   "headline": "$2,510 or above at the close",
-   "home": null,
-   "id": "2026-10-21|KXETHD-26OCT2117-T2509.99|$2,510 or above at the close \u00b7 Crypto ETH favourite, both sides",
-   "kickoff": "2026-10-21T21:05Z",
-   "lane": "production",
-   "league": "Crypto \u00b7 Favourite band",
-   "match": "Ethereum price at Oct 21, 2026 at 5pm EDT",
-   "pair": "crypto_eth_fav_both|crypto_fav",
-   "price_at_log": 0.6,
-   "published_at": "2026-10-21T23:12:57+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "$2,510 or above at the close",
-    "event": "KXETHD-26OCT2117",
-    "market": "KXETHD-26OCT2117-T2509.99",
-    "outcome": "$2,510 or above",
-    "outcome_side": "yes",
-    "price_at_log": 0.6,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "crypto_eth_fav_both:KXETHD-26OCT2117-T2509.99",
-   "source": "crypto_eth_fav_both",
-   "sport": "crypto_fav",
-   "status": "miss"
-  },
   "2026-10-21|KXNATGASD-26OCT2117-T3.160|Above $3.160 at the close \u00b7 Commodities favourite band": {
    "away": null,
    "bet": {
@@ -250,76 +215,6 @@
    "source": "commod_fav_band",
    "sport": "commodities_fav",
    "status": "hit"
-  },
-  "2026-10-21|Limpopo Impalas|North West Dragons|North West Dragons to win \u00b7 Oddspedia community tips": {
-   "away": "North West Dragons",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-10-21",
-   "edge_at_log": null,
-   "first_seen": "2026-10-21",
-   "headline": "North West Dragons to win",
-   "home": "Limpopo Impalas",
-   "id": "2026-10-21|Limpopo Impalas|North West Dragons|North West Dragons to win \u00b7 Oddspedia community tips",
-   "kickoff": "2026-10-21T16:00Z",
-   "lane": "production",
-   "league": "Cricket",
-   "match": "Limpopo Impalas v North West Dragons",
-   "pair": "oddspedia|cricket",
-   "price_at_log": 0.78,
-   "published_at": "2026-10-21T19:50:26+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "North West Dragons to win",
-    "event": "KXT20MATCH-26OCT211200LIMPNWD",
-    "market": "KXT20MATCH-26OCT211200LIMPNWD-NWD",
-    "outcome": "North West Dragons",
-    "outcome_side": "yes",
-    "price_at_log": 0.78,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "oddspedia:KXT20MATCH-26OCT211200LIMPNWD",
-   "source": "oddspedia",
-   "sport": "cricket",
-   "status": "hit"
-  },
-  "2026-10-22|Al Fateh|Al Shabab|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
-   "away": "Al Shabab",
-   "bet": {
-    "kind": "total_lte",
-    "n": 3
-   },
-   "date": "2026-10-22",
-   "edge_at_log": null,
-   "first_seen": "2026-10-20",
-   "headline": "Under 3.5 goals",
-   "home": "Al Fateh",
-   "id": "2026-10-22|Al Fateh|Al Shabab|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
-   "kickoff": "2026-10-22T14:45Z",
-   "lane": "production",
-   "league": "Saudi Pro League",
-   "match": "Al Fateh v Al Shabab",
-   "pair": "u35_low_scoring|soccer_u35",
-   "price_at_log": 0.65,
-   "published_at": "2026-10-22T17:19:33+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Under 3.5 goals",
-    "event": "KXSAUDIPLTOTAL-26OCT22FATSHA",
-    "market": "KXSAUDIPLTOTAL-26OCT22FATSHA-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "no",
-    "price_at_log": 0.65,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "u35_low_scoring:KXSAUDIPLTOTAL-26OCT22FATSHA-4",
-   "source": "u35_low_scoring",
-   "sport": "soccer_u35",
-   "status": "miss"
   },
   "2026-10-22|Ferencvaros|Torreense|Ferencvaros to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
    "away": "Torreense",
@@ -460,41 +355,6 @@
    },
    "sandbox_quote": "crypto_fav_band_below:KXBTCD-26OCT2217-T81499.99",
    "source": "crypto_fav_band_below",
-   "sport": "crypto_fav",
-   "status": "hit"
-  },
-  "2026-10-22|KXETHD-26OCT2217-T2369.99|$2,370 or above at the close \u00b7 Crypto ETH favourite, both sides": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-22",
-   "edge_at_log": null,
-   "first_seen": "2026-10-22",
-   "headline": "$2,370 or above at the close",
-   "home": null,
-   "id": "2026-10-22|KXETHD-26OCT2217-T2369.99|$2,370 or above at the close \u00b7 Crypto ETH favourite, both sides",
-   "kickoff": "2026-10-22T21:05Z",
-   "lane": "production",
-   "league": "Crypto \u00b7 Favourite band",
-   "match": "Ethereum price at Oct 22, 2026 at 5pm EDT",
-   "pair": "crypto_eth_fav_both|crypto_fav",
-   "price_at_log": 0.66,
-   "published_at": "2026-10-22T23:30:57+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "$2,370 or above at the close",
-    "event": "KXETHD-26OCT2217",
-    "market": "KXETHD-26OCT2217-T2369.99",
-    "outcome": "$2,370 or above",
-    "outcome_side": "yes",
-    "price_at_log": 0.66,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "crypto_eth_fav_both:KXETHD-26OCT2217-T2369.99",
-   "source": "crypto_eth_fav_both",
    "sport": "crypto_fav",
    "status": "hit"
   },
@@ -744,40 +604,6 @@
    "sport": "soccer_btts",
    "status": "hit"
   },
-  "2026-10-23|Furuya, Michiru|Namigata, Junri|Namigata, Junri to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
-   "away": "Namigata, Junri",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-10-23",
-   "edge_at_log": null,
-   "first_seen": "2026-10-22",
-   "headline": "Namigata, Junri to win",
-   "home": "Furuya, Michiru",
-   "id": "2026-10-23|Furuya, Michiru|Namigata, Junri|Namigata, Junri to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles",
-   "kickoff": "2026-10-23T00:00Z",
-   "lane": "production",
-   "league": "Tennis",
-   "match": "Furuya, Michiru v Namigata, Junri",
-   "pair": "tennis_utr_shortlist_v1|tennis",
-   "price_at_log": 0.72,
-   "published_at": "2026-10-23T04:51:25+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Namigata, Junri to win",
-    "market": "aec-utr-furmic-namjun-2026-10-23",
-    "outcome": "Namigata, Junri",
-    "outcome_side": "no",
-    "price_at_log": 0.72,
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "tennis_utr_shortlist_v1:aec-utr-furmic-namjun-2026-10-23",
-   "source": "tennis_utr_shortlist_v1",
-   "sport": "tennis",
-   "status": "hit"
-  },
   "2026-10-23|GA Eagles|Telstar|Draw \u00b7 Eredivisie draw band": {
    "away": "Telstar",
    "bet": {
@@ -812,76 +638,6 @@
    "source": "ere_draw",
    "sport": "soccer",
    "status": "miss"
-  },
-  "2026-10-23|Ipswich Town|Nottingham Forest|Under 10 corners \u00b7 Corners total under": {
-   "away": "Nottingham Forest",
-   "bet": {
-    "kind": "corners_lte",
-    "n": 9
-   },
-   "date": "2026-10-23",
-   "edge_at_log": null,
-   "first_seen": "2026-10-23",
-   "headline": "Under 10 corners",
-   "home": "Ipswich Town",
-   "id": "2026-10-23|Ipswich Town|Nottingham Forest|Under 10 corners \u00b7 Corners total under",
-   "kickoff": "2026-10-23T19:00Z",
-   "lane": "production",
-   "league": "Premier League",
-   "match": "Ipswich Town v Nottingham Forest",
-   "pair": "corners_total_under|soccer_corners",
-   "price_at_log": 0.51,
-   "published_at": "2026-10-23T15:04:54+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 235,
-   "route": {
-    "claim": "Under 10 corners",
-    "event": "KXEPLCORNERS-26OCT23IPSNFO",
-    "market": "KXEPLCORNERS-26OCT23IPSNFO-10",
-    "outcome": "10+ corners",
-    "outcome_side": "no",
-    "price_at_log": 0.51,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "corners_total_under:KXEPLCORNERS-26OCT23IPSNFO-10",
-   "source": "corners_total_under",
-   "sport": "soccer_corners",
-   "status": "hit"
-  },
-  "2026-10-23|KXETHD-26OCT2317-T2409.99|Below $2,410 at the close \u00b7 Crypto ETH favourite, both sides": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "no"
-   },
-   "date": "2026-10-23",
-   "edge_at_log": null,
-   "first_seen": "2026-10-23",
-   "headline": "Below $2,410 at the close",
-   "home": null,
-   "id": "2026-10-23|KXETHD-26OCT2317-T2409.99|Below $2,410 at the close \u00b7 Crypto ETH favourite, both sides",
-   "kickoff": "2026-10-23T21:05Z",
-   "lane": "production",
-   "league": "Crypto \u00b7 Favourite band",
-   "match": "Ethereum price at Oct 23, 2026 at 5pm EDT",
-   "pair": "crypto_eth_fav_both|crypto_fav",
-   "price_at_log": 0.6,
-   "published_at": "2026-10-23T23:10:03+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Below $2,410 at the close",
-    "event": "KXETHD-26OCT2317",
-    "market": "KXETHD-26OCT2317-T2409.99",
-    "outcome": "$2,410 or above",
-    "outcome_side": "no",
-    "price_at_log": 0.6,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "crypto_eth_fav_both:KXETHD-26OCT2317-T2409.99",
-   "source": "crypto_eth_fav_both",
-   "sport": "crypto_fav",
-   "status": "hit"
   },
   "2026-10-23|KXETHD-26OCT2317-T2409.99|Below $2,410 at the close \u00b7 Crypto favourite band, below": {
    "away": null,
@@ -918,41 +674,6 @@
    "sport": "crypto_fav",
    "status": "hit"
   },
-  "2026-10-23|KXSOLD-26OCT2317-T103.9999|$104 or above at the close \u00b7 Crypto SOL favourite, both sides": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-23",
-   "edge_at_log": null,
-   "first_seen": "2026-10-23",
-   "headline": "$104 or above at the close",
-   "home": null,
-   "id": "2026-10-23|KXSOLD-26OCT2317-T103.9999|$104 or above at the close \u00b7 Crypto SOL favourite, both sides",
-   "kickoff": "2026-10-23T21:05Z",
-   "lane": "production",
-   "league": "Crypto \u00b7 Favourite band",
-   "match": "SOL price on Oct 23, 2026",
-   "pair": "crypto_sol_fav_both|crypto_fav",
-   "price_at_log": 0.73,
-   "published_at": "2026-10-23T23:10:03+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "$104 or above at the close",
-    "event": "KXSOLD-26OCT2317",
-    "market": "KXSOLD-26OCT2317-T103.9999",
-    "outcome": "$104 or above",
-    "outcome_side": "yes",
-    "price_at_log": 0.73,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "crypto_sol_fav_both:KXSOLD-26OCT2317-T103.9999",
-   "source": "crypto_sol_fav_both",
-   "sport": "crypto_fav",
-   "status": "miss"
-  },
   "2026-10-23|KXWTI-26OCT2314-T102.49|Above $102.49 at the close \u00b7 Commodities favourite band": {
    "away": null,
    "bet": {
@@ -987,111 +708,6 @@
    "source": "commod_fav_band",
    "sport": "commodities_fav",
    "status": "hit"
-  },
-  "2026-10-23|Patriots|Bears|Patriots to win \u00b7 ESPN FPI / Matchup Predictor": {
-   "away": "Bears",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-10-23",
-   "edge_at_log": 0.0335,
-   "first_seen": "2026-10-19",
-   "headline": "Patriots to win",
-   "home": "Patriots",
-   "id": "2026-10-23|Patriots|Bears|Patriots to win \u00b7 ESPN FPI / Matchup Predictor",
-   "kickoff": "2026-10-23T00:15Z",
-   "lane": "production",
-   "league": "NFL",
-   "match": "Patriots v Bears",
-   "model_prob": 0.436,
-   "pair": "espn_fpi|nfl",
-   "price_at_log": 0.4025,
-   "published_at": "2026-10-23T04:51:25+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Patriots to win",
-    "market": "aec-nfl-ne-chi-2026-10-22",
-    "outcome": "Patriots",
-    "outcome_side": "yes",
-    "price_at_log": 0.4025,
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "espn_fpi:aec-nfl-ne-chi-2026-10-22",
-   "source": "espn_fpi",
-   "sport": "nfl",
-   "status": "miss"
-  },
-  "2026-10-24|Al Riyadh|Al Taawoun|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
-   "away": "Al Taawoun",
-   "bet": {
-    "kind": "total_lte",
-    "n": 3
-   },
-   "date": "2026-10-24",
-   "edge_at_log": null,
-   "first_seen": "2026-10-21",
-   "headline": "Under 3.5 goals",
-   "home": "Al Riyadh",
-   "id": "2026-10-24|Al Riyadh|Al Taawoun|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
-   "kickoff": "2026-10-24T18:00Z",
-   "lane": "production",
-   "league": "Saudi Pro League",
-   "match": "Al Riyadh v Al Taawoun",
-   "pair": "u35_low_scoring|soccer_u35",
-   "price_at_log": 0.72,
-   "published_at": "2026-10-24T20:47:32+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Under 3.5 goals",
-    "event": "KXSAUDIPLTOTAL-26OCT24RIYALT",
-    "market": "KXSAUDIPLTOTAL-26OCT24RIYALT-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "no",
-    "price_at_log": 0.72,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "u35_low_scoring:KXSAUDIPLTOTAL-26OCT24RIYALT-4",
-   "source": "u35_low_scoring",
-   "sport": "soccer_u35",
-   "status": "hit"
-  },
-  "2026-10-24|Arsenal|Everton|Under 9 corners \u00b7 Corners total under": {
-   "away": "Everton",
-   "bet": {
-    "kind": "corners_lte",
-    "n": 8
-   },
-   "date": "2026-10-24",
-   "edge_at_log": null,
-   "first_seen": "2026-10-24",
-   "headline": "Under 9 corners",
-   "home": "Arsenal",
-   "id": "2026-10-24|Arsenal|Everton|Under 9 corners \u00b7 Corners total under",
-   "kickoff": "2026-10-24T14:00Z",
-   "lane": "production",
-   "league": "Premier League",
-   "match": "Arsenal v Everton",
-   "pair": "corners_total_under|soccer_corners",
-   "price_at_log": 0.38,
-   "published_at": "2026-10-24T17:26:53+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Under 9 corners",
-    "event": "KXEPLCORNERS-26OCT24ARSEVE",
-    "market": "KXEPLCORNERS-26OCT24ARSEVE-9",
-    "outcome": "9+ corners",
-    "outcome_side": "no",
-    "price_at_log": 0.38,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "corners_total_under:KXEPLCORNERS-26OCT24ARSEVE-9",
-   "source": "corners_total_under",
-   "sport": "soccer_corners",
-   "status": "miss"
   },
   "2026-10-24|Borussia Dortmund|Eintracht Frankfurt|Borussia Dortmund to score 2+ \u00b7 Team scores 2+ form rule": {
    "away": "Eintracht Frankfurt",
@@ -1200,75 +816,6 @@
    "sport": "soccer",
    "status": "miss"
   },
-  "2026-10-24|Falkirk|Kilmarnock|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
-   "away": "Kilmarnock",
-   "bet": {
-    "kind": "total_lte",
-    "n": 3
-   },
-   "date": "2026-10-24",
-   "edge_at_log": null,
-   "first_seen": "2026-10-21",
-   "headline": "Under 3.5 goals",
-   "home": "Falkirk",
-   "id": "2026-10-24|Falkirk|Kilmarnock|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
-   "kickoff": "2026-10-24T14:00Z",
-   "lane": "production",
-   "league": "Scottish Premiership",
-   "match": "Falkirk v Kilmarnock",
-   "pair": "u35_low_scoring|soccer_u35",
-   "price_at_log": 0.68,
-   "published_at": "2026-10-24T17:26:53+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Under 3.5 goals",
-    "event": "KXSCOTTISHPREMTOTAL-26OCT24FALKIL",
-    "market": "KXSCOTTISHPREMTOTAL-26OCT24FALKIL-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "no",
-    "price_at_log": 0.68,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "u35_low_scoring:KXSCOTTISHPREMTOTAL-26OCT24FALKIL-4",
-   "source": "u35_low_scoring",
-   "sport": "soccer_u35",
-   "status": "hit"
-  },
-  "2026-10-24|Franchi, Francesca|Garcia Alonso, Carlota|Franchi, Francesca to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
-   "away": "Garcia Alonso, Carlota",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-10-24",
-   "edge_at_log": null,
-   "first_seen": "2026-10-24",
-   "headline": "Franchi, Francesca to win",
-   "home": "Franchi, Francesca",
-   "id": "2026-10-24|Franchi, Francesca|Garcia Alonso, Carlota|Franchi, Francesca to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles",
-   "kickoff": "2026-10-24T08:00Z",
-   "lane": "production",
-   "league": "Tennis",
-   "match": "Franchi, Francesca v Garcia Alonso, Carlota",
-   "pair": "tennis_utr_shortlist_v1|tennis",
-   "price_at_log": 0.74,
-   "published_at": "2026-10-24T12:41:16+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Franchi, Francesca to win",
-    "market": "aec-utr-frafra-garcar-2026-10-24",
-    "outcome": "Franchi, Francesca",
-    "outcome_side": "yes",
-    "price_at_log": 0.74,
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "tennis_utr_shortlist_v1:aec-utr-frafra-garcar-2026-10-24",
-   "source": "tennis_utr_shortlist_v1",
-   "sport": "tennis",
-   "status": "hit"
-  },
   "2026-10-24|KXBTCD-26OCT2417-T80499.99|Below $80,500 at the close \u00b7 Crypto favourite band, below": {
    "away": null,
    "bet": {
@@ -1304,41 +851,6 @@
    "sport": "crypto_fav",
    "status": "hit"
   },
-  "2026-10-24|KXETHD-26OCT2417-T2319.99|Below $2,320 at the close \u00b7 Crypto ETH favourite, both sides": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "no"
-   },
-   "date": "2026-10-24",
-   "edge_at_log": null,
-   "first_seen": "2026-10-24",
-   "headline": "Below $2,320 at the close",
-   "home": null,
-   "id": "2026-10-24|KXETHD-26OCT2417-T2319.99|Below $2,320 at the close \u00b7 Crypto ETH favourite, both sides",
-   "kickoff": "2026-10-24T21:05Z",
-   "lane": "production",
-   "league": "Crypto \u00b7 Favourite band",
-   "match": "Ethereum price at Oct 24, 2026 at 5pm EDT",
-   "pair": "crypto_eth_fav_both|crypto_fav",
-   "price_at_log": 0.61,
-   "published_at": "2026-10-24T23:06:00+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Below $2,320 at the close",
-    "event": "KXETHD-26OCT2417",
-    "market": "KXETHD-26OCT2417-T2319.99",
-    "outcome": "$2,320 or above",
-    "outcome_side": "no",
-    "price_at_log": 0.61,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "crypto_eth_fav_both:KXETHD-26OCT2417-T2319.99",
-   "source": "crypto_eth_fav_both",
-   "sport": "crypto_fav",
-   "status": "miss"
-  },
   "2026-10-24|KXHYPED-26OCT2417-T75.9999|Below $76 at the close \u00b7 Crypto favourite band, below": {
    "away": null,
    "bet": {
@@ -1373,41 +885,6 @@
    "source": "crypto_fav_band_below",
    "sport": "crypto_fav",
    "status": "miss"
-  },
-  "2026-10-24|KXSOLD-26OCT2417-T99.9999|$100 or above at the close \u00b7 Crypto SOL favourite, both sides": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-24",
-   "edge_at_log": null,
-   "first_seen": "2026-10-24",
-   "headline": "$100 or above at the close",
-   "home": null,
-   "id": "2026-10-24|KXSOLD-26OCT2417-T99.9999|$100 or above at the close \u00b7 Crypto SOL favourite, both sides",
-   "kickoff": "2026-10-24T21:05Z",
-   "lane": "production",
-   "league": "Crypto \u00b7 Favourite band",
-   "match": "SOL price on Oct 24, 2026",
-   "pair": "crypto_sol_fav_both|crypto_fav",
-   "price_at_log": 0.73,
-   "published_at": "2026-10-24T23:06:00+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "$100 or above at the close",
-    "event": "KXSOLD-26OCT2417",
-    "market": "KXSOLD-26OCT2417-T99.9999",
-    "outcome": "$100 or above",
-    "outcome_side": "yes",
-    "price_at_log": 0.73,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "crypto_sol_fav_both:KXSOLD-26OCT2417-T99.9999",
-   "source": "crypto_sol_fav_both",
-   "sport": "crypto_fav",
-   "status": "hit"
   },
   "2026-10-24|Lazio|Parma|Lazio to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
    "away": "Parma",
@@ -1445,74 +922,6 @@
    "sport": "soccer_team2",
    "status": "hit"
   },
-  "2026-10-24|McElnea, Harrison|Batista, Daniel|Batista, Daniel to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
-   "away": "Batista, Daniel",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-10-24",
-   "edge_at_log": null,
-   "first_seen": "2026-10-24",
-   "headline": "Batista, Daniel to win",
-   "home": "McElnea, Harrison",
-   "id": "2026-10-24|McElnea, Harrison|Batista, Daniel|Batista, Daniel to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles",
-   "kickoff": "2026-10-24T08:00Z",
-   "lane": "production",
-   "league": "Tennis",
-   "match": "McElnea, Harrison v Batista, Daniel",
-   "pair": "tennis_utr_shortlist_v1|tennis",
-   "price_at_log": 0.72,
-   "published_at": "2026-10-24T05:10:17+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 169,
-   "route": {
-    "claim": "Batista, Daniel to win",
-    "market": "aec-utr-mcehar-batdan-2026-10-24",
-    "outcome": "Batista, Daniel",
-    "outcome_side": "no",
-    "price_at_log": 0.72,
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "tennis_utr_shortlist_v1:aec-utr-mcehar-batdan-2026-10-24",
-   "source": "tennis_utr_shortlist_v1",
-   "sport": "tennis",
-   "status": "price"
-  },
-  "2026-10-24|Namigata, Junri|Yoshimoto, Natsuki|Yoshimoto, Natsuki to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
-   "away": "Yoshimoto, Natsuki",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-10-24",
-   "edge_at_log": null,
-   "first_seen": "2026-10-23",
-   "headline": "Yoshimoto, Natsuki to win",
-   "home": "Namigata, Junri",
-   "id": "2026-10-24|Namigata, Junri|Yoshimoto, Natsuki|Yoshimoto, Natsuki to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles",
-   "kickoff": "2026-10-24T00:00Z",
-   "lane": "production",
-   "league": "Tennis",
-   "match": "Namigata, Junri v Yoshimoto, Natsuki",
-   "pair": "tennis_utr_shortlist_v1|tennis",
-   "price_at_log": 0.7,
-   "published_at": "2026-10-25T04:05:00+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Yoshimoto, Natsuki to win",
-    "market": "aec-utr-namjun-yosnat-2026-10-24",
-    "outcome": "Yoshimoto, Natsuki",
-    "outcome_side": "no",
-    "price_at_log": 0.7,
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "tennis_utr_shortlist_v1:aec-utr-namjun-yosnat-2026-10-24",
-   "source": "tennis_utr_shortlist_v1",
-   "sport": "tennis",
-   "status": "miss"
-  },
   "2026-10-24|Orlando City SC|New York City FC|New York City FC +0.5 (Orlando City SC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
    "away": "New York City FC",
    "bet": {
@@ -1546,40 +955,6 @@
    "sandbox_quote": "mls_fade_home:KXMLSGAME-26OCT24ORLNYC-ORL",
    "source": "mls_fade_home",
    "sport": "soccer_p05",
-   "status": "hit"
-  },
-  "2026-10-24|Papazian, Tiffany|Suryapranata, Daniella Clara|Papazian, Tiffany to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
-   "away": "Suryapranata, Daniella Clara",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-10-24",
-   "edge_at_log": null,
-   "first_seen": "2026-10-23",
-   "headline": "Papazian, Tiffany to win",
-   "home": "Papazian, Tiffany",
-   "id": "2026-10-24|Papazian, Tiffany|Suryapranata, Daniella Clara|Papazian, Tiffany to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles",
-   "kickoff": "2026-10-24T01:30Z",
-   "lane": "production",
-   "league": "Tennis",
-   "match": "Papazian, Tiffany v Suryapranata, Daniella Clara",
-   "pair": "tennis_utr_shortlist_v1|tennis",
-   "price_at_log": 0.74,
-   "published_at": "2026-10-24T18:34:51+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Papazian, Tiffany to win",
-    "market": "aec-utr-paptif-surcla-2026-10-23",
-    "outcome": "Papazian, Tiffany",
-    "outcome_side": "yes",
-    "price_at_log": 0.74,
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "tennis_utr_shortlist_v1:aec-utr-paptif-surcla-2026-10-23",
-   "source": "tennis_utr_shortlist_v1",
-   "sport": "tennis",
    "status": "hit"
   },
   "2026-10-24|Rayo Vallecano|Elche|Both teams to score \u00b7 La Liga BTTS in balanced matches": {
@@ -1686,41 +1061,6 @@
    "sport": "soccer",
    "status": "miss"
   },
-  "2026-10-25|49ers|Falcons|49ers to win \u00b7 ESPN FPI / Matchup Predictor": {
-   "away": "Falcons",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-10-25",
-   "edge_at_log": 0.204,
-   "first_seen": "2026-10-22",
-   "headline": "49ers to win",
-   "home": "49ers",
-   "id": "2026-10-25|49ers|Falcons|49ers to win \u00b7 ESPN FPI / Matchup Predictor",
-   "kickoff": "2026-10-25T17:00Z",
-   "lane": "production",
-   "league": "NFL",
-   "match": "49ers v Falcons",
-   "model_prob": 0.789,
-   "pair": "espn_fpi|nfl",
-   "price_at_log": 0.585,
-   "published_at": "2026-10-25T20:50:57+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "49ers to win",
-    "market": "aec-nfl-sf-atl-2026-10-25",
-    "outcome": "49ers",
-    "outcome_side": "yes",
-    "price_at_log": 0.585,
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "espn_fpi:aec-nfl-sf-atl-2026-10-25",
-   "source": "espn_fpi",
-   "sport": "nfl",
-   "status": "miss"
-  },
   "2026-10-25|Alkmaar|Enschede|Draw \u00b7 Eredivisie draw band": {
    "away": "Enschede",
    "bet": {
@@ -1754,216 +1094,6 @@
    "sandbox_quote": "ere_draw:KXEREDIVISIEGAME-26OCT25AZATWE",
    "source": "ere_draw",
    "sport": "soccer",
-   "status": "miss"
-  },
-  "2026-10-25|Angers|Lorient|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
-   "away": "Lorient",
-   "bet": {
-    "kind": "total_lte",
-    "n": 3
-   },
-   "date": "2026-10-25",
-   "edge_at_log": null,
-   "first_seen": "2026-10-21",
-   "headline": "Under 3.5 goals",
-   "home": "Angers",
-   "id": "2026-10-25|Angers|Lorient|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
-   "kickoff": "2026-10-25T16:15Z",
-   "lane": "production",
-   "league": "Ligue 1",
-   "match": "Angers v Lorient",
-   "pair": "u35_low_scoring|soccer_u35",
-   "price_at_log": 0.76,
-   "published_at": "2026-10-25T18:33:37+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Under 3.5 goals",
-    "event": "KXLIGUE1TOTAL-26OCT25ANGFCL",
-    "market": "KXLIGUE1TOTAL-26OCT25ANGFCL-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "no",
-    "price_at_log": 0.76,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "u35_low_scoring:KXLIGUE1TOTAL-26OCT25ANGFCL-4",
-   "source": "u35_low_scoring",
-   "sport": "soccer_u35",
-   "status": "hit"
-  },
-  "2026-10-25|Athletic Club|Getafe|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
-   "away": "Getafe",
-   "bet": {
-    "kind": "total_lte",
-    "n": 3
-   },
-   "date": "2026-10-25",
-   "edge_at_log": null,
-   "first_seen": "2026-10-21",
-   "headline": "Under 3.5 goals",
-   "home": "Athletic Club",
-   "id": "2026-10-25|Athletic Club|Getafe|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
-   "kickoff": "2026-10-25T13:00Z",
-   "lane": "production",
-   "league": "La Liga",
-   "match": "Athletic Club v Getafe",
-   "pair": "u35_low_scoring|soccer_u35",
-   "price_at_log": 0.82,
-   "published_at": "2026-10-25T15:10:02+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Under 3.5 goals",
-    "event": "KXLALIGATOTAL-26OCT25ATHGET",
-    "market": "KXLALIGATOTAL-26OCT25ATHGET-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "no",
-    "price_at_log": 0.82,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "u35_low_scoring:KXLALIGATOTAL-26OCT25ATHGET-4",
-   "source": "u35_low_scoring",
-   "sport": "soccer_u35",
-   "status": "miss"
-  },
-  "2026-10-25|Barcelona|Real Madrid|Under 10 corners \u00b7 Corners total under": {
-   "away": "Real Madrid",
-   "bet": {
-    "kind": "corners_lte",
-    "n": 9
-   },
-   "date": "2026-10-25",
-   "edge_at_log": null,
-   "first_seen": "2026-10-25",
-   "headline": "Under 10 corners",
-   "home": "Barcelona",
-   "id": "2026-10-25|Barcelona|Real Madrid|Under 10 corners \u00b7 Corners total under",
-   "kickoff": "2026-10-25T20:00Z",
-   "lane": "production",
-   "league": "La Liga",
-   "match": "Barcelona v Real Madrid",
-   "pair": "corners_total_under|soccer_corners",
-   "price_at_log": 0.38,
-   "published_at": "2026-10-25T22:33:33+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Under 10 corners",
-    "event": "KXLALIGACORNERS-26OCT25BARRMA",
-    "market": "KXLALIGACORNERS-26OCT25BARRMA-10",
-    "outcome": "10+ corners",
-    "outcome_side": "no",
-    "price_at_log": 0.38,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "corners_total_under:KXLALIGACORNERS-26OCT25BARRMA-10",
-   "source": "corners_total_under",
-   "sport": "soccer_corners",
-   "status": "miss"
-  },
-  "2026-10-25|Browns|Titans|Titans to win \u00b7 ESPN FPI / Matchup Predictor": {
-   "away": "Titans",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-10-25",
-   "edge_at_log": 0.04,
-   "first_seen": "2026-10-22",
-   "headline": "Titans to win",
-   "home": "Browns",
-   "id": "2026-10-25|Browns|Titans|Titans to win \u00b7 ESPN FPI / Matchup Predictor",
-   "kickoff": "2026-10-25T17:00Z",
-   "lane": "production",
-   "league": "NFL",
-   "match": "Browns v Titans",
-   "model_prob": 0.5,
-   "pair": "espn_fpi|nfl",
-   "price_at_log": 0.46,
-   "published_at": "2026-10-25T20:50:57+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Titans to win",
-    "market": "aec-nfl-cle-ten-2026-10-25",
-    "outcome": "Titans",
-    "outcome_side": "no",
-    "price_at_log": 0.46,
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "espn_fpi:aec-nfl-cle-ten-2026-10-25",
-   "source": "espn_fpi",
-   "sport": "nfl",
-   "status": "miss"
-  },
-  "2026-10-25|Buccaneers|Panthers|Panthers to win \u00b7 ESPN FPI / Matchup Predictor": {
-   "away": "Panthers",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-10-25",
-   "edge_at_log": 0.08,
-   "first_seen": "2026-10-22",
-   "headline": "Panthers to win",
-   "home": "Buccaneers",
-   "id": "2026-10-25|Buccaneers|Panthers|Panthers to win \u00b7 ESPN FPI / Matchup Predictor",
-   "kickoff": "2026-10-25T17:00Z",
-   "lane": "production",
-   "league": "NFL",
-   "match": "Buccaneers v Panthers",
-   "model_prob": 0.685,
-   "pair": "espn_fpi|nfl",
-   "price_at_log": 0.605,
-   "published_at": "2026-10-25T20:50:57+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Panthers to win",
-    "market": "aec-nfl-tb-car-2026-10-25",
-    "outcome": "Panthers",
-    "outcome_side": "no",
-    "price_at_log": 0.605,
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "espn_fpi:aec-nfl-tb-car-2026-10-25",
-   "source": "espn_fpi",
-   "sport": "nfl",
-   "status": "miss"
-  },
-  "2026-10-25|Colts|Vikings|Colts to win \u00b7 ESPN FPI / Matchup Predictor": {
-   "away": "Vikings",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-10-25",
-   "edge_at_log": 0.061,
-   "first_seen": "2026-10-22",
-   "headline": "Colts to win",
-   "home": "Colts",
-   "id": "2026-10-25|Colts|Vikings|Colts to win \u00b7 ESPN FPI / Matchup Predictor",
-   "kickoff": "2026-10-25T17:00Z",
-   "lane": "production",
-   "league": "NFL",
-   "match": "Colts v Vikings",
-   "model_prob": 0.346,
-   "pair": "espn_fpi|nfl",
-   "price_at_log": 0.285,
-   "published_at": "2026-10-25T20:50:57+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Colts to win",
-    "market": "aec-nfl-ind-min-2026-10-25",
-    "outcome": "Colts",
-    "outcome_side": "yes",
-    "price_at_log": 0.285,
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "espn_fpi:aec-nfl-ind-min-2026-10-25",
-   "source": "espn_fpi",
-   "sport": "nfl",
    "status": "miss"
   },
   "2026-10-25|Eindhoven|Feyenoord|Draw \u00b7 Eredivisie draw band": {
@@ -2000,76 +1130,6 @@
    "source": "ere_draw",
    "sport": "soccer",
    "status": "hit"
-  },
-  "2026-10-25|Estoril|Moreirense|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
-   "away": "Moreirense",
-   "bet": {
-    "kind": "total_lte",
-    "n": 3
-   },
-   "date": "2026-10-25",
-   "edge_at_log": null,
-   "first_seen": "2026-10-22",
-   "headline": "Under 3.5 goals",
-   "home": "Estoril",
-   "id": "2026-10-25|Estoril|Moreirense|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
-   "kickoff": "2026-10-25T15:30Z",
-   "lane": "production",
-   "league": "Primeira Liga",
-   "match": "Estoril v Moreirense",
-   "pair": "u35_low_scoring|soccer_u35",
-   "price_at_log": 0.75,
-   "published_at": "2026-10-22T17:19:33+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 4210,
-   "route": {
-    "claim": "Under 3.5 goals",
-    "event": "KXLIGAPORTUGALTOTAL-26OCT25ESTMOR",
-    "market": "KXLIGAPORTUGALTOTAL-26OCT25ESTMOR-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "no",
-    "price_at_log": 0.75,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "u35_low_scoring:KXLIGAPORTUGALTOTAL-26OCT25ESTMOR-4",
-   "source": "u35_low_scoring",
-   "sport": "soccer_u35",
-   "status": "miss"
-  },
-  "2026-10-25|Giants|Texans|Texans to win \u00b7 ESPN FPI / Matchup Predictor": {
-   "away": "Texans",
-   "bet": {
-    "kind": "match_result",
-    "side": "away"
-   },
-   "date": "2026-10-25",
-   "edge_at_log": 0.0335,
-   "first_seen": "2026-10-22",
-   "headline": "Texans to win",
-   "home": "Giants",
-   "id": "2026-10-25|Giants|Texans|Texans to win \u00b7 ESPN FPI / Matchup Predictor",
-   "kickoff": "2026-10-25T17:00Z",
-   "lane": "production",
-   "league": "NFL",
-   "match": "Giants v Texans",
-   "model_prob": 0.841,
-   "pair": "espn_fpi|nfl",
-   "price_at_log": 0.8075,
-   "published_at": "2026-10-25T20:50:57+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Texans to win",
-    "market": "aec-nfl-nyg-hou-2026-10-25",
-    "outcome": "Texans",
-    "outcome_side": "no",
-    "price_at_log": 0.8075,
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "espn_fpi:aec-nfl-nyg-hou-2026-10-25",
-   "source": "espn_fpi",
-   "sport": "nfl",
-   "status": "miss"
   },
   "2026-10-25|Houston Dynamo FC|Minnesota United FC|Minnesota United FC +0.5 (Houston Dynamo FC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
    "away": "Minnesota United FC",
@@ -2141,41 +1201,6 @@
    "sport": "crypto_fav",
    "status": "hit"
   },
-  "2026-10-25|KXETHD-26OCT2517-T2349.99|$2,350 or above at the close \u00b7 Crypto ETH favourite, both sides": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-25",
-   "edge_at_log": null,
-   "first_seen": "2026-10-25",
-   "headline": "$2,350 or above at the close",
-   "home": null,
-   "id": "2026-10-25|KXETHD-26OCT2517-T2349.99|$2,350 or above at the close \u00b7 Crypto ETH favourite, both sides",
-   "kickoff": "2026-10-25T21:05Z",
-   "lane": "production",
-   "league": "Crypto \u00b7 Favourite band",
-   "match": "Ethereum price at Oct 25, 2026 at 5pm EDT",
-   "pair": "crypto_eth_fav_both|crypto_fav",
-   "price_at_log": 0.61,
-   "published_at": "2026-10-26T01:10:05+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "$2,350 or above at the close",
-    "event": "KXETHD-26OCT2517",
-    "market": "KXETHD-26OCT2517-T2349.99",
-    "outcome": "$2,350 or above",
-    "outcome_side": "yes",
-    "price_at_log": 0.61,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "crypto_eth_fav_both:KXETHD-26OCT2517-T2349.99",
-   "source": "crypto_eth_fav_both",
-   "sport": "crypto_fav",
-   "status": "miss"
-  },
   "2026-10-25|Lecce|Juventus|Juventus to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
    "away": "Juventus",
    "bet": {
@@ -2212,41 +1237,6 @@
    "sport": "soccer_team2",
    "status": "hit"
   },
-  "2026-10-25|Manchester United|AFC Bournemouth|Under 10 corners \u00b7 Corners total under": {
-   "away": "AFC Bournemouth",
-   "bet": {
-    "kind": "corners_lte",
-    "n": 9
-   },
-   "date": "2026-10-25",
-   "edge_at_log": null,
-   "first_seen": "2026-10-25",
-   "headline": "Under 10 corners",
-   "home": "Manchester United",
-   "id": "2026-10-25|Manchester United|AFC Bournemouth|Under 10 corners \u00b7 Corners total under",
-   "kickoff": "2026-10-25T14:00Z",
-   "lane": "production",
-   "league": "Premier League",
-   "match": "Manchester United v AFC Bournemouth",
-   "pair": "corners_total_under|soccer_corners",
-   "price_at_log": 0.45,
-   "published_at": "2026-10-25T17:34:40+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Under 10 corners",
-    "event": "KXEPLCORNERS-26OCT25MUNBOU",
-    "market": "KXEPLCORNERS-26OCT25MUNBOU-10",
-    "outcome": "10+ corners",
-    "outcome_side": "no",
-    "price_at_log": 0.45,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "corners_total_under:KXEPLCORNERS-26OCT25MUNBOU-10",
-   "source": "corners_total_under",
-   "sport": "soccer_corners",
-   "status": "hit"
-  },
   "2026-10-25|Nijmegen|Groningen|Draw \u00b7 Eredivisie draw band": {
    "away": "Groningen",
    "bet": {
@@ -2281,41 +1271,6 @@
    "source": "ere_draw",
    "sport": "soccer",
    "status": "hit"
-  },
-  "2026-10-25|Packers|Lions|Packers to win \u00b7 ESPN FPI / Matchup Predictor": {
-   "away": "Lions",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-10-25",
-   "edge_at_log": 0.036,
-   "first_seen": "2026-10-22",
-   "headline": "Packers to win",
-   "home": "Packers",
-   "id": "2026-10-25|Packers|Lions|Packers to win \u00b7 ESPN FPI / Matchup Predictor",
-   "kickoff": "2026-10-25T20:25Z",
-   "lane": "production",
-   "league": "NFL",
-   "match": "Packers v Lions",
-   "model_prob": 0.416,
-   "pair": "espn_fpi|nfl",
-   "price_at_log": 0.38,
-   "published_at": "2026-10-26T01:10:05+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Packers to win",
-    "market": "aec-nfl-gb-det-2026-10-25",
-    "outcome": "Packers",
-    "outcome_side": "yes",
-    "price_at_log": 0.38,
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "espn_fpi:aec-nfl-gb-det-2026-10-25",
-   "source": "espn_fpi",
-   "sport": "nfl",
-   "status": "miss"
   },
   "2026-10-25|Portland Timbers|Charlotte FC|Charlotte FC to score 2+ \u00b7 Team scores 2+ form rule": {
    "away": "Charlotte FC",
@@ -2386,41 +1341,6 @@
    "sandbox_quote": "mls_fade_home:KXMLSGAME-26OCT24RSLSTL-RSL",
    "source": "mls_fade_home",
    "sport": "soccer_p05",
-   "status": "miss"
-  },
-  "2026-10-25|Rio Ave|FC Famalicao|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
-   "away": "FC Famalicao",
-   "bet": {
-    "kind": "total_lte",
-    "n": 3
-   },
-   "date": "2026-10-25",
-   "edge_at_log": null,
-   "first_seen": "2026-10-22",
-   "headline": "Under 3.5 goals",
-   "home": "Rio Ave",
-   "id": "2026-10-25|Rio Ave|FC Famalicao|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
-   "kickoff": "2026-10-25T18:00Z",
-   "lane": "production",
-   "league": "Primeira Liga",
-   "match": "Rio Ave v FC Famalicao",
-   "pair": "u35_low_scoring|soccer_u35",
-   "price_at_log": 0.79,
-   "published_at": "2026-10-25T20:50:57+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Under 3.5 goals",
-    "event": "KXLIGAPORTUGALTOTAL-26OCT25RAVFAM",
-    "market": "KXLIGAPORTUGALTOTAL-26OCT25RAVFAM-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "no",
-    "price_at_log": 0.79,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "u35_low_scoring:KXLIGAPORTUGALTOTAL-26OCT25RAVFAM-4",
-   "source": "u35_low_scoring",
-   "sport": "soccer_u35",
    "status": "miss"
   },
   "2026-10-25|San Diego FC|Seattle Sounders FC|Seattle Sounders FC +0.5 (San Diego FC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
@@ -2528,110 +1448,6 @@
    "source": "team2_ranked",
    "sport": "soccer_team2",
    "status": "miss"
-  },
-  "2026-10-25|Sunderland|Leeds United|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
-   "away": "Leeds United",
-   "bet": {
-    "kind": "total_lte",
-    "n": 3
-   },
-   "date": "2026-10-25",
-   "edge_at_log": null,
-   "first_seen": "2026-10-21",
-   "headline": "Under 3.5 goals",
-   "home": "Sunderland",
-   "id": "2026-10-25|Sunderland|Leeds United|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
-   "kickoff": "2026-10-25T16:30Z",
-   "lane": "production",
-   "league": "Premier League",
-   "match": "Sunderland v Leeds United",
-   "pair": "u35_low_scoring|soccer_u35",
-   "price_at_log": 0.78,
-   "published_at": "2026-10-25T18:33:37+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Under 3.5 goals",
-    "event": "KXEPLTOTAL-26OCT25SUNLEE",
-    "market": "KXEPLTOTAL-26OCT25SUNLEE-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "no",
-    "price_at_log": 0.78,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "u35_low_scoring:KXEPLTOTAL-26OCT25SUNLEE-4",
-   "source": "u35_low_scoring",
-   "sport": "soccer_u35",
-   "status": "hit"
-  },
-  "2026-10-26|Chiefs|Seahawks|Chiefs to win \u00b7 ESPN FPI / Matchup Predictor": {
-   "away": "Seahawks",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-10-26",
-   "edge_at_log": 0.107,
-   "first_seen": "2026-10-22",
-   "headline": "Chiefs to win",
-   "home": "Chiefs",
-   "id": "2026-10-26|Chiefs|Seahawks|Chiefs to win \u00b7 ESPN FPI / Matchup Predictor",
-   "kickoff": "2026-10-26T00:20Z",
-   "lane": "production",
-   "league": "NFL",
-   "match": "Chiefs v Seahawks",
-   "model_prob": 0.532,
-   "pair": "espn_fpi|nfl",
-   "price_at_log": 0.425,
-   "published_at": "2026-10-26T06:03:47+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Chiefs to win",
-    "market": "aec-nfl-kc-sea-2026-10-25",
-    "outcome": "Chiefs",
-    "outcome_side": "yes",
-    "price_at_log": 0.425,
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "espn_fpi:aec-nfl-kc-sea-2026-10-25",
-   "source": "espn_fpi",
-   "sport": "nfl",
-   "status": "miss"
-  },
-  "2026-10-26|Jaisinghani, Raghav|Singh, Svarmanyu|Jaisinghani, Raghav to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
-   "away": "Singh, Svarmanyu",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-10-26",
-   "edge_at_log": null,
-   "first_seen": "2026-10-26",
-   "headline": "Jaisinghani, Raghav to win",
-   "home": "Jaisinghani, Raghav",
-   "id": "2026-10-26|Jaisinghani, Raghav|Singh, Svarmanyu|Jaisinghani, Raghav to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles",
-   "kickoff": "2026-10-26T03:30Z",
-   "lane": "production",
-   "league": "Tennis",
-   "match": "Jaisinghani, Raghav v Singh, Svarmanyu",
-   "pair": "tennis_utr_shortlist_v1|tennis",
-   "price_at_log": 0.7,
-   "published_at": "2026-10-26T02:34:22+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 55,
-   "route": {
-    "claim": "Jaisinghani, Raghav to win",
-    "market": "aec-utr-jairag-sinsva-2026-10-25",
-    "outcome": "Jaisinghani, Raghav",
-    "outcome_side": "yes",
-    "price_at_log": 0.7,
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "tennis_utr_shortlist_v1:aec-utr-jairag-sinsva-2026-10-25",
-   "source": "tennis_utr_shortlist_v1",
-   "sport": "tennis",
-   "status": "hit"
   },
   "2026-10-26|KXBRENTD-26OCT2617-T110.50|Above $110.50 at the close \u00b7 Commodities favourite band": {
    "away": null,
@@ -2878,76 +1694,6 @@
    "sport": "soccer_team2",
    "status": "hit"
   },
-  "2026-10-26|Sevilla|Osasuna|Under 8 corners \u00b7 Corners total under": {
-   "away": "Osasuna",
-   "bet": {
-    "kind": "corners_lte",
-    "n": 7
-   },
-   "date": "2026-10-26",
-   "edge_at_log": null,
-   "first_seen": "2026-10-26",
-   "headline": "Under 8 corners",
-   "home": "Sevilla",
-   "id": "2026-10-26|Sevilla|Osasuna|Under 8 corners \u00b7 Corners total under",
-   "kickoff": "2026-10-26T20:00Z",
-   "lane": "production",
-   "league": "La Liga",
-   "match": "Sevilla v Osasuna",
-   "pair": "corners_total_under|soccer_corners",
-   "price_at_log": 0.36,
-   "published_at": "2026-10-26T22:41:44+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Under 8 corners",
-    "event": "KXLALIGACORNERS-26OCT26SEVOSA",
-    "market": "KXLALIGACORNERS-26OCT26SEVOSA-8",
-    "outcome": "8+ corners",
-    "outcome_side": "no",
-    "price_at_log": 0.36,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "corners_total_under:KXLALIGACORNERS-26OCT26SEVOSA-8",
-   "source": "corners_total_under",
-   "sport": "soccer_corners",
-   "status": "miss"
-  },
-  "2026-10-27|Cowboys|Eagles|Cowboys to win \u00b7 ESPN FPI / Matchup Predictor": {
-   "away": "Eagles",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-10-27",
-   "edge_at_log": 0.0465,
-   "first_seen": "2026-10-23",
-   "headline": "Cowboys to win",
-   "home": "Cowboys",
-   "id": "2026-10-27|Cowboys|Eagles|Cowboys to win \u00b7 ESPN FPI / Matchup Predictor",
-   "kickoff": "2026-10-27T00:15Z",
-   "lane": "production",
-   "league": "NFL",
-   "match": "Cowboys v Eagles",
-   "model_prob": 0.694,
-   "pair": "espn_fpi|nfl",
-   "price_at_log": 0.6475,
-   "published_at": "2026-10-27T03:40:16+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Cowboys to win",
-    "market": "aec-nfl-dal-phi-2026-10-26",
-    "outcome": "Cowboys",
-    "outcome_side": "yes",
-    "price_at_log": 0.6475,
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "espn_fpi:aec-nfl-dal-phi-2026-10-26",
-   "source": "espn_fpi",
-   "sport": "nfl",
-   "status": "hit"
-  },
   "2026-10-27|KXBRENTD-26OCT2717-T109|Above $109 at the close \u00b7 Commodities favourite band": {
    "away": null,
    "bet": {
@@ -3015,41 +1761,6 @@
    },
    "sandbox_quote": "crypto_fav_band_below:KXBTCD-26OCT2717-T80749.99",
    "source": "crypto_fav_band_below",
-   "sport": "crypto_fav",
-   "status": "hit"
-  },
-  "2026-10-27|KXETHD-26OCT2717-T2339.99|$2,340 or above at the close \u00b7 Crypto ETH favourite, both sides": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-10-27",
-   "edge_at_log": null,
-   "first_seen": "2026-10-27",
-   "headline": "$2,340 or above at the close",
-   "home": null,
-   "id": "2026-10-27|KXETHD-26OCT2717-T2339.99|$2,340 or above at the close \u00b7 Crypto ETH favourite, both sides",
-   "kickoff": "2026-10-27T21:05Z",
-   "lane": "production",
-   "league": "Crypto \u00b7 Favourite band",
-   "match": "Ethereum price at Oct 27, 2026 at 5pm EDT",
-   "pair": "crypto_eth_fav_both|crypto_fav",
-   "price_at_log": 0.72,
-   "published_at": "2026-10-27T23:45:45+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "$2,340 or above at the close",
-    "event": "KXETHD-26OCT2717",
-    "market": "KXETHD-26OCT2717-T2339.99",
-    "outcome": "$2,340 or above",
-    "outcome_side": "yes",
-    "price_at_log": 0.72,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "crypto_eth_fav_both:KXETHD-26OCT2717-T2339.99",
-   "source": "crypto_eth_fav_both",
    "sport": "crypto_fav",
    "status": "hit"
   },
@@ -3121,41 +1832,6 @@
    "sandbox_quote": "commod_fav_band:KXSILVERD-26OCT2717-T54.25",
    "source": "commod_fav_band",
    "sport": "commodities_fav",
-   "status": "hit"
-  },
-  "2026-10-27|KXSOLD-26OCT2717-T100.9999|Below $101 at the close \u00b7 Crypto SOL favourite, both sides": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "no"
-   },
-   "date": "2026-10-27",
-   "edge_at_log": null,
-   "first_seen": "2026-10-27",
-   "headline": "Below $101 at the close",
-   "home": null,
-   "id": "2026-10-27|KXSOLD-26OCT2717-T100.9999|Below $101 at the close \u00b7 Crypto SOL favourite, both sides",
-   "kickoff": "2026-10-27T21:05Z",
-   "lane": "production",
-   "league": "Crypto \u00b7 Favourite band",
-   "match": "SOL price on Oct 27, 2026",
-   "pair": "crypto_sol_fav_both|crypto_fav",
-   "price_at_log": 0.69,
-   "published_at": "2026-10-27T23:45:45+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Below $101 at the close",
-    "event": "KXSOLD-26OCT2717",
-    "market": "KXSOLD-26OCT2717-T100.9999",
-    "outcome": "$101 or above",
-    "outcome_side": "no",
-    "price_at_log": 0.69,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "crypto_sol_fav_both:KXSOLD-26OCT2717-T100.9999",
-   "source": "crypto_sol_fav_both",
-   "sport": "crypto_fav",
    "status": "hit"
   },
   "2026-10-28|Charlotte FC|CF Montr\u00e9al|Charlotte FC to score 2+ \u00b7 Team scores 2+ form rule": {
@@ -3310,80 +1986,6 @@
    "sport": "soccer_team2",
    "status": "pending"
   },
-  "2026-10-28|Parma|Udinese|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
-   "away": "Udinese",
-   "bet": {
-    "kind": "total_lte",
-    "n": 3
-   },
-   "date": "2026-10-28",
-   "edge_at_log": null,
-   "first_seen": "2026-10-24",
-   "headline": "Under 3.5 goals",
-   "home": "Parma",
-   "id": "2026-10-28|Parma|Udinese|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
-   "kickoff": "2026-10-28T17:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T23:51:58+00:00",
-   "league": "Serie A",
-   "match": "Parma v Udinese",
-   "pair": "u35_low_scoring|soccer_u35",
-   "price_at_log": 0.81,
-   "published_at": "2026-10-24T17:34:25+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 5755,
-   "route": {
-    "claim": "Under 3.5 goals",
-    "event": "KXSERIEATOTAL-26OCT28PARUDI",
-    "market": "KXSERIEATOTAL-26OCT28PARUDI-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "no",
-    "price_at_log": 0.81,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "u35_low_scoring:KXSERIEATOTAL-26OCT28PARUDI-4",
-   "source": "u35_low_scoring",
-   "sport": "soccer_u35",
-   "status": "pending"
-  },
-  "2026-10-28|St Mirren|Hibernian|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
-   "away": "Hibernian",
-   "bet": {
-    "kind": "total_lte",
-    "n": 3
-   },
-   "date": "2026-10-28",
-   "edge_at_log": null,
-   "first_seen": "2026-10-25",
-   "headline": "Under 3.5 goals",
-   "home": "St Mirren",
-   "id": "2026-10-28|St Mirren|Hibernian|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
-   "kickoff": "2026-10-28T19:45Z",
-   "lane": "production",
-   "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T23:51:58+00:00",
-   "league": "Scottish Premiership",
-   "match": "St Mirren v Hibernian",
-   "pair": "u35_low_scoring|soccer_u35",
-   "price_at_log": 0.69,
-   "published_at": "2026-10-25T20:50:57+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 4254,
-   "route": {
-    "claim": "Under 3.5 goals",
-    "event": "KXSCOTTISHPREMTOTAL-26OCT28MIRHIB",
-    "market": "KXSCOTTISHPREMTOTAL-26OCT28MIRHIB-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "no",
-    "price_at_log": 0.69,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "u35_low_scoring:KXSCOTTISHPREMTOTAL-26OCT28MIRHIB-4",
-   "source": "u35_low_scoring",
-   "sport": "soccer_u35",
-   "status": "pending"
-  },
   "2026-10-28|Venezia|Internazionale|Internazionale to score 2+ \u00b7 Team scores 2+ form rule": {
    "away": "Internazionale",
    "bet": {
@@ -3534,43 +2136,6 @@
    "sport": "soccer_p05",
    "status": "pending"
   },
-  "2026-10-29|San Jose Earthquakes|Colorado Rapids|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
-   "away": "Colorado Rapids",
-   "bet": {
-    "kind": "total_lte",
-    "n": 3
-   },
-   "date": "2026-10-29",
-   "edge_at_log": null,
-   "first_seen": "2026-10-25",
-   "headline": "Under 3.5 goals",
-   "home": "San Jose Earthquakes",
-   "id": "2026-10-29|San Jose Earthquakes|Colorado Rapids|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
-   "kickoff": "2026-10-29T02:30Z",
-   "lane": "production",
-   "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T23:51:58+00:00",
-   "league": "MLS",
-   "match": "San Jose Earthquakes v Colorado Rapids",
-   "pair": "u35_low_scoring|soccer_u35",
-   "price_at_log": 0.62,
-   "published_at": "2026-10-25T04:05:00+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 5665,
-   "route": {
-    "claim": "Under 3.5 goals",
-    "event": "KXMLSTOTAL-26OCT28SJCOL",
-    "market": "KXMLSTOTAL-26OCT28SJCOL-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "no",
-    "price_at_log": 0.62,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "u35_low_scoring:KXMLSTOTAL-26OCT28SJCOL-4",
-   "source": "u35_low_scoring",
-   "sport": "soccer_u35",
-   "status": "pending"
-  },
   "2026-10-29|St. Louis CITY SC|Portland Timbers|St. Louis CITY SC to score 2+ \u00b7 Team scores 2+ form rule": {
    "away": "Portland Timbers",
    "bet": {
@@ -3607,43 +2172,6 @@
    "sandbox_quote": "team2_form_l10:KXMLSTEAMTOTAL-26OCT28STLPOR-STL2",
    "source": "team2_form_l10",
    "sport": "soccer_team2",
-   "status": "pending"
-  },
-  "2026-10-30|Panthers|Packers|Panthers to win \u00b7 ESPN FPI / Matchup Predictor": {
-   "away": "Packers",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-10-30",
-   "edge_at_log": 0.048,
-   "first_seen": "2026-10-26",
-   "headline": "Panthers to win",
-   "home": "Panthers",
-   "id": "2026-10-30|Panthers|Packers|Panthers to win \u00b7 ESPN FPI / Matchup Predictor",
-   "kickoff": "2026-10-30T00:15Z",
-   "lane": "production",
-   "last_seen": "2026-10-27",
-   "last_seen_at": "2026-10-27T23:51:58+00:00",
-   "league": "NFL",
-   "match": "Panthers v Packers",
-   "model_prob": 0.393,
-   "pair": "espn_fpi|nfl",
-   "price_at_log": 0.345,
-   "published_at": "2026-10-26T01:10:05+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 5704,
-   "route": {
-    "claim": "Panthers to win",
-    "market": "aec-nfl-car-gb-2026-10-29",
-    "outcome": "Panthers",
-    "outcome_side": "yes",
-    "price_at_log": 0.345,
-    "venue": "polymarket_us"
-   },
-   "sandbox_quote": "espn_fpi:aec-nfl-car-gb-2026-10-29",
-   "source": "espn_fpi",
-   "sport": "nfl",
    "status": "pending"
   },
   "2026-10-31|Ajax|Alkmaar|Draw \u00b7 Eredivisie draw band": {
@@ -3784,56 +2312,6 @@
     "under_target": 0
    }
   },
-  "corners_total_under|soccer_corners": {
-   "by_hand": "2026-10-15",
-   "entered_at": "2026-10-15T07:20:21+00:00",
-   "promoted_at": "2026-10-15T07:20:21+00:00",
-   "ready_at": "2026-10-15T07:20:21+00:00",
-   "route": "moved by hand on 2026-10-15",
-   "routing": {
-    "leads": 5,
-    "problem": null,
-    "routed": 5,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": -0.0017,
-   "sandbox_n": 12,
-   "sandbox_roi": -0.0386,
-   "sandbox_roi_fee": -0.0753,
-   "timing": {
-    "late": [],
-    "timed": 1,
-    "under_target": 0
-   }
-  },
-  "crypto_eth_fav_both|crypto_fav": {
-   "by_hand": "2026-10-20",
-   "entered_at": "2026-10-21T00:47:16+00:00",
-   "promoted_at": "2026-10-21T00:47:16+00:00",
-   "ready_at": "2026-10-21T00:47:16+00:00",
-   "route": "moved by hand on 2026-10-20",
-   "routing": {
-    "leads": 6,
-    "problem": null,
-    "routed": 6,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": -0.085,
-   "sandbox_n": 6,
-   "sandbox_roi": -0.2382,
-   "sandbox_roi_fee": -0.2561,
-   "timing": {
-    "late": [],
-    "timed": 0,
-    "under_target": 0
-   }
-  },
   "crypto_fav_band_below|crypto_fav": {
    "by_hand": "2026-10-20",
    "entered_at": "2026-10-21T00:47:16+00:00",
@@ -3853,31 +2331,6 @@
    "sandbox_n": 7,
    "sandbox_roi": 0.2497,
    "sandbox_roi_fee": 0.2276,
-   "timing": {
-    "late": [],
-    "timed": 0,
-    "under_target": 0
-   }
-  },
-  "crypto_sol_fav_both|crypto_fav": {
-   "by_hand": "2026-10-20",
-   "entered_at": "2026-10-21T00:47:16+00:00",
-   "promoted_at": "2026-10-21T00:47:16+00:00",
-   "ready_at": "2026-10-21T00:47:16+00:00",
-   "route": "moved by hand on 2026-10-20",
-   "routing": {
-    "leads": 3,
-    "problem": null,
-    "routed": 3,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": -0.0367,
-   "sandbox_n": 3,
-   "sandbox_roi": -0.0603,
-   "sandbox_roi_fee": -0.079,
    "timing": {
     "late": [],
     "timed": 0,
@@ -3906,31 +2359,6 @@
    "timing": {
     "late": [],
     "timed": 3,
-    "under_target": 0
-   }
-  },
-  "espn_fpi|nfl": {
-   "by_hand": "2026-10-16",
-   "entered_at": "2026-10-16T17:17:38+00:00",
-   "promoted_at": "2026-10-16T17:17:38+00:00",
-   "ready_at": "2026-10-16T17:17:38+00:00",
-   "route": "moved by hand on 2026-10-16",
-   "routing": {
-    "leads": 10,
-    "problem": null,
-    "routed": 10,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": 0.0003,
-   "sandbox_n": 17,
-   "sandbox_roi": -0.4495,
-   "sandbox_roi_fee": -0.4611,
-   "timing": {
-    "late": [],
-    "timed": 1,
     "under_target": 0
    }
   },
@@ -4034,31 +2462,6 @@
     "under_target": 0
    }
   },
-  "oddspedia|cricket": {
-   "by_hand": "2026-09-27",
-   "entered_at": "2026-10-12T00:00:00+00:00",
-   "promoted_at": "2026-09-28T02:59:44+00:00",
-   "ready_at": "2026-09-28T02:59:44+00:00",
-   "route": "moved by hand on 2026-09-27",
-   "routing": {
-    "leads": 1,
-    "problem": null,
-    "routed": 1,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": 0.035,
-   "sandbox_n": 6,
-   "sandbox_roi": -0.0638,
-   "sandbox_roi_fee": -0.0823,
-   "timing": {
-    "late": [],
-    "timed": 0,
-    "under_target": 0
-   }
-  },
   "team1_form_l5|soccer_team1_intl": {
    "by_hand": "2026-10-01",
    "entered_at": "2026-10-01T16:20:16+00:00",
@@ -4134,56 +2537,6 @@
     "under_target": 0
    }
   },
-  "tennis_utr_shortlist_v1|tennis": {
-   "by_hand": "2026-10-14",
-   "entered_at": "2026-10-14T04:38:55+00:00",
-   "promoted_at": "2026-10-14T04:38:55+00:00",
-   "ready_at": "2026-10-14T04:38:55+00:00",
-   "route": "moved by hand on 2026-10-14",
-   "routing": {
-    "leads": 6,
-    "problem": null,
-    "routed": 6,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": -0.0012,
-   "sandbox_n": 17,
-   "sandbox_roi": -0.033,
-   "sandbox_roi_fee": -0.049,
-   "timing": {
-    "late": [],
-    "timed": 2,
-    "under_target": 1
-   }
-  },
-  "u35_low_scoring|soccer_u35": {
-   "by_hand": "2026-10-11",
-   "entered_at": "2026-10-11T19:34:45+00:00",
-   "promoted_at": "2026-10-11T19:34:45+00:00",
-   "ready_at": "2026-10-11T19:34:45+00:00",
-   "route": "moved by hand on 2026-10-11",
-   "routing": {
-    "leads": 11,
-    "problem": null,
-    "routed": 11,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": -0.0178,
-   "sandbox_n": 18,
-   "sandbox_roi": -0.1271,
-   "sandbox_roi_fee": -0.145,
-   "timing": {
-    "late": [],
-    "timed": 4,
-    "under_target": 0
-   }
-  },
   "u35_low_scoring|soccer_u35_intl": {
    "by_hand": "2026-10-04",
    "entered_at": "2026-10-04T07:03:02+00:00",
@@ -4210,6 +2563,7 @@
    }
   }
  },
+ "pruned_at": "2026-10-28T00:18:19+00:00",
  "publication_withheld": {
   "2026-10-21|McElnea, Harrison|Dominguez Alonso, Jose|Dominguez Alonso, Jose to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
    "headline": "Dominguez Alonso, Jose to win",
