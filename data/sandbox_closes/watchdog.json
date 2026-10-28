@@ -170,10 +170,30 @@
    "lead_min": 24.3,
    "price": 0.81
   },
+  "mls_away_band_fade:KXMLSGAME-26OCT28CHIORL-ORL": {
+   "at": "2026-10-28T23:39:18+00:00",
+   "lead_min": 50.7,
+   "price": 0.82
+  },
+  "mls_away_band_fade:KXMLSGAME-26OCT28NSHPHI-PHI": {
+   "at": "2026-10-28T23:39:18+00:00",
+   "lead_min": 50.7,
+   "price": 0.8
+  },
+  "mls_away_band_fade:KXMLSGAME-26OCT28STLPOR-POR": {
+   "at": "2026-10-28T23:39:18+00:00",
+   "lead_min": 50.7,
+   "price": 0.74
+  },
   "mls_fade_home:KXMLSGAME-26OCT24RSLSTL-RSL": {
    "at": "2026-10-25T00:35:54+00:00",
    "lead_min": 54.1,
    "price": 0.52
+  },
+  "mls_fade_home:KXMLSGAME-26OCT28DALCLB-DAL": {
+   "at": "2026-10-28T23:39:18+00:00",
+   "lead_min": 50.7,
+   "price": 0.57
   },
   "o15_cup_mismatch:KXDFBPOKALTOTAL-26OCT27GROFCA-2": {
    "at": "2026-10-27T16:52:59+00:00",
@@ -280,6 +300,16 @@
    "lead_min": 12.5,
    "price": 0.75
   },
+  "team2_form_l10:KXMLSTEAMTOTAL-26OCT28MINSKC-MIN2": {
+   "at": "2026-10-28T23:39:18+00:00",
+   "lead_min": 50.7,
+   "price": 0.76
+  },
+  "team2_form_l10:KXMLSTEAMTOTAL-26OCT28STLPOR-STL2": {
+   "at": "2026-10-28T23:39:18+00:00",
+   "lead_min": 50.7,
+   "price": 0.59
+  },
   "team2_ranked:KXLALIGATEAMTOTAL-26OCT23ALAMCF-ALA2": {
    "at": "2026-10-23T18:10:47+00:00",
    "lead_min": 49.2,
@@ -346,5 +376,5 @@
    "price": 0.71
   }
  },
- "updated": "2026-10-28T19:09:13+00:00"
+ "updated": "2026-10-28T23:39:18+00:00"
 }
