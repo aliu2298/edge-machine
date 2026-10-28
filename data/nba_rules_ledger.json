@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-28T21:30:16.485176+00:00",
+ "last_run": "2026-10-28T22:00:16.824051+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -600,6 +600,28 @@
      "ticker": "KXNBATEAMTOTAL-26OCT28PHIIND-IND110",
      "title": "Indiana over 109.5 points",
      "why": "IND O+D+ v PHI O-D- \u00b7 110+ YES 0.64"
+    },
+    {
+     "game": "401909885",
+     "id": "R1:KXNBATEAMTOTAL-26OCT28ORLTOR-TOR109",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O+D+",
+      "home": "O+D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-28T22:00:16.824051+00:00",
+     "match": "ORL @ TOR",
+     "price": 0.68,
+     "rule": "R1",
+     "side": "yes",
+     "start": "2026-10-28T23:30Z",
+     "status": "open",
+     "strike": 108.5,
+     "team": "TOR",
+     "ticker": "KXNBATEAMTOTAL-26OCT28ORLTOR-TOR109",
+     "title": "Toronto over 108.5 points",
+     "why": "TOR O+D- v ORL O+D+ \u00b7 110+ YES 0.68"
     }
    ]
   },
@@ -1863,6 +1885,28 @@
      "ticker": "KXNBA1HTOTAL-26OCT27BKNBOS-114",
      "title": "Over 113.5 points",
      "why": "1H BKN O+D+ @ BOS O-D- \u00b7 115+ NO 0.50"
+    },
+    {
+     "game": "401909885",
+     "id": "R5:KXNBA1HTOTAL-26OCT28ORLTOR-114",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O+D+",
+      "home": "O+D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-28T22:00:16.824051+00:00",
+     "match": "ORL @ TOR",
+     "price": 0.44,
+     "rule": "R5",
+     "side": "no",
+     "start": "2026-10-28T23:30Z",
+     "status": "open",
+     "strike": 113.5,
+     "team": "game",
+     "ticker": "KXNBA1HTOTAL-26OCT28ORLTOR-114",
+     "title": "Over 113.5 points",
+     "why": "1H ORL O+D+ @ TOR O-D- \u00b7 115+ NO 0.44"
     }
    ]
   },
@@ -2686,6 +2730,50 @@
      "ticker": "KXNBATEAMTOTAL-26OCT28PHIIND-IND104",
      "title": "Indiana over 103.5 points",
      "why": "IND O+D+ v PHI O-D- \u00b7 105+ YES 0.81"
+    },
+    {
+     "game": "401909885",
+     "id": "R6:KXNBATEAMTOTAL-26OCT28ORLTOR-TOR105",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O+D+",
+      "home": "O+D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-28T22:00:16.824051+00:00",
+     "match": "ORL @ TOR",
+     "price": 0.81,
+     "rule": "R6",
+     "side": "yes",
+     "start": "2026-10-28T23:30Z",
+     "status": "open",
+     "strike": 104.5,
+     "team": "TOR",
+     "ticker": "KXNBATEAMTOTAL-26OCT28ORLTOR-TOR105",
+     "title": "Toronto over 104.5 points",
+     "why": "TOR O+D- v ORL O+D+ \u00b7 105+ YES 0.81"
+    },
+    {
+     "game": "401909885",
+     "id": "R6:KXNBATEAMTOTAL-26OCT28ORLTOR-ORL104",
+     "labels": {
+      "away": "O+D+",
+      "away_h1": "O+D+",
+      "home": "O+D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-28T22:00:16.824051+00:00",
+     "match": "ORL @ TOR",
+     "price": 0.7,
+     "rule": "R6",
+     "side": "yes",
+     "start": "2026-10-28T23:30Z",
+     "status": "open",
+     "strike": 103.5,
+     "team": "ORL",
+     "ticker": "KXNBATEAMTOTAL-26OCT28ORLTOR-ORL104",
+     "title": "Orlando over 103.5 points",
+     "why": "ORL O+D+ v TOR O+D- \u00b7 105+ YES 0.70"
     }
    ]
   },
@@ -3218,11 +3306,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-24T22:30:15.799761+00:00",
-   "due": 4,
-   "new": 0
-  },
-  {
    "at": "2026-10-24T23:00:16.473307+00:00",
    "due": 5,
    "new": 5
@@ -3471,6 +3554,11 @@
    "at": "2026-10-28T21:30:16.485176+00:00",
    "due": 4,
    "new": 5
+  },
+  {
+   "at": "2026-10-28T22:00:16.824051+00:00",
+   "due": 5,
+   "new": 4
   }
  ],
  "version": "nba-rules-v1"
