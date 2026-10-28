@@ -1,0 +1,251 @@
+"""o35_cheap_no_wave: Over 3.5 cheap NO, a resting bid sold into the quiet spell (2026-10-28, Olu). Sandbox PAPER.
+
+Kalshi soccer total-goals markets, the over 3.5 rung (event ticker + "-4", floor_strike 3.5), in the twelve
+leagues the Soccer page already tracks (soccer_rules.SERIES). Before kickoff a NO bid rests at 10c (the headline;
+15c and 20c are tracked too). It can only fill in play, after goals push YES to 80-90c or more.
+
+FILL. The bid fills at its limit when the first TRADE after it was placed prints NO at or under the limit (NO
+price = 1 - yes_price on /markets/trades). Fills after the 4th goal are KEPT (a real resting bid is hit there
+too) and flagged "dead fill": by the market's own prices that is a fill whose print is NO 2c or less, when the
+over is all but certain (we have no goal clock, so this is the proxy; it can only miss a dead fill, never invent one).
+
+EXITS, on the same entries: a resting sell at 2x (HEADLINE), 3x or 4x of the limit, or hold to settlement. A sell
+fills only on a LATER trade print at or above the target AND only if at least 50 contracts traded at or above the
+target after the bid filled. Under 50 the sell does not fill (held to settlement) and the trade is marked "thin";
+the volume is logged either way. Maker fee 0.0175 p(1-p) on BOTH legs (both rest), none on settlement.
+
+KICKOFF = Kalshi occurrence_datetime minus 4 hours (verified on 72 games against ESPN). The bid is placed an hour
+before it; only prints after that count.
+
+Every settled market since SINCE is evaluated once, from its trades, whether or not the bid filled. Each entry
+is tagged with whether the match was also an over 1.5 form-rule match (the research population: o15_form_l10).
+Own ledger data/o35_cheap_no_ledger.json (fresh record from SINCE; no other ledger is read or written).
+Review at 10 settled, decide at 30.
+"""
+import datetime as dt
+import json
+import os
+
+import chaos_replay as C
+import daily_track as D
+import soccer_rules as SR
+
+ROOT = os.path.dirname(os.path.abspath(__file__))
+PATH = os.path.join(ROOT, "data", "o35_cheap_no_ledger.json")
+SOURCE_LEDGER = os.path.join(ROOT, "data", "sandbox_ledger.json")
+LANE = "o35_cheap_no_wave"
+LABEL = "Over 3.5 cheap NO · resting bid, sell into the quiet spell"
+SINCE = "2026-10-28"
+VERSION = "o35-v1"
+LIMITS = (0.10, 0.15, 0.20)
+HEADLINE = 0.10
+MULTS = (2, 3, 4)
+HEAD_MULT = 2
+MIN_VOL = 50
+DEAD_NO = 0.02
+KICKOFF_BACK_H = 4
+BID_LEAD_MIN = 60
+CAP = 0.98
+MAKER = 0.0175
+REVIEW_N, DECIDE_N = 10, 30
+MAX_EVENTS_PER_RUN = 60
+EPS = 1e-9
+ET = D.ET
+UTC = dt.timezone.utc
+
+
+def fee(p):
+    return MAKER * p * (1 - p)
+
+
+def vkey(limit, mult):
+    return f"{round(limit * 100)}c_{'hold' if mult is None else str(mult) + 'x'}"
+
+
+def vlabel(key):
+    lim, ex = key.split("_")
+    return f"NO bid {lim} · " + ("hold to settlement" if ex == "hold" else f"sell at {ex}")
+
+
+def _ts(raw):
+    t = D.instant(raw)
+    return int(t.timestamp()) if t else None
+
+
+def night_of(ts):
+    return dt.datetime.fromtimestamp(ts, UTC).astimezone(ET).date().isoformat()
+
+
+def prints_of(trades):
+    """[(ts, no_price, contracts)] oldest first, from /markets/trades rows."""
+    out = []
+    for t in trades or []:
+        ts = _ts(t.get("created_time"))
+        yes = D.number(t.get("yes_price_dollars"))
+        no = D.number(t.get("no_price_dollars"))
+        if no is None and yes is not None:
+            no = round(1 - yes, 4)
+        n = D.number(t.get("count_fp")) or 0.0
+        if ts is not None and no is not None:
+            out.append((ts, no, n))
+    return sorted(out)
+
+
+def fetch_trades(ticker, min_ts, fetch, max_pages=30):
+    rows, path, pages = [], f"markets/trades?ticker={ticker}&min_ts={min_ts}&limit=1000", 0
+    while path and pages < max_pages:
+        d = fetch(path)
+        rows += d.get("trades") or []
+        cur = d.get("cursor")
+        path = f"markets/trades?ticker={ticker}&min_ts={min_ts}&limit=1000&cursor={cur}" if cur and d.get("trades") else None
+        pages += 1
+    return rows
+
+
+def evaluate(prints, kickoff_ts, result):
+    """{limit key: bid outcome} for one market. A bid is None when no print reached it. A filled bid carries the
+    fill time, the dead-fill flag, and per multiple the target, whether the sell filled, whether it was thin and
+    the contracts traded at or above the target after the fill."""
+    live = [p for p in prints if p[0] >= kickoff_ts - BID_LEAD_MIN * 60]
+    payout = 1.0 if result == "no" else 0.0
+    out = {}
+    for limit in LIMITS:
+        i = next((k for k, p in enumerate(live) if p[1] <= limit + EPS), None)
+        if i is None:
+            out[f"{round(limit * 100)}"] = None
+            continue
+        after = live[i + 1:]
+        sells = {}
+        for m in MULTS:
+            target = round(min(limit * m, CAP), 2)
+            hit = [p for p in after if p[1] >= target - EPS]
+            vol = round(sum(p[2] for p in hit), 2)
+            sells[str(m)] = dict(target=target, volume=vol, filled=bool(hit) and vol >= MIN_VOL - EPS,
+                                 thin=bool(hit) and vol < MIN_VOL - EPS, at=hit[0][0] if hit and vol >= MIN_VOL - EPS else None)
+        out[f"{round(limit * 100)}"] = dict(limit=limit, fill_at=live[i][0], fill_print=live[i][1], dead=live[i][1] <= DEAD_NO + EPS,
+                                            sells=sells, payout=payout)
+    return out
+
+
+def trade_rows(entries):
+    """One row per filled bid per variant: the stats shape chaos_replay.stats reads."""
+    rows = []
+    for e in entries:
+        for lk, b in (e.get("bids") or {}).items():
+            if not b:
+                continue
+            limit = b["limit"]
+            cost = limit + fee(limit)
+            for m in (None,) + MULTS:
+                if m is None:
+                    proceeds, reason, thin = b["payout"], "settled", False
+                else:
+                    s = b["sells"][str(m)]
+                    proceeds = s["target"] - fee(s["target"]) if s["filled"] else b["payout"]
+                    reason, thin = ("target" if s["filled"] else "settled"), s["thin"]
+                profit = proceeds - cost
+                rows.append(dict(variant=vkey(limit, m), limit=limit, mult=m, cost=cost, profit=profit, roi=profit / cost,
+                                 won=profit > 0, reason=reason, night=e["night"], kickoff=e["kickoff"], league=e["league"],
+                                 event=e["event"], dead=b["dead"], thin=thin, form_rule=e["form_rule"]))
+    return rows
+
+
+def form_rule_events(path=SOURCE_LEDGER):
+    """Events the over 1.5 form rule (o15_form_l10) fired on: read-only."""
+    try:
+        with open(path) as f:
+            q = json.load(f).get("quotes") or []
+    except (OSError, ValueError):
+        return set()
+    return {x["market_id"].rsplit("-", 1)[0] for x in q if x.get("source") == "o15_form_l10" and x.get("market_id")}
+
+
+def load(path=None):
+    try:
+        with open(path or PATH) as f:
+            s = json.load(f)
+    except FileNotFoundError:
+        s = {}
+    s.setdefault("lane", LANE)
+    s.setdefault("since", SINCE)
+    s.setdefault("version", VERSION)
+    s.setdefault("entries", [])
+    s.setdefault("seen", {})
+    s.setdefault("skips", {})
+    return s
+
+
+def over35(markets):
+    return next((m for m in markets if D.number(m.get("floor_strike")) == 3.5 and m["ticker"].endswith("-4")), None)
+
+
+def run(state, now=None, fetch=D.get, forms=None):
+    now = now or dt.datetime.now(UTC)
+    forms = form_rule_events() if forms is None else forms
+    since = dt.date.fromisoformat(state["since"])
+    obs = dict(at=now.isoformat(), new=0, waiting=0, errors=[])
+    done = 0
+    for league, series in SR.SERIES.items():
+        try:
+            events = C.list_events(series, since, fetch, until=now.astimezone(ET).date())
+        except Exception as e:                                  # noqa: BLE001
+            obs["errors"].append(f"{series}: {str(e)[:80]}")
+            continue
+        for event in events:
+            if event in state["seen"] or event in state["skips"]:
+                continue
+            if done >= MAX_EVENTS_PER_RUN:
+                break
+            try:
+                ms = D.pages(f"markets?limit=200&event_ticker={event}", "markets", fetch)
+                m = over35(ms)
+                if m is None:
+                    state["skips"][event] = "no over 3.5 market"
+                    continue
+                result = m.get("result")
+                if m.get("status") not in ("finalized", "settled") or result not in ("yes", "no"):
+                    obs["waiting"] += 1
+                    continue
+                occ = _ts(m.get("occurrence_datetime"))
+                if occ is None:
+                    state["skips"][event] = "no occurrence time"
+                    continue
+                kickoff = occ - KICKOFF_BACK_H * 3600
+                night = night_of(kickoff)
+                if night < state["since"]:
+                    state["seen"][event] = "before the lane's first night"
+                    continue
+                prints = prints_of(fetch_trades(m["ticker"], kickoff - BID_LEAD_MIN * 60, fetch))
+            except Exception as e:                              # noqa: BLE001
+                obs["errors"].append(f"{event}: {str(e)[:80]}")
+                continue
+            state["entries"].append(dict(id=m["ticker"], event=event, league=league, series=series, kickoff=kickoff,
+                                         night=night, result=result, form_rule=event in forms, prints=len(prints),
+                                         bids=evaluate(prints, kickoff, result), logged=now.isoformat(), version=VERSION))
+            state["seen"][event] = now.isoformat()
+            obs["new"] += 1
+            done += 1
+    state["last_run"] = now.isoformat()
+    state["error"] = "; ".join(obs["errors"])[:600] or None
+    state["observations"] = obs
+    return state
+
+
+def main():
+    st = load()
+    try:
+        run(st)
+    except Exception as e:                                      # noqa: BLE001
+        st["error"] = (type(e).__name__ + ": " + str(e))[:300]
+    os.makedirs(os.path.dirname(PATH), exist_ok=True)
+    tmp = PATH + ".tmp"
+    with open(tmp, "w") as f:
+        json.dump(st, f, indent=1, sort_keys=True)
+        f.write("\n")
+    os.replace(tmp, PATH)
+    print(LANE, "entries", len(st["entries"]), "this run", st.get("observations"), "error", st.get("error"))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
