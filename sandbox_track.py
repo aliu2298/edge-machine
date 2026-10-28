@@ -266,7 +266,8 @@ PAIR_OVERRIDES = {
     # time and any parseable rules time agree, and the match is still pre-match.
     # Otherwise start_source stays unset and placeable() refuses it. Polymarket US
     # cricket carries its own start and is unchanged.
-    "oddspedia|cricket": dict(moved_on="2026-09-27", production_at=None),
+    #   oddspedia|cricket — OUT 2026-10-27, back to the Sandbox, as asked (Olu): oddspedia|cricket (4-2, -8.2%). Whole record kept
+    #   (PAIR_REMOVALS); it keeps collecting in the Sandbox.
     # 2026-09-28, as asked. LISTED BUT NOT ACTIONABLE, and that is a fact about the exchange
     # rather than a gap to be closed here, so it is written down instead of quietly retried:
     # Polymarket US publishes no parlay API. Its official SDK (polymarket-us 0.1.2) takes a
@@ -387,14 +388,17 @@ PAIR_OVERRIDES = {
     # were found on. The feed learned the No of a ladder rung for them ({"kind": "ladder",
     # "side": "no"}). The below lane takes a shared No rung first; the coin lanes yield it.
     "crypto_fav_band_below|crypto_fav": dict(moved_on="2026-10-20", production_at=None),
-    "crypto_eth_fav_both|crypto_fav": dict(moved_on="2026-10-20", production_at=None),
-    "crypto_sol_fav_both|crypto_fav": dict(moved_on="2026-10-20", production_at=None),
+    #   crypto_eth_fav_both|crypto_fav — OUT 2026-10-27, back to the Sandbox, as asked (Olu): crypto_eth_fav_both (2-3, -38.0%). Whole record kept
+    #   (PAIR_REMOVALS); it keeps collecting in the Sandbox.
+    #   crypto_sol_fav_both|crypto_fav — OUT 2026-10-27, back to the Sandbox, as asked (Olu): crypto_sol_fav_both (1-1, -32.8%). Whole record kept
+    #   (PAIR_REMOVALS); it keeps collecting in the Sandbox.
     # tennis 2-leg combo, the KALSHI basket (tennis_combo2, NOT pm_combo2 on Polymarket
     # US, which placeable() still refuses): 6-4 on 10 baskets since the 2026-10-04 reset,
     # +2.7% after fees, -2.1c a basket against the close. The tennis rules are FROZEN
     # from 2026-10-08; promotion is not a parameter change and leaves the freeze intact.
     # A basket reaches the feed only once every leg carries a verified start.
-    "tennis_utr_shortlist_v1|tennis": dict(moved_on="2026-10-14", production_at=None),
+    #   tennis_utr_shortlist_v1|tennis — OUT 2026-10-27, back to the Sandbox, as asked (Olu): tennis_utr_shortlist_v1 (13-4, -4.9%). Whole record kept
+    #   (PAIR_REMOVALS); it keeps collecting in the Sandbox.
     # over 1.5 form rule, LEAGUE scope only -- not the cup or internationals twins. Back in
     # Production after its 2026-09-21 removal: 4-0 on 4, +15.0% after fees since the
     # clock restarted. The removal above still stands as the record it was taken off on.
@@ -434,11 +438,13 @@ PAIR_OVERRIDES = {
     # under 3.5 low-scoring, CLUBS scope (the internationals twin has been in Production
     # since 2026-10-04): 11-2 on 13, +16.5% after fees, -2.2c against the close, 4 open.
     # The feed already names its No on the league over-3.5 contract (FEED_BETS soccer_u35).
-    "u35_low_scoring|soccer_u35": dict(moved_on="2026-10-11", production_at=None),
+    #   u35_low_scoring|soccer_u35 — OUT 2026-10-27, back to the Sandbox, as asked (Olu): u35_low_scoring|soccer_u35 Clubs (23-9 = the price +0.2%, live 11-7 -14.5%, -2.0c v the close, t -3.55). Whole record kept
+    #   (PAIR_REMOVALS); it keeps collecting in the Sandbox.
     # 2026-10-15, as asked: the three corners lanes that replace corners_under go straight
     # into Production, on empty records (the Early badge says so). The two fades are the YES
     # of a corners rung (FEED_YES_TWIN corners_gte); the total under is the NO, as before.
-    "corners_total_under|soccer_corners": dict(moved_on="2026-10-15", production_at=None),
+    #   corners_total_under|soccer_corners — OUT 2026-10-27, back to the Sandbox, as asked (Olu): corners_total_under (5-7, -7.5%). Whole record kept
+    #   (PAIR_REMOVALS); it keeps collecting in the Sandbox.
     #   corners_ucl_fade|soccer_corners — OUT 2026-10-21, back to the Sandbox, as asked (Olu):
     #   1/2 on the tradeable venues (both on the 2026-10-20 Champions League night), -10.3% after
     #   fees, z -0.08. Whole record kept (PAIR_REMOVALS).
@@ -489,7 +495,8 @@ PAIR_OVERRIDES = {
     # had demoted it three times and this listing re-promoted it twice (see evaluate_stages:
     # a same-day listing no longer cancels a demotion). Kept in PAIR_REMOVALS, whole record.
     # FEED_NO_TWIN soccer_o25 stays: it is per market type, and nothing else uses it today.
-    "espn_fpi|nfl": dict(moved_on="2026-10-16", production_at=None),
+    #   espn_fpi|nfl — OUT 2026-10-27, back to the Sandbox, as asked (Olu): espn_fpi|nfl (10-15, -22.2%; live 6-11, -46.1%). Whole record kept
+    #   (PAIR_REMOVALS); it keeps collecting in the Sandbox.
 }
 
 
@@ -513,6 +520,18 @@ PAIR_REMOVALS = {
     # record (1/2, -10.3% after fees). Its override is gone, so nothing re-promotes it on the
     # removal's own day (#176). corners_total_under stays in Production.
     "corners_ucl_fade|soccer_corners": dict(removed_on="2026-10-21", keep_record=True),
+    # 2026-10-27, as asked (Olu: "pull from production"): seven more lanes back to the Sandbox on their
+    # whole records, paper and still collecting, not retired. No override is left for any of them, so
+    # nothing re-promotes them on the removal's own day (#176). u35_low_scoring|soccer_u35 is the Clubs
+    # scope only; its Internationals twin (soccer_u35_intl) stays in Production. Argentina over 1.5 (the
+    # eighth) lived in soccer_rules_production.PAIRS and is gone from there.
+    "corners_total_under|soccer_corners": dict(removed_on="2026-10-27", keep_record=True),
+    "u35_low_scoring|soccer_u35": dict(removed_on="2026-10-27", keep_record=True),
+    "oddspedia|cricket": dict(removed_on="2026-10-27", keep_record=True),
+    "tennis_utr_shortlist_v1|tennis": dict(removed_on="2026-10-27", keep_record=True),
+    "crypto_sol_fav_both|crypto_fav": dict(removed_on="2026-10-27", keep_record=True),
+    "crypto_eth_fav_both|crypto_fav": dict(removed_on="2026-10-27", keep_record=True),
+    "espn_fpi|nfl": dict(removed_on="2026-10-27", keep_record=True),
     # The crypto Yes band, replaced by three angle lanes the same day (see PAIR_OVERRIDES).
     "crypto_fav_band|crypto_fav": dict(removed_on="2026-10-20", keep_record=True),
     # 2026-10-20, as asked (Olu): the Econ Daily favourite band (YES 70-80c, 3h to the close)

@@ -137,8 +137,8 @@ for k in sorted(TENNIS):
           (False, True))
 check("kept: tennis_combo2 (Kalshi 2-leg) and the UTR shortlist stay on their sports",
       (S.SOURCES["tennis_combo2"]["sports"], S.SOURCES["tennis_utr_shortlist_v1"]["sports"]), (["tennis_combo"], ["tennis"]))
-check("the UTR shortlist is still in Production, and no retired tennis pair is", (
-    "tennis_utr_shortlist_v1|tennis" in T.PAIR_OVERRIDES, sorted(TENNIS & set(T.PAIR_OVERRIDES))), (True, []))
+check("the UTR shortlist went back to the Sandbox 2026-10-27, and no retired tennis pair is in Production", (
+    "tennis_utr_shortlist_v1|tennis" in T.PAIR_OVERRIDES, sorted(TENNIS & set(T.PAIR_OVERRIDES))), (False, []))
 called.clear()
 tboard = {sp: [row(sp, f"KX{sp.upper()}-26OCT25{i}") for i in range(2)] for sp in ("tennis", "tennis_combo", "tennis_pmcombo")}
 board.update(tboard)

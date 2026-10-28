@@ -123,7 +123,7 @@ ok("o15_ranked|soccer_o15" not in _LIVE_OV and T.PAIR_REMOVALS["o15_ranked|socce
    and "o15_ranked|soccer_o15_intl" in _LIVE_OV,
    "o15_ranked Clubs is off the live list since 2026-10-21, keeping its record; its internationals twin stays")
 eq((len(_LIVE_OV), "corners_ucl_fade|soccer_corners" in _LIVE_OV, T.PAIR_REMOVALS["corners_ucl_fade|soccer_corners"]),
-   (18, False, dict(removed_on="2026-10-21", keep_record=True)), "five pairs before, eleven after the six, twelve with commodities, eighteen with the six of 2026-10-11, seventeen with team scores 1+ · Clubs out on 2026-10-14, nineteen with corners_under out and its three lanes in on 2026-10-15, twenty-four with the five of 2026-10-16, twenty-three with btts_form_l10_fade out on 2026-10-17, twenty-two with o15_form_l10|soccer_o15 out the same day, twenty-three with o25_congestion|soccer_o25 in on 2026-10-18, twenty-two with it out on 2026-10-19, eighteen with four soccer lanes out on 2026-10-20, twenty with crypto_fav_band out and three crypto angle lanes in the same day, nineteen with corners_ucl_fade out on 2026-10-21, keeping its record")
+   (11, False, dict(removed_on="2026-10-21", keep_record=True)), "(seven more lanes back to the Sandbox on 2026-10-27 take eighteen to eleven) five pairs before, eleven after the six, twelve with commodities, eighteen with the six of 2026-10-11, seventeen with team scores 1+ · Clubs out on 2026-10-14, nineteen with corners_under out and its three lanes in on 2026-10-15, twenty-four with the five of 2026-10-16, twenty-three with btts_form_l10_fade out on 2026-10-17, twenty-two with o15_form_l10|soccer_o15 out the same day, twenty-three with o25_congestion|soccer_o25 in on 2026-10-18, twenty-two with it out on 2026-10-19, eighteen with four soccer lanes out on 2026-10-20, twenty with crypto_fav_band out and three crypto angle lanes in the same day, nineteen with corners_ucl_fade out on 2026-10-21, keeping its record")
 
 # The tracker moves them on its next run, and the Since-Production record starts there.
 _stages = {"pairs": {}, "events": []}
@@ -658,7 +658,8 @@ SIX2 = {
 }
 MOVE2 = "2026-10-11"
 # The two Turkey pairs left Production on 2026-10-20 (record kept); their listing is replayed here.
-for _k in ("turkey_btts_dog|soccer_btts", "turkey_o25_dog|soccer_o25"):
+# u35_low_scoring|soccer_u35 (Clubs) left on 2026-10-27 the same way.
+for _k in ("turkey_btts_dog|soccer_btts", "turkey_o25_dog|soccer_o25", "u35_low_scoring|soccer_u35"):
     T.PAIR_OVERRIDES[_k] = dict(moved_on=MOVE2, production_at=None)
 # corners_under was the sixth: it left Production on 2026-10-15 (three corners lanes replaced it).
 ok("corners_under|soccer_corners" not in T.PAIR_OVERRIDES, "corners_under, listed that day, is out since 2026-10-15")

@@ -117,6 +117,8 @@ ok("polymarket" in S.PAUSED_LANES and S.PAUSED_LANES["polymarket"] is None,
    "the Polymarket comparison lane's pause is untouched: the reset changes no rule")
 
 print("-- the stage rows, applied on every read")
+# Oddspedia left Production 2026-10-27 (PAIR_REMOVALS); the reset scenario is the one before that.
+T.PAIR_OVERRIDES["oddspedia|cricket"] = dict(moved_on="2026-09-27", production_at=None)
 st = _stages()
 changed = T.apply_resets(st)
 eq(sorted(changed), sorted(KEYS), "apply_resets writes the three cricket rows")
@@ -133,6 +135,7 @@ for key in ("polymarket|cricket", "cricket_consensus|cricket"):
        f"{key} gets a Sandbox row on the clock with the note")
 eq(T.record_since(odd), CLOCK, "record_since reads the clock")
 eq(T.qa_since(odd, "cricket", "oddspedia|cricket"), CLOCK, "qa_since reads it for the demotion net")
+del T.PAIR_OVERRIDES["oddspedia|cricket"]
 events = [e for e in st["events"] if e.get("reset") == CLOCK]
 eq(sorted(e["pair"] for e in events), sorted(KEYS), "each applied reset is one event")
 snapshot = copy.deepcopy(st)
@@ -155,8 +158,9 @@ with tempfile.TemporaryDirectory() as tmp:
     eq(sorted(k for k in missing["pairs"]), sorted(KEYS), "a missing file still yields the three rows")
 real = T.load_stages()
 ok(all(real["pairs"][k].get("since") == CLOCK for k in KEYS), "the repository's own stage file reads with the reset")
-eq(real["pairs"]["oddspedia|cricket"]["stage"], "production", "and Oddspedia is still in Production there")
-ok("oddspedia|cricket" in T.PAIR_OVERRIDES, "Oddspedia is still listed for Production (PAIR_OVERRIDES)")
+eq(real["pairs"]["oddspedia|cricket"]["stage"], "sandbox", "and Oddspedia is back in the Sandbox there (out 2026-10-27)")
+ok("oddspedia|cricket" not in T.PAIR_OVERRIDES and T.PAIR_REMOVALS["oddspedia|cricket"]["keep_record"],
+   "Oddspedia is off the Production list and goes back keeping its record (PAIR_REMOVALS)")
 
 print("-- the Sandbox record, verdict and Waiting state")
 d = _ledger()

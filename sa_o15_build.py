@@ -18,8 +18,8 @@ def section(state=None):
     for key, row in SA.ROWS.items():
         picks = (state.get("rules", {}).get(key) or {}).get("picks") or []
         words = "Every league match · over 1.5 goals · YES at the ask"
-        if key == "ARG":                       # moved to Production by hand 2026-10-21 (soccer_rules_production)
-            words += " · Production since 2026-10-21"
+        if key == "ARG":                       # in Production 2026-10-21 .. 2026-10-27 (soccer_rules_production)
+            words += " · Production 2026-10-21 to 2026-10-27, back in the Sandbox"
         lines.append(SB.rule_line(key, row["league"], words, row["evidence"], picks))
         recent += picks
     n, won, _roi = SB._record(recent)
@@ -36,7 +36,7 @@ def section(state=None):
                              'enters 20–90 minutes before kickoff once Kalshi quotes over 1.5 with a spread of 5c or less.</td></tr>')
     last = state.get("last_run")
     return f"""<section id="sa-o15">
-<div class="nba-section-head"><div><h2>Argentina &amp; Brasileirão over 1.5 (paper)</h2><p class="shell-kicker">Every league match, YES on over 1.5 at the Kalshi ask, no selection · a league-character lane · Argentina in Production since 2026-10-21, the Brasileirão paper · 7% fee</p></div></div>
+<div class="nba-section-head"><div><h2>Argentina &amp; Brasileirão over 1.5 (paper)</h2><p class="shell-kicker">Every league match, YES on over 1.5 at the Kalshi ask, no selection · a league-character lane · both leagues paper (Argentina was in Production 2026-10-21 to 2026-10-27) · 7% fee</p></div></div>
 <details class="section-disclosure label-group" data-group="sa-o15" open><summary><b>Over 1.5, by league</b><span>{esc(head)}</span><span class="label-group-words">Research: every match, Jan–Oct 2026, ask 30 min before kickoff</span></summary>
 <div class="sp-rules-list" data-list="sa-o15">{SB.rule_head("League")}{"".join(lines)}</div></details>
 <details class="section-disclosure"><summary><b>Entries</b><span>latest 25</span></summary>
