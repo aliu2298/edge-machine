@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-27T21:22:35.226745+00:00",
+ "last_run": "2026-10-28T00:34:14.437019+00:00",
  "registered": "2026-10-21",
  "rules": {
   "baseline": {
@@ -976,11 +976,14 @@
      "line": 18.5,
      "logged": "2026-10-27T18:15:15.914891+00:00",
      "match": "Grigor Dimitrov v Flavio Cobolli",
+     "payout": 1.0,
      "price": 0.85,
+     "profit": 16.42,
      "rule": "baseline",
+     "settled": "2026-10-28T00:34:14.437019+00:00",
      "side": "yes",
      "start": "2026-10-27T19:00:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXATPGTOTAL-26OCT25COBDIM-19",
      "title": "Over 18.5 games",
      "tournament": "Erste Bank Open",
@@ -1961,11 +1964,14 @@
      "line": 18.5,
      "logged": "2026-10-27T18:15:15.914891+00:00",
      "match": "Grigor Dimitrov v Flavio Cobolli",
+     "payout": 1.0,
      "price": 0.85,
+     "profit": 16.42,
      "rule": "tennis_atp_low_over",
+     "settled": "2026-10-28T00:34:14.437019+00:00",
      "side": "yes",
      "start": "2026-10-27T19:00:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXATPGTOTAL-26OCT25COBDIM-19",
      "title": "Over 18.5 games",
      "tournament": "Erste Bank Open",
@@ -1975,14 +1981,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T11:45:13.659188+00:00",
-   "baseline": 0,
-   "due": 1,
-   "entered": 0,
-   "matched": 0,
-   "new": 0
-  },
   {
    "at": "2026-10-25T12:00:16.285269+00:00",
    "baseline": 0,
@@ -2377,6 +2375,14 @@
   },
   {
    "at": "2026-10-27T21:22:35.226745+00:00",
+   "baseline": 0,
+   "due": 0,
+   "entered": 0,
+   "matched": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-10-28T00:34:14.437019+00:00",
    "baseline": 0,
    "due": 0,
    "entered": 0,
