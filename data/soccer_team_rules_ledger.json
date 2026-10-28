@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-27T18:46:43.124664+00:00",
+ "last_run": "2026-10-28T16:01:47.482964+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -1196,11 +1196,14 @@
      "logged": "2026-10-27T18:16:13.859797+00:00",
      "match": "AS Roma v Cagliari",
      "opponent": "Cagliari",
+     "payout": 1.0,
      "price": 0.39,
+     "profit": 145.91,
      "rule": "T3",
+     "settled": "2026-10-28T16:01:47.482964+00:00",
      "side": "yes",
      "start": "2026-10-27T19:45Z",
-     "status": "open",
+     "status": "won",
      "sub": "Roma over 2.5 goals",
      "team": "AS Roma",
      "team_side": "home",
@@ -1223,17 +1226,47 @@
      "logged": "2026-10-27T18:16:13.859797+00:00",
      "match": "Torino v Como",
      "opponent": "Torino",
+     "payout": 1.0,
      "price": 0.3,
+     "profit": 217.76,
      "rule": "T3",
+     "settled": "2026-10-28T16:01:47.482964+00:00",
      "side": "yes",
      "start": "2026-10-27T19:45Z",
-     "status": "open",
+     "status": "won",
      "sub": "Como over 2.5 goals",
      "team": "Como",
      "team_side": "away",
      "ticker": "KXSERIEATEAMTOTAL-26OCT27TORCOM-COM3",
      "title": "Will Como score over 2.5 goals?",
      "why": "Como O+D- v Torino O-D- \u00b7 3+ YES 0.30"
+    },
+    {
+     "ask": 0.24,
+     "bid": 0.23,
+     "event": "KXSERIEATEAMTOTAL-26OCT28ACMBFC",
+     "group": "B",
+     "id": "T3:KXSERIEATEAMTOTAL-26OCT28ACMBFC:home",
+     "labels": {
+      "opp": "O-D-",
+      "own": "O+D-"
+     },
+     "league": "Serie A",
+     "line": 2.5,
+     "logged": "2026-10-28T16:01:47.482964+00:00",
+     "match": "AC Milan v Bologna",
+     "opponent": "Bologna",
+     "price": 0.24,
+     "rule": "T3",
+     "side": "yes",
+     "start": "2026-10-28T17:30Z",
+     "status": "open",
+     "sub": "Milan over 2.5 goals",
+     "team": "AC Milan",
+     "team_side": "home",
+     "ticker": "KXSERIEATEAMTOTAL-26OCT28ACMBFC-ACM3",
+     "title": "Will Milan score over 2.5 goals?",
+     "why": "AC Milan O+D- v Bologna O-D- \u00b7 3+ YES 0.24"
     }
    ]
   },
@@ -1696,11 +1729,14 @@
      "logged": "2026-10-27T16:01:40.975406+00:00",
      "match": "Sassuolo v Lazio",
      "opponent": "Sassuolo",
+     "payout": 1.0,
      "price": 0.52,
+     "profit": 86.06,
      "rule": "T5",
+     "settled": "2026-10-28T16:01:47.482964+00:00",
      "side": "yes",
      "start": "2026-10-27T17:30Z",
-     "status": "open",
+     "status": "won",
      "sub": "Lazio over 1.5 goals",
      "team": "Lazio",
      "team_side": "away",
@@ -2079,11 +2115,14 @@
      "logged": "2026-10-27T16:01:40.975406+00:00",
      "match": "Sassuolo v Lazio",
      "opponent": "Lazio",
+     "payout": 1.0,
      "price": 0.89,
+     "profit": 11.5,
      "rule": "T6",
+     "settled": "2026-10-28T16:01:47.482964+00:00",
      "side": "no",
      "start": "2026-10-27T17:30Z",
-     "status": "open",
+     "status": "won",
      "sub": "Sassuolo over 2.5 goals",
      "team": "Sassuolo",
      "team_side": "home",
@@ -2455,14 +2494,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-24T15:01:35.788083+00:00",
-   "candidates": 3,
-   "due": 4,
-   "labelled": 4,
-   "matched": 3,
-   "new": 2
-  },
   {
    "at": "2026-10-24T15:31:46.968678+00:00",
    "candidates": 3,
@@ -2862,6 +2893,14 @@
    "labelled": 2,
    "matched": 2,
    "new": 0
+  },
+  {
+   "at": "2026-10-28T16:01:47.482964+00:00",
+   "candidates": 1,
+   "due": 3,
+   "labelled": 3,
+   "matched": 1,
+   "new": 1
   }
  ],
  "version": "soccer-team-rules-v1"
