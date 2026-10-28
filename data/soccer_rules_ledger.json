@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-28T21:31:39.038020+00:00",
+ "last_run": "2026-10-28T22:01:42.984563+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -29,6 +29,29 @@
      "ticker": "KXMLSTOTAL-26OCT24ATLCHI-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Atlanta United FC O-D- v Chicago Fire FC O-D+ \u00b7 Under 3.5 NO 0.55"
+    },
+    {
+     "ask": 0.36,
+     "bid": 0.35,
+     "event": "KXMLSTOTAL-26OCT28NYCATL",
+     "group": "A",
+     "id": "A1:KXMLSTOTAL-26OCT28NYCATL",
+     "labels": {
+      "away": "O-D+",
+      "home": "O-D-"
+     },
+     "league": "MLS",
+     "line": 3.5,
+     "logged": "2026-10-28T22:01:42.984563+00:00",
+     "match": "New York City FC v Atlanta United FC",
+     "price": 0.65,
+     "rule": "A1",
+     "side": "no",
+     "start": "2026-10-28T23:30Z",
+     "status": "open",
+     "ticker": "KXMLSTOTAL-26OCT28NYCATL-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "New York City FC O-D- v Atlanta United FC O-D+ \u00b7 Under 3.5 NO 0.65"
     }
    ]
   },
@@ -654,11 +677,14 @@
      "line": 3.5,
      "logged": "2026-10-28T18:16:41.173984+00:00",
      "match": "Aberdeen v Falkirk",
+     "payout": 1.0,
      "price": 0.71,
+     "profit": 38.04,
      "rule": "B4",
+     "settled": "2026-10-28T22:01:42.984563+00:00",
      "side": "no",
      "start": "2026-10-28T19:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXSCOTTISHPREMTOTAL-26OCT28ABEFAL-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Aberdeen O-D- v Falkirk O-D- \u00b7 Under 3.5 NO 0.71"
@@ -677,11 +703,14 @@
      "line": 3.5,
      "logged": "2026-10-28T18:16:41.173984+00:00",
      "match": "Dundee v Kilmarnock",
+     "payout": 0.0,
      "price": 0.64,
+     "profit": -100.0,
      "rule": "B4",
+     "settled": "2026-10-28T22:01:42.984563+00:00",
      "side": "no",
      "start": "2026-10-28T19:45Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXSCOTTISHPREMTOTAL-26OCT28DUNKIL-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Dundee O-D- v Kilmarnock O-D+ \u00b7 Under 3.5 NO 0.64"
@@ -957,11 +986,14 @@
      "line": 2.5,
      "logged": "2026-10-28T18:16:41.173984+00:00",
      "match": "Genoa v Juventus",
+     "payout": 0.0,
      "price": 0.39,
+     "profit": -100.0,
      "rule": "C4",
+     "settled": "2026-10-28T22:01:42.984563+00:00",
      "side": "yes",
      "start": "2026-10-28T19:45Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXSERIEATOTAL-26OCT28GENJUV-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Genoa O-D- v Juventus O+D- \u00b7 Over 2.5 YES 0.39"
@@ -2931,11 +2963,14 @@
      "line": null,
      "logged": "2026-10-28T18:16:41.173984+00:00",
      "match": "Genoa v Juventus",
+     "payout": 0.0,
      "price": 0.44,
+     "profit": -100.0,
      "rule": "D3",
+     "settled": "2026-10-28T22:01:42.984563+00:00",
      "side": "yes",
      "start": "2026-10-28T19:45Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXSERIEABTTS-26OCT28GENJUV-BTTS",
      "title": "Both Teams To Score",
      "why": "Genoa O-D- v Juventus O+D- \u00b7 BTTS YES 0.44"
@@ -2954,27 +2989,45 @@
      "line": null,
      "logged": "2026-10-28T18:16:41.173984+00:00",
      "match": "Celtic v Dundee United",
+     "payout": 1.0,
      "price": 0.59,
+     "profit": 64.76,
      "rule": "D3",
+     "settled": "2026-10-28T22:01:42.984563+00:00",
      "side": "yes",
      "start": "2026-10-28T19:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXSCOTTISHPREMBTTS-26OCT28CELDUU-BTTS",
      "title": "Both Teams To Score",
      "why": "Celtic O+D- v Dundee United O-D- \u00b7 BTTS YES 0.59"
+    },
+    {
+     "ask": 0.69,
+     "bid": 0.68,
+     "event": "KXMLSBTTS-26OCT28NENYRB",
+     "group": "BTTS",
+     "id": "D3:KXMLSBTTS-26OCT28NENYRB",
+     "labels": {
+      "away": "O-D-",
+      "home": "O+D-"
+     },
+     "league": "MLS",
+     "line": null,
+     "logged": "2026-10-28T22:01:42.984563+00:00",
+     "match": "New England Revolution v Red Bull New York",
+     "price": 0.69,
+     "rule": "D3",
+     "side": "yes",
+     "start": "2026-10-28T23:30Z",
+     "status": "open",
+     "ticker": "KXMLSBTTS-26OCT28NENYRB-BTTS",
+     "title": "Both Teams To Score",
+     "why": "New England Revolution O+D- v Red Bull New York O-D- \u00b7 BTTS YES 0.69"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T16:16:35.447771+00:00",
-   "candidates": 0,
-   "due": 2,
-   "labelled": 2,
-   "matched": 0,
-   "new": 0
-  },
   {
    "at": "2026-10-25T16:31:27.234518+00:00",
    "candidates": 0,
@@ -3374,6 +3427,14 @@
    "labelled": 0,
    "matched": 0,
    "new": 0
+  },
+  {
+   "at": "2026-10-28T22:01:42.984563+00:00",
+   "candidates": 2,
+   "due": 5,
+   "labelled": 5,
+   "matched": 2,
+   "new": 2
   }
  ],
  "version": "soccer-rules-v1"
