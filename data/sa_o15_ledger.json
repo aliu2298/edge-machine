@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-28T19:16:46.238004+00:00",
+ "last_run": "2026-10-28T21:01:38.048781+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -616,18 +616,65 @@
      "ticker": "KXBRASILEIROTOTAL-26OCT26FLAATL-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Brasileir\u00e3o over 1.5 YES 0.84"
+    },
+    {
+     "ask": 0.75,
+     "bid": 0.73,
+     "event": "KXBRASILEIROTOTAL-26OCT28FLUINT",
+     "id": "BRA:KXBRASILEIROTOTAL-26OCT28FLUINT",
+     "league": "Brasileir\u00e3o",
+     "line": 1.5,
+     "logged": "2026-10-28T21:01:38.048781+00:00",
+     "match": "Fluminense v Internacional",
+     "price": 0.75,
+     "rule": "BRA",
+     "side": "yes",
+     "start": "2026-10-28T22:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROTOTAL-26OCT28FLUINT-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Brasileir\u00e3o over 1.5 YES 0.75"
+    },
+    {
+     "ask": 0.9,
+     "bid": 0.89,
+     "event": "KXBRASILEIROTOTAL-26OCT28RBBCHA",
+     "id": "BRA:KXBRASILEIROTOTAL-26OCT28RBBCHA",
+     "league": "Brasileir\u00e3o",
+     "line": 1.5,
+     "logged": "2026-10-28T21:01:38.048781+00:00",
+     "match": "Red Bull Bragantino v Chapecoense",
+     "price": 0.9,
+     "rule": "BRA",
+     "side": "yes",
+     "start": "2026-10-28T22:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROTOTAL-26OCT28RBBCHA-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Brasileir\u00e3o over 1.5 YES 0.90"
+    },
+    {
+     "ask": 0.78,
+     "bid": 0.77,
+     "event": "KXBRASILEIROTOTAL-26OCT28SANPAL",
+     "id": "BRA:KXBRASILEIROTOTAL-26OCT28SANPAL",
+     "league": "Brasileir\u00e3o",
+     "line": 1.5,
+     "logged": "2026-10-28T21:01:38.048781+00:00",
+     "match": "Santos v Palmeiras",
+     "price": 0.78,
+     "rule": "BRA",
+     "side": "yes",
+     "start": "2026-10-28T22:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROTOTAL-26OCT28SANPAL-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Brasileir\u00e3o over 1.5 YES 0.78"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T15:46:47.042623+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "quoted": 0
-  },
   {
    "at": "2026-10-25T16:01:44.032811+00:00",
    "due": 0,
@@ -977,6 +1024,13 @@
    "matched": 0,
    "new": 0,
    "quoted": 0
+  },
+  {
+   "at": "2026-10-28T21:01:38.048781+00:00",
+   "due": 3,
+   "matched": 3,
+   "new": 3,
+   "quoted": 3
   }
  ],
  "schedule": [
