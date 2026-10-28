@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-28T14:30:21.962516+00:00",
+ "last_run": "2026-10-28T14:45:16.316052+00:00",
  "registered": "2026-10-21",
  "rules": {
   "baseline": {
@@ -1033,6 +1033,27 @@
      "title": "Over 18.5 games",
      "tournament": "Swiss Indoors Basel",
      "why": "over 18.5 YES 0.84"
+    },
+    {
+     "ask": 0.86,
+     "ask_size": 1.0,
+     "bid": 0.83,
+     "espn_id": "185185",
+     "event": "KXATPGTOTAL-26OCT28MENMAN",
+     "id": "baseline:KXATPGTOTAL-26OCT28MENMAN-18",
+     "lead_min": 44.7,
+     "line": 17.5,
+     "logged": "2026-10-28T14:45:16.316052+00:00",
+     "match": "Adrian Mannarino v Jakub Mensik",
+     "price": 0.86,
+     "rule": "baseline",
+     "side": "yes",
+     "start": "2026-10-28T15:30:00+00:00",
+     "status": "open",
+     "ticker": "KXATPGTOTAL-26OCT28MENMAN-18",
+     "title": "Over 17.5 games",
+     "tournament": "Erste Bank Open",
+     "why": "over 17.5 YES 0.86"
     }
    ]
   },
@@ -2066,19 +2087,32 @@
      "title": "Over 18.5 games",
      "tournament": "Swiss Indoors Basel",
      "why": "over 18.5 YES 0.84"
+    },
+    {
+     "ask": 0.86,
+     "ask_size": 1.0,
+     "bid": 0.83,
+     "espn_id": "185185",
+     "event": "KXATPGTOTAL-26OCT28MENMAN",
+     "id": "tennis_atp_low_over:KXATPGTOTAL-26OCT28MENMAN",
+     "lead_min": 44.7,
+     "line": 17.5,
+     "logged": "2026-10-28T14:45:16.316052+00:00",
+     "match": "Adrian Mannarino v Jakub Mensik",
+     "price": 0.86,
+     "rule": "tennis_atp_low_over",
+     "side": "yes",
+     "start": "2026-10-28T15:30:00+00:00",
+     "status": "open",
+     "ticker": "KXATPGTOTAL-26OCT28MENMAN-18",
+     "title": "Over 17.5 games",
+     "tournament": "Erste Bank Open",
+     "why": "over 17.5 YES 0.86"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-26T12:00:16.222847+00:00",
-   "baseline": 0,
-   "due": 3,
-   "entered": 0,
-   "matched": 3,
-   "new": 0
-  },
   {
    "at": "2026-10-26T13:15:14.309942+00:00",
    "baseline": 0,
@@ -2478,10 +2512,17 @@
    "entered": 0,
    "matched": 1,
    "new": 0
+  },
+  {
+   "at": "2026-10-28T14:45:16.316052+00:00",
+   "baseline": 1,
+   "due": 1,
+   "entered": 1,
+   "matched": 1,
+   "new": 1
   }
  ],
  "schedule": [
-  "2026-10-28T14:30:00+00:00",
   "2026-10-28T15:00:00+00:00",
   "2026-10-28T15:30:00+00:00",
   "2026-10-28T16:30:00+00:00",
