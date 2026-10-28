@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-28T23:00:28+00:00",
+ "board_built_at": "2026-10-28T23:30:33+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -1391,7 +1391,7 @@
    "kickoff": "2026-10-29T00:00Z",
    "lane": "production",
    "last_seen": "2026-10-28",
-   "last_seen_at": "2026-10-28T23:00:28+00:00",
+   "last_seen_at": "2026-10-28T23:30:33+00:00",
    "league": "NBA",
    "match": "DEN @ NO",
    "model_prob": 0.5048,
@@ -1430,7 +1430,7 @@
    "kickoff": "2026-10-29T00:00Z",
    "lane": "production",
    "last_seen": "2026-10-28",
-   "last_seen_at": "2026-10-28T23:00:28+00:00",
+   "last_seen_at": "2026-10-28T23:30:33+00:00",
    "league": "NBA",
    "match": "GS @ MIN",
    "model_prob": 0.6106,
@@ -1469,7 +1469,7 @@
    "kickoff": "2026-10-29T00:00Z",
    "lane": "production",
    "last_seen": "2026-10-28",
-   "last_seen_at": "2026-10-28T23:00:28+00:00",
+   "last_seen_at": "2026-10-28T23:30:33+00:00",
    "league": "NBA",
    "match": "NY @ CHI",
    "model_prob": 0.741,
@@ -1491,6 +1491,45 @@
    "source": "nba_tt_value_1h",
    "sport": "nba_tt",
    "status": "pending"
+  },
+  "2026-10-29|KXNBATEAMTOTAL-26OCT28SASUTA-UTA106|Utah over 105.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
+   "away": null,
+   "bet": {
+    "kind": "nba_tt",
+    "n": 105.5,
+    "team": "Utah"
+   },
+   "date": "2026-10-29",
+   "edge_at_log": 0.0656,
+   "first_seen": "2026-10-28",
+   "headline": "Utah over 105.5 points",
+   "home": null,
+   "id": "2026-10-29|KXNBATEAMTOTAL-26OCT28SASUTA-UTA106|Utah over 105.5 points \u00b7 NBA team total value \u00b7 1h before tip",
+   "kickoff": "2026-10-29T01:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-28",
+   "last_seen_at": "2026-10-28T23:30:33+00:00",
+   "league": "NBA",
+   "match": "SA @ UTAH",
+   "model_prob": 0.7218,
+   "pair": "nba_tt_value_1h|nba_tt",
+   "price_at_log": 0.64,
+   "published_at": "2026-10-28T23:30:33+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 89,
+   "route": {
+    "claim": "Utah over 105.5 points",
+    "event": "KXNBATEAMTOTAL-26OCT28SASUTA",
+    "market": "KXNBATEAMTOTAL-26OCT28SASUTA-UTA106",
+    "outcome": "Utah over 105.5 points",
+    "outcome_side": "yes",
+    "price_at_log": 0.64,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "nba_tt_value_1h:401909890:UTAH",
+   "source": "nba_tt_value_1h",
+   "sport": "nba_tt",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -1501,9 +1540,9 @@
    "ready_at": "2026-10-24T22:13:00+00:00",
    "route": "moved by hand on 2026-10-24",
    "routing": {
-    "leads": 32,
+    "leads": 33,
     "problem": null,
-    "routed": 32,
+    "routed": 33,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1515,7 +1554,7 @@
    "sandbox_roi_fee": -0.1883,
    "timing": {
     "late": [],
-    "timed": 3,
+    "timed": 4,
     "under_target": 0
    }
   },
@@ -1568,5 +1607,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-28T23:00:28+00:00"
+ "updated_at": "2026-10-28T23:30:33+00:00"
 }
