@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-28T18:46:51.154786+00:00",
+ "last_run": "2026-10-28T22:01:28.529530+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -884,6 +884,33 @@
      "ticker": "KXLIGUE1TEAMTOTAL-26OCT25ANGFCL-FCL2",
      "title": "Will Lorient score over 1.5 goals?",
      "why": "Lorient O-D- v Angers O-D+ \u00b7 2+ NO 0.61"
+    },
+    {
+     "ask": 0.58,
+     "bid": 0.56,
+     "event": "KXMLSTEAMTOTAL-26OCT28NYCATL",
+     "group": "A",
+     "id": "T2:KXMLSTEAMTOTAL-26OCT28NYCATL:home",
+     "labels": {
+      "opp": "O-D+",
+      "own": "O-D-"
+     },
+     "league": "MLS",
+     "line": 1.5,
+     "logged": "2026-10-28T22:01:28.529530+00:00",
+     "match": "New York City FC v Atlanta United FC",
+     "opponent": "Atlanta United FC",
+     "price": 0.44,
+     "rule": "T2",
+     "side": "no",
+     "start": "2026-10-28T23:30Z",
+     "status": "open",
+     "sub": "New York City over 1.5 goals",
+     "team": "New York City FC",
+     "team_side": "home",
+     "ticker": "KXMLSTEAMTOTAL-26OCT28NYCATL-NYC2",
+     "title": "Will New York City score over 1.5 goals?",
+     "why": "New York City FC O-D- v Atlanta United FC O-D+ \u00b7 2+ NO 0.44"
     }
    ]
   },
@@ -1256,11 +1283,14 @@
      "logged": "2026-10-28T16:01:47.482964+00:00",
      "match": "AC Milan v Bologna",
      "opponent": "Bologna",
+     "payout": 0.0,
      "price": 0.24,
+     "profit": -100.0,
      "rule": "T3",
+     "settled": "2026-10-28T22:01:28.529530+00:00",
      "side": "yes",
      "start": "2026-10-28T17:30Z",
-     "status": "open",
+     "status": "lost",
      "sub": "Milan over 2.5 goals",
      "team": "AC Milan",
      "team_side": "home",
@@ -1283,17 +1313,47 @@
      "logged": "2026-10-28T18:16:43.904225+00:00",
      "match": "Genoa v Juventus",
      "opponent": "Genoa",
+     "payout": 0.0,
      "price": 0.18,
+     "profit": -100.0,
      "rule": "T3",
+     "settled": "2026-10-28T22:01:28.529530+00:00",
      "side": "yes",
      "start": "2026-10-28T19:45Z",
-     "status": "open",
+     "status": "lost",
      "sub": "Juventus over 2.5 goals",
      "team": "Juventus",
      "team_side": "away",
      "ticker": "KXSERIEATEAMTOTAL-26OCT28GENJUV-JUV3",
      "title": "Will Juventus score over 2.5 goals?",
      "why": "Juventus O+D- v Genoa O-D- \u00b7 3+ YES 0.18"
+    },
+    {
+     "ask": 0.31,
+     "bid": 0.29,
+     "event": "KXMLSTEAMTOTAL-26OCT28NENYRB",
+     "group": "B",
+     "id": "T3:KXMLSTEAMTOTAL-26OCT28NENYRB:home",
+     "labels": {
+      "opp": "O-D-",
+      "own": "O+D-"
+     },
+     "league": "MLS",
+     "line": 2.5,
+     "logged": "2026-10-28T22:01:28.529530+00:00",
+     "match": "New England Revolution v Red Bull New York",
+     "opponent": "Red Bull New York",
+     "price": 0.31,
+     "rule": "T3",
+     "side": "yes",
+     "start": "2026-10-28T23:30Z",
+     "status": "open",
+     "sub": "New England over 2.5 goals",
+     "team": "New England Revolution",
+     "team_side": "home",
+     "ticker": "KXMLSTEAMTOTAL-26OCT28NENYRB-NE3",
+     "title": "Will New England score over 2.5 goals?",
+     "why": "New England Revolution O+D- v Red Bull New York O-D- \u00b7 3+ YES 0.31"
     }
    ]
   },
@@ -1444,6 +1504,60 @@
      "ticker": "KXMLSTEAMTOTAL-26OCT24PORCLT-CLT2",
      "title": "Will Charlotte score over 1.5 goals?",
      "why": "Charlotte FC O+D- v Portland Timbers O-D+ \u00b7 2+ YES 0.47"
+    },
+    {
+     "ask": 0.66,
+     "bid": 0.65,
+     "event": "KXMLSTEAMTOTAL-26OCT28CLTMTL",
+     "group": "B",
+     "id": "T4:KXMLSTEAMTOTAL-26OCT28CLTMTL:home",
+     "labels": {
+      "opp": "O-D+",
+      "own": "O+D-"
+     },
+     "league": "MLS",
+     "line": 1.5,
+     "logged": "2026-10-28T22:01:28.529530+00:00",
+     "match": "Charlotte FC v CF Montr\u00e9al",
+     "opponent": "CF Montr\u00e9al",
+     "price": 0.66,
+     "rule": "T4",
+     "side": "yes",
+     "start": "2026-10-28T23:30Z",
+     "status": "open",
+     "sub": "Charlotte over 1.5 goals",
+     "team": "Charlotte FC",
+     "team_side": "home",
+     "ticker": "KXMLSTEAMTOTAL-26OCT28CLTMTL-CLT2",
+     "title": "Will Charlotte score over 1.5 goals?",
+     "why": "Charlotte FC O+D- v CF Montr\u00e9al O-D+ \u00b7 2+ YES 0.66"
+    },
+    {
+     "ask": 0.76,
+     "bid": 0.75,
+     "event": "KXMLSTEAMTOTAL-26OCT28MIACIN",
+     "group": "B",
+     "id": "T4:KXMLSTEAMTOTAL-26OCT28MIACIN:home",
+     "labels": {
+      "opp": "O-D+",
+      "own": "O+D-"
+     },
+     "league": "MLS",
+     "line": 1.5,
+     "logged": "2026-10-28T22:01:28.529530+00:00",
+     "match": "Inter Miami CF v FC Cincinnati",
+     "opponent": "FC Cincinnati",
+     "price": 0.76,
+     "rule": "T4",
+     "side": "yes",
+     "start": "2026-10-28T23:30Z",
+     "status": "open",
+     "sub": "Miami over 1.5 goals",
+     "team": "Inter Miami CF",
+     "team_side": "home",
+     "ticker": "KXMLSTEAMTOTAL-26OCT28MIACIN-MIA2",
+     "title": "Will Miami score over 1.5 goals?",
+     "why": "Inter Miami CF O+D- v FC Cincinnati O-D+ \u00b7 2+ YES 0.76"
     }
    ]
   },
@@ -2522,14 +2636,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-24T17:16:10.463742+00:00",
-   "candidates": 1,
-   "due": 2,
-   "labelled": 2,
-   "matched": 1,
-   "new": 1
-  },
-  {
    "at": "2026-10-24T17:31:36.755470+00:00",
    "candidates": 2,
    "due": 3,
@@ -2928,6 +3034,14 @@
    "labelled": 2,
    "matched": 1,
    "new": 0
+  },
+  {
+   "at": "2026-10-28T22:01:28.529530+00:00",
+   "candidates": 4,
+   "due": 5,
+   "labelled": 5,
+   "matched": 4,
+   "new": 4
   }
  ],
  "version": "soccer-team-rules-v1"
