@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-28T23:31:46.879913+00:00",
+ "last_run": "2026-10-29T00:53:14.897386+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -626,11 +626,14 @@
      "line": 1.5,
      "logged": "2026-10-28T21:01:38.048781+00:00",
      "match": "Fluminense v Internacional",
+     "payout": 1.0,
      "price": 0.75,
+     "profit": 31.04,
      "rule": "BRA",
+     "settled": "2026-10-29T00:53:14.897386+00:00",
      "side": "yes",
      "start": "2026-10-28T22:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXBRASILEIROTOTAL-26OCT28FLUINT-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Brasileir\u00e3o over 1.5 YES 0.75"
@@ -644,11 +647,14 @@
      "line": 1.5,
      "logged": "2026-10-28T21:01:38.048781+00:00",
      "match": "Red Bull Bragantino v Chapecoense",
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 10.34,
      "rule": "BRA",
+     "settled": "2026-10-29T00:53:14.897386+00:00",
      "side": "yes",
      "start": "2026-10-28T22:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXBRASILEIROTOTAL-26OCT28RBBCHA-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Brasileir\u00e3o over 1.5 YES 0.90"
@@ -662,11 +668,14 @@
      "line": 1.5,
      "logged": "2026-10-28T21:01:38.048781+00:00",
      "match": "Santos v Palmeiras",
+     "payout": 0.0,
      "price": 0.78,
+     "profit": -100.0,
      "rule": "BRA",
+     "settled": "2026-10-29T00:53:14.897386+00:00",
      "side": "yes",
      "start": "2026-10-28T22:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXBRASILEIROTOTAL-26OCT28SANPAL-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Brasileir\u00e3o over 1.5 YES 0.78"
@@ -711,13 +720,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T17:16:37.402170+00:00",
-   "due": 1,
-   "matched": 1,
-   "new": 0,
-   "quoted": 1
-  },
   {
    "at": "2026-10-25T17:31:40.435167+00:00",
    "due": 0,
@@ -1067,10 +1069,16 @@
    "matched": 2,
    "new": 0,
    "quoted": 2
+  },
+  {
+   "at": "2026-10-29T00:53:14.897386+00:00",
+   "due": 0,
+   "matched": 0,
+   "new": 0,
+   "quoted": 0
   }
  ],
  "schedule": [
-  "2026-10-29T00:30:00+00:00",
   "2026-10-29T22:30:00+00:00",
   "2026-10-29T23:00:00+00:00",
   "2026-10-30T00:30:00+00:00",
