@@ -1,9 +1,12 @@
 {
- "board_built_at": "2026-10-29T01:31:41+00:00",
+ "board_built_at": "2026-10-29T01:33:10+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sr_a6": true,
-  "sr_a7": true
+  "sr_a7": true,
+  "sr_c1": true,
+  "sr_c3": true,
+  "sr_c4": true
  },
  "corners_selections": {},
  "first_publish_min": 45,
@@ -165,6 +168,81 @@
     "timed": 0,
     "under_target": 0
    }
+  },
+  "sr_c1|soccer_u35": {
+   "by_hand": "2026-10-28",
+   "entered_at": "2026-10-29T00:59:00+00:00",
+   "promoted_at": "2026-10-29T00:59:00+00:00",
+   "ready_at": "2026-10-29T00:59:00+00:00",
+   "route": "moved by hand on 2026-10-28",
+   "routing": {
+    "leads": 0,
+    "problem": null,
+    "routed": 0,
+    "unlisted": 0,
+    "unrouted": 0,
+    "unverified": 0,
+    "why": []
+   },
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null,
+   "timing": {
+    "late": [],
+    "timed": 0,
+    "under_target": 0
+   }
+  },
+  "sr_c3|soccer_o25": {
+   "by_hand": "2026-10-28",
+   "entered_at": "2026-10-29T00:59:00+00:00",
+   "promoted_at": "2026-10-29T00:59:00+00:00",
+   "ready_at": "2026-10-29T00:59:00+00:00",
+   "route": "moved by hand on 2026-10-28",
+   "routing": {
+    "leads": 0,
+    "problem": null,
+    "routed": 0,
+    "unlisted": 0,
+    "unrouted": 0,
+    "unverified": 0,
+    "why": []
+   },
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null,
+   "timing": {
+    "late": [],
+    "timed": 0,
+    "under_target": 0
+   }
+  },
+  "sr_c4|soccer_o25": {
+   "by_hand": "2026-10-28",
+   "entered_at": "2026-10-29T00:59:00+00:00",
+   "promoted_at": "2026-10-29T00:59:00+00:00",
+   "ready_at": "2026-10-29T00:59:00+00:00",
+   "route": "moved by hand on 2026-10-28",
+   "routing": {
+    "leads": 0,
+    "problem": null,
+    "routed": 0,
+    "unlisted": 0,
+    "unrouted": 0,
+    "unverified": 0,
+    "why": []
+   },
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null,
+   "timing": {
+    "late": [],
+    "timed": 0,
+    "under_target": 0
+   }
   }
  },
  "publication_withheld": {
@@ -190,5 +268,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-29T01:31:41+00:00"
+ "updated_at": "2026-10-29T01:33:10+00:00"
 }
