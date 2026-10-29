@@ -38,9 +38,17 @@ import daily_track as D
 # Rules retired by hand: no new entry from the dated day on (Eastern), the ledger rows stay and
 # keep settling, and the NBA page shows the rule as Retired with this reason. R1 keeps standing
 # aside when both teams are D- (that is R7's line), exactly as before; only R2's entry is skipped.
+NO_EDGE = "no edge against Kalshi's NBA totals; picks hit at the price, the labels don't beat the line"
 RETIRED = {
     "R2": dict(on="2026-10-24",
                reason="3/10, −41% after fees (pooled by cost); overs priced above hit rate in the ladder tracker"),
+    # 2026-10-28 (Olu): the rest of the label rules, each with the record it was retired on.
+    "R1": dict(on="2026-10-28", reason=f"13/23 won, −25.6% after fee; {NO_EDGE}"),
+    "R3": dict(on="2026-10-28", reason=f"13/25 won, −3.0% after fee; {NO_EDGE}"),
+    "R4": dict(on="2026-10-28", reason=f"0/5 won, −100.0% after fee; {NO_EDGE}"),
+    "R5": dict(on="2026-10-28", reason=f"4/8 won, +7.1% after fee; {NO_EDGE}"),
+    "R6": dict(on="2026-10-28", reason=f"23/31 won, −3.4% after fee; {NO_EDGE}"),
+    "R7": dict(on="2026-10-28", reason=f"9/20 won, −14.5% after fee; {NO_EDGE}"),
 }
 R4_NO_BAND = (0.25, 0.45)    # R4's NO price, both ends inclusive; the 0.25 floor from 2026-10-22
 
@@ -185,6 +193,8 @@ def team_picks(g, ms, now):
 
 def half_picks(g, ms, now):
     """R5: the first-half 115+ NO when either team carries a first-half O-D- label."""
+    if retired("R5", now):
+        return []
     h, a = g.get("roll_lab_home_h1"), g.get("roll_lab_away_h1")
     if "O-D-" not in (h, a):
         return []

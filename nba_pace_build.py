@@ -589,12 +589,30 @@ def _rules_section():
 
 
 def _value_section():
-    """The value lanes and the ladder tracker (nba_value_build.py, 2026-10-21). Never breaks the board."""
+    """The retired value lanes (nba_value_build.py, 2026-10-21; retired 2026-10-28). Never breaks the board."""
     try:
         import nba_value_build
-        return nba_value_build.section()
+        return nba_value_build.lanes_section()
     except Exception as exc:                                    # noqa: BLE001
         return f'<section id="value"><p class="sm mut">Value section unavailable ({esc(type(exc).__name__)}).</p></section>'
+
+
+def _ladder_section():
+    """The ladder tracker, which keeps running. Never breaks the board."""
+    try:
+        import nba_value_build
+        return nba_value_build.ladder_section()
+    except Exception as exc:                                    # noqa: BLE001
+        return f'<section id="ladder"><p class="sm mut">Ladder section unavailable ({esc(type(exc).__name__)}).</p></section>'
+
+
+def _retired_block():
+    """Every retired NBA lane in one collapsed block (2026-10-28): the label rules and the value lanes."""
+    return ('<section id="retired"><details class="section-disclosure nba-retired"><summary><b>Retired</b>'
+            '<span>label rules R1-R7 and value lanes · kept, not deleted</span></summary>'
+            '<p class="sm mut">No new entries from each lane\'s retired date. Rows stay and open bets still settle. '
+            'The ladder tracker and the model\'s data keep running; the Safe Card still uses the model.</p>'
+            f'{_rules_section()}\n{_value_section()}</details></section>')
 
 
 def _safe_card_section():
@@ -629,6 +647,7 @@ def build(blob=None, now=None):
 <h1>NBA</h1>
 <p class="scope">Expected combined points · tip times Central</p>
 {fresh_html}</div>
+{_safe_card_section()}
 <section id="matchups">
 <div class="nba-section-head">
 <div><h2>Upcoming</h2><p class="shell-kicker">Next 24 hours · chronological · the mark is the board's highest expectation in that column</p></div>
@@ -637,9 +656,8 @@ def build(blob=None, now=None):
 {upcoming_table(blob, upcoming)}
 <p class="nba-accuracy" id="accuracy">{esc(accuracy_line(graded))}</p>
 </section>
-{_rules_section()}
-{_value_section()}
-{_safe_card_section()}
+{_ladder_section()}
+{_retired_block()}
 <section id="graded">
 <details class="section-disclosure nba-results"><summary><b>Results · last 24 hours</b><span>{len(graded)} graded</span></summary>
 <p class="sm mut">Expected / actual combined points; the small signed number is the file's own error.</p>
@@ -662,8 +680,8 @@ def build(blob=None, now=None):
         "Edge Machine · NBA",
         "NBA matchups, pace labels, and combined expectations. Preseason. No bets.",
         "nba",
-        (("cheap-side", "Cheap side"), ("matchups", "Upcoming"), ("rules", "Rules"), ("value", "Value"), ("ladder", "Ladder"), ("safe-card", "Safe Card"),
-         ("graded", "Results"), ("teams", "Teams")),
+        (("cheap-side", "Cheap side"), ("safe-card", "Safe Card"), ("matchups", "Upcoming"), ("ladder", "Ladder"),
+         ("retired", "Retired"), ("graded", "Results"), ("teams", "Teams")),
         C.stamp(clock),
         body,
         scripts=("./tables.js",),
@@ -674,7 +692,7 @@ def build(blob=None, now=None):
     import sandbox_build
     # nba_ml_dog_tp50 and nba_tt_cheap_tp30's home (2026-10-27): the cheap-side section at the top.
     import chaos_build
-    page = chaos_build.place(page, "nba", before='<section id="matchups"')
+    page = chaos_build.place(page, "nba", before='<section id="safe-card"')
     return sandbox_build.label_cells(page)
 
 
