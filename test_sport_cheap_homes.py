@@ -95,6 +95,16 @@ check("nba_tt_cheap_tp30 retired 2026-10-27 with its record", (tt["retired"]["on
 check("the NBA page keeps nba_ml_dog_tp50 open and folds nba_tt_cheap_tp30 into Retired",
       (folded(pages["nba"], '<details class="section-disclosure" data-lane="nba_ml_dog_tp50" open>'),
        folded(pages["nba"], '<li data-lane="nba_tt_cheap_tp30"')), (False, True))
+if "nba_ml_dog_tp50" in (C.load().get("lanes") or {}):
+    nba_cs = pages["nba"][pages["nba"].find('<section id="cheap-side">'):pages["nba"].find("</section>", pages["nba"].find('<section id="cheap-side">'))]
+    summ = nba_cs[nba_cs.find('class="chaos-summary"'):nba_cs.find("</table>", nba_cs.find('class="chaos-summary"'))]
+    check("NBA: the moneyline lane leads the cheap-side summary under its split label, its ask 10-30c row directly under it",
+          (re.findall(r'<tr data-lane="([^"]+)"(?: data-band="([^"]+)")?>', summ)[:2],
+           "NBA moneyline underdog · split 2x / 3x" in summ, "sell +50%" in summ),
+          ([("nba_ml_dog_tp50", ""), ("nba_ml_dog_tp50", "ask_10_30")], True, False))
+    check("NBA: its card opens on split v hold, before the other exits",
+          nba_cs.find("Split v hold", nba_cs.find('data-lane="nba_ml_dog_tp50" open'))
+          < nba_cs.find("Other exits", nba_cs.find('data-lane="nba_ml_dog_tp50" open')), True)
 
 print("\nCulture, Commodities and Fights: every active cheap-side lane visible")
 import commodities_build
