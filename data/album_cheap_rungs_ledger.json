@@ -2224,11 +2224,15 @@
    "last_trade_at": null,
    "legs": [
     {
+     "fill_px": 0.12,
+     "filled_at": "2026-10-29T21:00:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.12
     },
     {
+     "fill_px": 0.18,
+     "filled_at": "2026-10-29T21:00:00+00:00",
      "multiple": 3.0,
      "share": 0.5,
      "target": 0.18
@@ -2236,11 +2240,14 @@
    ],
    "logged": "2026-10-29T19:54:18.393510+00:00",
    "payout": null,
+   "pnl": 0.0838,
    "price": 0.06,
+   "roi": 1.311,
+   "roi_2x": 0.8476,
    "side": "yes",
    "spread": 0.04,
    "spread_cost": null,
-   "status": "open",
+   "status": "filled",
    "traded_to_entry": 0.0,
    "word": "Above 25K"
   },
@@ -2274,6 +2281,44 @@
    "status": "open",
    "traded_to_entry": 0.0,
    "word": "Above 30K"
+  },
+  {
+   "bid": 0.05,
+   "book_at": "2026-10-29T21:00:44.207678+00:00",
+   "book_size": 0,
+   "entry_at": "2026-10-29T20:04:00+00:00",
+   "event": "KXALBUMEQUIV-HOW26NOV05",
+   "id": "KXALBUMEQUIV-HOW26NOV05-20K",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "fill_px": 0.18,
+     "filled_at": "2026-10-29T21:00:00+00:00",
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.18
+    },
+    {
+     "fill_px": 0.27,
+     "filled_at": "2026-10-29T21:00:00+00:00",
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.27
+    }
+   ],
+   "logged": "2026-10-29T21:00:44.207678+00:00",
+   "payout": null,
+   "pnl": 0.1263,
+   "price": 0.09,
+   "roi": 1.3188,
+   "roi_2x": 0.8532,
+   "side": "yes",
+   "spread": 0.04,
+   "spread_cost": null,
+   "status": "filled",
+   "traded_to_entry": 0.0,
+   "word": "Above 20K"
   }
  ],
  "error": null,
@@ -2297,14 +2342,14 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:42.883824+00:00"
  },
  "lane": "album_cheap_rungs",
- "last_success": "2026-10-29T20:00:42.869232+00:00",
+ "last_success": "2026-10-29T21:00:44.207678+00:00",
  "observations": {
-  "at": "2026-10-29T20:00:42.869232+00:00",
-  "entered": 0,
+  "at": "2026-10-29T21:00:44.207678+00:00",
+  "entered": 1,
   "events": 17,
-  "filled": 0,
+  "filled": 4,
   "skipped": 0,
-  "waiting": 7
+  "waiting": 6
  },
  "skips": {
   "KXALBUMEQUIV-BLEACH26NOV05-10K": {
