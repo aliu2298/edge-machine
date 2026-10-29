@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-29T18:46:42.656395+00:00",
+ "last_run": "2026-10-29T21:01:40.071381+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -721,18 +721,29 @@
      "ticker": "KXBRASILEIROTOTAL-26OCT28CRBOT-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Brasileir\u00e3o over 1.5 YES 0.80"
+    },
+    {
+     "ask": 0.81,
+     "bid": 0.79,
+     "event": "KXBRASILEIROTOTAL-26OCT29ATLCRU",
+     "id": "BRA:KXBRASILEIROTOTAL-26OCT29ATLCRU",
+     "league": "Brasileir\u00e3o",
+     "line": 1.5,
+     "logged": "2026-10-29T21:01:40.071381+00:00",
+     "match": "Atl\u00e9tico-MG v Cruzeiro",
+     "price": 0.81,
+     "rule": "BRA",
+     "side": "yes",
+     "start": "2026-10-29T22:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROTOTAL-26OCT29ATLCRU-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Brasileir\u00e3o over 1.5 YES 0.81"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T20:46:37.741974+00:00",
-   "due": 1,
-   "matched": 1,
-   "new": 1,
-   "quoted": 1
-  },
   {
    "at": "2026-10-25T21:16:28.188442+00:00",
    "due": 1,
@@ -1082,6 +1093,13 @@
    "matched": 0,
    "new": 0,
    "quoted": 0
+  },
+  {
+   "at": "2026-10-29T21:01:40.071381+00:00",
+   "due": 1,
+   "matched": 1,
+   "new": 1,
+   "quoted": 1
   }
  ],
  "schedule": [
