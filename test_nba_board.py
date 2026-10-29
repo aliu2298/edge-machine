@@ -445,9 +445,9 @@ ok(nba_tab is not None and 'aria-current="page"' in nba_tab.group(0)
    and main_nav.count('aria-current="page"') == 1 and HTML.count('<nav class="main"') == 1,
    "only the NBA pill is current")
 ok('<script src="./sports.js"></script>' in HTML, "the NBA page still loads sports.js")
-ok('<nav class="toc" aria-label="On this page"><a href="#cheap-side">Cheap side</a><a href="#safe-card">Safe Card</a><a href="#matchups">Upcoming</a><a href="#ladder">Ladder</a><a href="#retired">Retired</a><a href="#graded">Results</a><a href="#teams">Teams</a></nav>' in HTML
+ok('<nav class="toc" aria-label="On this page"><a href="#cheap-side">Cheap side</a><a href="#safe-card">Safe Card</a><a href="#matchups">Upcoming</a><a href="#ladder">Ladder</a><a href="#graded">Results</a><a href="#teams">Teams</a><a href="#retired">Retired</a></nav>' in HTML
    and "nba-local-nav" not in HTML,
-   "the Cheap side / Safe Card / Upcoming / Ladder / Retired / Results / Teams jump pills are the shared sub-nav, not a local pill bar")
+   "the Cheap side / Safe Card / Upcoming / Ladder / Results / Teams / Retired jump pills are the shared sub-nav, not a local pill bar")
 head = HTML.split('<section id="matchups">', 1)[0]
 ok("<h1>NBA</h1>" in head and '<p class="eyebrow">Research board</p>' in head
    and '<p class="scope">Expected combined points · tip times Central</p>' in head
@@ -485,10 +485,9 @@ def _safe_card_theads(html):
 
 ok(HTML.count('data-l=""') >= 1 and 'data-l="" data-l=' not in HTML
    and 'data-l="1Q"' in HTML
-   # + Rules (2), the value lanes (3) and the ladder tracker (3), 2026-10-21; + the ladder tracker's
-   # Model level v Kalshi level table (1), 2026-10-24; the Safe Card's own tables (2026-10-22) read
-   # the live ledger, so they are counted apart.
-   and HTML.count("<thead>") - _safe_card_theads(HTML) == 12,
+   # Upcoming, Results, Teams and the folded ladder's team table (the retired lanes' tables left the
+   # page 2026-10-28); the Safe Card's own tables (2026-10-22) read the live ledger, so they are counted apart.
+   and HTML.count("<thead>") - _safe_card_theads(HTML) == 4,
    "the page names each column for the phone cards and leaves the detail cell unlabelled")
 ok(sandbox_build.label_cells(HTML) == HTML, "labelling the page again changes nothing")
 
@@ -568,6 +567,9 @@ def browser_checks():
             ok(not wide["resultsOpen"] and not wide["teamsOpen"], "Results and Team reference start collapsed")
             ok(wide["tableDisplay"] == "table" and not wide["overflow"] and wide["bars"] == 0,
                f"at 1280px the board is a table with no bars and no sideways scroll (overflow {wide['overflow']})")
+            ok(not page.locator("#matchups details").first.evaluate("d => d.open"), "Upcoming starts collapsed (reference, 2026-10-28)")
+            page.locator("#matchups summary").first.click()
+            page.wait_for_timeout(40)
             page.locator("#matchups button.nba-more").first.click()
             page.wait_for_timeout(40)
             opened = page.evaluate(STATE)
@@ -595,6 +597,8 @@ def browser_checks():
             ok(narrow["tableDisplay"] == "block" and not narrow["detailShown"] and not narrow["overflow"],
                f"at 390px the table is the phone cards, the detail stays hidden, and nothing scrolls sideways "
                f"(display {narrow['tableDisplay']}, overflow {narrow['overflow']})")
+            page.locator("#matchups summary").first.click()
+            page.wait_for_timeout(40)
             page.locator("#matchups button.nba-more").first.click()
             page.wait_for_timeout(40)
             phone_open = page.evaluate(STATE)

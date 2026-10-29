@@ -521,19 +521,34 @@ empty_html = VB.section(V.empty(), T.empty())
 check("an empty ledger renders", "No tracked game yet" in empty_html and "No entries yet" in empty_html, True)
 import nba_pace_build
 page = nba_pace_build.build(json.load(open(nba_pace_build.SRC)), now=TIP)
-check("the NBA page carries both sections and the nav", all(x in page for x in ('id="value"', 'id="ladder"', 'href="#ladder"')), True)
+check("the NBA page keeps the ladder tracker, folded, and its nav", all(x in page for x in ('id="ladder"', 'href="#ladder"')), True)
 import re
-retired_part = page[page.index('id="retired"'):page.index('id="graded"')]
-check("the retired lanes sit in one collapsed Retired block, never open",
-      ('<details class="section-disclosure nba-retired">' in retired_part, "<details open" in retired_part,
-       'id="rules"' in retired_part and 'id="value"' in retired_part, 'id="ladder"' in retired_part), (True, False, True, False))
-check("the block names every retired lane with its date and reason",
-      (retired_part.count("Retired 2026-10-28") >= 12, "R2" in retired_part and "Retired 2026-10-24" in retired_part,
-       "no edge against Kalshi" in retired_part), (True, True, True))
-order = [page.index(f'id="{i}"') for i in ("cheap-side", "safe-card", "matchups", "ladder", "retired", "graded")]
-check("active lanes first: cheap side, then the Safe Card, then the board; ladder, then Retired",
-      order == sorted(order), True)
-check("the ladder tracker is outside the Retired block and the nav lists it", 'href="#retired"' in page and 'href="#safe-card"' in page, True)
+ret_i = page.index('<section id="retired">')
+ret_part = page[ret_i:page.index("</section>", ret_i)]
+above = page[:ret_i]
+check("the Retired fold is collapsed, near the bottom: after Results and Teams, before the About note",
+      ('<details class="section-disclosure nba-retired">' in ret_part, "<details open" in ret_part,
+       page.index('id="graded"') < page.index('id="teams"') < ret_i < page.index("About this desk")), (True, False, True))
+check("one line each for every retired lane: R1-R7, six value lanes and controls, four baselines, the cheap-side lane",
+      sorted(re.findall(r'<li data-lane="([^"]+)"', ret_part)),
+      sorted(["R1", "R2", "R3", "R4", "R5", "R6", "R7", *V.LANES, *V.CONTROLS, *V.BASE.values(), "nba_tt_cheap_tp30"]))
+check("each line carries its date and reason (R2 keeps its Oct 24 note)",
+      (ret_part.count("Retired 2026-10-28") >= 16, "Retired 2026-10-24: 3/10" in ret_part, "Retired 2026-10-27 at 145 settled" in ret_part,
+       ret_part.count("no edge against Kalshi") >= 10), (True, True, True, True))
+check("above the fold only the active lanes: no retired lane id, label table or entry list",
+      [x for x in ("R1:", "nba_tt_value", "nba_1q_value", "fade_overs", "base_nba", "nba_tt_cheap_tp30", "Sandbox rules", "Value lanes",
+                   "Level guard", "Model level v Kalshi level", "Calibration · team totals", "Retired 2026") if x in above], [])
+check("above the fold the page shows the cheap-side lane, then the Safe Card, then the folded reference",
+      [i for i in ("cheap-side", "safe-card", "matchups", "ladder", "graded", "teams") if f'id="{i}"' in above] ==
+      ["cheap-side", "safe-card", "matchups", "ladder", "graded", "teams"] and
+      [page.index(f'id="{i}"') for i in ("cheap-side", "safe-card", "matchups", "ladder")] ==
+      sorted(page.index(f'id="{i}"') for i in ("cheap-side", "safe-card", "matchups", "ladder")), True)
+check("the retired cheap-side lane is not listed in the cheap-side section", "cheap-side-retired" not in page, True)
+check("the ladder reference keeps the team table and drops the value lanes' checks",
+      ("Team climb" not in page and "Ask drift" in page and "Line move" in page, "Calibration" in page.split('id="ladder"')[1].split('id="graded"')[0]),
+      (True, False))
+check("no dangling link: every in-page anchor on the page resolves",
+      [a for a in re.findall(r'href="#([a-z0-9-]+)"', page) if f'id="{a}"' not in page], [])
 check("the page no longer says the value lanes are in Production", "in Production since" not in page, True)
 check("no guarded phrase in the copy",
       sandbox_audit.COPY_RE.search(html + open("nba_value.py").read() + open("nba_value_build.py").read()

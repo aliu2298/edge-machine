@@ -265,9 +265,37 @@ def lanes_section(state=None):
     return lanes_html(_state(state))
 
 
+def reference_html(track):
+    """The ladder tracker as page reference (2026-10-28): the team climb and drift table with its one-line
+    summaries. The model-v-Kalshi nightly tables, calibration and level guard served the retired value
+    lanes, so the page drops them; tracker_html still builds them and the data keeps being collected."""
+    tr = track.get("tracked") or {}
+    s = T.summary(track)
+    drift = T.drift_table(tr)
+
+    def drift_line(key, label):
+        d = drift.get(key)
+        if not d:
+            return f"{label}: no rung two-sided at both 24h and 1h yet"
+        return (f"{label}: {d['n']} rungs, average ask move {d['avg'] * 100:+.1f}c from 24h to 1h; "
+                f"{d['moved']} moved 2c or more, and {_pct(d['matched'])} of those moved the way the rung settled")
+
+    last = track.get("last_run")
+    return f"""<section id="ladder">
+<details class="section-disclosure nba-ladder"><summary><b>Ladder tracker</b><span>reference · {s["games"]} game{"s" if s["games"] != 1 else ""} · {s["rungs"]} rungs</span></summary>
+<p class="sm mut">Every finished game's Kalshi team-total and 1Q ladders, 24h to 1h before tip. Observation only, no bets. Climb is points minus Kalshi's 50c line (the rung whose 1h mid is nearest 0.50); beat is how often the team cleared it. Opp. climb is the opponents' climb against their own line. Ask drift is the average YES ask change from 24h to 1h on that team's rungs with a 1h mid of 15-85c; line move is the 50c line at 1h minus at 24h, in points.</p>
+<div class="tbl"><table><thead><tr><th>Team</th><th class="num">Games</th><th class="num">Climb</th><th class="num">Beat</th><th class="num">Opp. climb</th><th class="num">Opp. beat</th><th class="num">Ask drift</th><th class="num">Line move</th></tr></thead>
+<tbody>{_climb_rows(track)}</tbody></table></div>
+<p class="sm">{esc(drift_line("tt", "Team totals"))}.</p>
+<p class="sm">{esc(drift_line("q1", "1st-quarter totals"))}.</p>
+<p class="sm mut">{s["nights"]} game night{"s" if s["nights"] != 1 else ""} since {esc(T.SEASON_START.isoformat())}. Last run {esc(fmt.when(last) if last else "not yet")}{(" · " + esc(track["error"])) if track.get("error") else ""}.</p>
+</details>
+</section>"""
+
+
 def ladder_section(track=None):
-    return tracker_html(_track(track))
+    return reference_html(_track(track))
 
 
 def section(state=None, track=None):
-    return lanes_section(state) + "\n" + ladder_section(track)
+    return lanes_section(state) + "\n" + tracker_html(_track(track))
