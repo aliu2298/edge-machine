@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-29T07:40:05.684331+00:00",
-   "last_success": "2026-10-29T07:40:05.684331+00:00",
+   "last_run": "2026-10-29T08:00:19.853428+00:00",
+   "last_success": "2026-10-29T08:00:19.853428+00:00",
    "observations": {
-    "at": "2026-10-29T07:40:05.684331+00:00",
+    "at": "2026-10-29T08:00:19.853428+00:00",
     "events": 966,
     "reasons": {},
     "retired": "2026-10-24"
@@ -548,10 +548,10 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-29T07:40:05.684331+00:00",
-   "last_success": "2026-10-29T07:40:05.684331+00:00",
+   "last_run": "2026-10-29T08:00:19.853428+00:00",
+   "last_success": "2026-10-29T08:00:19.853428+00:00",
    "observations": {
-    "at": "2026-10-29T07:40:05.684331+00:00",
+    "at": "2026-10-29T08:00:19.853428+00:00",
     "events": 966,
     "reasons": {},
     "retired": "2026-10-24"
@@ -905,19 +905,18 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-29T07:40:05.684331+00:00",
-   "last_success": "2026-10-29T07:40:05.684331+00:00",
+   "last_run": "2026-10-29T08:00:19.853428+00:00",
+   "last_success": "2026-10-29T08:00:19.853428+00:00",
    "observations": {
-    "at": "2026-10-29T07:40:05.684331+00:00",
+    "at": "2026-10-29T08:00:19.853428+00:00",
     "events": 966,
     "news_guard": [],
     "reasons": {
-     "NO under 0.60 (floor 2026-10-26)": 1,
      "already near-certain (under 10c or over 90c)": 11,
-     "edge 5c+": 4,
+     "edge 5c+": 1,
      "edge under 5c": 2,
      "monthly or company series (excluded 2026-10-26)": 76,
-     "no quote or spread too wide": 16
+     "no quote or spread too wide": 20
     }
    },
    "picks": [
@@ -2333,10 +2332,10 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-29T07:40:05.684331+00:00",
-   "last_success": "2026-10-29T07:40:05.684331+00:00",
+   "last_run": "2026-10-29T08:00:19.853428+00:00",
+   "last_success": "2026-10-29T08:00:19.853428+00:00",
    "observations": {
-    "at": "2026-10-29T07:40:05.684331+00:00",
+    "at": "2026-10-29T08:00:19.853428+00:00",
     "events": 966,
     "reasons": {
      "edge 5c+": 4,
