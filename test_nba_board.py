@@ -445,7 +445,7 @@ ok(nba_tab is not None and 'aria-current="page"' in nba_tab.group(0)
    and main_nav.count('aria-current="page"') == 1 and HTML.count('<nav class="main"') == 1,
    "only the NBA pill is current")
 ok('<script src="./sports.js"></script>' in HTML, "the NBA page still loads sports.js")
-ok('<nav class="toc" aria-label="On this page"><a href="#cheap-side">Cheap side</a><a href="#safe-card">Safe Card</a><a href="#matchups">Upcoming</a><a href="#ladder">Ladder</a><a href="#graded">Results</a><a href="#teams">Teams</a><a href="#retired">Retired</a></nav>' in HTML
+ok('<nav class="toc" aria-label="On this page"><a href="#cheap-side">Cheap side</a><a href="#winmargin">Win margin</a><a href="#safe-card">Safe Card</a><a href="#matchups">Upcoming</a><a href="#ladder">Ladder</a><a href="#graded">Results</a><a href="#teams">Teams</a><a href="#retired">Retired</a></nav>' in HTML
    and "nba-local-nav" not in HTML,
    "the Cheap side / Safe Card / Upcoming / Ladder / Results / Teams / Retired jump pills are the shared sub-nav, not a local pill bar")
 head = HTML.split('<section id="matchups">', 1)[0]
@@ -474,10 +474,10 @@ labelled = HTML
 
 
 def _safe_card_theads(html):
-    """The live-ledger tables, counted apart: the Safe Card's (2026-10-22) and the cheap-side section's
-    (the chaos lanes' home, 2026-10-27)."""
+    """The live-ledger tables, counted apart: the Safe Card's (2026-10-22), the cheap-side section's
+    (the chaos lanes' home, 2026-10-27) and the Win margin tracker's (2026-10-29)."""
     n = 0
-    for sec in ("safe-card", "cheap-side"):
+    for sec in ("safe-card", "cheap-side", "winmargin"):
         m = re.search(rf'<section id="{sec}">.*?</section>', html, re.S)
         n += m.group(0).count("<thead>") if m else 0
     return n

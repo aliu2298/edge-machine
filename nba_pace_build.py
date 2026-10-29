@@ -642,6 +642,15 @@ def _safe_card_section():
         return f'<section id="safe-card"><p class="sm mut">Safe Card unavailable ({esc(type(exc).__name__)}).</p></section>'
 
 
+def _winmargin_section():
+    """The Win margin tracker (nba_winmargin_build.py, 2026-10-29): observation only. Never breaks the board."""
+    try:
+        import nba_winmargin_build
+        return nba_winmargin_build.section()
+    except Exception as exc:                                    # noqa: BLE001
+        return f'<section id="winmargin"><p class="sm mut">Win margin tracker unavailable ({esc(type(exc).__name__)}).</p></section>'
+
+
 def build(blob=None, now=None):
     if blob is None:
         with open(SRC, encoding="utf-8") as fh:
@@ -665,6 +674,7 @@ def build(blob=None, now=None):
 <h1>NBA</h1>
 <p class="scope">Expected combined points · tip times Central</p>
 {fresh_html}</div>
+{_winmargin_section()}
 {_safe_card_section()}
 <section id="matchups">
 <details class="section-disclosure nba-upcoming"><summary><b>Upcoming</b><span>reference · next 24 hours · {n_up} game{"s" if n_up != 1 else ""}</span></summary>
@@ -697,7 +707,7 @@ def build(blob=None, now=None):
         "Edge Machine · NBA",
         "NBA matchups, pace labels, and combined expectations. Preseason. No bets.",
         "nba",
-        (("cheap-side", "Cheap side"), ("safe-card", "Safe Card"), ("matchups", "Upcoming"), ("ladder", "Ladder"),
+        (("cheap-side", "Cheap side"), ("winmargin", "Win margin"), ("safe-card", "Safe Card"), ("matchups", "Upcoming"), ("ladder", "Ladder"),
          ("graded", "Results"), ("teams", "Teams"), ("retired", "Retired")),
         C.stamp(clock),
         body,
@@ -707,9 +717,10 @@ def build(blob=None, now=None):
     # Every cell named for its column and the header rows in <thead>, so the
     # phone cards work on this page however it is written out.
     import sandbox_build
-    # nba_ml_dog_tp50 and nba_tt_cheap_tp30's home (2026-10-27): the cheap-side section at the top.
+    # nba_ml_dog_tp50 and nba_tt_cheap_tp30's home (2026-10-27): the cheap-side section at the top,
+    # then the Win margin tracker (2026-10-29), then the Safe Card.
     import chaos_build
-    page = chaos_build.place(page, "nba", before='<section id="safe-card"', retired=False)
+    page = chaos_build.place(page, "nba", before='<section id="winmargin"', retired=False)
     return sandbox_build.label_cells(page)
 
 

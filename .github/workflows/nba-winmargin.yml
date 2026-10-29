@@ -1,0 +1,79 @@
+name: NBA win margin tracker
+
+# OBSERVATION ONLY (2026-10-29, approved by Olu): Kalshi's NBA win-margin buckets
+# (KXNBAWINMARGIN), every game since opening night. Entry quote an hour before the
+# tip, every trade print after, the settled result. No buying or selling rule, no
+# orders, no bot, no Production feed. Kalshi's public endpoints only: no secret.
+#
+# Games settle a little after the final whistle, so the job runs through the
+# night and morning (UTC 04:40-14:40, every two hours) and is idempotent: a game
+# already final in data/nba_winmargin_tracker.json is never read again. It also
+# rebuilds the NBA page, whose Win margin tracker section reads the ledger.
+
+on:
+  schedule:
+    - cron: "40 4,6,8,10,12,14 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nba-winmargin
+  cancel-in-progress: false
+
+jobs:
+  track:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - name: Collect settled games
+        run: |
+          set -o pipefail
+          python3 nba_winmargin.py | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Build the NBA page
+        run: python3 nba_pace_build.py
+
+      - name: Commit and push if changed
+        run: |
+          set -euo pipefail
+          python3 -c 'import json; json.load(open("data/nba_winmargin_tracker.json"))'
+          git config user.name  "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+          git add data/nba_winmargin_tracker.json public_site/nba.html
+          if git diff --cached --quiet; then
+            echo "no changes" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          git commit -m "NBA win margin tracker observations ($(date -u +%Y-%m-%d\ %H:%MZ))"
+          # Retry the push only. Other jobs rebuild nba.html on their own clocks; this
+          # job's ledger is its own, so a conflict only in nba.html keeps this run's copy.
+          for attempt in 1 2 3; do
+            if git push origin main; then
+              exit 0
+            fi
+            echo "push rejected — rebasing onto origin/main (attempt $attempt)"
+            if ! git pull --rebase origin main; then
+              conflicted="$(git diff --name-only --diff-filter=U)"
+              if [ "$conflicted" = "public_site/nba.html" ]; then
+                echo "conflict only in nba.html; keeping this run's copy"
+                git checkout --theirs -- public_site/nba.html
+                git add -- public_site/nba.html
+                GIT_EDITOR=true git rebase --continue
+              else
+                git rebase --abort 2>/dev/null || echo "rebase was not left in progress"
+                echo "::error::rebase onto origin/main failed on attempt $attempt"
+                exit 1
+              fi
+            fi
+          done
+          echo "::error::could not push win margin observations after 3 attempts"
+          exit 1
