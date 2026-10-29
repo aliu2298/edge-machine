@@ -579,26 +579,8 @@ def _clock(blob, now):
     return datetime.datetime.now(datetime.timezone.utc)
 
 
-def _rules_section():
-    """The seven Sandbox label rules (nba_rules_build.py, 2026-10-17). Never breaks the board."""
-    try:
-        import nba_rules_build
-        return nba_rules_build.section()
-    except Exception as exc:                                    # noqa: BLE001
-        return f'<section id="rules"><p class="sm mut">Rules section unavailable ({esc(type(exc).__name__)}).</p></section>'
-
-
-def _value_section():
-    """The retired value lanes (nba_value_build.py, 2026-10-21; retired 2026-10-28). Never breaks the board."""
-    try:
-        import nba_value_build
-        return nba_value_build.lanes_section()
-    except Exception as exc:                                    # noqa: BLE001
-        return f'<section id="value"><p class="sm mut">Value section unavailable ({esc(type(exc).__name__)}).</p></section>'
-
-
 def _ladder_section():
-    """The ladder tracker, which keeps running. Never breaks the board."""
+    """The ladder tracker, folded, as reference (nba_value_build.py). Never breaks the board."""
     try:
         import nba_value_build
         return nba_value_build.ladder_section()
@@ -606,13 +588,49 @@ def _ladder_section():
         return f'<section id="ladder"><p class="sm mut">Ladder section unavailable ({esc(type(exc).__name__)}).</p></section>'
 
 
+def _retired_items():
+    """(id, name, text) for every retired NBA lane: the label rules, the value lanes, the fade controls, their
+    blind baselines and the retired cheap-side lane. Each text is its record, date and reason."""
+    import chaos_build
+    import chaos_lanes
+    import nba_rules as NR
+    import nba_value as V
+    out = []
+    for key, meta in NR.RULES.items():
+        r = NR.RETIRED.get(key)
+        if r:
+            out.append((key, meta["label"], f"Retired {r['on']}: {r['reason']}."))
+    for lane in V.LANES + V.CONTROLS:
+        r = V.RETIRED.get(lane)
+        if r:
+            out.append((lane, V.NAMES[lane], f"Retired {r['on']}: {r['reason']}."))
+    try:
+        state = V.load() if os.path.exists(V.PATH) else V.empty()
+    except Exception:                                           # noqa: BLE001
+        state = V.empty()
+    for lane in V.LANES:
+        r = V.RETIRED.get(lane)
+        if not r:
+            continue
+        a = V.stats(((state.get("rules") or {}).get(V.BASE[lane]) or {}).get("picks") or [])
+        rec = ("no settled entries" if not a["n"] else
+               f"{a['won']}/{a['n']} won, {a['roi_fee'] * 100:+.1f}% after fee so far")
+        out.append((V.BASE[lane], f"Blind baseline for {V.NAMES[lane]}",
+                    f"Retired {r['on']} with its lane: {rec}; it only judged that lane."))
+    for cfg in chaos_lanes.LANES:
+        if cfg["id"] in chaos_build.HOMES["nba"] and cfg.get("retired"):
+            out.append((cfg["id"], cfg["label"], chaos_build.retired_line(cfg)))
+    return out
+
+
 def _retired_block():
-    """Every retired NBA lane in one collapsed block (2026-10-28): the label rules and the value lanes."""
+    """Every retired NBA lane in one collapsed block near the bottom (2026-10-28), one line each."""
+    items = "".join(f'<li data-lane="{esc(i)}"><b>{esc(n)}</b> ({esc(i)}): {esc(t)}</li>' for i, n, t in _retired_items())
     return ('<section id="retired"><details class="section-disclosure nba-retired"><summary><b>Retired</b>'
-            '<span>label rules R1-R7 and value lanes · kept, not deleted</span></summary>'
-            '<p class="sm mut">No new entries from each lane\'s retired date. Rows stay and open bets still settle. '
+            f'<span>{len(_retired_items())} lanes · kept, not deleted</span></summary>'
+            '<p class="sm mut">No new entries from each lane\'s retired date. The rows stay and open bets still settle. '
             'The ladder tracker and the model\'s data keep running; the Safe Card still uses the model.</p>'
-            f'{_rules_section()}\n{_value_section()}</details></section>')
+            f'<ul class="sm">{items}</ul></details></section>')
 
 
 def _safe_card_section():
@@ -649,15 +667,13 @@ def build(blob=None, now=None):
 {fresh_html}</div>
 {_safe_card_section()}
 <section id="matchups">
-<div class="nba-section-head">
-<div><h2>Upcoming</h2><p class="shell-kicker">Next 24 hours · chronological · the mark is the board's highest expectation in that column</p></div>
-<span class="nba-count">{n_up} game{"s" if n_up != 1 else ""}</span>
-</div>
+<details class="section-disclosure nba-upcoming"><summary><b>Upcoming</b><span>reference · next 24 hours · {n_up} game{"s" if n_up != 1 else ""}</span></summary>
+<p class="shell-kicker">Chronological · the mark is the board's highest expectation in that column</p>
 {upcoming_table(blob, upcoming)}
 <p class="nba-accuracy" id="accuracy">{esc(accuracy_line(graded))}</p>
+</details>
 </section>
 {_ladder_section()}
-{_retired_block()}
 <section id="graded">
 <details class="section-disclosure nba-results"><summary><b>Results · last 24 hours</b><span>{len(graded)} graded</span></summary>
 <p class="sm mut">Expected / actual combined points; the small signed number is the file's own error.</p>
@@ -669,6 +685,7 @@ def build(blob=None, now=None):
 <p class="sm mut">Each team's scoring and allowing rates over its last {window_txt} games, labelled against the league means of this table.</p>
 {team_table(blob)}</details>
 </section>
+{_retired_block()}
 <details class="section-disclosure nba-about"><summary><b>About this desk</b><span>Preseason research</span></summary>
 <p class="sm mut">1Q, 1H and FT are expected combined points for both teams, from each team's last-{window_txt} scoring and allowing rates. A finished game is graded against its actual combined total, and the error shown is actual minus expected as stored in the pace file. These are research expectations, not betting lines or recommendations.</p></details>
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
@@ -681,7 +698,7 @@ def build(blob=None, now=None):
         "NBA matchups, pace labels, and combined expectations. Preseason. No bets.",
         "nba",
         (("cheap-side", "Cheap side"), ("safe-card", "Safe Card"), ("matchups", "Upcoming"), ("ladder", "Ladder"),
-         ("retired", "Retired"), ("graded", "Results"), ("teams", "Teams")),
+         ("graded", "Results"), ("teams", "Teams"), ("retired", "Retired")),
         C.stamp(clock),
         body,
         scripts=("./tables.js",),
@@ -692,7 +709,7 @@ def build(blob=None, now=None):
     import sandbox_build
     # nba_ml_dog_tp50 and nba_tt_cheap_tp30's home (2026-10-27): the cheap-side section at the top.
     import chaos_build
-    page = chaos_build.place(page, "nba", before='<section id="safe-card"')
+    page = chaos_build.place(page, "nba", before='<section id="safe-card"', retired=False)
     return sandbox_build.label_cells(page)
 
 

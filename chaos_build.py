@@ -209,7 +209,7 @@ def home_href(lane_id):
     return f"./{page}.html#cheap-side" if page else None
 
 
-def sport_section(page, state=None):
+def sport_section(page, state=None, retired=True):
     """A sport page's "Cheap side + resting take-profit" section: its chaos lanes, split v hold first."""
     if state is None:
         state = C.load() if os.path.exists(C.PATH) else C.empty()
@@ -219,7 +219,7 @@ def sport_section(page, state=None):
     gone = [L for L in every if L.get("retired")]
     body = (summary(lanes, spread=True) + "".join(lane_html(L) for L in lanes)) if lanes else (
         '<p class="sm mut">No cheap-side lane on this page has replayed yet.</p>')
-    if gone:
+    if gone and retired:                                        # the NBA page lists its retired lanes in its own bottom fold
         body += retired_block(gone)
     block = ('<h3>College football</h3><p class="sm mut">The college football lane sits on the NFL page: '
              'it is the same football markets, and the site has no college football page.</p>' if page == "nfl" else "")
@@ -250,13 +250,13 @@ def tennis_section(state=None):
     return sport_section("tennis", state)
 
 
-def place(html, page, state=None, before=None):
+def place(html, page, state=None, before=None, retired=True):
     """Insert the page's cheap-side section near the top: before `before` (an opening tag), else before
     the first top-level <section id=...> in <main>. Never breaks the page."""
     try:
         import sandbox_build
         # Labelled here (phone cards), so every caller of a page's build() gets the phone layout.
-        sec = sandbox_build.label_cells(sport_section(page, state))
+        sec = sandbox_build.label_cells(sport_section(page, state, retired))
         at = html.find(before) if before else html.find("<section id=", html.find("<main"))
         return html[:at] + sec + html[at:] if at >= 0 else html
     except Exception:                                           # noqa: BLE001
