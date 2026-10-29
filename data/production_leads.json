@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-29T15:04:56+00:00",
+ "board_built_at": "2026-10-29T16:18:05+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -2100,7 +2100,7 @@
    "kickoff": "2026-10-29T18:30Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T15:04:56+00:00",
+   "last_seen_at": "2026-10-29T16:18:05+00:00",
    "league": "Commodities \u00b7 Favourite band",
    "match": "WTI crude close on Oct 29, 2026",
    "pair": "commod_fav_band|commodities_fav",
@@ -2244,7 +2244,7 @@
    "kickoff": "2026-10-31T20:00Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T15:04:56+00:00",
+   "last_seen_at": "2026-10-29T16:18:05+00:00",
    "league": "Eredivisie",
    "match": "Ajax v Alkmaar",
    "pair": "ere_draw|soccer",
@@ -2281,7 +2281,7 @@
    "kickoff": "2026-10-31T20:00Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T15:04:56+00:00",
+   "last_seen_at": "2026-10-29T16:18:05+00:00",
    "league": "Eredivisie",
    "match": "Cambuur v GA Eagles",
    "pair": "ere_draw|soccer",
@@ -2318,7 +2318,7 @@
    "kickoff": "2026-10-31T17:45Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T15:04:56+00:00",
+   "last_seen_at": "2026-10-29T16:18:05+00:00",
    "league": "Eredivisie",
    "match": "Heerenveen v Nijmegen",
    "pair": "ere_draw|soccer",
@@ -2355,7 +2355,7 @@
    "kickoff": "2026-10-31T21:00Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T15:04:56+00:00",
+   "last_seen_at": "2026-10-29T16:18:05+00:00",
    "league": "MLS",
    "match": "San Jose Earthquakes v Real Salt Lake",
    "pair": "mls_fade_home|soccer_p05",
@@ -2377,6 +2377,44 @@
    "sport": "soccer_p05",
    "status": "pending"
   },
+  "2026-10-31|Werder Bremen|TSG Hoffenheim|TSG Hoffenheim to score 2+ \u00b7 Team scores 2+ form rule": {
+   "away": "TSG Hoffenheim",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "TSG Hoffenheim"
+   },
+   "date": "2026-10-31",
+   "edge_at_log": null,
+   "first_seen": "2026-10-29",
+   "headline": "TSG Hoffenheim to score 2+",
+   "home": "Werder Bremen",
+   "id": "2026-10-31|Werder Bremen|TSG Hoffenheim|TSG Hoffenheim to score 2+ \u00b7 Team scores 2+ form rule",
+   "kickoff": "2026-10-31T14:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-29",
+   "last_seen_at": "2026-10-29T16:18:05+00:00",
+   "league": "Bundesliga",
+   "match": "Werder Bremen v TSG Hoffenheim",
+   "pair": "team2_form_l10|soccer_team2",
+   "price_at_log": 0.58,
+   "published_at": "2026-10-29T16:18:05+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 2771,
+   "route": {
+    "claim": "TSG Hoffenheim to score 2+",
+    "event": "KXBUNDESLIGATEAMTOTAL-26OCT31SVWTSG",
+    "market": "KXBUNDESLIGATEAMTOTAL-26OCT31SVWTSG-TSG2",
+    "outcome": "Hoffenheim over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.58,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "team2_form_l10:KXBUNDESLIGATEAMTOTAL-26OCT31SVWTSG-TSG2",
+   "source": "team2_form_l10",
+   "sport": "soccer_team2",
+   "status": "pending"
+  },
   "2026-11-01|Atlanta United FC|Toronto FC|Toronto FC +0.5 (Atlanta United FC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
    "away": "Toronto FC",
    "bet": {
@@ -2392,7 +2430,7 @@
    "kickoff": "2026-11-01T21:30Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T15:04:56+00:00",
+   "last_seen_at": "2026-10-29T16:18:05+00:00",
    "league": "MLS",
    "match": "Atlanta United FC v Toronto FC",
    "pair": "mls_fade_home|soccer_p05",
@@ -2429,7 +2467,7 @@
    "kickoff": "2026-11-01T01:30Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T15:04:56+00:00",
+   "last_seen_at": "2026-10-29T16:18:05+00:00",
    "league": "MLS",
    "match": "Colorado Rapids v Chicago Fire FC",
    "pair": "mls_fade_home|soccer_p05",
@@ -2466,7 +2504,7 @@
    "kickoff": "2026-11-01T13:30Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T15:04:56+00:00",
+   "last_seen_at": "2026-10-29T16:18:05+00:00",
    "league": "Eredivisie",
    "match": "Excelsior v Enschede",
    "pair": "ere_draw|soccer",
@@ -2503,7 +2541,7 @@
    "kickoff": "2026-11-01T15:45Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T15:04:56+00:00",
+   "last_seen_at": "2026-10-29T16:18:05+00:00",
    "league": "Eredivisie",
    "match": "Groningen v Sparta",
    "pair": "ere_draw|soccer",
@@ -2734,9 +2772,9 @@
    "ready_at": "2026-10-16T17:17:38+00:00",
    "route": "moved by hand on 2026-10-16",
    "routing": {
-    "leads": 8,
+    "leads": 9,
     "problem": null,
-    "routed": 8,
+    "routed": 9,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -2748,7 +2786,7 @@
    "sandbox_roi_fee": 0.1939,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -2880,5 +2918,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-29T15:04:56+00:00"
+ "updated_at": "2026-10-29T16:18:05+00:00"
 }
