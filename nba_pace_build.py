@@ -697,7 +697,7 @@ def build(blob=None, now=None):
         "Edge Machine · NBA",
         "NBA matchups, pace labels, and combined expectations. Preseason. No bets.",
         "nba",
-        (("cheap-side", "Cheap side"), ("safe-card", "Safe Card"), ("matchups", "Upcoming"), ("ladder", "Ladder"),
+        (("cheap-side", "Cheap side"), ("win-margin", "Win margin"), ("safe-card", "Safe Card"), ("matchups", "Upcoming"), ("ladder", "Ladder"),
          ("graded", "Results"), ("teams", "Teams"), ("retired", "Retired")),
         C.stamp(clock),
         body,
@@ -710,6 +710,9 @@ def build(blob=None, now=None):
     # nba_ml_dog_tp50 and nba_tt_cheap_tp30's home (2026-10-27): the cheap-side section at the top.
     import chaos_build
     page = chaos_build.place(page, "nba", before='<section id="safe-card"', retired=False)
+    # The Win margin tracker (2026-10-29): directly under the cheap-side card, above the Safe Card.
+    import nba_winmargin_build
+    page = nba_winmargin_build.place(page)
     return sandbox_build.label_cells(page)
 
 
