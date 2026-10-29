@@ -2212,6 +2212,68 @@
    "status": "open",
    "traded_to_entry": 29.0,
    "word": "Above 50K"
+  },
+  {
+   "bid": 0.02,
+   "book_at": "2026-10-29T19:54:18.393510+00:00",
+   "book_size": 4.0,
+   "entry_at": "2026-10-29T19:32:00+00:00",
+   "event": "KXALBUMEQUIV-HOW26NOV05",
+   "id": "KXALBUMEQUIV-HOW26NOV05-25K",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.12
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.18
+    }
+   ],
+   "logged": "2026-10-29T19:54:18.393510+00:00",
+   "payout": null,
+   "price": 0.06,
+   "side": "yes",
+   "spread": 0.04,
+   "spread_cost": null,
+   "status": "open",
+   "traded_to_entry": 0.0,
+   "word": "Above 25K"
+  },
+  {
+   "bid": 0.01,
+   "book_at": "2026-10-29T19:54:18.393510+00:00",
+   "book_size": 7.0,
+   "entry_at": "2026-10-29T19:32:00+00:00",
+   "event": "KXALBUMEQUIV-HOW26NOV05",
+   "id": "KXALBUMEQUIV-HOW26NOV05-30K",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.08
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.12
+    }
+   ],
+   "logged": "2026-10-29T19:54:18.393510+00:00",
+   "payout": null,
+   "price": 0.04,
+   "side": "yes",
+   "spread": 0.03,
+   "spread_cost": null,
+   "status": "open",
+   "traded_to_entry": 0.0,
+   "word": "Above 30K"
   }
  ],
  "error": null,
@@ -2235,14 +2297,14 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:42.883824+00:00"
  },
  "lane": "album_cheap_rungs",
- "last_success": "2026-10-29T19:00:45.583538+00:00",
+ "last_success": "2026-10-29T19:54:18.393510+00:00",
  "observations": {
-  "at": "2026-10-29T19:00:45.583538+00:00",
-  "entered": 0,
+  "at": "2026-10-29T19:54:18.393510+00:00",
+  "entered": 2,
   "events": 17,
   "filled": 0,
   "skipped": 0,
-  "waiting": 9
+  "waiting": 7
  },
  "skips": {
   "KXALBUMEQUIV-BLEACH26NOV05-10K": {
