@@ -2262,6 +2262,8 @@
    "last_trade_at": null,
    "legs": [
     {
+     "fill_px": 0.08,
+     "filled_at": "2026-10-29T22:00:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.08
@@ -2342,14 +2344,14 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:42.883824+00:00"
  },
  "lane": "album_cheap_rungs",
- "last_success": "2026-10-29T21:00:44.207678+00:00",
+ "last_success": "2026-10-29T22:00:57.363689+00:00",
  "observations": {
-  "at": "2026-10-29T21:00:44.207678+00:00",
-  "entered": 1,
+  "at": "2026-10-29T22:00:57.363689+00:00",
+  "entered": 0,
   "events": 17,
-  "filled": 4,
+  "filled": 1,
   "skipped": 0,
-  "waiting": 6
+  "waiting": 8
  },
  "skips": {
   "KXALBUMEQUIV-BLEACH26NOV05-10K": {
