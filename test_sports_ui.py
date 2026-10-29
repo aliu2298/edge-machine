@@ -103,6 +103,7 @@ if playwright is not None:
                 if sport == "nba":
                     # The game row's chevron opens the detail row under it.
                     assert page.locator("tr.nba-detail:not([hidden])").count() == 0
+                    page.locator("#matchups summary").first.click()      # Upcoming is a folded reference (2026-10-28)
                     page.locator("button.nba-more").first.click()
                     assert page.locator("tr.nba-detail:not([hidden])").count() == 1
                     assert page.locator("tr.nba-detail .nba-side").first.is_visible()
