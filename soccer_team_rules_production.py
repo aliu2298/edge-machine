@@ -27,15 +27,21 @@ import soccer_team_rules as TR
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 PATH = os.path.join(ROOT, "data", "soccer_team_rules_production_leads.json")
-PROMOTED = "2026-10-24T22:00:00+00:00"
-MOVED_ON = "2026-10-24"
+T1_MOVED_ON = "2026-10-24"           # T1's earlier stay in Production, to PULLED_ON
+PROMOTED = "2026-10-29T00:59:00+00:00"
+MOVED_ON = "2026-10-28"
 HEALTHY_HOURS = SRP.HEALTHY_HOURS
 # rule key -> (Production source id, the soccer claim domain it publishes on, display name)
-# T1 (st_t1, O+D− v O+D− · team 2+ goals) was the one pair from 2026-10-24 to 2026-10-28; it is
-# back in the Sandbox as paper on its whole record (Olu), still logged by soccer_team_rules.py. The
-# adapter stays so the feed keeps publishing, now with no pair.
+# T1 (st_t1, O+D− v O+D− · team 2+ goals) was a pair from 2026-10-24 to 2026-10-28; it is back in the
+# Sandbox as paper on its whole record (Olu), still logged by soccer_team_rules.py.
 PULLED_ON = "2026-10-28"
-PAIRS = {}
+# Moved by hand 2026-10-28 (Olu), on small samples, with live $1 bets:
+#   T5  MLS, Serie A, Ligue 1, UEL · O+D− v O+D+ · team 2+ goals YES      8/11, +25.8%
+#   T7  MLS, La Liga, Bundesliga, EPL · O+D+ v O+D+ · team 3+ goals NO    4/4,  +35.7%
+PAIRS = {
+    "T5": ("st_t5", "soccer_team2", "O+D− v O+D+ · team 2+ goals"),
+    "T7": ("st_t7", "soccer_team3", "O+D+ v O+D+ · team 3+ goals · NO"),
+}
 LABELS = {src: name for src, _sport, name in PAIRS.values()}
 BAND = (TR.PRICE_LO, TR.PRICE_HI)
 TITLE_RE = re.compile(r"^Will (.+?) score over (\d+(?:\.\d+)?) goals\??$", re.I)
@@ -64,26 +70,32 @@ def _quote(rule, r):
     start, logged, price = D.instant(r.get("start")), D.instant(r.get("logged")), D.number(r.get("price"))
     home, _, away = str(r.get("match") or "").partition(" v ")
     team, opp = r.get("team"), r.get("opponent")
+    spec = TR.RULES.get(rule) or {}
     if (not start or not logged or price is None or not 0 < price < 1 or not (home and away and team and opp)
-            or r.get("side") != "yes" or r.get("line") != 1.5):
+            or r.get("side") != spec.get("side") or r.get("line") != spec.get("line")):
         return None
     status = {"open": "open", "won": "won", "lost": "lost", "no_result": "settled"}.get(r.get("status"))
     if status is None:
         return None
+    # The Yes of "<team> over <line> goals" (a), or its No (b): T7 backs the team staying under 3.
+    pick = "a" if spec["side"] == "yes" else "b"
+    won_side = pick if status == "won" else ("b" if pick == "a" else "a")
     return dict(
         id=f"{src}:{r['ticker']}", source=src, sport=sport, venue="kalshi_binary", market_id=r["ticker"],
-        event=r.get("event"), label=f"{home} v {away}: {team} to score 2+", side_a="Yes", side_b="No",
+        event=r.get("event"), label=f"{home} v {away}: {team} to score {'under ' + str(spec['goals']) if pick == 'b' else str(spec['goals']) + '+'}",
+        side_a="Yes", side_b="No",
         kalshi_title=kalshi_title(r), league=r.get("league"), team=team, opponent=opp,
         espn_home=home, espn_away=away, date=start.date().isoformat(), start=start.isoformat(),
-        logged=logged.isoformat(), price=price, price_a=price, price_b=None, price_draw=None, pick="a", bet=True,
+        logged=logged.isoformat(), price=price, price_a=price if pick == "a" else None,
+        price_b=price if pick == "b" else None, price_draw=None, pick=pick, bet=True,
         stake=100.0, status=status, pnl=round(float(r.get("profit") or 0), 2) if status != "open" else 0.0,
-        result=("price" if status == "settled" else "a" if status == "won" else "b") if status != "open" else None,
+        result=("price" if status == "settled" else won_side) if status != "open" else None,
         settle_px=r.get("payout"), settled=r.get("settled"), prob_a=None, edge=None, untraded=False,
         start_source="espn", url="", rule=rule)
 
 
 def quotes(state):
-    """T1's entries as Sandbox-style quotes. Read-only."""
+    """The listed rules' entries as Sandbox-style quotes. Read-only."""
     out = []
     for rule in PAIRS:
         if rule not in TR.RULES:

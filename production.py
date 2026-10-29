@@ -330,6 +330,10 @@ def lead_from_quote(q, pair_key, built, kalshi=None):
         if bet["kind"] == "team_gte":
             bet["team"] = q["team"]
             headline = f"{q['team']} to score {bet['n']}+"
+        elif bet["kind"] == "team_lte":
+            # The No on the team's "over n + 0.5" contract: it scores n goals or fewer.
+            bet["team"] = q["team"]
+            headline = f"{q['team']} to score under {bet['n'] + 0.5:g}"
         elif bet["kind"] == "total_lte":
             # total_lte n means n goals or fewer, i.e. under (n + 0.5).
             headline = f"Under {bet['n'] + 0.5:g} goals"

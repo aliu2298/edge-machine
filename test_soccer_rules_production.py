@@ -12,6 +12,10 @@ import soccer_rules_production as RP
 # D3 went back to the Sandbox on 2026-10-28. The checks below replay its Production era
 # (2026-10-21 to 2026-10-28) by listing it again for this run; the real state is checked first.
 _NOW_PAIRS = sorted(RP.PAIRS)
+# C1, C3 and C4 entered on 2026-10-28; their real dates are checked, then they are listed from the same
+# instant as the rest so this file's 2026-10-22 fixtures fall inside their window.
+_C_DATES = {k: RP.moved_on(k) for k in ("C1", "C3", "C4", "A7")}
+RP.PROMOTED_LATER = {k: ("2026-10-28", RP.PROMOTED) for k in ("C1", "C3", "C4")}
 RP.PAIRS["D3"] = ("sr_d3", "soccer_btts", "O−D− v O+D− · both teams to score")
 RP.LABELS = {src: name for src, _sport, name in RP.PAIRS.values()}
 RP.NOT_PUBLISHED = {"D3": {"Europa League"}}
@@ -43,6 +47,12 @@ rules = {"last_run": (NOW - dt.timedelta(minutes=20)).isoformat(), "error": None
                           start="2026-10-25T14:00Z"),
                      pick("D3", "KXSERIEABTTS-26OCT19UDILEC-BTTS", "Udinese v Lecce", "Serie A", "yes", 0.50, None,
                           status="won", start="2026-10-19T14:00Z", logged="2026-10-19T12:30:00+00:00", profit=88.0, payout=1)]},
+    "C1": {"picks": [pick("C1", "KXMLSTOTAL-26OCT22MINSKC-4", "Minnesota United FC v Sporting Kansas City", "MLS", "yes", 0.42,
+                          3.5, start="2026-10-22T23:30Z")]},
+    "C3": {"picks": [pick("C3", "KXSERIEATOTAL-26OCT25NAPROM-3", "Napoli v AS Roma", "Serie A", "yes", 0.55, 2.5,
+                          start="2026-10-25T14:00Z")]},
+    "C4": {"picks": [pick("C4", "KXSERIEATOTAL-26OCT25INTJUV-3", "Inter v Juventus", "Serie A", "yes", 0.50, 2.5,
+                          start="2026-10-25T16:00Z")]},
     "D1": {"picks": [pick("D1", "KXSERIEABTTS-26OCT22INTJUV-BTTS", "Inter v Juventus", "Serie A", "yes", 0.60, None)]}}}
 sa = {"last_run": (NOW - dt.timedelta(minutes=20)).isoformat(), "error": None, "rules": {
     "ARG": {"picks": [pick("ARG", "KXARGPREMDIVTOTAL-26OCT22RIVBOC-2", "River Plate v Boca Juniors", "Liga Profesional",
@@ -50,16 +60,19 @@ sa = {"last_run": (NOW - dt.timedelta(minutes=20)).isoformat(), "error": None, "
     "BRA": {"picks": [pick("BRA", "KXBRASILEIROTOTAL-26OCT22FLAPAL-2", "Flamengo v Palmeiras", "Brasileirão",
                            "yes", 0.74, 1.5)]}}}
 
-print("only the three rules, on the existing soccer claims (Argentina left Production 2026-10-27)")
+print("only the listed rules, on the existing soccer claims (Argentina left Production 2026-10-27)")
+check("C1, C3 and C4 entered on 2026-10-28, A7 on 2026-10-21", _C_DATES, {"C1": "2026-10-28", "C3": "2026-10-28", "C4": "2026-10-28", "A7": "2026-10-21"})
 qs = RP.quotes(rules, sa)
-check("A7, A6 and D3; never D1, Argentina or the Brasileirão",
-      sorted({q["source"] for q in qs}), ["sr_a6", "sr_a7", "sr_d3"])
+check("A7, A6, C1, C3, C4 and D3; never D1, Argentina or the Brasileirão",
+      sorted({q["source"] for q in qs}), ["sr_a6", "sr_a7", "sr_c1", "sr_c3", "sr_c4", "sr_d3"])
 by = {q["market_id"]: q for q in qs}
 check("each on its claim domain and side",
       [(by[t]["sport"], by[t]["pick"]) for t in ("KXUCLTOTAL-26OCT22ARSBAY-4", "KXEPLTOTAL-26OCT25EVEBUR-3",
-                                                  "KXLALIGABTTS-26OCT25GETOSA-BTTS")],
-      [("soccer_u35", "a"), ("soccer_o25", "b"), ("soccer_btts", "a")])
-check("all three may be published, on an ESPN-verified start", [(T.placeable(q), P.start_verified(q)) for q in qs],
+                                                  "KXLALIGABTTS-26OCT25GETOSA-BTTS", "KXMLSTOTAL-26OCT22MINSKC-4", "KXSERIEATOTAL-26OCT25NAPROM-3",
+                                                  "KXSERIEATOTAL-26OCT25INTJUV-3")],
+      [("soccer_u35", "a"), ("soccer_o25", "b"), ("soccer_btts", "a"), ("soccer_u35", "a"), ("soccer_o25", "a"),
+       ("soccer_o25", "a")])
+check("all may be published, on an ESPN-verified start", [(T.placeable(q), P.start_verified(q)) for q in qs],
       [(True, True)] * len(qs))
 check("Argentina's league is a feed league now, and only it was added", (
     "Liga Profesional" in S.feed_binary_leagues(), S.FEED_EXTRA_LEAGUES), (True, {"Liga Profesional"}))
@@ -67,9 +80,16 @@ check("Argentina's league is a feed league now, and only it was added", (
 print("\nthe leads: the exact contract and side")
 f = RP.feed(rules, sa, now=NOW)
 leads = {l["route"]["market"]: l for l in f["leads"].values()}
-check("three pairs listed, moved by hand 2026-10-21",
-      (sorted(f["pairs"]), {v["by_hand"] for v in f["pairs"].values()}),
-      (["sr_a6|soccer_o25", "sr_a7|soccer_u35", "sr_d3|soccer_btts"], {"2026-10-21"}))
+check("six pairs listed: A7, A6, D3 moved by hand 2026-10-21, C1, C3 and C4 on 2026-10-28",
+      (sorted(f["pairs"]), {k: v["by_hand"] for k, v in f["pairs"].items()}),
+      (["sr_a6|soccer_o25", "sr_a7|soccer_u35", "sr_c1|soccer_u35", "sr_c3|soccer_o25", "sr_c4|soccer_o25", "sr_d3|soccer_btts"],
+       {"sr_a7|soccer_u35": "2026-10-21", "sr_a6|soccer_o25": "2026-10-21", "sr_d3|soccer_btts": "2026-10-21",
+        "sr_c1|soccer_u35": "2026-10-28", "sr_c3|soccer_o25": "2026-10-28", "sr_c4|soccer_o25": "2026-10-28"}))
+check("C1: over 3.5 is the Yes of the -4 contract; C3 and C4: over 2.5 is the Yes of the -3 contract",
+      [(leads[t]["bet"], leads[t]["route"]["outcome_side"], leads[t]["route"]["outcome"]) for t in
+       ("KXMLSTOTAL-26OCT22MINSKC-4", "KXSERIEATOTAL-26OCT25NAPROM-3", "KXSERIEATOTAL-26OCT25INTJUV-3")],
+      [({"kind": "total_gte", "n": 4}, "yes", "Over 3.5 goals scored"), ({"kind": "total_gte", "n": 3}, "yes", "Over 2.5 goals scored"),
+       ({"kind": "total_gte", "n": 3}, "yes", "Over 2.5 goals scored")])
 check("A7: over 3.5 is the Yes of the -4 contract, named as Kalshi names it",
       (leads["KXUCLTOTAL-26OCT22ARSBAY-4"]["bet"], leads["KXUCLTOTAL-26OCT22ARSBAY-4"]["route"]["outcome_side"],
        leads["KXUCLTOTAL-26OCT22ARSBAY-4"]["route"]["outcome"]), ({"kind": "total_gte", "n": 4}, "yes", "Over 3.5 goals scored"))

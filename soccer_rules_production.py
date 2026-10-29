@@ -34,6 +34,11 @@ HEALTHY_HOURS = 3
 PAIRS = {
     "A7": ("sr_a7", "soccer_u35", "UCL either team O+D− · over 3.5"),
     "A6": ("sr_a6", "soccer_o25", "EPL O−D− v an O+ opponent · under 2.5"),
+    # Moved by hand 2026-10-28 (Olu), on small samples, with live $1 bets: MLS over 3.5 YES <=50c (2/2),
+    # Serie A O+D− v O+D+ over 2.5 YES <=60c (2/2), Serie A O−D− v O+D− over 2.5 YES <=55c (3/4).
+    "C1": ("sr_c1", "soccer_u35", "MLS O+D− v O+D+ · over 3.5"),
+    "C3": ("sr_c3", "soccer_o25", "Serie A O+D− v O+D+ · over 2.5"),
+    "C4": ("sr_c4", "soccer_o25", "Serie A O−D− v O+D− · over 2.5"),
 }
 # D3 (sr_d3, O−D− v O+D− · both teams to score) was the third pair from 2026-10-21 to 2026-10-28; it
 # is back in the Sandbox as paper on its whole record (Olu), still logged by soccer_rules.py.
@@ -47,9 +52,20 @@ LABELS = {src: name for src, _sport, name in PAIRS.values()}
 NOT_PUBLISHED = {}
 
 
+# C1, C3 and C4 entered on their own date; the rest on MOVED_ON.
+PROMOTED_LATER = {"C1": ("2026-10-28", "2026-10-29T00:59:00+00:00"), "C3": ("2026-10-28", "2026-10-29T00:59:00+00:00"), "C4": ("2026-10-28", "2026-10-29T00:59:00+00:00")}
+
+
+def moved_on(rule):
+    return PROMOTED_LATER.get(rule, (MOVED_ON, PROMOTED))[0]
+
+
 def pairs():
-    return {f"{src}|{sport}": dict(stage="production", ready_at=PROMOTED, promoted_at=PROMOTED, by_hand=MOVED_ON)
-            for src, sport, _n in PAIRS.values()}
+    out = {}
+    for rule, (src, sport, _n) in PAIRS.items():
+        day, at = PROMOTED_LATER.get(rule, (MOVED_ON, PROMOTED))
+        out[f"{src}|{sport}"] = dict(stage="production", ready_at=at, promoted_at=at, by_hand=day)
+    return out
 
 
 def _title(rule, line):

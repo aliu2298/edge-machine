@@ -3422,6 +3422,9 @@ FEED_BETS = {"soccer_o15": {"kind": "total_gte", "n": 2},
              "soccer_team1": {"kind": "team_gte", "n": 1},
              "soccer_team1_intl": {"kind": "team_gte", "n": 1},
              "soccer_team2": {"kind": "team_gte", "n": 2},
+             # 2026-10-28, with st_t7|soccer_team3: team 3+ goals. The named bet is the Yes on the
+             # "<team> over 2.5 goals" contract; the rule backs its No (FEED_NO_TWIN: team_lte 2).
+             "soccer_team3": {"kind": "team_gte", "n": 3},
              # 2026-10-08, with liga_btts_even|soccer_btts: both teams to score, the Yes on
              # Kalshi's KX<league>BTTS contract. League scope only; no cup or intl twin.
              "soccer_btts": {"kind": "btts"},
@@ -3445,7 +3448,7 @@ FEED_BETS = {"soccer_o15": {"kind": "total_gte", "n": 2},
              "soccer_ftts": {"kind": "ftts_no"}}
 
 # Which side of the named market each kind buys, as the Sandbox records a pick.
-FEED_SIDE = {"total_gte": "a", "team_gte": "a", "total_lte": "b", "btts": "a", "corners_lte": "b",
+FEED_SIDE = {"total_gte": "a", "team_gte": "a", "total_lte": "b", "team_lte": "b", "btts": "a", "corners_lte": "b",
              "corners_gte": "a", "btts_no": "b", "win_no": "b", "ftts_no": "b"}
 
 # The NO twin of a Yes domain (2026-10-16, with btts_form_l10_fade|soccer_btts): the No on the
@@ -3453,7 +3456,10 @@ FEED_SIDE = {"total_gte": "a", "team_gte": "a", "total_lte": "b", "btts": "a", "
 FEED_NO_TWIN = {"soccer_btts": {"kind": "btts_no"},
                 # 2026-10-18, with o25_congestion|soccer_o25: the No on the same KX<league>TOTAL
                 # over-2.5 contract turkey_o25_dog backs the Yes on, i.e. 2 goals or fewer.
-                "soccer_o25": {"kind": "total_lte", "n": 2}}
+                "soccer_o25": {"kind": "total_lte", "n": 2},
+                # 2026-10-28, with st_t7|soccer_team3: the No on the team's over-2.5 contract, i.e.
+                # the team scores 2 or fewer.
+                "soccer_team3": {"kind": "team_lte", "n": 2}}
 
 # ONE DOMAIN, TWO CLAIMS (2026-10-08). bund_o35 backs the YES on the same KX...TOTAL-4
 # contract u35_low_scoring backs the No on, so a soccer_u35 bet is the over or the under
@@ -3538,7 +3544,7 @@ def placeable(q):
         bet = feed_bet(q)
         return (bet is not None and q.get("venue") == "kalshi_binary"
                 and S.quote_league(q) is not None and bool(q.get("espn_home") and q.get("espn_away"))
-                and (bet["kind"] != "team_gte" or bool(q.get("team")))
+                and (bet["kind"] not in ("team_gte", "team_lte") or bool(q.get("team")))
                 and (bet["kind"] != "win_no" or bool(q.get("opponent")))
                 and (bet["kind"] != "ftts_no" or bool(q.get("team")))
                 and (bet["kind"] != "corners_lte" or corners_strike(q.get("market_id")) is not None))
