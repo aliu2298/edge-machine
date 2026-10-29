@@ -9,6 +9,13 @@ import sandbox_sources as S
 import sandbox_track as T
 import soccer_rules_production as RP
 
+# D3 went back to the Sandbox on 2026-10-28. The checks below replay its Production era
+# (2026-10-21 to 2026-10-28) by listing it again for this run; the real state is checked first.
+_NOW_PAIRS = sorted(RP.PAIRS)
+RP.PAIRS["D3"] = ("sr_d3", "soccer_btts", "O−D− v O+D− · both teams to score")
+RP.LABELS = {src: name for src, _sport, name in RP.PAIRS.values()}
+RP.NOT_PUBLISHED = {"D3": {"Europa League"}}
+
 FAILS = []
 UTC = dt.timezone.utc
 NOW = dt.datetime(2026, 10, 22, 17, 0, tzinfo=UTC)
@@ -89,7 +96,7 @@ check("D3 in every other league still publishes", "KXLALIGABTTS-26OCT25GETOSA-BT
       {l["route"]["market"] for l in RP.feed(uel, sa, now=NOW)["leads"].values()}, True)
 import soccer_rules as SRM
 check("soccer_rules still runs D3 in the Europa League (Sandbox paper)", SRM.in_league(SRM.RULES["D3"], "Europa League"), True)
-check("the Soccer page says so", "not the Europa League" in __import__("soccer_rules_build").section(uel), True)
+check("the Soccer page says D3 is back in the Sandbox", "Production 2026-10-21 to 2026-10-28, back in the Sandbox" in __import__("soccer_rules_build").section(uel), True)
 
 print("\nthe pages")
 html = P.page({"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}, "", now=NOW, soccer_rules=(rules, sa))
@@ -97,8 +104,8 @@ check("the Production page lists the three rules by name", all(n in html for n i
 check("the display names are the registered ones", all(S.OWN_LEDGER_LABELS[k] == v for k, v in RP.LABELS.items()), True)
 import soccer_rules_build as SB
 import sa_o15_build as SAB
-check("the Soccer page marks A7, A6 and D3 as in Production; Argentina is back in the Sandbox",
-      (SB.section(rules).count("Production since 2026-10-21") >= 3, "Production since 2026-10-21" in SAB.section(sa),
+check("the Soccer page marks A7 and A6 as in Production (D3 is back in the Sandbox); Argentina is back in the Sandbox",
+      (SB.section(rules).count("Production since 2026-10-21") >= 2, "Production since 2026-10-21" in SAB.section(sa),
        "back in the Sandbox" in SAB.section(sa)), (True, False, True))
 check("no guarded public phrase in the leads",
       sandbox_audit.COPY_RE.findall(" ".join(l["headline"] + " " + l["id"] for l in f["leads"].values())), [])

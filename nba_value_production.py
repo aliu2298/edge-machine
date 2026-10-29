@@ -36,10 +36,14 @@ PROMOTED = "2026-10-24T22:13:00+00:00"
 MOVED_ON = "2026-10-24"
 HEALTHY_HOURS = 3
 # lane -> display name
-PAIRS = {
+# Both lanes went back to the Sandbox on 2026-10-28 (Olu), paper on their whole records, still
+# logged by nba_value.py. The adapter stays so the feed keeps publishing, now with no pair.
+PULLED_ON = "2026-10-28"
+PULLED = {
     NV.TT_24H: "NBA team total value · 24h before tip",
     NV.TT_1H: "NBA team total value · 1h before tip",
 }
+PAIRS = {}
 
 
 def pairs():

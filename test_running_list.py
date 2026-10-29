@@ -1123,7 +1123,7 @@ def _live_with_open_bet(contests, name):
 
 print("\nown-feed open bet beside a settled main-feed lead")
 # 2026-10-25 04:00Z: the main feed's mls_fade_home lead on Real Salt Lake v St. Louis CITY SC had
-# settled while the soccer-rules feed's sr_d3 bet on the same match was still open. The page
+# settled while the soccer-rules feed's sr_a6 bet on the same match was still open. The page
 # showed the contest Live (right: a Production bet on it was open); the committed-page check
 # exempted only open MAIN-feed leads, so it demanded Settled and went red until the bet settled.
 _own_now = datetime.datetime(2026, 10, 25, 4, 0, tzinfo=timezone.utc)
@@ -1138,7 +1138,7 @@ def _own_rules(status):
                 logged="2026-10-24T23:00:00+00:00", price=0.65, side="yes", status=status,
                 profit=35.0 if status == "won" else 0, payout=1.0 if status == "won" else None,
                 settled="2026-10-25T04:30:00+00:00" if status == "won" else None)
-    return ({"rules": {"D3": {"picks": [pick]}}, "last_run": "2026-10-25T03:55:00+00:00"},
+    return ({"rules": {"A6": {"picks": [pick]}}, "last_run": "2026-10-25T03:55:00+00:00"},
             {"rules": {}, "last_run": "2026-10-25T03:55:00+00:00"})
 
 

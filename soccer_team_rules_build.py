@@ -1,5 +1,5 @@
 """The Soccer page's Team scoring rules section: the 8 Sandbox team-total label rules
-(soccer_team_rules.py): paper, T1 in Production since 2026-10-24."""
+(soccer_team_rules.py): paper; T1 was in Production 2026-10-24 to 2026-10-28."""
 import html as _h
 import os
 
@@ -28,7 +28,7 @@ def section(state=None):
             leagues = ", ".join(SHORT.get(x, x) for x in meta["leagues"])
             # T1 moved to Production by hand 2026-10-24 (soccer_team_rules_production); its full
             # record stays here.
-            label = meta["label"] + (f" · Production since {TRP.MOVED_ON}" if key in TRP.PAIRS else "")
+            label = meta["label"] + (f" · Production {TRP.MOVED_ON} to {TRP.PULLED_ON}, back in the Sandbox" if key == "T1" else "")
             lines.append(SB.rule_line(key, leagues, label, meta.get("evidence"), picks))
             picks_g += picks
         recent += picks_g
@@ -48,7 +48,7 @@ def section(state=None):
                                   'once both teams carry a label and Kalshi quotes the team total with a spread of 5c or less.</td></tr>')
     last = state.get("last_run")
     return f"""<section id="team-rules">
-<div class="nba-section-head"><div><h2>Team scoring rules</h2><p class="shell-kicker">8 team-total label rules from 411 matches, Aug 1 – Oct 17 2026 · paper · T1 in Production since 2026-10-24, the other seven paper · Kalshi price, 7% fee</p></div></div>
+<div class="nba-section-head"><div><h2>Team scoring rules</h2><p class="shell-kicker">8 team-total label rules from 411 matches, Aug 1 – Oct 17 2026 · paper · T1 was in Production 2026-10-24 to 2026-10-28, back in the Sandbox · Kalshi price, 7% fee</p></div></div>
 {"".join(groups)}
 <details class="section-disclosure"><summary><b>Entries</b><span>latest 25</span></summary>
 <div class="tbl"><table><thead><tr><th>Kickoff</th><th>Match</th><th>Team</th><th>Labels</th><th>Rule</th><th>Contract</th><th>Side</th><th class="num">Price</th><th>Result</th></tr></thead>

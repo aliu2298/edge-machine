@@ -45,8 +45,9 @@ def state(yes=True,no=True,old=True):
 
 
 class EconProduction(unittest.TestCase):
-    def test_production_is_the_two_near_certain_lanes_and_the_band_is_demoted(self):
-        self.assertEqual(set(DP.pairs()),{YES_PAIR,NO_PAIR})
+    def test_production_is_the_yes_lane_the_no_lane_is_back_in_the_sandbox_and_the_band_is_demoted(self):
+        self.assertEqual(set(DP.pairs()),{YES_PAIR})
+        self.assertEqual(DP.PULLED_NC,{'econ_nc_no':'2026-10-28'})
         self.assertNotIn(DP.OLD_PAIR,DP.pairs())
         self.assertEqual(T.PAIR_REMOVALS[DP.OLD_PAIR],dict(removed_on='2026-10-20',keep_record=True))
         self.assertNotIn(DP.OLD_PAIR,T.PAIR_OVERRIDES)
@@ -58,20 +59,18 @@ class EconProduction(unittest.TestCase):
     def test_yes_and_no_routes_name_the_exact_contract_and_side(self):
         s=state();before=copy.deepcopy(s);f=DP.feed(s,now=NOW)
         self.assertEqual(s,before)
-        self.assertEqual(set(f['pairs']),{YES_PAIR,NO_PAIR})
+        self.assertEqual(set(f['pairs']),{YES_PAIR})
         live={l['pair']:l for l in f['leads'].values() if l.get('lane')!='retired'}
-        self.assertEqual(set(live),{YES_PAIR,NO_PAIR})
-        y,n=live[YES_PAIR],live[NO_PAIR]
+        self.assertEqual(set(live),{YES_PAIR})     # the NO lane is paper since 2026-10-28: no lead
+        y=live[YES_PAIR]
+        n=next(q for q in DP.quotes(s,all_lanes=True) if q['source']=='econ_nc_no')
         self.assertEqual((y['route']['market'],y['route']['outcome_side'],y['bet']),
                          ('KXAAAGASD-26OCT21-4.2600','yes',{'kind':'ladder','side':'yes'}))
-        self.assertEqual((n['route']['market'],n['route']['outcome_side'],n['bet']),
-                         ('KXDIESELD-26OCT21-T6.320','no',{'kind':'ladder','side':'no'}))
-        self.assertEqual(n['price_at_log'],.88)
-        self.assertEqual(n['headline'],'Not Above $6.320 at the close')
+        self.assertEqual((n['market_id'],n['pick'],n['price']),('KXDIESELD-26OCT21-T6.320','b',.88))
         self.assertEqual(y['last_seen_at'],f['board_built_at'])
 
     def test_failed_or_stale_scan_has_no_actionable_entries(self):
-        s=state();s['nc']['econ_nc_no']['error']='incomplete scan'
+        s=state();s['nc']['econ_nc_yes']['error']='incomplete scan'
         self.assertFalse([l for l in DP.feed(s,now=NOW)['leads'].values() if l['status']=='pending'])
         self.assertFalse([l for l in DP.feed(state(),now=NOW+dt.timedelta(hours=4))['leads'].values() if l['status']=='pending'])
 
@@ -84,16 +83,16 @@ class EconProduction(unittest.TestCase):
             s=state(yes=which=='yes',no=which=='no')
             lane='econ_nc_yes' if which=='yes' else 'econ_nc_no'
             s['nc'][lane]['picks'][0].update(kw)
-            self.assertEqual(DP.quotes(s),[],(which,kw))
+            self.assertEqual(DP.quotes(s,all_lanes=True),[],(which,kw))
 
     def test_no_record_settles_on_the_no_side(self):
         s=state(yes=False);r=s['nc']['econ_nc_no']['picks'][0]
         r.update(status='won',payout=1.,profit=12.7,settled=(NOW+dt.timedelta(hours=12)).isoformat())
-        q=DP.quotes(s)[0]
+        q=DP.quotes(s,all_lanes=True)[0]
         self.assertEqual((q['pick'],q['status'],q['result']),('b','won','b'))
         self.assertAlmostEqual(q['pnl'],100*(1/.88-1),places=2)
         r.update(status='lost',payout=0.,profit=-100.)
-        self.assertEqual(DP.quotes(s)[0]['result'],'a')
+        self.assertEqual(DP.quotes(s,all_lanes=True)[0]['result'],'a')
 
     def test_retired_band_keeps_settled_leads_for_grading_only(self):
         s=state(yes=False,no=False)
@@ -118,10 +117,10 @@ class EconProduction(unittest.TestCase):
         d={'quotes':[]};st={'pairs':{}};blob={'updated_at':NOW.isoformat(),'pairs':{},'leads':{}}
         prod,index=B.production_and_index(NOW,d,st,blob,extra={'daily':s})
         self.assertIn('Above 4.2600',prod)
-        self.assertIn('Not Above $6.320',prod)
+        self.assertNotIn('Not Above $6.320',prod)    # the NO lane is paper again
         self.assertNotIn('Montana gas price',prod)
         model=C.model(d,st,blob,NOW,daily=s)
-        self.assertEqual(model['tiles']['pairs'],2)
+        self.assertEqual(model['tiles']['pairs'],1)
 
     def test_page_merge_does_not_mutate_sports_inputs_or_reset_sports_clock(self):
         d={'quotes':[]};st={'pairs':{}};blob={'updated_at':'2026-10-15T12:00Z','pairs':{},'leads':{}}
@@ -129,12 +128,12 @@ class EconProduction(unittest.TestCase):
         dd,ss,bb=DP.page_inputs(d,st,blob,state(),now=NOW)
         self.assertEqual((d,st,blob),before)
         self.assertEqual(bb['updated_at'],blob['updated_at'])
-        self.assertEqual({YES_PAIR,NO_PAIR}&set(ss['pairs']),{YES_PAIR,NO_PAIR})
-        self.assertEqual({YES_PAIR,NO_PAIR}&set(bb['pairs']),{YES_PAIR,NO_PAIR})
-        self.assertEqual(len(dd['quotes']),2)
+        self.assertEqual({YES_PAIR,NO_PAIR}&set(ss['pairs']),{YES_PAIR})
+        self.assertEqual({YES_PAIR,NO_PAIR}&set(bb['pairs']),{YES_PAIR})
+        self.assertEqual(len(dd['quotes']),1)
         h=P.page(d,st,blob,'',now=NOW,daily=state())
         self.assertIn('Near-certain · last hour · YES',h)
-        self.assertIn('Near-certain · 3h · NO',h)
+        self.assertNotIn('Near-certain · 3h · NO',h)
 
 
 class NearCertainCollector(unittest.TestCase):
@@ -291,15 +290,15 @@ class OneDirectionANight(unittest.TestCase):
         no=no_row(id='KXAAAGASD-26OCT24-4.2650',event='KXAAAGASD-26OCT24',series='KXAAAGASD',price=.9,bid=.88,yes_bid=.1,yes_ask=.12,**n24)
         yes=yes_row(id='KXAAAGASD-26OCT24-4.2600',event='KXAAAGASD-26OCT24',**y24)
         s={'lanes':{},'nc':{'econ_nc_yes':dict(picks=[yes],observations=[],error=None),'econ_nc_no':dict(picks=[no],observations=[],error=None)}}
-        self.assertEqual([q['source'] for q in DP.quotes(s)],['econ_nc_no'])
+        self.assertEqual([q['source'] for q in DP.quotes(s,all_lanes=True)],['econ_nc_no'])
         # the same pair on an Oct 23 event stays published, both rows (past rows are not rewritten)
         no3=dict(no,id='KXAAAGASD-26OCT23-4.2650',event='KXAAAGASD-26OCT23');yes3=dict(yes,id='KXAAAGASD-26OCT23-4.2600',event='KXAAAGASD-26OCT23')
         s['nc']['econ_nc_no']['picks'],s['nc']['econ_nc_yes']['picks']=[no3],[yes3]
-        self.assertEqual(sorted(q['source'] for q in DP.quotes(s)),['econ_nc_no','econ_nc_yes'])
+        self.assertEqual(sorted(q['source'] for q in DP.quotes(s,all_lanes=True)),['econ_nc_no','econ_nc_yes'])
         # a different commodity the same night is not affected
         dsl=yes_row(id='KXDIESELD-26OCT24-T6.315',event='KXDIESELD-26OCT24',series='KXDIESELD',name='Diesel price (daily)',**y24)
         s['nc']['econ_nc_no']['picks'],s['nc']['econ_nc_yes']['picks']=[no],[dsl]
-        self.assertEqual(sorted(q['source'] for q in DP.quotes(s)),['econ_nc_no','econ_nc_yes'])
+        self.assertEqual(sorted(q['source'] for q in DP.quotes(s,all_lanes=True)),['econ_nc_no','econ_nc_yes'])
 
     def test_the_amendment_is_in_the_pre_registered_text(self):
         self.assertIn('Amendment 2026-10-24',D.NC_AMENDMENT)
