@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-29T21:01:40.071381+00:00",
+ "last_run": "2026-10-29T21:31:38.404432+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -739,18 +739,29 @@
      "ticker": "KXBRASILEIROTOTAL-26OCT29ATLCRU-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Brasileir\u00e3o over 1.5 YES 0.81"
+    },
+    {
+     "ask": 0.77,
+     "bid": 0.76,
+     "event": "KXBRASILEIROTOTAL-26OCT29VDGFLA",
+     "id": "BRA:KXBRASILEIROTOTAL-26OCT29VDGFLA",
+     "league": "Brasileir\u00e3o",
+     "line": 1.5,
+     "logged": "2026-10-29T21:31:38.404432+00:00",
+     "match": "Vasco da Gama v Flamengo",
+     "price": 0.77,
+     "rule": "BRA",
+     "side": "yes",
+     "start": "2026-10-29T23:00Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROTOTAL-26OCT29VDGFLA-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Brasileir\u00e3o over 1.5 YES 0.77"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T21:16:28.188442+00:00",
-   "due": 1,
-   "matched": 1,
-   "new": 0,
-   "quoted": 1
-  },
   {
    "at": "2026-10-25T23:01:42.216034+00:00",
    "due": 2,
@@ -1100,6 +1111,13 @@
    "matched": 1,
    "new": 1,
    "quoted": 1
+  },
+  {
+   "at": "2026-10-29T21:31:38.404432+00:00",
+   "due": 2,
+   "matched": 2,
+   "new": 1,
+   "quoted": 2
   }
  ],
  "schedule": [
