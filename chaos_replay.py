@@ -550,9 +550,12 @@ def lane_state(state, lane, now):
     # from its `on` night is replayed. Nothing already recorded is touched.
     if lane.get("retired"):
         L["retired"] = dict(lane["retired"])
-    for k in ("label", "note", "headline", "first"):
+    for k in ("label", "note", "headline", "first", "caution"):
         if lane.get(k) is not None:
             L[k] = lane[k]
+    # Narrower entry-ask bands of the same entries, shown beside the lane (no new lane, no reset).
+    if lane.get("sub_bands"):
+        L["sub_bands"] = [dict(b) for b in lane["sub_bands"]]
     return L
 
 

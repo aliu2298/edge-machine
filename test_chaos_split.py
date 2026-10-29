@@ -128,5 +128,62 @@ check("tables stay header-row tables for the phone labels", ("<thead>" not in h,
       (True, True))
 check("public copy passes the guard", sandbox_audit.COPY_RE.search(text), None)
 
+print("\nnba_ml_dog_tp50: the split headline and the ask 10-30c sub-band (2026-10-28)")
+N = next(l for l in chaos_lanes.LANES if l["id"] == "nba_ml_dog_tp50")
+check("same lane id and entries; headline the split; every exit still tracked; no reset (since 2026-10-25)",
+      (N["picker"] is chaos_lanes.DOG, N["entry_hours"], N["headline"], C.lane_exits(N), N["since"], N["label"]),
+      (True, (1,), "split", C.LANE_EXITS, "2026-10-25", "NBA moneyline underdog · split 2x / 3x"))
+check("one sub-band, ask 10-30c, inside the lane's 10-40c population",
+      [(b["id"], b["lo"], b["hi"]) for b in N["sub_bands"]], [("ask_10_30", 0.10, 0.30)])
+# A ledger written under the old config: +50% headline, old label and caution. Nothing in its trades changes.
+old_L = dict(id="nba_ml_dog_tp50", label="NBA moneyline underdog · sell +50%", headline="tp50", since="2026-10-25",
+             caution="In the research HOLD beat the sell", note="old", entry_hours=[1], exits=list(C.LANE_EXITS),
+             series=["KXNBAGAME"], replayed={}, trades=[])
+for i, (ask, won, split_roi) in enumerate(((0.10, False, 1.3), (0.29, True, 2.2), (0.30, False, -1.0), (0.31, True, 1.9),
+                                           (0.39, True, 1.4), (0.40, False, -1.0))):
+    base = dict(event=f"KXNBAGAME-26OCT2{5 + i % 3}G{i}", ticker=f"T{i}", side="yes", hours=1, night=f"2026-10-2{5 + i % 3}",
+                entry=ask, spread=0.01, cost=ask, entry_ts=1_793_000_000 + 3600 * i)
+    hold_roi = (1 - ask) / ask if won else -1.0
+    old_L["trades"].append(dict(base, exit_key="hold", variant="t1h_hold", roi=hold_roi, profit=hold_roi * ask,
+                                won=won, reason="settled"))
+    old_L["trades"].append(dict(base, exit_key="split", variant="t1h_split", roi=split_roi, profit=split_roi * ask,
+                                won=split_roi > 0, reason="split", filled_2x=split_roi > 0, filled_3x=split_roi > 1.5))
+before = copy.deepcopy(old_L["trades"])
+st_n = dict(lanes={"nba_ml_dog_tp50": copy.deepcopy(old_L)})
+L_new = C.lane_state(st_n, N, C.dt.datetime(2026, 10, 28, 10, tzinfo=C.UTC))
+check("the next replay rewrites label, headline, caution and sub-bands on the SAME record, trades untouched",
+      (L_new["label"], L_new["headline"], "HOLD beat" in L_new["caution"], L_new["sub_bands"][0]["id"], L_new["trades"] == before,
+       L_new["registered"] if "registered" in L_new else None),
+      ("NBA moneyline underdog · split 2x / 3x", "split", False, "ask_10_30", True, None))
+shown = CB.with_config(dict(lanes={"nba_ml_dog_tp50": copy.deepcopy(old_L)}))["lanes"]["nba_ml_dog_tp50"]
+check("a page built before that replay already shows the new label and the sub-band (a copy, never saved)",
+      (shown["label"], shown["sub_bands"][0]["label"], old_L["label"]),
+      ("NBA moneyline underdog · split 2x / 3x", "ask 10-30c", "NBA moneyline underdog · sell +50%"))
+band = N["sub_bands"][0]
+full, narrow = CB.split_hold(shown), CB.split_hold(shown, band=band)
+check("the sub-band keeps entries asked 10-30c, edges included (0.10, 0.29, 0.30), and drops 0.31-0.40",
+      (full["entries"], narrow["entries"], narrow["won"]), (6, 3, 1))
+check("its split v hold is computed on those entries alone",
+      (round(narrow["split"], 4), round(narrow["hold"], 4)),
+      (round((0.13 + 0.638 - 0.30) / 0.69, 4), round((-0.10 + 0.71 - 0.30) / 0.69, 4)))
+nba = CB.sport_section("nba", dict(lanes={"nba_ml_dog_tp50": copy.deepcopy(old_L)}))
+summ_n = nba[nba.find('class="chaos-summary"'):nba.find("</table>", nba.find('class="chaos-summary"'))]
+rows_n = re.findall(r'<tr data-lane="([^"]+)"(?: data-band="([^"]+)")?>', summ_n)
+check("on the NBA page the lane leads the summary, its 10-30c row directly under it",
+      rows_n, [("nba_ml_dog_tp50", ""), ("nba_ml_dog_tp50", "ask_10_30")])
+text_n = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", nba))
+check("the lane row reads split before hold; the sub-band row says it is the same entries",
+      ("NBA moneyline underdog · split 2x / 3x 6 6 3" in text_n, "· ask 10-30c, same entries 3 3 1" in text_n), (True, True))
+card_n = nba[nba.find('data-lane="nba_ml_dog_tp50" open'):]
+split_tbl = card_n[card_n.find('class="chaos-split"'):card_n.find("</table>", card_n.find('class="chaos-split"'))]
+check("its card: split v hold first, the 10-30c row under the 1h row, then the other exits",
+      (re.findall(r'<tr(?: data-band="([^"]+)")?><td>', split_tbl), card_n.find("Split v hold") < card_n.find("Other exits")),
+      (["", "ask_10_30"], True))
+check("the Sandbox index keeps one row for the lane, under its new label",
+      re.findall(r'<tr data-lane="nba_ml_dog_tp50"[^>]*><td><b>([^<]+)</b>',
+                 CB.section(dict(lanes={"nba_ml_dog_tp50": copy.deepcopy(old_L)}))),
+      ["NBA moneyline underdog · split 2x / 3x"])
+check("public copy passes the guard", sandbox_audit.COPY_RE.search(text_n), None)
+
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

@@ -122,10 +122,20 @@ LANES = [
          retired=dict(on="2026-10-27", at="145 settled, 26 won; hold -29.4%, split -37.8%, +30% sell -38.8%, every exit negative",
                       reason="past 30 and losing under every exit"),
          note="Each team's rungs priced 10-40c, bought 1h and 24h before the tip, with a resting sell at +30%. A loss-cutter test for the failing NBA team-total lanes. Rungs of one game move together: z is clustered by night, which is at least as strict as by game."),
-    dict(id="nba_ml_dog_tp50", label="NBA moneyline underdog · sell +50%", series=["KXNBAGAME"], picker=DOG,
-         entry_hours=(1,), headline="tp50", since=FIRST_NIGHT, duration_min=160, start=espn_start("basketball/nba"),
-         caution="In the research HOLD beat the sell (+12% v +1%, n18): read this lane against its hold row.",
-         note="A team priced 10-40c an hour before the tip, with a resting sell at +50%."),
+    # 2026-10-28 (Olu): the HEADLINE exit moves from +50% to the cheap-side split (half 2x, half 3x), on the
+    # same entries: the record does NOT reset (every exit was tracked on them from the first night) and the
+    # lane id stays nba_ml_dog_tp50 so the ledger history is continuous. At 12 settled (Oct 25-27): split
+    # +15.2%, +30% +14.4%, hold +13.9%, +100% +10.6%, +20% +5.6%, +50% +0.7%, every -50% stop -15% to -26%;
+    # the +50% sell capped the 4 outright winners (+146% to +228% held). Hold stays its comparison row and
+    # every other exit is still tracked. SUB-BAND ask 10-30c: the same entries narrowed (the 37-40c entries
+    # reached 2x hardest), split v hold, shown under the lane; the 10-40c population stays the lane.
+    dict(id="nba_ml_dog_tp50", label="NBA moneyline underdog · split 2x / 3x", series=["KXNBAGAME"], picker=DOG,
+         entry_hours=(1,), headline=C.SPLIT, since=FIRST_NIGHT, duration_min=160, start=espn_start("basketball/nba"),
+         sub_bands=(dict(id="ask_10_30", label="ask 10-30c", lo=0.10, hi=0.30),),
+         caution="Read the split against its hold row; the ask 10-30c row is the same entries narrowed, not a new lane.",
+         note="A team priced 10-40c an hour before the tip, with a split resting sell: half at 2x, half at 3x of the "
+              "ask paid. The headline exit was +50% until 2026-10-28; it moved to the split on the same entries, "
+              "with no reset, and every other exit is still tracked."),
 ]
 
 # A demo config for tests and dry runs (python3 chaos_replay.py --demo --out <scratch>); never registered.

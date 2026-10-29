@@ -81,14 +81,21 @@ def trade_list(L, limit=30):
     return f'<div class="tbl"><table>{head}{body}</table></div>'
 
 
-def _by(L, exit_key, hours=None):
-    return [t for t in L.get("trades") or [] if t["exit_key"] == exit_key and (hours is None or t["hours"] == hours)]
+def _in_band(t, band):
+    """A trade whose entry ask is inside the sub-band [lo, hi], edges included as band_picker does."""
+    return band is None or band["lo"] - C.EPS <= t["entry"] <= band["hi"] + C.EPS
 
 
-def split_hold(L, hours=None):
+def _by(L, exit_key, hours=None, band=None):
+    return [t for t in L.get("trades") or [] if t["exit_key"] == exit_key and (hours is None or t["hours"] == hours)
+            and _in_band(t, band)]
+
+
+def split_hold(L, hours=None, band=None):
     """The cheap-side split v the same entries held: entries, won (held), legs filled 2x / 3x, split ROI,
-    hold ROI (each after fees, sum of profit over sum of cost), split z by night."""
-    sp, hd = _by(L, C.SPLIT, hours), _by(L, "hold", hours)
+    hold ROI (each after fees, sum of profit over sum of cost), split z by night. `band` narrows the
+    same entries to an entry ask of band["lo"]-band["hi"] (a lane's sub_bands)."""
+    sp, hd = _by(L, C.SPLIT, hours, band), _by(L, "hold", hours, band)
     a, h = C.stats(sp), C.stats(hd)
     return dict(entries=len({(t["event"], t["ticker"], t["side"], t["hours"]) for t in (sp or hd)}), settled=len(hd),
                 won=h["won"], filled_2x=sum(1 for t in sp if t.get("filled_2x")),
@@ -109,14 +116,18 @@ def summary(lanes, spread=False):
     """One row per lane; with `spread`, the average spread paid at entry (recorded from 2026-10-27)."""
     rows = []
     for L in lanes:
-        r = split_hold(L)
-        rows.append(f'<tr data-lane="{esc(L["id"])}"><td><b>{esc(L.get("label") or L["id"])}</b></td>'
-                    f'<td class="num">{r["entries"]}</td><td class="num">{r["settled"]}</td><td class="num">{r["won"]}</td>'
-                    f'<td class="num">{_pct(r["split"], sign=True) if r["n_split"] else "—"}</td>'
-                    f'<td class="num">{_pct(r["hold"], sign=True)}</td>'
-                    f'<td class="num">{r["filled_2x"]} / {r["filled_3x"]}</td>'
-                    + (f'<td class="num">{_spread(r["spread"])}</td>' if spread else "")
-                    + f'<td>{esc(MS.status(r["settled"]))}</td></tr>')
+        for band in [None] + list(L.get("sub_bands") or ()):
+            r = split_hold(L, band=band)
+            name = (f'<b>{esc(L.get("label") or L["id"])}</b>' if band is None else
+                    f'<span class="sub-band">· {esc(band["label"])}, same entries</span>')
+            attrs = f' data-band="{esc(band["id"])}"' if band else ""
+            rows.append(f'<tr data-lane="{esc(L["id"])}"{attrs}><td>{name}</td>'
+                        f'<td class="num">{r["entries"]}</td><td class="num">{r["settled"]}</td><td class="num">{r["won"]}</td>'
+                        f'<td class="num">{_pct(r["split"], sign=True) if r["n_split"] else "—"}</td>'
+                        f'<td class="num">{_pct(r["hold"], sign=True)}</td>'
+                        f'<td class="num">{r["filled_2x"]} / {r["filled_3x"]}</td>'
+                        + (f'<td class="num">{_spread(r["spread"])}</td>' if spread else "")
+                        + f'<td>{esc(MS.status(r["settled"]))}</td></tr>')
     return ('<div class="tbl"><table class="chaos-summary"><tr><th>Lane</th><th class="num">Entries</th>'
             '<th class="num">Settled</th><th class="num">Won</th><th class="num">Split ROI</th><th class="num">Hold ROI</th>'
             '<th class="num">Legs filled 2x / 3x</th>' + ('<th class="num">Avg spread paid</th>' if spread else "")
@@ -127,11 +138,15 @@ def split_table(L):
     """SPLIT v HOLD first, a row per entry time."""
     rows = []
     for h in L.get("entry_hours") or C.ENTRY_HOURS:
-        r = split_hold(L, h)
-        rows.append(f'<tr><td><b>{esc(C.variant_label(C.vkey(h, C.SPLIT)))}</b></td><td class="num">{r["entries"]}</td><td class="num">{r["won"]}</td>'
-                    f'<td class="num">{r["filled_2x"]} / {r["filled_3x"]}</td>'
-                    f'<td class="num">{_pct(r["split"], sign=True) if r["n_split"] else "—"}</td>'
-                    f'<td class="num">{_pct(r["hold"], sign=True)}</td><td class="num">{_num(r["z"], 1, "", 2)}</td></tr>')
+        for band in [None] + list(L.get("sub_bands") or ()):
+            r = split_hold(L, h, band)
+            name = (f'<b>{esc(C.variant_label(C.vkey(h, C.SPLIT)))}</b>' if band is None else
+                    f'<span class="sub-band">· {esc(band["label"])}, same entries</span>')
+            attrs = f' data-band="{esc(band["id"])}"' if band else ""
+            rows.append(f'<tr{attrs}><td>{name}</td><td class="num">{r["entries"]}</td><td class="num">{r["won"]}</td>'
+                        f'<td class="num">{r["filled_2x"]} / {r["filled_3x"]}</td>'
+                        f'<td class="num">{_pct(r["split"], sign=True) if r["n_split"] else "—"}</td>'
+                        f'<td class="num">{_pct(r["hold"], sign=True)}</td><td class="num">{_num(r["z"], 1, "", 2)}</td></tr>')
     return ('<div class="tbl"><table class="chaos-split"><tr><th>Entry</th><th class="num">Entries</th><th class="num">Won</th>'
             '<th class="num">Legs filled 2x / 3x</th><th class="num">Split ROI</th><th class="num">Hold ROI</th>'
             '<th class="num">Split z (by night)</th></tr>' + "".join(rows) + "</table></div>")
@@ -169,14 +184,21 @@ _BUY = {"tennis": "Buy the cheap player about an hour before the match, at the r
 
 
 def with_config(state):
-    """The ledger's lanes with each registered lane's retirement (chaos_lanes) applied, so a page shows a
-    retirement from the day it is registered, before the next replay writes it. A copy: never saved."""
+    """The ledger's lanes with each registered lane's retirement, label, note, caution, headline and sub-bands
+    (chaos_lanes) applied, so a page shows a change from the day it is registered, before the next replay
+    writes it. A copy: never saved."""
     lanes = dict(state.get("lanes") or {})
     try:
         import chaos_lanes
         for cfg in chaos_lanes.LANES:
-            if cfg.get("retired") and cfg["id"] in lanes:
-                lanes[cfg["id"]] = dict(lanes[cfg["id"]], retired=dict(cfg["retired"]))
+            if cfg["id"] not in lanes:
+                continue
+            shown = {k: cfg[k] for k in ("label", "note", "caution", "headline") if cfg.get(k) is not None}
+            if cfg.get("sub_bands"):
+                shown["sub_bands"] = [dict(b) for b in cfg["sub_bands"]]
+            if cfg.get("retired"):
+                shown["retired"] = dict(cfg["retired"])
+            lanes[cfg["id"]] = dict(lanes[cfg["id"]], **shown)
     except Exception:                                           # noqa: BLE001
         pass
     return dict(state, lanes=lanes)

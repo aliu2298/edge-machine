@@ -229,9 +229,9 @@ check("the five approved lanes are registered, each with fresh record from 2026-
 LD = {l["id"]: l for l in chaos_lanes.LANES}
 check("entry times and headlines as approved",
       [(l["entry_hours"], l["headline"]) for l in chaos_lanes.LANES],
-      [((1,), "split"), ((1,), "tp30"), ((1, 24), "tp50"), ((1,), "tp30"), ((1, 24), "tp30"), ((1,), "tp50")])
-check("the coin-flip lane is a watch lane; the NBA moneyline lane carries the hold-beat-the-sell caution",
-      (LD["atp_coinflip_tp30"]["watch"], "HOLD beat the sell" in LD["nba_ml_dog_tp50"]["caution"]), (True, True))
+      [((1,), "split"), ((1,), "tp30"), ((1, 24), "tp50"), ((1,), "tp30"), ((1, 24), "tp30"), ((1,), "split")])
+check("the coin-flip lane is a watch lane; the NBA moneyline lane is read against its hold row",
+      (LD["atp_coinflip_tp30"]["watch"], "against its hold row" in LD["nba_ml_dog_tp50"]["caution"]), (True, True))
 ctx2 = dict(event=EV, tickers=[EV + "-AAA", EV + "-BBB"],
             entry_view=lambda t, s: dict(ask=0.45 if t.endswith("AAA") else 0.52, bid=0.43))
 bp = C.one_per_event(C.band_picker(0.40, 0.60, ("yes",)))
