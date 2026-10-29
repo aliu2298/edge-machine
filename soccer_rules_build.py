@@ -4,6 +4,7 @@ import os
 
 import fmt
 import soccer_rules as SR
+import soccer_rules_production as RP
 
 
 def esc(x):
@@ -73,7 +74,7 @@ BTTS_NOTE = ('<details class="section-disclosure"><summary><b>Group BTTS evidenc
                'match; YES means both teams score.</p></details>')
 
 
-PRODUCTION_KEYS = ("A7", "A6")
+PRODUCTION_KEYS = ("A7", "A6", "C1", "C3", "C4")
 
 
 def section(state=None):
@@ -88,7 +89,7 @@ def section(state=None):
             picks = (state.get("rules", {}).get(key) or {}).get("picks") or []
             scope = (f"All {len(SR.MARKETS[meta['market']])} BTTS leagues" if meta["league"] == SR.ALL else meta["league"])
             # A7 and A6 moved to Production by hand 2026-10-21 (soccer_rules_production); D3 came back 2026-10-28.
-            label = meta["label"] + (" · Production since 2026-10-21" if key in PRODUCTION_KEYS else "")
+            label = meta["label"] + (f" · Production since {RP.moved_on(key)}" if key in PRODUCTION_KEYS else "")
             if key == "D3":                    # in Production 2026-10-21 to 2026-10-28; paper again
                 label += " · Production 2026-10-21 to 2026-10-28, back in the Sandbox"
             gone = SR.RETIRED.get(key)

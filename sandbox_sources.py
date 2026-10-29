@@ -98,6 +98,7 @@ SPORTS["tennis_pmcombo"] = "Tennis · PM Combos"
 # First team to score (2026-10-14): Kalshi's three-leg FTTS events (home, away, No Goal). Its
 # own domain, so these legs never pool with a goals market. Only the two TEAM legs are rows.
 SPORTS["soccer_ftts"] = "Soccer · First to score"
+SPORTS["soccer_team3"] = "Soccer · Team 3+"
 
 # Polymarket tag slugs, verified live against gamma-api on 2026-09-09: every one of the
 # six returns open, tradeable markets. table-tennis is the surprise — Polymarket carries
@@ -4264,7 +4265,7 @@ def quote_league(q):
     # (BTTS_LEAGUES names the Turkish Super Lig, which the GAME map does not): every such
     # row was matched to an ESPN fixture before it was logged, which is what the feed
     # needs the league for.
-    if q.get("venue") == "kalshi_binary" and q.get("sport") in GOALS_SPORTS + BTTS_SPORTS + ("soccer_corners", "soccer_ftts"):
+    if q.get("venue") == "kalshi_binary" and q.get("sport") in GOALS_SPORTS + BTTS_SPORTS + ("soccer_corners", "soccer_ftts", "soccer_team3"):
         return q.get("league") if q.get("league") in feed_binary_leagues() else None
     return None
 
@@ -4786,6 +4787,11 @@ OWN_LEDGER_LABELS = {
     "nba_tt_value_24h": "NBA team total value · 24h before tip",
     "nba_tt_value_1h": "NBA team total value · 1h before tip",
     "st_t1": "O+D− v O+D− · team 2+ goals",
+    "sr_c1": "MLS O+D− v O+D+ · over 3.5",
+    "sr_c3": "Serie A O+D− v O+D+ · over 2.5",
+    "sr_c4": "Serie A O−D− v O+D− · over 2.5",
+    "st_t5": "O+D− v O+D+ · team 2+ goals",
+    "st_t7": "O+D+ v O+D+ · team 3+ goals · NO",
 }
 
 
