@@ -567,6 +567,9 @@ def browser_checks():
             ok(not wide["resultsOpen"] and not wide["teamsOpen"], "Results and Team reference start collapsed")
             ok(wide["tableDisplay"] == "table" and not wide["overflow"] and wide["bars"] == 0,
                f"at 1280px the board is a table with no bars and no sideways scroll (overflow {wide['overflow']})")
+            ok(not page.locator("#matchups details").first.evaluate("d => d.open"), "Upcoming starts collapsed (reference, 2026-10-28)")
+            page.locator("#matchups summary").first.click()
+            page.wait_for_timeout(40)
             page.locator("#matchups button.nba-more").first.click()
             page.wait_for_timeout(40)
             opened = page.evaluate(STATE)
@@ -594,6 +597,8 @@ def browser_checks():
             ok(narrow["tableDisplay"] == "block" and not narrow["detailShown"] and not narrow["overflow"],
                f"at 390px the table is the phone cards, the detail stays hidden, and nothing scrolls sideways "
                f"(display {narrow['tableDisplay']}, overflow {narrow['overflow']})")
+            page.locator("#matchups summary").first.click()
+            page.wait_for_timeout(40)
             page.locator("#matchups button.nba-more").first.click()
             page.wait_for_timeout(40)
             phone_open = page.evaluate(STATE)
