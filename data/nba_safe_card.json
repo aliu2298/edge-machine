@@ -27404,12 +27404,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.89,
+     "profit": 0.115,
      "rationale": "CHA@DET 1Q UNDER 62.5 @89c: model 72.8% (mu 57.5, line +5.0 above mu); edge -16.2c",
      "sd": 8.28,
+     "settled": "2026-10-29T00:15:18.361648+00:00",
      "side": "no",
      "start": "2026-10-28T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT28CHADET-63",
      "unit": "game"
     },
@@ -27434,12 +27437,15 @@
       "labels",
       "clean"
      ],
+     "payout": 1.0,
      "price": 0.9,
+     "profit": 0.1034,
      "rationale": "CHA@DET 1Q OVER 42.5 @90c: model 96.5% (mu 57.5, line -15.0 below mu); labels: one side (early-season rule): q1 O\u2212D\u2212 v O+D\u2212; edge +6.5c",
      "sd": 8.28,
+     "settled": "2026-10-29T00:15:18.361648+00:00",
      "side": "yes",
      "start": "2026-10-28T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT28CHADET-43",
      "unit": "game"
     },
@@ -27457,12 +27463,15 @@
      "passed": [
       "band"
      ],
+     "payout": 1.0,
      "price": 0.94,
+     "profit": 0.0594,
      "rationale": "CHA@DET 1Q UNDER 64.5 @94c: model 80.2% (mu 57.5, line +7.0 above mu); edge -13.8c",
      "sd": 8.28,
+     "settled": "2026-10-29T00:15:18.361648+00:00",
      "side": "no",
      "start": "2026-10-28T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT28CHADET-65",
      "unit": "game"
     },
@@ -27481,12 +27490,15 @@
       "band",
       "safety"
      ],
+     "payout": 1.0,
      "price": 0.95,
+     "profit": 0.049,
      "rationale": "CHA@DET 1Q OVER 40.5 @95c: model 98.0% (mu 57.5, line -17.0 below mu); edge +3.0c",
      "sd": 8.28,
+     "settled": "2026-10-29T00:15:18.361648+00:00",
      "side": "yes",
      "start": "2026-10-28T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXNBA1QTOTAL-26OCT28CHADET-41",
      "unit": "game"
     },
@@ -33110,7 +33122,7 @@
   }
  },
  "error": null,
- "last_run": "2026-10-29T00:00:41.190152+00:00",
+ "last_run": "2026-10-29T00:15:18.361648+00:00",
  "preseason": [
   {
    "pts": 105,
@@ -33781,10 +33793,6 @@
  "registered": "2026-10-22",
  "runs": [
   {
-   "at": "2026-10-25T20:30:19.812370+00:00",
-   "built": []
-  },
-  {
    "at": "2026-10-25T20:45:18.361519+00:00",
    "built": []
   },
@@ -33988,6 +33996,10 @@
   },
   {
    "at": "2026-10-29T00:00:41.190152+00:00",
+   "built": []
+  },
+  {
+   "at": "2026-10-29T00:15:18.361648+00:00",
    "built": []
   }
  ],
