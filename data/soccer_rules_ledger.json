@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-29T01:33:09.840279+00:00",
+ "last_run": "2026-10-29T16:01:33.394892+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -44,11 +44,14 @@
      "line": 3.5,
      "logged": "2026-10-28T22:01:42.984563+00:00",
      "match": "New York City FC v Atlanta United FC",
+     "payout": 1.0,
      "price": 0.65,
+     "profit": 50.17,
      "rule": "A1",
+     "settled": "2026-10-29T16:01:33.394892+00:00",
      "side": "no",
      "start": "2026-10-28T23:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXMLSTOTAL-26OCT28NYCATL-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "New York City FC O-D- v Atlanta United FC O-D+ \u00b7 Under 3.5 NO 0.65"
@@ -67,11 +70,14 @@
      "line": 3.5,
      "logged": "2026-10-28T23:01:41.057064+00:00",
      "match": "Austin FC v Real Salt Lake",
+     "payout": 1.0,
      "price": 0.62,
+     "profit": 57.11,
      "rule": "A1",
+     "settled": "2026-10-29T16:01:33.394892+00:00",
      "side": "no",
      "start": "2026-10-29T00:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXMLSTOTAL-26OCT28ATXRSL-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Austin FC O-D+ v Real Salt Lake O-D- \u00b7 Under 3.5 NO 0.62"
@@ -1886,11 +1892,14 @@
      "line": null,
      "logged": "2026-10-28T23:01:41.057064+00:00",
      "match": "FC Dallas v Columbus Crew",
+     "payout": 0.0,
      "price": 0.68,
+     "profit": -100.0,
      "rule": "D1",
+     "settled": "2026-10-29T16:01:33.394892+00:00",
      "side": "yes",
      "start": "2026-10-29T00:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXMLSBTTS-26OCT28DALCLB-BTTS",
      "title": "Both Teams To Score",
      "why": "FC Dallas O+D- v Columbus Crew O+D- \u00b7 BTTS YES 0.68"
@@ -1909,11 +1918,14 @@
      "line": null,
      "logged": "2026-10-28T23:01:41.057064+00:00",
      "match": "Nashville SC v Philadelphia Union",
+     "payout": 0.0,
      "price": 0.61,
+     "profit": -100.0,
      "rule": "D1",
+     "settled": "2026-10-29T16:01:33.394892+00:00",
      "side": "yes",
      "start": "2026-10-29T00:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXMLSBTTS-26OCT28NSHPHI-BTTS",
      "title": "Both Teams To Score",
      "why": "Nashville SC O+D- v Philadelphia Union O+D- \u00b7 BTTS YES 0.61"
@@ -3110,11 +3122,14 @@
      "line": null,
      "logged": "2026-10-29T01:01:35.831312+00:00",
      "match": "Seattle Sounders FC v Houston Dynamo FC",
+     "payout": 0.0,
      "price": 0.59,
+     "profit": -100.0,
      "rule": "D3",
+     "settled": "2026-10-29T16:01:33.394892+00:00",
      "side": "yes",
      "start": "2026-10-29T02:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXMLSBTTS-26OCT28SEAHOU-BTTS",
      "title": "Both Teams To Score",
      "why": "Seattle Sounders FC O+D- v Houston Dynamo FC O-D- \u00b7 BTTS YES 0.59"
@@ -3123,14 +3138,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T18:31:11.485456+00:00",
-   "candidates": 1,
-   "due": 3,
-   "labelled": 3,
-   "matched": 1,
-   "new": 0
-  },
   {
    "at": "2026-10-25T18:46:10.488305+00:00",
    "candidates": 0,
@@ -3529,6 +3536,14 @@
    "due": 3,
    "labelled": 3,
    "matched": 1,
+   "new": 0
+  },
+  {
+   "at": "2026-10-29T16:01:33.394892+00:00",
+   "candidates": 0,
+   "due": 1,
+   "labelled": 1,
+   "matched": 0,
    "new": 0
   }
  ],

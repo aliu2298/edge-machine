@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-29T01:33:10.749368+00:00",
+ "last_run": "2026-10-29T16:01:34.183421+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -710,11 +710,14 @@
      "line": 1.5,
      "logged": "2026-10-28T23:01:42.300821+00:00",
      "match": "Remo v Botafogo",
+     "payout": 1.0,
      "price": 0.8,
+     "profit": 23.27,
      "rule": "BRA",
+     "settled": "2026-10-29T16:01:34.183421+00:00",
      "side": "yes",
      "start": "2026-10-29T00:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXBRASILEIROTOTAL-26OCT28CRBOT-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Brasileir\u00e3o over 1.5 YES 0.80"
@@ -723,13 +726,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T18:31:12.662548+00:00",
-   "due": 1,
-   "matched": 1,
-   "new": 1,
-   "quoted": 1
-  },
   {
    "at": "2026-10-25T18:46:11.254964+00:00",
    "due": 1,
@@ -1075,6 +1071,13 @@
   },
   {
    "at": "2026-10-29T01:33:10.749368+00:00",
+   "due": 0,
+   "matched": 0,
+   "new": 0,
+   "quoted": 0
+  },
+  {
+   "at": "2026-10-29T16:01:34.183421+00:00",
    "due": 0,
    "matched": 0,
    "new": 0,
