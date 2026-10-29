@@ -719,18 +719,1067 @@
    "result": "no",
    "series": "KXSCOTTISHPREMTOTAL",
    "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1793247264,
+     "fill_print": 0.03,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793247264,
+       "filled": true,
+       "target": 0.2,
+       "thin": false,
+       "volume": 2073.39
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": true,
+       "volume": 22.79
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "15": {
+     "dead": false,
+     "fill_at": 1793244393,
+     "fill_print": 0.15,
+     "limit": 0.15,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793244393,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 17540.83
+      },
+      "3": {
+       "at": 1793245953,
+       "filled": true,
+       "target": 0.45,
+       "thin": false,
+       "volume": 10697.1
+      },
+      "4": {
+       "at": 1793246499,
+       "filled": true,
+       "target": 0.6,
+       "thin": false,
+       "volume": 929.65
+      }
+     }
+    },
+    "20": {
+     "dead": false,
+     "fill_at": 1793244393,
+     "fill_print": 0.15,
+     "limit": 0.2,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793245817,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 12954.12
+      },
+      "3": {
+       "at": 1793246499,
+       "filled": true,
+       "target": 0.6,
+       "thin": false,
+       "volume": 929.65
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.8,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "event": "KXMLSTOTAL-26OCT28VANSD",
+   "form_rule": false,
+   "id": "KXMLSTOTAL-26OCT28VANSD-4",
+   "kickoff": 1793241000,
+   "league": "MLS",
+   "logged": "2026-10-29T07:40:30.746726+00:00",
+   "night": "2026-10-28",
+   "prints": 1626,
+   "result": "yes",
+   "series": "KXMLSTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": null,
+    "15": null,
+    "20": null
+   },
+   "event": "KXMLSTOTAL-26OCT28TORDCU",
+   "form_rule": false,
+   "id": "KXMLSTOTAL-26OCT28TORDCU-4",
+   "kickoff": 1793230200,
+   "league": "MLS",
+   "logged": "2026-10-29T07:40:30.746726+00:00",
+   "night": "2026-10-28",
+   "prints": 502,
+   "result": "no",
+   "series": "KXMLSTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1793239156,
+     "fill_print": 0.1,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.2,
+       "thin": true,
+       "volume": 0.2
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "15": {
+     "dead": false,
+     "fill_at": 1793239156,
+     "fill_print": 0.1,
+     "limit": 0.15,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.45,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "20": {
+     "dead": false,
+     "fill_at": 1793238550,
+     "fill_print": 0.2,
+     "limit": 0.2,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.8,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "event": "KXMLSTOTAL-26OCT28STLPOR",
+   "form_rule": false,
+   "id": "KXMLSTOTAL-26OCT28STLPOR-4",
+   "kickoff": 1793233800,
+   "league": "MLS",
+   "logged": "2026-10-29T07:40:30.746726+00:00",
+   "night": "2026-10-28",
+   "prints": 286,
+   "result": "yes",
+   "series": "KXMLSTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1793247719,
+     "fill_print": 0.08,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793247719,
+       "filled": true,
+       "target": 0.2,
+       "thin": false,
+       "volume": 389.43
+      },
+      "3": {
+       "at": 1793247719,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 252.43
+      },
+      "4": {
+       "at": 1793247719,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 78.81
+      }
+     }
+    },
+    "15": {
+     "dead": false,
+     "fill_at": 1793247176,
+     "fill_print": 0.13,
+     "limit": 0.15,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793247176,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 18384.54
+      },
+      "3": {
+       "at": 1793247176,
+       "filled": true,
+       "target": 0.45,
+       "thin": false,
+       "volume": 12856.13
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "20": {
+     "dead": false,
+     "fill_at": 1793243220,
+     "fill_print": 0.2,
+     "limit": 0.2,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793243893,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 42764.72
+      },
+      "3": {
+       "at": 1793246108,
+       "filled": true,
+       "target": 0.6,
+       "thin": false,
+       "volume": 4898.93
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.8,
+       "thin": true,
+       "volume": 6.16
+      }
+     }
+    }
+   },
+   "event": "KXMLSTOTAL-26OCT28SJCOL",
+   "form_rule": false,
+   "id": "KXMLSTOTAL-26OCT28SJCOL-4",
+   "kickoff": 1793241000,
+   "league": "MLS",
+   "logged": "2026-10-29T07:40:30.746726+00:00",
+   "night": "2026-10-28",
+   "prints": 1480,
+   "result": "yes",
+   "series": "KXMLSTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": null,
+    "15": null,
+    "20": null
+   },
+   "event": "KXMLSTOTAL-26OCT28SEAHOU",
+   "form_rule": false,
+   "id": "KXMLSTOTAL-26OCT28SEAHOU-4",
+   "kickoff": 1793241000,
+   "league": "MLS",
+   "logged": "2026-10-29T07:40:30.746726+00:00",
+   "night": "2026-10-28",
+   "prints": 622,
+   "result": "no",
+   "series": "KXMLSTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": null,
+    "15": null,
+    "20": null
+   },
+   "event": "KXMLSTOTAL-26OCT28NYCATL",
+   "form_rule": false,
+   "id": "KXMLSTOTAL-26OCT28NYCATL-4",
+   "kickoff": 1793230200,
+   "league": "MLS",
+   "logged": "2026-10-29T07:40:30.746726+00:00",
+   "night": "2026-10-28",
+   "prints": 489,
+   "result": "no",
+   "series": "KXMLSTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": null,
+    "15": null,
+    "20": null
+   },
+   "event": "KXMLSTOTAL-26OCT28NSHPHI",
+   "form_rule": false,
+   "id": "KXMLSTOTAL-26OCT28NSHPHI-4",
+   "kickoff": 1793233800,
+   "league": "MLS",
+   "logged": "2026-10-29T07:40:30.746726+00:00",
+   "night": "2026-10-28",
+   "prints": 166,
+   "result": "no",
+   "series": "KXMLSTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1793235773,
+     "fill_print": 0.05,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.2,
+       "thin": true,
+       "volume": 3.57
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "15": {
+     "dead": false,
+     "fill_at": 1793235012,
+     "fill_print": 0.15,
+     "limit": 0.15,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.45,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "20": {
+     "dead": false,
+     "fill_at": 1793234996,
+     "fill_print": 0.18,
+     "limit": 0.2,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.8,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "event": "KXMLSTOTAL-26OCT28NENYRB",
+   "form_rule": false,
+   "id": "KXMLSTOTAL-26OCT28NENYRB-4",
+   "kickoff": 1793230200,
+   "league": "MLS",
+   "logged": "2026-10-29T07:40:30.746726+00:00",
+   "night": "2026-10-28",
+   "prints": 451,
+   "result": "yes",
+   "series": "KXMLSTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1793240852,
+     "fill_print": 0.06,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793240910,
+       "filled": true,
+       "target": 0.2,
+       "thin": false,
+       "volume": 171.5
+      },
+      "3": {
+       "at": 1793240910,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 118.02
+      },
+      "4": {
+       "at": 1793240910,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 55.52
+      }
+     }
+    },
+    "15": {
+     "dead": false,
+     "fill_at": 1793240852,
+     "fill_print": 0.06,
+     "limit": 0.15,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793240910,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 118.02
+      },
+      "3": {
+       "at": 1793240910,
+       "filled": true,
+       "target": 0.45,
+       "thin": false,
+       "volume": 55.02
+      },
+      "4": {
+       "at": 1793240910,
+       "filled": true,
+       "target": 0.6,
+       "thin": false,
+       "volume": 55.0
+      }
+     }
+    },
+    "20": {
+     "dead": false,
+     "fill_at": 1793240851,
+     "fill_print": 0.19,
+     "limit": 0.2,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793240851,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 56.52
+      },
+      "3": {
+       "at": 1793240910,
+       "filled": true,
+       "target": 0.6,
+       "thin": false,
+       "volume": 55.0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.8,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "event": "KXMLSTOTAL-26OCT28MINSKC",
+   "form_rule": false,
+   "id": "KXMLSTOTAL-26OCT28MINSKC-4",
+   "kickoff": 1793233800,
+   "league": "MLS",
+   "logged": "2026-10-29T07:40:30.746726+00:00",
+   "night": "2026-10-28",
+   "prints": 699,
+   "result": "yes",
+   "series": "KXMLSTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1793237244,
+     "fill_print": 0.06,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793237247,
+       "filled": true,
+       "target": 0.2,
+       "thin": false,
+       "volume": 1182.24
+      },
+      "3": {
+       "at": 1793237247,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 1182.24
+      },
+      "4": {
+       "at": 1793237247,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 1182.24
+      }
+     }
+    },
+    "15": {
+     "dead": false,
+     "fill_at": 1793237243,
+     "fill_print": 0.11,
+     "limit": 0.15,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793237243,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 1519.56
+      },
+      "3": {
+       "at": 1793237243,
+       "filled": true,
+       "target": 0.45,
+       "thin": false,
+       "volume": 1454.86
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": true,
+       "volume": 4.5
+      }
+     }
+    },
+    "20": {
+     "dead": false,
+     "fill_at": 1793237243,
+     "fill_print": 0.11,
+     "limit": 0.2,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793237243,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 1455.36
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": true,
+       "volume": 4.5
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.8,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "event": "KXMLSTOTAL-26OCT28MIACIN",
+   "form_rule": false,
+   "id": "KXMLSTOTAL-26OCT28MIACIN-4",
+   "kickoff": 1793230200,
+   "league": "MLS",
+   "logged": "2026-10-29T07:40:30.746726+00:00",
+   "night": "2026-10-28",
+   "prints": 1212,
+   "result": "yes",
+   "series": "KXMLSTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": null,
+    "15": null,
+    "20": null
+   },
+   "event": "KXMLSTOTAL-26OCT28DALCLB",
+   "form_rule": false,
+   "id": "KXMLSTOTAL-26OCT28DALCLB-4",
+   "kickoff": 1793233800,
+   "league": "MLS",
+   "logged": "2026-10-29T07:40:30.746726+00:00",
+   "night": "2026-10-28",
+   "prints": 448,
+   "result": "no",
+   "series": "KXMLSTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1793236759,
+     "fill_print": 0.07,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793236764,
+       "filled": true,
+       "target": 0.2,
+       "thin": false,
+       "volume": 641.35
+      },
+      "3": {
+       "at": 1793236764,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 640.34
+      },
+      "4": {
+       "at": 1793236764,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 640.33
+      }
+     }
+    },
+    "15": {
+     "dead": false,
+     "fill_at": 1793236758,
+     "fill_print": 0.14,
+     "limit": 0.15,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793236758,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 706.74
+      },
+      "3": {
+       "at": 1793236758,
+       "filled": true,
+       "target": 0.45,
+       "thin": false,
+       "volume": 680.68
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "20": {
+     "dead": false,
+     "fill_at": 1793236758,
+     "fill_print": 0.14,
+     "limit": 0.2,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793236758,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 705.73
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.8,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "event": "KXMLSTOTAL-26OCT28CLTMTL",
+   "form_rule": false,
+   "id": "KXMLSTOTAL-26OCT28CLTMTL-4",
+   "kickoff": 1793230200,
+   "league": "MLS",
+   "logged": "2026-10-29T07:40:30.746726+00:00",
+   "night": "2026-10-28",
+   "prints": 475,
+   "result": "yes",
+   "series": "KXMLSTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": true,
+     "fill_at": 1793239773,
+     "fill_print": 0.01,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.2,
+       "thin": true,
+       "volume": 0.31
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "15": {
+     "dead": false,
+     "fill_at": 1793236700,
+     "fill_print": 0.14,
+     "limit": 0.15,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793237448,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 10584.93
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.45,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "20": {
+     "dead": false,
+     "fill_at": 1793234853,
+     "fill_print": 0.2,
+     "limit": 0.2,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793236266,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 2508.53
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.8,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "event": "KXMLSTOTAL-26OCT28CHIORL",
+   "form_rule": false,
+   "id": "KXMLSTOTAL-26OCT28CHIORL-4",
+   "kickoff": 1793233800,
+   "league": "MLS",
+   "logged": "2026-10-29T07:40:30.746726+00:00",
+   "night": "2026-10-28",
+   "prints": 438,
+   "result": "yes",
+   "series": "KXMLSTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1793239235,
+     "fill_print": 0.07,
+     "limit": 0.1,
+     "payout": 1.0,
+     "sells": {
+      "2": {
+       "at": 1793239235,
+       "filled": true,
+       "target": 0.2,
+       "thin": false,
+       "volume": 21982.89
+      },
+      "3": {
+       "at": 1793239341,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 18885.24
+      },
+      "4": {
+       "at": 1793239832,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 15520.49
+      }
+     }
+    },
+    "15": {
+     "dead": false,
+     "fill_at": 1793239235,
+     "fill_print": 0.07,
+     "limit": 0.15,
+     "payout": 1.0,
+     "sells": {
+      "2": {
+       "at": 1793239341,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 18885.24
+      },
+      "3": {
+       "at": 1793240007,
+       "filled": true,
+       "target": 0.45,
+       "thin": false,
+       "volume": 14676.4
+      },
+      "4": {
+       "at": 1793240464,
+       "filled": true,
+       "target": 0.6,
+       "thin": false,
+       "volume": 12054.31
+      }
+     }
+    },
+    "20": {
+     "dead": false,
+     "fill_at": 1793239080,
+     "fill_print": 0.2,
+     "limit": 0.2,
+     "payout": 1.0,
+     "sells": {
+      "2": {
+       "at": 1793239832,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 15520.49
+      },
+      "3": {
+       "at": 1793240464,
+       "filled": true,
+       "target": 0.6,
+       "thin": false,
+       "volume": 12054.31
+      },
+      "4": {
+       "at": 1793240793,
+       "filled": true,
+       "target": 0.8,
+       "thin": false,
+       "volume": 4753.42
+      }
+     }
+    }
+   },
+   "event": "KXMLSTOTAL-26OCT28ATXRSL",
+   "form_rule": false,
+   "id": "KXMLSTOTAL-26OCT28ATXRSL-4",
+   "kickoff": 1793233800,
+   "league": "MLS",
+   "logged": "2026-10-29T07:40:30.746726+00:00",
+   "night": "2026-10-28",
+   "prints": 1216,
+   "result": "no",
+   "series": "KXMLSTOTAL",
+   "version": "o35-v1"
   }
  ],
  "error": null,
  "lane": "o35_cheap_no_wave",
- "last_run": "2026-10-29T01:14:05.091805+00:00",
+ "last_run": "2026-10-29T07:40:30.746726+00:00",
  "observations": {
-  "at": "2026-10-29T01:14:05.091805+00:00",
+  "at": "2026-10-29T07:40:30.746726+00:00",
   "errors": [],
-  "new": 8,
-  "waiting": 3
+  "new": 14,
+  "waiting": 0
  },
  "seen": {
+  "KXMLSTOTAL-26OCT28ATXRSL": "2026-10-29T07:40:30.746726+00:00",
+  "KXMLSTOTAL-26OCT28CHIORL": "2026-10-29T07:40:30.746726+00:00",
+  "KXMLSTOTAL-26OCT28CLTMTL": "2026-10-29T07:40:30.746726+00:00",
+  "KXMLSTOTAL-26OCT28DALCLB": "2026-10-29T07:40:30.746726+00:00",
+  "KXMLSTOTAL-26OCT28MIACIN": "2026-10-29T07:40:30.746726+00:00",
+  "KXMLSTOTAL-26OCT28MINSKC": "2026-10-29T07:40:30.746726+00:00",
+  "KXMLSTOTAL-26OCT28NENYRB": "2026-10-29T07:40:30.746726+00:00",
+  "KXMLSTOTAL-26OCT28NSHPHI": "2026-10-29T07:40:30.746726+00:00",
+  "KXMLSTOTAL-26OCT28NYCATL": "2026-10-29T07:40:30.746726+00:00",
+  "KXMLSTOTAL-26OCT28SEAHOU": "2026-10-29T07:40:30.746726+00:00",
+  "KXMLSTOTAL-26OCT28SJCOL": "2026-10-29T07:40:30.746726+00:00",
+  "KXMLSTOTAL-26OCT28STLPOR": "2026-10-29T07:40:30.746726+00:00",
+  "KXMLSTOTAL-26OCT28TORDCU": "2026-10-29T07:40:30.746726+00:00",
+  "KXMLSTOTAL-26OCT28VANSD": "2026-10-29T07:40:30.746726+00:00",
   "KXSAUDIPLTOTAL-26OCT27ABHFAI": "before the lane's first night",
   "KXSCOTTISHPREMTOTAL-26OCT28ABEFAL": "2026-10-29T01:14:05.091805+00:00",
   "KXSCOTTISHPREMTOTAL-26OCT28CELDUU": "2026-10-29T01:14:05.091805+00:00",
