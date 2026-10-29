@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-28T23:16:44+00:00",
+ "board_built_at": "2026-10-29T00:30:20+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -320,6 +320,43 @@
    "source": "econ_nc_no",
    "sport": "econ_daily",
    "status": "hit"
+  },
+  "2026-10-29|KXDIESELD-26OCT29-T6.340|Not Above $6.340 at the close \u00b7 Near-certain \u00b7 3h \u00b7 NO": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-10-29",
+   "edge_at_log": null,
+   "first_seen": "2026-10-29",
+   "headline": "Not Above $6.340 at the close",
+   "home": null,
+   "id": "2026-10-29|KXDIESELD-26OCT29-T6.340|Not Above $6.340 at the close \u00b7 Near-certain \u00b7 3h \u00b7 NO",
+   "kickoff": "2026-10-29T03:59Z",
+   "lane": "production",
+   "last_seen": "2026-10-29",
+   "last_seen_at": "2026-10-29T00:30:20+00:00",
+   "league": "Econ Daily",
+   "match": "Diesel price (daily)",
+   "pair": "econ_nc_no|econ_daily",
+   "price_at_log": 0.86,
+   "published_at": "2026-10-29T00:30:20+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 208,
+   "route": {
+    "claim": "Not Above $6.340 at the close",
+    "event": "KXDIESELD-26OCT29",
+    "market": "KXDIESELD-26OCT29-T6.340",
+    "outcome": "Above $6.340",
+    "outcome_side": "no",
+    "price_at_log": 0.86,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "econ_nc_no:KXDIESELD-26OCT29-T6.340",
+   "source": "econ_nc_no",
+   "sport": "econ_daily",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -330,9 +367,9 @@
    "ready_at": "2026-10-20T05:00:00+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 8,
+    "leads": 9,
     "problem": null,
-    "routed": 8,
+    "routed": 9,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -344,7 +381,7 @@
    "sandbox_roi_fee": -0.0406,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -378,5 +415,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-28T23:16:44+00:00"
+ "updated_at": "2026-10-29T00:30:20+00:00"
 }
