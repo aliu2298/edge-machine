@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-29T14:00:22+00:00",
+ "board_built_at": "2026-10-29T14:40:43+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -301,6 +301,43 @@
    "source": "mentions_rate",
    "sport": "culture_mentions",
    "status": "miss"
+  },
+  "2026-11-02|KXTRUMPSAY-26NOV02-VIVE|Trump does not say \"Vivek / Ramaswamy\" \u00b7 Trump mentions": {
+   "away": null,
+   "bet": {
+    "kind": "mention_no",
+    "p_said": 0.4066,
+    "subject": "Vivek / Ramaswamy"
+   },
+   "date": "2026-11-02",
+   "edge_at_log": 0.25,
+   "first_seen": "2026-10-26",
+   "headline": "Trump does not say \"Vivek / Ramaswamy\"",
+   "home": null,
+   "id": "2026-11-02|KXTRUMPSAY-26NOV02-VIVE|Trump does not say \"Vivek / Ramaswamy\" \u00b7 Trump mentions",
+   "kickoff": "2026-11-02T15:00Z",
+   "lane": "retired",
+   "league": "Trump mentions",
+   "match": "What will Trump say this week?",
+   "pair": "mentions_rate|culture_mentions",
+   "price_at_log": 0.13,
+   "published_at": "2026-10-29T14:40:43+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5779,
+   "retired_on": "2026-10-26",
+   "route": {
+    "claim": "Trump does not say \"Vivek / Ramaswamy\"",
+    "event": "KXTRUMPSAY-26NOV02",
+    "market": "KXTRUMPSAY-26NOV02-VIVE",
+    "outcome": "Vivek / Ramaswamy",
+    "outcome_side": "no",
+    "price_at_log": 0.13,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "mentions_rate:KXTRUMPSAY-26NOV02-VIVE",
+   "source": "mentions_rate",
+   "sport": "culture_mentions",
+   "status": "miss"
   }
  },
  "pairs": {},
@@ -308,5 +345,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-29T14:00:22+00:00"
+ "updated_at": "2026-10-29T14:40:43+00:00"
 }
