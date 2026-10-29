@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-29T17:35:35+00:00",
+ "board_built_at": "2026-10-29T18:05:28+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -39,7 +39,7 @@
   "kalshi:26OCT26SEVOSA": "2026-10-26|Sevilla|Osasuna|Under 8 corners \u00b7 Corners total under"
  },
  "first_publish_min": 45,
- "late_publication_skipped": 8,
+ "late_publication_skipped": 6,
  "leads": {
   "2026-10-22|KXBRENTD-26OCT2217-T108|Above $108 at the close \u00b7 Commodities favourite band": {
    "away": null,
@@ -2028,7 +2028,7 @@
    "kickoff": "2026-10-29T21:00Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T17:35:35+00:00",
+   "last_seen_at": "2026-10-29T18:05:28+00:00",
    "league": "Commodities \u00b7 Favourite band",
    "match": "Brent crude close on Oct 29, 2026",
    "pair": "commod_fav_band|commodities_fav",
@@ -2050,6 +2050,43 @@
    "sport": "commodities_fav",
    "status": "pending"
   },
+  "2026-10-29|KXBTCD-26OCT2917-T80999.99|Below $81,000 at the close \u00b7 Crypto favourite band, below": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-10-29",
+   "edge_at_log": null,
+   "first_seen": "2026-10-29",
+   "headline": "Below $81,000 at the close",
+   "home": null,
+   "id": "2026-10-29|KXBTCD-26OCT2917-T80999.99|Below $81,000 at the close \u00b7 Crypto favourite band, below",
+   "kickoff": "2026-10-29T21:05Z",
+   "lane": "production",
+   "last_seen": "2026-10-29",
+   "last_seen_at": "2026-10-29T18:05:28+00:00",
+   "league": "Crypto \u00b7 Favourite band",
+   "match": "Bitcoin price on Oct 29, 2026",
+   "pair": "crypto_fav_band_below|crypto_fav",
+   "price_at_log": 0.74,
+   "published_at": "2026-10-29T18:05:28+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 179,
+   "route": {
+    "claim": "Below $81,000 at the close",
+    "event": "KXBTCD-26OCT2917",
+    "market": "KXBTCD-26OCT2917-T80999.99",
+    "outcome": "$81,000 or above",
+    "outcome_side": "no",
+    "price_at_log": 0.74,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "crypto_fav_band_below:KXBTCD-26OCT2917-T80999.99",
+   "source": "crypto_fav_band_below",
+   "sport": "crypto_fav",
+   "status": "pending"
+  },
   "2026-10-29|KXSILVERD-26OCT2917-T52|Above $52 at the close \u00b7 Commodities favourite band": {
    "away": null,
    "bet": {
@@ -2065,7 +2102,7 @@
    "kickoff": "2026-10-29T21:00Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T17:35:35+00:00",
+   "last_seen_at": "2026-10-29T18:05:28+00:00",
    "league": "Commodities \u00b7 Favourite band",
    "match": "Silver close on Oct 29, 2026",
    "pair": "commod_fav_band|commodities_fav",
@@ -2102,7 +2139,7 @@
    "kickoff": "2026-10-29T18:30Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T17:35:35+00:00",
+   "last_seen_at": "2026-10-29T18:05:28+00:00",
    "league": "Commodities \u00b7 Favourite band",
    "match": "WTI crude close on Oct 29, 2026",
    "pair": "commod_fav_band|commodities_fav",
@@ -2246,7 +2283,7 @@
    "kickoff": "2026-10-31T20:00Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T17:35:35+00:00",
+   "last_seen_at": "2026-10-29T18:05:28+00:00",
    "league": "Eredivisie",
    "match": "Ajax v Alkmaar",
    "pair": "ere_draw|soccer",
@@ -2283,7 +2320,7 @@
    "kickoff": "2026-10-31T20:00Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T17:35:35+00:00",
+   "last_seen_at": "2026-10-29T18:05:28+00:00",
    "league": "Eredivisie",
    "match": "Cambuur v GA Eagles",
    "pair": "ere_draw|soccer",
@@ -2305,6 +2342,44 @@
    "sport": "soccer",
    "status": "pending"
   },
+  "2026-10-31|Charlotte FC|Orlando City SC|Charlotte FC to score 2+ \u00b7 Team scores 2+ form rule": {
+   "away": "Orlando City SC",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "Charlotte FC"
+   },
+   "date": "2026-10-31",
+   "edge_at_log": null,
+   "first_seen": "2026-10-29",
+   "headline": "Charlotte FC to score 2+",
+   "home": "Charlotte FC",
+   "id": "2026-10-31|Charlotte FC|Orlando City SC|Charlotte FC to score 2+ \u00b7 Team scores 2+ form rule",
+   "kickoff": "2026-10-31T17:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-29",
+   "last_seen_at": "2026-10-29T18:05:28+00:00",
+   "league": "MLS",
+   "match": "Charlotte FC v Orlando City SC",
+   "pair": "team2_form_l10|soccer_team2",
+   "price_at_log": 0.69,
+   "published_at": "2026-10-29T18:05:28+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 2814,
+   "route": {
+    "claim": "Charlotte FC to score 2+",
+    "event": "KXMLSTEAMTOTAL-26OCT31CLTORL",
+    "market": "KXMLSTEAMTOTAL-26OCT31CLTORL-CLT2",
+    "outcome": "Charlotte over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.69,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "team2_form_l10:KXMLSTEAMTOTAL-26OCT31CLTORL-CLT2",
+   "source": "team2_form_l10",
+   "sport": "soccer_team2",
+   "status": "pending"
+  },
   "2026-10-31|Heerenveen|Nijmegen|Draw \u00b7 Eredivisie draw band": {
    "away": "Nijmegen",
    "bet": {
@@ -2320,7 +2395,7 @@
    "kickoff": "2026-10-31T17:45Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T17:35:35+00:00",
+   "last_seen_at": "2026-10-29T18:05:28+00:00",
    "league": "Eredivisie",
    "match": "Heerenveen v Nijmegen",
    "pair": "ere_draw|soccer",
@@ -2357,7 +2432,7 @@
    "kickoff": "2026-10-31T21:00Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T17:35:35+00:00",
+   "last_seen_at": "2026-10-29T18:05:28+00:00",
    "league": "MLS",
    "match": "San Jose Earthquakes v Real Salt Lake",
    "pair": "mls_fade_home|soccer_p05",
@@ -2395,7 +2470,7 @@
    "kickoff": "2026-10-31T14:30Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T17:35:35+00:00",
+   "last_seen_at": "2026-10-29T18:05:28+00:00",
    "league": "Bundesliga",
    "match": "Werder Bremen v TSG Hoffenheim",
    "pair": "team2_form_l10|soccer_team2",
@@ -2432,7 +2507,7 @@
    "kickoff": "2026-11-01T21:30Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T17:35:35+00:00",
+   "last_seen_at": "2026-10-29T18:05:28+00:00",
    "league": "MLS",
    "match": "Atlanta United FC v Toronto FC",
    "pair": "mls_fade_home|soccer_p05",
@@ -2469,7 +2544,7 @@
    "kickoff": "2026-11-01T01:30Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T17:35:35+00:00",
+   "last_seen_at": "2026-10-29T18:05:28+00:00",
    "league": "MLS",
    "match": "Colorado Rapids v Chicago Fire FC",
    "pair": "mls_fade_home|soccer_p05",
@@ -2506,7 +2581,7 @@
    "kickoff": "2026-11-01T13:30Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T17:35:35+00:00",
+   "last_seen_at": "2026-10-29T18:05:28+00:00",
    "league": "Eredivisie",
    "match": "Excelsior v Enschede",
    "pair": "ere_draw|soccer",
@@ -2543,7 +2618,7 @@
    "kickoff": "2026-11-01T15:45Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T17:35:35+00:00",
+   "last_seen_at": "2026-10-29T18:05:28+00:00",
    "league": "Eredivisie",
    "match": "Groningen v Sparta",
    "pair": "ere_draw|soccer",
@@ -2599,9 +2674,9 @@
    "ready_at": "2026-10-21T00:47:16+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 10,
+    "leads": 11,
     "problem": null,
-    "routed": 10,
+    "routed": 11,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -2613,7 +2688,7 @@
    "sandbox_roi_fee": 0.0741,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -2774,9 +2849,9 @@
    "ready_at": "2026-10-16T17:17:38+00:00",
    "route": "moved by hand on 2026-10-16",
    "routing": {
-    "leads": 9,
+    "leads": 10,
     "problem": null,
-    "routed": 9,
+    "routed": 10,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -2788,7 +2863,7 @@
    "sandbox_roi_fee": 0.1939,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 2,
     "under_target": 0
    }
   },
@@ -2844,24 +2919,6 @@
   }
  },
  "publication_withheld": {
-  "2026-10-22|Avelar, Luana|Medicetty, Myna|Avelar, Luana to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
-   "headline": "Avelar, Luana to win",
-   "id": "2026-10-22|Avelar, Luana|Medicetty, Myna|Avelar, Luana to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles",
-   "kickoff": "2026-10-22T18:00Z",
-   "match": "Avelar, Luana v Medicetty, Myna",
-   "pair": "tennis_utr_shortlist_v1|tennis",
-   "reason": "less than 45 minutes left at first publication",
-   "withheld_at": "2026-10-22T17:19:33+00:00"
-  },
-  "2026-10-22|Papazian, Tiffany|Metta, Saanvi|Papazian, Tiffany to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
-   "headline": "Papazian, Tiffany to win",
-   "id": "2026-10-22|Papazian, Tiffany|Metta, Saanvi|Papazian, Tiffany to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles",
-   "kickoff": "2026-10-22T18:00Z",
-   "match": "Papazian, Tiffany v Metta, Saanvi",
-   "pair": "tennis_utr_shortlist_v1|tennis",
-   "reason": "less than 45 minutes left at first publication",
-   "withheld_at": "2026-10-22T17:19:33+00:00"
-  },
   "2026-10-24|Aston Villa|Manchester City|Under 8 corners \u00b7 Corners total under": {
    "headline": "Under 8 corners",
    "id": "2026-10-24|Aston Villa|Manchester City|Under 8 corners \u00b7 Corners total under",
@@ -2920,5 +2977,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-29T17:35:35+00:00"
+ "updated_at": "2026-10-29T18:05:28+00:00"
 }
