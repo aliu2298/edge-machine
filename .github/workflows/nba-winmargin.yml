@@ -3,7 +3,7 @@ name: NBA win margin tracker
 # OBSERVATION ONLY (2026-10-29, approved by Olu): Kalshi's NBA win-margin buckets
 # (KXNBAWINMARGIN), every game since opening night. Entry quote an hour before the
 # tip, every trade print after, the settled result. No buying or selling rule, no
-# orders, no bot, no Production feed. Kalshi's public endpoints only: no secret.
+# orders, no executor, no Production feed. Kalshi's public endpoints only: no secret.
 #
 # Games settle a little after the final whistle, so the job runs through the
 # night and morning (UTC 04:40-14:40, every two hours) and is idempotent: a game

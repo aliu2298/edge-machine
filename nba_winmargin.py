@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """NBA win margin tracker (2026-10-29): an OBSERVATION record of Kalshi's NBA win-margin buckets.
 
-Observation only. No buying or selling rule, no orders, no bot, no Production feed.
+Observation only. No buying or selling rule, no orders, no executor, no Production feed.
 
 Why it exists: a research pass on 2026-10-28 found that KXNBAWINMARGIN bucket contracts ("Boston
 wins by 1-5 points") priced 5-35c an hour before the tip traded at 2x their entry ask far more
