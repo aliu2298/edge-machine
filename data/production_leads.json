@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-29T09:05:42+00:00",
+ "board_built_at": "2026-10-29T11:33:12+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -2207,7 +2207,7 @@
    "kickoff": "2026-10-31T20:00Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T09:05:42+00:00",
+   "last_seen_at": "2026-10-29T11:33:12+00:00",
    "league": "Eredivisie",
    "match": "Ajax v Alkmaar",
    "pair": "ere_draw|soccer",
@@ -2244,7 +2244,7 @@
    "kickoff": "2026-10-31T20:00Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T09:05:42+00:00",
+   "last_seen_at": "2026-10-29T11:33:12+00:00",
    "league": "Eredivisie",
    "match": "Cambuur v GA Eagles",
    "pair": "ere_draw|soccer",
@@ -2281,7 +2281,7 @@
    "kickoff": "2026-10-31T17:45Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T09:05:42+00:00",
+   "last_seen_at": "2026-10-29T11:33:12+00:00",
    "league": "Eredivisie",
    "match": "Heerenveen v Nijmegen",
    "pair": "ere_draw|soccer",
@@ -2303,6 +2303,43 @@
    "sport": "soccer",
    "status": "pending"
   },
+  "2026-11-01|Atlanta United FC|Toronto FC|Toronto FC +0.5 (Atlanta United FC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
+   "away": "Toronto FC",
+   "bet": {
+    "kind": "win_no",
+    "team": "Atlanta United FC"
+   },
+   "date": "2026-11-01",
+   "edge_at_log": null,
+   "first_seen": "2026-10-29",
+   "headline": "Toronto FC +0.5 (Atlanta United FC not to win)",
+   "home": "Atlanta United FC",
+   "id": "2026-11-01|Atlanta United FC|Toronto FC|Toronto FC +0.5 (Atlanta United FC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45",
+   "kickoff": "2026-11-01T21:30Z",
+   "lane": "production",
+   "last_seen": "2026-10-29",
+   "last_seen_at": "2026-10-29T11:33:12+00:00",
+   "league": "MLS",
+   "match": "Atlanta United FC v Toronto FC",
+   "pair": "mls_fade_home|soccer_p05",
+   "price_at_log": 0.56,
+   "published_at": "2026-10-29T11:33:12+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 4916,
+   "route": {
+    "claim": "Toronto FC +0.5 (Atlanta United FC not to win)",
+    "event": "KXMLSGAME-26NOV01ATLTOR",
+    "market": "KXMLSGAME-26NOV01ATLTOR-ATL",
+    "outcome": "Atlanta",
+    "outcome_side": "no",
+    "price_at_log": 0.56,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "mls_fade_home:KXMLSGAME-26NOV01ATLTOR-ATL",
+   "source": "mls_fade_home",
+   "sport": "soccer_p05",
+   "status": "pending"
+  },
   "2026-11-01|Colorado Rapids|Chicago Fire FC|Chicago Fire FC +0.5 (Colorado Rapids not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
    "away": "Chicago Fire FC",
    "bet": {
@@ -2318,7 +2355,7 @@
    "kickoff": "2026-11-01T01:30Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T09:05:42+00:00",
+   "last_seen_at": "2026-10-29T11:33:12+00:00",
    "league": "MLS",
    "match": "Colorado Rapids v Chicago Fire FC",
    "pair": "mls_fade_home|soccer_p05",
@@ -2355,7 +2392,7 @@
    "kickoff": "2026-11-01T13:30Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T09:05:42+00:00",
+   "last_seen_at": "2026-10-29T11:33:12+00:00",
    "league": "Eredivisie",
    "match": "Excelsior v Enschede",
    "pair": "ere_draw|soccer",
@@ -2392,7 +2429,7 @@
    "kickoff": "2026-11-01T15:45Z",
    "lane": "production",
    "last_seen": "2026-10-29",
-   "last_seen_at": "2026-10-29T09:05:42+00:00",
+   "last_seen_at": "2026-10-29T11:33:12+00:00",
    "league": "Eredivisie",
    "match": "Groningen v Sparta",
    "pair": "ere_draw|soccer",
@@ -2548,9 +2585,9 @@
    "ready_at": "2026-10-16T17:17:38+00:00",
    "route": "moved by hand on 2026-10-16",
    "routing": {
-    "leads": 8,
+    "leads": 9,
     "problem": null,
-    "routed": 8,
+    "routed": 9,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -2562,7 +2599,7 @@
    "sandbox_roi_fee": 0.3239,
    "timing": {
     "late": [],
-    "timed": 3,
+    "timed": 4,
     "under_target": 0
    }
   },
@@ -2769,5 +2806,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-29T09:05:42+00:00"
+ "updated_at": "2026-10-29T11:33:12+00:00"
 }
