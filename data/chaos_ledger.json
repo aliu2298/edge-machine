@@ -93,7 +93,10 @@
     "KXATPMATCH-26OCT28BORRUU": 0,
     "KXATPMATCH-26OCT28HURRUN": 0,
     "KXATPMATCH-26OCT28MENMAN": 0,
-    "KXATPMATCH-26OCT28TIEDE": 1
+    "KXATPMATCH-26OCT28TIEDE": 1,
+    "KXATPMATCH-26OCT29NORMED": 0,
+    "KXATPMATCH-26OCT29PAUDAR": 0,
+    "KXATPMATCH-26OCT29VACJOD": 0
    },
    "series": [
     "KXATPMATCH"
@@ -4793,6 +4796,7 @@
     "KXATPCHALLENGERMATCH-26OCT26YOUOST": 0,
     "KXATPCHALLENGERMATCH-26OCT27ATMMAT": 0,
     "KXATPCHALLENGERMATCH-26OCT27BALBLA": 0,
+    "KXATPCHALLENGERMATCH-26OCT27BARSUN": 0,
     "KXATPCHALLENGERMATCH-26OCT27BOBGEE": 0,
     "KXATPCHALLENGERMATCH-26OCT27BRODEM": 0,
     "KXATPCHALLENGERMATCH-26OCT27BRONAK": 1,
@@ -4811,6 +4815,7 @@
     "KXATPCHALLENGERMATCH-26OCT27GREKOU": 1,
     "KXATPCHALLENGERMATCH-26OCT27HARJAS": 0,
     "KXATPCHALLENGERMATCH-26OCT27HARVUK": 0,
+    "KXATPCHALLENGERMATCH-26OCT27HONBRO": 1,
     "KXATPCHALLENGERMATCH-26OCT27HONPEL": 0,
     "KXATPCHALLENGERMATCH-26OCT27HONYIB": 1,
     "KXATPCHALLENGERMATCH-26OCT27JARDEL": 0,
@@ -4825,6 +4830,7 @@
     "KXATPCHALLENGERMATCH-26OCT27PIRDJE": 0,
     "KXATPCHALLENGERMATCH-26OCT27RONABO": 0,
     "KXATPCHALLENGERMATCH-26OCT27SAKSKA": 0,
+    "KXATPCHALLENGERMATCH-26OCT27SCHCUI": 0,
     "KXATPCHALLENGERMATCH-26OCT27SCHIMA": 1,
     "KXATPCHALLENGERMATCH-26OCT27SHIREH": 0,
     "KXATPCHALLENGERMATCH-26OCT27SHIWON": 0,
@@ -4837,6 +4843,7 @@
     "KXATPCHALLENGERMATCH-26OCT27XIACUI": 1,
     "KXATPCHALLENGERMATCH-26OCT27YMEZHO": 0,
     "KXATPCHALLENGERMATCH-26OCT27ZHAMAY": 0,
+    "KXATPCHALLENGERMATCH-26OCT27ZHODEL": 0,
     "KXATPCHALLENGERMATCH-26OCT28AGUTOB": 0,
     "KXATPCHALLENGERMATCH-26OCT28ATMDAN": 0,
     "KXATPCHALLENGERMATCH-26OCT28BOBVIR": 1,
@@ -4847,6 +4854,7 @@
     "KXATPCHALLENGERMATCH-26OCT28GASGLI": 0,
     "KXATPCHALLENGERMATCH-26OCT28GOJPRI": 0,
     "KXATPCHALLENGERMATCH-26OCT28GUIHER": 0,
+    "KXATPCHALLENGERMATCH-26OCT28KACHON": 0,
     "KXATPCHALLENGERMATCH-26OCT28MAEDIA": 1,
     "KXATPCHALLENGERMATCH-26OCT28MAYKAS": 0,
     "KXATPCHALLENGERMATCH-26OCT28MONSAM": 0,
@@ -4859,7 +4867,8 @@
     "KXATPCHALLENGERMATCH-26OCT28UCHMAY": 0,
     "KXATPCHALLENGERMATCH-26OCT28WOLMIL": 0,
     "KXATPCHALLENGERMATCH-26OCT28ZARMAG": 0,
-    "KXATPCHALLENGERMATCH-26OCT28ZHASAK": 0
+    "KXATPCHALLENGERMATCH-26OCT28ZHASAK": 0,
+    "KXATPCHALLENGERMATCH-26OCT29DAMBLA": 1
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -6325,6 +6334,140 @@
      "stop": null,
      "target": null,
      "ticker": "KXATPCHALLENGERMATCH-26OCT28BOBVIR-BOB",
+     "unreachable": false,
+     "variant": "t1h_split",
+     "won": false
+    },
+    {
+     "cost": 0.29411,
+     "entry": 0.28,
+     "entry_i": 688,
+     "entry_ts": 1793276340,
+     "event": "KXATPCHALLENGERMATCH-26OCT29DAMBLA",
+     "exit": 0.0,
+     "exit_i": 853,
+     "exit_key": "hold",
+     "exit_ts": 1793286240,
+     "hours": 1,
+     "night": "2026-10-29",
+     "profit": -0.29411,
+     "reason": "settled",
+     "roi": -1.0,
+     "side": "yes",
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1793279940,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26OCT29DAMBLA-BLA",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": false
+    },
+    {
+     "cost": 0.29411,
+     "entry": 0.28,
+     "entry_i": 688,
+     "entry_ts": 1793276340,
+     "event": "KXATPCHALLENGERMATCH-26OCT29DAMBLA",
+     "exit": null,
+     "exit_i": null,
+     "exit_key": "split",
+     "exit_ts": 1793286240,
+     "filled_2x": false,
+     "filled_3x": false,
+     "hours": 1,
+     "legs": [
+      {
+       "filled_ts": null,
+       "multiple": 2.0,
+       "target": 0.56
+      },
+      {
+       "filled_ts": null,
+       "multiple": 3.0,
+       "target": 0.84
+      }
+     ],
+     "night": "2026-10-29",
+     "profit": -0.29411,
+     "reason": "split",
+     "roi": -1.0,
+     "side": "yes",
+     "side_won": false,
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1793279940,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26OCT29DAMBLA-BLA",
+     "unreachable": false,
+     "variant": "t1h_split",
+     "won": false
+    },
+    {
+     "cost": 0.2112,
+     "entry": 0.2,
+     "entry_i": 1773,
+     "entry_ts": 1793252100,
+     "event": "KXATPCHALLENGERMATCH-26OCT27HONBRO",
+     "exit": 0.0,
+     "exit_i": 1978,
+     "exit_key": "hold",
+     "exit_ts": 1793264400,
+     "hours": 1,
+     "night": "2026-10-29",
+     "profit": -0.2112,
+     "reason": "settled",
+     "roi": -1.0,
+     "side": "yes",
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1793255700,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26OCT27HONBRO-HON",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": false
+    },
+    {
+     "cost": 0.2112,
+     "entry": 0.2,
+     "entry_i": 1773,
+     "entry_ts": 1793252100,
+     "event": "KXATPCHALLENGERMATCH-26OCT27HONBRO",
+     "exit": null,
+     "exit_i": null,
+     "exit_key": "split",
+     "exit_ts": 1793264400,
+     "filled_2x": false,
+     "filled_3x": false,
+     "hours": 1,
+     "legs": [
+      {
+       "filled_ts": null,
+       "multiple": 2.0,
+       "target": 0.4
+      },
+      {
+       "filled_ts": null,
+       "multiple": 3.0,
+       "target": 0.6
+      }
+     ],
+     "night": "2026-10-29",
+     "profit": -0.2112,
+     "reason": "split",
+     "roi": -1.0,
+     "side": "yes",
+     "side_won": false,
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1793255700,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26OCT27HONBRO-HON",
      "unreachable": false,
      "variant": "t1h_split",
      "won": false
@@ -70818,7 +70961,7 @@
    "watch": false
   }
  },
- "last_run": "2026-10-29T09:00:20.734714+00:00",
+ "last_run": "2026-10-29T16:13:26.968571+00:00",
  "runs": [
   {
    "at": "2026-10-25T04:00:26.997081+00:00",
@@ -71001,6 +71144,13 @@
   {
    "at": "2026-10-29T09:00:20.734714+00:00",
    "new": {}
+  },
+  {
+   "at": "2026-10-29T16:13:26.968571+00:00",
+   "new": {
+    "atp_coinflip_tp30": 0,
+    "challenger_cheap_split": 4
+   }
   }
  ],
  "version": "chaos-v2"
