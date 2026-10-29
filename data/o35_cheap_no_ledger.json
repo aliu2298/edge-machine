@@ -140,23 +140,610 @@
    "result": "yes",
    "series": "KXSERIEATOTAL",
    "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1793221566,
+     "fill_print": 0.07,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793221566,
+       "filled": true,
+       "target": 0.2,
+       "thin": false,
+       "volume": 1340.02
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "15": {
+     "dead": false,
+     "fill_at": 1793220928,
+     "fill_print": 0.14,
+     "limit": 0.15,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.45,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "20": {
+     "dead": false,
+     "fill_at": 1793220774,
+     "fill_print": 0.2,
+     "limit": 0.2,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.8,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "event": "KXSERIEATOTAL-26OCT28MONNAP",
+   "form_rule": false,
+   "id": "KXSERIEATOTAL-26OCT28MONNAP-4",
+   "kickoff": 1793216700,
+   "league": "Serie A",
+   "logged": "2026-10-29T01:14:05.091805+00:00",
+   "night": "2026-10-28",
+   "prints": 758,
+   "result": "yes",
+   "series": "KXSERIEATOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": null,
+    "15": null,
+    "20": null
+   },
+   "event": "KXSERIEATOTAL-26OCT28GENJUV",
+   "form_rule": false,
+   "id": "KXSERIEATOTAL-26OCT28GENJUV-4",
+   "kickoff": 1793216700,
+   "league": "Serie A",
+   "logged": "2026-10-29T01:14:05.091805+00:00",
+   "night": "2026-10-28",
+   "prints": 1123,
+   "result": "no",
+   "series": "KXSERIEATOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": null,
+    "15": null,
+    "20": null
+   },
+   "event": "KXSCOTTISHPREMTOTAL-26OCT28MIRHIB",
+   "form_rule": false,
+   "id": "KXSCOTTISHPREMTOTAL-26OCT28MIRHIB-4",
+   "kickoff": 1793216700,
+   "league": "Scottish Premiership",
+   "logged": "2026-10-29T01:14:05.091805+00:00",
+   "night": "2026-10-28",
+   "prints": 58,
+   "result": "no",
+   "series": "KXSCOTTISHPREMTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1793223227,
+     "fill_print": 0.08,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793223227,
+       "filled": true,
+       "target": 0.2,
+       "thin": false,
+       "volume": 919.23
+      },
+      "3": {
+       "at": 1793223227,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 794.97
+      },
+      "4": {
+       "at": 1793223227,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 75.65
+      }
+     }
+    },
+    "15": {
+     "dead": false,
+     "fill_at": 1793223227,
+     "fill_print": 0.08,
+     "limit": 0.15,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793223227,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 794.97
+      },
+      "3": {
+       "at": 1793223227,
+       "filled": true,
+       "target": 0.45,
+       "thin": false,
+       "volume": 59.33
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": true,
+       "volume": 1.01
+      }
+     }
+    },
+    "20": {
+     "dead": false,
+     "fill_at": 1793223227,
+     "fill_print": 0.08,
+     "limit": 0.2,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793223227,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 75.65
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": true,
+       "volume": 1.01
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.8,
+       "thin": true,
+       "volume": 1.01
+      }
+     }
+    }
+   },
+   "event": "KXSCOTTISHPREMTOTAL-26OCT28JOHMOT",
+   "form_rule": false,
+   "id": "KXSCOTTISHPREMTOTAL-26OCT28JOHMOT-4",
+   "kickoff": 1793216700,
+   "league": "Scottish Premiership",
+   "logged": "2026-10-29T01:14:05.091805+00:00",
+   "night": "2026-10-28",
+   "prints": 261,
+   "result": "yes",
+   "series": "KXSCOTTISHPREMTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1793224119,
+     "fill_print": 0.07,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.2,
+       "thin": true,
+       "volume": 48.5
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": true,
+       "volume": 27.4
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": true,
+       "volume": 27.4
+      }
+     }
+    },
+    "15": {
+     "dead": false,
+     "fill_at": 1793224119,
+     "fill_print": 0.07,
+     "limit": 0.15,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": true,
+       "volume": 27.4
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.45,
+       "thin": true,
+       "volume": 0.4
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": true,
+       "volume": 0.4
+      }
+     }
+    },
+    "20": {
+     "dead": false,
+     "fill_at": 1793223355,
+     "fill_print": 0.2,
+     "limit": 0.2,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793223355,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 22272.67
+      },
+      "3": {
+       "at": 1793223823,
+       "filled": true,
+       "target": 0.6,
+       "thin": false,
+       "volume": 8555.04
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.8,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "event": "KXSCOTTISHPREMTOTAL-26OCT28HOMRFC",
+   "form_rule": false,
+   "id": "KXSCOTTISHPREMTOTAL-26OCT28HOMRFC-4",
+   "kickoff": 1793217600,
+   "league": "Scottish Premiership",
+   "logged": "2026-10-29T01:14:05.091805+00:00",
+   "night": "2026-10-28",
+   "prints": 571,
+   "result": "yes",
+   "series": "KXSCOTTISHPREMTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1793223342,
+     "fill_print": 0.08,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793223342,
+       "filled": true,
+       "target": 0.2,
+       "thin": false,
+       "volume": 139.01
+      },
+      "3": {
+       "at": 1793223342,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 135.01
+      },
+      "4": {
+       "at": 1793223342,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 120.01
+      }
+     }
+    },
+    "15": {
+     "dead": false,
+     "fill_at": 1793223342,
+     "fill_print": 0.08,
+     "limit": 0.15,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793223342,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 135.01
+      },
+      "3": {
+       "at": 1793223342,
+       "filled": true,
+       "target": 0.45,
+       "thin": false,
+       "volume": 120.01
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": true,
+       "volume": 14.01
+      }
+     }
+    },
+    "20": {
+     "dead": false,
+     "fill_at": 1793223342,
+     "fill_print": 0.08,
+     "limit": 0.2,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793223342,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 120.01
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": true,
+       "volume": 14.01
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.8,
+       "thin": true,
+       "volume": 11.01
+      }
+     }
+    }
+   },
+   "event": "KXSCOTTISHPREMTOTAL-26OCT28DUNKIL",
+   "form_rule": false,
+   "id": "KXSCOTTISHPREMTOTAL-26OCT28DUNKIL-4",
+   "kickoff": 1793216700,
+   "league": "Scottish Premiership",
+   "logged": "2026-10-29T01:14:05.091805+00:00",
+   "night": "2026-10-28",
+   "prints": 123,
+   "result": "yes",
+   "series": "KXSCOTTISHPREMTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1793218612,
+     "fill_print": 0.05,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793221679,
+       "filled": true,
+       "target": 0.2,
+       "thin": false,
+       "volume": 89.98
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "15": {
+     "dead": false,
+     "fill_at": 1793218612,
+     "fill_print": 0.05,
+     "limit": 0.15,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.45,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "20": {
+     "dead": false,
+     "fill_at": 1793218612,
+     "fill_print": 0.05,
+     "limit": 0.2,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.8,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "event": "KXSCOTTISHPREMTOTAL-26OCT28CELDUU",
+   "form_rule": false,
+   "id": "KXSCOTTISHPREMTOTAL-26OCT28CELDUU-4",
+   "kickoff": 1793216700,
+   "league": "Scottish Premiership",
+   "logged": "2026-10-29T01:14:05.091805+00:00",
+   "night": "2026-10-28",
+   "prints": 100,
+   "result": "yes",
+   "series": "KXSCOTTISHPREMTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": null,
+    "15": null,
+    "20": null
+   },
+   "event": "KXSCOTTISHPREMTOTAL-26OCT28ABEFAL",
+   "form_rule": false,
+   "id": "KXSCOTTISHPREMTOTAL-26OCT28ABEFAL-4",
+   "kickoff": 1793216700,
+   "league": "Scottish Premiership",
+   "logged": "2026-10-29T01:14:05.091805+00:00",
+   "night": "2026-10-28",
+   "prints": 59,
+   "result": "no",
+   "series": "KXSCOTTISHPREMTOTAL",
+   "version": "o35-v1"
   }
  ],
  "error": null,
  "lane": "o35_cheap_no_wave",
- "last_run": "2026-10-28T21:20:01.281235+00:00",
+ "last_run": "2026-10-29T01:14:05.091805+00:00",
  "observations": {
-  "at": "2026-10-28T21:20:01.281235+00:00",
+  "at": "2026-10-29T01:14:05.091805+00:00",
   "errors": [],
-  "new": 3,
-  "waiting": 0
+  "new": 8,
+  "waiting": 3
  },
  "seen": {
   "KXSAUDIPLTOTAL-26OCT27ABHFAI": "before the lane's first night",
+  "KXSCOTTISHPREMTOTAL-26OCT28ABEFAL": "2026-10-29T01:14:05.091805+00:00",
+  "KXSCOTTISHPREMTOTAL-26OCT28CELDUU": "2026-10-29T01:14:05.091805+00:00",
+  "KXSCOTTISHPREMTOTAL-26OCT28DUNKIL": "2026-10-29T01:14:05.091805+00:00",
+  "KXSCOTTISHPREMTOTAL-26OCT28HOMRFC": "2026-10-29T01:14:05.091805+00:00",
+  "KXSCOTTISHPREMTOTAL-26OCT28JOHMOT": "2026-10-29T01:14:05.091805+00:00",
+  "KXSCOTTISHPREMTOTAL-26OCT28MIRHIB": "2026-10-29T01:14:05.091805+00:00",
   "KXSERIEATOTAL-26OCT27ROMCAG": "before the lane's first night",
   "KXSERIEATOTAL-26OCT27SASLAZ": "before the lane's first night",
   "KXSERIEATOTAL-26OCT27TORCOM": "before the lane's first night",
   "KXSERIEATOTAL-26OCT28ACMBFC": "2026-10-28T21:20:01.281235+00:00",
+  "KXSERIEATOTAL-26OCT28GENJUV": "2026-10-29T01:14:05.091805+00:00",
+  "KXSERIEATOTAL-26OCT28MONNAP": "2026-10-29T01:14:05.091805+00:00",
   "KXSERIEATOTAL-26OCT28PARUDI": "2026-10-28T21:20:01.281235+00:00",
   "KXSERIEATOTAL-26OCT28VENINT": "2026-10-28T21:20:01.281235+00:00"
  },
