@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-29T22:01:41.797998+00:00",
+ "last_run": "2026-10-29T23:01:41.373370+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -757,18 +757,29 @@
      "ticker": "KXBRASILEIROTOTAL-26OCT29VDGFLA-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Brasileir\u00e3o over 1.5 YES 0.77"
+    },
+    {
+     "ask": 0.76,
+     "bid": 0.75,
+     "event": "KXBRASILEIROTOTAL-26OCT29GPACAP",
+     "id": "BRA:KXBRASILEIROTOTAL-26OCT29GPACAP",
+     "league": "Brasileir\u00e3o",
+     "line": 1.5,
+     "logged": "2026-10-29T23:01:41.373370+00:00",
+     "match": "Gr\u00eamio v Athletico-PR",
+     "price": 0.76,
+     "rule": "BRA",
+     "side": "yes",
+     "start": "2026-10-30T00:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROTOTAL-26OCT29GPACAP-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Brasileir\u00e3o over 1.5 YES 0.76"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T23:31:41.052028+00:00",
-   "due": 2,
-   "matched": 2,
-   "new": 0,
-   "quoted": 2
-  },
   {
    "at": "2026-10-26T00:01:44.309127+00:00",
    "due": 2,
@@ -1118,11 +1129,16 @@
    "matched": 2,
    "new": 0,
    "quoted": 2
+  },
+  {
+   "at": "2026-10-29T23:01:41.373370+00:00",
+   "due": 1,
+   "matched": 1,
+   "new": 1,
+   "quoted": 1
   }
  ],
  "schedule": [
-  "2026-10-29T22:30:00+00:00",
-  "2026-10-29T23:00:00+00:00",
   "2026-10-30T00:30:00+00:00",
   "2026-10-30T22:00:00+00:00",
   "2026-10-30T23:00:00+00:00",
