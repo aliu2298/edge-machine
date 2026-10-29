@@ -82,7 +82,20 @@ check("  and R1 and R6 are exactly as before",
 check("Eastern date: 03:00Z on Oct 24 is still Oct 23 in New York, so R2 is not yet retired",
       NR.retired("R2", dt.datetime(2026, 10, 24, 3, 0, tzinfo=UTC)), False)
 check("  and 05:00Z on Oct 24 is retired", NR.retired("R2", dt.datetime(2026, 10, 24, 5, 0, tzinfo=UTC)), True)
-check("no other rule is retired", sorted(NR.RETIRED), ["R2"])
+check("2026-10-28: every rule is retired, R2 on its own earlier day",
+      (sorted(NR.RETIRED), NR.RETIRED["R2"]["on"], {k: v["on"] for k, v in NR.RETIRED.items() if k != "R2"} == {k: "2026-10-28" for k in "R1 R3 R4 R5 R6 R7".split()}),
+      (["R1", "R2", "R3", "R4", "R5", "R6", "R7"], "2026-10-24", True))
+EDGE = dt.datetime(2026, 10, 28, 5, 0, tzinfo=UTC)           # 01:00 ET on the 28th
+check("Eastern date: 03:00Z on Oct 28 is still Oct 27 (not retired), 05:00Z is",
+      (NR.retired("R6", dt.datetime(2026, 10, 28, 3, 0, tzinfo=UTC)), NR.retired("R6", EDGE)), (False, True))
+allg = game("O+D+", "O-D-")
+allm = [mkt("SA", 104.5, .80, .82), mkt("SA", 109.5, .68, .70), mkt("HOU", 114.5, .50, .53), mkt("HOU", 99.5, .30, .33),
+        mkt("SA", 114.5, .50, .53)]
+check("before the 28th the labels still enter rules; from the 28th team_picks enters nothing",
+      (bool(NR.team_picks(allg, allm, dt.datetime(2026, 10, 27, 22, 0, tzinfo=UTC))), NR.team_picks(allg, allm, EDGE)), (True, []))
+h1r = [dict(ticker="KXNBA1HTOTAL-26OCT28HOUSAS-114", floor_strike=114.5, status="active", yes_bid_dollars="0.52", yes_ask_dollars="0.55")]
+check("R5 (first half) enters nothing from the 28th",
+      NR.half_picks(game("O+D+", "O+D+", home_h1="O-D-"), h1r, EDGE), [])
 dd2 = game("O+D-", "O-D-")
 d7 = [mkt("SA", 109.5, .52, .55), mkt("SA", 114.5, .40, .42), mkt("HOU", 109.5, .45, .48)]
 check("both D-: R1 and R2 stand aside and R7 fires, before and after the retirement",
@@ -96,7 +109,7 @@ NR.run(st_r2, [gm], ON, lambda path: {"markets": []})
 check("run() leaves the existing R2 rows exactly as they were", st_r2["rules"]["R2"]["picks"], before)
 html_r2 = NB.section(st_r2)
 check("the NBA page shows R2 as Retired with its dated reason and its final record",
-      ("Retired 2026-10-24" in html_r2, "overs priced above hit rate in the ladder tracker" in html_r2, "(1 retired)" in html_r2),
+      ("Retired 2026-10-24" in html_r2, "overs priced above hit rate in the ladder tracker" in html_r2, "(all retired)" in html_r2),
       (True, True, True))
 
 h1 = [dict(ticker="KXNBA1HTOTAL-26OCT20HOUSAS-114", floor_strike=114.5, status="active",

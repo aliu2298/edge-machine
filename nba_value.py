@@ -118,6 +118,25 @@ SCHEDULE_DAYS = 3
 # is observed by the tracker but never entered.
 FIRST_NIGHT = "2026-10-22"
 BASE = {lane: "base_" + lane for lane in LANES}
+# Retired by hand (2026-10-28, Olu): no new entry, for the lane or its blind baseline, from the dated
+# day on (Eastern). The ledger rows stay and open bets still settle; the ladder tracker and the model's
+# data keep running (the Safe Card reads them). The controls and baselines only judged these lanes.
+NO_EDGE = "no edge against Kalshi's NBA totals; model picks hit at the price, the model doesn't beat the line"
+RETIRED_ON = "2026-10-28"
+RETIRED = {
+    TT_1H: dict(on=RETIRED_ON, reason=f"15/33 won, −2.3% after fee; {NO_EDGE}"),
+    TT_24H: dict(on=RETIRED_ON, reason=f"9/23 won, +9.5% after fee; {NO_EDGE}"),
+    Q1_1H: dict(on=RETIRED_ON, reason=f"8/24 won, −36.5% after fee; {NO_EDGE}"),
+    Q1_24H: dict(on=RETIRED_ON, reason=f"no entries; {NO_EDGE}"),
+    FADE_1H: dict(on=RETIRED_ON, reason="15/54 won, −30.0% after fee; control for the retired value lanes, which it judged"),
+    FADE_24H: dict(on=RETIRED_ON, reason="12/24 won, +5.1% after fee; control for the retired value lanes, which it judged"),
+}
+
+
+def retired(lane, now):
+    """True once `lane` is retired as of `now` (its dated day, Eastern, or later). A baseline follows its lane."""
+    r = RETIRED.get(lane[5:] if lane.startswith("base_") else lane)
+    return bool(r) and now.astimezone(D.ET).date().isoformat() >= r["on"]
 CT = ZoneInfo("America/Chicago")
 NAMES = {TT_1H: "NBA team total · model value · 1h", TT_24H: "NBA team total · model value · 24h",
          Q1_1H: "NBA 1Q total · model value · 1h", Q1_24H: "NBA 1Q total · model value · 24h",
@@ -544,6 +563,8 @@ def run(state, track_state, now=None, fetch=D.get, pri=None, season_gap=None):
     st = dict(due=0, looked=0, entered=0, baseline=0)
     cache = {}
     for lane in LANES + CONTROLS:
+        if retired(lane, now):
+            continue                                            # no new look: rows stay, settle() still runs
         for g in sorted(due(lane, games, now), key=lambda g: (str(g.get("start")), g["id"])):
             if f"{lane}:{g['id']}" in state["looks"]:
                 continue

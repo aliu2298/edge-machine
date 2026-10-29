@@ -72,7 +72,11 @@ def lanes_html(state):
             broi, read = "control (no baseline)", f"{read} · {nights}"
         prod = (' <span class="badge stage production">Production</span>'
                 if lane in NP.PAIRS else "")
-        rows.append(f'<tr data-source="{esc(lane)}"><td><b>{esc(V.NAMES[lane])}</b>{prod}<br><span class="sm mut">{esc(lane)}</span></td>'
+        gone = V.RETIRED.get(lane)
+        if gone:
+            prod += (f' <span class="badge stage">Retired {esc(gone["on"])}</span>'
+                     f'<div class="sm mut">{esc(gone["reason"])}. Its entries stay below and settle.</div>')
+        rows.append(f'<tr{" class=\"mut\"" if gone else ""} data-source="{esc(lane)}"><td><b>{esc(V.NAMES[lane])}</b>{prod}<br><span class="sm mut">{esc(lane)}</span></td>'
                     f'<td class="num">{n}</td><td class="num">{a["won"]}</td><td class="num">{a["expected"]:.1f}</td>'
                     f'<td class="num">{a["z"]:+.2f}</td><td class="num">{roi}</td><td class="num">{a["open"]}</td>'
                     f'<td class="num">{broi if control else f"{b['n'] + b['n_price']} · {broi}"}</td><td>{esc(read)}</td></tr>')
@@ -93,7 +97,7 @@ def lanes_html(state):
     defs = "".join(f'<p class="sm"><b>{esc(V.NAMES[k])}</b>: {esc(V.DEFINITION[k])}</p>' for k in (V.TT_1H, V.Q1_1H, V.FADE_1H))
     last = state.get("last_run")
     return f"""<section id="value">
-<div class="nba-section-head"><div><h2>Value lanes</h2><p class="shell-kicker">Model probability v the Kalshi price · team totals and 1st-quarter totals · paper at the ask, 7% fee · the two team-total lanes were in Production {esc(NP.MOVED_ON)} to {esc(NP.PULLED_ON)}, back in the Sandbox</p></div></div>
+<div class="nba-section-head"><div><h2>Value lanes</h2><p class="shell-kicker">Model probability v the Kalshi price · team totals and 1st-quarter totals · paper at the ask, 7% fee · the two team-total lanes were in Production {esc(NP.MOVED_ON)} to {esc(NP.PULLED_ON)}; all six retired {esc(V.RETIRED_ON)}: no new entries, rows stay and settle; the ladder tracker below keeps running</p></div></div>
 <div class="tbl"><table><thead><tr><th>Lane</th><th class="num">Settled</th><th class="num">Won</th><th class="num">Priced</th><th class="num">z (by night)</th><th class="num">ROI after fee</th><th class="num">Open</th><th class="num">Blind baseline</th><th>Read</th></tr></thead>
 <tbody>{"".join(rows)}</tbody></table></div>
 <p class="sm">{esc(compare_html(state))}</p>
@@ -248,9 +252,22 @@ def tracker_html(track):
 </section>"""
 
 
+def _state(state):
+    return state if state is not None else (V.load() if os.path.exists(V.PATH) else V.empty())
+
+
+def _track(track):
+    return track if track is not None else (T.load() if os.path.exists(T.PATH) else T.empty())
+
+
+def lanes_section(state=None):
+    """The retired value lanes (2026-10-28): the board puts them in its collapsed Retired block."""
+    return lanes_html(_state(state))
+
+
+def ladder_section(track=None):
+    return tracker_html(_track(track))
+
+
 def section(state=None, track=None):
-    if state is None:
-        state = V.load() if os.path.exists(V.PATH) else V.empty()
-    if track is None:
-        track = T.load() if os.path.exists(T.PATH) else T.empty()
-    return lanes_html(state) + "\n" + tracker_html(track)
+    return lanes_section(state) + "\n" + ladder_section(track)

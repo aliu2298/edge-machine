@@ -18,6 +18,10 @@ UTC = dt.timezone.utc
 TIP = dt.datetime(2026, 10, 28, 23, 30, tzinfo=UTC)
 
 
+_RETIRED = V.RETIRED
+V.RETIRED = {}                                    # the lane mechanics below are tested before the 2026-10-28 retirement
+
+
 def check(label, got, want):
     ok = got == want
     print(f"  {'ok  ' if ok else 'FAIL'} {label}" + ("" if ok else f" (got {got!r}, want {want!r})"))
@@ -483,6 +487,29 @@ check("the control's public copy passes the guard", sandbox_audit.COPY_RE.search
 check("the control is Sandbox only: not a Sandbox-ledger source, not in Production",
       all(l not in __import__("sandbox_sources").SOURCES and l not in open("production.py").read() for l in V.CONTROLS), True)
 
+V.RETIRED = _RETIRED
+print("\nretired 2026-10-28: no new entries, rows kept, open bets settle, the tracker runs")
+check("all six lanes are retired, with a record and the reason, controls included",
+      (sorted(V.RETIRED), {r["on"] for r in V.RETIRED.values()}), (sorted(V.LANES + V.CONTROLS), {"2026-10-28"}))
+check("every retirement carries its record and the reason",
+      all("won" in r["reason"] or "no entries" in r["reason"] for r in V.RETIRED.values()) and
+      all("no edge against Kalshi" in V.RETIRED[k]["reason"] for k in V.LANES), True)
+EDGE = dt.datetime(2026, 10, 28, 5, 0, tzinfo=UTC)
+check("Eastern date: 03:00Z on Oct 28 is not yet retired, 05:00Z is; a baseline follows its lane",
+      (V.retired(V.TT_1H, dt.datetime(2026, 10, 28, 3, 0, tzinfo=UTC)), V.retired(V.TT_1H, EDGE), V.retired(V.BASE[V.TT_24H], EDGE),
+       V.retired("nba_unknown", EDGE)), (False, True, True, False))
+ret_state = json.loads(json.dumps(state))
+rows_before = {k: [dict(p) for p in v["picks"]] for k, v in ret_state["rules"].items()}
+looks_before = set(ret_state["looks"])
+g_new = dict(GAME, id="9002", start=(TIP + dt.timedelta(days=1)).isoformat())
+g_new.pop("night", None)
+V.run(ret_state, dict(games={"9002": g_new}), TIP + dt.timedelta(days=1) - dt.timedelta(minutes=75), fetch, pri={})
+check("run() after the retirement looks at no game and adds no entry or baseline",
+      ({k: v["picks"] for k, v in ret_state["rules"].items()}, set(ret_state["looks"]) - looks_before), (rows_before, set()))
+V.run(ret_state, dict(games={"9002": g_new}), TIP + dt.timedelta(days=1) - dt.timedelta(hours=24), fetch, pri={})
+check("  nor on the 24h look", {k: v["picks"] for k, v in ret_state["rules"].items()}, rows_before)
+check("settle() still runs after the retirement", ret_state["last_run"] is not None and "runs" in ret_state, True)
+
 print("\nthe page sections")
 html = VB.section(state, dict(tracked=tracked, games={}, last_run=None))
 for lane in V.LANES:
@@ -495,6 +522,19 @@ check("an empty ledger renders", "No tracked game yet" in empty_html and "No ent
 import nba_pace_build
 page = nba_pace_build.build(json.load(open(nba_pace_build.SRC)), now=TIP)
 check("the NBA page carries both sections and the nav", all(x in page for x in ('id="value"', 'id="ladder"', 'href="#ladder"')), True)
+import re
+retired_part = page[page.index('id="retired"'):page.index('id="graded"')]
+check("the retired lanes sit in one collapsed Retired block, never open",
+      ('<details class="section-disclosure nba-retired">' in retired_part, "<details open" in retired_part,
+       'id="rules"' in retired_part and 'id="value"' in retired_part, 'id="ladder"' in retired_part), (True, False, True, False))
+check("the block names every retired lane with its date and reason",
+      (retired_part.count("Retired 2026-10-28") >= 12, "R2" in retired_part and "Retired 2026-10-24" in retired_part,
+       "no edge against Kalshi" in retired_part), (True, True, True))
+order = [page.index(f'id="{i}"') for i in ("cheap-side", "safe-card", "matchups", "ladder", "retired", "graded")]
+check("active lanes first: cheap side, then the Safe Card, then the board; ladder, then Retired",
+      order == sorted(order), True)
+check("the ladder tracker is outside the Retired block and the nav lists it", 'href="#retired"' in page and 'href="#safe-card"' in page, True)
+check("the page no longer says the value lanes are in Production", "in Production since" not in page, True)
 check("no guarded phrase in the copy",
       sandbox_audit.COPY_RE.search(html + open("nba_value.py").read() + open("nba_value_build.py").read()
                                    + open("nba_ladder_track.py").read() + open("nba_value_model.py").read()), None)

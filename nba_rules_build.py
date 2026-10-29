@@ -45,9 +45,9 @@ def section(state=None):
                          f'<td class="num">{p["price"] * 100:.0f}c</td><td>{esc(res + money)}</td></tr>')
     body = "".join(pick_rows) or '<tr><td colspan="8" class="mut">No entries yet: rules enter 20–90 minutes before tip-off once Kalshi lists the game\'s team-total and first-half markets.</td></tr>'
     last = state.get("last_run")
-    retired_note = f" ({len(NR.RETIRED)} retired)" if NR.RETIRED else ""
+    retired_note = (" (all retired)" if len(NR.RETIRED) >= len(NR.RULES) else f" ({len(NR.RETIRED)} retired)") if NR.RETIRED else ""
     return f"""<section id="rules">
-<div class="nba-section-head"><div><h2>Sandbox rules</h2><p class="shell-kicker">Seven label rules from the 2026-27 preseason{retired_note} · paper at the Kalshi ask, 7% fee · not in Production</p></div></div>
+<div class="nba-section-head"><div><h2>Sandbox rules</h2><p class="shell-kicker">Seven label rules from the 2026-27 preseason{retired_note} · no new entries from their retired dates, rows stay and settle · paper at the Kalshi ask, 7% fee · not in Production</p></div></div>
 <div class="tbl"><table><thead><tr><th>Rule</th><th>Definition</th><th class="num">Settled</th><th class="num">Won</th><th class="num">ROI after fee</th><th class="num">Open</th></tr></thead>
 <tbody>{"".join(rows)}</tbody></table></div>
 <details class="section-disclosure"><summary><b>Entries</b><span>latest 25</span></summary>
