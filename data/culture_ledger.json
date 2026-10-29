@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-29T10:00:20.279232+00:00",
-   "last_success": "2026-10-29T10:00:20.279232+00:00",
+   "last_run": "2026-10-29T11:00:21.875080+00:00",
+   "last_success": "2026-10-29T11:00:21.875080+00:00",
    "observations": {
-    "at": "2026-10-29T10:00:20.279232+00:00",
+    "at": "2026-10-29T11:00:21.875080+00:00",
     "events": 966,
     "reasons": {},
     "retired": "2026-10-24"
@@ -548,10 +548,10 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-29T10:00:20.279232+00:00",
-   "last_success": "2026-10-29T10:00:20.279232+00:00",
+   "last_run": "2026-10-29T11:00:21.875080+00:00",
+   "last_success": "2026-10-29T11:00:21.875080+00:00",
    "observations": {
-    "at": "2026-10-29T10:00:20.279232+00:00",
+    "at": "2026-10-29T11:00:21.875080+00:00",
     "events": 966,
     "reasons": {},
     "retired": "2026-10-24"
@@ -905,17 +905,18 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-29T10:00:20.279232+00:00",
-   "last_success": "2026-10-29T10:00:20.279232+00:00",
+   "last_run": "2026-10-29T11:00:21.875080+00:00",
+   "last_success": "2026-10-29T11:00:21.875080+00:00",
    "observations": {
-    "at": "2026-10-29T10:00:20.279232+00:00",
+    "at": "2026-10-29T11:00:21.875080+00:00",
     "events": 966,
     "news_guard": [],
     "reasons": {
      "already near-certain (under 10c or over 90c)": 13,
-     "edge 5c+": 4,
+     "edge 5c+": 5,
+     "edge under 5c": 1,
      "monthly or company series (excluded 2026-10-26)": 76,
-     "no quote or spread too wide": 17
+     "no quote or spread too wide": 15
     }
    },
    "picks": [
@@ -2326,15 +2327,33 @@
      "status": "open",
      "title": "Mortgage",
      "yes_mid": 0.275
+    },
+    {
+     "amended": "2026-10-26",
+     "category": "Mentions",
+     "close": "2026-11-01T15:00:00Z",
+     "detail": "P(said) 0.00 \u00b7 said on 0 of the last 84 days, 3.2 days left \u00b7 edge +0.08",
+     "edge": 0.0843,
+     "event": "KXTRUMPSAYCOUNTRY-26NOV01",
+     "id": "KXTRUMPSAYCOUNTRY-26NOV01-HUN",
+     "logged": "2026-10-29T11:00:21.875080+00:00",
+     "model": 0.0,
+     "name": "What countries will Trump say in October?",
+     "price": 0.91,
+     "series": "KXTRUMPSAYCOUNTRY",
+     "side": "no",
+     "status": "open",
+     "title": "Hungary / Hungarian",
+     "yes_mid": 0.11
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-29T10:00:20.279232+00:00",
-   "last_success": "2026-10-29T10:00:20.279232+00:00",
+   "last_run": "2026-10-29T11:00:21.875080+00:00",
+   "last_success": "2026-10-29T11:00:21.875080+00:00",
    "observations": {
-    "at": "2026-10-29T10:00:20.279232+00:00",
+    "at": "2026-10-29T11:00:21.875080+00:00",
     "events": 966,
     "reasons": {
      "edge 5c+": 3,
@@ -2830,6 +2849,10 @@
    "at": "2026-10-28T19:00:22.857344+00:00",
    "days": []
   },
+  "Hungary / Hungarian": {
+   "at": "2026-10-29T11:00:21.875080+00:00",
+   "days": []
+  },
   "Ilhan / Omar": {
    "at": "2026-10-26T05:00:16.356623+00:00",
    "days": [
@@ -3020,7 +3043,7 @@
    ]
   },
   "Third Term": {
-   "at": "2026-10-29T04:00:20.444087+00:00",
+   "at": "2026-10-29T11:00:21.875080+00:00",
    "days": [
     "2026-09-18",
     "2026-10-01",
@@ -3071,7 +3094,7 @@
    "days": []
   },
   "Zohran / Mamdani": {
-   "at": "2026-10-29T04:00:20.444087+00:00",
+   "at": "2026-10-29T11:00:21.875080+00:00",
    "days": [
     "2026-08-14"
    ]
