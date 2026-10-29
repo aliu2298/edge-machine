@@ -504,8 +504,8 @@ import sandbox_sources as S
 import nba_value_production as NP
 for lane in V.LANES:
     check(f"{lane} is not a Sandbox-ledger source", lane in S.SOURCES, False)
-    check(f"{lane} is in Production only if nba_value_production publishes it (2026-10-24: the team-total pair)",
-          lane in NP.PAIRS, lane in (V.TT_1H, V.TT_24H))
+    check(f"{lane} is in Production only if nba_value_production publishes it (none since 2026-10-28)",
+          lane in NP.PAIRS, False)
 check("the R1-R7 rules are untouched (own ledger)", V.PATH != __import__("nba_rules").PATH, True)
 
 print()

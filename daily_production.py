@@ -28,7 +28,11 @@ DEMOTED_AT = '2026-10-21T02:00:00+00:00'
 
 # The near-certain lanes, in Production from 2026-10-20 (00:00 CT), on a fresh record.
 NC_PROMOTED = '2026-10-20T05:00:00+00:00'
-NC_PAIRS = {lane: lane+'|econ_daily' for lane in D.NC_LANES}
+# econ_nc_no (NO 85-95c, 3h) went back to the Sandbox on 2026-10-28 (Olu), paper on its whole record and
+# still scanned; econ_nc_yes stays. quotes(all_lanes=True) is the Daily page's view of both.
+PULLED_NC = {'econ_nc_no': '2026-10-28'}
+NC_PUBLISHED = tuple(lane for lane in D.NC_LANES if lane not in PULLED_NC)
+NC_PAIRS = {lane: lane+'|econ_daily' for lane in NC_PUBLISHED}
 PATH = os.path.join(D.ROOT, 'data', 'econ_production_leads.json')
 
 
@@ -93,12 +97,14 @@ def _opposite_earlier(nc, lane, r):
     return False
 
 
-def quotes(state):
+def quotes(state, all_lanes=False):
     """The near-certain lanes' rows as ledger quotes; never copied into the Sandbox ledger.
-    A row that does not meet its own lane's registered terms is not published."""
+    A row that does not meet its own lane's registered terms is not published. Only the lanes still in
+    Production unless all_lanes (the Daily page shows the paper lane's record beside them)."""
     out=[]
     nc=state.get('nc') or {}
     for lane,spec in D.NC_LANES.items():
+        if not all_lanes and lane in PULLED_NC:continue
         for r in (nc.get(lane) or {}).get('picks') or []:
             close,logged=D.instant(r.get('close')),D.instant(r.get('logged'))
             price,bid,size=(D.number(r.get(k)) for k in ('price','bid','size'))
@@ -110,7 +116,7 @@ def quotes(state):
                     or (spec['side']=='no' and (D.number(r.get('yes_bid')) is None or D.number(r.get('yes_ask')) is None))):
                 continue
             if r.get('status') not in ('open','won','lost','no_result'):continue
-            if _opposite_earlier(nc,lane,r):continue       # one ladder, one direction a night (2026-10-24)
+            if _opposite_earlier({k:v for k,v in nc.items() if all_lanes or k not in PULLED_NC},lane,r):continue       # one ladder, one direction a night (2026-10-24)
             status=r['status']
             payout=r.get('payout',1 if status=='won' else 0 if status=='lost' else None)
             out.append(_row(lane,r,price,bid,size,'a' if spec['side']=='yes' else 'b',payout))
@@ -127,7 +133,7 @@ def feed(state, now=None, previous=None):
     now=now or dt.datetime.now(dt.timezone.utc)
     nc=state.get('nc') or {}
     stamps,healthy=[],True
-    for lane in D.NC_LANES:
+    for lane in NC_PUBLISHED:
         stamp,ok=_healthy(nc.get(lane) or {},now)
         stamps.append(stamp);healthy=healthy and ok
     rows=quotes(state)
@@ -146,7 +152,7 @@ def feed(state, now=None, previous=None):
             # Settled leads only: a pending one would be a lead with nothing to act on.
             if lid not in blob['leads'] and lead.get('status')!='pending':
                 blob['leads'][lid]=dict(lead,lane='retired',retired_on=DEMOTED_ON)
-    errors=[(nc.get(l) or {}).get('error') for l in D.NC_LANES]
+    errors=[(nc.get(l) or {}).get('error') for l in NC_PUBLISHED]
     blob['collector_error']='; '.join(e for e in errors if e) or None
     blob['collector_healthy']=healthy
     return blob

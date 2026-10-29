@@ -12,6 +12,11 @@ import sandbox_audit
 import sandbox_sources as S
 import sandbox_track as T
 
+# Both lanes went back to the Sandbox on 2026-10-28: nothing is published now. The checks below replay
+# the Production era (2026-10-24 to 2026-10-28) by listing them again for this run.
+check_now = dict(NP.PAIRS)
+NP.PAIRS.update(NP.PULLED)
+
 FAILS = []
 UTC = dt.timezone.utc
 NOW = dt.datetime(2026, 10, 24, 22, 30, tzinfo=UTC)
@@ -44,7 +49,8 @@ yes = pick(NV.TT_1H, "g1", "CLE", "yes", 0.62, 109.5, p=0.71)
 won = pick(NV.TT_24H, "g0", "PHI", "no", 0.40, 112.5, status="won", payout=1.0, profit=139.92, settled="2026-10-24T03:00:00+00:00",
            tip="2026-10-23T23:00:00+00:00")
 
-print("the pairs: two, on their own ledger, nothing else")
+print("the pairs: none since 2026-10-28; replayed as two for the checks below")
+check("no pair is published since 2026-10-28", check_now, {})
 check("two Production pairs, 24h and 1h, on the nba_tt domain", sorted(NP.pairs()), ["nba_tt_value_1h|nba_tt", "nba_tt_value_24h|nba_tt"])
 check("each is staged as moved by hand 2026-10-24", {v["by_hand"] for v in NP.pairs().values()}, {"2026-10-24"})
 check("neither is in stages.json or PAIR_OVERRIDES, so no demotion or same-day flip (#176) can touch them",

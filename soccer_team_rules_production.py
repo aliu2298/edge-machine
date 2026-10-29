@@ -31,9 +31,11 @@ PROMOTED = "2026-10-24T22:00:00+00:00"
 MOVED_ON = "2026-10-24"
 HEALTHY_HOURS = SRP.HEALTHY_HOURS
 # rule key -> (Production source id, the soccer claim domain it publishes on, display name)
-PAIRS = {
-    "T1": ("st_t1", "soccer_team2", "O+D− v O+D− · team 2+ goals"),
-}
+# T1 (st_t1, O+D− v O+D− · team 2+ goals) was the one pair from 2026-10-24 to 2026-10-28; it is
+# back in the Sandbox as paper on its whole record (Olu), still logged by soccer_team_rules.py. The
+# adapter stays so the feed keeps publishing, now with no pair.
+PULLED_ON = "2026-10-28"
+PAIRS = {}
 LABELS = {src: name for src, _sport, name in PAIRS.values()}
 BAND = (TR.PRICE_LO, TR.PRICE_HI)
 TITLE_RE = re.compile(r"^Will (.+?) score over (\d+(?:\.\d+)?) goals\??$", re.I)

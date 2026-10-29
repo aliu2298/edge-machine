@@ -34,8 +34,9 @@ HEALTHY_HOURS = 3
 PAIRS = {
     "A7": ("sr_a7", "soccer_u35", "UCL either team O+D− · over 3.5"),
     "A6": ("sr_a6", "soccer_o25", "EPL O−D− v an O+ opponent · under 2.5"),
-    "D3": ("sr_d3", "soccer_btts", "O−D− v O+D− · both teams to score"),
 }
+# D3 (sr_d3, O−D− v O+D− · both teams to score) was the third pair from 2026-10-21 to 2026-10-28; it
+# is back in the Sandbox as paper on its whole record (Olu), still logged by soccer_rules.py.
 LABELS = {src: name for src, _sport, name in PAIRS.values()}
 # Leagues a rule logs in but does NOT publish to Production. 2026-10-22, as asked (Olu), before
 # Europa League matchday 3: D3 replayed on 2026-27 UEL games (labels from each team's last 10
@@ -43,7 +44,7 @@ LABELS = {src: name for src, _sport, name in PAIRS.values()}
 # 2/5) -- in the UEL the O-D- side often fails to score -- and its research edge was La Liga, Serie
 # A, Primeira and the UCL. soccer_rules.py still logs D3 there, so the UEL keeps being measured
 # as Sandbox paper on the same ledger; it is simply never a Production lead.
-NOT_PUBLISHED = {"D3": {"Europa League"}}
+NOT_PUBLISHED = {}
 
 
 def pairs():
@@ -84,10 +85,9 @@ def _quote(rule, r, league):
 def quotes(rules_state, sa_state):
     """The four rules' entries as Sandbox-style quotes. Read-only."""
     out = []
-    for rule in ("A7", "A6", "D3"):
+    for rule in PAIRS:
         for r in ((rules_state.get("rules") or {}).get(rule) or {}).get("picks") or []:
-            if r.get("league") in NOT_PUBLISHED.get(rule, ()) or (
-                    rule == "D3" and str(r.get("ticker") or "").startswith("KXUELBTTS")):
+            if r.get("league") in NOT_PUBLISHED.get(rule, ()):
                 continue
             q = _quote(rule, r, r.get("league"))
             if q:
@@ -106,7 +106,7 @@ def feed(rules_state, sa_state, now=None, previous=None):
     import production as P
     now = now or dt.datetime.now(dt.timezone.utc)
     rows = quotes(rules_state, sa_state)
-    ok = {PAIRS[k][0]: _healthy(rules_state, now) for k in ("A7", "A6", "D3")}
+    ok = {PAIRS[k][0]: _healthy(rules_state, now) for k in PAIRS}
     # A stale or failed read keeps the settled history but publishes no actionable entry.
     rows = [r for r in rows if r["status"] != "open" or ok.get(r["source"])]
     stamps = [D.instant(s.get("last_run")) for s in (rules_state, sa_state)]

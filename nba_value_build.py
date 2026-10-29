@@ -93,7 +93,7 @@ def lanes_html(state):
     defs = "".join(f'<p class="sm"><b>{esc(V.NAMES[k])}</b>: {esc(V.DEFINITION[k])}</p>' for k in (V.TT_1H, V.Q1_1H, V.FADE_1H))
     last = state.get("last_run")
     return f"""<section id="value">
-<div class="nba-section-head"><div><h2>Value lanes</h2><p class="shell-kicker">Model probability v the Kalshi price · team totals and 1st-quarter totals · paper at the ask, 7% fee · the two team-total lanes are in Production since {esc(NP.MOVED_ON)}, the rest are not</p></div></div>
+<div class="nba-section-head"><div><h2>Value lanes</h2><p class="shell-kicker">Model probability v the Kalshi price · team totals and 1st-quarter totals · paper at the ask, 7% fee · the two team-total lanes were in Production {esc(NP.MOVED_ON)} to {esc(NP.PULLED_ON)}, back in the Sandbox</p></div></div>
 <div class="tbl"><table><thead><tr><th>Lane</th><th class="num">Settled</th><th class="num">Won</th><th class="num">Priced</th><th class="num">z (by night)</th><th class="num">ROI after fee</th><th class="num">Open</th><th class="num">Blind baseline</th><th>Read</th></tr></thead>
 <tbody>{"".join(rows)}</tbody></table></div>
 <p class="sm">{esc(compare_html(state))}</p>

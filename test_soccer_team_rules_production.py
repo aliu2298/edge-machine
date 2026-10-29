@@ -12,6 +12,12 @@ import soccer_team_rules as TR
 import soccer_team_rules_build as TB
 import soccer_team_rules_production as TP
 
+# T1 went back to the Sandbox on 2026-10-28. The checks below replay its Production era
+# (2026-10-24 to 2026-10-28) by listing it again for this run; the real state is checked first.
+_NOW_PAIRS = dict(TP.PAIRS)
+TP.PAIRS["T1"] = ("st_t1", "soccer_team2", "O+D− v O+D− · team 2+ goals")
+TP.LABELS = {src: name for src, _sport, name in TP.PAIRS.values()}
+
 FAILS = []
 UTC = dt.timezone.utc
 NOW = dt.datetime(2026, 10, 25, 13, 5, tzinfo=UTC)
@@ -45,6 +51,8 @@ state = {"last_run": (NOW - dt.timedelta(minutes=10)).isoformat(), "error": None
     "T4": {"picks": [pick("T4", "KXEPLTEAMTOTAL-26OCT25CRYNEW-CRY2", "Crystal Palace v Newcastle", "Crystal Palace",
                           "Newcastle", "Premier League", 0.45)]}}}
 
+print("no pair is published since 2026-10-28; T1 replayed for the checks below")
+check("nothing is published now", _NOW_PAIRS, {})
 print("only T1, on the existing team 2+ claim")
 qs = TP.quotes(state)
 check("T1 alone, its five leagues only", sorted(q["market_id"] for q in qs),
@@ -85,8 +93,9 @@ check("the Control Center counts it once and names it", (m1["tiles"]["pairs"] - 
                                                           [n for n in m1["prod_outside"] if n in TP.LABELS.values()]),
       (1, list(TP.LABELS.values())))
 sec = TB.section(state)
-check("the Soccer page marks T1, and only T1, as in Production",
-      (sec.count("Production since 2026-10-24") >= 1, "T1 in Production since 2026-10-24" in sec), (True, True))
+check("the Soccer page says T1 was in Production 2026-10-24 to 2026-10-28 and is back in the Sandbox",
+      (sec.count("Production 2026-10-24 to 2026-10-28, back in the Sandbox") >= 1,
+       "T1 was in Production 2026-10-24 to 2026-10-28" in sec), (True, True))
 check("no guarded public phrase in the leads or the section",
       sandbox_audit.COPY_RE.findall(" ".join(l["headline"] + " " + l["id"] for l in f["leads"].values()) + sec), [])
 

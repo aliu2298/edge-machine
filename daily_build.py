@@ -7,11 +7,13 @@ and the S&P near-certain NO lane (finance_nc.py) is its Sandbox rule.
 """
 import datetime as dt
 import os
+import daily_production as DP0
 import daily_track as D
 import fmt
 import site_chrome as C
 import sport_page as SP
 
+DP_PULLED = DP0.PULLED_NC
 OLD_NAME = {'econ_daily': 'econ_daily_fav_band', 'finance_daily': 'finance_daily_fav_band'}
 OLD_RULE_NAME = 'Favourite band · 3h to the close'
 RETIRED_NOTE = (' Retired 2026-10-20: research on 94 settled KXINXU/KXNASDAQ100U 16:00 ET ladders, '
@@ -126,7 +128,7 @@ def build(key, state=None, now=None, nc=None):
                       ('Selection', 'Cheapest qualifying rung per event; ties to the lower ticker; '
                                     'one market, one lane (this pair and its twin never hold the same rung), and from 2026-10-24 one ladder, one direction a night: if the other lane already holds the event, this lane skips it'),
                       ('Liquidity', f'≤3¢ spread, 25+ contracts at the {side} ask'),
-                      ('Record', 'Production from 2026-10-20, fresh record · official Kalshi settlement · 7% fee')]
+                      ('Record', ('Production from 2026-10-20, fresh record' if r['name'] not in DP_PULLED else f'Production 2026-10-20 to {DP_PULLED[r["name"]]}, back in the Sandbox on its whole record') + ' · official Kalshi settlement · 7% fee')]
             note = ' '.join((D.NC_RULE[r['name']], D.NC_RESEARCH[r['name']], D.NC_WHY, D.NC_CAVEAT[r['name']], D.NC_AMENDMENT))
         else:
             params = [('Entry','YES 70–80¢, 2–3.5h before the close'),
@@ -180,7 +182,7 @@ def build(key, state=None, now=None, nc=None):
                                'picked':sum(x['eligible'] for x in observed)}}} if lane.get('last_success') else {}
     if econ:
         description = D.NC_RULE['econ_nc_yes']+' '+D.NC_RULE['econ_nc_no']
-        scope = 'Near-certain AAA gas and diesel rungs · Production'
+        scope = 'Near-certain AAA gas and diesel rungs · YES in Production, NO paper'
     elif finance:
         description = 'S&P 500 near-certain NO, 90–98¢, 2–3.5h before the close; paper only.'
         scope = 'S&P near-certain NO · paper only'
@@ -195,7 +197,7 @@ def build(key, state=None, now=None, nc=None):
     data, stages = {'quotes':[], 'coverage':coverage}, {'pairs':{}}
     if econ:
         import daily_production as DP
-        data['quotes'] = DP.quotes(state)
+        data['quotes'] = DP.quotes(state, all_lanes=True)
         stages['pairs'] = DP.pairs()
     html = SP.page(spec, data, stages, now, rows=rows)
     # Keep the template's design while preserving these lanes' record semantics:
