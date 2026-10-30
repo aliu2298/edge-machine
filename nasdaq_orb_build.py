@@ -16,6 +16,16 @@ def _f(x, unit="bp", sign=True):
     return f"{x:+.1f}{unit}" if sign else f"{x:.1f}{unit}"
 
 
+def _retired_line():
+    """One sentence naming the retired variants, from nasdaq_orb.RETIRED."""
+    if not N.RETIRED:
+        return ""
+    names = " and ".join(sorted(N.RETIRED))
+    last = sorted({v[0] for v in N.RETIRED.values()})
+    return (f"{names} are retired: last day {' / '.join(last)}, the review point at {N.REVIEW_AT} days. No edge, and "
+            "they lost before costs too. They log no new days after it; their record stays below.")
+
+
 def section(state=None):
     state = N.load() if state is None else state
     summ = N.summary(state)
@@ -25,6 +35,16 @@ def section(state=None):
         win = "—" if s["win"] is None else f"{s['win'] * 100:.0f}%"
         t = "—" if s["t"] is None else f"{s['t']:+.2f}"
         review = "review due" if not need else f"{need} more day" + ("s" if need != 1 else "")
+        if s.get("retired"):
+            # Retired after its last logged day. Until that day has settled it is still the last day.
+            if any(r["variant"] == k and r["day"] >= s["retired"] and r["status"] in ("settled", "no_break", "skipped", "no_data")
+                   for r in state.get("rows") or []):
+                review = f'Retired {s["retired"]} at {s["days"]} days, {s["retired_why"]}'
+            else:
+                review = f'last day {s["retired"]}, then retired ({s["retired_why"]})'
+            review = f'<b>{esc(review)}</b>'
+        else:
+            review = esc(review)
         rows.append(f'<tr><td><b>{esc(k)}</b></td><td>{esc(s["label"])}</td>'
                     f'<td class="num">{s["days"]}</td><td class="num">{s["trades"]}</td>'
                     f'<td class="num">{win}</td>'
@@ -55,7 +75,7 @@ def section(state=None):
 <h2>Nasdaq open breakout (paper)</h2>
 <p class="sm">Paper · never places an order · not in Production. QQQ opening-range breakout, four
 pre-registered variants, one row each per trading day, no stop, one position. Reviewed at
-{N.REVIEW_AT}+ settled days per variant.</p>
+{N.REVIEW_AT}+ settled days per variant. {esc(_retired_line())}</p>
 <div class="tbl"><table><thead><tr><th>Variant</th><th>Rule</th><th class="num">Days</th><th class="num">Trades</th>
 <th class="num">Win</th><th class="num">Avg gross</th><th class="num">Avg net</th><th class="num">Avg spread</th>
 <th class="num">t</th><th>Review</th></tr></thead><tbody>{"".join(rows)}</tbody></table></div>

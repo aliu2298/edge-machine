@@ -1735,7 +1735,7 @@ def sport_sections(d, rows):
 
 
 TRADE_HEAD = ('<tr><th>Rule</th><th>Verdict</th><th class="num">Entry days</th>'
-              '<th class="num">Trades</th><th class="num">Mean per day</th>'
+              '<th class="num">Trades</th><th class="num">Cost a side</th><th class="num">Mean per day</th>'
               '<th class="num">Edge</th><th class="num">P/L</th><th class="num">Last</th></tr>')
 
 
@@ -1825,7 +1825,8 @@ def trade_exec_html(fills, exiting=0):
     cost = ("nothing filled against a recorded price yet" if not s.get("fills") else
             f'{int(s["fills"])} fills matched to the record, measured cost '
             f'{s["mean_bps"]:+.1f}bp a side on average against the '
-            f'{float(s.get("assumed_bps_per_side") or 0):.0f}bp the record assumes')
+            f'{float(s.get("assumed_bps_per_side") or 0):.0f}bp the record first assumed; the rules '
+            f'table charges the measured cost')
     drift = (f'<b class="neg">{int(s["orphans"])} fill(s) have no trade in the record.</b> '
              if s.get("orphans") else "")
     updated = fills.get("updated")
@@ -1843,12 +1844,39 @@ def trade_exec_html(fills, exiting=0):
     return (f'<p class="sm trade-exec">{head}{(" · held by two rules: " + tags) if tags else ""}</p>{detail}')
 
 
-def trading_rows(md):
-    """The trading lane: one row per rule, counted per ENTRY DAY (see market_track)."""
+def cost_note_html(cost):
+    """How the cost a side is derived, under the rules table (market_track.measured_cost)."""
+    import market_sources as MS
+    import market_track as MT
+    assumed = MS.COST_BPS_PER_SIDE
+    if not cost:
+        return (f'<p class="sm trade-cost">Cost: {assumed:g}bp a side, assumed. No Alpaca fill check '
+                f'has been published, so nothing has measured it yet.</p>')
+    since = f" since {_trade_day(cost['since'])}" if cost.get("since") else ""
+    return (f'<p class="sm trade-cost">Cost a side is <b>measured</b> from the Alpaca paper fills: '
+            f'<b>{cost["pooled"]:+.1f}bp</b> over {cost["n"]} fills{esc(since)}, against the '
+            f'{assumed:g}bp a side the record first assumed, which is shown beneath each figure.</p>'
+            '<details class="fold trade-cost-detail"><summary>How the cost is measured</summary>'
+            f'<p class="sm">From 2026-10-29 every rule is judged at the mean adverse gap between each '
+            f'Alpaca paper fill and the open the record used, positive on both sides. It rolls: the '
+            f'fill check reads the last 120 days of orders every weekday. A rule with '
+            f'{MT.MIN_RULE_FILLS}+ fills of its own is charged its own mean; one with fewer is '
+            f'charged the mean over all fills. It is more than slippage: the record\'s open is '
+            f'IEX\'s first print, and an order fills in the opening auction.</p>'
+            f'<p class="sm">The ledger still stores each trade at {assumed:g}bp a side; the page '
+            f'charges the measured cost when it judges. Entry and exit rules are unchanged.</p></details>')
+
+
+def trading_rows(md, cost=None):
+    """The trading lane: one row per rule, counted per ENTRY DAY (see market_track).
+
+    With `cost` (market_track.measured_cost) each row is judged at the cost the Alpaca fills
+    measured, and the 5bp the ledger assumes is shown under each figure for comparison."""
+    import market_sources as MS
     import market_track as MT
     import sport_page
     rows = []
-    for r in sorted(MT.report(md), key=lambda r: (MT.VERDICTS[r["verdict"]][2], -r["days"])):
+    for r in sorted(MT.report(md, cost=cost), key=lambda r: (MT.VERDICTS[r["verdict"]][2], -r["days"])):
         meta = MT.RULES[r["rule"]]
         badge = sport_page.verdict_badge(dict(v=r["verdict"], a={"n": r["days"]}), floor=MT.READ_FLOOR)
         more = (f'<div class="sm mut">{MT.READ_FLOOR - r["days"]} more entry days to read</div>'
@@ -1862,16 +1890,29 @@ def trading_rows(md):
         # its own row: its record is graded like every other, but no Alpaca order backs it.
         record_only = (f'<div class="sm mut trade-record-only">{esc(RECORD_ONLY)}</div>'
                        if meta.get("entry") == "close" else "")
+        # Judged at the measured cost; the same record at the ledger's assumed 5bp sits under
+        # each figure, so the change of cost is visible rather than silent.
+        a = r.get("assumed")
+        assumed_bps = MS.COST_BPS_PER_SIDE
+        was = lambda x: f'<div class="sm mut trade-assumed">at {assumed_bps:g}bp: {x}</div>'
+        plain = lambda x: "—" if x is None else fmt.pct(x, digits=2, sign=True)
+        if a and r["cost_from"] != "assumed":
+            cost_cell = f'{r["cost_bps"]:.1f}bp<div class="sm mut">measured · {esc(r["cost_from"])}</div>'
+        else:
+            cost_cell = f'{r.get("cost_bps", assumed_bps):g}bp<div class="sm mut">assumed</div>'
+        if a and a["verdict"] != r["verdict"]:
+            more += was(esc(MT.VERDICTS[a["verdict"]][0]))
         rows.append(f"""<tr><td><b>{esc(meta['label'])}</b>
 <div class="sm mut">{esc(meta['lane'].title())} · {esc(r['rule'])}</div>{record_only}</td>
 <td>{badge}{more}</td>
 <td class="num">{r['days']}</td>
 <td class="num">{r['trades']}<div class="sm mut">{r['open']} open</div></td>
-<td class="num">{pc(r['mean'])}<div class="sm mut">{fmt.tstat(r['t']) if r['days'] > 1 else ''}</div></td>
-<td class="num">{pc(r['edge'])}<div class="sm mut">{vs}{(" · " + fmt.tstat(r['edge_t'])) if r['days'] > 1 else ''}</div></td>
-<td class="num {cls(r['total'])}">{money(r['total']) if r['trades'] else '—'}</td>
+<td class="num">{cost_cell}</td>
+<td class="num">{pc(r['mean'])}<div class="sm mut">{fmt.tstat(r['t']) if r['days'] > 1 else ''}</div>{was(plain(a['mean']) + (" · " + fmt.tstat(a['t']) if r['days'] > 1 else "")) if a else ''}</td>
+<td class="num">{pc(r['edge'])}<div class="sm mut">{vs}{(" · " + fmt.tstat(r['edge_t'])) if r['days'] > 1 else ''}</div>{was(plain(a['edge'])) if a else ''}</td>
+<td class="num {cls(r['total'])}">{money(r['total']) if r['trades'] else '—'}{was(money(a['total'])) if a and r['trades'] else ''}</td>
 <td class="num mut sm">{esc(_trade_day(r['last']))}</td></tr>
-<tr class="rule-about"><td colspan="8"><details class="rule-more"><summary>What this rule does</summary>
+<tr class="rule-about"><td colspan="9"><details class="rule-more"><summary>What this rule does</summary>
 <div class="sm mut">{esc(meta['note'])}</div>
 <div class="sm mut">Backtest before the lane went live ({esc(_trade_day((r.get('research_window') or ['', ''])[0]))} to
 {esc(_trade_day((r.get('research_window') or ['', ''])[1]))}, not part of the record above):
@@ -2300,12 +2341,14 @@ def trading_page(now=None):
     if now_dt.tzinfo is None:
         now_dt = now_dt.replace(tzinfo=timezone.utc)
     md = MT.load()
-    trade_rules = MT.report(md)
+    fills = load_fills()
+    cost = MT.measured_cost(fills)
+    trade_rules = MT.report(md, cost=cost)
     trade_open = sum(r["open"] for r in trade_rules)
     trade_note = (f'<p class="sm trade-source">Run by {esc(TRADE_RUNNER)}. The table is each '
                   f'rule\'s <b>paper record</b> since its registration, every signal at the bar\'s '
                   f'open; it is not the Alpaca account.</p>'
-                  f'{trade_exec_html(load_fills(), MT.exiting(md))}')
+                  f'{trade_exec_html(fills, MT.exiting(md))}')
     body = f"""<h1>Trading</h1>
 <p class="lede">Stock and ETF rules under test, judged per entry day. Paper only.</p>
 <div class="tiles">
@@ -2318,11 +2361,13 @@ def trading_page(now=None):
 {trade_note}
 <section id="rules">
 <h2>Stock and ETF rules under test</h2>
-<div class="tbl"><table>{TRADE_HEAD}{trading_rows(md)}</table></div>
+<div class="tbl"><table>{TRADE_HEAD}{trading_rows(md, cost)}</table></div>
+{cost_note_html(cost)}
 <details class="fold trade-method"><summary>How the record is kept</summary>
 <div class="note sm">Each rule is <b>pre-registered</b>: its thresholds and the reason for them are fixed before it
 logs a trade. A trade is logged only from bars that closed BEFORE it, and enters at the <b>next</b> bar's open —
-never the signal bar's close. Costs of {int(MS.COST_BPS_PER_SIDE)}bp a side are charged on entry and exit.
+never the signal bar's close. Costs are charged on entry and exit, at the cost the Alpaca fills measured
+(above the table); the ledger itself stores each trade at the {MS.COST_BPS_PER_SIDE:g}bp a side first assumed.
 <b>Judged per entry day</b>, because names bought the same morning rise and fall together, and against
 <b>SPY over the identical days</b>: beating a rising market is not an edge. Read at {MT.READ_FLOOR}+ entry days
 (<i>Working</i>, <i>No edge</i> or <i>Proven</i>); from {MT.EARLY_N} it is <i>Collecting n/{MT.READ_FLOOR}</i>
