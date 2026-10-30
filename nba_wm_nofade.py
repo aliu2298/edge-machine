@@ -1,5 +1,5 @@
 """NBA win margin NO FADE (2026-10-30, Olu): a resting NO buy at a dip in a win-margin bucket, sold back at the
-pregame price. Sandbox PAPER, no orders, no bot. Its own ledger, data/nba_wm_nofade.json.
+pregame price. Sandbox PAPER, no live orders. Its own ledger, data/nba_wm_nofade.json.
 
 Research (dip_study_2026-10-30, NBA win margin, Oct 20-28): when a bucket's YES spikes its NO crashes, and the spike
 reverts. P = the NO price an hour before the tip (1 - the YES bid), YES spread 5c or less, P 10-95c. After the tip a
