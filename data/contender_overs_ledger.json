@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-30T18:31:29.154154+00:00",
+ "last_run": "2026-10-30T18:46:16.122131+00:00",
  "rules": {
   "O15": {
    "picks": [
@@ -224,6 +224,47 @@
      "ticker": "KXLIGAPORTUGALTOTAL-26OCT26SCLBEN-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "SL Benfica in a top-3 title spot \u00b7 over 1.5 YES 0.82"
+    },
+    {
+     "ask": 0.84,
+     "bid": 0.83,
+     "contenders": [
+      {
+       "ask": 0.54,
+       "bid": 0.52,
+       "mid": 0.53,
+       "team": "Porto"
+      },
+      {
+       "ask": 0.33,
+       "bid": 0.3,
+       "mid": 0.315,
+       "team": "SL Benfica"
+      },
+      {
+       "ask": 0.09,
+       "bid": 0.04,
+       "mid": 0.065,
+       "team": "Sporting CP"
+      }
+     ],
+     "contenders_in": [
+      "Sporting CP"
+     ],
+     "event": "KXLIGAPORTUGALTOTAL-26OCT30CASSPO",
+     "id": "O15:KXLIGAPORTUGALTOTAL-26OCT30CASSPO",
+     "league": "Primeira Liga",
+     "line": 1.5,
+     "logged": "2026-10-30T18:46:16.122131+00:00",
+     "match": "Casa Pia v Sporting CP",
+     "price": 0.84,
+     "rule": "O15",
+     "side": "yes",
+     "start": "2026-10-30T20:15Z",
+     "status": "open",
+     "ticker": "KXLIGAPORTUGALTOTAL-26OCT30CASSPO-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Sporting CP in a top-3 title spot \u00b7 over 1.5 YES 0.84"
     }
    ]
   },
@@ -449,6 +490,47 @@
      "ticker": "KXLIGAPORTUGALTOTAL-26OCT26SCLBEN-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "SL Benfica in a top-3 title spot \u00b7 over 2.5 YES 0.60"
+    },
+    {
+     "ask": 0.64,
+     "bid": 0.63,
+     "contenders": [
+      {
+       "ask": 0.54,
+       "bid": 0.52,
+       "mid": 0.53,
+       "team": "Porto"
+      },
+      {
+       "ask": 0.33,
+       "bid": 0.3,
+       "mid": 0.315,
+       "team": "SL Benfica"
+      },
+      {
+       "ask": 0.09,
+       "bid": 0.04,
+       "mid": 0.065,
+       "team": "Sporting CP"
+      }
+     ],
+     "contenders_in": [
+      "Sporting CP"
+     ],
+     "event": "KXLIGAPORTUGALTOTAL-26OCT30CASSPO",
+     "id": "O25:KXLIGAPORTUGALTOTAL-26OCT30CASSPO",
+     "league": "Primeira Liga",
+     "line": 2.5,
+     "logged": "2026-10-30T18:46:16.122131+00:00",
+     "match": "Casa Pia v Sporting CP",
+     "price": 0.64,
+     "rule": "O25",
+     "side": "yes",
+     "start": "2026-10-30T20:15Z",
+     "status": "open",
+     "ticker": "KXLIGAPORTUGALTOTAL-26OCT30CASSPO-3",
+     "title": "Will over 2.5 goals be scored?",
+     "why": "Sporting CP in a top-3 title spot \u00b7 over 2.5 YES 0.64"
     }
    ]
   },
@@ -674,18 +756,52 @@
      "ticker": "KXLIGAPORTUGALTOTAL-26OCT26SCLBEN-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "SL Benfica in a top-3 title spot \u00b7 over 3.5 YES 0.37"
+    },
+    {
+     "ask": 0.42,
+     "bid": 0.41,
+     "contenders": [
+      {
+       "ask": 0.54,
+       "bid": 0.52,
+       "mid": 0.53,
+       "team": "Porto"
+      },
+      {
+       "ask": 0.33,
+       "bid": 0.3,
+       "mid": 0.315,
+       "team": "SL Benfica"
+      },
+      {
+       "ask": 0.09,
+       "bid": 0.04,
+       "mid": 0.065,
+       "team": "Sporting CP"
+      }
+     ],
+     "contenders_in": [
+      "Sporting CP"
+     ],
+     "event": "KXLIGAPORTUGALTOTAL-26OCT30CASSPO",
+     "id": "O35:KXLIGAPORTUGALTOTAL-26OCT30CASSPO",
+     "league": "Primeira Liga",
+     "line": 3.5,
+     "logged": "2026-10-30T18:46:16.122131+00:00",
+     "match": "Casa Pia v Sporting CP",
+     "price": 0.42,
+     "rule": "O35",
+     "side": "yes",
+     "start": "2026-10-30T20:15Z",
+     "status": "open",
+     "ticker": "KXLIGAPORTUGALTOTAL-26OCT30CASSPO-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Sporting CP in a top-3 title spot \u00b7 over 3.5 YES 0.42"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-26T19:01:47.488817+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "qualifying": 0
-  },
   {
    "at": "2026-10-26T20:31:27.021908+00:00",
    "due": 0,
@@ -1035,6 +1151,13 @@
    "matched": 0,
    "new": 0,
    "qualifying": 0
+  },
+  {
+   "at": "2026-10-30T18:46:16.122131+00:00",
+   "due": 1,
+   "matched": 1,
+   "new": 3,
+   "qualifying": 1
   }
  ],
  "version": "contender-overs-v1"
