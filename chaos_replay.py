@@ -203,7 +203,8 @@ def normalise(c):
     yb, ya = c.get("yes_bid") or {}, c.get("yes_ask") or {}
     px = c.get("price") or {}
     row = dict(ts=ts, bid=_f(yb, "close"), ask=_f(ya, "close"), bid_lo=_f(yb, "low"), bid_hi=_f(yb, "high"),
-               ask_lo=_f(ya, "low"), ask_hi=_f(ya, "high"), px_hi=_f(px, "high"), px_lo=_f(px, "low"))
+               ask_lo=_f(ya, "low"), ask_hi=_f(ya, "high"), px_hi=_f(px, "high"), px_lo=_f(px, "low"),
+               px_close=_f(px, "close"), vol=D.number(c.get("volume_fp", c.get("volume"))) or 0.0)
     if not isinstance(ts, (int, float)) or row["bid"] is None or row["ask"] is None:
         return None
     for k in ("bid_lo", "bid_hi"):
@@ -228,7 +229,7 @@ def dense(candles, start_ts, end_ts):
                 out.append(dict(last))
             else:
                 out.append(dict(ts=t, bid=last["bid"], ask=last["ask"], bid_lo=last["bid"], bid_hi=last["bid"],
-                                ask_lo=last["ask"], ask_hi=last["ask"], px_hi=None, px_lo=None))
+                                ask_lo=last["ask"], ask_hi=last["ask"], px_hi=None, px_lo=None, px_close=None, vol=0.0))
         t += 60
     return out
 
@@ -351,6 +352,42 @@ def simulate(minutes, side, result, start_ts, hours, exit_key, spread=MAX_SPREAD
     if exit_key in LEGGED:
         return [_split_trade(vs, i, result == side, LEGGED[exit_key], start_ts if fill_from_start else None)]
     return [_trade(vs, i, result == side, EXITS[exit_key])]
+
+
+def entry_check(minutes, side, i, opened_ts=None):
+    """The entry-validity check (mentions_split's rule, 2026-10-30) on a replayed entry at minute i of a
+    market's dense minute rows, bought on `side` at its ask: verified only when MS.MIN_SIZE or more
+    contracts traded at or through that ask within MS.PRINT_WINDOW_MIN minutes after it, and the ask is
+    not under half the last trade before it. A replay is read long after the book has moved on, so the
+    print is the only evidence (source "replayed"). An entry in the market's first minutes is flagged."""
+    import mentions_split as MS
+    m = minutes[i]
+    ask = view(m, side)["ask"]
+    closes = [r["px_close"] for r in minutes[:i + 1] if r.get("px_close") is not None]
+    last = None if not closes else (closes[-1] if side == "yes" else round(1 - closes[-1], 4))
+    out = dict(source="replayed", last_trade=last, book=None,
+               first_quotes=opened_ts is not None and m["ts"] - opened_ts <= MS.FIRST_QUOTES_MIN * 60)
+    if last is not None and ask < MS.LAST_TRADE_FLOOR * last - EPS:
+        return dict(out, status="unverified", reason=f"ask {ask:.2f} under half the last trade {last:.2f}")
+    after = [r for r in minutes[i + 1:] if r["ts"] <= m["ts"] + MS.PRINT_WINDOW_MIN * 60]
+
+    def through(r):
+        if side == "yes":
+            return r.get("px_lo") is not None and r["px_lo"] <= ask + EPS
+        return r.get("px_hi") is not None and r["px_hi"] >= 1 - ask - EPS
+    printed = round(sum(r.get("vol") or 0 for r in after if through(r)), 2)
+    out["printed"] = printed
+    if printed >= MS.MIN_SIZE:
+        return dict(out, status="verified", how="print")
+    return dict(out, status="unverified", reason=f"{printed:g} contracts traded at or through the ask within "
+                                                  f"{MS.PRINT_WINDOW_MIN} minutes (under {MS.MIN_SIZE})")
+
+
+def counted(trades, L=None):
+    """Trades the record counts: under the ask rule (L["ask_rule_since"]), only entries whose ask verified."""
+    if not (L or {}).get("ask_rule_since"):
+        return list(trades)
+    return [t for t in trades if (t.get("ask") or {}).get("status") == "verified"]
 
 
 # ---------- pickers: which market and side a lane buys ----------
@@ -523,10 +560,13 @@ def replay_event(lane, series, event, fetch, now=None):
             ms = mins.get(ticker)
             if not ms:
                 continue
+            check = None
             for ex in lane_exits(lane):
                 for t in simulate(ms, side, results[ticker], start_ts, hours, ex, spread, bool(lane.get("fill_from_start"))):
+                    if check is None:
+                        check = entry_check(ms, side, t["entry_i"], _ts((ctx0["markets"].get(ticker) or {}).get("open_time")))
                     trades.append(dict(t, variant=vkey(hours, ex), hours=hours, exit_key=ex, event=event, ticker=ticker,
-                                       side=side, night=night, start_ts=start_ts, start_how=how))
+                                       side=side, night=night, start_ts=start_ts, start_how=how, ask=check))
     return trades, None
 
 
@@ -592,6 +632,33 @@ def _backfill(L, lane, now, fetch, errs):
                         and (t["ticker"], t["side"], t["hours"], t["exit_key"]) not in have]
 
 
+def _ask_backfill(L, lane, now, fetch, errs):
+    """Annotate trades recorded before the ask rule (2026-10-30) with their entry's ask check, by
+    re-replaying their events; the check is ADDED to each trade (t["ask"]), nothing else is edited.
+    The lane's figure before the rule is kept once as L["voided"]."""
+    if not L.get("ask_rule_since"):
+        rows = [t for t in L["trades"] if t["exit_key"] in ("hold", SPLIT)]
+        sp, hd = stats([t for t in rows if t["exit_key"] == SPLIT]), stats([t for t in rows if t["exit_key"] == "hold"])
+        L["voided"] = dict(on=now.date().isoformat(), entries=len({(t["event"], t["ticker"], t["side"], t["hours"]) for t in rows}),
+                           events=len({t["event"] for t in rows}), split=sp["roi"], hold=hd["roi"])
+        L["ask_rule_since"] = now.isoformat()
+    todo = sorted({t["event"] for t in L["trades"] if "ask" not in t})[:MAX_EVENTS_PER_RUN]
+    for event in todo:
+        series = next((x for x in lane["series"] if event.startswith(x + "-")), None)
+        if not series:
+            continue
+        try:
+            trades, note = replay_event(lane, series, event, fetch, now)
+        except Exception as e:                                  # noqa: BLE001
+            errs.append(f"{lane['id']} ask check {event}: {str(e)[:80]}")
+            continue
+        got = {(t["ticker"], t["side"], t["hours"]): t["ask"] for t in trades or []}
+        for t in L["trades"]:
+            if t["event"] == event and "ask" not in t:
+                t["ask"] = got.get((t["ticker"], t["side"], t["hours"])) or dict(
+                    status="unverified", source="replayed", reason=f"its entry could not be replayed again ({note or 'no entry'})")
+
+
 def run(state, lanes, now=None, fetch=D.get):
     """Replay every settled, not yet replayed event of every lane. Returns {lane id: new trades}."""
     now = now or dt.datetime.now(UTC)
@@ -636,6 +703,7 @@ def run(state, lanes, now=None, fetch=D.get):
         L = state["lanes"].get(lane["id"])
         if L:
             _backfill(L, lane, now, fetch, errs)
+            _ask_backfill(L, lane, now, fetch, errs)
     state["last_run"] = now.isoformat()
     state["error"] = "; ".join(errs)[:1000] or None
     state["runs"] = (state.get("runs") or [])[-50:] + [dict(at=now.isoformat(), new={k: len(v) for k, v in new.items()})]
@@ -678,7 +746,7 @@ def lane_table(L):
     """{variant: dict(lane stats, control stats, delta, flag)}: each variant against the same entry held
     to settlement (the control), the hold rows against nothing."""
     out = {}
-    trades = L.get("trades") or []
+    trades = counted(L.get("trades") or [], L)
     for key in variants_of(L):
         rows = _rows(trades, key)
         a = stats(rows)

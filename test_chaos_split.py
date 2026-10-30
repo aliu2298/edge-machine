@@ -112,11 +112,11 @@ summ = h[h.find('class="chaos-summary"'):h.find("</table>", h.find('class="chaos
 check("the summary: challenger_cheap_split first, then the other tennis lane",
       re.findall(r'data-lane="([^"]+)"', summ), ["challenger_cheap_split", "atp_coinflip_tp30"])
 check("its columns", [re.sub(r"<[^>]+>", "", x) for x in re.findall(r"<th[^>]*>(.*?)</th>", summ)],
-      ["Lane", "Entries", "Settled entries", "Settled events", "Won", "Split ROI", "Hold ROI", "Legs filled 2x / 3x", "Avg spread paid", "Status"])
+      ["Lane", "Entries", "Unverified asks", "Settled entries", "Settled events", "Won", "Split ROI", "Hold ROI", "Legs filled 2x / 3x", "Avg spread paid", "Status"])
 check("the new lane's row: 1 entry, 1 settled, 1 won, +100% split, +150% hold, legs 1 / 1, review at 10",
-      "Challenger cheap side · split 2x / 3x 1 1 1 1 +100.0% +150.0% 1 / 1 — 1 settled event · review at 10, decide at 30" in text, True)
+      "Challenger cheap side · split 2x / 3x 1 0 1 1 1 +100.0% +150.0% 1 / 1 — 1 settled event · review at 10, decide at 30" in text, True)
 check("an older lane without split rows yet shows — for split, and says the split is being added",
-      ("ATP coin-flip · sell +30% 1 1 1 0 — −100.0%" in text.replace("-100.0%", "−100.0%"),
+      ("ATP coin-flip · sell +30% 1 0 1 1 0 — −100.0%" in text.replace("-100.0%", "−100.0%"),
        "the split joined this lane on 2026-10-27 and is being added to its earlier entries" in text), (True, True))
 idx = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", CB.section(state)))
 check("the Sandbox's Chaos section is an index: rows and links to the sport pages, no cards",
@@ -189,7 +189,7 @@ check("on the NBA page the lane leads the summary, its 10-30c row directly under
       rows_n, [("nba_ml_dog_tp50", ""), ("nba_ml_dog_tp50", "ask_10_30")])
 text_n = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", nba))
 check("the lane row reads split before hold; the sub-band row says it is the same entries",
-      ("NBA moneyline underdog · split 2x / 3x 6 6 6 3" in text_n, "· ask 10-30c, same entries 3 3 3 1" in text_n), (True, True))
+      ("NBA moneyline underdog · split 2x / 3x 6 0 6 6 3" in text_n, "· ask 10-30c, same entries 3 · 3 3 1" in text_n), (True, True))
 card_n = nba[nba.find('data-lane="nba_ml_dog_tp50" open'):]
 split_tbl = card_n[card_n.find('class="chaos-split"'):card_n.find("</table>", card_n.find('class="chaos-split"'))]
 check("its card: split v hold first, the 10-30c row under the 1h row, then the other exits",
@@ -218,11 +218,74 @@ check("12 trades on 2 events is still too early for review: the flag counts even
       (tbl[C.vkey(1, "tp30")]["lane"]["n"], tbl[C.vkey(1, "tp30")]["lane"]["events"], tbl[C.vkey(1, "tp30")]["flag"]), (12, 2, "too early"))
 rtxt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", CB.summary([rungs])))
 check("the summary row shows entries, settled entries and settled events; its status counts events",
-      "Rungs 12 12 2 0 +50.0% −100.0% 0 / 0 2 settled events · review at 10, decide at 30" in rtxt.replace("-100.0%", "−100.0%"), True)
+      "Rungs 12 0 12 2 0 +50.0% −100.0% 0 / 0 2 settled events · review at 10, decide at 30" in rtxt.replace("-100.0%", "−100.0%"), True)
 card = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", CB.lane_html(dict(rungs, replayed={"a": 1, "b": 1, "c": 1}, since="2026-10-25"))))
 check("the card header: events replayed, entries, settled events entered; review counted in settled events",
       ("3 events replayed · 12 entries · 2 settled events entered" in card, "Review at 10 settled events, decide at 30" in card), (True, True))
 check("the index row: entries, then settled events", "Rungs — 12 2 0 +50.0%" in re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", CB.index([rungs]))), True)
+
+print("\nentry validity on replayed entries (2026-10-30)")
+
+
+def row(k, bid, ask, vol=0.0, lo=None, hi=None, close=None):
+    return dict(ts=T0 + 60 * k, bid=bid, ask=ask, bid_lo=bid, bid_hi=bid, ask_lo=ask, ask_hi=ask, px_lo=lo, px_hi=hi,
+                px_close=close, vol=vol)
+
+
+rows = [row(0, 0.18, 0.20, 3, close=0.21), row(1, 0.18, 0.20, 6, lo=0.20), row(30, 0.19, 0.21, 5, lo=0.19),
+        row(61, 0.15, 0.17, 50, lo=0.15), row(20, 0.20, 0.22, 9, lo=0.21)]
+rows = sorted(rows, key=lambda r: r["ts"])
+ok_ = C.entry_check(rows, "yes", 0, T0 - 60)
+check("verified by 11 contracts traded at or through the 0.20 ask within 60 minutes (a 0.21 low and minute 61 do not count)",
+      (ok_["status"], ok_["how"], ok_["printed"], ok_["source"], ok_["first_quotes"]), ("verified", "print", 11.0, "replayed", True))
+thin = [row(0, 0.03, 0.04, 0), row(10, 0.03, 0.04, 0, lo=0.08)]
+check("a 4c ask nothing traded through is unverified", C.entry_check(thin, "yes", 0)["reason"],
+      "0 contracts traded at or through the ask within 60 minutes (under 10)")
+check("an ask under half the last trade is unverified", C.entry_check([row(0, 0.03, 0.04, 2, close=0.30), row(5, 0.03, 0.04, 40, lo=0.04)], "yes", 1)["reason"],
+      "ask 0.04 under half the last trade 0.30")
+check("the NO side: NO ask 1 - YES bid, printed through when the YES traded high reaches 1 - the ask",
+      C.entry_check([row(0, 0.80, 0.82, 0), row(5, 0.80, 0.82, 12, hi=0.81)], "no", 0)["status"], "verified")
+check("normalise keeps the minute's volume and traded close", (C.normalise(dict(end_period_ts=T0, yes_bid=dict(close_dollars="0.1"),
+      yes_ask=dict(close_dollars="0.12"), price=dict(close_dollars="0.11"), volume_fp="7"))["vol"],
+      C.dense([dict(end_period_ts=T0, yes_bid=dict(close_dollars="0.1"), yes_ask=dict(close_dollars="0.12"), volume_fp="7")], T0, T0 + 60)[1]["vol"]),
+      (7.0, 0.0))
+# A lane recorded before the rule: 2 entries on 2 events, the second never traded through its ask.
+old_L = dict(id="t_old", entry_hours=[1], exits=["hold", C.SPLIT], trades=[], replayed={"E1": 1, "E2": 1}, since="2026-10-25")
+for ev, roi in (("KXNBAGAME-26OCT25AAABBB", 1.5), ("KXNBAGAME-26OCT26CCCDDD", 2.0)):
+    for ex in ("hold", C.SPLIT):
+        old_L["trades"].append(dict(event=ev, ticker=ev + "-AAA", side="yes", hours=1, exit_key=ex, variant=C.vkey(1, ex),
+                                    entry=0.2, entry_ts=T0, roi=roi, profit=roi * 0.2, cost=0.2, won=True,
+                                    night=ev[10:12], reason="split" if ex == C.SPLIT else "settled", spread=0.02))
+verdict = {"KXNBAGAME-26OCT25AAABBB": dict(status="verified", how="print", printed=40, source="replayed"),
+           "KXNBAGAME-26OCT26CCCDDD": dict(status="unverified", printed=0, source="replayed", reason="0 contracts traded at or "
+                                           "through the ask within 60 minutes (under 10)")}
+_re = C.replay_event
+C.replay_event = lambda ln, series, event, fetch, now=None: ([dict(ticker=event + "-AAA", side="yes", hours=1, ask=verdict[event])], None)
+try:
+    errs = []
+    C._ask_backfill(old_L, dict(id="t_old", series=["KXNBAGAME"]), C.dt.datetime(2026, 10, 30, tzinfo=C.UTC), None, errs)
+finally:
+    C.replay_event = _re
+check("the backfill adds each entry's ask check to its trades; nothing else on a trade changes",
+      ([t["ask"]["status"] for t in old_L["trades"]], errs, sorted(old_L["trades"][0])),
+      (["verified", "verified", "unverified", "unverified"], [],
+       sorted(["ask", "cost", "entry", "entry_ts", "event", "exit_key", "hours", "night", "profit", "reason", "roi",
+               "side", "spread", "ticker", "variant", "won"])))
+check("the figure before the rule is kept as voided; the record restarts on the verified entry",
+      ((old_L["voided"]["entries"], old_L["voided"]["events"], round(old_L["voided"]["split"], 2)),
+       (CB.split_hold(old_L)["entries"], CB.split_hold(old_L)["events"]), CB.unverified(old_L)),
+      ((2, 2, 1.75), (1, 1), (1, 0)))
+otxt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", CB.lane_html(dict(old_L, label="Old"))))
+check("the card: the voided line, the unverified count and the ask check on each trade",
+      ("Voided 2026-10-30: the earlier figure (2 entries on 2 events, split +175.0%, hold +175.0%)" in otxt,
+       "Skipped: unverified ask: 1." in otxt, "unverified, not counted: 0 contracts traded" in otxt, "verified · print, 40" in otxt),
+      (True, True, True, True))
+srow = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", CB.summary([dict(old_L, label="Old")])))
+check("the summary row: entries 1, unverified asks 1, settled entries 1, settled events 1", "Old 1 1 1 1 1 +150.0% +150.0%" in srow, True)
+check("the Other-exits flags read the verified entries only", C.lane_table(old_L)[C.vkey(1, "hold")]["lane"]["n"], 1)
+check("a lane with every trade checked asks for nothing more",
+      sorted({t["event"] for t in old_L["trades"] if "ask" not in t}), [])
+check("public copy passes the guard", sandbox_audit.COPY_RE.search(otxt + srow), None)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

@@ -10,6 +10,10 @@ import sandbox_audit
 import site_chrome as C
 
 FAILS = []
+# The sections below test entry, fill and settlement mechanics on fakes that serve no event endpoint, so they
+# run with the ask rule off; the rule (2026-10-30) has its own section at the end, with it on.
+_run = M.run
+M.run = lambda *a, **k: _run(*a, **dict(k, ask_rule=k.get("ask_rule", False)))
 UTC = dt.timezone.utc
 OPEN = dt.datetime(2026, 10, 26, 4, 0, tzinfo=UTC)
 O = int(OPEN.timestamp())
@@ -404,7 +408,7 @@ nh = KB.build(split_state=st, wide_state=ws, month_state=ms_, month_wide_state=m
 nt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", nh))
 check("the page: the summary has cheap YES and cheap NO as separate rows; the note, then each card",
       ("Album ladders tested too confident: both tails won more than priced." in nt,
-       "Album · cheap YES 1 1 1" in nt, "Album · cheap NO 1 1 1" in nt,
+       "Album · cheap YES 1 0 1 1" in nt, "Album · cheap NO 1 0 1 1" in nt,
        nh.find('id="album-note"') < nh.find('id="album-cheap-rungs"') < nh.find('id="album-cheap-no"') < nh.find('<section id="models"'),
        "NO ask paid" in nt), (True, True, True, True, True))
 check("no guarded public phrase on the album cards", sandbox_audit.COPY_RE.findall(
@@ -524,8 +528,8 @@ check("the ROI columns stay the mean per entry; the event ROI is the mean of eac
 _cfg = dict(M.WTI)
 _html = M.summary([_cfg], {_cfg["lane"]: dict(entries=_ladder)}, M._esc)
 _row = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", _html.split("<tbody>", 1)[1].split("</tbody>", 1)[0])).strip()
-check("the summary row: entries, settled entries, settled events side by side, the status from events",
-      _row.startswith("WTI oil · cheap YES (15-30c) 18 14 3 ") and _row.endswith("3 settled events · review at 10, decide at 30"), True)
+check("the summary row: entries, unverified asks, settled entries, settled events side by side, the status from events",
+      _row.startswith("WTI oil · cheap YES (15-30c) 18 0 14 3 ") and _row.endswith("3 settled events · review at 10, decide at 30"), True)
 _card = M.section(dict(entries=_ladder), M._esc, _cfg)
 check("the card's header and tiles read events",
       ("review at 10 settled events, decide at 30" in _card, "3 settled events · review at 10, decide at 30" in _card,
@@ -546,7 +550,7 @@ _acfg = dict(M.ALBUM)
 _ah = M.summary([_acfg], {_acfg["lane"]: dict(entries=_open)}, M._esc)
 _arow = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", _ah.split("<tbody>", 1)[1].split("</tbody>", 1)[0])).strip()
 check("the summary shows pending for split and hold ROI, never the +130% the open legs imply",
-      (_arow.startswith("Album · cheap YES 5 0 0 0 pending pending 5 / 5"), "%" in _arow), (True, False))
+      (_arow.startswith("Album · cheap YES 5 0 0 0 0 pending pending 5 / 5"), "%" in _arow), (True, False))
 _ac = M.section(dict(entries=_open), M._esc, _acfg)
 _tiles = dict((k, v) for v, k in re.findall(r'<div class="tile"><b>([^<]*)</b><span>([^<]+)</span>', _ac))
 check("the card's ROI tiles and its event row read pending; the trade list keeps each entry's own figures",
@@ -558,6 +562,105 @@ _one = _open + [M.grade(dict(id="KXALBUMEQUIV-Y-0", event="KXALBUMEQUIV-Y", pric
                              legs=[dict(target=0.08, share=0.5, settled_px=0.0), dict(target=0.12, share=0.5, settled_px=0.0)]))]
 check("from the first settled event the ROI shows again", M._headline(M.record(_one)["roi"], M.record(_one)) != "pending", True)
 check("a lane with no entry still shows —", M._headline(None, M.record([])), "—")
+
+print("\nentry validity: the ask must have been there (2026-10-30, option A + the book at entry)")
+
+
+def pc(mins, vol=0, lo=None, hi=None, close=None):
+    """A minute candle `mins` after the open with a traded low / high / close."""
+    return dict(end_period_ts=O + mins * 60, volume_fp=str(vol),
+                price=dict(low_dollars=None if lo is None else str(lo), high_dollars=None if hi is None else str(hi),
+                           close_dollars=None if close is None else str(close)))
+
+
+def ve(price, mins=20, side="yes", **k):
+    return dict(dict(id="KX-T", event="KX", price=price, side=side, entry_at=M._iso(O + mins * 60)), **k)
+
+
+AFTER = O + 3 * 3600
+check("its terms: 10 contracts, 60 minutes, half the last trade, first 5 minutes flagged",
+      (M.MIN_SIZE, M.PRINT_WINDOW_MIN, M.LAST_TRADE_FLOOR, M.FIRST_QUOTES_MIN), (10, 60, 0.5, 5))
+snap = M.book_snapshot({"orderbook_fp": {"no_dollars": [["0.75", "10"], ["0.77", "5.5"], ["0.80", "3"]],
+                                         "yes_dollars": [["0.20", "40"], ["0.18", "7"]]}}, 0.23, "yes", "2026-10-26T04:21:00+00:00")
+check("the book snapshot at entry: best bid / ask with sizes, depth, and the contracts at or under the price paid",
+      (snap["best_bid"], snap["bid_size"], snap["best_ask"], snap["ask_size"], snap["at_or_under"], snap["ask_depth"], snap["bid_levels"]),
+      (0.2, 40.0, 0.2, 3.0, 8.5, 18.5, 2))
+live = lambda n: dict(book=dict(at=M._iso(O + 25 * 60), at_or_under=n))
+check("a live book of 10+ at or under the ask verifies the entry, with no print needed",
+      M.ask_check(ve(0.23, **live(12)), [], None, AFTER)["status"] + " " + M.ask_check(ve(0.23, **live(12)), [], None, AFTER)["how"],
+      "verified book")
+check("a book read hours after the entry is not live: the print rule decides",
+      M.ask_check(ve(0.23, book=dict(at=M._iso(O + 5 * 3600), at_or_under=500)), [pc(30, 3, lo=0.22)], None, AFTER + 7200)["source"],
+      "replayed")
+c_ok = M.ask_check(ve(0.23, **live(8.5)), [pc(30, 6, lo=0.22), pc(50, 5, lo=0.23), pc(90, 50, lo=0.20), pc(40, 9, lo=0.25)], None, AFTER)
+check("under 10 on the book: verified by 10+ traded at or through the ask within 60 min (a 0.25 low and the 90th minute, after the window, do not count)",
+      (c_ok["status"], c_ok["how"], c_ok["printed"]), ("verified", "print", 11.0))
+c_bad = M.ask_check(ve(0.04, mins=19), [pc(19, 0), pc(25, 0, lo=0.08, hi=0.12)], O - 60, AFTER)
+check("a 4c ask nothing traded through is an unverified ask; the reason names the count",
+      (c_bad["status"], c_bad["reason"]), ("unverified", "0 contracts traded at or through the ask within 60 minutes (under 10)"))
+c_last = M.ask_check(ve(0.04, mins=30), [pc(25, 3, close=0.40), pc(40, 50, lo=0.04)], None, AFTER)
+check("an ask under half the last trade before the entry is unverified, prints or not",
+      (c_last["status"], c_last["reason"], c_last["last_trade"]), ("unverified", "ask 0.04 under half the last trade 0.40", 0.4))
+check("a NO reads the YES side: last YES trade 0.60 makes the last NO trade 0.40; a YES traded high of 0.96+ prints through a 0.04 NO",
+      (M.ask_check(ve(0.04, side="no"), [pc(10, 1, close=0.60)], None, AFTER)["reason"],
+       M.ask_check(ve(0.04, side="no"), [pc(30, 12, hi=0.97)], None, AFTER)["status"]),
+      ("ask 0.04 under half the last trade 0.40", "verified"))
+check("inside the 60 minutes the entry is still checking; with no candles it keeps checking until they stop being served",
+      (M.ask_check(ve(0.23), [], None, O + 40 * 60)["status"], M.ask_check(ve(0.23), [], None, AFTER)["status"],
+       M.ask_check(ve(0.23), [], None, O + 8 * 86400)["reason"]),
+      ("checking", "checking", "its minute candles are no longer served"))
+check("an entry in the market's first 5 minutes is flagged, never rejected for that alone",
+      (M.ask_check(ve(0.23, mins=4), [pc(30, 20, lo=0.2)], O, AFTER)["first_quotes"],
+       M.ask_check(ve(0.23, mins=4), [pc(30, 20, lo=0.2)], O, AFTER)["status"],
+       M.ask_check(ve(0.23, mins=6), [pc(30, 20, lo=0.2)], O, AFTER)["first_quotes"]), (True, "verified", False))
+
+# A placeholder ladder (every rung at 4c, nothing traded, legs "filled" at 8c / 12c) beside one real rung.
+LAD = "KXALBUMEQUIV-PH"
+rungs = [dict(id=f"{LAD}-{k}", event=LAD, word=f"{k}K", side="yes", price=0.04, entry_at=M._iso(O + 20 * 60),
+              logged=M._iso(O + 7200), legs=[dict(multiple=2.0, share=0.5, target=0.08, filled_at=M._iso(O + 3600)),
+                                             dict(multiple=3.0, share=0.5, target=0.12, filled_at=M._iso(O + 3700))],
+              payout=None) for k in (20, 40, 60)]
+rungs.append(dict(id=f"{LAD}-80", event=LAD, word="80K", side="yes", price=0.10, entry_at=M._iso(O + 20 * 60),
+                  logged=M._iso(O + 7200), legs=[dict(multiple=2.0, share=0.5, target=0.2), dict(multiple=3.0, share=0.5, target=0.3)],
+                  payout=None))
+for _e in rungs:
+    M.grade(_e)
+lad_c = {f"{LAD}-20": [pc(25, 0, lo=0.08, hi=0.12)], f"{LAD}-40": [pc(25, 0)], f"{LAD}-60": [pc(10, 2, close=0.30)],
+         f"{LAD}-80": [pc(30, 25, lo=0.09)]}
+lcalls = []
+
+
+def lfake(path):
+    lcalls.append(path)
+    if path.startswith(f"events/{LAD}"):
+        return {"event": {"markets": [dict(ticker=t, open_time=M._iso(O)) for t in lad_c]}}
+    if "candlesticks" in path and path.endswith("period_interval=1"):
+        return {"market_tickers": list(lad_c), "market_candlesticks": list(lad_c.values())}
+    raise AssertionError(path)
+
+
+lst = dict(lane="album_cheap_rungs", entries=rungs, skips={}, events={})
+errs = M.check_asks(lst, dt.datetime.fromtimestamp(AFTER, UTC), lfake, dict(M.ALBUM))
+check("one event request and one candle request for the whole ladder", (errs, len(lcalls)), ([], 2))
+check("the placeholders fail (no print; under half the 0.30 last trade); the rung with 25 printed through its ask counts",
+      [(e["word"], M.check_status(e)) for e in rungs],
+      [("20K", "unverified"), ("40K", "unverified"), ("60K", "unverified"), ("80K", "verified")])
+check("the voided figure keeps the record from before the rule (4 entries, the +130% split on open legs)",
+      (lst["voided"]["entries"], round(lst["voided"]["roi"], 2) > 0.9, M.record(M.counted(lst))["entries"]), (4, True, 1))
+vcard = M.section(lst, M._esc, dict(M.ALBUM))
+vtxt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", vcard))
+check("the card shows the voided figure once, the unverified count by reason, and the ask check per entry",
+      ("Voided " in vtxt and vtxt.count("Voided ") == 1, "3 of those entries failed the ask check" in vtxt,
+       "Skipped: unverified ask: 3 (ask under half the last trade: 1; under 10 traded at or through the ask in 60 min: 2)" in vtxt,
+       "unverified, not counted: 0 contracts traded" in vtxt, "verified · print, 25 traded through the ask in 60 min" in vtxt),
+      (True, True, True, True, True))
+vsum = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", M.summary([dict(M.ALBUM)], {"album_cheap_rungs": lst}, M._esc)))
+check("the summary counts the 1 verified entry and shows the 3 unverified asks beside it",
+      "Album · cheap YES 1 3 0 0 0 pending pending 0 / 0" in vsum, True)
+check("a second run leaves verified and unverified entries alone (nothing re-fetched)",
+      (M.check_asks(lst, dt.datetime.fromtimestamp(AFTER + 3600, UTC), lfake, dict(M.ALBUM)), len(lcalls)), ([], 2))
+check("with no entry failing, no voided line is shown", M.voided_line(dict(voided=lst["voided"], ask_rule_since="x", entries=[]), M._esc), "")
+check("public copy passes the guard", sandbox_audit.COPY_RE.search(vtxt + vsum), None)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
