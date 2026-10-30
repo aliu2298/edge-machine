@@ -2326,9 +2326,14 @@ def chaos_html():
     """The Chaos section: in-play take-profit lanes replayed nightly (chaos_build.py, 2026-10-25). Never breaks the page."""
     try:
         import chaos_build
-        return chaos_build.section()
+        html = chaos_build.section()
     except Exception as exc:                                    # noqa: BLE001
         return f'<section id="chaos"><p class="sm mut">Chaos section unavailable ({type(exc).__name__}).</p></section>'
+    # Resting in-play buys (arg_goalless_dip, 2026-10-30) index right after it, as their own section.
+    try:
+        return html + chaos_build.in_play_index()
+    except Exception:                                           # noqa: BLE001
+        return html
 
 
 def trading_page(now=None):

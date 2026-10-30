@@ -23,9 +23,10 @@ RECORD: fresh from 2026-10-31, the first Argentine matchday after the lane was b
 (209 matches, 2026-01-15 to 2026-10-29: buy at 65% +22.3% per fill, z +2.8) is IN-SAMPLE: it is replayed once
 by this code (python3 arg_dip.py --backfill) into state["insample"], shown once and labelled, and never
 counted in the record. Research files: ~/edge-research/arg_o15_exits_2026-10-30/ (dip.py).
+OUT OF SAMPLE (2026-10-30): Out-of-sample check, Brasileirão over 0.5 (135 matches, Jan-Oct 2026): the dip buy did NOT replicate (−2% to −22% per fill, z −0.6 to −0.8). Treat this as an Argentina-only watch.
 
 Own ledger data/arg_dip_ledger.json; read hourly by .github/workflows/arg-dip.yml from settled matches.
-The bot cannot rest in-play buys, so this lane is paper only.
+Paper only: no order is placed, and Production has no executor for resting in-play buys.
 """
 import datetime as dt
 import json
@@ -45,6 +46,8 @@ LABEL = "Argentina · buy the goalless dip (over 0.5)"
 SERIES = "KXARGPREMDIVTOTAL"
 STRIKE = 0.5
 SINCE = "2026-10-31"
+OOS_NOTE = ("Out-of-sample check, Brasileirão over 0.5 (135 matches, Jan-Oct 2026): the dip buy did NOT replicate "
+            "(−2% to −22% per fill, z −0.6 to −0.8). Treat this as an Argentina-only watch.")
 INSAMPLE = ("2026-01-15", "2026-10-30")
 FRACTIONS = (0.65, 0.75, 0.55)
 HEADLINE = 0.65
@@ -296,15 +299,16 @@ def run(state, now=None, fetch=D.get, backfill=False):
     if backfill:
         book["built"] = now.isoformat()
     else:
-        state["upcoming"] = upcoming(fetch, now)
+        state["upcoming"] = upcoming(fetch, now, since=state["since"])
         state["last_run"] = now.isoformat()
         state["error"] = "; ".join(obs["errors"])[:600] or None
         state["observations"] = obs
     return state
 
 
-def upcoming(fetch, now, n=10):
-    """The next open matches the lane will watch: [(kickoff, event, title)], soonest first."""
+def upcoming(fetch, now, n=10, since=SINCE):
+    """The next open matches the lane will count (matchday on or after `since`): [(kickoff, event, title)],
+    soonest first."""
     try:
         evs = D.pages(f"events?series_ticker={SERIES}&status=open&with_nested_markets=true&limit=200", "events", fetch)
     except Exception:                                           # noqa: BLE001
@@ -313,7 +317,8 @@ def upcoming(fetch, now, n=10):
     for ev in evs:
         m = over05(ev.get("markets") or [])
         occ = _ts((m or {}).get("occurrence_datetime"))
-        if m and occ and occ - KICKOFF_BACK_H * 3600 >= now.timestamp() - 3 * 3600:
+        if (m and occ and occ - KICKOFF_BACK_H * 3600 >= now.timestamp() - 3 * 3600
+                and (matchday(ev.get("event_ticker")) or "") >= since):
             out.append(dict(kickoff=occ - KICKOFF_BACK_H * 3600, event=ev.get("event_ticker"), title=ev.get("title") or ""))
     return sorted(out, key=lambda x: x["kickoff"])[:n]
 

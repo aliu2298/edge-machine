@@ -346,21 +346,23 @@ def index(lanes):
 
 
 def in_play_index():
-    """Resting in-play buys that live outside the chaos engine (2026-10-30): one index row each, the live record
-    only, linking to the lane's card on its sport page. Never breaks the section."""
+    """Resting in-play buys, which live outside the chaos engine (2026-10-30): one index row each, the live record
+    only, linking to the lane's card on its sport page. Its own Sandbox section (sandbox_build.chaos_html), never
+    inside the Chaos section, which buys only before the start. Returns "" if the lane cannot be read."""
     try:
         import arg_dip_build
         r = arg_dip_build.index_row()
     except Exception:                                           # noqa: BLE001
         return ""
-    return ('<p class="sm"><b>Resting in-play buys</b> · bought during the match below the pregame price, sold back at it</p>'
+    return ('<section id="in-play"><h2>Resting in-play buys</h2><p class="shell-kicker">Bought during the match below the '
+            'pregame price, sold back at it · fills only on traded prints · paper · not in Production</p>'
             '<div class="tbl"><table class="inplay-index"><tr><th>Lane</th><th>Page</th><th class="num">Matches seen</th>'
             '<th class="num">Buys filled</th><th class="num">ROI per fill</th><th class="num">Hold, same fills</th>'
             '<th>Status</th></tr>'
             f'<tr data-lane="{esc(r["lane"])}"><td><b>{esc(r["label"])}</b></td><td><a href="{esc(r["href"])}">Soccer</a></td>'
             f'<td class="num">{r["matches"]}</td><td class="num">{r["fills"]}</td>'
             f'<td class="num">{_pct(r["roi"], sign=True)}</td><td class="num">{_pct(r["hold"], sign=True)}</td>'
-            f'<td>{esc(r["status"])}</td></tr></table></div>')
+            f'<td>{esc(r["status"])}</td></tr></table></div></section>')
 
 
 def section(state=None):
@@ -372,7 +374,6 @@ def section(state=None):
     body = index(lanes) if lanes else (
         '<p class="sm mut">No chaos lane is registered yet. The engine is built; each lane plugs in as a config '
         '(chaos_lanes.py) and starts a fresh record from its first replayed night.</p>')
-    body += in_play_index()
     return f"""<section id="chaos">
 <h2>Chaos</h2>
 <p class="shell-kicker">Cheap side + resting take-profit · buy before the start at the real ask · rest a split sell, half at 2x and half at 3x · a fill counts only on a traded print · every lane next to the same entries held · replayed nightly from Kalshi's 1-minute candles · paper · not in Production</p>

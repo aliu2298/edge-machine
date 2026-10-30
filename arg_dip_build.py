@@ -140,6 +140,7 @@ def section(state=None):
 <details class="section-disclosure" data-lane="{A.LANE}" open><summary><b>{esc(A.LABEL)}</b><span>{esc(summ)}</span></summary>
 <p class="sm">Before kickoff over 0.5 costs about 88c and about 9 matches in 10 have a goal. During a long 0-0 the price slides; this lane buys that slide and sells it back at the pregame price.</p>
 <p class="sm">{esc(RULE)}</p>
+<p class="sm"><b>{esc(A.OOS_NOTE)}</b></p>
 {body}
 <p class="sm mut">{esc(skips_line(state.get("skips")))}.</p>
 {watching(state)}
