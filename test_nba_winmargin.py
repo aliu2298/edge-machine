@@ -195,7 +195,7 @@ import json
 if __import__("os").path.exists(NB.SRC):
     page = NB.build(json.load(open(NB.SRC)))
     ids = re.findall(r'<section id="([^"]+)"', page[page.find("<main"):])
-    check("on the NBA page: cheap-side first, then the win margin tracker, then the Safe Card", ids[:3], ["cheap-side", "win-margin", "safe-card"])
+    check("on the NBA page: cheap-side first, then the win margin tracker, then Upcoming", ids[:3], ["cheap-side", "win-margin", "matchups"])
     check("with a nav link", 'href="#win-margin"' in page, True)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")

@@ -358,12 +358,8 @@ check("the pre-registered text and the module doc carry the amendment; the origi
       (True, True, True))
 check("public copy passes the guard", sandbox_audit.COPY_RE.search(page7 + SC.__doc__) is None, True)
 
-print("\nlane windows: the VPS asks 90-60 minutes before each tip")
-tips = [dt.datetime(2026, 10, 22, 23, 0, tzinfo=UTC)]
-got = lambda h, m: sorted(k for w, k in W.due(dt.datetime(2026, 10, 22, h, m, tzinfo=UTC), {"quotes": []}, [], [], nba_safe=tips)
-                          if w["lane"] == "nba_safe_card")
-check("a 23:00Z tip: read 1 at 21:35, read 2 at 21:50, none at 22:00", (got(21, 35), got(21, 50), got(22, 0)), ([1], [2], []))
-check("its stamp file", W.STAMP["nba_safe_card"], "data/nba_safe_card_window/request.txt")
+print("\nlane windows: retired 2026-10-30, the VPS no longer asks for it")
+check("no Safe Card stamp file and no window", ("nba_safe_card" in W.STAMP, hasattr(W, "nba_safe_windows")), (False, False))
 
 print("\nthe page section")
 html = SB.section(state)

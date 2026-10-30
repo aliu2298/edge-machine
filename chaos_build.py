@@ -127,7 +127,7 @@ def summary(lanes, spread=False):
                         f'<td class="num">{_pct(r["hold"], sign=True)}</td>'
                         f'<td class="num">{r["filled_2x"]} / {r["filled_3x"]}</td>'
                         + (f'<td class="num">{_spread(r["spread"])}</td>' if spread else "")
-                        + f'<td>{esc(MS.status(r["settled"]))}</td></tr>')
+                        + f'<td>{esc(status_of(L, r["settled"]))}</td></tr>')
     return ('<div class="tbl"><table class="chaos-summary"><tr><th>Lane</th><th class="num">Entries</th>'
             '<th class="num">Settled</th><th class="num">Won</th><th class="num">Split ROI</th><th class="num">Hold ROI</th>'
             '<th class="num">Legs filled 2x / 3x</th>' + ('<th class="num">Avg spread paid</th>' if spread else "")
@@ -152,13 +152,23 @@ def split_table(L):
             '<th class="num">Split z (by night)</th></tr>' + "".join(rows) + "</table></div>")
 
 
+def record_words(L):
+    if L.get("insample"):
+        return f"IN-SAMPLE backfill {esc(L.get('since'))} to the lane's first night, not evidence"
+    return f"fresh record since {esc(L.get('since'))}"
+
+
+def status_of(L, settled):
+    return "in-sample backfill, not evidence" if L.get("insample") else MS.status(settled)
+
+
 def lane_html(L):
     trades = L.get("trades") or []
     entries = len({(t["event"], t["ticker"], t["side"], t["hours"]) for t in trades})
     hours = ", ".join(f"{h}h" for h in L.get("entry_hours") or C.ENTRY_HOURS)
     others = [k for k in (L.get("exits") or C.EXITS) if k not in (C.SPLIT, "hold")]
     pending = C.SPLIT in (L.get("exits") or ()) and not _by(L, C.SPLIT) and trades
-    return f"""<details class="section-disclosure" data-lane="{esc(L['id'])}" open><summary><b>{esc(L.get('label') or L['id'])}</b><span>{len(L.get('replayed') or {})} events · {entries} entries · fresh record since {esc(L.get('since'))}</span></summary>
+    return f"""<details class="section-disclosure" data-lane="{esc(L['id'])}" open><summary><b>{esc(L.get('label') or L['id'])}</b><span>{len(L.get('replayed') or {})} events · {entries} entries · {record_words(L)}</span></summary>
 <p class="sm">{esc(L.get('note') or '')}{(' <b>WATCH lane.</b>') if L.get('watch') else ''}{(' <b>' + esc(L['caution']) + '</b>') if L.get('caution') else ''} Bought {esc(hours)} before the start. Series {esc(', '.join(L.get('series') or []))}. Review at {C.REVIEW_N}, decide at {C.PROMOTE_N}.</p>
 <p class="sm"><b>Split v hold</b>{(' · the split joined this lane on 2026-10-27 and is being added to its earlier entries, newest events first') if pending else ''}</p>
 {split_table(L)}
@@ -172,7 +182,7 @@ def lane_html(L):
 # that links to them. A lane not listed here would have no home: test_sport_cheap_homes checks.
 HOMES = {
     "tennis": ("challenger_cheap_split", "challenger_dog_tp30", "atp_coinflip_tp30"),
-    "nba": ("nba_ml_dog_tp50", "nba_tt_cheap_tp30"),
+    "nba": ("nba_ml_dog_tp50", "nba_winmargin_split", "nba_winmargin_split_insample", "nba_tt_cheap_tp30"),
     "nfl": ("cfb_dog_tp50",),
 }
 HOME_OF = {lane: page for page, lanes in HOMES.items() for lane in lanes}
@@ -215,10 +225,13 @@ def sport_section(page, state=None, retired=True):
         state = C.load() if os.path.exists(C.PATH) else C.empty()
     have = with_config(state).get("lanes") or {}
     every = [have[k] for k in HOMES[page] if k in have]
-    lanes = [L for L in every if not L.get("retired")]
+    lanes = [L for L in every if not L.get("retired") and not L.get("insample")]
     gone = [L for L in every if L.get("retired")]
+    sample = [L for L in every if L.get("insample") and not L.get("retired")]
     body = (summary(lanes, spread=True) + "".join(lane_html(L) for L in lanes)) if lanes else (
         '<p class="sm mut">No cheap-side lane on this page has replayed yet.</p>')
+    if sample:                                                  # a lane's in-sample backfill: its own labelled row, never the headline
+        body += in_sample_block(sample)
     if gone and retired:                                        # the NBA page lists its retired lanes in its own bottom fold
         body += retired_block(gone)
     block = ('<h3>College football</h3><p class="sm mut">The college football lane sits on the NFL page: '
@@ -231,6 +244,14 @@ def sport_section(page, state=None, retired=True):
 <p class="sm mut">Sandbox, paper only, replayed nightly from Kalshi's 1-minute candles: review at {C.REVIEW_N} settled, decide at {C.PROMOTE_N}. Every cheap-side lane is listed in the <a href="./sandbox.html#chaos">Sandbox's Chaos index</a>, which links here; the records are the same. The average spread paid is recorded from 2026-10-27.</p>
 {block}{body}
 </section>"""
+
+
+def in_sample_block(lanes):
+    """In-sample backfills, apart from the lane they back-test: the rule was chosen on this data."""
+    return ('<div class="in-sample" id="cheap-side-insample"><h3>In-sample backfill</h3>'
+            '<p class="sm mut">The same rule replayed on the days it was chosen from. In-sample, so it is NOT evidence '
+            'and is never a lane\'s headline; the lane above starts a fresh record after it.</p>'
+            + summary(lanes, spread=True) + "".join(lane_html(L) for L in lanes) + '</div>')
 
 
 def retired_line(L):
@@ -275,7 +296,7 @@ def index(lanes):
                     f'<td class="num">{r["entries"]}</td><td class="num">{r["won"]}</td>'
                     f'<td class="num">{_pct(r["split"], sign=True) if r["n_split"] else "—"}</td>'
                     f'<td class="num">{_pct(r["hold"], sign=True)}</td>'
-                    f'<td>{esc("retired " + L["retired"]["on"] if L.get("retired") else MS.status(r["settled"]))}</td></tr>')
+                    f'<td>{esc("retired " + L["retired"]["on"] if L.get("retired") else status_of(L, r["settled"]))}</td></tr>')
     return ('<div class="tbl"><table class="chaos-index"><tr><th>Lane</th><th>Page</th><th class="num">Entries</th>'
             '<th class="num">Won</th><th class="num">Split ROI</th><th class="num">Hold ROI</th><th>Status</th></tr>'
             + "".join(rows) + "</table></div>")

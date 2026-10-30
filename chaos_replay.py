@@ -102,6 +102,10 @@ SPLIT = "split"
 SPLIT_LEGS = ((2.0, 0.5), (3.0, 0.5))
 SPLIT_CAP = 0.98
 LANE_EXITS = tuple(EXITS) + (SPLIT,)
+# The whole stake resting at 2x (2026-10-30, the NBA win margin lane): the split's first leg alone. Not in
+# LANE_EXITS: only a lane that lists it in its own `exits` is replayed with it.
+X2 = "x2"
+LEGGED = {SPLIT: SPLIT_LEGS, X2: ((2.0, 1.0),)}
 
 
 def lane_exits(lane):
@@ -121,6 +125,8 @@ def split_key(key):
 def exit_label(key):
     if key == SPLIT:
         return "split: half at 2x, half at 3x"
+    if key == X2:
+        return "sell everything at 2x"
     v = EXITS[key]
     base = "hold to settlement" if v["tp"] is None else f"sell at +{round(v['tp'] * 100)}%"
     return base + ("" if v["stop"] is None else f", stop {round(v['stop'] * 100)}%")
@@ -134,7 +140,7 @@ def variant_label(key):
 def control_of(key):
     """The variant a key is judged against: the same entry time and stop, held to settlement."""
     h, ex = split_key(key)
-    if ex == SPLIT:
+    if ex in LEGGED:
         return vkey(h, "hold")
     return vkey(h, "hold" + ("" if EXITS[ex]["stop"] is None else f"_stop{round(-EXITS[ex]['stop'] * 100)}"))
 
@@ -305,19 +311,21 @@ def _trade(vs, i, won_side, var):
                 unreachable=(var["tp"] is not None and tp is None))
 
 
-def split_targets(entry):
-    return [(m, w, round(min(entry * m, SPLIT_CAP), 2)) for m, w in SPLIT_LEGS]
+def split_targets(entry, legs=SPLIT_LEGS):
+    return [(m, w, round(min(entry * m, SPLIT_CAP), 2)) for m, w in legs]
 
 
-def _split_trade(vs, i, won_side):
+def _split_trade(vs, i, won_side, legs_cfg=SPLIT_LEGS, from_ts=None):
     """The cheap-side split from minute i: two resting legs, filled only on a traded print at or above
-    each target; a leg not filled is held to settlement."""
+    each target (and, with `from_ts`, only from that minute on: a lane that counts prints after the start
+    only); a leg not filled is held to settlement."""
     entry = vs[i]["ask"]
     c = cost(entry)
     pay = 1.0 if won_side else 0.0
     legs, proceeds = [], 0.0
-    for mult, share, target in split_targets(entry):
+    for mult, share, target in split_targets(entry, legs_cfg):
         fill = next((j for j in range(i + 1, len(vs)) if vs[j].get("traded_hi") is not None
+                     and (from_ts is None or vs[j]["ts"] >= from_ts)
                      and vs[j]["traded_hi"] >= target - EPS), None)
         legs.append(dict(multiple=mult, target=target, filled_ts=vs[fill]["ts"] if fill is not None else None))
         proceeds += share * ((target - maker_fee(target)) if fill is not None else pay)
@@ -328,19 +336,20 @@ def _split_trade(vs, i, won_side):
                 exit_i=None, exit_ts=last,
                 exit=None, reason="split", cost=round(c, 5), profit=round(proceeds - c, 5),
                 roi=round((proceeds - c) / c, 4), won=proceeds > c, target=None, stop=None, unreachable=False,
-                legs=legs, filled_2x=legs[0]["filled_ts"] is not None, filled_3x=legs[1]["filled_ts"] is not None,
+                legs=legs, filled_2x=legs[0]["filled_ts"] is not None,
+                filled_3x=len(legs) > 1 and legs[1]["filled_ts"] is not None,
                 side_won=won_side)
 
 
-def simulate(minutes, side, result, start_ts, hours, exit_key, spread=MAX_SPREAD):
+def simulate(minutes, side, result, start_ts, hours, exit_key, spread=MAX_SPREAD, fill_from_start=False):
     """One variant's trade in one market and side: bought `hours` before start_ts, exited per exit_key.
     Returns [trade] or [] when there is no tight quote at that time."""
     vs = [view(m, side) for m in minutes]
     i = entry_index(vs, start_ts - int(hours * 3600), start_ts, spread)
     if i is None or i >= len(vs) - 1:
         return []
-    if exit_key == SPLIT:
-        return [_split_trade(vs, i, result == side)]
+    if exit_key in LEGGED:
+        return [_split_trade(vs, i, result == side, LEGGED[exit_key], start_ts if fill_from_start else None)]
     return [_trade(vs, i, result == side, EXITS[exit_key])]
 
 
@@ -480,13 +489,13 @@ def replay_event(lane, series, event, fetch, now=None):
     if not closes:
         return None, "no close time"
     end_ts = max(closes) - max(closes) % 60
-    lo = end_ts - FETCH_BEFORE_H * 3600
+    lo = end_ts - int(lane.get("fetch_before_h") or FETCH_BEFORE_H) * 3600
     candles = fetch_candles(series, event, markets, lo, end_ts, fetch, archived)
     mins = {t: dense(c, lo, end_ts) for t, c in candles.items() if c}
     if not mins:
         return None, "no candles"
     ctx0 = dict(event=event, series=series, tickers=sorted(mins), markets={m["ticker"]: m for m in markets},
-                close_ts=end_ts, minutes=mins)
+                close_ts=end_ts, minutes=mins, fetch=fetch)
     start_ts, how = None, None
     if callable(lane.get("start")):
         start_ts, how = lane["start"](ctx0), "lane source"
@@ -515,7 +524,7 @@ def replay_event(lane, series, event, fetch, now=None):
             if not ms:
                 continue
             for ex in lane_exits(lane):
-                for t in simulate(ms, side, results[ticker], start_ts, hours, ex, spread):
+                for t in simulate(ms, side, results[ticker], start_ts, hours, ex, spread, bool(lane.get("fill_from_start"))):
                     trades.append(dict(t, variant=vkey(hours, ex), hours=hours, exit_key=ex, event=event, ticker=ticker,
                                        side=side, night=night, start_ts=start_ts, start_how=how))
     return trades, None
@@ -550,7 +559,7 @@ def lane_state(state, lane, now):
     # from its `on` night is replayed. Nothing already recorded is touched.
     if lane.get("retired"):
         L["retired"] = dict(lane["retired"])
-    for k in ("label", "note", "headline", "first", "caution"):
+    for k in ("label", "note", "headline", "first", "caution", "insample"):
         if lane.get(k) is not None:
             L[k] = lane[k]
     # Narrower entry-ask bands of the same entries, shown beside the lane (no new lane, no reset).
@@ -602,6 +611,8 @@ def run(state, lanes, now=None, fetch=D.get):
                 if event in L["replayed"] or event in L["skipped"] or day is None or day < since - dt.timedelta(days=1):
                     continue
                 if lane.get("retired") and day.isoformat() >= lane["retired"]["on"]:
+                    continue
+                if lane.get("until") and day.isoformat() > lane["until"]:       # an in-sample backfill lane stops here
                     continue
                 if done >= MAX_EVENTS_PER_RUN:
                     break

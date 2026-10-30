@@ -32,7 +32,6 @@ and the NFL team-total lanes (nfl_tt_over_3545, nfl_tt_over_main, 2026-10-21), t
 and the NBA value lanes (nba_tt_value_* / nba_1q_value_*, 2026-10-21), timed to each tip K:
 
     nba_value         each NBA tip K        K-90 to K-60 min, asked every 15 min until K-70
-    nba_safe_card     each NBA tip K        K-90 to K-60 min, asked every 15 min until K-70 (2026-10-22)
                                             K-26h to K-18h, asked every hour (up to 8 reads)
 
 GitHub's cron cannot hold a 90-minute window, so the VPS asks for each read by pushing one
@@ -94,8 +93,6 @@ STAMP = {
     "nfl_tt": "data/nfl_tt_window/request.txt",
     # 2026-10-21: the NBA value lanes (nba_value.py), 90-60 min and 26-18 h before each tip.
     "nba_value": "data/nba_value_window/request.txt",
-    # 2026-10-22: the NBA Safe Card (nba_safe_card.py), 90-60 min before each tip.
-    "nba_safe_card": "data/nba_safe_card_window/request.txt",
     # 2026-10-25: the chaos replay (chaos_replay.py), once a night after the games have settled.
     "chaos": "data/chaos_window/request.txt",
 }
@@ -446,22 +443,6 @@ def nba_value_windows(now, tips=None):
     return out
 
 
-def nba_safe_tips(now, path=None):
-    """NBA tips in the next 27 hours, from the schedule nba_safe_card.py writes into its own ledger.
-    Only main() calls this, so windows() and the tests never read the file."""
-    return nba_value_tips(now, path or os.path.join(ROOT, "data", "nba_safe_card.json"))
-
-
-def nba_safe_windows(now, tips=None):
-    """One window per distinct NBA tip, 90 to 60 minutes before, every 15 minutes: the Safe Card is
-    built at the first read before the slate's first tip and each leg's price is read again before its
-    own tip. `tips` None (tests, the plain listing) means none."""
-    a, b = NBA_VALUE_1H
-    return [dict(lane="nba_safe_card", label=f"NBA safe card {t:%H:%M}Z tip", series=(), close=t,
-                 start=t - dt.timedelta(minutes=a), end=t - dt.timedelta(minutes=b),
-                 every=NBA_VALUE_1H_EVERY, last_ask=NBA_VALUE_1H_LAST_ASK) for t in tips or ()]
-
-
 CHAOS_AT = (4, 0)                        # ET: after the late games settle
 CHAOS_EVERY = dt.timedelta(minutes=30)
 
@@ -493,7 +474,7 @@ def ftts_day_full(day, ledger=None):
     return all(v >= S.FTTS_NO_PICKS for v in n.values())
 
 
-def windows(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, nba_value=None, nba_safe=None):
+def windows(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, nba_value=None):
     """Every lane's windows whose close is within a day of `now`, soonest start first. UTC."""
     if now.tzinfo is None:
         now = now.replace(tzinfo=dt.timezone.utc)
@@ -536,7 +517,6 @@ def windows(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, 
     out += tennis_windows(now, tennis)
     out += nfl_windows(now, nfl)
     out += nba_value_windows(now, nba_value)
-    out += nba_safe_windows(now, nba_safe)
     out += chaos_windows(now)
     return sorted(out, key=lambda w: (w["start"], w["lane"]))
 
@@ -579,10 +559,10 @@ def entered_series(lane, close, ledger=None):
     return set.intersection(*got.values())
 
 
-def due(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, nba_value=None, nba_safe=None):
+def due(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, nba_value=None):
     """[(window, read number)] for every read to ask for at `now`."""
     out = []
-    for w in windows(now, ledger, games, fixtures, tennis, nfl, nba_value, nba_safe):
+    for w in windows(now, ledger, games, fixtures, tennis, nfl, nba_value):
         if not (w["start"] <= now <= w["end"] - w.get("last_ask", LAST_ASK)):
             continue
         k = int((now - w["start"]) / w.get("every", READ_EVERY))
@@ -596,10 +576,10 @@ def due(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, nba_
     return out
 
 
-def stamp_lines(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, nba_value=None, nba_safe=None):
+def stamp_lines(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, nba_value=None):
     """{stamp file: stamp text} for the reads due now. One file can serve several windows."""
     lines = {}
-    for w, k in due(now, ledger, games, fixtures, tennis, nfl, nba_value, nba_safe):
+    for w, k in due(now, ledger, games, fixtures, tennis, nfl, nba_value):
         text = f"{w['lane']}{' 24h' if w.get('early') else ''} {w['close'].isoformat()} read {k}"
         path = STAMP[w["lane"]]
         lines[path] = "\n".join(sorted(set((lines.get(path) or "").splitlines()) | {text})).strip()
@@ -611,8 +591,7 @@ def main(argv=None):
     now = dt.datetime.now(dt.timezone.utc)
     if "--due" in argv:
         for path, text in sorted(stamp_lines(now, tennis=tennis_starts(now), nfl=nfl_kickoffs(now),
-                                                       nba_value=nba_value_tips(now),
-                                                       nba_safe=nba_safe_tips(now)).items()):
+                                                       nba_value=nba_value_tips(now)).items()):
             print(f"{path}\t{text.replace(chr(10), ' | ')}")
         return 0
     for w in windows(now):

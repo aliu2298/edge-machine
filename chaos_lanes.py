@@ -40,6 +40,7 @@ import subprocess
 import urllib.request
 
 import chaos_replay as C
+import daily_track as D
 
 ESPN_SITE = "https://site.web.api.espn.com/apis/site/v2/sports"
 _BOARDS = {}
@@ -86,6 +87,31 @@ def espn_start(path):
                         return None
         return None
     return start
+
+
+def winmargin_start(ctx):
+    """The NBA win margin tracker's tip rule (nba_winmargin.py): the KXNBAGAME market's
+    expected_expiration_time minus 3 hours, from the same game's moneyline event. None sends the engine to
+    the price path."""
+    import nba_winmargin as W
+    suf = ctx["event"].split("-", 1)[1]
+    fetch = ctx["fetch"]
+    ms = D.pages(f"markets?limit=5&event_ticker=KXNBAGAME-{suf}", "markets", fetch) \
+        or D.pages(f"historical/markets?limit=5&event_ticker=KXNBAGAME-{suf}", "markets", fetch)
+    tip = next((x for x in (W._ts(m.get("expected_expiration_time")) for m in ms) if x), None)
+    return None if tip is None else tip - W.TIP_BACK_H * 3600
+
+
+def bucket_picker(buckets, lo, hi, spread):
+    """YES of a win margin bucket (by its title: 1-5, 6-10) whose ask at the entry hour is lo-hi with a
+    spread of `spread` or less, either team."""
+    import nba_winmargin as W
+    inner = C.band_picker(lo, hi, ("yes",), spread=spread)
+
+    def pick(ctx):
+        return [(t, s) for t, s in inner(ctx)
+                if W.bucket_of((ctx["markets"].get(t) or {}).get("yes_sub_title")) in buckets]
+    return pick
 
 
 DOG = C.band_picker(0.10, 0.40, ("yes",))
@@ -136,6 +162,25 @@ LANES = [
          note="A team priced 10-40c an hour before the tip, with a split resting sell: half at 2x, half at 3x of the "
               "ask paid. The headline exit was +50% until 2026-10-28; it moved to the split on the same entries, "
               "with no reset, and every other exit is still tracked."),
+    # 2026-10-30 (Olu): the NBA win margin LANE, from the tracker's research (nba_winmargin.py: a 1-5 or 6-10
+    # bucket at a cheap ask reaches 2x about 7 times in 10). YES of the 1-5 and 6-10 buckets, either team,
+    # priced 10-20c (spread 5c or less) an hour before the tip (the tracker's tip rule: KXNBAGAME expiry
+    # minus 3h); the split resting sell (half 2x, half 3x of the ask), a leg filling ONLY on a traded print
+    # from the tip on, the rest held; the same entries held as the control. FRESH from 2026-10-30. The rule
+    # was chosen on Oct 20-29 data, so that period is the separate in-sample row below, never the headline.
+    dict(id="nba_winmargin_split", label="NBA win margin 1-5 / 6-10 · split 2x / 3x", series=["KXNBAWINMARGIN"],
+         picker=bucket_picker(("1-5", "6-10"), 0.10, 0.20, 0.05), max_spread=0.05, entry_hours=(1,),
+         exits=("hold", C.SPLIT, "tp50", "tp100", C.X2), headline=C.SPLIT, since="2026-10-30", start=winmargin_start,
+         fill_from_start=True, fetch_before_h=6, duration_min=160,
+         note="YES of the 1-5 or 6-10 win margin bucket (either team) priced 10-20c, spread 5c or less, an hour before the tip, "
+              "with a split resting sell: half at 2x, half at 3x of the ask paid, filling only on a traded print from the tip on. "
+              "The buckets of one game are not independent: z is clustered by night."),
+    dict(id="nba_winmargin_split_insample", label="NBA win margin 1-5 / 6-10 · IN-SAMPLE backfill Oct 20-29", series=["KXNBAWINMARGIN"],
+         picker=bucket_picker(("1-5", "6-10"), 0.10, 0.20, 0.05), max_spread=0.05, entry_hours=(1,),
+         exits=("hold", C.SPLIT, "tp50", "tp100", C.X2), headline=C.SPLIT, since="2026-10-20", until="2026-10-29",
+         start=winmargin_start, fill_from_start=True, fetch_before_h=6, duration_min=160, insample=True,
+         note="The same rule replayed on Oct 20-29, the data it was chosen on: in-sample, so it is NOT evidence and is never the "
+              "lane's headline. It stops on 2026-10-29; the lane's own record starts fresh on 2026-10-30."),
 ]
 
 # A demo config for tests and dry runs (python3 chaos_replay.py --demo --out <scratch>); never registered.
