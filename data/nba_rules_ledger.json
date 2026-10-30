@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-30T22:00:15.232842+00:00",
+ "last_run": "2026-10-30T22:30:15.403581+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -3840,16 +3840,99 @@
      "ticker": "KXNBATEAMTOTAL-26OCT30NYKPHI-NYK116",
      "title": "New York over 115.5 points",
      "why": "NY O-D- v PHI O-D- \u00b7 both D\u2212 \u00b7 115+ NO 0.56"
+    },
+    {
+     "game": "401909283",
+     "id": "R7:KXNBATEAMTOTAL-26OCT30HOUDAL-DAL110",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O+D-",
+      "home": "O-D-",
+      "home_h1": "O+D+"
+     },
+     "logged": "2026-10-30T22:30:15.403581+00:00",
+     "match": "HOU @ DAL",
+     "price": 0.52,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-10-31T00:00Z",
+     "status": "open",
+     "strike": 109.5,
+     "team": "DAL",
+     "ticker": "KXNBATEAMTOTAL-26OCT30HOUDAL-DAL110",
+     "title": "Dallas over 109.5 points",
+     "why": "DAL O-D- v HOU O+D- \u00b7 both D\u2212 \u00b7 110+ NO 0.52"
+    },
+    {
+     "game": "401909283",
+     "id": "R7:KXNBATEAMTOTAL-26OCT30HOUDAL-HOU115",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O+D-",
+      "home": "O-D-",
+      "home_h1": "O+D+"
+     },
+     "logged": "2026-10-30T22:30:15.403581+00:00",
+     "match": "HOU @ DAL",
+     "price": 0.47,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-10-31T00:00Z",
+     "status": "open",
+     "strike": 114.5,
+     "team": "HOU",
+     "ticker": "KXNBATEAMTOTAL-26OCT30HOUDAL-HOU115",
+     "title": "Houston over 114.5 points",
+     "why": "HOU O+D- v DAL O-D- \u00b7 both D\u2212 \u00b7 115+ NO 0.47"
+    },
+    {
+     "game": "401909284",
+     "id": "R7:KXNBATEAMTOTAL-26OCT30LACMIN-MIN116",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O-D-",
+      "home": "O+D-",
+      "home_h1": "O+D-"
+     },
+     "logged": "2026-10-30T22:30:15.403581+00:00",
+     "match": "LAC @ MIN",
+     "price": 0.52,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-10-31T00:00Z",
+     "status": "open",
+     "strike": 115.5,
+     "team": "MIN",
+     "ticker": "KXNBATEAMTOTAL-26OCT30LACMIN-MIN116",
+     "title": "Minnesota over 115.5 points",
+     "why": "MIN O+D- v LAC O-D- \u00b7 both D\u2212 \u00b7 115+ NO 0.52"
+    },
+    {
+     "game": "401909284",
+     "id": "R7:KXNBATEAMTOTAL-26OCT30LACMIN-LAC111",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O-D-",
+      "home": "O+D-",
+      "home_h1": "O+D-"
+     },
+     "logged": "2026-10-30T22:30:15.403581+00:00",
+     "match": "LAC @ MIN",
+     "price": 0.59,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-10-31T00:00Z",
+     "status": "open",
+     "strike": 110.5,
+     "team": "LAC",
+     "ticker": "KXNBATEAMTOTAL-26OCT30LACMIN-LAC111",
+     "title": "Los Angeles C over 110.5 points",
+     "why": "LAC O-D- v MIN O+D- \u00b7 both D\u2212 \u00b7 110+ NO 0.59"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-26T06:58:22.733048+00:00",
-   "due": 0,
-   "new": 0
-  },
   {
    "at": "2026-10-26T13:55:04.768157+00:00",
    "due": 0,
@@ -4098,6 +4181,11 @@
   {
    "at": "2026-10-30T22:00:15.232842+00:00",
    "due": 5,
+   "new": 4
+  },
+  {
+   "at": "2026-10-30T22:30:15.403581+00:00",
+   "due": 8,
    "new": 4
   }
  ],
