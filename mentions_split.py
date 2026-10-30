@@ -511,6 +511,15 @@ def _pct(x):
     return "—" if x is None else f"{x * 100:+.1f}%".replace("-", "−")
 
 
+def _headline(x, r):
+    """A lane ROI shown as a headline: "pending" until the lane's first settled event (2026-10-30, Olu).
+    Legs that fill before any event settles are not a record: on thin ladders they can be the split's
+    maximum on every rung at once."""
+    if r["entries"] and not r["settled_events"]:
+        return "pending"
+    return _pct(x)
+
+
 def _px(x):
     return "—" if x is None else f"{x:.2f}".replace("-", "\u2212")
 
@@ -521,7 +530,7 @@ def compare(strict, wide, esc, anchor="mentions-split-compare", title="Strict v 
         es = st.get("entries") or []
         r = record(es)
         sp = [e["spread"] for e in es if e.get("spread") is not None]
-        return (f"{name}: {r['entries']} entr{'y' if r['entries'] == 1 else 'ies'}, ROI after fees {_pct(r['roi'])} "
+        return (f"{name}: {r['entries']} entr{'y' if r['entries'] == 1 else 'ies'}, ROI after fees {_headline(r['roi'], r)} "
                 f"({r['resolved']} resolved), average spread paid {_px(sum(sp) / len(sp)) if sp else '—'}")
     return (f'<p class="sm" id="{anchor}"><b>{esc(title)}</b> · {esc(part("strict (5c)", strict))} · '
             f'{esc(part("wide (10c)", wide))}.</p>')
@@ -539,13 +548,13 @@ def section(state, esc, cfg=STRICT):
     # One tile set for every cheap-side card (the Culture page redo, 2026-10-27).
     shown = (("entries", r["entries"]), ("settled entries", r["settled"]),
              ("settled events", f'{r["settled_events"]} of {r["events"]}'), ("won", r["won"]),
-             ("ROI after fees · split", _pct(r["roi"])), ("ROI after fees · held", _pct(r["roi_held"])),
-             ("split ROI per event", _pct(r["roi_event"])), ("legs filled 2x / 3x", f'{r["filled_2x"]} / {r["filled_3x"]}'))
+             ("ROI after fees · split", _headline(r["roi"], r)), ("ROI after fees · held", _headline(r["roi_held"], r)),
+             ("split ROI per event", _headline(r["roi_event"], r)), ("legs filled 2x / 3x", f'{r["filled_2x"]} / {r["filled_3x"]}'))
     tiles = "".join(f'<div class="tile"><b>{esc(str(v))}</b><span>{esc(k)}</span></div>' for k, v in shown)
     wk = "".join(f'<tr><td>{esc(k)}</td><td class="num">{w["entries"]}</td><td class="num">{w["filled_2x"]}</td>'
                  f'<td class="num">{w["filled_3x"]}</td><td class="num">{w["resolved"]}</td>'
-                 f'<td class="num">{_pct(w["roi"])}</td><td class="num">{_pct(w["roi_held"])}</td>'
-                 f'<td class="num">{_pct(w["roi_2x"])}</td></tr>' for k, w in weeks(es))
+                 f'<td class="num">{_headline(w["roi"], w)}</td><td class="num">{_headline(w["roi_held"], w)}</td>'
+                 f'<td class="num">{_headline(w["roi_2x"], w)}</td></tr>' for k, w in weeks(es))
     leg = lambda l: (f'{l["target"]:.2f} filled {esc(l["filled_at"][:16].replace("T", " "))}Z'
                      + (f', {l["fill_volume"]:g} traded that minute' if l.get("fill_volume") is not None else "")
                      if l.get("filled_at")
@@ -623,7 +632,7 @@ def summary(cfgs, states, esc, pairs=()):
             f'<tr><td><a href="#{esc(cfg["anchor"])}">{esc(cfg["label"])}</a></td>'
             f'<td class="num">{r["entries"]}</td><td class="num">{r["settled"]}</td>'
             f'<td class="num">{r["settled_events"]}</td><td class="num">{r["won"]}</td>'
-            f'<td class="num">{_pct(r["roi"])}</td><td class="num">{_pct(r["roi_held"])}</td>'
+            f'<td class="num">{_headline(r["roi"], r)}</td><td class="num">{_headline(r["roi_held"], r)}</td>'
             f'<td class="num">{r["filled_2x"]} / {r["filled_3x"]}</td><td class="num">{_sp(avg_spread(st))}</td>'
             f'<td>{esc(status(r["settled_events"]))}</td></tr>')
     spread_line = "".join(
@@ -637,7 +646,8 @@ def summary(cfgs, states, esc, pairs=()):
             f'<p class="sm mut" id="spread-paid">{esc(spread_line)}ROI is after fees, the mean per entry (equal '
             'stake); split ROI counts entries whose two legs are resolved, hold ROI entries whose market has '
             'settled. A settled event is one Kalshi event whose entries have all settled: the rungs or words of '
-            'one event move together, so it is one outcome, and the status counts settled events.</p>')
+            'one event move together, so it is one outcome, and the status counts settled events. Until a lane '
+            'has a settled event its ROI reads pending: legs filled before anything settles are not a record.</p>')
 
 
 _esc = lambda x: _html.escape(str(x), quote=True)

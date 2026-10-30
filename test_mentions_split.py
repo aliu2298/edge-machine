@@ -226,7 +226,7 @@ check("the page: both cards, the wide one after the strict one, and the comparis
       (True, True, True))
 check("the comparison: entries, ROI after fees and the average spread paid, strict v wide",
       re.search(r"Strict v wide · strict \(5c\): 2 entries, ROI after fees [^,]+ \(2 resolved\), average spread paid 0\.03 · "
-                r"wide \(10c\): 3 entries, ROI after fees — \(0 resolved\), average spread paid 0\.06", wt) is not None, True)
+                r"wide \(10c\): 3 entries, ROI after fees pending \(0 resolved\), average spread paid 0\.06", wt) is not None, True)
 check("the wide card names its own rule and the review note",
       ("whose spread is 10c or less and whose YES ask is 0.03-0.30" in wt and wt.count("review at 10, decide at 30") >= 6), True)
 check("no guarded public phrase on the page cards", sandbox_audit.COPY_RE.findall(
@@ -532,6 +532,32 @@ check("the card's header and tiles read events",
        '<b>3 of 5</b><span>settled events</span>' in _card, "<span>split ROI per event</span>" in _card), (True, True, True, True))
 check("ten settled days reach review whatever the rung count", M.status(10), "10 settled events · review due (10 reached) · decide at 30")
 check("public copy passes the guard", sandbox_audit.COPY_RE.search(re.sub(r"<[^>]+>", " ", _card + _html)), None)
+
+print("\nno ROI headline before the first settled event (2026-10-30)")
+# An album-like ladder: 5 rungs bought at 4c, every leg filled at 8c / 12c, nothing settled yet.
+_open = [M.grade(dict(id=f"KXALBUMEQUIV-X-{_i}", event="KXALBUMEQUIV-X", price=0.04, payout=None, word=f"R{_i}",
+                      entry_at="2026-10-29T04:00:00+00:00", side="yes",
+                      legs=[dict(target=0.08, share=0.5, filled_at="2026-10-29T05:00:00+00:00"),
+                            dict(target=0.12, share=0.5, filled_at="2026-10-29T06:00:00+00:00")])) for _i in range(5)]
+_ro = M.record(_open)
+check("every leg filled, so the split is resolved, but no event has settled", (_ro["resolved"], _ro["settled_events"], _ro["roi"] > 1),
+      (5, 0, True))
+_acfg = dict(M.ALBUM)
+_ah = M.summary([_acfg], {_acfg["lane"]: dict(entries=_open)}, M._esc)
+_arow = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", _ah.split("<tbody>", 1)[1].split("</tbody>", 1)[0])).strip()
+check("the summary shows pending for split and hold ROI, never the +130% the open legs imply",
+      (_arow.startswith("Album · cheap YES 5 0 0 0 pending pending 5 / 5"), "%" in _arow), (True, False))
+_ac = M.section(dict(entries=_open), M._esc, _acfg)
+_tiles = dict((k, v) for v, k in re.findall(r'<div class="tile"><b>([^<]*)</b><span>([^<]+)</span>', _ac))
+check("the card's ROI tiles and its event row read pending; the trade list keeps each entry's own figures",
+      (_tiles["ROI after fees · split"], _tiles["ROI after fees · held"], _tiles["split ROI per event"],
+       "<td>KXALBUMEQUIV-X</td><td class=\"num\">5</td>" in _ac and _ac.count(">pending</td>") == 3, "+130.6%" in _ac),
+      ("pending", "pending", "pending", True, True))
+_one = _open + [M.grade(dict(id="KXALBUMEQUIV-Y-0", event="KXALBUMEQUIV-Y", price=0.04, payout=0.0, word="R0",
+                             entry_at="2026-10-28T04:00:00+00:00", side="yes",
+                             legs=[dict(target=0.08, share=0.5, settled_px=0.0), dict(target=0.12, share=0.5, settled_px=0.0)]))]
+check("from the first settled event the ROI shows again", M._headline(M.record(_one)["roi"], M.record(_one)) != "pending", True)
+check("a lane with no entry still shows —", M._headline(None, M.record([])), "—")
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
