@@ -95,7 +95,7 @@
    "polymarket_us_priced": 13
   },
   "nhl_pl": {
-   "kalshi_venue": 17
+   "kalshi_venue": 18
   },
   "nhl_rest": {
    "kalshi_venue": 22
@@ -105,7 +105,7 @@
     "offered": 9,
     "picked": 5
    },
-   "kalshi_venue": 344,
+   "kalshi_venue": 311,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -278,10 +278,10 @@
   },
   "soccer_team1": {
    "goals_market": {
-    "offered": 82,
-    "picked": 82
+    "offered": 84,
+    "picked": 84
    },
-   "kalshi_venue": 82
+   "kalshi_venue": 84
   },
   "soccer_team1_cup": {
    "goals_market": {
@@ -307,16 +307,16 @@
   },
   "soccer_team2": {
    "goals_market": {
-    "offered": 82,
-    "picked": 82
+    "offered": 84,
+    "picked": 84
    },
-   "kalshi_venue": 82,
+   "kalshi_venue": 84,
    "team2_form_l10": {
-    "offered": 82,
+    "offered": 84,
     "picked": 6
    },
    "team2_ranked": {
-    "offered": 82,
+    "offered": 84,
     "picked": 1
    }
   },
@@ -390,10 +390,10 @@
    }
   },
   "tennis": {
-   "kalshi_venue": 30,
+   "kalshi_venue": 28,
    "polymarket_us": 40,
-   "polymarket_us_listed": 257,
-   "polymarket_us_priced": 108,
+   "polymarket_us_listed": 251,
+   "polymarket_us_priced": 100,
    "tennis_utr_shortlist_v1": {
     "offered": 0,
     "picked": 0
@@ -404,8 +404,8 @@
    "legs": 0
   },
   "tennis_pmcombo": {
-   "combo": 2,
-   "legs": 3
+   "combo": 4,
+   "legs": 4
   }
  },
  "feed_status": {
@@ -415,41 +415,41 @@
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-10-30T15:06:43+00:00",
-   "commodities": "2026-10-30T15:06:43+00:00",
-   "commodities_fav": "2026-10-30T15:06:43+00:00",
-   "cricket": "2026-10-30T15:06:43+00:00",
-   "crypto": "2026-10-30T15:06:43+00:00",
-   "crypto_fav": "2026-10-30T15:06:43+00:00",
-   "economics": "2026-10-30T15:06:43+00:00",
-   "finance": "2026-10-30T15:06:43+00:00",
-   "mma": "2026-10-30T15:06:43+00:00",
-   "nfl": "2026-10-30T15:06:43+00:00",
-   "nhl_pl": "2026-10-30T15:06:43+00:00",
-   "nhl_rest": "2026-10-30T15:06:43+00:00",
-   "soccer": "2026-10-30T15:06:43+00:00",
-   "soccer_btts": "2026-10-30T15:06:43+00:00",
-   "soccer_btts_cup": "2026-10-30T15:06:43+00:00",
-   "soccer_corners": "2026-10-30T15:06:43+00:00",
+   "boxing": "2026-10-30T15:12:03+00:00",
+   "commodities": "2026-10-30T15:12:03+00:00",
+   "commodities_fav": "2026-10-30T15:12:03+00:00",
+   "cricket": "2026-10-30T15:12:03+00:00",
+   "crypto": "2026-10-30T15:12:03+00:00",
+   "crypto_fav": "2026-10-30T15:12:03+00:00",
+   "economics": "2026-10-30T15:12:03+00:00",
+   "finance": "2026-10-30T15:12:03+00:00",
+   "mma": "2026-10-30T15:12:03+00:00",
+   "nfl": "2026-10-30T15:12:03+00:00",
+   "nhl_pl": "2026-10-30T15:12:03+00:00",
+   "nhl_rest": "2026-10-30T15:12:03+00:00",
+   "soccer": "2026-10-30T15:12:03+00:00",
+   "soccer_btts": "2026-10-30T15:12:03+00:00",
+   "soccer_btts_cup": "2026-10-30T15:12:03+00:00",
+   "soccer_corners": "2026-10-30T15:12:03+00:00",
    "soccer_ftts": "2026-10-19T18:33:38+00:00",
-   "soccer_o15": "2026-10-30T15:06:43+00:00",
-   "soccer_o15_cup": "2026-10-30T15:06:43+00:00",
-   "soccer_o25": "2026-10-30T15:06:43+00:00",
-   "soccer_o25_cup": "2026-10-30T15:06:43+00:00",
-   "soccer_p05": "2026-10-30T15:06:43+00:00",
-   "soccer_p05_cup": "2026-10-30T15:06:43+00:00",
-   "soccer_team1": "2026-10-30T15:06:43+00:00",
+   "soccer_o15": "2026-10-30T15:12:03+00:00",
+   "soccer_o15_cup": "2026-10-30T15:12:03+00:00",
+   "soccer_o25": "2026-10-30T15:12:03+00:00",
+   "soccer_o25_cup": "2026-10-30T15:12:03+00:00",
+   "soccer_p05": "2026-10-30T15:12:03+00:00",
+   "soccer_p05_cup": "2026-10-30T15:12:03+00:00",
+   "soccer_team1": "2026-10-30T15:12:03+00:00",
    "soccer_team1_cup": "2026-10-28T18:33:55+00:00",
-   "soccer_team2": "2026-10-30T15:06:43+00:00",
+   "soccer_team2": "2026-10-30T15:12:03+00:00",
    "soccer_team2_cup": "2026-10-28T18:33:55+00:00",
-   "soccer_u35": "2026-10-30T15:06:43+00:00",
-   "soccer_u35_cup": "2026-10-30T15:06:43+00:00",
-   "tennis": "2026-10-30T15:06:43+00:00",
+   "soccer_u35": "2026-10-30T15:12:03+00:00",
+   "soccer_u35_cup": "2026-10-30T15:12:03+00:00",
+   "tennis": "2026-10-30T15:12:03+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "odds_api": {
    "allowance": 0,
-   "at": "2026-10-30T15:06:43+00:00",
+   "at": "2026-10-30T15:12:03+00:00",
    "remaining": 57,
    "used": 443
   },
@@ -470,14 +470,14 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 787,
+  "runs": 788,
   "tennis_shortlist": {
    "audit": [],
-   "checked_at": "2026-10-30T15:06:42.967814+00:00",
+   "checked_at": "2026-10-30T15:12:03.140783+00:00",
    "daily_limit": 3,
    "day": "2026-10-30"
   },
-  "updated": "2026-10-30T15:07:39+00:00"
+  "updated": "2026-10-30T15:12:58+00:00"
  },
  "quotes": [
   {
@@ -341482,7 +341482,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.24,
    "date": "2026-10-31",
    "edge": null,
@@ -341527,7 +341527,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.21,
    "date": "2026-10-31",
    "edge": null,
@@ -341572,7 +341572,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.25,
    "date": "2026-10-31",
    "edge": null,
@@ -370896,7 +370896,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.17,
    "date": "2026-10-31",
    "edge": null,
@@ -379082,7 +379082,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.73,
    "date": "2026-10-31",
    "edge": null,
@@ -380946,7 +380946,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.08,
    "date": "2026-10-31",
    "edge": null,
@@ -381765,7 +381765,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.74,
    "date": "2026-10-31",
    "edge": null,
@@ -383793,7 +383793,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.84,
    "date": "2026-10-31",
    "edge": null,
@@ -386458,7 +386458,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.21,
    "date": "2026-11-01",
    "edge": null,
@@ -386503,7 +386503,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.22,
    "date": "2026-11-01",
    "edge": null,
@@ -386900,7 +386900,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.59,
    "date": "2026-11-01",
    "edge": null,
@@ -402978,7 +402978,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.08,
    "date": "2026-11-01",
    "edge": null,
@@ -403246,8 +403246,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
-   "close_price": 0.66,
+   "close_at": "2026-10-30T15:12:03+00:00",
+   "close_price": 0.65,
    "date": "2026-10-31",
    "edge": null,
    "espn_away": "St Johnstone",
@@ -403446,7 +403446,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.9,
    "date": "2026-10-31",
    "edge": null,
@@ -415791,7 +415791,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.15,
    "date": "2026-10-30",
    "edge": null,
@@ -416797,7 +416797,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.82,
    "date": "2026-10-31",
    "edge": null,
@@ -420684,7 +420684,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.84,
    "date": "2026-10-31",
    "edge": null,
@@ -422201,7 +422201,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.1975,
    "date": "2026-11-01",
    "edge": 0.072,
@@ -422236,8 +422236,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
-   "close_price": 0.8575,
+   "close_at": "2026-10-30T15:12:03+00:00",
+   "close_price": 0.86,
    "date": "2026-11-01",
    "edge": 0.036,
    "id": "espn_fpi:aec-nfl-ten-cin-2026-11-01",
@@ -422304,7 +422304,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.3775,
    "date": "2026-11-01",
    "edge": 0.073,
@@ -422339,7 +422339,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.5625,
    "date": "2026-11-01",
    "edge": 0.131,
@@ -422374,7 +422374,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.7475,
    "date": "2026-11-01",
    "edge": 0.0325,
@@ -422409,7 +422409,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.47,
    "date": "2026-11-01",
    "edge": 0.054,
@@ -422510,7 +422510,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.7575,
    "date": "2026-11-01",
    "edge": 0.0465,
@@ -422545,7 +422545,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.5225,
    "date": "2026-11-01",
    "edge": 0.031,
@@ -423199,7 +423199,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.79,
    "date": "2026-11-02",
    "edge": null,
@@ -426027,7 +426027,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.77,
    "date": "2026-11-02",
    "edge": null,
@@ -427505,7 +427505,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.57,
    "date": "2026-11-01",
    "edge": null,
@@ -428057,7 +428057,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.6,
    "date": "2026-10-31",
    "edge": null,
@@ -433954,7 +433954,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.57,
    "date": "2026-10-31",
    "edge": null,
@@ -437119,7 +437119,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.7,
    "date": "2026-10-31",
    "edge": null,
@@ -439126,7 +439126,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.54,
    "date": "2026-10-31",
    "edge": null,
@@ -439168,7 +439168,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.75,
    "date": "2026-10-31",
    "edge": null,
@@ -439625,7 +439625,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.67,
    "date": "2026-11-01",
    "edge": null,
@@ -439865,7 +439865,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.82,
    "date": "2026-11-01",
    "edge": null,
@@ -440645,7 +440645,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.65,
    "date": "2026-10-31",
    "edge": null,
@@ -451605,8 +451605,8 @@
    "price_b": 0.7,
    "price_draw": null,
    "prob_a": 0.305,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-10-30T15:12:52+00:00",
    "side_a": "Marina Bassols Ribera",
    "side_b": "Alina Charaeva",
    "source": "polymarket_us",
@@ -451615,7 +451615,7 @@
    "stake": 0.0,
    "start": "2026-10-30T13:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "wta",
    "uncovered": null,
    "untraded": false,
@@ -452304,7 +452304,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.77,
    "date": "2026-11-01",
    "edge": null,
@@ -455225,7 +455225,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.31,
    "date": "2026-11-01",
    "edge": null,
@@ -456213,7 +456213,7 @@
    "ask_size": 68.0,
    "bet": true,
    "bid": 0.73,
-   "close_at": "2026-10-30T15:06:43+00:00",
+   "close_at": "2026-10-30T15:12:03+00:00",
    "close_price": 0.72,
    "date": "2026-10-30",
    "edge": null,
@@ -456531,6 +456531,184 @@
    "uncovered": null,
    "untraded": false,
    "url": "https://polymarket.us/event/itfwo-ashlah-rebmor-2026-10-30",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-01",
+   "edge": -0.035,
+   "espn_away": "FC Cologne",
+   "espn_home": "1. FC Union Berlin",
+   "event": "KXBUNDESLIGATEAMTOTAL-26NOV01UNIKOE",
+   "id": "goals_market:KXBUNDESLIGATEAMTOTAL-26NOV01UNIKOE-UNI2",
+   "kalshi_title": "Union Berlin over 1.5 goals",
+   "label": "1. FC Union Berlin v FC Cologne: 1. FC Union Berlin to score 2+",
+   "league": "Bundesliga",
+   "liquidity": null,
+   "logged": "2026-10-30T15:12:03+00:00",
+   "market_id": "KXBUNDESLIGATEAMTOTAL-26NOV01UNIKOE-UNI2",
+   "opponent": "FC Cologne",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.48,
+   "price_b": 0.59,
+   "price_draw": null,
+   "prob_a": 0.445,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_team2",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-01T14:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "1. FC Union Berlin",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxbundesligateamtotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-30",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-atp-meerot-aidmay-2026-10-30",
+   "label": "Mees Rottgering vs Aidan Mayo",
+   "liquidity": null,
+   "logged": "2026-10-30T15:12:03+00:00",
+   "market_id": "aec-atp-meerot-aidmay-2026-10-30",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.58,
+   "price_b": 0.43,
+   "price_draw": null,
+   "prob_a": 0.575,
+   "result": null,
+   "settled": null,
+   "side_a": "Mees Rottgering",
+   "side_b": "Aidan Mayo",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-10-30T17:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "atpch",
+   "tour": "atpch",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/atp-meerot-aidmay-2026-10-30",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-30",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-atp-jerkym-jirleh-2026-10-30",
+   "label": "Jerome Kym vs Jiri Lehecka",
+   "liquidity": null,
+   "logged": "2026-10-30T15:12:03+00:00",
+   "market_id": "aec-atp-jerkym-jirleh-2026-10-30",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.28,
+   "price_b": 0.73,
+   "price_draw": null,
+   "prob_a": 0.275,
+   "result": null,
+   "settled": null,
+   "side_a": "Jerome Kym",
+   "side_b": "Jiri Lehecka",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-10-30T17:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "atp",
+   "tour": "atp",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/atp-jerkym-jirleh-2026-10-30",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-30",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-atpdb-galarnhacver-reyvarstalde-2026-10-30",
+   "label": "Galarneau A / Hach Verdugo H vs Reyes-Varela M A / Stalder R",
+   "liquidity": null,
+   "logged": "2026-10-30T15:12:03+00:00",
+   "market_id": "aec-atpdb-galarnhacver-reyvarstalde-2026-10-30",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.37,
+   "price_b": 0.64,
+   "price_draw": null,
+   "prob_a": 0.365,
+   "result": null,
+   "settled": null,
+   "side_a": "Galarneau A / Hach Verdugo H",
+   "side_b": "Reyes-Varela M A / Stalder R",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-10-30T17:10:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "atpdb",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/atpdb-galarnhacver-reyvarstalde-2026-10-30",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-10-30",
+   "edge": -0.01,
+   "id": "polymarket_us:aec-utr-ylisar-shaaly-2026-10-30",
+   "label": "Yli-Piipari, Saray vs Shannon, Alyson",
+   "liquidity": null,
+   "logged": "2026-10-30T15:12:03+00:00",
+   "market_id": "aec-utr-ylisar-shaaly-2026-10-30",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.64,
+   "price_b": 0.38,
+   "price_draw": null,
+   "prob_a": 0.63,
+   "result": null,
+   "settled": null,
+   "side_a": "Yli-Piipari, Saray",
+   "side_b": "Shannon, Alyson",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.02,
+   "stake": 0.0,
+   "start": "2026-10-30T17:10:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "utr",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/utr-ylisar-shaaly-2026-10-30",
    "venue": "polymarket_us",
    "venue_start": null
   }
