@@ -1,6 +1,16 @@
 {
+ "ask_rule_since": "2026-10-30T14:56:31.908505+00:00",
  "entries": [
   {
+   "ask_check": {
+    "book": null,
+    "first_quotes": false,
+    "how": "print",
+    "last_trade": null,
+    "printed": 21.0,
+    "source": "replayed",
+    "status": "verified"
+   },
    "bid": 0.0,
    "entry_at": "2026-10-20T22:53:00+00:00",
    "event": "KXALBUMEQUIV-FRE26NOV12",
@@ -30,6 +40,15 @@
    "word": "Above 20K"
   },
   {
+   "ask_check": {
+    "book": null,
+    "first_quotes": false,
+    "how": "print",
+    "last_trade": null,
+    "printed": 19.0,
+    "source": "replayed",
+    "status": "verified"
+   },
    "bid": 0.0,
    "entry_at": "2026-10-20T22:53:00+00:00",
    "event": "KXALBUMEQUIV-FRE26NOV12",
@@ -59,6 +78,15 @@
    "word": "Above 40K"
   },
   {
+   "ask_check": {
+    "book": null,
+    "first_quotes": false,
+    "last_trade": null,
+    "printed": 0,
+    "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+    "source": "replayed",
+    "status": "unverified"
+   },
    "bid": 0.03,
    "entry_at": "2026-10-20T22:53:00+00:00",
    "event": "KXALBUMEQUIV-FRE26NOV12",
@@ -95,6 +123,15 @@
    "word": "Above 60K"
   },
   {
+   "ask_check": {
+    "book": null,
+    "first_quotes": false,
+    "last_trade": null,
+    "printed": 0,
+    "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+    "source": "replayed",
+    "status": "unverified"
+   },
    "bid": 0.06,
    "entry_at": "2026-10-20T23:17:00+00:00",
    "event": "KXALBUMEQUIV-FRE26NOV12",
@@ -131,6 +168,15 @@
    "word": "Above 80K"
   },
   {
+   "ask_check": {
+    "book": null,
+    "first_quotes": false,
+    "last_trade": null,
+    "printed": 0,
+    "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+    "source": "replayed",
+    "status": "unverified"
+   },
    "bid": 0.04,
    "entry_at": "2026-10-23T18:42:00+00:00",
    "event": "KXALBUMEQUIV-PRESSPLAY26OCT29",
@@ -160,6 +206,15 @@
    "word": "Above 15K"
   },
   {
+   "ask_check": {
+    "book": null,
+    "first_quotes": false,
+    "last_trade": 0.14,
+    "printed": 2.0,
+    "reason": "2 contracts traded at or through the ask within 60 minutes (under 10)",
+    "source": "replayed",
+    "status": "unverified"
+   },
    "bid": 0.13,
    "entry_at": "2026-10-07T20:56:00+00:00",
    "event": "KXALBUMEQUIV-WAT26OCT29",
@@ -196,6 +251,15 @@
    "word": "Above 5K"
   },
   {
+   "ask_check": {
+    "book": null,
+    "first_quotes": false,
+    "last_trade": null,
+    "printed": 0,
+    "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+    "source": "replayed",
+    "status": "unverified"
+   },
    "bid": 0.03,
    "entry_at": "2026-10-23T22:05:00+00:00",
    "event": "KXALBUMEQUIV-LUH26OCT29",
@@ -232,6 +296,15 @@
    "word": "Above 15K"
   },
   {
+   "ask_check": {
+    "book": 0,
+    "first_quotes": false,
+    "last_trade": null,
+    "printed": 0,
+    "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+    "source": "live",
+    "status": "unverified"
+   },
    "bid": 0.04,
    "book_at": "2026-10-27T18:00:47.878392+00:00",
    "book_size": 0,
@@ -263,6 +336,14 @@
    "word": "Above 22K"
   },
   {
+   "ask_check": {
+    "book": 12.0,
+    "first_quotes": false,
+    "how": "book",
+    "last_trade": null,
+    "source": "live",
+    "status": "verified"
+   },
    "bid": 0.07,
    "book_at": "2026-10-27T20:00:54.956110+00:00",
    "book_size": 12.0,
@@ -294,6 +375,15 @@
    "word": "Above 8K"
   },
   {
+   "ask_check": {
+    "book": 0,
+    "first_quotes": false,
+    "last_trade": null,
+    "printed": 0,
+    "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+    "source": "live",
+    "status": "unverified"
+   },
    "bid": 0.03,
    "book_at": "2026-10-27T22:00:46.491137+00:00",
    "book_size": 0,
@@ -325,6 +415,14 @@
    "word": "Above 27K"
   },
   {
+   "ask_check": {
+    "book": 126.0,
+    "first_quotes": false,
+    "how": "book",
+    "last_trade": 0.11,
+    "source": "live",
+    "status": "verified"
+   },
    "bid": 0.06,
    "book_at": "2026-10-29T19:00:46.926423+00:00",
    "book_size": 126.0,
@@ -356,6 +454,15 @@
    "word": "Above 2K"
   },
   {
+   "ask_check": {
+    "book": 6.0,
+    "first_quotes": false,
+    "last_trade": null,
+    "printed": 0,
+    "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+    "source": "live",
+    "status": "unverified"
+   },
    "bid": 0.02,
    "book_at": "2026-10-29T19:54:19.787959+00:00",
    "book_size": 6.0,
@@ -387,6 +494,15 @@
    "word": "Above 5K"
   },
   {
+   "ask_check": {
+    "book": 3.0,
+    "first_quotes": false,
+    "last_trade": null,
+    "printed": 0,
+    "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+    "source": "live",
+    "status": "unverified"
+   },
    "bid": 0.06,
    "book_at": "2026-10-29T19:54:19.787959+00:00",
    "book_size": 3.0,
@@ -418,6 +534,14 @@
    "word": "Above 7K"
   },
   {
+   "ask_check": {
+    "book": 18.0,
+    "first_quotes": false,
+    "last_trade": 0.4,
+    "reason": "ask 0.10 under half the last trade 0.40",
+    "source": "live",
+    "status": "unverified"
+   },
    "bid": 0.06,
    "book_at": "2026-10-29T22:00:59.602297+00:00",
    "book_size": 18.0,
@@ -456,6 +580,15 @@
    "word": "Above 10K"
   },
   {
+   "ask_check": {
+    "book": 5.0,
+    "first_quotes": false,
+    "last_trade": 0.03,
+    "printed": 0,
+    "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+    "source": "live",
+    "status": "unverified"
+   },
    "bid": 0.01,
    "book_at": "2026-10-29T22:00:59.602297+00:00",
    "book_size": 5.0,
@@ -487,6 +620,15 @@
    "word": "Above 14K"
   },
   {
+   "ask_check": {
+    "book": 0,
+    "first_quotes": false,
+    "last_trade": null,
+    "printed": 0,
+    "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+    "source": "live",
+    "status": "unverified"
+   },
    "bid": 0.07,
    "book_at": "2026-10-29T22:00:59.602297+00:00",
    "book_size": 0,
@@ -539,13 +681,15 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:50.419359+00:00"
  },
  "lane": "album_cheap_no",
- "last_success": "2026-10-30T14:00:54.331815+00:00",
+ "last_success": "2026-10-30T14:56:31.908505+00:00",
  "observations": {
-  "at": "2026-10-30T14:00:54.331815+00:00",
+  "at": "2026-10-30T14:56:31.908505+00:00",
+  "checking": 0,
   "entered": 0,
   "events": 17,
   "filled": 0,
   "skipped": 0,
+  "unverified": 12,
   "waiting": 0
  },
  "skips": {
@@ -1309,5 +1453,12 @@
    "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
    "word": "Above 90K"
   }
+ },
+ "voided": {
+  "entries": 16,
+  "on": "2026-10-30",
+  "roi": 1.32192,
+  "roi_held": null,
+  "settled_events": 0
  }
 }

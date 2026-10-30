@@ -1,17 +1,20 @@
 {
+ "ask_rule_since": "2026-10-30T14:56:28.465736+00:00",
  "entries": [],
  "error": null,
  "events": {
   "KXTRUMPSAYMONTH-26NOV01": "2026-10-27T03:09:42.841121+00:00"
  },
  "lane": "mentions_month_split_wide",
- "last_success": "2026-10-30T14:00:52.984685+00:00",
+ "last_success": "2026-10-30T14:56:28.465736+00:00",
  "observations": {
-  "at": "2026-10-30T14:00:52.984685+00:00",
+  "at": "2026-10-30T14:56:28.465736+00:00",
+  "checking": 0,
   "entered": 0,
   "events": 1,
   "filled": 0,
   "skipped": 0,
+  "unverified": 0,
   "waiting": 0
  },
  "skips": {
@@ -145,5 +148,12 @@
    "reason": "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h",
    "word": "Zohran / Mamdani"
   }
+ },
+ "voided": {
+  "entries": 0,
+  "on": "2026-10-30",
+  "roi": null,
+  "roi_held": null,
+  "settled_events": 0
  }
 }
