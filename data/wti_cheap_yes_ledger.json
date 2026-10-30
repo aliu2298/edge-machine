@@ -760,6 +760,8 @@
    "last_trade_at": null,
    "legs": [
     {
+     "fill_px": 0.36,
+     "filled_at": "2026-10-30T03:00:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.36
@@ -888,6 +890,8 @@
    "last_trade_at": null,
    "legs": [
     {
+     "fill_px": 0.3,
+     "filled_at": "2026-10-30T03:00:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.3
@@ -980,12 +984,12 @@
   "KXWTI-26OCT3014": "2026-10-29T00:30:36.981950+00:00"
  },
  "lane": "wti_cheap_yes",
- "last_success": "2026-10-30T02:45:36.545524+00:00",
+ "last_success": "2026-10-30T03:00:37.989524+00:00",
  "observations": {
-  "at": "2026-10-30T02:45:36.545524+00:00",
+  "at": "2026-10-30T03:00:37.989524+00:00",
   "entered": 0,
   "events": 2,
-  "filled": 0,
+  "filled": 2,
   "skipped": 0,
   "waiting": 20
  },
