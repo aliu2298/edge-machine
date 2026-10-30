@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-29T23:00:15.044358+00:00",
+ "last_run": "2026-10-30T00:30:13.843875+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -3727,16 +3727,33 @@
      "ticker": "KXNBATEAMTOTAL-26OCT28CHADET-DET110",
      "title": "Detroit over 109.5 points",
      "why": "DET O+D- v CHA O-D- \u00b7 both D\u2212 \u00b7 110+ NO 0.50"
+    },
+    {
+     "game": "401909895",
+     "id": "R7:KXNBATEAMTOTAL-26OCT29MEMPOR-MEM114",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O+D-",
+      "home": "O+D-",
+      "home_h1": "O+D-"
+     },
+     "logged": "2026-10-30T00:30:13.843875+00:00",
+     "match": "MEM @ POR",
+     "price": 0.53,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-10-30T02:00Z",
+     "status": "open",
+     "strike": 113.5,
+     "team": "MEM",
+     "ticker": "KXNBATEAMTOTAL-26OCT29MEMPOR-MEM114",
+     "title": "Memphis over 113.5 points",
+     "why": "MEM O+D- v POR O+D- \u00b7 both D\u2212 \u00b7 115+ NO 0.53"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T21:30:15.288473+00:00",
-   "due": 4,
-   "new": 6
-  },
   {
    "at": "2026-10-25T21:43:17.570607+00:00",
    "due": 3,
@@ -3986,6 +4003,11 @@
    "at": "2026-10-29T23:00:15.044358+00:00",
    "due": 2,
    "new": 0
+  },
+  {
+   "at": "2026-10-30T00:30:13.843875+00:00",
+   "due": 1,
+   "new": 1
   }
  ],
  "version": "nba-rules-v1"
