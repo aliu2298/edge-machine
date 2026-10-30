@@ -133,6 +133,31 @@ st["rows"][0]["night"] = "2026-10-01"
 st["rows"][0]["path"] = [[1, 2, 3]]
 W.run(st, NOW + dt.timedelta(hours=2), fetch)
 check("raw prints are kept for the last three nights only", st["rows"][0]["path"], [])
+check("a game with no spread markets is still marked read for the spread line", EVT in st["spread_seen"], True)
+back = W.load("/nonexistent")
+back["seen"] = {EVT: "earlier"}
+bcalls = []
+W.run(back, NOW, lambda p: (bcalls.append(p), fetch(p))[1])
+check("backfill: a game already read for the buckets is read again for the spread line only", (back["rows"], EVT in back["spread_seen"], any("trades" in c for c in bcalls)), ([], True, False))
+
+print("\ncomeback underdog spread line")
+SP = [dict(ticker="KXNBASPREAD-26OCT29WASCLE-WAS3", floor_strike=2.5, result="no"),
+      dict(ticker="KXNBASPREAD-26OCT29WASCLE-WAS9", floor_strike=8.5, result="no"),
+      dict(ticker="KXNBASPREAD-26OCT29WASCLE-CLE6", floor_strike=5.5, result="yes"),
+      dict(ticker="KXNBASPREAD-26OCT29WASCLE-WAS15", floor_strike=14.5, result="no")]
+sent = {SP[0]["ticker"]: (0.18, 0.20), SP[1]["ticker"]: (0.08, 0.10), SP[2]["ticker"]: (0.60, 0.62), SP[3]["ticker"]: (0.01, 0.03)}
+spr = {SP[0]["ticker"]: [(TIP + 900, 0.45, 12.0)], SP[1]["ticker"]: [(TIP + 900, 0.15, 2.0)]}
+sr = {r["id"].rsplit("-", 1)[-1]: r for r in W.spread_rows("KXNBAWINMARGIN-26OCT29WASCLE", SP, sent, {"WAS": 0.3, "CLE": 0.7}, TIP, lambda t: spr.get(t, []), NOW)}
+check("only the underdog's rungs (WAS), not the favourite's", sorted(sr), ["WAS15", "WAS3", "WAS9"])
+check("WAS is not a Comeback team; the line and share are kept", (sr["WAS3"]["comeback"], sr["WAS3"]["line"], sr["WAS3"]["team_share"]), (False, 2.5, 0.3))
+check("the 20c rung reached 2x, the 10c rung did not, the 3c rung is not eligible", (sr["WAS3"]["m"]["reach2"], sr["WAS9"]["m"]["reach2"], sr["WAS15"]["eligible"], sr["WAS15"]["m"]), (True, False, False, None))
+check("a Comeback underdog is flagged", W.spread_rows("E", [dict(ticker="KXNBASPREAD-26OCT29CLEOKC-OKC3", floor_strike=2.5, result="no")], {"KXNBASPREAD-26OCT29CLEOKC-OKC3": (0.2, 0.22)}, {"OKC": 0.4, "CLE": 0.6}, TIP, lambda t: [], NOW)[0]["comeback"], True)
+check("a 50/50 game has no underdog", W.spread_rows("E", SP, sent, {"WAS": 0.5, "CLE": 0.5}, TIP, lambda t: [], NOW), [])
+check("moneyline shares from the KXNBAGAME mids", W.ml_shares([dict(ticker="KXNBAGAME-26OCT29WASCLE-WAS"), dict(ticker="KXNBAGAME-26OCT29WASCLE-CLE")],
+      {"KXNBAGAME-26OCT29WASCLE-WAS": [candle(ENTRY, 0.29, 0.31)], "KXNBAGAME-26OCT29WASCLE-CLE": [candle(ENTRY, 0.69, 0.71)]}, ENTRY), {"WAS": 0.3, "CLE": 0.7})
+check("one side unquoted: no moneyline shares", W.ml_shares([dict(ticker="X-WAS"), dict(ticker="X-CLE")], {"X-WAS": [candle(ENTRY, 0.29, 0.31)]}, ENTRY), {})
+check("by game: one game, a rung reached 2x", W.by_game(W.eligible(list(sr.values()))), (1, 1))
+check("the Comeback list is the 2025-26 profile", sorted(W.COMEBACK), ["BOS", "CLE", "DEN", "HOU", "MIN", "NYK", "OKC", "SAS"])
 
 print("\nsummaries")
 mk2 = lambda ask, won, r2, first, above, vol, bucket="1-5", tip=1, **k: dict(
@@ -158,6 +183,7 @@ for r in real["rows"]:
 real["seen"] = {EV: "x"}
 html = B.section(real)
 check("observation only, plainly", ("Observation only — no buying or selling rule yet" in html), True)
+check("the comeback underdog spread line is on the section", "Comeback underdog spread line" in html, True)
 check("the three tables, the halves and last night's games", all(x in html for x in ("<th>Bucket</th>", "<th>Team</th>", "<th>Entry ask</th>", "Older and newer halves", "Last night's games")), True)
 check("every column the coordinator asked for", all(c in html for c in B.COLS), True)
 check("the fair benchmark is stated: 50, 33 and 20%", all(x in html for x in ("about 50% of the time", "3x 33%", "5x 20%")), True)
