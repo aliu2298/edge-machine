@@ -2344,14 +2344,14 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:42.883824+00:00"
  },
  "lane": "album_cheap_rungs",
- "last_success": "2026-10-30T02:00:51.856600+00:00",
+ "last_success": "2026-10-30T03:00:44.841401+00:00",
  "observations": {
-  "at": "2026-10-30T02:00:51.856600+00:00",
+  "at": "2026-10-30T03:00:44.841401+00:00",
   "entered": 0,
   "events": 17,
   "filled": 0,
-  "skipped": 0,
-  "waiting": 2
+  "skipped": 2,
+  "waiting": 0
  },
  "skips": {
   "KXALBUMEQUIV-BLEACH26NOV05-10K": {
@@ -2724,10 +2724,20 @@
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
    "word": "Above 12K"
   },
+  "KXALBUMEQUIV-MUSE26OCT29-14K": {
+   "event": "KXALBUMEQUIV-MUSE26OCT29",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 14K"
+  },
   "KXALBUMEQUIV-MUSE26OCT29-15K": {
    "event": "KXALBUMEQUIV-MUSE26OCT29",
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
    "word": "Above 15K"
+  },
+  "KXALBUMEQUIV-MUSE26OCT29-17K": {
+   "event": "KXALBUMEQUIV-MUSE26OCT29",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 17K"
   },
   "KXALBUMEQUIV-MUSE26OCT29-18K": {
    "event": "KXALBUMEQUIV-MUSE26OCT29",
