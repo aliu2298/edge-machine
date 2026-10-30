@@ -109,7 +109,8 @@ def quotes(state):
     return out
 
 
-def feed(state, now=None, previous=None):
+def feed(state, now=None, previous=None, heartbeat=False):
+    """The feed; `heartbeat` stamps it with the clock (see soccer_rules_production.feed for why that is safe)."""
     import production as P
     now = now or dt.datetime.now(dt.timezone.utc)
     rows = quotes(state)
@@ -117,7 +118,7 @@ def feed(state, now=None, previous=None):
     ok = {src: healthy for src, _s, _n in PAIRS.values()}
     # A stale or failed read keeps the settled history but publishes no actionable entry.
     rows = [r for r in rows if r["status"] != "open" or ok.get(r["source"])]
-    built = D.instant(state.get("last_run")) or now
+    built = now if heartbeat else (D.instant(state.get("last_run")) or now)
     blob = P.build_feed({"quotes": rows}, {"pairs": pairs()}, now=built, previous=previous)
     blob["collector_healthy"] = ok
     blob["collector_error"] = state.get("error")
@@ -134,11 +135,12 @@ def page_inputs(d, st, blob, state, now=None):
                  pairs={**(blob.get("pairs") or {}), **current["pairs"]}))
 
 
-def main():
+def main(argv=None):
+    import sys
     import production as P
     state = TR.load()
     previous = P.load_feed(PATH)
-    P.save_feed(feed(state, previous=previous), PATH)
+    P.save_feed(feed(state, previous=previous, heartbeat="--heartbeat" in (sys.argv[1:] if argv is None else argv)), PATH)
     return 0
 
 

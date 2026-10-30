@@ -118,7 +118,11 @@ def _healthy(state, now):
     return stamp is not None and not state.get("error") and dt.timedelta(0) <= now - stamp <= dt.timedelta(hours=HEALTHY_HOURS)
 
 
-def feed(rules_state, sa_state, now=None, previous=None):
+def feed(rules_state, sa_state, now=None, previous=None, heartbeat=False):
+    """The feed. `heartbeat` (2026-10-30) stamps it with the clock instead of the collectors' last read, so
+    the bot's 8h staleness guard stays met between match windows. Nothing stale can pass as fresh: the
+    build runs at `now`, so an open lead whose kickoff has passed is dropped, and open leads are published
+    only while the collector's last read is within HEALTHY_HOURS, as in every build."""
     import production as P
     now = now or dt.datetime.now(dt.timezone.utc)
     rows = quotes(rules_state, sa_state)
@@ -126,7 +130,7 @@ def feed(rules_state, sa_state, now=None, previous=None):
     # A stale or failed read keeps the settled history but publishes no actionable entry.
     rows = [r for r in rows if r["status"] != "open" or ok.get(r["source"])]
     stamps = [D.instant(s.get("last_run")) for s in (rules_state, sa_state)]
-    built = max([s for s in stamps if s] or [now])
+    built = now if heartbeat else max([s for s in stamps if s] or [now])
     blob = P.build_feed({"quotes": rows}, {"pairs": pairs()}, now=built, previous=previous)
     blob["collector_healthy"] = ok
     blob["collector_error"] = rules_state.get("error") or sa_state.get("error")
@@ -146,11 +150,12 @@ def load_states():
     return SR.load(), SA.load()
 
 
-def main():
+def main(argv=None):
+    import sys
     import production as P
     rules_state, sa_state = load_states()
     previous = P.load_feed(PATH)
-    P.save_feed(feed(rules_state, sa_state, previous=previous), PATH)
+    P.save_feed(feed(rules_state, sa_state, previous=previous, heartbeat="--heartbeat" in (sys.argv[1:] if argv is None else argv)), PATH)
     return 0
 
 
