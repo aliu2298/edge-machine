@@ -37,6 +37,7 @@ PAGE_HREFS = (
     'href="./finance_daily.html"',
     'href="./culture.html"',
     'href="./fights.html"',
+    'href="./leaderboard.html"',
     'href="./sandbox.html#method"',
 )
 PAGE_LABELS = ["Archives", "Production", "Trading", "NBA", "NFL", "Soccer", "Tennis", "Cricket", "Crypto",
