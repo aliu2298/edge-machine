@@ -502,6 +502,8 @@
    "last_trade_at": null,
    "legs": [
     {
+     "fill_px": 0.58,
+     "filled_at": "2026-10-30T02:00:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.58
@@ -533,6 +535,8 @@
    "last_trade_at": null,
    "legs": [
     {
+     "fill_px": 0.48,
+     "filled_at": "2026-10-30T02:00:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.48
@@ -564,6 +568,8 @@
    "last_trade_at": null,
    "legs": [
     {
+     "fill_px": 0.38,
+     "filled_at": "2026-10-30T02:00:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.38
@@ -595,6 +601,8 @@
    "last_trade_at": null,
    "legs": [
     {
+     "fill_px": 0.3,
+     "filled_at": "2026-10-30T02:00:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.3
@@ -626,6 +634,8 @@
    "last_trade_at": null,
    "legs": [
     {
+     "fill_px": 0.6,
+     "filled_at": "2026-10-30T02:00:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.6
@@ -781,6 +791,8 @@
    "last_trade_at": null,
    "legs": [
     {
+     "fill_px": 0.3,
+     "filled_at": "2026-10-30T02:00:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.3
@@ -843,6 +855,8 @@
    "last_trade_at": null,
    "legs": [
     {
+     "fill_px": 0.3,
+     "filled_at": "2026-10-30T02:00:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.3
@@ -966,12 +980,12 @@
   "KXWTI-26OCT3014": "2026-10-29T00:30:36.981950+00:00"
  },
  "lane": "wti_cheap_yes",
- "last_success": "2026-10-30T01:59:50.298340+00:00",
+ "last_success": "2026-10-30T02:30:34.918845+00:00",
  "observations": {
-  "at": "2026-10-30T01:59:50.298340+00:00",
-  "entered": 4,
+  "at": "2026-10-30T02:30:34.918845+00:00",
+  "entered": 0,
   "events": 2,
-  "filled": 0,
+  "filled": 7,
   "skipped": 0,
   "waiting": 20
  },
