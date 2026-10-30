@@ -24,10 +24,13 @@ THE RULE, pre-registered before any entry:
 Research basis (Olu, 60 settled weekly events, Dec 2025 - Oct 2026; held out on the 56 weeks before
 Oct 5): cheap YES 3-15c split +65% (27/33 weeks up), 15-30c split +55% (41/53 weeks up); holding
 cheap YES was up only 8/33 weeks. Caveat: fills are thin early in the week. Every record here is
-paper. Review at 10 settled entries, decide at 30.
+paper. Review at 10 settled EVENTS, decide at 30 (2026-10-29, Olu: the rungs or words of one event
+move together, so one Kalshi event is one independent outcome; a WTI day, a gas day or week, a
+mention week, an album's ladder, a fight).
 
 Each entry's ROI is per contract after fees; the lane ROI is the mean over entries (equal stake per
-entry), beside the same entries held to settlement and with the 2x leg only, for comparison.
+entry), beside the same entries held to settlement and with the 2x leg only, for comparison. The
+event ROI beside it is the mean over settled events of each event's mean entry ROI.
 """
 import datetime as dt
 import html as _html
@@ -439,15 +442,35 @@ def run(state, now=None, fetch=D.get, cfg=STRICT):
 
 
 # ------------------------------------------------------------------ the record
+def by_event(entries):
+    """{event ticker: [entries]}: the lane's independent outcomes (one Kalshi event each). An entry that
+    names no event is its own outcome."""
+    out = {}
+    for e in entries:
+        out.setdefault(e.get("event") or e.get("id"), []).append(e)
+    return out
+
+
+def settled_events(entries):
+    """The events every one of whose entries has settled: the outcome unit the review rule counts."""
+    return {k: v for k, v in by_event(entries).items() if all(done(e) for e in v)}
+
+
 def record(entries):
     """The lane's record over entries whose split is resolved: n, legs filled at 2x / 3x, and the ROI
-    after fees (mean over entries, equal stake) for the split, the same entries held, and 2x only."""
+    after fees (mean over entries, equal stake) for the split, the same entries held, and 2x only.
+    events / settled_events count Kalshi events (the independent outcomes); roi_event and
+    roi_held_event are the mean over settled events of each event's mean entry ROI."""
     graded = [e for e in entries if e.get("roi") is not None]
     held = [e["roi_held"] for e in graded if e.get("roi_held") is not None]
     two = [e["roi_2x"] for e in graded if e.get("roi_2x") is not None]
     mean = lambda xs: sum(xs) / len(xs) if xs else None
+    done_evs = settled_events(entries).values()
     return dict(entries=len(entries), resolved=len(graded), won=sum(e.get("payout") == 1 for e in entries),
                 settled=sum(e.get("payout") is not None for e in entries),
+                events=len(by_event(entries)), settled_events=len(done_evs),
+                roi_event=mean([mean([e["roi"] for e in v]) for v in done_evs]),
+                roi_held_event=mean([mean([e["roi_held"] for e in v]) for v in done_evs]),
                 filled_2x=sum(bool(e["legs"][0].get("filled_at")) for e in entries),
                 filled_3x=sum(bool(e["legs"][1].get("filled_at")) for e in entries),
                 roi=mean([e["roi"] for e in graded]), roi_held=mean(held), n_held=len(held),
@@ -455,10 +478,7 @@ def record(entries):
 
 
 def weeks(entries):
-    out = {}
-    for e in entries:
-        out.setdefault(e["event"], []).append(e)
-    return [(k, record(v)) for k, v in sorted(out.items(), reverse=True)]
+    return [(k, record(v)) for k, v in sorted(by_event(entries).items(), reverse=True)]
 
 
 def main(argv=None):
@@ -517,9 +537,10 @@ def section(state, esc, cfg=STRICT):
     r = record(es)
     o = state.get("observations") or {}
     # One tile set for every cheap-side card (the Culture page redo, 2026-10-27).
-    shown = (("entries", r["entries"]), ("settled", r["settled"]), ("won", r["won"]),
+    shown = (("entries", r["entries"]), ("settled entries", r["settled"]),
+             ("settled events", f'{r["settled_events"]} of {r["events"]}'), ("won", r["won"]),
              ("ROI after fees · split", _pct(r["roi"])), ("ROI after fees · held", _pct(r["roi_held"])),
-             ("legs filled 2x / 3x", f'{r["filled_2x"]} / {r["filled_3x"]}'))
+             ("split ROI per event", _pct(r["roi_event"])), ("legs filled 2x / 3x", f'{r["filled_2x"]} / {r["filled_3x"]}'))
     tiles = "".join(f'<div class="tile"><b>{esc(str(v))}</b><span>{esc(k)}</span></div>' for k, v in shown)
     wk = "".join(f'<tr><td>{esc(k)}</td><td class="num">{w["entries"]}</td><td class="num">{w["filled_2x"]}</td>'
                  f'<td class="num">{w["filled_3x"]}</td><td class="num">{w["resolved"]}</td>'
@@ -553,11 +574,15 @@ def section(state, esc, cfg=STRICT):
              + '<th>Size</th><th>2x leg</th><th>3x leg</th><th class="num">P/L per contract</th><th class="num">ROI</th></tr></thead>')
     cols = 11
     return (f'<section class="lane-card" id="{cfg["anchor"]}"><h3>{esc(cfg["label"])}</h3>'
-            f'<p class="sm"><b>Sandbox · paper · fresh record from its first entry · review at {REVIEW_AT}, decide at '
-            f'{DECIDE_AT}</b> ({r["resolved"]} resolved). Registered {cfg["registered"]}; {cfg["backfill"]}.</p>'
+            f'<p class="sm"><b>Sandbox · paper · fresh record from its first entry · review at {REVIEW_AT} settled events, '
+            f'decide at {DECIDE_AT}</b> ({esc(status(r["settled_events"]))}; {r["entries"]} entries, {r["resolved"]} '
+            f'resolved). Registered {cfg["registered"]}; {cfg["backfill"]}.</p>'
             f'<p class="sm">{esc(cfg["rule"])}</p><div class="tiles">{tiles}</div>'
             '<p class="sm mut">ROI is per contract after fees, the mean over resolved entries (equal stake per entry). '
-            'Held: the same entries to settlement. 2x only: the same entries with one sell at 2x.</p>'
+            'Held: the same entries to settlement. 2x only: the same entries with one sell at 2x. Each Kalshi event '
+            f'is one outcome: its {esc(cfg.get("item", "Word").lower())}s move '
+            'together, so the review rule counts settled events, and the split ROI per event is the mean over settled '
+            'events of each event\'s mean.</p>'
             f'<div class="tbl"><table>{head}<tbody>{wk or "<tr><td colspan=8>No entry yet.</td></tr>"}</tbody></table></div>'
             f'<div class="tbl"><table>{thead}<tbody>{trades or f"<tr><td colspan={cols}>No entry yet.</td></tr>"}</tbody></table></div>'
             f'<p class="sm mut">{cfg.get("skipped_noun", "Words")} skipped: {len(skips)}'
@@ -567,13 +592,15 @@ def section(state, esc, cfg=STRICT):
 
 
 # ------------------------------------------------------------------ shared page parts (2026-10-27)
-def status(settled):
-    """Where a lane stands against the review rule: review at 10 settled, decide at 30."""
-    if settled >= DECIDE_AT:
-        return f"{settled} settled · decide now (30 reached)"
-    if settled >= REVIEW_AT:
-        return f"{settled} settled · review due (10 reached) · decide at 30"
-    return f"{settled} settled · review at 10, decide at 30"
+def status(events):
+    """Where a lane stands against the review rule: review at 10 settled EVENTS, decide at 30. An event is
+    one independent outcome (2026-10-29, Olu): count settled_events, never entries or rungs."""
+    n = f"{events} settled event{'' if events == 1 else 's'}"
+    if events >= DECIDE_AT:
+        return f"{n} · decide now (30 reached)"
+    if events >= REVIEW_AT:
+        return f"{n} · review due (10 reached) · decide at 30"
+    return f"{n} · review at 10, decide at 30"
 
 
 def avg_spread(state):
@@ -594,21 +621,23 @@ def summary(cfgs, states, esc, pairs=()):
         r = record(st.get("entries") or [])
         rows.append(
             f'<tr><td><a href="#{esc(cfg["anchor"])}">{esc(cfg["label"])}</a></td>'
-            f'<td class="num">{r["entries"]}</td><td class="num">{r["settled"]}</td><td class="num">{r["won"]}</td>'
+            f'<td class="num">{r["entries"]}</td><td class="num">{r["settled"]}</td>'
+            f'<td class="num">{r["settled_events"]}</td><td class="num">{r["won"]}</td>'
             f'<td class="num">{_pct(r["roi"])}</td><td class="num">{_pct(r["roi_held"])}</td>'
             f'<td class="num">{r["filled_2x"]} / {r["filled_3x"]}</td><td class="num">{_sp(avg_spread(st))}</td>'
-            f'<td>{esc(status(r["settled"]))}</td></tr>')
+            f'<td>{esc(status(r["settled_events"]))}</td></tr>')
     spread_line = "".join(
         f'{w}, strict v wide average spread paid {_sp(avg_spread(states[a["lane"]]))} v '
         f'{_sp(avg_spread(states[b["lane"]]))}. '
         for a, b, w in pairs)
     return ('<div class="tbl"><table class="culture-summary"><thead><tr><th>Lane</th><th class="num">Entries</th>'
-            '<th class="num">Settled</th><th class="num">Won</th><th class="num">Split ROI</th><th class="num">Hold ROI</th>'
+            '<th class="num">Settled entries</th><th class="num">Settled events</th><th class="num">Won</th><th class="num">Split ROI</th><th class="num">Hold ROI</th>'
             '<th class="num">Legs filled 2x / 3x</th><th class="num">Avg spread paid</th><th>Status</th></tr></thead>'
             f'<tbody>{"".join(rows)}</tbody></table></div>'
             f'<p class="sm mut" id="spread-paid">{esc(spread_line)}ROI is after fees, the mean per entry (equal '
             'stake); split ROI counts entries whose two legs are resolved, hold ROI entries whose market has '
-            'settled.</p>')
+            'settled. A settled event is one Kalshi event whose entries have all settled: the rungs or words of '
+            'one event move together, so it is one outcome, and the status counts settled events.</p>')
 
 
 _esc = lambda x: _html.escape(str(x), quote=True)

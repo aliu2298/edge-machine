@@ -35,7 +35,7 @@ days (older minute candles are no longer served). Each lane has its own ledger a
 Research basis (Olu): boxing, 134 matches, 31 entries at 3-15c, 0 won, but 24 traded 2x at some
 point: split +53% (z 3.0) if brief in-fight spikes fill, -81% counting only hourly closes. UFC, 169
 fights, 16 entries at 15-30c, 8 won: hold +97%, split +28% (hourly-close version +18%). Review at
-10 settled entries, decide at 30.
+10 settled events (fights), decide at 30.
 """
 import datetime as dt
 import json

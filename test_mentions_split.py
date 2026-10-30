@@ -493,7 +493,45 @@ gtx = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", gsec))
 check("the Commodities page: a summary row and its card after gas_cheap_no, with the small-and-slow note",
       ("AAA gas weekly · cheap NO (15-30c, 10c spread)" in gtx,
        gsec.find('id="gas-cheap-no"') < gsec.find('id="gas-week-note"') < gsec.find('id="gas-week-cheap-no"'),
-       "about 3 entries a week, so 10 settled takes about a month. Review at 10, decide at 30." in gtx), (True, True, True))
+       "about 3 entries a week, all on one weekly event, so 10 settled events takes about ten weeks. Review at 10, decide at 30." in gtx), (True, True, True))
+
+print("\nthe outcome unit is the Kalshi event, not the rung (2026-10-29)")
+# A WTI-like ladder: 3 trading days, 13 settled rungs, plus a 4th day still open. Rungs of one day move together.
+_days = (("KXWTI-26OCT27", 5, 0.0), ("KXWTI-26OCT28", 4, 0.0), ("KXWTI-26OCT29", 4, 1.0))
+_ladder = []
+for _ev, _n, _pay in _days:
+    for _i in range(_n):
+        _ladder.append(M.grade(dict(id=f"{_ev}-T{_i}", event=_ev, price=0.20, payout=_pay,
+                                    legs=[dict(target=0.40, share=0.5, settled_px=_pay), dict(target=0.60, share=0.5, settled_px=_pay)])))
+_ladder += [dict(id=f"KXWTI-26OCT30-T{_i}", event="KXWTI-26OCT30", price=0.20, payout=None, legs=[dict(target=0.40, share=0.5),
+            dict(target=0.60, share=0.5)]) for _i in range(3)]
+# A day with one rung settled and one still open is not a settled event yet.
+_ladder += [M.grade(dict(id="KXWTI-26OCT31-T0", event="KXWTI-26OCT31", price=0.20, payout=1.0,
+                         legs=[dict(target=0.40, share=0.5, settled_px=1.0), dict(target=0.60, share=0.5, settled_px=1.0)])),
+            dict(id="KXWTI-26OCT31-T1", event="KXWTI-26OCT31", price=0.20, payout=None,
+                 legs=[dict(target=0.40, share=0.5), dict(target=0.60, share=0.5)])]
+for _e in _ladder:
+    _e.update(entry_at=_e["event"][-5:] + "T04:00:00+00:00", word=_e["id"].rsplit("-", 1)[-1], side="yes")
+_r = M.record(_ladder)
+check("18 entries, 14 settled entries, 5 events, only the 3 fully settled days are settled events",
+      (_r["entries"], _r["settled"], _r["events"], _r["settled_events"]), (18, 14, 5, 3))
+check("the status counts settled events, so 14 settled rungs are not a review", M.status(_r["settled_events"]),
+      "3 settled events · review at 10, decide at 30")
+_win = (1 - M.fee(0.20, M.TAKER) - 0.20) / (0.20 + M.fee(0.20, M.TAKER))
+check("the ROI columns stay the mean per entry; the event ROI is the mean of each settled day's mean",
+      (round(_r["roi"], 4), round(_r["roi_event"], 4)),
+      (round((9 * -1.0 + 5 * _win) / 14, 4), round((-1.0 - 1.0 + _win) / 3, 4)))
+_cfg = dict(M.WTI)
+_html = M.summary([_cfg], {_cfg["lane"]: dict(entries=_ladder)}, M._esc)
+_row = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", _html.split("<tbody>", 1)[1].split("</tbody>", 1)[0])).strip()
+check("the summary row: entries, settled entries, settled events side by side, the status from events",
+      _row.startswith("WTI oil · cheap YES (15-30c) 18 14 3 ") and _row.endswith("3 settled events · review at 10, decide at 30"), True)
+_card = M.section(dict(entries=_ladder), M._esc, _cfg)
+check("the card's header and tiles read events",
+      ("review at 10 settled events, decide at 30" in _card, "3 settled events · review at 10, decide at 30" in _card,
+       '<b>3 of 5</b><span>settled events</span>' in _card, "<span>split ROI per event</span>" in _card), (True, True, True, True))
+check("ten settled days reach review whatever the rung count", M.status(10), "10 settled events · review due (10 reached) · decide at 30")
+check("public copy passes the guard", sandbox_audit.COPY_RE.search(re.sub(r"<[^>]+>", " ", _card + _html)), None)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

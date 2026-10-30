@@ -60,10 +60,10 @@ check("the summary: the active tennis lanes, challenger_cheap_split first; no NB
       re.findall(r'data-lane="([^"]+)"', summ), ["challenger_cheap_split", "atp_coinflip_tp30"])
 check("its columns include the average spread paid",
       [re.sub(r"<[^>]+>", "", x) for x in re.findall(r"<th[^>]*>(.*?)</th>", summ)],
-      ["Lane", "Entries", "Settled", "Won", "Split ROI", "Hold ROI", "Legs filled 2x / 3x", "Avg spread paid", "Status"])
+      ["Lane", "Entries", "Settled entries", "Settled events", "Won", "Split ROI", "Hold ROI", "Legs filled 2x / 3x", "Avg spread paid", "Status"])
 check("the cheap-split row: +100% split, +150% hold, legs 1 / 1, spread 0.04, review at 10",
-      "Challenger cheap side · split 2x / 3x 1 1 1 +100.0% +150.0% 1 / 1 0.04 1 settled · review at 10, decide at 30" in text, True)
-check("a row without a recorded spread shows —", "ATP coin-flip · sell +30% 1 1 1 +30.0% +50.0% 1 / 0 —" in text, True)
+      "Challenger cheap side · split 2x / 3x 1 1 1 1 +100.0% +150.0% 1 / 1 0.04 1 settled event · review at 10, decide at 30" in text, True)
+check("a row without a recorded spread shows —", "ATP coin-flip · sell +30% 1 1 1 1 +30.0% +50.0% 1 / 0 —" in text, True)
 cards = re.findall(r'<details class="section-disclosure" data-lane="([^"]+)" open>', h)
 check("cards in the same order, with trade lists", (cards, h.count("<summary><b>Trades</b>")),
       (["challenger_cheap_split", "atp_coinflip_tp30"], 2))

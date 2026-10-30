@@ -112,15 +112,15 @@ summ = h[h.find('class="chaos-summary"'):h.find("</table>", h.find('class="chaos
 check("the summary: challenger_cheap_split first, then the other tennis lane",
       re.findall(r'data-lane="([^"]+)"', summ), ["challenger_cheap_split", "atp_coinflip_tp30"])
 check("its columns", [re.sub(r"<[^>]+>", "", x) for x in re.findall(r"<th[^>]*>(.*?)</th>", summ)],
-      ["Lane", "Entries", "Settled", "Won", "Split ROI", "Hold ROI", "Legs filled 2x / 3x", "Avg spread paid", "Status"])
+      ["Lane", "Entries", "Settled entries", "Settled events", "Won", "Split ROI", "Hold ROI", "Legs filled 2x / 3x", "Avg spread paid", "Status"])
 check("the new lane's row: 1 entry, 1 settled, 1 won, +100% split, +150% hold, legs 1 / 1, review at 10",
-      "Challenger cheap side · split 2x / 3x 1 1 1 +100.0% +150.0% 1 / 1 — 1 settled · review at 10, decide at 30" in text, True)
+      "Challenger cheap side · split 2x / 3x 1 1 1 1 +100.0% +150.0% 1 / 1 — 1 settled event · review at 10, decide at 30" in text, True)
 check("an older lane without split rows yet shows — for split, and says the split is being added",
-      ("ATP coin-flip · sell +30% 1 1 0 — −100.0%" in text.replace("-100.0%", "−100.0%"),
+      ("ATP coin-flip · sell +30% 1 1 1 0 — −100.0%" in text.replace("-100.0%", "−100.0%"),
        "the split joined this lane on 2026-10-27 and is being added to its earlier entries" in text), (True, True))
 idx = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", CB.section(state)))
 check("the Sandbox's Chaos section is an index: rows and links to the sport pages, no cards",
-      ("Challenger cheap side · split 2x / 3x Tennis 1 1 +100.0% +150.0%" in idx, 'href="./tennis.html#cheap-side"' in CB.section(state),
+      ("Challenger cheap side · split 2x / 3x Tennis 1 1 1 +100.0% +150.0%" in idx, 'href="./tennis.html#cheap-side"' in CB.section(state),
        "Split v hold" in CB.section(state)), (True, True, False))
 cards = re.findall(r'<details class="section-disclosure" data-lane="([^"]+)" open>', h)
 check("the cards in the same order", cards, ["challenger_cheap_split", "atp_coinflip_tp30"])
@@ -189,7 +189,7 @@ check("on the NBA page the lane leads the summary, its 10-30c row directly under
       rows_n, [("nba_ml_dog_tp50", ""), ("nba_ml_dog_tp50", "ask_10_30")])
 text_n = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", nba))
 check("the lane row reads split before hold; the sub-band row says it is the same entries",
-      ("NBA moneyline underdog · split 2x / 3x 6 6 3" in text_n, "· ask 10-30c, same entries 3 3 1" in text_n), (True, True))
+      ("NBA moneyline underdog · split 2x / 3x 6 6 6 3" in text_n, "· ask 10-30c, same entries 3 3 3 1" in text_n), (True, True))
 card_n = nba[nba.find('data-lane="nba_ml_dog_tp50" open'):]
 split_tbl = card_n[card_n.find('class="chaos-split"'):card_n.find("</table>", card_n.find('class="chaos-split"'))]
 check("its card: split v hold first, the 10-30c row under the 1h row, then the other exits",
@@ -200,6 +200,29 @@ check("the Sandbox index keeps one row for the lane, under its new label",
                  CB.section(dict(lanes={"nba_ml_dog_tp50": copy.deepcopy(old_L)}))),
       ["NBA moneyline underdog · split 2x / 3x"])
 check("public copy passes the guard", sandbox_audit.COPY_RE.search(text_n), None)
+
+print("\nthe outcome unit is the event, not the rung (2026-10-29)")
+# A rung-heavy lane (as nba_tt_cheap_tp30 was): 6 rungs on each of 2 games, every exit on the same entries.
+rungs = dict(id="t_rungs", label="Rungs", entry_hours=[1], exits=["hold", "tp30", C.SPLIT], trades=[])
+for g in range(2):
+    for k in range(6):
+        for ex, roi in (("hold", -1.0), ("tp30", 0.3), (C.SPLIT, 0.5)):
+            rungs["trades"].append(dict(event=f"KXNBATEAMTOTAL-26OCT2{5 + g}G", ticker=f"R{g}{k}", side="yes", hours=1,
+                                        exit_key=ex, variant=C.vkey(1, ex), entry=0.2, entry_ts=T0 + 60 * (6 * g + k),
+                                        roi=roi, profit=roi * 0.2, cost=0.2, won=roi > 0, night=f"2026-10-2{5 + g}",
+                                        reason="split" if ex == C.SPLIT else "settled", spread=0.02))
+rh = CB.split_hold(rungs)
+check("12 entries on 2 games: 12 settled entries, 2 settled events", (rh["entries"], rh["settled"], rh["events"]), (12, 12, 2))
+tbl = C.lane_table(rungs)
+check("12 trades on 2 events is still too early for review: the flag counts events",
+      (tbl[C.vkey(1, "tp30")]["lane"]["n"], tbl[C.vkey(1, "tp30")]["lane"]["events"], tbl[C.vkey(1, "tp30")]["flag"]), (12, 2, "too early"))
+rtxt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", CB.summary([rungs])))
+check("the summary row shows entries, settled entries and settled events; its status counts events",
+      "Rungs 12 12 2 0 +50.0% −100.0% 0 / 0 2 settled events · review at 10, decide at 30" in rtxt.replace("-100.0%", "−100.0%"), True)
+card = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", CB.lane_html(dict(rungs, replayed={"a": 1, "b": 1, "c": 1}, since="2026-10-25"))))
+check("the card header: events replayed, entries, settled events entered; review counted in settled events",
+      ("3 events replayed · 12 entries · 2 settled events entered" in card, "Review at 10 settled events, decide at 30" in card), (True, True))
+check("the index row: entries, then settled events", "Rungs — 12 2 0 +50.0%" in re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", CB.index([rungs]))), True)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
