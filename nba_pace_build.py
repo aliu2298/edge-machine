@@ -629,17 +629,18 @@ def _retired_block():
     return ('<section id="retired"><details class="section-disclosure nba-retired"><summary><b>Retired</b>'
             f'<span>{len(_retired_items())} lanes · kept, not deleted</span></summary>'
             '<p class="sm mut">No new entries from each lane\'s retired date. The rows stay and open bets still settle. '
-            'The ladder tracker and the model\'s data keep running; the Safe Card still uses the model.</p>'
-            f'<ul class="sm">{items}</ul></details></section>')
+            'The ladder tracker and the model\'s data keep running.</p>'
+            f'<ul class="sm">{items}</ul>{_safe_card_section()}</details></section>')
 
 
 def _safe_card_section():
-    """The NBA Safe Card (nba_safe_card_build.py, 2026-10-22). Never breaks the board."""
+    """The NBA Safe Card (nba_safe_card_build.py, 2026-10-22), retired 2026-10-30: its record sits in the Retired fold.
+    Never breaks the board."""
     try:
         import nba_safe_card_build
-        return nba_safe_card_build.section()
+        return nba_safe_card_build.section(retired=True)
     except Exception as exc:                                    # noqa: BLE001
-        return f'<section id="safe-card"><p class="sm mut">Safe Card unavailable ({esc(type(exc).__name__)}).</p></section>'
+        return f'<p class="sm mut" id="safe-card">Safe Card unavailable ({esc(type(exc).__name__)}).</p>'
 
 
 def build(blob=None, now=None):
@@ -665,7 +666,6 @@ def build(blob=None, now=None):
 <h1>NBA</h1>
 <p class="scope">Expected combined points · tip times Central</p>
 {fresh_html}</div>
-{_safe_card_section()}
 <section id="matchups">
 <details class="section-disclosure nba-upcoming"><summary><b>Upcoming</b><span>reference · next 24 hours · {n_up} game{"s" if n_up != 1 else ""}</span></summary>
 <p class="shell-kicker">Chronological · the mark is the board's highest expectation in that column</p>
@@ -697,7 +697,7 @@ def build(blob=None, now=None):
         "Edge Machine · NBA",
         "NBA matchups, pace labels, and combined expectations. Preseason. No bets.",
         "nba",
-        (("cheap-side", "Cheap side"), ("win-margin", "Win margin"), ("safe-card", "Safe Card"), ("matchups", "Upcoming"), ("ladder", "Ladder"),
+        (("cheap-side", "Cheap side"), ("win-margin", "Win margin"), ("matchups", "Upcoming"), ("ladder", "Ladder"),
          ("graded", "Results"), ("teams", "Teams"), ("retired", "Retired")),
         C.stamp(clock),
         body,
@@ -709,8 +709,8 @@ def build(blob=None, now=None):
     import sandbox_build
     # nba_ml_dog_tp50 and nba_tt_cheap_tp30's home (2026-10-27): the cheap-side section at the top.
     import chaos_build
-    page = chaos_build.place(page, "nba", before='<section id="safe-card"', retired=False)
-    # The Win margin tracker (2026-10-29): directly under the cheap-side card, above the Safe Card.
+    page = chaos_build.place(page, "nba", before='<section id="matchups"', retired=False)
+    # The Win margin tracker (2026-10-29): directly under the cheap-side card, above Upcoming.
     import nba_winmargin_build
     page = nba_winmargin_build.place(page)
     return sandbox_build.label_cells(page)

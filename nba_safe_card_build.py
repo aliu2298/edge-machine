@@ -54,7 +54,23 @@ def card_html(card):
             f'<th>Result</th></tr></thead><tbody>{rows}</tbody></table></div>')
 
 
-def section(state=None):
+RETIRED_ON = "2026-10-30"
+
+
+def retired_line(state=None):
+    """The one-line record the NBA page's Retired fold carries for the Safe Card (read from its ledger)."""
+    if state is None:
+        state = SC.load() if os.path.exists(SC.PATH) else SC.empty()
+    r = SC.records(state)
+    lm = r["label_modes"]
+    return (f"Retired {RETIRED_ON}: cards {r['won']} won / {r['lost']} lost / {r['no_card']} no-card nights, "
+            f"${r['profit']:+.2f} at $1 a card; legs {r['legs_won']}/{r['legs']}. Legs where both labels agree hit "
+            f"{lm['both']['won']}/{lm['both']['n']} ({lm['both']['won'] / max(lm['both']['n'], 1) * 100:.0f}%) at "
+            f"{lm['both']['price'] * 100:.0f}c, against one side {lm['one']['won']}/{lm['one']['n']} "
+            f"({lm['one']['won'] / max(lm['one']['n'], 1) * 100:.0f}%). It stopped scanning; its record is kept.")
+
+
+def section(state=None, retired=False):
     if state is None:
         state = SC.load() if os.path.exists(SC.PATH) else SC.empty()
     cards = state.get("cards") or {}
@@ -89,8 +105,12 @@ def section(state=None):
             hist.append(f'<tr><td>{esc(night)}</td><td>no card</td><td class="num">—</td><td class="mut">{esc(c.get("reason") or "")}</td></tr>')
     hist_html = "".join(hist) or '<tr><td colspan="4" class="mut">No earlier nights yet.</td></tr>'
     last = state.get("last_run")
-    return f"""<section id="safe-card">
-<div class="nba-section-head"><div><h2>Safe Card</h2><p class="shell-kicker">One card a slate: 3-4 legs priced 84-95c that the model, the value check and the labels all back, combined odds 1.70+ · paper · not in Production</p></div></div>
+    head = (f"""<details class="section-disclosure" id="safe-card"><summary><b>Safe Card</b><span>retired {RETIRED_ON} · record kept</span></summary>
+<p class="sm"><b>{esc(retired_line(state))}</b></p>
+<p class="shell-kicker">One card a slate: 3-4 legs priced 84-95c that the model, the value check and the labels all back, combined odds 1.70+ · paper · not in Production · no longer scanning</p>"""
+            if retired else """<section id="safe-card">
+<div class="nba-section-head"><div><h2>Safe Card</h2><p class="shell-kicker">One card a slate: 3-4 legs priced 84-95c that the model, the value check and the labels all back, combined odds 1.70+ · paper · not in Production</p></div></div>""")
+    return f"""{head}
 {card_html(latest)}
 <div class="tbl"><table><thead><tr><th>Record</th><th>Since {esc(SC.REGISTERED)}</th></tr></thead><tbody>
 <tr><td>Cards</td><td>{esc(card_rec)}</td></tr><tr><td>Card legs</td><td>{esc(leg_rec)}</td></tr></tbody></table></div>
@@ -114,4 +134,4 @@ def section(state=None):
 <p class="sm mut">Amendment 2026-10-24: the model's own season-data level stays the driver; Kalshi's slate level is logged as a check by the ladder tracker (kept in the data, no longer drawn on this page). A one-sided slate no longer blocks the card: it carries a label, "model leans under: Kalshi lines running X pts above results season to date". Only a data problem blocks (no level to compare, or a model-Kalshi gap over 8 points); a gap over 4 points is a warning.</p>
 <p class="sm mut">Amendment 2026-10-22 (before the first card): on a slate of fewer than 4 games a game may give up to 2 legs (still 3-4 legs at 1.70+, ranked by edge); two legs of one game must be different markets and never same-direction pairs where one implies the other (game with a team total, 1H with the game, 1Q with 1H). The combo chance then assumes the legs are independent. The 84-95c band is unchanged.</p></details>
 <p class="sm mut">Last scan {esc(fmt.when(last) if last else "not yet")}{(" · " + esc(state["error"])) if state.get("error") else ""}.</p>
-</section>"""
+{"</details>" if retired else "</section>"}"""

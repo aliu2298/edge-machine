@@ -141,11 +141,11 @@ def section(state=None):
 
 
 def place(html, state=None):
-    """Put the section directly above the Safe Card (so under the cheap-side card). Never breaks the page."""
+    """Put the section directly above Upcoming (so under the cheap-side card). Never breaks the page."""
     try:
         import sandbox_build
         sec = sandbox_build.label_cells(section(state))
-        at = html.find('<section id="safe-card"')
+        at = html.find('<section id="matchups"')
         if at < 0:
             at = html.find("<section id=", html.find("<main"))
         return html[:at] + sec + html[at:] if at >= 0 else html

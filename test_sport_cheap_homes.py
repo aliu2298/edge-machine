@@ -43,7 +43,8 @@ ids = [l["id"] for l in chaos_lanes.LANES]
 check("every registered chaos lane has a home page", sorted(x for x in ids if x not in CB.HOME_OF), [])
 check("the map", {p: list(v) for p, v in CB.HOMES.items()},
       {"tennis": ["challenger_cheap_split", "challenger_dog_tp30", "atp_coinflip_tp30"],
-       "nba": ["nba_ml_dog_tp50", "nba_tt_cheap_tp30"], "nfl": ["cfb_dog_tp50"]})
+       "nba": ["nba_ml_dog_tp50", "nba_winmargin_split", "nba_winmargin_split_insample", "nba_tt_cheap_tp30"],
+       "nfl": ["cfb_dog_tp50"]})
 check("every home page is in the nav's Markets menu", all(p in SC.MARKET_GROUP for p in CB.HOMES), True)
 check("and so are Culture, Commodities and Fights", all(p in SC.MARKET_GROUP for p in ("culture", "commodities", "fights")), True)
 
