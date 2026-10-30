@@ -55,11 +55,6 @@
    "lead_min": 15.2,
    "price": 0.99
   },
-  "commod_fav_band:KXWTI-26OCT2014-T95.49": {
-   "at": "2026-10-20T15:46:19+00:00",
-   "lead_min": 43.7,
-   "price": 0.94
-  },
   "commod_fav_band:KXWTI-26OCT2114-T95.99": {
    "at": "2026-10-21T17:39:27+00:00",
    "lead_min": 20.5,
@@ -79,6 +74,11 @@
    "at": "2026-10-28T17:28:25+00:00",
    "lead_min": 31.6,
    "price": 0.38
+  },
+  "commod_fav_band:KXWTI-26OCT3014-T103.49": {
+   "at": "2026-10-30T17:47:51+00:00",
+   "lead_min": 12.1,
+   "price": 0.99
   },
   "commod_nc_no:KXBRENTD-26OCT2717-T110": {
    "at": "2026-10-27T20:14:46+00:00",
@@ -134,6 +134,11 @@
    "at": "2026-10-29T17:29:38+00:00",
    "lead_min": 30.4,
    "price": 0.93
+  },
+  "commod_nc_yes:KXWTI-26OCT3014-T103.99": {
+   "at": "2026-10-30T17:47:51+00:00",
+   "lead_min": 12.1,
+   "price": 0.91
   },
   "corners_team_fade:KXEPLTCORNERS-26OCT24CFCTOT-CFC6": {
    "at": "2026-10-24T16:14:46+00:00",
@@ -390,11 +395,6 @@
    "lead_min": 1.6,
    "price": 0.53
   },
-  "o25_congestion:KXUCLTOTAL-26OCT20FENSLA-3": {
-   "at": "2026-10-20T15:46:19+00:00",
-   "lead_min": 58.7,
-   "price": 0.33
-  },
   "o25_congestion:KXUCLTOTAL-26OCT21COMMUN-3": {
    "at": "2026-10-21T16:03:32+00:00",
    "lead_min": 41.5,
@@ -505,6 +505,11 @@
    "lead_min": 27.4,
    "price": 0.71
   },
+  "tennis_utr_shortlist_v1:aec-utr-guiowe-pawsin-2026-10-30": {
+   "at": "2026-10-30T17:47:51+00:00",
+   "lead_min": 12.1,
+   "price": 0.76
+  },
   "tennis_utr_shortlist_v1:aec-utr-jairag-sinsva-2026-10-25": {
    "at": "2026-10-26T03:18:06+00:00",
    "lead_min": 11.9,
@@ -523,11 +528,6 @@
   "tennis_utr_shortlist_v1:aec-utr-paptif-metsaa-2026-10-22": {
    "at": "2026-10-22T17:38:03+00:00",
    "lead_min": 21.9,
-   "price": 0.7
-  },
-  "tennis_utr_shortlist_v1:aec-utr-rosabr-almalf-2026-10-19": {
-   "at": "2026-10-20T15:46:19+00:00",
-   "lead_min": 13.7,
    "price": 0.7
   },
   "u35_low_o15:KXEPLTOTAL-26OCT25SUNLEE-2": {
@@ -566,5 +566,5 @@
    "price": 0.75
   }
  },
- "updated": "2026-10-29T17:29:38+00:00"
+ "updated": "2026-10-30T17:47:51+00:00"
 }
