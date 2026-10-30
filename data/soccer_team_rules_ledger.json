@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-30T18:01:22.652694+00:00",
+ "last_run": "2026-10-30T18:31:47.052804+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -1420,6 +1420,33 @@
      "ticker": "KXMLSTEAMTOTAL-26OCT28SEAHOU-SEA3",
      "title": "Will Seattle score over 2.5 goals?",
      "why": "Seattle Sounders FC O+D- v Houston Dynamo FC O-D- \u00b7 3+ YES 0.30"
+    },
+    {
+     "ask": 0.45,
+     "bid": 0.43,
+     "event": "KXLALIGATEAMTOTAL-26OCT30VILESP",
+     "group": "B",
+     "id": "T3:KXLALIGATEAMTOTAL-26OCT30VILESP:home",
+     "labels": {
+      "opp": "O-D-",
+      "own": "O+D-"
+     },
+     "league": "La Liga",
+     "line": 2.5,
+     "logged": "2026-10-30T18:31:47.052804+00:00",
+     "match": "Villarreal v Espanyol",
+     "opponent": "Espanyol",
+     "price": 0.45,
+     "rule": "T3",
+     "side": "yes",
+     "start": "2026-10-30T20:00Z",
+     "status": "open",
+     "sub": "Villarreal over 2.5 goals",
+     "team": "Villarreal",
+     "team_side": "home",
+     "ticker": "KXLALIGATEAMTOTAL-26OCT30VILESP-VIL3",
+     "title": "Will Villarreal score over 2.5 goals?",
+     "why": "Villarreal O+D- v Espanyol O-D- \u00b7 3+ YES 0.45"
     }
    ]
   },
@@ -2852,14 +2879,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-25T01:31:42.515167+00:00",
-   "candidates": 2,
-   "due": 2,
-   "labelled": 2,
-   "matched": 2,
-   "new": 0
-  },
-  {
    "at": "2026-10-25T10:01:21.143720+00:00",
    "candidates": 0,
    "due": 1,
@@ -3257,6 +3276,14 @@
    "due": 1,
    "labelled": 1,
    "matched": 1,
+   "new": 1
+  },
+  {
+   "at": "2026-10-30T18:31:47.052804+00:00",
+   "candidates": 2,
+   "due": 2,
+   "labelled": 2,
+   "matched": 2,
    "new": 1
   }
  ],
