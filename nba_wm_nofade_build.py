@@ -5,7 +5,6 @@ cell for the phone layout. Never breaks the page: chaos_build wraps the call.
 import html as _h
 
 import chaos_replay as CR
-import mentions_split as MS
 import nba_wm_nofade as N
 
 
@@ -22,7 +21,11 @@ def zfmt(v):
 
 
 def status(settled_games):
-    return MS.status(settled_games).replace("settled", "games")
+    if settled_games >= N.DECIDE_N:
+        return f"{settled_games} games · decide now (30 reached)"
+    if settled_games >= N.REVIEW_N:
+        return f"{settled_games} games · review due (10 reached) · decide at 30"
+    return f"{settled_games} games · review at 10, decide at 30"
 
 
 def variant_rows(state, insample, label=None):
