@@ -24,6 +24,15 @@ CONDITIONS on each row: bucket; the team's pregame win share (that team's bucket
 teams'); favourite (55% or more) / toss-up / underdog (under 45%); entry band 5-10, 10-20, 20-35c; home or away (the
 Kalshi code is AWAYHOME); the pregame spread (the KXNBASPREAD rung nearest 50c: the team's median winning margin).
 
+COMEBACK UNDERDOG SPREAD LINE (added 2026-10-29, Olu). The dynamics-sheet rerun (Oct 20-28): when a Comeback team
+(won 40%+ of 2025-26 games it trailed at half-time) was the underdog, its KXNBASPREAD rungs ("X wins by over N") reached
+2x in 7 of 9 games, against 52% of games for other underdogs. Nine games prove nothing, so this line only grows the
+sample. Every game's UNDERDOG spread rungs (the KXNBAGAME moneyline mid at the entry hour under 50%; the bucket mids
+only when the moneyline has no quote) are read the same way as the buckets (the ask an hour
+before the tip, 5-35c, spread 5c or less, then every trade print) into state["spread_rows"], each flagged comeback or
+not, so the two groups compare like for like. The Comeback list is FIXED from the 2025-26 profile (COMEBACK below);
+re-profiling on this season is a new version, not an edit.
+
 Own ledger data/nba_winmargin_tracker.json; rows are stamped (version, logged). Raw prints are kept for the last three
 nights only (the price charts); older rows keep their metrics.
 """
@@ -54,6 +63,9 @@ KEEP_PATH_NIGHTS = 3
 MAX_EVENTS_PER_RUN = 80
 FAIR = {2: 0.50, 3: 0.33, 5: 0.20}
 HOLD_MIN = 10
+# Comeback teams, Kalshi codes: won 40%+ of the 2025-26 games they trailed at half-time (the NBA dynamics sheet).
+COMEBACK = frozenset({"SAS", "OKC", "DEN", "MIN", "BOS", "HOU", "NYK", "CLE"})
+SPREAD_VERSION = "wm-spread-v1"
 UTC, ET = dt.timezone.utc, D.ET
 
 
@@ -155,6 +167,8 @@ def load(path=None):
     s.setdefault("rows", [])
     s.setdefault("seen", {})
     s.setdefault("skips", {})
+    s.setdefault("spread_rows", [])
+    s.setdefault("spread_seen", {})
     return s
 
 
@@ -186,6 +200,45 @@ def game_rows(event, markets, tip, entry, trades_of, spread, now):
     return rows
 
 
+def ml_shares(gm, candles, entry_ts):
+    """{team code: pregame win share} from the KXNBAGAME moneyline mids at the entry hour (the research's underdog)."""
+    q = {}
+    for m in gm:
+        t = m.get("ticker") or ""
+        e = entry_quote(candles.get(t), entry_ts)
+        if e:
+            q[t.rsplit("-", 1)[-1]] = (e[0] + e[1]) / 2
+    tot = sum(q.values())
+    return {k: v / tot for k, v in q.items()} if len(q) == 2 and tot > 0 else {}
+
+
+def spread_rows(event, sp, entry_of, share, tip, trades_of, now):
+    """The underdog's spread rungs of one game. `sp` the KXNBASPREAD markets, `entry_of` {ticker: (bid, ask)},
+    `share` {team code: pregame win share}, `trades_of(ticker)` -> [(ts, price, count)]."""
+    if not share:
+        return []
+    dog = min(share, key=share.get)
+    if share[dog] >= 0.5:
+        return []
+    rows = []
+    for m in sp:
+        t = m["ticker"]
+        mt = re.match(r"([A-Z]+)\d", t.rsplit("-", 1)[-1])
+        if not mt or mt.group(1) != dog or t not in entry_of:
+            continue
+        bid, ask = entry_of[t]
+        spr = round(ask - bid, 4)
+        elig = ASK_RANGE[0] - 1e-9 <= ask <= ASK_RANGE[1] + 1e-9 and spr <= MAX_SPREAD + 1e-9
+        prints = trades_of(t) if elig else []
+        rows.append(dict(id=t, event=event, night=night_of(tip), tip=tip, team=dog, comeback=dog in COMEBACK,
+                         team_share=round(share[dog], 4), line=D.number(m.get("floor_strike")), bid=bid, ask=ask, spread=spr,
+                         eligible=elig, band=band_of(ask) if elig else None, won=m.get("result") == "yes",
+                         m=metrics(prints, tip, ask) if elig else None,
+                         path=[[p0[0] - tip, round(p0[1] * 100), round(p0[2])] for p0 in prints if p0[0] >= tip - ENTRY_H * 3600],
+                         logged=now.isoformat(), version=SPREAD_VERSION))
+    return rows
+
+
 def run(state, now=None, fetch=D.get):
     now = now or dt.datetime.now(UTC)
     since = dt.date.fromisoformat(state["since"])
@@ -197,8 +250,11 @@ def run(state, now=None, fetch=D.get):
         obs["errors"].append(f"listing: {str(e)[:80]}")
     done = 0
     for event in events:
-        if event in state["seen"] or event in state["skips"] or done >= MAX_EVENTS_PER_RUN:
+        need_wm = event not in state["seen"] and event not in state["skips"]
+        need_sp = event not in state["spread_seen"] and event not in state["skips"]
+        if not (need_wm or need_sp) or done >= MAX_EVENTS_PER_RUN:
             continue
+        sp_rows = None
         try:
             markets, archived = C.event_markets(event, fetch)
             if not markets or any(m.get("result") not in ("yes", "no") for m in markets):
@@ -212,28 +268,46 @@ def run(state, now=None, fetch=D.get):
                 continue
             tip -= TIP_BACK_H * 3600
             if night_of(tip) < state["since"]:
-                state["seen"][event] = "before the tracker's first night"
+                state["seen"][event] = state["spread_seen"][event] = "before the tracker's first night"
                 continue
             entry_ts = tip - ENTRY_H * 3600
             cs = C.fetch_candles(SERIES, event, markets, entry_ts - 1800, entry_ts + 60, fetch, archived)
             entry = {t: q for t, q in ((t, entry_quote(c, entry_ts)) for t, c in cs.items()) if q}
-            trades_of = {t: yes_prints(O.fetch_trades(t, tip - TRADES_FROM_H * 3600, fetch)) for t in entry}
+            trades_of = {t: yes_prints(O.fetch_trades(t, tip - TRADES_FROM_H * 3600, fetch)) for t in entry} if need_wm else {}
             spread = None
             try:
                 sp = D.pages(f"markets?limit=200&event_ticker=KXNBASPREAD-{suf}", "markets", fetch)
                 scs = C.fetch_candles("KXNBASPREAD", f"KXNBASPREAD-{suf}", sp, entry_ts - 1800, entry_ts + 60, fetch, False) if sp else {}
                 spread = spread_of(sp, scs, entry_ts)
-            except Exception:                                    # noqa: BLE001
+                if need_sp:
+                    try:
+                        share = ml_shares(gm, C.fetch_candles("KXNBAGAME", f"KXNBAGAME-{suf}", gm, entry_ts - 1800, entry_ts + 60, fetch, False), entry_ts)
+                    except Exception:                        # noqa: BLE001
+                        share = {}
+                    if not share:                            # no moneyline quote: fall back to the bucket mids
+                        teams = {m["ticker"]: re.search(r"-([A-Z]+)\d", m["ticker"]).group(1) for m in markets}
+                        share = team_shares([(teams[t], q) for t, q in entry.items()])
+                    sentry = {t: q for t, q in ((t, entry_quote(c, entry_ts)) for t, c in scs.items()) if q}
+                    sp_rows = spread_rows(event, sp, sentry, share, tip,
+                                          lambda t: yes_prints(O.fetch_trades(t, tip - TRADES_FROM_H * 3600, fetch)), now)
+            except Exception as e:                               # noqa: BLE001
                 spread = None
+                if need_sp:
+                    obs["errors"].append(f"{event} spread: {str(e)[:80]}")
         except Exception as e:                                   # noqa: BLE001
             obs["errors"].append(f"{event}: {str(e)[:80]}")
             continue
-        state["rows"] += game_rows(event, markets, tip, entry, trades_of, spread, now)
-        state["seen"][event] = now.isoformat()
-        obs["new"] += 1
+        if need_wm:
+            state["rows"] += game_rows(event, markets, tip, entry, trades_of, spread, now)
+            state["seen"][event] = now.isoformat()
+            obs["new"] += 1
+        if sp_rows is not None:
+            state["spread_rows"] += sp_rows
+            state["spread_seen"][event] = now.isoformat()
+            obs["spread_new"] = obs.get("spread_new", 0) + 1
         done += 1
     cutoff = (now.astimezone(ET).date() - dt.timedelta(days=KEEP_PATH_NIGHTS)).isoformat()
-    for r in state["rows"]:
+    for r in state["rows"] + state["spread_rows"]:
         if r["night"] < cutoff:
             r["path"] = []
     state["last_run"] = now.isoformat()
@@ -265,6 +339,14 @@ def summarize(rows):
     out["vol"] = statistics.median(r["m"]["vol2"] for r in hit) if hit else None
     out["edge"] = sum(1 for r in rows if r["won"]) / n - out["ask"]
     return out
+
+
+def by_game(rows):
+    """(games, games where any eligible rung reached 2x)."""
+    g = {}
+    for r in rows:
+        g[r["event"]] = g.get(r["event"], False) or bool(r["m"].get("reach2"))
+    return len(g), sum(g.values())
 
 
 def halves(rows):

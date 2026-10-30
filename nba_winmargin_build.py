@@ -90,6 +90,31 @@ def last_night(rows):
             + body + "</table></div>"), night
 
 
+def spread_block(state):
+    """The comeback-underdog spread line: Comeback teams as the underdog v every other underdog, same entry rule."""
+    rows = W.eligible(state.get("spread_rows") or [])
+    teams = ", ".join(sorted(W.COMEBACK))
+    if not rows:
+        inner = '<p class="sm mut">No underdog spread rung has been recorded yet.</p>'
+    else:
+        key = lambda r: "Comeback team as underdog" if r["comeback"] else "Other underdogs"
+        gl = ""
+        for g in ("Comeback team as underdog", "Other underdogs"):
+            n, hit = W.by_game([r for r in rows if key(r) == g])
+            gl += f'<tr><td><b>{esc(g)}</b></td><td class="num">{n}</td><td class="num">{hit}</td><td class="num">{pct(hit / n) if n else "—"}</td></tr>'
+        inner = (f'{table("Underdog", ("Comeback team as underdog", "Other underdogs"), rows, key)}'
+                 '<p class="sm"><b>By game</b> · a game counts once: did any of the underdog\'s eligible rungs reach 2x</p>'
+                 '<div class="tbl"><table><tr><th>Underdog</th><th class="num">Games</th><th class="num">Any rung reached 2x</th><th class="num">Share</th></tr>'
+                 f'{gl}</table></div>')
+    return (f'<details class="section-disclosure"><summary><b>Comeback underdog spread line</b><span>observation only · '
+            f'{len(rows)} rungs</span></summary>'
+            '<p class="sm">The underdog\'s Kalshi spread rungs ("wins by over N"), read the same way as the buckets: the ask an hour '
+            'before the tip, 5-35c with a spread of 5c or less, then every trade print. Comeback teams won 40% or more of the '
+            f'2025-26 games they trailed at half-time: {esc(teams)}. In the Oct 20-28 data their underdog rungs reached 2x in 7 of 9 '
+            'games, against about half the games for other underdogs. Nine games prove nothing; this line grows the sample.</p>'
+            f'{inner}</details>')
+
+
 def section(state=None):
     if state is None:
         state = W.load() if os.path.exists(W.PATH) else W.load("/nonexistent")
@@ -117,6 +142,7 @@ def section(state=None):
 <p class="sm">Reached means a trade at or after the tip printed at 2, 3 or 5 times the entry ask (a target above 99c is left out of that rate). At fair prices a contract reaches 2x about {W.FAIR[2] * 100:.0f}% of the time, 3x {W.FAIR[3] * 100:.0f}% and 5x {W.FAIR[5] * 100:.0f}%. Held 10+ min is the share that stayed at 2x or more for ten minutes or longer. Min to 2x, Min above 2x and Contracts at 2x+ are medians over the contracts that reached 2x. Won minus ask is the share that settled yes less the average ask paid.</p>
 {body}
 </details>
+{spread_block(state)}
 <p class="sm mut">Last read {esc(last or 'not yet')}{(' · ' + esc(state['error'])) if state.get('error') else ''}.</p>
 </section>"""
 
