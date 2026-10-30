@@ -37,10 +37,11 @@ PAGE_HREFS = (
     'href="./finance_daily.html"',
     'href="./culture.html"',
     'href="./fights.html"',
+    'href="./leaderboard.html"',
     'href="./sandbox.html#method"',
 )
 PAGE_LABELS = ["Archives", "Production", "Trading", "NBA", "NFL", "Soccer", "Tennis", "Cricket", "Crypto",
-               "Commodities", "Econ Daily", "Finance Daily", "Culture", "Fights", "Method"]
+               "Commodities", "Econ Daily", "Finance Daily", "Culture", "Fights", "Leaderboard", "Method"]
 SKETCH_FAKES = (
     "Milan",
     "Atalanta",

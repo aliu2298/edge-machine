@@ -2539,6 +2539,14 @@ def main():
         print(f"wrote {fights_out}")
     except Exception as exc:                                    # noqa: BLE001
         print(f"::warning::fights page not rebuilt ({type(exc).__name__}: {exc})")
+    # The Leaderboard (2026-10-30): named teams, players and assets ranked on the ledgers above (leaderboard.py).
+    try:
+        import leaderboard_build
+        leaderboard_out = os.path.join(os.path.dirname(OUT), "leaderboard.html")
+        _write(leaderboard_out, leaderboard_build.build(now=now))
+        print(f"wrote {leaderboard_out}")
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"::warning::leaderboard page not rebuilt ({type(exc).__name__}: {exc})")
     import daily_build
     for daily_key in daily_build.D.LANES:
         daily_out = os.path.join(os.path.dirname(OUT), daily_key + ".html")

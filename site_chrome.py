@@ -28,6 +28,7 @@ PAGES = (
     ("finance_daily", "Finance Daily", "./finance_daily.html"),
     ("culture", "Culture", "./culture.html"),
     ("fights", "Fights", "./fights.html"),
+    ("leaderboard", "Leaderboard", "./leaderboard.html"),
     ("method", "Method", "./sandbox.html#method"),
 )
 SPORT_KEYS = ("nba", "nfl", "soccer", "tennis", "cricket", "crypto", "commodities")
@@ -48,6 +49,7 @@ PAGE_FILES = {
     "finance_daily": "finance_daily.html",
     "culture": "culture.html",
     "fights": "fights.html",
+    "leaderboard": "leaderboard.html",
 }
 
 # Fixed-width segmented control. The label is the current choice (aria-pressed),
@@ -106,7 +108,7 @@ def title_for(page):
 # wrapped onto two rows at 1280px and four on a tablet. Every link stays in nav.main in the same
 # order, so the phone's single swipe row (site.css, max-width 640px) still shows each one inline.
 MARKET_GROUP = ("nba", "nfl", "soccer", "tennis", "cricket", "crypto", "commodities",
-                "econ_daily", "finance_daily", "culture", "fights")
+                "econ_daily", "finance_daily", "culture", "fights", "leaderboard")
 
 
 def nav(active, prefix="./"):

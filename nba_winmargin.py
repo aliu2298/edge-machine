@@ -308,6 +308,11 @@ def run(state, now=None, fetch=D.get):
         done += 1
     cutoff = (now.astimezone(ET).date() - dt.timedelta(days=KEEP_PATH_NIGHTS)).isoformat()
     for r in state["rows"] + state["spread_rows"]:
+        # The ask check (leaderboard.tracker_ask_ok, the #253 print test) is stamped while the path is still
+        # kept, so a row stays checkable after its path is cleared. Rows already cleared stay unstamped.
+        if r.get("ask_ok") is None and r.get("path") and r.get("eligible") and r.get("m"):
+            import leaderboard
+            r["ask_ok"] = bool(leaderboard.tracker_ask_ok(dict(r, ask_ok=None)))
         if r["night"] < cutoff:
             r["path"] = []
     state["last_run"] = now.isoformat()
