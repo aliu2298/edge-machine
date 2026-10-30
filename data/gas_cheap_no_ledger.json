@@ -424,9 +424,11 @@
    "ask_check": {
     "book": 0,
     "first_quotes": false,
+    "how": "print",
     "last_trade": 0.16,
+    "printed": 1190.97,
     "source": "live",
-    "status": "checking"
+    "status": "verified"
    },
    "bid": 0.15,
    "book": {
@@ -480,12 +482,12 @@
   "KXAAAGASD-26OCT31": "2026-10-30T14:57:20.807863+00:00"
  },
  "lane": "gas_cheap_no",
- "last_success": "2026-10-30T14:57:20.807863+00:00",
+ "last_success": "2026-10-30T15:59:04.739540+00:00",
  "observations": {
-  "at": "2026-10-30T14:57:20.807863+00:00",
-  "checking": 1,
-  "entered": 1,
-  "events": 2,
+  "at": "2026-10-30T15:59:04.739540+00:00",
+  "checking": 0,
+  "entered": 0,
+  "events": 1,
   "filled": 0,
   "skipped": 0,
   "unverified": 0,
