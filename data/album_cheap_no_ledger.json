@@ -428,11 +428,15 @@
    "last_trade_at": "2026-10-29T20:39:00+00:00",
    "legs": [
     {
+     "fill_px": 0.2,
+     "filled_at": "2026-10-30T00:00:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.2
     },
     {
+     "fill_px": 0.3,
+     "filled_at": "2026-10-30T00:00:00+00:00",
      "multiple": 3.0,
      "share": 0.5,
      "target": 0.3
@@ -440,11 +444,14 @@
    ],
    "logged": "2026-10-29T22:00:59.602297+00:00",
    "payout": null,
+   "pnl": 0.1405,
    "price": 0.1,
+   "roi": 1.3214,
+   "roi_2x": 0.8551,
    "side": "no",
    "spread": 0.04,
    "spread_cost": -0.3,
-   "status": "open",
+   "status": "filled",
    "traded_to_entry": 24.06,
    "word": "Above 10K"
   },
@@ -532,14 +539,14 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:50.419359+00:00"
  },
  "lane": "album_cheap_no",
- "last_success": "2026-10-29T23:00:48.379844+00:00",
+ "last_success": "2026-10-30T00:01:04.124301+00:00",
  "observations": {
-  "at": "2026-10-29T23:00:48.379844+00:00",
+  "at": "2026-10-30T00:01:04.124301+00:00",
   "entered": 0,
   "events": 17,
-  "filled": 0,
-  "skipped": 0,
-  "waiting": 5
+  "filled": 2,
+  "skipped": 5,
+  "waiting": 0
  },
  "skips": {
   "KXALBUMEQUIV-BLEACH26NOV05-10K": {
@@ -966,6 +973,31 @@
    "event": "KXALBUMEQUIV-HEAVYCROWN26OCT29",
    "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
    "word": "Above 40K"
+  },
+  "KXALBUMEQUIV-HOW26NOV05-12K": {
+   "event": "KXALBUMEQUIV-HOW26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 12K"
+  },
+  "KXALBUMEQUIV-HOW26NOV05-15K": {
+   "event": "KXALBUMEQUIV-HOW26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 15K"
+  },
+  "KXALBUMEQUIV-HOW26NOV05-20K": {
+   "event": "KXALBUMEQUIV-HOW26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 20K"
+  },
+  "KXALBUMEQUIV-HOW26NOV05-25K": {
+   "event": "KXALBUMEQUIV-HOW26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 25K"
+  },
+  "KXALBUMEQUIV-HOW26NOV05-30K": {
+   "event": "KXALBUMEQUIV-HOW26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 30K"
   },
   "KXALBUMEQUIV-HUN26NOV19-15K": {
    "event": "KXALBUMEQUIV-HUN26NOV19",
