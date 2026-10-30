@@ -16,6 +16,7 @@ SITE_URL = "https://aliu2298.github.io/edge-machine/"
 PAGES = (
     ("sandbox", "Archives", "./sandbox.html"),
     ("production", "Production", "./production.html"),
+    ("leaderboard", "Leaderboard", "./leaderboard.html"),
     ("trading", "Trading", "./trading.html"),
     ("nba", "NBA", "./nba.html"),
     ("nfl", "NFL", "./nfl.html"),
@@ -48,6 +49,7 @@ PAGE_FILES = {
     "finance_daily": "finance_daily.html",
     "culture": "culture.html",
     "fights": "fights.html",
+    "leaderboard": "leaderboard.html",
 }
 
 # Fixed-width segmented control. The label is the current choice (aria-pressed),
