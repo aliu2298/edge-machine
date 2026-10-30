@@ -1,0 +1,45 @@
+name: NBA win margin NO fade
+on:
+  schedule:
+    # Hourly. Every settled game is read once, after the fact, from its candles and trades.
+    - cron: '52 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: nba-wm-nofade
+  cancel-in-progress: false
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Tests
+        run: python3 test_nba_wm_nofade.py
+      - name: NO fade (paper; in-sample from 2026-10-20, fresh record from 2026-10-31)
+        run: python3 nba_wm_nofade.py
+      - name: Save records
+        run: |
+          set -euo pipefail
+          python3 -c 'import json; json.load(open("data/nba_wm_nofade.json"))'
+          git config user.name "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+          git add data/nba_wm_nofade.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "NBA win margin NO fade observations"
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              # a push by the workflow token does not start the page build: ask for it so the page carries this ledger
+              GH_TOKEN=${{ github.token }} gh workflow run sandbox-tracker.yml --ref main || true
+              exit 0
+            fi
+            git fetch origin main
+            # Only this workflow owns this file.
+            git rebase origin/main
+          done
+          exit 1
