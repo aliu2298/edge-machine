@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-10-30T05:00:20.631448+00:00",
-   "last_success": "2026-10-30T05:00:20.631448+00:00",
+   "last_run": "2026-10-30T06:00:19.785374+00:00",
+   "last_success": "2026-10-30T06:00:19.785374+00:00",
    "observations": {
-    "at": "2026-10-30T05:00:20.631448+00:00",
+    "at": "2026-10-30T06:00:19.785374+00:00",
     "events": 973,
     "reasons": {},
     "retired": "2026-10-24"
@@ -548,10 +548,10 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-10-30T05:00:20.631448+00:00",
-   "last_success": "2026-10-30T05:00:20.631448+00:00",
+   "last_run": "2026-10-30T06:00:19.785374+00:00",
+   "last_success": "2026-10-30T06:00:19.785374+00:00",
    "observations": {
-    "at": "2026-10-30T05:00:20.631448+00:00",
+    "at": "2026-10-30T06:00:19.785374+00:00",
     "events": 973,
     "reasons": {},
     "retired": "2026-10-24"
@@ -905,19 +905,18 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-10-30T05:00:20.631448+00:00",
-   "last_success": "2026-10-30T05:00:20.631448+00:00",
+   "last_run": "2026-10-30T06:00:19.785374+00:00",
+   "last_success": "2026-10-30T06:00:19.785374+00:00",
    "observations": {
-    "at": "2026-10-30T05:00:20.631448+00:00",
+    "at": "2026-10-30T06:00:19.785374+00:00",
     "events": 973,
     "news_guard": [],
     "reasons": {
-     "NO under 0.60 (floor 2026-10-26)": 1,
      "already near-certain (under 10c or over 90c)": 13,
-     "edge 5c+": 6,
+     "edge 5c+": 4,
      "edge under 5c": 3,
      "monthly or company series (excluded 2026-10-26)": 76,
-     "no quote or spread too wide": 10
+     "no quote or spread too wide": 13
     }
    },
    "picks": [
@@ -2385,19 +2384,37 @@
      "status": "open",
      "title": "Ranked Choice / Ranked-Choice",
      "yes_mid": 0.285
+    },
+    {
+     "amended": "2026-10-26",
+     "category": "Mentions",
+     "close": "2026-11-02T15:00:00Z",
+     "detail": "P(said) 0.15 \u00b7 said on 4 of the last 84 days, 3.4 days left \u00b7 edge +0.18",
+     "edge": 0.1823,
+     "event": "KXTRUMPSAY-26NOV02",
+     "id": "KXTRUMPSAY-26NOV02-ETHA",
+     "logged": "2026-10-30T06:00:19.785374+00:00",
+     "model": 0.1518,
+     "name": "What will Trump say this week?",
+     "price": 0.65,
+     "series": "KXTRUMPSAY",
+     "side": "no",
+     "status": "open",
+     "title": "Ethanol",
+     "yes_mid": 0.36
     }
    ]
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-10-30T05:00:20.631448+00:00",
-   "last_success": "2026-10-30T05:00:20.631448+00:00",
+   "last_run": "2026-10-30T06:00:19.785374+00:00",
+   "last_success": "2026-10-30T06:00:19.785374+00:00",
    "observations": {
-    "at": "2026-10-30T05:00:20.631448+00:00",
+    "at": "2026-10-30T06:00:19.785374+00:00",
     "events": 973,
     "reasons": {
-     "edge 5c+": 4,
-     "edge under 5c": 1,
+     "edge 5c+": 3,
+     "edge under 5c": 2,
      "under 20 reviews counted": 15,
      "within 1 point of the line": 5
     }
@@ -2694,7 +2711,7 @@
    ]
   },
   "Autopen / Auto Pen": {
-   "at": "2026-10-29T23:00:21.942613+00:00",
+   "at": "2026-10-30T06:00:19.785374+00:00",
    "days": [
     "2026-08-11",
     "2026-09-16",
@@ -2812,7 +2829,7 @@
    ]
   },
   "Cybersecurity / Cyber Security": {
-   "at": "2026-10-29T23:00:21.942613+00:00",
+   "at": "2026-10-30T06:00:19.785374+00:00",
    "days": [
     "2026-10-21"
    ]
@@ -2834,7 +2851,7 @@
    ]
   },
   "Ethanol": {
-   "at": "2026-10-27T18:00:24.734301+00:00",
+   "at": "2026-10-30T06:00:19.785374+00:00",
    "days": [
     "2026-09-18",
     "2026-09-21",
