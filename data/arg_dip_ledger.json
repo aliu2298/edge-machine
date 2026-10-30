@@ -5953,9 +5953,9 @@
   ]
  },
  "lane": "arg_goalless_dip",
- "last_run": "2026-10-30T19:02:49.934134+00:00",
+ "last_run": "2026-10-30T23:16:53.236013+00:00",
  "observations": {
-  "at": "2026-10-30T19:02:49.934134+00:00",
+  "at": "2026-10-30T23:16:53.236013+00:00",
   "errors": [],
   "new": 0,
   "skipped": 0,
@@ -5964,6 +5964,17 @@
  "seen": {},
  "since": "2026-10-31",
  "skips": {},
- "upcoming": [],
+ "upcoming": [
+  {
+   "event": "KXARGPREMDIVTOTAL-26OCT31RIECAT",
+   "kickoff": 1793476800,
+   "title": "Riestra vs Talleres Cordoba: Total Goals"
+  },
+  {
+   "event": "KXARGPREMDIVTOTAL-26OCT31VELSLA",
+   "kickoff": 1793484900,
+   "title": "Velez Sarsfield vs San Lorenzo de Almagro: Total Goals"
+  }
+ ],
  "version": "argdip-v1"
 }
