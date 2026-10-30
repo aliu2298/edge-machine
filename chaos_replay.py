@@ -36,8 +36,8 @@ best bid if the whole minute is below it; a minute touching both takes the stop.
 is held to Kalshi's settlement.
 FEES: taker 0.07 p (1 - p) on entry and on a stop; maker 0.0175 p (1 - p) on a limit exit.
 CONTROL: the same entry HELD TO SETTLEMENT. Every lane shows hold v each target; the stop variants
-are compared with the held-with-the-same-stop row. A variant is flagged for review at 10 trades;
-promotion needs 30 AND a better ROI than its hold control. z is day-clustered (by the ET date of the
+are compared with the held-with-the-same-stop row. A variant is flagged for review at 10 settled events
+(2026-10-29: one Kalshi event is one outcome, so rungs of one event count once); promotion needs 30 AND a better ROI than its hold control. z is day-clustered (by the ET date of the
 start), never below the independent-trades z.
 
 START TIME. Where a lane has its own source, `start` wins. Otherwise the onset of play is read from
@@ -680,13 +680,16 @@ def lane_table(L):
     out = {}
     trades = L.get("trades") or []
     for key in variants_of(L):
-        a = stats(_rows(trades, key))
+        rows = _rows(trades, key)
+        a = stats(rows)
+        # The review and promotion counts are Kalshi EVENTS (2026-10-29, Olu): rungs of one event move together.
+        a["events"] = len({t.get("event") or id(t) for t in rows})
         ctl = control_of(key)
         c = stats(_rows(trades, ctl)) if ctl != key else None
         delta = None if c is None or a["roi"] is None or c["roi"] is None else a["roi"] - c["roi"]
-        flag = ("too early" if a["n"] < REVIEW_N else
+        flag = ("too early" if a["events"] < REVIEW_N else
                 "control" if c is None else
-                "promotable" if a["n"] >= PROMOTE_N and delta is not None and delta > 0 else
+                "promotable" if a["events"] >= PROMOTE_N and delta is not None and delta > 0 else
                 "review")
         out[key] = dict(lane=a, control=c, delta=delta, flag=flag)
     return out

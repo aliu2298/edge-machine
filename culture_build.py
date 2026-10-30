@@ -148,8 +148,9 @@ def build(state=None, now=None, split_state=None, wide_state=None, month_state=N
         '<li>Rest a split sell: half at 2x, half at 3x.</li>'
         '<li>A fill counts only on a traded print.</li>'
         '<li>Every lane is shown next to the same entries held.</li></ul>'
-        '<p class="sm mut">Sandbox, paper only, each lane on a fresh record from its first entry: review at 10 settled, '
-        'decide at 30.</p></section>')
+        '<p class="sm mut">Sandbox, paper only, each lane on a fresh record from its first entry: review at 10 settled '
+        'events, decide at 30. An event is one outcome: the words of one mention market, or the rungs of one '
+        'album ladder, move together, so they count once.</p></section>')
     cards = (MS.section(S(MS.STRICT), e) + MS.compare(S(MS.STRICT), S(MS.WIDE), e) + MS.section(S(MS.WIDE), e, MS.WIDE)
              + MS.section(S(MS.MONTH), e, MS.MONTH)
              + MS.compare(S(MS.MONTH), S(MS.MONTH_WIDE), e, anchor=MS.MONTH["compare_id"], title="Monthly · strict v wide")

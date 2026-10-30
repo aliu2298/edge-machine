@@ -65,25 +65,26 @@ rows = re.findall(r"<tr>(.*?)</tr>", summ.split("<tbody>", 1)[1], re.S)
 check("six rows, in order", [text(r).split(" ", 1)[1].split(" 0 ")[0] if False else re.sub(r"<[^>]+>", "", r.split("</td>")[0]).strip()
                              for r in rows],
       [_html.escape(c["label"], quote=False) for c in KB.CHEAP])
-check("columns: entries, settled, won, split ROI, hold ROI, legs 2x / 3x, average spread paid, status",
+check("columns: entries, settled entries, settled events, won, split ROI, hold ROI, legs 2x / 3x, average spread paid, status",
       [re.sub(r"<[^>]+>", "", x) for x in re.findall(r"<th[^>]*>(.*?)</th>", summ)],
-      ["Lane", "Entries", "Settled", "Won", "Split ROI", "Hold ROI", "Legs filled 2x / 3x", "Avg spread paid", "Status"])
+      ["Lane", "Entries", "Settled entries", "Settled events", "Won", "Split ROI", "Hold ROI", "Legs filled 2x / 3x", "Avg spread paid", "Status"])
 w0 = text(rows[0])
-check("the weekly strict row: 2 entries, 2 settled, 1 won, legs 1 / 0, 4c spread, the review status",
-      ("2 2 1" in w0, "1 / 0" in w0, "0.04" in w0, "2 settled · review at 10, decide at 30" in w0), (True, True, True, True))
+check("the weekly strict row: 2 entries, 2 settled, both in 1 event, 1 won, legs 1 / 0, 4c spread, the review status",
+      ("2 2 1 1" in w0, "1 / 0" in w0, "0.04" in w0, "1 settled event · review at 10, decide at 30" in w0), (True, True, True, True))
 check("strict v wide average spread paid, for the mention lanes",
       "Weekly mentions, strict v wide average spread paid 0.04 v 0.10. Monthly mentions, strict v wide average spread paid — v —." in t,
       True)
 check("status moves at 10 and 30", (KB.status(9), KB.status(10), KB.status(30)),
-      ("9 settled · review at 10, decide at 30", "10 settled · review due (10 reached) · decide at 30",
-       "30 settled · decide now (30 reached)"))
+      ("9 settled events · review at 10, decide at 30", "10 settled events · review due (10 reached) · decide at 30",
+       "30 settled events · decide now (30 reached)"))
 
 print("\nthe cards are consistent")
 cards = re.findall(r'<section class="lane-card" id="([^"]+)">(.*?)</section>', h, re.S)
 tiles = {i: re.findall(r'<div class="tile"><b>[^<]*</b><span>([^<]+)</span>', c) for i, c in cards}
 check("six cards, every one with the same tiles", (len(cards), len({tuple(v) for v in tiles.values()}),
       next(iter(tiles.values()))),
-      (6, 1, ["entries", "settled", "won", "ROI after fees · split", "ROI after fees · held", "legs filled 2x / 3x"]))
+      (6, 1, ["entries", "settled entries", "settled events", "won", "ROI after fees · split", "ROI after fees · held",
+             "split ROI per event", "legs filled 2x / 3x"]))
 heads = {i: tuple(re.sub(r"<[^>]+>", "", x) for x in re.findall(r"<th[^>]*>(.*?)</th>", c)) for i, c in cards}
 norm = {i: tuple(x for x in v if x not in ("Week", "Event", "Word", "Rung", "YES ask paid", "NO ask paid")) for i, v in heads.items()}
 check("and the same columns (units and side aside)", len(set(norm.values())), 1)
