@@ -1,8 +1,8 @@
 {
  "error": null,
- "last_run": "2026-10-30T16:50:11.896862+00:00",
+ "last_run": "2026-10-30T21:42:09.352851+00:00",
  "observations": {
-  "at": "2026-10-30T16:50:11.896862+00:00",
+  "at": "2026-10-30T21:42:09.352851+00:00",
   "errors": [],
   "new": 0,
   "waiting": 0
@@ -10,6 +10,7 @@
  "rows": [
   {
    "ask": 0.08,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.05,
    "bucket": "11-20",
@@ -77,6 +78,7 @@
   },
   {
    "ask": 0.11,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.08,
    "bucket": "1-5",
@@ -179,6 +181,7 @@
   },
   {
    "ask": 0.13,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.08,
    "bucket": "1-5",
@@ -286,6 +289,7 @@
   },
   {
    "ask": 0.27,
+   "ask_ok": false,
    "band": "20-35c",
    "bid": 0.22,
    "bucket": "11-20",
@@ -578,6 +582,7 @@
   },
   {
    "ask": 0.2,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.15,
    "bucket": "26+",
@@ -725,6 +730,7 @@
   },
   {
    "ask": 0.13,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.12,
    "bucket": "1-5",
@@ -1202,6 +1208,7 @@
   },
   {
    "ask": 0.06,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.01,
    "bucket": "6-10",
@@ -1339,6 +1346,7 @@
   },
   {
    "ask": 0.27,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.24,
    "bucket": "16-25",
@@ -1511,6 +1519,7 @@
   },
   {
    "ask": 0.22,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.21,
    "bucket": "11-20",
@@ -1813,6 +1822,7 @@
   },
   {
    "ask": 0.14,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.13,
    "bucket": "21+",
@@ -2000,6 +2010,7 @@
   },
   {
    "ask": 0.18,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.15,
    "bucket": "6-10",
@@ -2447,6 +2458,7 @@
   },
   {
    "ask": 0.15,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.14,
    "bucket": "1-5",
@@ -2704,6 +2716,7 @@
   },
   {
    "ask": 0.08,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.03,
    "bucket": "11-20",
@@ -2821,6 +2834,7 @@
   },
   {
    "ask": 0.1,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.09,
    "bucket": "6-10",
@@ -3123,6 +3137,7 @@
   },
   {
    "ask": 0.16,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.13,
    "bucket": "1-5",
@@ -4100,6 +4115,7 @@
   },
   {
    "ask": 0.13,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.12,
    "bucket": "6-10",
@@ -4152,6 +4168,7 @@
   },
   {
    "ask": 0.12,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.08,
    "bucket": "1-5",
@@ -4229,6 +4246,7 @@
   },
   {
    "ask": 0.15,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.12,
    "bucket": "1-5",
@@ -4311,6 +4329,7 @@
   },
   {
    "ask": 0.14,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.09,
    "bucket": "6-10",
@@ -4558,6 +4577,7 @@
   },
   {
    "ask": 0.13,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.08,
    "bucket": "21+",
@@ -4605,6 +4625,7 @@
   },
   {
    "ask": 0.15,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.12,
    "bucket": "1-5",
@@ -4907,6 +4928,7 @@
   },
   {
    "ask": 0.1,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.05,
    "bucket": "11-20",
@@ -5109,6 +5131,7 @@
   },
   {
    "ask": 0.17,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.12,
    "bucket": "1-5",
@@ -5361,6 +5384,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.0,
    "bucket": "21+",
@@ -5608,6 +5632,7 @@
   },
   {
    "ask": 0.24,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.19,
    "bucket": "11-20",
@@ -5820,6 +5845,7 @@
   },
   {
    "ask": 0.16,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.11,
    "bucket": "1-5",
@@ -6167,6 +6193,7 @@
   },
   {
    "ask": 0.15,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.12,
    "bucket": "1-5",
@@ -6454,6 +6481,7 @@
   },
   {
    "ask": 0.11,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.09,
    "bucket": "6-10",
@@ -6631,6 +6659,7 @@
   },
   {
    "ask": 0.14,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.12,
    "bucket": "11-20",
@@ -7018,6 +7047,7 @@
   },
   {
    "ask": 0.18,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.14,
    "bucket": "1-5",
@@ -7160,6 +7190,7 @@
   },
   {
    "ask": 0.12,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.08,
    "bucket": "6-10",
@@ -7317,6 +7348,7 @@
   },
   {
    "ask": 0.16,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.12,
    "bucket": "1-5",
@@ -7469,6 +7501,7 @@
   },
   {
    "ask": 0.16,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.12,
    "bucket": "1-5",
@@ -7896,6 +7929,7 @@
   },
   {
    "ask": 0.07,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.04,
    "bucket": "21+",
@@ -9243,6 +9277,7 @@
   },
   {
    "ask": 0.13,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.08,
    "bucket": "6-10",
@@ -9410,6 +9445,7 @@
   },
   {
    "ask": 0.09,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.04,
    "bucket": "21+",
@@ -9527,6 +9563,7 @@
   },
   {
    "ask": 0.17,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.13,
    "bucket": "6-10",
@@ -11179,6 +11216,7 @@
   },
   {
    "ask": 0.13,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.1,
    "bucket": "11-20",
@@ -13146,6 +13184,7 @@
   },
   {
    "ask": 0.17,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.12,
    "bucket": "1-5",
@@ -13243,6 +13282,7 @@
   },
   {
    "ask": 0.26,
+   "ask_ok": false,
    "band": "20-35c",
    "bid": 0.21,
    "bucket": "11-20",
@@ -13455,6 +13495,7 @@
   },
   {
    "ask": 0.12,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.09,
    "bucket": "6-10",
@@ -13702,6 +13743,7 @@
   },
   {
    "ask": 0.16,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.13,
    "bucket": "1-5",
@@ -13824,6 +13866,7 @@
   },
   {
    "ask": 0.14,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.12,
    "bucket": "1-5",
@@ -14066,6 +14109,7 @@
   },
   {
    "ask": 0.16,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.12,
    "bucket": "6-10",
@@ -14123,6 +14167,7 @@
   },
   {
    "ask": 0.2,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.16,
    "bucket": "11-20",
@@ -14465,6 +14510,7 @@
   },
   {
    "ask": 0.12,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.07,
    "bucket": "1-5",
@@ -14532,6 +14578,7 @@
   },
   {
    "ask": 0.17,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.14,
    "bucket": "6-10",
@@ -14799,6 +14846,7 @@
   },
   {
    "ask": 0.16,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.12,
    "bucket": "1-5",
@@ -14891,6 +14939,7 @@
   },
   {
    "ask": 0.26,
+   "ask_ok": false,
    "band": "20-35c",
    "bid": 0.21,
    "bucket": "11-20",
@@ -14963,6 +15012,7 @@
   },
   {
    "ask": 0.14,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.09,
    "bucket": "6-10",
@@ -15260,6 +15310,7 @@
   },
   {
    "ask": 0.28,
+   "ask_ok": false,
    "band": "20-35c",
    "bid": 0.24,
    "bucket": "26+",
@@ -15527,6 +15578,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.01,
    "bucket": "11+",
@@ -15714,6 +15766,7 @@
   },
   {
    "ask": 0.13,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.1,
    "bucket": "11-15",
@@ -16021,6 +16074,7 @@
   },
   {
    "ask": 0.07,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.05,
    "bucket": "1-5",
@@ -16148,6 +16202,7 @@
   },
   {
    "ask": 0.13,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.09,
    "bucket": "6-10",
@@ -16870,6 +16925,7 @@
   },
   {
    "ask": 0.18,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.15,
    "bucket": "6-10",
@@ -19557,6 +19613,7 @@
   },
   {
    "ask": 0.07,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.05,
    "bucket": "21+",
@@ -19774,6 +19831,7 @@
   },
   {
    "ask": 0.15,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.11,
    "bucket": "1-5",
@@ -21776,6 +21834,7 @@
   },
   {
    "ask": 0.11,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.09,
    "bucket": "11-20",
@@ -22128,6 +22187,7 @@
   },
   {
    "ask": 0.06,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.04,
    "bucket": "21+",
@@ -22270,6 +22330,7 @@
   },
   {
    "ask": 0.13,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.09,
    "bucket": "6-10",
@@ -22422,6 +22483,7 @@
   },
   {
    "ask": 0.09,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.06,
    "bucket": "11-20",
@@ -22529,6 +22591,7 @@
   },
   {
    "ask": 0.06,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.05,
    "bucket": "21+",
@@ -22616,6 +22679,7 @@
   },
   {
    "ask": 0.14,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.1,
    "bucket": "6-10",
@@ -23018,6 +23082,7 @@
   },
   {
    "ask": 0.11,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.08,
    "bucket": "21+",
@@ -23310,6 +23375,7 @@
   },
   {
    "ask": 0.16,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.13,
    "bucket": "1-5",
@@ -23497,6 +23563,7 @@
   },
   {
    "ask": 0.16,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.13,
    "bucket": "1-5",
@@ -23924,6 +23991,7 @@
   },
   {
    "ask": 0.21,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.19,
    "bucket": "11-20",
@@ -24506,6 +24574,7 @@
   },
   {
    "ask": 0.16,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.12,
    "bucket": "11-15",
@@ -24723,6 +24792,7 @@
   },
   {
    "ask": 0.06,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.01,
    "bucket": "6-10",
@@ -24810,6 +24880,7 @@
   },
   {
    "ask": 0.19,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.18,
    "bucket": "6-10",
@@ -25147,6 +25218,7 @@
   },
   {
    "ask": 0.22,
+   "ask_ok": false,
    "band": "20-35c",
    "bid": 0.21,
    "bucket": "16-25",
@@ -25294,6 +25366,7 @@
   },
   {
    "ask": 0.12,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.08,
    "bucket": "1-5",
@@ -38889,6 +38962,7 @@
   },
   {
    "ask": 0.16,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.12,
    "bucket": "1-5",
@@ -39116,6 +39190,7 @@
   },
   {
    "ask": 0.2,
+   "ask_ok": false,
    "band": "20-35c",
    "bid": 0.17,
    "bucket": "6-10",
@@ -39293,6 +39368,7 @@
   },
   {
    "ask": 0.23,
+   "ask_ok": false,
    "band": "20-35c",
    "bid": 0.18,
    "bucket": "11-20",
@@ -39535,6 +39611,7 @@
   },
   {
    "ask": 0.18,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.14,
    "bucket": "6-10",
@@ -39877,6 +39954,7 @@
   },
   {
    "ask": 0.16,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.12,
    "bucket": "1-5",
@@ -40099,6 +40177,7 @@
   },
   {
    "ask": 0.17,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.12,
    "bucket": "1-5",
@@ -40486,6 +40565,7 @@
   },
   {
    "ask": 0.19,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.18,
    "bucket": "6-10",
@@ -41088,6 +41168,7 @@
   },
   {
    "ask": 0.14,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.13,
    "bucket": "21+",
@@ -41285,6 +41366,7 @@
   },
   {
    "ask": 0.17,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.16,
    "bucket": "1-5",
@@ -42069,6 +42151,7 @@
  "spread_rows": [
   {
    "ask": 0.08,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.07,
    "comeback": false,
@@ -42596,6 +42679,7 @@
   },
   {
    "ask": 0.17,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.15,
    "comeback": false,
@@ -43998,6 +44082,7 @@
   },
   {
    "ask": 0.23,
+   "ask_ok": false,
    "band": "20-35c",
    "bid": 0.21,
    "comeback": false,
@@ -45755,6 +45840,7 @@
   },
   {
    "ask": 0.13,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.11,
    "comeback": false,
@@ -46597,6 +46683,7 @@
   },
   {
    "ask": 0.1,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.08,
    "comeback": false,
@@ -47084,6 +47171,7 @@
   },
   {
    "ask": 0.2,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.18,
    "comeback": false,
@@ -48576,6 +48664,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.02,
    "comeback": false,
@@ -49063,6 +49152,7 @@
   },
   {
    "ask": 0.13,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.11,
    "comeback": false,
@@ -51385,6 +51475,7 @@
   },
   {
    "ask": 0.06,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.04,
    "comeback": false,
@@ -52137,6 +52228,7 @@
   },
   {
    "ask": 0.09,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.07,
    "comeback": false,
@@ -53904,6 +53996,7 @@
   },
   {
    "ask": 0.14,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.13,
    "comeback": false,
@@ -56746,6 +56839,7 @@
   },
   {
    "ask": 0.07,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.05,
    "comeback": false,
@@ -57633,6 +57727,7 @@
   },
   {
    "ask": 0.23,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.22,
    "comeback": false,
@@ -60060,6 +60155,7 @@
   },
   {
    "ask": 0.08,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.06,
    "comeback": false,
@@ -60737,6 +60833,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.0,
    "comeback": false,
@@ -60809,6 +60906,7 @@
   },
   {
    "ask": 0.06,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.04,
    "comeback": false,
@@ -61091,6 +61189,7 @@
   },
   {
    "ask": 0.13,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.11,
    "comeback": false,
@@ -62628,6 +62727,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.01,
    "comeback": false,
@@ -62745,6 +62845,7 @@
   },
   {
    "ask": 0.09,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.08,
    "comeback": false,
@@ -63737,6 +63838,7 @@
   },
   {
    "ask": 0.18,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.17,
    "comeback": false,
@@ -65954,6 +66056,7 @@
   },
   {
    "ask": 0.16,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.15,
    "comeback": false,
@@ -68046,6 +68149,7 @@
   },
   {
    "ask": 0.25,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.24,
    "comeback": false,
@@ -69583,6 +69687,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.0,
    "comeback": false,
@@ -69685,6 +69790,7 @@
   },
   {
    "ask": 0.21,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.2,
    "comeback": false,
@@ -71962,6 +72068,7 @@
   },
   {
    "ask": 0.29,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.27,
    "comeback": false,
@@ -73584,6 +73691,7 @@
   },
   {
    "ask": 0.31,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.3,
    "comeback": false,
@@ -73986,6 +74094,7 @@
   },
   {
    "ask": 0.15,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.13,
    "comeback": false,
@@ -74103,6 +74212,7 @@
   },
   {
    "ask": 0.22,
+   "ask_ok": false,
    "band": "20-35c",
    "bid": 0.21,
    "comeback": false,
@@ -74340,6 +74450,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.01,
    "comeback": false,
@@ -74422,6 +74533,7 @@
   },
   {
    "ask": 0.06,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.02,
    "comeback": false,
@@ -74484,6 +74596,7 @@
   },
   {
    "ask": 0.07,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.05,
    "comeback": false,
@@ -74561,6 +74674,7 @@
   },
   {
    "ask": 0.35,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.34,
    "comeback": false,
@@ -74933,6 +75047,7 @@
   },
   {
    "ask": 0.27,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.26,
    "comeback": false,
@@ -75300,6 +75415,7 @@
   },
   {
    "ask": 0.11,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.09,
    "comeback": false,
@@ -75432,6 +75548,7 @@
   },
   {
    "ask": 0.09,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.07,
    "comeback": false,
@@ -75574,6 +75691,7 @@
   },
   {
    "ask": 0.18,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.16,
    "comeback": false,
@@ -75721,6 +75839,7 @@
   },
   {
    "ask": 0.35,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.34,
    "comeback": false,
@@ -80148,6 +80267,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.02,
    "comeback": false,
@@ -85980,6 +86100,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.02,
    "comeback": false,
@@ -89407,6 +89528,7 @@
   },
   {
    "ask": 0.07,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.04,
    "comeback": false,
@@ -94524,6 +94646,7 @@
   },
   {
    "ask": 0.08,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.06,
    "comeback": false,
@@ -100796,6 +100919,7 @@
   },
   {
    "ask": 0.1,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.07,
    "comeback": false,
@@ -108953,6 +109077,7 @@
   },
   {
    "ask": 0.11,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.1,
    "comeback": false,
@@ -114250,6 +114375,7 @@
   },
   {
    "ask": 0.14,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.13,
    "comeback": false,
@@ -122997,6 +123123,7 @@
   },
   {
    "ask": 0.19,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.17,
    "comeback": false,
@@ -129744,6 +129871,7 @@
   },
   {
    "ask": 0.25,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.23,
    "comeback": false,
@@ -135651,6 +135779,7 @@
   },
   {
    "ask": 0.29,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.28,
    "comeback": false,
@@ -141753,6 +141882,7 @@
   },
   {
    "ask": 0.1,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.08,
    "comeback": false,
@@ -142450,6 +142580,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.02,
    "comeback": false,
@@ -142717,6 +142848,7 @@
   },
   {
    "ask": 0.07,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.04,
    "comeback": false,
@@ -143094,6 +143226,7 @@
   },
   {
    "ask": 0.06,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.02,
    "comeback": false,
@@ -143446,6 +143579,7 @@
   },
   {
    "ask": 0.07,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.06,
    "comeback": false,
@@ -143863,6 +143997,7 @@
   },
   {
    "ask": 0.14,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.12,
    "comeback": false,
@@ -145435,6 +145570,7 @@
   },
   {
    "ask": 0.25,
+   "ask_ok": false,
    "band": "20-35c",
    "bid": 0.24,
    "comeback": false,
@@ -147757,6 +147893,7 @@
   },
   {
    "ask": 0.17,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.16,
    "comeback": false,
@@ -150189,6 +150326,7 @@
   },
   {
    "ask": 0.21,
+   "ask_ok": false,
    "band": "20-35c",
    "bid": 0.2,
    "comeback": false,
@@ -153936,6 +154074,7 @@
   },
   {
    "ask": 0.27,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.26,
    "comeback": false,
@@ -156733,6 +156872,7 @@
   },
   {
    "ask": 0.12,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.11,
    "comeback": false,
@@ -158125,6 +158265,7 @@
   },
   {
    "ask": 0.06,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.04,
    "comeback": false,
@@ -158692,6 +158833,7 @@
   },
   {
    "ask": 0.29,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.28,
    "comeback": false,
@@ -163409,6 +163551,7 @@
   },
   {
    "ask": 0.24,
+   "ask_ok": false,
    "band": "20-35c",
    "bid": 0.23,
    "comeback": false,
@@ -170161,6 +170304,7 @@
   },
   {
    "ask": 0.16,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.15,
    "comeback": false,
@@ -174088,6 +174232,7 @@
   },
   {
    "ask": 0.34,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.33,
    "comeback": false,
@@ -177410,6 +177555,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.02,
    "comeback": false,
@@ -177462,6 +177608,7 @@
   },
   {
    "ask": 0.07,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.05,
    "comeback": false,
@@ -177559,6 +177706,7 @@
   },
   {
    "ask": 0.09,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.07,
    "comeback": false,
@@ -177671,6 +177819,7 @@
   },
   {
    "ask": 0.2,
+   "ask_ok": false,
    "band": "20-35c",
    "bid": 0.19,
    "comeback": false,
@@ -177753,6 +177902,7 @@
   },
   {
    "ask": 0.06,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.03,
    "comeback": false,
@@ -177845,6 +177995,7 @@
   },
   {
    "ask": 0.25,
+   "ask_ok": false,
    "band": "20-35c",
    "bid": 0.23,
    "comeback": false,
@@ -178147,6 +178298,7 @@
   },
   {
    "ask": 0.12,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.1,
    "comeback": false,
@@ -178234,6 +178386,7 @@
   },
   {
    "ask": 0.15,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.14,
    "comeback": false,
@@ -178356,6 +178509,7 @@
   },
   {
    "ask": 0.1,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.08,
    "comeback": false,
@@ -181783,6 +181937,7 @@
   },
   {
    "ask": 0.35,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.34,
    "comeback": false,
@@ -183690,6 +183845,7 @@
   },
   {
    "ask": 0.17,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.15,
    "comeback": false,
@@ -189177,6 +189333,7 @@
   },
   {
    "ask": 0.08,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.06,
    "comeback": false,
@@ -191574,6 +191731,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.03,
    "comeback": false,
@@ -192831,6 +192989,7 @@
   },
   {
    "ask": 0.21,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.19,
    "comeback": false,
@@ -198808,6 +198967,7 @@
   },
   {
    "ask": 0.07,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.04,
    "comeback": false,
@@ -200470,6 +200630,7 @@
   },
   {
    "ask": 0.29,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.28,
    "comeback": false,
@@ -206712,6 +206873,7 @@
   },
   {
    "ask": 0.13,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.11,
    "comeback": false,
@@ -213014,6 +213176,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.01,
    "comeback": false,
@@ -214061,6 +214224,7 @@
   },
   {
    "ask": 0.25,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.23,
    "comeback": false,
@@ -218713,6 +218877,7 @@
   },
   {
    "ask": 0.09,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.07,
    "comeback": false,
@@ -218855,6 +219020,7 @@
   },
   {
    "ask": 0.15,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.14,
    "comeback": false,
@@ -219022,6 +219188,7 @@
   },
   {
    "ask": 0.34,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.32,
    "comeback": false,
@@ -219164,6 +219331,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.01,
    "comeback": false,
@@ -219221,6 +219389,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.02,
    "comeback": false,
@@ -219278,6 +219447,7 @@
   },
   {
    "ask": 0.28,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.27,
    "comeback": false,
@@ -219445,6 +219615,7 @@
   },
   {
    "ask": 0.08,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.06,
    "comeback": false,
@@ -219552,6 +219723,7 @@
   },
   {
    "ask": 0.12,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.1,
    "comeback": false,
@@ -219714,6 +219886,7 @@
   },
   {
    "ask": 0.19,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.18,
    "comeback": false,
@@ -219831,6 +220004,7 @@
   },
   {
    "ask": 0.23,
+   "ask_ok": false,
    "band": "20-35c",
    "bid": 0.22,
    "comeback": false,
@@ -219958,6 +220132,7 @@
   },
   {
    "ask": 0.06,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.03,
    "comeback": false,
@@ -220055,6 +220230,7 @@
   },
   {
    "ask": 0.1,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.08,
    "comeback": false,
@@ -220327,6 +220503,7 @@
   },
   {
    "ask": 0.28,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.26,
    "comeback": false,
@@ -221514,6 +221691,7 @@
   },
   {
    "ask": 0.13,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.11,
    "comeback": false,
@@ -221891,6 +222069,7 @@
   },
   {
    "ask": 0.06,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.01,
    "comeback": false,
@@ -222063,6 +222242,7 @@
   },
   {
    "ask": 0.08,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.06,
    "comeback": false,
@@ -222240,6 +222420,7 @@
   },
   {
    "ask": 0.16,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.14,
    "comeback": false,
@@ -222697,6 +222878,7 @@
   },
   {
    "ask": 0.06,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.03,
    "comeback": false,
@@ -222914,6 +223096,7 @@
   },
   {
    "ask": 0.21,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.2,
    "comeback": false,
@@ -223431,6 +223614,7 @@
   },
   {
    "ask": 0.06,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.02,
    "comeback": false,
@@ -223588,6 +223772,7 @@
   },
   {
    "ask": 0.25,
+   "ask_ok": false,
    "band": "20-35c",
    "bid": 0.23,
    "comeback": false,
@@ -224320,6 +224505,7 @@
   },
   {
    "ask": 0.07,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.05,
    "comeback": false,
@@ -224527,6 +224713,7 @@
   },
   {
    "ask": 0.06,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.04,
    "comeback": false,
@@ -224709,6 +224896,7 @@
   },
   {
    "ask": 0.06,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.02,
    "comeback": false,
@@ -224951,6 +225139,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.02,
    "comeback": false,
@@ -225078,6 +225267,7 @@
   },
   {
    "ask": 0.17,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.16,
    "comeback": false,
@@ -225975,6 +226165,7 @@
   },
   {
    "ask": 0.09,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.07,
    "comeback": false,
@@ -226402,6 +226593,7 @@
   },
   {
    "ask": 0.25,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.24,
    "comeback": false,
@@ -230704,6 +230896,7 @@
   },
   {
    "ask": 0.2,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.19,
    "comeback": false,
@@ -232571,6 +232764,7 @@
   },
   {
    "ask": 0.13,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.12,
    "comeback": false,
@@ -233188,6 +233382,7 @@
   },
   {
    "ask": 0.31,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.3,
    "comeback": false,
@@ -247500,6 +247695,7 @@
   },
   {
    "ask": 0.07,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.05,
    "comeback": false,
@@ -247752,6 +247948,7 @@
   },
   {
    "ask": 0.11,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.09,
    "comeback": false,
@@ -248659,6 +248856,7 @@
   },
   {
    "ask": 0.18,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.16,
    "comeback": false,
@@ -249311,6 +249509,7 @@
   },
   {
    "ask": 0.12,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.1,
    "comeback": false,
@@ -249623,6 +249822,7 @@
   },
   {
    "ask": 0.09,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.08,
    "comeback": false,
@@ -249740,6 +249940,7 @@
   },
   {
    "ask": 0.06,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.03,
    "comeback": false,
@@ -249917,6 +250118,7 @@
   },
   {
    "ask": 0.35,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.34,
    "comeback": false,
@@ -251324,6 +251526,7 @@
   },
   {
    "ask": 0.13,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.11,
    "comeback": false,
@@ -251916,6 +252119,7 @@
   },
   {
    "ask": 0.21,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.2,
    "comeback": false,
@@ -252688,6 +252892,7 @@
   },
   {
    "ask": 0.27,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.25,
    "comeback": false,
@@ -254880,6 +255085,7 @@
   },
   {
    "ask": 0.07,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.05,
    "comeback": false,
@@ -255022,6 +255228,7 @@
   },
   {
    "ask": 0.33,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.31,
    "comeback": false,
@@ -257219,6 +257426,7 @@
   },
   {
    "ask": 0.14,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.12,
    "comeback": false,
@@ -263476,6 +263684,7 @@
   },
   {
    "ask": 0.15,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.14,
    "comeback": false,
@@ -270958,6 +271167,7 @@
   },
   {
    "ask": 0.11,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.09,
    "comeback": false,
@@ -274755,6 +274965,7 @@
   },
   {
    "ask": 0.07,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.04,
    "comeback": false,
@@ -275312,6 +275523,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.02,
    "comeback": false,
@@ -275714,6 +275926,7 @@
   },
   {
    "ask": 0.08,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.06,
    "comeback": false,
@@ -294709,6 +294922,7 @@
   },
   {
    "ask": 0.09,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.07,
    "comeback": false,
@@ -294871,6 +295085,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.03,
    "comeback": false,
@@ -295033,6 +295248,7 @@
   },
   {
    "ask": 0.24,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.23,
    "comeback": false,
@@ -295535,6 +295751,7 @@
   },
   {
    "ask": 0.07,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.05,
    "comeback": false,
@@ -295602,6 +295819,7 @@
   },
   {
    "ask": 0.29,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.27,
    "comeback": false,
@@ -296154,6 +296372,7 @@
   },
   {
    "ask": 0.31,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.3,
    "comeback": false,
@@ -296891,6 +297110,7 @@
   },
   {
    "ask": 0.19,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.18,
    "comeback": false,
@@ -297218,6 +297438,7 @@
   },
   {
    "ask": 0.12,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.1,
    "comeback": false,
@@ -297560,6 +297781,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.02,
    "comeback": false,
@@ -297762,6 +297984,7 @@
   },
   {
    "ask": 0.15,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.14,
    "comeback": false,
@@ -298064,6 +298287,7 @@
   },
   {
    "ask": 0.32,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.31,
    "comeback": true,
@@ -299386,6 +299610,7 @@
   },
   {
    "ask": 0.18,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.17,
    "comeback": true,
@@ -299708,6 +299933,7 @@
   },
   {
    "ask": 0.22,
+   "ask_ok": false,
    "band": "20-35c",
    "bid": 0.21,
    "comeback": true,
@@ -300400,6 +300626,7 @@
   },
   {
    "ask": 0.14,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.13,
    "comeback": true,
@@ -300652,6 +300879,7 @@
   },
   {
    "ask": 0.12,
+   "ask_ok": false,
    "band": "10-20c",
    "bid": 0.08,
    "comeback": true,
@@ -300809,6 +301037,7 @@
   },
   {
    "ask": 0.35,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.33,
    "comeback": true,
@@ -302206,6 +302435,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.02,
    "comeback": true,
@@ -302323,6 +302553,7 @@
   },
   {
    "ask": 0.27,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.25,
    "comeback": true,
@@ -303650,6 +303881,7 @@
   },
   {
    "ask": 0.09,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.07,
    "comeback": true,
@@ -303782,6 +304014,7 @@
   },
   {
    "ask": 0.07,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.05,
    "comeback": true,
@@ -303929,6 +304162,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.03,
    "comeback": true,
@@ -304121,6 +304355,7 @@
   },
   {
    "ask": 0.18,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.17,
    "comeback": false,
@@ -316083,6 +316318,7 @@
   },
   {
    "ask": 0.09,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.08,
    "comeback": false,
@@ -320950,6 +321186,7 @@
   },
   {
    "ask": 0.23,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.21,
    "comeback": false,
@@ -335327,6 +335564,7 @@
   },
   {
    "ask": 0.28,
+   "ask_ok": true,
    "band": "20-35c",
    "bid": 0.26,
    "comeback": false,
@@ -340914,6 +341152,7 @@
   },
   {
    "ask": 0.06,
+   "ask_ok": true,
    "band": "5-10c",
    "bid": 0.05,
    "comeback": false,
@@ -344496,6 +344735,7 @@
   },
   {
    "ask": 0.05,
+   "ask_ok": false,
    "band": "5-10c",
    "bid": 0.03,
    "comeback": false,
@@ -350283,6 +350523,7 @@
   },
   {
    "ask": 0.15,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.13,
    "comeback": false,
@@ -363395,6 +363636,7 @@
   },
   {
    "ask": 0.1,
+   "ask_ok": true,
    "band": "10-20c",
    "bid": 0.09,
    "comeback": false,
