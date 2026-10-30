@@ -497,3 +497,196 @@ def board(contracts):
     by_sport = {sp: [s for s in ranked if s["sport"] == sp][:TOP_N] for sp in SPORTS}
     return dict(ranked=ranked, watching=watching, top=top, bottom=bottom, by_sport=by_sport, means=means,
                 persistence=persistence(contracts), contracts=len(contracts), entities=len(stats))
+
+
+# ================================================================ PROFIT BOARD (2026-10-30, Olu)
+# "I only need the team or player or asset: who is frequently making the Edge Machine profitable." One table: every
+# SETTLED BET in every lane record, Production and Sandbox, retired lanes included, credited to the names it was on
+# and ranked by the paper profit it made at $1 a bet, after fees, as each lane computes it. Observation-only
+# trackers (the NBA win margin tracker rows) are not bets and are left out. The cheap-contract spike board above
+# stays, moved into a fold on the page.
+MIN_BETS = 5
+TOP_BETS = 20
+BET_WEEK_MIN = 3          # bets a name needs in a week to be ranked for the profit persistence line
+BET_WEEK_ENTITIES_MIN = 8
+
+SANDBOX_SPORT = {
+    "mlb": "Baseball", "nhl_pl": "Hockey", "nhl_rest": "Hockey", "nfl": "Football", "mma": "Fights", "boxing": "Fights",
+    "cricket": "Cricket", "table_tennis": "Table tennis", "tennis": "Tennis",
+}
+SKIP_SPORTS = {"tennis_combo": "combo (several legs)", "tennis_pmcombo": "combo (several legs)",
+               "climate": "weather city (not a team, player or asset)"}
+ASSET_BY_SERIES = {"KXGOLDD": "Gold", "KXSILVERD": "Silver", "KXBRENTD": "Brent", "KXNATGASD": "Natural gas",
+                   "KXCOPPERD": "Copper", "KXWTI": "WTI", "KXBTCD": "Bitcoin", "KXETHD": "Ethereum", "KXSOLD": "Solana",
+                   "KXSOL": "Solana", "KXXRP": "XRP", "KXXRPD": "XRP", "KXHYPED": "HYPE", "KXBTC": "Bitcoin",
+                   "KXETH": "Ethereum"}
+# (file, sport, how names are taken): "match" credits both teams/players of "A v B", "team" the pick's `team`,
+# "code" a team code (NBA codes are named), "pair" a "AAA @ BBB" game.
+RULE_LEDGERS = (
+    ("soccer_rules_ledger.json", "Soccer", "match"), ("soccer_team_rules_ledger.json", "Soccer", "team"),
+    ("sa_o15_ledger.json", "Soccer", "match"), ("contender_overs_ledger.json", "Soccer", "match"),
+    ("nfl_tt_ledger.json", "Football", "code"), ("tennis_totals_ledger.json", "Tennis", "match"),
+    ("nba_rules_ledger.json", "NBA", "code"), ("nba_value_ledger.json", "NBA", "code"),
+)
+
+
+def bet(uid, lane, sport, entities, day, profit, won, kind="team"):
+    return dict(uid=uid, lane=lane, sport=sport, entities=list(dict.fromkeys(entities)), day=day, profit=profit,
+                won=bool(won), kind=kind)
+
+
+def is_control(rule):
+    """A baseline or control population compares lanes; it is not a bet the Edge Machine made."""
+    r = str(rule or "")
+    return r.startswith("base") or "control" in r
+
+
+def _split_match(text):
+    a, sep, b = str(text or "").partition(" v ")
+    return [a.strip(), b.strip()] if sep and a.strip() and b.strip() else []
+
+
+def collect_sandbox_bets(sandbox, skipped):
+    out = []
+    for q in (sandbox or {}).get("quotes") or []:
+        if not q.get("bet") or q.get("status") not in ("won", "lost", "settled") or not q.get("stake") or q.get("pnl") is None:
+            continue
+        sport = q.get("sport") or ""
+        if sport in SKIP_SPORTS:
+            skipped[f"sandbox: {SKIP_SPORTS[sport]}"] = skipped.get(f"sandbox: {SKIP_SPORTS[sport]}", 0) + 1
+            continue
+        profit = q["pnl"] / q["stake"]
+        series = series_of(q.get("market_id") or q.get("id"))
+        yes_no = {str(q.get("side_a")).lower(), str(q.get("side_b")).lower()} == {"yes", "no"}
+        kind, names = "team", []
+        if sport.startswith("commodities") or sport.startswith("crypto"):
+            label = "Commodities" if sport.startswith("commodities") else "Crypto"
+            asset = "AAA gas" if series.startswith("KXAAAGAS") else ASSET_BY_SERIES.get(series)
+            names = [asset] if asset else []
+        elif sport.startswith("soccer"):
+            label = "Soccer"
+            if yes_no:
+                names = [q["team"]] if q.get("team") else [n for n in (q.get("espn_home"), q.get("espn_away")) if n]
+                kind = "team" if q.get("team") else "match"
+            elif q.get("pick") in ("a", "b"):
+                names = [q["side_a"] if q["pick"] == "a" else q["side_b"]]
+        else:
+            label = SANDBOX_SPORT.get(sport, sport)
+            if not yes_no and q.get("pick") in ("a", "b"):
+                names = [q["side_a"] if q["pick"] == "a" else q["side_b"]]
+        names = [n for n in names if n]
+        if not names:
+            skipped["sandbox: no name on the bet"] = skipped.get("sandbox: no name on the bet", 0) + 1
+            continue
+        out.append(bet((q["id"], q.get("pick")), q.get("source") or "?", label, names, str(q.get("date") or q.get("start") or "")[:10],
+                       profit, q["status"] == "won", kind))
+    return out
+
+
+def collect_rule_bets(skipped, loader=load):
+    out = []
+    for name, sport, how in RULE_LEDGERS:
+        for rule, state in ((loader(name).get("rules")) or {}).items():
+            if is_control(rule) or not isinstance(state, dict):
+                continue
+            for p in state.get("picks") or []:
+                if p.get("status") not in ("won", "lost", "no_result") or p.get("profit") is None:
+                    continue
+                if how == "team" or (how == "code" and p.get("team")):
+                    team = p.get("team")
+                    names = [nba_name(team) if sport == "NBA" else team] if team else []
+                    kind = "team"
+                elif how == "code":
+                    names = [nba_name(c.strip()) for c in re.split(r"@", str(p.get("match") or p.get("game") or "")) if c.strip()]
+                    kind = "match"
+                else:
+                    names = _split_match(p.get("match"))
+                    kind = "match"
+                if not names:
+                    skipped[f"{name}: no name on the bet"] = skipped.get(f"{name}: no name on the bet", 0) + 1
+                    continue
+                out.append(bet((p.get("id") or p.get("ticker"), p.get("side")), f"{rule}", sport, names,
+                               str(p.get("start") or p.get("settled") or "")[:10], p["profit"] / 100.0, p["status"] == "won", kind))
+    return out
+
+
+def contract_bets(contracts):
+    """The verified cheap-side entries as bets: the split exit's ROI per $1 is the bet's profit."""
+    out = []
+    for c in contracts:
+        if c["source"] == "nba_winmargin_tracker" or c["split"] is None:
+            continue
+        out.append(bet(c["uid"], c["source"], c["sport"], c["entities"], c["day"], c["split"], c["split"] > 0, c["kind"]))
+    return out
+
+
+def collect_bets(loader=load):
+    skipped, unmapped = {}, {}
+    contracts, c_skipped, c_unmapped = collect_all(loader)
+    bets = (collect_sandbox_bets(loader("sandbox_ledger.json"), skipped) + collect_rule_bets(skipped, loader)
+            + contract_bets(contracts))
+    uniq, seen = [], set()
+    for b in bets:
+        key = (b["lane"], b["uid"])
+        if key in seen:
+            continue
+        seen.add(key)
+        uniq.append(b)
+    for k, v in c_unmapped.items():
+        unmapped[k] = v
+    return uniq, skipped, unmapped, contracts, c_skipped
+
+
+def profit_stats(sport, name, rows):
+    weeks = {}
+    for b in rows:
+        if b["day"]:
+            weeks[iso_week(b["day"])] = weeks.get(iso_week(b["day"]), 0.0) + b["profit"]
+    lanes = {}
+    for b in rows:
+        lanes[b["lane"]] = lanes.get(b["lane"], 0) + 1
+    n = len(rows)
+    total = sum(b["profit"] for b in rows)
+    return dict(sport=sport, name=name, n=n, won=sum(b["won"] for b in rows) / n, profit=total, roi=total / n,
+                weeks=len(weeks), good_weeks=sum(v > 0 for v in weeks.values()),
+                lanes=[k for k, _ in sorted(lanes.items(), key=lambda kv: (-kv[1], kv[0]))],
+                matches=any(b["kind"] == "match" for b in rows))
+
+
+def profit_persistence(bets):
+    """Last week's top-quarter v bottom-quarter names on THIS week's profit per bet (names with BET_WEEK_MIN+ bets)."""
+    ents = {}
+    for b in bets:
+        if b["day"]:
+            for n in b["entities"]:
+                ents.setdefault((b["sport"], n), []).append(b)
+    weeks = sorted({iso_week(b["day"]) for rows in ents.values() for b in rows})
+    tested = []
+    for a, w in zip(weeks, weeks[1:]):
+        if dt.date.fromisocalendar(int(w[:4]), int(w[6:]), 1) - dt.date.fromisocalendar(int(a[:4]), int(a[6:]), 1) != dt.timedelta(days=7):
+            continue
+        last = {k: [b for b in rows if iso_week(b["day"]) == a] for k, rows in ents.items()}
+        last = {k: v for k, v in last.items() if len(v) >= BET_WEEK_MIN}
+        if len(last) < BET_WEEK_ENTITIES_MIN:
+            continue
+        per = lambda rows: sum(b["profit"] for b in rows) / len(rows)                      # noqa: E731
+        order = sorted(last, key=lambda k: (-per(last[k]), k))
+        q = max(1, len(order) // 4)
+        pool = lambda keys: [b for k in keys for b in ents[k] if iso_week(b["day"]) == w]   # noqa: E731
+        t_rows, b_rows = pool(order[:q]), pool(order[-q:])
+        if not t_rows or not b_rows:
+            continue
+        tested.append(dict(last=a, this=w, top=per(t_rows), bottom=per(b_rows), beat=per(t_rows) > per(b_rows)))
+    beats = sum(t["beat"] for t in tested)
+    return dict(weeks=tested, tested=len(tested), beats=beats, proven=bool(len(tested) >= 4 and beats / len(tested) > 0.5))
+
+
+def profit_board(bets):
+    ents = {}
+    for b in bets:
+        for n in b["entities"]:
+            ents.setdefault((b["sport"], n), []).append(b)
+    stats = [profit_stats(s, n, rows) for (s, n), rows in ents.items()]
+    ranked = sorted((s for s in stats if s["n"] >= MIN_BETS), key=lambda s: (-s["profit"], -s["n"], s["name"]))
+    return dict(top=ranked[:TOP_BETS], qualified=len(ranked), names=len(stats), bets=len(bets),
+                lanes=len({b["lane"] for b in bets}), persistence=profit_persistence(bets))

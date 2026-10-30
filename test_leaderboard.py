@@ -182,21 +182,94 @@ check("the record is never called proven on one week", L.persistence(w1 + w2_per
 check("Spearman: perfect, inverse and ties", (round(L.spearman([1, 2, 3, 4], [1, 2, 3, 4]), 6), round(L.spearman([1, 2, 3, 4], [4, 3, 2, 1]), 6),
                                               L.spearman([1, 1, 1], [1, 2, 3])), (1.0, -1.0, None))
 
+print("profit board")
+
+
+def mk(name, profits, sport="Soccer", lane="A1", kind="team", day0=20):
+    return [L.bet((f"{name}-{i}", "yes"), lane, sport, [name], f"2026-10-{day0 + i:02d}", p, p > 0, kind) for i, p in enumerate(profits)]
+
+
+bets = (mk("Big", [1.0, -0.5, 0.8, 0.7, 1.2, -0.4]) + mk("Small", [2.0, 3.0, 1.0, 1.0]) + mk("Loser", [-1.0] * 6)
+        + mk("Mid", [0.5, -0.5, 0.5, 0.5, -0.5, 0.2]))
+pb = L.profit_board(bets)
+check("ranked by total profit", [s["name"] for s in pb["top"]], ["Big", "Mid", "Loser"])
+check("under 5 settled bets does not appear, whatever the profit", "Small" in [s["name"] for s in pb["top"]], False)
+big = pb["top"][0]
+check("bets, won share, profit and ROI per $1", (big["n"], round(big["won"], 3), round(big["profit"], 2), round(big["roi"], 3)),
+      (6, 0.667, 2.8, 0.467))
+check("a profitable week is a week whose profit is above zero", (big["good_weeks"], big["weeks"]), (1, 1))
+many = [b for i in range(30) for b in mk(f"N{i:02d}", [1.0] * 5 + [0.0], day0=20)]
+check("the table is capped at 20 names", len(L.profit_board(many)["top"]), 20)
+
+two = mk("W", [1.0, 1.0, -3.0], day0=19) + mk("W", [1.0], day0=27)         # Oct 19-21 (one ISO week) then Oct 27 (the next)
+st = L.profit_stats("Soccer", "W", two)
+check("profitable weeks are counted per ISO week", (st["good_weeks"], st["weeks"]), (1, 2))
+m = L.bet(("m", "yes"), "O35", "Soccer", ["Home", "Away"], "2026-10-20", 1.0, True, "match")
+mm = L.profit_board([m] * 0 + [dict(m, uid=(f"m{i}", "yes")) for i in range(5)])
+check("a match bet counts once for each team", sorted(s["name"] for s in mm["top"]), ["Away", "Home"])
+check("a lane's controls are not bets", (L.is_control("baseline"), L.is_control("base_nba_1q_value_1h"), L.is_control("A1")), (True, True, False))
+
+sk = {}
+sandbox = dict(quotes=[
+    dict(id="q1", bet=True, status="won", stake=100.0, pnl=50.0, sport="soccer_o25", source="x", pick="a", side_a="Yes", side_b="No",
+         espn_home="Leeds", espn_away="Arsenal", market_id="KXEPLTOTAL-26OCT20LEEARS-3", date="2026-10-20"),
+    dict(id="q2", bet=True, status="lost", stake=100.0, pnl=-100.0, sport="mlb", source="covers", pick="b", side_a="Reds", side_b="Cubs",
+         market_id="123", date="2026-10-20"),
+    dict(id="q3", bet=True, status="won", stake=100.0, pnl=10.0, sport="crypto_fav", source="c", pick="a", side_a="Yes", side_b="No",
+         market_id="KXBTCD-26OCT20-T1", date="2026-10-20"),
+    dict(id="q4", bet=True, status="won", stake=100.0, pnl=10.0, sport="commodities", source="c", pick="a", side_a="Yes", side_b="No",
+         market_id="KXAAAGASDMI-26OCT20-4", date="2026-10-20"),
+    dict(id="q5", bet=True, status="won", stake=100.0, pnl=10.0, sport="climate", source="nws", pick="a", market_id="KXHIGHCHI-26OCT20-T1", date="2026-10-20"),
+    dict(id="q6", bet=True, status="won", stake=100.0, pnl=10.0, sport="tennis_combo", source="c2", pick="a", market_id="x", date="2026-10-20"),
+    dict(id="q7", bet=True, status="open", stake=100.0, pnl=0.0, sport="mlb", source="covers", pick="a", side_a="Reds", side_b="Cubs", market_id="9", date="2026-10-20"),
+    dict(id="q8", bet=False, status="won", stake=100.0, pnl=9.0, sport="mlb", source="covers", pick="a", side_a="Reds", side_b="Cubs", market_id="8", date="2026-10-20")])
+got = L.collect_sandbox_bets(sandbox, sk)
+check("sandbox: a Yes/No soccer market credits both teams, a side-named bet the side backed, assets by series",
+      sorted((b["sport"], tuple(b["entities"]), round(b["profit"], 2)) for b in got),
+      sorted([("Soccer", ("Leeds", "Arsenal"), 0.5), ("Baseball", ("Cubs",), -1.0), ("Crypto", ("Bitcoin",), 0.1), ("Commodities", ("AAA gas",), 0.1)]))
+check("sandbox: weather and combos are named as not counted; open and non-bet rows are not bets",
+      sk, {"sandbox: weather city (not a team, player or asset)": 1, "sandbox: combo (several legs)": 1})
+
+ledgers = {"soccer_rules_ledger.json": dict(rules={
+    "A1": dict(picks=[dict(id="A1:e", ticker="e", side="no", match="Home FC v Away FC", status="won", profit=45.0, start="2026-10-20T10:00Z")]),
+    "baseline": dict(picks=[dict(id="b:e", match="Home FC v Away FC", status="won", profit=45.0, start="2026-10-20T10:00Z")])}),
+    "nba_rules_ledger.json": dict(rules={"R1": dict(picks=[dict(id="R1:t", team="PHI", status="lost", profit=-100.0, start="2026-10-20T10:00Z")])}),
+    "nba_value_ledger.json": dict(rules={"v1": dict(picks=[dict(id="v1:t", match="CLE @ PHI", status="won", profit=20.0, start="2026-10-20T10:00Z")])})}
+got = L.collect_rule_bets({}, lambda name: ledgers.get(name, {}))
+check("rule ledgers: match bets credit both teams, a team bet its team, controls are skipped",
+      sorted((b["lane"], tuple(b["entities"]), b["profit"]) for b in got),
+      sorted([("A1", ("Home FC", "Away FC"), 0.45), ("R1", ("Philadelphia 76ers",), -1.0),
+              ("v1", ("Cleveland Cavaliers", "Philadelphia 76ers"), 0.2)]))
+check("the win margin tracker is not a bet", L.contract_bets([L.contract(("t", "yes"), "NBA", "Spreads", "e", "2026-10-20", ["X"], split=0.5,
+                                                                          source="nba_winmargin_tracker")]), [])
+check("a cheap-side contract is a bet worth its split ROI", [b["profit"] for b in L.contract_bets(
+    [L.contract(("t", "yes"), "NBA", "Moneyline underdog", "e", "2026-10-20", ["X"], split=0.4, source="nba_ml_dog_tp50")])], [0.4])
+
+pp = L.profit_persistence(mk("a", [1, 1, 1], day0=20) + mk("a", [1, 1, 1], day0=27))
+check("one name cannot be tested week to week", pp["tested"], 0)
+wk = []
+for i in range(8):
+    wk += mk(f"P{i}", [(1.0 if i >= 4 else -1.0)] * 3, day0=19) + mk(f"P{i}", [(1.0 if i >= 4 else -1.0)] * 3, day0=26)
+pp = L.profit_persistence(wk)
+check("names that stay profitable beat the least profitable the next week", (pp["tested"], pp["beats"], pp["proven"]), (1, 1, False))
+
 print("page")
 b = L.board(cs)
-html = LB.build(cs, {"unverified ask": 3}, {"x": 1})
-check("Leaderboard is in the main nav, once", len(re.findall(r'<a href="\./leaderboard\.html"', html)), 1)
+html = LB.build(bets, cs, {"unverified ask": 3}, {"x": 1})
+check("Leaderboard is in the Markets menu, once", len(re.findall(r'<a href="\./leaderboard\.html"', html)), 1)
 check("the page marks itself current", 'aria-current="page">Leaderboard' in html, True)
 check("registered with its file name", site_chrome.PAGE_FILES["leaderboard"], "leaderboard.html")
 check("no inline style, SVG or inline script", (len(re.findall(r"\sstyle=", html)), len(re.findall("<svg", html)),
                                                  len(re.findall(r"<script(?![^>]*\ssrc=)", html))), (0, 0, 0))
 text = re.sub(r"<[^>]+>", " ", html)
 check("no guarded public phrase", sandbox_audit.COPY_RE.findall(text), [])
-check("the persistence verdict comes before the board", html.index('id="persistence"') < html.index('id="top"'), True)
-check("it says plainly it is not proven while the test is not positive", "Not proven" in html, True)
-check("every sport has its own table", all(f'id="sport-{s.lower()}"' in html for s in L.SPORTS), True)
-check("table cells are labelled for the phone cards", 'data-l="Reached 2x"' in html, True)
-check("an empty board still builds", "Nothing ranks yet" in LB.build([], {}, {}), True)
+check("the main view is the profit table, before the spike fold", html.index("Profitable weeks") < html.index("<summary>Cheap-contract spike detail"), True)
+check("it says retired lanes are included", "retired lanes included" in html, True)
+check("the persistence note is one line under the table, saying not a pick list yet", "Not a pick list yet" in html, True)
+check("the spike board sits in one closed fold", html.count('<details class="lb-fold"><summary>Cheap-contract spike detail') == 1
+      and "Top 10 by spike rate" in html.split("<summary>Cheap-contract spike detail")[1], True)
+check("table cells are labelled for the phone cards", 'data-l="Profit"' in html and 'data-l="Reached 2x"' in html, True)
+check("an empty board still builds", "settled bets yet" in LB.build([], [], {}, {}), True)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
