@@ -1735,7 +1735,7 @@ def sport_sections(d, rows):
 
 
 TRADE_HEAD = ('<tr><th>Rule</th><th>Verdict</th><th class="num">Entry days</th>'
-              '<th class="num">Trades</th><th class="num">Cost a side</th><th class="num">Mean per day</th>'
+              '<th class="num">Trades</th><th class="num">Mean per day</th>'
               '<th class="num">Edge</th><th class="num">P/L</th><th class="num">Last</th></tr>')
 
 
@@ -1898,24 +1898,24 @@ def trading_rows(md, cost=None):
         was = lambda x: f'<div class="sm mut trade-assumed">{assumed_bps:g}bp: {x}</div>'
         plain = lambda x: "—" if x is None else fmt.pct(x, digits=2, sign=True)
         measured = bool(a) and r["cost_from"] != "assumed"
-        cost_cell = (f'{r["cost_bps"]:.1f}bp<div class="sm mut">measured</div>' if measured else
-                     f'{r.get("cost_bps", assumed_bps):g}bp<div class="sm mut">assumed</div>')
+        cost_line = (f'<div class="sm mut trade-cost-line">cost {r["cost_bps"]:.1f}bp a side, measured</div>'
+                     if measured else
+                     f'<div class="sm mut trade-cost-line">cost {r.get("cost_bps", assumed_bps):g}bp a side, assumed</div>')
         cost_about = (f'<div class="sm mut trade-cost-from">Charged {r["cost_bps"]:.1f}bp a side, measured '
                       f'over {esc(r["cost_from"])}; the {assumed_bps:g}bp figures beneath are the record '
                       f'at the cost first assumed.</div>' if measured else "")
         if a and a["verdict"] != r["verdict"]:
             more += was(esc(MT.VERDICTS[a["verdict"]][0]))
         rows.append(f"""<tr><td><b>{esc(meta['label'])}</b>
-<div class="sm mut">{esc(meta['lane'].title())} · {esc(r['rule'])}</div>{record_only}</td>
+<div class="sm mut">{esc(meta['lane'].title())} · {esc(r['rule'])}</div>{cost_line}{record_only}</td>
 <td>{badge}{more}</td>
 <td class="num">{r['days']}</td>
 <td class="num">{r['trades']}<div class="sm mut">{r['open']} open</div></td>
-<td class="num">{cost_cell}</td>
 <td class="num">{pc(r['mean'])}<div class="sm mut">{fmt.tstat(r['t']) if r['days'] > 1 else ''}</div>{was(plain(a['mean'])) if a else ''}</td>
 <td class="num">{pc(r['edge'])}<div class="sm mut">{vs}{(" · " + fmt.tstat(r['edge_t'])) if r['days'] > 1 else ''}</div>{was(plain(a['edge'])) if a else ''}</td>
 <td class="num {cls(r['total'])}">{money(r['total']) if r['trades'] else '—'}{was(money(a['total'])) if a and r['trades'] else ''}</td>
 <td class="num mut sm">{esc(_trade_day(r['last']))}</td></tr>
-<tr class="rule-about"><td colspan="9"><details class="rule-more"><summary>What this rule does</summary>
+<tr class="rule-about"><td colspan="8"><details class="rule-more"><summary>What this rule does</summary>
 <div class="sm mut">{esc(meta['note'])}</div>{cost_about}
 <div class="sm mut">Backtest before the lane went live ({esc(_trade_day((r.get('research_window') or ['', ''])[0]))} to
 {esc(_trade_day((r.get('research_window') or ['', ''])[1]))}, not part of the record above):

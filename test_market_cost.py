@@ -104,13 +104,13 @@ eq(MT.READ_FLOOR, 30, "still read at 30 entry days")
 
 print("\nthe Trading page shows both")
 html = SB.trading_rows(d, mc)
-ok("Cost a side" in SB.TRADE_HEAD and SB.TRADE_HEAD.count("<th") == 9, "the table has a Cost a side column")
-ok('30.0bp<div class="sm mut">measured</div>' in html, "RSI(2) shows its measured cost")
+eq(SB.TRADE_HEAD.count("<th"), 8, "no extra column: a wider table loses its sticky header on Linux Chrome")
+ok("cost 30.0bp a side, measured" in html, "RSI(2) shows its measured cost under its name")
 ok("Charged 30.0bp a side, measured over its own 40 fills" in html, "and where it came from, in its fold")
 ok("Charged 20.0bp a side, measured over all 60 fills (its own 12: +2.0bp)" in html,
    "Double 7s names the pooled figure and its own")
 ok(html.count('class="sm mut trade-assumed">5bp:') >= 6, "mean, edge and P/L each show the 5bp figure beneath")
-ok('colspan="9"' in html and 'colspan="8"' not in html, "the definition row spans the new column")
+ok('colspan="8"' in html, "the definition row spans the table")
 note = SB.cost_note_html(mc)
 ok("measured" in note and "60 fills" in note and "+20.0bp" in note and "120 days" in note
    and f"{MT.MIN_RULE_FILLS}+" in note and "5bp a side the record first assumed" in note,
@@ -118,7 +118,7 @@ ok("measured" in note and "60 fills" in note and "+20.0bp" in note and "120 days
 ok("assumed" in SB.cost_note_html(None) and "measured" not in SB.cost_note_html(None).split("nothing has")[0],
    "without a fill check the page says the cost is assumed")
 page = SB.trading_page()
-ok("trade-cost" in page and "Cost a side" in page, "the live page carries the cost column and its note")
+ok("trade-cost-line" in page and "Cost a side is <b>measured</b>" in page, "the live page carries the cost line and its note")
 eq(sandbox_audit.COPY_RE.findall(html + note + SB.cost_note_html(None)), [], "no guarded public phrase in the new copy")
 
 print(f"\n{'all passed' if not FAILS else str(len(FAILS)) + ' FAILED'}")
