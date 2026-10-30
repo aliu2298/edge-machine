@@ -46,7 +46,7 @@ def leads(blob, status=None):
 print("the team-rules feed, collector last read 6h ago (between windows)")
 old = state(NOW - dt.timedelta(hours=6))
 normal = TP.feed(old, now=NOW)
-check("normal build: updated_at is the collector's last read (6h old: the bot's 8h guard is next)",
+check("normal build: updated_at is the collector's last read (6h old: the follower's 8h guard is next)",
       normal["updated_at"], (NOW - dt.timedelta(hours=6)).replace(microsecond=0).isoformat())
 beat = TP.feed(old, now=NOW, heartbeat=True)
 check("heartbeat build: updated_at is the clock", beat["updated_at"], NOW.replace(microsecond=0).isoformat())
@@ -66,7 +66,7 @@ check("the 19:00Z kickoff is still a lead; the 12:30Z one (kicked off) is not",
 later = TP.feed(fresh, now=NOW + dt.timedelta(hours=6), heartbeat=True)
 check("six hours on, with no new read, the same lead is gone (kicked off 19:00Z; unhealthy collector too)",
       leads(later, "pending"), {})
-check("a heartbeat at any hour is within the bot's 8h guard",
+check("a heartbeat at any hour is within the follower's 8h guard",
       all(dt.datetime.fromisoformat(f["updated_at"]) >= t - dt.timedelta(hours=8)
           for f, t in ((hb, NOW), (later, NOW + dt.timedelta(hours=6)))), True)
 

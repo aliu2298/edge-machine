@@ -2,7 +2,7 @@ name: Soccer feeds heartbeat
 on:
   schedule:
     # Hourly. The soccer workflows run only in VPS-stamped windows around matches, so between windows
-    # the two Production feeds' updated_at ages past the bot's 8h staleness guard. This restamps both with
+    # the two Production feeds' updated_at ages past the follower's 8h staleness guard. This restamps both with
     # the clock and rebuilds their leads at that clock: a lead whose kickoff has passed is dropped, and
     # open leads are published only while the collector's last read is under 3h old, so nothing stale is
     # ever presented as fresh. GitHub's cron skips some runs; one success in any 8h is enough.

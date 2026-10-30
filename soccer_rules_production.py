@@ -120,7 +120,7 @@ def _healthy(state, now):
 
 def feed(rules_state, sa_state, now=None, previous=None, heartbeat=False):
     """The feed. `heartbeat` (2026-10-30) stamps it with the clock instead of the collectors' last read, so
-    the bot's 8h staleness guard stays met between match windows. Nothing stale can pass as fresh: the
+    the follower's 8h staleness guard stays met between match windows. Nothing stale can pass as fresh: the
     build runs at `now`, so an open lead whose kickoff has passed is dropped, and open leads are published
     only while the collector's last read is within HEALTHY_HOURS, as in every build."""
     import production as P
