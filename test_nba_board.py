@@ -474,10 +474,10 @@ labelled = HTML
 
 
 def _safe_card_theads(html):
-    """The live-ledger tables, counted apart: the Safe Card's (2026-10-22) and the cheap-side section's
-    (the chaos lanes' home, 2026-10-27)."""
+    """The live-ledger tables, counted apart: the Safe Card's (2026-10-22), the cheap-side section's
+    (the chaos lanes' home, 2026-10-27) and the win margin tracker's (2026-10-29)."""
     n = 0
-    for sec in ("safe-card", "cheap-side"):
+    for sec in ("safe-card", "cheap-side", "win-margin"):
         m = re.search(rf'<section id="{sec}">.*?</section>', html, re.S)
         n += m.group(0).count("<thead>") if m else 0
     return n
