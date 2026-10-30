@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-30T19:31:38.451837+00:00",
+ "last_run": "2026-10-30T20:31:37.863391+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -1231,11 +1231,14 @@
      "line": 2.5,
      "logged": "2026-10-30T16:31:42.449418+00:00",
      "match": "Nice v Stade Rennais",
+     "payout": 0.0,
      "price": 0.41,
+     "profit": -100.0,
      "rule": "C6",
+     "settled": "2026-10-30T20:31:37.863391+00:00",
      "side": "no",
      "start": "2026-10-30T18:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXLIGUE1TOTAL-26OCT31NICREN-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Nice O-D- v Stade Rennais O+D+ \u00b7 Under 2.5 NO 0.41"
@@ -3211,14 +3214,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-26T22:01:24.173548+00:00",
-   "candidates": 0,
-   "due": 0,
-   "labelled": 0,
-   "matched": 0,
-   "new": 0
-  },
-  {
    "at": "2026-10-26T22:46:11.138335+00:00",
    "candidates": 0,
    "due": 0,
@@ -3616,6 +3611,14 @@
    "due": 3,
    "labelled": 3,
    "matched": 1,
+   "new": 0
+  },
+  {
+   "at": "2026-10-30T20:31:37.863391+00:00",
+   "candidates": 0,
+   "due": 0,
+   "labelled": 0,
+   "matched": 0,
    "new": 0
   }
  ],
