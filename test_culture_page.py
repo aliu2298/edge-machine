@@ -65,12 +65,12 @@ rows = re.findall(r"<tr>(.*?)</tr>", summ.split("<tbody>", 1)[1], re.S)
 check("six rows, in order", [text(r).split(" ", 1)[1].split(" 0 ")[0] if False else re.sub(r"<[^>]+>", "", r.split("</td>")[0]).strip()
                              for r in rows],
       [_html.escape(c["label"], quote=False) for c in KB.CHEAP])
-check("columns: entries, settled entries, settled events, won, split ROI, hold ROI, legs 2x / 3x, average spread paid, status",
+check("columns: entries, unverified asks, settled entries, settled events, won, split ROI, hold ROI, legs 2x / 3x, average spread paid, status",
       [re.sub(r"<[^>]+>", "", x) for x in re.findall(r"<th[^>]*>(.*?)</th>", summ)],
-      ["Lane", "Entries", "Settled entries", "Settled events", "Won", "Split ROI", "Hold ROI", "Legs filled 2x / 3x", "Avg spread paid", "Status"])
+      ["Lane", "Entries", "Unverified asks", "Settled entries", "Settled events", "Won", "Split ROI", "Hold ROI", "Legs filled 2x / 3x", "Avg spread paid", "Status"])
 w0 = text(rows[0])
 check("the weekly strict row: 2 entries, 2 settled, both in 1 event, 1 won, legs 1 / 0, 4c spread, the review status",
-      ("2 2 1 1" in w0, "1 / 0" in w0, "0.04" in w0, "1 settled event · review at 10, decide at 30" in w0), (True, True, True, True))
+      ("2 0 2 1 1" in w0, "1 / 0" in w0, "0.04" in w0, "1 settled event · review at 10, decide at 30" in w0), (True, True, True, True))
 check("strict v wide average spread paid, for the mention lanes",
       "Weekly mentions, strict v wide average spread paid 0.04 v 0.10. Monthly mentions, strict v wide average spread paid — v —." in t,
       True)

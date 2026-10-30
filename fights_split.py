@@ -35,7 +35,8 @@ days (older minute candles are no longer served). Each lane has its own ledger a
 Research basis (Olu): boxing, 134 matches, 31 entries at 3-15c, 0 won, but 24 traded 2x at some
 point: split +53% (z 3.0) if brief in-fight spikes fill, -81% counting only hourly closes. UFC, 169
 fights, 16 entries at 15-30c, 8 won: hold +97%, split +28% (hourly-close version +18%). Review at
-10 settled events (fights), decide at 30.
+10 settled events (fights), decide at 30. An entry counts only when its ask was there (mentions_split's
+entry-validity rule, 2026-10-30): a book of 10+ at entry, or 10+ traded through it within 60 minutes.
 """
 import datetime as dt
 import json
@@ -142,7 +143,7 @@ def entry_for(cs, start_ts, cfg):
     return MS.entry_quote([c for c in cs if (c.get("end_period_ts") or 0) <= hi], lo, cfg, detail=True)
 
 
-def run(state, now=None, fetch=D.get, cfg=BOXING):
+def run(state, now=None, fetch=D.get, cfg=BOXING, ask_rule=True):
     now = now or dt.datetime.now(dt.timezone.utc)
     now_ts = int(now.timestamp())
     state.setdefault("starts", {})
@@ -193,9 +194,10 @@ def run(state, now=None, fetch=D.get, cfg=BOXING):
                      spread_cost=round(ask - last_px, 4) if last_px is not None else None,
                      legs=[dict(multiple=mult, share=w, target=t) for mult, w, t in MS.targets(ask)], payout=None)
             if now_ts < start_ts:                             # the book only means something before the fight
+                # The book as the engine takes the entry (2026-10-30): verifies the ask when it shows MS.MIN_SIZE.
                 try:
-                    e["book_size"] = MS.book_size(fetch(f"markets/{m['ticker']}/orderbook"), ask)
-                    e["book_at"] = now.isoformat()
+                    e["book"] = MS.book_snapshot(fetch(f"markets/{m['ticker']}/orderbook"), ask, "yes", now.isoformat())
+                    e["book_size"], e["book_at"] = e["book"]["at_or_under"], now.isoformat()
                 except Exception:                              # noqa: BLE001
                     e["book_size"] = None
             state["entries"].append(e)
@@ -220,9 +222,12 @@ def run(state, now=None, fetch=D.get, cfg=BOXING):
                     if not leg.get("filled_at"):
                         leg["settled_px"] = pay
             MS.grade(e)
+    # The entry-validity rule (2026-10-30), as on the Culture and Commodities lanes.
+    errs = MS.check_asks(state, now, fetch, cfg) if ask_rule else []
+    obs.update(unverified=sum(MS.check_status(e) == "unverified" for e in state["entries"]))
     state["observations"] = obs
     state["last_success"] = now.isoformat()
-    state["error"] = None
+    state["error"] = ("ask check: " + "; ".join(errs))[:300] if errs else None
     return state
 
 

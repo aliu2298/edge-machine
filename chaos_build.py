@@ -69,15 +69,18 @@ def trade_list(L, limit=30):
         groups.setdefault((t["event"], t["ticker"], t["side"], t["hours"]), {})[t["exit_key"]] = t
     recent = sorted(groups.items(), key=lambda kv: next(iter(kv[1].values()))["entry_ts"], reverse=True)[:limit]
     keys = [C.SPLIT] + [k for k in (L.get("exits") or C.EXITS) if k != C.SPLIT]
+    rule = bool(L.get("ask_rule_since"))
     head = ('<tr><th>Night</th><th>Market</th><th>Side</th><th class="num">Entry</th>'
-            + "".join(f'<th class="num">{esc(k.replace("_stop50", "+stop"))}</th>' for k in keys) + "</tr>")
+            + "".join(f'<th class="num">{esc(k.replace("_stop50", "+stop"))}</th>' for k in keys)
+            + ("<th>Ask check</th>" if rule else "") + "</tr>")
     rows = []
     for (event, ticker, side, hours), by in recent:
         first = next(iter(by.values()))
         rows.append(f'<tr><td>{esc(first["night"])}</td><td>{esc(ticker.split("-", 1)[-1])}</td><td>{esc(side.upper())}</td>'
                     f'<td class="num">{hours}h before · {_clock(first["entry_ts"])} · {first["entry"] * 100:.0f}c</td>'
-                    + "".join(f'<td class="num">{esc(_cell(by.get(k)))}</td>' for k in keys) + "</tr>")
-    body = "".join(rows) or f'<tr><td colspan="{4 + len(keys)}" class="mut">No trade yet.</td></tr>'
+                    + "".join(f'<td class="num">{esc(_cell(by.get(k)))}</td>' for k in keys)
+                    + (f'<td>{esc(MS.check_text(dict(ask_check=first.get("ask") or {})))}</td>' if rule else "") + "</tr>")
+    body = "".join(rows) or f'<tr><td colspan="{4 + len(keys) + rule}" class="mut">No trade yet.</td></tr>'
     return f'<div class="tbl"><table>{head}{body}</table></div>'
 
 
@@ -87,8 +90,32 @@ def _in_band(t, band):
 
 
 def _by(L, exit_key, hours=None, band=None):
-    return [t for t in L.get("trades") or [] if t["exit_key"] == exit_key and (hours is None or t["hours"] == hours)
-            and _in_band(t, band)]
+    """The lane's counted trades of one exit (under the ask rule, verified entries only)."""
+    return [t for t in C.counted(L.get("trades") or [], L) if t["exit_key"] == exit_key
+            and (hours is None or t["hours"] == hours) and _in_band(t, band)]
+
+
+def unverified(L):
+    """Entries whose ask failed the check (2026-10-30), and entries not checked yet."""
+    if not L.get("ask_rule_since"):
+        return 0, 0
+    ent = {}
+    for t in L.get("trades") or []:
+        ent[(t["event"], t["ticker"], t["side"], t["hours"])] = (t.get("ask") or {}).get("status")
+    return sum(v == "unverified" for v in ent.values()), sum(v not in ("verified", "unverified") for v in ent.values())
+
+
+def voided_line(L):
+    """The lane's figure before the ask rule, once, labelled voided, when an entry failed the check."""
+    v = L.get("voided")
+    bad, _ = unverified(L)
+    if not v or not bad:
+        return ""
+    return (f'<p class="sm voided"><b>Voided {esc(v["on"])}:</b> the earlier figure ({v["entries"]} entries on '
+            f'{v["events"]} events, split {_pct(v["split"], sign=True)}, hold {_pct(v["hold"], sign=True)}) counted asks '
+            f'with no evidence they could be traded. {bad} entries failed the ask check (under {MS.MIN_SIZE} contracts '
+            f'traded at or through the ask within {MS.PRINT_WINDOW_MIN} minutes, or an ask under half the last trade) '
+            'and left the record; the record restarts on the verified entries.</p>')
 
 
 def split_hold(L, hours=None, band=None):
@@ -125,7 +152,8 @@ def summary(lanes, spread=False):
                     f'<span class="sub-band">· {esc(band["label"])}, same entries</span>')
             attrs = f' data-band="{esc(band["id"])}"' if band else ""
             rows.append(f'<tr data-lane="{esc(L["id"])}"{attrs}><td>{name}</td>'
-                        f'<td class="num">{r["entries"]}</td><td class="num">{r["settled"]}</td>'
+                        f'<td class="num">{r["entries"]}</td><td class="num">{unverified(L)[0] if band is None else "·"}</td>'
+                        f'<td class="num">{r["settled"]}</td>'
                         f'<td class="num">{r["events"]}</td><td class="num">{r["won"]}</td>'
                         f'<td class="num">{_pct(r["split"], sign=True) if r["n_split"] else "—"}</td>'
                         f'<td class="num">{_pct(r["hold"], sign=True)}</td>'
@@ -133,7 +161,7 @@ def summary(lanes, spread=False):
                         + (f'<td class="num">{_spread(r["spread"])}</td>' if spread else "")
                         + f'<td>{esc(status_of(L, r["events"]))}</td></tr>')
     return ('<div class="tbl"><table class="chaos-summary"><tr><th>Lane</th><th class="num">Entries</th>'
-            '<th class="num">Settled entries</th><th class="num">Settled events</th><th class="num">Won</th><th class="num">Split ROI</th><th class="num">Hold ROI</th>'
+            '<th class="num">Unverified asks</th><th class="num">Settled entries</th><th class="num">Settled events</th><th class="num">Won</th><th class="num">Split ROI</th><th class="num">Hold ROI</th>'
             '<th class="num">Legs filled 2x / 3x</th>' + ('<th class="num">Avg spread paid</th>' if spread else "")
             + '<th>Status</th></tr>' + "".join(rows) + "</table></div>")
 
@@ -167,6 +195,16 @@ def status_of(L, events):
     return "in-sample backfill, not evidence" if L.get("insample") else MS.status(events)
 
 
+def _checking_line(L):
+    bad, waiting = unverified(L)
+    if not L.get("ask_rule_since"):
+        return ""
+    return (f'<p class="sm mut">Skipped: unverified ask: {bad}' + (f'; still to check: {waiting}' if waiting else '')
+            + f'. An entry counts only with {MS.MIN_SIZE}+ contracts traded at or through its ask within '
+            f'{MS.PRINT_WINDOW_MIN} minutes (a replay cannot read the book at entry), and never under half the last '
+            'trade; an entry in the market\'s first minutes is flagged.</p>')
+
+
 def lane_html(L):
     trades = L.get("trades") or []
     entries = len({(t["event"], t["ticker"], t["side"], t["hours"]) for t in trades})
@@ -175,7 +213,7 @@ def lane_html(L):
     pending = C.SPLIT in (L.get("exits") or ()) and not _by(L, C.SPLIT) and trades
     return f"""<details class="section-disclosure" data-lane="{esc(L['id'])}" open><summary><b>{esc(L.get('label') or L['id'])}</b><span>{len(L.get('replayed') or {})} events replayed · {entries} entries · {split_hold(L)["events"]} settled events entered · {record_words(L)}</span></summary>
 <p class="sm">{esc(L.get('note') or '')}{(' <b>WATCH lane.</b>') if L.get('watch') else ''}{(' <b>' + esc(L['caution']) + '</b>') if L.get('caution') else ''} Bought {esc(hours)} before the start. Series {esc(', '.join(L.get('series') or []))}. Review at {C.REVIEW_N} settled events, decide at {C.PROMOTE_N}: one game, match or fight is one outcome, however many entries it holds.</p>
-<p class="sm"><b>Split v hold</b>{(' · the split joined this lane on 2026-10-27 and is being added to its earlier entries, newest events first') if pending else ''}</p>
+{voided_line(L)}{_checking_line(L)}<p class="sm"><b>Split v hold</b>{(' · the split joined this lane on 2026-10-27 and is being added to its earlier entries, newest events first') if pending else ''}</p>
 {split_table(L)}
 {f'<details class="section-disclosure"><summary><b>Other exits</b><span>{len(others)} variants · the original targets and stops, each against its hold control</span></summary>{variant_table(L, skip=(C.SPLIT,))}</details>' if others else ''}
 <details class="section-disclosure"><summary><b>Trades</b><span>latest 30 entries · split, T target, S stop, H held to settlement</span></summary>{trade_list(L)}</details></details>"""

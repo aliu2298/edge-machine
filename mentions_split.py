@@ -271,6 +271,152 @@ def book_size(book, price, side="yes"):
     return round(sum(float(q) for p, q in levels if float(p) >= 1 - price - 1e-9), 2)
 
 
+# ------------------------------------------------------------------ entry validity (2026-10-30)
+# Olu, 2026-10-30 (option A, and the book recorded at entry). Album cheap YES showed 69 entries, nearly all
+# at exactly 4c on every rung of a ladder at once, nothing traded to entry and no book read, legs "filling"
+# at 8c / 12c: opening placeholder asks, not prices anyone could trade. An entry now COUNTS only when its
+# ask is shown to have been there:
+#   book   a live book read within LIVE_BOOK_H of the entry minute showing MIN_SIZE or more contracts
+#          offered at or under the price paid (every new entry snapshots the book when the engine takes it), or
+#   print  MIN_SIZE or more contracts traded at or through the price paid within PRINT_WINDOW_MIN minutes
+#          after the entry (minute candles: the volume of each minute whose traded low reached the ask; for
+#          a NO, whose YES traded high reached 1 - the ask). Candles carry no book size, so a replayed or
+#          backfilled entry, read after the book has moved on, can be verified only this way;
+#   and in both cases the ask is not under LAST_TRADE_FLOOR x the last trade before the entry.
+# Anything else is "unverified ask": it stays on the ledger with its reason and leaves the record. An entry
+# taken in the market's first FIRST_QUOTES_MIN minutes after listing is flagged (placeholder risk), never
+# rejected for that alone. A lane's figure before the rule is kept once as "voided" (state["voided"]).
+MIN_SIZE = 10
+PRINT_WINDOW_MIN = 60
+LAST_TRADE_FLOOR = 0.5
+FIRST_QUOTES_MIN = 5
+CHECK_GIVE_UP_D = 7          # minute candles are no longer served after about a week
+CHECK_WINDOW_H = ENTRY_WINDOW_H
+
+
+def book_snapshot(book, price, side, at):
+    """The book as the engine saw it when it took the entry, from `side`'s point of view: best bid and ask
+    with their sizes, depth on each side, and the contracts offered at or under `price` (the size an
+    order at the price paid could have taken)."""
+    ob = (book or {}).get("orderbook_fp") or {}
+    own = ob.get("yes_dollars" if side == "yes" else "no_dollars") or []
+    other = ob.get("no_dollars" if side == "yes" else "yes_dollars") or []
+    bids = sorted(((float(p), float(q)) for p, q in own), reverse=True)
+    asks = sorted((round(1 - float(p), 4), float(q)) for p, q in other)
+    return dict(at=at, best_bid=bids[0][0] if bids else None, bid_size=bids[0][1] if bids else None,
+                best_ask=asks[0][0] if asks else None, ask_size=asks[0][1] if asks else None,
+                at_or_under=round(sum(q for a, q in asks if a <= price + 1e-9), 2),
+                bid_depth=round(sum(q for _, q in bids), 2), ask_depth=round(sum(q for _, q in asks), 2),
+                bid_levels=len(bids), ask_levels=len(asks))
+
+
+def _book_evidence(e):
+    """(contracts at or under the price paid, read live?) from the entry's book read, or (None, False)."""
+    snap = e.get("book") or {}
+    size = snap.get("at_or_under", e.get("book_size"))
+    at = _ts(snap.get("at") or e.get("book_at"))
+    t0 = _ts(e["entry_at"])
+    live = size is not None and at is not None and t0 is not None and at - t0 <= LIVE_BOOK_H * 3600
+    return size, live
+
+
+def _through(c, price, side):
+    p = c.get("price") or {}
+    if side == "no":
+        hi = _num(p.get("high_dollars"))
+        return hi is not None and hi >= 1 - price - 1e-9
+    lo = _num(p.get("low_dollars"))
+    return lo is not None and lo <= price + 1e-9
+
+
+def ask_check(e, cs, opened_ts, now_ts):
+    """The entry's ask check from its market's minute candles `cs` (from before the entry to at least
+    PRINT_WINDOW_MIN after it): dict(status verified | unverified | checking, how, reason, printed,
+    last_trade, first_quotes, source live | replayed)."""
+    side, px, t0 = e.get("side", "yes"), e["price"], _ts(e["entry_at"])
+    cs = sorted(cs or [], key=lambda c: c.get("end_period_ts") or 0)
+    last = e.get("last_trade")
+    if last is None:
+        before = [c for c in cs if (c.get("end_period_ts") or 0) <= t0
+                  and _num((c.get("price") or {}).get("close_dollars")) is not None]
+        if before:
+            close = _num(before[-1]["price"]["close_dollars"])
+            last = round(1 - close, 4) if side == "no" else close
+    size, live = _book_evidence(e)
+    out = dict(first_quotes=opened_ts is not None and t0 - opened_ts <= FIRST_QUOTES_MIN * 60, last_trade=last,
+               source="live" if live else "replayed", book=size if live else None)
+    if last is not None and px < LAST_TRADE_FLOOR * last - 1e-9:
+        return dict(out, status="unverified", reason=f"ask {px:.2f} under half the last trade {last:.2f}")
+    if live and size >= MIN_SIZE:
+        return dict(out, status="verified", how="book")
+    if now_ts < t0 + (PRINT_WINDOW_MIN + 1) * 60:
+        return dict(out, status="checking")
+    after = [c for c in cs if t0 < (c.get("end_period_ts") or 0) <= t0 + PRINT_WINDOW_MIN * 60]
+    printed = round(sum(_num(c.get("volume_fp")) or 0 for c in after if _through(c, px, side)), 2)
+    out["printed"] = printed
+    if printed >= MIN_SIZE:
+        return dict(out, status="verified", how="print")
+    if not cs:
+        if now_ts - t0 > CHECK_GIVE_UP_D * 86400:
+            return dict(out, status="unverified", reason="its minute candles are no longer served")
+        return dict(out, status="checking")
+    return dict(out, status="unverified",
+                reason=f"{printed:g} contracts traded at or through the ask within {PRINT_WINDOW_MIN} minutes (under {MIN_SIZE})")
+
+
+def check_status(e):
+    return (e.get("ask_check") or {}).get("status")
+
+
+def check_asks(state, now, fetch, cfg):
+    """Run the ask check on every entry not yet verified or rejected. The first time a lane runs it, its
+    record until then is kept once as state["voided"] (shown only if an entry from before fails)."""
+    now_ts = int(now.timestamp())
+    if not state.get("ask_rule_since"):
+        state["voided"] = dict(on=now.date().isoformat(), **{k: v for k, v in record(state["entries"]).items()
+                                                            if k in ("entries", "settled_events", "roi", "roi_held")})
+        state["ask_rule_since"] = now.isoformat()
+    todo = [e for e in state["entries"] if check_status(e) in (None, "checking")]
+    by = {}
+    for e in todo:
+        by.setdefault(e["event"], []).append(e)
+    errs = []
+    for tick, es in by.items():
+        try:
+            d = fetch(f"events/{tick}?with_nested_markets=true")
+            mk = {m["ticker"]: m for m in (d.get("event") or {}).get("markets") or d.get("markets") or []}
+        except Exception as x:                                  # noqa: BLE001
+            errs.append(f"{tick}: {str(x)[:60]}")
+            continue
+        win = {}
+        for e in es:
+            t0 = _ts(e["entry_at"])
+            o = _ts((mk.get(e["id"]) or {}).get("open_time"))
+            lo = max(o or 0, t0 - CHECK_WINDOW_H * 3600)
+            win[e["id"]] = (o, lo - lo % 60, min(now_ts, t0 + (PRINT_WINDOW_MIN + 1) * 60))
+        # One request for the event when its entries sit inside one window (a ladder's rungs open together).
+        a, b = min(w[1] for w in win.values()), max(w[2] for w in win.values())
+        spans = [(a, b)] if b - a <= (CHECK_WINDOW_H + 2) * 3600 else sorted({(w[1], w[2]) for w in win.values()})
+        got = {}
+        for lo, hi in spans:
+            try:
+                for t, c in candles(tick, lo, hi - hi % 60, fetch, minutes=1, series=cfg["series"]).items():
+                    got.setdefault(t, []).extend(x for x in c or [] if lo < (x.get("end_period_ts") or 0) <= hi)
+            except Exception as x:                              # noqa: BLE001
+                errs.append(f"{tick}: {str(x)[:60]}")
+        if errs and errs[-1].startswith(tick):
+            continue
+        for e in es:
+            e["ask_check"] = ask_check(e, got.get(e["id"]) or [], win[e["id"]][0], now_ts)
+    return errs
+
+
+def counted(state):
+    """The entries the record counts: under the ask rule (from ask_rule_since), only verified ones."""
+    es = state.get("entries") or []
+    return [e for e in es if check_status(e) == "verified"] if state.get("ask_rule_since") else es
+
+
 def settled_payout(m, side="yes"):
     """1 or 0 for `side` once Kalshi has settled the market, else None."""
     if m.get("status") in ("finalized", "settled") and m.get("result") in ("yes", "no"):
@@ -339,7 +485,9 @@ def candles(event, start_ts, end_ts, fetch, minutes=60, series=SERIES):
     return dict(zip(d.get("market_tickers") or [], d.get("market_candlesticks") or []))
 
 
-def run(state, now=None, fetch=D.get, cfg=STRICT):
+def run(state, now=None, fetch=D.get, cfg=STRICT, ask_rule=True):
+    """One read of the lane: new entries, fills, settlement, then the ask check (ask_rule; off only where a
+    test exercises the entry and fill mechanics alone)."""
     now = now or dt.datetime.now(dt.timezone.utc)
     now_ts = int(now.timestamp())
     start_ts = _ts(cfg["start"])
@@ -408,9 +556,11 @@ def run(state, now=None, fetch=D.get, cfg=STRICT):
                 e.update(last_trade=last_px, last_trade_at=_iso(last_at) if last_at else None,
                          spread_cost=round(ask - last_px, 4) if last_px is not None else None)
             if now_ts - end <= LIVE_BOOK_H * 3600:
+                # The book as the engine takes the entry (2026-10-30): verifies the ask when it shows MIN_SIZE.
                 try:
-                    e["book_size"] = book_size(fetch(f"markets/{m['ticker']}/orderbook"), ask, cfg.get("side", "yes"))
-                    e["book_at"] = now.isoformat()
+                    e["book"] = book_snapshot(fetch(f"markets/{m['ticker']}/orderbook"), ask, cfg.get("side", "yes"),
+                                              now.isoformat())
+                    e["book_size"], e["book_at"] = e["book"]["at_or_under"], now.isoformat()
                 except Exception:                              # noqa: BLE001
                     e["book_size"] = None
             state["entries"].append(e)
@@ -435,9 +585,12 @@ def run(state, now=None, fetch=D.get, cfg=STRICT):
                     if not leg.get("filled_at"):
                         leg["settled_px"] = pay
             grade(e)
+    errs = check_asks(state, now, fetch, cfg) if ask_rule else []
+    obs.update(unverified=sum(check_status(e) == "unverified" for e in state["entries"]),
+               checking=sum(check_status(e) == "checking" for e in state["entries"]))
     state["observations"] = obs
     state["last_success"] = now.isoformat()
-    state["error"] = None
+    state["error"] = ("ask check: " + "; ".join(errs))[:300] if errs else None
     return state
 
 
@@ -527,7 +680,7 @@ def _px(x):
 def compare(strict, wide, esc, anchor="mentions-split-compare", title="Strict v wide"):
     """Strict v wide, one line: entries, ROI after fees, average spread paid (ask - bid at entry)."""
     def part(name, st):
-        es = st.get("entries") or []
+        es = counted(st)
         r = record(es)
         sp = [e["spread"] for e in es if e.get("spread") is not None]
         return (f"{name}: {r['entries']} entr{'y' if r['entries'] == 1 else 'ies'}, ROI after fees {_headline(r['roi'], r)} "
@@ -541,8 +694,10 @@ def _pl(x):
 
 
 def section(state, esc, cfg=STRICT):
-    """The lane's card on the Culture page: tiles, per-week rows and the trade list."""
-    es = state.get("entries") or []
+    """The lane's card on the Culture page: tiles, per-week rows and the trade list. The record counts only
+    entries whose ask was verified (counted); every entry stays in the trade list with its ask check."""
+    every = state.get("entries") or []
+    es = counted(state)
     r = record(es)
     o = state.get("observations") or {}
     # One tile set for every cheap-side card (the Culture page redo, 2026-10-27).
@@ -562,14 +717,16 @@ def section(state, esc, cfg=STRICT):
                      else f'{l["target"]:.2f} resting')
     size = lambda e: (f'{e["traded_to_entry"]:g} traded to entry' if e.get("traded_to_entry") is not None else "") + (
         f' · {e["book_size"]:g} on the book' if e.get("book_size") is not None else "")
+    rule = bool(state.get("ask_rule_since"))
     trades = "".join(
         f'<tr><td>{esc(e["event"].rsplit("-", 1)[-1])}</td><td>{esc(e["word"])}</td>'
         f'<td>{esc(e["entry_at"][:16].replace("T", " "))}Z</td><td class="num">{e["price"]:.2f}</td>'
         + f'<td class="num">{_px(e.get("last_trade"))}</td><td class="num">{_px(e.get("spread_cost"))}</td>' +
         f'<td>{esc(size(e))}</td><td>{esc(leg(e["legs"][0]))}</td><td>{esc(leg(e["legs"][1]))}</td>'
         f'<td class="num">{_pl(e.get("pnl"))}</td>'
-        f'<td class="num">{_pct(e.get("roi"))}</td></tr>'
-        for e in sorted(es, key=lambda e: e["entry_at"], reverse=True))
+        f'<td class="num">{_pct(e.get("roi"))}</td>'
+        + (f'<td>{esc(check_text(e))}</td>' if rule else '') + '</tr>'
+        for e in sorted(every if rule else es, key=lambda e: e["entry_at"], reverse=True))
     skips = state.get("skips") or {}
     why = {}
     for v in skips.values():
@@ -580,13 +737,14 @@ def section(state, esc, cfg=STRICT):
             '<th class="num">Resolved</th><th class="num">ROI split</th><th class="num">Held</th><th class="num">2x only</th></tr></thead>')
     thead = (f'<thead><tr><th>{unit}</th><th>{item}</th><th>Entry (UTC)</th><th class="num">{cfg.get("side", "yes").upper()} ask paid</th>'
              + '<th class="num">Last trade</th><th class="num">Cost of the spread</th>'
-             + '<th>Size</th><th>2x leg</th><th>3x leg</th><th class="num">P/L per contract</th><th class="num">ROI</th></tr></thead>')
-    cols = 11
+             + '<th>Size</th><th>2x leg</th><th>3x leg</th><th class="num">P/L per contract</th><th class="num">ROI</th>'
+             + ('<th>Ask check</th>' if rule else '') + '</tr></thead>')
+    cols = 12 if rule else 11
     return (f'<section class="lane-card" id="{cfg["anchor"]}"><h3>{esc(cfg["label"])}</h3>'
             f'<p class="sm"><b>Sandbox · paper · fresh record from its first entry · review at {REVIEW_AT} settled events, '
             f'decide at {DECIDE_AT}</b> ({esc(status(r["settled_events"]))}; {r["entries"]} entries, {r["resolved"]} '
             f'resolved). Registered {cfg["registered"]}; {cfg["backfill"]}.</p>'
-            f'<p class="sm">{esc(cfg["rule"])}</p><div class="tiles">{tiles}</div>'
+            f'<p class="sm">{esc(cfg["rule"])}</p>{voided_line(state, esc)}<div class="tiles">{tiles}</div>'
             '<p class="sm mut">ROI is per contract after fees, the mean over resolved entries (equal stake per entry). '
             'Held: the same entries to settlement. 2x only: the same entries with one sell at 2x. Each Kalshi event '
             f'is one outcome: its {esc(cfg.get("item", "Word").lower())}s move '
@@ -596,8 +754,60 @@ def section(state, esc, cfg=STRICT):
             f'<div class="tbl"><table>{thead}<tbody>{trades or f"<tr><td colspan={cols}>No entry yet.</td></tr>"}</tbody></table></div>'
             f'<p class="sm mut">{cfg.get("skipped_noun", "Words")} skipped: {len(skips)}'
             + (" (" + "; ".join(f"{k}: {v}" for k, v in sorted(why.items())) + ")" if why else "")
+            + (f". {unverified_text(state)}" if rule else "")
             + (f'. Last read {esc(str(state.get("last_success"))[:16].replace("T", " "))}Z' if state.get("last_success") else ". Not read yet")
             + (f' · {esc(state["error"])}' if state.get("error") else "") + '.</p></section>')
+
+
+def check_text(e):
+    """The trade list's Ask check cell."""
+    c = e.get("ask_check") or {}
+    flag = " · first quotes after listing" if c.get("first_quotes") else ""
+    if c.get("status") == "verified":
+        how = (f"book, {c['book']:g} at or under the ask" if c.get("how") == "book"
+               else f"print, {c.get('printed', 0):g} traded through the ask in {PRINT_WINDOW_MIN} min")
+        return f"verified · {how}{flag}"
+    if c.get("status") == "unverified":
+        return f"unverified, not counted: {c.get('reason')}{flag}"
+    return f"checking (the print window is {PRINT_WINDOW_MIN} min){flag}"
+
+
+def _reason_kind(reason):
+    r = reason or ""
+    return ("ask under half the last trade" if "last trade" in r else
+            f"under {MIN_SIZE} traded at or through the ask in {PRINT_WINDOW_MIN} min" if "traded" in r else
+            "candles no longer served" if "served" in r else r)
+
+
+def unverified_text(state):
+    """Skipped: unverified ask, with counts by reason; entries still checking; first-quote flags."""
+    es = state.get("entries") or []
+    bad = [e for e in es if check_status(e) == "unverified"]
+    why = {}
+    for e in bad:
+        k = _reason_kind(e["ask_check"].get("reason"))
+        why[k] = why.get(k, 0) + 1
+    checking = sum(check_status(e) in (None, "checking") for e in es)
+    first = sum(bool((e.get("ask_check") or {}).get("first_quotes")) for e in es)
+    return (f"Skipped: unverified ask: {len(bad)}"
+            + (" (" + "; ".join(f"{k}: {v}" for k, v in sorted(why.items())) + ")" if why else "")
+            + (f"; still checking: {checking}" if checking else "")
+            + f". Taken on the first quotes after listing (flag only): {first}")
+
+
+def voided_line(state, esc):
+    """The lane's figure before the ask rule, once, labelled voided, when an entry from before failed it."""
+    v, since = state.get("voided"), state.get("ask_rule_since")
+    if not v or not since:
+        return ""
+    lost = sum(check_status(e) == "unverified" and str(e.get("logged") or "") < since for e in state.get("entries") or [])
+    if not lost:
+        return ""
+    return (f'<p class="sm voided"><b>Voided {esc(v["on"])}:</b> the earlier figure ({v["entries"]} entries, split '
+            f'{_pct(v["roi"])}, held {_pct(v["roi_held"])}, {v["settled_events"]} settled events) counted asks with '
+            f'no evidence they could be traded. {lost} of those entries failed the ask check (under {MIN_SIZE} '
+            f'contracts on the book or traded through the ask within {PRINT_WINDOW_MIN} minutes, or an ask under half '
+            'the last trade) and left the record; the record restarts on the verified entries.</p>')
 
 
 # ------------------------------------------------------------------ shared page parts (2026-10-27)
@@ -613,7 +823,7 @@ def status(events):
 
 
 def avg_spread(state):
-    sp = [e["spread"] for e in state.get("entries") or [] if e.get("spread") is not None]
+    sp = [e["spread"] for e in counted(state) if e.get("spread") is not None]
     return sum(sp) / len(sp) if sp else None
 
 
@@ -627,10 +837,11 @@ def summary(cfgs, states, esc, pairs=()):
     rows = []
     for cfg in cfgs:
         st = states[cfg["lane"]]
-        r = record(st.get("entries") or [])
+        r = record(counted(st))
+        bad = sum(check_status(e) == "unverified" for e in st.get("entries") or [])
         rows.append(
             f'<tr><td><a href="#{esc(cfg["anchor"])}">{esc(cfg["label"])}</a></td>'
-            f'<td class="num">{r["entries"]}</td><td class="num">{r["settled"]}</td>'
+            f'<td class="num">{r["entries"]}</td><td class="num">{bad}</td><td class="num">{r["settled"]}</td>'
             f'<td class="num">{r["settled_events"]}</td><td class="num">{r["won"]}</td>'
             f'<td class="num">{_headline(r["roi"], r)}</td><td class="num">{_headline(r["roi_held"], r)}</td>'
             f'<td class="num">{r["filled_2x"]} / {r["filled_3x"]}</td><td class="num">{_sp(avg_spread(st))}</td>'
@@ -640,14 +851,17 @@ def summary(cfgs, states, esc, pairs=()):
         f'{_sp(avg_spread(states[b["lane"]]))}. '
         for a, b, w in pairs)
     return ('<div class="tbl"><table class="culture-summary"><thead><tr><th>Lane</th><th class="num">Entries</th>'
-            '<th class="num">Settled entries</th><th class="num">Settled events</th><th class="num">Won</th><th class="num">Split ROI</th><th class="num">Hold ROI</th>'
+            '<th class="num">Unverified asks</th><th class="num">Settled entries</th><th class="num">Settled events</th><th class="num">Won</th><th class="num">Split ROI</th><th class="num">Hold ROI</th>'
             '<th class="num">Legs filled 2x / 3x</th><th class="num">Avg spread paid</th><th>Status</th></tr></thead>'
             f'<tbody>{"".join(rows)}</tbody></table></div>'
             f'<p class="sm mut" id="spread-paid">{esc(spread_line)}ROI is after fees, the mean per entry (equal '
             'stake); split ROI counts entries whose two legs are resolved, hold ROI entries whose market has '
             'settled. A settled event is one Kalshi event whose entries have all settled: the rungs or words of '
             'one event move together, so it is one outcome, and the status counts settled events. Until a lane '
-            'has a settled event its ROI reads pending: legs filled before anything settles are not a record.</p>')
+            'has a settled event its ROI reads pending: legs filled before anything settles are not a record. '
+            f'Entries count only when the ask was there: {MIN_SIZE}+ contracts on the book at entry, or {MIN_SIZE}+ '
+            f'traded at or through it within {PRINT_WINDOW_MIN} minutes, and never under half the last trade; '
+            'the rest are unverified asks, kept on the ledger and left out of the record.</p>')
 
 
 _esc = lambda x: _html.escape(str(x), quote=True)
