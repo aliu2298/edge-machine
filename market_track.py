@@ -9,7 +9,8 @@ The sports lane taught the method and it carries over unchanged:
     bar's open. A rule that needs the signal bar's close to enter is a backtest, not a record.
     The one exception is a rule whose decision does not depend on that bar at all — the
     overnight rule buys every close, unconditionally — which may enter at that close;
-  * costs are charged on both sides (market_sources.COST_BPS_PER_SIDE). A rule that only works
+  * costs are charged on both sides: market_sources.COST_BPS_PER_SIDE in the ledger, and the
+    cost the Alpaca fills measured on the page (measured_cost below). A rule that only works
     at zero cost is not a rule — the BTC day-trading tests of 2026-09-19 made that concrete;
   * a rule is judged PER ENTRY DAY, not per trade. Ten names bought the same morning rise and
     fall with the market, so they are one result, the same correction the commodities and
@@ -816,8 +817,66 @@ VERDICTS = {                       # key -> (label, chip class, order); words as
 }
 
 
-def assess(d, rule):
-    """One rule's record, counted PER ENTRY DAY and measured against SPY over the same days."""
+# --------------------------------------------------------------------------- measured cost
+# The ledger's ret_net is charged market_sources.COST_BPS_PER_SIDE (5bp a side, assumed) when a
+# trade closes, and stays that way. From 2026-10-29 the page judges every rule at the cost the
+# Alpaca paper fills MEASURED instead (market_exec.reconcile -> data/market_fills.json): the
+# adverse gap between each fill and the open the record used, positive on both sides. That is
+# spread, slippage, and the gap between IEX's first print and the opening auction, all of which
+# the record really pays. The report is rebuilt every weekday from the last 120 days of orders,
+# so the figure rolls. A rule with MIN_RULE_FILLS of its own matched fills is charged its own
+# mean; one with fewer is charged the mean over every matched fill. The 5bp figures stay on the
+# page beside it.
+FILLS = os.path.join(ROOT, "data", "market_fills.json")
+MIN_RULE_FILLS = 30
+
+
+def load_fills(path=None):
+    """The fill check as the VPS published it, or None."""
+    try:
+        with open(path or FILLS, encoding="utf-8") as fh:
+            rep = json.load(fh)
+    except (OSError, ValueError):
+        return None
+    return rep if isinstance(rep, dict) and isinstance(rep.get("summary"), dict) else None
+
+
+def measured_cost(fills):
+    """{pooled, n, since, by_rule} in bp a side from a fill-check report, or None without fills."""
+    s = (fills or {}).get("summary") or {}
+    if not s.get("fills") or s.get("mean_bps") is None:
+        return None
+    by_rule = {k: (int(v.get("n") or 0), float(v["mean_bps"]))
+               for k, v in (s.get("by_rule") or {}).items() if v.get("mean_bps") is not None}
+    return dict(pooled=float(s["mean_bps"]), n=int(s["fills"]),
+                since=(s.get("orders") or {}).get("since"), by_rule=by_rule,
+                assumed=float(s.get("assumed_bps_per_side") or M.COST_BPS_PER_SIDE))
+
+
+def rule_cost_bps(name, mc):
+    """(bp a side, where it came from) for one rule under the measured cost `mc`.
+
+    A rule with its own cost (crypto) keeps it: no Alpaca fill measures a coin."""
+    rule = RULES.get(name) or {}
+    if "cost_bps" in rule or not mc:
+        return float(rule.get("cost_bps", M.COST_BPS_PER_SIDE)), "assumed"
+    n, own = mc["by_rule"].get(name, (0, None))
+    if own is not None and n >= MIN_RULE_FILLS:
+        return own, f"its own {n} fills"
+    return mc["pooled"], f"all {mc['n']} fills" + (f" (its own {n}: {own:+.1f}bp)" if n else "")
+
+
+def _net(t, bps):
+    """A closed trade's net return: the stored one, or its gross less `bps` a side both ways."""
+    if bps is None:
+        return t["ret_net"]
+    return t["ret_gross"] - 2 * bps / 10000.0
+
+
+def assess(d, rule, bps=None):
+    """One rule's record, counted PER ENTRY DAY and measured against SPY over the same days.
+
+    `bps` charges that cost a side instead of the 5bp stored in each trade's ret_net."""
     live = [t for t in d["trades"] if t["rule"] == rule and not t.get("research")]
     ts = [t for t in live if t["status"] == "closed"]
     op = [t for t in live if t["status"] == "open"]
@@ -826,10 +885,10 @@ def assess(d, rule):
         days.setdefault(t["entry_day"], []).append(t)
     units, edges = [], []
     for day, group in days.items():
-        units.append(sum(t["ret_net"] for t in group) / len(group))
+        units.append(sum(_net(t, bps) for t in group) / len(group))
         b = [t for t in group if t["bench_ret"] is not None]
         if b:
-            edges.append(sum(t["ret_net"] - t["bench_ret"] for t in b) / len(b))
+            edges.append(sum(_net(t, bps) - t["bench_ret"] for t in b) / len(b))
     n = len(units)
     mean = statistics.mean(units) if units else None
     t_stat = (mean / (statistics.pstdev(units) / math.sqrt(n))
@@ -854,14 +913,26 @@ def assess(d, rule):
                 research_edge=r.get("edge"), research_t=r.get("t", 0.0),
                 research_window=r.get("window"),
                 mean=mean, t=t_stat, edge=edge, edge_t=edge_t,
-                wins=sum(1 for t in ts if t["ret_net"] > 0),
-                total=(sum(t["ret_net"] for t in ts) * STAKE) if ts else 0.0,
+                wins=sum(1 for t in ts if _net(t, bps) > 0),
+                total=(sum(_net(t, bps) for t in ts) * STAKE) if ts else 0.0,
                 last=max((t["entry_day"] for t in ts + op), default=""))
 
 
-def report(d, rules=None):
-    """One row per rule that is still on the board. Removed rules are not counted."""
-    return [assess(d, name) for name in (rules or RULES) if not rule_removed(name)]
+def report(d, rules=None, cost=None):
+    """One row per rule that is still on the board. Removed rules are not counted.
+
+    With `cost` (measured_cost()), each row is judged at that measured cost and carries
+    cost_bps, cost_from, and `assumed`: the same record at the stored 5bp, for comparison."""
+    out = []
+    for name in (rules or RULES):
+        if rule_removed(name):
+            continue
+        if cost is None:
+            out.append(assess(d, name))
+            continue
+        bps, src = rule_cost_bps(name, cost)
+        out.append(dict(assess(d, name, bps), cost_bps=bps, cost_from=src, assumed=assess(d, name)))
+    return out
 
 
 def main():
@@ -885,11 +956,12 @@ def main():
                          research_before=live_from)
     save(d)
     print(f"logged {added} new trade(s), closed {closed}")
-    for r in report(d):
+    for r in report(d, cost=measured_cost(load_fills())):
         mean = "—" if r["mean"] is None else f"{r['mean']*100:+.2f}%"
         edge = "—" if r["edge"] is None else f"{r['edge']*100:+.2f}%"
         print(f"  {r['rule']:22} {VERDICTS[r['verdict']][0]:12} days {r['days']:3} "
-              f"trades {r['trades']:4} open {r['open']:3} mean/day {mean:>7} v SPY {edge:>7}")
+              f"trades {r['trades']:4} open {r['open']:3} mean/day {mean:>7} v SPY {edge:>7} "
+              f"at {r.get('cost_bps', M.COST_BPS_PER_SIDE):.1f}bp a side")
     return 0
 
 

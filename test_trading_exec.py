@@ -150,7 +150,7 @@ ok(fold.startswith('<details class="fold trade-exec-detail"><summary>Execution d
    "the detail is in a fold")
 ok("<details open" not in line, "and the fold is closed on load")
 ok("DAL 24: removed rule 12, sw_rsi2_pullback 12" in fold, "the fold lists what is held, by rule")
-ok("4 fills matched to the record" in fold and "against the 5bp the record assumes" in fold,
+ok("4 fills matched to the record" in fold and "against the 5bp the record first assumed; the rules table charges the measured cost" in fold,
    "and the measured cost against the assumed one")
 ok(SB.RECORD_ONLY not in fold, "and no longer names the overnight rule: it is off the board since 2026-10-20")
 ok("Fill check published 3:31 PM CT Oct 13." in fold, "and when the report was published, in CT once")

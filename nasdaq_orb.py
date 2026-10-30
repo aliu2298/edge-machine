@@ -6,7 +6,8 @@ opening-range breakout, tested on 807 days of QQQ 1-minute bars. Done without lo
 negative; this lane watches it live anyway. Not in Production, not on the Production feed, and it does
 not touch the Alpaca account: it reads market data only.
 
-Pre-registered variants, one row per variant per trading day, QQQ, no stop, one position:
+Pre-registered variants, one row per variant per trading day, QQQ, no stop, one position
+(A and B retired after 2026-10-30, their 10th day: see RETIRED):
   A    "friend"       range 9:30-10:00 ET, signal from 10:00, exit 15 min after entry
   B    "first 5"      range 9:30-9:35 ET,  signal from 9:35,  exit 15 min after entry
   C15  "premarket 5"  range 9:25-9:30 ET,  signal from 9:30,  exit 15 min after entry
@@ -54,6 +55,22 @@ VARIANTS = {
     "C15": ("premarket 5 · 9:25-9:30 range, 15-min hold", (9, 25), (9, 30), (9, 30), 15),
     "C30": ("premarket 5 · 9:25-9:30 range, 30-min hold", (9, 25), (9, 30), (9, 30), 30),
 }
+
+# Retired variants: (last day logged, why). Olu, 2026-10-29: A and B lose before costs too
+# (A 1 of 8 won, -20.2bp net, t -2.03; B 3 of 9, -18.3bp, t -2.38 over 9 days), so Thursday
+# 2026-10-30 is their 10th and last day, the review point. From 2026-10-31 they log nothing;
+# their rows and record stay on the page. C15 and C30 run on to their own 10 days.
+RETIRED = {
+    "A": ("2026-10-30", "no edge"),
+    "B": ("2026-10-30", "no edge"),
+}
+
+
+def variants_on(day):
+    """The variant keys that log a row on `day` (a date): every one not retired before it."""
+    d = day.isoformat()
+    return [k for k in VARIANTS if k not in RETIRED or d <= RETIRED[k][0]]
+
 
 # Fallback when the calendar cannot be read. Full closures and early (13:00 ET) closes.
 HOLIDAYS = {
@@ -172,8 +189,9 @@ def grade(day, key, bars, quotes=None, quote_feed=None, bar_feed="sip"):
 
 
 def skipped(day, reason):
-    return [dict(id=f"{day.isoformat()}:{k}", day=day.isoformat(), variant=k, label=v[0], symbol=SYMBOL,
-                 hold=v[4], status="skipped", note=reason) for k, v in VARIANTS.items()]
+    return [dict(id=f"{day.isoformat()}:{k}", day=day.isoformat(), variant=k, label=VARIANTS[k][0],
+                 symbol=SYMBOL, hold=VARIANTS[k][4], status="skipped", note=reason)
+            for k in variants_on(day)]
 
 
 def session(day, cal=None):
@@ -193,7 +211,7 @@ def grade_day(day, bars, quotes=None, cal=None, quote_feed=None, bar_feed="sip")
     kind = session(day, cal)
     if kind != "full":
         return skipped(day, "market holiday" if kind == "holiday" else "half-day (early close)")
-    return [grade(day, k, bars, quotes, quote_feed, bar_feed) for k in VARIANTS]
+    return [grade(day, k, bars, quotes, quote_feed, bar_feed) for k in variants_on(day)]
 
 
 # ---------- the ledger ----------
@@ -250,7 +268,9 @@ def summary(state):
         out[k] = dict(label=v[0], days=len(done), trades=len(tr), no_break=len(done) - len(tr),
                       win=(sum(x > 0 for x in g) / len(g)) if g else None,
                       gross=mean(g), net=mean(n_), spread=mean(sp), t=t, t_on="net" if n_ else "gross",
-                      skipped=sum(r["status"] == "skipped" for r in rows))
+                      skipped=sum(r["status"] == "skipped" for r in rows),
+                      retired=RETIRED[k][0] if k in RETIRED else None,
+                      retired_why=RETIRED[k][1] if k in RETIRED else None)
     return out
 
 
