@@ -138,9 +138,12 @@ LANES = [
     dict(id="cfb_dog_tp50", label="College football underdog · sell +50%", series=["KXNCAAFGAME"], picker=DOG,
          entry_hours=(1, 24), headline="tp50", since=FIRST_NIGHT, duration_min=210, start=espn_start("football/college-football"),
          note="A side priced 10-40c, bought 1h and 24h before kickoff, with a resting sell at +50%."),
+    # RETIRED 2026-10-29 (Olu): no new entries from that night on; its rows stay on the ledger as they are.
     dict(id="atp_coinflip_tp30", label="ATP coin-flip · sell +30%", series=["KXATPMATCH"],
          picker=C.one_per_event(C.band_picker(0.40, 0.60, ("yes",))), entry_hours=(1,), headline="tp30", watch=True,
          since=FIRST_NIGHT, duration_min=120,
+         retired=dict(on="2026-10-29", at="13 settled, 6 won; split -2.0%, hold -1.5%, every target exit (+20/+30/+50/+100%, with or without a stop) loses to hold by 2 to 29 points",
+                      reason="every take-profit exit loses to holding"),
          note="One player (the cheaper ask) priced 40-60c an hour before the match, with a resting sell at +30%. Start from the first in-play price movement."),
     # RETIRED 2026-10-27 (Olu): no new entries from that night on; its rows stay on the ledger as they are.
     dict(id="nba_tt_cheap_tp30", label="NBA team-total cheap rungs · sell +30%", series=["KXNBATEAMTOTAL"], picker=DOG,

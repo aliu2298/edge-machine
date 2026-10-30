@@ -373,7 +373,11 @@ def tennis_windows(now, starts=None):
     """One window per distinct ATP start: 45 to 15 minutes before, read every 15 minutes.
 
     The last ask is 10 minutes before the window ends, so a read lands by K-15 with the run's own
-    start-up time. `starts` None (tests, the plain listing) means no tennis windows."""
+    start-up time. `starts` None (tests, the plain listing) means no tennis windows. The lane was
+    retired 2026-10-29, so it asks for no more reads: its hourly run only settles what is open."""
+    import tennis_totals as TT
+    if TT.retired(now):
+        return []
     return [dict(lane="tennis_totals", label=f"ATP totals {t:%H:%M}Z start", series=(), close=t,
                  start=t - dt.timedelta(minutes=TENNIS_FROM), end=t - dt.timedelta(minutes=TENNIS_TO),
                  every=TENNIS_EVERY, last_ask=TENNIS_LAST_ASK) for t in (starts or ())]

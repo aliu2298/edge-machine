@@ -130,12 +130,16 @@ RETIRED_ON_2026_10_24 = (
     "btts_form_l10_fade|soccer_btts", "bund_o35|soccer_u35", "bund_o35_fav|soccer_u35",
     "corners_team_fade|soccer_corners",
 )
-# The tennis Sandbox lanes retired the same day (Olu). Kept: the Kalshi 2-leg combo
-# (tennis_combo2, paused), the UTR shortlist (Production) and tennis_totals.py's own lane.
+# The tennis Sandbox lanes retired the same day (Olu). Kept then: the Kalshi 2-leg combo
+# (tennis_combo2, paused), the UTR shortlist and tennis_totals.py's own lane. The 2-leg combo went
+# on 2026-10-29 (TENNIS_RETIRED_ON_2026_10_29 below).
 TENNIS_RETIRED_ON_2026_10_24 = (
     "tennis_fav_band_3h|tennis", "pm_combo2|tennis_pmcombo", "pm_combo3|tennis_pmcombo",
     "pm_combo4|tennis_pmcombo", "tennis_combo3|tennis_combo", "tennis_combo4|tennis_combo",
 )
+RETIRED_TAIL_2026_10_29 = (" No new entries from 2026-10-29; its rows stay on file and its open "
+                           "bets still settle.")
+TENNIS_RETIRED_ON_2026_10_29 = ("tennis_combo2|tennis_combo",)
 
 # The registry. `connected` is the honest bit: it says whether this run can actually
 # reach the source, not whether the site exists.
@@ -365,7 +369,11 @@ SOURCES = {
         frozen="2026-10-08"),
     "tennis_combo2": dict(
         label="Tennis 2-leg combo (favourite-band legs)", kind="Rule", connected=True,
-        site="edge-machine", sports=["tennis_combo"], baseline="favourite_population",
+        site="edge-machine", sports=[], baseline="favourite_population",
+        retired_sports={
+            "tennis_combo": "Retired 2026-10-29 by Olu: frozen at fair, won exactly what its prices implied "
+                            "(10 won v 9.9 priced, +1.1% after fees, 17 settled of the 30 needed)."
+                            + RETIRED_TAIL_2026_10_29},
         note=(
              "Cut each day's favourite-band legs, in start-time order, into consecutive baskets of 2 "
              'and buy each basket as ONE combo contract, which pays only if all 2 win. A combo '

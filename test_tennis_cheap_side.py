@@ -42,7 +42,13 @@ state = {"lanes": {
     "challenger_cheap_split": lane("challenger_cheap_split", "Challenger cheap side · split 2x / 3x", ["hold", "split"],
                                    [tr("hold", 1.5, True, spread=0.04), tr("split", 1.0, True, spread=0.04, f2=True, f3=True)],
                                    first=True)}}
+# atp_coinflip_tp30 was retired 2026-10-29: its retirement is lifted for the live-card checks below (it stands in
+# as the older lane) and checked at the end of this file.
+import chaos_lanes
+_lanes = chaos_lanes.LANES
+chaos_lanes.LANES = [dict(c, retired=None) if c["id"] == "atp_coinflip_tp30" else c for c in _lanes]
 h = CB.tennis_section(state)
+chaos_lanes.LANES = _lanes
 text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", h))
 
 print("the section")

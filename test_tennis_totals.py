@@ -172,24 +172,47 @@ s = TT.empty()
 s["rules"][TT.LANE]["picks"] = [dict(p, status="won", profit=10.5), dict(p, id="x", status="open")]
 row = TB.row_html(s)
 check("named as registered", TB.NAME in row and f'data-source="{TT.LANE}"' in row, True)
-check("a Sandbox rule row", 'data-stage="sandbox"' in row and 'class="sp-rule' in row, True)
+check("a Retired rule row (2026-10-29), with its badge, not a live Sandbox rule", ('class="sp-rule' in row, '<span class="badge stage">Retired</span>' in row), (True, True))
 check("record and evidence cells", ('data-l="Record">1–0' in row, 'data-l="Evidence">1/30' in row), (True, True))
 check("the pre-registered text is in the details", "59/65 (64 matches)" in row and "2026-10-21" in row, True)
 page = ('<section id="rules"><details class="fold sp-sandbox" id="sandbox"><summary><h3>Sandbox rules</h3>'
         '<span class="sm mut">· 7 rules · by evidence</span></summary><div class="sp-rules-list" data-list="sandbox">'
         '<div class="sp-line sp-head-line"></div><details class="sp-rule"><summary></summary>'
-        '<div class="sp-details-body"></div></details></div></details></section><footer></footer>')
+        '<div class="sp-details-body"></div></details></div></details></section>'
+        '<section id="retired" class="sp-section"><details class="fold sp-retired"><summary><h3>Retired rules</h3>'
+        '<span class="sm mut">· 2 rules · final records · no new entries</span></summary>'
+        '<div class="sp-rules-list" data-list="retired"><div class="sp-line sp-head-line"></div>'
+        '<details class="sp-rule"><summary></summary><div class="sp-details-body"></div></details></div></details></section><footer></footer>')
 out = TB.place(page, s)
-check("placed at the end of the Sandbox list", out.index(TB.NAME) > out.index('<details class="sp-rule">')
-      and out.index(TB.NAME) < out.index("</section>"), True)
-check("the Sandbox count includes it, too early", "· 8 rules · 1 too early to read · by evidence" in out, True)
-out = TB.place(page.replace("· 7 rules ·", "· 7 rules · 4 too early to read ·"), s)
-check("an existing too-early count is bumped", "· 8 rules · 5 too early to read · by evidence" in out, True)
-empty = '<section id="rules"><p class="sp-empty" data-empty="sandbox">No tennis rule is in the Sandbox.</p></section><footer>'
-out = TB.place(empty, s)
-check("a page with no Sandbox list gets one", 'data-list="sandbox"' in out and TB.NAME in out and "sp-empty" not in out, True)
+sand, ret = out[:out.index('id="retired"')], out[out.index('id="retired"'):]
+check("placed at the end of the Retired list, with its dated reason, and not in the Sandbox list",
+      (TB.NAME in ret, TB.NAME in sand, "Retired 2026-10-29 by Olu: No edge at 48 settled" in ret), (True, False, True))
+check("the Sandbox count is unchanged and the Retired count goes up by one",
+      ("· 7 rules · by evidence" in sand, "· 3 rules · final records" in ret), (True, True))
+bare = '<section id="rules"><p class="sp-empty" data-empty="sandbox">No tennis rule is in the Sandbox.</p></section><footer>'
+out = TB.place(bare, s)
+check("a page with no Retired fold gets one", 'id="retired"' in out and 'data-list="retired"' in out and TB.NAME in out, True)
 check("no guarded phrase in the lane's copy",
       sandbox_audit.COPY_RE.search(row + open("tennis_totals.py").read() + open("tennis_totals_build.py").read()), None)
+
+print("\nretired 2026-10-29: nothing new, open bets settle, no more window asks")
+check("the Eastern date gates it: 03:00Z on Oct 29 is still Oct 28", (TT.retired(dt.datetime(2026, 10, 29, 3, 0, tzinfo=dt.timezone.utc)),
+      TT.retired(dt.datetime(2026, 10, 29, 5, 0, tzinfo=dt.timezone.utc))), (False, True))
+rs = TT.empty()
+rs["rules"][TT.LANE]["picks"].append(dict(p, status="open"))
+after = dt.datetime(2026, 10, 29, 12, 0, tzinfo=dt.timezone.utc)
+_on = TT.RETIRED_ON
+TT.RETIRED_ON = "2026-10-21"                       # the fixtures above are a due match on Oct 21 with a quoting event
+fresh = TT.empty()
+fresh["rules"][TT.LANE]["picks"].append(dict(p, id="old", status="open"))
+new = TT.run(fresh, [match()], NOW, fetch=lambda path: ({"events": evs} if path.startswith("events") else fetch_settled("yes")(path)))
+TT.RETIRED_ON = _on
+check("run() on a retired day enters nothing (lane or baseline) for a due match, and still settles the open entry",
+      (new, [x["id"] for x in fresh["rules"][TT.LANE]["picks"]], fresh["rules"][TT.LANE]["picks"][0]["status"],
+       len(fresh["rules"][TT.BASE]["picks"])), ([], ["old"], "won", 0))
+import lane_windows as LW
+check("the lane asks for no more window reads once retired", LW.tennis_windows(after, [after + dt.timedelta(minutes=30)]), [])
+check("  and still did the day before", len(LW.tennis_windows(after - dt.timedelta(days=1), [after])), 1)
 
 print("\nSandbox only")
 import sandbox_sources as S

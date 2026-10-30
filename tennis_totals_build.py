@@ -15,6 +15,8 @@ import tennis_totals as TT
 
 NAME = "ATP total games · low rung · OVER"
 MARKET = "Kalshi ATP total games · over"
+GONE = f"Retired {TT.RETIRED_ON} by Olu: {TT.RETIRED_WHY} No new entries from {TT.RETIRED_ON}; its rows stay on file and its open bets still settle."
+RETIRED_LIST = '<div class="sp-rules-list" data-list="retired">'
 SANDBOX_LIST = '<div class="sp-rules-list" data-list="sandbox">'
 EMPTY_SANDBOX = '<p class="sp-empty" data-empty="sandbox">'
 # The Sandbox fold closes the Rules section (sport_page.rules_html); a rule row's own fold ends
@@ -41,7 +43,7 @@ def row_data(state=None):
     picks = ((state.get("rules") or {}).get(TT.LANE) or {}).get("picks") or []
     a = TT.stats(picks)
     a["unit"] = "bet"
-    return dict(name=TT.LANE, sport="tennis_total", a=a, v=B.verdict(dict(a, n=a["n"] + a["n_price"])),
+    return dict(name=TT.LANE, sport="tennis_total", a=a, v="retired", gone=GONE,
                 meta={"note": TT.DEFINITION}, picks=picks)
 
 
@@ -79,7 +81,6 @@ def row_html(state=None):
     row = row_data(state)
     a = row["a"]
     base = TT.stats(((state.get("rules") or {}).get(TT.BASE) or {}).get("picks") or [])
-    early = _early(row)
     last = state.get("last_run")
     open_words = f" · {a['open']} open" if a["open"] else ""
     details = (
@@ -93,12 +94,12 @@ def row_html(state=None):
         f'<p class="sm mut">Last scan {esc(fmt.when(last) if last else "not yet")}'
         f'{(" · " + esc(state["error"])) if state.get("error") else ""}.</p></div>')
     return (
-        f'<details class="sp-rule{" is-early" if early else ""}" data-source="{esc(TT.LANE)}" '
-        f'data-sport="tennis_total" data-scope="clubs" data-stage="sandbox"{" data-early=\"1\"" if early else ""}>'
+        f'<details class="sp-rule" data-source="{esc(TT.LANE)}" '
+        f'data-sport="tennis_total" data-scope="clubs" data-stage="sandbox">'
         f'<summary class="sp-line">'
         f'<span class="sp-cell sp-c-name"><span class="sp-chev" aria-hidden="true">›</span>'
         f'<b class="sp-name" title="{esc(NAME)}">{esc(NAME)}</b>'
-        f'<span class="sp-badges"><span class="badge stage" title="Paper, own ledger">Paper</span></span>'
+        f'<span class="sp-badges"><span class="badge stage" title="Paper, own ledger">Paper</span><span class="badge stage">Retired</span></span>'
         f'<span class="sr-only"> · Rule details</span></span>'
         f'<span class="sp-cell sp-c-market" data-l="Market">{esc(MARKET)}</span>'
         f'<span class="sp-cell num" data-l="Record">{SP.record_compact(a)}</span>'
@@ -110,26 +111,22 @@ def row_html(state=None):
 
 
 def place(html, state=None):
-    """Put the row at the end of the page's Sandbox rules list; build the fold if the page has none."""
+    """Put the retired row in the page's Retired rules fold (2026-10-29), with its dated reason; build the
+    fold if the page has none. The Sandbox rules list and its counts no longer include the lane."""
     try:
-        row = row_html(state)
+        row = row_html(state) + (f'<p class="sm mut sp-retired-why" data-source="{esc(TT.LANE)}" '
+                                 f'data-sport="tennis_total">{esc(GONE)}</p>')
     except Exception as exc:                                    # noqa: BLE001
         row = f'<p class="sm mut" data-source="{esc(TT.LANE)}">{esc(NAME)} unavailable ({type(exc).__name__}).</p>'
-    i = html.find(SANDBOX_LIST)
-    if i >= 0:
-        end = html.find(LIST_END, i)
-        if end >= 0:
-            early = _early(row_data(state))
-            head = SANDBOX_COUNT.sub(lambda m: f"· {int(m.group(1)) + 1} rules", html[:i], count=1)
-            if early:
-                bumped = EARLY_COUNT.sub(lambda m: f"· {int(m.group(1)) + 1} too early to read", head, count=1)
-                head = bumped if bumped != head else SANDBOX_COUNT_DONE.sub(r"\1 · 1 too early to read", head, count=1)
-            return head + html[i:end] + row + html[end:]
-    j = html.find(EMPTY_SANDBOX)
+    i = html.find('id="retired"')
+    j = html.find(RETIRED_LIST, i) if i >= 0 else -1
     if j >= 0:
-        k = html.find("</p>", j) + len("</p>")
-        fold = (f'<details class="fold sp-sandbox" id="sandbox"><summary><h3>Sandbox rules</h3>'
-                f'<span class="sm mut">· 1 rule</span></summary>'
-                f'{SANDBOX_LIST}{SP.list_head(False)}{row}</div></details>')
-        return html[:j] + fold + html[k:]
-    return html.replace("<footer>", f'<section id="atp-totals">{row}</section><footer>', 1)
+        end = html.find("</div></details></section>", j)
+        if end >= 0:
+            count = re.compile(r'(<section id="retired".*?<span class="sm mut">· )(\d+)( rules?)', re.S)
+            head = count.sub(lambda m: f"{m.group(1)}{int(m.group(2)) + 1} rules", html[:j], count=1)
+            return head + html[j:end] + row + html[end:]
+    fold = (f'<section id="retired" class="sp-section"><details class="fold sp-retired"><summary><h3>Retired rules</h3>'
+            f'<span class="sm mut">· 1 rule · final records · no new entries</span></summary>'
+            f'{RETIRED_LIST}{SP.list_head(False)}{row}</div></details></section>')
+    return html.replace("<footer>", fold + "<footer>", 1)
