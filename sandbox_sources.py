@@ -4376,8 +4376,10 @@ def outcome_cluster(q):
     if q.get("sport") in EVENT_CLUSTERED and q.get("market_id"):
         return str(q["market_id"])
     # Not the soccer goals markets: both sides of a team total can land, and one over-1.5
-    # market is the whole event.
-    if q.get("venue") == "kalshi_binary" and q.get("market_id") and q.get("sport") not in GOALS_SPORTS:
+    # market is the whole event. soccer_team3 (team 3+, st_t7's No) is one of them: its two teams'
+    # No legs of one match (0.68 + 0.74) summed past 1 as one "exclusive" event and raised
+    # DegenerateCluster in the Production record (2026-10-29).
+    if q.get("venue") == "kalshi_binary" and q.get("market_id") and q.get("sport") not in GOALS_SPORTS + ("soccer_team3",):
         return str(q["market_id"]).rsplit("-", 1)[0]
     return q.get("id") or ("row", id(q))          # no id: every quote is its own outcome
 
