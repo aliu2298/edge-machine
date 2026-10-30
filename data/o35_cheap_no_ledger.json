@@ -2279,16 +2279,52 @@
    "result": "yes",
    "series": "KXSAUDIPLTOTAL",
    "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": null,
+    "15": null,
+    "20": null
+   },
+   "event": "KXSAUDIPLTOTAL-26OCT30DIRNEO",
+   "form_rule": false,
+   "id": "KXSAUDIPLTOTAL-26OCT30DIRNEO-4",
+   "kickoff": 1793371800,
+   "league": "Saudi Pro League",
+   "logged": "2026-10-30T18:51:54.338526+00:00",
+   "night": "2026-10-30",
+   "prints": 2790,
+   "result": "no",
+   "series": "KXSAUDIPLTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": null,
+    "15": null,
+    "20": null
+   },
+   "event": "KXSAUDIPLTOTAL-26OCT30ABHITJ",
+   "form_rule": false,
+   "id": "KXSAUDIPLTOTAL-26OCT30ABHITJ-4",
+   "kickoff": 1793367900,
+   "league": "Saudi Pro League",
+   "logged": "2026-10-30T18:51:54.338526+00:00",
+   "night": "2026-10-30",
+   "prints": 644,
+   "result": "no",
+   "series": "KXSAUDIPLTOTAL",
+   "version": "o35-v1"
   }
  ],
  "error": null,
  "lane": "o35_cheap_no_wave",
- "last_run": "2026-10-30T13:34:26.310111+00:00",
+ "last_run": "2026-10-30T18:51:54.338526+00:00",
  "observations": {
-  "at": "2026-10-30T13:34:26.310111+00:00",
+  "at": "2026-10-30T18:51:54.338526+00:00",
   "errors": [],
-  "new": 0,
-  "waiting": 0
+  "new": 2,
+  "waiting": 2
  },
  "seen": {
   "KXMLSTOTAL-26OCT28ATXRSL": "2026-10-29T07:40:30.746726+00:00",
@@ -2309,6 +2345,8 @@
   "KXSAUDIPLTOTAL-26OCT29ALNAKH": "2026-10-29T19:53:34.117876+00:00",
   "KXSAUDIPLTOTAL-26OCT29KHAHAZ": "2026-10-29T19:53:34.117876+00:00",
   "KXSAUDIPLTOTAL-26OCT29RIYQAD": "2026-10-30T00:22:17.879249+00:00",
+  "KXSAUDIPLTOTAL-26OCT30ABHITJ": "2026-10-30T18:51:54.338526+00:00",
+  "KXSAUDIPLTOTAL-26OCT30DIRNEO": "2026-10-30T18:51:54.338526+00:00",
   "KXSCOTTISHPREMTOTAL-26OCT28ABEFAL": "2026-10-29T01:14:05.091805+00:00",
   "KXSCOTTISHPREMTOTAL-26OCT28CELDUU": "2026-10-29T01:14:05.091805+00:00",
   "KXSCOTTISHPREMTOTAL-26OCT28DUNKIL": "2026-10-29T01:14:05.091805+00:00",
