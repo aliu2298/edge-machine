@@ -634,6 +634,8 @@
      "target": 0.58
     },
     {
+     "fill_px": 0.87,
+     "filled_at": "2026-10-30T17:00:00+00:00",
      "multiple": 3.0,
      "share": 0.5,
      "target": 0.87
@@ -641,11 +643,14 @@
    ],
    "logged": "2026-10-29T00:30:36.981950+00:00",
    "payout": null,
+   "pnl": 0.4175,
    "price": 0.29,
+   "roi": 1.3714,
+   "roi_2x": 0.8913,
    "side": "yes",
    "spread": 0.04,
    "spread_cost": null,
-   "status": "open",
+   "status": "filled",
    "traded_to_entry": 0.0,
    "word": "Above $103.99"
   },
@@ -676,6 +681,8 @@
      "target": 0.48
     },
     {
+     "fill_px": 0.72,
+     "filled_at": "2026-10-30T17:00:00+00:00",
      "multiple": 3.0,
      "share": 0.5,
      "target": 0.72
@@ -683,11 +690,14 @@
    ],
    "logged": "2026-10-29T00:30:36.981950+00:00",
    "payout": null,
+   "pnl": 0.3433,
    "price": 0.24,
+   "roi": 1.3581,
+   "roi_2x": 0.8817,
    "side": "yes",
    "spread": 0.04,
    "spread_cost": null,
-   "status": "open",
+   "status": "filled",
    "traded_to_entry": 0.0,
    "word": "Above $104.49"
   },
@@ -801,6 +811,8 @@
      "target": 0.6
     },
     {
+     "fill_px": 0.9,
+     "filled_at": "2026-10-30T17:00:00+00:00",
      "multiple": 3.0,
      "share": 0.5,
      "target": 0.9
@@ -808,11 +820,14 @@
    ],
    "logged": "2026-10-29T02:30:33.275529+00:00",
    "payout": null,
+   "pnl": 0.4324,
    "price": 0.3,
+   "roi": 1.374,
+   "roi_2x": 0.8932,
    "side": "yes",
    "spread": 0.04,
    "spread_cost": null,
-   "status": "open",
+   "status": "filled",
    "traded_to_entry": 0.0,
    "word": "Above $103.49"
   },
@@ -1229,13 +1244,13 @@
   "KXWTI-26OCT3014": "2026-10-29T00:30:36.981950+00:00"
  },
  "lane": "wti_cheap_yes",
- "last_success": "2026-10-30T16:30:31.695348+00:00",
+ "last_success": "2026-10-30T17:00:36.234217+00:00",
  "observations": {
-  "at": "2026-10-30T16:30:31.695348+00:00",
+  "at": "2026-10-30T17:00:36.234217+00:00",
   "checking": 0,
   "entered": 0,
   "events": 2,
-  "filled": 0,
+  "filled": 3,
   "skipped": 0,
   "unverified": 20,
   "waiting": 0
