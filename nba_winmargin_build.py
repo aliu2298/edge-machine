@@ -55,21 +55,14 @@ def halves_table(rows):
             + f"</tr>{body}</table></div>")
 
 
-def spark(r, w=120, h=34):
-    """A tiny price-path chart as multiples of the entry ask, from the entry hour to 3 hours after the tip, with 2x
-    and 3x lines. Inline SVG that takes its colours from the page."""
-    pts = [(t, c / 100 / r["ask"]) for t, c, _n in r.get("path") or [] if -3600 <= t <= 3 * 3600]
+def spark(r):
+    """Where the price went, in words (the NBA page allows no inline SVG or style): the peak multiple and its minute
+    from the tip, and the minutes at 2x or more."""
+    pts = [(t, c / 100 / r["ask"]) for t, c, _n in r.get("path") or [] if t >= 0]
     if not pts:
         return '<span class="mut">—</span>'
-    top = max(3.4, max(m for _t, m in pts) * 1.05)
-    x = lambda t: (t + 3600) / (4 * 3600) * w
-    y = lambda m: h - 2 - (min(m, top) / top) * (h - 4)
-    line = " ".join(f"{x(t):.1f},{y(m):.1f}" for t, m in pts)
-    marks = "".join(f'<line x1="0" x2="{w}" y1="{y(k):.1f}" y2="{y(k):.1f}" stroke="currentColor" stroke-opacity=".35" stroke-dasharray="3 3"/>' for k in (1, 2, 3))
-    tip_x = x(0)
-    return (f'<svg viewBox="0 0 {w} {h}" width="{w}" height="{h}" role="img" aria-label="price path as multiples of the entry, 1x 2x 3x lines" '
-            f'style="max-width:100%;color:inherit">{marks}<line x1="{tip_x:.1f}" x2="{tip_x:.1f}" y1="0" y2="{h}" stroke="currentColor" stroke-opacity=".25"/>'
-            f'<polyline fill="none" stroke="currentColor" stroke-width="1.5" points="{line}"/></svg>')
+    t, m = max(pts, key=lambda x: x[1])
+    return f'peak {m:.1f}x at minute {t / 60:.0f}'
 
 
 def last_night(rows):
@@ -86,7 +79,7 @@ def last_night(rows):
                  f'<td class="num">{num(m["first2"])}</td><td class="num">{num(m["above2"])}</td>'
                  f'<td>{"won" if r["won"] else "lost"}</td><td>{spark(r)}</td></tr>')
     return ('<div class="tbl"><table><tr><th>Game (away home)</th><th>Contract</th><th class="num">Entry ask</th><th class="num">Peak</th>'
-            '<th class="num">Min to 2x</th><th class="num">Min above 2x</th><th>Result</th><th>Price path (x entry, 2x / 3x dashed)</th></tr>'
+            '<th class="num">Min to 2x</th><th class="num">Min above 2x</th><th>Result</th><th>Price path</th></tr>'
             + body + "</table></div>"), night
 
 

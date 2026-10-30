@@ -187,7 +187,7 @@ check("the comeback underdog spread line is on the section", "Comeback underdog 
 check("the three tables, the halves and last night's games", all(x in html for x in ("<th>Bucket</th>", "<th>Team</th>", "<th>Entry ask</th>", "Older and newer halves", "Last night's games")), True)
 check("every column the coordinator asked for", all(c in html for c in B.COLS), True)
 check("the fair benchmark is stated: 50, 33 and 20%", all(x in html for x in ("about 50% of the time", "3x 33%", "5x 20%")), True)
-check("a price-path chart for last night's contracts", "<svg" in html and "polyline" in html, True)
+check("last night's price path in words, no inline SVG or style (the NBA page forbids both)", ("peak " in html and " at minute " in html, "<svg" in html, "style=" in html), (True, False, False))
 check("header-row tables (no thead), labelled for the phone by the page", "<thead>" not in html, True)
 check("no private-system words in the copy", sandbox_audit.COPY_RE.search(html), None)
 import nba_pace_build as NB
