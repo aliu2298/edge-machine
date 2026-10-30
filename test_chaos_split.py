@@ -98,7 +98,13 @@ state = {"lanes": {
                                    replayed={"b": 1}, trades=[tr(0, "hold", 1.5, True), tr(0, "split", 1.0, True, f2=True, f3=True)])},
     "last_run": "2026-10-27T09:00:00+00:00"}
 # The Sandbox's Chaos section is an index (2026-10-27); the summary and cards render on the sport page.
+# atp_coinflip_tp30 was retired 2026-10-29; its retirement is lifted here so it still stands in as the
+# older lane without split rows (the retirement itself is checked at the end of this file).
+import chaos_lanes
+_lanes = chaos_lanes.LANES
+chaos_lanes.LANES = [dict(c, retired=None) if c["id"] == "atp_coinflip_tp30" else c for c in _lanes]
 h = CB.sport_section("tennis", state)
+chaos_lanes.LANES = _lanes
 text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", h))
 check("the standard header", all(x in text for x in ("Cheap side + resting take-profit", "Rest a split sell: half at 2x, half at 3x.",
                                                   "A fill counts only on a traded print.", "Every lane is shown next to the same entries held.")), True)
@@ -127,6 +133,16 @@ check("the split lane has no Other exits block (it carries only hold and split)"
 check("tables stay header-row tables for the phone labels", ("<thead>" not in h, h.count("<table") == h.count('<div class="tbl"><table')),
       (True, True))
 check("public copy passes the guard", sandbox_audit.COPY_RE.search(text), None)
+print("\nretired 2026-10-29: atp_coinflip_tp30 leaves the live cards for the Retired block")
+rh = CB.sport_section("tennis", state)
+rtext = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", rh))
+rsumm = rh[rh.find('class="chaos-summary"'):rh.find("</table>", rh.find('class="chaos-summary"'))]
+check("the summary and the cards list only the live lane",
+      (re.findall(r'data-lane="([^"]+)"', rsumm), re.findall(r'<details class="section-disclosure" data-lane="([^"]+)" open>', rh)),
+      (["challenger_cheap_split"], ["challenger_cheap_split"]))
+check("it sits in the collapsed Retired block with its date, record and reason",
+      ('id="cheap-side-retired"' in rh, "Retired 2026-10-29 at 13 settled, 6 won; split -2.0%, hold -1.5%" in rtext,
+       "every take-profit exit loses to holding" in rtext), (True, True, True))
 
 print("\nnba_ml_dog_tp50: the split headline and the ask 10-30c sub-band (2026-10-28)")
 N = next(l for l in chaos_lanes.LANES if l["id"] == "nba_ml_dog_tp50")

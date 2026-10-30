@@ -53,6 +53,10 @@ PATH = os.path.join(ROOT, "data", "tennis_totals_ledger.json")
 LANE = "tennis_atp_low_over"
 BASE = "baseline"
 REGISTERED = "2026-10-21"
+# Retired by hand (2026-10-29, Olu): no new entry, for the lane or its baseline, from the dated day on
+# (Eastern). The ledger rows stay and open bets still settle; the lane's workflow stays only to settle them.
+RETIRED_ON = "2026-10-29"
+RETIRED_WHY = "No edge at 48 settled: 38 won v 41.4 priced, -10.4% after fees."
 SERIES = "KXATPGTOTAL"
 MAX_STRIKE = 19.5
 BAND = (0.70, 0.92)              # YES ask, both ends inclusive
@@ -78,6 +82,11 @@ DEFINITION = (
     "0.70-0.92 inclusive, two-sided quote with spread ≤5c, no depth floor. Settled on Kalshi's "
     "official result after the 7% taker fee. Blind baseline: the over on every in-window rung ≤19.5 "
     "with ask 0.70-0.92 and the same quote. Paper, Sandbox only.")
+
+
+def retired(now):
+    """True once the lane is retired as of `now` (its dated day, Eastern, or later)."""
+    return now.astimezone(D.ET).date().isoformat() >= RETIRED_ON
 
 
 def fee(p):
@@ -353,7 +362,7 @@ def run(state, matches, now=None, fetch=D.get):
     seen = {p["id"] for lane in state["rules"].values() for p in lane["picks"]}
     log, errs = [], []
     st = dict(due=0, matched=0, entered=0, baseline=0)
-    todo = due(matches, now)
+    todo = [] if retired(now) else due(matches, now)            # retired: nothing new; settle() below still runs
     events = None
     if todo:
         try:
@@ -411,6 +420,11 @@ def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
     out = argv[argv.index("--out") + 1] if "--out" in argv else PATH
     now = dt.datetime.now(dt.timezone.utc)
+    if "--board" not in argv and retired(now):
+        state = load(out)
+        if not any(p["status"] == "open" for r in state["rules"].values() for p in r["picks"]):
+            print("retired", RETIRED_ON, "and nothing open: no run")
+            return 0
     matches = espn_matches(now)
     if "--board" in argv:
         rows, n_ev = board(matches, now)

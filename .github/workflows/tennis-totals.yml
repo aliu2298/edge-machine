@@ -1,16 +1,11 @@
-name: ATP total games paper research
+name: ATP total games paper research (retired, settles open entries)
 on:
   schedule:
-    # Hourly, to settle entries and refresh the start schedule. Entries need a read 45-15 minutes
-    # before each ATP start, which GitHub's cron cannot hold, so the VPS asks for those (below).
+    # RETIRED 2026-10-29 (Olu): no new entries and no window reads (lane_windows stops asking). The hourly
+    # run only settles the entries still open; with none open it does nothing. Delete this workflow once
+    # the ledger shows no open entry.
     - cron: '23 * * * *'
   workflow_dispatch:
-  # The VPS asks for each read by pushing a stamp (scripts/vps_window_requests.sh,
-  # lane_windows.tennis_windows): one window per ESPN start, 45 to 15 minutes before.
-  push:
-    branches: [main]
-    paths:
-      - "data/tennis_totals_window/**"
 permissions:
   contents: write
 concurrency:
