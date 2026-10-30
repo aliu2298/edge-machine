@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-29T23:21:14.626623+00:00",
+ "last_run": "2026-10-30T02:41:37.182446+00:00",
  "registered": "2026-10-21",
  "rules": {
   "baseline": {
@@ -1264,11 +1264,14 @@
      "line": 19.5,
      "logged": "2026-10-29T18:45:15.743248+00:00",
      "match": "Jerome Kym v Ben Shelton",
+     "payout": 1.0,
      "price": 0.84,
+     "profit": 17.73,
      "rule": "baseline",
+     "settled": "2026-10-30T02:41:37.182446+00:00",
      "side": "yes",
      "start": "2026-10-29T19:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXATPGTOTAL-26OCT29SHEKYM-20",
      "title": "Over 19.5 games",
      "tournament": "Swiss Indoors Basel",
@@ -2537,11 +2540,14 @@
      "line": 19.5,
      "logged": "2026-10-29T18:45:15.743248+00:00",
      "match": "Jerome Kym v Ben Shelton",
+     "payout": 1.0,
      "price": 0.84,
+     "profit": 17.73,
      "rule": "tennis_atp_low_over",
+     "settled": "2026-10-30T02:41:37.182446+00:00",
      "side": "yes",
      "start": "2026-10-29T19:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "ticker": "KXATPGTOTAL-26OCT29SHEKYM-20",
      "title": "Over 19.5 games",
      "tournament": "Swiss Indoors Basel",
@@ -2551,14 +2557,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-28T11:00:15.827209+00:00",
-   "baseline": 0,
-   "due": 1,
-   "entered": 0,
-   "matched": 1,
-   "new": 0
-  },
   {
    "at": "2026-10-28T11:45:15.206675+00:00",
    "baseline": 0,
@@ -2958,6 +2956,14 @@
    "entered": 0,
    "matched": 0,
    "new": 0
+  },
+  {
+   "at": "2026-10-30T02:41:37.182446+00:00",
+   "baseline": 0,
+   "due": 0,
+   "entered": 0,
+   "matched": 0,
+   "new": 0
   }
  ],
  "schedule": [
@@ -2967,6 +2973,7 @@
   "2026-10-30T14:30:00+00:00",
   "2026-10-30T16:30:00+00:00",
   "2026-10-30T17:00:00+00:00",
+  "2026-10-30T18:30:00+00:00",
   "2026-10-30T19:00:00+00:00"
  ],
  "version": "tennis-totals-v1"
