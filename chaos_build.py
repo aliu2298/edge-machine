@@ -273,6 +273,12 @@ def sport_section(page, state=None, retired=True):
     sample = [L for L in every if L.get("insample") and not L.get("retired")]
     body = (summary(lanes, spread=True) + "".join(lane_html(L) for L in lanes)) if lanes else (
         '<p class="sm mut">No cheap-side lane on this page has replayed yet.</p>')
+    if page == "nba" and lanes:                                 # the NO fade (2026-10-30), under the YES split it mirrors
+        try:
+            import nba_wm_nofade_build
+            body += nba_wm_nofade_build.card(chaos=state)
+        except Exception:                                       # noqa: BLE001
+            pass
     if sample:                                                  # a lane's in-sample backfill: its own labelled row, never the headline
         body += in_sample_block(sample)
     if gone and retired:                                        # the NBA page lists its retired lanes in its own bottom fold
@@ -342,7 +348,16 @@ def index(lanes):
                     f'<td>{esc("retired " + L["retired"]["on"] if L.get("retired") else status_of(L, r["events"]))}</td></tr>')
     return ('<div class="tbl"><table class="chaos-index"><tr><th>Lane</th><th>Page</th><th class="num">Entries</th>'
             '<th class="num">Settled events</th><th class="num">Won</th><th class="num">Split ROI</th><th class="num">Hold ROI</th><th>Status</th></tr>'
-            + "".join(rows) + "</table></div>")
+            + "".join(rows + _extra_index_rows()) + "</table></div>")
+
+
+def _extra_index_rows():
+    """Cheap-side lanes that keep their own ledger (the NBA win margin NO fade, 2026-10-30)."""
+    try:
+        import nba_wm_nofade_build
+        return [nba_wm_nofade_build.index_row()]
+    except Exception:                                           # noqa: BLE001
+        return []
 
 
 def in_play_index():
