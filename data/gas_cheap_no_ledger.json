@@ -482,16 +482,16 @@
   "KXAAAGASD-26OCT31": "2026-10-30T14:57:20.807863+00:00"
  },
  "lane": "gas_cheap_no",
- "last_success": "2026-10-30T17:30:35.220820+00:00",
+ "last_success": "2026-10-30T20:51:31.800785+00:00",
  "observations": {
-  "at": "2026-10-30T17:30:35.220820+00:00",
+  "at": "2026-10-30T20:51:31.800785+00:00",
   "checking": 0,
   "entered": 0,
   "events": 1,
   "filled": 0,
-  "skipped": 0,
+  "skipped": 16,
   "unverified": 0,
-  "waiting": 16
+  "waiting": 0
  },
  "skips": {
   "KXAAAGASD-26OCT27-4.2450": {
@@ -788,6 +788,86 @@
    "event": "KXAAAGASD-26OCT30",
    "reason": "no quote with a 5c spread and a NO ask of 0.15-0.30 inside 6h",
    "word": "Above 4.2650"
+  },
+  "KXAAAGASD-26OCT31-4.1650": {
+   "event": "KXAAAGASD-26OCT31",
+   "reason": "no quote with a 5c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 4.1650"
+  },
+  "KXAAAGASD-26OCT31-4.1700": {
+   "event": "KXAAAGASD-26OCT31",
+   "reason": "no quote with a 5c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 4.1700"
+  },
+  "KXAAAGASD-26OCT31-4.1750": {
+   "event": "KXAAAGASD-26OCT31",
+   "reason": "no quote with a 5c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 4.1750"
+  },
+  "KXAAAGASD-26OCT31-4.1850": {
+   "event": "KXAAAGASD-26OCT31",
+   "reason": "no quote with a 5c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 4.1850"
+  },
+  "KXAAAGASD-26OCT31-4.1900": {
+   "event": "KXAAAGASD-26OCT31",
+   "reason": "no quote with a 5c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 4.1900"
+  },
+  "KXAAAGASD-26OCT31-4.1950": {
+   "event": "KXAAAGASD-26OCT31",
+   "reason": "no quote with a 5c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 4.1950"
+  },
+  "KXAAAGASD-26OCT31-4.2000": {
+   "event": "KXAAAGASD-26OCT31",
+   "reason": "no quote with a 5c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 4.2000"
+  },
+  "KXAAAGASD-26OCT31-4.2050": {
+   "event": "KXAAAGASD-26OCT31",
+   "reason": "no quote with a 5c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 4.2050"
+  },
+  "KXAAAGASD-26OCT31-4.2100": {
+   "event": "KXAAAGASD-26OCT31",
+   "reason": "no quote with a 5c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 4.2100"
+  },
+  "KXAAAGASD-26OCT31-4.2150": {
+   "event": "KXAAAGASD-26OCT31",
+   "reason": "no quote with a 5c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 4.2150"
+  },
+  "KXAAAGASD-26OCT31-4.2200": {
+   "event": "KXAAAGASD-26OCT31",
+   "reason": "no quote with a 5c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 4.2200"
+  },
+  "KXAAAGASD-26OCT31-4.2250": {
+   "event": "KXAAAGASD-26OCT31",
+   "reason": "no quote with a 5c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 4.2250"
+  },
+  "KXAAAGASD-26OCT31-4.2300": {
+   "event": "KXAAAGASD-26OCT31",
+   "reason": "no quote with a 5c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 4.2300"
+  },
+  "KXAAAGASD-26OCT31-4.2350": {
+   "event": "KXAAAGASD-26OCT31",
+   "reason": "no quote with a 5c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 4.2350"
+  },
+  "KXAAAGASD-26OCT31-4.2400": {
+   "event": "KXAAAGASD-26OCT31",
+   "reason": "no quote with a 5c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 4.2400"
+  },
+  "KXAAAGASD-26OCT31-4.2450": {
+   "event": "KXAAAGASD-26OCT31",
+   "reason": "no quote with a 5c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 4.2450"
   }
  },
  "voided": {
