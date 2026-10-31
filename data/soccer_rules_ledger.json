@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-31T16:16:15.026299+00:00",
+ "last_run": "2026-10-31T16:31:26.785128+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -81,6 +81,29 @@
      "ticker": "KXMLSTOTAL-26OCT28ATXRSL-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Austin FC O-D+ v Real Salt Lake O-D- \u00b7 Under 3.5 NO 0.62"
+    },
+    {
+     "ask": 0.4,
+     "bid": 0.39,
+     "event": "KXMLSTOTAL-26OCT31NYCMTL",
+     "group": "A",
+     "id": "A1:KXMLSTOTAL-26OCT31NYCMTL",
+     "labels": {
+      "away": "O-D+",
+      "home": "O-D-"
+     },
+     "league": "MLS",
+     "line": 3.5,
+     "logged": "2026-10-31T16:31:26.785128+00:00",
+     "match": "New York City FC v CF Montr\u00e9al",
+     "price": 0.61,
+     "rule": "A1",
+     "side": "no",
+     "start": "2026-10-31T18:00Z",
+     "status": "open",
+     "ticker": "KXMLSTOTAL-26OCT31NYCMTL-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "New York City FC O-D- v CF Montr\u00e9al O-D+ \u00b7 Under 3.5 NO 0.61"
     }
    ]
   },
@@ -1044,6 +1067,29 @@
      "ticker": "KXMLSTOTAL-26OCT24SDSEA-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "San Diego FC O+D+ v Seattle Sounders FC O+D- \u00b7 Over 3.5 YES 0.48"
+    },
+    {
+     "ask": 0.45,
+     "bid": 0.43,
+     "event": "KXMLSTOTAL-26OCT31CINPHI",
+     "group": "C",
+     "id": "C1:KXMLSTOTAL-26OCT31CINPHI",
+     "labels": {
+      "away": "O+D-",
+      "home": "O+D+"
+     },
+     "league": "MLS",
+     "line": 3.5,
+     "logged": "2026-10-31T16:31:26.785128+00:00",
+     "match": "FC Cincinnati v Philadelphia Union",
+     "price": 0.45,
+     "rule": "C1",
+     "side": "yes",
+     "start": "2026-10-31T18:00Z",
+     "status": "open",
+     "ticker": "KXMLSTOTAL-26OCT31CINPHI-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "FC Cincinnati O+D+ v Philadelphia Union O+D- \u00b7 Over 3.5 YES 0.45"
     }
    ]
   },
@@ -3494,14 +3540,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-28T23:01:41.057064+00:00",
-   "candidates": 5,
-   "due": 11,
-   "labelled": 11,
-   "matched": 5,
-   "new": 3
-  },
-  {
    "at": "2026-10-28T23:31:45.740316+00:00",
    "candidates": 3,
    "due": 6,
@@ -3900,6 +3938,14 @@
    "labelled": 7,
    "matched": 3,
    "new": 0
+  },
+  {
+   "at": "2026-10-31T16:31:26.785128+00:00",
+   "candidates": 5,
+   "due": 11,
+   "labelled": 11,
+   "matched": 5,
+   "new": 2
   }
  ],
  "version": "soccer-rules-v1"
