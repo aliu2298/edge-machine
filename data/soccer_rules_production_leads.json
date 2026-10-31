@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-31T20:30:18+00:00",
+ "board_built_at": "2026-10-31T20:39:48+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sr_a6": true,
@@ -81,6 +81,41 @@
    "source": "sr_a6",
    "sport": "soccer_o25",
    "status": "hit"
+  },
+  "2026-10-31|FC Cincinnati|Philadelphia Union|Over 3.5 goals \u00b7 MLS O+D\u2212 v O+D+ \u00b7 over 3.5": {
+   "away": "Philadelphia Union",
+   "bet": {
+    "kind": "total_gte",
+    "n": 4
+   },
+   "date": "2026-10-31",
+   "edge_at_log": null,
+   "first_seen": "2026-10-31",
+   "headline": "Over 3.5 goals",
+   "home": "FC Cincinnati",
+   "id": "2026-10-31|FC Cincinnati|Philadelphia Union|Over 3.5 goals \u00b7 MLS O+D\u2212 v O+D+ \u00b7 over 3.5",
+   "kickoff": "2026-10-31T18:00Z",
+   "lane": "production",
+   "league": "MLS",
+   "match": "FC Cincinnati v Philadelphia Union",
+   "pair": "sr_c1|soccer_u35",
+   "price_at_log": 0.45,
+   "published_at": "2026-10-31T20:39:48+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Over 3.5 goals",
+    "event": "KXMLSTOTAL-26OCT31CINPHI",
+    "market": "KXMLSTOTAL-26OCT31CINPHI-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.45,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_c1:KXMLSTOTAL-26OCT31CINPHI-4",
+   "source": "sr_c1",
+   "sport": "soccer_u35",
+   "status": "miss"
   },
   "2026-10-31|Hull City|Ipswich Town|Under 2.5 goals \u00b7 EPL O\u2212D\u2212 v an O+ opponent \u00b7 under 2.5": {
    "away": "Ipswich Town",
@@ -176,18 +211,18 @@
    "ready_at": "2026-10-29T00:59:00+00:00",
    "route": "moved by hand on 2026-10-28",
    "routing": {
-    "leads": 0,
+    "leads": 1,
     "problem": null,
-    "routed": 0,
+    "routed": 1,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 0,
-   "sandbox_roi": null,
-   "sandbox_roi_fee": null,
+   "sandbox_n": 1,
+   "sandbox_roi": -1.0,
+   "sandbox_roi_fee": -1.0,
    "timing": {
     "late": [],
     "timed": 0,
@@ -268,5 +303,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-31T20:30:18+00:00"
+ "updated_at": "2026-10-31T20:39:48+00:00"
 }

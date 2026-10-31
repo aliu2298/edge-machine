@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-31T19:31:10.093449+00:00",
+ "last_run": "2026-10-31T20:39:46.776190+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -96,11 +96,14 @@
      "line": 3.5,
      "logged": "2026-10-31T16:31:26.785128+00:00",
      "match": "New York City FC v CF Montr\u00e9al",
+     "payout": 1.0,
      "price": 0.61,
+     "profit": 59.58,
      "rule": "A1",
+     "settled": "2026-10-31T20:39:46.776190+00:00",
      "side": "no",
      "start": "2026-10-31T18:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXMLSTOTAL-26OCT31NYCMTL-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "New York City FC O-D- v CF Montr\u00e9al O-D+ \u00b7 Under 3.5 NO 0.61"
@@ -175,11 +178,14 @@
      "line": 3.5,
      "logged": "2026-10-31T16:01:30.489822+00:00",
      "match": "Bayern Munich v Borussia Dortmund",
+     "payout": 1.0,
      "price": 0.58,
+     "profit": 67.49,
      "rule": "A2",
+     "settled": "2026-10-31T20:39:46.776190+00:00",
      "side": "yes",
      "start": "2026-10-31T17:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXBUNDESLIGATOTAL-26OCT31BMUBVB-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Bayern Munich O+D- v Borussia Dortmund O+D- \u00b7 Over 3.5 YES 0.58"
@@ -742,11 +748,14 @@
      "line": 3.5,
      "logged": "2026-10-31T16:01:30.489822+00:00",
      "match": "Real Betis v M\u00e1laga",
+     "payout": 0.0,
      "price": 0.44,
+     "profit": -100.0,
      "rule": "B2",
+     "settled": "2026-10-31T20:39:46.776190+00:00",
      "side": "yes",
      "start": "2026-10-31T17:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXLALIGATOTAL-26OCT31RBBMCF-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Real Betis O+D- v M\u00e1laga O-D+ \u00b7 Over 3.5 YES 0.44"
@@ -1146,11 +1155,14 @@
      "line": 3.5,
      "logged": "2026-10-31T16:31:26.785128+00:00",
      "match": "FC Cincinnati v Philadelphia Union",
+     "payout": 0.0,
      "price": 0.45,
+     "profit": -100.0,
      "rule": "C1",
+     "settled": "2026-10-31T20:39:46.776190+00:00",
      "side": "yes",
      "start": "2026-10-31T18:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXMLSTOTAL-26OCT31CINPHI-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "FC Cincinnati O+D+ v Philadelphia Union O+D- \u00b7 Over 3.5 YES 0.45"
@@ -2340,11 +2352,14 @@
      "line": null,
      "logged": "2026-10-31T16:01:30.489822+00:00",
      "match": "Bayern Munich v Borussia Dortmund",
+     "payout": 1.0,
      "price": 0.65,
+     "profit": 50.17,
      "rule": "D1",
+     "settled": "2026-10-31T20:39:46.776190+00:00",
      "side": "yes",
      "start": "2026-10-31T17:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXBUNDESLIGABTTS-26OCT31BMUBVB-BTTS",
      "title": "Both Teams To Score",
      "why": "Bayern Munich O+D- v Borussia Dortmund O+D- \u00b7 BTTS YES 0.65"
@@ -3682,14 +3697,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-29T21:01:39.931775+00:00",
-   "candidates": 0,
-   "due": 0,
-   "labelled": 0,
-   "matched": 0,
-   "new": 0
-  },
-  {
    "at": "2026-10-29T21:31:38.261644+00:00",
    "candidates": 0,
    "due": 0,
@@ -4087,6 +4094,14 @@
    "due": 7,
    "labelled": 7,
    "matched": 2,
+   "new": 0
+  },
+  {
+   "at": "2026-10-31T20:39:46.776190+00:00",
+   "candidates": 0,
+   "due": 2,
+   "labelled": 2,
+   "matched": 0,
    "new": 0
   }
  ],
