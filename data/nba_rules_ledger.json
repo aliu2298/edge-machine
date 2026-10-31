@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-31T02:23:14.743700+00:00",
+ "last_run": "2026-10-31T08:36:48.313221+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -3864,11 +3864,14 @@
      },
      "logged": "2026-10-30T22:30:15.403581+00:00",
      "match": "HOU @ DAL",
+     "payout": 0.0,
      "price": 0.52,
+     "profit": -100.0,
      "rule": "R7",
+     "settled": "2026-10-31T08:36:48.313221+00:00",
      "side": "no",
      "start": "2026-10-31T00:00Z",
-     "status": "open",
+     "status": "lost",
      "strike": 109.5,
      "team": "DAL",
      "ticker": "KXNBATEAMTOTAL-26OCT30HOUDAL-DAL110",
@@ -3886,11 +3889,14 @@
      },
      "logged": "2026-10-30T22:30:15.403581+00:00",
      "match": "HOU @ DAL",
+     "payout": 1.0,
      "price": 0.47,
+     "profit": 105.15,
      "rule": "R7",
+     "settled": "2026-10-31T08:36:48.313221+00:00",
      "side": "no",
      "start": "2026-10-31T00:00Z",
-     "status": "open",
+     "status": "won",
      "strike": 114.5,
      "team": "HOU",
      "ticker": "KXNBATEAMTOTAL-26OCT30HOUDAL-HOU115",
@@ -3908,11 +3914,14 @@
      },
      "logged": "2026-10-30T22:30:15.403581+00:00",
      "match": "LAC @ MIN",
+     "payout": 0.0,
      "price": 0.52,
+     "profit": -100.0,
      "rule": "R7",
+     "settled": "2026-10-31T08:36:48.313221+00:00",
      "side": "no",
      "start": "2026-10-31T00:00Z",
-     "status": "open",
+     "status": "lost",
      "strike": 115.5,
      "team": "MIN",
      "ticker": "KXNBATEAMTOTAL-26OCT30LACMIN-MIN116",
@@ -3930,11 +3939,14 @@
      },
      "logged": "2026-10-30T22:30:15.403581+00:00",
      "match": "LAC @ MIN",
+     "payout": 1.0,
      "price": 0.59,
+     "profit": 64.76,
      "rule": "R7",
+     "settled": "2026-10-31T08:36:48.313221+00:00",
      "side": "no",
      "start": "2026-10-31T00:00Z",
-     "status": "open",
+     "status": "won",
      "strike": 110.5,
      "team": "LAC",
      "ticker": "KXNBATEAMTOTAL-26OCT30LACMIN-LAC111",
@@ -3945,11 +3957,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-26T23:00:15.060833+00:00",
-   "due": 5,
-   "new": 3
-  },
   {
    "at": "2026-10-26T23:20:39.506484+00:00",
    "due": 3,
@@ -4197,6 +4204,11 @@
   },
   {
    "at": "2026-10-31T02:23:14.743700+00:00",
+   "due": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-10-31T08:36:48.313221+00:00",
    "due": 0,
    "new": 0
   }
