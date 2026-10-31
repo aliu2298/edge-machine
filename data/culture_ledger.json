@@ -1,12 +1,12 @@
 {
  "lanes": {
   "culture_endgame": {
-   "error": "events: Pagination limit reached; no entries from this scan",
-   "last_run": "2026-10-31T21:00:29.055049+00:00",
-   "last_success": "2026-10-31T02:00:18.087577+00:00",
+   "error": null,
+   "last_run": "2026-10-31T21:21:24.982616+00:00",
+   "last_success": "2026-10-31T21:21:24.982616+00:00",
    "observations": {
-    "at": "2026-10-31T02:00:18.087577+00:00",
-    "events": 974,
+    "at": "2026-10-31T21:21:24.982616+00:00",
+    "events": 928,
     "reasons": {},
     "retired": "2026-10-24"
    },
@@ -547,12 +547,12 @@
    ]
   },
   "culture_fav_band": {
-   "error": "events: Pagination limit reached; no entries from this scan",
-   "last_run": "2026-10-31T21:00:29.055049+00:00",
-   "last_success": "2026-10-31T02:00:18.087577+00:00",
+   "error": null,
+   "last_run": "2026-10-31T21:21:24.982616+00:00",
+   "last_success": "2026-10-31T21:21:24.982616+00:00",
    "observations": {
-    "at": "2026-10-31T02:00:18.087577+00:00",
-    "events": 974,
+    "at": "2026-10-31T21:21:24.982616+00:00",
+    "events": 928,
     "reasons": {},
     "retired": "2026-10-24"
    },
@@ -904,21 +904,14 @@
    ]
   },
   "mentions_rate": {
-   "error": "events: Pagination limit reached; no entries from this scan",
-   "last_run": "2026-10-31T21:00:29.055049+00:00",
-   "last_success": "2026-10-31T02:00:18.087577+00:00",
+   "error": null,
+   "last_run": "2026-10-31T21:21:24.982616+00:00",
+   "last_success": "2026-10-31T21:21:24.982616+00:00",
    "observations": {
-    "at": "2026-10-31T02:00:18.087577+00:00",
-    "events": 974,
-    "news_guard": [],
-    "reasons": {
-     "already near-certain (under 10c or over 90c)": 13,
-     "edge 5c+": 7,
-     "edge under 5c": 1,
-     "monthly or company series (excluded 2026-10-26)": 76,
-     "no quote or spread too wide": 7,
-     "transcript search failed": 4
-    }
+    "at": "2026-10-31T21:21:24.982616+00:00",
+    "events": 928,
+    "reasons": {},
+    "retired": "2026-10-31"
    },
    "picks": [
     {
@@ -2446,12 +2439,12 @@
    ]
   },
   "rt_model": {
-   "error": "events: Pagination limit reached; no entries from this scan",
-   "last_run": "2026-10-31T21:00:29.055049+00:00",
-   "last_success": "2026-10-31T02:00:18.087577+00:00",
+   "error": null,
+   "last_run": "2026-10-31T21:21:24.982616+00:00",
+   "last_success": "2026-10-31T21:21:24.982616+00:00",
    "observations": {
-    "at": "2026-10-31T02:00:18.087577+00:00",
-    "events": 974,
+    "at": "2026-10-31T21:21:24.982616+00:00",
+    "events": 928,
     "reasons": {
      "edge 5c+": 3,
      "edge under 5c": 2,
