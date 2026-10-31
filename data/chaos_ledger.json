@@ -11230,6 +11230,11 @@
     "KXATPCHALLENGERMATCH-26OCT31HARATM": 1,
     "KXATPCHALLENGERMATCH-26OCT31WONJAS": 1
    },
+   "retired": {
+    "at": "34 settled, 10 won; split +0.8%, hold +19.6%",
+    "on": "2026-10-31",
+    "reason": "decided at 34 settled: the split sell (+0.8%) lost to holding (+19.6%); the hold result is 10 cheap-underdog wins, not a proven edge"
+   },
    "series": [
     "KXATPCHALLENGERMATCH"
    ],
@@ -35183,7 +35188,7 @@
   },
   "nba_ml_dog_tp50": {
    "ask_rule_since": "2026-10-30T14:58:12.680303+00:00",
-   "caution": "Read the split against its hold row; the ask 10-30c row is the same entries narrowed, not a new lane.",
+   "caution": "Read the split against its hold row; the ask 10-30c row is the same entries narrowed, not a new lane. Reviewed at 31: kept as paper (beats hold, not strong enough to promote).",
    "duration_min": 160,
    "entry_hours": [
     1
@@ -146804,7 +146809,7 @@
    "watch": false
   }
  },
- "last_run": "2026-10-31T09:00:18.420579+00:00",
+ "last_run": "2026-10-31T14:43:43.571255+00:00",
  "runs": [
   {
    "at": "2026-10-25T04:00:26.997081+00:00",
@@ -147056,6 +147061,10 @@
   },
   {
    "at": "2026-10-31T09:00:18.420579+00:00",
+   "new": {}
+  },
+  {
+   "at": "2026-10-31T14:43:43.571255+00:00",
    "new": {}
   }
  ],
