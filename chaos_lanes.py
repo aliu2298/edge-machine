@@ -138,9 +138,14 @@ LANES = [
          retired=dict(on="2026-10-27", at="45 settled, 13 won; hold -3.2%, split -7.9%, every target exit negative",
                       reason="superseded by challenger_cheap_split (the 15-30c band)"),
          note="A Challenger player priced 10-40c an hour before the match, with a resting sell at +30%. Start from the first in-play price movement (Kalshi's occurrence time is near the END). 24h books are empty, so 1h only."),
+    # 2026-10-31 (Olu): single sells at 2x, 3x and 4x join the tracked exits, on the same entries (no reset): the
+    # split stays the headline, hold its comparison, every +20-100% target still tracked. Added to the entries
+    # already recorded by the engine's additive backfill.
     dict(id="cfb_dog_tp50", label="College football underdog · sell +50%", series=["KXNCAAFGAME"], picker=DOG,
          entry_hours=(1, 24), headline="tp50", since=FIRST_NIGHT, duration_min=210, start=espn_start("football/college-football"),
-         note="A side priced 10-40c, bought 1h and 24h before kickoff, with a resting sell at +50%."),
+         exits=C.LANE_EXITS + C.SINGLES,
+         note="A side priced 10-40c, bought 1h and 24h before kickoff, with a resting sell at +50%; the split, and "
+              "single sells at 2x, 3x and 4x, are tracked on the same entries."),
     # RETIRED 2026-10-29 (Olu): no new entries from that night on; its rows stay on the ledger as they are.
     dict(id="atp_coinflip_tp30", label="ATP coin-flip · sell +30%", series=["KXATPMATCH"],
          picker=C.one_per_event(C.band_picker(0.40, 0.60, ("yes",))), entry_hours=(1,), headline="tp30", watch=True,
@@ -161,8 +166,9 @@ LANES = [
     # the +50% sell capped the 4 outright winners (+146% to +228% held). Hold stays its comparison row and
     # every other exit is still tracked. SUB-BAND ask 10-30c: the same entries narrowed (the 37-40c entries
     # reached 2x hardest), split v hold, shown under the lane; the 10-40c population stays the lane.
+    # 2026-10-31 (Olu): single sells at 2x, 3x and 4x tracked on the same entries too (additive backfill, no reset).
     dict(id="nba_ml_dog_tp50", label="NBA moneyline underdog · split 2x / 3x", series=["KXNBAGAME"], picker=DOG,
-         entry_hours=(1,), headline=C.SPLIT, since=FIRST_NIGHT, duration_min=160, start=espn_start("basketball/nba"),
+         entry_hours=(1,), headline=C.SPLIT, exits=C.LANE_EXITS + C.SINGLES, since=FIRST_NIGHT, duration_min=160, start=espn_start("basketball/nba"),
          sub_bands=(dict(id="ask_10_30", label="ask 10-30c", lo=0.10, hi=0.30),),
          caution="Read the split against its hold row; the ask 10-30c row is the same entries narrowed, not a new lane. "
                  "Reviewed at 31: kept as paper (beats hold, not strong enough to promote).",

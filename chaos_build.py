@@ -195,6 +195,23 @@ def status_of(L, events):
     return "in-sample backfill, not evidence" if L.get("insample") else MS.status(events)
 
 
+# The ROI basis change (2026-10-31, Olu): chaos_replay.stats() moved from sum profit / sum cost to the equal-stake
+# mean. Each card says so once, with its split and hold as they read on the old basis that day, so nothing
+# changes silently. {lane: {entry hours: (split, hold)}}, frozen from the ledger on 2026-10-31.
+ROI_BASIS_ON = "2026-10-31"
+ROI_BASIS_OLD = {"atp_coinflip_tp30": {"1": {"hold": 0.0587, "split": 0.0514}}, "cfb_dog_tp50": {"1": {"hold": 0.6784, "split": 0.3225}, "24": {"hold": 0.1828, "split": 0.1925}}, "challenger_cheap_split": {"1": {"hold": 0.1961, "split": 0.0084}}, "challenger_dog_tp30": {"1": {"hold": -0.1593, "split": -0.1586}}, "nba_ml_dog_tp50": {"1": {"hold": -0.0531, "split": 0.059}}, "nba_tt_cheap_tp30": {"1": {"hold": -1.0, "split": -1.0}}, "nba_winmargin_split": {"1": {"hold": 0.0337, "split": 0.3934}}, "nba_winmargin_split_insample": {"1": {"hold": -0.1384, "split": 0.4555}}}
+
+
+def basis_line(L):
+    old = ROI_BASIS_OLD.get(L.get("id")) or {}
+    if not old:
+        return ""
+    parts = "; ".join(f"{h}h split {_pct(v['split'], sign=True)}, hold {_pct(v['hold'], sign=True)}"
+                      for h, v in sorted(old.items(), key=lambda kv: int(kv[0])))
+    return (f'<p class="sm mut roi-basis">ROI basis changed {ROI_BASIS_ON} from cost-weighted to equal-stake (the mean of each '
+            f'entry\'s ROI, the same quantity its z tests); old figure: {esc(parts)}.</p>')
+
+
 def _checking_line(L):
     bad, waiting = unverified(L)
     if not L.get("ask_rule_since"):
@@ -213,7 +230,7 @@ def lane_html(L):
     pending = C.SPLIT in (L.get("exits") or ()) and not _by(L, C.SPLIT) and trades
     return f"""<details class="section-disclosure" data-lane="{esc(L['id'])}" open><summary><b>{esc(L.get('label') or L['id'])}</b><span>{len(L.get('replayed') or {})} events replayed · {entries} entries · {split_hold(L)["events"]} settled events entered · {record_words(L)}</span></summary>
 <p class="sm">{esc(L.get('note') or '')}{(' <b>WATCH lane.</b>') if L.get('watch') else ''}{(' <b>' + esc(L['caution']) + '</b>') if L.get('caution') else ''} Bought {esc(hours)} before the start. Series {esc(', '.join(L.get('series') or []))}. Review at {C.REVIEW_N} settled events, decide at {C.PROMOTE_N}: one game, match or fight is one outcome, however many entries it holds.</p>
-{voided_line(L)}{_checking_line(L)}<p class="sm"><b>Split v hold</b>{(' · the split joined this lane on 2026-10-27 and is being added to its earlier entries, newest events first') if pending else ''}</p>
+{voided_line(L)}{_checking_line(L)}{basis_line(L)}<p class="sm"><b>Split v hold</b>{(' · the split joined this lane on 2026-10-27 and is being added to its earlier entries, newest events first') if pending else ''}</p>
 {split_table(L)}
 {f'<details class="section-disclosure"><summary><b>Other exits</b><span>{len(others)} variants · the original targets and stops, each against its hold control</span></summary>{variant_table(L, skip=(C.SPLIT,))}</details>' if others else ''}
 <details class="section-disclosure"><summary><b>Trades</b><span>latest 30 entries · split, T target, S stop, H held to settlement</span></summary>{trade_list(L)}</details></details>"""

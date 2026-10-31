@@ -105,7 +105,11 @@ LANE_EXITS = tuple(EXITS) + (SPLIT,)
 # The whole stake resting at 2x (2026-10-30, the NBA win margin lane): the split's first leg alone. Not in
 # LANE_EXITS: only a lane that lists it in its own `exits` is replayed with it.
 X2 = "x2"
-LEGGED = {SPLIT: SPLIT_LEGS, X2: ((2.0, 1.0),)}
+# The whole stake resting at 3x or at 4x (2026-10-31, Olu, the college football underdog): single sells beside
+# the split, filled on a traded print at or above the target like every leg, else held. Opt-in per lane too.
+X3, X4 = "x3", "x4"
+SINGLES = (X2, X3, X4)
+LEGGED = {SPLIT: SPLIT_LEGS, X2: ((2.0, 1.0),), X3: ((3.0, 1.0),), X4: ((4.0, 1.0),)}
 
 
 def lane_exits(lane):
@@ -125,8 +129,8 @@ def split_key(key):
 def exit_label(key):
     if key == SPLIT:
         return "split: half at 2x, half at 3x"
-    if key == X2:
-        return "sell everything at 2x"
+    if key in SINGLES:
+        return f"sell everything at {LEGGED[key][0][0]:g}x"
     v = EXITS[key]
     base = "hold to settlement" if v["tp"] is None else f"sell at +{round(v['tp'] * 100)}%"
     return base + ("" if v["stop"] is None else f", stop {round(v['stop'] * 100)}%")
@@ -717,14 +721,17 @@ def _rows(trades, variant):
 
 
 def stats(rows):
-    """n, hit rate, ROI after fees (sum profit / sum cost), z by night (None under 3 nights or a degenerate variance), nights, per-reason counts."""
+    """n, hit rate, ROI after fees, z by night (None under 3 nights or a degenerate variance), nights, per-reason counts.
+
+    ROI is the EQUAL-STAKE mean, the mean of each trade's ROI (2026-10-31, Olu): the same quantity its z tests,
+    the basis of the mentions_split lanes and of the $1-a-bet staking. It was sum profit / sum cost (one
+    contract a trade) until then, which weighted a 30c entry three times a 10c one; the cards say so once."""
     n = len(rows)
     if not n:
         return dict(n=0, won=0, hit=None, roi=None, z=None, nights=0, reasons={})
-    cost_sum = sum(t["cost"] for t in rows)
-    roi = sum(t["profit"] for t in rows) / cost_sum
     r = [t["roi"] for t in rows]
     mean = sum(r) / n
+    roi = mean
     nights = {}
     for t in rows:
         nights.setdefault(t["night"], []).append(t["roi"] - mean)
