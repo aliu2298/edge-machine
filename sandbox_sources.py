@@ -144,8 +144,13 @@ TENNIS_RETIRED_ON_2026_10_29 = ("tennis_combo2|tennis_combo",)
 # logging; their rows stay, their open bets still settle, and the Crypto page lists them in its Retired fold.
 RETIRED_TAIL_2026_10_31 = (" No new entries from 2026-10-31; its rows stay on file and its open bets "
                            "still settle.")
-CRYPTO_BOTH_RETIRED_WHY = ("Retired 2026-10-31 by Olu: pulled from Production 2026-10-27; the both-sides angle was found "
-                           "on its own window and lost live." + RETIRED_TAIL_2026_10_31)
+CRYPTO_BOTH_RETIRED_WHY = {
+    "crypto_eth_fav_both": ("Retired 2026-10-31 by Olu: pulled from Production 2026-10-27; the both-sides angle was found on its "
+                            "own window and lost live (3-4, -36.2%)." + RETIRED_TAIL_2026_10_31),
+    "crypto_sol_fav_both": ("Retired 2026-10-31 by Olu: pulled from Production 2026-10-27; 3-1, +4.1% over 4 market-days, too "
+                            "small to read; retired with the ETH twin because the both-sides angle was found on its own window."
+                            + RETIRED_TAIL_2026_10_31),
+}
 
 # The registry. `connected` is the honest bit: it says whether this run can actually
 # reach the source, not whether the site exists.
@@ -1440,7 +1445,7 @@ SOURCES = {
     "crypto_eth_fav_both": dict(
         label="Crypto ETH favourite, both sides (Yes and No 0.60-0.80, 3 hours to the close)",
         kind="Rule", connected=True, site="edge-machine", sports=[],
-        retired_sports={"crypto_fav": CRYPTO_BOTH_RETIRED_WHY},
+        retired_sports={"crypto_fav": CRYPTO_BOTH_RETIRED_WHY["crypto_eth_fav_both"]},
         baseline="favourite_population",
         # Both sides: one YES and one NO per close (one_per_coin_close_side), so the blind
         # population is the favourites on either side (no favourite_side).
@@ -1468,7 +1473,7 @@ SOURCES = {
     "crypto_sol_fav_both": dict(
         label="Crypto SOL favourite, both sides (Yes and No 0.60-0.80, 3 hours to the close)",
         kind="Rule", connected=True, site="edge-machine", sports=[],
-        retired_sports={"crypto_fav": CRYPTO_BOTH_RETIRED_WHY},
+        retired_sports={"crypto_fav": CRYPTO_BOTH_RETIRED_WHY["crypto_sol_fav_both"]},
         baseline="favourite_population",
         # Both sides: one YES and one NO per close (one_per_coin_close_side), so the blind
         # population is the favourites on either side (no favourite_side).

@@ -29,7 +29,10 @@ for lane in BOTH:
           (m["sports"], list(m["retired_sports"])), ([], ["crypto_fav"]))
     why = m["retired_sports"]["crypto_fav"]
     check(f"{lane}: the reason names the Production pull and the retirement date",
-          all(w in why for w in ("pulled from Production 2026-10-27", "Retired 2026-10-31", "found on its own window and lost live")), True)
+          all(w in why for w in ("pulled from Production 2026-10-27", "Retired 2026-10-31")), True)
+    check(f"{lane}: the reason is accurate for this lane",
+          ("lost live (3-4, -36.2%)" in why) if "eth" in lane else
+          ("3-1, +4.1% over 4 market-days, too small to read" in why and "retired with the ETH twin" in why and "lost live" not in why), True)
     check(f"{lane}: the Production removal keeps its record", T.PAIR_REMOVALS[f"{lane}|crypto_fav"],
           dict(removed_on="2026-10-27", keep_record=True))
 check("the live crypto lanes still fetch", all(S.SOURCES[n]["sports"] == ["crypto_fav"] for n in
@@ -45,7 +48,7 @@ check("the page has a Retired fold", "Retired rules" in html and bool(retired), 
 text = re.sub(r"<[^>]+>", " ", retired)
 check("both lanes are in it, with their records", all(n in text for n in ("ETH favourite, both sides", "SOL favourite, both sides")), True)
 check("their record is shown (won-lost and ROI)", len(re.findall(r"\d+[–-]\d+", text)) >= 2 and "%" in text, True)
-check("the retirement reason is on the page", "Retired 2026-10-31 by Olu" in html, True)
+check("each lane's own reason is on the page", "lost live (3-4, -36.2%)" in html and "too small to read" in html, True)
 live = html.split('id="retired"', 1)[0]
 check("neither lane is in the live list", "both sides" not in re.sub(r"<[^>]+>", " ", live.split('id="rules"', 1)[-1]), True)
 check("the live lanes are", all(n in html for n in ("Favourite band, below", "Favourite band 60")), True)
