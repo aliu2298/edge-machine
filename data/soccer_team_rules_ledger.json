@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-31T12:31:11.780185+00:00",
+ "last_run": "2026-10-31T13:01:21.068606+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -2432,6 +2432,33 @@
      "ticker": "KXBUNDESLIGATEAMTOTAL-26OCT30SVEM05-SVE3",
      "title": "Will Elversberg score over 2.5 goals?",
      "why": "SV Elversberg O+D+ v Mainz O+D- \u00b7 3+ NO 0.86"
+    },
+    {
+     "ask": 0.19,
+     "bid": 0.17,
+     "event": "KXBUNDESLIGATEAMTOTAL-26OCT31FCASCF",
+     "group": "C",
+     "id": "T6:KXBUNDESLIGATEAMTOTAL-26OCT31FCASCF:home",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D+"
+     },
+     "league": "Bundesliga",
+     "line": 2.5,
+     "logged": "2026-10-31T13:01:21.068606+00:00",
+     "match": "FC Augsburg v SC Freiburg",
+     "opponent": "SC Freiburg",
+     "price": 0.83,
+     "rule": "T6",
+     "side": "no",
+     "start": "2026-10-31T14:30Z",
+     "status": "open",
+     "sub": "Augsburg over 2.5 goals",
+     "team": "FC Augsburg",
+     "team_side": "home",
+     "ticker": "KXBUNDESLIGATEAMTOTAL-26OCT31FCASCF-FCA3",
+     "title": "Will Augsburg score over 2.5 goals?",
+     "why": "FC Augsburg O+D+ v SC Freiburg O+D- \u00b7 3+ NO 0.83"
     }
    ]
   },
@@ -2614,6 +2641,60 @@
      "ticker": "KXMLSTEAMTOTAL-26OCT28MINSKC-SKC3",
      "title": "Will Kansas City score over 2.5 goals?",
      "why": "Sporting Kansas City O+D+ v Minnesota United FC O+D+ \u00b7 3+ NO 0.90"
+    },
+    {
+     "ask": 0.28,
+     "bid": 0.27,
+     "event": "KXBUNDESLIGATEAMTOTAL-26OCT31SVWTSG",
+     "group": "C",
+     "id": "T7:KXBUNDESLIGATEAMTOTAL-26OCT31SVWTSG:home",
+     "labels": {
+      "opp": "O+D+",
+      "own": "O+D+"
+     },
+     "league": "Bundesliga",
+     "line": 2.5,
+     "logged": "2026-10-31T13:01:21.068606+00:00",
+     "match": "Werder Bremen v TSG Hoffenheim",
+     "opponent": "TSG Hoffenheim",
+     "price": 0.73,
+     "rule": "T7",
+     "side": "no",
+     "start": "2026-10-31T14:30Z",
+     "status": "open",
+     "sub": "Bremen over 2.5 goals",
+     "team": "Werder Bremen",
+     "team_side": "home",
+     "ticker": "KXBUNDESLIGATEAMTOTAL-26OCT31SVWTSG-SVW3",
+     "title": "Will Bremen score over 2.5 goals?",
+     "why": "Werder Bremen O+D+ v TSG Hoffenheim O+D+ \u00b7 3+ NO 0.73"
+    },
+    {
+     "ask": 0.27,
+     "bid": 0.25,
+     "event": "KXBUNDESLIGATEAMTOTAL-26OCT31SVWTSG",
+     "group": "C",
+     "id": "T7:KXBUNDESLIGATEAMTOTAL-26OCT31SVWTSG:away",
+     "labels": {
+      "opp": "O+D+",
+      "own": "O+D+"
+     },
+     "league": "Bundesliga",
+     "line": 2.5,
+     "logged": "2026-10-31T13:01:21.068606+00:00",
+     "match": "Werder Bremen v TSG Hoffenheim",
+     "opponent": "Werder Bremen",
+     "price": 0.75,
+     "rule": "T7",
+     "side": "no",
+     "start": "2026-10-31T14:30Z",
+     "status": "open",
+     "sub": "Hoffenheim over 2.5 goals",
+     "team": "TSG Hoffenheim",
+     "team_side": "away",
+     "ticker": "KXBUNDESLIGATEAMTOTAL-26OCT31SVWTSG-TSG3",
+     "title": "Will Hoffenheim score over 2.5 goals?",
+     "why": "TSG Hoffenheim O+D+ v Werder Bremen O+D+ \u00b7 3+ NO 0.75"
     }
    ]
   },
@@ -2887,14 +2968,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T14:01:36.183253+00:00",
-   "candidates": 2,
-   "due": 2,
-   "labelled": 2,
-   "matched": 2,
-   "new": 0
-  },
   {
    "at": "2026-10-25T14:16:38.256601+00:00",
    "candidates": 1,
@@ -3294,6 +3367,14 @@
    "labelled": 2,
    "matched": 0,
    "new": 0
+  },
+  {
+   "at": "2026-10-31T13:01:21.068606+00:00",
+   "candidates": 2,
+   "due": 6,
+   "labelled": 6,
+   "matched": 2,
+   "new": 3
   }
  ],
  "version": "soccer-team-rules-v1"
