@@ -4543,16 +4543,631 @@
    "result": "no",
    "series": "KXSUPERLIGTOTAL",
    "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": null,
+    "15": null,
+    "20": null
+   },
+   "event": "KXEPLTOTAL-26OCT31AVLFUL",
+   "form_rule": false,
+   "id": "KXEPLTOTAL-26OCT31AVLFUL-4",
+   "kickoff": 1793476800,
+   "league": "Premier League",
+   "logged": "2026-10-31T23:44:55.322274+00:00",
+   "night": "2026-10-31",
+   "prints": 642,
+   "result": "no",
+   "series": "KXEPLTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1793478847,
+     "fill_print": 0.05,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793478872,
+       "filled": true,
+       "target": 0.2,
+       "thin": false,
+       "volume": 3309.7
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "15": {
+     "dead": false,
+     "fill_at": 1793477733,
+     "fill_print": 0.15,
+     "limit": 0.15,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793478117,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 1058.36
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.45,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "20": {
+     "dead": false,
+     "fill_at": 1793477569,
+     "fill_print": 0.18,
+     "limit": 0.2,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.8,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "event": "KXLALIGATOTAL-26OCT31BARALA",
+   "form_rule": false,
+   "id": "KXLALIGATOTAL-26OCT31BARALA-4",
+   "kickoff": 1793476800,
+   "league": "La Liga",
+   "logged": "2026-10-31T23:44:55.322274+00:00",
+   "night": "2026-10-31",
+   "prints": 944,
+   "result": "yes",
+   "series": "KXLALIGATOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1793477469,
+     "fill_print": 0.09,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793477469,
+       "filled": true,
+       "target": 0.2,
+       "thin": false,
+       "volume": 57.58
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "15": {
+     "dead": false,
+     "fill_at": 1793477469,
+     "fill_print": 0.09,
+     "limit": 0.15,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.45,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "20": {
+     "dead": false,
+     "fill_at": 1793477133,
+     "fill_print": 0.2,
+     "limit": 0.2,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.8,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "event": "KXSERIEATOTAL-26OCT31ACMINT",
+   "form_rule": false,
+   "id": "KXSERIEATOTAL-26OCT31ACMINT-4",
+   "kickoff": 1793475900,
+   "league": "Serie A",
+   "logged": "2026-10-31T23:44:55.322274+00:00",
+   "night": "2026-10-31",
+   "prints": 614,
+   "result": "yes",
+   "series": "KXSERIEATOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": null,
+    "15": null,
+    "20": null
+   },
+   "event": "KXLIGUE1TOTAL-26OCT31ESTMAN",
+   "form_rule": false,
+   "id": "KXLIGUE1TOTAL-26OCT31ESTMAN-4",
+   "kickoff": 1793475900,
+   "league": "Ligue 1",
+   "logged": "2026-10-31T23:44:55.322274+00:00",
+   "night": "2026-10-31",
+   "prints": 104,
+   "result": "no",
+   "series": "KXLIGUE1TOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1793479372,
+     "fill_print": 0.1,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793481478,
+       "filled": true,
+       "target": 0.2,
+       "thin": false,
+       "volume": 997.83
+      },
+      "3": {
+       "at": 1793481893,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 521.25
+      },
+      "4": {
+       "at": 1793482467,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 311.01
+      }
+     }
+    },
+    "15": {
+     "dead": false,
+     "fill_at": 1793479278,
+     "fill_print": 0.12,
+     "limit": 0.15,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793479278,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 524.42
+      },
+      "3": {
+       "at": 1793482467,
+       "filled": true,
+       "target": 0.45,
+       "thin": false,
+       "volume": 311.01
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "20": {
+     "dead": false,
+     "fill_at": 1793477756,
+     "fill_print": 0.2,
+     "limit": 0.2,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793482467,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 311.01
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.8,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "event": "KXEREDIVISIETOTAL-26OCT31CAMGAE",
+   "form_rule": false,
+   "id": "KXEREDIVISIETOTAL-26OCT31CAMGAE-4",
+   "kickoff": 1793476800,
+   "league": "Eredivisie",
+   "logged": "2026-10-31T23:44:55.322274+00:00",
+   "night": "2026-10-31",
+   "prints": 342,
+   "result": "yes",
+   "series": "KXEREDIVISIETOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": null,
+    "15": null,
+    "20": null
+   },
+   "event": "KXEREDIVISIETOTAL-26OCT31AJAAZA",
+   "form_rule": false,
+   "id": "KXEREDIVISIETOTAL-26OCT31AJAAZA-4",
+   "kickoff": 1793476800,
+   "league": "Eredivisie",
+   "logged": "2026-10-31T23:44:55.322274+00:00",
+   "night": "2026-10-31",
+   "prints": 126,
+   "result": "no",
+   "series": "KXEREDIVISIETOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": null,
+    "15": null,
+    "20": null
+   },
+   "event": "KXMLSTOTAL-26OCT31STLSD",
+   "form_rule": false,
+   "id": "KXMLSTOTAL-26OCT31STLSD-4",
+   "kickoff": 1793473200,
+   "league": "MLS",
+   "logged": "2026-10-31T23:44:55.322274+00:00",
+   "night": "2026-10-31",
+   "prints": 459,
+   "result": "no",
+   "series": "KXMLSTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": null,
+    "15": null,
+    "20": null
+   },
+   "event": "KXMLSTOTAL-26OCT31SKCDAL",
+   "form_rule": false,
+   "id": "KXMLSTOTAL-26OCT31SKCDAL-4",
+   "kickoff": 1793473200,
+   "league": "MLS",
+   "logged": "2026-10-31T23:44:55.322274+00:00",
+   "night": "2026-10-31",
+   "prints": 756,
+   "result": "no",
+   "series": "KXMLSTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1793482384,
+     "fill_print": 0.1,
+     "limit": 0.1,
+     "payout": 1.0,
+     "sells": {
+      "2": {
+       "at": 1793485647,
+       "filled": true,
+       "target": 0.2,
+       "thin": false,
+       "volume": 47565.6
+      },
+      "3": {
+       "at": 1793486132,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 45208.76
+      },
+      "4": {
+       "at": 1793486610,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 34271.74
+      }
+     }
+    },
+    "15": {
+     "dead": false,
+     "fill_at": 1793482384,
+     "fill_print": 0.1,
+     "limit": 0.15,
+     "payout": 1.0,
+     "sells": {
+      "2": {
+       "at": 1793486132,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 45208.76
+      },
+      "3": {
+       "at": 1793486753,
+       "filled": true,
+       "target": 0.45,
+       "thin": false,
+       "volume": 32530.68
+      },
+      "4": {
+       "at": 1793487194,
+       "filled": true,
+       "target": 0.6,
+       "thin": false,
+       "volume": 20671.25
+      }
+     }
+    },
+    "20": {
+     "dead": false,
+     "fill_at": 1793482374,
+     "fill_print": 0.2,
+     "limit": 0.2,
+     "payout": 1.0,
+     "sells": {
+      "2": {
+       "at": 1793486610,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 34271.74
+      },
+      "3": {
+       "at": 1793487194,
+       "filled": true,
+       "target": 0.6,
+       "thin": false,
+       "volume": 20671.25
+      },
+      "4": {
+       "at": 1793487738,
+       "filled": true,
+       "target": 0.8,
+       "thin": false,
+       "volume": 9557.34
+      }
+     }
+    }
+   },
+   "event": "KXMLSTOTAL-26OCT31SJRSL",
+   "form_rule": false,
+   "id": "KXMLSTOTAL-26OCT31SJRSL-4",
+   "kickoff": 1793480400,
+   "league": "MLS",
+   "logged": "2026-10-31T23:44:55.322274+00:00",
+   "night": "2026-10-31",
+   "prints": 1370,
+   "result": "no",
+   "series": "KXMLSTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1793485372,
+     "fill_print": 0.09,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.2,
+       "thin": false,
+       "volume": 0
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "15": {
+     "dead": false,
+     "fill_at": 1793485067,
+     "fill_print": 0.15,
+     "limit": 0.15,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.45,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "20": {
+     "dead": false,
+     "fill_at": 1793485036,
+     "fill_print": 0.17,
+     "limit": 0.2,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.8,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "event": "KXMLSTOTAL-26OCT31LAGATX",
+   "form_rule": false,
+   "id": "KXMLSTOTAL-26OCT31LAGATX-4",
+   "kickoff": 1793480400,
+   "league": "MLS",
+   "logged": "2026-10-31T23:44:55.322274+00:00",
+   "night": "2026-10-31",
+   "prints": 600,
+   "result": "yes",
+   "series": "KXMLSTOTAL",
+   "version": "o35-v1"
   }
  ],
  "error": null,
  "lane": "o35_cheap_no_wave",
- "last_run": "2026-10-31T20:17:38.147736+00:00",
+ "last_run": "2026-10-31T23:44:55.322274+00:00",
  "observations": {
-  "at": "2026-10-31T20:17:38.147736+00:00",
+  "at": "2026-10-31T23:44:55.322274+00:00",
   "errors": [],
-  "new": 28,
-  "waiting": 3
+  "new": 10,
+  "waiting": 2
  },
  "seen": {
   "KXBUNDESLIGATOTAL-26OCT30SVEM05": "2026-10-30T23:13:35.713075+00:00",
@@ -4562,6 +5177,7 @@
   "KXBUNDESLIGATOTAL-26OCT31LEVVFB": "2026-10-31T20:17:38.147736+00:00",
   "KXBUNDESLIGATOTAL-26OCT31SCHRBL": "2026-10-31T20:17:38.147736+00:00",
   "KXBUNDESLIGATOTAL-26OCT31SVWTSG": "2026-10-31T20:17:38.147736+00:00",
+  "KXEPLTOTAL-26OCT31AVLFUL": "2026-10-31T23:44:55.322274+00:00",
   "KXEPLTOTAL-26OCT31BOULEE": "2026-10-31T20:17:38.147736+00:00",
   "KXEPLTOTAL-26OCT31BRENFO": "2026-10-31T20:17:38.147736+00:00",
   "KXEPLTOTAL-26OCT31CFCMUN": "2026-10-31T15:52:35.442119+00:00",
@@ -4569,15 +5185,19 @@
   "KXEPLTOTAL-26OCT31HULIPS": "2026-10-31T20:17:38.147736+00:00",
   "KXEPLTOTAL-26OCT31MCIBRI": "2026-10-31T20:17:38.147736+00:00",
   "KXEPLTOTAL-26OCT31TOTCRY": "2026-10-31T20:17:38.147736+00:00",
+  "KXEREDIVISIETOTAL-26OCT31AJAAZA": "2026-10-31T23:44:55.322274+00:00",
+  "KXEREDIVISIETOTAL-26OCT31CAMGAE": "2026-10-31T23:44:55.322274+00:00",
   "KXEREDIVISIETOTAL-26OCT31FEYFOR": "2026-10-31T20:17:38.147736+00:00",
   "KXEREDIVISIETOTAL-26OCT31HEENIJ": "2026-10-31T20:17:38.147736+00:00",
   "KXEREDIVISIETOTAL-26OCT31PSVWIL": "2026-10-31T20:17:38.147736+00:00",
   "KXLALIGATOTAL-26OCT30VILESP": "2026-10-30T23:13:35.713075+00:00",
+  "KXLALIGATOTAL-26OCT31BARALA": "2026-10-31T23:44:55.322274+00:00",
   "KXLALIGATOTAL-26OCT31LEVATM": "2026-10-31T15:52:35.442119+00:00",
   "KXLALIGATOTAL-26OCT31RBBMCF": "2026-10-31T20:17:38.147736+00:00",
   "KXLALIGATOTAL-26OCT31RVCRCC": "2026-10-31T20:17:38.147736+00:00",
   "KXLIGUE1TOTAL-26OCT30HACPSG": "2026-10-30T23:13:35.713075+00:00",
   "KXLIGUE1TOTAL-26OCT30LILRCL": "2026-10-30T23:13:35.713075+00:00",
+  "KXLIGUE1TOTAL-26OCT31ESTMAN": "2026-10-31T23:44:55.322274+00:00",
   "KXLIGUE1TOTAL-26OCT31NICREN": "2026-10-30T23:13:35.713075+00:00",
   "KXMLSTOTAL-26OCT28ATXRSL": "2026-10-29T07:40:30.746726+00:00",
   "KXMLSTOTAL-26OCT28CHIORL": "2026-10-29T07:40:30.746726+00:00",
@@ -4596,7 +5216,11 @@
   "KXMLSTOTAL-26OCT31CINPHI": "2026-10-31T20:17:38.147736+00:00",
   "KXMLSTOTAL-26OCT31CLBDCU": "2026-10-31T20:17:38.147736+00:00",
   "KXMLSTOTAL-26OCT31CLTORL": "2026-10-31T20:17:38.147736+00:00",
+  "KXMLSTOTAL-26OCT31LAGATX": "2026-10-31T23:44:55.322274+00:00",
   "KXMLSTOTAL-26OCT31NYCMTL": "2026-10-31T20:17:38.147736+00:00",
+  "KXMLSTOTAL-26OCT31SJRSL": "2026-10-31T23:44:55.322274+00:00",
+  "KXMLSTOTAL-26OCT31SKCDAL": "2026-10-31T23:44:55.322274+00:00",
+  "KXMLSTOTAL-26OCT31STLSD": "2026-10-31T23:44:55.322274+00:00",
   "KXSAUDIPLTOTAL-26OCT27ABHFAI": "before the lane's first night",
   "KXSAUDIPLTOTAL-26OCT29ALNAKH": "2026-10-29T19:53:34.117876+00:00",
   "KXSAUDIPLTOTAL-26OCT29KHAHAZ": "2026-10-29T19:53:34.117876+00:00",
@@ -4625,6 +5249,7 @@
   "KXSERIEATOTAL-26OCT28VENINT": "2026-10-28T21:20:01.281235+00:00",
   "KXSERIEATOTAL-26OCT29FIOATA": "2026-10-30T00:22:17.879249+00:00",
   "KXSERIEATOTAL-26OCT29FROLEC": "2026-10-29T19:53:34.117876+00:00",
+  "KXSERIEATOTAL-26OCT31ACMINT": "2026-10-31T23:44:55.322274+00:00",
   "KXSERIEATOTAL-26OCT31BFCMON": "2026-10-31T20:17:38.147736+00:00",
   "KXSERIEATOTAL-26OCT31UDIROM": "2026-10-31T20:17:38.147736+00:00",
   "KXSUPERLIGTOTAL-26OCT30KONGAL": "2026-10-30T23:13:35.713075+00:00",
