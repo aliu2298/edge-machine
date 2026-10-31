@@ -1,0 +1,16 @@
+[Unit]
+Description=edge-machine bot health, status only (data/bot_health.json)
+After=network-online.target polymarket-bot.service
+
+[Service]
+Type=oneshot
+User=bot
+Environment=EDGE_CLOSES_DIR=/home/bot/edge-machine-closes
+Environment=EDGE_CLOSES_PY=/usr/bin/python3
+Environment=ENGINE_DIR=/home/bot/polymarket-bot
+Environment=ENGINE_UNIT=polymarket-bot
+Environment=ENGINE_JOBS=edge-closes edge-kick bot-backup edge-health
+Environment=BACKUP_DIR=/home/bot/backups
+# The LOW-balance threshold in dollars: set here only, never published.
+Environment=BOT_HEALTH_LOW_USD=50
+ExecStart=/home/bot/edge-machine-closes/scripts/vps_bot_health.sh

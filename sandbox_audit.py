@@ -821,7 +821,9 @@ def check_copy(rep):
         return
     hits = 0
     for f in files:
-        if f not in COPY_DATA and (not f.endswith(COPY_TYPES) or f.startswith("data/")):
+        if f not in COPY_DATA and (not f.endswith(COPY_TYPES) or f.startswith(("data/", "reports/"))):
+            # reports/ holds the twice-daily health check's operational reports (2026-10-30), not page copy;
+            # the Sandbox card that quotes them hides any line the guard would catch (daily_health.py).
             continue
         try:
             text = open(os.path.join(ROOT, f), errors="replace").read()

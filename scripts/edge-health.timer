@@ -1,0 +1,9 @@
+[Unit]
+Description=Bot health (status only) every hour
+
+[Timer]
+OnCalendar=*-*-* *:23:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
