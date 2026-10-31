@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-31T16:01:32.456549+00:00",
+ "last_run": "2026-10-31T16:16:17.023181+00:00",
  "rules": {
   "O15": {
    "picks": [
@@ -309,6 +309,47 @@
      "ticker": "KXEREDIVISIETOTAL-26OCT31FEYFOR-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Feyenoord in a top-3 title spot \u00b7 over 1.5 YES 0.92"
+    },
+    {
+     "ask": 0.95,
+     "bid": 0.94,
+     "contenders": [
+      {
+       "ask": 0.71,
+       "bid": 0.11,
+       "mid": 0.41,
+       "team": "Eindhoven"
+      },
+      {
+       "ask": 0.46,
+       "bid": 0.32,
+       "mid": 0.39,
+       "team": "Feyenoord"
+      },
+      {
+       "ask": 0.23,
+       "bid": 0.15,
+       "mid": 0.19,
+       "team": "Ajax"
+      }
+     ],
+     "contenders_in": [
+      "Eindhoven"
+     ],
+     "event": "KXEREDIVISIETOTAL-26OCT31PSVWIL",
+     "id": "O15:KXEREDIVISIETOTAL-26OCT31PSVWIL",
+     "league": "Eredivisie",
+     "line": 1.5,
+     "logged": "2026-10-31T16:16:17.023181+00:00",
+     "match": "PSV Eindhoven v Willem II",
+     "price": 0.95,
+     "rule": "O15",
+     "side": "yes",
+     "start": "2026-10-31T17:45Z",
+     "status": "open",
+     "ticker": "KXEREDIVISIETOTAL-26OCT31PSVWIL-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Eindhoven in a top-3 title spot \u00b7 over 1.5 YES 0.95"
     }
    ]
   },
@@ -619,6 +660,47 @@
      "ticker": "KXEREDIVISIETOTAL-26OCT31FEYFOR-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Feyenoord in a top-3 title spot \u00b7 over 2.5 YES 0.78"
+    },
+    {
+     "ask": 0.86,
+     "bid": 0.85,
+     "contenders": [
+      {
+       "ask": 0.71,
+       "bid": 0.11,
+       "mid": 0.41,
+       "team": "Eindhoven"
+      },
+      {
+       "ask": 0.46,
+       "bid": 0.32,
+       "mid": 0.39,
+       "team": "Feyenoord"
+      },
+      {
+       "ask": 0.23,
+       "bid": 0.15,
+       "mid": 0.19,
+       "team": "Ajax"
+      }
+     ],
+     "contenders_in": [
+      "Eindhoven"
+     ],
+     "event": "KXEREDIVISIETOTAL-26OCT31PSVWIL",
+     "id": "O25:KXEREDIVISIETOTAL-26OCT31PSVWIL",
+     "league": "Eredivisie",
+     "line": 2.5,
+     "logged": "2026-10-31T16:16:17.023181+00:00",
+     "match": "PSV Eindhoven v Willem II",
+     "price": 0.86,
+     "rule": "O25",
+     "side": "yes",
+     "start": "2026-10-31T17:45Z",
+     "status": "open",
+     "ticker": "KXEREDIVISIETOTAL-26OCT31PSVWIL-3",
+     "title": "Will over 2.5 goals be scored?",
+     "why": "Eindhoven in a top-3 title spot \u00b7 over 2.5 YES 0.86"
     }
    ]
   },
@@ -929,18 +1011,52 @@
      "ticker": "KXEREDIVISIETOTAL-26OCT31FEYFOR-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Feyenoord in a top-3 title spot \u00b7 over 3.5 YES 0.58"
+    },
+    {
+     "ask": 0.69,
+     "bid": 0.68,
+     "contenders": [
+      {
+       "ask": 0.71,
+       "bid": 0.11,
+       "mid": 0.41,
+       "team": "Eindhoven"
+      },
+      {
+       "ask": 0.46,
+       "bid": 0.32,
+       "mid": 0.39,
+       "team": "Feyenoord"
+      },
+      {
+       "ask": 0.23,
+       "bid": 0.15,
+       "mid": 0.19,
+       "team": "Ajax"
+      }
+     ],
+     "contenders_in": [
+      "Eindhoven"
+     ],
+     "event": "KXEREDIVISIETOTAL-26OCT31PSVWIL",
+     "id": "O35:KXEREDIVISIETOTAL-26OCT31PSVWIL",
+     "league": "Eredivisie",
+     "line": 3.5,
+     "logged": "2026-10-31T16:16:17.023181+00:00",
+     "match": "PSV Eindhoven v Willem II",
+     "price": 0.69,
+     "rule": "O35",
+     "side": "yes",
+     "start": "2026-10-31T17:45Z",
+     "status": "open",
+     "ticker": "KXEREDIVISIETOTAL-26OCT31PSVWIL-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Eindhoven in a top-3 title spot \u00b7 over 3.5 YES 0.69"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-28T22:31:14.839001+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "qualifying": 0
-  },
   {
    "at": "2026-10-28T23:01:42.214213+00:00",
    "due": 0,
@@ -1290,6 +1406,13 @@
    "matched": 0,
    "new": 0,
    "qualifying": 0
+  },
+  {
+   "at": "2026-10-31T16:16:17.023181+00:00",
+   "due": 2,
+   "matched": 2,
+   "new": 3,
+   "qualifying": 1
   }
  ],
  "version": "contender-overs-v1"
