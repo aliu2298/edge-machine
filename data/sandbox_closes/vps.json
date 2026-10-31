@@ -700,6 +700,11 @@
    "lead_min": 4.4,
    "price": 0.43
   },
+  "crypto_fav_band_60:KXBTCD-26OCT3117-T77499.99": {
+   "at": "2026-10-31T18:09:11+00:00",
+   "lead_min": 55.8,
+   "price": 0.65
+  },
   "crypto_fav_band_60:KXETHD-26OCT2117-T2509.99": {
    "at": "2026-10-21T18:51:28+00:00",
    "lead_min": 13.5,
@@ -774,6 +779,11 @@
    "at": "2026-10-30T19:00:38+00:00",
    "lead_min": 4.4,
    "price": 0.94
+  },
+  "crypto_fav_band_below:KXBTCD-26OCT3117-T77749.99": {
+   "at": "2026-10-31T18:09:11+00:00",
+   "lead_min": 55.8,
+   "price": 0.79
   },
   "crypto_fav_band_below:KXETHD-26OCT2317-T2409.99": {
    "at": "2026-10-23T19:03:24+00:00",
@@ -1044,6 +1054,11 @@
    "at": "2026-10-31T16:52:40+00:00",
    "lead_min": 7.3,
    "price": 0.73
+  },
+  "mls_away_band_fade:KXMLSGAME-26OCT31STLSD-SD": {
+   "at": "2026-10-31T18:09:11+00:00",
+   "lead_min": 50.8,
+   "price": 0.8
   },
   "mls_fade_home:KXMLSGAME-26OCT24HOUMIN-HOU": {
    "at": "2026-10-25T00:16:38+00:00",
@@ -1585,6 +1600,11 @@
    "lead_min": 7.3,
    "price": 0.7
   },
+  "team2_form_l10:KXMLSTEAMTOTAL-26OCT31STLSD-STL2": {
+   "at": "2026-10-31T18:09:11+00:00",
+   "lead_min": 50.8,
+   "price": 0.71
+  },
   "team2_form_l10:KXSERIEATEAMTOTAL-26OCT28VENINT-INT2": {
    "at": "2026-10-28T17:28:09+00:00",
    "lead_min": 1.8,
@@ -1931,5 +1951,5 @@
    "price": 0.75
   }
  },
- "updated": "2026-10-31T17:54:08+00:00"
+ "updated": "2026-10-31T18:09:11+00:00"
 }
