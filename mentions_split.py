@@ -143,7 +143,21 @@ ALBUM_NO = dict(ALBUM, lane="album_cheap_no", label="Album · cheap NO",
                 path=os.path.join(ROOT, "data", "album_cheap_no_ledger.json"), spread=0.10, side="no",
                 rule=ALBUM_NO_RULE, anchor="album-cheap-no",
                 skip="no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h")
+# Retired by hand (2026-10-31, Olu): the weekly and monthly mention lanes. No new entry from the dated day on
+# (Eastern); the rows stay and open entries still fill and settle. Set after every config is built, because ALBUM
+# and ALBUM_NO are copies of WIDE and must not inherit it.
+_MENTIONS_GONE = dict(on="2026-10-31", at="no valid entry since 2026-10-27",
+                      reason="these markets open with thin, wide books, so almost no entry passes the spread rule "
+                             "and the ask check (0 valid entries since 2026-10-27); retired 2026-10-31")
+for _cfg in (STRICT, WIDE, MONTH, MONTH_WIDE):
+    _cfg["retired"] = dict(_MENTIONS_GONE)
 LANES = (STRICT, WIDE, MONTH, MONTH_WIDE, ALBUM, ALBUM_NO)
+
+
+def retired(cfg, now):
+    """True once the lane is retired as of `now` (its dated day, Eastern, or later)."""
+    r = cfg.get("retired")
+    return bool(r) and now.astimezone(D.ET).date().isoformat() >= r["on"]
 
 # COMMODITIES (2026-10-27, Olu): the same cheap-side standard on two daily commodity ladders, shown
 # on the Commodities page and read by daily-research.yml (`python3 mentions_split.py commodities`),
@@ -519,6 +533,8 @@ def run(state, now=None, fetch=D.get, cfg=STRICT, ask_rule=True):
         mine = [e for e in state["entries"] if e["event"] == tick]
         pending = [m for m in ms if m["ticker"] not in have and m["ticker"] not in state["skips"]
                    and now_ts >= _ts(m["open_time"]) + 3600]
+        if retired(cfg, now):
+            pending = []                       # retired: nothing new; fills, settlement and the ask check go on
         if pending:
             # Minute candles per opening time (a ladder can add rungs days after its first ones).
             entry_cs = {}

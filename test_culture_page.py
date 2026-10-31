@@ -48,27 +48,33 @@ h = KB.build(ledger, NOW, split_state=weekly, wide_state=wide, month_state=empty
 t = text(h)
 
 print("the order, top to bottom")
-ids = ["standard", "lanes", "mentions-split", "mentions-split-compare", "mentions-split-wide", "mentions-month-split",
-       "mentions-month-split-compare", "mentions-month-split-wide", "album-note", "album-cheap-rungs", "album-cheap-no",
-       "models", "archive"]
+ids = ["standard", "lanes", "album-note", "album-cheap-rungs", "album-cheap-no", "models", "retired-cheap",
+       "mentions-split", "mentions-split-compare", "mentions-split-wide", "mentions-month-split",
+       "mentions-month-split-compare", "mentions-month-split-wide", "archive"]
 pos = [h.find(f'id="{i}"') for i in ids]
-check("standard, summary, the six cards (strict / wide, weekly then monthly, album YES then NO), model lanes, archive",
+check("standard, summary and the album cards, model lanes, the Retired fold (weekly then monthly mention cards), archive",
       (all(p > 0 for p in pos), pos == sorted(pos)), (True, True))
 check("the standard, in Olu's words",
       all(x in t for x in ("Cheap side + resting take-profit.", "Buy cheap contracts at the event's open, at the real ask.",
                            "Rest a split sell: half at 2x, half at 3x.", "A fill counts only on a traded print.",
                            "Every lane is shown next to the same entries held.")), True)
 
-print("\nthe summary table: one row per cheap-side lane")
+print("\nthe summary table: one row per LIVE cheap-side lane (the album lanes); the retired mention lanes sit in their fold")
 summ = h[h.find('class="culture-summary"'):h.find("</table>", h.find('class="culture-summary"'))]
+retired_h = h[h.find('id="retired-cheap"'):h.find('id="archive"')]
+rsumm = retired_h[retired_h.find('class="culture-summary"'):retired_h.find("</table>", retired_h.find('class="culture-summary"'))]
 rows = re.findall(r"<tr>(.*?)</tr>", summ.split("<tbody>", 1)[1], re.S)
-check("six rows, in order", [text(r).split(" ", 1)[1].split(" 0 ")[0] if False else re.sub(r"<[^>]+>", "", r.split("</td>")[0]).strip()
+rrows = re.findall(r"<tr>(.*?)</tr>", rsumm.split("<tbody>", 1)[1], re.S)
+check("the retired fold's summary lists the four mention lanes, in order",
+      [re.sub(r"<[^>]+>", "", r.split("</td>")[0]).strip() for r in rrows],
+      [_html.escape(c["label"], quote=False) for c in KB.GONE_CHEAP])
+check("the page summary lists the two album lanes only", [text(r).split(" ", 1)[1].split(" 0 ")[0] if False else re.sub(r"<[^>]+>", "", r.split("</td>")[0]).strip()
                              for r in rows],
-      [_html.escape(c["label"], quote=False) for c in KB.CHEAP])
+      [_html.escape(c["label"], quote=False) for c in KB.LIVE_CHEAP])
 check("columns: entries, unverified asks, settled entries, settled events, won, split ROI, hold ROI, legs 2x / 3x, average spread paid, status",
-      [re.sub(r"<[^>]+>", "", x) for x in re.findall(r"<th[^>]*>(.*?)</th>", summ)],
+      [re.sub(r"<[^>]+>", "", x) for x in re.findall(r"<th[^>]*>(.*?)</th>", rsumm)],
       ["Lane", "Entries", "Unverified asks", "Settled entries", "Settled events", "Won", "Split ROI", "Hold ROI", "Legs filled 2x / 3x", "Avg spread paid", "Status"])
-w0 = text(rows[0])
+w0 = text(rrows[0])
 check("the weekly strict row: 2 entries, 2 settled, both in 1 event, 1 won, legs 1 / 0, 4c spread, the review status",
       ("2 0 2 1 1" in w0, "1 / 0" in w0, "0.04" in w0, "1 settled event · review at 10, decide at 30" in w0), (True, True, True, True))
 check("strict v wide average spread paid, for the mention lanes",
@@ -90,7 +96,7 @@ norm = {i: tuple(x for x in v if x not in ("Week", "Event", "Word", "Rung", "YES
 check("and the same columns (units and side aside)", len(set(norm.values())), 1)
 
 print("\nmodel lanes and the archive")
-models = text(h[h.find('id="models"'):h.find('id="archive"')])
+models = text(h[h.find('id="models"'):h.find('id="retired-cheap"')])
 check("rt_model under Model lanes, with its revival note", ("Rotten Tomatoes model" in models,
       "revived 2026-10-26 · fresh record · review at 10" in models), (True, True))
 arch_h = h[h.find('id="archive"'):]

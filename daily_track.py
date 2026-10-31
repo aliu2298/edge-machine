@@ -3,6 +3,7 @@
 Public Kalshi reads only. No credentials, orders, or Production feed writes.
 """
 import datetime as dt
+import http.client
 import json
 import math
 import os
@@ -72,10 +73,16 @@ def get(path, sleep=time.sleep, clock=time.monotonic, opener=urllib.request.urlo
                 retry_after = number(e.headers.get('Retry-After')) if e.headers else None
                 sleep(max(RETRY_WAITS_S[attempt], retry_after or 0)); continue
             raise
+        except (TimeoutError, ConnectionError, http.client.HTTPException, urllib.error.URLError):
+            # A dropped or timed-out read (the nested-markets events listing is heavy: one page timed out
+            # on 2026-10-31) is retried like a 5xx; the last attempt raises.
+            if attempt < len(RETRY_WAITS_S):
+                sleep(RETRY_WAITS_S[attempt]); continue
+            raise
 
-def pages(path, key, fetch=get):
+def pages(path, key, fetch=get, max_pages=100):
     out, seen = [], set()
-    for _ in range(100):
+    for _ in range(max_pages):
         d = fetch(path)
         if not isinstance(d.get(key), list): raise ValueError('Incomplete ' + key + ' response')
         out.extend(d[key])

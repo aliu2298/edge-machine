@@ -164,9 +164,9 @@ check("no book is read for an entry made long after its time", calls.count("mark
 
 print("\nthe Culture page card")
 h = KB.build(split_state=st)
-card = h[h.find('id="mentions-split"'):h.find('<section id="models"')]
+card = h[h.find('id="mentions-split"'):h.find('id="archive"')]
 t = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", card))
-check("it sits on the Culture page before the Model lanes, with the review note and the same tiles as every card",
+check("it sits on the Culture page (in the Retired fold since 2026-10-31, before the Archive), with the review note and the same tiles as every card",
       (bool(card), "review at 10, decide at 30" in t, "ROI after fees · held" in t, "2x only" in t,
        "legs filled 2x / 3x" in t, "ROI after fees · split" in t), (True, True, True, True, True, True))
 check("per-week row and the trade list name the words, the entry price and the size",
@@ -226,7 +226,7 @@ wh = KB.build(split_state=st, wide_state=ws)
 wt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", wh))
 check("the page: both cards, the wide one after the strict one, and the comparison line between",
       (wh.find('id="mentions-split"') < wh.find('id="mentions-split-compare"') < wh.find('id="mentions-split-wide"')
-       < wh.find('<section id="models"'), "Cost of the spread" in wt, "Last trade" in wt),
+       < wh.find('id="archive"'), "Cost of the spread" in wt, "Last trade" in wt),
       (True, True, True))
 check("the comparison: entries, ROI after fees and the average spread paid, strict v wide",
       re.search(r"Strict v wide · strict \(5c\): 2 entries, ROI after fees [^,]+ \(2 resolved\), average spread paid 0\.03 · "
@@ -234,7 +234,7 @@ check("the comparison: entries, ROI after fees and the average spread paid, stri
 check("the wide card names its own rule and the review note",
       ("whose spread is 10c or less and whose YES ask is 0.03-0.30" in wt and wt.count("review at 10, decide at 30") >= 6), True)
 check("no guarded public phrase on the page cards", sandbox_audit.COPY_RE.findall(
-      wh[wh.find('id="mentions-split"'):wh.find('<section id="models"')]), [])
+      wh[wh.find('id="mentions-split"'):wh.find('id="archive"')]), [])
 
 print("\nthe monthly market (2026-10-27): both lanes on KXTRUMPSAYMONTH, separate records")
 check("monthly lanes: their own ids, ledgers, series and start; the same entry rules as the weekly twins",
@@ -283,7 +283,7 @@ check("every call went to the monthly series, none to the weekly or company one"
       (all("KXTRUMPSAYMONTH" in c for c in mcalls if "series" in c), any("COMPANY" in c for c in mcalls)), (True, False))
 mh = KB.build(split_state=st, wide_state=ws, month_state=ms_, month_wide_state=ms_)
 order = [mh.find(f'id="{a}"') for a in ("mentions-split", "mentions-split-compare", "mentions-split-wide", "mentions-month-split",
-                                        "mentions-month-split-compare", "mentions-month-split-wide")] + [mh.find('<section id="models"')]
+                                        "mentions-month-split-compare", "mentions-month-split-wide")] + [mh.find('id="archive"')]
 mt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", mh))
 check("the page: weekly cards, then the monthly strict card, its comparison line and the monthly wide card",
       (all(x > 0 for x in order), order == sorted(order), "Monthly · strict v wide" in mt,
@@ -349,7 +349,7 @@ check("once tracked it is kept after it settles: won, HOLD and SPLIT both graded
       (e0["payout"], e0["roi_held"] > e0["roi"] > 0, M.record(als["entries"])["won"], M.record(als["entries"])["settled"]),
       (1.0, True, 1, 1))
 ah = KB.build(split_state=st, wide_state=ws, month_state=ms_, month_wide_state=ms_, album_state=als)
-card_a = ah[ah.find('id="album-cheap-rungs"'):ah.find('<section id="models"')]
+card_a = ah[ah.find('id="album-cheap-rungs"'):ah.find('id="archive"')]
 at = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", card_a))
 check("the album card: entries, won, HOLD v SPLIT, per-event rows and the trade list, review at 10",
       (bool(card_a), "ROI after fees · held" in at, "ROI after fees · split" in at, " won" in at, "Event" in at,
@@ -409,10 +409,10 @@ nt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", nh))
 check("the page: the summary has cheap YES and cheap NO as separate rows; the note, then each card",
       ("Album ladders tested too confident: both tails won more than priced." in nt,
        "Album · cheap YES 1 0 1 1" in nt, "Album · cheap NO 1 0 1 1" in nt,
-       nh.find('id="album-note"') < nh.find('id="album-cheap-rungs"') < nh.find('id="album-cheap-no"') < nh.find('<section id="models"'),
+       nh.find('id="album-note"') < nh.find('id="album-cheap-rungs"') < nh.find('id="album-cheap-no"') < nh.find('id="archive"'),
        "NO ask paid" in nt), (True, True, True, True, True))
 check("no guarded public phrase on the album cards", sandbox_audit.COPY_RE.findall(
-      nh[nh.find('id="album-note"'):nh.find('<section id="models"')]), [])
+      nh[nh.find('id="album-note"'):nh.find('id="archive"')]), [])
 
 print("\ncommodities (2026-10-27): wti_cheap_yes and gas_cheap_no on the same engine")
 WT, GS = M.WTI, M.GAS
@@ -661,6 +661,21 @@ check("a second run leaves verified and unverified entries alone (nothing re-fet
       (M.check_asks(lst, dt.datetime.fromtimestamp(AFTER + 3600, UTC), lfake, dict(M.ALBUM)), len(lcalls)), ([], 2))
 check("with no entry failing, no voided line is shown", M.voided_line(dict(voided=lst["voided"], ask_rule_since="x", entries=[]), M._esc), "")
 check("public copy passes the guard", sandbox_audit.COPY_RE.search(vtxt + vsum), None)
+
+print("\nretired 2026-10-31: the weekly and monthly mention lanes take no new entry; the album lanes are untouched")
+check("the four mention lanes carry the dated retirement, the album lanes do not (they are copies of the wide config)",
+      ([bool(c.get("retired")) for c in (M.STRICT, M.WIDE, M.MONTH, M.MONTH_WIDE)], [bool(c.get("retired")) for c in (M.ALBUM, M.ALBUM_NO)]),
+      ([True] * 4, [False] * 2))
+check("its record and reason are the ones Olu gave",
+      (M.STRICT["retired"]["on"], "0 valid entries since 2026-10-27" in M.STRICT["retired"]["reason"]), ("2026-10-31", True))
+check("Eastern date gate: 03:00Z on Oct 31 is not yet retired, 05:00Z is; the album lane never is",
+      (M.retired(M.STRICT, dt.datetime(2026, 10, 31, 3, 0, tzinfo=UTC)), M.retired(M.STRICT, dt.datetime(2026, 10, 31, 5, 0, tzinfo=UTC)),
+       M.retired(M.ALBUM, dt.datetime(2026, 12, 1, tzinfo=UTC))), (False, True, False))
+gone_state = M.load("/nonexistent/ledger.json")
+late = dt.datetime(2026, 11, 1, 12, 0, tzinfo=UTC)
+M.run(gone_state, late, fake, ask_rule=False)
+check("a run after the date, on a market that would have entered, adds no entry and no skip",
+      (len(gone_state["entries"]), len(gone_state["skips"])), (0, 0))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
