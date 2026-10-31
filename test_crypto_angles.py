@@ -61,8 +61,11 @@ print("registration")
 for lane in BOTH:
     m = S.SOURCES[lane]
     eq((m["sports"], m["baseline"], m.get("one_per_coin_close_side"), m.get("yields_to"), m.get("favourite_side"),
-        m["connected"]), (["crypto_fav"], "favourite_population", True, ("crypto_fav_band_below",), None, True),
-       f"{lane}: crypto_fav, the favourites on both sides, one per side per close, yields to the below lane")
+        m["connected"]), ([], "favourite_population", True, ("crypto_fav_band_below",), None, True),
+       f"{lane}: retired (no sports to fetch), the favourites on both sides, one per side per close, yields to the below lane")
+    ok(list(m["retired_sports"]) == ["crypto_fav"] and "Retired 2026-10-31" in m["retired_sports"]["crypto_fav"]
+       and "No new entries from 2026-10-31" in m["retired_sports"]["crypto_fav"],
+       f"{lane}: its scope is retired 2026-10-31 with the reason, and the run never fetches it")
     ok("PRE-REGISTERED 2026-10-20" in m["note"] and "CAVEAT" in m["note"] and "FOUND on" in m["note"],
        f"{lane}: pre-registered with the research figures and the in-sample caveat")
 ok("28/30" in S.SOURCES["crypto_eth_fav_both"]["note"] and "z +3.76" in S.SOURCES["crypto_eth_fav_both"]["note"], "ETH cites 28/30, z +3.76")
@@ -90,12 +93,18 @@ print("\none per side per close, and one market, one lane")
 
 
 def publish_all(d, rows, now, lanes=("crypto_fav_band_below",) + BOTH):
+    # The two both-sides lanes are retired (2026-10-31): switch their scope back on only to test their rules.
     saved = S.CHALLENGERS
+    saved_sports = {k: S.SOURCES[k]["sports"] for k in BOTH}
+    for k in BOTH:
+        S.SOURCES[k]["sports"] = ["crypto_fav"]
     S.CHALLENGERS = {k: (lambda sport, now=now, k=k: saved[k](sport, now=now)) for k in lanes}
     try:
         return T.publish(d, {"crypto_fav": rows}, {}, verbose=False, now=now)
     finally:
         S.CHALLENGERS = saved
+        for k in BOTH:
+            S.SOURCES[k]["sports"] = saved_sports[k]
 
 
 d = {"meta": {}, "quotes": [], "coverage": {}}
@@ -147,7 +156,15 @@ eq({k: T.PAIR_OVERRIDES[k]["moved_on"] for k in T.PAIR_OVERRIDES if k.endswith("
 eq(T.PAIR_REMOVALS["crypto_fav_band|crypto_fav"], dict(removed_on="2026-10-20", keep_record=True), "crypto_fav_band keeps its record")
 st = {"pairs": {"crypto_fav_band|crypto_fav": dict(stage="production", by_hand="2026-10-08", promoted_at="2026-10-08T17:50:08+00:00",
                                                    ready_at="2026-10-08T17:50:08+00:00", entry_since=None)}, "events": []}
-T.evaluate_stages({"quotes": []}, st, now=datetime.datetime(2026, 10, 20, 23, tzinfo=timezone.utc), verbose=False)
+# Replayed as they were on 2026-10-20: the two lanes were live then (they are retired now, scope switched off).
+_kept = {k: (S.SOURCES[k]["sports"], S.SOURCES[k].get("retired_sports")) for k in BOTH}
+for _k in BOTH:
+    S.SOURCES[_k]["sports"], S.SOURCES[_k]["retired_sports"] = ["crypto_fav"], None
+try:
+    T.evaluate_stages({"quotes": []}, st, now=datetime.datetime(2026, 10, 20, 23, tzinfo=timezone.utc), verbose=False)
+finally:
+    for _k in BOTH:
+        S.SOURCES[_k]["sports"], S.SOURCES[_k]["retired_sports"] = _kept[_k]
 eq({k: (st["pairs"][k]["stage"], st["pairs"][k].get("since")) for k in sorted(st["pairs"]) if k.endswith("|crypto_fav")},
    {"crypto_eth_fav_both|crypto_fav": ("production", None), "crypto_fav_band_below|crypto_fav": ("production", None),
     "crypto_fav_band|crypto_fav": ("sandbox", None), "crypto_sol_fav_both|crypto_fav": ("production", None)},
