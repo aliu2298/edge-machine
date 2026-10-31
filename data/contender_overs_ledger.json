@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-31T19:16:28.727651+00:00",
+ "last_run": "2026-10-31T19:31:11.703418+00:00",
  "rules": {
   "O15": {
    "picks": [
@@ -1223,11 +1223,14 @@
      "line": 3.5,
      "logged": "2026-10-31T16:16:17.023181+00:00",
      "match": "PSV Eindhoven v Willem II",
+     "payout": 1.0,
      "price": 0.69,
+     "profit": 41.85,
      "rule": "O35",
+     "settled": "2026-10-31T19:31:11.703418+00:00",
      "side": "yes",
      "start": "2026-10-31T17:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXEREDIVISIETOTAL-26OCT31PSVWIL-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Eindhoven in a top-3 title spot \u00b7 over 3.5 YES 0.69"
@@ -1318,13 +1321,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-29T18:46:42.583418+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "qualifying": 0
-  },
   {
    "at": "2026-10-29T21:01:40.005474+00:00",
    "due": 0,
@@ -1670,6 +1666,13 @@
   },
   {
    "at": "2026-10-31T19:16:28.727651+00:00",
+   "due": 3,
+   "matched": 3,
+   "new": 0,
+   "qualifying": 2
+  },
+  {
+   "at": "2026-10-31T19:31:11.703418+00:00",
    "due": 3,
    "matched": 3,
    "new": 0,
