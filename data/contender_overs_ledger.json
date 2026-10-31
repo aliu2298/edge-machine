@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-31T18:46:42.606300+00:00",
+ "last_run": "2026-10-31T19:01:14.022233+00:00",
  "rules": {
   "O15": {
    "picks": [
@@ -394,6 +394,47 @@
      "ticker": "KXEREDIVISIETOTAL-26OCT31AJAAZA-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Ajax in a top-3 title spot \u00b7 over 1.5 YES 0.88"
+    },
+    {
+     "ask": 0.87,
+     "bid": 0.86,
+     "contenders": [
+      {
+       "ask": 0.54,
+       "bid": 0.52,
+       "mid": 0.53,
+       "team": "Porto"
+      },
+      {
+       "ask": 0.32,
+       "bid": 0.3,
+       "mid": 0.31,
+       "team": "SL Benfica"
+      },
+      {
+       "ask": 0.1,
+       "bid": 0.04,
+       "mid": 0.07,
+       "team": "Sporting CP"
+      }
+     ],
+     "contenders_in": [
+      "Porto"
+     ],
+     "event": "KXLIGAPORTUGALTOTAL-26OCT31FCPEST",
+     "id": "O15:KXLIGAPORTUGALTOTAL-26OCT31FCPEST",
+     "league": "Primeira Liga",
+     "line": 1.5,
+     "logged": "2026-10-31T19:01:14.022233+00:00",
+     "match": "FC Porto v Estoril",
+     "price": 0.87,
+     "rule": "O15",
+     "side": "yes",
+     "start": "2026-10-31T20:30Z",
+     "status": "open",
+     "ticker": "KXLIGAPORTUGALTOTAL-26OCT31FCPEST-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Porto in a top-3 title spot \u00b7 over 1.5 YES 0.87"
     }
    ]
   },
@@ -789,6 +830,47 @@
      "ticker": "KXEREDIVISIETOTAL-26OCT31AJAAZA-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Ajax in a top-3 title spot \u00b7 over 2.5 YES 0.70"
+    },
+    {
+     "ask": 0.68,
+     "bid": 0.67,
+     "contenders": [
+      {
+       "ask": 0.54,
+       "bid": 0.52,
+       "mid": 0.53,
+       "team": "Porto"
+      },
+      {
+       "ask": 0.32,
+       "bid": 0.3,
+       "mid": 0.31,
+       "team": "SL Benfica"
+      },
+      {
+       "ask": 0.1,
+       "bid": 0.04,
+       "mid": 0.07,
+       "team": "Sporting CP"
+      }
+     ],
+     "contenders_in": [
+      "Porto"
+     ],
+     "event": "KXLIGAPORTUGALTOTAL-26OCT31FCPEST",
+     "id": "O25:KXLIGAPORTUGALTOTAL-26OCT31FCPEST",
+     "league": "Primeira Liga",
+     "line": 2.5,
+     "logged": "2026-10-31T19:01:14.022233+00:00",
+     "match": "FC Porto v Estoril",
+     "price": 0.68,
+     "rule": "O25",
+     "side": "yes",
+     "start": "2026-10-31T20:30Z",
+     "status": "open",
+     "ticker": "KXLIGAPORTUGALTOTAL-26OCT31FCPEST-3",
+     "title": "Will over 2.5 goals be scored?",
+     "why": "Porto in a top-3 title spot \u00b7 over 2.5 YES 0.68"
     }
    ]
   },
@@ -1184,18 +1266,52 @@
      "ticker": "KXEREDIVISIETOTAL-26OCT31AJAAZA-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Ajax in a top-3 title spot \u00b7 over 3.5 YES 0.47"
+    },
+    {
+     "ask": 0.46,
+     "bid": 0.45,
+     "contenders": [
+      {
+       "ask": 0.54,
+       "bid": 0.52,
+       "mid": 0.53,
+       "team": "Porto"
+      },
+      {
+       "ask": 0.32,
+       "bid": 0.3,
+       "mid": 0.31,
+       "team": "SL Benfica"
+      },
+      {
+       "ask": 0.1,
+       "bid": 0.04,
+       "mid": 0.07,
+       "team": "Sporting CP"
+      }
+     ],
+     "contenders_in": [
+      "Porto"
+     ],
+     "event": "KXLIGAPORTUGALTOTAL-26OCT31FCPEST",
+     "id": "O35:KXLIGAPORTUGALTOTAL-26OCT31FCPEST",
+     "league": "Primeira Liga",
+     "line": 3.5,
+     "logged": "2026-10-31T19:01:14.022233+00:00",
+     "match": "FC Porto v Estoril",
+     "price": 0.46,
+     "rule": "O35",
+     "side": "yes",
+     "start": "2026-10-31T20:30Z",
+     "status": "open",
+     "ticker": "KXLIGAPORTUGALTOTAL-26OCT31FCPEST-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Porto in a top-3 title spot \u00b7 over 3.5 YES 0.46"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-29T17:01:15.948366+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "qualifying": 0
-  },
   {
    "at": "2026-10-29T18:16:29.423531+00:00",
    "due": 0,
@@ -1545,6 +1661,13 @@
    "matched": 2,
    "new": 0,
    "qualifying": 1
+  },
+  {
+   "at": "2026-10-31T19:01:14.022233+00:00",
+   "due": 3,
+   "matched": 3,
+   "new": 3,
+   "qualifying": 2
   }
  ],
  "version": "contender-overs-v1"
