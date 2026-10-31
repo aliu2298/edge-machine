@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-31T19:01:14.022233+00:00",
+ "last_run": "2026-10-31T19:16:28.727651+00:00",
  "rules": {
   "O15": {
    "picks": [
@@ -345,11 +345,14 @@
      "line": 1.5,
      "logged": "2026-10-31T16:16:17.023181+00:00",
      "match": "PSV Eindhoven v Willem II",
+     "payout": 1.0,
      "price": 0.95,
+     "profit": 4.9,
      "rule": "O15",
+     "settled": "2026-10-31T19:16:28.727651+00:00",
      "side": "yes",
      "start": "2026-10-31T17:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXEREDIVISIETOTAL-26OCT31PSVWIL-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Eindhoven in a top-3 title spot \u00b7 over 1.5 YES 0.95"
@@ -781,11 +784,14 @@
      "line": 2.5,
      "logged": "2026-10-31T16:16:17.023181+00:00",
      "match": "PSV Eindhoven v Willem II",
+     "payout": 1.0,
      "price": 0.86,
+     "profit": 15.15,
      "rule": "O25",
+     "settled": "2026-10-31T19:16:28.727651+00:00",
      "side": "yes",
      "start": "2026-10-31T17:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXEREDIVISIETOTAL-26OCT31PSVWIL-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Eindhoven in a top-3 title spot \u00b7 over 2.5 YES 0.86"
@@ -1313,13 +1319,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-29T18:16:29.423531+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "qualifying": 0
-  },
-  {
    "at": "2026-10-29T18:46:42.583418+00:00",
    "due": 0,
    "matched": 0,
@@ -1667,6 +1666,13 @@
    "due": 3,
    "matched": 3,
    "new": 3,
+   "qualifying": 2
+  },
+  {
+   "at": "2026-10-31T19:16:28.727651+00:00",
+   "due": 3,
+   "matched": 3,
+   "new": 0,
    "qualifying": 2
   }
  ],
