@@ -485,16 +485,6 @@
    "lead_min": 8.5,
    "price": 0.59
   },
-  "corners_team_fade:KXUCLTCORNERS-26OCT21COMMUN-COM5": {
-   "at": "2026-10-21T16:34:48+00:00",
-   "lead_min": 10.2,
-   "price": 0.54
-  },
-  "corners_team_fade:KXUCLTCORNERS-26OCT21LILGAL-LIL5": {
-   "at": "2026-10-21T16:34:48+00:00",
-   "lead_min": 10.2,
-   "price": 0.55
-  },
   "corners_team_fade:KXUCLTCORNERS-26OCT21RBBFEY-RBB5": {
    "at": "2026-10-21T18:51:28+00:00",
    "lead_min": 8.5,
@@ -1000,6 +990,11 @@
    "lead_min": 13.5,
    "price": 0.14
   },
+  "liga_u15_dog:KXLALIGATOTAL-26OCT31RBBMCF-2": {
+   "at": "2026-10-31T16:37:32+00:00",
+   "lead_min": 52.5,
+   "price": 0.16
+  },
   "mls_away_band_fade:KXMLSGAME-26OCT21CINDCU-DCU": {
    "at": "2026-10-21T22:54:10+00:00",
    "lead_min": 5.8,
@@ -1046,8 +1041,8 @@
    "price": 0.74
   },
   "mls_away_band_fade:KXMLSGAME-26OCT31CLTORL-ORL": {
-   "at": "2026-10-31T16:22:08+00:00",
-   "lead_min": 37.9,
+   "at": "2026-10-31T16:37:32+00:00",
+   "lead_min": 22.5,
    "price": 0.74
   },
   "mls_fade_home:KXMLSGAME-26OCT24HOUMIN-HOU": {
@@ -1219,11 +1214,6 @@
    "at": "2026-10-25T11:28:28+00:00",
    "lead_min": 1.5,
    "price": 0.89
-  },
-  "o15_form_l10:KXUCLTOTAL-26OCT21COMMUN-2": {
-   "at": "2026-10-21T16:34:48+00:00",
-   "lead_min": 10.2,
-   "price": 0.84
   },
   "o15_form_l10:KXUCLTOTAL-26OCT21SPOASK-2": {
    "at": "2026-10-21T18:51:28+00:00",
@@ -1460,11 +1450,6 @@
    "lead_min": 1.8,
    "price": 0.53
   },
-  "o25_congestion:KXUCLTOTAL-26OCT21COMMUN-3": {
-   "at": "2026-10-21T16:34:48+00:00",
-   "lead_min": 10.2,
-   "price": 0.38
-  },
   "o25_congestion:KXUECLTOTAL-26OCT22GETLUG-3": {
    "at": "2026-10-22T16:41:10+00:00",
    "lead_min": 3.8,
@@ -1581,9 +1566,9 @@
    "price": 0.59
   },
   "team2_form_l10:KXMLSTEAMTOTAL-26OCT31CLTORL-CLT2": {
-   "at": "2026-10-31T16:22:08+00:00",
-   "lead_min": 37.9,
-   "price": 0.71
+   "at": "2026-10-31T16:37:32+00:00",
+   "lead_min": 22.5,
+   "price": 0.7
   },
   "team2_form_l10:KXSERIEATEAMTOTAL-26OCT28VENINT-INT2": {
    "at": "2026-10-28T17:28:09+00:00",
@@ -1926,5 +1911,5 @@
    "price": 0.75
   }
  },
- "updated": "2026-10-31T16:22:08+00:00"
+ "updated": "2026-10-31T16:37:32+00:00"
 }
