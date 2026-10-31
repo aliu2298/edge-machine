@@ -9,7 +9,7 @@
    0.97
   ]
  },
- "board_built_at": "2026-10-31T16:31:26+00:00",
+ "board_built_at": "2026-10-31T17:00:57+00:00",
  "collector_error": null,
  "collector_healthy": {
   "st_t5": true,
@@ -19,44 +19,6 @@
  "first_publish_min": 45,
  "late_publication_skipped": 0,
  "leads": {
-  "2026-10-31|Charlotte FC|Orlando City SC|Charlotte FC to score 2+ \u00b7 O+D\u2212 v O+D+ \u00b7 team 2+ goals": {
-   "away": "Orlando City SC",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "Charlotte FC"
-   },
-   "date": "2026-10-31",
-   "edge_at_log": null,
-   "first_seen": "2026-10-31",
-   "headline": "Charlotte FC to score 2+",
-   "home": "Charlotte FC",
-   "id": "2026-10-31|Charlotte FC|Orlando City SC|Charlotte FC to score 2+ \u00b7 O+D\u2212 v O+D+ \u00b7 team 2+ goals",
-   "kickoff": "2026-10-31T17:00Z",
-   "lane": "production",
-   "last_seen": "2026-10-31",
-   "last_seen_at": "2026-10-31T16:31:26+00:00",
-   "league": "MLS",
-   "match": "Charlotte FC v Orlando City SC",
-   "pair": "st_t5|soccer_team2",
-   "price_at_log": 0.7,
-   "published_at": "2026-10-31T15:31:28+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 88,
-   "route": {
-    "claim": "Charlotte FC to score 2+",
-    "event": "KXMLSTEAMTOTAL-26OCT31CLTORL",
-    "market": "KXMLSTEAMTOTAL-26OCT31CLTORL-CLT2",
-    "outcome": "Charlotte over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.7,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "st_t5:KXMLSTEAMTOTAL-26OCT31CLTORL-CLT2",
-   "source": "st_t5",
-   "sport": "soccer_team2",
-   "status": "pending"
-  },
   "2026-10-31|FC Cincinnati|Philadelphia Union|Philadelphia Union to score 2+ \u00b7 O+D\u2212 v O+D+ \u00b7 team 2+ goals": {
    "away": "Philadelphia Union",
    "bet": {
@@ -73,7 +35,7 @@
    "kickoff": "2026-10-31T18:00Z",
    "lane": "production",
    "last_seen": "2026-10-31",
-   "last_seen_at": "2026-10-31T16:31:26+00:00",
+   "last_seen_at": "2026-10-31T17:00:57+00:00",
    "league": "MLS",
    "match": "FC Cincinnati v Philadelphia Union",
    "pair": "st_t5|soccer_team2",
@@ -111,7 +73,7 @@
    "kickoff": "2026-10-31T17:30Z",
    "lane": "production",
    "last_seen": "2026-10-31",
-   "last_seen_at": "2026-10-31T16:31:26+00:00",
+   "last_seen_at": "2026-10-31T17:00:57+00:00",
    "league": "Premier League",
    "match": "Tottenham Hotspur v Crystal Palace",
    "pair": "st_t7|soccer_team3",
@@ -149,7 +111,7 @@
    "kickoff": "2026-10-31T17:30Z",
    "lane": "production",
    "last_seen": "2026-10-31",
-   "last_seen_at": "2026-10-31T16:31:26+00:00",
+   "last_seen_at": "2026-10-31T17:00:57+00:00",
    "league": "Premier League",
    "match": "Tottenham Hotspur v Crystal Palace",
    "pair": "st_t7|soccer_team3",
@@ -252,9 +214,9 @@
    "ready_at": "2026-10-29T00:59:00+00:00",
    "route": "moved by hand on 2026-10-28",
    "routing": {
-    "leads": 2,
+    "leads": 1,
     "problem": null,
-    "routed": 2,
+    "routed": 1,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -266,7 +228,7 @@
    "sandbox_roi_fee": null,
    "timing": {
     "late": [],
-    "timed": 2,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -300,5 +262,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-31T16:31:26+00:00"
+ "updated_at": "2026-10-31T17:00:57+00:00"
 }
