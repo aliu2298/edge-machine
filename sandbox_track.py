@@ -2324,6 +2324,45 @@ def _kalshi_price_regrade(q):
                for leg in (q.get("legs") or []))
 
 
+# A row of a REMOVED lane is left alone while it is fresh, but it must not sit open for ever: the lane no longer
+# logs, so nothing else would ever close it. Once it is this long past its start it is graded once, from the
+# venue, like any other row (2026-10-31: 88 removed-lane rows had been open 22-48 days, flagged every day by the
+# health check, because grade() skipped them for good).
+CLOSE_REMOVED_H = 72
+# A row whose venue has given no final answer this long after the start is refunded, never guessed: a market
+# the venue delisted or never settled would otherwise stay open for ever.
+NO_ANSWER_VOID_H = 14 * 24
+NO_ANSWER_NOTE = "no venue result 14 days after the start; refunded, not guessed"
+
+
+def _hours_past_start(q, now):
+    try:
+        start = datetime.fromisoformat(str(q.get("start") or "").replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if start.tzinfo is None:
+        start = start.replace(tzinfo=timezone.utc)
+    return (now - start).total_seconds() / 3600
+
+
+def _removed_due(q, now):
+    """True when a removed-lane row is old enough to be closed by a single venue read."""
+    age = _hours_past_start(q, now)
+    return age is not None and age >= CLOSE_REMOVED_H
+
+
+def _no_answer_due(q, now):
+    age = _hours_past_start(q, now)
+    return age is not None and age >= NO_ANSWER_VOID_H + contest_length_h(q)
+
+
+def _void_no_answer(q, stamp):
+    q["status"], q["result"], q["pnl"] = "void", "void", 0.0
+    q["note"] = NO_ANSWER_NOTE
+    if not q.get("settled"):
+        q["settled"] = stamp
+
+
 def grade(d, verbose=True, now=None, mismatches=None):
     """Settle every open quote, then correct a settled one whose venue has revised.
 
@@ -2352,7 +2391,9 @@ def grade(d, verbose=True, now=None, mismatches=None):
         # Weather stays as stored: no settlement read, no status or price change.
         # A Kalshi MMA bet retired as unplaceable is not graded, even if a later
         # edit put it back to open.
-        if S.removed_row(q) or q.get("note") == KALSHI_UNPLACEABLE:
+        if q.get("note") == KALSHI_UNPLACEABLE:
+            continue
+        if S.removed_row(q) and not _removed_due(q, now):
             continue
         if q.get("venue") == "espn":
             # Soccer was priced on ESPN + DraftKings until that venue was retired for
@@ -2381,6 +2422,9 @@ def grade(d, verbose=True, now=None, mismatches=None):
             resolved[mid] = _resolve_market(q)
         res = resolved[mid]
         if res is None:
+            if _no_answer_due(q, now):
+                _void_no_answer(q, now_iso())
+                settled += 1
             continue
         _apply_result(q, res, now_iso())
         settled += 1

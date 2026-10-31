@@ -3,7 +3,7 @@
 
 Fails while weather is still fetched, bet, graded, priced, or rendered.
 Passes once those lanes are removed. Stored ledger rows are not deleted
-and are not settled or repriced. No network.
+and a fresh one is not settled or repriced; one past T.CLOSE_REMOVED_H is closed once (2026-10-31). No network.
 """
 import copy
 import os
@@ -229,11 +229,11 @@ def main():
     S.resolve_polymarket_us = _pm
     try:
         T.grade({"quotes": [weather, other], "meta": {}}, verbose=False,
-                now=datetime(2026, 10, 1, 18, 0, tzinfo=timezone.utc), mismatches=set())
+                now=datetime(2026, 9, 30, 18, 0, tzinfo=timezone.utc), mismatches=set())   # 54h past the start: inside T.CLOSE_REMOVED_H
     finally:
         S.resolve_kalshi_market = saved_kalshi
         S.resolve_polymarket_us = saved_pm
-    ok(weather == before, "grade() leaves an open weather row unchanged")
+    ok(weather == before, "grade() leaves a fresh open weather row unchanged (a removed-lane row older than T.CLOSE_REMOVED_H is closed once: test_stuck_open.py)")
     eq(other.get("status"), "won", "grade() still settles a non-weather row")
     ok(("kalshi_binary", weather["market_id"]) not in resolved,
        "grade() does not resolve a weather market")
