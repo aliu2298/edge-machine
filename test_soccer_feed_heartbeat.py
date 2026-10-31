@@ -83,12 +83,42 @@ check("no open lead on an unhealthy collector", [l for l in hbr["leads"].values(
 print("\nthe switch and the workflow")
 import inspect
 check("both scripts accept --heartbeat", all('"--heartbeat"' in inspect.getsource(m.main) for m in (SRP, TP)), True)
-wf = open(".github/workflows/soccer-feed-heartbeat.yml").read()
-check("the heartbeat workflow runs both feeds with --heartbeat, hourly, and saves only the two feed files",
-      ("python3 soccer_rules_production.py --heartbeat" in wf, "python3 soccer_team_rules_production.py --heartbeat" in wf,
-       "cron:" in wf, "git add data/soccer_rules_production_leads.json data/soccer_team_rules_production_leads.json" in wf),
-      (True, True, True, True))
+wf = open(".github/workflows/feeds-heartbeat.yml").read()
+check("the heartbeat workflow runs all four feeds with --heartbeat and saves only their files",
+      tuple(f"python3 {s} --heartbeat" in wf for s in ("soccer_rules_production.py", "soccer_team_rules_production.py",
+                                                       "nba_value_production.py", "daily_production.py")), (True,) * 4)
+check("it does not rely on cron alone: twice an hour plus a run after the Sandbox Tracker and the lane workflows",
+      ("cron: '7,37 * * * *'" in wf, "workflow_run:" in wf, '"Sandbox Tracker"' in wf, "types: [completed]" in wf), (True,) * 4)
+check("it saves exactly the four feed files",
+      all(f in wf for f in ("data/soccer_rules_production_leads.json", "data/soccer_team_rules_production_leads.json",
+                            "data/nba_value_production_leads.json", "data/econ_production_leads.json")), True)
 check("it places nothing and never reads a key", ("TOKEN" in wf.replace("github.token", ""), "secrets." in wf), (False, False))
+
+print("\nthe NBA value and Econ feeds take the same switch (2026-10-31)")
+import daily_production as DP
+import nba_value_production as NP
+import production as P
+nv = {"last_run": (NOW - dt.timedelta(hours=6)).isoformat(), "error": None, "rules": {}}
+nb, hb = NP.feed(nv, now=NOW), NP.feed(nv, now=NOW, heartbeat=True)
+check("NBA value: the read's time normally, the clock on a heartbeat",
+      (nb["updated_at"], hb["updated_at"]), ((NOW - dt.timedelta(hours=6)).replace(microsecond=0).isoformat(), NOW.replace(microsecond=0).isoformat()))
+check("  and an empty feed stays empty (the lanes left Production)", hb["leads"], {})
+ec = {"nc": {l: {"last_success": (NOW - dt.timedelta(hours=7)).isoformat(), "error": None} for l in DP.NC_PUBLISHED}}
+eb, eh = DP.feed(ec, now=NOW), DP.feed(ec, now=NOW, heartbeat=True)
+check("Econ: the oldest scan's time normally, the clock on a heartbeat",
+      (eb["updated_at"], eh["updated_at"]), ((NOW - dt.timedelta(hours=7)).replace(microsecond=0).isoformat(), NOW.replace(microsecond=0).isoformat()))
+check("  a stale scan publishes no open lead", [l for l in eh["leads"].values() if l.get("status") == "pending"], [])
+check("all four scripts accept --heartbeat", all('"--heartbeat"' in __import__("inspect").getsource(m.main) or "'--heartbeat'" in __import__("inspect").getsource(m.main)
+                                                  for m in (SRP, TP, NP, DP)), True)
+
+print("\na feed restamped in the last 20 minutes is left alone")
+import json, os, tempfile
+with tempfile.TemporaryDirectory() as tmp:
+    path = os.path.join(tmp, "f.json")
+    P.save_feed({"updated_at": (NOW - dt.timedelta(minutes=5)).isoformat(), "leads": {}}, path)
+    check("age 5 min -> below the skip line; 30 min -> above it",
+          (round(P.feed_age_min(path, now=NOW)), P.feed_age_min(path, now=NOW + dt.timedelta(minutes=25)) > P.HEARTBEAT_SKIP_MIN), (5, True))
+    check("a missing feed has no age (so a heartbeat builds it)", P.feed_age_min(os.path.join(tmp, "none.json")), None)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

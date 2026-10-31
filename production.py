@@ -856,6 +856,19 @@ def save_feed(blob, path=None):
     T.atomic_write_json(path, blob, prefix=".feed-")
 
 
+def feed_age_min(path=None, now=None):
+    """Minutes since the feed file's updated_at, or None when it is missing or unreadable."""
+    try:
+        at = datetime.datetime.fromisoformat(str(load_feed(path).get("updated_at")).replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return None
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    return (now - at).total_seconds() / 60
+
+
+HEARTBEAT_SKIP_MIN = 20          # a --heartbeat run leaves a feed restamped less than this long ago alone
+
+
 def load_feed(path=None):
     try:
         with open(path or FEED) as f:

@@ -138,9 +138,12 @@ def page_inputs(d, st, blob, state, now=None):
 def main(argv=None):
     import sys
     import production as P
+    beat = "--heartbeat" in (sys.argv[1:] if argv is None else argv)
+    if beat and (P.feed_age_min(PATH) or 1e9) < P.HEARTBEAT_SKIP_MIN:
+        return 0
     state = TR.load()
     previous = P.load_feed(PATH)
-    P.save_feed(feed(state, previous=previous, heartbeat="--heartbeat" in (sys.argv[1:] if argv is None else argv)), PATH)
+    P.save_feed(feed(state, previous=previous, heartbeat=beat), PATH)
     return 0
 
 

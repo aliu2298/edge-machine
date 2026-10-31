@@ -100,7 +100,8 @@ def _healthy(state, now):
     return stamp is not None and not state.get("error") and dt.timedelta(0) <= now - stamp <= dt.timedelta(hours=HEALTHY_HOURS)
 
 
-def feed(state, now=None, previous=None):
+def feed(state, now=None, previous=None, heartbeat=False):
+    """The feed; `heartbeat` stamps it with the clock (see soccer_rules_production.feed for why that is safe)."""
     import production as P
     now = now or dt.datetime.now(dt.timezone.utc)
     rows = quotes(state)
@@ -108,7 +109,7 @@ def feed(state, now=None, previous=None):
     # A stale or failed read keeps the settled history but publishes no actionable entry.
     if not healthy:
         rows = [r for r in rows if r["status"] != "open"]
-    built = D.instant(state.get("last_run")) or now
+    built = now if heartbeat else (D.instant(state.get("last_run")) or now)
     blob = P.build_feed({"quotes": rows}, {"pairs": pairs()}, now=built, previous=previous)
     blob["collector_healthy"] = healthy
     blob["collector_error"] = state.get("error")
@@ -124,10 +125,14 @@ def page_inputs(d, st, blob, state, now=None):
                  pairs={**(blob.get("pairs") or {}), **current["pairs"]}))
 
 
-def main():
+def main(argv=None):
+    import sys
     import production as P
+    beat = "--heartbeat" in (sys.argv[1:] if argv is None else argv)
+    if beat and (P.feed_age_min(PATH) or 1e9) < P.HEARTBEAT_SKIP_MIN:
+        return 0
     previous = P.load_feed(PATH)
-    P.save_feed(feed(NV.load(), previous=previous), PATH)
+    P.save_feed(feed(NV.load(), previous=previous, heartbeat=beat), PATH)
     return 0
 
 
