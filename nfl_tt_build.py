@@ -47,8 +47,16 @@ def row_data(lane, state=None):
     picks = _picks(state, lane)
     a = N.stats(picks)
     a["unit"] = "bet"
-    return dict(name=lane, sport="nfl_team_total", a=a, v=B.verdict(dict(a, n=a["n"] + a["n_price"])),
-                meta={"note": N.DEFINITION[lane]}, picks=picks)
+    gone = N.RETIRED.get(lane)
+    v = "retired" if gone else B.verdict(dict(a, n=a["n"] + a["n_price"]))
+    return dict(name=lane, sport="nfl_team_total", a=a, v=v, meta={"note": N.DEFINITION[lane]}, picks=picks,
+                **({"gone": gone_text(lane)} if gone else {}))
+
+
+def gone_text(lane):
+    r = N.RETIRED[lane]
+    return (f"Retired {r['on']} by Olu: {r['reason']} No new entries from {r['on']}; its rows stay on file and its "
+            f"open bets still settle.")
 
 
 def _early(row):
@@ -87,7 +95,8 @@ def row_html(lane, state=None):
     a = row["a"]
     name = N.NAMES[lane]
     base = N.stats(_picks(state, N.BASE))
-    early = _early(row)
+    gone = N.RETIRED.get(lane)
+    early = False if gone else _early(row)
     last = state.get("last_run")
     open_words = f" · {a['open']} open" if a["open"] else ""
     details = (
@@ -107,7 +116,7 @@ def row_html(lane, state=None):
         f'<summary class="sp-line">'
         f'<span class="sp-cell sp-c-name"><span class="sp-chev" aria-hidden="true">›</span>'
         f'<b class="sp-name" title="{esc(name)}">{esc(name)}</b>'
-        f'<span class="sp-badges"><span class="badge stage" title="Paper, own ledger">Paper</span></span>'
+        f'<span class="sp-badges"><span class="badge stage" title="Paper, own ledger">Paper</span>{'<span class="badge stage">Retired</span>' if gone else ''}</span>'
         f'<span class="sr-only"> · Rule details</span></span>'
         f'<span class="sp-cell sp-c-market" data-l="Market">{esc(MARKET)}</span>'
         f'<span class="sp-cell num" data-l="Record">{SP.record_compact(a)}</span>'
@@ -118,16 +127,48 @@ def row_html(lane, state=None):
         f'</summary>{details}</details>')
 
 
+def _row_or_note(lane, state):
+    try:
+        return row_html(lane, state)
+    except Exception as exc:                                    # noqa: BLE001
+        return (f'<p class="sm mut" data-source="{esc(lane)}">{esc(N.NAMES[lane])} unavailable '
+                f'({type(exc).__name__}).</p>')
+
+
 def place(html, state=None):
-    """Put both rows at the end of the page's Sandbox rules list; build the fold if the page has none."""
+    """Live lanes at the end of the page's Sandbox rules list (the fold is built if the page has none); a
+    retired lane (2026-10-31) goes in the Retired rules fold with its dated reason."""
+    live = [l for l in N.LANES if l not in N.RETIRED]
+    gone = [l for l in N.LANES if l in N.RETIRED]
+    html = _place_live(html, state, live)
+    return _place_retired(html, state, gone) if gone else html
+
+
+def _place_retired(html, state, gone):
+    rows = "".join(_row_or_note(l, state) + f'<p class="sm mut sp-retired-why" data-source="{esc(l)}" '
+                   f'data-sport="nfl_team_total">{esc(gone_text(l))}</p>' for l in gone)
+    i = html.find('id="retired"')
+    j = html.find('<div class="sp-rules-list" data-list="retired">', i) if i >= 0 else -1
+    if j >= 0:
+        end = html.find("</div></details></section>", j)
+        if end >= 0:
+            count = re.compile(r'(<section id="retired".*?<span class="sm mut">· )(\d+)( rules?)', re.S)
+            head = count.sub(lambda m: f"{m.group(1)}{int(m.group(2)) + len(gone)} rules", html[:j], count=1)
+            return head + html[j:end] + rows + html[end:]
+    fold = ('<section id="retired" class="sp-section"><details class="fold sp-retired"><summary><h3>Retired rules</h3>'
+            f'<span class="sm mut">· {len(gone)} rule{"s" if len(gone) != 1 else ""} · final records · no new entries</span></summary>'
+            f'<div class="sp-rules-list" data-list="retired">{SP.list_head(False)}{rows}</div></details></section>')
+    return html.replace("<footer>", fold + "<footer>", 1)
+
+
+def _place_live(html, state, lanes):
     rows, n_early = [], 0
-    for lane in N.LANES:
+    for lane in lanes:
+        rows.append(_row_or_note(lane, state))
         try:
-            rows.append(row_html(lane, state))
             n_early += 1 if _early(row_data(lane, state)) else 0
-        except Exception as exc:                                # noqa: BLE001
-            rows.append(f'<p class="sm mut" data-source="{esc(lane)}">{esc(N.NAMES[lane])} unavailable '
-                        f'({type(exc).__name__}).</p>')
+        except Exception:                                       # noqa: BLE001
+            pass
     body, k = "".join(rows), len(rows)
     html = HEAD_COUNT.sub(lambda m: f"{m.group(1)}{int(m.group(2)) + k}{m.group(3)}", html, count=1)
     i = html.find(SANDBOX_LIST)

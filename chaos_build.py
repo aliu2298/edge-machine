@@ -272,6 +272,7 @@ def sport_section(page, state=None, retired=True):
     gone = [L for L in every if L.get("retired")]
     sample = [L for L in every if L.get("insample") and not L.get("retired")]
     body = (summary(lanes, spread=True) + "".join(lane_html(L) for L in lanes)) if lanes else (
+        '<p class="sm mut">Every cheap-side lane on this page is retired; the records are below.</p>' if gone and retired else
         '<p class="sm mut">No cheap-side lane on this page has replayed yet.</p>')
     if page == "nba" and lanes:                                 # the NO fade (2026-10-30), under the YES split it mirrors
         try:

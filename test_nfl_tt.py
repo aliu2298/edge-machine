@@ -224,21 +224,41 @@ empty = ('<section id="rules" class="sp-section"><div class="sp-section-head"><h
          '<span class="sm mut">1 in Production · 0 in the Sandbox</span></div>'
          '<p class="sp-empty" data-empty="sandbox">No nfl rule is in the Sandbox.</p></section><footer>')
 out = NB.place(empty, s)
-check("the empty NFL Sandbox gets a list with both rows",
-      ('data-list="sandbox"' in out, "sp-empty" in out, out.count('<details class="sp-rule')), (True, False, 2))
-check("the fold counts them, too early", "· 2 rules · 2 too early to read · by evidence" in out, True)
-check("the Rules head counts them", "1 in Production · 2 in the Sandbox" in out, True)
-check("3545 first, then the main line", out.index(N.NAMES[N.LANE_BAND]) < out.index(N.NAMES[N.LANE_MAIN]), True)
+sand, ret = out[:out.index('id="retired"')], out[out.index('id="retired"'):]
+check("the empty NFL Sandbox gets a list with the live row only; the main line (retired 2026-10-31) is in the Retired fold",
+      ('data-list="sandbox"' in sand, "sp-empty" in out, sand.count('<details class="sp-rule'), N.NAMES[N.LANE_MAIN] in sand,
+       N.NAMES[N.LANE_MAIN] in ret), (True, False, 1, False, True))
+check("the fold counts the live row, too early", "· 1 rules · 1 too early to read · by evidence" in sand, True)
+check("the Rules head counts the live row", "1 in Production · 1 in the Sandbox" in out, True)
+check("the retired row carries its date and reason",
+      ("Retired 2026-10-31 by Olu: No edge at 30 settled (won exactly what its prices implied)" in ret,
+       '<span class="badge stage">Retired</span>' in ret), (True, True))
 page = ('<section id="rules"><details class="fold sp-sandbox" id="sandbox"><summary><h3>Sandbox rules</h3>'
         '<span class="sm mut">· 3 rules · 1 too early to read · by evidence</span></summary><div class="sp-rules-list" data-list="sandbox">'
         '<div class="sp-line sp-head-line"></div><details class="sp-rule"><summary></summary>'
-        '<div class="sp-details-body"></div></details></div></details></section><footer></footer>')
+        '<div class="sp-details-body"></div></details></div></details></section>'
+        '<section id="retired" class="sp-section"><details class="fold sp-retired"><summary><h3>Retired rules</h3>'
+        '<span class="sm mut">· 2 rules · final records · no new entries</span></summary>'
+        '<div class="sp-rules-list" data-list="retired"><div class="sp-line sp-head-line"></div>'
+        '<details class="sp-rule"><summary></summary><div class="sp-details-body"></div></details></div></details></section><footer></footer>')
 out = NB.place(page, s)
-check("an existing list: appended, counts bumped", "· 5 rules · 3 too early to read · by evidence" in out
-      and out.index(N.NAMES[N.LANE_BAND]) < out.index("</section>"), True)
+sand, ret = out[:out.index('id="retired"')], out[out.index('id="retired"'):]
+check("an existing list: the live row appended, the retired one in the existing Retired list, counts bumped",
+      ("· 4 rules · 2 too early to read · by evidence" in sand and N.NAMES[N.LANE_BAND] in sand and N.NAMES[N.LANE_MAIN] not in sand,
+       N.NAMES[N.LANE_MAIN] in ret and "· 3 rules · final records" in ret), (True, True))
+check("the main line takes no new entry from 2026-10-31 and the other lane still does",
+      (N.retired(N.LANE_MAIN, dt.datetime(2026, 10, 31, 5, 0, tzinfo=dt.timezone.utc)),
+       N.retired(N.LANE_MAIN, dt.datetime(2026, 10, 31, 3, 0, tzinfo=dt.timezone.utc)),
+       N.retired(N.LANE_BAND, dt.datetime(2026, 11, 5, tzinfo=dt.timezone.utc))), (True, False, False))
+e_late = event(ladders={"WAS": {20.5: (0.56, 0.59), 23.5: (0.43, 0.44), 26.5: (0.30, 0.33)}})
+before = N.picks_for(e_late, game(), NOW)
+late = N.picks_for(e_late, game(), dt.datetime(2026, 11, 1, 16, 0, tzinfo=dt.timezone.utc))
+check("picks_for: before the retirement the main line enters; after it, nothing, while the 35-45c lane and the baseline carry on",
+      (len(before[N.LANE_MAIN]) > 0, late[N.LANE_MAIN], len(late[N.LANE_BAND]) == len(before[N.LANE_BAND]),
+       len(late[N.BASE]) == len(before[N.BASE])), (True, [], True, True))
 import nfl_build
 built = nfl_build.build()
-check("the built NFL page carries both rows", all(f'data-source="{x}"' in built for x in N.LANES), True)
+check("the built NFL page carries both rows (the main line in the Retired fold)", all(f'data-source="{x}"' in built for x in N.LANES) and 'data-source="nfl_tt_over_main"' in built[built.find('id="retired"'):], True)
 check("no guarded phrase in the lanes' copy",
       sandbox_audit.COPY_RE.search(NB.row_html(N.LANE_BAND, s) + NB.row_html(N.LANE_MAIN, s)
                                    + open("nfl_tt.py").read() + open("nfl_tt_build.py").read()), None)

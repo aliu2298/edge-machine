@@ -124,9 +124,12 @@ LANES = [
     # (cap 0.98), filled only on a traded print, else held; HOLD on the same entries. Research (Olu,
     # real asks, 149 settled matches): 21 entries, 7 won, 14 reached 2x; split +43% (z 1.7, halves
     # +44% / +42%), hold +24%. 3-15c and the ATP main tour lost. Fresh record from 2026-10-26.
+    # RETIRED 2026-10-31 (Olu): no new entries from that night on; its rows stay on the ledger as they are.
     dict(id="challenger_cheap_split", label="Challenger cheap side · split 2x / 3x", series=["KXATPCHALLENGERMATCH"],
          picker=C.band_picker(0.15, 0.30, ("yes",), spread=0.05), max_spread=0.05, entry_hours=(1,),
          exits=("hold", C.SPLIT), headline=C.SPLIT, first=True, since="2026-10-26", duration_min=120,
+         retired=dict(on="2026-10-31", at="34 settled, 10 won; split +0.8%, hold +19.6%",
+                      reason="decided at 34 settled: the split sell (+0.8%) lost to holding (+19.6%); the hold result is 10 cheap-underdog wins, not a proven edge"),
          note="A Challenger player priced 15-30c (spread 5c or less) an hour before the match, with a split resting sell: "
               "half at 2x, half at 3x of the ask paid. Start from the first in-play price movement, as challenger_dog_tp30."),
     # RETIRED 2026-10-27 (Olu): no new entries from that night on; its rows stay on the ledger as they are.
@@ -161,7 +164,8 @@ LANES = [
     dict(id="nba_ml_dog_tp50", label="NBA moneyline underdog · split 2x / 3x", series=["KXNBAGAME"], picker=DOG,
          entry_hours=(1,), headline=C.SPLIT, since=FIRST_NIGHT, duration_min=160, start=espn_start("basketball/nba"),
          sub_bands=(dict(id="ask_10_30", label="ask 10-30c", lo=0.10, hi=0.30),),
-         caution="Read the split against its hold row; the ask 10-30c row is the same entries narrowed, not a new lane.",
+         caution="Read the split against its hold row; the ask 10-30c row is the same entries narrowed, not a new lane. "
+                 "Reviewed at 31: kept as paper (beats hold, not strong enough to promote).",
          note="A team priced 10-40c an hour before the tip, with a split resting sell: half at 2x, half at 3x of the "
               "ask paid. The headline exit was +50% until 2026-10-28; it moved to the split on the same entries, "
               "with no reset, and every other exit is still tracked."),

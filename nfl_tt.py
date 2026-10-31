@@ -72,6 +72,17 @@ ESPN = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
 MON = "JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC".split()
 # ESPN code -> the other code Kalshi has used for the same team.
 ALIAS = {"WSH": "WAS", "LAR": "LA", "JAX": "JAC"}
+# Retired by hand (2026-10-31, Olu): no new entry from the dated day on (Eastern). The ledger rows stay and open
+# bets still settle; the workflow and the other lane keep running.
+RETIRED = {LANE_MAIN: dict(on="2026-10-31", reason="No edge at 30 settled (won exactly what its prices implied): "
+                                                   "15 won v 15.1 priced, -3.5% after fees.")}
+
+
+def retired(lane, now):
+    r = RETIRED.get(lane)
+    return bool(r) and now.astimezone(ET).date().isoformat() >= r["on"]
+
+
 NAMES = {LANE_BAND: "NFL team total · OVER 35-45c", LANE_MAIN: "NFL team total · OVER · main line"}
 PREREG = {
     LANE_BAND: (
@@ -318,7 +329,7 @@ def picks_for(ev, g, now):
         if band:
             out[LANE_BAND].append(entry(LANE_BAND, ev, g, team, band, now))
         main = pick_main(ladder, band)
-        if main:
+        if main and not retired(LANE_MAIN, now):
             out[LANE_MAIN].append(entry(LANE_MAIN, ev, g, team, main, now))
         out[BASE] += [entry(BASE, ev, g, team, r, now) for r in ladder]
     return out
