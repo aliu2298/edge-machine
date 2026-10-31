@@ -9,7 +9,8 @@ Environment=EDGE_CLOSES_DIR=/home/bot/edge-machine-closes
 Environment=EDGE_CLOSES_PY=/usr/bin/python3
 Environment=ENGINE_DIR=/home/bot/polymarket-bot
 Environment=ENGINE_UNIT=polymarket-bot
-Environment=ENGINE_JOBS=edge-closes edge-kick bot-backup edge-health
+# Quoted: systemd splits an unquoted value on spaces and keeps only the first job.
+Environment="ENGINE_JOBS=edge-closes edge-kick bot-backup edge-health"
 Environment=BACKUP_DIR=/home/bot/backups
 # The LOW-balance threshold in dollars: set here only, never published.
 Environment=BOT_HEALTH_LOW_USD=50

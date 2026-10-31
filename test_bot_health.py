@@ -142,6 +142,8 @@ check("the script commits only data/bot_health.json, under the shared clone lock
       (re.findall(r"git add (\S+)", sh), "edge-shared.lock" in sh, "git pull -q --rebase origin main" in sh), (["data/bot_health.json"], True, True))
 check("the unit sets the paths, the jobs and the LOW threshold on the server only",
       all(x in unit for x in ("ENGINE_DIR=", "ENGINE_UNIT=", "ENGINE_JOBS=", "BOT_HEALTH_LOW_USD=50", "User=" + GUARDED)), True)
+check("the job list is quoted, or systemd keeps only its first name",
+      re.search(r'^Environment="ENGINE_JOBS=[^"]+ [^"]+"$', unit, re.M) is not None, True)
 check("hourly", "OnCalendar=*-*-* *:23:00" in timer and "Persistent=true" in timer, True)
 check("no guarded phrase in the new public files",
       [f for f in ("bot_health.py", "daily_health.py", "scripts/vps_bot_health.sh", "reports/daily/README.md")
