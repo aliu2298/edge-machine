@@ -84,28 +84,26 @@ def last_night(rows):
 
 
 def spread_block(state):
-    """The comeback-underdog spread line: Comeback teams as the underdog v every other underdog, same entry rule."""
+    """The comeback-underdog spread line, a titled sub-card: the by-game table visible, the rest in a fold."""
     rows = W.eligible(state.get("spread_rows") or [])
     teams = ", ".join(sorted(W.COMEBACK))
+    head = f'<h3 id="comeback-spread">Comeback underdog spread line</h3><p class="shell-kicker">observation only · {len(rows)} rungs</p>'
     if not rows:
-        inner = '<p class="sm mut">No underdog spread rung has been recorded yet.</p>'
-    else:
-        key = lambda r: "Comeback team as underdog" if r["comeback"] else "Other underdogs"
-        gl = ""
-        for g in ("Comeback team as underdog", "Other underdogs"):
-            n, hit = W.by_game([r for r in rows if key(r) == g])
-            gl += f'<tr><td><b>{esc(g)}</b></td><td class="num">{n}</td><td class="num">{hit}</td><td class="num">{pct(hit / n) if n else "—"}</td></tr>'
-        inner = (f'{table("Underdog", ("Comeback team as underdog", "Other underdogs"), rows, key)}'
-                 '<p class="sm"><b>By game</b> · a game counts once: did any of the underdog\'s eligible rungs reach 2x</p>'
-                 '<div class="tbl"><table><tr><th>Underdog</th><th class="num">Games</th><th class="num">Any rung reached 2x</th><th class="num">Share</th></tr>'
-                 f'{gl}</table></div>')
-    return (f'<details class="section-disclosure"><summary><b>Comeback underdog spread line</b><span>observation only · '
-            f'{len(rows)} rungs</span></summary>'
-            '<p class="sm">The underdog\'s Kalshi spread rungs ("wins by over N"), read the same way as the buckets: the ask an hour '
-            'before the tip, 5-35c with a spread of 5c or less, then every trade print. Comeback teams won 40% or more of the '
-            f'2025-26 games they trailed at half-time: {esc(teams)}. In the Oct 20-28 data their underdog rungs reached 2x in 7 of 9 '
-            'games, against about half the games for other underdogs. Nine games prove nothing; this line grows the sample.</p>'
-            f'{inner}</details>')
+        return f'<div class="tracker-sub">{head}<p class="sm mut">No underdog spread rung has been recorded yet.</p></div>'
+    key = lambda r: "Comeback team as underdog" if r["comeback"] else "Other underdogs"
+    gl = ""
+    for g in ("Comeback team as underdog", "Other underdogs"):
+        n, hit = W.by_game([r for r in rows if key(r) == g])
+        gl += f'<tr><td><b>{esc(g)}</b></td><td class="num">{n}</td><td class="num">{hit}</td><td class="num">{pct(hit / n) if n else "—"}</td></tr>'
+    return (f'<div class="tracker-sub">{head}'
+            '<p class="sm">A game counts once: did any of the underdog\'s eligible spread rungs reach 2x?</p>'
+            '<div class="tbl"><table><tr><th>Underdog</th><th class="num">Games</th><th class="num">Any rung reached 2x</th><th class="num">Share</th></tr>'
+            f'{gl}</table></div>'
+            '<details class="section-disclosure"><summary><b>Rung detail and how it is read</b><span>per-rung reach rates</span></summary>'
+            '<p class="sm">The underdog\'s Kalshi spread rungs ("wins by over N"), read like the buckets: the ask an hour before the tip, '
+            '5-35c with a spread of 5c or less, then every trade print. Comeback teams won 40% or more of the 2025-26 games they trailed at '
+            f'half-time: {esc(teams)}. Nine games prove nothing; this line grows the sample.</p>'
+            f'{table("Underdog", ("Comeback team as underdog", "Other underdogs"), rows, key)}</details></div>')
 
 
 def section(state=None):
@@ -122,19 +120,19 @@ def section(state=None):
         lt, night = last_night(rows)
         summ = f'{len(rows)} contracts · {games} games since {state.get("since")}'
         body = (f'<p class="sm"><b>By bucket</b> · the margin bucket of the team named</p>{table("Bucket", W.BUCKETS, rows, lambda r: r["bucket"])}'
-                f'<p class="sm"><b>By favourite or underdog</b> · the bucket team\'s pregame win share (55% or more, under 45%)</p>'
-                f'{table("Team", ("favourite", "toss-up", "underdog"), rows, lambda r: r["role"])}'
-                f'<p class="sm"><b>By entry price</b></p>{table("Entry ask", ("5-10c", "10-20c", "20-35c"), rows, lambda r: r["band"])}'
-                f'<details class="section-disclosure"><summary><b>Older and newer halves</b><span>buckets 1-5 and 6-10, split by tip time</span></summary>{halves_table(rows)}</details>'
+                f'<p class="sm"><b>Older and newer halves</b> · buckets 1-5 and 6-10, split by tip time</p>{halves_table(rows)}'
+                f'<details class="section-disclosure"><summary><b>By favourite or underdog</b><span>the bucket team\'s pregame win share (55% or more, under 45%)</span></summary>'
+                f'{table("Team", ("favourite", "toss-up", "underdog"), rows, lambda r: r["role"])}</details>'
+                f'<details class="section-disclosure"><summary><b>By entry price</b><span>5-10c, 10-20c, 20-35c</span></summary>'
+                f'{table("Entry ask", ("5-10c", "10-20c", "20-35c"), rows, lambda r: r["band"])}</details>'
                 f'<details class="section-disclosure"><summary><b>Last night\'s games</b><span>{esc(night)} · each contract entry to peak, time above 2x</span></summary>{lt}</details>')
-    return f"""<section id="win-margin">
+    return f"""<section id="tracker">
 <h2>Win margin tracker</h2>
-<p class="shell-kicker">Observation only — no buying or selling rule yet · paper · no orders · since {esc(state.get("since"))}</p>
-<details class="section-disclosure" open><summary><b>Kalshi NBA win-margin buckets, bought at the ask an hour before the tip</b><span>{esc(summ)}</span></summary>
-<p class="sm">For every game, each bucket contract (both teams: 1-5, 6-10, 11-20, 21+) is read at the ask one hour before the tip, then followed through every trade print. Only contracts with an entry ask of 5-35c and a spread of 5c or less are counted. The tip is the Kalshi game market's time minus 3 hours.</p>
-<p class="sm">Reached means a trade at or after the tip printed at 2, 3 or 5 times the entry ask (a target above 99c is left out of that rate). At fair prices a contract reaches 2x about {W.FAIR[2] * 100:.0f}% of the time, 3x {W.FAIR[3] * 100:.0f}% and 5x {W.FAIR[5] * 100:.0f}%. Held 10+ min is the share that stayed at 2x or more for ten minutes or longer. Min to 2x, Min above 2x and Contracts at 2x+ are medians over the contracts that reached 2x. Won minus ask is the share that settled yes less the average ask paid.</p>
+<p class="shell-kicker">Observation only — no buying or selling rule · paper · no orders · since {esc(state.get("since"))} · {esc(summ)}</p>
+<details class="section-disclosure"><summary><b>How the tracker is read</b><span>entries, reach, fair rates</span></summary>
+<p class="sm">Every game's bucket contracts (both teams: 1-5, 6-10, 11-20, 21+) are read at the ask one hour before the tip, then followed through every trade print. Only contracts with an entry ask of 5-35c and a spread of 5c or less count. The tip is the Kalshi game market's time minus 3 hours.</p>
+<p class="sm">Reached means a trade at or after the tip printed at 2, 3 or 5 times the entry ask (a target above 99c is left out of that rate). At fair prices a contract reaches 2x about {W.FAIR[2] * 100:.0f}% of the time, 3x {W.FAIR[3] * 100:.0f}% and 5x {W.FAIR[5] * 100:.0f}%. Held 10+ min is the share that stayed at 2x or more for ten minutes or longer. Min to 2x, Min above 2x and Contracts at 2x+ are medians over the contracts that reached 2x. Won minus ask is the share that settled yes less the average ask paid.</p></details>
 {body}
-</details>
 {spread_block(state)}
 <p class="sm mut">Last read {esc(last or 'not yet')}{(' · ' + esc(state['error'])) if state.get('error') else ''}.</p>
 </section>"""
