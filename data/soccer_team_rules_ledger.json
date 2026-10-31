@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-31T15:31:28.444640+00:00",
+ "last_run": "2026-10-31T16:01:42.362062+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -813,6 +813,60 @@
      "ticker": "KXEPLTEAMTOTAL-26OCT31MCIBRI-BRI2",
      "title": "Will Brighton score over 1.5 goals?",
      "why": "Brighton & Hove Albion O+D- v Manchester City O+D- \u00b7 2+ YES 0.35"
+    },
+    {
+     "ask": 0.8,
+     "bid": 0.79,
+     "event": "KXBUNDESLIGATEAMTOTAL-26OCT31BMUBVB",
+     "group": "A",
+     "id": "T1:KXBUNDESLIGATEAMTOTAL-26OCT31BMUBVB:home",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Bundesliga",
+     "line": 1.5,
+     "logged": "2026-10-31T16:01:42.362062+00:00",
+     "match": "Bayern Munich v Borussia Dortmund",
+     "opponent": "Borussia Dortmund",
+     "price": 0.8,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-10-31T17:30Z",
+     "status": "open",
+     "sub": "Bayern Munich over 1.5 goals",
+     "team": "Bayern Munich",
+     "team_side": "home",
+     "ticker": "KXBUNDESLIGATEAMTOTAL-26OCT31BMUBVB-BMU2",
+     "title": "Will Bayern Munich score over 1.5 goals?",
+     "why": "Bayern Munich O+D- v Borussia Dortmund O+D- \u00b7 2+ YES 0.80"
+    },
+    {
+     "ask": 0.32,
+     "bid": 0.31,
+     "event": "KXBUNDESLIGATEAMTOTAL-26OCT31BMUBVB",
+     "group": "A",
+     "id": "T1:KXBUNDESLIGATEAMTOTAL-26OCT31BMUBVB:away",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Bundesliga",
+     "line": 1.5,
+     "logged": "2026-10-31T16:01:42.362062+00:00",
+     "match": "Bayern Munich v Borussia Dortmund",
+     "opponent": "Bayern Munich",
+     "price": 0.32,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-10-31T17:30Z",
+     "status": "open",
+     "sub": "Dortmund over 1.5 goals",
+     "team": "Borussia Dortmund",
+     "team_side": "away",
+     "ticker": "KXBUNDESLIGATEAMTOTAL-26OCT31BMUBVB-BVB2",
+     "title": "Will Dortmund score over 1.5 goals?",
+     "why": "Borussia Dortmund O+D- v Bayern Munich O+D- \u00b7 2+ YES 0.32"
     }
    ]
   },
@@ -1825,6 +1879,33 @@
      "ticker": "KXMLSTEAMTOTAL-26OCT28STLPOR-STL2",
      "title": "Will Saint Louis score over 1.5 goals?",
      "why": "St. Louis CITY SC O+D- v Portland Timbers O-D+ \u00b7 2+ YES 0.58"
+    },
+    {
+     "ask": 0.74,
+     "bid": 0.72,
+     "event": "KXLALIGATEAMTOTAL-26OCT31RBBMCF",
+     "group": "B",
+     "id": "T4:KXLALIGATEAMTOTAL-26OCT31RBBMCF:home",
+     "labels": {
+      "opp": "O-D+",
+      "own": "O+D-"
+     },
+     "league": "La Liga",
+     "line": 1.5,
+     "logged": "2026-10-31T16:01:42.362062+00:00",
+     "match": "Real Betis v M\u00e1laga",
+     "opponent": "M\u00e1laga",
+     "price": 0.74,
+     "rule": "T4",
+     "side": "yes",
+     "start": "2026-10-31T17:30Z",
+     "status": "open",
+     "sub": "Real Betis over 1.5 goals",
+     "team": "Real Betis",
+     "team_side": "home",
+     "ticker": "KXLALIGATEAMTOTAL-26OCT31RBBMCF-RBB2",
+     "title": "Will Real Betis score over 1.5 goals?",
+     "why": "Real Betis O+D- v M\u00e1laga O-D+ \u00b7 2+ YES 0.74"
     }
    ]
   },
@@ -2884,6 +2965,60 @@
      "ticker": "KXBUNDESLIGATEAMTOTAL-26OCT31SVWTSG-TSG3",
      "title": "Will Hoffenheim score over 2.5 goals?",
      "why": "TSG Hoffenheim O+D+ v Werder Bremen O+D+ \u00b7 3+ NO 0.75"
+    },
+    {
+     "ask": 0.3,
+     "bid": 0.29,
+     "event": "KXEPLTEAMTOTAL-26OCT31TOTCRY",
+     "group": "C",
+     "id": "T7:KXEPLTEAMTOTAL-26OCT31TOTCRY:home",
+     "labels": {
+      "opp": "O+D+",
+      "own": "O+D+"
+     },
+     "league": "Premier League",
+     "line": 2.5,
+     "logged": "2026-10-31T16:01:42.362062+00:00",
+     "match": "Tottenham Hotspur v Crystal Palace",
+     "opponent": "Crystal Palace",
+     "price": 0.71,
+     "rule": "T7",
+     "side": "no",
+     "start": "2026-10-31T17:30Z",
+     "status": "open",
+     "sub": "Tottenham over 2.5 goals",
+     "team": "Tottenham Hotspur",
+     "team_side": "home",
+     "ticker": "KXEPLTEAMTOTAL-26OCT31TOTCRY-TOT3",
+     "title": "Will Tottenham score over 2.5 goals?",
+     "why": "Tottenham Hotspur O+D+ v Crystal Palace O+D+ \u00b7 3+ NO 0.71"
+    },
+    {
+     "ask": 0.09,
+     "bid": 0.07,
+     "event": "KXEPLTEAMTOTAL-26OCT31TOTCRY",
+     "group": "C",
+     "id": "T7:KXEPLTEAMTOTAL-26OCT31TOTCRY:away",
+     "labels": {
+      "opp": "O+D+",
+      "own": "O+D+"
+     },
+     "league": "Premier League",
+     "line": 2.5,
+     "logged": "2026-10-31T16:01:42.362062+00:00",
+     "match": "Tottenham Hotspur v Crystal Palace",
+     "opponent": "Tottenham Hotspur",
+     "price": 0.93,
+     "rule": "T7",
+     "side": "no",
+     "start": "2026-10-31T17:30Z",
+     "status": "open",
+     "sub": "Crystal Palace over 2.5 goals",
+     "team": "Crystal Palace",
+     "team_side": "away",
+     "ticker": "KXEPLTEAMTOTAL-26OCT31TOTCRY-CRY3",
+     "title": "Will Crystal Palace score over 2.5 goals?",
+     "why": "Crystal Palace O+D+ v Tottenham Hotspur O+D+ \u00b7 3+ NO 0.93"
     }
    ]
   },
@@ -3211,14 +3346,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T16:01:46.990186+00:00",
-   "candidates": 2,
-   "due": 4,
-   "labelled": 4,
-   "matched": 2,
-   "new": 2
-  },
   {
    "at": "2026-10-25T16:31:09.818376+00:00",
    "candidates": 1,
@@ -3618,6 +3745,14 @@
    "labelled": 2,
    "matched": 1,
    "new": 2
+  },
+  {
+   "at": "2026-10-31T16:01:42.362062+00:00",
+   "candidates": 4,
+   "due": 5,
+   "labelled": 5,
+   "matched": 4,
+   "new": 5
   }
  ],
  "version": "soccer-team-rules-v1"
