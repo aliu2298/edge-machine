@@ -18,6 +18,7 @@ import fmt
 import sandbox_build as B
 import sandbox_sources as S
 import sandbox_track as T
+import sport_tab
 import site_chrome as C
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -31,8 +32,9 @@ SOURCE = "crypto_fav_band"
 # 0.60-0.70 band below it; and the two both-sides coin lanes (2026-10-20), ETH and SOL, Yes and
 # No 0.60-0.80. Each is its own row. In Production since 2026-10-20: the below lane and the two
 # coin lanes (crypto_fav_band went back to the Sandbox that day).
-LANES = ("crypto_fav_band", "crypto_fav_band_below", "crypto_fav_band_60", "crypto_fav_band_below_60",
-         "crypto_eth_fav_both", "crypto_sol_fav_both")
+LANES = ("crypto_fav_band", "crypto_fav_band_below", "crypto_fav_band_60", "crypto_fav_band_below_60")
+# crypto_eth_fav_both and crypto_sol_fav_both were retired 2026-10-31 (Olu): they are in the page's Retired fold,
+# with their full records, not in this list.
 RULE_NAMES = {
     "crypto_fav_band": "Favourite band · 3h to the close",
     "crypto_fav_band_below": "Favourite band, below · No 0.70–0.80",
@@ -314,7 +316,8 @@ def build(d=None, st=None, now=None):
         scope="Daily favourite-band picks on Kalshi coin closes", venue="Kalshi",
         rows=rows, events=events, rule_name=rule_name, market=market,
         definition=definition, recent=recent_html, method=method, scoped=False,
-        unit=lambda row: "market-day")
+        unit=lambda row: "market-day",
+        retired=sport_tab.retired_rows(d, st, "Crypto"))
     return SP.page(sp, d, st, now, rows=rows)
 
 
