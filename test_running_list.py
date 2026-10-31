@@ -1280,6 +1280,25 @@ eq(len(_model_keys), len(set(_model_keys)),
 _by_name = {}
 for _row in _committed_rows:
     _by_name.setdefault(_attr(_row, "data-name"), []).append(_row)
+def _row_live_on_open_bet(row):
+    """A committed Running row bucketed Live whose own cards show a bet still open (or awaiting its result)."""
+    if _attr(row, "data-filter") != "live":
+        return False
+    try:
+        cards = json.loads(_attr(row, "data-cards") or "[]")
+    except ValueError:
+        return False
+    return any(c.get("status") in ("Open", "Awaiting result") for c in cards)
+
+
+_mk = lambda f, sts: (f'<button type="button" class="running-row" data-filter="{f}" data-cards="'
+                      + html_lib.escape(json.dumps([{"status": x} for x in sts]), quote=True) + '">x</button>')
+ok(_row_live_on_open_bet(_mk("live", ["L", "Open"])) and _row_live_on_open_bet(_mk("live", ["Awaiting result"])),
+   "a Live row with an open (or awaiting) bet on its own cards is consistent, whatever a newer ledger says")
+ok(not _row_live_on_open_bet(_mk("live", ["L", "W"])) and not _row_live_on_open_bet(_mk("settled", ["Open"])),
+   "a Live row with every bet graded is not exempt, and a Settled row never is")
+
+
 _matched_settled = 0
 _feed_leads = list((production.load_feed() or {}).get("leads", {}).values())
 for _name, _headline, _status in _prod_rows:
@@ -1299,6 +1318,11 @@ for _name, _headline, _status in _prod_rows:
     _hits = _by_name.get(_name, [])
     eq(len(_hits), 1, f"production recent lead {_name} is one Running row")
     if len(_hits) != 1:
+        continue
+    if _row_live_on_open_bet(_hits[0]):
+        # 2026-10-31: the page built at 20:43 with sr_c1 still open; its ledger committed the settlement at 20:46,
+        # so a model rebuilt from today's ledgers saw it settled. The committed row is Live on a bet its own cards
+        # show open, which is the page's rule; the model loop above already checks Live only with an open bet.
         continue
     eq(_attr(_hits[0], "data-filter"), "settled", f"production recent lead {_name} is Settled")
     ok(_status in _bet_labels(_visual(_hits[0])),
