@@ -34,7 +34,7 @@ SCHEMA = 1
 UTC = dt.timezone.utc
 LOUD = {"cycle", "pick", "feed", "results", "unresolved_claim"}   # as health_report.py
 # The scheduled jobs whose last result is reported; the unit names them (ENGINE_JOBS) so no host name lives here.
-JOBS = tuple(os.environ.get("ENGINE_JOBS", "edge-closes edge-kick edge-health").split())
+JOBS = tuple(os.environ.get("ENGINE_JOBS", "edge-closes edge-kick").split())
 
 # ---------------------------------------------------------------- the guard
 MONEY_RE = re.compile(r"\$\s*-?\d")
