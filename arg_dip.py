@@ -27,6 +27,11 @@ OUT OF SAMPLE (2026-10-30): Out-of-sample check, Brasileirão over 0.5 (135 matc
 
 Own ledger data/arg_dip_ledger.json; read hourly by .github/workflows/arg-dip.yml from settled matches.
 Paper only: no order is placed, and Production has no executor for resting in-play buys.
+
+THE ENGINE (2026-10-30): the same code runs every goalless-dip lane. A lane is a config dict (ARG below; the
+top-5 over 1.5 lane is top5_dip.TOP5): its series, rung, buy fractions, headline, record date, in-sample window,
+ledger and whether a fill must also HOLD. Every function takes `cfg` and defaults to ARG, so this lane reads as
+it always has.
 """
 import datetime as dt
 import json
@@ -62,6 +67,20 @@ MAX_EVENTS_PER_RUN = 60
 VERSION = "argdip-v1"
 EPS = 1e-9
 UTC = dt.timezone.utc
+# The held-fill rule a lane may switch on (top-5, 2026-10-30): beyond MIN_FILL in FILL_WINDOW_MIN, the low price
+# must HOLD: prints at or below the limit span HELD_SPAN_S within HELD_WINDOW_MIN of the first touch, or
+# HELD_CONTRACTS+ contracts print there. A brief stray touch a real resting bid would rarely get is "thin".
+HELD_WINDOW_MIN = 5
+HELD_SPAN_S = 120
+HELD_CONTRACTS = 50
+
+ARG = dict(lane=LANE, label=LABEL, series=(SERIES,), strike=STRIKE, since=SINCE, insample=INSAMPLE,
+           fractions=FRACTIONS, headline=HEADLINE, path=PATH, version=VERSION, held=False)
+
+
+def series_of(event):
+    """The series an event ticker belongs to (KXEPLTOTAL-26OCT31CFCMUN -> KXEPLTOTAL)."""
+    return str(event or "").split("-")[0]
 
 
 def fee(p):
@@ -140,14 +159,24 @@ def p_check(prints, quote_ts, p):
 
 
 # ------------------------------------------------------------------ the rule
-def evaluate(prints, kickoff, p, result):
+def held_at(live, i, limit):
+    """Whether the low price held after the first touch at live[i]: prints at or below the limit span
+    HELD_SPAN_S within HELD_WINDOW_MIN of it, or HELD_CONTRACTS+ contracts printed there."""
+    t0 = live[i][0]
+    w = [x for x in live[i:] if x[0] <= t0 + HELD_WINDOW_MIN * 60 and x[1] <= limit + EPS]
+    return (w[-1][0] - t0 >= HELD_SPAN_S) or sum(x[2] for x in w) >= HELD_CONTRACTS - EPS
+
+
+def evaluate(prints, kickoff, p, result, cfg=None):
     """{fraction key: buy outcome} on one match. None: no print reached the limit after kickoff. A touch
     carries the limit, the first touch, the contracts printed at or below the limit within FILL_WINDOW_MIN
-    of it, whether that counts as a fill (MIN_FILL+), and whether the sell at P filled after it."""
+    of it, whether that counts as a fill (MIN_FILL+, and, for a lane with cfg["held"], the low price held),
+    and whether the sell at P filled after it."""
+    cfg = cfg or ARG
     live = [x for x in prints if x[0] >= kickoff]
     payout = 1.0 if result == "yes" else 0.0
     out = {}
-    for f in FRACTIONS:
+    for f in cfg["fractions"]:
         limit = round(f * p, 2)
         i = next((k for k, x in enumerate(live) if x[1] <= limit + EPS), None) if limit >= 0.02 else None
         if i is None:
@@ -156,9 +185,13 @@ def evaluate(prints, kickoff, p, result):
         t0 = live[i][0]
         vol = round(sum(n for t, px, n in live[i:] if t <= t0 + FILL_WINDOW_MIN * 60 and px <= limit + EPS), 2)
         sold = next((x for x in live[i + 1:] if x[1] >= p - EPS), None)
-        out[vkey(f)] = dict(limit=limit, fill_at=t0, fill_print=live[i][1], fill_volume=vol,
-                            counted=vol >= MIN_FILL - EPS, sold=sold is not None, sold_at=sold[0] if sold else None,
-                            payout=payout)
+        counted = vol >= MIN_FILL - EPS
+        b = dict(limit=limit, fill_at=t0, fill_print=live[i][1], fill_volume=vol, counted=counted,
+                 sold=sold is not None, sold_at=sold[0] if sold else None, payout=payout)
+        if cfg.get("held"):
+            b["held"] = held_at(live, i, limit)
+            b["counted"] = counted and b["held"]
+        out[vkey(f)] = b
     return out
 
 
@@ -172,7 +205,8 @@ def rows_of(entries, f):
         cost = b["limit"] + fee(b["limit"])
         proceeds = (e["p"] - fee(e["p"])) if b["sold"] else b["payout"]
         out.append(dict(event=e["event"], day=e["matchday"], kickoff=e["kickoff"], roi=(proceeds - cost) / cost,
-                        hold=(b["payout"] - cost) / cost, sold=b["sold"], zero=e["result"] == "no"))
+                        hold=(b["payout"] - cost) / cost, sold=b["sold"], zero=e["result"] == "no",
+                        league=e.get("league")))
     return out
 
 
@@ -211,32 +245,38 @@ def status(fills):
 
 
 # ------------------------------------------------------------------ the ledger
-def load(path=None):
+def load(path=None, cfg=None):
+    cfg = cfg or ARG
     try:
-        with open(path or PATH) as f:
+        with open(path or cfg["path"]) as f:
             s = json.load(f)
     except FileNotFoundError:
         s = {}
-    s.setdefault("lane", LANE)
-    s.setdefault("since", SINCE)
-    s.setdefault("version", VERSION)
+    s.setdefault("lane", cfg["lane"])
+    s.setdefault("since", cfg["since"])
+    s.setdefault("version", cfg["version"])
     s.setdefault("entries", [])
     s.setdefault("seen", {})
     s.setdefault("skips", {})
-    s.setdefault("insample", dict(window=list(INSAMPLE), entries=[], skips={}, built=None))
+    s.setdefault("insample", dict(window=list(cfg["insample"]), entries=[], skips={}, built=None))
     return s
 
 
+def rung(markets, strike):
+    return next((m for m in markets if D.number(m.get("floor_strike")) == strike), None)
+
+
 def over05(markets):
-    return next((m for m in markets if D.number(m.get("floor_strike")) == STRIKE), None)
+    return rung(markets, STRIKE)
 
 
-def replay(event, fetch, now):
+def replay(event, fetch, now, cfg=None):
     """(entry, None) for a settled match, (None, reason) to skip it, or (None, None) while it is not settled."""
+    cfg = cfg or ARG
     ms, archived = C.event_markets(event, fetch)
-    m = over05(ms)
+    m = rung(ms, cfg["strike"])
     if m is None:
-        return None, "no over 0.5 market"
+        return None, f"no over {cfg['strike']:g} market"
     if m.get("status") not in ("finalized", "settled") or m.get("result") not in ("yes", "no"):
         return None, None
     occ = _ts(m.get("occurrence_datetime"))
@@ -244,36 +284,43 @@ def replay(event, fetch, now):
         return None, "no occurrence time"
     kickoff = occ - KICKOFF_BACK_H * 3600
     q_at = kickoff - P_LEAD_MIN * 60
-    cs = C.fetch_candles(SERIES, event, [m], q_at - 30 * 60, q_at + 60, fetch, archived).get(m["ticker"])
+    cs = C.fetch_candles(series_of(event), event, [m], q_at - 30 * 60, q_at + 60, fetch, archived).get(m["ticker"])
     q = pregame_quote(cs, q_at)
     if q is None:
         return None, "no pregame quote an hour before kickoff"
     q_ts, bid, ask = q
     if ask - bid > MAX_SPREAD + EPS:
         return None, f"pregame spread {ask - bid:.2f} over 5c"
+    lo, hi = cfg.get("p_range") or (0.0, 1.0)
+    if not lo - EPS <= ask <= hi + EPS:
+        return None, f"pregame ask {ask:.2f} outside {lo * 100:.0f}-{hi * 100:.0f}c"
     prints = prints_of(fetch_trades(m["ticker"], q_at - 30 * 60, fetch))
     chk = p_check(prints, q_ts, ask)
     base = dict(id=m["ticker"], event=event, title=m.get("title") or event, kickoff=kickoff, matchday=matchday(event),
                 result=m["result"], p=ask, p_bid=bid, p_at=q_ts, p_check=chk, prints=len(prints),
-                logged=now.isoformat(), version=VERSION)
+                logged=now.isoformat(), version=cfg["version"])
+    if len(cfg["series"]) > 1:
+        base["league"] = cfg.get("leagues", {}).get(series_of(event), series_of(event))
     if chk["status"] != "verified":
         return dict(base, buys={}), "pregame ask unverified: " + chk["reason"]
-    return dict(base, buys=evaluate(prints, kickoff, ask, m["result"])), None
+    return dict(base, buys=evaluate(prints, kickoff, ask, m["result"], cfg)), None
 
 
-def run(state, now=None, fetch=D.get, backfill=False):
+def run(state, now=None, fetch=D.get, backfill=False, cfg=None):
     """Replay every settled match since the record began (or, with backfill, the in-sample window once)."""
+    cfg = cfg or ARG
     now = now or dt.datetime.now(UTC)
     book = state["insample"] if backfill else state
-    lo, hi = ((dt.date.fromisoformat(INSAMPLE[0]), dt.date.fromisoformat(INSAMPLE[1])) if backfill
+    lo, hi = ((dt.date.fromisoformat(cfg["insample"][0]), dt.date.fromisoformat(cfg["insample"][1])) if backfill
               else (dt.date.fromisoformat(state["since"]), now.date()))
     seen = {e["event"] for e in book["entries"]} | set(book["skips"]) | set(book.get("seen") or {})
     obs = dict(at=now.isoformat(), new=0, waiting=0, skipped=0, errors=[])
-    try:
-        events = C.list_events(SERIES, lo, fetch, until=hi, cap=800)
-    except Exception as e:                                      # noqa: BLE001
-        events = []
-        obs["errors"].append(f"listing: {str(e)[:80]}")
+    events = []
+    for series in cfg["series"]:
+        try:
+            events += C.list_events(series, lo, fetch, until=hi, cap=800)
+        except Exception as e:                                  # noqa: BLE001
+            obs["errors"].append(f"listing {series}: {str(e)[:80]}")
     done = 0
     for event in sorted(events):
         day = C.event_date(event)
@@ -282,7 +329,7 @@ def run(state, now=None, fetch=D.get, backfill=False):
         if not backfill and done >= MAX_EVENTS_PER_RUN:
             break
         try:
-            entry, why = replay(event, fetch, now)
+            entry, why = replay(event, fetch, now, cfg)
         except Exception as e:                                  # noqa: BLE001
             obs["errors"].append(f"{event}: {str(e)[:80]}")
             continue
@@ -299,23 +346,26 @@ def run(state, now=None, fetch=D.get, backfill=False):
     if backfill:
         book["built"] = now.isoformat()
     else:
-        state["upcoming"] = upcoming(fetch, now, since=state["since"])
+        state["upcoming"] = upcoming(fetch, now, since=state["since"], cfg=cfg)
         state["last_run"] = now.isoformat()
         state["error"] = "; ".join(obs["errors"])[:600] or None
         state["observations"] = obs
     return state
 
 
-def upcoming(fetch, now, n=10, since=SINCE):
+def upcoming(fetch, now, n=10, since=SINCE, cfg=None):
     """The next open matches the lane will count (matchday on or after `since`): [(kickoff, event, title)],
     soonest first."""
-    try:
-        evs = D.pages(f"events?series_ticker={SERIES}&status=open&with_nested_markets=true&limit=200", "events", fetch)
-    except Exception:                                           # noqa: BLE001
-        return []
+    cfg = cfg or ARG
+    evs = []
+    for series in cfg["series"]:
+        try:
+            evs += D.pages(f"events?series_ticker={series}&status=open&with_nested_markets=true&limit=200", "events", fetch)
+        except Exception:                                       # noqa: BLE001
+            continue
     out = []
     for ev in evs:
-        m = over05(ev.get("markets") or [])
+        m = rung(ev.get("markets") or [], cfg["strike"])
         occ = _ts((m or {}).get("occurrence_datetime"))
         if (m and occ and occ - KICKOFF_BACK_H * 3600 >= now.timestamp() - 3 * 3600
                 and (matchday(ev.get("event_ticker")) or "") >= since):
@@ -323,21 +373,23 @@ def upcoming(fetch, now, n=10, since=SINCE):
     return sorted(out, key=lambda x: x["kickoff"])[:n]
 
 
-def main(argv=None):
+def main(argv=None, cfg=None):
+    cfg = cfg or ARG
     argv = sys.argv[1:] if argv is None else argv
-    st = load()
+    path = cfg["path"]
+    st = load(cfg=cfg)
     try:
-        run(st, backfill="--backfill" in argv)
+        run(st, backfill="--backfill" in argv, cfg=cfg)
     except Exception as e:                                      # noqa: BLE001
         st["error"] = (type(e).__name__ + ": " + str(e))[:300]
-    os.makedirs(os.path.dirname(PATH), exist_ok=True)
-    tmp = PATH + ".tmp"
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    tmp = path + ".tmp"
     with open(tmp, "w") as f:
         json.dump(st, f, indent=1, sort_keys=True)
         f.write("\n")
-    os.replace(tmp, PATH)
+    os.replace(tmp, path)
     ins = st["insample"]
-    print(LANE, "entries", len(st["entries"]), "skips", len(st["skips"]), "in-sample", len(ins["entries"]),
+    print(cfg["lane"], "entries", len(st["entries"]), "skips", len(st["skips"]), "in-sample", len(ins["entries"]),
           "this run", st.get("observations"), "error", st.get("error"))
     return 0
 
