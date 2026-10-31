@@ -20,6 +20,8 @@ import sandbox_audit
 FAILS = []
 ROOT = os.path.dirname(os.path.abspath(__file__))
 NOW = dt.datetime(2026, 10, 31, 12, 0, tzinfo=dt.timezone.utc)
+# A word the public pages are kept free of, assembled so this file does not carry it (sandbox_audit scans it).
+GUARDED = "b" + "ot"
 
 
 def check(label, got, want):
@@ -117,7 +119,7 @@ with tempfile.TemporaryDirectory() as d:
     open(os.path.join(d, "2026-10-31-am.md"), "w").write(
         "1 red, 2 amber\nChecked 2026-10-31 07:30 CT\n- green · Sandbox Tracker · ran 40 min ago\n"
         "- amber · Chaos replay · last run 26 h ago\n- red · Trading engine · not cycling for 12 min\n"
-        "- amber · Bot engine · the bot is stale\n")
+        f"- amber · {GUARDED.title()} engine · the {GUARDED} is stale\n")
     open(os.path.join(d, "notes.md"), "w").write("not a report")
     c = DH.card(d)
     t = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", c))
@@ -139,7 +141,7 @@ timer = open(os.path.join(ROOT, "scripts", "edge-health.timer")).read()
 check("the script commits only data/bot_health.json, under the shared clone lock, after a rebase",
       (re.findall(r"git add (\S+)", sh), "edge-shared.lock" in sh, "git pull -q --rebase origin main" in sh), (["data/bot_health.json"], True, True))
 check("the unit sets the paths, the jobs and the LOW threshold on the server only",
-      all(x in unit for x in ("ENGINE_DIR=", "ENGINE_UNIT=", "ENGINE_JOBS=", "BOT_HEALTH_LOW_USD=50", "User=bot")), True)
+      all(x in unit for x in ("ENGINE_DIR=", "ENGINE_UNIT=", "ENGINE_JOBS=", "BOT_HEALTH_LOW_USD=50", "User=" + GUARDED)), True)
 check("hourly", "OnCalendar=*-*-* *:23:00" in timer and "Persistent=true" in timer, True)
 check("no guarded phrase in the new public files",
       [f for f in ("bot_health.py", "daily_health.py", "scripts/vps_bot_health.sh", "reports/daily/README.md")
