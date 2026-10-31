@@ -152,7 +152,7 @@ print("\nnba_ml_dog_tp50: the split headline and the ask 10-30c sub-band (2026-1
 N = next(l for l in chaos_lanes.LANES if l["id"] == "nba_ml_dog_tp50")
 check("same lane id and entries; headline the split; every exit still tracked; no reset (since 2026-10-25)",
       (N["picker"] is chaos_lanes.DOG, N["entry_hours"], N["headline"], C.lane_exits(N), N["since"], N["label"]),
-      (True, (1,), "split", C.LANE_EXITS, "2026-10-25", "NBA moneyline underdog · split 2x / 3x"))
+      (True, (1,), "split", C.LANE_EXITS + C.SINGLES, "2026-10-25", "NBA moneyline underdog · split 2x / 3x"))
 check("one sub-band, ask 10-30c, inside the lane's 10-40c population",
       [(b["id"], b["lo"], b["hi"]) for b in N["sub_bands"]], [("ask_10_30", 0.10, 0.30)])
 # A ledger written under the old config: +50% headline, old label and caution. Nothing in its trades changes.
@@ -183,9 +183,9 @@ band = N["sub_bands"][0]
 full, narrow = CB.split_hold(shown), CB.split_hold(shown, band=band)
 check("the sub-band keeps entries asked 10-30c, edges included (0.10, 0.29, 0.30), and drops 0.31-0.40",
       (full["entries"], narrow["entries"], narrow["won"]), (6, 3, 1))
-check("its split v hold is computed on those entries alone",
+check("its split v hold is computed on those entries alone, at equal stake (the mean of each entry's ROI)",
       (round(narrow["split"], 4), round(narrow["hold"], 4)),
-      (round((0.13 + 0.638 - 0.30) / 0.69, 4), round((-0.10 + 0.71 - 0.30) / 0.69, 4)))
+      (round((1.3 + 2.2 - 1.0) / 3, 4), round((-1.0 + 0.71 / 0.29 - 1.0) / 3, 4)))
 nba = CB.sport_section("nba", dict(lanes={"nba_ml_dog_tp50": copy.deepcopy(old_L)}))
 summ_n = nba[nba.find('class="chaos-summary"'):nba.find("</table>", nba.find('class="chaos-summary"'))]
 rows_n = re.findall(r'<tr data-lane="([^"]+)"(?: data-band="([^"]+)")?>', summ_n)
@@ -290,6 +290,41 @@ check("the Other-exits flags read the verified entries only", C.lane_table(old_L
 check("a lane with every trade checked asks for nothing more",
       sorted({t["event"] for t in old_L["trades"] if "ask" not in t}), [])
 check("public copy passes the guard", sandbox_audit.COPY_RE.search(otxt + srow), None)
+
+print("\nsingle sells at 2x, 3x and 4x (2026-10-31, the college football underdog)")
+check("the singles: the whole stake resting at 2x, 3x or 4x, labelled", (C.SINGLES, [C.LEGGED[k] for k in C.SINGLES],
+      [C.exit_label(k) for k in C.SINGLES]), (("x2", "x3", "x4"), [((2.0, 1.0),), ((3.0, 1.0),), ((4.0, 1.0),)],
+      ["sell everything at 2x", "sell everything at 3x", "sell everything at 4x"]))
+CFB = next(l for l in chaos_lanes.LANES if l["id"] == "cfb_dog_tp50")
+check("the college football lane tracks them beside every exit it had; the split stays on its page first",
+      (C.lane_exits(CFB)[:len(C.LANE_EXITS)] == C.LANE_EXITS, C.lane_exits(CFB)[-3:], CFB["entry_hours"], CFB["since"]),
+      (True, ("x2", "x3", "x4"), (1, 24), "2026-10-25"))
+# Entry 0.10; prints reach 0.30 (3x) but never 0.40 (4x).
+sv = [C.view(m, "yes") for m in [minute(0, 0.08, 0.10), minute(5, 0.20, 0.22, px_hi=0.21), minute(9, 0.28, 0.31, px_hi=0.30)]]
+fin = 0.10 + 0.07 * 0.10 * 0.90
+x3w, x4l = C._split_trade(sv, 0, False, C.LEGGED[C.X3]), C._split_trade(sv, 0, False, C.LEGGED[C.X4])
+check("3x fills on the 0.30 print (maker fee out, taker in); 4x never printed, held to a NO",
+      ((x3w["legs"][0]["filled_ts"] is not None, round(x3w["profit"], 5)), (x4l["legs"][0]["filled_ts"], round(x4l["profit"], 5))),
+      ((True, round(0.30 - 0.0175 * 0.30 * 0.70 - fin, 5)), (None, round(-fin, 5))))
+check("held to a YES, the unfilled 4x pays 1", round(C._split_trade(sv, 0, True, C.LEGGED[C.X4])["profit"], 5), round(1 - fin, 5))
+check("their rows sit under Other exits, each against the same entry held",
+      [C.control_of(C.vkey(1, k)) for k in C.SINGLES], ["t1h_hold"] * 3)
+
+print("\nthe ROI basis: equal stake (2026-10-31)")
+cheap = dict(cost=0.10, profit=0.84, roi=8.4, night="a", won=True, reason="settled")
+dear = dict(cost=0.30, profit=-0.30, roi=-1.0, night="b", won=False, reason="settled")
+check("ROI is the mean of each trade's ROI, not sum profit over sum cost (a 10c win counts as much as a 30c loss)",
+      (round(C.stats([cheap, dear])["roi"], 4), round((0.84 - 0.30) / 0.40, 4)), (3.7, 1.35))
+check("every chaos lane with a card says so once, with its old figures frozen", sorted(CB.ROI_BASIS_OLD)
+      == sorted(["atp_coinflip_tp30", "cfb_dog_tp50", "challenger_cheap_split", "challenger_dog_tp30", "nba_ml_dog_tp50",
+                 "nba_tt_cheap_tp30", "nba_winmargin_split", "nba_winmargin_split_insample"]), True)
+bl = re.sub(r"<[^>]+>", "", CB.basis_line(dict(id="cfb_dog_tp50")))
+check("the card line: the date, the old basis, and the old split and hold per entry time",
+      bl, "ROI basis changed 2026-10-31 from cost-weighted to equal-stake (the mean of each entry's ROI, the same "
+          "quantity its z tests); old figure: 1h split +32.2%, hold +67.8%; 24h split +19.2%, hold +18.3%.")
+check("a lane registered after the change carries no such line", CB.basis_line(dict(id="new_lane")), "")
+import o35_cheap_no_build as OB
+check("the o35 Soccer section says so too", "ROI basis changed 2026-10-31 from cost-weighted to equal-stake" in OB.section(), True)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

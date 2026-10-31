@@ -11,6 +11,9 @@ import chaos_replay as CR
 import o35_cheap_no as O
 
 HEAD = O.vkey(O.HEADLINE, O.HEAD_MULT)
+# The ROI basis change (2026-10-31, Olu): chaos_replay.stats(), which this section reads, moved from sum profit / sum
+# cost to the equal-stake mean. Said once, with the headline and hold as they read on the old basis that day.
+ROI_BASIS = dict(on="2026-10-31", head=0.0786, hold=-0.1796, n=36)
 
 
 def esc(x):
@@ -134,6 +137,7 @@ def section(state=None):
     return f"""<section id="cheap-side">
 <h2>Cheap side · resting bid</h2>
 <p class="shell-kicker">Paper only · no orders · fresh record since {esc(state.get("since"))} · review at {O.REVIEW_N} filled, decide at {O.DECIDE_N}</p>
+<p class="sm mut roi-basis">ROI basis changed {ROI_BASIS["on"]} from cost-weighted to equal-stake (the mean of each fill's ROI, the same quantity its z tests); old figure: 10c bid sold at 2x {pct(ROI_BASIS["head"])}, hold {pct(ROI_BASIS["hold"])} on {ROI_BASIS["n"]} fills.</p>
 <details class="section-disclosure" data-lane="{O.LANE}" open><summary><b>{esc(O.LABEL)}</b><span>{esc(summ)}</span></summary>
 <p class="sm">On the over 3.5 goals market of every game in the twelve leagues on this page, a NO bid rests at 10c before kickoff (15c and 20c are tracked too). It can fill only in play, after goals push the over to 80c or more. The headline sells at 2x the bid; 3x, 4x and holding to settlement are recorded on the same fills.</p>
 <p class="sm">A bid fills when the first trade after it prints NO at or under the bid. Fills after the 4th goal are kept and marked dead fill. A sell counts only if a later trade prints at or above its target and at least {O.MIN_VOL} contracts traded at or above the target after the fill; fewer is marked thin and the trade is held. Fees: 1.75% of p(1-p) on both legs. Kickoff is the Kalshi time minus 4 hours.</p>
