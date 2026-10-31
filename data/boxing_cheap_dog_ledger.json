@@ -38,15 +38,17 @@
    ],
    "logged": "2026-10-31T20:06:27.383501+00:00",
    "minutes_to_start": 59.0,
-   "payout": null,
+   "payout": 0.0,
    "pnl": 0.1833,
    "price": 0.13,
    "roi": 1.3292,
    "roi_2x": 0.8608,
+   "roi_held": -1.0,
+   "settled": "2026-10-31T23:28:48.718767+00:00",
    "side": "yes",
    "spread": 0.02,
    "spread_cost": 0.0,
-   "status": "filled",
+   "status": "settled",
    "traded_to_entry": 123.25,
    "word": "Raymundo Rojas"
   },
@@ -70,23 +72,30 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.18
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.27
     }
    ],
    "logged": "2026-10-31T20:06:27.383501+00:00",
    "minutes_to_start": 59.0,
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.0957,
    "price": 0.09,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-10-31T23:28:48.718767+00:00",
    "side": "yes",
    "spread": 0.02,
    "spread_cost": null,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Ricardo Blandon"
   },
@@ -109,11 +118,17 @@
    "last_trade_at": "2026-10-31T18:01:00+00:00",
    "legs": [
     {
+     "fill_px": 0.3,
+     "fill_volume": 15628.19,
+     "filled_at": "2026-10-31T20:38:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.3
     },
     {
+     "fill_px": 0.45,
+     "fill_volume": 22358.84,
+     "filled_at": "2026-10-31T20:48:00+00:00",
      "multiple": 3.0,
      "share": 0.5,
      "target": 0.45
@@ -121,12 +136,17 @@
    ],
    "logged": "2026-10-31T20:06:27.383501+00:00",
    "minutes_to_start": 59.0,
-   "payout": null,
+   "payout": 0.0,
+   "pnl": 0.2121,
    "price": 0.15,
+   "roi": 1.3344,
+   "roi_2x": 0.8646,
+   "roi_held": -1.0,
+   "settled": "2026-10-31T23:28:48.718767+00:00",
    "side": "yes",
    "spread": 0.01,
    "spread_cost": 0.0,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 225.92,
    "word": "Nikita Zon"
   }
@@ -140,14 +160,14 @@
   "KXBOXING-26OCT31TSUTSUROJAS": "2026-10-31T20:06:27.383501+00:00"
  },
  "lane": "boxing_cheap_dog",
- "last_success": "2026-10-31T20:06:27.383501+00:00",
+ "last_success": "2026-10-31T23:28:48.718767+00:00",
  "observations": {
-  "at": "2026-10-31T20:06:27.383501+00:00",
-  "entered": 3,
-  "events": 4,
+  "at": "2026-10-31T23:28:48.718767+00:00",
+  "entered": 0,
+  "events": 3,
   "filled": 2,
   "no_start": 0,
-  "skipped": 5,
+  "skipped": 0,
   "unverified": 0,
   "waiting": 2
  },

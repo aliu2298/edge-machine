@@ -1,21 +1,110 @@
 {
  "ask_rule_since": "2026-10-30T14:57:46.895797+00:00",
- "entries": [],
+ "entries": [
+  {
+   "ask_check": {
+    "book": 256253.09,
+    "first_quotes": false,
+    "how": "book",
+    "last_trade": 0.28,
+    "source": "live",
+    "status": "verified"
+   },
+   "bid": 0.27,
+   "book": {
+    "ask_depth": 921899.94,
+    "ask_levels": 42,
+    "ask_size": 256253.09,
+    "at": "2026-10-31T23:28:50.112649+00:00",
+    "at_or_under": 256253.09,
+    "best_ask": 0.28,
+    "best_bid": 0.27,
+    "bid_depth": 232027.44,
+    "bid_levels": 19,
+    "bid_size": 87138.59
+   },
+   "book_at": "2026-10-31T23:28:50.112649+00:00",
+   "book_size": 256253.09,
+   "entry_at": "2026-10-31T23:01:00+00:00",
+   "event": "KXUFCFIGHT-26OCT31LEBHAS",
+   "fight_start": "2026-11-01T00:00:00+00:00",
+   "id": "KXUFCFIGHT-26OCT31LEBHAS-HAS",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.56
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.84
+    }
+   ],
+   "logged": "2026-10-31T23:28:50.112649+00:00",
+   "minutes_to_start": 59.0,
+   "payout": null,
+   "price": 0.28,
+   "side": "yes",
+   "spread": 0.01,
+   "spread_cost": null,
+   "status": "open",
+   "traded_to_entry": 0.0,
+   "word": "Farman Hasanov"
+  }
+ ],
  "error": null,
- "events": {},
+ "events": {
+  "KXUFCFIGHT-26OCT31LEBHAS": "2026-10-31T23:28:50.112649+00:00",
+  "KXUFCFIGHT-26OCT31MARHOP": "2026-10-31T23:28:50.112649+00:00",
+  "KXUFCFIGHT-26OCT31SEZBER": "2026-10-31T23:28:50.112649+00:00"
+ },
  "lane": "ufc_dog",
- "last_success": "2026-10-31T20:06:28.972574+00:00",
+ "last_success": "2026-10-31T23:28:50.112649+00:00",
  "observations": {
-  "at": "2026-10-31T20:06:28.972574+00:00",
-  "entered": 0,
-  "events": 0,
+  "at": "2026-10-31T23:28:50.112649+00:00",
+  "entered": 1,
+  "events": 3,
   "filled": 0,
   "no_start": 0,
-  "skipped": 0,
+  "skipped": 5,
   "unverified": 0,
-  "waiting": 12
+  "waiting": 4
  },
- "skips": {},
+ "skips": {
+  "KXUFCFIGHT-26OCT31LEBHAS-LEB": {
+   "event": "KXUFCFIGHT-26OCT31LEBHAS",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 in the hour-before window",
+   "start": "2026-11-01T00:00:00+00:00",
+   "word": "Jean-Paul Lebosnoyani"
+  },
+  "KXUFCFIGHT-26OCT31MARHOP-HOP": {
+   "event": "KXUFCFIGHT-26OCT31MARHOP",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 in the hour-before window",
+   "start": "2026-10-31T23:00:00+00:00",
+   "word": "Dakota Hope"
+  },
+  "KXUFCFIGHT-26OCT31MARHOP-MAR": {
+   "event": "KXUFCFIGHT-26OCT31MARHOP",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 in the hour-before window",
+   "start": "2026-10-31T23:00:00+00:00",
+   "word": "Francis Marshall"
+  },
+  "KXUFCFIGHT-26OCT31SEZBER-BER": {
+   "event": "KXUFCFIGHT-26OCT31SEZBER",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 in the hour-before window",
+   "start": "2026-10-31T22:40:00+00:00",
+   "word": "Theodor Berggren"
+  },
+  "KXUFCFIGHT-26OCT31SEZBER-SEZ": {
+   "event": "KXUFCFIGHT-26OCT31SEZBER",
+   "reason": "no quote with a 5c spread and a YES ask of 0.15-0.30 in the hour-before window",
+   "start": "2026-10-31T22:40:00+00:00",
+   "word": "Rodrigo Sezinando"
+  }
+ },
  "starts": {
   "KXUFCFIGHT-26OCT31BEKPET": "2026-10-31T23:00:00+00:00",
   "KXUFCFIGHT-26OCT31BROSMI": "2026-11-01T01:00:00+00:00",
