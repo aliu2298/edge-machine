@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-31T13:01:21.068606+00:00",
+ "last_run": "2026-10-31T13:31:40.833100+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -705,6 +705,114 @@
      "ticker": "KXLIGUE1TEAMTOTAL-26OCT26PSGOL-OL2",
      "title": "Will Lyon score over 1.5 goals?",
      "why": "Lyon O+D- v Paris Saint-Germain O+D- \u00b7 2+ YES 0.27"
+    },
+    {
+     "ask": 0.46,
+     "bid": 0.44,
+     "event": "KXEPLTEAMTOTAL-26OCT31BOULEE",
+     "group": "A",
+     "id": "T1:KXEPLTEAMTOTAL-26OCT31BOULEE:home",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Premier League",
+     "line": 1.5,
+     "logged": "2026-10-31T13:31:40.833100+00:00",
+     "match": "AFC Bournemouth v Leeds United",
+     "opponent": "Leeds United",
+     "price": 0.46,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-10-31T15:00Z",
+     "status": "open",
+     "sub": "Bournemouth over 1.5 goals",
+     "team": "AFC Bournemouth",
+     "team_side": "home",
+     "ticker": "KXEPLTEAMTOTAL-26OCT31BOULEE-BOU2",
+     "title": "Will Bournemouth score over 1.5 goals?",
+     "why": "AFC Bournemouth O+D- v Leeds United O+D- \u00b7 2+ YES 0.46"
+    },
+    {
+     "ask": 0.3,
+     "bid": 0.29,
+     "event": "KXEPLTEAMTOTAL-26OCT31BOULEE",
+     "group": "A",
+     "id": "T1:KXEPLTEAMTOTAL-26OCT31BOULEE:away",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Premier League",
+     "line": 1.5,
+     "logged": "2026-10-31T13:31:40.833100+00:00",
+     "match": "AFC Bournemouth v Leeds United",
+     "opponent": "AFC Bournemouth",
+     "price": 0.3,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-10-31T15:00Z",
+     "status": "open",
+     "sub": "Leeds United over 1.5 goals",
+     "team": "Leeds United",
+     "team_side": "away",
+     "ticker": "KXEPLTEAMTOTAL-26OCT31BOULEE-LEE2",
+     "title": "Will Leeds United score over 1.5 goals?",
+     "why": "Leeds United O+D- v AFC Bournemouth O+D- \u00b7 2+ YES 0.30"
+    },
+    {
+     "ask": 0.63,
+     "bid": 0.62,
+     "event": "KXEPLTEAMTOTAL-26OCT31MCIBRI",
+     "group": "A",
+     "id": "T1:KXEPLTEAMTOTAL-26OCT31MCIBRI:home",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Premier League",
+     "line": 1.5,
+     "logged": "2026-10-31T13:31:40.833100+00:00",
+     "match": "Manchester City v Brighton & Hove Albion",
+     "opponent": "Brighton & Hove Albion",
+     "price": 0.63,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-10-31T15:00Z",
+     "status": "open",
+     "sub": "Manchester City over 1.5 goals",
+     "team": "Manchester City",
+     "team_side": "home",
+     "ticker": "KXEPLTEAMTOTAL-26OCT31MCIBRI-MCI2",
+     "title": "Will Manchester City score over 1.5 goals?",
+     "why": "Manchester City O+D- v Brighton & Hove Albion O+D- \u00b7 2+ YES 0.63"
+    },
+    {
+     "ask": 0.35,
+     "bid": 0.34,
+     "event": "KXEPLTEAMTOTAL-26OCT31MCIBRI",
+     "group": "A",
+     "id": "T1:KXEPLTEAMTOTAL-26OCT31MCIBRI:away",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Premier League",
+     "line": 1.5,
+     "logged": "2026-10-31T13:31:40.833100+00:00",
+     "match": "Manchester City v Brighton & Hove Albion",
+     "opponent": "Manchester City",
+     "price": 0.35,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-10-31T15:00Z",
+     "status": "open",
+     "sub": "Brighton over 1.5 goals",
+     "team": "Brighton & Hove Albion",
+     "team_side": "away",
+     "ticker": "KXEPLTEAMTOTAL-26OCT31MCIBRI-BRI2",
+     "title": "Will Brighton score over 1.5 goals?",
+     "why": "Brighton & Hove Albion O+D- v Manchester City O+D- \u00b7 2+ YES 0.35"
     }
    ]
   },
@@ -2963,19 +3071,65 @@
      "ticker": "KXLIGUE1TEAMTOTAL-26OCT30NICREN-REN2",
      "title": "Will Stade Rennais score over 1.5 goals?",
      "why": "Stade Rennais O+D+ v Nice O-D- \u00b7 2+ NO 0.56"
+    },
+    {
+     "ask": 0.51,
+     "bid": 0.5,
+     "event": "KXEPLTEAMTOTAL-26OCT31BRENFO",
+     "group": "C",
+     "id": "T8:KXEPLTEAMTOTAL-26OCT31BRENFO:home",
+     "labels": {
+      "opp": "O-D-",
+      "own": "O+D+"
+     },
+     "league": "Premier League",
+     "line": 1.5,
+     "logged": "2026-10-31T13:31:40.833100+00:00",
+     "match": "Brentford v Nottingham Forest",
+     "opponent": "Nottingham Forest",
+     "price": 0.5,
+     "rule": "T8",
+     "side": "no",
+     "start": "2026-10-31T15:00Z",
+     "status": "open",
+     "sub": "Brentford over 1.5 goals",
+     "team": "Brentford",
+     "team_side": "home",
+     "ticker": "KXEPLTEAMTOTAL-26OCT31BRENFO-BRE2",
+     "title": "Will Brentford score over 1.5 goals?",
+     "why": "Brentford O+D+ v Nottingham Forest O-D- \u00b7 2+ NO 0.50"
+    },
+    {
+     "ask": 0.41,
+     "bid": 0.4,
+     "event": "KXEPLTEAMTOTAL-26OCT31HULIPS",
+     "group": "C",
+     "id": "T8:KXEPLTEAMTOTAL-26OCT31HULIPS:away",
+     "labels": {
+      "opp": "O-D-",
+      "own": "O+D+"
+     },
+     "league": "Premier League",
+     "line": 1.5,
+     "logged": "2026-10-31T13:31:40.833100+00:00",
+     "match": "Hull City v Ipswich Town",
+     "opponent": "Hull City",
+     "price": 0.6,
+     "rule": "T8",
+     "side": "no",
+     "start": "2026-10-31T15:00Z",
+     "status": "open",
+     "sub": "Ipswich Town over 1.5 goals",
+     "team": "Ipswich Town",
+     "team_side": "away",
+     "ticker": "KXEPLTEAMTOTAL-26OCT31HULIPS-IPS2",
+     "title": "Will Ipswich Town score over 1.5 goals?",
+     "why": "Ipswich Town O+D+ v Hull City O-D- \u00b7 2+ NO 0.60"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T14:16:38.256601+00:00",
-   "candidates": 1,
-   "due": 1,
-   "labelled": 1,
-   "matched": 1,
-   "new": 0
-  },
   {
    "at": "2026-10-25T14:46:35.581366+00:00",
    "candidates": 3,
@@ -3375,6 +3529,14 @@
    "labelled": 6,
    "matched": 2,
    "new": 3
+  },
+  {
+   "at": "2026-10-31T13:31:40.833100+00:00",
+   "candidates": 6,
+   "due": 11,
+   "labelled": 11,
+   "matched": 6,
+   "new": 6
   }
  ],
  "version": "soccer-team-rules-v1"
