@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-31T16:01:42.362062+00:00",
+ "last_run": "2026-10-31T16:31:26.039782+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -1133,6 +1133,33 @@
      "ticker": "KXLALIGATEAMTOTAL-26OCT31RVCRCC-RCC2",
      "title": "Will Celta Vigo score over 1.5 goals?",
      "why": "Celta Vigo O-D- v Rayo Vallecano O-D+ \u00b7 2+ NO 0.70"
+    },
+    {
+     "ask": 0.68,
+     "bid": 0.66,
+     "event": "KXMLSTEAMTOTAL-26OCT31NYCMTL",
+     "group": "A",
+     "id": "T2:KXMLSTEAMTOTAL-26OCT31NYCMTL:home",
+     "labels": {
+      "opp": "O-D+",
+      "own": "O-D-"
+     },
+     "league": "MLS",
+     "line": 1.5,
+     "logged": "2026-10-31T16:31:26.039782+00:00",
+     "match": "New York City FC v CF Montr\u00e9al",
+     "opponent": "CF Montr\u00e9al",
+     "price": 0.34,
+     "rule": "T2",
+     "side": "no",
+     "start": "2026-10-31T18:00Z",
+     "status": "open",
+     "sub": "New York City over 1.5 goals",
+     "team": "New York City FC",
+     "team_side": "home",
+     "ticker": "KXMLSTEAMTOTAL-26OCT31NYCMTL-NYC2",
+     "title": "Will New York City score over 1.5 goals?",
+     "why": "New York City FC O-D- v CF Montr\u00e9al O-D+ \u00b7 2+ NO 0.34"
     }
    ]
   },
@@ -1906,6 +1933,33 @@
      "ticker": "KXLALIGATEAMTOTAL-26OCT31RBBMCF-RBB2",
      "title": "Will Real Betis score over 1.5 goals?",
      "why": "Real Betis O+D- v M\u00e1laga O-D+ \u00b7 2+ YES 0.74"
+    },
+    {
+     "ask": 0.7,
+     "bid": 0.68,
+     "event": "KXMLSTEAMTOTAL-26OCT31CLBDCU",
+     "group": "B",
+     "id": "T4:KXMLSTEAMTOTAL-26OCT31CLBDCU:home",
+     "labels": {
+      "opp": "O-D+",
+      "own": "O+D-"
+     },
+     "league": "MLS",
+     "line": 1.5,
+     "logged": "2026-10-31T16:31:26.039782+00:00",
+     "match": "Columbus Crew v D.C. United",
+     "opponent": "D.C. United",
+     "price": 0.7,
+     "rule": "T4",
+     "side": "yes",
+     "start": "2026-10-31T18:00Z",
+     "status": "open",
+     "sub": "Columbus over 1.5 goals",
+     "team": "Columbus Crew",
+     "team_side": "home",
+     "ticker": "KXMLSTEAMTOTAL-26OCT31CLBDCU-CLB2",
+     "title": "Will Columbus score over 1.5 goals?",
+     "why": "Columbus Crew O+D- v D.C. United O-D+ \u00b7 2+ YES 0.70"
     }
    ]
   },
@@ -2259,6 +2313,33 @@
      "ticker": "KXMLSTEAMTOTAL-26OCT31CLTORL-CLT2",
      "title": "Will Charlotte score over 1.5 goals?",
      "why": "Charlotte FC O+D- v Orlando City SC O+D+ \u00b7 2+ YES 0.70"
+    },
+    {
+     "ask": 0.49,
+     "bid": 0.47,
+     "event": "KXMLSTEAMTOTAL-26OCT31CINPHI",
+     "group": "B",
+     "id": "T5:KXMLSTEAMTOTAL-26OCT31CINPHI:away",
+     "labels": {
+      "opp": "O+D+",
+      "own": "O+D-"
+     },
+     "league": "MLS",
+     "line": 1.5,
+     "logged": "2026-10-31T16:31:26.039782+00:00",
+     "match": "FC Cincinnati v Philadelphia Union",
+     "opponent": "FC Cincinnati",
+     "price": 0.49,
+     "rule": "T5",
+     "side": "yes",
+     "start": "2026-10-31T18:00Z",
+     "status": "open",
+     "sub": "Philadelphia over 1.5 goals",
+     "team": "Philadelphia Union",
+     "team_side": "away",
+     "ticker": "KXMLSTEAMTOTAL-26OCT31CINPHI-PHI2",
+     "title": "Will Philadelphia score over 1.5 goals?",
+     "why": "Philadelphia Union O+D- v FC Cincinnati O+D+ \u00b7 2+ YES 0.49"
     }
    ]
   },
@@ -2691,11 +2772,14 @@
      "logged": "2026-10-31T13:01:21.068606+00:00",
      "match": "FC Augsburg v SC Freiburg",
      "opponent": "SC Freiburg",
+     "payout": 1.0,
      "price": 0.83,
+     "profit": 19.07,
      "rule": "T6",
+     "settled": "2026-10-31T16:31:26.039782+00:00",
      "side": "no",
      "start": "2026-10-31T14:30Z",
-     "status": "open",
+     "status": "won",
      "sub": "Augsburg over 2.5 goals",
      "team": "FC Augsburg",
      "team_side": "home",
@@ -2729,6 +2813,33 @@
      "ticker": "KXMLSTEAMTOTAL-26OCT31CLTORL-ORL3",
      "title": "Will Orlando score over 2.5 goals?",
      "why": "Orlando City SC O+D+ v Charlotte FC O+D- \u00b7 3+ NO 0.76"
+    },
+    {
+     "ask": 0.26,
+     "bid": 0.25,
+     "event": "KXMLSTEAMTOTAL-26OCT31CINPHI",
+     "group": "C",
+     "id": "T6:KXMLSTEAMTOTAL-26OCT31CINPHI:home",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D+"
+     },
+     "league": "MLS",
+     "line": 2.5,
+     "logged": "2026-10-31T16:31:26.039782+00:00",
+     "match": "FC Cincinnati v Philadelphia Union",
+     "opponent": "Philadelphia Union",
+     "price": 0.75,
+     "rule": "T6",
+     "side": "no",
+     "start": "2026-10-31T18:00Z",
+     "status": "open",
+     "sub": "Cincinnati over 2.5 goals",
+     "team": "FC Cincinnati",
+     "team_side": "home",
+     "ticker": "KXMLSTEAMTOTAL-26OCT31CINPHI-CIN3",
+     "title": "Will Cincinnati score over 2.5 goals?",
+     "why": "FC Cincinnati O+D+ v Philadelphia Union O+D- \u00b7 3+ NO 0.75"
     }
    ]
   },
@@ -2927,11 +3038,14 @@
      "logged": "2026-10-31T13:01:21.068606+00:00",
      "match": "Werder Bremen v TSG Hoffenheim",
      "opponent": "TSG Hoffenheim",
+     "payout": 1.0,
      "price": 0.73,
+     "profit": 34.45,
      "rule": "T7",
+     "settled": "2026-10-31T16:31:26.039782+00:00",
      "side": "no",
      "start": "2026-10-31T14:30Z",
-     "status": "open",
+     "status": "won",
      "sub": "Bremen over 2.5 goals",
      "team": "Werder Bremen",
      "team_side": "home",
@@ -2954,11 +3068,14 @@
      "logged": "2026-10-31T13:01:21.068606+00:00",
      "match": "Werder Bremen v TSG Hoffenheim",
      "opponent": "Werder Bremen",
+     "payout": 1.0,
      "price": 0.75,
+     "profit": 31.04,
      "rule": "T7",
+     "settled": "2026-10-31T16:31:26.039782+00:00",
      "side": "no",
      "start": "2026-10-31T14:30Z",
-     "status": "open",
+     "status": "won",
      "sub": "Hoffenheim over 2.5 goals",
      "team": "TSG Hoffenheim",
      "team_side": "away",
@@ -3346,14 +3463,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T16:31:09.818376+00:00",
-   "candidates": 1,
-   "due": 2,
-   "labelled": 2,
-   "matched": 1,
-   "new": 0
-  },
   {
    "at": "2026-10-25T18:16:09.910193+00:00",
    "candidates": 0,
@@ -3753,6 +3862,14 @@
    "labelled": 5,
    "matched": 4,
    "new": 5
+  },
+  {
+   "at": "2026-10-31T16:31:26.039782+00:00",
+   "candidates": 7,
+   "due": 8,
+   "labelled": 8,
+   "matched": 7,
+   "new": 4
   }
  ],
  "version": "soccer-team-rules-v1"

@@ -9,7 +9,7 @@
    0.97
   ]
  },
- "board_built_at": "2026-10-31T16:01:42+00:00",
+ "board_built_at": "2026-10-31T16:31:26+00:00",
  "collector_error": null,
  "collector_healthy": {
   "st_t5": true,
@@ -35,7 +35,7 @@
    "kickoff": "2026-10-31T17:00Z",
    "lane": "production",
    "last_seen": "2026-10-31",
-   "last_seen_at": "2026-10-31T16:01:42+00:00",
+   "last_seen_at": "2026-10-31T16:31:26+00:00",
    "league": "MLS",
    "match": "Charlotte FC v Orlando City SC",
    "pair": "st_t5|soccer_team2",
@@ -57,6 +57,44 @@
    "sport": "soccer_team2",
    "status": "pending"
   },
+  "2026-10-31|FC Cincinnati|Philadelphia Union|Philadelphia Union to score 2+ \u00b7 O+D\u2212 v O+D+ \u00b7 team 2+ goals": {
+   "away": "Philadelphia Union",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "Philadelphia Union"
+   },
+   "date": "2026-10-31",
+   "edge_at_log": null,
+   "first_seen": "2026-10-31",
+   "headline": "Philadelphia Union to score 2+",
+   "home": "FC Cincinnati",
+   "id": "2026-10-31|FC Cincinnati|Philadelphia Union|Philadelphia Union to score 2+ \u00b7 O+D\u2212 v O+D+ \u00b7 team 2+ goals",
+   "kickoff": "2026-10-31T18:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-31",
+   "last_seen_at": "2026-10-31T16:31:26+00:00",
+   "league": "MLS",
+   "match": "FC Cincinnati v Philadelphia Union",
+   "pair": "st_t5|soccer_team2",
+   "price_at_log": 0.49,
+   "published_at": "2026-10-31T16:31:26+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Philadelphia Union to score 2+",
+    "event": "KXMLSTEAMTOTAL-26OCT31CINPHI",
+    "market": "KXMLSTEAMTOTAL-26OCT31CINPHI-PHI2",
+    "outcome": "Philadelphia over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.49,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "st_t5:KXMLSTEAMTOTAL-26OCT31CINPHI-PHI2",
+   "source": "st_t5",
+   "sport": "soccer_team2",
+   "status": "pending"
+  },
   "2026-10-31|Tottenham Hotspur|Crystal Palace|Crystal Palace to score under 2.5 \u00b7 O+D+ v O+D+ \u00b7 team 3+ goals \u00b7 NO": {
    "away": "Crystal Palace",
    "bet": {
@@ -73,7 +111,7 @@
    "kickoff": "2026-10-31T17:30Z",
    "lane": "production",
    "last_seen": "2026-10-31",
-   "last_seen_at": "2026-10-31T16:01:42+00:00",
+   "last_seen_at": "2026-10-31T16:31:26+00:00",
    "league": "Premier League",
    "match": "Tottenham Hotspur v Crystal Palace",
    "pair": "st_t7|soccer_team3",
@@ -111,7 +149,7 @@
    "kickoff": "2026-10-31T17:30Z",
    "lane": "production",
    "last_seen": "2026-10-31",
-   "last_seen_at": "2026-10-31T16:01:42+00:00",
+   "last_seen_at": "2026-10-31T16:31:26+00:00",
    "league": "Premier League",
    "match": "Tottenham Hotspur v Crystal Palace",
    "pair": "st_t7|soccer_team3",
@@ -132,35 +170,82 @@
    "source": "st_t7",
    "sport": "soccer_team3",
    "status": "pending"
+  },
+  "2026-10-31|Werder Bremen|TSG Hoffenheim|TSG Hoffenheim to score under 2.5 \u00b7 O+D+ v O+D+ \u00b7 team 3+ goals \u00b7 NO": {
+   "away": "TSG Hoffenheim",
+   "bet": {
+    "kind": "team_lte",
+    "n": 2,
+    "team": "TSG Hoffenheim"
+   },
+   "date": "2026-10-31",
+   "edge_at_log": null,
+   "first_seen": "2026-10-31",
+   "headline": "TSG Hoffenheim to score under 2.5",
+   "home": "Werder Bremen",
+   "id": "2026-10-31|Werder Bremen|TSG Hoffenheim|TSG Hoffenheim to score under 2.5 \u00b7 O+D+ v O+D+ \u00b7 team 3+ goals \u00b7 NO",
+   "kickoff": "2026-10-31T14:30Z",
+   "lane": "production",
+   "league": "Bundesliga",
+   "match": "Werder Bremen v TSG Hoffenheim",
+   "pair": "st_t7|soccer_team3",
+   "price_at_log": 0.75,
+   "published_at": "2026-10-31T16:31:26+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "TSG Hoffenheim to score under 2.5",
+    "event": "KXBUNDESLIGATEAMTOTAL-26OCT31SVWTSG",
+    "market": "KXBUNDESLIGATEAMTOTAL-26OCT31SVWTSG-TSG3",
+    "outcome": "Hoffenheim over 2.5 goals",
+    "outcome_side": "no",
+    "price_at_log": 0.75,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "st_t7:KXBUNDESLIGATEAMTOTAL-26OCT31SVWTSG-TSG3",
+   "source": "st_t7",
+   "sport": "soccer_team3",
+   "status": "hit"
+  },
+  "2026-10-31|Werder Bremen|TSG Hoffenheim|Werder Bremen to score under 2.5 \u00b7 O+D+ v O+D+ \u00b7 team 3+ goals \u00b7 NO": {
+   "away": "TSG Hoffenheim",
+   "bet": {
+    "kind": "team_lte",
+    "n": 2,
+    "team": "Werder Bremen"
+   },
+   "date": "2026-10-31",
+   "edge_at_log": null,
+   "first_seen": "2026-10-31",
+   "headline": "Werder Bremen to score under 2.5",
+   "home": "Werder Bremen",
+   "id": "2026-10-31|Werder Bremen|TSG Hoffenheim|Werder Bremen to score under 2.5 \u00b7 O+D+ v O+D+ \u00b7 team 3+ goals \u00b7 NO",
+   "kickoff": "2026-10-31T14:30Z",
+   "lane": "production",
+   "league": "Bundesliga",
+   "match": "Werder Bremen v TSG Hoffenheim",
+   "pair": "st_t7|soccer_team3",
+   "price_at_log": 0.73,
+   "published_at": "2026-10-31T16:31:26+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Werder Bremen to score under 2.5",
+    "event": "KXBUNDESLIGATEAMTOTAL-26OCT31SVWTSG",
+    "market": "KXBUNDESLIGATEAMTOTAL-26OCT31SVWTSG-SVW3",
+    "outcome": "Bremen over 2.5 goals",
+    "outcome_side": "no",
+    "price_at_log": 0.73,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "st_t7:KXBUNDESLIGATEAMTOTAL-26OCT31SVWTSG-SVW3",
+   "source": "st_t7",
+   "sport": "soccer_team3",
+   "status": "hit"
   }
  },
  "pairs": {
   "st_t5|soccer_team2": {
-   "by_hand": "2026-10-28",
-   "entered_at": "2026-10-29T00:59:00+00:00",
-   "promoted_at": "2026-10-29T00:59:00+00:00",
-   "ready_at": "2026-10-29T00:59:00+00:00",
-   "route": "moved by hand on 2026-10-28",
-   "routing": {
-    "leads": 1,
-    "problem": null,
-    "routed": 1,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": null,
-   "sandbox_n": 0,
-   "sandbox_roi": null,
-   "sandbox_roi_fee": null,
-   "timing": {
-    "late": [],
-    "timed": 1,
-    "under_target": 0
-   }
-  },
-  "st_t7|soccer_team3": {
    "by_hand": "2026-10-28",
    "entered_at": "2026-10-29T00:59:00+00:00",
    "promoted_at": "2026-10-29T00:59:00+00:00",
@@ -184,11 +269,36 @@
     "timed": 2,
     "under_target": 0
    }
+  },
+  "st_t7|soccer_team3": {
+   "by_hand": "2026-10-28",
+   "entered_at": "2026-10-29T00:59:00+00:00",
+   "promoted_at": "2026-10-29T00:59:00+00:00",
+   "ready_at": "2026-10-29T00:59:00+00:00",
+   "route": "moved by hand on 2026-10-28",
+   "routing": {
+    "leads": 4,
+    "problem": null,
+    "routed": 4,
+    "unlisted": 0,
+    "unrouted": 0,
+    "unverified": 0,
+    "why": []
+   },
+   "sandbox_clv": null,
+   "sandbox_n": 2,
+   "sandbox_roi": 0.3275,
+   "sandbox_roi_fee": 0.3275,
+   "timing": {
+    "late": [],
+    "timed": 2,
+    "under_target": 0
+   }
   }
  },
  "publication_withheld": {},
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-31T16:01:42+00:00"
+ "updated_at": "2026-10-31T16:31:26+00:00"
 }
