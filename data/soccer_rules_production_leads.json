@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-31T17:01:32+00:00",
+ "board_built_at": "2026-10-31T17:16:40+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sr_a6": true,
@@ -47,6 +47,41 @@
    "sport": "soccer_o25",
    "status": "hit"
   },
+  "2026-10-31|Brentford|Nottingham Forest|Under 2.5 goals \u00b7 EPL O\u2212D\u2212 v an O+ opponent \u00b7 under 2.5": {
+   "away": "Nottingham Forest",
+   "bet": {
+    "kind": "total_lte",
+    "n": 2
+   },
+   "date": "2026-10-31",
+   "edge_at_log": null,
+   "first_seen": "2026-10-31",
+   "headline": "Under 2.5 goals",
+   "home": "Brentford",
+   "id": "2026-10-31|Brentford|Nottingham Forest|Under 2.5 goals \u00b7 EPL O\u2212D\u2212 v an O+ opponent \u00b7 under 2.5",
+   "kickoff": "2026-10-31T15:00Z",
+   "lane": "production",
+   "league": "Premier League",
+   "match": "Brentford v Nottingham Forest",
+   "pair": "sr_a6|soccer_o25",
+   "price_at_log": 0.43,
+   "published_at": "2026-10-31T17:16:40+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Under 2.5 goals",
+    "event": "KXEPLTOTAL-26OCT31BRENFO",
+    "market": "KXEPLTOTAL-26OCT31BRENFO-3",
+    "outcome": "Over 2.5 goals scored",
+    "outcome_side": "no",
+    "price_at_log": 0.43,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_a6:KXEPLTOTAL-26OCT31BRENFO-3",
+   "source": "sr_a6",
+   "sport": "soccer_o25",
+   "status": "hit"
+  },
   "2026-10-31|FC Cincinnati|Philadelphia Union|Over 3.5 goals \u00b7 MLS O+D\u2212 v O+D+ \u00b7 over 3.5": {
    "away": "Philadelphia Union",
    "bet": {
@@ -62,7 +97,7 @@
    "kickoff": "2026-10-31T18:00Z",
    "lane": "production",
    "last_seen": "2026-10-31",
-   "last_seen_at": "2026-10-31T17:01:32+00:00",
+   "last_seen_at": "2026-10-31T17:16:40+00:00",
    "league": "MLS",
    "match": "FC Cincinnati v Philadelphia Union",
    "pair": "sr_c1|soccer_u35",
@@ -83,6 +118,41 @@
    "source": "sr_c1",
    "sport": "soccer_u35",
    "status": "pending"
+  },
+  "2026-10-31|Hull City|Ipswich Town|Under 2.5 goals \u00b7 EPL O\u2212D\u2212 v an O+ opponent \u00b7 under 2.5": {
+   "away": "Ipswich Town",
+   "bet": {
+    "kind": "total_lte",
+    "n": 2
+   },
+   "date": "2026-10-31",
+   "edge_at_log": null,
+   "first_seen": "2026-10-31",
+   "headline": "Under 2.5 goals",
+   "home": "Hull City",
+   "id": "2026-10-31|Hull City|Ipswich Town|Under 2.5 goals \u00b7 EPL O\u2212D\u2212 v an O+ opponent \u00b7 under 2.5",
+   "kickoff": "2026-10-31T15:00Z",
+   "lane": "production",
+   "league": "Premier League",
+   "match": "Hull City v Ipswich Town",
+   "pair": "sr_a6|soccer_o25",
+   "price_at_log": 0.5,
+   "published_at": "2026-10-31T17:16:40+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Under 2.5 goals",
+    "event": "KXEPLTOTAL-26OCT31HULIPS",
+    "market": "KXEPLTOTAL-26OCT31HULIPS-3",
+    "outcome": "Over 2.5 goals scored",
+    "outcome_side": "no",
+    "price_at_log": 0.5,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_a6:KXEPLTOTAL-26OCT31HULIPS-3",
+   "source": "sr_a6",
+   "sport": "soccer_o25",
+   "status": "miss"
   }
  },
  "pairs": {
@@ -93,18 +163,18 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 1,
+    "leads": 3,
     "problem": null,
-    "routed": 1,
+    "routed": 3,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 3,
-   "sandbox_roi": 1.2634,
-   "sandbox_roi_fee": 1.2634,
+   "sandbox_n": 5,
+   "sandbox_roi": 0.8053,
+   "sandbox_roi_fee": 0.8053,
    "timing": {
     "late": [],
     "timed": 0,
@@ -235,5 +305,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-31T17:01:32+00:00"
+ "updated_at": "2026-10-31T17:16:40+00:00"
 }
