@@ -158,7 +158,9 @@ check("all 8 rules are listed, in groups A, B and C",
       (all(f"<b>{k}</b>" in html for k in TR.RULES), all(f"Group {g}" in html for g in "ABC")), (True, True))
 # Compact layout (2026-10-18): one grid line per rule on the Rules section's own classes, the
 # figures labelled for the phone, each group a section disclosure with only Group A open.
-lines = re.findall(r'<div class="sp-line is-label" data-rule="([^"]+)">(.*?)</div>', html)
+lines = re.findall(r'<div class="sp-line is-label(?: mut)?" data-rule="([^"]+)"(?: data-retired="[^"]*")?>(.*?)</div>', html)
+check("T6 and T8 are marked Retired 2026-10-31 with their records, no other rule is (2026-10-31)",
+      (sorted(re.findall(r'data-rule="(T\d)" data-retired="2026-10-31"', html)), html.count("data-retired=")), (["T6", "T8"], 2))
 check("team rules: one compact line per rule, no table rows", (sorted(k for k, _ in lines) == sorted(TR.RULES), "<tr><td><b>" + 'T1' in html), (True, False))
 check("team rules: every figure carries its phone label",
       all(all(f'data-l="{l}"' in body for l in ("Settled", "Won", "ROI", "Open")) for _, body in lines), True)

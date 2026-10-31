@@ -163,10 +163,26 @@ def entry(rule, f, ev, m, team, px, b, a, labs, now):
                 why=f"{own} {own_lab} v {opp} {opp_lab} · {r['goals']}+ {r['side'].upper()} {px:.2f}")
 
 
+# Rules retired by hand (2026-10-31, Olu): no new entry from the dated day on (Eastern); the ledger rows
+# stay and keep settling. T1, T5 and T7 (Production pairs) and the other rules behave exactly as before.
+RETIRED = {
+    "T6": dict(on="2026-10-31", reason="10 won, 5 lost at about 82c, −23.0% after fees on 15 bets; retired by Olu"),
+    "T8": dict(on="2026-10-31", reason="3 won, 8 lost, −51.6% after fees on 11 bets; retired by Olu"),
+}
+
+
+def retired(rule, now):
+    """True once `rule` is retired as of `now` (its dated day, Eastern, or later)."""
+    r = RETIRED.get(rule)
+    return bool(r) and now.astimezone(SR.ET).date().isoformat() >= r["on"]
+
+
 def picks_for(f, labs, ev, now):
     out = []
     for team, own, opp in (("home", labs[0], labs[1]), ("away", labs[1], labs[0])):
         for rule in applicable(f["league"], own, opp):
+            if retired(rule, now):
+                continue
             r = RULES[rule]
             m = market_for(ev, team, r["line"])
             q = SR.quote(m) if m else None

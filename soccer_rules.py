@@ -167,6 +167,11 @@ MARKETS = {"total": SERIES, "btts": BTTS_SERIES}
 RETIRED = {
     "D2": dict(on="2026-10-24",
                reason="3/11, −39.4% after fees on the paper record"),
+    # 2026-10-31 (Olu), none in Production: each with the record it was retired on.
+    "D1": dict(on="2026-10-31", reason="retired at 27: 14 won, 13 lost, −19.4% after fees"),
+    "C5": dict(on="2026-10-31", reason="0–3; 0–10 across C5-C7, retired early by Olu"),
+    "C6": dict(on="2026-10-31", reason="0–5; 0–10 across C5-C7, retired early by Olu"),
+    "C7": dict(on="2026-10-31", reason="0–2; 0–10 across C5-C7, retired early by Olu"),
 }
 
 

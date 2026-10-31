@@ -811,7 +811,12 @@ SOURCES = {
              "own price does not."),
     "u35_low_scoring": dict(
         label="Under 3.5 low-scoring rule (both teams scored ≤1 in 7+/10)", kind="Rule",
-        connected=True, site="edge-machine", sports=["soccer_u35", "soccer_u35_cup", "soccer_u35_intl"], baseline="population",
+        connected=True, site="edge-machine", sports=["soccer_u35_cup", "soccer_u35_intl"], baseline="population",
+        retired_sports={
+            "soccer_u35": "Retired 2026-10-31 by Olu: no edge at 36 settled — 25 won v 25.8 priced, −3.6% after "
+                          "fees. No new entries from 2026-10-31; its rows stay on file and its open bets still "
+                          "settle. The Cups and Internationals scopes and the over 1.5 lane that shares the "
+                          "trigger (u35_low_o15) are untouched."},
         note="Pre-registered 2026-09-14. Back under 3.5 goals (No on Kalshi's Over 3.5) where BOTH "
              "teams scored 1 or fewer in at least 7 of their last 10 games in this competition "
              "(HOF's way of counting form; 10+ games each, ESPN results before kickoff). Research: "
