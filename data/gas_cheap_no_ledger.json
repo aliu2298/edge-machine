@@ -453,28 +453,138 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.32
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.48
     }
    ],
    "logged": "2026-10-30T14:57:20.807863+00:00",
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.1694,
    "price": 0.16,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-10-31T13:42:07.140508+00:00",
    "side": "no",
    "spread": 0.01,
    "spread_cost": 0.0,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 5760.56,
    "word": "Above 4.1800"
+  },
+  {
+   "ask_check": {
+    "book": 2634.0,
+    "first_quotes": true,
+    "how": "book",
+    "last_trade": null,
+    "source": "live",
+    "status": "verified"
+   },
+   "bid": 0.11,
+   "book": {
+    "ask_depth": 4045.0,
+    "ask_levels": 20,
+    "ask_size": 2134.0,
+    "at": "2026-10-31T13:42:07.140508+00:00",
+    "at_or_under": 2634.0,
+    "best_ask": 0.02,
+    "best_bid": 0.01,
+    "bid_depth": 4666.0,
+    "bid_levels": 1,
+    "bid_size": 4666.0
+   },
+   "book_at": "2026-10-31T13:42:07.140508+00:00",
+   "book_size": 2634.0,
+   "entry_at": "2026-10-31T12:02:00+00:00",
+   "event": "KXAAAGASD-26NOV01",
+   "id": "KXAAAGASD-26NOV01-4.1650",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.3
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.45
+    }
+   ],
+   "logged": "2026-10-31T13:42:07.140508+00:00",
+   "payout": null,
+   "price": 0.15,
+   "side": "no",
+   "spread": 0.04,
+   "spread_cost": null,
+   "status": "open",
+   "traded_to_entry": 0.0,
+   "word": "Above 4.1650"
+  },
+  {
+   "ask_check": {
+    "book": 2422.0,
+    "first_quotes": false,
+    "how": "book",
+    "last_trade": 0.35,
+    "source": "live",
+    "status": "verified"
+   },
+   "bid": 0.25,
+   "book": {
+    "ask_depth": 6221.0,
+    "ask_levels": 22,
+    "ask_size": 1203.0,
+    "at": "2026-10-31T13:42:07.140508+00:00",
+    "at_or_under": 2422.0,
+    "best_ask": 0.07,
+    "best_bid": 0.06,
+    "bid_depth": 3723.71,
+    "bid_levels": 5,
+    "bid_size": 1007.71
+   },
+   "book_at": "2026-10-31T13:42:07.140508+00:00",
+   "book_size": 2422.0,
+   "entry_at": "2026-10-31T12:45:00+00:00",
+   "event": "KXAAAGASD-26NOV01",
+   "id": "KXAAAGASD-26NOV01-4.1700",
+   "last_trade": 0.35,
+   "last_trade_at": "2026-10-31T12:45:00+00:00",
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.52
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.78
+    }
+   ],
+   "logged": "2026-10-31T13:42:07.140508+00:00",
+   "payout": null,
+   "price": 0.26,
+   "side": "no",
+   "spread": 0.01,
+   "spread_cost": -0.09,
+   "status": "open",
+   "traded_to_entry": 861.96,
+   "word": "Above 4.1700"
   }
  ],
  "error": null,
  "events": {
+  "KXAAAGASD-26NOV01": "2026-10-31T13:42:07.140508+00:00",
   "KXAAAGASD-26OCT27": "2026-10-27T03:36:13.936099+00:00",
   "KXAAAGASD-26OCT28": "2026-10-27T13:18:27.785504+00:00",
   "KXAAAGASD-26OCT29": "2026-10-28T13:05:29.619697+00:00",
@@ -482,16 +592,16 @@
   "KXAAAGASD-26OCT31": "2026-10-30T14:57:20.807863+00:00"
  },
  "lane": "gas_cheap_no",
- "last_success": "2026-10-31T07:03:32.076424+00:00",
+ "last_success": "2026-10-31T13:42:07.140508+00:00",
  "observations": {
-  "at": "2026-10-31T07:03:32.076424+00:00",
+  "at": "2026-10-31T13:42:07.140508+00:00",
   "checking": 0,
-  "entered": 0,
-  "events": 1,
+  "entered": 2,
+  "events": 2,
   "filled": 0,
   "skipped": 0,
   "unverified": 0,
-  "waiting": 0
+  "waiting": 15
  },
  "skips": {
   "KXAAAGASD-26OCT27-4.2450": {
