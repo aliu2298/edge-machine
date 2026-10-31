@@ -28,9 +28,9 @@ def status(settled_games):
     return f"{settled_games} games · review at 10, decide at 30"
 
 
-def variant_rows(state, insample, label=None):
+def variant_rows(state, insample, dips=None):
     rows = []
-    for d in N.DIPS:
+    for d in (dips or N.DIPS):
         key = N.vkey(d)
         g = N.game_rows(state["entries"], key, insample)
         s = CR.stats(g)
@@ -45,6 +45,26 @@ def variant_rows(state, insample, label=None):
             '<th class="num">Sold back</th><th class="num">Games won</th><th class="num">ROI after fees</th>'
             '<th class="num">z (by night)</th><th class="num">Nights</th>' + ("" if insample else "<th>Status</th>")
             + "</tr>" + "".join(rows) + "</table></div>")
+
+
+def trade_list(state, limit=30):
+    """Latest games with a fill (fresh record), the headline row: buckets filled, sold back, ROI after fees."""
+    key = N.vkey(N.HEAD)
+    rows = []
+    for e in sorted(state["entries"], key=lambda e: e["tip"], reverse=True):
+        if e.get("insample"):
+            continue
+        g = N.game_rows([e], key, False)
+        if not g:
+            continue
+        r = g[0]
+        rows.append(f'<tr><td>{esc(e["night"])}</td><td>{esc(e["event"].split("-", 1)[1][7:])}</td><td class="num">{r["fills"]}</td>'
+                    f'<td class="num">{r["sold"]}</td><td class="num">{pct(r["roi"])}</td></tr>')
+        if len(rows) >= limit:
+            break
+    body = "".join(rows) or '<tr><td colspan="5" class="mut">No game with a fill yet.</td></tr>'
+    return ('<div class="tbl"><table><tr><th>Night</th><th>Game (away home)</th><th class="num">Buckets filled</th>'
+            '<th class="num">Sold back</th><th class="num">ROI after fees</th></tr>' + body + "</table></div>")
 
 
 def yes_trades(chaos, lane_id):

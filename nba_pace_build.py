@@ -673,7 +673,6 @@ def build(blob=None, now=None):
 <p class="nba-accuracy" id="accuracy">{esc(accuracy_line(graded))}</p>
 </details>
 </section>
-{_ladder_section()}
 <section id="graded">
 <details class="section-disclosure nba-results"><summary><b>Results · last 24 hours</b><span>{len(graded)} graded</span></summary>
 <p class="sm mut">Expected / actual combined points; the small signed number is the file's own error.</p>
@@ -685,6 +684,7 @@ def build(blob=None, now=None):
 <p class="sm mut">Each team's scoring and allowing rates over its last {window_txt} games, labelled against the league means of this table.</p>
 {team_table(blob)}</details>
 </section>
+{_ladder_section()}
 {_retired_block()}
 <details class="section-disclosure nba-about"><summary><b>About this desk</b><span>Preseason research</span></summary>
 <p class="sm mut">1Q, 1H and FT are expected combined points for both teams, from each team's last-{window_txt} scoring and allowing rates. A finished game is graded against its actual combined total, and the error shown is actual minus expected as stored in the pace file. These are research expectations, not betting lines or recommendations.</p></details>
@@ -697,8 +697,8 @@ def build(blob=None, now=None):
         "Edge Machine · NBA",
         "NBA matchups, pace labels, and combined expectations. Preseason. No bets.",
         "nba",
-        (("cheap-side", "Cheap side"), ("win-margin", "Win margin"), ("matchups", "Upcoming"), ("ladder", "Ladder"),
-         ("graded", "Results"), ("teams", "Teams"), ("retired", "Retired")),
+        (("glance", "Glance"), ("wm-yes", "Win margin"), ("wm-no", "NO fade"), ("ml-dog", "ML underdog"), ("tracker", "Tracker"),
+         ("matchups", "Upcoming"), ("graded", "Results"), ("teams", "Teams"), ("ladder", "Ladder"), ("retired", "Retired")),
         C.stamp(clock),
         body,
         scripts=("./tables.js",),
@@ -707,12 +707,9 @@ def build(blob=None, now=None):
     # Every cell named for its column and the header rows in <thead>, so the
     # phone cards work on this page however it is written out.
     import sandbox_build
-    # nba_ml_dog_tp50 and nba_tt_cheap_tp30's home (2026-10-27): the cheap-side section at the top.
-    import chaos_build
-    page = chaos_build.place(page, "nba", before='<section id="matchups"', retired=False)
-    # The Win margin tracker (2026-10-29): directly under the cheap-side card, above Upcoming.
-    import nba_winmargin_build
-    page = nba_winmargin_build.place(page)
+    # The top half (2026-10-31): the glance table, one card per active lane, then the win margin tracker.
+    import nba_layout
+    page = nba_layout.place(page)
     return sandbox_build.label_cells(page)
 
 

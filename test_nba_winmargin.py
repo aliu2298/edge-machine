@@ -175,14 +175,14 @@ check("under four contracts: no halves", W.halves(rs[:3]), (None, None))
 
 print("\nthe NBA page section")
 empty = B.section(W.load("/nonexistent"))
-check("an empty record says so", ("No game has been recorded yet" in empty, 'id="win-margin"' in empty), (True, True))
+check("an empty record says so", ("No game has been recorded yet" in empty, 'id="tracker"' in empty), (True, True))
 real = W.load("/nonexistent")
 real["rows"] = list(st["rows"]) + [dict(r, id=r["id"] + str(i), tip=TIP + i, bucket=b) for i, (r, b) in enumerate(zip(W.game_rows(EV, mkts, TIP, entry, trades, None, NOW) * 3, ["6-10", "11-20", "21+", "1-5"] * 3))]
 for r in real["rows"]:
     r["night"] = "2026-10-29"
 real["seen"] = {EV: "x"}
 html = B.section(real)
-check("observation only, plainly", ("Observation only — no buying or selling rule yet" in html), True)
+check("observation only, plainly", ("Observation only — no buying or selling rule" in html), True)
 check("the comeback underdog spread line is on the section", "Comeback underdog spread line" in html, True)
 check("the three tables, the halves and last night's games", all(x in html for x in ("<th>Bucket</th>", "<th>Team</th>", "<th>Entry ask</th>", "Older and newer halves", "Last night's games")), True)
 check("every column the coordinator asked for", all(c in html for c in B.COLS), True)
@@ -195,8 +195,10 @@ import json
 if __import__("os").path.exists(NB.SRC):
     page = NB.build(json.load(open(NB.SRC)))
     ids = re.findall(r'<section id="([^"]+)"', page[page.find("<main"):])
-    check("on the NBA page: cheap-side first, then the win margin tracker, then Upcoming", ids[:3], ["cheap-side", "win-margin", "matchups"])
-    check("with a nav link", 'href="#win-margin"' in page, True)
+    check("on the NBA page: the glance, the lane cards, the tracker, then Upcoming",
+          [i for i in ids if i in ("glance", "cheap-side", "wm-yes", "wm-no", "ml-dog", "tracker", "matchups")],
+          ["glance", "cheap-side", "wm-yes", "wm-no", "ml-dog", "tracker", "matchups"])
+    check("with a nav link", 'href="#tracker"' in page, True)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

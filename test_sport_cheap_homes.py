@@ -57,11 +57,14 @@ if os.path.exists(nba_pace_build.SRC):
     pages["nba"] = nba_pace_build.build(json.load(open(nba_pace_build.SRC)))
 for page, html in pages.items():
     first = re.search(r'<(?:section|details)[^>]*id="([^"]+)"', html[html.find("<main"):])
-    check(f"{page}: the cheap-side section is the first section of the page", first and first.group(1), "cheap-side")
+    check(f"{page}: the cheap-side section is the first section of the page (the NBA page opens on its glance table, 2026-10-31)",
+          first and first.group(1), "glance" if page == "nba" else "cheap-side")
     for lane in CB.HOMES[page]:
         L = next(x for x in chaos_lanes.LANES if x["id"] == lane)
         if L.get("retired"):
             check(f"{page}: {lane} (retired) is in the collapsed Retired block", folded(html, f'<li data-lane="{lane}"'), True)
+        elif L.get("insample"):
+            check(f"{page}: {lane} (in-sample) sits in its lane's in-sample fold", f'id="{L["id"].replace("_insample", "")}-insample"' in html or "nofade-insample" in html, True)
         elif lane in (C.load().get("lanes") or {}):
             check(f"{page}: {lane}'s card is visible without opening a fold",
                   folded(html, f'<details class="section-disclosure" data-lane="{lane}" open>'), False)
@@ -97,15 +100,13 @@ check("the NBA page keeps nba_ml_dog_tp50 open and folds nba_tt_cheap_tp30 into 
       (folded(pages["nba"], '<details class="section-disclosure" data-lane="nba_ml_dog_tp50" open>'),
        folded(pages["nba"], '<li data-lane="nba_tt_cheap_tp30"')), (False, True))
 if "nba_ml_dog_tp50" in (C.load().get("lanes") or {}):
-    nba_cs = pages["nba"][pages["nba"].find('<section id="cheap-side">'):pages["nba"].find("</section>", pages["nba"].find('<section id="cheap-side">'))]
-    summ = nba_cs[nba_cs.find('class="chaos-summary"'):nba_cs.find("</table>", nba_cs.find('class="chaos-summary"'))]
-    check("NBA: the moneyline lane leads the cheap-side summary under its split label, its ask 10-30c row directly under it",
-          (re.findall(r'<tr data-lane="([^"]+)"(?: data-band="([^"]+)")?>', summ)[:2],
-           "NBA moneyline underdog · split 2x / 3x" in summ, "sell +50%" in summ),
-          ([("nba_ml_dog_tp50", ""), ("nba_ml_dog_tp50", "ask_10_30")], True, False))
-    check("NBA: its card opens on split v hold, before the other exits",
-          nba_cs.find("Split v hold", nba_cs.find('data-lane="nba_ml_dog_tp50" open'))
-          < nba_cs.find("Other exits", nba_cs.find('data-lane="nba_ml_dog_tp50" open')), True)
+    nba_cs = pages["nba"][pages["nba"].find('<section id="cheap-side">'):pages["nba"].find('<section id="tracker">')]
+    ml = nba_cs[nba_cs.find('data-lane="nba_ml_dog_tp50" open'):]
+    check("NBA: the moneyline card opens on its split v hold record, then the other exits fold holding the ask 10-30c row",
+          (ml.find("Split 2x / 3x v the same entries held") < ml.find("Other exits / variants"), "ask 10-30c" in ml[ml.find("Other exits / variants"):]), (True, True))
+    glance = pages["nba"][pages["nba"].find('<section id="glance"'):pages["nba"].find('<section id="cheap-side">')]
+    check("NBA: the glance table lists the three active lanes in order, each linking to its card",
+          re.findall(r'<a href="#([^"]+)"><b>', glance), ["wm-yes", "wm-no", "ml-dog"])
 
 print("\nCulture, Commodities and Fights: every active cheap-side lane visible")
 import commodities_build
