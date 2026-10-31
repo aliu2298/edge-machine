@@ -2207,6 +2207,7 @@ def _sandbox_html(d, st, now_dt, full=None):
 
     body = f"""<h1>Sandbox</h1>
 <p class="lede">Which rules and tipsters are making money, and which are failing. Every one is backed at real prices and settled on real results. Paper only.</p>
+{daily_health_card()}
 <div class="tiles">
 <div class="tile"><b>{in_prod}</b><span>in Production</span></div>
 <div class="tile"><b class="{'pos' if vc['proven'] + vc['working'] else ''}">{vc['proven'] + vc['working']}</b><span>working (30+ bets)</span></div>
@@ -2320,6 +2321,15 @@ def gold_orb_html():
         return gold_orb_build.section()
     except Exception as exc:                                    # noqa: BLE001
         return f'<section id="gold-orb"><p class="sm mut">Gold breakout section unavailable ({type(exc).__name__}).</p></section>'
+
+
+def daily_health_card():
+    """The newest twice-daily health report's verdict and its red and amber lines (daily_health.py, 2026-10-30)."""
+    try:
+        import daily_health
+        return daily_health.safe_card()
+    except Exception:                                           # noqa: BLE001
+        return ""
 
 
 def chaos_html():

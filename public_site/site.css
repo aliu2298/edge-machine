@@ -2070,3 +2070,9 @@ details.fold.later > summary .sm { font-weight: 500; }
 @media (prefers-reduced-motion: reduce) {
   details.sp-more > summary::before, details.sp-changes > summary::before, .sp-method > details > summary::before, .sp-chev { transition: none; }
 }
+
+/* The Sandbox's Daily health card (daily_health.py, 2026-10-30): the newest twice-daily report's verdict. */
+.health-card { border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; margin: 10px 0 14px; background: var(--card); }
+.health-card ul { margin: 6px 0 0; padding-left: 18px; }
+.health-card li.red b { color: var(--neg); }
+.health-card li.amber b { color: var(--warn); }
