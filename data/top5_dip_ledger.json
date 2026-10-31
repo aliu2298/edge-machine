@@ -1,5 +1,376 @@
 {
- "entries": [],
+ "entries": [
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXBUNDESLIGATOTAL-26OCT31LEVVFB",
+   "id": "KXBUNDESLIGATOTAL-26OCT31LEVVFB-2",
+   "kickoff": 1793457000,
+   "league": "Bundesliga",
+   "logged": "2026-10-31T18:52:38.713553+00:00",
+   "matchday": "2026-10-31",
+   "p": 0.91,
+   "p_at": 1793453220,
+   "p_bid": 0.9,
+   "p_check": {
+    "how": "print",
+    "last_trade": null,
+    "printed": 1218.69,
+    "status": "verified"
+   },
+   "prints": 59,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": {
+     "counted": true,
+     "fill_at": 1793462841,
+     "fill_print": 0.54,
+     "fill_volume": 2695.78,
+     "held": true,
+     "limit": 0.54,
+     "payout": 1.0,
+     "sold": true,
+     "sold_at": 1793462924
+    }
+   },
+   "event": "KXBUNDESLIGATOTAL-26OCT31SCHRBL",
+   "id": "KXBUNDESLIGATOTAL-26OCT31SCHRBL-2",
+   "kickoff": 1793457000,
+   "league": "Bundesliga",
+   "logged": "2026-10-31T18:52:38.713553+00:00",
+   "matchday": "2026-10-31",
+   "p": 0.83,
+   "p_at": 1793453460,
+   "p_bid": 0.82,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.83,
+    "printed": 71.43,
+    "status": "verified"
+   },
+   "prints": 231,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": {
+     "counted": true,
+     "fill_at": 1793461274,
+     "fill_print": 0.49,
+     "fill_volume": 3872.56,
+     "held": true,
+     "limit": 0.49,
+     "payout": 1.0,
+     "sold": true,
+     "sold_at": 1793463072
+    },
+    "65": {
+     "counted": true,
+     "fill_at": 1793459867,
+     "fill_print": 0.56,
+     "fill_volume": 18503.72,
+     "held": true,
+     "limit": 0.58,
+     "payout": 1.0,
+     "sold": true,
+     "sold_at": 1793463072
+    }
+   },
+   "event": "KXBUNDESLIGATOTAL-26OCT31SVWTSG",
+   "id": "KXBUNDESLIGATOTAL-26OCT31SVWTSG-2",
+   "kickoff": 1793457000,
+   "league": "Bundesliga",
+   "logged": "2026-10-31T18:52:38.713553+00:00",
+   "matchday": "2026-10-31",
+   "p": 0.89,
+   "p_at": 1793453460,
+   "p_bid": 0.87,
+   "p_check": {
+    "how": "print",
+    "last_trade": null,
+    "printed": 3000.0,
+    "status": "verified"
+   },
+   "prints": 494,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": {
+     "counted": true,
+     "fill_at": 1793464755,
+     "fill_print": 0.42,
+     "fill_volume": 24841.54,
+     "held": true,
+     "limit": 0.42,
+     "payout": 1.0,
+     "sold": true,
+     "sold_at": 1793465304
+    },
+    "65": {
+     "counted": true,
+     "fill_at": 1793464500,
+     "fill_print": 0.49,
+     "fill_volume": 34510.95,
+     "held": true,
+     "limit": 0.49,
+     "payout": 1.0,
+     "sold": true,
+     "sold_at": 1793465304
+    }
+   },
+   "event": "KXEPLTOTAL-26OCT31BOULEE",
+   "id": "KXEPLTOTAL-26OCT31BOULEE-2",
+   "kickoff": 1793458800,
+   "league": "EPL",
+   "logged": "2026-10-31T18:52:38.713553+00:00",
+   "matchday": "2026-10-31",
+   "p": 0.76,
+   "p_at": 1793455260,
+   "p_bid": 0.75,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.75,
+    "printed": 6759.08,
+    "status": "verified"
+   },
+   "prints": 849,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXEPLTOTAL-26OCT31BRENFO",
+   "id": "KXEPLTOTAL-26OCT31BRENFO-2",
+   "kickoff": 1793458800,
+   "league": "EPL",
+   "logged": "2026-10-31T18:52:38.713553+00:00",
+   "matchday": "2026-10-31",
+   "p": 0.8,
+   "p_at": 1793455260,
+   "p_bid": 0.79,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.81,
+    "printed": 313.0,
+    "status": "verified"
+   },
+   "prints": 275,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXEPLTOTAL-26OCT31CFCMUN",
+   "id": "KXEPLTOTAL-26OCT31CFCMUN-2",
+   "kickoff": 1793449800,
+   "league": "EPL",
+   "logged": "2026-10-31T18:52:38.713553+00:00",
+   "matchday": "2026-10-31",
+   "p": 0.82,
+   "p_at": 1793446260,
+   "p_bid": 0.81,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.82,
+    "printed": 6228.42,
+    "status": "verified"
+   },
+   "prints": 1613,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXEPLTOTAL-26OCT31COVSUN",
+   "id": "KXEPLTOTAL-26OCT31COVSUN-2",
+   "kickoff": 1793458800,
+   "league": "EPL",
+   "logged": "2026-10-31T18:52:38.713553+00:00",
+   "matchday": "2026-10-31",
+   "p": 0.75,
+   "p_at": 1793455260,
+   "p_bid": 0.74,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.75,
+    "printed": 20.0,
+    "status": "verified"
+   },
+   "prints": 118,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXEPLTOTAL-26OCT31HULIPS",
+   "id": "KXEPLTOTAL-26OCT31HULIPS-2",
+   "kickoff": 1793458800,
+   "league": "EPL",
+   "logged": "2026-10-31T18:52:38.713553+00:00",
+   "matchday": "2026-10-31",
+   "p": 0.77,
+   "p_at": 1793455260,
+   "p_bid": 0.76,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.76,
+    "printed": 300.54,
+    "status": "verified"
+   },
+   "prints": 135,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": {
+     "counted": true,
+     "fill_at": 1793464925,
+     "fill_print": 0.47,
+     "fill_volume": 120730.62,
+     "held": true,
+     "limit": 0.47,
+     "payout": 0.0,
+     "sold": true,
+     "sold_at": 1793465004
+    },
+    "65": {
+     "counted": true,
+     "fill_at": 1793464672,
+     "fill_print": 0.55,
+     "fill_volume": 165458.21,
+     "held": true,
+     "limit": 0.55,
+     "payout": 0.0,
+     "sold": true,
+     "sold_at": 1793465004
+    }
+   },
+   "event": "KXEPLTOTAL-26OCT31MCIBRI",
+   "id": "KXEPLTOTAL-26OCT31MCIBRI-2",
+   "kickoff": 1793458800,
+   "league": "EPL",
+   "logged": "2026-10-31T18:52:38.713553+00:00",
+   "matchday": "2026-10-31",
+   "p": 0.85,
+   "p_at": 1793455260,
+   "p_bid": 0.84,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.85,
+    "printed": 34472.37,
+    "status": "verified"
+   },
+   "prints": 2405,
+   "result": "no",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXLALIGATOTAL-26OCT31LEVATM",
+   "id": "KXLALIGATOTAL-26OCT31LEVATM-2",
+   "kickoff": 1793451600,
+   "league": "La Liga",
+   "logged": "2026-10-31T18:52:38.713553+00:00",
+   "matchday": "2026-10-31",
+   "p": 0.85,
+   "p_at": 1793448060,
+   "p_bid": 0.83,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.85,
+    "printed": 1424.27,
+    "status": "verified"
+   },
+   "prints": 522,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXLALIGATOTAL-26OCT31RVCRCC",
+   "id": "KXLALIGATOTAL-26OCT31RVCRCC-2",
+   "kickoff": 1793459700,
+   "league": "La Liga",
+   "logged": "2026-10-31T18:52:38.713553+00:00",
+   "matchday": "2026-10-31",
+   "p": 0.71,
+   "p_at": 1793456160,
+   "p_bid": 0.7,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.71,
+    "printed": 429.65,
+    "status": "verified"
+   },
+   "prints": 256,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXSERIEATOTAL-26OCT31BFCMON",
+   "id": "KXSERIEATOTAL-26OCT31BFCMON-2",
+   "kickoff": 1793455200,
+   "league": "Serie A",
+   "logged": "2026-10-31T18:52:38.713553+00:00",
+   "matchday": "2026-10-31",
+   "p": 0.78,
+   "p_at": 1793451660,
+   "p_bid": 0.77,
+   "p_check": {
+    "how": "print",
+    "last_trade": null,
+    "printed": 1957.09,
+    "status": "verified"
+   },
+   "prints": 108,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  }
+ ],
  "error": null,
  "insample": {
   "built": "2026-10-30T19:04:25.138756+00:00",
@@ -14052,69 +14423,71 @@
   ]
  },
  "lane": "top5_goalless_dip",
- "last_run": "2026-10-31T13:55:46.610460+00:00",
+ "last_run": "2026-10-31T18:52:38.713553+00:00",
  "observations": {
-  "at": "2026-10-31T13:55:46.610460+00:00",
+  "at": "2026-10-31T18:52:38.713553+00:00",
   "errors": [],
-  "new": 0,
-  "skipped": 0,
+  "new": 12,
+  "skipped": 2,
   "waiting": 0
  },
  "seen": {},
  "since": "2026-10-31",
  "skips": {
+  "KXBUNDESLIGATOTAL-26OCT31BMGPAD": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)",
+  "KXBUNDESLIGATOTAL-26OCT31FCASCF": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)",
   "KXLIGUE1TOTAL-26OCT31NICREN": "market closed before its listed kickoff (match moved)"
  },
  "upcoming": [
   {
-   "event": "KXEPLTOTAL-26OCT31CFCMUN",
-   "kickoff": 1793449800,
-   "title": "Chelsea vs Manchester United: Total Goals"
+   "event": "KXSERIEATOTAL-26OCT31UDIROM",
+   "kickoff": 1793466000,
+   "title": "Udinese vs Roma: Total Goals"
   },
   {
-   "event": "KXLALIGATOTAL-26OCT31LEVATM",
-   "kickoff": 1793451600,
-   "title": "Levante vs Atletico: Total Goals"
+   "event": "KXEPLTOTAL-26OCT31TOTCRY",
+   "kickoff": 1793467800,
+   "title": "Tottenham vs Crystal Palace: Total Goals"
   },
   {
-   "event": "KXSERIEATOTAL-26OCT31BFCMON",
-   "kickoff": 1793455200,
-   "title": "Bologna vs Monza: Total Goals"
+   "event": "KXLALIGATOTAL-26OCT31RBBMCF",
+   "kickoff": 1793467800,
+   "title": "Real Betis vs Malaga: Total Goals"
   },
   {
-   "event": "KXBUNDESLIGATOTAL-26OCT31BMGPAD",
-   "kickoff": 1793457000,
-   "title": "M\u00b4gladbach vs Paderborn: Total Goals"
+   "event": "KXBUNDESLIGATOTAL-26OCT31BMUBVB",
+   "kickoff": 1793467800,
+   "title": "Bayern Munich vs Dortmund: Total Goals"
   },
   {
-   "event": "KXBUNDESLIGATOTAL-26OCT31FCASCF",
-   "kickoff": 1793457000,
-   "title": "Augsburg vs Freiburg: Total Goals"
+   "event": "KXSERIEATOTAL-26OCT31ACMINT",
+   "kickoff": 1793475900,
+   "title": "Milan vs Inter: Total Goals"
   },
   {
-   "event": "KXBUNDESLIGATOTAL-26OCT31LEVVFB",
-   "kickoff": 1793457000,
-   "title": "Leverkusen vs Stuttgart: Total Goals"
+   "event": "KXLIGUE1TOTAL-26OCT31ESTMAN",
+   "kickoff": 1793475900,
+   "title": "Troyes vs Le Mans: Total Goals"
   },
   {
-   "event": "KXBUNDESLIGATOTAL-26OCT31SCHRBL",
-   "kickoff": 1793457000,
-   "title": "Schalke vs Leipzig: Total Goals"
+   "event": "KXLIGUE1TOTAL-26OCT31FCLSTB",
+   "kickoff": 1793475900,
+   "title": "Lorient vs Stade Brest 29: Total Goals"
   },
   {
-   "event": "KXBUNDESLIGATOTAL-26OCT31SVWTSG",
-   "kickoff": 1793457000,
-   "title": "Bremen vs Hoffenheim: Total Goals"
+   "event": "KXLIGUE1TOTAL-26OCT31OLANG",
+   "kickoff": 1793475900,
+   "title": "Lyon vs Angers: Total Goals"
   },
   {
-   "event": "KXEPLTOTAL-26OCT31BOULEE",
-   "kickoff": 1793458800,
-   "title": "Bournemouth vs Leeds United: Total Goals"
+   "event": "KXEPLTOTAL-26OCT31AVLFUL",
+   "kickoff": 1793476800,
+   "title": "Aston Villa vs Fulham: Total Goals"
   },
   {
-   "event": "KXEPLTOTAL-26OCT31BRENFO",
-   "kickoff": 1793458800,
-   "title": "Brentford vs Nottingham Forest: Total Goals"
+   "event": "KXLALIGATOTAL-26OCT31BARALA",
+   "kickoff": 1793476800,
+   "title": "Barcelona vs Alaves: Total Goals"
   }
  ],
  "version": "top5dip-v1"
