@@ -61,6 +61,15 @@ VARIANTS = {
 }
 
 
+# Variants retired by hand (2026-10-31, Olu): no new entry from the dated day on (Eastern); rows stay and settle.
+RETIRED = {"O35": dict(on="2026-10-31", reason="0–7, −100% after fees; retired early by Olu")}
+
+
+def retired(variant, now):
+    r = RETIRED.get(variant)
+    return bool(r) and now.astimezone(SR.ET).date().isoformat() >= r["on"]
+
+
 def fee(p):
     return FEE * p * (1 - p)
 
@@ -126,6 +135,8 @@ def picks_for(f, ev, top, now):
         return []
     out = []
     for key, v in VARIANTS.items():
+        if retired(key, now):
+            continue
         m = SR.market_at(ev, v["line"])
         q = SR.quote(m) if m else None
         if not q:

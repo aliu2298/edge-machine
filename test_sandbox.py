@@ -4743,9 +4743,11 @@ eq([p["market_id"] for p in S.fetch_o15_form_l10("soccer_o15_cup", universe=_cro
    ["KXEFLCUPTOTAL-26SEP15GOALEA-2"], "the Over 1.5 rule reads the cup domain with the same thresholds")
 eq((S._form_league({"comp": "cup", "league": "EFL Cup"}), S._form_league({"league": "Serie A"})),
    (None, "Serie A"), "cup and international pairs count form across all competitions; league pairs as before")
-for _src in ("team2_form_l10", "u35_low_scoring"):
-    _base = S.SOURCES[_src]["sports"][0]
-    eq(S.SOURCES[_src]["sports"], [_base, _base + "_cup", _base + "_intl"], f"{_src} runs as league, Cups and Internationals pairs")
+_base = S.SOURCES["team2_form_l10"]["sports"][0]
+eq(S.SOURCES["team2_form_l10"]["sports"], [_base, _base + "_cup", _base + "_intl"], "team2_form_l10 runs as league, Cups and Internationals pairs")
+eq((S.SOURCES["u35_low_scoring"]["sports"], sorted(S.SOURCES["u35_low_scoring"]["retired_sports"])),
+   (["soccer_u35_cup", "soccer_u35_intl"], ["soccer_u35"]),
+   "u35_low_scoring: the Clubs scope retired 2026-10-31, Cups and Internationals still run")
 # o15_form_l10 was registered on all three and retired on all three 2026-10-24.
 eq((S.SOURCES["o15_form_l10"]["sports"], list(S.SOURCES["o15_form_l10"]["retired_sports"])),
    ([], ["soccer_o15", "soccer_o15_cup", "soccer_o15_intl"]), "o15_form_l10 is retired on all three scopes")

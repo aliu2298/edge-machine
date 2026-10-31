@@ -6,6 +6,7 @@ favourite band and five combo lanes). None of them is in Production; the Product
 that share a source or a page (o15_ranked · Internationals, the UTR shortlist) and the kept
 lanes (tennis_combo2, tennis_atp_low_over) are untouched. No network.
 """
+import re
 import datetime as dt
 import sys
 import unittest.mock as um
@@ -223,7 +224,9 @@ d2 = sec[sec.find('data-rule="D2"'):]
 d2 = d2[:d2.find("</div>")]
 check("the label-rules section marks D2 Retired, dated, with its record",
       ('data-retired="2026-10-24"' in d2, "Retired" in d2, "3/11" in d2), (True, True, True))
-check("and no other label rule is marked", sec.count("data-retired="), 1)
+check("and the other marked rules are the 2026-10-31 retirements only (D1, C5, C6, C7)",
+      (sec.count("data-retired="), sorted(set(re.findall(r'data-rule="([A-Z]\d)"[^>]*data-retired="2026-10-31"', sec)))),
+      (5, ["C5", "C6", "C7", "D1"]))
 
 print()
 if FAILS:

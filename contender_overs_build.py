@@ -17,11 +17,15 @@ def section(state=None):
     lines, recent = [], []
     for key, v in CO.VARIANTS.items():
         picks = (state.get("rules", {}).get(key) or {}).get("picks") or []
-        lines.append(SB.rule_line(key, "Eredivisie, Primeira", f"Contender's match · {v['words']}", v["evidence"], picks))
+        gone = CO.RETIRED.get(key)
+        why = f" · Retired {gone['on']}: {gone['reason']}. Its entries stay and settle" if gone else ""
+        lines.append((gone is not None, SB.rule_line(key, "Eredivisie, Primeira", f"Contender's match · {v['words']}{why}",
+                                                      v["evidence"], picks, retired=gone)))
         recent += picks
+    lines = [l for _gone, l in sorted(lines, key=lambda x: x[0])]
     n, won, _roi = SB._record(recent)
     live = sum(p["status"] == "open" for p in recent)
-    head = f"3 variants · {n} settled · {won} won" + (f" · {live} open" if live else "")
+    head = f"3 variants (over 3.5 retired 2026-10-31) · {n} settled · {won} won" + (f" · {live} open" if live else "")
     recent.sort(key=lambda p: (p.get("start") or "", p.get("rule") or ""), reverse=True)
     rows = []
     for p in recent[:25]:

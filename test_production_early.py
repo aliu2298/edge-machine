@@ -75,7 +75,9 @@ T.PAIR_OVERRIDES["crypto_fav_band|crypto_fav"] = dict(moved_on=MOVE, production_
 # 2026-10-24 (off the run; test_retired_2026_10_24 holds that). This file replays
 # 2026-10-08 to 2026-10-20, when all three still ran, so their scopes are put back on the run
 # for this script only.
-for _src, _sp in (("o15_form_l10", "soccer_o15"), ("o15_ranked", "soccer_o15"), ("bund_o35", "soccer_u35")):
+# u35_low_scoring Clubs (soccer_u35) was retired 2026-10-31 and is put back the same way.
+for _src, _sp in (("o15_form_l10", "soccer_o15"), ("o15_ranked", "soccer_o15"), ("bund_o35", "soccer_u35"),
+                  ("u35_low_scoring", "soccer_u35")):
     if _sp not in S.SOURCES[_src]["sports"]:
         S.SOURCES[_src]["sports"] = list(S.SOURCES[_src]["sports"]) + [_sp]
     S.SOURCES[_src]["retired_sports"] = {k: v for k, v in S.SOURCES[_src]["retired_sports"].items() if k != _sp}

@@ -374,7 +374,7 @@ def _frozen_overlaps():
 # pair is the same edit; the test does not require it.
 LOOKED_AT_SHA256 = "323618ead3340efcbbe70a5752c94581db3bb63fc4911a1446d56067967f7920"
 OVERLAPS_SHA256 = "0f3c41a83d4cdf24ac17661616e3dac44c3151e1da5501b67eb8d76c16875419"
-SETTLED_PAIRS_SHA256 = "9d8b6a03a4ce7f4a6fa071f542884e68b29b2997bdbfe7ce516be34f5a74b872"   # 2026-10-29: tennis_combo2 retired and left the list (2026-10-24: ten retired pairs)
+SETTLED_PAIRS_SHA256 = "ceb371345cbac852f96f7a3be6d02ba945bccb25f67dc1ad56eb0b75ad4c421a"   # 2026-10-31: u35_low_scoring|soccer_u35 retired and left the list (2026-10-29: tennis_combo2)
 
 
 def _check_frozen_note(rows):
