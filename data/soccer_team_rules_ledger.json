@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-31T19:16:26.971487+00:00",
+ "last_run": "2026-10-31T19:31:10.703182+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -3254,11 +3254,14 @@
      "logged": "2026-10-31T16:01:42.362062+00:00",
      "match": "Tottenham Hotspur v Crystal Palace",
      "opponent": "Crystal Palace",
+     "payout": 1.0,
      "price": 0.71,
+     "profit": 38.04,
      "rule": "T7",
+     "settled": "2026-10-31T19:31:10.703182+00:00",
      "side": "no",
      "start": "2026-10-31T17:30Z",
-     "status": "open",
+     "status": "won",
      "sub": "Tottenham over 2.5 goals",
      "team": "Tottenham Hotspur",
      "team_side": "home",
@@ -3281,11 +3284,14 @@
      "logged": "2026-10-31T16:01:42.362062+00:00",
      "match": "Tottenham Hotspur v Crystal Palace",
      "opponent": "Tottenham Hotspur",
+     "payout": 1.0,
      "price": 0.93,
+     "profit": 7.0,
      "rule": "T7",
+     "settled": "2026-10-31T19:31:10.703182+00:00",
      "side": "no",
      "start": "2026-10-31T17:30Z",
-     "status": "open",
+     "status": "won",
      "sub": "Crystal Palace over 2.5 goals",
      "team": "Crystal Palace",
      "team_side": "away",
@@ -3679,14 +3685,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T23:31:40.202677+00:00",
-   "candidates": 0,
-   "due": 1,
-   "labelled": 1,
-   "matched": 0,
-   "new": 0
-  },
   {
    "at": "2026-10-26T00:01:11.594306+00:00",
    "candidates": 0,
@@ -4085,6 +4083,14 @@
    "due": 4,
    "labelled": 4,
    "matched": 3,
+   "new": 0
+  },
+  {
+   "at": "2026-10-31T19:31:10.703182+00:00",
+   "candidates": 2,
+   "due": 4,
+   "labelled": 4,
+   "matched": 2,
    "new": 0
   }
  ],
