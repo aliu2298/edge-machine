@@ -1,34 +1,15 @@
 {
- "board_built_at": "2026-10-31T21:45:43+00:00",
+ "board_built_at": "2026-10-31T22:00:27+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
  "first_publish_min": 45,
- "late_publication_skipped": 2,
+ "late_publication_skipped": 0,
  "leads": {},
  "pairs": {},
- "publication_withheld": {
-  "2026-10-24|KXNBATEAMTOTAL-26OCT24MIACHA-CHA114|Charlotte over 113.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
-   "headline": "Charlotte over 113.5 points",
-   "id": "2026-10-24|KXNBATEAMTOTAL-26OCT24MIACHA-CHA114|Charlotte over 113.5 points \u00b7 NBA team total value \u00b7 1h before tip",
-   "kickoff": "2026-10-24T22:00Z",
-   "match": "MIA @ CHA",
-   "pair": "nba_tt_value_1h|nba_tt",
-   "reason": "less than 45 minutes left at first publication",
-   "withheld_at": "2026-10-24T21:30:25+00:00"
-  },
-  "2026-10-24|KXNBATEAMTOTAL-26OCT24MIACHA-MIA113|Miami under 112.5 points \u00b7 NBA team total value \u00b7 1h before tip": {
-   "headline": "Miami under 112.5 points",
-   "id": "2026-10-24|KXNBATEAMTOTAL-26OCT24MIACHA-MIA113|Miami under 112.5 points \u00b7 NBA team total value \u00b7 1h before tip",
-   "kickoff": "2026-10-24T22:00Z",
-   "match": "MIA @ CHA",
-   "pair": "nba_tt_value_1h|nba_tt",
-   "reason": "less than 45 minutes left at first publication",
-   "withheld_at": "2026-10-24T21:30:25+00:00"
-  }
- },
+ "publication_withheld": {},
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-31T21:45:43+00:00"
+ "updated_at": "2026-10-31T22:00:27+00:00"
 }
