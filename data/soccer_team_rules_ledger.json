@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-31T18:16:41.947952+00:00",
+ "last_run": "2026-10-31T18:31:12.422115+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -3614,19 +3614,65 @@
      "ticker": "KXEPLTEAMTOTAL-26OCT31HULIPS-IPS2",
      "title": "Will Ipswich Town score over 1.5 goals?",
      "why": "Ipswich Town O+D+ v Hull City O-D- \u00b7 2+ NO 0.60"
+    },
+    {
+     "ask": 0.51,
+     "bid": 0.49,
+     "event": "KXEPLTEAMTOTAL-26OCT31AVLFUL",
+     "group": "C",
+     "id": "T8:KXEPLTEAMTOTAL-26OCT31AVLFUL:home",
+     "labels": {
+      "opp": "O-D-",
+      "own": "O+D+"
+     },
+     "league": "Premier League",
+     "line": 1.5,
+     "logged": "2026-10-31T18:31:12.422115+00:00",
+     "match": "Aston Villa v Fulham",
+     "opponent": "Fulham",
+     "price": 0.51,
+     "rule": "T8",
+     "side": "no",
+     "start": "2026-10-31T20:00Z",
+     "status": "open",
+     "sub": "Aston Villa over 1.5 goals",
+     "team": "Aston Villa",
+     "team_side": "home",
+     "ticker": "KXEPLTEAMTOTAL-26OCT31AVLFUL-AVL2",
+     "title": "Will Aston Villa score over 1.5 goals?",
+     "why": "Aston Villa O+D+ v Fulham O-D- \u00b7 2+ NO 0.51"
+    },
+    {
+     "ask": 0.88,
+     "bid": 0.87,
+     "event": "KXLALIGATEAMTOTAL-26OCT31BARALA",
+     "group": "C",
+     "id": "T8:KXLALIGATEAMTOTAL-26OCT31BARALA:home",
+     "labels": {
+      "opp": "O-D-",
+      "own": "O+D+"
+     },
+     "league": "La Liga",
+     "line": 1.5,
+     "logged": "2026-10-31T18:31:12.422115+00:00",
+     "match": "Barcelona v Alav\u00e9s",
+     "opponent": "Alav\u00e9s",
+     "price": 0.13,
+     "rule": "T8",
+     "side": "no",
+     "start": "2026-10-31T20:00Z",
+     "status": "open",
+     "sub": "Barcelona over 1.5 goals",
+     "team": "Barcelona",
+     "team_side": "home",
+     "ticker": "KXLALIGATEAMTOTAL-26OCT31BARALA-BAR2",
+     "title": "Will Barcelona score over 1.5 goals?",
+     "why": "Barcelona O+D+ v Alav\u00e9s O-D- \u00b7 2+ NO 0.13"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-25T18:31:28.427189+00:00",
-   "candidates": 0,
-   "due": 2,
-   "labelled": 2,
-   "matched": 0,
-   "new": 0
-  },
   {
    "at": "2026-10-25T18:46:40.397189+00:00",
    "candidates": 0,
@@ -4026,6 +4072,14 @@
    "labelled": 4,
    "matched": 3,
    "new": 5
+  },
+  {
+   "at": "2026-10-31T18:31:12.422115+00:00",
+   "candidates": 5,
+   "due": 6,
+   "labelled": 6,
+   "matched": 5,
+   "new": 2
   }
  ],
  "version": "soccer-team-rules-v1"
