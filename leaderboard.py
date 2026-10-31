@@ -505,8 +505,10 @@ def board(contracts):
 # and ranked by the paper profit it made at $1 a bet, after fees, as each lane computes it. Observation-only
 # trackers (the NBA win margin tracker rows) are not bets and are left out. The cheap-contract spike board above
 # stays, moved into a fold on the page.
-MIN_BETS = 5
+MIN_BETS = 10
+CLOSE_MIN = 5            # 5 to MIN_BETS-1 settled bets: shown in the "close to qualifying" fold
 TOP_BETS = 20
+PROOF_WEEKS, PROOF_P = 10, 0.05   # "proven" needs 10+ weeks tested and a one-sided binomial p under 0.05
 BET_WEEK_MIN = 3          # bets a name needs in a week to be ranked for the profit persistence line
 BET_WEEK_ENTITIES_MIN = 8
 
@@ -620,11 +622,85 @@ def contract_bets(contracts):
     return out
 
 
+# TIPSTER / COPY SOURCES (the sandbox ledger's `source` field): other people's picks or prices the Edge Machine
+# follows, not its own rules. Left out of the default ranking, shown in the "Including tipster lanes" view.
+TIPSTER_SOURCES = frozenset({"covers", "scores24", "olbg", "oddspedia", "soccerpredictions", "sportsgambler", "polymarket",
+                             "kalshi", "draftkings", "pinnacle", "espn_fpi"})
+
+
+def is_tipster(lane):
+    return lane in TIPSTER_SOURCES
+
+
+# Econ, finance and culture pick ledgers (daily_ledger.json lanes and nc lanes, finance_nc_ledger.json,
+# culture_ledger.json lanes): a pick has a `series`, a display `name`, a `profit` at $100 and a won/lost status.
+# NAMES: gas series (KXAAAGAS*) are "AAA gas", KXDIESEL* "Diesel", KXINX* "S&P 500", KXNASDAQ100* "Nasdaq 100"; Trump
+# mentions (KXTRUMPSAY*) are the speaker "Trump"; a Rotten Tomatoes market (KXRT*) is its title; any other series keeps
+# the pick's own name. SPORTS: gas and diesel are Commodities, indexes and rates Finance, the rest Culture.
+def daily_entity(series, name):
+    series, name = str(series or ""), str(name or "").strip()
+    if series.startswith("KXAAAGAS"):
+        return "AAA gas", "Commodities"
+    if series.startswith("KXDIESEL"):
+        return "Diesel", "Commodities"
+    if series.startswith("KXTRUMPSAY"):
+        return "Trump", "Culture"
+    if series.startswith("KXINX"):
+        return "S&P 500", "Finance"
+    if series.startswith("KXNASDAQ100"):
+        return "Nasdaq 100", "Finance"
+    if series.startswith("KXRT"):
+        return (name.split(" \u00b7 ")[0].strip() or None), "Culture"
+    return (name or None), "Finance"
+
+
+def _pick_bet(lane, p, skipped, fallback_sport=None):
+    if p.get("status") not in ("won", "lost") or p.get("profit") is None:
+        return None
+    entity, sport = daily_entity(p.get("series"), p.get("name"))
+    if not entity:
+        skipped[f"{lane}: no name on the bet"] = skipped.get(f"{lane}: no name on the bet", 0) + 1
+        return None
+    return bet((p.get("id"), p.get("side")), p.get("lane") or lane, sport, [entity],
+               str(p.get("settled") or p.get("close") or p.get("logged") or "")[:10], p["profit"] / 100.0, p["status"] == "won")
+
+
+def collect_daily_bets(skipped, loader=load):
+    out = []
+    daily = loader("daily_ledger.json")
+    for lane, state in (daily.get("lanes") or {}).items():
+        for p in state.get("picks") or []:
+            b = _pick_bet(lane, p, skipped)
+            if b:
+                out.append(b)
+    for lane, state in (daily.get("nc") or {}).items():
+        for p in (state or {}).get("picks") or []:
+            b = _pick_bet(lane, p, skipped)
+            if b:
+                out.append(b)
+    for p in loader("finance_nc_ledger.json").get("picks") or []:
+        b = _pick_bet("finance_nc", p, skipped)
+        if b:
+            out.append(b)
+    for lane, state in (loader("culture_ledger.json").get("lanes") or {}).items():
+        for p in (state or {}).get("picks") or []:
+            b = _pick_bet(lane, p, skipped)
+            if b:
+                out.append(b)
+    return out
+
+
+def binom_tail(k, n, p=0.5):
+    """P(X >= k) for X ~ Binomial(n, p): the one-sided chance of k or more wins by luck alone."""
+    from math import comb
+    return sum(comb(n, i) * p ** i * (1 - p) ** (n - i) for i in range(k, n + 1))
+
+
 def collect_bets(loader=load):
     skipped, unmapped = {}, {}
     contracts, c_skipped, c_unmapped = collect_all(loader)
     bets = (collect_sandbox_bets(loader("sandbox_ledger.json"), skipped) + collect_rule_bets(skipped, loader)
-            + contract_bets(contracts))
+            + collect_daily_bets(skipped, loader) + contract_bets(contracts))
     uniq, seen = [], set()
     for b in bets:
         key = (b["lane"], b["uid"])
@@ -678,15 +754,29 @@ def profit_persistence(bets):
             continue
         tested.append(dict(last=a, this=w, top=per(t_rows), bottom=per(b_rows), beat=per(t_rows) > per(b_rows)))
     beats = sum(t["beat"] for t in tested)
-    return dict(weeks=tested, tested=len(tested), beats=beats, proven=bool(len(tested) >= 4 and beats / len(tested) > 0.5))
+    n = len(tested)
+    pval = binom_tail(beats, n) if n else None
+    return dict(weeks=tested, tested=n, beats=beats, p=pval,
+                proven=bool(n >= PROOF_WEEKS and pval is not None and pval < PROOF_P))
 
 
-def profit_board(bets):
+def rank_names(bets):
     ents = {}
     for b in bets:
         for n in b["entities"]:
             ents.setdefault((b["sport"], n), []).append(b)
     stats = [profit_stats(s, n, rows) for (s, n), rows in ents.items()]
     ranked = sorted((s for s in stats if s["n"] >= MIN_BETS), key=lambda s: (-s["profit"], -s["n"], s["name"]))
-    return dict(top=ranked[:TOP_BETS], qualified=len(ranked), names=len(stats), bets=len(bets),
-                lanes=len({b["lane"] for b in bets}), persistence=profit_persistence(bets))
+    close = sorted((s for s in stats if CLOSE_MIN <= s["n"] < MIN_BETS), key=lambda s: (-s["profit"], -s["n"], s["name"]))
+    return ranked, close, len(stats)
+
+
+def profit_board(bets):
+    """The default view is the Edge Machine's own rules; the second view adds the tipster and copy lanes."""
+    own = [b for b in bets if not is_tipster(b["lane"])]
+    ranked, close, names = rank_names(own)
+    all_ranked, _c, _n = rank_names(bets)
+    return dict(top=ranked[:TOP_BETS], qualified=len(ranked), close=close, names=names, bets=len(own),
+                lanes=len({b["lane"] for b in own}), persistence=profit_persistence(own),
+                with_tipsters=all_ranked[:TOP_BETS], qualified_all=len(all_ranked), bets_all=len(bets),
+                lanes_all=len({b["lane"] for b in bets}), tipster_bets=len(bets) - len(own))

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """The Leaderboard (leaderboard.py, leaderboard_build.py): entity mapping, verified-only counting, shrinkage, the
 minimum sample, the persistence calculation, and the page's rules (nav, no inline style or SVG, guarded copy)."""
+import datetime as dt
 import re
 import sys
 
@@ -189,23 +190,24 @@ def mk(name, profits, sport="Soccer", lane="A1", kind="team", day0=20):
     return [L.bet((f"{name}-{i}", "yes"), lane, sport, [name], f"2026-10-{day0 + i:02d}", p, p > 0, kind) for i, p in enumerate(profits)]
 
 
-bets = (mk("Big", [1.0, -0.5, 0.8, 0.7, 1.2, -0.4]) + mk("Small", [2.0, 3.0, 1.0, 1.0]) + mk("Loser", [-1.0] * 6)
-        + mk("Mid", [0.5, -0.5, 0.5, 0.5, -0.5, 0.2]))
+bets = (mk("Big", [1.0, -0.5, 0.8, 0.7, 1.2, -0.4] + [0.1] * 4, day0=15) + mk("Small", [2.0, 3.0, 1.0, 1.0] * 2 + [1.0])
+        + mk("Loser", [-1.0] * 10) + mk("Mid", [0.5, -0.5, 0.5, 0.5, -0.5, 0.2] + [0.0] * 4))
 pb = L.profit_board(bets)
 check("ranked by total profit", [s["name"] for s in pb["top"]], ["Big", "Mid", "Loser"])
-check("under 5 settled bets does not appear, whatever the profit", "Small" in [s["name"] for s in pb["top"]], False)
+check("under 10 settled bets does not rank, whatever the profit", "Small" in [s["name"] for s in pb["top"]], False)
+check("5 to 9 settled bets sit in the close-to-qualifying list", [s["name"] for s in pb["close"]], ["Small"])
 big = pb["top"][0]
 check("bets, won share, profit and ROI per $1", (big["n"], round(big["won"], 3), round(big["profit"], 2), round(big["roi"], 3)),
-      (6, 0.667, 2.8, 0.467))
-check("a profitable week is a week whose profit is above zero", (big["good_weeks"], big["weeks"]), (1, 1))
-many = [b for i in range(30) for b in mk(f"N{i:02d}", [1.0] * 5 + [0.0], day0=20)]
+      (10, 0.8, 3.2, 0.32))
+check("a profitable week is a week whose profit is above zero", (big["good_weeks"], big["weeks"]), (2, 2))
+many = [b for i in range(30) for b in mk(f"N{i:02d}", [1.0] * 9 + [0.0], day0=20)]
 check("the table is capped at 20 names", len(L.profit_board(many)["top"]), 20)
 
 two = mk("W", [1.0, 1.0, -3.0], day0=19) + mk("W", [1.0], day0=27)         # Oct 19-21 (one ISO week) then Oct 27 (the next)
 st = L.profit_stats("Soccer", "W", two)
 check("profitable weeks are counted per ISO week", (st["good_weeks"], st["weeks"]), (1, 2))
 m = L.bet(("m", "yes"), "O35", "Soccer", ["Home", "Away"], "2026-10-20", 1.0, True, "match")
-mm = L.profit_board([m] * 0 + [dict(m, uid=(f"m{i}", "yes")) for i in range(5)])
+mm = L.profit_board([dict(m, uid=(f"m{i}", "yes")) for i in range(10)])
 check("a match bet counts once for each team", sorted(s["name"] for s in mm["top"]), ["Away", "Home"])
 check("a lane's controls are not bets", (L.is_control("baseline"), L.is_control("base_nba_1q_value_1h"), L.is_control("A1")), (True, True, False))
 
@@ -245,6 +247,38 @@ check("the win margin tracker is not a bet", L.contract_bets([L.contract(("t", "
 check("a cheap-side contract is a bet worth its split ROI", [b["profit"] for b in L.contract_bets(
     [L.contract(("t", "yes"), "NBA", "Moneyline underdog", "e", "2026-10-20", ["X"], split=0.4, source="nba_ml_dog_tp50")])], [0.4])
 
+tip = mk("Tip", [1.0] * 10, lane="covers") + mk("Own", [0.5] * 10, lane="A1")
+pt = L.profit_board(tip)
+check("the default view leaves tipster and copy sources out", [s["name"] for s in pt["top"]], ["Own"])
+check("the second view adds them", [s["name"] for s in pt["with_tipsters"]], ["Tip", "Own"])
+check("tipster bets are counted and named", (pt["tipster_bets"], L.is_tipster("espn_fpi"), L.is_tipster("A7")), (10, True, False))
+check("every tipster source named by the coordinator is on the list",
+      {"covers", "espn_fpi", "polymarket", "kalshi", "soccerpredictions", "oddspedia", "olbg"} <= L.TIPSTER_SOURCES, True)
+
+print("econ, finance and culture ledgers")
+pick = lambda **k: dict(dict(id="i", side="no", status="won", profit=50.0, settled="2026-10-21T10:00:00Z", name="n", series="S"), **k)   # noqa: E731
+ledgers = {"daily_ledger.json": dict(lanes={"econ_daily": dict(picks=[pick(series="KXAAAGASDID", name="Idaho gas price", id="a")],
+                                                                 baseline=[pick(id="base")]),
+                                            "finance_daily": dict(picks=[pick(series="KXNASDAQ100U", name="Nasdaq above/below", id="b")])},
+                                     nc={"econ_nc_no": dict(picks=[pick(series="KXAAAGASD", name="US gas price", id="c", lane="econ_nc_no")])}),
+           "finance_nc_ledger.json": dict(picks=[pick(series="KXINXU", name="S&P 500 above/below", id="d")]),
+           "culture_ledger.json": dict(lanes={"mentions_rate": dict(picks=[pick(series="KXTRUMPSAYMONTH", name="What will Trump say", id="e"),
+                                                                           pick(series="KXTRUMPSAYMONTH", name="x", id="open", status="open")]),
+                                              "rt_model": dict(picks=[pick(series="KXRT", name="I Play Rocky \u00b7 Rotten Tomatoes score", id="f")])})}
+got = L.collect_daily_bets({}, lambda name: ledgers.get(name, {}))
+check("daily, finance and culture picks are named by their series",
+      sorted((b["sport"], b["entities"][0], b["lane"]) for b in got),
+      sorted([("Commodities", "AAA gas", "econ_daily"), ("Finance", "Nasdaq 100", "finance_daily"), ("Commodities", "AAA gas", "econ_nc_no"),
+              ("Finance", "S&P 500", "finance_nc"), ("Culture", "Trump", "mentions_rate"), ("Culture", "I Play Rocky", "rt_model")]))
+check("baselines and open picks are not bets; profit is per $1", sorted(round(b["profit"], 2) for b in got), [0.5] * 6)
+check("series to name", (L.daily_entity("KXDIESELD", "x"), L.daily_entity("KXTRUMPSAY", "x"), L.daily_entity("KXOTHER", " Odd name ")),
+      (("Diesel", "Commodities"), ("Trump", "Culture"), ("Odd name", "Finance")))
+
+print("persistence bar")
+check("binomial tail: 8 of 10 is under 0.05, 7 of 10 is not", (round(L.binom_tail(8, 10), 4), round(L.binom_tail(7, 10), 4)), (0.0547, 0.1719))
+check("8 of 10 by luck alone is still 0.055: the bar needs 9 of 10, or more weeks", L.binom_tail(8, 10) < L.PROOF_P, False)
+check("9 of 10 clears it", L.binom_tail(9, 10) < L.PROOF_P, True)
+check("the bar is 10 weeks and p under 0.05", (L.PROOF_WEEKS, L.PROOF_P), (10, 0.05))
 pp = L.profit_persistence(mk("a", [1, 1, 1], day0=20) + mk("a", [1, 1, 1], day0=27))
 check("one name cannot be tested week to week", pp["tested"], 0)
 wk = []
@@ -252,6 +286,16 @@ for i in range(8):
     wk += mk(f"P{i}", [(1.0 if i >= 4 else -1.0)] * 3, day0=19) + mk(f"P{i}", [(1.0 if i >= 4 else -1.0)] * 3, day0=26)
 pp = L.profit_persistence(wk)
 check("names that stay profitable beat the least profitable the next week", (pp["tested"], pp["beats"], pp["proven"]), (1, 1, False))
+check("one week of 1 is not proven, however clean", (pp["p"], pp["proven"]), (0.5, False))
+long = []
+for w in range(11):                                              # 11 weeks: each week the same four names stay on top
+    d0 = 1 + 7 * w
+    for i in range(8):
+        for j in range(L.BET_WEEK_MIN):
+            day = dt.date(2026, 8, 3) + dt.timedelta(days=7 * w + j)
+            long.append(L.bet((f"P{i}-{w}-{j}", "y"), "A1", "Soccer", [f"P{i}"], day.isoformat(), 1.0 if i >= 4 else -1.0, i >= 4))
+pl = L.profit_persistence(long)
+check("10+ weeks with the top quarter always ahead is proven", (pl["tested"], pl["beats"], pl["proven"]), (10, 10, True))
 
 print("page")
 b = L.board(cs)
@@ -265,7 +309,12 @@ text = re.sub(r"<[^>]+>", " ", html)
 check("no guarded public phrase", sandbox_audit.COPY_RE.findall(text), [])
 check("the main view is the profit table, before the spike fold", html.index("Profitable weeks") < html.index("<summary>Cheap-contract spike detail"), True)
 check("it says retired lanes are included", "retired lanes included" in html, True)
-check("the persistence note is one line under the table, saying not a pick list yet", "Not a pick list yet" in html, True)
+check("the persistence note gives the running count and says not proven", "weeks" in html and "not proven" in html, True)
+check("the bar is stated: 10+ weeks and a binomial p under 0.05", "10+ weeks tested" in html and "binomial p under 0.05" in html, True)
+check("the default view says it is the Edge Machine's rules only and lists the tipster sources",
+      "Edge Machine rules only" in html and "covers" in html and "espn_fpi" in html, True)
+check("a second view includes tipster lanes, and a fold lists names close to qualifying",
+      "<summary>Including tipster lanes" in html and "<summary>Close to qualifying" in html, True)
 check("the spike board sits in one closed fold", html.count('<details class="lb-fold"><summary>Cheap-contract spike detail') == 1
       and "Top 10 by spike rate" in html.split("<summary>Cheap-contract spike detail")[1], True)
 check("table cells are labelled for the phone cards", 'data-l="Profit"' in html and 'data-l="Reached 2x"' in html, True)

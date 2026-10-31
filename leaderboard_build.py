@@ -15,7 +15,7 @@ import sport_page as SP
 KEY = "leaderboard"
 TITLE = "Edge Machine · Leaderboard"
 DESCRIPTION = ("The teams, players and assets that made the Edge Machine the most paper profit, from every settled bet "
-               "in every lane, retired lanes included.")
+               "in the Edge Machine's own rules, retired lanes included.")
 SECTIONS = (("top", "Top 20"), ("detail", "Cheap-contract spike detail"))
 COLS = ("#", "Name", "Sport", "Contracts", "Events", "Per week", "Reached 2x", "Reached 3x", "Split ROI", "Hold ROI",
         "Traded at 2x+", "Holds up?", "Score")
@@ -166,11 +166,25 @@ def profit_table(stats):
 
 
 def persistence_line(p):
+    n, k = p["tested"], p["beats"]
+    share = f" ({k / n * 100:.0f}%)" if n else ""
+    rule = (f"Proven means {L.PROOF_WEEKS}+ weeks tested and the top quarter of names beating the bottom quarter "
+            f"clearly above chance (one-sided binomial p under {L.PROOF_P}, about 8 of 10).")
     if p["proven"]:
-        return (f'The top quarter of names beat the bottom quarter the next week in {p["beats"]} of {p["tested"]} weeks '
-                'tested; still a short record.')
-    return (f"Not a pick list yet: last week's most profitable names beat the least profitable the next week in "
-            f'{p["beats"]} of {p["tested"]} weeks tested, and earlier work found hot teams do not stay hot.')
+        return (f"Last week's most profitable names beat the least profitable the next week in {k} of {n} weeks{share}: "
+                f"proven (p = {p['p']:.3f}). {rule}")
+    return (f"Last week's most profitable names beat the least profitable the next week in {k} of {n} weeks{share}: "
+            f"not proven. {rule} Earlier work found hot teams do not stay hot.")
+
+
+def tipster_list():
+    return ", ".join(sorted(L.TIPSTER_SOURCES))
+
+
+def close_table(stats):
+    if not stats:
+        return '<p class="sm mut">Nobody has 5-9 settled bets.</p>'
+    return profit_table(stats)
 
 
 def spike_fold(b, skipped, unmapped):
@@ -202,14 +216,22 @@ def build(bets=None, contracts=None, skipped=None, unmapped=None, now=None, bet_
     left = "; ".join(f"{esc(k)} {v}" for k, v in sorted({**bet_skipped, **unmapped}.items())) or "nothing"
     body = (
         '<section id="top"><h1>Leaderboard</h1>'
-        '<p class="lede">The teams, players and assets that made the Edge Machine the most paper profit.</p>'
-        f'<p class="sm">Top {L.TOP_BETS} of {pb["qualified"]} names with {L.MIN_BETS}+ settled bets. Every settled bet in every lane, '
-        f'Production and Sandbox, <b>retired lanes included</b> ({pb["bets"]:,} bets, {pb["lanes"]} lanes). Profit is in dollars at '
-        '$1 a bet, after fees, as each lane computes it. A match bet (an over, both teams to score) counts for both teams and is '
-        'marked match. Tracker rows that are not bets are left out.</p>'
+        '<p class="lede">The teams, players and assets that made the Edge Machine\'s own rules the most paper profit.</p>'
+        f'<p class="sm"><b>Edge Machine rules only.</b> Top {L.TOP_BETS} of {pb["qualified"]} names with {L.MIN_BETS}+ settled bets, from '
+        f'every settled bet in every rule lane, Production and Sandbox, <b>retired lanes included</b> ({pb["bets"]:,} bets, '
+        f'{pb["lanes"]} lanes). Tipster and copy sources are left out of this view ({esc(tipster_list())}); the second view adds '
+        'them. Profit is in dollars at $1 a bet, after fees, as each lane computes it. A match bet (an over, both teams to score) '
+        'counts for both teams and is marked match. Tracker rows that are not bets are left out.</p>'
         + profit_table(pb["top"])
         + f'<p class="sm">{persistence_line(pb["persistence"])}</p>'
-        + f'<p class="sm mut">Not counted: {left}. Econ, finance and culture pick ledgers are not read yet.</p></section>'
+        + f'<details class="lb-fold"><summary>Including tipster lanes</summary><p class="sm">Top {L.TOP_BETS} of {pb["qualified_all"]} names '
+          f'with {L.MIN_BETS}+ settled bets, adding {pb["tipster_bets"]:,} bets from the tipster and copy sources '
+          f'({esc(tipster_list())}).</p>{profit_table(pb["with_tipsters"])}</details>'
+        + f'<details class="lb-fold"><summary>Close to qualifying ({L.CLOSE_MIN}-{L.MIN_BETS - 1} settled bets)</summary>'
+          f'{close_table(pb["close"])}</details>'
+        + '<p class="sm mut">Names: the team or player on the bet; a coin or commodity from its market series (AAA gas, WTI, '
+          'gold, Bitcoin); Trump for mentions; the index for finance markets; the title for Rotten Tomatoes. '
+          f'Not counted: {left}.</p></section>'
         + f'<section id="detail">{spike_fold(b, skipped, unmapped)}</section>')
     html = C.document(TITLE, DESCRIPTION, KEY, SECTIONS, C.stamp(now), body,
                       script_src="./site.js", scripts=("./tables.js",))
