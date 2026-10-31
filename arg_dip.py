@@ -283,6 +283,10 @@ def replay(event, fetch, now, cfg=None):
     if occ is None:
         return None, "no occurrence time"
     kickoff = occ - KICKOFF_BACK_H * 3600
+    close = _ts(m.get("close_time"))
+    if close is not None and close <= kickoff:
+        # a match moved earlier keeps its old occurrence time (Nice v Rennes, 2026-10-30): no pregame quote exists
+        return None, "market closed before its listed kickoff (match moved)"
     q_at = kickoff - P_LEAD_MIN * 60
     cs = C.fetch_candles(series_of(event), event, [m], q_at - 30 * 60, q_at + 60, fetch, archived).get(m["ticker"])
     q = pregame_quote(cs, q_at)

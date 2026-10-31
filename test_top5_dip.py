@@ -140,6 +140,18 @@ check("the entry reads the over 1.5 rung, P 0.80, its league, the 55% buy held, 
       (e0["id"], e0["p"], e0["league"], e0["buys"]["55"]["held"], e0["buys"]["55"]["counted"], e0["buys"]["55"]["sold"], e0["version"]),
       ("KXSERIEATOTAL-26OCT31BFCMON-2", 0.80, "Serie A", True, True, True, "top5dip-v1"))
 check("a pregame ask over 95c is skipped with its reason", st["skips"].get("KXUCLTOTAL-26OCT31DEARMA"), "pregame ask 0.97 outside 10-95c")
+moved = market("KXLIGUE1TOTAL-26OCT31NICREN")
+moved["close_time"] = dt.datetime.fromtimestamp(KICK - 86400, UTC).isoformat()
+
+
+def moved_fetch(path):
+    if path.startswith("markets?limit=200&event_ticker="):
+        return {"markets": [moved], "cursor": ""}
+    raise AssertionError(path)                                  # no candles or trades are asked for
+
+
+check("a match moved earlier (market closed before its listed kickoff) is skipped, not an hourly error",
+      A.replay("KXLIGUE1TOTAL-26OCT31NICREN", moved_fetch, NOW, CFG), (None, "market closed before its listed kickoff (match moved)"))
 check("watching next lists open matches across series from the record date on (over 1.5 rung)",
       [u["event"] for u in st["upcoming"]], ["KXLALIGATOTAL-26NOV05NEXTGM"])
 A.run(st, NOW + dt.timedelta(hours=1), fake_for({"KXEPLTOTAL": ["KXEPLTOTAL-26OCT31CFCMUN"]}), cfg=CFG)
