@@ -25,11 +25,6 @@
    "lead_min": 47.1,
    "price": 0.37
   },
-  "btts_form_l10_fade:KXUCLBTTS-26OCT21RBBFEY-BTTS": {
-   "at": "2026-10-21T18:15:08+00:00",
-   "lead_min": 44.9,
-   "price": 0.33
-  },
   "bund_o35:KXBUNDESLIGATOTAL-26OCT24BVBSGE-4": {
    "at": "2026-10-24T16:13:59+00:00",
    "lead_min": 16.0,
@@ -100,21 +95,6 @@
    "lead_min": 0.8,
    "price": 0.54
   },
-  "corners_team_fade:KXUCLTCORNERS-26OCT21AVLVIK-AVL7": {
-   "at": "2026-10-21T18:15:08+00:00",
-   "lead_min": 44.9,
-   "price": 0.58
-  },
-  "corners_team_fade:KXUCLTCORNERS-26OCT21RBBFEY-RBB5": {
-   "at": "2026-10-21T18:15:08+00:00",
-   "lead_min": 44.9,
-   "price": 0.6
-  },
-  "corners_team_fade:KXUCLTCORNERS-26OCT21RMARBL-RMA7": {
-   "at": "2026-10-21T18:15:08+00:00",
-   "lead_min": 44.9,
-   "price": 0.51
-  },
   "corners_total_under:KXEPLCORNERS-26OCT25MUNBOU-10": {
    "at": "2026-10-25T13:54:45+00:00",
    "lead_min": 5.2,
@@ -130,25 +110,15 @@
    "lead_min": 45.7,
    "price": 0.35
   },
-  "corners_ucl_fade:KXUCLCORNERS-26OCT21SPOASK-9": {
-   "at": "2026-10-21T18:15:08+00:00",
-   "lead_min": 44.9,
-   "price": 0.66
-  },
-  "crypto_eth_fav_both:KXETHD-26OCT2117-T2509.99": {
-   "at": "2026-10-21T18:15:08+00:00",
-   "lead_min": 49.9,
-   "price": 0.6
+  "corners_total_under:KXLALIGACORNERS-26OCT31BARALA-10": {
+   "at": "2026-10-31T19:31:35+00:00",
+   "lead_min": 28.4,
+   "price": 0.38
   },
   "crypto_eth_fav_both:KXETHD-26OCT2417-T2319.99": {
    "at": "2026-10-24T18:59:10+00:00",
    "lead_min": 5.8,
    "price": 0.14
-  },
-  "crypto_fav_band:KXBTCD-26OCT2117-T84249.99": {
-   "at": "2026-10-21T18:15:08+00:00",
-   "lead_min": 49.9,
-   "price": 0.85
   },
   "crypto_fav_band:KXBTCD-26OCT2417-T79749.99": {
    "at": "2026-10-24T18:59:10+00:00",
@@ -170,16 +140,6 @@
    "lead_min": 14.6,
    "price": 0.38
   },
-  "crypto_fav_band:KXXRPD-26OCT2117-T1.3799": {
-   "at": "2026-10-21T18:15:08+00:00",
-   "lead_min": 49.9,
-   "price": 0.86
-  },
-  "crypto_fav_band_60:KXBTCD-26OCT2117-T84499.99": {
-   "at": "2026-10-21T18:15:08+00:00",
-   "lead_min": 49.9,
-   "price": 0.66
-  },
   "crypto_fav_band_60:KXBTCD-26OCT2417-T79999.99": {
    "at": "2026-10-24T18:59:10+00:00",
    "lead_min": 5.8,
@@ -189,16 +149,6 @@
    "at": "2026-10-30T18:50:24+00:00",
    "lead_min": 14.6,
    "price": 0.56
-  },
-  "crypto_fav_band_60:KXETHD-26OCT2117-T2509.99": {
-   "at": "2026-10-21T18:15:08+00:00",
-   "lead_min": 49.9,
-   "price": 0.6
-  },
-  "crypto_fav_band_below:KXBTCD-26OCT2117-T84749.99": {
-   "at": "2026-10-21T18:15:08+00:00",
-   "lead_min": 49.9,
-   "price": 0.61
   },
   "crypto_fav_band_below:KXBTCD-26OCT2417-T80499.99": {
    "at": "2026-10-24T18:59:10+00:00",
@@ -214,11 +164,6 @@
    "at": "2026-10-24T18:59:10+00:00",
    "lead_min": 5.8,
    "price": 0.46
-  },
-  "crypto_fav_band_below_60:KXBTCD-26OCT2117-T84749.99": {
-   "at": "2026-10-21T18:15:08+00:00",
-   "lead_min": 49.9,
-   "price": 0.61
   },
   "crypto_fav_band_below_60:KXBTCD-26OCT2417-T80249.99": {
    "at": "2026-10-24T18:59:10+00:00",
@@ -255,6 +200,16 @@
    "lead_min": 31.0,
    "price": 0.26
   },
+  "ere_draw:KXEREDIVISIEGAME-26OCT31AJAAZA": {
+   "at": "2026-10-31T19:31:35+00:00",
+   "lead_min": 28.4,
+   "price": 0.23
+  },
+  "ere_draw:KXEREDIVISIEGAME-26OCT31CAMGAE": {
+   "at": "2026-10-31T19:31:35+00:00",
+   "lead_min": 28.4,
+   "price": 0.25
+  },
   "espn_fpi:aec-nfl-dal-phi-2026-10-26": {
    "at": "2026-10-26T23:19:26+00:00",
    "lead_min": 55.6,
@@ -274,6 +229,11 @@
    "at": "2026-10-24T18:59:10+00:00",
    "lead_min": 0.8,
    "price": 0.15
+  },
+  "liga_u15_dog:KXLALIGATOTAL-26OCT31BARALA-2": {
+   "at": "2026-10-31T19:31:35+00:00",
+   "lead_min": 28.4,
+   "price": 0.07
   },
   "mls_away_band_fade:KXMLSGAME-26OCT24CLBTOR-TOR": {
    "at": "2026-10-24T18:59:10+00:00",
@@ -349,11 +309,6 @@
    "at": "2026-10-24T12:12:53+00:00",
    "lead_min": 47.1,
    "price": 0.89
-  },
-  "o15_form_l10:KXUCLTOTAL-26OCT21SPOASK-2": {
-   "at": "2026-10-21T18:15:08+00:00",
-   "lead_min": 44.9,
-   "price": 0.91
   },
   "o15_ranked:KXLIGAPORTUGALTOTAL-26OCT25CDNBRA-2": {
    "at": "2026-10-25T17:37:32+00:00",
@@ -511,5 +466,5 @@
    "price": 0.75
   }
  },
- "updated": "2026-10-31T15:17:36+00:00"
+ "updated": "2026-10-31T19:31:35+00:00"
 }
