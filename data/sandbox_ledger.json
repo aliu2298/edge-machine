@@ -1,10 +1,10 @@
 {
  "coverage": {
   "boxing": {
-   "kalshi_venue": 1,
-   "polymarket_us": 4,
-   "polymarket_us_listed": 4,
-   "polymarket_us_priced": 2
+   "kalshi_venue": 5,
+   "polymarket_us": 0,
+   "polymarket_us_listed": 0,
+   "polymarket_us_priced": 0
   },
   "commodities": {
    "cmd_market": {
@@ -30,17 +30,17 @@
   },
   "cricket": {
    "cricket_consensus": {
-    "offered": 17,
+    "offered": 16,
     "picked": 0
    },
-   "kalshi_venue": 14,
+   "kalshi_venue": 16,
    "oddspedia": {
-    "offered": 17,
+    "offered": 16,
     "picked": 0
    },
-   "polymarket_us": 3,
-   "polymarket_us_listed": 3,
-   "polymarket_us_priced": 2
+   "polymarket_us": 0,
+   "polymarket_us_listed": 0,
+   "polymarket_us_priced": 0
   },
   "crypto": {
    "kalshi_venue": 80
@@ -76,23 +76,23 @@
    "kalshi_venue": 34
   },
   "finance": {
-   "kalshi_venue": 16
+   "kalshi_venue": 32
   },
   "mma": {
-   "kalshi_venue": 0,
-   "polymarket_us": 12,
-   "polymarket_us_listed": 12,
-   "polymarket_us_priced": 12
+   "kalshi_venue": 12,
+   "polymarket_us": 0,
+   "polymarket_us_listed": 0,
+   "polymarket_us_priced": 0
   },
   "nfl": {
    "espn_fpi": {
     "offered": 13,
     "picked": 13
    },
-   "kalshi_venue": 0,
-   "polymarket_us": 13,
-   "polymarket_us_listed": 13,
-   "polymarket_us_priced": 13
+   "kalshi_venue": 13,
+   "polymarket_us": 0,
+   "polymarket_us_listed": 0,
+   "polymarket_us_priced": 0
   },
   "nhl_pl": {
    "kalshi_venue": 19
@@ -102,20 +102,20 @@
   },
   "soccer": {
    "ere_draw": {
-    "offered": 9,
+    "offered": 8,
     "picked": 5
    },
-   "kalshi_venue": 247,
+   "kalshi_venue": 234,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
   },
   "soccer_btts": {
    "btts_market": {
-    "offered": 73,
-    "picked": 73
+    "offered": 72,
+    "picked": 72
    },
-   "kalshi_venue": 73,
+   "kalshi_venue": 72,
    "liga_btts_even": {
     "offered": 7,
     "picked": 0
@@ -171,20 +171,20 @@
   },
   "soccer_o15": {
    "ere_o15": {
-    "offered": 9,
+    "offered": 8,
     "picked": 0
    },
    "goals_market": {
-    "offered": 73,
-    "picked": 73
+    "offered": 72,
+    "picked": 72
    },
-   "kalshi_venue": 73,
+   "kalshi_venue": 72,
    "liga_u15_dog": {
     "offered": 7,
     "picked": 3
    },
    "u35_low_o15": {
-    "offered": 73,
+    "offered": 72,
     "picked": 1
    }
   },
@@ -208,12 +208,12 @@
   },
   "soccer_o25": {
    "goals_market": {
-    "offered": 73,
-    "picked": 73
+    "offered": 72,
+    "picked": 72
    },
-   "kalshi_venue": 73,
+   "kalshi_venue": 72,
    "pin_totals": {
-    "offered": 73,
+    "offered": 72,
     "picked": 0
    },
    "turkey_o25_dog": {
@@ -245,17 +245,17 @@
   },
   "soccer_p05": {
    "goals_market": {
-    "offered": 150,
-    "picked": 150
+    "offered": 148,
+    "picked": 148
    },
-   "kalshi_venue": 150,
+   "kalshi_venue": 148,
    "mls_away_band_fade": {
     "offered": 30,
-    "picked": 2
+    "picked": 0
    },
    "mls_fade_home": {
     "offered": 30,
-    "picked": 4
+    "picked": 0
    }
   },
   "soccer_p05_cup": {
@@ -358,12 +358,12 @@
   },
   "soccer_u35": {
    "goals_market": {
-    "offered": 73,
-    "picked": 73
+    "offered": 72,
+    "picked": 72
    },
-   "kalshi_venue": 73,
+   "kalshi_venue": 72,
    "u35_low_scoring": {
-    "offered": 73,
+    "offered": 72,
     "picked": 1
    }
   },
@@ -390,22 +390,22 @@
    }
   },
   "tennis": {
-   "kalshi_venue": 34,
-   "polymarket_us": 40,
-   "polymarket_us_listed": 345,
-   "polymarket_us_priced": 75,
+   "kalshi_venue": 37,
+   "polymarket_us": 0,
+   "polymarket_us_listed": 0,
+   "polymarket_us_priced": 0,
    "tennis_utr_shortlist_v1": {
-    "offered": 2,
+    "offered": 0,
     "picked": 0
    }
   },
   "tennis_combo": {
    "combo": 0,
-   "legs": 0
+   "legs": 1
   },
   "tennis_pmcombo": {
-   "combo": 6,
-   "legs": 7
+   "combo": 0,
+   "legs": 0
   }
  },
  "feed_status": {
@@ -415,41 +415,41 @@
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-10-31T15:26:49+00:00",
-   "commodities": "2026-10-31T15:26:49+00:00",
-   "commodities_fav": "2026-10-31T15:26:49+00:00",
-   "cricket": "2026-10-31T15:26:49+00:00",
-   "crypto": "2026-10-31T15:26:49+00:00",
-   "crypto_fav": "2026-10-31T15:26:49+00:00",
-   "economics": "2026-10-31T15:26:49+00:00",
-   "finance": "2026-10-31T15:26:49+00:00",
-   "mma": "2026-10-31T15:26:49+00:00",
-   "nfl": "2026-10-31T15:26:49+00:00",
-   "nhl_pl": "2026-10-31T15:26:49+00:00",
-   "nhl_rest": "2026-10-31T15:26:49+00:00",
-   "soccer": "2026-10-31T15:26:49+00:00",
-   "soccer_btts": "2026-10-31T15:26:49+00:00",
-   "soccer_btts_cup": "2026-10-31T15:26:49+00:00",
-   "soccer_corners": "2026-10-31T15:26:49+00:00",
+   "boxing": "2026-10-31T15:33:58+00:00",
+   "commodities": "2026-10-31T15:33:58+00:00",
+   "commodities_fav": "2026-10-31T15:33:58+00:00",
+   "cricket": "2026-10-31T15:33:58+00:00",
+   "crypto": "2026-10-31T15:33:58+00:00",
+   "crypto_fav": "2026-10-31T15:33:58+00:00",
+   "economics": "2026-10-31T15:33:58+00:00",
+   "finance": "2026-10-31T15:33:58+00:00",
+   "mma": "2026-10-31T15:33:58+00:00",
+   "nfl": "2026-10-31T15:33:58+00:00",
+   "nhl_pl": "2026-10-31T15:33:58+00:00",
+   "nhl_rest": "2026-10-31T15:33:58+00:00",
+   "soccer": "2026-10-31T15:33:58+00:00",
+   "soccer_btts": "2026-10-31T15:33:58+00:00",
+   "soccer_btts_cup": "2026-10-31T15:33:58+00:00",
+   "soccer_corners": "2026-10-31T15:33:58+00:00",
    "soccer_ftts": "2026-10-19T18:33:38+00:00",
-   "soccer_o15": "2026-10-31T15:26:49+00:00",
-   "soccer_o15_cup": "2026-10-31T15:26:49+00:00",
-   "soccer_o25": "2026-10-31T15:26:49+00:00",
-   "soccer_o25_cup": "2026-10-31T15:26:49+00:00",
-   "soccer_p05": "2026-10-31T15:26:49+00:00",
-   "soccer_p05_cup": "2026-10-31T15:26:49+00:00",
-   "soccer_team1": "2026-10-31T15:26:49+00:00",
-   "soccer_team1_cup": "2026-10-31T15:26:49+00:00",
-   "soccer_team2": "2026-10-31T15:26:49+00:00",
-   "soccer_team2_cup": "2026-10-31T15:26:49+00:00",
-   "soccer_u35": "2026-10-31T15:26:49+00:00",
-   "soccer_u35_cup": "2026-10-31T15:26:49+00:00",
-   "tennis": "2026-10-31T15:26:49+00:00",
+   "soccer_o15": "2026-10-31T15:33:58+00:00",
+   "soccer_o15_cup": "2026-10-31T15:33:58+00:00",
+   "soccer_o25": "2026-10-31T15:33:58+00:00",
+   "soccer_o25_cup": "2026-10-31T15:33:58+00:00",
+   "soccer_p05": "2026-10-31T15:33:58+00:00",
+   "soccer_p05_cup": "2026-10-31T15:33:58+00:00",
+   "soccer_team1": "2026-10-31T15:33:58+00:00",
+   "soccer_team1_cup": "2026-10-31T15:33:58+00:00",
+   "soccer_team2": "2026-10-31T15:33:58+00:00",
+   "soccer_team2_cup": "2026-10-31T15:33:58+00:00",
+   "soccer_u35": "2026-10-31T15:33:58+00:00",
+   "soccer_u35_cup": "2026-10-31T15:33:58+00:00",
+   "tennis": "2026-10-31T15:33:58+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "odds_api": {
    "allowance": 0,
-   "at": "2026-10-31T15:26:49+00:00",
+   "at": "2026-10-31T15:33:58+00:00",
    "remaining": 43,
    "used": 457
   },
@@ -470,41 +470,14 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 840,
+  "runs": 841,
   "tennis_shortlist": {
-   "audit": [
-    {
-     "market_id": "aec-utr-vozkhr-chadai-2026-10-31",
-     "reason": "book failed freshness/price/spread/depth gate"
-    },
-    {
-     "market_id": "aec-utr-matfra-milsar-2026-10-31",
-     "reason": "book failed freshness/price/spread/depth gate"
-    },
-    {
-     "ask_size": 0.63,
-     "book_at": "2026-10-31T15:24:27.766803+00:00",
-     "cost": 0.7126,
-     "market_id": "aec-utr-smemag-cozsar-2026-10-31",
-     "price": 0.7,
-     "reason": "daily cap",
-     "spread": 0.01
-    },
-    {
-     "ask_size": 94.0,
-     "book_at": "2026-10-31T15:26:32.733471+00:00",
-     "cost": 0.751544,
-     "market_id": "aec-utr-pitnat-cornic-2026-10-31",
-     "price": 0.74,
-     "reason": "daily cap",
-     "spread": 0.02
-    }
-   ],
-   "checked_at": "2026-10-31T15:26:48.439347+00:00",
+   "audit": [],
+   "checked_at": "2026-10-31T15:33:58.804816+00:00",
    "daily_limit": 3,
    "day": "2026-10-31"
   },
-  "updated": "2026-10-31T15:27:19+00:00"
+  "updated": "2026-10-31T15:34:34+00:00"
  },
  "quotes": [
   {
@@ -327680,7 +327653,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.25,
    "date": "2026-10-31",
    "edge": null,
@@ -327725,7 +327698,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.22,
    "date": "2026-10-31",
    "edge": null,
@@ -327770,7 +327743,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.25,
    "date": "2026-10-31",
    "edge": null,
@@ -357103,7 +357076,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.16,
    "date": "2026-10-31",
    "edge": null,
@@ -365289,7 +365262,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.74,
    "date": "2026-10-31",
    "edge": null,
@@ -367153,7 +367126,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.08,
    "date": "2026-10-31",
    "edge": null,
@@ -367972,7 +367945,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.74,
    "date": "2026-10-31",
    "edge": null,
@@ -370000,7 +369973,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.84,
    "date": "2026-10-31",
    "edge": null,
@@ -372665,7 +372638,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.21,
    "date": "2026-11-01",
    "edge": null,
@@ -372710,7 +372683,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.23,
    "date": "2026-11-01",
    "edge": null,
@@ -373107,7 +373080,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.59,
    "date": "2026-11-01",
    "edge": null,
@@ -389185,7 +389158,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.07,
    "date": "2026-11-01",
    "edge": null,
@@ -389653,7 +389626,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.86,
    "date": "2026-10-31",
    "edge": null,
@@ -406891,7 +406864,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.84,
    "date": "2026-10-31",
    "edge": null,
@@ -408787,8 +408760,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-29T11:31:21+00:00",
-   "close_price": 0.31,
+   "close_at": "2026-10-31T15:33:58+00:00",
+   "close_price": 0.3,
    "date": "2026-11-01",
    "edge": 0.049,
    "id": "espn_fpi:KXNFLGAME-26NOV01PHIWAS",
@@ -409406,7 +409379,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.79,
    "date": "2026-11-02",
    "edge": null,
@@ -412234,7 +412207,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.78,
    "date": "2026-11-02",
    "edge": null,
@@ -413712,7 +413685,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.57,
    "date": "2026-11-01",
    "edge": null,
@@ -414264,7 +414237,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.6,
    "date": "2026-10-31",
    "edge": null,
@@ -423332,7 +423305,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.7,
    "date": "2026-10-31",
    "edge": null,
@@ -425339,7 +425312,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.49,
    "date": "2026-10-31",
    "edge": null,
@@ -425381,7 +425354,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.7,
    "date": "2026-10-31",
    "edge": null,
@@ -425838,7 +425811,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.67,
    "date": "2026-11-01",
    "edge": null,
@@ -426078,7 +426051,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.81,
    "date": "2026-11-01",
    "edge": null,
@@ -426858,7 +426831,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.64,
    "date": "2026-10-31",
    "edge": null,
@@ -431127,7 +431100,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-30T01:13:52+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.4,
    "date": "2026-11-02",
    "edge": 0.053,
@@ -438517,7 +438490,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.76,
    "date": "2026-11-01",
    "edge": null,
@@ -441438,7 +441411,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.31,
    "date": "2026-11-01",
    "edge": null,
@@ -443128,8 +443101,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
-   "close_price": 0.61,
+   "close_at": "2026-10-31T15:33:58+00:00",
+   "close_price": 0.62,
    "date": "2026-11-01",
    "edge": null,
    "espn_away": "Cagliari",
@@ -443343,8 +443316,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
-   "close_price": 0.59,
+   "close_at": "2026-10-31T15:33:58+00:00",
+   "close_price": 0.58,
    "date": "2026-10-31",
    "edge": null,
    "espn_away": "Goztepe",
@@ -443459,8 +443432,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
-   "close_price": 0.65,
+   "close_at": "2026-10-31T15:33:58+00:00",
+   "close_price": 0.64,
    "date": "2026-10-31",
    "edge": null,
    "espn_away": "Goztepe",
@@ -445159,7 +445132,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.35,
    "date": "2026-11-01",
    "edge": null,
@@ -445201,7 +445174,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.6,
    "date": "2026-10-31",
    "edge": null,
@@ -449112,7 +449085,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.81,
    "date": "2026-11-01",
    "edge": null,
@@ -450779,7 +450752,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.5,
    "date": "2026-11-01",
    "edge": null,
@@ -455120,7 +455093,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.47,
    "date": "2026-11-01",
    "edge": null,
@@ -455160,7 +455133,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.58,
    "date": "2026-11-01",
    "edge": null,
@@ -455428,7 +455401,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.6,
    "date": "2026-11-01",
    "edge": null,
@@ -455468,7 +455441,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-10-31T15:26:49+00:00",
+   "close_at": "2026-10-31T15:33:58+00:00",
    "close_price": 0.7,
    "date": "2026-11-01",
    "edge": null,
@@ -458198,6 +458171,337 @@
    "result": null,
    "settled": null,
    "side_a": "Above $91.49",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-02T19:30:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxwti",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-04",
+   "edge": -0.025,
+   "espn_away": "Olympiacos",
+   "espn_home": "Stade Rennais",
+   "event": "KXUELBTTS-26NOV04RENOLY",
+   "id": "btts_market:KXUELBTTS-26NOV04RENOLY-BTTS",
+   "kalshi_title": "Both Teams To Score",
+   "label": "Stade Rennais v Olympiacos: both teams to score",
+   "league": "Europa League",
+   "liquidity": null,
+   "logged": "2026-10-31T15:33:58+00:00",
+   "market_id": "KXUELBTTS-26NOV04RENOLY-BTTS",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.61,
+   "price_b": 0.44,
+   "price_draw": null,
+   "prob_a": 0.585,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "btts_market",
+   "sport": "soccer_btts",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-04T15:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxuelbtts",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-04",
+   "edge": -0.02,
+   "espn_away": "Olympiacos",
+   "espn_home": "Stade Rennais",
+   "event": "KXUELTOTAL-26NOV04RENOLY",
+   "id": "goals_market:KXUELTOTAL-26NOV04RENOLY-2",
+   "kalshi_title": "Over 1.5 goals scored",
+   "label": "Stade Rennais v Olympiacos: over 1.5 goals",
+   "league": "Europa League",
+   "liquidity": null,
+   "logged": "2026-10-31T15:33:58+00:00",
+   "market_id": "KXUELTOTAL-26NOV04RENOLY-2",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.8,
+   "price_b": 0.24,
+   "price_draw": null,
+   "prob_a": 0.78,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_o15",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-04T15:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxueltotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-04",
+   "edge": -0.02,
+   "espn_away": "Olympiacos",
+   "espn_home": "Stade Rennais",
+   "event": "KXUELTOTAL-26NOV04RENOLY",
+   "id": "goals_market:KXUELTOTAL-26NOV04RENOLY-3",
+   "kalshi_title": "Over 2.5 goals scored",
+   "label": "Stade Rennais v Olympiacos: over 2.5 goals",
+   "league": "Europa League",
+   "liquidity": null,
+   "logged": "2026-10-31T15:33:58+00:00",
+   "market_id": "KXUELTOTAL-26NOV04RENOLY-3",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.57,
+   "price_b": 0.47,
+   "price_draw": null,
+   "prob_a": 0.55,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_o25",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-04T15:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxueltotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-04",
+   "edge": -0.025,
+   "espn_away": "Olympiacos",
+   "espn_home": "Stade Rennais",
+   "event": "KXUELTOTAL-26NOV04RENOLY",
+   "id": "goals_market:KXUELTOTAL-26NOV04RENOLY-4",
+   "kalshi_title": "Over 3.5 goals scored",
+   "label": "Stade Rennais v Olympiacos: over 3.5 goals",
+   "league": "Europa League",
+   "liquidity": null,
+   "logged": "2026-10-31T15:33:58+00:00",
+   "market_id": "KXUELTOTAL-26NOV04RENOLY-4",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.35,
+   "price_b": 0.7,
+   "price_draw": null,
+   "prob_a": 0.325,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_u35",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-04T15:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxueltotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-04",
+   "edge": -0.015,
+   "espn_away": "Olympiacos",
+   "espn_home": "Stade Rennais",
+   "event": "KXUELGAME-26NOV05RENOLY",
+   "id": "goals_market:KXUELGAME-26NOV05RENOLY-REN",
+   "kalshi_title": "Stade Rennais",
+   "label": "Stade Rennais v Olympiacos: Stade Rennais to win (No = Olympiacos +0.5)",
+   "league": "Europa League",
+   "liquidity": null,
+   "logged": "2026-10-31T15:33:58+00:00",
+   "market_id": "KXUELGAME-26NOV05RENOLY-REN",
+   "opponent": "Stade Rennais",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.46,
+   "price_b": 0.57,
+   "price_draw": null,
+   "prob_a": 0.445,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_p05",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-04T15:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "Olympiacos",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxuelgame",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-04",
+   "edge": -0.01,
+   "espn_away": "Olympiacos",
+   "espn_home": "Stade Rennais",
+   "event": "KXUELGAME-26NOV05RENOLY",
+   "id": "goals_market:KXUELGAME-26NOV05RENOLY-OLY",
+   "kalshi_title": "Olympiacos",
+   "label": "Stade Rennais v Olympiacos: Olympiacos to win (No = Stade Rennais +0.5)",
+   "league": "Europa League",
+   "liquidity": null,
+   "logged": "2026-10-31T15:33:58+00:00",
+   "market_id": "KXUELGAME-26NOV05RENOLY-OLY",
+   "opponent": "Olympiacos",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.3,
+   "price_b": 0.72,
+   "price_draw": null,
+   "prob_a": 0.29,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_p05",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-04T15:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "Stade Rennais",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxuelgame",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-02",
+   "edge": 0.0,
+   "id": "cmd_market:KXWTI-26NOV0214-T91.99",
+   "label": "Will the WTI crude oil settlement price be above 91.99 USD/Bbl on Nov 2, 2026?",
+   "liquidity": null,
+   "logged": "2026-10-31T15:33:58+00:00",
+   "market_id": "KXWTI-26NOV0214-T91.99",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.99,
+   "price_b": 0.1,
+   "price_draw": null,
+   "prob_a": 0.99,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $91.99",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-02T19:30:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxwti",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-02",
+   "edge": 0.0,
+   "id": "cmd_market:KXWTI-26NOV0214-T92.49",
+   "label": "Will the WTI crude oil settlement price be above 92.49 USD/Bbl on Nov 2, 2026?",
+   "liquidity": null,
+   "logged": "2026-10-31T15:33:58+00:00",
+   "market_id": "KXWTI-26NOV0214-T92.49",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.99,
+   "price_b": 0.11,
+   "price_draw": null,
+   "prob_a": 0.99,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $92.49",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-02T19:30:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxwti",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-02",
+   "edge": 0.0,
+   "id": "cmd_market:KXWTI-26NOV0214-T94.49",
+   "label": "Will the WTI crude oil settlement price be above 94.49 USD/Bbl on Nov 2, 2026?",
+   "liquidity": null,
+   "logged": "2026-10-31T15:33:58+00:00",
+   "market_id": "KXWTI-26NOV0214-T94.49",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.99,
+   "price_b": 0.11,
+   "price_draw": null,
+   "prob_a": 0.99,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $94.49",
    "side_b": "No",
    "source": "cmd_market",
    "sport": "commodities",
