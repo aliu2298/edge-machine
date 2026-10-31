@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-31T18:45:48.832919+00:00",
+ "last_run": "2026-10-31T20:30:15.431136+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -1965,6 +1965,50 @@
      "ticker": "KXNBATEAMTOTAL-26OCT30NYKPHI-NYK106",
      "title": "New York over 105.5 points",
      "why": "NY O-D- v PHI O-D- \u00b7 cheapest NO 0.26 at 105.5"
+    },
+    {
+     "game": "401909897",
+     "id": "R4:KXNBATEAMTOTAL-26OCT31PHICHA-CHA99",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O-D-",
+      "home": "O-D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-31T20:30:15.431136+00:00",
+     "match": "PHI @ CHA",
+     "price": 0.3,
+     "rule": "R4",
+     "side": "no",
+     "start": "2026-10-31T22:00Z",
+     "status": "open",
+     "strike": 98.5,
+     "team": "CHA",
+     "ticker": "KXNBATEAMTOTAL-26OCT31PHICHA-CHA99",
+     "title": "Charlotte over 98.5 points",
+     "why": "CHA O-D- v PHI O-D- \u00b7 cheapest NO 0.30 at 98.5"
+    },
+    {
+     "game": "401909897",
+     "id": "R4:KXNBATEAMTOTAL-26OCT31PHICHA-PHI102",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O-D-",
+      "home": "O-D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-31T20:30:15.431136+00:00",
+     "match": "PHI @ CHA",
+     "price": 0.38,
+     "rule": "R4",
+     "side": "no",
+     "start": "2026-10-31T22:00Z",
+     "status": "open",
+     "strike": 101.5,
+     "team": "PHI",
+     "ticker": "KXNBATEAMTOTAL-26OCT31PHICHA-PHI102",
+     "title": "Philadelphia over 101.5 points",
+     "why": "PHI O-D- v CHA O-D- \u00b7 cheapest NO 0.38 at 101.5"
     }
    ]
   },
@@ -3952,16 +3996,33 @@
      "ticker": "KXNBATEAMTOTAL-26OCT30LACMIN-LAC111",
      "title": "Los Angeles C over 110.5 points",
      "why": "LAC O-D- v MIN O+D- \u00b7 both D\u2212 \u00b7 110+ NO 0.59"
+    },
+    {
+     "game": "401909897",
+     "id": "R7:KXNBATEAMTOTAL-26OCT31PHICHA-CHA109",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O-D-",
+      "home": "O-D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-10-31T20:30:15.431136+00:00",
+     "match": "PHI @ CHA",
+     "price": 0.6,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-10-31T22:00Z",
+     "status": "open",
+     "strike": 108.5,
+     "team": "CHA",
+     "ticker": "KXNBATEAMTOTAL-26OCT31PHICHA-CHA109",
+     "title": "Charlotte over 108.5 points",
+     "why": "CHA O-D- v PHI O-D- \u00b7 both D\u2212 \u00b7 110+ NO 0.60"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-27T01:00:16.532283+00:00",
-   "due": 1,
-   "new": 0
-  },
   {
    "at": "2026-10-27T02:13:27.899684+00:00",
    "due": 0,
@@ -4211,6 +4272,11 @@
    "at": "2026-10-31T18:45:48.832919+00:00",
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-10-31T20:30:15.431136+00:00",
+   "due": 1,
+   "new": 3
   }
  ],
  "version": "nba-rules-v1"
