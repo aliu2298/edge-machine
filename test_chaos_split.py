@@ -324,6 +324,10 @@ check("the card line: the date, the old basis, and the old split and hold per en
           "quantity its z tests); old figure: 1h split +32.2%, hold +67.8%; 24h split +19.2%, hold +18.3%.")
 check("a lane registered after the change carries no such line", CB.basis_line(dict(id="new_lane")), "")
 import o35_cheap_no_build as OB
+import nba_layout
+_ml = nba_layout.lane_card("ml-dog", "Moneyline underdog", dict(id="nba_ml_dog_tp50", trades=[], exits=["hold", "split"], since="2026-10-25"))
+check("the NBA page's own cards say so too (nba_layout renders them, not lane_html), with the old figure",
+      ("ROI basis changed 2026-10-31" in _ml, "old figure: 1h split +5.9%, hold −5.3%" in _ml.replace("-5.3%", "−5.3%")), (True, True))
 check("the o35 Soccer section says so too", "ROI basis changed 2026-10-31 from cost-weighted to equal-stake" in OB.section(), True)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
