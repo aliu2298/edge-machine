@@ -28,6 +28,8 @@ DESCRIPTION = ("Kalshi culture markets on paper: cheap side + resting take-profi
                "sales, beside the same entries held.")
 # The cheap-side lanes, in page order (weekly mentions strict, wide; monthly strict, wide; album YES, NO).
 CHEAP = (MS.STRICT, MS.WIDE, MS.MONTH, MS.MONTH_WIDE, MS.ALBUM, MS.ALBUM_NO)
+LIVE_CHEAP = tuple(c for c in CHEAP if not c.get("retired"))      # the album lanes
+GONE_CHEAP = tuple(c for c in CHEAP if c.get("retired"))          # the weekly and monthly mention lanes (2026-10-31)
 SECTIONS = (("standard", "Standard"), ("lanes", "Lanes"), ("models", "Model lanes"), ("archive", "Archive"))
 # The old lanes, shown in the Archive only (2026-10-27).
 ARCHIVE = ("mentions_rate", "culture_endgame", "culture_fav_band")
@@ -75,9 +77,20 @@ status = MS.status          # the review rule's status line (moved to mentions_s
 
 
 def summary(states, esc):
-    """One row per cheap-side lane, and the strict v wide spread line for the mention lanes."""
-    return MS.summary(CHEAP, states, esc, pairs=((MS.STRICT, MS.WIDE, "Weekly mentions"),
-                                                  (MS.MONTH, MS.MONTH_WIDE, "Monthly mentions")))
+    """One row per live cheap-side lane (the album lanes)."""
+    return MS.summary(LIVE_CHEAP, states, esc)
+
+
+def retired_cheap(states, esc, cards):
+    """The retired weekly and monthly mention lanes in one collapsed fold: each lane's record, the reason, then
+    their full cards. Records kept, rows stay, open entries still settle."""
+    why = GONE_CHEAP[0]["retired"]
+    return (f'<details class="fold sec" id="retired-cheap"><summary><h2>Retired</h2> <span class="mut sm">· '
+            f'{len(GONE_CHEAP)} cheap-side mention lanes · retired {esc(why["on"])} · kept, not deleted</span></summary>'
+            f'<p class="sm mut">{esc(why["reason"])}. Their rows stay and any open entry still settles.</p>'
+            + MS.summary(GONE_CHEAP, states, esc, pairs=((MS.STRICT, MS.WIDE, "Weekly mentions"),
+                                                         (MS.MONTH, MS.MONTH_WIDE, "Monthly mentions")))
+            + cards + '</details>')
 
 
 def model_lanes(state, now, esc):
@@ -114,6 +127,11 @@ def archive(state, now, esc):
             where = (f"in Production {CP.MOVED_ON} to {CP.DEMOTED_ON}, still logging on paper in the Sandbox under its "
                      f"{K.AMENDED_2} amendment" if not CP.listed(now) else f"in Production since {CP.MOVED_ON}")
             line = f"{where}; record {rec} (before the amendment {_rec(pre)}; from it {_rec(post)}); {open_n} open"
+            if K.retired(key, now):
+                g = K.RETIRED[key]
+                line = (f"retired {g['on']} at {g['at']}: {g['reason']}; no new entries, the {open_n} open pick"
+                        f"{'s' if open_n != 1 else ''} still settle and are graded; record {rec} (before the "
+                        f"amendment {_rec(pre)}; from it {_rec(post)})")
         elif K.retired(key, now):
             g = K.RETIRED[key]
             line = (f"retired {g['on']} at {g['at']}; record now {rec}; {open_n} open still settling" if open_n
@@ -151,15 +169,16 @@ def build(state=None, now=None, split_state=None, wide_state=None, month_state=N
         '<p class="sm mut">Sandbox, paper only, each lane on a fresh record from its first entry: review at 10 settled '
         'events, decide at 30. An event is one outcome: the words of one mention market, or the rungs of one '
         'album ladder, move together, so they count once.</p></section>')
-    cards = (MS.section(S(MS.STRICT), e) + MS.compare(S(MS.STRICT), S(MS.WIDE), e) + MS.section(S(MS.WIDE), e, MS.WIDE)
-             + MS.section(S(MS.MONTH), e, MS.MONTH)
-             + MS.compare(S(MS.MONTH), S(MS.MONTH_WIDE), e, anchor=MS.MONTH["compare_id"], title="Monthly · strict v wide")
-             + MS.section(S(MS.MONTH_WIDE), e, MS.MONTH_WIDE)
-             + '<p class="sm" id="album-note"><b>Album ladders tested too confident: both tails won more than priced.</b></p>'
+    gone_cards = (MS.section(S(MS.STRICT), e) + MS.compare(S(MS.STRICT), S(MS.WIDE), e) + MS.section(S(MS.WIDE), e, MS.WIDE)
+                  + MS.section(S(MS.MONTH), e, MS.MONTH)
+                  + MS.compare(S(MS.MONTH), S(MS.MONTH_WIDE), e, anchor=MS.MONTH["compare_id"], title="Monthly · strict v wide")
+                  + MS.section(S(MS.MONTH_WIDE), e, MS.MONTH_WIDE))
+    cards = ('<p class="sm" id="album-note"><b>Album ladders tested too confident: both tails won more than priced.</b></p>'
              + MS.section(S(MS.ALBUM), e, MS.ALBUM) + MS.section(S(MS.ALBUM_NO), e, MS.ALBUM_NO))
     body = (standard
             + f'<section id="lanes"><h2>Cheap-side lanes</h2>{summary(states, e)}{cards}</section>'
             + f'<section id="models"><h2>Model lanes</h2>{model_lanes(state, now, e)}</section>'
+            + retired_cheap(states, e, gone_cards)
             + archive(state, now, e)
             + '<p class="sm mut">Read hourly by GitHub Actions (culture.yml) from Kalshi public market data and '
               'candles, Rotten Tomatoes and Roll Call Factbase. Paper entries at the ask with Kalshi\'s fees.</p>')

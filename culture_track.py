@@ -170,6 +170,9 @@ RETIRED = {
                                    "about 19 wins, so the fee is never earned back"),
     "culture_fav_band": dict(on="2026-10-24", at="9/17 won, −30.9% after fees",
                              reason="the 0.70-0.80 favourites won about half the time, far under their price"),
+    # 2026-10-31 (Olu): no new entry from the dated day on; its open picks keep settling and grading.
+    "mentions_rate": dict(on="2026-10-31", at="23/38 won, −8.8% after fees",
+                          reason="no edge after fees at 38 settled; culture_execution was already off for the follower"),
     "rt_model": dict(on="2026-10-24", at="2/4 won, −25.7% after fees",
                      reason="the Rotten Tomatoes model lost at its own edges; its snapshot collector "
                             "served this lane alone and stopped with it"),
@@ -560,8 +563,15 @@ def rt_picks(events, now, state, snaps, fetch=web):
 
 
 # ------------------------------------------------------------------ the run
+# Kalshi's events listing has no category filter, so the Culture scan reads EVERY open event and keeps its three
+# categories. That was 21,232 events (107 pages of 200) on 2026-10-31, past D.pages' default 100-page cap, so the
+# scan raised "Pagination limit reached" and every Culture lane (the Rotten Tomatoes model included) logged
+# nothing. The cap here is 400 pages (80,000 events); a listing that still does not end raises, as before.
+EVENT_PAGES = 400
+
+
 def culture_events(fetch=D.get):
-    evs = D.pages("events?status=open&with_nested_markets=true&limit=200", "events", fetch)
+    evs = D.pages("events?status=open&with_nested_markets=true&limit=200", "events", fetch, max_pages=EVENT_PAGES)
     return [e for e in evs if e.get("category") in CATEGORIES]
 
 

@@ -114,7 +114,7 @@ import culture_build
 import fights_build
 import fights_split
 import mentions_split as MS
-for name, html, cfgs in (("culture", culture_build.build(), culture_build.CHEAP),
+for name, html, cfgs in (("culture", culture_build.build(), culture_build.LIVE_CHEAP),   # the weekly and monthly mention lanes retired 2026-10-31: in a Retired fold
                          ("commodities", commodities_build.build(), MS.COMMOD_LANES),
                          ("fights", fights_build.build(), fights_split.LANES)):
     hidden = [c["lane"] for c in cfgs if folded(html, f'id="{c["anchor"]}"') is not False]

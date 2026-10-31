@@ -289,7 +289,8 @@ check("each retired lane carries its dated retirement and record",
       all(f"retired 2026-10-24 at {K.RETIRED[k]['at']}" in arch for k in ("culture_endgame", "culture_fav_band")), True)
 small = ledger_with_rows()
 for k in K.RETIRED:
-    small["lanes"][k]["picks"][0]["payout"] = 1.0
+    if k != "mentions_rate":                  # retired 2026-10-31, checked below
+        small["lanes"][k]["picks"][0]["payout"] = 1.0
 sh = _re.sub(r"\s+", " ", _re.sub(r"<[^>]+>", " ", _html.unescape(KB.build(small, RET))))
 check("a retired lane's line gives its record now, per contract, and what still settles",
       sh.count("record now 1/1 won, +31.0% after fees per contract; 1 open still settling"), 2)
@@ -474,6 +475,68 @@ check("the ledger rows are untouched by the page", rv["lanes"]["rt_model"]["pick
 check("before the revival the Model lanes line says retired, with the revival time",
       "Rotten Tomatoes model · retired 2026-10-24; revived from 2026-10-27 00:00Z." in
       _re.sub(r"\s+", " ", _re.sub(r"<[^>]+>", " ", KB.build(rv, EVE))), True)
+
+print("\nTrump mentions (mentions_rate) retired 2026-10-31: no new entries, open picks keep settling")
+check("retired with its record and reason; Eastern date gate",
+      (K.RETIRED["mentions_rate"]["on"], K.RETIRED["mentions_rate"]["at"], K.retired("mentions_rate", dt.datetime(2026, 10, 31, 3, 0, tzinfo=UTC)),
+       K.retired("mentions_rate", dt.datetime(2026, 10, 31, 5, 0, tzinfo=UTC))), ("2026-10-31", "23/38 won, −8.8% after fees", False, True))
+gone = ledger_with_rows()
+gone["lanes"]["mentions_rate"]["picks"].append(pk("KXTRUMPSAY-26OCT30-OPEN", "no", "KXTRUMPSAY-26OCT30", logged="2026-10-29T00:00:00+00:00"))
+LATE = dt.datetime(2026, 11, 1, 12, 0, tzinfo=UTC)
+K.run(gone, {}, now=LATE, fetch=ret_fetch, webfetch=fb_ret)
+mr = gone["lanes"]["mentions_rate"]
+check("a scan after the date logs no new Trump entry (the open word market is not entered), and the lane's scan says retired",
+      ([p["id"] for p in mr["picks"]], mr["observations"].get("retired")), (["KXTRUMPSAY-26OCT30-OPEN"], "2026-10-31"))
+check("its open pick still settles (a NO on a market that resolved no: won)", [p["status"] for p in mr["picks"]], ["won"])
+check("the Archive line says retired, no new entries, with the record and what still settles",
+      "retired 2026-10-31 at 23/38 won, −8.8% after fees" in _re.sub(r"\s+", " ", _re.sub(r"<[^>]+>", " ", _html.unescape(KB.build(gone, LATE)[KB.build(gone, LATE).find('id="archive"'):]))), True)
+
+print("\nthe events listing: past D.pages' default 100 pages (21,232 open events on 2026-10-31), the RT model's scan root cause")
+import daily_track as _D
+def _paged(n_pages):
+    def f(path):
+        cur = int(path.split("&cursor=")[1].split("&")[0]) if "&cursor=" in path else 0
+        evs = [dict(event_ticker=f"E{cur}-{i}", category="Entertainment" if i == 0 else "Sports") for i in range(3)]
+        return {"events": evs, "cursor": str(cur + 1) if cur + 1 < n_pages else ""}
+    return f
+raised = None
+try:
+    _D.pages("events?status=open&limit=200", "events", _paged(150))
+except ValueError as _e:
+    raised = str(_e)
+check("the default cap still raises on a listing that does not end in 100 pages", raised, "Pagination limit reached; no entries from this scan")
+got = K.culture_events(_paged(150))
+check("culture_events reads a 150-page listing to the end and keeps only the Culture categories", (len(got), K.EVENT_PAGES), (150, 400))
+raised = None
+try:
+    K.culture_events(_paged(500))
+except ValueError as _e:
+    raised = str(_e)
+check("a listing that still does not end inside the new cap raises, as before", raised, "Pagination limit reached; no entries from this scan")
+
+print("\na timed-out read is retried like a 5xx (the heavy events listing timed out once on 2026-10-31)")
+class _R:
+    def __enter__(self): return self
+    def __exit__(self, *a): return False
+    def read(self, *a): return b'{"events": [], "cursor": ""}'
+_n = []
+def _op(req, timeout=0):
+    _n.append(1)
+    if len(_n) < 3:
+        raise TimeoutError("The read operation timed out")
+    return _R()
+_slept = []
+check("two timeouts then a good read returns the page, after two backoffs",
+      (_D.get("events?x=1", sleep=_slept.append, clock=lambda: 0.0, opener=_op), len(_n), [s for s in _slept if s >= 1]), ({"events": [], "cursor": ""}, 3, [1, 2]))
+_n.clear()
+def _bad(req, timeout=0):
+    raise TimeoutError("always")
+_err = None
+try:
+    _D.get("events?x=1", sleep=lambda s: None, clock=lambda: 0.0, opener=_bad)
+except TimeoutError as e:
+    _err = str(e)
+check("a read that never recovers still raises after the last attempt", _err, "always")
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
