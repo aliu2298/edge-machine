@@ -119,7 +119,7 @@ def lane_card(anchor, title, L, sample=None):
     return (f'<section id="{anchor}"><details class="section-disclosure" data-lane="{esc(L["id"])}" open><summary><b>{esc(title)}</b>'
             f'<span>{CB.split_hold(L)["events"]} settled events · fresh record since {esc(L.get("since"))}</span></summary>'
             f'<p class="sm">{esc(RULES[L["id"]])}{(" " + esc(L["caution"])) if L.get("caution") else ""}</p>'
-            f'{CB.voided_line(L)}{_record(L)}{skipped}{folds}'
+            f'{CB.voided_line(L)}{_record(L)}{CB.basis_line(L)}{skipped}{folds}'
             f'<details class="section-disclosure"><summary><b>Trades</b><span>latest 30 entries · split, T target, S stop, H held to settlement</span></summary>{CB.trade_list(L)}</details>'
             '</details></section>')
 
