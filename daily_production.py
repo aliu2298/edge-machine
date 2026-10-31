@@ -128,7 +128,8 @@ def _healthy(lane, now):
     return stamp, stamp is not None and not lane.get('error') and dt.timedelta(0)<=now-stamp<=dt.timedelta(hours=3)
 
 
-def feed(state, now=None, previous=None):
+def feed(state, now=None, previous=None, heartbeat=False):
+    """The feed; `heartbeat` stamps it with the clock (see soccer_rules_production.feed for why that is safe)."""
     import production as P
     now=now or dt.datetime.now(dt.timezone.utc)
     nc=state.get('nc') or {}
@@ -140,7 +141,7 @@ def feed(state, now=None, previous=None):
     # Failed/stale scans retain settled history but publish no actionable entries.
     if not healthy:rows=[r for r in rows if r['status']!='open']
     built=min([s for s in stamps if s] or [None]) if all(stamps) else None
-    built=built or now
+    built=now if heartbeat else (built or now)
     blob=P.build_feed({'quotes':rows}, {'pairs':pairs()}, now=built, previous=previous)
     # The retired favourite band: its Production-era leads, kept for grading the positions a
     # follower already holds. Never in `pairs`, so a follower that checks the pairs block cannot
@@ -171,10 +172,14 @@ def page_inputs(d, st, blob, state, now=None):
                  pairs={**(blob.get('pairs') or {}),**current['pairs']}))
 
 
-def main():
+def main(argv=None):
+    import sys
     import production as P
+    beat='--heartbeat' in (sys.argv[1:] if argv is None else argv)
+    if beat and (P.feed_age_min(PATH) or 1e9)<P.HEARTBEAT_SKIP_MIN:
+        return 0
     previous=P.load_feed(PATH)
-    P.save_feed(feed(D.load(),previous=previous),PATH)
+    P.save_feed(feed(D.load(),previous=previous,heartbeat=beat),PATH)
     return 0
 
 

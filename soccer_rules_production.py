@@ -153,9 +153,12 @@ def load_states():
 def main(argv=None):
     import sys
     import production as P
+    beat = "--heartbeat" in (sys.argv[1:] if argv is None else argv)
+    if beat and (P.feed_age_min(PATH) or 1e9) < P.HEARTBEAT_SKIP_MIN:
+        return 0
     rules_state, sa_state = load_states()
     previous = P.load_feed(PATH)
-    P.save_feed(feed(rules_state, sa_state, previous=previous, heartbeat="--heartbeat" in (sys.argv[1:] if argv is None else argv)), PATH)
+    P.save_feed(feed(rules_state, sa_state, previous=previous, heartbeat=beat), PATH)
     return 0
 
 
