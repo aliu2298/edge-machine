@@ -102,7 +102,7 @@ state = {"lanes": {
 # older lane without split rows (the retirement itself is checked at the end of this file).
 import chaos_lanes
 _lanes = chaos_lanes.LANES
-chaos_lanes.LANES = [dict(c, retired=None) if c["id"] == "atp_coinflip_tp30" else c for c in _lanes]
+chaos_lanes.LANES = [dict(c, retired=None) if c["id"] in ("atp_coinflip_tp30", "challenger_cheap_split") else c for c in _lanes]
 h = CB.sport_section("tennis", state)
 chaos_lanes.LANES = _lanes
 text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", h))
@@ -133,16 +133,20 @@ check("the split lane has no Other exits block (it carries only hold and split)"
 check("tables stay header-row tables for the phone labels", ("<thead>" not in h, h.count("<table") == h.count('<div class="tbl"><table')),
       (True, True))
 check("public copy passes the guard", sandbox_audit.COPY_RE.search(text), None)
-print("\nretired 2026-10-29: atp_coinflip_tp30 leaves the live cards for the Retired block")
+print("\nretired: atp_coinflip_tp30 (2026-10-29) and challenger_cheap_split (2026-10-31) leave the live cards for the Retired block")
 rh = CB.sport_section("tennis", state)
 rtext = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", rh))
-rsumm = rh[rh.find('class="chaos-summary"'):rh.find("</table>", rh.find('class="chaos-summary"'))]
-check("the summary and the cards list only the live lane",
-      (re.findall(r'data-lane="([^"]+)"', rsumm), re.findall(r'<details class="section-disclosure" data-lane="([^"]+)" open>', rh)),
-      (["challenger_cheap_split"], ["challenger_cheap_split"]))
-check("it sits in the collapsed Retired block with its date, record and reason",
+check("no live summary or card remains; the section says every lane is retired",
+      ('class="chaos-summary"' in rh, re.findall(r'<details class="section-disclosure" data-lane="([^"]+)" open>', rh),
+       "Every cheap-side lane on this page is retired" in rtext), (False, [], True))
+check("both sit in the collapsed Retired block with their dates, records and reasons",
       ('id="cheap-side-retired"' in rh, "Retired 2026-10-29 at 13 settled, 6 won; split -2.0%, hold -1.5%" in rtext,
-       "every take-profit exit loses to holding" in rtext), (True, True, True))
+       "every take-profit exit loses to holding" in rtext,
+       "Retired 2026-10-31 at 34 settled, 10 won; split +0.8%, hold +19.6%: decided at 34 settled: the split sell (+0.8%) lost to holding (+19.6%)" in rtext,
+       "not a proven edge" in rtext), (True,) * 5)
+check("the NBA underdog card notes its decide-point review (kept as paper)",
+      "Reviewed at 31: kept as paper (beats hold, not strong enough to promote)" in CB.sport_section("nba", {"lanes": {}, "last_run": None}) or
+      "Reviewed at 31: kept as paper" in str(next(l for l in chaos_lanes.LANES if l["id"] == "nba_ml_dog_tp50")["caution"]), True)
 
 print("\nnba_ml_dog_tp50: the split headline and the ask 10-30c sub-band (2026-10-28)")
 N = next(l for l in chaos_lanes.LANES if l["id"] == "nba_ml_dog_tp50")

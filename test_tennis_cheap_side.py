@@ -46,7 +46,7 @@ state = {"lanes": {
 # as the older lane) and checked at the end of this file.
 import chaos_lanes
 _lanes = chaos_lanes.LANES
-chaos_lanes.LANES = [dict(c, retired=None) if c["id"] == "atp_coinflip_tp30" else c for c in _lanes]
+chaos_lanes.LANES = [dict(c, retired=None) if c["id"] in ("atp_coinflip_tp30", "challenger_cheap_split") else c for c in _lanes]
 h = CB.tennis_section(state)
 chaos_lanes.LANES = _lanes
 text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", h))
