@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-31T17:16:37.950600+00:00",
+ "last_run": "2026-10-31T17:31:36.487910+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -228,11 +228,14 @@
      "line": 3.5,
      "logged": "2026-10-31T13:46:26.910092+00:00",
      "match": "Rayo Vallecano v Celta Vigo",
+     "payout": 1.0,
      "price": 0.79,
+     "profit": 24.75,
      "rule": "A3",
+     "settled": "2026-10-31T17:31:36.487910+00:00",
      "side": "no",
      "start": "2026-10-31T15:15Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXLALIGATOTAL-26OCT31RVCRCC-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Rayo Vallecano O-D+ v Celta Vigo O-D- \u00b7 Under 3.5 NO 0.79"
@@ -1105,6 +1108,29 @@
      "ticker": "KXMLSTOTAL-26OCT31CINPHI-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "FC Cincinnati O+D+ v Philadelphia Union O+D- \u00b7 Over 3.5 YES 0.45"
+    },
+    {
+     "ask": 0.45,
+     "bid": 0.44,
+     "event": "KXMLSTOTAL-26OCT31SKCDAL",
+     "group": "C",
+     "id": "C1:KXMLSTOTAL-26OCT31SKCDAL",
+     "labels": {
+      "away": "O+D-",
+      "home": "O+D+"
+     },
+     "league": "MLS",
+     "line": 3.5,
+     "logged": "2026-10-31T17:31:36.487910+00:00",
+     "match": "Sporting Kansas City v FC Dallas",
+     "price": 0.45,
+     "rule": "C1",
+     "side": "yes",
+     "start": "2026-10-31T19:00Z",
+     "status": "open",
+     "ticker": "KXMLSTOTAL-26OCT31SKCDAL-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Sporting Kansas City O+D+ v FC Dallas O+D- \u00b7 Over 3.5 YES 0.45"
     }
    ]
   },
@@ -3561,14 +3587,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-29T01:31:40.709915+00:00",
-   "candidates": 1,
-   "due": 3,
-   "labelled": 3,
-   "matched": 1,
-   "new": 0
-  },
-  {
    "at": "2026-10-29T01:33:09.840279+00:00",
    "candidates": 1,
    "due": 3,
@@ -3967,6 +3985,14 @@
    "labelled": 6,
    "matched": 2,
    "new": 0
+  },
+  {
+   "at": "2026-10-31T17:31:36.487910+00:00",
+   "candidates": 3,
+   "due": 6,
+   "labelled": 6,
+   "matched": 3,
+   "new": 1
   }
  ],
  "version": "soccer-rules-v1"

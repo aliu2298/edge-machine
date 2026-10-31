@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-10-31T17:16:40+00:00",
+ "board_built_at": "2026-10-31T17:31:38+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sr_a6": true,
@@ -97,7 +97,7 @@
    "kickoff": "2026-10-31T18:00Z",
    "lane": "production",
    "last_seen": "2026-10-31",
-   "last_seen_at": "2026-10-31T17:16:40+00:00",
+   "last_seen_at": "2026-10-31T17:31:38+00:00",
    "league": "MLS",
    "match": "FC Cincinnati v Philadelphia Union",
    "pair": "sr_c1|soccer_u35",
@@ -153,6 +153,43 @@
    "source": "sr_a6",
    "sport": "soccer_o25",
    "status": "miss"
+  },
+  "2026-10-31|Sporting Kansas City|FC Dallas|Over 3.5 goals \u00b7 MLS O+D\u2212 v O+D+ \u00b7 over 3.5": {
+   "away": "FC Dallas",
+   "bet": {
+    "kind": "total_gte",
+    "n": 4
+   },
+   "date": "2026-10-31",
+   "edge_at_log": null,
+   "first_seen": "2026-10-31",
+   "headline": "Over 3.5 goals",
+   "home": "Sporting Kansas City",
+   "id": "2026-10-31|Sporting Kansas City|FC Dallas|Over 3.5 goals \u00b7 MLS O+D\u2212 v O+D+ \u00b7 over 3.5",
+   "kickoff": "2026-10-31T19:00Z",
+   "lane": "production",
+   "last_seen": "2026-10-31",
+   "last_seen_at": "2026-10-31T17:31:38+00:00",
+   "league": "MLS",
+   "match": "Sporting Kansas City v FC Dallas",
+   "pair": "sr_c1|soccer_u35",
+   "price_at_log": 0.45,
+   "published_at": "2026-10-31T17:31:38+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Over 3.5 goals",
+    "event": "KXMLSTOTAL-26OCT31SKCDAL",
+    "market": "KXMLSTOTAL-26OCT31SKCDAL-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.45,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_c1:KXMLSTOTAL-26OCT31SKCDAL-4",
+   "source": "sr_c1",
+   "sport": "soccer_u35",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -213,9 +250,9 @@
    "ready_at": "2026-10-29T00:59:00+00:00",
    "route": "moved by hand on 2026-10-28",
    "routing": {
-    "leads": 1,
+    "leads": 2,
     "problem": null,
-    "routed": 1,
+    "routed": 2,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -227,7 +264,7 @@
    "sandbox_roi_fee": null,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 2,
     "under_target": 0
    }
   },
@@ -305,5 +342,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-10-31T17:16:40+00:00"
+ "updated_at": "2026-10-31T17:31:38+00:00"
 }
