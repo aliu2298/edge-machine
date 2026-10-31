@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-31T13:31:43.895205+00:00",
+ "last_run": "2026-10-31T13:46:26.910092+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -167,6 +167,29 @@
      "ticker": "KXLALIGATOTAL-26OCT23ALAMCF-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Alav\u00e9s O-D- v M\u00e1laga O-D+ \u00b7 Under 3.5 NO 0.76"
+    },
+    {
+     "ask": 0.23,
+     "bid": 0.21,
+     "event": "KXLALIGATOTAL-26OCT31RVCRCC",
+     "group": "A",
+     "id": "A3:KXLALIGATOTAL-26OCT31RVCRCC",
+     "labels": {
+      "away": "O-D-",
+      "home": "O-D+"
+     },
+     "league": "La Liga",
+     "line": 3.5,
+     "logged": "2026-10-31T13:46:26.910092+00:00",
+     "match": "Rayo Vallecano v Celta Vigo",
+     "price": 0.79,
+     "rule": "A3",
+     "side": "no",
+     "start": "2026-10-31T15:15Z",
+     "status": "open",
+     "ticker": "KXLALIGATOTAL-26OCT31RVCRCC-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Rayo Vallecano O-D+ v Celta Vigo O-D- \u00b7 Under 3.5 NO 0.79"
     }
    ]
   },
@@ -3378,14 +3401,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-28T18:16:41.173984+00:00",
-   "candidates": 4,
-   "due": 7,
-   "labelled": 7,
-   "matched": 4,
-   "new": 5
-  },
-  {
    "at": "2026-10-28T18:31:27.989731+00:00",
    "candidates": 4,
    "due": 8,
@@ -3784,6 +3799,14 @@
    "labelled": 14,
    "matched": 7,
    "new": 7
+  },
+  {
+   "at": "2026-10-31T13:46:26.910092+00:00",
+   "candidates": 8,
+   "due": 14,
+   "labelled": 14,
+   "matched": 8,
+   "new": 1
   }
  ],
  "version": "soccer-rules-v1"
