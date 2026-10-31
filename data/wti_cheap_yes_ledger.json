@@ -642,15 +642,17 @@
     }
    ],
    "logged": "2026-10-29T00:30:36.981950+00:00",
-   "payout": null,
+   "payout": 1.0,
    "pnl": 0.4175,
    "price": 0.29,
    "roi": 1.3714,
    "roi_2x": 0.8913,
+   "roi_held": 2.285,
+   "settled": "2026-10-31T00:30:36.338145+00:00",
    "side": "yes",
    "spread": 0.04,
    "spread_cost": null,
-   "status": "filled",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Above $103.99"
   },
@@ -689,15 +691,17 @@
     }
    ],
    "logged": "2026-10-29T00:30:36.981950+00:00",
-   "payout": null,
+   "payout": 0.0,
    "pnl": 0.3433,
    "price": 0.24,
    "roi": 1.3581,
    "roi_2x": 0.8817,
+   "roi_held": -1.0,
+   "settled": "2026-10-31T00:30:36.338145+00:00",
    "side": "yes",
    "spread": 0.04,
    "spread_cost": null,
-   "status": "filled",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Above $104.49"
   },
@@ -729,17 +733,23 @@
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.57
     }
    ],
    "logged": "2026-10-29T00:30:36.981950+00:00",
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.0128,
    "price": 0.19,
+   "roi": -0.0639,
+   "roi_2x": 0.8721,
+   "roi_held": -1.0,
+   "settled": "2026-10-31T00:30:36.338145+00:00",
    "side": "yes",
    "spread": 0.04,
    "spread_cost": null,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Above $104.99"
   },
@@ -771,17 +781,23 @@
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.45
     }
    ],
    "logged": "2026-10-29T00:30:36.981950+00:00",
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.0108,
    "price": 0.15,
+   "roi": -0.0677,
+   "roi_2x": 0.8646,
+   "roi_held": -1.0,
+   "settled": "2026-10-31T00:30:36.338145+00:00",
    "side": "yes",
    "spread": 0.04,
    "spread_cost": null,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Above $105.49"
   },
@@ -819,15 +835,17 @@
     }
    ],
    "logged": "2026-10-29T02:30:33.275529+00:00",
-   "payout": null,
+   "payout": 1.0,
    "pnl": 0.4324,
    "price": 0.3,
    "roi": 1.374,
    "roi_2x": 0.8932,
+   "roi_held": 2.1776,
+   "settled": "2026-10-31T00:30:36.338145+00:00",
    "side": "yes",
    "spread": 0.04,
    "spread_cost": null,
-   "status": "filled",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Above $103.49"
   },
@@ -1233,27 +1251,232 @@
    "status": "open",
    "traded_to_entry": 0.0,
    "word": "Above $108.99"
+  },
+  {
+   "ask_check": {
+    "book": 500.0,
+    "first_quotes": true,
+    "how": "book",
+    "last_trade": null,
+    "source": "live",
+    "status": "verified"
+   },
+   "bid": 0.23,
+   "book": {
+    "ask_depth": 6231.0,
+    "ask_levels": 5,
+    "ask_size": 500.0,
+    "at": "2026-10-31T00:30:36.338145+00:00",
+    "at_or_under": 500.0,
+    "best_ask": 0.26,
+    "best_bid": 0.22,
+    "bid_depth": 501.0,
+    "bid_levels": 2,
+    "bid_size": 500.0
+   },
+   "book_at": "2026-10-31T00:30:36.338145+00:00",
+   "book_size": 500.0,
+   "entry_at": "2026-10-30T23:31:00+00:00",
+   "event": "KXWTI-26NOV0314",
+   "id": "KXWTI-26NOV0314-T105.99",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.54
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.81
+    }
+   ],
+   "logged": "2026-10-31T00:30:36.338145+00:00",
+   "payout": null,
+   "price": 0.27,
+   "side": "yes",
+   "spread": 0.04,
+   "spread_cost": null,
+   "status": "open",
+   "traded_to_entry": 0.0,
+   "word": "Above $105.99"
+  },
+  {
+   "ask_check": {
+    "book": 505.0,
+    "first_quotes": true,
+    "how": "book",
+    "last_trade": null,
+    "source": "live",
+    "status": "verified"
+   },
+   "bid": 0.19,
+   "book": {
+    "ask_depth": 6132.0,
+    "ask_levels": 5,
+    "ask_size": 505.0,
+    "at": "2026-10-31T00:30:36.338145+00:00",
+    "at_or_under": 505.0,
+    "best_ask": 0.22,
+    "best_bid": 0.18,
+    "bid_depth": 501.0,
+    "bid_levels": 2,
+    "bid_size": 500.0
+   },
+   "book_at": "2026-10-31T00:30:36.338145+00:00",
+   "book_size": 505.0,
+   "entry_at": "2026-10-30T23:31:00+00:00",
+   "event": "KXWTI-26NOV0314",
+   "id": "KXWTI-26NOV0314-T106.49",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.46
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.69
+    }
+   ],
+   "logged": "2026-10-31T00:30:36.338145+00:00",
+   "payout": null,
+   "price": 0.23,
+   "side": "yes",
+   "spread": 0.04,
+   "spread_cost": null,
+   "status": "open",
+   "traded_to_entry": 0.0,
+   "word": "Above $106.49"
+  },
+  {
+   "ask_check": {
+    "book": 500.0,
+    "first_quotes": true,
+    "how": "book",
+    "last_trade": null,
+    "source": "live",
+    "status": "verified"
+   },
+   "bid": 0.15,
+   "book": {
+    "ask_depth": 6231.0,
+    "ask_levels": 5,
+    "ask_size": 500.0,
+    "at": "2026-10-31T00:30:36.338145+00:00",
+    "at_or_under": 500.0,
+    "best_ask": 0.19,
+    "best_bid": 0.15,
+    "bid_depth": 501.0,
+    "bid_levels": 2,
+    "bid_size": 500.0
+   },
+   "book_at": "2026-10-31T00:30:36.338145+00:00",
+   "book_size": 500.0,
+   "entry_at": "2026-10-30T23:31:00+00:00",
+   "event": "KXWTI-26NOV0314",
+   "id": "KXWTI-26NOV0314-T106.99",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.38
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.57
+    }
+   ],
+   "logged": "2026-10-31T00:30:36.338145+00:00",
+   "payout": null,
+   "price": 0.19,
+   "side": "yes",
+   "spread": 0.04,
+   "spread_cost": null,
+   "status": "open",
+   "traded_to_entry": 0.0,
+   "word": "Above $106.99"
+  },
+  {
+   "ask_check": {
+    "book": 500.0,
+    "first_quotes": true,
+    "how": "book",
+    "last_trade": null,
+    "source": "live",
+    "status": "verified"
+   },
+   "bid": 0.12,
+   "book": {
+    "ask_depth": 6064.0,
+    "ask_levels": 5,
+    "ask_size": 500.0,
+    "at": "2026-10-31T00:30:36.338145+00:00",
+    "at_or_under": 500.0,
+    "best_ask": 0.16,
+    "best_bid": 0.12,
+    "bid_depth": 500.0,
+    "bid_levels": 1,
+    "bid_size": 500.0
+   },
+   "book_at": "2026-10-31T00:30:36.338145+00:00",
+   "book_size": 500.0,
+   "entry_at": "2026-10-30T23:31:00+00:00",
+   "event": "KXWTI-26NOV0314",
+   "id": "KXWTI-26NOV0314-T107.49",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.32
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.48
+    }
+   ],
+   "logged": "2026-10-31T00:30:36.338145+00:00",
+   "payout": null,
+   "price": 0.16,
+   "side": "yes",
+   "spread": 0.04,
+   "spread_cost": null,
+   "status": "open",
+   "traded_to_entry": 0.0,
+   "word": "Above $107.49"
   }
  ],
  "error": null,
  "events": {
   "KXWTI-26NOV0214": "2026-10-30T00:30:35.110470+00:00",
+  "KXWTI-26NOV0314": "2026-10-31T00:30:36.338145+00:00",
   "KXWTI-26OCT2714": "2026-10-27T03:36:13.254634+00:00",
   "KXWTI-26OCT2814": "2026-10-27T03:36:13.254634+00:00",
   "KXWTI-26OCT2914": "2026-10-27T23:49:22.229612+00:00",
   "KXWTI-26OCT3014": "2026-10-29T00:30:36.981950+00:00"
  },
  "lane": "wti_cheap_yes",
- "last_success": "2026-10-30T17:30:34.812506+00:00",
+ "last_success": "2026-10-31T00:51:29.224744+00:00",
  "observations": {
-  "at": "2026-10-30T17:30:34.812506+00:00",
+  "at": "2026-10-31T00:51:29.224744+00:00",
   "checking": 0,
   "entered": 0,
   "events": 2,
   "filled": 0,
   "skipped": 0,
   "unverified": 20,
-  "waiting": 0
+  "waiting": 26
  },
  "skips": {
   "KXWTI-26NOV0214-T100.49": {

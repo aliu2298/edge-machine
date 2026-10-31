@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-30T18:46:48.731414+00:00",
+ "last_run": "2026-10-30T19:31:43.173856+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -2879,30 +2879,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-25T10:31:11.688599+00:00",
-   "candidates": 0,
-   "due": 1,
-   "labelled": 1,
-   "matched": 0,
-   "new": 0
-  },
-  {
-   "at": "2026-10-25T11:31:43.667708+00:00",
-   "candidates": 0,
-   "due": 1,
-   "labelled": 1,
-   "matched": 0,
-   "new": 0
-  },
-  {
-   "at": "2026-10-25T12:01:42.824378+00:00",
-   "candidates": 0,
-   "due": 1,
-   "labelled": 1,
-   "matched": 0,
-   "new": 0
-  },
-  {
    "at": "2026-10-25T12:31:41.195557+00:00",
    "candidates": 3,
    "due": 8,
@@ -3284,6 +3260,30 @@
    "due": 3,
    "labelled": 3,
    "matched": 2,
+   "new": 0
+  },
+  {
+   "at": "2026-10-30T19:01:29.549721+00:00",
+   "candidates": 2,
+   "due": 3,
+   "labelled": 3,
+   "matched": 2,
+   "new": 0
+  },
+  {
+   "at": "2026-10-30T19:16:17.971824+00:00",
+   "candidates": 1,
+   "due": 2,
+   "labelled": 2,
+   "matched": 1,
+   "new": 0
+  },
+  {
+   "at": "2026-10-30T19:31:43.173856+00:00",
+   "candidates": 1,
+   "due": 2,
+   "labelled": 2,
+   "matched": 1,
    "new": 0
   }
  ],

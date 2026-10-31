@@ -1,29 +1,8 @@
 {
  "held": [
   {
-   "qty": 14,
+   "qty": 3,
    "rules": [
-    {
-     "id": "sw_rsi2_pullback|CNC|2026-10-26",
-     "qty": 14,
-     "rule": "sw_rsi2_pullback"
-    }
-   ],
-   "symbol": "CNC"
-  },
-  {
-   "qty": 8,
-   "rules": [
-    {
-     "id": "sw_rsi2_pullback|COR|2026-10-22",
-     "qty": 2,
-     "rule": "sw_rsi2_pullback"
-    },
-    {
-     "id": "sw_rsi2_pullback|COR|2026-10-26",
-     "qty": 3,
-     "rule": "sw_rsi2_pullback"
-    },
     {
      "id": "sw_rsi2_pullback|COR|2026-10-28",
      "qty": 3,
@@ -53,6 +32,28 @@
     }
    ],
    "symbol": "CRM"
+  },
+  {
+   "qty": 3,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|CRWD|2026-10-29",
+     "qty": 3,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "CRWD"
+  },
+  {
+   "qty": 9,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|CSCO|2026-10-29",
+     "qty": 9,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "CSCO"
   },
   {
    "qty": 4,
@@ -103,46 +104,30 @@
    "symbol": "CVS"
   },
   {
-   "qty": 4,
+   "qty": 3,
    "rules": [
     {
-     "id": "sw_rsi2_pullback|CVX|2026-10-27",
-     "qty": 4,
+     "id": "sw_rsi2_pullback|DDOG|2026-10-29",
+     "qty": 3,
      "rule": "sw_rsi2_pullback"
     }
    ],
-   "symbol": "CVX"
+   "symbol": "DDOG"
   },
   {
-   "qty": 5,
+   "qty": 2,
    "rules": [
     {
-     "id": "sw_rsi2_pullback|DASH|2026-10-21",
-     "qty": 5,
+     "id": "sw_rsi2_pullback|DELL|2026-10-29",
+     "qty": 2,
      "rule": "sw_rsi2_pullback"
     }
    ],
-   "symbol": "DASH"
+   "symbol": "DELL"
   },
   {
-   "qty": 1,
+   "qty": 7,
    "rules": [
-    {
-     "id": "sw_rsi2_pullback|DE|2026-10-27",
-     "qty": 1,
-     "rule": "sw_rsi2_pullback"
-    }
-   ],
-   "symbol": "DE"
-  },
-  {
-   "qty": 14,
-   "rules": [
-    {
-     "id": "sw_rsi2_pullback|DG|2026-10-26",
-     "qty": 7,
-     "rule": "sw_rsi2_pullback"
-    },
     {
      "id": "sw_rsi2_pullback|DG|2026-10-28",
      "qty": 7,
@@ -152,18 +137,8 @@
    "symbol": "DG"
   },
   {
-   "qty": 27,
+   "qty": 9,
    "rules": [
-    {
-     "id": "sw_rsi2_pullback|DIS|2026-10-26",
-     "qty": 9,
-     "rule": "sw_rsi2_pullback"
-    },
-    {
-     "id": "sw_rsi2_pullback|DIS|2026-10-27",
-     "qty": 9,
-     "rule": "sw_rsi2_pullback"
-    },
     {
      "id": "sw_rsi2_pullback|DIS|2026-10-28",
      "qty": 9,
@@ -171,28 +146,6 @@
     }
    ],
    "symbol": "DIS"
-  },
-  {
-   "qty": 8,
-   "rules": [
-    {
-     "id": "sw_rsi2_pullback|EBAY|2026-10-26",
-     "qty": 8,
-     "rule": "sw_rsi2_pullback"
-    }
-   ],
-   "symbol": "EBAY"
-  },
-  {
-   "qty": 5,
-   "rules": [
-    {
-     "id": "sw_rsi2_pullback|EFX|2026-10-26",
-     "qty": 5,
-     "rule": "sw_rsi2_pullback"
-    }
-   ],
-   "symbol": "EFX"
   },
   {
    "qty": 6,
@@ -216,10 +169,15 @@
    "symbol": "ELV"
   },
   {
-   "qty": 2,
+   "qty": 4,
    "rules": [
     {
      "id": "sw_rsi2_pullback|FFIV|2026-10-28",
+     "qty": 2,
+     "rule": "sw_rsi2_pullback"
+    },
+    {
+     "id": "sw_rsi2_pullback|FFIV|2026-10-29",
      "qty": 2,
      "rule": "sw_rsi2_pullback"
     }
@@ -238,59 +196,48 @@
    "symbol": "FOXA"
   },
   {
-   "qty": 5,
+   "qty": 7,
    "rules": [
     {
-     "id": "sw_rsi2_pullback|GL|2026-10-22",
-     "qty": 5,
+     "id": "sw_rsi2_pullback|FTNT|2026-10-29",
+     "qty": 7,
      "rule": "sw_rsi2_pullback"
     }
    ],
-   "symbol": "GL"
+   "symbol": "FTNT"
   },
   {
-   "qty": 2,
+   "qty": 16,
    "rules": [
     {
-     "id": "sw_rsi2_pullback|HLT|2026-10-23",
-     "qty": 2,
+     "id": "sw_rsi2_pullback|HPE|2026-10-29",
+     "qty": 16,
      "rule": "sw_rsi2_pullback"
     }
    ],
-   "symbol": "HLT"
+   "symbol": "HPE"
   },
   {
-   "qty": 6,
+   "qty": 31,
    "rules": [
     {
-     "id": "sw_rsi2_pullback|ICE|2026-10-26",
-     "qty": 6,
+     "id": "sw_rsi2_pullback|HPQ|2026-10-29",
+     "qty": 31,
      "rule": "sw_rsi2_pullback"
     }
    ],
-   "symbol": "ICE"
-  },
-  {
-   "qty": 1,
-   "rules": [
-    {
-     "id": "sw_rsi2_pullback|MA|2026-10-26",
-     "qty": 1,
-     "rule": "sw_rsi2_pullback"
-    }
-   ],
-   "symbol": "MA"
+   "symbol": "HPQ"
   },
   {
    "qty": 1,
    "rules": [
     {
-     "id": "sw_rsi2_pullback|MCK|2026-10-26",
+     "id": "sw_rsi2_pullback|LIN|2026-10-29",
      "qty": 1,
      "rule": "sw_rsi2_pullback"
     }
    ],
-   "symbol": "MCK"
+   "symbol": "LIN"
   },
   {
    "qty": 15,
@@ -304,17 +251,6 @@
    "symbol": "MDLZ"
   },
   {
-   "qty": 10,
-   "rules": [
-    {
-     "id": "sw_rsi2_pullback|MDT|2026-10-26",
-     "qty": 10,
-     "rule": "sw_rsi2_pullback"
-    }
-   ],
-   "symbol": "MDT"
-  },
-  {
    "qty": 1,
    "rules": [
     {
@@ -324,17 +260,6 @@
     }
    ],
    "symbol": "META"
-  },
-  {
-   "qty": 13,
-   "rules": [
-    {
-     "id": "sw_rsi2_pullback|MO|2026-10-26",
-     "qty": 13,
-     "rule": "sw_rsi2_pullback"
-    }
-   ],
-   "symbol": "MO"
   },
   {
    "qty": 2,
@@ -348,42 +273,48 @@
    "symbol": "MPC"
   },
   {
-   "qty": 13,
+   "qty": 4,
    "rules": [
     {
-     "id": "sw_rsi2_pullback|MRK|2026-10-23",
-     "qty": 6,
-     "rule": "sw_rsi2_pullback"
-    },
-    {
-     "id": "sw_rsi2_pullback|MRK|2026-10-26",
-     "qty": 7,
+     "id": "sw_rsi2_pullback|NTAP|2026-10-29",
+     "qty": 4,
      "rule": "sw_rsi2_pullback"
     }
    ],
-   "symbol": "MRK"
+   "symbol": "NTAP"
   },
   {
-   "qty": 33,
+   "qty": 4,
    "rules": [
     {
-     "id": "sw_rsi2_pullback|PFE|2026-10-26",
-     "qty": 33,
+     "id": "sw_rsi2_pullback|NVDA|2026-10-29",
+     "qty": 4,
      "rule": "sw_rsi2_pullback"
     }
    ],
-   "symbol": "PFE"
+   "symbol": "NVDA"
   },
   {
-   "qty": 6,
+   "qty": 2,
    "rules": [
     {
-     "id": "sw_rsi2_pullback|PG|2026-10-26",
-     "qty": 6,
+     "id": "sw_rsi2_pullback|PANW|2026-10-29",
+     "qty": 2,
      "rule": "sw_rsi2_pullback"
     }
    ],
-   "symbol": "PG"
+   "symbol": "PANW"
+  },
+  {
+   "qty": 5,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|PLTR|2026-10-29",
+     "qty": 5,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "PLTR"
   },
   {
    "qty": 3,
@@ -413,6 +344,17 @@
    "symbol": "SPY"
   },
   {
+   "qty": 4,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|TWLO|2026-10-29",
+     "qty": 4,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "TWLO"
+  },
+  {
    "qty": 2,
    "rules": [
     {
@@ -422,29 +364,31 @@
     }
    ],
    "symbol": "VLO"
+  },
+  {
+   "qty": 5,
+   "rules": [
+    {
+     "id": "sw_rsi2_pullback|WDAY|2026-10-29",
+     "qty": 5,
+     "rule": "sw_rsi2_pullback"
+    }
+   ],
+   "symbol": "WDAY"
   }
  ],
  "in_flight": [
   {
-   "client_order_id": "em-ed80dfe7-f3e8-5f7e-9b02-37d158bac467",
+   "client_order_id": "em-fca7e185-5baa-54d9-88f5-0153f16b6bbf",
    "filled_at": "",
    "price": null,
    "qty": 0,
    "side": "buy",
    "status": "accepted",
-   "symbol": "WDAY"
+   "symbol": "SMCI"
   },
   {
-   "client_order_id": "em-1d5e7313-e010-5082-b206-fc2ab0593488",
-   "filled_at": "",
-   "price": null,
-   "qty": 0,
-   "side": "buy",
-   "status": "accepted",
-   "symbol": "TWLO"
-  },
-  {
-   "client_order_id": "em-8901fe3f-008e-5a55-8451-c789a340c6ce",
+   "client_order_id": "em-8b9831a3-3d52-5087-8f20-69ea3b4fc2f8",
    "filled_at": "",
    "price": null,
    "qty": 0,
@@ -453,7 +397,7 @@
    "symbol": "PLTR"
   },
   {
-   "client_order_id": "em-aee53085-2288-5ce4-ac2e-8d1d94a06551",
+   "client_order_id": "em-8b9843ed-e3d8-5a7f-ad49-b60aab88f0b5",
    "filled_at": "",
    "price": null,
    "qty": 0,
@@ -462,7 +406,16 @@
    "symbol": "PANW"
   },
   {
-   "client_order_id": "em-b524241c-e281-55f3-84da-01a7d56f6cbd",
+   "client_order_id": "em-3fd96220-489e-57f4-9cec-9476f93f65b5",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "P"
+  },
+  {
+   "client_order_id": "em-4edf712c-feca-5947-8c8a-f89af8dfab21",
    "filled_at": "",
    "price": null,
    "qty": 0,
@@ -471,7 +424,7 @@
    "symbol": "NVDA"
   },
   {
-   "client_order_id": "em-9d2c66c3-5b7e-5777-9ca1-f28dc842b1d3",
+   "client_order_id": "em-89db6a77-f418-5d4a-9587-f685ae9881b5",
    "filled_at": "",
    "price": null,
    "qty": 0,
@@ -480,16 +433,34 @@
    "symbol": "NTAP"
   },
   {
-   "client_order_id": "em-0866006d-786c-5c2d-8d57-c3ea05dd3aa5",
+   "client_order_id": "em-4e4f4028-7f63-5875-b4f9-96ecdef0fa86",
    "filled_at": "",
    "price": null,
    "qty": 0,
    "side": "buy",
    "status": "accepted",
-   "symbol": "LIN"
+   "symbol": "MU"
   },
   {
-   "client_order_id": "em-22ad25ce-4218-51e8-99a5-80ba97645809",
+   "client_order_id": "em-6648812c-5fd7-560e-8288-b6065b8d85b0",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "MSFT"
+  },
+  {
+   "client_order_id": "em-90baa16c-fe13-513c-8a3d-4f69a5ca6ff6",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "MRVL"
+  },
+  {
+   "client_order_id": "em-3186bfab-9257-5d23-a139-4c44d7f8dd1d",
    "filled_at": "",
    "price": null,
    "qty": 0,
@@ -498,7 +469,7 @@
    "symbol": "HPQ"
   },
   {
-   "client_order_id": "em-3b01e6b6-0342-5c0f-9e3c-c3ed5b7071dc",
+   "client_order_id": "em-1452c75c-479e-5216-809a-a8b96387c0fd",
    "filled_at": "",
    "price": null,
    "qty": 0,
@@ -507,7 +478,7 @@
    "symbol": "HPE"
   },
   {
-   "client_order_id": "em-e72e5305-796f-54f3-8659-41cbe7a642fc",
+   "client_order_id": "em-669f1cdd-c042-577d-a446-78185a72d515",
    "filled_at": "",
    "price": null,
    "qty": 0,
@@ -516,16 +487,7 @@
    "symbol": "FTNT"
   },
   {
-   "client_order_id": "em-32cae8cf-cbca-5980-9317-8d1dbd1de76f",
-   "filled_at": "",
-   "price": null,
-   "qty": 0,
-   "side": "buy",
-   "status": "accepted",
-   "symbol": "FFIV"
-  },
-  {
-   "client_order_id": "em-2b22a851-5784-552b-8a36-34a9e3b6a77e",
+   "client_order_id": "em-fb7c7836-7302-5356-8600-d11bebb63f39",
    "filled_at": "",
    "price": null,
    "qty": 0,
@@ -534,7 +496,7 @@
    "symbol": "DELL"
   },
   {
-   "client_order_id": "em-624abe5a-aa8b-5b09-9021-a7a1a27caab8",
+   "client_order_id": "em-baaf7cc7-75de-54f4-94c6-877fca445ed1",
    "filled_at": "",
    "price": null,
    "qty": 0,
@@ -543,7 +505,7 @@
    "symbol": "DDOG"
   },
   {
-   "client_order_id": "em-212128ea-a6e6-53a4-86d2-4bc2ebfc47d9",
+   "client_order_id": "em-2a407d54-ccd1-51cc-adde-743c2d4a186d",
    "filled_at": "",
    "price": null,
    "qty": 0,
@@ -552,13 +514,49 @@
    "symbol": "CSCO"
   },
   {
-   "client_order_id": "em-1cc1ceb9-c11c-5ffd-8a3e-fddde0c9144e",
+   "client_order_id": "em-61a2a91b-655f-54cb-a6da-358f59ae5c1a",
    "filled_at": "",
    "price": null,
    "qty": 0,
    "side": "buy",
    "status": "accepted",
    "symbol": "CRWD"
+  },
+  {
+   "client_order_id": "em-76cc32ba-67df-5b76-8fc8-1ce3adcdcd1f",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "CRM"
+  },
+  {
+   "client_order_id": "em-3da76b0e-879b-5872-bc63-fca7fa866546",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "SPY"
+  },
+  {
+   "client_order_id": "em-b6c0e99c-4825-5039-b646-2c0d1fd58c3c",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "QQQ"
+  },
+  {
+   "client_order_id": "em-ffcdbfa6-27db-51c5-916d-356ccd485f8d",
+   "filled_at": "",
+   "price": null,
+   "qty": 0,
+   "side": "buy",
+   "status": "accepted",
+   "symbol": "DIA"
   }
  ],
  "orphans": [
@@ -599,18 +597,7 @@
  "rows": [
   {
    "fill": null,
-   "id": "sw_rsi2_pullback|CNC|2026-10-26",
-   "ledger": null,
-   "qty": 0,
-   "rule": "sw_rsi2_pullback",
-   "side": "sell",
-   "slip_bps": null,
-   "status": "accepted",
-   "symbol": "CNC"
-  },
-  {
-   "fill": null,
-   "id": "sw_rsi2_pullback|COR|2026-10-22",
+   "id": "sw_rsi2_pullback|COR|2026-10-28",
    "ledger": null,
    "qty": 0,
    "rule": "sw_rsi2_pullback",
@@ -621,36 +608,25 @@
   },
   {
    "fill": null,
-   "id": "sw_rsi2_pullback|COR|2026-10-26",
+   "id": "sw_rsi2_pullback|COST|2026-10-28",
    "ledger": null,
    "qty": 0,
    "rule": "sw_rsi2_pullback",
    "side": "sell",
    "slip_bps": null,
    "status": "accepted",
-   "symbol": "COR"
+   "symbol": "COST"
   },
   {
    "fill": null,
-   "id": "sw_rsi2_pullback|CVX|2026-10-27",
+   "id": "sw_rsi2_pullback|CTAS|2026-10-28",
    "ledger": null,
    "qty": 0,
    "rule": "sw_rsi2_pullback",
    "side": "sell",
    "slip_bps": null,
    "status": "accepted",
-   "symbol": "CVX"
-  },
-  {
-   "fill": null,
-   "id": "sw_rsi2_pullback|DASH|2026-10-21",
-   "ledger": null,
-   "qty": 0,
-   "rule": "sw_rsi2_pullback",
-   "side": "sell",
-   "slip_bps": null,
-   "status": "accepted",
-   "symbol": "DASH"
+   "symbol": "CTAS"
   },
   {
    "fill": null,
@@ -665,18 +641,7 @@
   },
   {
    "fill": null,
-   "id": "sw_rsi2_pullback|DE|2026-10-27",
-   "ledger": null,
-   "qty": 0,
-   "rule": "sw_rsi2_pullback",
-   "side": "sell",
-   "slip_bps": null,
-   "status": "accepted",
-   "symbol": "DE"
-  },
-  {
-   "fill": null,
-   "id": "sw_rsi2_pullback|DG|2026-10-26",
+   "id": "sw_rsi2_pullback|DG|2026-10-28",
    "ledger": null,
    "qty": 0,
    "rule": "sw_rsi2_pullback",
@@ -687,7 +652,7 @@
   },
   {
    "fill": null,
-   "id": "sw_rsi2_pullback|DIS|2026-10-26",
+   "id": "sw_rsi2_pullback|DIS|2026-10-28",
    "ledger": null,
    "qty": 0,
    "rule": "sw_rsi2_pullback",
@@ -695,72 +660,6 @@
    "slip_bps": null,
    "status": "accepted",
    "symbol": "DIS"
-  },
-  {
-   "fill": null,
-   "id": "sw_rsi2_pullback|DIS|2026-10-27",
-   "ledger": null,
-   "qty": 0,
-   "rule": "sw_rsi2_pullback",
-   "side": "sell",
-   "slip_bps": null,
-   "status": "accepted",
-   "symbol": "DIS"
-  },
-  {
-   "fill": null,
-   "id": "sw_rsi2_pullback|EBAY|2026-10-26",
-   "ledger": null,
-   "qty": 0,
-   "rule": "sw_rsi2_pullback",
-   "side": "sell",
-   "slip_bps": null,
-   "status": "accepted",
-   "symbol": "EBAY"
-  },
-  {
-   "fill": null,
-   "id": "sw_rsi2_pullback|EFX|2026-10-26",
-   "ledger": null,
-   "qty": 0,
-   "rule": "sw_rsi2_pullback",
-   "side": "sell",
-   "slip_bps": null,
-   "status": "accepted",
-   "symbol": "EFX"
-  },
-  {
-   "fill": null,
-   "id": "sw_rsi2_pullback|GL|2026-10-22",
-   "ledger": null,
-   "qty": 0,
-   "rule": "sw_rsi2_pullback",
-   "side": "sell",
-   "slip_bps": null,
-   "status": "accepted",
-   "symbol": "GL"
-  },
-  {
-   "fill": null,
-   "id": "sw_rsi2_pullback|HLT|2026-10-23",
-   "ledger": null,
-   "qty": 0,
-   "rule": "sw_rsi2_pullback",
-   "side": "sell",
-   "slip_bps": null,
-   "status": "accepted",
-   "symbol": "HLT"
-  },
-  {
-   "fill": null,
-   "id": "sw_rsi2_pullback|ICE|2026-10-26",
-   "ledger": null,
-   "qty": 0,
-   "rule": "sw_rsi2_pullback",
-   "side": "sell",
-   "slip_bps": null,
-   "status": "accepted",
-   "symbol": "ICE"
   },
   {
    "fill": null,
@@ -797,36 +696,14 @@
   },
   {
    "fill": null,
-   "id": "sw_rsi2_pullback|MA|2026-10-26",
+   "id": "sw_rsi2_pullback|MDLZ|2026-10-26",
    "ledger": null,
    "qty": 0,
    "rule": "sw_rsi2_pullback",
    "side": "sell",
    "slip_bps": null,
    "status": "accepted",
-   "symbol": "MA"
-  },
-  {
-   "fill": null,
-   "id": "sw_rsi2_pullback|MCK|2026-10-26",
-   "ledger": null,
-   "qty": 0,
-   "rule": "sw_rsi2_pullback",
-   "side": "sell",
-   "slip_bps": null,
-   "status": "accepted",
-   "symbol": "MCK"
-  },
-  {
-   "fill": null,
-   "id": "sw_rsi2_pullback|MDT|2026-10-26",
-   "ledger": null,
-   "qty": 0,
-   "rule": "sw_rsi2_pullback",
-   "side": "sell",
-   "slip_bps": null,
-   "status": "accepted",
-   "symbol": "MDT"
+   "symbol": "MDLZ"
   },
   {
    "fill": null,
@@ -841,39 +718,6 @@
   },
   {
    "fill": null,
-   "id": "sw_rsi2_pullback|MO|2026-10-26",
-   "ledger": null,
-   "qty": 0,
-   "rule": "sw_rsi2_pullback",
-   "side": "sell",
-   "slip_bps": null,
-   "status": "accepted",
-   "symbol": "MO"
-  },
-  {
-   "fill": null,
-   "id": "sw_rsi2_pullback|MRK|2026-10-23",
-   "ledger": null,
-   "qty": 0,
-   "rule": "sw_rsi2_pullback",
-   "side": "sell",
-   "slip_bps": null,
-   "status": "accepted",
-   "symbol": "MRK"
-  },
-  {
-   "fill": null,
-   "id": "sw_rsi2_pullback|MRK|2026-10-26",
-   "ledger": null,
-   "qty": 0,
-   "rule": "sw_rsi2_pullback",
-   "side": "sell",
-   "slip_bps": null,
-   "status": "accepted",
-   "symbol": "MRK"
-  },
-  {
-   "fill": null,
    "id": "sw_rsi2_pullback|NVDA|2026-10-09",
    "ledger": 228.69,
    "qty": 0,
@@ -885,25 +729,14 @@
   },
   {
    "fill": null,
-   "id": "sw_rsi2_pullback|PFE|2026-10-26",
+   "id": "sw_rsi2_pullback|PSX|2026-10-23",
    "ledger": null,
    "qty": 0,
    "rule": "sw_rsi2_pullback",
    "side": "sell",
    "slip_bps": null,
    "status": "accepted",
-   "symbol": "PFE"
-  },
-  {
-   "fill": null,
-   "id": "sw_rsi2_pullback|PG|2026-10-26",
-   "ledger": null,
-   "qty": 0,
-   "rule": "sw_rsi2_pullback",
-   "side": "sell",
-   "slip_bps": null,
-   "status": "accepted",
-   "symbol": "PG"
+   "symbol": "PSX"
   },
   {
    "fill": null,
@@ -948,6 +781,17 @@
    "slip_bps": null,
    "status": "expired",
    "symbol": "TXN"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|VLO|2026-10-23",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "VLO"
   },
   {
    "day": "2026-10-12",
@@ -3797,6 +3641,487 @@
    "slip_bps": 53.54,
    "status": "filled",
    "symbol": "VRSN"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 68.281428,
+   "filled_at": "2026-10-30T13:34:12",
+   "id": "sw_rsi2_pullback|CNC|2026-10-26",
+   "ledger": 69.42,
+   "qty": 14,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 164.01,
+   "status": "filled",
+   "symbol": "CNC"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 335.2,
+   "filled_at": "2026-10-30T13:31:11",
+   "id": "sw_rsi2_pullback|COR|2026-10-22",
+   "ledger": 337.72,
+   "qty": 2,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 74.62,
+   "status": "filled",
+   "symbol": "COR"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 335.23,
+   "filled_at": "2026-10-30T13:32:30",
+   "id": "sw_rsi2_pullback|COR|2026-10-26",
+   "ledger": 337.72,
+   "qty": 3,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 73.73,
+   "status": "filled",
+   "symbol": "COR"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 260.29,
+   "filled_at": "2026-10-30T13:32:54",
+   "id": "sw_rsi2_pullback|CRWD|2026-10-29",
+   "ledger": 261.6,
+   "qty": 3,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": -50.08,
+   "status": "filled",
+   "symbol": "CRWD"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 106.812222,
+   "filled_at": "2026-10-30T13:34:00",
+   "id": "sw_rsi2_pullback|CSCO|2026-10-29",
+   "ledger": 108.565,
+   "qty": 9,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": -161.45,
+   "status": "filled",
+   "symbol": "CSCO"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 234.055,
+   "filled_at": "2026-10-30T13:33:46",
+   "id": "sw_rsi2_pullback|CVX|2026-10-27",
+   "ledger": 234.01,
+   "qty": 4,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": -1.92,
+   "status": "filled",
+   "symbol": "CVX"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 176.77,
+   "filled_at": "2026-10-30T13:34:53",
+   "id": "sw_rsi2_pullback|DASH|2026-10-21",
+   "ledger": 179.27,
+   "qty": 5,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 139.45,
+   "status": "filled",
+   "symbol": "DASH"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 247.856667,
+   "filled_at": "2026-10-30T13:33:05",
+   "id": "sw_rsi2_pullback|DDOG|2026-10-29",
+   "ledger": 251.4,
+   "qty": 3,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": -140.94,
+   "status": "filled",
+   "symbol": "DDOG"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 421.95,
+   "filled_at": "2026-10-30T13:31:08",
+   "id": "sw_rsi2_pullback|DELL|2026-10-29",
+   "ledger": 417.95,
+   "qty": 2,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 95.71,
+   "status": "filled",
+   "symbol": "DELL"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 661.71,
+   "filled_at": "2026-10-30T13:32:18",
+   "id": "sw_rsi2_pullback|DE|2026-10-27",
+   "ledger": 663.06,
+   "qty": 1,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 20.36,
+   "status": "filled",
+   "symbol": "DE"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 131.38,
+   "filled_at": "2026-10-30T13:31:28",
+   "id": "sw_rsi2_pullback|DG|2026-10-26",
+   "ledger": 132.98,
+   "qty": 7,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 120.32,
+   "status": "filled",
+   "symbol": "DG"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 112.055556,
+   "filled_at": "2026-10-30T13:33:06",
+   "id": "sw_rsi2_pullback|DIS|2026-10-26",
+   "ledger": 112.13,
+   "qty": 9,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 6.64,
+   "status": "filled",
+   "symbol": "DIS"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 112.044444,
+   "filled_at": "2026-10-30T13:34:32",
+   "id": "sw_rsi2_pullback|DIS|2026-10-27",
+   "ledger": 112.13,
+   "qty": 9,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 7.63,
+   "status": "filled",
+   "symbol": "DIS"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 120.3375,
+   "filled_at": "2026-10-30T13:34:39",
+   "id": "sw_rsi2_pullback|EBAY|2026-10-26",
+   "ledger": 121.45,
+   "qty": 8,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 91.6,
+   "status": "filled",
+   "symbol": "EBAY"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 181.64,
+   "filled_at": "2026-10-30T13:30:46",
+   "id": "sw_rsi2_pullback|EFX|2026-10-26",
+   "ledger": 185.24,
+   "qty": 5,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 194.34,
+   "status": "filled",
+   "symbol": "EFX"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 351.735,
+   "filled_at": "2026-10-30T13:32:38",
+   "id": "sw_rsi2_pullback|FFIV|2026-10-29",
+   "ledger": 354.58,
+   "qty": 2,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": -80.24,
+   "status": "filled",
+   "symbol": "FFIV"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 136.56,
+   "filled_at": "2026-10-30T13:31:48",
+   "id": "sw_rsi2_pullback|FTNT|2026-10-29",
+   "ledger": 136.785,
+   "qty": 7,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": -16.45,
+   "status": "filled",
+   "symbol": "FTNT"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 159.6,
+   "filled_at": "2026-10-30T13:31:02",
+   "id": "sw_rsi2_pullback|GL|2026-10-22",
+   "ledger": 160.4,
+   "qty": 5,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 49.88,
+   "status": "filled",
+   "symbol": "GL"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 357.76,
+   "filled_at": "2026-10-30T13:33:13",
+   "id": "sw_rsi2_pullback|HLT|2026-10-23",
+   "ledger": 360.625,
+   "qty": 2,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 79.45,
+   "status": "filled",
+   "symbol": "HLT"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 54.5225,
+   "filled_at": "2026-10-30T13:32:39",
+   "id": "sw_rsi2_pullback|HPE|2026-10-29",
+   "ledger": 54.91,
+   "qty": 16,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": -70.57,
+   "status": "filled",
+   "symbol": "HPE"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 27.84,
+   "filled_at": "2026-10-30T13:31:49",
+   "id": "sw_rsi2_pullback|HPQ|2026-10-29",
+   "ledger": 27.16,
+   "qty": 31,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 250.37,
+   "status": "filled",
+   "symbol": "HPQ"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 165.888333,
+   "filled_at": "2026-10-30T13:33:01",
+   "id": "sw_rsi2_pullback|ICE|2026-10-26",
+   "ledger": 166.33,
+   "qty": 6,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 26.55,
+   "status": "filled",
+   "symbol": "ICE"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 513.92,
+   "filled_at": "2026-10-30T13:30:54",
+   "id": "sw_rsi2_pullback|LIN|2026-10-29",
+   "ledger": 512.6,
+   "qty": 1,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 25.75,
+   "status": "filled",
+   "symbol": "LIN"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 642.0,
+   "filled_at": "2026-10-30T13:30:35",
+   "id": "sw_rsi2_pullback|MA|2026-10-26",
+   "ledger": 642.605,
+   "qty": 1,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 9.41,
+   "status": "filled",
+   "symbol": "MA"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 1001.76,
+   "filled_at": "2026-10-30T13:31:31",
+   "id": "sw_rsi2_pullback|MCK|2026-10-26",
+   "ledger": 1012.235,
+   "qty": 1,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 103.48,
+   "status": "filled",
+   "symbol": "MCK"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 96.582,
+   "filled_at": "2026-10-30T13:33:54",
+   "id": "sw_rsi2_pullback|MDT|2026-10-26",
+   "ledger": 97.805,
+   "qty": 10,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 125.04,
+   "status": "filled",
+   "symbol": "MDT"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 78.58,
+   "filled_at": "2026-10-30T13:31:02",
+   "id": "sw_rsi2_pullback|MO|2026-10-26",
+   "ledger": 78.22,
+   "qty": 13,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": -46.02,
+   "status": "filled",
+   "symbol": "MO"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 148.58,
+   "filled_at": "2026-10-30T13:30:21",
+   "id": "sw_rsi2_pullback|MRK|2026-10-23",
+   "ledger": 150.19,
+   "qty": 6,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 107.2,
+   "status": "filled",
+   "symbol": "MRK"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 150.0,
+   "filled_at": "2026-10-30T13:32:17",
+   "id": "sw_rsi2_pullback|MRK|2026-10-26",
+   "ledger": 150.19,
+   "qty": 7,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 12.65,
+   "status": "filled",
+   "symbol": "MRK"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 206.7,
+   "filled_at": "2026-10-30T13:30:41",
+   "id": "sw_rsi2_pullback|NTAP|2026-10-29",
+   "ledger": 206.46,
+   "qty": 4,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 11.62,
+   "status": "filled",
+   "symbol": "NTAP"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 207.31,
+   "filled_at": "2026-10-30T13:32:18",
+   "id": "sw_rsi2_pullback|NVDA|2026-10-29",
+   "ledger": 208.7,
+   "qty": 4,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": -66.6,
+   "status": "filled",
+   "symbol": "NVDA"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 384.305,
+   "filled_at": "2026-10-30T13:33:15",
+   "id": "sw_rsi2_pullback|PANW|2026-10-29",
+   "ledger": 382.8,
+   "qty": 2,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 39.32,
+   "status": "filled",
+   "symbol": "PANW"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 30.497273,
+   "filled_at": "2026-10-30T13:33:57",
+   "id": "sw_rsi2_pullback|PFE|2026-10-26",
+   "ledger": 30.48,
+   "qty": 33,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": -5.67,
+   "status": "filled",
+   "symbol": "PFE"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 164.59,
+   "filled_at": "2026-10-30T13:32:57",
+   "id": "sw_rsi2_pullback|PG|2026-10-26",
+   "ledger": 164.495,
+   "qty": 6,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": -5.78,
+   "status": "filled",
+   "symbol": "PG"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 191.66,
+   "filled_at": "2026-10-30T13:33:05",
+   "id": "sw_rsi2_pullback|PLTR|2026-10-29",
+   "ledger": 193.64,
+   "qty": 5,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": -102.25,
+   "status": "filled",
+   "symbol": "PLTR"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 188.17,
+   "filled_at": "2026-10-30T13:31:04",
+   "id": "sw_rsi2_pullback|TWLO|2026-10-29",
+   "ledger": 184.3,
+   "qty": 4,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 209.98,
+   "status": "filled",
+   "symbol": "TWLO"
+  },
+  {
+   "day": "2026-10-30",
+   "fill": 200.146,
+   "filled_at": "2026-10-30T13:32:48",
+   "id": "sw_rsi2_pullback|WDAY|2026-10-29",
+   "ledger": 199.805,
+   "qty": 5,
+   "rule": "sw_rsi2_pullback",
+   "side": "buy",
+   "slip_bps": 17.07,
+   "status": "filled",
+   "symbol": "WDAY"
   }
  ],
  "summary": {
@@ -3816,24 +4141,24 @@
     "n": 48
    },
    "sw_rsi2_pullback": {
-    "mean_bps": 27.63,
-    "n": 149
+    "mean_bps": 29.17,
+    "n": 186
    }
   },
-  "fills": 217,
-  "in_flight": 15,
-  "mean_bps": 22.75,
-  "median_bps": 14.85,
+  "fills": 254,
+  "in_flight": 20,
+  "mean_bps": 24.59,
+  "median_bps": 15.52,
   "orders": {
-   "filled": 220,
-   "sent": 267,
+   "filled": 257,
+   "sent": 295,
    "since": "2026-10-12",
    "unfilled": 10,
-   "working": 37
+   "working": 28
   },
   "orphans": 3,
-  "unfilled": 32,
+  "unfilled": 18,
   "worst_bps": 414.27
  },
- "updated": "2026-10-29T20:13:10+00:00"
+ "updated": "2026-10-30T20:12:24+00:00"
 }

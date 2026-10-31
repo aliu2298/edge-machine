@@ -78,11 +78,17 @@ def place_label_rules(html, sections):
 
 
 def _cheap_side(html):
-    """o35_cheap_no_wave (o35_cheap_no_build.py, 2026-10-28) as the page's cheap-side section, near the top.
-    Never breaks the page."""
+    """o35_cheap_no_wave (o35_cheap_no_build.py, 2026-10-28) as the page's cheap-side section, near the top,
+    then the Argentina goalless-dip lane (arg_dip_build.py, 2026-10-30). Never breaks the page."""
     try:
         import o35_cheap_no_build
-        return o35_cheap_no_build.place(html)
+        html = o35_cheap_no_build.place(html)
+    except Exception:                                           # noqa: BLE001
+        pass
+    # arg_goalless_dip (arg_dip_build.py, 2026-10-30) right under it.
+    try:
+        import arg_dip_build
+        return arg_dip_build.place(html)
     except Exception:                                           # noqa: BLE001
         return html
 

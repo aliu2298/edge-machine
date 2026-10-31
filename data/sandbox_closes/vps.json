@@ -85,11 +85,6 @@
    "lead_min": 1.5,
    "price": 0.39
   },
-  "btts_form_l10_fade:KXUCLBTTS-26OCT20PSGBAR-BTTS": {
-   "at": "2026-10-20T18:46:38+00:00",
-   "lead_min": 13.4,
-   "price": 0.2
-  },
   "btts_form_l10_fade:KXUCLBTTS-26OCT21RBBFEY-BTTS": {
    "at": "2026-10-21T18:51:28+00:00",
    "lead_min": 8.5,
@@ -150,11 +145,6 @@
    "lead_min": 8.0,
    "price": 0.41
   },
-  "commod_fav_band:KXBRENTD-26OCT2017-T104.50": {
-   "at": "2026-10-20T18:46:38+00:00",
-   "lead_min": 13.4,
-   "price": 0.86
-  },
   "commod_fav_band:KXBRENTD-26OCT2117-T104.50": {
    "at": "2026-10-21T19:51:58+00:00",
    "lead_min": 38.0,
@@ -195,20 +185,10 @@
    "lead_min": 13.9,
    "price": 0.39
   },
-  "commod_fav_band:KXNATGASD-26OCT2017-T3.280": {
-   "at": "2026-10-20T18:46:38+00:00",
-   "lead_min": 13.4,
-   "price": 0.98
-  },
   "commod_fav_band:KXNATGASD-26OCT2117-T3.160": {
    "at": "2026-10-21T20:22:12+00:00",
    "lead_min": 7.8,
    "price": 0.74
-  },
-  "commod_fav_band:KXSILVERD-26OCT2017-T57.75": {
-   "at": "2026-10-20T18:46:38+00:00",
-   "lead_min": 13.4,
-   "price": 0.63
   },
   "commod_fav_band:KXSILVERD-26OCT2117-T57.50": {
    "at": "2026-10-21T19:51:58+00:00",
@@ -500,16 +480,6 @@
    "lead_min": 9.9,
    "price": 0.54
   },
-  "corners_team_fade:KXUCLTCORNERS-26OCT20FCPPSV-FCP6": {
-   "at": "2026-10-20T18:46:38+00:00",
-   "lead_min": 13.4,
-   "price": 0.48
-  },
-  "corners_team_fade:KXUCLTCORNERS-26OCT20LFCVIL-LFC7": {
-   "at": "2026-10-20T18:46:38+00:00",
-   "lead_min": 13.4,
-   "price": 0.45
-  },
   "corners_team_fade:KXUCLTCORNERS-26OCT21AVLVIK-AVL7": {
    "at": "2026-10-21T18:51:28+00:00",
    "lead_min": 8.5,
@@ -565,16 +535,6 @@
    "lead_min": 14.4,
    "price": 0.35
   },
-  "corners_ucl_fade:KXUCLCORNERS-26OCT20MCIAEK-10": {
-   "at": "2026-10-20T18:46:38+00:00",
-   "lead_min": 13.4,
-   "price": 0.54
-  },
-  "corners_ucl_fade:KXUCLCORNERS-26OCT20PSGBAR-9": {
-   "at": "2026-10-20T18:46:38+00:00",
-   "lead_min": 13.4,
-   "price": 0.63
-  },
   "corners_ucl_fade:KXUCLCORNERS-26OCT21SPOASK-9": {
    "at": "2026-10-21T18:51:28+00:00",
    "lead_min": 8.5,
@@ -614,11 +574,6 @@
    "at": "2026-10-28T18:59:22+00:00",
    "lead_min": 5.6,
    "price": 0.28
-  },
-  "crypto_fav_band:KXBTCD-26OCT2017-T82499.99": {
-   "at": "2026-10-20T19:01:58+00:00",
-   "lead_min": 3.0,
-   "price": 0.44
   },
   "crypto_fav_band:KXBTCD-26OCT2117-T84249.99": {
    "at": "2026-10-21T18:51:28+00:00",
@@ -661,9 +616,9 @@
    "price": 0.47
   },
   "crypto_fav_band:KXBTCD-26OCT3017-T76499.99": {
-   "at": "2026-10-30T18:45:28+00:00",
-   "lead_min": 19.5,
-   "price": 0.6
+   "at": "2026-10-30T19:00:38+00:00",
+   "lead_min": 4.4,
+   "price": 0.43
   },
   "crypto_fav_band:KXETHD-26OCT2717-T2339.99": {
    "at": "2026-10-27T18:53:18+00:00",
@@ -705,11 +660,6 @@
    "lead_min": 6.9,
    "price": 0.83
   },
-  "crypto_fav_band_60:KXBTCD-26OCT2017-T82499.99": {
-   "at": "2026-10-20T19:01:58+00:00",
-   "lead_min": 3.0,
-   "price": 0.44
-  },
   "crypto_fav_band_60:KXBTCD-26OCT2117-T84499.99": {
    "at": "2026-10-21T18:51:28+00:00",
    "lead_min": 13.5,
@@ -746,14 +696,9 @@
    "price": 0.9
   },
   "crypto_fav_band_60:KXBTCD-26OCT3017-T76499.99": {
-   "at": "2026-10-30T18:45:28+00:00",
-   "lead_min": 19.5,
-   "price": 0.6
-  },
-  "crypto_fav_band_60:KXETHD-26OCT2017-T2439.99": {
-   "at": "2026-10-20T19:01:58+00:00",
-   "lead_min": 3.0,
-   "price": 0.35
+   "at": "2026-10-30T19:00:38+00:00",
+   "lead_min": 4.4,
+   "price": 0.43
   },
   "crypto_fav_band_60:KXETHD-26OCT2117-T2509.99": {
    "at": "2026-10-21T18:51:28+00:00",
@@ -784,11 +729,6 @@
    "at": "2026-10-22T18:58:08+00:00",
    "lead_min": 6.9,
    "price": 0.83
-  },
-  "crypto_fav_band_below:KXBTCD-26OCT2017-T82999.99": {
-   "at": "2026-10-20T19:01:58+00:00",
-   "lead_min": 3.0,
-   "price": 0.97
   },
   "crypto_fav_band_below:KXBTCD-26OCT2117-T84749.99": {
    "at": "2026-10-21T18:51:28+00:00",
@@ -831,9 +771,9 @@
    "price": 0.78
   },
   "crypto_fav_band_below:KXBTCD-26OCT3017-T77499.99": {
-   "at": "2026-10-30T18:45:28+00:00",
-   "lead_min": 19.5,
-   "price": 0.95
+   "at": "2026-10-30T19:00:38+00:00",
+   "lead_min": 4.4,
+   "price": 0.94
   },
   "crypto_fav_band_below:KXETHD-26OCT2317-T2409.99": {
    "at": "2026-10-23T19:03:24+00:00",
@@ -849,11 +789,6 @@
    "at": "2026-10-24T18:56:29+00:00",
    "lead_min": 8.5,
    "price": 0.49
-  },
-  "crypto_fav_band_below:KXSOLD-26OCT2017-T106.9999": {
-   "at": "2026-10-20T19:01:58+00:00",
-   "lead_min": 3.0,
-   "price": 0.94
   },
   "crypto_fav_band_below:KXXRPD-26OCT2217-T1.3199": {
    "at": "2026-10-22T18:58:08+00:00",
@@ -894,11 +829,6 @@
    "at": "2026-10-29T18:51:38+00:00",
    "lead_min": 13.4,
    "price": 0.91
-  },
-  "crypto_fav_band_below_60:KXETHD-26OCT2017-T2439.99": {
-   "at": "2026-10-20T19:01:58+00:00",
-   "lead_min": 3.0,
-   "price": 0.66
   },
   "crypto_fav_band_below_60:KXETHD-26OCT2317-T2409.99": {
    "at": "2026-10-23T19:03:24+00:00",
@@ -1044,6 +974,11 @@
    "at": "2026-10-24T18:56:29+00:00",
    "lead_min": 3.5,
    "price": 0.15
+  },
+  "liga_u15_dog:KXLALIGATOTAL-26OCT30VILESP-2": {
+   "at": "2026-10-30T19:46:28+00:00",
+   "lead_min": 13.5,
+   "price": 0.14
   },
   "mls_away_band_fade:KXMLSGAME-26OCT21CINDCU-DCU": {
    "at": "2026-10-21T22:54:10+00:00",
@@ -1259,21 +1194,6 @@
    "at": "2026-10-25T11:28:28+00:00",
    "lead_min": 1.5,
    "price": 0.89
-  },
-  "o15_form_l10:KXUCLTOTAL-26OCT20FCPPSV-2": {
-   "at": "2026-10-20T18:46:38+00:00",
-   "lead_min": 13.4,
-   "price": 0.84
-  },
-  "o15_form_l10:KXUCLTOTAL-26OCT20PSGBAR-2": {
-   "at": "2026-10-20T18:46:38+00:00",
-   "lead_min": 13.4,
-   "price": 0.94
-  },
-  "o15_form_l10:KXUCLTOTAL-26OCT20VFBATM-2": {
-   "at": "2026-10-20T18:46:38+00:00",
-   "lead_min": 13.4,
-   "price": 0.86
   },
   "o15_form_l10:KXUCLTOTAL-26OCT21COMMUN-2": {
    "at": "2026-10-21T16:34:48+00:00",
@@ -1515,31 +1435,6 @@
    "lead_min": 1.8,
    "price": 0.53
   },
-  "o25_congestion:KXUCLTOTAL-26OCT20FCPPSV-3": {
-   "at": "2026-10-20T18:46:38+00:00",
-   "lead_min": 13.4,
-   "price": 0.39
-  },
-  "o25_congestion:KXUCLTOTAL-26OCT20MCIAEK-3": {
-   "at": "2026-10-20T18:46:38+00:00",
-   "lead_min": 13.4,
-   "price": 0.24
-  },
-  "o25_congestion:KXUCLTOTAL-26OCT20PSGBAR-3": {
-   "at": "2026-10-20T18:46:38+00:00",
-   "lead_min": 13.4,
-   "price": 0.19
-  },
-  "o25_congestion:KXUCLTOTAL-26OCT20ROMSLO-3": {
-   "at": "2026-10-20T18:46:38+00:00",
-   "lead_min": 13.4,
-   "price": 0.23
-  },
-  "o25_congestion:KXUCLTOTAL-26OCT20VFBATM-3": {
-   "at": "2026-10-20T18:46:38+00:00",
-   "lead_min": 13.4,
-   "price": 0.35
-  },
   "o25_congestion:KXUCLTOTAL-26OCT21COMMUN-3": {
    "at": "2026-10-21T16:34:48+00:00",
    "lead_min": 10.2,
@@ -1740,11 +1635,6 @@
    "lead_min": 3.0,
    "price": 0.71
   },
-  "tennis_utr_shortlist_v1:aec-utr-bocfel-macang-2026-10-19": {
-   "at": "2026-10-20T20:02:55+00:00",
-   "lead_min": 7.1,
-   "price": 0.72
-  },
   "tennis_utr_shortlist_v1:aec-utr-chaeli-bhapar-2026-10-26": {
    "at": "2026-10-27T15:50:08+00:00",
    "lead_min": 9.9,
@@ -1849,11 +1739,6 @@
    "at": "2026-10-21T07:57:10+00:00",
    "lead_min": 2.8,
    "price": 0.74
-  },
-  "tennis_utr_shortlist_v1:aec-utr-vaclud-traleo-2026-10-19": {
-   "at": "2026-10-20T18:46:38+00:00",
-   "lead_min": 13.4,
-   "price": 0.75
   },
   "tennis_utr_shortlist_v1:aec-utr-valell-okurin-2026-10-28": {
    "at": "2026-10-28T15:56:25+00:00",
@@ -1991,5 +1876,5 @@
    "price": 0.75
   }
  },
- "updated": "2026-10-30T18:45:28+00:00"
+ "updated": "2026-10-30T20:16:33+00:00"
 }
