@@ -150,16 +150,6 @@
    "lead_min": 21.6,
    "price": 0.55
   },
-  "corners_team_fade:KXUCLTCORNERS-26OCT21COMMUN-COM5": {
-   "at": "2026-10-21T16:03:32+00:00",
-   "lead_min": 41.5,
-   "price": 0.52
-  },
-  "corners_team_fade:KXUCLTCORNERS-26OCT21LILGAL-LIL5": {
-   "at": "2026-10-21T16:03:32+00:00",
-   "lead_min": 41.5,
-   "price": 0.54
-  },
   "crypto_eth_fav_both:KXETHD-26OCT2817-T2339.99": {
    "at": "2026-10-28T18:29:36+00:00",
    "lead_min": 35.4,
@@ -260,6 +250,11 @@
    "lead_min": 21.6,
    "price": 0.55
   },
+  "liga_u15_dog:KXLALIGATOTAL-26OCT31RBBMCF-2": {
+   "at": "2026-10-31T16:43:48+00:00",
+   "lead_min": 46.2,
+   "price": 0.15
+  },
   "mls_away_band_fade:KXMLSGAME-26OCT24DALSJ-SJ": {
    "at": "2026-10-24T23:43:12+00:00",
    "lead_min": 46.8,
@@ -274,6 +269,11 @@
    "at": "2026-10-28T22:51:47+00:00",
    "lead_min": 38.2,
    "price": 0.79
+  },
+  "mls_away_band_fade:KXMLSGAME-26OCT31CLTORL-ORL": {
+   "at": "2026-10-31T16:43:48+00:00",
+   "lead_min": 16.2,
+   "price": 0.73
   },
   "mls_fade_home:KXMLSGAME-26OCT24HOUMIN-HOU": {
    "at": "2026-10-24T23:43:12+00:00",
@@ -329,11 +329,6 @@
    "at": "2026-10-23T17:26:37+00:00",
    "lead_min": 33.4,
    "price": 0.87
-  },
-  "o15_form_l10:KXUCLTOTAL-26OCT21COMMUN-2": {
-   "at": "2026-10-21T16:03:32+00:00",
-   "lead_min": 41.5,
-   "price": 0.84
   },
   "o15_ranked:KXSERIEATOTAL-26OCT25LECJUV-2": {
    "at": "2026-10-25T16:49:14+00:00",
@@ -415,11 +410,6 @@
    "lead_min": 1.6,
    "price": 0.53
   },
-  "o25_congestion:KXUCLTOTAL-26OCT21COMMUN-3": {
-   "at": "2026-10-21T16:03:32+00:00",
-   "lead_min": 41.5,
-   "price": 0.37
-  },
   "o25_congestion:KXUECLTOTAL-26OCT22GETLUG-3": {
    "at": "2026-10-22T15:58:38+00:00",
    "lead_min": 46.4,
@@ -469,6 +459,11 @@
    "at": "2026-10-28T22:51:47+00:00",
    "lead_min": 38.2,
    "price": 0.77
+  },
+  "team2_form_l10:KXMLSTEAMTOTAL-26OCT31CLTORL-CLT2": {
+   "at": "2026-10-31T16:43:48+00:00",
+   "lead_min": 16.2,
+   "price": 0.7
   },
   "team2_form_l10:KXSERIEATEAMTOTAL-26OCT28VENINT-INT2": {
    "at": "2026-10-28T17:28:25+00:00",
@@ -591,5 +586,5 @@
    "price": 0.75
   }
  },
- "updated": "2026-10-31T10:03:11+00:00"
+ "updated": "2026-10-31T16:43:48+00:00"
 }
