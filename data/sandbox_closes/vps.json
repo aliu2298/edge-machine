@@ -916,8 +916,8 @@
    "price": 0.23
   },
   "ere_draw:KXEREDIVISIEGAME-26OCT31HEENIJ": {
-   "at": "2026-10-31T16:52:40+00:00",
-   "lead_min": 52.3,
+   "at": "2026-10-31T17:08:08+00:00",
+   "lead_min": 36.9,
    "price": 0.25
   },
   "espn_fpi:aec-nfl-car-gb-2026-10-29": {
@@ -996,9 +996,9 @@
    "price": 0.14
   },
   "liga_u15_dog:KXLALIGATOTAL-26OCT31RBBMCF-2": {
-   "at": "2026-10-31T16:52:40+00:00",
-   "lead_min": 37.3,
-   "price": 0.15
+   "at": "2026-10-31T17:08:08+00:00",
+   "lead_min": 21.9,
+   "price": 0.16
   },
   "mls_away_band_fade:KXMLSGAME-26OCT21CINDCU-DCU": {
    "at": "2026-10-21T22:54:10+00:00",
@@ -1045,6 +1045,11 @@
    "lead_min": 9.8,
    "price": 0.74
   },
+  "mls_away_band_fade:KXMLSGAME-26OCT31CLBDCU-DCU": {
+   "at": "2026-10-31T17:08:08+00:00",
+   "lead_min": 51.9,
+   "price": 0.86
+  },
   "mls_away_band_fade:KXMLSGAME-26OCT31CLTORL-ORL": {
    "at": "2026-10-31T16:52:40+00:00",
    "lead_min": 7.3,
@@ -1084,6 +1089,11 @@
    "at": "2026-10-29T02:22:08+00:00",
    "lead_min": 7.9,
    "price": 0.58
+  },
+  "mls_fade_home:KXMLSGAME-26OCT31CINPHI-CIN": {
+   "at": "2026-10-31T17:08:08+00:00",
+   "lead_min": 51.9,
+   "price": 0.59
   },
   "o15_cup_mismatch:KXCONMEBOLLIBTOTAL-26OCT22FLAELP-2": {
    "at": "2026-10-23T00:19:28+00:00",
@@ -1570,6 +1580,16 @@
    "lead_min": 9.8,
    "price": 0.59
   },
+  "team2_form_l10:KXMLSTEAMTOTAL-26OCT31CINPHI-PHI2": {
+   "at": "2026-10-31T17:08:08+00:00",
+   "lead_min": 51.9,
+   "price": 0.5
+  },
+  "team2_form_l10:KXMLSTEAMTOTAL-26OCT31CLBDCU-CLB2": {
+   "at": "2026-10-31T17:08:08+00:00",
+   "lead_min": 51.9,
+   "price": 0.71
+  },
   "team2_form_l10:KXMLSTEAMTOTAL-26OCT31CLTORL-CLT2": {
    "at": "2026-10-31T16:52:40+00:00",
    "lead_min": 7.3,
@@ -1815,6 +1835,11 @@
    "lead_min": 7.9,
    "price": 0.81
   },
+  "u35_low_o15:KXMLSTOTAL-26OCT31NYCMTL-2": {
+   "at": "2026-10-31T17:08:08+00:00",
+   "lead_min": 51.9,
+   "price": 0.84
+  },
   "u35_low_o15:KXSAUDIPLTOTAL-26OCT22FATSHA-2": {
    "at": "2026-10-22T14:39:02+00:00",
    "lead_min": 6.0,
@@ -1916,5 +1941,5 @@
    "price": 0.75
   }
  },
- "updated": "2026-10-31T16:52:40+00:00"
+ "updated": "2026-10-31T17:08:08+00:00"
 }
