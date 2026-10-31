@@ -2789,20 +2789,199 @@
    "result": "yes",
    "series": "KXSUPERLIGTOTAL",
    "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": null,
+    "15": null,
+    "20": null
+   },
+   "event": "KXEPLTOTAL-26OCT31CFCMUN",
+   "form_rule": false,
+   "id": "KXEPLTOTAL-26OCT31CFCMUN-4",
+   "kickoff": 1793449800,
+   "league": "Premier League",
+   "logged": "2026-10-31T15:52:35.442119+00:00",
+   "night": "2026-10-31",
+   "prints": 2250,
+   "result": "no",
+   "series": "KXEPLTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": null,
+    "15": null,
+    "20": null
+   },
+   "event": "KXLALIGATOTAL-26OCT31LEVATM",
+   "form_rule": false,
+   "id": "KXLALIGATOTAL-26OCT31LEVATM-4",
+   "kickoff": 1793451600,
+   "league": "La Liga",
+   "logged": "2026-10-31T15:52:35.442119+00:00",
+   "night": "2026-10-31",
+   "prints": 817,
+   "result": "no",
+   "series": "KXLALIGATOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": null,
+    "15": null,
+    "20": null
+   },
+   "event": "KXSAUDIPLTOTAL-26OCT31ALTITT",
+   "form_rule": false,
+   "id": "KXSAUDIPLTOTAL-26OCT31ALTITT-4",
+   "kickoff": 1793453400,
+   "league": "Saudi Pro League",
+   "logged": "2026-10-31T15:52:35.442119+00:00",
+   "night": "2026-10-31",
+   "prints": 162,
+   "result": "no",
+   "series": "KXSAUDIPLTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": null,
+    "15": null,
+    "20": null
+   },
+   "event": "KXSUPERLIGTOTAL-26OCT31KOCRIZ",
+   "form_rule": false,
+   "id": "KXSUPERLIGTOTAL-26OCT31KOCRIZ-4",
+   "kickoff": 1793451600,
+   "league": "Turkish Super Lig",
+   "logged": "2026-10-31T15:52:35.442119+00:00",
+   "night": "2026-10-31",
+   "prints": 56,
+   "result": "no",
+   "series": "KXSUPERLIGTOTAL",
+   "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1793448364,
+     "fill_print": 0.03,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793448364,
+       "filled": true,
+       "target": 0.2,
+       "thin": false,
+       "volume": 458.76
+      },
+      "3": {
+       "at": 1793448374,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 254.49
+      },
+      "4": {
+       "at": 1793448380,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 73.9
+      }
+     }
+    },
+    "15": {
+     "dead": false,
+     "fill_at": 1793448364,
+     "fill_print": 0.03,
+     "limit": 0.15,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793448374,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 254.49
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.45,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "20": {
+     "dead": false,
+     "fill_at": 1793448342,
+     "fill_print": 0.19,
+     "limit": 0.2,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1793448353,
+       "filled": true,
+       "target": 0.4,
+       "thin": false,
+       "volume": 101.34
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.6,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.8,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "event": "KXSUPERLIGTOTAL-26OCT31ERZCOR",
+   "form_rule": false,
+   "id": "KXSUPERLIGTOTAL-26OCT31ERZCOR-4",
+   "kickoff": 1793442600,
+   "league": "Turkish Super Lig",
+   "logged": "2026-10-31T15:52:35.442119+00:00",
+   "night": "2026-10-31",
+   "prints": 559,
+   "result": "yes",
+   "series": "KXSUPERLIGTOTAL",
+   "version": "o35-v1"
   }
  ],
  "error": null,
  "lane": "o35_cheap_no_wave",
- "last_run": "2026-10-31T09:57:21.165492+00:00",
+ "last_run": "2026-10-31T15:52:35.442119+00:00",
  "observations": {
-  "at": "2026-10-31T09:57:21.165492+00:00",
+  "at": "2026-10-31T15:52:35.442119+00:00",
   "errors": [],
-  "new": 0,
-  "waiting": 0
+  "new": 5,
+  "waiting": 1
  },
  "seen": {
   "KXBUNDESLIGATOTAL-26OCT30SVEM05": "2026-10-30T23:13:35.713075+00:00",
+  "KXEPLTOTAL-26OCT31CFCMUN": "2026-10-31T15:52:35.442119+00:00",
   "KXLALIGATOTAL-26OCT30VILESP": "2026-10-30T23:13:35.713075+00:00",
+  "KXLALIGATOTAL-26OCT31LEVATM": "2026-10-31T15:52:35.442119+00:00",
   "KXLIGUE1TOTAL-26OCT30HACPSG": "2026-10-30T23:13:35.713075+00:00",
   "KXLIGUE1TOTAL-26OCT30LILRCL": "2026-10-30T23:13:35.713075+00:00",
   "KXLIGUE1TOTAL-26OCT31NICREN": "2026-10-30T23:13:35.713075+00:00",
@@ -2827,6 +3006,7 @@
   "KXSAUDIPLTOTAL-26OCT30ABHITJ": "2026-10-30T18:51:54.338526+00:00",
   "KXSAUDIPLTOTAL-26OCT30DIRNEO": "2026-10-30T18:51:54.338526+00:00",
   "KXSAUDIPLTOTAL-26OCT30SHAAAS": "2026-10-30T23:13:35.713075+00:00",
+  "KXSAUDIPLTOTAL-26OCT31ALTITT": "2026-10-31T15:52:35.442119+00:00",
   "KXSCOTTISHPREMTOTAL-26OCT28ABEFAL": "2026-10-29T01:14:05.091805+00:00",
   "KXSCOTTISHPREMTOTAL-26OCT28CELDUU": "2026-10-29T01:14:05.091805+00:00",
   "KXSCOTTISHPREMTOTAL-26OCT28DUNKIL": "2026-10-29T01:14:05.091805+00:00",
@@ -2843,7 +3023,9 @@
   "KXSERIEATOTAL-26OCT28VENINT": "2026-10-28T21:20:01.281235+00:00",
   "KXSERIEATOTAL-26OCT29FIOATA": "2026-10-30T00:22:17.879249+00:00",
   "KXSERIEATOTAL-26OCT29FROLEC": "2026-10-29T19:53:34.117876+00:00",
-  "KXSUPERLIGTOTAL-26OCT30KONGAL": "2026-10-30T23:13:35.713075+00:00"
+  "KXSUPERLIGTOTAL-26OCT30KONGAL": "2026-10-30T23:13:35.713075+00:00",
+  "KXSUPERLIGTOTAL-26OCT31ERZCOR": "2026-10-31T15:52:35.442119+00:00",
+  "KXSUPERLIGTOTAL-26OCT31KOCRIZ": "2026-10-31T15:52:35.442119+00:00"
  },
  "since": "2026-10-28",
  "skips": {},
