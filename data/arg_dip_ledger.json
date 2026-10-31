@@ -5953,23 +5953,20 @@
   ]
  },
  "lane": "arg_goalless_dip",
- "last_run": "2026-10-31T19:34:38.238410+00:00",
+ "last_run": "2026-10-31T22:51:09.196485+00:00",
  "observations": {
-  "at": "2026-10-31T19:34:38.238410+00:00",
+  "at": "2026-10-31T22:51:09.196485+00:00",
   "errors": [],
   "new": 0,
-  "skipped": 0,
+  "skipped": 1,
   "waiting": 0
  },
  "seen": {},
  "since": "2026-10-31",
- "skips": {},
+ "skips": {
+  "KXARGPREMDIVTOTAL-26OCT31RIECAT": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)"
+ },
  "upcoming": [
-  {
-   "event": "KXARGPREMDIVTOTAL-26OCT31RIECAT",
-   "kickoff": 1793476800,
-   "title": "Riestra vs Talleres Cordoba: Total Goals"
-  },
   {
    "event": "KXARGPREMDIVTOTAL-26OCT31VELSLA",
    "kickoff": 1793484900,
@@ -5984,6 +5981,16 @@
    "event": "KXARGPREMDIVTOTAL-26NOV01BOCRIV",
    "kickoff": 1793556000,
    "title": "Boca Juniors vs River Plate: Total Goals"
+  },
+  {
+   "event": "KXARGPREMDIVTOTAL-26NOV01CABBAR",
+   "kickoff": 1793568600,
+   "title": "Belgrano de Cordoba vs Barracas: Total Goals"
+  },
+  {
+   "event": "KXARGPREMDIVTOTAL-26NOV01NOBUNI",
+   "kickoff": 1793568600,
+   "title": "Newell's Old Boys vs Union Santa Fe: Total Goals"
   }
  ],
  "version": "argdip-v1"
