@@ -140,11 +140,6 @@
    "lead_min": 8.0,
    "price": 0.41
   },
-  "commod_fav_band:KXBRENTD-26OCT2217-T108": {
-   "at": "2026-10-22T20:29:36+00:00",
-   "lead_min": 0.4,
-   "price": 0.87
-  },
   "commod_fav_band:KXBRENTD-26OCT2617-T110.50": {
    "at": "2026-10-26T20:16:08+00:00",
    "lead_min": 13.9,
@@ -165,20 +160,10 @@
    "lead_min": 37.4,
    "price": 0.98
   },
-  "commod_fav_band:KXGOLDD-26OCT2217-T4033": {
-   "at": "2026-10-22T20:29:36+00:00",
-   "lead_min": 0.4,
-   "price": 0.03
-  },
   "commod_fav_band:KXGOLDD-26OCT2617-T4014": {
    "at": "2026-10-26T20:16:08+00:00",
    "lead_min": 13.9,
    "price": 0.39
-  },
-  "commod_fav_band:KXSILVERD-26OCT2217-T54.75": {
-   "at": "2026-10-22T20:29:36+00:00",
-   "lead_min": 0.4,
-   "price": 0.05
   },
   "commod_fav_band:KXSILVERD-26OCT2717-T54.25": {
    "at": "2026-10-27T20:25:18+00:00",
@@ -218,11 +203,6 @@
   "commod_fav_band:KXWTI-26OCT3014-T103.49": {
    "at": "2026-10-30T17:45:06+00:00",
    "lead_min": 14.9,
-   "price": 0.98
-  },
-  "commod_nc_no:KXBRENTD-26OCT2217-T109.50": {
-   "at": "2026-10-22T20:29:36+00:00",
-   "lead_min": 0.4,
    "price": 0.98
   },
   "commod_nc_no:KXBRENTD-26OCT2717-T110": {
@@ -305,11 +285,6 @@
    "lead_min": 14.5,
    "price": 0.83
   },
-  "commod_nc_yes:KXGOLDD-26OCT2217-T4013": {
-   "at": "2026-10-22T20:29:36+00:00",
-   "lead_min": 0.4,
-   "price": 0.98
-  },
   "commod_nc_yes:KXGOLDD-26OCT2617-T4004": {
    "at": "2026-10-26T20:16:08+00:00",
    "lead_min": 13.9,
@@ -325,20 +300,10 @@
    "lead_min": 37.4,
    "price": 0.99
   },
-  "commod_nc_yes:KXNATGASD-26OCT2217-T3.135": {
-   "at": "2026-10-22T20:29:36+00:00",
-   "lead_min": 0.4,
-   "price": 0.95
-  },
   "commod_nc_yes:KXNATGASD-26OCT2917-T2.900": {
    "at": "2026-10-29T20:22:49+00:00",
    "lead_min": 7.2,
    "price": 0.48
-  },
-  "commod_nc_yes:KXSILVERD-26OCT2217-T54.50": {
-   "at": "2026-10-22T20:29:36+00:00",
-   "lead_min": 0.4,
-   "price": 0.85
   },
   "commod_nc_yes:KXSILVERD-26OCT2617-T53.75": {
    "at": "2026-10-26T20:16:08+00:00",
@@ -841,8 +806,8 @@
    "price": 0.255
   },
   "espn_fpi:aec-nfl-kc-den-2026-11-01": {
-   "at": "2026-11-01T20:25:25+00:00",
-   "lead_min": 59.6,
+   "at": "2026-11-01T20:40:28+00:00",
+   "lead_min": 44.5,
    "price": 0.5075
   },
   "espn_fpi:aec-nfl-kc-sea-2026-10-25": {
@@ -866,8 +831,8 @@
    "price": 0.4075
   },
   "espn_fpi:aec-nfl-ne-mia-2026-11-01": {
-   "at": "2026-11-01T20:25:25+00:00",
-   "lead_min": 59.6,
+   "at": "2026-11-01T20:40:28+00:00",
+   "lead_min": 44.5,
    "price": 0.765
   },
   "espn_fpi:aec-nfl-nyg-hou-2026-10-25": {
@@ -994,6 +959,11 @@
    "at": "2026-10-31T18:54:41+00:00",
    "lead_min": 5.3,
    "price": 0.81
+  },
+  "mls_fade_home:KXMLSGAME-26NOV01ATLTOR-ATL": {
+   "at": "2026-11-01T20:40:28+00:00",
+   "lead_min": 49.5,
+   "price": 0.56
   },
   "mls_fade_home:KXMLSGAME-26OCT24HOUMIN-HOU": {
    "at": "2026-10-25T00:16:38+00:00",
@@ -1410,6 +1380,11 @@
    "lead_min": 9.6,
    "price": 0.51
   },
+  "team2_form_l10:KXMLSTEAMTOTAL-26NOV01ATLTOR-TOR2": {
+   "at": "2026-11-01T20:40:28+00:00",
+   "lead_min": 49.5,
+   "price": 0.46
+  },
   "team2_form_l10:KXMLSTEAMTOTAL-26OCT24MTLNSH-NSH2": {
    "at": "2026-10-24T17:25:27+00:00",
    "lead_min": 4.5,
@@ -1811,5 +1786,5 @@
    "price": 0.75
   }
  },
- "updated": "2026-11-01T20:25:25+00:00"
+ "updated": "2026-11-01T20:40:28+00:00"
 }
