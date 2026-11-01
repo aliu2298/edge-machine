@@ -9,7 +9,7 @@
    0.97
   ]
  },
- "board_built_at": "2026-11-01T18:01:02+00:00",
+ "board_built_at": "2026-11-01T18:16:11+00:00",
  "collector_error": null,
  "collector_healthy": {
   "st_t5": true,
@@ -234,6 +234,82 @@
    "source": "st_t7",
    "sport": "soccer_team3",
    "status": "hit"
+  },
+  "2026-11-01|Juventus|Napoli|Juventus to score 2+ \u00b7 O+D\u2212 v O+D+ \u00b7 team 2+ goals": {
+   "away": "Napoli",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "Juventus"
+   },
+   "date": "2026-11-01",
+   "edge_at_log": null,
+   "first_seen": "2026-11-01",
+   "headline": "Juventus to score 2+",
+   "home": "Juventus",
+   "id": "2026-11-01|Juventus|Napoli|Juventus to score 2+ \u00b7 O+D\u2212 v O+D+ \u00b7 team 2+ goals",
+   "kickoff": "2026-11-01T19:45Z",
+   "lane": "production",
+   "last_seen": "2026-11-01",
+   "last_seen_at": "2026-11-01T18:16:11+00:00",
+   "league": "Serie A",
+   "match": "Juventus v Napoli",
+   "pair": "st_t5|soccer_team2",
+   "price_at_log": 0.44,
+   "published_at": "2026-11-01T18:16:11+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Juventus to score 2+",
+    "event": "KXSERIEATEAMTOTAL-26NOV01JUVNAP",
+    "market": "KXSERIEATEAMTOTAL-26NOV01JUVNAP-JUV2",
+    "outcome": "Juventus over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.44,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "st_t5:KXSERIEATEAMTOTAL-26NOV01JUVNAP-JUV2",
+   "source": "st_t5",
+   "sport": "soccer_team2",
+   "status": "pending"
+  },
+  "2026-11-01|Marseille|Toulouse|Toulouse to score 2+ \u00b7 O+D\u2212 v O+D+ \u00b7 team 2+ goals": {
+   "away": "Toulouse",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "Toulouse"
+   },
+   "date": "2026-11-01",
+   "edge_at_log": null,
+   "first_seen": "2026-11-01",
+   "headline": "Toulouse to score 2+",
+   "home": "Marseille",
+   "id": "2026-11-01|Marseille|Toulouse|Toulouse to score 2+ \u00b7 O+D\u2212 v O+D+ \u00b7 team 2+ goals",
+   "kickoff": "2026-11-01T19:45Z",
+   "lane": "production",
+   "last_seen": "2026-11-01",
+   "last_seen_at": "2026-11-01T18:16:11+00:00",
+   "league": "Ligue 1",
+   "match": "Marseille v Toulouse",
+   "pair": "st_t5|soccer_team2",
+   "price_at_log": 0.41,
+   "published_at": "2026-11-01T18:16:11+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Toulouse to score 2+",
+    "event": "KXLIGUE1TEAMTOTAL-26NOV01OLMTFC",
+    "market": "KXLIGUE1TEAMTOTAL-26NOV01OLMTFC-TFC2",
+    "outcome": "Toulouse over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.41,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "st_t5:KXLIGUE1TEAMTOTAL-26NOV01OLMTFC-TFC2",
+   "source": "st_t5",
+   "sport": "soccer_team2",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -244,9 +320,9 @@
    "ready_at": "2026-10-29T00:59:00+00:00",
    "route": "moved by hand on 2026-10-28",
    "routing": {
-    "leads": 2,
+    "leads": 4,
     "problem": null,
-    "routed": 2,
+    "routed": 4,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -258,7 +334,7 @@
    "sandbox_roi_fee": -0.5336,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 2,
     "under_target": 0
    }
   },
@@ -302,5 +378,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-01T18:01:02+00:00"
+ "updated_at": "2026-11-01T18:16:11+00:00"
 }

@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-01T16:31:30.274118+00:00",
+ "last_run": "2026-11-01T18:16:11.011696+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -2664,6 +2664,60 @@
      "ticker": "KXMLSTEAMTOTAL-26OCT31SKCDAL-DAL2",
      "title": "Will Dallas score over 1.5 goals?",
      "why": "FC Dallas O+D- v Sporting Kansas City O+D+ \u00b7 2+ YES 0.58"
+    },
+    {
+     "ask": 0.44,
+     "bid": 0.42,
+     "event": "KXSERIEATEAMTOTAL-26NOV01JUVNAP",
+     "group": "B",
+     "id": "T5:KXSERIEATEAMTOTAL-26NOV01JUVNAP:home",
+     "labels": {
+      "opp": "O+D+",
+      "own": "O+D-"
+     },
+     "league": "Serie A",
+     "line": 1.5,
+     "logged": "2026-11-01T18:16:11.011696+00:00",
+     "match": "Juventus v Napoli",
+     "opponent": "Napoli",
+     "price": 0.44,
+     "rule": "T5",
+     "side": "yes",
+     "start": "2026-11-01T19:45Z",
+     "status": "open",
+     "sub": "Juventus over 1.5 goals",
+     "team": "Juventus",
+     "team_side": "home",
+     "ticker": "KXSERIEATEAMTOTAL-26NOV01JUVNAP-JUV2",
+     "title": "Will Juventus score over 1.5 goals?",
+     "why": "Juventus O+D- v Napoli O+D+ \u00b7 2+ YES 0.44"
+    },
+    {
+     "ask": 0.41,
+     "bid": 0.39,
+     "event": "KXLIGUE1TEAMTOTAL-26NOV01OLMTFC",
+     "group": "B",
+     "id": "T5:KXLIGUE1TEAMTOTAL-26NOV01OLMTFC:away",
+     "labels": {
+      "opp": "O+D+",
+      "own": "O+D-"
+     },
+     "league": "Ligue 1",
+     "line": 1.5,
+     "logged": "2026-11-01T18:16:11.011696+00:00",
+     "match": "Marseille v Toulouse",
+     "opponent": "Marseille",
+     "price": 0.41,
+     "rule": "T5",
+     "side": "yes",
+     "start": "2026-11-01T19:45Z",
+     "status": "open",
+     "sub": "Toulouse over 1.5 goals",
+     "team": "Toulouse",
+     "team_side": "away",
+     "ticker": "KXLIGUE1TEAMTOTAL-26NOV01OLMTFC-TFC2",
+     "title": "Will Toulouse score over 1.5 goals?",
+     "why": "Toulouse O+D- v Marseille O+D+ \u00b7 2+ YES 0.41"
     }
    ]
   },
@@ -3896,14 +3950,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-29T01:31:26.266467+00:00",
-   "candidates": 1,
-   "due": 3,
-   "labelled": 3,
-   "matched": 1,
-   "new": 0
-  },
-  {
    "at": "2026-10-29T01:33:27.360781+00:00",
    "candidates": 1,
    "due": 3,
@@ -4302,6 +4348,14 @@
    "labelled": 2,
    "matched": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-01T18:16:11.011696+00:00",
+   "candidates": 2,
+   "due": 2,
+   "labelled": 2,
+   "matched": 2,
+   "new": 2
   }
  ],
  "version": "soccer-team-rules-v1"
