@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-01T21:07:49.868327+00:00",
+ "last_run": "2026-11-01T22:31:44.423810+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -2719,11 +2719,14 @@
      "logged": "2026-11-01T18:16:11.011696+00:00",
      "match": "Juventus v Napoli",
      "opponent": "Napoli",
+     "payout": 1.0,
      "price": 0.44,
+     "profit": 118.7,
      "rule": "T5",
+     "settled": "2026-11-01T22:31:44.423810+00:00",
      "side": "yes",
      "start": "2026-11-01T19:45Z",
-     "status": "open",
+     "status": "won",
      "sub": "Juventus over 1.5 goals",
      "team": "Juventus",
      "team_side": "home",
@@ -2746,17 +2749,47 @@
      "logged": "2026-11-01T18:16:11.011696+00:00",
      "match": "Marseille v Toulouse",
      "opponent": "Marseille",
+     "payout": 0.0,
      "price": 0.41,
+     "profit": -100.0,
      "rule": "T5",
+     "settled": "2026-11-01T22:31:44.423810+00:00",
      "side": "yes",
      "start": "2026-11-01T19:45Z",
-     "status": "open",
+     "status": "lost",
      "sub": "Toulouse over 1.5 goals",
      "team": "Toulouse",
      "team_side": "away",
      "ticker": "KXLIGUE1TEAMTOTAL-26NOV01OLMTFC-TFC2",
      "title": "Will Toulouse score over 1.5 goals?",
      "why": "Toulouse O+D- v Marseille O+D+ \u00b7 2+ YES 0.41"
+    },
+    {
+     "ask": 0.6,
+     "bid": 0.59,
+     "event": "KXMLSTEAMTOTAL-26NOV01NEMIA",
+     "group": "B",
+     "id": "T5:KXMLSTEAMTOTAL-26NOV01NEMIA:away",
+     "labels": {
+      "opp": "O+D+",
+      "own": "O+D-"
+     },
+     "league": "MLS",
+     "line": 1.5,
+     "logged": "2026-11-01T22:31:44.423810+00:00",
+     "match": "New England Revolution v Inter Miami CF",
+     "opponent": "New England Revolution",
+     "price": 0.6,
+     "rule": "T5",
+     "side": "yes",
+     "start": "2026-11-02T00:00Z",
+     "status": "open",
+     "sub": "Miami over 1.5 goals",
+     "team": "Inter Miami CF",
+     "team_side": "away",
+     "ticker": "KXMLSTEAMTOTAL-26NOV01NEMIA-MIA2",
+     "title": "Will Miami score over 1.5 goals?",
+     "why": "Inter Miami CF O+D- v New England Revolution O+D+ \u00b7 2+ YES 0.60"
     }
    ]
   },
@@ -3989,14 +4022,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-30T17:01:28.660485+00:00",
-   "candidates": 1,
-   "due": 2,
-   "labelled": 2,
-   "matched": 1,
-   "new": 0
-  },
-  {
    "at": "2026-10-30T18:01:22.652694+00:00",
    "candidates": 1,
    "due": 1,
@@ -4393,6 +4418,14 @@
    "candidates": 1,
    "due": 2,
    "labelled": 2,
+   "matched": 1,
+   "new": 1
+  },
+  {
+   "at": "2026-11-01T22:31:44.423810+00:00",
+   "candidates": 1,
+   "due": 1,
+   "labelled": 1,
    "matched": 1,
    "new": 1
   }
