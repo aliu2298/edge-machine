@@ -118,13 +118,36 @@ def voided_line(L):
             'and left the record; the record restarts on the verified entries.</p>')
 
 
+def head_key(L):
+    """The exit a lane's headline row reads: the cheap-side split, or a single sell (x2, x3, x4) when the lane's headline is one."""
+    return L.get("headline") if L.get("headline") in C.SINGLES else C.SPLIT
+
+
+def head_word(lanes):
+    """The headline exit's column word: "Split" for split lanes, "Sell-all-at-4x" when every lane shares one single sell, else "Headline"."""
+    keys = {head_key(L) for L in lanes}
+    if not keys or keys == {C.SPLIT}:
+        return "Split"
+    return f"Sell-all-at-{C.LEGGED[next(iter(keys))][0][0]:g}x" if len(keys) == 1 else "Headline"
+
+
+def legs_head(lanes):
+    keys = {head_key(L) for L in lanes}
+    return "Legs filled 2x / 3x" if not keys or keys == {C.SPLIT} else ("Reached " + f"{C.LEGGED[next(iter(keys))][0][0]:g}x" if len(keys) == 1 else "Legs filled")
+
+
+def legs_cell(L, r):
+    k = head_key(L)
+    return f'{r["filled_2x"]} / {r["filled_3x"]}' if k == C.SPLIT else str(r["filled_2x"])
+
+
 def split_hold(L, hours=None, band=None):
     """The cheap-side split v the same entries held: entries, won (held), legs filled 2x / 3x, split ROI,
     hold ROI (each after fees, sum of profit over sum of cost), split z by night. `band` narrows the
     same entries to an entry ask of band["lo"]-band["hi"] (a lane's sub_bands). `events` counts the Kalshi
     events entered (one game, match or fight each: the independent outcome; 2026-10-29, Olu). Only settled
     events are replayed, so every event here is settled, and the review status counts them."""
-    sp, hd = _by(L, C.SPLIT, hours, band), _by(L, "hold", hours, band)
+    sp, hd = _by(L, head_key(L), hours, band), _by(L, "hold", hours, band)
     a, h = C.stats(sp), C.stats(hd)
     return dict(entries=len({(t["event"], t["ticker"], t["side"], t["hours"]) for t in (sp or hd)}), settled=len(hd),
                 events=len({t.get("event") or id(t) for t in hd}),
@@ -157,12 +180,12 @@ def summary(lanes, spread=False):
                         f'<td class="num">{r["events"]}</td><td class="num">{r["won"]}</td>'
                         f'<td class="num">{_pct(r["split"], sign=True) if r["n_split"] else "—"}</td>'
                         f'<td class="num">{_pct(r["hold"], sign=True)}</td>'
-                        f'<td class="num">{r["filled_2x"]} / {r["filled_3x"]}</td>'
+                        f'<td class="num">{legs_cell(L, r)}</td>'
                         + (f'<td class="num">{_spread(r["spread"])}</td>' if spread else "")
                         + f'<td>{esc(status_of(L, r["events"]))}</td></tr>')
     return ('<div class="tbl"><table class="chaos-summary"><tr><th>Lane</th><th class="num">Entries</th>'
-            '<th class="num">Unverified asks</th><th class="num">Settled entries</th><th class="num">Settled events</th><th class="num">Won</th><th class="num">Split ROI</th><th class="num">Hold ROI</th>'
-            '<th class="num">Legs filled 2x / 3x</th>' + ('<th class="num">Avg spread paid</th>' if spread else "")
+            '<th class="num">Unverified asks</th><th class="num">Settled entries</th><th class="num">Settled events</th><th class="num">Won</th><th class="num">' + head_word(lanes) + ' ROI</th><th class="num">Hold ROI</th>'
+            '<th class="num">' + legs_head(lanes) + '</th>' + ('<th class="num">Avg spread paid</th>' if spread else "")
             + '<th>Status</th></tr>' + "".join(rows) + "</table></div>")
 
 
@@ -172,16 +195,16 @@ def split_table(L):
     for h in L.get("entry_hours") or C.ENTRY_HOURS:
         for band in [None] + list(L.get("sub_bands") or ()):
             r = split_hold(L, h, band)
-            name = (f'<b>{esc(C.variant_label(C.vkey(h, C.SPLIT)))}</b>' if band is None else
+            name = (f'<b>{esc(C.variant_label(C.vkey(h, head_key(L))))}</b>' if band is None else
                     f'<span class="sub-band">· {esc(band["label"])}, same entries</span>')
             attrs = f' data-band="{esc(band["id"])}"' if band else ""
             rows.append(f'<tr{attrs}><td>{name}</td><td class="num">{r["entries"]}</td><td class="num">{r["won"]}</td>'
-                        f'<td class="num">{r["filled_2x"]} / {r["filled_3x"]}</td>'
+                        f'<td class="num">{legs_cell(L, r)}</td>'
                         f'<td class="num">{_pct(r["split"], sign=True) if r["n_split"] else "—"}</td>'
                         f'<td class="num">{_pct(r["hold"], sign=True)}</td><td class="num">{_num(r["z"], 1, "", 2)}</td></tr>')
     return ('<div class="tbl"><table class="chaos-split"><tr><th>Entry</th><th class="num">Entries</th><th class="num">Won</th>'
-            '<th class="num">Legs filled 2x / 3x</th><th class="num">Split ROI</th><th class="num">Hold ROI</th>'
-            '<th class="num">Split z (by night)</th></tr>' + "".join(rows) + "</table></div>")
+            '<th class="num">' + legs_head([L]) + '</th><th class="num">' + head_word([L]) + ' ROI</th><th class="num">Hold ROI</th>'
+            '<th class="num">' + head_word([L]) + ' z (by night)</th></tr>' + "".join(rows) + "</table></div>")
 
 
 def record_words(L):
@@ -228,13 +251,13 @@ def lane_html(L):
     trades = L.get("trades") or []
     entries = len({(t["event"], t["ticker"], t["side"], t["hours"]) for t in trades})
     hours = ", ".join(f"{h}h" for h in L.get("entry_hours") or C.ENTRY_HOURS)
-    others = [k for k in (L.get("exits") or C.EXITS) if k not in (C.SPLIT, "hold")]
+    others = [k for k in (L.get("exits") or C.EXITS) if k not in (head_key(L), "hold")]
     pending = C.SPLIT in (L.get("exits") or ()) and not _by(L, C.SPLIT) and trades
     return f"""<details class="section-disclosure" data-lane="{esc(L['id'])}" open><summary><b>{esc(L.get('label') or L['id'])}</b><span>{len(L.get('replayed') or {})} events replayed · {entries} entries · {split_hold(L)["events"]} settled events entered · {record_words(L)}</span></summary>
 <p class="sm">{esc(L.get('note') or '')}{(' <b>WATCH lane.</b>') if L.get('watch') else ''}{(' <b>' + esc(L['caution']) + '</b>') if L.get('caution') else ''} Bought {esc(hours)} before the start. Series {esc(', '.join(L.get('series') or []))}. Review at {C.REVIEW_N} settled events, decide at {C.PROMOTE_N}: one game, match or fight is one outcome, however many entries it holds.</p>
-{voided_line(L)}{_checking_line(L)}{basis_line(L)}<p class="sm"><b>Split v hold</b>{(' · the split joined this lane on 2026-10-27 and is being added to its earlier entries, newest events first') if pending else ''}</p>
+{voided_line(L)}{_checking_line(L)}{basis_line(L)}<p class="sm"><b>{head_word([L])} v hold</b>{(' · the split joined this lane on 2026-10-27 and is being added to its earlier entries, newest events first') if pending else ''}</p>
 {split_table(L)}
-{f'<details class="section-disclosure"><summary><b>Other exits</b><span>{len(others)} variants · the original targets and stops, each against its hold control</span></summary>{variant_table(L, skip=(C.SPLIT,))}</details>' if others else ''}
+{f'<details class="section-disclosure"><summary><b>Other exits</b><span>{len(others)} variants · the original targets and stops, each against its hold control</span></summary>{variant_table(L, skip=(head_key(L),))}</details>' if others else ''}
 <details class="section-disclosure"><summary><b>Trades</b><span>latest 30 entries · split, T target, S stop, H held to settlement</span></summary>{trade_list(L)}</details></details>"""
 
 
@@ -245,14 +268,14 @@ def lane_html(L):
 HOMES = {
     "tennis": ("challenger_cheap_split", "challenger_dog_tp30", "atp_coinflip_tp30"),
     "nba": ("nba_ml_dog_tp50", "nba_winmargin_split", "nba_winmargin_split_insample", "nba_tt_cheap_tp30"),
-    "nfl": ("cfb_dog_tp50",),
+    "nfl": ("cfb_home_dog_x4", "cfb_dog_tp50"),
 }
 HOME_OF = {lane: page for page, lanes in HOMES.items() for lane in lanes}
 TENNIS = HOMES["tennis"]
 PAGE_LABEL = {"tennis": "Tennis", "nba": "NBA", "nfl": "NFL · College football"}
 _BUY = {"tennis": "Buy the cheap player about an hour before the match, at the real ask.",
         "nba": "Buy the cheap side before the tip (1h, and 24h for the team totals), at the real ask.",
-        "nfl": "College football: buy the underdog 1h and 24h before kickoff, at the real ask."}
+        "nfl": "College football: buy the underdog 1h and 24h before kickoff, at the real ask (the lane: the home team, 10-25c)."}
 
 
 def with_config(state):
@@ -383,7 +406,8 @@ def place(html, page, state=None, before=None, retired=True):
 def index(lanes):
     """The Sandbox's Chaos index: one row per lane, its headline numbers and a link to its home."""
     rows = []
-    for L in [L for L in lanes if not L.get("baseline")]:
+    shown = [L for L in lanes if not L.get("baseline")]
+    for L in shown:
         r = split_hold(L)
         href = home_href(L["id"])
         page = PAGE_LABEL.get(HOME_OF.get(L["id"]), "—")
@@ -394,7 +418,7 @@ def index(lanes):
                     f'<td class="num">{_pct(r["hold"], sign=True)}</td>'
                     f'<td>{esc("retired " + L["retired"]["on"] if L.get("retired") else status_of(L, r["events"]))}</td></tr>')
     return ('<div class="tbl"><table class="chaos-index"><tr><th>Lane</th><th>Page</th><th class="num">Entries</th>'
-            '<th class="num">Settled events</th><th class="num">Won</th><th class="num">Split ROI</th><th class="num">Hold ROI</th><th>Status</th></tr>'
+            '<th class="num">Settled events</th><th class="num">Won</th><th class="num">' + head_word(shown) + ' ROI</th><th class="num">Hold ROI</th><th>Status</th></tr>'
             + "".join(rows + _extra_index_rows()) + "</table></div>" + baseline_index(lanes))
 
 

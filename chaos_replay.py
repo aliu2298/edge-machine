@@ -519,6 +519,11 @@ def night_of(ts):
     return dt.datetime.fromtimestamp(ts, UTC).astimezone(ET).date().isoformat()
 
 
+class SkipEvent(Exception):
+    """Raised by a picker that cannot judge an event (its team source has no match): the event is skipped and
+    the message is recorded as the skip note. Any other exception is a retry on the next run."""
+
+
 def replay_event(lane, series, event, fetch, now=None):
     """Replay one settled event for one lane -> (trades, note). Every trade carries its variant key
     (entry hours and exit), the start it was timed from and how that start was found."""
@@ -560,7 +565,11 @@ def replay_event(lane, series, event, fetch, now=None):
             i = entry_index([view(m, "yes") for m in ms], target, start_ts, spread)
             return view(ms[i], s) if i is not None else None
         ctx = dict(ctx0, entry_view=entry_view, start_ts=start_ts, hours=hours)
-        for ticker, side in dict.fromkeys(lane["picker"](ctx) or []):
+        try:
+            picks = lane["picker"](ctx) or []
+        except SkipEvent as e:
+            return None, str(e)
+        for ticker, side in dict.fromkeys(picks):
             ms = mins.get(ticker)
             if not ms:
                 continue

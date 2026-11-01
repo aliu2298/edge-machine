@@ -224,13 +224,13 @@ check("an older lane's rows in the same ledger are never edited or deleted", len
 check("a lane before its first night is not replayed", C.run(C.empty(), [dict(lane, since="2026-10-26")], NOW, fetch), {})
 check("the approved lanes are registered, each with fresh record from 2026-10-25; the cheap-side split lane first, from 2026-10-26; the win margin lane from 2026-10-30 and its in-sample backfill from 2026-10-20",
       ([l["id"] for l in chaos_lanes.LANES], [l["since"] for l in chaos_lanes.LANES]),
-      (["challenger_cheap_split", "challenger_dog_tp30", "cfb_dog_tp50", "atp_coinflip_tp30", "nba_tt_cheap_tp30", "nba_ml_dog_tp50",
+      (["challenger_cheap_split", "challenger_dog_tp30", "cfb_home_dog_x4", "cfb_dog_tp50", "atp_coinflip_tp30", "nba_tt_cheap_tp30", "nba_ml_dog_tp50",
         "nba_winmargin_split", "nba_winmargin_split_insample"],
-       ["2026-10-26"] + ["2026-10-25"] * 5 + ["2026-10-30", "2026-10-20"]))
+       ["2026-10-26", "2026-10-25", "2026-11-02"] + ["2026-10-25"] * 4 + ["2026-10-30", "2026-10-20"]))
 LD = {l["id"]: l for l in chaos_lanes.LANES}
 check("entry times and headlines as approved",
       [(l["entry_hours"], l["headline"]) for l in chaos_lanes.LANES],
-      [((1,), "split"), ((1,), "tp30"), ((1, 24), "tp50"), ((1,), "tp30"), ((1, 24), "tp30"), ((1,), "split"), ((1,), "split"), ((1,), "split")])
+      [((1,), "split"), ((1,), "tp30"), ((1, 24), "x4"), ((1, 24), "tp50"), ((1,), "tp30"), ((1, 24), "tp30"), ((1,), "split"), ((1,), "split"), ((1,), "split")])
 check("the coin-flip lane is a watch lane; the NBA moneyline lane is read against its hold row",
       (LD["atp_coinflip_tp30"]["watch"], "against its hold row" in LD["nba_ml_dog_tp50"]["caution"]), (True, True))
 ctx2 = dict(event=EV, tickers=[EV + "-AAA", EV + "-BBB"],
