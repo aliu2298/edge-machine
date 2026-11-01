@@ -171,13 +171,15 @@ LANES = [
     # every other exit is still tracked. SUB-BAND ask 10-30c: the same entries narrowed (the 37-40c entries
     # reached 2x hardest), split v hold, shown under the lane; the 10-40c population stays the lane.
     # 2026-10-31 (Olu): single sells at 2x, 3x and 4x tracked on the same entries too (additive backfill, no reset).
-    # BASELINE 2026-11-01 (Olu): no lane may select blind (every game, price band only). This one keeps replaying
-    # every new night as the baseline a filtered underdog lane must beat: no lane status, no promotion.
+    # BASELINE 2026-11-01 (Olu): no lane may select blind (every game, price band only). RETIRED the same day: a
+    # filter pass (~/edge-research/nba_mldog_2026-11-01/) found the blind set fair in all three periods and no
+    # pre-registered filter that holds in all three, so no filtered NBA moneyline lane exists for it to judge.
+    # No new entries from that night on; its rows stay on the ledger as they are.
     dict(id="nba_ml_dog_tp50", label="NBA moneyline underdog · split 2x / 3x", series=["KXNBAGAME"], picker=DOG,
          entry_hours=(1,), headline=C.SPLIT, exits=C.LANE_EXITS + C.SINGLES, since=FIRST_NIGHT, duration_min=160, start=espn_start("basketball/nba"),
          sub_bands=(dict(id="ask_10_30", label="ask 10-30c", lo=0.10, hi=0.30),),
-         baseline=dict(on="2026-11-01", at="31 settled events; split +8.7%, hold -16.5%",
-                       reason="blind selection (price band only, no team filter): kept as the baseline for filtered underdog lanes (Olu, 2026-11-01)"),
+         retired=dict(on="2026-11-01", at="36 settled events, 10 won; split +2.4%, hold -20.7%",
+                      reason="blind baseline with no filtered lane to judge: a filter pass found the NBA moneyline cheap underdog fair in 3 periods (Olu, 2026-11-01)"),
          caution="Read the split against its hold row; the ask 10-30c row is the same entries narrowed, not a new lane. "
                  "Reviewed at 31: kept as paper (beats hold, not strong enough to promote).",
          note="A team priced 10-40c an hour before the tip, with a split resting sell: half at 2x, half at 3x of the "

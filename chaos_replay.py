@@ -605,8 +605,11 @@ def lane_state(state, lane, now):
         L["retired"] = dict(lane["retired"])
     # A baseline (lane["baseline"] = dict(on, at, reason), 2026-11-01): blind selection, kept replaying every night
     # as the population a filtered lane must beat; never a lane, so it carries no review status.
+    # The config decides: a mark dropped from it (a baseline later retired) is dropped from the record too.
     if lane.get("baseline"):
         L["baseline"] = dict(lane["baseline"])
+    else:
+        L.pop("baseline", None)
     for k in ("label", "note", "headline", "first", "caution", "insample"):
         if lane.get(k) is not None:
             L[k] = lane[k]

@@ -529,9 +529,10 @@ above = page[:ret_i]
 check("the Retired fold is collapsed, near the bottom: after Results and Teams, before the About note",
       ('<details class="section-disclosure nba-retired">' in ret_part, "<details open" in ret_part,
        page.index('id="graded"') < page.index('id="teams"') < ret_i < page.index("About this desk")), (True, False, True))
-check("one line each for every retired lane: R1-R7, six value lanes and controls, four baselines, the cheap-side lane",
+check("one line each for every retired lane: R1-R7, six value lanes and controls, four baselines, the cheap-side lanes "
+      "(the moneyline underdog retired 2026-11-01)",
       sorted(re.findall(r'<li data-lane="([^"]+)"', ret_part)),
-      sorted(["R1", "R2", "R3", "R4", "R5", "R6", "R7", *V.LANES, *V.CONTROLS, *V.BASE.values(), "nba_tt_cheap_tp30"]))
+      sorted(["R1", "R2", "R3", "R4", "R5", "R6", "R7", *V.LANES, *V.CONTROLS, *V.BASE.values(), "nba_tt_cheap_tp30", "nba_ml_dog_tp50"]))
 check("each line carries its date and reason (R2 keeps its Oct 24 note)",
       (ret_part.count("Retired 2026-10-28") >= 16, "Retired 2026-10-24: 3/10" in ret_part, "Retired 2026-10-27 at 145 settled" in ret_part,
        ret_part.count("no edge against Kalshi") >= 10), (True, True, True, True))

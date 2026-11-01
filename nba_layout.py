@@ -1,7 +1,7 @@
 """The NBA page's top half (2026-10-31, Olu: "clumsy"): an "NBA at a glance" table, then one card per ACTIVE lane in one
-layout (the rule in a sentence, the live record, folds for other exits, in-sample research and trades), the blind
-baselines (2026-11-01), then the win margin tracker. Presentation only: every figure is read from the same ledgers as
-before; no rule, record or ledger changes. Header-row tables, so sandbox_build.label_cells names each cell for the phone cards. No inline style or SVG
+layout (the rule in a sentence, the live record, folds for other exits, in-sample research and trades), then the win
+margin tracker. Presentation only: every figure is read from the same ledgers as before; no rule, record or ledger
+changes. Header-row tables, so sandbox_build.label_cells names each cell for the phone cards. No inline style or SVG
 (the NBA page forbids both). Never breaks the page: nba_pace_build wraps place().
 """
 import html as _h
@@ -14,10 +14,10 @@ import nba_winmargin_build as WB
 import nba_wm_nofade as N
 import nba_wm_nofade_build as NB
 
-YES_ID, NO_ID, ML_ID = "nba_winmargin_split", "nba_wm_nofade", "nba_ml_dog_tp50"
+YES_ID, NO_ID = "nba_winmargin_split", "nba_wm_nofade"
 SAMPLE_ID = "nba_winmargin_split_insample"
-# The moneyline underdog is a BASELINE since 2026-11-01 (Olu: no lane may select blind): its own block under the
-# active lanes, out of the glance, with no status.
+# The moneyline underdog (nba_ml_dog_tp50) was demoted to a blind baseline and retired on 2026-11-01: it sits in the
+# page's Retired fold (nba_pace_build), not here.
 
 RULES = {
     YES_ID: "Buy YES on a 1-5 or 6-10 win margin bucket (either team) priced 10-20c an hour before the tip; rest a sell for half at 2x "
@@ -156,20 +156,10 @@ def cheap_side(chaos=None, nofade=None):
     return f'<section id="cheap-side"><h2>Active lanes</h2><p class="shell-kicker">One card each · the rule, the live record, then folds</p>{cards}</section>'
 
 
-def baselines(chaos=None):
-    """The blind moneyline underdog population, replayed every night as the bar a filtered underdog lane must beat."""
-    chaos = chaos if chaos is not None else (C.load() if os.path.exists(C.PATH) else C.empty())
-    L = _lanes(chaos).get(ML_ID)
-    if not L or not L.get("baseline"):
-        return ""
-    return ('<section id="ml-dog"><h2>Baselines</h2><p class="shell-kicker">Blind, price band only · not a lane · '
-            'a filtered lane must beat it</p>' + CB.baseline_block(L) + '</section>')
-
-
 def build(chaos=None, nofade=None, tracker=None):
     chaos = chaos if chaos is not None else (C.load() if os.path.exists(C.PATH) else C.empty())
     nofade = nofade if nofade is not None else N.load()
-    return glance(chaos, nofade) + cheap_side(chaos, nofade) + baselines(chaos) + WB.section(tracker)
+    return glance(chaos, nofade) + cheap_side(chaos, nofade) + WB.section(tracker)
 
 
 def place(html, chaos=None, nofade=None, tracker=None):
