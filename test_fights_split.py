@@ -105,7 +105,8 @@ def fetcher(w):
         w["calls"].append(path)
         if path.startswith("events?series_ticker="):
             ser = path.split("series_ticker=")[1].split("&")[0]
-            return {"events": [w["events"][t] for t in w["open"]] if ser == w["series"] else [], "cursor": ""}
+            keys = w["open"] if "status=open" in path else w.get("recent", [])
+            return {"events": [w["events"][t] for t in keys] if ser == w["series"] else [], "cursor": ""}
         if path.startswith("milestones?related_event_ticker="):
             return {"milestones": w["milestones"].get(path.split("ticker=")[1].split("&")[0], [])}
         if "/candlesticks?" in path:
@@ -302,6 +303,41 @@ tr = open("/".join([FS.ROOT, ".github", "workflows", "sandbox-tracker.yml"])).re
 check("the Sandbox Tracker stages the Fights page", "git add public_site/fights.html" in tr, True)
 sb = open("/".join([FS.ROOT, "sandbox_build.py"])).read()
 check("the Sandbox build writes fights.html", "fights_build.build(now=now)" in sb, True)
+
+print("\na fight that opens and settles between two runs is still entered (2026-11-01: 11 fights missed)")
+WS = world(result=DOG, open_=False)
+WS["recent"] = [EV]                                    # settled: off the open list, on the recently settled one
+WS["candles"][DOG] = list(W["candles"][DOG]) + [mc(m(10), 0.09, 0.12, last=0.12, lo=0.11, vol=25)]   # 25 traded through the ask
+WS["candles"][FAV] = list(W["candles"][FAV])
+FSet = fetcher(WS)
+st = lane_state()
+FS.run(st, now=at(600), fetch=FSet, cfg=FS.BOXING)     # the first run since before the fight: it is already final
+e = st["entries"][0] if st["entries"] else {}
+check("the settled fight is listed through the closed/settled query, not only the open one",
+      any("status=closed,settled" in p and "min_close_ts=" in p for p in WS["calls"]), True)
+check("it is entered from the minute candles at the 0.12 ask, the favourite skipped",
+      (len(st["entries"]), e.get("price"), e.get("entry_at"), list(st["skips"])), (1, 0.12, "2026-10-31T20:03:00+00:00", [FAV]))
+check("its 2x leg fills on the 0.24 print, and it is settled (the dog won)",
+      (e["legs"][0].get("filled_at"), e["payout"], e.get("roi") is not None), ("2026-10-31T21:20:00+00:00", 1.0, True))
+check("the 10+ traded-through rule verifies it (no pre-fight book on a replay)", (MS.check_status(e), e.get("book_size")), ("verified", None))
+FS.run(st, now=at(660), fetch=FSet, cfg=FS.BOXING)
+check("a second run adds nothing: no double entry, one event on file", (len(st["entries"]), len(st["skips"]), list(st["events"])), (1, 1, [EV]))
+
+old_start = START - dt.timedelta(days=FS.BACKFILL_DAYS + 2)
+WO = world(start=old_start, result=DOG, open_=False)
+WO["recent"] = [EV]
+WO["candles"][DOG] = [mc(int(old_start.timestamp()) - 3600 + 180, 0.09, 0.12, last=0.11, vol=40)]
+st = lane_state()
+FS.run(st, now=at(600), fetch=fetcher(WO), cfg=FS.BOXING)
+check("a fight whose entry minute is older than BACKFILL_DAYS is not entered (its candles are gone)", len(st["entries"]), 0)
+
+before = START.replace(day=20)
+WB = world(start=before, result=DOG, open_=False)
+WB["recent"] = [EV]
+WB["candles"][DOG] = [mc(int(before.timestamp()) - 3600 + 180, 0.09, 0.12, last=0.11, vol=40)]
+st = lane_state()
+FS.run(st, now=before + dt.timedelta(hours=5), fetch=fetcher(WB), cfg=FS.BOXING)
+check("a fight from before the lane was registered is not entered, whatever the window", len(st["entries"]), 0)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

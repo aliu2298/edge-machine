@@ -95,6 +95,9 @@ STAMP = {
     "nba_value": "data/nba_value_window/request.txt",
     # 2026-10-25: the chaos replay (chaos_replay.py), once a night after the games have settled.
     "chaos": "data/chaos_window/request.txt",
+    # 2026-11-01: the boxing and UFC cheap-side lanes (fights_split.py), once an hour. GitHub's hourly cron ran them
+    # 6 times in 24 hours and 11 fights were never seen; the VPS asks every hour instead.
+    "fights": "data/fights_window/request.txt",
 }
 # nfl_tt.WINDOW_MIN (45, 75), copied; test_nfl_tt.py checks the two agree.
 NFL_FROM, NFL_TO = 75, 45                # minutes before the ESPN kickoff
@@ -345,6 +348,13 @@ def culture_windows(now):
                  start=h, end=h + dt.timedelta(hours=1), every=dt.timedelta(hours=1), last_ask=dt.timedelta(0))]
 
 
+def fights_windows(now):
+    """The fights lanes read once an hour, every hour (fights.yml)."""
+    h = now.replace(minute=0, second=0, microsecond=0)
+    return [dict(lane="fights", label=f"Fights {h:%H}:00Z", series=(), close=h + dt.timedelta(hours=1),
+                 start=h, end=h + dt.timedelta(hours=1), every=dt.timedelta(hours=1), last_ask=dt.timedelta(0))]
+
+
 def tennis_starts(now):
     """Valid ATP singles starts in the next day (tennis_atp_low_over, 2026-10-21), read live.
 
@@ -518,6 +528,7 @@ def windows(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, 
     out += soccer_windows(now, fixtures, ledger)
     out += soccer_team_windows(now, fixtures, ledger)
     out += culture_windows(now)
+    out += fights_windows(now)
     out += tennis_windows(now, tennis)
     out += nfl_windows(now, nfl)
     out += nba_value_windows(now, nba_value)

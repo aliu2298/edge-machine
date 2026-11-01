@@ -1,10 +1,15 @@
 name: Fights paper research
 on:
   schedule:
-    # Hourly. Entry is replayed from minute candles after the fact, so no window stamp is needed and a
-    # missed run only delays an entry (minute candles are served for about a week).
+    # Backup only: GitHub ran this hourly cron 6 times in 24 hours (2026-10-31), and fights that opened and settled
+    # between runs went unseen. The VPS asks for the hourly read by pushing a stamp (scripts/vps_window_requests.sh,
+    # lane_windows.py), and the lanes now also list fights settled within six days, so a late run misses nothing.
     - cron: '23 * * * *'
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "data/fights_window/**"
 permissions:
   contents: write
   actions: write

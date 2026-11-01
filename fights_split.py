@@ -143,13 +143,28 @@ def entry_for(cs, start_ts, cfg):
     return MS.entry_quote([c for c in cs if (c.get("end_period_ts") or 0) <= hi], lo, cfg, detail=True)
 
 
+def list_events(fetch, series, now_ts):
+    """The events a run evaluates: every open one, plus those that closed or settled within BACKFILL_DAYS.
+
+    Listing only open events missed any fight that started and finalized between two runs (GitHub's hourly cron
+    ran 6 times in 24 hours on 2026-10-31, and 11 fights were never seen): an entry is replayed from the minute
+    candles, which are served for BACKFILL_DAYS, so a settled fight whose entry minute is still served is
+    evaluated exactly once like any other (an entry or a skip, legs from the prints, then settled)."""
+    opened = MS.events(fetch, series, open_only=True)
+    seen = {e.get("event_ticker") for e in opened}
+    since = now_ts - (BACKFILL_DAYS + 1) * 86400
+    recent = D.pages(f"events?series_ticker={series}&status=closed,settled&min_close_ts={since}"
+                     "&with_nested_markets=true&limit=200", "events", fetch)
+    return opened + [e for e in recent if e.get("event_ticker") not in seen]
+
+
 def run(state, now=None, fetch=D.get, cfg=BOXING, ask_rule=True):
     now = now or dt.datetime.now(dt.timezone.utc)
     now_ts = int(now.timestamp())
     state.setdefault("starts", {})
     obs = dict(at=now.isoformat(), events=0, entered=0, skipped=0, filled=0, waiting=0, no_start=0)
     have = {e["id"] for e in state["entries"]}
-    listed = MS.events(fetch, cfg["series"], open_only=True)
+    listed = list_events(fetch, cfg["series"], now_ts)
     evs = listed + MS.held_events(state, [x.get("event_ticker") for x in listed], fetch)
     for ev in evs:
         tick = ev.get("event_ticker")
@@ -163,6 +178,8 @@ def run(state, now=None, fetch=D.get, cfg=BOXING, ask_rule=True):
             continue
         if tick not in state["events"] and start_ts - ENTRY_LEAD_MIN * 60 < now_ts - BACKFILL_DAYS * 86400:
             continue                                          # its entry minute candles are no longer served
+        if tick not in state["events"] and start_ts < _ts(REGISTERED + "T00:00:00+00:00"):
+            continue                                          # before the lane existed: the record starts fresh
         lo = start_ts - ENTRY_LEAD_MIN * 60
         window_end = lo + ENTRY_GRACE_MIN * 60
         pending = [m for m in ms if m["ticker"] not in have and m["ticker"] not in state["skips"]]
