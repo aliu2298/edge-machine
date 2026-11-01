@@ -511,22 +511,29 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.3
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.45
     }
    ],
    "logged": "2026-10-31T13:42:07.140508+00:00",
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.1589,
    "price": 0.15,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-11-01T17:09:54.910359+00:00",
    "side": "no",
    "spread": 0.04,
    "spread_cost": null,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Above 4.1650"
   },
@@ -562,22 +569,29 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.52
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.78
     }
    ],
    "logged": "2026-10-31T13:42:07.140508+00:00",
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.2735,
    "price": 0.26,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-11-01T17:09:54.910359+00:00",
    "side": "no",
    "spread": 0.01,
    "spread_cost": -0.09,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 861.96,
    "word": "Above 4.1700"
   }
@@ -585,6 +599,7 @@
  "error": null,
  "events": {
   "KXAAAGASD-26NOV01": "2026-10-31T13:42:07.140508+00:00",
+  "KXAAAGASD-26NOV02": "2026-11-01T17:09:54.910359+00:00",
   "KXAAAGASD-26OCT27": "2026-10-27T03:36:13.936099+00:00",
   "KXAAAGASD-26OCT28": "2026-10-27T13:18:27.785504+00:00",
   "KXAAAGASD-26OCT29": "2026-10-28T13:05:29.619697+00:00",
@@ -592,12 +607,12 @@
   "KXAAAGASD-26OCT31": "2026-10-30T14:57:20.807863+00:00"
  },
  "lane": "gas_cheap_no",
- "last_success": "2026-11-01T10:35:23.358544+00:00",
+ "last_success": "2026-11-01T17:09:54.910359+00:00",
  "observations": {
-  "at": "2026-11-01T10:35:23.358544+00:00",
+  "at": "2026-11-01T17:09:54.910359+00:00",
   "checking": 0,
   "entered": 0,
-  "events": 1,
+  "events": 2,
   "filled": 0,
   "skipped": 0,
   "unverified": 0,
