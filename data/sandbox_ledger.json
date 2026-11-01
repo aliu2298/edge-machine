@@ -43,32 +43,32 @@
    "polymarket_us_priced": 1
   },
   "crypto": {
-   "kalshi_venue": 0
+   "kalshi_venue": 80
   },
   "crypto_fav": {
    "crypto_fav_band": {
-    "offered": 0,
+    "offered": 275,
     "picked": 0
    },
    "crypto_fav_band_60": {
-    "offered": 0,
+    "offered": 275,
     "picked": 0
    },
    "crypto_fav_band_below": {
-    "offered": 0,
+    "offered": 275,
     "picked": 0
    },
    "crypto_fav_band_below_60": {
-    "offered": 0,
+    "offered": 275,
     "picked": 0
    },
-   "kalshi_venue": 0
+   "kalshi_venue": 275
   },
   "economics": {
    "kalshi_venue": 34
   },
   "finance": {
-   "kalshi_venue": 30
+   "kalshi_venue": 47
   },
   "mma": {
    "kalshi_venue": 0,
@@ -87,17 +87,17 @@
    "polymarket_us_priced": 5
   },
   "nhl_pl": {
-   "kalshi_venue": 18
+   "kalshi_venue": 17
   },
   "nhl_rest": {
-   "kalshi_venue": 22
+   "kalshi_venue": 21
   },
   "soccer": {
    "ere_draw": {
     "offered": 0,
     "picked": 0
    },
-   "kalshi_venue": 103,
+   "kalshi_venue": 109,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -378,10 +378,10 @@
    }
   },
   "tennis": {
-   "kalshi_venue": 43,
+   "kalshi_venue": 45,
    "polymarket_us": 40,
-   "polymarket_us_listed": 507,
-   "polymarket_us_priced": 119,
+   "polymarket_us_listed": 520,
+   "polymarket_us_priced": 131,
    "tennis_utr_shortlist_v1": {
     "offered": 0,
     "picked": 0
@@ -398,49 +398,48 @@
  },
  "feed_status": {
   "oddspedia": "ok",
-  "pin_totals": "ok",
-  "pinnacle": "down: HTTP 429 on /sports/soccer_poland_ekstraklasa/events"
+  "pin_totals": "ok"
  },
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
    "boxing": "2026-10-31T23:48:48+00:00",
-   "commodities": "2026-11-01T21:00:12+00:00",
-   "commodities_fav": "2026-11-01T21:00:12+00:00",
-   "cricket": "2026-11-01T21:00:12+00:00",
-   "crypto": "2026-11-01T20:04:07+00:00",
-   "crypto_fav": "2026-11-01T20:04:07+00:00",
-   "economics": "2026-11-01T21:00:12+00:00",
-   "finance": "2026-11-01T21:00:12+00:00",
+   "commodities": "2026-11-01T21:05:34+00:00",
+   "commodities_fav": "2026-11-01T21:05:34+00:00",
+   "cricket": "2026-11-01T21:05:34+00:00",
+   "crypto": "2026-11-01T21:05:34+00:00",
+   "crypto_fav": "2026-11-01T21:05:34+00:00",
+   "economics": "2026-11-01T21:05:34+00:00",
+   "finance": "2026-11-01T21:05:34+00:00",
    "mma": "2026-11-01T02:19:24+00:00",
-   "nfl": "2026-11-01T21:00:12+00:00",
-   "nhl_pl": "2026-11-01T21:00:12+00:00",
-   "nhl_rest": "2026-11-01T21:00:12+00:00",
-   "soccer": "2026-11-01T21:00:12+00:00",
-   "soccer_btts": "2026-11-01T21:00:12+00:00",
-   "soccer_btts_cup": "2026-11-01T21:00:12+00:00",
-   "soccer_corners": "2026-11-01T21:00:12+00:00",
+   "nfl": "2026-11-01T21:05:34+00:00",
+   "nhl_pl": "2026-11-01T21:05:34+00:00",
+   "nhl_rest": "2026-11-01T21:05:34+00:00",
+   "soccer": "2026-11-01T21:05:34+00:00",
+   "soccer_btts": "2026-11-01T21:05:34+00:00",
+   "soccer_btts_cup": "2026-11-01T21:05:34+00:00",
+   "soccer_corners": "2026-11-01T21:05:34+00:00",
    "soccer_ftts": "2026-10-19T18:33:38+00:00",
-   "soccer_o15": "2026-11-01T21:00:12+00:00",
-   "soccer_o15_cup": "2026-11-01T21:00:12+00:00",
-   "soccer_o25": "2026-11-01T21:00:12+00:00",
-   "soccer_o25_cup": "2026-11-01T21:00:12+00:00",
-   "soccer_p05": "2026-11-01T21:00:12+00:00",
-   "soccer_p05_cup": "2026-11-01T21:00:12+00:00",
-   "soccer_team1": "2026-11-01T21:00:12+00:00",
-   "soccer_team1_cup": "2026-11-01T21:00:12+00:00",
-   "soccer_team2": "2026-11-01T21:00:12+00:00",
-   "soccer_team2_cup": "2026-11-01T21:00:12+00:00",
-   "soccer_u35": "2026-11-01T21:00:12+00:00",
-   "soccer_u35_cup": "2026-11-01T21:00:12+00:00",
-   "tennis": "2026-11-01T21:00:12+00:00",
+   "soccer_o15": "2026-11-01T21:05:34+00:00",
+   "soccer_o15_cup": "2026-11-01T21:05:34+00:00",
+   "soccer_o25": "2026-11-01T21:05:34+00:00",
+   "soccer_o25_cup": "2026-11-01T21:05:34+00:00",
+   "soccer_p05": "2026-11-01T21:05:34+00:00",
+   "soccer_p05_cup": "2026-11-01T21:05:34+00:00",
+   "soccer_team1": "2026-11-01T21:05:34+00:00",
+   "soccer_team1_cup": "2026-11-01T21:05:34+00:00",
+   "soccer_team2": "2026-11-01T21:05:34+00:00",
+   "soccer_team2_cup": "2026-11-01T21:05:34+00:00",
+   "soccer_u35": "2026-11-01T21:05:34+00:00",
+   "soccer_u35_cup": "2026-11-01T21:05:34+00:00",
+   "tennis": "2026-11-01T21:05:34+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "odds_api": {
    "allowance": 1,
-   "at": "2026-11-01T21:00:12+00:00",
+   "at": "2026-11-01T21:05:34+00:00",
    "calls": 1,
-   "remaining": 440,
+   "remaining": 439,
    "totals_on": [
     {
      "empty": {
@@ -560,7 +559,7 @@
      ]
     }
    ],
-   "used": 60
+   "used": 61
   },
   "outages": [
    {
@@ -579,14 +578,14 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 929,
+  "runs": 930,
   "tennis_shortlist": {
    "audit": [],
-   "checked_at": "2026-11-01T21:00:12.088876+00:00",
+   "checked_at": "2026-11-01T21:05:34.663890+00:00",
    "daily_limit": 3,
    "day": "2026-11-01"
   },
-  "updated": "2026-11-01T21:00:45+00:00"
+  "updated": "2026-11-01T21:06:08+00:00"
  },
  "quotes": [
   {
@@ -369229,7 +369228,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-01T21:00:12+00:00",
+   "close_at": "2026-11-01T21:05:34+00:00",
    "close_price": 0.765,
    "date": "2026-11-01",
    "edge": 0.0465,
@@ -369264,8 +369263,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-01T21:00:12+00:00",
-   "close_price": 0.5,
+   "close_at": "2026-11-01T21:05:34+00:00",
+   "close_price": 0.4975,
    "date": "2026-11-01",
    "edge": 0.031,
    "id": "espn_fpi:aec-nfl-kc-den-2026-11-01",
@@ -369918,7 +369917,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-01T21:00:12+00:00",
+   "close_at": "2026-11-01T21:05:34+00:00",
    "close_price": 0.81,
    "date": "2026-11-02",
    "edge": null,
@@ -372746,7 +372745,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-01T21:00:12+00:00",
+   "close_at": "2026-11-01T21:05:34+00:00",
    "close_price": 0.78,
    "date": "2026-11-02",
    "edge": null,
@@ -374224,7 +374223,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-01T21:00:12+00:00",
+   "close_at": "2026-11-01T21:05:34+00:00",
    "close_price": 0.53,
    "date": "2026-11-01",
    "edge": null,
@@ -411291,8 +411290,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-01T21:00:12+00:00",
-   "close_price": 0.45,
+   "close_at": "2026-11-01T21:05:34+00:00",
+   "close_price": 0.44,
    "date": "2026-11-01",
    "edge": null,
    "espn_away": "Toronto FC",
@@ -434501,7 +434500,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-01T21:00:12+00:00",
+   "close_at": "2026-11-01T21:05:34+00:00",
    "close_price": 0.36,
    "date": "2026-11-02",
    "edge": null,
@@ -437340,7 +437339,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-01T21:00:12+00:00",
+   "close_at": "2026-11-01T21:05:34+00:00",
    "close_price": 0.74,
    "date": "2026-11-02",
    "edge": null,
@@ -445623,7 +445622,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-01T21:00:12+00:00",
+   "close_at": "2026-11-01T21:05:34+00:00",
    "close_price": 0.85,
    "date": "2026-11-05",
    "edge": null,
