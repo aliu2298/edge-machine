@@ -197,7 +197,7 @@ if __import__("os").path.exists(NB.SRC):
     ids = re.findall(r'<section id="([^"]+)"', page[page.find("<main"):])
     check("on the NBA page: the glance, the lane cards, the tracker, then Upcoming",
           [i for i in ids if i in ("glance", "cheap-side", "wm-yes", "wm-no", "ml-dog", "tracker", "matchups")],
-          ["glance", "cheap-side", "wm-yes", "wm-no", "ml-dog", "tracker", "matchups"])
+          ["glance", "cheap-side", "wm-yes", "wm-no", "tracker", "matchups"])
     check("with a nav link", 'href="#tracker"' in page, True)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")

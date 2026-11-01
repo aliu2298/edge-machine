@@ -272,6 +272,8 @@ def with_config(state):
                 if cfg.get(k):
                     shown[k] = dict(cfg[k])
             lanes[cfg["id"]] = dict(lanes[cfg["id"]], **shown)
+            if not cfg.get("baseline"):                         # the config decides: a baseline since retired is not one
+                lanes[cfg["id"]].pop("baseline", None)
     except Exception:                                           # noqa: BLE001
         pass
     return dict(state, lanes=lanes)

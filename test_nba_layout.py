@@ -27,17 +27,17 @@ page = NB.build(json.load(open(NB.SRC)))
 main = page[page.find("<main"):]
 ids = re.findall(r'<section id="([^"]+)"', main)
 print("order")
-check("glance, active lanes (YES, NO fade), the ML underdog baseline, tracker, then the matchup board, Ladder after Teams, Retired last",
+check("glance, active lanes (YES, NO fade), tracker, then the matchup board, Ladder after Teams, Retired last; no ML underdog section (retired 2026-11-01)",
       [i for i in ids if i in ("glance", "wm-yes", "wm-no", "ml-dog", "tracker", "matchups", "graded", "teams", "ladder", "retired")],
-      ["glance", "wm-yes", "wm-no", "ml-dog", "tracker", "matchups", "graded", "teams", "ladder", "retired"])
+      ["glance", "wm-yes", "wm-no", "tracker", "matchups", "graded", "teams", "ladder", "retired"])
 check("the #cheap-side anchor (the Sandbox index links to it) still holds the lane cards",
       "cheap-side" in ids and ids.index("cheap-side") < ids.index("wm-yes"), True)
 check("the jump pills match the sections",
-      re.findall(r'<nav class="toc".*?</nav>', page, re.S)[0].count("<a "), 10)
+      re.findall(r'<nav class="toc".*?</nav>', page, re.S)[0].count("<a "), 9)
 
 print("\nthe glance table")
 g = page[page.find('<section id="glance"'):page.find('<section id="cheap-side"')]
-check("one row per active lane, each linking to its card; the ML underdog baseline is not one (2026-11-01)",
+check("one row per active lane, each linking to its card; the retired ML underdog is not one (2026-11-01)",
       re.findall(r'<a href="#([^"]+)"><b>', g), ["wm-yes", "wm-no"])
 check("columns: lane, settled events, split ROI, hold ROI, z, status",
       [re.sub(r"<[^>]+>", "", c) for c in re.findall(r"<th[^>]*>.*?</th>", g.split("<table")[1].split("</tr>")[0])],
@@ -56,16 +56,13 @@ for anchor in ("wm-yes", "wm-no"):
     check(f"{anchor}: no inner fold starts open", [d for d in inner if " open" in d], [])
 check("the YES and NO fade cards carry their in-sample research fold, labelled",
       ("In-sample research (not evidence)" in page[page.find('id="wm-yes"'):page.find('id="wm-no"')],
-       "In-sample research (not evidence)" in page[page.find('id="wm-no"'):page.find('id="ml-dog"')]), (True, True))
-print("\nthe moneyline underdog baseline (2026-11-01)")
-b = page[page.find('<section id="ml-dog"'):]
-b = b[:b.find('<section id="tracker"')]
-check("its own Baselines block after the active lanes, titled blind, saying a filtered lane must beat it, with no status",
-      ("Baseline · NBA moneyline underdog (blind, price band only)" in b, "must beat" in b, "Status" in b, "decide at" in b,
-       page.find('<section id="ml-dog"') > page.find('<section id="wm-no"')), (True, True, False, False, True))
-check("its record: split v hold, then other exits and trades folded", ("chaos-split" in b, "Other exits" in b, "Trades" in b,
-      [d for d in re.findall(r"<details[^>]*>", b)[1:] if " open" in d]), (True, True, True, []))
-check("the NO fade card puts the overlap with the YES split in view", "Overlap" in page[page.find('id="wm-no"'):page.find('id="ml-dog"')], True)
+       "In-sample research (not evidence)" in page[page.find('id="wm-no"'):page.find('<section id="tracker"')]), (True, True))
+print("\nthe moneyline underdog, retired 2026-11-01")
+r = page[page.find('<section id="retired"'):]
+check("no ML section or pill; its line sits in the collapsed Retired fold with its record and reason",
+      ('id="ml-dog"' in page, 'href="#ml-dog"' in page, '<li data-lane="nba_ml_dog_tp50"' in r,
+       "36 settled events, 10 won" in r, "fair in 3 periods" in r), (False, False, True, True, True))
+check("the NO fade card puts the overlap with the YES split in view", "Overlap" in page[page.find('id="wm-no"'):page.find('<section id="tracker"')], True)
 
 print("\nthe tracker")
 t = page[page.find('<section id="tracker"'):page.find('<section id="matchups"')]

@@ -445,7 +445,7 @@ ok(nba_tab is not None and 'aria-current="page"' in nba_tab.group(0)
    and main_nav.count('aria-current="page"') == 1 and HTML.count('<nav class="main"') == 1,
    "only the NBA pill is current")
 ok('<script src="./sports.js"></script>' in HTML, "the NBA page still loads sports.js")
-ok('<nav class="toc" aria-label="On this page"><a href="#glance">Glance</a><a href="#wm-yes">Win margin</a><a href="#wm-no">NO fade</a><a href="#ml-dog">ML baseline</a><a href="#tracker">Tracker</a><a href="#matchups">Upcoming</a><a href="#graded">Results</a><a href="#teams">Teams</a><a href="#ladder">Ladder</a><a href="#retired">Retired</a></nav>' in HTML
+ok('<nav class="toc" aria-label="On this page"><a href="#glance">Glance</a><a href="#wm-yes">Win margin</a><a href="#wm-no">NO fade</a><a href="#tracker">Tracker</a><a href="#matchups">Upcoming</a><a href="#graded">Results</a><a href="#teams">Teams</a><a href="#ladder">Ladder</a><a href="#retired">Retired</a></nav>' in HTML
    and "nba-local-nav" not in HTML,
    "the Glance / Win margin / NO fade / ML underdog / Tracker / Upcoming / Results / Teams / Ladder / Retired jump pills are the shared sub-nav, not a local pill bar")
 head = HTML.split('<section id="matchups">', 1)[0]

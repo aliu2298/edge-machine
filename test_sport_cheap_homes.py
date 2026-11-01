@@ -100,24 +100,28 @@ check("the ledger carries the retirement", st["lanes"]["challenger_dog_tp30"]["r
 tt = next(x for x in chaos_lanes.LANES if x["id"] == "nba_tt_cheap_tp30")
 check("nba_tt_cheap_tp30 retired 2026-10-27 with its record", (tt["retired"]["on"], "145 settled, 26 won" in tt["retired"]["at"]),
       ("2026-10-27", True))
-check("the NBA page keeps the nba_ml_dog_tp50 baseline open and folds nba_tt_cheap_tp30 into Retired",
-      (folded(pages["nba"], 'id="baseline-nba_ml_dog_tp50" open>'),
-       folded(pages["nba"], '<li data-lane="nba_tt_cheap_tp30"')), (False, True))
-if "nba_ml_dog_tp50" in (C.load().get("lanes") or {}):
-    ml = pages["nba"][pages["nba"].find('id="baseline-nba_ml_dog_tp50" open'):]
-    check("NBA: the moneyline baseline opens on its split v hold record, the ask 10-30c row in it, then the other exits fold",
-          (ml.find("chaos-split") < ml.find("Other exits"), "ask 10-30c" in ml[:ml.find("Other exits")]), (True, True))
-    glance = pages["nba"][pages["nba"].find('<section id="glance"'):pages["nba"].find('<section id="cheap-side">')]
-    check("NBA: the glance table lists the two active lanes in order, each linking to its card (the ML underdog is a baseline)",
-          re.findall(r'<a href="#([^"]+)"><b>', glance), ["wm-yes", "wm-no"])
+check("the NBA page folds nba_ml_dog_tp50 (retired 2026-11-01) and nba_tt_cheap_tp30 into Retired, no baseline block",
+      (folded(pages["nba"], '<li data-lane="nba_ml_dog_tp50"'), folded(pages["nba"], '<li data-lane="nba_tt_cheap_tp30"'),
+       'id="baseline-nba_ml_dog_tp50"' in pages["nba"]), (True, True, False))
+glance = pages["nba"][pages["nba"].find('<section id="glance"'):pages["nba"].find('<section id="cheap-side">')]
+check("NBA: the glance table lists the two active lanes in order, each linking to its card",
+      re.findall(r'<a href="#([^"]+)"><b>', glance), ["wm-yes", "wm-no"])
 
 print("\nblind lanes demoted to baselines (2026-11-01, Olu: a lane needs a team or matchup filter)")
-for lid, at in (("cfb_dog_tp50", "33 settled events; split -0.5%, hold -15.9%"),
-                ("nba_ml_dog_tp50", "31 settled events; split +8.7%, hold -16.5%")):
+for lid, at in (("cfb_dog_tp50", "33 settled events; split -0.5%, hold -15.9%"),):
     cfg = next(x for x in chaos_lanes.LANES if x["id"] == lid)
     check(f"{lid}: a baseline, not retired, dated with its record and the reason", (
         cfg["baseline"]["on"], cfg["baseline"]["at"], "blind selection (price band only, no team filter)" in cfg["baseline"]["reason"],
         "retired" in cfg), ("2026-11-01", at, True, False))
+ml = next(x for x in chaos_lanes.LANES if x["id"] == "nba_ml_dog_tp50")
+check("nba_ml_dog_tp50: retired 2026-11-01 as a blind baseline with no filtered lane to judge, its record at that date", (
+    ml["retired"]["on"], ml["retired"]["at"], "fair in 3 periods" in ml["retired"]["reason"], "baseline" in ml),
+    ("2026-11-01", "36 settled events, 10 won; split +2.4%, hold -20.7%", True, False))
+stale = dict(lanes={"nba_ml_dog_tp50": dict(id="nba_ml_dog_tp50", baseline=dict(on="2026-11-01", at="x", reason="y"),
+                                            replayed={}, trades=[], skipped={}, since="2026-10-25")})
+check("a baseline mark left on the ledger from before its retirement is dropped, by the page and by the next replay",
+      ("baseline" in CB.with_config(stale)["lanes"]["nba_ml_dog_tp50"],
+       "baseline" in C.lane_state(stale, ml, dt.datetime(2026, 11, 2, tzinfo=C.UTC))), (False, False))
 check("the win margin YES split is not demoted (its buckets came from tracker research)",
       next(x for x in chaos_lanes.LANES if x["id"] == "nba_winmargin_split").get("baseline"), None)
 cfb = next(x for x in chaos_lanes.LANES if x["id"] == "cfb_dog_tp50")
