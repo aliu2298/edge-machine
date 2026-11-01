@@ -42,21 +42,29 @@ near("maker fee 0.0175 p(1-p)", O.fee(0.10), 0.0175 * 0.1 * 0.9)
 check("variant keys and labels", (O.vkey(0.10, 2), O.vkey(0.15, None), O.vlabel("10c_2x"), O.vlabel("20c_hold")),
       ("10c_2x", "15c_hold", "NO bid 10c · sell at 2x", "NO bid 20c · hold to settlement"))
 check("v2 keeps only the 10c bid; the ledger still stores 2x/3x/4x/hold", (O.LIMITS, O.V1_LIMITS, len({O.vkey(l, m) for l in O.LIMITS for m in (None,) + O.MULTS})), ((0.10,), (0.10, 0.15, 0.20), 4))
-check("headline is the 10c bid sold at 4x, 3x beside it; v2 stamp", (O.HEADLINE, O.HEAD_MULT, O.COMPARE_MULT, O.VERSION, O.SINCE), (0.10, 4, 3, "o35-v2", "2026-10-31"))
+check("headline is the 10c bid sold at 4x, 3x beside it; v2 stamp", (O.HEADLINE, O.HEAD_MULT, O.COMPARE_MULT, O.VERSION, O.SINCE), (0.10, 4, 3, "o35-v3", "2026-11-01"))
 check("eleven leagues: the Soccer page's twelve less the Saudi Pro League", (len(O.SR.SERIES), len(O.LEAGUES), "Saudi Pro League" in O.LEAGUES), (12, 11, False))
 
 print("\nthe bid fills on the first print at or under the limit")
 base = [pr(-30, 0.85), pr(5, 0.60), pr(40, 0.30), pr(70, 0.12), pr(80, 0.09), pr(90, 0.04), pr(95, 0.25, 60), pr(100, 0.30, 55)]
 ev = O.evaluate(base, KICK, "no", O.V1_LIMITS)
-check("v2 evaluates the 10c bid only", list(O.evaluate(base, KICK, "no")), ["10"])
+check("v3 evaluates the 10c bid and its first-half comparison only", list(O.evaluate(base, KICK, "no")), ["10", "10e"])
 check("10c bid: filled by the 9c print, not the 12c print", ev["10"]["fill_at"], KICK + 80 * 60)
 check("15c bid fills earlier on the 12c print; 20c on the 12c print too", (ev["15"]["fill_at"], ev["20"]["fill_at"]), (KICK + 70 * 60,) * 2)
 check("the fill is at the limit, whatever printed", ev["10"]["limit"], 0.10)
 check("a 12c print does not fill a 10c bid", O.evaluate([pr(70, 0.12)], KICK, "no")["10"], None)
 check("a bid exactly at the limit fills", O.evaluate([pr(70, 0.10)], KICK, "no")["10"]["fill_print"], 0.10)
-check("a print an hour and a minute before kickoff is before the bid was placed",
-      O.evaluate([pr(-61, 0.05)], KICK, "no")["10"], None)
-check("a print inside the hour before kickoff counts", O.evaluate([pr(-30, 0.05)], KICK, "no")["10"]["fill_at"], KICK - 1800)
+check("a print an hour and a minute before kickoff is before the old bid was placed",
+      O.evaluate([pr(-61, 0.05)], KICK, "no"), {"10": None, "10e": None})
+e30 = O.evaluate([pr(-30, 0.05)], KICK, "no")
+check("v3: a print before kickoff + 60 never fills the bid; the old bid's first-half fill is the comparison",
+      (e30["10"], e30["10e"]["fill_at"]), (None, KICK - 1800))
+e59, e60 = O.evaluate([pr(59, 0.05)], KICK, "no"), O.evaluate([pr(60, 0.05)], KICK, "no")
+check("minute 59 is first half (comparison), minute 60 is the second-half bid",
+      (e59["10"], e59["10e"] is not None, e60["10"]["fill_at"], e60["10e"]), (None, True, KICK + 3600, None))
+chk = O.evaluate([pr(30, 0.05), pr(80, 0.05)], KICK, "no")
+check("an early fill and a later one: the bid fills at the second-half print, the comparison keeps the early one",
+      (chk["10"]["fill_at"], chk["10e"]["fill_at"]), (KICK + 80 * 60, KICK + 30 * 60))
 
 print("\nthe sells: later prints, 50 contracts at or above the target")
 b = ev["10"]
@@ -124,7 +132,8 @@ def fetch(path):
 
 NOW = dt.datetime(2026, 11, 1, 6, 0, tzinfo=UTC)
 st = O.load("/nonexistent")
-check("a fresh record begins on 2026-10-31 as v2", (st["since"], st["entries"], st["version"]), ("2026-10-31", [], "o35-v2"))
+check("a fresh record begins on 2026-11-01 as v3", (st["since"], st["entries"], st["version"]), ("2026-11-01", [], "o35-v3"))
+st["since"] = "2026-10-31"                         # the replayed game is from the night before
 O.run(st, NOW, fetch, forms={EV})
 check("the settled game is recorded, the one still active waits", (len(st["entries"]), st["observations"]["waiting"]), (1, 1))
 e = st["entries"][0]
@@ -145,16 +154,21 @@ check("an event with no over 3.5 market is skipped with a reason", O.over35([dic
 check("the form-rule tag reads the ledger and ignores other sources",
       O.form_rule_events("/nonexistent"), set())
 
-print("\nthe v1 record: kept, collapsed, and out of the v2 headline")
+print("\nthe v1 and v2 records: kept, collapsed, and out of the v3 headline")
 v1e = dict(entry, version="o35-v1", event="KXMLSTOTAL-26OCT30XXXYYY", night="2026-10-30", kickoff=KICK - 86400)
+v2e = dict(entry, version="o35-v2", event="KXMLSTOTAL-26OCT31EEEFFF")
+entry = dict(entry, version="o35-v3")
 unstamped = {k: v for k, v in entry.items() if k != "version"}
-mix = dict(O.load("/nonexistent"), entries=[v1e, entry, unstamped])
-o1, n2 = O.split(mix["entries"])
-check("split: stamped v2 is v2, o35-v1 and an unstamped entry are v1", (len(o1), len(n2)), (2, 1))
+mix = dict(O.load("/nonexistent"), entries=[v1e, v2e, entry, unstamped])
+o1, o2, n3 = O.split3(mix["entries"])
+check("split3: o35-v1 and an unstamped entry are v1, stamped v2 and v3 are their own", (len(o1), len(o2), len(n3)), (2, 1, 1))
 hm = B.section(mix)
-check("v2 headline counts only v2 entries (1 game); v1 sits in a fold with every bid, exit and the 2x headline",
-      ("1 games" in hm, "Before the Nov trim (v1)" in hm, O.vlabel("10c_hold") in hm, O.vlabel("20c_4x") in hm,
-       O.vlabel("10c_2x") + " (headline)" in hm, "2 games" in hm), (True, True, True, True, True, True))
+check("v3 headline counts only v3 entries (1 game); v2 and v1 sit in folds with every bid and exit",
+      ("1 games" in hm, "Before the Nov trim (v1)" in hm, "Before the second-half rule (v2)" in hm, O.vlabel("10c_hold") in hm, O.vlabel("20c_4x") in hm,
+       O.vlabel("10c_2x") + " (headline)" in hm, "2 games" in hm), (True, True, True, True, True, True, True))
+check("the second-half note and the first-half comparison are on the page, labelled not evidence",
+      ("Research note, not evidence" in hm, 'data-lane="o35_cheap_no_wave_first_half"' in hm, "First-half fills, tracked" in hm), (True, True, True))
+check("the v2 fold is closed by default", re.search(r'<details class="section-disclosure" data-lane="o35_cheap_no_wave_v2">', hm) is not None, True)
 check("the v1 fold is closed by default", re.search(r'<details class="section-disclosure" data-lane="o35_cheap_no_wave_v1">', hm) is not None, True)
 check("the trim date and reason are on the page", "Trimmed 2026-10-31" in hm, True)
 import json, os, tempfile
@@ -163,7 +177,13 @@ json.dump({"since": "2026-10-28", "version": "o35-v1", "entries": [v1e]}, tf)
 tf.close()
 mg = O.load(tf.name)
 os.unlink(tf.name)
-check("loading a v1 ledger starts v2 fresh from SINCE and keeps v1_since", (mg["version"], mg["since"], mg["v1_since"], len(mg["entries"])), ("o35-v2", "2026-10-31", "2026-10-28", 1))
+check("loading a v1 ledger starts v3 fresh from SINCE and keeps v1_since", (mg["version"], mg["since"], mg["v1_since"], len(mg["entries"])), ("o35-v3", "2026-11-01", "2026-10-28", 1))
+tf = tempfile.NamedTemporaryFile("w", suffix=".json", delete=False)
+json.dump({"since": "2026-10-31", "version": "o35-v2", "entries": [v2e]}, tf)
+tf.close()
+mg2 = O.load(tf.name)
+os.unlink(tf.name)
+check("loading a v2 ledger keeps its entries and its start as v2_since", (mg2["version"], mg2["since"], mg2["v2_since"], len(mg2["entries"])), ("o35-v3", "2026-11-01", "2026-10-31", 1))
 
 print("\nstats: z needs 3 nights, halves, clustering")
 mk = lambda night, roi, k: dict(variant="10c_2x", night=night, roi=roi, cost=0.1, profit=roi * 0.1, won=roi > 0, reason="target",
@@ -180,7 +200,7 @@ check("review at 10, decide at 30", (B.read_of(5, None), B.read_of(12, 0.1), B.r
 
 print("\nthe Soccer page section")
 empty = B.section(O.load("/nonexistent"))
-check("empty record says so and keeps the lane card", ('id="cheap-side"' in empty, "0 entries: no game has settled since the v2 record began" in empty, O.LANE in empty), (True, True, True))
+check("empty record says so and keeps the lane card", ('id="cheap-side"' in empty, "0 entries: no game has settled since the v3 record began" in empty, O.LANE in empty), (True, True, True))
 html = B.section(st)
 check("the lane's name, the 4x headline and the 3x comparison are shown; 2x, hold, 15c and 20c are not",
       (O.LABEL in html, O.vlabel("10c_4x") + " (headline)" in html, O.vlabel("10c_3x") in html, O.vlabel("10c_2x") in html, "hold to settlement" in html,
