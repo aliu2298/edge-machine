@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-01T18:04:10+00:00",
+ "board_built_at": "2026-11-01T18:34:10+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -1679,7 +1679,7 @@
    "kickoff": "2026-11-01T21:30Z",
    "lane": "production",
    "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T18:04:10+00:00",
+   "last_seen_at": "2026-11-01T18:34:10+00:00",
    "league": "MLS",
    "match": "Atlanta United FC v Toronto FC",
    "pair": "mls_fade_home|soccer_p05",
@@ -1717,7 +1717,7 @@
    "kickoff": "2026-11-01T21:30Z",
    "lane": "production",
    "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T18:04:10+00:00",
+   "last_seen_at": "2026-11-01T18:34:10+00:00",
    "league": "MLS",
    "match": "Atlanta United FC v Toronto FC",
    "pair": "team2_form_l10|soccer_team2",
@@ -1916,6 +1916,43 @@
    "sport": "soccer",
    "status": "miss"
   },
+  "2026-11-01|KXBTCD-26NOV0117-T77999.99|Below $78,000 at the close \u00b7 Crypto favourite band, below": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-11-01",
+   "edge_at_log": null,
+   "first_seen": "2026-11-01",
+   "headline": "Below $78,000 at the close",
+   "home": null,
+   "id": "2026-11-01|KXBTCD-26NOV0117-T77999.99|Below $78,000 at the close \u00b7 Crypto favourite band, below",
+   "kickoff": "2026-11-01T22:05Z",
+   "lane": "production",
+   "last_seen": "2026-11-01",
+   "last_seen_at": "2026-11-01T18:34:10+00:00",
+   "league": "Crypto \u00b7 Favourite band",
+   "match": "Bitcoin price on Nov 1, 2026",
+   "pair": "crypto_fav_band_below|crypto_fav",
+   "price_at_log": 0.72,
+   "published_at": "2026-11-01T18:34:10+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 210,
+   "route": {
+    "claim": "Below $78,000 at the close",
+    "event": "KXBTCD-26NOV0117",
+    "market": "KXBTCD-26NOV0117-T77999.99",
+    "outcome": "$78,000 or above",
+    "outcome_side": "no",
+    "price_at_log": 0.72,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "crypto_fav_band_below:KXBTCD-26NOV0117-T77999.99",
+   "source": "crypto_fav_band_below",
+   "sport": "crypto_fav",
+   "status": "pending"
+  },
   "2026-11-01|Lazio|Cagliari|Lazio to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
    "away": "Cagliari",
    "bet": {
@@ -1986,9 +2023,9 @@
    "ready_at": "2026-10-21T00:47:16+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 9,
+    "leads": 10,
     "problem": null,
-    "routed": 9,
+    "routed": 10,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -2000,7 +2037,7 @@
    "sandbox_roi_fee": 0.0727,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -2280,5 +2317,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-01T18:04:10+00:00"
+ "updated_at": "2026-11-01T18:34:10+00:00"
 }
