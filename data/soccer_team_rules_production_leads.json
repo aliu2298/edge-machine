@@ -9,11 +9,11 @@
    0.97
   ]
  },
- "board_built_at": "2026-11-01T00:26:00+00:00",
+ "board_built_at": "2026-11-01T00:31:53+00:00",
  "collector_error": null,
  "collector_healthy": {
-  "st_t5": false,
-  "st_t7": false
+  "st_t5": true,
+  "st_t7": true
  },
  "corners_selections": {},
  "first_publish_min": 45,
@@ -253,9 +253,9 @@
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 2,
-   "sandbox_roi": -0.3004,
-   "sandbox_roi_fee": -0.3004,
+   "sandbox_n": 3,
+   "sandbox_roi": -0.5336,
+   "sandbox_roi_fee": -0.5336,
    "timing": {
     "late": [],
     "timed": 0,
@@ -302,5 +302,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-01T00:26:00+00:00"
+ "updated_at": "2026-11-01T00:31:53+00:00"
 }
