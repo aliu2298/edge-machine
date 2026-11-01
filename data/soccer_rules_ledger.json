@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-01T14:46:37.831735+00:00",
+ "last_run": "2026-11-01T15:01:42.394649+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -1060,6 +1060,29 @@
      "ticker": "KXEPLTOTAL-26OCT31MCIBRI-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Manchester City O+D- v Brighton & Hove Albion O+D- \u00b7 Over 2.5 YES 0.65"
+    },
+    {
+     "ask": 0.55,
+     "bid": 0.54,
+     "event": "KXEPLTOTAL-26NOV01LFCARS",
+     "group": "B",
+     "id": "B5:KXEPLTOTAL-26NOV01LFCARS",
+     "labels": {
+      "away": "O+D-",
+      "home": "O+D-"
+     },
+     "league": "Premier League",
+     "line": 2.5,
+     "logged": "2026-11-01T15:01:42.394649+00:00",
+     "match": "Liverpool v Arsenal",
+     "price": 0.55,
+     "rule": "B5",
+     "side": "yes",
+     "start": "2026-11-01T16:30Z",
+     "status": "open",
+     "ticker": "KXEPLTOTAL-26NOV01LFCARS-3",
+     "title": "Will over 2.5 goals be scored?",
+     "why": "Liverpool O+D- v Arsenal O+D- \u00b7 Over 2.5 YES 0.55"
     }
    ]
   },
@@ -3758,14 +3781,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-30T20:31:37.863391+00:00",
-   "candidates": 0,
-   "due": 0,
-   "labelled": 0,
-   "matched": 0,
-   "new": 0
-  },
-  {
    "at": "2026-10-30T21:01:30.003640+00:00",
    "candidates": 0,
    "due": 0,
@@ -4163,6 +4178,14 @@
    "due": 6,
    "labelled": 6,
    "matched": 1,
+   "new": 1
+  },
+  {
+   "at": "2026-11-01T15:01:42.394649+00:00",
+   "candidates": 2,
+   "due": 7,
+   "labelled": 7,
+   "matched": 2,
    "new": 1
   }
  ],
