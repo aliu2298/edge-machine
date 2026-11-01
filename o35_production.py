@@ -1,4 +1,4 @@
-"""o35_cheap_no_wave v2 in Production: the feed the bot's resting-bid executor reads (2026-11-01, Olu).
+"""o35_cheap_no_wave v2 in Production: the feed the follower's resting-bid executor reads (2026-11-01, Olu).
 
 The Sandbox paper lane (o35_cheap_no.py) keeps running unchanged. This file only LISTS the matches the live
 rule applies to, from Kalshi's open total-goals markets in the eleven v2 leagues: the over 3.5 rung (event
