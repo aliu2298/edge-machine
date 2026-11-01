@@ -4,34 +4,6 @@
  "leads": [
   {
    "bid": 0.1,
-   "event": "KXLALIGATOTAL-26NOV01SANRMA",
-   "id": "o35_cheap_no_wave:KXLALIGATOTAL-26NOV01SANRMA-4",
-   "kickoff": "2026-11-01T15:15:00+00:00",
-   "lane": "o35_cheap_no_wave",
-   "league": "La Liga",
-   "sell": 0.4,
-   "side": "no",
-   "stake_usd": 1.0,
-   "ticker": "KXLALIGATOTAL-26NOV01SANRMA-4",
-   "title": "Santander vs Real Madrid: Total Goals",
-   "version": "o35-v3"
-  },
-  {
-   "bid": 0.1,
-   "event": "KXEREDIVISIETOTAL-26NOV01GROSPA",
-   "id": "o35_cheap_no_wave:KXEREDIVISIETOTAL-26NOV01GROSPA-4",
-   "kickoff": "2026-11-01T15:45:00+00:00",
-   "lane": "o35_cheap_no_wave",
-   "league": "Eredivisie",
-   "sell": 0.4,
-   "side": "no",
-   "stake_usd": 1.0,
-   "ticker": "KXEREDIVISIETOTAL-26NOV01GROSPA-4",
-   "title": "Groningen vs Sparta: Total Goals",
-   "version": "o35-v3"
-  },
-  {
-   "bid": 0.1,
    "event": "KXSUPERLIGTOTAL-26NOV01KASBES",
    "id": "o35_cheap_no_wave:KXSUPERLIGTOTAL-26NOV01KASBES-4",
    "kickoff": "2026-11-01T16:00:00+00:00",
@@ -242,6 +214,20 @@
   },
   {
    "bid": 0.1,
+   "event": "KXSUPERLIGTOTAL-26NOV02GENALA",
+   "id": "o35_cheap_no_wave:KXSUPERLIGTOTAL-26NOV02GENALA-4",
+   "kickoff": "2026-11-02T17:00:00+00:00",
+   "lane": "o35_cheap_no_wave",
+   "league": "Turkish Super Lig",
+   "sell": 0.4,
+   "side": "no",
+   "stake_usd": 1.0,
+   "ticker": "KXSUPERLIGTOTAL-26NOV02GENALA-4",
+   "title": "Genclerbirligi vs Alanyaspor: Total Goals",
+   "version": "o35-v3"
+  },
+  {
+   "bid": 0.1,
    "event": "KXSERIEATOTAL-26NOV02SASFIO",
    "id": "o35_cheap_no_wave:KXSERIEATOTAL-26NOV02SASFIO-4",
    "kickoff": "2026-11-02T17:30:00+00:00",
@@ -320,6 +306,6 @@
   "side": "no",
   "stake_usd": 1.0
  },
- "updated_at": "2026-11-01T17:01:11+00:00",
+ "updated_at": "2026-11-01T18:01:02+00:00",
  "version": "o35-v3"
 }
