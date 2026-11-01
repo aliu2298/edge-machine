@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-01T01:05:51.953713+00:00",
+ "last_run": "2026-11-01T07:29:11.046217+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -4039,11 +4039,14 @@
      },
      "logged": "2026-10-31T22:30:15.205893+00:00",
      "match": "MIN @ SA",
+     "payout": 0.0,
      "price": 0.56,
+     "profit": -100.0,
      "rule": "R7",
+     "settled": "2026-11-01T07:29:11.046217+00:00",
      "side": "no",
      "start": "2026-11-01T00:00Z",
-     "status": "open",
+     "status": "lost",
      "strike": 109.5,
      "team": "MIN",
      "ticker": "KXNBATEAMTOTAL-26OCT31MINSAS-MIN110",
@@ -4061,11 +4064,14 @@
      },
      "logged": "2026-10-31T23:00:14.718258+00:00",
      "match": "OKC @ HOU",
+     "payout": 0.0,
      "price": 0.41,
+     "profit": -100.0,
      "rule": "R7",
+     "settled": "2026-11-01T07:29:11.046217+00:00",
      "side": "no",
      "start": "2026-11-01T00:30Z",
-     "status": "open",
+     "status": "lost",
      "strike": 108.5,
      "team": "HOU",
      "ticker": "KXNBATEAMTOTAL-26OCT31OKCHOU-HOU109",
@@ -4083,11 +4089,14 @@
      },
      "logged": "2026-10-31T23:00:14.718258+00:00",
      "match": "OKC @ HOU",
+     "payout": 1.0,
      "price": 0.58,
+     "profit": 67.49,
      "rule": "R7",
+     "settled": "2026-11-01T07:29:11.046217+00:00",
      "side": "no",
      "start": "2026-11-01T00:30Z",
-     "status": "open",
+     "status": "won",
      "strike": 110.5,
      "team": "OKC",
      "ticker": "KXNBATEAMTOTAL-26OCT31OKCHOU-OKC111",
@@ -4098,11 +4107,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-10-28T01:30:14.033417+00:00",
-   "due": 1,
-   "new": 3
-  },
   {
    "at": "2026-10-28T01:58:50.389227+00:00",
    "due": 1,
@@ -4350,6 +4354,11 @@
   },
   {
    "at": "2026-11-01T01:05:51.953713+00:00",
+   "due": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-01T07:29:11.046217+00:00",
    "due": 0,
    "new": 0
   }
