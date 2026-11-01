@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-01T12:04:59+00:00",
+ "board_built_at": "2026-11-01T13:05:21+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -39,7 +39,7 @@
   "kalshi:26OCT26SEVOSA": "2026-10-26|Sevilla|Osasuna|Under 8 corners \u00b7 Corners total under"
  },
  "first_publish_min": 45,
- "late_publication_skipped": 4,
+ "late_publication_skipped": 5,
  "leads": {
   "2026-10-25|Alkmaar|Enschede|Draw \u00b7 Eredivisie draw band": {
    "away": "Enschede",
@@ -1821,7 +1821,7 @@
    "kickoff": "2026-11-01T21:30Z",
    "lane": "production",
    "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T12:04:59+00:00",
+   "last_seen_at": "2026-11-01T13:05:21+00:00",
    "league": "MLS",
    "match": "Atlanta United FC v Toronto FC",
    "pair": "mls_fade_home|soccer_p05",
@@ -1859,7 +1859,7 @@
    "kickoff": "2026-11-01T21:30Z",
    "lane": "production",
    "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T12:04:59+00:00",
+   "last_seen_at": "2026-11-01T13:05:21+00:00",
    "league": "MLS",
    "match": "Atlanta United FC v Toronto FC",
    "pair": "team2_form_l10|soccer_team2",
@@ -1931,7 +1931,7 @@
    "kickoff": "2026-11-01T13:30Z",
    "lane": "production",
    "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T12:04:59+00:00",
+   "last_seen_at": "2026-11-01T13:05:21+00:00",
    "league": "Eredivisie",
    "match": "Excelsior v Enschede",
    "pair": "ere_draw|soccer",
@@ -1953,44 +1953,6 @@
    "sport": "soccer",
    "status": "pending"
   },
-  "2026-11-01|Getafe|Sevilla|Sevilla to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
-   "away": "Sevilla",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "Sevilla"
-   },
-   "date": "2026-11-01",
-   "edge_at_log": null,
-   "first_seen": "2026-10-30",
-   "headline": "Sevilla to score 2+",
-   "home": "Getafe",
-   "id": "2026-11-01|Getafe|Sevilla|Sevilla to score 2+ \u00b7 Favourite to score 2+, ranked by margin",
-   "kickoff": "2026-11-01T13:00Z",
-   "lane": "production",
-   "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T12:04:59+00:00",
-   "league": "La Liga",
-   "match": "Getafe v Sevilla",
-   "pair": "team2_ranked|soccer_team2",
-   "price_at_log": 0.32,
-   "published_at": "2026-10-30T13:46:13+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 2833,
-   "route": {
-    "claim": "Sevilla to score 2+",
-    "event": "KXLALIGATEAMTOTAL-26NOV01GETSEV",
-    "market": "KXLALIGATEAMTOTAL-26NOV01GETSEV-SEV2",
-    "outcome": "Sevilla over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.32,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team2_ranked:KXLALIGATEAMTOTAL-26NOV01GETSEV-SEV2",
-   "source": "team2_ranked",
-   "sport": "soccer_team2",
-   "status": "pending"
-  },
   "2026-11-01|Groningen|Sparta|Draw \u00b7 Eredivisie draw band": {
    "away": "Sparta",
    "bet": {
@@ -2006,7 +1968,7 @@
    "kickoff": "2026-11-01T15:45Z",
    "lane": "production",
    "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T12:04:59+00:00",
+   "last_seen_at": "2026-11-01T13:05:21+00:00",
    "league": "Eredivisie",
    "match": "Groningen v Sparta",
    "pair": "ere_draw|soccer",
@@ -2044,7 +2006,7 @@
    "kickoff": "2026-11-01T14:00Z",
    "lane": "production",
    "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T12:04:59+00:00",
+   "last_seen_at": "2026-11-01T13:05:21+00:00",
    "league": "Serie A",
    "match": "Lazio v Cagliari",
    "pair": "team2_ranked|soccer_team2",
@@ -2082,7 +2044,7 @@
    "kickoff": "2026-11-01T17:00Z",
    "lane": "production",
    "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T12:04:59+00:00",
+   "last_seen_at": "2026-11-01T13:05:21+00:00",
    "league": "Serie A",
    "match": "Lecce v Genoa",
    "pair": "team2_ranked|soccer_team2",
@@ -2338,9 +2300,9 @@
    "ready_at": "2026-10-11T19:34:45+00:00",
    "route": "moved by hand on 2026-10-11",
    "routing": {
-    "leads": 9,
+    "leads": 8,
     "problem": null,
-    "routed": 9,
+    "routed": 8,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -2352,7 +2314,7 @@
    "sandbox_roi_fee": 0.0413,
    "timing": {
     "late": [],
-    "timed": 3,
+    "timed": 2,
     "under_target": 0
    }
   },
@@ -2418,10 +2380,19 @@
    "pair": "tennis_utr_shortlist_v1|tennis",
    "reason": "less than 45 minutes left at first publication",
    "withheld_at": "2026-10-27T07:46:47+00:00"
+  },
+  "2026-11-01|Telstar|Utrecht|Draw \u00b7 Eredivisie draw band": {
+   "headline": "Draw",
+   "id": "2026-11-01|Telstar|Utrecht|Draw \u00b7 Eredivisie draw band",
+   "kickoff": "2026-11-01T13:30Z",
+   "match": "Telstar v Utrecht",
+   "pair": "ere_draw|soccer",
+   "reason": "less than 45 minutes left at first publication",
+   "withheld_at": "2026-11-01T13:05:21+00:00"
   }
  },
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-01T12:04:59+00:00"
+ "updated_at": "2026-11-01T13:05:21+00:00"
 }
