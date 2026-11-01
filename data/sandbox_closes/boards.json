@@ -55,11 +55,6 @@
    "lead_min": 15.2,
    "price": 0.99
   },
-  "commod_fav_band:KXWTI-26OCT2214-T97.99": {
-   "at": "2026-10-22T17:38:03+00:00",
-   "lead_min": 21.9,
-   "price": 0.99
-  },
   "commod_fav_band:KXWTI-26OCT2314-T102.49": {
    "at": "2026-10-23T17:26:37+00:00",
    "lead_min": 33.4,
@@ -90,11 +85,6 @@
    "lead_min": 15.2,
    "price": 0.95
   },
-  "commod_nc_no:KXWTI-26OCT2214-T100.49": {
-   "at": "2026-10-22T17:38:03+00:00",
-   "lead_min": 21.9,
-   "price": 0.96
-  },
   "commod_nc_no:KXWTI-26OCT2314-T103.49": {
    "at": "2026-10-23T17:26:37+00:00",
    "lead_min": 33.4,
@@ -104,11 +94,6 @@
    "at": "2026-10-29T17:29:38+00:00",
    "lead_min": 30.4,
    "price": 0.92
-  },
-  "commod_nc_yes:KXWTI-26OCT2214-T98.49": {
-   "at": "2026-10-22T17:38:03+00:00",
-   "lead_min": 21.9,
-   "price": 0.95
   },
   "commod_nc_yes:KXWTI-26OCT2314-T101.99": {
    "at": "2026-10-23T17:26:37+00:00",
@@ -269,6 +254,11 @@
    "at": "2026-10-31T16:43:48+00:00",
    "lead_min": 46.2,
    "price": 0.15
+  },
+  "mls_away_band_fade:KXMLSGAME-26NOV01VANSEA-SEA": {
+   "at": "2026-11-01T20:05:45+00:00",
+   "lead_min": 24.2,
+   "price": 0.77
   },
   "mls_away_band_fade:KXMLSGAME-26OCT24DALSJ-SJ": {
    "at": "2026-10-24T23:43:12+00:00",
@@ -475,11 +465,6 @@
    "lead_min": 1.6,
    "price": 0.37
   },
-  "tennis_utr_shortlist_v1:aec-utr-avelua-medmyn-2026-10-22": {
-   "at": "2026-10-22T17:38:03+00:00",
-   "lead_min": 21.9,
-   "price": 0.71
-  },
   "tennis_utr_shortlist_v1:aec-utr-chaeli-bhapar-2026-10-26": {
    "at": "2026-10-27T15:32:38+00:00",
    "lead_min": 27.4,
@@ -509,11 +494,6 @@
    "at": "2026-10-28T18:29:36+00:00",
    "lead_min": 0.4,
    "price": 0.71
-  },
-  "tennis_utr_shortlist_v1:aec-utr-paptif-metsaa-2026-10-22": {
-   "at": "2026-10-22T17:38:03+00:00",
-   "lead_min": 21.9,
-   "price": 0.7
   },
   "u35_low_o15:KXEPLTOTAL-26OCT25SUNLEE-2": {
    "at": "2026-10-25T15:49:50+00:00",
@@ -561,5 +541,5 @@
    "price": 0.75
   }
  },
- "updated": "2026-11-01T16:22:57+00:00"
+ "updated": "2026-11-01T20:05:45+00:00"
 }
