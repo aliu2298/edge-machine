@@ -660,6 +660,16 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
 
 
 # ------------------------------------------------------------------ the rule scorecard
+def _o35_live():
+    """Over 3.5 cheap NO v2, live since 2026-11-01 through its own feed (o35_production): named in the Production
+    list on the page. Not a pair row and not in the pairs tile, which counts the Production page's pairs."""
+    try:
+        import o35_production
+        return [o35_production.NAME]
+    except Exception:                                           # noqa: BLE001
+        return []
+
+
 def _rule_href(sport):
     return AREA_HREF.get(FAMILY_AREA.get(B.family(sport)), "./sandbox.html")
 
@@ -904,7 +914,7 @@ def page(now, d=None, st=None, blob=None, nba=None, market=None, closes=None, ru
 
 <section id="scorecard" aria-labelledby="scorecard-title" class="cc-scorecard-section">
 <div class="pane-head"><h2 id="scorecard-title">Rule scorecard</h2> <span class="mut sm">· {len(m['scorecard'])} rules</span></div>
-{_scorecard_html(m['scorecard'], m.get('prod_outside') or (), m.get('prod_left') or ())}
+{_scorecard_html(m['scorecard'], list(m.get('prod_outside') or ()) + _o35_live(), m.get('prod_left') or ())}
 </section>
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 """
