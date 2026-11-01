@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-01T16:59:27+00:00",
+ "board_built_at": "2026-11-01T17:04:45+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -109,42 +109,6 @@
    "sandbox_quote": "crypto_fav_band_below:KXBTCD-26OCT2517-T80749.99",
    "source": "crypto_fav_band_below",
    "sport": "crypto_fav",
-   "status": "hit"
-  },
-  "2026-10-25|Lecce|Juventus|Juventus to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
-   "away": "Juventus",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "Juventus"
-   },
-   "date": "2026-10-25",
-   "edge_at_log": null,
-   "first_seen": "2026-10-23",
-   "headline": "Juventus to score 2+",
-   "home": "Lecce",
-   "id": "2026-10-25|Lecce|Juventus|Juventus to score 2+ \u00b7 Favourite to score 2+, ranked by margin",
-   "kickoff": "2026-10-25T17:00Z",
-   "lane": "production",
-   "league": "Serie A",
-   "match": "Lecce v Juventus",
-   "pair": "team2_ranked|soccer_team2",
-   "price_at_log": 0.62,
-   "published_at": "2026-10-25T20:50:57+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Juventus to score 2+",
-    "event": "KXSERIEATEAMTOTAL-26OCT25LECJUV",
-    "market": "KXSERIEATEAMTOTAL-26OCT25LECJUV-JUV2",
-    "outcome": "Juventus over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.62,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team2_ranked:KXSERIEATEAMTOTAL-26OCT25LECJUV-JUV2",
-   "source": "team2_ranked",
-   "sport": "soccer_team2",
    "status": "hit"
   },
   "2026-10-26|KXBRENTD-26OCT2617-T110.50|Above $110.50 at the close \u00b7 Commodities favourite band": {
@@ -1715,7 +1679,7 @@
    "kickoff": "2026-11-01T21:30Z",
    "lane": "production",
    "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T16:59:27+00:00",
+   "last_seen_at": "2026-11-01T17:04:45+00:00",
    "league": "MLS",
    "match": "Atlanta United FC v Toronto FC",
    "pair": "mls_fade_home|soccer_p05",
@@ -1753,7 +1717,7 @@
    "kickoff": "2026-11-01T21:30Z",
    "lane": "production",
    "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T16:59:27+00:00",
+   "last_seen_at": "2026-11-01T17:04:45+00:00",
    "league": "MLS",
    "match": "Atlanta United FC v Toronto FC",
    "pair": "team2_form_l10|soccer_team2",
@@ -1952,44 +1916,6 @@
    "source": "team2_ranked",
    "sport": "soccer_team2",
    "status": "hit"
-  },
-  "2026-11-01|Lecce|Genoa|Genoa to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
-   "away": "Genoa",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "Genoa"
-   },
-   "date": "2026-11-01",
-   "edge_at_log": null,
-   "first_seen": "2026-10-30",
-   "headline": "Genoa to score 2+",
-   "home": "Lecce",
-   "id": "2026-11-01|Lecce|Genoa|Genoa to score 2+ \u00b7 Favourite to score 2+, ranked by margin",
-   "kickoff": "2026-11-01T17:00Z",
-   "lane": "production",
-   "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T16:59:27+00:00",
-   "league": "Serie A",
-   "match": "Lecce v Genoa",
-   "pair": "team2_ranked|soccer_team2",
-   "price_at_log": 0.36,
-   "published_at": "2026-10-30T17:34:52+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 2845,
-   "route": {
-    "claim": "Genoa to score 2+",
-    "event": "KXSERIEATEAMTOTAL-26NOV01LECGEN",
-    "market": "KXSERIEATEAMTOTAL-26NOV01LECGEN-GEN2",
-    "outcome": "Genoa over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.36,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team2_ranked:KXSERIEATEAMTOTAL-26NOV01LECGEN-GEN2",
-   "source": "team2_ranked",
-   "sport": "soccer_team2",
-   "status": "pending"
   }
  },
  "pairs": {
@@ -2225,9 +2151,9 @@
    "ready_at": "2026-10-11T19:34:45+00:00",
    "route": "moved by hand on 2026-10-11",
    "routing": {
-    "leads": 8,
+    "leads": 6,
     "problem": null,
-    "routed": 8,
+    "routed": 6,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -2239,7 +2165,7 @@
    "sandbox_roi_fee": 0.0157,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 0,
     "under_target": 0
    }
   },
@@ -2319,5 +2245,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-01T16:59:27+00:00"
+ "updated_at": "2026-11-01T17:04:45+00:00"
 }
