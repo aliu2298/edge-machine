@@ -104,7 +104,10 @@ arch = text(arch_h)
 check("the Archive is collapsed and holds the three old lanes, one line each",
       ('<details class="fold sec" id="archive">' in h, arch.count("(mentions_rate)"), arch.count("(culture_endgame)"),
        arch.count("(culture_fav_band)")), (True, 1, 1, 1))
-outside = text(h[:h.find('id="archive"')])
+above = h[:h.find('id="archive"')]
+# mentions_dip_hold (2026-11-01) is a live lane whose label starts "Trump mentions": its card is not the old mentions_rate lane.
+above = above[:above.find('<section id="dip-hold"')] + above[above.find('<section id="lanes"'):]
+outside = text(above)
 check("the old lanes are not shown anywhere above the Archive",
       any(K.LANES[k] in outside for k in ("mentions_rate", "culture_endgame", "culture_fav_band")), False)
 check("no leftover blocks of the old template (verdict chips, Events, Production list, Observing)",
@@ -114,7 +117,7 @@ check("the ledger was not touched", ledger["lanes"]["mentions_rate"]["picks"], [
 
 print("\nthe document")
 check("Culture is the active page in the site nav; the in-page links name the four parts",
-      ('aria-current="page"' in h and "culture" in h, all(f'href="#{i}"' in h for i in ("standard", "lanes", "models", "archive"))),
+      ('aria-current="page"' in h and "culture" in h, all(f'href="#{i}"' in h for i in ("standard", "dip-hold", "lanes", "models", "archive"))),
       (True, True))
 check("every table sits in a scroll wrapper and its cells carry phone labels",
       (h.count("<table") == h.count('<div class="tbl"><table'), 'data-l="Entries"' in h), (True, True))
