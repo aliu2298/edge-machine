@@ -190,7 +190,7 @@ eq(soccer["coverage"], f"{n_soccer} rules · 1 in Production",
 eq((_area(counts, "tennis")["open"], _area(counts, "cricket")["settled"]), (1, 1), "tennis and cricket count their own rows")
 eq(_area(counts, "crypto")["coverage"], f"{len(S.COINS)} coins checked", "crypto's coverage line is its coins")
 eq(_area(counts, "commodities")["coverage"], f"{len(S.COMMOD_FAV_SERIES)} series checked", "commodities' is its series")
-eq(counts["tiles"]["pairs"], 2, "the pairs tile counts Production pairs (one pair plus the o35 live lane)")
+eq(counts["tiles"]["pairs"], 1, "the pairs tile counts Production pairs")
 eq(counts["tiles"]["open"], 3, "the open tile counts every open bet")
 nba = {"built": ISO, "teams": {t: {} for t in range(30)}, "games": [
     {"id": "a", "start": (NOW + timedelta(hours=3)).strftime("%Y-%m-%dT%H:%MZ"), "completed": False},
@@ -375,7 +375,7 @@ tiles = re.findall(r'<div class="tile"><b>([^<]*)</b><span>([^<]*)</span></div>'
 eq([t[1] for t in tiles], ["pairs in Production", "open bets", "landed · last 14 days", "areas healthy", "needs attention"],
    "five tiles, in order")
 tile_of = {label: value for value, label in tiles}
-eq(tile_of["pairs in Production"], "2", "the pairs tile")
+eq(tile_of["pairs in Production"], "1", "the pairs tile")
 eq(tile_of["open bets"], "2", "the open tile")
 eq(tile_of["needs attention"], "6", "the attention tile")
 ok(re.fullmatch(r"\d+/\d+", tile_of["landed · last 14 days"]), "the landed tile is won/settled")
