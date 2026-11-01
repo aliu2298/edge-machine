@@ -631,6 +631,9 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
     if soccer_team_rules is not None:
         import soccer_team_rules_production
         sr_names += [n for _s, _sp, n in soccer_team_rules_production.PAIRS.values()]
+    # Over 3.5 cheap NO v2, live since 2026-11-01 through its own feed (o35_production): named, not a pair row.
+    import o35_production
+    sr_names.append(o35_production.NAME)
     # Trump mentions publishes through its own feed while it is listed (2026-10-20 to 2026-10-26);
     # out of Production it is named once, with the day it left and the record it left on.
     culture_listed, culture_left = False, []
