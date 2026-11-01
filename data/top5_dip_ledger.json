@@ -684,6 +684,126 @@
    "result": "yes",
    "title": "Will over 1.5 goals be scored?",
    "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXBUNDESLIGATOTAL-26NOV01SGEHSV",
+   "id": "KXBUNDESLIGATOTAL-26NOV01SGEHSV-2",
+   "kickoff": 1793550600,
+   "league": "Bundesliga",
+   "logged": "2026-11-01T20:52:51.300174+00:00",
+   "matchday": "2026-11-01",
+   "p": 0.88,
+   "p_at": 1793546700,
+   "p_bid": 0.86,
+   "p_check": {
+    "how": "print",
+    "last_trade": null,
+    "printed": 49.43,
+    "status": "verified"
+   },
+   "prints": 61,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": {
+     "counted": true,
+     "fill_at": 1793556679,
+     "fill_print": 0.43,
+     "fill_volume": 128428.28,
+     "held": true,
+     "limit": 0.43,
+     "payout": 0.0,
+     "sold": false,
+     "sold_at": null
+    },
+    "65": {
+     "counted": true,
+     "fill_at": 1793556391,
+     "fill_print": 0.51,
+     "fill_volume": 164429.4,
+     "held": true,
+     "limit": 0.51,
+     "payout": 0.0,
+     "sold": false,
+     "sold_at": null
+    }
+   },
+   "event": "KXEPLTOTAL-26NOV01LFCARS",
+   "id": "KXEPLTOTAL-26NOV01LFCARS-2",
+   "kickoff": 1793550600,
+   "league": "EPL",
+   "logged": "2026-11-01T20:52:51.300174+00:00",
+   "matchday": "2026-11-01",
+   "p": 0.79,
+   "p_at": 1793547060,
+   "p_bid": 0.77,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.78,
+    "printed": 11631.57,
+    "status": "verified"
+   },
+   "prints": 2439,
+   "result": "no",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXLALIGATOTAL-26NOV01SANRMA",
+   "id": "KXLALIGATOTAL-26NOV01SANRMA-2",
+   "kickoff": 1793546100,
+   "league": "La Liga",
+   "logged": "2026-11-01T20:52:51.300174+00:00",
+   "matchday": "2026-11-01",
+   "p": 0.93,
+   "p_at": 1793542320,
+   "p_bid": 0.92,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.93,
+    "printed": 8787.6,
+    "status": "verified"
+   },
+   "prints": 170,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXSERIEATOTAL-26NOV01LECGEN",
+   "id": "KXSERIEATOTAL-26NOV01LECGEN-2",
+   "kickoff": 1793552400,
+   "league": "Serie A",
+   "logged": "2026-11-01T20:52:51.300174+00:00",
+   "matchday": "2026-11-01",
+   "p": 0.67,
+   "p_at": 1793548860,
+   "p_bid": 0.66,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.67,
+    "printed": 14.58,
+    "status": "verified"
+   },
+   "prints": 71,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
   }
  ],
  "error": null,
@@ -14738,12 +14858,12 @@
   ]
  },
  "lane": "top5_goalless_dip",
- "last_run": "2026-11-01T16:29:08.626036+00:00",
+ "last_run": "2026-11-01T20:52:51.300174+00:00",
  "observations": {
-  "at": "2026-11-01T16:29:08.626036+00:00",
+  "at": "2026-11-01T20:52:51.300174+00:00",
   "errors": [],
   "new": 4,
-  "skipped": 2,
+  "skipped": 3,
   "waiting": 0
  },
  "seen": {},
@@ -14752,41 +14872,14 @@
   "KXBUNDESLIGATOTAL-26NOV01UNIKOE": "pregame ask unverified: 1 contracts traded at or through the ask within 60 minutes (under 10)",
   "KXBUNDESLIGATOTAL-26OCT31BMGPAD": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)",
   "KXBUNDESLIGATOTAL-26OCT31FCASCF": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)",
+  "KXLALIGATOTAL-26NOV01ELCVCF": "pregame ask unverified: 4.64 contracts traded at or through the ask within 60 minutes (under 10)",
+  "KXLIGUE1TOTAL-26NOV01PARASM": "pregame ask unverified: 6.3 contracts traded at or through the ask within 60 minutes (under 10)",
   "KXLIGUE1TOTAL-26NOV01RCSAUX": "pregame ask unverified: 5.95 contracts traded at or through the ask within 60 minutes (under 10)",
   "KXLIGUE1TOTAL-26OCT31ESTMAN": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)",
-  "KXLIGUE1TOTAL-26OCT31NICREN": "market closed before its listed kickoff (match moved)"
+  "KXLIGUE1TOTAL-26OCT31NICREN": "market closed before its listed kickoff (match moved)",
+  "KXLIGUE1TOTAL-26OCT31OLANG": "no pregame quote an hour before kickoff"
  },
  "upcoming": [
-  {
-   "event": "KXLALIGATOTAL-26NOV01SANRMA",
-   "kickoff": 1793546100,
-   "title": "Santander vs Real Madrid: Total Goals"
-  },
-  {
-   "event": "KXLIGUE1TOTAL-26NOV01PARASM",
-   "kickoff": 1793549700,
-   "title": "Paris FC vs Monaco: Total Goals"
-  },
-  {
-   "event": "KXEPLTOTAL-26NOV01LFCARS",
-   "kickoff": 1793550600,
-   "title": "Liverpool vs Arsenal: Total Goals"
-  },
-  {
-   "event": "KXBUNDESLIGATOTAL-26NOV01SGEHSV",
-   "kickoff": 1793550600,
-   "title": "Frankfurt vs Hamburg: Total Goals"
-  },
-  {
-   "event": "KXSERIEATOTAL-26NOV01LECGEN",
-   "kickoff": 1793552400,
-   "title": "Lecce vs Genoa: Total Goals"
-  },
-  {
-   "event": "KXLALIGATOTAL-26NOV01ELCVCF",
-   "kickoff": 1793554200,
-   "title": "Elche vs Valencia: Total Goals"
-  },
   {
    "event": "KXSERIEATOTAL-26NOV01JUVNAP",
    "kickoff": 1793562300,
@@ -14806,6 +14899,36 @@
    "event": "KXSERIEATOTAL-26NOV02SASFIO",
    "kickoff": 1793640600,
    "title": "Sassuolo vs Fiorentina: Total Goals"
+  },
+  {
+   "event": "KXSERIEATOTAL-26NOV02ATAPAR",
+   "kickoff": 1793648700,
+   "title": "Atalanta vs Parma Calcio: Total Goals"
+  },
+  {
+   "event": "KXEPLTOTAL-26NOV02NEWEVE",
+   "kickoff": 1793649600,
+   "title": "Newcastle vs Everton: Total Goals"
+  },
+  {
+   "event": "KXLALIGATOTAL-26NOV02DEPOSA",
+   "kickoff": 1793649600,
+   "title": "Deportivo De La Coruna vs Osasuna: Total Goals"
+  },
+  {
+   "event": "KXUCLTOTAL-26NOV03GALVFB",
+   "kickoff": 1793727900,
+   "title": "Galatasaray vs Stuttgart: Total Goals"
+  },
+  {
+   "event": "KXUCLTOTAL-26NOV03SHASPO",
+   "kickoff": 1793727900,
+   "title": "Shakhtar vs Sporting CP: Total Goals"
+  },
+  {
+   "event": "KXUCLTOTAL-26NOV03ASKSLO",
+   "kickoff": 1793736000,
+   "title": "LASK vs Slovan Bratislava: Total Goals"
   }
  ],
  "version": "top5dip-v1"
