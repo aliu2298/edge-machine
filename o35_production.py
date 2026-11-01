@@ -5,7 +5,7 @@ rule applies to, from Kalshi's open total-goals markets in the eleven v2 leagues
 ticker + "-4", floor_strike 3.5), kickoff = occurrence_datetime minus 4 hours (the paper rule's own clock).
 The rule itself is carried in the feed header so the follower and the page quote one source:
 
-  a post-only GTC NO bid at BID, STAKE dollars a match, placed about an hour before kickoff; when it fills
+  a post-only GTC NO bid at BID, STAKE dollars a match, placed an hour AFTER kickoff (second half only); when it fills
   (in play, after goals push the over up) a post-only resting sell of the filled NO at SELL (4x); the unfilled
   bid is cancelled at the final whistle; an unsold position is held to settlement. Never chases, never takes.
 
@@ -29,7 +29,7 @@ BID = O.HEADLINE
 SELL = round(O.HEADLINE * O.HEAD_MULT, 2)
 STAKE_USD = 1.0
 LOOKAHEAD_H = 30
-GRACE_MIN = 20                 # a started match stays listed this long so a slow cycle can still see it
+GRACE_MIN = 230                # second-half bids: a started match stays listed until about kickoff + 4h, when the follower cancels
 SKIP_FRESH_MIN = 20            # a heartbeat leaves a feed this young alone
 
 
@@ -67,7 +67,7 @@ def feed(now=None, fetch=D.get):
     now = now or dt.datetime.now(O.UTC)
     rows, errors = leads(now, fetch)
     return dict(lane=LANE, name=NAME, version=O.VERSION, moved_on=MOVED_ON, updated_at=now.replace(microsecond=0).isoformat(),
-                rule=dict(side="no", bid=BID, sell=SELL, stake_usd=STAKE_USD, bid_lead_min=O.BID_LEAD_MIN,
+                rule=dict(side="no", bid=BID, sell=SELL, stake_usd=STAKE_USD, bid_after_min=O.BID_AFTER_MIN,
                           kickoff_back_h=O.KICKOFF_BACK_H, leagues=sorted(O.LEAGUES)),
                 errors=errors, leads=rows)
 

@@ -19,8 +19,15 @@ fills only on a LATER trade print at or above the target AND only if at least 50
 target after the bid filled. Under 50 the sell does not fill (held to settlement) and the trade is marked "thin";
 the volume is logged either way. Maker fee 0.0175 p(1-p) on BOTH legs (both rest), none on settlement.
 
-KICKOFF = Kalshi occurrence_datetime minus 4 hours (verified on 72 games against ESPN). The bid is placed an hour
-before it; only prints after that count.
+SECOND HALF ONLY, version o35-v3 (Olu, 2026-11-01): the bid counts only from kickoff + BID_AFTER_MIN (60) minutes, so a
+fill needs a print after that. A comparison bid, "10e", is tracked beside it: the old rule (bid an hour BEFORE kickoff)
+counted only for fills that came before kickoff + 60 min, so the split keeps being measured. Why: the 10c fills split by
+the clock, in-sample Oct 28-31 2nd-half 27 fills reached 4x 56% (+116.5%) v 1st-half 9 fills 22% (-13%); holdout Oct 17-27
+(190 matches) 2nd-half 63 fills 40% (+54.6% at 4x, z 2.3) v 1st-half 24 fills 21% (-18.8%); fair to reach 4x is 25%.
+This is research, not evidence for the lane (the v3 record starts fresh on SINCE).
+
+KICKOFF = Kalshi occurrence_datetime minus 4 hours (verified on 72 games against ESPN). The v1 and v2 bids were placed
+an hour before it; only prints after that count for them.
 
 Every settled market since SINCE is evaluated once, from its trades, whether or not the bid filled. Each entry
 is tagged with whether the match was also an over 1.5 form-rule match (the research population: o15_form_l10).
@@ -39,12 +46,18 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 PATH = os.path.join(ROOT, "data", "o35_cheap_no_ledger.json")
 SOURCE_LEDGER = os.path.join(ROOT, "data", "sandbox_ledger.json")
 LANE = "o35_cheap_no_wave"
-LABEL = "Over 3.5 cheap NO · NO bid 10c · sell at 4× (3× tracked)"
+LABEL = "Over 3.5 cheap NO · second-half NO bid 10c · sell at 4× (3× tracked)"
+RESEARCH_NOTE = ("Research note, not evidence: on 10c fills measured by minutes after kickoff, second-half fills (60+ min) reached 4x "
+                 "56% of the time, +117% at 4x (27 fills, Oct 28-31), and 40%, +55% at 4x, z 2.3 (63 fills, 190 matches, Oct 17-27); "
+                 "first-half fills reached it 22% and 21%, -13% and -19% (9 and 24 fills). Fair to reach 4x is 25%. "
+                 "That is why the bid now waits for the second half; this record starts fresh.")
+V2_LABEL = "Before the second-half rule (v2)"
 TRIM_NOTE = "Trimmed 2026-10-31: v1 (41 fills) showed 10c at 4× best, 15c/20c worse, and the Saudi Pro League 0 for 5 with no sell filled; fresh v2 record."
 V1_LABEL = "Before the Nov trim (v1)"
 V1 = "o35-v1"
-SINCE = "2026-10-31"
-VERSION = "o35-v2"
+V2 = "o35-v2"
+SINCE = "2026-11-01"
+VERSION = "o35-v3"
 LIMITS = (0.10,)
 V1_LIMITS = (0.10, 0.15, 0.20)
 HEADLINE = 0.10
@@ -56,7 +69,9 @@ LEAGUES = {k: v for k, v in SR.SERIES.items() if k != "Saudi Pro League"}
 MIN_VOL = 50
 DEAD_NO = 0.02
 KICKOFF_BACK_H = 4
-BID_LEAD_MIN = 60
+BID_LEAD_MIN = 60              # the old rule: bid this long before kickoff (v1, v2, and the "10e" comparison)
+BID_AFTER_MIN = 60             # v3: the bid counts from this long AFTER kickoff
+EARLY = "e"                    # bids key suffix of the comparison: first-half fills of the old bid
 CAP = 0.98
 MAKER = 0.0175
 REVIEW_N, DECIDE_N = 10, 30
@@ -117,39 +132,54 @@ def fetch_trades(ticker, min_ts, fetch, max_pages=30):
 def evaluate(prints, kickoff_ts, result, limits=None):
     """{limit key: bid outcome} for one market. A bid is None when no print reached it. A filled bid carries the
     fill time, the dead-fill flag, and per multiple the target, whether the sell filled, whether it was thin and
-    the contracts traded at or above the target after the fill."""
-    live = [p for p in prints if p[0] >= kickoff_ts - BID_LEAD_MIN * 60]
+    the contracts traded at or above the target after the fill. Key "10" is the second-half bid (prints from kickoff +
+    BID_AFTER_MIN); "10e" is the comparison: the old bid from an hour before kickoff, kept only if it filled before
+    kickoff + BID_AFTER_MIN (a first-half fill)."""
     payout = 1.0 if result == "no" else 0.0
     out = {}
     for limit in limits or LIMITS:
-        i = next((k for k, p in enumerate(live) if p[1] <= limit + EPS), None)
-        if i is None:
-            out[f"{round(limit * 100)}"] = None
-            continue
-        after = live[i + 1:]
-        sells = {}
-        for m in MULTS:
-            target = round(min(limit * m, CAP), 2)
-            hit = [p for p in after if p[1] >= target - EPS]
-            vol = round(sum(p[2] for p in hit), 2)
-            sells[str(m)] = dict(target=target, volume=vol, filled=bool(hit) and vol >= MIN_VOL - EPS,
-                                 thin=bool(hit) and vol < MIN_VOL - EPS, at=hit[0][0] if hit and vol >= MIN_VOL - EPS else None)
-        out[f"{round(limit * 100)}"] = dict(limit=limit, fill_at=live[i][0], fill_print=live[i][1], dead=live[i][1] <= DEAD_NO + EPS,
-                                            sells=sells, payout=payout)
+        key = f"{round(limit * 100)}"
+        lo = kickoff_ts + BID_AFTER_MIN * 60
+        out[key] = _bid([p for p in prints if p[0] >= lo], limit, payout)
+        early = _bid([p for p in prints if p[0] >= kickoff_ts - BID_LEAD_MIN * 60], limit, payout)
+        out[key + EARLY] = early if early and early["fill_at"] < lo else None
     return out
 
 
+def _bid(live, limit, payout):
+    i = next((k for k, p in enumerate(live) if p[1] <= limit + EPS), None)
+    if i is None:
+        return None
+    after = live[i + 1:]
+    sells = {}
+    for m in MULTS:
+        target = round(min(limit * m, CAP), 2)
+        hit = [p for p in after if p[1] >= target - EPS]
+        vol = round(sum(p[2] for p in hit), 2)
+        sells[str(m)] = dict(target=target, volume=vol, filled=bool(hit) and vol >= MIN_VOL - EPS,
+                             thin=bool(hit) and vol < MIN_VOL - EPS, at=hit[0][0] if hit and vol >= MIN_VOL - EPS else None)
+    return dict(limit=limit, fill_at=live[i][0], fill_print=live[i][1], dead=live[i][1] <= DEAD_NO + EPS,
+                sells=sells, payout=payout)
+
+
 def split(entries):
-    """(v1 entries, v2 entries): an entry without a version stamp is v1."""
+    """(older entries, current-version entries): an entry without a version stamp is v1."""
     return ([e for e in entries if e.get("version", V1) != VERSION], [e for e in entries if e.get("version", V1) == VERSION])
 
 
-def trade_rows(entries):
-    """One row per filled bid per variant: the stats shape chaos_replay.stats reads."""
+def split3(entries):
+    """(v1, v2, v3 entries)."""
+    v = lambda e: e.get("version", V1)
+    return ([e for e in entries if v(e) not in (V2, VERSION)], [e for e in entries if v(e) == V2], [e for e in entries if v(e) == VERSION])
+
+
+def trade_rows(entries, early=False):
+    """One row per filled bid per variant: the stats shape chaos_replay.stats reads. early=True reads the
+    first-half comparison bids ("10e") instead of the second-half ones."""
     rows = []
     for e in entries:
         for lk, b in (e.get("bids") or {}).items():
-            if not b:
+            if not b or lk.endswith(EARLY) != early:
                 continue
             limit = b["limit"]
             cost = limit + fee(limit)
@@ -184,8 +214,11 @@ def load(path=None):
     except FileNotFoundError:
         s = {}
     s.setdefault("lane", LANE)
-    if s.get("version") != VERSION:                             # the v1 record stays; v2 starts fresh from SINCE
-        s["v1_since"] = s.get("since") or "2026-10-28"
+    if s.get("version") != VERSION:                             # older records stay; v3 starts fresh from SINCE
+        if s.get("version") == V2:
+            s["v2_since"] = s.get("since") or "2026-10-31"
+        else:
+            s["v1_since"] = s.get("v1_since") or s.get("since") or "2026-10-28"
         s["since"], s["version"] = SINCE, VERSION
     s.setdefault("entries", [])
     s.setdefault("seen", {})

@@ -29,9 +29,10 @@ def mkt(ev, hours, status="active", strike=3.5, suffix="-4", result=""):
 
 
 EVENTS = {"KXMLSTOTAL": [dict(event_ticker="KXMLSTOTAL-A", title="A v B", markets=[mkt("KXMLSTOTAL-A", 3, strike=2.5, suffix="-3"), mkt("KXMLSTOTAL-A", 3)]),
-                         dict(event_ticker="KXMLSTOTAL-OLD", title="old", markets=[mkt("KXMLSTOTAL-OLD", -2)]),
+                         dict(event_ticker="KXMLSTOTAL-OLD", title="old", markets=[mkt("KXMLSTOTAL-OLD", -5)]),
                          dict(event_ticker="KXMLSTOTAL-FAR", title="far", markets=[mkt("KXMLSTOTAL-FAR", 48)]),
                          dict(event_ticker="KXMLSTOTAL-CLOSED", title="c", markets=[mkt("KXMLSTOTAL-CLOSED", 2, status="closed")]),
+                         dict(event_ticker="KXMLSTOTAL-MID", title="m", markets=[mkt("KXMLSTOTAL-MID", -2.5)]),
                          dict(event_ticker="KXMLSTOTAL-JUST", title="j", markets=[mkt("KXMLSTOTAL-JUST", -0.2)])],
           "KXSAUDIPLTOTAL": [dict(event_ticker="KXSAUDIPLTOTAL-S", title="s", markets=[mkt("KXSAUDIPLTOTAL-S", 2)])]}
 
@@ -43,16 +44,16 @@ def fetch(path):
 
 rows, errs = X.leads(NOW, fetch)
 print("the listing")
-check("only the open over 3.5 rung inside the window, kicked off at occurrence minus 4h; just-started stays; old, far, closed out",
-      [r["event"] for r in rows], ["KXMLSTOTAL-JUST", "KXMLSTOTAL-A"])
+check("only the open over 3.5 rung inside the window, kicked off at occurrence minus 4h; a match deep in the second half stays (the follower bids from kickoff + 60); over 4h in, far, closed out",
+      [r["event"] for r in rows], ["KXMLSTOTAL-MID", "KXMLSTOTAL-JUST", "KXMLSTOTAL-A"])
 check("Saudi Pro League is not scanned", any("SAUDI" in r["event"] for r in rows), False)
-a = rows[1]
+a = rows[2]
 check("the lead carries the rule: NO side, 10c bid, 40c sell, $1", (a["side"], a["bid"], a["sell"], a["stake_usd"], a["ticker"]),
       ("no", 0.1, 0.4, 1.0, "KXMLSTOTAL-A-4"))
 check("kickoff is the occurrence time less 4 hours", a["kickoff"], (NOW + dt.timedelta(hours=3)).isoformat())
 b = X.feed(NOW, fetch)
 check("the feed header names the rule and version", (b["lane"], b["version"], b["rule"]["bid"], b["rule"]["sell"], len(b["rule"]["leagues"])),
-      ("o35_cheap_no_wave", "o35-v2", 0.1, 0.4, 11))
+      ("o35_cheap_no_wave", "o35-v3", 0.1, 0.4, 11))
 
 
 def broken(path):
