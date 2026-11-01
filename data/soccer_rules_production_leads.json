@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-01T01:00:42+00:00",
+ "board_built_at": "2026-11-01T01:30:44+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sr_a6": true,
@@ -10,7 +10,7 @@
  },
  "corners_selections": {},
  "first_publish_min": 45,
- "late_publication_skipped": 2,
+ "late_publication_skipped": 0,
  "leads": {
   "2026-10-25|Hull City|Brentford|Under 2.5 goals \u00b7 EPL O\u2212D\u2212 v an O+ opponent \u00b7 under 2.5": {
    "away": "Brentford",
@@ -350,28 +350,9 @@
    }
   }
  },
- "publication_withheld": {
-  "2026-10-25|Colorado Rapids|Vancouver Whitecaps|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
-   "headline": "Both teams to score",
-   "id": "2026-10-25|Colorado Rapids|Vancouver Whitecaps|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score",
-   "kickoff": "2026-10-25T01:30Z",
-   "match": "Colorado Rapids v Vancouver Whitecaps",
-   "pair": "sr_d3|soccer_btts",
-   "reason": "less than 45 minutes left at first publication",
-   "withheld_at": "2026-10-25T01:01:29+00:00"
-  },
-  "2026-10-25|Real Salt Lake|St. Louis CITY SC|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score": {
-   "headline": "Both teams to score",
-   "id": "2026-10-25|Real Salt Lake|St. Louis CITY SC|Both teams to score \u00b7 O\u2212D\u2212 v O+D\u2212 \u00b7 both teams to score",
-   "kickoff": "2026-10-25T01:30Z",
-   "match": "Real Salt Lake v St. Louis CITY SC",
-   "pair": "sr_d3|soccer_btts",
-   "reason": "less than 45 minutes left at first publication",
-   "withheld_at": "2026-10-25T01:01:29+00:00"
-  }
- },
+ "publication_withheld": {},
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-01T01:00:42+00:00"
+ "updated_at": "2026-11-01T01:30:44+00:00"
 }
