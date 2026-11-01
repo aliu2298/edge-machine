@@ -23,7 +23,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Tests
-        run: python3 test_soccer_team_rules.py && python3 test_soccer_team_rules_production.py
+        run: python3 test_soccer_team_rules.py && python3 test_soccer_team_rules_production.py && python3 test_save_records.py
       - name: Enter due matches and settle
         # Fetches the ESPN fixtures (data/streaks_raw.json, not committed) for the labels.
         run: python3 soccer_team_rules.py
@@ -32,17 +32,13 @@ jobs:
         # while there is time to act on it (production.FIRST_PUBLISH_MIN).
         run: python3 soccer_team_rules_production.py
       - name: Save records
+        # The Feeds heartbeat restamps data/soccer_team_rules_production_leads.json too, so it can push between
+        # this run's checkout and its push. save_records.py rebases the ledger (only this workflow writes it)
+        # and, on a rejected push, REBUILDS the feed from the merged ledger instead of failing on it.
         run: |
           set -euo pipefail
-          python3 -c 'import json; json.load(open("data/soccer_team_rules_ledger.json")); json.load(open("data/soccer_team_rules_production_leads.json"))'
           git config user.name "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
-          git add data/soccer_team_rules_ledger.json data/soccer_team_rules_production_leads.json
-          if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Soccer team scoring rules paper observations"
-          for attempt in 1 2 3; do
-            if git push origin HEAD:main; then exit 0; fi
-            git fetch origin main
-            git rebase origin/main
-          done
-          exit 1
+          python3 save_records.py --message "Soccer team scoring rules paper observations" \
+            --add data/soccer_team_rules_ledger.json \
+            --derived data/soccer_team_rules_production_leads.json "python3 soccer_team_rules_production.py"
