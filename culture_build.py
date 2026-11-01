@@ -30,7 +30,7 @@ DESCRIPTION = ("Kalshi culture markets on paper: cheap side + resting take-profi
 CHEAP = (MS.STRICT, MS.WIDE, MS.MONTH, MS.MONTH_WIDE, MS.ALBUM, MS.ALBUM_NO)
 LIVE_CHEAP = tuple(c for c in CHEAP if not c.get("retired"))      # the album lanes
 GONE_CHEAP = tuple(c for c in CHEAP if c.get("retired"))          # the weekly and monthly mention lanes (2026-10-31)
-SECTIONS = (("standard", "Standard"), ("lanes", "Lanes"), ("models", "Model lanes"), ("archive", "Archive"))
+SECTIONS = (("standard", "Standard"), ("dip-hold", "Dip bid"), ("lanes", "Lanes"), ("models", "Model lanes"), ("archive", "Archive"))
 # The old lanes, shown in the Archive only (2026-10-27).
 ARCHIVE = ("mentions_rate", "culture_endgame", "culture_fav_band")
 
@@ -149,8 +149,18 @@ def archive(state, now, esc):
 label_cells = MS.label_cells   # phone labels for tables with a <thead> (moved to mentions_split)
 
 
+def _dip_hold(dip_state, e):
+    """The mentions_dip_hold card (2026-11-01). Never breaks the page."""
+    try:
+        import mentions_dip_hold as DH
+        import mentions_dip_hold_build as DB
+        return DB.section(dip_state if dip_state is not None else DH.load(), e)
+    except Exception:                                           # noqa: BLE001
+        return ""
+
+
 def build(state=None, now=None, split_state=None, wide_state=None, month_state=None, month_wide_state=None,
-          album_state=None, album_no_state=None):
+          album_state=None, album_no_state=None, dip_state=None):
     state = state if state is not None else K.load()
     now = SP.as_utc(now)
     e = C.esc
@@ -176,6 +186,7 @@ def build(state=None, now=None, split_state=None, wide_state=None, month_state=N
     cards = ('<p class="sm" id="album-note"><b>Album ladders tested too confident: both tails won more than priced.</b></p>'
              + MS.section(S(MS.ALBUM), e, MS.ALBUM) + MS.section(S(MS.ALBUM_NO), e, MS.ALBUM_NO))
     body = (standard
+            + _dip_hold(dip_state, e)
             + f'<section id="lanes"><h2>Cheap-side lanes</h2>{summary(states, e)}{cards}</section>'
             + f'<section id="models"><h2>Model lanes</h2>{model_lanes(state, now, e)}</section>'
             + retired_cheap(states, e, gone_cards)
