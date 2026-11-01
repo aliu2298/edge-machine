@@ -544,6 +544,146 @@
    "result": "yes",
    "title": "Will over 1.5 goals be scored?",
    "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXLALIGATOTAL-26NOV01GETSEV",
+   "id": "KXLALIGATOTAL-26NOV01GETSEV-2",
+   "kickoff": 1793538000,
+   "league": "La Liga",
+   "logged": "2026-11-01T16:29:08.626036+00:00",
+   "matchday": "2026-11-01",
+   "p": 0.65,
+   "p_at": 1793534460,
+   "p_bid": 0.64,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.65,
+    "printed": 9397.6,
+    "status": "verified"
+   },
+   "prints": 979,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": {
+     "counted": true,
+     "fill_at": 1793538451,
+     "fill_print": 0.49,
+     "fill_volume": 57732.66,
+     "held": true,
+     "limit": 0.49,
+     "payout": 0.0,
+     "sold": false,
+     "sold_at": null
+    },
+    "65": {
+     "counted": true,
+     "fill_at": 1793538091,
+     "fill_print": 0.57,
+     "fill_volume": 81896.88,
+     "held": true,
+     "limit": 0.58,
+     "payout": 0.0,
+     "sold": false,
+     "sold_at": null
+    }
+   },
+   "event": "KXSERIEATOTAL-26NOV01COMVEN",
+   "id": "KXSERIEATOTAL-26NOV01COMVEN-2",
+   "kickoff": 1793532600,
+   "league": "Serie A",
+   "logged": "2026-11-01T16:29:08.626036+00:00",
+   "matchday": "2026-11-01",
+   "p": 0.89,
+   "p_at": 1793529060,
+   "p_bid": 0.88,
+   "p_check": {
+    "how": "print",
+    "last_trade": null,
+    "printed": 514.31,
+    "status": "verified"
+   },
+   "prints": 1215,
+   "result": "no",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": {
+     "counted": true,
+     "fill_at": 1793547648,
+     "fill_print": 0.48,
+     "fill_volume": 27320.73,
+     "held": true,
+     "limit": 0.48,
+     "payout": 1.0,
+     "sold": true,
+     "sold_at": 1793548443
+    },
+    "65": {
+     "counted": true,
+     "fill_at": 1793544698,
+     "fill_print": 0.57,
+     "fill_volume": 28151.53,
+     "held": true,
+     "limit": 0.57,
+     "payout": 1.0,
+     "sold": true,
+     "sold_at": 1793545841
+    }
+   },
+   "event": "KXSERIEATOTAL-26NOV01FROTOR",
+   "id": "KXSERIEATOTAL-26NOV01FROTOR-2",
+   "kickoff": 1793541600,
+   "league": "Serie A",
+   "logged": "2026-11-01T16:29:08.626036+00:00",
+   "matchday": "2026-11-01",
+   "p": 0.88,
+   "p_at": 1793538060,
+   "p_bid": 0.87,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.88,
+    "printed": 821.2,
+    "status": "verified"
+   },
+   "prints": 1316,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXSERIEATOTAL-26NOV01LAZCAG",
+   "id": "KXSERIEATOTAL-26NOV01LAZCAG-2",
+   "kickoff": 1793541600,
+   "league": "Serie A",
+   "logged": "2026-11-01T16:29:08.626036+00:00",
+   "matchday": "2026-11-01",
+   "p": 0.77,
+   "p_at": 1793538060,
+   "p_bid": 0.76,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.77,
+    "printed": 2722.86,
+    "status": "verified"
+   },
+   "prints": 232,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
   }
  ],
  "error": null,
@@ -14598,53 +14738,25 @@
   ]
  },
  "lane": "top5_goalless_dip",
- "last_run": "2026-11-01T09:47:56.049130+00:00",
+ "last_run": "2026-11-01T16:29:08.626036+00:00",
  "observations": {
-  "at": "2026-11-01T09:47:56.049130+00:00",
+  "at": "2026-11-01T16:29:08.626036+00:00",
   "errors": [],
-  "new": 0,
-  "skipped": 0,
+  "new": 4,
+  "skipped": 2,
   "waiting": 0
  },
  "seen": {},
  "since": "2026-10-31",
  "skips": {
+  "KXBUNDESLIGATOTAL-26NOV01UNIKOE": "pregame ask unverified: 1 contracts traded at or through the ask within 60 minutes (under 10)",
   "KXBUNDESLIGATOTAL-26OCT31BMGPAD": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)",
   "KXBUNDESLIGATOTAL-26OCT31FCASCF": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)",
+  "KXLIGUE1TOTAL-26NOV01RCSAUX": "pregame ask unverified: 5.95 contracts traded at or through the ask within 60 minutes (under 10)",
   "KXLIGUE1TOTAL-26OCT31ESTMAN": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)",
   "KXLIGUE1TOTAL-26OCT31NICREN": "market closed before its listed kickoff (match moved)"
  },
  "upcoming": [
-  {
-   "event": "KXSERIEATOTAL-26NOV01COMVEN",
-   "kickoff": 1793532600,
-   "title": "Como vs Venezia: Total Goals"
-  },
-  {
-   "event": "KXLALIGATOTAL-26NOV01GETSEV",
-   "kickoff": 1793538000,
-   "title": "Getafe vs Sevilla: Total Goals"
-  },
-  {
-   "event": "KXSERIEATOTAL-26NOV01FROTOR",
-   "kickoff": 1793541600,
-   "title": "Frosinone vs Torino: Total Goals"
-  },
-  {
-   "event": "KXSERIEATOTAL-26NOV01LAZCAG",
-   "kickoff": 1793541600,
-   "title": "Lazio vs Cagliari: Total Goals"
-  },
-  {
-   "event": "KXLIGUE1TOTAL-26NOV01RCSAUX",
-   "kickoff": 1793541600,
-   "title": "Strasbourg Alsace vs Auxerre: Total Goals"
-  },
-  {
-   "event": "KXBUNDESLIGATOTAL-26NOV01UNIKOE",
-   "kickoff": 1793543400,
-   "title": "Union Berlin vs FC K\u00f6ln: Total Goals"
-  },
   {
    "event": "KXLALIGATOTAL-26NOV01SANRMA",
    "kickoff": 1793546100,
@@ -14664,6 +14776,36 @@
    "event": "KXBUNDESLIGATOTAL-26NOV01SGEHSV",
    "kickoff": 1793550600,
    "title": "Frankfurt vs Hamburg: Total Goals"
+  },
+  {
+   "event": "KXSERIEATOTAL-26NOV01LECGEN",
+   "kickoff": 1793552400,
+   "title": "Lecce vs Genoa: Total Goals"
+  },
+  {
+   "event": "KXLALIGATOTAL-26NOV01ELCVCF",
+   "kickoff": 1793554200,
+   "title": "Elche vs Valencia: Total Goals"
+  },
+  {
+   "event": "KXSERIEATOTAL-26NOV01JUVNAP",
+   "kickoff": 1793562300,
+   "title": "Juventus vs Napoli: Total Goals"
+  },
+  {
+   "event": "KXLIGUE1TOTAL-26NOV01OLMTFC",
+   "kickoff": 1793562300,
+   "title": "Marseille vs Toulouse: Total Goals"
+  },
+  {
+   "event": "KXLALIGATOTAL-26NOV01ATHRSO",
+   "kickoff": 1793563200,
+   "title": "Bilbao vs Real Sociedad: Total Goals"
+  },
+  {
+   "event": "KXSERIEATOTAL-26NOV02SASFIO",
+   "kickoff": 1793640600,
+   "title": "Sassuolo vs Fiorentina: Total Goals"
   }
  ],
  "version": "top5dip-v1"
