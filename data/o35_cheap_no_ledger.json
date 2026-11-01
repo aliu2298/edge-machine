@@ -5158,16 +5158,142 @@
    "result": "yes",
    "series": "KXMLSTOTAL",
    "version": "o35-v1"
+  },
+  {
+   "bids": {
+    "10": null,
+    "10e": null
+   },
+   "event": "KXSERIEATOTAL-26NOV01COMVEN",
+   "form_rule": false,
+   "id": "KXSERIEATOTAL-26NOV01COMVEN-4",
+   "kickoff": 1793532600,
+   "league": "Serie A",
+   "logged": "2026-11-01T14:30:28.902553+00:00",
+   "night": "2026-11-01",
+   "prints": 605,
+   "result": "no",
+   "series": "KXSERIEATOTAL",
+   "version": "o35-v3"
+  },
+  {
+   "bids": {
+    "10": null,
+    "10e": null
+   },
+   "event": "KXEREDIVISIETOTAL-26NOV01ZWOADO",
+   "form_rule": false,
+   "id": "KXEREDIVISIETOTAL-26NOV01ZWOADO-4",
+   "kickoff": 1793531700,
+   "league": "Eredivisie",
+   "logged": "2026-11-01T14:30:28.902553+00:00",
+   "night": "2026-11-01",
+   "prints": 97,
+   "result": "no",
+   "series": "KXEREDIVISIETOTAL",
+   "version": "o35-v3"
+  },
+  {
+   "bids": {
+    "10": null,
+    "10e": {
+     "dead": false,
+     "fill_at": 1793542173,
+     "fill_print": 0.04,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.2,
+       "thin": false,
+       "volume": 0
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "event": "KXEREDIVISIETOTAL-26NOV01EXCTWE",
+   "form_rule": false,
+   "id": "KXEREDIVISIETOTAL-26NOV01EXCTWE-4",
+   "kickoff": 1793539800,
+   "league": "Eredivisie",
+   "logged": "2026-11-01T14:30:28.902553+00:00",
+   "night": "2026-11-01",
+   "prints": 110,
+   "result": "yes",
+   "series": "KXEREDIVISIETOTAL",
+   "version": "o35-v3"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1793533220,
+     "fill_print": 0.04,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.2,
+       "thin": false,
+       "volume": 0
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "10e": null
+   },
+   "event": "KXSUPERLIGTOTAL-26NOV01AMSEYU",
+   "form_rule": false,
+   "id": "KXSUPERLIGTOTAL-26NOV01AMSEYU-4",
+   "kickoff": 1793529000,
+   "league": "Turkish Super Lig",
+   "logged": "2026-11-01T14:30:28.902553+00:00",
+   "night": "2026-11-01",
+   "prints": 429,
+   "result": "yes",
+   "series": "KXSUPERLIGTOTAL",
+   "version": "o35-v3"
   }
  ],
  "error": null,
  "lane": "o35_cheap_no_wave",
- "last_run": "2026-11-01T06:51:04.878096+00:00",
+ "last_run": "2026-11-01T14:30:28.902553+00:00",
  "observations": {
-  "at": "2026-11-01T06:51:04.878096+00:00",
+  "at": "2026-11-01T14:30:28.902553+00:00",
   "errors": [],
-  "new": 0,
-  "waiting": 2
+  "new": 4,
+  "waiting": 5
  },
  "seen": {
   "KXBUNDESLIGATOTAL-26OCT30SVEM05": "2026-10-30T23:13:35.713075+00:00",
@@ -5185,6 +5311,8 @@
   "KXEPLTOTAL-26OCT31HULIPS": "2026-10-31T20:17:38.147736+00:00",
   "KXEPLTOTAL-26OCT31MCIBRI": "2026-10-31T20:17:38.147736+00:00",
   "KXEPLTOTAL-26OCT31TOTCRY": "2026-10-31T20:17:38.147736+00:00",
+  "KXEREDIVISIETOTAL-26NOV01EXCTWE": "2026-11-01T14:30:28.902553+00:00",
+  "KXEREDIVISIETOTAL-26NOV01ZWOADO": "2026-11-01T14:30:28.902553+00:00",
   "KXEREDIVISIETOTAL-26OCT31AJAAZA": "2026-10-31T23:44:55.322274+00:00",
   "KXEREDIVISIETOTAL-26OCT31CAMGAE": "2026-10-31T23:44:55.322274+00:00",
   "KXEREDIVISIETOTAL-26OCT31FEYFOR": "2026-10-31T20:17:38.147736+00:00",
@@ -5240,6 +5368,7 @@
   "KXSCOTTISHPREMTOTAL-26OCT28MIRHIB": "2026-10-29T01:14:05.091805+00:00",
   "KXSCOTTISHPREMTOTAL-26OCT31KILJOH": "2026-10-31T20:17:38.147736+00:00",
   "KXSCOTTISHPREMTOTAL-26OCT31MOTMIR": "2026-10-31T20:17:38.147736+00:00",
+  "KXSERIEATOTAL-26NOV01COMVEN": "2026-11-01T14:30:28.902553+00:00",
   "KXSERIEATOTAL-26OCT27ROMCAG": "before the lane's first night",
   "KXSERIEATOTAL-26OCT27SASLAZ": "before the lane's first night",
   "KXSERIEATOTAL-26OCT27TORCOM": "before the lane's first night",
@@ -5253,6 +5382,7 @@
   "KXSERIEATOTAL-26OCT31ACMINT": "2026-10-31T23:44:55.322274+00:00",
   "KXSERIEATOTAL-26OCT31BFCMON": "2026-10-31T20:17:38.147736+00:00",
   "KXSERIEATOTAL-26OCT31UDIROM": "2026-10-31T20:17:38.147736+00:00",
+  "KXSUPERLIGTOTAL-26NOV01AMSEYU": "2026-11-01T14:30:28.902553+00:00",
   "KXSUPERLIGTOTAL-26OCT30KONGAL": "2026-10-30T23:13:35.713075+00:00",
   "KXSUPERLIGTOTAL-26OCT31ERZCOR": "2026-10-31T15:52:35.442119+00:00",
   "KXSUPERLIGTOTAL-26OCT31FENGOZ": "2026-10-31T20:17:38.147736+00:00",
