@@ -141,9 +141,13 @@ LANES = [
     # 2026-10-31 (Olu): single sells at 2x, 3x and 4x join the tracked exits, on the same entries (no reset): the
     # split stays the headline, hold its comparison, every +20-100% target still tracked. Added to the entries
     # already recorded by the engine's additive backfill.
+    # BASELINE 2026-11-01 (Olu): no lane may select blind (every game, price band only). This one keeps replaying
+    # every new night as the baseline a filtered underdog lane must beat: no lane status, no promotion.
     dict(id="cfb_dog_tp50", label="College football underdog · sell +50%", series=["KXNCAAFGAME"], picker=DOG,
          entry_hours=(1, 24), headline="tp50", since=FIRST_NIGHT, duration_min=210, start=espn_start("football/college-football"),
          exits=C.LANE_EXITS + C.SINGLES,
+         baseline=dict(on="2026-11-01", at="33 settled events; split -0.5%, hold -15.9%",
+                       reason="blind selection (price band only, no team filter): kept as the baseline for filtered underdog lanes (Olu, 2026-11-01)"),
          note="A side priced 10-40c, bought 1h and 24h before kickoff, with a resting sell at +50%; the split, and "
               "single sells at 2x, 3x and 4x, are tracked on the same entries."),
     # RETIRED 2026-10-29 (Olu): no new entries from that night on; its rows stay on the ledger as they are.
@@ -167,9 +171,13 @@ LANES = [
     # every other exit is still tracked. SUB-BAND ask 10-30c: the same entries narrowed (the 37-40c entries
     # reached 2x hardest), split v hold, shown under the lane; the 10-40c population stays the lane.
     # 2026-10-31 (Olu): single sells at 2x, 3x and 4x tracked on the same entries too (additive backfill, no reset).
+    # BASELINE 2026-11-01 (Olu): no lane may select blind (every game, price band only). This one keeps replaying
+    # every new night as the baseline a filtered underdog lane must beat: no lane status, no promotion.
     dict(id="nba_ml_dog_tp50", label="NBA moneyline underdog · split 2x / 3x", series=["KXNBAGAME"], picker=DOG,
          entry_hours=(1,), headline=C.SPLIT, exits=C.LANE_EXITS + C.SINGLES, since=FIRST_NIGHT, duration_min=160, start=espn_start("basketball/nba"),
          sub_bands=(dict(id="ask_10_30", label="ask 10-30c", lo=0.10, hi=0.30),),
+         baseline=dict(on="2026-11-01", at="31 settled events; split +8.7%, hold -16.5%",
+                       reason="blind selection (price band only, no team filter): kept as the baseline for filtered underdog lanes (Olu, 2026-11-01)"),
          caution="Read the split against its hold row; the ask 10-30c row is the same entries narrowed, not a new lane. "
                  "Reviewed at 31: kept as paper (beats hold, not strong enough to promote).",
          note="A team priced 10-40c an hour before the tip, with a split resting sell: half at 2x, half at 3x of the "

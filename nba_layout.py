@@ -1,7 +1,7 @@
 """The NBA page's top half (2026-10-31, Olu: "clumsy"): an "NBA at a glance" table, then one card per ACTIVE lane in one
-layout (the rule in a sentence, the live record, folds for other exits, in-sample research and trades), then the win
-margin tracker. Presentation only: every figure is read from the same ledgers as before; no rule, record or ledger
-changes. Header-row tables, so sandbox_build.label_cells names each cell for the phone cards. No inline style or SVG
+layout (the rule in a sentence, the live record, folds for other exits, in-sample research and trades), the blind
+baselines (2026-11-01), then the win margin tracker. Presentation only: every figure is read from the same ledgers as
+before; no rule, record or ledger changes. Header-row tables, so sandbox_build.label_cells names each cell for the phone cards. No inline style or SVG
 (the NBA page forbids both). Never breaks the page: nba_pace_build wraps place().
 """
 import html as _h
@@ -16,15 +16,14 @@ import nba_wm_nofade_build as NB
 
 YES_ID, NO_ID, ML_ID = "nba_winmargin_split", "nba_wm_nofade", "nba_ml_dog_tp50"
 SAMPLE_ID = "nba_winmargin_split_insample"
-# Olu's sport review, 2026-10-31: 31 settled, split +5.9% v hold -5.3%, z about 1: kept as paper, not promoted.
-KEPT = {ML_ID: "reviewed at 31: kept as paper"}
+# The moneyline underdog is a BASELINE since 2026-11-01 (Olu: no lane may select blind): its own block under the
+# active lanes, out of the glance, with no status.
 
 RULES = {
     YES_ID: "Buy YES on a 1-5 or 6-10 win margin bucket (either team) priced 10-20c an hour before the tip; rest a sell for half at 2x "
             "and half at 3x, filled only by traded prints from the tip on; the rest is held.",
     NO_ID: "After the tip, rest a NO buy at 75% of a bucket's pregame NO price (10-95c) and sell it back at the pregame price on a "
            "traded print, else hold; 85% and 65% are tracked too.",
-    ML_ID: "Buy a team priced 10-40c to win an hour before the tip; rest a sell for half at 2x and half at 3x on traded prints; the rest is held.",
 }
 
 
@@ -74,9 +73,6 @@ def glance(chaos, nofade):
     g = N.game_rows(nofade["entries"], N.vkey(N.HEAD), False)
     s = C.stats(g)
     add("wm-no", "Win margin · NO fade (live)", s["n"], s["roi"], None, s["z"], NB.status(s["n"]))
-    if ML_ID in lanes:
-        x = _chaos_row(lanes[ML_ID])
-        add("ml-dog", "Moneyline underdog · split (paper)", x["events"], x["split"], x["hold"], x["z"], f'{x["status"]} · {KEPT[ML_ID]}')
     return ('<section id="glance"><h2>NBA at a glance</h2>'
             '<p class="shell-kicker">Every active lane · Sandbox, paper only · ROI after fees · NO fade sells back at its pregame price, so it has no hold row</p>'
             '<div class="tbl"><table class="nba-glance"><tr><th>Lane</th><th class="num">Settled events</th><th class="num">Split ROI</th>'
@@ -149,7 +145,7 @@ def nofade_card(chaos, nofade):
 
 
 def cheap_side(chaos=None, nofade=None):
-    """The three active lane cards, in order, inside the section the Sandbox index links to (#cheap-side)."""
+    """The active lane cards, in order, inside the section the Sandbox index links to (#cheap-side)."""
     chaos = chaos if chaos is not None else (C.load() if os.path.exists(C.PATH) else C.empty())
     nofade = nofade if nofade is not None else N.load()
     lanes = _lanes(chaos)
@@ -157,15 +153,23 @@ def cheap_side(chaos=None, nofade=None):
     if YES_ID in lanes:
         cards += lane_card("wm-yes", "Win margin · YES split", lanes[YES_ID], lanes.get(SAMPLE_ID))
     cards += nofade_card(chaos, nofade)
-    if ML_ID in lanes:
-        cards += lane_card("ml-dog", "Moneyline underdog · split", lanes[ML_ID])
     return f'<section id="cheap-side"><h2>Active lanes</h2><p class="shell-kicker">One card each · the rule, the live record, then folds</p>{cards}</section>'
+
+
+def baselines(chaos=None):
+    """The blind moneyline underdog population, replayed every night as the bar a filtered underdog lane must beat."""
+    chaos = chaos if chaos is not None else (C.load() if os.path.exists(C.PATH) else C.empty())
+    L = _lanes(chaos).get(ML_ID)
+    if not L or not L.get("baseline"):
+        return ""
+    return ('<section id="ml-dog"><h2>Baselines</h2><p class="shell-kicker">Blind, price band only · not a lane · '
+            'a filtered lane must beat it</p>' + CB.baseline_block(L) + '</section>')
 
 
 def build(chaos=None, nofade=None, tracker=None):
     chaos = chaos if chaos is not None else (C.load() if os.path.exists(C.PATH) else C.empty())
     nofade = nofade if nofade is not None else N.load()
-    return glance(chaos, nofade) + cheap_side(chaos, nofade) + WB.section(tracker)
+    return glance(chaos, nofade) + cheap_side(chaos, nofade) + baselines(chaos) + WB.section(tracker)
 
 
 def place(html, chaos=None, nofade=None, tracker=None):

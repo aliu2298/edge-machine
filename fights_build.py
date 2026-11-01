@@ -39,7 +39,8 @@ def build(states=None, now=None):
         '<p class="sm mut">Sandbox, paper only, each lane on a fresh record from its first entry: review at 10 settled '
         'events (fights), decide at 30. The start is Kalshi\'s scheduled start for the fight.</p></section>')
     cards = "".join(
-        f'<p class="sm" id="{e(cfg["anchor"])}-note"><b>{e(cfg["research"])}</b></p>' + MS.section(states[cfg["lane"]], e, cfg)
+        f'<p class="sm" id="{e(cfg["anchor"])}-note"><b>{e(cfg["research"])}</b></p>'
+        f'<p class="sm mut fights-blind">{e(FS.BLIND)}</p>' + MS.section(states[cfg["lane"]], e, cfg)
         for cfg in FS.LANES)
     body = (standard
             + f'<section id="lanes"><h2>Fight lanes</h2>{MS.summary(FS.LANES, states, e)}{cards}</section>'
