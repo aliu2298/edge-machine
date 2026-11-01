@@ -149,25 +149,79 @@
    "status": "settled",
    "traded_to_entry": 225.92,
    "word": "Nikita Zon"
+  },
+  {
+   "ask_check": {
+    "book": null,
+    "first_quotes": false,
+    "how": "print",
+    "last_trade": 0.16,
+    "printed": 20240.87,
+    "source": "replayed",
+    "status": "verified"
+   },
+   "bid": 0.13,
+   "entry_at": "2026-10-31T17:33:00+00:00",
+   "event": "KXBOXING-26OCT31PICASSMARTIN",
+   "fight_start": "2026-10-31T18:20:00+00:00",
+   "id": "KXBOXING-26OCT31PICASSMARTIN-MARTIN",
+   "last_trade": 0.16,
+   "last_trade_at": "2026-10-31T17:33:00+00:00",
+   "legs": [
+    {
+     "fill_px": 0.3,
+     "fill_volume": 8999.96,
+     "filled_at": "2026-10-31T17:39:00+00:00",
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.3
+    },
+    {
+     "fill_px": 0.45,
+     "fill_volume": 8999.96,
+     "filled_at": "2026-10-31T17:39:00+00:00",
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.45
+    }
+   ],
+   "logged": "2026-11-01T01:57:46.281274+00:00",
+   "minutes_to_start": 47.0,
+   "payout": 1.0,
+   "pnl": 0.2121,
+   "price": 0.15,
+   "roi": 1.3344,
+   "roi_2x": 0.8646,
+   "roi_held": 5.2923,
+   "settled": "2026-11-01T01:57:46.281274+00:00",
+   "side": "yes",
+   "spread": 0.02,
+   "spread_cost": -0.01,
+   "status": "settled",
+   "traded_to_entry": 40016.11,
+   "word": "Carl Jammes Martin"
   }
  ],
  "error": null,
  "events": {
   "KXBOXING-26OCT23ULDEDACAPARE": "2026-10-27T04:45:21.662265+00:00",
   "KXBOXING-26OCT31CALVARMBILLI": "2026-10-31T20:06:27.383501+00:00",
+  "KXBOXING-26OCT31DELGADBIYARS": "2026-11-01T01:57:46.281274+00:00",
   "KXBOXING-26OCT31ESPINOBLANDO": "2026-10-31T20:06:27.383501+00:00",
+  "KXBOXING-26OCT31ESPINOPARRA": "2026-11-01T01:57:46.281274+00:00",
   "KXBOXING-26OCT31MUNGUIZON": "2026-10-31T20:06:27.383501+00:00",
+  "KXBOXING-26OCT31PICASSMARTIN": "2026-11-01T01:57:46.281274+00:00",
   "KXBOXING-26OCT31TSUTSUROJAS": "2026-10-31T20:06:27.383501+00:00"
  },
  "lane": "boxing_cheap_dog",
- "last_success": "2026-11-01T01:35:03.996533+00:00",
+ "last_success": "2026-11-01T01:57:46.281274+00:00",
  "observations": {
-  "at": "2026-11-01T01:35:03.996533+00:00",
-  "entered": 0,
-  "events": 0,
-  "filled": 0,
+  "at": "2026-11-01T01:57:46.281274+00:00",
+  "entered": 1,
+  "events": 3,
+  "filled": 2,
   "no_start": 0,
-  "skipped": 0,
+  "skipped": 5,
   "unverified": 0,
   "waiting": 2
  },
@@ -196,17 +250,47 @@
    "start": "2026-10-31T20:30:00+00:00",
    "word": "Christian Mbilli"
   },
+  "KXBOXING-26OCT31DELGADBIYARS-BIYARS": {
+   "event": "KXBOXING-26OCT31DELGADBIYARS",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-10-31T18:20:00+00:00",
+   "word": "Movladdin Biyarslanov"
+  },
+  "KXBOXING-26OCT31DELGADBIYARS-DELGAD": {
+   "event": "KXBOXING-26OCT31DELGADBIYARS",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-10-31T18:20:00+00:00",
+   "word": "Lindolfo Delgado"
+  },
   "KXBOXING-26OCT31ESPINOBLANDO-ESPINO": {
    "event": "KXBOXING-26OCT31ESPINOBLANDO",
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
    "start": "2026-10-31T18:40:00+00:00",
    "word": "Rafael Espinoza"
   },
+  "KXBOXING-26OCT31ESPINOPARRA-ESPINO": {
+   "event": "KXBOXING-26OCT31ESPINOPARRA",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-10-31T18:00:00+00:00",
+   "word": "Rafael Espinoza"
+  },
+  "KXBOXING-26OCT31ESPINOPARRA-PARRA": {
+   "event": "KXBOXING-26OCT31ESPINOPARRA",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-10-31T18:00:00+00:00",
+   "word": "Lorenzo Parra"
+  },
   "KXBOXING-26OCT31MUNGUIZON-MUNGUI": {
    "event": "KXBOXING-26OCT31MUNGUIZON",
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
    "start": "2026-10-31T19:00:00+00:00",
    "word": "Jaime Munguia"
+  },
+  "KXBOXING-26OCT31PICASSMARTIN-PICASS": {
+   "event": "KXBOXING-26OCT31PICASSMARTIN",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-10-31T18:20:00+00:00",
+   "word": "David Picasso"
   },
   "KXBOXING-26OCT31TSUTSUROJAS-TSUTSU": {
    "event": "KXBOXING-26OCT31TSUTSUROJAS",
@@ -219,6 +303,14 @@
   "KXBOXING-26DEC11FURYJOSHUA": "2026-12-11T23:00:00+00:00",
   "KXBOXING-26NOV07BUATSIHUTCHI": "2026-11-07T19:00:00+00:00",
   "KXBOXING-26OCT23ULDEDACAPARE": "2026-10-23T21:00:00+00:00",
+  "KXBOXING-26OCT24BAUMSTBUSTIL": "2026-10-25T03:00:00+00:00",
+  "KXBOXING-26OCT24GONZALVAZQUE": "2026-10-25T00:40:00+00:00",
+  "KXBOXING-26OCT24KINGHART": "2026-10-25T05:00:00+00:00",
+  "KXBOXING-26OCT24MARTINZAINA": "2026-10-25T00:20:00+00:00",
+  "KXBOXING-26OCT24NAVARRFOSTER": "2026-10-25T03:05:00+00:00",
+  "KXBOXING-26OCT24NAVARRMORENO": "2026-10-25T00:00:00+00:00",
+  "KXBOXING-26OCT25JEFFCAMD": "2026-10-26T02:00:00+00:00",
+  "KXBOXING-26OCT25SMOOTGUAPO": "2026-10-26T01:00:00+00:00",
   "KXBOXING-26OCT31CALVARMBILLI": "2026-10-31T20:30:00+00:00",
   "KXBOXING-26OCT31DELGADBIYARS": "2026-10-31T18:20:00+00:00",
   "KXBOXING-26OCT31ESPINOBLANDO": "2026-10-31T18:40:00+00:00",
