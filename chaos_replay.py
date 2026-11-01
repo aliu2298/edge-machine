@@ -603,6 +603,10 @@ def lane_state(state, lane, now):
     # from its `on` night is replayed. Nothing already recorded is touched.
     if lane.get("retired"):
         L["retired"] = dict(lane["retired"])
+    # A baseline (lane["baseline"] = dict(on, at, reason), 2026-11-01): blind selection, kept replaying every night
+    # as the population a filtered lane must beat; never a lane, so it carries no review status.
+    if lane.get("baseline"):
+        L["baseline"] = dict(lane["baseline"])
     for k in ("label", "note", "headline", "first", "caution", "insample"):
         if lane.get(k) is not None:
             L[k] = lane[k]

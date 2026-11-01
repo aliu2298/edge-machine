@@ -36,7 +36,7 @@ FLAG_WORDS = {"too early": "too early", "review": "review (10+ events)", "promot
               "control": "control"}
 
 
-def variant_table(L, skip=()):
+def variant_table(L, skip=(), read=True):
     rows = []
     for key, v in C.lane_table(L).items():
         if C.split_key(key)[1] in skip:
@@ -49,10 +49,10 @@ def variant_table(L, skip=()):
                     f'<td class="num">{ctl}</td>'
                     f'<td class="num">{_num(v["delta"], 100, " pts")}</td>'
                     f'<td class="num">{_num(a["z"], 1, "", 2)}</td>'
-                    f'<td class="num">{a["nights"]}</td><td>{esc(FLAG_WORDS[v["flag"]])}</td></tr>')
+                    f'<td class="num">{a["nights"]}</td>' + (f'<td>{esc(FLAG_WORDS[v["flag"]])}</td>' if read else '') + '</tr>')
     return ('<div class="tbl"><table><tr><th>Entry · exit</th><th class="num">Trades</th><th class="num">Events</th><th class="num">Hit</th>'
             '<th class="num">ROI after fees</th><th class="num">Hold control</th><th class="num">v hold</th>'
-            '<th class="num">z (by night)</th><th class="num">Nights</th><th>Read</th></tr>'
+            '<th class="num">z (by night)</th><th class="num">Nights</th>' + ('<th>Read</th>' if read else '') + '</tr>'
             + "".join(rows) + "</table></div>")
 
 
@@ -192,6 +192,8 @@ def record_words(L):
 
 def status_of(L, events):
     """The review status, counted in settled events (2026-10-29); an in-sample backfill is never evidence."""
+    if L.get("baseline"):
+        return "baseline, not a lane"
     return "in-sample backfill, not evidence" if L.get("insample") else MS.status(events)
 
 
@@ -266,8 +268,9 @@ def with_config(state):
             shown = {k: cfg[k] for k in ("label", "note", "caution", "headline") if cfg.get(k) is not None}
             if cfg.get("sub_bands"):
                 shown["sub_bands"] = [dict(b) for b in cfg["sub_bands"]]
-            if cfg.get("retired"):
-                shown["retired"] = dict(cfg["retired"])
+            for k in ("retired", "baseline"):
+                if cfg.get(k):
+                    shown[k] = dict(cfg[k])
             lanes[cfg["id"]] = dict(lanes[cfg["id"]], **shown)
     except Exception:                                           # noqa: BLE001
         pass
@@ -285,10 +288,12 @@ def sport_section(page, state=None, retired=True):
         state = C.load() if os.path.exists(C.PATH) else C.empty()
     have = with_config(state).get("lanes") or {}
     every = [have[k] for k in HOMES[page] if k in have]
-    lanes = [L for L in every if not L.get("retired") and not L.get("insample")]
+    lanes = [L for L in every if not L.get("retired") and not L.get("insample") and not L.get("baseline")]
+    bases = [L for L in every if L.get("baseline") and not L.get("retired")]
     gone = [L for L in every if L.get("retired")]
     sample = [L for L in every if L.get("insample") and not L.get("retired")]
     body = (summary(lanes, spread=True) + "".join(lane_html(L) for L in lanes)) if lanes else (
+        '<p class="sm mut">No filtered cheap-side lane on this page yet; the baseline below is what one must beat.</p>' if bases else
         '<p class="sm mut">Every cheap-side lane on this page is retired; the records are below.</p>' if gone and retired else
         '<p class="sm mut">No cheap-side lane on this page has replayed yet.</p>')
     if page == "nba" and lanes:                                 # the NO fade (2026-10-30), under the YES split it mirrors
@@ -297,6 +302,7 @@ def sport_section(page, state=None, retired=True):
             body += nba_wm_nofade_build.card(chaos=state)
         except Exception:                                       # noqa: BLE001
             pass
+    body += "".join(baseline_block(L) for L in bases)
     if sample:                                                  # a lane's in-sample backfill: its own labelled row, never the headline
         body += in_sample_block(sample)
     if gone and retired:                                        # the NBA page lists its retired lanes in its own bottom fold
@@ -319,6 +325,29 @@ def in_sample_block(lanes):
             '<p class="sm mut">The same rule replayed on the days it was chosen from. In-sample, so it is NOT evidence '
             'and is never a lane\'s headline; the lane above starts a fresh record after it.</p>'
             + summary(lanes, spread=True) + "".join(lane_html(L) for L in lanes) + '</div>')
+
+
+def baseline_name(L):
+    """The population's name, without the exit: "College football underdog"."""
+    return (L.get("label") or L["id"]).split(" · ")[0]
+
+
+def baseline_block(L):
+    """A blind price-band population kept replaying as a BASELINE (2026-11-01, Olu: no lane may select blind): its
+    record with no review status, the bar a filtered lane on the same markets must beat."""
+    g = L["baseline"]
+    others = [k for k in (L.get("exits") or C.EXITS) if k not in (C.SPLIT, "hold")]
+    hours = ", ".join(f"{h}h" for h in L.get("entry_hours") or C.ENTRY_HOURS)
+    return (f'<details class="section-disclosure baseline" data-lane="{esc(L["id"])}" id="baseline-{esc(L["id"])}" open>'
+            f'<summary><b>Baseline · {esc(baseline_name(L))} (blind, price band only)</b>'
+            f'<span>{split_hold(L)["events"]} settled events · replayed every night · not a lane</span></summary>'
+            f'<p class="sm">Every game\'s side priced 10-40c, bought {esc(hours)} before the start, no team or matchup filter. '
+            'A filtered underdog lane on these markets must beat this record, split and hold alike.</p>'
+            f'<p class="sm mut">A lane until {esc(g["on"])} ({esc(g["at"])}): {esc(g["reason"])}.</p>'
+            f'{voided_line(L)}{split_table(L)}{basis_line(L)}'
+            + (f'<details class="section-disclosure"><summary><b>Other exits</b><span>{len(others)} variants, each against its hold control</span></summary>'
+               f'{variant_table(L, skip=(C.SPLIT,), read=False)}</details>' if others else '')
+            + f'<details class="section-disclosure"><summary><b>Trades</b><span>latest 30 entries · split, T target, S stop, H held to settlement</span></summary>{trade_list(L)}</details></details>')
 
 
 def retired_line(L):
@@ -354,7 +383,7 @@ def place(html, page, state=None, before=None, retired=True):
 def index(lanes):
     """The Sandbox's Chaos index: one row per lane, its headline numbers and a link to its home."""
     rows = []
-    for L in lanes:
+    for L in [L for L in lanes if not L.get("baseline")]:
         r = split_hold(L)
         href = home_href(L["id"])
         page = PAGE_LABEL.get(HOME_OF.get(L["id"]), "—")
@@ -366,7 +395,18 @@ def index(lanes):
                     f'<td>{esc("retired " + L["retired"]["on"] if L.get("retired") else status_of(L, r["events"]))}</td></tr>')
     return ('<div class="tbl"><table class="chaos-index"><tr><th>Lane</th><th>Page</th><th class="num">Entries</th>'
             '<th class="num">Settled events</th><th class="num">Won</th><th class="num">Split ROI</th><th class="num">Hold ROI</th><th>Status</th></tr>'
-            + "".join(rows + _extra_index_rows()) + "</table></div>")
+            + "".join(rows + _extra_index_rows()) + "</table></div>" + baseline_index(lanes))
+
+
+def baseline_index(lanes):
+    """The baselines under the index, apart from the lanes: a link each, no status."""
+    bases = [L for L in lanes if L.get("baseline") and not L.get("retired")]
+    if not bases:
+        return ""
+    items = ", ".join(f'<a href="./{esc(HOME_OF.get(L["id"], "sandbox"))}.html#baseline-{esc(L["id"])}">{esc(baseline_name(L))}</a>'
+                      for L in bases)
+    return (f'<p class="sm mut chaos-baselines">Baselines (blind, price band only, not lanes): {items}. '
+            'A filtered lane on the same markets must beat its baseline.</p>')
 
 
 def _extra_index_rows():

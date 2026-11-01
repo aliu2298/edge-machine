@@ -82,6 +82,9 @@ UFC = dict(
     outside_text="YES ask outside 0.15-0.30",
     research="Research (169 fights): 16 entries, 8 won. Hold +97%; split +28% (the hourly-close version +18%). "
              "HOLD and SPLIT are shown side by side.")
+# 2026-11-01 (Olu): no lane may select blind. Both fights lanes are price band only, kept running under 10 fights;
+# each card says so, and each becomes a baseline when a filtered fights lane exists.
+BLIND = "Price band only: becomes a baseline when a filtered fights lane exists."
 LANES = (BOXING, UFC)
 
 

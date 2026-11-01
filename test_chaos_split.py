@@ -187,22 +187,20 @@ check("its split v hold is computed on those entries alone, at equal stake (the 
       (round(narrow["split"], 4), round(narrow["hold"], 4)),
       (round((1.3 + 2.2 - 1.0) / 3, 4), round((-1.0 + 0.71 / 0.29 - 1.0) / 3, 4)))
 nba = CB.sport_section("nba", dict(lanes={"nba_ml_dog_tp50": copy.deepcopy(old_L)}))
-summ_n = nba[nba.find('class="chaos-summary"'):nba.find("</table>", nba.find('class="chaos-summary"'))]
-rows_n = re.findall(r'<tr data-lane="([^"]+)"(?: data-band="([^"]+)")?>', summ_n)
-check("on the NBA page the lane leads the summary, its 10-30c row directly under it",
-      rows_n, [("nba_ml_dog_tp50", ""), ("nba_ml_dog_tp50", "ask_10_30")])
+# A BASELINE since 2026-11-01 (blind selection): no summary row, its own block with the split table, no status.
+check("on the NBA page the baseline has no lane summary row",
+      re.findall(r'<tr data-lane="nba_ml_dog_tp50"', nba), [])
 text_n = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", nba))
-check("the lane row reads split before hold; the sub-band row says it is the same entries",
-      ("NBA moneyline underdog · split 2x / 3x 6 0 6 6 3" in text_n, "· ask 10-30c, same entries 3 · 3 3 1" in text_n), (True, True))
-card_n = nba[nba.find('data-lane="nba_ml_dog_tp50" open'):]
+card_n = nba[nba.find('id="baseline-nba_ml_dog_tp50" open'):]
 split_tbl = card_n[card_n.find('class="chaos-split"'):card_n.find("</table>", card_n.find('class="chaos-split"'))]
-check("its card: split v hold first, the 10-30c row under the 1h row, then the other exits",
-      (re.findall(r'<tr(?: data-band="([^"]+)")?><td>', split_tbl), card_n.find("Split v hold") < card_n.find("Other exits")),
+check("its baseline block: split v hold first, the 10-30c row under the 1h row, then the other exits",
+      (re.findall(r'<tr(?: data-band="([^"]+)")?><td>', split_tbl), card_n.find("chaos-split") < card_n.find("Other exits")),
       (["", "ask_10_30"], True))
-check("the Sandbox index keeps one row for the lane, under its new label",
-      re.findall(r'<tr data-lane="nba_ml_dog_tp50"[^>]*><td><b>([^<]+)</b>',
-                 CB.section(dict(lanes={"nba_ml_dog_tp50": copy.deepcopy(old_L)}))),
-      ["NBA moneyline underdog · split 2x / 3x"])
+check("the sub-band row says it is the same entries", "· ask 10-30c, same entries 3 1 2 / 1" in text_n, True)
+idx_n = CB.section(dict(lanes={"nba_ml_dog_tp50": copy.deepcopy(old_L)}))
+check("the Sandbox index has no lane row for it, only the baselines line linking to its block",
+      (re.findall(r'<tr data-lane="nba_ml_dog_tp50"', idx_n), 'href="./nba.html#baseline-nba_ml_dog_tp50">NBA moneyline underdog</a>' in idx_n),
+      ([], True))
 check("public copy passes the guard", sandbox_audit.COPY_RE.search(text_n), None)
 
 print("\nthe outcome unit is the event, not the rung (2026-10-29)")
@@ -325,8 +323,8 @@ check("the card line: the date, the old basis, and the old split and hold per en
 check("a lane registered after the change carries no such line", CB.basis_line(dict(id="new_lane")), "")
 import o35_cheap_no_build as OB
 import nba_layout
-_ml = nba_layout.lane_card("ml-dog", "Moneyline underdog", dict(id="nba_ml_dog_tp50", trades=[], exits=["hold", "split"], since="2026-10-25"))
-check("the NBA page's own cards say so too (nba_layout renders them, not lane_html), with the old figure",
+_ml = nba_layout.baselines(dict(lanes={"nba_ml_dog_tp50": dict(id="nba_ml_dog_tp50", trades=[], exits=["hold", "split"], since="2026-10-25")}))
+check("the NBA page's baseline block says so too (nba_layout renders it, not lane_html), with the old figure",
       ("ROI basis changed 2026-10-31" in _ml, "old figure: 1h split +5.9%, hold −5.3%" in _ml.replace("-5.3%", "−5.3%")), (True, True))
 check("the o35 Soccer section says so too", "ROI basis changed 2026-10-31 from cost-weighted to equal-stake" in OB.section(), True)
 

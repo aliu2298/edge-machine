@@ -697,7 +697,7 @@ def build(blob=None, now=None):
         "Edge Machine · NBA",
         "NBA matchups, pace labels, and combined expectations. Preseason. No bets.",
         "nba",
-        (("glance", "Glance"), ("wm-yes", "Win margin"), ("wm-no", "NO fade"), ("ml-dog", "ML underdog"), ("tracker", "Tracker"),
+        (("glance", "Glance"), ("wm-yes", "Win margin"), ("wm-no", "NO fade"), ("ml-dog", "ML baseline"), ("tracker", "Tracker"),
          ("matchups", "Upcoming"), ("graded", "Results"), ("teams", "Teams"), ("ladder", "Ladder"), ("retired", "Retired")),
         C.stamp(clock),
         body,
