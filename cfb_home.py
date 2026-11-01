@@ -8,12 +8,20 @@ match the two different teams of one game. No match: the event is skipped with a
 """
 import datetime as dt
 import re
+import unicodedata
 
 import chaos_replay as C
 
 
 def norm(name):
-    return re.sub(r"[^a-z]", "", (name or "").lower().replace("st.", "state").replace("&", "and"))
+    plain = unicodedata.normalize("NFKD", name or "").encode("ascii", "ignore").decode()      # San José -> San Jose
+    return re.sub(r"[^a-z]", "", plain.lower().replace("st.", "state").replace("&", "and"))
+
+
+# Kalshi names ESPN writes differently (checked against both lists on 2026-11-01), normalised to ESPN's form. An
+# explicit table, not a guess: a name not in it and not matched is a skip.
+ALIASES = {"louisianamonroe": "ulmonroe", "tennesseemartin": "utmartin", "universityatalbany": "ualbany",
+           "southeasternlouisiana": "selouisiana"}
 
 
 def _same(n, cand):
@@ -28,7 +36,7 @@ def team_forms(team):
 def match_game(names, events):
     """The ESPN game whose two competitors are the event's two named teams -> (home name, neutral flag, {kalshi
     name: 'home' | 'away'}), or None. `names` are the event's yes_sub_titles."""
-    wanted = [norm(n) for n in names]
+    wanted = [ALIASES.get(norm(n), norm(n)) for n in names]
     for ev in events:
         comps = ((ev.get("competitions") or [{}])[0]).get("competitors") or []
         if len(comps) != 2 or len(wanted) != 2:

@@ -44,6 +44,12 @@ print("names")
 check("St. -> State, & -> and, letters only", (cfb_home.norm("Ohio St."), cfb_home.norm("Texas A&M"), cfb_home.norm("Miami (OH)")),
       ("ohiostate", "texasaandm", "miamioh"))
 
+check("accents are dropped and the listed aliases map to ESPN's names (San José, UL Monroe, UT Martin, UAlbany, SE Louisiana)",
+      [cfb_home.match_game(n, [game((a, a.split()[0] + " " + a.split()[1]), ("Other Team", "Other"))]) is not None
+       for n, a in ((["San Jose St.", "Other"], "San José State Spartans"), (["Louisiana-Monroe", "Other"], "UL Monroe Warhawks"),
+                    (["Tennessee-Martin", "Other"], "UT Martin Skyhawks"), (["University at Albany", "Other"], "UAlbany Great Danes"),
+                    (["Southeastern Louisiana", "Other"], "SE Louisiana Lions"))], [True] * 5)
+
 print("\nthe picker")
 b2 = [game(("Wisconsin Badgers", "Wisconsin"), ("Ohio State Buckeyes", "Ohio State"), abbr=("WIS", "OSU"))]
 check("the HOME underdog (Wisconsin at home, 20c) is picked", pick(b2, {"OHST": 0.80, "WIS": 0.20}), [(EV + "-WIS", "yes")])
