@@ -56,7 +56,7 @@ sat = at(2026, 10, 17, 12, 0)
 # An empty ledger: the lineup windows come from the real ledger's kickoffs, which this test must
 # not depend on (it read real Oct 17 fixtures once they were logged).
 lanes_sat = {(w["lane"], w["label"]) for w in W.windows(sat, ledger={"quotes": []}, games=[], fixtures=[])
-             if w["close"].date() == dt.date(2026, 10, 17) and w["lane"] not in ("culture", "chaos")}
+             if w["close"].date() == dt.date(2026, 10, 17) and w["lane"] not in ("culture", "chaos", "fights")}
 check("Saturday: crypto, gas/diesel (and the near-certain YES hour) and the first-to-score NO pick, "
       "no Treasury, index or commodity",
       sorted(l for l, _ in lanes_sat), ["crypto_fav_band", "econ_daily", "econ_daily", "econ_nc_yes", "ftts_no"])
@@ -105,6 +105,7 @@ check("an entry on another day's close does not count",
 print("\nstamps: one file per workflow, a crypto and a commodity read in one push")
 lines = W.stamp_lines(at(2026, 10, 13, 17, 35), ledger={"quotes": []}, games=[], fixtures=[])
 lines.pop("data/culture_window/request.txt", None)      # the hourly culture read (2026-10-17), tested below
+lines.pop("data/fights_window/request.txt", None)       # the hourly fights read (2026-11-01), tested below
 check("17:35Z: crypto and commodities stamps both written, and the index window's daily stamp",
       sorted(lines), ["data/commodities_window/request.txt", "data/crypto_window/request.txt",
                       "data/daily_window/request.txt"])
@@ -114,6 +115,18 @@ lines = W.stamp_lines(at(2026, 10, 13, 16, 35), ledger={"quotes": []}, games=[],
 check("16:35Z: the Treasury and index reads share the daily stamp",
       lines["data/daily_window/request.txt"].count("finance_daily"), 2)
 
+
+print("\nthe fights lanes are asked for every hour (2026-11-01)")
+fl = [k for w, k in W.due(at(2026, 11, 1, 9, 41), {"quotes": []}, [], []) if w["lane"] == "fights"]
+check("fights are read once every hour", fl, [1])
+fl2 = [k for w, k in W.due(at(2026, 11, 1, 10, 3), {"quotes": []}, [], []) if w["lane"] == "fights"]
+check("and again the next hour, as read 1 of that hour", fl2, [1])
+check("the stamp goes to the fights file, named for the hour",
+      W.stamp_lines(at(2026, 11, 1, 9, 41), {"quotes": []}, [], []).get("data/fights_window/request.txt"),
+      "fights 2026-11-01T10:00:00+00:00 read 1")
+check("the VPS script may write that stamp and the workflow runs on it",
+      ("data/fights_window/request.txt" in open("scripts/vps_window_requests.sh").read()
+       and 'data/fights_window/**' in open(".github/workflows/fights.yml").read()), True)
 
 print("\nNBA rules and culture reads (2026-10-17)")
 nba = [dict(start="2026-10-20T19:00Z", completed=False), dict(start="2026-10-20T23:30Z", completed=False),
