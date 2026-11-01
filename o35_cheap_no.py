@@ -1,15 +1,20 @@
 """o35_cheap_no_wave: Over 3.5 cheap NO, a resting bid sold into the quiet spell (2026-10-28, Olu). Sandbox PAPER.
 
-Kalshi soccer total-goals markets, the over 3.5 rung (event ticker + "-4", floor_strike 3.5), in the twelve
-leagues the Soccer page already tracks (soccer_rules.SERIES). Before kickoff a NO bid rests at 10c (the headline;
-15c and 20c are tracked too). It can only fill in play, after goals push YES to 80-90c or more.
+Kalshi soccer total-goals markets, the over 3.5 rung (event ticker + "-4", floor_strike 3.5), in the eleven
+leagues the Soccer page tracks (soccer_rules.SERIES less the Saudi Pro League). Before kickoff a NO bid rests at 10c.
+It can only fill in play, after goals push YES to 80-90c or more.
+
+TRIMMED 2026-10-31 (Olu), version o35-v2: NO bid 10c, sell at 4x (3x tracked beside it); 15c and 20c bids and the Saudi
+Pro League dropped (v1, 41 fills: 10c at 4x +61.6%, 20c at 4x -36%; Saudi 0/5, no sell filled). The v1 record stays on the
+page, collapsed; the v2 record is fresh from SINCE and its headline counts only v2 entries. The ledger still stores every
+target (2x, 3x, 4x, hold) so nothing is lost; the page shows 3x and 4x.
 
 FILL. The bid fills at its limit when the first TRADE after it was placed prints NO at or under the limit (NO
 price = 1 - yes_price on /markets/trades). Fills after the 4th goal are KEPT (a real resting bid is hit there
 too) and flagged "dead fill": by the market's own prices that is a fill whose print is NO 2c or less, when the
 over is all but certain (we have no goal clock, so this is the proxy; it can only miss a dead fill, never invent one).
 
-EXITS, on the same entries: a resting sell at 2x (HEADLINE), 3x or 4x of the limit, or hold to settlement. A sell
+EXITS, on the same entries: a resting sell at 2x, 3x or 4x of the limit (4x is the headline since v2), or hold to settlement. A sell
 fills only on a LATER trade print at or above the target AND only if at least 50 contracts traded at or above the
 target after the bid filled. Under 50 the sell does not fill (held to settlement) and the trade is marked "thin";
 the volume is logged either way. Maker fee 0.0175 p(1-p) on BOTH legs (both rest), none on settlement.
@@ -20,7 +25,7 @@ before it; only prints after that count.
 Every settled market since SINCE is evaluated once, from its trades, whether or not the bid filled. Each entry
 is tagged with whether the match was also an over 1.5 form-rule match (the research population: o15_form_l10).
 Own ledger data/o35_cheap_no_ledger.json (fresh record from SINCE; no other ledger is read or written).
-Review at 10 settled, decide at 30.
+Review at 10 filled, decide at 30, on the v2 record.
 """
 import datetime as dt
 import json
@@ -34,13 +39,20 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 PATH = os.path.join(ROOT, "data", "o35_cheap_no_ledger.json")
 SOURCE_LEDGER = os.path.join(ROOT, "data", "sandbox_ledger.json")
 LANE = "o35_cheap_no_wave"
-LABEL = "Over 3.5 cheap NO · resting bid, sell into the quiet spell"
-SINCE = "2026-10-28"
-VERSION = "o35-v1"
-LIMITS = (0.10, 0.15, 0.20)
+LABEL = "Over 3.5 cheap NO · NO bid 10c · sell at 4× (3× tracked)"
+TRIM_NOTE = "Trimmed 2026-10-31: v1 (41 fills) showed 10c at 4× best, 15c/20c worse, and the Saudi Pro League 0 for 5 with no sell filled; fresh v2 record."
+V1_LABEL = "Before the Nov trim (v1)"
+V1 = "o35-v1"
+SINCE = "2026-10-31"
+VERSION = "o35-v2"
+LIMITS = (0.10,)
+V1_LIMITS = (0.10, 0.15, 0.20)
 HEADLINE = 0.10
 MULTS = (2, 3, 4)
-HEAD_MULT = 2
+HEAD_MULT = 4
+COMPARE_MULT = 3
+V1_HEAD_MULT = 2
+LEAGUES = {k: v for k, v in SR.SERIES.items() if k != "Saudi Pro League"}
 MIN_VOL = 50
 DEAD_NO = 0.02
 KICKOFF_BACK_H = 4
@@ -102,14 +114,14 @@ def fetch_trades(ticker, min_ts, fetch, max_pages=30):
     return rows
 
 
-def evaluate(prints, kickoff_ts, result):
+def evaluate(prints, kickoff_ts, result, limits=None):
     """{limit key: bid outcome} for one market. A bid is None when no print reached it. A filled bid carries the
     fill time, the dead-fill flag, and per multiple the target, whether the sell filled, whether it was thin and
     the contracts traded at or above the target after the fill."""
     live = [p for p in prints if p[0] >= kickoff_ts - BID_LEAD_MIN * 60]
     payout = 1.0 if result == "no" else 0.0
     out = {}
-    for limit in LIMITS:
+    for limit in limits or LIMITS:
         i = next((k for k, p in enumerate(live) if p[1] <= limit + EPS), None)
         if i is None:
             out[f"{round(limit * 100)}"] = None
@@ -125,6 +137,11 @@ def evaluate(prints, kickoff_ts, result):
         out[f"{round(limit * 100)}"] = dict(limit=limit, fill_at=live[i][0], fill_print=live[i][1], dead=live[i][1] <= DEAD_NO + EPS,
                                             sells=sells, payout=payout)
     return out
+
+
+def split(entries):
+    """(v1 entries, v2 entries): an entry without a version stamp is v1."""
+    return ([e for e in entries if e.get("version", V1) != VERSION], [e for e in entries if e.get("version", V1) == VERSION])
 
 
 def trade_rows(entries):
@@ -167,8 +184,9 @@ def load(path=None):
     except FileNotFoundError:
         s = {}
     s.setdefault("lane", LANE)
-    s.setdefault("since", SINCE)
-    s.setdefault("version", VERSION)
+    if s.get("version") != VERSION:                             # the v1 record stays; v2 starts fresh from SINCE
+        s["v1_since"] = s.get("since") or "2026-10-28"
+        s["since"], s["version"] = SINCE, VERSION
     s.setdefault("entries", [])
     s.setdefault("seen", {})
     s.setdefault("skips", {})
@@ -185,7 +203,7 @@ def run(state, now=None, fetch=D.get, forms=None):
     since = dt.date.fromisoformat(state["since"])
     obs = dict(at=now.isoformat(), new=0, waiting=0, errors=[])
     done = 0
-    for league, series in SR.SERIES.items():
+    for league, series in LEAGUES.items():
         try:
             events = C.list_events(series, since, fetch, until=now.astimezone(ET).date())
         except Exception as e:                                  # noqa: BLE001

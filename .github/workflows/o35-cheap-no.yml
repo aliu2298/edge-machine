@@ -22,7 +22,7 @@ jobs:
           python-version: '3.12'
       - name: Tests
         run: python3 test_o35_cheap_no.py
-      - name: Over 3.5 cheap NO lane (Sandbox paper since 2026-10-28, trade-print fills)
+      - name: Over 3.5 cheap NO lane (Sandbox paper, v2 since 2026-10-31, trade-print fills)
         run: python3 o35_cheap_no.py
       - name: Save records
         run: |
