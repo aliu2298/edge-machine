@@ -39,6 +39,7 @@ import re
 import subprocess
 import urllib.request
 
+import cfb_home
 import chaos_replay as C
 import daily_track as D
 
@@ -46,24 +47,44 @@ ESPN_SITE = "https://site.web.api.espn.com/apis/site/v2/sports"
 _BOARDS = {}
 
 
+def _get_json(url):
+    """One ESPN GET (urllib, then curl) -> the parsed JSON, None when ESPN is unreachable."""
+    body = None
+    try:
+        with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"}), timeout=20) as f:
+            body = f.read()
+    except Exception:
+        try:
+            body = subprocess.run(["curl", "-s", "--max-time", "20", url], capture_output=True, timeout=30).stdout
+        except Exception:
+            body = None
+    try:
+        return json.loads(body)
+    except Exception:
+        return None
+
+
 def _board(path, day):
     """ESPN scoreboard events for one day (cached); [] when ESPN is unreachable."""
     key = (path, day)
     if key not in _BOARDS:
         url = f"{ESPN_SITE}/{path}/scoreboard?dates={day:%Y%m%d}" + ("&groups=80&limit=300" if "college" in path else "")
-        body = None
-        try:
-            with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"}), timeout=20) as f:
-                body = f.read()
-        except Exception:
-            try:
-                body = subprocess.run(["curl", "-s", "--max-time", "20", url], capture_output=True, timeout=30).stdout
-            except Exception:
-                body = None
-        try:
-            _BOARDS[key] = json.loads(body).get("events") or []
-        except Exception:
-            _BOARDS[key] = []
+        _BOARDS[key] = (_get_json(url) or {}).get("events") or []
+    return _BOARDS[key]
+
+
+def cfb_board(day):
+    """The college football scoreboard for one day, FBS and FCS (Kalshi lists both), cached. Raises when ESPN
+    cannot be reached, so the engine retries the event on its next run instead of recording a miss."""
+    key = ("cfb", day)
+    if key not in _BOARDS:
+        events = []
+        for group in ("80", "81"):
+            got = _get_json(f"{ESPN_SITE}/football/college-football/scoreboard?dates={day:%Y%m%d}&groups={group}&limit=400")
+            if got is None:
+                raise RuntimeError(f"ESPN college football scoreboard {day:%Y-%m-%d} (group {group}) unreachable")
+            events += got.get("events") or []
+        _BOARDS[key] = events
     return _BOARDS[key]
 
 
@@ -141,6 +162,24 @@ LANES = [
     # 2026-10-31 (Olu): single sells at 2x, 3x and 4x join the tracked exits, on the same entries (no reset): the
     # split stays the headline, hold its comparison, every +20-100% target still tracked. Added to the entries
     # already recorded by the engine's additive backfill.
+    # 2026-11-01 (Olu): the filtered replacement for the blind cfb_dog_tp50 (now its baseline). Rule from the
+    # college football dynamics research (~/edge-research/cfb_dynamics_2026-11-01, filter F1 pre-registered
+    # before any filtered result): a HOME underdog (ESPN homeAway, not a neutral site) priced 10-25c.
+    # Headline: sell everything at 4x of the ask, resting, filled only on a traded print; hold is the
+    # comparison; the split, x2, x3 and the standard targets ride on the same entries. FRESH record from
+    # 2026-11-02. In-sample Oct 25-31 (8 games): reached 2x / 3x / 4x 82% / 64% / 64%, sell-all-at-4x
+    # +140.6% (z 2.07), hold +50.5%. Holdout Oct 10 / 17 / 24 (22 games, replayed through this engine):
+    # 77% / 57% / 43%, 4x +63.7%, hold +81.1%; the blind holdout reached 63% / 43% / 36%.
+    dict(id="cfb_home_dog_x4", label="College football home underdog · 10-25c · sell 4x", series=["KXNCAAFGAME"],
+         picker=cfb_home.home_dog_picker(cfb_board, 0.10, 0.25), entry_hours=(1, 24), headline=C.X4,
+         exits=C.LANE_EXITS + C.SINGLES, since="2026-11-02", duration_min=210, start=espn_start("football/college-football"),
+         caution="Not evidence yet: the rule was found on Oct 25-31 (8 games: reached 2x / 3x / 4x 82% / 64% / 64%; sell all at 4x "
+                 "+140.6%, z 2.07; hold +50.5%) and held on Oct 10 / 17 / 24 (22 games: 77% / 57% / 43%; sell all at 4x +63.7%; hold "
+                 "+81.1%; the blind lane reached 63% / 43% / 36%; away underdogs were at or under fair). It must beat the blind "
+                 "baseline below and fair (25% reach 4x). The record moves with each Saturday, so read it across several Saturdays.",
+         note="The home team (not a neutral site, from ESPN) priced 10-25c to win, bought 1h and 24h before kickoff, with the whole "
+              "stake resting at 4x of the ask paid, filled only on a traded print, else held. Hold is the comparison; the split, 2x, "
+              "3x and the standard targets are tracked on the same entries. A game ESPN cannot match is skipped with a note, never guessed."),
     # BASELINE 2026-11-01 (Olu): no lane may select blind (every game, price band only). This one keeps replaying
     # every new night as the baseline a filtered underdog lane must beat: no lane status, no promotion.
     dict(id="cfb_dog_tp50", label="College football underdog · sell +50%", series=["KXNCAAFGAME"], picker=DOG,
