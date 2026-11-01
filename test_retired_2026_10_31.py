@@ -37,13 +37,13 @@ check("Eastern date gate: 03:00Z is not yet retired, 05:00Z is",
 check("each carries its record and reason", [SR.RETIRED[k]["reason"] for k in ("D1", "C5", "C6", "C7")],
       ["retired at 27: 14 won, 13 lost, −19.4% after fees", "0–3; 0–10 across C5-C7, retired early by Olu",
        "0–5; 0–10 across C5-C7, retired early by Olu", "0–2; 0–10 across C5-C7, retired early by Olu"])
-check("A6, A7 and D3 (Production) are never retired", [SR.retired(k, AFTER) for k in ("A6", "A7", "D3")], [False] * 3)
+check("A6 and A7 (Production) are never retired", [SR.retired(k, AFTER) for k in ("A6", "A7")], [False] * 2)
 check("live_rules drops a retired rule where it applies and keeps the others",
       all(k not in SR.live_rules(lg, a, b, AFTER) for lg in SR.SERIES for a in ("O+D-", "O-D-", "O-D+") for b in ("O+D-", "O+", "O+D+", "O-D+")
           for k in ("D1", "C5", "C6", "C7")), True)
 
 print("\nteam rules: T6 and T8 retired; T1, T5 and T7 untouched")
-check("the two rules, dated and with records", {k: v["on"] for k, v in TR.RETIRED.items()}, {"T6": "2026-10-31", "T8": "2026-10-31"})
+check("the two rules, dated and with records (T2 followed on 2026-11-01)", {k: v["on"] for k, v in TR.RETIRED.items() if v["on"] == "2026-10-31"}, {"T6": "2026-10-31", "T8": "2026-10-31"})
 check("date gate", (TR.retired("T6", BEFORE), TR.retired("T6", AFTER), TR.retired("T8", AFTER), TR.retired("T5", AFTER), TR.retired("T7", AFTER)),
       (False, True, True, False, False))
 f = dict(league="Premier League", home="A", away="B", kickoff="2026-11-01T15:00:00Z", played=False)
@@ -53,7 +53,7 @@ check("picks_for skips a retired rule before building any entry", "if retired(ru
 check("the Production team-rule pairs are exactly what they were", sorted(TRP.PAIRS), ["T5", "T7"])
 
 print("\ncontender overs: the over 3.5 variant only")
-check("O35 retired, O15 and O25 not", (CO.retired("O35", AFTER), CO.retired("O15", AFTER), CO.retired("O25", AFTER),
+check("O35 retired on 2026-10-31; O15 and O25 are not yet then", (CO.retired("O35", AFTER), CO.retired("O15", AFTER), CO.retired("O25", AFTER),
                                        CO.retired("O35", BEFORE)), (True, False, False, False))
 ev = {"event_ticker": "KXEREDIVISIETOTAL-26NOV01AJAPSV", "markets": []}
 check("picks_for skips the retired variant", "if retired(key, now):" in inspect.getsource(CO.picks_for), True)
@@ -66,14 +66,15 @@ sec = SRB.section(state)
 marked = sorted(set(re.findall(r'data-rule="([A-Z]\d)"[^>]*data-retired="([^"]+)"', sec)))
 check("the label-rules section marks D1, C5-C7 (2026-10-31) and D2 (2026-10-24), dated with their records",
       (marked, "retired at 27: 14 won, 13 lost" in sec and "0–10 across C5-C7" in sec),
-      ([("C5", "2026-10-31"), ("C6", "2026-10-31"), ("C7", "2026-10-31"), ("D1", "2026-10-31"), ("D2", "2026-10-24")], True))
+      ([("C5", "2026-10-31"), ("C6", "2026-10-31"), ("C7", "2026-10-31"), ("D1", "2026-10-31"), ("D2", "2026-10-24"),
+       ("D3", "2026-11-01")], True))      # D3 followed on 2026-11-01 (test_retired_2026_11_01.py)
 tsec = TRB.section({"rules": {k: {"picks": []} for k in TR.RULES}})
-check("the team-rules section marks T6 and T8 only, with their records",
-      (sorted(re.findall(r'data-rule="(T\d)" data-retired', tsec)), "−23.0% after fees on 15 bets" in tsec, "−51.6% after fees on 11 bets" in tsec),
+check("the team-rules section marks T6 and T8 (2026-10-31), with their records; T2 followed on 2026-11-01",
+      (sorted(re.findall(r'data-rule="(T\d)" data-retired="2026-10-31"', tsec)), "−23.0% after fees on 15 bets" in tsec, "−51.6% after fees on 11 bets" in tsec),
       (["T6", "T8"], True, True))
 csec = COB.section({"rules": {k: {"picks": []} for k in CO.VARIANTS}})
-check("the contender section marks O35 only, retired early",
-      (re.findall(r'data-rule="(O\d+)" data-retired', csec), "retired early by Olu" in csec), (["O35"], True))
+check("the contender section marks O35 (2026-10-31), retired early; O25 and O15 followed on 2026-11-01",
+      (re.findall(r'data-rule="(O\d+)" data-retired="2026-10-31"', csec), "retired early by Olu" in csec), (["O35"], True))
 
 print("\nu35_low_scoring Clubs pair: retired; Cups, Internationals and the over 1.5 lane keep running")
 src = S.SOURCES["u35_low_scoring"]
