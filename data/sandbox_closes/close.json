@@ -35,25 +35,10 @@
    "lead_min": 35.2,
    "price": 0.53
   },
-  "commod_fav_band:KXBRENTD-26OCT2217-T108": {
-   "at": "2026-10-22T19:30:51+00:00",
-   "lead_min": 59.1,
-   "price": 0.93
-  },
   "commod_fav_band:KXBRENTD-26OCT2717-T109": {
    "at": "2026-10-27T20:01:49+00:00",
    "lead_min": 28.2,
    "price": 0.98
-  },
-  "commod_fav_band:KXGOLDD-26OCT2217-T4033": {
-   "at": "2026-10-22T19:30:51+00:00",
-   "lead_min": 59.1,
-   "price": 0.38
-  },
-  "commod_fav_band:KXSILVERD-26OCT2217-T54.75": {
-   "at": "2026-10-22T19:30:51+00:00",
-   "lead_min": 59.1,
-   "price": 0.47
   },
   "commod_fav_band:KXSILVERD-26OCT2717-T54.25": {
    "at": "2026-10-27T20:01:49+00:00",
@@ -220,6 +205,16 @@
    "lead_min": 28.3,
    "price": 0.3575
   },
+  "espn_fpi:aec-nfl-kc-den-2026-11-01": {
+   "at": "2026-11-01T20:49:10+00:00",
+   "lead_min": 35.8,
+   "price": 0.5025
+  },
+  "espn_fpi:aec-nfl-ne-mia-2026-11-01": {
+   "at": "2026-11-01T20:49:10+00:00",
+   "lead_min": 35.8,
+   "price": 0.765
+  },
   "liga_btts_even:KXLALIGABTTS-26OCT26SEVOSA-BTTS": {
    "at": "2026-10-26T19:14:17+00:00",
    "lead_min": 45.7,
@@ -249,6 +244,11 @@
    "at": "2026-10-29T01:46:41+00:00",
    "lead_min": 43.3,
    "price": 0.8
+  },
+  "mls_fade_home:KXMLSGAME-26NOV01ATLTOR-ATL": {
+   "at": "2026-11-01T20:49:10+00:00",
+   "lead_min": 40.8,
+   "price": 0.55
   },
   "mls_fade_home:KXMLSGAME-26OCT24HOUMIN-HOU": {
    "at": "2026-10-24T23:41:58+00:00",
@@ -380,6 +380,11 @@
    "lead_min": 16.0,
    "price": 0.75
   },
+  "team2_form_l10:KXMLSTEAMTOTAL-26NOV01ATLTOR-TOR2": {
+   "at": "2026-11-01T20:49:10+00:00",
+   "lead_min": 40.8,
+   "price": 0.46
+  },
   "team2_form_l10:KXSERIEATEAMTOTAL-26OCT28VENINT-INT2": {
    "at": "2026-10-28T17:23:08+00:00",
    "lead_min": 6.9,
@@ -481,5 +486,5 @@
    "price": 0.75
   }
  },
- "updated": "2026-11-01T16:21:27+00:00"
+ "updated": "2026-11-01T20:49:10+00:00"
 }
