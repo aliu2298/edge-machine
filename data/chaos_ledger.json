@@ -84539,6 +84539,51 @@
    },
    "watch": false
   },
+  "cfb_home_dog_x4": {
+   "ask_rule_since": "2026-11-01T04:48:41.878145+00:00",
+   "caution": "Not evidence yet: the rule was found on Oct 25-31 (8 games: reached 2x / 3x / 4x 82% / 64% / 64%; sell all at 4x +140.6%, z 2.07; hold +50.5%) and held on Oct 10 / 17 / 24 (22 games: 77% / 57% / 43%; sell all at 4x +63.7%; hold +81.1%; the blind lane reached 63% / 43% / 36%; away underdogs were at or under fair). It must beat the blind baseline below and fair (25% reach 4x). The record moves with each Saturday, so read it across several Saturdays.",
+   "duration_min": 210,
+   "entry_hours": [
+    1,
+    24
+   ],
+   "exits": [
+    "hold",
+    "hold_stop50",
+    "tp20",
+    "tp20_stop50",
+    "tp30",
+    "tp30_stop50",
+    "tp50",
+    "tp50_stop50",
+    "tp100",
+    "tp100_stop50",
+    "split",
+    "x2",
+    "x3",
+    "x4"
+   ],
+   "headline": "x4",
+   "id": "cfb_home_dog_x4",
+   "label": "College football home underdog \u00b7 10-25c \u00b7 sell 4x",
+   "note": "The home team (not a neutral site, from ESPN) priced 10-25c to win, bought 1h and 24h before kickoff, with the whole stake resting at 4x of the ask paid, filled only on a traded print, else held. Hold is the comparison; the split, 2x, 3x and the standard targets are tracked on the same entries. A game ESPN cannot match is skipped with a note, never guessed.",
+   "registered": "2026-11-01T04:48:41.878145+00:00",
+   "replayed": {},
+   "series": [
+    "KXNCAAFGAME"
+   ],
+   "since": "2026-11-02",
+   "skipped": {},
+   "trades": [],
+   "voided": {
+    "entries": 0,
+    "events": 0,
+    "hold": null,
+    "on": "2026-11-01",
+    "split": null
+   },
+   "watch": false
+  },
   "challenger_cheap_split": {
    "ask_rule_since": "2026-10-30T14:58:12.680303+00:00",
    "caution": "",
@@ -231644,7 +231689,7 @@
    "watch": false
   }
  },
- "last_run": "2026-11-01T04:46:51.682486+00:00",
+ "last_run": "2026-11-01T04:48:41.878145+00:00",
  "runs": [
   {
    "at": "2026-10-25T04:00:26.997081+00:00",
@@ -231925,6 +231970,10 @@
    "new": {
     "cfb_dog_tp50": 392
    }
+  },
+  {
+   "at": "2026-11-01T04:48:41.878145+00:00",
+   "new": {}
   }
  ],
  "version": "chaos-v2"
