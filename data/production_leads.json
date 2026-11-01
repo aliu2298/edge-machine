@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-01T21:28:00+00:00",
+ "board_built_at": "2026-11-01T22:02:34+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -1594,81 +1594,6 @@
    "sport": "soccer_team2",
    "status": "miss"
   },
-  "2026-11-01|Atlanta United FC|Toronto FC|Toronto FC +0.5 (Atlanta United FC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
-   "away": "Toronto FC",
-   "bet": {
-    "kind": "win_no",
-    "team": "Atlanta United FC"
-   },
-   "date": "2026-11-01",
-   "edge_at_log": null,
-   "first_seen": "2026-10-29",
-   "headline": "Toronto FC +0.5 (Atlanta United FC not to win)",
-   "home": "Atlanta United FC",
-   "id": "2026-11-01|Atlanta United FC|Toronto FC|Toronto FC +0.5 (Atlanta United FC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45",
-   "kickoff": "2026-11-01T21:30Z",
-   "lane": "production",
-   "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T21:28:00+00:00",
-   "league": "MLS",
-   "match": "Atlanta United FC v Toronto FC",
-   "pair": "mls_fade_home|soccer_p05",
-   "price_at_log": 0.56,
-   "published_at": "2026-10-29T11:33:12+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 4916,
-   "route": {
-    "claim": "Toronto FC +0.5 (Atlanta United FC not to win)",
-    "event": "KXMLSGAME-26NOV01ATLTOR",
-    "market": "KXMLSGAME-26NOV01ATLTOR-ATL",
-    "outcome": "Atlanta",
-    "outcome_side": "no",
-    "price_at_log": 0.56,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "mls_fade_home:KXMLSGAME-26NOV01ATLTOR-ATL",
-   "source": "mls_fade_home",
-   "sport": "soccer_p05",
-   "status": "pending"
-  },
-  "2026-11-01|Atlanta United FC|Toronto FC|Toronto FC to score 2+ \u00b7 Team scores 2+ form rule": {
-   "away": "Toronto FC",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "Toronto FC"
-   },
-   "date": "2026-11-01",
-   "edge_at_log": null,
-   "first_seen": "2026-10-30",
-   "headline": "Toronto FC to score 2+",
-   "home": "Atlanta United FC",
-   "id": "2026-11-01|Atlanta United FC|Toronto FC|Toronto FC to score 2+ \u00b7 Team scores 2+ form rule",
-   "kickoff": "2026-11-01T21:30Z",
-   "lane": "production",
-   "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T21:28:00+00:00",
-   "league": "MLS",
-   "match": "Atlanta United FC v Toronto FC",
-   "pair": "team2_form_l10|soccer_team2",
-   "price_at_log": 0.51,
-   "published_at": "2026-10-30T23:07:19+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 2782,
-   "route": {
-    "claim": "Toronto FC to score 2+",
-    "event": "KXMLSTEAMTOTAL-26NOV01ATLTOR",
-    "market": "KXMLSTEAMTOTAL-26NOV01ATLTOR-TOR2",
-    "outcome": "Toronto over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.51,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team2_form_l10:KXMLSTEAMTOTAL-26NOV01ATLTOR-TOR2",
-   "source": "team2_form_l10",
-   "sport": "soccer_team2",
-   "status": "pending"
-  },
   "2026-11-01|Colorado Rapids|Chicago Fire FC|Chicago Fire FC +0.5 (Colorado Rapids not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
    "away": "Chicago Fire FC",
    "bet": {
@@ -1861,7 +1786,7 @@
    "kickoff": "2026-11-01T22:05Z",
    "lane": "production",
    "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T21:28:00+00:00",
+   "last_seen_at": "2026-11-01T22:02:34+00:00",
    "league": "Crypto \u00b7 Favourite band",
    "match": "Bitcoin price on Nov 1, 2026",
    "pair": "crypto_fav_band_below|crypto_fav",
@@ -2089,9 +2014,9 @@
    "ready_at": "2026-10-16T17:17:38+00:00",
    "route": "moved by hand on 2026-10-16",
    "routing": {
-    "leads": 6,
+    "leads": 5,
     "problem": null,
-    "routed": 6,
+    "routed": 5,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -2103,7 +2028,7 @@
    "sandbox_roi_fee": 0.1787,
    "timing": {
     "late": [],
-    "timed": 2,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -2164,9 +2089,9 @@
    "ready_at": "2026-10-16T17:17:38+00:00",
    "route": "moved by hand on 2026-10-16",
    "routing": {
-    "leads": 12,
+    "leads": 11,
     "problem": null,
-    "routed": 12,
+    "routed": 11,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -2178,7 +2103,7 @@
    "sandbox_roi_fee": -0.0843,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 0,
     "under_target": 0
    }
   },
@@ -2283,5 +2208,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-01T21:28:00+00:00"
+ "updated_at": "2026-11-01T22:02:34+00:00"
 }
