@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-01T16:01:11.529399+00:00",
+ "last_run": "2026-11-01T16:31:43.380500+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -1426,11 +1426,14 @@
      "line": 2.5,
      "logged": "2026-11-01T12:31:42.130815+00:00",
      "match": "Lazio v Cagliari",
+     "payout": 1.0,
      "price": 0.53,
+     "profit": 82.67,
      "rule": "C4",
+     "settled": "2026-11-01T16:31:43.380500+00:00",
      "side": "yes",
      "start": "2026-11-01T14:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXSERIEATOTAL-26NOV01LAZCAG-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Lazio O+D- v Cagliari O-D- \u00b7 Over 2.5 YES 0.53"
@@ -3781,14 +3784,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-30T23:16:43.867248+00:00",
-   "candidates": 0,
-   "due": 0,
-   "labelled": 0,
-   "matched": 0,
-   "new": 0
-  },
-  {
    "at": "2026-10-31T09:01:11.253734+00:00",
    "candidates": 0,
    "due": 1,
@@ -4186,6 +4181,14 @@
    "due": 4,
    "labelled": 4,
    "matched": 1,
+   "new": 0
+  },
+  {
+   "at": "2026-11-01T16:31:43.380500+00:00",
+   "candidates": 0,
+   "due": 4,
+   "labelled": 4,
+   "matched": 0,
    "new": 0
   }
  ],
