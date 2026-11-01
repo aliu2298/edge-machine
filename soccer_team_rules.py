@@ -168,6 +168,7 @@ def entry(rule, f, ev, m, team, px, b, a, labs, now):
 RETIRED = {
     "T6": dict(on="2026-10-31", reason="10 won, 5 lost at about 82c, −23.0% after fees on 15 bets; retired by Olu"),
     "T8": dict(on="2026-10-31", reason="3 won, 8 lost, −51.6% after fees on 11 bets; retired by Olu"),
+    "T2": dict(on="2026-11-01", reason="4 won of 10, −21.8% after fees at the 10-bet review; research was +29%"),
 }
 
 

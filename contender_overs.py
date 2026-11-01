@@ -62,7 +62,10 @@ VARIANTS = {
 
 
 # Variants retired by hand (2026-10-31, Olu): no new entry from the dated day on (Eastern); rows stay and settle.
-RETIRED = {"O35": dict(on="2026-10-31", reason="0–7, −100% after fees; retired early by Olu")}
+RETIRED = {"O35": dict(on="2026-10-31", reason="0–7, −100% after fees; retired early by Olu"),
+           # 2026-11-01 (Olu): with these two the whole lane is retired; it still runs to settle its open entries.
+           "O25": dict(on="2026-11-01", reason="5 won of 10, −30.8% after fees; contender matches are not scoring"),
+           "O15": dict(on="2026-11-01", reason="8 won of 10 at 82-92c, −10.4% after fees")}
 
 
 def retired(variant, now):

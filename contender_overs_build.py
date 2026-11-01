@@ -25,7 +25,9 @@ def section(state=None):
     lines = [l for _gone, l in sorted(lines, key=lambda x: x[0])]
     n, won, _roi = SB._record(recent)
     live = sum(p["status"] == "open" for p in recent)
-    head = f"3 variants (over 3.5 retired 2026-10-31) · {n} settled · {won} won" + (f" · {live} open" if live else "")
+    all_gone = all(k in CO.RETIRED for k in CO.VARIANTS)
+    head = (("Retired 2026-11-01 (over 3.5 on 2026-10-31): no new entries · " if all_gone else "3 variants (over 3.5 retired 2026-10-31) · ")
+            + f"{n} settled · {won} won" + (f" · {live} open" if live else ""))
     recent.sort(key=lambda p: (p.get("start") or "", p.get("rule") or ""), reverse=True)
     rows = []
     for p in recent[:25]:

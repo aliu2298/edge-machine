@@ -172,6 +172,9 @@ RETIRED = {
     "C5": dict(on="2026-10-31", reason="0–3; 0–10 across C5-C7, retired early by Olu"),
     "C6": dict(on="2026-10-31", reason="0–5; 0–10 across C5-C7, retired early by Olu"),
     "C7": dict(on="2026-10-31", reason="0–2; 0–10 across C5-C7, retired early by Olu"),
+    # 2026-11-01 (Olu). D3 was in Production 2026-10-21 to 2026-10-28 and is a Sandbox rule again; retired here it
+    # can no longer be re-promoted (no new entry means no lead for the Production feed, and it is not a pair there).
+    "D3": dict(on="2026-11-01", reason="23 won of 38, +1.6% after fees past the 30-bet decision; flat, and it lost its Production week"),
 }
 
 
