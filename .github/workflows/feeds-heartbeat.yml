@@ -14,6 +14,7 @@ on:
       - "Soccer label rules paper research"
       - "Soccer team scoring rules paper research"
       - "Culture lanes paper research"
+      - "Over 3.5 cheap NO paper research"
     types: [completed]
 permissions:
   contents: write
@@ -44,10 +45,12 @@ jobs:
         run: python3 nba_value_production.py --heartbeat
       - name: Econ feed
         run: python3 daily_production.py --heartbeat
+      - name: Over 3.5 cheap NO feed (live Kalshi read)
+        run: python3 o35_production.py --heartbeat
       - name: Save the feeds
         run: |
           set -euo pipefail
-          FEEDS="data/soccer_rules_production_leads.json data/soccer_team_rules_production_leads.json data/nba_value_production_leads.json data/econ_production_leads.json"
+          FEEDS="data/soccer_rules_production_leads.json data/soccer_team_rules_production_leads.json data/nba_value_production_leads.json data/econ_production_leads.json data/production_o35_leads.json"
           for f in $FEEDS; do python3 -c "import json,sys; json.load(open(sys.argv[1]))" "$f"; done
           git config user.name "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
@@ -63,6 +66,7 @@ jobs:
             python3 soccer_team_rules_production.py --heartbeat
             python3 nba_value_production.py --heartbeat
             python3 daily_production.py --heartbeat
+            python3 o35_production.py --heartbeat
             git add $FEEDS
             git diff --cached --quiet && exit 0
             git commit -m "Feeds heartbeat"

@@ -165,6 +165,7 @@ def section(state=None):
 <h2>Cheap side · resting bid</h2>
 <p class="shell-kicker">Paper only · no orders · fresh v2 record since {esc(state.get("since"))} · review at {O.REVIEW_N} filled, decide at {O.DECIDE_N}</p>
 <details class="section-disclosure" data-lane="{O.LANE}" open><summary><b>{esc(O.LABEL)}</b><span>{esc(summ)}</span></summary>
+<p class="sm"><b class="chip">Production</b> since 2026-11-01 the follower trades this rule live on Kalshi: a resting NO bid at 10c, $1 a match (10 contracts), about an hour before kickoff; on a fill it rests a sell at 40c (4x); the unfilled bid is cancelled at the final whistle and an unsold position is held to settlement. Never chases, never takes. The live record is the follower&#39;s own fills. The paper record below is unchanged and keeps running beside it.</p>
 <p class="sm mut">{esc(O.TRIM_NOTE)}</p>
 <p class="sm">On the over 3.5 goals market of every game in the eleven leagues on this page, a NO bid rests at 10c before kickoff. It can fill only in play, after goals push the over to 80c or more. The headline sells at 4x the bid (40c); selling at 3x is shown beside it.</p>
 <p class="sm">A bid fills when the first trade after it prints NO at or under the bid. Fills after the 4th goal are kept and marked dead fill. A sell counts only if a later trade prints at or above its target and at least {O.MIN_VOL} contracts traded at or above the target after the fill; fewer is marked thin and the trade is held. Fees: 1.75% of p(1-p) on both legs. Kickoff is the Kalshi time minus 4 hours.</p>
