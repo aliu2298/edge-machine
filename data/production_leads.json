@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-01T11:05:29+00:00",
+ "board_built_at": "2026-11-01T12:04:59+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -1821,7 +1821,7 @@
    "kickoff": "2026-11-01T21:30Z",
    "lane": "production",
    "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T11:05:29+00:00",
+   "last_seen_at": "2026-11-01T12:04:59+00:00",
    "league": "MLS",
    "match": "Atlanta United FC v Toronto FC",
    "pair": "mls_fade_home|soccer_p05",
@@ -1859,7 +1859,7 @@
    "kickoff": "2026-11-01T21:30Z",
    "lane": "production",
    "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T11:05:29+00:00",
+   "last_seen_at": "2026-11-01T12:04:59+00:00",
    "league": "MLS",
    "match": "Atlanta United FC v Toronto FC",
    "pair": "team2_form_l10|soccer_team2",
@@ -1916,44 +1916,6 @@
    "sport": "soccer_p05",
    "status": "hit"
   },
-  "2026-11-01|Como|Venezia|Como to score 2+ \u00b7 Team scores 2+ form rule": {
-   "away": "Venezia",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "Como"
-   },
-   "date": "2026-11-01",
-   "edge_at_log": null,
-   "first_seen": "2026-10-30",
-   "headline": "Como to score 2+",
-   "home": "Como",
-   "id": "2026-11-01|Como|Venezia|Como to score 2+ \u00b7 Team scores 2+ form rule",
-   "kickoff": "2026-11-01T11:30Z",
-   "lane": "production",
-   "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T11:05:29+00:00",
-   "league": "Serie A",
-   "match": "Como v Venezia",
-   "pair": "team2_form_l10|soccer_team2",
-   "price_at_log": 0.77,
-   "published_at": "2026-10-30T13:16:52+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 2773,
-   "route": {
-    "claim": "Como to score 2+",
-    "event": "KXSERIEATEAMTOTAL-26NOV01COMVEN",
-    "market": "KXSERIEATEAMTOTAL-26NOV01COMVEN-COM2",
-    "outcome": "Como over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.77,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team2_form_l10:KXSERIEATEAMTOTAL-26NOV01COMVEN-COM2",
-   "source": "team2_form_l10",
-   "sport": "soccer_team2",
-   "status": "pending"
-  },
   "2026-11-01|Excelsior|Enschede|Draw \u00b7 Eredivisie draw band": {
    "away": "Enschede",
    "bet": {
@@ -1969,7 +1931,7 @@
    "kickoff": "2026-11-01T13:30Z",
    "lane": "production",
    "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T11:05:29+00:00",
+   "last_seen_at": "2026-11-01T12:04:59+00:00",
    "league": "Eredivisie",
    "match": "Excelsior v Enschede",
    "pair": "ere_draw|soccer",
@@ -2007,7 +1969,7 @@
    "kickoff": "2026-11-01T13:00Z",
    "lane": "production",
    "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T11:05:29+00:00",
+   "last_seen_at": "2026-11-01T12:04:59+00:00",
    "league": "La Liga",
    "match": "Getafe v Sevilla",
    "pair": "team2_ranked|soccer_team2",
@@ -2044,7 +2006,7 @@
    "kickoff": "2026-11-01T15:45Z",
    "lane": "production",
    "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T11:05:29+00:00",
+   "last_seen_at": "2026-11-01T12:04:59+00:00",
    "league": "Eredivisie",
    "match": "Groningen v Sparta",
    "pair": "ere_draw|soccer",
@@ -2082,7 +2044,7 @@
    "kickoff": "2026-11-01T14:00Z",
    "lane": "production",
    "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T11:05:29+00:00",
+   "last_seen_at": "2026-11-01T12:04:59+00:00",
    "league": "Serie A",
    "match": "Lazio v Cagliari",
    "pair": "team2_ranked|soccer_team2",
@@ -2120,7 +2082,7 @@
    "kickoff": "2026-11-01T17:00Z",
    "lane": "production",
    "last_seen": "2026-11-01",
-   "last_seen_at": "2026-11-01T11:05:29+00:00",
+   "last_seen_at": "2026-11-01T12:04:59+00:00",
    "league": "Serie A",
    "match": "Lecce v Genoa",
    "pair": "team2_ranked|soccer_team2",
@@ -2351,9 +2313,9 @@
    "ready_at": "2026-10-16T17:17:38+00:00",
    "route": "moved by hand on 2026-10-16",
    "routing": {
-    "leads": 12,
+    "leads": 11,
     "problem": null,
-    "routed": 12,
+    "routed": 11,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -2365,7 +2327,7 @@
    "sandbox_roi_fee": -0.0232,
    "timing": {
     "late": [],
-    "timed": 2,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -2461,5 +2423,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-01T11:05:29+00:00"
+ "updated_at": "2026-11-01T12:04:59+00:00"
 }
