@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-01T19:31:37.849015+00:00",
+ "last_run": "2026-11-01T21:07:58.095197+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -517,14 +517,53 @@
      "line": 1.5,
      "logged": "2026-11-01T16:31:44.372077+00:00",
      "match": "Boca Juniors v River Plate",
+     "payout": 0.0,
      "price": 0.67,
+     "profit": -100.0,
      "rule": "ARG",
+     "settled": "2026-11-01T21:07:58.095197+00:00",
      "side": "yes",
      "start": "2026-11-01T18:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXARGPREMDIVTOTAL-26NOV01BOCRIV-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Argentina over 1.5 YES 0.67"
+    },
+    {
+     "ask": 0.67,
+     "bid": 0.66,
+     "event": "KXARGPREMDIVTOTAL-26NOV01CABBAR",
+     "id": "ARG:KXARGPREMDIVTOTAL-26NOV01CABBAR",
+     "league": "Liga Profesional",
+     "line": 1.5,
+     "logged": "2026-11-01T21:07:58.095197+00:00",
+     "match": "Belgrano (C\u00f3rdoba) v Barracas Central",
+     "price": 0.67,
+     "rule": "ARG",
+     "side": "yes",
+     "start": "2026-11-01T21:30Z",
+     "status": "open",
+     "ticker": "KXARGPREMDIVTOTAL-26NOV01CABBAR-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Argentina over 1.5 YES 0.67"
+    },
+    {
+     "ask": 0.7,
+     "bid": 0.69,
+     "event": "KXARGPREMDIVTOTAL-26NOV01NOBUNI",
+     "id": "ARG:KXARGPREMDIVTOTAL-26NOV01NOBUNI",
+     "league": "Liga Profesional",
+     "line": 1.5,
+     "logged": "2026-11-01T21:07:58.095197+00:00",
+     "match": "Newell's Old Boys v Uni\u00f3n (Santa Fe)",
+     "price": 0.7,
+     "rule": "ARG",
+     "side": "yes",
+     "start": "2026-11-01T21:30Z",
+     "status": "open",
+     "ticker": "KXARGPREMDIVTOTAL-26NOV01NOBUNI-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Argentina over 1.5 YES 0.70"
     }
    ]
   },
@@ -976,13 +1015,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-31T13:01:10.847776+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "quoted": 0
-  },
-  {
    "at": "2026-10-31T13:31:46.008913+00:00",
    "due": 0,
    "matched": 0,
@@ -1331,6 +1363,13 @@
    "matched": 0,
    "new": 0,
    "quoted": 0
+  },
+  {
+   "at": "2026-11-01T21:07:58.095197+00:00",
+   "due": 2,
+   "matched": 2,
+   "new": 2,
+   "quoted": 2
   }
  ],
  "schedule": [
