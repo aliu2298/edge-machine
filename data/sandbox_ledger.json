@@ -8,25 +8,25 @@
   },
   "commodities": {
    "cmd_market": {
-    "offered": 190,
-    "picked": 190
+    "offered": 250,
+    "picked": 250
    },
-   "kalshi_venue": 190
+   "kalshi_venue": 250
   },
   "commodities_fav": {
    "commod_fav_band": {
-    "offered": 295,
+    "offered": 355,
     "picked": 0
    },
    "commod_nc_no": {
-    "offered": 295,
+    "offered": 355,
     "picked": 0
    },
    "commod_nc_yes": {
-    "offered": 295,
+    "offered": 355,
     "picked": 0
    },
-   "kalshi_venue": 295
+   "kalshi_venue": 355
   },
   "cricket": {
    "cricket_consensus": {
@@ -97,7 +97,7 @@
     "offered": 0,
     "picked": 0
    },
-   "kalshi_venue": 123,
+   "kalshi_venue": 126,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -381,7 +381,7 @@
    "kalshi_venue": 49,
    "polymarket_us": 40,
    "polymarket_us_listed": 535,
-   "polymarket_us_priced": 134,
+   "polymarket_us_priced": 133,
    "tennis_utr_shortlist_v1": {
     "offered": 1,
     "picked": 0
@@ -398,49 +398,168 @@
  },
  "feed_status": {
   "oddspedia": "ok",
-  "pin_totals": "down: no paced credit left for this run",
-  "pinnacle": "down: HTTP 429 on /sports/soccer_turkey_super_league/events"
+  "pin_totals": "ok"
  },
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
    "boxing": "2026-10-31T23:48:48+00:00",
-   "commodities": "2026-11-01T23:03:35+00:00",
-   "commodities_fav": "2026-11-01T23:03:35+00:00",
-   "cricket": "2026-11-01T23:03:35+00:00",
-   "crypto": "2026-11-01T23:03:35+00:00",
-   "crypto_fav": "2026-11-01T23:03:35+00:00",
-   "economics": "2026-11-01T23:03:35+00:00",
-   "finance": "2026-11-01T23:03:35+00:00",
+   "commodities": "2026-11-01T23:09:08+00:00",
+   "commodities_fav": "2026-11-01T23:09:08+00:00",
+   "cricket": "2026-11-01T23:09:08+00:00",
+   "crypto": "2026-11-01T23:09:08+00:00",
+   "crypto_fav": "2026-11-01T23:09:08+00:00",
+   "economics": "2026-11-01T23:09:08+00:00",
+   "finance": "2026-11-01T23:09:08+00:00",
    "mma": "2026-11-01T02:19:24+00:00",
-   "nfl": "2026-11-01T23:03:35+00:00",
-   "nhl_pl": "2026-11-01T23:03:35+00:00",
-   "nhl_rest": "2026-11-01T23:03:35+00:00",
-   "soccer": "2026-11-01T23:03:35+00:00",
-   "soccer_btts": "2026-11-01T23:03:35+00:00",
-   "soccer_btts_cup": "2026-11-01T23:03:35+00:00",
-   "soccer_corners": "2026-11-01T23:03:35+00:00",
+   "nfl": "2026-11-01T23:09:08+00:00",
+   "nhl_pl": "2026-11-01T23:09:08+00:00",
+   "nhl_rest": "2026-11-01T23:09:08+00:00",
+   "soccer": "2026-11-01T23:09:08+00:00",
+   "soccer_btts": "2026-11-01T23:09:08+00:00",
+   "soccer_btts_cup": "2026-11-01T23:09:08+00:00",
+   "soccer_corners": "2026-11-01T23:09:08+00:00",
    "soccer_ftts": "2026-10-19T18:33:38+00:00",
-   "soccer_o15": "2026-11-01T23:03:35+00:00",
-   "soccer_o15_cup": "2026-11-01T23:03:35+00:00",
-   "soccer_o25": "2026-11-01T23:03:35+00:00",
-   "soccer_o25_cup": "2026-11-01T23:03:35+00:00",
-   "soccer_p05": "2026-11-01T23:03:35+00:00",
-   "soccer_p05_cup": "2026-11-01T23:03:35+00:00",
-   "soccer_team1": "2026-11-01T23:03:35+00:00",
-   "soccer_team1_cup": "2026-11-01T23:03:35+00:00",
-   "soccer_team2": "2026-11-01T23:03:35+00:00",
-   "soccer_team2_cup": "2026-11-01T23:03:35+00:00",
-   "soccer_u35": "2026-11-01T23:03:35+00:00",
-   "soccer_u35_cup": "2026-11-01T23:03:35+00:00",
-   "tennis": "2026-11-01T23:03:35+00:00",
+   "soccer_o15": "2026-11-01T23:09:08+00:00",
+   "soccer_o15_cup": "2026-11-01T23:09:08+00:00",
+   "soccer_o25": "2026-11-01T23:09:08+00:00",
+   "soccer_o25_cup": "2026-11-01T23:09:08+00:00",
+   "soccer_p05": "2026-11-01T23:09:08+00:00",
+   "soccer_p05_cup": "2026-11-01T23:09:08+00:00",
+   "soccer_team1": "2026-11-01T23:09:08+00:00",
+   "soccer_team1_cup": "2026-11-01T23:09:08+00:00",
+   "soccer_team2": "2026-11-01T23:09:08+00:00",
+   "soccer_team2_cup": "2026-11-01T23:09:08+00:00",
+   "soccer_u35": "2026-11-01T23:09:08+00:00",
+   "soccer_u35_cup": "2026-11-01T23:09:08+00:00",
+   "tennis": "2026-11-01T23:09:08+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "odds_api": {
-   "allowance": 0,
-   "at": "2026-11-01T23:03:35+00:00",
-   "remaining": 438,
-   "used": 62
+   "allowance": 1,
+   "at": "2026-11-01T23:09:08+00:00",
+   "calls": 1,
+   "remaining": 437,
+   "totals_on": [
+    {
+     "empty": {
+      "no_event": 0,
+      "no_totals": 0,
+      "other_point": 14,
+      "points": [
+       3.25,
+       4.0,
+       3.0,
+       3.5,
+       2.75
+      ],
+      "stale": 0
+     },
+     "key": "soccer_uefa_champs_league",
+     "listed": 14,
+     "rows": [
+      {
+       "empty": "other_point",
+       "market_id": "KXUCLTOTAL-26NOV03GALVFB-3",
+       "points": [
+        3.25
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXUCLTOTAL-26NOV03ASKSLO-3",
+       "points": [
+        3.25
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXUCLTOTAL-26NOV03ATMBMU-3",
+       "points": [
+        3.25
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXUCLTOTAL-26NOV03BARAVL-3",
+       "points": [
+        4.0
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXUCLTOTAL-26NOV03FEYINT-3",
+       "points": [
+        3.25
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXUCLTOTAL-26NOV03MUNROM-3",
+       "points": [
+        3.0
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXUCLTOTAL-26NOV03VILPSG-3",
+       "points": [
+        3.5
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXUCLTOTAL-26NOV04AEKRMA-3",
+       "points": [
+        3.5
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXUCLTOTAL-26NOV04FENLFC-3",
+       "points": [
+        3.25
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXUCLTOTAL-26NOV04BVBRBB-3",
+       "points": [
+        3.25
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXUCLTOTAL-26NOV04FCPNAP-3",
+       "points": [
+        2.75
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXUCLTOTAL-26NOV04PSVBRU-3",
+       "points": [
+        3.5
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXUCLTOTAL-26NOV04RBLMCI-3",
+       "points": [
+        3.5
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXUCLTOTAL-26NOV04RCLCOM-3",
+       "points": [
+        3.0
+       ]
+      }
+     ]
+    }
+   ],
+   "used": 63
   },
   "outages": [
    {
@@ -459,12 +578,12 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 936,
+  "runs": 937,
   "tennis_shortlist": {
    "audit": [
     {
-     "ask_size": 453.94,
-     "book_at": "2026-11-01T23:03:33.934477+00:00",
+     "ask_size": 535.9,
+     "book_at": "2026-11-01T23:08:38.651996+00:00",
      "cost": 0.751544,
      "market_id": "aec-utr-suzeit-oguewa-2026-11-03",
      "price": 0.74,
@@ -472,11 +591,11 @@
      "spread": 0.03
     }
    ],
-   "checked_at": "2026-11-01T23:03:35.114110+00:00",
+   "checked_at": "2026-11-01T23:09:08.624591+00:00",
    "daily_limit": 3,
    "day": "2026-11-01"
   },
-  "updated": "2026-11-01T23:03:52+00:00"
+  "updated": "2026-11-01T23:09:30+00:00"
  },
  "quotes": [
   {
@@ -367649,7 +367768,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-01T23:03:35+00:00",
+   "close_at": "2026-11-01T23:09:08+00:00",
    "close_price": 0.81,
    "date": "2026-11-02",
    "edge": null,
@@ -370477,7 +370596,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-01T23:03:35+00:00",
+   "close_at": "2026-11-01T23:09:08+00:00",
    "close_price": 0.79,
    "date": "2026-11-02",
    "edge": null,
@@ -432232,7 +432351,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-01T23:03:35+00:00",
+   "close_at": "2026-11-01T23:09:08+00:00",
    "close_price": 0.36,
    "date": "2026-11-02",
    "edge": null,
@@ -435071,7 +435190,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-01T23:03:35+00:00",
+   "close_at": "2026-11-01T23:09:08+00:00",
    "close_price": 0.74,
    "date": "2026-11-02",
    "edge": null,
@@ -439627,8 +439746,8 @@
    "price_b": 0.57,
    "price_draw": null,
    "prob_a": 0.435,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-01T23:09:26+00:00",
    "side_a": "Steven McCartney",
    "side_b": "Haig Daouidian",
    "source": "polymarket_us",
@@ -439637,7 +439756,7 @@
    "stake": 0.0,
    "start": "2026-11-01T21:07:34+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -439661,8 +439780,8 @@
    "price_b": 0.23,
    "price_draw": null,
    "prob_a": 0.775,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-01T23:09:26+00:00",
    "side_a": "Kim Johannes Niethammer",
    "side_b": "Brayden Woo",
    "source": "polymarket_us",
@@ -439671,7 +439790,7 @@
    "stake": 0.0,
    "start": "2026-11-01T21:07:34+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -439695,8 +439814,8 @@
    "price_b": 0.26,
    "price_draw": null,
    "prob_a": 0.745,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-01T23:09:26+00:00",
    "side_a": "Mathias Roy",
    "side_b": "James McKenzie",
    "source": "polymarket_us",
@@ -439705,7 +439824,7 @@
    "stake": 0.0,
    "start": "2026-11-01T21:07:34+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -443356,7 +443475,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-01T23:03:35+00:00",
+   "close_at": "2026-11-01T23:09:08+00:00",
    "close_price": 0.85,
    "date": "2026-11-05",
    "edge": null,
@@ -445076,7 +445195,7 @@
    "ask_size": 821.24,
    "bet": true,
    "book_at": "2026-11-01T22:01:44.630711+00:00",
-   "close_at": "2026-11-01T23:03:35+00:00",
+   "close_at": "2026-11-01T23:09:08+00:00",
    "close_price": 0.74,
    "cost": 0.751544,
    "date": "2026-11-02",
