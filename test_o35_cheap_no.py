@@ -41,13 +41,14 @@ print("fees, keys, kickoff")
 near("maker fee 0.0175 p(1-p)", O.fee(0.10), 0.0175 * 0.1 * 0.9)
 check("variant keys and labels", (O.vkey(0.10, 2), O.vkey(0.15, None), O.vlabel("10c_2x"), O.vlabel("20c_hold")),
       ("10c_2x", "15c_hold", "NO bid 10c · sell at 2x", "NO bid 20c · hold to settlement"))
-check("twelve variants: 10/15/20c x 2x/3x/4x/hold", len({O.vkey(l, m) for l in O.LIMITS for m in (None,) + O.MULTS}), 12)
-check("headline is the 10c bid sold at 2x", (O.HEADLINE, O.HEAD_MULT), (0.10, 2))
-check("twelve leagues, from the Soccer page's own list", len(O.SR.SERIES), 12)
+check("v2 keeps only the 10c bid; the ledger still stores 2x/3x/4x/hold", (O.LIMITS, O.V1_LIMITS, len({O.vkey(l, m) for l in O.LIMITS for m in (None,) + O.MULTS})), ((0.10,), (0.10, 0.15, 0.20), 4))
+check("headline is the 10c bid sold at 4x, 3x beside it; v2 stamp", (O.HEADLINE, O.HEAD_MULT, O.COMPARE_MULT, O.VERSION, O.SINCE), (0.10, 4, 3, "o35-v2", "2026-10-31"))
+check("eleven leagues: the Soccer page's twelve less the Saudi Pro League", (len(O.SR.SERIES), len(O.LEAGUES), "Saudi Pro League" in O.LEAGUES), (12, 11, False))
 
 print("\nthe bid fills on the first print at or under the limit")
 base = [pr(-30, 0.85), pr(5, 0.60), pr(40, 0.30), pr(70, 0.12), pr(80, 0.09), pr(90, 0.04), pr(95, 0.25, 60), pr(100, 0.30, 55)]
-ev = O.evaluate(base, KICK, "no")
+ev = O.evaluate(base, KICK, "no", O.V1_LIMITS)
+check("v2 evaluates the 10c bid only", list(O.evaluate(base, KICK, "no")), ["10"])
 check("10c bid: filled by the 9c print, not the 12c print", ev["10"]["fill_at"], KICK + 80 * 60)
 check("15c bid fills earlier on the 12c print; 20c on the 12c print too", (ev["15"]["fill_at"], ev["20"]["fill_at"]), (KICK + 70 * 60,) * 2)
 check("the fill is at the limit, whatever printed", ev["10"]["limit"], 0.10)
@@ -70,7 +71,7 @@ edge = O.evaluate([pr(80, 0.09), pr(90, 0.25, 30), pr(91, 0.22, 20)], KICK, "no"
 check("volume adds across prints at or above the target: exactly 50 sells", (edge["filled"], edge["volume"]), (True, 50.0))
 before = O.evaluate([pr(60, 0.25, 500), pr(80, 0.09)], KICK, "no")["10"]["sells"]["2"]
 check("a print above the target BEFORE the bid filled does not count", (before["filled"], before["volume"]), (False, 0.0))
-check("a 20c bid's 4x target is capped at 98c", O.evaluate([pr(80, 0.2)], KICK, "no")["20"]["sells"]["4"]["target"], 0.8)
+check("a 20c bid's 4x target is capped at 98c", O.evaluate([pr(80, 0.2)], KICK, "no", O.V1_LIMITS)["20"]["sells"]["4"]["target"], 0.8)
 check("the payout is 1 on a NO result, 0 on YES", (O.evaluate(base, KICK, "no")["10"]["payout"], O.evaluate(base, KICK, "yes")["10"]["payout"]), (1.0, 0.0))
 
 print("\ndead fills: after the over is all but certain")
@@ -79,7 +80,7 @@ live = O.evaluate([pr(80, 0.08, 40)], KICK, "yes")["10"]
 check("a fill whose print is NO 2c or less is a dead fill and is kept", (dead is not None, dead["dead"], live["dead"]), (True, True, False))
 
 print("\nthe ledger rows: ROI after maker fees on both legs")
-entry = dict(event="KXMLSTOTAL-26OCT31AAABBB", league="MLS", night="2026-10-31", kickoff=KICK, form_rule=True, bids={"10": b, "15": ev["15"], "20": ev["20"]})
+entry = dict(version="o35-v2", event="KXMLSTOTAL-26OCT31AAABBB", league="MLS", night="2026-10-31", kickoff=KICK, form_rule=True, bids={"10": b, "15": ev["15"], "20": ev["20"]})
 rows = O.trade_rows([entry])
 by = {r["variant"]: r for r in rows}
 cost = 0.10 + O.fee(0.10)
@@ -123,7 +124,7 @@ def fetch(path):
 
 NOW = dt.datetime(2026, 11, 1, 6, 0, tzinfo=UTC)
 st = O.load("/nonexistent")
-check("a fresh record begins on 2026-10-28", (st["since"], st["entries"]), ("2026-10-28", []))
+check("a fresh record begins on 2026-10-31 as v2", (st["since"], st["entries"], st["version"]), ("2026-10-31", [], "o35-v2"))
 O.run(st, NOW, fetch, forms={EV})
 check("the settled game is recorded, the one still active waits", (len(st["entries"]), st["observations"]["waiting"]), (1, 1))
 e = st["entries"][0]
@@ -144,6 +145,26 @@ check("an event with no over 3.5 market is skipped with a reason", O.over35([dic
 check("the form-rule tag reads the ledger and ignores other sources",
       O.form_rule_events("/nonexistent"), set())
 
+print("\nthe v1 record: kept, collapsed, and out of the v2 headline")
+v1e = dict(entry, version="o35-v1", event="KXMLSTOTAL-26OCT30XXXYYY", night="2026-10-30", kickoff=KICK - 86400)
+unstamped = {k: v for k, v in entry.items() if k != "version"}
+mix = dict(O.load("/nonexistent"), entries=[v1e, entry, unstamped])
+o1, n2 = O.split(mix["entries"])
+check("split: stamped v2 is v2, o35-v1 and an unstamped entry are v1", (len(o1), len(n2)), (2, 1))
+hm = B.section(mix)
+check("v2 headline counts only v2 entries (1 game); v1 sits in a fold with every bid, exit and the 2x headline",
+      ("1 games" in hm, "Before the Nov trim (v1)" in hm, O.vlabel("10c_hold") in hm, O.vlabel("20c_4x") in hm,
+       O.vlabel("10c_2x") + " (headline)" in hm, "2 games" in hm), (True, True, True, True, True, True))
+check("the v1 fold is closed by default", re.search(r'<details class="section-disclosure" data-lane="o35_cheap_no_wave_v1">', hm) is not None, True)
+check("the trim date and reason are on the page", "Trimmed 2026-10-31" in hm, True)
+import json, os, tempfile
+tf = tempfile.NamedTemporaryFile("w", suffix=".json", delete=False)
+json.dump({"since": "2026-10-28", "version": "o35-v1", "entries": [v1e]}, tf)
+tf.close()
+mg = O.load(tf.name)
+os.unlink(tf.name)
+check("loading a v1 ledger starts v2 fresh from SINCE and keeps v1_since", (mg["version"], mg["since"], mg["v1_since"], len(mg["entries"])), ("o35-v2", "2026-10-31", "2026-10-28", 1))
+
 print("\nstats: z needs 3 nights, halves, clustering")
 mk = lambda night, roi, k: dict(variant="10c_2x", night=night, roi=roi, cost=0.1, profit=roi * 0.1, won=roi > 0, reason="target",
                                 kickoff=k, league="MLS", dead=False, thin=False, form_rule=False)
@@ -155,17 +176,18 @@ old, new = B.halves([mk("n1", 1, 1), mk("n1", 1, 2), mk("n2", -1, 3), mk("n2", -
 check("older half v newer half, by kickoff", (round(old, 2), round(new, 2)), (1.0, -1.0))
 check("under four rows: no halves", B.halves([mk("n1", 1, 1)]), (None, None))
 check("review at 10, decide at 30", (B.read_of(5, None), B.read_of(12, 0.1), B.read_of(31, 0.1), B.read_of(31, -0.1)),
-      ("too early (5 of 10)", "review (12 of 30 to decide)", "decide · beats hold", "decide"))
+      ("too early (5 of 10)", "review (12 of 30 to decide)", "decide", "decide"))
 
 print("\nthe Soccer page section")
 empty = B.section(O.load("/nonexistent"))
-check("empty record says so and keeps the lane card", ('id="cheap-side"' in empty, "No game has settled since the record began" in empty, O.LANE in empty), (True, True, True))
+check("empty record says so and keeps the lane card", ('id="cheap-side"' in empty, "0 entries: no game has settled since the v2 record began" in empty, O.LANE in empty), (True, True, True))
 html = B.section(st)
-check("the lane's name, the headline, the three limits and four exits are shown",
-      (O.LABEL in html, all(O.vlabel(O.vkey(l, m)) in html for l in O.LIMITS for m in (None,) + O.MULTS), "(headline)" in html), (True, True, True))
+check("the lane's name, the 4x headline and the 3x comparison are shown; 2x, hold, 15c and 20c are not",
+      (O.LABEL in html, O.vlabel("10c_4x") + " (headline)" in html, O.vlabel("10c_3x") in html, O.vlabel("10c_2x") in html, "hold to settlement" in html,
+       O.vlabel("15c_4x") in html or O.vlabel("20c_4x") in html), (True, True, True, False, False, False))
 check("dead and thin counts, halves, league and form-rule rows",
       ("Dead fills" in html, "Thin sells" in html, "Older half" in html, "Over 1.5 form-rule matches" in html, "<td><b>MLS</b></td>" in html), (True,) * 5)
-check("the fill list shows the contracts at each target", ("Sell at 2x · contracts" in html and "sold" in html), True)
+check("the fill list shows the contracts at 3x and 4x", ("Sell at 4x · contracts" in html and "Sell at 3x · contracts" in html and "Sell at 2x" not in html and "sold" in html), True)
 check("header-row tables for the phone labels (no thead)", "<thead>" not in html, True)
 check("no private-system words in the page copy", sandbox_audit.COPY_RE.search(html), None)
 page = soccer_build.build()
