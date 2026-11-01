@@ -840,6 +840,11 @@
    "lead_min": 11.0,
    "price": 0.255
   },
+  "espn_fpi:aec-nfl-kc-den-2026-11-01": {
+   "at": "2026-11-01T20:25:25+00:00",
+   "lead_min": 59.6,
+   "price": 0.5075
+  },
   "espn_fpi:aec-nfl-kc-sea-2026-10-25": {
    "at": "2026-10-26T00:12:12+00:00",
    "lead_min": 7.8,
@@ -859,6 +864,11 @@
    "at": "2026-10-23T00:04:08+00:00",
    "lead_min": 10.9,
    "price": 0.4075
+  },
+  "espn_fpi:aec-nfl-ne-mia-2026-11-01": {
+   "at": "2026-11-01T20:25:25+00:00",
+   "lead_min": 59.6,
+   "price": 0.765
   },
   "espn_fpi:aec-nfl-nyg-hou-2026-10-25": {
    "at": "2026-10-25T16:48:58+00:00",
@@ -921,9 +931,9 @@
    "price": 0.16
   },
   "mls_away_band_fade:KXMLSGAME-26NOV01VANSEA-SEA": {
-   "at": "2026-11-01T20:10:19+00:00",
-   "lead_min": 19.7,
-   "price": 0.77
+   "at": "2026-11-01T20:25:25+00:00",
+   "lead_min": 4.6,
+   "price": 0.75
   },
   "mls_away_band_fade:KXMLSGAME-26OCT24CLBTOR-TOR": {
    "at": "2026-10-24T19:27:00+00:00",
@@ -1801,5 +1811,5 @@
    "price": 0.75
   }
  },
- "updated": "2026-11-01T20:10:19+00:00"
+ "updated": "2026-11-01T20:25:25+00:00"
 }
