@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-01T16:01:15.889127+00:00",
+ "last_run": "2026-11-01T16:31:30.274118+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -1874,11 +1874,14 @@
      "logged": "2026-11-01T12:31:44.076985+00:00",
      "match": "Frosinone v Torino",
      "opponent": "Torino",
+     "payout": 0.0,
      "price": 0.33,
+     "profit": -100.0,
      "rule": "T3",
+     "settled": "2026-11-01T16:31:30.274118+00:00",
      "side": "yes",
      "start": "2026-11-01T14:00Z",
-     "status": "open",
+     "status": "lost",
      "sub": "Frosinone over 2.5 goals",
      "team": "Frosinone",
      "team_side": "home",
@@ -1901,11 +1904,14 @@
      "logged": "2026-11-01T12:31:44.076985+00:00",
      "match": "Lazio v Cagliari",
      "opponent": "Cagliari",
+     "payout": 0.0,
      "price": 0.31,
+     "profit": -100.0,
      "rule": "T3",
+     "settled": "2026-11-01T16:31:30.274118+00:00",
      "side": "yes",
      "start": "2026-11-01T14:00Z",
-     "status": "open",
+     "status": "lost",
      "sub": "Lazio over 2.5 goals",
      "team": "Lazio",
      "team_side": "home",
@@ -3890,14 +3896,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-29T01:01:12.851405+00:00",
-   "candidates": 1,
-   "due": 3,
-   "labelled": 3,
-   "matched": 1,
-   "new": 1
-  },
-  {
    "at": "2026-10-29T01:31:26.266467+00:00",
    "candidates": 1,
    "due": 3,
@@ -4295,6 +4293,14 @@
    "due": 4,
    "labelled": 4,
    "matched": 1,
+   "new": 0
+  },
+  {
+   "at": "2026-11-01T16:31:30.274118+00:00",
+   "candidates": 0,
+   "due": 2,
+   "labelled": 2,
+   "matched": 0,
    "new": 0
   }
  ],
