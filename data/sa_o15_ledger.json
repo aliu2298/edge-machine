@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-10-31T21:16:38.439308+00:00",
+ "last_run": "2026-11-01T00:31:28.481216+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -475,11 +475,14 @@
      "line": 1.5,
      "logged": "2026-10-31T18:31:40.223067+00:00",
      "match": "Deportivo Riestra v Talleres (C\u00f3rdoba)",
+     "payout": 1.0,
      "price": 0.61,
+     "profit": 59.58,
      "rule": "ARG",
+     "settled": "2026-11-01T00:31:28.481216+00:00",
      "side": "yes",
      "start": "2026-10-31T20:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXARGPREMDIVTOTAL-26OCT31RIECAT-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Argentina over 1.5 YES 0.61"
@@ -493,11 +496,14 @@
      "line": 1.5,
      "logged": "2026-10-31T20:46:13.975115+00:00",
      "match": "V\u00e9lez Sarsfield v San Lorenzo",
+     "payout": 1.0,
      "price": 0.67,
+     "profit": 45.88,
      "rule": "ARG",
+     "settled": "2026-11-01T00:31:28.481216+00:00",
      "side": "yes",
      "start": "2026-10-31T22:15Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXARGPREMDIVTOTAL-26OCT31VELSLA-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Argentina over 1.5 YES 0.67"
@@ -952,13 +958,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-29T23:01:41.373370+00:00",
-   "due": 1,
-   "matched": 1,
-   "new": 1,
-   "quoted": 1
-  },
-  {
    "at": "2026-10-29T23:31:42.115004+00:00",
    "due": 1,
    "matched": 1,
@@ -1307,10 +1306,16 @@
    "matched": 1,
    "new": 0,
    "quoted": 1
+  },
+  {
+   "at": "2026-11-01T00:31:28.481216+00:00",
+   "due": 0,
+   "matched": 0,
+   "new": 0,
+   "quoted": 0
   }
  ],
  "schedule": [
-  "2026-10-31T22:15:00+00:00",
   "2026-11-01T00:30:00+00:00",
   "2026-11-01T18:00:00+00:00",
   "2026-11-01T21:30:00+00:00",
@@ -1325,7 +1330,8 @@
   "2026-11-05T22:30:00+00:00",
   "2026-11-06T00:30:00+00:00",
   "2026-11-06T23:00:00+00:00",
-  "2026-11-08T20:00:00+00:00"
+  "2026-11-08T20:00:00+00:00",
+  "2026-11-14T21:30:00+00:00"
  ],
  "version": "sa-o15-v1"
 }
