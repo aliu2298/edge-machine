@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-02T21:01:33.043629+00:00",
+ "last_run": "2026-11-02T21:31:26.854453+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -1072,18 +1072,29 @@
      "ticker": "KXBRASILEIROTOTAL-26OCT31CFCVIT-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Brasileir\u00e3o over 1.5 YES 0.75"
+    },
+    {
+     "ask": 0.84,
+     "bid": 0.83,
+     "event": "KXBRASILEIROTOTAL-26NOV02RBBSAN",
+     "id": "BRA:KXBRASILEIROTOTAL-26NOV02RBBSAN",
+     "league": "Brasileir\u00e3o",
+     "line": 1.5,
+     "logged": "2026-11-02T21:31:26.854453+00:00",
+     "match": "Red Bull Bragantino v Santos",
+     "price": 0.84,
+     "rule": "BRA",
+     "side": "yes",
+     "start": "2026-11-02T23:00Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROTOTAL-26NOV02RBBSAN-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Brasileir\u00e3o over 1.5 YES 0.84"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-10-31T19:31:13.049671+00:00",
-   "due": 1,
-   "matched": 1,
-   "new": 0,
-   "quoted": 1
-  },
   {
    "at": "2026-10-31T20:39:48.889926+00:00",
    "due": 0,
@@ -1433,6 +1444,13 @@
    "matched": 2,
    "new": 0,
    "quoted": 2
+  },
+  {
+   "at": "2026-11-02T21:31:26.854453+00:00",
+   "due": 3,
+   "matched": 3,
+   "new": 1,
+   "quoted": 3
   }
  ],
  "schedule": [
