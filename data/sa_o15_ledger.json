@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-01T23:16:23.608269+00:00",
+ "last_run": "2026-11-02T00:01:39.856754+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -538,11 +538,14 @@
      "line": 1.5,
      "logged": "2026-11-01T21:07:58.095197+00:00",
      "match": "Belgrano (C\u00f3rdoba) v Barracas Central",
+     "payout": 1.0,
      "price": 0.67,
+     "profit": 45.88,
      "rule": "ARG",
+     "settled": "2026-11-02T00:01:39.856754+00:00",
      "side": "yes",
      "start": "2026-11-01T21:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXARGPREMDIVTOTAL-26NOV01CABBAR-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Argentina over 1.5 YES 0.67"
@@ -556,11 +559,14 @@
      "line": 1.5,
      "logged": "2026-11-01T21:07:58.095197+00:00",
      "match": "Newell's Old Boys v Uni\u00f3n (Santa Fe)",
+     "payout": 1.0,
      "price": 0.7,
+     "profit": 39.92,
      "rule": "ARG",
+     "settled": "2026-11-02T00:01:39.856754+00:00",
      "side": "yes",
      "start": "2026-11-01T21:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXARGPREMDIVTOTAL-26NOV01NOBUNI-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Argentina over 1.5 YES 0.70"
@@ -1033,13 +1039,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-31T14:46:46.238439+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "quoted": 0
-  },
-  {
    "at": "2026-10-31T15:01:41.251266+00:00",
    "due": 0,
    "matched": 0,
@@ -1388,10 +1387,16 @@
    "matched": 1,
    "new": 0,
    "quoted": 1
+  },
+  {
+   "at": "2026-11-02T00:01:39.856754+00:00",
+   "due": 0,
+   "matched": 0,
+   "new": 0,
+   "quoted": 0
   }
  ],
  "schedule": [
-  "2026-11-01T23:45:00+00:00",
   "2026-11-02T22:00:00+00:00",
   "2026-11-02T23:00:00+00:00",
   "2026-11-03T00:15:00+00:00",
