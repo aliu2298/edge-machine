@@ -2936,6 +2936,8 @@ def pnl_after_fee(q):
     A win pays 1. A price payout pays settle_px, and the fee comes off the same
     way: the stake buys `paid` at `price + fee` instead of at `price`.
     """
+    if q.get("pnl_fee_override") is not None:       # a lane that exits before settlement books its own after-fee P/L (o35_production)
+        return round(float(q["pnl_fee_override"]), 2)
     p = q["price"]
     fee = FEE_RATE.get(q.get("venue") or "polymarket", 0.07) * p * (1 - p)
     if q["status"] == "won":

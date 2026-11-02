@@ -2454,7 +2454,8 @@ def production_and_index(now, d, st, blob, extra=None):
                                        daily=extra.get("daily"), culture=extra.get("culture"),
                                        soccer_rules=extra.get("soccer_rules"),
                                        nba_value=extra.get("nba_value"),
-                                       soccer_team_rules=extra.get("soccer_team_rules")))
+                                       soccer_team_rules=extra.get("soccer_team_rules"),
+                                       o35=extra.get("o35")))
     index = control_center.page(now, d=d, st=st, blob=blob, extra=extra)
     return prod, index
 
