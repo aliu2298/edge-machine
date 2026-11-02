@@ -804,6 +804,101 @@
    "result": "yes",
    "title": "Will over 1.5 goals be scored?",
    "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXLALIGATOTAL-26NOV01ATHRSO",
+   "id": "KXLALIGATOTAL-26NOV01ATHRSO-2",
+   "kickoff": 1793563200,
+   "league": "La Liga",
+   "logged": "2026-11-02T01:04:22.659153+00:00",
+   "matchday": "2026-11-01",
+   "p": 0.79,
+   "p_at": 1793559660,
+   "p_bid": 0.78,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.78,
+    "printed": 11150.09,
+    "status": "verified"
+   },
+   "prints": 240,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXLIGUE1TOTAL-26NOV01OLMTFC",
+   "id": "KXLIGUE1TOTAL-26NOV01OLMTFC-2",
+   "kickoff": 1793562300,
+   "league": "Ligue 1",
+   "logged": "2026-11-02T01:04:22.659153+00:00",
+   "matchday": "2026-11-01",
+   "p": 0.86,
+   "p_at": 1793558760,
+   "p_bid": 0.85,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.86,
+    "printed": 3291.02,
+    "status": "verified"
+   },
+   "prints": 92,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": {
+     "counted": true,
+     "fill_at": 1793566408,
+     "fill_print": 0.43,
+     "fill_volume": 53909.0,
+     "held": true,
+     "limit": 0.43,
+     "payout": 1.0,
+     "sold": true,
+     "sold_at": 1793567766
+    },
+    "65": {
+     "counted": true,
+     "fill_at": 1793565085,
+     "fill_print": 0.49,
+     "fill_volume": 136114.72,
+     "held": true,
+     "limit": 0.51,
+     "payout": 1.0,
+     "sold": true,
+     "sold_at": 1793567766
+    }
+   },
+   "event": "KXSERIEATOTAL-26NOV01JUVNAP",
+   "id": "KXSERIEATOTAL-26NOV01JUVNAP-2",
+   "kickoff": 1793562300,
+   "league": "Serie A",
+   "logged": "2026-11-02T01:04:22.659153+00:00",
+   "matchday": "2026-11-01",
+   "p": 0.78,
+   "p_at": 1793558760,
+   "p_bid": 0.76,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.78,
+    "printed": 13267.82,
+    "status": "verified"
+   },
+   "prints": 2767,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
   }
  ],
  "error": null,
@@ -14858,12 +14953,12 @@
   ]
  },
  "lane": "top5_goalless_dip",
- "last_run": "2026-11-01T20:52:51.300174+00:00",
+ "last_run": "2026-11-02T01:04:22.659153+00:00",
  "observations": {
-  "at": "2026-11-01T20:52:51.300174+00:00",
+  "at": "2026-11-02T01:04:22.659153+00:00",
   "errors": [],
-  "new": 4,
-  "skipped": 3,
+  "new": 3,
+  "skipped": 0,
   "waiting": 0
  },
  "seen": {},
@@ -14880,21 +14975,6 @@
   "KXLIGUE1TOTAL-26OCT31OLANG": "no pregame quote an hour before kickoff"
  },
  "upcoming": [
-  {
-   "event": "KXSERIEATOTAL-26NOV01JUVNAP",
-   "kickoff": 1793562300,
-   "title": "Juventus vs Napoli: Total Goals"
-  },
-  {
-   "event": "KXLIGUE1TOTAL-26NOV01OLMTFC",
-   "kickoff": 1793562300,
-   "title": "Marseille vs Toulouse: Total Goals"
-  },
-  {
-   "event": "KXLALIGATOTAL-26NOV01ATHRSO",
-   "kickoff": 1793563200,
-   "title": "Bilbao vs Real Sociedad: Total Goals"
-  },
   {
    "event": "KXSERIEATOTAL-26NOV02SASFIO",
    "kickoff": 1793640600,
@@ -14929,6 +15009,21 @@
    "event": "KXUCLTOTAL-26NOV03ASKSLO",
    "kickoff": 1793736000,
    "title": "LASK vs Slovan Bratislava: Total Goals"
+  },
+  {
+   "event": "KXUCLTOTAL-26NOV03ATMBMU",
+   "kickoff": 1793736000,
+   "title": "Atletico vs Bayern Munich: Total Goals"
+  },
+  {
+   "event": "KXUCLTOTAL-26NOV03BARAVL",
+   "kickoff": 1793736000,
+   "title": "Barcelona vs Aston Villa: Total Goals"
+  },
+  {
+   "event": "KXUCLTOTAL-26NOV03BOGLIL",
+   "kickoff": 1793736000,
+   "title": "Bodoe/Glimt vs Lille: Total Goals"
   }
  ],
  "version": "top5dip-v1"
