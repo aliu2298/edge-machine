@@ -79,5 +79,12 @@ check("after the lead ages out of the feed the sidecar still names it", list(P.l
 check("and a page built from the reloaded feed still leaves it out",
       P._assess_since_kickoff(d, KEY, pairs[KEY], late=P.late_set(P.load_feed(path)))["n"], 2)
 
+print("\nthe sport pages' pooled line agrees")
+import sport_page
+row = dict(prod=True, pair=KEY, name=O.LANE, sport=X.SPORT)
+rec_late, _ = sport_page.since_production(d, {"pairs": pairs}, [row], late=late)
+rec_all, _ = sport_page.since_production(d, {"pairs": pairs}, [row], late={})
+check("with the late set the pooled since-Production line counts 2 bets, without it 3", (rec_late["n"], rec_all["n"]), (2, 3))
+
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
