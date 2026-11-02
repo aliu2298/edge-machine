@@ -117,6 +117,31 @@
    "result": "yes",
    "title": "Will over 0.5 goals be scored?",
    "version": "argdip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null,
+    "75": null
+   },
+   "event": "KXARGPREMDIVTOTAL-26NOV01LANGEM",
+   "id": "KXARGPREMDIVTOTAL-26NOV01LANGEM-1",
+   "kickoff": 1793576700,
+   "logged": "2026-11-02T08:21:41.402258+00:00",
+   "matchday": "2026-11-01",
+   "p": 0.94,
+   "p_at": 1793573160,
+   "p_bid": 0.93,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.93,
+    "printed": 76.31,
+    "status": "verified"
+   },
+   "prints": 79,
+   "result": "yes",
+   "title": "Will over 0.5 goals be scored?",
+   "version": "argdip-v1"
   }
  ],
  "error": null,
@@ -6072,11 +6097,11 @@
   ]
  },
  "lane": "arg_goalless_dip",
- "last_run": "2026-11-02T01:03:26.846714+00:00",
+ "last_run": "2026-11-02T08:21:41.402258+00:00",
  "observations": {
-  "at": "2026-11-02T01:03:26.846714+00:00",
+  "at": "2026-11-02T08:21:41.402258+00:00",
   "errors": [],
-  "new": 2,
+  "new": 1,
   "skipped": 0,
   "waiting": 0
  },
@@ -6088,11 +6113,6 @@
  },
  "upcoming": [
   {
-   "event": "KXARGPREMDIVTOTAL-26NOV01LANGEM",
-   "kickoff": 1793576700,
-   "title": "Lanus vs Mendoza: Total Goals"
-  },
-  {
    "event": "KXARGPREMDIVTOTAL-26NOV02DYJCAI",
    "kickoff": 1793656800,
    "title": "Defensa y Justicia vs Independiente Avellaneda: Total Goals"
@@ -6101,6 +6121,16 @@
    "event": "KXARGPREMDIVTOTAL-26NOV02PLACC",
    "kickoff": 1793656800,
    "title": "Platense vs Central Cordoba: Total Goals"
+  },
+  {
+   "event": "KXARGPREMDIVTOTAL-26NOV02IRMBAN",
+   "kickoff": 1793664900,
+   "title": "Rivadavia vs Banfield: Total Goals"
+  },
+  {
+   "event": "KXARGPREMDIVTOTAL-26NOV02TUCARG",
+   "kickoff": 1793664900,
+   "title": "Tucuman vs Argentinos Juniors: Total Goals"
   }
  ],
  "version": "argdip-v1"
