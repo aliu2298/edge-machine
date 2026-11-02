@@ -136,8 +136,9 @@ for k in sorted(TENNIS):
     check(f"{k}: off the run, retired with a dated reason",
           (sport in meta["sports"], (meta.get("retired_sports") or {}).get(sport, "").startswith("Retired 2026-10-24 by Olu")),
           (False, True))
-check("kept then, and now: the UTR shortlist stays on its sport; the 2-leg combo went 2026-10-29 (checked below)",
-      S.SOURCES["tennis_utr_shortlist_v1"]["sports"], ["tennis"])
+check("kept then: the UTR shortlist, retired later on 2026-11-02 (test_retired_2026_11_02.py); the 2-leg combo went 2026-10-29",
+      (S.SOURCES["tennis_utr_shortlist_v1"]["sports"], S.SOURCES["tennis_utr_shortlist_v1"]["retired_sports"]["tennis"][:22]),
+      ([], "Retired 2026-11-02 by "))
 check("2026-10-29: the Kalshi 2-leg combo is off the run, retired with a dated reason and its record",
       (S.SOURCES["tennis_combo2"]["sports"], S.TENNIS_RETIRED_ON_2026_10_29,
        S.SOURCES["tennis_combo2"]["retired_sports"]["tennis_combo"].startswith("Retired 2026-10-29 by Olu: frozen at fair"),
@@ -164,15 +165,15 @@ tcount = {k: sum(1 for q in T.all_bets(d) if f'{q.get("source")}|{q.get("sport")
 check("the retired tennis lanes that bet keep their rows",
       sorted(k for k in ("tennis_fav_band_3h|tennis", "pm_combo2|tennis_pmcombo", "pm_combo4|tennis_pmcombo") if not tcount[k]), [])
 trows = {f'{r["name"]}|{r["sport"]}': r for r in sport_tab.retired_rows(d, st, tennis_build.FAMILY)}
-check("the Tennis page's Retired list is the six, the 2-leg combo (2026-10-29) and pm_combo4", set(trows),
-      TENNIS | {"tennis_combo2|tennis_combo", "pm_combo4|tennis_pmcombo"})
+check("the Tennis page's Retired list is the six, the 2-leg combo (2026-10-29), pm_combo4 and the UTR shortlist (2026-11-02)",
+      set(trows), TENNIS | {"tennis_combo2|tennis_combo", "pm_combo4|tennis_pmcombo", "tennis_utr_shortlist_v1|tennis"})
 for k in ("tennis_fav_band_3h|tennis", "pm_combo2|tennis_pmcombo"):
     name, sport = k.split("|")
     a = T.assess(d, name, sport, since=T.record_since((st.get("pairs") or {}).get(k)), venues=T.TRADEABLE_VENUES)
     check(f"{k}: the record since its reset, as the page read it", (trows[k]["a"]["n"], trows[k]["a"]["won"]), (a["n"], a["won"]))
 tlive = {f'{r["name"]}|{r["sport"]}' for r in sport_tab.family_rows(d, st, tennis_build.FAMILY)}
-check("none of the six, nor the 2-leg combo, is a live Tennis row; the shortlist is",
-      (sorted(tlive & (TENNIS | {"tennis_combo2|tennis_combo"})), "tennis_utr_shortlist_v1|tennis" in tlive), ([], True))
+check("none of the six, nor the 2-leg combo, is a live Tennis row; nor the shortlist since 2026-11-02",
+      (sorted(tlive & (TENNIS | {"tennis_combo2|tennis_combo"})), "tennis_utr_shortlist_v1|tennis" in tlive), ([], False))
 thtml = tennis_build.build(d, st, NOW)
 tfold = thtml[thtml.find('id="retired"'):]
 check("the Tennis page draws all six in its Retired fold, dated",

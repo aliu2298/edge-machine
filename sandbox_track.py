@@ -1750,7 +1750,10 @@ def publish(d, universe, coverage, verbose=True, now=None):
                 "picked": len(source_probs[name]), "offered": len(by_id)}
 
     for sport, (by_id, source_probs) in per_sport.items():
+        # Its own selection path, so it also checks the source's live sports: retired 2026-11-02 (tennis moved to
+        # retired_sports), it selects and logs nothing new, while its open rows still settle.
         if (sport == "tennis" and "tennis_utr_shortlist_v1" in S.CHALLENGERS
+                and sport in S.SOURCES["tennis_utr_shortlist_v1"]["sports"]
                 and not S.lane_paused("tennis_utr_shortlist_v1", sport)):
             import tennis_shortlist as TS
             at = log_now()

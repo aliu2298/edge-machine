@@ -45,8 +45,23 @@ for old in ['tennis_fav_band','tennis_fav_band_3h','tennis_combo2','tennis_combo
 assert 'tennis_combo2|tennis_combo' not in T.PAIR_OVERRIDES
 assert 'tennis_utr_shortlist_v1|tennis' not in T.PAIR_OVERRIDES  # back in the Sandbox 2026-10-27
 
-# Exercise the actual publisher with public calls replaced by deterministic fixtures.
+# Retired 2026-11-02 (tennis moved to retired_sports): the run selects and logs nothing new.
 saved=(S._get,S.CHALLENGERS,T.CONSENSUS,T.snap_closing)
+try:
+    S._get=lambda url,tries=1: books[url.split('/')[-2]]
+    S.CHALLENGERS={TS.NAME:lambda sport: []}
+    T.CONSENSUS={}
+    T.snap_closing=lambda *a,**kw:0
+    gone=dict(quotes=[],meta={},retired={})
+    T.publish(gone,{'tennis':copy.deepcopy(rows)},{},verbose=False,now=NOW)
+    assert not [q for q in gone['quotes'] if q.get('source') in (TS.NAME, TS.POOL)], gone['quotes']
+finally:
+    S._get,S.CHALLENGERS,T.CONSENSUS,T.snap_closing=saved
+print('PASS: retired, the shortlist logs no pick and no control')
+
+# The mechanics as they ran before the retirement: the source's tennis scope put back for this check only.
+saved=(S._get,S.CHALLENGERS,T.CONSENSUS,T.snap_closing,S.SOURCES[TS.NAME]["sports"])
+S.SOURCES[TS.NAME]["sports"]=["tennis"]
 try:
     S._get=lambda url,tries=1: books[url.split('/')[-2]]
     S.CHALLENGERS={TS.NAME:lambda sport: []}
@@ -63,7 +78,7 @@ try:
     T.publish(d,universe,{},verbose=False,now=NOW)
     assert len([q for q in d['quotes'] if q.get('source')==TS.NAME])==3
 finally:
-    S._get,S.CHALLENGERS,T.CONSENSUS,T.snap_closing=saved
+    S._get,S.CHALLENGERS,T.CONSENSUS,T.snap_closing,S.SOURCES[TS.NAME]["sports"]=saved
 print('PASS: shortlist ranking, book gates, Central day cap, persistent reruns, controls and Production routing')
 
 # 2026-10-15: a thin best level (7 contracts, as live UTR books show) is still eligible.

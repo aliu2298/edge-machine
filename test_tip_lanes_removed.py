@@ -195,8 +195,11 @@ def main():
     titles = re.findall(r'<details class="sport"><summary><b>([^<]+)</b>', sandbox)
     for name in ("MLB", "NHL", "Boxing", "MMA"):
         ok(name not in titles, f"no {name} section header")
-    for name in ("Soccer", "Tennis", "Cricket"):
+    for name in ("Soccer", "Cricket"):
         ok(name in titles, f"{name} section stays")
+    # 2026-11-02: the UTR shortlist, the last live Tennis source rule, retired; Tennis's live lane is the chaos hold
+    # lane on its own page, so the Sandbox's sport sections hold no Tennis rule.
+    ok("Tennis" not in titles, "the Tennis section leaves with the last live Tennis source rule (2026-11-02)")
     ok("<b>MLB</b>" not in sandbox and "<b>NHL · Rest</b>" not in sandbox,
        "MLB and NHL · Rest leave coverage")
     for label in ("NHL · Puck line", "Economics", "Finance", "Politics", "Elections",

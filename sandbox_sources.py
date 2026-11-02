@@ -156,6 +156,9 @@ CRYPTO_BOTH_RETIRED_WHY = {
 # removed lane since 2026-10-04), so the source fetches nothing new; its rows stay and its open bets still settle.
 RETIRED_TAIL_2026_11_02 = (" No new entries from 2026-11-02; its rows stay on file and its open bets "
                            "still settle.")
+# The UTR daily shortlist (Olu, 2026-11-02): out of Production since 2026-10-27, retired here. Its only scope.
+UTR_SHORTLIST_RETIRED_WHY = ("Retired 2026-11-02 by Olu: at the price — 20 won v 19.4 priced, +10 no result, −7.8% after fees "
+                             "on 37; the shortlist did no better than the whole eligible pool (−7.5%)." + RETIRED_TAIL_2026_11_02)
 ESPN_FPI_NFL_RETIRED_WHY = ("Retired 2026-11-02 by Olu: no edge at 35 settled — 14 won v 17.8 priced, −26.4% after fees."
                             + RETIRED_TAIL_2026_11_02)
 
@@ -1800,7 +1803,8 @@ for _name, _text in BACK_IN_SANDBOX.items():
 
 SOURCES["tennis_utr_shortlist_v1"] = dict(
     label="UTR daily shortlist · up to 3 singles", kind="Rule", connected=True,
-    site="edge-machine", sports=["tennis"], baseline="favourite_population",
+    site="edge-machine", sports=[], baseline="favourite_population",
+    retired_sports={"tennis": UTR_SHORTLIST_RETIRED_WHY},
     note="UNPROVEN PAPER RULE v1, registered 2026-10-14. UTR singles on Polymarket US only, "
          "70 cents to below 75 cents, within 3 hours of the venue-confirmed start. A fresh "
          "open public order book (at most 5 minutes old), spread at most 3 cents, and enough "

@@ -106,8 +106,8 @@ chaos_lanes.LANES = [dict(c, retired=None) if c["id"] in ("atp_coinflip_tp30", "
 h = CB.sport_section("tennis", state)
 chaos_lanes.LANES = _lanes
 text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", h))
-check("the standard header", all(x in text for x in ("Cheap side + resting take-profit", "Rest a split sell: half at 2x, half at 3x.",
-                                                  "A fill counts only on a traded print.", "Every lane is shown next to the same entries held.")), True)
+check("the standard header (Tennis lanes hold from 2026-11-02, each beside its blind baseline)", all(x in text for x in ("Cheap side + resting take-profit",
+      "Hold to settlement: no sell.", "Every lane is shown next to its blind baseline")), True)
 summ = h[h.find('class="chaos-summary"'):h.find("</table>", h.find('class="chaos-summary"'))]
 check("the summary: challenger_cheap_split first, then the other tennis lane",
       re.findall(r'data-lane="([^"]+)"', summ), ["challenger_cheap_split", "atp_coinflip_tp30"])
