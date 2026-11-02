@@ -264,10 +264,15 @@ def stage_badges(row):
 
 
 # ------------------------------------------------------------------ the tiles
-def since_production(d, st, rows):
+def since_production(d, st, rows, late=None):
     """One record across this sport's Production rules since each entered, the way the
     Production page's sport line counts it (production._assess_since_kickoff). Pooled
-    only across rules in Production, never with a Sandbox row."""
+    only across rules in Production, never with a Sandbox row.
+
+    `late` is production.late_set(feed): leads first published inside the follower's cutoff stay out of the
+    record here as they do on the Production page (default: the committed feed's)."""
+    if late is None:
+        late = production.late_set(production.load_feed())
     pairs = (st or {}).get("pairs") or {}
     lives = []
     names = []
@@ -281,7 +286,7 @@ def since_production(d, st, rows):
         pair = pairs.get(key) or {}
         if production.entered_at(pair) is None:
             continue
-        lives.append(production._assess_since_kickoff(d, key, pair))
+        lives.append(production._assess_since_kickoff(d, key, pair, late=late))
         names.append(row)
     return production._group_record(lives), names
 
