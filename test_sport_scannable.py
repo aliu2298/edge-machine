@@ -214,7 +214,13 @@ if playwright is not None:
                 ok(got["words"] == 0, f"{label} ({scheme}): no definition is visible on load ({got['words']})")
                 ok(not got["overflow"], f"{label} ({scheme}): nothing scrolls sideways")
                 if scheme == "light" and not label.startswith("published"):
-                    page.locator("details.sp-rule > summary").first.click()
+                    # Tennis has no live rule row since 2026-11-02 (the UTR shortlist, its last, retired): every row
+                    # sits in the collapsed Retired fold, so open that fold first and read a retired row's details.
+                    row = page.locator("details.sp-rule > summary").first
+                    if row.is_hidden():
+                        page.locator("details.sp-retired > summary").first.click()
+                        row = page.locator("details.sp-retired details.sp-rule > summary").first
+                    row.click()
                     shown = page.evaluate("""() => [...document.querySelectorAll('details.sp-rule[open] .sp-def')]
                         .filter(e => e.checkVisibility()).length""")
                     ok(shown >= 1, f"{label}: opening a row's Rule details shows its definition")
