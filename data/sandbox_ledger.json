@@ -16,7 +16,7 @@
   "commodities_fav": {
    "commod_fav_band": {
     "offered": 545,
-    "picked": 1
+    "picked": 2
    },
    "commod_nc_no": {
     "offered": 545,
@@ -48,11 +48,11 @@
   "crypto_fav": {
    "crypto_fav_band": {
     "offered": 275,
-    "picked": 0
+    "picked": 1
    },
    "crypto_fav_band_60": {
     "offered": 275,
-    "picked": 1
+    "picked": 0
    },
    "crypto_fav_band_below": {
     "offered": 275,
@@ -60,7 +60,7 @@
    },
    "crypto_fav_band_below_60": {
     "offered": 275,
-    "picked": 0
+    "picked": 1
    },
    "kalshi_venue": 275
   },
@@ -93,7 +93,7 @@
     "offered": 1,
     "picked": 0
    },
-   "kalshi_venue": 112,
+   "kalshi_venue": 105,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -233,10 +233,10 @@
   },
   "soccer_p05": {
    "goals_market": {
-    "offered": 86,
-    "picked": 86
+    "offered": 88,
+    "picked": 88
    },
-   "kalshi_venue": 86,
+   "kalshi_venue": 88,
    "mls_away_band_fade": {
     "offered": 0,
     "picked": 0
@@ -374,18 +374,18 @@
    }
   },
   "tennis": {
-   "kalshi_venue": 19,
+   "kalshi_venue": 17,
    "polymarket_us": 40,
-   "polymarket_us_listed": 488,
-   "polymarket_us_priced": 189
+   "polymarket_us_listed": 497,
+   "polymarket_us_priced": 185
   },
   "tennis_combo": {
    "combo": 0,
    "legs": 0
   },
   "tennis_pmcombo": {
-   "combo": 8,
-   "legs": 8
+   "combo": 1,
+   "legs": 2
   }
  },
  "feed_status": {
@@ -396,40 +396,40 @@
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
    "boxing": "2026-10-31T23:48:48+00:00",
-   "commodities": "2026-11-02T19:01:23+00:00",
-   "commodities_fav": "2026-11-02T19:01:23+00:00",
-   "cricket": "2026-11-02T19:01:23+00:00",
-   "crypto": "2026-11-02T19:01:23+00:00",
-   "crypto_fav": "2026-11-02T19:01:23+00:00",
-   "economics": "2026-11-02T19:01:23+00:00",
-   "finance": "2026-11-02T19:01:23+00:00",
-   "mma": "2026-11-02T19:01:23+00:00",
-   "nfl": "2026-11-02T19:01:23+00:00",
-   "nhl_pl": "2026-11-02T19:01:23+00:00",
-   "nhl_rest": "2026-11-02T19:01:23+00:00",
-   "soccer": "2026-11-02T19:01:23+00:00",
-   "soccer_btts": "2026-11-02T19:01:23+00:00",
-   "soccer_btts_cup": "2026-11-02T19:01:23+00:00",
-   "soccer_corners": "2026-11-02T19:01:23+00:00",
+   "commodities": "2026-11-02T19:07:46+00:00",
+   "commodities_fav": "2026-11-02T19:07:46+00:00",
+   "cricket": "2026-11-02T19:07:46+00:00",
+   "crypto": "2026-11-02T19:07:46+00:00",
+   "crypto_fav": "2026-11-02T19:07:46+00:00",
+   "economics": "2026-11-02T19:07:46+00:00",
+   "finance": "2026-11-02T19:07:46+00:00",
+   "mma": "2026-11-02T19:07:46+00:00",
+   "nfl": "2026-11-02T19:07:46+00:00",
+   "nhl_pl": "2026-11-02T19:07:46+00:00",
+   "nhl_rest": "2026-11-02T19:07:46+00:00",
+   "soccer": "2026-11-02T19:07:46+00:00",
+   "soccer_btts": "2026-11-02T19:07:46+00:00",
+   "soccer_btts_cup": "2026-11-02T19:07:46+00:00",
+   "soccer_corners": "2026-11-02T19:07:46+00:00",
    "soccer_ftts": "2026-10-19T18:33:38+00:00",
-   "soccer_o15": "2026-11-02T19:01:23+00:00",
-   "soccer_o15_cup": "2026-11-02T19:01:23+00:00",
-   "soccer_o25": "2026-11-02T19:01:23+00:00",
-   "soccer_o25_cup": "2026-11-02T19:01:23+00:00",
-   "soccer_p05": "2026-11-02T19:01:23+00:00",
-   "soccer_p05_cup": "2026-11-02T19:01:23+00:00",
-   "soccer_team1": "2026-11-02T19:01:23+00:00",
-   "soccer_team1_cup": "2026-11-02T19:01:23+00:00",
-   "soccer_team2": "2026-11-02T19:01:23+00:00",
-   "soccer_team2_cup": "2026-11-02T19:01:23+00:00",
-   "soccer_u35": "2026-11-02T19:01:23+00:00",
-   "soccer_u35_cup": "2026-11-02T19:01:23+00:00",
-   "tennis": "2026-11-02T19:01:23+00:00",
+   "soccer_o15": "2026-11-02T19:07:46+00:00",
+   "soccer_o15_cup": "2026-11-02T19:07:46+00:00",
+   "soccer_o25": "2026-11-02T19:07:46+00:00",
+   "soccer_o25_cup": "2026-11-02T19:07:46+00:00",
+   "soccer_p05": "2026-11-02T19:07:46+00:00",
+   "soccer_p05_cup": "2026-11-02T19:07:46+00:00",
+   "soccer_team1": "2026-11-02T19:07:46+00:00",
+   "soccer_team1_cup": "2026-11-02T19:07:46+00:00",
+   "soccer_team2": "2026-11-02T19:07:46+00:00",
+   "soccer_team2_cup": "2026-11-02T19:07:46+00:00",
+   "soccer_u35": "2026-11-02T19:07:46+00:00",
+   "soccer_u35_cup": "2026-11-02T19:07:46+00:00",
+   "tennis": "2026-11-02T19:07:46+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "odds_api": {
    "allowance": 0,
-   "at": "2026-11-02T19:01:23+00:00",
+   "at": "2026-11-02T19:07:46+00:00",
    "remaining": 426,
    "used": 74
   },
@@ -450,7 +450,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 983,
+  "runs": 984,
   "tennis_shortlist": {
    "audit": [
     {
@@ -462,7 +462,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-02T19:02:18+00:00"
+  "updated": "2026-11-02T19:08:34+00:00"
  },
  "quotes": [
   {
@@ -430812,7 +430812,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-02T19:01:23+00:00",
+   "close_at": "2026-11-02T19:07:46+00:00",
    "close_price": 0.86,
    "date": "2026-11-05",
    "edge": null,
@@ -449008,8 +449008,8 @@
    "price_b": 0.47,
    "price_draw": null,
    "prob_a": 0.535,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-02T19:08:16+00:00",
    "side_a": "Leolia Jeanjean",
    "side_b": "Lucia Bronzetti",
    "source": "polymarket_us",
@@ -449018,7 +449018,7 @@
    "stake": 0.0,
    "start": "2026-11-02T16:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "wta",
    "uncovered": null,
    "untraded": false,
@@ -457160,8 +457160,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-02T19:01:23+00:00",
-   "close_price": 0.82,
+   "close_at": "2026-11-02T19:07:46+00:00",
+   "close_price": 0.75,
    "date": "2026-11-02",
    "edge": null,
    "id": "crypto_fav_band:KXBTCD-26NOV0217-T76499.99",
@@ -457195,8 +457195,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-02T19:01:23+00:00",
-   "close_price": 0.78,
+   "close_at": "2026-11-02T19:07:46+00:00",
+   "close_price": 0.87,
    "date": "2026-11-02",
    "edge": null,
    "id": "crypto_fav_band_below:KXBTCD-26NOV0217-T77249.99",
@@ -457230,8 +457230,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-02T19:01:23+00:00",
-   "close_price": 0.65,
+   "close_at": "2026-11-02T19:07:46+00:00",
+   "close_price": 0.55,
    "date": "2026-11-02",
    "edge": null,
    "id": "crypto_fav_band_60:KXBTCD-26NOV0217-T76749.99",
@@ -457971,8 +457971,8 @@
    "ask_size": 276.17,
    "bet": true,
    "bid": 0.68,
-   "close_at": "2026-11-02T19:01:23+00:00",
-   "close_price": 0.75,
+   "close_at": "2026-11-02T19:07:46+00:00",
+   "close_price": 0.73,
    "date": "2026-11-02",
    "edge": null,
    "id": "commod_fav_band:KXBRENTD-26NOV0217-T104.00",
@@ -458433,8 +458433,8 @@
    "ask_size": 40.0,
    "bet": true,
    "bid": 0.78,
-   "close_at": "2026-11-02T19:01:23+00:00",
-   "close_price": 0.8,
+   "close_at": "2026-11-02T19:07:46+00:00",
+   "close_price": 0.82,
    "date": "2026-11-02",
    "edge": null,
    "id": "commod_fav_band:KXGOLDD-26NOV0217-T3944",
@@ -458463,6 +458463,158 @@
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxgoldd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-06",
+   "edge": -0.01,
+   "espn_away": "PEC Zwolle",
+   "espn_home": "Willem II",
+   "event": "KXEREDIVISIEGAME-26NOV06WILZWO",
+   "id": "goals_market:KXEREDIVISIEGAME-26NOV06WILZWO-WIL",
+   "kalshi_title": "Willem II",
+   "label": "Willem II v PEC Zwolle: Willem II to win (No = PEC Zwolle +0.5)",
+   "league": "Eredivisie",
+   "liquidity": null,
+   "logged": "2026-11-02T19:07:45+00:00",
+   "market_id": "KXEREDIVISIEGAME-26NOV06WILZWO-WIL",
+   "opponent": "Willem II",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.35,
+   "price_b": 0.67,
+   "price_draw": null,
+   "prob_a": 0.34,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_p05",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-06T19:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "PEC Zwolle",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxeredivisiegame",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-06",
+   "edge": -0.01,
+   "espn_away": "PEC Zwolle",
+   "espn_home": "Willem II",
+   "event": "KXEREDIVISIEGAME-26NOV06WILZWO",
+   "id": "goals_market:KXEREDIVISIEGAME-26NOV06WILZWO-ZWO",
+   "kalshi_title": "Zwolle",
+   "label": "Willem II v PEC Zwolle: PEC Zwolle to win (No = Willem II +0.5)",
+   "league": "Eredivisie",
+   "liquidity": null,
+   "logged": "2026-11-02T19:07:45+00:00",
+   "market_id": "KXEREDIVISIEGAME-26NOV06WILZWO-ZWO",
+   "opponent": "PEC Zwolle",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.42,
+   "price_b": 0.6,
+   "price_draw": null,
+   "prob_a": 0.41,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_p05",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-06T19:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "Willem II",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxeredivisiegame",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": true,
+   "close_at": "2026-11-02T19:07:46+00:00",
+   "close_price": 0.62,
+   "date": "2026-11-02",
+   "edge": null,
+   "id": "crypto_fav_band_below_60:KXETHD-26NOV0217-T2249.99",
+   "label": "Ethereum price at Nov 2, 2026 at 5pm EST?",
+   "liquidity": null,
+   "logged": "2026-11-02T19:07:45+00:00",
+   "market_id": "KXETHD-26NOV0217-T2249.99",
+   "pick": "b",
+   "pnl": 0.0,
+   "price": 0.62,
+   "price_a": 0.39,
+   "price_b": 0.62,
+   "price_draw": null,
+   "prob_a": null,
+   "result": null,
+   "settled": null,
+   "side_a": "$2,250 or above",
+   "side_b": "No",
+   "source": "crypto_fav_band_below_60",
+   "sport": "crypto_fav",
+   "spread": null,
+   "stake": 100.0,
+   "start": "2026-11-02T22:05:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxethd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "ask": 0.75,
+   "ask_size": 500.0,
+   "bet": false,
+   "bid": 0.72,
+   "cut": "gold/silver cap: Gold taken",
+   "date": "2026-11-02",
+   "edge": null,
+   "id": "commod_fav_band:KXSILVERD-26NOV0217-T50.50",
+   "label": "Will the silver close price be above 50.50 USD/t.oz on November 02, 2026 at 5:00 PM EST?",
+   "liquidity": null,
+   "logged": "2026-11-02T19:07:45+00:00",
+   "market_id": "KXSILVERD-26NOV0217-T50.50",
+   "pick": "a",
+   "pnl": 0.0,
+   "price": 0.75,
+   "price_a": 0.75,
+   "price_b": 0.28,
+   "price_draw": null,
+   "prob_a": null,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $50.50",
+   "side_b": "No",
+   "source": "commod_fav_band",
+   "sport": "commodities_fav",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-02T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxsilverd",
    "venue": "kalshi_binary",
    "venue_start": null
   }
