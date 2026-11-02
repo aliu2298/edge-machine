@@ -1860,6 +1860,30 @@
    "pair": "tennis_utr_shortlist_v1|tennis",
    "reason": "taken off the Production list by hand, record kept",
    "to": "sandbox"
+  },
+  {
+   "at": "2026-11-02T12:00:00+00:00",
+   "pair": "o15_ranked|soccer_o15_intl",
+   "reason": "taken off the Production list by hand, record kept",
+   "to": "sandbox"
+  },
+  {
+   "at": "2026-11-02T12:00:00+00:00",
+   "pair": "liga_btts_even|soccer_btts",
+   "reason": "taken off the Production list by hand, record kept",
+   "to": "sandbox"
+  },
+  {
+   "at": "2026-11-02T12:00:00+00:00",
+   "pair": "ere_draw|soccer",
+   "reason": "taken off the Production list by hand, record kept",
+   "to": "sandbox"
+  },
+  {
+   "at": "2026-11-02T12:00:00+00:00",
+   "pair": "team2_form_l10|soccer_team2",
+   "reason": "taken off the Production list by hand, record kept",
+   "to": "sandbox"
   }
  ],
  "pairs": {
@@ -1954,24 +1978,9 @@
    "stage": "sandbox"
   },
   "ere_draw|soccer": {
-   "by_hand": "2026-10-11",
-   "entry": {
-    "base_roi": -0.0957,
-    "clv": -0.002,
-    "clv_n": 5,
-    "n": 5,
-    "own_roi": 0.6,
-    "roi": 0.6,
-    "roi_fee": 0.5202,
-    "span_days": 0.9167,
-    "weeks": 0,
-    "z": 0.8383
-   },
-   "entry_since": null,
-   "promoted_at": "2026-10-11T19:34:45+00:00",
-   "ready_at": "2026-10-11T19:34:45+00:00",
-   "ready_since": "2026-10-11T19:34:45+00:00",
-   "stage": "production"
+   "demoted_at": "2026-11-02T12:00:00+00:00",
+   "since": null,
+   "stage": "sandbox"
   },
   "espn_fpi|mlb": {
    "demoted_at": "2026-09-21T01:06:15+00:00",
@@ -2004,24 +2013,9 @@
    "stage": "production"
   },
   "liga_btts_even|soccer_btts": {
-   "by_hand": "2026-10-08",
-   "entry": {
-    "base_roi": null,
-    "clv": null,
-    "clv_n": 0,
-    "n": 0,
-    "own_roi": null,
-    "roi": null,
-    "roi_fee": null,
-    "span_days": 0.0,
-    "weeks": 0,
-    "z": 0.0
-   },
-   "entry_since": null,
-   "promoted_at": "2026-10-08T17:50:08+00:00",
-   "ready_at": "2026-10-08T17:50:08+00:00",
-   "ready_since": "2026-10-08T17:50:08+00:00",
-   "stage": "production"
+   "demoted_at": "2026-11-02T12:00:00+00:00",
+   "since": null,
+   "stage": "sandbox"
   },
   "mls_fade_home|soccer_p05": {
    "by_hand": "2026-10-16",
@@ -2059,24 +2053,9 @@
    "stage": "sandbox"
   },
   "o15_ranked|soccer_o15_intl": {
-   "by_hand": "2026-10-01",
-   "entry": {
-    "base_roi": 0.0014,
-    "clv": 0.018,
-    "clv_n": 10,
-    "n": 10,
-    "own_roi": 0.327,
-    "roi": 0.327,
-    "roi_fee": 0.3045,
-    "span_days": 6.8021,
-    "weeks": 0,
-    "z": 1.8049
-   },
-   "entry_since": null,
-   "promoted_at": "2026-10-01T16:20:16+00:00",
-   "ready_at": "2026-10-01T16:20:16+00:00",
-   "ready_since": "2026-10-01T16:20:16+00:00",
-   "stage": "production"
+   "demoted_at": "2026-11-02T12:00:00+00:00",
+   "since": null,
+   "stage": "sandbox"
   },
   "o25_congestion|soccer_o25": {
    "demoted_at": "2026-10-19T02:23:41+00:00",
@@ -2144,24 +2123,9 @@
    "stage": "production"
   },
   "team2_form_l10|soccer_team2": {
-   "by_hand": "2026-10-16",
-   "entry": {
-    "base_roi": 0.0647,
-    "clv": -0.0111,
-    "clv_n": 9,
-    "n": 9,
-    "own_roi": 0.1456,
-    "roi": 0.1456,
-    "roi_fee": 0.1205,
-    "span_days": 27.0208,
-    "weeks": 3,
-    "z": 0.8151
-   },
-   "entry_since": null,
-   "promoted_at": "2026-10-16T17:17:38+00:00",
-   "ready_at": "2026-10-16T17:17:38+00:00",
-   "ready_since": "2026-10-16T17:17:38+00:00",
-   "stage": "production"
+   "demoted_at": "2026-11-02T12:00:00+00:00",
+   "since": null,
+   "stage": "sandbox"
   },
   "team2_ranked|soccer_team2": {
    "by_hand": "2026-10-11",
@@ -2263,5 +2227,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-11-02T06:03:48+00:00"
+ "updated": "2026-11-02T12:00:00+00:00"
 }

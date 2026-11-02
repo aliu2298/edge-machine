@@ -216,40 +216,6 @@
    "sport": "commodities_fav",
    "status": "hit"
   },
-  "2026-10-26|Sevilla|Osasuna|Both teams to score \u00b7 La Liga BTTS in balanced matches": {
-   "away": "Osasuna",
-   "bet": {
-    "kind": "btts"
-   },
-   "date": "2026-10-26",
-   "edge_at_log": null,
-   "first_seen": "2026-10-22",
-   "headline": "Both teams to score",
-   "home": "Sevilla",
-   "id": "2026-10-26|Sevilla|Osasuna|Both teams to score \u00b7 La Liga BTTS in balanced matches",
-   "kickoff": "2026-10-26T20:00Z",
-   "lane": "production",
-   "league": "La Liga",
-   "match": "Sevilla v Osasuna",
-   "pair": "liga_btts_even|soccer_btts",
-   "price_at_log": 0.51,
-   "published_at": "2026-10-26T22:41:44+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Both teams to score",
-    "event": "KXLALIGABTTS-26OCT26SEVOSA",
-    "market": "KXLALIGABTTS-26OCT26SEVOSA-BTTS",
-    "outcome": "Both Teams To Score",
-    "outcome_side": "yes",
-    "price_at_log": 0.51,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "liga_btts_even:KXLALIGABTTS-26OCT26SEVOSA-BTTS",
-   "source": "liga_btts_even",
-   "sport": "soccer_btts",
-   "status": "miss"
-  },
   "2026-10-26|Sevilla|Osasuna|Sevilla to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
    "away": "Osasuna",
    "bet": {
@@ -461,42 +427,6 @@
    "sport": "commodities_fav",
    "status": "hit"
   },
-  "2026-10-28|Charlotte FC|CF Montr\u00e9al|Charlotte FC to score 2+ \u00b7 Team scores 2+ form rule": {
-   "away": "CF Montr\u00e9al",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "Charlotte FC"
-   },
-   "date": "2026-10-28",
-   "edge_at_log": null,
-   "first_seen": "2026-10-27",
-   "headline": "Charlotte FC to score 2+",
-   "home": "Charlotte FC",
-   "id": "2026-10-28|Charlotte FC|CF Montr\u00e9al|Charlotte FC to score 2+ \u00b7 Team scores 2+ form rule",
-   "kickoff": "2026-10-28T23:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "Charlotte FC v CF Montr\u00e9al",
-   "pair": "team2_form_l10|soccer_team2",
-   "price_at_log": 0.71,
-   "published_at": "2026-10-29T01:34:39+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Charlotte FC to score 2+",
-    "event": "KXMLSTEAMTOTAL-26OCT28CLTMTL",
-    "market": "KXMLSTEAMTOTAL-26OCT28CLTMTL-CLT2",
-    "outcome": "Charlotte over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.71,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team2_form_l10:KXMLSTEAMTOTAL-26OCT28CLTMTL-CLT2",
-   "source": "team2_form_l10",
-   "sport": "soccer_team2",
-   "status": "hit"
-  },
   "2026-10-28|Genoa|Juventus|Juventus to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
    "away": "Juventus",
    "bet": {
@@ -532,42 +462,6 @@
    "source": "team2_ranked",
    "sport": "soccer_team2",
    "status": "miss"
-  },
-  "2026-10-28|Inter Miami CF|FC Cincinnati|Inter Miami CF to score 2+ \u00b7 Team scores 2+ form rule": {
-   "away": "FC Cincinnati",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "Inter Miami CF"
-   },
-   "date": "2026-10-28",
-   "edge_at_log": null,
-   "first_seen": "2026-10-27",
-   "headline": "Inter Miami CF to score 2+",
-   "home": "Inter Miami CF",
-   "id": "2026-10-28|Inter Miami CF|FC Cincinnati|Inter Miami CF to score 2+ \u00b7 Team scores 2+ form rule",
-   "kickoff": "2026-10-28T23:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "Inter Miami CF v FC Cincinnati",
-   "pair": "team2_form_l10|soccer_team2",
-   "price_at_log": 0.79,
-   "published_at": "2026-10-29T01:40:30+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Inter Miami CF to score 2+",
-    "event": "KXMLSTEAMTOTAL-26OCT28MIACIN",
-    "market": "KXMLSTEAMTOTAL-26OCT28MIACIN-MIA2",
-    "outcome": "Miami over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.79,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team2_form_l10:KXMLSTEAMTOTAL-26OCT28MIACIN-MIA2",
-   "source": "team2_form_l10",
-   "sport": "soccer_team2",
-   "status": "hit"
   },
   "2026-10-28|KXBRENTD-26OCT2817-T111|Above $111 at the close \u00b7 Commodities favourite band": {
    "away": null,
@@ -781,42 +675,6 @@
    "sport": "soccer_team2",
    "status": "miss"
   },
-  "2026-10-28|Venezia|Internazionale|Internazionale to score 2+ \u00b7 Team scores 2+ form rule": {
-   "away": "Internazionale",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "Internazionale"
-   },
-   "date": "2026-10-28",
-   "edge_at_log": null,
-   "first_seen": "2026-10-26",
-   "headline": "Internazionale to score 2+",
-   "home": "Venezia",
-   "id": "2026-10-28|Venezia|Internazionale|Internazionale to score 2+ \u00b7 Team scores 2+ form rule",
-   "kickoff": "2026-10-28T17:30Z",
-   "lane": "production",
-   "league": "Serie A",
-   "match": "Venezia v Internazionale",
-   "pair": "team2_form_l10|soccer_team2",
-   "price_at_log": 0.77,
-   "published_at": "2026-10-28T19:50:25+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Internazionale to score 2+",
-    "event": "KXSERIEATEAMTOTAL-26OCT28VENINT",
-    "market": "KXSERIEATEAMTOTAL-26OCT28VENINT-INT2",
-    "outcome": "Inter over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.77,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team2_form_l10:KXSERIEATEAMTOTAL-26OCT28VENINT-INT2",
-   "source": "team2_form_l10",
-   "sport": "soccer_team2",
-   "status": "hit"
-  },
   "2026-10-29|FC Dallas|Columbus Crew|Columbus Crew +0.5 (FC Dallas not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
    "away": "Columbus Crew",
    "bet": {
@@ -992,42 +850,6 @@
    "sport": "commodities_fav",
    "status": "hit"
   },
-  "2026-10-29|Minnesota United FC|Sporting Kansas City|Minnesota United FC to score 2+ \u00b7 Team scores 2+ form rule": {
-   "away": "Sporting Kansas City",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "Minnesota United FC"
-   },
-   "date": "2026-10-29",
-   "edge_at_log": null,
-   "first_seen": "2026-10-27",
-   "headline": "Minnesota United FC to score 2+",
-   "home": "Minnesota United FC",
-   "id": "2026-10-29|Minnesota United FC|Sporting Kansas City|Minnesota United FC to score 2+ \u00b7 Team scores 2+ form rule",
-   "kickoff": "2026-10-29T00:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "Minnesota United FC v Sporting Kansas City",
-   "pair": "team2_form_l10|soccer_team2",
-   "price_at_log": 0.76,
-   "published_at": "2026-10-29T06:04:42+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Minnesota United FC to score 2+",
-    "event": "KXMLSTEAMTOTAL-26OCT28MINSKC",
-    "market": "KXMLSTEAMTOTAL-26OCT28MINSKC-MIN2",
-    "outcome": "Minnesota over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.76,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team2_form_l10:KXMLSTEAMTOTAL-26OCT28MINSKC-MIN2",
-   "source": "team2_form_l10",
-   "sport": "soccer_team2",
-   "status": "hit"
-  },
   "2026-10-29|San Jose Earthquakes|Colorado Rapids|Colorado Rapids +0.5 (San Jose Earthquakes not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
    "away": "Colorado Rapids",
    "bet": {
@@ -1061,42 +883,6 @@
    "sandbox_quote": "mls_fade_home:KXMLSGAME-26OCT28SJCOL-SJ",
    "source": "mls_fade_home",
    "sport": "soccer_p05",
-   "status": "hit"
-  },
-  "2026-10-29|St. Louis CITY SC|Portland Timbers|St. Louis CITY SC to score 2+ \u00b7 Team scores 2+ form rule": {
-   "away": "Portland Timbers",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "St. Louis CITY SC"
-   },
-   "date": "2026-10-29",
-   "edge_at_log": null,
-   "first_seen": "2026-10-27",
-   "headline": "St. Louis CITY SC to score 2+",
-   "home": "St. Louis CITY SC",
-   "id": "2026-10-29|St. Louis CITY SC|Portland Timbers|St. Louis CITY SC to score 2+ \u00b7 Team scores 2+ form rule",
-   "kickoff": "2026-10-29T00:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "St. Louis CITY SC v Portland Timbers",
-   "pair": "team2_form_l10|soccer_team2",
-   "price_at_log": 0.67,
-   "published_at": "2026-10-29T06:04:42+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "St. Louis CITY SC to score 2+",
-    "event": "KXMLSTEAMTOTAL-26OCT28STLPOR",
-    "market": "KXMLSTEAMTOTAL-26OCT28STLPOR-STL2",
-    "outcome": "Saint Louis over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.67,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team2_form_l10:KXMLSTEAMTOTAL-26OCT28STLPOR-STL2",
-   "source": "team2_form_l10",
-   "sport": "soccer_team2",
    "status": "hit"
   },
   "2026-10-30|KXBTCD-26OCT3017-T77499.99|Below $77,500 at the close \u00b7 Crypto favourite band, below": {
@@ -1204,148 +990,6 @@
    "sport": "commodities_fav",
    "status": "hit"
   },
-  "2026-10-31|Ajax|Alkmaar|Draw \u00b7 Eredivisie draw band": {
-   "away": "Alkmaar",
-   "bet": {
-    "kind": "match_result",
-    "side": "draw"
-   },
-   "date": "2026-10-31",
-   "edge_at_log": null,
-   "first_seen": "2026-10-27",
-   "headline": "Draw",
-   "home": "Ajax",
-   "id": "2026-10-31|Ajax|Alkmaar|Draw \u00b7 Eredivisie draw band",
-   "kickoff": "2026-10-31T20:00Z",
-   "lane": "production",
-   "league": "Eredivisie",
-   "match": "Ajax v Alkmaar",
-   "pair": "ere_draw|soccer",
-   "price_at_log": 0.23,
-   "published_at": "2026-10-31T22:38:32+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Draw",
-    "event": "KXEREDIVISIEGAME-26OCT31AJAAZA",
-    "market": "KXEREDIVISIEGAME-26OCT31AJAAZA-TIE",
-    "outcome": "Tie",
-    "outcome_side": "yes",
-    "price_at_log": 0.23,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "ere_draw:KXEREDIVISIEGAME-26OCT31AJAAZA",
-   "source": "ere_draw",
-   "sport": "soccer",
-   "status": "miss"
-  },
-  "2026-10-31|Cambuur|GA Eagles|Draw \u00b7 Eredivisie draw band": {
-   "away": "GA Eagles",
-   "bet": {
-    "kind": "match_result",
-    "side": "draw"
-   },
-   "date": "2026-10-31",
-   "edge_at_log": null,
-   "first_seen": "2026-10-27",
-   "headline": "Draw",
-   "home": "Cambuur",
-   "id": "2026-10-31|Cambuur|GA Eagles|Draw \u00b7 Eredivisie draw band",
-   "kickoff": "2026-10-31T20:00Z",
-   "lane": "production",
-   "league": "Eredivisie",
-   "match": "Cambuur v GA Eagles",
-   "pair": "ere_draw|soccer",
-   "price_at_log": 0.25,
-   "published_at": "2026-10-31T23:33:59+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Draw",
-    "event": "KXEREDIVISIEGAME-26OCT31CAMGAE",
-    "market": "KXEREDIVISIEGAME-26OCT31CAMGAE-TIE",
-    "outcome": "Tie",
-    "outcome_side": "yes",
-    "price_at_log": 0.25,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "ere_draw:KXEREDIVISIEGAME-26OCT31CAMGAE",
-   "source": "ere_draw",
-   "sport": "soccer",
-   "status": "miss"
-  },
-  "2026-10-31|Charlotte FC|Orlando City SC|Charlotte FC to score 2+ \u00b7 Team scores 2+ form rule": {
-   "away": "Orlando City SC",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "Charlotte FC"
-   },
-   "date": "2026-10-31",
-   "edge_at_log": null,
-   "first_seen": "2026-10-29",
-   "headline": "Charlotte FC to score 2+",
-   "home": "Charlotte FC",
-   "id": "2026-10-31|Charlotte FC|Orlando City SC|Charlotte FC to score 2+ \u00b7 Team scores 2+ form rule",
-   "kickoff": "2026-10-31T17:00Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "Charlotte FC v Orlando City SC",
-   "pair": "team2_form_l10|soccer_team2",
-   "price_at_log": 0.69,
-   "published_at": "2026-10-31T19:38:52+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Charlotte FC to score 2+",
-    "event": "KXMLSTEAMTOTAL-26OCT31CLTORL",
-    "market": "KXMLSTEAMTOTAL-26OCT31CLTORL-CLT2",
-    "outcome": "Charlotte over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.69,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team2_form_l10:KXMLSTEAMTOTAL-26OCT31CLTORL-CLT2",
-   "source": "team2_form_l10",
-   "sport": "soccer_team2",
-   "status": "hit"
-  },
-  "2026-10-31|Columbus Crew|D.C. United|Columbus Crew to score 2+ \u00b7 Team scores 2+ form rule": {
-   "away": "D.C. United",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "Columbus Crew"
-   },
-   "date": "2026-10-31",
-   "edge_at_log": null,
-   "first_seen": "2026-10-29",
-   "headline": "Columbus Crew to score 2+",
-   "home": "Columbus Crew",
-   "id": "2026-10-31|Columbus Crew|D.C. United|Columbus Crew to score 2+ \u00b7 Team scores 2+ form rule",
-   "kickoff": "2026-10-31T18:00Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "Columbus Crew v D.C. United",
-   "pair": "team2_form_l10|soccer_team2",
-   "price_at_log": 0.76,
-   "published_at": "2026-10-31T20:10:46+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Columbus Crew to score 2+",
-    "event": "KXMLSTEAMTOTAL-26OCT31CLBDCU",
-    "market": "KXMLSTEAMTOTAL-26OCT31CLBDCU-CLB2",
-    "outcome": "Columbus over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.76,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team2_form_l10:KXMLSTEAMTOTAL-26OCT31CLBDCU-CLB2",
-   "source": "team2_form_l10",
-   "sport": "soccer_team2",
-   "status": "hit"
-  },
   "2026-10-31|FC Cincinnati|Philadelphia Union|Philadelphia Union +0.5 (FC Cincinnati not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
    "away": "Philadelphia Union",
    "bet": {
@@ -1379,77 +1023,6 @@
    "sandbox_quote": "mls_fade_home:KXMLSGAME-26OCT31CINPHI-CIN",
    "source": "mls_fade_home",
    "sport": "soccer_p05",
-   "status": "miss"
-  },
-  "2026-10-31|FC Cincinnati|Philadelphia Union|Philadelphia Union to score 2+ \u00b7 Team scores 2+ form rule": {
-   "away": "Philadelphia Union",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "Philadelphia Union"
-   },
-   "date": "2026-10-31",
-   "edge_at_log": null,
-   "first_seen": "2026-10-29",
-   "headline": "Philadelphia Union to score 2+",
-   "home": "FC Cincinnati",
-   "id": "2026-10-31|FC Cincinnati|Philadelphia Union|Philadelphia Union to score 2+ \u00b7 Team scores 2+ form rule",
-   "kickoff": "2026-10-31T18:00Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "FC Cincinnati v Philadelphia Union",
-   "pair": "team2_form_l10|soccer_team2",
-   "price_at_log": 0.61,
-   "published_at": "2026-10-31T20:10:46+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Philadelphia Union to score 2+",
-    "event": "KXMLSTEAMTOTAL-26OCT31CINPHI",
-    "market": "KXMLSTEAMTOTAL-26OCT31CINPHI-PHI2",
-    "outcome": "Philadelphia over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.61,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team2_form_l10:KXMLSTEAMTOTAL-26OCT31CINPHI-PHI2",
-   "source": "team2_form_l10",
-   "sport": "soccer_team2",
-   "status": "miss"
-  },
-  "2026-10-31|Heerenveen|Nijmegen|Draw \u00b7 Eredivisie draw band": {
-   "away": "Nijmegen",
-   "bet": {
-    "kind": "match_result",
-    "side": "draw"
-   },
-   "date": "2026-10-31",
-   "edge_at_log": null,
-   "first_seen": "2026-10-27",
-   "headline": "Draw",
-   "home": "Heerenveen",
-   "id": "2026-10-31|Heerenveen|Nijmegen|Draw \u00b7 Eredivisie draw band",
-   "kickoff": "2026-10-31T17:45Z",
-   "lane": "production",
-   "league": "Eredivisie",
-   "match": "Heerenveen v Nijmegen",
-   "pair": "ere_draw|soccer",
-   "price_at_log": 0.25,
-   "published_at": "2026-10-31T20:10:46+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Draw",
-    "event": "KXEREDIVISIEGAME-26OCT31HEENIJ",
-    "market": "KXEREDIVISIEGAME-26OCT31HEENIJ-TIE",
-    "outcome": "Tie",
-    "outcome_side": "yes",
-    "price_at_log": 0.25,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "ere_draw:KXEREDIVISIEGAME-26OCT31HEENIJ",
-   "source": "ere_draw",
-   "sport": "soccer",
    "status": "miss"
   },
   "2026-10-31|KXBTCD-26OCT3117-T77749.99|Below $77,750 at the close \u00b7 Crypto favourite band, below": {
@@ -1522,78 +1095,6 @@
    "sport": "soccer_p05",
    "status": "miss"
   },
-  "2026-10-31|St. Louis CITY SC|San Diego FC|St. Louis CITY SC to score 2+ \u00b7 Team scores 2+ form rule": {
-   "away": "San Diego FC",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "St. Louis CITY SC"
-   },
-   "date": "2026-10-31",
-   "edge_at_log": null,
-   "first_seen": "2026-10-29",
-   "headline": "St. Louis CITY SC to score 2+",
-   "home": "St. Louis CITY SC",
-   "id": "2026-10-31|St. Louis CITY SC|San Diego FC|St. Louis CITY SC to score 2+ \u00b7 Team scores 2+ form rule",
-   "kickoff": "2026-10-31T19:00Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "St. Louis CITY SC v San Diego FC",
-   "pair": "team2_form_l10|soccer_team2",
-   "price_at_log": 0.66,
-   "published_at": "2026-10-31T21:08:37+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "St. Louis CITY SC to score 2+",
-    "event": "KXMLSTEAMTOTAL-26OCT31STLSD",
-    "market": "KXMLSTEAMTOTAL-26OCT31STLSD-STL2",
-    "outcome": "Saint Louis over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.66,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team2_form_l10:KXMLSTEAMTOTAL-26OCT31STLSD-STL2",
-   "source": "team2_form_l10",
-   "sport": "soccer_team2",
-   "status": "miss"
-  },
-  "2026-10-31|Werder Bremen|TSG Hoffenheim|TSG Hoffenheim to score 2+ \u00b7 Team scores 2+ form rule": {
-   "away": "TSG Hoffenheim",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "TSG Hoffenheim"
-   },
-   "date": "2026-10-31",
-   "edge_at_log": null,
-   "first_seen": "2026-10-29",
-   "headline": "TSG Hoffenheim to score 2+",
-   "home": "Werder Bremen",
-   "id": "2026-10-31|Werder Bremen|TSG Hoffenheim|TSG Hoffenheim to score 2+ \u00b7 Team scores 2+ form rule",
-   "kickoff": "2026-10-31T14:30Z",
-   "lane": "production",
-   "league": "Bundesliga",
-   "match": "Werder Bremen v TSG Hoffenheim",
-   "pair": "team2_form_l10|soccer_team2",
-   "price_at_log": 0.58,
-   "published_at": "2026-10-31T17:34:34+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "TSG Hoffenheim to score 2+",
-    "event": "KXBUNDESLIGATEAMTOTAL-26OCT31SVWTSG",
-    "market": "KXBUNDESLIGATEAMTOTAL-26OCT31SVWTSG-TSG2",
-    "outcome": "Hoffenheim over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.58,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team2_form_l10:KXBUNDESLIGATEAMTOTAL-26OCT31SVWTSG-TSG2",
-   "source": "team2_form_l10",
-   "sport": "soccer_team2",
-   "status": "miss"
-  },
   "2026-11-01|Atlanta United FC|Toronto FC|Toronto FC +0.5 (Atlanta United FC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
    "away": "Toronto FC",
    "bet": {
@@ -1627,42 +1128,6 @@
    "sandbox_quote": "mls_fade_home:KXMLSGAME-26NOV01ATLTOR-ATL",
    "source": "mls_fade_home",
    "sport": "soccer_p05",
-   "status": "miss"
-  },
-  "2026-11-01|Atlanta United FC|Toronto FC|Toronto FC to score 2+ \u00b7 Team scores 2+ form rule": {
-   "away": "Toronto FC",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "Toronto FC"
-   },
-   "date": "2026-11-01",
-   "edge_at_log": null,
-   "first_seen": "2026-10-30",
-   "headline": "Toronto FC to score 2+",
-   "home": "Atlanta United FC",
-   "id": "2026-11-01|Atlanta United FC|Toronto FC|Toronto FC to score 2+ \u00b7 Team scores 2+ form rule",
-   "kickoff": "2026-11-01T21:30Z",
-   "lane": "production",
-   "league": "MLS",
-   "match": "Atlanta United FC v Toronto FC",
-   "pair": "team2_form_l10|soccer_team2",
-   "price_at_log": 0.51,
-   "published_at": "2026-11-01T23:59:15+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Toronto FC to score 2+",
-    "event": "KXMLSTEAMTOTAL-26NOV01ATLTOR",
-    "market": "KXMLSTEAMTOTAL-26NOV01ATLTOR-TOR2",
-    "outcome": "Toronto over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.51,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team2_form_l10:KXMLSTEAMTOTAL-26NOV01ATLTOR-TOR2",
-   "source": "team2_form_l10",
-   "sport": "soccer_team2",
    "status": "miss"
   },
   "2026-11-01|Colorado Rapids|Chicago Fire FC|Chicago Fire FC +0.5 (Colorado Rapids not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
@@ -1700,77 +1165,6 @@
    "sport": "soccer_p05",
    "status": "hit"
   },
-  "2026-11-01|Como|Venezia|Como to score 2+ \u00b7 Team scores 2+ form rule": {
-   "away": "Venezia",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "Como"
-   },
-   "date": "2026-11-01",
-   "edge_at_log": null,
-   "first_seen": "2026-10-30",
-   "headline": "Como to score 2+",
-   "home": "Como",
-   "id": "2026-11-01|Como|Venezia|Como to score 2+ \u00b7 Team scores 2+ form rule",
-   "kickoff": "2026-11-01T11:30Z",
-   "lane": "production",
-   "league": "Serie A",
-   "match": "Como v Venezia",
-   "pair": "team2_form_l10|soccer_team2",
-   "price_at_log": 0.77,
-   "published_at": "2026-11-01T14:04:46+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Como to score 2+",
-    "event": "KXSERIEATEAMTOTAL-26NOV01COMVEN",
-    "market": "KXSERIEATEAMTOTAL-26NOV01COMVEN-COM2",
-    "outcome": "Como over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.77,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "team2_form_l10:KXSERIEATEAMTOTAL-26NOV01COMVEN-COM2",
-   "source": "team2_form_l10",
-   "sport": "soccer_team2",
-   "status": "miss"
-  },
-  "2026-11-01|Excelsior|Enschede|Draw \u00b7 Eredivisie draw band": {
-   "away": "Enschede",
-   "bet": {
-    "kind": "match_result",
-    "side": "draw"
-   },
-   "date": "2026-11-01",
-   "edge_at_log": null,
-   "first_seen": "2026-10-28",
-   "headline": "Draw",
-   "home": "Excelsior",
-   "id": "2026-11-01|Excelsior|Enschede|Draw \u00b7 Eredivisie draw band",
-   "kickoff": "2026-11-01T13:30Z",
-   "lane": "production",
-   "league": "Eredivisie",
-   "match": "Excelsior v Enschede",
-   "pair": "ere_draw|soccer",
-   "price_at_log": 0.22,
-   "published_at": "2026-11-01T15:33:14+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Draw",
-    "event": "KXEREDIVISIEGAME-26NOV01EXCTWE",
-    "market": "KXEREDIVISIEGAME-26NOV01EXCTWE-TIE",
-    "outcome": "Tie",
-    "outcome_side": "yes",
-    "price_at_log": 0.22,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "ere_draw:KXEREDIVISIEGAME-26NOV01EXCTWE",
-   "source": "ere_draw",
-   "sport": "soccer",
-   "status": "miss"
-  },
   "2026-11-01|Getafe|Sevilla|Sevilla to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
    "away": "Sevilla",
    "bet": {
@@ -1805,41 +1199,6 @@
    "sandbox_quote": "team2_ranked:KXLALIGATEAMTOTAL-26NOV01GETSEV-SEV2",
    "source": "team2_ranked",
    "sport": "soccer_team2",
-   "status": "miss"
-  },
-  "2026-11-01|Groningen|Sparta|Draw \u00b7 Eredivisie draw band": {
-   "away": "Sparta",
-   "bet": {
-    "kind": "match_result",
-    "side": "draw"
-   },
-   "date": "2026-11-01",
-   "edge_at_log": null,
-   "first_seen": "2026-10-28",
-   "headline": "Draw",
-   "home": "Groningen",
-   "id": "2026-11-01|Groningen|Sparta|Draw \u00b7 Eredivisie draw band",
-   "kickoff": "2026-11-01T15:45Z",
-   "lane": "production",
-   "league": "Eredivisie",
-   "match": "Groningen v Sparta",
-   "pair": "ere_draw|soccer",
-   "price_at_log": 0.23,
-   "published_at": "2026-11-01T18:04:10+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Draw",
-    "event": "KXEREDIVISIEGAME-26NOV01GROSPA",
-    "market": "KXEREDIVISIEGAME-26NOV01GROSPA-TIE",
-    "outcome": "Tie",
-    "outcome_side": "yes",
-    "price_at_log": 0.23,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "ere_draw:KXEREDIVISIEGAME-26NOV01GROSPA",
-   "source": "ere_draw",
-   "sport": "soccer",
    "status": "miss"
   },
   "2026-11-01|KXBTCD-26NOV0117-T77999.99|Below $78,000 at the close \u00b7 Crypto favourite band, below": {
@@ -2001,31 +1360,6 @@
     "under_target": 0
    }
   },
-  "ere_draw|soccer": {
-   "by_hand": "2026-10-11",
-   "entered_at": "2026-10-11T19:34:45+00:00",
-   "promoted_at": "2026-10-11T19:34:45+00:00",
-   "ready_at": "2026-10-11T19:34:45+00:00",
-   "route": "moved by hand on 2026-10-11",
-   "routing": {
-    "leads": 5,
-    "problem": null,
-    "routed": 5,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": 0.0,
-   "sandbox_n": 18,
-   "sandbox_roi": -0.0301,
-   "sandbox_roi_fee": -0.0798,
-   "timing": {
-    "late": [],
-    "timed": 0,
-    "under_target": 0
-   }
-  },
   "ftts_no_70_80|soccer_ftts": {
    "by_hand": "2026-10-16",
    "entered_at": "2026-10-16T17:17:38+00:00",
@@ -2045,31 +1379,6 @@
    "sandbox_n": 2,
    "sandbox_roi": 0.3701,
    "sandbox_roi_fee": 0.3447,
-   "timing": {
-    "late": [],
-    "timed": 0,
-    "under_target": 0
-   }
-  },
-  "liga_btts_even|soccer_btts": {
-   "by_hand": "2026-10-08",
-   "entered_at": "2026-10-08T17:50:08+00:00",
-   "promoted_at": "2026-10-08T17:50:08+00:00",
-   "ready_at": "2026-10-08T17:50:08+00:00",
-   "route": "moved by hand on 2026-10-08",
-   "routing": {
-    "leads": 1,
-    "problem": null,
-    "routed": 1,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": -0.0125,
-   "sandbox_n": 4,
-   "sandbox_roi": -0.037,
-   "sandbox_roi_fee": -0.0684,
    "timing": {
     "late": [],
     "timed": 0,
@@ -2101,31 +1410,6 @@
     "under_target": 0
    }
   },
-  "o15_ranked|soccer_o15_intl": {
-   "by_hand": "2026-10-01",
-   "entered_at": "2026-10-01T16:20:16+00:00",
-   "promoted_at": "2026-10-01T16:20:16+00:00",
-   "ready_at": "2026-10-01T16:20:16+00:00",
-   "route": "moved by hand on 2026-10-01",
-   "routing": {
-    "leads": 0,
-    "problem": null,
-    "routed": 0,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": -0.0063,
-   "sandbox_n": 8,
-   "sandbox_roi": -0.0142,
-   "sandbox_roi_fee": -0.0304,
-   "timing": {
-    "late": [],
-    "timed": 0,
-    "under_target": 0
-   }
-  },
   "team1_form_l5|soccer_team1_intl": {
    "by_hand": "2026-10-01",
    "entered_at": "2026-10-01T16:20:16+00:00",
@@ -2145,31 +1429,6 @@
    "sandbox_n": 5,
    "sandbox_roi": 0.1895,
    "sandbox_roi_fee": 0.1765,
-   "timing": {
-    "late": [],
-    "timed": 0,
-    "under_target": 0
-   }
-  },
-  "team2_form_l10|soccer_team2": {
-   "by_hand": "2026-10-16",
-   "entered_at": "2026-10-16T17:17:38+00:00",
-   "promoted_at": "2026-10-16T17:17:38+00:00",
-   "ready_at": "2026-10-16T17:17:38+00:00",
-   "route": "moved by hand on 2026-10-16",
-   "routing": {
-    "leads": 12,
-    "problem": null,
-    "routed": 12,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": -0.0282,
-   "sandbox_n": 17,
-   "sandbox_roi": -0.1181,
-   "sandbox_roi_fee": -0.1381,
    "timing": {
     "late": [],
     "timed": 0,
@@ -2227,6 +1486,7 @@
    }
   }
  },
+ "pruned_at": "2026-11-02T06:14:42+00:00",
  "publication_withheld": {
   "2026-10-26|Sulcova, Vanesa|Pryshchepa, Mariia|Sulcova, Vanesa to win \u00b7 UTR daily shortlist \u00b7 up to 3 singles": {
    "headline": "Sulcova, Vanesa to win",

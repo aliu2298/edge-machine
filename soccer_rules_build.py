@@ -74,7 +74,7 @@ BTTS_NOTE = ('<details class="section-disclosure"><summary><b>Group BTTS evidenc
                'match; YES means both teams score.</p></details>')
 
 
-PRODUCTION_KEYS = ("A7", "A6", "C1", "C3", "C4")
+PRODUCTION_KEYS = ("A7", "A6", "C3", "C4")
 
 
 def section(state=None):
@@ -90,6 +90,8 @@ def section(state=None):
             scope = (f"All {len(SR.MARKETS[meta['market']])} BTTS leagues" if meta["league"] == SR.ALL else meta["league"])
             # A7 and A6 moved to Production by hand 2026-10-21 (soccer_rules_production); D3 came back 2026-10-28.
             label = meta["label"] + (f" · Production since {RP.moved_on(key)}" if key in PRODUCTION_KEYS else "")
+            if key in RP.PULLED:               # C1: in Production 2026-10-28 to 2026-11-02; paper again
+                label += f" · Production {RP.PULLED[key][0]} to {RP.PULLED[key][1]}, back in the Sandbox"
             if key == "D3":                    # in Production 2026-10-21 to 2026-10-28; paper again
                 label += " · Production 2026-10-21 to 2026-10-28, back in the Sandbox"
             gone = SR.RETIRED.get(key)

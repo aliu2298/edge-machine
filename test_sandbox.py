@@ -3418,13 +3418,12 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 # and not a surprise. These are judgement calls; the test only pins that they were made.
 eq(sorted(T.PAIR_OVERRIDES),
    ["commod_fav_band|commodities_fav",
-    "crypto_fav_band_below|crypto_fav", "ere_draw|soccer", "ftts_no_70_80|soccer_ftts",
-    "liga_btts_even|soccer_btts", "mls_fade_home|soccer_p05",
-    "o15_ranked|soccer_o15_intl", "team1_form_l5|soccer_team1_intl",
-    "team2_form_l10|soccer_team2", "team2_ranked|soccer_team2",
-    "u35_low_scoring|soccer_u35_intl"],
+    "crypto_fav_band_below|crypto_fav", "ftts_no_70_80|soccer_ftts",
+    "mls_fade_home|soccer_p05", "team1_form_l5|soccer_team1_intl",
+    "team2_ranked|soccer_team2", "u35_low_scoring|soccer_u35_intl"],
    "the Production list is exactly the pairs moved there by hand, and nothing else (corners_ucl_fade out 2026-10-21; four soccer lanes out, crypto_fav_band swapped for three crypto angle lanes, 2026-10-20) "
-   "(team scores 1+ · Clubs out 2026-10-14; five moved in 2026-10-16; seven lanes back to the Sandbox 2026-10-27)")
+   "(team scores 1+ · Clubs out 2026-10-14; five moved in 2026-10-16; seven lanes back to the Sandbox 2026-10-27; "
+   "ere_draw, liga_btts_even, team2_form_l10 Clubs and o15_ranked Internationals back 2026-11-02)")
 # pm_combo4 came OFF on 2026-10-03, not on its record: Polymarket US publishes no parlay
 # API, so in five days as a Production pair it published zero leads and never could. The
 # refusal below is why, and it must keep holding or the pair could be relisted as a label.
@@ -4762,9 +4761,9 @@ eq(S.SOURCES["btts_form_l10"]["sports"], ["soccer_btts_cup", "soccer_btts_intl"]
 eq(S.SPORTS["soccer_o15_intl"], "Soccer · Over 1.5 · Internationals", "twins are labelled for review under Soccer")
 ok(not any("_cup" in k for k in T.PAIR_OVERRIDES), "no cup pair is in Production")
 ok("team1_form_l5|soccer_team1_intl" in T.PAIR_OVERRIDES
-   and "o15_ranked|soccer_o15_intl" in T.PAIR_OVERRIDES
+   and "o15_ranked|soccer_o15_intl" not in T.PAIR_OVERRIDES
    and "u35_low_scoring|soccer_u35_intl" in T.PAIR_OVERRIDES,
-   "the three internationals pairs moved by hand are on the list")
+   "two of the three internationals pairs moved by hand are on the list (o15_ranked went back to the Sandbox 2026-11-02)")
 ok("o15_form_l10|soccer_o15_intl" not in T.PAIR_OVERRIDES
    and "team1_form_l5|soccer_team1_cup" not in T.PAIR_OVERRIDES,
    "the over-1.5 form twin and the cup twin stay off it")
@@ -4801,6 +4800,8 @@ eq(S.quote_league(dict(venue="kalshi", sport="soccer", market_id="KXEFLCUPGAME-2
    "a cup match ticker still does not")
 
 _st_intl = {"pairs": {}, "events": []}
+_live_intl = dict(T.PAIR_OVERRIDES)               # o15_ranked Internationals is replayed on its 2026-10-01 listing
+T.PAIR_OVERRIDES["o15_ranked|soccer_o15_intl"] = dict(moved_on="2026-10-01", production_at=None)
 T.evaluate_stages({"quotes": []}, _st_intl, now=_INTL_NOW, verbose=False)
 # .get so a pre-fix tree, which never writes these keys, fails the assertion
 # instead of raising KeyError before the message is printed.
@@ -4889,6 +4890,7 @@ eq(None if _o15_lead is None else _o15_lead.get("bet"),
    {"kind": "total_gte", "n": 2}, "the over-1.5 lead is total_gte 2")
 eq(None if _o15_lead is None else _o15_lead.get("league"),
    "International Friendly", "and it names the friendly")
+T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_intl)
 _twin = dict(name="o15_form_l10", sport="soccer_o15_cup", meta=S.SOURCES["o15_form_l10"],
              a=dict(n=0, won=0, expected=0, z=0, roi_fee=None), open=2, last="", prod=False, moved="", v="waiting")
 eq(SB._who(_twin), "Over 1.5 form rule · Cups", "the summary names a twin with its scope")

@@ -1765,6 +1765,18 @@ SOURCES = {
              "the whole paced allowance. Either way the month's budget does not shorten."),
 }
 
+# 2026-11-02 (Olu: "move six soccer rules back to the Sandbox, research them later"): four of them were Stage
+# pairs in Production; each is paper again on its whole record (sandbox_track.PAIR_REMOVALS). The note is
+# the page's own statement of it, with the dates.
+BACK_IN_SANDBOX = {
+    "ere_draw": "Production 2026-10-11 to 2026-11-02, back in the Sandbox with its whole record (paper).",
+    "liga_btts_even": "Production 2026-10-08 to 2026-11-02, back in the Sandbox with its whole record (paper).",
+    "team2_form_l10": "Clubs scope: Production 2026-10-16 to 2026-11-02, back in the Sandbox with its whole record (paper).",
+    "o15_ranked": "Internationals scope: Production 2026-10-01 to 2026-11-02, back in the Sandbox with its whole record (paper).",
+}
+for _name, _text in BACK_IN_SANDBOX.items():
+    SOURCES[_name]["note"] = SOURCES[_name]["note"].replace("Measured in the Sandbox; not in Production.", "Measured in the Sandbox.") + " " + _text
+
 
 # ---------------------------------------------------------------------------
 # Paused lanes (2026-09-25). Approved in full; paper only.

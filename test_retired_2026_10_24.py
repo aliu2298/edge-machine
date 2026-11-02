@@ -51,8 +51,8 @@ for name, sport in SPLIT:
     why = (meta.get("retired_sports") or {}).get(sport) or ""
     check(f"{name}|{sport}: off the run, retired with a dated reason",
           (sport in meta["sports"], why.startswith("Retired 2026-10-24 by Olu")), (False, True))
-check("o15_ranked keeps ONLY its Internationals scope, which is in Production",
-      (S.SOURCES["o15_ranked"]["sports"], "o15_ranked|soccer_o15_intl" in T.PAIR_OVERRIDES), (["soccer_o15_intl"], True))
+check("o15_ranked keeps ONLY its Internationals scope, which went back to the Sandbox (paper) on 2026-11-02",
+      (S.SOURCES["o15_ranked"]["sports"], "o15_ranked|soccer_o15_intl" in T.PAIR_OVERRIDES), (["soccer_o15_intl"], False))
 check("no retired pair is a Production pair", sorted(RETIRED & set(T.PAIR_OVERRIDES)), [])
 check("every Production pair is still on its source's live sports",
       [k for k in T.PAIR_OVERRIDES if k.split("|")[0] in S.SOURCES

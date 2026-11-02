@@ -38,8 +38,10 @@ PULLED_ON = "2026-10-28"
 # Moved by hand 2026-10-28 (Olu), on small samples, with live $1 bets:
 #   T5  MLS, Serie A, Ligue 1, UEL · O+D− v O+D+ · team 2+ goals YES      8/11, +25.8%
 #   T7  MLS, La Liga, Bundesliga, EPL · O+D+ v O+D+ · team 3+ goals NO    4/4,  +35.7%
+# T5 (st_t5, O+D− v O+D+ · team 2+ goals) was a pair from 2026-10-28 to 2026-11-02; it is back in the Sandbox
+# as paper on its whole record (Olu: research it later), still logged by soccer_team_rules.py.
+T5_PULLED = ("2026-10-28", "2026-11-02")
 PAIRS = {
-    "T5": ("st_t5", "soccer_team2", "O+D− v O+D+ · team 2+ goals"),
     "T7": ("st_t7", "soccer_team3", "O+D+ v O+D+ · team 3+ goals · NO"),
 }
 LABELS = {src: name for src, _sport, name in PAIRS.values()}

@@ -171,10 +171,11 @@ check("team rules: each group is a disclosure, only Group A open", [(g, bool(o))
 check("team rules: a group's summary carries its count and record",
       re.search(r'<b>Group B</b><span>\d+ rules · \d+ settled · \d+ won', html) is not None, True)
 check("its own id and heading", ('<section id="team-rules">' in html, "<h2>Team scoring rules</h2>" in html), (True, True))
-check("says paper, T5 and T7 in Production since 2026-10-28, T1 back in the Sandbox",
-      ("T5 and T7 in Production since 2026-10-28, T1 was there 2026-10-24 to 2026-10-28" in html,
+check("says paper, T7 in Production since 2026-10-28, T1 and T5 back in the Sandbox",
+      ("T7 in Production since 2026-10-28; T1 (2026-10-24 to 2026-10-28) and T5 (2026-10-28 to 2026-11-02) back in the Sandbox" in html,
        [k for k, body in lines if "Production 2026-10-24 to 2026-10-28, back in the Sandbox" in body],
-       [k for k, body in lines if "Production since 2026-10-28" in body]), (True, ["T1"], ["T5", "T7"]))
+       [k for k, body in lines if "Production 2026-10-28 to 2026-11-02, back in the Sandbox" in body],
+       [k for k, body in lines if "Production since 2026-10-28" in body]), (True, ["T1"], ["T5"], ["T7"]))
 check("the columns", all(c in html for c in ("Settled", "Won", "ROI after fee", "Open", "latest 25")), True)
 check("entries carry the team and labels", ("Alpha v Beta" in html, "O+D- v O+D-" in html), (True, True))
 check("an empty ledger says how entries arrive", "No entries yet" in TB.section({"rules": {}}), True)

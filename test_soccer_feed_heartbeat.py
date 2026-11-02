@@ -7,6 +7,10 @@ import sys
 import soccer_rules_production as SRP
 import soccer_team_rules_production as TP
 
+# T5 went back to the Sandbox on 2026-11-02; the heartbeat is the same for any pair, so its listing is replayed here.
+TP.PAIRS["T5"] = ("st_t5", "soccer_team2", "O+D− v O+D+ · team 2+ goals")
+TP.LABELS = {src: name for src, _sport, name in TP.PAIRS.values()}
+
 FAILS = []
 UTC = dt.timezone.utc
 NOW = dt.datetime(2026, 10, 30, 14, 0, tzinfo=UTC)
