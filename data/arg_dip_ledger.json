@@ -49,6 +49,74 @@
    "result": "yes",
    "title": "Will over 0.5 goals be scored?",
    "version": "argdip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null,
+    "75": null
+   },
+   "event": "KXARGPREMDIVTOTAL-26NOV01CABBAR",
+   "id": "KXARGPREMDIVTOTAL-26NOV01CABBAR-1",
+   "kickoff": 1793568600,
+   "logged": "2026-11-02T01:03:26.846714+00:00",
+   "matchday": "2026-11-01",
+   "p": 0.9,
+   "p_at": 1793565060,
+   "p_bid": 0.88,
+   "p_check": {
+    "how": "print",
+    "last_trade": null,
+    "printed": 5146.19,
+    "status": "verified"
+   },
+   "prints": 36,
+   "result": "yes",
+   "title": "Will over 0.5 goals be scored?",
+   "version": "argdip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": {
+     "counted": true,
+     "fill_at": 1793573406,
+     "fill_print": 0.58,
+     "fill_volume": 45.51,
+     "limit": 0.59,
+     "payout": 1.0,
+     "sold": true,
+     "sold_at": 1793573472
+    },
+    "75": {
+     "counted": true,
+     "fill_at": 1793572981,
+     "fill_print": 0.67,
+     "fill_volume": 3212.17,
+     "limit": 0.68,
+     "payout": 1.0,
+     "sold": true,
+     "sold_at": 1793573472
+    }
+   },
+   "event": "KXARGPREMDIVTOTAL-26NOV01NOBUNI",
+   "id": "KXARGPREMDIVTOTAL-26NOV01NOBUNI-1",
+   "kickoff": 1793568600,
+   "logged": "2026-11-02T01:03:26.846714+00:00",
+   "matchday": "2026-11-01",
+   "p": 0.91,
+   "p_at": 1793565060,
+   "p_bid": 0.9,
+   "p_check": {
+    "how": "print",
+    "last_trade": null,
+    "printed": 507.29,
+    "status": "verified"
+   },
+   "prints": 217,
+   "result": "yes",
+   "title": "Will over 0.5 goals be scored?",
+   "version": "argdip-v1"
   }
  ],
  "error": null,
@@ -6004,11 +6072,11 @@
   ]
  },
  "lane": "arg_goalless_dip",
- "last_run": "2026-11-01T21:23:34.683855+00:00",
+ "last_run": "2026-11-02T01:03:26.846714+00:00",
  "observations": {
-  "at": "2026-11-01T21:23:34.683855+00:00",
+  "at": "2026-11-02T01:03:26.846714+00:00",
   "errors": [],
-  "new": 1,
+  "new": 2,
   "skipped": 0,
   "waiting": 0
  },
@@ -6020,19 +6088,19 @@
  },
  "upcoming": [
   {
-   "event": "KXARGPREMDIVTOTAL-26NOV01CABBAR",
-   "kickoff": 1793568600,
-   "title": "Belgrano de Cordoba vs Barracas: Total Goals"
-  },
-  {
-   "event": "KXARGPREMDIVTOTAL-26NOV01NOBUNI",
-   "kickoff": 1793568600,
-   "title": "Newell's Old Boys vs Union Santa Fe: Total Goals"
-  },
-  {
    "event": "KXARGPREMDIVTOTAL-26NOV01LANGEM",
    "kickoff": 1793576700,
    "title": "Lanus vs Mendoza: Total Goals"
+  },
+  {
+   "event": "KXARGPREMDIVTOTAL-26NOV02DYJCAI",
+   "kickoff": 1793656800,
+   "title": "Defensa y Justicia vs Independiente Avellaneda: Total Goals"
+  },
+  {
+   "event": "KXARGPREMDIVTOTAL-26NOV02PLACC",
+   "kickoff": 1793656800,
+   "title": "Platense vs Central Cordoba: Total Goals"
   }
  ],
  "version": "argdip-v1"
