@@ -26,6 +26,13 @@ Checked 2026-10-31 07:30 CT
 
 Nothing else goes in the file. The card shows line 1, the time, and every red and amber line.
 
+## Production feed builds
+
+`data/feed_gap.json` (written by the Feeds heartbeat, status only) says whether the Production feed went more
+than 2 hours without a build in the last 24. The health check reports it as `- green|amber · Production feed
+builds · ...`: amber when its `status` is `amber`, with the gap in hours; a `checked` time over 6 hours old is
+amber too (the heartbeat itself stopped).
+
 ## What a report must never carry
 
 edge-machine is a public repository. A report carries **status only**:
