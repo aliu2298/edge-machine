@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-02T01:46:39.321729+00:00",
+ "last_run": "2026-11-02T15:31:16.695156+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -1265,11 +1265,14 @@
      "line": 3.5,
      "logged": "2026-11-01T22:31:12.689662+00:00",
      "match": "New England Revolution v Inter Miami CF",
+     "payout": 0.0,
      "price": 0.5,
+     "profit": -100.0,
      "rule": "C1",
+     "settled": "2026-11-02T15:31:16.695156+00:00",
      "side": "yes",
      "start": "2026-11-02T00:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXMLSTOTAL-26NOV01NEMIA-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "New England Revolution O+D+ v Inter Miami CF O+D- \u00b7 Over 3.5 YES 0.50"
@@ -3839,14 +3842,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-31T16:16:15.026299+00:00",
-   "candidates": 3,
-   "due": 7,
-   "labelled": 7,
-   "matched": 3,
-   "new": 0
-  },
-  {
    "at": "2026-10-31T16:31:26.785128+00:00",
    "candidates": 5,
    "due": 11,
@@ -4240,6 +4235,14 @@
   },
   {
    "at": "2026-11-02T01:46:39.321729+00:00",
+   "candidates": 0,
+   "due": 1,
+   "labelled": 1,
+   "matched": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-02T15:31:16.695156+00:00",
    "candidates": 0,
    "due": 1,
    "labelled": 1,

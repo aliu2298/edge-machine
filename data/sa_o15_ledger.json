@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-02T01:46:39.738667+00:00",
+ "last_run": "2026-11-02T15:31:17.055033+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -580,11 +580,14 @@
      "line": 1.5,
      "logged": "2026-11-01T22:16:41.057877+00:00",
      "match": "Lan\u00fas v Gimnasia (Mendoza)",
+     "payout": 1.0,
      "price": 0.77,
+     "profit": 27.81,
      "rule": "ARG",
+     "settled": "2026-11-02T15:31:17.055033+00:00",
      "side": "yes",
      "start": "2026-11-01T23:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXARGPREMDIVTOTAL-26NOV01LANGEM-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Argentina over 1.5 YES 0.77"
@@ -1039,13 +1042,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-31T16:16:18.026657+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "quoted": 0
-  },
-  {
    "at": "2026-10-31T16:31:30.760570+00:00",
    "due": 0,
    "matched": 0,
@@ -1390,6 +1386,13 @@
   },
   {
    "at": "2026-11-02T01:46:39.738667+00:00",
+   "due": 0,
+   "matched": 0,
+   "new": 0,
+   "quoted": 0
+  },
+  {
+   "at": "2026-11-02T15:31:17.055033+00:00",
    "due": 0,
    "matched": 0,
    "new": 0,
