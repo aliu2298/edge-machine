@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-02T22:01:19.285170+00:00",
+ "last_run": "2026-11-02T22:46:14.586902+00:00",
  "rules": {
   "ARG": {
    "picks": [
@@ -627,6 +627,42 @@
      "ticker": "KXARGPREMDIVTOTAL-26NOV02PLACC-2",
      "title": "Will over 1.5 goals be scored?",
      "why": "Argentina over 1.5 YES 0.73"
+    },
+    {
+     "ask": 0.65,
+     "bid": 0.64,
+     "event": "KXARGPREMDIVTOTAL-26NOV02TUCARG",
+     "id": "ARG:KXARGPREMDIVTOTAL-26NOV02TUCARG",
+     "league": "Liga Profesional",
+     "line": 1.5,
+     "logged": "2026-11-02T22:46:14.586902+00:00",
+     "match": "Atl\u00e9tico Tucum\u00e1n v Argentinos Juniors",
+     "price": 0.65,
+     "rule": "ARG",
+     "side": "yes",
+     "start": "2026-11-03T00:15Z",
+     "status": "open",
+     "ticker": "KXARGPREMDIVTOTAL-26NOV02TUCARG-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Argentina over 1.5 YES 0.65"
+    },
+    {
+     "ask": 0.76,
+     "bid": 0.74,
+     "event": "KXARGPREMDIVTOTAL-26NOV02IRMBAN",
+     "id": "ARG:KXARGPREMDIVTOTAL-26NOV02IRMBAN",
+     "league": "Liga Profesional",
+     "line": 1.5,
+     "logged": "2026-11-02T22:46:14.586902+00:00",
+     "match": "Independiente Rivadavia v Banfield",
+     "price": 0.76,
+     "rule": "ARG",
+     "side": "yes",
+     "start": "2026-11-03T00:15Z",
+     "status": "open",
+     "ticker": "KXARGPREMDIVTOTAL-26NOV02IRMBAN-2",
+     "title": "Will over 1.5 goals be scored?",
+     "why": "Argentina over 1.5 YES 0.76"
     }
    ]
   },
@@ -1096,13 +1132,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-31T20:46:13.975115+00:00",
-   "due": 1,
-   "matched": 1,
-   "new": 1,
-   "quoted": 1
-  },
-  {
    "at": "2026-10-31T21:16:38.439308+00:00",
    "due": 1,
    "matched": 1,
@@ -1451,10 +1480,16 @@
    "matched": 1,
    "new": 0,
    "quoted": 1
+  },
+  {
+   "at": "2026-11-02T22:46:14.586902+00:00",
+   "due": 2,
+   "matched": 2,
+   "new": 2,
+   "quoted": 2
   }
  ],
  "schedule": [
-  "2026-11-02T22:00:00+00:00",
   "2026-11-02T23:00:00+00:00",
   "2026-11-03T00:15:00+00:00",
   "2026-11-03T22:30:00+00:00",
