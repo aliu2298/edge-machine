@@ -267,7 +267,7 @@ def lane_html(L):
 # that links to them. A lane not listed here would have no home: test_sport_cheap_homes checks.
 HOMES = {
     "tennis": ("challenger_cheap_split", "challenger_dog_tp30", "atp_coinflip_tp30"),
-    "nba": ("nba_ml_dog_tp50", "nba_winmargin_split", "nba_winmargin_split_insample", "nba_tt_cheap_tp30"),
+    "nba": ("nba_ml_dog_tp50", "nba_winmargin_live", "nba_winmargin_split", "nba_winmargin_split_insample", "nba_tt_cheap_tp30"),
     "nfl": ("cfb_home_dog_x4", "cfb_dog_tp50"),
 }
 HOME_OF = {lane: page for page, lanes in HOMES.items() for lane in lanes}

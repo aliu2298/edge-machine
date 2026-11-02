@@ -532,7 +532,7 @@ check("the Retired fold is collapsed, near the bottom: after Results and Teams, 
 check("one line each for every retired lane: R1-R7, six value lanes and controls, four baselines, the cheap-side lanes "
       "(the moneyline underdog retired 2026-11-01)",
       sorted(re.findall(r'<li data-lane="([^"]+)"', ret_part)),
-      sorted(["R1", "R2", "R3", "R4", "R5", "R6", "R7", *V.LANES, *V.CONTROLS, *V.BASE.values(), "nba_tt_cheap_tp30", "nba_ml_dog_tp50"]))
+      sorted(["R1", "R2", "R3", "R4", "R5", "R6", "R7", *V.LANES, *V.CONTROLS, *V.BASE.values(), "nba_tt_cheap_tp30", "nba_ml_dog_tp50", "nba_winmargin_split"]))
 check("each line carries its date and reason (R2 keeps its Oct 24 note)",
       (ret_part.count("Retired 2026-10-28") >= 16, "Retired 2026-10-24: 3/10" in ret_part, "Retired 2026-10-27 at 145 settled" in ret_part,
        ret_part.count("no edge against Kalshi") >= 10), (True, True, True, True))

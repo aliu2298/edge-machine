@@ -143,7 +143,7 @@ def start_verified(q):
                     if isinstance(l, dict)
                     and l.get("start_source", "kalshi_milestone") == "kalshi_milestone"]
         return bool(carriers) and all(l.get("sport") == "cricket" for l in carriers)
-    if q.get("sport") in T.NBA_TT_SPORTS:
+    if q.get("sport") in T.NBA_TT_SPORTS + T.NBA_WM_SPORTS:
         # An NBA tip is ESPN's own scheduled time (nba_value reads it from the scoreboard); a
         # row with no readable tip is held back like any other.
         return _kickoff(q) is not None and q.get("start_source") == "espn"
@@ -377,6 +377,13 @@ def lead_from_quote(q, pair_key, built, kalshi=None):
         team = str(q.get("team_name") or q.get("kalshi_title", "").split(" over ")[0])
         headline = f"{team} over {line:g} points" if q["pick"] == "a" else f"{team} under {line:g} points"
         bet = {"kind": "nba_tt" if q["pick"] == "a" else "nba_tt_no", "n": line, "team": team}
+    elif q["sport"] in T.NBA_WM_SPORTS:
+        # One win margin bucket of a Kalshi NBA game: YES that the team wins by the bucket, or its NO.
+        home = away = None
+        contest = q.get("label") or q["market_id"]
+        title = str(q.get("kalshi_title") or q["market_id"])
+        headline = title if q["pick"] == "a" else f"Not: {title}"
+        bet = {"kind": "nba_wm" if q["pick"] == "a" else "nba_wm_no", "bucket": title}
     elif q["sport"] in T.MENTION_SPORTS:
         # One word on a "What will Trump say" contract: YES that he says it before the close,
         # NO that he does not. The contest is the event ("What will Trump say this week?").
@@ -436,10 +443,10 @@ def lead_from_quote(q, pair_key, built, kalshi=None):
                else f"{date}|{home}|{away}|{headline} · {label}"),
         "date": date, "kickoff": ko.strftime("%Y-%m-%dT%H:%MZ"),
         "league": ("Trump mentions" if q["sport"] in T.MENTION_SPORTS
-                   else "NBA" if q["sport"] in T.NBA_TT_SPORTS
+                   else "NBA" if q["sport"] in T.NBA_TT_SPORTS + T.NBA_WM_SPORTS
                    else S.quote_league(q) or (S.SPORTS.get(q["sport"])
                                               if q["sport"] in T.ROUTED_SPORTS + T.LADDER_SPORTS else None)),
-        "match": (contest if q["sport"] in T.LADDER_SPORTS + T.MENTION_SPORTS + T.NBA_TT_SPORTS else headline) if home is None else f"{home} v {away}",
+        "match": (contest if q["sport"] in T.LADDER_SPORTS + T.MENTION_SPORTS + T.NBA_TT_SPORTS + T.NBA_WM_SPORTS else headline) if home is None else f"{home} v {away}",
         "home": home, "away": away, "headline": headline,
         "bet": bet,
         "status": STATUS.get(q["status"], "void"),
@@ -1306,7 +1313,7 @@ def unavailable_row(key, label, sport_label, note):
             f'<td colspan="8" class="neg">{esc(note)}</td></tr>')
 
 
-def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=None, nba_value=None, soccer_team_rules=None, o35=None):
+def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=None, nba_value=None, soccer_team_rules=None, o35=None, nba_wm=None):
     """public_site/production.html — shares the Sandbox stylesheet.
 
     Organised as the questions a visitor actually asks, in order: what is in Production and on
@@ -1344,6 +1351,10 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
         # own ledger (data/soccer_team_rules_ledger.json).
         import soccer_team_rules_production
         d, st, blob = soccer_team_rules_production.page_inputs(d, st, blob, soccer_team_rules, now=now_dt)
+    if nba_wm is not None:
+        # The NBA win margin YES split and NO fade, live since 2026-11-03 (nba_wm_production): the paper lanes' version 2 is the record.
+        import nba_wm_production
+        d, st, blob = nba_wm_production.page_inputs(d, st, blob, nba_wm.get("chaos"), nba_wm.get("nofade"), now=now_dt)
     if o35 is not None:
         # Over 3.5 cheap NO, live since 2026-11-01 (o35_production): the Sandbox v3 ledger is its record,
         # data/production_o35_leads.json its upcoming list.

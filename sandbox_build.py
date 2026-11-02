@@ -2455,7 +2455,7 @@ def production_and_index(now, d, st, blob, extra=None):
                                        soccer_rules=extra.get("soccer_rules"),
                                        nba_value=extra.get("nba_value"),
                                        soccer_team_rules=extra.get("soccer_team_rules"),
-                                       o35=extra.get("o35")))
+                                       o35=extra.get("o35"), nba_wm=extra.get("nba_wm")))
     index = control_center.page(now, d=d, st=st, blob=blob, extra=extra)
     return prod, index
 

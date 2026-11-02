@@ -20,16 +20,18 @@ jobs:
         with:
           python-version: '3.12'
       - name: Tests
-        run: python3 test_nba_wm_nofade.py
+        run: python3 test_nba_wm_nofade.py && python3 test_nba_wm_page.py
       - name: NO fade (paper; in-sample from 2026-10-20, fresh record from 2026-10-31)
         run: python3 nba_wm_nofade.py
+      - name: Production feeds for the follower (a live Kalshi read, not the ledgers)
+        run: python3 nba_wm_production.py
       - name: Save records
         run: |
           set -euo pipefail
-          python3 -c 'import json; json.load(open("data/nba_wm_nofade.json"))'
+          python3 -c 'import json; json.load(open("data/nba_wm_nofade.json")); json.load(open("data/production_nba_wm_leads.json")); json.load(open("data/production_nba_wm_nofade_leads.json"))'
           git config user.name "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
-          git add data/nba_wm_nofade.json
+          git add data/nba_wm_nofade.json data/production_nba_wm_leads.json data/production_nba_wm_nofade_leads.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "NBA win margin NO fade observations"
           for attempt in 1 2 3; do

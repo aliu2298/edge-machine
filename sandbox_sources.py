@@ -4481,7 +4481,7 @@ DAY_CLUSTERED = ("commodities", "crypto", "crypto_fav", "commodities_fav", "socc
 # past 1, DegenerateCluster was raised, and the Production feed failed every run from 03:00Z on Oct 25.
 # Each bet is now its own outcome (a lane holds one rung per team-game, so that is one per team ladder)
 # and the z's variance is clustered by game event, never below the independent-bets variance.
-EVENT_CLUSTERED = ("culture_mentions", "nba_tt")
+EVENT_CLUSTERED = ("culture_mentions", "nba_tt", "nba_wm")
 
 
 def event_key(q):
@@ -4841,11 +4841,13 @@ OWN_LEDGER_LABELS = {
     "st_t5": "O+D− v O+D+ · team 2+ goals",
     "st_t7": "O+D+ v O+D+ · team 3+ goals · NO",
     "o35_cheap_no_wave": "Over 3.5 cheap NO (live)",
+    "nba_winmargin_live": "Win margin YES split (live)",
+    "nba_wm_nofade": "Win margin NO fade (live)",
 }
 
 
 # The sport word a Production pair on its own ledger shows where S.SPORTS has no domain for it.
-OWN_LEDGER_SPORTS = {"nba_tt": "NBA team totals"}
+OWN_LEDGER_SPORTS = {"nba_tt": "NBA team totals", "nba_wm": "NBA win margin"}
 
 
 def feed_binary_leagues():

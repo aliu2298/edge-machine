@@ -24,6 +24,12 @@ OUTCOME = THE GAME. A game's filled buckets are one row (their cost and profit s
 move together. z is clustered by night, never below the independent-games z. Review at 10 settled games with a fill,
 decide at 30.
 
+VERSION 2 (2026-11-03, Olu, Nov 2: the lane goes to Production, traded by the follower). Paper must equal what the follower can do, so
+from V2_FROM the rule mirrors the exchange: the follower's bid is POST-ONLY, so a bucket whose NO price at the tip is already at or
+under the limit (the bid would cross) is "no entry", not a fill; a fill needs a print STRICTLY under the bid (and the 10-contract
+check counts prints strictly under it); the sell back at the pregame price fills only on a print STRICTLY above it. Version 1
+(2026-10-31 to 2026-11-02) is folded: its record stays as it was.
+
 RECORD. Fresh from SINCE (2026-10-31). Nights from SINCE_IN to the day before SINCE are IN-SAMPLE (the rule was chosen
 on them): kept, flagged, shown once and apart, never in the headline.
 """
@@ -43,7 +49,8 @@ LABEL = "Win margin · NO fade (buy NO at 75% of pregame, sell back at pregame)"
 SERIES = W.SERIES
 SINCE = "2026-10-31"
 SINCE_IN = "2026-10-20"
-VERSION = "nofade-v1"
+VERSION = "nofade-v2"
+V2_FROM = "2026-11-03"
 DIPS = (0.75, 0.85, 0.65)
 HEAD = 0.75
 P_RANGE = (0.10, 0.95)
@@ -84,29 +91,40 @@ def ask_check(prints, entry_ts, P):
                 last=last, printed=printed, source="replayed")
 
 
-def dip_trade(prints, tip, P, d, no_wins):
-    """One variant on one bucket: None when nothing fills (or the fill is thin); else the fill and its outcome.
-    `prints` are NO prints [(ts, no, count)] oldest first."""
+def phase_of(night):
+    """insample before SINCE, v1 from SINCE to the day before V2_FROM, v2 from V2_FROM."""
+    return "insample" if night < SINCE else "v1" if night < V2_FROM else "v2"
+
+
+def dip_trade(prints, tip, P, d, no_wins, strict=False, no_at_tip=None):
+    """One variant on one bucket: None when nothing fills (or the fill is thin, or the post-only bid would cross); else the fill
+    and its outcome. `prints` are NO prints [(ts, no, count)] oldest first. `strict` is the version-2 (follower) rule: a fill and its
+    10-contract check need prints strictly under the limit, the sell a print strictly above P, and `no_at_tip` (the NO price at
+    the tip, 1 - the YES bid) at or under the limit means the post-only bid would cross: no entry."""
     limit = round(d * P, 2)
     if limit < MIN_LIMIT or limit >= P:
         return None
+    if strict and no_at_tip is not None and no_at_tip <= limit + EPS:
+        return None
+    under = (lambda x: x < limit - EPS) if strict else (lambda x: x <= limit + EPS)
     live = [p for p in prints if p[0] >= tip]
-    i = next((k for k, p in enumerate(live) if p[1] <= limit + EPS), None)
+    i = next((k for k, p in enumerate(live) if under(p[1])), None)
     if i is None:
         return None
     t0 = live[i][0]
-    vol = round(sum(p[2] for p in live[i:] if p[0] <= t0 + FILL_WINDOW_MIN * 60 and p[1] <= limit + EPS), 2)
+    vol = round(sum(p[2] for p in live[i:] if p[0] <= t0 + FILL_WINDOW_MIN * 60 and under(p[1])), 2)
     if vol < MIN_FILL - EPS:
         return None
-    sold = next((p for p in live[i + 1:] if p[1] >= P - EPS), None)
+    sold = next((p for p in live[i + 1:] if (p[1] > P + EPS if strict else p[1] >= P - EPS)), None)
     pay = (P - fee(P)) if sold else (1.0 if no_wins else 0.0)
     cost = limit + fee(limit)
     return dict(limit=limit, fill_at=t0, fill_print=live[i][1], printed=vol, sold_at=sold[0] if sold else None,
                 cost=round(cost, 5), profit=round(pay - cost, 5), won=pay > cost, reason="sold" if sold else "settled")
 
 
-def evaluate(markets, entry, trades_of, tip, now_iso):
-    """The bucket rows of one game. `entry` {ticker: (yes bid, yes ask)}, `trades_of` {ticker: NO prints}."""
+def evaluate(markets, entry, trades_of, tip, now_iso, strict=False, at_tip=None):
+    """The bucket rows of one game. `entry` {ticker: (yes bid, yes ask)}, `trades_of` {ticker: NO prints}, `at_tip`
+    {ticker: (yes bid, yes ask)} at the tip minute (version 2: the post-only cross check)."""
     entry_ts = tip - W.ENTRY_H * 3600
     rows = []
     for m in markets:
@@ -122,16 +140,20 @@ def evaluate(markets, entry, trades_of, tip, now_iso):
         prints = trades_of.get(t) or []
         chk = ask_check(prints, entry_ts, P)
         no_wins = m.get("result") == "no"
+        nat = None if not at_tip or t not in at_tip else round(1 - at_tip[t][0], 4)
         rows.append(dict(id=t, bucket=W.bucket_of(m.get("yes_sub_title")), team=t.rsplit("-", 1)[-1][:3], P=P, spread=spread, ask=chk,
-                         no_wins=no_wins, fills={vkey(d): dip_trade(prints, tip, P, d, no_wins) for d in DIPS}))
+                         no_wins=no_wins, fills={vkey(d): dip_trade(prints, tip, P, d, no_wins, strict, nat) for d in DIPS}))
     return rows
 
 
-def game_rows(entries, variant, insample=None):
-    """One row per game with a fill under the ask rule, in the shape chaos_replay.stats reads."""
+def game_rows(entries, variant, insample=None, phase=None):
+    """One row per game with a fill under the ask rule, in the shape chaos_replay.stats reads. `phase` (insample, v1, v2)
+    narrows to one version; `insample` False keeps v1 and v2 together (the record before the versions were split)."""
     out = []
     for e in entries:
         if insample is not None and bool(e.get("insample")) != insample:
+            continue
+        if phase is not None and phase_of(e["night"]) != phase:
             continue
         fills = [r["fills"][variant] for r in e["buckets"] if r["ask"]["status"] == "verified" and r["fills"].get(variant)]
         if not fills:
@@ -143,9 +165,10 @@ def game_rows(entries, variant, insample=None):
     return out
 
 
-def counts(entries, insample=None):
+def counts(entries, insample=None, phase=None):
     """Games read, buckets that passed the ask check, buckets that failed it."""
-    es = [e for e in entries if insample is None or bool(e.get("insample")) == insample]
+    es = [e for e in entries if (insample is None or bool(e.get("insample")) == insample)
+          and (phase is None or phase_of(e["night"]) == phase)]
     ok = sum(1 for e in es for r in e["buckets"] if r["ask"]["status"] == "verified")
     bad = sum(1 for e in es for r in e["buckets"] if r["ask"]["status"] != "verified")
     return dict(games=len(es), verified=ok, unverified=bad)
@@ -197,15 +220,17 @@ def run(state, now=None, fetch=D.get):
                 state["seen"][event] = "before the first night"
                 continue
             entry_ts = tip - W.ENTRY_H * 3600
-            cs = C.fetch_candles(SERIES, event, markets, entry_ts - 1800, entry_ts + 60, fetch, archived)
+            v2 = night >= V2_FROM
+            cs = C.fetch_candles(SERIES, event, markets, entry_ts - 1800, (tip if v2 else entry_ts) + 60, fetch, archived)
             entry = {t: q for t, q in ((t, W.entry_quote(c, entry_ts)) for t, c in cs.items()) if q}
+            at_tip = {t: q for t, q in ((t, W.entry_quote(c, tip)) for t, c in cs.items()) if q} if v2 else None
             trades_of = {t: O.prints_of(O.fetch_trades(t, entry_ts - 3600, fetch)) for t in entry}
         except Exception as e:                                   # noqa: BLE001
             obs["errors"].append(f"{event}: {str(e)[:80]}")
             continue
         state["entries"].append(dict(event=event, night=night, tip=tip, insample=night < state["since"],
-                                     buckets=evaluate(markets, entry, trades_of, tip, now.isoformat()),
-                                     logged=now.isoformat(), version=VERSION))
+                                     buckets=evaluate(markets, entry, trades_of, tip, now.isoformat(), night >= V2_FROM, at_tip),
+                                     logged=now.isoformat(), version=VERSION if night >= V2_FROM else "nofade-v1"))
         state["seen"][event] = now.isoformat()
         obs["new"] += 1
         done += 1

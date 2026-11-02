@@ -28,11 +28,11 @@ def status(settled_games):
     return f"{settled_games} games · review at 10, decide at 30"
 
 
-def variant_rows(state, insample, dips=None):
+def variant_rows(state, insample, dips=None, phase=None):
     rows = []
     for d in (dips or N.DIPS):
         key = N.vkey(d)
-        g = N.game_rows(state["entries"], key, insample)
+        g = N.game_rows(state["entries"], key, None if phase else insample, phase)
         s = CR.stats(g)
         fills = sum(r["fills"] for r in g)
         sold = sum(r["sold"] for r in g)
@@ -47,14 +47,14 @@ def variant_rows(state, insample, dips=None):
             + "</tr>" + "".join(rows) + "</table></div>")
 
 
-def trade_list(state, limit=30):
+def trade_list(state, limit=30, phase="v2"):
     """Latest games with a fill (fresh record), the headline row: buckets filled, sold back, ROI after fees."""
     key = N.vkey(N.HEAD)
     rows = []
     for e in sorted(state["entries"], key=lambda e: e["tip"], reverse=True):
-        if e.get("insample"):
+        if N.phase_of(e["night"]) != phase:
             continue
-        g = N.game_rows([e], key, False)
+        g = N.game_rows([e], key, None, phase)
         if not g:
             continue
         r = g[0]
@@ -76,21 +76,21 @@ def yes_trades(chaos, lane_id):
 
 def side_by_side(state, chaos):
     """The YES split row and the NO fade row on the fresh record, and how often both traded the same game."""
-    L, yt = yes_trades(chaos, "nba_winmargin_split")
+    L, yt = yes_trades(chaos, "nba_winmargin_live")
     ys = CR.stats(yt)
     yh = CR.stats([t for t in CR.counted(L.get("trades") or [], L) if t["exit_key"] == "hold"]) if L else CR.stats([])
-    ng = N.game_rows(state["entries"], N.vkey(N.HEAD), False)
+    ng = N.game_rows(state["entries"], N.vkey(N.HEAD), None, "v2")
     ns = CR.stats(ng)
     yes_events = {t["event"] for t in yt}
     no_events = {r["event"] for r in ng}
     both = yes_events & no_events
     same = 0
     for e in state["entries"]:
-        if e["event"] not in both or e.get("insample"):
+        if e["event"] not in both or N.phase_of(e["night"]) != "v2":
             continue
         yb = {t["ticker"] for t in yt if t["event"] == e["event"]}
         same += sum(1 for r in e["buckets"] if r["ask"]["status"] == "verified" and r["fills"].get(N.vkey(N.HEAD)) and r["id"] in yb)
-    games_read = sum(1 for e in state["entries"] if not e.get("insample"))
+    games_read = sum(1 for e in state["entries"] if N.phase_of(e["night"]) == "v2")
     rows = (f'<tr><td><b>YES split · win margin 1-5 / 6-10</b> (buy YES 10-20c, sell half at 2x, half at 3x)</td>'
             f'<td class="num">{len(yes_events)}</td><td class="num">{pct(ys["roi"])}</td><td class="num">{pct(yh["roi"])}</td>'
             f'<td class="num">{zfmt(ys["z"])}</td></tr>'

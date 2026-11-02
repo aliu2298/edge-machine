@@ -49,9 +49,11 @@ print("\nthe lane cards")
 for anchor in ("wm-yes", "wm-no"):
     sec = page[page.find(f'<section id="{anchor}"'):]
     sec = sec[:sec.find("</section>")]
-    check(f"{anchor}: opens on its rule and record; folds for other exits, trades (and in-sample where it has one), all collapsed",
+    # The Production YES lane tracks only the hold control and the split, so it has no "Other exits" fold; it carries its folded paper v1 instead.
+    want = (True, anchor == "wm-no", anchor == "wm-no", True)
+    check(f"{anchor}: opens on its rule and record; folds for trades, in-sample research and the folded paper version 1, all collapsed",
           ("Trades" in sec, "Other exits / variants" in sec,
-           sec.find("Other exits / variants") > sec.find("<table"), "open>" in sec.split("<summary>")[0] + ">"), (True, True, True, True))
+           sec.find("Other exits / variants") > sec.find("<table"), "open>" in sec.split("<summary>")[0] + ">"), want)
     inner = [m for m in re.findall(r"<details[^>]*>", sec)[1:]]
     check(f"{anchor}: no inner fold starts open", [d for d in inner if " open" in d], [])
 check("the YES and NO fade cards carry their in-sample research fold, labelled",

@@ -320,10 +320,11 @@ def split_targets(entry, legs=SPLIT_LEGS):
     return [(m, w, round(min(entry * m, SPLIT_CAP), 2)) for m, w in legs]
 
 
-def _split_trade(vs, i, won_side, legs_cfg=SPLIT_LEGS, from_ts=None):
+def _split_trade(vs, i, won_side, legs_cfg=SPLIT_LEGS, from_ts=None, strict=False):
     """The cheap-side split from minute i: two resting legs, filled only on a traded print at or above
     each target (and, with `from_ts`, only from that minute on: a lane that counts prints after the start
-    only); a leg not filled is held to settlement."""
+    only); a leg not filled is held to settlement. With `strict` a leg fills only on a print STRICTLY through its target
+    (a live resting sell is not filled by a print at its own price: the order queue is ahead of it)."""
     entry = vs[i]["ask"]
     c = cost(entry)
     pay = 1.0 if won_side else 0.0
@@ -331,7 +332,7 @@ def _split_trade(vs, i, won_side, legs_cfg=SPLIT_LEGS, from_ts=None):
     for mult, share, target in split_targets(entry, legs_cfg):
         fill = next((j for j in range(i + 1, len(vs)) if vs[j].get("traded_hi") is not None
                      and (from_ts is None or vs[j]["ts"] >= from_ts)
-                     and vs[j]["traded_hi"] >= target - EPS), None)
+                     and (vs[j]["traded_hi"] > target + EPS if strict else vs[j]["traded_hi"] >= target - EPS)), None)
         legs.append(dict(multiple=mult, target=target, filled_ts=vs[fill]["ts"] if fill is not None else None))
         proceeds += share * ((target - maker_fee(target)) if fill is not None else pay)
     last = max([l["filled_ts"] for l in legs if l["filled_ts"]] or [vs[-1]["ts"]])
@@ -346,7 +347,7 @@ def _split_trade(vs, i, won_side, legs_cfg=SPLIT_LEGS, from_ts=None):
                 side_won=won_side)
 
 
-def simulate(minutes, side, result, start_ts, hours, exit_key, spread=MAX_SPREAD, fill_from_start=False):
+def simulate(minutes, side, result, start_ts, hours, exit_key, spread=MAX_SPREAD, fill_from_start=False, strict=False):
     """One variant's trade in one market and side: bought `hours` before start_ts, exited per exit_key.
     Returns [trade] or [] when there is no tight quote at that time."""
     vs = [view(m, side) for m in minutes]
@@ -354,7 +355,7 @@ def simulate(minutes, side, result, start_ts, hours, exit_key, spread=MAX_SPREAD
     if i is None or i >= len(vs) - 1:
         return []
     if exit_key in LEGGED:
-        return [_split_trade(vs, i, result == side, LEGGED[exit_key], start_ts if fill_from_start else None)]
+        return [_split_trade(vs, i, result == side, LEGGED[exit_key], start_ts if fill_from_start else None, strict)]
     return [_trade(vs, i, result == side, EXITS[exit_key])]
 
 
@@ -575,7 +576,7 @@ def replay_event(lane, series, event, fetch, now=None):
                 continue
             check = None
             for ex in lane_exits(lane):
-                for t in simulate(ms, side, results[ticker], start_ts, hours, ex, spread, bool(lane.get("fill_from_start"))):
+                for t in simulate(ms, side, results[ticker], start_ts, hours, ex, spread, bool(lane.get("fill_from_start")), bool(lane.get("strict_through"))):
                     if check is None:
                         check = entry_check(ms, side, t["entry_i"], _ts((ctx0["markets"].get(ticker) or {}).get("open_time")))
                     trades.append(dict(t, variant=vkey(hours, ex), hours=hours, exit_key=ex, event=event, ticker=ticker,

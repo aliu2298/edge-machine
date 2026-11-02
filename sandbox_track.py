@@ -3453,6 +3453,9 @@ MENTION_SPORTS = ("culture_mentions",)
 # nba_value_production.py): YES that the team scores over the line, or its NO. The lead names the
 # exact contract (KXNBATEAMTOTAL-26OCT22CLEPHI-PHI115) and its line; the game's tip is the kickoff.
 NBA_TT_SPORTS = ("nba_tt",)
+# A Kalshi NBA win margin bucket (2026-11-03, with nba_winmargin_live and nba_wm_nofade, published by nba_wm_production.py): YES that a
+# team wins by the bucket (the split lane), or its NO (the fade). The lead names the exact contract (KXNBAWINMARGIN-26NOV02OKCCLE-OKC1TO5).
+NBA_WM_SPORTS = ("nba_wm",)
 # start_source values that mean a real start time, not the venue's estimate.
 # kalshi_milestone is cricket and MMA only, each after its own checker agrees.
 VERIFIED_STARTS = ("tennisexplorer", "espn", "mlb", "kalshi_milestone")
@@ -3616,6 +3619,10 @@ def placeable(q):
             and q.get("price") and 0 < float(q["price"]) < 1
             and all(l.get("venue") == "kalshi" and l.get("market_id") and l.get("pick") in ("a", "b")
                     and l.get("name") for l in legs))
+    if q.get("sport") in NBA_WM_SPORTS:
+        return (q.get("pick") in ("a", "b") and q.get("venue") == "kalshi_binary"
+                and str(q.get("market_id") or "").startswith("KXNBAWINMARGIN-")
+                and bool(q.get("kalshi_title")) and q.get("price") is not None and 0 < float(q["price"]) < 1)
     if q.get("sport") in NBA_TT_SPORTS:
         return (q.get("pick") in ("a", "b") and q.get("venue") == "kalshi_binary"
                 and str(q.get("market_id") or "").startswith("KXNBATEAMTOTAL-")
