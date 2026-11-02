@@ -12,10 +12,19 @@ Here, when the push is rejected:
      on main changed and nothing taken from either side.
   2. every derived file is REBUILT, not picked: main's copy is put back as the builder's previous feed (it
      carries each lead's first-publication stamp), then the builder reruns on the merged ledgers.
-  3. the result is amended into the commit and pushed again (3 attempts).
+  3. the result is amended into the commit and pushed again (4 attempts, a short random pause before each retry).
+
+A rebuild that leaves nothing to push (another job's identical or newer write already covers this run: the
+heartbeat's restamp, say) ends the run green with nothing pushed.
 
     python3 save_records.py --message "..." --add data/a.json data/b.json \
-        --derived data/feed.json "python3 build_feed.py"
+        --derived data/feed.json "python3 build_feed.py" \
+        [--optional data/maybe.json] [--regenerate "python3 rerun_the_job.py"] [--after "gh workflow run x.yml"]
+
+  --optional   records saved only if the job wrote them (a missing file is skipped, not an error)
+  --regenerate on a genuine conflict in a ledger (a file that is not derived), instead of failing: abort the
+               rebase, reset to origin/main and rerun the job's steps on top of it. Never picks a side of a ledger.
+  --after      run once, only after the push lands (e.g. asking for the page build)
 
 Every file named is checked to parse as JSON before anything is committed.
 """
@@ -23,9 +32,13 @@ import argparse
 import json
 import os
 import subprocess
+import random
 import sys
+import time
 
-ATTEMPTS = 3
+ATTEMPTS = 4
+BACKOFF_S = (1.0, 4.0)        # a random pause in this range before a retry, so two racing jobs do not collide again
+SLEEP = time.sleep           # patched by the tests
 
 
 def git(*args, check=True, cwd=None):
@@ -70,29 +83,63 @@ def integrate(derived, cwd=None, log=print):
             return False
         log("rebuilding derived file(s) after a concurrent write: " + ", ".join(sorted(conflicted)))
         rebuild([d for d in derived if d[0] in conflicted], cwd)
-        r = git("-c", "core.editor=true", "rebase", "--continue", check=False, cwd=cwd)
+        if git("diff", "--cached", "--quiet", check=False, cwd=cwd).returncode == 0:
+            r = git("rebase", "--skip", check=False, cwd=cwd)          # the rebuild equals main: nothing of this run's commit is left
+        else:
+            r = git("-c", "core.editor=true", "rebase", "--continue", check=False, cwd=cwd)
     # A clean rebase can still splice a JSON feed line by line: rebuild every derived file on the merged state.
+    if git("rev-parse", "HEAD", cwd=cwd).stdout == git("rev-parse", "origin/main", cwd=cwd).stdout:
+        return True                                         # this run's commit became empty and was dropped: main already has it all
     rebuild(derived, cwd)
     if git("diff", "--cached", "--quiet", check=False, cwd=cwd).returncode != 0:
         git("commit", "--amend", "--no-edit", cwd=cwd)
     return True
 
 
-def save(message, add, derived, cwd=None, log=print, remote="origin", branch="main"):
+def regenerate_on_main(message, add, derived, regenerate, cwd=None, log=print):
+    """A genuine ledger conflict: put the work on top of origin/main by rerunning the job, never by picking a side."""
+    log("regenerating on top of origin/main: " + regenerate)
+    git("reset", "--hard", "origin/main", cwd=cwd)
+    subprocess.run(regenerate, shell=True, check=True, cwd=cwd)
+    check_json(list(add) + [p for p, _ in derived], cwd)
+    git("add", *add, *[p for p, _ in derived], cwd=cwd)
+    if git("diff", "--cached", "--quiet", check=False, cwd=cwd).returncode == 0:
+        return False
+    git("commit", "-m", message, cwd=cwd)
+    return True
+
+
+def save(message, add, derived, cwd=None, log=print, remote="origin", branch="main", optional=(), regenerate=None, after=None):
     """0 when the records are on main (or there was nothing to save), 1 otherwise."""
+    add = list(add) + [p for p in optional if os.path.exists(os.path.join(cwd or ".", p))]
     check_json(list(add) + [p for p, _ in derived], cwd)
     git("add", *add, *[p for p, _ in derived], cwd=cwd)
     if git("diff", "--cached", "--quiet", check=False, cwd=cwd).returncode == 0:
         log("nothing to save")
         return 0
     git("commit", "-m", message, cwd=cwd)
+
+    def landed(attempt):
+        log(f"saved on attempt {attempt}")
+        if after:
+            subprocess.run(after, shell=True, check=False, cwd=cwd)
+        return 0
+
     for attempt in range(1, ATTEMPTS + 1):
         if git("push", remote, f"HEAD:{branch}", check=False, cwd=cwd).returncode == 0:
-            log(f"saved on attempt {attempt}")
-            return 0
+            return landed(attempt)
+        SLEEP(random.uniform(*BACKOFF_S))
         git("fetch", remote, branch, cwd=cwd)
         if not integrate(derived, cwd, log):
-            return 1
+            if not regenerate:
+                return 1
+            if not regenerate_on_main(message, add, derived, regenerate, cwd, log):
+                log("nothing to save after regenerating on main")
+                return 0
+            continue
+        if git("rev-parse", "HEAD", cwd=cwd).stdout == git("rev-parse", f"{remote}/{branch}", cwd=cwd).stdout:
+            log("main already holds everything this run produced")
+            return 0
     log(f"push still rejected after {ATTEMPTS} attempts")
     return 1
 
@@ -103,8 +150,11 @@ def main(argv=None):
     ap.add_argument("--add", nargs="+", default=[], help="records to commit (merged by git)")
     ap.add_argument("--derived", nargs=2, action="append", default=[], metavar=("PATH", "CMD"),
                     help="a file rebuilt by CMD from the records; rebuilt, never picked, after a concurrent write")
+    ap.add_argument("--optional", nargs="+", default=[], help="records saved only if the job wrote them")
+    ap.add_argument("--regenerate", default=None, help="rerun the job on top of origin/main after a genuine ledger conflict")
+    ap.add_argument("--after", default=None, help="a command run once, after the push lands")
     a = ap.parse_args(argv)
-    return save(a.message, a.add, [tuple(d) for d in a.derived])
+    return save(a.message, a.add, [tuple(d) for d in a.derived], optional=a.optional, regenerate=a.regenerate, after=a.after)
 
 
 if __name__ == "__main__":
