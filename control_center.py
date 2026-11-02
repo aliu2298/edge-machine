@@ -240,7 +240,8 @@ def inputs(runs=False, opener=None):
                 culture=_read_json(os.path.join(ROOT, 'data', 'culture_ledger.json')),
                 soccer_rules=_soccer_rules_states(),
                 nba_value=_read_json(os.path.join(ROOT, 'data', 'nba_value_ledger.json')),
-                soccer_team_rules=_read_json(os.path.join(ROOT, 'data', 'soccer_team_rules_ledger.json')))
+                soccer_team_rules=_read_json(os.path.join(ROOT, 'data', 'soccer_team_rules_ledger.json')),
+                o35=_read_json(os.path.join(ROOT, 'data', 'o35_cheap_no_ledger.json')))
 
 
 def _soccer_rules_states():
@@ -545,7 +546,7 @@ def _age_text(hours):
 
 
 def running_inputs(d, st, blob, now, daily=None, culture=None, soccer_rules=None, nba_value=None,
-                   soccer_team_rules=None):
+                   soccer_team_rules=None, o35=None):
     """(d, st, blob) with every own-feed Production lane merged in, as the Running list reads them.
 
     Econ Daily, Trump mentions, the soccer rules, the NBA value lanes and T1 publish from their
@@ -568,11 +569,15 @@ def running_inputs(d, st, blob, now, daily=None, culture=None, soccer_rules=None
         # T1, moved by hand 2026-10-24 (soccer_team_rules_production), from its own ledger.
         import soccer_team_rules_production
         d, st, blob = soccer_team_rules_production.page_inputs(d, st, blob, soccer_team_rules, now=now)
+    if o35 is not None:
+        # Over 3.5 cheap NO, live since 2026-11-01 (o35_production), from the Sandbox v3 ledger.
+        import o35_production
+        d, st, blob = o35_production.page_inputs(d, st, blob, o35, now=now)
     return d, st, blob
 
 
 def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, status=None, daily=None, culture=None,
-          soccer_rules=None, nba_value=None, soccer_team_rules=None):
+          soccer_rules=None, nba_value=None, soccer_team_rules=None, o35=None):
     """The Control Center as data. Pure: everything it reads is an argument.
 
     `status` is data/status.json as read (inputs()); it is used only when it
@@ -618,7 +623,7 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
                 status=status_word, items=daily_items))
     live_d, live_st, live_blob = running_inputs(d, st, blob, now, daily=daily, culture=culture,
                                                 soccer_rules=soccer_rules, nba_value=nba_value,
-                                                soccer_team_rules=soccer_team_rules)
+                                                soccer_team_rules=soccer_team_rules, o35=o35)
     if daily is not None:
         import daily_production  # the pairs tile counts its lanes
     sr_names = []
@@ -631,6 +636,9 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
     if soccer_team_rules is not None:
         import soccer_team_rules_production
         sr_names += [n for _s, _sp, n in soccer_team_rules_production.PAIRS.values()]
+    if o35 is not None:
+        import o35_production
+        sr_names.append(o35_production.NAME)
     # Trump mentions publishes through its own feed while it is listed (2026-10-20 to 2026-10-26);
     # out of Production it is named once, with the day it left and the record it left on.
     culture_listed, culture_left = False, []
@@ -660,16 +668,6 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
 
 
 # ------------------------------------------------------------------ the rule scorecard
-def _o35_live():
-    """Over 3.5 cheap NO v2, live since 2026-11-01 through its own feed (o35_production): named in the Production
-    list on the page. Not a pair row and not in the pairs tile, which counts the Production page's pairs."""
-    try:
-        import o35_production
-        return [o35_production.NAME]
-    except Exception:                                           # noqa: BLE001
-        return []
-
-
 def _rule_href(sport):
     return AREA_HREF.get(FAMILY_AREA.get(B.family(sport)), "./sandbox.html")
 
@@ -821,7 +819,7 @@ def _attention_html(items):
 
 
 def page(now, d=None, st=None, blob=None, nba=None, market=None, closes=None, runs=None, extra=None,
-         status=None, daily=None, culture=None, soccer_rules=None, nba_value=None, soccer_team_rules=None):
+         status=None, daily=None, culture=None, soccer_rules=None, nba_value=None, soccer_team_rules=None, o35=None):
     """public_site/index.html. `extra` is the dict `inputs()` returns, for the tracker build."""
     when = shell_build._now(now)
     d, st, blob = shell_build._load(d, st, blob)
@@ -836,8 +834,9 @@ def page(now, d=None, st=None, blob=None, nba=None, market=None, closes=None, ru
         soccer_rules = extra.get("soccer_rules") if soccer_rules is None else soccer_rules
         nba_value = extra.get("nba_value") if nba_value is None else nba_value
         soccer_team_rules = extra.get("soccer_team_rules") if soccer_team_rules is None else soccer_team_rules
+        o35 = extra.get("o35") if o35 is None else o35
     m = model(d, st, blob, when, nba=nba, market=market, closes=closes, runs=runs, status=status, daily=daily,
-              culture=culture, soccer_rules=soccer_rules, nba_value=nba_value, soccer_team_rules=soccer_team_rules)
+              culture=culture, soccer_rules=soccer_rules, nba_value=nba_value, soccer_team_rules=soccer_team_rules, o35=o35)
     tiles = m["tiles"]
     n_won, n_settled = tiles["landed"]
     healthy, total = tiles["healthy"]
@@ -914,7 +913,7 @@ def page(now, d=None, st=None, blob=None, nba=None, market=None, closes=None, ru
 
 <section id="scorecard" aria-labelledby="scorecard-title" class="cc-scorecard-section">
 <div class="pane-head"><h2 id="scorecard-title">Rule scorecard</h2> <span class="mut sm">· {len(m['scorecard'])} rules</span></div>
-{_scorecard_html(m['scorecard'], list(m.get('prod_outside') or ()) + _o35_live(), m.get('prod_left') or ())}
+{_scorecard_html(m['scorecard'], list(m.get('prod_outside') or ()), m.get('prod_left') or ())}
 </section>
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 """
