@@ -53,7 +53,7 @@ check("the lead carries the rule: NO side, 10c bid, 40c sell, $1", (a["side"], a
 check("kickoff is the occurrence time less 4 hours", a["kickoff"], (NOW + dt.timedelta(hours=3)).isoformat())
 b = X.feed(NOW, fetch)
 check("the feed header names the rule and version", (b["lane"], b["version"], b["rule"]["bid"], b["rule"]["sell"], len(b["rule"]["leagues"])),
-      ("o35_cheap_no_wave", "o35-v3", 0.1, 0.4, 11))
+      ("o35_cheap_no_wave", "o35-v4", 0.1, 0.4, 11))
 
 
 def broken(path):

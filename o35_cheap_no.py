@@ -19,6 +19,10 @@ fills only on a LATER trade print at or above the target AND only if at least 50
 target after the bid filled. Under 50 the sell does not fill (held to settlement) and the trade is marked "thin";
 the volume is logged either way. Maker fee 0.0175 p(1-p) on BOTH legs (both rest), none on settlement.
 
+VERSION o35-v4 (2026-11-02), what the live executor can actually do: a fill needs a trade STRICTLY below the bid, and a
+match is not entered when No already sat at or under the bid at the bid minute (the exchange rejects that post-only bid as
+a cross and the executor does not retry). v3 stays in history.
+
 SECOND HALF ONLY, version o35-v3 (Olu, 2026-11-01): the bid counts only from kickoff + BID_AFTER_MIN (60) minutes, so a
 fill needs a print after that. A comparison bid, "10e", is tracked beside it: the old rule (bid an hour BEFORE kickoff)
 counted only for fills that came before kickoff + 60 min, so the split keeps being measured. Why: the 10c fills split by
@@ -52,12 +56,14 @@ RESEARCH_NOTE = ("Research note, not evidence: on 10c fills measured by minutes 
                  "first-half fills reached it 22% and 21%, -13% and -19% (9 and 24 fills). Fair to reach 4x is 25%. "
                  "That is why the bid now waits for the second half; this record starts fresh.")
 V2_LABEL = "Before the second-half rule (v2)"
+V3_LABEL = "Before the exchange rules (v3)"
 TRIM_NOTE = "Trimmed 2026-10-31: v1 (41 fills) showed 10c at 4× best, 15c/20c worse, and the Saudi Pro League 0 for 5 with no sell filled; fresh v2 record."
 V1_LABEL = "Before the Nov trim (v1)"
 V1 = "o35-v1"
 V2 = "o35-v2"
-SINCE = "2026-11-01"
-VERSION = "o35-v3"
+V3 = "o35-v3"
+SINCE = "2026-11-01"             # v4 re-scores Nov 1 (v3's first day)
+VERSION = "o35-v4"
 LIMITS = (0.10,)
 V1_LIMITS = (0.10, 0.15, 0.20)
 HEADLINE = 0.10
@@ -70,6 +76,7 @@ MIN_VOL = 50
 DEAD_NO = 0.02
 KICKOFF_BACK_H = 4
 BID_LEAD_MIN = 60              # the old rule: bid this long before kickoff (v1, v2, and the "10e" comparison)
+CROSS_LOOKBACK_MIN = 90        # v4: the last print this recent before the bid minute says where No stood when the bid went up
 BID_AFTER_MIN = 60             # v3: the bid counts from this long AFTER kickoff
 EARLY = "e"                    # bids key suffix of the comparison: first-half fills of the old bid
 CAP = 0.98
@@ -129,25 +136,40 @@ def fetch_trades(ticker, min_ts, fetch, max_pages=30):
     return rows
 
 
+def crossed_at_bid(prints, kickoff_ts, limit):
+    """v4: the No price of the last print in the CROSS_LOOKBACK_MIN minutes before the bid minute if it is at or under
+    the bid, else None. The live bid is a post-only YES ask at 1 - limit; with No already at or under the limit the
+    exchange rejects it as a cross, the executor does not retry (what it finds next is the dead order), and nothing
+    rests: so the paper match is not entered."""
+    lo = kickoff_ts + BID_AFTER_MIN * 60
+    last = [p for p in prints if lo - CROSS_LOOKBACK_MIN * 60 <= p[0] < lo]
+    return last[-1][1] if last and last[-1][1] <= limit + EPS else None
+
+
 def evaluate(prints, kickoff_ts, result, limits=None):
     """{limit key: bid outcome} for one market. A bid is None when no print reached it. A filled bid carries the
     fill time, the dead-fill flag, and per multiple the target, whether the sell filled, whether it was thin and
     the contracts traded at or above the target after the fill. Key "10" is the second-half bid (prints from kickoff +
     BID_AFTER_MIN); "10e" is the comparison: the old bid from an hour before kickoff, kept only if it filled before
-    kickoff + BID_AFTER_MIN (a first-half fill)."""
+    kickoff + BID_AFTER_MIN (a first-half fill).
+
+    v4 (2026-11-02): a fill needs a print STRICTLY below the bid (a trade at exactly the limit only touches it, and
+    a resting order behind the queue does not fill on it), and the second-half bid is not entered at all when No
+    was already at or under the bid at the bid minute (crossed_at_bid)."""
     payout = 1.0 if result == "no" else 0.0
     out = {}
     for limit in limits or LIMITS:
         key = f"{round(limit * 100)}"
         lo = kickoff_ts + BID_AFTER_MIN * 60
-        out[key] = _bid([p for p in prints if p[0] >= lo], limit, payout)
+        out[key] = (None if crossed_at_bid(prints, kickoff_ts, limit) is not None
+                    else _bid([p for p in prints if p[0] >= lo], limit, payout))
         early = _bid([p for p in prints if p[0] >= kickoff_ts - BID_LEAD_MIN * 60], limit, payout)
         out[key + EARLY] = early if early and early["fill_at"] < lo else None
     return out
 
 
 def _bid(live, limit, payout):
-    i = next((k for k, p in enumerate(live) if p[1] <= limit + EPS), None)
+    i = next((k for k, p in enumerate(live) if p[1] < limit - EPS), None)
     if i is None:
         return None
     after = live[i + 1:]
@@ -168,9 +190,9 @@ def split(entries):
 
 
 def split3(entries):
-    """(v1, v2, v3 entries)."""
+    """(v1, v2, v3 entries): the record before this version, by earlier version; v4 is the current one (split)."""
     v = lambda e: e.get("version", V1)
-    return ([e for e in entries if v(e) not in (V2, VERSION)], [e for e in entries if v(e) == V2], [e for e in entries if v(e) == VERSION])
+    return ([e for e in entries if v(e) not in (V2, V3, VERSION)], [e for e in entries if v(e) == V2], [e for e in entries if v(e) == V3])
 
 
 def trade_rows(entries, early=False):
@@ -214,8 +236,11 @@ def load(path=None):
     except FileNotFoundError:
         s = {}
     s.setdefault("lane", LANE)
-    if s.get("version") != VERSION:                             # older records stay; v3 starts fresh from SINCE
-        if s.get("version") == V2:
+    if s.get("version") != VERSION:                             # older records stay; v4 starts fresh from SINCE
+        if s.get("version") == V3:
+            s["v3_since"] = s.get("since") or "2026-11-01"
+            s["seen_v3"], s["seen"] = s.get("seen") or {}, {}    # Nov 1 is re-scored under v4: every event is read again
+        elif s.get("version") == V2:
             s["v2_since"] = s.get("since") or "2026-10-31"
         else:
             s["v1_since"] = s.get("v1_since") or s.get("since") or "2026-10-28"
@@ -272,7 +297,8 @@ def run(state, now=None, fetch=D.get, forms=None):
                 continue
             state["entries"].append(dict(id=m["ticker"], event=event, league=league, series=series, kickoff=kickoff,
                                          night=night, result=result, form_rule=event in forms, prints=len(prints),
-                                         bids=evaluate(prints, kickoff, result), logged=now.isoformat(), version=VERSION))
+                                         bids=evaluate(prints, kickoff, result), logged=now.isoformat(), version=VERSION,
+                                         crossed=crossed_at_bid(prints, kickoff, HEADLINE)))
             state["seen"][event] = now.isoformat()
             obs["new"] += 1
             done += 1
