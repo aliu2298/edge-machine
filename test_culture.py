@@ -447,7 +447,7 @@ check("  and the first revived scan says why it waits: 12h of snapshots before a
       st_rt["lanes"]["rt_model"]["observations"]["reasons"], {"collecting review pace (12h of snapshots)": 1})
 wf = open(".github/workflows/culture.yml").read()
 check("culture.yml runs the scan hourly and saves the snapshots",
-      ("cron: '41 * * * *'" in wf, "run: python3 culture_track.py" in wf, "data/rt_snapshots.json" in wf.split("git add", 1)[1]),
+      ("cron: '41 * * * *'" in wf, "run: python3 culture_track.py" in wf, "data/rt_snapshots.json" in wf.split("save_records.py", 1)[1]),
       (True, True, True))
 
 print("\n2026-10-26: the fresh record and the pre-retirement history, apart")

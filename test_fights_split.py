@@ -297,7 +297,7 @@ print("\nthe workflows and the build")
 wf = open("/".join([FS.ROOT, ".github", "workflows", "fights.yml"])).read()
 check("fights.yml runs hourly, the tests, the script, saves both ledgers and asks for the page build",
       ("cron: '23 * * * *'" in wf, "python3 test_fights_split.py" in wf, "python3 fights_split.py" in wf,
-       "git add data/boxing_cheap_dog_ledger.json data/ufc_dog_ledger.json" in wf, "gh workflow run sandbox-tracker.yml" in wf),
+       "--add data/boxing_cheap_dog_ledger.json data/ufc_dog_ledger.json" in wf, "gh workflow run sandbox-tracker.yml" in wf),
       (True, True, True, True, True))
 tr = open("/".join([FS.ROOT, ".github", "workflows", "sandbox-tracker.yml"])).read()
 check("the Sandbox Tracker stages the Fights page", "git add public_site/fights.html" in tr, True)

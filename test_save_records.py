@@ -94,6 +94,7 @@ def on_main(remote, root, path):
 
 DERIVED = [("data/feed.json", "python3 build.py")]
 quiet = lambda *_: None
+S.SLEEP = lambda *_: None          # the retry pause is not real here
 
 print("the race, reproduced: the old save (rebase only) fails on the derived feed")
 with tempfile.TemporaryDirectory() as root:
@@ -166,6 +167,75 @@ with tempfile.TemporaryDirectory() as root:
           (True, False))
     check("the log names the conflicted record", any("data/ledger.json" in m for m in msgs), True)
 
+print("\nthe heartbeat restamped the same feed: this run's rebuild equals main, so nothing is left to push")
+with tempfile.TemporaryDirectory() as root:
+    remote, a, b = setup(root)
+    sh("python3 build.py", b, {"BUILD_AT": "10:40"})              # B's only change is the restamp (the heartbeat's own job)
+    heartbeat(a, "10:41")                                        # A pushed the same feed, newer
+    os.environ["BUILD_AT"] = "10:41"
+    derived = [("data/feed.json", "python3 build.py")]
+    rc = S.save("Feeds heartbeat", [], derived, cwd=b, log=quiet)
+    clean = sh("git status --porcelain", b).stdout.strip()
+    check("the save ends green with nothing pushed and a clean checkout", (rc, clean, os.path.isdir(os.path.join(b, ".git", "rebase-merge"))), (0, "", False))
+    check("main still carries the other writer's feed", on_main(remote, root, "data/feed.json")["updated_at"], "10:41")
+
+print("\ntwo writers racing on one feed, three rounds: every push lands, none fails, no rows lost")
+with tempfile.TemporaryDirectory() as root:
+    remote, a, b = setup(root)
+    for n in range(3):
+        heartbeat(a, f"11:{n}0")                                  # A (heartbeat) pushes between B's checkout and B's save
+        collect(b, f"r{n}", f"11:{n}1")
+        os.environ["BUILD_AT"] = f"11:{n}2"
+        rc = S.save(f"collector round {n}", ["data/ledger.json"], DERIVED, cwd=b, log=quiet)
+        sh("git pull -q --rebase origin main", a)
+        check(f"round {n}: B's save lands", rc, 0)
+    led, feed = on_main(remote, root, "data/ledger.json"), on_main(remote, root, "data/feed.json")
+    check("all three collected rows are on main", [e["id"] for e in led["entries"]], ["m1", "r0", "r1", "r2"])
+    check("and the feed carries a lead for each", sorted(feed["leads"]), ["m1", "r0", "r1", "r2"])
+
+print("\noptional records, the after command, the attempt limit")
+with tempfile.TemporaryDirectory() as root:
+    remote, a, b = setup(root)
+    collect(b, "m2", "10:31")
+    marker = os.path.join(root, "after.txt")
+    rc = S.save("obs", ["data/ledger.json"], DERIVED, cwd=b, log=quiet, optional=["data/not_written_today.json"], after=f"echo ok > {marker}")
+    check("a missing optional record is skipped, the save lands, the after command ran once the push landed",
+          (rc, os.path.exists(marker)), (0, True))
+    check("nothing to save with only a missing optional record", S.save("obs", [], [], cwd=b, log=quiet, optional=["data/not_written_today.json"]), 0)
+with tempfile.TemporaryDirectory() as root:
+    remote, a, b = setup(root)
+    collect(b, "m2", "10:31")
+    hook = os.path.join(remote, "hooks", "pre-receive")
+    with open(hook, "w") as f:
+        f.write("#!/bin/sh\nexit 1\n")
+    os.chmod(hook, 0o755)
+    msgs, sleeps = [], []
+    S.SLEEP = sleeps.append
+    rc = S.save("obs", ["data/ledger.json"], DERIVED, cwd=b, log=msgs.append)
+    S.SLEEP = lambda *_: None
+    check("a remote that always refuses: 4 attempts, a pause before each retry, then exit 1",
+          (rc, S.ATTEMPTS, len(sleeps), all(S.BACKOFF_S[0] <= x <= S.BACKOFF_S[1] for x in sleeps)), (1, 4, 4, True))
+
+print("\na genuine ledger conflict with --regenerate: the job is rerun on top of main, no side taken")
+RERUN = r"""
+import json
+led = json.load(open("data/ledger.json"))
+led["entries"].append({"id": "mB", "row": "re-entered on main"})
+json.dump(led, open("data/ledger.json", "w"), indent=1, sort_keys=True)
+"""
+with tempfile.TemporaryDirectory() as root:
+    remote, a, b = setup(root)
+    collect(a, "mA", "10:20")
+    sh("git add -A && git commit -q -m 'other ledger writer' && git push -q origin HEAD:main", a)
+    collect(b, "mB", "10:21")
+    with open(os.path.join(b, "rerun.py"), "w") as f:
+        f.write(RERUN)
+    os.environ["BUILD_AT"] = "10:22"
+    rc = S.save("obs", ["data/ledger.json"], DERIVED, cwd=b, log=quiet, regenerate="python3 rerun.py && python3 build.py")
+    led, feed = on_main(remote, root, "data/ledger.json"), on_main(remote, root, "data/feed.json")
+    check("regenerated on origin/main: both rows are there, the feed matches the ledger",
+          (rc, [e["id"] for e in led["entries"]], sorted(feed["leads"])), (0, ["m1", "mA", "mB"], ["m1", "mA", "mB"]))
+
 print("\nthe workflows use it")
 for wf, derived in ((".github/workflows/soccer-rules.yml", "data/soccer_rules_production_leads.json"),
                     (".github/workflows/soccer-team-rules.yml", "data/soccer_team_rules_production_leads.json")):
@@ -174,6 +244,26 @@ for wf, derived in ((".github/workflows/soccer-rules.yml", "data/soccer_rules_pr
     check(f"{wf}: saves through save_records.py with its feed as a derived file",
           ("python3 save_records.py" in save_step, f"--derived {derived}" in save_step, "git rebase origin/main" in save_step),
           (True, True, False))
+
+print("\nevery workflow that saves records through git uses save_records.py (2026-11-02: the race was on more than the soccer pair)")
+import glob
+SAVES = ["arg-dip", "chaos", "culture", "daily-research", "feeds-heartbeat", "fights", "nba-rules", "nba-value", "nba-winmargin",
+         "nba-wm-nofade", "nfl-tt", "o35-cheap-no", "soccer-rules", "soccer-team-rules", "tennis-totals", "top5-dip"]
+for name in SAVES:
+    text = open(f".github/workflows/{name}.yml").read()
+    check(f"{name}: saves through save_records.py, no hand-written rebase loop",
+          ("python3 save_records.py" in text, "git rebase origin/main" in text, "git push origin" in text), (True, False, False))
+OWN = ("refresh-boards", "sandbox-tracker", "backup-refresh", "nba-pace", "sandbox-audit", "sandbox-close", "nba-odds-probe")
+check("the page-building workflows keep their own save (they merge generated pages)",
+      [n for n in OWN if "git push" not in open(f".github/workflows/{n}.yml").read()], [])
+pushers = sorted(os.path.basename(p)[:-4] for p in glob.glob(".github/workflows/*.yml") if "git push" in open(p).read())
+check("no other workflow pushes", sorted(set(pushers) - set(OWN) - set(SAVES)), [])
+hb = open(".github/workflows/feeds-heartbeat.yml").read()
+check("the heartbeat has every feed it restamps as a derived file",
+      all(f"--derived data/{f}.json" in hb for f in ("soccer_rules_production_leads", "soccer_team_rules_production_leads", "nba_value_production_leads", "econ_production_leads",
+                                                    "production_o35_leads", "production_nba_wm_leads", "production_nba_wm_nofade_leads", "feed_gap")), True)
+nv = open(".github/workflows/nba-value.yml").read()
+check("nba-value no longer writes the feed the heartbeat owns", ("nba_value_production_leads" in nv.split("name: Save records")[1], "python3 nba_value_production.py" in nv), (False, False))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
