@@ -482,7 +482,12 @@ def late_set(blob):
     carries no such key -- the follower reads that file and its shape is not changed -- and the sidecar outlives
     the feed's seven-day pruning, so a record does not move when a lead ages out."""
     out = dict((blob or {}).get("late_leads") or {})
-    for lid, lead in ((blob or {}).get("leads") or {}).items():
+    leads = (blob or {}).get("leads") or {}
+    if isinstance(leads, list):                     # own-feed lanes (o35, NBA win margin) publish a list of leads
+        leads = {l.get("id"): l for l in leads if isinstance(l, dict)}
+    for lid, lead in leads.items():
+        if not isinstance(lead, dict):
+            continue
         mkt = (lead.get("route") or {}).get("market")
         if lead.get("published_late") and mkt and lead.get("pair"):
             out.setdefault(late_key(lead["pair"], mkt), {"id": lid, "kickoff": lead.get("kickoff"),
