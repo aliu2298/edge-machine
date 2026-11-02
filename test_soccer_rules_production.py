@@ -16,6 +16,8 @@ _NOW_PAIRS = sorted(RP.PAIRS)
 # instant as the rest so this file's 2026-10-22 fixtures fall inside their window.
 _C_DATES = {k: RP.moved_on(k) for k in ("C1", "C3", "C4", "A7")}
 RP.PROMOTED_LATER = {k: ("2026-10-28", RP.PROMOTED) for k in ("C1", "C3", "C4")}
+# C1 went back to the Sandbox on 2026-11-02 (RP.PULLED): replayed the same way, its real state checked first.
+RP.PAIRS["C1"] = ("sr_c1", "soccer_u35", "MLS O+D− v O+D+ · over 3.5")
 RP.PAIRS["D3"] = ("sr_d3", "soccer_btts", "O−D− v O+D− · both teams to score")
 RP.LABELS = {src: name for src, _sport, name in RP.PAIRS.values()}
 RP.NOT_PUBLISHED = {"D3": {"Europa League"}}
@@ -63,6 +65,7 @@ sa = {"last_run": (NOW - dt.timedelta(minutes=20)).isoformat(), "error": None, "
 print("only the listed rules, on the existing soccer claims (Argentina left Production 2026-10-27)")
 check("C1, C3 and C4 entered on 2026-10-28, A7 on 2026-10-21", _C_DATES, {"C1": "2026-10-28", "C3": "2026-10-28", "C4": "2026-10-28", "A7": "2026-10-21"})
 qs = RP.quotes(rules, sa)
+check("C1 is not a Production pair (back in the Sandbox 2026-11-02)", ("C1" in _NOW_PAIRS, RP.PULLED["C1"]), (False, ("2026-10-28", "2026-11-02")))
 check("A7, A6, C1, C3, C4 and D3; never D1, Argentina or the Brasileirão",
       sorted({q["source"] for q in qs}), ["sr_a6", "sr_a7", "sr_c1", "sr_c3", "sr_c4", "sr_d3"])
 by = {q["market_id"]: q for q in qs}

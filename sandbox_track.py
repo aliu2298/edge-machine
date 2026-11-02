@@ -325,7 +325,6 @@ PAIR_OVERRIDES = {
     # listed, and neither is any cup twin. Under 3.5 was not listed on 2026-10-01
     # because those bets are the No side of the over-3.5 market and the feed could
     # only say Yes; that is no longer true — see u35_low_scoring below.
-    "o15_ranked|soccer_o15_intl": dict(moved_on="2026-10-01", production_at=None),
     # 2026-10-04, as asked. Under 3.5 goals, internationals only. 18 settled, 17 won
     # against 14.19 priced: +21.4% (+19.6% after fees), z +1.66 over 9.4 days, and it
     # beats its blind rule — backing the under on every Kalshi match returned +2.7% on
@@ -412,7 +411,6 @@ PAIR_OVERRIDES = {
     # internationals twin (above) stays in Production.
     # La Liga BTTS in balanced matches: nothing settled, one bet open. The feed learned
     # BTTS for it (FEED_BETS soccer_btts): Yes on Kalshi's KXLALIGABTTS contract.
-    "liga_btts_even|soccer_btts": dict(moved_on="2026-10-08", production_at=None),
     # Bundesliga over 3.5, EVERY match -- not the favourite-priced 2.00-2.60 variant.
     # Nothing settled, nine bets open. It backs the YES on the same over-3.5 contract the
     # under-3.5 rule backs the No on, so the league under-3.5 domain now carries two
@@ -462,7 +460,6 @@ PAIR_OVERRIDES = {
     # Eredivisie draw band: 2-3 on 5, +52.0% after fees (two draws at 0.25 and 0.24), flat
     # against the close. A draw is Kalshi's Tie contract on the GAME event, which the feed
     # has expressed since 2026-09-16.
-    "ere_draw|soccer": dict(moved_on="2026-10-11", production_at=None),
     # Turkey BTTS in heavy mismatches: 1-0 on 1 (+86.1%), nothing to read. BTTS reached the
     # feed on 2026-10-08; the Turkish Super Lig is a BTTS-board league and not a GAME-map
     # one, so quote_league now accepts either map's leagues for a yes/no row.
@@ -487,7 +484,6 @@ PAIR_OVERRIDES = {
     #   2026-10-17. Live $1 bets stop; it keeps its whole record (PAIR_REMOVALS), no reset,
     #   no retune.
     "mls_fade_home|soccer_p05": dict(moved_on="2026-10-16", production_at=None),
-    "team2_form_l10|soccer_team2": dict(moved_on="2026-10-16", production_at=None),
     "ftts_no_70_80|soccer_ftts": dict(moved_on="2026-10-16", production_at=None),
     # Congestion under 2.5, CLUBS scope: moved by hand on 2026-10-18 (30 settled, +16.4% after
     # fees, z +1.11, below the stamp) and OUT again the same week, as asked (Olu, 2026-10-19):
@@ -547,6 +543,14 @@ PAIR_REMOVALS = {
     # registry), which lists nothing from culture_production.DEMOTED_AT, so nothing re-promotes it
     # on the removal's own day (#176). Amended the same day in the Sandbox (culture_track.AMENDED_2).
     "mentions_rate|culture_mentions": dict(removed_on="2026-10-26", keep_record=True),
+    # 2026-11-02, as asked (Olu: "research them later"): four more soccer rules back to the Sandbox on their
+    # whole records, paper and still collecting, nothing retired. No override is left for any of them
+    # (#176). team2_form_l10 is the Clubs scope only (soccer_team2); o15_ranked is the Internationals
+    # scope only (soccer_o15_intl). C1 (sr_c1) and T5 (st_t5) left their adapters' PAIRS the same day.
+    "ere_draw|soccer": dict(removed_on="2026-11-02", keep_record=True),
+    "liga_btts_even|soccer_btts": dict(removed_on="2026-11-02", keep_record=True),
+    "team2_form_l10|soccer_team2": dict(removed_on="2026-11-02", keep_record=True),
+    "o15_ranked|soccer_o15_intl": dict(removed_on="2026-11-02", keep_record=True),
 }
 
 

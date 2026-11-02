@@ -36,10 +36,12 @@ PAIRS = {
     "A6": ("sr_a6", "soccer_o25", "EPL O−D− v an O+ opponent · under 2.5"),
     # Moved by hand 2026-10-28 (Olu), on small samples, with live $1 bets: MLS over 3.5 YES <=50c (2/2),
     # Serie A O+D− v O+D+ over 2.5 YES <=60c (2/2), Serie A O−D− v O+D− over 2.5 YES <=55c (3/4).
-    "C1": ("sr_c1", "soccer_u35", "MLS O+D− v O+D+ · over 3.5"),
     "C3": ("sr_c3", "soccer_o25", "Serie A O+D− v O+D+ · over 2.5"),
     "C4": ("sr_c4", "soccer_o25", "Serie A O−D− v O+D− · over 2.5"),
 }
+# C1 (sr_c1, MLS O+D− v O+D+ · over 3.5) was a pair from 2026-10-28 to 2026-11-02; it is back in the Sandbox
+# as paper on its whole record (Olu: research it later), still logged by soccer_rules.py.
+PULLED = {"C1": ("2026-10-28", "2026-11-02")}
 # D3 (sr_d3, O−D− v O+D− · both teams to score) was the third pair from 2026-10-21 to 2026-10-28; it
 # is back in the Sandbox as paper on its whole record (Olu), still logged by soccer_rules.py.
 LABELS = {src: name for src, _sport, name in PAIRS.values()}

@@ -20,6 +20,8 @@ _NOW_MOVED = (TP.MOVED_ON, TP.PROMOTED)
 # from the day T1 entered.
 TP.PROMOTED = "2026-10-24T22:00:00+00:00"
 TP.PAIRS["T1"] = ("st_t1", "soccer_team2", "O+D− v O+D− · team 2+ goals")
+# T5 went back to the Sandbox on 2026-11-02 (TP.T5_PULLED); replayed the same way.
+TP.PAIRS["T5"] = ("st_t5", "soccer_team2", "O+D− v O+D+ · team 2+ goals")
 TP.LABELS = {src: name for src, _sport, name in TP.PAIRS.values()}
 
 FAILS = []
@@ -62,7 +64,7 @@ state = {"last_run": (NOW - dt.timedelta(minutes=10)).isoformat(), "error": None
                           "Newcastle", "Premier League", 0.45)]}}}
 
 print("T5 and T7 since 2026-10-28; T1 (out 2026-10-28) replayed for the checks below")
-check("T5 and T7 are the two pairs, listed 2026-10-28", (_NOW_PAIRS, _NOW_MOVED[0]), (["T5", "T7"], "2026-10-28"))
+check("T7 is the one pair, listed 2026-10-28; T5 went back to the Sandbox 2026-11-02", (_NOW_PAIRS, _NOW_MOVED[0], TP.T5_PULLED[1]), (["T7"], "2026-10-28", "2026-11-02"))
 print("only T1, on the existing team 2+ claim")
 qs = TP.quotes(state)
 check("T1, T5 and T7, their own leagues only", sorted(q["market_id"] for q in qs),
@@ -119,7 +121,7 @@ check("the Control Center counts it once and names it", (m1["tiles"]["pairs"] - 
 sec = TB.section(state)
 check("the Soccer page says T1 was in Production 2026-10-24 to 2026-10-28 and is back in the Sandbox",
       (sec.count("Production 2026-10-24 to 2026-10-28, back in the Sandbox") >= 1,
-       "T5 and T7 in Production since 2026-10-28" in sec), (True, True))
+       "T7 in Production since 2026-10-28; T1 (2026-10-24 to 2026-10-28) and T5 (2026-10-28 to 2026-11-02) back in the Sandbox" in sec), (True, True))
 check("no guarded public phrase in the leads or the section",
       sandbox_audit.COPY_RE.findall(" ".join(l["headline"] + " " + l["id"] for l in f["leads"].values()) + sec), [])
 
