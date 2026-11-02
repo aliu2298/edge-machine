@@ -15,6 +15,7 @@ on:
       - "Soccer team scoring rules paper research"
       - "Culture lanes paper research"
       - "Over 3.5 cheap NO paper research"
+      - "NBA win margin NO fade"
     types: [completed]
 permissions:
   contents: write
@@ -47,6 +48,8 @@ jobs:
         run: python3 daily_production.py --heartbeat
       - name: Over 3.5 cheap NO feed (live Kalshi read)
         run: python3 o35_production.py --heartbeat
+      - name: NBA win margin feeds (live Kalshi read)
+        run: python3 nba_wm_production.py --heartbeat
       - name: Production feed build gap (status only; the daily health check reads data/feed_gap.json)
         env:
           GH_AUTH: ${{ github.token }}
@@ -54,7 +57,7 @@ jobs:
       - name: Save the feeds
         run: |
           set -euo pipefail
-          FEEDS="data/soccer_rules_production_leads.json data/soccer_team_rules_production_leads.json data/nba_value_production_leads.json data/econ_production_leads.json data/production_o35_leads.json data/feed_gap.json"
+          FEEDS="data/soccer_rules_production_leads.json data/soccer_team_rules_production_leads.json data/nba_value_production_leads.json data/econ_production_leads.json data/production_o35_leads.json data/production_nba_wm_leads.json data/production_nba_wm_nofade_leads.json data/feed_gap.json"
           for f in $FEEDS; do python3 -c "import json,sys; json.load(open(sys.argv[1]))" "$f"; done
           git config user.name "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""The NBA win margin lane (2026-10-30): nba_winmargin_split on the chaos engine (paper), its in-sample
+"""The NBA win margin lane (2026-10-30): nba_winmargin_live on the chaos engine (paper), its in-sample
 backfill row, the x2 exit, fills only from the tip on, and where both sit on the NBA page and the Sandbox index."""
 import datetime as dt
 import sys
@@ -20,16 +20,18 @@ def check(label, got, want):
 
 
 LD = {l["id"]: l for l in CL.LANES}
-M, I = LD["nba_winmargin_split"], LD["nba_winmargin_split_insample"]
+M, I = LD["nba_winmargin_live"], LD["nba_winmargin_split_insample"]
 EV = "KXNBAWINMARGIN-26OCT30WASCLE"
 
 print("the lane configs")
 check("fresh from 2026-10-30; the in-sample row replays Oct 20-29 and stops", (M["since"], I["since"], I["until"], M.get("until")),
-      ("2026-10-30", "2026-10-20", "2026-10-29", None))
+      ("2026-11-03", "2026-10-20", "2026-10-29", None))
 check("the same rule on both: 1h before the tip, spread 5c or less, split headline, fills from the tip on",
       [(l["entry_hours"], l["max_spread"], l["headline"], l["fill_from_start"], l["series"]) for l in (M, I)],
       [((1,), 0.05, "split", True, ["KXNBAWINMARGIN"])] * 2)
-check("exits: hold, the split, +50%, +100% and 2x only", M["exits"], ("hold", "split", "tp50", "tp100", "x2"))
+check("exits: the live version tracks the hold control and the split only; the in-sample row keeps +50%, +100% and 2x only",
+      (M["exits"], I["exits"]), (("hold", "split"), ("hold", "split", "tp50", "tp100", "x2")))
+check("the live version fills a resting sell only on a print STRICTLY through its target; the in-sample row does not", (M["strict_through"], I.get("strict_through")), (True, None))
 check("only the in-sample row is flagged in-sample", (M.get("insample"), I.get("insample")), (None, True))
 
 print("\nthe picker: YES of the 1-5 and 6-10 buckets, 10-20c, either team")
@@ -119,22 +121,21 @@ def lane_state(cfg, nights):
                 note=cfg["note"], replayed={EV: 1}, trades=trades, skipped={}, series=cfg["series"], insample=cfg.get("insample"))
 
 
-state = dict(lanes={"nba_winmargin_split": lane_state(M, ["2026-10-30"]),
+state = dict(lanes={"nba_winmargin_live": lane_state(M, ["2026-10-30"]),
                     "nba_winmargin_split_insample": lane_state(I, ["2026-10-22", "2026-10-23", "2026-10-24"])})
 html = CB.sport_section("nba", state)
 head = html[:html.find('id="cheap-side-insample"')]
 check("the in-sample row is its own labelled block, apart from the lane", ('id="cheap-side-insample"' in html, "IN-SAMPLE" in html, "NOT evidence" in html),
       (True, True, True))
 check("the headline summary lists the fresh lane and never the in-sample lane",
-      ('data-lane="nba_winmargin_split"' in head, 'data-lane="nba_winmargin_split_insample"' in head), (True, False))
+      ('data-lane="nba_winmargin_live"' in head, 'data-lane="nba_winmargin_split_insample"' in head), (True, False))
 check("the in-sample summary row says so", "in-sample backfill, not evidence" in html[html.find('id="cheap-side-insample"'):], True)
-card = html[html.find('data-lane="nba_winmargin_split" open'):html.find('id="cheap-side-insample"')]
-check("the lane's card: split v hold first, then the other exits (+50%, +100%, 2x only)",
-      ("Split v hold" in card, "sell at +50%" in card, "sell at +100%" in card, "sell everything at 2x" in card), (True, True, True, True))
-check("each variant sits against its hold control", "Hold control" in card, True)
+card = html[html.find('data-lane="nba_winmargin_live" open'):html.find('id="cheap-side-insample"')]
+check("the lane's card (the live version): split v hold first; it tracks no other exit, so there is no Other exits fold",
+      ("Split v hold" in card, "Other exits" in card), (True, False))
 idx = CB.section(state)
 check("the Sandbox's Chaos index lists both, the in-sample one marked",
-      ('data-lane="nba_winmargin_split"' in idx, 'data-lane="nba_winmargin_split_insample"' in idx, "in-sample backfill, not evidence" in idx),
+      ('data-lane="nba_winmargin_live"' in idx, 'data-lane="nba_winmargin_split_insample"' in idx, "in-sample backfill, not evidence" in idx),
       (True, True, True))
 check("both link to the NBA page", idx.count("./nba.html#cheap-side") >= 2, True)
 check("public copy passes the guard", sandbox_audit.COPY_RE.search(html + idx), None)

@@ -41,6 +41,20 @@ check("the sell needs a LATER print at or above P: an earlier one does not sell,
       N.dip_trade([(TIP + 10, 0.45, 5), (TIP + 60, 0.30, 20)], TIP, 0.40, 0.75, True)["reason"], "settled")
 check("a limit under 3c is not placed", N.dip_trade(pr, TIP, 0.10, 0.25, True), None)
 
+print("\nversion 2 (the follower's rules): strict prints, post-only cross")
+P2, TIP2 = 0.40, TIP
+prs = [(TIP2 + 120, 0.30, 15), (TIP2 + 180, 0.41, 3)]
+check("v1 fills on a print AT the limit; v2 needs a print strictly under it", (N.dip_trade(prs, TIP2, P2, 0.75, True) is not None, N.dip_trade(prs, TIP2, P2, 0.75, True, strict=True)), (True, None))
+prs2 = [(TIP2 + 120, 0.29, 15), (TIP2 + 180, 0.40, 3)]
+check("v2: a print AT the pregame price does not sell the fill back; v1 does", (N.dip_trade(prs2, TIP2, P2, 0.75, True)["reason"], N.dip_trade(prs2, TIP2, P2, 0.75, True, strict=True)["reason"]), ("sold", "settled"))
+prs3 = [(TIP2 + 120, 0.29, 15), (TIP2 + 180, 0.41, 3)]
+check("v2: a print strictly above it does", N.dip_trade(prs3, TIP2, P2, 0.75, True, strict=True)["reason"], "sold")
+check("v2: 15 contracts AT the limit and 4 strictly under do not make 10 strictly under: no fill", N.dip_trade([(TIP2 + 60, 0.30, 15), (TIP2 + 70, 0.29, 4)], TIP2, P2, 0.75, True, strict=True), None)
+check("v2: the post-only bid would CROSS when the NO price at the tip is already at or under the limit: no entry, even with prints below it",
+      (N.dip_trade(prs3, TIP2, P2, 0.75, True, strict=True, no_at_tip=0.30), N.dip_trade(prs3, TIP2, P2, 0.75, True, strict=True, no_at_tip=0.31) is not None), (None, True))
+check("v1 has no cross rule", N.dip_trade(prs3, TIP2, P2, 0.75, True, strict=False, no_at_tip=0.30) is not None, True)
+check("the version split is by night: insample before 10-31, v1 to 11-02, v2 from 11-03", [N.phase_of(n) for n in ("2026-10-30", "2026-10-31", "2026-11-02", "2026-11-03")], ["insample", "v1", "v1", "v2"])
+
 print("\nthe ask check (#253) on the pregame price")
 good = [(ENTRY - 300, 0.41, 2), (ENTRY + 600, 0.40, 12)]
 check("10+ contracts at or under P in the hour after, P not under half the last trade: verified", N.ask_check(good, ENTRY, 0.40)["status"], "verified")
@@ -66,8 +80,8 @@ print("\ngame rows: one row per game, only verified buckets, fresh and in-sample
 def bucket(ok, roi_cost, roi_profit, sold=False):
     return dict(id="x", ask=dict(status="verified" if ok else "unverified"),
                 fills={"d75": dict(cost=roi_cost, profit=roi_profit, sold_at=1 if sold else None)})
-entries = [dict(event="E1", night="2026-10-31", insample=False, buckets=[bucket(True, 0.3, 0.15, True), bucket(True, 0.3, -0.3), bucket(False, 0.3, 9)]),
-           dict(event="E2", night="2026-11-01", insample=False, buckets=[bucket(True, 0.2, 0.1, True)]),
+entries = [dict(event="E1", night="2026-11-03", insample=False, buckets=[bucket(True, 0.3, 0.15, True), bucket(True, 0.3, -0.3), bucket(False, 0.3, 9)]),
+           dict(event="E2", night="2026-11-04", insample=False, buckets=[bucket(True, 0.2, 0.1, True)]),
            dict(event="E0", night="2026-10-25", insample=True, buckets=[bucket(True, 0.3, 0.3, True)])]
 g = N.game_rows(entries, "d75", False)
 check("two fresh games; E1 sums its two verified buckets (the unverified one is out)",
@@ -97,9 +111,9 @@ check("the ledger starts 2026-10-31 with the study window from 2026-10-20", (st[
 
 print("\nthe card")
 state = dict(entries=entries, last_run="x", error=None)
-chaos = dict(lanes={"nba_winmargin_split": dict(id="nba_winmargin_split", since="2026-10-30", trades=[
-    dict(event="E1", ticker="x", exit_key="split", roi=1.0, cost=0.2, profit=0.2, night="2026-10-31", won=True, reason="split"),
-    dict(event="E9", ticker="y", exit_key="split", roi=-1.0, cost=0.2, profit=-0.2, night="2026-11-01", won=False, reason="split")])})
+chaos = dict(lanes={"nba_winmargin_live": dict(id="nba_winmargin_live", since="2026-11-03", trades=[
+    dict(event="E1", ticker="x", exit_key="split", roi=1.0, cost=0.2, profit=0.2, night="2026-11-03", won=True, reason="split"),
+    dict(event="E9", ticker="y", exit_key="split", roi=-1.0, cost=0.2, profit=-0.2, night="2026-11-04", won=False, reason="split")])})
 html = B.card(state, chaos)
 check("headline row first, then 85% and 65%, in the lane's own order",
       [r for r in ("d75", "d85", "d65") if f'data-variant="{r}"' in html] , ["d75", "d85", "d65"])

@@ -14,16 +14,17 @@ import nba_winmargin_build as WB
 import nba_wm_nofade as N
 import nba_wm_nofade_build as NB
 
-YES_ID, NO_ID = "nba_winmargin_split", "nba_wm_nofade"
+YES_ID, NO_ID = "nba_winmargin_live", "nba_wm_nofade"
+V1_ID = "nba_winmargin_split"      # paper version 1 (folded 2026-11-03): its record stays
 SAMPLE_ID = "nba_winmargin_split_insample"
 # The moneyline underdog (nba_ml_dog_tp50) was demoted to a blind baseline and retired on 2026-11-01: it sits in the
 # page's Retired fold (nba_pace_build), not here.
 
 RULES = {
-    YES_ID: "Buy YES on a 1-5 or 6-10 win margin bucket (either team) priced 10-20c an hour before the tip; rest a sell for half at 2x "
-            "and half at 3x, filled only by traded prints from the tip on; the rest is held.",
-    NO_ID: "After the tip, rest a NO buy at 75% of a bucket's pregame NO price (10-95c) and sell it back at the pregame price on a "
-           "traded print, else hold; 85% and 65% are tracked too.",
+    YES_ID: "Production: traded live. Buy YES on a 1-5 or 6-10 win margin bucket (either team) at the ask, 10-20c, an hour before the tip; "
+            "rest a sell for half at 2x and half at 3x, filled only by prints strictly through the target from the tip on; the rest is held.",
+    NO_ID: "Production: traded live. After the tip, rest a post-only NO bid at 75% of a bucket's pregame NO price (10-95c) and sell it back "
+           "at the pregame price on a print strictly above it, else hold; a bucket already at or under the bid at the tip is no entry.",
 }
 
 
@@ -40,12 +41,22 @@ def _z(v):
 
 
 def _lanes(chaos):
-    return CB.with_config(chaos).get("lanes") or {}
+    """The ledger's lanes with the config applied; the live YES lane, before its first replay writes it, as an empty fresh record."""
+    lanes = dict(CB.with_config(chaos).get("lanes") or {})
+    if YES_ID not in lanes:
+        try:
+            import chaos_lanes
+            import datetime as _dt
+            cfg = next(x for x in chaos_lanes.LANES if x["id"] == YES_ID)
+            lanes[YES_ID] = C.lane_state(dict(lanes={}), cfg, _dt.datetime.now(C.UTC))
+        except Exception:                                       # noqa: BLE001
+            pass
+    return lanes
 
 
 def how_read():
     return ('<details class="section-disclosure" id="how-read"><summary><b>How these lanes are read</b><span>one place for the rules that apply to every card</span></summary>'
-            '<ul class="sm"><li>Sandbox, paper only: no orders, replayed from Kalshi\'s trade prints and 1-minute candles.</li>'
+            '<ul class="sm"><li>Both lanes are in Production: traded live. The record on this page is paper that mirrors what the live orders can do, replayed from Kalshi\'s trade prints and 1-minute candles.</li>'
             '<li>A buy is at the real ask before the tip (or a resting bid after it); a sell fills only on a traded print.</li>'
             '<li>The split sells half at 2x and half at 3x of the price paid. "Hold" is the same entries kept to settlement.</li>'
             '<li>The outcome is the game: one game is one event however many entries it holds. z is clustered by night.</li>'
@@ -69,12 +80,12 @@ def glance(chaos, nofade):
                     f'<td class="num">{_pct(hold)}</td><td class="num">{_z(z)}</td><td>{esc(status)}</td></tr>')
     if YES_ID in lanes:
         x = _chaos_row(lanes[YES_ID])
-        add("wm-yes", "Win margin · YES split (live)", x["events"], x["split"], x["hold"], x["z"], x["status"])
-    g = N.game_rows(nofade["entries"], N.vkey(N.HEAD), False)
+        add("wm-yes", "Win margin · YES split (Production)", x["events"], x["split"], x["hold"], x["z"], x["status"])
+    g = N.game_rows(nofade["entries"], N.vkey(N.HEAD), None, "v2")
     s = C.stats(g)
-    add("wm-no", "Win margin · NO fade (live)", s["n"], s["roi"], None, s["z"], NB.status(s["n"]))
+    add("wm-no", "Win margin · NO fade (Production)", s["n"], s["roi"], None, s["z"], NB.status(s["n"]))
     return ('<section id="glance"><h2>NBA at a glance</h2>'
-            '<p class="shell-kicker">Every active lane · Sandbox, paper only · ROI after fees · NO fade sells back at its pregame price, so it has no hold row</p>'
+            '<p class="shell-kicker">Every active lane · Production · the paper record live orders can match · ROI after fees · NO fade sells back at its pregame price, so it has no hold row</p>'
             '<div class="tbl"><table class="nba-glance"><tr><th>Lane</th><th class="num">Settled events</th><th class="num">Split ROI</th>'
             '<th class="num">Hold ROI</th><th class="num">z (by night)</th><th>Status</th></tr>' + "".join(rows) + "</table></div>"
             + how_read() + "</section>")
@@ -108,13 +119,18 @@ def _folds(L, sample=None, extra_sample=""):
     return out
 
 
-def lane_card(anchor, title, L, sample=None):
+def lane_card(anchor, title, L, sample=None, v1=None):
     bad = CB.unverified(L)[0]
     skipped = f'<p class="sm mut">Skipped as unverified ask: {bad}.</p>' if bad else ""
     folds = _folds(L, sample)
+    if v1 is not None:
+        folds += ('<details class="section-disclosure" id="wm-yes-v1"><summary><b>Paper version 1 (folded)</b>'
+                  f'<span>{esc(v1.get("since"))} to 2026-11-02 · sells filled on a print at the target</span></summary>'
+                  '<p class="sm mut">The paper lane before it mirrored live orders (a resting sell fills only through its target). '
+                  f'Its record stays as it was; it is not the Production record.</p>{_record(v1)}</details>')
     return (f'<section id="{anchor}"><details class="section-disclosure" data-lane="{esc(L["id"])}" open><summary><b>{esc(title)}</b>'
             f'<span>{CB.split_hold(L)["events"]} settled events · fresh record since {esc(L.get("since"))}</span></summary>'
-            f'<p class="sm">{esc(RULES[L["id"]])}{(" " + esc(L["caution"])) if L.get("caution") else ""}</p>'
+            f'<p class="sm">{esc(RULES.get(L["id"], ""))}{(" " + esc(L["caution"])) if L.get("caution") else ""}</p>'
             f'{CB.voided_line(L)}{_record(L)}{CB.basis_line(L)}{skipped}{folds}'
             f'<details class="section-disclosure"><summary><b>Trades</b><span>latest 30 entries · split, T target, S stop, H held to settlement</span></summary>{CB.trade_list(L)}</details>'
             '</details></section>')
@@ -122,23 +138,28 @@ def lane_card(anchor, title, L, sample=None):
 
 def nofade_card(chaos, nofade):
     head = N.vkey(N.HEAD)
-    c = N.counts(nofade["entries"], False)
+    c = N.counts(nofade["entries"], None, "v2")
     i = N.counts(nofade["entries"], True)
-    g = N.game_rows(nofade["entries"], head, False)
+    g = N.game_rows(nofade["entries"], head, None, "v2")
+    c1 = N.counts(nofade["entries"], None, "v1")
     last = nofade.get("last_run")
+    v1 = ('<details class="section-disclosure" id="nofade-v1"><summary><b>Paper version 1 (folded)</b>'
+          f'<span>{esc(N.SINCE)} to {esc(N.V2_FROM)}, fills and sells on a print at the price · {c1["games"]} games read</span></summary>'
+          '<p class="sm mut">The paper lane before it mirrored live orders (a post-only bid, fills and sells strictly through the price). '
+          f'Its record stays as it was; it is not the Production record.</p>{NB.variant_rows(nofade, False, dips=(N.HEAD,), phase="v1")}</details>')
     insample = ('<details class="section-disclosure" id="nofade-insample"><summary><b>In-sample research (not evidence)</b>'
                 f'<span>{esc(N.SINCE_IN)} to {esc(N.SINCE)}, the days the rule was chosen on</span></summary>'
                 f'<p class="sm mut">The same rule on Oct 20-30. {i["games"]} games read, {i["unverified"]} of {i["unverified"] + i["verified"]} buckets skipped as unverified ask. '
                 f'NOT evidence, never the headline.</p>{NB.variant_rows(nofade, True)}</details>')
     return (f'<section id="wm-no"><details class="section-disclosure" data-lane="{N.LANE}" open><summary><b>Win margin · NO fade</b>'
-            f'<span>{len(g)} settled events · fresh record since {esc(N.SINCE)}</span></summary>'
+            f'<span>{len(g)} settled events · fresh record since {esc(N.V2_FROM)}</span></summary>'
             f'<p class="sm">{esc(RULES[NO_ID])}</p>'
-            f'{NB.variant_rows(nofade, False, dips=(N.HEAD,))}'
+            f'{NB.variant_rows(nofade, False, dips=(N.HEAD,), phase="v2")}'
             f'<p class="sm mut">Skipped as unverified ask: {c["unverified"]} of {c["unverified"] + c["verified"]} buckets.</p>'
             f'<p class="sm"><b>Next to the YES split</b></p>{NB.side_by_side(nofade, chaos)}'
             f'<details class="section-disclosure"><summary><b>Other exits / variants</b><span>85% and 65% of pregame</span></summary>'
-            f'{NB.variant_rows(nofade, False, dips=tuple(d for d in N.DIPS if d != N.HEAD))}</details>'
-            f'{insample}'
+            f'{NB.variant_rows(nofade, False, dips=tuple(d for d in N.DIPS if d != N.HEAD), phase="v2")}</details>'
+            f'{insample}{v1}'
             f'<details class="section-disclosure"><summary><b>Trades</b><span>latest 30 games with a fill · the headline row</span></summary>{NB.trade_list(nofade)}</details>'
             f'<p class="sm mut">Last read {esc(last or "not yet")}{(" · " + esc(nofade["error"])) if nofade.get("error") else ""}.</p>'
             '</details></section>')
@@ -151,7 +172,7 @@ def cheap_side(chaos=None, nofade=None):
     lanes = _lanes(chaos)
     cards = ""
     if YES_ID in lanes:
-        cards += lane_card("wm-yes", "Win margin · YES split", lanes[YES_ID], lanes.get(SAMPLE_ID))
+        cards += lane_card("wm-yes", "Win margin · YES split", lanes[YES_ID], lanes.get(SAMPLE_ID), lanes.get(V1_ID))
     cards += nofade_card(chaos, nofade)
     return f'<section id="cheap-side"><h2>Active lanes</h2><p class="shell-kicker">One card each · the rule, the live record, then folds</p>{cards}</section>'
 
