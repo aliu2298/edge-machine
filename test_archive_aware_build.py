@@ -22,6 +22,12 @@ import sandbox_sources as S
 import sandbox_track as T
 import sport_tab
 
+# The fixtures replay 4 Oct 2026, when espn_fpi|nfl was a running pair. It was retired for NFL on 2026-11-02 (its
+# nfl scope moved to retired_sports), which made the fixture lane "retired" and dropped it from the closing-price
+# sentence. Put the scope back for this replay only.
+S.SOURCES["espn_fpi"]["sports"] = list(S.SOURCES["espn_fpi"]["sports"]) + (["nfl"] if "nfl" not in S.SOURCES["espn_fpi"]["sports"] else [])
+S.SOURCES["espn_fpi"]["retired_sports"] = {k: v for k, v in (S.SOURCES["espn_fpi"].get("retired_sports") or {}).items() if k != "nfl"}
+
 FAILS = []
 # Noon UTC on 4 Oct 2026. Chicago is CDT (UTC-5). The recent window is the
 # seven Chicago dates 28 Sep through 4 Oct.
