@@ -85,11 +85,6 @@
    "lead_min": 1.5,
    "price": 0.39
   },
-  "bund_o35:KXBUNDESLIGATOTAL-26OCT23VFBBMG-4": {
-   "at": "2026-10-23T18:17:08+00:00",
-   "lead_min": 12.9,
-   "price": 0.56
-  },
   "bund_o35:KXBUNDESLIGATOTAL-26OCT24BVBSGE-4": {
    "at": "2026-10-24T16:24:38+00:00",
    "lead_min": 5.4,
@@ -181,9 +176,9 @@
    "price": 0.98
   },
   "commod_fav_band:KXWTI-26NOV0214-T96.49": {
-   "at": "2026-11-02T18:16:31+00:00",
-   "lead_min": 43.5,
-   "price": 0.11
+   "at": "2026-11-02T18:31:39+00:00",
+   "lead_min": 28.3,
+   "price": 0.17
   },
   "commod_fav_band:KXWTI-26OCT2614-T100.49": {
    "at": "2026-10-26T17:59:48+00:00",
@@ -304,6 +299,11 @@
    "at": "2026-10-26T20:16:08+00:00",
    "lead_min": 13.9,
    "price": 0.9
+  },
+  "commod_nc_yes:KXWTI-26NOV0214-T94.49": {
+   "at": "2026-11-02T18:31:39+00:00",
+   "lead_min": 28.3,
+   "price": 0.97
   },
   "commod_nc_yes:KXWTI-26OCT2614-T101.49": {
    "at": "2026-10-26T17:59:48+00:00",
@@ -1781,5 +1781,5 @@
    "price": 0.75
   }
  },
- "updated": "2026-11-02T18:16:31+00:00"
+ "updated": "2026-11-02T18:31:39+00:00"
 }
