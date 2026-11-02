@@ -152,6 +152,13 @@ CRYPTO_BOTH_RETIRED_WHY = {
                             + RETIRED_TAIL_2026_10_31),
 }
 
+# ESPN FPI's NFL scope (Olu, 2026-11-02): out of Production since 2026-10-27, retired here. Its only live scope (MLB is a
+# removed lane since 2026-10-04), so the source fetches nothing new; its rows stay and its open bets still settle.
+RETIRED_TAIL_2026_11_02 = (" No new entries from 2026-11-02; its rows stay on file and its open bets "
+                           "still settle.")
+ESPN_FPI_NFL_RETIRED_WHY = ("Retired 2026-11-02 by Olu: no edge at 35 settled — 14 won v 17.8 priced, −26.4% after fees."
+                            + RETIRED_TAIL_2026_11_02)
+
 # The registry. `connected` is the honest bit: it says whether this run can actually
 # reach the source, not whether the site exists.
 SOURCES = {
@@ -182,7 +189,8 @@ SOURCES = {
              "picks ran +12.4% on 23 (z +0.85). Re-opened in the Sandbox only."),
     "espn_fpi": dict(
         label="ESPN FPI / Matchup Predictor", kind="Statistical model", connected=True,
-        site="espn.com", sports=["nfl", "mlb"],
+        site="espn.com", sports=["mlb"],
+        retired_sports={"nfl": ESPN_FPI_NFL_RETIRED_WHY},
         note="ESPN's own win probability (gameProjection). A pure model with no money "
              "behind it, which makes it the most likely of the four to be beatable."),
     "draftkings": dict(

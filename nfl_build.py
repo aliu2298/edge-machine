@@ -29,7 +29,8 @@ def method(idle_html=""):
                  'is logged before kickoff at the price available then, settled on the real result at a '
                  f'flat ${int(T.STAKE)} stake, and judged after fees against the price it paid.</p>'
                  '<p class="sm">ESPN FPI was paused on 2026-09-25 with every NFL lane and resumed by '
-                 'the owner on 2026-10-16; its record counts from its 2026-09-21 reset.</p>' + idle_html)
+                 'the owner on 2026-10-16; its record counts from its 2026-09-21 reset. It was retired on '
+                 '2026-11-02 (Retired rules, below).</p>' + idle_html)
         return "Method", "venue note", inner, False
     return _method
 
@@ -45,7 +46,7 @@ def build(d=None, st=None, now=None):
         family=FAMILY, key=KEY, title=TITLE, description=DESCRIPTION, scope=SCOPE,
         venue="Polymarket US", rows=rows, events=CC.events, rule_name=CC.rule_name,
         market=CC.market, definition=SP.default_definition, recent=CC.recent_html,
-        method=method(idle_html))
+        method=method(idle_html), retired=sport_tab.retired_rows(d, st, FAMILY))
     # cfb_dog_tp50's home (2026-10-27): the cheap-side section near the top, before the rules.
     import chaos_build
     return chaos_build.place(_team_totals(SP.page(sp, d, st, now, rows=rows, idle=idle)), "nfl",

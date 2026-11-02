@@ -76,6 +76,10 @@ ALIAS = {"WSH": "WAS", "LAR": "LA", "JAX": "JAC"}
 # bets still settle; the workflow and the other lane keep running.
 RETIRED = {LANE_MAIN: dict(on="2026-10-31", reason="No edge at 30 settled (won exactly what its prices implied): "
                                                    "15 won v 15.1 priced, -3.5% after fees.")}
+# Kept past the 30-settled read to a decision at 50 (2026-11-02, Olu): below READ_AT a lane is still collecting,
+# whatever its lean, and its verdict counts to READ_AT. Paper; nothing else about the lane changes.
+READ_AT = {LANE_BAND: 50}
+KEPT = {LANE_BAND: "Kept to 50 by Olu 2026-11-02 (36 settled, +2.1% v blind baseline +1.4%)."}
 
 
 def retired(lane, now):

@@ -163,8 +163,8 @@ def main():
         S.clear_nws_run()
     weather_calls = [c for c in calls if c[0] in ("nws", "nws_fade") or c[1] == "climate"]
     eq(weather_calls, [], "no weather source is fetched")
-    ok(("espn_fpi", "nfl") in calls and ("espn_fpi", "mlb") not in calls,
-       "ESPN FPI NFL is still fetched and its MLB lane is not")
+    ok(("espn_fpi", "nfl") not in calls and ("espn_fpi", "mlb") not in calls,
+       "ESPN FPI is fetched on neither sport: NFL retired 2026-11-02, MLB removed")
     eq(_weather_quote(logged["quotes"]), [], "the run logs no weather bet")
     eq(_weather_quote(logged_on["quotes"]), [],
        "taking nws off the pause list still logs no weather bet")
