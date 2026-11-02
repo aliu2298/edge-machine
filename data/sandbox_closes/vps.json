@@ -431,9 +431,9 @@
    "price": 0.73
   },
   "crypto_fav_band:KXBTCD-26NOV0217-T76499.99": {
-   "at": "2026-11-02T19:32:08+00:00",
-   "lead_min": 32.9,
-   "price": 0.8
+   "at": "2026-11-02T19:47:19+00:00",
+   "lead_min": 17.7,
+   "price": 0.64
   },
   "crypto_fav_band:KXBTCD-26OCT2417-T79749.99": {
    "at": "2026-10-24T18:56:29+00:00",
@@ -490,15 +490,20 @@
    "lead_min": 19.5,
    "price": 0.45
   },
+  "crypto_fav_band:KXXRPD-26NOV0217-T1.2399": {
+   "at": "2026-11-02T19:47:19+00:00",
+   "lead_min": 17.7,
+   "price": 0.61
+  },
   "crypto_fav_band_60:KXBTCD-26NOV0117-T77749.99": {
    "at": "2026-11-01T19:55:12+00:00",
    "lead_min": 9.8,
    "price": 0.33
   },
   "crypto_fav_band_60:KXBTCD-26NOV0217-T76749.99": {
-   "at": "2026-11-02T19:32:08+00:00",
-   "lead_min": 32.9,
-   "price": 0.6
+   "at": "2026-11-02T19:47:19+00:00",
+   "lead_min": 17.7,
+   "price": 0.38
   },
   "crypto_fav_band_60:KXBTCD-26OCT2417-T79999.99": {
    "at": "2026-10-24T18:56:29+00:00",
@@ -556,9 +561,9 @@
    "price": 0.91
   },
   "crypto_fav_band_below:KXBTCD-26NOV0217-T77249.99": {
-   "at": "2026-11-02T19:32:08+00:00",
-   "lead_min": 32.9,
-   "price": 0.84
+   "at": "2026-11-02T19:47:19+00:00",
+   "lead_min": 17.7,
+   "price": 0.93
   },
   "crypto_fav_band_below:KXBTCD-26OCT2417-T80499.99": {
    "at": "2026-10-24T18:56:29+00:00",
@@ -615,6 +620,11 @@
    "lead_min": 9.8,
    "price": 0.68
   },
+  "crypto_fav_band_below_60:KXBTCD-26NOV0217-T76999.99": {
+   "at": "2026-11-02T19:47:19+00:00",
+   "lead_min": 17.7,
+   "price": 0.82
+  },
   "crypto_fav_band_below_60:KXBTCD-26OCT2417-T80249.99": {
    "at": "2026-10-24T18:56:29+00:00",
    "lead_min": 8.5,
@@ -641,9 +651,9 @@
    "price": 0.91
   },
   "crypto_fav_band_below_60:KXETHD-26NOV0217-T2249.99": {
-   "at": "2026-11-02T19:32:08+00:00",
-   "lead_min": 32.9,
-   "price": 0.57
+   "at": "2026-11-02T19:47:19+00:00",
+   "lead_min": 17.7,
+   "price": 0.77
   },
   "crypto_fav_band_below_60:KXETHD-26OCT2417-T2319.99": {
    "at": "2026-10-24T18:56:29+00:00",
@@ -1756,5 +1766,5 @@
    "price": 0.75
   }
  },
- "updated": "2026-11-02T19:32:08+00:00"
+ "updated": "2026-11-02T19:47:19+00:00"
 }
