@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Offline checks for the 2026-11-02 NFL decisions (Olu): ESPN FPI retired (its NFL scope, the only one it still ran:
-MLB is a removed lane since 2026-10-04), and the NFL team total OVER 35-45c lane kept to a decision at 50 settled.
-Neither is in Production; nothing in Production moves."""
+"""Offline checks for the 2026-11-02 decisions (Olu): ESPN FPI retired (its NFL scope, the only one it still ran: MLB is
+a removed lane since 2026-10-04), the NFL team total OVER 35-45c lane kept to a decision at 50 settled, and the UTR daily
+shortlist retired. None is in Production; nothing in Production moves. The Challenger hold lane registered the same day
+is checked in test_challenger_form.py."""
 import inspect
 import re
 import sys
@@ -85,7 +86,27 @@ check("its row: evidence out of 50 and the kept note in its details",
       (re.findall(r'data-l="Evidence">([^<]+)', row), "Kept to 50 by Olu 2026-11-02" in row), (["36/50"], True))
 check("any other lane keeps the page's floor", NB.floor(N.LANE_MAIN), NB.SP.EVIDENCE_FLOOR)
 
-check("no guarded phrase in the new copy", sandbox_audit.COPY_RE.search(WHY + N.KEPT[N.LANE_BAND] + fold + row), None)
+print("\nthe UTR daily shortlist: retired (its only scope), its open bets still settle")
+utr = S.SOURCES["tennis_utr_shortlist_v1"]
+UTR_WHY = ("Retired 2026-11-02 by Olu: at the price — 20 won v 19.4 priced, +10 no result, −7.8% after fees on 37; the shortlist did "
+           "no better than the whole eligible pool (−7.5%). No new entries from 2026-11-02; its rows stay on file and its open "
+           "bets still settle.")
+check("tennis moved from sports to retired_sports with the dated reason", (utr["sports"], utr["retired_sports"]), ([], {"tennis": UTR_WHY}))
+check("its own selection path checks the source's live sports, so it selects and logs nothing new",
+      'and sport in S.SOURCES["tennis_utr_shortlist_v1"]["sports"]' in inspect.getsource(T), True)
+check("a retired-scope row still settles", S.removed_row(dict(source="tennis_utr_shortlist_v1", sport="tennis")), False)
+check("out of Production since 2026-10-27, not re-listed",
+      (T.PAIR_REMOVALS.get("tennis_utr_shortlist_v1|tennis", {}).get("removed_on"), "tennis_utr_shortlist_v1|tennis" in T.PAIR_OVERRIDES),
+      ("2026-10-27", False))
+import tennis_build
+th = tennis_build.build()
+ti = th.find('<section id="retired"')
+tfold = th[ti:th.find("</section>", ti)]
+m = re.search(r'sp-retired-why" data-source="tennis_utr_shortlist_v1"[^>]*>(.*?)</p>', tfold, re.S)
+check("the Tennis page lists it in Retired rules with the dated record, and not in the live rules",
+      (re.sub(r"<[^>]+>", "", m.group(1)) if m else None, 'data-source="tennis_utr_shortlist_v1"' in th[:ti]), (UTR_WHY, False))
+
+check("no guarded phrase in the new copy", sandbox_audit.COPY_RE.search(WHY + UTR_WHY + N.KEPT[N.LANE_BAND] + fold + row + tfold), None)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

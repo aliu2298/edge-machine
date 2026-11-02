@@ -266,13 +266,21 @@ def lane_html(L):
 # data/chaos_ledger.json (the same records, never copied). The Sandbox's Chaos section is an index
 # that links to them. A lane not listed here would have no home: test_sport_cheap_homes checks.
 HOMES = {
-    "tennis": ("challenger_cheap_split", "challenger_dog_tp30", "atp_coinflip_tp30"),
+    "tennis": ("challenger_won_here_hold", "challenger_cheap_hold_base", "challenger_cheap_split", "challenger_dog_tp30",
+               "atp_coinflip_tp30"),
     "nba": ("nba_ml_dog_tp50", "nba_winmargin_live", "nba_winmargin_split", "nba_winmargin_split_insample", "nba_tt_cheap_tp30"),
     "nfl": ("cfb_home_dog_x4", "cfb_dog_tp50"),
 }
 HOME_OF = {lane: page for page, lanes in HOMES.items() for lane in lanes}
 TENNIS = HOMES["tennis"]
 PAGE_LABEL = {"tennis": "Tennis", "nba": "NBA", "nfl": "NFL · College football"}
+# What the page's lanes do after the entry. Tennis holds since 2026-11-02 (its split lanes are retired).
+_EXIT_WORDS = {
+    None: "<li>Rest a split sell: half at 2x, half at 3x.</li><li>A fill counts only on a traded print.</li>\n"
+          "<li>Every lane is shown next to the same entries held.</li>",
+    "tennis": "<li>Hold to settlement: no sell.</li><li>Every lane is shown next to its blind baseline: the same entry on "
+              "every player in the band.</li>",
+}
 _BUY = {"tennis": "Buy the cheap player about an hour before the match, at the real ask.",
         "nba": "Buy the cheap side before the tip (1h, and 24h for the team totals), at the real ask.",
         "nfl": "College football: buy the underdog 1h and 24h before kickoff, at the real ask (the lane: the home team, 10-25c)."}
@@ -337,8 +345,7 @@ def sport_section(page, state=None, retired=True):
     return f"""<section id="cheap-side">
 <h2>Cheap side + resting take-profit</h2>
 <ul class="sm"><li>{esc(_BUY[page])}</li>
-<li>Rest a split sell: half at 2x, half at 3x.</li><li>A fill counts only on a traded print.</li>
-<li>Every lane is shown next to the same entries held.</li></ul>
+{_EXIT_WORDS.get(page, _EXIT_WORDS[None])}</ul>
 <p class="sm mut">Sandbox, paper only, replayed nightly from Kalshi's 1-minute candles: review at {C.REVIEW_N} settled, decide at {C.PROMOTE_N}. Every cheap-side lane is listed in the <a href="./sandbox.html#chaos">Sandbox's Chaos index</a>, which links here; the records are the same. The average spread paid is recorded from 2026-10-27.</p>
 {block}{body}
 </section>"""
@@ -366,10 +373,12 @@ def baseline_block(L):
     return (f'<details class="section-disclosure baseline" data-lane="{esc(L["id"])}" id="baseline-{esc(L["id"])}" open>'
             f'<summary><b>Baseline · {esc(baseline_name(L))} (blind, price band only)</b>'
             f'<span>{split_hold(L)["events"]} settled events · replayed every night · not a lane</span></summary>'
-            f'<p class="sm">Every game\'s side priced 10-40c, bought {esc(hours)} before the start, no team or matchup filter. '
-            'A filtered underdog lane on these markets must beat this record, split and hold alike.</p>'
-            f'<p class="sm mut">A lane until {esc(g["on"])} ({esc(g["at"])}): {esc(g["reason"])}.</p>'
-            f'{voided_line(L)}{split_table(L)}{basis_line(L)}'
+            + (f'<p class="sm">{esc(g["who"])} A filtered lane on these markets must beat this record.</p>'
+               f'<p class="sm mut">Registered as a baseline {esc(g["on"])}: {esc(g["reason"])}.</p>' if g.get("who") else
+               f'<p class="sm">Every game\'s side priced 10-40c, bought {esc(hours)} before the start, no team or matchup filter. '
+               'A filtered underdog lane on these markets must beat this record, split and hold alike.</p>'
+               f'<p class="sm mut">A lane until {esc(g["on"])} ({esc(g["at"])}): {esc(g["reason"])}.</p>')
+            + f'{voided_line(L)}{split_table(L)}{basis_line(L)}'
             + (f'<details class="section-disclosure"><summary><b>Other exits</b><span>{len(others)} variants, each against its hold control</span></summary>'
                f'{variant_table(L, skip=(C.SPLIT,), read=False)}</details>' if others else '')
             + f'<details class="section-disclosure"><summary><b>Trades</b><span>latest 30 entries · split, T target, S stop, H held to settlement</span></summary>{trade_list(L)}</details></details>')

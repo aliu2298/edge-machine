@@ -451,6 +451,12 @@ def _check_sport_tab(family, html, d, st):
     rows = [r for r in B.pair_list(d, st)
             if B.family(r["sport"]) == family and not B.eliminated(r)]
     section = B.sport_sections(d, rows)
+    if family == "Tennis" and not rows:
+        # Since 2026-11-02 every Tennis source rule is retired (the UTR shortlist last); the Tennis page's live lane is the
+        # chaos hold lane in its cheap-side section, and the retired rules sit in its Retired fold.
+        # (the caller strips the cheap-side section before these fixture checks)
+        ok('id="retired"' in html and 'class="sp-rules-list' in html, "Tennis has no live source rule: the rules list and its Retired fold stand")
+        return
     ok(bool(section) and len(section) > 200, f"{family} Sandbox section is non-empty")
     # Tennis and Soccer name their one rules table #rules; the other tabs keep #lanes.
     lanes = re.search(r'<section id="(?:lanes|rules)"[^>]*>(.*?)</section>', html, re.S)

@@ -40,6 +40,7 @@ import subprocess
 import urllib.request
 
 import cfb_home
+import challenger_form
 import chaos_replay as C
 import daily_track as D
 
@@ -138,7 +139,33 @@ def bucket_picker(buckets, lo, hi, spread):
 DOG = C.band_picker(0.10, 0.40, ("yes",))
 FIRST_NIGHT = "2026-10-25"          # approved 2026-10-24: every record starts fresh from here
 
+CHALLENGER_CHEAP = C.band_picker(0.15, 0.30, ("yes",), spread=0.05)
+
 LANES = [
+    # 2026-11-02 (Olu): the Challenger cheap side as a HOLD lane, with a pre-registered player filter (no blind
+    # selection). The retired challenger_cheap_split's hold made +19.6% on 34 settled (its split +0.8%) but was never a
+    # hold-only lane; it was blind. PRE-REGISTERED 2026-11-02, before any price or result was looked at
+    # (challenger_form.py): the 15-30c player who has already WON a match at this tournament (qualifying counts),
+    # against a favourite who has not played one there yet. Same entry as challenger_cheap_split, held, no sells.
+    # Fresh record from 2026-11-02; review at 10, decide at 30. Its baseline is the next lane.
+    dict(id="challenger_won_here_hold", label="Challenger cheap side, won here · hold", series=[challenger_form.SERIES],
+         picker=challenger_form.won_here_picker(0.15, 0.30, 0.05), max_spread=0.05, entry_hours=(1,),
+         exits=("hold",), headline="hold", first=True, since="2026-11-02", duration_min=120,
+         caution="Registered 2026-11-02 with its filter written down first. Read it against the blind 15-30c baseline below, "
+                 "not against fair alone.",
+         note="A Challenger player priced 15-30c (spread 5c or less) an hour before the match who has already won a match at "
+              "this tournament (qualifying counts), against a favourite who has not played there yet; held to settlement, no "
+              "sells. The tournament is read from the Kalshi event (product_metadata.competition); a match counts only once it settled before "
+              "the entry. Start from the first in-play price movement, as challenger_cheap_split."),
+    # Its BASELINE (2026-11-02, Olu: no blind selection): the same entry on every 15-30c Challenger player, held.
+    dict(id="challenger_cheap_hold_base", label="Challenger 15-30c player · hold", series=[challenger_form.SERIES],
+         picker=CHALLENGER_CHEAP, max_spread=0.05, entry_hours=(1,), exits=("hold",), headline="hold",
+         since="2026-11-02", duration_min=120,
+         baseline=dict(on="2026-11-02", at="registered with its lane",
+                       reason="the blind 15-30c Challenger population, held: the bar challenger_won_here_hold must beat (Olu, 2026-11-02)",
+                       who="Every Challenger player priced 15-30c (spread 5c or less) an hour before the match, held to "
+                           "settlement, no player or matchup filter."),
+         note="Every Challenger player priced 15-30c an hour before the match, held: the blind population."),
     # 2026-10-27 (Olu): the cheap-side split as the chaos standard. A Challenger player whose YES ask is
     # 0.15-0.30 (spread 5c or less) about an hour before the match, start found as for
     # challenger_dog_tp30 (the first in-play price movement); SPLIT half at 2x, half at 3x of the ask

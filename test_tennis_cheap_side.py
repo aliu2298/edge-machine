@@ -52,9 +52,9 @@ chaos_lanes.LANES = _lanes
 text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", h))
 
 print("the section")
-check("the standard header", all(x in text for x in ("Cheap side + resting take-profit",
-      "Buy the cheap player about an hour before the match, at the real ask.", "Rest a split sell: half at 2x, half at 3x.",
-      "A fill counts only on a traded print.", "Every lane is shown next to the same entries held.")), True)
+check("the standard header (Tennis lanes hold from 2026-11-02, each beside its blind baseline)", all(x in text for x in ("Cheap side + resting take-profit",
+      "Buy the cheap player about an hour before the match, at the real ask.", "Hold to settlement: no sell.",
+      "Every lane is shown next to its blind baseline")), True)
 summ = h[h.find('class="chaos-summary"'):h.find("</table>", h.find('class="chaos-summary"'))]
 check("the summary: the active tennis lanes, challenger_cheap_split first; no NBA lane; challenger_dog_tp30 retired 2026-10-27",
       re.findall(r'data-lane="([^"]+)"', summ), ["challenger_cheap_split", "atp_coinflip_tp30"])
