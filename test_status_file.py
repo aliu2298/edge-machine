@@ -137,7 +137,7 @@ print("\nthe status file")
 d2 = {"quotes": [test, t20, _bet("oddspedia:settled", 60, status="won", market_id="k2")],
       "meta": {"updated": NOW.isoformat()},
       "coverage": {"cricket": {"oddspedia": {"offered": 21, "picked": 0}}},
-      "feed_status": {"oddspedia": "ok", "espn_fpi": "down: page unreachable"}}
+      "feed_status": {"oddspedia": "ok", "pin_totals": "down: page unreachable"}}
 s = T.build_status(d2, now=NOW)
 eq(sorted(s), ["broken_feeds", "lanes", "ledger_updated", "overdue_open", "written"], "the top-level keys")
 eq(s["written"], NOW.isoformat(), "written is the build clock")
@@ -152,16 +152,18 @@ ok(all(k.count("|") == 1 for k in s["lanes"]) and all(S.SOURCES[v["source"]]["co
 ok(any(v["read"] == "paused" and v["paused"] for v in s["lanes"].values()), "a paused lane says so")
 eq([(x["id"], x["overdue_after_h"]) for x in s["overdue_open"]], [("oddspedia:aec-t20icr-x-y-2026-10-10", 24)],
    "overdue_open lists the T20 and not the Test, with the hours it was allowed")
-eq([x["source"] for x in s["broken_feeds"]], ["espn_fpi"], "broken_feeds is broken_feeds(d)")
-olbg = next(v for k, v in s["lanes"].items() if k.startswith("espn_fpi|"))
+eq([x["source"] for x in s["broken_feeds"]], ["pin_totals"], "broken_feeds is broken_feeds(d)")
+# A live (unpaused) lane of the down source; ESPN FPI was the example until its NFL scope retired on 2026-11-02.
+olbg = next(v for k, v in s["lanes"].items() if k.startswith("pin_totals|") and not v["paused"])
 eq((olbg["read"], olbg["last_read"]), ("down: page unreachable", None), "a source down this run has no last_read to carry")
 empty = dict(d2, coverage={"cricket": {"oddspedia": {"offered": 0, "picked": 0}}})
 quiet = T.build_status(empty, now=NOW)["lanes"]["oddspedia|cricket"]
 eq((quiet["read"], quiet["last_read"]), ("ok", None),
    "a feed that answered with nothing on offer for this sport is not a read of this lane")
-previous = {"lanes": {next(k for k in s["lanes"] if k.startswith("espn_fpi|")): {"last_read": "2026-10-10T08:00:00+00:00"}}}
+_down = next(k for k, v in s["lanes"].items() if k.startswith("pin_totals|") and not v["paused"])
+previous = {"lanes": {_down: {"last_read": "2026-10-10T08:00:00+00:00"}}}
 s2 = T.build_status(d2, now=NOW, previous=previous)
-olbg2 = next(v for k, v in s2["lanes"].items() if k.startswith("espn_fpi|"))
+olbg2 = s2["lanes"][_down]
 eq(olbg2["last_read"], "2026-10-10T08:00:00+00:00", "last_read carries forward from the previous file when this run did not read")
 with tempfile.TemporaryDirectory() as tmp:
     path = os.path.join(tmp, "status.json")

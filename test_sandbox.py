@@ -1091,8 +1091,8 @@ healthy = {"coverage": {"cricket": {"oddspedia": 4}, "boxing": {"olbg": 12},
 eq(BUILD.feed_health(healthy), "", "no warning when every source reported something")
 
 # One quiet sport is an empty fixture list, not a broken feed.
-# OLBG left the board on 2026-10-04, so this uses ESPN FPI, which still covers two sports.
-quiet = {"coverage": {"nfl": {"espn_fpi": 3}, "mlb": {"espn_fpi": 0}}, "quotes": []}
+# OLBG left the board on 2026-10-04 and ESPN FPI's NFL scope retired on 2026-11-02, so this uses Kalshi (NFL and tennis).
+quiet = {"coverage": {"nfl": {"kalshi": 3}, "tennis": {"kalshi": 0}}, "quotes": []}
 eq(BUILD.feed_health(quiet), "",
    "a source quiet in ONE sport is not flagged — a card can be empty on a Tuesday")
 
@@ -3276,10 +3276,10 @@ def _pq2(src, sport, i, won, price=0.5):
                 status="won" if won else "lost", pnl=100.0 if won else -100.0, stake=100.0,
                 start=f"2026-08-{1 + i % 28:02d}T18:00:00+00:00", logged=f"2026-08-{1 + i % 28:02d}T10:00:00+00:00")
 _pd = {"quotes": [_pq2("mls_away_band", "soccer", i, i % 3 != 0) for i in range(36)]  # 24/36 at 0.5: working
-                + [_pq2("espn_fpi", "nfl", i, i % 3 == 0) for i in range(33)]    # 11/33: not working
+                + [_pq2("kalshi", "nfl", i, i % 3 == 0) for i in range(33)]    # 11/33: not working (ESPN FPI NFL retired 2026-11-02)
                 + [_pq2("corners_total_under", "soccer_corners", i, i % 2 == 0) for i in range(5)]}  # too early
 _pl = {(r["name"], r["sport"]): r["v"] for r in SB.pair_list(_pd, {"pairs": {}})}
-eq((_pl[("mls_away_band", "soccer")], _pl[("espn_fpi", "nfl")]), ("proven", "noedge"),
+eq((_pl[("mls_away_band", "soccer")], _pl[("kalshi", "nfl")]), ("proven", "noedge"),
    "24/36 at 0.50 is a proven edge (z > 2); 11/33 has no edge")
 eq(_pl[("corners_total_under", "soccer_corners")], "early", "five bets is too early for any verdict, whichever way it leans")
 _secs = SB.sport_sections(_pd, SB.pair_list(_pd, {"pairs": {}}))
@@ -7127,10 +7127,10 @@ ok(not S.lane_paused("polymarket_us", "nfl") and not S.lane_paused("polymarket_u
 ok(S.lane_paused("polymarket", "nfl") and S.lane_paused("kalshi", "nfl"),
    "the other NFL sources stay paused on their own lines")
 ok(S.source_fully_paused("pinnacle") and S.source_fully_paused("covers")
-   and S.source_fully_paused("scores24") and not S.source_fully_paused("espn_fpi")
+   and S.source_fully_paused("scores24") and S.source_fully_paused("espn_fpi")     # NFL retired 2026-11-02, MLB removed
    and S.source_fully_paused("olbg")
    and not S.source_fully_paused("polymarket_us"),
-   "a removed source logs no sport; Polymarket US still logs the sports it keeps")
+   "a removed (or wholly retired) source logs no sport; Polymarket US still logs the sports it keeps")
 for _name, _sport in (
         ("tennis_utr_shortlist_v1", "tennis"), ("crypto_fav_band", "crypto_fav"),
         ("team1_form_l5", "soccer_team1"), ("u35_low_scoring", "soccer_u35"),
@@ -7226,8 +7226,8 @@ ok(("soccerpredictions", "soccer") not in _fetch_calls,
    "a removed lane's fetcher is not called")
 ok(("scores24", "soccer") not in _fetch_calls and ("scores24", "nfl") not in _fetch_calls,
    "scores24 is not fetched on either sport")
-ok(("espn_fpi", "nfl") in _fetch_calls and ("espn_fpi", "mlb") not in _fetch_calls,
-   "espn_fpi still fetches NFL and does not fetch the removed MLB lane")
+ok(("espn_fpi", "nfl") not in _fetch_calls and ("espn_fpi", "mlb") not in _fetch_calls,
+   "espn_fpi fetches neither its retired NFL scope (2026-11-02) nor the removed MLB lane")
 
 _saved_ch = S.CHALLENGERS
 S.SOURCES["soccerpredictions"]["sports"].append("nfl")

@@ -48,9 +48,18 @@ def row_data(lane, state=None):
     a = N.stats(picks)
     a["unit"] = "bet"
     gone = N.RETIRED.get(lane)
-    v = "retired" if gone else B.verdict(dict(a, n=a["n"] + a["n_price"]))
+    n = a["n"] + a["n_price"]
+    v = "retired" if gone else B.verdict(dict(a, n=n))
+    if not gone and v in ("proven", "working", "noedge") and n < floor(lane):
+        # kept to a later decision (N.READ_AT): still collecting, with its lean so far
+        v = "promising" if (a.get("roi_fee") or 0) > 0 and a["z"] > 0 else "behind"
     return dict(name=lane, sport="nfl_team_total", a=a, v=v, meta={"note": N.DEFINITION[lane]}, picks=picks,
                 **({"gone": gone_text(lane)} if gone else {}))
+
+
+def floor(lane):
+    """The settled count a lane is decided at: the page's read floor, or the later one it was kept to."""
+    return N.READ_AT.get(lane, SP.EVIDENCE_FLOOR)
 
 
 def gone_text(lane):
@@ -104,6 +113,7 @@ def row_html(lane, state=None):
         f'registered {esc(N.REGISTERED)} · paper · own ledger</p>'
         f'{SP.definition_html(N.DEFINITION[lane])}{SP.definition_html(N.PREREG[lane], "mut")}'
         f'<p class="sp-def">This record: {esc(_record_words(a))}. z is clustered by NFL week.</p>'
+        + (f'<p class="sp-def nfl-tt-kept">{esc(N.KEPT[lane])}</p>' if lane in N.KEPT and not gone else '') +
         f'<p class="sp-def">Blind baseline (the YES on every in-window team-total rung, same quote): '
         f'{esc(_record_words(base))}{" · " + str(base["open"]) + " open" if base["open"] else ""}.</p>'
         f'<h4 class="sp-details-sub">Recent entries{open_words}</h4>'
@@ -122,8 +132,8 @@ def row_html(lane, state=None):
         f'<span class="sp-cell num" data-l="Record">{SP.record_compact(a)}</span>'
         f'<span class="sp-cell num" data-l="ROI after fees">{SP.roi_html(row)}</span>'
         f'<span class="sp-cell num" data-l="Won v priced">{esc(SP.won_v_priced(a))}</span>'
-        f'<span class="sp-cell num" data-l="Evidence">{esc(SP.evidence(a))}</span>'
-        f'<span class="sp-cell sp-c-verdict" data-l="Verdict">{SP.verdict_badge(row)}</span>'
+        f'<span class="sp-cell num" data-l="Evidence">{int(a.get("n") or 0)}/{floor(lane)}</span>'
+        f'<span class="sp-cell sp-c-verdict" data-l="Verdict">{SP.verdict_badge(row, floor(lane))}</span>'
         f'</summary>{details}</details>')
 
 

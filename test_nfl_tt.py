@@ -217,7 +217,7 @@ for lane in N.LANES:
     check(f"{lane}: named as registered", N.NAMES[lane] in row and f'data-source="{lane}"' in row, True)
     check(f"{lane}: a Sandbox rule row", 'data-stage="sandbox"' in row and 'class="sp-rule' in row, True)
 row = NB.row_html(N.LANE_BAND, s)
-check("record and evidence cells", ('data-l="Record">1–0' in row, 'data-l="Evidence">1/30' in row), (True, True))
+check("record and evidence cells (the band lane counts to 50 since 2026-11-02)", ('data-l="Record">1–0' in row, 'data-l="Evidence">1/50' in row), (True, True))
 check("the pre-registered text is in the details", "72/144" in row and "2026-10-21" in row and "16/22" in row, True)
 check("the main line's text", "100/185" in NB.row_html(N.LANE_MAIN, s) and "27/42" in NB.row_html(N.LANE_MAIN, s), True)
 empty = ('<section id="rules" class="sp-section"><div class="sp-section-head"><h2>Rules</h2>'

@@ -285,8 +285,8 @@ def main():
         S.PAUSED_LANES = saved_lanes
     removed_calls = [c for c in calls if c[0] in FULL or c in SCOPED_CALLS]
     eq(removed_calls, [], "no removed source or sport-scoped lane is fetched")
-    ok(("espn_fpi", "nfl") in calls and ("espn_fpi", "mlb") not in calls,
-       "ESPN FPI NFL is fetched and MLB is not")
+    ok(("espn_fpi", "nfl") not in calls and ("espn_fpi", "mlb") not in calls,
+       "ESPN FPI is fetched on neither sport: NFL retired 2026-11-02, MLB removed")
     ok(("tennis_fav_band_3h", "tennis") not in calls and ("pin_totals", "soccer_o25") in calls,
        "the paused tennis band is not fetched; pin totals remains active")
     ok(not any(q.get("source") in FULL or (q.get("source"), q.get("sport")) in S.REMOVED_LANES
@@ -614,11 +614,12 @@ def _built_pages(d, st):
 def _nfl_section_stays():
     """NFL last logged on 2026-09-25, so the live page may have no NFL section.
 
-    One kept ESPN FPI NFL bet still opens the section. The sports whose only
-    lanes were removed do not, even when those lanes have settled bets.
+    One kept Kalshi NFL bet still opens the section (ESPN FPI was the example until its
+    NFL scope retired on 2026-11-02). The sports whose only lanes were removed do not,
+    even when those lanes have settled bets.
     """
     bets = [
-        _bet("espn_fpi", "nfl", "nfl-kept", 0.55, 80.0, "2026-09-20T12:00:00+00:00"),
+        _bet("kalshi", "nfl", "nfl-kept", 0.55, 80.0, "2026-09-20T12:00:00+00:00"),
         _bet("mlb_fade_streak", "mlb", "mlb-gone", 0.50, 100.0, "2026-09-20T12:00:00+00:00"),
         _bet("nhl_rest_edge", "nhl_rest", "nhl-gone", 0.50, 100.0, "2026-09-20T12:00:00+00:00"),
         _bet("olbg", "boxing", "box-gone", 0.50, 100.0, "2026-09-20T12:00:00+00:00"),
@@ -629,8 +630,8 @@ def _nfl_section_stays():
     st = {"pairs": {}, "events": []}
     html = html_lib.unescape(SB.build(now=NOW, d=raw, st=st))
     titles = re.findall(r'<details class="sport"><summary><b>([^<]+)</b>', html)
-    ok("NFL" in titles, "a kept ESPN FPI NFL bet still opens an NFL section")
-    ok("ESPN FPI / Matchup Predictor" in html, "that section names ESPN FPI")
+    ok("NFL" in titles, "a kept Kalshi NFL bet still opens an NFL section")
+    ok("Kalshi" in html, "that section names Kalshi")
     for name in ("MLB", "NHL", "Boxing", "MMA"):
         ok(name not in titles, f"the fixture has no {name} section")
 
