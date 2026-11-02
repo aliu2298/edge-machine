@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-01T23:01:39.265979+00:00",
+ "last_run": "2026-11-02T00:01:38.469947+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -1946,11 +1946,14 @@
      "logged": "2026-11-01T21:07:49.868327+00:00",
      "match": "Nashville SC v Red Bull New York",
      "opponent": "Red Bull New York",
+     "payout": 1.0,
      "price": 0.47,
+     "profit": 105.15,
      "rule": "T3",
+     "settled": "2026-11-02T00:01:38.469947+00:00",
      "side": "yes",
      "start": "2026-11-01T21:30Z",
-     "status": "open",
+     "status": "won",
      "sub": "Nashville over 2.5 goals",
      "team": "Nashville SC",
      "team_side": "home",
@@ -4022,14 +4025,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-30T18:31:47.052804+00:00",
-   "candidates": 2,
-   "due": 2,
-   "labelled": 2,
-   "matched": 2,
-   "new": 1
-  },
-  {
    "at": "2026-10-30T18:46:48.731414+00:00",
    "candidates": 2,
    "due": 3,
@@ -4427,6 +4422,14 @@
    "due": 1,
    "labelled": 1,
    "matched": 1,
+   "new": 0
+  },
+  {
+   "at": "2026-11-02T00:01:38.469947+00:00",
+   "candidates": 0,
+   "due": 1,
+   "labelled": 1,
+   "matched": 0,
    "new": 0
   }
  ],
