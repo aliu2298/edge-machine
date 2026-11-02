@@ -465,13 +465,39 @@ def lead_from_quote(q, pair_key, built, kalshi=None):
     return lead
 
 
-def _assess_since_kickoff(d, key, pair):
+def late_key(pair_key, market_id):
+    return f"{pair_key}|{market_id}"
+
+
+def late_set(blob):
+    """{late_key: info} of every lead first published inside LATE_MIN of its kickoff: the leads in this feed plus the
+    ones remembered in the feed's sidecar file (load_feed attaches it as blob['late_leads']). The feed itself
+    carries no such key -- the follower reads that file and its shape is not changed -- and the sidecar outlives
+    the feed's seven-day pruning, so a record does not move when a lead ages out."""
+    out = dict((blob or {}).get("late_leads") or {})
+    for lid, lead in ((blob or {}).get("leads") or {}).items():
+        mkt = (lead.get("route") or {}).get("market")
+        if lead.get("published_late") and mkt and lead.get("pair"):
+            out.setdefault(late_key(lead["pair"], mkt), {"id": lid, "kickoff": lead.get("kickoff"),
+                                                         "minutes": lead.get("published_min_before_kickoff")})
+    return out
+
+
+def late_path(path=None):
+    return (path or FEED)[:-5] + "_late.json"
+
+
+def _assess_since_kickoff(d, key, pair, late=None):
     """US-exchange record for contests that kick off at or after this pair entered.
 
     The feed publishes a bet when `_kickoff(q).isoformat() >= entered_at(pair)`.
     `assess` windows on `logged`, so this copies the ledger and the archive,
     keeps only this pair's rows in that kickoff window, and calls `assess`
     with the log window open. A row with no readable kickoff is not in it.
+
+    `late` (2026-11-02): the feed's late_leads. A bet whose lead was first published inside LATE_MIN of its
+    kickoff (the follower's own cutoff: feed.min_minutes_to_kickoff = 30 in the follower repo's config module, mirrored by LATE_MIN) could not be followed, so it stays
+    out of this since-Production record. The full Sandbox record (assess over the whole ledger) is unchanged.
     """
     source, sport = key.split("|", 1)
     entered = entered_at(pair)
@@ -482,6 +508,8 @@ def _assess_since_kickoff(d, key, pair):
             if q.get("source") != source or q.get("sport") != sport:
                 continue
             ko = _kickoff(q)
+            if late and late_key(key, q.get("market_id")) in late:
+                continue
             if ko is not None and entered is not None and ko.isoformat() >= entered:
                 out.append(q)
         return out
@@ -490,7 +518,7 @@ def _assess_since_kickoff(d, key, pair):
     return T.assess(window, source, sport, since=None, venues=T.TRADEABLE_VENUES)
 
 
-def _sandbox_record(d, key, since):
+def _sandbox_record(d, key, since, late=None):
     # `since` is entered_at(pair). The record counts the contest, not the log.
     #
     # ONE PAIR'S RECORD MUST NOT TAKE THE FEED DOWN (2026-10-25). The record is a courtesy beside the
@@ -500,7 +528,7 @@ def _sandbox_record(d, key, since):
     # fields are None, and every other pair and every lead is published as before. The cause still
     # raises wherever it is tested (test_sandbox.py), so it stays visible.
     try:
-        a = _assess_since_kickoff(d, key, {"ready_at": since})
+        a = _assess_since_kickoff(d, key, {"ready_at": since}, **({"late": late} if late else {}))
     except Exception as exc:                                   # noqa: BLE001
         print(f"::warning title=Record unavailable::{key}: {type(exc).__name__}: {' '.join(str(exc).split())[:160]}",
               flush=True)
@@ -726,6 +754,7 @@ def build_feed(d, st, now=None, kalshi=None, previous=None):
             if lead.get("status") == "pending":
                 lead["last_seen_at"] = built
     publication_withheld = withhold_new_late_leads(leads, previous, now)
+    late_leads = {}
     for lead in leads.values():
         r = routing.get(lead["pair"])
         if r is None:
@@ -741,6 +770,7 @@ def build_feed(d, st, now=None, kalshi=None, previous=None):
     for r in routing.values():
         r["problem"] = routing_problem(r)
     stamp_timing(leads, previous, logged_at, built)
+    late_leads = late_set(dict(leads=leads, late_leads=(previous or {}).get("late_leads")))
     return {
         "updated_at": built, "board_built_at": built, "stage": "production",
         # The Sandbox's own record for each pair since it entered Production, counted on
@@ -749,7 +779,7 @@ def build_feed(d, st, now=None, kalshi=None, previous=None):
         "pairs": {k: dict({"ready_at": p.get("ready_at"), "promoted_at": p.get("promoted_at"),
                            "entered_at": entered_at(p), "route": route_label(p),
                            "by_hand": p.get("by_hand")},
-                          **_sandbox_record(d, k, entered_at(p)),
+                          **_sandbox_record(d, k, entered_at(p), late=late_leads),
                           routing=routing[k], timing=pair_timing(leads, k))
                   for k, p in pairs.items()},
         "leads": leads, "corners_selections": corners_selections,
@@ -854,6 +884,9 @@ def save_feed(blob, path=None):
     """
     path = path or FEED
     T.atomic_write_json(path, blob, prefix=".feed-")
+    late = late_set(dict(blob, late_leads=load_feed(path).get("late_leads")))
+    if late:
+        T.atomic_write_json(late_path(path), late, prefix=".late-")
 
 
 def feed_age_min(path=None, now=None):
@@ -872,9 +905,17 @@ HEARTBEAT_SKIP_MIN = 20          # a --heartbeat run leaves a feed restamped les
 def load_feed(path=None):
     try:
         with open(path or FEED) as f:
-            return json.load(f)
+            blob = json.load(f)
     except (OSError, ValueError):
         return {"leads": {}, "pairs": {}}
+    try:
+        with open(late_path(path)) as f:
+            late = json.load(f)
+        if isinstance(late, dict) and late:
+            blob["late_leads"] = late          # in memory only: save_feed never writes it into the feed
+    except (OSError, ValueError):
+        pass
+    return blob
 
 
 def _day_label(day, today):
@@ -1352,7 +1393,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
             # The SAME window the Sandbox page reads (the pair's stage clock), so the two pages
             # never show two different records for one rule.
             whole = T.assess(raw, source, sport, since=T.record_since(pair), venues=T.TRADEABLE_VENUES)
-            live = _assess_since_kickoff(raw, key, pair)
+            live = _assess_since_kickoff(raw, key, pair, late=late_set(blob))
             mine = [l for l in leads if l.get("pair") == key]
             to_come = sum(1 for l in mine if l in upcoming)
             clv = fmt.signed_cents(whole["clv"])
@@ -1477,7 +1518,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
 
     def lead_row(l, when):
         return (f"""<tr{lead_attr(l)}><td class="mut">{esc(when)}</td><td>{esc(l.get('league') or sport_of(l['pair']))}</td>
-<td>{esc(fmt.contest(l['match']))}</td><td><b>{esc(l['headline'])}</b></td><td class="mut">{esc(name(l['pair']))}</td>
+<td>{esc(fmt.contest(l['match']))}</td><td><b>{esc(l['headline'])}</b>{' <span class="badge neg">too late for the follower</span>' if l.get('published_late') else ''}</td><td class="mut">{esc(name(l['pair']))}</td>
 <td class="num">{fmt.cents(l['price_at_log']) if l.get('price_at_log') else '—'}</td></tr>""")
 
     def day_fold(label, ls, opened):
@@ -1520,7 +1561,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
     # cannot be read, so a missing kickoff cannot fall off the end of the list.
     def settled_row(l):
         return (f"""<tr{lead_attr(l)}><td class="mut">{esc(_ct_when(l.get('kickoff')) if _kickoff_known(l) else _KICKOFF_UNKNOWN)}</td><td>{esc(fmt.contest(l['match']))}</td>
-<td>{esc(l['headline'])}</td><td class="mut">{esc(name(l['pair']))}</td>
+<td>{esc(l['headline'])}{' <span class="badge neg">too late for the follower</span>' if l.get('published_late') else ''}</td><td class="mut">{esc(name(l['pair']))}</td>
 <td class="num"><span class="{'pos' if l['status'] == 'hit' else ('mut' if l['status'] == 'price' else 'neg')}">{'landed' if l['status'] == 'hit' else (T.NO_RESULT_LABEL if l['status'] == 'price' else 'missed')}</span></td></tr>""")
 
     settled_head = ('<tr><th>Kickoff</th><th>Match</th><th>Lead</th><th>From</th>'
