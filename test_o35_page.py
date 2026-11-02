@@ -86,6 +86,19 @@ check("a stale lead feed lists no upcoming lead", [q["status"] for q in X.quotes
 _, _, b3 = X.page_inputs(d, st, blob, LEDGER, now=NOW, leads_feed=stale)
 check("... on the page's blob", [l for l in b3["leads"].values() if l.get("status") == "pending"], [])
 
+print("\nthe record equals the lane's own 10c_4x figure")
+import sandbox_track as T
+fx = [e for e in LEDGER["entries"] if e["version"] == O.VERSION and e["night"] >= X.MOVED_ON and (e["bids"].get("10"))]
+want = O.trade_rows(fx)
+want = sum(r["roi"] for r in want if r["variant"] == "10c_4x") / sum(1 for r in want if r["variant"] == "10c_4x")
+got = P.build_feed({"quotes": [q for q in X.quotes(LEDGER, {}) if q["status"] != "open"]}, {"pairs": X.pairs()}, now=NOW)["pairs"][f"{O.LANE}|{X.SPORT}"]
+check("three fills (one 4x sale, one held No win, one held loss): the pair's after-fee ROI is trade_rows' 10c_4x mean",
+      (got["sandbox_n"], round(got["sandbox_roi_fee"], 2)), (3, round(want, 2)))
+sold_q = next(q for q in X.quotes(LEDGER, {}) if q["market_id"].endswith("KASBES-4"))
+check("... the 4x sale books its sale (+~290%), not a 10c win paid at settlement (+~884%)", 250 < sold_q["pnl"] < 330, True)
+rec = T.assess({"quotes": X.quotes(LEDGER, {})}, O.LANE, X.SPORT, since=None, venues=T.TRADEABLE_VENUES)
+check("the page's whole-record ROI after fees agrees", round(rec["roi_fee"], 2), round(want, 2))
+
 print("\nthe Control Center agrees with the Production page")
 import control_center as CC
 m0 = CC.model(d, st, blob, NOW)

@@ -115,6 +115,7 @@ def _result_quote(e):
         side_a="Yes", side_b="No", kalshi_title="Over 3.5 goals", league=e.get("league"), date=kick.date().isoformat(),
         start=kick.isoformat(), logged=logged.isoformat(), price=b["limit"], price_a=None, price_b=b["limit"], price_draw=None,
         pick="b", bet=True, stake=100.0, status="won" if roi > 0 else "lost", pnl=round(roi * 100, 2),
+        pnl_fee_override=round(roi * 100, 2),            # the 4x exit, not a re-grade of a 10c win paid at settlement
         result="a" if over else "b", settle_px=None, settled=None, prob_a=None, edge=None, untraded=False,
         start_source="espn", url="", espn_home=_codes(e.get("event"))[0], espn_away=_codes(e.get("event"))[1],
         rule=("sold at 4x" if s.get("filled") else "held to settlement"))
