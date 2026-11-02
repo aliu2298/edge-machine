@@ -7,11 +7,11 @@
     "KXTRUMPSAY-26NOV02-ANTI": {
      "close_ts": 1793631600,
      "edge_ids": [
-      "0727eb43-d001-80a7-a63a-bc9466084da8"
+      "0727e860-de81-b26b-baae-347793e9448c"
      ],
      "first_px": 0.28,
      "first_ts": 1792991873,
-     "last_ts": 1793626799,
+     "last_ts": 1793630419,
      "lows": [
       [
        1793033818,
@@ -1417,22 +1417,38 @@
        1793626799,
        0.01,
        499.66
+      ],
+      [
+       1793628453,
+       0.01,
+       187.03
+      ],
+      [
+       1793628559,
+       0.01,
+       3.0
+      ],
+      [
+       1793630419,
+       0.01,
+       935.19
       ]
      ],
-     "n_prints": 384,
+     "n_prints": 387,
      "open_ts": 1792987200,
-     "result": "",
-     "status": "active",
+     "result": "no",
+     "status": "determined",
      "word": "Antifa"
     },
     "KXTRUMPSAY-26NOV02-AUTO": {
      "close_ts": 1793631600,
      "edge_ids": [
-      "0727ebec-7d49-bd95-e207-4781bef8f5f0"
+      "0727e848-8209-985d-ecf3-2de8b2fa74d0",
+      "0727e84a-dd39-9946-c83f-06dee63184c4"
      ],
      "first_px": 0.54,
      "first_ts": 1792989115,
-     "last_ts": 1793624649,
+     "last_ts": 1793630475,
      "lows": [
       [
        1793420283,
@@ -2088,12 +2104,22 @@
        1793624649,
        0.01,
        12.19
+      ],
+      [
+       1793630475,
+       0.01,
+       443.43
+      ],
+      [
+       1793630475,
+       0.01,
+       24.16
       ]
      ],
-     "n_prints": 375,
+     "n_prints": 377,
      "open_ts": 1792987200,
-     "result": "",
-     "status": "active",
+     "result": "no",
+     "status": "determined",
      "word": "Autopen / Auto Pen"
     },
     "KXTRUMPSAY-26NOV02-BIBI": {
@@ -2142,7 +2168,7 @@
      "word": "Canada / Canadian"
     },
     "KXTRUMPSAY-26NOV02-CEAS": {
-     "close_ts": 1793631600,
+     "close_ts": 1793631209,
      "edge_ids": [
       "0727088a-3639-8d20-0eee-e26c785c2d9a"
      ],
@@ -2151,18 +2177,18 @@
      "last_ts": 1793627529,
      "n_prints": 235,
      "open_ts": 1792987200,
-     "result": "",
-     "status": "active",
+     "result": "yes",
+     "status": "determined",
      "word": "Ceasefire"
     },
     "KXTRUMPSAY-26NOV02-CRYP": {
      "close_ts": 1793631600,
      "edge_ids": [
-      "0727eb4c-ca79-a8e7-d251-674a3ee34366"
+      "0727e833-d839-85b7-9335-88ab8849423e"
      ],
      "first_px": 0.16,
      "first_ts": 1792998906,
-     "last_ts": 1793626441,
+     "last_ts": 1793629635,
      "lows": [
       [
        1793033829,
@@ -3753,12 +3779,17 @@
        1793626441,
        0.01,
        187.03
+      ],
+      [
+       1793629635,
+       0.01,
+       99.66
       ]
      ],
-     "n_prints": 410,
+     "n_prints": 411,
      "open_ts": 1792987200,
-     "result": "",
-     "status": "active",
+     "result": "no",
+     "status": "determined",
      "word": "Crypto / Bitcoin"
     },
     "KXTRUMPSAY-26NOV02-CUBA": {
@@ -3779,11 +3810,11 @@
     "KXTRUMPSAY-26NOV02-CYBE": {
      "close_ts": 1793631600,
      "edge_ids": [
-      "0727eb61-65a1-a894-d0cc-0774a7a4fdaf"
+      "0727e98f-cd21-8e00-584c-0386f53a6d0b"
      ],
      "first_px": 0.23,
      "first_ts": 1792991782,
-     "last_ts": 1793626703,
+     "last_ts": 1793631203,
      "lows": [
       [
        1793197417,
@@ -5294,12 +5325,17 @@
        1793626703,
        0.01,
        1.87
+      ],
+      [
+       1793631203,
+       0.01,
+       1.0
       ]
      ],
-     "n_prints": 578,
+     "n_prints": 579,
      "open_ts": 1792987200,
-     "result": "",
-     "status": "active",
+     "result": "no",
+     "status": "determined",
      "word": "Cybersecurity / Cyber Security"
     },
     "KXTRUMPSAY-26NOV02-DIES": {
@@ -5422,12 +5458,11 @@
     "KXTRUMPSAY-26NOV02-ETHA": {
      "close_ts": 1793631600,
      "edge_ids": [
-      "0727ebad-5769-a903-4821-ea74dfea7faa",
-      "0727ebb4-ac99-a6fd-7f21-701070f0eb75"
+      "0727e847-2649-aeab-0535-aeadc3d8b71e"
      ],
      "first_px": 0.65,
      "first_ts": 1792993486,
-     "last_ts": 1793623764,
+     "last_ts": 1793630417,
      "lows": [
       [
        1793416455,
@@ -6748,12 +6783,17 @@
        1793623764,
        0.01,
        84.72
+      ],
+      [
+       1793630417,
+       0.01,
+       3.28
       ]
      ],
-     "n_prints": 1911,
+     "n_prints": 1912,
      "open_ts": 1792987200,
-     "result": "",
-     "status": "active",
+     "result": "no",
+     "status": "determined",
      "word": "Ethanol"
     },
     "KXTRUMPSAY-26NOV02-GOLD": {
@@ -7723,8 +7763,8 @@
      ],
      "n_prints": 201,
      "open_ts": 1792987200,
-     "result": "",
-     "status": "active",
+     "result": "no",
+     "status": "determined",
      "word": "Golden Dome"
     },
     "KXTRUMPSAY-26NOV02-HOUT": {
@@ -8651,8 +8691,8 @@
      ],
      "n_prints": 269,
      "open_ts": 1792987200,
-     "result": "",
-     "status": "active",
+     "result": "no",
+     "status": "determined",
      "word": "Houthi"
     },
     "KXTRUMPSAY-26NOV02-ILHA": {
@@ -9394,8 +9434,8 @@
      ],
      "n_prints": 143,
      "open_ts": 1792987200,
-     "result": "",
-     "status": "active",
+     "result": "no",
+     "status": "determined",
      "word": "Make Iran Great Again"
     },
     "KXTRUMPSAY-26NOV02-MARI": {
@@ -10540,8 +10580,8 @@
      ],
      "n_prints": 274,
      "open_ts": 1792987200,
-     "result": "",
-     "status": "active",
+     "result": "no",
+     "status": "determined",
      "word": "Marijuana / Weed / Cannabis"
     },
     "KXTRUMPSAY-26NOV02-MELA": {
@@ -10739,11 +10779,11 @@
     "KXTRUMPSAY-26NOV02-PEAC": {
      "close_ts": 1793631600,
      "edge_ids": [
-      "0727f2bb-3b91-9198-9cec-1fe6412ebd03"
+      "0727ebc5-e271-8538-3f31-6a10e021867b"
      ],
      "first_px": 0.17,
      "first_ts": 1793011402,
-     "last_ts": 1793601356,
+     "last_ts": 1793629583,
      "lows": [
       [
        1793027777,
@@ -12519,12 +12559,17 @@
        1793601356,
        0.01,
        33.0
+      ],
+      [
+       1793629583,
+       0.01,
+       66.33
       ]
      ],
-     "n_prints": 363,
+     "n_prints": 364,
      "open_ts": 1792987200,
-     "result": "",
-     "status": "active",
+     "result": "no",
+     "status": "determined",
      "word": "Peace in the Middle East"
     },
     "KXTRUMPSAY-26NOV02-PRED": {
@@ -13494,8 +13539,8 @@
      ],
      "n_prints": 191,
      "open_ts": 1792987200,
-     "result": "",
-     "status": "active",
+     "result": "no",
+     "status": "determined",
      "word": "Prediction Market / Predictive Market"
     },
     "KXTRUMPSAY-26NOV02-RANK": {
@@ -14520,19 +14565,18 @@
      ],
      "n_prints": 545,
      "open_ts": 1792987200,
-     "result": "",
-     "status": "active",
+     "result": "no",
+     "status": "determined",
      "word": "Ranked Choice / Ranked-Choice"
     },
     "KXTRUMPSAY-26NOV02-REFI": {
      "close_ts": 1793631600,
      "edge_ids": [
-      "0727e8b1-5ee9-912d-6016-d6fa0f295687",
-      "0727e8be-ba99-9ded-6f68-c2a218b05e60"
+      "0727e8fe-6d79-b34d-93df-3ec966fa3abc"
      ],
      "first_px": 0.57,
      "first_ts": 1792993226,
-     "last_ts": 1793627563,
+     "last_ts": 1793628608,
      "lows": [
       [
        1793547703,
@@ -15628,12 +15672,17 @@
        1793627563,
        0.01,
        904.5
+      ],
+      [
+       1793628608,
+       0.01,
+       3.0
       ]
      ],
-     "n_prints": 1542,
+     "n_prints": 1543,
      "open_ts": 1792987200,
-     "result": "",
-     "status": "active",
+     "result": "no",
+     "status": "determined",
      "word": "Refinery"
     },
     "KXTRUMPSAY-26NOV02-RIGG": {
@@ -15695,11 +15744,11 @@
     "KXTRUMPSAY-26NOV02-THIR": {
      "close_ts": 1793631600,
      "edge_ids": [
-      "0727eb4d-3569-b268-9a83-8784edda4eb4"
+      "0727e865-c5c9-bbec-edcd-bc6d9f9146b8"
      ],
      "first_px": 0.35,
      "first_ts": 1792989040,
-     "last_ts": 1793626327,
+     "last_ts": 1793631190,
      "lows": [
       [
        1793341446,
@@ -17710,12 +17759,17 @@
        1793626327,
        0.01,
        79.15
+      ],
+      [
+       1793631190,
+       0.01,
+       1.0
       ]
      ],
-     "n_prints": 741,
+     "n_prints": 742,
      "open_ts": 1792987200,
-     "result": "",
-     "status": "active",
+     "result": "no",
+     "status": "determined",
      "word": "Third Term"
     },
     "KXTRUMPSAY-26NOV02-TOMA": {
@@ -18790,8 +18844,8 @@
      ],
      "n_prints": 289,
      "open_ts": 1792987200,
-     "result": "",
-     "status": "active",
+     "result": "no",
+     "status": "determined",
      "word": "Tomahawk"
     },
     "KXTRUMPSAY-26NOV02-UFO": {
@@ -19921,18 +19975,18 @@
      ],
      "n_prints": 241,
      "open_ts": 1792987200,
-     "result": "",
-     "status": "active",
+     "result": "no",
+     "status": "determined",
      "word": "UFO / UAP"
     },
     "KXTRUMPSAY-26NOV02-URAN": {
      "close_ts": 1793631600,
      "edge_ids": [
-      "0727f478-e889-b0cd-5632-39e85c4b6743"
+      "0727e83e-0a09-906d-5ccf-4b7e5f6b067f"
      ],
      "first_px": 0.32,
      "first_ts": 1792991762,
-     "last_ts": 1793614263,
+     "last_ts": 1793629883,
      "lows": [
       [
        1792999975,
@@ -21668,12 +21722,17 @@
        1793614263,
        0.01,
        46.75
+      ],
+      [
+       1793629883,
+       0.01,
+       168.0
       ]
      ],
-     "n_prints": 352,
+     "n_prints": 353,
      "open_ts": 1792987200,
-     "result": "",
-     "status": "active",
+     "result": "no",
+     "status": "determined",
      "word": "Uranium"
     },
     "KXTRUMPSAY-26NOV02-VIVE": {
@@ -21694,11 +21753,11 @@
     "KXTRUMPSAY-26NOV02-ZOHR": {
      "close_ts": 1793631600,
      "edge_ids": [
-      "0727e8aa-f5d1-8c1a-0a59-af52535e2b40"
+      "0727e85e-24f1-a2d6-0538-e377cd3bc70c"
      ],
      "first_px": 0.37,
      "first_ts": 1792988980,
-     "last_ts": 1793627598,
+     "last_ts": 1793630411,
      "lows": [
       [
        1793004267,
@@ -24014,12 +24073,22 @@
        1793627598,
        0.01,
        1870.38
+      ],
+      [
+       1793628580,
+       0.01,
+       3.0
+      ],
+      [
+       1793630411,
+       0.01,
+       1.17
       ]
      ],
-     "n_prints": 753,
+     "n_prints": 755,
      "open_ts": 1792987200,
-     "result": "",
-     "status": "active",
+     "result": "no",
+     "status": "determined",
      "word": "Zohran / Mamdani"
     }
    }
@@ -24044,12 +24113,11 @@
     "KXTRUMPSAY-26NOV09-BIBI": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727ee51-c0f9-9fc7-7ef6-7ece9bb337b8",
-      "0727ee57-5cd1-9ff9-5b6f-0d051f137fa6"
+      "0727efb0-5549-9ad9-9b57-374be4024927"
      ],
      "first_px": 0.06,
      "first_ts": 1793627096,
-     "last_ts": 1793627096,
+     "last_ts": 1793631363,
      "lows": [
       [
        1793627096,
@@ -24057,7 +24125,7 @@
        1.0
       ]
      ],
-     "n_prints": 2,
+     "n_prints": 8,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -24072,6 +24140,13 @@
     },
     "KXTRUMPSAY-26NOV09-CANA": {
      "close_ts": 1794236400,
+     "edge_ids": [
+      "0727eef6-9201-a2e3-ce08-1267b8df2ed0"
+     ],
+     "first_px": 0.98,
+     "first_ts": 1793628698,
+     "last_ts": 1793628772,
+     "n_prints": 6,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -24079,6 +24154,13 @@
     },
     "KXTRUMPSAY-26NOV09-CEAS": {
      "close_ts": 1794236400,
+     "edge_ids": [
+      "0727efa0-c391-b5e7-0dd1-5cdeed6eefc1"
+     ],
+     "first_px": 0.82,
+     "first_ts": 1793631307,
+     "last_ts": 1793631307,
+     "n_prints": 1,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -24087,12 +24169,12 @@
     "KXTRUMPSAY-26NOV09-CRYP": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727f7de-5509-a08d-7451-5b1ca3c1a552"
+      "0727ef91-59a1-a813-f644-a04829f5e89c"
      ],
      "first_px": 0.83,
      "first_ts": 1793603083,
-     "last_ts": 1793605630,
-     "n_prints": 2,
+     "last_ts": 1793631207,
+     "n_prints": 3,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -24122,12 +24204,14 @@
     "KXTRUMPSAY-26NOV09-DIVI": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727f114-52c9-9e0c-328c-c9497105fb29"
+      "0727ef86-e9f1-a2a0-4ab1-5dcd188d079e",
+      "0727efaf-e239-a976-4d49-22bbeac12a28",
+      "0727efaf-edf1-ab37-64f1-cc4e09148018"
      ],
      "first_px": 0.9,
      "first_ts": 1793596505,
-     "last_ts": 1793601176,
-     "n_prints": 4,
+     "last_ts": 1793631232,
+     "n_prints": 7,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -24266,12 +24350,11 @@
     "KXTRUMPSAY-26NOV09-PEAC": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727eaf8-3921-9e0b-55df-3f84080240a4",
-      "0727ed2f-2539-93f5-603e-3ea0e75e8c65"
+      "0727efb5-6799-b175-46e6-8749299f8f65"
      ],
      "first_px": 0.01,
      "first_ts": 1793607220,
-     "last_ts": 1793623045,
+     "last_ts": 1793631353,
      "lows": [
       [
        1793607220,
@@ -24312,9 +24395,29 @@
        1793623045,
        0.08,
        1.54
+      ],
+      [
+       1793629956,
+       0.08,
+       0.81
+      ],
+      [
+       1793629956,
+       0.08,
+       10.93
+      ],
+      [
+       1793630765,
+       0.14,
+       5.0
+      ],
+      [
+       1793630765,
+       0.13,
+       10.0
       ]
      ],
-     "n_prints": 8,
+     "n_prints": 13,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -24379,12 +24482,12 @@
     "KXTRUMPSAY-26NOV09-THIR": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727f6bd-7321-9715-575f-64301a8db82a"
+      "0727ef94-46f9-a4d9-d3f5-24486368e492"
      ],
      "first_px": 0.63,
      "first_ts": 1793600774,
-     "last_ts": 1793603031,
-     "n_prints": 2,
+     "last_ts": 1793631282,
+     "n_prints": 5,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -24393,12 +24496,12 @@
     "KXTRUMPSAY-26NOV09-TOMA": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727ecfa-31e1-9998-f977-d6f9e62d1c37"
+      "0727efbb-2b21-b15d-0d59-b3ddf09e96d9"
      ],
      "first_px": 0.56,
      "first_ts": 1793603203,
-     "last_ts": 1793622653,
-     "n_prints": 3,
+     "last_ts": 1793631294,
+     "n_prints": 7,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -24428,12 +24531,12 @@
     "KXTRUMPSAY-26NOV09-ZOHR": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727f75d-2d19-89cb-c041-20a3327dd89e"
+      "0727efa2-69d9-b825-d9a9-fb5b941cfa89"
      ],
      "first_px": 0.84,
      "first_ts": 1793603190,
-     "last_ts": 1793603190,
-     "n_prints": 1,
+     "last_ts": 1793631339,
+     "n_prints": 3,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -24443,13 +24546,13 @@
   }
  },
  "lane": "mentions_dip_hold",
- "last_success": "2026-11-02T14:01:00.431585+00:00",
+ "last_success": "2026-11-02T15:01:02.129665+00:00",
  "observations": {
-  "at": "2026-11-02T14:01:00.431585+00:00",
+  "at": "2026-11-02T15:01:02.129665+00:00",
   "errors": [],
   "events": 2,
   "markets": 58,
-  "prints": 27
+  "prints": 45
  },
  "since": "2026-10-26T04:00:00+00:00"
 }
