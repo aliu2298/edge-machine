@@ -160,11 +160,36 @@ def v2_fold(entries):
             + league_table(entries, rows, HEAD, False) + '</details>')
 
 
+V4_NOTE = ("Why v4 (2026-11-02): on Nov 1 the live account and the v3 paper record differed on seven matches. Five live bids were "
+           "rejected as post-only crosses because No was already at or under the bid when the bid went up, and are not retried "
+           "(Racing Santander v Real Madrid, Nashville v Red Bull New York, Basaksehir v Samsun, Telstar v Utrecht, Groningen v Sparta), "
+           "yet v3 counted them as fills. Athletic v Real Sociedad rested unfilled while v3 filled it on a print exactly at the bid. "
+           "One sell was refused by the exchange in the live account and has since been fixed. v4 enters a match only if No is above "
+           "the bid at the bid minute, and fills only on a trade strictly under the bid; re-scored on Nov 1 it reproduces the live fills.")
+
+
+def v3_fold(entries):
+    """The v3 record (second-half bid, touch fills, no crossing check), collapsed."""
+    if not entries:
+        return ""
+    rows = O.trade_rows(entries)
+    f10 = [e for e in entries if (e["bids"] or {}).get("10")]
+    dead = sum(1 for e in f10 if e["bids"]["10"]["dead"])
+    summ = f'{len(entries)} games · {len(f10)} bids filled at 10c · {dead} dead · closed 2026-11-02'
+    return (f'<details class="section-disclosure" data-lane="{O.LANE}_v3"><summary><b>{esc(O.V3_LABEL)}</b><span>{esc(summ)}</span></summary>'
+            f'<p class="sm">The third record: the second-half bid, filled on a print at or under the bid, with no check for a bid the exchange would reject. '
+            f'Ended 2026-11-02 and shown as it stood.</p><p class="sm mut">{esc(V4_NOTE)}</p>'
+            + variant_table(rows, O.LIMITS, HEAD, (O.HEAD_MULT, O.COMPARE_MULT), False)
+            + '<p class="sm"><b>By league, and the over 1.5 form-rule matches</b> · 10c bid, sell at 4x</p>'
+            + league_table(entries, rows, HEAD, False) + '</details>')
+
+
 def section(state=None):
     if state is None:
         state = O.load() if os.path.exists(O.PATH) else O.load("/nonexistent")
     all_entries = sorted(state.get("entries") or [], key=lambda e: e["kickoff"])
-    old, v2, entries = O.split3(all_entries)
+    old, v2, v3 = O.split3(all_entries)
+    entries = [e for e in all_entries if e.get("version") == O.VERSION]
     rows = O.trade_rows(entries)
     early_rows = O.trade_rows(entries, early=True)
     filled10 = [e for e in entries if (e["bids"] or {}).get("10")]
@@ -172,27 +197,27 @@ def section(state=None):
     thin = sum(1 for e in filled10 if e["bids"]["10"]["sells"][str(O.HEAD_MULT)]["thin"])
     last = state.get("last_run")
     summ = (f'{len(entries)} games · {len(filled10)} bids filled at 10c · {dead} dead · {thin} thin' if entries
-            else "0 entries since the v3 record began")
+            else "0 entries since the v4 record began")
     shown = (O.COMPARE_MULT, O.HEAD_MULT)
     body = (variant_table(rows, O.LIMITS, HEAD, (O.HEAD_MULT, O.COMPARE_MULT), False)
             + '<p class="sm"><b>By league, and the over 1.5 form-rule matches</b> · 10c bid, sell at 4x</p>'
-            + league_table(entries, rows, HEAD, False) if entries else '<p class="sm mut">0 entries: no game has settled since the v3 record began on '
+            + league_table(entries, rows, HEAD, False) if entries else '<p class="sm mut">0 entries: no game has settled since the v4 record began on '
             f'{esc(state.get("since"))}. The first rows appear after the first matches finish.</p>')
     return f"""<section id="cheap-side">
 <h2>Cheap side · resting bid</h2>
-<p class="shell-kicker">Paper only · no orders · fresh v3 record (second-half bid) since {esc(state.get("since"))} · review at {O.REVIEW_N} filled, decide at {O.DECIDE_N}</p>
+<p class="shell-kicker">Paper only · no orders · fresh v4 record (second-half bid the exchange would accept) since {esc(state.get("since"))} · review at {O.REVIEW_N} filled, decide at {O.DECIDE_N}</p>
 <details class="section-disclosure" data-lane="{O.LANE}" open><summary><b>{esc(O.LABEL)}</b><span>{esc(summ)}</span></summary>
 <p class="sm"><b class="chip">Production</b> since 2026-11-01 the follower trades this rule live on Kalshi: a resting NO bid at 10c in a small fixed size, posted an hour after kickoff (the second half only); on a fill it rests a sell at 40c (4x); the unfilled bid is cancelled at the final whistle and an unsold position is held to settlement. Never chases, never takes. The live record is the follower&#39;s own fills. The paper record below is unchanged and keeps running beside it.</p>
 <p class="sm mut">{esc(O.TRIM_NOTE)}</p>
 <p class="sm mut">{esc(O.RESEARCH_NOTE)}</p>
-<p class="sm">On the over 3.5 goals market of every game in the eleven leagues on this page, a NO bid rests at 10c from {O.BID_AFTER_MIN} minutes after kickoff. It can fill only in the second half, after goals push the over to 80c or more. The headline sells at 4x the bid (40c); selling at 3x is shown beside it.</p>
+<p class="sm">On the over 3.5 goals market of every game in the eleven leagues on this page, a NO bid rests at 10c from {O.BID_AFTER_MIN} minutes after kickoff. It can fill only in the second half, after goals push the over to 80c or more. A match is not entered when No already sits at or under the bid at that minute (the exchange would reject the bid), and a fill needs a trade strictly under the bid. The headline sells at 4x the bid (40c); selling at 3x is shown beside it.</p>
 <p class="sm">A bid fills when the first trade after it prints NO at or under the bid. Fills after the 4th goal are kept and marked dead fill. A sell counts only if a later trade prints at or above its target and at least {O.MIN_VOL} contracts traded at or above the target after the fill; fewer is marked thin and the trade is held. Fees: 1.75% of p(1-p) on both legs. Kickoff is the Kalshi time minus 4 hours.</p>
 {body}
 <details class="section-disclosure"><summary><b>Fills</b><span>latest 30 at 10c</span></summary>{trade_list(entries, shown, False)}</details>
 <details class="section-disclosure" data-lane="{O.LANE}_first_half"><summary><b>First-half fills, tracked</b><span>{len(early_rows) // 4} bids from the old time that filled before the break</span></summary>
 <p class="sm">The old bid (posted an hour before kickoff), counted only where it filled in the first {O.BID_AFTER_MIN} minutes. Kept only so the split stays measured.</p>
 {variant_table(early_rows, O.LIMITS, HEAD, (O.HEAD_MULT, O.COMPARE_MULT), False) if early_rows else '<p class="sm mut">No first-half fill yet in the v3 record.</p>'}</details>
-{v2_fold(v2)}{v1_fold(old)}
+{v3_fold(v3)}{v2_fold(v2)}{v1_fold(old)}
 </details>
 <p class="sm mut">Last read {esc(last or 'not yet')}{(' · ' + esc(state['error'])) if state.get('error') else ''}.</p>
 </section>"""

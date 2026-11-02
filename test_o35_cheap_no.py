@@ -42,7 +42,7 @@ near("maker fee 0.0175 p(1-p)", O.fee(0.10), 0.0175 * 0.1 * 0.9)
 check("variant keys and labels", (O.vkey(0.10, 2), O.vkey(0.15, None), O.vlabel("10c_2x"), O.vlabel("20c_hold")),
       ("10c_2x", "15c_hold", "NO bid 10c · sell at 2x", "NO bid 20c · hold to settlement"))
 check("v2 keeps only the 10c bid; the ledger still stores 2x/3x/4x/hold", (O.LIMITS, O.V1_LIMITS, len({O.vkey(l, m) for l in O.LIMITS for m in (None,) + O.MULTS})), ((0.10,), (0.10, 0.15, 0.20), 4))
-check("headline is the 10c bid sold at 4x, 3x beside it; v2 stamp", (O.HEADLINE, O.HEAD_MULT, O.COMPARE_MULT, O.VERSION, O.SINCE), (0.10, 4, 3, "o35-v3", "2026-11-01"))
+check("headline is the 10c bid sold at 4x, 3x beside it; v2 stamp", (O.HEADLINE, O.HEAD_MULT, O.COMPARE_MULT, O.VERSION, O.SINCE), (0.10, 4, 3, "o35-v4", "2026-11-01"))
 check("eleven leagues: the Soccer page's twelve less the Saudi Pro League", (len(O.SR.SERIES), len(O.LEAGUES), "Saudi Pro League" in O.LEAGUES), (12, 11, False))
 
 print("\nthe bid fills on the first print at or under the limit")
@@ -53,7 +53,18 @@ check("10c bid: filled by the 9c print, not the 12c print", ev["10"]["fill_at"],
 check("15c bid fills earlier on the 12c print; 20c on the 12c print too", (ev["15"]["fill_at"], ev["20"]["fill_at"]), (KICK + 70 * 60,) * 2)
 check("the fill is at the limit, whatever printed", ev["10"]["limit"], 0.10)
 check("a 12c print does not fill a 10c bid", O.evaluate([pr(70, 0.12)], KICK, "no")["10"], None)
-check("a bid exactly at the limit fills", O.evaluate([pr(70, 0.10)], KICK, "no")["10"]["fill_print"], 0.10)
+check("v4: a print exactly at the limit only touches the bid: no fill", O.evaluate([pr(70, 0.10)], KICK, "no")["10"], None)
+check("v4: a print at 9c fills the 10c bid", O.evaluate([pr(70, 0.09)], KICK, "no")["10"]["fill_print"], 0.09)
+check("v4: the first print under the limit fills, one at the limit before it does not",
+      O.evaluate([pr(65, 0.10), pr(70, 0.09)], KICK, "no")["10"]["fill_at"], KICK + 70 * 60)
+cx = [pr(58, 0.04, 5), pr(80, 0.03)]
+check("v4: No already under the bid at the bid minute (last print 04c): the match is not entered, nothing fills",
+      (O.evaluate(cx, KICK, "no")["10"], O.crossed_at_bid(cx, KICK, 0.10)), (None, 0.04))
+check("v4: a 10c print at the bid minute is also a cross (YES bid at 0.90 would meet it)", O.crossed_at_bid([pr(59, 0.10)], KICK, 0.10), 0.10)
+check("v4: No above the bid at the bid minute is entered and can fill later",
+      (O.crossed_at_bid([pr(58, 0.30)], KICK, 0.10), O.evaluate([pr(58, 0.30), pr(80, 0.08)], KICK, "no")["10"] is not None), (None, True))
+check("v4: the last print wins (a 4c print an hour ago, then 25c: not crossed)", O.crossed_at_bid([pr(10, 0.04), pr(58, 0.25)], KICK, 0.10), None)
+check("v4: no print at all before the bid minute: not crossed", O.crossed_at_bid([pr(80, 0.04)], KICK, 0.10), None)
 check("a print an hour and a minute before kickoff is before the old bid was placed",
       O.evaluate([pr(-61, 0.05)], KICK, "no"), {"10": None, "10e": None})
 e30 = O.evaluate([pr(-30, 0.05)], KICK, "no")
@@ -63,7 +74,10 @@ e59, e60 = O.evaluate([pr(59, 0.05)], KICK, "no"), O.evaluate([pr(60, 0.05)], KI
 check("minute 59 is first half (comparison), minute 60 is the second-half bid",
       (e59["10"], e59["10e"] is not None, e60["10"]["fill_at"], e60["10e"]), (None, True, KICK + 3600, None))
 chk = O.evaluate([pr(30, 0.05), pr(80, 0.05)], KICK, "no")
-check("an early fill and a later one: the bid fills at the second-half print, the comparison keeps the early one",
+check("v4: a first-half fill at 5c leaves No under the bid at the bid minute: the second-half bid is not entered, the comparison keeps the fill",
+      (chk["10"], chk["10e"]["fill_at"]), (None, KICK + 30 * 60))
+chk = O.evaluate([pr(30, 0.05), pr(50, 0.30), pr(80, 0.05)], KICK, "no")
+check("... but if No had recovered above the bid by the bid minute, the bid is entered and fills at the later print",
       (chk["10"]["fill_at"], chk["10e"]["fill_at"]), (KICK + 80 * 60, KICK + 30 * 60))
 
 print("\nthe sells: later prints, 50 contracts at or above the target")
@@ -79,7 +93,7 @@ edge = O.evaluate([pr(80, 0.09), pr(90, 0.25, 30), pr(91, 0.22, 20)], KICK, "no"
 check("volume adds across prints at or above the target: exactly 50 sells", (edge["filled"], edge["volume"]), (True, 50.0))
 before = O.evaluate([pr(60, 0.25, 500), pr(80, 0.09)], KICK, "no")["10"]["sells"]["2"]
 check("a print above the target BEFORE the bid filled does not count", (before["filled"], before["volume"]), (False, 0.0))
-check("a 20c bid's 4x target is capped at 98c", O.evaluate([pr(80, 0.2)], KICK, "no", O.V1_LIMITS)["20"]["sells"]["4"]["target"], 0.8)
+check("a 20c bid's 4x target is capped at 98c", O.evaluate([pr(80, 0.19)], KICK, "no", O.V1_LIMITS)["20"]["sells"]["4"]["target"], 0.8)
 check("the payout is 1 on a NO result, 0 on YES", (O.evaluate(base, KICK, "no")["10"]["payout"], O.evaluate(base, KICK, "yes")["10"]["payout"]), (1.0, 0.0))
 
 print("\ndead fills: after the over is all but certain")
@@ -132,7 +146,7 @@ def fetch(path):
 
 NOW = dt.datetime(2026, 11, 1, 6, 0, tzinfo=UTC)
 st = O.load("/nonexistent")
-check("a fresh record begins on 2026-11-01 as v3", (st["since"], st["entries"], st["version"]), ("2026-11-01", [], "o35-v3"))
+check("a fresh record begins on 2026-11-01 as v4", (st["since"], st["entries"], st["version"]), ("2026-11-01", [], "o35-v4"))
 st["since"] = "2026-10-31"                         # the replayed game is from the night before
 O.run(st, NOW, fetch, forms={EV})
 check("the settled game is recorded, the one still active waits", (len(st["entries"]), st["observations"]["waiting"]), (1, 1))
@@ -168,6 +182,11 @@ check("v3 headline counts only v3 entries (1 game); v2 and v1 sit in folds with 
        O.vlabel("10c_2x") + " (headline)" in hm, "2 games" in hm), (True, True, True, True, True, True, True))
 check("the second-half note and the first-half comparison are on the page, labelled not evidence",
       ("Research note, not evidence" in hm, 'data-lane="o35_cheap_no_wave_first_half"' in hm, "First-half fills, tracked" in hm), (True, True, True))
+v3e = dict(entry, version="o35-v3", event="KXMLSTOTAL-26NOV01JJJKKK")
+h3 = B.section(dict(mix, entries=mix["entries"] + [v3e]))
+check("a v3 entry sits in its own closed fold with the reason v4 exists; the v4 headline still counts only v4",
+      ("Before the exchange rules (v3)" in h3, "post-only crosses" in h3, re.search(r'data-lane="o35_cheap_no_wave_v3"', h3) is not None, "1 games" in h3),
+      (True, True, True, True))
 check("the v2 fold is closed by default", re.search(r'<details class="section-disclosure" data-lane="o35_cheap_no_wave_v2">', hm) is not None, True)
 check("the v1 fold is closed by default", re.search(r'<details class="section-disclosure" data-lane="o35_cheap_no_wave_v1">', hm) is not None, True)
 check("the trim date and reason are on the page", "Trimmed 2026-10-31" in hm, True)
@@ -177,13 +196,20 @@ json.dump({"since": "2026-10-28", "version": "o35-v1", "entries": [v1e]}, tf)
 tf.close()
 mg = O.load(tf.name)
 os.unlink(tf.name)
-check("loading a v1 ledger starts v3 fresh from SINCE and keeps v1_since", (mg["version"], mg["since"], mg["v1_since"], len(mg["entries"])), ("o35-v3", "2026-11-01", "2026-10-28", 1))
+check("loading a v1 ledger starts v4 fresh from SINCE and keeps v1_since", (mg["version"], mg["since"], mg["v1_since"], len(mg["entries"])), ("o35-v4", "2026-11-01", "2026-10-28", 1))
 tf = tempfile.NamedTemporaryFile("w", suffix=".json", delete=False)
 json.dump({"since": "2026-10-31", "version": "o35-v2", "entries": [v2e]}, tf)
 tf.close()
 mg2 = O.load(tf.name)
 os.unlink(tf.name)
-check("loading a v2 ledger keeps its entries and its start as v2_since", (mg2["version"], mg2["since"], mg2["v2_since"], len(mg2["entries"])), ("o35-v3", "2026-11-01", "2026-10-31", 1))
+check("loading a v2 ledger keeps its entries and its start as v2_since", (mg2["version"], mg2["since"], mg2["v2_since"], len(mg2["entries"])), ("o35-v4", "2026-11-01", "2026-10-31", 1))
+tf = tempfile.NamedTemporaryFile("w", suffix=".json", delete=False)
+json.dump({"since": "2026-11-01", "version": "o35-v3", "seen": {"KXA-1": "x"}, "entries": [dict(v2e, version="o35-v3")]}, tf)
+tf.close()
+mg3 = O.load(tf.name)
+os.unlink(tf.name)
+check("loading a v3 ledger keeps its entries, starts v4 on the same day and reads every event again (Nov 1 is re-scored)",
+      (mg3["version"], mg3["since"], mg3["v3_since"], len(mg3["entries"]), mg3["seen"], mg3["seen_v3"]), ("o35-v4", "2026-11-01", "2026-11-01", 1, {}, {"KXA-1": "x"}))
 
 print("\nstats: z needs 3 nights, halves, clustering")
 mk = lambda night, roi, k: dict(variant="10c_2x", night=night, roi=roi, cost=0.1, profit=roi * 0.1, won=roi > 0, reason="target",
@@ -200,7 +226,7 @@ check("review at 10, decide at 30", (B.read_of(5, None), B.read_of(12, 0.1), B.r
 
 print("\nthe Soccer page section")
 empty = B.section(O.load("/nonexistent"))
-check("empty record says so and keeps the lane card", ('id="cheap-side"' in empty, "0 entries: no game has settled since the v3 record began" in empty, O.LANE in empty), (True, True, True))
+check("empty record says so and keeps the lane card", ('id="cheap-side"' in empty, "0 entries: no game has settled since the v4 record began" in empty, O.LANE in empty), (True, True, True))
 html = B.section(st)
 check("the lane's name, the 4x headline and the 3x comparison are shown; 2x, hold, 15c and 20c are not",
       (O.LABEL in html, O.vlabel("10c_4x") + " (headline)" in html, O.vlabel("10c_3x") in html, O.vlabel("10c_2x") in html, "hold to settlement" in html,
