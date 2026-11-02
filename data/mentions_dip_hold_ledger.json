@@ -24144,12 +24144,12 @@
     "KXTRUMPSAY-26NOV09-AUTO": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727e596-9de1-acf3-a19d-792d61563613"
+      "0727e682-29c9-a702-d691-ff81ccae9593"
      ],
      "first_px": 0.65,
      "first_ts": 1793635969,
-     "last_ts": 1793652656,
-     "n_prints": 14,
+     "last_ts": 1793654798,
+     "n_prints": 15,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -24158,11 +24158,11 @@
     "KXTRUMPSAY-26NOV09-BIBI": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727ea54-6551-9b1f-0477-c470d89f7a14"
+      "0727e5bf-24e9-8c17-ca52-1b3310ee6f7b"
      ],
      "first_px": 0.06,
      "first_ts": 1793627096,
-     "last_ts": 1793651732,
+     "last_ts": 1793653315,
      "lows": [
       [
        1793627096,
@@ -24170,7 +24170,7 @@
        1.0
       ]
      ],
-     "n_prints": 10,
+     "n_prints": 11,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -24207,16 +24207,14 @@
     "KXTRUMPSAY-26NOV09-CEAS": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727ea40-9331-861d-9ab8-1bb4f52c8327",
-      "0727ea44-7b79-84f9-8924-c702606bd44d",
-      "0727ea44-f851-84a3-9c24-82cb2b06f745",
-      "0727ea79-7f71-840b-946b-194caf3bc892",
-      "0727eae4-0411-8cac-ac3b-1c73d4c36e46"
+      "0727e6d8-a309-83f8-4490-378b8267b7bf",
+      "0727e6e1-2c19-816b-76e3-2c113a99f0a2",
+      "0727e6e5-4981-88d0-5f70-42ca03d6bbfe"
      ],
      "first_px": 0.82,
      "first_ts": 1793631307,
-     "last_ts": 1793650651,
-     "n_prints": 17,
+     "last_ts": 1793655548,
+     "n_prints": 21,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -24225,12 +24223,13 @@
     "KXTRUMPSAY-26NOV09-CRYP": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727ebe8-95b9-aacd-3ccc-444dd3f9f1e4"
+      "0727e51b-ce79-a7e2-e64f-1eda1743161e",
+      "0727e6c5-b959-aab0-e5d9-e56bb4a7dda7"
      ],
      "first_px": 0.83,
      "first_ts": 1793603083,
-     "last_ts": 1793645372,
-     "n_prints": 11,
+     "last_ts": 1793655990,
+     "n_prints": 17,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -24341,11 +24340,13 @@
     "KXTRUMPSAY-26NOV09-EPST": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727e5cd-a639-a660-9709-367660be91be"
+      "0727e549-ee89-a877-6717-1d71b11b4636",
+      "0727e684-8391-ad53-5a23-c095aa05e4fe",
+      "0727e686-e959-a55c-76f7-b134f5581c2e"
      ],
      "first_px": 0.82,
      "first_ts": 1793635945,
-     "last_ts": 1793652647,
+     "last_ts": 1793654808,
      "lows": [
       [
        1793644430,
@@ -24401,9 +24402,24 @@
        1793652647,
        0.15,
        10.0
+      ],
+      [
+       1793654617,
+       0.15,
+       3.64
+      ],
+      [
+       1793654808,
+       0.15,
+       4.0
+      ],
+      [
+       1793654808,
+       0.15,
+       1.36
       ]
      ],
-     "n_prints": 21,
+     "n_prints": 25,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -24638,12 +24654,12 @@
     "KXTRUMPSAY-26NOV09-MOON": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727e61c-01c9-8bc2-73c1-0c5f882d0269"
+      "0727e739-bff9-a44f-3ca9-8babecdcc2f5"
      ],
      "first_px": 0.63,
      "first_ts": 1793644850,
-     "last_ts": 1793652668,
-     "n_prints": 4,
+     "last_ts": 1793656565,
+     "n_prints": 6,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -24673,12 +24689,11 @@
     "KXTRUMPSAY-26NOV09-PEAC": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727e5c6-fe11-a6b8-0b47-87b9a61417f0",
-      "0727e61b-a419-aaa3-07f3-04e5c43786fd"
+      "0727e5da-f409-9be9-6b22-424d6df3b64d"
      ],
      "first_px": 0.01,
      "first_ts": 1793607220,
-     "last_ts": 1793652643,
+     "last_ts": 1793653344,
      "lows": [
       [
        1793607220,
@@ -24879,9 +24894,14 @@
        1793652643,
        0.11,
        1.0
+      ],
+      [
+       1793653344,
+       0.07,
+       0.27
       ]
      ],
-     "n_prints": 48,
+     "n_prints": 49,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -24958,12 +24978,12 @@
     "KXTRUMPSAY-26NOV09-REFI": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727eacb-1161-aee6-92ab-0552609bd17f"
+      "0727e5bb-6349-92ca-5312-84b82d28b0d5"
      ],
      "first_px": 0.97,
      "first_ts": 1793636312,
-     "last_ts": 1793649559,
-     "n_prints": 5,
+     "last_ts": 1793653336,
+     "n_prints": 6,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -24991,14 +25011,12 @@
     "KXTRUMPSAY-26NOV09-ROBO": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727ea8e-ea11-aa2a-4092-7c22c93822bc",
-      "0727eaea-f9f1-ad33-7ca0-975852871b88",
-      "0727eba4-7729-a537-5e93-b8b20a76c81c"
+      "0727e4bb-3e09-b8bf-cc88-4c511c82cd08"
      ],
      "first_px": 0.97,
      "first_ts": 1793647014,
-     "last_ts": 1793649468,
-     "n_prints": 4,
+     "last_ts": 1793653289,
+     "n_prints": 5,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -25007,12 +25025,12 @@
     "KXTRUMPSAY-26NOV09-SOLE": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727e8ce-6479-99b1-81cc-8ce30aac06c8"
+      "0727e658-6f91-936c-6045-e238d5c2edd7"
      ],
      "first_px": 0.95,
      "first_ts": 1793636161,
-     "last_ts": 1793636161,
-     "n_prints": 1,
+     "last_ts": 1793653657,
+     "n_prints": 2,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -25028,13 +25046,29 @@
     "KXTRUMPSAY-26NOV09-THIR": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727eaa1-0371-a18e-a35e-ff823256bfda",
-      "0727eaa8-b261-a726-a0a0-a28e83f37caa"
+      "0727e53a-10d1-ae67-d30a-bfe4d09ceeae",
+      "0727e578-0759-ab4e-c7c4-3ae94b3bf1fa",
+      "0727e6c8-78f9-ad09-c486-b9222f557f78",
+      "0727e6e5-3f19-a85a-e58d-ddefaa7035fc",
+      "0727e6e9-97b1-a5e9-cacf-0ff368c5cb48",
+      "0727e6e9-9b99-a6b5-ebaf-7c7df36999fd"
      ],
      "first_px": 0.63,
      "first_ts": 1793600774,
-     "last_ts": 1793649619,
-     "n_prints": 14,
+     "last_ts": 1793656354,
+     "lows": [
+      [
+       1793653337,
+       0.14,
+       0.02
+      ],
+      [
+       1793653337,
+       0.14,
+       0.15
+      ]
+     ],
+     "n_prints": 22,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -25043,13 +25077,11 @@
     "KXTRUMPSAY-26NOV09-TOMA": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727eb29-f4d1-95fd-04aa-770da4fe6da1",
-      "0727ebca-0c21-99bb-3ebc-0edfa9ed7b2a",
-      "0727ebcc-a7f9-9785-16d8-00a04facb5f8"
+      "0727e644-eeb1-a8a0-613a-62a615f71f75"
      ],
      "first_px": 0.56,
      "first_ts": 1793603203,
-     "last_ts": 1793644947,
+     "last_ts": 1793653433,
      "lows": [
       [
        1793641614,
@@ -25060,9 +25092,14 @@
        1793641614,
        0.14,
        1.0
+      ],
+      [
+       1793653341,
+       0.1,
+       0.21
       ]
      ],
-     "n_prints": 22,
+     "n_prints": 24,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -25288,15 +25325,13 @@
     "KXTRUMPSAY-26NOV09-ZOHR": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727e5fa-2341-86ef-37b4-e9e6d2ee947a",
-      "0727e60c-0841-82fa-174a-c816c8e858f8",
-      "0727e60c-de51-8638-0498-210ac91164f1",
-      "0727e60f-8619-882a-0178-1d274a77719a"
+      "0727e691-4cc9-a2fd-d52a-cf121b073ffa",
+      "0727e6a9-0bd9-a125-c170-d4db74d36131"
      ],
      "first_px": 0.84,
      "first_ts": 1793603190,
-     "last_ts": 1793652420,
-     "n_prints": 13,
+     "last_ts": 1793655292,
+     "n_prints": 19,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -25306,13 +25341,13 @@
   }
  },
  "lane": "mentions_dip_hold",
- "last_success": "2026-11-02T21:00:52.458655+00:00",
+ "last_success": "2026-11-02T21:57:00.127686+00:00",
  "observations": {
-  "at": "2026-11-02T21:00:52.458655+00:00",
+  "at": "2026-11-02T21:57:00.127686+00:00",
   "errors": [],
   "events": 1,
   "markets": 39,
-  "prints": 84
+  "prints": 38
  },
  "since": "2026-10-26T04:00:00+00:00"
 }
