@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-11-02T16:00:21.676318+00:00",
-   "last_success": "2026-11-02T16:00:21.676318+00:00",
+   "last_run": "2026-11-02T17:00:20.063980+00:00",
+   "last_success": "2026-11-02T17:00:20.063980+00:00",
    "observations": {
-    "at": "2026-11-02T16:00:21.676318+00:00",
+    "at": "2026-11-02T17:00:20.063980+00:00",
     "events": 885,
     "reasons": {},
     "retired": "2026-10-24"
@@ -548,10 +548,10 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-11-02T16:00:21.676318+00:00",
-   "last_success": "2026-11-02T16:00:21.676318+00:00",
+   "last_run": "2026-11-02T17:00:20.063980+00:00",
+   "last_success": "2026-11-02T17:00:20.063980+00:00",
    "observations": {
-    "at": "2026-11-02T16:00:21.676318+00:00",
+    "at": "2026-11-02T17:00:20.063980+00:00",
     "events": 885,
     "reasons": {},
     "retired": "2026-10-24"
@@ -905,10 +905,10 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-11-02T16:00:21.676318+00:00",
-   "last_success": "2026-11-02T16:00:21.676318+00:00",
+   "last_run": "2026-11-02T17:00:20.063980+00:00",
+   "last_success": "2026-11-02T17:00:20.063980+00:00",
    "observations": {
-    "at": "2026-11-02T16:00:21.676318+00:00",
+    "at": "2026-11-02T17:00:20.063980+00:00",
     "events": 885,
     "reasons": {},
     "retired": "2026-10-31"
@@ -2581,10 +2581,10 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-11-02T16:00:21.676318+00:00",
-   "last_success": "2026-11-02T16:00:21.676318+00:00",
+   "last_run": "2026-11-02T17:00:20.063980+00:00",
+   "last_success": "2026-11-02T17:00:20.063980+00:00",
    "observations": {
-    "at": "2026-11-02T16:00:21.676318+00:00",
+    "at": "2026-11-02T17:00:20.063980+00:00",
     "events": 885,
     "reasons": {
      "edge 5c+": 3,
@@ -2754,11 +2754,14 @@
      "logged": "2026-10-20T06:00:17.672978+00:00",
      "model": 0.6433,
      "name": "Wicker \u00b7 Rotten Tomatoes score",
+     "payout": 1.0,
      "price": 0.43,
+     "profit": 123.64,
      "rt_url": "https://www.rottentomatoes.com/m/wicker",
      "series": "KXRT",
+     "settled": "2026-11-02T17:00:20.063980+00:00",
      "side": "yes",
-     "status": "open",
+     "status": "won",
      "title": "Above 90"
     },
     {
@@ -2813,11 +2816,14 @@
      "logged": "2026-10-24T07:00:14.277448+00:00",
      "model": 0.95,
      "name": "The Only Living Pickpocket in New York \u00b7 Rotten Tomatoes score",
+     "payout": 1.0,
      "price": 0.83,
+     "profit": 19.07,
      "rt_url": "https://www.rottentomatoes.com/m/the_only_living_pickpocket_in_new_york",
      "series": "KXRT",
+     "settled": "2026-11-02T17:00:20.063980+00:00",
      "side": "yes",
-     "status": "open",
+     "status": "won",
      "strike": 92,
      "strike_type": "greater",
      "title": "Above 92"
