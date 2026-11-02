@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-02T15:00:25+00:00",
+ "board_built_at": "2026-11-02T16:00:21+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -339,6 +339,117 @@
    "sport": "culture_mentions",
    "status": "miss"
   },
+  "2026-11-02|KXTRUMPSAY-26NOV02-PEAC|Trump does not say \"Peace in the Middle East\" \u00b7 Trump mentions": {
+   "away": null,
+   "bet": {
+    "kind": "mention_no",
+    "p_said": 0.0,
+    "subject": "Peace in the Middle East"
+   },
+   "date": "2026-11-02",
+   "edge_at_log": 0.1126,
+   "first_seen": "2026-10-26",
+   "headline": "Trump does not say \"Peace in the Middle East\"",
+   "home": null,
+   "id": "2026-11-02|KXTRUMPSAY-26NOV02-PEAC|Trump does not say \"Peace in the Middle East\" \u00b7 Trump mentions",
+   "kickoff": "2026-11-02T15:00Z",
+   "lane": "retired",
+   "league": "Trump mentions",
+   "match": "What will Trump say this week?",
+   "pair": "mentions_rate|culture_mentions",
+   "price_at_log": 0.88,
+   "published_at": "2026-11-02T16:00:21+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "retired_on": "2026-10-26",
+   "route": {
+    "claim": "Trump does not say \"Peace in the Middle East\"",
+    "event": "KXTRUMPSAY-26NOV02",
+    "market": "KXTRUMPSAY-26NOV02-PEAC",
+    "outcome": "Peace in the Middle East",
+    "outcome_side": "no",
+    "price_at_log": 0.88,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "mentions_rate:KXTRUMPSAY-26NOV02-PEAC",
+   "source": "mentions_rate",
+   "sport": "culture_mentions",
+   "status": "hit"
+  },
+  "2026-11-02|KXTRUMPSAY-26NOV02-PRED|Trump does not say \"Prediction Market / Predictive Market\" \u00b7 Trump mentions": {
+   "away": null,
+   "bet": {
+    "kind": "mention_no",
+    "p_said": 0.0,
+    "subject": "Prediction Market / Predictive Market"
+   },
+   "date": "2026-11-02",
+   "edge_at_log": 0.1126,
+   "first_seen": "2026-10-26",
+   "headline": "Trump does not say \"Prediction Market / Predictive Market\"",
+   "home": null,
+   "id": "2026-11-02|KXTRUMPSAY-26NOV02-PRED|Trump does not say \"Prediction Market / Predictive Market\" \u00b7 Trump mentions",
+   "kickoff": "2026-11-02T15:00Z",
+   "lane": "retired",
+   "league": "Trump mentions",
+   "match": "What will Trump say this week?",
+   "pair": "mentions_rate|culture_mentions",
+   "price_at_log": 0.88,
+   "published_at": "2026-11-02T16:00:21+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "retired_on": "2026-10-26",
+   "route": {
+    "claim": "Trump does not say \"Prediction Market / Predictive Market\"",
+    "event": "KXTRUMPSAY-26NOV02",
+    "market": "KXTRUMPSAY-26NOV02-PRED",
+    "outcome": "Prediction Market / Predictive Market",
+    "outcome_side": "no",
+    "price_at_log": 0.88,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "mentions_rate:KXTRUMPSAY-26NOV02-PRED",
+   "source": "mentions_rate",
+   "sport": "culture_mentions",
+   "status": "hit"
+  },
+  "2026-11-02|KXTRUMPSAY-26NOV02-UFO|Trump does not say \"UFO / UAP\" \u00b7 Trump mentions": {
+   "away": null,
+   "bet": {
+    "kind": "mention_no",
+    "p_said": 0.0,
+    "subject": "UFO / UAP"
+   },
+   "date": "2026-11-02",
+   "edge_at_log": 0.1126,
+   "first_seen": "2026-10-26",
+   "headline": "Trump does not say \"UFO / UAP\"",
+   "home": null,
+   "id": "2026-11-02|KXTRUMPSAY-26NOV02-UFO|Trump does not say \"UFO / UAP\" \u00b7 Trump mentions",
+   "kickoff": "2026-11-02T15:00Z",
+   "lane": "retired",
+   "league": "Trump mentions",
+   "match": "What will Trump say this week?",
+   "pair": "mentions_rate|culture_mentions",
+   "price_at_log": 0.88,
+   "published_at": "2026-11-02T16:00:21+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "retired_on": "2026-10-26",
+   "route": {
+    "claim": "Trump does not say \"UFO / UAP\"",
+    "event": "KXTRUMPSAY-26NOV02",
+    "market": "KXTRUMPSAY-26NOV02-UFO",
+    "outcome": "UFO / UAP",
+    "outcome_side": "no",
+    "price_at_log": 0.88,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "mentions_rate:KXTRUMPSAY-26NOV02-UFO",
+   "source": "mentions_rate",
+   "sport": "culture_mentions",
+   "status": "hit"
+  },
   "2026-11-02|KXTRUMPSAY-26NOV02-VIVE|Trump does not say \"Vivek / Ramaswamy\" \u00b7 Trump mentions": {
    "away": null,
    "bet": {
@@ -382,5 +493,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-02T15:00:25+00:00"
+ "updated_at": "2026-11-02T16:00:21+00:00"
 }
