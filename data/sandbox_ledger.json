@@ -8,25 +8,25 @@
   },
   "commodities": {
    "cmd_market": {
-    "offered": 190,
-    "picked": 190
+    "offered": 200,
+    "picked": 200
    },
-   "kalshi_venue": 190
+   "kalshi_venue": 200
   },
   "commodities_fav": {
    "commod_fav_band": {
-    "offered": 190,
+    "offered": 200,
     "picked": 0
    },
    "commod_nc_no": {
-    "offered": 190,
+    "offered": 200,
     "picked": 0
    },
    "commod_nc_yes": {
-    "offered": 190,
+    "offered": 200,
     "picked": 0
    },
-   "kalshi_venue": 190
+   "kalshi_venue": 200
   },
   "cricket": {
    "kalshi_venue": 9,
@@ -73,7 +73,7 @@
     "offered": 4,
     "picked": 1
    },
-   "kalshi_venue": 184,
+   "kalshi_venue": 199,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -182,7 +182,7 @@
    "kalshi_venue": 59,
    "pin_totals": {
     "offered": 59,
-    "picked": 1
+    "picked": 0
    },
    "turkey_o25_dog": {
     "offered": 0,
@@ -348,8 +348,8 @@
   "tennis": {
    "kalshi_venue": 30,
    "polymarket_us": 40,
-   "polymarket_us_listed": 435,
-   "polymarket_us_priced": 209
+   "polymarket_us_listed": 441,
+   "polymarket_us_priced": 203
   },
   "tennis_combo": {
    "combo": 0,
@@ -357,156 +357,51 @@
   },
   "tennis_pmcombo": {
    "combo": 4,
-   "legs": 4
+   "legs": 5
   }
  },
  "feed_status": {
-  "pin_totals": "ok"
+  "pin_totals": "down: no paced credit left for this run"
  },
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-03T23:03:52+00:00",
-   "commodities": "2026-11-03T23:03:52+00:00",
-   "commodities_fav": "2026-11-03T23:03:52+00:00",
-   "cricket": "2026-11-03T23:03:52+00:00",
-   "crypto": "2026-11-03T23:03:52+00:00",
-   "crypto_fav": "2026-11-03T23:03:52+00:00",
-   "economics": "2026-11-03T23:03:52+00:00",
-   "finance": "2026-11-03T23:03:52+00:00",
-   "mma": "2026-11-03T23:03:52+00:00",
-   "nfl": "2026-11-03T23:03:52+00:00",
-   "nhl_pl": "2026-11-03T23:03:52+00:00",
-   "nhl_rest": "2026-11-03T23:03:52+00:00",
-   "soccer": "2026-11-03T23:03:52+00:00",
-   "soccer_btts": "2026-11-03T23:03:52+00:00",
-   "soccer_btts_cup": "2026-11-03T23:03:52+00:00",
-   "soccer_corners": "2026-11-03T23:03:52+00:00",
+   "boxing": "2026-11-03T23:19:44+00:00",
+   "commodities": "2026-11-03T23:19:44+00:00",
+   "commodities_fav": "2026-11-03T23:19:44+00:00",
+   "cricket": "2026-11-03T23:19:44+00:00",
+   "crypto": "2026-11-03T23:19:44+00:00",
+   "crypto_fav": "2026-11-03T23:19:44+00:00",
+   "economics": "2026-11-03T23:19:44+00:00",
+   "finance": "2026-11-03T23:19:44+00:00",
+   "mma": "2026-11-03T23:19:44+00:00",
+   "nfl": "2026-11-03T23:19:44+00:00",
+   "nhl_pl": "2026-11-03T23:19:44+00:00",
+   "nhl_rest": "2026-11-03T23:19:44+00:00",
+   "soccer": "2026-11-03T23:19:44+00:00",
+   "soccer_btts": "2026-11-03T23:19:44+00:00",
+   "soccer_btts_cup": "2026-11-03T23:19:44+00:00",
+   "soccer_corners": "2026-11-03T23:19:44+00:00",
    "soccer_ftts": "2026-10-19T18:33:38+00:00",
-   "soccer_o15": "2026-11-03T23:03:52+00:00",
-   "soccer_o15_cup": "2026-11-03T23:03:52+00:00",
-   "soccer_o25": "2026-11-03T23:03:52+00:00",
-   "soccer_o25_cup": "2026-11-03T23:03:52+00:00",
-   "soccer_p05": "2026-11-03T23:03:52+00:00",
-   "soccer_p05_cup": "2026-11-03T23:03:52+00:00",
-   "soccer_team1": "2026-11-03T23:03:52+00:00",
-   "soccer_team1_cup": "2026-11-03T23:03:52+00:00",
-   "soccer_team2": "2026-11-03T23:03:52+00:00",
-   "soccer_team2_cup": "2026-11-03T23:03:52+00:00",
-   "soccer_u35": "2026-11-03T23:03:52+00:00",
-   "soccer_u35_cup": "2026-11-03T23:03:52+00:00",
-   "tennis": "2026-11-03T23:03:52+00:00",
+   "soccer_o15": "2026-11-03T23:19:44+00:00",
+   "soccer_o15_cup": "2026-11-03T23:19:44+00:00",
+   "soccer_o25": "2026-11-03T23:19:44+00:00",
+   "soccer_o25_cup": "2026-11-03T23:19:44+00:00",
+   "soccer_p05": "2026-11-03T23:19:44+00:00",
+   "soccer_p05_cup": "2026-11-03T23:19:44+00:00",
+   "soccer_team1": "2026-11-03T23:19:44+00:00",
+   "soccer_team1_cup": "2026-11-03T23:19:44+00:00",
+   "soccer_team2": "2026-11-03T23:19:44+00:00",
+   "soccer_team2_cup": "2026-11-03T23:19:44+00:00",
+   "soccer_u35": "2026-11-03T23:19:44+00:00",
+   "soccer_u35_cup": "2026-11-03T23:19:44+00:00",
+   "tennis": "2026-11-03T23:19:44+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "odds_api": {
-   "allowance": 1,
-   "at": "2026-11-03T23:03:52+00:00",
-   "calls": 1,
+   "allowance": 0,
+   "at": "2026-11-03T23:19:44+00:00",
    "remaining": 410,
-   "totals_on": [
-    {
-     "empty": {
-      "no_event": 0,
-      "no_totals": 0,
-      "other_point": 12,
-      "points": [
-       3.0,
-       2.75,
-       3.75,
-       3.25
-      ],
-      "stale": 0
-     },
-     "key": "soccer_uefa_europa_league",
-     "listed": 13,
-     "rows": [
-      {
-       "empty": "other_point",
-       "market_id": "KXUELTOTAL-26NOV05ACMFTC-3",
-       "points": [
-        3.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUELTOTAL-26NOV05CRYTSG-3",
-       "points": [
-        3.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUELTOTAL-26NOV05LSKVIK-3",
-       "points": [
-        3.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUELTOTAL-26NOV05RSCRBS-3",
-       "points": [
-        3.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUELTOTAL-26NOV05RSOOL-3",
-       "points": [
-        3.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUELTOTAL-26NOV05SPABOU-3",
-       "points": [
-        3.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUELTOTAL-26NOV05AZAJUV-3",
-       "points": [
-        2.75
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUELTOTAL-26NOV05BENLPO-3",
-       "points": [
-        3.75
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUELTOTAL-26NOV05CELBES-3",
-       "points": [
-        3.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUELTOTAL-26NOV05LEVOLM-3",
-       "points": [
-        3.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUELTOTAL-26NOV05STUCEL-3",
-       "points": [
-        3.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUELTOTAL-26NOV05SUNDIN-3",
-       "points": [
-        2.75
-       ]
-      }
-     ]
-    }
-   ],
    "used": 90
   },
   "outages": [
@@ -526,7 +421,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 1056,
+  "runs": 1057,
   "tennis_shortlist": {
    "audit": [
     {
@@ -538,7 +433,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-03T23:05:08+00:00"
+  "updated": "2026-11-03T23:20:43+00:00"
  },
  "quotes": [
   {
@@ -390173,7 +390068,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-03T23:03:52+00:00",
+   "close_at": "2026-11-03T23:19:44+00:00",
    "close_price": 0.86,
    "date": "2026-11-05",
    "edge": null,
@@ -417982,7 +417877,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-03T23:03:52+00:00",
+   "close_at": "2026-11-03T23:19:44+00:00",
    "close_price": 0.25,
    "date": "2026-11-06",
    "edge": null,
@@ -419172,7 +419067,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-03T23:03:52+00:00",
+   "close_at": "2026-11-03T23:19:44+00:00",
    "close_price": 0.49,
    "date": "2026-11-06",
    "edge": null,
@@ -419364,7 +419259,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-03T23:03:52+00:00",
+   "close_at": "2026-11-03T23:19:44+00:00",
    "close_price": 0.8,
    "date": "2026-11-06",
    "edge": null,
@@ -419404,7 +419299,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-03T23:03:52+00:00",
+   "close_at": "2026-11-03T23:19:44+00:00",
    "close_price": 0.7,
    "date": "2026-11-06",
    "edge": null,
@@ -450189,7 +450084,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-03T23:03:52+00:00",
+   "close_at": "2026-11-03T23:19:44+00:00",
    "close_price": 0.85,
    "date": "2026-11-05",
    "edge": null,
@@ -451929,7 +451824,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-03T23:03:52+00:00",
+   "close_at": "2026-11-03T23:19:44+00:00",
    "close_price": 0.84,
    "date": "2026-11-05",
    "edge": null,
@@ -453882,8 +453777,8 @@
    "price_b": 0.61,
    "price_draw": null,
    "prob_a": 0.395,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-03T23:20:28+00:00",
    "side_a": "Ryan Cozad",
    "side_b": "Duje Markovina",
    "source": "polymarket_us",
@@ -453892,7 +453787,7 @@
    "stake": 0.0,
    "start": "2026-11-03T20:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -454156,8 +454051,8 @@
    "price_b": 0.33,
    "price_draw": null,
    "prob_a": 0.675,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-03T23:20:29+00:00",
    "side_a": "Schafer, Brooke Lynn",
    "side_b": "Oliver, Natalie",
    "source": "polymarket_us",
@@ -454166,7 +454061,7 @@
    "stake": 0.0,
    "start": "2026-11-03T20:30:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "utr",
    "uncovered": null,
    "untraded": false,
@@ -454429,8 +454324,8 @@
    "price_b": 0.94,
    "price_draw": null,
    "prob_a": 0.07,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-03T23:20:37+00:00",
    "side_a": "Felipe Badaro",
    "side_b": "Joao Vitor Scramin do Lago",
    "source": "polymarket_us",
@@ -454439,7 +454334,7 @@
    "stake": 0.0,
    "start": "2026-11-03T20:33:35+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -454498,8 +454393,8 @@
    "price_b": 0.71,
    "price_draw": null,
    "prob_a": 0.295,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-03T23:20:37+00:00",
    "side_a": "Ian Lucca Cervantes Tomas",
    "side_b": "Maxwell McKennon",
    "source": "polymarket_us",
@@ -454508,7 +454403,7 @@
    "stake": 0.0,
    "start": "2026-11-03T21:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -455199,7 +455094,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-03T23:03:52+00:00",
+   "close_at": "2026-11-03T23:19:44+00:00",
    "close_price": 0.15,
    "date": "2026-11-07",
    "edge": null,
@@ -455239,7 +455134,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-03T23:03:52+00:00",
+   "close_at": "2026-11-03T23:19:44+00:00",
    "close_price": 0.84,
    "date": "2026-11-06",
    "edge": null,
@@ -455921,8 +455816,8 @@
    "price_b": 0.57,
    "price_draw": null,
    "prob_a": 0.435,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-03T23:20:41+00:00",
    "side_a": "Ciara Harding",
    "side_b": "Alice Otis",
    "source": "polymarket_us",
@@ -455931,7 +455826,7 @@
    "stake": 0.0,
    "start": "2026-11-03T20:07:34+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfwo",
    "uncovered": null,
    "untraded": false,
@@ -461853,7 +461748,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-03T23:03:52+00:00",
+   "close_at": "2026-11-03T23:19:44+00:00",
    "close_price": 0.75,
    "date": "2026-11-06",
    "edge": null,
@@ -462658,6 +462553,370 @@
    "untraded": false,
    "url": "https://polymarket.us/event/ufc-ausbas-lucbre-2026-11-07",
    "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-04",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-utr-suhnat-boerob-2026-11-04",
+   "label": "Suh, Nathaniel vs Boeckli, Robin",
+   "liquidity": null,
+   "logged": "2026-11-03T23:19:44+00:00",
+   "market_id": "aec-utr-suhnat-boerob-2026-11-04",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.26,
+   "price_b": 0.75,
+   "price_draw": null,
+   "prob_a": 0.255,
+   "result": null,
+   "settled": null,
+   "side_a": "Suh, Nathaniel",
+   "side_b": "Boeckli, Robin",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-04T02:30:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "utr",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/utr-suhnat-boerob-2026-11-04",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-04",
+   "edge": 0.0,
+   "id": "cmd_market:KXCOPPERD-26NOV0417-T6.58",
+   "label": "Will the copper close price be above 6.58 USD/Lbs on November 04, 2026 at 5:00 PM EST?",
+   "liquidity": null,
+   "logged": "2026-11-03T23:19:44+00:00",
+   "market_id": "KXCOPPERD-26NOV0417-T6.58",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.19,
+   "price_b": 0.85,
+   "price_draw": null,
+   "prob_a": 0.19,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $6.58",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-04T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcopperd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-04",
+   "edge": 0.0,
+   "id": "cmd_market:KXCOPPERD-26NOV0417-T6.56",
+   "label": "Will the copper close price be above 6.56 USD/Lbs on November 04, 2026 at 5:00 PM EST?",
+   "liquidity": null,
+   "logged": "2026-11-03T23:19:44+00:00",
+   "market_id": "KXCOPPERD-26NOV0417-T6.56",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.25,
+   "price_b": 0.79,
+   "price_draw": null,
+   "prob_a": 0.25,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $6.56",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-04T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcopperd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-04",
+   "edge": 0.0,
+   "id": "cmd_market:KXCOPPERD-26NOV0417-T6.54",
+   "label": "Will the copper close price be above 6.54 USD/Lbs on November 04, 2026 at 5:00 PM EST?",
+   "liquidity": null,
+   "logged": "2026-11-03T23:19:44+00:00",
+   "market_id": "KXCOPPERD-26NOV0417-T6.54",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.32,
+   "price_b": 0.72,
+   "price_draw": null,
+   "prob_a": 0.32,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $6.54",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-04T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcopperd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-04",
+   "edge": 0.0,
+   "id": "cmd_market:KXCOPPERD-26NOV0417-T6.52",
+   "label": "Will the copper close price be above 6.52 USD/Lbs on November 04, 2026 at 5:00 PM EST?",
+   "liquidity": null,
+   "logged": "2026-11-03T23:19:44+00:00",
+   "market_id": "KXCOPPERD-26NOV0417-T6.52",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.4,
+   "price_b": 0.64,
+   "price_draw": null,
+   "prob_a": 0.4,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $6.52",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-04T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcopperd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-04",
+   "edge": 0.0,
+   "id": "cmd_market:KXCOPPERD-26NOV0417-T6.50",
+   "label": "Will the copper close price be above 6.50 USD/Lbs on November 04, 2026 at 5:00 PM EST?",
+   "liquidity": null,
+   "logged": "2026-11-03T23:19:44+00:00",
+   "market_id": "KXCOPPERD-26NOV0417-T6.50",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.5,
+   "price_b": 0.54,
+   "price_draw": null,
+   "prob_a": 0.5,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $6.50",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-04T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcopperd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-04",
+   "edge": 0.0,
+   "id": "cmd_market:KXCOPPERD-26NOV0417-T6.48",
+   "label": "Will the copper close price be above 6.48 USD/Lbs on November 04, 2026 at 5:00 PM EST?",
+   "liquidity": null,
+   "logged": "2026-11-03T23:19:44+00:00",
+   "market_id": "KXCOPPERD-26NOV0417-T6.48",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.59,
+   "price_b": 0.45,
+   "price_draw": null,
+   "prob_a": 0.59,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $6.48",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-04T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcopperd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-04",
+   "edge": 0.0,
+   "id": "cmd_market:KXCOPPERD-26NOV0417-T6.46",
+   "label": "Will the copper close price be above 6.46 USD/Lbs on November 04, 2026 at 5:00 PM EST?",
+   "liquidity": null,
+   "logged": "2026-11-03T23:19:44+00:00",
+   "market_id": "KXCOPPERD-26NOV0417-T6.46",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.68,
+   "price_b": 0.36,
+   "price_draw": null,
+   "prob_a": 0.68,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $6.46",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-04T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcopperd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-04",
+   "edge": 0.0,
+   "id": "cmd_market:KXCOPPERD-26NOV0417-T6.44",
+   "label": "Will the copper close price be above 6.44 USD/Lbs on November 04, 2026 at 5:00 PM EST?",
+   "liquidity": null,
+   "logged": "2026-11-03T23:19:44+00:00",
+   "market_id": "KXCOPPERD-26NOV0417-T6.44",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.75,
+   "price_b": 0.29,
+   "price_draw": null,
+   "prob_a": 0.75,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $6.44",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-04T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcopperd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-04",
+   "edge": 0.0,
+   "id": "cmd_market:KXCOPPERD-26NOV0417-T6.42",
+   "label": "Will the copper close price be above 6.42 USD/Lbs on November 04, 2026 at 5:00 PM EST?",
+   "liquidity": null,
+   "logged": "2026-11-03T23:19:44+00:00",
+   "market_id": "KXCOPPERD-26NOV0417-T6.42",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.82,
+   "price_b": 0.22,
+   "price_draw": null,
+   "prob_a": 0.82,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $6.42",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-04T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcopperd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-04",
+   "edge": 0.0,
+   "id": "cmd_market:KXCOPPERD-26NOV0417-T6.40",
+   "label": "Will the copper close price be above 6.40 USD/Lbs on November 04, 2026 at 5:00 PM EST?",
+   "liquidity": null,
+   "logged": "2026-11-03T23:19:44+00:00",
+   "market_id": "KXCOPPERD-26NOV0417-T6.40",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.87,
+   "price_b": 0.17,
+   "price_draw": null,
+   "prob_a": 0.87,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $6.40",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-04T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcopperd",
+   "venue": "kalshi_binary",
    "venue_start": null
   }
  ],
