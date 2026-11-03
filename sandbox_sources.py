@@ -162,6 +162,15 @@ UTR_SHORTLIST_RETIRED_WHY = ("Retired 2026-11-02 by Olu: at the price — 20 won
 ESPN_FPI_NFL_RETIRED_WHY = ("Retired 2026-11-02 by Olu: no edge at 35 settled — 14 won v 17.8 priced, −26.4% after fees."
                             + RETIRED_TAIL_2026_11_02)
 
+# 2026-11-03 retirements (Olu, records review of the 2026-11-02 pages). None is in Production.
+RETIRED_TAIL_2026_11_03 = (" No new entries from 2026-11-03; its rows stay on file and its open bets "
+                           "still settle.")
+CRYPTO_FAV_BAND_RETIRED_WHY = ("Retired 2026-11-03 by Olu: no edge at 23 market-days — 15–8, 15 won v 17.2 priced, "
+                               "−7.8% after fees." + RETIRED_TAIL_2026_11_03)
+CRYPTO_RETIRED_ON_2026_11_03 = ("crypto_fav_band|crypto_fav", "crypto_fav_band_60|crypto_fav")
+CRYPTO_FAV_BAND_60_RETIRED_WHY = ("Retired 2026-11-03 by Olu: no edge at 14 market-days — 8–6, 8 won v 8.9 priced, "
+                                  "−10.7% after fees." + RETIRED_TAIL_2026_11_03)
+
 # The registry. `connected` is the honest bit: it says whether this run can actually
 # reach the source, not whether the site exists.
 SOURCES = {
@@ -1338,7 +1347,8 @@ SOURCES = {
              "Read at 30 settled."),
     "crypto_fav_band": dict(
         label="Crypto favourite band (Yes 0.70-0.80, 3 hours to the close)", kind="Rule",
-        connected=True, site="edge-machine", sports=["crypto_fav"],
+        connected=True, site="edge-machine", sports=[],
+        retired_sports={"crypto_fav": CRYPTO_FAV_BAND_RETIRED_WHY},
         changes=[
             (
                 'READS 2026-10-13: up to three reads per window, 30 minutes apart, asked for by the '
@@ -1416,7 +1426,8 @@ SOURCES = {
              "30 independent outcomes."),
     "crypto_fav_band_60": dict(
         label="Crypto favourite band 60 (Yes 0.60 to under 0.70, 3 hours to the close)",
-        kind="Rule", connected=True, site="edge-machine", sports=["crypto_fav"],
+        kind="Rule", connected=True, site="edge-machine", sports=[],
+        retired_sports={"crypto_fav": CRYPTO_FAV_BAND_60_RETIRED_WHY},
         baseline="favourite_population", favourite_side="a", one_per_coin_close=True,
         note="PRE-REGISTERED 2026-10-18, before it logged anything, on a fresh record and in "
              "the Sandbox only: crypto_fav_band one band lower. Back the YES on the CHEAPEST "

@@ -154,12 +154,13 @@ import fights_split
 import mentions_split as MS
 for name, html, cfgs in (("culture", culture_build.build(), culture_build.LIVE_CHEAP),   # the weekly and monthly mention lanes retired 2026-10-31: in a Retired fold
                          ("commodities", commodities_build.build(), MS.COMMOD_LANES),
-                         ("fights", fights_build.build(), fights_split.LANES)):
+                         ("fights", fights_build.build(), fights_split.LIVE)):     # the UFC lane retired 2026-11-03: in a Retired fold
     hidden = [c["lane"] for c in cfgs if folded(html, f'id="{c["anchor"]}"') is not False]
     check(f"{name}: every lane card on the page and not folded", hidden, [])
 fights_html = fights_build.build()
 check("fights: each card says it is price band only and becomes a baseline when a filtered fights lane exists",
-      (fights_html.count("Price band only: becomes a baseline when a filtered fights lane exists."), len(fights_split.LANES)), (2, 2))
+      (fights_html.count("Price band only: becomes a baseline when a filtered fights lane exists."), len(fights_split.LIVE)), (1, 1))
+check("fights: the retired UFC lane sits in the collapsed Retired fold", folded(fights_html, 'id="ufc-dog"'), True)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

@@ -125,7 +125,9 @@ removed = getattr(MT, "REMOVED_RULES", None)
 ok(removed is not None and set(removed) == set(EIGHT),
    "exactly these twelve rules are removed")
 retired = {name for name, meta in MT.RULES.items() if meta.get("retired")}
-ok(retired == set(EIGHT), "every retired trading rule is one of the twelve, and no other rule is")
+# 2026-11-03: sw_rsi2_pullback is retired too, but stays on the board (not removed): test_retired_2026_11_03.py.
+ok(retired - {"sw_rsi2_pullback"} == set(EIGHT) and not MT.rule_removed("sw_rsi2_pullback"),
+   "every retired trading rule is one of the twelve, and no other rule is, but the RSI(2) rule (retired 2026-11-03, on the board)")
 gate = getattr(MT, "rule_removed", lambda _name: False)
 ok(all(gate(name) for name in EIGHT), "the entry gate blocks each of the eight")
 ok(not gate(KEPT), "a rule still on the board is not blocked")
@@ -343,7 +345,14 @@ try:
     live_row = open_row("sw_gap_down_reversal", "DELL", DAYS[E])
     led = {"trades": [live_row], "meta": {}}
     stld4 = flat_bars(DAYS[:E + 1 + 4])
-    orders, refused = X.plan({"DELL": sw, "STLD": stld4, "GGG": gap}, led, state=st)
+    # The rule on the board here is the RSI(2) rule, retired 2026-11-03; this checks the planner's machinery, so it
+    # buys again for this one plan (test_retired_2026_11_03.py holds the retirement).
+    _gone = MT.RULES[KEPT].pop("retired", None)
+    try:
+        orders, refused = X.plan({"DELL": sw, "STLD": stld4, "GGG": gap}, led, state=st)
+    finally:
+        if _gone:
+            MT.RULES[KEPT]["retired"] = _gone
     eq([(o["symbol"], o["action"], o["qty"]) for o in orders if o["action"] == "sell"],
        [("DELL", "sell", 2)], "4 sessions after entry: DELL's scheduled sell, no orphan sell yet")
     ok(not [o for o in orders + refused if o["action"] == "buy" and MT.rule_removed(o["rule"])],

@@ -16,7 +16,7 @@ from require_browser import require_browser
 NOW = dt.datetime(2026, 10, 7, 12, tzinfo=dt.timezone.utc)
 ROOT = Path(__file__).parent
 ledger = {"quotes": [], "meta": {"updated": "2026-10-07T11:00:00Z"},
-          "coverage": {"crypto_fav": {"crypto_fav_band": {"offered": 42, "picked": 0}}}}
+          "coverage": {"crypto_fav": {"crypto_fav_band_below": {"offered": 42, "picked": 0}}}}   # the scanner's lane since 2026-11-03
 original = copy.deepcopy(ledger)
 scan = crypto._scan_status(ledger, NOW)
 assert "Last scan Oct 7, 6:00 AM CT · 42 quotes · next window Oct 7, 12:30–2:00 PM CT" in scan, scan
