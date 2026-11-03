@@ -93,7 +93,7 @@
     "offered": 4,
     "picked": 0
    },
-   "kalshi_venue": 163,
+   "kalshi_venue": 172,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -376,181 +376,61 @@
   "tennis": {
    "kalshi_venue": 21,
    "polymarket_us": 40,
-   "polymarket_us_listed": 511,
-   "polymarket_us_priced": 214
+   "polymarket_us_listed": 503,
+   "polymarket_us_priced": 215
   },
   "tennis_combo": {
    "combo": 0,
    "legs": 0
   },
   "tennis_pmcombo": {
-   "combo": 0,
-   "legs": 1
+   "combo": 1,
+   "legs": 2
   }
  },
  "feed_status": {
   "oddspedia": "ok",
-  "pin_totals": "ok"
+  "pin_totals": "down: no paced credit left for this run"
  },
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-03T00:04:14+00:00",
-   "commodities": "2026-11-03T00:04:14+00:00",
-   "commodities_fav": "2026-11-03T00:04:14+00:00",
-   "cricket": "2026-11-03T00:04:14+00:00",
-   "crypto": "2026-11-03T00:04:14+00:00",
-   "crypto_fav": "2026-11-03T00:04:14+00:00",
-   "economics": "2026-11-03T00:04:14+00:00",
-   "finance": "2026-11-03T00:04:14+00:00",
-   "mma": "2026-11-03T00:04:14+00:00",
-   "nfl": "2026-11-03T00:04:14+00:00",
-   "nhl_pl": "2026-11-03T00:04:14+00:00",
-   "nhl_rest": "2026-11-03T00:04:14+00:00",
-   "soccer": "2026-11-03T00:04:14+00:00",
-   "soccer_btts": "2026-11-03T00:04:14+00:00",
-   "soccer_btts_cup": "2026-11-03T00:04:14+00:00",
-   "soccer_corners": "2026-11-03T00:04:14+00:00",
+   "boxing": "2026-11-03T00:10:15+00:00",
+   "commodities": "2026-11-03T00:10:15+00:00",
+   "commodities_fav": "2026-11-03T00:10:15+00:00",
+   "cricket": "2026-11-03T00:10:15+00:00",
+   "crypto": "2026-11-03T00:10:15+00:00",
+   "crypto_fav": "2026-11-03T00:10:15+00:00",
+   "economics": "2026-11-03T00:10:15+00:00",
+   "finance": "2026-11-03T00:10:15+00:00",
+   "mma": "2026-11-03T00:10:15+00:00",
+   "nfl": "2026-11-03T00:10:15+00:00",
+   "nhl_pl": "2026-11-03T00:10:15+00:00",
+   "nhl_rest": "2026-11-03T00:10:15+00:00",
+   "soccer": "2026-11-03T00:10:15+00:00",
+   "soccer_btts": "2026-11-03T00:10:15+00:00",
+   "soccer_btts_cup": "2026-11-03T00:10:15+00:00",
+   "soccer_corners": "2026-11-03T00:10:15+00:00",
    "soccer_ftts": "2026-10-19T18:33:38+00:00",
-   "soccer_o15": "2026-11-03T00:04:14+00:00",
-   "soccer_o15_cup": "2026-11-03T00:04:14+00:00",
-   "soccer_o25": "2026-11-03T00:04:14+00:00",
-   "soccer_o25_cup": "2026-11-03T00:04:14+00:00",
-   "soccer_p05": "2026-11-03T00:04:14+00:00",
-   "soccer_p05_cup": "2026-11-03T00:04:14+00:00",
-   "soccer_team1": "2026-11-03T00:04:14+00:00",
-   "soccer_team1_cup": "2026-11-03T00:04:14+00:00",
-   "soccer_team2": "2026-11-03T00:04:14+00:00",
-   "soccer_team2_cup": "2026-11-03T00:04:14+00:00",
-   "soccer_u35": "2026-11-03T00:04:14+00:00",
-   "soccer_u35_cup": "2026-11-03T00:04:14+00:00",
-   "tennis": "2026-11-03T00:04:14+00:00",
+   "soccer_o15": "2026-11-03T00:10:15+00:00",
+   "soccer_o15_cup": "2026-11-03T00:10:15+00:00",
+   "soccer_o25": "2026-11-03T00:10:15+00:00",
+   "soccer_o25_cup": "2026-11-03T00:10:15+00:00",
+   "soccer_p05": "2026-11-03T00:10:15+00:00",
+   "soccer_p05_cup": "2026-11-03T00:10:15+00:00",
+   "soccer_team1": "2026-11-03T00:10:15+00:00",
+   "soccer_team1_cup": "2026-11-03T00:10:15+00:00",
+   "soccer_team2": "2026-11-03T00:10:15+00:00",
+   "soccer_team2_cup": "2026-11-03T00:10:15+00:00",
+   "soccer_u35": "2026-11-03T00:10:15+00:00",
+   "soccer_u35_cup": "2026-11-03T00:10:15+00:00",
+   "tennis": "2026-11-03T00:10:15+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "odds_api": {
-   "allowance": 1,
-   "at": "2026-11-03T00:04:14+00:00",
-   "calls": 1,
+   "allowance": 0,
+   "at": "2026-11-03T00:10:15+00:00",
    "remaining": 423,
-   "totals_on": [
-    {
-     "empty": {
-      "no_event": 0,
-      "no_totals": 0,
-      "other_point": 14,
-      "points": [
-       3.5,
-       3.25,
-       4.0,
-       3.0,
-       2.75
-      ],
-      "stale": 0
-     },
-     "key": "soccer_uefa_champs_league",
-     "listed": 14,
-     "rows": [
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV03GALVFB-3",
-       "points": [
-        3.5
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV03ASKSLO-3",
-       "points": [
-        3.5
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV03ATMBMU-3",
-       "points": [
-        3.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV03BARAVL-3",
-       "points": [
-        4.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV03FEYINT-3",
-       "points": [
-        3.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV03MUNROM-3",
-       "points": [
-        3.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV03VILPSG-3",
-       "points": [
-        3.5
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV04AEKRMA-3",
-       "points": [
-        3.5
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV04FENLFC-3",
-       "points": [
-        3.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV04BVBRBB-3",
-       "points": [
-        3.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV04FCPNAP-3",
-       "points": [
-        2.75
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV04PSVBRU-3",
-       "points": [
-        3.5
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV04RBLMCI-3",
-       "points": [
-        3.5
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV04RCLCOM-3",
-       "points": [
-        3.0
-       ]
-      }
-     ]
-    }
-   ],
    "used": 77
   },
   "outages": [
@@ -570,7 +450,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 996,
+  "runs": 997,
   "tennis_shortlist": {
    "audit": [
     {
@@ -582,7 +462,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-03T00:05:36+00:00"
+  "updated": "2026-11-03T00:11:24+00:00"
  },
  "quotes": [
   {
@@ -425886,7 +425766,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-03T00:04:14+00:00",
+   "close_at": "2026-11-03T00:10:15+00:00",
    "close_price": 0.86,
    "date": "2026-11-05",
    "edge": null,
@@ -452244,14 +452124,14 @@
    "logged": "2026-11-02T18:34:00+00:00",
    "market_id": "KXBTCD-26NOV0217-T76499.99",
    "pick": "a",
-   "pnl": 0.0,
+   "pnl": 28.21,
    "price": 0.78,
    "price_a": 0.78,
    "price_b": 0.23,
    "price_draw": null,
    "prob_a": null,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-03T00:10:47+00:00",
    "side_a": "$76,500 or above",
    "side_b": "No",
    "source": "crypto_fav_band",
@@ -452260,7 +452140,7 @@
    "stake": 100.0,
    "start": "2026-11-02T22:05:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "won",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxbtcd",
@@ -452279,14 +452159,14 @@
    "logged": "2026-11-02T18:34:00+00:00",
    "market_id": "KXBTCD-26NOV0217-T77249.99",
    "pick": "b",
-   "pnl": 0.0,
+   "pnl": 31.58,
    "price": 0.76,
    "price_a": 0.25,
    "price_b": 0.76,
    "price_draw": null,
    "prob_a": null,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-03T00:10:47+00:00",
    "side_a": "$77,250 or above",
    "side_b": "No",
    "source": "crypto_fav_band_below",
@@ -452295,7 +452175,7 @@
    "stake": 100.0,
    "start": "2026-11-02T22:05:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "won",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxbtcd",
@@ -452314,14 +452194,14 @@
    "logged": "2026-11-02T18:34:00+00:00",
    "market_id": "KXBTCD-26NOV0217-T76749.99",
    "pick": "a",
-   "pnl": 0.0,
+   "pnl": -100.0,
    "price": 0.62,
    "price_a": 0.62,
    "price_b": 0.39,
    "price_draw": null,
    "prob_a": null,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-03T00:10:47+00:00",
    "side_a": "$76,750 or above",
    "side_b": "No",
    "source": "crypto_fav_band_60",
@@ -452330,7 +452210,7 @@
    "stake": 100.0,
    "start": "2026-11-02T22:05:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "lost",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxbtcd",
@@ -453632,14 +453512,14 @@
    "logged": "2026-11-02T19:07:45+00:00",
    "market_id": "KXETHD-26NOV0217-T2249.99",
    "pick": "b",
-   "pnl": 0.0,
+   "pnl": -100.0,
    "price": 0.62,
    "price_a": 0.39,
    "price_b": 0.62,
    "price_draw": null,
    "prob_a": null,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-03T00:10:47+00:00",
    "side_a": "$2,250 or above",
    "side_b": "No",
    "source": "crypto_fav_band_below_60",
@@ -453648,7 +453528,7 @@
    "stake": 100.0,
    "start": "2026-11-02T22:05:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "lost",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxethd",
@@ -453694,7 +453574,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-03T00:04:14+00:00",
+   "close_at": "2026-11-03T00:10:15+00:00",
    "close_price": 0.26,
    "date": "2026-11-06",
    "edge": null,
@@ -454270,14 +454150,14 @@
    "logged": "2026-11-02T19:33:18+00:00",
    "market_id": "KXXRPD-26NOV0217-T1.2399",
    "pick": "a",
-   "pnl": 0.0,
+   "pnl": 40.85,
    "price": 0.71,
    "price_a": 0.71,
    "price_b": 0.32,
    "price_draw": null,
    "prob_a": null,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-03T00:10:49+00:00",
    "side_a": "$1.23991 or above",
    "side_b": "No",
    "source": "crypto_fav_band",
@@ -454286,7 +454166,7 @@
    "stake": 100.0,
    "start": "2026-11-02T22:05:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "won",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxxrpd",
@@ -454305,14 +454185,14 @@
    "logged": "2026-11-02T19:33:18+00:00",
    "market_id": "KXBTCD-26NOV0217-T76999.99",
    "pick": "b",
-   "pnl": 0.0,
+   "pnl": 51.52,
    "price": 0.66,
    "price_a": 0.35,
    "price_b": 0.66,
    "price_draw": null,
    "prob_a": null,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-03T00:10:49+00:00",
    "side_a": "$77,000 or above",
    "side_b": "No",
    "source": "crypto_fav_band_below_60",
@@ -454321,7 +454201,7 @@
    "stake": 100.0,
    "start": "2026-11-02T22:05:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "won",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxbtcd",
@@ -454884,7 +454764,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-03T00:04:14+00:00",
+   "close_at": "2026-11-03T00:10:15+00:00",
    "close_price": 0.49,
    "date": "2026-11-06",
    "edge": null,
@@ -455076,7 +454956,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-03T00:04:14+00:00",
+   "close_at": "2026-11-03T00:10:15+00:00",
    "close_price": 0.81,
    "date": "2026-11-06",
    "edge": null,
@@ -455116,7 +454996,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-03T00:04:14+00:00",
+   "close_at": "2026-11-03T00:10:15+00:00",
    "close_price": 0.71,
    "date": "2026-11-06",
    "edge": null,
@@ -458687,8 +458567,8 @@
    "price_b": 0.3,
    "price_draw": null,
    "prob_a": 0.705,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-03T00:11:16+00:00",
    "side_a": "Colton Smith",
    "side_b": "Braden Shick",
    "source": "polymarket_us",
@@ -458697,7 +458577,7 @@
    "stake": 0.0,
    "start": "2026-11-02T22:05:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "atpch",
    "tour": "atpch",
    "uncovered": null,
@@ -461107,6 +460987,74 @@
    "uncovered": null,
    "untraded": false,
    "url": "https://polymarket.us/event/utr-johric-wilhen-2026-11-03",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-03",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfme-haohe-arkkoz-2026-11-03",
+   "label": "Haolong He vs Arkhip Kozlov",
+   "liquidity": null,
+   "logged": "2026-11-03T00:10:14+00:00",
+   "market_id": "aec-itfme-haohe-arkkoz-2026-11-03",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.67,
+   "price_b": 0.34,
+   "price_draw": null,
+   "prob_a": 0.665,
+   "result": null,
+   "settled": null,
+   "side_a": "Haolong He",
+   "side_b": "Arkhip Kozlov",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-03T03:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfme",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfme-haohe-arkkoz-2026-11-03",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-03",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfme-miksta-yehon-2026-11-03",
+   "label": "Mikal Statham vs Ye Hongyu",
+   "liquidity": null,
+   "logged": "2026-11-03T00:10:14+00:00",
+   "market_id": "aec-itfme-miksta-yehon-2026-11-03",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.64,
+   "price_b": 0.37,
+   "price_draw": null,
+   "prob_a": 0.635,
+   "result": null,
+   "settled": null,
+   "side_a": "Mikal Statham",
+   "side_b": "Ye Hongyu",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-03T03:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfme",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfme-miksta-yehon-2026-11-03",
    "venue": "polymarket_us",
    "venue_start": null
   }

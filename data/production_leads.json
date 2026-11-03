@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-03T00:05:36+00:00",
+ "board_built_at": "2026-11-03T00:11:24+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -1132,6 +1132,41 @@
    "sport": "commodities_fav",
    "status": "hit"
   },
+  "2026-11-02|KXBTCD-26NOV0217-T77249.99|Below $77,250 at the close \u00b7 Crypto favourite band, below": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-11-02",
+   "edge_at_log": null,
+   "first_seen": "2026-11-02",
+   "headline": "Below $77,250 at the close",
+   "home": null,
+   "id": "2026-11-02|KXBTCD-26NOV0217-T77249.99|Below $77,250 at the close \u00b7 Crypto favourite band, below",
+   "kickoff": "2026-11-02T22:05Z",
+   "lane": "production",
+   "league": "Crypto \u00b7 Favourite band",
+   "match": "Bitcoin price on Nov 2, 2026",
+   "pair": "crypto_fav_band_below|crypto_fav",
+   "price_at_log": 0.76,
+   "published_at": "2026-11-03T00:11:24+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Below $77,250 at the close",
+    "event": "KXBTCD-26NOV0217",
+    "market": "KXBTCD-26NOV0217-T77249.99",
+    "outcome": "$77,250 or above",
+    "outcome_side": "no",
+    "price_at_log": 0.76,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "crypto_fav_band_below:KXBTCD-26NOV0217-T77249.99",
+   "source": "crypto_fav_band_below",
+   "sport": "crypto_fav",
+   "status": "hit"
+  },
   "2026-11-02|KXGOLDD-26NOV0217-T3944|Above $3944 at the close \u00b7 Commodities favourite band": {
    "away": null,
    "bet": {
@@ -1201,18 +1236,18 @@
    "ready_at": "2026-10-21T00:47:16+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 7,
+    "leads": 8,
     "problem": null,
-    "routed": 7,
+    "routed": 8,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": 0.0438,
-   "sandbox_n": 12,
-   "sandbox_roi": 0.1163,
-   "sandbox_roi_fee": 0.0969,
+   "sandbox_clv": 0.0473,
+   "sandbox_n": 13,
+   "sandbox_roi": 0.1317,
+   "sandbox_roi_fee": 0.112,
    "timing": {
     "late": [],
     "timed": 0,
@@ -1386,5 +1421,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-03T00:05:36+00:00"
+ "updated_at": "2026-11-03T00:11:24+00:00"
 }
