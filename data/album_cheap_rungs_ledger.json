@@ -3151,8 +3151,10 @@
     "book": 0,
     "first_quotes": false,
     "last_trade": 0.03,
+    "printed": 0,
+    "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
     "source": "live",
-    "status": "checking"
+    "status": "unverified"
    },
    "bid": 0.02,
    "book": {
@@ -3208,8 +3210,10 @@
     "book": 7.0,
     "first_quotes": false,
     "last_trade": 0.01,
+    "printed": 0,
+    "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
     "source": "live",
-    "status": "checking"
+    "status": "unverified"
    },
    "bid": 0.01,
    "book": {
@@ -3265,8 +3269,10 @@
     "book": 0,
     "first_quotes": false,
     "last_trade": 0.01,
+    "printed": 0,
+    "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
     "source": "live",
-    "status": "checking"
+    "status": "unverified"
    },
    "bid": 0.01,
    "book": {
@@ -3334,15 +3340,15 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:42.883824+00:00"
  },
  "lane": "album_cheap_rungs",
- "last_success": "2026-11-03T04:00:42.832000+00:00",
+ "last_success": "2026-11-03T05:00:48.054995+00:00",
  "observations": {
-  "at": "2026-11-03T04:00:42.832000+00:00",
-  "checking": 3,
+  "at": "2026-11-03T05:00:48.054995+00:00",
+  "checking": 0,
   "entered": 0,
   "events": 19,
-  "filled": 6,
+  "filled": 0,
   "skipped": 0,
-  "unverified": 62,
+  "unverified": 65,
   "waiting": 11
  },
  "skips": {
