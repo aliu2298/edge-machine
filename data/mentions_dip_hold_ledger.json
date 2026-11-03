@@ -24213,12 +24213,12 @@
     "KXTRUMPSAY-26NOV09-CEAS": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727e17a-f569-9525-a993-793444b6abe8"
+      "07271f6a-e2f9-bbcc-b84c-3437245015d5"
      ],
      "first_px": 0.82,
      "first_ts": 1793631307,
-     "last_ts": 1793680638,
-     "n_prints": 72,
+     "last_ts": 1793687966,
+     "n_prints": 75,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -24334,15 +24334,13 @@
     "KXTRUMPSAY-26NOV09-EPST": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727e000-6fc1-9a07-fd2f-2da5bae79e4b",
-      "0727e024-db49-972a-c541-5ecd85ffbedd",
-      "0727e026-9ea9-9baf-e4e7-c72101a3d996",
-      "0727e026-9ea9-9d17-e0f5-5369a9e7b35d",
-      "0727e114-01e9-9c62-e574-56913a9705e8"
+      "0727208d-0269-9b89-99b1-88a42b520a92",
+      "07272098-20a9-924a-a2c7-c577f5002ca2",
+      "07272098-5c51-9e2e-acc8-699db4ff6e9c"
      ],
      "first_px": 0.82,
      "first_ts": 1793635945,
-     "last_ts": 1793685005,
+     "last_ts": 1793688029,
      "lows": [
       [
        1793644430,
@@ -24515,7 +24513,7 @@
        1.0
       ]
      ],
-     "n_prints": 76,
+     "n_prints": 79,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -24704,12 +24702,13 @@
     "KXTRUMPSAY-26NOV09-ILHA": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727e1f7-d969-a038-00aa-f2dca68b976f"
+      "0727209e-ee79-a413-e597-3ef2291f0525",
+      "0727209e-ee79-a844-fe68-5e4e4bd022e3"
      ],
      "first_px": 0.89,
      "first_ts": 1793598202,
-     "last_ts": 1793680273,
-     "n_prints": 10,
+     "last_ts": 1793688640,
+     "n_prints": 19,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -24718,11 +24717,11 @@
     "KXTRUMPSAY-26NOV09-MAKE": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727e014-1dd9-b90f-66f0-3f42ac33fd3e"
+      "07271f9c-efb9-b63e-1a69-38ee5f77c536"
      ],
      "first_px": 0.01,
      "first_ts": 1793607237,
-     "last_ts": 1793685392,
+     "last_ts": 1793685822,
      "lows": [
       [
        1793607237,
@@ -24888,9 +24887,14 @@
        1793685392,
        0.05,
        18.75
+      ],
+      [
+       1793685822,
+       0.04,
+       0.31
       ]
      ],
-     "n_prints": 34,
+     "n_prints": 35,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -24931,12 +24935,13 @@
     "KXTRUMPSAY-26NOV09-MELA": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727e077-2b49-b56b-2c1a-830c3a85cf43"
+      "0727205c-7b19-a1cc-9dcf-3df042c1e4cd",
+      "0727205c-7b19-a87f-935e-1e4a4b8b2534"
      ],
      "first_px": 0.96,
      "first_ts": 1793635908,
-     "last_ts": 1793684649,
-     "n_prints": 18,
+     "last_ts": 1793687016,
+     "n_prints": 20,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -25052,11 +25057,11 @@
     "KXTRUMPSAY-26NOV09-PEAC": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727e00e-79c1-9acd-6ee1-fa88a796c764"
+      "07271f9b-2021-b44d-700f-fc05e234dc74"
      ],
      "first_px": 0.01,
      "first_ts": 1793607220,
-     "last_ts": 1793685417,
+     "last_ts": 1793687698,
      "lows": [
       [
        1793607220,
@@ -25487,9 +25492,14 @@
        1793685417,
        0.09,
        10.44
+      ],
+      [
+       1793687698,
+       0.09,
+       48.0
       ]
      ],
-     "n_prints": 94,
+     "n_prints": 95,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -25699,12 +25709,12 @@
     "KXTRUMPSAY-26NOV09-REFI": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727e216-79d1-adef-dfcb-7ee22a9edfba"
+      "0727206c-9419-8012-89b9-679cf7d1f774"
      ],
      "first_px": 0.97,
      "first_ts": 1793636312,
-     "last_ts": 1793684031,
-     "n_prints": 8,
+     "last_ts": 1793687493,
+     "n_prints": 9,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -25859,13 +25869,12 @@
     "KXTRUMPSAY-26NOV09-UFO": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727e087-2dd1-b9f1-bed9-d464335c33f7",
-      "0727e087-2dd1-bede-97ef-3247491abc81",
-      "0727e0fc-d1d1-b2f9-b255-adca5dca0fdf"
+      "07271faf-2f11-b815-f147-f50d43a9e7eb",
+      "07271fe5-15d1-bed8-f316-32461880a427"
      ],
      "first_px": 0.11,
      "first_ts": 1793636243,
-     "last_ts": 1793682893,
+     "last_ts": 1793685723,
      "lows": [
       [
        1793636243,
@@ -26056,9 +26065,19 @@
        1793682893,
        0.05,
        5.0
+      ],
+      [
+       1793685723,
+       0.08,
+       16.0
+      ],
+      [
+       1793685723,
+       0.09,
+       6.58
       ]
      ],
-     "n_prints": 40,
+     "n_prints": 42,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -26293,12 +26312,14 @@
     "KXTRUMPSAY-26NOV09-VIVE": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727e002-7d51-a4fa-3094-9c2a1a203d50"
+      "0727204a-9ec1-8f6a-cda2-98c53b3f5dea",
+      "0727204f-eba9-827e-c6cb-c601166d176f",
+      "07272051-60c9-8b98-c705-387a132fea18"
      ],
      "first_px": 0.76,
      "first_ts": 1793672976,
-     "last_ts": 1793685446,
-     "n_prints": 10,
+     "last_ts": 1793686790,
+     "n_prints": 14,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -26307,13 +26328,12 @@
     "KXTRUMPSAY-26NOV09-ZOHR": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727e012-1e39-aeb0-8e0c-4970bf237a8d",
-      "0727e046-a5d1-ab23-b819-9ca8255dca41"
+      "07271f88-a2d9-8c9c-43e4-1ee0dc904671"
      ],
      "first_px": 0.84,
      "first_ts": 1793603190,
-     "last_ts": 1793684250,
-     "n_prints": 69,
+     "last_ts": 1793686713,
+     "n_prints": 71,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -26323,13 +26343,13 @@
   }
  },
  "lane": "mentions_dip_hold",
- "last_success": "2026-11-03T06:00:41.297324+00:00",
+ "last_success": "2026-11-03T07:00:37.353805+00:00",
  "observations": {
-  "at": "2026-11-03T06:00:41.297324+00:00",
+  "at": "2026-11-03T07:00:37.353805+00:00",
   "errors": [],
   "events": 1,
   "markets": 39,
-  "prints": 80
+  "prints": 28
  },
  "since": "2026-10-26T04:00:00+00:00"
 }
