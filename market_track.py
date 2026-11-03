@@ -307,7 +307,10 @@ RULES = {
              "sessions. IBS was formally documented by Pagonidis (2013): below 0.2, SPY's next "
              "day averaged +0.35%; this band version is the one published as still working in "
              "2025-26. Judged against cash — it trades the index itself — after 5bp a side."),
+    # 2026-11-03 (Olu): no new entries; its open trades still exit and grade on the rule's own exit, and it stays on the
+    # Trading page as Retired.
     "etf_double7": dict(
+        retired="2026-11-03: no edge at 14 entry days — 19 closed trades, −0.19% a day after costs, t −0.46, 6 open",
         lane="swing", label="Double 7s (Connors)", signal=_etf_double7, exit=_etf_double7_exit,
         universe="etf", bench="cash", live_from=LIVE_2026_09_23,
         note="Pre-registered 2026-09-22, Larry Connors' published rule unchanged: on SPY, QQQ, "

@@ -35,7 +35,7 @@
 .cc-stats dd { margin: 0; font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .cc-coverage, .cc-read, .cc-why { margin: 0; }
 .cc-why { color: var(--warn); }
-.cc-card-items { margin: 0; padding-left: 16px; color: var(--mut); }
+.cc-card-items { margin: 0; padding-left: 16px; color: var(--mut); overflow-wrap: anywhere; }
 .cc-open { margin-top: auto; align-self: flex-start; font-weight: 600; }
 .cc-attention { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 8px; }
 .cc-item {
@@ -48,7 +48,9 @@
   border: 1px solid var(--line);
   border-radius: 10px;
 }
-.cc-item-text { flex: 1 1 240px; min-width: 0; }
+/* overflow-wrap: a feed error can carry one long unbroken path ("HTTP 429 on /sports/soccer_uefa_champs_league/odds"),
+   which pushed the phone page sideways (2026-11-03). */
+.cc-item-text { flex: 1 1 240px; min-width: 0; overflow-wrap: anywhere; }
 .cc-live .pane-head h3 { font-size: 16px; margin: 0; }
 .cc-live .desk-layout { margin-top: 8px; }
 @media (max-width: 800px) {

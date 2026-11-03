@@ -50,8 +50,9 @@ check("only on soccer_p05", S.fetch_mls_away_band_fade("soccer", uni), [])
 print("\nthe follow side is retired on soccer, off the pages, on a fresh record for the fade")
 check("mls_away_band logs soccer no more", "soccer" in S.SOURCES["mls_away_band"]["sports"], False)
 check("its retirement is recorded", bool((S.SOURCES["mls_away_band"].get("retired_sports") or {}).get("soccer")), True)
-check("the fade is registered on soccer_p05",
-      ("mls_away_band_fade" in S.CHALLENGERS, S.SOURCES["mls_away_band_fade"]["sports"]), (True, ["soccer_p05"]))
+check("the fade was registered on soccer_p05, and retired there 2026-11-03 (test_retired_2026_11_03_more.py)",
+      ("mls_away_band_fade" in S.CHALLENGERS, S.SOURCES["mls_away_band_fade"]["sports"],
+       list(S.SOURCES["mls_away_band_fade"]["retired_sports"])), (True, [], ["soccer_p05"]))
 d, st = T.load(), T.load_stages()
 names = {(r["name"], r["sport"]) for r in B.pair_list(d, st)}
 check("the retired pair is not listed", ("mls_away_band", "soccer") in names, False)

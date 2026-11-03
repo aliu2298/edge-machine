@@ -18,6 +18,7 @@ import sandbox_audit as A
 import sandbox_browser as B
 import sandbox_build as SB
 import sandbox_sources as S
+import sport_rows_testlib
 import sandbox_track as T
 import site_root
 import soccer_build
@@ -420,24 +421,31 @@ def main():
         seen.extend(jobs)
         return {}
 
-    saved_fetch = B.fetch_rows
-    B.fetch_rows = _browser_spy
-    S._browser_cache = None
-    S._oddspedia_cache = None
-    S._scores24_cache = None
-    try:
-        S.fetch_oddspedia("cricket")
-    finally:
-        B.fetch_rows = saved_fetch
+    def _requested():
+        seen.clear()
+        saved_fetch = B.fetch_rows
+        B.fetch_rows = _browser_spy
         S._browser_cache = None
         S._oddspedia_cache = None
         S._scores24_cache = None
-    urls = [url for url, _js in seen]
+        try:
+            S.fetch_oddspedia("cricket")
+        finally:
+            B.fetch_rows = saved_fetch
+            S._browser_cache = None
+            S._oddspedia_cache = None
+            S._scores24_cache = None
+        return [url for url, _js in seen]
+
+    # Oddspedia cricket retired 2026-11-03 (test_retired_2026_11_03_more.py). Put back on the run, it is the only page.
+    with sport_rows_testlib.running_again(*S.CRICKET_RETIRED_ON_2026_11_03):
+        urls = _requested()
     ok(any("oddspedia.com" in url and "/cricket/" in url for url in urls),
-       "the Oddspedia cricket page is still requested")
+       "the Oddspedia cricket page is requested while that scope runs")
     ok(not any("scores24" in url for url in urls), "no Scores24 URL is requested")
     ok(urls and all("oddspedia.com" in url for url in urls),
        "every requested page is an Oddspedia page")
+    ok(_requested() == [], "retired, its page is not requested either: the session loads nothing")
 
     print("\nkept-lane numbers do not move when a removed row is hidden")
     _kept_lane_numbers()

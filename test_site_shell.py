@@ -507,6 +507,12 @@ if tennis_build is not None and SB is not None:
     # The cheap-side section (2026-10-27) reads the live chaos ledger, not this fixture; its numbers
     # are not the fixture's, so the fixture checks below read the page without it.
     _ten = re.sub(r'<section id="cheap-side">.*?</section>', "", _ten, count=1, flags=re.S)
+    # The fixture's Production cricket lane is Oddspedia, retired 2026-11-03 with cricket consensus
+    # (test_retired_2026_11_03_more.py): this checks the template, so both are put back on the run for these checks.
+    import sandbox_sources as S
+    import sport_rows_testlib
+    _cricket_again = sport_rows_testlib.running_again(*S.CRICKET_RETIRED_ON_2026_11_03)
+    _cricket_again.__enter__()
     _cri = cricket_build.build(_fx, _fx_st, _now)
     _soc = soccer_build.build(_fx, _fx_st, _now)
     _check_sport_tab("Tennis", _ten, _fx, _fx_st)
@@ -534,6 +540,7 @@ if tennis_build is not None and SB is not None:
         ok(_label not in _ten and _label not in _cri,
            f"removed lane {_label} is not on Tennis or Cricket")
     ok("tennis_fav_band_3h" in _ten, "the kept 3-hour lane is named")
+    _cricket_again.__exit__(None, None, None)
 
 
 if FAILS:

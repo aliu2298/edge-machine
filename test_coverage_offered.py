@@ -14,6 +14,11 @@ from datetime import datetime, timedelta, timezone
 
 import sandbox_build as BUILD
 import sandbox_sources as S
+import sport_rows_testlib
+# Oddspedia's cricket row and cricket consensus retired 2026-11-03 (test_retired_2026_11_03_more.py); this test asks about
+# the machinery, so it puts them back on the run in-process.
+_REPLAY = sport_rows_testlib.running_again(*S.CRICKET_RETIRED_ON_2026_11_03)   # kept: a dropped handle restores
+_REPLAY.__enter__()
 import sandbox_track as T
 
 FAILS = []

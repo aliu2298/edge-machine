@@ -62,6 +62,23 @@ ROWS = {
 # Kalshi short name -> ESPN name, normalised, for clubs whose two names share no whole word.
 ALIASES = {"paranaense": "athletico pr", "atletico paranaense": "athletico pr",
            "atletico mineiro": "atletico mg", "racing avellaneda": "racing club"}
+# Rows retired by hand: no new entry from the dated day on (Eastern); rows stay, and run() still settles the open ones.
+# 2026-11-03 (Olu): both rows, so the whole lane. A blind league-character lane, every match with no team or matchup
+# filter, is the baseline a filtered lane is judged against, not a lane of its own (the 2026-11-01 rule).
+RETIRED = {"ARG": dict(on="2026-11-03", reason="20 won v 19.1 priced on 28 settled, +2.5% after fees; a blind lane "
+                                               "with no team or matchup filter"),
+           "BRA": dict(on="2026-11-03", reason="17 won v 16.5 priced on 21 settled, +2.6% after fees; a blind lane "
+                                               "with no team or matchup filter")}
+
+
+def retired(row, now):
+    r = RETIRED.get(row)
+    return bool(r) and now.astimezone(SR.ET).date().isoformat() >= r["on"]
+
+
+def all_retired(now):
+    """True once every row is retired: nothing new enters, so the VPS asks for no window (lane_windows.sa_kickoffs)."""
+    return all(retired(k, now) for k in ROWS)
 
 
 def fee(p):
@@ -151,7 +168,7 @@ def pick_for(f, ev, now):
 def due(fixtures, now):
     out = []
     for f in fixtures:
-        if f.get("played") or f.get("league") not in LEAGUES:
+        if f.get("played") or f.get("league") not in LEAGUES or retired(LEAGUES[f["league"]][0], now):
             continue
         t = D.instant(f.get("kickoff"))
         if t and WINDOW_MIN[0] * 60 <= (t - now).total_seconds() <= WINDOW_MIN[1] * 60:
@@ -163,7 +180,7 @@ def schedule(fixtures, now):
     """Kickoffs of unplayed matches in the two leagues over the next 14 days, ISO UTC, sorted."""
     out = set()
     for f in fixtures:
-        if f.get("played") or f.get("league") not in LEAGUES:
+        if f.get("played") or f.get("league") not in LEAGUES or retired(LEAGUES[f["league"]][0], now):
             continue
         t = D.instant(f.get("kickoff"))
         if t and now - dt.timedelta(hours=2) <= t <= now + dt.timedelta(days=SCHEDULE_DAYS):

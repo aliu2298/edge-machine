@@ -37,7 +37,8 @@ def build(d=None, st=None, now=None):
         venue="Polymarket US", rows=rows, events=cricket_cards.events,
         rule_name=cricket_cards.rule_name, market=cricket_cards.market,
         definition=cricket_cards.definition,
-        recent=cricket_cards.recent_html, method=cricket_cards.method(idle_html))
+        recent=cricket_cards.recent_html, method=cricket_cards.method(idle_html),
+        retired=sport_tab.retired_rows(d, st, FAMILY))
     return SP.page(sp, d, st, now, rows=rows, idle=idle)
 
 
