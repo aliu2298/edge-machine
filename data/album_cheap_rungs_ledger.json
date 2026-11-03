@@ -3119,11 +3119,15 @@
    "last_trade_at": "2026-11-03T03:11:00+00:00",
    "legs": [
     {
+     "fill_px": 0.12,
+     "filled_at": "2026-11-03T04:00:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.12
     },
     {
+     "fill_px": 0.18,
+     "filled_at": "2026-11-03T04:00:00+00:00",
      "multiple": 3.0,
      "share": 0.5,
      "target": 0.18
@@ -3131,11 +3135,14 @@
    ],
    "logged": "2026-11-03T03:43:31.156855+00:00",
    "payout": null,
+   "pnl": 0.0838,
    "price": 0.06,
+   "roi": 1.311,
+   "roi_2x": 0.8476,
    "side": "yes",
    "spread": 0.01,
    "spread_cost": -0.47,
-   "status": "open",
+   "status": "filled",
    "traded_to_entry": 4.0,
    "word": "Above 30K"
   },
@@ -3169,11 +3176,15 @@
    "last_trade_at": "2026-11-03T03:27:00+00:00",
    "legs": [
     {
+     "fill_px": 0.1,
+     "filled_at": "2026-11-03T04:00:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.1
     },
     {
+     "fill_px": 0.15,
+     "filled_at": "2026-11-03T04:00:00+00:00",
      "multiple": 3.0,
      "share": 0.5,
      "target": 0.15
@@ -3181,11 +3192,14 @@
    ],
    "logged": "2026-11-03T03:43:31.156855+00:00",
    "payout": null,
+   "pnl": 0.0698,
    "price": 0.05,
+   "roi": 1.3084,
+   "roi_2x": 0.8458,
    "side": "yes",
    "spread": 0.03,
    "spread_cost": 0.02,
-   "status": "open",
+   "status": "filled",
    "traded_to_entry": 29.0,
    "word": "Above 40K"
   },
@@ -3219,11 +3233,15 @@
    "last_trade_at": "2026-11-03T03:20:00+00:00",
    "legs": [
     {
+     "fill_px": 0.1,
+     "filled_at": "2026-11-03T04:00:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.1
     },
     {
+     "fill_px": 0.15,
+     "filled_at": "2026-11-03T04:00:00+00:00",
      "multiple": 3.0,
      "share": 0.5,
      "target": 0.15
@@ -3231,11 +3249,14 @@
    ],
    "logged": "2026-11-03T03:43:31.156855+00:00",
    "payout": null,
+   "pnl": 0.0698,
    "price": 0.05,
+   "roi": 1.3084,
+   "roi_2x": 0.8458,
    "side": "yes",
    "spread": 0.04,
    "spread_cost": 0.04,
-   "status": "open",
+   "status": "filled",
    "traded_to_entry": 9.0,
    "word": "Above 50K"
   },
@@ -3313,14 +3334,14 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:42.883824+00:00"
  },
  "lane": "album_cheap_rungs",
- "last_success": "2026-11-03T03:43:31.156855+00:00",
+ "last_success": "2026-11-03T04:00:42.832000+00:00",
  "observations": {
-  "at": "2026-11-03T03:43:31.156855+00:00",
+  "at": "2026-11-03T04:00:42.832000+00:00",
   "checking": 3,
-  "entered": 4,
+  "entered": 0,
   "events": 19,
-  "filled": 0,
-  "skipped": 2,
+  "filled": 6,
+  "skipped": 0,
   "unverified": 62,
   "waiting": 11
  },
