@@ -24,14 +24,19 @@ import chaos_replay as C
 import daily_track as D
 import nba_winmargin as W
 import nba_wm_nofade as N
+import nba_wm_v3 as V3
 import production as P
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 YES_PATH = os.path.join(ROOT, "data", "production_nba_wm_leads.json")
 NO_PATH = os.path.join(ROOT, "data", "production_nba_wm_nofade_leads.json")
 YES_LANE, NO_LANE = "nba_winmargin_live", N.LANE
-YES_NAME, NO_NAME = "Win margin YES split (live)", "Win margin NO fade (live)"
-YES_VERSION, NO_VERSION = "wm-yes-v2", "wm-nofade-v2"
+YES_NAME, NO_NAME = "Win margin YES split (live, v2)", "Win margin NO fade (live, v2)"
+YES_VERSION, NO_VERSION = V3.YES_VERSION, V3.NO_VERSION          # the feeds carry the version the executor pins (v3 from 2026-11-03)
+# Version 3 (the executor's own decision snapshots as the entries, nba_wm_v3.py): from its first night the record is v3 and v2 is kept as its own
+# labelled block, so there are four pairs, each with its own source id.
+YES3_LANE, NO3_LANE = "nba_winmargin_v3", "nba_wm_nofade_v3"
+YES3_NAME, NO3_NAME = "Win margin YES split (live, v3)", "Win margin NO fade (live, v3)"
 MOVED_ON = "2026-11-02"
 PROMOTED = "2026-11-02T22:00:00+00:00"        # before the first live order (23:00Z on the first night)
 SPORT = "nba_wm"
@@ -110,9 +115,14 @@ def feeds(now, fetch=D.get):
 
 
 # --- the Production page ---------------------------------------------------------------------------------------
-def pairs():
-    return {f"{lane}|{SPORT}": dict(stage="production", ready_at=PROMOTED, promoted_at=PROMOTED, by_hand=MOVED_ON)
-            for lane in (YES_LANE, NO_LANE)}
+def v3_since(v3):
+    """The first night of version 3 (the first night a decision snapshot exists), or None before it."""
+    return (v3 or {}).get("since")
+
+
+def pairs(v3=None):
+    lanes = [YES_LANE, NO_LANE] + ([YES3_LANE, NO3_LANE] if v3_since(v3) else [])
+    return {f"{lane}|{SPORT}": dict(stage="production", ready_at=PROMOTED, promoted_at=PROMOTED, by_hand=MOVED_ON) for lane in lanes}
 
 
 def _team_bucket(ticker):
@@ -144,24 +154,25 @@ def _quote(lane, pick, ticker, event, tip, logged, price, roi, won_side_yes, lab
         start_source="espn", url="", espn_home=_codes(event)[1], espn_away=_codes(event)[0])
 
 
-def yes_quotes(chaos):
-    """The live YES lane's counted split entries (settled), from the chaos ledger: one quote per entry. Read-only."""
+def yes_quotes(chaos, before=None):
+    """The live YES lane's counted split entries (settled), from the chaos ledger: one quote per entry. Read-only. `before`: only nights
+    earlier than that (version 2 once version 3 has started)."""
     L = ((chaos or {}).get("lanes") or {}).get(YES_LANE) or {}
     out = []
     for t in C.counted(L.get("trades") or [], L):
-        if t.get("exit_key") != C.SPLIT or str(t.get("night") or "") < MOVED_ON:
+        if t.get("exit_key") != C.SPLIT or str(t.get("night") or "") < MOVED_ON or (before and str(t["night"]) >= before):
             continue
         out.append(_quote(YES_LANE, "a", t["ticker"], t["event"], t["start_ts"], t["entry_ts"], t["entry"], t["roi"], bool(t.get("side_won")),
                           f"{t['event'].split('-', 1)[-1]} · {_title(t['ticker'])} (buy YES, split sell)"))
     return out
 
 
-def no_quotes(nofade):
-    """The live NO fade's verified fills (settled, version 2), one quote per filled bucket. Read-only."""
+def no_quotes(nofade, before=None):
+    """The live NO fade's verified fills (settled, version 2), one quote per filled bucket. Read-only. `before` as in yes_quotes."""
     out = []
     key = N.vkey(N.HEAD)
     for e in (nofade or {}).get("entries") or []:
-        if N.phase_of(e["night"]) != "v2":
+        if N.phase_of(e["night"]) != "v2" or (before and e["night"] >= before):
             continue
         for r in e["buckets"]:
             f = (r.get("fills") or {}).get(key)
@@ -171,6 +182,26 @@ def no_quotes(nofade):
             out.append(_quote(NO_LANE, "b", r["id"], e["event"], e["tip"], f["fill_at"], f["limit"], roi, not r["no_wins"],
                               f"{e['event'].split('-', 1)[-1]} · {_title(r['id'])} (NO fade)"))
     return out
+
+
+def v3_quotes(v3):
+    """Version 3's settled entries (the executor's snapshots, fills replayed from prints), as quotes under their own source ids."""
+    out = []
+    for r in (v3 or {}).get("rows", {}).values():
+        if r.get("no_entry") or "roi" not in r:
+            continue
+        if r["lane"] == YES_LANE:
+            out.append(_quote(YES3_LANE, "a", r["ticker"], r["event"], r["tip"], _epoch(r.get("decided_at")) or r["tip"], r["ask"], r["roi"], r["result"] == "yes",
+                              f"{r['event'].split('-', 1)[-1]} · {_title(r['ticker'])} (buy YES, split sell)"))
+        else:
+            out.append(_quote(NO3_LANE, "b", r["ticker"], r["event"], r["tip"], r.get("fill_at") or r["tip"], r["limit"], r["roi"], r["result"] == "yes",
+                              f"{r['event'].split('-', 1)[-1]} · {_title(r['ticker'])} (NO fade)"))
+    return out
+
+
+def _epoch(raw):
+    t = D.instant(raw)
+    return int(t.timestamp()) if t else None
 
 
 def _open_quote(lane, pick, lead):
@@ -187,14 +218,16 @@ def _open_quote(lane, pick, lead):
         espn_home=_codes(lead.get("event"))[1], espn_away=_codes(lead.get("event"))[0])
 
 
-def page_inputs(d, st, blob, chaos, nofade, now=None, yes_feed=None, no_feed=None):
+def page_inputs(d, st, blob, chaos, nofade, now=None, yes_feed=None, no_feed=None, v3=None):
     """Augment page inputs in memory; the original ledgers, stage and feeds are untouched (a test pins the follower's feeds byte for byte).
     The record is the paper lanes' version 2; the upcoming list is the feeds' own leads, only while a feed is fresh."""
     now = now or dt.datetime.now(UTC)
     yes_feed = yes_feed if yes_feed is not None else (P.load_feed(YES_PATH) or {})
     no_feed = no_feed if no_feed is not None else (P.load_feed(NO_PATH) or {})
-    rows = yes_quotes(chaos) + no_quotes(nofade)
-    for lane, pick, feed_ in ((YES_LANE, "a", yes_feed), (NO_LANE, "b", no_feed)):
+    since = v3_since(v3)
+    rows = yes_quotes(chaos, since) + no_quotes(nofade, since) + (v3_quotes(v3) if since else [])
+    open_lanes = ((YES3_LANE, "a", yes_feed), (NO3_LANE, "b", no_feed)) if since else ((YES_LANE, "a", yes_feed), (NO_LANE, "b", no_feed))
+    for lane, pick, feed_ in open_lanes:
         stamp = D.instant((feed_ or {}).get("updated_at"))
         if stamp is None or not dt.timedelta(0) <= now - stamp <= dt.timedelta(hours=HEALTHY_HOURS):
             continue
@@ -203,9 +236,9 @@ def page_inputs(d, st, blob, chaos, nofade, now=None, yes_feed=None, no_feed=Non
             q = _open_quote(lane, pick, lead) if lead.get("ticker") not in done else None
             if q:
                 rows.append(q)
-    current = P.build_feed({"quotes": rows}, {"pairs": pairs()}, now=now)
+    current = P.build_feed({"quotes": rows}, {"pairs": pairs(v3)}, now=now)
     return (dict(d, quotes=list(d.get("quotes") or []) + rows),
-            dict(st, pairs={**(st.get("pairs") or {}), **pairs()}),
+            dict(st, pairs={**(st.get("pairs") or {}), **pairs(v3)}),
             dict(blob, leads={**(blob.get("leads") or {}), **current["leads"]},
                  pairs={**(blob.get("pairs") or {}), **current["pairs"]}))
 

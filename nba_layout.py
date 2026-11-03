@@ -13,6 +13,7 @@ import mentions_split as MS
 import nba_winmargin_build as WB
 import nba_wm_nofade as N
 import nba_wm_nofade_build as NB
+import nba_wm_v3 as V3
 
 YES_ID, NO_ID = "nba_winmargin_live", "nba_wm_nofade"
 V1_ID = "nba_winmargin_split"      # paper version 1 (folded 2026-11-02): its record stays
@@ -71,19 +72,40 @@ def _chaos_row(L):
     return dict(events=r["events"], split=r["split"] if r["n_split"] else None, hold=r["hold"], z=r["z"], status=CB.status_of(L, r["events"]), r=r)
 
 
-def glance(chaos, nofade):
+def _v3_block(title, rows, since, ident):
+    """Version 3's record (the executor's own decision snapshots as the entries): the headline once it has started."""
+    s = C.stats(rows)
+    events = len({r["event"] for r in rows})
+    return (f'<div class="v3-block" id="{ident}"><p class="sm"><b>{esc(title)}</b> · from {esc(since)}: the entries are the executor\'s own T-1h decisions, the fills replayed from prints</p>'
+            '<div class="tbl"><table><tr><th>Record</th><th class="num">Settled events</th><th class="num">Entries</th><th class="num">Won</th>'
+            '<th class="num">ROI after fees</th><th class="num">z (by night)</th><th>Status</th></tr>'
+            f'<tr><td><b>{esc(title)}</b></td><td class="num">{events}</td><td class="num">{s["n"]}</td><td class="num">{s["won"]}</td><td class="num">{_pct(s["roi"])}</td>'
+            f'<td class="num">{_z(s["z"])}</td><td>{esc(MS.status(events))}</td></tr></table></div></div>')
+
+
+def glance(chaos, nofade, v3=None):
     lanes = _lanes(chaos)
     rows = []
+    since = (v3 or {}).get("since")
 
     def add(anchor, name, events, split, hold, z, status):
         rows.append(f'<tr><td><a href="#{anchor}"><b>{esc(name)}</b></a></td><td class="num">{events}</td><td class="num">{_pct(split)}</td>'
                     f'<td class="num">{_pct(hold)}</td><td class="num">{_z(z)}</td><td>{esc(status)}</td></tr>')
-    if YES_ID in lanes:
-        x = _chaos_row(lanes[YES_ID])
-        add("wm-yes", "Win margin · YES split (Production)", x["events"], x["split"], x["hold"], x["z"], x["status"])
-    g = N.game_rows(nofade["entries"], N.vkey(N.HEAD), None, "v2")
-    s = C.stats(g)
-    add("wm-no", "Win margin · NO fade (Production)", s["n"], s["roi"], None, s["z"], NB.status(s["n"]))
+    if since:
+        yr = V3.yes_rows(v3)
+        ys = C.stats(yr)
+        add("wm-yes", "Win margin · YES split (Production, v3)", len({r["event"] for r in yr}), ys["roi"], (sum(r["hold_roi"] for r in yr) / len(yr)) if yr else None, ys["z"],
+            MS.status(len({r["event"] for r in yr})))
+        g = V3.no_games(v3)
+        s = C.stats(g)
+        add("wm-no", "Win margin · NO fade (Production, v3)", s["n"], s["roi"], None, s["z"], NB.status(s["n"]))
+    else:
+        if YES_ID in lanes:
+            x = _chaos_row(lanes[YES_ID])
+            add("wm-yes", "Win margin · YES split (Production)", x["events"], x["split"], x["hold"], x["z"], x["status"])
+        g = N.game_rows(nofade["entries"], N.vkey(N.HEAD), None, "v2")
+        s = C.stats(g)
+        add("wm-no", "Win margin · NO fade (Production)", s["n"], s["roi"], None, s["z"], NB.status(s["n"]))
     return ('<section id="glance"><h2>NBA at a glance</h2>'
             '<p class="shell-kicker">Every active lane · Production · the paper record live orders can match · ROI after fees · NO fade sells back at its pregame price, so it has no hold row</p>'
             '<div class="tbl"><table class="nba-glance"><tr><th>Lane</th><th class="num">Settled events</th><th class="num">Split ROI</th>'
@@ -119,7 +141,17 @@ def _folds(L, sample=None, extra_sample=""):
     return out
 
 
-def lane_card(anchor, title, L, sample=None, v1=None):
+def _head_record(L, v3):
+    """The YES card's record: version 3 as the headline once it has started, version 2 then as its own labelled fold; else the lane's record."""
+    since = (v3 or {}).get("since")
+    if not since:
+        return f"{CB.voided_line(L)}{_record(L)}"
+    return (_v3_block("Version 3", V3.yes_rows(v3), since, "wm-yes-v3")
+            + f'<details class="section-disclosure" id="wm-yes-v2"><summary><b>Version 2 (to the night before {esc(since)})</b><span>entries judged from prints; its record stays</span></summary>'
+              f'{CB.voided_line(L)}{_record(L)}</details>')
+
+
+def lane_card(anchor, title, L, sample=None, v1=None, v3=None):
     bad = CB.unverified(L)[0]
     skipped = f'<p class="sm mut">Skipped as unverified ask: {bad}.</p>' if bad else ""
     folds = _folds(L, sample)
@@ -131,13 +163,23 @@ def lane_card(anchor, title, L, sample=None, v1=None):
     return (f'<section id="{anchor}"><details class="section-disclosure" data-lane="{esc(L["id"])}" open><summary><b>{esc(title)}</b>'
             f'<span>{CB.split_hold(L)["events"]} settled events · fresh record since {esc(L.get("since"))}</span></summary>'
             f'<p class="sm">{esc(RULES.get(L["id"], ""))}{(" " + esc(L["caution"])) if L.get("caution") else ""}</p>'
-            f'{CB.voided_line(L)}{_record(L)}{CB.basis_line(L)}{skipped}{folds}'
+            f'{_head_record(L, v3)}{CB.basis_line(L)}{skipped}{folds}'
             f'<details class="section-disclosure"><summary><b>Trades</b><span>latest 30 entries · split, T target, S stop, H held to settlement</span></summary>{CB.trade_list(L)}</details>'
             '</details></section>')
 
 
-def nofade_card(chaos, nofade):
+def _nofade_record(nofade, v3, since):
+    """Version 3 as the headline once it has started, version 2 then as its own labelled fold; else version 2's headline row."""
+    if not since:
+        return NB.variant_rows(nofade, False, dips=(N.HEAD,), phase="v2")
+    return (_v3_block("Version 3", V3.no_games(v3), since, "wm-no-v3")
+            + f'<details class="section-disclosure" id="wm-no-v2"><summary><b>Version 2 (to the night before {esc(since)})</b><span>entries judged from prints; its record stays</span></summary>'
+              f'{NB.variant_rows(nofade, False, dips=(N.HEAD,), phase="v2")}</details>')
+
+
+def nofade_card(chaos, nofade, v3=None):
     head = N.vkey(N.HEAD)
+    since = (v3 or {}).get("since")
     c = N.counts(nofade["entries"], None, "v2")
     i = N.counts(nofade["entries"], True)
     g = N.game_rows(nofade["entries"], head, None, "v2")
@@ -154,7 +196,7 @@ def nofade_card(chaos, nofade):
     return (f'<section id="wm-no"><details class="section-disclosure" data-lane="{N.LANE}" open><summary><b>Win margin · NO fade</b>'
             f'<span>{len(g)} settled events · fresh record since {esc(N.V2_FROM)}</span></summary>'
             f'<p class="sm">{esc(RULES[NO_ID])}</p>'
-            f'{NB.variant_rows(nofade, False, dips=(N.HEAD,), phase="v2")}'
+            f'{_nofade_record(nofade, v3, since)}'
             f'<p class="sm mut">Skipped as unverified ask: {c["unverified"]} of {c["unverified"] + c["verified"]} buckets.</p>'
             f'<p class="sm"><b>Next to the YES split</b></p>{NB.side_by_side(nofade, chaos)}'
             f'<details class="section-disclosure"><summary><b>Other exits / variants</b><span>85% and 65% of pregame</span></summary>'
@@ -165,29 +207,30 @@ def nofade_card(chaos, nofade):
             '</details></section>')
 
 
-def cheap_side(chaos=None, nofade=None):
+def cheap_side(chaos=None, nofade=None, v3=None):
     """The active lane cards, in order, inside the section the Sandbox index links to (#cheap-side)."""
     chaos = chaos if chaos is not None else (C.load() if os.path.exists(C.PATH) else C.empty())
     nofade = nofade if nofade is not None else N.load()
     lanes = _lanes(chaos)
     cards = ""
     if YES_ID in lanes:
-        cards += lane_card("wm-yes", "Win margin · YES split", lanes[YES_ID], lanes.get(SAMPLE_ID), lanes.get(V1_ID))
-    cards += nofade_card(chaos, nofade)
+        cards += lane_card("wm-yes", "Win margin · YES split", lanes[YES_ID], lanes.get(SAMPLE_ID), lanes.get(V1_ID), v3)
+    cards += nofade_card(chaos, nofade, v3)
     return f'<section id="cheap-side"><h2>Active lanes</h2><p class="shell-kicker">One card each · the rule, the live record, then folds</p>{cards}</section>'
 
 
-def build(chaos=None, nofade=None, tracker=None):
+def build(chaos=None, nofade=None, tracker=None, v3=None):
     chaos = chaos if chaos is not None else (C.load() if os.path.exists(C.PATH) else C.empty())
     nofade = nofade if nofade is not None else N.load()
-    return glance(chaos, nofade) + cheap_side(chaos, nofade) + WB.section(tracker)
+    v3 = v3 if v3 is not None else V3.load()
+    return glance(chaos, nofade, v3) + cheap_side(chaos, nofade, v3) + WB.section(tracker)
 
 
-def place(html, chaos=None, nofade=None, tracker=None):
+def place(html, chaos=None, nofade=None, tracker=None, v3=None):
     """Insert the glance, the lane cards and the tracker before Upcoming. Never breaks the page."""
     try:
         import sandbox_build
-        sec = sandbox_build.label_cells(build(chaos, nofade, tracker))
+        sec = sandbox_build.label_cells(build(chaos, nofade, tracker, v3))
         at = html.find('<section id="matchups"')
         if at < 0:
             at = html.find("<section id=", html.find("<main"))
