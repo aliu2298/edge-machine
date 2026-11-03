@@ -131,9 +131,10 @@ L2 = CR2.lane_state(dict(lanes={"x": dict(id="x", since="2026-11-03", label="x",
 check("a lane's first night may move earlier (the earlier nights are then replayed), never later", L2["since"], "2026-11-02")
 L3 = CR2.lane_state(dict(lanes={"x": dict(id="x", since="2026-11-02", label="x", series=["S"], replayed={}, trades=[], skipped={}, entry_hours=[1])}), dict(lane_cfg, since="2026-11-05"), dt.datetime(2026, 11, 3, tzinfo=dt.timezone.utc))
 check("... never later", L3["since"], "2026-11-02")
-L4 = CR2.lane_state(dict(lanes={"x": dict(id="x", since="2026-11-03", label="x", series=["S"], replayed={"E1": "before the lane's first night", "E2": 3}, trades=[], skipped={}, entry_hours=[1])}),
+L4 = CR2.lane_state(dict(lanes={"x": dict(id="x", since="2026-11-02", label="x", series=["S"], replayed={"S-26NOV01AAABBB": "before the lane's first night", "S-26NOV02AAABBB": "before the lane's first night", "S-26NOV03AAABBB": 3}, trades=[], skipped={}, entry_hours=[1])}),
                     lane_cfg, dt.datetime(2026, 11, 3, tzinfo=dt.timezone.utc))
-check("events set aside as before the first night are replayed again when it moves earlier; replayed ones are kept", L4["replayed"], {"E2": 3})
+check("events dated on or after the first night that were set aside as before it are replayed again (also when the first night did not move); older ones and replayed ones stay",
+      L4["replayed"], {"S-26NOV01AAABBB": "before the lane's first night", "S-26NOV03AAABBB": 3})
 
 print("\nthe card")
 state = dict(entries=entries, last_run="x", error=None)

@@ -610,8 +610,12 @@ def lane_state(state, lane, now):
     # A lane's first night may move EARLIER (never later): the earlier nights are then replayed, nothing recorded is touched.
     if lane.get("since") and lane["since"] < L.get("since", lane["since"]):
         L["since"] = lane["since"]
-        # Events an earlier run set aside as "before the lane's first night" belong to the lane now: they are replayed again.
-        for ev in [e for e, v in (L.get("replayed") or {}).items() if v == "before the lane's first night"]:
+
+    # An event set aside as "before the lane's first night" whose date is on or after the lane's first night belongs to the lane (the first night
+    # moved earlier, or the mark was made before it did): it is replayed again, and set aside again only if its trades really are before it.
+    for ev in [e for e, v in (L.get("replayed") or {}).items() if v == "before the lane's first night"]:
+        day = event_date(ev)
+        if day and day.isoformat() >= L.get("since", ""):
             del L["replayed"][ev]
     # The lane's exits as configured now (the split joined every lane on 2026-10-27; additive only).
     L["exits"] = list(lane_exits(lane))
