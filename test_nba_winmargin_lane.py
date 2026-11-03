@@ -25,7 +25,7 @@ EV = "KXNBAWINMARGIN-26OCT30WASCLE"
 
 print("the lane configs")
 check("fresh from 2026-10-30; the in-sample row replays Oct 20-29 and stops", (M["since"], I["since"], I["until"], M.get("until")),
-      ("2026-11-03", "2026-10-20", "2026-10-29", None))
+      ("2026-11-02", "2026-10-20", "2026-10-29", None))
 check("the same rule on both: 1h before the tip, spread 5c or less, split headline, fills from the tip on",
       [(l["entry_hours"], l["max_spread"], l["headline"], l["fill_from_start"], l["series"]) for l in (M, I)],
       [((1,), 0.05, "split", True, ["KXNBAWINMARGIN"])] * 2)

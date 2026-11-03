@@ -28,7 +28,8 @@ VERSION 2 (2026-11-03, Olu, Nov 2: the lane goes to Production, traded by the fo
 from V2_FROM the rule mirrors the exchange: the follower's bid is POST-ONLY, so a bucket whose NO price at the tip is already at or
 under the limit (the bid would cross) is "no entry", not a fill; a fill needs a print STRICTLY under the bid (and the 10-contract
 check counts prints strictly under it); the sell back at the pregame price fills only on a print STRICTLY above it. Version 1
-(2026-10-31 to 2026-11-02) is folded: its record stays as it was.
+(2026-10-31 to 2026-11-01) is folded: its record stays as it was. V2_FROM moved from 2026-11-03 to 2026-11-02, the first night the
+follower traded it live; the Nov 2 games recorded under version 1 are re-evaluated under version 2 (run()).
 
 RECORD. Fresh from SINCE (2026-10-31). Nights from SINCE_IN to the day before SINCE are IN-SAMPLE (the rule was chosen
 on them): kept, flagged, shown once and apart, never in the headline.
@@ -50,7 +51,7 @@ SERIES = W.SERIES
 SINCE = "2026-10-31"
 SINCE_IN = "2026-10-20"
 VERSION = "nofade-v2"
-V2_FROM = "2026-11-03"
+V2_FROM = "2026-11-02"
 DIPS = (0.75, 0.85, 0.65)
 HEAD = 0.75
 P_RANGE = (0.10, 0.95)
@@ -199,6 +200,11 @@ def run(state, now=None, fetch=D.get):
     except Exception as e:                                       # noqa: BLE001
         events = []
         obs["errors"].append(f"listing: {str(e)[:80]}")
+    # Entries of the version-2 nights that an older run recorded under version 1 rules are evaluated again under version 2.
+    stale = [e for e in state["entries"] if e["night"] >= V2_FROM and e.get("version") != VERSION]
+    for e in stale:
+        state["entries"].remove(e)
+        state["seen"].pop(e["event"], None)
     done = 0
     for event in events:
         if event in state["seen"] or event in state["skips"] or done >= MAX_EVENTS_PER_RUN:
