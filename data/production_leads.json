@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-03T04:05:21+00:00",
+ "board_built_at": "2026-11-03T05:04:49+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -1201,6 +1201,41 @@
    "source": "commod_fav_band",
    "sport": "commodities_fav",
    "status": "hit"
+  },
+  "2026-11-02|KXWTI-26NOV0214-T96.49|Above $96.49 at the close \u00b7 Commodities favourite band": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-11-02",
+   "edge_at_log": null,
+   "first_seen": "2026-11-02",
+   "headline": "Above $96.49 at the close",
+   "home": null,
+   "id": "2026-11-02|KXWTI-26NOV0214-T96.49|Above $96.49 at the close \u00b7 Commodities favourite band",
+   "kickoff": "2026-11-02T19:30Z",
+   "lane": "production",
+   "league": "Commodities \u00b7 Favourite band",
+   "match": "WTI crude close on Nov 2, 2026",
+   "pair": "commod_fav_band|commodities_fav",
+   "price_at_log": 0.79,
+   "published_at": "2026-11-03T05:04:49+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Above $96.49 at the close",
+    "event": "KXWTI-26NOV0214",
+    "market": "KXWTI-26NOV0214-T96.49",
+    "outcome": "Above $96.49",
+    "outcome_side": "yes",
+    "price_at_log": 0.79,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "commod_fav_band:KXWTI-26NOV0214-T96.49",
+   "source": "commod_fav_band",
+   "sport": "commodities_fav",
+   "status": "miss"
   }
  },
  "pairs": {
@@ -1211,18 +1246,18 @@
    "ready_at": "2026-10-09T04:31:34+00:00",
    "route": "moved by hand on 2026-10-09",
    "routing": {
-    "leads": 13,
+    "leads": 14,
     "problem": null,
-    "routed": 13,
+    "routed": 14,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": 0.0664,
+   "sandbox_clv": 0.0161,
    "sandbox_n": 16,
-   "sandbox_roi": 0.2091,
-   "sandbox_roi_fee": 0.1882,
+   "sandbox_roi": 0.1814,
+   "sandbox_roi_fee": 0.161,
    "timing": {
     "late": [],
     "timed": 0,
@@ -1421,5 +1456,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-03T04:05:21+00:00"
+ "updated_at": "2026-11-03T05:04:49+00:00"
 }
