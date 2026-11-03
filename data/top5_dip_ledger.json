@@ -1019,6 +1019,291 @@
    "result": "yes",
    "title": "Will over 1.5 goals be scored?",
    "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXUCLTOTAL-26NOV03ASKSLO",
+   "id": "KXUCLTOTAL-26NOV03ASKSLO-2",
+   "kickoff": 1793736000,
+   "league": "UCL",
+   "logged": "2026-11-03T23:44:00.218634+00:00",
+   "matchday": "2026-11-03",
+   "p": 0.89,
+   "p_at": 1793732460,
+   "p_bid": 0.88,
+   "p_check": {
+    "how": "print",
+    "last_trade": null,
+    "printed": 208.8,
+    "status": "verified"
+   },
+   "prints": 76,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": {
+     "counted": true,
+     "fill_at": 1793740315,
+     "fill_print": 0.44,
+     "fill_volume": 7493.45,
+     "held": true,
+     "limit": 0.47,
+     "payout": 1.0,
+     "sold": true,
+     "sold_at": 1793740518
+    },
+    "65": {
+     "counted": true,
+     "fill_at": 1793738803,
+     "fill_print": 0.56,
+     "fill_volume": 100632.96,
+     "held": true,
+     "limit": 0.56,
+     "payout": 1.0,
+     "sold": true,
+     "sold_at": 1793740518
+    }
+   },
+   "event": "KXUCLTOTAL-26NOV03ATMBMU",
+   "id": "KXUCLTOTAL-26NOV03ATMBMU-2",
+   "kickoff": 1793736000,
+   "league": "UCL",
+   "logged": "2026-11-03T23:44:00.218634+00:00",
+   "matchday": "2026-11-03",
+   "p": 0.86,
+   "p_at": 1793732460,
+   "p_bid": 0.85,
+   "p_check": {
+    "how": "print",
+    "last_trade": null,
+    "printed": 661.36,
+    "status": "verified"
+   },
+   "prints": 1642,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXUCLTOTAL-26NOV03BARAVL",
+   "id": "KXUCLTOTAL-26NOV03BARAVL-2",
+   "kickoff": 1793736000,
+   "league": "UCL",
+   "logged": "2026-11-03T23:44:00.218634+00:00",
+   "matchday": "2026-11-03",
+   "p": 0.94,
+   "p_at": 1793732460,
+   "p_bid": 0.93,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.95,
+    "printed": 185.55,
+    "status": "verified"
+   },
+   "prints": 244,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": {
+     "counted": true,
+     "fill_at": 1793739836,
+     "fill_print": 0.47,
+     "fill_volume": 53344.85,
+     "held": true,
+     "limit": 0.48,
+     "payout": 0.0,
+     "sold": false,
+     "sold_at": null
+    },
+    "65": {
+     "counted": true,
+     "fill_at": 1793738710,
+     "fill_print": 0.54,
+     "fill_volume": 62870.8,
+     "held": true,
+     "limit": 0.57,
+     "payout": 0.0,
+     "sold": false,
+     "sold_at": null
+    }
+   },
+   "event": "KXUCLTOTAL-26NOV03BOGLIL",
+   "id": "KXUCLTOTAL-26NOV03BOGLIL-2",
+   "kickoff": 1793736000,
+   "league": "UCL",
+   "logged": "2026-11-03T23:44:00.218634+00:00",
+   "matchday": "2026-11-03",
+   "p": 0.87,
+   "p_at": 1793732460,
+   "p_bid": 0.86,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.87,
+    "printed": 345.83,
+    "status": "verified"
+   },
+   "prints": 639,
+   "result": "no",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXUCLTOTAL-26NOV03FEYINT",
+   "id": "KXUCLTOTAL-26NOV03FEYINT-2",
+   "kickoff": 1793736000,
+   "league": "UCL",
+   "logged": "2026-11-03T23:44:00.218634+00:00",
+   "matchday": "2026-11-03",
+   "p": 0.88,
+   "p_at": 1793732100,
+   "p_bid": 0.87,
+   "p_check": {
+    "how": "print",
+    "last_trade": null,
+    "printed": 955.12,
+    "status": "verified"
+   },
+   "prints": 98,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXUCLTOTAL-26NOV03GALVFB",
+   "id": "KXUCLTOTAL-26NOV03GALVFB-2",
+   "kickoff": 1793727900,
+   "league": "UCL",
+   "logged": "2026-11-03T23:44:00.218634+00:00",
+   "matchday": "2026-11-03",
+   "p": 0.92,
+   "p_at": 1793724360,
+   "p_bid": 0.91,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.92,
+    "printed": 10471.64,
+    "status": "verified"
+   },
+   "prints": 148,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXUCLTOTAL-26NOV03MUNROM",
+   "id": "KXUCLTOTAL-26NOV03MUNROM-2",
+   "kickoff": 1793736000,
+   "league": "UCL",
+   "logged": "2026-11-03T23:44:00.218634+00:00",
+   "matchday": "2026-11-03",
+   "p": 0.85,
+   "p_at": 1793732460,
+   "p_bid": 0.84,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.85,
+    "printed": 708.94,
+    "status": "verified"
+   },
+   "prints": 114,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": {
+     "counted": true,
+     "fill_at": 1793730475,
+     "fill_print": 0.44,
+     "fill_volume": 115511.78,
+     "held": true,
+     "limit": 0.44,
+     "payout": 0.0,
+     "sold": true,
+     "sold_at": 1793732824
+    },
+    "65": {
+     "counted": true,
+     "fill_at": 1793729922,
+     "fill_print": 0.52,
+     "fill_volume": 106564.05,
+     "held": true,
+     "limit": 0.52,
+     "payout": 0.0,
+     "sold": true,
+     "sold_at": 1793732824
+    }
+   },
+   "event": "KXUCLTOTAL-26NOV03SHASPO",
+   "id": "KXUCLTOTAL-26NOV03SHASPO-2",
+   "kickoff": 1793727900,
+   "league": "UCL",
+   "logged": "2026-11-03T23:44:00.218634+00:00",
+   "matchday": "2026-11-03",
+   "p": 0.8,
+   "p_at": 1793724360,
+   "p_bid": 0.79,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.8,
+    "printed": 5256.97,
+    "status": "verified"
+   },
+   "prints": 2880,
+   "result": "no",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXUCLTOTAL-26NOV03VILPSG",
+   "id": "KXUCLTOTAL-26NOV03VILPSG-2",
+   "kickoff": 1793736000,
+   "league": "UCL",
+   "logged": "2026-11-03T23:44:00.218634+00:00",
+   "matchday": "2026-11-03",
+   "p": 0.88,
+   "p_at": 1793732460,
+   "p_bid": 0.87,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.89,
+    "printed": 72332.3,
+    "status": "verified"
+   },
+   "prints": 234,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
   }
  ],
  "error": null,
@@ -15073,11 +15358,11 @@
   ]
  },
  "lane": "top5_goalless_dip",
- "last_run": "2026-11-03T18:06:22.834059+00:00",
+ "last_run": "2026-11-03T23:44:00.218634+00:00",
  "observations": {
-  "at": "2026-11-03T18:06:22.834059+00:00",
+  "at": "2026-11-03T23:44:00.218634+00:00",
   "errors": [],
-  "new": 0,
+  "new": 9,
   "skipped": 0,
   "waiting": 0
  },
@@ -15097,54 +15382,54 @@
  },
  "upcoming": [
   {
-   "event": "KXUCLTOTAL-26NOV03GALVFB",
-   "kickoff": 1793727900,
-   "title": "Galatasaray vs Stuttgart: Total Goals"
-  },
-  {
-   "event": "KXUCLTOTAL-26NOV03SHASPO",
-   "kickoff": 1793727900,
-   "title": "Shakhtar vs Sporting CP: Total Goals"
-  },
-  {
-   "event": "KXUCLTOTAL-26NOV03ASKSLO",
-   "kickoff": 1793736000,
-   "title": "LASK vs Slovan Bratislava: Total Goals"
-  },
-  {
-   "event": "KXUCLTOTAL-26NOV03ATMBMU",
-   "kickoff": 1793736000,
-   "title": "Atletico vs Bayern Munich: Total Goals"
-  },
-  {
-   "event": "KXUCLTOTAL-26NOV03BARAVL",
-   "kickoff": 1793736000,
-   "title": "Barcelona vs Aston Villa: Total Goals"
-  },
-  {
-   "event": "KXUCLTOTAL-26NOV03BOGLIL",
-   "kickoff": 1793736000,
-   "title": "Bodoe/Glimt vs Lille: Total Goals"
-  },
-  {
-   "event": "KXUCLTOTAL-26NOV03FEYINT",
-   "kickoff": 1793736000,
-   "title": "Feyenoord vs Inter: Total Goals"
-  },
-  {
-   "event": "KXUCLTOTAL-26NOV03MUNROM",
-   "kickoff": 1793736000,
-   "title": "Manchester United vs Roma: Total Goals"
-  },
-  {
-   "event": "KXUCLTOTAL-26NOV03VILPSG",
-   "kickoff": 1793736000,
-   "title": "Villarreal vs PSG: Total Goals"
-  },
-  {
    "event": "KXUCLTOTAL-26NOV04AEKRMA",
    "kickoff": 1793814300,
    "title": "AEK Athens vs Real Madrid: Total Goals"
+  },
+  {
+   "event": "KXUCLTOTAL-26NOV04FENLFC",
+   "kickoff": 1793814300,
+   "title": "Fenerbahce vs Liverpool: Total Goals"
+  },
+  {
+   "event": "KXUCLTOTAL-26NOV04BVBRBB",
+   "kickoff": 1793822400,
+   "title": "Dortmund vs Real Betis: Total Goals"
+  },
+  {
+   "event": "KXUCLTOTAL-26NOV04FCPNAP",
+   "kickoff": 1793822400,
+   "title": "Porto vs Napoli: Total Goals"
+  },
+  {
+   "event": "KXUCLTOTAL-26NOV04PSVBRU",
+   "kickoff": 1793822400,
+   "title": "Eindhoven vs Club Brugge: Total Goals"
+  },
+  {
+   "event": "KXUCLTOTAL-26NOV04RBLMCI",
+   "kickoff": 1793822400,
+   "title": "Leipzig vs Manchester City: Total Goals"
+  },
+  {
+   "event": "KXUCLTOTAL-26NOV04RCLCOM",
+   "kickoff": 1793822400,
+   "title": "Lens vs Como: Total Goals"
+  },
+  {
+   "event": "KXUCLTOTAL-26NOV04SLAARS",
+   "kickoff": 1793822400,
+   "title": "Slavia Prague vs Arsenal: Total Goals"
+  },
+  {
+   "event": "KXUCLTOTAL-26NOV04VIKSBH",
+   "kickoff": 1793822400,
+   "title": "Viking vs Sabah Masazir: Total Goals"
+  },
+  {
+   "event": "KXBUNDESLIGATOTAL-26NOV06HSVBMG",
+   "kickoff": 1793993400,
+   "title": "Hamburg vs M\u00b4gladbach: Total Goals"
   }
  ],
  "version": "top5dip-v1"
