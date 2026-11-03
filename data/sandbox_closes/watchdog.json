@@ -10,11 +10,6 @@
    "lead_min": 44.8,
    "price": 0.37
   },
-  "bund_o35:KXBUNDESLIGATOTAL-26OCT23VFBBMG-4": {
-   "at": "2026-10-23T18:10:47+00:00",
-   "lead_min": 19.2,
-   "price": 0.56
-  },
   "bund_o35:KXBUNDESLIGATOTAL-26OCT24BVBSGE-4": {
    "at": "2026-10-24T16:17:30+00:00",
    "lead_min": 12.5,
@@ -30,20 +25,10 @@
    "lead_min": 18.4,
    "price": 0.41
   },
-  "commod_fav_band:KXWTI-26OCT2314-T102.49": {
-   "at": "2026-10-23T17:31:02+00:00",
-   "lead_min": 29.0,
-   "price": 0.88
-  },
   "commod_nc_no:KXGOLDD-26OCT2617-T4024": {
    "at": "2026-10-26T20:11:34+00:00",
    "lead_min": 18.4,
    "price": 0.98
-  },
-  "commod_nc_no:KXWTI-26OCT2314-T103.49": {
-   "at": "2026-10-23T17:31:02+00:00",
-   "lead_min": 29.0,
-   "price": 0.78
   },
   "commod_nc_yes:KXBRENTD-26OCT2617-T109.50": {
    "at": "2026-10-26T20:11:34+00:00",
@@ -60,45 +45,15 @@
    "lead_min": 18.4,
    "price": 0.91
   },
-  "commod_nc_yes:KXWTI-26OCT2314-T101.99": {
-   "at": "2026-10-23T17:31:02+00:00",
-   "lead_min": 29.0,
-   "price": 0.96
-  },
   "corners_team_fade:KXEPLTCORNERS-26OCT24CFCTOT-CFC6": {
    "at": "2026-10-24T16:17:30+00:00",
    "lead_min": 12.5,
    "price": 0.5
   },
-  "corners_team_fade:KXLALIGATCORNERS-26OCT23ALAMCF-ALA6": {
-   "at": "2026-10-23T18:10:47+00:00",
-   "lead_min": 49.2,
-   "price": 0.48
-  },
-  "corners_total_under:KXEPLCORNERS-26OCT23IPSNFO-10": {
-   "at": "2026-10-23T18:10:47+00:00",
-   "lead_min": 49.2,
-   "price": 0.53
-  },
-  "crypto_eth_fav_both:KXETHD-26OCT2317-T2409.99": {
-   "at": "2026-10-23T18:10:47+00:00",
-   "lead_min": 54.2,
-   "price": 0.72
-  },
   "crypto_fav_band:KXBTCD-26NOV0117-T77499.99": {
    "at": "2026-11-01T19:54:57+00:00",
    "lead_min": 10.0,
    "price": 0.74
-  },
-  "crypto_fav_band:KXHYPED-26OCT2317-T77.9999": {
-   "at": "2026-10-23T18:10:47+00:00",
-   "lead_min": 54.2,
-   "price": 0.58
-  },
-  "crypto_fav_band:KXSOLD-26OCT2317-T103.9999": {
-   "at": "2026-10-23T18:10:47+00:00",
-   "lead_min": 54.2,
-   "price": 0.63
   },
   "crypto_fav_band_60:KXBTCD-26NOV0117-T77749.99": {
    "at": "2026-11-01T19:54:57+00:00",
@@ -125,25 +80,10 @@
    "lead_min": 10.0,
    "price": 0.68
   },
-  "crypto_fav_band_below_60:KXETHD-26OCT2317-T2409.99": {
-   "at": "2026-10-23T18:10:47+00:00",
-   "lead_min": 54.2,
-   "price": 0.72
-  },
-  "crypto_sol_fav_both:KXSOLD-26OCT2317-T103.9999": {
-   "at": "2026-10-23T18:10:47+00:00",
-   "lead_min": 54.2,
-   "price": 0.63
-  },
   "ere_draw:KXEREDIVISIEGAME-26NOV01GROSPA": {
    "at": "2026-11-01T15:29:38+00:00",
    "lead_min": 15.4,
    "price": 0.23
-  },
-  "ere_draw:KXEREDIVISIEGAME-26OCT23GAETEL": {
-   "at": "2026-10-23T17:31:02+00:00",
-   "lead_min": 29.0,
-   "price": 0.21
   },
   "ere_draw:KXEREDIVISIEGAME-26OCT24WILCAM": {
    "at": "2026-10-24T16:17:30+00:00",
@@ -159,11 +99,6 @@
    "at": "2026-10-25T23:37:57+00:00",
    "lead_min": 42.0,
    "price": 0.415
-  },
-  "liga_btts_even:KXLALIGABTTS-26OCT23ALAMCF-BTTS": {
-   "at": "2026-10-23T18:10:47+00:00",
-   "lead_min": 49.2,
-   "price": 0.47
   },
   "mls_away_band_fade:KXMLSGAME-26NOV01VANSEA-SEA": {
    "at": "2026-11-01T19:54:57+00:00",
@@ -224,11 +159,6 @@
    "at": "2026-10-24T19:05:43+00:00",
    "lead_min": 24.3,
    "price": 0.85
-  },
-  "o15_form_l10:KXSAUDIPLTOTAL-26OCT23QADHIL-2": {
-   "at": "2026-10-23T17:31:02+00:00",
-   "lead_min": 29.0,
-   "price": 0.87
   },
   "o15_form_l10:KXSERIEATOTAL-26OCT24COMSAS-2": {
    "at": "2026-10-24T12:15:14+00:00",
@@ -325,11 +255,6 @@
    "lead_min": 7.4,
    "price": 0.7
   },
-  "team2_ranked:KXLALIGATEAMTOTAL-26OCT23ALAMCF-ALA2": {
-   "at": "2026-10-23T18:10:47+00:00",
-   "lead_min": 49.2,
-   "price": 0.53
-  },
   "team2_ranked:KXSERIEATEAMTOTAL-26OCT28GENJUV-JUV2": {
    "at": "2026-10-28T19:09:13+00:00",
    "lead_min": 35.8,
@@ -344,11 +269,6 @@
    "at": "2026-10-24T07:37:48+00:00",
    "lead_min": 22.2,
    "price": 0.67
-  },
-  "tennis_utr_shortlist_v1:aec-utr-namjun-yosnat-2026-10-24": {
-   "at": "2026-10-23T23:35:10+00:00",
-   "lead_min": 24.8,
-   "price": 0.71
   },
   "u35_low_o15:KXLIGAPORTUGALTOTAL-26OCT25ESTMOR-2": {
    "at": "2026-10-25T14:35:55+00:00",
@@ -386,5 +306,5 @@
    "price": 0.71
   }
  },
- "updated": "2026-11-01T19:54:57+00:00"
+ "updated": "2026-11-03T00:04:41+00:00"
 }
