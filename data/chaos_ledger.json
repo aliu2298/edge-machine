@@ -86877,19 +86877,28 @@
     "KXATPCHALLENGERMATCH-26NOV02VASURS": 0,
     "KXATPCHALLENGERMATCH-26NOV02ZARVIL": 0,
     "KXATPCHALLENGERMATCH-26NOV03BAXCAD": 0,
+    "KXATPCHALLENGERMATCH-26NOV03BOUWOL": 1,
     "KXATPCHALLENGERMATCH-26NOV03BRAFEL": 0,
     "KXATPCHALLENGERMATCH-26NOV03BRUVRB": 1,
     "KXATPCHALLENGERMATCH-26NOV03CLABON": 0,
     "KXATPCHALLENGERMATCH-26NOV03DJEBUT": 0,
+    "KXATPCHALLENGERMATCH-26NOV03ESTTAB": 0,
     "KXATPCHALLENGERMATCH-26NOV03GAGNIJ": 0,
     "KXATPCHALLENGERMATCH-26NOV03GRAROY": 1,
     "KXATPCHALLENGERMATCH-26NOV03HARWAT": 0,
     "KXATPCHALLENGERMATCH-26NOV03KOZMAR": 0,
     "KXATPCHALLENGERMATCH-26NOV03KYMPOU": 1,
+    "KXATPCHALLENGERMATCH-26NOV03LADEL": 0,
+    "KXATPCHALLENGERMATCH-26NOV03MAEFOR": 0,
+    "KXATPCHALLENGERMATCH-26NOV03MARMON": 0,
+    "KXATPCHALLENGERMATCH-26NOV03MAYNES": 0,
     "KXATPCHALLENGERMATCH-26NOV03MCCSAM": 0,
+    "KXATPCHALLENGERMATCH-26NOV03MPEKRU": 1,
+    "KXATPCHALLENGERMATCH-26NOV03NAGKRA": 0,
     "KXATPCHALLENGERMATCH-26NOV03POLSHI": 1,
     "KXATPCHALLENGERMATCH-26NOV03ROCGAL": 0,
     "KXATPCHALLENGERMATCH-26NOV03RODAGU": 0,
+    "KXATPCHALLENGERMATCH-26NOV03RODTRA": 0,
     "KXATPCHALLENGERMATCH-26NOV03TUNHOU": 1,
     "KXATPCHALLENGERMATCH-26NOV03VASGUE": 1,
     "KXATPCHALLENGERMATCH-26NOV03WONHUA": 0
@@ -87739,6 +87748,76 @@
      "unreachable": false,
      "variant": "t1h_hold",
      "won": false
+    },
+    {
+     "ask": {
+      "book": null,
+      "first_quotes": false,
+      "how": "print",
+      "last_trade": 0.27,
+      "printed": 191.0,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "cost": 0.29411,
+     "entry": 0.28,
+     "entry_i": 801,
+     "entry_ts": 1793720520,
+     "event": "KXATPCHALLENGERMATCH-26NOV03MPEKRU",
+     "exit": 0.0,
+     "exit_i": 964,
+     "exit_key": "hold",
+     "exit_ts": 1793730300,
+     "hours": 1,
+     "night": "2026-11-03",
+     "profit": -0.29411,
+     "reason": "settled",
+     "roi": -1.0,
+     "side": "yes",
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1793724120,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26NOV03MPEKRU-KRU",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": false
+    },
+    {
+     "ask": {
+      "book": null,
+      "first_quotes": false,
+      "last_trade": 0.21,
+      "printed": 0,
+      "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+      "source": "replayed",
+      "status": "unverified"
+     },
+     "cost": 0.22161,
+     "entry": 0.21,
+     "entry_i": 659,
+     "entry_ts": 1793719260,
+     "event": "KXATPCHALLENGERMATCH-26NOV03BOUWOL",
+     "exit": 1.0,
+     "exit_i": 803,
+     "exit_key": "hold",
+     "exit_ts": 1793727900,
+     "hours": 1,
+     "night": "2026-11-03",
+     "profit": 0.77839,
+     "reason": "settled",
+     "roi": 3.5124,
+     "side": "yes",
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1793722860,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26NOV03BOUWOL-BOU",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": true
     }
    ],
    "voided": {
@@ -112095,19 +112174,28 @@
     "KXATPCHALLENGERMATCH-26NOV02VASURS": 0,
     "KXATPCHALLENGERMATCH-26NOV02ZARVIL": 0,
     "KXATPCHALLENGERMATCH-26NOV03BAXCAD": 0,
+    "KXATPCHALLENGERMATCH-26NOV03BOUWOL": 1,
     "KXATPCHALLENGERMATCH-26NOV03BRAFEL": 0,
     "KXATPCHALLENGERMATCH-26NOV03BRUVRB": 1,
     "KXATPCHALLENGERMATCH-26NOV03CLABON": 0,
     "KXATPCHALLENGERMATCH-26NOV03DJEBUT": 0,
+    "KXATPCHALLENGERMATCH-26NOV03ESTTAB": 0,
     "KXATPCHALLENGERMATCH-26NOV03GAGNIJ": 0,
     "KXATPCHALLENGERMATCH-26NOV03GRAROY": 0,
     "KXATPCHALLENGERMATCH-26NOV03HARWAT": 0,
     "KXATPCHALLENGERMATCH-26NOV03KOZMAR": 0,
     "KXATPCHALLENGERMATCH-26NOV03KYMPOU": 1,
+    "KXATPCHALLENGERMATCH-26NOV03LADEL": 0,
+    "KXATPCHALLENGERMATCH-26NOV03MAEFOR": 0,
+    "KXATPCHALLENGERMATCH-26NOV03MARMON": 0,
+    "KXATPCHALLENGERMATCH-26NOV03MAYNES": 0,
     "KXATPCHALLENGERMATCH-26NOV03MCCSAM": 0,
+    "KXATPCHALLENGERMATCH-26NOV03MPEKRU": 0,
+    "KXATPCHALLENGERMATCH-26NOV03NAGKRA": 0,
     "KXATPCHALLENGERMATCH-26NOV03POLSHI": 0,
     "KXATPCHALLENGERMATCH-26NOV03ROCGAL": 0,
     "KXATPCHALLENGERMATCH-26NOV03RODAGU": 0,
+    "KXATPCHALLENGERMATCH-26NOV03RODTRA": 0,
     "KXATPCHALLENGERMATCH-26NOV03TUNHOU": 1,
     "KXATPCHALLENGERMATCH-26NOV03VASGUE": 1,
     "KXATPCHALLENGERMATCH-26NOV03WONHUA": 0
@@ -112362,6 +112450,41 @@
      "unreachable": false,
      "variant": "t1h_hold",
      "won": false
+    },
+    {
+     "ask": {
+      "book": null,
+      "first_quotes": false,
+      "last_trade": 0.21,
+      "printed": 0,
+      "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+      "source": "replayed",
+      "status": "unverified"
+     },
+     "cost": 0.22161,
+     "entry": 0.21,
+     "entry_i": 659,
+     "entry_ts": 1793719260,
+     "event": "KXATPCHALLENGERMATCH-26NOV03BOUWOL",
+     "exit": 1.0,
+     "exit_i": 803,
+     "exit_key": "hold",
+     "exit_ts": 1793727900,
+     "hours": 1,
+     "night": "2026-11-03",
+     "profit": 0.77839,
+     "reason": "settled",
+     "roi": 3.5124,
+     "side": "yes",
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1793722860,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26NOV03BOUWOL-BOU",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": true
     }
    ],
    "voided": {
@@ -245354,16 +245477,8 @@
    "watch": false
   }
  },
- "last_run": "2026-11-03T17:08:03.353147+00:00",
+ "last_run": "2026-11-03T18:47:12.230095+00:00",
  "runs": [
-  {
-   "at": "2026-10-26T08:00:17.817174+00:00",
-   "new": {
-    "challenger_dog_tp30": 40,
-    "nba_ml_dog_tp50": 0,
-    "nba_tt_cheap_tp30": 160
-   }
-  },
   {
    "at": "2026-10-26T08:30:15.842654+00:00",
    "new": {
@@ -245662,6 +245777,13 @@
   {
    "at": "2026-11-03T17:08:03.353147+00:00",
    "new": {}
+  },
+  {
+   "at": "2026-11-03T18:47:12.230095+00:00",
+   "new": {
+    "challenger_cheap_hold_base": 2,
+    "challenger_won_here_hold": 1
+   }
   }
  ],
  "version": "chaos-v2"
