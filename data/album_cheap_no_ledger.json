@@ -729,16 +729,16 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:50.419359+00:00"
  },
  "lane": "album_cheap_no",
- "last_success": "2026-11-03T03:01:05.876714+00:00",
+ "last_success": "2026-11-03T03:43:33.660736+00:00",
  "observations": {
-  "at": "2026-11-03T03:01:05.876714+00:00",
+  "at": "2026-11-03T03:43:33.660736+00:00",
   "checking": 0,
   "entered": 0,
   "events": 19,
   "filled": 0,
-  "skipped": 0,
+  "skipped": 2,
   "unverified": 12,
-  "waiting": 18
+  "waiting": 16
  },
  "skips": {
   "KXALBUMEQUIV-BLEACH26NOV05-10K": {
@@ -1170,6 +1170,16 @@
    "event": "KXALBUMEQUIV-HOW26NOV05",
    "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
    "word": "Above 12K"
+  },
+  "KXALBUMEQUIV-HOW26NOV05-13K": {
+   "event": "KXALBUMEQUIV-HOW26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 13K"
+  },
+  "KXALBUMEQUIV-HOW26NOV05-14K": {
+   "event": "KXALBUMEQUIV-HOW26NOV05",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 14K"
   },
   "KXALBUMEQUIV-HOW26NOV05-15K": {
    "event": "KXALBUMEQUIV-HOW26NOV05",
