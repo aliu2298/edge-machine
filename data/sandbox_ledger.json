@@ -68,7 +68,7 @@
    "kalshi_venue": 34
   },
   "finance": {
-   "kalshi_venue": 30
+   "kalshi_venue": 47
   },
   "mma": {
    "kalshi_venue": 13,
@@ -93,7 +93,7 @@
     "offered": 4,
     "picked": 0
    },
-   "kalshi_venue": 257,
+   "kalshi_venue": 197,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -377,180 +377,60 @@
    "kalshi_venue": 30,
    "polymarket_us": 40,
    "polymarket_us_listed": 502,
-   "polymarket_us_priced": 248
+   "polymarket_us_priced": 247
   },
   "tennis_combo": {
    "combo": 0,
    "legs": 0
   },
   "tennis_pmcombo": {
-   "combo": 1,
-   "legs": 2
+   "combo": 2,
+   "legs": 3
   }
  },
  "feed_status": {
   "oddspedia": "ok",
-  "pin_totals": "ok"
+  "pin_totals": "down: no paced credit left for this run"
  },
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-03T01:54:14+00:00",
-   "commodities": "2026-11-03T01:54:14+00:00",
-   "commodities_fav": "2026-11-03T01:54:14+00:00",
-   "cricket": "2026-11-03T01:54:14+00:00",
-   "crypto": "2026-11-03T01:54:14+00:00",
-   "crypto_fav": "2026-11-03T01:54:14+00:00",
-   "economics": "2026-11-03T01:54:14+00:00",
-   "finance": "2026-11-03T01:54:14+00:00",
-   "mma": "2026-11-03T01:54:14+00:00",
-   "nfl": "2026-11-03T01:54:14+00:00",
-   "nhl_pl": "2026-11-03T01:54:14+00:00",
-   "nhl_rest": "2026-11-03T01:54:14+00:00",
-   "soccer": "2026-11-03T01:54:14+00:00",
-   "soccer_btts": "2026-11-03T01:54:14+00:00",
-   "soccer_btts_cup": "2026-11-03T01:54:14+00:00",
-   "soccer_corners": "2026-11-03T01:54:14+00:00",
+   "boxing": "2026-11-03T02:00:04+00:00",
+   "commodities": "2026-11-03T02:00:04+00:00",
+   "commodities_fav": "2026-11-03T02:00:04+00:00",
+   "cricket": "2026-11-03T02:00:04+00:00",
+   "crypto": "2026-11-03T02:00:04+00:00",
+   "crypto_fav": "2026-11-03T02:00:04+00:00",
+   "economics": "2026-11-03T02:00:04+00:00",
+   "finance": "2026-11-03T02:00:04+00:00",
+   "mma": "2026-11-03T02:00:04+00:00",
+   "nfl": "2026-11-03T02:00:04+00:00",
+   "nhl_pl": "2026-11-03T02:00:04+00:00",
+   "nhl_rest": "2026-11-03T02:00:04+00:00",
+   "soccer": "2026-11-03T02:00:04+00:00",
+   "soccer_btts": "2026-11-03T02:00:04+00:00",
+   "soccer_btts_cup": "2026-11-03T02:00:04+00:00",
+   "soccer_corners": "2026-11-03T02:00:04+00:00",
    "soccer_ftts": "2026-10-19T18:33:38+00:00",
-   "soccer_o15": "2026-11-03T01:54:14+00:00",
-   "soccer_o15_cup": "2026-11-03T01:54:14+00:00",
-   "soccer_o25": "2026-11-03T01:54:14+00:00",
-   "soccer_o25_cup": "2026-11-03T01:54:14+00:00",
-   "soccer_p05": "2026-11-03T01:54:14+00:00",
-   "soccer_p05_cup": "2026-11-03T01:54:14+00:00",
-   "soccer_team1": "2026-11-03T01:54:14+00:00",
-   "soccer_team1_cup": "2026-11-03T01:54:14+00:00",
-   "soccer_team2": "2026-11-03T01:54:14+00:00",
-   "soccer_team2_cup": "2026-11-03T01:54:14+00:00",
-   "soccer_u35": "2026-11-03T01:54:14+00:00",
-   "soccer_u35_cup": "2026-11-03T01:54:14+00:00",
-   "tennis": "2026-11-03T01:54:14+00:00",
+   "soccer_o15": "2026-11-03T02:00:04+00:00",
+   "soccer_o15_cup": "2026-11-03T02:00:04+00:00",
+   "soccer_o25": "2026-11-03T02:00:04+00:00",
+   "soccer_o25_cup": "2026-11-03T02:00:04+00:00",
+   "soccer_p05": "2026-11-03T02:00:04+00:00",
+   "soccer_p05_cup": "2026-11-03T02:00:04+00:00",
+   "soccer_team1": "2026-11-03T02:00:04+00:00",
+   "soccer_team1_cup": "2026-11-03T02:00:04+00:00",
+   "soccer_team2": "2026-11-03T02:00:04+00:00",
+   "soccer_team2_cup": "2026-11-03T02:00:04+00:00",
+   "soccer_u35": "2026-11-03T02:00:04+00:00",
+   "soccer_u35_cup": "2026-11-03T02:00:04+00:00",
+   "tennis": "2026-11-03T02:00:04+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "odds_api": {
-   "allowance": 1,
-   "at": "2026-11-03T01:54:14+00:00",
-   "calls": 1,
+   "allowance": 0,
+   "at": "2026-11-03T02:00:04+00:00",
    "remaining": 422,
-   "totals_on": [
-    {
-     "empty": {
-      "no_event": 0,
-      "no_totals": 0,
-      "other_point": 14,
-      "points": [
-       3.5,
-       3.25,
-       4.0,
-       3.0,
-       2.75
-      ],
-      "stale": 0
-     },
-     "key": "soccer_uefa_champs_league",
-     "listed": 14,
-     "rows": [
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV03GALVFB-3",
-       "points": [
-        3.5
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV03ASKSLO-3",
-       "points": [
-        3.5
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV03ATMBMU-3",
-       "points": [
-        3.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV03BARAVL-3",
-       "points": [
-        4.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV03FEYINT-3",
-       "points": [
-        3.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV03MUNROM-3",
-       "points": [
-        3.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV03VILPSG-3",
-       "points": [
-        3.5
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV04AEKRMA-3",
-       "points": [
-        3.5
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV04FENLFC-3",
-       "points": [
-        3.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV04BVBRBB-3",
-       "points": [
-        3.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV04FCPNAP-3",
-       "points": [
-        2.75
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV04PSVBRU-3",
-       "points": [
-        3.5
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV04RBLMCI-3",
-       "points": [
-        3.5
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUCLTOTAL-26NOV04RCLCOM-3",
-       "points": [
-        3.0
-       ]
-      }
-     ]
-    }
-   ],
    "used": 78
   },
   "outages": [
@@ -570,7 +450,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 1000,
+  "runs": 1001,
   "tennis_shortlist": {
    "audit": [
     {
@@ -582,7 +462,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-03T01:55:18+00:00"
+  "updated": "2026-11-03T02:01:08+00:00"
  },
  "quotes": [
   {
@@ -419438,7 +419318,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-03T01:54:14+00:00",
+   "close_at": "2026-11-03T02:00:04+00:00",
    "close_price": 0.86,
    "date": "2026-11-05",
    "edge": null,
@@ -447246,7 +447126,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-03T01:54:14+00:00",
+   "close_at": "2026-11-03T02:00:04+00:00",
    "close_price": 0.26,
    "date": "2026-11-06",
    "edge": null,
@@ -448436,7 +448316,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-03T01:54:14+00:00",
+   "close_at": "2026-11-03T02:00:04+00:00",
    "close_price": 0.49,
    "date": "2026-11-06",
    "edge": null,
@@ -448628,7 +448508,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-03T01:54:14+00:00",
+   "close_at": "2026-11-03T02:00:04+00:00",
    "close_price": 0.81,
    "date": "2026-11-06",
    "edge": null,
@@ -448668,7 +448548,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-03T01:54:14+00:00",
+   "close_at": "2026-11-03T02:00:04+00:00",
    "close_price": 0.71,
    "date": "2026-11-06",
    "edge": null,
@@ -455284,6 +455164,74 @@
    "uncovered": null,
    "untraded": false,
    "url": "https://polymarket.us/event/itfwo-prinug-seocho-2026-11-03",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-03",
+   "edge": -0.015,
+   "id": "polymarket_us:aec-utr-kawken-naksei-2026-11-03",
+   "label": "Kawada, Kenta vs Nakanishi, Seiya",
+   "liquidity": null,
+   "logged": "2026-11-03T02:00:04+00:00",
+   "market_id": "aec-utr-kawken-naksei-2026-11-03",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.33,
+   "price_b": 0.7,
+   "price_draw": null,
+   "prob_a": 0.315,
+   "result": null,
+   "settled": null,
+   "side_a": "Kawada, Kenta",
+   "side_b": "Nakanishi, Seiya",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.03,
+   "stake": 0.0,
+   "start": "2026-11-03T04:10:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "utr",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/utr-kawken-naksei-2026-11-03",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-03",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfwo-yuyli-alitik-2026-11-03",
+   "label": "Yuyao Li vs Alina Tikhonova",
+   "liquidity": null,
+   "logged": "2026-11-03T02:00:04+00:00",
+   "market_id": "aec-itfwo-yuyli-alitik-2026-11-03",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.1,
+   "price_b": 0.91,
+   "price_draw": null,
+   "prob_a": 0.095,
+   "result": null,
+   "settled": null,
+   "side_a": "Yuyao Li",
+   "side_b": "Alina Tikhonova",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-03T04:30:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfwo",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfwo-yuyli-alitik-2026-11-03",
    "venue": "polymarket_us",
    "venue_start": null
   }
