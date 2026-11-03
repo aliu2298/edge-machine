@@ -40,7 +40,7 @@ def trade(ev, tick, roi, side_won, night="2026-11-03", exit_key="split", h=-20):
 CHAOS = dict(lanes={X.YES_LANE: dict(id=X.YES_LANE, since="2026-11-03", exits=["hold", "split"], trades=[
     trade(EV1, "OKC1TO5", 1.33, True), trade(EV1, "OKC1TO5", -1.0, True, exit_key="hold"),
     trade(EV1, "CLE6TO10", -1.0, False), trade(EV2, "DEN1TO5", 0.4, True, night="2026-11-03"),
-    trade("KXNBAWINMARGIN-26NOV02AAABBB", "AAA1TO5", 1.0, True, night="2026-11-02")])})        # before Production: not in the record
+    trade("KXNBAWINMARGIN-26NOV01AAABBB", "AAA1TO5", 1.0, True, night="2026-11-01")])})        # before Production: not in the record
 
 
 def bucket(tick, fill, ok=True, no_wins=True):
@@ -52,7 +52,7 @@ FILL = dict(limit=0.30, fill_at=ts(-19), fill_print=0.28, printed=14.0, sold_at=
 NOFADE = dict(entries=[
     dict(event=EV1, night="2026-11-03", tip=ts(-20), insample=False, buckets=[bucket("OKC1TO5", FILL), bucket("CLE6TO10", dict(FILL, sold_at=None, profit=-0.3037, won=False)),
                                                                            bucket("OKC11TO20", FILL, ok=False)]),
-    dict(event=EV2, night="2026-11-02", tip=ts(-40), insample=False, buckets=[bucket("DEN1TO5", FILL)]),        # version 1: not the record
+    dict(event=EV2, night="2026-11-01", tip=ts(-40), insample=False, buckets=[bucket("DEN1TO5", FILL)]),        # version 1: not the record
 ])
 FEED_YES = dict(lane=X.YES_LANE, updated_at=(NOW - dt.timedelta(minutes=30)).isoformat(), leads=[
     dict(id="x", lane=X.YES_LANE, event="KXNBAWINMARGIN-26NOV04BOSMIA", ticker="KXNBAWINMARGIN-26NOV04BOSMIA-BOS1TO5", tip=(NOW + dt.timedelta(hours=6)).isoformat(), side="yes")])
@@ -94,7 +94,7 @@ check("the lead carries lane, version, side and the stake", (yes["leads"][0]["la
 
 print("\nthe record: paper version 2, from the first night")
 yq, nq = X.yes_quotes(CHAOS), X.no_quotes(NOFADE)
-check("YES: the split entries from 2026-11-03 on (the hold control and the earlier night are out)", sorted(q["market_id"].rsplit("-", 1)[1] for q in yq), ["CLE6TO10", "DEN1TO5", "OKC1TO5"])
+check("YES: the split entries from 2026-11-02 on (the hold control and the earlier night are out)", sorted(q["market_id"].rsplit("-", 1)[1] for q in yq), ["CLE6TO10", "DEN1TO5", "OKC1TO5"])
 check("NO: the verified fills of version 2 (the unverified bucket and version 1 are out)", sorted(q["market_id"].rsplit("-", 1)[1] for q in nq), ["CLE6TO10", "OKC1TO5"])
 check("a quote books the lane's own after-fee P/L", {q["market_id"].rsplit("-", 1)[1]: q["pnl"] for q in yq}, {"OKC1TO5": 133.0, "CLE6TO10": -100.0, "DEN1TO5": 40.0})
 check("quotes are Kalshi binary contracts on the NBA win margin domain", {(q["venue"], q["sport"], q["pick"]) for q in yq + nq}, {("kalshi_binary", "nba_wm", "a"), ("kalshi_binary", "nba_wm", "b")})
@@ -110,7 +110,7 @@ check("no guarded public phrase, no dollar amount in the lane rows", sandbox_aud
 d2, st2, blob2 = X.page_inputs(d, st, blob, CHAOS, NOFADE, now=NOW)
 check("the originals are untouched", (d, st, blob), ({"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}))
 check("both pairs are in Production since the first night", ({k: v["stage"] for k, v in st2["pairs"].items()}, X.MOVED_ON),
-      ({f"{X.YES_LANE}|nba_wm": "production", f"{X.NO_LANE}|nba_wm": "production"}, "2026-11-03"))
+      ({f"{X.YES_LANE}|nba_wm": "production", f"{X.NO_LANE}|nba_wm": "production"}, "2026-11-02"))
 pend = [l for l in blob2["leads"].values() if l.get("status") == "pending"]
 check("one upcoming lead per lane while the feeds are fresh", sorted(l["route"]["outcome_side"] for l in pend), ["no", "yes"])
 _, _, b3 = X.page_inputs(d, st, blob, CHAOS, NOFADE, now=NOW + dt.timedelta(hours=6))

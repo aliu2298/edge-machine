@@ -261,7 +261,7 @@ LANES = [
          picker=bucket_picker(("1-5", "6-10"), 0.10, 0.20, 0.05), max_spread=0.05, entry_hours=(1,),
          exits=("hold", C.SPLIT, "tp50", "tp100", C.X2), headline=C.SPLIT, since="2026-10-30", start=winmargin_start,
          fill_from_start=True, fetch_before_h=6, duration_min=160,
-         retired=dict(on="2026-11-03", at="13 settled games, split +29.5% v hold -4.9% (sells filled on a print at the target)",
+         retired=dict(on="2026-11-02", at="13 settled games, split +29.5% v hold -4.9% (sells filled on a print at the target)",
                       reason="folded into nba_winmargin_live, the version that trades live (a sell fills only through its target)"),
          note="YES of the 1-5 or 6-10 win margin bucket (either team) priced 10-20c, spread 5c or less, an hour before the tip, "
               "with a split resting sell: half at 2x, half at 3x of the ask paid, filling only on a traded print from the tip on. "
@@ -270,10 +270,11 @@ LANES = [
     # can do, so this is a fresh VERSION of the lane (nba_winmargin_split above is folded: its record stays as it was):
     # the buy is a taker at the real ask an hour before the tip (10-20c, spread 5c or less, ask check), and a resting
     # sell fills only on a print STRICTLY through its target (a live order at the price is queued behind the book), from the
-    # tip on. Exits: the hold control and the split only (the follower places no other exit). Fresh record from 2026-11-03.
+    # tip on. Exits: the hold control and the split only (the follower places no other exit). Fresh record from 2026-11-02, the first
+    # night the follower traded it live (moved earlier from 2026-11-03 on Nov 3: the page showed none of that night).
     dict(id="nba_winmargin_live", label="NBA win margin 1-5 / 6-10 · split 2x / 3x (Production)", series=["KXNBAWINMARGIN"],
          picker=bucket_picker(("1-5", "6-10"), 0.10, 0.20, 0.05), max_spread=0.05, entry_hours=(1,),
-         exits=("hold", C.SPLIT), headline=C.SPLIT, since="2026-11-03", start=winmargin_start,
+         exits=("hold", C.SPLIT), headline=C.SPLIT, since="2026-11-02", start=winmargin_start,
          fill_from_start=True, strict_through=True, fetch_before_h=6, duration_min=160,
          note="YES of the 1-5 or 6-10 win margin bucket (either team) priced 10-20c, spread 5c or less, bought at the ask an hour before "
               "the tip (the follower's taker buy), with a split resting sell: half at 2x, half at 3x of the price paid, filled only by a "

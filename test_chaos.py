@@ -227,7 +227,7 @@ check("the approved lanes are registered, each with fresh record from 2026-10-25
       (["challenger_won_here_hold", "challenger_cheap_hold_base",        # 2026-11-02: the Challenger hold lane and its baseline
         "challenger_cheap_split", "challenger_dog_tp30", "cfb_home_dog_x4", "cfb_dog_tp50", "atp_coinflip_tp30", "nba_tt_cheap_tp30", "nba_ml_dog_tp50",
         "nba_winmargin_split", "nba_winmargin_live", "nba_winmargin_split_insample"],
-       ["2026-11-02", "2026-11-02", "2026-10-26", "2026-10-25", "2026-11-02"] + ["2026-10-25"] * 4 + ["2026-10-30", "2026-11-03", "2026-10-20"]))
+       ["2026-11-02", "2026-11-02", "2026-10-26", "2026-10-25", "2026-11-02"] + ["2026-10-25"] * 4 + ["2026-10-30", "2026-11-02", "2026-10-20"]))
 LD = {l["id"]: l for l in chaos_lanes.LANES}
 check("entry times and headlines as approved",
       [(l["entry_hours"], l["headline"]) for l in chaos_lanes.LANES],

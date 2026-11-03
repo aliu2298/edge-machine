@@ -53,7 +53,7 @@ check("v2: 15 contracts AT the limit and 4 strictly under do not make 10 strictl
 check("v2: the post-only bid would CROSS when the NO price at the tip is already at or under the limit: no entry, even with prints below it",
       (N.dip_trade(prs3, TIP2, P2, 0.75, True, strict=True, no_at_tip=0.30), N.dip_trade(prs3, TIP2, P2, 0.75, True, strict=True, no_at_tip=0.31) is not None), (None, True))
 check("v1 has no cross rule", N.dip_trade(prs3, TIP2, P2, 0.75, True, strict=False, no_at_tip=0.30) is not None, True)
-check("the version split is by night: insample before 10-31, v1 to 11-02, v2 from 11-03", [N.phase_of(n) for n in ("2026-10-30", "2026-10-31", "2026-11-02", "2026-11-03")], ["insample", "v1", "v1", "v2"])
+check("the version split is by night: insample before 10-31, v1 to 11-01, v2 from 11-02 (the first live night)", [N.phase_of(n) for n in ("2026-10-30", "2026-10-31", "2026-11-01", "2026-11-02")], ["insample", "v1", "v1", "v2"])
 
 print("\nthe ask check (#253) on the pregame price")
 good = [(ENTRY - 300, 0.41, 2), (ENTRY + 600, 0.40, 12)]
@@ -108,6 +108,29 @@ finally:
 check("Oct 30's game is in-sample, Oct 31's is fresh; a run records both once", sorted((e["night"], e["insample"]) for e in st["entries"]),
       [("2026-10-30", True), ("2026-10-31", False)])
 check("the ledger starts 2026-10-31 with the study window from 2026-10-20", (st["since"], st["since_in"]), ("2026-10-31", "2026-10-20"))
+
+print("\nthe first live night: a v1-recorded entry of that night is evaluated again under v2")
+real_list, real_markets, real_pages = N.C.list_events, N.C.event_markets, N.D.pages
+real_candles, real_trades = N.C.fetch_candles, N.O.fetch_trades
+N.C.list_events = lambda *a, **k: ["KXNBAWINMARGIN-26NOV02AAABBB"]
+N.C.event_markets = lambda ev, f: ([dict(ticker=ev + "-AAA1TO5", yes_sub_title="A wins by 1-5 points", result="no")], False)
+N.D.pages = lambda path, key, f: [dict(ticker="KXNBAGAME-x", expected_expiration_time="2026-11-03T03:30:00Z")]
+N.C.fetch_candles = lambda s, ev, ms, lo, hi, f, a: {ms[0]["ticker"]: [dict(end_period_ts=hi - 60, yes_bid=dict(close_dollars="0.5800"), yes_ask=dict(close_dollars="0.6000"))]}
+N.O.fetch_trades = lambda t, ts, f: []
+try:
+    st2 = N.load("/nonexistent/path.json")
+    st2["entries"] = [dict(event="KXNBAWINMARGIN-26NOV02AAABBB", night="2026-11-02", tip=1, insample=False, buckets=[], version="nofade-v1")]
+    st2["seen"] = {"KXNBAWINMARGIN-26NOV02AAABBB": "old"}
+    N.run(st2, dt.datetime(2026, 11, 3, 12, tzinfo=dt.timezone.utc), lambda p: {})
+finally:
+    N.C.list_events, N.C.event_markets, N.D.pages, N.C.fetch_candles, N.O.fetch_trades = real_list, real_markets, real_pages, real_candles, real_trades
+check("one entry again, now version 2", [(e["night"], e["version"]) for e in st2["entries"]], [("2026-11-02", "nofade-v2")])
+import chaos_replay as CR2
+lane_cfg = dict(id="x", label="x", series=["S"], since="2026-11-02")
+L2 = CR2.lane_state(dict(lanes={"x": dict(id="x", since="2026-11-03", label="x", series=["S"], replayed={}, trades=[], skipped={}, entry_hours=[1])}), lane_cfg, dt.datetime(2026, 11, 3, tzinfo=dt.timezone.utc))
+check("a lane's first night may move earlier (the earlier nights are then replayed), never later", L2["since"], "2026-11-02")
+L3 = CR2.lane_state(dict(lanes={"x": dict(id="x", since="2026-11-02", label="x", series=["S"], replayed={}, trades=[], skipped={}, entry_hours=[1])}), dict(lane_cfg, since="2026-11-05"), dt.datetime(2026, 11, 3, tzinfo=dt.timezone.utc))
+check("... never later", L3["since"], "2026-11-02")
 
 print("\nthe card")
 state = dict(entries=entries, last_run="x", error=None)

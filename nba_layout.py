@@ -15,7 +15,7 @@ import nba_wm_nofade as N
 import nba_wm_nofade_build as NB
 
 YES_ID, NO_ID = "nba_winmargin_live", "nba_wm_nofade"
-V1_ID = "nba_winmargin_split"      # paper version 1 (folded 2026-11-03): its record stays
+V1_ID = "nba_winmargin_split"      # paper version 1 (folded 2026-11-02): its record stays
 SAMPLE_ID = "nba_winmargin_split_insample"
 # The moneyline underdog (nba_ml_dog_tp50) was demoted to a blind baseline and retired on 2026-11-01: it sits in the
 # page's Retired fold (nba_pace_build), not here.
@@ -125,7 +125,7 @@ def lane_card(anchor, title, L, sample=None, v1=None):
     folds = _folds(L, sample)
     if v1 is not None:
         folds += ('<details class="section-disclosure" id="wm-yes-v1"><summary><b>Paper version 1 (folded)</b>'
-                  f'<span>{esc(v1.get("since"))} to 2026-11-02 · sells filled on a print at the target</span></summary>'
+                  f'<span>{esc(v1.get("since"))} to 2026-11-01 · sells filled on a print at the target</span></summary>'
                   '<p class="sm mut">The paper lane before it mirrored live orders (a resting sell fills only through its target). '
                   f'Its record stays as it was; it is not the Production record.</p>{_record(v1)}</details>')
     return (f'<section id="{anchor}"><details class="section-disclosure" data-lane="{esc(L["id"])}" open><summary><b>{esc(title)}</b>'

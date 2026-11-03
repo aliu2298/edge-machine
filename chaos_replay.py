@@ -607,6 +607,9 @@ def lane_state(state, lane, now):
             series=list(lane["series"]), entry_hours=list(lane.get("entry_hours") or ENTRY_HOURS),
             duration_min=lane.get("duration_min"), note=lane.get("note") or "", headline=lane.get("headline"),
             caution=lane.get("caution") or "", watch=bool(lane.get("watch")), replayed={}, trades=[], skipped={})
+    # A lane's first night may move EARLIER (never later): the earlier nights are then replayed, nothing recorded is touched.
+    if lane.get("since") and lane["since"] < L.get("since", lane["since"]):
+        L["since"] = lane["since"]
     # The lane's exits as configured now (the split joined every lane on 2026-10-27; additive only).
     L["exits"] = list(lane_exits(lane))
     # Retired by hand (lane["retired"] = dict(on, at, reason)): kept on the record for the pages; no event
