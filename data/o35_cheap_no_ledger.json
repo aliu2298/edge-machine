@@ -7428,16 +7428,70 @@
    "result": "yes",
    "series": "KXSUPERLIGTOTAL",
    "version": "o35-v4"
+  },
+  {
+   "bids": {
+    "10": null,
+    "10e": null
+   },
+   "crossed": null,
+   "event": "KXEPLTOTAL-26NOV02NEWEVE",
+   "form_rule": false,
+   "id": "KXEPLTOTAL-26NOV02NEWEVE-4",
+   "kickoff": 1793649600,
+   "league": "Premier League",
+   "logged": "2026-11-03T03:04:22.325628+00:00",
+   "night": "2026-11-02",
+   "prints": 771,
+   "result": "no",
+   "series": "KXEPLTOTAL",
+   "version": "o35-v4"
+  },
+  {
+   "bids": {
+    "10": null,
+    "10e": null
+   },
+   "crossed": null,
+   "event": "KXLALIGATOTAL-26NOV02DEPOSA",
+   "form_rule": false,
+   "id": "KXLALIGATOTAL-26NOV02DEPOSA-4",
+   "kickoff": 1793649600,
+   "league": "La Liga",
+   "logged": "2026-11-03T03:04:22.325628+00:00",
+   "night": "2026-11-02",
+   "prints": 1005,
+   "result": "no",
+   "series": "KXLALIGATOTAL",
+   "version": "o35-v4"
+  },
+  {
+   "bids": {
+    "10": null,
+    "10e": null
+   },
+   "crossed": null,
+   "event": "KXSERIEATOTAL-26NOV02ATAPAR",
+   "form_rule": false,
+   "id": "KXSERIEATOTAL-26NOV02ATAPAR-4",
+   "kickoff": 1793648700,
+   "league": "Serie A",
+   "logged": "2026-11-03T03:04:22.325628+00:00",
+   "night": "2026-11-02",
+   "prints": 2464,
+   "result": "no",
+   "series": "KXSERIEATOTAL",
+   "version": "o35-v4"
   }
  ],
  "error": null,
  "lane": "o35_cheap_no_wave",
- "last_run": "2026-11-02T20:53:24.102976+00:00",
+ "last_run": "2026-11-03T03:04:22.325628+00:00",
  "observations": {
-  "at": "2026-11-02T20:53:24.102976+00:00",
+  "at": "2026-11-03T03:04:22.325628+00:00",
   "errors": [],
-  "new": 2,
-  "waiting": 2
+  "new": 3,
+  "waiting": 3
  },
  "seen": {
   "KXBUNDESLIGATOTAL-26NOV01SGEHSV": "2026-11-02T11:41:22.679309+00:00",
@@ -7449,6 +7503,7 @@
   "KXBUNDESLIGATOTAL-26OCT31SCHRBL": "before the lane's first night",
   "KXBUNDESLIGATOTAL-26OCT31SVWTSG": "before the lane's first night",
   "KXEPLTOTAL-26NOV01LFCARS": "2026-11-02T11:41:22.679309+00:00",
+  "KXEPLTOTAL-26NOV02NEWEVE": "2026-11-03T03:04:22.325628+00:00",
   "KXEPLTOTAL-26OCT31AVLFUL": "before the lane's first night",
   "KXEPLTOTAL-26OCT31BOULEE": "before the lane's first night",
   "KXEPLTOTAL-26OCT31BRENFO": "before the lane's first night",
@@ -7470,6 +7525,7 @@
   "KXLALIGATOTAL-26NOV01ELCVCF": "2026-11-02T11:41:22.679309+00:00",
   "KXLALIGATOTAL-26NOV01GETSEV": "2026-11-02T11:41:22.679309+00:00",
   "KXLALIGATOTAL-26NOV01SANRMA": "2026-11-02T11:41:22.679309+00:00",
+  "KXLALIGATOTAL-26NOV02DEPOSA": "2026-11-03T03:04:22.325628+00:00",
   "KXLALIGATOTAL-26OCT31BARALA": "before the lane's first night",
   "KXLALIGATOTAL-26OCT31LEVATM": "before the lane's first night",
   "KXLALIGATOTAL-26OCT31RBBMCF": "before the lane's first night",
@@ -7478,6 +7534,7 @@
   "KXLIGUE1TOTAL-26NOV01PARASM": "2026-11-02T11:41:22.679309+00:00",
   "KXLIGUE1TOTAL-26NOV01RCSAUX": "2026-11-02T11:41:22.679309+00:00",
   "KXLIGUE1TOTAL-26OCT31ESTMAN": "before the lane's first night",
+  "KXLIGUE1TOTAL-26OCT31FCLSTB": "before the lane's first night",
   "KXLIGUE1TOTAL-26OCT31NICREN": "before the lane's first night",
   "KXLIGUE1TOTAL-26OCT31OLANG": "before the lane's first night",
   "KXMLSTOTAL-26NOV01ATLTOR": "2026-11-02T11:41:22.679309+00:00",
@@ -7503,6 +7560,7 @@
   "KXSERIEATOTAL-26NOV01JUVNAP": "2026-11-02T11:41:22.679309+00:00",
   "KXSERIEATOTAL-26NOV01LAZCAG": "2026-11-02T11:41:22.679309+00:00",
   "KXSERIEATOTAL-26NOV01LECGEN": "2026-11-02T11:41:22.679309+00:00",
+  "KXSERIEATOTAL-26NOV02ATAPAR": "2026-11-03T03:04:22.325628+00:00",
   "KXSERIEATOTAL-26NOV02SASFIO": "2026-11-02T20:53:24.102976+00:00",
   "KXSERIEATOTAL-26OCT31ACMINT": "before the lane's first night",
   "KXSERIEATOTAL-26OCT31BFCMON": "before the lane's first night",
