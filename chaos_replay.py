@@ -610,6 +610,9 @@ def lane_state(state, lane, now):
     # A lane's first night may move EARLIER (never later): the earlier nights are then replayed, nothing recorded is touched.
     if lane.get("since") and lane["since"] < L.get("since", lane["since"]):
         L["since"] = lane["since"]
+        # Events an earlier run set aside as "before the lane's first night" belong to the lane now: they are replayed again.
+        for ev in [e for e, v in (L.get("replayed") or {}).items() if v == "before the lane's first night"]:
+            del L["replayed"][ev]
     # The lane's exits as configured now (the split joined every lane on 2026-10-27; additive only).
     L["exits"] = list(lane_exits(lane))
     # Retired by hand (lane["retired"] = dict(on, at, reason)): kept on the record for the pages; no event
