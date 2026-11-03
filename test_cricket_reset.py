@@ -262,7 +262,10 @@ eq(cricket_cards.before_reset(d, {"name": "cricket_consensus", "sport": "cricket
 print("-- nothing on file changes")
 eq(d, before, "the page build changes no ledger row")
 real_d = T.load()
-pre = [q for q in real_d.get("quotes") or [] if q.get("sport") == "cricket" and q.get("bet")
+# Settled rows older than RETAIN_DAYS move to the archive (prune), so read both; the live row wins on a shared id.
+on_file = {q.get("id"): q for q in T.load_archive()}
+on_file.update({q.get("id"): q for q in real_d.get("quotes") or []})
+pre = [q for q in on_file.values() if q.get("sport") == "cricket" and q.get("bet")
        and str(q.get("logged") or "") < CLOCK and q.get("status") in ("won", "lost")]
 ok(all(q.get("status") in ("won", "lost") for q in pre), "no settled cricket row was voided or rewritten")
 longshots = [q for q in pre if q.get("source") == "oddspedia" and (q.get("price") or 1) < 0.15]
