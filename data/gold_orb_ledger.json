@@ -1,5 +1,5 @@
 {
- "last_run": "2026-11-02T03:01:02.000903+00:00",
+ "last_run": "2026-11-03T02:18:02.001101+00:00",
  "nights": [
   {
    "anchor": "ct_2000",
@@ -1642,6 +1642,146 @@
    "signal_at": "2026-11-02T01:01:00+00:00",
    "status": "settled",
    "variant": "B"
+  },
+  {
+   "anchor": "utc_0130",
+   "anchor_at": "2026-11-03T02:00:00+00:00",
+   "entry_at": "2026-11-03T02:02:00+00:00",
+   "entry_book": {
+    "ask": 3957.4,
+    "ask_size": 30.0,
+    "at": "2026-11-03T02:02:01.868259Z",
+    "bid": 3956.9,
+    "bid_size": 3.0
+   },
+   "entry_late": false,
+   "entry_px": 3955.8,
+   "entry_spread_bp": 1.264,
+   "exit_at": "2026-11-03T02:17:00+00:00",
+   "exit_book": {
+    "ask": 3954.5,
+    "ask_size": 4.0,
+    "at": "2026-11-03T02:17:01.724084Z",
+    "bid": 3954.1,
+    "bid_size": 1.0
+   },
+   "exit_carried": false,
+   "exit_px": 3955.0,
+   "exit_spread_bp": 1.012,
+   "fill_in": 3956.9,
+   "fill_out": 3954.5,
+   "gross_bp": 2.022,
+   "gross_usd": 0.8,
+   "id": "A:utc_0130:2026-11-02",
+   "net_bp": 5.561,
+   "net_usd": 2.2,
+   "night": "2026-11-02",
+   "product": "GOL-25NOV26-CDE",
+   "range_high": 3963.0,
+   "range_low": 3957.7,
+   "settled_at": "2026-11-03T02:17:02.000618+00:00",
+   "shadow": false,
+   "side": "short",
+   "signal_at": "2026-11-03T02:01:00+00:00",
+   "status": "settled",
+   "variant": "A"
+  },
+  {
+   "anchor": "utc_0100",
+   "anchor_at": "2026-11-03T01:00:00+00:00",
+   "entry_at": "2026-11-03T01:11:00+00:00",
+   "entry_book": {
+    "ask": 3959.0,
+    "ask_size": 33.0,
+    "at": "2026-11-03T01:11:02.144334Z",
+    "bid": 3958.6,
+    "bid_size": 3.0
+   },
+   "entry_late": false,
+   "entry_px": 3958.9,
+   "entry_spread_bp": 1.01,
+   "exit_at": "2026-11-03T01:26:00+00:00",
+   "exit_book": {
+    "ask": 3964.2,
+    "ask_size": 52.0,
+    "at": "2026-11-03T01:26:01.440801Z",
+    "bid": 3963.6,
+    "bid_size": 8.0
+   },
+   "exit_carried": false,
+   "exit_px": 3964.4,
+   "exit_spread_bp": 1.514,
+   "fill_in": 3958.6,
+   "fill_out": 3964.2,
+   "gross_bp": -13.893,
+   "gross_usd": -5.5,
+   "id": "A:utc_0100:2026-11-02",
+   "net_bp": -14.651,
+   "net_usd": -5.8,
+   "night": "2026-11-02",
+   "product": "GOL-25NOV26-CDE",
+   "range_high": 3973.9,
+   "range_low": 3957.9,
+   "settled_at": "2026-11-03T01:26:02.000757+00:00",
+   "shadow": true,
+   "side": "short",
+   "signal_at": "2026-11-03T01:10:00+00:00",
+   "status": "settled",
+   "variant": "A"
+  },
+  {
+   "anchor": "utc_0130",
+   "anchor_at": "2026-11-03T02:00:00+00:00",
+   "id": "B:utc_0130:2026-11-02",
+   "night": "2026-11-02",
+   "product": "GOL-25NOV26-CDE",
+   "settled_at": "2026-11-03T02:02:02.000575+00:00",
+   "shadow": false,
+   "status": "no_range",
+   "variant": "B"
+  },
+  {
+   "anchor": "utc_0100",
+   "anchor_at": "2026-11-03T01:00:00+00:00",
+   "entry_at": "2026-11-03T01:01:00+00:00",
+   "entry_book": {
+    "ask": 3964.2,
+    "ask_size": 32.0,
+    "at": "2026-11-03T01:01:01.751183Z",
+    "bid": 3963.8,
+    "bid_size": 1.0
+   },
+   "entry_late": false,
+   "entry_px": 3963.8,
+   "entry_spread_bp": 1.009,
+   "exit_at": "2026-11-03T01:16:00+00:00",
+   "exit_book": {
+    "ask": 3965.4,
+    "ask_size": 33.0,
+    "at": "2026-11-03T01:16:01.463070Z",
+    "bid": 3964.9,
+    "bid_size": 1.0
+   },
+   "exit_carried": false,
+   "exit_px": 3963.4,
+   "exit_spread_bp": 1.261,
+   "fill_in": 3963.8,
+   "fill_out": 3965.4,
+   "gross_bp": 1.009,
+   "gross_usd": 0.4,
+   "id": "B:utc_0100:2026-11-02",
+   "net_bp": -4.541,
+   "net_usd": -1.8,
+   "night": "2026-11-02",
+   "product": "GOL-25NOV26-CDE",
+   "range_high": 3971.4,
+   "range_low": 3967.0,
+   "settled_at": "2026-11-03T01:16:02.000786+00:00",
+   "shadow": true,
+   "side": "short",
+   "signal_at": "2026-11-03T01:00:00+00:00",
+   "status": "settled",
+   "variant": "B"
   }
  ],
  "runs": [
@@ -1775,6 +1915,18 @@
     "A:utc_0130": "settled",
     "B:utc_0100": "settled",
     "B:utc_0130": "settled"
+   }
+  },
+  {
+   "at": "2026-11-03T00:54:02.311993+00:00",
+   "night": "2026-11-02",
+   "product": "GOL-25NOV26-CDE",
+   "read_errors": 0,
+   "statuses": {
+    "A:utc_0100": "settled",
+    "A:utc_0130": "settled",
+    "B:utc_0100": "settled",
+    "B:utc_0130": "no_range"
    }
   }
  ],
