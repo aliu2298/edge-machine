@@ -1,10 +1,5 @@
 {
  "closes": {
-  "btts_form_l10_fade:KXEREDIVISIEBTTS-26OCT24WILCAM-BTTS": {
-   "at": "2026-10-24T16:13:59+00:00",
-   "lead_min": 31.0,
-   "price": 0.37
-  },
   "btts_form_l10_fade:KXLALIGABTTS-26OCT25BARRMA-BTTS": {
    "at": "2026-10-25T19:56:39+00:00",
    "lead_min": 3.3,
@@ -20,20 +15,25 @@
    "lead_min": 17.5,
    "price": 0.36
   },
-  "bund_o35:KXBUNDESLIGATOTAL-26OCT24BVBSGE-4": {
-   "at": "2026-10-24T16:13:59+00:00",
-   "lead_min": 16.0,
-   "price": 0.52
-  },
   "bund_o35:KXBUNDESLIGATOTAL-26OCT25TSGLEV-4": {
    "at": "2026-10-25T13:54:45+00:00",
    "lead_min": 35.2,
    "price": 0.53
   },
+  "commod_fav_band:KXBRENTD-26NOV0317-T103": {
+   "at": "2026-11-03T20:39:47+00:00",
+   "lead_min": 50.2,
+   "price": 0.98
+  },
   "commod_fav_band:KXBRENTD-26OCT2717-T109": {
    "at": "2026-10-27T20:01:49+00:00",
    "lead_min": 28.2,
    "price": 0.98
+  },
+  "commod_fav_band:KXSILVERD-26NOV0317-T49.50": {
+   "at": "2026-11-03T20:39:47+00:00",
+   "lead_min": 50.2,
+   "price": 0.62
   },
   "commod_fav_band:KXSILVERD-26OCT2717-T54.25": {
    "at": "2026-10-27T20:01:49+00:00",
@@ -60,16 +60,6 @@
    "lead_min": 36.9,
    "price": 0.94
   },
-  "corners_team_fade:KXEPLTCORNERS-26OCT24CFCTOT-CFC6": {
-   "at": "2026-10-24T16:13:59+00:00",
-   "lead_min": 16.0,
-   "price": 0.5
-  },
-  "corners_team_fade:KXLALIGATCORNERS-26OCT24ATMDEP-ATM7": {
-   "at": "2026-10-24T18:59:10+00:00",
-   "lead_min": 0.8,
-   "price": 0.54
-  },
   "corners_total_under:KXEPLCORNERS-26OCT25MUNBOU-10": {
    "at": "2026-10-25T13:54:45+00:00",
    "lead_min": 5.2,
@@ -90,85 +80,30 @@
    "lead_min": 28.4,
    "price": 0.38
   },
-  "crypto_eth_fav_both:KXETHD-26OCT2417-T2319.99": {
-   "at": "2026-10-24T18:59:10+00:00",
-   "lead_min": 5.8,
-   "price": 0.14
-  },
-  "crypto_fav_band:KXBTCD-26OCT2417-T79749.99": {
-   "at": "2026-10-24T18:59:10+00:00",
-   "lead_min": 5.8,
-   "price": 0.97
-  },
   "crypto_fav_band:KXBTCD-26OCT3017-T76499.99": {
    "at": "2026-10-30T18:50:24+00:00",
    "lead_min": 14.6,
    "price": 0.56
-  },
-  "crypto_fav_band:KXSOLD-26OCT2417-T99.9999": {
-   "at": "2026-10-24T18:59:10+00:00",
-   "lead_min": 5.8,
-   "price": 0.92
   },
   "crypto_fav_band:KXSOLD-26OCT3017-T93.9999": {
    "at": "2026-10-30T18:50:24+00:00",
    "lead_min": 14.6,
    "price": 0.38
   },
-  "crypto_fav_band_60:KXBTCD-26OCT2417-T79999.99": {
-   "at": "2026-10-24T18:59:10+00:00",
-   "lead_min": 5.8,
-   "price": 0.92
-  },
   "crypto_fav_band_60:KXBTCD-26OCT3017-T76499.99": {
    "at": "2026-10-30T18:50:24+00:00",
    "lead_min": 14.6,
    "price": 0.56
-  },
-  "crypto_fav_band_below:KXBTCD-26OCT2417-T80499.99": {
-   "at": "2026-10-24T18:59:10+00:00",
-   "lead_min": 5.8,
-   "price": 0.55
   },
   "crypto_fav_band_below:KXBTCD-26OCT3017-T77499.99": {
    "at": "2026-10-30T18:50:24+00:00",
    "lead_min": 14.6,
    "price": 0.96
   },
-  "crypto_fav_band_below:KXHYPED-26OCT2417-T75.9999": {
-   "at": "2026-10-24T18:59:10+00:00",
-   "lead_min": 5.8,
-   "price": 0.46
-  },
-  "crypto_fav_band_below_60:KXBTCD-26OCT2417-T80249.99": {
-   "at": "2026-10-24T18:59:10+00:00",
-   "lead_min": 5.8,
-   "price": 0.23
-  },
-  "crypto_fav_band_below_60:KXETHD-26OCT2417-T2319.99": {
-   "at": "2026-10-24T18:59:10+00:00",
-   "lead_min": 5.8,
-   "price": 0.14
-  },
-  "crypto_sol_fav_both:KXSOLD-26OCT2417-T99.9999": {
-   "at": "2026-10-24T18:59:10+00:00",
-   "lead_min": 5.8,
-   "price": 0.92
-  },
   "crypto_sol_fav_both:KXSOLD-26OCT3017-T93.9999": {
    "at": "2026-10-30T18:50:24+00:00",
    "lead_min": 14.6,
    "price": 0.38
-  },
-  "ere_draw:KXEREDIVISIEGAME-26OCT24ADOHEE": {
-   "at": "2026-10-24T18:59:10+00:00",
-   "lead_min": 0.8,
-   "price": 0.26
-  },
-  "ere_draw:KXEREDIVISIEGAME-26OCT24WILCAM": {
-   "at": "2026-10-24T16:13:59+00:00",
-   "lead_min": 31.0,
-   "price": 0.26
   },
   "ere_draw:KXEREDIVISIEGAME-26OCT31AJAAZA": {
    "at": "2026-10-31T19:31:35+00:00",
@@ -210,11 +145,6 @@
    "lead_min": 45.7,
    "price": 0.5
   },
-  "liga_u15_dog:KXLALIGATOTAL-26OCT24ATMDEP-2": {
-   "at": "2026-10-24T18:59:10+00:00",
-   "lead_min": 0.8,
-   "price": 0.15
-  },
   "liga_u15_dog:KXLALIGATOTAL-26OCT31BARALA-2": {
    "at": "2026-10-31T19:31:35+00:00",
    "lead_min": 28.4,
@@ -223,11 +153,6 @@
   "mls_away_band_fade:KXMLSGAME-26NOV01LAFCMIN-MIN": {
    "at": "2026-11-02T00:38:24+00:00",
    "lead_min": 51.6,
-   "price": 0.81
-  },
-  "mls_away_band_fade:KXMLSGAME-26OCT24CLBTOR-TOR": {
-   "at": "2026-10-24T18:59:10+00:00",
-   "lead_min": 30.8,
    "price": 0.81
   },
   "mls_away_band_fade:KXMLSGAME-26OCT24DALSJ-SJ": {
@@ -270,21 +195,6 @@
    "lead_min": 5.2,
    "price": 0.78
   },
-  "o15_form_l10:KXEREDIVISIETOTAL-26OCT24WILCAM-2": {
-   "at": "2026-10-24T16:13:59+00:00",
-   "lead_min": 31.0,
-   "price": 0.84
-  },
-  "o15_form_l10:KXLALIGATOTAL-26OCT24ATMDEP-2": {
-   "at": "2026-10-24T18:59:10+00:00",
-   "lead_min": 0.8,
-   "price": 0.86
-  },
-  "o15_form_l10:KXMLSTOTAL-26OCT24CLBTOR-2": {
-   "at": "2026-10-24T18:59:10+00:00",
-   "lead_min": 30.8,
-   "price": 0.85
-  },
   "o15_form_l10:KXMLSTOTAL-26OCT24RSLSTL-2": {
    "at": "2026-10-24T23:41:58+00:00",
    "lead_min": 48.0,
@@ -300,11 +210,6 @@
    "lead_min": 22.5,
    "price": 0.77
   },
-  "o25_congestion:KXBUNDESLIGATOTAL-26OCT24BVBSGE-3": {
-   "at": "2026-10-24T16:13:59+00:00",
-   "lead_min": 16.0,
-   "price": 0.28
-  },
   "o25_congestion:KXBUNDESLIGATOTAL-26OCT25TSGLEV-3": {
    "at": "2026-10-25T13:54:45+00:00",
    "lead_min": 35.2,
@@ -319,11 +224,6 @@
    "at": "2026-10-25T13:54:45+00:00",
    "lead_min": 5.2,
    "price": 0.47
-  },
-  "o25_congestion:KXLALIGATOTAL-26OCT24VCFVIL-3": {
-   "at": "2026-10-24T16:13:59+00:00",
-   "lead_min": 16.0,
-   "price": 0.45
   },
   "o25_congestion:KXLIGAPORTUGALTOTAL-26OCT25CDNBRA-3": {
    "at": "2026-10-25T17:37:32+00:00",
@@ -359,11 +259,6 @@
    "at": "2026-10-28T17:23:08+00:00",
    "lead_min": 21.9,
    "price": 0.49
-  },
-  "team2_form_l10:KXBUNDESLIGATEAMTOTAL-26OCT24BVBSGE-BVB2": {
-   "at": "2026-10-24T16:13:59+00:00",
-   "lead_min": 16.0,
-   "price": 0.75
   },
   "team2_form_l10:KXMLSTEAMTOTAL-26NOV01ATLTOR-TOR2": {
    "at": "2026-11-01T20:49:10+00:00",
@@ -461,5 +356,5 @@
    "price": 0.75
   }
  },
- "updated": "2026-11-03T14:40:43+00:00"
+ "updated": "2026-11-03T20:39:47+00:00"
 }
