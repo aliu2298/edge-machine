@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-03T16:46:48.722890+00:00",
+ "last_run": "2026-11-03T18:31:44.186569+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -1065,6 +1065,114 @@
      "ticker": "KXEPLTEAMTOTAL-26NOV01LFCARS-ARS2",
      "title": "Will Arsenal score over 1.5 goals?",
      "why": "Arsenal O+D- v Liverpool O+D- \u00b7 2+ YES 0.44"
+    },
+    {
+     "ask": 0.86,
+     "bid": 0.85,
+     "event": "KXUCLTEAMTOTAL-26NOV03BARAVL",
+     "group": "A",
+     "id": "T1:KXUCLTEAMTOTAL-26NOV03BARAVL:home",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-03T18:31:44.186569+00:00",
+     "match": "Barcelona v Aston Villa",
+     "opponent": "Aston Villa",
+     "price": 0.86,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-11-03T20:00Z",
+     "status": "open",
+     "sub": "Barcelona over 1.5 goals",
+     "team": "Barcelona",
+     "team_side": "home",
+     "ticker": "KXUCLTEAMTOTAL-26NOV03BARAVL-BAR2",
+     "title": "Will Barcelona score over 1.5 goals?",
+     "why": "Barcelona O+D- v Aston Villa O+D- \u00b7 2+ YES 0.86"
+    },
+    {
+     "ask": 0.38,
+     "bid": 0.36,
+     "event": "KXUCLTEAMTOTAL-26NOV03BARAVL",
+     "group": "A",
+     "id": "T1:KXUCLTEAMTOTAL-26NOV03BARAVL:away",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-03T18:31:44.186569+00:00",
+     "match": "Barcelona v Aston Villa",
+     "opponent": "Barcelona",
+     "price": 0.38,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-11-03T20:00Z",
+     "status": "open",
+     "sub": "Aston Villa over 1.5 goals",
+     "team": "Aston Villa",
+     "team_side": "away",
+     "ticker": "KXUCLTEAMTOTAL-26NOV03BARAVL-AVL2",
+     "title": "Will Aston Villa score over 1.5 goals?",
+     "why": "Aston Villa O+D- v Barcelona O+D- \u00b7 2+ YES 0.38"
+    },
+    {
+     "ask": 0.44,
+     "bid": 0.43,
+     "event": "KXUCLTEAMTOTAL-26NOV03FEYINT",
+     "group": "A",
+     "id": "T1:KXUCLTEAMTOTAL-26NOV03FEYINT:home",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-03T18:31:44.186569+00:00",
+     "match": "Feyenoord Rotterdam v Internazionale",
+     "opponent": "Internazionale",
+     "price": 0.44,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-11-03T20:00Z",
+     "status": "open",
+     "sub": "Feyenoord over 1.5 goals",
+     "team": "Feyenoord Rotterdam",
+     "team_side": "home",
+     "ticker": "KXUCLTEAMTOTAL-26NOV03FEYINT-FEY2",
+     "title": "Will Feyenoord score over 1.5 goals?",
+     "why": "Feyenoord Rotterdam O+D- v Internazionale O+D- \u00b7 2+ YES 0.44"
+    },
+    {
+     "ask": 0.63,
+     "bid": 0.61,
+     "event": "KXUCLTEAMTOTAL-26NOV03FEYINT",
+     "group": "A",
+     "id": "T1:KXUCLTEAMTOTAL-26NOV03FEYINT:away",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-03T18:31:44.186569+00:00",
+     "match": "Feyenoord Rotterdam v Internazionale",
+     "opponent": "Feyenoord Rotterdam",
+     "price": 0.63,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-11-03T20:00Z",
+     "status": "open",
+     "sub": "Inter over 1.5 goals",
+     "team": "Internazionale",
+     "team_side": "away",
+     "ticker": "KXUCLTEAMTOTAL-26NOV03FEYINT-INT2",
+     "title": "Will Inter score over 1.5 goals?",
+     "why": "Internazionale O+D- v Feyenoord Rotterdam O+D- \u00b7 2+ YES 0.63"
     }
    ]
   },
@@ -4028,14 +4136,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-31T14:01:28.886023+00:00",
-   "candidates": 7,
-   "due": 11,
-   "labelled": 11,
-   "matched": 7,
-   "new": 0
-  },
-  {
    "at": "2026-10-31T14:16:41.870988+00:00",
    "candidates": 5,
    "due": 6,
@@ -4434,6 +4534,14 @@
    "labelled": 1,
    "matched": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-03T18:31:44.186569+00:00",
+   "candidates": 2,
+   "due": 7,
+   "labelled": 6,
+   "matched": 2,
+   "new": 4
   }
  ],
  "version": "soccer-team-rules-v1"
