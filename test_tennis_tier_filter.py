@@ -19,6 +19,11 @@ from datetime import datetime, timedelta, timezone
 
 import sandbox_build as SB
 import sandbox_sources as S
+import sport_rows_testlib
+# Oddspedia's cricket row (and cricket consensus) retired 2026-11-03 (test_retired_2026_11_03_more.py). Oddspedia is this
+# file's example of a lane on its own reset clock, so it is put back on the run in-process; the stamp is what is checked.
+_REPLAY = sport_rows_testlib.running_again(*S.CRICKET_RETIRED_ON_2026_11_03)   # kept: a dropped handle restores
+_REPLAY.__enter__()
 import sandbox_track as T
 
 FAILS = []
@@ -374,7 +379,7 @@ def _frozen_overlaps():
 # pair is the same edit; the test does not require it.
 LOOKED_AT_SHA256 = "323618ead3340efcbbe70a5752c94581db3bb63fc4911a1446d56067967f7920"
 OVERLAPS_SHA256 = "0f3c41a83d4cdf24ac17661616e3dac44c3151e1da5501b67eb8d76c16875419"
-SETTLED_PAIRS_SHA256 = "4723a7e21fe0014077d22d31656130a5e881a8ee11ea0ad783363d6cec595a55"   # 2026-11-02: espn_fpi|nfl retired and left the list (2026-10-31: u35_low_scoring|soccer_u35; 2026-10-29: tennis_combo2)
+SETTLED_PAIRS_SHA256 = "7656da477f30f301cc5848c06dbe07b47e019be376b3c7855ed3afca96767e82"   # 2026-11-03: team2_form_l10|soccer_team2 retired and left the list (2026-11-02: espn_fpi|nfl; 2026-10-31: u35_low_scoring|soccer_u35; 2026-10-29: tennis_combo2)
 
 
 def _check_frozen_note(rows):

@@ -119,7 +119,7 @@ check("on the VPS (no ESPN cache) the ledger's schedule stands in",
 print("\nthe page section")
 html = SB.section(st)
 check("its id and heading", ('<section id="sa-o15">' in html, "Argentina &amp; Brasileirão over 1.5 (paper)" in html), (True, True))
-rows = re.findall(r'<div class="sp-line is-label" data-rule="([^"]+)">(.*?)</div>', html)
+rows = re.findall(r'<div class="sp-line is-label(?: mut)?" data-rule="([^"]+)"(?: data-retired="[^"]+")?>(.*?)</div>', html)
 check("compact rows, one per league, figures labelled",
       ([k for k, _ in rows], all('data-l="ROI"' in b for _, b in rows)), (["ARG", "BRA"], True))
 check("the per-league records show", ("Argentina" in html, "Brasileirão" in html), (True, True))

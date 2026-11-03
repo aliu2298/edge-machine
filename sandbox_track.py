@@ -1741,9 +1741,11 @@ def publish(d, universe, coverage, verbose=True, now=None):
               f"{u.get('remaining', '?')} left, {u.get('stale', 0)} stale lines skipped "
               f"({time.time() - t0:.0f}s)")
 
-    # Consensus pairs, once every source has spoken for this run and before anything is logged.
+    # Consensus pairs, once every source has spoken for this run and before anything is logged. Its own selection path,
+    # so it checks the pair's live sports too: cricket_consensus retired 2026-11-03 (cricket in retired_sports) logs nothing.
     for name, cfg in CONSENSUS.items():
-        if cfg["sport"] in per_sport and (S.SOURCES.get(name) or {}).get("connected"):
+        if (cfg["sport"] in per_sport and (S.SOURCES.get(name) or {}).get("connected")
+                and cfg["sport"] in S.SOURCES[name]["sports"]):
             by_id, source_probs = per_sport[cfg["sport"]]
             source_probs[name] = consensus_probs(name, list(by_id.values()), source_probs, prior)
             coverage.setdefault(cfg["sport"], {})[name] = {

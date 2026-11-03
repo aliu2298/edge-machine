@@ -24,6 +24,11 @@ from urllib.parse import urlparse
 
 import sandbox_build as B
 import sandbox_sources as S
+import sport_rows_testlib
+# Oddspedia's cricket row retired 2026-11-03 (test_retired_2026_11_03_more.py); the cricket fixture below uses it as the
+# example lane, so it is put back on the run in-process.
+_REPLAY = sport_rows_testlib.running_again(*S.CRICKET_RETIRED_ON_2026_11_03)   # kept: a dropped handle restores
+_REPLAY.__enter__()
 import site_chrome
 import tennis_cards as TN
 

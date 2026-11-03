@@ -125,9 +125,11 @@ removed = getattr(MT, "REMOVED_RULES", None)
 ok(removed is not None and set(removed) == set(EIGHT),
    "exactly these twelve rules are removed")
 retired = {name for name, meta in MT.RULES.items() if meta.get("retired")}
-# 2026-11-03: sw_rsi2_pullback is retired too, but stays on the board (not removed): test_retired_2026_11_03.py.
-ok(retired - {"sw_rsi2_pullback"} == set(EIGHT) and not MT.rule_removed("sw_rsi2_pullback"),
-   "every retired trading rule is one of the twelve, and no other rule is, but the RSI(2) rule (retired 2026-11-03, on the board)")
+# 2026-11-03: sw_rsi2_pullback and etf_double7 are retired too, but stay on the board (not removed):
+# test_retired_2026_11_03.py and test_retired_2026_11_03_more.py.
+ON_BOARD = {"sw_rsi2_pullback", "etf_double7"}
+ok(retired - ON_BOARD == set(EIGHT) and not any(MT.rule_removed(n) for n in ON_BOARD),
+   "every retired trading rule is one of the twelve, and no other rule is, but RSI(2) and Double 7s (retired 2026-11-03, on the board)")
 gate = getattr(MT, "rule_removed", lambda _name: False)
 ok(all(gate(name) for name in EIGHT), "the entry gate blocks each of the eight")
 ok(not gate(KEPT), "a rule still on the board is not blocked")
@@ -203,7 +205,9 @@ for i in range(215):
 rise.append(bar("2025-08-04", 121.0, 122, 118, 118.5))   # a 7-day closing low above the 200-day: Double 7s
 rise.append(bar("2025-08-05", 118.6, 119, 118, 118.8))   # the next open it enters at
 n_kept = MT.scan({"SPY": rise}, kept_book)
-ok(n_kept > 0 and all(t.get("rule") in MT.ACTIVE for t in kept_book["trades"]),
+# The fixture is a Double 7s signal. That rule retired 2026-11-03 but stays on the board (its live run scans ACTIVE
+# only, test_retired_2026_11_03_more.py); scan() itself skips only removed rules, which is what this checks.
+ok(n_kept > 0 and all(not MT.rule_removed(t.get("rule")) for t in kept_book["trades"]),
    "a rule still on the board still logs a trade")
 ok(all(t.get("rule") not in set(EIGHT) for t in kept_book["trades"]),
    "that same scan does not log one of the eight")

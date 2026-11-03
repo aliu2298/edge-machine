@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Offline checks for the 2026-11-03 retirements (Olu, records review of the 2026-11-02 pages): the RSI(2) pullback
 trading rule (with its live pilot held off), the crypto favourite bands 70-80 and 60-70, and the UFC underdog fights
-lane. None is in Production; nothing in Production moves. Oddspedia's cricket row is NOT retired here: cricket
-consensus reads it (asked first, as agreed)."""
+lane. None is in Production; nothing in Production moves. Oddspedia's cricket row was held here (cricket consensus reads
+it) and retired the same day with consensus, once asked: test_retired_2026_11_03_more.py, with the second batch."""
 import datetime as dt
 import inspect
 import os
@@ -73,8 +73,8 @@ for name, why in (("crypto_fav_band", S.CRYPTO_FAV_BAND_RETIRED_WHY), ("crypto_f
     check(f"{name}: off the run, retired with a dated record", (m["sports"], m["retired_sports"]), ([], {"crypto_fav": why}))
 check("the records", (S.CRYPTO_FAV_BAND_RETIRED_WHY[:110], "8–6, 8 won v 8.9 priced, −10.7% after fees" in S.CRYPTO_FAV_BAND_60_RETIRED_WHY),
       ("Retired 2026-11-03 by Olu: no edge at 23 market-days — 15–8, 15 won v 17.2 priced, −7.8% after fees. No new en", True))
-check("the below lanes keep running", (S.SOURCES["crypto_fav_band_below"]["sports"], S.SOURCES["crypto_fav_band_below_60"]["sports"]),
-      (["crypto_fav"], ["crypto_fav"]))
+check("crypto band, below keeps running (band 60, below retired in the second batch)", S.SOURCES["crypto_fav_band_below"]["sports"],
+      ["crypto_fav"])
 check("open rows still settle (a retired scope is not a removed row)", S.removed_row(dict(source="crypto_fav_band", sport="crypto_fav")), False)
 html = CB.build()
 i = html.find('<section id="retired"')
@@ -104,9 +104,8 @@ check("no Production pair for any of them", sorted(k for k in prod if k.split("|
 check("the crypto 70-80 band was pulled from Production on 2026-10-20 and not re-listed",
       (T.PAIR_REMOVALS["crypto_fav_band|crypto_fav"]["removed_on"], "crypto_fav_band|crypto_fav" in T.PAIR_OVERRIDES), ("2026-10-20", False))
 
-print("\nOddspedia cricket is not retired here (cricket consensus reads it)")
-check("Oddspedia still runs on cricket, and consensus is built from it and Polymarket",
-      (S.SOURCES["oddspedia"]["sports"], T.CONSENSUS["cricket_consensus"]["sources"]), (["cricket"], ("oddspedia", "polymarket")))
+print("\ncricket consensus is built from Oddspedia and Polymarket, so the two retire together (second batch)")
+check("consensus's sources", T.CONSENSUS["cricket_consensus"]["sources"], ("oddspedia", "polymarket"))
 
 check("no guarded phrase in the new copy", sandbox_audit.COPY_RE.search(
     rsi["retired"] + S.CRYPTO_FAV_BAND_RETIRED_WHY + S.CRYPTO_FAV_BAND_60_RETIRED_WHY + str(FS.UFC["retired"]) + fold + fh[j:]), None)

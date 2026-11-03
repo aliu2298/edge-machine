@@ -20,11 +20,16 @@ def section(state=None):
         words = "Every league match · over 1.5 goals · YES at the ask"
         if key == "ARG":                       # in Production 2026-10-21 .. 2026-10-27 (soccer_rules_production)
             words += " · Production 2026-10-21 to 2026-10-27, back in the Sandbox"
-        lines.append(SB.rule_line(key, row["league"], words, row["evidence"], picks))
+        gone = SA.RETIRED.get(key)
+        if gone:                               # retired by hand: no new entries, rows kept and settled
+            words += f" · Retired {gone['on']}: {gone['reason']}. Its entries stay and settle"
+        lines.append(SB.rule_line(key, row["league"], words, row["evidence"], picks, retired=gone))
         recent += picks
     n, won, _roi = SB._record(recent)
     live = sum(p["status"] == "open" for p in recent)
-    head = f"2 leagues · {n} settled · {won} won" + (f" · {live} open" if live else "")
+    all_gone = all(k in SA.RETIRED for k in SA.ROWS)
+    head = (("Retired 2026-11-03: no new entries · " if all_gone else "2 leagues · ")
+            + f"{n} settled · {won} won" + (f" · {live} open" if live else ""))
     recent.sort(key=lambda p: p.get("start") or "", reverse=True)
     rows = []
     for p in recent[:25]:
@@ -36,7 +41,7 @@ def section(state=None):
                              'enters 20–90 minutes before kickoff once Kalshi quotes over 1.5 with a spread of 5c or less.</td></tr>')
     last = state.get("last_run")
     return f"""<section id="sa-o15">
-<div class="nba-section-head"><div><h2>Argentina &amp; Brasileirão over 1.5 (paper)</h2><p class="shell-kicker">Every league match, YES on over 1.5 at the Kalshi ask, no selection · a league-character lane · both leagues paper (Argentina was in Production 2026-10-21 to 2026-10-27) · 7% fee</p></div></div>
+<div class="nba-section-head"><div><h2>Argentina &amp; Brasileirão over 1.5 (paper)</h2><p class="shell-kicker">Every league match, YES on over 1.5 at the Kalshi ask, no selection · a league-character lane · both leagues paper (Argentina was in Production 2026-10-21 to 2026-10-27) · 7% fee{" · retired 2026-11-03 (Olu): a blind lane with no team or matchup filter" if all_gone else ""}</p></div></div>
 <details class="section-disclosure label-group" data-group="sa-o15" open><summary><b>Over 1.5, by league</b><span>{esc(head)}</span><span class="label-group-words">Research: every match, Jan–Oct 2026, ask 30 min before kickoff</span></summary>
 <div class="sp-rules-list" data-list="sa-o15">{SB.rule_head("League")}{"".join(lines)}</div></details>
 <details class="section-disclosure"><summary><b>Entries</b><span>latest 25</span></summary>

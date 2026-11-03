@@ -201,7 +201,8 @@ def _live_ledger_checks():
     _found = sorted({m.group(0).lower() for m in AUD.COPY_RE.finditer(_text)})
     eq(_found, [], "the production copy gives nothing away")
 
-    ok(any(r["name"] == "cricket_consensus" for r in SB.pair_list(T.load(), T.load_stages())),
+    # Retired 2026-11-03 with Oddspedia's cricket row (test_retired_2026_11_03_more.py): on the page in its Retired fold.
+    ok(any(r["name"] == "cricket_consensus" for r in SB.pair_list(T.load(), T.load_stages(), show_retired=True)),
        "and it is on the page from the day it is wired")
 
     _st = T.load_stages()
@@ -4716,12 +4717,19 @@ _rst = {"pairs": {"team2_form_l10|soccer_team2": {"stage": "sandbox", "since": "
                                                   "demoted_at": "2026-09-18T21:30:00+00:00"}}}
 # Since 2026-10-10 the page shows only the record from the reset: the 40 bets it was removed
 # on are the old record, so they stay out of the row and the summary. The audit still sees them.
-_rr = [r for r in SB.pair_list({"quotes": _rq}, _rst) if r["name"] == "team2_form_l10"][0]
+# team2_form_l10 on Clubs retired 2026-11-03 (test_retired_2026_11_03_more.py); a removal's view is the machinery here,
+# so the scope is put back on the run for these reads.
+import sport_rows_testlib
+_t2 = sport_rows_testlib.running_again("team2_form_l10|soccer_team2")
+_t2.__enter__()
+_rr = [r for r in SB.pair_list({"quotes": _rq}, _rst) if r["name"] == "team2_form_l10" and r["sport"] == "soccer_team2"][0]
 eq((_rr["removed"], _rr["v"] != "removed"), (None, True),
    "a removed pair's pre-reset record is not on the page")
 ok("Removed 2026-09-18" not in SB._row(_rr), "its row does not print the old record")
 ok("Removed from Production:" not in SB.insights([_rr]), "and the summary does not name it")
-_ra = [r for r in SB.pair_list({"quotes": _rq}, _rst, include_retired=True) if r["name"] == "team2_form_l10"][0]
+_ra = [r for r in SB.pair_list({"quotes": _rq}, _rst, include_retired=True)
+       if r["name"] == "team2_form_l10" and r["sport"] == "soccer_team2"][0]
+_t2.__exit__(None, None, None)
 eq((_ra["v"], _ra["removed"]["a"]["n"], _ra["removed"]["at"]), ("removed", 40, "2026-09-18"),
    "the audit's view keeps the 40 bets it was removed on")
 
@@ -4742,8 +4750,10 @@ eq([p["market_id"] for p in S.fetch_o15_form_l10("soccer_o15_cup", universe=_cro
    ["KXEFLCUPTOTAL-26SEP15GOALEA-2"], "the Over 1.5 rule reads the cup domain with the same thresholds")
 eq((S._form_league({"comp": "cup", "league": "EFL Cup"}), S._form_league({"league": "Serie A"})),
    (None, "Serie A"), "cup and international pairs count form across all competitions; league pairs as before")
-_base = S.SOURCES["team2_form_l10"]["sports"][0]
-eq(S.SOURCES["team2_form_l10"]["sports"], [_base, _base + "_cup", _base + "_intl"], "team2_form_l10 runs as league, Cups and Internationals pairs")
+# The Clubs (league) scope retired 2026-11-03 (test_retired_2026_11_03_more.py); Cups and Internationals still run.
+_base = "soccer_team2"
+eq((S.SOURCES["team2_form_l10"]["sports"], list(S.SOURCES["team2_form_l10"]["retired_sports"])),
+   ([_base + "_cup", _base + "_intl"], [_base]), "team2_form_l10 runs as league, Cups and Internationals pairs (league retired)")
 eq((S.SOURCES["u35_low_scoring"]["sports"], sorted(S.SOURCES["u35_low_scoring"]["retired_sports"])),
    (["soccer_u35_cup", "soccer_u35_intl"], ["soccer_u35"]),
    "u35_low_scoring: the Clubs scope retired 2026-10-31, Cups and Internationals still run")
@@ -5363,8 +5373,8 @@ for _hidden_name, _hidden_sport in (("nws", "climate"), ("nws_fade", "climate"),
     eq(RANKB.eliminated_section([dict(_er[1], name=_hidden_name, sport=_hidden_sport)]), "",
        f"a removed source is not drawn, even though {_hidden_name} is eliminated")
 # the other both-ways failures that were kept in their sports stay there
-ok(("team2_form_l10", "soccer_team2") not in S.ELIMINATED and "soccer_team2" in S.SOURCES["team2_form_l10"]["sports"],
-   "team2_form_l10 also failed both ways but stays in its sport, as asked")
+ok(("team2_form_l10", "soccer_team2") not in S.ELIMINATED and "soccer_team2" in S.SOURCES["team2_form_l10"]["retired_sports"],
+   "team2_form_l10 also failed both ways but stayed in its sport, as asked (retired there 2026-11-03, not eliminated)")
 ok("soccer_p05" in S.SOURCES["p05_unbeaten"]["retired_sports"],
    "p05_unbeaten Clubs, kept in its sport until 2026-10-14, is now retired as asked")
 ok(("nhl_dog_pl", "nhl_pl") in S.ELIMINATED and not S.SOURCES["nhl_dog_pl"]["connected"],

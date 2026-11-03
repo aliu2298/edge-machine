@@ -145,6 +145,8 @@ SOCCER_TEAM_SERIES = {
 # test_sa_o15.py checks the two agree. The tracker logs no quotes for these series, so on the VPS
 # their kickoffs come from the schedule sa_o15.py writes into its own ledger on every run.
 SOCCER_SA_SERIES = {"Liga Profesional": "KXARGPREMDIVTOTAL", "Brasileirão": "KXBRASILEIROTOTAL"}
+# The Eastern day sa_o15's last row retired (sa_o15.RETIRED, 2026-11-03), copied; test_sa_o15.py checks the two agree.
+SOCCER_SA_RETIRED_ON = "2026-11-03"
 CT = ZoneInfo("America/Chicago")
 FTTS_DAY = ((9, 0), (10, 30))
 LINEUP_FROM, LINEUP_TO = 60, 15          # minutes before kickoff
@@ -310,7 +312,10 @@ def _sa_schedule():
 def sa_kickoffs(now, fixtures=None):
     """Kickoffs within the next day in Argentina and the Brasileirão (sa_o15, 2026-10-18).
 
-    From the fixtures passed in (tests) or, live, the ESPN cache plus sa_o15's own schedule."""
+    From the fixtures passed in (tests) or, live, the ESPN cache plus sa_o15's own schedule. None once the lane is
+    retired (both rows, 2026-11-03): it enters nothing new, and its open entries settle on the soccer rules' runs."""
+    if now.astimezone(ET).date().isoformat() >= SOCCER_SA_RETIRED_ON:
+        return []
     starts = []
     if fixtures is None:
         fixtures = _fixtures_cache()
@@ -564,7 +569,9 @@ def entered_series(lane, close, ledger=None):
         except (OSError, ValueError):
             return set()
     token = _close_token(close)
-    got = {name: set() for name in WINDOW_LANES[lane]}
+    # Only the lanes still logging (2026-11-03): a retired sibling enters nothing, so waiting on it would never skip a read.
+    names = [n for n in WINDOW_LANES[lane] if n not in S.SOURCES or S.SOURCES[n].get("sports")] or list(WINDOW_LANES[lane])
+    got = {name: set() for name in names}
     for q in (ledger.get("quotes") or []) + (ledger.get("_archive") or []):
         if q.get("source") not in got or not q.get("bet"):
             continue

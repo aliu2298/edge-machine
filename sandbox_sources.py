@@ -167,9 +167,30 @@ RETIRED_TAIL_2026_11_03 = (" No new entries from 2026-11-03; its rows stay on fi
                            "still settle.")
 CRYPTO_FAV_BAND_RETIRED_WHY = ("Retired 2026-11-03 by Olu: no edge at 23 market-days — 15–8, 15 won v 17.2 priced, "
                                "−7.8% after fees." + RETIRED_TAIL_2026_11_03)
-CRYPTO_RETIRED_ON_2026_11_03 = ("crypto_fav_band|crypto_fav", "crypto_fav_band_60|crypto_fav")
+# Every coin lane retired 2026-11-03 (the second batch added crypto_fav_band_below_60): the tests that drive the coin
+# machinery re-enable them in-process (sport_rows_testlib.running_again).
+CRYPTO_RETIRED_ON_2026_11_03 = ("crypto_fav_band|crypto_fav", "crypto_fav_band_60|crypto_fav", "crypto_fav_band_below_60|crypto_fav")
 CRYPTO_FAV_BAND_60_RETIRED_WHY = ("Retired 2026-11-03 by Olu: no edge at 14 market-days — 8–6, 8 won v 8.9 priced, "
                                   "−10.7% after fees." + RETIRED_TAIL_2026_11_03)
+# The second batch the same day (Olu): Oddspedia's cricket row with cricket consensus, which is built from it; team 2+
+# form on Clubs (its Cups and Internationals scopes keep running); the MLS away fade; and crypto band 60, below. The
+# Argentina & Brasileirao over 1.5 lane (sa_o15.RETIRED) and Double 7s (market_track) go the same day. None is in Production.
+ODDSPEDIA_CRICKET_RETIRED_WHY = ("Retired 2026-11-03 by Olu: no edge at 10 settled — 6 won v 6.6 priced, −4.6% after fees, "
+                                 "counted from its 2026-10-12 reset; cricket consensus, built from it, retires with it."
+                                 + RETIRED_TAIL_2026_11_03)
+CRICKET_CONSENSUS_RETIRED_WHY = ("Retired 2026-11-03 by Olu with Oddspedia's cricket row, one of its two inputs: it never "
+                                 "fired — the two sources did not agree on a match after its 2026-10-12 reset, so it has no "
+                                 "record." + RETIRED_TAIL_2026_11_03)
+# The two cricket scopes retired together: the tests that drive the cricket machinery re-enable them in-process.
+CRICKET_RETIRED_ON_2026_11_03 = ("oddspedia|cricket", "cricket_consensus|cricket")
+TEAM2_FORM_CLUBS_RETIRED_WHY = ("Retired 2026-11-03 by Olu: no edge at 26 settled — 17 won v 17.3 priced, −4.9% after fees "
+                                "(back in the Sandbox from Production 2026-11-02). The Cups and Internationals scopes, the "
+                                "same rule, keep running." + RETIRED_TAIL_2026_11_03)
+MLS_AWAY_FADE_RETIRED_WHY = ("Retired 2026-11-03 by Olu: no edge at 18 settled — 13 won v 14.2 priced, −9.9% after fees."
+                             + RETIRED_TAIL_2026_11_03)
+CRYPTO_FAV_BAND_BELOW_60_RETIRED_WHY = ("Retired 2026-11-03 by Olu: no edge at 14 market-days — 8–6, 8 won v 9.1 priced, "
+                                        "−8.8% after fees. Crypto band, below (No 0.70-0.80) keeps running."
+                                        + RETIRED_TAIL_2026_11_03)
 
 # The registry. `connected` is the honest bit: it says whether this run can actually
 # reach the source, not whether the site exists.
@@ -227,7 +248,7 @@ SOURCES = {
              "by the retirement above."),
     "cricket_consensus": dict(
         label="Cricket consensus (Oddspedia and Polymarket agree)", kind="Rule", connected=True,
-        site="edge-machine", sports=["cricket"],
+        site="edge-machine", sports=[], retired_sports={"cricket": CRICKET_CONSENSUS_RETIRED_WHY},
         note="Pre-registered 2026-09-22, before it logged anything. Back a cricket match only "
              "where the two cricket sources with records — Oddspedia's community tips and "
              "Polymarket's international price — both back the same side, at the going price "
@@ -240,7 +261,7 @@ SOURCES = {
              "is worth more than either source alone, from here on."),
     "oddspedia": dict(
         label="Oddspedia community tips", kind="Tipster site", connected=True,
-        site="oddspedia.com", sports=["cricket"],
+        site="oddspedia.com", sports=[], retired_sports={"cricket": ODDSPEDIA_CRICKET_RETIRED_WHY},
         note="A public tipster community — named accounts with a visible record — "
              "reduced to a majority consensus per match, because its tipsters routinely "
              "take opposite sides of the same game. The only source found that tips the "
@@ -898,7 +919,8 @@ SOURCES = {
              "favourite on every match."),
     "mls_away_band_fade": dict(
         label="MLS away side priced 0.20-0.25, faded (back home or draw)", kind="Rule", connected=True,
-        site="edge-machine", sports=["soccer_p05"], baseline="population",
+        site="edge-machine", sports=[], retired_sports={"soccer_p05": MLS_AWAY_FADE_RETIRED_WHY},
+        baseline="population",
         note="REGISTERED 2026-10-16 by Olu, before it logged anything. The other side of "
              "mls_away_band: the same MLS matches (away side at a de-vigged 0.20-0.25 on the "
              "Kalshi board, its ask 0.26 or less, the board holding no more than 6%), backing NO "
@@ -1266,7 +1288,8 @@ SOURCES = {
              "draw fact. Parameters unchanged — only the expectation is revised upward."),
     "team2_form_l10": dict(
         label="Team scores 2+ form rule (7+/10 scored 2+, opponent 7+/10 conceded 2+)",
-        kind="Rule", connected=True, site="edge-machine", sports=["soccer_team2", "soccer_team2_cup", "soccer_team2_intl"],
+        kind="Rule", connected=True, site="edge-machine", sports=["soccer_team2_cup", "soccer_team2_intl"],
+        retired_sports={"soccer_team2": TEAM2_FORM_CLUBS_RETIRED_WHY},
         baseline="population",
         note="Pre-registered 2026-09-14. Back a side to score 2+ at the Kalshi ask where it "
              "scored 2+ in at least 7 of its last 10 competitive games and its opponent "
@@ -1446,7 +1469,8 @@ SOURCES = {
              "favourite on every rung this sport logged, read at 30 independent outcomes."),
     "crypto_fav_band_below_60": dict(
         label="Crypto favourite band 60, below (No 0.60 to under 0.70 on the rung above the price, 3 hours to the close)",
-        kind="Rule", connected=True, site="edge-machine", sports=["crypto_fav"],
+        kind="Rule", connected=True, site="edge-machine", sports=[],
+        retired_sports={"crypto_fav": CRYPTO_FAV_BAND_BELOW_60_RETIRED_WHY},
         baseline="favourite_population", favourite_side="b", one_per_coin_close=True,
         note="PRE-REGISTERED 2026-10-18, before it logged anything, on a fresh record and in "
              "the Sandbox only: crypto_fav_band_below one band lower. Back the NO on the "
@@ -3919,10 +3943,11 @@ def _browser_pages():
     # soccer tips are the ones worth protecting, since soccer is where tipsters actually
     # publish. Scores24 is far more tolerant and goes at the back of the queue.
     # A page whose lane is off the board is not requested. Oddspedia cricket used to
-    # drag every Scores24 listing into the same session, so a removed source still loaded.
+    # drag every Scores24 listing into the same session, so a removed source still loaded. A retired
+    # scope (Oddspedia cricket, 2026-11-03) is off its live sports and is not requested either.
     jobs = []
     for sport, slug in ODDSPEDIA_SLUG.items():
-        if not lane_removed("oddspedia", sport):
+        if not lane_removed("oddspedia", sport) and sport in SOURCES["oddspedia"]["sports"]:
             jobs.append((ODDSPEDIA_URL.format(slug=slug), B.TIPS_JS))
     for sport, slug in SCORES24_SLUG.items():
         if not lane_removed("scores24", sport):
