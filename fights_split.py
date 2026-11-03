@@ -85,7 +85,13 @@ UFC = dict(
 # 2026-11-01 (Olu): no lane may select blind. Both fights lanes are price band only, kept running under 10 fights;
 # each card says so, and each becomes a baseline when a filtered fights lane exists.
 BLIND = "Price band only: becomes a baseline when a filtered fights lane exists."
+# Retired by hand (2026-11-03, Olu): no new entry from the dated day on (Eastern, mentions_split.retired); its rows
+# stay and open entries still fill and settle. The Fights page lists it in its Retired fold.
+UFC["retired"] = dict(on="2026-11-03", at="7 fights, 0 won; split −86.5%, hold −100%",
+                      reason="no edge at 7 fights: none won, and the split sell lost almost the whole stake")
 LANES = (BOXING, UFC)
+LIVE = tuple(c for c in LANES if not c.get("retired"))
+GONE = tuple(c for c in LANES if c.get("retired"))
 
 
 def _ts(raw):
@@ -186,6 +192,8 @@ def run(state, now=None, fetch=D.get, cfg=BOXING, ask_rule=True):
         lo = start_ts - ENTRY_LEAD_MIN * 60
         window_end = lo + ENTRY_GRACE_MIN * 60
         pending = [m for m in ms if m["ticker"] not in have and m["ticker"] not in state["skips"]]
+        if MS.retired(cfg, now):
+            pending = []                                      # retired: nothing new; open entries still fill and settle
         if pending and now_ts < window_end + 60:
             obs["waiting"] += 1                               # the entry window is not over yet
             pending = []

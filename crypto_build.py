@@ -63,9 +63,11 @@ def _fav_row(rows, source=SOURCE):
 
 
 def _fav_quotes(d):
-    """Every row this lane has logged: bets (live and archived) and watch-only quotes."""
+    """Every row the live lanes have logged: bets (live and archived) and watch-only quotes. A retired lane's rows
+    (2026-11-03) are read in its Retired rules record, not in the Events list."""
+    live = live_lanes()
     return [q for q in (T.bet_rows(d) + [q for q in (d.get("quotes") or []) if not q.get("bet")])
-            if q.get("source") in LANES and q.get("sport") in SPORTS]
+            if q.get("source") in live and q.get("sport") in SPORTS]
 
 
 def _series(q):
@@ -190,7 +192,8 @@ def _scan_status(d, now):
             last = None
     except ValueError:
         last = None
-    coverage = ((d.get("coverage") or {}).get("crypto_fav") or {}).get(SOURCE)
+    # The scanner's count from the first lane still logging (crypto_fav_band itself retired 2026-11-03).
+    coverage = ((d.get("coverage") or {}).get("crypto_fav") or {}).get((live_lanes() or (SOURCE,))[0])
     bits = [f"Last scan {fmt.when(last)}" if last is not None else "Last scan not recorded"]
     if isinstance(coverage, dict) and last is not None:
         bits.append(f'{int(coverage.get("offered") or 0)} quotes')
@@ -248,7 +251,12 @@ def page_rows(d, st):
     """The Sandbox rows, and the registration of each sibling lane that has not bet yet."""
     rows = crypto_rows(d, st)
     have = {r.get("name") for r in rows}
-    return rows + [registered_row(name, st) for name in LANES if name not in have]
+    return rows + [registered_row(name, st) for name in live_lanes() if name not in have]
+
+
+def live_lanes():
+    """The coin lanes still logging: a retired one (its sport in retired_sports, 2026-11-03) sits in Retired rules."""
+    return tuple(n for n in LANES if "crypto_fav" in (S.SOURCES.get(n) or {}).get("sports", ()))
 
 
 def rule_name(row):

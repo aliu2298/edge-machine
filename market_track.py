@@ -251,7 +251,12 @@ LIVE_2026_09_23 = "2026-09-23"      # rules registered 2026-09-22 count from the
 
 
 RULES = {
+    # RETIRED 2026-11-03 (Olu): not scanned from that day, so no new entry; its open trades still grade on their own
+    # exit and market_exec still sends their paper sells (exits only). It stays on the Trading page as Retired. The
+    # live pilot built on it refuses to start while it is retired (market_exec.retired_live_rules).
     "sw_rsi2_pullback": dict(
+        retired="2026-11-03: no edge after costs at 29 days — "
+                "588 trades on 29 entry days, −0.89% per trade after the measured costs, t −1.37",
         lane="swing", label="RSI(2) pullback in an uptrend", signal=_sw_rsi2, exit=_sw_rsi2_exit,
         note="Pre-registered 2026-09-19 (Connors' published RSI-2 rule, thresholds unchanged). "
              "Buy the next open when a stock closes above its 200-day average, below its 5-day "

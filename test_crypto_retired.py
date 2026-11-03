@@ -35,8 +35,9 @@ for lane in BOTH:
           ("3-1, +4.1% over 4 market-days, too small to read" in why and "retired with the ETH twin" in why and "lost live" not in why), True)
     check(f"{lane}: the Production removal keeps its record", T.PAIR_REMOVALS[f"{lane}|crypto_fav"],
           dict(removed_on="2026-10-27", keep_record=True))
-check("the live crypto lanes still fetch", all(S.SOURCES[n]["sports"] == ["crypto_fav"] for n in
-                                               ("crypto_fav_band", "crypto_fav_band_below", "crypto_fav_band_60", "crypto_fav_band_below_60")), True)
+check("the live crypto lanes still fetch; the two Yes bands retired 2026-11-03 (test_retired_2026_11_03.py)",
+      ([n for n in ("crypto_fav_band", "crypto_fav_band_below", "crypto_fav_band_60", "crypto_fav_band_below_60")
+        if S.SOURCES[n]["sports"] == ["crypto_fav"]]), ["crypto_fav_band_below", "crypto_fav_band_below_60"])
 check("the Production crypto pair is still moved on 2026-10-20",
       T.PAIR_OVERRIDES["crypto_fav_band_below|crypto_fav"]["moved_on"], "2026-10-20")
 

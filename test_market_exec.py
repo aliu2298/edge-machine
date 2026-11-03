@@ -68,10 +68,12 @@ check("  ...because it is off the board since 2026-10-20 (it also entered at the
       skipped.get("etf_overnight"), "removed from the board")
 check("none of the four rules removed 2026-10-20 is executable",
       [n for n in ("sw_gap_down_reversal", "etf_ibs_band", "etf_tom", "etf_overnight") if n in ok], [])
-check("the open-entry swing rules are executable",
+check("the open-entry swing rules still on the board and not retired are executable (none since 2026-11-03)",
       sorted(ok) == sorted(n for n, r in T.RULES.items()
-                           if not T.rule_removed(n) and r.get("lane") == "swing"
+                           if not T.rule_removed(n) and not r.get("retired") and r.get("lane") == "swing"
                            and r.get("entry") != "close" and r.get("signal")), True)
+check("the RSI(2) rule, retired 2026-11-03, sends no entry", skipped.get("sw_rsi2_pullback"),
+      "retired: sells its open trades, never a new entry")
 check("nothing executable enters at the close",
       [n for n, r in ok.items() if r.get("entry") == "close"], [])
 check("nothing executable is off the swing lane",
@@ -554,7 +556,8 @@ os.environ.update(ALPACA_RULES="sw_rsi2_pullback", ALPACA_FRACTIONAL="1", ALPACA
 L = importlib.reload(X)
 try:
     ok_rules, skipped = L.executable_rules()
-    check("only sw_rsi2_pullback is executable", sorted(ok_rules), ["sw_rsi2_pullback"])
+    check("the live pass's one rule, sw_rsi2_pullback, is retired (2026-11-03): nothing executable, and the live guard names it",
+          (sorted(ok_rules), L.retired_live_rules()), ([], ["sw_rsi2_pullback"]))
     check("the others say why", all(v for v in skipped.values()), True)
     check("its own state file", os.path.relpath(L.STATE, L.ROOT), "data/market_orders_live.json")
     check("its own fills file", os.path.relpath(L.FILLS, L.ROOT), "data/market_fills_live.json")

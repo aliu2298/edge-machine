@@ -41,14 +41,30 @@ def build(states=None, now=None):
     cards = "".join(
         f'<p class="sm" id="{e(cfg["anchor"])}-note"><b>{e(cfg["research"])}</b></p>'
         f'<p class="sm mut fights-blind">{e(FS.BLIND)}</p>' + MS.section(states[cfg["lane"]], e, cfg)
-        for cfg in FS.LANES)
+        for cfg in FS.LIVE)
     body = (standard
-            + f'<section id="lanes"><h2>Fight lanes</h2>{MS.summary(FS.LANES, states, e)}{cards}</section>'
+            + f'<section id="lanes"><h2>Fight lanes</h2>{MS.summary(FS.LIVE, states, e)}{cards}</section>'
+            + retired_fold(states, e)
             + '<p class="sm mut">Read hourly by GitHub Actions (fights.yml) from Kalshi public market data, minute '
               'candles and fight schedules. Paper entries at the ask with Kalshi\'s fees.</p>')
     html = C.document(TITLE, DESCRIPTION, KEY, SECTIONS, C.stamp(now), body,
                       script_src="./site.js", scripts=("./tables.js",))
     return MS.label_cells(html)
+
+
+def retired_fold(states, e):
+    """Retired fights lanes (2026-11-03): collapsed, each with its dated record and reason, then its full card. Rows
+    stay; an open entry still settles."""
+    if not FS.GONE:
+        return ""
+    lines = "".join(f'<li data-lane="{e(c["lane"])}"><b>{e(c["label"])}</b>: retired {e(c["retired"]["on"])} at '
+                    f'{e(c["retired"]["at"])}: {e(c["retired"]["reason"])}. Its rows stay; any open entry still settles.</li>'
+                    for c in FS.GONE)
+    cards = "".join(f'<p class="sm" id="{e(c["anchor"])}-note"><b>{e(c["research"])}</b></p>' + MS.section(states[c["lane"]], e, c)
+                    for c in FS.GONE)
+    return (f'<details class="fold sec" id="retired"><summary><h2>Retired</h2> <span class="mut sm">· {len(FS.GONE)} '
+            f'lane{"s" if len(FS.GONE) != 1 else ""} · kept, not deleted</span></summary><ul class="sm">{lines}</ul>'
+            + MS.summary(FS.GONE, states, e) + cards + '</details>')
 
 
 def main():

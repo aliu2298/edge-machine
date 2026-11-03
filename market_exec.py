@@ -209,6 +209,8 @@ def executable_rules(rules=None):
     for name, rule in (rules or T.RULES).items():
         if T.rule_removed(name):
             skipped[name] = "removed from the board"
+        elif rule.get("retired"):
+            skipped[name] = "retired: sells its open trades, never a new entry"
         elif ONLY_RULES and name not in ONLY_RULES:
             skipped[name] = "not in ALPACA_RULES for this account"
         elif rule.get("lane") != LANE:
@@ -230,7 +232,9 @@ def exit_rules(rules=None):
     out, _ = executable_rules(rules)
     out = dict(out)
     for name, rule in rules.items():
-        if not T.rule_exit_only(name) or rule.get("exit") is None:
+        # A retired rule still on the board (RULES[...]["retired"], not removed: sw_rsi2_pullback, 2026-11-03)
+        # sells its open trades the same way an exit-only removed rule does.
+        if not (T.rule_exit_only(name) or (rule.get("retired") and not T.rule_removed(name))) or rule.get("exit") is None:
             continue
         if ONLY_RULES and name not in ONLY_RULES:
             continue
@@ -238,6 +242,14 @@ def exit_rules(rules=None):
             continue
         out[name] = rule
     return out
+
+
+def retired_live_rules(rules=None):
+    """The rules this account trades (ALPACA_RULES, else every rule on the board) that are RETIRED. The live pass
+    refuses to start while any is (2026-11-03: the live pilot is built on sw_rsi2_pullback, retired that day)."""
+    rules = rules or T.RULES
+    names = ONLY_RULES or {n for n in rules if not T.rule_removed(n)}
+    return sorted(n for n in names if (rules.get(n) or {}).get("retired"))
 
 
 # How each rule ranks its own signals when more fire than the caps allow: LOWER is stronger.
@@ -979,6 +991,10 @@ def main(argv=None):
                     os.environ.pop("ALPACA_LIVE", None)
                 else:
                     os.environ["ALPACA_LIVE"] = prev
+        gone = retired_live_rules()
+        if gone:
+            print(f"  NO    retired on the board: {', '.join(gone)} — the live pass refuses to start while it is")
+            ok = False
         live_on = os.environ.get("ALPACA_LIVE") == "1"
         print(f"  {'LIVE ' if live_on else 'no   '} ALPACA_LIVE is {'SET — this host trades LIVE' if live_on else 'not set, so every run is paper'}")
         print(f"        rules: {', '.join(sorted(ONLY_RULES)) or 'every executable rule'}"
@@ -1012,6 +1028,12 @@ def main(argv=None):
             print(f"    {o['symbol']:6} {o['side']:4} {o['qty']:>6} {o['type']}/{o['time_in_force']} "
                   f"{o['status']}")
         return 0
+
+    if live() and retired_live_rules():
+        # The live pilot never starts on a retired rule: nothing is planned, sent or cancelled.
+        print(f"REFUSED   : the live pass trades {', '.join(retired_live_rules())}, retired on the board "
+              "(market_track.RULES) — nothing planned or sent")
+        return 1
 
     dry = "--place" not in argv
     rules_ok, skipped = executable_rules()
