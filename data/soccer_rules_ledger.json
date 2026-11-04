@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-04T16:46:28.590310+00:00",
+ "last_run": "2026-11-04T18:31:48.068378+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -852,6 +852,98 @@
      "ticker": "KXUCLTOTAL-26NOV04FENLFC-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Fenerbahce O+D- v Liverpool O+D- \u00b7 Over 3.5 YES 0.53"
+    },
+    {
+     "ask": 0.42,
+     "bid": 0.41,
+     "event": "KXUCLTOTAL-26NOV04BVBRBB",
+     "group": "A",
+     "id": "A7:KXUCLTOTAL-26NOV04BVBRBB",
+     "labels": {
+      "away": "O+D-",
+      "home": "O-D-"
+     },
+     "league": "Champions League",
+     "line": 3.5,
+     "logged": "2026-11-04T18:31:48.068378+00:00",
+     "match": "Borussia Dortmund v Real Betis",
+     "price": 0.42,
+     "rule": "A7",
+     "side": "yes",
+     "start": "2026-11-04T20:00Z",
+     "status": "open",
+     "ticker": "KXUCLTOTAL-26NOV04BVBRBB-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Borussia Dortmund O-D- v Real Betis O+D- \u00b7 Over 3.5 YES 0.42"
+    },
+    {
+     "ask": 0.3,
+     "bid": 0.29,
+     "event": "KXUCLTOTAL-26NOV04FCPNAP",
+     "group": "A",
+     "id": "A7:KXUCLTOTAL-26NOV04FCPNAP",
+     "labels": {
+      "away": "O-D-",
+      "home": "O+D-"
+     },
+     "league": "Champions League",
+     "line": 3.5,
+     "logged": "2026-11-04T18:31:48.068378+00:00",
+     "match": "FC Porto v Napoli",
+     "price": 0.3,
+     "rule": "A7",
+     "side": "yes",
+     "start": "2026-11-04T20:00Z",
+     "status": "open",
+     "ticker": "KXUCLTOTAL-26NOV04FCPNAP-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "FC Porto O+D- v Napoli O-D- \u00b7 Over 3.5 YES 0.30"
+    },
+    {
+     "ask": 0.39,
+     "bid": 0.38,
+     "event": "KXUCLTOTAL-26NOV04RCLCOM",
+     "group": "A",
+     "id": "A7:KXUCLTOTAL-26NOV04RCLCOM",
+     "labels": {
+      "away": "O+D-",
+      "home": "O-D-"
+     },
+     "league": "Champions League",
+     "line": 3.5,
+     "logged": "2026-11-04T18:31:48.068378+00:00",
+     "match": "Lens v Como",
+     "price": 0.39,
+     "rule": "A7",
+     "side": "yes",
+     "start": "2026-11-04T20:00Z",
+     "status": "open",
+     "ticker": "KXUCLTOTAL-26NOV04RCLCOM-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Lens O-D- v Como O+D- \u00b7 Over 3.5 YES 0.39"
+    },
+    {
+     "ask": 0.52,
+     "bid": 0.51,
+     "event": "KXUCLTOTAL-26NOV04PSVBRU",
+     "group": "A",
+     "id": "A7:KXUCLTOTAL-26NOV04PSVBRU",
+     "labels": {
+      "away": "O+D-",
+      "home": "O+D-"
+     },
+     "league": "Champions League",
+     "line": 3.5,
+     "logged": "2026-11-04T18:31:48.068378+00:00",
+     "match": "PSV Eindhoven v Club Brugge",
+     "price": 0.52,
+     "rule": "A7",
+     "side": "yes",
+     "start": "2026-11-04T20:00Z",
+     "status": "open",
+     "ticker": "KXUCLTOTAL-26NOV04PSVBRU-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "PSV Eindhoven O+D- v Club Brugge O+D- \u00b7 Over 3.5 YES 0.52"
     }
    ]
   },
@@ -3992,14 +4084,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-01T13:31:35.569789+00:00",
-   "candidates": 2,
-   "due": 4,
-   "labelled": 4,
-   "matched": 2,
-   "new": 0
-  },
-  {
    "at": "2026-11-01T13:46:36.833327+00:00",
    "candidates": 0,
    "due": 2,
@@ -4398,6 +4482,14 @@
    "labelled": 2,
    "matched": 2,
    "new": 0
+  },
+  {
+   "at": "2026-11-04T18:31:48.068378+00:00",
+   "candidates": 5,
+   "due": 7,
+   "labelled": 5,
+   "matched": 5,
+   "new": 4
   }
  ],
  "version": "soccer-rules-v1"

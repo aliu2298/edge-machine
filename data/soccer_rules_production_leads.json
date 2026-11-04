@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-04T18:26:24+00:00",
+ "board_built_at": "2026-11-04T18:31:49+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sr_a6": true,
@@ -325,6 +325,154 @@
    "source": "sr_a7",
    "sport": "soccer_u35",
    "status": "hit"
+  },
+  "2026-11-04|Borussia Dortmund|Real Betis|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5": {
+   "away": "Real Betis",
+   "bet": {
+    "kind": "total_gte",
+    "n": 4
+   },
+   "date": "2026-11-04",
+   "edge_at_log": null,
+   "first_seen": "2026-11-04",
+   "headline": "Over 3.5 goals",
+   "home": "Borussia Dortmund",
+   "id": "2026-11-04|Borussia Dortmund|Real Betis|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5",
+   "kickoff": "2026-11-04T20:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-04",
+   "last_seen_at": "2026-11-04T18:31:49+00:00",
+   "league": "Champions League",
+   "match": "Borussia Dortmund v Real Betis",
+   "pair": "sr_a7|soccer_u35",
+   "price_at_log": 0.42,
+   "published_at": "2026-11-04T18:31:49+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Over 3.5 goals",
+    "event": "KXUCLTOTAL-26NOV04BVBRBB",
+    "market": "KXUCLTOTAL-26NOV04BVBRBB-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.42,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_a7:KXUCLTOTAL-26NOV04BVBRBB-4",
+   "source": "sr_a7",
+   "sport": "soccer_u35",
+   "status": "pending"
+  },
+  "2026-11-04|FC Porto|Napoli|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5": {
+   "away": "Napoli",
+   "bet": {
+    "kind": "total_gte",
+    "n": 4
+   },
+   "date": "2026-11-04",
+   "edge_at_log": null,
+   "first_seen": "2026-11-04",
+   "headline": "Over 3.5 goals",
+   "home": "FC Porto",
+   "id": "2026-11-04|FC Porto|Napoli|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5",
+   "kickoff": "2026-11-04T20:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-04",
+   "last_seen_at": "2026-11-04T18:31:49+00:00",
+   "league": "Champions League",
+   "match": "FC Porto v Napoli",
+   "pair": "sr_a7|soccer_u35",
+   "price_at_log": 0.3,
+   "published_at": "2026-11-04T18:31:49+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Over 3.5 goals",
+    "event": "KXUCLTOTAL-26NOV04FCPNAP",
+    "market": "KXUCLTOTAL-26NOV04FCPNAP-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.3,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_a7:KXUCLTOTAL-26NOV04FCPNAP-4",
+   "source": "sr_a7",
+   "sport": "soccer_u35",
+   "status": "pending"
+  },
+  "2026-11-04|Lens|Como|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5": {
+   "away": "Como",
+   "bet": {
+    "kind": "total_gte",
+    "n": 4
+   },
+   "date": "2026-11-04",
+   "edge_at_log": null,
+   "first_seen": "2026-11-04",
+   "headline": "Over 3.5 goals",
+   "home": "Lens",
+   "id": "2026-11-04|Lens|Como|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5",
+   "kickoff": "2026-11-04T20:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-04",
+   "last_seen_at": "2026-11-04T18:31:49+00:00",
+   "league": "Champions League",
+   "match": "Lens v Como",
+   "pair": "sr_a7|soccer_u35",
+   "price_at_log": 0.39,
+   "published_at": "2026-11-04T18:31:49+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Over 3.5 goals",
+    "event": "KXUCLTOTAL-26NOV04RCLCOM",
+    "market": "KXUCLTOTAL-26NOV04RCLCOM-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.39,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_a7:KXUCLTOTAL-26NOV04RCLCOM-4",
+   "source": "sr_a7",
+   "sport": "soccer_u35",
+   "status": "pending"
+  },
+  "2026-11-04|PSV Eindhoven|Club Brugge|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5": {
+   "away": "Club Brugge",
+   "bet": {
+    "kind": "total_gte",
+    "n": 4
+   },
+   "date": "2026-11-04",
+   "edge_at_log": null,
+   "first_seen": "2026-11-04",
+   "headline": "Over 3.5 goals",
+   "home": "PSV Eindhoven",
+   "id": "2026-11-04|PSV Eindhoven|Club Brugge|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5",
+   "kickoff": "2026-11-04T20:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-04",
+   "last_seen_at": "2026-11-04T18:31:49+00:00",
+   "league": "Champions League",
+   "match": "PSV Eindhoven v Club Brugge",
+   "pair": "sr_a7|soccer_u35",
+   "price_at_log": 0.52,
+   "published_at": "2026-11-04T18:31:49+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Over 3.5 goals",
+    "event": "KXUCLTOTAL-26NOV04PSVBRU",
+    "market": "KXUCLTOTAL-26NOV04PSVBRU-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.52,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_a7:KXUCLTOTAL-26NOV04PSVBRU-4",
+   "source": "sr_a7",
+   "sport": "soccer_u35",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -360,9 +508,9 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 4,
+    "leads": 8,
     "problem": null,
-    "routed": 4,
+    "routed": 8,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -374,7 +522,7 @@
    "sandbox_roi_fee": 0.0243,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 4,
     "under_target": 0
    }
   },
@@ -433,5 +581,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-04T18:26:24+00:00"
+ "updated_at": "2026-11-04T18:31:49+00:00"
 }
