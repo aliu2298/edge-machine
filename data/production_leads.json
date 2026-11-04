@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-04T22:05:16+00:00",
+ "board_built_at": "2026-11-04T22:18:09+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -1023,6 +1023,42 @@
    "source": "commod_fav_band",
    "sport": "commodities_fav",
    "status": "hit"
+  },
+  "2026-11-04|Slavia Prague|Arsenal|Arsenal to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
+   "away": "Arsenal",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "Arsenal"
+   },
+   "date": "2026-11-04",
+   "edge_at_log": null,
+   "first_seen": "2026-11-04",
+   "headline": "Arsenal to score 2+",
+   "home": "Slavia Prague",
+   "id": "2026-11-04|Slavia Prague|Arsenal|Arsenal to score 2+ \u00b7 Favourite to score 2+, ranked by margin",
+   "kickoff": "2026-11-04T20:00Z",
+   "lane": "production",
+   "league": "Champions League",
+   "match": "Slavia Prague v Arsenal",
+   "pair": "team2_ranked|soccer_team2",
+   "price_at_log": 0.7,
+   "published_at": "2026-11-04T22:18:09+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Arsenal to score 2+",
+    "event": "KXUCLTEAMTOTAL-26NOV04SLAARS",
+    "market": "KXUCLTEAMTOTAL-26NOV04SLAARS-ARS2",
+    "outcome": "Arsenal over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.7,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "team2_ranked:KXUCLTEAMTOTAL-26NOV04SLAARS-ARS2",
+   "source": "team2_ranked",
+   "sport": "soccer_team2",
+   "status": "hit"
   }
  },
  "pairs": {
@@ -1158,18 +1194,18 @@
    "ready_at": "2026-10-11T19:34:45+00:00",
    "route": "moved by hand on 2026-10-11",
    "routing": {
-    "leads": 3,
+    "leads": 4,
     "problem": null,
-    "routed": 3,
+    "routed": 4,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": -0.001,
-   "sandbox_n": 21,
-   "sandbox_roi": 0.1318,
-   "sandbox_roi_fee": 0.094,
+   "sandbox_clv": -0.0014,
+   "sandbox_n": 22,
+   "sandbox_roi": 0.1453,
+   "sandbox_roi_fee": 0.1078,
    "timing": {
     "late": [],
     "timed": 0,
@@ -1216,5 +1252,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-04T22:05:16+00:00"
+ "updated_at": "2026-11-04T22:18:09+00:00"
 }
