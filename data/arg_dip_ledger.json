@@ -6206,9 +6206,9 @@
   ]
  },
  "lane": "arg_goalless_dip",
- "last_run": "2026-11-04T11:37:17.027882+00:00",
+ "last_run": "2026-11-04T18:53:08.986539+00:00",
  "observations": {
-  "at": "2026-11-04T11:37:17.027882+00:00",
+  "at": "2026-11-04T18:53:08.986539+00:00",
   "errors": [],
   "new": 0,
   "skipped": 0,
@@ -6220,6 +6220,12 @@
   "KXARGPREMDIVTOTAL-26OCT31RIECAT": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)",
   "KXARGPREMDIVTOTAL-26OCT31VELSLA": "pregame ask unverified: 9.09 contracts traded at or through the ask within 60 minutes (under 10)"
  },
- "upcoming": [],
+ "upcoming": [
+  {
+   "event": "KXARGPREMDIVTOTAL-26NOV05CAARIV",
+   "kickoff": 1793901600,
+   "title": "Aldosivi vs River Plate: Total Goals"
+  }
+ ],
  "version": "argdip-v1"
 }
