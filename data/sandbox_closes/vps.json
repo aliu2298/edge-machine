@@ -345,6 +345,16 @@
    "lead_min": 8.1,
    "price": 0.58
   },
+  "corners_ucl_fade:KXUCLCORNERS-26NOV04FCPNAP-8": {
+   "at": "2026-11-04T19:10:38+00:00",
+   "lead_min": 49.4,
+   "price": 0.69
+  },
+  "corners_ucl_fade:KXUCLCORNERS-26NOV04PSVBRU-9": {
+   "at": "2026-11-04T19:10:38+00:00",
+   "lead_min": 49.4,
+   "price": 0.7
+  },
   "crypto_eth_fav_both:KXETHD-26OCT2717-T2339.99": {
    "at": "2026-10-27T18:53:18+00:00",
    "lead_min": 11.7,
@@ -469,6 +479,11 @@
    "at": "2026-11-03T19:51:51+00:00",
    "lead_min": 13.1,
    "price": 0.89
+  },
+  "crypto_fav_band_below:KXBTCD-26NOV0417-T80749.99": {
+   "at": "2026-11-04T19:10:38+00:00",
+   "lead_min": 54.4,
+   "price": 0.86
   },
   "crypto_fav_band_below:KXBTCD-26OCT2617-T80499.99": {
    "at": "2026-10-26T19:00:07+00:00",
@@ -995,6 +1010,11 @@
    "lead_min": 1.8,
    "price": 0.37
   },
+  "team2_ranked:KXUCLTEAMTOTAL-26NOV04SLAARS-ARS2": {
+   "at": "2026-11-04T19:10:38+00:00",
+   "lead_min": 49.4,
+   "price": 0.68
+  },
   "tennis_utr_shortlist_v1:aec-utr-chaeli-bhapar-2026-10-26": {
    "at": "2026-10-27T15:50:08+00:00",
    "lead_min": 9.9,
@@ -1191,5 +1211,5 @@
    "price": 0.75
   }
  },
- "updated": "2026-11-04T18:55:30+00:00"
+ "updated": "2026-11-04T19:10:38+00:00"
 }
