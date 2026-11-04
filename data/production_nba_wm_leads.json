@@ -315,6 +315,58 @@
    "version": "wm-yes-v2"
   },
   {
+   "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV04INDMEM",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV04INDMEM-IND6TO10",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "IND",
+   "ticker": "KXNBAWINMARGIN-26NOV04INDMEM-IND6TO10",
+   "tip": "2026-11-05T01:00:00+00:00",
+   "title": "Indiana wins by 6-10 points",
+   "version": "wm-yes-v2"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV04INDMEM",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV04INDMEM-IND1TO5",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "IND",
+   "ticker": "KXNBAWINMARGIN-26NOV04INDMEM-IND1TO5",
+   "tip": "2026-11-05T01:00:00+00:00",
+   "title": "Indiana wins by 1-5 points",
+   "version": "wm-yes-v2"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV04INDMEM",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV04INDMEM-MEM1TO5",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "MEM",
+   "ticker": "KXNBAWINMARGIN-26NOV04INDMEM-MEM1TO5",
+   "tip": "2026-11-05T01:00:00+00:00",
+   "title": "Memphis wins by 1-5 points",
+   "version": "wm-yes-v2"
+  },
+  {
+   "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV04INDMEM",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV04INDMEM-MEM6TO10",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "MEM",
+   "ticker": "KXNBAWINMARGIN-26NOV04INDMEM-MEM6TO10",
+   "tip": "2026-11-05T01:00:00+00:00",
+   "title": "Memphis wins by 6-10 points",
+   "version": "wm-yes-v2"
+  },
+  {
    "bucket": "1-5",
    "event": "KXNBAWINMARGIN-26NOV04MINHOU",
    "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV04MINHOU-MIN1TO5",
@@ -573,6 +625,58 @@
    "tip": "2026-11-05T03:00:00+00:00",
    "title": "Sacramento wins by 6-10 points",
    "version": "wm-yes-v2"
+  },
+  {
+   "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV04MIALAC",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV04MIALAC-MIA6TO10",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "MIA",
+   "ticker": "KXNBAWINMARGIN-26NOV04MIALAC-MIA6TO10",
+   "tip": "2026-11-05T03:30:00+00:00",
+   "title": "Miami wins by 6-10 points",
+   "version": "wm-yes-v2"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV04MIALAC",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV04MIALAC-MIA1TO5",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "MIA",
+   "ticker": "KXNBAWINMARGIN-26NOV04MIALAC-MIA1TO5",
+   "tip": "2026-11-05T03:30:00+00:00",
+   "title": "Miami wins by 1-5 points",
+   "version": "wm-yes-v2"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV04MIALAC",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV04MIALAC-LAC1TO5",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "LAC",
+   "ticker": "KXNBAWINMARGIN-26NOV04MIALAC-LAC1TO5",
+   "tip": "2026-11-05T03:30:00+00:00",
+   "title": "Los Angeles C wins by 1-5 points",
+   "version": "wm-yes-v2"
+  },
+  {
+   "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV04MIALAC",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV04MIALAC-LAC6TO10",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "LAC",
+   "ticker": "KXNBAWINMARGIN-26NOV04MIALAC-LAC6TO10",
+   "tip": "2026-11-05T03:30:00+00:00",
+   "title": "Los Angeles C wins by 6-10 points",
+   "version": "wm-yes-v2"
   }
  ],
  "moved_on": "2026-11-02",
@@ -603,6 +707,6 @@
   "side": "yes",
   "stake_usd": 1.0
  },
- "updated_at": "2026-11-03T23:43:41+00:00",
+ "updated_at": "2026-11-04T00:30:50+00:00",
  "version": "wm-yes-v2"
 }
