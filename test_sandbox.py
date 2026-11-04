@@ -4763,8 +4763,9 @@ eq((S.SOURCES["o15_form_l10"]["sports"], list(S.SOURCES["o15_form_l10"]["retired
 # Retired scopes (2026-10-11 and 2026-10-14): the twins that remain keep running.
 eq(S.SOURCES["team1_form_l5"]["sports"], ["soccer_team1_cup", "soccer_team1_intl"],
    "team1_form_l5 runs Cups and Internationals; Clubs retired 2026-10-14")
-eq(S.SOURCES["p05_unbeaten"]["sports"], ["soccer_p05_cup"],
-   "p05_unbeaten runs Cups only; Clubs and Internationals retired 2026-10-14")
+eq((S.SOURCES["p05_unbeaten"]["sports"], sorted(S.SOURCES["p05_unbeaten"]["retired_sports"])),
+   ([], ["soccer_p05", "soccer_p05_cup", "soccer_p05_intl"]),
+   "p05_unbeaten is retired on all three scopes: Clubs and Internationals 2026-10-14, Cups 2026-11-04")
 # btts_form_l10's Clubs scope was retired and faded on 2026-10-11; its twins keep running.
 eq(S.SOURCES["btts_form_l10"]["sports"], ["soccer_btts_cup", "soccer_btts_intl"],
    "btts_form_l10 runs its Cups and Internationals pairs; Clubs is now btts_form_l10_fade")
