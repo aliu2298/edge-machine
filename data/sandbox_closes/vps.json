@@ -346,13 +346,13 @@
    "price": 0.58
   },
   "corners_ucl_fade:KXUCLCORNERS-26NOV04FCPNAP-8": {
-   "at": "2026-11-04T19:25:41+00:00",
-   "lead_min": 34.3,
+   "at": "2026-11-04T19:40:58+00:00",
+   "lead_min": 19.0,
    "price": 0.69
   },
   "corners_ucl_fade:KXUCLCORNERS-26NOV04PSVBRU-9": {
-   "at": "2026-11-04T19:25:41+00:00",
-   "lead_min": 34.3,
+   "at": "2026-11-04T19:40:58+00:00",
+   "lead_min": 19.0,
    "price": 0.7
   },
   "crypto_eth_fav_both:KXETHD-26OCT2717-T2339.99": {
@@ -481,9 +481,9 @@
    "price": 0.89
   },
   "crypto_fav_band_below:KXBTCD-26NOV0417-T80749.99": {
-   "at": "2026-11-04T19:25:41+00:00",
-   "lead_min": 39.3,
-   "price": 0.93
+   "at": "2026-11-04T19:40:58+00:00",
+   "lead_min": 24.0,
+   "price": 0.95
   },
   "crypto_fav_band_below:KXBTCD-26OCT2617-T80499.99": {
    "at": "2026-10-26T19:00:07+00:00",
@@ -810,11 +810,6 @@
    "lead_min": 5.4,
    "price": 0.91
   },
-  "o15_form_l10:KXLIGUE1TOTAL-26OCT25PSGOL-2": {
-   "at": "2026-10-25T19:37:09+00:00",
-   "lead_min": 7.8,
-   "price": 0.89
-  },
   "o25_congestion:KXDFBPOKALTOTAL-26OCT27HSVSGE-3": {
    "at": "2026-10-27T16:51:51+00:00",
    "lead_min": 8.1,
@@ -829,11 +824,6 @@
    "at": "2026-10-26T18:30:06+00:00",
    "lead_min": 14.9,
    "price": 0.41
-  },
-  "o25_congestion:KXSERIEATOTAL-26OCT25UDIACM-3": {
-   "at": "2026-10-25T19:37:09+00:00",
-   "lead_min": 7.8,
-   "price": 0.5
   },
   "o25_congestion:KXSERIEATOTAL-26OCT27ROMCAG-3": {
    "at": "2026-10-27T19:39:08+00:00",
@@ -1011,8 +1001,8 @@
    "price": 0.37
   },
   "team2_ranked:KXUCLTEAMTOTAL-26NOV04SLAARS-ARS2": {
-   "at": "2026-11-04T19:25:41+00:00",
-   "lead_min": 34.3,
+   "at": "2026-11-04T19:40:58+00:00",
+   "lead_min": 19.0,
    "price": 0.68
   },
   "tennis_utr_shortlist_v1:aec-utr-chaeli-bhapar-2026-10-26": {
@@ -1211,5 +1201,5 @@
    "price": 0.75
   }
  },
- "updated": "2026-11-04T19:25:41+00:00"
+ "updated": "2026-11-04T19:40:58+00:00"
 }
