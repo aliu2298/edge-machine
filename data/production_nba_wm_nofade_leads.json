@@ -731,6 +731,110 @@
    "version": "wm-nofade-v2"
   },
   {
+   "bucket": "21+",
+   "event": "KXNBAWINMARGIN-26NOV04UTANOP",
+   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV04UTANOP-UTA21PLUS",
+   "lane": "nba_wm_nofade",
+   "side": "no",
+   "stake_usd": 1.0,
+   "team": "UTA",
+   "ticker": "KXNBAWINMARGIN-26NOV04UTANOP-UTA21PLUS",
+   "tip": "2026-11-05T01:00:00+00:00",
+   "title": "Utah wins by 21+ points",
+   "version": "wm-nofade-v2"
+  },
+  {
+   "bucket": "11-20",
+   "event": "KXNBAWINMARGIN-26NOV04UTANOP",
+   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV04UTANOP-UTA11TO20",
+   "lane": "nba_wm_nofade",
+   "side": "no",
+   "stake_usd": 1.0,
+   "team": "UTA",
+   "ticker": "KXNBAWINMARGIN-26NOV04UTANOP-UTA11TO20",
+   "tip": "2026-11-05T01:00:00+00:00",
+   "title": "Utah wins by 11-20 points",
+   "version": "wm-nofade-v2"
+  },
+  {
+   "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV04UTANOP",
+   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV04UTANOP-UTA6TO10",
+   "lane": "nba_wm_nofade",
+   "side": "no",
+   "stake_usd": 1.0,
+   "team": "UTA",
+   "ticker": "KXNBAWINMARGIN-26NOV04UTANOP-UTA6TO10",
+   "tip": "2026-11-05T01:00:00+00:00",
+   "title": "Utah wins by 6-10 points",
+   "version": "wm-nofade-v2"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV04UTANOP",
+   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV04UTANOP-UTA1TO5",
+   "lane": "nba_wm_nofade",
+   "side": "no",
+   "stake_usd": 1.0,
+   "team": "UTA",
+   "ticker": "KXNBAWINMARGIN-26NOV04UTANOP-UTA1TO5",
+   "tip": "2026-11-05T01:00:00+00:00",
+   "title": "Utah wins by 1-5 points",
+   "version": "wm-nofade-v2"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV04UTANOP",
+   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV04UTANOP-NOP1TO5",
+   "lane": "nba_wm_nofade",
+   "side": "no",
+   "stake_usd": 1.0,
+   "team": "NOP",
+   "ticker": "KXNBAWINMARGIN-26NOV04UTANOP-NOP1TO5",
+   "tip": "2026-11-05T01:00:00+00:00",
+   "title": "New Orleans wins by 1-5 points",
+   "version": "wm-nofade-v2"
+  },
+  {
+   "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV04UTANOP",
+   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV04UTANOP-NOP6TO10",
+   "lane": "nba_wm_nofade",
+   "side": "no",
+   "stake_usd": 1.0,
+   "team": "NOP",
+   "ticker": "KXNBAWINMARGIN-26NOV04UTANOP-NOP6TO10",
+   "tip": "2026-11-05T01:00:00+00:00",
+   "title": "New Orleans wins by 6-10 points",
+   "version": "wm-nofade-v2"
+  },
+  {
+   "bucket": "11-20",
+   "event": "KXNBAWINMARGIN-26NOV04UTANOP",
+   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV04UTANOP-NOP11TO20",
+   "lane": "nba_wm_nofade",
+   "side": "no",
+   "stake_usd": 1.0,
+   "team": "NOP",
+   "ticker": "KXNBAWINMARGIN-26NOV04UTANOP-NOP11TO20",
+   "tip": "2026-11-05T01:00:00+00:00",
+   "title": "New Orleans wins by 11-20 points",
+   "version": "wm-nofade-v2"
+  },
+  {
+   "bucket": "21+",
+   "event": "KXNBAWINMARGIN-26NOV04UTANOP",
+   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV04UTANOP-NOP21PLUS",
+   "lane": "nba_wm_nofade",
+   "side": "no",
+   "stake_usd": 1.0,
+   "team": "NOP",
+   "ticker": "KXNBAWINMARGIN-26NOV04UTANOP-NOP21PLUS",
+   "tip": "2026-11-05T01:00:00+00:00",
+   "title": "New Orleans wins by 21+ points",
+   "version": "wm-nofade-v2"
+  },
+  {
    "bucket": "1-5",
    "event": "KXNBAWINMARGIN-26NOV04MINHOU",
    "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV04MINHOU-MIN1TO5",
@@ -1372,6 +1476,6 @@
   "side": "no",
   "stake_usd": 1.0
  },
- "updated_at": "2026-11-04T00:30:50+00:00",
+ "updated_at": "2026-11-04T00:55:34+00:00",
  "version": "wm-nofade-v2"
 }
