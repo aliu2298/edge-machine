@@ -4682,6 +4682,28 @@ def in_range(value, m):
     return None
 
 
+# The daily-close ladders (crypto, commodities, Economics and Financials dailies) trade up to their close. A row's
+# `start` becomes the quote's start, and so a Production lead's date, kickoff and match name. Kalshi's
+# expected_expiration_time is the close for the hourly-suffixed events (KXWTI-26NOV0314) but the NEXT MORNING for the
+# older WTI event format with no hour (KXWTI-26NOV03: close 2026-11-03T19:30Z, expected_expiration 2026-11-04T15:00Z),
+# which labelled a Nov 3 contract as a Nov 4 lead (2026-11-04) and merged it with that day's real lead on the
+# Running list. These domains take the market's own close_time when it is earlier than the expected expiration by
+# more than ten minutes; the coin ladders' five-minute gap (21:05Z against 21:00Z) is left as it was.
+LADDER_START_AT_CLOSE = {"crypto", "crypto_fav", "commodities", "commodities_fav", "economics", "finance"}
+CLOSE_TOLERANCE = timedelta(minutes=10)
+
+
+def ladder_start(m, exp):
+    """The start a daily-close ladder rung carries: its close_time if that is well before expected_expiration_time."""
+    try:
+        close = datetime.fromisoformat(str(m.get("close_time")).replace("Z", "+00:00"))
+    except (ValueError, TypeError):
+        return exp
+    if close.tzinfo is None:
+        close = close.replace(tzinfo=timezone.utc)
+    return close if exp - close > CLOSE_TOLERANCE else exp
+
+
 def fetch_kalshi_binary(domain, horizon_days=4, stats=None):
     """Every near-dated yes/no market in one domain, as universe rows.
 
@@ -4711,6 +4733,8 @@ def fetch_kalshi_binary(domain, horizon_days=4, stats=None):
                     str(m.get("expected_expiration_time")).replace("Z", "+00:00"))
             except (ValueError, TypeError):
                 continue
+            if domain in LADDER_START_AT_CLOSE:
+                exp = ladder_start(m, exp)
             if not (earliest <= exp <= horizon):
                 continue
             listed += 1
