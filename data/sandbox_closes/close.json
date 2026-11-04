@@ -1,10 +1,5 @@
 {
  "closes": {
-  "btts_form_l10_fade:KXLALIGABTTS-26OCT25BARRMA-BTTS": {
-   "at": "2026-10-25T19:56:39+00:00",
-   "lead_min": 3.3,
-   "price": 0.24
-  },
   "btts_form_l10_fade:KXMLSBTTS-26OCT25LAFCLAG-BTTS": {
    "at": "2026-10-26T00:42:31+00:00",
    "lead_min": 17.5,
@@ -49,11 +44,6 @@
    "at": "2026-10-28T17:23:08+00:00",
    "lead_min": 36.9,
    "price": 0.94
-  },
-  "corners_total_under:KXLALIGACORNERS-26OCT25BARRMA-10": {
-   "at": "2026-10-25T19:56:39+00:00",
-   "lead_min": 3.3,
-   "price": 0.36
   },
   "corners_total_under:KXLALIGACORNERS-26OCT26SEVOSA-8": {
    "at": "2026-10-26T19:14:17+00:00",
@@ -110,11 +100,6 @@
    "lead_min": 55.6,
    "price": 0.67
   },
-  "espn_fpi:aec-nfl-gb-det-2026-10-25": {
-   "at": "2026-10-25T19:56:39+00:00",
-   "lead_min": 28.3,
-   "price": 0.3575
-  },
   "espn_fpi:aec-nfl-kc-den-2026-11-01": {
    "at": "2026-11-01T20:49:10+00:00",
    "lead_min": 35.8,
@@ -154,16 +139,6 @@
    "at": "2026-10-29T01:46:41+00:00",
    "lead_min": 43.3,
    "price": 0.61
-  },
-  "o15_ranked:KXLIGAPORTUGALTOTAL-26OCT25CDNBRA-2": {
-   "at": "2026-10-25T17:37:32+00:00",
-   "lead_min": 22.5,
-   "price": 0.77
-  },
-  "o25_congestion:KXLIGAPORTUGALTOTAL-26OCT25CDNBRA-3": {
-   "at": "2026-10-25T17:37:32+00:00",
-   "lead_min": 22.5,
-   "price": 0.48
   },
   "o25_congestion:KXSERIEATOTAL-26OCT28PARUDI-3": {
    "at": "2026-10-28T17:23:08+00:00",
@@ -235,11 +210,6 @@
    "lead_min": 42.4,
    "price": 0.65
   },
-  "u35_low_o15:KXLIGAPORTUGALTOTAL-26OCT25RAVFAM-2": {
-   "at": "2026-10-25T17:37:32+00:00",
-   "lead_min": 22.5,
-   "price": 0.75
-  },
   "u35_low_o15:KXMLSTOTAL-26OCT28SJCOL-2": {
    "at": "2026-10-29T01:46:41+00:00",
    "lead_min": 43.3,
@@ -254,11 +224,6 @@
    "at": "2026-10-28T17:23:08+00:00",
    "lead_min": 6.9,
    "price": 0.74
-  },
-  "u35_low_scoring:KXLIGAPORTUGALTOTAL-26OCT25RAVFAM-4": {
-   "at": "2026-10-25T17:37:32+00:00",
-   "lead_min": 22.5,
-   "price": 0.73
   },
   "u35_low_scoring:KXMLSTOTAL-26OCT28SJCOL-4": {
    "at": "2026-10-29T01:46:41+00:00",
@@ -276,5 +241,5 @@
    "price": 0.75
   }
  },
- "updated": "2026-11-04T15:44:53+00:00"
+ "updated": "2026-11-04T21:50:13+00:00"
 }
