@@ -97,27 +97,6 @@
    "symbol": "CSX"
   },
   {
-   "qty": 31,
-   "rules": [
-    {
-     "id": "sw_rsi2_pullback|CVS|2026-10-26",
-     "qty": 10,
-     "rule": "sw_rsi2_pullback"
-    },
-    {
-     "id": "sw_rsi2_pullback|CVS|2026-10-27",
-     "qty": 10,
-     "rule": "sw_rsi2_pullback"
-    },
-    {
-     "id": "sw_rsi2_pullback|CVS|2026-10-28",
-     "qty": 11,
-     "rule": "sw_rsi2_pullback"
-    }
-   ],
-   "symbol": "CVS"
-  },
-  {
    "qty": 11,
    "rules": [
     {
@@ -208,17 +187,6 @@
    "symbol": "FFIV"
   },
   {
-   "qty": 15,
-   "rules": [
-    {
-     "id": "sw_rsi2_pullback|FOXA|2026-10-28",
-     "qty": 15,
-     "rule": "sw_rsi2_pullback"
-    }
-   ],
-   "symbol": "FOXA"
-  },
-  {
    "qty": 14,
    "rules": [
     {
@@ -265,17 +233,6 @@
     }
    ],
    "symbol": "HPQ"
-  },
-  {
-   "qty": 1,
-   "rules": [
-    {
-     "id": "sw_rsi2_pullback|META|2026-10-23",
-     "qty": 1,
-     "rule": "sw_rsi2_pullback"
-    }
-   ],
-   "symbol": "META"
   },
   {
    "qty": 2,
@@ -511,36 +468,69 @@
  "rows": [
   {
    "fill": null,
-   "id": "sw_rsi2_pullback|CVS|2026-10-26",
+   "id": "etf_double7|DIA|2026-10-30",
    "ledger": null,
    "qty": 0,
-   "rule": "sw_rsi2_pullback",
+   "rule": "etf_double7",
    "side": "sell",
    "slip_bps": null,
    "status": "accepted",
-   "symbol": "CVS"
+   "symbol": "DIA"
   },
   {
    "fill": null,
-   "id": "sw_rsi2_pullback|CVS|2026-10-27",
+   "id": "sw_rsi2_pullback|CNC|2026-11-02",
    "ledger": null,
    "qty": 0,
    "rule": "sw_rsi2_pullback",
    "side": "sell",
    "slip_bps": null,
    "status": "accepted",
-   "symbol": "CVS"
+   "symbol": "CNC"
   },
   {
    "fill": null,
-   "id": "sw_rsi2_pullback|CVS|2026-10-28",
+   "id": "sw_rsi2_pullback|CRM|2026-10-27",
    "ledger": null,
    "qty": 0,
    "rule": "sw_rsi2_pullback",
    "side": "sell",
    "slip_bps": null,
    "status": "accepted",
-   "symbol": "CVS"
+   "symbol": "CRM"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|CRM|2026-10-30",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "CRM"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|CRM|2026-11-02",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "CRM"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|CSX|2026-11-02",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "CSX"
   },
   {
    "fill": null,
@@ -555,14 +545,58 @@
   },
   {
    "fill": null,
-   "id": "sw_rsi2_pullback|FOXA|2026-10-28",
+   "id": "sw_rsi2_pullback|ELV|2026-10-26",
    "ledger": null,
    "qty": 0,
    "rule": "sw_rsi2_pullback",
    "side": "sell",
    "slip_bps": null,
    "status": "accepted",
-   "symbol": "FOXA"
+   "symbol": "ELV"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|ELV|2026-10-27",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "ELV"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|ELV|2026-10-28",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "ELV"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|HPQ|2026-10-29",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "HPQ"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|HPQ|2026-10-30",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "HPQ"
   },
   {
    "fill": null,
@@ -610,14 +644,14 @@
   },
   {
    "fill": null,
-   "id": "sw_rsi2_pullback|META|2026-10-23",
+   "id": "sw_rsi2_pullback|MSFT|2026-10-30",
    "ledger": null,
    "qty": 0,
    "rule": "sw_rsi2_pullback",
    "side": "sell",
    "slip_bps": null,
    "status": "accepted",
-   "symbol": "META"
+   "symbol": "MSFT"
   },
   {
    "fill": null,
@@ -673,6 +707,17 @@
    "slip_bps": null,
    "status": "expired",
    "symbol": "TXN"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|WDAY|2026-10-29",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "WDAY"
   },
   {
    "day": "2026-10-12",
@@ -4536,6 +4581,71 @@
    "slip_bps": 25.82,
    "status": "filled",
    "symbol": "LIN"
+  },
+  {
+   "day": "2026-11-04",
+   "fill": 82.06,
+   "filled_at": "2026-11-04T14:34:37",
+   "id": "sw_rsi2_pullback|CVS|2026-10-26",
+   "ledger": 83.97,
+   "qty": 10,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 227.46,
+   "status": "filled",
+   "symbol": "CVS"
+  },
+  {
+   "day": "2026-11-04",
+   "fill": 79.318,
+   "filled_at": "2026-11-04T14:35:06",
+   "id": "sw_rsi2_pullback|CVS|2026-10-27",
+   "ledger": 83.97,
+   "qty": 10,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 554.01,
+   "status": "filled",
+   "symbol": "CVS"
+  },
+  {
+   "day": "2026-11-04",
+   "fill": 81.269091,
+   "filled_at": "2026-11-04T14:34:26",
+   "id": "sw_rsi2_pullback|CVS|2026-10-28",
+   "ledger": 83.97,
+   "qty": 11,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 321.65,
+   "status": "filled",
+   "symbol": "CVS"
+  },
+  {
+   "day": "2026-11-04",
+   "fill": 67.61,
+   "filled_at": "2026-11-04T14:34:01",
+   "id": "sw_rsi2_pullback|FOXA|2026-10-28",
+   "ledger": 67.965,
+   "qty": 15,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 52.23,
+   "status": "filled",
+   "symbol": "FOXA"
+  },
+  {
+   "day": "2026-11-04",
+   "fill": 638.57,
+   "filled_at": "2026-11-04T14:30:22",
+   "id": "sw_rsi2_pullback|META|2026-10-23",
+   "ledger": 640.02,
+   "qty": 1,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 22.66,
+   "status": "filled",
+   "symbol": "META"
   }
  ],
  "summary": {
@@ -4555,24 +4665,24 @@
     "n": 48
    },
    "sw_rsi2_pullback": {
-    "mean_bps": 20.52,
-    "n": 222
+    "mean_bps": 25.26,
+    "n": 227
    }
   },
-  "fills": 295,
+  "fills": 300,
   "in_flight": 0,
-  "mean_bps": 18.22,
-  "median_bps": 13.06,
+  "mean_bps": 21.84,
+  "median_bps": 14.37,
   "orders": {
-   "filled": 298,
-   "sent": 313,
+   "filled": 303,
+   "sent": 326,
    "since": "2026-10-12",
    "unfilled": 10,
-   "working": 5
+   "working": 13
   },
   "orphans": 3,
-  "unfilled": 15,
-  "worst_bps": 414.27
+  "unfilled": 23,
+  "worst_bps": 554.01
  },
- "updated": "2026-11-03T21:12:22+00:00"
+ "updated": "2026-11-04T21:12:39+00:00"
 }
