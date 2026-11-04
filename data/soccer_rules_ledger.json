@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-03T19:02:03.190411+00:00",
+ "last_run": "2026-11-04T14:01:48.868977+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -717,11 +717,14 @@
      "line": 3.5,
      "logged": "2026-11-03T18:31:30.920077+00:00",
      "match": "Atl\u00e9tico Madrid v Bayern Munich",
+     "payout": 0.0,
      "price": 0.43,
+     "profit": -100.0,
      "rule": "A7",
+     "settled": "2026-11-04T14:01:48.868977+00:00",
      "side": "yes",
      "start": "2026-11-03T20:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXUCLTOTAL-26NOV03ATMBMU-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Atl\u00e9tico Madrid O-D- v Bayern Munich O+D- \u00b7 Over 3.5 YES 0.43"
@@ -740,11 +743,14 @@
      "line": 3.5,
      "logged": "2026-11-03T18:31:30.920077+00:00",
      "match": "Feyenoord Rotterdam v Internazionale",
+     "payout": 0.0,
      "price": 0.48,
+     "profit": -100.0,
      "rule": "A7",
+     "settled": "2026-11-04T14:01:48.868977+00:00",
      "side": "yes",
      "start": "2026-11-03T20:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXUCLTOTAL-26NOV03FEYINT-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Feyenoord Rotterdam O+D- v Internazionale O+D- \u00b7 Over 3.5 YES 0.48"
@@ -763,11 +769,14 @@
      "line": 3.5,
      "logged": "2026-11-03T18:31:30.920077+00:00",
      "match": "Manchester United v AS Roma",
+     "payout": 1.0,
      "price": 0.43,
+     "profit": 123.64,
      "rule": "A7",
+     "settled": "2026-11-04T14:01:48.868977+00:00",
      "side": "yes",
      "start": "2026-11-03T20:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUCLTOTAL-26NOV03MUNROM-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Manchester United O-D- v AS Roma O+D- \u00b7 Over 3.5 YES 0.43"
@@ -786,11 +795,14 @@
      "line": 3.5,
      "logged": "2026-11-03T18:31:30.920077+00:00",
      "match": "Villarreal v Paris Saint-Germain",
+     "payout": 1.0,
      "price": 0.52,
+     "profit": 86.06,
      "rule": "A7",
+     "settled": "2026-11-04T14:01:48.868977+00:00",
      "side": "yes",
      "start": "2026-11-03T20:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUCLTOTAL-26NOV03VILPSG-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Villarreal O-D- v Paris Saint-Germain O+D- \u00b7 Over 3.5 YES 0.52"
@@ -3934,14 +3946,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-01T10:16:41.570493+00:00",
-   "candidates": 0,
-   "due": 2,
-   "labelled": 2,
-   "matched": 0,
-   "new": 0
-  },
-  {
    "at": "2026-11-01T10:31:43.229732+00:00",
    "candidates": 0,
    "due": 2,
@@ -4339,6 +4343,14 @@
    "due": 7,
    "labelled": 6,
    "matched": 5,
+   "new": 0
+  },
+  {
+   "at": "2026-11-04T14:01:48.868977+00:00",
+   "candidates": 0,
+   "due": 1,
+   "labelled": 1,
+   "matched": 0,
    "new": 0
   }
  ],
