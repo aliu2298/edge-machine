@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-04T16:46:31.458068+00:00",
+ "last_run": "2026-11-04T18:31:28.027432+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -1293,6 +1293,114 @@
      "ticker": "KXUCLTEAMTOTAL-26NOV04FENLFC-LFC2",
      "title": "Will Liverpool score over 1.5 goals?",
      "why": "Liverpool O+D- v Fenerbahce O+D- \u00b7 2+ YES 0.74"
+    },
+    {
+     "ask": 0.63,
+     "bid": 0.62,
+     "event": "KXUCLTEAMTOTAL-26NOV04PSVBRU",
+     "group": "A",
+     "id": "T1:KXUCLTEAMTOTAL-26NOV04PSVBRU:home",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-04T18:31:28.027432+00:00",
+     "match": "PSV Eindhoven v Club Brugge",
+     "opponent": "Club Brugge",
+     "price": 0.63,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-11-04T20:00Z",
+     "status": "open",
+     "sub": "Eindhoven over 1.5 goals",
+     "team": "PSV Eindhoven",
+     "team_side": "home",
+     "ticker": "KXUCLTEAMTOTAL-26NOV04PSVBRU-PSV2",
+     "title": "Will Eindhoven score over 1.5 goals?",
+     "why": "PSV Eindhoven O+D- v Club Brugge O+D- \u00b7 2+ YES 0.63"
+    },
+    {
+     "ask": 0.49,
+     "bid": 0.48,
+     "event": "KXUCLTEAMTOTAL-26NOV04PSVBRU",
+     "group": "A",
+     "id": "T1:KXUCLTEAMTOTAL-26NOV04PSVBRU:away",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-04T18:31:28.027432+00:00",
+     "match": "PSV Eindhoven v Club Brugge",
+     "opponent": "PSV Eindhoven",
+     "price": 0.49,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-11-04T20:00Z",
+     "status": "open",
+     "sub": "Club Brugge over 1.5 goals",
+     "team": "Club Brugge",
+     "team_side": "away",
+     "ticker": "KXUCLTEAMTOTAL-26NOV04PSVBRU-BRU2",
+     "title": "Will Club Brugge score over 1.5 goals?",
+     "why": "Club Brugge O+D- v PSV Eindhoven O+D- \u00b7 2+ YES 0.49"
+    },
+    {
+     "ask": 0.43,
+     "bid": 0.42,
+     "event": "KXUCLTEAMTOTAL-26NOV04RBLMCI",
+     "group": "A",
+     "id": "T1:KXUCLTEAMTOTAL-26NOV04RBLMCI:home",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-04T18:31:28.027432+00:00",
+     "match": "RB Leipzig v Manchester City",
+     "opponent": "Manchester City",
+     "price": 0.43,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-11-04T20:00Z",
+     "status": "open",
+     "sub": "Leipzig over 1.5 goals",
+     "team": "RB Leipzig",
+     "team_side": "home",
+     "ticker": "KXUCLTEAMTOTAL-26NOV04RBLMCI-RBL2",
+     "title": "Will Leipzig score over 1.5 goals?",
+     "why": "RB Leipzig O+D- v Manchester City O+D- \u00b7 2+ YES 0.43"
+    },
+    {
+     "ask": 0.74,
+     "bid": 0.72,
+     "event": "KXUCLTEAMTOTAL-26NOV04RBLMCI",
+     "group": "A",
+     "id": "T1:KXUCLTEAMTOTAL-26NOV04RBLMCI:away",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-04T18:31:28.027432+00:00",
+     "match": "RB Leipzig v Manchester City",
+     "opponent": "RB Leipzig",
+     "price": 0.74,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-11-04T20:00Z",
+     "status": "open",
+     "sub": "Manchester City over 1.5 goals",
+     "team": "Manchester City",
+     "team_side": "away",
+     "ticker": "KXUCLTEAMTOTAL-26NOV04RBLMCI-MCI2",
+     "title": "Will Manchester City score over 1.5 goals?",
+     "why": "Manchester City O+D- v RB Leipzig O+D- \u00b7 2+ YES 0.74"
     }
    ]
   },
@@ -3040,11 +3148,14 @@
      "logged": "2026-11-04T14:01:41.271520+00:00",
      "match": "Stade Rennais v Olympiacos",
      "opponent": "Stade Rennais",
+     "payout": 0.0,
      "price": 0.37,
+     "profit": -100.0,
      "rule": "T5",
+     "settled": "2026-11-04T18:31:28.027432+00:00",
      "side": "yes",
      "start": "2026-11-04T15:30Z",
-     "status": "open",
+     "status": "lost",
      "sub": "Olympiacos over 1.5 goals",
      "team": "Olympiacos",
      "team_side": "away",
@@ -4283,14 +4394,6 @@
  },
  "runs": [
   {
-   "at": "2026-10-31T18:16:41.947952+00:00",
-   "candidates": 3,
-   "due": 4,
-   "labelled": 4,
-   "matched": 3,
-   "new": 5
-  },
-  {
    "at": "2026-10-31T18:31:12.422115+00:00",
    "candidates": 5,
    "due": 6,
@@ -4689,6 +4792,14 @@
    "labelled": 2,
    "matched": 2,
    "new": 0
+  },
+  {
+   "at": "2026-11-04T18:31:28.027432+00:00",
+   "candidates": 2,
+   "due": 7,
+   "labelled": 5,
+   "matched": 2,
+   "new": 4
   }
  ],
  "version": "soccer-team-rules-v1"
