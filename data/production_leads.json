@@ -954,6 +954,41 @@
    "sport": "crypto_fav",
    "status": "hit"
   },
+  "2026-11-03|KXWTI-26NOV03-T94.99|$95 or above at the close \u00b7 Commodities favourite band": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-11-03",
+   "edge_at_log": null,
+   "first_seen": "2026-11-03",
+   "headline": "$95 or above at the close",
+   "home": null,
+   "id": "2026-11-03|KXWTI-26NOV03-T94.99|$95 or above at the close \u00b7 Commodities favourite band",
+   "kickoff": "2026-11-03T19:30Z",
+   "lane": "production",
+   "league": "Commodities \u00b7 Favourite band",
+   "match": "WTI crude close on Nov 3, 2026",
+   "pair": "commod_fav_band|commodities_fav",
+   "price_at_log": 0.78,
+   "published_at": "2026-11-04T17:05:07+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "$95 or above at the close",
+    "event": "KXWTI-26NOV03",
+    "market": "KXWTI-26NOV03-T94.99",
+    "outcome": "$95 or above",
+    "outcome_side": "yes",
+    "price_at_log": 0.78,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "commod_fav_band:KXWTI-26NOV03-T94.99",
+   "source": "commod_fav_band",
+   "sport": "commodities_fav",
+   "status": "hit"
+  },
   "2026-11-03|KXWTI-26NOV0314-T94.99|Above $94.99 at the close \u00b7 Commodities favourite band": {
    "away": null,
    "bet": {
@@ -985,41 +1020,6 @@
     "venue": "kalshi"
    },
    "sandbox_quote": "commod_fav_band:KXWTI-26NOV0314-T94.99",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
-   "status": "hit"
-  },
-  "2026-11-04|KXWTI-26NOV03-T94.99|$95 or above at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-11-04",
-   "edge_at_log": null,
-   "first_seen": "2026-11-03",
-   "headline": "$95 or above at the close",
-   "home": null,
-   "id": "2026-11-04|KXWTI-26NOV03-T94.99|$95 or above at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-11-04T15:00Z",
-   "lane": "production",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "WTI crude close on Nov 4, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.78,
-   "published_at": "2026-11-04T17:05:07+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "$95 or above at the close",
-    "event": "KXWTI-26NOV03",
-    "market": "KXWTI-26NOV03-T94.99",
-    "outcome": "$95 or above",
-    "outcome_side": "yes",
-    "price_at_log": 0.78,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXWTI-26NOV03-T94.99",
    "source": "commod_fav_band",
    "sport": "commodities_fav",
    "status": "hit"
