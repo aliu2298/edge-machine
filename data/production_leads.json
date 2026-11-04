@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-04T05:04:53+00:00",
+ "board_built_at": "2026-11-04T06:04:40+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -1252,7 +1252,7 @@
    "kickoff": "2026-11-04T15:00Z",
    "lane": "production",
    "last_seen": "2026-11-04",
-   "last_seen_at": "2026-11-04T05:04:53+00:00",
+   "last_seen_at": "2026-11-04T06:04:40+00:00",
    "league": "Commodities \u00b7 Favourite band",
    "match": "WTI crude close on Nov 4, 2026",
    "pair": "commod_fav_band|commodities_fav",
@@ -1272,6 +1272,44 @@
    "sandbox_quote": "commod_fav_band:KXWTI-26NOV03-T94.99",
    "source": "commod_fav_band",
    "sport": "commodities_fav",
+   "status": "pending"
+  },
+  "2026-11-04|Slavia Prague|Arsenal|Arsenal to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
+   "away": "Arsenal",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "Arsenal"
+   },
+   "date": "2026-11-04",
+   "edge_at_log": null,
+   "first_seen": "2026-11-04",
+   "headline": "Arsenal to score 2+",
+   "home": "Slavia Prague",
+   "id": "2026-11-04|Slavia Prague|Arsenal|Arsenal to score 2+ \u00b7 Favourite to score 2+, ranked by margin",
+   "kickoff": "2026-11-04T20:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-04",
+   "last_seen_at": "2026-11-04T06:04:40+00:00",
+   "league": "Champions League",
+   "match": "Slavia Prague v Arsenal",
+   "pair": "team2_ranked|soccer_team2",
+   "price_at_log": 0.7,
+   "published_at": "2026-11-04T06:04:40+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 835,
+   "route": {
+    "claim": "Arsenal to score 2+",
+    "event": "KXUCLTEAMTOTAL-26NOV04SLAARS",
+    "market": "KXUCLTEAMTOTAL-26NOV04SLAARS-ARS2",
+    "outcome": "Arsenal over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.7,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "team2_ranked:KXUCLTEAMTOTAL-26NOV04SLAARS-ARS2",
+   "source": "team2_ranked",
+   "sport": "soccer_team2",
    "status": "pending"
   }
  },
@@ -1408,9 +1446,9 @@
    "ready_at": "2026-10-11T19:34:45+00:00",
    "route": "moved by hand on 2026-10-11",
    "routing": {
-    "leads": 6,
+    "leads": 7,
     "problem": null,
-    "routed": 6,
+    "routed": 7,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1422,7 +1460,7 @@
    "sandbox_roi_fee": 0.094,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -1466,5 +1504,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-04T05:04:53+00:00"
+ "updated_at": "2026-11-04T06:04:40+00:00"
 }
