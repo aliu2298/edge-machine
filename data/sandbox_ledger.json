@@ -1,32 +1,32 @@
 {
  "coverage": {
   "boxing": {
-   "kalshi_venue": 18,
-   "polymarket_us": 20,
-   "polymarket_us_listed": 20,
-   "polymarket_us_priced": 8
+   "kalshi_venue": 17,
+   "polymarket_us": 21,
+   "polymarket_us_listed": 21,
+   "polymarket_us_priced": 9
   },
   "commodities": {
    "cmd_market": {
-    "offered": 250,
-    "picked": 250
+    "offered": 260,
+    "picked": 260
    },
-   "kalshi_venue": 250
+   "kalshi_venue": 260
   },
   "commodities_fav": {
    "commod_fav_band": {
-    "offered": 250,
+    "offered": 260,
     "picked": 0
    },
    "commod_nc_no": {
-    "offered": 250,
+    "offered": 260,
     "picked": 0
    },
    "commod_nc_yes": {
-    "offered": 250,
+    "offered": 260,
     "picked": 0
    },
-   "kalshi_venue": 250
+   "kalshi_venue": 260
   },
   "cricket": {
    "kalshi_venue": 15,
@@ -73,7 +73,7 @@
     "offered": 9,
     "picked": 2
    },
-   "kalshi_venue": 319,
+   "kalshi_venue": 307,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -348,8 +348,8 @@
   "tennis": {
    "kalshi_venue": 21,
    "polymarket_us": 40,
-   "polymarket_us_listed": 384,
-   "polymarket_us_priced": 144
+   "polymarket_us_listed": 378,
+   "polymarket_us_priced": 145
   },
   "tennis_combo": {
    "combo": 0,
@@ -361,48 +361,175 @@
   }
  },
  "feed_status": {
-  "pin_totals": "down: no paced credit left for this run"
+  "pin_totals": "ok"
  },
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-04T22:38:13+00:00",
-   "commodities": "2026-11-04T22:38:13+00:00",
-   "commodities_fav": "2026-11-04T22:38:13+00:00",
-   "cricket": "2026-11-04T22:38:13+00:00",
-   "crypto": "2026-11-04T22:38:13+00:00",
-   "crypto_fav": "2026-11-04T22:38:13+00:00",
-   "economics": "2026-11-04T22:38:13+00:00",
-   "finance": "2026-11-04T22:38:13+00:00",
-   "mma": "2026-11-04T22:38:13+00:00",
-   "nfl": "2026-11-04T22:38:13+00:00",
-   "nhl_pl": "2026-11-04T22:38:13+00:00",
-   "nhl_rest": "2026-11-04T22:38:13+00:00",
-   "soccer": "2026-11-04T22:38:13+00:00",
-   "soccer_btts": "2026-11-04T22:38:13+00:00",
-   "soccer_btts_cup": "2026-11-04T22:38:13+00:00",
-   "soccer_corners": "2026-11-04T22:38:13+00:00",
+   "boxing": "2026-11-04T22:46:14+00:00",
+   "commodities": "2026-11-04T22:46:14+00:00",
+   "commodities_fav": "2026-11-04T22:46:14+00:00",
+   "cricket": "2026-11-04T22:46:14+00:00",
+   "crypto": "2026-11-04T22:46:14+00:00",
+   "crypto_fav": "2026-11-04T22:46:14+00:00",
+   "economics": "2026-11-04T22:46:14+00:00",
+   "finance": "2026-11-04T22:46:14+00:00",
+   "mma": "2026-11-04T22:46:14+00:00",
+   "nfl": "2026-11-04T22:46:14+00:00",
+   "nhl_pl": "2026-11-04T22:46:14+00:00",
+   "nhl_rest": "2026-11-04T22:46:14+00:00",
+   "soccer": "2026-11-04T22:46:14+00:00",
+   "soccer_btts": "2026-11-04T22:46:14+00:00",
+   "soccer_btts_cup": "2026-11-04T22:46:14+00:00",
+   "soccer_corners": "2026-11-04T22:46:14+00:00",
    "soccer_ftts": "2026-10-19T18:33:38+00:00",
-   "soccer_o15": "2026-11-04T22:38:13+00:00",
-   "soccer_o15_cup": "2026-11-04T22:38:13+00:00",
-   "soccer_o25": "2026-11-04T22:38:13+00:00",
-   "soccer_o25_cup": "2026-11-04T22:38:13+00:00",
-   "soccer_p05": "2026-11-04T22:38:13+00:00",
-   "soccer_p05_cup": "2026-11-04T22:38:13+00:00",
-   "soccer_team1": "2026-11-04T22:38:13+00:00",
-   "soccer_team1_cup": "2026-11-04T22:38:13+00:00",
-   "soccer_team2": "2026-11-04T22:38:13+00:00",
-   "soccer_team2_cup": "2026-11-04T22:38:13+00:00",
-   "soccer_u35": "2026-11-04T22:38:13+00:00",
-   "soccer_u35_cup": "2026-11-04T22:38:13+00:00",
-   "tennis": "2026-11-04T22:38:13+00:00",
+   "soccer_o15": "2026-11-04T22:46:14+00:00",
+   "soccer_o15_cup": "2026-11-04T22:46:14+00:00",
+   "soccer_o25": "2026-11-04T22:46:14+00:00",
+   "soccer_o25_cup": "2026-11-04T22:46:14+00:00",
+   "soccer_p05": "2026-11-04T22:46:14+00:00",
+   "soccer_p05_cup": "2026-11-04T22:46:14+00:00",
+   "soccer_team1": "2026-11-04T22:46:14+00:00",
+   "soccer_team1_cup": "2026-11-04T22:46:14+00:00",
+   "soccer_team2": "2026-11-04T22:46:14+00:00",
+   "soccer_team2_cup": "2026-11-04T22:46:14+00:00",
+   "soccer_u35": "2026-11-04T22:46:14+00:00",
+   "soccer_u35_cup": "2026-11-04T22:46:14+00:00",
+   "tennis": "2026-11-04T22:46:14+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "odds_api": {
-   "allowance": 0,
-   "at": "2026-11-04T22:38:13+00:00",
-   "remaining": 397,
-   "used": 103
+   "allowance": 1,
+   "at": "2026-11-04T22:46:14+00:00",
+   "calls": 1,
+   "remaining": 396,
+   "totals_on": [
+    {
+     "empty": {
+      "no_event": 0,
+      "no_totals": 0,
+      "other_point": 15,
+      "points": [
+       3.25,
+       2.75,
+       4.0,
+       3.5,
+       3.0
+      ],
+      "stale": 0
+     },
+     "key": "soccer_usa_mls",
+     "listed": 15,
+     "rows": [
+      {
+       "empty": "other_point",
+       "market_id": "KXMLSTOTAL-26NOV07CHICLB-3",
+       "points": [
+        3.25
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXMLSTOTAL-26NOV07CINNSH-3",
+       "points": [
+        3.25
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXMLSTOTAL-26NOV07DCUNYC-3",
+       "points": [
+        2.75
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXMLSTOTAL-26NOV07MIACLT-3",
+       "points": [
+        4.0
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXMLSTOTAL-26NOV07MTLVAN-3",
+       "points": [
+        3.25
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXMLSTOTAL-26NOV07NYRBATL-3",
+       "points": [
+        3.5
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXMLSTOTAL-26NOV07ORLNE-3",
+       "points": [
+        3.5
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXMLSTOTAL-26NOV07PHITOR-3",
+       "points": [
+        3.5
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXMLSTOTAL-26NOV07ATXPOR-3",
+       "points": [
+        3.5
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXMLSTOTAL-26NOV07DALCOL-3",
+       "points": [
+        2.75
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXMLSTOTAL-26NOV07HOUSTL-3",
+       "points": [
+        2.75
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXMLSTOTAL-26NOV07MINSJ-3",
+       "points": [
+        3.5
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXMLSTOTAL-26NOV07RSLLAG-3",
+       "points": [
+        3.5
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXMLSTOTAL-26NOV07SDSKC-3",
+       "points": [
+        4.0
+       ]
+      },
+      {
+       "empty": "other_point",
+       "market_id": "KXMLSTOTAL-26NOV07SEALAFC-3",
+       "points": [
+        3.0
+       ]
+      }
+     ]
+    }
+   ],
+   "used": 104
   },
   "outages": [
    {
@@ -421,7 +548,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 1112,
+  "runs": 1113,
   "tennis_shortlist": {
    "audit": [
     {
@@ -433,7 +560,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-04T22:39:12+00:00"
+  "updated": "2026-11-04T22:47:11+00:00"
  },
  "quotes": [
   {
@@ -358222,7 +358349,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-04T22:38:13+00:00",
+   "close_at": "2026-11-04T22:46:14+00:00",
    "close_price": 0.86,
    "date": "2026-11-05",
    "edge": null,
@@ -386033,7 +386160,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-04T22:38:13+00:00",
+   "close_at": "2026-11-04T22:46:14+00:00",
    "close_price": 0.25,
    "date": "2026-11-06",
    "edge": null,
@@ -387223,7 +387350,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-04T22:38:13+00:00",
+   "close_at": "2026-11-04T22:46:14+00:00",
    "close_price": 0.49,
    "date": "2026-11-06",
    "edge": null,
@@ -387415,7 +387542,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-04T22:38:13+00:00",
+   "close_at": "2026-11-04T22:46:14+00:00",
    "close_price": 0.79,
    "date": "2026-11-06",
    "edge": null,
@@ -387455,7 +387582,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-04T22:38:13+00:00",
+   "close_at": "2026-11-04T22:46:14+00:00",
    "close_price": 0.7,
    "date": "2026-11-06",
    "edge": null,
@@ -418240,7 +418367,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-04T22:38:13+00:00",
+   "close_at": "2026-11-04T22:46:14+00:00",
    "close_price": 0.84,
    "date": "2026-11-05",
    "edge": null,
@@ -419980,7 +420107,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-04T22:38:13+00:00",
+   "close_at": "2026-11-04T22:46:14+00:00",
    "close_price": 0.84,
    "date": "2026-11-05",
    "edge": null,
@@ -423252,7 +423379,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-04T22:38:13+00:00",
+   "close_at": "2026-11-04T22:46:14+00:00",
    "close_price": 0.15,
    "date": "2026-11-07",
    "edge": null,
@@ -423292,7 +423419,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-04T22:38:13+00:00",
+   "close_at": "2026-11-04T22:46:14+00:00",
    "close_price": 0.84,
    "date": "2026-11-06",
    "edge": null,
@@ -429907,7 +430034,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-04T22:38:13+00:00",
+   "close_at": "2026-11-04T22:46:14+00:00",
    "close_price": 0.75,
    "date": "2026-11-06",
    "edge": null,
@@ -431348,7 +431475,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-04T22:38:13+00:00",
+   "close_at": "2026-11-04T22:46:14+00:00",
    "close_price": 0.22,
    "date": "2026-11-08",
    "edge": null,
@@ -431393,7 +431520,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-04T22:38:13+00:00",
+   "close_at": "2026-11-04T22:46:14+00:00",
    "close_price": 0.2,
    "date": "2026-11-08",
    "edge": null,
@@ -431438,7 +431565,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-04T22:38:13+00:00",
+   "close_at": "2026-11-04T22:46:14+00:00",
    "close_price": 0.26,
    "date": "2026-11-08",
    "edge": null,
@@ -433861,7 +433988,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-04T22:38:13+00:00",
+   "close_at": "2026-11-04T22:46:14+00:00",
    "close_price": 0.26,
    "date": "2026-11-07",
    "edge": null,
@@ -435365,7 +435492,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-04T22:38:13+00:00",
+   "close_at": "2026-11-04T22:46:14+00:00",
    "close_price": 0.25,
    "date": "2026-11-08",
    "edge": null,
@@ -457297,7 +457424,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-04T22:38:13+00:00",
+   "close_at": "2026-11-04T22:46:14+00:00",
    "close_price": 0.74,
    "date": "2026-11-08",
    "edge": null,
@@ -460817,7 +460944,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-04T22:38:13+00:00",
+   "close_at": "2026-11-04T22:46:14+00:00",
    "close_price": 0.54,
    "date": "2026-11-08",
    "edge": null,
@@ -463913,7 +464040,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-04T22:38:13+00:00",
+   "close_at": "2026-11-04T22:46:14+00:00",
    "close_price": 0.79,
    "date": "2026-11-07",
    "edge": null,
@@ -463953,7 +464080,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-04T22:38:13+00:00",
+   "close_at": "2026-11-04T22:46:14+00:00",
    "close_price": 0.76,
    "date": "2026-11-07",
    "edge": null,
@@ -467637,7 +467764,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-04T22:38:13+00:00",
+   "close_at": "2026-11-04T22:46:14+00:00",
    "close_price": 0.55,
    "date": "2026-11-05",
    "edge": null,
@@ -469632,6 +469759,404 @@
    "untraded": false,
    "url": "https://polymarket.us/event/itfme-zacfucbraper-reijarandmat-2026-11-04",
    "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-05",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfwo-hanshi-yujhua-2026-11-05",
+   "label": "Han Shi vs Yujia Huang",
+   "liquidity": null,
+   "logged": "2026-11-04T22:46:14+00:00",
+   "market_id": "aec-itfwo-hanshi-yujhua-2026-11-05",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.74,
+   "price_b": 0.27,
+   "price_draw": null,
+   "prob_a": 0.735,
+   "result": null,
+   "settled": null,
+   "side_a": "Han Shi",
+   "side_b": "Yujia Huang",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-05T03:30:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfwo",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfwo-hanshi-yujhua-2026-11-05",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-05",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfme-dansar-boxzha-2026-11-05",
+   "label": "Daniil Sarksian vs Boxiong Zhang",
+   "liquidity": null,
+   "logged": "2026-11-04T22:46:14+00:00",
+   "market_id": "aec-itfme-dansar-boxzha-2026-11-05",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.68,
+   "price_b": 0.33,
+   "price_draw": null,
+   "prob_a": 0.675,
+   "result": null,
+   "settled": null,
+   "side_a": "Daniil Sarksian",
+   "side_b": "Boxiong Zhang",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-05T04:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfme",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfme-dansar-boxzha-2026-11-05",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-05",
+   "edge": 0.0,
+   "id": "cmd_market:KXBRENTD-26NOV0517-T93.00",
+   "label": "Will the brent crude oil close price be above 93.00 USD/Bbl on November 05, 2026 at 5:00 P",
+   "liquidity": null,
+   "logged": "2026-11-04T22:46:14+00:00",
+   "market_id": "KXBRENTD-26NOV0517-T93.00",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.73,
+   "price_b": 0.31,
+   "price_draw": null,
+   "prob_a": 0.73,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $93.00",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-05T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxbrentd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-05",
+   "edge": 0.0,
+   "id": "cmd_market:KXBRENTD-26NOV0517-T93.50",
+   "label": "Will the brent crude oil close price be above 93.50 USD/Bbl on November 05, 2026 at 5:00 P",
+   "liquidity": null,
+   "logged": "2026-11-04T22:46:14+00:00",
+   "market_id": "KXBRENTD-26NOV0517-T93.50",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.67,
+   "price_b": 0.37,
+   "price_draw": null,
+   "prob_a": 0.67,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $93.50",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-05T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxbrentd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-05",
+   "edge": 0.0,
+   "id": "cmd_market:KXBRENTD-26NOV0517-T94.00",
+   "label": "Will the brent crude oil close price be above 94.00 USD/Bbl on November 05, 2026 at 5:00 P",
+   "liquidity": null,
+   "logged": "2026-11-04T22:46:14+00:00",
+   "market_id": "KXBRENTD-26NOV0517-T94.00",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.6,
+   "price_b": 0.44,
+   "price_draw": null,
+   "prob_a": 0.6,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $94.00",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-05T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxbrentd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-05",
+   "edge": 0.0,
+   "id": "cmd_market:KXBRENTD-26NOV0517-T94.50",
+   "label": "Will the brent crude oil close price be above 94.50 USD/Bbl on November 05, 2026 at 5:00 P",
+   "liquidity": null,
+   "logged": "2026-11-04T22:46:14+00:00",
+   "market_id": "KXBRENTD-26NOV0517-T94.50",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.53,
+   "price_b": 0.51,
+   "price_draw": null,
+   "prob_a": 0.53,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $94.50",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-05T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxbrentd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-05",
+   "edge": 0.0,
+   "id": "cmd_market:KXBRENTD-26NOV0517-T95.00",
+   "label": "Will the brent crude oil close price be above 95.00 USD/Bbl on November 05, 2026 at 5:00 P",
+   "liquidity": null,
+   "logged": "2026-11-04T22:46:14+00:00",
+   "market_id": "KXBRENTD-26NOV0517-T95.00",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.46,
+   "price_b": 0.58,
+   "price_draw": null,
+   "prob_a": 0.46,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $95.00",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-05T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxbrentd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-05",
+   "edge": 0.0,
+   "id": "cmd_market:KXBRENTD-26NOV0517-T95.50",
+   "label": "Will the brent crude oil close price be above 95.50 USD/Bbl on November 05, 2026 at 5:00 P",
+   "liquidity": null,
+   "logged": "2026-11-04T22:46:14+00:00",
+   "market_id": "KXBRENTD-26NOV0517-T95.50",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.39,
+   "price_b": 0.65,
+   "price_draw": null,
+   "prob_a": 0.39,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $95.50",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-05T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxbrentd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-05",
+   "edge": 0.0,
+   "id": "cmd_market:KXBRENTD-26NOV0517-T96.00",
+   "label": "Will the brent crude oil close price be above 96.00 USD/Bbl on November 05, 2026 at 5:00 P",
+   "liquidity": null,
+   "logged": "2026-11-04T22:46:14+00:00",
+   "market_id": "KXBRENTD-26NOV0517-T96.00",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.33,
+   "price_b": 0.71,
+   "price_draw": null,
+   "prob_a": 0.33,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $96.00",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-05T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxbrentd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-05",
+   "edge": 0.0,
+   "id": "cmd_market:KXBRENTD-26NOV0517-T96.50",
+   "label": "Will the brent crude oil close price be above 96.50 USD/Bbl on November 05, 2026 at 5:00 P",
+   "liquidity": null,
+   "logged": "2026-11-04T22:46:14+00:00",
+   "market_id": "KXBRENTD-26NOV0517-T96.50",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.27,
+   "price_b": 0.77,
+   "price_draw": null,
+   "prob_a": 0.27,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $96.50",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-05T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxbrentd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-05",
+   "edge": 0.0,
+   "id": "cmd_market:KXBRENTD-26NOV0517-T97.00",
+   "label": "Will the brent crude oil close price be above 97.00 USD/Bbl on November 05, 2026 at 5:00 P",
+   "liquidity": null,
+   "logged": "2026-11-04T22:46:14+00:00",
+   "market_id": "KXBRENTD-26NOV0517-T97.00",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.22,
+   "price_b": 0.82,
+   "price_draw": null,
+   "prob_a": 0.22,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $97.00",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-05T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxbrentd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-05",
+   "edge": 0.0,
+   "id": "cmd_market:KXBRENTD-26NOV0517-T97.50",
+   "label": "Will the brent crude oil close price be above 97.50 USD/Bbl on November 05, 2026 at 5:00 P",
+   "liquidity": null,
+   "logged": "2026-11-04T22:46:14+00:00",
+   "market_id": "KXBRENTD-26NOV0517-T97.50",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.18,
+   "price_b": 0.86,
+   "price_draw": null,
+   "prob_a": 0.18,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $97.50",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-05T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxbrentd",
+   "venue": "kalshi_binary",
    "venue_start": null
   }
  ],
