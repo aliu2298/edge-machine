@@ -326,6 +326,12 @@ def stamp_ledger(full, name):
     return out
 
 
+def source_retired(name):
+    """True when a source runs no scope any more and every one it covered is retired."""
+    m = S.SOURCES[name]
+    return not m["sports"] and bool(m.get("retired_sports") or m.get("retired"))
+
+
 def approval_table(d, scores, full=None):
     """Every betting source against every criterion, so a stamp can be checked, not trusted.
 
@@ -356,7 +362,10 @@ def approval_table(d, scores, full=None):
             f'<td><span class="{"pos" if passed else "neg"}">{"✓" if passed else "✗"}</span>'
             f'<div class="sm mut">{esc(detail)}</div></td>'
             for _k, _l, passed, detail in a["criteria"])
-        rows.append(f'<tr><td><b>{esc(S.SOURCES[name]["label"])}</b></td>'
+        # A source retired on every scope it covered keeps its row (its record is still judged),
+        # tagged so it does not read as a live lane (2026-11-04, Olu).
+        tag = ' <span class="sig n" data-retired>RETIRED</span>' if source_retired(name) else ""
+        rows.append(f'<tr><td><b>{esc(S.SOURCES[name]["label"])}</b>{tag}</td>'
                     f'<td>{STAMP[a["status"]]}</td>{cells}</tr>')
     return f"""<div class="tbl"><table>
 <tr><th>Source</th><th>Stamp</th>{head}</tr>

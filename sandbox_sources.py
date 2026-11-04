@@ -192,6 +192,14 @@ CRYPTO_FAV_BAND_BELOW_60_RETIRED_WHY = ("Retired 2026-11-03 by Olu: no edge at 1
                                         "−8.8% after fees. Crypto band, below (No 0.70-0.80) keeps running."
                                         + RETIRED_TAIL_2026_11_03)
 
+# 2026-11-04 (Olu): the team +0.5 unbeaten rule's last live scope, Cups (Clubs and Internationals went on 2026-10-14),
+# so every scope of it is retired. Not in Production. The congestion under 2.5 rule and the tennis favourite band
+# within 3h, retired in the same request, were already retired on every scope (2026-10-11 and 2026-10-24).
+RETIRED_TAIL_2026_11_04 = (" No new entries from 2026-11-04; its rows stay on file and its open bets "
+                           "still settle.")
+P05_UNBEATEN_CUPS_RETIRED_WHY = ("Retired 2026-11-04 by Olu with the rule's other scopes: no edge at 8 settled — 6 won v 5.7 "
+                                 "priced, +3.6% after fees, z +0.23." + RETIRED_TAIL_2026_11_04)
+
 # The registry. `connected` is the honest bit: it says whether this run can actually
 # reach the source, not whether the site exists.
 SOURCES = {
@@ -749,8 +757,9 @@ SOURCES = {
              "In Production since 2026-09-18, moved by hand."),
     "p05_unbeaten": dict(
         label="Team +0.5 unbeaten rule (unbeaten 8+/10, opponent won ≤3/10)", kind="Rule",
-        connected=True, site="edge-machine", sports=["soccer_p05_cup"], baseline="population",
+        connected=True, site="edge-machine", sports=[], baseline="population",
         retired_sports={
+            "soccer_p05_cup": P05_UNBEATEN_CUPS_RETIRED_WHY,
             "soccer_p05": "Retired 2026-10-14 by Olu: 34 won, 11 lost, 1 no result on 46 settled, "
                           "-5.3% after fees, and the other side of the same bets lost too (-4.7% "
                           "after fees per contract, -20.5% at $100 a bet). It loses both ways.",
