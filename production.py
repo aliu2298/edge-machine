@@ -1359,7 +1359,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
     if nba_wm is not None:
         # The NBA win margin YES split and NO fade, live since 2026-11-03 (nba_wm_production): the paper lanes' version 2 is the record.
         import nba_wm_production
-        d, st, blob = nba_wm_production.page_inputs(d, st, blob, nba_wm.get("chaos"), nba_wm.get("nofade"), now=now_dt)
+        d, st, blob = nba_wm_production.page_inputs(d, st, blob, nba_wm.get("chaos"), nba_wm.get("nofade"), now=now_dt, v3=nba_wm.get("v3"))
     if o35 is not None:
         # Over 3.5 cheap NO, live since 2026-11-01 (o35_production): the Sandbox v3 ledger is its record,
         # data/production_o35_leads.json its upcoming list.
