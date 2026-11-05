@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-05T22:07Z",
+ "generated": "2026-11-05T23:07Z",
  "lane_note": "own-state lanes: the lane's own fill price; outcome from the market's settled result; sold bets left out; fees not included",
  "lanes": {
   "nba_wm_nofade": [
@@ -989,10 +989,7 @@
    "refused": {
     "crypto_fav_band_below:KXBTCD-26NOV0317-T77999.99": "outside the price band",
     "crypto_fav_band_below:KXBTCD-26NOV0417-T80749.99": "outside the entry window",
-    "crypto_fav_band_below:KXETHD-26NOV0517-T2259.99": "outside the price band",
-    "crypto_fav_band_below:KXSOLD-26NOV0517-T89.9999": "outside the entry window",
-    "crypto_fav_band_below:KXSOLD-26OCT3017-T93.9999": "published inside 30 min of kickoff",
-    "crypto_fav_band_below:KXXRPD-26NOV0517-T1.2399": "outside the entry window"
+    "crypto_fav_band_below:KXSOLD-26OCT3017-T93.9999": "published inside 30 min of kickoff"
    }
   },
   "econ_nc_yes|econ_daily": {
