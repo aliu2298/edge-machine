@@ -400,11 +400,6 @@
    "lead_min": 2.6,
    "price": 0.83
   },
-  "crypto_fav_band:KXBTCD-26OCT2617-T79999.99": {
-   "at": "2026-10-26T19:00:07+00:00",
-   "lead_min": 4.9,
-   "price": 0.33
-  },
   "crypto_fav_band:KXBTCD-26OCT2717-T80249.99": {
    "at": "2026-10-27T18:53:18+00:00",
    "lead_min": 11.7,
@@ -454,11 +449,6 @@
    "at": "2026-11-02T20:02:22+00:00",
    "lead_min": 2.6,
    "price": 0.63
-  },
-  "crypto_fav_band_60:KXBTCD-26OCT2617-T79999.99": {
-   "at": "2026-10-26T19:00:07+00:00",
-   "lead_min": 4.9,
-   "price": 0.33
   },
   "crypto_fav_band_60:KXBTCD-26OCT2717-T80499.99": {
    "at": "2026-10-27T18:53:18+00:00",
@@ -510,11 +500,6 @@
    "lead_min": 8.9,
    "price": 0.97
   },
-  "crypto_fav_band_below:KXBTCD-26OCT2617-T80499.99": {
-   "at": "2026-10-26T19:00:07+00:00",
-   "lead_min": 4.9,
-   "price": 0.95
-  },
   "crypto_fav_band_below:KXBTCD-26OCT2717-T80749.99": {
    "at": "2026-10-27T18:53:18+00:00",
    "lead_min": 11.7,
@@ -539,11 +524,6 @@
    "at": "2026-10-31T18:54:41+00:00",
    "lead_min": 10.3,
    "price": 0.9
-  },
-  "crypto_fav_band_below:KXETHD-26OCT2617-T2339.99": {
-   "at": "2026-10-26T19:00:07+00:00",
-   "lead_min": 4.9,
-   "price": 0.94
   },
   "crypto_fav_band_below:KXSOLD-26NOV0317-T93.9999": {
    "at": "2026-11-03T19:51:51+00:00",
@@ -900,6 +880,11 @@
    "lead_min": 1.8,
    "price": 0.49
   },
+  "p05_unbeaten:KXUECLGAME-26NOV05GETBRI-GET": {
+   "at": "2026-11-05T19:00:09+00:00",
+   "lead_min": 59.8,
+   "price": 0.85
+  },
   "team1_form_l5:KXDFBPOKALTEAMTOTAL-26OCT27BOCM05-M051": {
    "at": "2026-10-27T16:51:51+00:00",
    "lead_min": 8.1,
@@ -1024,6 +1009,11 @@
    "at": "2026-11-04T19:56:08+00:00",
    "lead_min": 3.9,
    "price": 0.69
+  },
+  "team2_ranked:KXUECLTEAMTOTAL-26NOV05GETBRI-BRI2": {
+   "at": "2026-11-05T19:00:09+00:00",
+   "lead_min": 59.8,
+   "price": 0.57
   },
   "team2_ranked:KXUECLTEAMTOTAL-26NOV05LINHAJ-HAJ2": {
    "at": "2026-11-05T17:44:58+00:00",
@@ -1206,5 +1196,5 @@
    "price": 0.75
   }
  },
- "updated": "2026-11-05T18:45:07+00:00"
+ "updated": "2026-11-05T19:00:09+00:00"
 }
