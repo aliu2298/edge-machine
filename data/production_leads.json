@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-04T23:41:43+00:00",
+ "board_built_at": "2026-11-05T00:05:04+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -989,6 +989,76 @@
    "sport": "commodities_fav",
    "status": "hit"
   },
+  "2026-11-04|KXBRENTD-26NOV0417-T94.00|Above $94.00 at the close \u00b7 Commodities favourite band": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-11-04",
+   "edge_at_log": null,
+   "first_seen": "2026-11-04",
+   "headline": "Above $94.00 at the close",
+   "home": null,
+   "id": "2026-11-04|KXBRENTD-26NOV0417-T94.00|Above $94.00 at the close \u00b7 Commodities favourite band",
+   "kickoff": "2026-11-04T22:00Z",
+   "lane": "production",
+   "league": "Commodities \u00b7 Favourite band",
+   "match": "Brent crude close on Nov 4, 2026",
+   "pair": "commod_fav_band|commodities_fav",
+   "price_at_log": 0.74,
+   "published_at": "2026-11-05T00:05:04+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Above $94.00 at the close",
+    "event": "KXBRENTD-26NOV0417",
+    "market": "KXBRENTD-26NOV0417-T94.00",
+    "outcome": "Above $94.00",
+    "outcome_side": "yes",
+    "price_at_log": 0.74,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "commod_fav_band:KXBRENTD-26NOV0417-T94.00",
+   "source": "commod_fav_band",
+   "sport": "commodities_fav",
+   "status": "hit"
+  },
+  "2026-11-04|KXGOLDD-26NOV0417-T4058|Above $4058 at the close \u00b7 Commodities favourite band": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-11-04",
+   "edge_at_log": null,
+   "first_seen": "2026-11-04",
+   "headline": "Above $4058 at the close",
+   "home": null,
+   "id": "2026-11-04|KXGOLDD-26NOV0417-T4058|Above $4058 at the close \u00b7 Commodities favourite band",
+   "kickoff": "2026-11-04T22:00Z",
+   "lane": "production",
+   "league": "Commodities \u00b7 Favourite band",
+   "match": "Gold close on Nov 4, 2026",
+   "pair": "commod_fav_band|commodities_fav",
+   "price_at_log": 0.74,
+   "published_at": "2026-11-05T00:05:04+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Above $4058 at the close",
+    "event": "KXGOLDD-26NOV0417",
+    "market": "KXGOLDD-26NOV0417-T4058",
+    "outcome": "Above $4058",
+    "outcome_side": "yes",
+    "price_at_log": 0.74,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "commod_fav_band:KXGOLDD-26NOV0417-T4058",
+   "source": "commod_fav_band",
+   "sport": "commodities_fav",
+   "status": "hit"
+  },
   "2026-11-04|Slavia Prague|Arsenal|Arsenal to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
    "away": "Arsenal",
    "bet": {
@@ -1034,18 +1104,18 @@
    "ready_at": "2026-10-09T04:31:34+00:00",
    "route": "moved by hand on 2026-10-09",
    "routing": {
-    "leads": 10,
+    "leads": 12,
     "problem": null,
-    "routed": 10,
+    "routed": 12,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": 0.0357,
-   "sandbox_n": 17,
-   "sandbox_roi": 0.1886,
-   "sandbox_roi_fee": 0.1682,
+   "sandbox_clv": 0.0522,
+   "sandbox_n": 18,
+   "sandbox_roi": 0.1977,
+   "sandbox_roi_fee": 0.177,
    "timing": {
     "late": [],
     "timed": 0,
@@ -1217,5 +1287,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-04T23:41:43+00:00"
+ "updated_at": "2026-11-05T00:05:04+00:00"
 }
