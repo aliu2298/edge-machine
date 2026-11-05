@@ -23,7 +23,7 @@ def order(market, side, px, qty, pair="sr_a7|soccer_u35", quote=None, ko="2026-1
                 lead=dict(pair=pair, sandbox_quote=quote or f"sr_a7:{market}", kickoff=ko), **kw)
 
 
-print("the order rows come from the bot's own fills, settled by Kalshi's result")
+print("the order rows come from the follower's own fills, settled by Kalshi's result")
 mk = "KXUCLTOTAL-26NOV03FEYINT-4"
 # results.json prices this contract with a position-wide P&L of -7 (another lane holds the NO): the order itself won.
 res = {"k1": dict(resolved=True, market_settled=True, realised=-6.995, cost=6.995)}

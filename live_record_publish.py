@@ -1,12 +1,12 @@
-"""Publish the bot's LIVE record per Production pair to the public repo (2026-11-04), for the Production page's "live v paper" column.
+"""Publish the follower's LIVE record per Production pair to the public repo (2026-11-04), for the Production page's "live v paper" column.
 
-Runs on edge-vps (scripts/vps_live_record.sh), beside the bot. Reads the bot's own files (orders_placed.json for what was bought,
+Runs on edge-vps (scripts/vps_live_record.sh), beside the follower. Reads the follower's own files (orders_placed.json for what was bought,
 results.json for how each market settled, ledger.jsonl for why a lead was refused), joins them to the Production feeds' leads, and writes
 data/live_record.json. Public fields only: per order a quote id (the Sandbox quote the lead came from), kickoff, side, outcome, the
 return per $1 staked and the stake as a MULTIPLE of the pair's typical stake. No dollar amount, balance, order id, account or key.
 It REFUSES to write (exit 1, nothing changed) if any value looks like one.
 
-The live record is built from the bot's OWN orders (quantity x price paid + fee), never from results.json's cost column: that column
+The live record is built from the follower's OWN orders (quantity x price paid + fee), never from results.json's cost column: that column
 is the whole Kalshi position in the market, so when two lanes (or a hand order) hold one contract it prices one lane's bet with
 the other's stake.
 """
@@ -22,7 +22,7 @@ OUT = os.path.join(ROOT, "data", "live_record.json")
 FEEDS = ("production_leads", "soccer_rules_production_leads", "soccer_team_rules_production_leads", "econ_production_leads",
          "culture_production_leads", "nba_value_production_leads")
 _FOUND = sorted(glob.glob(os.path.expanduser("~/poly*/orders_placed.json")))
-BOT = os.path.expanduser(os.environ.get("LIVE_RECORD_BOT") or (os.path.dirname(_FOUND[0]) if _FOUND else "~/polymarket-bot"))
+SRC_DIR = os.path.expanduser(os.environ.get("LIVE_RECORD_DIR") or (os.path.dirname(_FOUND[0]) if _FOUND else "~/polymarket-src_dir"))
 
 # A refused lead's reason text -> the public category. Order matters (first match wins).
 REASONS = (
@@ -78,7 +78,7 @@ def feed_index():
 
 
 def refusals(path, leads):
-    """{quote id: category} for the last refusal of each lead, from the bot's ledger."""
+    """{quote id: category} for the last refusal of each lead, from the follower's ledger."""
     last = {}
     try:
         with open(path) as f:
@@ -164,12 +164,12 @@ def results_for(tickers, fetch=None, cache_path=None):
     return cache
 
 
-def lane_rows(bot, fetch=None, cache_path=None):
+def lane_rows(src_dir, fetch=None, cache_path=None):
     """The own-state lanes (o35, nba_wm), {lane: [order rows]}. Stake and price are the lane's own fill; the outcome is the
     market's settled result from Kalshi's public API, so a contract another lane also holds does not blur it. A bet with a
     sale or a resting take-profit filled is left out ('sold'). Fees are not in these rows."""
-    o35 = load(os.path.join(bot, "o35_state.json"), {}).get("matches") or {}
-    wm = load(os.path.join(bot, "nba_wm_state.json"), {}).get("matches") or {}
+    o35 = load(os.path.join(src_dir, "o35_state.json"), {}).get("matches") or {}
+    wm = load(os.path.join(src_dir, "nba_wm_state.json"), {}).get("matches") or {}
     tickers = {tk for tk, m in o35.items() if m.get("filled")} | {k.split(":", 1)[1] for k, m in wm.items() if m.get("filled")}
     res = results_for(tickers, fetch, cache_path)
     out = {"o35_cheap_no": [], "nba_wm_yes": [], "nba_wm_nofade": []}
@@ -199,9 +199,9 @@ def lane_rows(bot, fetch=None, cache_path=None):
     return {k: sorted(v, key=lambda r: (r["ko"], r["id"])) for k, v in out.items()}
 
 
-def build(bot=BOT, fetch=None, cache_path=None):
-    orders = load(os.path.join(bot, "orders_placed.json"), {})
-    res = {r.get("pick_id"): r for r in (load(os.path.join(bot, "results.json"), {}).get("rows") or [])}
+def build(src_dir=SRC_DIR, fetch=None, cache_path=None):
+    orders = load(os.path.join(src_dir, "orders_placed.json"), {})
+    res = {r.get("pick_id"): r for r in (load(os.path.join(src_dir, "results.json"), {}).get("rows") or [])}
     leads, entered = feed_index()
     mine = {k: o for k, o in orders.items() if (o.get("lead") or {}).get("pair") in entered}
     kres = results_for({o.get("market") for o in mine.values() if str(o.get("market") or "").startswith("KX")}, fetch, cache_path)
@@ -218,13 +218,13 @@ def build(bot=BOT, fetch=None, cache_path=None):
             row["w"] = round(stake / typical, 2) if stake and typical else None
             mine.append(row)
         out[pair] = dict(entered=entered[pair], orders=mine, refused={})
-    refused = refusals(os.path.join(bot, "ledger.jsonl"), leads)
+    refused = refusals(os.path.join(src_dir, "ledger.jsonl"), leads)
     placed = {r["id"] for blob in out.values() for r in blob["orders"] if r["st"] not in ("unfilled",)}
     for lid, (pair, quote) in leads.items():
         if pair in out and quote and quote in refused and quote not in placed:
             out[pair]["refused"][quote] = refused[quote]
     return dict(generated=dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%MZ"), pairs=out,
-                lanes=lane_rows(bot, fetch, cache_path),
+                lanes=lane_rows(src_dir, fetch, cache_path),
                 lane_note="own-state lanes: the lane's own fill price; outcome from the market's settled result; sold bets left out; fees not included")
 
 

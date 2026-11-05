@@ -1,9 +1,9 @@
 #!/bin/bash
-# vps_live_record.sh — the bot's live record per Production pair, pushed to main for the Production page (2026-11-04).
+# vps_live_record.sh — the follower's live record per Production pair, pushed to main for the Production page (2026-11-04).
 #
 # Hourly from edge-vps (a USER crontab, like vps_window_requests.sh and the NBA win margin decisions snapshot):
 #   7 * * * * /home/<user>/edge-machine-closes/scripts/vps_live_record.sh >> /home/<user>/edge-live-record.log 2>&1
-# live_record_publish.py reads the bot's own files (orders_placed.json, results.json, ledger.jsonl, o35_state.json, nba_wm_state.json: read-only),
+# live_record_publish.py reads the follower's own files (orders_placed.json, results.json, ledger.jsonl, o35_state.json, nba_wm_state.json: read-only),
 # reads Kalshi's PUBLIC market results (cached in ~/live_record_results.json), and writes data/live_record.json after refusing anything outside
 # its whitelist of public fields (no balance, order id, account, key or dollar figure). This script commits only that file. It shares the
 # edge-machine-closes clone with the other VPS jobs, so it takes the same lock and pulls with --rebase. No new secret: it uses the push route

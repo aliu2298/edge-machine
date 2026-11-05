@@ -1,4 +1,4 @@
-"""The Production page's "live v paper" column (2026-11-04): what the bot really bought and how it settled, next to the paper record.
+"""The Production page's "live v paper" column (2026-11-04): what the follower really bought and how it settled, next to the paper record.
 
 The live side is data/live_record.json (live_record_publish.py, from the follower's own orders: public fields only). The paper side is the
 page's own since-Production record. Both are per pair; the gap is listed with its reasons wherever it is more than about one bet.
@@ -70,7 +70,7 @@ def explain(paper, orders, refused, in_feed=None, feed_from=None):
     `orders` the live orders in the same window
     `refused` {quote id: category} the follower's refusals of leads that never got an order
     `feed_from` the earliest kickoff the feed still holds for the pair: older paper bets cannot be placed in or out of it
-    `in_feed` the quote ids the Production feed carries (None = unknown): a paper bet missing from it never reached the bot"""
+    `in_feed` the quote ids the Production feed carries (None = unknown): a paper bet missing from it never reached the follower"""
     live = {o["id"]: o for o in orders if o.get("id")}
     out = {}
 
