@@ -8,6 +8,10 @@
   "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXUECLTEAMTOTAL-26NOV05LINHAJ-HAJ2\", \"a\"]]": {
    "at": "2026-11-05T16:10:44.196456+00:00",
    "pool": "entered"
+  },
+  "[\"soccer_team_rules_ledger.json\", \"T5\", [\"T5:KXUELTEAMTOTAL-26NOV05RSOOL:away\", \"yes\"]]": {
+   "at": "2026-11-05T17:04:52.386341+00:00",
+   "pool": "entered"
   }
  },
  "entries": [
@@ -101,7 +105,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-05T16:10:44.196456+00:00",
+ "last_run": "2026-11-05T17:04:52.386341+00:00",
  "mirror": [],
  "pool": [
   {
@@ -148,6 +152,29 @@
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUELTEAMTOTAL-26NOV05RSOOL-OL2",
+   "entered_at": "2026-11-05T17:04:52.386341+00:00",
+   "entities": [
+    "Lyon"
+   ],
+   "id": "superpack:[\"soccer_team_rules_ledger.json\", \"T5\", [\"T5:KXUELTEAMTOTAL-26NOV05RSOOL:away\", \"yes\"]]",
+   "lane": "T5",
+   "logged": "2026-11-05T16:16:38.845886+00:00",
+   "matched": [
+    "Lyon"
+   ],
+   "pid": "[\"soccer_team_rules_ledger.json\", \"T5\", [\"T5:KXUELTEAMTOTAL-26NOV05RSOOL:away\", \"yes\"]]",
+   "price": 0.31,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_team_rules_ledger.json",
    "status": "open"
   }
  ],
