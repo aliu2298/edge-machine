@@ -41,17 +41,25 @@ PULLED_ON = "2026-10-28"
 # T5 (st_t5, O+D− v O+D+ · team 2+ goals) was a pair from 2026-10-28 to 2026-11-02; it is back in the Sandbox
 # as paper on its whole record (Olu: research it later), still logged by soccer_team_rules.py.
 T5_PULLED = ("2026-10-28", "2026-11-02")
+# T4 (O+D− v O−D+ · team 2+ goals YES · MLS, La Liga, EPL; Sandbox 8–3 on 11, +10.6%) moved by hand
+# 2026-11-04 (Olu), live $1 bets, only for fixtures after the promotion time.
+T4_PROMOTED = "2026-11-05T02:50:00+00:00"
+T4_MOVED_ON = "2026-11-04"
 PAIRS = {
+    "T4": ("st_t4", "soccer_team2", "O+D− v O−D+ · team 2+ goals"),
     "T7": ("st_t7", "soccer_team3", "O+D+ v O+D+ · team 3+ goals · NO"),
 }
+PROMOTED_AT = {"T4": T4_PROMOTED, "T7": PROMOTED}
+MOVED = {"T4": T4_MOVED_ON, "T7": MOVED_ON}
 LABELS = {src: name for src, _sport, name in PAIRS.values()}
 BAND = (TR.PRICE_LO, TR.PRICE_HI)
 TITLE_RE = re.compile(r"^Will (.+?) score over (\d+(?:\.\d+)?) goals\??$", re.I)
 
 
 def pairs():
-    return {f"{src}|{sport}": dict(stage="production", ready_at=PROMOTED, promoted_at=PROMOTED, by_hand=MOVED_ON)
-            for src, sport, _n in PAIRS.values()}
+    return {f"{src}|{sport}": dict(stage="production", ready_at=PROMOTED_AT.get(rule, PROMOTED),
+                                   promoted_at=PROMOTED_AT.get(rule, PROMOTED), by_hand=MOVED.get(rule, MOVED_ON))
+            for rule, (src, sport, _n) in PAIRS.items()}
 
 
 def kalshi_title(r):
