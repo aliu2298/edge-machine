@@ -8107,16 +8107,34 @@
    "result": "yes",
    "series": "KXUCLTOTAL",
    "version": "o35-v4"
+  },
+  {
+   "bids": {
+    "10": null,
+    "10e": null
+   },
+   "crossed": null,
+   "event": "KXUCLTOTAL-26NOV04BVBRBB",
+   "form_rule": false,
+   "id": "KXUCLTOTAL-26NOV04BVBRBB-4",
+   "kickoff": 1793822400,
+   "league": "Champions League",
+   "logged": "2026-11-05T02:46:39.419860+00:00",
+   "night": "2026-11-04",
+   "prints": 2160,
+   "result": "no",
+   "series": "KXUCLTOTAL",
+   "version": "o35-v4"
   }
  ],
  "error": null,
  "lane": "o35_cheap_no_wave",
- "last_run": "2026-11-04T22:12:51.762073+00:00",
+ "last_run": "2026-11-05T02:46:39.419860+00:00",
  "observations": {
-  "at": "2026-11-04T22:12:51.762073+00:00",
+  "at": "2026-11-05T02:46:39.419860+00:00",
   "errors": [],
-  "new": 8,
-  "waiting": 4
+  "new": 1,
+  "waiting": 3
  },
  "seen": {
   "KXBUNDESLIGATOTAL-26NOV01SGEHSV": "2026-11-02T11:41:22.679309+00:00",
@@ -8208,6 +8226,7 @@
   "KXUCLTOTAL-26NOV03SHASPO": "2026-11-03T23:43:04.158275+00:00",
   "KXUCLTOTAL-26NOV03VILPSG": "2026-11-03T23:43:04.158275+00:00",
   "KXUCLTOTAL-26NOV04AEKRMA": "2026-11-04T22:12:51.762073+00:00",
+  "KXUCLTOTAL-26NOV04BVBRBB": "2026-11-05T02:46:39.419860+00:00",
   "KXUCLTOTAL-26NOV04FCPNAP": "2026-11-04T22:12:51.762073+00:00",
   "KXUCLTOTAL-26NOV04FENLFC": "2026-11-04T22:12:51.762073+00:00",
   "KXUCLTOTAL-26NOV04PSVBRU": "2026-11-04T22:12:51.762073+00:00",
