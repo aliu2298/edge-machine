@@ -82,15 +82,23 @@ UFC = dict(
     outside_text="YES ask outside 0.15-0.30",
     research="Research (169 fights): 16 entries, 8 won. Hold +97%; split +28% (the hourly-close version +18%). "
              "HOLD and SPLIT are shown side by side.")
-# 2026-11-01 (Olu): no lane may select blind. Both fights lanes are price band only, kept running under 10 fights;
-# each card says so, and each becomes a baseline when a filtered fights lane exists.
+# 2026-11-01 (Olu): no lane may select blind. Both fights lanes were price band only; UFC retired 2026-11-03 and boxing
+# became a baseline 2026-11-04 (below). A live blind lane's card would carry this note.
 BLIND = "Price band only: becomes a baseline when a filtered fights lane exists."
 # Retired by hand (2026-11-03, Olu): no new entry from the dated day on (Eastern, mentions_split.retired); its rows
 # stay and open entries still fill and settle. The Fights page lists it in its Retired fold.
 UFC["retired"] = dict(on="2026-11-03", at="7 fights, 0 won; split −86.5%, hold −100%",
                       reason="no edge at 7 fights: none won, and the split sell lost almost the whole stake")
-LANES = (BOXING, UFC)
-LIVE = tuple(c for c in LANES if not c.get("retired"))
+# A BASELINE by hand (2026-11-04, Olu): boxing picks on its price band alone, so under the 2026-11-01 rule it is the
+# population a filtered boxing lane must beat, not a lane. Same entry and exit rules, whole record kept, still read every
+# hour; no review status and no lane count. Set after UFC is built, because UFC is a copy of BOXING. No filtered boxing
+# lane is registered: Olu has not chosen a filter.
+BOXING["baseline"] = dict(on="2026-11-04", at="4 settled events, 1 won; split +75.0%, hold +57.3%",
+                          reason="blind selection (price band only, no fighter or matchup filter): kept as the baseline a "
+                                 "filtered boxing lane must beat (Olu, 2026-11-04)")
+LANES = (BOXING, UFC)                                                   # every ledger the run reads, baselines included
+LIVE = tuple(c for c in LANES if not c.get("retired") and not c.get("baseline"))
+BASES = tuple(c for c in LANES if c.get("baseline") and not c.get("retired"))
 GONE = tuple(c for c in LANES if c.get("retired"))
 
 

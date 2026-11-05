@@ -436,12 +436,24 @@ def index(lanes):
 def baseline_index(lanes):
     """The baselines under the index, apart from the lanes: a link each, no status."""
     bases = [L for L in lanes if L.get("baseline") and not L.get("retired")]
-    if not bases:
+    links = [f'<a href="./{esc(HOME_OF.get(L["id"], "sandbox"))}.html#baseline-{esc(L["id"])}">{esc(baseline_name(L))}</a>'
+             for L in bases] + _extra_baselines()
+    if not links:
         return ""
-    items = ", ".join(f'<a href="./{esc(HOME_OF.get(L["id"], "sandbox"))}.html#baseline-{esc(L["id"])}">{esc(baseline_name(L))}</a>'
-                      for L in bases)
+    items = ", ".join(links)
     return (f'<p class="sm mut chaos-baselines">Baselines (blind, price band only, not lanes): {items}. '
             'A filtered lane on the same markets must beat its baseline.</p>')
+
+
+def _extra_baselines():
+    """Baselines kept outside the chaos engine (boxing cheap dog on the Fights page, 2026-11-04): a link each."""
+    try:
+        import fights_build
+        import fights_split
+        return [f'<a href="./fights.html#baseline-{esc(c["lane"])}">{esc(fights_build.baseline_name(c))}</a>'
+                for c in fights_split.BASES]
+    except Exception:                                           # noqa: BLE001
+        return []
 
 
 def _extra_index_rows():
