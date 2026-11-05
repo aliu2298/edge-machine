@@ -325,7 +325,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-05T19:34:57.852924+00:00",
+ "last_run": "2026-11-05T20:05:49.450275+00:00",
  "mirror": [],
  "pool": [
   {
@@ -365,14 +365,14 @@
    ],
    "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXUECLTEAMTOTAL-26NOV05LINHAJ-HAJ2\", \"a\"]]",
    "price": 0.71,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_team2_cup",
-   "settled": null,
+   "settled": "2026-11-05T20:05:22+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXUELTEAMTOTAL-26NOV05RSOOL-OL2",
