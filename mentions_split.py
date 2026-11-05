@@ -766,10 +766,13 @@ def section(state, esc, cfg=STRICT):
              + ('<th>Ask check</th>' if rule else '') + '</tr></thead>')
     cols = 12 if rule else 11
     return (f'<section class="lane-card" id="{cfg["anchor"]}"><h3>{esc(cfg["label"])}</h3>'
-            f'<p class="sm"><b>Sandbox · paper · fresh record from its first entry · review at {REVIEW_AT} settled events, '
-            f'decide at {DECIDE_AT}</b> ({esc(status(r["settled_events"]))}; {r["entries"]} entries, {r["resolved"]} '
-            f'resolved). Registered {cfg["registered"]}; {cfg["backfill"]}.</p>'
-            f'<p class="sm">{esc(cfg["rule"])}</p>{voided_line(state, esc)}<div class="tiles">{tiles}</div>'
+            + (f'<p class="sm"><b>Sandbox · paper · baseline (blind, price band only) · not a lane, so no review '
+               f'status</b> ({r["entries"]} entries, {r["resolved"]} resolved). Registered {cfg["registered"]}, a '
+               f'baseline from {esc(cfg["baseline"]["on"])}; {cfg["backfill"]}.</p>' if cfg.get("baseline") else
+               f'<p class="sm"><b>Sandbox · paper · fresh record from its first entry · review at {REVIEW_AT} settled events, '
+               f'decide at {DECIDE_AT}</b> ({esc(status(r["settled_events"]))}; {r["entries"]} entries, {r["resolved"]} '
+               f'resolved). Registered {cfg["registered"]}; {cfg["backfill"]}.</p>')
+            + f'<p class="sm">{esc(cfg["rule"])}</p>{voided_line(state, esc)}<div class="tiles">{tiles}</div>'
             '<p class="sm mut">ROI is per contract after fees, the mean over resolved entries (equal stake per entry). '
             'Held: the same entries to settlement. 2x only: the same entries with one sell at 2x. Each Kalshi event '
             f'is one outcome: its {esc(cfg.get("item", "Word").lower())}s move '
@@ -847,6 +850,11 @@ def status(events):
     return f"{n} · review at 10, decide at 30"
 
 
+def lane_status(cfg, events):
+    """status() for a lane; a BASELINE (cfg["baseline"], 2026-11-04: blind, price band only) has no review status."""
+    return "baseline, not a lane" if cfg.get("baseline") else status(events)
+
+
 def avg_spread(state):
     sp = [e["spread"] for e in counted(state) if e.get("spread") is not None]
     return sum(sp) / len(sp) if sp else None
@@ -870,7 +878,7 @@ def summary(cfgs, states, esc, pairs=()):
             f'<td class="num">{r["settled_events"]}</td><td class="num">{r["won"]}</td>'
             f'<td class="num">{_headline(r["roi"], r)}</td><td class="num">{_headline(r["roi_held"], r)}</td>'
             f'<td class="num">{r["filled_2x"]} / {r["filled_3x"]}</td><td class="num">{_sp(avg_spread(st))}</td>'
-            f'<td>{esc(status(r["settled_events"]))}</td></tr>')
+            f'<td>{esc(lane_status(cfg, r["settled_events"]))}</td></tr>')
     spread_line = "".join(
         f'{w}, strict v wide average spread paid {_sp(avg_spread(states[a["lane"]]))} v '
         f'{_sp(avg_spread(states[b["lane"]]))}. '

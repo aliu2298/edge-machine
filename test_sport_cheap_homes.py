@@ -158,8 +158,13 @@ for name, html, cfgs in (("culture", culture_build.build(), culture_build.LIVE_C
     hidden = [c["lane"] for c in cfgs if folded(html, f'id="{c["anchor"]}"') is not False]
     check(f"{name}: every lane card on the page and not folded", hidden, [])
 fights_html = fights_build.build()
-check("fights: each card says it is price band only and becomes a baseline when a filtered fights lane exists",
-      (fights_html.count("Price band only: becomes a baseline when a filtered fights lane exists."), len(fights_split.LIVE)), (1, 1))
+check("fights: each live card says it is price band only (none since boxing became a baseline, 2026-11-04)",
+      (fights_html.count("Price band only: becomes a baseline when a filtered fights lane exists."), len(fights_split.LIVE)), (0, 0))
+check("fights: the boxing baseline is on the page, open, not folded, with no review status",
+      ('id="baseline-boxing_cheap_dog" open' in fights_html, folded(fights_html, 'id="boxing-cheap-dog"'),
+       "Baseline · Boxing cheap dog (blind, price band only)" in fights_html,
+       "review at 10" in fights_html[fights_html.find('id="baseline-boxing_cheap_dog"'):fights_html.find('id="retired"')]),
+      (True, False, True, False))
 check("fights: the retired UFC lane sits in the collapsed Retired fold", folded(fights_html, 'id="ufc-dog"'), True)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")

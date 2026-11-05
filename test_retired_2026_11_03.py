@@ -87,15 +87,16 @@ check("the scanner line reads a live lane's coverage", CB.live_lanes()[0], "cryp
 
 print("\nUFC underdog 15-30c: retired; boxing keeps running")
 check("dated with its record", (FS.UFC["retired"]["on"], FS.UFC["retired"]["at"]), ("2026-11-03", "7 fights, 0 won; split −86.5%, hold −100%"))
-check("the live and retired fights lanes", ([c["lane"] for c in FS.LIVE], [c["lane"] for c in FS.GONE]), (["boxing_cheap_dog"], ["ufc_dog"]))
+check("the live, baseline and retired fights lanes (boxing a baseline from 2026-11-04)",
+      ([c["lane"] for c in FS.LIVE], [c["lane"] for c in FS.BASES], [c["lane"] for c in FS.GONE]), ([], ["boxing_cheap_dog"], ["ufc_dog"]))
 check("Eastern date gate", (MS.retired(FS.UFC, dt.datetime(2026, 11, 3, 4, tzinfo=UTC)), MS.retired(FS.UFC, dt.datetime(2026, 11, 3, 6, tzinfo=UTC))),
       (False, True))
 check("run() takes no new entry for a retired lane, open entries still fill and settle", "if MS.retired(cfg, now):" in inspect.getsource(FS.run), True)
 fh = FB.build()
 j = fh.find('id="retired"')
-check("the Fights page: UFC in its Retired fold, not in the live lanes; boxing live with its blind note",
-      ("UFC · dog" in fh[:j], "UFC · dog" in fh[j:], fh.count("fights-blind"), '<details class="fold sec" id="retired">' in fh),
-      (False, True, 1, True))
+check("the Fights page: UFC in its Retired fold, not in the live lanes; boxing above it as a baseline",
+      ("UFC · dog" in fh[:j], "UFC · dog" in fh[j:], 'id="baseline-boxing_cheap_dog"' in fh[:j], '<details class="fold sec" id="retired">' in fh),
+      (False, True, True, True))
 
 print("\nnone is in Production: no Production pair for any of them")
 st = T.load_stages()

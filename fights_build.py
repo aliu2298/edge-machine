@@ -42,14 +42,35 @@ def build(states=None, now=None):
         f'<p class="sm" id="{e(cfg["anchor"])}-note"><b>{e(cfg["research"])}</b></p>'
         f'<p class="sm mut fights-blind">{e(FS.BLIND)}</p>' + MS.section(states[cfg["lane"]], e, cfg)
         for cfg in FS.LIVE)
+    lanes = (MS.summary(FS.LIVE, states, e) + cards if FS.LIVE else
+             '<p class="sm mut">No filtered fights lane yet. A filtered boxing lane must beat the baseline below.</p>')
     body = (standard
-            + f'<section id="lanes"><h2>Fight lanes</h2>{MS.summary(FS.LIVE, states, e)}{cards}</section>'
+            + f'<section id="lanes"><h2>Fight lanes</h2>{lanes}{"".join(baseline_block(c, states, e) for c in FS.BASES)}</section>'
             + retired_fold(states, e)
             + '<p class="sm mut">Read hourly by GitHub Actions (fights.yml) from Kalshi public market data, minute '
               'candles and fight schedules. Paper entries at the ask with Kalshi\'s fees.</p>')
     html = C.document(TITLE, DESCRIPTION, KEY, SECTIONS, C.stamp(now), body,
                       script_src="./site.js", scripts=("./tables.js",))
     return MS.label_cells(html)
+
+
+def baseline_name(cfg):
+    """"Boxing cheap dog" from "Boxing · cheap dog (3-15c)": the name the Chaos baselines line uses too."""
+    return cfg["label"].split(" (")[0].replace(" · ", " ")
+
+
+def baseline_block(cfg, states, e):
+    """A blind price-band population kept as a BASELINE (2026-11-04, Olu), in the Chaos baselines' layout: its record
+    and card, no review status, not a lane. A filtered boxing lane must beat it."""
+    g = cfg["baseline"]
+    r = MS.record(MS.counted(states[cfg["lane"]]))
+    return (f'<details class="section-disclosure baseline" data-lane="{e(cfg["lane"])}" id="baseline-{e(cfg["lane"])}" open>'
+            f'<summary><b>Baseline · {e(baseline_name(cfg))} (blind, price band only)</b>'
+            f'<span>{r["settled_events"]} settled events · read every hour · not a lane</span></summary>'
+            f'<p class="sm mut">Registered as a baseline {e(g["on"])} at {e(g["at"])}: {e(g["reason"])}. '
+            'A filtered boxing lane must beat this record. The entry and exit rules are unchanged.</p>'
+            f'<p class="sm" id="{e(cfg["anchor"])}-note"><b>{e(cfg["research"])}</b></p>'
+            + MS.summary((cfg,), states, e) + MS.section(states[cfg["lane"]], e, cfg) + '</details>')
 
 
 def retired_fold(states, e):
