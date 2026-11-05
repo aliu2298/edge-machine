@@ -1,11 +1,11 @@
 {
- "board_built_at": "2026-11-05T12:01:19+00:00",
+ "board_built_at": "2026-11-05T12:01:51+00:00",
  "collector_error": null,
  "collector_healthy": {
-  "sr_a6": false,
-  "sr_a7": false,
-  "sr_c3": false,
-  "sr_c4": false
+  "sr_a6": true,
+  "sr_a7": true,
+  "sr_c3": true,
+  "sr_c4": true
  },
  "corners_selections": {},
  "first_publish_min": 45,
@@ -325,6 +325,216 @@
    "source": "sr_a7",
    "sport": "soccer_u35",
    "status": "hit"
+  },
+  "2026-11-04|AEK Athens|Real Madrid|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5": {
+   "away": "Real Madrid",
+   "bet": {
+    "kind": "total_gte",
+    "n": 4
+   },
+   "date": "2026-11-04",
+   "edge_at_log": null,
+   "first_seen": "2026-11-04",
+   "headline": "Over 3.5 goals",
+   "home": "AEK Athens",
+   "id": "2026-11-04|AEK Athens|Real Madrid|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5",
+   "kickoff": "2026-11-04T17:45Z",
+   "lane": "production",
+   "league": "Champions League",
+   "match": "AEK Athens v Real Madrid",
+   "pair": "sr_a7|soccer_u35",
+   "price_at_log": 0.55,
+   "published_at": "2026-11-05T12:01:51+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Over 3.5 goals",
+    "event": "KXUCLTOTAL-26NOV04AEKRMA",
+    "market": "KXUCLTOTAL-26NOV04AEKRMA-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.55,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_a7:KXUCLTOTAL-26NOV04AEKRMA-4",
+   "source": "sr_a7",
+   "sport": "soccer_u35",
+   "status": "hit"
+  },
+  "2026-11-04|Borussia Dortmund|Real Betis|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5": {
+   "away": "Real Betis",
+   "bet": {
+    "kind": "total_gte",
+    "n": 4
+   },
+   "date": "2026-11-04",
+   "edge_at_log": null,
+   "first_seen": "2026-11-04",
+   "headline": "Over 3.5 goals",
+   "home": "Borussia Dortmund",
+   "id": "2026-11-04|Borussia Dortmund|Real Betis|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5",
+   "kickoff": "2026-11-04T20:00Z",
+   "lane": "production",
+   "league": "Champions League",
+   "match": "Borussia Dortmund v Real Betis",
+   "pair": "sr_a7|soccer_u35",
+   "price_at_log": 0.42,
+   "published_at": "2026-11-05T12:01:51+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Over 3.5 goals",
+    "event": "KXUCLTOTAL-26NOV04BVBRBB",
+    "market": "KXUCLTOTAL-26NOV04BVBRBB-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.42,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_a7:KXUCLTOTAL-26NOV04BVBRBB-4",
+   "source": "sr_a7",
+   "sport": "soccer_u35",
+   "status": "miss"
+  },
+  "2026-11-04|FC Porto|Napoli|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5": {
+   "away": "Napoli",
+   "bet": {
+    "kind": "total_gte",
+    "n": 4
+   },
+   "date": "2026-11-04",
+   "edge_at_log": null,
+   "first_seen": "2026-11-04",
+   "headline": "Over 3.5 goals",
+   "home": "FC Porto",
+   "id": "2026-11-04|FC Porto|Napoli|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5",
+   "kickoff": "2026-11-04T20:00Z",
+   "lane": "production",
+   "league": "Champions League",
+   "match": "FC Porto v Napoli",
+   "pair": "sr_a7|soccer_u35",
+   "price_at_log": 0.3,
+   "published_at": "2026-11-05T12:01:51+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Over 3.5 goals",
+    "event": "KXUCLTOTAL-26NOV04FCPNAP",
+    "market": "KXUCLTOTAL-26NOV04FCPNAP-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.3,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_a7:KXUCLTOTAL-26NOV04FCPNAP-4",
+   "source": "sr_a7",
+   "sport": "soccer_u35",
+   "status": "hit"
+  },
+  "2026-11-04|Fenerbahce|Liverpool|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5": {
+   "away": "Liverpool",
+   "bet": {
+    "kind": "total_gte",
+    "n": 4
+   },
+   "date": "2026-11-04",
+   "edge_at_log": null,
+   "first_seen": "2026-11-04",
+   "headline": "Over 3.5 goals",
+   "home": "Fenerbahce",
+   "id": "2026-11-04|Fenerbahce|Liverpool|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5",
+   "kickoff": "2026-11-04T17:45Z",
+   "lane": "production",
+   "league": "Champions League",
+   "match": "Fenerbahce v Liverpool",
+   "pair": "sr_a7|soccer_u35",
+   "price_at_log": 0.53,
+   "published_at": "2026-11-05T12:01:51+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Over 3.5 goals",
+    "event": "KXUCLTOTAL-26NOV04FENLFC",
+    "market": "KXUCLTOTAL-26NOV04FENLFC-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.53,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_a7:KXUCLTOTAL-26NOV04FENLFC-4",
+   "source": "sr_a7",
+   "sport": "soccer_u35",
+   "status": "hit"
+  },
+  "2026-11-04|Lens|Como|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5": {
+   "away": "Como",
+   "bet": {
+    "kind": "total_gte",
+    "n": 4
+   },
+   "date": "2026-11-04",
+   "edge_at_log": null,
+   "first_seen": "2026-11-04",
+   "headline": "Over 3.5 goals",
+   "home": "Lens",
+   "id": "2026-11-04|Lens|Como|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5",
+   "kickoff": "2026-11-04T20:00Z",
+   "lane": "production",
+   "league": "Champions League",
+   "match": "Lens v Como",
+   "pair": "sr_a7|soccer_u35",
+   "price_at_log": 0.39,
+   "published_at": "2026-11-05T12:01:51+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Over 3.5 goals",
+    "event": "KXUCLTOTAL-26NOV04RCLCOM",
+    "market": "KXUCLTOTAL-26NOV04RCLCOM-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.39,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_a7:KXUCLTOTAL-26NOV04RCLCOM-4",
+   "source": "sr_a7",
+   "sport": "soccer_u35",
+   "status": "hit"
+  },
+  "2026-11-04|PSV Eindhoven|Club Brugge|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5": {
+   "away": "Club Brugge",
+   "bet": {
+    "kind": "total_gte",
+    "n": 4
+   },
+   "date": "2026-11-04",
+   "edge_at_log": null,
+   "first_seen": "2026-11-04",
+   "headline": "Over 3.5 goals",
+   "home": "PSV Eindhoven",
+   "id": "2026-11-04|PSV Eindhoven|Club Brugge|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5",
+   "kickoff": "2026-11-04T20:00Z",
+   "lane": "production",
+   "league": "Champions League",
+   "match": "PSV Eindhoven v Club Brugge",
+   "pair": "sr_a7|soccer_u35",
+   "price_at_log": 0.52,
+   "published_at": "2026-11-05T12:01:51+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Over 3.5 goals",
+    "event": "KXUCLTOTAL-26NOV04PSVBRU",
+    "market": "KXUCLTOTAL-26NOV04PSVBRU-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.52,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_a7:KXUCLTOTAL-26NOV04PSVBRU-4",
+   "source": "sr_a7",
+   "sport": "soccer_u35",
+   "status": "miss"
   }
  },
  "pairs": {
@@ -360,18 +570,18 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 4,
+    "leads": 10,
     "problem": null,
-    "routed": 4,
+    "routed": 10,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 4,
-   "sandbox_roi": 0.0243,
-   "sandbox_roi_fee": 0.0243,
+   "sandbox_n": 10,
+   "sandbox_roi": 0.3323,
+   "sandbox_roi_fee": 0.3323,
    "timing": {
     "late": [],
     "timed": 0,
@@ -433,5 +643,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-05T12:01:19+00:00"
+ "updated_at": "2026-11-05T12:01:51+00:00"
 }

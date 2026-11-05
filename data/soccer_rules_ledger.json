@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-04T19:01:47.104310+00:00",
+ "last_run": "2026-11-05T12:01:50.336132+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -821,11 +821,14 @@
      "line": 3.5,
      "logged": "2026-11-04T16:16:46.637731+00:00",
      "match": "AEK Athens v Real Madrid",
+     "payout": 1.0,
      "price": 0.55,
+     "profit": 76.27,
      "rule": "A7",
+     "settled": "2026-11-05T12:01:50.336132+00:00",
      "side": "yes",
      "start": "2026-11-04T17:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUCLTOTAL-26NOV04AEKRMA-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "AEK Athens O+D- v Real Madrid O+D- \u00b7 Over 3.5 YES 0.55"
@@ -844,11 +847,14 @@
      "line": 3.5,
      "logged": "2026-11-04T16:16:46.637731+00:00",
      "match": "Fenerbahce v Liverpool",
+     "payout": 1.0,
      "price": 0.53,
+     "profit": 82.67,
      "rule": "A7",
+     "settled": "2026-11-05T12:01:50.336132+00:00",
      "side": "yes",
      "start": "2026-11-04T17:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUCLTOTAL-26NOV04FENLFC-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Fenerbahce O+D- v Liverpool O+D- \u00b7 Over 3.5 YES 0.53"
@@ -867,11 +873,14 @@
      "line": 3.5,
      "logged": "2026-11-04T18:31:48.068378+00:00",
      "match": "Borussia Dortmund v Real Betis",
+     "payout": 0.0,
      "price": 0.42,
+     "profit": -100.0,
      "rule": "A7",
+     "settled": "2026-11-05T12:01:50.336132+00:00",
      "side": "yes",
      "start": "2026-11-04T20:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXUCLTOTAL-26NOV04BVBRBB-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Borussia Dortmund O-D- v Real Betis O+D- \u00b7 Over 3.5 YES 0.42"
@@ -890,11 +899,14 @@
      "line": 3.5,
      "logged": "2026-11-04T18:31:48.068378+00:00",
      "match": "FC Porto v Napoli",
+     "payout": 1.0,
      "price": 0.3,
+     "profit": 217.76,
      "rule": "A7",
+     "settled": "2026-11-05T12:01:50.336132+00:00",
      "side": "yes",
      "start": "2026-11-04T20:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUCLTOTAL-26NOV04FCPNAP-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "FC Porto O+D- v Napoli O-D- \u00b7 Over 3.5 YES 0.30"
@@ -913,11 +925,14 @@
      "line": 3.5,
      "logged": "2026-11-04T18:31:48.068378+00:00",
      "match": "Lens v Como",
+     "payout": 1.0,
      "price": 0.39,
+     "profit": 145.91,
      "rule": "A7",
+     "settled": "2026-11-05T12:01:50.336132+00:00",
      "side": "yes",
      "start": "2026-11-04T20:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUCLTOTAL-26NOV04RCLCOM-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Lens O-D- v Como O+D- \u00b7 Over 3.5 YES 0.39"
@@ -936,11 +951,14 @@
      "line": 3.5,
      "logged": "2026-11-04T18:31:48.068378+00:00",
      "match": "PSV Eindhoven v Club Brugge",
+     "payout": 0.0,
      "price": 0.52,
+     "profit": -100.0,
      "rule": "A7",
+     "settled": "2026-11-05T12:01:50.336132+00:00",
      "side": "yes",
      "start": "2026-11-04T20:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXUCLTOTAL-26NOV04PSVBRU-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "PSV Eindhoven O+D- v Club Brugge O+D- \u00b7 Over 3.5 YES 0.52"
@@ -4084,14 +4102,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-01T14:01:26.739830+00:00",
-   "candidates": 0,
-   "due": 3,
-   "labelled": 3,
-   "matched": 0,
-   "new": 0
-  },
-  {
    "at": "2026-11-01T14:16:36.283347+00:00",
    "candidates": 0,
    "due": 3,
@@ -4489,6 +4499,14 @@
    "due": 7,
    "labelled": 5,
    "matched": 5,
+   "new": 0
+  },
+  {
+   "at": "2026-11-05T12:01:50.336132+00:00",
+   "candidates": 0,
+   "due": 0,
+   "labelled": 0,
+   "matched": 0,
    "new": 0
   }
  ],
