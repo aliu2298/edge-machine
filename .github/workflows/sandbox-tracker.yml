@@ -144,6 +144,12 @@ jobs:
           python3 sandbox_track.py
           echo "track_rc=$?" >> "$GITHUB_OUTPUT"
 
+      # Superpack (2026-11-05): copies the active lanes' new bets on the leaderboard's top 10, from the ledgers the
+      # lanes just wrote. Never fatal: a failure leaves its ledger as it was and the page says so.
+      - name: Superpack
+        run: |
+          python3 superpack.py || echo "::warning::superpack did not run; its ledger is unchanged"
+
       - name: Build the tracker page
         id: build
         run: |
@@ -203,6 +209,10 @@ jobs:
           # whose status write failed has none, and the ledger must still land.
           if [ -f data/status.json ]; then
             git add data/status.json
+          fi
+          # Superpack's ledger (2026-11-05), written after the lanes log; added only when present.
+          if [ -f data/superpack_ledger.json ]; then
+            git add data/superpack_ledger.json
           fi
           if [ "$COMMIT_SITE" = "true" ]; then
             git add $DATA $SITE
