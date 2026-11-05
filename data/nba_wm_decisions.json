@@ -1596,57 +1596,51 @@
   },
   "no:KXNBAWINMARGIN-26NOV04TORDEN-DEN6TO10": {
    "P": 0.86,
-   "bot_version": "wm-nofade-v2",
+   "bot_version": "wm-nofade-v3",
    "bucket": "DEN6TO10",
-   "decided_at": "2026-11-05T02:00:58+00:00",
+   "decided_at": "2026-11-05T04:41:38+00:00",
    "event": "KXNBAWINMARGIN-26NOV04TORDEN",
    "lane": "nba_wm_nofade",
    "limit": 0.65,
-   "night_cap": 30,
-   "night_count": 25,
-   "outcome": "bid_posted",
+   "outcome": "bid_late",
    "qty": 1.0,
    "rule_ok": true,
    "slate": "26NOV04",
    "ticker": "KXNBAWINMARGIN-26NOV04TORDEN-DEN6TO10",
    "tip": "2026-11-05T02:00:00+00:00",
-   "why": null
+   "why": "the bid was not posted within 5 minutes of the tip"
   },
   "no:KXNBAWINMARGIN-26NOV04TORDEN-TOR11TO20": {
    "P": 0.94,
-   "bot_version": "wm-nofade-v2",
+   "bot_version": "wm-nofade-v3",
    "bucket": "TOR11TO20",
-   "decided_at": "2026-11-05T02:00:58+00:00",
+   "decided_at": "2026-11-05T04:41:38+00:00",
    "event": "KXNBAWINMARGIN-26NOV04TORDEN",
    "lane": "nba_wm_nofade",
    "limit": 0.7,
-   "night_cap": 30,
-   "night_count": 22,
-   "outcome": "bid_posted",
+   "outcome": "bid_late",
    "qty": 1.0,
    "rule_ok": true,
    "slate": "26NOV04",
    "ticker": "KXNBAWINMARGIN-26NOV04TORDEN-TOR11TO20",
    "tip": "2026-11-05T02:00:00+00:00",
-   "why": null
+   "why": "the bid was not posted within 5 minutes of the tip"
   },
   "no:KXNBAWINMARGIN-26NOV04TORDEN-TOR1TO5": {
    "P": 0.91,
-   "bot_version": "wm-nofade-v2",
+   "bot_version": "wm-nofade-v3",
    "bucket": "TOR1TO5",
-   "decided_at": "2026-11-05T02:00:58+00:00",
+   "decided_at": "2026-11-05T04:41:38+00:00",
    "event": "KXNBAWINMARGIN-26NOV04TORDEN",
    "lane": "nba_wm_nofade",
    "limit": 0.68,
-   "night_cap": 30,
-   "night_count": 23,
-   "outcome": "bid_posted",
+   "outcome": "bid_late",
    "qty": 1.0,
    "rule_ok": true,
    "slate": "26NOV04",
    "ticker": "KXNBAWINMARGIN-26NOV04TORDEN-TOR1TO5",
    "tip": "2026-11-05T02:00:00+00:00",
-   "why": null
+   "why": "the bid was not posted within 5 minutes of the tip"
   },
   "no:KXNBAWINMARGIN-26NOV04TORDEN-TOR21PLUS": {
    "bot_version": "wm-nofade-v2",
@@ -2801,6 +2795,6 @@
    "why": "no tight read inside the entry window"
   }
  },
- "updated_at": "2026-11-05T03:30:53+00:00",
+ "updated_at": "2026-11-05T04:41:38+00:00",
  "version": 1
 }
