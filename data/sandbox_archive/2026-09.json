@@ -110443,6 +110443,53 @@
   "venue": "polymarket_us"
  },
  {
+  "bet": true,
+  "close_at": "2026-09-21T14:44:10+00:00",
+  "close_price": 0.6445,
+  "date": "2026-09-21",
+  "edge": null,
+  "id": "tennis_combo2:combo2:2026-09-21:fc601fbf19",
+  "label": "2-leg tennis combo: Spencer Johnson + Timo Legout",
+  "legs": [
+   {
+    "market_id": "KXATPCHALLENGERMATCH-26SEP21VRBJOH",
+    "pick": "b",
+    "venue": "kalshi"
+   },
+   {
+    "market_id": "KXATPCHALLENGERMATCH-26SEP21LEGOST",
+    "pick": "a",
+    "venue": "kalshi"
+   }
+  ],
+  "liquidity": null,
+  "logged": "2026-09-21T14:44:10+00:00",
+  "market_id": "combo2:2026-09-21:fc601fbf19",
+  "pick": "a",
+  "pnl": 55.16,
+  "price": 0.6445,
+  "price_a": 0.6445,
+  "price_b": 0.3555,
+  "price_draw": null,
+  "prob_a": null,
+  "result": "a",
+  "settled": "2026-09-21T21:05:15+00:00",
+  "side_a": "All 2 win",
+  "side_b": "Any one loses",
+  "source": "tennis_combo2",
+  "sport": "tennis_combo",
+  "spread": null,
+  "stake": 100.0,
+  "start": "2026-09-21T18:00:00+00:00",
+  "start_source": null,
+  "status": "won",
+  "uncovered": null,
+  "untraded": false,
+  "url": "https://kalshi.com/combos",
+  "venue": "combo",
+  "venue_start": null
+ },
+ {
   "bet": false,
   "compact": true,
   "id": "polymarket_us:aec-setkamemd-ciumir-turrom-2026-09-21",
