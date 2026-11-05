@@ -1113,8 +1113,32 @@
    "status": "no_data",
    "symbol": "QQQ",
    "variant": "C30"
+  },
+  {
+   "bar_feed": "iex",
+   "day": "2026-11-05",
+   "hold": 15,
+   "id": "2026-11-05:C15",
+   "label": "premarket 5 \u00b7 9:25-9:30 range, 15-min hold",
+   "note": "no bars in the range",
+   "quote_feed": "iex",
+   "status": "no_data",
+   "symbol": "QQQ",
+   "variant": "C15"
+  },
+  {
+   "bar_feed": "iex",
+   "day": "2026-11-05",
+   "hold": 30,
+   "id": "2026-11-05:C30",
+   "label": "premarket 5 \u00b7 9:25-9:30 range, 30-min hold",
+   "note": "no bars in the range",
+   "quote_feed": "iex",
+   "status": "no_data",
+   "symbol": "QQQ",
+   "variant": "C30"
   }
  ],
- "updated": "2026-11-04T16:49:01+00:00",
+ "updated": "2026-11-05T16:49:01+00:00",
  "version": "nasdaq-orb-v1"
 }
