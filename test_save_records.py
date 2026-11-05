@@ -261,7 +261,7 @@ check("no other workflow pushes", sorted(set(pushers) - set(OWN) - set(SAVES)), 
 hb = open(".github/workflows/feeds-heartbeat.yml").read()
 check("the heartbeat has every feed it restamps as a derived file",
       all(f"--derived data/{f}.json" in hb for f in ("soccer_rules_production_leads", "soccer_team_rules_production_leads", "nba_value_production_leads", "econ_production_leads",
-                                                    "production_o35_leads", "production_nba_wm_leads", "production_nba_wm_nofade_leads", "feed_gap")), True)
+                                                    "production_o35_leads", "production_top5_dip_leads", "production_nba_wm_leads", "production_nba_wm_nofade_leads", "feed_gap")), True)
 nv = open(".github/workflows/nba-value.yml").read()
 check("nba-value no longer writes the feed the heartbeat owns", ("nba_value_production_leads" in nv.split("name: Save records")[1], "python3 nba_value_production.py" in nv), (False, False))
 
