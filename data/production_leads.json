@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-05T21:49:22+00:00",
+ "board_built_at": "2026-11-05T22:04:05+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -955,43 +955,6 @@
    "sport": "soccer_team2",
    "status": "hit"
   },
-  "2026-11-05|KXBRENTD-26NOV0517-T97.50|Above $97.50 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-11-05",
-   "edge_at_log": null,
-   "first_seen": "2026-11-05",
-   "headline": "Above $97.50 at the close",
-   "home": null,
-   "id": "2026-11-05|KXBRENTD-26NOV0517-T97.50|Above $97.50 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-11-05T22:00Z",
-   "lane": "production",
-   "last_seen": "2026-11-05",
-   "last_seen_at": "2026-11-05T21:49:22+00:00",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "Brent crude close on Nov 5, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.7,
-   "published_at": "2026-11-05T18:35:00+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 205,
-   "route": {
-    "claim": "Above $97.50 at the close",
-    "event": "KXBRENTD-26NOV0517",
-    "market": "KXBRENTD-26NOV0517-T97.50",
-    "outcome": "Above $97.50",
-    "outcome_side": "yes",
-    "price_at_log": 0.7,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXBRENTD-26NOV0517-T97.50",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
-   "status": "pending"
-  },
   "2026-11-05|KXBTCD-26NOV0517-T76499.99|Below $76,500 at the close \u00b7 Crypto favourite band, below": {
    "away": null,
    "bet": {
@@ -1007,7 +970,7 @@
    "kickoff": "2026-11-05T22:05Z",
    "lane": "production",
    "last_seen": "2026-11-05",
-   "last_seen_at": "2026-11-05T21:49:22+00:00",
+   "last_seen_at": "2026-11-05T22:04:05+00:00",
    "league": "Crypto \u00b7 Favourite band",
    "match": "Bitcoin price on Nov 5, 2026",
    "pair": "crypto_fav_band_below|crypto_fav",
@@ -1044,7 +1007,7 @@
    "kickoff": "2026-11-05T22:05Z",
    "lane": "production",
    "last_seen": "2026-11-05",
-   "last_seen_at": "2026-11-05T21:49:22+00:00",
+   "last_seen_at": "2026-11-05T22:04:05+00:00",
    "league": "Crypto \u00b7 Favourite band",
    "match": "Ethereum price at Nov 5, 2026 at 5pm EST",
    "pair": "crypto_fav_band_below|crypto_fav",
@@ -1066,43 +1029,6 @@
    "sport": "crypto_fav",
    "status": "pending"
   },
-  "2026-11-05|KXSILVERD-26NOV0517-T52.25|Above $52.25 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-11-05",
-   "edge_at_log": null,
-   "first_seen": "2026-11-05",
-   "headline": "Above $52.25 at the close",
-   "home": null,
-   "id": "2026-11-05|KXSILVERD-26NOV0517-T52.25|Above $52.25 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-11-05T22:00Z",
-   "lane": "production",
-   "last_seen": "2026-11-05",
-   "last_seen_at": "2026-11-05T21:49:22+00:00",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "Silver close on Nov 5, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.75,
-   "published_at": "2026-11-05T18:35:00+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 205,
-   "route": {
-    "claim": "Above $52.25 at the close",
-    "event": "KXSILVERD-26NOV0517",
-    "market": "KXSILVERD-26NOV0517-T52.25",
-    "outcome": "Above $52.25",
-    "outcome_side": "yes",
-    "price_at_log": 0.75,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXSILVERD-26NOV0517-T52.25",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
-   "status": "pending"
-  },
   "2026-11-05|KXSOLD-26NOV0517-T89.9999|Below $90 at the close \u00b7 Crypto favourite band, below": {
    "away": null,
    "bet": {
@@ -1118,7 +1044,7 @@
    "kickoff": "2026-11-05T22:05Z",
    "lane": "production",
    "last_seen": "2026-11-05",
-   "last_seen_at": "2026-11-05T21:49:22+00:00",
+   "last_seen_at": "2026-11-05T22:04:05+00:00",
    "league": "Crypto \u00b7 Favourite band",
    "match": "SOL price on Nov 5, 2026",
    "pair": "crypto_fav_band_below|crypto_fav",
@@ -1155,7 +1081,7 @@
    "kickoff": "2026-11-05T22:05Z",
    "lane": "production",
    "last_seen": "2026-11-05",
-   "last_seen_at": "2026-11-05T21:49:22+00:00",
+   "last_seen_at": "2026-11-05T22:04:05+00:00",
    "league": "Crypto \u00b7 Favourite band",
    "match": "Ripple price at Nov 5, 2026 at 5pm EST",
    "pair": "crypto_fav_band_below|crypto_fav",
@@ -1193,7 +1119,7 @@
    "kickoff": "2026-11-06T20:00Z",
    "lane": "production",
    "last_seen": "2026-11-05",
-   "last_seen_at": "2026-11-05T21:49:22+00:00",
+   "last_seen_at": "2026-11-05T22:04:05+00:00",
    "league": "La Liga",
    "match": "Sevilla v Alav\u00e9s",
    "pair": "team2_ranked|soccer_team2",
@@ -1231,7 +1157,7 @@
    "kickoff": "2026-11-07T17:00Z",
    "lane": "production",
    "last_seen": "2026-11-05",
-   "last_seen_at": "2026-11-05T21:49:22+00:00",
+   "last_seen_at": "2026-11-05T22:04:05+00:00",
    "league": "Serie A",
    "match": "Parma v Bologna",
    "pair": "team2_ranked|soccer_team2",
@@ -1262,9 +1188,9 @@
    "ready_at": "2026-10-09T04:31:34+00:00",
    "route": "moved by hand on 2026-10-09",
    "routing": {
-    "leads": 12,
+    "leads": 10,
     "problem": null,
-    "routed": 12,
+    "routed": 10,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1276,7 +1202,7 @@
    "sandbox_roi_fee": 0.1525,
    "timing": {
     "late": [],
-    "timed": 2,
+    "timed": 0,
     "under_target": 0
    }
   },
@@ -1445,5 +1371,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-05T21:49:22+00:00"
+ "updated_at": "2026-11-05T22:04:05+00:00"
 }
