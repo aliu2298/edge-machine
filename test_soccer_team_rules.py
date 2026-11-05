@@ -172,7 +172,7 @@ check("team rules: a group's summary carries its count and record",
       re.search(r'<b>Group B</b><span>\d+ rules · \d+ settled · \d+ won', html) is not None, True)
 check("its own id and heading", ('<section id="team-rules">' in html, "<h2>Team scoring rules</h2>" in html), (True, True))
 check("says paper, T7 in Production since 2026-10-28, T1 and T5 back in the Sandbox",
-      ("T7 in Production since 2026-10-28; T1 (2026-10-24 to 2026-10-28) and T5 (2026-10-28 to 2026-11-02) back in the Sandbox" in html,
+      ("T4 in Production since 2026-11-04, T7 since 2026-10-28; T1 (2026-10-24 to 2026-10-28) and T5 (2026-10-28 to 2026-11-02) back in the Sandbox" in html,
        [k for k, body in lines if "Production 2026-10-24 to 2026-10-28, back in the Sandbox" in body],
        [k for k, body in lines if "Production 2026-10-28 to 2026-11-02, back in the Sandbox" in body],
        [k for k, body in lines if "Production since 2026-10-28" in body]), (True, ["T1"], ["T5"], ["T7"]))

@@ -55,7 +55,7 @@ check("it is not a Production pair, and was never added to the stage overrides",
       ("D3" in SRP.PAIRS, any("sr_d3" in k for k in T.PAIR_OVERRIDES)), (False, False))
 check("retired, the rule stops logging, so the Production feed has no D3 lead to publish",
       (SR.retired("D3", AFTER), sorted(SRP.PAIRS)), (True, sorted(SRP.PAIRS)))
-check("the Production pairs are what they are (C1 and T5 went back to the Sandbox 2026-11-02)", (sorted(SRP.PAIRS), sorted(TRP.PAIRS)), (["A6", "A7", "C3", "C4"], ["T7"]))
+check("the Production pairs are what they are (C1 and T5 went back to the Sandbox 2026-11-02; T4 joined 2026-11-04)", (sorted(SRP.PAIRS), sorted(TRP.PAIRS)), (["A6", "A7", "C3", "C4"], ["T4", "T7"]))
 
 print("\nthe pages")
 state = {"rules": {k: {"picks": []} for k in TR.RULES}}

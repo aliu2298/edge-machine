@@ -16,6 +16,10 @@ import soccer_team_rules_production as TP
 # (2026-10-24 to 2026-10-28) by listing it again for this run; the real state is checked first.
 _NOW_PAIRS = sorted(TP.PAIRS)
 _NOW_MOVED = (TP.MOVED_ON, TP.PROMOTED)
+_REAL = (dict(TP.PROMOTED_AT), dict(TP.PAIRS))
+_REAL_MOVED = dict(TP.MOVED)
+# T4 (2026-11-04) is checked on its own below; the 2026-10-25 replay keeps it out.
+TP.PAIRS.pop("T4")
 # The 2026-10-25 fixtures below sit before T5 and T7's real entry instant, so the replay lists every pair
 # from the day T1 entered.
 TP.PROMOTED = "2026-10-24T22:00:00+00:00"
@@ -23,6 +27,8 @@ TP.PAIRS["T1"] = ("st_t1", "soccer_team2", "O+D− v O+D− · team 2+ goals")
 # T5 went back to the Sandbox on 2026-11-02 (TP.T5_PULLED); replayed the same way.
 TP.PAIRS["T5"] = ("st_t5", "soccer_team2", "O+D− v O+D+ · team 2+ goals")
 TP.LABELS = {src: name for src, _sport, name in TP.PAIRS.values()}
+TP.PROMOTED_AT = {k: TP.PROMOTED for k in ("T1", "T5", "T7")}
+TP.MOVED = {k: TP.MOVED_ON for k in ("T1", "T5", "T7")}
 
 FAILS = []
 UTC = dt.timezone.utc
@@ -64,7 +70,7 @@ state = {"last_run": (NOW - dt.timedelta(minutes=10)).isoformat(), "error": None
                           "Newcastle", "Premier League", 0.45)]}}}
 
 print("T5 and T7 since 2026-10-28; T1 (out 2026-10-28) replayed for the checks below")
-check("T7 is the one pair, listed 2026-10-28; T5 went back to the Sandbox 2026-11-02", (_NOW_PAIRS, _NOW_MOVED[0], TP.T5_PULLED[1]), (["T7"], "2026-10-28", "2026-11-02"))
+check("T7 is the one pair, listed 2026-10-28; T5 went back to the Sandbox 2026-11-02", (_NOW_PAIRS, _NOW_MOVED[0], TP.T5_PULLED[1]), (["T4", "T7"], "2026-10-28", "2026-11-02"))
 print("only T1, on the existing team 2+ claim")
 qs = TP.quotes(state)
 check("T1, T5 and T7, their own leagues only", sorted(q["market_id"] for q in qs),
@@ -83,6 +89,26 @@ check("T7's quote is the No at the No's own price, and a loss on the settled one
       (t7["pick"], t7["price_a"], t7["price_b"], {q["market_id"]: q["result"] for q in qs}["KXEPLTEAMTOTAL-26OCT24CRYNEW-CRY3"]),
       ("b", None, 0.70, "a"))
 check("T1's band is the rule's own 3-97c", TP.BAND, (TR.PRICE_LO, TR.PRICE_HI))
+
+print("\nT4 moved 2026-11-04")
+_REPLAY = (TP.PAIRS, TP.PROMOTED_AT, TP.MOVED)
+_REAL_PAIRS = {k: v for k, v in _REAL[1].items()}
+TP.PAIRS, TP.PROMOTED_AT, TP.MOVED = _REAL_PAIRS, _REAL[0], _REAL_MOVED
+check("T4 is a pair on the team 2+ claim, promoted 2026-11-04 by hand",
+      (TP.pairs()["st_t4|soccer_team2"]["stage"], TP.pairs()["st_t4|soccer_team2"]["promoted_at"], TP.pairs()["st_t4|soccer_team2"]["by_hand"],
+       TP.T4_MOVED_ON), ("production", TP.T4_PROMOTED, "2026-11-04", "2026-11-04"))
+check("T7 keeps its own promotion time", TP.pairs()["st_t7|soccer_team3"]["promoted_at"], _NOW_MOVED[1])
+check("T4 backs the Yes of the team's over-1.5 contract in MLS, La Liga and the EPL",
+      (TP.PAIRS["T4"][1], sorted(TR.RULES["T4"]["leagues"]), TR.RULES["T4"]["side"], TR.RULES["T4"]["goals"]),
+      ("soccer_team2", sorted(["MLS", "La Liga", "Premier League"]), "yes", 2))
+t4s = {"rules": {"T4": {"picks": [
+    pick("T4", "KXEPLTEAMTOTAL-26NOV08ARSCHE-ARS2", "Arsenal v Chelsea", "Arsenal", "Chelsea", "Premier League", 0.45),
+    pick("T4", "KXBUNDESLIGATEAMTOTAL-26NOV08BAYDOR-BAY2", "Bayern Munich v Dortmund", "Bayern Munich", "Dortmund", "Bundesliga", 0.5)]}},
+    "last_run": NOW.isoformat()}
+check("T4 publishes its three leagues only", [q["market_id"] for q in TP.quotes(t4s)], ["KXEPLTEAMTOTAL-26NOV08ARSCHE-ARS2"])
+check("its feed lists st_t4|soccer_team2 on the 3-97c band", (sorted(TP.feed(t4s, now=NOW)["pairs"]), TP.feed(t4s, now=NOW)["bands"]["st_t4|soccer_team2"]),
+      (["st_t4|soccer_team2", "st_t7|soccer_team3"], [0.03, 0.97]))
+TP.PAIRS, TP.PROMOTED_AT, TP.MOVED = _REPLAY
 
 print("\nthe leads: the exact contract, team and side")
 f = TP.feed(state, now=NOW)
@@ -121,7 +147,7 @@ check("the Control Center counts it once and names it", (m1["tiles"]["pairs"] - 
 sec = TB.section(state)
 check("the Soccer page says T1 was in Production 2026-10-24 to 2026-10-28 and is back in the Sandbox",
       (sec.count("Production 2026-10-24 to 2026-10-28, back in the Sandbox") >= 1,
-       "T7 in Production since 2026-10-28; T1 (2026-10-24 to 2026-10-28) and T5 (2026-10-28 to 2026-11-02) back in the Sandbox" in sec), (True, True))
+       "T4 in Production since 2026-11-04, T7 since 2026-10-28; T1 (2026-10-24 to 2026-10-28) and T5 (2026-10-28 to 2026-11-02) back in the Sandbox" in sec), (True, True))
 check("no guarded public phrase in the leads or the section",
       sandbox_audit.COPY_RE.findall(" ".join(l["headline"] + " " + l["id"] for l in f["leads"].values()) + sec), [])
 

@@ -4923,6 +4923,7 @@ OWN_LEDGER_LABELS = {
     "sr_c3": "Serie A O+D− v O+D+ · over 2.5",
     "sr_c4": "Serie A O−D− v O+D− · over 2.5",
     "st_t5": "O+D− v O+D+ · team 2+ goals",
+    "st_t4": "O+D− v O−D+ · team 2+ goals",
     "st_t7": "O+D+ v O+D+ · team 3+ goals · NO",
     "o35_cheap_no_wave": "Over 3.5 cheap NO (live)",
     "nba_winmargin_live": "Win margin YES split (live, v2)",
