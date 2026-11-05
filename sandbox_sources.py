@@ -199,6 +199,15 @@ RETIRED_TAIL_2026_11_04 = (" No new entries from 2026-11-04; its rows stay on fi
                            "still settle.")
 P05_UNBEATEN_CUPS_RETIRED_WHY = ("Retired 2026-11-04 by Olu with the rule's other scopes: no edge at 8 settled — 6 won v 5.7 "
                                  "priced, +3.6% after fees, z +0.23." + RETIRED_TAIL_2026_11_04)
+# The second round the same day (Olu): the two Turkey heavy-mismatch lanes, siblings on the same fixtures (both back in
+# the Sandbox from Production 2026-10-20). Neither has an open bet. WTI oil · cheap YES retires with them
+# (mentions_split.WTI["retired"]). None is in Production.
+TURKEY_O25_DOG_RETIRED_WHY = ("Retired 2026-11-04 by Olu: no edge at 8 settled — 4 won v 5.1 priced, −24.5% after fees. "
+                              "Turkey BTTS in heavy mismatches, on the same fixtures, retires with it." + RETIRED_TAIL_2026_11_04)
+TURKEY_BTTS_DOG_RETIRED_WHY = ("Retired 2026-11-04 by Olu: no edge at 8 settled — 3 won v 4.2 priced, −29.4% after fees. "
+                               "Turkey over 2.5 in heavy mismatches, on the same fixtures, retires with it." + RETIRED_TAIL_2026_11_04)
+# The Turkey pair retired together: tests that replay them from before then re-enable them in-process.
+TURKEY_RETIRED_ON_2026_11_04 = ("turkey_o25_dog|soccer_o25", "turkey_btts_dog|soccer_btts")
 
 # The registry. `connected` is the honest bit: it says whether this run can actually
 # reach the source, not whether the site exists.
@@ -961,7 +970,8 @@ SOURCES = {
              "here. Judged against backing the same side on every match of this market."),
     "turkey_btts_dog": dict(
         label="Turkey BTTS in heavy mismatches (underdog 7.00+)", kind="Rule", connected=True,
-        site="edge-machine", sports=["soccer_btts"], baseline="population",
+        site="edge-machine", sports=[], baseline="population",
+        retired_sports={"soccer_btts": TURKEY_BTTS_DOG_RETIRED_WHY},
         note="Pre-registered 2026-09-27 alongside turkey_o25_dog, on the SAME fixtures — "
              "same de-vigged underdog cut of 0.135, same join to the three-way board — but "
              "on BTTS instead of over 2.5, so the two records answer which line of the pair "
@@ -994,7 +1004,8 @@ SOURCES = {
              "market."),
     "turkey_o25_dog": dict(
         label="Turkey over 2.5 in heavy mismatches (underdog 7.00+)", kind="Rule",
-        connected=True, site="edge-machine", sports=["soccer_o25"], baseline="population",
+        connected=True, site="edge-machine", sports=[], baseline="population",
+        retired_sports={"soccer_o25": TURKEY_O25_DOG_RETIRED_WHY},
         note="Pre-registered 2026-09-26, before it logged anything. Back OVER 2.5 GOALS on a "
              "Kalshi Turkish Super Lig match when that fixture's own three-way board prices "
              "the underdog under a de-vigged 0.135 (bookmaker decimal 7.00+), with the ask at "

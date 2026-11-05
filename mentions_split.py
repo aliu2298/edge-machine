@@ -177,7 +177,10 @@ _COMMOD_RULE = ("{series} only. For each rung, the first minute quote inside 6h 
                 "lost). HOLD: held to settlement. SPLIT, on the same entries: half resting at 2x, half at 3x of the "
                 "ask paid, each capped at 0.98, filled only when a trade prints at or above it{no_fill}, else "
                 "held. Taker fee in, maker fee out.")
-WTI = dict(WIDE, lane="wti_cheap_yes", label="WTI oil · cheap YES (15-30c)",
+# Built from WIDE WITHOUT its "retired" key: WIDE carries the 2026-10-31 mentions retirement (_MENTIONS_GONE, set
+# above), and copying it froze WTI, gas daily and gas weekly on that day too, with no entry logged from 2026-10-31
+# until this was found on 2026-11-04. GAS and GAS_WEEK copy WTI, so they are clean through it.
+WTI = dict({k: v for k, v in WIDE.items() if k != "retired"}, lane="wti_cheap_yes", label="WTI oil · cheap YES (15-30c)",
            path=os.path.join(ROOT, "data", "wti_cheap_yes_ledger.json"), spread=0.05, band=(0.15, 0.30),
            band_in_quote=True, series="KXWTI", start="2026-10-27T04:00:00+00:00", registered="2026-10-27",
            backfill_open=True, open_only=True, backfill_days=7, anchor="wti-cheap-yes",
@@ -204,7 +207,13 @@ GAS_WEEK = dict(GAS, lane="gas_week_cheap_no", label="AAA gas weekly · cheap NO
                                          ).replace("a spread of 5c or less", "a spread of 10c or less")
                      + " A small, slow lane: about 3 entries a week.",
                 skip="no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h")
+# Retired by hand (2026-11-04, Olu): WTI cheap YES. Set after GAS and GAS_WEEK are built, because both are copies of
+# WTI and must not inherit it; the gas lanes keep running.
+WTI["retired"] = dict(on="2026-11-04", at="13 entries on 4 settled events, 1 won; split −60.2%, hold −75.6%",
+                      reason="no edge: the cheap WTI rungs lost both ways, split and held")
 COMMOD_LANES = (WTI, GAS, GAS_WEEK)
+LIVE_COMMOD = tuple(c for c in COMMOD_LANES if not c.get("retired"))
+GONE_COMMOD = tuple(c for c in COMMOD_LANES if c.get("retired"))
 GROUPS = {"culture": LANES, "commodities": COMMOD_LANES}
 
 

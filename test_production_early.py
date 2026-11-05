@@ -24,8 +24,10 @@ import sandbox_build as SB
 import sandbox_sources as S
 import sport_rows_testlib
 # crypto_fav_band and crypto_fav_band_60 retired 2026-11-03. This file tests the rule's machinery on fixtures from
-# before then, so both run again for this script only; test_retired_2026_11_03.py holds the retirement.
-_REPLAY = sport_rows_testlib.running_again(*S.CRYPTO_RETIRED_ON_2026_11_03)   # kept: a dropped handle restores
+# before then, so both run again for this script only; test_retired_2026_11_03.py holds the retirement. The Turkey
+# pair (retired 2026-11-04, test_retired_2026_11_04b.py) is replayed the same way for its 2026-10-11 listing.
+_REPLAY = sport_rows_testlib.running_again(*S.CRYPTO_RETIRED_ON_2026_11_03,
+                                           *S.TURKEY_RETIRED_ON_2026_11_04)   # kept: a dropped handle restores
 _REPLAY.__enter__()
 import sandbox_track as T
 import shell_build

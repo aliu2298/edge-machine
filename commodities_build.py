@@ -324,13 +324,29 @@ def cheap_side(states=None):
              '<p class="sm mut">Sandbox, paper only, fresh records from the first entry: review at 10 settled events, '
              'decide at 30. An event is one outcome (a WTI day, a gas day, a gas week): its rungs move together, so '
              'they count once. The same engine and wording as the Culture page.</p>'
-             + MS.summary(MS.COMMOD_LANES, states, e)
+             + MS.summary(MS.LIVE_COMMOD, states, e)
              + "".join((('<p class="sm" id="gas-week-note"><b>The weekly gas lane is small and slow: about 3 entries a '
                          'week, all on one weekly event, so 10 settled events takes about ten weeks. Review at 10, '
                          'decide at 30.</b></p>')
                         if cfg is MS.GAS_WEEK else "") + MS.section(states[cfg["lane"]], e, cfg)
-                       for cfg in MS.COMMOD_LANES) + '</section>')
+                       for cfg in MS.LIVE_COMMOD)
+             + retired_cheap(states, e) + '</section>')
     return MS.label_cells(inner)
+
+
+def retired_cheap(states, e):
+    """The retired cheap-side lanes (WTI cheap YES, 2026-11-04) in one collapsed fold, as on the Culture page: each
+    lane's record, the dated reason, then its full card. Records kept, rows stay, open entries still settle."""
+    import mentions_split as MS
+    if not MS.GONE_COMMOD:
+        return ""
+    lines = "".join(f'<li data-lane="{e(c["lane"])}"><b>{e(c["label"])}</b>: retired {e(c["retired"]["on"])} at '
+                    f'{e(c["retired"]["at"])}: {e(c["retired"]["reason"])}. Its rows stay; any open entry still settles.</li>'
+                    for c in MS.GONE_COMMOD)
+    return (f'<details class="fold sec" id="retired-cheap"><summary><h2>Retired</h2> <span class="mut sm">· '
+            f'{len(MS.GONE_COMMOD)} cheap-side lane{"s" if len(MS.GONE_COMMOD) != 1 else ""} · kept, not deleted</span>'
+            f'</summary><ul class="sm">{lines}</ul>' + MS.summary(MS.GONE_COMMOD, states, e)
+            + "".join(MS.section(states[c["lane"]], e, c) for c in MS.GONE_COMMOD) + '</details>')
 
 
 def main():

@@ -7870,9 +7870,10 @@ eq((S.fetch_turkey_o25_dog("soccer_o15", universe=_tu), S.fetch_turkey_o25_dog("
 eq((S.TURKEY_O25_DOG_MAX, S.TURKEY_O25_MAX_ASK, S.TURKEY_TOTAL, S.TURKEY_GAME),
    (0.135, 0.70, "KXSUPERLIGTOTAL", "KXSUPERLIGGAME"),
    "cut, ceiling and both series are the pre-registered ones")
-eq((S.SOURCES["turkey_o25_dog"]["sports"], S.SOURCES["turkey_o25_dog"]["baseline"],
+eq((S.SOURCES["turkey_o25_dog"]["sports"], S.SOURCES["turkey_o25_dog"]["retired_sports"], S.SOURCES["turkey_o25_dog"]["baseline"],
     S.CHALLENGERS["turkey_o25_dog"] is S.fetch_turkey_o25_dog),
-   (["soccer_o25"], "population", True), "turkey_o25_dog is registered on the over-2.5 domain and wired up")
+   ([], {"soccer_o25": S.TURKEY_O25_DOG_RETIRED_WHY}, "population", True),
+   "turkey_o25_dog stays wired on the over-2.5 domain, retired 2026-11-04")
 ok(not S.lane_paused("turkey_o25_dog", "soccer_o25"), "the Turkey lane is not paused")
 _tn = S.SOURCES["turkey_o25_dog"]["note"]
 ok("z +3.03" in _tn and "71.05" in _tn and "63.03" in _tn,
@@ -7925,9 +7926,10 @@ eq(S.fetch_turkey_btts_dog("soccer_btts", universe={
    "another league's BTTS market is not this lane's")
 eq((S.fetch_turkey_btts_dog("soccer_o25", universe=_ku), S.fetch_turkey_o25_dog("soccer_btts", universe=_ku)),
    ([], []), "each Turkey lane answers only for its own domain")
-eq((S.SOURCES["turkey_btts_dog"]["sports"], S.SOURCES["turkey_btts_dog"]["baseline"],
+eq((S.SOURCES["turkey_btts_dog"]["sports"], S.SOURCES["turkey_btts_dog"]["retired_sports"], S.SOURCES["turkey_btts_dog"]["baseline"],
     S.CHALLENGERS["turkey_btts_dog"] is S.fetch_turkey_btts_dog),
-   (["soccer_btts"], "population", True), "turkey_btts_dog is registered on the BTTS domain and wired up")
+   ([], {"soccer_btts": S.TURKEY_BTTS_DOG_RETIRED_WHY}, "population", True),
+   "turkey_btts_dog stays wired on the BTTS domain, retired 2026-11-04")
 ok(not S.lane_paused("turkey_btts_dog", "soccer_btts"), "the Turkey BTTS lane is not paused")
 _kn = S.SOURCES["turkey_btts_dog"]["note"]
 ok("z +3.51" in _kn and "z +4.59" in _kn,

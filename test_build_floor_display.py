@@ -107,8 +107,9 @@ def main():
                  "mls_away_band", "mls_fade_home", "nws", "nws_fade", "covers"):
         ok(lane not in names, f"{lane} is not a new sport row")
     ok("turkey_btts_dog" in S.SOURCES and S.SOURCES["turkey_btts_dog"]["connected"],
-       "turkey_btts_dog stays registered")
-    cov = SB.coverage_table({"soccer_btts": {"turkey_btts_dog": {"picked": 0, "offered": 0}}})
+       "turkey_btts_dog stays registered (retired 2026-11-04, its rows kept)")
+    # A live BTTS lane: a retired one has no coverage row (turkey_btts_dog was the example until 2026-11-04).
+    cov = SB.coverage_table({"soccer_btts": {"liga_btts_even": {"picked": 0, "offered": 0}}})
     ok("0 of 0" in cov and "Fails BUILD" not in cov,
        "the coverage cell stays 0 of 0")
     ok("National Weather Service" not in cov and "Covers" not in cov,

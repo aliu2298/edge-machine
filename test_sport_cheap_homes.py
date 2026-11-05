@@ -153,7 +153,7 @@ import fights_build
 import fights_split
 import mentions_split as MS
 for name, html, cfgs in (("culture", culture_build.build(), culture_build.LIVE_CHEAP),   # the weekly and monthly mention lanes retired 2026-10-31: in a Retired fold
-                         ("commodities", commodities_build.build(), MS.COMMOD_LANES),
+                         ("commodities", commodities_build.build(), MS.LIVE_COMMOD),   # WTI cheap YES retired 2026-11-04: in a Retired fold
                          ("fights", fights_build.build(), fights_split.LIVE)):     # the UFC lane retired 2026-11-03: in a Retired fold
     hidden = [c["lane"] for c in cfgs if folded(html, f'id="{c["anchor"]}"') is not False]
     check(f"{name}: every lane card on the page and not folded", hidden, [])

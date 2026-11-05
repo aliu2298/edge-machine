@@ -65,7 +65,9 @@ check("the two mislabelled quotes are on Nov 3 at 19:30Z, results kept",
       [("commod_fav_band:KXWTI-26NOV03-T94.99", "2026-11-03T19:30:00+00:00", "2026-11-03", "won"),
        ("commod_nc_no:KXWTI-26NOV03-T96.99", "2026-11-03T19:30:00+00:00", "2026-11-03", "won")])
 import production as P
-leads = [l for l in P.load_feed()["leads"].values() if "KXWTI-26NOV03-" in l["id"]]
+# Either WTI ticker format (KXWTI-26NOV03-... or KXWTI-26NOV0314-...): the feed re-keyed the lead on the
+# 26NOV0314 market after the fix, and it is the same Nov 3 lead with the same result.
+leads = [l for l in P.load_feed()["leads"].values() if "|KXWTI-26NOV03" in l["id"]]
 check("the Production lead is a Nov 3 lead with its graded result",
       [(l["date"], l["kickoff"], l["match"], l["status"], l["id"].startswith("2026-11-03|")) for l in leads],
       [("2026-11-03", "2026-11-03T19:30Z", "WTI crude close on Nov 3, 2026", "hit", True)])
