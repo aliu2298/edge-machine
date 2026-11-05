@@ -100211,6 +100211,53 @@
   "venue": "kalshi"
  },
  {
+  "bet": true,
+  "close_at": "2026-09-21T05:02:29+00:00",
+  "close_price": 0.6655,
+  "date": "2026-09-21",
+  "edge": null,
+  "id": "tennis_combo2:combo2:2026-09-21",
+  "label": "2-leg tennis combo: Nao Hibino + Filip Misolic",
+  "legs": [
+   {
+    "market_id": "KXWTAMATCH-26SEP21MLAHIB",
+    "pick": "b",
+    "venue": "kalshi"
+   },
+   {
+    "market_id": "KXATPCHALLENGERMATCH-26SEP21MISGIM",
+    "pick": "a",
+    "venue": "kalshi"
+   }
+  ],
+  "liquidity": null,
+  "logged": "2026-09-21T01:43:50+00:00",
+  "market_id": "combo2:2026-09-21",
+  "pick": "a",
+  "pnl": -100.0,
+  "price": 0.7018,
+  "price_a": 0.7018,
+  "price_b": 0.2982,
+  "price_draw": null,
+  "prob_a": null,
+  "result": "b",
+  "settled": "2026-09-21T11:39:03+00:00",
+  "side_a": "All 2 win",
+  "side_b": "Any one loses",
+  "source": "tennis_combo2",
+  "sport": "tennis_combo",
+  "spread": null,
+  "stake": 100.0,
+  "start": "2026-09-21T05:30:00+00:00",
+  "start_source": null,
+  "status": "lost",
+  "uncovered": null,
+  "untraded": false,
+  "url": "https://kalshi.com/combos",
+  "venue": "combo",
+  "venue_start": null
+ },
+ {
   "bet": false,
   "compact": true,
   "id": "polymarket_us:aec-setkameua-sykole-kuzdmy-2026-09-21",
