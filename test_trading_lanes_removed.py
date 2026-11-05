@@ -114,7 +114,8 @@ def _board_tiles(trades):
     on the board moves the page and this expectation together.
     """
     kept = [t for t in trades
-            if t.get("rule") not in set(EIGHT) and not t.get("research")]
+            if t.get("rule") not in set(EIGHT) and not t.get("research")
+            and not MT.after_retirement(t)]          # a retired rule's rows from after its retirement (2026-11-04)
     closed = sum(1 for t in kept if t.get("status") == "closed")
     opened = sum(1 for t in kept if t.get("status") == "open")
     return closed, opened
