@@ -347,5 +347,72 @@ check("the committed ledger: backfilled rows are all utc_0130, none carries a ne
        sorted({r["night"] for r in real_bf})), (True, [f"2026-10-{d}" for d in (18, 19, 20, 21, 22)]))
 check("  and every ct_2000 row is stamped retired", all(r.get("retired") == "2026-10-24" for r in real["nights"] if r["anchor"] == "ct_2000"), True)
 
+print("\nthe book guard (2026-11-04)")
+NOW = at(2026, 11, 5, 2, 19, 5)
+ok_book = dict(bid=100.0, ask=100.2, at="2026-11-05T02:19:03Z")
+check("a sane fresh book is valid", G.book_problem(ok_book, NOW), None)
+check("bid above ask is crossed", G.book_problem(dict(bid=101.0, ask=100.0), NOW), "crossed")
+check("bid equal to ask is locked", G.book_problem(dict(bid=100.0, ask=100.0), NOW), "locked")
+check("a missing side is invalid", (G.book_problem(dict(bid=100.0, ask=None)), G.book_problem(None)), ("a side is missing", "no book"))
+check("a book older than a few seconds is stale", G.book_problem(dict(bid=100.0, ask=100.2, at="2026-11-05T02:18:50Z"), NOW), "stale")
+check("a crossed book has no spread and prices no net",
+      (G.spread_bp(dict(bid=101.0, ask=100.0)), "net_bp" in G.returns("long", 100.0, 101.0, dict(bid=100, ask=100.2), dict(bid=102, ask=101))),
+      (None, False))
+
+seq = [dict(bid=4022.7, ask=4014.2), dict(bid=4022.7, ask=4014.2), dict(bid=4014.0, ask=4014.4)]
+polled = []
+clk = [NOW]
+
+
+def fake_fetch(path, timeout=10):
+    polled.append(path)
+    b = seq[min(len(polled) - 1, len(seq) - 1)]
+    return {"pricebook": {"bids": [{"price": str(b["bid"]), "size": "1"}], "asks": [{"price": str(b["ask"]), "size": "1"}],
+                          "time": clk[0].isoformat()}}
+
+
+def nap(sec):
+    clk[0] += dt.timedelta(seconds=sec)
+
+
+got = G.fresh_book("GOL-X", lambda: clk[0], fake_fetch, nap)
+check("a crossed book is rejected and re-polled until a valid one arrives", (len(polled), got["bid"], got["ask"], "invalid" in got), (3, 4014.0, 4014.4, False))
+seq[:] = [dict(bid=4022.7, ask=4014.2)]
+polled.clear()
+got = G.fresh_book("GOL-X", lambda: clk[0], fake_fetch, nap, wait_s=5)
+check("if none arrives by the deadline the book comes back marked invalid", (got.get("invalid"), len(polled) > 2), ("crossed", True))
+
+row = dict(id="A:utc_0130:2026-11-05", night="2026-11-05", variant="A", anchor="utc_0130", status="open", side="long",
+           signal_at=at(2026, 11, 5, 2, 3).isoformat(), anchor_at=at(2026, 11, 5, 2, 0).isoformat(),
+           entry_book=dict(bid=100.0, ask=100.2), entry_spread_bp=20.0)
+cmx = G.by_minute([cdl(at(2026, 11, 5, 2, 4), 100, 101, 99, 100), cdl(at(2026, 11, 5, 2, 18), 100, 102, 99, 101)])
+G.step(row, cmx, dict(bid=102.0, ask=101.0, invalid="crossed"), at(2026, 11, 5, 2, 19, 2), "GOL-X")
+check("a row that settles on an invalid exit book keeps its gross and has no net",
+      (row["status"], row["book_invalid"], row.get("net_bp"), row["gross_bp"] != 0), ("settled", "exit", None, True))
+good = dict(id="A:utc_0130:2026-11-04", night="2026-11-04", variant="A", anchor="utc_0130", status="settled", side="long",
+            gross_bp=5.0, net_bp=3.0, net_usd=1.2, entry_spread_bp=2.0, entry_book=dict(bid=1, ask=1.1), exit_book=dict(bid=1, ask=1.1))
+bad = dict(good, id="A:utc_0130:2026-11-03", night="2026-11-03", gross_bp=9.0, net_bp=11.0, net_usd=3.0, exit_book=dict(bid=1.2, ask=1.1), exit_spread_bp=-80.0)
+bfr = dict(good, id="A:utc_0130:2026-10-20", night="2026-10-20", backfilled=True, gross_bp=-10.0)
+for r_ in (bfr,):
+    r_.pop("net_bp"); r_.pop("net_usd")
+st_g = {"nights": [good, bad, bfr]}
+s_before = G.summary(st_g["nights"])
+check("before the re-grade the crossed row sits in net", s_before["n"], 2)
+moved = G.regrade(st_g)
+s_after, ga = G.summary(st_g["nights"]), G.gross_all(st_g["nights"])
+check("re-grade moves only the live row with a crossed stored book", (moved, bad["book_invalid"], "net_bp" in bad, bad["exit_spread_bp"], good.get("book_invalid")),
+      (["A:utc_0130:2026-11-03"], "exit", False, None, None))
+check("it stays out of net; its gross stays in the all-nights line next to the backfilled one",
+      (s_after["n"], s_after["net"], ga["n"], round(ga["gross"], 3)), (1, 3.0, 3, round((5 + 9 - 10) / 3, 3)))
+check("re-grading again moves nothing", G.regrade(st_g), [])
+page_g = GB.section(st_g)
+check("the page shows the all-nights gross line and marks the invalid book", ("all nights, gross" in page_g, "book invalid (exit)" in page_g), (True, True))
+real2 = json.load(open(os.path.join(G.ROOT, "data", "gold_orb_ledger.json")))
+check("the committed ledger has no crossed book left in any net row",
+      [r["id"] for r in real2["nights"] if r.get("net_bp") is not None and (G.book_problem(r.get("entry_book")) or G.book_problem(r.get("exit_book")))], [])
+check("  and the four 2026-10-29 rows are flagged",
+      sorted(r["id"] for r in real2["nights"] if r.get("book_invalid")),
+      sorted(f"{v}:{k}:2026-10-29" for v in "AB" for k in ("utc_0130", "utc_0100")))
+
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
