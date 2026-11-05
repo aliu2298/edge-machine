@@ -119,9 +119,9 @@
    ],
    "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXWTI-26NOV0514-T89.49\", \"a\"]]",
    "price": 0.74,
-   "profit": null,
+   "profit": 0.3514,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-05T23:56:06+00:00",
    "side": "a",
    "snapshot": {
     "as_of": "2026-11-05T16:04:22+00:00",
@@ -190,7 +190,7 @@
    },
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXWTI-26NOV0514-T91.49",
@@ -206,9 +206,9 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_no\", [\"commod_nc_no:KXWTI-26NOV0514-T91.49\", \"b\"]]",
    "price": 0.9,
-   "profit": null,
+   "profit": 0.1111,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-05T23:56:10+00:00",
    "side": "b",
    "snapshot": {
     "as_of": "2026-11-05T18:18:44+00:00",
@@ -277,7 +277,7 @@
    },
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXBTCD-26NOV0517-T76499.99",
@@ -369,7 +369,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-05T23:40:18.390281+00:00",
+ "last_run": "2026-11-05T23:56:16.572344+00:00",
  "mirror": [],
  "pool": [
   {
@@ -386,14 +386,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXWTI-26NOV0514-T89.49\", \"a\"]]",
    "price": 0.74,
-   "profit": null,
+   "profit": 0.3514,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-05T23:56:06+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXUECLTEAMTOTAL-26NOV05LINHAJ-HAJ2",
@@ -501,14 +501,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_no\", [\"commod_nc_no:KXWTI-26NOV0514-T91.49\", \"b\"]]",
    "price": 0.9,
-   "profit": null,
+   "profit": 0.1111,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-05T23:56:10+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXBRENTD-26NOV0517-T97.50",
