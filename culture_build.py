@@ -14,6 +14,8 @@ Paper only. The ledgers are written by culture_track.py, culture_production.py a
 (culture.yml, hourly); this page reads them.
 """
 import os
+import sys
+import traceback
 
 import culture_production as CP
 import culture_track as K
@@ -150,13 +152,18 @@ label_cells = MS.label_cells   # phone labels for tables with a <thead> (moved t
 
 
 def _dip_hold(dip_state, e):
-    """The mentions_dip_hold card (2026-11-01). Never breaks the page."""
+    """The mentions_dip_hold card (2026-11-01). Never breaks the page, but never vanishes silently either
+    (2026-11-04): a failure is printed to the build log with its traceback, and the page keeps the section, so
+    the Dip bid link still lands, with a one-line note."""
     try:
         import mentions_dip_hold as DH
         import mentions_dip_hold_build as DB
         return DB.section(dip_state if dip_state is not None else DH.load(), e)
     except Exception:                                           # noqa: BLE001
-        return ""
+        print("culture_build: the Dip bid card failed to build:", file=sys.stderr)
+        traceback.print_exc()
+        return ('<section id="dip-hold"><h2>Dip bid</h2><p class="sm mut">This card could not be built on this run; '
+                'its ledger is unchanged and the next run tries again.</p></section>')
 
 
 def build(state=None, now=None, split_state=None, wide_state=None, month_state=None, month_wide_state=None,
