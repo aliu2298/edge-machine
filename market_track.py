@@ -467,6 +467,18 @@ def exiting(d):
 ACTIVE = {k: v for k, v in RULES.items() if not v.get("retired")}
 
 
+def after_retirement(t):
+    """True for a retired rule's row whose signal came on or after its retirement day.
+
+    Such a row is not the rule's record: the rule was retired before it signalled. It stays in the
+    ledger and still grades (its exit closes it), but assess() does not count it, so the record
+    reads as it was retired. 2026-11-04: 29 sw_rsi2_pullback rows signalled 2026-11-03, logged
+    because an empty ACTIVE was scanned as every rule. None of them was ever sent to the broker.
+    """
+    r = (RULES.get(t.get("rule")) or {}).get("retired")
+    return bool(r) and str(t.get("signal_day") or "") >= str(r)[:10]
+
+
 # --------------------------------------------------------------------------- the day lane
 # A fixed, pre-registered universe: the most liquid ETFs and mega caps, where a 5bp round trip
 # is realistic. Day rules are priced on 5-minute bars, and intraday spread is the whole game —
@@ -580,7 +592,7 @@ def starts(rule, research_before):
 def scan_day(bars_by_symbol, d, research_before=None, rules=None):
     """Log the day lane's completed trades. Intraday trades open and close inside one session,
     so they are logged after it, from bars that all existed before each decision."""
-    rules = rules or RULES
+    rules = RULES if rules is None else rules
     seen = {t["id"] for t in d["trades"]}
     bench_day = {}
     for b in bars_by_symbol.get(BENCH, []):
@@ -630,7 +642,7 @@ def scan_day(bars_by_symbol, d, research_before=None, rules=None):
 def scan_hours(bars_by_symbol, d, research_before=None, rules=None):
     """The hourly crypto seasonality rule: each UTC day, in at the 22:00 bar's open, out at the
     next day's 00:00 bar's open. Logged once that exit bar exists, from bars that all did."""
-    rules = rules or RULES
+    rules = RULES if rules is None else rules
     seen = {t["id"] for t in d["trades"]}
     added = 0
     for name, rule in rules.items():
@@ -724,7 +736,10 @@ def scan(bars_by_symbol, d, now=None, rules=None, research_before=None):
     now = now or datetime.datetime.now(datetime.timezone.utc)
     seen = {t["id"] for t in d["trades"]}
     added = 0
-    for name, rule in (rules or RULES).items():
+    # None means every rule; an EMPTY dict means none. `rules or RULES` read an empty ACTIVE (every
+    # rule retired or removed, from 2026-11-03) as "every rule", and scanned the retired RSI(2)
+    # pullback on 2026-11-03 and 2026-11-04 (after_retirement keeps those rows off its record).
+    for name, rule in (RULES if rules is None else rules).items():
         if rule_removed(name):
             continue
         if rule["lane"] not in ("swing", "crypto") or rule.get("signal") is None:
@@ -770,7 +785,7 @@ def grade(bars_by_symbol, d, rules=None):
     A removed rule's trades are left as they are, except the exit-only rules' (EXIT_ONLY_RULES):
     those still close on their own registered exit.
     """
-    rules = rules or RULES
+    rules = RULES if rules is None else rules
     bench = {_day(b): b for b in bars_by_symbol.get(BENCH, [])}
     closed = 0
     for t in d["trades"]:
@@ -885,7 +900,7 @@ def assess(d, rule, bps=None):
     """One rule's record, counted PER ENTRY DAY and measured against SPY over the same days.
 
     `bps` charges that cost a side instead of the 5bp stored in each trade's ret_net."""
-    live = [t for t in d["trades"] if t["rule"] == rule and not t.get("research")]
+    live = [t for t in d["trades"] if t["rule"] == rule and not t.get("research") and not after_retirement(t)]
     ts = [t for t in live if t["status"] == "closed"]
     op = [t for t in live if t["status"] == "open"]
     days = {}
@@ -932,7 +947,7 @@ def report(d, rules=None, cost=None):
     With `cost` (measured_cost()), each row is judged at that measured cost and carries
     cost_bps, cost_from, and `assumed`: the same record at the stored 5bp, for comparison."""
     out = []
-    for name in (rules or RULES):
+    for name in (RULES if rules is None else rules):
         if rule_removed(name):
             continue
         if cost is None:

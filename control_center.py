@@ -44,6 +44,7 @@ from datetime import timedelta, timezone
 
 import daily_track as D
 import fmt
+import market_track as MT
 import production
 import sandbox_build as B
 import sandbox_sources as S
@@ -359,7 +360,8 @@ def _nba_area(nba, now):
 
 
 def _trading_area(market, now):
-    trades = [t for t in ((market or {}).get("trades") or []) if isinstance(t, dict)]
+    # A retired rule's rows from after its retirement are not its record (market_track.after_retirement).
+    trades = [t for t in ((market or {}).get("trades") or []) if isinstance(t, dict) and not MT.after_retirement(t)]
     open_n = sum(1 for t in trades if t.get("status") == "open")
     cut = (now - timedelta(days=window_days())).date().isoformat()
     settled = sum(1 for t in trades if t.get("status") == "closed" and str(t.get("exit_day") or "") >= cut)
