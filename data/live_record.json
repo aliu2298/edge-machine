@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-05T04:07Z",
+ "generated": "2026-11-05T05:07Z",
  "lane_note": "own-state lanes: the lane's own fill price; outcome from the market's settled result; sold bets left out; fees not included",
  "lanes": {
   "nba_wm_nofade": [
@@ -86,34 +86,34 @@
    {
     "id": "KXNBAWINMARGIN-26NOV04UTANOP-NOP1TO5",
     "ko": "2026-11-05T01:00",
-    "r": null,
+    "r": 0.5385,
     "side": "no",
-    "st": "open",
-    "w": null
+    "st": "won",
+    "w": 1.0
    },
    {
     "id": "KXNBAWINMARGIN-26NOV04MINHOU-HOU6TO10",
     "ko": "2026-11-05T01:30",
-    "r": null,
+    "r": 0.6129,
     "side": "no",
-    "st": "open",
-    "w": null
+    "st": "won",
+    "w": 1.0
    },
    {
     "id": "KXNBAWINMARGIN-26NOV04PORPHX-PHX1TO5",
     "ko": "2026-11-05T02:00",
-    "r": null,
+    "r": 0.5152,
     "side": "no",
-    "st": "open",
-    "w": null
+    "st": "won",
+    "w": 1.0
    },
    {
     "id": "KXNBAWINMARGIN-26NOV04PORPHX-POR11TO20",
     "ko": "2026-11-05T02:00",
-    "r": null,
+    "r": -1.0,
     "side": "no",
-    "st": "open",
-    "w": null
+    "st": "lost",
+    "w": 1.0
    },
    {
     "id": "KXNBAWINMARGIN-26NOV04DALSAS-DAL1TO5",
@@ -140,6 +140,14 @@
     "w": null
    },
    {
+    "id": "KXNBAWINMARGIN-26NOV04DALSAS-SAS1TO5",
+    "ko": "2026-11-05T02:30",
+    "r": null,
+    "side": "no",
+    "st": "open",
+    "w": null
+   },
+   {
     "id": "KXNBAWINMARGIN-26NOV04DALSAS-SAS6TO10",
     "ko": "2026-11-05T02:30",
     "r": null,
@@ -149,6 +157,14 @@
    },
    {
     "id": "KXNBAWINMARGIN-26NOV04LALSAC-LAL11TO15",
+    "ko": "2026-11-05T03:00",
+    "r": null,
+    "side": "no",
+    "st": "open",
+    "w": null
+   },
+   {
+    "id": "KXNBAWINMARGIN-26NOV04LALSAC-LAL16TO25",
     "ko": "2026-11-05T03:00",
     "r": null,
     "side": "no",
@@ -166,6 +182,14 @@
    {
     "id": "KXNBAWINMARGIN-26NOV04LALSAC-LAL6TO10",
     "ko": "2026-11-05T03:00",
+    "r": null,
+    "side": "no",
+    "st": "open",
+    "w": null
+   },
+   {
+    "id": "KXNBAWINMARGIN-26NOV04MIALAC-MIA21PLUS",
+    "ko": "2026-11-05T03:30",
     "r": null,
     "side": "no",
     "st": "open",
@@ -360,82 +384,82 @@
    {
     "id": "KXNBAWINMARGIN-26NOV04UTANOP-NOP1TO5",
     "ko": "2026-11-05T01:00",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
-    "st": "open",
-    "w": null
+    "st": "lost",
+    "w": 1.0
    },
    {
     "id": "KXNBAWINMARGIN-26NOV04UTANOP-UTA1TO5",
     "ko": "2026-11-05T01:00",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
-    "st": "open",
-    "w": null
+    "st": "lost",
+    "w": 1.0
    },
    {
     "id": "KXNBAWINMARGIN-26NOV04MINHOU-HOU1TO5",
     "ko": "2026-11-05T01:30",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
-    "st": "open",
-    "w": null
+    "st": "lost",
+    "w": 1.0
    },
    {
     "id": "KXNBAWINMARGIN-26NOV04MINHOU-HOU6TO10",
     "ko": "2026-11-05T01:30",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
-    "st": "open",
-    "w": null
+    "st": "lost",
+    "w": 1.0
    },
    {
     "id": "KXNBAWINMARGIN-26NOV04MINHOU-MIN1TO5",
     "ko": "2026-11-05T01:30",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
-    "st": "open",
-    "w": null
+    "st": "lost",
+    "w": 1.0
    },
    {
     "id": "KXNBAWINMARGIN-26NOV04PORPHX-PHX1TO5",
     "ko": "2026-11-05T02:00",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
-    "st": "open",
-    "w": null
+    "st": "lost",
+    "w": 1.0
    },
    {
     "id": "KXNBAWINMARGIN-26NOV04PORPHX-POR6TO10",
     "ko": "2026-11-05T02:00",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
-    "st": "open",
-    "w": null
+    "st": "lost",
+    "w": 1.0
    },
    {
     "id": "KXNBAWINMARGIN-26NOV04TORDEN-DEN1TO5",
     "ko": "2026-11-05T02:00",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
-    "st": "open",
-    "w": null
+    "st": "lost",
+    "w": 1.0
    },
    {
     "id": "KXNBAWINMARGIN-26NOV04TORDEN-DEN6TO10",
     "ko": "2026-11-05T02:00",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
-    "st": "open",
-    "w": null
+    "st": "lost",
+    "w": 1.0
    },
    {
     "id": "KXNBAWINMARGIN-26NOV04TORDEN-TOR1TO5",
     "ko": "2026-11-05T02:00",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
-    "st": "open",
-    "w": null
+    "st": "lost",
+    "w": 1.0
    },
    {
     "id": "KXNBAWINMARGIN-26NOV04DALSAS-SAS6TO10",
