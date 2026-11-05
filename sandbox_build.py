@@ -332,6 +332,15 @@ def source_retired(name):
     return not m["sports"] and bool(m.get("retired_sports") or m.get("retired"))
 
 
+def _own_ledger_label(name):
+    """The label of a lane that keeps its own ledger (Superpack), for the stamp table."""
+    try:
+        import superpack as SPK
+        return SPK.LABEL if name == SPK.LANE else name
+    except Exception:                                           # noqa: BLE001
+        return name
+
+
 def approval_table(d, scores, full=None):
     """Every betting source against every criterion, so a stamp can be checked, not trusted.
 
@@ -357,6 +366,12 @@ def approval_table(d, scores, full=None):
         # (S.source_reset_since): Oddspedia's cricket record restarts, so its stamp does.
         since = S.tour_clock_since(source=name) or S.source_reset_since(name)
         judged.append((name, T.assess(stamp_ledger(full, name), name, since=since)))
+    # Superpack (2026-11-05) keeps its own ledger; its entries are judged on the same criteria as Sandbox-ledger quotes.
+    try:
+        import superpack as SPK
+        judged.append((SPK.LANE, T.assess({"quotes": SPK.quotes(SPK.load())}, SPK.LANE)))
+    except Exception:                                           # noqa: BLE001
+        pass
     for name, a in sorted(judged, key=lambda kv: (order[kv[1]["status"]], -kv[1]["n"])):
         cells = "".join(
             f'<td><span class="{"pos" if passed else "neg"}">{"✓" if passed else "✗"}</span>'
@@ -364,8 +379,9 @@ def approval_table(d, scores, full=None):
             for _k, _l, passed, detail in a["criteria"])
         # A source retired on every scope it covered keeps its row (its record is still judged),
         # tagged so it does not read as a live lane (2026-11-04, Olu).
-        tag = ' <span class="sig n" data-retired>RETIRED</span>' if source_retired(name) else ""
-        rows.append(f'<tr><td><b>{esc(S.SOURCES[name]["label"])}</b>{tag}</td>'
+        tag = ' <span class="sig n" data-retired>RETIRED</span>' if name in S.SOURCES and source_retired(name) else ""
+        label = S.SOURCES[name]["label"] if name in S.SOURCES else _own_ledger_label(name)
+        rows.append(f'<tr><td><b>{esc(label)}</b>{tag}</td>'
                     f'<td>{STAMP[a["status"]]}</td>{cells}</tr>')
     return f"""<div class="tbl"><table>
 <tr><th>Source</th><th>Stamp</th>{head}</tr>

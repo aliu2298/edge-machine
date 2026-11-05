@@ -457,12 +457,19 @@ def _extra_baselines():
 
 
 def _extra_index_rows():
-    """Cheap-side lanes that keep their own ledger (the NBA win margin NO fade, 2026-10-30)."""
+    """Lanes that keep their own ledger (the NBA win margin NO fade, 2026-10-30; Superpack, 2026-11-05)."""
+    rows = []
     try:
         import nba_wm_nofade_build
-        return [nba_wm_nofade_build.index_row()]
+        rows.append(nba_wm_nofade_build.index_row())
     except Exception:                                           # noqa: BLE001
-        return []
+        pass
+    try:                                                        # Superpack (2026-11-05): its card is on the Leaderboard
+        import leaderboard_build
+        rows.append(leaderboard_build.superpack_index_row())
+    except Exception:                                           # noqa: BLE001
+        pass
+    return rows
 
 
 def in_play_index():

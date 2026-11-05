@@ -152,9 +152,17 @@ CODE_NAMES = {"NBA": nba_name, "Football": nfl_name}
 
 
 def contract(uid, sport, market, event, day, entities, kind="team", reach2=None, reach3=None, split=None, hold=None,
-             vol2=None, source=""):
+             vol2=None, source="", logged=None):
+    """`logged` is when the entry was made (ISO UTC), for Superpack's copy rule."""
     return dict(uid=uid, sport=sport, market=market, event=event, day=day, entities=list(entities), kind=kind,
-                reach2=reach2, reach3=reach3, split=split, hold=hold, vol2=vol2, source=source)
+                reach2=reach2, reach3=reach3, split=split, hold=hold, vol2=vol2, source=source, logged=logged)
+
+
+def _iso_ts(ts):
+    try:
+        return dt.datetime.fromtimestamp(int(ts), dt.timezone.utc).isoformat() if ts is not None else None
+    except (TypeError, ValueError, OverflowError):
+        return None
 
 
 # ---------------------------------------------------------------- collectors
@@ -190,7 +198,7 @@ def collect_chaos(chaos, skipped):
             seen.add(uid)
             out.append(contract(uid, sport, market, hold["event"], hold.get("night") or "", [name],
                                 reach2=bool(split.get("filled_2x")), reach3=bool(split.get("filled_3x")),
-                                split=split.get("roi"), hold=hold.get("roi"), source=lane_id))
+                                split=split.get("roi"), hold=hold.get("roi"), source=lane_id, logged=_iso_ts(hold.get("entry_ts"))))
     return out
 
 
@@ -296,7 +304,7 @@ def collect_o35(o35, names, skipped, unmapped):
         out.append(contract((e["id"], "no"), "Soccer", "Over 3.5 NO bid", e["event"], e.get("night") or "",
                             list(pair), kind="match", reach2=flag["2"], reach3=flag["3"],
                             split=round((proceeds - cost) / cost, 4), hold=round((pay - cost) / cost, 4),
-                            vol2=vols[0] if vols else None, source="o35_cheap_no"))
+                            vol2=vols[0] if vols else None, source="o35_cheap_no", logged=_iso_ts(bid.get("fill_at"))))
     return out
 
 
@@ -336,7 +344,7 @@ def collect_ledgers(skipped, unmapped, loader=load):
             r3 = bool((legs.get(3) or {}).get("filled_at"))
             out.append(contract((e["id"], e.get("side") or ""), sport, market, e["event"], _day(e.get("entry_at")),
                                 [str(entity)], reach2=r2, reach3=r3, split=e.get("roi"), hold=e.get("roi_held"),
-                                source=name))
+                                source=name, logged=e.get("entry_at") or e.get("logged")))
     return out
 
 
@@ -558,11 +566,15 @@ RULE_LEDGERS = (
 )
 
 
-def bet(uid, lane, sport, entities, day, profit, won, kind="team", src=None, scope=None):
+def bet(uid, lane, sport, entities, day, profit, won, kind="team", src=None, scope=None, logged=None, settled=None,
+        contract_id=None, side=None, price=None):
     """`src` is where the bet was read (the Sandbox ledger, a rule ledger's file, a daily or culture lane, a cheap-side
-    contract) and `scope` its Sandbox sport key: together they say which lane, and so whether it is active now."""
+    contract) and `scope` its Sandbox sport key: together they say which lane, and so whether it is active now.
+    `logged`, `settled` (ISO UTC, either may be None), `contract_id`, `side` and `price` are what Superpack copies.
+    An OPEN bet (collected only with include_open=True) has profit None."""
     return dict(uid=uid, lane=lane, sport=sport, entities=list(dict.fromkeys(entities)), day=day, profit=profit,
-                won=bool(won), kind=kind, src=src, scope=scope)
+                won=None if profit is None else bool(won), kind=kind, src=src, scope=scope, logged=logged, settled=settled,
+                contract_id=contract_id, side=side, price=price)
 
 
 def is_control(rule):
@@ -576,16 +588,18 @@ def _split_match(text):
     return [a.strip(), b.strip()] if sep and a.strip() and b.strip() else []
 
 
-def collect_sandbox_bets(sandbox, skipped):
+def collect_sandbox_bets(sandbox, skipped, include_open=False):
     out = []
     for q in (sandbox or {}).get("quotes") or []:
-        if not q.get("bet") or q.get("status") not in ("won", "lost", "settled") or not q.get("stake") or q.get("pnl") is None:
+        is_open = include_open and q.get("bet") and q.get("status") == "open"
+        if not is_open and (not q.get("bet") or q.get("status") not in ("won", "lost", "settled") or not q.get("stake")
+                            or q.get("pnl") is None):
             continue
         sport = q.get("sport") or ""
         if sport in SKIP_SPORTS:
             skipped[f"sandbox: {SKIP_SPORTS[sport]}"] = skipped.get(f"sandbox: {SKIP_SPORTS[sport]}", 0) + 1
             continue
-        profit = q["pnl"] / q["stake"]
+        profit = None if is_open else q["pnl"] / q["stake"]
         series = series_of(q.get("market_id") or q.get("id"))
         yes_no = {str(q.get("side_a")).lower(), str(q.get("side_b")).lower()} == {"yes", "no"}
         kind, names = "team", []
@@ -609,18 +623,21 @@ def collect_sandbox_bets(sandbox, skipped):
             skipped["sandbox: no name on the bet"] = skipped.get("sandbox: no name on the bet", 0) + 1
             continue
         out.append(bet((q["id"], q.get("pick")), q.get("source") or "?", label, names, str(q.get("date") or q.get("start") or "")[:10],
-                       profit, q["status"] == "won", kind, src="sandbox", scope=sport))
+                       profit, q["status"] == "won", kind, src="sandbox", scope=sport, logged=q.get("logged"),
+                       settled=q.get("settled"), contract_id=q.get("market_id") or q.get("id"), side=q.get("pick"),
+                       price=q.get("price")))
     return out
 
 
-def collect_rule_bets(skipped, loader=load):
+def collect_rule_bets(skipped, loader=load, include_open=False):
     out = []
     for name, sport, how in RULE_LEDGERS:
         for rule, state in ((loader(name).get("rules")) or {}).items():
             if is_control(rule) or not isinstance(state, dict):
                 continue
             for p in state.get("picks") or []:
-                if p.get("status") not in ("won", "lost", "no_result") or p.get("profit") is None:
+                is_open = include_open and p.get("status") == "open"
+                if not is_open and (p.get("status") not in ("won", "lost", "no_result") or p.get("profit") is None):
                     continue
                 # team "game" marks a game-total pick (nba_rules R5): it is a match bet, not a team called "game".
                 named = CODE_NAMES.get(sport, lambda c: c) if how == "code" else (lambda c: c)
@@ -638,8 +655,10 @@ def collect_rule_bets(skipped, loader=load):
                     skipped[f"{name}: no name on the bet"] = skipped.get(f"{name}: no name on the bet", 0) + 1
                     continue
                 out.append(bet((p.get("id") or p.get("ticker"), p.get("side")), f"{rule}", sport, names,
-                               str(p.get("start") or p.get("settled") or "")[:10], p["profit"] / 100.0, p["status"] == "won", kind,
-                               src=name))
+                               str(p.get("start") or p.get("settled") or "")[:10], None if is_open else p["profit"] / 100.0,
+                               p["status"] == "won", kind, src=name, logged=p.get("logged"), settled=p.get("settled"),
+                               contract_id=p.get("ticker") or p.get("id"), side=p.get("side"),
+                               price=p.get("price") if p.get("price") is not None else p.get("ask")))
     return out
 
 
@@ -650,7 +669,7 @@ def contract_bets(contracts):
         if c["source"] == "nba_winmargin_tracker" or c["split"] is None:
             continue
         out.append(bet(c["uid"], c["source"], c["sport"], c["entities"], c["day"], c["split"], c["split"] > 0, c["kind"],
-                       src="contract"))
+                       src="contract", logged=c.get("logged"), contract_id=c["uid"][0], side=c["uid"][1]))
     return out
 
 
@@ -686,38 +705,40 @@ def daily_entity(series, name):
     return (name or None), "Finance"
 
 
-def _pick_bet(lane, p, skipped, fallback_sport=None, src="daily"):
-    if p.get("status") not in ("won", "lost") or p.get("profit") is None:
+def _pick_bet(lane, p, skipped, fallback_sport=None, src="daily", include_open=False):
+    is_open = include_open and p.get("status") == "open"
+    if not is_open and (p.get("status") not in ("won", "lost") or p.get("profit") is None):
         return None
     entity, sport = daily_entity(p.get("series"), p.get("name"))
     if not entity:
         skipped[f"{lane}: no name on the bet"] = skipped.get(f"{lane}: no name on the bet", 0) + 1
         return None
     return bet((p.get("id"), p.get("side")), p.get("lane") or lane, sport, [entity],
-               str(p.get("settled") or p.get("close") or p.get("logged") or "")[:10], p["profit"] / 100.0, p["status"] == "won",
-               src=src)
+               str(p.get("settled") or p.get("close") or p.get("logged") or "")[:10], None if is_open else p["profit"] / 100.0,
+               p["status"] == "won", src=src, logged=p.get("logged"), settled=p.get("settled"), contract_id=p.get("id"),
+               side=p.get("side") or "yes", price=p.get("price"))
 
 
-def collect_daily_bets(skipped, loader=load):
+def collect_daily_bets(skipped, loader=load, include_open=False):
     out = []
     daily = loader("daily_ledger.json")
     for lane, state in (daily.get("lanes") or {}).items():
         for p in state.get("picks") or []:
-            b = _pick_bet(lane, p, skipped)
+            b = _pick_bet(lane, p, skipped, include_open=include_open)
             if b:
                 out.append(b)
     for lane, state in (daily.get("nc") or {}).items():
         for p in (state or {}).get("picks") or []:
-            b = _pick_bet(lane, p, skipped)
+            b = _pick_bet(lane, p, skipped, include_open=include_open)
             if b:
                 out.append(b)
     for p in loader("finance_nc_ledger.json").get("picks") or []:
-        b = _pick_bet("finance_nc", p, skipped, src="finance_nc")
+        b = _pick_bet("finance_nc", p, skipped, src="finance_nc", include_open=include_open)
         if b:
             out.append(b)
     for lane, state in (loader("culture_ledger.json").get("lanes") or {}).items():
         for p in (state or {}).get("picks") or []:
-            b = _pick_bet(lane, p, skipped, src="culture")
+            b = _pick_bet(lane, p, skipped, src="culture", include_open=include_open)
             if b:
                 out.append(b)
     return out
@@ -729,11 +750,13 @@ def binom_tail(k, n, p=0.5):
     return sum(comb(n, i) * p ** i * (1 - p) ** (n - i) for i in range(k, n + 1))
 
 
-def collect_bets(loader=load):
+def collect_bets(loader=load, include_open=False):
+    """Every settled bet (with include_open, the open ones too, profit None: Superpack's copy source)."""
     skipped, unmapped = {}, {}
     contracts, c_skipped, c_unmapped = collect_all(loader)
-    bets = (collect_sandbox_bets(loader("sandbox_ledger.json"), skipped) + collect_rule_bets(skipped, loader)
-            + collect_daily_bets(skipped, loader) + contract_bets(contracts))
+    bets = (collect_sandbox_bets(loader("sandbox_ledger.json"), skipped, include_open)
+            + collect_rule_bets(skipped, loader, include_open) + collect_daily_bets(skipped, loader, include_open)
+            + contract_bets(contracts))
     uniq, seen = [], set()
     for b in bets:
         key = (b["lane"], b["uid"])

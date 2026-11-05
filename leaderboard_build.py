@@ -16,7 +16,7 @@ KEY = "leaderboard"
 TITLE = "Edge Machine · Leaderboard"
 DESCRIPTION = ("The teams, players and assets the Edge Machine's active lanes win and lose most on, then every settled bet "
                "in its own rules, retired lanes included.")
-SECTIONS = (("active", "Active lanes"), ("top", "All lanes"), ("detail", "Cheap-contract spike detail"))
+SECTIONS = (("active", "Active lanes"), ("superpack", "Superpack"), ("top", "All lanes"), ("detail", "Cheap-contract spike detail"))
 COLS = ("#", "Name", "Sport", "Contracts", "Events", "Per week", "Reached 2x", "Reached 3x", "Split ROI", "Hold ROI",
         "Traded at 2x+", "Holds up?", "Score")
 
@@ -223,6 +223,66 @@ def active_section(ab):
           'not a pick list.</p></section>')
 
 
+def _sp_row(name, r, status_text, anchor=None):
+    roi = pct(r["roi"], True) if r["settled"] else "pending"
+    if r["settled"] and r["settled"] < L.GREY_UNDER:
+        roi = f'<span class="mut">{roi}</span>'
+    return (f'<tr{f" data-lane={chr(34)}{anchor}{chr(34)}" if anchor else ""}><td><b>{esc(name)}</b></td><td class="num">{r["entries"]}</td>'
+            f'<td class="num">{r["open"]}</td><td class="num">{r["settled"]}</td><td class="num">{r["won"]}</td>'
+            f'<td class="num">{money(r["profit"]) if r["settled"] else "—"}</td><td class="num">{roi}</td><td>{esc(status_text)}</td></tr>')
+
+
+def superpack_section(state=None, persistence=None):
+    """Superpack's card (2026-11-05, Olu): the registration, its record beside the two baselines, the persistence note,
+    and its latest entries with the top 10 each was chosen on. Paper only. Never breaks the page."""
+    import superpack as SPK
+    try:
+        state = state if state is not None else SPK.load()
+    except Exception:                                           # noqa: BLE001
+        return '<section id="superpack"><h2>Superpack</h2><p class="sm mut">Its ledger could not be read on this run.</p></section>'
+    r, a, m = SPK.record(state["entries"]), SPK.record(state["pool"]), SPK.record(state["mirror"])
+    since = state.get("since")
+    rows = (_sp_row("Superpack · top 10 names", r, SPK.status(r["settled"]), SPK.LANE)
+            + _sp_row("Baseline (a) · every active-lane bet", a, "baseline, not a lane")
+            + _sp_row("Baseline (b) · the bottom 10, same copy rule", m, "baseline, not a lane"))
+    latest = sorted(state["entries"], key=lambda e: (e.get("logged") or "", e["id"]), reverse=True)[:10]
+    trs = "".join(
+        f'<tr><td>{esc(", ".join(e["matched"]))}</td><td>{esc(e["sport"])}</td><td>{esc(e["lane"])}</td>'
+        f'<td>{esc(str(e.get("side") or "").upper())} at {pct(e.get("price"))}</td><td>{esc(str(e.get("logged") or "")[:16].replace("T", " "))}</td>'
+        f'<td>{esc(str((e.get("snapshot") or {}).get("as_of") or "")[:16].replace("T", " "))}</td>'
+        f'<td>{esc(e["status"])}{"" if e["profit"] is None else " · " + money(e["profit"])}</td></tr>' for e in latest)
+    entries = ('<div class="tbl"><table class="superpack-entries"><tr><th>Top-10 name</th><th>Sport</th><th>Copied lane</th>'
+               '<th>Side and ask</th><th>Logged (UTC)</th><th>Top 10 as of</th><th>Status</th></tr>' + trs + '</table></div>'
+               if latest else '<p class="sm mut">No entry yet: it copies only bets logged after its first run'
+               + (f' ({esc(since[:16].replace("T", " "))} UTC)' if since else '') + '.</p>')
+    note = f'<p class="sm">{persistence_line(persistence)}</p>' if persistence else ""
+    return (
+        f'<section id="superpack"><h2>{esc(SPK.LABEL)}</h2>'
+        '<p class="sm"><b>Sandbox · paper · not in Production and in no feed.</b> '
+        f'Pre-registered {esc(SPK.REGISTERED)}, before it logged anything; fresh record from its first entry.</p>'
+        f'<p class="sm">{esc(SPK.RULE)}</p>'
+        '<p class="sm">Judged against two baselines logged by the same rule from the same start: (a) every active-lane '
+        'bet, every name, the main comparison, so Superpack counts only if the top-10 names beat the lanes\' own average; '
+        '(b) the bottom 10, a mirror test.</p>'
+        f'<p class="sm"><b>Weakness.</b> {esc(SPK.WEAKNESS)}</p>'
+        '<div class="tbl"><table class="superpack-record"><tr><th>Row</th><th class="num">Entries</th><th class="num">Open</th>'
+        '<th class="num">Settled</th><th class="num">Won</th><th class="num">Profit at $1 after fees</th><th class="num">ROI</th>'
+        f'<th>Status</th></tr>{rows}</table></div>{note}'
+        f'<h3>Latest entries</h3>{entries}'
+        f'<p class="sm mut">{len(state.get("skips") or [])} bets skipped because active lanes were on both sides of the same '
+        'contract. A copied bet settles on the copied lane\'s own per-$1 result, after its fees.</p></section>')
+
+
+def superpack_index_row(state=None):
+    """Superpack's row in the Sandbox's lane index (chaos_build.index's columns)."""
+    import superpack as SPK
+    state = state if state is not None else SPK.load()
+    r = SPK.record(state["entries"])
+    return (f'<tr data-lane="{SPK.LANE}"><td><b>{esc(SPK.LABEL)}</b></td><td><a href="./leaderboard.html#superpack">Leaderboard</a></td>'
+            f'<td class="num">{r["entries"]}</td><td class="num">{r["settled"]}</td><td class="num">{r["won"]}</td>'
+            f'<td class="num">{pct(r["roi"], True) if r["settled"] else "—"}</td><td class="num">—</td><td>{esc(SPK.status(r["settled"]))}</td></tr>')
+
+
 def tipster_list():
     return ", ".join(sorted(L.TIPSTER_SOURCES))
 
@@ -263,6 +323,7 @@ def build(bets=None, contracts=None, skipped=None, unmapped=None, now=None, bet_
     left = "; ".join(f"{esc(k)} {v}" for k, v in sorted({**bet_skipped, **unmapped}.items())) or "nothing"
     body = (
         active_section(ab)
+        + superpack_section(persistence=ab["persistence"])
         + '<section id="top"><h2>All lanes</h2>'
         '<p class="lede">The teams, players and assets that made the Edge Machine\'s own rules the most paper profit.</p>'
         f'<p class="sm"><b>Edge Machine rules only.</b> Top {L.TOP_BETS} of {pb["qualified"]} names with {L.MIN_BETS}+ settled bets, from '
