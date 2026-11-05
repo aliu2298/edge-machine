@@ -1,11 +1,129 @@
 {
- "decided": {},
- "entries": [],
+ "decided": {
+  "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXWTI-26NOV0514-T89.49\", \"a\"]]": {
+   "at": "2026-11-05T16:05:22.943647+00:00",
+   "entries": "entered",
+   "pool": "entered"
+  }
+ },
+ "entries": [
+  {
+   "contract": "KXWTI-26NOV0514-T89.49",
+   "entered_at": "2026-11-05T16:05:22.943647+00:00",
+   "entities": [
+    "WTI"
+   ],
+   "id": "superpack:[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXWTI-26NOV0514-T89.49\", \"a\"]]",
+   "lane": "commod_fav_band",
+   "logged": "2026-11-05T16:04:22+00:00",
+   "matched": [
+    "WTI"
+   ],
+   "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXWTI-26NOV0514-T89.49\", \"a\"]]",
+   "price": 0.74,
+   "profit": null,
+   "scope": "commodities_fav",
+   "settled": null,
+   "side": "a",
+   "snapshot": {
+    "as_of": "2026-11-05T16:04:22+00:00",
+    "names": [
+     {
+      "bets": 10,
+      "name": "Real Madrid",
+      "profit": 10.8488,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Napoli",
+      "profit": 5.7771,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Como",
+      "profit": 5.7566,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Manchester United",
+      "profit": 5.3737,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Charlotte FC",
+      "profit": 4.7894,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 17,
+      "name": "Bitcoin",
+      "profit": 4.4421,
+      "sport": "Crypto"
+     },
+     {
+      "bets": 41,
+      "name": "WTI",
+      "profit": 4.0335,
+      "sport": "Commodities"
+     },
+     {
+      "bets": 7,
+      "name": "Bayern Munich",
+      "profit": 3.8901,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "AFC Bournemouth",
+      "profit": 3.7752,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "AS Roma",
+      "profit": 3.7712,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Commodities",
+   "src": "sandbox",
+   "status": "open"
+  }
+ ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-05T15:59:25.943072+00:00",
+ "last_run": "2026-11-05T16:05:22.943647+00:00",
  "mirror": [],
- "pool": [],
+ "pool": [
+  {
+   "contract": "KXWTI-26NOV0514-T89.49",
+   "entered_at": "2026-11-05T16:05:22.943647+00:00",
+   "entities": [
+    "WTI"
+   ],
+   "id": "superpack:[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXWTI-26NOV0514-T89.49\", \"a\"]]",
+   "lane": "commod_fav_band",
+   "logged": "2026-11-05T16:04:22+00:00",
+   "matched": [
+    "WTI"
+   ],
+   "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXWTI-26NOV0514-T89.49\", \"a\"]]",
+   "price": 0.74,
+   "profit": null,
+   "scope": "commodities_fav",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Commodities",
+   "src": "sandbox",
+   "status": "open"
+  }
+ ],
  "registered": "2026-11-05",
  "seen_settled": {
   "[\"contract\", \"album_cheap_no_ledger.json\", [\"KXALBUMEQUIV-WAT26OCT29-8K\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
