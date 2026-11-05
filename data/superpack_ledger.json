@@ -75,6 +75,10 @@
    "at": "2026-11-05T18:35:00.864249+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLALIGATEAMTOTAL-26NOV06SEVALA-SEV2\", \"a\"]]": {
+   "at": "2026-11-05T21:49:22.360613+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXSERIEATEAMTOTAL-26NOV07PARBFC-BFC2\", \"a\"]]": {
    "at": "2026-11-05T18:05:03.605874+00:00",
    "pool": "entered"
@@ -361,7 +365,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-05T21:11:08.213916+00:00",
+ "last_run": "2026-11-05T21:49:22.360613+00:00",
  "mirror": [],
  "pool": [
   {
@@ -890,6 +894,29 @@
    "side": "b",
    "snapshot": null,
    "sport": "Commodities",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXLALIGATEAMTOTAL-26NOV06SEVALA-SEV2",
+   "entered_at": "2026-11-05T21:49:22.360613+00:00",
+   "entities": [
+    "Sevilla"
+   ],
+   "id": "superpack:[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLALIGATEAMTOTAL-26NOV06SEVALA-SEV2\", \"a\"]]",
+   "lane": "team2_ranked",
+   "logged": "2026-11-05T21:48:21+00:00",
+   "matched": [
+    "Sevilla"
+   ],
+   "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLALIGATEAMTOTAL-26NOV06SEVALA-SEV2\", \"a\"]]",
+   "price": 0.45,
+   "profit": null,
+   "scope": "soccer_team2",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
    "src": "sandbox",
    "status": "open"
   }
