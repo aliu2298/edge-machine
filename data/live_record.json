@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-05T19:07Z",
+ "generated": "2026-11-05T20:07Z",
  "lane_note": "own-state lanes: the lane's own fill price; outcome from the market's settled result; sold bets left out; fees not included",
  "lanes": {
   "nba_wm_nofade": [
@@ -884,8 +884,7 @@
     "commod_fav_band:KXBRENTD-26OCT2917-T110": "published inside 30 min of kickoff",
     "commod_fav_band:KXGOLDD-26NOV0217-T3944": "outside the price band",
     "commod_fav_band:KXGOLDD-26NOV0417-T4058": "outside the price band",
-    "commod_fav_band:KXWTI-26NOV0414-T90.99": "outside the price band",
-    "commod_fav_band:KXWTI-26NOV0514-T89.49": "outside the price band"
+    "commod_fav_band:KXWTI-26NOV0414-T90.99": "outside the price band"
    }
   },
   "crypto_fav_band_below|crypto_fav": {
@@ -991,9 +990,10 @@
    "refused": {
     "crypto_fav_band_below:KXBTCD-26NOV0317-T77999.99": "outside the price band",
     "crypto_fav_band_below:KXBTCD-26NOV0417-T80749.99": "outside the entry window",
-    "crypto_fav_band_below:KXSOLD-26NOV0517-T89.9999": "wide spread",
+    "crypto_fav_band_below:KXETHD-26NOV0517-T2259.99": "outside the price band",
+    "crypto_fav_band_below:KXSOLD-26NOV0517-T89.9999": "outside the entry window",
     "crypto_fav_band_below:KXSOLD-26OCT3017-T93.9999": "published inside 30 min of kickoff",
-    "crypto_fav_band_below:KXXRPD-26NOV0517-T1.2399": "wide spread"
+    "crypto_fav_band_below:KXXRPD-26NOV0517-T1.2399": "outside the entry window"
    }
   },
   "econ_nc_yes|econ_daily": {
