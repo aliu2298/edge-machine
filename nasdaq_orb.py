@@ -140,8 +140,14 @@ def bp(a, b):
     return round((b - a) / a * 1e4, 2)
 
 
+def quote_ok(q):
+    """A quote prices a fill only with both sides and bid < ask; a crossed or locked IEX top of book
+    is a stale or torn read."""
+    return bool(q and q.get("bp") and q.get("ap") and q["bp"] < q["ap"])
+
+
 def spread_bp(q):
-    if not q or not q.get("bp") or not q.get("ap"):
+    if not quote_ok(q):
         return None
     mid = (q["bp"] + q["ap"]) / 2
     return round((q["ap"] - q["bp"]) / mid * 1e4, 2)
@@ -149,7 +155,7 @@ def spread_bp(q):
 
 def net_bp(side, q_in, q_out):
     """Buy at the ask, sell at the bid. None without both quotes."""
-    if not (q_in and q_out and q_in.get("bp") and q_in.get("ap") and q_out.get("bp") and q_out.get("ap")):
+    if not (quote_ok(q_in) and quote_ok(q_out)):
         return None
     if side == "long":
         return bp(q_in["ap"], q_out["bp"])
@@ -290,7 +296,8 @@ def fetch_bars(day, feed="sip", get=None):
 
 def fetch_quote(feed, get=None):
     q = ((get or _get)(f"{DATA}/v2/stocks/{SYMBOL}/quotes/latest?feed={feed}") or {}).get("quote") or {}
-    return dict(bp=q.get("bp"), ap=q.get("ap"), t=q.get("t")) if q.get("bp") and q.get("ap") else None
+    out = dict(bp=q.get("bp"), ap=q.get("ap"), t=q.get("t"))
+    return out if quote_ok(out) else None
 
 
 def fetch_calendar(day, get=None):

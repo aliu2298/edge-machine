@@ -57,6 +57,9 @@ def _row(r):
     exit_ = "—" if r.get("exit_px") is None else f'{r["exit_px"]:.1f}' + (" *" if r.get("exit_carried") else "")
     if r.get("backfilled"):
         spreads, net = "no spread", "— · —"
+    elif r.get("book_invalid"):
+        side = r["book_invalid"]
+        spreads, net = f'book invalid ({esc(side)}) · {esc(r.get("entry_book_invalid") or r.get("exit_book_invalid") or "")}', "— · —"
     else:
         spreads = f'{_num(r.get("entry_spread_bp"), "{:.1f}")} / {_num(r.get("exit_spread_bp"), "{:.1f}")}'
         net = f'{_num(r.get("net_bp"))} · {_usd(r.get("net_usd"))}'
@@ -83,6 +86,14 @@ def _summary_row(variant, key, label, rows):
                 f'<td class="num">{g["n"]}</td><td class="num">{g["win"] * 100:.0f}% gross</td>'
                 f'<td class="num">{_num(g["gross"])}</td><td class="num">—</td><td class="num">—</td>'
                 f'<td class="num">—</td></tr>')
+    a = G.gross_all(mine)
+    if a["n"] and any(r.get("backfilled") or r.get("book_invalid") for r in mine):
+        # Every settled night at this anchor on its gross return, net or not: backfilled nights and
+        # nights whose book was unusable sit here next to the net line.
+        out += (f'<tr class="mut"><td>{esc(name)}</td><td>{esc(label)} · all nights, gross</td>'
+                f'<td class="num">{a["n"]}</td><td class="num">{a["win"] * 100:.0f}% gross</td>'
+                f'<td class="num">{_num(a["gross"])}</td><td class="num">—</td><td class="num">—</td>'
+                f'<td class="num">{_num(a["t"], "{:+.2f}")} gross</td></tr>')
     return out
 
 
@@ -113,6 +124,9 @@ is kept as a second anchor. The DST-following 8:00 pm CT anchor is retired; its 
 <div class="note sm"><b>Amendment {esc(AMENDMENT)}</b> Nights since 2026-10-18 were re-run at the new anchor from
 Coinbase's historical 1-minute candles (GOL-25NOV26-CDE). Coinbase publishes no historical book, so those rows are
 marked backfilled, show their gross return and no spread, and stay out of every net-after-spread figure.</div>
+<div class="note sm"><b>Book guard 2026-11-04.</b> A book with a side missing, bid at or above ask, or older than a few
+seconds is re-polled; if none arrives the row is marked <i>book invalid</i> and leaves the net figures, keeping its gross.
+Four rows from 2026-10-29 (a crossed book at the entry or the exit poll) were moved out that way.</div>
 </details>
 <div class="tbl"><table><thead><tr><th>Variant</th><th>Anchor</th><th class="num">Settled nights</th>
 <th class="num">Won</th><th class="num">Avg gross bp</th><th class="num">Avg net bp · $</th>

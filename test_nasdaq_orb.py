@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Offline checks for the Nasdaq open breakout paper lane (nasdaq_orb.py) and its Trading section."""
 import datetime as dt
+import json
 import os
 import sys
 import tempfile
@@ -216,6 +217,18 @@ check("title, paper note, review rule and all four variants",
 check("the daily table carries the bid/ask and net", ("100.21/100.23 → 100.49/100.51" in h, "IEX top of book" in h), (True, True))
 check("an empty ledger says when the first read is", "Monday 2026-10-19" in NB.section({"rows": []}), True)
 check("no guarded public phrase in the section", sandbox_audit.COPY_RE.findall(h + NB.section({"rows": []})), [])
+
+print("\nthe quote guard (2026-11-04)")
+check("a crossed or locked IEX quote prices nothing",
+      (N.quote_ok(dict(bp=100.1, ap=100.0)), N.quote_ok(dict(bp=100.0, ap=100.0)), N.quote_ok(dict(bp=100.0, ap=100.02))), (False, False, True))
+check("  no spread, no net from a crossed quote",
+      (N.spread_bp(dict(bp=100.1, ap=100.0)), N.net_bp("long", dict(bp=100.1, ap=100.0), dict(bp=100.0, ap=100.02))), (None, None))
+check("fetch_quote drops a crossed snapshot",
+      N.fetch_quote("iex", lambda url: {"quote": {"bp": 100.1, "ap": 100.0, "t": "x"}}), None)
+_led = json.load(open(N.PATH))
+check("the committed ledger holds no crossed quote",
+      [r["id"] for r in _led["rows"] for a, b in (("bid_in", "ask_in"), ("bid_out", "ask_out"))
+       if r.get(a) and r.get(b) and r[a] >= r[b]], [])
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

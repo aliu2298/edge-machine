@@ -79,6 +79,9 @@ RANGE_GRACE_S = 120               # a 7:59 candle can lag the clock; no_range on
 FEE_PER_SIDE = 0.10
 FEE_NOTE = "fee: $0.10/side (CDE 2024 filing, non-professional, exchange fee only)"
 READ_AT = 10                      # Olu reviews at 10+ settled nights per variant
+MAX_BOOK_AGE_S = 5                # a book whose own timestamp is older than this is stale
+BOOK_WAIT_S = 12                  # re-poll an invalid book this long before giving up on it
+BOOK_RETRY_S = 1.0
 
 
 # ---------- the clock ----------
@@ -194,7 +197,7 @@ def returns(side, entry_px, exit_px, entry_book=None, exit_book=None, fee=FEE_PE
     gross_usd = s * (exit_px - entry_px) * CONTRACT_OZ
     out = dict(gross_usd=round(gross_usd, 4), gross_bp=round(1e4 * gross_usd / (entry_px * CONTRACT_OZ), 3))
     eb, xb = entry_book or {}, exit_book or {}
-    if all(eb.get(k) for k in ("bid", "ask")) and all(xb.get(k) for k in ("bid", "ask")):
+    if book_problem(eb) is None and book_problem(xb) is None:
         fill_in = eb["ask"] if s == 1 else eb["bid"]
         fill_out = xb["bid"] if s == 1 else xb["ask"]
         net_usd = s * (fill_out - fill_in) * CONTRACT_OZ - 2 * fee
@@ -203,11 +206,55 @@ def returns(side, entry_px, exit_px, entry_book=None, exit_book=None, fee=FEE_PE
     return out
 
 
+def book_problem(book, now=None, max_age=MAX_BOOK_AGE_S):
+    """Why `book` cannot price a fill, or None when it can. A book is invalid when a side is
+    missing, when bid >= ask (a crossed or locked top of book is a stale or torn read, never a
+    real price), or, given `now`, when its own timestamp is more than `max_age` seconds old."""
+    if not book:
+        return "no book"
+    if book.get("invalid"):
+        return str(book["invalid"])
+    bid, ask = book.get("bid"), book.get("ask")
+    if not bid or not ask:
+        return "a side is missing"
+    if bid >= ask:
+        return "crossed" if bid > ask else "locked"
+    if now is not None and book.get("at"):
+        try:
+            t = dt.datetime.fromisoformat(str(book["at"]).replace("Z", "+00:00"))
+        except ValueError:
+            return "bad timestamp"
+        if t.tzinfo is None:
+            t = t.replace(tzinfo=UTC)
+        if (now - t).total_seconds() > max_age:
+            return "stale"
+    return None
+
+
 def spread_bp(book):
-    if not book or not book.get("bid") or not book.get("ask"):
+    if book_problem(book) is not None:
         return None
     mid = (book["bid"] + book["ask"]) / 2
     return round(1e4 * (book["ask"] - book["bid"]) / mid, 3)
+
+
+def fresh_book(product, now_fn, fetch=None, sleep=time.sleep, wait_s=BOOK_WAIT_S, retry_s=BOOK_RETRY_S):
+    """A valid top of book, re-polled until one arrives or `wait_s` passes. When none does, the last
+    book read comes back with `invalid` set to why, so the row can say its book was unusable."""
+    fetch = fetch or get
+    t0 = now_fn()
+    last = None
+    while True:
+        try:
+            last = book_top(product, fetch)
+            why = book_problem(last, now_fn())
+        except Exception as e:                                     # noqa: BLE001
+            last, why = last or {}, f"read failed: {str(e)[:60]}"
+        if why is None:
+            return last
+        if (now_fn() - t0).total_seconds() >= wait_s:
+            return dict(last or {}, invalid=why)
+        sleep(retry_s)
 
 
 # ---------- the ledger ----------
@@ -241,7 +288,8 @@ def row_for(state, day, variant, key, anchor, shadow):
 
 def summary(rows):
     """Settled trades: n, win % (net > 0), average gross, net and entry spread in bp, net $, t of net."""
-    done = [r for r in rows if r.get("status") == "settled" and r.get("net_bp") is not None]
+    done = [r for r in rows if r.get("status") == "settled" and r.get("net_bp") is not None
+            and not r.get("book_invalid") and not r.get("backfilled")]
     n = len(done)
     if not n:
         return dict(n=0, win=None, gross=None, net=None, spread=None, t=None, net_usd=None)
@@ -253,6 +301,49 @@ def summary(rows):
                 spread=(sum(spreads) / len(spreads) if spreads else None),
                 t=(mean / (sd / math.sqrt(n)) if sd > 0 else None),
                 net_usd=sum(r["net_usd"] for r in done) / n)
+
+
+def flag_book(row):
+    """Mark which book (entry, exit, both) could not price a fill; those rows leave every net figure
+    but keep their gross. Idempotent."""
+    bad = [w for w, k in (("entry", "entry_book"), ("exit", "exit_book"))
+           if row.get(k) is not None and book_problem(row[k]) is not None]
+    if bad:
+        row["book_invalid"] = "both" if len(bad) == 2 else bad[0]
+    return row.get("book_invalid")
+
+
+def regrade(state):
+    """Move every settled live row whose stored entry or exit book was crossed, locked or one-sided
+    out of net: the net, fills and the bad side's spread are removed, `book_invalid` says which side,
+    the gross stays. The rule, anchors and variants are untouched. -> the row ids moved."""
+    moved = []
+    for r in state["nights"]:
+        if r.get("backfilled") or r.get("status") != "settled" or r.get("book_invalid"):
+            continue
+        if not flag_book(r):
+            continue
+        for k in ("net_bp", "net_usd", "fill_in", "fill_out"):
+            r.pop(k, None)
+        if r["book_invalid"] in ("entry", "both"):
+            r["entry_spread_bp"] = None
+        if r["book_invalid"] in ("exit", "both"):
+            r["exit_spread_bp"] = None
+        moved.append(r["id"])
+    return moved
+
+
+def gross_all(rows):
+    """Every settled trade with a gross return, whatever its book (live, invalid-book or backfilled):
+    n, win % on gross, average gross bp, t of gross."""
+    done = [r for r in rows if r.get("status") == "settled" and r.get("gross_bp") is not None]
+    n = len(done)
+    if not n:
+        return dict(n=0, win=None, gross=None, t=None)
+    g = [r["gross_bp"] for r in done]
+    mean = sum(g) / n
+    sd = math.sqrt(sum((x - mean) ** 2 for x in g) / (n - 1)) if n > 1 else 0.0
+    return dict(n=n, win=sum(x > 0 for x in g) / n, gross=mean, t=(mean / (sd / math.sqrt(n)) if sd > 0 else None))
 
 
 def gross_summary(rows):
@@ -308,6 +399,8 @@ def step(row, cm, book, now, product):
                        entry_at=dt.datetime.fromtimestamp(entry_minute(m), UTC).isoformat(),
                        exit_at=dt.datetime.fromtimestamp(exit_due(entry_minute(m)), UTC).isoformat(),
                        entry_book=book, entry_spread_bp=spread_bp(book))
+            if book_problem(book) is not None:
+                row["entry_book_invalid"] = book_problem(book)
             changed = True
         elif minute(now) >= a + 60 * BREAK_MIN:
             row.update(status="no_break", settled_at=now.isoformat())
@@ -323,6 +416,9 @@ def step(row, cm, book, now, product):
         row.update(entry_px=entry, entry_late=late, exit_px=exit_px, exit_carried=carried, exit_book=book,
                    exit_spread_bp=spread_bp(book),
                    **returns(row["side"], entry, exit_px, row.get("entry_book"), book))
+        if book_problem(book) is not None:
+            row["exit_book_invalid"] = book_problem(book)
+        flag_book(row)
         row.update(status="settled", settled_at=now.isoformat())
         changed = True
     return changed
@@ -444,7 +540,7 @@ def run(state, now_fn=lambda: dt.datetime.now(UTC), fetch=get, sleep=time.sleep,
             continue
         try:
             cm = candles(product, first - dt.timedelta(minutes=longest + 1), now + dt.timedelta(minutes=1), fetch)
-            book = book_top(product, fetch)
+            book = fresh_book(product, now_fn, fetch, sleep)
             changed = [r for r in rows if step(r, cm, book, now, product)]
             for r in changed:
                 log(f"{now:%H:%M:%SZ} {r['id']} -> {r['status']}")
@@ -468,6 +564,12 @@ def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
     out = argv[argv.index("--out") + 1] if "--out" in argv else PATH
     src = argv[argv.index("--from") + 1] if "--from" in argv else out
+    if "--regrade" in argv:
+        state = load(src)
+        moved = regrade(state)
+        save(state, out)
+        print(f"{len(moved)} rows moved out of net:", moved)
+        return 0
     if "--run" not in argv and "--backfill" not in argv:
         st = load(src)
         for v in VARIANTS:
@@ -478,6 +580,7 @@ def main(argv=None):
     if "--backfill" in argv:
         product = argv[argv.index("--product") + 1] if "--product" in argv else BACKFILL_PRODUCT
         n_retired = retire_anchors(state)
+        print("books moved out of net:", regrade(state))
         new = backfill(state, product)
         save(state, out)
         print(f"backfilled {len(new)} rows, retired-anchor rows stamped {n_retired}")
