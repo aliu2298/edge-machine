@@ -4,6 +4,10 @@
    "at": "2026-11-05T16:05:22.943647+00:00",
    "entries": "entered",
    "pool": "entered"
+  },
+  "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXUECLTEAMTOTAL-26NOV05LINHAJ-HAJ2\", \"a\"]]": {
+   "at": "2026-11-05T16:10:44.196456+00:00",
+   "pool": "entered"
   }
  },
  "entries": [
@@ -97,7 +101,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-05T16:05:22.943647+00:00",
+ "last_run": "2026-11-05T16:10:44.196456+00:00",
  "mirror": [],
  "pool": [
   {
@@ -120,6 +124,29 @@
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUECLTEAMTOTAL-26NOV05LINHAJ-HAJ2",
+   "entered_at": "2026-11-05T16:10:44.196456+00:00",
+   "entities": [
+    "Hajduk Split"
+   ],
+   "id": "superpack:[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXUECLTEAMTOTAL-26NOV05LINHAJ-HAJ2\", \"a\"]]",
+   "lane": "team2_ranked",
+   "logged": "2026-11-05T16:09:43+00:00",
+   "matched": [
+    "Hajduk Split"
+   ],
+   "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXUECLTEAMTOTAL-26NOV05LINHAJ-HAJ2\", \"a\"]]",
+   "price": 0.71,
+   "profit": null,
+   "scope": "soccer_team2_cup",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
    "src": "sandbox",
    "status": "open"
   }
