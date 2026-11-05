@@ -35,6 +35,7 @@ tracker runs (every 3h).
 import datetime, html, json, os, re, sys
 
 import fmt
+import production_live as PL
 import sandbox_sources as S
 import sandbox_track as T
 import site_chrome
@@ -1311,6 +1312,16 @@ def record_unavailable(pair_key, exc):
     return note
 
 
+def _feed_from(leads):
+    """{pair: earliest kickoff the feed still holds}, so older paper bets are not blamed on the feed."""
+    out = {}
+    for l in leads:
+        ko = l.get("kickoff")
+        if l.get("pair") and ko and (l["pair"] not in out or str(ko) < out[l["pair"]]):
+            out[l["pair"]] = str(ko)
+    return out
+
+
 def unavailable_row(key, label, sport_label, note):
     """The Production table row for a pair whose record could not be read."""
     return (f'<tr class="unavailable" data-pair="{esc(key)}"><td><b>{esc(label)}</b>'
@@ -1398,6 +1409,8 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
                        if l["status"] in ("hit", "miss", "price") and not _kickoff_known(l)]
 
     # ---- the pairs, each with the evidence it was moved on and what it has done since ----
+    live_blob = PL.load()
+    live_gap_rows, paper_bets = [], {}
     cards = []
     n_early = 0
     # Each pair's row, its since-Production record and its leads to come, by sport.
@@ -1468,13 +1481,16 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
             else:
                 since_note = "none yet"
             early = early_state(pair, live["n"])
+            paper_bets[key] = [dict(id=q.get("id"), status=q.get("status"), ko=(_kickoff(q).isoformat() if _kickoff(q) else None)) for q in mine_since if q.get("bet")]
+            live_rec, live_roi, live_data = PL.cells(key, since, dict(roi=live["roi_fee"] if live["n"] else None), live_blob)
+            live_gap_rows.append((name(key), key, live["n"], live["roi_fee"] if live["n"] else None, live_data))
             card = f"""<tr>
 <td><b>{esc(name(key))}</b>{early_html(early)}<div class="sm mut">{esc(sport_of(key))} · moved {esc(str(pair.get('by_hand') or since or '')[:10])}</div></td>
 <td class="num">{whole['n']}<div class="sm mut">settled</div></td>
 <td class="num"><span class="{tone(whole['roi_fee'], whole['n'])}">{pct(whole['roi_fee'])}</span><div class="sm mut">after fees</div></td>
 <td class="num">{clv}<div class="sm mut">v the close</div></td>
-<td class="num">{T.record_html(live)}<div class="sm mut">{esc(since_note)}</div></td>
-<td class="num"><span class="{tone(live['roi_fee'], live['n'] >= EARLY_N)}">{pct(live['roi_fee'])}</span>{'<div class="sm mut">too early</div>' if 0 < live['n'] < EARLY_N else ''}</td>
+<td class="num">{T.record_html(live)}<div class="sm mut">{esc(since_note)}</div>{live_rec}</td>
+<td class="num"><span class="{tone(live['roi_fee'], live['n'] >= EARLY_N)}">{pct(live['roi_fee'])}</span>{'<div class="sm mut">too early</div>' if 0 < live['n'] < EARLY_N else ''}{live_roi}</td>
 <td class="num light">{light} <span class="sm mut">{esc(why)}</span></td>
 <td class="num"><span class="{reach_tone}">{reach}</span><div class="sm mut">reachable</div></td>
 <td class="num"><b>{to_come}</b></td></tr>"""
@@ -1520,7 +1536,10 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
             f'{" open" if grp["to_come"] else ""}>'
             f'<summary><h3>{esc(g)}</h3><span class="mut sm">· {" · ".join(bits)}</span></summary>'
             f'<div class="tbl"><table>{pairs_head}{rows}</table></div></details>')
-    pairs_html = ("".join(sections) +
+    pairs_html = ("".join(sections) + PL.gap_section(live_gap_rows, paper_bets, {l.get('sandbox_quote') for l in leads if l.get('sandbox_quote')},
+                                                                  _feed_from(leads)) + PL.lanes_table(live_blob) +
+                  ('<p class="sm mut">Live fills: orders the follower placed and Kalshi settled, counted from the pair\'s Production date, ROI per $1 staked after fees, '
+                   f'read {esc((live_blob or {}).get("generated") or "not yet")}. Paper is the Sandbox grade of the same bets.</p>' if live_blob else "") +
                   '<p class="sm mut">Reaches the feed counts the pair\'s bets the feed could publish. A tip is unreachable when no Kalshi or Polymarket US market was listed for it, or its Kalshi market had no verified start time, so it stays in the Sandbox record and the feed cannot carry it.</p>'
                   if cards else
                   '<div class="note">Nothing is in Production. A pair arrives here by hand, on the record '
