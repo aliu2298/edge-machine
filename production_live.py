@@ -129,7 +129,7 @@ def cells(key, pair_entered, paper, live_blob):
         return "", "", None
     p = (live_blob.get("pairs") or {}).get(key)
     if p is None:
-        return '<div class="sm mut live-line">live fills: not exported</div>', "", None
+        return "", "", None
     orders = window(p["orders"], pair_entered)
     rec = record(orders)
     notes = [f"{rec[k]} {w}" for k, w in (("open", "open"), ("unfilled", "unfilled"), ("sold", "exited early"), ("unconfirmed", "unconfirmed")) if rec[k]]
