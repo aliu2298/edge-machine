@@ -496,6 +496,22 @@
    "tip": "2026-11-05T01:00:00+00:00",
    "why": null
   },
+  "no:KXNBAWINMARGIN-26NOV04DALSAS-DAL11PLUS": {
+   "bot_version": "wm-nofade-v2",
+   "bucket": "DAL11PLUS",
+   "decided_at": "2026-11-05T01:44:48+00:00",
+   "event": "KXNBAWINMARGIN-26NOV04DALSAS",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV04",
+   "spread": 0.05,
+   "ticker": "KXNBAWINMARGIN-26NOV04DALSAS-DAL11PLUS",
+   "tip": "2026-11-05T02:30:00+00:00",
+   "why": "NO price 0.99 outside 10-95c",
+   "yes_ask": 0.06,
+   "yes_bid": 0.01
+  },
   "no:KXNBAWINMARGIN-26NOV04DALSAS-DAL1TO5": {
    "P": 0.94,
    "bot_version": "wm-nofade-v2",
@@ -515,6 +531,22 @@
    "why": null,
    "yes_ask": 0.09,
    "yes_bid": 0.06
+  },
+  "no:KXNBAWINMARGIN-26NOV04DALSAS-DAL6TO10": {
+   "bot_version": "wm-nofade-v2",
+   "bucket": "DAL6TO10",
+   "decided_at": "2026-11-05T01:42:42+00:00",
+   "event": "KXNBAWINMARGIN-26NOV04DALSAS",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV04",
+   "spread": 0.05,
+   "ticker": "KXNBAWINMARGIN-26NOV04DALSAS-DAL6TO10",
+   "tip": "2026-11-05T02:30:00+00:00",
+   "why": "NO price 0.99 outside 10-95c",
+   "yes_ask": 0.06,
+   "yes_bid": 0.01
   },
   "no:KXNBAWINMARGIN-26NOV04DALSAS-SAS11TO15": {
    "P": 0.86,
@@ -575,6 +607,19 @@
    "why": null,
    "yes_ask": 0.11,
    "yes_bid": 0.08
+  },
+  "no:KXNBAWINMARGIN-26NOV04DALSAS-SAS26PLUS": {
+   "bot_version": "wm-nofade-v2",
+   "bucket": "SAS26PLUS",
+   "decided_at": "2026-11-05T01:45:49+00:00",
+   "event": "KXNBAWINMARGIN-26NOV04DALSAS",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV04",
+   "ticker": "KXNBAWINMARGIN-26NOV04DALSAS-SAS26PLUS",
+   "tip": "2026-11-05T02:30:00+00:00",
+   "why": "no tight read inside the entry window"
   },
   "no:KXNBAWINMARGIN-26NOV04DALSAS-SAS6TO10": {
    "P": 0.86,
@@ -1817,6 +1862,22 @@
    "yes_ask": 0.09,
    "yes_bid": 0.06
   },
+  "yes:KXNBAWINMARGIN-26NOV04DALSAS-DAL6TO10": {
+   "bot_version": "wm-yes-v2",
+   "bucket": "DAL6TO10",
+   "decided_at": "2026-11-05T01:42:42+00:00",
+   "event": "KXNBAWINMARGIN-26NOV04DALSAS",
+   "lane": "nba_winmargin_live",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV04",
+   "spread": 0.05,
+   "ticker": "KXNBAWINMARGIN-26NOV04DALSAS-DAL6TO10",
+   "tip": "2026-11-05T02:30:00+00:00",
+   "why": "ask 0.06 outside 10-20c",
+   "yes_ask": 0.06,
+   "yes_bid": 0.01
+  },
   "yes:KXNBAWINMARGIN-26NOV04DALSAS-SAS1TO5": {
    "bot_version": "wm-yes-v2",
    "bucket": "SAS1TO5",
@@ -2378,6 +2439,6 @@
    "why": "no tight read inside the entry window"
   }
  },
- "updated_at": "2026-11-05T01:30:02+00:00",
+ "updated_at": "2026-11-05T01:45:49+00:00",
  "version": 1
 }
