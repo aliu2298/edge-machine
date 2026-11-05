@@ -41,7 +41,9 @@ def week_table(state, esc, now_ts=None):
         return '<p class="sm mut">No week has been read yet.</p>'
     tick = max(state["events"])
     mk = state["events"][tick]["markets"]
-    by = {bid: {e["ticker"]: e for e in M.entries(state, bid, now_ts)} for bid in M.BIDS}
+    # The latest week's entries only: M.entries spans every week, and an earlier week's ticker is not in this
+    # week's markets (2026-11-04: KXTRUMPSAY-26NOV02-AUTO raised KeyError and the whole card vanished).
+    by = {bid: {e["ticker"]: e for e in M.entries(state, bid, now_ts) if e["event"] == tick} for bid in M.BIDS}
     rows = ""
     for t in sorted({t for d in by.values() for t in d}, key=lambda t: (mk[t].get("word") or t).lower()):
         cells = ""
