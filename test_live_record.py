@@ -80,9 +80,9 @@ orders = [dict(id="q1", ko="2026-11-03T20:00", side="yes", st="won", w=1.0, r=1.
 rec = PL.record(PL.window(orders, "2026-11-01T00:00:00+00:00"))
 check("the window starts at the pair's Production date", (rec["won"], rec["lost"], rec["open"], rec["roi"]), (1, 1, 1, 0.0))
 blob = dict(generated="2026-11-05T03:00Z", pairs={"a|b": dict(entered="2026-11-01", orders=orders, refused={"q9": "thin book"})}, lanes={})
-cell, data = PL.cells("a|b", "2026-11-01T00:00:00+00:00", dict(roi=0.25), blob)
-check("the cells carry the record and the gap to paper", ("1–1" in cell, "-25.0pp v paper" in cell if rec["roi"] else True), (True, True))
-check("no live file reads as dashes", PL.cells("a|b", None, dict(roi=None), None)[1], None)
+frag_rec, frag_roi, data = PL.cells("a|b", "2026-11-01T00:00:00+00:00", dict(roi=0.25), blob)
+check("the fragments carry the live record and the gap to paper, under the paper cells", ("1–1" in frag_rec, "-25.0pp v paper" in frag_roi), (True, True))
+check("no live file adds nothing", PL.cells("a|b", None, dict(roi=None), None), ("", "", None))
 paper = [dict(id="q1", status="won"), dict(id="q9", status="won"), dict(id="q5", status="won", ko="2026-11-01T20:00:00+00:00"), dict(id="q2", status="won")]
 why = PL.explain(paper, PL.window(orders, "2026-11-01T00:00:00+00:00"), {"q9": "thin book"}, in_feed={"q1", "q2", "q9"}, feed_from="2026-11-02T00:00Z")
 check("the gap is explained: refused, older than the feed, settled the other way", sorted(why),

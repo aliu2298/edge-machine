@@ -123,27 +123,27 @@ def gap_bets(paper_n, paper_roi, live):
 
 
 def cells(key, pair_entered, paper, live_blob):
-    """(live record cell, live ROI cell, gap data) for the pair's row, or ('—', '—', None) when there is no live file."""
+    """(record fragment, ROI fragment, data) to sit under the pair's paper record and ROI, or empty fragments with no data when
+    there is no live file. Fragments, not cells: the pairs table is already as wide as its card."""
     if live_blob is None:
-        return '<td class="num mut">—</td><td class="num mut">—</td>', None
+        return "", "", None
     p = (live_blob.get("pairs") or {}).get(key)
     if p is None:
-        return '<td class="num mut">—<div class="sm mut">not exported</div></td><td class="num mut">—</td>', None
+        return '<div class="sm mut live-line">live fills: not exported</div>', "", None
     orders = window(p["orders"], pair_entered)
     rec = record(orders)
     notes = [f"{rec[k]} {w}" for k, w in (("open", "open"), ("unfilled", "unfilled"), ("sold", "exited early"), ("unconfirmed", "unconfirmed")) if rec[k]]
-    rec_cell = (f'<td class="num"><b>{rec["won"]}–{rec["lost"]}</b>' + (f'<div class="sm mut">{esc(", ".join(notes))}</div>' if notes else "")
-                + "</td>")
+    rec_frag = (f'<div class="sm live-line" title="the follower\'s own fills, settled by Kalshi">live fills <b>{rec["won"]}–{rec["lost"]}</b>'
+                + (f' <span class="mut">· {esc(", ".join(notes))}</span>' if notes else "") + "</div>")
     if rec["roi"] is None:
-        roi_cell = '<td class="num mut">—</td>'
+        roi_frag = '<div class="sm mut live-line">live fills —</div>'
     else:
         tone = "pos" if rec["roi"] > 0 else "neg" if rec["roi"] < 0 else ""
         gap = ""
         if paper.get("roi") is not None and rec["n"]:
-            d = (rec["roi"] - paper["roi"]) * 100
-            gap = f'<div class="sm mut">{d:+.1f}pp v paper</div>'
-        roi_cell = f'<td class="num"><span class="{tone}">{rec["roi"] * 100:+.1f}%</span>{gap}</td>'
-    return rec_cell + roi_cell, dict(orders=orders, rec=rec, refused=p.get("refused") or {})
+            gap = f' <span class="mut">({(rec["roi"] - paper["roi"]) * 100:+.1f}pp v paper)</span>'
+        roi_frag = f'<div class="sm live-line">live fills <span class="{tone}">{rec["roi"] * 100:+.1f}%</span>{gap}</div>'
+    return rec_frag, roi_frag, dict(orders=orders, rec=rec, refused=p.get("refused") or {})
 
 
 def gap_section(rows, paper_by_pair, in_feed=None, feed_from=None):

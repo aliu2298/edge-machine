@@ -1326,7 +1326,7 @@ def unavailable_row(key, label, sport_label, note):
     """The Production table row for a pair whose record could not be read."""
     return (f'<tr class="unavailable" data-pair="{esc(key)}"><td><b>{esc(label)}</b>'
             f'<div class="sm mut">{esc(sport_label)}</div></td>'
-            f'<td colspan="10" class="neg">{esc(note)}</td></tr>')
+            f'<td colspan="8" class="neg">{esc(note)}</td></tr>')
 
 
 def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=None, nba_value=None, soccer_team_rules=None, o35=None, nba_wm=None):
@@ -1482,16 +1482,15 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
                 since_note = "none yet"
             early = early_state(pair, live["n"])
             paper_bets[key] = [dict(id=q.get("id"), status=q.get("status"), ko=(_kickoff(q).isoformat() if _kickoff(q) else None)) for q in mine_since if q.get("bet")]
-            live_cells, live_data = PL.cells(key, since, dict(roi=live["roi_fee"] if live["n"] else None), live_blob)
+            live_rec, live_roi, live_data = PL.cells(key, since, dict(roi=live["roi_fee"] if live["n"] else None), live_blob)
             live_gap_rows.append((name(key), key, live["n"], live["roi_fee"] if live["n"] else None, live_data))
             card = f"""<tr>
 <td><b>{esc(name(key))}</b>{early_html(early)}<div class="sm mut">{esc(sport_of(key))} · moved {esc(str(pair.get('by_hand') or since or '')[:10])}</div></td>
 <td class="num">{whole['n']}<div class="sm mut">settled</div></td>
 <td class="num"><span class="{tone(whole['roi_fee'], whole['n'])}">{pct(whole['roi_fee'])}</span><div class="sm mut">after fees</div></td>
 <td class="num">{clv}<div class="sm mut">v the close</div></td>
-<td class="num">{T.record_html(live)}<div class="sm mut">{esc(since_note)}</div></td>
-<td class="num"><span class="{tone(live['roi_fee'], live['n'] >= EARLY_N)}">{pct(live['roi_fee'])}</span>{'<div class="sm mut">too early</div>' if 0 < live['n'] < EARLY_N else ''}</td>
-{live_cells}
+<td class="num">{T.record_html(live)}<div class="sm mut">{esc(since_note)}</div>{live_rec}</td>
+<td class="num"><span class="{tone(live['roi_fee'], live['n'] >= EARLY_N)}">{pct(live['roi_fee'])}</span>{'<div class="sm mut">too early</div>' if 0 < live['n'] < EARLY_N else ''}{live_roi}</td>
 <td class="num light">{light} <span class="sm mut">{esc(why)}</span></td>
 <td class="num"><span class="{reach_tone}">{reach}</span><div class="sm mut">reachable</div></td>
 <td class="num"><b>{to_come}</b></td></tr>"""
@@ -1511,8 +1510,8 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
         group["rows"].append(len(cards))
         cards.append(card)
     pairs_head = """<tr><th rowspan="2">Pair</th><th colspan="3" class="grp">Sandbox record (US exchanges)</th>
-<th colspan="2" class="grp">Since Production · paper</th><th colspan="2" class="grp">Since Production · live fills</th><th rowspan="2" class="num">Live</th><th rowspan="2" class="num">Reaches<br>the feed</th><th rowspan="2" class="num">Leads<br>to come</th></tr>
-<tr><th class="num">Bets</th><th class="num">ROI</th><th class="num">CLV</th><th class="num">Record</th><th class="num">ROI</th><th class="num">W–L</th><th class="num">ROI · gap</th></tr>"""
+<th colspan="2" class="grp">Since Production</th><th rowspan="2" class="num">Live</th><th rowspan="2" class="num">Reaches<br>the feed</th><th rowspan="2" class="num">Leads<br>to come</th></tr>
+<tr><th class="num">Bets</th><th class="num">ROI</th><th class="num">CLV</th><th class="num">Record</th><th class="num">ROI</th></tr>"""
     # One section per sport, in SPORT_ORDER, with the same columns in each. The
     # summary line is the sport's combined since-Production record, greyed under
     # EARLY_N settled bets the way a pair's own is, and its leads still to come.
