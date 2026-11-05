@@ -107,10 +107,8 @@ def title_for(page):
 # The market pages sit in one "Markets" menu from 641px up (2026-10-16): thirteen pills had
 # wrapped onto two rows at 1280px and four on a tablet. Every link stays in nav.main in the same
 # order, so the phone's single swipe row (site.css, max-width 640px) still shows each one inline.
-# The Leaderboard is not a market (2026-11-04): in the menu, its page named the menu button "Leaderboard" beside its own
-# link, so the label showed twice (#254 had added it to the group). It is a top-level pill, after the Markets menu.
 MARKET_GROUP = ("nba", "nfl", "soccer", "tennis", "cricket", "crypto", "commodities",
-                "econ_daily", "finance_daily", "culture", "fights")
+                "econ_daily", "finance_daily", "culture", "fights", "leaderboard")
 
 
 def nav(active, prefix="./"):
@@ -130,11 +128,14 @@ def nav(active, prefix="./"):
         if key in MARKET_GROUP:
             group.append(link)
             if len(group) == len(MARKET_GROUP):
-                here = next((lbl for k, lbl, _h in PAGES if k == active and k in MARKET_GROUP), None)
+                # The button always reads "Markets" (2026-11-04). It used to take the current page's name, so every
+                # page in the menu showed its label twice, button and link ("Leaderboard" on leaderboard.html, #254).
+                # The current page is still marked: the button is highlighted and the page's own link is current.
+                here = any(k == active for k, _l, _h in PAGES if k in MARKET_GROUP)
                 parts.append(
                     f'<span class="nav-group{" is-current" if here else ""}">'
                     f'<button type="button" class="nav-more" aria-expanded="false" aria-controls="nav-markets">'
-                    f'{esc(here or "Markets")}<span class="nav-caret" aria-hidden="true"></span></button>'
+                    f'Markets<span class="nav-caret" aria-hidden="true"></span></button>'
                     f'<span class="nav-menu" id="nav-markets">{"".join(group)}</span></span>')
             continue
         parts.append(link)

@@ -26,19 +26,16 @@ def check(label, got, want):
         FAILS.append(label)
 
 
-print("the nav: each link label once on every page")
-market_labels = {label for key, label, _h in C.PAGES if key in C.MARKET_GROUP}
+print("the nav: each label once on every page")
 for key in ["index"] + [k for k, _l, _h in C.PAGES]:
     nav = C.nav(key)
-    links = re.findall(r"<a [^>]*>([^<]+)</a>", nav)
-    dupes = sorted({x for x in links if links.count(x) > 1})
-    button = re.findall(r'class="nav-more"[^>]*>([^<]+)<', nav)
-    check(f"{key}: no link label twice, and the menu button names Markets or this market page",
-          (dupes, all(b == "Markets" or b in market_labels for b in button)), ([], True))
-check("the Leaderboard is a top-level pill, not in the Markets menu", "leaderboard" in C.MARKET_GROUP, False)
+    labels = re.findall(r"<a [^>]*>([^<]+)</a>", nav) + re.findall(r'class="nav-more"[^>]*>([^<]+)<', nav)
+    check(f"{key}: no label twice (links and the Markets button)", sorted({x for x in labels if labels.count(x) > 1}), [])
 lb_nav = C.nav("leaderboard")
-check("on its own page the menu button reads Markets and Leaderboard is named once",
-      (re.findall(r'class="nav-more"[^>]*>([^<]+)<', lb_nav), len(re.findall(r">Leaderboard<", lb_nav))), (["Markets"], 1))
+check("on the Leaderboard page the button reads Markets, highlighted, and Leaderboard is named once and current",
+      (re.findall(r'class="nav-more"[^>]*>([^<]+)<', lb_nav), "nav-group is-current" in lb_nav, len(re.findall(r">Leaderboard<", lb_nav)),
+       bool(re.search(r'href="\./leaderboard\.html" aria-current="page">Leaderboard<', lb_nav))), (["Markets"], True, 1, True))
+check("on a page outside the menu the button is not highlighted", "nav-group is-current" in C.nav("sandbox"), False)
 check("Method is still the last pill", re.findall(r"<a [^>]*>([^<]+)</a>", lb_nav)[-1], "Method")
 
 print("\nteam names: every NBA and NFL code a ledger writes is named")
