@@ -827,6 +827,19 @@
    "yes_ask": 0.12,
    "yes_bid": 0.08
   },
+  "no:KXNBAWINMARGIN-26NOV04LALSAC-LAL26PLUS": {
+   "bot_version": "wm-nofade-v2",
+   "bucket": "LAL26PLUS",
+   "decided_at": "2026-11-05T02:16:02+00:00",
+   "event": "KXNBAWINMARGIN-26NOV04LALSAC",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV04",
+   "ticker": "KXNBAWINMARGIN-26NOV04LALSAC-LAL26PLUS",
+   "tip": "2026-11-05T03:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "no:KXNBAWINMARGIN-26NOV04LALSAC-LAL6TO10": {
    "P": 0.83,
    "bot_version": "wm-nofade-v2",
@@ -2623,6 +2636,6 @@
    "why": "no tight read inside the entry window"
   }
  },
- "updated_at": "2026-11-05T02:04:19+00:00",
+ "updated_at": "2026-11-05T02:16:02+00:00",
  "version": 1
 }
