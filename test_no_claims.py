@@ -74,9 +74,10 @@ check("btts_form_l10_fade|soccer_btts is off the list and goes back keeping its 
 check("and since 2026-10-24 it is retired: off the run, its rows kept",
       ("soccer_btts" in S.SOURCES["btts_form_l10_fade"]["sports"],
        "soccer_btts" in S.SOURCES["btts_form_l10_fade"]["retired_sports"]), (False, True))
-# The kept-record removal itself, on a pair of the same kind that still runs (turkey_btts_dog,
-# out 2026-10-20 keeping its record): evaluate_stages only walks the live scopes.
-_KR = "turkey_btts_dog|soccer_btts"
+# The kept-record removal itself, on a pair of the same kind that still runs (liga_btts_even,
+# out 2026-11-02 keeping its record; turkey_btts_dog was the example until it retired 2026-11-04):
+# evaluate_stages only walks the live scopes.
+_KR = "liga_btts_even|soccer_btts"
 _rm = {"pairs": {_KR: dict(stage="production", promoted_at="2026-10-16T17:17:38+00:00",
                            entry_since=None, by_hand="2026-10-16")}, "events": []}
 T.evaluate_stages({"quotes": []}, _rm, now=datetime(2026, 10, 18, 6, tzinfo=timezone.utc), verbose=False)

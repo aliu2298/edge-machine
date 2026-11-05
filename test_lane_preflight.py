@@ -170,15 +170,15 @@ def _one(results, lane, series, kind):
 
 def test_map_uses_lane_constants():
     _need()
-    print("\nmap is the eight lanes' own constants (bund_o35 and bund_o35_fav retired 2026-10-24)")
+    print("\nmap is the six lanes' own constants (the Bundesliga pair retired 2026-10-24, the Turkey pair 2026-11-04)")
     by = {}
     for lane, series, kind in P.checks():
         by.setdefault(lane, []).append((series, kind))
     eq(list(by), [
         "ere_draw", "ere_o15", "liga_btts_even",
-        "liga_u15_dog", "turkey_o25_dog", "turkey_btts_dog", "mls_away_band",
+        "liga_u15_dog", "mls_away_band",
         "mls_fade_home",
-    ], "the eight lanes, in matchday order, and no others (the two Bundesliga lanes are retired)")
+    ], "the six lanes, in matchday order, and no others (the Bundesliga and Turkey pairs are retired)")
     eq(by["ere_draw"], [(S.ERE_DRAW_SERIES, "three_way")], "ere_draw reads ERE_DRAW_SERIES")
     eq(by["ere_o15"], [(S.ERE_O15_TOTAL, "total"), (S.ERE_O15_GAME, "three_way")],
        "ere_o15 reads ERE_O15_TOTAL and ERE_O15_GAME")
@@ -186,15 +186,11 @@ def test_map_uses_lane_constants():
        "liga_btts_even reads LIGA_BTTS and LIGA_GAME")
     eq(by["liga_u15_dog"], [(S.LIGA_TOTAL, "total"), (S.LIGA_GAME, "three_way")],
        "liga_u15_dog reads LIGA_TOTAL and LIGA_GAME")
-    eq(by["turkey_o25_dog"], [(S.TURKEY_TOTAL, "total"), (S.TURKEY_GAME, "three_way")],
-       "turkey_o25_dog reads TURKEY_TOTAL and TURKEY_GAME")
-    eq(by["turkey_btts_dog"], [(S.TURKEY_BTTS, "btts"), (S.TURKEY_GAME, "three_way")],
-       "turkey_btts_dog reads TURKEY_BTTS and TURKEY_GAME")
     eq(by["mls_away_band"], [(S.MLS_GAME, "three_way")], "mls_away_band reads MLS_GAME")
     eq(by["mls_fade_home"], [(S.MLS_GAME, "three_way"), (S.MLS_GAME, "p05")],
        "mls_fade_home reads MLS_GAME on the three-way board and the +0.5 board")
     eq(P.board_sport("ere_o15", "total"), "soccer_o15", "ere_o15's total is the over-1.5 board")
-    eq(P.board_sport("turkey_o25_dog", "total"), "soccer_o25", "turkey_o25_dog's total is the over-2.5 board")
+    eq(P.board_sport("liga_u15_dog", "total"), "soccer_o15", "liga_u15_dog's total is the over-1.5 board")
     eq(P.board_sport("liga_btts_even", "btts"), "soccer_btts", "liga_btts_even reads the BTTS board")
     eq(P.board_sport("mls_fade_home", "p05"), "soccer_p05", "mls_fade_home reads the +0.5 board")
     eq(P.board_sport("ere_draw", "three_way"), "soccer", "a three-way series is the soccer board")
@@ -332,15 +328,15 @@ def test_transport_error_is_not_never_seen():
     _need()
     print("\ntransport error")
     book = _Book()
-    book.fail.add(S.TURKEY_BTTS)
+    book.fail.add(S.LIGA_BTTS)
     results, text, code = _run(book)
-    row = _one(results, "turkey_btts_dog", S.TURKEY_BTTS, "btts")
+    row = _one(results, "liga_btts_even", S.LIGA_BTTS, "btts")
     eq(row["state"], "could not check", "a failed request is not a verdict about the series")
     ok(row["state"] != "never seen", "it is not reported as never seen")
     ok("no open markets" not in row["state"], "it is not reported as a quiet book")
     eq(row["level"], "error", "an unchecked series fails the run")
     ok(code != 0, "it exits non-zero")
-    ok("turkey_btts_dog" in text and "::error::" in text, "the error names turkey_btts_dog")
+    ok("liga_btts_even" in text and "::error::" in text, "the error names liga_btts_even")
 
 
 def test_call_count_stays_small():
@@ -585,14 +581,14 @@ def test_retries_429_and_5xx():
         path = url.split("?", 1)[0]
         if hits[url] == 1 and path.rstrip("/").endswith("/series/" + S.ERE_DRAW_SERIES):
             return 429, {}
-        if hits[url] == 1 and path.rstrip("/").endswith("/series/" + S.TURKEY_BTTS):
+        if hits[url] == 1 and path.rstrip("/").endswith("/series/" + S.LIGA_BTTS):
             return 503, {"error": "unavailable"}
         return book(url)
 
     results = P.evaluate(get, now=NOW, attempts=3, pause=0)
     draw = _one(results, "ere_draw", S.ERE_DRAW_SERIES, "three_way")
     eq(draw["state"], "exists but no open markets", "a 429 then a 200 is the book")
-    btts = _one(results, "turkey_btts_dog", S.TURKEY_BTTS, "btts")
+    btts = _one(results, "liga_btts_even", S.LIGA_BTTS, "btts")
     eq(btts["state"], "exists but no open markets", "a 503 is retried")
     draw_url = next(u for u in hits if u.rstrip("/").endswith("/series/" + S.ERE_DRAW_SERIES))
     eq(hits[draw_url], 2, "the 429 series is fetched a second time")
