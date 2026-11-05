@@ -14,9 +14,9 @@ import sport_page as SP
 
 KEY = "leaderboard"
 TITLE = "Edge Machine · Leaderboard"
-DESCRIPTION = ("The teams, players and assets that made the Edge Machine the most paper profit, from every settled bet "
-               "in the Edge Machine's own rules, retired lanes included.")
-SECTIONS = (("top", "Top 20"), ("detail", "Cheap-contract spike detail"))
+DESCRIPTION = ("The teams, players and assets the Edge Machine's active lanes win and lose most on, then every settled bet "
+               "in its own rules, retired lanes included.")
+SECTIONS = (("active", "Active lanes"), ("top", "All lanes"), ("detail", "Cheap-contract spike detail"))
 COLS = ("#", "Name", "Sport", "Contracts", "Events", "Per week", "Reached 2x", "Reached 3x", "Split ROI", "Hold ROI",
         "Traded at 2x+", "Holds up?", "Score")
 
@@ -177,6 +177,52 @@ def persistence_line(p):
             f"not proven. {rule} Earlier work found hot teams do not stay hot.")
 
 
+ACTIVE_COLS = ("#", "Name", "Sport", "Bets", "Won", "Profit at $1 after fees", "ROI", "Profitable weeks", "Lanes")
+
+
+def marked_lanes(marks):
+    """Each lane with its stage, Production first: "sr · P" style marks, at most four shown."""
+    tag = {"Production": "P", "Sandbox": "S"}
+    order = sorted(marks, key=lambda m: (m[1] != "Production",))
+    shown = ", ".join(f'{esc(ln)} <span class="{"pos" if st == "Production" else "mut"}">{tag[st]}</span>' for ln, st in order[:4])
+    return shown + (f" +{len(order) - 4}" if len(order) > 4 else "")
+
+
+def active_table(stats, empty):
+    """The active-lanes table. An ROI on fewer than L.GREY_UNDER settled bets is greyed, as on the Production page."""
+    if not stats:
+        return f'<p class="sm mut">{esc(empty)}</p>'
+    mark = ' <span class="mut">match</span>'
+    body = "".join(
+        f'<tr><td class="num">{i}</td><td>{esc(s["name"])}{mark if s["matches"] else ""}</td>'
+        f'<td>{esc(s["sport"])}</td><td class="num">{s["n"]}</td><td class="num">{pct(s["won"])}</td>'
+        f'<td class="num">{money(s["profit"])}</td>'
+        f'<td class="num">{pct(s["roi"], True) if s["n"] >= L.GREY_UNDER else f"<span class=\"mut\">{pct(s["roi"], True)}</span>"}</td>'
+        f'<td class="num">{s["good_weeks"]} of {s["weeks"]}</td><td>{marked_lanes(s["lane_marks"])}</td></tr>'
+        for i, s in enumerate(stats, 1))
+    head = "".join(f"<th>{c}</th>" if c in ("Name", "Sport", "Lanes") else f'<th class="num">{c}</th>' for c in ACTIVE_COLS)
+    return f'<div class="tbl"><table class="lb-active"><tr>{head}</tr>{body}</table></div>'
+
+
+def active_section(ab):
+    return (
+        '<section id="active"><h1>Leaderboard</h1>'
+        '<p class="lede">The teams, players and assets the Edge Machine\'s active lanes win and lose most on.</p>'
+        f'<p class="sm"><b>Active lanes only.</b> Every settled bet from a lane that is active now: the Production pairs and '
+        f'the Sandbox lanes still taking entries ({ab["bets"]:,} bets, {ab["lanes"]} lanes, {ab["production"]} of them in '
+        f'Production). Retired lanes, baselines, tipster and copy sources and tracker rows are left out ({ab["left_out"]:,} '
+        f'bets); each lane\'s status is the one its page and the Sandbox stamp table show. A name needs {L.ACTIVE_MIN_BETS}+ '
+        f'settled bets ({ab["qualified"]} of {ab["names"]} do), since active lanes are young; an ROI on fewer than '
+        f'{L.GREY_UNDER} is greyed. Profit is at $1 a bet, after fees. P marks a Production lane, S a Sandbox one.</p>'
+        f'<h2>Top {L.ACTIVE_TOP}</h2>'
+        + active_table(ab["top"], f"No name has {L.ACTIVE_MIN_BETS} settled bets from active lanes yet.")
+        + f'<h2>Bottom {L.ACTIVE_BOTTOM}</h2><p class="sm">The names the active lanes are losing on, from the names not in the '
+          'top list.</p>'
+        + active_table(ab["bottom"], f"Needs more than {L.ACTIVE_TOP} qualifying names before a bottom list is separate.")
+        + f'<p class="sm">{persistence_line(ab["persistence"])} Counted on active-lane bets only, so this view is descriptive, '
+          'not a pick list.</p></section>')
+
+
 def tipster_list():
     return ", ".join(sorted(L.TIPSTER_SOURCES))
 
@@ -212,10 +258,12 @@ def build(bets=None, contracts=None, skipped=None, unmapped=None, now=None, bet_
         bets, bet_skipped, unmapped, contracts, skipped = L.collect_bets()
     bet_skipped, skipped, unmapped = bet_skipped or {}, skipped or {}, unmapped or {}
     pb = L.profit_board(bets)
+    ab = L.active_board(bets, now=now)
     b = L.board(contracts or [])
     left = "; ".join(f"{esc(k)} {v}" for k, v in sorted({**bet_skipped, **unmapped}.items())) or "nothing"
     body = (
-        '<section id="top"><h1>Leaderboard</h1>'
+        active_section(ab)
+        + '<section id="top"><h2>All lanes</h2>'
         '<p class="lede">The teams, players and assets that made the Edge Machine\'s own rules the most paper profit.</p>'
         f'<p class="sm"><b>Edge Machine rules only.</b> Top {L.TOP_BETS} of {pb["qualified"]} names with {L.MIN_BETS}+ settled bets, from '
         f'every settled bet in every rule lane, Production and Sandbox, <b>retired lanes included</b> ({pb["bets"]:,} bets, '

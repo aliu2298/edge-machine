@@ -107,8 +107,10 @@ def title_for(page):
 # The market pages sit in one "Markets" menu from 641px up (2026-10-16): thirteen pills had
 # wrapped onto two rows at 1280px and four on a tablet. Every link stays in nav.main in the same
 # order, so the phone's single swipe row (site.css, max-width 640px) still shows each one inline.
+# The Leaderboard is not a market (2026-11-04): in the menu, its page named the menu button "Leaderboard" beside its own
+# link, so the label showed twice (#254 had added it to the group). It is a top-level pill, after the Markets menu.
 MARKET_GROUP = ("nba", "nfl", "soccer", "tennis", "cricket", "crypto", "commodities",
-                "econ_daily", "finance_daily", "culture", "fights", "leaderboard")
+                "econ_daily", "finance_daily", "culture", "fights")
 
 
 def nav(active, prefix="./"):
