@@ -68,6 +68,23 @@ NBA_TEAMS = {
     "PHX": "Phoenix Suns", "POR": "Portland Trail Blazers", "SAC": "Sacramento Kings", "SAS": "San Antonio Spurs",
     "TOR": "Toronto Raptors", "UTA": "Utah Jazz", "WAS": "Washington Wizards",
 }
+# ESPN's codes for the same teams, as the NBA rule and value ledgers write them (2026-11-04: "WSH match" showed
+# where every other team had its name).
+NBA_TEAMS.update({"GS": "Golden State Warriors", "NO": "New Orleans Pelicans", "NY": "New York Knicks",
+                  "SA": "San Antonio Spurs", "UTAH": "Utah Jazz", "WSH": "Washington Wizards", "PHO": "Phoenix Suns",
+                  "BRK": "Brooklyn Nets", "NOR": "New Orleans Pelicans", "CHO": "Charlotte Hornets"})
+# NFL teams by the codes the NFL team-total ledger (nfl_tt) writes: Kalshi's and ESPN's, which agree but for Washington.
+NFL_TEAMS = {
+    "ARI": "Arizona Cardinals", "ATL": "Atlanta Falcons", "BAL": "Baltimore Ravens", "BUF": "Buffalo Bills",
+    "CAR": "Carolina Panthers", "CHI": "Chicago Bears", "CIN": "Cincinnati Bengals", "CLE": "Cleveland Browns",
+    "DAL": "Dallas Cowboys", "DEN": "Denver Broncos", "DET": "Detroit Lions", "GB": "Green Bay Packers",
+    "HOU": "Houston Texans", "IND": "Indianapolis Colts", "JAX": "Jacksonville Jaguars", "JAC": "Jacksonville Jaguars",
+    "KC": "Kansas City Chiefs", "LV": "Las Vegas Raiders", "LAC": "Los Angeles Chargers", "LAR": "Los Angeles Rams",
+    "LA": "Los Angeles Rams", "MIA": "Miami Dolphins", "MIN": "Minnesota Vikings", "NE": "New England Patriots",
+    "NO": "New Orleans Saints", "NYG": "New York Giants", "NYJ": "New York Jets", "PHI": "Philadelphia Eagles",
+    "PIT": "Pittsburgh Steelers", "SF": "San Francisco 49ers", "SEA": "Seattle Seahawks", "TB": "Tampa Bay Buccaneers",
+    "TEN": "Tennessee Titans", "WAS": "Washington Commanders", "WSH": "Washington Commanders",
+}
 COIN_BY_SERIES = {"KXBTCD": "Bitcoin", "KXBTC": "Bitcoin", "KXETHD": "Ethereum", "KXETH": "Ethereum",
                   "KXSOLD": "Solana", "KXSOL": "Solana", "KXXRPD": "XRP", "KXXRP": "XRP", "KXHYPED": "HYPE"}
 COMMODITY_BY_SERIES = {"KXWTI": "WTI", "KXAAAGASD": "AAA gas", "KXAAAGASW": "AAA gas"}
@@ -123,6 +140,15 @@ def team_code(suffix):
 
 def nba_name(code):
     return NBA_TEAMS.get(code, code)
+
+
+def nfl_name(code):
+    return NFL_TEAMS.get(code, code)
+
+
+# The ledger codes named per rule-ledger sport ("code" ledgers): NBA and NFL. Tennis and college football keep the
+# ticker code (Kalshi gives no name in those ledgers), as the method note says.
+CODE_NAMES = {"NBA": nba_name, "Football": nfl_name}
 
 
 def contract(uid, sport, market, event, day, entities, kind="team", reach2=None, reach3=None, split=None, hold=None,
@@ -532,9 +558,11 @@ RULE_LEDGERS = (
 )
 
 
-def bet(uid, lane, sport, entities, day, profit, won, kind="team"):
+def bet(uid, lane, sport, entities, day, profit, won, kind="team", src=None, scope=None):
+    """`src` is where the bet was read (the Sandbox ledger, a rule ledger's file, a daily or culture lane, a cheap-side
+    contract) and `scope` its Sandbox sport key: together they say which lane, and so whether it is active now."""
     return dict(uid=uid, lane=lane, sport=sport, entities=list(dict.fromkeys(entities)), day=day, profit=profit,
-                won=bool(won), kind=kind)
+                won=bool(won), kind=kind, src=src, scope=scope)
 
 
 def is_control(rule):
@@ -581,7 +609,7 @@ def collect_sandbox_bets(sandbox, skipped):
             skipped["sandbox: no name on the bet"] = skipped.get("sandbox: no name on the bet", 0) + 1
             continue
         out.append(bet((q["id"], q.get("pick")), q.get("source") or "?", label, names, str(q.get("date") or q.get("start") or "")[:10],
-                       profit, q["status"] == "won", kind))
+                       profit, q["status"] == "won", kind, src="sandbox", scope=sport))
     return out
 
 
@@ -594,12 +622,14 @@ def collect_rule_bets(skipped, loader=load):
             for p in state.get("picks") or []:
                 if p.get("status") not in ("won", "lost", "no_result") or p.get("profit") is None:
                     continue
-                if how == "team" or (how == "code" and p.get("team")):
+                # team "game" marks a game-total pick (nba_rules R5): it is a match bet, not a team called "game".
+                named = CODE_NAMES.get(sport, lambda c: c) if how == "code" else (lambda c: c)
+                if how == "team" or (how == "code" and p.get("team") and p.get("team") != "game"):
                     team = p.get("team")
-                    names = [nba_name(team) if sport == "NBA" else team] if team else []
+                    names = [named(team)] if team else []
                     kind = "team"
                 elif how == "code":
-                    names = [nba_name(c.strip()) for c in re.split(r"@", str(p.get("match") or p.get("game") or "")) if c.strip()]
+                    names = [named(c.strip()) for c in re.split(r"@", str(p.get("match") or "")) if c.strip()]
                     kind = "match"
                 else:
                     names = _split_match(p.get("match"))
@@ -608,7 +638,8 @@ def collect_rule_bets(skipped, loader=load):
                     skipped[f"{name}: no name on the bet"] = skipped.get(f"{name}: no name on the bet", 0) + 1
                     continue
                 out.append(bet((p.get("id") or p.get("ticker"), p.get("side")), f"{rule}", sport, names,
-                               str(p.get("start") or p.get("settled") or "")[:10], p["profit"] / 100.0, p["status"] == "won", kind))
+                               str(p.get("start") or p.get("settled") or "")[:10], p["profit"] / 100.0, p["status"] == "won", kind,
+                               src=name))
     return out
 
 
@@ -618,7 +649,8 @@ def contract_bets(contracts):
     for c in contracts:
         if c["source"] == "nba_winmargin_tracker" or c["split"] is None:
             continue
-        out.append(bet(c["uid"], c["source"], c["sport"], c["entities"], c["day"], c["split"], c["split"] > 0, c["kind"]))
+        out.append(bet(c["uid"], c["source"], c["sport"], c["entities"], c["day"], c["split"], c["split"] > 0, c["kind"],
+                       src="contract"))
     return out
 
 
@@ -654,7 +686,7 @@ def daily_entity(series, name):
     return (name or None), "Finance"
 
 
-def _pick_bet(lane, p, skipped, fallback_sport=None):
+def _pick_bet(lane, p, skipped, fallback_sport=None, src="daily"):
     if p.get("status") not in ("won", "lost") or p.get("profit") is None:
         return None
     entity, sport = daily_entity(p.get("series"), p.get("name"))
@@ -662,7 +694,8 @@ def _pick_bet(lane, p, skipped, fallback_sport=None):
         skipped[f"{lane}: no name on the bet"] = skipped.get(f"{lane}: no name on the bet", 0) + 1
         return None
     return bet((p.get("id"), p.get("side")), p.get("lane") or lane, sport, [entity],
-               str(p.get("settled") or p.get("close") or p.get("logged") or "")[:10], p["profit"] / 100.0, p["status"] == "won")
+               str(p.get("settled") or p.get("close") or p.get("logged") or "")[:10], p["profit"] / 100.0, p["status"] == "won",
+               src=src)
 
 
 def collect_daily_bets(skipped, loader=load):
@@ -679,12 +712,12 @@ def collect_daily_bets(skipped, loader=load):
             if b:
                 out.append(b)
     for p in loader("finance_nc_ledger.json").get("picks") or []:
-        b = _pick_bet("finance_nc", p, skipped)
+        b = _pick_bet("finance_nc", p, skipped, src="finance_nc")
         if b:
             out.append(b)
     for lane, state in (loader("culture_ledger.json").get("lanes") or {}).items():
         for p in (state or {}).get("picks") or []:
-            b = _pick_bet(lane, p, skipped)
+            b = _pick_bet(lane, p, skipped, src="culture")
             if b:
                 out.append(b)
     return out
@@ -780,3 +813,140 @@ def profit_board(bets):
                 lanes=len({b["lane"] for b in own}), persistence=profit_persistence(own),
                 with_tipsters=all_ranked[:TOP_BETS], qualified_all=len(all_ranked), bets_all=len(bets),
                 lanes_all=len({b["lane"] for b in bets}), tipster_bets=len(bets) - len(own))
+
+
+# ACTIVE LANES (2026-11-04, Olu): the board's first view counts only bets from lanes that are active NOW -- the
+# Production pairs and the Sandbox lanes still taking entries. Retired lanes, baselines, tipster and copy sources and
+# tracker rows are left out. Each engine's own registry status decides it, the same status its page and the Sandbox
+# stamp table read (a source tagged RETIRED there has no live scope here), so the two cannot drift.
+ACTIVE_MIN_BETS = 5
+ACTIVE_TOP, ACTIVE_BOTTOM = 20, 10
+GREY_UNDER = 10          # an ROI on fewer settled bets is greyed, as on the Production page
+
+
+def _code_retired(module, key, now):
+    try:
+        return bool(module.retired(key, now))
+    except Exception:                                           # noqa: BLE001
+        return True                                             # an unknown key is not shown as active
+
+
+def lane_stages(now=None, st=None):
+    """A function bet -> "Production", "Sandbox", or None (not an active lane), from each engine's registry."""
+    import chaos_lanes
+    import contender_overs as CO
+    import culture_track as K
+    import daily_production as DP
+    import daily_track as D
+    import fights_split as FS
+    import mentions_split as MS
+    import nba_rules as NR
+    import nba_value as NV
+    import nfl_tt as NT
+    import o35_production as OP
+    import production as P
+    import sa_o15 as SA
+    import sandbox_build as B
+    import sandbox_sources as S
+    import sandbox_track as T
+    import soccer_rules as SR
+    import soccer_rules_production as SRP
+    import soccer_team_rules as STR
+    import soccer_team_rules_production as STRP
+    import tennis_totals as TT
+    now = now or dt.datetime.now(dt.timezone.utc)
+    st = st if st is not None else T.load_stages()
+    prod_pairs = set(P.production_pairs(st))
+    rule_engines = {
+        "soccer_rules_ledger.json": (SR, set(SRP.PAIRS)), "soccer_team_rules_ledger.json": (STR, set(STRP.PAIRS)),
+        "sa_o15_ledger.json": (SA, set()), "contender_overs_ledger.json": (CO, set()), "nfl_tt_ledger.json": (NT, set()),
+        "nba_rules_ledger.json": (NR, set()), "nba_value_ledger.json": (NV, set()),
+    }
+    chaos = {L_["id"]: L_ for L_ in chaos_lanes.LANES}
+    cheap = {os.path.basename(c["path"]): c for c in tuple(MS.LANES) + tuple(MS.COMMOD_LANES) + tuple(FS.LANES)}
+
+    def sandbox(b):
+        src, scope = b["lane"], b.get("scope")
+        meta = S.SOURCES.get(src)
+        if not meta or is_tipster(src) or meta.get("kind") != "Rule" or B.source_retired(src):
+            return None
+        if f"{src}|{scope}" in prod_pairs:
+            return "Production"
+        live = (meta.get("connected") and scope in (meta.get("sports") or []) and not S.lane_removed(src, scope)
+                and not S.lane_paused(src, scope))
+        return "Sandbox" if live else None
+
+    def stage(b):
+        src = b.get("src")
+        if src == "sandbox":
+            return sandbox(b)
+        if src in rule_engines:
+            module, prod = rule_engines[src]
+            if _code_retired(module, b["lane"], now):
+                return None
+            return "Production" if b["lane"] in prod else "Sandbox"
+        if src == "tennis_totals_ledger.json":
+            return None if TT.retired(now) else "Sandbox"
+        if src == "daily":
+            if b["lane"] in D.RETIRED and now.date().isoformat() >= D.RETIRED[b["lane"]]:
+                return None
+            if b["lane"] in D.NC_LANES:
+                return "Production" if b["lane"] in DP.NC_PUBLISHED else "Sandbox"
+            return "Sandbox" if b["lane"] in D.LANES else None
+        if src == "finance_nc":
+            return "Sandbox"
+        if src == "culture":
+            return None if _code_retired(K, b["lane"], now) else "Sandbox"
+        if src == "contract":
+            if b["lane"] in chaos:
+                c = chaos[b["lane"]]
+                return None if (c.get("retired") or c.get("baseline") or c.get("insample")) else "Sandbox"
+            if b["lane"] in cheap:
+                c = cheap[b["lane"]]
+                return None if (MS.retired(c, now) or c.get("baseline")) else "Sandbox"
+            if b["lane"] == "o35_cheap_no":
+                return "Production" if OP.MOVED_ON <= now.date().isoformat() else "Sandbox"
+            return None
+        return None
+
+    return stage
+
+
+def active_stats(sport, name, rows, stages):
+    """profit_stats, with each lane's Production or Sandbox mark. A lane with a Production scope and a Sandbox one
+    (team2_ranked Clubs and Cups) is listed once per stage, so a mark never names the wrong scope."""
+    s = profit_stats(sport, name, rows)
+    marks = {}
+    for b in rows:
+        k = (b["lane"], stages[(b["src"], b["lane"], b.get("scope"))])
+        marks[k] = marks.get(k, 0) + 1
+    s["lane_marks"] = [k for k, _ in sorted(marks.items(), key=lambda kv: (-kv[1], kv[0]))]
+    return s
+
+
+def active_board(bets, stage=None, now=None):
+    """The active-lanes view: names with ACTIVE_MIN_BETS+ settled bets from active lanes only, the top ACTIVE_TOP by
+    profit and the bottom ACTIVE_BOTTOM (the names the active lanes are losing on), and the persistence line on the
+    same bets."""
+    stage = stage or lane_stages(now)
+    stages, active = {}, []
+    for b in bets:
+        k = (b.get("src"), b["lane"], b.get("scope"))
+        if k not in stages:
+            stages[k] = stage(b)
+        if stages[k]:
+            active.append(b)
+    ents = {}
+    for b in active:
+        for n in b["entities"]:
+            ents.setdefault((b["sport"], n), []).append(b)
+    stats = [active_stats(s, n, rows, stages) for (s, n), rows in ents.items()]
+    ranked = sorted((s for s in stats if s["n"] >= ACTIVE_MIN_BETS), key=lambda s: (-s["profit"], -s["n"], s["name"]))
+    top = ranked[:ACTIVE_TOP]
+    rest = ranked[len(top):]
+    bottom = sorted(rest, key=lambda s: (s["profit"], -s["n"], s["name"]))[:ACTIVE_BOTTOM]
+    lanes = {(b["src"], b["lane"], b.get("scope")) for b in active}
+    return dict(top=top, bottom=bottom, qualified=len(ranked), names=len(stats), bets=len(active),
+                lanes=len({ln for _s, ln, _c in lanes}),
+                production=len({ln for s_, ln, c in lanes if stages[(s_, ln, c)] == "Production"}),
+                persistence=profit_persistence(active), left_out=len(bets) - len(active))

@@ -226,8 +226,9 @@ nav.main.nav-fade.nav-fade-left {
 }
 nav.main a:hover { color: var(--fg); background: var(--raised); text-decoration: none; }
 nav.main a[aria-current="page"] { color: var(--fg); background: var(--line); }
-/* The Markets menu (2026-10-16). From 641px up the nine market pages fold into one button
-   that names the current page; under 641px the group dissolves into the swipe row. */
+/* The Markets menu (2026-10-16). From 641px up the market pages fold into one "Markets" button,
+   highlighted on a market page (it no longer repeats the page's name, 2026-11-04); under 641px
+   the group dissolves into the swipe row. */
 .nav-group { position: relative; display: inline-flex; flex: 0 0 auto; }
 .nav-more {
   font: inherit; font-size: 14px; font-weight: 500; color: var(--mut);

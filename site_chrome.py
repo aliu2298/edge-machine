@@ -128,11 +128,14 @@ def nav(active, prefix="./"):
         if key in MARKET_GROUP:
             group.append(link)
             if len(group) == len(MARKET_GROUP):
-                here = next((lbl for k, lbl, _h in PAGES if k == active and k in MARKET_GROUP), None)
+                # The button always reads "Markets" (2026-11-04). It used to take the current page's name, so every
+                # page in the menu showed its label twice, button and link ("Leaderboard" on leaderboard.html, #254).
+                # The current page is still marked: the button is highlighted and the page's own link is current.
+                here = any(k == active for k, _l, _h in PAGES if k in MARKET_GROUP)
                 parts.append(
                     f'<span class="nav-group{" is-current" if here else ""}">'
                     f'<button type="button" class="nav-more" aria-expanded="false" aria-controls="nav-markets">'
-                    f'{esc(here or "Markets")}<span class="nav-caret" aria-hidden="true"></span></button>'
+                    f'Markets<span class="nav-caret" aria-hidden="true"></span></button>'
                     f'<span class="nav-menu" id="nav-markets">{"".join(group)}</span></span>')
             continue
         parts.append(link)
