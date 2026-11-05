@@ -1028,6 +1028,19 @@
    "yes_ask": 0.11,
    "yes_bid": 0.09
   },
+  "no:KXNBAWINMARGIN-26NOV04PORPHX-PHX11TO20": {
+   "bot_version": "wm-nofade-v2",
+   "bucket": "PHX11TO20",
+   "decided_at": "2026-11-05T01:15:17+00:00",
+   "event": "KXNBAWINMARGIN-26NOV04PORPHX",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV04",
+   "ticker": "KXNBAWINMARGIN-26NOV04PORPHX-PHX11TO20",
+   "tip": "2026-11-05T02:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "no:KXNBAWINMARGIN-26NOV04PORPHX-PHX1TO5": {
    "P": 0.88,
    "bot_version": "wm-nofade-v2",
@@ -1047,6 +1060,19 @@
    "why": null,
    "yes_ask": 0.15,
    "yes_bid": 0.12
+  },
+  "no:KXNBAWINMARGIN-26NOV04PORPHX-PHX21PLUS": {
+   "bot_version": "wm-nofade-v2",
+   "bucket": "PHX21PLUS",
+   "decided_at": "2026-11-05T01:15:17+00:00",
+   "event": "KXNBAWINMARGIN-26NOV04PORPHX",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV04",
+   "ticker": "KXNBAWINMARGIN-26NOV04PORPHX-PHX21PLUS",
+   "tip": "2026-11-05T02:00:00+00:00",
+   "why": "no tight read inside the entry window"
   },
   "no:KXNBAWINMARGIN-26NOV04PORPHX-PHX6TO10": {
    "P": 0.93,
@@ -1107,6 +1133,38 @@
    "yes_ask": 0.16,
    "yes_bid": 0.12
   },
+  "no:KXNBAWINMARGIN-26NOV04PORPHX-POR21PLUS": {
+   "bot_version": "wm-nofade-v2",
+   "bucket": "POR21PLUS",
+   "decided_at": "2026-11-05T01:15:17+00:00",
+   "event": "KXNBAWINMARGIN-26NOV04PORPHX",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV04",
+   "ticker": "KXNBAWINMARGIN-26NOV04PORPHX-POR21PLUS",
+   "tip": "2026-11-05T02:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
+  "no:KXNBAWINMARGIN-26NOV04PORPHX-POR6TO10": {
+   "P": 0.9,
+   "bot_version": "wm-nofade-v2",
+   "bucket": "POR6TO10",
+   "decided_at": "2026-11-05T01:10:00+00:00",
+   "depth": 4.61,
+   "event": "KXNBAWINMARGIN-26NOV04PORPHX",
+   "lane": "nba_wm_nofade",
+   "limit": 0.68,
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV04",
+   "spread": 0.04,
+   "ticker": "KXNBAWINMARGIN-26NOV04PORPHX-POR6TO10",
+   "tip": "2026-11-05T02:00:00+00:00",
+   "why": "ask check: 4.61 contracts offered at or under 0.90 (under 10)",
+   "yes_ask": 0.14,
+   "yes_bid": 0.1
+  },
   "no:KXNBAWINMARGIN-26NOV04TORDEN-DEN11TO20": {
    "P": 0.83,
    "bot_version": "wm-nofade-v2",
@@ -1146,6 +1204,19 @@
    "yes_ask": 0.17,
    "yes_bid": 0.12
   },
+  "no:KXNBAWINMARGIN-26NOV04TORDEN-DEN21PLUS": {
+   "bot_version": "wm-nofade-v2",
+   "bucket": "DEN21PLUS",
+   "decided_at": "2026-11-05T01:15:17+00:00",
+   "event": "KXNBAWINMARGIN-26NOV04TORDEN",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV04",
+   "ticker": "KXNBAWINMARGIN-26NOV04TORDEN-DEN21PLUS",
+   "tip": "2026-11-05T02:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "no:KXNBAWINMARGIN-26NOV04TORDEN-DEN6TO10": {
    "P": 0.86,
    "bot_version": "wm-nofade-v2",
@@ -1166,6 +1237,26 @@
    "yes_ask": 0.17,
    "yes_bid": 0.14
   },
+  "no:KXNBAWINMARGIN-26NOV04TORDEN-TOR11TO20": {
+   "P": 0.94,
+   "bot_version": "wm-nofade-v2",
+   "bucket": "TOR11TO20",
+   "decided_at": "2026-11-05T01:13:12+00:00",
+   "depth": 35.0,
+   "event": "KXNBAWINMARGIN-26NOV04TORDEN",
+   "lane": "nba_wm_nofade",
+   "limit": 0.7,
+   "outcome": "plan",
+   "qty": 1.0,
+   "rule_ok": true,
+   "slate": "26NOV04",
+   "spread": 0.05,
+   "ticker": "KXNBAWINMARGIN-26NOV04TORDEN-TOR11TO20",
+   "tip": "2026-11-05T02:00:00+00:00",
+   "why": null,
+   "yes_ask": 0.11,
+   "yes_bid": 0.06
+  },
   "no:KXNBAWINMARGIN-26NOV04TORDEN-TOR1TO5": {
    "P": 0.91,
    "bot_version": "wm-nofade-v2",
@@ -1185,6 +1276,38 @@
    "why": null,
    "yes_ask": 0.12,
    "yes_bid": 0.09
+  },
+  "no:KXNBAWINMARGIN-26NOV04TORDEN-TOR21PLUS": {
+   "bot_version": "wm-nofade-v2",
+   "bucket": "TOR21PLUS",
+   "decided_at": "2026-11-05T01:15:17+00:00",
+   "event": "KXNBAWINMARGIN-26NOV04TORDEN",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV04",
+   "ticker": "KXNBAWINMARGIN-26NOV04TORDEN-TOR21PLUS",
+   "tip": "2026-11-05T02:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
+  "no:KXNBAWINMARGIN-26NOV04TORDEN-TOR6TO10": {
+   "P": 0.94,
+   "bot_version": "wm-nofade-v2",
+   "bucket": "TOR6TO10",
+   "decided_at": "2026-11-05T01:10:00+00:00",
+   "depth": 7.7,
+   "event": "KXNBAWINMARGIN-26NOV04TORDEN",
+   "lane": "nba_wm_nofade",
+   "limit": 0.7,
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV04",
+   "spread": 0.05,
+   "ticker": "KXNBAWINMARGIN-26NOV04TORDEN-TOR6TO10",
+   "tip": "2026-11-05T02:00:00+00:00",
+   "why": "ask check: 7.7 contracts offered at or under 0.94 (under 10)",
+   "yes_ask": 0.11,
+   "yes_bid": 0.06
   },
   "no:KXNBAWINMARGIN-26NOV04UTANOP-NOP11TO20": {
    "bot_version": "wm-nofade-v2",
@@ -1937,6 +2060,27 @@
    "yes_ask": 0.16,
    "yes_bid": 0.12
   },
+  "yes:KXNBAWINMARGIN-26NOV04PORPHX-POR6TO10": {
+   "bot_version": "wm-yes-v2",
+   "bucket": "POR6TO10",
+   "decided_at": "2026-11-05T01:10:00+00:00",
+   "depth": 22.0,
+   "event": "KXNBAWINMARGIN-26NOV04PORPHX",
+   "filled": 7.0,
+   "lane": "nba_winmargin_live",
+   "night_cap": 30,
+   "night_count": 25,
+   "outcome": "enter",
+   "qty": 7.0,
+   "rule_ok": true,
+   "slate": "26NOV04",
+   "spread": 0.05,
+   "ticker": "KXNBAWINMARGIN-26NOV04PORPHX-POR6TO10",
+   "tip": "2026-11-05T02:00:00+00:00",
+   "why": null,
+   "yes_ask": 0.14,
+   "yes_bid": 0.09
+  },
   "yes:KXNBAWINMARGIN-26NOV04TORDEN-DEN1TO5": {
    "bot_version": "wm-yes-v2",
    "bucket": "DEN1TO5",
@@ -1999,6 +2143,23 @@
    "why": null,
    "yes_ask": 0.12,
    "yes_bid": 0.09
+  },
+  "yes:KXNBAWINMARGIN-26NOV04TORDEN-TOR6TO10": {
+   "bot_version": "wm-yes-v2",
+   "bucket": "TOR6TO10",
+   "decided_at": "2026-11-05T01:10:00+00:00",
+   "depth": 5.0,
+   "event": "KXNBAWINMARGIN-26NOV04TORDEN",
+   "lane": "nba_winmargin_live",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV04",
+   "spread": 0.05,
+   "ticker": "KXNBAWINMARGIN-26NOV04TORDEN-TOR6TO10",
+   "tip": "2026-11-05T02:00:00+00:00",
+   "why": "ask check: 5 contracts offered at or under 0.11 (under 10)",
+   "yes_ask": 0.11,
+   "yes_bid": 0.06
   },
   "yes:KXNBAWINMARGIN-26NOV04UTANOP-NOP1TO5": {
    "bot_version": "wm-yes-v2",
@@ -2069,6 +2230,6 @@
    "why": "no tight read inside the entry window"
   }
  },
- "updated_at": "2026-11-05T01:08:55+00:00",
+ "updated_at": "2026-11-05T01:15:17+00:00",
  "version": 1
 }
