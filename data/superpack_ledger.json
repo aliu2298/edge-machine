@@ -112,6 +112,10 @@
    "at": "2026-11-05T16:10:44.196456+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"u35_low_o15\", [\"u35_low_o15:KXSUPERLIGTOTAL-26NOV07SAMKON-2\", \"a\"]]": {
+   "at": "2026-11-06T13:09:08.900685+00:00",
+   "pool": "entered"
+  },
   "[\"soccer_team_rules_ledger.json\", \"T5\", [\"T5:KXUELTEAMTOTAL-26NOV05CELBES:away\", \"yes\"]]": {
    "at": "2026-11-05T18:49:25.263865+00:00",
    "pool": "entered"
@@ -390,7 +394,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-06T13:03:22.856536+00:00",
+ "last_run": "2026-11-06T13:09:08.900685+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -1166,6 +1170,31 @@
    ],
    "pid": "[\"sandbox\", \"ere_o15\", [\"ere_o15:KXEREDIVISIETOTAL-26NOV06WILZWO-2\", \"a\"]]",
    "price": 0.81,
+   "profit": null,
+   "scope": "soccer_o15",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXSUPERLIGTOTAL-26NOV07SAMKON-2",
+   "entered_at": "2026-11-06T13:09:08.900685+00:00",
+   "entities": [
+    "Samsunspor",
+    "Konyaspor"
+   ],
+   "id": "superpack:[\"sandbox\", \"u35_low_o15\", [\"u35_low_o15:KXSUPERLIGTOTAL-26NOV07SAMKON-2\", \"a\"]]",
+   "lane": "u35_low_o15",
+   "logged": "2026-11-06T13:08:32+00:00",
+   "matched": [
+    "Konyaspor",
+    "Samsunspor"
+   ],
+   "pid": "[\"sandbox\", \"u35_low_o15\", [\"u35_low_o15:KXSUPERLIGTOTAL-26NOV07SAMKON-2\", \"a\"]]",
+   "price": 0.75,
    "profit": null,
    "scope": "soccer_o15",
    "settled": null,
