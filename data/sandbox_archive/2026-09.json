@@ -127546,6 +127546,53 @@
   "venue": "polymarket_us"
  },
  {
+  "bet": true,
+  "close_at": "2026-09-22T05:23:12+00:00",
+  "close_price": 0.6514,
+  "date": "2026-09-22",
+  "edge": null,
+  "id": "tennis_combo2:combo2:2026-09-22:966fde737f",
+  "label": "2-leg tennis combo: Francesco Passaro + Juan Carlos Prado Ange",
+  "legs": [
+   {
+    "market_id": "KXATPCHALLENGERMATCH-26SEP22JUAPAS",
+    "pick": "b",
+    "venue": "kalshi"
+   },
+   {
+    "market_id": "KXATPCHALLENGERMATCH-26SEP22PRAROD",
+    "pick": "a",
+    "venue": "kalshi"
+   }
+  ],
+  "liquidity": null,
+  "logged": "2026-09-22T05:23:12+00:00",
+  "market_id": "combo2:2026-09-22:966fde737f",
+  "pick": "a",
+  "pnl": -100.0,
+  "price": 0.6514,
+  "price_a": 0.6514,
+  "price_b": 0.3486,
+  "price_draw": null,
+  "prob_a": null,
+  "result": "b",
+  "settled": "2026-09-22T18:09:12+00:00",
+  "side_a": "All 2 win",
+  "side_b": "Any one loses",
+  "source": "tennis_combo2",
+  "sport": "tennis_combo",
+  "spread": null,
+  "stake": 100.0,
+  "start": "2026-09-22T15:30:00+00:00",
+  "start_source": null,
+  "status": "lost",
+  "uncovered": null,
+  "untraded": false,
+  "url": "https://kalshi.com/combos",
+  "venue": "combo",
+  "venue_start": null
+ },
+ {
   "bet": false,
   "compact": true,
   "id": "polymarket_us:aec-atp-murdel-hercas-2026-09-21",
