@@ -4922,6 +4922,8 @@ OWN_LEDGER_LABELS = {
     "sr_c1": "MLS O+D− v O+D+ · over 3.5",
     "sr_c3": "Serie A O+D− v O+D+ · over 2.5",
     "sr_c4": "Serie A O−D− v O+D− · over 2.5",
+    "sr_a2": "Bundesliga O+D− v O+D− · over 3.5",
+    "sr_a3": "La Liga O−D− v O−D+ · under 3.5",
     "st_t5": "O+D− v O+D+ · team 2+ goals",
     "st_t4": "O+D− v O−D+ · team 2+ goals",
     "st_t7": "O+D+ v O+D+ · team 3+ goals · NO",

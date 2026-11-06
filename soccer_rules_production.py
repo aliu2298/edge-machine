@@ -38,6 +38,11 @@ PAIRS = {
     # Serie A O+D− v O+D+ over 2.5 YES <=60c (2/2), Serie A O−D− v O+D− over 2.5 YES <=55c (3/4).
     "C3": ("sr_c3", "soccer_o25", "Serie A O+D− v O+D+ · over 2.5"),
     "C4": ("sr_c4", "soccer_o25", "Serie A O−D− v O+D− · over 2.5"),
+    # Moved by hand 2026-11-06 (Olu), on small samples, at $1: Bundesliga O+D− v O+D− over 3.5 YES <=60c (2/3),
+    # La Liga O−D− v O−D+ under 3.5 NO 70-85c (2/2). Both on the soccer_u35 claim: A2 the Yes of the -4
+    # contract (like A7), A3 its No (total_lte 3).
+    "A2": ("sr_a2", "soccer_u35", "Bundesliga O+D− v O+D− · over 3.5"),
+    "A3": ("sr_a3", "soccer_u35", "La Liga O−D− v O−D+ · under 3.5"),
 }
 # C1 (sr_c1, MLS O+D− v O+D+ · over 3.5) was a pair from 2026-10-28 to 2026-11-02; it is back in the Sandbox
 # as paper on its whole record (Olu: research it later), still logged by soccer_rules.py.
@@ -54,8 +59,9 @@ LABELS = {src: name for src, _sport, name in PAIRS.values()}
 NOT_PUBLISHED = {}
 
 
-# C1, C3 and C4 entered on their own date; the rest on MOVED_ON.
-PROMOTED_LATER = {"C1": ("2026-10-28", "2026-10-29T00:59:00+00:00"), "C3": ("2026-10-28", "2026-10-29T00:59:00+00:00"), "C4": ("2026-10-28", "2026-10-29T00:59:00+00:00")}
+# C1, C3, C4, A2 and A3 entered on their own date; the rest on MOVED_ON.
+PROMOTED_LATER = {"C1": ("2026-10-28", "2026-10-29T00:59:00+00:00"), "C3": ("2026-10-28", "2026-10-29T00:59:00+00:00"), "C4": ("2026-10-28", "2026-10-29T00:59:00+00:00"),
+                  "A2": ("2026-11-06", "2026-11-06T15:00:00+00:00"), "A3": ("2026-11-06", "2026-11-06T15:00:00+00:00")}
 
 
 def moved_on(rule):
