@@ -5,7 +5,9 @@
 #   7 * * * * /home/<user>/edge-machine-closes/scripts/vps_live_record.sh >> /home/<user>/edge-live-record.log 2>&1
 # live_record_publish.py reads the follower's own files (orders_placed.json, results.json, ledger.jsonl, o35_state.json, nba_wm_state.json: read-only),
 # reads Kalshi's PUBLIC market results (cached in ~/live_record_results.json), and writes data/live_record.json after refusing anything outside
-# its whitelist of public fields (no balance, order id, account, key or dollar figure). This script commits only that file. It shares the
+# its whitelist of public fields (no balance, order id, account, key or dollar figure). live_caps_publish.py (the follower's own python) writes
+# data/live_caps.json: each Production pair's price cap, highest ask under it and band, so the Soccer page's headline counts the legs the
+# follower can take. This script commits only those two files. It shares the
 # edge-machine-closes clone with the other VPS jobs, so it takes the same lock and pulls with --rebase. No new secret: it uses the push route
 # the other jobs already use.
 set -uo pipefail
@@ -19,7 +21,11 @@ if command -v flock >/dev/null 2>&1; then
 fi
 git pull -q --rebase origin main || { echo "$(stamp) pull failed"; exit 0; }
 "$PY" live_record_publish.py || { echo "$(stamp) publish refused or failed"; exit 1; }
-git add data/live_record.json 2>/dev/null
+# The follower's own price guards per pair (2026-11-06), from ITS python so it can import its own price_cap / price_band / fee: a failure
+# leaves data/live_caps.json as it was and never blocks the live record above.
+FOLLOWER_PY="${FOLLOWER_PY:-$(ls -d "$HOME"/polymarket-*/.venv/bin/python 2>/dev/null | head -1)}"
+if [ -n "$FOLLOWER_PY" ] && [ -x "$FOLLOWER_PY" ]; then "$FOLLOWER_PY" live_caps_publish.py || echo "$(stamp) live caps failed; the file is left as it was"; fi
+git add data/live_record.json data/live_caps.json 2>/dev/null
 if ! git diff --cached --quiet; then
   git commit -q -m "Live record per Production pair via vps ($(date -u +%Y-%m-%d\ %H:%MZ))"
 fi

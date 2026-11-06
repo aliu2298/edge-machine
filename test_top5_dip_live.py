@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 """The live top-5 dip paper record (top5_dip_live.py): it follows the executor's decision snapshots. Offline checks."""
 import datetime as dt
+import os
 import sys
+import tempfile
 
 import arg_dip as A
 import chaos_replay as C
 import top5_dip_live as L
 
+L.PATH = os.path.join(tempfile.mkdtemp(), "top5_dip_live_test.json")   # hermetic: never the real ledger, which now holds real entries on the same dates
 FAILS = []
 UTC = dt.timezone.utc
 

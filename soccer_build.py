@@ -12,6 +12,7 @@ starts open only when the pre-flight needs attention.
 import datetime
 import os
 
+import sandbox_build as B
 import sandbox_track as T
 import soccer_cards
 import sport_page as SP
@@ -80,6 +81,33 @@ def _raised(row):
     return dict(row, raised=raised_stakes.raised(row.get("pair") or f'{row["name"]}|{row["sport"]}'))
 
 
+def _tradeable(row, d, st):
+    """A Production rule's headline is the legs the follower can take (2026-11-06, Olu): the paper legs inside the pair's price cap and band
+    (live_caps.py, read from the follower itself). The record of every leg stays in the row's fold; the ledger is not touched. A row
+    with no leg outside the guard is returned as it came."""
+    import live_caps as LC
+    import soccer_lanes as L
+    if not row.get("prod") or row.get("own"):
+        return row
+    pair = row.get("pair") or f'{row["name"]}|{row["sport"]}'
+    if LC.guard(pair) is None:
+        return row
+    mine = lambda q: q.get("source") == row["name"] and q.get("sport") == row["sport"]
+    bad = lambda q: mine(q) and not LC.tradeable(pair, q.get("price"))
+    if not any(bad(q) for q in T.bet_rows(d)):
+        return row
+    d2 = dict(d, quotes=[q for q in d["quotes"] if not bad(q)], _archive=[q for q in (d.get("_archive") or []) if not bad(q)])
+    since = T.record_since((st.get("pairs") or {}).get(pair) or {})
+    a_t = dict(T.assess(d2, row["name"], row["sport"], since=since, venues=T.TRADEABLE_VENUES))
+    a_all = row["a"]
+    fresh_v = B.verdict(a_all) == row.get("v")
+    out = dict(row, a=dict(a_all, **{k: a_t[k] for k in a_t}), a_all=a_all,
+               legs_html=L.legs_table(a_t, a_all))
+    if fresh_v:
+        out["v"] = B.verdict(out["a"])
+    return out
+
+
 def _own_ledger_note():
     """The own-ledger lanes' shared words and last reads, once, in the method fold (they were each section's footer)."""
     import fmt
@@ -122,7 +150,7 @@ def build(d=None, st=None, now=None, own_lanes=True):
     retired = sport_tab.retired_rows(d, st, FAMILY)
     # own_lanes=False: the tracker's rows alone (a test that hands in its own ledger reads that ledger only).
     own_live, own_gone, d, st = (soccer_lanes.rows_and_inputs(d, st, now) if own_lanes else ([], [], d, st))
-    rows = [_raised(r) for r in rows + own_live]
+    rows = [_raised(_tradeable(r, d, st)) for r in rows + own_live]
     sp = SP.spec(
         family=FAMILY, key=KEY, title=TITLE, description=DESCRIPTION, scope=SCOPE,
         venue="Kalshi", rows=rows, events=soccer_cards.events,

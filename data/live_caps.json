@@ -1,0 +1,128 @@
+{
+ "caps": {
+  "commod_fav_band|commodities_fav": {
+   "band": [
+    0.7,
+    0.8
+   ],
+   "cap": 0.85,
+   "max_ask": 0.84
+  },
+  "crypto_fav_band_below|crypto_fav": {
+   "band": [
+    0.7,
+    0.8
+   ],
+   "cap": 0.85,
+   "max_ask": 0.84
+  },
+  "econ_nc_yes|econ_daily": {
+   "band": [
+    0.9,
+    0.98
+   ],
+   "cap": 0.99,
+   "max_ask": 0.98
+  },
+  "ftts_no_70_80|soccer_ftts": {
+   "band": null,
+   "cap": 0.85,
+   "max_ask": 0.84
+  },
+  "mls_fade_home|soccer_p05": {
+   "band": null,
+   "cap": 0.85,
+   "max_ask": 0.84
+  },
+  "sr_a2|soccer_u35": {
+   "band": [
+    0.01,
+    0.6
+   ],
+   "cap": 0.85,
+   "max_ask": 0.84
+  },
+  "sr_a3|soccer_u35": {
+   "band": [
+    0.7,
+    0.85
+   ],
+   "cap": 0.86,
+   "max_ask": 0.85
+  },
+  "sr_a6|soccer_o25": {
+   "band": [
+    0.01,
+    0.55
+   ],
+   "cap": 0.85,
+   "max_ask": 0.84
+  },
+  "sr_a7|soccer_u35": {
+   "band": [
+    0.01,
+    0.55
+   ],
+   "cap": 0.85,
+   "max_ask": 0.84
+  },
+  "sr_c3|soccer_o25": {
+   "band": [
+    0.01,
+    0.6
+   ],
+   "cap": 0.85,
+   "max_ask": 0.84
+  },
+  "sr_c4|soccer_o25": {
+   "band": [
+    0.01,
+    0.55
+   ],
+   "cap": 0.85,
+   "max_ask": 0.84
+  },
+  "st_t4|soccer_team2": {
+   "band": [
+    0.03,
+    0.97
+   ],
+   "cap": 0.85,
+   "max_ask": 0.84
+  },
+  "st_t7|soccer_team3": {
+   "band": [
+    0.03,
+    0.97
+   ],
+   "cap": 0.85,
+   "max_ask": 0.84
+  },
+  "team1_form_l5|soccer_team1_intl": {
+   "band": null,
+   "cap": 0.88,
+   "max_ask": 0.87
+  },
+  "team2_form_l10|soccer_team2_intl": {
+   "band": null,
+   "cap": 0.85,
+   "max_ask": 0.84
+  },
+  "team2_ranked|soccer_team2": {
+   "band": null,
+   "cap": 0.85,
+   "max_ask": 0.84
+  },
+  "u35_low_scoring|soccer_u35_cup": {
+   "band": null,
+   "cap": 0.92,
+   "max_ask": 0.91
+  },
+  "u35_low_scoring|soccer_u35_intl": {
+   "band": null,
+   "cap": 0.92,
+   "max_ask": 0.91
+  }
+ },
+ "generated": "2026-11-06T22:47Z"
+}
