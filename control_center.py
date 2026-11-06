@@ -652,7 +652,8 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
         sr_names += [n for _s, _sp, n in soccer_team_rules_production.PAIRS.values()]
     if o35 is not None:
         import o35_production
-        sr_names.append(o35_production.NAME)
+        if not o35_production.ENDED_ON:          # back in the Sandbox 2026-11-06: not a Production lane any more
+            sr_names.append(o35_production.NAME)
     if top5_dip is not None:
         import top5_dip_production
         sr_names.append(top5_dip_production.NAME)
