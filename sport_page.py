@@ -290,10 +290,11 @@ def since_production(d, st, rows, late=None):
         # mentions, the Econ Daily lanes) is staged under its feed's pair, not "<name>|<page key>",
         # and its builder passes that adapter's quotes and pairs as `d` and `st`.
         key = row.get("pair") or f'{row["name"]}|{row["sport"]}'
-        pair = pairs.get(key) or {}
+        pair = production.fresh_view(key, pairs.get(key) or {})      # a raised stake restarts the record (2026-11-06)
         if production.entered_at(pair) is None:
             continue
-        lives.append(production._assess_since_kickoff(d, key, pair, late=late))
+        # The legs the follower can take (2026-11-06): the tile counts what the follower could trade, as the rows' headlines do.
+        lives.append(production._assess_since_kickoff(d, key, pair, late=late, tradeable=True))
         names.append(row)
     return production._group_record(lives), names
 

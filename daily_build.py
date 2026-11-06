@@ -201,7 +201,10 @@ def build(key, state=None, now=None, nc=None):
     data, stages = {'quotes':[], 'coverage':coverage}, {'pairs':{}}
     if econ:
         import daily_production as DP
-        data['quotes'] = DP.quotes(state, all_lanes=True)
+        # The Production lane's rows come from the PRODUCTION view (what the feed published and the follower traded: the retired 3h NO lane is
+        # not counted as 'the other lane' that holds a night), the paper lane's from the all-lanes view. With all_lanes alone the YES lane lost
+        # a pick the follower was offered and traded (2026-10-24 diesel), so this page said 5-0 where the Production page says 6-0.
+        data['quotes'] = [q for q in DP.quotes(state, all_lanes=True) if q['source'] in DP.PULLED_NC] + DP.quotes(state)
         stages['pairs'] = DP.pairs()
     if econ:
         # ONE BASIS for the Production lane (2026-11-06): its row counts the record since Production the way the header tile and the Production

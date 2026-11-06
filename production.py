@@ -35,6 +35,7 @@ tracker runs (every 3h).
 import datetime, html, json, os, re, sys
 
 import fmt
+import live_caps as LC
 import production_live as PL
 import sandbox_sources as S
 import sandbox_track as T
@@ -525,13 +526,17 @@ def late_path(path=None):
     return (path or FEED)[:-5] + "_late.json"
 
 
-def _assess_since_kickoff(d, key, pair, late=None, until=None):
+def _assess_since_kickoff(d, key, pair, late=None, until=None, tradeable=False):
     """US-exchange record for contests that kick off at or after this pair entered.
 
     The feed publishes a bet when `_kickoff(q).isoformat() >= entered_at(pair)`.
     `assess` windows on `logged`, so this copies the ledger and the archive,
     keeps only this pair's rows in that kickoff window, and calls `assess`
     with the log window open. A row with no readable kickoff is not in it.
+
+    `tradeable` (2026-11-06, Olu): count only the legs the follower can take: ask at or under the pair's max ask (ask + fee inside its price
+    cap) and inside its band, read from the follower itself (live_caps.py). The header tiles and the Production page's lines pass it; the feed's own
+    record fields do not, so what is published is unchanged.
 
     `late` (2026-11-02): the feed's late_leads. A bet whose lead was first published inside LATE_MIN of its
     kickoff (the follower's own cutoff: feed.min_minutes_to_kickoff = 30 in the follower repo's config module, mirrored by LATE_MIN) could not be followed, so it stays
@@ -547,6 +552,8 @@ def _assess_since_kickoff(d, key, pair, late=None, until=None):
                 continue
             ko = _kickoff(q)
             if late and late_key(key, q.get("market_id")) in late:
+                continue
+            if tradeable and not LC.tradeable(key, q.get("price")):
                 continue
             if ko is not None and entered is not None and ko.isoformat() >= entered and (until is None or ko.isoformat() < until):
                 out.append(q)
@@ -1461,7 +1468,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
             # The SAME window the Sandbox page reads (the pair's stage clock), so the two pages
             # never show two different records for one rule.
             whole = T.assess(raw, source, sport, since=T.record_since(pair_orig), venues=T.TRADEABLE_VENUES)
-            live = _assess_since_kickoff(raw, key, pair, late=late_set(blob))
+            live = _assess_since_kickoff(raw, key, pair, late=late_set(blob), tradeable=True)
             mine = [l for l in leads if l.get("pair") == key]
             to_come = sum(1 for l in mine if l in upcoming)
             clv = fmt.signed_cents(whole["clv"])
@@ -1524,7 +1531,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
             live_rec, live_roi, live_data = PL.cells(key, since, dict(roi=live["roi_fee"] if live["n"] else None), live_blob)
             live_gap_rows.append((name(key), key, live["n"], live["roi_fee"] if live["n"] else None, live_data))
             if raised_at:
-                old = _assess_since_kickoff(raw, key, pair_orig, late=late_set(blob), until=raised_at)
+                old = _assess_since_kickoff(raw, key, pair_orig, late=late_set(blob), until=raised_at, tradeable=True)
                 raised_rows.append((name(key), raised_at, old, PL.record(PL.window(((live_blob or {}).get("pairs") or {}).get(key, {}).get("orders") or [],
                                                                                    entered_at(pair_orig), raised_at))))
             card = f"""<tr>

@@ -71,6 +71,24 @@ all7 = L.pick_record((state["rules"].get("T7") or {}).get("picks") or [])
 check("T7's headline drops the legs above the cap and its fold shows both records",
       (r7["a"]["n"] < all7["n"], "All paper legs" in r7["legs_html"], f'{all7["n"]}' in r7["legs_html"]), (True, True, True))
 
+print("\nthe since-Production record and the header tile count the legs the follower can take")
+import datetime as dt
+import production as P
+import sport_page as SP
+KO = "2026-11-10T18:00:00+00:00"
+mk = lambda i, price, status: dict(id=f"q{i}", source="t", sport="soccer_team3", venue="kalshi_binary", status=status, bet=True, price=price, price_a=None,
+                                   price_b=price, start=KO, logged="2026-11-09T12:00:00+00:00", pnl=(100 / price - 100) if status == "won" else -100.0,
+                                   market_id=f"m{i}", label=f"x{i}", pick="b", date="2026-11-10", result="b" if status == "won" else "a", settle_px=None,
+                                   espn_home="A", espn_away="B", start_source="espn")
+ledger = {"quotes": [mk(1, 0.70, "won"), mk(2, 0.80, "lost"), mk(3, 0.92, "won"), mk(4, 0.93, "won")]}
+stage = {"stage": "production", "ready_at": "2026-11-01T00:00:00+00:00", "promoted_at": "2026-11-01T00:00:00+00:00"}
+G["t|soccer_team3"] = dict(cap=0.85, max_ask=0.84, band=None)
+LC.load = lambda path=LC.PATH, _g=G: _g
+allv = P._assess_since_kickoff(ledger, "t|soccer_team3", stage)
+trade = P._assess_since_kickoff(ledger, "t|soccer_team3", stage, tradeable=True)
+check("the plain record counts all four legs; the tradeable one drops the two above the cap", (allv["n"], trade["n"], trade["won"]), (4, 2, 1))
+check("the tile pools the tradeable basis", (SP.since_production(ledger, {"pairs": {"t|soccer_team3": stage}}, [dict(name="t", sport="soccer_team3", prod=True)], late={})[0]["n"],), (2,))
+
 if FAILS:
     print(f"\nFAILED {len(FAILS)}")
     sys.exit(1)
