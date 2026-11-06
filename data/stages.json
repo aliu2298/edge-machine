@@ -1884,6 +1884,78 @@
    "pair": "team2_form_l10|soccer_team2",
    "reason": "taken off the Production list by hand, record kept",
    "to": "sandbox"
+  },
+  {
+   "at": "2026-11-06T21:10:55+00:00",
+   "evidence": {
+    "base_roi": 0.0302,
+    "clv": -0.03,
+    "clv_n": 2,
+    "n": 2,
+    "own_roi": 0.5239,
+    "roi": 0.5239,
+    "roi_fee": 0.4881,
+    "span_days": 1.0,
+    "weeks": 0,
+    "z": 1.0207
+   },
+   "pair": "u35_low_scoring|soccer_u35_cup",
+   "reason": "moved to Production by hand on 2026-11-06",
+   "to": "production"
+  },
+  {
+   "at": "2026-11-06T21:10:55+00:00",
+   "evidence": {
+    "base_roi": 0.0302,
+    "clv": -0.03,
+    "clv_n": 2,
+    "n": 2,
+    "own_roi": 0.5239,
+    "roi": 0.5239,
+    "roi_fee": 0.4881,
+    "span_days": 1.0,
+    "weeks": 0,
+    "z": 1.0207
+   },
+   "pair": "u35_low_scoring|soccer_u35_cup",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
+  },
+  {
+   "at": "2026-11-06T21:10:55+00:00",
+   "evidence": {
+    "base_roi": -0.2498,
+    "clv": 0.01,
+    "clv_n": 1,
+    "n": 1,
+    "own_roi": 0.2346,
+    "roi": 0.2346,
+    "roi_fee": 0.2184,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.4843
+   },
+   "pair": "team2_form_l10|soccer_team2_intl",
+   "reason": "moved to Production by hand on 2026-11-06",
+   "to": "production"
+  },
+  {
+   "at": "2026-11-06T21:10:55+00:00",
+   "evidence": {
+    "base_roi": -0.2498,
+    "clv": 0.01,
+    "clv_n": 1,
+    "n": 1,
+    "own_roi": 0.2346,
+    "roi": 0.2346,
+    "roi_fee": 0.2184,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.4843
+   },
+   "pair": "team2_form_l10|soccer_team2_intl",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
   }
  ],
  "pairs": {
@@ -2127,6 +2199,26 @@
    "since": null,
    "stage": "sandbox"
   },
+  "team2_form_l10|soccer_team2_intl": {
+   "by_hand": "2026-11-06",
+   "entry": {
+    "base_roi": -0.2498,
+    "clv": 0.01,
+    "clv_n": 1,
+    "n": 1,
+    "own_roi": 0.2346,
+    "roi": 0.2346,
+    "roi_fee": 0.2184,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 0.4843
+   },
+   "entry_since": null,
+   "promoted_at": "2026-11-06T21:10:55+00:00",
+   "ready_at": "2026-11-06T21:10:55+00:00",
+   "ready_since": "2026-11-06T21:10:55+00:00",
+   "stage": "production"
+  },
   "team2_ranked|soccer_team2": {
    "by_hand": "2026-10-11",
    "entry": {
@@ -2206,6 +2298,26 @@
    "since": null,
    "stage": "sandbox"
   },
+  "u35_low_scoring|soccer_u35_cup": {
+   "by_hand": "2026-11-06",
+   "entry": {
+    "base_roi": 0.0302,
+    "clv": -0.03,
+    "clv_n": 2,
+    "n": 2,
+    "own_roi": 0.5239,
+    "roi": 0.5239,
+    "roi_fee": 0.4881,
+    "span_days": 1.0,
+    "weeks": 0,
+    "z": 1.0207
+   },
+   "entry_since": null,
+   "promoted_at": "2026-11-06T21:10:55+00:00",
+   "ready_at": "2026-11-06T21:10:55+00:00",
+   "ready_since": "2026-11-06T21:10:55+00:00",
+   "stage": "production"
+  },
   "u35_low_scoring|soccer_u35_intl": {
    "by_hand": "2026-10-04",
    "entry": {
@@ -2227,5 +2339,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-11-06T21:05:07+00:00"
+ "updated": "2026-11-06T21:10:55+00:00"
 }
