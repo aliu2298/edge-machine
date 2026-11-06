@@ -14,6 +14,7 @@ import site_chrome as C
 import sport_page as SP
 
 DP_PULLED = DP0.PULLED_NC
+import sandbox_sources as S_
 OLD_NAME = {'econ_daily': 'econ_daily_fav_band', 'finance_daily': 'finance_daily_fav_band'}
 OLD_RULE_NAME = 'Favourite band · 3h to the close'
 RETIRED_NOTE = (' Retired 2026-10-20: research on 94 settled KXINXU/KXNASDAQ100U 16:00 ET ladders, '
@@ -21,9 +22,9 @@ RETIRED_NOTE = (' Retired 2026-10-20: research on 94 settled KXINXU/KXNASDAQ100U
                 '−28% / +9%; the YES side loses in 8 of 9 price bands. It logs nothing new and its records are kept.')
 
 
-def _evidence(html, name, n, text):
-    """Rewrite one rule row's Evidence cell, scoped to that row."""
-    i = html.find(f'data-source="{name}"')
+def _evidence(html, name, n, text, retired=False):
+    """Rewrite one rule row's Evidence cell, scoped to that row (a retired row: scoped to the Retired fold's)."""
+    i = html.find(f'data-source="{name}"', html.find('<section id="retired"') if retired else 0)
     if i < 0:
         return html
     j = html.find('</summary>', i)
@@ -70,7 +71,9 @@ def build(key, state=None, now=None, nc=None):
             a, _days = _record(picks)
             rows.append(dict(name=name, sport=key, meta={'label':spec['label'], 'note':D.NC_RULE[name]+' '+D.NC_AMENDMENT,
                                                          'frozen':D.NC_REGISTERED},
-                             prod=True, open=sum(r['status']=='open' for r in picks), since=None, v='waiting', a=a))
+                             prod=name not in DP_PULLED, open=sum(r['status']=='open' for r in picks), since=None, v='waiting', a=a))
+            if name in D.NC_RETIRED:
+                rows[-1].update(v='retired', gone=S_.ECON_NC_NO_RETIRED_WHY)
             lane_picks[name] = picks
     rows.append(old_row)
     lane_picks[old_row['name']] = old_picks
@@ -182,14 +185,15 @@ def build(key, state=None, now=None, nc=None):
                                'picked':sum(x['eligible'] for x in observed)}}} if lane.get('last_success') else {}
     if econ:
         description = D.NC_RULE['econ_nc_yes']+' '+D.NC_RULE['econ_nc_no']
-        scope = 'Near-certain AAA gas and diesel rungs · YES in Production, NO paper'
+        scope = 'Near-certain AAA gas and diesel rungs · YES in Production, NO retired'
     elif finance:
         description = 'S&P 500 near-certain NO, 90–98¢, 2–3.5h before the close; paper only.'
         scope = 'S&P near-certain NO · paper only'
     else:
         description, scope = D.RULE, 'Daily favourite-band thresholds · paper only'
     spec = SP.spec(family=D.LANES[key],key=key,title='Edge Machine · '+D.LANES[key],description=description,
-                   scope=scope,venue='Kalshi',rows=rows,
+                   scope=scope,venue='Kalshi',rows=[r for r in rows if not r.get('gone')],
+                   retired=[r for r in rows if r.get('gone')],
                    events=events,rule_name=rule_name,
                    market=lambda d,r:'Kalshi',definition=definition,
                    recent=lambda d,r,n:(nc_scan() if nrow is not None and r is nrow else scan()),
@@ -199,7 +203,7 @@ def build(key, state=None, now=None, nc=None):
         import daily_production as DP
         data['quotes'] = DP.quotes(state, all_lanes=True)
         stages['pairs'] = DP.pairs()
-    html = SP.page(spec, data, stages, now, rows=rows)
+    html = SP.page(spec, data, stages, now, rows=[r for r in rows if not r.get('gone')])
     # Keep the template's design while preserving these lanes' record semantics:
     # contract wins are descriptive; market-days are the evidence clock, not an edge test.
     for r in rows:
@@ -209,7 +213,7 @@ def build(key, state=None, now=None, nc=None):
             html = _verdict(html, r['name'], r, 'Paper record · not graded')
             continue
         _a, days = _record(lane_picks[r['name']])
-        html = _evidence(html, r['name'], r['a']['n'], f'{days}/30 market-days')
+        html = _evidence(html, r['name'], r['a']['n'], f'{days}/30 market-days', retired=bool(r.get('gone')))
         if r.get('v') != 'retired':
             html = _verdict(html, r['name'], r, 'Production · paper record' if r['prod'] else 'Paper record · not graded')
     return html

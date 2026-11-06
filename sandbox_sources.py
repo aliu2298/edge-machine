@@ -206,6 +206,11 @@ TURKEY_O25_DOG_RETIRED_WHY = ("Retired 2026-11-04 by Olu: no edge at 8 settled �
                               "Turkey BTTS in heavy mismatches, on the same fixtures, retires with it." + RETIRED_TAIL_2026_11_04)
 TURKEY_BTTS_DOG_RETIRED_WHY = ("Retired 2026-11-04 by Olu: no edge at 8 settled — 3 won v 4.2 priced, −29.4% after fees. "
                                "Turkey over 2.5 in heavy mismatches, on the same fixtures, retires with it." + RETIRED_TAIL_2026_11_04)
+# Econ Daily near-certain 3h NO (Olu, 2026-11-06): paper since 2026-10-28, never traded live after that. No new entries from
+# 2026-11-06 (daily_track.NC_RETIRED); its rows stay on file and its open bets still settle. The S&P near-certain NO stays.
+ECON_NC_NO_RETIRED_WHY = ("Retired 2026-11-06 by Olu: no edge at 20 settled contracts on 16 market-days — 18 won v 18.1 priced, "
+                          "−1.6% after fees. It was in Production 2026-10-20 to 2026-10-28, paper after that. No new entries from "
+                          "2026-11-06; its rows stay on file and its open bets still settle.")
 # The Turkey pair retired together: tests that replay them from before then re-enable them in-process.
 TURKEY_RETIRED_ON_2026_11_04 = ("turkey_o25_dog|soccer_o25", "turkey_btts_dog|soccer_btts")
 
@@ -1895,7 +1900,7 @@ SOURCES["econ_nc_yes"] = dict(
          "Thin payoff: one loss costs about 16 wins.")
 SOURCES["econ_nc_no"] = dict(
     label="Near-certain · 3h · NO", kind="Rule", connected=True,
-    site="kalshi.com", sports=["econ_daily"], baseline="population",
+    site="kalshi.com", sports=[], retired_sports={"econ_daily": ECON_NC_NO_RETIRED_WHY}, baseline="population",
     note="Pre-registered 2026-10-20. NO on the cheapest KXAAAGASD / KXDIESELD rung whose NO "
          "ask (1 - YES bid) is 85-95c inclusive, 3.5-2 hours before the verified close; "
          "spread at most 3c, 25+ contracts at the NO ask, one entry per event, ties to the "

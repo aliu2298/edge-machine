@@ -175,6 +175,8 @@ def payout(m):
 # against the ticker's target date.
 NC_SERIES = {'KXAAAGASD': 'US gas price (AAA national average)', 'KXDIESELD': 'Diesel price (daily)'}
 NC_ORDER = ('econ_nc_yes', 'econ_nc_no')
+# Retired by Olu 2026-11-06: no new entry is logged, the open ones still settle (nc_run's settlement loop covers every lane).
+NC_RETIRED = {'econ_nc_no': '2026-11-06'}
 NC_LANES = {
     'econ_nc_yes': dict(label='Near-certain · last hour · YES', side='yes', band=(0.90, 0.98),
                         minutes=(45, 75), window='75 to 45 minutes before the close'),
@@ -340,6 +342,8 @@ def nc_run(state, fetch=get, now=None, stamp=None):
             continue
         books = {}
         for key in NC_ORDER:
+            if key in NC_RETIRED:
+                continue
             spec, lane, counts, candidates = NC_LANES[key], nc[key], Counter(), []
             try:
                 for m in markets:

@@ -11,6 +11,9 @@ import production as P
 import sandbox_sources as S
 import sandbox_track as T
 
+# econ_nc_no was retired 2026-11-06 (test_retired_2026_11_06.py checks the real state); these checks replay its active era.
+D.NC_RETIRED = {}
+
 NOW=dt.datetime(2026,10,21,2,50,tzinfo=dt.timezone.utc)
 YES_PAIR,NO_PAIR='econ_nc_yes|econ_daily','econ_nc_no|econ_daily'
 
