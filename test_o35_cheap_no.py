@@ -240,10 +240,45 @@ page = soccer_build.build()
 # 2026-11-05 (Olu): one row of the Soccer page's Production rules, its words in the row's fold (soccer_lanes).
 k = page.find('id="cheap-side"')
 row = page[k:k + 400]
-check("the lane is a Production row of the Soccer page, linked as #cheap-side",
-      (k > 0, 'data-source="o35_cheap_no_wave"' in row, 'data-stage="production"' in row), (True, True, True))
-check("its fold carries the exits, the league split and the versions", all(x in B.panel(st) for x in ("<b>Exits</b>", "<b>By league</b>", "<b>Fills</b>")), True)
+check("the lane is a Sandbox row of the Soccer page (back from Production 2026-11-06), linked as #cheap-side",
+      (k > 0, 'data-source="o35_cheap_no_wave"' in row, 'data-stage="sandbox"' in row), (True, True, True))
+check("its fold carries the honest record, the exits and the old versions folded",
+      all(x in B.panel(st) for x in ("<b>Honest re-score by version</b>", "<b>Before the honesty rules</b>", "<b>Exits</b>", "<b>Fills</b>")), True)
 check("its tables are labelled for the phone", 'data-l="Filled"' in B.place("<main><section id=\"x\"></section>", st), True)
+
+print("\nthe honest rules (2026-11-06)")
+K = 1_000_000
+def pr(sec, no, n=60):
+    return (K + sec, no, n)
+# a fill strictly under the bid, then a flash print at the target 20 seconds later, then the real target print 2 minutes later
+base = [pr(3600 + 60, 0.30), pr(3700, 0.08), pr(3720, 0.40, 60), pr(3820, 0.40, 60)]
+old = O._bid([p for p in base], 0.10, 1.0)
+hon = O._bid([p for p in base], 0.10, 1.0, True)
+check("before: the flash print 20 seconds after the fill sells it", (old["sells"]["4"]["filled"], old["sells"]["4"]["at"]), (True, K + 3720))
+check("honest: a sell counts only on prints 60+ seconds after the fill; the later print sells it", (hon["sells"]["4"]["filled"], hon["sells"]["4"]["at"]), (True, K + 3820))
+flash_only = [pr(3700, 0.08), pr(3720, 0.40, 60)]
+check("honest: a flash print alone no longer sells", O._bid(flash_only, 0.10, 1.0, True)["sells"]["4"]["filled"], False)
+check("honest: the 50-contract rule counts only the later prints", O._bid([pr(3700, 0.08), pr(3720, 0.40, 60), pr(3800, 0.40, 20)], 0.10, 1.0, True)["sells"]["4"]["filled"], False)
+check("a print exactly at the bid is no fill", O._bid([pr(3700, 0.10)], 0.10, 1.0, True), None)
+v5 = O.v5_bids([pr(O.BID_AFTER_MIN * 60 + 60, 0.30), pr(O.CANCEL_MIN * 60 + 10, 0.05)], K, "no")
+check("v5: a print after the bid is cancelled is not a fill", v5["10"], None) if False else None
+late = O.v5_bids([(K + O.BID_AFTER_MIN * 60 + 60, 0.30, 5), (K + O.CANCEL_MIN * 60 + 10, 0.05, 20)], K, "no")
+early = O.v5_bids([(K + O.BID_AFTER_MIN * 60 + 60, 0.30, 5), (K + O.CANCEL_MIN * 60 - 60, 0.05, 20)], K, "no")
+check("v5: a print under the bid after the cancel minute is no fill; one before it is", (late["10"], early["10"] is not None), (None, True))
+e = dict(id="X-4", kickoff=K, night="2026-11-06", result="no", version=O.VERSION)
+O.stamp(e, [(K + O.BID_AFTER_MIN * 60 + 60, 0.30, 5), (K + O.CANCEL_MIN * 60 - 60, 0.05, 20)])
+check("stamp adds the honest block, and v5 from SINCE_V5", ("honest" in e, "v5" in e), (True, True))
+e2 = O.stamp(dict(id="Y-4", kickoff=K, night="2026-11-01", result="no", version=O.V3), [])
+check("an entry before SINCE_V5 gets no v5 block; v3 is re-scored with the second-half bid", ("v5" in e2, sorted(e2["honest"])), (False, ["10"]))
+e3 = O.stamp(dict(id="Z-4", kickoff=K, night="2026-10-28", result="no", version=O.V1), [])
+check("v1 is re-scored with its own three limits", sorted(e3["honest"]), ["10", "15", "20"])
+st0 = O.load("/nonexistent")
+st0["entries"] = [dict(id="A-4", event="E", league="MLS", series="s", kickoff=K, night="2026-11-01", result="no", form_rule=False, prints=0,
+                       bids={}, logged="x", version=O.VERSION)]
+ob = {"errors": []}
+O.backfill(st0, lambda p: {"trades": []}, ob)
+check("backfill stamps an entry that has no honest block, and says how many are left", ("honest" in st0["entries"][0], ob["backfilled"], ob["backfill_left"]), (True, 1, 0))
+check("the v5 row of the Soccer page exists, with its rule lines", ("sp-rule-line" in B.v5_panel(st0), "Beside v4 re-scored" in B.v5_panel(st0)), (True, True))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

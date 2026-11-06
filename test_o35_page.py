@@ -54,6 +54,7 @@ FEED = dict(lane=O.LANE, updated_at=(NOW - dt.timedelta(minutes=30)).isoformat()
 _tmp = tempfile.mkdtemp(prefix="o35-page-")
 X.PATH = os.path.join(_tmp, "production_o35_leads.json")
 assert _tmp in X.PATH
+X.ENDED_ON = None      # the Production adapter is tested as it ran while the lane traded (it is a no-op once ENDED_ON is set, below)
 print("quotes")
 qs = X.quotes(LEDGER, FEED)
 check("filled v3 bids from Production day on, plus the upcoming lead; unfilled, v2 and pre-Production entries are out",
@@ -85,6 +86,12 @@ stale = dict(FEED, updated_at=(NOW - dt.timedelta(hours=6)).isoformat())
 check("a stale lead feed lists no upcoming lead", [q["status"] for q in X.quotes(LEDGER, stale) if q["status"] == "open"], ["open"])
 _, _, b3 = X.page_inputs(d, st, blob, LEDGER, now=NOW, leads_feed=stale)
 check("... on the page's blob", [l for l in b3["leads"].values() if l.get("status") == "pending"], [])
+
+X.ENDED_ON = "2026-11-06"
+d9, st9, b9 = X.page_inputs(d, st, blob, LEDGER, now=NOW, leads_feed=FEED)
+check("after ENDED_ON the lane adds no Production pair, quote or upcoming lead", (d9, st9, b9), (d, st, blob))
+check("... and the Production page no longer lists it", X.NAME in P.page(d, st, blob, "", now=NOW, o35=LEDGER), False)
+X.ENDED_ON = None
 
 print("\nthe record equals the lane's own 10c_4x figure")
 import sandbox_track as T

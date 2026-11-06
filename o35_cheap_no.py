@@ -30,6 +30,19 @@ the clock, in-sample Oct 28-31 2nd-half 27 fills reached 4x 56% (+116.5%) v 1st-
 (190 matches) 2nd-half 63 fills 40% (+54.6% at 4x, z 2.3) v 1st-half 24 fills 21% (-18.8%); fair to reach 4x is 25%.
 This is research, not evidence for the lane (the v3 record starts fresh on SINCE).
 
+HONEST RE-SCORE (2026-11-06, Olu: the lane goes back to the Sandbox "till it's working properly"). A live audit found paper sells
+printing within a minute of the fill (flash prints: a VAR check, a one-off print) that a resting sell behind the queue and the bot's
+latency can never catch: in v4 paper 15 of 15 2x sells and 4 of 6 4x sells printed within 60 seconds of the fill, while the live
+fills came 68 to 131 minutes in and held 0 of 17. Every entry therefore carries a second block, "honest": a fill needs a print
+STRICTLY BELOW the bid (the queue), a sell counts only on prints at least SELL_DELAY_S (60) seconds AFTER the fill, with the same
+50-contract volume rule counted over those later prints. v1 and v2 are re-scored with their own timing (the bid an hour before
+kickoff, their own limits), v3 and v4 with the second-half bid and the post-only cross check. The old block ("bids") stays as it was and
+is shown folded as "before the honesty rules".
+
+v5 (Sandbox, fresh from SINCE_V5): the honest rules plus the bid is cancelled CANCEL_MIN minutes after kickoff so there are no late
+fills (match minute 80 is about 100 minutes of wall clock: no goal clock here, 45 + the break + stoppages). Exit at 4x, 3x tracked.
+Stored per entry as "v5".
+
 KICKOFF = Kalshi occurrence_datetime minus 4 hours (verified on 72 games against ESPN). The v1 and v2 bids were placed
 an hour before it; only prints after that count for them.
 
@@ -78,6 +91,10 @@ KICKOFF_BACK_H = 4
 BID_LEAD_MIN = 60              # the old rule: bid this long before kickoff (v1, v2, and the "10e" comparison)
 CROSS_LOOKBACK_MIN = 90        # v4: the last print this recent before the bid minute says where No stood when the bid went up
 BID_AFTER_MIN = 60             # v3: the bid counts from this long AFTER kickoff
+SELL_DELAY_S = 60              # honest: a sell counts only on prints this long after the fill (the bot's latency)
+CANCEL_MIN = 100               # v5: the bid is cancelled this long after kickoff (match minute 80 on the wall clock, about)
+SINCE_V5 = "2026-11-06"
+V5_LABEL = "Over 3.5 cheap NO · v5 · 10c bid cancelled at minute 80 · sell at 4× (3× tracked)"
 EARLY = "e"                    # bids key suffix of the comparison: first-half fills of the old bid
 CAP = 0.98
 MAKER = 0.0175
@@ -168,11 +185,12 @@ def evaluate(prints, kickoff_ts, result, limits=None):
     return out
 
 
-def _bid(live, limit, payout):
-    i = next((k for k, p in enumerate(live) if p[1] < limit - EPS), None)
+def _bid(live, limit, payout, honest=False, cancel_ts=None):
+    """`live` the prints from the bid minute. honest: the sell counts prints SELL_DELAY_S+ after the fill only; cancel_ts: no fill at or after it."""
+    i = next((k for k, p in enumerate(live) if p[1] < limit - EPS and (cancel_ts is None or p[0] < cancel_ts)), None)
     if i is None:
         return None
-    after = live[i + 1:]
+    after = [p for p in live[i + 1:] if not honest or p[0] >= live[i][0] + SELL_DELAY_S]
     sells = {}
     for m in MULTS:
         target = round(min(limit * m, CAP), 2)
@@ -182,6 +200,34 @@ def _bid(live, limit, payout):
                              thin=bool(hit) and vol < MIN_VOL - EPS, at=hit[0][0] if hit and vol >= MIN_VOL - EPS else None)
     return dict(limit=limit, fill_at=live[i][0], fill_print=live[i][1], dead=live[i][1] <= DEAD_NO + EPS,
                 sells=sells, payout=payout)
+
+
+def honest_bids(prints, kickoff_ts, result, version):
+    """The honest re-score of one entry ({limit key: bid or None}) under the version's own timing (see HONEST RE-SCORE)."""
+    payout = 1.0 if result == "no" else 0.0
+    if version in (V1, V2):
+        lo = kickoff_ts - BID_LEAD_MIN * 60
+        return {f"{round(l * 100)}": _bid([p for p in prints if p[0] >= lo], l, payout, True) for l in (V1_LIMITS if version == V1 else LIMITS)}
+    lo = kickoff_ts + BID_AFTER_MIN * 60
+    return {f"{round(l * 100)}": (None if crossed_at_bid(prints, kickoff_ts, l) is not None
+                                  else _bid([p for p in prints if p[0] >= lo], l, payout, True)) for l in LIMITS}
+
+
+def v5_bids(prints, kickoff_ts, result):
+    """v5: the honest second-half bid, cancelled CANCEL_MIN minutes after kickoff."""
+    payout = 1.0 if result == "no" else 0.0
+    lo, cancel = kickoff_ts + BID_AFTER_MIN * 60, kickoff_ts + CANCEL_MIN * 60
+    return {f"{round(l * 100)}": (None if crossed_at_bid(prints, kickoff_ts, l) is not None
+                                  else _bid([p for p in prints if p[0] >= lo], l, payout, True, cancel)) for l in LIMITS}
+
+
+def stamp(entry, prints):
+    """Add the honest block (every entry) and the v5 block (nights from SINCE_V5) to an entry from its prints."""
+    v = entry.get("version", V1)
+    entry["honest"] = honest_bids(prints, entry["kickoff"], entry["result"], v)
+    if entry["night"] >= SINCE_V5:
+        entry["v5"] = v5_bids(prints, entry["kickoff"], entry["result"])
+    return entry
 
 
 def split(entries):
@@ -195,12 +241,12 @@ def split3(entries):
     return ([e for e in entries if v(e) not in (V2, V3, VERSION)], [e for e in entries if v(e) == V2], [e for e in entries if v(e) == V3])
 
 
-def trade_rows(entries, early=False):
+def trade_rows(entries, early=False, field="bids"):
     """One row per filled bid per variant: the stats shape chaos_replay.stats reads. early=True reads the
     first-half comparison bids ("10e") instead of the second-half ones."""
     rows = []
     for e in entries:
-        for lk, b in (e.get("bids") or {}).items():
+        for lk, b in (e.get(field) or {}).items():
             if not b or lk.endswith(EARLY) != early:
                 continue
             limit = b["limit"]
@@ -295,17 +341,37 @@ def run(state, now=None, fetch=D.get, forms=None):
             except Exception as e:                              # noqa: BLE001
                 obs["errors"].append(f"{event}: {str(e)[:80]}")
                 continue
-            state["entries"].append(dict(id=m["ticker"], event=event, league=league, series=series, kickoff=kickoff,
-                                         night=night, result=result, form_rule=event in forms, prints=len(prints),
-                                         bids=evaluate(prints, kickoff, result), logged=now.isoformat(), version=VERSION,
-                                         crossed=crossed_at_bid(prints, kickoff, HEADLINE)))
+            state["entries"].append(stamp(dict(id=m["ticker"], event=event, league=league, series=series, kickoff=kickoff,
+                                               night=night, result=result, form_rule=event in forms, prints=len(prints),
+                                               bids=evaluate(prints, kickoff, result), logged=now.isoformat(), version=VERSION,
+                                               crossed=crossed_at_bid(prints, kickoff, HEADLINE)), prints))
             state["seen"][event] = now.isoformat()
             obs["new"] += 1
             done += 1
+    backfill(state, fetch, obs)
     state["last_run"] = now.isoformat()
     state["error"] = "; ".join(obs["errors"])[:600] or None
     state["observations"] = obs
     return state
+
+
+MAX_BACKFILL_PER_RUN = 80
+
+
+def backfill(state, fetch, obs):
+    """Entries recorded before the honest block existed get it (and v5 where due), a bounded number a run, newest first."""
+    todo = [e for e in state["entries"] if "honest" not in e]
+    done = 0
+    for e in sorted(todo, key=lambda e: -e["kickoff"]):
+        if done >= MAX_BACKFILL_PER_RUN:
+            break
+        try:
+            stamp(e, prints_of(fetch_trades(e["id"], e["kickoff"] - BID_LEAD_MIN * 60, fetch)))
+            done += 1
+        except Exception as ex:                                 # noqa: BLE001
+            obs["errors"].append(f"backfill {e['id']}: {str(ex)[:80]}")
+    obs["backfilled"] = done
+    obs["backfill_left"] = len(todo) - done
 
 
 def main():
