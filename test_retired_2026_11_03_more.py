@@ -130,9 +130,9 @@ check("no new paper entry, but its open trades still sell",
 check("the Trading page draws it as Retired", (MT.assess(MT.load(), "etf_double7")["verdict"],
       "no edge at 14 entry days" in B.trading_page()), ("retired", True))
 
-print("\nnone is in Production")
+print("\nnone is in Production (team2_form_l10 left this list 2026-11-06: Olu promoted it back to Production at $1 as team2_form_l10|soccer_team2_intl, bot #82)")
 st = T.load_stages()
-gone = ("oddspedia", "cricket_consensus", "team2_form_l10", "mls_away_band_fade", "crypto_fav_band_below_60", "sa_o15_arg", "sa_o15_bra")
+gone = ("oddspedia", "cricket_consensus", "mls_away_band_fade", "crypto_fav_band_below_60", "sa_o15_arg", "sa_o15_bra")
 check("no Production pair for any of them", sorted(k for k in P.production_pairs(st) if k.split("|")[0] in gone), [])
 
 check("no guarded phrase in the new copy", sandbox_audit.COPY_RE.search(
