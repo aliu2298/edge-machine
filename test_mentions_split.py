@@ -163,10 +163,15 @@ check("settled NO: PEAC keeps both fills (held would have lost); CHEA held both 
 check("no book is read for an entry made long after its time", calls.count("markets/KXTRUMPSAY-26NOV02-LATE/orderbook"), 0)
 
 print("\nthe Culture page card")
+# Since 2026-11-06 (Olu) the Culture page shows the four retired mention lanes as one line in its Retired fold, not
+# their cards; the card itself is still built by mentions_split.section, and is checked here directly.
 h = KB.build(split_state=st)
-card = h[h.find('id="mentions-split"'):h.find('id="archive"')]
+retired_fold = h[h.find('id="retired-cheap"'):h.find('id="archive"')]
+check("the Culture page no longer draws the card: one line in the Retired fold",
+      ('id="mentions-split"' in h, retired_fold.count("<li>")), (False, 1))
+card = M.section(st, C.esc)
 t = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", card))
-check("it sits on the Culture page (in the Retired fold since 2026-10-31, before the Archive), with the review note and the same tiles as every card",
+check("the card (built on its own), with the review note and the same tiles as every card",
       (bool(card), "review at 10, decide at 30" in t, "ROI after fees · held" in t, "2x only" in t,
        "legs filled 2x / 3x" in t, "ROI after fees · split" in t), (True, True, True, True, True, True))
 check("per-week row and the trade list name the words, the entry price and the size",
@@ -222,9 +227,9 @@ check("DEAR never quoted inside the band within 10c: skipped with the wide reaso
       sorted((v["word"], v["reason"]) for v in ws["skips"].values())[:1],
       [("Dear", "no quote with a 10c spread and a YES ask of 0.03-0.30 inside 6h")])
 check("the strict lane's entries are not the wide lane's (separate ledgers)", ws["lane"], "mentions_cheap_yes_split_wide")
-wh = KB.build(split_state=st, wide_state=ws)
+wh = M.section(st, C.esc) + M.compare(st, ws, C.esc) + M.section(ws, C.esc, W) + '<i id="archive"></i>'
 wt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", wh))
-check("the page: both cards, the wide one after the strict one, and the comparison line between",
+check("the cards: the wide one after the strict one, and the comparison line between",
       (wh.find('id="mentions-split"') < wh.find('id="mentions-split-compare"') < wh.find('id="mentions-split-wide"')
        < wh.find('id="archive"'), "Cost of the spread" in wt, "Last trade" in wt),
       (True, True, True))
@@ -232,7 +237,7 @@ check("the comparison: entries, ROI after fees and the average spread paid, stri
       re.search(r"Strict v wide · strict \(5c\): 2 entries, ROI after fees [^,]+ \(2 resolved\), average spread paid 0\.03 · "
                 r"wide \(10c\): 3 entries, ROI after fees pending \(0 resolved\), average spread paid 0\.06", wt) is not None, True)
 check("the wide card names its own rule and the review note",
-      ("whose spread is 10c or less and whose YES ask is 0.03-0.30" in wt and wt.count("review at 10, decide at 30") >= 6), True)
+      ("whose spread is 10c or less and whose YES ask is 0.03-0.30" in wt and wt.count("review at 10, decide at 30") >= 2), True)
 check("no guarded public phrase on the page cards", sandbox_audit.COPY_RE.findall(
       wh[wh.find('id="mentions-split"'):wh.find('id="archive"')]), [])
 
@@ -281,11 +286,13 @@ for cfg in (M.MONTH, M.MONTH_WIDE):
           ("KXTRUMPSAYMONTH-26NOV01-UFO", 0.14, 0.28, 0.12 if cfg["last_trade"] else None, cfg["lane"]))
 check("every call went to the monthly series, none to the weekly or company one",
       (all("KXTRUMPSAYMONTH" in c for c in mcalls if "series" in c), any("COMPANY" in c for c in mcalls)), (True, False))
-mh = KB.build(split_state=st, wide_state=ws, month_state=ms_, month_wide_state=ms_)
+mh = (M.section(st, C.esc) + M.compare(st, ws, C.esc) + M.section(ws, C.esc, W) + M.section(ms_, C.esc, M.MONTH)
+      + M.compare(ms_, ms_, C.esc, anchor=M.MONTH["compare_id"], title="Monthly · strict v wide")
+      + M.section(ms_, C.esc, M.MONTH_WIDE) + '<i id="archive"></i>')
 order = [mh.find(f'id="{a}"') for a in ("mentions-split", "mentions-split-compare", "mentions-split-wide", "mentions-month-split",
                                         "mentions-month-split-compare", "mentions-month-split-wide")] + [mh.find('id="archive"')]
 mt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", mh))
-check("the page: weekly cards, then the monthly strict card, its comparison line and the monthly wide card",
+check("the cards: weekly, then the monthly strict card, its comparison line and the monthly wide card",
       (all(x > 0 for x in order), order == sorted(order), "Monthly · strict v wide" in mt,
        "KXTRUMPSAYMONTH-26NOV01 (October, opened 2026-10-01 14:00Z)" in mt), (True, True, True, True))
 

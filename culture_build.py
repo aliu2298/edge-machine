@@ -83,16 +83,27 @@ def summary(states, esc):
     return MS.summary(LIVE_CHEAP, states, esc)
 
 
-def retired_cheap(states, esc, cards):
-    """The retired weekly and monthly mention lanes in one collapsed fold: each lane's record, the reason, then
-    their full cards. Records kept, rows stay, open entries still settle."""
+def retired_cheap(states, esc):
+    """The retired weekly and monthly mention lanes as ONE line in a collapsed fold (2026-11-06, Olu), in the
+    Archive's one-line style: names, retired date, final record, reason. Display only: their ledger rows stay and
+    any open entry still fills and settles. The record counts valid entries only (unverified asks are left out)."""
     why = GONE_CHEAP[0]["retired"]
+    valid = [e for c in GONE_CHEAP for e in MS.counted(states[c["lane"]])]
+    open_n = sum(not MS.done(e) for c in GONE_CHEAP for e in states[c["lane"]].get("entries") or [])
+    since = min(c["registered"] for c in GONE_CHEAP)
+    if valid:
+        r = MS.record(valid)
+        rec = (f"{r['entries']} valid entr{'y' if r['entries'] == 1 else 'ies'} since {since}, {r['won']} won, "
+               f"split ROI {MS._headline(r['roi'], r)}, hold ROI {MS._headline(r['roi_held'], r)} after fees")
+    else:
+        rec = f"0 valid entries since {since}"
+    names = ", ".join(c["label"].replace("mentions · ", "").replace(" (", " ").rstrip(")") for c in GONE_CHEAP)
+    line = (f"retired {why['on']}; final record {rec}"
+            + (f"; {open_n} open entr{'y' if open_n == 1 else 'ies'} still settling" if open_n else "")
+            + "; books too thin to pass the spread + ask check")
     return (f'<details class="fold sec" id="retired-cheap"><summary><h2>Retired</h2> <span class="mut sm">· '
             f'{len(GONE_CHEAP)} cheap-side mention lanes · retired {esc(why["on"])} · kept, not deleted</span></summary>'
-            f'<p class="sm mut">{esc(why["reason"])}. Their rows stay and any open entry still settles.</p>'
-            + MS.summary(GONE_CHEAP, states, esc, pairs=((MS.STRICT, MS.WIDE, "Weekly mentions"),
-                                                         (MS.MONTH, MS.MONTH_WIDE, "Monthly mentions")))
-            + cards + '</details>')
+            f'<ul class="sm"><li><b>Cheap-side mention lanes</b> ({esc(names)}): {esc(line)}.</li></ul></details>')
 
 
 def model_lanes(state, now, esc):
@@ -186,17 +197,13 @@ def build(state=None, now=None, split_state=None, wide_state=None, month_state=N
         '<p class="sm mut">Sandbox, paper only, each lane on a fresh record from its first entry: review at 10 settled '
         'events, decide at 30. An event is one outcome: the words of one mention market, or the rungs of one '
         'album ladder, move together, so they count once.</p></section>')
-    gone_cards = (MS.section(S(MS.STRICT), e) + MS.compare(S(MS.STRICT), S(MS.WIDE), e) + MS.section(S(MS.WIDE), e, MS.WIDE)
-                  + MS.section(S(MS.MONTH), e, MS.MONTH)
-                  + MS.compare(S(MS.MONTH), S(MS.MONTH_WIDE), e, anchor=MS.MONTH["compare_id"], title="Monthly · strict v wide")
-                  + MS.section(S(MS.MONTH_WIDE), e, MS.MONTH_WIDE))
     cards = ('<p class="sm" id="album-note"><b>Album ladders tested too confident: both tails won more than priced.</b></p>'
              + MS.section(S(MS.ALBUM), e, MS.ALBUM) + MS.section(S(MS.ALBUM_NO), e, MS.ALBUM_NO))
     body = (standard
             + _dip_hold(dip_state, e)
             + f'<section id="lanes"><h2>Cheap-side lanes</h2>{summary(states, e)}{cards}</section>'
             + f'<section id="models"><h2>Model lanes</h2>{model_lanes(state, now, e)}</section>'
-            + retired_cheap(states, e, gone_cards)
+            + retired_cheap(states, e)
             + archive(state, now, e)
             + '<p class="sm mut">Read hourly by GitHub Actions (culture.yml) from Kalshi public market data and '
               'candles, Rotten Tomatoes and Roll Call Factbase. Paper entries at the ask with Kalshi\'s fees.</p>')
