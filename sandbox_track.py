@@ -1991,6 +1991,13 @@ def publish(d, universe, coverage, verbose=True, now=None):
     # saw rows), kept across runs. coverage is this run's alone; the Control Center
     # needs to know when a lane was last read, not only whether this run read it.
     d["meta"]["lane_reads"] = lane_reads_after(d["meta"].get("lane_reads"), coverage, now_iso())
+    # A rule's logged skips (2026-11-06, corners_fav_no): the latest reason per match, kept to 200 a lane.
+    lane_skips = d["meta"].setdefault("lane_skips", {})
+    for lane, got in S.take_skips().items():
+        cur = lane_skips.setdefault(lane, {})
+        cur.update(got)
+        for k in sorted(cur, key=lambda k: cur[k].get("at") or "")[:max(0, len(cur) - 200)]:
+            del cur[k]
     if S.ODDS_USAGE:
         d["meta"]["odds_api"] = dict(S.ODDS_USAGE, at=now_iso())
     if verbose:

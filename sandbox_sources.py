@@ -1374,6 +1374,21 @@ SOURCES = {
              "model's own estimate is negative on every fade by construction, so this lane is judged "
              "on its record alone. One rung a match, five a day, and a match any corners lane has "
              "already bet is never entered again. Read at 30 settled."),
+    "corners_fav_no": dict(
+        label="Corners total · favourite-side NO (v2)", kind="Rule",
+        connected=True, site="edge-machine", sports=["soccer_corners"], baseline="population",
+        one_per_corners_fixture=True, day_cap=5,
+        note="REGISTERED 2026-11-06 by Olu, before it logged anything; corners_total_under stays unchanged as the "
+             "control. MATCH-TOTAL corner rungs ('N+ corners') in every league the corners feed reads, the Champions "
+             "League included. A match qualifies when its own Kalshi 1X2 board has a clear favourite: de-vigged "
+             "favourite win probability 0.55 or more (no board: skipped, and the reason logged). The rung: "
+             "the LOWEST match-total rung whose No ask is 0.60 or more (No book 5c wide or tighter), within 4 hours "
+             "of kickoff; if that rung's No is above 0.95 the match is skipped; one rung a match, never a No under "
+             "0.30. ENTRY IS A MAKER BID: a No bid rests at the No ask less 2c from selection until kickoff, and fills only on a trade print STRICTLY below it (queue-honest); maker fee, held to settlement "
+             "(corners_fav_no.py). The Sandbox row is the same rung at the taker ask, the comparison. Five a day, and "
+             "a match any corners lane has already bet is never entered again: it is read after corners_total_under "
+             "and corners_ucl_fade, so they keep their matches. Review at 10 settled, decide at 30; a match is one "
+             "outcome."),
     "corners_team_fade": dict(
         label="Corners team fade (Yes on the team rung the under model picks)", kind="Rule",
         connected=True, site="edge-machine", sports=[], baseline="population",
@@ -8054,6 +8069,97 @@ def fetch_corners_team_fade(sport, universe=None, fixtures=None, now=None):
             if _corner_pick(r, "a")]
 
 
+# Corners total · favourite-side NO (v2), registered 2026-11-06 (Olu). Every number fixed before the first entry.
+CFN_FAV_MIN = 0.55            # de-vigged favourite win probability on the match's own Kalshi 1X2 board
+CFN_NO_MIN = 0.60             # the rung's No ask
+CFN_NO_FLOOR = 0.30           # never a No under this
+CFN_NO_MAX = 0.95             # the corners lanes' ceiling: a lowest qualifying rung above it skips the match
+CFN_NO_SPREAD = 0.05          # the No book: ask - bid, with the No bid = 1 - the Yes ask
+CFN_BID_UNDER = 0.02          # the maker bid rests this far under the No ask
+# This run's skips, {fixture key: dict(label, start, league, reason)}; sandbox_track keeps them (lane_skips).
+LANE_SKIPS = {}
+
+
+def note_skip(name, key, **row):
+    LANE_SKIPS.setdefault(name, {})[key] = row
+
+
+def take_skips():
+    out = {k: dict(v) for k, v in LANE_SKIPS.items()}
+    LANE_SKIPS.clear()
+    return out
+
+
+def kalshi_1x2(universe, corner_row):
+    """(home, draw, away) de-vigged from the match's own Kalshi GAME board, or None when there is none. The board is
+    found by the corners ticker's own event code: KXEPLCORNERS-26NOV08ARSCHE -> KXEPLGAME-26NOV08ARSCHE."""
+    m = re.match(r"^KX([A-Z0-9]+?)T?CORNERS-([^-]+)", str(corner_row.get("market_id") or "").upper())
+    if not m:
+        return None
+    game = f"KX{m.group(1)}GAME-{m.group(2)}"
+    rows = (universe if universe is not None else (UNIVERSE or {})).get("soccer") or []
+    b = next((r for r in rows if r.get("venue") == "kalshi" and str(r.get("market_id")) == game), None)
+    if not b or not all(b.get(k) for k in ("price_a", "price_b", "price_draw")):
+        return None
+    pa, pb, pd = float(b["price_a"]), float(b["price_b"]), float(b["price_draw"])
+    tot = pa + pd + pb
+    return (pa / tot, pd / tot, pb / tot)
+
+
+def cfn_spread(r):
+    """The No book's width: the No ask less the No bid (1 - the Yes ask)."""
+    return round(float(r["price_b"]) + float(r["price_a"]) - 1, 4)
+
+
+def cfn_rung(rows):
+    """(the match's rung, or None, and why not). Locked 2026-11-06 (Olu, A): the LOWEST N whose No ask is 0.60 or more
+    (with a No book 5c or tighter and a quote on both sides); if that rung's No is above 0.95, the corners lanes'
+    ceiling, the match is skipped. The cheapest No at or above 60c."""
+    ok = [r for r in rows if r.get("price_b") is not None and r.get("price_a") is not None and not r.get("untraded")
+          and (r.get("tradeable") or {}).get("b") and float(r["price_b"]) >= CFN_NO_MIN - 1e-9
+          and cfn_spread(r) <= CFN_NO_SPREAD + 1e-9]
+    if not ok:
+        return None, "no rung with a No ask of 0.60 or more and a No book 5c or tighter"
+    r = min(ok, key=lambda r: (int(r["corner_n"]), str(r["market_id"])))
+    if float(r["price_b"]) > CFN_NO_MAX + 1e-9:
+        return None, f"the lowest 0.60+ rung ({r['corner_n']}+) has a No ask of {float(r['price_b']):.2f}, over 0.95"
+    if float(r["price_b"]) < CFN_NO_FLOOR - 1e-9:
+        return None, "a No under 0.30"
+    return r, None
+
+
+def fetch_corners_fav_no(sport, universe=None, now=None):
+    """NO on one match-total rung of a match whose own 1X2 board has a 0.55+ favourite (see SOURCES)."""
+    now = now or datetime.now(timezone.utc)
+    by_match = {}
+    for r, ko in _rule_rows(sport, universe):
+        if r.get("corner_kind", "total") != "total" or not (now < ko <= now + timedelta(hours=CORNERS_LEAD_H)):
+            continue
+        key = corners_fixture_key(r)
+        if key:
+            by_match.setdefault(key, []).append(r)
+    out = []
+    for key, rows in sorted(by_match.items()):
+        r0 = rows[0]
+        skip = lambda why: note_skip("corners_fav_no", key, label=f'{r0.get("espn_home")} v {r0.get("espn_away")}',  # noqa: E731
+                                     league=r0.get("league"), start=r0.get("start"), reason=why, at=now.isoformat())
+        board = kalshi_1x2(universe, r0)
+        if board is None:
+            skip("no Kalshi 1X2 board for the match")
+            continue
+        fav = max(board[0], board[2])
+        if fav < CFN_FAV_MIN - 1e-9:
+            skip(f"no clear favourite: {fav:.2f} de-vigged, under {CFN_FAV_MIN:.2f}")
+            continue
+        r, why = cfn_rung(rows)
+        if r is None:
+            skip(why)
+            continue
+        out.append(dict(market_id=r["market_id"], pick="b",
+                        detail=f"favourite {fav:.2f} · {r['corner_n']}+ corners · No ask {float(r['price_b']):.2f}"))
+    return out
+
+
 def fetch_corners_market(sport, universe=None):
     """The Kalshi midpoint on every listed corners rung — never a bet."""
     rows = (universe if universe is not None else (UNIVERSE or {})).get(sport) or []
@@ -11229,6 +11335,8 @@ CHALLENGERS = {
     # later ones (one_per_corners_fixture). The match-total lanes come before the team fade.
     "corners_total_under": fetch_corners_total_under,
     "corners_ucl_fade": fetch_corners_ucl_fade,
+    # 2026-11-06: read after the two match-total lanes, so a match they take stays theirs (one_per_corners_fixture).
+    "corners_fav_no": fetch_corners_fav_no,
     "corners_team_fade": fetch_corners_team_fade,
     "tennis_fav_band": fetch_tennis_fav_band,
     "tennis_utr_shortlist_v1": lambda sport: [],  # publish() ranks fresh books against the persistent daily quota
