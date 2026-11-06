@@ -1,15 +1,5 @@
 {
  "closes": {
-  "commod_fav_band:KXBRENTD-26OCT2617-T110.50": {
-   "at": "2026-10-26T20:11:34+00:00",
-   "lead_min": 18.4,
-   "price": 0.48
-  },
-  "commod_fav_band:KXGOLDD-26OCT2617-T4014": {
-   "at": "2026-10-26T20:11:34+00:00",
-   "lead_min": 18.4,
-   "price": 0.41
-  },
   "commod_fav_band:KXSILVERD-26NOV0317-T49.50": {
    "at": "2026-11-03T21:18:33+00:00",
    "lead_min": 11.4,
@@ -20,30 +10,10 @@
    "lead_min": 11.4,
    "price": 0.99
   },
-  "commod_nc_no:KXGOLDD-26OCT2617-T4024": {
-   "at": "2026-10-26T20:11:34+00:00",
-   "lead_min": 18.4,
-   "price": 0.98
-  },
   "commod_nc_no:KXSILVERD-26NOV0317-T50": {
    "at": "2026-11-03T21:18:33+00:00",
    "lead_min": 11.4,
    "price": 0.99
-  },
-  "commod_nc_yes:KXBRENTD-26OCT2617-T109.50": {
-   "at": "2026-10-26T20:11:34+00:00",
-   "lead_min": 18.4,
-   "price": 0.99
-  },
-  "commod_nc_yes:KXGOLDD-26OCT2617-T4004": {
-   "at": "2026-10-26T20:11:34+00:00",
-   "lead_min": 18.4,
-   "price": 0.95
-  },
-  "commod_nc_yes:KXSILVERD-26OCT2617-T53.75": {
-   "at": "2026-10-26T20:11:34+00:00",
-   "lead_min": 18.4,
-   "price": 0.91
   },
   "crypto_fav_band:KXBTCD-26NOV0117-T77499.99": {
    "at": "2026-11-01T19:54:57+00:00",
@@ -95,10 +65,10 @@
    "lead_min": 15.4,
    "price": 0.23
   },
-  "espn_fpi:aec-nfl-dal-phi-2026-10-26": {
-   "at": "2026-10-27T00:07:01+00:00",
-   "lead_min": 8.0,
-   "price": 0.67
+  "espn_fpi:KXNFLGAME-26NOV05JACBAL": {
+   "at": "2026-11-06T00:34:45+00:00",
+   "lead_min": 40.2,
+   "price": 0.22
   },
   "mls_away_band_fade:KXMLSGAME-26NOV01VANSEA-SEA": {
    "at": "2026-11-01T19:54:57+00:00",
@@ -226,5 +196,5 @@
    "price": 0.71
   }
  },
- "updated": "2026-11-05T19:05:00+00:00"
+ "updated": "2026-11-06T00:34:45+00:00"
 }
