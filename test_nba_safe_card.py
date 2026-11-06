@@ -171,13 +171,16 @@ def fetch(path):
     return {"market": dict(status="active", yes_bid_dollars="0.12", yes_ask_dollars="0.14")}
 
 
+# Hermetic (2026-11-06): an empty preseason list is falsy, so SC.preseason() would fetch every preseason day from ESPN
+# live. With no network that build raised, no card was built, and the test died on a KeyError. No run here reads ESPN.
+NO_ESPN = lambda d: []   # noqa: E731
 SC.T.model_for = lambda g, games, pri=None, at=None, pre=None: dict(mu={g["home"]: 110.0, g["away"]: 110.0}, mu_q1=58.0)
 SC.D.pages = lambda path, key, fetch: fetch(path).get(key) or []
 state = SC.empty()
 state["preseason"] = [dict(start="2026-10-10T23:00Z", team="PHI", pts=100)]
-early = SC.run(state, GAMES, NOW - dt.timedelta(hours=3), fetch, pri={}, labs_all=LABS)
+early = SC.run(state, GAMES, NOW - dt.timedelta(hours=3), fetch, pri={}, labs_all=LABS, fetch_day=NO_ESPN)
 check("3 hours before the first tip: nothing built", (early, state["cards"]), ([], {}))
-built = SC.run(state, GAMES, NOW, fetch, pri={}, labs_all=LABS)
+built = SC.run(state, GAMES, NOW, fetch, pri={}, labs_all=LABS, fetch_day=NO_ESPN)
 card = state["cards"]["2026-10-22"]
 check("75 minutes before the first tip: tonight's card", (built, card["status"], len(card["legs"])), (["2026-10-22"], "open", 4))
 check("four game UNDER 249.5 legs at 87c, odds 1.75",
@@ -187,13 +190,13 @@ check("the funnel counts are logged, labels split into both-agree and one-side (
       ["band", "card", "clean", "labels", "labels_both", "labels_one", "quoted", "safety", "value"])
 check("every leg the funnel looked at is logged with a cut reason, or is on the card",
       all(x["cut"] for x in card["candidates"]) and all(x["cut"] is None for x in card["legs"]), True)
-SC.run(state, GAMES, NOW + dt.timedelta(minutes=10), fetch, pri={}, labs_all=LABS)
+SC.run(state, GAMES, NOW + dt.timedelta(minutes=10), fetch, pri={}, labs_all=LABS, fetch_day=NO_ESPN)
 check("frozen: a later read does not rebuild", state["cards"]["2026-10-22"]["built_at"], NOW.isoformat())
 check("price at tip logged once inside 60-90 min of the leg's own tip",
       {x.get("price_at_tip") for x in card["legs"]}, {0.88})
 for x in card["legs"]:
     results[x["ticker"]] = "no"
-SC.run(state, GAMES, NOW + dt.timedelta(hours=6), fetch, pri={}, labs_all=LABS)
+SC.run(state, GAMES, NOW + dt.timedelta(hours=6), fetch, pri={}, labs_all=LABS, fetch_day=NO_ESPN)
 check("all four NO legs win: the card wins, paying its odds", (card["status"], card["profit"]),
       ("won", round(card["odds"] - 1, 4)))
 check("a leg's profit is after the 7% fee", card["legs"][0]["profit"], round(1 / (0.87 + SC.fee(0.87)) - 1, 4))
@@ -205,14 +208,14 @@ check("one leg loses: the card loses $1", (lost["status"], lost["profit"]), ("lo
 two = {k: GAMES[k] for k in ("g0", "g1")}
 st3 = SC.empty()
 st3["preseason"] = []
-SC.run(st3, two, NOW, fetch, pri={}, labs_all=LABS)
+SC.run(st3, two, NOW, fetch, pri={}, labs_all=LABS, fetch_day=NO_ESPN)
 check("a two-game slate with only game-total legs: one per game (the same market twice is refused), no card",
       (st3["cards"]["2026-10-22"]["per_game_cap"], st3["cards"]["2026-10-22"]["reason"]),
       (2, "no card tonight: only 2 legs can go on a card (a card needs 3 to 4 legs, up to two per game)"))
 one = {"g0": GAMES["g0"]}
 st4 = SC.empty()
 st4["preseason"] = []
-SC.run(st4, one, NOW, fetch, pri={}, labs_all=LABS)
+SC.run(st4, one, NOW, fetch, pri={}, labs_all=LABS, fetch_day=NO_ESPN)
 check("a one-game slate cannot make 3 legs", st4["cards"]["2026-10-22"]["reason"],
       "no card tonight: only 1 game on the slate (a card needs 3 to 4 legs, at most 2 per game)")
 
@@ -222,7 +225,7 @@ LADDER[:] = [mk("GAME-250", 249.5, 0.13, 0.15), mk("GAME-252", 251.5, 0.11, 0.13
 st5 = SC.empty()
 st5["preseason"] = []
 GAPS = dict(n=56, avg=-3.5, beat=0.46)
-SC.run(st5, GAMES, NOW, fetch, pri={}, labs_all=LABS, season_gap=GAPS)
+SC.run(st5, GAMES, NOW, fetch, pri={}, labs_all=LABS, season_gap=GAPS, fetch_day=NO_ESPN)
 c5 = st5["cards"]["2026-10-22"]
 check("14 under legs survive and all of them lean one way, yet the card still builds",
       (c5["status"], len(c5["legs"]), {x["side"] for x in c5["legs"]}, c5["guard"]["ok"]), ("open", 4, {"no"}, True))
@@ -233,7 +236,7 @@ check("the page shows the label above the card", "model leans under" in SB.secti
 check("an unlabelled night carries no lean", state["cards"]["2026-10-22"].get("lean"), None)
 st6 = SC.empty()
 st6["preseason"] = []
-SC.run(st6, GAMES, NOW, lambda path: {"markets": []} if "KXNBATEAMTOTAL" in path else fetch(path), pri={}, labs_all=LABS)
+SC.run(st6, GAMES, NOW, lambda path: {"markets": []} if "KXNBATEAMTOTAL" in path else fetch(path), pri={}, labs_all=LABS, fetch_day=NO_ESPN)
 check("no Kalshi team-total level at all: no card, a data problem",
       st6["cards"]["2026-10-22"]["reason"].startswith("no card tonight: no Kalshi team-total level"), True)
 
@@ -313,7 +316,7 @@ results.clear()
 LABS_ONE = {gid: dict(home_ft="O-D-", away_ft="O+D+", home_q1="O-D-", away_q1="O+D+", home_h1="O-D-", away_h1="O+D+") for gid in GAMES}
 st7 = SC.empty()
 st7["preseason"] = []
-SC.run(st7, GAMES, NOW, fetch, pri={}, labs_all=LABS_ONE)
+SC.run(st7, GAMES, NOW, fetch, pri={}, labs_all=LABS_ONE, fetch_day=NO_ESPN)
 c7 = st7["cards"]["2026-10-22"]
 check("loose: one-side game UNDER legs build the card, marked as the early-season rule",
       (c7["label_rule"], c7["status"], len(c7["legs"]), {x["label_mode"] for x in c7["legs"]}), ("loose", "open", 4, {"one"}))
@@ -325,7 +328,7 @@ SC.LABEL_RULE_LOOSE_UNTIL = "2026-10-22"                              # tonight 
 try:
     st8 = SC.empty()
     st8["preseason"] = []
-    SC.run(st8, GAMES, NOW, fetch, pri={}, labs_all=LABS_ONE)
+    SC.run(st8, GAMES, NOW, fetch, pri={}, labs_all=LABS_ONE, fetch_day=NO_ESPN)
 finally:
     SC.LABEL_RULE_LOOSE_UNTIL = _until
 c8 = st8["cards"]["2026-10-22"]
@@ -333,7 +336,7 @@ check("strict after the date: the same labels cut every leg, no card", (c8["labe
       ("strict", "no_card", 0))
 st9 = SC.empty()
 st9["preseason"] = []
-SC.run(st9, GAMES, NOW, fetch, pri={}, labs_all=LABS)
+SC.run(st9, GAMES, NOW, fetch, pri={}, labs_all=LABS, fetch_day=NO_ESPN)
 c9 = st9["cards"]["2026-10-22"]
 check("both labels agreeing builds the same card in either rule, every leg 'both agree'",
       (c9["status"], {x["label_mode"] for x in c9["legs"]}, c9["counts"]["labels_one"]), ("open", {"both"}, 0))
