@@ -4,58 +4,6 @@
  "leads": [
   {
    "bucket": "6-10",
-   "event": "KXNBAWINMARGIN-26NOV05MIAGSW",
-   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV05MIAGSW-MIA6TO10",
-   "lane": "nba_winmargin_live",
-   "side": "yes",
-   "stake_usd": 1.0,
-   "team": "MIA",
-   "ticker": "KXNBAWINMARGIN-26NOV05MIAGSW-MIA6TO10",
-   "tip": "2026-11-06T03:00:00+00:00",
-   "title": "Miami wins by 6-10 points",
-   "version": "wm-yes-v3"
-  },
-  {
-   "bucket": "1-5",
-   "event": "KXNBAWINMARGIN-26NOV05MIAGSW",
-   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV05MIAGSW-MIA1TO5",
-   "lane": "nba_winmargin_live",
-   "side": "yes",
-   "stake_usd": 1.0,
-   "team": "MIA",
-   "ticker": "KXNBAWINMARGIN-26NOV05MIAGSW-MIA1TO5",
-   "tip": "2026-11-06T03:00:00+00:00",
-   "title": "Miami wins by 1-5 points",
-   "version": "wm-yes-v3"
-  },
-  {
-   "bucket": "1-5",
-   "event": "KXNBAWINMARGIN-26NOV05MIAGSW",
-   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV05MIAGSW-GSW1TO5",
-   "lane": "nba_winmargin_live",
-   "side": "yes",
-   "stake_usd": 1.0,
-   "team": "GSW",
-   "ticker": "KXNBAWINMARGIN-26NOV05MIAGSW-GSW1TO5",
-   "tip": "2026-11-06T03:00:00+00:00",
-   "title": "Golden State wins by 1-5 points",
-   "version": "wm-yes-v3"
-  },
-  {
-   "bucket": "6-10",
-   "event": "KXNBAWINMARGIN-26NOV05MIAGSW",
-   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV05MIAGSW-GSW6TO10",
-   "lane": "nba_winmargin_live",
-   "side": "yes",
-   "stake_usd": 1.0,
-   "team": "GSW",
-   "ticker": "KXNBAWINMARGIN-26NOV05MIAGSW-GSW6TO10",
-   "tip": "2026-11-06T03:00:00+00:00",
-   "title": "Golden State wins by 6-10 points",
-   "version": "wm-yes-v3"
-  },
-  {
-   "bucket": "6-10",
    "event": "KXNBAWINMARGIN-26NOV06BOSCHA",
    "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV06BOSCHA-BOS6TO10",
    "lane": "nba_winmargin_live",
@@ -104,6 +52,58 @@
    "ticker": "KXNBAWINMARGIN-26NOV06BOSCHA-CHA6TO10",
    "tip": "2026-11-07T00:00:00+00:00",
    "title": "Charlotte wins by 6-10 points",
+   "version": "wm-yes-v3"
+  },
+  {
+   "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV06WASATL",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV06WASATL-WAS6TO10",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "WAS",
+   "ticker": "KXNBAWINMARGIN-26NOV06WASATL-WAS6TO10",
+   "tip": "2026-11-07T00:00:00+00:00",
+   "title": "Washington wins by 6-10 points",
+   "version": "wm-yes-v3"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV06WASATL",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV06WASATL-WAS1TO5",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "WAS",
+   "ticker": "KXNBAWINMARGIN-26NOV06WASATL-WAS1TO5",
+   "tip": "2026-11-07T00:00:00+00:00",
+   "title": "Washington wins by 1-5 points",
+   "version": "wm-yes-v3"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV06WASATL",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV06WASATL-ATL1TO5",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "ATL",
+   "ticker": "KXNBAWINMARGIN-26NOV06WASATL-ATL1TO5",
+   "tip": "2026-11-07T00:00:00+00:00",
+   "title": "Atlanta wins by 1-5 points",
+   "version": "wm-yes-v3"
+  },
+  {
+   "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV06WASATL",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV06WASATL-ATL6TO10",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "ATL",
+   "ticker": "KXNBAWINMARGIN-26NOV06WASATL-ATL6TO10",
+   "tip": "2026-11-07T00:00:00+00:00",
+   "title": "Atlanta wins by 6-10 points",
    "version": "wm-yes-v3"
   },
   {
@@ -499,6 +499,6 @@
   "side": "yes",
   "stake_usd": 1.0
  },
- "updated_at": "2026-11-06T05:30:47+00:00",
+ "updated_at": "2026-11-06T06:00:56+00:00",
  "version": "wm-yes-v3"
 }
