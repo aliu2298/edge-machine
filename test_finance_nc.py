@@ -149,7 +149,8 @@ empty_html = B.build('finance_daily', state, NOW, nc=N.empty())
 ok('<b>—</b><span>Sandbox record · paper' in empty_html, 'before any settled entry the record tile is a dash')
 econ = B.build('econ_daily', state, NOW)
 ok('Production · paper record' in econ and 'Near-certain · last hour · YES' in econ
-   and 'data-verdict="retired"' not in econ and 'S&amp;P near-certain' not in econ,
+   and econ.count('data-verdict="retired"') == 1 and 'Near-certain · 3h · NO' in econ[econ.find('<section id="retired"'):]   # the 3h NO lane, retired 2026-11-06, and only it
+   and 'S&amp;P near-certain' not in econ,
    'Econ Daily carries its own near-certain lanes (2026-10-20), none of Finance Daily\'s')
 
 print()
