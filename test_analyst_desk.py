@@ -69,8 +69,8 @@ ok(html.index("</header>") < html.index('<main id="content"'),
    "the header comes before the workspace")
 if navs:
     labels = re.findall(r'>([^<]+)</a>', navs[0])
-    ok(labels == [label for _key, label, _href in site_chrome.PAGES],
-       f"the page nav carries every destination ({labels})")
+    ok(labels == [label for _key, label, _href in site_chrome.shown_pages("index")],
+       f"the page nav carries every destination but the archived tabs ({labels})")
     ok('aria-current="page"' not in navs[0], "no page pill is current on the root")
 ok('<a class="brand" href="./index.html" aria-current="page">Edge Machine</a>' in header,
    "the brand is the current page on the root")

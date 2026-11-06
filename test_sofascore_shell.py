@@ -42,6 +42,11 @@ PAGE_HREFS = (
 )
 PAGE_LABELS = ["Archives", "Production", "Trading", "NBA", "NFL", "Soccer", "Tennis", "Cricket", "Crypto",
                "Commodities", "Econ Daily", "Finance Daily", "Culture", "Fights", "Leaderboard", "Method"]
+# The archived tabs (tab_activity, 2026-11-05) leave the nav: the root's pills are the shown pages.
+import site_chrome as _SC
+_GONE = _SC.archived_tabs()
+PAGE_HREFS = tuple(h for h in PAGE_HREFS if not any(h == f'href="./{k}.html"' for k in _GONE))
+PAGE_LABELS = [x for x in PAGE_LABELS if x not in {l for k, l, _h in _SC.PAGES if k in _GONE}]
 SKETCH_FAKES = (
     "Milan",
     "Atalanta",
@@ -502,7 +507,9 @@ def _browser():
                and sports["allBg"] not in ("transparent", "rgba(0, 0, 0, 0)")
                and (not sports["idle"] or (sports["idleColor"] != sports["fg"]
                                            and sports["idleBg"] in ("transparent", "rgba(0, 0, 0, 0)")))
-               and sports["hrefs"] == [href[6:-1] for href in PAGE_HREFS]
+               # the served page's own nav links (the committed root page is rebuilt by the tracker after a tab archives)
+               and sports["hrefs"] == re.findall(r'<a href="([^"]+)"', re.search(r'<nav class="main".*?</nav>', open(
+                   os.path.join(ROOT, "public_site", "index.html"), encoding="utf-8").read(), re.S).group(0))
                and focused["sport"] == "all" and focused["tag"] == "BUTTON"
                and focused["outline"] == "solid" and focused["width"] == "3px",
                f"sport pills filter in place inside Running and page pills stay links ({sports}, focus {focused})")

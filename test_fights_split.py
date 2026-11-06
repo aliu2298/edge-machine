@@ -280,8 +280,10 @@ check("the trade list names the fighter, the ask paid, the last trade and the co
       ("Dave Dog" in html, "Fighter" in html, "Cost of the spread" in html, "Last trade" in html), (True, True, True, True))
 check("phone layout: every body cell is labelled for its column (data-l)", ('data-l="Fighter"' in html, 'data-l="ROI"' in html), (True, True))
 check("skipped fighters are counted with the lane's own reason", ("Fighters skipped: 1" in html, FS.BOXING["skip"] in html), (True, True))
-check("the Fights link is in the nav on its own page and on another page",
-      ('href="./fights.html"' in html, 'href="./fights.html"' in C.nav("culture"), ">Fights<" in C.nav("culture")), (True, True, True))
+# 2026-11-05: a tab with no active lane leaves the nav (tab_activity); Fights' lanes are a baseline and a retired lane.
+live_tab = "fights" not in C.archived_tabs()
+check("the Fights link is in the nav on its own page, and on another page while it has an active lane",
+      ('href="./fights.html"' in html, 'href="./fights.html"' in C.nav("culture"), ">Fights<" in C.nav("culture")), (True, live_tab, live_tab))
 check("it sits in the Markets menu", "fights" in C.MARKET_GROUP, True)
 check("the page file name is registered", C.PAGE_FILES["fights"], "fights.html")
 check("an empty ledger renders both cards", all(x in FB.build(states={c["lane"]: lane_state(c) for c in FS.LANES}, now=at(0))

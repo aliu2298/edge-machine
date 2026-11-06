@@ -242,7 +242,10 @@ for path in _published():
     ok(_main is not None and html.count('<nav class="main"') == 1,
        f"{path} has one nav.main, in the header")
     _labels = re.findall(r">([^<]+)</a>", _main.group(0) if _main else "")
-    ok(_labels == [label for _key, label, _href in site_chrome.PAGES],
+    # The shell's pages less the archived tabs, which keep their link on their own page (tab_activity, 2026-11-05).
+    _own = os.path.basename(path)[:-5] if path.endswith(".html") else None
+    _gone = site_chrome.archived_tabs() - {_own}
+    ok(_labels == [label for _key, label, _href in site_chrome.PAGES if _key not in _gone],
        f"{path} page pills match the shell ({_labels})")
     if path == "index.html":
         ok(_main is not None and _main.group(0).count('aria-current="page"') == 0
@@ -560,9 +563,10 @@ def _landing_nav_labels():
 
 
 def _nav_count(path):
-    """Every page carries the same pills: site_chrome.PAGES."""
-    del path
-    return len(site_chrome.PAGES)
+    """Every page carries the same pills: site_chrome.PAGES, less the archived tabs (tab_activity, 2026-11-05),
+    which keep their link only on their own page."""
+    own = os.path.basename(str(path))[:-5] if str(path).endswith(".html") else None
+    return len(site_chrome.shown_pages(own))
 
 
 def _keyboard_focus(page, expect_toggle, pill_target=8):

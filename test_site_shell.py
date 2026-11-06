@@ -58,6 +58,15 @@ _CURRENT = {
 _BRAND = '<a class="brand" href="./index.html"'
 
 
+def _nav_shown(current):
+    """The archived tabs (tab_activity, 2026-11-05) leave the nav except on their own page."""
+    import site_chrome
+    gone = site_chrome.archived_tabs() - {current}
+    labels = {k: l for k, l, _h in site_chrome.PAGES}
+    return ([h for h in _NAV_HREFS if not any(h == f'href="./{k}.html"' for k in gone)],
+            [x for x in _NAV_LABELS if x not in {labels[k] for k in gone}])
+
+
 def _inline_script(html):
     for m in _SCRIPT.finditer(html):
         if m.group(2).strip():
@@ -75,7 +84,7 @@ def _check_page(name, html, current):
     ok(_HANDLER.search(html) is None, f"{name} has no inline on* handler")
     ok('href="#content"' in html and "Skip to content" in html,
        f"{name} has a skip-to-content link")
-    for href in _NAV_HREFS:
+    for href in _nav_shown(current)[0]:
         ok(href in html, f"{name} nav includes {href}")
     ok(_CURRENT[current] in html, f"{name} marks {current} as the current page")
     # One shell on every page: the brand (the site root), then the page pills.
@@ -99,7 +108,7 @@ def _check_page(name, html, current):
         ok(_BRAND + ">" in header, f"{name} brand is not current")
     if nav:
         labels = re.findall(r">([^<]+)</a>", nav.group(0))
-        eq(labels, _NAV_LABELS, f"{name} nav labels")
+        eq(labels, _nav_shown(current)[1], f"{name} nav labels")
 
 
 def _nba(now):
@@ -243,8 +252,12 @@ except Exception as exc:
     ok(False, f"published pages render ({type(exc).__name__}: {exc})")
 
 def _same_links(navs):
+    # An archived tab's own page keeps its own link (tab_activity, 2026-11-05); every other link is the same everywhere.
+    import site_chrome
+    gone = {f'href="./{k}.html"' for k in site_chrome.archived_tabs()}
+
     def hrefs(nav):
-        return re.findall(r'href="[^"]+"', nav)
+        return [h for h in re.findall(r'href="[^"]+"', nav) if h not in gone]
     return bool(navs) and len({tuple(hrefs(n)) for n in navs}) == 1
 
 
