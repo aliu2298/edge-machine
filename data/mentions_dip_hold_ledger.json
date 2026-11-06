@@ -25423,12 +25423,11 @@
     "KXTRUMPSAY-26NOV09-CYBE": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "07277802-b2e1-bccc-c26f-258908ddc414",
-      "0727780d-c881-b9ee-ce92-caf4bbcecf11"
+      "07277805-32c9-bb3e-cfdc-76e0473f2b72"
      ],
      "first_px": 0.06,
      "first_ts": 1793636152,
-     "last_ts": 1793998807,
+     "last_ts": 1793998919,
      "lows": [
       [
        1793636152,
@@ -25626,7 +25625,7 @@
        0.1
       ]
      ],
-     "n_prints": 200,
+     "n_prints": 201,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -34480,13 +34479,13 @@
   }
  },
  "lane": "mentions_dip_hold",
- "last_success": "2026-11-06T21:01:09.408795+00:00",
+ "last_success": "2026-11-06T21:04:48.775613+00:00",
  "observations": {
-  "at": "2026-11-06T21:01:09.408795+00:00",
+  "at": "2026-11-06T21:04:48.775613+00:00",
   "errors": [],
   "events": 1,
   "markets": 32,
-  "prints": 220
+  "prints": 1
  },
  "since": "2026-10-26T04:00:00+00:00"
 }
