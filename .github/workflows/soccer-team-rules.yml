@@ -23,7 +23,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Tests
-        run: python3 test_soccer_team_rules.py && python3 test_soccer_team_rules_production.py && python3 test_save_records.py
+        run: python3 test_soccer_team_rules.py && python3 test_soccer_t1_siblings.py && python3 test_soccer_team_rules_production.py && python3 test_save_records.py
       - name: Enter due matches and settle
         # Fetches the ESPN fixtures (data/streaks_raw.json, not committed) for the labels.
         run: python3 soccer_team_rules.py

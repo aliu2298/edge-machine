@@ -140,8 +140,9 @@ def fake(path):
 
 st = TR.load("/nonexistent/ledger.json")
 new = TR.run(st, game, NOW, fake)
-check("Alpha O+D- v Beta O+D- in the EPL: T1 on both teams", sorted(new),
-      ["T1:KXEPLTEAMTOTAL-26OCT18ALPBET:away", "T1:KXEPLTEAMTOTAL-26OCT18ALPBET:home"])
+check("Alpha O+D- v Beta O+D- in the EPL: T1 on both teams, and T1-H on the home team (2026-11-06)", sorted(new),
+      ["T1:KXEPLTEAMTOTAL-26OCT18ALPBET:away", "T1:KXEPLTEAMTOTAL-26OCT18ALPBET:home",
+       "T1H:KXEPLTEAMTOTAL-26OCT18ALPBET:home"])
 TR.run(st, game, NOW + dt.timedelta(minutes=30), fake)
 check("a second read adds nothing: one frozen entry per rule, team and match", len(st["rules"]["T1"]["picks"]), 2)
 rows = {r["team_side"]: r for r in st["rules"]["T1"]["picks"]}
@@ -186,11 +187,12 @@ import soccer_team_rules_production as TRP
 # 2026-11-05 (Olu): each rule is one row of the Soccer page (soccer_lanes); a Production rule is its pair's row.
 live, gone, quotes = soccer_lanes.team_rows(st)
 rows = {r["own"]["label"].split(" · ")[0]: r for r in live + gone}
-check("every team rule is one row", sorted(rows), sorted(TR.RULES))
+check("every team rule is one row, and T1's two siblings (2026-11-06)", sorted(rows),
+      sorted(list(TR.RULES) + [m["name"] for m in TR.SIBLINGS.values()]))
 check("the Production rules are their pairs' rows", sorted(k for k, r in rows.items() if r["prod"]), sorted(TRP.PAIRS))
 check("retired rules sit in the Retired fold", sorted(k for k, r in rows.items() if r["gone"]), sorted(TR.RETIRED))
 check("a row's record is the section's own count (settled, won)",
-      all((r["a"]["n"] + r["a"]["n_price"], r["a"]["won"]) == SB._record((st["rules"].get(k) or {}).get("picks") or [])[:2]
+      all((r["a"]["n"] + r["a"]["n_price"], r["a"]["won"]) == SB._record((st["rules"].get(k.replace("-", "")) or {}).get("picks") or [])[:2]
           for k, r in rows.items()), True)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
