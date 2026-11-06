@@ -145,6 +145,9 @@ def build(d=None, st=None, now=None, own_lanes=True):
     d = d if d is not None else T.load()
     st = st if st is not None else T.load_stages()
     rows = sport_tab.family_rows(d, st, FAMILY)
+    if own_lanes:          # 2026-11-06: one row from registration, its headline the maker bid (corners_fav_no_build)
+        import corners_fav_no_build
+        rows = corners_fav_no_build.place(d, rows)
     idle = sport_tab.idle_lanes(KEY, d, skip=tuple(r["name"] for r in rows))
     # Retired by hand (2026-10-24 and before): their own fold, final record and reason.
     retired = sport_tab.retired_rows(d, st, FAMILY)
