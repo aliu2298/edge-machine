@@ -6,13 +6,15 @@ stake" badge on its sport page's rule row. No amount is printed anywhere (public
 nothing here changes what the follower does. Update it when the follower's config changes.
 
 Read from the follower's config 2026-11-05: mls_fade_home|soccer_p05, commod_fav_band|commodities_fav and
-crypto_fav_band_below|crypto_fav carry their own stake; every other pair trades at the default.
+crypto_fav_band_below|crypto_fav carry their own stake; team2_ranked|soccer_team2 and sr_a7|soccer_u35 joined 2026-11-06; every other pair trades at the default.
 """
 
 RAISED = {
     "mls_fade_home|soccer_p05": "2026-11-05",
     "commod_fav_band|commodities_fav": "2026-11-05",
     "crypto_fav_band_below|crypto_fav": "2026-11-05",
+    "team2_ranked|soccer_team2": "2026-11-06",
+    "sr_a7|soccer_u35": "2026-11-06",
 }
 
 

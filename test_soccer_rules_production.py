@@ -14,8 +14,8 @@ import soccer_rules_production as RP
 _NOW_PAIRS = sorted(RP.PAIRS)
 # C1, C3 and C4 entered on 2026-10-28; their real dates are checked, then they are listed from the same
 # instant as the rest so this file's 2026-10-22 fixtures fall inside their window.
-_C_DATES = {k: RP.moved_on(k) for k in ("C1", "C3", "C4", "A7")}
-RP.PROMOTED_LATER = {k: ("2026-10-28", RP.PROMOTED) for k in ("C1", "C3", "C4")}
+_C_DATES = {k: RP.moved_on(k) for k in ("C1", "C3", "C4", "A7", "A2", "A3")}
+RP.PROMOTED_LATER = {k: ("2026-10-28", RP.PROMOTED) for k in ("C1", "C3", "C4", "A2", "A3")}
 # C1 went back to the Sandbox on 2026-11-02 (RP.PULLED): replayed the same way, its real state checked first.
 RP.PAIRS["C1"] = ("sr_c1", "soccer_u35", "MLS O+D− v O+D+ · over 3.5")
 RP.PAIRS["D3"] = ("sr_d3", "soccer_btts", "O−D− v O+D− · both teams to score")
@@ -55,6 +55,10 @@ rules = {"last_run": (NOW - dt.timedelta(minutes=20)).isoformat(), "error": None
                           start="2026-10-25T14:00Z")]},
     "C4": {"picks": [pick("C4", "KXSERIEATOTAL-26OCT25INTJUV-3", "Inter v Juventus", "Serie A", "yes", 0.50, 2.5,
                           start="2026-10-25T16:00Z")]},
+    "A2": {"picks": [pick("A2", "KXBUNDESLIGATOTAL-26OCT25BAYDOR-4", "Bayern Munich v Borussia Dortmund", "Bundesliga", "yes", 0.55, 3.5,
+                          start="2026-10-25T16:30Z")]},
+    "A3": {"picks": [pick("A3", "KXLALIGATOTAL-26OCT25BARGET-4", "Barcelona v Getafe", "La Liga", "no", 0.78, 3.5,
+                          start="2026-10-25T19:00Z")]},
     "D1": {"picks": [pick("D1", "KXSERIEABTTS-26OCT22INTJUV-BTTS", "Inter v Juventus", "Serie A", "yes", 0.60, None)]}}}
 sa = {"last_run": (NOW - dt.timedelta(minutes=20)).isoformat(), "error": None, "rules": {
     "ARG": {"picks": [pick("ARG", "KXARGPREMDIVTOTAL-26OCT22RIVBOC-2", "River Plate v Boca Juniors", "Liga Profesional",
@@ -63,11 +67,11 @@ sa = {"last_run": (NOW - dt.timedelta(minutes=20)).isoformat(), "error": None, "
                            "yes", 0.74, 1.5)]}}}
 
 print("only the listed rules, on the existing soccer claims (Argentina left Production 2026-10-27)")
-check("C1, C3 and C4 entered on 2026-10-28, A7 on 2026-10-21", _C_DATES, {"C1": "2026-10-28", "C3": "2026-10-28", "C4": "2026-10-28", "A7": "2026-10-21"})
+check("C1, C3 and C4 entered on 2026-10-28, A7 on 2026-10-21", _C_DATES, {"C1": "2026-10-28", "C3": "2026-10-28", "C4": "2026-10-28", "A7": "2026-10-21", "A2": "2026-11-06", "A3": "2026-11-06"})
 qs = RP.quotes(rules, sa)
 check("C1 is not a Production pair (back in the Sandbox 2026-11-02)", ("C1" in _NOW_PAIRS, RP.PULLED["C1"]), (False, ("2026-10-28", "2026-11-02")))
 check("A7, A6, C1, C3, C4 and D3; never D1, Argentina or the Brasileirão",
-      sorted({q["source"] for q in qs}), ["sr_a6", "sr_a7", "sr_c1", "sr_c3", "sr_c4", "sr_d3"])
+      sorted({q["source"] for q in qs}), ["sr_a2", "sr_a3", "sr_a6", "sr_a7", "sr_c1", "sr_c3", "sr_c4", "sr_d3"])
 by = {q["market_id"]: q for q in qs}
 check("each on its claim domain and side",
       [(by[t]["sport"], by[t]["pick"]) for t in ("KXUCLTOTAL-26OCT22ARSBAY-4", "KXEPLTOTAL-26OCT25EVEBUR-3",
@@ -85,9 +89,14 @@ f = RP.feed(rules, sa, now=NOW)
 leads = {l["route"]["market"]: l for l in f["leads"].values()}
 check("six pairs listed: A7, A6, D3 moved by hand 2026-10-21, C1, C3 and C4 on 2026-10-28",
       (sorted(f["pairs"]), {k: v["by_hand"] for k, v in f["pairs"].items()}),
-      (["sr_a6|soccer_o25", "sr_a7|soccer_u35", "sr_c1|soccer_u35", "sr_c3|soccer_o25", "sr_c4|soccer_o25", "sr_d3|soccer_btts"],
+      (["sr_a2|soccer_u35", "sr_a3|soccer_u35", "sr_a6|soccer_o25", "sr_a7|soccer_u35", "sr_c1|soccer_u35", "sr_c3|soccer_o25", "sr_c4|soccer_o25", "sr_d3|soccer_btts"],
        {"sr_a7|soccer_u35": "2026-10-21", "sr_a6|soccer_o25": "2026-10-21", "sr_d3|soccer_btts": "2026-10-21",
-        "sr_c1|soccer_u35": "2026-10-28", "sr_c3|soccer_o25": "2026-10-28", "sr_c4|soccer_o25": "2026-10-28"}))
+        "sr_c1|soccer_u35": "2026-10-28", "sr_c3|soccer_o25": "2026-10-28", "sr_c4|soccer_o25": "2026-10-28",
+        "sr_a2|soccer_u35": "2026-10-28", "sr_a3|soccer_u35": "2026-10-28"}))
+check("A2: over 3.5 is the Yes of the Bundesliga -4 contract; A3: under 3.5 is the No of the La Liga -4 contract",
+      [(leads[t]["bet"], leads[t]["route"]["outcome_side"], leads[t]["route"]["outcome"]) for t in
+       ("KXBUNDESLIGATOTAL-26OCT25BAYDOR-4", "KXLALIGATOTAL-26OCT25BARGET-4")],
+      [({"kind": "total_gte", "n": 4}, "yes", "Over 3.5 goals scored"), ({"kind": "total_lte", "n": 3}, "no", "Over 3.5 goals scored")])
 check("C1: over 3.5 is the Yes of the -4 contract; C3 and C4: over 2.5 is the Yes of the -3 contract",
       [(leads[t]["bet"], leads[t]["route"]["outcome_side"], leads[t]["route"]["outcome"]) for t in
        ("KXMLSTOTAL-26OCT22MINSKC-4", "KXSERIEATOTAL-26OCT25NAPROM-3", "KXSERIEATOTAL-26OCT25INTJUV-3")],

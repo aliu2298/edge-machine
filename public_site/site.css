@@ -1803,7 +1803,7 @@ nav.sp-filter::before {
   color: var(--dim);
 }
 .sp-section { margin-top: 18px; scroll-margin-top: calc(var(--hdr-h) + 18px); }
-.sp-section-head { display: flex; align-items: baseline; gap: 12px; margin: 0 0 8px; }
+.sp-section-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; margin: 0 0 8px; }   /* the count drops under the heading on a phone when it no longer fits */
 .sp-section-head h2 { margin: 0; }
 .sp-section-head > span { white-space: nowrap; }
 /* Production rule cards. */

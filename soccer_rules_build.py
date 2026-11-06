@@ -74,7 +74,7 @@ BTTS_NOTE = ('<details class="section-disclosure"><summary><b>Group BTTS evidenc
                'match; YES means both teams score.</p></details>')
 
 
-PRODUCTION_KEYS = ("A7", "A6", "C3", "C4")
+PRODUCTION_KEYS = ("A7", "A6", "C3", "C4", "A2", "A3")
 
 
 def section(state=None):
