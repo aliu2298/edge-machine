@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-06T18:07Z",
+ "generated": "2026-11-06T19:07Z",
  "lane_note": "own-state lanes: the lane's own fill price; outcome from the market's settled result; sold bets left out; fees not included",
  "lanes": {
   "nba_wm_nofade": [
@@ -1008,7 +1008,7 @@
      "r": 0.362,
      "side": "no",
      "st": "won",
-     "w": 0.96
+     "w": 0.95
     },
     {
      "id": "crypto_fav_band_below:KXBTCD-26OCT2517-T80749.99",
@@ -1016,7 +1016,7 @@
      "r": 0.3271,
      "side": "no",
      "st": "won",
-     "w": 0.99
+     "w": 0.98
     },
     {
      "id": "crypto_fav_band_below:KXBTCD-26OCT2617-T80499.99",
@@ -1024,7 +1024,7 @@
      "r": 0.3803,
      "side": "no",
      "st": "won",
-     "w": 0.95
+     "w": 0.94
     },
     {
      "id": "crypto_fav_band_below:KXBTCD-26OCT2717-T80749.99",
@@ -1032,7 +1032,7 @@
      "r": 0.3444,
      "side": "no",
      "st": "won",
-     "w": 0.97
+     "w": 0.96
     },
     {
      "id": "crypto_fav_band_below:KXBTCD-26OCT2917-T80999.99",
@@ -1040,7 +1040,7 @@
      "r": 0.3103,
      "side": "no",
      "st": "won",
-     "w": 1.0
+     "w": 0.99
     },
     {
      "id": "crypto_fav_band_below:KXBTCD-26OCT3017-T77499.99",
@@ -1048,7 +1048,7 @@
      "r": 0.294,
      "side": "no",
      "st": "won",
-     "w": 1.01
+     "w": 1.0
     },
     {
      "id": "crypto_fav_band_below:KXBTCD-26OCT3117-T77749.99",
@@ -1056,7 +1056,7 @@
      "r": 0.2473,
      "side": "no",
      "st": "won",
-     "w": 1.05
+     "w": 1.04
     },
     {
      "id": "crypto_fav_band_below:KXBTCD-26NOV0117-T77999.99",
@@ -1064,7 +1064,7 @@
      "r": 0.3803,
      "side": "no",
      "st": "won",
-     "w": 0.95
+     "w": 0.94
     },
     {
      "id": "crypto_fav_band_below:KXBTCD-26NOV0217-T77249.99",
@@ -1072,7 +1072,7 @@
      "r": 0.2625,
      "side": "no",
      "st": "won",
-     "w": 1.04
+     "w": 1.02
     },
     {
      "id": "crypto_fav_band_below:KXBTCD-26NOV0317-T77999.99",
@@ -1088,7 +1088,7 @@
      "r": 0.2942,
      "side": "no",
      "st": "won",
-     "w": 12.15
+     "w": 12.0
     },
     {
      "id": "crypto_fav_band_below:KXBTCD-26NOV0517-T76499.99",
@@ -1096,14 +1096,24 @@
      "r": 0.3273,
      "side": "no",
      "st": "won",
-     "w": 12.83
+     "w": 12.67
+    },
+    {
+     "id": "crypto_fav_band_below:KXETHD-26NOV0617-T2239.99",
+     "ko": "2026-11-06T22:05",
+     "r": null,
+     "side": "no",
+     "st": "open",
+     "w": 12.51
     }
    ],
    "refused": {
     "crypto_fav_band_below:KXBTCD-26NOV0317-T77999.99": "outside the price band",
     "crypto_fav_band_below:KXBTCD-26NOV0417-T80749.99": "outside the entry window",
     "crypto_fav_band_below:KXETHD-26NOV0517-T2259.99": "outside the price band",
+    "crypto_fav_band_below:KXHYPED-26NOV0617-T78.9999": "other",
     "crypto_fav_band_below:KXSOLD-26NOV0517-T89.9999": "outside the entry window",
+    "crypto_fav_band_below:KXSOLD-26NOV0617-T90.9999": "wide spread",
     "crypto_fav_band_below:KXSOLD-26OCT3017-T93.9999": "published inside 30 min of kickoff",
     "crypto_fav_band_below:KXXRPD-26NOV0517-T1.2399": "outside the entry window"
    }
@@ -1310,6 +1320,16 @@
    ],
    "refused": {}
   },
+  "sr_a2|soccer_u35": {
+   "entered": "2026-11-06T15:00:00+00:00",
+   "orders": [],
+   "refused": {}
+  },
+  "sr_a3|soccer_u35": {
+   "entered": "2026-11-06T15:00:00+00:00",
+   "orders": [],
+   "refused": {}
+  },
   "sr_a6|soccer_o25": {
    "entered": "2026-10-21T23:00:00+00:00",
    "orders": [
@@ -1360,6 +1380,14 @@
      "side": "no",
      "st": "won",
      "w": 1.09
+    },
+    {
+     "id": "sr_a6:KXEPLTOTAL-26NOV06EVECOV-3",
+     "ko": "2026-11-06T20:00",
+     "r": null,
+     "side": "no",
+     "st": "open",
+     "w": 1.04
     }
    ],
    "refused": {}
