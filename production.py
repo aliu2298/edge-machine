@@ -56,24 +56,29 @@ def production_pairs(st):
             if p.get("stage") == "production" and p.get("ready_at")}
 
 
-# The follower's stake per bet for a pair, when it was raised from the $1 default (risk.stake_usd_by_pair on the VPS). Shown under the
-# pair's name so a record that spans the change is read as two sizes. {pair: (UTC date of the change, new stake in dollars)}
-STAKE_CHANGES = {
-    "mls_fade_home|soccer_p05": ("2026-11-02", 10),
-    "commod_fav_band|commodities_fav": ("2026-11-02", 10),
-    "crypto_fav_band_below|crypto_fav": ("2026-11-02", 10),
-    "team2_ranked|soccer_team2": ("2026-11-06", 10),
-    "sr_a7|soccer_u35": ("2026-11-06", 10),
-}
-
-
 def stake_note(key):
-    """'stake size changed $1 → $10 on Nov 6' for a pair whose stake was raised, else ''."""
-    c = STAKE_CHANGES.get(key)
-    if not c:
+    """'stake raised Nov 6' under a pair whose stake the follower has raised, else ''. The date is the instant its export first saw the raise
+    (raised_stakes, read from the follower), so a new raise shows itself. No amount: public copy."""
+    import raised_stakes
+    at = raised_stakes.since(key)
+    if not at:
         return ""
-    d = datetime.date.fromisoformat(c[0])
-    return f'<div class="sm mut">stake size changed $1 → ${c[1]:g} on {d:%b} {d.day}</div>'
+    d = datetime.date.fromisoformat(str(at)[:10])
+    return f'<div class="sm mut">stake raised {d:%b} {d.day}</div>'
+
+
+def fresh_view(key, pair):
+    """The pair as its Production record is counted since a stake raise (2026-11-06, Olu): the record restarts at the instant the follower's
+    stake was raised, like a reset (`since`), so the since-Production record, the live fills, the Early count and the header lines all count
+    from there. The pair itself, the feed and the Sandbox record are untouched. A pair not raised, or raised before it entered, is returned as is."""
+    import raised_stakes
+    at = raised_stakes.since(key)
+    if not at or not pair:
+        return pair
+    start = entered_at(pair)
+    if start and str(at) > str(start):
+        return dict(pair, since=str(at))
+    return pair
 
 
 def entered_at(pair):
@@ -520,7 +525,7 @@ def late_path(path=None):
     return (path or FEED)[:-5] + "_late.json"
 
 
-def _assess_since_kickoff(d, key, pair, late=None):
+def _assess_since_kickoff(d, key, pair, late=None, until=None):
     """US-exchange record for contests that kick off at or after this pair entered.
 
     The feed publishes a bet when `_kickoff(q).isoformat() >= entered_at(pair)`.
@@ -543,7 +548,7 @@ def _assess_since_kickoff(d, key, pair, late=None):
             ko = _kickoff(q)
             if late and late_key(key, q.get("market_id")) in late:
                 continue
-            if ko is not None and entered is not None and ko.isoformat() >= entered:
+            if ko is not None and entered is not None and ko.isoformat() >= entered and (until is None or ko.isoformat() < until):
                 out.append(q)
         return out
 
@@ -1440,7 +1445,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
 
     # ---- the pairs, each with the evidence it was moved on and what it has done since ----
     live_blob = PL.load()
-    live_gap_rows, paper_bets = [], {}
+    live_gap_rows, paper_bets, raised_rows = [], {}, []
     cards = []
     n_early = 0
     # Each pair's row, its since-Production record and its leads to come, by sport.
@@ -1448,10 +1453,14 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
     for key, pair in sorted(pairs.items(), key=lambda kv: (sport_of(kv[0]), name(kv[0]))):
         source, sport = key.split("|", 1)
         try:
+            raised_at = None
+            pair_orig, pair = pair, fresh_view(key, pair)        # a raised stake starts a fresh record (the original window is kept for the fold)
+            if pair is not pair_orig:
+                raised_at = pair["since"]
             since = entered_at(pair)
             # The SAME window the Sandbox page reads (the pair's stage clock), so the two pages
             # never show two different records for one rule.
-            whole = T.assess(raw, source, sport, since=T.record_since(pair), venues=T.TRADEABLE_VENUES)
+            whole = T.assess(raw, source, sport, since=T.record_since(pair_orig), venues=T.TRADEABLE_VENUES)
             live = _assess_since_kickoff(raw, key, pair, late=late_set(blob))
             mine = [l for l in leads if l.get("pair") == key]
             to_come = sum(1 for l in mine if l in upcoming)
@@ -1514,6 +1523,10 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
             paper_bets[key] = [dict(id=q.get("id"), status=q.get("status"), price=q.get("price"), ko=(_kickoff(q).isoformat() if _kickoff(q) else None)) for q in mine_since if q.get("bet")]
             live_rec, live_roi, live_data = PL.cells(key, since, dict(roi=live["roi_fee"] if live["n"] else None), live_blob)
             live_gap_rows.append((name(key), key, live["n"], live["roi_fee"] if live["n"] else None, live_data))
+            if raised_at:
+                old = _assess_since_kickoff(raw, key, pair_orig, late=late_set(blob), until=raised_at)
+                raised_rows.append((name(key), raised_at, old, PL.record(PL.window(((live_blob or {}).get("pairs") or {}).get(key, {}).get("orders") or [],
+                                                                                   entered_at(pair_orig), raised_at))))
             card = f"""<tr>
 <td><b>{esc(name(key))}</b>{early_html(early)}<div class="sm mut">{esc(sport_of(key))} · moved {esc(str(pair.get('by_hand') or since or '')[:10])}</div>{stake_note(key)}</td>
 <td class="num">{whole['n']}<div class="sm mut">settled</div></td>
@@ -1567,7 +1580,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
             f'<summary><h3>{esc(g)}</h3><span class="mut sm">· {" · ".join(bits)}</span></summary>'
             f'<div class="tbl"><table>{pairs_head}{rows}</table></div></details>')
     pairs_html = ("".join(sections) + PL.gap_section(live_gap_rows, paper_bets, {l.get('sandbox_quote') for l in leads if l.get('sandbox_quote')},
-                                                                  _feed_from(leads), horizon=(now_dt - datetime.timedelta(days=KEEP_SETTLED_DAYS)).isoformat()) + PL.lanes_table(live_blob) + PL.pulled_table(live_blob, name) +
+                                                                  _feed_from(leads), horizon=(now_dt - datetime.timedelta(days=KEEP_SETTLED_DAYS)).isoformat()) + PL.lanes_table(live_blob) + PL.pulled_table(live_blob, name) + PL.raised_fold(raised_rows) +
                   ('<p class="sm mut">Live fills: orders the follower placed and Kalshi settled, counted from the pair\'s Production date, ROI per $1 staked after fees, '
                    f'read {esc((live_blob or {}).get("generated") or "not yet")}. Paper is the Sandbox grade of the same bets.</p>' if live_blob else "") +
                   '<p class="sm mut">Reaches the feed counts the pair\'s bets the feed could publish. A tip is unreachable when no Kalshi or Polymarket US market was listed for it, or its Kalshi market had no verified start time, so it stays in the Sandbox record and the feed cannot carry it.</p>'

@@ -11,6 +11,8 @@ date with under EARLY_N settled since its move, on the Production pairs table, i
 page's Rules table and the home rule cards, dropping on its own at EARLY_N and never on a
 pair moved before that date. No network, nothing read from data/.
 """
+import live_caps as _LC
+_LC.load = lambda path=None: {}      # hermetic: the real follower caps raise commod_fav_band, which would restart these fixtures' record (test_fresh_record.py covers that)
 import datetime
 import html as html_mod
 import re

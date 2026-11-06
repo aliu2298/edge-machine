@@ -30,6 +30,13 @@ def guard(pair, caps=None):
     return caps.get(pair)
 
 
+def raised_at(pair, caps=None):
+    """The instant (ISO, UTC) the follower's stake on this pair was first seen raised above its default, or None. Read from the follower's own
+    config by live_caps_publish.py, never kept by hand: a new raise starts a new window by itself."""
+    g = guard(pair, caps)
+    return (g or {}).get("raised_at")
+
+
 def tradeable(pair, price, caps=None):
     """True when the follower could take a leg at this ask under the pair's price cap and band (or when nothing is known)."""
     g = guard(pair, caps)

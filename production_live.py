@@ -40,15 +40,16 @@ def _t(x):
     return t if t.tzinfo else t.replace(tzinfo=dt.timezone.utc)
 
 
-def window(orders, since):
-    """The orders whose kickoff is at or after `since` (None = all time)."""
+def window(orders, since, until=None):
+    """The orders whose kickoff is at or after `since` (None = all time) and before `until` (None = no end)."""
     cut = _t(since) if since else None
-    if cut is None:
+    end = _t(until) if until else None
+    if cut is None and end is None:
         return list(orders)
     out = []
     for o in orders:
         ko = _t(o.get("ko"))
-        if ko is not None and ko >= cut:
+        if ko is not None and (cut is None or ko >= cut) and (end is None or ko < end):
             out.append(o)
     return out
 
@@ -213,6 +214,25 @@ def pulled_table(live_blob, name):
     return ('<details class="fold"><summary>Pairs no longer in Production, live fills (each under its own pair)</summary>'
             '<div class="tbl"><table><thead><tr><th>Pair</th><th class="num">Live W–L</th><th class="num">ROI</th><th>Other</th></tr></thead>'
             f'<tbody>{body}</tbody></table></div></details>')
+
+
+def raised_fold(rows):
+    """The record at the earlier stake, one fold under the pairs table (2026-11-06): for each pair whose stake was raised, the paper record and the
+    live fills from its entry to the raise. The table above counts from the raise. `rows`: [(name, raised_at, paper assess, live record)]. No amount."""
+    if not rows:
+        return ""
+    body = ""
+    for name, at, paper, live in sorted(rows, key=lambda r: r[0]):
+        paper_roi = "—" if paper.get("roi_fee") is None or not paper.get("n") else f'{paper["roi_fee"] * 100:+.1f}%'
+        live_roi = "—" if live["roi"] is None else f'{live["roi"] * 100:+.1f}%'
+        d = dt.date.fromisoformat(str(at)[:10])
+        body += (f'<tr><td>{esc(name)}</td><td>{esc(f"{d:%b} {d.day}")}</td>'
+                 f'<td class="num"><b>{paper["won"]}–{paper["n"] - paper["won"]}</b></td><td class="num">{paper_roi}</td>'
+                 f'<td class="num"><b>{live["won"]}–{live["lost"]}</b></td><td class="num">{live_roi}</td></tr>')
+    return ('<details class="fold"><summary>Raised-stake pairs, the record at the earlier stake</summary>'
+            '<div class="tbl"><table><thead><tr><th>Pair</th><th>Stake raised</th><th class="num">Paper W–L</th><th class="num">Paper ROI</th>'
+            f'<th class="num">Live W–L</th><th class="num">Live ROI</th></tr></thead><tbody>{body}</tbody></table></div>'
+            '<p class="sm mut">Entry to the raise. The Since Production columns above count from the raise.</p></details>')
 
 
 def lanes_table(live_blob):
