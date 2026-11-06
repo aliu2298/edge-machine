@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-06T21:07Z",
+ "generated": "2026-11-06T22:07Z",
  "lane_note": "own-state lanes: the lane's own fill price; outcome from the market's settled result; sold bets left out; fees not included",
  "lanes": {
   "nba_wm_nofade": [
@@ -778,10 +778,10 @@
    {
     "id": "KXBUNDESLIGATOTAL-26NOV06HSVBMG-4",
     "ko": "2026-11-06T19:30",
-    "r": null,
+    "r": -1.0,
     "side": "no",
-    "st": "open",
-    "w": null
+    "st": "lost",
+    "w": 1.0
    }
   ]
  },
@@ -1109,9 +1109,9 @@
     {
      "id": "crypto_fav_band_below:KXETHD-26NOV0617-T2239.99",
      "ko": "2026-11-06T22:05",
-     "r": null,
+     "r": 0.3444,
      "side": "no",
-     "st": "open",
+     "st": "won",
      "w": 12.51
     }
    ],
@@ -1120,7 +1120,7 @@
     "crypto_fav_band_below:KXBTCD-26NOV0417-T80749.99": "outside the entry window",
     "crypto_fav_band_below:KXBTCD-26NOV0617-T75999.99": "already held by another lane",
     "crypto_fav_band_below:KXETHD-26NOV0517-T2259.99": "outside the price band",
-    "crypto_fav_band_below:KXHYPED-26NOV0617-T78.9999": "other",
+    "crypto_fav_band_below:KXHYPED-26NOV0617-T78.9999": "published inside 30 min of kickoff",
     "crypto_fav_band_below:KXSOLD-26NOV0517-T89.9999": "outside the entry window",
     "crypto_fav_band_below:KXSOLD-26NOV0617-T90.9999": "outside the entry window",
     "crypto_fav_band_below:KXXRPD-26NOV0517-T1.2399": "outside the entry window"
@@ -1392,9 +1392,9 @@
     {
      "id": "sr_a6:KXEPLTOTAL-26NOV06EVECOV-3",
      "ko": "2026-11-06T20:00",
-     "r": null,
+     "r": -1.0,
      "side": "no",
-     "st": "open",
+     "st": "lost",
      "w": 1.04
     }
    ],
@@ -1573,6 +1573,11 @@
    ],
    "refused": {}
   },
+  "team2_form_l10|soccer_team2_intl": {
+   "entered": "2026-11-06T21:10:55+00:00",
+   "orders": [],
+   "refused": {}
+  },
   "team2_ranked|soccer_team2": {
    "entered": "2026-10-11T19:34:45+00:00",
    "orders": [
@@ -1739,9 +1744,9 @@
     {
      "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV06SEVALA-SEV2",
      "ko": "2026-11-06T20:00",
-     "r": null,
+     "r": -1.0,
      "side": "yes",
-     "st": "open",
+     "st": "lost",
      "w": 1.24
     },
     {
@@ -1753,6 +1758,11 @@
      "w": 1.3
     }
    ],
+   "refused": {}
+  },
+  "u35_low_scoring|soccer_u35_cup": {
+   "entered": "2026-11-06T21:10:55+00:00",
+   "orders": [],
    "refused": {}
   },
   "u35_low_scoring|soccer_u35_intl": {
