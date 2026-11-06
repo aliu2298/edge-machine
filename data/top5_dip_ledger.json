@@ -1539,6 +1539,201 @@
    "result": "yes",
    "title": "Will over 1.5 goals be scored?",
    "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXBUNDESLIGATOTAL-26NOV06HSVBMG",
+   "id": "KXBUNDESLIGATOTAL-26NOV06HSVBMG-2",
+   "kickoff": 1793993400,
+   "league": "Bundesliga",
+   "logged": "2026-11-06T22:26:25.560958+00:00",
+   "matchday": "2026-11-06",
+   "p": 0.81,
+   "p_at": 1793989860,
+   "p_bid": 0.8,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.81,
+    "printed": 6474.18,
+    "status": "verified"
+   },
+   "prints": 205,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": {
+     "counted": true,
+     "fill_at": 1793999248,
+     "fill_print": 0.44,
+     "fill_volume": 4349.37,
+     "held": true,
+     "limit": 0.44,
+     "payout": 1.0,
+     "sold": true,
+     "sold_at": 1793999526
+    },
+    "65": {
+     "counted": true,
+     "fill_at": 1793997809,
+     "fill_print": 0.52,
+     "fill_volume": 47339.16,
+     "held": true,
+     "limit": 0.52,
+     "payout": 1.0,
+     "sold": true,
+     "sold_at": 1793999526
+    }
+   },
+   "event": "KXEPLTOTAL-26NOV06EVECOV",
+   "id": "KXEPLTOTAL-26NOV06EVECOV-2",
+   "kickoff": 1793995200,
+   "league": "EPL",
+   "logged": "2026-11-06T22:26:25.560958+00:00",
+   "matchday": "2026-11-06",
+   "p": 0.8,
+   "p_at": 1793991660,
+   "p_bid": 0.79,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.79,
+    "printed": 2363.43,
+    "status": "verified"
+   },
+   "prints": 1139,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": {
+     "counted": true,
+     "fill_at": 1793998119,
+     "fill_print": 0.37,
+     "fill_volume": 176934.23,
+     "held": true,
+     "limit": 0.37,
+     "payout": 0.0,
+     "sold": false,
+     "sold_at": null
+    },
+    "65": {
+     "counted": true,
+     "fill_at": 1793997787,
+     "fill_print": 0.44,
+     "fill_volume": 160603.31,
+     "held": true,
+     "limit": 0.44,
+     "payout": 0.0,
+     "sold": false,
+     "sold_at": null
+    }
+   },
+   "event": "KXLALIGATOTAL-26NOV06SEVALA",
+   "id": "KXLALIGATOTAL-26NOV06SEVALA-2",
+   "kickoff": 1793995200,
+   "league": "La Liga",
+   "logged": "2026-11-06T22:26:25.560958+00:00",
+   "matchday": "2026-11-06",
+   "p": 0.68,
+   "p_at": 1793991660,
+   "p_bid": 0.67,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.67,
+    "printed": 35498.69,
+    "status": "verified"
+   },
+   "prints": 2008,
+   "result": "no",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": {
+     "counted": true,
+     "fill_at": 1793996510,
+     "fill_print": 0.53,
+     "fill_volume": 3655.18,
+     "held": true,
+     "limit": 0.54,
+     "payout": 1.0,
+     "sold": true,
+     "sold_at": 1793998800
+    }
+   },
+   "event": "KXLIGUE1TOTAL-26NOV06TFCRCS",
+   "id": "KXLIGUE1TOTAL-26NOV06TFCRCS-2",
+   "kickoff": 1793994300,
+   "league": "Ligue 1",
+   "logged": "2026-11-06T22:26:25.560958+00:00",
+   "matchday": "2026-11-06",
+   "p": 0.83,
+   "p_at": 1793990760,
+   "p_bid": 0.82,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.83,
+    "printed": 318.01,
+    "status": "verified"
+   },
+   "prints": 241,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": {
+     "counted": true,
+     "fill_at": 1793998267,
+     "fill_print": 0.42,
+     "fill_volume": 5748.95,
+     "held": true,
+     "limit": 0.42,
+     "payout": 1.0,
+     "sold": true,
+     "sold_at": 1793998791
+    },
+    "65": {
+     "counted": true,
+     "fill_at": 1793996889,
+     "fill_print": 0.5,
+     "fill_volume": 17089.07,
+     "held": true,
+     "limit": 0.5,
+     "payout": 1.0,
+     "sold": true,
+     "sold_at": 1793998791
+    }
+   },
+   "event": "KXSERIEATOTAL-26NOV06VENUDI",
+   "id": "KXSERIEATOTAL-26NOV06VENUDI-2",
+   "kickoff": 1793994300,
+   "league": "Serie A",
+   "logged": "2026-11-06T22:26:25.560958+00:00",
+   "matchday": "2026-11-06",
+   "p": 0.77,
+   "p_at": 1793990760,
+   "p_bid": 0.76,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.77,
+    "printed": 68.5,
+    "status": "verified"
+   },
+   "prints": 1013,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
   }
  ],
  "error": null,
@@ -15593,11 +15788,11 @@
   ]
  },
  "lane": "top5_goalless_dip",
- "last_run": "2026-11-05T21:44:36.941622+00:00",
+ "last_run": "2026-11-06T22:26:25.560958+00:00",
  "observations": {
-  "at": "2026-11-05T21:44:36.941622+00:00",
+  "at": "2026-11-06T22:26:25.560958+00:00",
   "errors": [],
-  "new": 0,
+  "new": 5,
   "skipped": 0,
   "waiting": 0
  },
@@ -15616,31 +15811,6 @@
   "KXLIGUE1TOTAL-26OCT31OLANG": "no pregame quote an hour before kickoff"
  },
  "upcoming": [
-  {
-   "event": "KXBUNDESLIGATOTAL-26NOV06HSVBMG",
-   "kickoff": 1793993400,
-   "title": "Hamburg vs M\u00b4gladbach: Total Goals"
-  },
-  {
-   "event": "KXSERIEATOTAL-26NOV06VENUDI",
-   "kickoff": 1793994300,
-   "title": "Venezia vs Udinese: Total Goals"
-  },
-  {
-   "event": "KXLIGUE1TOTAL-26NOV06TFCRCS",
-   "kickoff": 1793994300,
-   "title": "Toulouse vs Strasbourg Alsace: Total Goals"
-  },
-  {
-   "event": "KXEPLTOTAL-26NOV06EVECOV",
-   "kickoff": 1793995200,
-   "title": "Everton vs Coventry: Total Goals"
-  },
-  {
-   "event": "KXLALIGATOTAL-26NOV06SEVALA",
-   "kickoff": 1793995200,
-   "title": "Sevilla vs Alaves: Total Goals"
-  },
   {
    "event": "KXEPLTOTAL-26NOV07LEETOT",
    "kickoff": 1794054600,
@@ -15665,6 +15835,31 @@
    "event": "KXBUNDESLIGATOTAL-26NOV07BVBSVE",
    "kickoff": 1794061800,
    "title": "Dortmund vs Elversberg: Total Goals"
+  },
+  {
+   "event": "KXBUNDESLIGATOTAL-26NOV07M05BMU",
+   "kickoff": 1794061800,
+   "title": "Mainz vs Bayern Munich: Total Goals"
+  },
+  {
+   "event": "KXBUNDESLIGATOTAL-26NOV07PADSGE",
+   "kickoff": 1794061800,
+   "title": "Paderborn vs Frankfurt: Total Goals"
+  },
+  {
+   "event": "KXBUNDESLIGATOTAL-26NOV07RBLFCA",
+   "kickoff": 1794061800,
+   "title": "Leipzig vs Augsburg: Total Goals"
+  },
+  {
+   "event": "KXEPLTOTAL-26NOV07ARSHUL",
+   "kickoff": 1794063600,
+   "title": "Arsenal vs Hull City: Total Goals"
+  },
+  {
+   "event": "KXEPLTOTAL-26NOV07FULNEW",
+   "kickoff": 1794063600,
+   "title": "Fulham vs Newcastle: Total Goals"
   }
  ],
  "version": "top5dip-v1"
