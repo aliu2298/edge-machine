@@ -232,8 +232,9 @@ def won_v_priced(a):
     return f'{int(a.get("won") or 0)} v {float(a.get("expected") or 0):.1f}'
 
 
-def evidence(a):
-    return f'{int(a.get("n") or 0)}/{EVIDENCE_FLOOR}'
+def evidence(a, floor=EVIDENCE_FLOOR):
+    """'4/30', or a row's own later read floor ('39/50': a lane kept to a later decision, row["floor"])."""
+    return f'{int(a.get("n") or 0)}/{int(floor)}'
 
 
 # A rule's definition is its registration, verbatim. It is only ever drawn inside
@@ -461,8 +462,8 @@ def rule_row(sp, d, row, now, scoped, ev_list=()):
         f'<span class="sp-cell num" data-l="{esc(sp.get("record_head") or "Record")}">{record_compact(a)}</span>{extra["record"]}'
         f'<span class="sp-cell num" data-l="ROI after fees">{roi_html(row)}</span>{extra["roi"]}'
         f'<span class="sp-cell num" data-l="Won v priced">{esc(won_v_priced(a))}</span>'
-        f'<span class="sp-cell num" data-l="Evidence">{esc(evidence(a))}</span>'
-        f'<span class="sp-cell sp-c-verdict" data-l="Verdict">{verdict_badge(row)}</span>'
+        f'<span class="sp-cell num" data-l="Evidence">{esc(evidence(a, row.get("floor") or EVIDENCE_FLOOR))}</span>'
+        f'<span class="sp-cell sp-c-verdict" data-l="Verdict">{verdict_badge(row, row.get("floor") or EVIDENCE_FLOOR)}</span>'
         f'</summary>{rule_details(sp, d, row, now, ev_list)}</details>')
 
 
