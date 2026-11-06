@@ -124,12 +124,21 @@ def card(state=None, chaos=None):
 </details>"""
 
 
-def index_row(state=None):
-    """The Sandbox Chaos index row (same columns as chaos_build.index)."""
+def index_row(state=None, v3=None):
+    """The Sandbox Chaos index row (same columns as chaos_build.index: entries, settled events, won entries, headline ROI,
+    hold, status). Version 3 once it has started (2026-11-05, Olu): the record the NBA page headlines, not versions 1-2."""
+    import nba_wm_v3 as V3
     if state is None:
         state = N.load()
-    g = N.game_rows(state["entries"], N.vkey(N.HEAD), False)
+    v3 = v3 if v3 is not None else V3.load()
+    if v3.get("since"):
+        g = V3.no_games(v3)
+        fills = [r for r in v3["rows"].values() if r["lane"] == V3.NO_LANE and not r.get("no_entry") and "profit" in r]
+        entries, won = len(fills), sum(1 for r in fills if r["profit"] > 0)
+    else:
+        g = N.game_rows(state["entries"], N.vkey(N.HEAD), None, "v2")
+        entries, won = sum(r["fills"] for r in g), None
     s = CR.stats(g)
-    return (f'<tr data-lane="{N.LANE}"><td><b>{esc(N.LABEL)}</b></td><td><a href="./nba.html#cheap-side">NBA</a></td>'
-            f'<td class="num">{sum(r["fills"] for r in g)}</td><td class="num">{s["won"]}</td><td class="num">{pct(s["roi"])}</td>'
-            f'<td class="num">—</td><td>{esc(status(s["n"]))}</td></tr>')
+    return (f'<tr data-lane="{N.LANE}"><td><b>{esc(N.LABEL)}</b></td><td><a href="./nba.html#wm-no">NBA</a></td>'
+            f'<td class="num">{entries}</td><td class="num">{s["n"]}</td><td class="num">{"—" if won is None else won}</td>'
+            f'<td class="num">{pct(s["roi"])}</td><td class="num">—</td><td>{esc(status(s["n"]))}</td></tr>')

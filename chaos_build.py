@@ -310,8 +310,16 @@ def with_config(state):
     return dict(state, lanes=lanes)
 
 
+# The NBA page has no cheap-side section since 2026-11-05 (the Econ Daily layout): each lane is a Rules row, its older
+# versions and in-sample research inside that row's fold, a retired lane in the Retired block.
+NBA_ANCHORS = {"nba_winmargin_live": "wm-yes", "nba_winmargin_split": "wm-yes-v1",
+               "nba_winmargin_split_insample": "nba_winmargin_live-insample", "nba_wm_nofade": "wm-no"}
+
+
 def home_href(lane_id):
     page = HOME_OF.get(lane_id)
+    if page == "nba":
+        return f"./nba.html#{NBA_ANCHORS.get(lane_id, 'retired')}"
     return f"./{page}.html#cheap-side" if page else None
 
 
@@ -420,6 +428,7 @@ def index(lanes):
     shown = [L for L in lanes if not L.get("baseline")]
     for L in shown:
         r = split_hold(L)
+        r = _v3_headline(L, r)
         href = home_href(L["id"])
         page = PAGE_LABEL.get(HOME_OF.get(L["id"]), "—")
         link = f'<a href="{esc(href)}">{esc(page)}</a>' if href else esc(page)
@@ -431,6 +440,24 @@ def index(lanes):
     return ('<div class="tbl"><table class="chaos-index"><tr><th>Lane</th><th>Page</th><th class="num">Entries</th>'
             '<th class="num">Settled events</th><th class="num">Won</th><th class="num">' + head_word(shown) + ' ROI</th><th class="num">Hold ROI</th><th>Status</th></tr>'
             + "".join(rows + _extra_index_rows()) + "</table></div>" + baseline_index(lanes))
+
+
+def _v3_headline(L, r):
+    """The NBA win margin YES split's index row reads version 3 once it has started (2026-11-05, Olu): the record the NBA
+    page headlines (the executor's own decisions, fills replayed from prints), not the version 2 lane's. Other lanes: r."""
+    if L.get("id") != "nba_winmargin_live":
+        return r
+    try:
+        import nba_wm_v3 as V3
+        v3 = V3.load()
+        if not v3.get("since"):
+            return r
+        yr = V3.yes_rows(v3)
+        s = C.stats(yr)
+        hold = (sum(x["hold_roi"] for x in yr) / len(yr)) if yr else None
+        return dict(r, entries=s["n"], events=len({x["event"] for x in yr}), won=s["won"], split=s["roi"], n_split=s["n"], hold=hold)
+    except Exception:                                           # noqa: BLE001
+        return r
 
 
 def baseline_index(lanes):
@@ -513,6 +540,6 @@ def section(state=None):
 <p class="sm">A lane buys before the event starts, at a set time before it (1 hour before, and a 24-hour variant), at the ask on the first tight quote (spread 3c or less, 5c for the cheap-side lane). The standard exit is the split: half the stake rests at 2x the entry ask and half at 3x, each capped at 0.98, and a leg fills only when a trade prints at or above it; a leg not filled is held to Kalshi's settlement. Nothing is bought during the event. The start comes from the lane's own kickoff source where it has one, otherwise from the price path.</p>
 <p class="sm">Other exits, from the same entry: a resting limit sell at +20%, +30%, +50% or +100% ROI after fees, each with no stop or a −50% stop. Those sells fill when the bid trades 1c through the limit inside a minute; a minute touching both the stop and the limit takes the stop. Fees: taker 0.07·p(1−p) on entry and on a stop, maker 0.0175·p(1−p) on a limit exit or a filled split leg.</p>
 <p class="sm">The control is the same entry held to settlement. A variant is flagged for review at {C.REVIEW_N} settled events; promotion needs {C.PROMOTE_N} AND a better ROI than its hold control. An event (one game, match or fight) is one outcome: several entries on one event move together, so they count once. z is clustered by night, never below the independent-trades z. Every lane's record starts fresh from its first replayed night and never inherits an older lane's rows; the split was added to the older lanes on 2026-10-27 by replaying their recorded entries, nothing edited or removed.</p></details>
-<p class="sm">Each lane's card (split v hold, its other exits, its trades) is on its own page: tennis lanes on the <a href="./tennis.html#cheap-side">Tennis page</a>, NBA lanes on the <a href="./nba.html#cheap-side">NBA page</a>, college football on the <a href="./nfl.html#cheap-side">NFL page</a>.</p>
+<p class="sm">Each lane's card (split v hold, its other exits, its trades) is on its own page: tennis lanes on the <a href="./tennis.html#cheap-side">Tennis page</a>, NBA lanes on the <a href="./nba.html#rules">NBA page</a>, college football on the <a href="./nfl.html#cheap-side">NFL page</a>.</p>
 <p class="sm mut">Last replay {esc(last or 'not yet')}{(' · ' + esc(state['error'])) if state.get('error') else ''}.</p>
 </section>"""

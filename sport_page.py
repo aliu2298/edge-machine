@@ -99,6 +99,11 @@ def spec(**kw):
         # empty_reason(d, rows, idle, now) -> str: why nothing is due in the next 24 hours, for a
         # family that keeps its own ledger and not the tracker's coverage (None: coverage_reason).
         empty_reason=None,
+        # record_head: the Record column's header ("Record (games)" where a row's record counts games, NBA 2026-11-05).
+        # extra_cols: [(after, header, fn(row) -> html)] cells drawn after the "record" or the "roi" cell, for a page
+        # whose rows carry more than the template's figures (NBA: entries won, live fills). A row with extra cells
+        # takes the wider grid (.sp-line.is-wide).
+        record_head="Record", extra_cols=(),
         # retired: rows for rules retired by hand (sport_tab.retired_rows), drawn in their own
         # folded list under the Sandbox with the record they stopped on and the dated reason.
         # They count in no tile and no Sandbox total.
@@ -440,30 +445,46 @@ def rule_row(sp, d, row, now, scoped, ev_list=()):
     scope_cell = (f'<span class="sp-cell sp-c-scope" data-l="Scope">{esc(SCOPE_WORDS[scope_key(row)])}</span>'
                   if scoped else "")
     badges = row_badges(row)
+    extra = _extra_cells(sp, row)
+    wide = " is-wide" if sp.get("extra_cols") else ""
     return (
         f'<details class="sp-rule{" is-early" if early else ""}"{f" id=\"{esc(row["anchor"])}\"" if row.get("anchor") else ""} '
         f'data-source="{esc(row["name"])}" '
         f'data-sport="{esc(row["sport"])}" data-scope="{scope_key(row)}" data-stage="{stage_key(row)}"'
         f'{" data-early=\"1\"" if early else ""}>'
-        f'<summary class="sp-line{" is-scoped" if scoped else ""}">'
+        f'<summary class="sp-line{" is-scoped" if scoped else ""}{wide}">'
         f'<span class="sp-cell sp-c-name"><span class="sp-chev" aria-hidden="true">›</span>'
         f'<b class="sp-name" title="{esc(name)}">{esc(shown_name)}</b>'
         f'{f"<span class=\"sp-badges\">{badges}</span>" if badges else ""}'
         f'<span class="sr-only"> · Rule details</span></span>'
         f'<span class="sp-cell sp-c-market" data-l="Market">{esc(market) or "—"}</span>{scope_cell}'
-        f'<span class="sp-cell num" data-l="Record">{record_compact(a)}</span>'
-        f'<span class="sp-cell num" data-l="ROI after fees">{roi_html(row)}</span>'
+        f'<span class="sp-cell num" data-l="{esc(sp.get("record_head") or "Record")}">{record_compact(a)}</span>{extra["record"]}'
+        f'<span class="sp-cell num" data-l="ROI after fees">{roi_html(row)}</span>{extra["roi"]}'
         f'<span class="sp-cell num" data-l="Won v priced">{esc(won_v_priced(a))}</span>'
         f'<span class="sp-cell num" data-l="Evidence">{esc(evidence(a))}</span>'
         f'<span class="sp-cell sp-c-verdict" data-l="Verdict">{verdict_badge(row)}</span>'
         f'</summary>{rule_details(sp, d, row, now, ev_list)}</details>')
 
 
-def list_head(scoped, first="Rule"):
+def _extra_cells(sp, row):
+    """{"record": html, "roi": html}: a page's extra cells (spec extra_cols), each labelled for the phone cards."""
+    out = {"record": "", "roi": ""}
+    for after, head, fn in sp.get("extra_cols") or ():
+        out[after] += f'<span class="sp-cell num" data-l="{esc(head)}">{fn(row)}</span>'
+    return out
+
+
+def list_head(scoped, first="Rule", sp=None):
+    sp = sp or {}
     scope = '<span class="sp-cell sp-c-scope">Scope</span>' if scoped else ""
-    return (f'<div class="sp-line sp-head-line{" is-scoped" if scoped else ""}" aria-hidden="true">'
+    extra = {"record": "", "roi": ""}
+    for after, head, _fn in sp.get("extra_cols") or ():
+        extra[after] += f'<span class="sp-cell num">{esc(head)}</span>'
+    wide = " is-wide" if sp.get("extra_cols") else ""
+    return (f'<div class="sp-line sp-head-line{" is-scoped" if scoped else ""}{wide}" aria-hidden="true">'
             f'<span class="sp-cell sp-c-name">{esc(first)}</span><span class="sp-cell sp-c-market">Market</span>{scope}'
-            f'<span class="sp-cell num">Record</span><span class="sp-cell num">ROI after fees</span>'
+            f'<span class="sp-cell num">{esc(sp.get("record_head") or "Record")}</span>{extra["record"]}'
+            f'<span class="sp-cell num">ROI after fees</span>{extra["roi"]}'
             f'<span class="sp-cell num">Won v priced</span><span class="sp-cell num">Evidence</span>'
             f'<span class="sp-cell sp-c-verdict">Verdict</span></div>')
 
@@ -487,7 +508,7 @@ def rules_html(sp, d, rows, now, ev_list):
     prod = sorted((r for r in rows if r.get("prod")), key=production_order)
     sand = sorted((r for r in rows if not r.get("prod")), key=sandbox_order)
     scoped = sp["scoped"] and len(scopes_present(rows)) > 1
-    family = esc(sp["family"].lower())
+    family = esc(sp["family"] if sp["family"].isupper() else sp["family"].lower())   # "NBA", not "nba"
     if prod:
         shown = "".join(rule_row(sp, d, r, now, scoped, ev_list) for r in prod[:PROD_VISIBLE])
         rest = prod[PROD_VISIBLE:]
@@ -497,7 +518,7 @@ def rules_html(sp, d, rows, now, ev_list):
                     f'rule{"s" if len(rest) != 1 else ""}</summary>'
                     f'{"".join(rule_row(sp, d, r, now, scoped, ev_list) for r in rest)}</details>')
         prod_html = (f'<div class="sp-rules-list sp-prod" data-list="production">'
-                     f'{list_head(scoped, "Production rule")}{shown}{more}</div>')
+                     f'{list_head(scoped, "Production rule", sp)}{shown}{more}</div>')
     else:
         prod_html = f'<p class="sp-empty" data-empty="production">No {family} rule is in Production.</p>'
     # Retired rules (v "retired") stay in the Sandbox list, last, and are counted apart: they are
@@ -518,7 +539,7 @@ def rules_html(sp, d, rows, now, ev_list):
         opened = " open" if (len(prod) <= SANDBOX_OPEN_MAX_PROD and len(sand) <= SANDBOX_OPEN_MAX_ROWS) else ""
         sand_html = (f'<details class="fold sp-sandbox" id="sandbox"{opened}><summary><h3>Sandbox rules</h3>'
                      f'<span class="sm mut">· {esc(count)} · by evidence</span></summary>'
-                     f'<div class="sp-rules-list" data-list="sandbox">{list_head(scoped)}{body}</div></details>')
+                     f'<div class="sp-rules-list" data-list="sandbox">{list_head(scoped, sp=sp)}{body}</div></details>')
     else:
         sand_html = f'<p class="sp-empty" data-empty="sandbox">No {family} rule is in the Sandbox.</p>'
     count = (f'{len(prod)} in Production · {len(sand)} in the Sandbox' if rows
@@ -545,7 +566,7 @@ def retired_html(sp, d, now):
     n = f'{len(gone)} rule{"s" if len(gone) != 1 else ""}'
     return (f'<section id="retired" class="sp-section"><details class="fold sp-retired"><summary><h3>Retired rules</h3>'
             f'<span class="sm mut">· {esc(n)} · final records · no new entries</span></summary>'
-            f'<div class="sp-rules-list" data-list="retired">{list_head(scoped)}{body}</div></details></section>')
+            f'<div class="sp-rules-list" data-list="retired">{list_head(scoped, sp=sp)}{body}</div></details></section>')
 
 
 # ------------------------------------------------------------------ the events

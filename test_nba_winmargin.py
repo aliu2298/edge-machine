@@ -195,10 +195,10 @@ import json
 if __import__("os").path.exists(NB.SRC):
     page = NB.build(json.load(open(NB.SRC)))
     ids = re.findall(r'<section id="([^"]+)"', page[page.find("<main"):])
-    check("on the NBA page: the glance, the lane cards, the tracker, then Upcoming",
-          [i for i in ids if i in ("glance", "cheap-side", "wm-yes", "wm-no", "ml-dog", "tracker", "matchups")],
-          ["glance", "cheap-side", "wm-yes", "wm-no", "tracker", "matchups"])
-    check("with a nav link", 'href="#tracker"' in page, True)
+    # 2026-11-05: the lanes are Rules rows; the tracker sits in the folded Research block, before Games.
+    check("on the NBA page: Rules, then the tracker in Research, then the games",
+          [i for i in ids if i in ("rules", "research", "tracker", "games", "matchups")], ["rules", "research", "tracker", "games", "matchups"])
+    check("with a nav link to Research", 'href="#research"' in page, True)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

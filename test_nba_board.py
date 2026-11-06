@@ -286,9 +286,9 @@ eq(acc.group(1) if acc else None,
    "the accuracy line is built from the file's own errors on the graded games")
 ok(UP.index("nba-games") < HTML.index('id="accuracy"') < HTML.index('<section id="graded">'),
    "the accuracy line sits under the upcoming table, before Results")
-ok('<details class="section-disclosure nba-results"><summary><b>Results · last 24 hours</b>' in GRADED
+ok('<details class="section-disclosure nba-results"><summary><b>Results</b><span>last 24 hours' in GRADED
    and "<details" in GRADED and ' open' not in GRADED.split("<summary>", 1)[0],
-   "Results is a collapsed section headed Results · last 24 hours")
+   "Results is a collapsed section headed Results · last 24 hours (Games, 2026-11-05)")
 ok('<th class="num">1Q exp / act</th><th class="num">1H exp / act</th><th class="num">FT exp / act</th>' in GRADED,
    "the results table has the exp / act columns")
 gs = _game_row(GRADED, "GS")
@@ -445,20 +445,20 @@ ok(nba_tab is not None and 'aria-current="page"' in nba_tab.group(0)
    and main_nav.count('aria-current="page"') == 1 and HTML.count('<nav class="main"') == 1,
    "only the NBA pill is current")
 ok('<script src="./sports.js"></script>' in HTML, "the NBA page still loads sports.js")
-ok('<nav class="toc" aria-label="On this page"><a href="#glance">Glance</a><a href="#wm-yes">Win margin</a><a href="#wm-no">NO fade</a><a href="#tracker">Tracker</a><a href="#matchups">Upcoming</a><a href="#graded">Results</a><a href="#teams">Teams</a><a href="#ladder">Ladder</a><a href="#retired">Retired</a></nav>' in HTML
+ok('<nav class="toc" aria-label="On this page"><a href="#rules">Rules</a><a href="#research">Research</a><a href="#games">Games</a><a href="#retired">Retired</a><a href="#method">Method</a></nav>' in HTML
    and "nba-local-nav" not in HTML,
-   "the Glance / Win margin / NO fade / ML underdog / Tracker / Upcoming / Results / Teams / Ladder / Retired jump pills are the shared sub-nav, not a local pill bar")
-head = HTML.split('<section id="matchups">', 1)[0]
-ok("<h1>NBA</h1>" in head and '<p class="eyebrow">Research board</p>' in head
-   and '<p class="scope">Expected combined points · tip times Central</p>' in head
-   and "Pace data as of Oct 1, 1:00 PM CT" in head and "Open a matchup" not in HTML,
-   "the header is the eyebrow, the title, one scope line, and the freshness line")
+   "the Rules / Research / Games / Retired / Method jump pills are the shared sub-nav, not a local pill bar (2026-11-05)")
+head = HTML.split('<div class="tiles', 1)[0]
+games = HTML[HTML.find('<section id="games"'):HTML.find('<section id="matchups">')]
+ok("<h1>NBA</h1>" in head and '<p class="eyebrow">Rules under test</p>' in head
+   and '<p class="scope">Win margin lanes on Kalshi · All times Central</p>' in head
+   and "Pace data as of Oct 1, 1:00 PM CT" in games and "Open a matchup" not in HTML,
+   "the header is the eyebrow, the title and one scope line; the freshness line heads Games (2026-11-05)")
 ok(fmt.display_updated(NOW) in HTML and "CT" in fmt.display_updated(NOW),
    "the stamp is Updated … CT for the pinned clock")
-about = re.search(r'<details class="section-disclosure nba-about">.*?</details>', HTML, re.S)
-ok(about and " open" not in about.group(0).split(">", 1)[0]
-   and len(re.findall(r"[.!?](\s|$)", _text(about.group(0)))) <= 4,
-   "About this desk is collapsed and a few sentences")
+about = re.search(r'<section id="method" class="sp-method"><details>.*?</details></section>', HTML, re.S)
+ok(about is not None and "1Q, 1H and FT are expected combined points" in about.group(0),
+   "the board's few sentences sit in the collapsed method fold (2026-11-05)")
 css = open(os.path.join(ROOT, "public_site", "site.css"), encoding="utf-8").read()
 ok("color-scheme: dark" in css and "prefers-color-scheme: light" in css,
    "the stylesheet is dark by default with the light theme on the same tokens")
@@ -487,7 +487,9 @@ ok(HTML.count('data-l=""') >= 1 and 'data-l="" data-l=' not in HTML
    and 'data-l="1Q"' in HTML
    # Upcoming, Results, Teams and the folded ladder's team table (the retired lanes' tables left the
    # page 2026-10-28); the Safe Card's own tables (2026-10-22) read the live ledger, so they are counted apart.
-   and HTML.count("<thead>") - _safe_card_theads(HTML) == 4,
+   # Counted on the board alone (Games and the folded ladder): the lane rows' folds carry their own tables (2026-11-05).
+   and (HTML[HTML.find('<section id="games"'):HTML.find('<section id="retired"')].count("<thead>")
+        + HTML[HTML.find('<section id="ladder"'):HTML.find('<section id="games"')].count("<thead>")) == 4,
    "the page names each column for the phone cards and leaves the detail cell unlabelled")
 ok(sandbox_build.label_cells(HTML) == HTML, "labelling the page again changes nothing")
 

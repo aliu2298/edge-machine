@@ -150,7 +150,7 @@ check("the in-sample result is its own fold, labelled not evidence", ('id="nofad
 check("the ask-check skip is stated", "Skipped as unverified ask: 1 of 4" in html, True)
 check("no inline style or svg (the NBA page forbids both)", ("style=" in html, "<svg" in html), (False, False))
 check("public copy passes the guard", sandbox_audit.COPY_RE.search(html), None)
-check("the Sandbox index row links to the NBA page", ("nba.html#cheap-side" in B.index_row(state), 'data-lane="nba_wm_nofade"' in B.index_row(state)), (True, True))
+check("the Sandbox index row links to the NBA page's NO fade row", ("nba.html#wm-no" in B.index_row(state), 'data-lane="nba_wm_nofade"' in B.index_row(state)), (True, True))
 
 print("\n" + ("ALL PASS" if not FAILS else f"{len(FAILS)} FAILED"))
 sys.exit(1 if FAILS else 0)

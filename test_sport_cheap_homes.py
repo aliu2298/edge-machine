@@ -57,8 +57,8 @@ if os.path.exists(nba_pace_build.SRC):
     pages["nba"] = nba_pace_build.build(json.load(open(nba_pace_build.SRC)))
 for page, html in pages.items():
     first = re.search(r'<(?:section|details)[^>]*id="([^"]+)"', html[html.find("<main"):])
-    check(f"{page}: the cheap-side section is the first section of the page (the NBA page opens on its glance table, 2026-10-31)",
-          first and first.group(1), "glance" if page == "nba" else "cheap-side")
+    check(f"{page}: the cheap-side section is the first section of the page (the NBA page opens on its Rules, 2026-11-05)",
+          first and first.group(1), "rules" if page == "nba" else "cheap-side")
     for lane in CB.HOMES[page]:
         L = next(x for x in chaos_lanes.LANES if x["id"] == lane)
         if L.get("retired"):
@@ -68,6 +68,10 @@ for page, html in pages.items():
                   (folded(html, f'id="baseline-{lane}" open>'), f'<li data-lane="{lane}"' in html), (False, False))
         elif L.get("insample"):
             check(f"{page}: {lane} (in-sample) sits in its lane's in-sample fold", f'id="{L["id"].replace("_insample", "")}-insample"' in html or "nofade-insample" in html, True)
+        elif page == "nba" and lane in (C.load().get("lanes") or {}):
+            # 2026-11-05: an NBA lane is a Rules row, its record on the row itself (its words in the row's fold).
+            check(f"{page}: {lane} is a Rules row, its record visible without opening a fold",
+                  bool(re.search(rf'<details class="sp-rule[^"]*" id="[^"]+" data-source="{lane}"', html)), True)
         elif lane in (C.load().get("lanes") or {}):
             check(f"{page}: {lane}'s card is visible without opening a fold",
                   folded(html, f'<details class="section-disclosure" data-lane="{lane}" open>'), False)
@@ -78,7 +82,8 @@ idx = CB.section()
 check("an index: a row per lane, a link to each home, no lane cards", (
     all(f'data-lane="{x}"' in idx for x in ids if x in (C.load().get("lanes") or {}) and not
         next(l for l in chaos_lanes.LANES if l["id"] == x).get("baseline")),
-    all(f'href="./{p}.html#cheap-side"' in idx for p in CB.HOMES), "Split v hold" in idx), (True, True, False))
+    all(f'href="./{p}.html#cheap-side"' in idx or (p == "nba" and 'href="./nba.html#wm-yes"' in idx) for p in CB.HOMES),
+    "Split v hold" in idx), (True, True, False))
 check("challenger_dog_tp30 is marked retired there", "retired 2026-10-27" in idx, True)
 
 print("\nthe retirement")
@@ -103,9 +108,9 @@ check("nba_tt_cheap_tp30 retired 2026-10-27 with its record", (tt["retired"]["on
 check("the NBA page folds nba_ml_dog_tp50 (retired 2026-11-01) and nba_tt_cheap_tp30 into Retired, no baseline block",
       (folded(pages["nba"], '<li data-lane="nba_ml_dog_tp50"'), folded(pages["nba"], '<li data-lane="nba_tt_cheap_tp30"'),
        'id="baseline-nba_ml_dog_tp50"' in pages["nba"]), (True, True, False))
-glance = pages["nba"][pages["nba"].find('<section id="glance"'):pages["nba"].find('<section id="cheap-side">')]
-check("NBA: the glance table lists the two active lanes in order, each linking to its card",
-      re.findall(r'<a href="#([^"]+)"><b>', glance), ["wm-yes", "wm-no"])
+rules = pages["nba"][pages["nba"].find('<section id="rules"'):pages["nba"].find('<section id="research"')]
+check("NBA: the Rules table lists the two active lanes in order, each its own row (2026-11-05)",
+      re.findall(r'<details class="sp-rule[^"]*" id="([^"]+)"', rules), ["wm-yes", "wm-no"])
 
 print("\nblind lanes demoted to baselines (2026-11-01, Olu: a lane needs a team or matchup filter)")
 for lid, at in (("cfb_dog_tp50", "33 settled events; split -0.5%, hold -15.9%"),):

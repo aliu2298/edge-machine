@@ -521,14 +521,14 @@ empty_html = VB.section(V.empty(), T.empty())
 check("an empty ledger renders", "No tracked game yet" in empty_html and "No entries yet" in empty_html, True)
 import nba_pace_build
 page = nba_pace_build.build(json.load(open(nba_pace_build.SRC)), now=TIP)
-check("the NBA page keeps the ladder tracker, folded, and its nav", all(x in page for x in ('id="ladder"', 'href="#ladder"')), True)
+check("the NBA page keeps the ladder tracker, folded in Research, and its nav", all(x in page for x in ('id="ladder"', 'href="#research"')), True)
 import re
 ret_i = page.index('<section id="retired">')
 ret_part = page[ret_i:page.index("</section>", ret_i)]
 above = page[:ret_i]
-check("the Retired fold is collapsed, near the bottom: after Results and Teams, before the About note",
+check("the Retired fold is collapsed, near the bottom: after Results and Teams, before the method fold",
       ('<details class="section-disclosure nba-retired">' in ret_part, "<details open" in ret_part,
-       page.index('id="graded"') < page.index('id="teams"') < ret_i < page.index("About this desk")), (True, False, True))
+       page.index('id="graded"') < page.index('id="teams"') < ret_i < page.index('<section id="method"')), (True, False, True))
 check("one line each for every retired lane: R1-R7, six value lanes and controls, four baselines, the cheap-side lanes "
       "(the moneyline underdog retired 2026-11-01)",
       sorted(re.findall(r'<li data-lane="([^"]+)"', ret_part)),
@@ -539,11 +539,11 @@ check("each line carries its date and reason (R2 keeps its Oct 24 note)",
 check("above the fold only the active lanes: no retired lane id, label table or entry list",
       [x for x in ("R1:", "nba_tt_value", "nba_1q_value", "fade_overs", "base_nba", "nba_tt_cheap_tp30", "Sandbox rules", "Value lanes",
                    "Level guard", "Model level v Kalshi level", "Calibration · team totals", "Retired 2026") if x in above], [])
-check("above the fold the page shows the cheap-side lane, then the folded reference; the Safe Card sits in the Retired fold",
-      [i for i in ("cheap-side", "safe-card", "matchups", "ladder", "graded", "teams") if f'id="{i}"' in above] ==
-      ["cheap-side", "matchups", "ladder", "graded", "teams"] and
-      [page.index(f'id="{i}"') for i in ("cheap-side", "matchups", "ladder")] ==
-      sorted(page.index(f'id="{i}"') for i in ("cheap-side", "matchups", "ladder")) and
+check("above the fold the page shows the lanes' Rules, then the folded Research (ladder) and the games; the Safe Card sits in the Retired fold",
+      [i for i in ("rules", "safe-card", "ladder", "matchups", "graded", "teams") if f'id="{i}"' in above] ==
+      ["rules", "ladder", "matchups", "graded", "teams"] and
+      [page.index(f'id="{i}"') for i in ("rules", "ladder", "matchups")] ==
+      sorted(page.index(f'id="{i}"') for i in ("rules", "ladder", "matchups")) and
       'id="safe-card"' in ret_part and "Retired 2026-10-30" in ret_part, True)
 check("the retired cheap-side lane is not listed in the cheap-side section", "cheap-side-retired" not in page, True)
 check("the ladder reference keeps the team table and drops the value lanes' checks",

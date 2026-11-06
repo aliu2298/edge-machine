@@ -1821,6 +1821,9 @@ nav.sp-filter::before {
   font-size: 14px;
 }
 .sp-line.is-scoped { grid-template-columns: minmax(0, 1fr) 92px 98px 88px 72px 84px 66px 200px; }
+/* A page whose rows carry two more figures (NBA, 2026-11-05: entries won after the record, live fills after the ROI). */
+.sp-line.is-wide { grid-template-columns: minmax(0, 1fr) 104px 70px 70px 70px 132px 64px 64px 176px; }
+.sp-line.is-wide .sp-cell[data-l="Live fills"] { white-space: normal; line-height: 1.25; }
 .sp-head-line {
   min-height: 0;
   padding-top: 7px;
@@ -1994,7 +1997,7 @@ details.fold.later > summary .sm { font-weight: 500; }
 /* Under 980px the eight figures no longer fit one line: a row stacks, the name and
    its badges first, then the figures, each with its own label. */
 @media (max-width: 980px) {
-  .sp-line, .sp-line.is-scoped { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px 10px; padding: 9px 12px; }
+  .sp-line, .sp-line.is-scoped, .sp-line.is-wide { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px 10px; padding: 9px 12px; }
   .sp-head-line { display: none; }
   .sp-c-name { grid-column: 1 / -1; flex-wrap: wrap; }
   .sp-name { white-space: normal; }
@@ -2003,7 +2006,7 @@ details.fold.later > summary .sm { font-weight: 500; }
   .sp-c-verdict { grid-column: 1 / -1; }
 }
 @media (max-width: 560px) {
-  .sp-line, .sp-line.is-scoped { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .sp-line, .sp-line.is-scoped, .sp-line.is-wide { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 /* The Soccer page's label rules (soccer_rules_build.py): the Rules grid, its own columns —
    rule · league · definition · Settled · Won · ROI after fee · Open. The research evidence
