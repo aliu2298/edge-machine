@@ -116754,6 +116754,53 @@
   "venue": "polymarket_us"
  },
  {
+  "bet": true,
+  "close_at": "2026-09-21T14:44:10+00:00",
+  "close_price": 0.6696,
+  "date": "2026-09-22",
+  "edge": null,
+  "id": "tennis_combo2:combo2:2026-09-22:d4efcfcc03",
+  "label": "2-leg tennis combo: Taro Daniel + Dalibor Svrcina",
+  "legs": [
+   {
+    "market_id": "KXATPMATCH-26SEP22DANDEL",
+    "pick": "a",
+    "venue": "kalshi"
+   },
+   {
+    "market_id": "KXATPMATCH-26SEP22SVRSEK",
+    "pick": "a",
+    "venue": "kalshi"
+   }
+  ],
+  "liquidity": null,
+  "logged": "2026-09-21T14:44:10+00:00",
+  "market_id": "combo2:2026-09-22:d4efcfcc03",
+  "pick": "a",
+  "pnl": 49.34,
+  "price": 0.6696,
+  "price_a": 0.6696,
+  "price_b": 0.3304,
+  "price_draw": null,
+  "prob_a": null,
+  "result": "a",
+  "settled": "2026-09-22T07:45:20+00:00",
+  "side_a": "All 2 win",
+  "side_b": "Any one loses",
+  "source": "tennis_combo2",
+  "sport": "tennis_combo",
+  "spread": null,
+  "stake": 100.0,
+  "start": "2026-09-22T04:00:00+00:00",
+  "start_source": null,
+  "status": "won",
+  "uncovered": null,
+  "untraded": false,
+  "url": "https://kalshi.com/combos",
+  "venue": "combo",
+  "venue_start": null
+ },
+ {
   "bet": false,
   "compact": true,
   "id": "pinnacle:KXWTAMATCH-26SEP21PARYAM",
