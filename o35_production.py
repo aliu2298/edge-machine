@@ -25,6 +25,7 @@ PATH = os.path.join(ROOT, "data", "production_o35_leads.json")
 NAME = "Over 3.5 cheap NO (live)"
 LANE = "o35_cheap_no_wave"
 MOVED_ON = "2026-11-01"
+ENDED_ON = "2026-11-06"          # Olu: "return to sandbox till it's working properly" - execution off, the lane is Sandbox paper again
 BID = O.HEADLINE
 SELL = round(O.HEADLINE * O.HEAD_MULT, 2)
 STAKE_USD = 1.0
@@ -153,6 +154,8 @@ def page_inputs(d, st, blob, o35_ledger, now=None, leads_feed=None):
     """Augment page inputs in memory; the original ledger, stage and feed objects are untouched. `o35_ledger` is
     data/o35_cheap_no_ledger.json; `leads_feed` defaults to data/production_o35_leads.json."""
     import production as P
+    if ENDED_ON:                          # back in the Sandbox: no Production pair, quotes or upcoming list (the live run is its own Sandbox row)
+        return d, st, blob
     now = now or dt.datetime.now(O.UTC)
     if leads_feed is None:
         leads_feed = P.load_feed(PATH) or {}

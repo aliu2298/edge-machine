@@ -102,8 +102,8 @@ def league_table(entries, rows, head, hold_on=True):
             f'<th class="num">Sell at {sell}</th>{hh}</tr>' + "".join(body) + "</table></div>")
 
 
-def trade_list(entries, mults, hold, limit=30):
-    filled = [(e, e["bids"].get("10")) for e in entries if (e.get("bids") or {}).get("10")]
+def trade_list(entries, mults, hold, limit=30, field="bids"):
+    filled = [(e, e[field].get("10")) for e in entries if (e.get(field) or {}).get("10")]
     filled.sort(key=lambda x: x[0]["kickoff"], reverse=True)
     body = []
     for e, b in filled[:limit]:
@@ -223,41 +223,100 @@ def section(state=None):
 </section>"""
 
 
+def honest_table(entries):
+    """Each record re-scored under the honesty rules (a fill strictly under the bid; a sell on prints 60+ seconds after the fill), against
+    its own old figure, on each version's headline exit and 10c bid."""
+    body = ""
+    for label, vs, mult in (("v1 · 10c bid, sell at 2x", (O.V1,), O.V1_HEAD_MULT), ("v2 · sell at 4x", (O.V2,), O.HEAD_MULT),
+                            ("v3 · second-half bid, sell at 4x", (O.V3,), O.HEAD_MULT), ("v4 · second-half bid, sell at 4x", (O.VERSION,), O.HEAD_MULT)):
+        es = [e for e in entries if e.get("version", O.V1) in vs and "honest" in e]
+        key = O.vkey(O.HEADLINE, mult)
+        new = CR.stats([r for r in O.trade_rows(es, field="honest") if r["variant"] == key])
+        old = CR.stats([r for r in O.trade_rows(es) if r["variant"] == key])
+        body += (f'<tr><td><b>{esc(label)}</b></td><td class="num">{len(es)}</td><td class="num">{old["n"]}</td><td class="num">{pct(old["roi"])}</td>'
+                 f'<td class="num">{new["n"]}</td><td class="num">{new["won"]}</td><td class="num">{pct(new["roi"])}</td><td class="num">{zfmt(new["z"])}</td></tr>')
+    return ('<div class="tbl"><table><tr><th>Record</th><th class="num">Games re-scored</th><th class="num">Fills before</th><th class="num">ROI before</th>'
+            '<th class="num">Fills honest</th><th class="num">Won honest</th><th class="num">ROI honest</th><th class="num">z honest</th></tr>' + body + "</table></div>")
+
+
+HONEST_RULE = ("Honest rules: a fill needs a trade strictly under the bid (the queue), and a sell counts only on prints at least "
+               f"{O.SELL_DELAY_S} seconds after the fill (order latency), with the same {O.MIN_VOL}-contract volume rule counted over those later prints.")
+STOP_NOTE = ("Production 2026-11-01 to 2026-11-06, then switched off: 21 live fills, 4 sold at 40c, -33% after fees. In paper, 15 of 15 2x sells and "
+             "4 of 6 4x sells printed within a minute of the fill; the live fills came 68 to 131 minutes in and none held. Back in the Sandbox until the paper rules match what the exchange does.")
+
+
 def panel(state=None):
-    """The lane's words for its row's "Rule details" fold on the Soccer page (soccer_lanes, 2026-11-05): the rule,
-    then every table of section() in its own closed fold (the exits, the league split, the fills, the first-half
-    fills and the v3 / v2 / v1 records). The row's record cells carry the headline exit."""
+    """The v4 row's "Rule details" fold on the Soccer page: the rule, the HONEST record (2026-11-06), then folds. The record before
+    the honesty rules (the exits, league split, fills, first-half fills and v3 / v2 / v1) sits in one closed fold, unchanged."""
     if state is None:
         state = O.load() if os.path.exists(O.PATH) else O.load("/nonexistent")
     all_entries = sorted(state.get("entries") or [], key=lambda e: e["kickoff"])
     old, v2, v3 = O.split3(all_entries)
     entries = [e for e in all_entries if e.get("version") == O.VERSION]
     rows = O.trade_rows(entries)
+    hrows = O.trade_rows(entries, field="honest")
     early_rows = O.trade_rows(entries, early=True)
     filled10 = [e for e in entries if (e["bids"] or {}).get("10")]
+    hfilled = [e for e in entries if (e.get("honest") or {}).get("10")]
     dead = sum(1 for e in filled10 if e["bids"]["10"]["dead"])
     thin = sum(1 for e in filled10 if e["bids"]["10"]["sells"][str(O.HEAD_MULT)]["thin"])
     summ = (f'{len(entries)} games · {len(filled10)} bids filled at 10c · {dead} dead · {thin} thin' if entries
             else "0 entries since the v4 record began")
+    left = sum(1 for e in all_entries if "honest" not in e)
     last = state.get("last_run")
     fold = lambda title, hint, body, extra="": (                # noqa: E731
         f'<details class="section-disclosure"{extra}><summary><b>{esc(title)}</b><span>{esc(hint)}</span></summary>{body}</details>')
-    tables = (fold("Exits", "sell at 4x (headline) and 3x, the v4 record", variant_table(rows, O.LIMITS, HEAD, (O.HEAD_MULT, O.COMPARE_MULT), False))
-              + fold("By league", "and the over 1.5 form-rule matches · 10c bid, sell at 4x", league_table(entries, rows, HEAD, False))
-              if entries else f'<p class="sm mut">0 entries: no game has settled since the v4 record began on {esc(state.get("since"))}.</p>')
+    honest_body = (variant_table(hrows, O.LIMITS, HEAD, (O.HEAD_MULT, O.COMPARE_MULT), False) if entries
+                   else f'<p class="sm mut">0 entries since {esc(state.get("since"))}.</p>')
+    earlier = (fold("Exits", "sell at 4x (headline) and 3x, before the honesty rules", variant_table(rows, O.LIMITS, HEAD, (O.HEAD_MULT, O.COMPARE_MULT), False)
+                    + '<p class="sm"><b>By league, and the over 1.5 form-rule matches</b> · 10c bid, sell at 4x</p>' + league_table(entries, rows, HEAD, False))
+               if entries else "")
     first_half = (variant_table(early_rows, O.LIMITS, HEAD, (O.HEAD_MULT, O.COMPARE_MULT), False) if early_rows
                   else '<p class="sm mut">No first-half fill yet in the v3 record.</p>')
-    return (f'<p class="sm"><b>v4 record</b> since {esc(state.get("since"))} · {esc(summ)} · review at {O.REVIEW_N} filled, decide at {O.DECIDE_N} · paper</p>'
-            '<p class="sm">Since 2026-11-01 the follower trades this rule live on Kalshi: a resting NO bid at 10c in a small fixed size, posted an hour after kickoff (the second half only); on a fill it rests a sell at 40c (4x); the unfilled bid is cancelled at the final whistle and an unsold position is held to settlement. Never chases, never takes. The live record is the follower&#39;s own fills. The paper record is unchanged and keeps running beside it.</p>'
-            f'<p class="sm">On the over 3.5 goals market of every game in the eleven leagues on this page, a NO bid rests at 10c from {O.BID_AFTER_MIN} minutes after kickoff. It can fill only in the second half, after goals push the over to 80c or more. A match is not entered when No already sits at or under the bid at that minute (the exchange would reject the bid), and a fill needs a trade strictly under the bid. The headline sells at 4x the bid (40c); selling at 3x is shown beside it.</p>'
-            f'<p class="sm">A bid fills when the first trade after it prints NO at or under the bid. Fills after the 4th goal are kept and marked dead fill. A sell counts only if a later trade prints at or above its target and at least {O.MIN_VOL} contracts traded at or above the target after the fill; fewer is marked thin and the trade is held. Fees: 1.75% of p(1-p) on both legs. Kickoff is the Kalshi time minus 4 hours.</p>'
-            + tables
-            + fold("Fills", "latest 30 at 10c", trade_list(entries, (O.COMPARE_MULT, O.HEAD_MULT), False))
-            + fold("First-half fills, tracked", f"{len(early_rows) // 4} bids from the old time that filled before the break",
-                   f'<p class="sm">The old bid (posted an hour before kickoff), counted only where it filled in the first {O.BID_AFTER_MIN} minutes. Kept only so the split stays measured.</p>' + first_half,
-                   f' data-lane="{O.LANE}_first_half"')
-            + v3_fold(v3) + v2_fold(v2) + v1_fold(old)
+    earlier += (fold("Fills", "latest 30 at 10c, before the honesty rules", trade_list(entries, (O.COMPARE_MULT, O.HEAD_MULT), False))
+                + fold("First-half fills, tracked", f"{len(early_rows) // 4} bids from the old time that filled before the break",
+                       f'<p class="sm">The old bid (posted an hour before kickoff), counted only where it filled in the first {O.BID_AFTER_MIN} minutes.</p>' + first_half,
+                       f' data-lane="{O.LANE}_first_half"')
+                + v3_fold(v3) + v2_fold(v2) + v1_fold(old))
+    return (f'<p class="sm sp-rule-line">Entry: a NO bid at 10c on the over 3.5 market of every game in eleven leagues, from {O.BID_AFTER_MIN} minutes after kickoff (second half only); not entered when No already sits at or under the bid.</p>'
+            f'<p class="sm sp-rule-line">Exit: sell at 4x (40c), 3x tracked; the unfilled bid is cancelled at the final whistle, an unsold position held. Paper. {esc(HONEST_RULE)}</p>'
+            f'<p class="sm"><b>v4, honest record</b> since {esc(state.get("since"))} · {len(hfilled)} bids filled · review at {O.REVIEW_N} filled, decide at {O.DECIDE_N}'
+            f'{f" · {left} games still being re-scored" if left else ""}</p>'
+            + honest_body
+            + fold("Honest re-score by version", "v1, v2, v3 and v4 against their old figures", honest_table(all_entries))
+            + fold("Live run", "Production 2026-11-01 to 2026-11-06, ended", f'<p class="sm">{esc(STOP_NOTE)}</p>')
+            + fold("Before the honesty rules", f"the old v4 record and v3, v2, v1 as they stood · {summ}", earlier)
             + fold("Research notes", "why the bid sits where it does", f'<p class="sm mut">{esc(O.TRIM_NOTE)}</p><p class="sm mut">{esc(O.RESEARCH_NOTE)}</p>')
+            + f'<p class="sm mut">Last read {esc(last or "not yet")}{(" · " + esc(state["error"])) if state.get("error") else ""}.</p>')
+
+
+def v5_panel(state=None):
+    """The v5 row's fold: the rule, its record beside v4 re-scored on the same nights, the fills."""
+    if state is None:
+        state = O.load() if os.path.exists(O.PATH) else O.load("/nonexistent")
+    es = [e for e in sorted(state.get("entries") or [], key=lambda e: e["kickoff"]) if e.get("night", "") >= O.SINCE_V5 and "v5" in e]
+    v4 = [e for e in es if e.get("version") == O.VERSION]
+    rows5 = O.trade_rows(es, field="v5")
+    rows4 = O.trade_rows(v4, field="honest")
+    fold = lambda title, hint, body: (                          # noqa: E731
+        f'<details class="section-disclosure"><summary><b>{esc(title)}</b><span>{esc(hint)}</span></summary>{body}</details>')
+    side = []
+    for label, rs in (("v5 · bid cancelled at minute 80", rows5), ("v4 re-scored · bid kept to the end", rows4)):
+        for m in (O.HEAD_MULT, O.COMPARE_MULT):
+            s = CR.stats([r for r in rs if r["variant"] == O.vkey(O.HEADLINE, m)])
+            side.append(f'<tr><td><b>{esc(label)} · sell at {m}x</b></td><td class="num">{s["n"]}</td><td class="num">{s["won"]}</td>'
+                        f'<td class="num">{pct(s["roi"])}</td><td class="num">{zfmt(s["z"])}</td><td class="num">{s["nights"]}</td></tr>')
+    beside = ('<div class="tbl"><table><tr><th>Record (same nights)</th><th class="num">Filled</th><th class="num">Won</th><th class="num">ROI after fees</th>'
+              '<th class="num">z (by night)</th><th class="num">Nights</th></tr>' + "".join(side) + "</table></div>")
+    n5 = len([e for e in es if (e.get("v5") or {}).get("10")])
+    last = state.get("last_run")
+    return (f'<p class="sm sp-rule-line">Entry: the v4 second-half NO bid at 10c, under the honest rules; the bid is cancelled {O.CANCEL_MIN} minutes after kickoff '
+            f'(match minute 80, about), so there are no late fills.</p>'
+            f'<p class="sm sp-rule-line">Exit: sell at 4x (40c), 3x tracked; unsold held to settlement. Paper. {esc(HONEST_RULE)}</p>'
+            f'<p class="sm"><b>v5</b> since {esc(O.SINCE_V5)} · {len(es)} games · {n5} bids filled · review at {O.REVIEW_N} filled, decide at {O.DECIDE_N}</p>'
+            + (variant_table(rows5, O.LIMITS, HEAD, (O.HEAD_MULT, O.COMPARE_MULT), False) if es else f'<p class="sm mut">0 games since {esc(O.SINCE_V5)}.</p>')
+            + fold("Beside v4 re-scored", "the same nights, the same honest rules, the bid kept to the end", beside)
+            + fold("Fills", "latest 30 at 10c", trade_list(es, (O.COMPARE_MULT, O.HEAD_MULT), False, field="v5"))
             + f'<p class="sm mut">Last read {esc(last or "not yet")}{(" · " + esc(state["error"])) if state.get("error") else ""}.</p>')
 
 

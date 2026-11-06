@@ -928,7 +928,7 @@ def lane_stages(now=None, st=None):
                 c = cheap[b["lane"]]
                 return None if (MS.retired(c, now) or c.get("baseline")) else "Sandbox"
             if b["lane"] == "o35_cheap_no":
-                return "Production" if OP.MOVED_ON <= now.date().isoformat() else "Sandbox"
+                return "Production" if OP.MOVED_ON <= now.date().isoformat() < OP.ENDED_ON else "Sandbox"
             return None
         return None
 

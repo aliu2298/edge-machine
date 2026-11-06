@@ -63,9 +63,9 @@ for key in TR.RULES:
     where = "retired" if key in TR.RETIRED else "rules"
     check(f"team rule {key}: one row, in {where}", (src in in_retired) if where == "retired" else (src in srcs), True)
 check("the Production label and team rules are Production rows", {RP.PAIRS[k][0] for k in RP.PAIRS} | {TRP.PAIRS[k][0] for k in TRP.PAIRS} <= prod, True)
-check("the in-play lanes: the cheap NO and the top-5 dip's live lane in Production, both dips' paper lanes in the Sandbox",
+check("the in-play lanes: the top-5 dip's live lane in Production; the cheap NO (back in the Sandbox 2026-11-06), its v5 and its ended live run, both dips' paper lanes in the Sandbox",
       ("o35_cheap_no_wave" in prod, "top5_goalless_dip_live" in prod,
-       {"arg_goalless_dip", "top5_goalless_dip"} <= srcs - prod), (True, True, True))
+       {"arg_goalless_dip", "top5_goalless_dip", "o35_cheap_no_wave", "o35_cheap_no_v5", "o35_cheap_no_wave_live"} <= srcs - prod), (False, True, True))
 check("the Eredivisie draw is a row", "ere_draw" in srcs, True)
 check("contenders and Argentina & Brasileirao over 1.5 are in the Retired fold",
       {"co_o15", "co_o25", "co_o35", "sa_o15_arg", "sa_o15_bra"} <= set(in_retired), True)
@@ -82,9 +82,9 @@ for key in SR.RULES:
     check(f"{key}: settled, won and ROI as the section counted them", (a["n"] + a["n_price"], a["won"], a["roi_fee"]), (n, won, roi))
 o = O.load()
 entries = [e for e in o["entries"] if e.get("version") == O.VERSION]
-s = CR.stats([r for r in O.trade_rows(entries) if r["variant"] == OB.HEAD])
+s = CR.stats([r for r in O.trade_rows(entries, field="honest") if r["variant"] == OB.HEAD])
 cheap = L.o35_row(o)["a"]
-check("the cheap NO's record is the headline exit (filled, won, ROI)", (cheap["n"], cheap["won"], cheap["roi_fee"]), (s["n"], s["won"], s["roi"]))
+check("the cheap NO's record is the headline exit, re-scored under the honesty rules (filled, won, ROI)", (cheap["n"], cheap["won"], cheap["roi_fee"]), (s["n"], s["won"], s["roi"]))
 for page in AB.PAGES:
     ps = AB.load_state(page)
     es = [e for e in ps.get("entries") or [] if e.get("buys") is not None]
@@ -98,7 +98,7 @@ print("\nthe row's fold holds the words, collapsed")
 k = main.find('id="cheap-side"')
 fold = main[k:main.find('</details>', main.find('class="sp-details-body"', k))]
 check("the cheap NO row is closed on load", main[k - 40:k].count(" open") == 0 and ' open' not in main[k:k + 30], True)
-for word in ("<b>Exits</b>", "<b>By league</b>", "<b>Fills</b>", "First-half fills", "v3", "v2", "v1"):
+for word in ("<b>Exits</b>", "<b>Honest re-score by version</b>", "<b>Live run</b>", "<b>Before the honesty rules</b>", "<b>Fills</b>", "First-half fills", "v3", "v2", "v1"):
     check(f"its fold has {word!r}", word in OB.panel(o), True)
 check("the dips' folds carry the buy levels and the in-sample research",
       all("<b>Buy levels</b>" in AB.panel(AB.load_state(p), p) for p in AB.PAGES)

@@ -356,11 +356,42 @@ def o35_row(state=None):
     import o35_production as OP
     state = state if state is not None else (O.load() if os.path.exists(O.PATH) else O.load("/nonexistent"))
     entries = [e for e in state.get("entries") or [] if e.get("version") == O.VERSION]
-    s = CR.stats([r for r in O.trade_rows(entries) if r["variant"] == OB.HEAD])
+    s = CR.stats([r for r in O.trade_rows(entries, field="honest") if r["variant"] == OB.HEAD])
     return row(OP.LANE, OP.SPORT, f"{O.LABEL}", "Under 3.5 · in-play",
-               inplay_record(s["n"], s["won"], s["roi"], s["z"]), OB.panel(state), prod=True, pair=f"{OP.LANE}|{OP.SPORT}",
+               inplay_record(s["n"], s["won"], s["roi"], s["z"]), OB.panel(state), prod=False, pair=None,
                anchor="cheap-side", kind="In-play",
-               note=f"Record: the v4 record's headline exit (bid {round(O.HEADLINE * 100)}c, sell at {O.HEAD_MULT:g}x).")
+               note=f"Record: v4 re-scored under the honesty rules, headline exit (bid {round(O.HEADLINE * 100)}c, sell at {O.HEAD_MULT:g}x).")
+
+
+def o35_v5_row(state=None):
+    import chaos_replay as CR
+    import o35_cheap_no as O
+    import o35_cheap_no_build as OB
+    import o35_production as OP
+    state = state if state is not None else (O.load() if os.path.exists(O.PATH) else O.load("/nonexistent"))
+    es = [e for e in state.get("entries") or [] if e.get("night", "") >= O.SINCE_V5 and "v5" in e]
+    s = CR.stats([r for r in O.trade_rows(es, field="v5") if r["variant"] == OB.HEAD])
+    return row("o35_cheap_no_v5", OP.SPORT, O.V5_LABEL, "Under 3.5 · in-play",
+               inplay_record(s["n"], s["won"], s["roi"], s["z"]), OB.v5_panel(state), prod=False, pair=None,
+               anchor="o35-v5", kind="In-play", note="Record: the 10c bid cancelled at minute 80, sell at 4x, honest rules, fresh from 2026-11-06.")
+
+
+# The live run of o35, 2026-11-01 to 2026-11-06, kept as its own row (Olu, Nov 6: back to the Sandbox until it works properly).
+O35_LIVE = dict(fills=21, sold=4, roi=-0.33, ended="2026-11-06")
+
+
+def o35_live_row():
+    import o35_production as OP
+    L = O35_LIVE
+    a = inplay_record(L["fills"], L["sold"], L["roi"], None)
+    details = params_html([
+        ("Run", f"Traded live on Kalshi from {OP.MOVED_ON} to {L['ended']} in a small fixed size; execution switched off {L['ended']}, the lane is paper only again."),
+        ("Result", f"{L['fills']} fills, {L['sold']} sold at 40c, the rest held and lost: {L['roi'] * 100:+.0f}% after fees on the fills. Final, not updated."),
+        ("Why it stopped", "Paper showed sells printing within a minute of the fill; live fills came 68 to 131 minutes in, behind the queue. "
+                           "The paper lane is being re-scored under queue and latency rules before it returns."),
+    ])
+    return row("o35_cheap_no_wave_live", OP.SPORT, "Over 3.5 cheap NO · live run (ended)", "Under 3.5 · in-play", a, details,
+               prod=False, pair=None, kind="In-play", note="The follower's own fills, closed.")
 
 
 def dip_row(page):
@@ -431,6 +462,8 @@ def rows_and_inputs(d, st, now):
     try:
         import o35_production as OP
         live.append(o35_row())
+        live.append(o35_v5_row())
+        live.append(o35_live_row())
         d, st, blob = OP.page_inputs(d, st, blob, _read(os.path.join(ROOT, "data", "o35_cheap_no_ledger.json")) or {}, now=now)
     except Exception as exc:                                    # noqa: BLE001
         print(f"soccer_lanes: the over 3.5 cheap NO failed: {type(exc).__name__}: {exc}")
