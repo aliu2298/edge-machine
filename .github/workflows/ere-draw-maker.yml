@@ -1,0 +1,36 @@
+name: Eredivisie draw maker paper research
+on:
+  schedule:
+    # Hourly. Every ere_draw match is read once, after kickoff, from its Tie market's trades, so no window stamp is needed
+    # and a missed run only delays a row.
+    - cron: '23 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: ere-draw-maker
+  cancel-in-progress: false
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Tests
+        run: python3 test_ere_draw_maker.py
+      - name: Eredivisie draw maker (Sandbox paper since 2026-11-06, queue-honest fills)
+        run: python3 ere_draw_maker.py
+      - name: Save records
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+          python3 save_records.py --message "Eredivisie draw maker paper observations" \
+            --add data/ere_draw_maker_ledger.json \
+            --after "gh workflow run sandbox-tracker.yml --ref main"

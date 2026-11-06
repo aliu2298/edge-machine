@@ -394,6 +394,18 @@ def o35_live_row():
                prod=False, pair=None, kind="In-play", note="The follower's own fills, closed.")
 
 
+def ere_draw_maker_row(state=None):
+    """Eredivisie draw band, maker entry (ere_draw_maker.py, 2026-11-06): one Sandbox row right under ere_draw, its comparison
+    with ere_draw's taker result inside the row's fold. The record is the settled fills since the lane began."""
+    import ere_draw_maker as M
+    import ere_draw_maker_build as MB
+    state = state if state is not None else (M.load() if os.path.exists(M.PATH) else M.empty())
+    r = row(M.LANE, "soccer", M.LABEL, "Match winner", M.record(state), MB.panel(state), prod=False, pair=None,
+            anchor="ere-draw-maker", kind="Rule", note="Record: the settled fills, maker fee, held to settlement; beside ere_draw's taker result.")
+    r["after"] = M.PARENT
+    return r
+
+
 def dip_row(page):
     import arg_dip as A
     import arg_dip_build as AB
@@ -467,6 +479,10 @@ def rows_and_inputs(d, st, now):
         d, st, blob = OP.page_inputs(d, st, blob, _read(os.path.join(ROOT, "data", "o35_cheap_no_ledger.json")) or {}, now=now)
     except Exception as exc:                                    # noqa: BLE001
         print(f"soccer_lanes: the over 3.5 cheap NO failed: {type(exc).__name__}: {exc}")
+    try:
+        live.append(ere_draw_maker_row())
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"soccer_lanes: the Eredivisie draw maker failed: {type(exc).__name__}: {exc}")
     try:
         import arg_dip_build as AB
         live.append(dip_row(AB.ARG_PAGE))
