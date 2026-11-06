@@ -156,15 +156,15 @@ _fresh = patch("sport_tab.preflight_report",
 _fresh.start()
 d, st = fixture()
 rows = sport_tab.family_rows(d, st, "Soccer")
-html = soccer_build.build(d, st, NOW)
+html = soccer_build.build(d, st, NOW, own_lanes=False)
 main = html.split("<main", 1)[-1].split("</main>", 1)[0]
 head = main.split('<div class="tiles', 1)[0]
 ok('<p class="eyebrow">Rules under test</p>' in head and "<h1>Soccer</h1>" in head
    and '<p class="scope">Match picks and the rules that fire them · All times Central</p>' in head,
    "the head is an eyebrow, the title and one scope line ending in All times Central")
 ok('<nav class="toc" aria-label="On this page"><a href="#rules">Rules</a><a href="#events">Events</a>'
-   '<a href="#label-rules">Label rules</a><a href="#team-rules">Team scoring</a><a href="#contender-overs">Contenders</a><a href="#sa-o15">Arg &amp; Bra</a><a href="#method">Method</a></nav>' in html,
-   "the sub-nav is Rules · Events · Label rules · Team scoring · Method")
+   '<a href="#method">Method</a></nav>' in html,
+   "the sub-nav is Rules · Events · Method (2026-11-05: every soccer lane is a row of Rules, as on Econ Daily)")
 ok(main.find('id="rules"') < main.find('id="events"') < main.find('id="method"'), "rules, then events, then the method fold")
 ok("javascript:" not in html and "&lt;script&gt;" in html, "a hostile label is escaped and a javascript: url is not a link")
 ok("<script" not in main.lower(), "no inline script")
@@ -190,7 +190,7 @@ eq(_text(tiles[2]), f'{live["won"]}–{live["n"] - live["won"]} since Production
 ok(B.pct(live["roi_fee"], sign=True) in tiles[3], "the ROI tile is that window's ROI after fees")
 whole = prod_row["a"]
 ok(whole["n"] >= live["n"], "the whole Sandbox record is at least the since-Production one")
-no_prod = soccer_build.build(d, {"pairs": {}}, NOW)
+no_prod = soccer_build.build(d, {"pairs": {}}, NOW, own_lanes=False)
 ok("<span>Sandbox record · paper" in no_prod and "ROI after fees · Sandbox, paper" in no_prod
    and "no rule in Production" not in no_prod, "with no rule in Production the tiles are the Sandbox's, labelled paper")
 # The pool is the live Sandbox rules' own records: baselines, retired rows and Production rows are out.
@@ -201,7 +201,7 @@ eq((_pool["n"], _pool["won"], round(_pool["roi_fee"], 4), len(_live)), (40, 27, 
    "pooled n-weighted across the live Sandbox rules only (the rows' own ROI after fees)")
 two = dict(st, pairs=dict(st["pairs"], **{"o15_ranked|soccer_o15": {"stage": "production", "by_hand": "2026-09-20",
                                                                      "promoted_at": "2026-09-20T00:00:00+00:00"}}))
-two_html = soccer_build.build(d, two, NOW)
+two_html = soccer_build.build(d, two, NOW, own_lanes=False)
 ok("since Production · 2 rules" in two_html, "two Production rules pool into one since-Production line, named by count")
 pooled = production._group_record([production._assess_since_kickoff(d, k, two["pairs"][k]) for k in two["pairs"]])
 ok(f'<b>{pooled["won"]}–{pooled["n"] - pooled["won"]}</b><span>since Production · 2 rules</span>' in two_html,
@@ -341,7 +341,7 @@ ok(dates and all(re.match(r"^(Mon|Tue|Wed|Thu|Fri|Sat|Sun) [A-Z][a-z]{2} \d{1,2}
 print("\nthe empty states say why")
 quiet = {"quotes": [q for q in d["quotes"] if q["status"] != "open"],
          "coverage": {"soccer_o15": {"o15_form_l10": {"offered": 55, "picked": 0}, "kalshi_venue": 55}}}
-qhtml = soccer_build.build(quiet, st, NOW)
+qhtml = soccer_build.build(quiet, st, NOW, own_lanes=False)
 qev = _section(qhtml.split("<main", 1)[-1], "events")
 empties = dict(re.findall(r'<p class="sp-empty" data-empty="([a-z]+)">(.*?)</p>', qev))
 ok(empties["next"].startswith("No pick starts in the next 24 hours: no qualifying Kalshi price: the last read offered 55 markets and no rule&#x27;s band was met"),
@@ -349,7 +349,7 @@ ok(empties["next"].startswith("No pick starts in the next 24 hours: no qualifyin
 ok("next check" in empties["next"], "and the tracker's next check is named")
 ok(empties["live"].startswith("Nothing is in progress"), "in progress: nothing started and unsettled")
 ok('data-default-tab="done"' in qhtml, "with nothing coming or running the Completed tab starts selected")
-nothing = soccer_build.build({"quotes": [], "coverage": {}}, {"pairs": {}}, NOW)
+nothing = soccer_build.build({"quotes": [], "coverage": {}}, {"pairs": {}}, NOW, own_lanes=False)
 nev = _section(nothing.split("<main", 1)[-1], "events")
 empties = dict(re.findall(r'<p class="sp-empty" data-empty="([a-z]+)">(.*?)</p>', nev))
 ok("no read is stored for this sport yet" in empties["next"], "with no coverage at all the page says no read is stored")
@@ -357,7 +357,7 @@ ok("history still warming" in empties["next"], "and names the rules still waitin
 ok(empties["done"].startswith("No pick settled in the last 14 days: no rule has settled a pick yet"), "completed: no history yet")
 old_only = {"quotes": _settled("o15_form_l10", "soccer_o15", n=4, won=3, days_ago=20),
             "coverage": {"soccer_o15": {"o15_form_l10": {"offered": 0, "picked": 0}}}}
-ohtml = soccer_build.build(old_only, st, NOW)
+ohtml = soccer_build.build(old_only, st, NOW, own_lanes=False)
 oev = _section(ohtml.split("<main", 1)[-1], "events")
 empties = dict(re.findall(r'<p class="sp-empty" data-empty="([a-z]+)">(.*?)</p>', oev))
 ok("no Kalshi market was listed on the last read" in empties["next"], "nothing offered: no market listed")
@@ -369,7 +369,7 @@ ok(method.lstrip().startswith("<details><summary><b>Method</b><small>") and "<de
    "the method is a fold, closed by default")
 ok("Prices are the Kalshi ask" in method and "Registered lanes" in method, "it carries the grading note and the registered lanes")
 with patch("sport_tab.preflight_report", return_value=({}, '<p class="note"><b class="neg">Status is old.</b></p>')):
-    warn = soccer_build.build(d, st, NOW)
+    warn = soccer_build.build(d, st, NOW, own_lanes=False)
 ok('<details open><summary><b>Method · check needed</b>' in warn, "a pre-flight that needs attention opens the fold and says so")
 
 print("\nthe stylesheet and the script")

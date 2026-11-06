@@ -223,6 +223,44 @@ def section(state=None):
 </section>"""
 
 
+def panel(state=None):
+    """The lane's words for its row's "Rule details" fold on the Soccer page (soccer_lanes, 2026-11-05): the rule,
+    then every table of section() in its own closed fold (the exits, the league split, the fills, the first-half
+    fills and the v3 / v2 / v1 records). The row's record cells carry the headline exit."""
+    if state is None:
+        state = O.load() if os.path.exists(O.PATH) else O.load("/nonexistent")
+    all_entries = sorted(state.get("entries") or [], key=lambda e: e["kickoff"])
+    old, v2, v3 = O.split3(all_entries)
+    entries = [e for e in all_entries if e.get("version") == O.VERSION]
+    rows = O.trade_rows(entries)
+    early_rows = O.trade_rows(entries, early=True)
+    filled10 = [e for e in entries if (e["bids"] or {}).get("10")]
+    dead = sum(1 for e in filled10 if e["bids"]["10"]["dead"])
+    thin = sum(1 for e in filled10 if e["bids"]["10"]["sells"][str(O.HEAD_MULT)]["thin"])
+    summ = (f'{len(entries)} games · {len(filled10)} bids filled at 10c · {dead} dead · {thin} thin' if entries
+            else "0 entries since the v4 record began")
+    last = state.get("last_run")
+    fold = lambda title, hint, body, extra="": (                # noqa: E731
+        f'<details class="section-disclosure"{extra}><summary><b>{esc(title)}</b><span>{esc(hint)}</span></summary>{body}</details>')
+    tables = (fold("Exits", "sell at 4x (headline) and 3x, the v4 record", variant_table(rows, O.LIMITS, HEAD, (O.HEAD_MULT, O.COMPARE_MULT), False))
+              + fold("By league", "and the over 1.5 form-rule matches · 10c bid, sell at 4x", league_table(entries, rows, HEAD, False))
+              if entries else f'<p class="sm mut">0 entries: no game has settled since the v4 record began on {esc(state.get("since"))}.</p>')
+    first_half = (variant_table(early_rows, O.LIMITS, HEAD, (O.HEAD_MULT, O.COMPARE_MULT), False) if early_rows
+                  else '<p class="sm mut">No first-half fill yet in the v3 record.</p>')
+    return (f'<p class="sm"><b>v4 record</b> since {esc(state.get("since"))} · {esc(summ)} · review at {O.REVIEW_N} filled, decide at {O.DECIDE_N} · paper</p>'
+            '<p class="sm">Since 2026-11-01 the follower trades this rule live on Kalshi: a resting NO bid at 10c in a small fixed size, posted an hour after kickoff (the second half only); on a fill it rests a sell at 40c (4x); the unfilled bid is cancelled at the final whistle and an unsold position is held to settlement. Never chases, never takes. The live record is the follower&#39;s own fills. The paper record is unchanged and keeps running beside it.</p>'
+            f'<p class="sm">On the over 3.5 goals market of every game in the eleven leagues on this page, a NO bid rests at 10c from {O.BID_AFTER_MIN} minutes after kickoff. It can fill only in the second half, after goals push the over to 80c or more. A match is not entered when No already sits at or under the bid at that minute (the exchange would reject the bid), and a fill needs a trade strictly under the bid. The headline sells at 4x the bid (40c); selling at 3x is shown beside it.</p>'
+            f'<p class="sm">A bid fills when the first trade after it prints NO at or under the bid. Fills after the 4th goal are kept and marked dead fill. A sell counts only if a later trade prints at or above its target and at least {O.MIN_VOL} contracts traded at or above the target after the fill; fewer is marked thin and the trade is held. Fees: 1.75% of p(1-p) on both legs. Kickoff is the Kalshi time minus 4 hours.</p>'
+            + tables
+            + fold("Fills", "latest 30 at 10c", trade_list(entries, (O.COMPARE_MULT, O.HEAD_MULT), False))
+            + fold("First-half fills, tracked", f"{len(early_rows) // 4} bids from the old time that filled before the break",
+                   f'<p class="sm">The old bid (posted an hour before kickoff), counted only where it filled in the first {O.BID_AFTER_MIN} minutes. Kept only so the split stays measured.</p>' + first_half,
+                   f' data-lane="{O.LANE}_first_half"')
+            + v3_fold(v3) + v2_fold(v2) + v1_fold(old)
+            + fold("Research notes", "why the bid sits where it does", f'<p class="sm mut">{esc(O.TRIM_NOTE)}</p><p class="sm mut">{esc(O.RESEARCH_NOTE)}</p>')
+            + f'<p class="sm mut">Last read {esc(last or "not yet")}{(" · " + esc(state["error"])) if state.get("error") else ""}.</p>')
+
+
 def place(html, state=None):
     """Put the section near the top: before the page's first <section id=...> in <main>. Never breaks the page."""
     try:

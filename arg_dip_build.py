@@ -221,6 +221,45 @@ def section(state=None, page=None):
 </section>"""
 
 
+def panel(state=None, page=None):
+    """The lane's words for its row's "Rule details" fold on the Soccer page (soccer_lanes, 2026-11-05): the rule,
+    then every table of section() in its own closed fold (the buy levels, the league split, the fills and the
+    in-sample research). The row's record cells carry the headline buy."""
+    page = page or ARG_PAGE
+    cfg = page["cfg"]
+    sid = page["id"]
+    if state is None:
+        state = load_state(page)
+    entries = [e for e in state.get("entries") or [] if e.get("buys") is not None]
+    ins = state.get("insample") or {}
+    head = A.vkey(cfg["headline"])
+    s = A.summary(entries, cfg["headline"])
+    summ = (f'{s["matches"]} matches seen · {s["fills"]} bought at {head}% · {s["sold"]} sold at P · {A.status(s["fills"])}'
+            if entries else f'no match has settled since the record began on {state.get("since")}')
+    fold = lambda title, hint, body, extra="": (                # noqa: E731
+        f'<details class="section-disclosure"{extra}><summary><b>{esc(title)}</b><span>{esc(hint)}</span></summary>{body}</details>')
+    tables = (fold("Buy levels", f"{head}% of P (headline) and the variants on the same matches", variant_table(entries, f"{sid}-live", page))
+              if entries else f'<p class="sm mut">No match has settled since the record began on {esc(state.get("since"))}.</p>')
+    if entries and cfg.get("leagues"):
+        tables += fold("By league", f"the headline buy at {head}% of P", league_table(entries, f"{sid}-leagues", cfg))
+    ins_entries = ins.get("entries") or []
+    window = ins.get("window", cfg["insample"])
+    ins_block = (fold("In-sample research", f"{window[0]} to {window[1]} · the matches the rule was found on · not evidence, never in the record",
+                      '<p class="sm">Replayed once by the same code. The rule was chosen on these matches, so they cannot '
+                      'test it: only matches from the record date on count.</p>'
+                      + (f'<p class="sm">{esc(page["insample_note"])}</p>' if page.get("insample_note") else "")
+                      + variant_table(ins_entries, f"{sid}-insample-table", page)
+                      + (league_table(ins_entries, f"{sid}-insample-leagues", cfg) if cfg.get("leagues") else "")
+                      + f'<p class="sm mut">{esc(skips_line(ins.get("skips")))}.</p>', f' id="{sid}-insample"')
+                 if ins_entries else "")
+    last = state.get("last_run")
+    return (f'<p class="sm"><b>Record</b> since {esc(state.get("since"))} · {esc(summ)} · an outcome is a match · paper</p>'
+            f'<p class="sm">{esc(page["intro"])}</p><p class="sm">{esc(page["rule"])}</p><p class="sm"><b>{esc(page["oos"])}</b></p>'
+            + tables + f'<p class="sm mut">{esc(skips_line(state.get("skips")))}.</p>{watching(state)}'
+            + fold("Fills", f"latest 30 at {head}% of P", fills_list(entries, page=page)) + ins_block
+            + f'<p class="sm mut">Last read {esc(last or "not yet")}{(" · " + esc(state["error"])) if state.get("error") else ""}.</p>')
+
+
 def place(html, state=None):
     """Put the goalless-dip sections right after the page's cheap-side section (o35), else before its first
     section, in PAGES order (Argentina first; `state`, when given, is Argentina's). Never breaks."""

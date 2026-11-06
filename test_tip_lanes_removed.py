@@ -571,7 +571,7 @@ def _kept_lane_numbers_body():
     html = SB.build(now=NOW, d=raw, st=st)
     shown = SB.hide_removed(raw)
     scores = T.score(shown)
-    stamp = SB.approval_table(shown, scores, full=raw)
+    stamp = SB.approval_table(shown, scores, full=raw, extra=SB.own_ledger_judged())   # the page adds the own-ledger rows
     ok(stamp in html, "the stamp judges each source on the full ledger minus its own removed rows")
     ok(SB.approval_table(shown, scores) not in html,
        "the stamp is not the ledger with every removed lane dropped")
@@ -794,7 +794,8 @@ def _aggregates_ignore_removed_rows_body():
     pages_clean = _built_pages(clean, st)
     eq(set(pages_dirty), set(pages_clean), "injecting removed bets builds the same pages")
     sandbox = pages_dirty["sandbox.html"]
-    ok(page_stamp in sandbox, "the built page shows that stamp")
+    ok(SB.approval_table(shown, T.score(shown), full=dirty, extra=SB.own_ledger_judged()) in sandbox,
+       "the built page shows that stamp (with the own-ledger rows the page adds)")
     for name in sorted(pages_dirty):
         got, want = pages_dirty[name], pages_clean[name]
         if name == "sandbox.html":

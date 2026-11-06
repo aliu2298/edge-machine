@@ -150,7 +150,7 @@ promoted = {"pairs": dict((st.get("pairs") or {}),
                           **{f'{r["name"]}|{r["sport"]}': {"stage": "production", "by_hand": "2026-10-08",
                                                           "promoted_at": "2026-10-08T00:00:00+00:00"}
                              for r in pages["soccer"][1]})}
-crowded = soccer_build.build(d, promoted, NOW)
+crowded = soccer_build.build(d, promoted, NOW, own_lanes=False)   # the tracker rows alone: the count below is theirs
 crowded_rows = sport_tab.family_rows(d, promoted, "Soccer")
 check(crowded, "soccer, all promoted", notes_for(crowded_rows))
 prod = [r for r in crowded_rows if r.get("prod")]

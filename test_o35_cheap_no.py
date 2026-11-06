@@ -237,8 +237,12 @@ check("the fill list shows the contracts at 3x and 4x", ("Sell at 4x · contract
 check("header-row tables for the phone labels (no thead)", "<thead>" not in html, True)
 check("no private-system words in the page copy", sandbox_audit.COPY_RE.search(html), None)
 page = soccer_build.build()
-sec_ids = re.findall(r'<section id="([^"]+)"', page[page.find("<main"):])
-check("the cheap-side section is the first section of the Soccer page", sec_ids[0], "cheap-side")
+# 2026-11-05 (Olu): one row of the Soccer page's Production rules, its words in the row's fold (soccer_lanes).
+k = page.find('id="cheap-side"')
+row = page[k:k + 400]
+check("the lane is a Production row of the Soccer page, linked as #cheap-side",
+      (k > 0, 'data-source="o35_cheap_no_wave"' in row, 'data-stage="production"' in row), (True, True, True))
+check("its fold carries the exits, the league split and the versions", all(x in B.panel(st) for x in ("<b>Exits</b>", "<b>By league</b>", "<b>Fills</b>")), True)
 check("its tables are labelled for the phone", 'data-l="Filled"' in B.place("<main><section id=\"x\"></section>", st), True)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
