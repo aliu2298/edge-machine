@@ -86,7 +86,7 @@ check("no live file adds nothing", PL.cells("a|b", None, dict(roi=None), None), 
 paper = [dict(id="q1", status="won"), dict(id="q9", status="won"), dict(id="q5", status="won", ko="2026-11-01T20:00:00+00:00"), dict(id="q2", status="won")]
 why = PL.explain(paper, PL.window(orders, "2026-11-01T00:00:00+00:00"), {"q9": "thin book"}, in_feed={"q1", "q2", "q9"}, feed_from="2026-11-02T00:00Z")
 check("the gap is explained: refused, older than the feed, settled the other way", sorted(why),
-      sorted(["refused: thin book", "older than the feed's retained history (cannot tell whether it was published)",
+      sorted(["refused: thin book", "older than the feed's retained history (settled leads are kept 7 days; cannot tell whether it was published)",
               "settled the other way (paper and live graded the match differently)",
               "live order outside the paper window (paper has no such bet since Production)"]))
 sec = PL.gap_section([("Pair A", "a|b", 4, 0.25, data)], {"a|b": paper}, {"q1"}, {})

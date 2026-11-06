@@ -223,7 +223,17 @@ def build(src_dir=SRC_DIR, fetch=None, cache_path=None):
     for lid, (pair, quote) in leads.items():
         if pair in out and quote and quote in refused and quote not in placed:
             out[pair]["refused"][quote] = refused[quote]
-    return dict(generated=dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%MZ"), pairs=out,
+    # Orders the follower placed on a pair that is NOT in a Production feed any more (pulled back to the Sandbox, or a scope that was in
+    # Production and left): its own live fills, kept under its own pair name so they are never read as another scope's (2026-11-06: the Clubs
+    # under 3.5 orders next to the Internationals pair, which has none).
+    gone = {k: o for k, o in orders.items() if (o.get("lead") or {}).get("pair") and o["lead"]["pair"] not in entered and "|" in o["lead"]["pair"]}
+    gone_res = results_for({o.get("market") for o in gone.values() if str(o.get("market") or "").startswith("KX")}, fetch, cache_path)
+    pulled = {}
+    for key, o in gone.items():
+        row, _stake = order_row(key, o, res, gone_res)
+        pulled.setdefault(o["lead"]["pair"], []).append(row)
+    pulled = {p: sorted(rows, key=lambda r: (r["ko"], str(r["id"]))) for p, rows in sorted(pulled.items())}
+    return dict(generated=dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%MZ"), pairs=out, pulled=pulled,
                 lanes=lane_rows(src_dir, fetch, cache_path),
                 lane_note="own-state lanes: the lane's own fill price; outcome from the market's settled result; sold bets left out; fees not included")
 
@@ -245,6 +255,15 @@ def check(blob):
                 raise Refused(f"{pair}: refusal entry outside the whitelist")
 
 
+def check_pulled(blob):
+    for pair, rows in (blob.get("pulled") or {}).items():
+        if BAD.search(pair) or KEYLIKE.search(pair):
+            raise Refused(f"pulled pair name {pair!r} is outside the whitelist")
+        for r in rows:
+            if set(r) - FIELDS or r["st"] not in STATES or any(isinstance(v, str) and (BAD.search(v) or KEYLIKE.search(v)) for v in r.values()):
+                raise Refused(f"{pair}: a pulled-pair order carries a field, state or value outside the whitelist")
+
+
 def check_lanes(blob):
     for lane, rows in blob.get("lanes", {}).items():
         for r in rows:
@@ -256,6 +275,7 @@ def main(argv=None):
     blob = build()
     check(blob)
     check_lanes(blob)
+    check_pulled(blob)
     tmp = OUT + ".tmp"
     with open(tmp, "w") as f:
         json.dump(blob, f, indent=1, sort_keys=True)

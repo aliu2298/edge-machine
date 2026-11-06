@@ -1410,8 +1410,14 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
     # ("Team scores 1+ form rule · Clubs" and "· Internationals"). The pair key and
     # the lead ids keep the plain label.
     name = lambda key: S.scoped_rule(*(key.split("|", 1) + [None])[:2]) if "|" in key else S.scoped_rule(key)
-    sport_of = lambda key: S.SPORTS.get(key.split("|")[1], "Econ Daily" if key.endswith("|econ_daily")
-                                        else S.OWN_LEDGER_SPORTS.get(key.split("|")[1], key.split("|")[1]))
+    # The market is worded for the side the pair backs (2026-11-06): soccer_u35 is the UNDER 3.5 market, so A7 and A2, which back its Yes (the
+    # over), read "Over 3.5"; A6 backs the No of the over 2.5 market and reads "Under 2.5". The side is the pair's own, from its quotes.
+    import sandbox_build as _B
+    _sides = _B.pair_sides(d)
+    _plain = lambda key: S.SPORTS.get(key.split("|")[1], "Econ Daily" if key.endswith("|econ_daily")
+                                      else S.OWN_LEDGER_SPORTS.get(key.split("|")[1], key.split("|")[1]))
+    sport_of = lambda key: (_B.side_words(key.split("|")[1], _sides.get(tuple(key.split("|", 1))), words=_plain(key))
+                            if "|" in key and key.split("|")[1] in S.SPORTS else _plain(key))
     label = lambda key: f"{name(key)} · {sport_of(key)}"
     pct = lambda x: fmt.pct(x, digits=1, sign=True)
     tone = lambda x, n: _tone(x, n, digits=1)
@@ -1505,7 +1511,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
             else:
                 since_note = "none yet"
             early = early_state(pair, live["n"])
-            paper_bets[key] = [dict(id=q.get("id"), status=q.get("status"), ko=(_kickoff(q).isoformat() if _kickoff(q) else None)) for q in mine_since if q.get("bet")]
+            paper_bets[key] = [dict(id=q.get("id"), status=q.get("status"), price=q.get("price"), ko=(_kickoff(q).isoformat() if _kickoff(q) else None)) for q in mine_since if q.get("bet")]
             live_rec, live_roi, live_data = PL.cells(key, since, dict(roi=live["roi_fee"] if live["n"] else None), live_blob)
             live_gap_rows.append((name(key), key, live["n"], live["roi_fee"] if live["n"] else None, live_data))
             card = f"""<tr>
@@ -1561,7 +1567,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
             f'<summary><h3>{esc(g)}</h3><span class="mut sm">· {" · ".join(bits)}</span></summary>'
             f'<div class="tbl"><table>{pairs_head}{rows}</table></div></details>')
     pairs_html = ("".join(sections) + PL.gap_section(live_gap_rows, paper_bets, {l.get('sandbox_quote') for l in leads if l.get('sandbox_quote')},
-                                                                  _feed_from(leads)) + PL.lanes_table(live_blob) +
+                                                                  _feed_from(leads), horizon=(now_dt - datetime.timedelta(days=KEEP_SETTLED_DAYS)).isoformat()) + PL.lanes_table(live_blob) + PL.pulled_table(live_blob, name) +
                   ('<p class="sm mut">Live fills: orders the follower placed and Kalshi settled, counted from the pair\'s Production date, ROI per $1 staked after fees, '
                    f'read {esc((live_blob or {}).get("generated") or "not yet")}. Paper is the Sandbox grade of the same bets.</p>' if live_blob else "") +
                   '<p class="sm mut">Reaches the feed counts the pair\'s bets the feed could publish. A tip is unreachable when no Kalshi or Polymarket US market was listed for it, or its Kalshi market had no verified start time, so it stays in the Sandbox record and the feed cannot carry it.</p>'

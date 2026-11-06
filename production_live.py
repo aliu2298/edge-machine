@@ -9,6 +9,8 @@ import html as _h
 import json
 import os
 
+import live_caps as LC
+
 ROOT = os.path.dirname(os.path.abspath(__file__))
 PATH = os.path.join(ROOT, "data", "live_record.json")
 GAP_BETS = 1.0              # a gap beyond about one bet is explained
@@ -63,7 +65,22 @@ def record(orders):
                 roi=(sum(o["w"] * o["r"] for o in wl) / w if w else None))
 
 
-def explain(paper, orders, refused, in_feed=None, feed_from=None):
+def link_orders(paper, orders):
+    """The follower's early orders carry no paper-bet id (placed before the lead named its Sandbox quote), so they cannot be matched by id.
+    Where an order has no id, it is linked to the one unlinked paper bet that kicks off at the same minute (the pair is the same: both
+    lists are one pair's). Copies; nothing is altered."""
+    out, taken = [], {o["id"] for o in orders if o.get("id")}
+    for o in orders:
+        if not o.get("id") and o.get("ko"):
+            hit = [p for p in paper if p["id"] not in taken and str(p.get("ko") or "")[:16] == str(o["ko"])[:16]]
+            if len(hit) == 1:
+                taken.add(hit[0]["id"])
+                o = dict(o, id=hit[0]["id"], linked_by="kickoff")
+        out.append(o)
+    return out
+
+
+def explain(paper, orders, refused, in_feed=None, feed_from=None, pair=None, horizon=None):
     """Why the live record differs from the paper one for a pair, as {reason: count}.
 
     `paper`  the pair's paper bets since Production: [{id, status}] (status open|won|lost|settled)
@@ -71,6 +88,7 @@ def explain(paper, orders, refused, in_feed=None, feed_from=None):
     `refused` {quote id: category} the follower's refusals of leads that never got an order
     `feed_from` the earliest kickoff the feed still holds for the pair: older paper bets cannot be placed in or out of it
     `in_feed` the quote ids the Production feed carries (None = unknown): a paper bet missing from it never reached the follower"""
+    orders = link_orders(paper, orders)
     live = {o["id"]: o for o in orders if o.get("id")}
     out = {}
 
@@ -84,10 +102,12 @@ def explain(paper, orders, refused, in_feed=None, feed_from=None):
         if o is None:
             if p["id"] in refused:
                 add("refused: " + refused[p["id"]])
+            elif pair and p.get("price") is not None and LC.reason(pair, p["price"]):
+                add(LC.reason(pair, p["price"]) + " (the follower refuses the leg)")
             elif in_feed is not None and p["id"] not in in_feed:
-                ko, cut = _t(p.get("ko")), _t(feed_from) if feed_from else None
+                ko, cut = _t(p.get("ko")), _t(feed_from or horizon) if (feed_from or horizon) else None
                 if cut is not None and ko is not None and ko < cut:
-                    add("older than the feed's retained history (cannot tell whether it was published)")
+                    add("older than the feed's retained history (settled leads are kept 7 days; cannot tell whether it was published)")
                 else:
                     add("never in the feed (the feed publishes fewer bets than the Sandbox grades: reachability, one rung a day, lateness)")
             else:
@@ -146,7 +166,7 @@ def cells(key, pair_entered, paper, live_blob):
     return rec_frag, roi_frag, dict(orders=orders, rec=rec, refused=p.get("refused") or {})
 
 
-def gap_section(rows, paper_by_pair, in_feed=None, feed_from=None):
+def gap_section(rows, paper_by_pair, in_feed=None, feed_from=None, horizon=None):
     """The 'why they differ' list for the pairs whose settled counts differ by more than about one bet, or whose ROI differs by more
     than one bet's worth of return. `rows`: [(pair label, key, paper settled n, paper roi, data from cells())]."""
     items = []
@@ -159,7 +179,7 @@ def gap_section(rows, paper_by_pair, in_feed=None, feed_from=None):
                    abs(rec["roi"] - proi) * max(pn, rec["n"]) > GAP_BETS * 0.5)
         if not (big_count or big_roi):
             continue
-        why = explain(paper_by_pair.get(key, []), data["orders"], data["refused"], in_feed, (feed_from or {}).get(key))
+        why = explain(paper_by_pair.get(key, []), data["orders"], data["refused"], in_feed, (feed_from or {}).get(key), pair=key, horizon=horizon)
         if key.split("|")[-1] in CLUSTERED:
             days = len({o["ko"][:10] for o in data["orders"] if o["st"] in SETTLED})
             why["the paper record counts one result per market-day (a day's rungs grade together); live counts every order: "
@@ -171,6 +191,28 @@ def gap_section(rows, paper_by_pair, in_feed=None, feed_from=None):
     if not items:
         return ""
     return ('<details class="fold"><summary>Where live and paper differ by more than about one bet</summary>' + "".join(items) + "</details>")
+
+
+def pulled_table(live_blob, name):
+    """Live fills on pairs that are no longer in Production (their own pair, never another scope's), one fold under the lanes table.
+    `name(pair)` words the pair as the page does. Settled fills only: won, lost; the rest is counted open or unfilled."""
+    import sandbox_sources as S
+    pulled = (live_blob or {}).get("pulled") or {}
+    # Soccer pairs that left Production, never a removed lane (removed lanes render nowhere).
+    pulled = {p: o for p, o in pulled.items() if p.split("|")[-1].startswith("soccer") and not S.lane_removed(*p.split("|", 1))}
+    rows = [(p, record(o)) for p, o in pulled.items() if o]
+    rows = [(p, r) for p, r in rows if r["won"] or r["lost"] or r["open"]]
+    if not rows:
+        return ""
+    body = ""
+    for pair, rec in sorted(rows, key=lambda x: (-x[1]["n"], x[0])):
+        roi = "—" if rec["roi"] is None else f'{rec["roi"] * 100:+.1f}%'
+        extra = ", ".join(f"{rec[k]} {w}" for k, w in (("open", "open"), ("unfilled", "unfilled"), ("sold", "exited early")) if rec[k]) or "—"
+        body += (f'<tr><td>{esc(name(pair))}</td><td class="num"><b>{rec["won"]}–{rec["lost"]}</b></td><td class="num">{roi}</td>'
+                 f'<td class="sm mut">{esc(extra)}</td></tr>')
+    return ('<details class="fold"><summary>Pairs no longer in Production, live fills (each under its own pair)</summary>'
+            '<div class="tbl"><table><thead><tr><th>Pair</th><th class="num">Live W–L</th><th class="num">ROI</th><th>Other</th></tr></thead>'
+            f'<tbody>{body}</tbody></table></div></details>')
 
 
 def lanes_table(live_blob):
