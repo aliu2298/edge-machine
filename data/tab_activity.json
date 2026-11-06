@@ -1,0 +1,139 @@
+{
+ "generated": "2026-11-06T02:24Z",
+ "rule": "active = not retired, not a baseline, a bet or an open pick in its current record window",
+ "tabs": {
+  "commodities": {
+   "active": [
+    "commod_fav_band|commodities_fav",
+    "commod_nc_no|commodities_fav",
+    "commod_nc_yes|commodities_fav",
+    "gas_cheap_no",
+    "gas_week_cheap_no"
+   ],
+   "archived": false,
+   "error": null,
+   "since": null
+  },
+  "cricket": {
+   "active": [],
+   "archived": true,
+   "error": null,
+   "since": "2026-11-05"
+  },
+  "crypto": {
+   "active": [
+    "crypto_fav_band_below|crypto_fav"
+   ],
+   "archived": false,
+   "error": null,
+   "since": null
+  },
+  "culture": {
+   "active": [
+    "album_cheap_no",
+    "album_cheap_rungs",
+    "mentions_dip_hold",
+    "rt_model"
+   ],
+   "archived": false,
+   "error": null,
+   "since": null
+  },
+  "econ_daily": {
+   "active": [
+    "econ_nc_no",
+    "econ_nc_yes"
+   ],
+   "archived": false,
+   "error": null,
+   "since": null
+  },
+  "fights": {
+   "active": [],
+   "archived": true,
+   "error": null,
+   "since": "2026-11-05"
+  },
+  "finance_daily": {
+   "active": [
+    "finance_spx_nc_no"
+   ],
+   "archived": false,
+   "error": null,
+   "since": null
+  },
+  "nba": {
+   "active": [
+    "nba_winmargin_live",
+    "nba_wm_nofade"
+   ],
+   "archived": false,
+   "error": null,
+   "since": null
+  },
+  "nfl": {
+   "active": [
+    "cfb_home_dog_x4",
+    "nfl_tt_over_3545"
+   ],
+   "archived": false,
+   "error": null,
+   "since": null
+  },
+  "soccer": {
+   "active": [
+    "arg_goalless_dip",
+    "btts_form_l10|soccer_btts_intl",
+    "corners_total_under|soccer_corners",
+    "corners_ucl_fade|soccer_corners",
+    "ere_draw|soccer",
+    "ftts_no_70_80|soccer_ftts",
+    "liga_btts_even|soccer_btts",
+    "liga_u15_dog|soccer_o15",
+    "mls_fade_home|soccer_p05",
+    "o15_ranked|soccer_o15_intl",
+    "o35_cheap_no_wave",
+    "sr_a1",
+    "sr_a2",
+    "sr_a3",
+    "sr_a4",
+    "sr_a6",
+    "sr_a7",
+    "sr_b1",
+    "sr_b2",
+    "sr_b3",
+    "sr_b4",
+    "sr_b5",
+    "sr_b6",
+    "sr_c1",
+    "sr_c3",
+    "sr_c4",
+    "st_t1",
+    "st_t3",
+    "st_t4",
+    "st_t5",
+    "st_t7",
+    "team1_form_l5|soccer_team1_cup",
+    "team1_form_l5|soccer_team1_intl",
+    "team2_form_l10|soccer_team2_intl",
+    "team2_ranked|soccer_team2",
+    "team2_ranked|soccer_team2_cup",
+    "top5_goalless_dip",
+    "u35_low_o15|soccer_o15",
+    "u35_low_scoring|soccer_u35_cup",
+    "u35_low_scoring|soccer_u35_intl"
+   ],
+   "archived": false,
+   "error": null,
+   "since": null
+  },
+  "tennis": {
+   "active": [
+    "challenger_won_here_hold"
+   ],
+   "archived": false,
+   "error": null,
+   "since": null
+  }
+ }
+}

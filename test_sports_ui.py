@@ -87,7 +87,7 @@ if playwright is not None:
                     !e.checkVisibility() || ![...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())
                     || parseFloat(getComputedStyle(e).fontSize) >= 11)"""), (sport, width)
                 assert page.locator(".page-menu").count() == 0 and page.locator("nav.sports").count() == 0
-                assert page.locator("nav.main a").count() == len(site_chrome.PAGES)
+                assert page.locator("nav.main a").count() == len(site_chrome.shown_pages(sport))   # archived tabs leave the nav
                 assert page.locator("nav.main a").evaluate_all(
                     "(links, tap) => links.filter(e => innerWidth <= 640 || !e.closest('.nav-menu'))"
                     ".every(e => e.getBoundingClientRect().height >= tap)", tap)

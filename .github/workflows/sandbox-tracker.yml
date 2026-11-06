@@ -150,6 +150,13 @@ jobs:
         run: |
           python3 superpack.py || echo "::warning::superpack did not run; its ledger is unchanged"
 
+      # Archived tabs (2026-11-05, Olu): a sport tab with no active lane leaves the nav. Checked before the pages
+      # are built, from the ledgers just written. Never fatal: a failed check leaves the last file, and a tab whose
+      # own check fails counts as active.
+      - name: Tab activity
+        run: |
+          python3 tab_activity.py || echo "::warning::tab_activity did not run; the last check stands"
+
       - name: Build the tracker page
         id: build
         run: |
@@ -213,6 +220,10 @@ jobs:
           # Superpack's ledger (2026-11-05), written after the lanes log; added only when present.
           if [ -f data/superpack_ledger.json ]; then
             git add data/superpack_ledger.json
+          fi
+          # The tab-activity check (2026-11-05), read by every page's nav; added only when present.
+          if [ -f data/tab_activity.json ]; then
+            git add data/tab_activity.json
           fi
           if [ "$COMMIT_SITE" = "true" ]; then
             git add $DATA $SITE

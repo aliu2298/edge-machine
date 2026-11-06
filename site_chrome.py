@@ -111,6 +111,27 @@ MARKET_GROUP = ("nba", "nfl", "soccer", "tennis", "cricket", "crypto", "commodit
                 "econ_daily", "finance_daily", "culture", "fights", "leaderboard")
 
 
+_ARCHIVED = None
+
+
+def archived_tabs():
+    """The tabs tab_activity's last build-time check archived (data/tab_activity.json), read once per process."""
+    global _ARCHIVED
+    if _ARCHIVED is None:
+        try:
+            import tab_activity
+            _ARCHIVED = frozenset(tab_activity.archived())
+        except Exception:                                       # noqa: BLE001
+            _ARCHIVED = frozenset()
+    return _ARCHIVED
+
+
+def shown_pages(active=None):
+    """PAGES as the nav shows them on `active`'s page: the archived tabs left out, except the page's own."""
+    gone = archived_tabs() - {active}
+    return [p for p in PAGES if p[0] not in gone]
+
+
 def nav(active, prefix="./"):
     """One link per page, with aria-current on exactly one.
 
@@ -119,7 +140,11 @@ def nav(active, prefix="./"):
     """
     parts, group = [], []
     current = 0
-    for key, label, href in PAGES:
+    # A tab with no active lane is archived (tab_activity, 2026-11-05): it leaves the nav, except on its own page,
+    # which is still built and linked from Archives. The market menu keeps whatever tabs remain.
+    shown = shown_pages(active)
+    in_group = [k for k, _l, _h in shown if k in MARKET_GROUP]
+    for key, label, href in shown:
         attr = ""
         if key == active:
             attr = ' aria-current="page"'
@@ -127,11 +152,11 @@ def nav(active, prefix="./"):
         link = f'<a href="{esc(_href(href, prefix))}"{attr}>{esc(label)}</a>'
         if key in MARKET_GROUP:
             group.append(link)
-            if len(group) == len(MARKET_GROUP):
+            if len(group) == len(in_group):
                 # The button always reads "Markets" (2026-11-04). It used to take the current page's name, so every
                 # page in the menu showed its label twice, button and link ("Leaderboard" on leaderboard.html, #254).
                 # The current page is still marked: the button is highlighted and the page's own link is current.
-                here = any(k == active for k, _l, _h in PAGES if k in MARKET_GROUP)
+                here = any(k == active for k in in_group)
                 parts.append(
                     f'<span class="nav-group{" is-current" if here else ""}">'
                     f'<button type="button" class="nav-more" aria-expanded="false" aria-controls="nav-markets">'

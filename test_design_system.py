@@ -241,13 +241,15 @@ if playwright is not None:
                         return r.width > 0 && r.left >= 0 && r.right <= innerWidth + 1 && r.bottom <= innerHeight + 1; }),
                         expanded: document.querySelector('.nav-more').getAttribute('aria-expanded') };
                 }""")
-                ok(menu["n"] == 12 and menu["whole"] and menu["expanded"] == "true",
-                   f"{width}px: the Markets menu opens with all twelve market pages whole ({menu})")
+                # Every market page the nav shows on the soccer page: twelve, less the archived tabs (tab_activity, 2026-11-05).
+                n_menu = sum(1 for k, _l, _h in site_chrome.shown_pages("soccer") if k in site_chrome.MARKET_GROUP)
+                ok(menu["n"] == n_menu and menu["whole"] and menu["expanded"] == "true",
+                   f"{width}px: the Markets menu opens with every shown market page whole ({n_menu}; {menu})")
                 page.keyboard.press("Escape")
                 eq(page.evaluate("document.querySelector('.nav-more').getAttribute('aria-expanded')"), "false",
                    f"{width}px: Escape closes the menu")
             else:
-                ok(got["rows"] == 1 and got["scrolls"] and got["n"] == 16,
+                ok(got["rows"] == 1 and got["scrolls"] and got["n"] == len(site_chrome.shown_pages("soccer")),
                    f"{width}px: every page is a pill in one scrolling row ({got})")
             page.close()
 

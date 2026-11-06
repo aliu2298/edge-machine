@@ -341,6 +341,15 @@ def _own_ledger_label(name):
         return name
 
 
+def archived_tabs_html():
+    """The archived sport tabs' entry (tab_activity, 2026-11-05). Never breaks the page."""
+    try:
+        import tab_activity
+        return tab_activity.archive_html()
+    except Exception as exc:                                    # noqa: BLE001
+        return f'<section id="archived-tabs"><p class="sm mut">Archived tabs unavailable ({esc(type(exc).__name__)}).</p></section>'
+
+
 def own_ledger_judged():
     """[(name, assess)] for the lanes that keep their own ledger and sit in the stamp table: Superpack (2026-11-05),
     its entries judged on the same criteria as Sandbox-ledger quotes. Read by the page build only, so a table built
@@ -2268,6 +2277,7 @@ def _sandbox_html(d, st, now_dt, full=None):
 <p class="sm mut">One page per week. <a href="./archive/index.html">Archive index</a></p>
 {archive_links or '<div class="note">Nothing archived.</div>'}
 </section>
+{archived_tabs_html()}
 
 <section id="summary">
 <details class="sec" open><summary><h2>What the Sandbox says</h2></summary>
