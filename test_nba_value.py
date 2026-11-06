@@ -537,7 +537,7 @@ check("each line carries its date and reason (R2 keeps its Oct 24 note)",
       (ret_part.count("Retired 2026-10-28") >= 16, "Retired 2026-10-24: 3/10" in ret_part, "Retired 2026-10-27 at 145 settled" in ret_part,
        ret_part.count("no edge against Kalshi") >= 10), (True, True, True, True))
 check("above the fold only the active lanes: no retired lane id, label table or entry list",
-      [x for x in ("R1:", "nba_tt_value", "nba_1q_value", "fade_overs", "base_nba", "nba_tt_cheap_tp30", "Sandbox rules", "Value lanes",
+      [x for x in ("R1:", "nba_tt_value", "nba_1q_value", "fade_overs", "base_nba", "nba_tt_cheap_tp30", "Value lanes",
                    "Level guard", "Model level v Kalshi level", "Calibration · team totals", "Retired 2026") if x in above], [])
 check("above the fold the page shows the lanes' Rules, then the folded Research (ladder) and the games; the Safe Card sits in the Retired fold",
       [i for i in ("rules", "safe-card", "ladder", "matchups", "graded", "teams") if f'id="{i}"' in above] ==

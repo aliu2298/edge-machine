@@ -46,13 +46,16 @@ check("a stage filter (no scope chips)", ('data-filter="stage"' in main, 'data-f
 
 print("\nthe Rules table")
 r = main[main.find('<section id="rules"'):main.find('<section id="research"')]
+rule_rows = re.findall(r'<details class="sp-rule[^"]*" id="([^"]+)" data-source="([^"]+)"[^>]*data-stage="(\w+)"', r)
 check("one Production row per lane, linked as #wm-yes and #wm-no",
-      re.findall(r'<details class="sp-rule[^"]*" id="([^"]+)" data-source="([^"]+)"[^>]*data-stage="(\w+)"', r),
+      [x for x in rule_rows if x[2] == "production"],
       [("wm-yes", "nba_winmargin_live", "production"), ("wm-no", "nba_wm_nofade", "production")])
+check("two Sandbox rows (2026-11-06): win margin YES v4 and the NO fade at 65%",
+      sorted((x[1], x[2]) for x in rule_rows if x[2] == "sandbox"), [("nba_wm_nofade_65", "sandbox"), ("nba_wm_yes_v4", "sandbox")])
 check("columns: lane, market, record (games), entries won, ROI after fees, live fills, won v priced, evidence, verdict",
       [re.sub(r"<[^>]+>", "", c) for c in re.findall(r'<span class="sp-cell[^"]*">(.*?)</span>', r[r.find("sp-head-line"):r.find("</div>", r.find("sp-head-line"))])],
       ["Production rule", "Market", "Record (games)", "Entries won", "ROI after fees", "Live fills", "Won v priced", "Evidence", "Verdict"])
-check("an empty Sandbox, said so", "No NBA rule is in the Sandbox." in r, True)
+check("the Sandbox fold lists the two paper lanes", ("No NBA rule is in the Sandbox." in r, "Sandbox rules" in r), (False, True))
 v3 = V3.load()
 if v3.get("since"):
     yr = V3.yes_rows(v3)
@@ -75,7 +78,8 @@ print("\neach row's fold: the rule in two lines, the record, then collapsed sub-
 for anchor, want in (("wm-yes", ("Alternate exits", "Older versions", "In-sample research (not evidence)", "YES / NO overlap", "Last 30 trades")),
                      ("wm-no", ("Alternate exits", "Older versions", "In-sample research (not evidence)", "YES / NO overlap", "Last 30 trades"))):
     body = r[r.find(f'id="{anchor}"'):]
-    body = body[:body.find('</details><details class="sp-rule') if anchor == "wm-yes" else len(body)]
+    nxt = body.find('<details class="sp-rule', 10)
+    body = body[:nxt if nxt > 0 else len(body)]
     check(f"{anchor}: closed on load", re.search(rf'<details class="sp-rule[^"]*" id="{anchor}"[^>]*>', r).group(0).endswith(" open>"), False)
     check(f"{anchor}: two rule lines", body.count('class="sm sp-rule-line"'), 2)
     check(f"{anchor}: the sub-panels, in order", [t for t in re.findall(r"<summary><b>([^<]+)</b>", body) if t in want], list(want))
