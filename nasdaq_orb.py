@@ -261,7 +261,10 @@ def summary(state):
         g = [r["gross_bp"] for r in tr]
         n_ = [r["net_bp"] for r in tr if r.get("net_bp") is not None]
         sp = [r["spread_bp"] for r in tr if r.get("spread_bp") is not None]
-        base = n_ if n_ else g
+        # Net only when EVERY trade has it: a re-graded row (SIP bars, 2026-11-06) whose entry minute moved has no quote for it, and a mean
+        # or a t over the few rows that kept theirs would read as the variant's net. Otherwise the figures are gross and say so.
+        use_net = bool(n_) and len(n_) == len(tr)
+        base = n_ if use_net else g
 
         def mean(x):
             return sum(x) / len(x) if x else None
@@ -273,7 +276,7 @@ def summary(state):
             t = round(m / (sd / math.sqrt(len(base))), 2) if sd > 0 else None
         out[k] = dict(label=v[0], days=len(done), trades=len(tr), no_break=len(done) - len(tr),
                       win=(sum(x > 0 for x in g) / len(g)) if g else None,
-                      gross=mean(g), net=mean(n_), spread=mean(sp), t=t, t_on="net" if n_ else "gross",
+                      gross=mean(g), net=mean(n_) if use_net else None, spread=mean(sp), t=t, t_on="net" if use_net else "gross",
                       skipped=sum(r["status"] == "skipped" for r in rows),
                       retired=RETIRED[k][0] if k in RETIRED else None,
                       retired_why=RETIRED[k][1] if k in RETIRED else None)
