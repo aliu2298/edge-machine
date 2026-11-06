@@ -180,17 +180,18 @@ check("the columns", all(c in html for c in ("Settled", "Won", "ROI after fee", 
 check("entries carry the team and labels", ("Alpha v Beta" in html, "O+D- v O+D-" in html), (True, True))
 check("an empty ledger says how entries arrive", "No entries yet" in TB.section({"rules": {}}), True)
 check("the copy passes the audit's guarded phrases", sandbox_audit.COPY_RE.search(html + TB.section({"rules": {}})), None)
-import soccer_build
-check("the Soccer page builder adds the section", "team-rules" in soccer_build._team_rules_section(), True)
-page = soccer_build.place_label_rules(
-    '<nav class="toc" aria-label="On this page"><a href="#rules">Rules</a><a href="#events">Events</a>'
-    '<a href="#method">Method</a></nav><section id="rules"></section><section id="events" class="sp-section"></section>'
-    '<section id="method"></section><footer>', '<section id="label-rules"></section><section id="team-rules"></section>')
-check("the rule sections sit after the events list and before the method fold, not under the footer",
-      page.index('id="events"') < page.index('id="label-rules"') < page.index('id="team-rules"') < page.index('id="method"'), True)
-check("the table of contents links both", ('href="#label-rules"' in page, 'href="#team-rules"' in page), (True, True))
-check("without an events section they still land above the footer",
-      soccer_build.place_label_rules("<main></main><footer>", "<section id=\"x\"></section>"), '<main></main><section id="x"></section><footer>')
+import soccer_lanes
+import soccer_rules_build as SB
+import soccer_team_rules_production as TRP
+# 2026-11-05 (Olu): each rule is one row of the Soccer page (soccer_lanes); a Production rule is its pair's row.
+live, gone, quotes = soccer_lanes.team_rows(st)
+rows = {r["own"]["label"].split(" · ")[0]: r for r in live + gone}
+check("every team rule is one row", sorted(rows), sorted(TR.RULES))
+check("the Production rules are their pairs' rows", sorted(k for k, r in rows.items() if r["prod"]), sorted(TRP.PAIRS))
+check("retired rules sit in the Retired fold", sorted(k for k, r in rows.items() if r["gone"]), sorted(TR.RETIRED))
+check("a row's record is the section's own count (settled, won)",
+      all((r["a"]["n"] + r["a"]["n_price"], r["a"]["won"]) == SB._record((st["rules"].get(k) or {}).get("picks") or [])[:2]
+          for k, r in rows.items()), True)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

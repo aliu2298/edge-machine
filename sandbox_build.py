@@ -341,7 +341,18 @@ def _own_ledger_label(name):
         return name
 
 
-def approval_table(d, scores, full=None):
+def own_ledger_judged():
+    """[(name, assess)] for the lanes that keep their own ledger and sit in the stamp table: Superpack (2026-11-05),
+    its entries judged on the same criteria as Sandbox-ledger quotes. Read by the page build only, so a table built
+    from a test ledger holds that ledger alone."""
+    try:
+        import superpack as SPK
+        return [(SPK.LANE, T.assess({"quotes": SPK.quotes(SPK.load())}, SPK.LANE))]
+    except Exception:                                           # noqa: BLE001
+        return []
+
+
+def approval_table(d, scores, full=None, extra=()):
     """Every betting source against every criterion, so a stamp can be checked, not trusted.
 
     `scores` decides who has a row, from the filtered page copy. Each row is
@@ -366,12 +377,8 @@ def approval_table(d, scores, full=None):
         # (S.source_reset_since): Oddspedia's cricket record restarts, so its stamp does.
         since = S.tour_clock_since(source=name) or S.source_reset_since(name)
         judged.append((name, T.assess(stamp_ledger(full, name), name, since=since)))
-    # Superpack (2026-11-05) keeps its own ledger; its entries are judged on the same criteria as Sandbox-ledger quotes.
-    try:
-        import superpack as SPK
-        judged.append((SPK.LANE, T.assess({"quotes": SPK.quotes(SPK.load())}, SPK.LANE)))
-    except Exception:                                           # noqa: BLE001
-        pass
+    # Own-ledger lanes judged on the same criteria (the page passes Superpack's, own_ledger_judged()).
+    judged += list(extra)
     for name, a in sorted(judged, key=lambda kv: (order[kv[1]["status"]], -kv[1]["n"])):
         cells = "".join(
             f'<td><span class="{"pos" if passed else "neg"}">{"✓" if passed else "✗"}</span>'
@@ -2289,7 +2296,7 @@ def _sandbox_html(d, st, now_dt, full=None):
 ({T.SPORT_RULES['high']['approval']['min_bets']}+ fresh bets at z ≥ {T.SPORT_RULES['high']['approval']['z_min']:g}, no day span, in high-volume sports),
 wins beating the price by z ≥ {T.APPROVAL['z_min']:g}, ROI beating every blind rule on the same contests,
 still profitable without its biggest win, and profitable in both halves. Fixed 2026-09-12.</div>
-{approval_table(d, scores, full=full)}</details>
+{approval_table(d, scores, full=full, extra=own_ledger_judged())}</details>
 <details class="ref"><summary>Blind baselines — what choosing nothing made</summary>{baseline_table(d)}</details>
 {"" if "pinnacle" in S.REMOVED_SOURCES else f'<details class="ref"><summary>Pinnacle v venue</summary>{pinnacle_table(d)}</details>'}
 <details class="ref"><summary>Feed coverage on the last run</summary>{coverage_table(cov)}

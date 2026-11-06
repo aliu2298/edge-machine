@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
-"""The Soccer page, on the shared sport template (sport_page).
+"""The Soccer page, on the shared sport template (sport_page), laid out like Econ Daily (2026-11-05, Olu).
 
-The rows are the Sandbox's own (sport_tab.family_rows); the events and the
-rule words are soccer_cards; the method fold carries the Kalshi pre-flight
-note and the registered lanes that have never fired. The fold starts open
-only when the pre-flight needs attention.
+Tiles, the scope and stage filters, the Production rules, the Sandbox rules, Events, the Retired fold and the
+method. Every soccer lane is ONE row: the tracker's rules (sport_tab.family_rows) and the own-ledger lanes
+(soccer_lanes: label rules, team scoring, the over 3.5 cheap NO, the goalless dips; the retired contenders and
+Argentina & Brasileirao over 1.5 in the Retired fold). A lane's words, other exits, splits, versions and research
+sit in its row's closed fold. The events and the tracker rules' words are soccer_cards; the method fold carries the
+Kalshi pre-flight note, the own-ledger lanes' shared words and the registered lanes that have never fired. It
+starts open only when the pre-flight needs attention.
 """
 import datetime
 import os
@@ -12,6 +15,8 @@ import os
 import sandbox_track as T
 import soccer_cards
 import sport_page as SP
+import raised_stakes
+import soccer_lanes
 import sport_tab
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -35,6 +40,7 @@ def method(idle):
             'Results are read back from the venue\'s own settlement, and this page is rebuilt '
             'from that ledger by GitHub Actions.</p>'
             f'{pf_note}'
+            f'{_own_ledger_note()}'
             f'<details class="section-disclosure"><summary><b>Registered lanes</b><span>{len(idle)}</span></summary>'
             f'{idle_html}</details>')
         label = "Method · check needed" if attention else "Method"
@@ -42,91 +48,87 @@ def method(idle):
     return _method
 
 
-def build(d=None, st=None, now=None):
+def rule_name(row):
+    own = row.get("own")
+    return own["label"] if own else soccer_cards._rule_name(row)
+
+
+def market(d, row):
+    own = row.get("own")
+    return own["market"] if own else soccer_cards.market(d, row)
+
+
+def definition(d, row):
+    own = row.get("own")
+    if not own:
+        return SP.default_definition(d, row)
+    note = (row.get("meta") or {}).get("note")
+    return own["details"] + (SP.definition_html(note) if note else "")
+
+
+def recent(d, row, now=None):
+    """The tracker's recent picks (an own-ledger lane's quotes are in the page's ledger too), then an own-ledger
+    rule's every entry, in a closed fold."""
+    own = row.get("own")
+    return soccer_cards.recent_html(d, row, now) + (own.get("entries") or "" if own else "")
+
+
+def _raised(row):
+    """The follower trades this Production pair at a raised stake (raised_stakes.py): a small badge, no amount."""
+    if not row.get("prod"):
+        return row
+    return dict(row, raised=raised_stakes.raised(row.get("pair") or f'{row["name"]}|{row["sport"]}'))
+
+
+def _own_ledger_note():
+    """The own-ledger lanes' shared words and last reads, once, in the method fold (they were each section's footer)."""
+    import fmt
+    import soccer_lanes as L
+    bits = []
+    for title, mod in (("Label rules", "soccer_rules"), ("Team scoring rules", "soccer_team_rules"),
+                       ("Title contenders' overs", "contender_overs"), ("Argentina & Brasileirão over 1.5", "sa_o15")):
+        try:
+            m = __import__(mod)
+            st = m.load() if os.path.exists(m.PATH) else {}
+            last = st.get("last_run")
+            bits.append(f'{title} {fmt.when(last) if last else "not yet"}' + (f' ({st["error"]})' if st.get("error") else ""))
+        except Exception:                                       # noqa: BLE001
+            bits.append(f"{title} could not be read")
+    return (
+        '<details class="section-disclosure"><summary><b>Own-ledger lanes</b><span>labels · last reads</span></summary>'
+        '<p class="sm">The label rules, team scoring, the over 3.5 cheap NO, the goalless dips, the contenders and '
+        'Argentina &amp; Brasileirão over 1.5 keep their own ledgers. Each is one row in the tables above, counted as '
+        'its ledger counts it: a pick lane on every settled entry at the Kalshi price after the 7% fee; an in-play lane '
+        'on its headline exit (the cheap NO\'s 10c bid sold at 4x; a dip\'s headline buy). Their other exits, splits, '
+        'versions and research are inside each row.</p>'
+        '<p class="sm">Labels: each team\'s last 10 competitive matches against its league\'s mean goals per team (O+/O− '
+        'scores more/less, D+/D− concedes more/less). A total-goals pair reads either way round; a team-scoring rule '
+        'reads the contract\'s team v its opponent. 2+ is the over 1.5 rung, 3+ the over 2.5 rung. Contenders: the top 3 '
+        'of the open Kalshi champion market by mid at entry. Argentina and the Brasileirão are judged apart, never pooled.</p>'
+        f'<p class="sm mut">Last scan · {L.esc(" · ".join(bits))}.</p></details>')
+
+
+def build(d=None, st=None, now=None, own_lanes=True):
+    """One page in the Econ Daily layout (2026-11-05, Olu): tiles, filters, the Production rules, the Sandbox
+    rules, Events, the Retired fold, Method. Every soccer lane is one row: the tracker's rules (sport_tab), and the
+    own-ledger lanes (soccer_lanes: the label rules, team scoring, the over 3.5 cheap NO, the goalless dips, and the
+    retired contenders and Argentina & Brasileirao over 1.5). Layout only: each record is counted as before."""
     now = now or datetime.datetime.now(datetime.timezone.utc)
     d = d if d is not None else T.load()
     st = st if st is not None else T.load_stages()
     rows = sport_tab.family_rows(d, st, FAMILY)
     idle = sport_tab.idle_lanes(KEY, d, skip=tuple(r["name"] for r in rows))
+    # Retired by hand (2026-10-24 and before): their own fold, final record and reason.
+    retired = sport_tab.retired_rows(d, st, FAMILY)
+    # own_lanes=False: the tracker's rows alone (a test that hands in its own ledger reads that ledger only).
+    own_live, own_gone, d, st = (soccer_lanes.rows_and_inputs(d, st, now) if own_lanes else ([], [], d, st))
+    rows = [_raised(r) for r in rows + own_live]
     sp = SP.spec(
         family=FAMILY, key=KEY, title=TITLE, description=DESCRIPTION, scope=SCOPE,
         venue="Kalshi", rows=rows, events=soccer_cards.events,
-        rule_name=soccer_cards._rule_name, market=soccer_cards.market,
-        recent=soccer_cards.recent_html, method=method(idle),
-        # Retired by hand (2026-10-24 and before): their own fold, final record and reason.
-        retired=sport_tab.retired_rows(d, st, FAMILY))
-    html = SP.page(sp, d, st, now, rows=rows, idle=idle)
-    html = _cheap_side(html)
-    return place_label_rules(html, _rules_section() + "\n" + _team_rules_section() + "\n" + _contender_section() + "\n"
-                             + _sa_o15_section() + "\n")
-
-
-METHOD_AT = '<section id="method"'
-TOC_EVENTS = '<a href="#events">Events</a>'
-
-
-def place_label_rules(html, sections):
-    """Put the label-rule sections between the events list and the method fold, and link them
-    from the page's table of contents (the Events heading must stay on the first screen, so
-    they cannot sit above it). Falls back to above the footer."""
-    if METHOD_AT in html:
-        html = html.replace(METHOD_AT, sections + METHOD_AT, 1)
-    else:
-        html = html.replace("<footer>", sections + "<footer>", 1)
-    return html.replace(TOC_EVENTS, TOC_EVENTS + '<a href="#label-rules">Label rules</a><a href="#team-rules">Team scoring</a>'
-                        '<a href="#contender-overs">Contenders</a><a href="#sa-o15">Arg &amp; Bra</a>', 1)
-
-
-def _cheap_side(html):
-    """o35_cheap_no_wave (o35_cheap_no_build.py, 2026-10-28) as the page's cheap-side section, near the top,
-    then the goalless-dip lanes (arg_dip_build.py: Argentina, then top-5 over 1.5, 2026-10-30). Never breaks the page."""
-    try:
-        import o35_cheap_no_build
-        html = o35_cheap_no_build.place(html)
-    except Exception:                                           # noqa: BLE001
-        pass
-    # arg_goalless_dip and top5_goalless_dip (arg_dip_build.py, 2026-10-30) right under it.
-    try:
-        import arg_dip_build
-        return arg_dip_build.place(html)
-    except Exception:                                           # noqa: BLE001
-        return html
-
-
-def _rules_section():
-    """The 21 Sandbox total-goals label rules (soccer_rules_build.py, 2026-10-17). Never breaks the page."""
-    try:
-        import soccer_rules_build
-        return soccer_rules_build.section()
-    except Exception as exc:                                    # noqa: BLE001
-        return f'<section id="label-rules"><p class="sm mut">Rules section unavailable ({type(exc).__name__}).</p></section>'
-
-
-def _team_rules_section():
-    """The 8 Sandbox team-scoring label rules (soccer_team_rules_build.py, 2026-10-17). Never breaks the page."""
-    try:
-        import soccer_team_rules_build
-        return soccer_team_rules_build.section()
-    except Exception as exc:                                    # noqa: BLE001
-        return f'<section id="team-rules"><p class="sm mut">Team scoring rules unavailable ({type(exc).__name__}).</p></section>'
-
-
-def _contender_section():
-    """Title contenders' matches · overs (contender_overs_build.py, 2026-10-18). Never breaks the page."""
-    try:
-        import contender_overs_build
-        return contender_overs_build.section()
-    except Exception as exc:                                    # noqa: BLE001
-        return f'<section id="contender-overs"><p class="sm mut">Contender overs unavailable ({type(exc).__name__}).</p></section>'
-
-
-def _sa_o15_section():
-    """Argentina & Brasileirão over 1.5 (sa_o15_build.py, 2026-10-18). Never breaks the page."""
-    try:
-        import sa_o15_build
-        return sa_o15_build.section()
-    except Exception as exc:                                    # noqa: BLE001
-        return f'<section id="sa-o15"><p class="sm mut">Argentina &amp; Brasileirão over 1.5 unavailable ({type(exc).__name__}).</p></section>'
+        rule_name=rule_name, market=market, definition=definition,
+        recent=recent, method=method(idle), retired=list(retired) + own_gone)
+    return SP.page(sp, d, st, now, rows=rows, idle=idle)
 
 
 def main():

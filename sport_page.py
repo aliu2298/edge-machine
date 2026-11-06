@@ -220,8 +220,9 @@ def roi_html(row, grey_under=B.MIN_N):
 
 
 def won_v_priced(a):
-    """'4 v 3.5': wins against the wins the prices implied, or a dash."""
-    if not a.get("n"):
+    """'4 v 3.5': wins against the wins the prices implied, or a dash. An in-play exit (a take-profit sell)
+    has no priced-win count, so its record carries expected None and reads a dash (soccer_lanes, 2026-11-05)."""
+    if not a.get("n") or ("expected" in a and a["expected"] is None):
         return "—"
     return f'{int(a.get("won") or 0)} v {float(a.get("expected") or 0):.1f}'
 
@@ -387,6 +388,9 @@ def row_badges(row):
         bits.append('<span class="badge stage">Combo</span>')
     if row.get("gone") or row.get("v") == "retired":
         bits.append('<span class="badge stage">Retired</span>')
+    if row.get("raised"):
+        # The live follower trades this pair at a raised stake (raised_stakes.py, 2026-11-05). No amount: public copy.
+        bits.append('<span class="badge stage raised" title="The live follower trades this rule at a raised stake">Raised stake</span>')
     if row.get("unavailable"):
         bits.append(f'<span class="badge neg">{esc(row["unavailable"])}</span>')
     return " ".join(bits)
@@ -437,7 +441,8 @@ def rule_row(sp, d, row, now, scoped, ev_list=()):
                   if scoped else "")
     badges = row_badges(row)
     return (
-        f'<details class="sp-rule{" is-early" if early else ""}" data-source="{esc(row["name"])}" '
+        f'<details class="sp-rule{" is-early" if early else ""}"{f" id=\"{esc(row["anchor"])}\"" if row.get("anchor") else ""} '
+        f'data-source="{esc(row["name"])}" '
         f'data-sport="{esc(row["sport"])}" data-scope="{scope_key(row)}" data-stage="{stage_key(row)}"'
         f'{" data-early=\"1\"" if early else ""}>'
         f'<summary class="sp-line{" is-scoped" if scoped else ""}">'

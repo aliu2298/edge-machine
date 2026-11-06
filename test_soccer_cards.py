@@ -182,7 +182,7 @@ _fresh.start()
 
 print("\nsoccer page shape")
 d, st = _fixture()
-html = soccer_build.build(d, st, NOW)
+html = soccer_build.build(d, st, NOW, own_lanes=False)
 rows = _rows(d, st)
 ok(rows, "the fixture has soccer lanes")
 ok('id="events"' in html and 'id="rules"' in html and 'id="method"' in html,
@@ -287,11 +287,11 @@ eq([e["label"] for e in live], ["Past match"], "an open pick past kickoff is In 
 eq(SP.pick_state(live[0]["picks"][0], NOW), ("unsettled · 30h", "is-late"), "and 30 hours on it says so")
 eq([e["label"] for e in nxt], ["Today match", "Unknown match"], "an unreadable kickoff sits in Next 24h as time TBC, after the timed ones")
 eq([e["label"] for e in later], ["Later match"], "a pick days out is in the Later fold")
-bucket_html = soccer_build.build(bucket_data, {"pairs": {}}, NOW)
+bucket_html = soccer_build.build(bucket_data, {"pairs": {}}, NOW, own_lanes=False)
 unknown_row = _event(_section(bucket_html, "events"), "Unknown match")
 ok('<span class="sp-tbc">time TBC</span>' in unknown_row, "an unreadable kickoff reads 'time TBC' in the time column")
 ok("Date TBC" not in bucket_html and "Tue Oct 6" in bucket_html, "a fixture with a date but no readable time sits under its day")
-empty_html = soccer_build.build({"quotes": []}, {"pairs": {}}, NOW)
+empty_html = soccer_build.build({"quotes": []}, {"pairs": {}}, NOW, own_lanes=False)
 ok('data-empty="next"' in empty_html and 'data-empty="done"' in empty_html, "an empty page says why each tab is empty")
 
 print("\nrules: a row per rule, the words folded")
@@ -324,7 +324,7 @@ ok(all(by_n[i] >= by_n[i + 1] for i in range(len(by_n) - 1) if early[i] == early
 
 prod_st = {"pairs": {"o15_ranked|soccer_o15_intl": {"stage": "production", "by_hand": "2026-09-20", "promoted_at": "2026-09-20T00:00:00+00:00"},
                      "team1_form_l5|soccer_team1_cup": {"stage": "production", "by_hand": "2026-09-20", "promoted_at": "2026-09-20T00:00:00+00:00"}}}
-prod_html = soccer_build.build(d, prod_st, NOW)
+prod_html = soccer_build.build(d, prod_st, NOW, own_lanes=False)
 prod_rules = _section(prod_html, "rules")
 prod_list = prod_rules.split('class="sp-rules-list sp-prod"', 1)[1].split('id="sandbox"', 1)[0]
 prows = rule_rows(prod_list)
@@ -338,7 +338,7 @@ empty_rules = _section(empty_html, "rules")
 ok("No soccer rule is in Production." in empty_rules and 'data-list="sandbox"' in empty_rules,
    "an empty ledger still lists the wired cup and international twins as Sandbox rows, and says nothing is in Production")
 with patch("sport_tab.family_rows", return_value=[]):
-    no_rows = _section(soccer_build.build({"quotes": []}, {"pairs": {}}, NOW), "rules")
+    no_rows = _section(soccer_build.build({"quotes": []}, {"pairs": {}}, NOW, own_lanes=False), "rules")
 ok("No soccer rule is in Production." in no_rows and "No soccer rule is in the Sandbox." in no_rows,
    "with no rows at all both halves say so")
 
@@ -351,7 +351,7 @@ ok('class="section-disclosure"' in health and "Registered lanes" in health,
    "registered lanes are a nested fold inside Method")
 
 with patch("sport_tab.family_rows", return_value=[]):
-    empty_html = soccer_build.build({"quotes": []}, {"pairs": {}}, NOW)
+    empty_html = soccer_build.build({"quotes": []}, {"pairs": {}}, NOW, own_lanes=False)
 ok(all(f'id="{anchor}"' in empty_html for anchor in ("events", "rules", "method")),
    "empty soccer pages preserve every navigation target")
 
@@ -393,7 +393,7 @@ if sync_playwright is not None:
     browser_st = {"pairs": {f'{r["name"]}|{r["sport"]}': {"stage": "production", "by_hand": "2026-09-20",
                                                          "promoted_at": "2026-09-20T00:00:00+00:00"}
                             for r in rows[:2]}}
-    browser_html = soccer_build.build(d, browser_st, NOW)
+    browser_html = soccer_build.build(d, browser_st, NOW, own_lanes=False)
     with tempfile.TemporaryDirectory(prefix="soccer-center-") as site:
         with open(os.path.join(site, "soccer.html"), "w", encoding="utf-8") as fh:
             fh.write(browser_html)
@@ -423,7 +423,7 @@ if sync_playwright is not None:
                        f"{width}px pick links have comfortable tap targets")
                     anchors = page.locator("nav.toc a").evaluate_all(
                         "links => links.map(a => a.getAttribute('href'))")
-                    eq(anchors, ["#rules", "#events", "#label-rules", "#team-rules", "#contender-overs", "#sa-o15", "#method"], f"{width}px sub-nav is Rules / Events / Label rules / Team scoring / Contenders / Arg & Bra / Method")
+                    eq(anchors, ["#rules", "#events", "#method"], f"{width}px sub-nav is Rules / Events / Method (2026-11-05: every lane is a row of Rules)")
                     ok(all(page.locator(a).count() == 1 for a in anchors),
                        f"{width}px sub-nav reaches unique sections")
                     eq(page.locator(".sp-day-head").first.evaluate("e => getComputedStyle(e).position"),

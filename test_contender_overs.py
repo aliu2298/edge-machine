@@ -119,11 +119,12 @@ check("not in Production", "not in Production" in html, True)
 check("an empty ledger says how entries arrive", "No entries yet" in CB.section({"rules": {}}), True)
 check("the copy passes the audit's guarded phrases",
       sandbox_audit.COPY_RE.search(html + CB.section({"rules": {}}) + open("contender_overs.py").read()), None)
-import soccer_build
-page = soccer_build.place_label_rules('<nav class="toc"><a href="#events">Events</a></nav><section id="events"></section>'
-                                      '<section id="method"></section><footer>', soccer_build._contender_section())
-check("the Soccer page places it before the method and links it",
-      (page.index('id="contender-overs"') < page.index('id="method"'), 'href="#contender-overs"' in page), (True, True))
+import soccer_lanes
+# 2026-11-05 (Olu): each variant is one row of the Soccer page's Retired fold (soccer_lanes), its entries in the row.
+live, gone = soccer_lanes.contender_rows(st)
+check("the Soccer page lists each variant as one row, retired ones in the Retired fold",
+      sorted(r["name"] for r in live + gone), sorted(f"co_{k.lower()}" for k in CO.VARIANTS))
+check("a retired variant's row carries its dated reason", all(r["gone"] for r in gone) and len(gone) == len(CO.RETIRED), True)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
