@@ -82,6 +82,12 @@ def pairs():
     return {f"{LANE}|{SPORT}": dict(stage="production", ready_at=PROMOTED, promoted_at=PROMOTED, by_hand=MOVED_ON)}
 
 
+# The paper lane names the leagues as its own ledger does ("EPL", "UCL"); the feed's league names are the venue's ("Premier League", "Champions
+# League"). The page's copy of a quote carries the feed's name, or placeable() finds no feed league and calls the bet unpublishable (2026-11-06:
+# 5 of 22 recent bets, all EPL). The lane's own ledger and its feed file are untouched.
+FEED_LEAGUE = {"EPL": "Premier League", "UCL": "Champions League"}
+
+
 def _event_label(event):
     return str(event or "").split("-", 1)[-1]
 
@@ -105,7 +111,7 @@ def _result_quote(e):
     return dict(
         id=f"{LANE}:{e['id']}", source=LANE, sport=SPORT, venue="kalshi_binary", market_id=e["id"], event=e.get("event"),
         label=f"{_event_label(e.get('event'))} · {e.get('league')}: over 1.5 goals (dip bid)",
-        side_a="Yes", side_b="No", kalshi_title="Over 1.5 goals", league=e.get("league"), date=kick.date().isoformat(),
+        side_a="Yes", side_b="No", kalshi_title="Over 1.5 goals", league=FEED_LEAGUE.get(e.get("league"), e.get("league")), date=kick.date().isoformat(),
         start=kick.isoformat(), logged=logged.isoformat(), price=b["limit"], price_a=b["limit"], price_b=None, price_draw=None,
         pick="a", bet=True, stake=100.0, status="won" if roi > 0 else "lost", pnl=round(roi * 100, 2),
         pnl_fee_override=round(roi * 100, 2),            # the sell at P, not a re-grade of a dip fill paid at settlement
@@ -121,7 +127,7 @@ def _open_quote(lead):
     return dict(
         id=f"{LANE}:{lead['ticker']}", source=LANE, sport=SPORT, venue="kalshi_binary", market_id=lead["ticker"],
         event=lead.get("event"), label=f"{lead.get('title') or _event_label(lead.get('event'))}: over 1.5 goals (dip bid)",
-        side_a="Yes", side_b="No", kalshi_title="Over 1.5 goals", league=lead.get("league"), date=k.date().isoformat(),
+        side_a="Yes", side_b="No", kalshi_title="Over 1.5 goals", league=FEED_LEAGUE.get(lead.get("league"), lead.get("league")), date=k.date().isoformat(),
         start=k.isoformat(), logged=(D.instant(lead.get("first_seen")) or k).isoformat(), price=None, price_a=None, price_b=None,
         price_draw=None, pick="a", bet=True, stake=100.0, status="open", pnl=0.0, result=None, settle_px=None, settled=None,
         prob_a=None, edge=None, untraded=False, start_source="espn", url="",

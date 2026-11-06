@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-06T23:07Z",
+ "generated": "2026-11-06T23:18Z",
  "lane_note": "own-state lanes: the lane's own fill price; outcome from the market's settled result; sold bets left out; fees not included",
  "lanes": {
   "nba_wm_nofade": [
@@ -1807,5 +1807,4672 @@
    "orders": [],
    "refused": {}
   }
+ },
+ "pulled": {
+  "btts_form_l10_fade|soccer_btts": [
+   {
+    "id": "btts_form_l10_fade:KXBUNDESLIGABTTS-26OCT16SGEKOE-BTTS",
+    "ko": "2026-10-16T18:30",
+    "r": 2.4002,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "btts_form_l10_fade:KXLIGUE1BTTS-26OCT16MANTFC-BTTS",
+    "ko": "2026-10-16T18:45",
+    "r": 1.5221,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "btts_form_l10_fade:KXBUNDESLIGABTTS-26OCT17SVEFCA-BTTS",
+    "ko": "2026-10-17T13:30",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "btts_form_l10_fade:KXSCOTTISHPREMBTTS-26OCT17HIBFAL-BTTS",
+    "ko": "2026-10-17T14:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "btts_form_l10_fade:KXLALIGABTTS-26OCT17VILELC-BTTS",
+    "ko": "2026-10-17T14:15",
+    "r": 1.3425,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "btts_form_l10_fade:KXEREDIVISIEBTTS-26OCT17ADOPSV-BTTS",
+    "ko": "2026-10-17T14:30",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "btts_form_l10_fade:KXLIGUE1BTTS-26OCT17RCSPSG-BTTS",
+    "ko": "2026-10-17T15:15",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "btts_form_l10_fade:KXMLSBTTS-26OCT17PHICLT-BTTS",
+    "ko": "2026-10-17T18:30",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "btts_form_l10_fade:KXEREDIVISIEBTTS-26OCT17SPAWIL-BTTS",
+    "ko": "2026-10-17T19:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "btts_form_l10_fade:KXMLSBTTS-26OCT17MINSTL-BTTS",
+    "ko": "2026-10-17T20:30",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "btts_form_l10_fade:KXMLSBTTS-26OCT17ATLMIA-BTTS",
+    "ko": "2026-10-17T23:30",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "btts_form_l10_fade:KXMLSBTTS-26OCT17NECHI-BTTS",
+    "ko": "2026-10-17T23:30",
+    "r": 1.8114,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "btts_form_l10_fade:KXMLSBTTS-26OCT17LAGSD-BTTS",
+    "ko": "2026-10-18T02:30",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "btts_form_l10_fade:KXMLSBTTS-26OCT17SEAMTL-BTTS",
+    "ko": "2026-10-18T02:30",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "btts_form_l10_fade:KXEREDIVISIEBTTS-26OCT18GROAJA-BTTS",
+    "ko": "2026-10-18T14:45",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "btts_form_l10_fade:KXEREDIVISIEBTTS-26OCT18NIJFOR-BTTS",
+    "ko": "2026-10-18T18:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   }
+  ],
+  "bund_o35|soccer_u35": [
+   {
+    "id": "",
+    "ko": "2026-10-09T18:30",
+    "r": 1.0202,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-10T13:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-10T13:30",
+    "r": 0.4286,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-10T13:30",
+    "r": 1.1505,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-10T13:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-10T13:30",
+    "r": 1.0202,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-10T16:30",
+    "r": 0.7624,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "bund_o35:KXBUNDESLIGATOTAL-26OCT11SCFSCH-4",
+    "ko": "2026-10-11T15:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "bund_o35:KXBUNDESLIGATOTAL-26OCT16SGEKOE-4",
+    "ko": "2026-10-16T18:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "bund_o35:KXBUNDESLIGATOTAL-26OCT17HSVVFB-4",
+    "ko": "2026-10-17T13:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "bund_o35:KXBUNDESLIGATOTAL-26OCT17SCHM05-4",
+    "ko": "2026-10-17T13:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "bund_o35:KXBUNDESLIGATOTAL-26OCT17SVEFCA-4",
+    "ko": "2026-10-17T13:30",
+    "r": 1.0947,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "bund_o35:KXBUNDESLIGATOTAL-26OCT17SVWPAD-4",
+    "ko": "2026-10-17T13:30",
+    "r": 1.2878,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "bund_o35:KXBUNDESLIGATOTAL-26OCT17UNIBVB-4",
+    "ko": "2026-10-17T13:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "bund_o35:KXBUNDESLIGATOTAL-26OCT17BMURBL-4",
+    "ko": "2026-10-17T16:30",
+    "r": 0.3803,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "bund_o35:KXBUNDESLIGATOTAL-26OCT18LEVSCF-4",
+    "ko": "2026-10-18T13:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "bund_o35:KXBUNDESLIGATOTAL-26OCT18BMGTSG-4",
+    "ko": "2026-10-18T15:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   }
+  ],
+  "corners_team_fade|soccer_corners": [
+   {
+    "id": "corners_team_fade:KXLALIGATCORNERS-26OCT16DEPLEV-DEP6",
+    "ko": "2026-10-16T19:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "corners_team_fade:KXEPLTCORNERS-26OCT17FULHUL-FUL7",
+    "ko": "2026-10-17T14:00",
+    "r": 0.9324,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "corners_team_fade:KXLALIGATCORNERS-26OCT17VILELC-VIL7",
+    "ko": "2026-10-17T14:15",
+    "r": 1.3992,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "corners_team_fade:KXLALIGATCORNERS-26OCT17RBBBAR-RBB4",
+    "ko": "2026-10-17T16:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "corners_team_fade:KXEPLTCORNERS-26OCT18BOUSUN-BOU6",
+    "ko": "2026-10-18T13:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "corners_team_fade:KXEPLTCORNERS-26OCT19TOTCOV-TOT7",
+    "ko": "2026-10-19T19:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "corners_team_fade:KXUCLTCORNERS-26OCT20FCPPSV-FCP6",
+    "ko": "2026-10-20T19:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "corners_team_fade:KXUCLTCORNERS-26OCT20LFCVIL-LFC7",
+    "ko": "2026-10-20T19:00",
+    "r": 1.14,
+    "side": "yes",
+    "st": "won"
+   }
+  ],
+  "corners_total_under|soccer_corners": [
+   {
+    "id": "corners_total_under:KXLALIGACORNERS-26OCT17ESPATM-9",
+    "ko": "2026-10-17T12:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "corners_total_under:KXEPLCORNERS-26OCT17MCIIPS-10",
+    "ko": "2026-10-17T14:00",
+    "r": 1.3992,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "corners_total_under:KXEPLCORNERS-26OCT18BRICRY-10",
+    "ko": "2026-10-18T13:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "corners_total_under:KXEPLCORNERS-26OCT18LEEMUN-9",
+    "ko": "2026-10-18T13:00",
+    "r": 1.5221,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "corners_total_under:KXEPLCORNERS-26OCT18NFOARS-9",
+    "ko": "2026-10-18T15:30",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "corners_total_under:KXLALIGACORNERS-26OCT18RMASEV-10",
+    "ko": "2026-10-18T19:00",
+    "r": 1.14,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "corners_total_under:KXEPLCORNERS-26OCT23IPSNFO-10",
+    "ko": "2026-10-23T19:00",
+    "r": 0.8957,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "corners_total_under:KXEPLCORNERS-26OCT24ARSEVE-9",
+    "ko": "2026-10-24T14:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "corners_total_under:KXEPLCORNERS-26OCT25MUNBOU-10",
+    "ko": "2026-10-25T14:00",
+    "r": 1.0101,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "corners_total_under:KXLALIGACORNERS-26OCT25BARRMA-10",
+    "ko": "2026-10-25T20:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "corners_total_under:KXLALIGACORNERS-26OCT26SEVOSA-8",
+    "ko": "2026-10-26T20:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   }
+  ],
+  "corners_ucl_fade|soccer_corners": [
+   {
+    "id": "corners_ucl_fade:KXUCLCORNERS-26OCT20MCIAEK-10",
+    "ko": "2026-10-20T19:00",
+    "r": 0.794,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "corners_ucl_fade:KXUCLCORNERS-26OCT20PSGBAR-9",
+    "ko": "2026-10-20T19:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   }
+  ],
+  "crypto_eth_fav_both|crypto_fav": [
+   {
+    "id": "crypto_eth_fav_both:KXETHD-26OCT2317-T2409.99",
+    "ko": "2026-10-23T21:05",
+    "r": 0.547,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "crypto_eth_fav_both:KXETHD-26OCT2417-T2319.99",
+    "ko": "2026-10-24T21:05",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "crypto_eth_fav_both:KXETHD-26OCT2717-T2339.99",
+    "ko": "2026-10-27T21:05",
+    "r": 0.3803,
+    "side": "yes",
+    "st": "won"
+   }
+  ],
+  "crypto_fav_band|crypto_fav": [
+   {
+    "id": "crypto_fav_band:KXETHD-26OCT0917-T2469.99",
+    "ko": "2026-10-09T21:05",
+    "r": 0.3103,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "crypto_fav_band:KXETHD-26OCT1417-T2419.99",
+    "ko": "2026-10-14T21:05",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "crypto_fav_band:KXBTCD-26OCT1517-T81999.99",
+    "ko": "2026-10-15T21:05",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "crypto_fav_band:KXBTCD-26OCT1917-T81749.99",
+    "ko": "2026-10-19T21:05",
+    "r": 0.3103,
+    "side": "yes",
+    "st": "won"
+   }
+  ],
+  "crypto_sol_fav_both|crypto_fav": [
+   {
+    "id": "crypto_sol_fav_both:KXSOLD-26OCT2717-T100.9999",
+    "ko": "2026-10-27T21:05",
+    "r": 0.3803,
+    "side": "no",
+    "st": "won"
+   }
+  ],
+  "econ_daily_fav_band|econ_daily": [
+   {
+    "id": "econ_daily_fav_band:KXAAAGASDMO-26OCT19-3.9300",
+    "ko": "2026-10-19T03:59",
+    "r": 0.3992,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "econ_daily_fav_band:KXAAAGASDMT-26OCT21-4.4500",
+    "ko": "2026-10-21T03:59",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   }
+  ],
+  "econ_nc_no|econ_daily": [
+   {
+    "id": "econ_nc_no:KXAAAGASD-26OCT21-4.2650",
+    "ko": "2026-10-21T03:59",
+    "r": 0.1269,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "econ_nc_no:KXDIESELD-26OCT22-T6.320",
+    "ko": "2026-10-22T03:59",
+    "r": 0.0489,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "econ_nc_no:KXAAAGASD-26OCT24-4.3000",
+    "ko": "2026-10-24T03:59",
+    "r": 0.0593,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "econ_nc_no:KXDIESELD-26OCT24-T6.335",
+    "ko": "2026-10-24T03:59",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "econ_nc_no:KXAAAGASD-26OCT25-4.2950",
+    "ko": "2026-10-25T03:59",
+    "r": 0.0489,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "econ_nc_no:KXAAAGASD-26OCT27-4.2700",
+    "ko": "2026-10-27T03:59",
+    "r": 0.0593,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "econ_nc_no:KXDIESELD-26OCT27-T6.360",
+    "ko": "2026-10-27T03:59",
+    "r": 0.07,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "econ_nc_no:KXAAAGASD-26OCT28-4.2500",
+    "ko": "2026-10-28T03:59",
+    "r": 0.0808,
+    "side": "no",
+    "st": "won"
+   }
+  ],
+  "ere_draw|soccer": [
+   {
+    "id": "ere_draw:KXEREDIVISIEGAME-26OCT16HEEEXC",
+    "ko": "2026-10-16T18:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "ere_draw:KXEREDIVISIEGAME-26OCT17SPAWIL",
+    "ko": "2026-10-17T19:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "ere_draw:KXEREDIVISIEGAME-26OCT18ZWOGAE",
+    "ko": "2026-10-18T10:15",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "ere_draw:KXEREDIVISIEGAME-26OCT18GROAJA",
+    "ko": "2026-10-18T14:45",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "ere_draw:KXEREDIVISIEGAME-26OCT18NIJFOR",
+    "ko": "2026-10-18T18:00",
+    "r": 3.2159,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "ere_draw:KXEREDIVISIEGAME-26OCT23GAETEL",
+    "ko": "2026-10-23T18:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "ere_draw:KXEREDIVISIEGAME-26OCT24FCUZWO",
+    "ko": "2026-10-24T14:30",
+    "r": 3.1254,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "ere_draw:KXEREDIVISIEGAME-26OCT24WILCAM",
+    "ko": "2026-10-24T16:45",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "ere_draw:KXEREDIVISIEGAME-26OCT24ADOHEE",
+    "ko": "2026-10-24T19:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "ere_draw:KXEREDIVISIEGAME-26OCT25NIJGRO",
+    "ko": "2026-10-25T13:30",
+    "r": 2.8008,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "ere_draw:KXEREDIVISIEGAME-26OCT25PSVFEY",
+    "ko": "2026-10-25T13:30",
+    "r": 3.1254,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "ere_draw:KXEREDIVISIEGAME-26OCT25AZATWE",
+    "ko": "2026-10-25T19:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "ere_draw:KXEREDIVISIEGAME-26OCT31HEENIJ",
+    "ko": "2026-10-31T17:45",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "ere_draw:KXEREDIVISIEGAME-26OCT31AJAAZA",
+    "ko": "2026-10-31T20:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "ere_draw:KXEREDIVISIEGAME-26OCT31CAMGAE",
+    "ko": "2026-10-31T20:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "ere_draw:KXEREDIVISIEGAME-26NOV01EXCTWE",
+    "ko": "2026-11-01T13:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "ere_draw:KXEREDIVISIEGAME-26NOV01GROSPA",
+    "ko": "2026-11-01T15:45",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   }
+  ],
+  "espn_fpi|mlb": [
+   {
+    "id": "",
+    "ko": "2026-09-18T23:40",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T00:05",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T01:40",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T20:10",
+    "r": 0.8349,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T22:40",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T22:40",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T23:05",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T23:10",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T23:15",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T17:40",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T18:15",
+    "r": 0.7391,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T19:10",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T22:35",
+    "r": 0.9048,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T01:45",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T22:35",
+    "r": 0.9048,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T22:45",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T23:05",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T23:15",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T23:40",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T23:40",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T02:10",
+    "r": 0.6529,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T17:10",
+    "r": 1.5641,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T19:45",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T22:35",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T22:40",
+    "r": 0.8519,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T22:40",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T23:10",
+    "r": 0.8349,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T23:15",
+    "r": 0.5038,
+    "side": null,
+    "st": "won"
+   }
+  ],
+  "espn_fpi|nfl": [
+   {
+    "id": "",
+    "ko": "2026-09-20T17:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T20:05",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T20:25",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T00:15",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-25T00:15",
+    "r": 2.6585,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "espn_fpi:aec-nfl-chi-atl-2026-10-18",
+    "ko": "2026-10-18T17:00",
+    "r": 0.8779,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "espn_fpi:aec-nfl-pit-tb-2026-10-18",
+    "ko": "2026-10-18T17:00",
+    "r": 0.7316,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "espn_fpi:aec-nfl-buf-lv-2026-10-18",
+    "ko": "2026-10-18T20:25",
+    "r": 0.4388,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "espn_fpi:aec-nfl-lac-kc-2026-10-18",
+    "ko": "2026-10-18T20:25",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "espn_fpi:aec-nfl-dal-gb-2026-10-18",
+    "ko": "2026-10-19T00:20",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "espn_fpi:aec-nfl-was-sf-2026-10-19",
+    "ko": "2026-10-20T00:15",
+    "r": 0.2698,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "espn_fpi:aec-nfl-cle-ten-2026-10-25",
+    "ko": "2026-10-25T17:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "espn_fpi:aec-nfl-ind-min-2026-10-25",
+    "ko": "2026-10-25T17:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "espn_fpi:aec-nfl-nyg-hou-2026-10-25",
+    "ko": "2026-10-25T17:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "espn_fpi:aec-nfl-sf-atl-2026-10-25",
+    "ko": "2026-10-25T17:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "espn_fpi:aec-nfl-tb-car-2026-10-25",
+    "ko": "2026-10-25T17:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "espn_fpi:aec-nfl-gb-det-2026-10-25",
+    "ko": "2026-10-25T20:25",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "espn_fpi:aec-nfl-kc-sea-2026-10-25",
+    "ko": "2026-10-26T00:20",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "espn_fpi:aec-nfl-dal-phi-2026-10-26",
+    "ko": "2026-10-27T00:15",
+    "r": 0.4925,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "espn_fpi:aec-nfl-car-gb-2026-10-29",
+    "ko": "2026-10-30T00:15",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   }
+  ],
+  "liga_btts_even|soccer_btts": [
+   {
+    "id": "",
+    "ko": "2026-10-10T14:15",
+    "r": 0.794,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "liga_btts_even:KXLALIGABTTS-26OCT23ALAMCF-BTTS",
+    "ko": "2026-10-23T19:00",
+    "r": 0.9324,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "liga_btts_even:KXLALIGABTTS-26OCT24RVCELC-BTTS",
+    "ko": "2026-10-24T12:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "liga_btts_even:KXLALIGABTTS-26OCT26SEVOSA-BTTS",
+    "ko": "2026-10-26T20:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   }
+  ],
+  "mentions_rate|culture_mentions": [
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-ANTI",
+    "ko": "2026-10-26T14:00",
+    "r": 0.3532,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-AUTO",
+    "ko": "2026-10-26T14:00",
+    "r": 1.4588,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-AUTO",
+    "ko": "2026-10-26T14:00",
+    "r": 1.3425,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-BIBI",
+    "ko": "2026-10-26T14:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-BIBI",
+    "ko": "2026-10-26T14:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-BLOC",
+    "ko": "2026-10-26T14:00",
+    "r": 0.294,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-CEAS",
+    "ko": "2026-10-26T14:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-CRYP",
+    "ko": "2026-10-26T14:00",
+    "r": 0.8265,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-CUBA",
+    "ko": "2026-10-26T14:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-CUBA",
+    "ko": "2026-10-26T14:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-CYBE",
+    "ko": "2026-10-26T14:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-ETHA",
+    "ko": "2026-10-26T14:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-NOBE",
+    "ko": "2026-10-26T14:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-RANK",
+    "ko": "2026-10-26T14:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-RIGG",
+    "ko": "2026-10-26T14:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-RIGG",
+    "ko": "2026-10-26T14:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-STUP",
+    "ko": "2026-10-26T14:00",
+    "r": 0.3444,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-TDS",
+    "ko": "2026-10-26T14:00",
+    "r": 0.9324,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-TDS",
+    "ko": "2026-10-26T14:00",
+    "r": 0.7624,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-TOMA",
+    "ko": "2026-10-26T14:00",
+    "r": 0.4797,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-TOMA",
+    "ko": "2026-10-26T14:00",
+    "r": 0.547,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-VIVE",
+    "ko": "2026-10-26T14:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-ZACH",
+    "ko": "2026-10-26T14:00",
+    "r": 0.3103,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-ZOHR",
+    "ko": "2026-10-26T14:00",
+    "r": 0.2327,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26OCT26-ZOHR",
+    "ko": "2026-10-26T14:00",
+    "r": 0.2473,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYCOMPANY-26NOV01-ANTH",
+    "ko": "2026-11-01T15:00",
+    "r": 0.4184,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYCOMPANY-26NOV01-CHAT",
+    "ko": "2026-11-01T15:00",
+    "r": 1.733,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYCOMPANY-26NOV01-CHAT",
+    "ko": "2026-11-01T15:00",
+    "r": 1.5887,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYCOMPANY-26NOV01-DE",
+    "ko": "2026-11-01T15:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYCOMPANY-26NOV01-DE",
+    "ko": "2026-11-01T15:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYCOMPANY-26NOV01-JPM",
+    "ko": "2026-11-01T15:00",
+    "r": 0.2327,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYCOMPANY-26NOV01-JPM",
+    "ko": "2026-11-01T15:00",
+    "r": 0.2473,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYCOMPANY-26NOV01-MA",
+    "ko": "2026-11-01T15:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYCOMPANY-26NOV01-ORCL",
+    "ko": "2026-11-01T15:00",
+    "r": 0.703,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYCOMPANY-26NOV01-ORCL",
+    "ko": "2026-11-01T15:00",
+    "r": 0.5715,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYCOMPANY-26NOV01-TPUSA",
+    "ko": "2026-11-01T15:00",
+    "r": 0.3271,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYCOMPANY-26NOV01-TPUSA",
+    "ko": "2026-11-01T15:00",
+    "r": 0.3271,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYCOUNTRY-26NOV01-AUS",
+    "ko": "2026-11-01T15:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYCOUNTRY-26NOV01-AUS",
+    "ko": "2026-11-01T15:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYCOUNTRY-26NOV01-BEL",
+    "ko": "2026-11-01T15:00",
+    "r": 0.1906,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYCOUNTRY-26NOV01-BEL",
+    "ko": "2026-11-01T15:00",
+    "r": 0.2042,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYCOUNTRY-26NOV01-BHR",
+    "ko": "2026-11-01T15:00",
+    "r": 1.0947,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYCOUNTRY-26NOV01-KUW",
+    "ko": "2026-11-01T15:00",
+    "r": 0.3992,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYCOUNTRY-26NOV01-PAN",
+    "ko": "2026-11-01T15:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYCOUNTRY-26NOV01-UAE",
+    "ko": "2026-11-01T15:00",
+    "r": 2.4002,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYCOUNTRY-26NOV01-UAE",
+    "ko": "2026-11-01T15:00",
+    "r": 2.4002,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYMONTH-26NOV01-ANTI",
+    "ko": "2026-11-01T15:00",
+    "r": 0.5239,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYMONTH-26NOV01-ANTI",
+    "ko": "2026-11-01T15:00",
+    "r": 0.6474,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYMONTH-26NOV01-EPST",
+    "ko": "2026-11-01T15:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYMONTH-26NOV01-FAT",
+    "ko": "2026-11-01T15:00",
+    "r": 0.362,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYMONTH-26NOV01-GOLD",
+    "ko": "2026-11-01T15:00",
+    "r": 0.2327,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYMONTH-26NOV01-GOLD",
+    "ko": "2026-11-01T15:00",
+    "r": 0.547,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYMONTH-26NOV01-PEAC",
+    "ko": "2026-11-01T15:00",
+    "r": 0.1772,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAYMONTH-26NOV01-UFO",
+    "ko": "2026-11-01T15:00",
+    "r": 0.2781,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26NOV02-EPST",
+    "ko": "2026-11-02T15:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26NOV02-ILHA",
+    "ko": "2026-11-02T15:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "mentions_rate:KXTRUMPSAY-26NOV02-VIVE",
+    "ko": "2026-11-02T15:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   }
+  ],
+  "mma_fav_band|mma": [
+   {
+    "id": "",
+    "ko": "2026-09-22T21:30",
+    "r": 0.2346,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-26T21:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-29T23:30",
+    "r": 0.2195,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-30T00:25",
+    "r": 0.3158,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-30T00:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-03T20:30",
+    "r": 0.2195,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-03T22:15",
+    "r": 0.2195,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-03T23:30",
+    "r": 0.2195,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-04T01:15",
+    "r": 0.1765,
+    "side": null,
+    "st": "won"
+   }
+  ],
+  "nba_tt_value_1h|nba_tt": [
+   {
+    "id": "nba_tt_value_1h:401909854:BKN",
+    "ko": "2026-10-24T23:30",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909854:CLE",
+    "ko": "2026-10-24T23:30",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909855:PHI",
+    "ko": "2026-10-24T23:30",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909857:WSH",
+    "ko": "2026-10-25T00:00",
+    "r": 0.6474,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "nba_tt_value_1h:401909858:DAL",
+    "ko": "2026-10-25T00:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909858:SA",
+    "ko": "2026-10-25T00:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909859:DEN",
+    "ko": "2026-10-25T01:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909860:GS",
+    "ko": "2026-10-25T02:00",
+    "r": 1.3992,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "nba_tt_value_1h:401909860:PHX",
+    "ko": "2026-10-25T02:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909861:LAL",
+    "ko": "2026-10-25T21:00",
+    "r": 1.3425,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "nba_tt_value_1h:401909862:IND",
+    "ko": "2026-10-25T22:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909864:MIN",
+    "ko": "2026-10-25T23:00",
+    "r": 0.5251,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "nba_tt_value_1h:401909864:TOR",
+    "ko": "2026-10-25T23:00",
+    "r": 1.9833,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "nba_tt_value_1h:401909865:OKC",
+    "ko": "2026-10-25T23:00",
+    "r": 1.0947,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "nba_tt_value_1h:401909866:DET",
+    "ko": "2026-10-25T23:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909867:SAC",
+    "ko": "2026-10-26T01:00",
+    "r": 1.2878,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "nba_tt_value_1h:401909868:CHA",
+    "ko": "2026-10-26T23:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909868:WSH",
+    "ko": "2026-10-26T23:00",
+    "r": 1.14,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "nba_tt_value_1h:401909869:CLE",
+    "ko": "2026-10-26T23:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909869:MIN",
+    "ko": "2026-10-26T23:00",
+    "r": 0.8605,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "nba_tt_value_1h:401909870:BOS",
+    "ko": "2026-10-26T23:30",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909871:MIA",
+    "ko": "2026-10-26T23:30",
+    "r": 1.1872,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "nba_tt_value_1h:401909872:IND",
+    "ko": "2026-10-27T00:00",
+    "r": 0.9324,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "nba_tt_value_1h:401909873:PHX",
+    "ko": "2026-10-27T00:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909875:MEM",
+    "ko": "2026-10-27T01:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909877:BKN",
+    "ko": "2026-10-27T23:30",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909878:DET",
+    "ko": "2026-10-28T00:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909878:NY",
+    "ko": "2026-10-28T00:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909879:SA",
+    "ko": "2026-10-28T00:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909881:MIA",
+    "ko": "2026-10-28T23:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909883:CHA",
+    "ko": "2026-10-28T23:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909883:DET",
+    "ko": "2026-10-28T23:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909884:PHI",
+    "ko": "2026-10-28T23:00",
+    "r": 1.0517,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "nba_tt_value_1h:401909886:CHI",
+    "ko": "2026-10-29T00:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909888:MIN",
+    "ko": "2026-10-29T00:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909889:NO",
+    "ko": "2026-10-29T00:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_1h:401909890:UTAH",
+    "ko": "2026-10-29T01:00",
+    "r": 0.5239,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "nba_tt_value_1h:401909891:DAL",
+    "ko": "2026-10-29T01:30",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   }
+  ],
+  "nba_tt_value_24h|nba_tt": [
+   {
+    "id": "nba_tt_value_24h:401909857:WSH",
+    "ko": "2026-10-25T00:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_24h:401909870:BOS",
+    "ko": "2026-10-26T23:30",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_24h:401909877:BKN",
+    "ko": "2026-10-27T23:30",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_24h:401909878:DET",
+    "ko": "2026-10-28T00:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_24h:401909878:NY",
+    "ko": "2026-10-28T00:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_24h:401909880:LAL",
+    "ko": "2026-10-28T03:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "nba_tt_value_24h:401909884:PHI",
+    "ko": "2026-10-28T23:00",
+    "r": 1.5221,
+    "side": "no",
+    "st": "won"
+   }
+  ],
+  "o15_form_l10|soccer_o15": [
+   {
+    "id": "",
+    "ko": "2026-09-19T16:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T18:45",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T19:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T00:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T13:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "o15_form_l10:KXLALIGATOTAL-26OCT17ESPATM-2",
+    "ko": "2026-10-17T12:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   }
+  ],
+  "o15_ranked|soccer_o15": [
+   {
+    "id": "",
+    "ko": "2026-10-09T19:15",
+    "r": 0.2625,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-10T18:45",
+    "r": 0.25,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "o15_ranked:KXSERIEATOTAL-26OCT11LECBFC-2",
+    "ko": "2026-10-11T13:00",
+    "r": 0.3699,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "o15_ranked:KXSERIEATOTAL-26OCT11SASACM-2",
+    "ko": "2026-10-11T16:00",
+    "r": 0.25,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "o15_ranked:KXLALIGATOTAL-26OCT11RBBOSA-2",
+    "ko": "2026-10-11T16:30",
+    "r": 0.2625,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "o15_ranked:KXLIGAPORTUGALTOTAL-26OCT12FAMALV-2",
+    "ko": "2026-10-12T19:15",
+    "r": 0.294,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "o15_ranked:KXUELTOTAL-26OCT15NIJLEV-2",
+    "ko": "2026-10-15T19:00",
+    "r": 0.2473,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "o15_ranked:KXLALIGATOTAL-26OCT16DEPLEV-2",
+    "ko": "2026-10-16T19:00",
+    "r": 0.3103,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "o15_ranked:KXSUPERLIGTOTAL-26OCT17ERZEYU-2",
+    "ko": "2026-10-17T10:30",
+    "r": 0.3444,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "o15_ranked:KXSERIEATOTAL-26OCT17VENNAP-2",
+    "ko": "2026-10-17T13:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "o15_ranked:KXSERIEATOTAL-26OCT17ROMGEN-2",
+    "ko": "2026-10-17T18:45",
+    "r": 0.2327,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "o15_ranked:KXEPLTOTAL-26OCT18NFOARS-2",
+    "ko": "2026-10-18T15:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "o15_ranked:KXSERIEATOTAL-26OCT18JUVLAZ-2",
+    "ko": "2026-10-18T18:45",
+    "r": 0.3171,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "o15_ranked:KXSAUDIPLTOTAL-26OCT20DIRRIY-2",
+    "ko": "2026-10-20T15:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "o15_ranked:KXUELTOTAL-26OCT22JUVREN-2",
+    "ko": "2026-10-22T16:45",
+    "r": 0.2327,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "o15_ranked:KXUELTOTAL-26OCT22OLYSPA-2",
+    "ko": "2026-10-22T19:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   }
+  ],
+  "o15_ranked|soccer_o15_intl": [
+   {
+    "id": "",
+    "ko": "2026-10-02T18:45",
+    "r": 0.25,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-03T16:00",
+    "r": 0.3158,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-03T18:00",
+    "r": 0.3443,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-04T16:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-05T18:45",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-06T18:45",
+    "r": 0.2987,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-06T23:45",
+    "r": 0.362,
+    "side": null,
+    "st": "won"
+   }
+  ],
+  "o25_congestion|soccer_o25": [
+   {
+    "id": "o25_congestion:KXLALIGATOTAL-26OCT18MCFRSO-3",
+    "ko": "2026-10-18T16:30",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "o25_congestion:KXEREDIVISIETOTAL-26OCT18NIJFOR-3",
+    "ko": "2026-10-18T18:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "o25_congestion:KXEREDIVISIETOTAL-26OCT18TWEFCU-3",
+    "ko": "2026-10-18T18:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "o25_congestion:KXLIGUE1TOTAL-26OCT18OLNIC-3",
+    "ko": "2026-10-18T18:45",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "o25_congestion:KXSERIEATOTAL-26OCT18JUVLAZ-3",
+    "ko": "2026-10-18T18:45",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "o25_congestion:KXSAUDIPLTOTAL-26OCT20DIRRIY-3",
+    "ko": "2026-10-20T15:00",
+    "r": 1.14,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "o25_congestion:KXUCLTOTAL-26OCT20FENSLA-3",
+    "ko": "2026-10-20T16:45",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "o25_congestion:KXUCLTOTAL-26OCT20FCPPSV-3",
+    "ko": "2026-10-20T19:00",
+    "r": 1.5221,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "o25_congestion:KXUCLTOTAL-26OCT20MCIAEK-3",
+    "ko": "2026-10-20T19:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "o25_congestion:KXUCLTOTAL-26OCT20PSGBAR-3",
+    "ko": "2026-10-20T19:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "o25_congestion:KXUCLTOTAL-26OCT20ROMSLO-3",
+    "ko": "2026-10-20T19:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "o25_congestion:KXUCLTOTAL-26OCT20VFBATM-3",
+    "ko": "2026-10-20T19:00",
+    "r": 1.4588,
+    "side": "no",
+    "st": "won"
+   }
+  ],
+  "oddspedia|cricket": [
+   {
+    "id": "",
+    "ko": "2026-10-02T16:00",
+    "r": 1.5887,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-02T16:00",
+    "r": 0.3803,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-03T00:00",
+    "r": 2.0928,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-03T04:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-04T16:00",
+    "r": 1.2361,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-04T16:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-05T11:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-05T11:30",
+    "r": 1.2361,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-07T11:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-09T15:30",
+    "r": 0.362,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "oddspedia:KXT20MATCH-26OCT131200DOLNWD",
+    "ko": "2026-10-13T16:00",
+    "r": 0.7624,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "oddspedia:KXT20MATCH-26OCT131200ECILIO",
+    "ko": "2026-10-13T16:00",
+    "r": 0.2625,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "oddspedia:aec-t20icr-india-wie-2026-10-14",
+    "ko": "2026-10-14T13:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "oddspedia:KXT20MATCH-26OCT141130SACHPBANCHP",
+    "ko": "2026-10-14T15:30",
+    "r": 0.2183,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "oddspedia:KXT20MATCH-26OCT211200LIMPNWD",
+    "ko": "2026-10-21T16:00",
+    "r": 0.2625,
+    "side": "yes",
+    "st": "won"
+   }
+  ],
+  "olbg|boxing": [
+   {
+    "id": "",
+    "ko": "2026-09-26T03:00",
+    "r": 0.6949,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-26T15:30",
+    "r": 0.2821,
+    "side": null,
+    "st": "won"
+   }
+  ],
+  "sa_o15_arg|soccer_o15": [
+   {
+    "id": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT23GLPCAS-2",
+    "ko": "2026-10-23T21:00",
+    "r": 0.294,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT23GEMPLA-2",
+    "ko": "2026-10-23T21:30",
+    "r": 0.4382,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT23TIGTUC-2",
+    "ko": "2026-10-24T00:15",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT24BANLAN-2",
+    "ko": "2026-10-24T17:45",
+    "r": 0.4382,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT24CATDYJ-2",
+    "ko": "2026-10-24T20:00",
+    "r": 0.3803,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT24SLANOB-2",
+    "ko": "2026-10-24T22:15",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT24CARCHUR-2",
+    "ko": "2026-10-25T00:30",
+    "r": 0.4797,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT25CAACAB-2",
+    "ko": "2026-10-25T17:45",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT25CAIBOC-2",
+    "ko": "2026-10-25T20:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT25RIVRAC-2",
+    "ko": "2026-10-25T22:15",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT25BARRCU-2",
+    "ko": "2026-10-26T00:30",
+    "r": 0.6213,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT25CCVEL-2",
+    "ko": "2026-10-26T00:30",
+    "r": 0.362,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT26UNIELP-2",
+    "ko": "2026-10-26T22:00",
+    "r": 0.3992,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT26IACCRIE-2",
+    "ko": "2026-10-27T00:15",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sa_o15_arg:KXARGPREMDIVTOTAL-26OCT27ARGIRM-2",
+    "ko": "2026-10-27T22:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   }
+  ],
+  "soccerpredictions|soccer": [
+   {
+    "id": "",
+    "ko": "2026-09-17T16:45",
+    "r": 1.2361,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T18:45",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T19:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   }
+  ],
+  "sr_c1|soccer_u35": [
+   {
+    "id": "sr_c1:KXMLSTOTAL-26OCT31CINPHI-4",
+    "ko": "2026-10-31T18:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sr_c1:KXMLSTOTAL-26OCT31SKCDAL-4",
+    "ko": "2026-10-31T19:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   }
+  ],
+  "sr_d3|soccer_btts": [
+   {
+    "id": "sr_d3:KXSAUDIPLBTTS-26OCT23ITJDIR-BTTS",
+    "ko": "2026-10-23T15:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sr_d3:KXSAUDIPLBTTS-26OCT22AASKHA-BTTS",
+    "ko": "2026-10-23T18:00",
+    "r": 0.7624,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sr_d3:KXBUNDESLIGABTTS-26OCT24M05SVW-BTTS",
+    "ko": "2026-10-24T13:30",
+    "r": 0.547,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sr_d3:KXEPLBTTS-26OCT24ARSEVE-BTTS",
+    "ko": "2026-10-24T14:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sr_d3:KXSCOTTISHPREMBTTS-26OCT24RFCJOH-BTTS",
+    "ko": "2026-10-24T14:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sr_d3:KXLALIGABTTS-26OCT24ATMDEP-BTTS",
+    "ko": "2026-10-24T19:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sr_d3:KXLIGAPORTUGALBTTS-26OCT24GILFCP-BTTS",
+    "ko": "2026-10-24T19:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sr_d3:KXEPLBTTS-26OCT25HULBRE-BTTS",
+    "ko": "2026-10-25T14:00",
+    "r": 0.6748,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sr_d3:KXLIGAPORTUGALBTTS-26OCT25SPOACV-BTTS",
+    "ko": "2026-10-25T20:30",
+    "r": 0.8265,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sr_d3:KXSERIEABTTS-26OCT27ROMCAG-BTTS",
+    "ko": "2026-10-27T19:45",
+    "r": 1.3425,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sr_d3:KXSERIEABTTS-26OCT27TORCOM-BTTS",
+    "ko": "2026-10-27T19:45",
+    "r": 0.6213,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sr_d3:KXSERIEABTTS-26OCT28ACMBFC-BTTS",
+    "ko": "2026-10-28T17:30",
+    "r": 0.9324,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sr_d3:KXSCOTTISHPREMBTTS-26OCT28CELDUU-BTTS",
+    "ko": "2026-10-28T19:45",
+    "r": 0.6474,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "sr_d3:KXSERIEABTTS-26OCT28GENJUV-BTTS",
+    "ko": "2026-10-28T19:45",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "sr_d3:KXMLSBTTS-26OCT28NENYRB-BTTS",
+    "ko": "2026-10-28T23:30",
+    "r": 0.4184,
+    "side": "yes",
+    "st": "won"
+   }
+  ],
+  "st_t1|soccer_team2": [
+   {
+    "id": "st_t1:KXEPLTEAMTOTAL-26OCT25LFCBRI-BRI2",
+    "ko": "2026-10-25T14:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "st_t1:KXEPLTEAMTOTAL-26OCT25LFCBRI-LFC2",
+    "ko": "2026-10-25T14:00",
+    "r": 0.703,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "st_t1:KXBUNDESLIGATEAMTOTAL-26OCT25SCFBMU-BMU2",
+    "ko": "2026-10-25T16:30",
+    "r": 0.3271,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "st_t1:KXBUNDESLIGATEAMTOTAL-26OCT25SCFBMU-SCF2",
+    "ko": "2026-10-25T16:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "st_t1:KXLIGUE1TEAMTOTAL-26OCT26PSGOL-OL2",
+    "ko": "2026-10-26T19:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "st_t1:KXLIGUE1TEAMTOTAL-26OCT26PSGOL-PSG2",
+    "ko": "2026-10-26T19:30",
+    "r": 0.2625,
+    "side": "yes",
+    "st": "won"
+   }
+  ],
+  "st_t5|soccer_team2": [
+   {
+    "id": "st_t5:KXLIGUE1TEAMTOTAL-26NOV01OLMTFC-TFC2",
+    "ko": "2026-11-01T19:45",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "st_t5:KXSERIEATEAMTOTAL-26NOV01JUVNAP-JUV2",
+    "ko": "2026-11-01T19:45",
+    "r": 1.2361,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "st_t5:KXMLSTEAMTOTAL-26NOV01NEMIA-MIA2",
+    "ko": "2026-11-02T00:00",
+    "r": 0.6213,
+    "side": "yes",
+    "st": "won"
+   }
+  ],
+  "team1_form_l5|soccer_team1": [
+   {
+    "id": "",
+    "ko": "2026-09-18T18:45",
+    "r": 0.1514,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T19:00",
+    "r": 0.1906,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T19:00",
+    "r": 0.1514,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T16:30",
+    "r": 0.1514,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T23:30",
+    "r": 0.2327,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T13:00",
+    "r": 0.294,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T16:30",
+    "r": 0.2042,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-10-10T19:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "team1_form_l5:KXMLSTEAMTOTAL-26OCT10NESEA-SEA1",
+    "ko": "2026-10-10T23:30",
+    "r": 0.2781,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "team1_form_l5:KXSERIEATEAMTOTAL-26OCT11COMROM-ROM1",
+    "ko": "2026-10-11T10:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "team1_form_l5:KXUCLTEAMTOTAL-26OCT13RCLSPO-SPO1",
+    "ko": "2026-10-13T16:45",
+    "r": 0.2326,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "team1_form_l5:KXUCLTEAMTOTAL-26OCT14RBBFCP-RBB1",
+    "ko": "2026-10-14T19:00",
+    "r": 0.1772,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team1_form_l5:KXMLSTEAMTOTAL-26OCT14TORORL-ORL1",
+    "ko": "2026-10-14T23:30",
+    "r": 0.2042,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team1_form_l5:KXUELTEAMTOTAL-26OCT15USGRSO-USG1",
+    "ko": "2026-10-15T16:45",
+    "r": 0.2042,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team1_form_l5:KXUELTEAMTOTAL-26OCT15TSGBES-BES1",
+    "ko": "2026-10-15T19:00",
+    "r": 0.2742,
+    "side": "yes",
+    "st": "won"
+   }
+  ],
+  "team2_form_l10|soccer_team2": [
+   {
+    "id": "team2_form_l10:KXBUNDESLIGATEAMTOTAL-26OCT17UNIBVB-BVB2",
+    "ko": "2026-10-17T13:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_form_l10:KXMLSTEAMTOTAL-26OCT17MINSTL-STL2",
+    "ko": "2026-10-17T20:30",
+    "r": 0.8957,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_form_l10:KXBUNDESLIGATEAMTOTAL-26OCT24BVBSGE-BVB2",
+    "ko": "2026-10-24T16:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_form_l10:KXMLSTEAMTOTAL-26OCT24MTLNSH-NSH2",
+    "ko": "2026-10-24T17:30",
+    "r": 0.5711,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_form_l10:KXMLSTEAMTOTAL-26OCT24PORCLT-CLT2",
+    "ko": "2026-10-25T02:30",
+    "r": 0.8605,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_form_l10:KXSERIEATEAMTOTAL-26OCT28VENINT-INT2",
+    "ko": "2026-10-28T17:30",
+    "r": 0.294,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_form_l10:KXMLSTEAMTOTAL-26OCT28CLTMTL-CLT2",
+    "ko": "2026-10-28T23:30",
+    "r": 0.3992,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_form_l10:KXMLSTEAMTOTAL-26OCT28MIACIN-MIA2",
+    "ko": "2026-10-28T23:30",
+    "r": 0.2473,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_form_l10:KXMLSTEAMTOTAL-26OCT28MINSKC-MIN2",
+    "ko": "2026-10-29T00:30",
+    "r": 0.294,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_form_l10:KXMLSTEAMTOTAL-26OCT28STLPOR-STL2",
+    "ko": "2026-10-29T00:30",
+    "r": 0.4588,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_form_l10:KXBUNDESLIGATEAMTOTAL-26OCT31SVWTSG-TSG2",
+    "ko": "2026-10-31T14:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_form_l10:KXMLSTEAMTOTAL-26OCT31CLTORL-CLT2",
+    "ko": "2026-10-31T17:00",
+    "r": 0.4184,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_form_l10:KXMLSTEAMTOTAL-26OCT31CINPHI-PHI2",
+    "ko": "2026-10-31T18:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_form_l10:KXMLSTEAMTOTAL-26OCT31CLBDCU-CLB2",
+    "ko": "2026-10-31T18:00",
+    "r": 0.3103,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "team2_form_l10:KXMLSTEAMTOTAL-26OCT31STLSD-STL2",
+    "ko": "2026-10-31T19:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_form_l10:KXSERIEATEAMTOTAL-26NOV01COMVEN-COM2",
+    "ko": "2026-11-01T11:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "team2_form_l10:KXMLSTEAMTOTAL-26NOV01ATLTOR-TOR2",
+    "ko": "2026-11-01T21:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   }
+  ],
+  "tennis_fav_band|tennis": [
+   {
+    "id": "",
+    "ko": "2026-09-18T05:30",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T06:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T06:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T06:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T06:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T06:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T06:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T07:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T07:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T08:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T08:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T08:30",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T08:30",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T08:30",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T09:30",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T09:30",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T11:00",
+    "r": 0.1772,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T13:51",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T14:30",
+    "r": 0.2327,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T14:30",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T14:51",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T19:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T20:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T20:30",
+    "r": 0.115,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-18T22:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T02:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T03:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T03:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T03:30",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T04:10",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T06:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T06:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T07:00",
+    "r": null,
+    "side": null,
+    "st": "unconfirmed",
+    "w": null
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T07:30",
+    "r": 0.3158,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T07:30",
+    "r": 0.1628,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T08:00",
+    "r": 0.1494,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T08:00",
+    "r": 0.2048,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T08:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T08:30",
+    "r": 0.25,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T11:10",
+    "r": 0.1364,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T11:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T12:00",
+    "r": 0.2195,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T12:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T13:00",
+    "r": 0.2195,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T13:10",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T13:40",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T15:00",
+    "r": 0.3158,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T15:00",
+    "r": 0.1765,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T15:50",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T16:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T16:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T16:10",
+    "r": 0.1765,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T16:30",
+    "r": 0.1111,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T17:00",
+    "r": 0.2987,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T17:10",
+    "r": 0.2821,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T18:10",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T19:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T19:10",
+    "r": 0.3158,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-19T20:30",
+    "r": 0.2195,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T00:00",
+    "r": 0.1765,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T00:00",
+    "r": 0.2346,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T00:00",
+    "r": 0.2658,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T00:00",
+    "r": 0.1628,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T01:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T01:00",
+    "r": 0.2346,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T01:10",
+    "r": 0.3158,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T02:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T02:08",
+    "r": 0.1236,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T02:08",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T02:20",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T03:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T03:08",
+    "r": 0.1236,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T03:08",
+    "r": 0.2346,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T04:08",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T04:08",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T04:10",
+    "r": 0.2346,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T04:17",
+    "r": 0.1236,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T04:17",
+    "r": 0.1111,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T05:30",
+    "r": 0.25,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T06:00",
+    "r": 0.1765,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T06:30",
+    "r": 0.1111,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T06:30",
+    "r": 0.1364,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T06:30",
+    "r": 0.1494,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T06:30",
+    "r": 0.1111,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T07:00",
+    "r": 0.1641,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T07:00",
+    "r": 0.2781,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T07:30",
+    "r": 0.2658,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T07:30",
+    "r": 0.25,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T07:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T07:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T07:30",
+    "r": 0.1765,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T07:30",
+    "r": 0.1236,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T08:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T11:30",
+    "r": 0.294,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T13:00",
+    "r": 0.2781,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T13:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T14:30",
+    "r": 0.115,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T14:30",
+    "r": 0.1641,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T16:00",
+    "r": 0.1269,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T17:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T17:52",
+    "r": 0.1364,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T17:52",
+    "r": 0.2987,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T17:52",
+    "r": 0.2346,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T19:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-20T21:00",
+    "r": 0.1034,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T01:00",
+    "r": 0.1905,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T01:00",
+    "r": 0.1364,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T01:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T02:00",
+    "r": 0.1905,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T02:00",
+    "r": 0.1111,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T02:00",
+    "r": 0.2195,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T02:00",
+    "r": 0.1905,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T02:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T02:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T02:30",
+    "r": 0.1111,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T03:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T03:00",
+    "r": 0.2821,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T03:00",
+    "r": 0.2821,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T03:00",
+    "r": 0.2987,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T03:00",
+    "r": 0.3158,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T03:17",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T04:08",
+    "r": 0.1494,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T04:17",
+    "r": 0.1905,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T05:24",
+    "r": 0.2658,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T05:46",
+    "r": 0.25,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T06:00",
+    "r": 0.1494,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T06:00",
+    "r": 0.3158,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T06:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T06:30",
+    "r": 0.1111,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T06:30",
+    "r": 0.1111,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T06:30",
+    "r": 0.2346,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T06:30",
+    "r": 0.1236,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T06:30",
+    "r": 0.3158,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T09:30",
+    "r": 0.2625,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T09:30",
+    "r": 0.3103,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T09:30",
+    "r": 0.2781,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T09:30",
+    "r": 0.115,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T14:00",
+    "r": 0.139,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T15:33",
+    "r": 0.2346,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T15:33",
+    "r": 0.1628,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T15:33",
+    "r": 0.1364,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T15:45",
+    "r": 0.1514,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T16:00",
+    "r": 0.2625,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T18:00",
+    "r": 0.1906,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T19:31",
+    "r": 0.2658,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T20:34",
+    "r": 0.2987,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T20:36",
+    "r": 0.1364,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T21:13",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-21T21:13",
+    "r": 0.1236,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T01:00",
+    "r": 0.2821,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T01:00",
+    "r": 0.1765,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T01:00",
+    "r": 0.2821,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T01:00",
+    "r": 0.2658,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T01:30",
+    "r": 0.3158,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T02:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T02:00",
+    "r": 0.1111,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T02:00",
+    "r": 0.25,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T02:50",
+    "r": 0.2987,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T03:00",
+    "r": 0.2987,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T03:00",
+    "r": 0.1765,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T03:00",
+    "r": 0.2346,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T03:00",
+    "r": 0.2987,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T03:38",
+    "r": 0.25,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T04:08",
+    "r": 0.2987,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T06:21",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T06:22",
+    "r": 0.2821,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T08:30",
+    "r": 0.294,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T09:30",
+    "r": 0.2473,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T09:30",
+    "r": 0.2781,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T10:00",
+    "r": 0.294,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T10:00",
+    "r": 0.2327,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T11:00",
+    "r": 0.2625,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T11:30",
+    "r": 0.2473,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T12:10",
+    "r": 0.3103,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T12:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T13:00",
+    "r": 0.1906,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T13:00",
+    "r": 0.2327,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T14:17",
+    "r": 0.1905,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T14:30",
+    "r": 0.1772,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T15:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T16:00",
+    "r": 0.294,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T16:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T16:17",
+    "r": 0.1905,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T17:00",
+    "r": 0.1906,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T17:00",
+    "r": 0.2658,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T18:00",
+    "r": 0.3103,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T18:00",
+    "r": 0.1364,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T18:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T19:00",
+    "r": 0.2346,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T19:00",
+    "r": 0.1765,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T19:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T19:30",
+    "r": 0.2987,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T19:30",
+    "r": 0.3158,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T20:00",
+    "r": 0.2987,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T20:00",
+    "r": 0.3158,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-22T23:35",
+    "r": 0.1905,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T00:00",
+    "r": 0.2821,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T01:00",
+    "r": 0.1236,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T01:00",
+    "r": 0.2346,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T01:30",
+    "r": 0.1364,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T02:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T02:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T03:30",
+    "r": 0.1905,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T04:00",
+    "r": 0.3158,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T06:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T06:00",
+    "r": 0.1236,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T06:00",
+    "r": 0.2821,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T06:02",
+    "r": 0.1236,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T06:15",
+    "r": 0.2195,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T06:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T06:30",
+    "r": 0.1494,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T06:30",
+    "r": 0.1628,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T08:30",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T08:30",
+    "r": 0.2821,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T08:30",
+    "r": 0.1236,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T08:30",
+    "r": 0.3158,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T08:30",
+    "r": 0.2346,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T11:30",
+    "r": 0.1772,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T15:00",
+    "r": 0.1906,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T18:00",
+    "r": 0.2781,
+    "side": null,
+    "st": "won"
+   },
+   {
+    "id": "",
+    "ko": "2026-09-23T18:00",
+    "r": -1.0,
+    "side": null,
+    "st": "lost"
+   }
+  ],
+  "tennis_utr_shortlist_v1|tennis": [
+   {
+    "id": "tennis_utr_shortlist_v1:aec-utr-hirtai-shtale-2026-10-17",
+    "ko": "2026-10-17T01:10",
+    "r": 0.3699,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "tennis_utr_shortlist_v1:aec-utr-saikaz-suzeit-2026-10-16",
+    "ko": "2026-10-17T02:30",
+    "r": 0.4085,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "tennis_utr_shortlist_v1:aec-utr-djaant-ungnil-2026-10-17",
+    "ko": "2026-10-17T21:30",
+    "r": 0.3889,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "tennis_utr_shortlist_v1:aec-utr-gooele-magmat-2026-10-17",
+    "ko": "2026-10-17T21:30",
+    "r": 0.3175,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "tennis_utr_shortlist_v1:aec-utr-rosabr-almalf-2026-10-19",
+    "ko": "2026-10-20T16:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "tennis_utr_shortlist_v1:aec-utr-vaclud-traleo-2026-10-19",
+    "ko": "2026-10-20T19:00",
+    "r": 0.32,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "tennis_utr_shortlist_v1:aec-utr-bocfel-macang-2026-10-19",
+    "ko": "2026-10-20T20:10",
+    "r": 0.3699,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "tennis_utr_shortlist_v1:aec-utr-furmic-namjun-2026-10-23",
+    "ko": "2026-10-23T00:00",
+    "r": 0.3699,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "tennis_utr_shortlist_v1:aec-utr-namjun-yosnat-2026-10-24",
+    "ko": "2026-10-24T00:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "tennis_utr_shortlist_v1:aec-utr-paptif-surcla-2026-10-23",
+    "ko": "2026-10-24T01:30",
+    "r": 0.3333,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "tennis_utr_shortlist_v1:aec-utr-frafra-garcar-2026-10-24",
+    "ko": "2026-10-24T08:00",
+    "r": 0.3333,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "tennis_utr_shortlist_v1:aec-utr-mcehar-batdan-2026-10-24",
+    "ko": "2026-10-24T08:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "tennis_utr_shortlist_v1:aec-utr-jairag-sinsva-2026-10-25",
+    "ko": "2026-10-26T03:30",
+    "r": 0.4085,
+    "side": "yes",
+    "st": "won"
+   },
+   {
+    "id": "tennis_utr_shortlist_v1:aec-utr-lotmon-gauvis-2026-10-25",
+    "ko": "2026-10-27T03:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "tennis_utr_shortlist_v1:aec-utr-mahvas-chopri-2026-10-25",
+    "ko": "2026-10-27T03:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   }
+  ],
+  "turkey_btts_dog|soccer_btts": [
+   {
+    "id": "turkey_btts_dog:KXSUPERLIGBTTS-26OCT17ERZEYU-BTTS",
+    "ko": "2026-10-17T10:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "turkey_btts_dog:KXSUPERLIGBTTS-26OCT17GENGAL-BTTS",
+    "ko": "2026-10-17T13:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "turkey_btts_dog:KXSUPERLIGBTTS-26OCT17FENALA-BTTS",
+    "ko": "2026-10-17T16:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   }
+  ],
+  "turkey_o25_dog|soccer_o25": [
+   {
+    "id": "turkey_o25_dog:KXSUPERLIGTOTAL-26OCT17ERZEYU-3",
+    "ko": "2026-10-17T10:30",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "turkey_o25_dog:KXSUPERLIGTOTAL-26OCT17GENGAL-3",
+    "ko": "2026-10-17T13:00",
+    "r": -1.0,
+    "side": "yes",
+    "st": "lost"
+   },
+   {
+    "id": "turkey_o25_dog:KXSUPERLIGTOTAL-26OCT17FENALA-3",
+    "ko": "2026-10-17T16:00",
+    "r": 0.547,
+    "side": "yes",
+    "st": "won"
+   }
+  ],
+  "u35_low_scoring|soccer_u35": [
+   {
+    "id": "u35_low_scoring:KXLIGAPORTUGALTOTAL-26OCT12FAMALV-4",
+    "ko": "2026-10-12T19:15",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "u35_low_scoring:KXMLSTOTAL-26OCT14DCUNYRB-4",
+    "ko": "2026-10-14T23:30",
+    "r": 0.6722,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "u35_low_scoring:KXMLSTOTAL-26OCT14RSLSJ-4",
+    "ko": "2026-10-15T01:30",
+    "r": 0.7007,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "u35_low_scoring:KXSAUDIPLTOTAL-26OCT15KHAFAY-4",
+    "ko": "2026-10-15T14:50",
+    "r": 0.3441,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "u35_low_scoring:KXSCOTTISHPREMTOTAL-26OCT17ABEMIR-4",
+    "ko": "2026-10-17T14:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "u35_low_scoring:KXSCOTTISHPREMTOTAL-26OCT17HIBFAL-4",
+    "ko": "2026-10-17T14:00",
+    "r": 0.4382,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "u35_low_scoring:KXMLSTOTAL-26OCT17NYCLAFC-4",
+    "ko": "2026-10-17T23:30",
+    "r": 0.4184,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "u35_low_scoring:KXEPLTOTAL-26OCT18BOUSUN-4",
+    "ko": "2026-10-18T13:00",
+    "r": 0.362,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "u35_low_scoring:KXLALIGATOTAL-26OCT18RCCALA-4",
+    "ko": "2026-10-18T14:15",
+    "r": 0.2327,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "u35_low_scoring:KXSAUDIPLTOTAL-26OCT18FATKHA-4",
+    "ko": "2026-10-18T18:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "u35_low_scoring:KXSAUDIPLTOTAL-26OCT22FATSHA-4",
+    "ko": "2026-10-22T14:45",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "u35_low_scoring:KXSCOTTISHPREMTOTAL-26OCT24FALKIL-4",
+    "ko": "2026-10-24T14:00",
+    "r": 0.4797,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "u35_low_scoring:KXSAUDIPLTOTAL-26OCT24RIYALT-4",
+    "ko": "2026-10-24T18:00",
+    "r": 0.362,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "u35_low_scoring:KXLALIGATOTAL-26OCT25ATHGET-4",
+    "ko": "2026-10-25T13:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "u35_low_scoring:KXLIGAPORTUGALTOTAL-26OCT25ESTMOR-4",
+    "ko": "2026-10-25T15:30",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "u35_low_scoring:KXLIGUE1TOTAL-26OCT25ANGFCL-4",
+    "ko": "2026-10-25T16:15",
+    "r": 0.294,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "u35_low_scoring:KXEPLTOTAL-26OCT25SUNLEE-4",
+    "ko": "2026-10-25T16:30",
+    "r": 0.2625,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "u35_low_scoring:KXLIGAPORTUGALTOTAL-26OCT25RAVFAM-4",
+    "ko": "2026-10-25T18:00",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   },
+   {
+    "id": "u35_low_scoring:KXSERIEATOTAL-26OCT28PARUDI-4",
+    "ko": "2026-10-28T17:30",
+    "r": 0.2327,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "u35_low_scoring:KXSCOTTISHPREMTOTAL-26OCT28MIRHIB-4",
+    "ko": "2026-10-28T19:45",
+    "r": 0.4588,
+    "side": "no",
+    "st": "won"
+   },
+   {
+    "id": "u35_low_scoring:KXMLSTOTAL-26OCT28SJCOL-4",
+    "ko": "2026-10-29T02:30",
+    "r": -1.0,
+    "side": "no",
+    "st": "lost"
+   }
+  ]
  }
 }
