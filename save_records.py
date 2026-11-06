@@ -21,6 +21,7 @@ heartbeat's restamp, say) ends the run green with nothing pushed.
         --derived data/feed.json "python3 build_feed.py" \
         [--optional data/maybe.json] [--regenerate "python3 rerun_the_job.py"] [--after "gh workflow run x.yml"]
 
+  --add        may be repeated (each use extends the list; until 2026-11-06 the last use silently replaced the earlier ones)
   --optional   records saved only if the job wrote them (a missing file is skipped, not an error)
   --regenerate on a genuine conflict in a ledger (a file that is not derived), instead of failing: abort the
                rebase, reset to origin/main and rerun the job's steps on top of it. Never picks a side of a ledger.
@@ -54,8 +55,12 @@ def check_json(paths, cwd=None):
             json.load(f)
 
 
-def rebuild(derived, cwd=None):
-    """Put main's copy of each derived file back as its builder's previous state, rerun the builder, stage it."""
+def rebuild(derived, cwd=None, every=()):
+    """Put main's copy of each derived file back as its builder's previous state, rerun the builder, stage it.
+
+    A builder may write SEVERAL derived files (nba_wm_production.py writes both Win margin feeds), so a later run rewrites a file
+    an earlier step had already staged, leaving it modified and unstaged, and the next `git rebase` refuses ("cannot rebase: You
+    have unstaged changes"). So every derived file (`every`) is staged again once the builders have all run."""
     for path, cmd in derived:
         shown = git("show", f"origin/main:{path}", check=False, cwd=cwd)
         if shown.returncode == 0:
@@ -64,11 +69,15 @@ def rebuild(derived, cwd=None):
         subprocess.run(cmd, shell=True, check=True, cwd=cwd)
         check_json([path], cwd)
         git("add", path, cwd=cwd)
+    for path in every:
+        if os.path.exists(os.path.join(cwd or ".", path)):
+            git("add", path, cwd=cwd)
 
 
 def integrate(derived, cwd=None, log=print):
     """Rebase onto origin/main, rebuilding the derived files. False on a genuine (non-derived) conflict."""
     names = {p for p, _ in derived}
+    every = [p for p, _ in derived]
     r = git("rebase", "origin/main", check=False, cwd=cwd)
     while r.returncode != 0:
         conflicted = set(git("diff", "--name-only", "--diff-filter=U", cwd=cwd).stdout.split())
@@ -82,7 +91,7 @@ def integrate(derived, cwd=None, log=print):
             log("conflict in records only this workflow should write, left for review: " + ", ".join(real))
             return False
         log("rebuilding derived file(s) after a concurrent write: " + ", ".join(sorted(conflicted)))
-        rebuild([d for d in derived if d[0] in conflicted], cwd)
+        rebuild([d for d in derived if d[0] in conflicted], cwd, every)
         if git("diff", "--cached", "--quiet", check=False, cwd=cwd).returncode == 0:
             r = git("rebase", "--skip", check=False, cwd=cwd)          # the rebuild equals main: nothing of this run's commit is left
         else:
@@ -90,7 +99,7 @@ def integrate(derived, cwd=None, log=print):
     # A clean rebase can still splice a JSON feed line by line: rebuild every derived file on the merged state.
     if git("rev-parse", "HEAD", cwd=cwd).stdout == git("rev-parse", "origin/main", cwd=cwd).stdout:
         return True                                         # this run's commit became empty and was dropped: main already has it all
-    rebuild(derived, cwd)
+    rebuild(derived, cwd, every)
     if git("diff", "--cached", "--quiet", check=False, cwd=cwd).returncode != 0:
         git("commit", "--amend", "--no-edit", cwd=cwd)
     return True
@@ -147,10 +156,10 @@ def save(message, add, derived, cwd=None, log=print, remote="origin", branch="ma
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--message", required=True)
-    ap.add_argument("--add", nargs="+", default=[], help="records to commit (merged by git)")
+    ap.add_argument("--add", nargs="+", action="extend", default=[], help="records to commit (merged by git); may be repeated")
     ap.add_argument("--derived", nargs=2, action="append", default=[], metavar=("PATH", "CMD"),
                     help="a file rebuilt by CMD from the records; rebuilt, never picked, after a concurrent write")
-    ap.add_argument("--optional", nargs="+", default=[], help="records saved only if the job wrote them")
+    ap.add_argument("--optional", nargs="+", action="extend", default=[], help="records saved only if the job wrote them")
     ap.add_argument("--regenerate", default=None, help="rerun the job on top of origin/main after a genuine ledger conflict")
     ap.add_argument("--after", default=None, help="a command run once, after the push lands")
     a = ap.parse_args(argv)

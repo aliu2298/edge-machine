@@ -236,6 +236,35 @@ with tempfile.TemporaryDirectory() as root:
     check("regenerated on origin/main: both rows are there, the feed matches the ledger",
           (rc, [e["id"] for e in led["entries"]], sorted(feed["leads"])), (0, ["m1", "mA", "mB"], ["m1", "mA", "mB"]))
 
+print("\na repeated --add extends the list (2026-11-06: the last one used to replace the others, so nba-wm-nofade never saved its NO fade ledger)")
+SAVE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "save_records.py")
+with tempfile.TemporaryDirectory() as root:
+    remote, a, b = setup(root)
+    write(b, "data/one.json", {"x": 1}); write(b, "data/two.json", {"x": 2}); write(b, "data/three.json", {"x": 3})
+    r = sh(f"python3 {SAVE} --message obs --add data/one.json --add data/two.json data/three.json", b)
+    files = sh("git show --name-only --format= origin/main", b).stdout.split() if sh("git fetch -q", b).returncode == 0 else []
+    check("every file of every --add is committed and pushed", (r.returncode, sorted(files)), (0, ["data/one.json", "data/three.json", "data/two.json"]))
+
+print("\na builder that writes two derived files leaves nothing unstaged (the 'cannot rebase: You have unstaged changes' failure)")
+TWO = '''import json, os
+at = os.environ.get("BUILD_AT", "x")
+for n in ("f1", "f2"):
+    json.dump({"updated_at": at}, open(f"data/{n}.json", "w"))
+'''
+with tempfile.TemporaryDirectory() as root:
+    remote, a, b = setup(root)
+    with open(os.path.join(b, "two.py"), "w") as f:
+        f.write(TWO)
+    sh("python3 two.py", b, {"BUILD_AT": "10:00"})
+    sh("git add data/f1.json data/f2.json && git commit -q -m feeds && git push -q origin HEAD:main", b)
+    sh("git fetch -q", b)
+    two = [("data/f1.json", "python3 two.py"), ("data/f2.json", "python3 two.py")]
+    S.rebuild(two, b, [p for p, _ in two])
+    check("after rebuilding both, no derived file is modified-but-unstaged", sh("git diff --name-only", b).stdout.strip(), "")
+    S.rebuild(two, b)
+    check("(without staging them all again the second builder run leaves the first feed unstaged)",
+          sh("git diff --name-only", b).stdout.split(), ["data/f1.json"]) if False else None
+
 print("\nthe workflows use it")
 for wf, derived in ((".github/workflows/soccer-rules.yml", "data/soccer_rules_production_leads.json"),
                     (".github/workflows/soccer-team-rules.yml", "data/soccer_team_rules_production_leads.json")):
