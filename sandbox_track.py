@@ -352,6 +352,12 @@ PAIR_OVERRIDES = {
     # opposite of the bet. The lead can be taken by hand — Kalshi sells the No on
     # that contract. That downstream change is not made here.
     "u35_low_scoring|soccer_u35_intl": dict(moved_on="2026-10-04", production_at=None),
+    # Moved by hand 2026-11-06 (Olu), knowing both are tiny samples, on the Sandbox record at the move: under 3.5 low-scoring,
+    # CUPS scope (2-0, +48.8% after fees) -- the same rule and the same No on the over-3.5 contract as its Internationals twin
+    # above (Clubs stays retired) -- and team 2+ form, INTERNATIONALS scope (1-0, +21.8%) -- the Yes on the team's over-1.5 contract,
+    # as its Clubs scope was in Production 2026-10-16 to 2026-11-02 (Cups stays in the Sandbox). A fresh Production record from the move.
+    "u35_low_scoring|soccer_u35_cup": dict(moved_on="2026-11-06", production_at=None),
+    "team2_form_l10|soccer_team2_intl": dict(moved_on="2026-11-06", production_at=None),
     #   OLBG boxing — listed 2026-09-22, OUT 2026-09-27, as asked. It went 8-0 on the US
     #   exchanges (+17.4%, +16.3% after fees) and is still taken off, because the win record
     #   is not the point: it backed the FAVOURITE in all nine bets, at prices from 0.64 to
@@ -3497,6 +3503,10 @@ FEED_BETS = {"soccer_o15": {"kind": "total_gte", "n": 2},
              # twin below.
              "soccer_u35": {"kind": "total_lte", "n": 3},
              "soccer_u35_intl": {"kind": "total_lte", "n": 3},
+             # 2026-11-06, with u35_low_scoring|soccer_u35_cup: the Cups scope of the same under (the No of the -4 contract).
+             "soccer_u35_cup": {"kind": "total_lte", "n": 3},
+             # 2026-11-06, with team2_form_l10|soccer_team2_intl: team 2+ for national teams, the Yes on the team's over-1.5 contract.
+             "soccer_team2_intl": {"kind": "team_gte", "n": 2},
              # 2026-10-16, with mls_fade_home|soccer_p05: the NO on one team's Kalshi GAME
              # contract ("LA Galaxy wins"), i.e. that team does not win. bet.team is the team
              # the contract names (the quote's opponent: the rule backs the other side +0.5).
