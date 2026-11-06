@@ -45,6 +45,11 @@
    "lead_min": 6.3,
    "price": 0.97
   },
+  "commod_nc_no:KXWTI-26NOV0614-T90.49": {
+   "at": "2026-11-06T18:55:25+00:00",
+   "lead_min": 4.6,
+   "price": 0.54
+  },
   "commod_nc_no:KXWTI-26OCT2914-T102.49": {
    "at": "2026-10-29T17:29:38+00:00",
    "lead_min": 30.4,
@@ -185,6 +190,11 @@
    "lead_min": 52.3,
    "price": 0.64
   },
+  "ere_draw:KXEREDIVISIEGAME-26NOV06WILZWO": {
+   "at": "2026-11-06T18:55:25+00:00",
+   "lead_min": 4.6,
+   "price": 0.27
+  },
   "ere_draw:KXEREDIVISIEGAME-26OCT31AJAAZA": {
    "at": "2026-10-31T19:32:29+00:00",
    "lead_min": 27.5,
@@ -194,6 +204,11 @@
    "at": "2026-10-31T19:32:29+00:00",
    "lead_min": 27.5,
    "price": 0.25
+  },
+  "ere_o15:KXEREDIVISIETOTAL-26NOV06WILZWO-2": {
+   "at": "2026-11-06T18:55:25+00:00",
+   "lead_min": 4.6,
+   "price": 0.81
   },
   "liga_u15_dog:KXLALIGATOTAL-26NOV01SANRMA-2": {
    "at": "2026-11-01T14:18:17+00:00",
@@ -325,11 +340,6 @@
    "lead_min": 45.4,
    "price": 0.68
   },
-  "tennis_utr_shortlist_v1:aec-utr-chaeli-bhapar-2026-10-26": {
-   "at": "2026-10-27T15:32:38+00:00",
-   "lead_min": 27.4,
-   "price": 0.71
-  },
   "tennis_utr_shortlist_v1:aec-utr-depson-bellea-2026-10-31": {
    "at": "2026-10-31T10:03:11+00:00",
    "lead_min": 16.8,
@@ -355,10 +365,20 @@
    "lead_min": 0.4,
    "price": 0.71
   },
+  "u35_low_o15:KXEREDIVISIETOTAL-26NOV06WILZWO-2": {
+   "at": "2026-11-06T18:55:25+00:00",
+   "lead_min": 4.6,
+   "price": 0.81
+  },
   "u35_low_o15:KXSERIEATOTAL-26NOV01LECGEN-2": {
    "at": "2026-11-01T16:22:57+00:00",
    "lead_min": 37.0,
    "price": 0.7
+  },
+  "u35_low_o15:KXSERIEATOTAL-26NOV06VENUDI-2": {
+   "at": "2026-11-06T18:55:25+00:00",
+   "lead_min": 49.6,
+   "price": 0.77
   },
   "u35_low_o15:KXSERIEATOTAL-26OCT28PARUDI-2": {
    "at": "2026-10-28T17:28:25+00:00",
@@ -381,5 +401,5 @@
    "price": 0.75
   }
  },
- "updated": "2026-11-05T05:32:51+00:00"
+ "updated": "2026-11-06T18:55:25+00:00"
 }
