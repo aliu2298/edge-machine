@@ -127154,6 +127154,58 @@
   "venue": "polymarket_us"
  },
  {
+  "bet": true,
+  "close_at": "2026-09-22T05:23:12+00:00",
+  "close_price": 0.5773,
+  "date": "2026-09-22",
+  "edge": null,
+  "id": "tennis_combo3:combo3:2026-09-22:20c1cdbddb",
+  "label": "3-leg tennis combo: Joaquin Aguilar Cardoz + Nicolas Kicker + Francesco Passaro",
+  "legs": [
+   {
+    "market_id": "KXATPCHALLENGERMATCH-26SEP22ZARAGU",
+    "pick": "b",
+    "venue": "kalshi"
+   },
+   {
+    "market_id": "KXATPCHALLENGERMATCH-26SEP22MARKIC",
+    "pick": "b",
+    "venue": "kalshi"
+   },
+   {
+    "market_id": "KXATPCHALLENGERMATCH-26SEP22JUAPAS",
+    "pick": "b",
+    "venue": "kalshi"
+   }
+  ],
+  "liquidity": null,
+  "logged": "2026-09-22T05:23:12+00:00",
+  "market_id": "combo3:2026-09-22:20c1cdbddb",
+  "pick": "a",
+  "pnl": -100.0,
+  "price": 0.5773,
+  "price_a": 0.5773,
+  "price_b": 0.4227,
+  "price_draw": null,
+  "prob_a": null,
+  "result": "b",
+  "settled": "2026-09-22T17:50:12+00:00",
+  "side_a": "All 3 win",
+  "side_b": "Any one loses",
+  "source": "tennis_combo3",
+  "sport": "tennis_combo",
+  "spread": null,
+  "stake": 100.0,
+  "start": "2026-09-22T13:00:00+00:00",
+  "start_source": null,
+  "status": "lost",
+  "uncovered": null,
+  "untraded": false,
+  "url": "https://kalshi.com/combos",
+  "venue": "combo",
+  "venue_start": null
+ },
+ {
   "bet": false,
   "compact": true,
   "id": "polymarket_us:aec-atp-giuvel-gioora-2026-09-22",
