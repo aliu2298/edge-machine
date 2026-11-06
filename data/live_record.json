@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-05T23:07Z",
+ "generated": "2026-11-06T00:07Z",
  "lane_note": "own-state lanes: the lane's own fill price; outcome from the market's settled result; sold bets left out; fees not included",
  "lanes": {
   "nba_wm_nofade": [
@@ -864,17 +864,17 @@
     {
      "id": "commod_fav_band:KXBRENTD-26NOV0517-T97.50",
      "ko": "2026-11-05T22:00",
-     "r": null,
+     "r": 0.3444,
      "side": "yes",
-     "st": "open",
+     "st": "won",
      "w": 12.36
     },
     {
      "id": "commod_fav_band:KXSILVERD-26NOV0517-T52.25",
      "ko": "2026-11-05T22:00",
-     "r": null,
+     "r": -1.0,
      "side": "yes",
-     "st": "open",
+     "st": "lost",
      "w": 12.68
     }
    ],
@@ -883,7 +883,8 @@
     "commod_fav_band:KXBRENTD-26NOV0317-T103": "outside the price band",
     "commod_fav_band:KXGOLDD-26NOV0217-T3944": "outside the price band",
     "commod_fav_band:KXGOLDD-26NOV0417-T4058": "outside the price band",
-    "commod_fav_band:KXWTI-26NOV0414-T90.99": "outside the price band"
+    "commod_fav_band:KXWTI-26NOV0414-T90.99": "outside the price band",
+    "commod_fav_band:KXWTI-26NOV0514-T89.49": "outside the price band"
    }
   },
   "crypto_fav_band_below|crypto_fav": {
