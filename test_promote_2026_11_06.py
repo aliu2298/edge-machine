@@ -39,7 +39,7 @@ for pair, kind, side in ((CUP, "total_lte", "no"), (INTL, "team_gte", "yes")):
     check(f"{pair}: it has recorded bets to publish", bool(qs), True)
     for q in qs:
         lead = P.lead_from_quote(q, pair, built)
-        check(f"{pair}: {q['label'][:44]} is placeable, ESPN-verified, on a feed league",
+        check(f"{pair}: {q['label'][:44]} is publishable, ESPN-verified, on a feed league",
               (T.placeable(q), P.start_verified(q), S.quote_league(q) is not None), (True, True, True))
         check(f"{pair}: the exact contract and side", (lead["bet"]["kind"], lead["route"]["outcome_side"], lead["route"]["venue"]), (kind, side, "kalshi"))
 
