@@ -563,9 +563,10 @@ def _landing_nav_labels():
 
 
 def _nav_count(path):
-    """Every page carries the same pills: site_chrome.PAGES."""
-    del path
-    return len(site_chrome.PAGES)
+    """Every page carries the same pills: site_chrome.PAGES, less the archived tabs (tab_activity, 2026-11-05),
+    which keep their link only on their own page."""
+    own = os.path.basename(str(path))[:-5] if str(path).endswith(".html") else None
+    return len(site_chrome.shown_pages(own))
 
 
 def _keyboard_focus(page, expect_toggle, pill_target=8):
