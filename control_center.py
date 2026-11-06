@@ -605,7 +605,10 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
                            blob=blob)
     flagged = {item["area"] for item in attention if item.get("area")}
     areas = []
+    archived = site_chrome.archived_tabs()           # a tab with no active lane is archived (tab_activity); it leaves the areas too
     for key, label, _href in AREAS:
+        if key in archived:
+            continue
         if key == "nba":
             area = _nba_area(nba, now)
         elif key == "trading":

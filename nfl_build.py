@@ -80,10 +80,19 @@ def build(d=None, st=None, now=None, own_lanes=True):
         market=lambda d_, r: r["own"]["market"] if r.get("own") else CC.market(d_, r),
         definition=lambda d_, r: r["own"]["details"] if r.get("own") else SP.default_definition(d_, r),
         recent=lambda d_, r, n_: "" if r.get("own") else CC.recent_html(d_, r, n_),
-        method=method(idle_html), retired=retired, empty_reason=empty_reason)
+        method=method(idle_html), retired=retired, empty_reason=empty_reason,
+        lane_tiles=lambda: _lane_tiles())
     # cfb_dog_tp50's home (2026-10-27): the cheap-side section near the top, before the rules.
     import chaos_build
     return chaos_build.place(SP.page(sp, d, st, now, rows=rows, idle=idle), "nfl", before='<section id="rules"')
+
+
+def _lane_tiles():
+    try:
+        import chaos_build
+        return chaos_build.page_tiles("nfl")
+    except Exception:                                           # noqa: BLE001
+        return None
 
 
 def main():

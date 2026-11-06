@@ -29,6 +29,7 @@ TOC = SP.TOC
 
 def build(d=None, st=None, now=None):
     now = now or datetime.datetime.now(datetime.timezone.utc)
+    real = d is None                                           # the real ledger's page counts the real cheap-side lanes; a test's own ledger does not
     d = d if d is not None else T.load()
     st = st if st is not None else T.load_stages()
     rows = sport_tab.family_rows(d, st, FAMILY)
@@ -41,8 +42,16 @@ def build(d=None, st=None, now=None):
         definition=tennis_cards.definition, recent=tennis_cards.recent_html,
         method=tennis_cards.method(idle_html),
         # Retired by hand (2026-10-24): their own fold, final record and reason.
-        retired=sport_tab.retired_rows(d, st, FAMILY))
+        retired=sport_tab.retired_rows(d, st, FAMILY), lane_tiles=(lambda: _lane_tiles()) if real else None)
     return _cheap_side(_atp_totals(SP.page(sp, d, st, now, rows=rows, idle=idle)))
+
+
+def _lane_tiles():
+    try:
+        import chaos_build
+        return chaos_build.page_tiles("tennis")
+    except Exception:                                           # noqa: BLE001
+        return None
 
 
 def _cheap_side(html):

@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Regression checks for the approved Analyst Desk production shell."""
+import site_chrome as _SC
+_SC._ARCHIVED = frozenset()      # hermetic: these checks count all seven areas; test_small_pages.py covers an archived tab leaving them
 import datetime
 import os
 import re

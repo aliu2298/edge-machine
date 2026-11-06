@@ -3,8 +3,10 @@
 import datetime as dt
 import json
 import os
+import re
 import sys
 import tempfile
+import urllib.parse
 
 import nasdaq_orb as N
 import nasdaq_orb_build as NB
@@ -165,6 +167,10 @@ def get(url):
         return {"quote": dict(bp=100.21, ap=100.23, t=clock["t"].isoformat()) if (et.hour, et.minute) == (10, 5)
                 else dict(bp=100.49, ap=100.51, t=clock["t"].isoformat())}
     if "/bars" in url:
+        if "feed=sip" in url:                       # SIP refuses a range whose end is younger than 15 minutes (the plan's rule)
+            end = dt.datetime.fromisoformat(re.search(r"end=([^&]+)", urllib.parse.unquote(url)).group(1).replace("Z", "+00:00"))
+            if clock["t"] - end < dt.timedelta(minutes=15):
+                raise RuntimeError("HTTP 403")
         return {"bars": b}
     raise AssertionError(url)
 
@@ -174,6 +180,8 @@ with tempfile.TemporaryDirectory() as tmp:
     out = N.live(day_path, now_fn=lambda: clock["t"], sleeper=sleeper, get=get)
     check("the SIP quote is refused, so the run uses IEX and says so", out["quote_feed"], "iex")
     check("bars are read only after 11:49 ET (15 minutes past the last exit)", clock["t"] >= N.at(DAY, (11, 49)), True)
+    check("the bars come from SIP (premarket included), not the IEX fallback, because the range asked for is 15+ minutes old",
+          set(r["bar_feed"] for r in out["rows"]), {"sip"})
     check("one quote snapshot a minute from 9:24 to 11:32 ET", (len(out["quotes"]), min(out["quotes"]), max(out["quotes"])),
           (129, "09:24", "11:32"))
     a = [x for x in out["rows"] if x["variant"] == "A"][0]

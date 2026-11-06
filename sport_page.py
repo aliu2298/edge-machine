@@ -313,6 +313,10 @@ def tiles_html(sp, d, st, rows, open_n):
     active = sum(1 for r in rows if r.get("v") != "retired"
                  and (r["a"].get("n") or r["a"].get("n_price") or r.get("open")))
     rec, prod_rows = since_production(d, st, rows)
+    lane_tiles = sp.get("lane_tiles")
+    lanes = lane_tiles() if lane_tiles else None            # a page whose own cheap-side lanes sit outside its rules table (tennis, NFL)
+    if lanes:
+        active += lanes["active"]
     if prod_rows:
         who = (sp["rule_name"](prod_rows[0]) if len(prod_rows) == 1
                else f"{len(prod_rows)} rules")
@@ -331,6 +335,8 @@ def tiles_html(sp, d, st, rows, open_n):
         # never implied. An em dash only when nothing in the Sandbox has settled either.
         import tennis_cards
         rec, note = sp["pooled"](rows) if sp.get("pooled") else (sandbox_record(rows)[0], "")
+        if lanes and lanes.get("record") and not (int(rec.get("n") or 0) + int(rec.get("n_price") or 0)):
+            rec, note = lanes["record"], "cheap-side lanes, held"       # nothing in the rules table has settled: the lanes' own pooled record
         rec_tile = tennis_cards.record_tile(rec, "Sandbox record · paper" + (f" · {note}" if note else ""))
         n = int(rec.get("n") or 0) + int(rec.get("n_price") or 0)
         if n and rec.get("roi_fee") is not None:

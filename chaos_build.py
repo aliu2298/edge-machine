@@ -323,6 +323,27 @@ def home_href(lane_id):
     return f"./{page}.html#cheap-side" if page else None
 
 
+def page_tiles(page, state=None):
+    """What a sport page's header tiles count of its cheap-side lanes (2026-11-06): {"active": the live lanes with an entry, "record": the lanes'
+    pooled HELD record as the template's record shape (settled entries, won, ROI after fees), or None, "n_lanes"}. The lanes' own section keeps
+    its split v hold; the tile says what the page has measured, the way a pooled Sandbox record does: every entry held to settlement."""
+    if state is None:
+        state = C.load() if os.path.exists(C.PATH) else C.empty()
+    have = with_config(state).get("lanes") or {}
+    lanes = [have[k] for k in HOMES[page] if k in have and not have[k].get("retired") and not have[k].get("insample") and not have[k].get("baseline")]
+    trades, active = [], 0
+    for L in lanes:
+        held = _by(L, "hold")
+        trades += held
+        entries = {(t["event"], t["ticker"], t["side"], t["hours"]) for t in held}
+        if entries or any(t for t in (L.get("trades") or [])):
+            active += 1
+    s = C.stats(trades) if trades else None
+    rec = (dict(n=len(trades), n_price=0, won=s["won"], expected=None, roi_fee=s["roi"], z=s["z"], n_bets=len(trades), unit="bet")
+           if s else None)
+    return dict(active=active, record=rec, n_lanes=len(lanes))
+
+
 def sport_section(page, state=None, retired=True):
     """A sport page's "Cheap side + resting take-profit" section: its chaos lanes, split v hold first."""
     if state is None:

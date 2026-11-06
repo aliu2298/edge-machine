@@ -287,10 +287,17 @@ def _get(url):
     return MS._get(url, tries=3)
 
 
-def fetch_bars(day, feed="sip", get=None):
+# The last bar the rules can read: a 30-minute hold entered on the 10:59 signal exits on the bar ending 11:30. SIP refuses bars younger than 15
+# minutes on this plan (HTTP 403), so the bars are asked for to 11:32 ET and read from 11:49 ET: every minute asked for is 17+ minutes old. Until
+# 2026-11-06 the request ended at 11:45, 4 minutes old at 11:49, SIP said 403, and the run FELL BACK TO IEX, which has no premarket bars: every
+# row since 2026-10-19 says bar_feed iex, and variant C (the 9:25-9:30 range) logged "no bars in the range" on 9 of the last 14 days.
+BARS_END = (11, 32)
+
+
+def fetch_bars(day, feed="sip", get=None, end=BARS_END):
     get = get or _get
     q = dict(timeframe="1Min", start=at(day, (9, 15)).strftime("%Y-%m-%dT%H:%M:%SZ"),
-             end=at(day, (11, 45)).strftime("%Y-%m-%dT%H:%M:%SZ"), feed=feed, limit=1000, adjustment="raw")
+             end=at(day, end).strftime("%Y-%m-%dT%H:%M:%SZ"), feed=feed, limit=1000, adjustment="raw")
     return (get(f"{DATA}/v2/stocks/{SYMBOL}/bars?{urllib.parse.urlencode(q)}") or {}).get("bars") or []
 
 
