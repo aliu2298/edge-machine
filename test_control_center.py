@@ -9,6 +9,8 @@ past its start, a feed that could not be read, a Production pair paused or near 
 stale-pair demotion, a failed workflow run, a closing-price writer gone quiet). No
 network: the workflow-run reader is fed a fake opener. Nothing reads data/.
 """
+import site_chrome as _SC
+_SC._ARCHIVED = frozenset()      # hermetic: these checks count all seven areas; test_small_pages.py covers an archived tab leaving them
 import datetime
 import io
 import json

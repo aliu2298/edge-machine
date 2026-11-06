@@ -261,7 +261,10 @@ def summary(state):
         g = [r["gross_bp"] for r in tr]
         n_ = [r["net_bp"] for r in tr if r.get("net_bp") is not None]
         sp = [r["spread_bp"] for r in tr if r.get("spread_bp") is not None]
-        base = n_ if n_ else g
+        # Net only when EVERY trade has it: a re-graded row (SIP bars, 2026-11-06) whose entry minute moved has no quote for it, and a mean
+        # or a t over the few rows that kept theirs would read as the variant's net. Otherwise the figures are gross and say so.
+        use_net = bool(n_) and len(n_) == len(tr)
+        base = n_ if use_net else g
 
         def mean(x):
             return sum(x) / len(x) if x else None
@@ -273,7 +276,7 @@ def summary(state):
             t = round(m / (sd / math.sqrt(len(base))), 2) if sd > 0 else None
         out[k] = dict(label=v[0], days=len(done), trades=len(tr), no_break=len(done) - len(tr),
                       win=(sum(x > 0 for x in g) / len(g)) if g else None,
-                      gross=mean(g), net=mean(n_), spread=mean(sp), t=t, t_on="net" if n_ else "gross",
+                      gross=mean(g), net=mean(n_) if use_net else None, spread=mean(sp), t=t, t_on="net" if use_net else "gross",
                       skipped=sum(r["status"] == "skipped" for r in rows),
                       retired=RETIRED[k][0] if k in RETIRED else None,
                       retired_why=RETIRED[k][1] if k in RETIRED else None)
@@ -287,10 +290,17 @@ def _get(url):
     return MS._get(url, tries=3)
 
 
-def fetch_bars(day, feed="sip", get=None):
+# The last bar the rules can read: a 30-minute hold entered on the 10:59 signal exits on the bar ending 11:30. SIP refuses bars younger than 15
+# minutes on this plan (HTTP 403), so the bars are asked for to 11:32 ET and read from 11:49 ET: every minute asked for is 17+ minutes old. Until
+# 2026-11-06 the request ended at 11:45, 4 minutes old at 11:49, SIP said 403, and the run FELL BACK TO IEX, which has no premarket bars: every
+# row since 2026-10-19 says bar_feed iex, and variant C (the 9:25-9:30 range) logged "no bars in the range" on 9 of the last 14 days.
+BARS_END = (11, 32)
+
+
+def fetch_bars(day, feed="sip", get=None, end=BARS_END):
     get = get or _get
     q = dict(timeframe="1Min", start=at(day, (9, 15)).strftime("%Y-%m-%dT%H:%M:%SZ"),
-             end=at(day, (11, 45)).strftime("%Y-%m-%dT%H:%M:%SZ"), feed=feed, limit=1000, adjustment="raw")
+             end=at(day, end).strftime("%Y-%m-%dT%H:%M:%SZ"), feed=feed, limit=1000, adjustment="raw")
     return (get(f"{DATA}/v2/stocks/{SYMBOL}/bars?{urllib.parse.urlencode(q)}") or {}).get("bars") or []
 
 

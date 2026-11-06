@@ -7,6 +7,8 @@ Passes once the root is the dark shell, Production is the current page pill,
 the summary strip is the Control Center's own tiles, and the Running and
 Rules-applied panes are empty. No network.
 """
+import site_chrome as _SC
+_SC._ARCHIVED = frozenset()      # hermetic: these checks count all seven areas; test_small_pages.py covers an archived tab leaving them
 import html as html_lib
 import os
 import re

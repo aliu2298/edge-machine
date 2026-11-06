@@ -131,7 +131,7 @@ def build(key, state=None, now=None, nc=None):
                       ('Selection', 'Cheapest qualifying rung per event; ties to the lower ticker; '
                                     'one market, one lane (this pair and its twin never hold the same rung), and from 2026-10-24 one ladder, one direction a night: if the other lane already holds the event, this lane skips it'),
                       ('Liquidity', f'≤3¢ spread, 25+ contracts at the {side} ask'),
-                      ('Record', ('Production from 2026-10-20, fresh record' if r['name'] not in DP_PULLED else f'Production 2026-10-20 to {DP_PULLED[r["name"]]}, back in the Sandbox on its whole record') + ' · official Kalshi settlement · 7% fee')]
+                      ('Record', ('Counted since Production (2026-10-20, a fresh record), the legs the follower could follow; the rule itself was frozen the day it was registered, parameters never retuned' if r['name'] not in DP_PULLED else f'Production 2026-10-20 to {DP_PULLED[r["name"]]}, back in the Sandbox on its whole record') + ' · official Kalshi settlement · 7% fee')]
             note = ' '.join((D.NC_RULE[r['name']], D.NC_RESEARCH[r['name']], D.NC_WHY, D.NC_CAVEAT[r['name']], D.NC_AMENDMENT))
         else:
             params = [('Entry','YES 70–80¢, 2–3.5h before the close'),
@@ -203,6 +203,16 @@ def build(key, state=None, now=None, nc=None):
         import daily_production as DP
         data['quotes'] = DP.quotes(state, all_lanes=True)
         stages['pairs'] = DP.pairs()
+    if econ:
+        # ONE BASIS for the Production lane (2026-11-06): its row counts the record since Production the way the header tile and the Production
+        # page do (production._assess_since_kickoff: the picks that kicked off after it entered, leads first published too close to kickoff to
+        # follow left out), instead of every pick it ever logged. The row said 6–0 +3.2% where the tile said 5–0 +3.1%: one late lead.
+        import production as P
+        late = P.late_set(P.load_feed())
+        for r in rows:
+            key = f"{r['name']}|{r['sport']}"
+            if r.get('prod') and key in stages['pairs']:
+                r['a'] = dict(P._assess_since_kickoff(data, key, stages['pairs'][key], late=late), unit='contract')
     html = SP.page(spec, data, stages, now, rows=[r for r in rows if not r.get('gone')])
     # Keep the template's design while preserving these lanes' record semantics:
     # contract wins are descriptive; market-days are the evidence clock, not an edge test.
