@@ -92,6 +92,10 @@
    "at": "2026-11-05T18:35:00.864249+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"ere_o15\", [\"ere_o15:KXEREDIVISIETOTAL-26NOV06WILZWO-2\", \"a\"]]": {
+   "at": "2026-11-06T08:57:55.916333+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"liga_btts_even\", [\"liga_btts_even:KXLALIGABTTS-26NOV07OSAATH-BTTS\", \"a\"]]": {
    "at": "2026-11-05T22:26:17.115908+00:00",
    "pool": "entered"
@@ -386,7 +390,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-06T08:04:46.910884+00:00",
+ "last_run": "2026-11-06T08:57:55.916333+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -1144,6 +1148,31 @@
    "snapshot": null,
    "sport": "Commodities",
    "src": "daily",
+   "status": "open"
+  },
+  {
+   "contract": "KXEREDIVISIETOTAL-26NOV06WILZWO-2",
+   "entered_at": "2026-11-06T08:57:55.916333+00:00",
+   "entities": [
+    "Willem II",
+    "PEC Zwolle"
+   ],
+   "id": "superpack:[\"sandbox\", \"ere_o15\", [\"ere_o15:KXEREDIVISIETOTAL-26NOV06WILZWO-2\", \"a\"]]",
+   "lane": "ere_o15",
+   "logged": "2026-11-06T08:57:25+00:00",
+   "matched": [
+    "PEC Zwolle",
+    "Willem II"
+   ],
+   "pid": "[\"sandbox\", \"ere_o15\", [\"ere_o15:KXEREDIVISIETOTAL-26NOV06WILZWO-2\", \"a\"]]",
+   "price": 0.81,
+   "profit": null,
+   "scope": "soccer_o15",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
    "status": "open"
   }
  ],

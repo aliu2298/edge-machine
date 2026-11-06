@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-06T08:04Z",
+ "generated": "2026-11-06T08:58Z",
  "rule": "active = not retired, not a baseline, a bet or an open pick in its current record window",
  "tabs": {
   "commodities": {
@@ -87,6 +87,7 @@
     "corners_total_under|soccer_corners",
     "corners_ucl_fade|soccer_corners",
     "ere_draw|soccer",
+    "ere_o15|soccer_o15",
     "ftts_no_70_80|soccer_ftts",
     "liga_btts_even|soccer_btts",
     "liga_u15_dog|soccer_o15",
