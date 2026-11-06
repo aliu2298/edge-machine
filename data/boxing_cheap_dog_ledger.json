@@ -375,6 +375,7 @@
  "events": {
   "KXBOXING-26NOV06AOKUSOKHAHRA": "2026-11-06T08:00:17.982079+00:00",
   "KXBOXING-26NOV06FADELKUMAR": "2026-11-06T06:00:20.435378+00:00",
+  "KXBOXING-26NOV06GALLENASOFAS": "2026-11-06T09:31:52.370870+00:00",
   "KXBOXING-26NOV06GERAGHLEE": "2026-11-06T08:00:17.982079+00:00",
   "KXBOXING-26NOV06KAENABEAUCH": "2026-11-06T06:00:20.435378+00:00",
   "KXBOXING-26NOV06NAMANADAMS": "2026-11-06T06:00:20.435378+00:00",
@@ -391,16 +392,16 @@
   "KXBOXING-26OCT31TSUTSUROJAS": "2026-10-31T20:06:27.383501+00:00"
  },
  "lane": "boxing_cheap_dog",
- "last_success": "2026-11-06T09:00:19.680132+00:00",
+ "last_success": "2026-11-06T09:31:52.370870+00:00",
  "observations": {
-  "at": "2026-11-06T09:00:19.680132+00:00",
+  "at": "2026-11-06T09:31:52.370870+00:00",
   "entered": 0,
-  "events": 4,
-  "filled": 1,
+  "events": 5,
+  "filled": 0,
   "no_start": 0,
-  "skipped": 0,
+  "skipped": 2,
   "unverified": 0,
-  "waiting": 31
+  "waiting": 30
  },
  "skips": {
   "KXBOXING-26NOV06AOKUSOKHAHRA-AOKUSO": {
@@ -414,6 +415,18 @@
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
    "start": "2026-11-06T06:00:00+00:00",
    "word": "Jayden Fadel"
+  },
+  "KXBOXING-26NOV06GALLENASOFAS-ASOFAS": {
+   "event": "KXBOXING-26NOV06GALLENASOFAS",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-06T10:00:00+00:00",
+   "word": "Nelson Asofa-Solomona"
+  },
+  "KXBOXING-26NOV06GALLENASOFAS-GALLEN": {
+   "event": "KXBOXING-26NOV06GALLENASOFAS",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-06T10:00:00+00:00",
+   "word": "Paul Gallen"
   },
   "KXBOXING-26NOV06GERAGHLEE-GERAGH": {
    "event": "KXBOXING-26NOV06GERAGHLEE",
