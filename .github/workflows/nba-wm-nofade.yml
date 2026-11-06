@@ -20,11 +20,13 @@ jobs:
         with:
           python-version: '3.12'
       - name: Tests
-        run: python3 test_nba_wm_nofade.py && python3 test_nba_wm_page.py && python3 test_nba_wm_v3.py
+        run: python3 test_nba_wm_nofade.py && python3 test_nba_wm_page.py && python3 test_nba_wm_v3.py && python3 test_nba_wm_v4.py && python3 test_nba_winmargin.py
       - name: NO fade (paper; in-sample from 2026-10-20, fresh record from 2026-10-31)
         run: python3 nba_wm_nofade.py
       - name: Paper version 3 (the executor's decision snapshots as the entries, fills from prints; from the first night a snapshot exists)
         run: python3 nba_wm_v3.py
+      - name: Win margin YES v4 (Sandbox paper; the tracker's rows as the entries, 2x / 2.5x split, fresh from 2026-11-06)
+        run: python3 nba_wm_v4.py
       - name: Production feeds for the follower (a live Kalshi read, not the ledgers)
         run: python3 nba_wm_production.py
       - name: Save records
@@ -37,6 +39,7 @@ jobs:
           python3 save_records.py --message "NBA win margin NO fade observations" \
             --add data/nba_wm_nofade.json \
             --add data/nba_wm_v3.json \
+            --add data/nba_wm_v4.json \
             --derived data/production_nba_wm_leads.json "python3 nba_wm_production.py" \
             --derived data/production_nba_wm_nofade_leads.json "python3 nba_wm_production.py" \
             --after "gh workflow run sandbox-tracker.yml --ref main"

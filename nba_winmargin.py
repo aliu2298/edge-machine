@@ -125,6 +125,30 @@ def metrics(prints, tip, ask):
     return out
 
 
+MARK_MINUTES = (30, 60, 90, 120, 150, 180)
+
+
+def marks_of(path, ask):
+    """Minute-level marks of one contract's price path (added 2026-11-06, observation only, so a time exit can be tested later):
+    `p` the last print price in cents at or before each minute from the tip (None before the first print), `first2` / `first25` the
+    minute of the first print at or above 2x / 2.5x the ask from the tip (None when never, or when the target is above 99c). `path` is
+    [[seconds from the tip, price in cents, contracts]]. Kept after the path itself is cleared."""
+    pts = sorted((t, c) for t, c, _n in path or [])
+    if not pts or not ask:
+        return None
+    p = {}
+    for k in MARK_MINUTES:
+        last = [c for t, c in pts if t <= k * 60]
+        p[str(k)] = last[-1] if last else None
+
+    def first(mult):
+        if mult * ask > 0.99 + 1e-9:
+            return None
+        hit = next((t for t, c in pts if t >= 0 and c / 100 >= mult * ask - 1e-9), None)
+        return None if hit is None else round(hit / 60, 1)
+    return dict(p=p, first2=first(2.0), first25=first(2.5))
+
+
 def yes_prints(rows):
     """[(ts, yes price, contracts)] oldest first from /markets/trades rows (o35_cheap_no.prints_of gives NO prices)."""
     return [(ts, round(1 - no, 4), n) for ts, no, n in O.prints_of(rows)]
@@ -196,6 +220,7 @@ def game_rows(event, markets, tip, entry, trades_of, spread, now):
                    spread_line=spread, logged=now.isoformat(), version=VERSION)
         row["m"] = metrics(prints, tip, ask) if elig else None
         row["path"] = [[p0[0] - tip, round(p0[1] * 100), round(p0[2])] for p0 in prints if p0[0] >= tip - ENTRY_H * 3600] if elig else []
+        row["marks"] = marks_of(row["path"], ask) if elig else None
         rows.append(row)
     return rows
 
@@ -236,6 +261,7 @@ def spread_rows(event, sp, entry_of, share, tip, trades_of, now):
                          m=metrics(prints, tip, ask) if elig else None,
                          path=[[p0[0] - tip, round(p0[1] * 100), round(p0[2])] for p0 in prints if p0[0] >= tip - ENTRY_H * 3600],
                          logged=now.isoformat(), version=SPREAD_VERSION))
+        rows[-1]["marks"] = marks_of(rows[-1]["path"], ask) if elig else None
     return rows
 
 
@@ -313,6 +339,8 @@ def run(state, now=None, fetch=D.get):
         if r.get("ask_ok") is None and r.get("path") and r.get("eligible") and r.get("m"):
             import leaderboard
             r["ask_ok"] = bool(leaderboard.tracker_ask_ok(dict(r, ask_ok=None)))
+        if r.get("marks") is None and r.get("path") and r.get("eligible"):
+            r["marks"] = marks_of(r["path"], r["ask"])           # rows read before the marks existed, while their path is kept
         if r["night"] < cutoff:
             r["path"] = []
     state["last_run"] = now.isoformat()
