@@ -1,5 +1,9 @@
 {
  "decided": {
+  "[\"daily\", \"econ_nc_no\", [\"KXDIESELD-26NOV06-T6.235\", \"no\"]]": {
+   "at": "2026-11-06T01:42:42.028853+00:00",
+   "pool": "entered"
+  },
   "[\"finance_nc\", \"finance_nc\", [\"KXINXU-26NOV05H1600-T7499.9999\", \"no\"]]": {
    "at": "2026-11-05T18:05:03.605874+00:00",
    "pool": "entered"
@@ -377,7 +381,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-06T01:04:45.235499+00:00",
+ "last_run": "2026-11-06T01:42:42.028853+00:00",
  "mirror": [],
  "pool": [
   {
@@ -1001,6 +1005,29 @@
    "snapshot": null,
    "sport": "Football",
    "src": "nfl_tt_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXDIESELD-26NOV06-T6.235",
+   "entered_at": "2026-11-06T01:42:42.028853+00:00",
+   "entities": [
+    "Diesel"
+   ],
+   "id": "superpack:[\"daily\", \"econ_nc_no\", [\"KXDIESELD-26NOV06-T6.235\", \"no\"]]",
+   "lane": "econ_nc_no",
+   "logged": "2026-11-06T01:30:17.746061+00:00",
+   "matched": [
+    "Diesel"
+   ],
+   "pid": "[\"daily\", \"econ_nc_no\", [\"KXDIESELD-26NOV06-T6.235\", \"no\"]]",
+   "price": 0.88,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "no",
+   "snapshot": null,
+   "sport": "Commodities",
+   "src": "daily",
    "status": "open"
   }
  ],
