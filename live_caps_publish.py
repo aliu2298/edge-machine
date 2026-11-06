@@ -19,6 +19,7 @@ import sys
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, "data", "live_caps.json")
 import glob
+import importlib
 SRC_DIR = os.environ.get("FOLLOWER_DIR") or (sorted(glob.glob(os.path.expanduser("~/polymarket-*")))[:1] or [""])[0]
 
 
@@ -39,9 +40,10 @@ def main(argv=None):
     argv = argv if argv is not None else sys.argv[1:]
     sys.path.insert(0, SRC_DIR)
     try:
-        import bot.config as BC
-        import bot.engine as BE
-        import bot.kalshi as BK
+        # The follower's package is the folder in SRC_DIR that holds its engine and exchange modules (found, not named here).
+        pkg = next(n for n in sorted(os.listdir(SRC_DIR)) if os.path.isfile(os.path.join(SRC_DIR, n, "engine.py"))
+                   and os.path.isfile(os.path.join(SRC_DIR, n, "kalshi.py")) and os.path.isfile(os.path.join(SRC_DIR, n, "config.py")))
+        BC, BE, BK = (importlib.import_module(f"{pkg}.{m}") for m in ("config", "engine", "kalshi"))
     except Exception as exc:                                # noqa: BLE001
         print(f"live_caps: the follower could not be imported ({type(exc).__name__}: {exc}); the file is left as it was")
         return 0
