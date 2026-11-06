@@ -1,5 +1,5 @@
 {
- "last_run": "2026-11-05T02:23:02.001663+00:00",
+ "last_run": "2026-11-06T03:01:02.001023+00:00",
  "nights": [
   {
    "anchor": "ct_2000",
@@ -2082,6 +2082,84 @@
    "signal_at": "2026-11-05T01:02:00+00:00",
    "status": "settled",
    "variant": "B"
+  },
+  {
+   "anchor": "utc_0130",
+   "anchor_at": "2026-11-06T02:00:00+00:00",
+   "id": "A:utc_0130:2026-11-05",
+   "night": "2026-11-05",
+   "product": "GOL-25NOV26-CDE",
+   "range_high": 4086.4,
+   "range_low": 4065.4,
+   "settled_at": "2026-11-06T03:00:02.000835+00:00",
+   "shadow": false,
+   "status": "no_break",
+   "variant": "A"
+  },
+  {
+   "anchor": "utc_0100",
+   "anchor_at": "2026-11-06T01:00:00+00:00",
+   "entry_at": "2026-11-06T01:01:00+00:00",
+   "entry_book": {
+    "ask": 4103.8,
+    "ask_size": 1.0,
+    "at": "2026-11-06T01:01:01.995064Z",
+    "bid": 4103.3,
+    "bid_size": 36.0
+   },
+   "entry_late": false,
+   "entry_px": 4103.0,
+   "entry_spread_bp": 1.218,
+   "exit_at": "2026-11-06T01:16:00+00:00",
+   "exit_book": {
+    "ask": 4103.6,
+    "ask_size": 3.0,
+    "at": "2026-11-06T01:16:02.143565Z",
+    "bid": 4103.1,
+    "bid_size": 1.0
+   },
+   "exit_carried": false,
+   "exit_px": 4102.0,
+   "exit_spread_bp": 1.219,
+   "fill_in": 4103.3,
+   "fill_out": 4103.6,
+   "gross_bp": 2.437,
+   "gross_usd": 1.0,
+   "id": "A:utc_0100:2026-11-05",
+   "net_bp": -1.219,
+   "net_usd": -0.5,
+   "night": "2026-11-05",
+   "product": "GOL-25NOV26-CDE",
+   "range_high": 4115.7,
+   "range_low": 4102.6,
+   "settled_at": "2026-11-06T01:16:02.000548+00:00",
+   "shadow": true,
+   "side": "short",
+   "signal_at": "2026-11-06T01:00:00+00:00",
+   "status": "settled",
+   "variant": "A"
+  },
+  {
+   "anchor": "utc_0130",
+   "anchor_at": "2026-11-06T02:00:00+00:00",
+   "id": "B:utc_0130:2026-11-05",
+   "night": "2026-11-05",
+   "product": "GOL-25NOV26-CDE",
+   "settled_at": "2026-11-06T02:02:02.000739+00:00",
+   "shadow": false,
+   "status": "no_range",
+   "variant": "B"
+  },
+  {
+   "anchor": "utc_0100",
+   "anchor_at": "2026-11-06T01:00:00+00:00",
+   "id": "B:utc_0100:2026-11-05",
+   "night": "2026-11-05",
+   "product": "GOL-25NOV26-CDE",
+   "settled_at": "2026-11-06T01:02:02.000546+00:00",
+   "shadow": true,
+   "status": "no_range",
+   "variant": "B"
   }
  ],
  "runs": [
@@ -2251,6 +2329,18 @@
     "A:utc_0130": "settled",
     "B:utc_0100": "settled",
     "B:utc_0130": "settled"
+   }
+  },
+  {
+   "at": "2026-11-06T00:54:02.710500+00:00",
+   "night": "2026-11-05",
+   "product": "GOL-25NOV26-CDE",
+   "read_errors": 0,
+   "statuses": {
+    "A:utc_0100": "settled",
+    "A:utc_0130": "no_break",
+    "B:utc_0100": "no_range",
+    "B:utc_0130": "no_range"
    }
   }
  ],
