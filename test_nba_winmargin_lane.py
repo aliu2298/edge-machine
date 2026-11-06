@@ -137,7 +137,8 @@ idx = CB.section(state)
 check("the Sandbox's Chaos index lists both, the in-sample one marked",
       ('data-lane="nba_winmargin_live"' in idx, 'data-lane="nba_winmargin_split_insample"' in idx, "in-sample backfill, not evidence" in idx),
       (True, True, True))
-check("both link to the NBA page", idx.count("./nba.html#cheap-side") >= 2, True)
+check("both link to their place on the NBA page (2026-11-05: a Rules row, its in-sample fold)",
+      ("./nba.html#wm-yes" in idx, "./nba.html#nba_winmargin_live-insample" in idx), (True, True))
 check("public copy passes the guard", sandbox_audit.COPY_RE.search(html + idx), None)
 
 print("\n" + ("ALL PASS" if not FAILS else f"{len(FAILS)} FAILED"))

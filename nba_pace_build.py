@@ -661,56 +661,86 @@ def build(blob=None, now=None):
             fresh += f" · board cut at {fmt.when(clock)}"
     fresh_html = f'<p class="nba-fresh">{esc(fresh)}</p>' if fresh else ""
     n_up = len(upcoming)
+    # The Econ Daily layout (2026-11-05, Olu): tiles, the stage filter, Rules (one row per lane), an empty Sandbox fold,
+    # Research (observation only), Games, Retired, the method. nba_page draws the lanes; this file the board around them.
+    try:
+        import nba_page
+        head_html, rules_html, _rows = nba_page.rules_section(now=clock)
+    except Exception as exc:                                    # noqa: BLE001
+        head_html, rules_html = "", (f'<section id="rules" class="sp-section"><p class="sm mut">The lanes could not be read '
+                                     f'({esc(type(exc).__name__)}).</p></section>')
     body = f"""<div class="sp-head nba-head">
-<p class="eyebrow">Research board</p>
+<p class="eyebrow">Rules under test</p>
 <h1>NBA</h1>
-<p class="scope">Expected combined points · tip times Central</p>
-{fresh_html}</div>
+<p class="scope">Win margin lanes on Kalshi · All times Central</p>
+</div>
+{head_html}
+{rules_html}
+{_research_section()}
+<section id="games" class="sp-section">
+<div class="sp-section-head"><h2>Games</h2><span class="sm mut">{n_up} next 24h · {len(graded)} graded</span></div>
+{fresh_html}
 <section id="matchups">
-<details class="section-disclosure nba-upcoming"><summary><b>Upcoming</b><span>reference · next 24 hours · {n_up} game{"s" if n_up != 1 else ""}</span></summary>
-<p class="shell-kicker">Chronological · the mark is the board's highest expectation in that column</p>
+<details class="section-disclosure nba-upcoming"><summary><b>Next 24h</b><span>{n_up} game{"s" if n_up != 1 else ""} · expected combined points · the mark is the board's highest in that column</span></summary>
 {upcoming_table(blob, upcoming)}
 <p class="nba-accuracy" id="accuracy">{esc(accuracy_line(graded))}</p>
 </details>
 </section>
 <section id="graded">
-<details class="section-disclosure nba-results"><summary><b>Results · last 24 hours</b><span>{len(graded)} graded</span></summary>
-<p class="sm mut">Expected / actual combined points; the small signed number is the file's own error.</p>
+<details class="section-disclosure nba-results"><summary><b>Results</b><span>last 24 hours · {len(graded)} graded · expected / actual, and the file's own error</span></summary>
 {results_table(graded)}
 </details>
 </section>
 <section id="teams">
-<details class="section-disclosure nba-teams"><summary><b>Team reference</b><span>Last-{window_txt} window</span></summary>
-<p class="sm mut">Each team's scoring and allowing rates over its last {window_txt} games, labelled against the league means of this table.</p>
+<details class="section-disclosure nba-teams"><summary><b>Team reference</b><span>last-{window_txt} scoring and allowing rates, labelled against the league means</span></summary>
 {team_table(blob)}</details>
 </section>
-{_ladder_section()}
+</section>
 {_retired_block()}
-<details class="section-disclosure nba-about"><summary><b>About this desk</b><span>Preseason research</span></summary>
-<p class="sm mut">1Q, 1H and FT are expected combined points for both teams, from each team's last-{window_txt} scoring and allowing rates. A finished game is graded against its actual combined total, and the error shown is actual minus expected as stored in the pace file. These are research expectations, not betting lines or recommendations.</p></details>
+<section id="method" class="sp-method"><details><summary><b>Method</b><small>how these lanes are read · the board</small></summary><div>
+{_how_read()}
+<p class="sm mut">The board: 1Q, 1H and FT are expected combined points for both teams, from each team's last-{window_txt} scoring and allowing rates. A finished game is graded against its actual combined total, and the error shown is actual minus expected as stored in the pace file. These are research expectations, not betting lines or recommendations.</p>
+</div></details></section>
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 
 """
-    # The shared shell, with the section nav every sport page carries in its
-    # second header row (Upcoming · Results · Teams) in place of a local pill bar.
     page = C.document(
         "Edge Machine · NBA",
-        "NBA matchups, pace labels, and combined expectations. Preseason. No bets.",
+        "NBA win margin lanes on Kalshi, their records and the games they trade. Research, not betting advice.",
         "nba",
-        (("glance", "Glance"), ("wm-yes", "Win margin"), ("wm-no", "NO fade"), ("tracker", "Tracker"),
-         ("matchups", "Upcoming"), ("graded", "Results"), ("teams", "Teams"), ("ladder", "Ladder"), ("retired", "Retired")),
+        (("rules", "Rules"), ("research", "Research"), ("games", "Games"), ("retired", "Retired"), ("method", "Method")),
         C.stamp(clock),
         body,
+        script_src="./site.js",
         scripts=("./tables.js",),
         sports=True,
     )
     # Every cell named for its column and the header rows in <thead>, so the
     # phone cards work on this page however it is written out.
     import sandbox_build
-    # The top half (2026-10-31): the glance table, one card per active lane, then the win margin tracker.
-    import nba_layout
-    page = nba_layout.place(page)
     return sandbox_build.label_cells(page)
+
+
+def _how_read():
+    try:
+        import nba_layout
+        return nba_layout.how_read()
+    except Exception:                                           # noqa: BLE001
+        return ""
+
+
+def _research_section():
+    """Observation only, no record (2026-11-05): the win margin tracker (with the comeback underdog spread line) and the
+    ladder tracker, in one collapsed block. Never breaks the board."""
+    try:
+        import nba_winmargin_build
+        tracker = nba_winmargin_build.section()
+    except Exception as exc:                                    # noqa: BLE001
+        tracker = f'<p class="sm mut" id="tracker">Win margin tracker unavailable ({esc(type(exc).__name__)}).</p>'
+    return ('<section id="research" class="sp-section"><details class="fold nba-research"><summary><h3>Research</h3>'
+            '<span class="sm mut">· observation only · no buying or selling rule, no record · the win margin tracker, '
+            'the comeback underdog spread line and the ladder tracker</span></summary>'
+            f'{tracker}{_ladder_section()}</details></section>')
 
 
 def main():

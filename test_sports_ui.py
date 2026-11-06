@@ -108,9 +108,11 @@ if playwright is not None:
                     assert page.locator("tr.nba-detail:not([hidden])").count() == 1
                     assert page.locator("tr.nba-detail .nba-side").first.is_visible()
                     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), (sport, width, "analysis")
-                    page.locator("a[href='#graded']").click()
+                    # Results and the team reference are folds inside Games (2026-11-05; the sub-nav links #games).
+                    assert page.locator("a[href='#games']").count() == 1
+                    page.locator("#graded summary").click()
                     page.locator(".nba-results[open]").wait_for(state="attached")
-                    page.locator("a[href='#teams']").click()
+                    page.locator("#teams summary").click()
                     page.locator("#teams > details[open]").wait_for(state="attached")
                 if sport == "soccer":
                     assert page.locator("#method > details").get_attribute("open") is None
