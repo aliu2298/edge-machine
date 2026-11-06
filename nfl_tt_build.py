@@ -97,29 +97,78 @@ def _record_words(a):
             f'({a["weeks"]} week{"s" if a["weeks"] != 1 else ""}) · ROI {roi} after fee')
 
 
+def details_words(lane, state=None):
+    """A lane's words for its row's "Rule details" fold: registration, definition, record, baseline, entries."""
+    state = _state(state)
+    row = row_data(lane, state)
+    a = row["a"]
+    base = N.stats(_picks(state, N.BASE))
+    gone = N.RETIRED.get(lane)
+    last = state.get("last_run")
+    open_words = f" · {a['open']} open" if a["open"] else ""
+    return (f'<p class="sp-def mut">Registered {esc(N.REGISTERED)} · paper · own ledger</p>'
+            f'{SP.definition_html(N.DEFINITION[lane])}{SP.definition_html(N.PREREG[lane], "mut")}'
+            f'<p class="sp-def">This record: {esc(_record_words(a))}. z is clustered by NFL week.</p>'
+            + (f'<p class="sp-def nfl-tt-kept">{esc(N.KEPT[lane])}</p>' if lane in N.KEPT and not gone else '') +
+            f'<p class="sp-def">Blind baseline (the YES on every in-window team-total rung, same quote): '
+            f'{esc(_record_words(base))}{" · " + str(base["open"]) + " open" if base["open"] else ""}.</p>'
+            f'<h4 class="sp-details-sub">Recent entries{open_words}</h4>'
+            f'{_entries(row["picks"])}'
+            f'<p class="sm mut">Last scan {esc(fmt.when(last) if last else "not yet")}'
+            f'{(" · " + esc(state["error"])) if state.get("error") else ""}.</p>')
+
+
+def template_row(lane, state=None):
+    """The lane as a row of the NFL page's own template lists (2026-11-05): its record in the tiles and the
+    Sandbox count, its entries in Events. The row's words are details_words()."""
+    state = _state(state)
+    row = row_data(lane, state)
+    row.update(prod=False, floor=floor(lane), open=row["a"]["open"],
+               own=dict(label=N.NAMES[lane], market=MARKET, details=details_words(lane, state)))
+    if "gone" not in row:
+        row.pop("gone", None)
+    return row
+
+
+def events(rows, state=None, now=None):
+    """The lanes' entries as the template's events, one game per event (open, and settled inside the window)."""
+    import datetime as dt
+    state = _state(state)
+    now = SP.as_utc(now)
+    floor_t = now - dt.timedelta(days=SP.DONE_DAYS)
+    by = {}
+    for row in rows:
+        for p in _picks(state, row["name"]):
+            when = SP.instant(p.get("start"))
+            st = {"open": "open", "won": "won", "lost": "lost", "no_result": "price"}.get(p.get("status"), "open")
+            if st != "open" and (when or now) < floor_t:
+                continue
+            q = dict(start=p.get("start"), venue="kalshi_binary", market_id=p.get("ticker"), settled=p.get("settled"),
+                     status=p.get("status"), label=p.get("game"))
+            ev = by.setdefault((p.get("game"), p.get("start")), dict(when=when, label=p.get("game") or "", picks=[]))
+            ev["picks"].append(SP.pick(row, q, f'{p.get("team")} over {p.get("line")}', st, price=p.get("price")))
+    return [SP.event(e["when"], fmt.contest(e["label"]), e["picks"], key=(e["label"], str(e["when"]))) for e in by.values()]
+
+
+def empty_reason(state=None):
+    """Why no team-total entry starts in the next 24 hours: the lanes' own last read, not the tracker's coverage."""
+    state = _state(state)
+    last = state.get("last_run")
+    return (f"the team-total lanes keep their own ledger; their last read {fmt.when(last)} found no in-window rung "
+            "for a game in the next 24 hours" if last else "the team-total lanes have not read yet")
+
+
 def row_html(lane, state=None):
     """One Sandbox rule row, sport_page.rule_row's markup, with its details fold."""
     state = _state(state)
     row = row_data(lane, state)
     a = row["a"]
     name = N.NAMES[lane]
-    base = N.stats(_picks(state, N.BASE))
     gone = N.RETIRED.get(lane)
     early = False if gone else _early(row)
-    last = state.get("last_run")
-    open_words = f" · {a['open']} open" if a["open"] else ""
     details = (
         f'<div class="sp-details-body"><p class="sp-details-name"><b>{esc(name)}</b> · {esc(MARKET)} · '
-        f'registered {esc(N.REGISTERED)} · paper · own ledger</p>'
-        f'{SP.definition_html(N.DEFINITION[lane])}{SP.definition_html(N.PREREG[lane], "mut")}'
-        f'<p class="sp-def">This record: {esc(_record_words(a))}. z is clustered by NFL week.</p>'
-        + (f'<p class="sp-def nfl-tt-kept">{esc(N.KEPT[lane])}</p>' if lane in N.KEPT and not gone else '') +
-        f'<p class="sp-def">Blind baseline (the YES on every in-window team-total rung, same quote): '
-        f'{esc(_record_words(base))}{" · " + str(base["open"]) + " open" if base["open"] else ""}.</p>'
-        f'<h4 class="sp-details-sub">Recent entries{open_words}</h4>'
-        f'{_entries(row["picks"])}'
-        f'<p class="sm mut">Last scan {esc(fmt.when(last) if last else "not yet")}'
-        f'{(" · " + esc(state["error"])) if state.get("error") else ""}.</p></div>')
+        f'registered {esc(N.REGISTERED)} · paper · own ledger</p>' + details_words(lane, state).split("</p>", 1)[1] + '</div>')
     return (
         f'<details class="sp-rule{" is-early" if early else ""}" data-source="{esc(lane)}" '
         f'data-sport="nfl_team_total" data-scope="clubs" data-stage="sandbox"{" data-early=\"1\"" if early else ""}>'
