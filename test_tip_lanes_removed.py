@@ -770,7 +770,10 @@ def _aggregates_ignore_removed_rows_body():
            f"{name}'s removed bets would raise its stamp count ({own['n']} vs {full_a['n']})")
         ok(own["criteria"][0][3] in page_stamp,
            f"the stamp shows {name}'s count without its removed bets")
-        ok(full_a["criteria"][0][3] not in page_stamp,
+        # that source's own stamp row: another row (the Superpack) can carry the same "3 bets over 0 days"
+        label = {"kalshi": "<b>Kalshi</b>", "espn_fpi": "<b>ESPN FPI", "polymarket": "<b>Polymarket (international)"}[name]
+        own_row = next((r for r in page_stamp.split("<tr") if label in r[:300]), "")
+        ok(own_row and full_a["criteria"][0][3] not in own_row,
            f"the stamp does not show {name}'s full-ledger count")
     eq(SB.baseline_table(shown), SB.baseline_table(clean),
        "the blind baselines built from the filtered rows match")

@@ -100,5 +100,10 @@ X.check(real)
 X.check_lanes(real)
 check("the committed export passes the whitelist and carries no dollar sign", "$" in json.dumps(real), False)
 
+import production as P
+check("a raised stake shows its date under the pair", ("$1 → $10 on Nov 6" in P.stake_note("sr_a7|soccer_u35"), P.stake_note("sr_c1|soccer_u35")), (True, ""))
+check("both new $10 pairs and the three older ones are listed", sorted(P.STAKE_CHANGES), sorted(["mls_fade_home|soccer_p05", "commod_fav_band|commodities_fav", "crypto_fav_band_below|crypto_fav", "team2_ranked|soccer_team2", "sr_a7|soccer_u35"]))
+
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
+
