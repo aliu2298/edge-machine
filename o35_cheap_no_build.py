@@ -240,7 +240,7 @@ def honest_table(entries):
 
 
 HONEST_RULE = ("Honest rules: a fill needs a trade strictly under the bid (the queue), and a sell counts only on prints at least "
-               f"{O.SELL_DELAY_S} seconds after the fill (the bot's latency), with the same {O.MIN_VOL}-contract volume rule counted over those later prints.")
+               f"{O.SELL_DELAY_S} seconds after the fill (order latency), with the same {O.MIN_VOL}-contract volume rule counted over those later prints.")
 STOP_NOTE = ("Production 2026-11-01 to 2026-11-06, then switched off: 21 live fills, 4 sold at 40c, -33% after fees. In paper, 15 of 15 2x sells and "
              "4 of 6 4x sells printed within a minute of the fill; the live fills came 68 to 131 minutes in and none held. Back in the Sandbox until the paper rules match what the exchange does.")
 

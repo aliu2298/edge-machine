@@ -31,7 +31,7 @@ the clock, in-sample Oct 28-31 2nd-half 27 fills reached 4x 56% (+116.5%) v 1st-
 This is research, not evidence for the lane (the v3 record starts fresh on SINCE).
 
 HONEST RE-SCORE (2026-11-06, Olu: the lane goes back to the Sandbox "till it's working properly"). A live audit found paper sells
-printing within a minute of the fill (flash prints: a VAR check, a one-off print) that a resting sell behind the queue and the bot's
+printing within a minute of the fill (flash prints: a VAR check, a one-off print) that a resting sell behind the queue and order
 latency can never catch: in v4 paper 15 of 15 2x sells and 4 of 6 4x sells printed within 60 seconds of the fill, while the live
 fills came 68 to 131 minutes in and held 0 of 17. Every entry therefore carries a second block, "honest": a fill needs a print
 STRICTLY BELOW the bid (the queue), a sell counts only on prints at least SELL_DELAY_S (60) seconds AFTER the fill, with the same
@@ -91,7 +91,7 @@ KICKOFF_BACK_H = 4
 BID_LEAD_MIN = 60              # the old rule: bid this long before kickoff (v1, v2, and the "10e" comparison)
 CROSS_LOOKBACK_MIN = 90        # v4: the last print this recent before the bid minute says where No stood when the bid went up
 BID_AFTER_MIN = 60             # v3: the bid counts from this long AFTER kickoff
-SELL_DELAY_S = 60              # honest: a sell counts only on prints this long after the fill (the bot's latency)
+SELL_DELAY_S = 60              # honest: a sell counts only on prints this long after the fill (order latency)
 CANCEL_MIN = 100               # v5: the bid is cancelled this long after kickoff (match minute 80 on the wall clock, about)
 SINCE_V5 = "2026-11-06"
 V5_LABEL = "Over 3.5 cheap NO · v5 · 10c bid cancelled at minute 80 · sell at 4× (3× tracked)"
