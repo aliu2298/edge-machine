@@ -23,16 +23,21 @@ import importlib
 SRC_DIR = os.environ.get("FOLLOWER_DIR") or (sorted(glob.glob(os.path.expanduser("~/polymarket-*")))[:1] or [""])[0]
 
 
-def compute(pairs, cfg, price_cap, price_band, fee):
-    """{pair: {cap, max_ask, band}}: the effective-price cap, the highest ask on the cent grid whose ask + fee is within it, and
-    the band (lo, hi) on the ask when the pair has one, else None."""
+def compute(pairs, cfg, price_cap, price_band, fee, pair_stake=None, previous=None, now=None):
+    """{pair: {cap, max_ask, band, raised_at}}: the effective-price cap, the highest ask on the cent grid whose ask + fee is within it, the
+    band (lo, hi) on the ask when the pair has one, else None, and, for a pair whose stake the follower has raised above its default
+    (pair_stake(cfg, pair) is a number), `raised_at`: the instant this export first saw it raised, kept from the previous file once set. A
+    pair that is no longer raised loses it. No amount is exported: only that the stake is raised, and since when."""
     out = {}
+    now = now or dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S+00:00")
     for pair in sorted(pairs):
         cap = float(price_cap(cfg, pair))
         asks = [round(c / 100, 2) for c in range(1, 100)]
         ok = [a for a in asks if a + fee(a) <= cap + 1e-9]
         band = price_band(cfg, {"feed": "production", "pair": pair})
         out[pair] = dict(cap=round(cap, 4), max_ask=max(ok) if ok else None, band=[round(band[0], 4), round(band[1], 4)] if band else None)
+        if pair_stake is not None and pair_stake(cfg, pair) is not None:
+            out[pair]["raised_at"] = ((previous or {}).get(pair) or {}).get("raised_at") or now
     return out
 
 
@@ -54,7 +59,12 @@ def main(argv=None):
         cfg = BC.load()
     import live_record_publish as LP
     _leads, entered = LP.feed_index()
-    caps = compute(entered, cfg, BE.price_cap, BE.price_band, BK.fee_per_contract)
+    try:
+        with open(OUT) as fh:
+            previous = json.load(fh).get("caps") or {}
+    except (OSError, ValueError):
+        previous = {}
+    caps = compute(entered, cfg, BE.price_cap, BE.price_band, BK.fee_per_contract, BE.pair_stake, previous)
     blob = dict(generated=dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%MZ"), caps=caps)
     tmp = OUT + ".tmp"
     with open(tmp, "w") as f:
