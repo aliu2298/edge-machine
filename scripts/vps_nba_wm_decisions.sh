@@ -4,7 +4,7 @@
 # Every 10 minutes from edge-vps (a USER crontab, like vps_window_requests.sh and the health snapshot):
 #   */10 * * * * /home/<user>/edge-machine-closes/scripts/vps_nba_wm_decisions.sh >> /home/<user>/edge-nba-wm.log 2>&1
 # nba_wm_publish.py reads the executor's own file (nba_wm_decisions.json in its working directory, never its ledger), refuses to write if
-# anything outside its whitelist of PUBLIC market fields is present, and this script commits only data/nba_wm_decisions.json. It shares the
+# anything outside its whitelist of PUBLIC market fields is present, and this script commits only data/nba_wm_decisions.json and data/top5_dip_decisions.json. It shares the
 # edge-machine-closes clone with the other VPS jobs, so it takes the same lock and pulls with --rebase; no other writer touches that file.
 # It uses the push route the other jobs already use: no new secret.
 set -uo pipefail
@@ -18,7 +18,10 @@ if command -v flock >/dev/null 2>&1; then
 fi
 git pull -q --rebase origin main || { echo "$(stamp) pull failed"; exit 0; }
 "$PY" nba_wm_publish.py || { echo "$(stamp) publish refused or failed"; exit 1; }
+# the top-5 dip executor's snapshots ride the same entry (2026-11-05): a refusal there must not stop the NBA ones, so it only reports
+"$PY" top5_dip_publish.py || echo "$(stamp) top-5 dip publish refused or failed"
 git add data/nba_wm_decisions.json 2>/dev/null
+git add data/top5_dip_decisions.json 2>/dev/null   # a missing file must not stop the NBA add above
 if ! git diff --cached --quiet; then
   git commit -q -m "NBA win margin decision snapshots via vps ($(date -u +%Y-%m-%d\ %H:%MZ))"
 fi

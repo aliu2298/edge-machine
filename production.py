@@ -1329,7 +1329,7 @@ def unavailable_row(key, label, sport_label, note):
             f'<td colspan="8" class="neg">{esc(note)}</td></tr>')
 
 
-def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=None, nba_value=None, soccer_team_rules=None, o35=None, nba_wm=None):
+def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=None, nba_value=None, soccer_team_rules=None, o35=None, nba_wm=None, top5_dip=None):
     """public_site/production.html — shares the Sandbox stylesheet.
 
     Organised as the questions a visitor actually asks, in order: what is in Production and on
@@ -1376,6 +1376,10 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
         # data/production_o35_leads.json its upcoming list.
         import o35_production
         d, st, blob = o35_production.page_inputs(d, st, blob, o35, now=now_dt)
+    if top5_dip is not None:
+        # The top-5 goalless dip, live since 2026-11-05 (top5_dip_production): the paper record that follows the executor is its record.
+        import top5_dip_production
+        d, st, blob = top5_dip_production.page_inputs(d, st, blob, top5_dip, now=now_dt)
     # Headlines and the lead list use the page copy. The record on each card
     # is assessed on the unfiltered ledger, the same one the tracker reads,
     # so a hidden row cannot move a kept pair's numbers.
