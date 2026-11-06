@@ -369,7 +369,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-05T23:56:16.572344+00:00",
+ "last_run": "2026-11-06T00:04:04.550611+00:00",
  "mirror": [],
  "pool": [
   {
@@ -524,14 +524,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXBRENTD-26NOV0517-T97.50\", \"a\"]]",
    "price": 0.7,
-   "profit": null,
+   "profit": 0.4286,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-06T00:03:57+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXSILVERD-26NOV0517-T52.25",
@@ -547,14 +547,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXSILVERD-26NOV0517-T52.25\", \"a\"]]",
    "price": 0.75,
-   "profit": null,
+   "profit": -1.0,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-06T00:03:57+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXBTCD-26NOV0517-T76499.99",
@@ -708,14 +708,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_no\", [\"commod_nc_no:KXBRENTD-26NOV0517-T99.50\", \"b\"]]",
    "price": 0.95,
-   "profit": null,
+   "profit": 0.0526,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-06T00:04:01+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXGOLDD-26NOV0517-T4114",
@@ -731,14 +731,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_no\", [\"commod_nc_no:KXGOLDD-26NOV0517-T4114\", \"b\"]]",
    "price": 0.93,
-   "profit": null,
+   "profit": 0.0753,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-06T00:04:01+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXBRENTD-26NOV0517-T97.00",
@@ -754,14 +754,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXBRENTD-26NOV0517-T97.00\", \"a\"]]",
    "price": 0.98,
-   "profit": null,
+   "profit": 0.0204,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-06T00:04:01+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXGOLDD-26NOV0517-T4084",
@@ -777,14 +777,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXGOLDD-26NOV0517-T4084\", \"a\"]]",
    "price": 0.96,
-   "profit": null,
+   "profit": 0.0417,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-06T00:04:01+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXSILVERD-26NOV0517-T51.50",
@@ -800,14 +800,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXSILVERD-26NOV0517-T51.50\", \"a\"]]",
    "price": 0.98,
-   "profit": null,
+   "profit": 0.0204,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-06T00:04:01+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXNATGASD-26NOV0517-T2.965",
@@ -823,14 +823,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_no\", [\"commod_nc_no:KXNATGASD-26NOV0517-T2.965\", \"b\"]]",
    "price": 0.95,
-   "profit": null,
+   "profit": 0.0526,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-06T00:04:01+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXCOPPERD-26NOV0517-T6.26",
@@ -846,14 +846,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXCOPPERD-26NOV0517-T6.26\", \"a\"]]",
    "price": 0.98,
-   "profit": null,
+   "profit": 0.0204,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-06T00:04:01+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXNATGASD-26NOV0517-T2.935",
@@ -869,14 +869,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXNATGASD-26NOV0517-T2.935\", \"a\"]]",
    "price": 0.94,
-   "profit": null,
+   "profit": 0.0638,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-06T00:04:01+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXSILVERD-26NOV0517-T52",
@@ -892,14 +892,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_no\", [\"commod_nc_no:KXSILVERD-26NOV0517-T52\", \"b\"]]",
    "price": 0.95,
-   "profit": null,
+   "profit": 0.0526,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-06T00:04:01+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXLALIGATEAMTOTAL-26NOV06SEVALA-SEV2",
