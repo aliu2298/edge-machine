@@ -1839,6 +1839,9 @@ BACK_IN_SANDBOX = {
 }
 for _name, _text in BACK_IN_SANDBOX.items():
     SOURCES[_name]["note"] = SOURCES[_name]["note"].replace("Measured in the Sandbox; not in Production.", "Measured in the Sandbox.") + " " + _text
+# 2026-11-06 (Olu, knowing both are tiny samples): one scope of each rule is in Production by hand, at the default stake.
+SOURCES["team2_form_l10"]["note"] += " Internationals scope: in Production from 2026-11-06 (Olu); Cups stays in the Sandbox."
+SOURCES["u35_low_scoring"]["note"] += " Cups scope: in Production from 2026-11-06 (Olu), as its Internationals scope has been since 2026-10-04; Clubs stays retired."
 
 
 # ---------------------------------------------------------------------------
@@ -4912,7 +4915,9 @@ BTTS_SPORTS = ("soccer_btts", "soccer_btts_cup", "soccer_btts_intl")
 # Leagues only an own-ledger Production rule publishes in (soccer_rules_production, 2026-10-21):
 # Argentina's KXARGPREMDIVTOTAL rows carry ESPN's "Liga Profesional", tied to their ESPN fixture
 # by sa_o15's exact matcher before they were logged.
-FEED_EXTRA_LEAGUES = {"Liga Profesional"}
+# 2026-11-06, with u35_low_scoring|soccer_u35_cup: the Cups scope's competitions (CUP_FRAGS) too. Its first two bets were an EFL Cup and a DFB
+# Pokal tie, which no feed league named, so a Cups lead would never have been published. Only a pair put in Production by hand publishes.
+FEED_EXTRA_LEAGUES = {"Liga Profesional"} | set(CUP_FRAGS.values())
 # Display names for Production pairs that run on their own ledgers, not in SOURCES (Econ Daily,
 # Trump mentions, the soccer label rules): a page or a lead names them by these.
 OWN_LEDGER_LABELS = {

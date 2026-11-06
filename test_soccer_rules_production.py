@@ -82,7 +82,7 @@ check("each on its claim domain and side",
 check("all may be published, on an ESPN-verified start", [(T.placeable(q), P.start_verified(q)) for q in qs],
       [(True, True)] * len(qs))
 check("Argentina's league is a feed league now, and only it was added", (
-    "Liga Profesional" in S.feed_binary_leagues(), S.FEED_EXTRA_LEAGUES), (True, {"Liga Profesional"}))
+    "Liga Profesional" in S.feed_binary_leagues(), S.FEED_EXTRA_LEAGUES), (True, {"Liga Profesional"} | set(S.CUP_FRAGS.values())))   # + the cup competitions (2026-11-06)
 
 print("\nthe leads: the exact contract and side")
 f = RP.feed(rules, sa, now=NOW)

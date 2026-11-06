@@ -3421,10 +3421,10 @@ eq(sorted(T.PAIR_OVERRIDES),
    ["commod_fav_band|commodities_fav",
     "crypto_fav_band_below|crypto_fav", "ftts_no_70_80|soccer_ftts",
     "mls_fade_home|soccer_p05", "team1_form_l5|soccer_team1_intl",
-    "team2_ranked|soccer_team2", "u35_low_scoring|soccer_u35_intl"],
+    "team2_form_l10|soccer_team2_intl", "team2_ranked|soccer_team2", "u35_low_scoring|soccer_u35_cup", "u35_low_scoring|soccer_u35_intl"],
    "the Production list is exactly the pairs moved there by hand, and nothing else (corners_ucl_fade out 2026-10-21; four soccer lanes out, crypto_fav_band swapped for three crypto angle lanes, 2026-10-20) "
    "(team scores 1+ · Clubs out 2026-10-14; five moved in 2026-10-16; seven lanes back to the Sandbox 2026-10-27; "
-   "ere_draw, liga_btts_even, team2_form_l10 Clubs and o15_ranked Internationals back 2026-11-02)")
+   "ere_draw, liga_btts_even, team2_form_l10 Clubs and o15_ranked Internationals back 2026-11-02; the under's Cups scope and team 2+ form's Internationals scope moved in 2026-11-06)")
 # pm_combo4 came OFF on 2026-10-03, not on its record: Polymarket US publishes no parlay
 # API, so in five days as a Production pair it published zero leads and never could. The
 # refusal below is why, and it must keep holding or the pair could be relisted as a label.
@@ -4770,7 +4770,7 @@ eq((S.SOURCES["p05_unbeaten"]["sports"], sorted(S.SOURCES["p05_unbeaten"]["retir
 eq(S.SOURCES["btts_form_l10"]["sports"], ["soccer_btts_cup", "soccer_btts_intl"],
    "btts_form_l10 runs its Cups and Internationals pairs; Clubs is now btts_form_l10_fade")
 eq(S.SPORTS["soccer_o15_intl"], "Soccer · Over 1.5 · Internationals", "twins are labelled for review under Soccer")
-ok(not any("_cup" in k for k in T.PAIR_OVERRIDES), "no cup pair is in Production")
+ok([k for k in T.PAIR_OVERRIDES if "_cup" in k] == ["u35_low_scoring|soccer_u35_cup"], "one cup pair is in Production: the under's Cups scope (2026-11-06)")
 ok("team1_form_l5|soccer_team1_intl" in T.PAIR_OVERRIDES
    and "o15_ranked|soccer_o15_intl" not in T.PAIR_OVERRIDES
    and "u35_low_scoring|soccer_u35_intl" in T.PAIR_OVERRIDES,
@@ -4805,8 +4805,8 @@ eq(S.quote_league(dict(venue="kalshi", sport="soccer", market_id="KXUEFANLGAME-2
    "UEFA Nations League", "the Nations League match ticker maps to the same league")
 eq(S.quote_league(dict(venue="kalshi", sport="soccer", market_id="KXINTLFRIENDLYGAME-26OCT01UZBSYR-UZB")),
    "International Friendly", "the friendly match ticker maps to the same league")
-eq(S.quote_league(dict(venue="kalshi_binary", sport="soccer_o15_cup", league="EFL Cup")), None,
-   "a cup competition still has no Production league")
+eq(S.quote_league(dict(venue="kalshi_binary", sport="soccer_o15_cup", league="EFL Cup")), "EFL Cup",
+   "a cup competition is a Production league since 2026-11-06 (only the under's Cups pair is in Production)")
 eq(S.quote_league(dict(venue="kalshi", sport="soccer", market_id="KXEFLCUPGAME-26SEP15X")), None,
    "a cup match ticker still does not")
 
@@ -4828,8 +4828,8 @@ ok("o15_form_l10|soccer_o15_intl" not in _st_intl["pairs"], "o15_form_l10|soccer
 _u35_stage = _st_intl["pairs"].get("u35_low_scoring|soccer_u35_intl") or {}
 eq(_u35_stage.get("stage"), "production",
    "u35_low_scoring|soccer_u35_intl qualifies for Production (2026-10-04)")
-ok("u35_low_scoring|soccer_u35_cup" not in _st_intl["pairs"],
-   "its cup twin is not moved with it")
+eq((_st_intl["pairs"].get("u35_low_scoring|soccer_u35_cup") or {}).get("stage"), "production",
+   "its cup twin is moved by hand on 2026-11-06 (Olu)")
 ok("team1_form_l5|soccer_team1_other" not in _st_intl["pairs"], "an unknown sport suffix is not moved")
 
 ok(T.placeable(_intl_q("team1_form_l5", "soccer_team1_intl", "KXUEFANLTEAMTOTAL-26OCT02KAZMDA-KAZ1")),
@@ -4861,9 +4861,10 @@ ok(T.placeable(_intl_q("bund_o35", "soccer_u35", "KXBUNDESLIGATOTAL-26OCT02X-4",
                        pick="a", team=None, league="Bundesliga")),
    "and Yes on it is the over -- the Bundesliga rule's bet, the Yes twin of the under domain")
 ok("soccer_team1_cup" not in T.FEED_BETS and "soccer_o15_cup" not in T.FEED_BETS
-   and "soccer_u35_cup" not in T.FEED_BETS and "soccer_btts_cup" not in T.FEED_BETS
+   and "soccer_u35_cup" in T.FEED_BETS and "soccer_team2_intl" in T.FEED_BETS and "soccer_team2_cup" not in T.FEED_BETS
+   and "soccer_btts_cup" not in T.FEED_BETS
    and "soccer_btts_intl" not in T.FEED_BETS and "soccer_team1_other" not in T.FEED_BETS,
-   "the feed names no cup suffix and no unknown one")
+   "the feed names one cup suffix (the under, 2026-11-06), the team 2+ internationals twin, and no unknown one")
 
 _verified = _intl_q("team1_form_l5", "soccer_team1_intl", "KXUEFANLTEAMTOTAL-26OCT02KAZMDA-KAZ1")
 _unverified = _intl_q("team1_form_l5", "soccer_team1_intl", "KXUEFANLTEAMTOTAL-26OCT02X-B1",

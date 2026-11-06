@@ -140,7 +140,7 @@ _OUT_1102 = ("ere_draw|soccer", "liga_btts_even|soccer_btts", "team2_form_l10|so
 eq([(k in _LIVE_OV, T.PAIR_REMOVALS[k]["removed_on"], T.PAIR_REMOVALS[k]["keep_record"]) for k in _OUT_1102],
    [(False, "2026-11-02", True)] * 4, "the four soccer rules out on 2026-11-02 are off the live list, keeping their records")
 eq((len(_LIVE_OV), "corners_ucl_fade|soccer_corners" in _LIVE_OV, T.PAIR_REMOVALS["corners_ucl_fade|soccer_corners"]),
-   (7, False, dict(removed_on="2026-10-21", keep_record=True)), "(four soccer rules back to the Sandbox on 2026-11-02 take eleven to seven; seven more lanes back to the Sandbox on 2026-10-27 take eighteen to eleven) five pairs before, eleven after the six, twelve with commodities, eighteen with the six of 2026-10-11, seventeen with team scores 1+ · Clubs out on 2026-10-14, nineteen with corners_under out and its three lanes in on 2026-10-15, twenty-four with the five of 2026-10-16, twenty-three with btts_form_l10_fade out on 2026-10-17, twenty-two with o15_form_l10|soccer_o15 out the same day, twenty-three with o25_congestion|soccer_o25 in on 2026-10-18, twenty-two with it out on 2026-10-19, eighteen with four soccer lanes out on 2026-10-20, twenty with crypto_fav_band out and three crypto angle lanes in the same day, nineteen with corners_ucl_fade out on 2026-10-21, keeping its record")
+   (9, False, dict(removed_on="2026-10-21", keep_record=True)), "(the under's Cups scope and team 2+ form's Internationals scope in on 2026-11-06 take seven to nine; four soccer rules back to the Sandbox on 2026-11-02 take eleven to seven; seven more lanes back to the Sandbox on 2026-10-27 take eighteen to eleven) five pairs before, eleven after the six, twelve with commodities, eighteen with the six of 2026-10-11, seventeen with team scores 1+ · Clubs out on 2026-10-14, nineteen with corners_under out and its three lanes in on 2026-10-15, twenty-four with the five of 2026-10-16, twenty-three with btts_form_l10_fade out on 2026-10-17, twenty-two with o15_form_l10|soccer_o15 out the same day, twenty-three with o25_congestion|soccer_o25 in on 2026-10-18, twenty-two with it out on 2026-10-19, eighteen with four soccer lanes out on 2026-10-20, twenty with crypto_fav_band out and three crypto angle lanes in the same day, nineteen with corners_ucl_fade out on 2026-10-21, keeping its record")
 
 # The tracker moves them on its next run, and the Since-Production record starts there.
 _stages = {"pairs": {}, "events": []}
@@ -692,8 +692,9 @@ for key, name in SIX2.items():
 eq(S.scoped_rule("u35_low_scoring", "soccer_u35"), "Under 3.5 low-scoring rule · Clubs", "the under-3.5 pair is the Clubs scope")
 eq(S.scoped_rule("team2_ranked", "soccer_team2"), "Favourite to score 2+, ranked by margin · Clubs",
    "the team 2+ pair is the Clubs scope (its internationals twin was retired and faded)")
-for twin in ("u35_low_scoring|soccer_u35_cup", "team2_ranked|soccer_team2_cup", "team2_ranked|soccer_team2_intl"):
+for twin in ("team2_ranked|soccer_team2_cup", "team2_ranked|soccer_team2_intl"):
     ok(twin not in T.PAIR_OVERRIDES, f"{twin} is not listed")
+ok("u35_low_scoring|soccer_u35_cup" in T.PAIR_OVERRIDES, "u35_low_scoring|soccer_u35_cup is listed since 2026-11-06 (the under's Cups scope)")
 _st2 = {"pairs": {}, "events": []}
 T.evaluate_stages({"quotes": []}, _st2, now=NOW, verbose=False)
 for key in SIX2:
