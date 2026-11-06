@@ -355,6 +355,17 @@
  "rows": [
   {
    "fill": null,
+   "id": "sw_rsi2_pullback|CRL|2026-11-02",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "CRL"
+  },
+  {
+   "fill": null,
    "id": "sw_rsi2_pullback|DE|2026-10-09",
    "ledger": 621.24,
    "qty": 0,
@@ -4588,14 +4599,14 @@
   "median_bps": 14.93,
   "orders": {
    "filled": 316,
-   "sent": 326,
+   "sent": 327,
    "since": "2026-10-12",
    "unfilled": 10,
-   "working": 0
+   "working": 1
   },
   "orphans": 3,
-  "unfilled": 10,
+  "unfilled": 11,
   "worst_bps": 554.01
  },
- "updated": "2026-11-05T21:11:42+00:00"
+ "updated": "2026-11-06T21:14:33+00:00"
 }
