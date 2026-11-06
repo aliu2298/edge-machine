@@ -236,7 +236,72 @@ def team_rows(state=None):
                                title=TRP.kalshi_title(p))
                 if q:
                     quotes.append(dict(q, team=p.get("team"), opponent=p.get("opponent")))
+        if key == "T1":                         # T1's paper siblings sit right under it (2026-11-06)
+            for sk in TR.SIBLINGS:
+                r2, q2 = sibling_row(sk, state)
+                live.append(r2)
+                quotes += q2
     return live, gone_rows, quotes
+
+
+def _sibling_record(picks, since):
+    """Settled, won, priced and ROI after fees: the record table in a sibling's fold (its first cell, the record's
+    start, is the card title on a phone)."""
+    a = pick_record(picks)
+    roi = "—" if a["roi_fee"] is None else f'{a["roi_fee"] * 100:+.1f}%'.replace("-", "−")
+    open_n = sum(p.get("status") == "open" for p in picks)
+    heads = ("Settled", "Won", "Priced to win", "ROI after fees", "Open")
+    cells = (a["n"] + a["n_price"], a["won"], f'{a["expected"]:.1f}', roi, open_n)
+    return ('<div class="tbl"><table><thead><tr><th>Record from</th>' + "".join(f'<th class="num">{h}</th>' for h in heads)
+            + f'</tr></thead><tbody><tr><td data-l="Record from">{esc(since)}</td>'
+            + "".join(f'<td class="num" data-l="{h}">{esc(c)}</td>' for h, c in zip(heads, cells))
+            + '</tr></tbody></table></div>')
+
+
+def sibling_row(key, state):
+    """T1-H or T1-M (soccer_team_rules.SIBLINGS): one row, its fold = entry, exit, record table, in-sample note
+    (folded), entries. Sandbox paper, fresh record from its first entry, one entry a match."""
+    import soccer_team_rules as TR
+    meta = TR.SIBLINGS[key]
+    lane = (state.get("rules", {}).get(key) or {})
+    picks = lane.get("picks") or []
+    leagues = ", ".join(SHORT.get(x, x) for x in TR.RULES["T1"]["leagues"])
+    team = meta["market"] == "team"
+    src, sport = f"st_{key.lower()}", ("soccer_team2" if team else "soccer_u35")
+    entry_line = ("On a T1 match (own O+D− v opp O+D−), 90–20 min before kickoff: buy the home team's 2+ YES at the ask, "
+                  "spread 5c or less, 3–97c" if team else
+                  "On a T1 match, 90–20 min before kickoff: buy the match over 3.5 YES at the ask, spread 5c or less, 3–97c")
+    skips = lane.get("skips") or {}
+    last_skip = max(skips.values(), key=lambda x: x["at"]) if skips else None
+    details = (params_html([("Entry", entry_line), ("Exit", "Held to Kalshi's own settlement; 7% fee"),
+                            ("Leagues", leagues),
+                            ("Count", f"One entry a match · fresh record from {meta['registered']} · review at 10 settled, decide at 30"),
+                            ("Skipped", f"{len(skips)} match{'' if len(skips) == 1 else 'es'}, last: {last_skip['match']}, "
+                                        f"{last_skip['reason']}" if last_skip else "")])
+               + _sibling_record(picks, meta["registered"])
+               + '<details class="section-disclosure"><summary><b>In-sample</b><span>why this lane</span></summary>'
+               f'<p class="sm mut">{esc(meta["evidence"][0].upper() + meta["evidence"][1:])}. Read on T1\'s own entries, so in-sample; '
+               'this lane is judged on its own forward record only.</p></details>')
+    side = ("Side", lambda p: str(p.get("side") or "").upper())
+    contract = ("Contract", lambda p: p.get("title") or "")
+    cols = ([KICK, MATCH, ("Team", lambda p: p.get("team") or ""), contract, PRICE, RESULT] if team
+            else [KICK, MATCH, contract, side, PRICE, RESULT])
+    market = "Home 2+" if team else "Over 3.5"
+    r = row(src, sport, f"{meta['name']} · {meta['label']}", market, pick_record(picks), details,
+            open_n=sum(p.get("status") == "open" for p in picks), entries=entries_table(picks, cols))
+    r["after"] = "st_t1"                         # shown right under T1 in the rules table
+    text = (lambda p: f"{p.get('team') or ''} to score 2+") if team else (lambda p: "over 3.5 goals")
+    quotes = []
+    for p in picks:
+        q = pick_quote(src, sport, p, text(p), title=_team_title(p) if team else None)
+        if q:
+            quotes.append(dict(q, team=p.get("team"), opponent=p.get("opponent")) if team else q)
+    return r, quotes
+
+
+def _team_title(p):
+    import soccer_team_rules_production as TRP
+    return TRP.kalshi_title(p)
 
 
 # ------------------------------------------------------------------ contenders and Argentina & Brasileirao (all retired)

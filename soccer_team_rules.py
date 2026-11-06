@@ -103,14 +103,46 @@ def load(path=PATH):
     if os.path.exists(path):
         with open(path) as f:
             return json.load(f)
-    return {"version": "soccer-team-rules-v1", "rules": {k: {"picks": []} for k in RULES}, "runs": []}
+    return {"version": "soccer-team-rules-v1", "rules": {k: {"picks": []} for k in LANES}, "runs": []}
+
+
+def fires(rule, league, own, opp):
+    """THE test of whether `rule` fires for the team labelled `own` against an opponent labelled `opp`. T1, T1-H
+    and T1-M all ask it for T1, so the siblings cannot drift from T1's selection (2026-11-06)."""
+    r = RULES[rule]
+    return bool(own and opp) and league in r["leagues"] and r["own"] == own and r["opp"] == opp
 
 
 def applicable(league, own, opp):
     """Rules that fire for the team labelled `own` against an opponent labelled `opp`."""
     if not own or not opp:
         return []
-    return [k for k, r in RULES.items() if league in r["leagues"] and r["own"] == own and r["opp"] == opp]
+    return [k for k in RULES if fires(k, league, own, opp)]
+
+
+def t1_sides(league, labs):
+    """The sides T1 takes in a match ("home", "away"); a match is a T1 match when this is not empty."""
+    return [team for team, own, opp in (("home", labs[0], labs[1]), ("away", labs[1], labs[0]))
+            if fires("T1", league, own, opp)]
+
+
+# T1's two Sandbox paper siblings (2026-11-06, Olu). T1 itself is unchanged and decides at 50 settled.
+#   T1-H  the home team's 2+ YES only, on T1's matches: on T1's first 48 forward bets home went 17/24 v 13.4
+#         priced, +38.8% (z 1.58); away 11/24 v 11.2, −9.9%.
+#   T1-M  the match total over 3.5 YES (KX<league>TOTAL, the over 3.5 rung) on the same matches, one bet a match:
+#         both teams scored 2+ in 8 of T1's 24 matches (33%) v about 24% implied by the two team prices.
+# The same entry as T1: 90-20 minutes before kickoff, spread 5c or less, 3-97c, YES at the ask. Fresh records from
+# their first entry, one entry per match, review at 10 settled, decide at 30. A missing market, rung or quote is a
+# logged skip. Paper only: neither is a Production pair.
+SIBLINGS = {
+    "T1H": dict(name="T1-H", parent="T1", registered="2026-11-06", market="team", line=1.5, goals=2, side="yes",
+                label="T1 matches, home team 2+ goals · YES",
+                evidence="T1's first 48 forward bets: home 17/24 v 13.4 priced, +38.8% (z 1.58); away 11/24 v 11.2, −9.9%"),
+    "T1M": dict(name="T1-M", parent="T1", registered="2026-11-06", market="total", line=3.5, side="yes",
+                label="T1 matches, match over 3.5 · YES",
+                evidence="both teams scored 2+ in 8 of T1's 24 matches (33%) v about 24% implied by the two team prices"),
+}
+LANES = tuple(RULES) + tuple(SIBLINGS)
 
 
 # ---------- Kalshi ----------
@@ -196,6 +228,62 @@ def picks_for(f, labs, ev, now):
     return out
 
 
+def _skip(state, key, f, reason, now):
+    """A sibling's logged skip for one match (kept to the latest 200)."""
+    lane = state["rules"][key]
+    skips = lane.setdefault("skips", {})
+    skips[f"{f['home']} v {f['away']} · {f['kickoff']}"] = dict(match=f"{f['home']} v {f['away']}", league=f["league"],
+                                                               start=f["kickoff"], reason=reason, at=now.isoformat())
+    if len(skips) > 200:
+        for k in sorted(skips, key=lambda k: skips[k]["at"])[:len(skips) - 200]:
+            del skips[k]
+
+
+def _quoted(m, what):
+    """(bid, ask) for a YES at the ask inside the entry rules, or the skip reason."""
+    if not m:
+        return None, f"no open {what} market"
+    q = SR.quote(m)
+    if not q:
+        return None, f"{what}: no quote with a spread of 5c or less"
+    if not PRICE_LO - 1e-9 <= q[1] <= PRICE_HI + 1e-9:
+        return None, f"{what}: ask {q[1]:.2f} outside 3-97c"
+    return q, None
+
+
+def t1h_pick(f, labs, ev, now):
+    """T1-H on one T1 match: (entry or None, skip reason or None). Not a T1 match with T1 on the home side: (None, None)."""
+    if "home" not in t1_sides(f["league"], labs):
+        return None, None
+    if not ev:
+        return None, "no Kalshi team-total event for the match"
+    m = market_for(ev, "home", SIBLINGS["T1H"]["line"])
+    q, why = _quoted(m, "home team over 1.5")
+    if not q:
+        return None, why
+    p = entry("T1", f, ev, m, "home", q[1], q[0], q[1], labs, now)
+    p.update(id=f"T1H:{ev['event_ticker']}:home", rule="T1H")
+    return p, None
+
+
+def t1m_pick(f, labs, ev, now):
+    """T1-M on one T1 match: (entry or None, skip reason or None); (None, None) when it is not a T1 match."""
+    if not t1_sides(f["league"], labs):
+        return None, None
+    if not ev:
+        return None, "no Kalshi match-total event for the match"
+    m = SR.market_at(ev, SIBLINGS["T1M"]["line"])
+    q, why = _quoted(m, "match over 3.5")
+    if not q:
+        return None, why if m else "no open over 3.5 rung on the match total"
+    b, a = q
+    return dict(id=f"T1M:{ev['event_ticker']}", rule="T1M", group="A", league=f["league"], event=ev["event_ticker"],
+                match=f"{f['home']} v {f['away']}", start=f["kickoff"], ticker=m["ticker"], line=3.5, side="yes",
+                price=round(a, 4), bid=b, ask=a, title=m.get("title") or m.get("yes_sub_title"), logged=now.isoformat(),
+                status="open", labels=dict(home=labs[0], away=labs[1]),
+                why=f"{f['home']} {labs[0]} v {f['away']} {labs[1]} · over 3.5 YES {a:.2f}"), None
+
+
 # ---------- the run ----------
 
 def due(fixtures, now):
@@ -217,7 +305,7 @@ def settle(state, now, fetch):
 
 def run(state, fixtures, now=None, fetch=D.get):
     now = now or dt.datetime.now(dt.timezone.utc)
-    for k in RULES:
+    for k in LANES:
         state["rules"].setdefault(k, {"picks": []})
     seen = {p["id"] for lane in state["rules"].values() for p in lane["picks"]}
     log, errs, cache = [], [], {}
@@ -236,15 +324,31 @@ def run(state, fixtures, now=None, fetch=D.get):
             if series not in cache:
                 cache[series] = SR.series_events(series, fetch)
             ev = SR.find_event(f, cache[series])
-            if not ev:
-                continue
-            stats["matched"] += 1
-            for p in picks_for(f, labs, ev, now):
+            picks = []
+            if ev:
+                stats["matched"] += 1
+                picks = picks_for(f, labs, ev, now)
+            sib = [("T1H", lambda: t1h_pick(f, labs, ev, now))]
+            if t1_sides(f["league"], labs):
+                total = SR.SERIES.get(f["league"])
+                if total and total not in cache:
+                    cache[total] = SR.series_events(total, fetch)
+                tev = SR.find_event(f, cache[total]) if total else None
+                sib.append(("T1M", lambda: t1m_pick(f, labs, tev, now)))
+            for key, pick in sib:
+                p, why = pick()
+                if p:
+                    picks.append(p)
+                elif why and not any(x["id"].startswith(key + ":") and x.get("match") == f"{f['home']} v {f['away']}"
+                                     and x.get("start") == f["kickoff"] for x in state["rules"][key]["picks"]):
+                    _skip(state, key, f, why, now)
+            for p in picks:
                 if p["id"] in seen:
                     continue
                 state["rules"][p["rule"]]["picks"].append(p)
                 seen.add(p["id"])
                 log.append(p["id"])
+                (state["rules"][p["rule"]].get("skips") or {}).pop(f"{f['home']} v {f['away']} · {f['kickoff']}", None)
         except Exception as e:                                  # noqa: BLE001
             errs.append(f"{f['home']} v {f['away']}: {str(e)[:80]}")
     errs += settle(state, now, fetch)

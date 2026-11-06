@@ -505,9 +505,20 @@ def sp_name(row):
     return B.rule_name(row)
 
 
+def place_after(rows):
+    """Rows with row["after"] = a source id go right under that row, in the order given (2026-11-06: T1's siblings
+    T1-H and T1-M under T1), instead of where the sort puts them. A row whose parent is not in the list stays put."""
+    kids = [r for r in rows if r.get("after") and any(x["name"] == r["after"] and not x.get("after") for x in rows)]
+    out = [r for r in rows if not any(r is k for k in kids)]
+    for k in reversed(kids):
+        i = next(i for i, x in enumerate(out) if x["name"] == k["after"])
+        out.insert(i + 1, k)
+    return out
+
+
 def rules_html(sp, d, rows, now, ev_list):
-    prod = sorted((r for r in rows if r.get("prod")), key=production_order)
-    sand = sorted((r for r in rows if not r.get("prod")), key=sandbox_order)
+    prod = place_after(sorted((r for r in rows if r.get("prod")), key=production_order))
+    sand = place_after(sorted((r for r in rows if not r.get("prod")), key=sandbox_order))
     scoped = sp["scoped"] and len(scopes_present(rows)) > 1
     family = esc(sp["family"] if sp["family"].isupper() else sp["family"].lower())   # "NBA", not "nba"
     if prod:
