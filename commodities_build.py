@@ -289,7 +289,37 @@ def method(d, rows, now):
 <p class="sm">A day is one bet because the commodities move in pairs: on the ledger's own graded rungs gold and silver moved together at +{gs:.2f} and WTI and Brent at +{wb:.2f}, with copper riding the metals, so a day where both members of a pair fire is reported per commodity here and judged as one outcome in the record. A market-day is a trading day: a weekend or a US exchange holiday is no market-day at all, so the {S.COMMOD_FAV_READ_DAYS}-day read takes about seven weeks. Each contract is logged at the Yes ask inside its window with the bid, ask and ask size it was taken at, settled on Kalshi's own result at a flat ${int(T.STAKE)} stake, and the day is graded as a single outcome against backing every in-band rung that day.</p>
 <p class="sm"><b>Scheduling.</b> Two reads a day, one per close: WTI settles at 14:30 Eastern, so its window is 10:00–11:30 Central, and the other five settle at 17:00 Eastern, so theirs is 12:30–2:00 Central, the crypto lane's window. Each is asked for from the always-on box inside its own window by the same stamp-file mechanism the crypto lane uses, because GitHub's cron cannot hold a 90-minute window. The close is matched in Eastern, not UTC, so the November clock change moves it with the exchange.</p>
 <p class="sm"><b>The near-certain lanes.</b> The two Sandbox lanes registered 2026-10-20 back the Yes or the No at {S.COMMOD_NC_BAND[0] * 100:g}–{S.COMMOD_NC_BAND[1] * 100:g}¢ in the last hour, {S.COMMOD_NC_FROM_MIN} to {S.COMMOD_NC_TO_MIN} minutes before each close (12:15–12:45 Central for WTI, 2:45–3:15 Central for the rest), on paper only. Each contract is logged at the ask of the side it backs, and the No book is read as the Yes book's complement. A market belongs to one lane only, in the order favourite band, near-certain Yes, near-certain No. These lanes win about 3¢ a time, so one loss costs about 16 wins; they are read at {S.COMMOD_NC_READ_DAYS} market-days like the others.</p>'''
+    inner += reading_note(d)
     return "Method", "why a day is one bet · scheduling", inner, False
+
+
+def day_figures(d, lane=SOURCE):
+    """The favourite band's figures at the two levels the page mixes, from the Sandbox's own day units (T.day_units):
+    days, days with a positive average P&L, the price-implied wins, the rungs behind them, and what a lost day costs.
+    Nothing here is a new record: it is the same bets read at the rung."""
+    bets = [q for q in T.bet_rows(d) if q.get("source") == lane and q.get("sport") in SPORTS and q.get("status") in ("won", "lost")]
+    if not bets:
+        return None
+    days = T.day_units(bets)
+    lost = [u for u in days if u["status"] == "lost"]
+    return dict(days=len(days), won_days=len(days) - len(lost), priced=sum(u["price"] for u in days),
+                rungs=len(bets), won_rungs=sum(q["status"] == "won" for q in bets),
+                rung_price=sum(q["price"] for q in bets) / len(bets),
+                lost_cost=[-u["pnl"] / T.STAKE for u in lost])
+
+
+def reading_note(d):
+    """Why 'Won v priced' can sit under the price while the ROI is positive (2026-11-06): the two are read at different levels."""
+    f = day_figures(d)
+    if f is None:
+        return ""
+    cost = f["lost_cost"]
+    lost_txt = (f" The {len(cost)} lost days cost {min(cost) * 100:.0f}% to {max(cost) * 100:.0f}% of a stake each (mean {sum(cost) / len(cost) * 100:.0f}%), not a whole one, "
+                f"because their winning rungs paid part of the losing ones." if cost else "")
+    return (f'<p class="sm"><b>Reading the favourite band\'s figures.</b> A day is Won when the average P&amp;L of its rungs is above zero, and the ROI is the mean of those day P&amp;Ls, '
+            f'so the two are not the same count. The record counts {f["won_days"]} of {f["days"]} days Won against {f["priced"]:.1f} priced; '
+            f'the same bets read rung by rung are {f["won_rungs"]} of {f["rungs"]} won ({f["won_rungs"] / f["rungs"] * 100:.0f}%) against {f["rung_price"] * 100:.0f}% priced.{lost_txt} '
+            f'A lane can therefore win fewer days than the prices imply and still return a positive ROI: a lost day loses a fraction of a stake while a won day earns most of one.</p>')
 
 
 def build(d=None, st=None, now=None):

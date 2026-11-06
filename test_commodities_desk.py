@@ -223,6 +223,18 @@ if playwright is not None:
             page.close()
         browser.close()
 
+# 2026-11-06: the favourite band's Won v priced is read per day and its ROI per day P&L; the note says so, from the ledger's own units.
+import commodities_build as _CB
+import sandbox_track as _T
+_f = _CB.day_figures(_T.load())
+if _f:
+    _note = _CB.reading_note(_T.load())
+    ok(_f["won_days"] <= _f["days"] and _f["won_rungs"] <= _f["rungs"], "the day and rung counts are bounded by their totals")
+    ok(f'{_f["won_days"]} of {_f["days"]} days Won' in _note and f'{_f["won_rungs"]} of {_f["rungs"]} won' in _note, "the note carries both levels")
+    ok(all(0 <= c <= 1.0 + 1e-9 for c in _f["lost_cost"]), "a lost day never costs more than one stake")
+    import sandbox_audit as _SA
+    ok(not _SA.COPY_RE.search(_note), "the note passes the public copy guard")
+
 if FAILS:
     print(f"\nFAILED {len(FAILS)}")
     sys.exit(1)
