@@ -105,9 +105,10 @@ for rel in ("index.html", "nba.html", "archive/index.html"):
     root = "../index.html" if rel.startswith("archive/") else "./index.html"
     ok(page_html.count('<header class="site">') == 1 and f'<a class="brand" href="{root}"' in header
        and header.count("<nav class=\"main\"") == 1
-       and len(re.findall(r"<a\b", re.search(r'<nav class="main"[^>]*>.*?</nav>', header, re.S).group(0))) == len(site_chrome.PAGES)
+       # every page but the archived tabs (tab_activity, 2026-11-05)
+       and len(re.findall(r"<a\b", re.search(r'<nav class="main"[^>]*>.*?</nav>', header, re.S).group(0))) == len(site_chrome.shown_pages())
        and "page-menu" not in header and '<nav class="sports"' not in header,
-       f"{rel} carries the one shell: brand to the root and {len(site_chrome.PAGES)} page pills")
+       f"{rel} carries the one shell: brand to the root and {len(site_chrome.shown_pages())} page pills")
 
 print("\n4. dates stay on one line")
 date_css = css.split('td[data-l="Date"]', 1)[-1][:240] if 'td[data-l="Date"]' in css else ""
