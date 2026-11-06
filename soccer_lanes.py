@@ -99,12 +99,30 @@ def pick_quote(src, sport, p, market_text, title=None):
 
 
 # ------------------------------------------------------------------ the row
+def legs_table(tradeable, every, headline="Legs the follower can take (headline)", all_label="All paper legs, incl. above the live price cap"):
+    """The two records of a Production pair whose paper legs are not all tradeable (2026-11-06), one header-row table in the fold:
+    the headline (legs inside the follower's price cap and band, live_caps.py) and every leg the rule logged. Nothing is removed from
+    the ledger: only the headline filters."""
+    heads = ("Settled", "Won", "Priced to win", "ROI after fees")
+
+    def cells(a):
+        roi = "—" if a.get("roi_fee") is None else f'{a["roi_fee"] * 100:+.1f}%'.replace("-", "−")
+        return (a["n"] + a.get("n_price", 0), a["won"], f'{(a.get("expected") or 0):.1f}', roi)
+
+    body = ""
+    for label, a in ((headline, tradeable), (all_label, every)):
+        body += (f'<tr><td data-l="Legs">{esc(label)}</td>'
+                 + "".join(f'<td class="num" data-l="{h}">{esc(c)}</td>' for h, c in zip(heads, cells(a))) + "</tr>")
+    return ('<div class="tbl"><table><thead><tr><th>Legs</th>' + "".join(f'<th class="num">{h}</th>' for h in heads)
+            + f'</tr></thead><tbody>{body}</tbody></table></div>')
+
+
 def row(name, sport, label, market, a, details, *, prod=False, pair=None, open_n=0, gone=None, anchor=None,
-        entries="", kind="Rule", note=""):
+        entries="", kind="Rule", note="", legs_html=""):
     """One own-ledger lane in the template's row shape. `details` is the definition html of its fold, `entries`
     its own entries list (shown under the recent picks)."""
     return dict(name=name, sport=sport, meta=dict(label=label, note=note, kind=kind), a=a, prod=prod, pair=pair,
-                open=open_n, since=None, v=verdict(a, retired=bool(gone)), gone=gone, anchor=anchor,
+                open=open_n, since=None, v=verdict(a, retired=bool(gone)), gone=gone, anchor=anchor, legs_html=legs_html,
                 own=dict(label=label, market=market, details=details, entries=entries))
 
 
@@ -133,6 +151,12 @@ KICK = ("Kickoff", lambda p: fmt.when(p["start"]) if p.get("start") else "")
 MATCH = ("Match", lambda p: p.get("match") or "")
 PRICE = ("Price", lambda p: f'{float(p.get("price") or 0) * 100:.0f}c')
 RESULT = ("Result", _res)
+
+
+def leg_col(pair):
+    """For a Production pair: a column naming the legs the follower could not take (above its price cap or outside its band)."""
+    import live_caps as LC
+    return ("Live guard", lambda p: LC.reason(pair, p.get("price")) or "")
 
 
 # ------------------------------------------------------------------ the label rules (soccer_rules.py)
@@ -175,11 +199,16 @@ def label_rows(state=None):
         labels = ("Labels", lambda p: f'{(p.get("labels") or {}).get("home") or ""} v {(p.get("labels") or {}).get("away") or ""}')
         side = ("Side", lambda p: str(p.get("side") or "").upper())
         contract = ("Contract", lambda p: p.get("title") or "")
+        pair = f"{src}|{sport}" if key in RP.PAIRS else None
+        import live_caps as LC
+        tp, _all = LC.split(pair, picks) if pair else (picks, picks)
+        cols = [KICK, MATCH, labels, contract, side, PRICE, RESULT] + ([leg_col(pair)] if pair and len(tp) != len(picks) else [])
         r = row(src, sport, f"{key} · {meta['league'] if meta['league'] != SR.ALL else 'every BTTS league'} · {meta['label']}",
-                market, pick_record(picks), details, prod=key in RP.PAIRS, pair=f"{src}|{sport}" if key in RP.PAIRS else None,
-                open_n=sum(p.get("status") == "open" for p in picks),
+                market, pick_record(tp), details, prod=key in RP.PAIRS, pair=pair,
+                open_n=sum(p.get("status") == "open" for p in tp),
                 gone=(f"Retired {gone['on']}: {gone['reason']}." if gone else None),
-                entries=entries_table(picks, [KICK, MATCH, labels, contract, side, PRICE, RESULT]))
+                entries=entries_table(picks, cols),
+                legs_html=legs_table(pick_record(tp), pick_record(picks)) if len(tp) != len(picks) else "")
         (gone_rows if gone else live).append(r)
         if key not in RP.PAIRS:
             text = "both teams to score" if btts else f"over {line:g} goals"
@@ -223,12 +252,17 @@ def team_rows(state=None):
                                ("History", " · ".join(history))])
         team = ("Team", lambda p: p.get("team") or "")
         labels = ("Labels", lambda p: f'{(p.get("labels") or {}).get("own") or ""} v {(p.get("labels") or {}).get("opp") or ""}')
-        r = row(src, sport, f"{key} · {leagues} · {meta['label']}", market, pick_record(picks), details,
-                prod=key in TRP.PAIRS, pair=f"{src}|{sport}" if key in TRP.PAIRS else None,
-                open_n=sum(p.get("status") == "open" for p in picks),
+        pair = f"{src}|{sport}" if key in TRP.PAIRS else None
+        import live_caps as LC
+        tp, _all = LC.split(pair, picks) if pair else (picks, picks)
+        cols = [KICK, MATCH, team, labels, ("Contract", lambda p: p.get("title") or ""),
+                ("Side", lambda p: str(p.get("side") or "").upper()), PRICE, RESULT] + ([leg_col(pair)] if pair and len(tp) != len(picks) else [])
+        r = row(src, sport, f"{key} · {leagues} · {meta['label']}", market, pick_record(tp), details,
+                prod=key in TRP.PAIRS, pair=pair,
+                open_n=sum(p.get("status") == "open" for p in tp),
                 gone=(f"Retired {gone['on']}: {gone['reason']}." if gone else None),
-                entries=entries_table(picks, [KICK, MATCH, team, labels, ("Contract", lambda p: p.get("title") or ""),
-                                              ("Side", lambda p: str(p.get("side") or "").upper()), PRICE, RESULT]))
+                entries=entries_table(picks, cols),
+                legs_html=legs_table(pick_record(tp), pick_record(picks)) if len(tp) != len(picks) else "")
         (gone_rows if gone else live).append(r)
         if key not in TRP.PAIRS:
             for p in picks:

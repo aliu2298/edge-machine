@@ -426,7 +426,7 @@ def rule_details(sp, d, row, now, ev_list=()):
     recent = sp["recent"](d, row, now) if sp["recent"] else ""
     recent_html = (f'<h4 class="sp-details-sub">Recent picks{f" · {open_n} open" if open_n else ""}</h4>{recent}'
                    if recent else "")
-    return f'<div class="sp-details-body">{head}{sp["definition"](d, row)}{recent_html}</div>'
+    return f'<div class="sp-details-body">{head}{sp["definition"](d, row)}{row.get("legs_html") or ""}{recent_html}</div>'
 
 
 def rule_row(sp, d, row, now, scoped, ev_list=()):
