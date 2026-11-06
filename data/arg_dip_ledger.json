@@ -285,6 +285,31 @@
    "result": "yes",
    "title": "Will over 0.5 goals be scored?",
    "version": "argdip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null,
+    "75": null
+   },
+   "event": "KXARGPREMDIVTOTAL-26NOV05GLPCAB",
+   "id": "KXARGPREMDIVTOTAL-26NOV05GLPCAB-1",
+   "kickoff": 1793916900,
+   "logged": "2026-11-06T02:52:03.524696+00:00",
+   "matchday": "2026-11-05",
+   "p": 0.92,
+   "p_at": 1793913360,
+   "p_bid": 0.91,
+   "p_check": {
+    "how": "print",
+    "last_trade": null,
+    "printed": 7487.56,
+    "status": "verified"
+   },
+   "prints": 53,
+   "result": "yes",
+   "title": "Will over 0.5 goals be scored?",
+   "version": "argdip-v1"
   }
  ],
  "error": null,
@@ -6240,9 +6265,9 @@
   ]
  },
  "lane": "arg_goalless_dip",
- "last_run": "2026-11-05T22:22:37.411684+00:00",
+ "last_run": "2026-11-06T02:52:03.524696+00:00",
  "observations": {
-  "at": "2026-11-05T22:22:37.411684+00:00",
+  "at": "2026-11-06T02:52:03.524696+00:00",
   "errors": [],
   "new": 1,
   "skipped": 0,
@@ -6256,14 +6281,34 @@
  },
  "upcoming": [
   {
-   "event": "KXARGPREMDIVTOTAL-26NOV05GLPCAB",
-   "kickoff": 1793916900,
-   "title": "Gimnasia La Plata vs Belgrano de Cordoba: Total Goals"
-  },
-  {
    "event": "KXARGPREMDIVTOTAL-26NOV06BARRAC",
    "kickoff": 1793988000,
    "title": "Barracas vs Racing Avellaneda: Total Goals"
+  },
+  {
+   "event": "KXARGPREMDIVTOTAL-26NOV06CAIRIE",
+   "kickoff": 1794003300,
+   "title": "Independiente Avellaneda vs Riestra: Total Goals"
+  },
+  {
+   "event": "KXARGPREMDIVTOTAL-26NOV06SLAPLA",
+   "kickoff": 1794003300,
+   "title": "San Lorenzo de Almagro vs Platense: Total Goals"
+  },
+  {
+   "event": "KXARGPREMDIVTOTAL-26NOV06UNIVEL",
+   "kickoff": 1794003300,
+   "title": "Union Santa Fe vs Velez Sarsfield: Total Goals"
+  },
+  {
+   "event": "KXARGPREMDIVTOTAL-26NOV06BANTUC",
+   "kickoff": 1794013200,
+   "title": "Banfield vs Tucuman: Total Goals"
+  },
+  {
+   "event": "KXARGPREMDIVTOTAL-26NOV06TIGCAS",
+   "kickoff": 1794013200,
+   "title": "Tigre vs Junin: Total Goals"
   }
  ],
  "version": "argdip-v1"
