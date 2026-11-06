@@ -56,6 +56,26 @@ def production_pairs(st):
             if p.get("stage") == "production" and p.get("ready_at")}
 
 
+# The follower's stake per bet for a pair, when it was raised from the $1 default (risk.stake_usd_by_pair on the VPS). Shown under the
+# pair's name so a record that spans the change is read as two sizes. {pair: (UTC date of the change, new stake in dollars)}
+STAKE_CHANGES = {
+    "mls_fade_home|soccer_p05": ("2026-11-02", 10),
+    "commod_fav_band|commodities_fav": ("2026-11-02", 10),
+    "crypto_fav_band_below|crypto_fav": ("2026-11-02", 10),
+    "team2_ranked|soccer_team2": ("2026-11-06", 10),
+    "sr_a7|soccer_u35": ("2026-11-06", 10),
+}
+
+
+def stake_note(key):
+    """'stake size changed $1 → $10 on Nov 6' for a pair whose stake was raised, else ''."""
+    c = STAKE_CHANGES.get(key)
+    if not c:
+        return ""
+    d = datetime.date.fromisoformat(c[0])
+    return f'<div class="sm mut">stake size changed $1 → ${c[1]:g} on {d:%b} {d.day}</div>'
+
+
 def entered_at(pair):
     """When the pair's Production record starts: its entry, or a reset made after it.
 
@@ -1489,7 +1509,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
             live_rec, live_roi, live_data = PL.cells(key, since, dict(roi=live["roi_fee"] if live["n"] else None), live_blob)
             live_gap_rows.append((name(key), key, live["n"], live["roi_fee"] if live["n"] else None, live_data))
             card = f"""<tr>
-<td><b>{esc(name(key))}</b>{early_html(early)}<div class="sm mut">{esc(sport_of(key))} · moved {esc(str(pair.get('by_hand') or since or '')[:10])}</div></td>
+<td><b>{esc(name(key))}</b>{early_html(early)}<div class="sm mut">{esc(sport_of(key))} · moved {esc(str(pair.get('by_hand') or since or '')[:10])}</div>{stake_note(key)}</td>
 <td class="num">{whole['n']}<div class="sm mut">settled</div></td>
 <td class="num"><span class="{tone(whole['roi_fee'], whole['n'])}">{pct(whole['roi_fee'])}</span><div class="sm mut">after fees</div></td>
 <td class="num">{clv}<div class="sm mut">v the close</div></td>
