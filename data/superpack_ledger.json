@@ -1,5 +1,10 @@
 {
  "decided": {
+  "[\"daily\", \"econ_nc_no\", [\"KXAAAGASD-26NOV06-4.0700\", \"no\"]]": {
+   "at": "2026-11-06T02:56:21.003710+00:00",
+   "mirror": "entered",
+   "pool": "entered"
+  },
   "[\"daily\", \"econ_nc_no\", [\"KXDIESELD-26NOV06-T6.235\", \"no\"]]": {
    "at": "2026-11-06T01:42:42.028853+00:00",
    "pool": "entered"
@@ -381,8 +386,96 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-06T02:04:22.323945+00:00",
- "mirror": [],
+ "last_run": "2026-11-06T02:56:21.003710+00:00",
+ "mirror": [
+  {
+   "contract": "KXAAAGASD-26NOV06-4.0700",
+   "entered_at": "2026-11-06T02:56:21.003710+00:00",
+   "entities": [
+    "AAA gas"
+   ],
+   "id": "superpack:[\"daily\", \"econ_nc_no\", [\"KXAAAGASD-26NOV06-4.0700\", \"no\"]]",
+   "lane": "econ_nc_no",
+   "logged": "2026-11-06T02:00:21.158000+00:00",
+   "matched": [
+    "AAA gas"
+   ],
+   "pid": "[\"daily\", \"econ_nc_no\", [\"KXAAAGASD-26NOV06-4.0700\", \"no\"]]",
+   "price": 0.9,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "no",
+   "snapshot": {
+    "as_of": "2026-11-06T02:00:21.158000+00:00",
+    "names": [
+     {
+      "bets": 7,
+      "name": "Brighton & Hove Albion",
+      "profit": -7.0,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "PSV Eindhoven",
+      "profit": -5.6111,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Real Betis",
+      "profit": -4.6728,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "St. Louis CITY SC",
+      "profit": -4.3251,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Feyenoord Rotterdam",
+      "profit": -3.5706,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 49,
+      "name": "AAA gas",
+      "profit": -2.8356,
+      "sport": "Commodities"
+     },
+     {
+      "bets": 5,
+      "name": "Kilmarnock",
+      "profit": -2.5459,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Liverpool",
+      "profit": -2.0834,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 9,
+      "name": "Arsenal",
+      "profit": -1.7261,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Paris Saint-Germain",
+      "profit": -1.3751,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Commodities",
+   "src": "daily",
+   "status": "open"
+  }
+ ],
  "pool": [
   {
    "contract": "KXWTI-26NOV0514-T89.49",
@@ -1021,6 +1114,29 @@
    ],
    "pid": "[\"daily\", \"econ_nc_no\", [\"KXDIESELD-26NOV06-T6.235\", \"no\"]]",
    "price": 0.88,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "no",
+   "snapshot": null,
+   "sport": "Commodities",
+   "src": "daily",
+   "status": "open"
+  },
+  {
+   "contract": "KXAAAGASD-26NOV06-4.0700",
+   "entered_at": "2026-11-06T02:56:21.003710+00:00",
+   "entities": [
+    "AAA gas"
+   ],
+   "id": "superpack:[\"daily\", \"econ_nc_no\", [\"KXAAAGASD-26NOV06-4.0700\", \"no\"]]",
+   "lane": "econ_nc_no",
+   "logged": "2026-11-06T02:00:21.158000+00:00",
+   "matched": [
+    "AAA gas"
+   ],
+   "pid": "[\"daily\", \"econ_nc_no\", [\"KXAAAGASD-26NOV06-4.0700\", \"no\"]]",
+   "price": 0.9,
    "profit": null,
    "scope": null,
    "settled": null,
