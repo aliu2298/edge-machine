@@ -44,8 +44,11 @@ check("no filtered boxing lane is registered", [c["lane"] for c in FS.LANES if c
 print("\nthe record stays whole")
 st = FS.load(FS.BOXING)
 r = MS.record(MS.counted(st))
-check("4 settled events, 1 won, split +75.0%, hold +57.3%", (r["settled_events"], r["won"], round(r["roi"] * 100, 1),
-                                                             round(r["roi_held"] * 100, 1)), (4, 1, 75.0, 57.3))
+# The record grows and regrades with the hourly fights read (4 settled events and a +75.0% split on 2026-11-04, 8 and +27.9% on
+# 2026-11-06), so only a floor is pinned: the record must stay whole, never shrink; the dated registry text above keeps the snapshot.
+check("at least the 4 settled events and 1 win of 2026-11-04; split and hold are numbers",
+      (r["settled_events"] >= 4, r["won"] >= 1, isinstance(r["roi"], float), isinstance(r["roi_held"], float)),
+      (True, True, True, True))
 
 print("\nno review status, no lane count")
 check("lane_status of a baseline", (MS.lane_status(FS.BOXING, 40), MS.lane_status(FS.UFC, 3)),
