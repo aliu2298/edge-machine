@@ -1,9 +1,10 @@
 {
- "generated": "2026-11-07T02:07Z",
- "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is won above +2% after fees, lost below -2%, flat between. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
+ "generated": "2026-11-07T03:07Z",
+ "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "nba_wm_nofade": [
    {
+    "g": 0.3333,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV02BOSHOU-HOU6TO10",
     "ko": "2026-11-03T01:30",
@@ -15,6 +16,7 @@
     "w": 0.95
    },
    {
+    "g": 0.3333,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV02PORDEN-DEN1TO5",
     "ko": "2026-11-03T02:00",
@@ -26,6 +28,7 @@
     "w": 1.0
    },
    {
+    "g": 0.3281,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04ATLWAS-WAS1TO5",
     "ko": "2026-11-05T00:00",
@@ -37,6 +40,7 @@
     "w": 0.97
    },
    {
+    "g": 0.3235,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04CHABKN-BKN1TO5",
     "ko": "2026-11-05T00:30",
@@ -48,6 +52,7 @@
     "w": 1.03
    },
    {
+    "g": 0.339,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04CHINYK-NYK16TO25",
     "ko": "2026-11-05T00:30",
@@ -59,6 +64,7 @@
     "w": 0.89
    },
    {
+    "g": 0.3333,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04CHINYK-NYK6TO10",
     "ko": "2026-11-05T00:30",
@@ -70,6 +76,7 @@
     "w": 0.95
    },
    {
+    "g": 0.3284,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04MILBOS-BOS1TO5",
     "ko": "2026-11-05T00:30",
@@ -81,6 +88,7 @@
     "w": 1.02
    },
    {
+    "g": 0.3231,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04CLEOKC-OKC6TO10",
     "ko": "2026-11-05T01:00",
@@ -92,6 +100,7 @@
     "w": 0.98
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04INDMEM-IND1TO5",
     "ko": "2026-11-05T01:00",
@@ -103,6 +112,7 @@
     "w": 0.98
    },
    {
+    "g": 0.3333,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04INDMEM-MEM6TO10",
     "ko": "2026-11-05T01:00",
@@ -114,6 +124,7 @@
     "w": 0.96
    },
    {
+    "g": 0.3231,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04UTANOP-NOP1TO5",
     "ko": "2026-11-05T01:00",
@@ -125,6 +136,7 @@
     "w": 0.98
    },
    {
+    "g": 0.3387,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04MINHOU-HOU6TO10",
     "ko": "2026-11-05T01:30",
@@ -136,6 +148,7 @@
     "w": 0.94
    },
    {
+    "g": 0.3333,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04PORPHX-PHX1TO5",
     "ko": "2026-11-05T02:00",
@@ -147,6 +160,7 @@
     "w": 1.0
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04PORPHX-POR11TO20",
     "ko": "2026-11-05T02:00",
@@ -158,6 +172,7 @@
     "w": 0.98
    },
    {
+    "g": 0.3429,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04DALSAS-DAL1TO5",
     "ko": "2026-11-05T02:30",
@@ -169,6 +184,7 @@
     "w": 1.06
    },
    {
+    "g": 0.3231,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04DALSAS-SAS11TO15",
     "ko": "2026-11-05T02:30",
@@ -180,6 +196,7 @@
     "w": 0.98
    },
    {
+    "g": 0.3281,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04DALSAS-SAS16TO25",
     "ko": "2026-11-05T02:30",
@@ -191,6 +208,7 @@
     "w": 0.97
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04DALSAS-SAS1TO5",
     "ko": "2026-11-05T02:30",
@@ -202,6 +220,7 @@
     "w": 1.05
    },
    {
+    "g": 0.3231,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04DALSAS-SAS6TO10",
     "ko": "2026-11-05T02:30",
@@ -213,6 +232,7 @@
     "w": 0.98
    },
    {
+    "g": 0.3231,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04LALSAC-LAL11TO15",
     "ko": "2026-11-05T03:00",
@@ -224,6 +244,7 @@
     "w": 0.98
    },
    {
+    "g": 0.339,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04LALSAC-LAL16TO25",
     "ko": "2026-11-05T03:00",
@@ -235,6 +256,7 @@
     "w": 0.89
    },
    {
+    "g": 0.3333,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04LALSAC-LAL1TO5",
     "ko": "2026-11-05T03:00",
@@ -246,6 +268,7 @@
     "w": 1.05
    },
    {
+    "g": 0.3387,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04LALSAC-LAL6TO10",
     "ko": "2026-11-05T03:00",
@@ -257,6 +280,7 @@
     "w": 0.94
    },
    {
+    "g": 0.4481,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04MIALAC-LAC1TO5",
     "ko": "2026-11-05T03:30",
@@ -268,6 +292,7 @@
     "w": 1.05
    },
    {
+    "g": 0.3235,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV04MIALAC-MIA21PLUS",
     "ko": "2026-11-05T03:30",
@@ -279,6 +304,7 @@
     "w": 1.03
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV05ORLPHX-PHX11TO20",
     "ko": "2026-11-06T02:00",
@@ -290,6 +316,7 @@
     "w": 1.03
    },
    {
+    "g": 0.3284,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV05ORLPHX-PHX1TO5",
     "ko": "2026-11-06T02:00",
@@ -301,6 +328,7 @@
     "w": 1.02
    },
    {
+    "g": 0.3235,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV05ORLPHX-PHX6TO10",
     "ko": "2026-11-06T02:00",
@@ -312,6 +340,7 @@
     "w": 1.03
    },
    {
+    "g": 0.3333,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV05MIAGSW-GSW1TO5",
     "ko": "2026-11-06T03:00",
@@ -323,6 +352,7 @@
     "w": 1.0
    },
    {
+    "g": 0.3333,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV05MIAGSW-GSW21PLUS",
     "ko": "2026-11-06T03:00",
@@ -334,6 +364,7 @@
     "w": 1.05
    },
    {
+    "g": 0.338,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV05MIAGSW-MIA11TO20",
     "ko": "2026-11-06T03:00",
@@ -345,6 +376,7 @@
     "w": 1.08
    },
    {
+    "g": 0.3235,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV05MIAGSW-MIA1TO5",
     "ko": "2026-11-06T03:00",
@@ -356,6 +388,7 @@
     "w": 1.03
    },
    {
+    "g": 0.3333,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06BOSCHA-BOS11TO20",
     "ko": "2026-11-07T00:00",
@@ -364,31 +397,34 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.84
+    "w": 0.85
    },
    {
+    "g": 0.3284,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06WASATL-ATL1TO5",
     "ko": "2026-11-07T00:00",
-    "legs": "",
-    "r": null,
+    "legs": "sold",
+    "r": 0.3284,
     "side": "no",
     "src": "fills",
-    "st": "open",
-    "w": 0.99
+    "st": "won",
+    "w": 1.0
    },
    {
+    "g": 0.2715,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06WASATL-ATL6TO10",
     "ko": "2026-11-07T00:00",
-    "legs": "",
-    "r": null,
+    "legs": "sold",
+    "r": 0.2715,
     "side": "no",
     "src": "fills",
-    "st": "open",
-    "w": 0.96
+    "st": "won",
+    "w": 0.97
    },
    {
+    "g": 0.3286,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06PHICLE-CLE11TO20",
     "ko": "2026-11-07T00:30",
@@ -397,20 +433,46 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.03
+    "w": 1.04
    },
    {
+    "g": null,
     "hold_r": null,
-    "id": "KXNBAWINMARGIN-26NOV06PHICLE-CLE6TO10",
+    "id": "KXNBAWINMARGIN-26NOV06PHICLE-CLE21PLUS",
     "ko": "2026-11-07T00:30",
     "legs": "",
     "r": null,
     "side": "no",
     "src": "fills",
     "st": "open",
-    "w": 1.01
+    "w": 1.06
    },
    {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV06PHICLE-CLE6TO10",
+    "ko": "2026-11-07T00:30",
+    "legs": "sold",
+    "r": null,
+    "side": "no",
+    "src": "fills",
+    "st": "open",
+    "w": 1.03
+   },
+   {
+    "g": 0.3231,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV06MINNOP-MIN1TO5",
+    "ko": "2026-11-07T01:00",
+    "legs": "sold",
+    "r": 0.3231,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 0.97
+   },
+   {
+    "g": null,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06MINNOP-NOP1TO5",
     "ko": "2026-11-07T01:00",
@@ -419,9 +481,10 @@
     "side": "no",
     "src": "fills",
     "st": "open",
-    "w": 1.0
+    "w": 1.01
    },
    {
+    "g": 0.3286,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06OKCMEM-MEM1TO5",
     "ko": "2026-11-07T01:00",
@@ -430,20 +493,34 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.03
+    "w": 1.04
    },
    {
+    "g": 0.3333,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06OKCMEM-OKC11TO20",
     "ko": "2026-11-07T01:00",
-    "legs": "",
-    "r": null,
+    "legs": "sold",
+    "r": 0.3333,
     "side": "no",
     "src": "fills",
-    "st": "open",
+    "st": "won",
+    "w": 0.94
+   },
+   {
+    "g": 0.4516,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV06OKCMEM-OKC1TO5",
+    "ko": "2026-11-07T01:00",
+    "legs": "sold",
+    "r": 0.4415,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
     "w": 0.93
    },
    {
+    "g": null,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06OKCMEM-OKC21PLUS",
     "ko": "2026-11-07T01:00",
@@ -452,11 +529,36 @@
     "side": "no",
     "src": "fills",
     "st": "open",
-    "w": 1.03
+    "w": 1.04
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV06UTADAL-DAL11TO20",
+    "ko": "2026-11-07T01:00",
+    "legs": "",
+    "r": null,
+    "side": "no",
+    "src": "fills",
+    "st": "open",
+    "w": 0.88
+   },
+   {
+    "g": 0.3385,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV06UTADAL-DAL21PLUS",
+    "ko": "2026-11-07T01:00",
+    "legs": "sold",
+    "r": 0.3385,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 0.97
    }
   ],
   "nba_wm_yes": [
    {
+    "g": 1.5,
     "hold_r": 5.2919,
     "id": "KXNBAWINMARGIN-26NOV02OKCCLE-OKC1TO5",
     "ko": "2026-11-03T00:00",
@@ -468,6 +570,7 @@
     "w": 0.95
    },
    {
+    "g": 1.5714,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV02OKCCLE-OKC6TO10",
     "ko": "2026-11-03T00:00",
@@ -479,6 +582,7 @@
     "w": 1.03
    },
    {
+    "g": 1.5,
     "hold_r": 4.9026,
     "id": "KXNBAWINMARGIN-26NOV02ATLIND-ATL1TO5",
     "ko": "2026-11-03T00:30",
@@ -490,6 +594,7 @@
     "w": 1.01
    },
    {
+    "g": -0.1111,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV02ATLIND-IND1TO5",
     "ko": "2026-11-03T00:30",
@@ -501,6 +606,7 @@
     "w": 1.05
    },
    {
+    "g": -0.2,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV02BKNNYK-NYK6TO10",
     "ko": "2026-11-03T00:30",
@@ -512,6 +618,7 @@
     "w": 0.89
    },
    {
+    "g": 1.5714,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV02CHIPHI-PHI1TO5",
     "ko": "2026-11-03T00:30",
@@ -523,6 +630,7 @@
     "w": 1.03
    },
    {
+    "g": 1.6,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV02CHIPHI-PHI6TO10",
     "ko": "2026-11-03T00:30",
@@ -534,6 +642,7 @@
     "w": 1.05
    },
    {
+    "g": -1.0,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV02DETCHA-DET6TO10",
     "ko": "2026-11-03T00:30",
@@ -545,6 +654,7 @@
     "w": 1.0
    },
    {
+    "g": -1.0,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04ATLWAS-ATL1TO5",
     "ko": "2026-11-05T00:00",
@@ -556,6 +666,7 @@
     "w": 0.95
    },
    {
+    "g": 0.0,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04ATLWAS-WAS1TO5",
     "ko": "2026-11-05T00:00",
@@ -563,10 +674,11 @@
     "r": -0.0556,
     "side": "yes",
     "src": "reconstructed",
-    "st": "lost",
+    "st": "flat",
     "w": 1.01
    },
    {
+    "g": -0.872,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04PHIDET-DET6TO10",
     "ko": "2026-11-05T00:00",
@@ -578,6 +690,7 @@
     "w": 1.0
    },
    {
+    "g": -0.0,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04CHABKN-BKN1TO5",
     "ko": "2026-11-05T00:30",
@@ -585,10 +698,11 @@
     "r": -0.0562,
     "side": "yes",
     "src": "reconstructed",
-    "st": "lost",
+    "st": "flat",
     "w": 0.95
    },
    {
+    "g": -1.0,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04CHABKN-CHA1TO5",
     "ko": "2026-11-05T00:30",
@@ -600,6 +714,7 @@
     "w": 1.01
    },
    {
+    "g": -1.0,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04CHINYK-NYK1TO5",
     "ko": "2026-11-05T00:30",
@@ -611,6 +726,7 @@
     "w": 1.06
    },
    {
+    "g": 1.6,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04CHINYK-NYK6TO10",
     "ko": "2026-11-05T00:30",
@@ -622,6 +738,7 @@
     "w": 0.89
    },
    {
+    "g": 1.5714,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04MILBOS-BOS1TO5",
     "ko": "2026-11-05T00:30",
@@ -633,6 +750,7 @@
     "w": 1.03
    },
    {
+    "g": 1.6,
     "hold_r": 4.2538,
     "id": "KXNBAWINMARGIN-26NOV04MILBOS-BOS6TO10",
     "ko": "2026-11-05T00:30",
@@ -644,6 +762,7 @@
     "w": 0.95
    },
    {
+    "g": -1.0,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04CLEOKC-CLE1TO5",
     "ko": "2026-11-05T01:00",
@@ -655,6 +774,7 @@
     "w": 1.03
    },
    {
+    "g": -1.0,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04CLEOKC-OKC1TO5",
     "ko": "2026-11-05T01:00",
@@ -666,6 +786,7 @@
     "w": 0.95
    },
    {
+    "g": 1.6,
     "hold_r": 4.2538,
     "id": "KXNBAWINMARGIN-26NOV04CLEOKC-OKC6TO10",
     "ko": "2026-11-05T01:00",
@@ -677,6 +798,7 @@
     "w": 0.95
    },
    {
+    "g": 1.5,
     "hold_r": 5.2919,
     "id": "KXNBAWINMARGIN-26NOV04INDMEM-IND1TO5",
     "ko": "2026-11-05T01:00",
@@ -688,6 +810,7 @@
     "w": 0.95
    },
    {
+    "g": 1.5714,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04INDMEM-IND6TO10",
     "ko": "2026-11-05T01:00",
@@ -699,6 +822,7 @@
     "w": 0.96
    },
    {
+    "g": -0.2,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04INDMEM-MEM6TO10",
     "ko": "2026-11-05T01:00",
@@ -710,6 +834,7 @@
     "w": 0.89
    },
    {
+    "g": 1.6,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04UTANOP-NOP1TO5",
     "ko": "2026-11-05T01:00",
@@ -721,6 +846,7 @@
     "w": 0.95
    },
    {
+    "g": 1.5714,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04UTANOP-UTA1TO5",
     "ko": "2026-11-05T01:00",
@@ -732,6 +858,7 @@
     "w": 0.96
    },
    {
+    "g": 1.5,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04MINHOU-HOU1TO5",
     "ko": "2026-11-05T01:30",
@@ -743,6 +870,7 @@
     "w": 1.01
    },
    {
+    "g": -0.2,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04MINHOU-HOU6TO10",
     "ko": "2026-11-05T01:30",
@@ -754,6 +882,7 @@
     "w": 1.0
    },
    {
+    "g": 1.5714,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04MINHOU-MIN1TO5",
     "ko": "2026-11-05T01:30",
@@ -765,6 +894,7 @@
     "w": 1.03
    },
    {
+    "g": -0.0,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04PORPHX-PHX1TO5",
     "ko": "2026-11-05T02:00",
@@ -772,10 +902,11 @@
     "r": -0.0562,
     "side": "yes",
     "src": "reconstructed",
-    "st": "lost",
+    "st": "flat",
     "w": 0.95
    },
    {
+    "g": 1.5714,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04PORPHX-POR6TO10",
     "ko": "2026-11-05T02:00",
@@ -787,6 +918,7 @@
     "w": 1.03
    },
    {
+    "g": -1.0,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04TORDEN-DEN1TO5",
     "ko": "2026-11-05T02:00",
@@ -798,6 +930,7 @@
     "w": 0.89
    },
    {
+    "g": -1.0,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04TORDEN-DEN6TO10",
     "ko": "2026-11-05T02:00",
@@ -809,6 +942,7 @@
     "w": 0.89
    },
    {
+    "g": 0.0,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04TORDEN-TOR1TO5",
     "ko": "2026-11-05T02:00",
@@ -816,10 +950,11 @@
     "r": -0.0581,
     "side": "yes",
     "src": "reconstructed",
-    "st": "lost",
+    "st": "flat",
     "w": 1.01
    },
    {
+    "g": 1.6,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04DALSAS-SAS6TO10",
     "ko": "2026-11-05T02:30",
@@ -831,6 +966,7 @@
     "w": 1.0
    },
    {
+    "g": 0.0,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04LALSAC-LAL1TO5",
     "ko": "2026-11-05T03:00",
@@ -838,10 +974,11 @@
     "r": -0.0581,
     "side": "yes",
     "src": "reconstructed",
-    "st": "lost",
+    "st": "flat",
     "w": 1.01
    },
    {
+    "g": 1.5,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV04MIALAC-LAC1TO5",
     "ko": "2026-11-05T03:30",
@@ -853,6 +990,7 @@
     "w": 1.01
    },
    {
+    "g": 0.0,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV05ORLPHX-ORL1TO5",
     "ko": "2026-11-06T02:00",
@@ -860,10 +998,11 @@
     "r": -0.0562,
     "side": "yes",
     "src": "reconstructed",
-    "st": "lost",
+    "st": "flat",
     "w": 0.95
    },
    {
+    "g": -1.0,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV05ORLPHX-ORL6TO10",
     "ko": "2026-11-06T02:00",
@@ -875,6 +1014,7 @@
     "w": 1.03
    },
    {
+    "g": 0.0,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV05ORLPHX-PHX1TO5",
     "ko": "2026-11-06T02:00",
@@ -882,10 +1022,11 @@
     "r": -0.0562,
     "side": "yes",
     "src": "reconstructed",
-    "st": "lost",
+    "st": "flat",
     "w": 0.95
    },
    {
+    "g": 1.5714,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV05ORLPHX-PHX6TO10",
     "ko": "2026-11-06T02:00",
@@ -897,6 +1038,7 @@
     "w": 1.03
    },
    {
+    "g": 1.5,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV05MIAGSW-GSW1TO5",
     "ko": "2026-11-06T03:00",
@@ -908,6 +1050,7 @@
     "w": 1.01
    },
    {
+    "g": -0.1429,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV05MIAGSW-MIA1TO5",
     "ko": "2026-11-06T03:00",
@@ -919,6 +1062,7 @@
     "w": 1.03
    },
    {
+    "g": 1.5,
     "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV05MIAGSW-MIA6TO10",
     "ko": "2026-11-06T03:00",
@@ -930,61 +1074,67 @@
     "w": 1.01
    },
    {
-    "hold_r": null,
+    "g": -1.0,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV06BOSCHA-BOS1TO5",
     "ko": "2026-11-07T00:00",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 0.95
    },
    {
-    "hold_r": null,
+    "g": -1.0,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV06BOSCHA-BOS6TO10",
     "ko": "2026-11-07T00:00",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 1.0
    },
    {
-    "hold_r": null,
+    "g": -1.0,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV06BOSCHA-CHA1TO5",
     "ko": "2026-11-07T00:00",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 1.05
    },
    {
-    "hold_r": null,
+    "g": 1.5,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV06WASATL-ATL1TO5",
     "ko": "2026-11-07T00:00",
-    "legs": "2x",
-    "r": null,
+    "legs": "2x+3x",
+    "r": 1.3585,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "won",
     "w": 0.95
    },
    {
-    "hold_r": null,
+    "g": 1.5714,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV06WASATL-WAS1TO5",
     "ko": "2026-11-07T00:00",
-    "legs": "",
-    "r": null,
+    "legs": "2x+3x",
+    "r": 1.4224,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "won",
     "w": 0.96
    },
    {
+    "g": null,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06PHICLE-CLE1TO5",
     "ko": "2026-11-07T00:30",
@@ -996,6 +1146,7 @@
     "w": 0.95
    },
    {
+    "g": 1.5556,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06PHICLE-CLE6TO10",
     "ko": "2026-11-07T00:30",
@@ -1007,6 +1158,7 @@
     "w": 1.05
    },
    {
+    "g": null,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06PHICLE-PHI1TO5",
     "ko": "2026-11-07T00:30",
@@ -1018,6 +1170,7 @@
     "w": 0.95
    },
    {
+    "g": null,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06PHICLE-PHI6TO10",
     "ko": "2026-11-07T00:30",
@@ -1029,10 +1182,11 @@
     "w": 1.05
    },
    {
+    "g": null,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06MINNOP-MIN1TO5",
     "ko": "2026-11-07T01:00",
-    "legs": "",
+    "legs": "2x",
     "r": null,
     "side": "yes",
     "src": "fills",
@@ -1040,10 +1194,11 @@
     "w": 1.01
    },
    {
+    "g": null,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06OKCMEM-OKC1TO5",
     "ko": "2026-11-07T01:00",
-    "legs": "",
+    "legs": "2x",
     "r": null,
     "side": "yes",
     "src": "fills",
@@ -1051,6 +1206,7 @@
     "w": 0.95
    },
    {
+    "g": null,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06OKCMEM-OKC6TO10",
     "ko": "2026-11-07T01:00",
@@ -1062,10 +1218,11 @@
     "w": 0.9
    },
    {
+    "g": null,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06TORMIL-TOR6TO10",
     "ko": "2026-11-07T01:00",
-    "legs": "",
+    "legs": "2x",
     "r": null,
     "side": "yes",
     "src": "fills",
@@ -1073,10 +1230,11 @@
     "w": 1.01
    },
    {
+    "g": null,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06UTADAL-DAL1TO5",
     "ko": "2026-11-07T01:00",
-    "legs": "",
+    "legs": "2x",
     "r": null,
     "side": "yes",
     "src": "fills",
@@ -1084,6 +1242,7 @@
     "w": 0.9
    },
    {
+    "g": null,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06UTADAL-UTA1TO5",
     "ko": "2026-11-07T01:00",
@@ -1095,6 +1254,7 @@
     "w": 0.96
    },
    {
+    "g": null,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06PORLAL-LAL1TO5",
     "ko": "2026-11-07T03:00",
@@ -1106,6 +1266,7 @@
     "w": 1.0
    },
    {
+    "g": null,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06PORLAL-LAL6TO10",
     "ko": "2026-11-07T03:00",
@@ -1117,6 +1278,7 @@
     "w": 1.01
    },
    {
+    "g": null,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06PORLAL-POR1TO5",
     "ko": "2026-11-07T03:00",
@@ -1128,6 +1290,7 @@
     "w": 1.04
    },
    {
+    "g": null,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06PORLAL-POR6TO10",
     "ko": "2026-11-07T03:00",
@@ -1139,6 +1302,7 @@
     "w": 1.02
    },
    {
+    "g": null,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06SASSAC-SAS6TO10",
     "ko": "2026-11-07T03:00",
@@ -1152,6 +1316,7 @@
   ],
   "o35_cheap_no": [
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXSUPERLIGTOTAL-26NOV01AMSEYU-4",
     "ko": "2026-11-01T10:30",
@@ -1163,6 +1328,7 @@
     "w": 1.0
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXLALIGATOTAL-26NOV01GETSEV-4",
     "ko": "2026-11-01T13:00",
@@ -1174,6 +1340,7 @@
     "w": 1.0
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXLIGUE1TOTAL-26NOV01RCSAUX-4",
     "ko": "2026-11-01T14:00",
@@ -1185,6 +1352,7 @@
     "w": 1.0
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXSUPERLIGTOTAL-26NOV01KASBES-4",
     "ko": "2026-11-01T16:00",
@@ -1196,6 +1364,7 @@
     "w": 1.0
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXLIGUE1TOTAL-26NOV01PARASM-4",
     "ko": "2026-11-01T16:15",
@@ -1207,6 +1376,7 @@
     "w": 1.0
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXBUNDESLIGATOTAL-26NOV01SGEHSV-4",
     "ko": "2026-11-01T16:30",
@@ -1218,6 +1388,7 @@
     "w": 1.0
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXMLSTOTAL-26NOV01ATLTOR-4",
     "ko": "2026-11-01T21:30",
@@ -1229,6 +1400,7 @@
     "w": 1.0
    },
    {
+    "g": 3.0,
     "hold_r": null,
     "id": "KXMLSTOTAL-26NOV01NEMIA-4",
     "ko": "2026-11-02T00:00",
@@ -1240,6 +1412,7 @@
     "w": 1.0
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXMLSTOTAL-26NOV01LAFCMIN-4",
     "ko": "2026-11-02T01:30",
@@ -1251,6 +1424,7 @@
     "w": 1.0
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXMLSTOTAL-26NOV01PORHOU-4",
     "ko": "2026-11-02T02:45",
@@ -1262,6 +1436,7 @@
     "w": 1.0
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXSUPERLIGTOTAL-26NOV02GENALA-4",
     "ko": "2026-11-02T17:00",
@@ -1273,6 +1448,7 @@
     "w": 1.0
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXSERIEATOTAL-26NOV02SASFIO-4",
     "ko": "2026-11-02T17:30",
@@ -1284,6 +1460,7 @@
     "w": 1.0
    },
    {
+    "g": 3.0,
     "hold_r": null,
     "id": "KXUCLTOTAL-26NOV03FEYINT-4",
     "ko": "2026-11-03T20:00",
@@ -1295,6 +1472,7 @@
     "w": 1.0
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXUCLTOTAL-26NOV03MUNROM-4",
     "ko": "2026-11-03T20:00",
@@ -1306,6 +1484,7 @@
     "w": 1.0
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXUCLTOTAL-26NOV04AEKRMA-4",
     "ko": "2026-11-04T17:45",
@@ -1317,6 +1496,7 @@
     "w": 1.0
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXUCLTOTAL-26NOV04FENLFC-4",
     "ko": "2026-11-04T17:45",
@@ -1328,6 +1508,7 @@
     "w": 1.0
    },
    {
+    "g": 3.0,
     "hold_r": null,
     "id": "KXUCLTOTAL-26NOV04BVBRBB-4",
     "ko": "2026-11-04T20:00",
@@ -1339,6 +1520,7 @@
     "w": 0.82
    },
    {
+    "g": 3.452,
     "hold_r": null,
     "id": "KXUCLTOTAL-26NOV04FCPNAP-4",
     "ko": "2026-11-04T20:00",
@@ -1350,6 +1532,7 @@
     "w": 1.0
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXUCLTOTAL-26NOV04RBLMCI-4",
     "ko": "2026-11-04T20:00",
@@ -1361,6 +1544,7 @@
     "w": 1.0
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXUCLTOTAL-26NOV04RCLCOM-4",
     "ko": "2026-11-04T20:00",
@@ -1372,6 +1556,7 @@
     "w": 1.0
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXUCLTOTAL-26NOV04VIKSBH-4",
     "ko": "2026-11-04T20:00",
@@ -1383,6 +1568,7 @@
     "w": 1.0
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXBUNDESLIGATOTAL-26NOV06HSVBMG-4",
     "ko": "2026-11-06T19:30",
@@ -1396,6 +1582,7 @@
   ],
   "top5_dip": [
    {
+    "g": 0.8333,
     "hold_r": null,
     "id": "KXSERIEATOTAL-26NOV06VENUDI-2",
     "ko": "2026-11-06T19:45",
@@ -1407,6 +1594,7 @@
     "w": 1.0
    },
    {
+    "g": 0.8182,
     "hold_r": null,
     "id": "KXEPLTOTAL-26NOV06EVECOV-2",
     "ko": "2026-11-06T20:00",
@@ -1418,6 +1606,7 @@
     "w": 1.05
    },
    {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXLALIGATOTAL-26NOV06SEVALA-2",
     "ko": "2026-11-06T20:00",
