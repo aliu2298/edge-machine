@@ -25968,12 +25968,12 @@
     "KXTRUMPSAY-26NOV09-DIES": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "07277d4b-3ad1-ae04-cb9f-e794b54aa026"
+      "07277d7e-76b1-a0c8-53dd-f5b993947c4e"
      ],
      "first_px": 0.98,
      "first_ts": 1793652073,
-     "last_ts": 1794013011,
-     "n_prints": 606,
+     "last_ts": 1794013876,
+     "n_prints": 608,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -25982,11 +25982,14 @@
     "KXTRUMPSAY-26NOV09-DIVI": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "07277e95-8c89-a201-d6d2-1eb3a2c3eb8f"
+      "07277d19-0959-9445-a083-cfcf032025a8",
+      "07277d79-f2d9-9694-8497-d4b759b8f3c7",
+      "07277d7b-e501-9d20-acc5-1340980a1ceb",
+      "07277dce-0ca1-971f-9868-8c377907f1b7"
      ],
      "first_px": 0.9,
      "first_ts": 1793596505,
-     "last_ts": 1794012405,
+     "last_ts": 1794013945,
      "lows": [
       [
        1793773500,
@@ -26094,7 +26097,7 @@
        1.02
       ]
      ],
-     "n_prints": 349,
+     "n_prints": 353,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -32372,11 +32375,12 @@
     "KXTRUMPSAY-26NOV09-RIGG": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "07277d7e-ef29-b080-327e-c3d031c7c684"
+      "07277d20-3fe9-8d5a-5e16-921b42751bee",
+      "07277dca-85c9-867b-505a-e29690332d99"
      ],
      "first_px": 0.97,
      "first_ts": 1793635129,
-     "last_ts": 1794012900,
+     "last_ts": 1794014029,
      "lows": [
       [
        1793764852,
@@ -32384,7 +32388,7 @@
        16.14
       ]
      ],
-     "n_prints": 3276,
+     "n_prints": 3282,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -35990,13 +35994,13 @@
   }
  },
  "lane": "mentions_dip_hold",
- "last_success": "2026-11-07T01:00:55.331896+00:00",
+ "last_success": "2026-11-07T01:14:15.879792+00:00",
  "observations": {
-  "at": "2026-11-07T01:00:55.331896+00:00",
+  "at": "2026-11-07T01:14:15.879792+00:00",
   "errors": [],
   "events": 1,
   "markets": 32,
-  "prints": 230
+  "prints": 12
  },
  "since": "2026-10-26T04:00:00+00:00"
 }
