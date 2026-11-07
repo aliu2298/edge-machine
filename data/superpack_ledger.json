@@ -4,6 +4,22 @@
    "at": "2026-11-06T16:03:36.782279+00:00",
    "pool": "duplicate"
   },
+  "[\"contract\", \"o35_cheap_no\", [\"KXBUNDESLIGATOTAL-26NOV06HSVBMG-4\", \"no\"]]": {
+   "at": "2026-11-07T01:17:11.141120+00:00",
+   "pool": "entered"
+  },
+  "[\"contract\", \"o35_cheap_no\", [\"KXEPLTOTAL-26NOV06EVECOV-4\", \"no\"]]": {
+   "at": "2026-11-07T01:17:11.141120+00:00",
+   "pool": "entered"
+  },
+  "[\"contract\", \"o35_cheap_no\", [\"KXLIGUE1TOTAL-26NOV06TFCRCS-4\", \"no\"]]": {
+   "at": "2026-11-07T01:17:11.141120+00:00",
+   "pool": "entered"
+  },
+  "[\"contract\", \"o35_cheap_no\", [\"KXSERIEATOTAL-26NOV06VENUDI-4\", \"no\"]]": {
+   "at": "2026-11-07T01:17:11.141120+00:00",
+   "pool": "entered"
+  },
   "[\"daily\", \"econ_nc_no\", [\"KXAAAGASD-26NOV06-4.0700\", \"no\"]]": {
    "at": "2026-11-06T02:56:21.003710+00:00",
    "mirror": "entered",
@@ -698,7 +714,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-07T01:12:13.089907+00:00",
+ "last_run": "2026-11-07T01:17:11.141120+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -1718,6 +1734,106 @@
    "sport": "Crypto",
    "src": "sandbox",
    "status": "won"
+  },
+  {
+   "contract": "KXBUNDESLIGATOTAL-26NOV06HSVBMG-4",
+   "entered_at": "2026-11-07T01:17:11.141120+00:00",
+   "entities": [
+    "Hamburg SV",
+    "Borussia M\u00f6nchengladbach"
+   ],
+   "id": "superpack:[\"contract\", \"o35_cheap_no\", [\"KXBUNDESLIGATOTAL-26NOV06HSVBMG-4\", \"no\"]]",
+   "lane": "o35_cheap_no",
+   "logged": "2026-11-06T20:57:25+00:00",
+   "matched": [
+    "Borussia M\u00f6nchengladbach",
+    "Hamburg SV"
+   ],
+   "pid": "[\"contract\", \"o35_cheap_no\", [\"KXBUNDESLIGATOTAL-26NOV06HSVBMG-4\", \"no\"]]",
+   "price": null,
+   "profit": -1.0,
+   "scope": null,
+   "settled": "2026-11-07T01:17:11.141120+00:00",
+   "side": "no",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "contract",
+   "status": "lost"
+  },
+  {
+   "contract": "KXLIGUE1TOTAL-26NOV06TFCRCS-4",
+   "entered_at": "2026-11-07T01:17:11.141120+00:00",
+   "entities": [
+    "Toulouse",
+    "Strasbourg"
+   ],
+   "id": "superpack:[\"contract\", \"o35_cheap_no\", [\"KXLIGUE1TOTAL-26NOV06TFCRCS-4\", \"no\"]]",
+   "lane": "o35_cheap_no",
+   "logged": "2026-11-06T21:20:20+00:00",
+   "matched": [
+    "Strasbourg",
+    "Toulouse"
+   ],
+   "pid": "[\"contract\", \"o35_cheap_no\", [\"KXLIGUE1TOTAL-26NOV06TFCRCS-4\", \"no\"]]",
+   "price": null,
+   "profit": -0.0293,
+   "scope": null,
+   "settled": "2026-11-07T01:17:11.141120+00:00",
+   "side": "no",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "contract",
+   "status": "lost"
+  },
+  {
+   "contract": "KXSERIEATOTAL-26NOV06VENUDI-4",
+   "entered_at": "2026-11-07T01:17:11.141120+00:00",
+   "entities": [
+    "Venezia",
+    "Udinese"
+   ],
+   "id": "superpack:[\"contract\", \"o35_cheap_no\", [\"KXSERIEATOTAL-26NOV06VENUDI-4\", \"no\"]]",
+   "lane": "o35_cheap_no",
+   "logged": "2026-11-06T21:22:03+00:00",
+   "matched": [
+    "Udinese",
+    "Venezia"
+   ],
+   "pid": "[\"contract\", \"o35_cheap_no\", [\"KXSERIEATOTAL-26NOV06VENUDI-4\", \"no\"]]",
+   "price": null,
+   "profit": 1.4294,
+   "scope": null,
+   "settled": "2026-11-07T01:17:11.141120+00:00",
+   "side": "no",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "contract",
+   "status": "won"
+  },
+  {
+   "contract": "KXEPLTOTAL-26NOV06EVECOV-4",
+   "entered_at": "2026-11-07T01:17:11.141120+00:00",
+   "entities": [
+    "Everton",
+    "Coventry City"
+   ],
+   "id": "superpack:[\"contract\", \"o35_cheap_no\", [\"KXEPLTOTAL-26NOV06EVECOV-4\", \"no\"]]",
+   "lane": "o35_cheap_no",
+   "logged": "2026-11-06T21:39:05+00:00",
+   "matched": [
+    "Coventry City",
+    "Everton"
+   ],
+   "pid": "[\"contract\", \"o35_cheap_no\", [\"KXEPLTOTAL-26NOV06EVECOV-4\", \"no\"]]",
+   "price": null,
+   "profit": 1.4294,
+   "scope": null,
+   "settled": "2026-11-07T01:17:11.141120+00:00",
+   "side": "no",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "contract",
+   "status": "won"
   }
  ],
  "registered": "2026-11-05",
@@ -1952,10 +2068,12 @@
   "[\"contract\", \"nba_tt_cheap_tp30\", [\"KXNBATEAMTOTAL-26OCT25TORMIN-TOR120\", \"yes\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"nba_tt_cheap_tp30\", [\"KXNBATEAMTOTAL-26OCT25TORMIN-TOR122\", \"yes\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXBUNDESLIGATOTAL-26NOV01SGEHSV-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
+  "[\"contract\", \"o35_cheap_no\", [\"KXBUNDESLIGATOTAL-26NOV06HSVBMG-4\", \"no\"]]": "2026-11-07T01:17:11.141120+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXBUNDESLIGATOTAL-26OCT30SVEM05-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXBUNDESLIGATOTAL-26OCT31BMUBVB-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXBUNDESLIGATOTAL-26OCT31FCASCF-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXBUNDESLIGATOTAL-26OCT31LEVVFB-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
+  "[\"contract\", \"o35_cheap_no\", [\"KXEPLTOTAL-26NOV06EVECOV-4\", \"no\"]]": "2026-11-07T01:17:11.141120+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXEPLTOTAL-26OCT31HULIPS-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXEREDIVISIETOTAL-26OCT31CAMGAE-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXEREDIVISIETOTAL-26OCT31PSVWIL-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
@@ -1965,6 +2083,7 @@
   "[\"contract\", \"o35_cheap_no\", [\"KXLALIGATOTAL-26OCT31BARALA-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXLIGUE1TOTAL-26NOV01PARASM-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXLIGUE1TOTAL-26NOV01RCSAUX-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
+  "[\"contract\", \"o35_cheap_no\", [\"KXLIGUE1TOTAL-26NOV06TFCRCS-4\", \"no\"]]": "2026-11-07T01:17:11.141120+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXLIGUE1TOTAL-26OCT30HACPSG-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXMLSTOTAL-26NOV01ATLTOR-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXMLSTOTAL-26NOV01LAFCMIN-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
@@ -1986,6 +2105,7 @@
   "[\"contract\", \"o35_cheap_no\", [\"KXSAUDIPLTOTAL-26OCT31FAYFAI-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXSCOTTISHPREMTOTAL-26OCT31KILJOH-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXSERIEATOTAL-26NOV02SASFIO-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
+  "[\"contract\", \"o35_cheap_no\", [\"KXSERIEATOTAL-26NOV06VENUDI-4\", \"no\"]]": "2026-11-07T01:17:11.141120+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXSERIEATOTAL-26OCT29FIOATA-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXSERIEATOTAL-26OCT29FROLEC-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXSERIEATOTAL-26OCT31ACMINT-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
