@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-07T04:07Z",
+ "generated": "2026-11-07T05:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "nba_wm_nofade": [
@@ -638,6 +638,18 @@
     "src": "fills",
     "st": "won",
     "w": 1.02
+   },
+   {
+    "g": 0.3393,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV06SASSAC-SAS26PLUS",
+    "ko": "2026-11-07T03:00",
+    "legs": "sold",
+    "r": 0.3393,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 0.86
    }
   ],
   "nba_wm_yes": [
@@ -1350,15 +1362,15 @@
     "w": 1.0
    },
    {
-    "g": null,
+    "g": 1.5,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06PORLAL-LAL6TO10",
     "ko": "2026-11-07T03:00",
-    "legs": "",
-    "r": null,
+    "legs": "2x+3x",
+    "r": 1.3599,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "won",
     "w": 1.01
    },
    {
@@ -2080,9 +2092,7 @@
      "w": 1.0
     }
    ],
-   "refused": {
-    "econ_nc_yes:KXDIESELD-26NOV07-T6.205": "other"
-   }
+   "refused": {}
   },
   "ftts_no_70_80|soccer_ftts": {
    "entered": "2026-10-16T17:17:38+00:00",
