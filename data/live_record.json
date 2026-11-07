@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-07T00:09Z",
+ "generated": "2026-11-07T01:07Z",
  "lane_note": "own-state lanes: the lane's own fill price; outcome from the market's settled result; sold bets left out; fees not included",
  "lanes": {
   "nba_wm_nofade": [
@@ -258,6 +258,38 @@
     "side": "no",
     "st": "won",
     "w": 1.0
+   },
+   {
+    "id": "KXNBAWINMARGIN-26NOV06BOSCHA-BOS11TO20",
+    "ko": "2026-11-07T00:00",
+    "r": null,
+    "side": "no",
+    "st": "open",
+    "w": null
+   },
+   {
+    "id": "KXNBAWINMARGIN-26NOV06WASATL-ATL6TO10",
+    "ko": "2026-11-07T00:00",
+    "r": null,
+    "side": "no",
+    "st": "open",
+    "w": null
+   },
+   {
+    "id": "KXNBAWINMARGIN-26NOV06PHICLE-CLE11TO20",
+    "ko": "2026-11-07T00:30",
+    "r": null,
+    "side": "no",
+    "st": "open",
+    "w": null
+   },
+   {
+    "id": "KXNBAWINMARGIN-26NOV06PHICLE-CLE6TO10",
+    "ko": "2026-11-07T00:30",
+    "r": null,
+    "side": "no",
+    "st": "open",
+    "w": null
    }
   ],
   "nba_wm_yes": [
@@ -1238,8 +1270,11 @@
    "refused": {
     "crypto_fav_band_below:KXBTCD-26NOV0317-T77999.99": "outside the price band",
     "crypto_fav_band_below:KXBTCD-26NOV0417-T80749.99": "outside the entry window",
+    "crypto_fav_band_below:KXBTCD-26NOV0617-T75999.99": "already held by another lane",
     "crypto_fav_band_below:KXETHD-26NOV0517-T2259.99": "outside the price band",
+    "crypto_fav_band_below:KXHYPED-26NOV0617-T78.9999": "published inside 30 min of kickoff",
     "crypto_fav_band_below:KXSOLD-26NOV0517-T89.9999": "outside the entry window",
+    "crypto_fav_band_below:KXSOLD-26NOV0617-T90.9999": "outside the entry window",
     "crypto_fav_band_below:KXXRPD-26NOV0517-T1.2399": "outside the entry window"
    }
   },
