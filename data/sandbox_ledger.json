@@ -4,7 +4,7 @@
    "kalshi_venue": 2,
    "polymarket_us": 38,
    "polymarket_us_listed": 38,
-   "polymarket_us_priced": 17
+   "polymarket_us_priced": 18
   },
   "commodities": {
    "cmd_market": {
@@ -48,7 +48,7 @@
    "kalshi_venue": 34
   },
   "finance": {
-   "kalshi_venue": 30
+   "kalshi_venue": 45
   },
   "mma": {
    "kalshi_venue": 0,
@@ -73,7 +73,7 @@
     "offered": 8,
     "picked": 3
    },
-   "kalshi_venue": 215,
+   "kalshi_venue": 212,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -338,10 +338,10 @@
    }
   },
   "tennis": {
-   "kalshi_venue": 3,
+   "kalshi_venue": 2,
    "polymarket_us": 40,
-   "polymarket_us_listed": 382,
-   "polymarket_us_priced": 105
+   "polymarket_us_listed": 378,
+   "polymarket_us_priced": 101
   },
   "tennis_combo": {
    "combo": 0,
@@ -358,36 +358,36 @@
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-07T15:08:55+00:00",
-   "commodities": "2026-11-07T15:08:55+00:00",
-   "commodities_fav": "2026-11-07T15:08:55+00:00",
-   "cricket": "2026-11-07T15:08:55+00:00",
-   "crypto": "2026-11-07T15:08:55+00:00",
-   "crypto_fav": "2026-11-07T15:08:55+00:00",
-   "economics": "2026-11-07T15:08:55+00:00",
-   "finance": "2026-11-07T15:08:55+00:00",
-   "mma": "2026-11-07T15:08:55+00:00",
-   "nfl": "2026-11-07T15:08:55+00:00",
-   "nhl_pl": "2026-11-07T15:08:55+00:00",
-   "nhl_rest": "2026-11-07T15:08:55+00:00",
-   "soccer": "2026-11-07T15:08:55+00:00",
-   "soccer_btts": "2026-11-07T15:08:55+00:00",
+   "boxing": "2026-11-07T15:13:38+00:00",
+   "commodities": "2026-11-07T15:13:38+00:00",
+   "commodities_fav": "2026-11-07T15:13:38+00:00",
+   "cricket": "2026-11-07T15:13:38+00:00",
+   "crypto": "2026-11-07T15:13:38+00:00",
+   "crypto_fav": "2026-11-07T15:13:38+00:00",
+   "economics": "2026-11-07T15:13:38+00:00",
+   "finance": "2026-11-07T15:13:38+00:00",
+   "mma": "2026-11-07T15:13:38+00:00",
+   "nfl": "2026-11-07T15:13:38+00:00",
+   "nhl_pl": "2026-11-07T15:13:38+00:00",
+   "nhl_rest": "2026-11-07T15:13:38+00:00",
+   "soccer": "2026-11-07T15:13:38+00:00",
+   "soccer_btts": "2026-11-07T15:13:38+00:00",
    "soccer_btts_cup": "2026-11-05T19:33:47+00:00",
-   "soccer_corners": "2026-11-07T15:08:55+00:00",
+   "soccer_corners": "2026-11-07T15:13:38+00:00",
    "soccer_ftts": "2026-10-19T18:33:38+00:00",
-   "soccer_o15": "2026-11-07T15:08:55+00:00",
+   "soccer_o15": "2026-11-07T15:13:38+00:00",
    "soccer_o15_cup": "2026-11-05T19:33:47+00:00",
-   "soccer_o25": "2026-11-07T15:08:55+00:00",
+   "soccer_o25": "2026-11-07T15:13:38+00:00",
    "soccer_o25_cup": "2026-11-05T19:33:47+00:00",
-   "soccer_p05": "2026-11-07T15:08:55+00:00",
-   "soccer_p05_cup": "2026-11-07T15:08:55+00:00",
-   "soccer_team1": "2026-11-07T15:08:55+00:00",
+   "soccer_p05": "2026-11-07T15:13:38+00:00",
+   "soccer_p05_cup": "2026-11-07T15:13:38+00:00",
+   "soccer_team1": "2026-11-07T15:13:38+00:00",
    "soccer_team1_cup": "2026-11-05T19:33:47+00:00",
-   "soccer_team2": "2026-11-07T15:08:55+00:00",
+   "soccer_team2": "2026-11-07T15:13:38+00:00",
    "soccer_team2_cup": "2026-11-05T19:33:47+00:00",
-   "soccer_u35": "2026-11-07T15:08:55+00:00",
+   "soccer_u35": "2026-11-07T15:13:38+00:00",
    "soccer_u35_cup": "2026-11-05T19:33:47+00:00",
-   "tennis": "2026-11-07T15:08:55+00:00",
+   "tennis": "2026-11-07T15:13:38+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -400,7 +400,7 @@
      "start": "2026-11-07T15:00:00+00:00"
     },
     "kalshi:26NOV07ESPDEP": {
-     "at": "2026-11-07T15:08:55.851230+00:00",
+     "at": "2026-11-07T15:13:38.355002+00:00",
      "label": "Espanyol v Deportivo",
      "league": "La Liga",
      "reason": "no clear favourite: 0.38 de-vigged, under 0.55",
@@ -428,7 +428,7 @@
      "start": "2026-11-07T13:00:00+00:00"
     },
     "kalshi:26NOV07OSAATH": {
-     "at": "2026-11-07T15:08:55.851230+00:00",
+     "at": "2026-11-07T15:13:38.355002+00:00",
      "label": "Osasuna v Athletic Club",
      "league": "La Liga",
      "reason": "no clear favourite: 0.47 de-vigged, under 0.55",
@@ -438,7 +438,7 @@
   },
   "odds_api": {
    "allowance": 0,
-   "at": "2026-11-07T15:08:55+00:00",
+   "at": "2026-11-07T15:13:38+00:00",
    "remaining": 360,
    "used": 140
   },
@@ -459,7 +459,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 1277,
+  "runs": 1278,
   "tennis_shortlist": {
    "audit": [
     {
@@ -471,7 +471,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-07T15:09:17+00:00"
+  "updated": "2026-11-07T15:13:58+00:00"
  },
  "quotes": [
   {
@@ -363412,7 +363412,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-07T15:08:55+00:00",
+   "close_at": "2026-11-07T15:13:38+00:00",
    "close_price": 0.15,
    "date": "2026-11-07",
    "edge": null,
@@ -371520,7 +371520,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-07T15:08:55+00:00",
+   "close_at": "2026-11-07T15:13:38+00:00",
    "close_price": 0.22,
    "date": "2026-11-08",
    "edge": null,
@@ -371565,7 +371565,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-07T15:08:55+00:00",
+   "close_at": "2026-11-07T15:13:38+00:00",
    "close_price": 0.2,
    "date": "2026-11-08",
    "edge": null,
@@ -371610,7 +371610,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-07T15:08:55+00:00",
+   "close_at": "2026-11-07T15:13:38+00:00",
    "close_price": 0.25,
    "date": "2026-11-08",
    "edge": null,
@@ -374033,7 +374033,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-07T15:08:55+00:00",
+   "close_at": "2026-11-07T15:13:38+00:00",
    "close_price": 0.27,
    "date": "2026-11-07",
    "edge": null,
@@ -375537,7 +375537,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-07T15:08:55+00:00",
+   "close_at": "2026-11-07T15:13:38+00:00",
    "close_price": 0.25,
    "date": "2026-11-08",
    "edge": null,
@@ -397469,7 +397469,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-07T15:08:55+00:00",
+   "close_at": "2026-11-07T15:13:38+00:00",
    "close_price": 0.74,
    "date": "2026-11-08",
    "edge": null,
@@ -400989,7 +400989,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-07T15:08:55+00:00",
+   "close_at": "2026-11-07T15:13:38+00:00",
    "close_price": 0.54,
    "date": "2026-11-08",
    "edge": null,
@@ -404085,7 +404085,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-07T15:08:55+00:00",
+   "close_at": "2026-11-07T15:13:38+00:00",
    "close_price": 0.77,
    "date": "2026-11-07",
    "edge": null,
@@ -404125,7 +404125,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-07T15:08:55+00:00",
+   "close_at": "2026-11-07T15:13:38+00:00",
    "close_price": 0.74,
    "date": "2026-11-07",
    "edge": null,
@@ -425266,7 +425266,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-07T15:08:55+00:00",
+   "close_at": "2026-11-07T15:13:38+00:00",
    "close_price": 0.49,
    "date": "2026-11-07",
    "edge": null,
@@ -431359,7 +431359,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-07T15:08:55+00:00",
+   "close_at": "2026-11-07T15:13:38+00:00",
    "close_price": 0.51,
    "date": "2026-11-07",
    "edge": null,
@@ -452686,7 +452686,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-07T15:08:55+00:00",
+   "close_at": "2026-11-07T15:13:38+00:00",
    "close_price": 0.8,
    "date": "2026-11-07",
    "edge": null,
@@ -455358,7 +455358,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-07T15:08:55+00:00",
+   "close_at": "2026-11-07T15:13:38+00:00",
    "close_price": 0.16,
    "date": "2026-11-07",
    "edge": null,
@@ -456108,6 +456108,109 @@
    "uncovered": null,
    "untraded": false,
    "url": "https://polymarket.us/event/utr-potaus-globre-2026-11-07",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-07",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-utr-panale-adeana-2026-11-07",
+   "label": "Panagiotidou, Alexandra vs Adeikyte, Anastasija",
+   "liquidity": null,
+   "logged": "2026-11-07T15:13:38+00:00",
+   "market_id": "aec-utr-panale-adeana-2026-11-07",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.55,
+   "price_b": 0.46,
+   "price_draw": null,
+   "prob_a": 0.545,
+   "result": null,
+   "settled": null,
+   "side_a": "Panagiotidou, Alexandra",
+   "side_b": "Adeikyte, Anastasija",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-07T18:10:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "utr",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/utr-panale-adeana-2026-11-07",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-07",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-utr-olinat-ploela-2026-11-07",
+   "label": "Oliver, Natalie vs Plosnik, Ela",
+   "liquidity": null,
+   "logged": "2026-11-07T15:13:38+00:00",
+   "market_id": "aec-utr-olinat-ploela-2026-11-07",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.4,
+   "price_b": 0.61,
+   "price_draw": null,
+   "prob_a": 0.395,
+   "result": null,
+   "settled": null,
+   "side_a": "Oliver, Natalie",
+   "side_b": "Plosnik, Ela",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-07T18:10:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "utr",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/utr-olinat-ploela-2026-11-07",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-07",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-atp-aidmay-andand-2026-11-07",
+   "label": "Aidan Mayo vs Andres Andrade",
+   "liquidity": null,
+   "logged": "2026-11-07T15:13:38+00:00",
+   "market_id": "aec-atp-aidmay-andand-2026-11-07",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.66,
+   "price_b": 0.35,
+   "price_draw": null,
+   "prob_a": 0.655,
+   "result": null,
+   "settled": null,
+   "side_a": "Aidan Mayo",
+   "side_b": "Andres Andrade",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-07T18:30:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "atpch",
+   "tour": "atpch",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/atp-aidmay-andand-2026-11-07",
    "venue": "polymarket_us",
    "venue_start": null
   }
