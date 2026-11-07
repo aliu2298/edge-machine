@@ -1070,7 +1070,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-07T20:04:23.862418+00:00",
+ "last_run": "2026-11-07T20:36:10.040029+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -2582,14 +2582,14 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"B4\", [\"B4:KXSCOTTISHPREMTOTAL-26NOV07ABEHIB\", \"no\"]]",
    "price": 0.72,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-07T20:01:40.598576+00:00",
    "side": "no",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXLALIGATOTAL-26NOV07VCFRMA-4",
