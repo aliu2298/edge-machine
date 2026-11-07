@@ -175,6 +175,13 @@ def browser_checks():
                 page.wait_for_timeout(150)
                 got = page.evaluate(MEASURE, {"sel": sel, "dateLabel": date_label})
                 gap = got["gap"]
+                if abs(gap) > 1:       # what the failing table looked like, for a runner whose fonts differ
+                    print("  diag", page.evaluate("""(sel) => { const t = document.querySelector(sel), b = t.parentElement;
+                        const r = t.getBoundingClientRect(); const cs = getComputedStyle(b);
+                        return {cls: b.className, overflowX: cs.overflowX, overflowY: cs.overflowY, tableW: Math.round(r.width), boxW: b.clientWidth,
+                                rows: t.tBodies[0].rows.length, tableH: Math.round(r.height), open: !!b.closest('details') && b.closest('details').open,
+                                pos: getComputedStyle(t.tHead).position, anc: [...(function*(){ let e = t.parentElement; while (e) { const c = getComputedStyle(e);
+                                if (c.overflowX !== 'visible' || c.overflowY !== 'visible') yield e.tagName + '.' + e.className.toString().slice(0, 30) + ':' + c.overflowX + '/' + c.overflowY; e = e.parentElement; } })()]}; }""", sel))
                 ok(abs(gap) <= 1,
                    f"{label}: thead top equals header bottom "
                    f"(gap {gap:.2f}px, thead {got['theadTop']:.2f}, header {got['headerBottom']:.2f})")

@@ -21,10 +21,13 @@ if command -v flock >/dev/null 2>&1; then
   flock -w 120 9 || { echo "$(stamp) the clone is busy (lock held for 2 min); next run retries"; exit 0; }
 fi
 git pull -q --rebase origin main || { echo "$(stamp) pull failed"; exit 0; }
+# The exchange's own buy fills per order (read-only, the follower's python): the publisher prices each order from them. A failure leaves
+# ~/live_record_fills.json as it was and the publisher falls back to the follower's recorded fill and fee.
+FOLLOWER_PY="${FOLLOWER_PY:-$(ls -d "$HOME"/polymarket-*/.venv/bin/python 2>/dev/null | head -1)}"
+if [ -n "$FOLLOWER_PY" ] && [ -x "$FOLLOWER_PY" ]; then "$FOLLOWER_PY" live_fills_export.py || echo "$(stamp) fills export failed; the publisher uses the recorded fills"; fi
 "$PY" live_record_publish.py || { echo "$(stamp) publish refused or failed"; exit 1; }
 # The follower's own price guards per pair (2026-11-06), from ITS python so it can import its own price_cap / price_band / fee: a failure
 # leaves data/live_caps.json as it was and never blocks the live record above.
-FOLLOWER_PY="${FOLLOWER_PY:-$(ls -d "$HOME"/polymarket-*/.venv/bin/python 2>/dev/null | head -1)}"
 if [ -n "$FOLLOWER_PY" ] && [ -x "$FOLLOWER_PY" ]; then "$FOLLOWER_PY" live_caps_publish.py || echo "$(stamp) live caps failed; the file is left as it was"; fi
 git add data/live_record.json data/live_caps.json 2>/dev/null
 if ! git diff --cached --quiet; then

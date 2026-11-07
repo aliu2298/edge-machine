@@ -246,6 +246,61 @@ def explain(paper, orders, refused, in_feed=None, feed_from=None, pair=None, hor
     return out
 
 
+def fill_window(live_blob, key, since):
+    """(the pair's own live orders from `since`, its exported block) when there is a live file, else (None, None). A pair absent from the file has placed
+    nothing the file knows of, so it reads as no orders."""
+    if not live_blob:
+        return None, None
+    p = (live_blob.get("pairs") or {}).get(key) or {}
+    return window(p.get("orders") or [], since), p
+
+
+def fill_live(live, rec):
+    """The pair's since-Production counts replaced by the follower's own fills (2026-11-07): settled orders won/lost, ROI per $1 staked after the
+    exchange's charged fees. The paper record stays in the Sandbox column."""
+    return dict(live, n=rec["won"] + rec["lost"], won=rec["won"], flat=0, n_price=0, roi_fee=rec["roi"], wfl=False, fills=True)
+
+
+def fill_fragment(rec):
+    """The small line under a live record: orders still running, placed but unfilled, sold early, unconfirmed."""
+    notes = [f"{rec[k]} {w}" for k, w in (("open", "running"), ("unfilled", "unfilled"), ("sold", "exited early"), ("unconfirmed", "unconfirmed")) if rec[k]]
+    return f'<div class="sm mut live-line">{esc(" · ".join(notes))}</div>' if notes else ""
+
+
+# Why a Production pair has placed nothing. Written once, from the follower's own ledger and the feed's history, for the pairs whose cause is
+# known; the others are worded from their refusals or from the feed (no_orders_reason).
+NO_ORDERS_WHY = {
+    "u35_low_scoring|soccer_u35_intl": (
+        "The only internationals fixtures since it moved (Oct 5–6, eight leads) were refused: their routes named a market where the exchange expects "
+        "an event, so the follower found nothing open to buy. That was fixed on Oct 11 and there have been no internationals fixtures since "
+        "(the next window is mid-November), so nothing has been tried on the fixed route yet."),
+}
+
+
+def no_orders_reason(key, refused, n_leads):
+    """One line on why the pair has no live order: a known cause, else its refusals, else the feed's lead count."""
+    if key in NO_ORDERS_WHY:
+        return NO_ORDERS_WHY[key]
+    if refused:
+        cats = {}
+        for c in refused.values():
+            cats[c] = cats.get(c, 0) + 1
+        top = ", ".join(f"{c} ({n})" for c, n in sorted(cats.items(), key=lambda kv: -kv[1])[:3])
+        return f"Every lead was refused by the follower: {top}."
+    if n_leads:
+        return f"{n_leads} lead{'s' if n_leads != 1 else ''} in the feed, none bought yet."
+    return "No qualifying fixture has reached the feed since the pair moved."
+
+
+def no_orders_fold(rows):
+    """One fold under the pairs table: each pair with no live order and the one-line reason. `rows`: [(label, reason)]."""
+    if not rows:
+        return ""
+    body = "".join(f'<tr><td><b>{esc(label)}</b></td><td class="sm">{esc(why)}</td></tr>' for label, why in sorted(rows))
+    return (f'<details class="fold"><summary>No live orders yet<span class="mut sm">· {len(rows)} pair{"s" if len(rows) != 1 else ""}</span></summary>'
+            f'<div class="tbl"><table><thead><tr><th>Pair</th><th>Why nothing has been placed</th></tr></thead><tbody>{body}</tbody></table></div></details>')
+
+
 def gap_bets(paper_n, paper_roi, live):
     """The gap between the two records, in bets: the settled-count difference and the ROI difference expressed as bets of return."""
     if live["n"] == 0 and not paper_n:
