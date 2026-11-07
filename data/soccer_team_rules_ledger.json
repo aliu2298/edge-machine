@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-07T16:31:39.269184+00:00",
+ "last_run": "2026-11-07T22:31:57.335770+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -2460,17 +2460,74 @@
      "logged": "2026-11-07T13:46:59.158959+00:00",
      "match": "Espanyol v Deportivo",
      "opponent": "Espanyol",
+     "payout": 0.0,
      "price": 0.12,
+     "profit": -100.0,
      "rule": "T3",
+     "settled": "2026-11-07T22:31:57.335770+00:00",
      "side": "yes",
      "start": "2026-11-07T15:15Z",
-     "status": "open",
+     "status": "lost",
      "sub": "Deportivo De La Coruna over 2.5 goals",
      "team": "Deportivo",
      "team_side": "away",
      "ticker": "KXLALIGATEAMTOTAL-26NOV07ESPDEP-DEP3",
      "title": "Will Deportivo De La Coruna score over 2.5 goals?",
      "why": "Deportivo O+D- v Espanyol O-D- \u00b7 3+ YES 0.12"
+    },
+    {
+     "ask": 0.16,
+     "bid": 0.15,
+     "event": "KXMLSTEAMTOTAL-26NOV07HOUSTL",
+     "group": "B",
+     "id": "T3:KXMLSTEAMTOTAL-26NOV07HOUSTL:away",
+     "labels": {
+      "opp": "O-D-",
+      "own": "O+D-"
+     },
+     "league": "MLS",
+     "line": 2.5,
+     "logged": "2026-11-07T22:31:57.335770+00:00",
+     "match": "Houston Dynamo FC v St. Louis CITY SC",
+     "opponent": "Houston Dynamo FC",
+     "price": 0.16,
+     "rule": "T3",
+     "side": "yes",
+     "start": "2026-11-08T00:00Z",
+     "status": "open",
+     "sub": "Saint Louis over 2.5 goals",
+     "team": "St. Louis CITY SC",
+     "team_side": "away",
+     "ticker": "KXMLSTEAMTOTAL-26NOV07HOUSTL-STL3",
+     "title": "Will Saint Louis score over 2.5 goals?",
+     "why": "St. Louis CITY SC O+D- v Houston Dynamo FC O-D- \u00b7 3+ YES 0.16"
+    },
+    {
+     "ask": 0.29,
+     "bid": 0.27,
+     "event": "KXMLSTEAMTOTAL-26NOV07SEALAFC",
+     "group": "B",
+     "id": "T3:KXMLSTEAMTOTAL-26NOV07SEALAFC:home",
+     "labels": {
+      "opp": "O-D-",
+      "own": "O+D-"
+     },
+     "league": "MLS",
+     "line": 2.5,
+     "logged": "2026-11-07T22:31:57.335770+00:00",
+     "match": "Seattle Sounders FC v LAFC",
+     "opponent": "LAFC",
+     "price": 0.29,
+     "rule": "T3",
+     "side": "yes",
+     "start": "2026-11-08T00:00Z",
+     "status": "open",
+     "sub": "Seattle over 2.5 goals",
+     "team": "Seattle Sounders FC",
+     "team_side": "home",
+     "ticker": "KXMLSTEAMTOTAL-26NOV07SEALAFC-SEA3",
+     "title": "Will Seattle score over 2.5 goals?",
+     "why": "Seattle Sounders FC O+D- v LAFC O-D- \u00b7 3+ YES 0.29"
     }
    ]
   },
@@ -4689,14 +4746,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-01T18:31:27.697558+00:00",
-   "candidates": 2,
-   "due": 3,
-   "labelled": 3,
-   "matched": 2,
-   "new": 0
-  },
-  {
    "at": "2026-11-01T18:46:11.341638+00:00",
    "candidates": 2,
    "due": 3,
@@ -5095,6 +5144,14 @@
    "labelled": 5,
    "matched": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-07T22:31:57.335770+00:00",
+   "candidates": 3,
+   "due": 7,
+   "labelled": 7,
+   "matched": 3,
+   "new": 2
   }
  ],
  "version": "soccer-team-rules-v1"
