@@ -399,9 +399,11 @@
    "ask_check": {
     "book": null,
     "first_quotes": false,
+    "how": "print",
     "last_trade": 0.03,
+    "printed": 2388.28,
     "source": "replayed",
-    "status": "checking"
+    "status": "verified"
    },
    "bid": 0.02,
    "entry_at": "2026-11-07T15:02:00+00:00",
@@ -498,10 +500,13 @@
   "KXBOXING-26NOV06PETERSORTIZ": "2026-11-06T08:00:17.982079+00:00",
   "KXBOXING-26NOV06REDAWYLLIE": "2026-11-06T08:00:17.982079+00:00",
   "KXBOXING-26NOV06SPARKSTAVARE": "2026-11-06T06:00:20.435378+00:00",
+  "KXBOXING-26NOV07ABDULAPALMA": "2026-11-07T16:55:00.621295+00:00",
   "KXBOXING-26NOV07ALIEVCAMKIR": "2026-11-07T16:00:21.112998+00:00",
   "KXBOXING-26NOV07ARTHURAGUIRR": "2026-11-07T16:00:21.112998+00:00",
+  "KXBOXING-26NOV07DENIZOSULLI": "2026-11-07T16:55:00.621295+00:00",
   "KXBOXING-26NOV07MACMILDENNIS": "2026-11-07T16:00:21.112998+00:00",
   "KXBOXING-26NOV07PHILLIDRAGON": "2026-11-07T16:00:21.112998+00:00",
+  "KXBOXING-26NOV07UMMATASANTAN": "2026-11-07T16:55:00.621295+00:00",
   "KXBOXING-26OCT23ULDEDACAPARE": "2026-10-27T04:45:21.662265+00:00",
   "KXBOXING-26OCT31CALVARMBILLI": "2026-10-31T20:06:27.383501+00:00",
   "KXBOXING-26OCT31DELGADBIYARS": "2026-11-01T01:57:46.281274+00:00",
@@ -512,16 +517,16 @@
   "KXBOXING-26OCT31TSUTSUROJAS": "2026-10-31T20:06:27.383501+00:00"
  },
  "lane": "boxing_cheap_dog",
- "last_success": "2026-11-07T16:00:21.112998+00:00",
+ "last_success": "2026-11-07T16:55:00.621295+00:00",
  "observations": {
-  "at": "2026-11-07T16:00:21.112998+00:00",
-  "entered": 2,
-  "events": 4,
+  "at": "2026-11-07T16:55:00.621295+00:00",
+  "entered": 0,
+  "events": 5,
   "filled": 0,
   "no_start": 0,
   "skipped": 6,
   "unverified": 0,
-  "waiting": 26
+  "waiting": 23
  },
  "skips": {
   "KXBOXING-26NOV06AOKUSOKHAHRA-AOKUSO": {
@@ -608,6 +613,18 @@
    "start": "2026-11-06T06:00:00+00:00",
    "word": "Zidane Semedo Tavares"
   },
+  "KXBOXING-26NOV07ABDULAPALMA-ABDULA": {
+   "event": "KXBOXING-26NOV07ABDULAPALMA",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-07T17:00:00+00:00",
+   "word": "Masood Abdulah"
+  },
+  "KXBOXING-26NOV07ABDULAPALMA-PALMA": {
+   "event": "KXBOXING-26NOV07ABDULAPALMA",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-07T17:00:00+00:00",
+   "word": "Adan Palma"
+  },
   "KXBOXING-26NOV07ALIEVCAMKIR-ALIEV": {
    "event": "KXBOXING-26NOV07ALIEVCAMKIR",
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
@@ -626,6 +643,18 @@
    "start": "2026-11-07T16:00:00+00:00",
    "word": "Alex Arthur Jr"
   },
+  "KXBOXING-26NOV07DENIZOSULLI-DENIZ": {
+   "event": "KXBOXING-26NOV07DENIZOSULLI",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-07T17:00:00+00:00",
+   "word": "Billy Deniz"
+  },
+  "KXBOXING-26NOV07DENIZOSULLI-OSULLI": {
+   "event": "KXBOXING-26NOV07DENIZOSULLI",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-07T17:00:00+00:00",
+   "word": "Joe O'Sullivan"
+  },
   "KXBOXING-26NOV07MACMILDENNIS-DENNIS": {
    "event": "KXBOXING-26NOV07MACMILDENNIS",
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
@@ -643,6 +672,18 @@
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
    "start": "2026-11-07T16:40:00+00:00",
    "word": "Tumi Phillips"
+  },
+  "KXBOXING-26NOV07UMMATASANTAN-SANTAN": {
+   "event": "KXBOXING-26NOV07UMMATASANTAN",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-07T17:20:00+00:00",
+   "word": "Atacayte Santana"
+  },
+  "KXBOXING-26NOV07UMMATASANTAN-UMMATA": {
+   "event": "KXBOXING-26NOV07UMMATASANTAN",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-07T17:20:00+00:00",
+   "word": "Javokhir Ummataliev"
   },
   "KXBOXING-26OCT23ULDEDACAPARE-CAPARE": {
    "event": "KXBOXING-26OCT23ULDEDACAPARE",
