@@ -97,6 +97,18 @@ def _codes(event):
     return (tail[:3], tail[3:]) if len(tail) >= 6 else (None, None)
 
 
+def _teams(title, event):
+    """(home, away) from a Kalshi title ("Roma vs Sassuolo: Total Goals"), else the ticker's codes. Kalshi writes " vs "; the
+    old " v " split never matched, so every open lead carried the whole title as its home team and a 5-letter code pair
+    (KXLIGUE1TOTAL-26NOV08STBOL) left no away team at all, which made the bet unpublishable (2026-11-07)."""
+    t = str(title or "").split(":", 1)[0]
+    for sep in (" vs ", " v "):
+        home, _, away = t.partition(sep)
+        if home.strip() and away.strip():
+            return home.strip(), away.strip()
+    return _codes(event)
+
+
 def _result_quote(e):
     """One counted fill of the live paper record as a Sandbox-style quote, or None. A bid that never filled is not a bet.
 
@@ -140,8 +152,7 @@ def _open_quote(lead):
         start=k.isoformat(), logged=(D.instant(lead.get("first_seen")) or k).isoformat(), price=None, price_a=None, price_b=None,
         price_draw=None, pick="a", bet=True, stake=100.0, status="open", pnl=0.0, result=None, settle_px=None, settled=None,
         prob_a=None, edge=None, untraded=False, start_source="espn", url="",
-        espn_home=(str(lead.get("title") or "").partition(" v ")[0] or _codes(lead.get("event"))[0]),
-        espn_away=(str(lead.get("title") or "").partition(" v ")[2] or _codes(lead.get("event"))[1]))
+        espn_home=_teams(lead.get("title"), lead.get("event"))[0], espn_away=_teams(lead.get("title"), lead.get("event"))[1])
 
 
 def quotes(ledger, leads_feed):
