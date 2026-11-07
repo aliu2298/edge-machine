@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-07T23:00:16.095218+00:00",
+ "last_run": "2026-11-07T23:30:17.713693+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -4602,16 +4602,55 @@
      "ticker": "KXNBATEAMTOTAL-26NOV06BOSCHA-BOS111",
      "title": "Boston over 110.5 points",
      "why": "BOS O-D- v CHA O-D- \u00b7 both D\u2212 \u00b7 110+ NO 0.55"
+    },
+    {
+     "game": "401909940",
+     "id": "R7:KXNBATEAMTOTAL-26NOV07NYKCLE-CLE110",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O+D-",
+      "home": "O+D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-11-07T23:30:17.713693+00:00",
+     "match": "NY @ CLE",
+     "price": 0.51,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-11-08T01:00Z",
+     "status": "open",
+     "strike": 109.5,
+     "team": "CLE",
+     "ticker": "KXNBATEAMTOTAL-26NOV07NYKCLE-CLE110",
+     "title": "Cleveland over 109.5 points",
+     "why": "CLE O+D- v NY O+D- \u00b7 both D\u2212 \u00b7 110+ NO 0.51"
+    },
+    {
+     "game": "401909940",
+     "id": "R7:KXNBATEAMTOTAL-26NOV07NYKCLE-NYK114",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O+D-",
+      "home": "O+D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-11-07T23:30:17.713693+00:00",
+     "match": "NY @ CLE",
+     "price": 0.51,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-11-08T01:00Z",
+     "status": "open",
+     "strike": 113.5,
+     "team": "NY",
+     "ticker": "KXNBATEAMTOTAL-26NOV07NYKCLE-NYK114",
+     "title": "New York over 113.5 points",
+     "why": "NY O+D- v CLE O+D- \u00b7 both D\u2212 \u00b7 115+ NO 0.51"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-02T22:30:14.798144+00:00",
-   "due": 1,
-   "new": 0
-  },
   {
    "at": "2026-11-02T23:00:16.014877+00:00",
    "due": 6,
@@ -4861,6 +4900,11 @@
    "at": "2026-11-07T23:00:16.095218+00:00",
    "due": 1,
    "new": 0
+  },
+  {
+   "at": "2026-11-07T23:30:17.713693+00:00",
+   "due": 3,
+   "new": 2
   }
  ],
  "version": "nba-rules-v1"
