@@ -660,20 +660,10 @@
    "lead_min": 9.8,
    "price": 0.84
   },
-  "mls_away_band_fade:KXMLSGAME-26OCT28CLTMTL-MTL": {
-   "at": "2026-10-28T23:18:58+00:00",
-   "lead_min": 11.0,
-   "price": 0.8
-  },
   "mls_away_band_fade:KXMLSGAME-26OCT28NSHPHI-PHI": {
    "at": "2026-10-29T00:20:09+00:00",
    "lead_min": 9.8,
    "price": 0.76
-  },
-  "mls_away_band_fade:KXMLSGAME-26OCT28NYCATL-ATL": {
-   "at": "2026-10-28T23:18:58+00:00",
-   "lead_min": 11.0,
-   "price": 0.79
   },
   "mls_away_band_fade:KXMLSGAME-26OCT28SEAHOU-HOU": {
    "at": "2026-10-29T02:22:08+00:00",
@@ -709,6 +699,11 @@
    "at": "2026-11-01T21:25:48+00:00",
    "lead_min": 4.2,
    "price": 0.53
+  },
+  "mls_fade_home:KXMLSGAME-26NOV07HOUSTL-HOU": {
+   "at": "2026-11-07T23:22:51+00:00",
+   "lead_min": 37.1,
+   "price": 0.6
   },
   "mls_fade_home:KXMLSGAME-26OCT28DALCLB-DAL": {
    "at": "2026-10-29T00:20:09+00:00",
@@ -774,16 +769,6 @@
    "at": "2026-11-01T21:25:48+00:00",
    "lead_min": 4.2,
    "price": 0.44
-  },
-  "team2_form_l10:KXMLSTEAMTOTAL-26OCT28CLTMTL-CLT2": {
-   "at": "2026-10-28T23:18:58+00:00",
-   "lead_min": 11.0,
-   "price": 0.67
-  },
-  "team2_form_l10:KXMLSTEAMTOTAL-26OCT28MIACIN-MIA2": {
-   "at": "2026-10-28T23:18:58+00:00",
-   "lead_min": 11.0,
-   "price": 0.78
   },
   "team2_form_l10:KXMLSTEAMTOTAL-26OCT28MINSKC-MIN2": {
    "at": "2026-10-29T00:20:09+00:00",
@@ -1011,5 +996,5 @@
    "price": 0.79
   }
  },
- "updated": "2026-11-07T22:52:38+00:00"
+ "updated": "2026-11-07T23:22:51+00:00"
 }
