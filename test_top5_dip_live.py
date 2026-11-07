@@ -98,11 +98,49 @@ check("a late bid still counts in paper", len(st["entries"]), 1)
 print("waiting")
 st = L.load()
 settle(TK, status="active", result="")
+TRADES[TK + "-2"] = [tr(5, 0.70, 30)]
 L.run(st, {TK + "-2": dec()}, NOW)
-check("an unsettled match waits", (st["entries"], st["observations"]["waiting"]), ([], 1))
+check("an unsettled match with no counted fill waits", (st["entries"], st["observations"]["waiting"]), ([], 1))
 st = L.load()
 settle(TK)
 L.run(st, {TK + "-2": dec()}, KICK - dt.timedelta(minutes=30))
 check("a match not yet kicked off waits", st["entries"], [])
+
+print("provisional entries: the fill and the sell are known before Kalshi settles the market")
+settle(TK, status="active", result="")
+TRADES[TK + "-2"] = [tr(5, 0.44, 30), tr(7, 0.44, 30), tr(40, 0.81, 5)]
+st = L.load()
+L.run(st, {TK + "-2": dec()}, NOW)
+e = st["entries"][0]
+b = e["buys"]["55"]
+check("a sold fill on an unsettled market is an entry at once, provisional, no result", (len(st["entries"]), e.get("provisional"), e["result"], b["counted"], b["sold"], b["payout"]),
+      (1, True, None, True, True, None))
+check("the observation says how many are provisional", (st["observations"]["new"], st["observations"]["provisional"]), (1, 1))
+check("a provisional entry is out of the settled summary", L.summary(st)["matches"], 0)
+import top5_dip_production as TP
+q = TP._result_quote(e)
+check("the page reads it as sold at P, a win, with no result yet", (q["status"], q["rule"], q["result"], q["pnl"] > 0), ("won", "sold at P", None, True))
+L.run(st, {TK + "-2": dec()}, NOW + dt.timedelta(minutes=5))
+check("re-reading an unsettled market keeps one entry", (len(st["entries"]), st["observations"]["new"]), (1, 0))
+settle(TK)
+L.run(st, {TK + "-2": dec()}, NOW + dt.timedelta(hours=2))
+e = st["entries"][0]
+check("settlement completes the same entry in place: result set, no longer provisional, the sale kept",
+      (len(st["entries"]), e.get("provisional"), e["result"], e["buys"]["55"]["sold"], e["buys"]["55"]["payout"], e["logged"] == NOW.isoformat()), (1, None, "yes", True, 1.0, True))
+check("and it joins the settled summary", L.summary(st)["fills"], 1)
+
+print("a fill still held is filled, open")
+ev5 = "KXBUNDESLIGATOTAL-26NOV07HSVBMG"
+settle(ev5, status="active", result="")
+TRADES[ev5 + "-2"] = [tr(5, 0.44, 30), tr(7, 0.44, 30), tr(20, 0.60, 5)]
+st = L.load()
+L.run(st, {ev5 + "-2": dec(event=ev5, ticker=ev5 + "-2", league="Bundesliga")}, NOW)
+e = st["entries"][0]
+q = TP._result_quote(e)
+check("held, not sold: provisional, open on the page", (e.get("provisional"), e["buys"]["55"]["sold"], q["status"], q["rule"], q["pnl"]), (True, False, "open", "filled, open", 0.0))
+settle(ev5, result="no")
+L.run(st, {ev5 + "-2": dec(event=ev5, ticker=ev5 + "-2", league="Bundesliga")}, NOW + dt.timedelta(hours=2))
+q = TP._result_quote(st["entries"][0])
+check("settled at 0 it completes as a loss", (len(st["entries"]), q["status"], q["rule"], q["result"]), (1, "lost", "held to settlement", "b"))
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

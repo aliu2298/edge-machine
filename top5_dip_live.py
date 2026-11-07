@@ -13,6 +13,12 @@ replays only the FILLS from trade prints, with the Sandbox lane's own engine (ar
   sell    a resting sell at P placed at the fill; it fills when a later trade prints at or above P; else the match settles.
   fees    maker 0.0175 p(1-p) in and out; nothing at settlement.
 
+  provisional  (2026-11-06) the market need not have settled for the record to know what happened to a bid. Once the replay shows the fill and
+          the sell (a print at or above P after it, under the held-fill rule) the entry is written as "sold at P"; a fill still held is
+          "filled, open". Both carry `provisional: true`, no result, and are re-read every run until Kalshi settles the market, when the
+          same entry is completed with its result (a sold entry keeps its sale, a held one pays the settlement). A bid with no counted fill
+          yet waits as before. Everton v Coventry sold at 80c at 21:12Z and the entry used to land only at 22:26Z, after settlement.
+
 Own ledger data/top5_dip_live.json in the Sandbox lane's own shape, so its summary is arg_dip.summary. The record starts on the first
 matchday a snapshot exists.
 """
@@ -64,17 +70,24 @@ def counts(d):
     return bool(d.get("rule_ok")) and not d.get("crossed") and d.get("outcome") != "no_entry" and d.get("P") is not None
 
 
+def _settled(m):
+    return bool(m) and m.get("status") in ("finalized", "settled") and m.get("result") in ("yes", "no")
+
+
 def run(state, decisions=None, now=None, fetch=D.get):
-    """Replay every counting decision of a settled market once. New entries only; an entry is never rewritten."""
+    """Replay every counting decision once the replay shows a fill. A settled market gives the final entry; before settlement a counted
+    fill gives a PROVISIONAL one ("sold at P" or "filled, open"), re-read each run until the market settles and then completed in place.
+    A settled entry is never rewritten."""
     now = now or dt.datetime.now(UTC)
     decisions = load_decisions() if decisions is None else decisions
     days = sorted(d.get("matchday") for d in decisions.values() if d.get("matchday"))
     state["since"] = state.get("since") or (days[0] if days else None)
-    have = {e["id"] for e in state["entries"]} | set(state["no_entry"])
-    obs = dict(at=now.isoformat(), new=0, waiting=0, errors=[])
+    final = {e["id"] for e in state["entries"] if not e.get("provisional")} | set(state["no_entry"])
+    at = {e["id"]: i for i, e in enumerate(state["entries"]) if e.get("provisional")}
+    obs = dict(at=now.isoformat(), new=0, waiting=0, provisional=0, errors=[])
     done = 0
     for key, d in sorted(decisions.items(), key=lambda kv: kv[1].get("kickoff") or ""):
-        if key in have:
+        if key in final:
             continue
         if d.get("outcome") == "no_entry" or d.get("crossed"):
             state["no_entry"][key] = d.get("why") or "bid crossed"
@@ -91,18 +104,32 @@ def run(state, decisions=None, now=None, fetch=D.get):
         try:
             ms, _archived = C.event_markets(d["event"], fetch)
             m = A.rung(ms, 1.5)
-            if m is None or m.get("status") not in ("finalized", "settled") or m.get("result") not in ("yes", "no"):
+            if m is None:
                 obs["waiting"] += 1
                 continue
+            settled = _settled(m)
             prints = A.prints_of(A.fetch_trades(m["ticker"], kick - 3600, fetch))
+            buys = A.evaluate(prints, kick, d["P"], m["result"] if settled else None, CFG)
+            b = buys.get(A.vkey(HEADLINE))
+            if not settled and not (b and b.get("counted")):
+                obs["waiting"] += 1                      # no counted fill to report yet
+                continue
             entry = dict(id=key, event=d["event"], title=m.get("title") or d["event"], kickoff=kick, matchday=d.get("matchday"), league=d.get("league"),
-                         result=m["result"], p=d["P"], bot_limit=d.get("limit"), outcome=d.get("outcome"), prints=len(prints),
-                         logged=now.isoformat(), version=VERSION, buys=A.evaluate(prints, kick, d["P"], m["result"], CFG))
+                         result=m["result"] if settled else None, p=d["P"], bot_limit=d.get("limit"), outcome=d.get("outcome"), prints=len(prints),
+                         logged=now.isoformat(), version=VERSION, buys=buys)
+            if not settled:
+                entry["provisional"] = True
+                b["payout"] = None                       # unknown until the market settles
         except Exception as e:                                   # noqa: BLE001
             obs["errors"].append(f"{key}: {str(e)[:80]}")
             continue
-        state["entries"].append(entry)
-        obs["new"] += 1
+        if key in at:
+            entry["logged"] = state["entries"][at[key]].get("logged") or entry["logged"]
+            state["entries"][at[key]] = entry
+        else:
+            state["entries"].append(entry)
+            obs["new"] += 1
+        obs["provisional"] += 1 if entry.get("provisional") else 0
         done += 1
     state["last_run"] = now.isoformat()
     state["error"] = "; ".join(obs["errors"])[:400] or None
@@ -111,7 +138,8 @@ def run(state, decisions=None, now=None, fetch=D.get):
 
 
 def summary(state):
-    return A.summary(state["entries"], HEADLINE)
+    """The research-style read of the SETTLED entries; a provisional one joins it when the market settles."""
+    return A.summary([e for e in state["entries"] if not e.get("provisional")], HEADLINE)
 
 
 def main(argv=None):

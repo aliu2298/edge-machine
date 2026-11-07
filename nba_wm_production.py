@@ -31,12 +31,12 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 YES_PATH = os.path.join(ROOT, "data", "production_nba_wm_leads.json")
 NO_PATH = os.path.join(ROOT, "data", "production_nba_wm_nofade_leads.json")
 YES_LANE, NO_LANE = "nba_winmargin_live", N.LANE
-YES_NAME, NO_NAME = "Win margin YES split (live, v2)", "Win margin NO fade (live, v2)"
+YES_NAME, NO_NAME = "Win margin YES split (v2)", "Win margin NO fade (v2)"
 YES_VERSION, NO_VERSION = V3.YES_VERSION, V3.NO_VERSION          # the feeds carry the version the executor pins (v3 from 2026-11-03)
 # Version 3 (the executor's own decision snapshots as the entries, nba_wm_v3.py): from its first night the record is v3 and v2 is kept as its own
 # labelled block, so there are four pairs, each with its own source id.
 YES3_LANE, NO3_LANE = "nba_winmargin_v3", "nba_wm_nofade_v3"
-YES3_NAME, NO3_NAME = "Win margin YES split (live, v3)", "Win margin NO fade (live, v3)"
+YES3_NAME, NO3_NAME = "Win margin YES split (v3)", "Win margin NO fade (v3)"
 MOVED_ON = "2026-11-02"
 PROMOTED = "2026-11-02T22:00:00+00:00"        # before the first live order (23:00Z on the first night)
 SPORT = "nba_wm"
@@ -121,8 +121,19 @@ def v3_since(v3):
 
 
 def pairs(v3=None):
-    lanes = [YES_LANE, NO_LANE] + ([YES3_LANE, NO3_LANE] if v3_since(v3) else [])
-    return {f"{lane}|{SPORT}": dict(stage="production", ready_at=PROMOTED, promoted_at=PROMOTED, by_hand=MOVED_ON) for lane in lanes}
+    """The Production pairs: version 2 from MOVED_ON; version 3, once it has started, from its own first night (2026-11-04, not the day the
+    lanes first went live), so its 'moved' date and its since-Production window are its own."""
+    out = {f"{lane}|{SPORT}": dict(stage="production", ready_at=PROMOTED, promoted_at=PROMOTED, by_hand=MOVED_ON) for lane in (YES_LANE, NO_LANE)}
+    since = v3_since(v3)
+    if since:
+        start = f"{since}T00:00:00+00:00"
+        out.update({f"{lane}|{SPORT}": dict(stage="production", ready_at=start, promoted_at=start, by_hand=since) for lane in (YES3_LANE, NO3_LANE)})
+    return out
+
+
+def older_pairs(v3=None):
+    """The pairs that ended when version 3 started: version 2's two, kept on the page in an 'Older versions' fold. Empty before version 3."""
+    return {f"{lane}|{SPORT}" for lane in (YES_LANE, NO_LANE)} if v3_since(v3) else set()
 
 
 def _team_bucket(ticker):

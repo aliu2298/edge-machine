@@ -3,7 +3,8 @@
 #
 # Hourly from edge-vps (a USER crontab, like vps_window_requests.sh and the NBA win margin decisions snapshot):
 #   7 * * * * /home/<user>/edge-machine-closes/scripts/vps_live_record.sh >> /home/<user>/edge-live-record.log 2>&1
-# live_record_publish.py reads the follower's own files (orders_placed.json, results.json, ledger.jsonl, o35_state.json, nba_wm_state.json: read-only),
+# live_record_publish.py reads the follower's own files (orders_placed.json, results.json, ledger.jsonl, o35_state.json, nba_wm_state.json, top5_dip_state.json: read-only),
+# plus the committed data/live_reconstructed.json (own-state entries from before per-sell fill logging, 2026-11-06 18:07Z),
 # reads Kalshi's PUBLIC market results (cached in ~/live_record_results.json), and writes data/live_record.json after refusing anything outside
 # its whitelist of public fields (no balance, order id, account, key or dollar figure). live_caps_publish.py (the follower's own python) writes
 # data/live_caps.json: each Production pair's price cap, highest ask under it and band, so the Soccer page's headline counts the legs the

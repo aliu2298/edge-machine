@@ -82,6 +82,19 @@ d2, _s, _b = X.page_inputs(dict(quotes=[]), dict(pairs={}), dict(leads={}, pairs
                            leads_feed=dict(updated_at=NOW.isoformat(), leads=[a]))
 check("a stale feed hides the upcoming matches", [x["status"] for x in d2["quotes"]], ["won"])
 
+print("provisional entries on the page (the market has not settled)")
+prov_sold = dict(entry, id="KXEPLTOTAL-26NOV07EVECOV-2", result=None, provisional=True,
+                 buys={"55": dict(limit=0.44, fill_at=int(NOW.timestamp()) + 300, counted=True, sold=True, payout=None)})
+prov_held = dict(entry, id="KXEPLTOTAL-26NOV07HSVBMG-2", result=None, provisional=True,
+                 buys={"55": dict(limit=0.44, fill_at=int(NOW.timestamp()) + 300, counted=True, sold=False, payout=None)})
+lead_same = dict(a, ticker="KXEPLTOTAL-26NOV07EVECOV-2", id="top5_goalless_dip_live:KXEPLTOTAL-26NOV07EVECOV-2")
+pq = X.quotes(dict(entries=[prov_sold, prov_held]), dict(leads=[lead_same]))
+by = {q["market_id"]: q for q in pq}
+check("sold at P before settlement: a won trade, not the feed's open lead (one quote for the market)",
+      (len(pq), by["KXEPLTOTAL-26NOV07EVECOV-2"]["status"], by["KXEPLTOTAL-26NOV07EVECOV-2"]["rule"], by["KXEPLTOTAL-26NOV07EVECOV-2"]["result"]), (2, "won", "sold at P", None))
+check("filled and held: open, worded as filled, open, with no P/L yet", (by["KXEPLTOTAL-26NOV07HSVBMG-2"]["status"], by["KXEPLTOTAL-26NOV07HSVBMG-2"]["rule"], by["KXEPLTOTAL-26NOV07HSVBMG-2"]["pnl"]),
+      ("open", "filled, open", 0.0))
+
 print("the snapshot publisher")
 good = {"decisions": {"KXEPLTOTAL-26NOV07ARSCHE-2": dict(lane=L.LANE, bot_version=L.VERSION, ticker="KXEPLTOTAL-26NOV07ARSCHE-2", event="KXEPLTOTAL-26NOV07ARSCHE",
                                                           league="EPL", matchday="2026-11-07", kickoff=NOW.isoformat(), outcome="planned", why=None, rule_ok=True,
