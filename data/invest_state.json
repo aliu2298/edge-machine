@@ -1,5 +1,60 @@
 {
- "collector": {},
+ "collector": {
+  "last_ts": 1794027602,
+  "markets": 60,
+  "rows_24h": 900
+ },
  "events": [],
- "flags": []
+ "flags": [],
+ "last_run": "2026-11-07T05:00:13+00:00",
+ "rules": {
+  "fade_drop": {
+   "act": "fade",
+   "cleared": false,
+   "dir": "drop",
+   "hold": "1d",
+   "registered": "2026-11-06",
+   "side": "Up",
+   "size": 0.05,
+   "sl": 0.04,
+   "tp": 0.08,
+   "win": "1h"
+  },
+  "fade_jump": {
+   "act": "fade",
+   "cleared": false,
+   "dir": "jump",
+   "hold": "5d",
+   "registered": "2026-11-06",
+   "side": "Down",
+   "size": 0.08,
+   "sl": 0.04,
+   "tp": 0.08,
+   "win": "day"
+  },
+  "follow_drop": {
+   "act": "follow",
+   "cleared": false,
+   "dir": "drop",
+   "hold": "5d",
+   "registered": "2026-11-06",
+   "side": "Down",
+   "size": 0.08,
+   "sl": 0.04,
+   "tp": 0.08,
+   "win": "day"
+  },
+  "follow_jump": {
+   "act": "follow",
+   "cleared": false,
+   "dir": "jump",
+   "hold": "1h",
+   "registered": "2026-11-06",
+   "side": "Up",
+   "size": 0.08,
+   "sl": 0.04,
+   "tp": 0.08,
+   "win": "1h"
+  }
+ }
 }
