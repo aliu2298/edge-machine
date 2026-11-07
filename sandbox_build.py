@@ -2388,15 +2388,61 @@ def chaos_html():
         return html
 
 
-def trading_page(now=None):
-    """public_site/trading.html — the trading lane, on its own page.
+def invest_html():
+    """The Kalshi Invest big-move section (invest_build.py, 2026-11-06) at the top of the Trading page.
+    A placeholder row until the module lands; never breaks the page. -> (html, running rules, settled, open)."""
+    import trading_layout as L
+    try:
+        import invest_build
+    except ImportError:
+        row = L.rule("invest_big_moves", "Big drops and jumps · fade or follow", "Kalshi Invest", "—", "—", "—", "—",
+                     L.sig("research running"),
+                     '<p class="sp-def">Up/Down perpetuals on US stocks at 1x, paper only. The rules (fade or follow, '
+                     'drop or jump) are being pre-registered and tested on the stocks\' own history first.</p>')
+        return (L.section("invest", "Kalshi Invest · big moves (paper)", "research running",
+                          L.rules_list([row], key="invest")), 0, 0, 0)
+    try:
+        return invest_build.section_and_counts()
+    except Exception as exc:                                    # noqa: BLE001
+        return (f'<section id="invest"><h2>Kalshi Invest · big moves (paper)</h2>'
+                f'<p class="sm mut">Section unavailable ({type(exc).__name__}).</p></section>', 0, 0, 0)
 
-    Same rows as the old hidden tab: trading_rows() is unchanged apart from
-    the percent sign glyph.
+
+def _running_counts():
+    """(rules running, settled entries, open now) over the gold and Nasdaq breakouts. Never breaks the page."""
+    rules = settled = 0
+    try:
+        import gold_orb as G
+        state = G.load() if os.path.exists(G.PATH) else {"nights": []}
+        for v in G.VARIANTS:
+            rules += 1
+            settled += G.summary([r for r in state.get("nights") or []
+                                  if r.get("variant") == v and r.get("anchor") == "utc_0130"])["n"]
+    except Exception:                                           # noqa: BLE001
+        pass
+    try:
+        import nasdaq_orb as N
+        for s in N.summary(N.load()).values():
+            if not s.get("retired"):
+                rules += 1
+                settled += s["trades"]
+    except Exception:                                           # noqa: BLE001
+        pass
+    return rules, settled
+
+
+def trading_page(now=None):
+    """public_site/trading.html — the paper trading lanes, on their own page.
+
+    2026-11-06 layout: Kalshi Invest first, then the gold and Nasdaq breakouts as one row per
+    variant (daily rows in folds), and every retired stock and ETF rule, the Alpaca execution
+    detail and the cost and method notes in ONE closed "Retired stock rules" block at the bottom.
+    The header tiles count only lanes still running. trading_rows() is unchanged.
     """
     import market_sources as MS
     import market_track as MT
     import nasdaq_orb_build
+    import trading_layout as L
     now_dt = now or datetime.now(timezone.utc)
     if now_dt.tzinfo is None:
         now_dt = now_dt.replace(tzinfo=timezone.utc)
@@ -2405,24 +2451,19 @@ def trading_page(now=None):
     cost = MT.measured_cost(fills)
     trade_rules = MT.report(md, cost=cost)
     trade_open = sum(r["open"] for r in trade_rules)
+    trade_n = sum(r["trades"] for r in trade_rules)
+    invest, inv_rules, inv_settled, inv_open = invest_html()
+    run_rules, run_settled = _running_counts()
     trade_note = (f'<p class="sm trade-source">Run by {esc(TRADE_RUNNER)}. The table is each '
                   f'rule\'s <b>paper record</b> since its registration, every signal at the bar\'s '
                   f'open; it is not the Alpaca account.</p>'
                   f'{trade_exec_html(fills, MT.exiting(md))}')
-    body = f"""<h1>Trading</h1>
-<p class="lede">Stock and ETF rules under test, judged per entry day. Paper only.</p>
-<div class="tiles">
-<div class="tile"><b>{sum(1 for r in trade_rules if r['verdict'] in ('proven', 'working'))}</b><span>working (30+ days)</span></div>
-<div class="tile"><b>{sum(1 for r in trade_rules if r['verdict'] == 'promising')}</b><span>promising</span></div>
-<div class="tile"><b class="{'neg' if any(r['verdict'] == 'noedge' for r in trade_rules) else ''}">{sum(1 for r in trade_rules if r['verdict'] == 'noedge')}</b><span>no edge</span></div>
-<div class="tile"><b>{sum(r['trades'] for r in trade_rules):,}</b><span>trades logged</span></div>
-<div class="tile"><b>{trade_open:,}</b><span>open now</span></div>
-</div>
+    retired = f"""<section id="retired"><details class="fold sp-retired"><summary><h3>Retired stock rules</h3><span class="sm mut">· {len(trade_rules)} rules · {trade_n:,} trades logged · {trade_open:,} still open · records kept</span></summary>
 {trade_note}
-<section id="rules">
-<h2>Stock and ETF rules under test</h2>
+<h3>Stock and ETF rules, retired</h3>
 <div class="tbl"><table>{TRADE_HEAD}{trading_rows(md, cost)}</table></div>
 {cost_note_html(cost)}
+<p class="sm mut">Twelve earlier rules (retired 2026-10-04 and 2026-10-20) are off the board; their trades stay in the ledger.</p>
 <details class="fold trade-method"><summary>How the record is kept</summary>
 <div class="note sm">Each rule is <b>pre-registered</b>: its thresholds and the reason for them are fixed before it
 logs a trade. A trade is logged only from bars that closed BEFORE it, and enters at the <b>next</b> bar's open —
@@ -2433,16 +2474,27 @@ never the signal bar's close. Costs are charged on entry and exit, at the cost t
 (<i>Working</i>, <i>No edge</i> or <i>Proven</i>); from {MT.EARLY_N} it is <i>Collecting n/{MT.READ_FLOOR}</i>
 with its lean, <i>Promising</i> or <i>Behind</i>; under {MT.EARLY_N} a rule is only <i>Too early</i>. Open <b>What this rule does</b> under a row for its definition.</div>
 </details>
-</section>
+</details></section>"""
+    body = f"""<h1>Trading</h1>
+<p class="lede">Paper lanes: big moves on Kalshi Invest, the gold and Nasdaq breakouts. Paper only.</p>
+<div class="tiles">
+<div class="tile"><b>{run_rules + inv_rules}</b><span>rules running</span></div>
+<div class="tile"><b>{inv_rules}</b><span>Invest rules</span></div>
+<div class="tile"><b>{run_settled + inv_settled:,}</b><span>settled entries, running rules</span></div>
+<div class="tile"><b>{inv_open:,}</b><span>Invest open now</span></div>
+</div>
+{invest}
 {gold_orb_html()}
 {nasdaq_orb_build.safe_section()}
+{retired}
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 """
     return site_chrome.document(
         "Edge Machine · Trading",
-        "Stock and ETF rules under test, judged per entry day at real prices.",
+        "Paper trading lanes: Kalshi Invest big moves, gold and Nasdaq breakouts; retired stock rules kept at the bottom.",
         "trading",
-        (("rules", "Rules"), ("gold-orb", "Gold breakout"), (nasdaq_orb_build.SECTION_ID, "Nasdaq breakout")),
+        (("invest", "Invest"), ("gold-orb", "Gold breakout"), (nasdaq_orb_build.SECTION_ID, "Nasdaq breakout"),
+         ("retired", "Retired")),
         site_chrome.stamp(now_dt),
         body,
     )

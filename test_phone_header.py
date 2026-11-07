@@ -177,8 +177,8 @@ ok('class="crumbs"' in week_html and ">W39<" in week_html and ">Archive<" in wee
    "a week page generator writes a Sandbox › Archive › W39 breadcrumb")
 _trade_toc = _toc(trade_html)
 _trade_labels = re.findall(r">([^<]+)</a>", _trade_toc.group(0) if _trade_toc else "")
-ok(_trade_labels == ["Rules", "Gold breakout", "Nasdaq breakout"],
-   f"Trading renders a Rules / Gold breakout / Nasdaq breakout section nav (2026-10-18; {_trade_labels})")
+ok(_trade_labels == ["Invest", "Gold breakout", "Nasdaq breakout", "Retired"],
+   f"Trading renders an Invest / Gold breakout / Nasdaq breakout / Retired section nav (2026-11-06; {_trade_labels})")
 _root_toc = _toc(root_html)
 _root_labels = re.findall(r">([^<]+)</a>", _root_toc.group(0) if _root_toc else "")
 ok(_root_labels == ["Overview", "Areas", "Attention", "Live now", "Rules"],

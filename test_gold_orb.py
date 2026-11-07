@@ -260,7 +260,7 @@ led = {"nights": [mk(19, 4.0, 6.0), mk(19, 1.0, 2.0, anchor="utc_0100"), mk(19, 
                        anchor_at="2026-10-19T02:00:00+00:00")],
        "last_run": "2026-10-20T03:00:00+00:00"}
 html = GB.section(led)
-check("its own id and heading", ('<section id="gold-orb">' in html, "Gold Asia-open breakout (paper)" in html), (True, True))
+check("its own id and heading", ('<section id="gold-orb"' in html, "Gold Asia-open breakout (paper)" in html), (True, True))
 check("a summary row per variant and anchor", [html.count(G.VARIANTS[v][2]) >= 2 for v in "AB"], [True, True])
 check("summary columns", all(c in html for c in ("Settled nights", "Won", "Avg gross bp", "Avg net bp", "Avg spread bp", "t (net)")), True)
 check("nightly columns", all(c in html for c in ("Night", "Variant", "Anchor", "Side", "Entry", "Exit", "Gross bp",
