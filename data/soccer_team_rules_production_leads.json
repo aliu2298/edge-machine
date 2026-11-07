@@ -9,11 +9,11 @@
    0.97
   ]
  },
- "board_built_at": "2026-11-07T11:01:35+00:00",
+ "board_built_at": "2026-11-07T11:02:03+00:00",
  "collector_error": null,
  "collector_healthy": {
-  "st_t4": false,
-  "st_t7": false
+  "st_t4": true,
+  "st_t7": true
  },
  "corners_selections": {},
  "first_publish_min": 45,
@@ -162,6 +162,44 @@
    "source": "st_t7",
    "sport": "soccer_team3",
    "status": "hit"
+  },
+  "2026-11-07|Leeds United|Tottenham Hotspur|Tottenham Hotspur to score 2+ \u00b7 O+D\u2212 v O\u2212D+ \u00b7 team 2+ goals": {
+   "away": "Tottenham Hotspur",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "Tottenham Hotspur"
+   },
+   "date": "2026-11-07",
+   "edge_at_log": null,
+   "first_seen": "2026-11-07",
+   "headline": "Tottenham Hotspur to score 2+",
+   "home": "Leeds United",
+   "id": "2026-11-07|Leeds United|Tottenham Hotspur|Tottenham Hotspur to score 2+ \u00b7 O+D\u2212 v O\u2212D+ \u00b7 team 2+ goals",
+   "kickoff": "2026-11-07T12:30Z",
+   "lane": "production",
+   "last_seen": "2026-11-07",
+   "last_seen_at": "2026-11-07T11:02:03+00:00",
+   "league": "Premier League",
+   "match": "Leeds United v Tottenham Hotspur",
+   "pair": "st_t4|soccer_team2",
+   "price_at_log": 0.4,
+   "published_at": "2026-11-07T11:02:03+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 87,
+   "route": {
+    "claim": "Tottenham Hotspur to score 2+",
+    "event": "KXEPLTEAMTOTAL-26NOV07LEETOT",
+    "market": "KXEPLTEAMTOTAL-26NOV07LEETOT-TOT2",
+    "outcome": "Tottenham over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.4,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "st_t4:KXEPLTEAMTOTAL-26NOV07LEETOT-TOT2",
+   "source": "st_t4",
+   "sport": "soccer_team2",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -172,9 +210,9 @@
    "ready_at": "2026-11-05T02:50:00+00:00",
    "route": "moved by hand on 2026-11-04",
    "routing": {
-    "leads": 0,
+    "leads": 1,
     "problem": null,
-    "routed": 0,
+    "routed": 1,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -186,7 +224,7 @@
    "sandbox_roi_fee": null,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -230,5 +268,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-07T11:01:35+00:00"
+ "updated_at": "2026-11-07T11:02:03+00:00"
 }
