@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-07T17:07Z",
+ "generated": "2026-11-07T18:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "nba_wm_nofade": [
@@ -1750,15 +1750,15 @@
     "w": 1.0
    },
    {
-    "g": null,
+    "g": -1.0,
     "hold_r": null,
     "id": "KXEPLTOTAL-26NOV07ARSHUL-2",
     "ko": "2026-11-07T15:00",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 1.09
    },
    {
@@ -1774,15 +1774,15 @@
     "w": 1.05
    },
    {
-    "g": null,
+    "g": -1.0,
     "hold_r": null,
     "id": "KXLALIGATOTAL-26NOV07ESPDEP-2",
     "ko": "2026-11-07T15:15",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 0.93
    }
   ]
@@ -2413,9 +2413,9 @@
     {
      "id": "sr_a6:KXEPLTOTAL-26NOV07ARSHUL-3",
      "ko": "2026-11-07T15:00",
-     "r": null,
+     "r": 1.6589,
      "side": "no",
-     "st": "open",
+     "st": "won",
      "w": 0.84
     }
    ],
@@ -2570,9 +2570,7 @@
      "w": 0.96
     }
    ],
-   "refused": {
-    "st_t7:KXEPLTEAMTOTAL-26OCT31TOTCRY-CRY3": "published inside 30 min of kickoff"
-   }
+   "refused": {}
   },
   "team1_form_l5|soccer_team1_intl": {
    "entered": "2026-10-01T16:20:16+00:00",
