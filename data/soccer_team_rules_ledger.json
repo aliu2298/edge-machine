@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-07T12:31:49.133547+00:00",
+ "last_run": "2026-11-07T13:02:15.289772+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -1425,14 +1425,120 @@
      "ticker": "KXUCLTEAMTOTAL-26NOV04RBLMCI-MCI2",
      "title": "Will Manchester City score over 1.5 goals?",
      "why": "Manchester City O+D- v RB Leipzig O+D- \u00b7 2+ YES 0.74"
+    },
+    {
+     "ask": 0.79,
+     "bid": 0.78,
+     "event": "KXBUNDESLIGATEAMTOTAL-26NOV07RBLFCA",
+     "group": "A",
+     "id": "T1:KXBUNDESLIGATEAMTOTAL-26NOV07RBLFCA:home",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Bundesliga",
+     "line": 1.5,
+     "logged": "2026-11-07T13:02:15.289772+00:00",
+     "match": "RB Leipzig v FC Augsburg",
+     "opponent": "FC Augsburg",
+     "price": 0.79,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-11-07T14:30Z",
+     "status": "open",
+     "sub": "Leipzig over 1.5 goals",
+     "team": "RB Leipzig",
+     "team_side": "home",
+     "ticker": "KXBUNDESLIGATEAMTOTAL-26NOV07RBLFCA-RBL2",
+     "title": "Will Leipzig score over 1.5 goals?",
+     "why": "RB Leipzig O+D- v FC Augsburg O+D- \u00b7 2+ YES 0.79"
+    },
+    {
+     "ask": 0.4,
+     "bid": 0.38,
+     "event": "KXBUNDESLIGATEAMTOTAL-26NOV07RBLFCA",
+     "group": "A",
+     "id": "T1:KXBUNDESLIGATEAMTOTAL-26NOV07RBLFCA:away",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Bundesliga",
+     "line": 1.5,
+     "logged": "2026-11-07T13:02:15.289772+00:00",
+     "match": "RB Leipzig v FC Augsburg",
+     "opponent": "RB Leipzig",
+     "price": 0.4,
+     "rule": "T1",
+     "side": "yes",
+     "start": "2026-11-07T14:30Z",
+     "status": "open",
+     "sub": "Augsburg over 1.5 goals",
+     "team": "FC Augsburg",
+     "team_side": "away",
+     "ticker": "KXBUNDESLIGATEAMTOTAL-26NOV07RBLFCA-FCA2",
+     "title": "Will Augsburg score over 1.5 goals?",
+     "why": "FC Augsburg O+D- v RB Leipzig O+D- \u00b7 2+ YES 0.40"
     }
    ]
   },
   "T1H": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.79,
+     "bid": 0.78,
+     "event": "KXBUNDESLIGATEAMTOTAL-26NOV07RBLFCA",
+     "group": "A",
+     "id": "T1H:KXBUNDESLIGATEAMTOTAL-26NOV07RBLFCA:home",
+     "labels": {
+      "opp": "O+D-",
+      "own": "O+D-"
+     },
+     "league": "Bundesliga",
+     "line": 1.5,
+     "logged": "2026-11-07T13:02:15.289772+00:00",
+     "match": "RB Leipzig v FC Augsburg",
+     "opponent": "FC Augsburg",
+     "price": 0.79,
+     "rule": "T1H",
+     "side": "yes",
+     "start": "2026-11-07T14:30Z",
+     "status": "open",
+     "sub": "Leipzig over 1.5 goals",
+     "team": "RB Leipzig",
+     "team_side": "home",
+     "ticker": "KXBUNDESLIGATEAMTOTAL-26NOV07RBLFCA-RBL2",
+     "title": "Will Leipzig score over 1.5 goals?",
+     "why": "RB Leipzig O+D- v FC Augsburg O+D- \u00b7 2+ YES 0.79"
+    }
+   ]
   },
   "T1M": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.59,
+     "bid": 0.58,
+     "event": "KXBUNDESLIGATOTAL-26NOV07RBLFCA",
+     "group": "A",
+     "id": "T1M:KXBUNDESLIGATOTAL-26NOV07RBLFCA",
+     "labels": {
+      "away": "O+D-",
+      "home": "O+D-"
+     },
+     "league": "Bundesliga",
+     "line": 3.5,
+     "logged": "2026-11-07T13:02:15.289772+00:00",
+     "match": "RB Leipzig v FC Augsburg",
+     "price": 0.59,
+     "rule": "T1M",
+     "side": "yes",
+     "start": "2026-11-07T14:30Z",
+     "status": "open",
+     "ticker": "KXBUNDESLIGATOTAL-26NOV07RBLFCA-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "RB Leipzig O+D- v FC Augsburg O+D- \u00b7 over 3.5 YES 0.59"
+    }
+   ]
   },
   "T2": {
    "picks": [
@@ -4541,14 +4647,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-01T14:16:37.134642+00:00",
-   "candidates": 0,
-   "due": 1,
-   "labelled": 1,
-   "matched": 0,
-   "new": 0
-  },
-  {
    "at": "2026-11-01T14:46:42.027484+00:00",
    "candidates": 1,
    "due": 3,
@@ -4947,6 +5045,14 @@
    "labelled": 3,
    "matched": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-07T13:02:15.289772+00:00",
+   "candidates": 2,
+   "due": 6,
+   "labelled": 6,
+   "matched": 2,
+   "new": 4
   }
  ],
  "version": "soccer-team-rules-v1"
