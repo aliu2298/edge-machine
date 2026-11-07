@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-07T21:07Z",
+ "generated": "2026-11-07T22:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "nba_wm_nofade": [
@@ -1844,6 +1844,18 @@
     "src": "fills",
     "st": "lost",
     "w": 1.11
+   },
+   {
+    "g": 0.8,
+    "hold_r": null,
+    "id": "KXLIGUE1TOTAL-26NOV07PSGEST-2",
+    "ko": "2026-11-07T19:45",
+    "legs": "sold",
+    "r": 0.8,
+    "side": "yes",
+    "src": "fills",
+    "st": "won",
+    "w": 1.14
    }
   ]
  },
