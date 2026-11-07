@@ -1,0 +1,35 @@
+name: Earnings and news calls paper lane
+on:
+  schedule:
+    # Hourly. F1 logs from 30 to 6 hours before a report, F2b and F4 at the first run at or after
+    # 15:00 ET, and F2a at least an hour before its entry. A call enters at the first honest fill AFTER it
+    # is logged; grading reads Kalshi's public 1-minute perp quotes and prints, so it can run late.
+    - cron: '41 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: earnings-news
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Tests
+        run: python3 test_earnings_news.py
+      - name: Calendar, KPI ladder reads, due rule calls, grading (paper, public data only)
+        run: python3 earnings_news.py run
+      - name: Save records
+        run: |
+          set -euo pipefail
+          git config user.name "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+          python3 save_records.py --message "Earnings and news paper calls" \
+            --add data/earnings_news.json \
+            --regenerate "python3 earnings_news.py run"
+          # The Trading page picks the record up on the tracker's own 3-hourly rebuild.

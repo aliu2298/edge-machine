@@ -2441,6 +2441,7 @@ def trading_page(now=None):
     """
     import market_sources as MS
     import market_track as MT
+    import earnings_news_build
     import nasdaq_orb_build
     import trading_layout as L
     now_dt = now or datetime.now(timezone.utc)
@@ -2484,6 +2485,7 @@ with its lean, <i>Promising</i> or <i>Behind</i>; under {MT.EARLY_N} a rule is o
 <div class="tile"><b>{inv_open:,}</b><span>Invest open now</span></div>
 </div>
 {invest}
+{earnings_news_build.safe_section()}
 {gold_orb_html()}
 {nasdaq_orb_build.safe_section()}
 {retired}
@@ -2493,8 +2495,8 @@ with its lean, <i>Promising</i> or <i>Behind</i>; under {MT.EARLY_N} a rule is o
         "Edge Machine · Trading",
         "Paper trading lanes: Kalshi Invest big moves, gold and Nasdaq breakouts; retired stock rules kept at the bottom.",
         "trading",
-        (("invest", "Invest"), ("gold-orb", "Gold breakout"), (nasdaq_orb_build.SECTION_ID, "Nasdaq breakout"),
-         ("retired", "Retired")),
+        (("invest", "Invest"), (earnings_news_build.SECTION_ID, "Earnings & news"), ("gold-orb", "Gold breakout"),
+         (nasdaq_orb_build.SECTION_ID, "Nasdaq breakout"), ("retired", "Retired")),
         site_chrome.stamp(now_dt),
         body,
     )
