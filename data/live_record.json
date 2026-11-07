@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-07T22:07Z",
+ "generated": "2026-11-07T23:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "nba_wm_nofade": [
@@ -650,6 +650,30 @@
     "src": "fills",
     "st": "won",
     "w": 0.86
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV07DENIND-DEN21PLUS",
+    "ko": "2026-11-07T22:00",
+    "legs": "",
+    "r": null,
+    "side": "no",
+    "src": "fills",
+    "st": "open",
+    "w": 1.0
+   },
+   {
+    "g": 0.3387,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV07DENIND-DEN6TO10",
+    "ko": "2026-11-07T22:00",
+    "legs": "sold",
+    "r": 0.3387,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 0.95
    }
   ],
   "nba_wm_yes": [
@@ -1426,7 +1450,7 @@
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV07DENIND-DEN6TO10",
     "ko": "2026-11-07T22:00",
-    "legs": "",
+    "legs": "2x",
     "r": null,
     "side": "yes",
     "src": "fills",
@@ -2849,6 +2873,14 @@
      "side": "yes",
      "st": "won",
      "w": 1.3
+    },
+    {
+     "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV08VILGET-VIL2",
+     "ko": "2026-11-08T17:30",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 12.69
     }
    ],
    "refused": {}
