@@ -860,7 +860,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-07T17:08:51.224766+00:00",
+ "last_run": "2026-11-07T18:04:01.567790+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -2107,14 +2107,14 @@
    ],
    "pid": "[\"sandbox\", \"ere_o15\", [\"ere_o15:KXEREDIVISIETOTAL-26NOV07FORTEL-2\", \"a\"]]",
    "price": 0.81,
-   "profit": null,
+   "profit": 0.2346,
    "scope": "soccer_o15",
-   "settled": null,
+   "settled": "2026-11-07T18:03:50+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXEPLTEAMTOTAL-26NOV07LEETOT-TOT2",
@@ -2226,14 +2226,14 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"A6\", [\"A6:KXEPLTOTAL-26NOV07ARSHUL\", \"no\"]]",
    "price": 0.36,
-   "profit": null,
+   "profit": 1.6587,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-07T17:16:36.239008+00:00",
    "side": "no",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXLALIGATOTAL-26NOV07ESPDEP-3",
@@ -2251,14 +2251,14 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"C2\", [\"C2:KXLALIGATOTAL-26NOV07ESPDEP\", \"yes\"]]",
    "price": 0.47,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-07T17:16:36.239008+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXLALIGATEAMTOTAL-26NOV07ESPDEP-DEP3",
