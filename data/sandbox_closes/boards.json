@@ -5,11 +5,6 @@
    "lead_min": 6.3,
    "price": 0.96
   },
-  "commod_fav_band:KXWTI-26OCT2814-T102.99": {
-   "at": "2026-10-28T17:28:25+00:00",
-   "lead_min": 31.6,
-   "price": 0.38
-  },
   "commod_fav_band:KXWTI-26OCT3014-T103.49": {
    "at": "2026-10-30T17:47:51+00:00",
    "lead_min": 12.1,
@@ -29,11 +24,6 @@
    "at": "2026-10-29T17:29:38+00:00",
    "lead_min": 30.4,
    "price": 0.92
-  },
-  "commod_nc_yes:KXWTI-26OCT2814-T101.99": {
-   "at": "2026-10-28T17:28:25+00:00",
-   "lead_min": 31.6,
-   "price": 0.91
   },
   "commod_nc_yes:KXWTI-26OCT2914-T100.99": {
    "at": "2026-10-29T17:29:38+00:00",
@@ -255,11 +245,6 @@
    "lead_min": 16.2,
    "price": 0.73
   },
-  "o25_congestion:KXSERIEATOTAL-26OCT28PARUDI-3": {
-   "at": "2026-10-28T17:28:25+00:00",
-   "lead_min": 1.6,
-   "price": 0.53
-  },
   "oddspedia:KXT20MATCH-26NOV030145JBOBKI": {
    "at": "2026-11-03T06:42:20+00:00",
    "lead_min": 2.7,
@@ -274,11 +259,6 @@
    "at": "2026-10-29T10:04:20+00:00",
    "lead_min": 55.7,
    "price": 0.89
-  },
-  "p05_unbeaten:KXKNVBCUPGAME-26OCT28SPAFOR-SPA": {
-   "at": "2026-10-28T17:28:25+00:00",
-   "lead_min": 16.6,
-   "price": 0.49
   },
   "team2_form_l10:KXMLSTEAMTOTAL-26OCT28CLTMTL-CLT2": {
    "at": "2026-10-28T22:51:47+00:00",
@@ -300,11 +280,6 @@
    "lead_min": 53.7,
    "price": 0.78
   },
-  "team2_form_l10:KXSERIEATEAMTOTAL-26OCT28VENINT-INT2": {
-   "at": "2026-10-28T17:28:25+00:00",
-   "lead_min": 1.6,
-   "price": 0.75
-  },
   "team2_ranked:KXLALIGATEAMTOTAL-26NOV06SEVALA-SEV2": {
    "at": "2026-11-06T19:47:06+00:00",
    "lead_min": 12.9,
@@ -314,16 +289,6 @@
    "at": "2026-11-01T16:22:57+00:00",
    "lead_min": 37.0,
    "price": 0.36
-  },
-  "team2_ranked:KXSERIEATEAMTOTAL-26OCT28PARUDI-PAR2": {
-   "at": "2026-10-28T17:28:25+00:00",
-   "lead_min": 1.6,
-   "price": 0.34
-  },
-  "team2_ranked:KXSERIEATEAMTOTAL-26OCT28PARUDI-UDI2": {
-   "at": "2026-10-28T17:28:25+00:00",
-   "lead_min": 1.6,
-   "price": 0.37
   },
   "team2_ranked:KXUCLTEAMTOTAL-26NOV04SLAARS-ARS2": {
    "at": "2026-11-04T19:14:35+00:00",
@@ -370,6 +335,11 @@
    "lead_min": 57.9,
    "price": 0.7
   },
+  "u35_low_o15:KXLIGAPORTUGALTOTAL-26NOV07ALVCAS-2": {
+   "at": "2026-11-07T17:51:41+00:00",
+   "lead_min": 8.3,
+   "price": 0.75
+  },
   "u35_low_o15:KXSERIEATOTAL-26NOV01LECGEN-2": {
    "at": "2026-11-01T16:22:57+00:00",
    "lead_min": 37.0,
@@ -380,21 +350,11 @@
    "lead_min": 49.6,
    "price": 0.77
   },
-  "u35_low_o15:KXSERIEATOTAL-26OCT28PARUDI-2": {
-   "at": "2026-10-28T17:28:25+00:00",
-   "lead_min": 1.6,
-   "price": 0.74
-  },
   "u35_low_scoring:KXSERIEATOTAL-26NOV01LECGEN-4": {
    "at": "2026-11-01T16:22:57+00:00",
    "lead_min": 37.0,
    "price": 0.78
-  },
-  "u35_low_scoring:KXSERIEATOTAL-26OCT28PARUDI-4": {
-   "at": "2026-10-28T17:28:25+00:00",
-   "lead_min": 1.6,
-   "price": 0.75
   }
  },
- "updated": "2026-11-06T23:17:35+00:00"
+ "updated": "2026-11-07T17:51:41+00:00"
 }
