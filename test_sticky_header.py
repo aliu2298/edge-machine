@@ -34,7 +34,8 @@ TABLES = (
     ("sandbox.html", "#running table", "sandbox Running", "Starts"),
     ("sandbox.html", "#recently-settled table", "sandbox Recently settled", "Settled"),
     ("production.html", "#pairs table", "production Pairs", None),
-    ("trading.html", "#rules table", "trading Stock rules", None),
+    # 2026-11-06: the Trading page's Stock rules table moved into the closed Retired stock rules fold; the page
+    # opens on rows (one per lane), with no table shown on load, so it has no sticky header to measure.
 )
 
 
