@@ -524,6 +524,58 @@
   },
   {
    "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV07ORLGSW",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV07ORLGSW-ORL6TO10",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "ORL",
+   "ticker": "KXNBAWINMARGIN-26NOV07ORLGSW-ORL6TO10",
+   "tip": "2026-11-08T01:30:00+00:00",
+   "title": "Orlando wins by 6-10 points",
+   "version": "wm-yes-v3"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV07ORLGSW",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV07ORLGSW-ORL1TO5",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "ORL",
+   "ticker": "KXNBAWINMARGIN-26NOV07ORLGSW-ORL1TO5",
+   "tip": "2026-11-08T01:30:00+00:00",
+   "title": "Orlando wins by 1-5 points",
+   "version": "wm-yes-v3"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV07ORLGSW",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV07ORLGSW-GSW1TO5",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "GSW",
+   "ticker": "KXNBAWINMARGIN-26NOV07ORLGSW-GSW1TO5",
+   "tip": "2026-11-08T01:30:00+00:00",
+   "title": "Golden State wins by 1-5 points",
+   "version": "wm-yes-v3"
+  },
+  {
+   "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV07ORLGSW",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV07ORLGSW-GSW6TO10",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "GSW",
+   "ticker": "KXNBAWINMARGIN-26NOV07ORLGSW-GSW6TO10",
+   "tip": "2026-11-08T01:30:00+00:00",
+   "title": "Golden State wins by 6-10 points",
+   "version": "wm-yes-v3"
+  },
+  {
+   "bucket": "6-10",
    "event": "KXNBAWINMARGIN-26NOV07HOUPHX",
    "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV07HOUPHX-HOU6TO10",
    "lane": "nba_winmargin_live",
@@ -603,6 +655,6 @@
   "side": "yes",
   "stake_usd": 1.0
  },
- "updated_at": "2026-11-07T01:30:52+00:00",
+ "updated_at": "2026-11-07T01:59:17+00:00",
  "version": "wm-yes-v3"
 }
