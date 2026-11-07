@@ -31,6 +31,9 @@ feed = json.load(open("data/production_top5_dip_leads.json"))
 qs = TP.quotes(led, feed)
 check("every league on its quotes is a feed league", sorted({q["league"] for q in qs if q["league"] not in S.feed_binary_leagues()}), [])
 check("none of its recent bets is dropped by the feed", [q["id"] for q in qs if not T.placeable(q)], [])
+check("an open lead's teams come from Kalshi's ' vs ' title, a 5-letter code pair included",
+      (TP._teams("Stade Brest 29 vs Lyon: Total Goals", "KXLIGUE1TOTAL-26NOV08STBOL"), TP._teams("", "KXEPLTOTAL-26NOV08ARSCHE")),
+      (("Stade Brest 29", "Lyon"), ("ARS", "CHE")))
 check("an EPL and a UCL lead carry the venue's names; the lane's own ledger keeps its short ones",
       (TP.FEED_LEAGUE["EPL"], TP.FEED_LEAGUE["UCL"], "EPL" in {e.get("league") for e in led.get("entries") or []} or True), ("Premier League", "Champions League", True))
 
