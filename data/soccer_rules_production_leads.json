@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-07T14:16:16+00:00",
+ "board_built_at": "2026-11-07T14:31:46+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sr_a2": true,
@@ -588,7 +588,7 @@
    "kickoff": "2026-11-07T15:00Z",
    "lane": "production",
    "last_seen": "2026-11-07",
-   "last_seen_at": "2026-11-07T14:16:16+00:00",
+   "last_seen_at": "2026-11-07T14:31:46+00:00",
    "league": "Premier League",
    "match": "Arsenal v Hull City",
    "pair": "sr_a6|soccer_o25",
@@ -609,43 +609,6 @@
    "source": "sr_a6",
    "sport": "soccer_o25",
    "status": "pending"
-  },
-  "2026-11-07|RB Leipzig|FC Augsburg|Over 3.5 goals \u00b7 Bundesliga O+D\u2212 v O+D\u2212 \u00b7 over 3.5": {
-   "away": "FC Augsburg",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-11-07",
-   "edge_at_log": null,
-   "first_seen": "2026-11-07",
-   "headline": "Over 3.5 goals",
-   "home": "RB Leipzig",
-   "id": "2026-11-07|RB Leipzig|FC Augsburg|Over 3.5 goals \u00b7 Bundesliga O+D\u2212 v O+D\u2212 \u00b7 over 3.5",
-   "kickoff": "2026-11-07T14:30Z",
-   "lane": "production",
-   "last_seen": "2026-11-07",
-   "last_seen_at": "2026-11-07T14:16:16+00:00",
-   "league": "Bundesliga",
-   "match": "RB Leipzig v FC Augsburg",
-   "pair": "sr_a2|soccer_u35",
-   "price_at_log": 0.59,
-   "published_at": "2026-11-07T13:01:30+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 88,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXBUNDESLIGATOTAL-26NOV07RBLFCA",
-    "market": "KXBUNDESLIGATOTAL-26NOV07RBLFCA-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.59,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "sr_a2:KXBUNDESLIGATOTAL-26NOV07RBLFCA-4",
-   "source": "sr_a2",
-   "sport": "soccer_u35",
-   "status": "pending"
   }
  },
  "pairs": {
@@ -656,9 +619,9 @@
    "ready_at": "2026-11-06T15:00:00+00:00",
    "route": "moved by hand on 2026-11-06",
    "routing": {
-    "leads": 1,
+    "leads": 0,
     "problem": null,
-    "routed": 1,
+    "routed": 0,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -670,7 +633,7 @@
    "sandbox_roi_fee": null,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 0,
     "under_target": 0
    }
   },
@@ -804,5 +767,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-07T14:16:16+00:00"
+ "updated_at": "2026-11-07T14:31:46+00:00"
 }
