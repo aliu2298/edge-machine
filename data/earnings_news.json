@@ -1,0 +1,373 @@
+{
+ "calendar": [
+  {
+   "date": "2026-11-12",
+   "eps_forecast": "$4.06",
+   "fiscal_q": "Oct/2026",
+   "kpi": [],
+   "mentions": [
+    "KXEARNINGSMENTIONAMAT-26NOV12"
+   ],
+   "n_ests": "10",
+   "name": "Applied Materials, Inc.",
+   "perp": "KXAMATPERP",
+   "sym": "AMAT",
+   "time": "after-hours"
+  },
+  {
+   "date": "2026-11-12",
+   "eps_forecast": "$1.15",
+   "fiscal_q": "Oct/2026",
+   "kpi": [],
+   "mentions": [],
+   "n_ests": "8",
+   "name": "Cisco Systems, Inc.",
+   "perp": "KXCSCOPERP",
+   "sym": "CSCO",
+   "time": "after-hours"
+  },
+  {
+   "date": "2026-11-17",
+   "eps_forecast": "$1.67",
+   "fiscal_q": "Sep/2026",
+   "kpi": [],
+   "mentions": [
+    "KXEARNINGSMENTIONDIS-26NOV17"
+   ],
+   "n_ests": "9",
+   "name": "Walt Disney Company (The)",
+   "perp": "KXDISPERP",
+   "sym": "DIS",
+   "time": "pre-market"
+  },
+  {
+   "date": "2026-11-17",
+   "eps_forecast": "$3.86",
+   "fiscal_q": "Oct/2026",
+   "kpi": [
+    {
+     "event": "KXHD-26NOVTXN",
+     "title": "Home Depot customer transactions in Q3"
+    }
+   ],
+   "mentions": [
+    "KXEARNINGSMENTIONHD-26NOV17"
+   ],
+   "n_ests": "11",
+   "name": "Home Depot, Inc. (The)",
+   "perp": "KXHDPERP",
+   "sym": "HD",
+   "time": "pre-market"
+  },
+  {
+   "date": "2026-11-17",
+   "eps_forecast": "$2.49",
+   "fiscal_q": "Oct/2026",
+   "kpi": [],
+   "mentions": [
+    "KXEARNINGSMENTIONNVDA-26NOV18"
+   ],
+   "n_ests": "13",
+   "name": "NVIDIA Corporation",
+   "perp": "KXNVDAPERP",
+   "sym": "NVDA",
+   "time": "after-hours"
+  },
+  {
+   "date": "2026-11-18",
+   "eps_forecast": "$0.52",
+   "fiscal_q": "Oct/2026",
+   "kpi": [],
+   "mentions": [
+    "KXEARNINGSMENTIONPANW-26NOV18"
+   ],
+   "n_ests": "15",
+   "name": "Palo Alto Networks, Inc.",
+   "perp": "KXPANWPERP",
+   "sym": "PANW",
+   "time": "after-hours"
+  },
+  {
+   "date": "2026-11-18",
+   "eps_forecast": "$1.33",
+   "fiscal_q": "Oct/2026",
+   "kpi": [],
+   "mentions": [],
+   "n_ests": "7",
+   "name": "TJX Companies, Inc. (The)",
+   "perp": "KXTJXPERP",
+   "sym": "TJX",
+   "time": "pre-market"
+  },
+  {
+   "date": "2026-11-19",
+   "eps_forecast": "$0.64",
+   "fiscal_q": "Oct/2026",
+   "kpi": [
+    {
+     "event": "KXWMT-26NOVUSCOMP",
+     "title": "Walmart US comparable sales growth (ex-fuel) in Q3"
+    }
+   ],
+   "mentions": [
+    "KXEARNINGSMENTIONWMT-26NOV19"
+   ],
+   "n_ests": "12",
+   "name": "Walmart Inc.",
+   "perp": "KXWMTPERP",
+   "sym": "WMT",
+   "time": "pre-market"
+  },
+  {
+   "date": "2026-11-24",
+   "eps_forecast": "$3.89",
+   "fiscal_q": "Oct/2026",
+   "kpi": [],
+   "mentions": [],
+   "n_ests": "9",
+   "name": "Analog Devices, Inc.",
+   "perp": "KXADIPERP",
+   "sym": "ADI",
+   "time": "pre-market"
+  },
+  {
+   "date": "2026-11-24",
+   "eps_forecast": "$1.31",
+   "fiscal_q": "Sep/2026",
+   "kpi": [],
+   "mentions": [],
+   "n_ests": "3",
+   "name": "Alibaba Group Holding Limited",
+   "perp": "KXBABAPERP",
+   "sym": "BABA",
+   "time": "not-supplied"
+  },
+  {
+   "date": "2026-11-24",
+   "eps_forecast": "$6.41",
+   "fiscal_q": "Oct/2026",
+   "kpi": [],
+   "mentions": [
+    "KXEARNINGSMENTIONDELL-26NOV24"
+   ],
+   "n_ests": "8",
+   "name": "Dell Technologies Inc.",
+   "perp": "KXDELLPERP",
+   "sym": "DELL",
+   "time": "not-supplied"
+  },
+  {
+   "date": "2026-11-25",
+   "eps_forecast": "$4.07",
+   "fiscal_q": "Oct/2026",
+   "kpi": [],
+   "mentions": [],
+   "n_ests": "1",
+   "name": "Deere & Company",
+   "perp": "KXDEPERP",
+   "sym": "DE",
+   "time": "pre-market"
+  }
+ ],
+ "calendar_at": "2026-11-07T03:49:01Z",
+ "kpi_reads": [
+  {
+   "at": "2026-11-07T03:49:31Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 391018518.5185185,
+    "rungs": 6,
+    "width": 10333333.333333313
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-07T03:49:31Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": null,
+   "sym": "WMT"
+  }
+ ],
+ "predictions": [
+  {
+   "entry_due": "2026-11-09T21:00:00Z",
+   "exit_due": "2026-11-16T21:00:00Z",
+   "family": "runup",
+   "id": "runup:DIS:2026-11-17",
+   "logged_at": "2026-11-07T03:49:33Z",
+   "perp": "KXDISPERP",
+   "random_side": -1,
+   "reason": "Up into the 2026-11-17 report (pre-market).",
+   "report": "2026-11-17",
+   "report_time": "pre-market",
+   "side": 1,
+   "sym": "DIS"
+  },
+  {
+   "entry_due": "2026-11-09T21:00:00Z",
+   "exit_due": "2026-11-16T21:00:00Z",
+   "family": "runup",
+   "id": "runup:HD:2026-11-17",
+   "logged_at": "2026-11-07T03:49:33Z",
+   "perp": "KXHDPERP",
+   "random_side": -1,
+   "reason": "Up into the 2026-11-17 report (pre-market).",
+   "report": "2026-11-17",
+   "report_time": "pre-market",
+   "side": 1,
+   "sym": "HD"
+  },
+  {
+   "entry_due": "2026-11-10T21:00:00Z",
+   "exit_due": "2026-11-17T21:00:00Z",
+   "family": "runup",
+   "id": "runup:NVDA:2026-11-17",
+   "logged_at": "2026-11-07T03:49:33Z",
+   "perp": "KXNVDAPERP",
+   "random_side": -1,
+   "reason": "Up into the 2026-11-17 report (after-hours).",
+   "report": "2026-11-17",
+   "report_time": "after-hours",
+   "side": 1,
+   "sym": "NVDA"
+  },
+  {
+   "entry_due": "2026-11-11T21:00:00Z",
+   "exit_due": "2026-11-18T21:00:00Z",
+   "family": "runup",
+   "id": "runup:PANW:2026-11-18",
+   "logged_at": "2026-11-07T03:49:33Z",
+   "perp": "KXPANWPERP",
+   "random_side": 1,
+   "reason": "Up into the 2026-11-18 report (after-hours).",
+   "report": "2026-11-18",
+   "report_time": "after-hours",
+   "side": 1,
+   "sym": "PANW"
+  },
+  {
+   "entry_due": "2026-11-10T21:00:00Z",
+   "exit_due": "2026-11-17T21:00:00Z",
+   "family": "runup",
+   "id": "runup:TJX:2026-11-18",
+   "logged_at": "2026-11-07T03:49:33Z",
+   "perp": "KXTJXPERP",
+   "random_side": 1,
+   "reason": "Up into the 2026-11-18 report (pre-market).",
+   "report": "2026-11-18",
+   "report_time": "pre-market",
+   "side": 1,
+   "sym": "TJX"
+  },
+  {
+   "entry_due": "2026-11-11T21:00:00Z",
+   "exit_due": "2026-11-18T21:00:00Z",
+   "family": "runup",
+   "id": "runup:WMT:2026-11-19",
+   "logged_at": "2026-11-07T03:49:33Z",
+   "perp": "KXWMTPERP",
+   "random_side": -1,
+   "reason": "Up into the 2026-11-19 report (pre-market).",
+   "report": "2026-11-19",
+   "report_time": "pre-market",
+   "side": 1,
+   "sym": "WMT"
+  },
+  {
+   "entry_due": "2026-11-16T21:00:00Z",
+   "exit_due": "2026-11-23T21:00:00Z",
+   "family": "runup",
+   "id": "runup:ADI:2026-11-24",
+   "logged_at": "2026-11-07T03:49:33Z",
+   "perp": "KXADIPERP",
+   "random_side": 1,
+   "reason": "Up into the 2026-11-24 report (pre-market).",
+   "report": "2026-11-24",
+   "report_time": "pre-market",
+   "side": 1,
+   "sym": "ADI"
+  },
+  {
+   "entry_due": "2026-11-16T21:00:00Z",
+   "exit_due": "2026-11-23T21:00:00Z",
+   "family": "runup",
+   "id": "runup:BABA:2026-11-24",
+   "logged_at": "2026-11-07T03:49:33Z",
+   "perp": "KXBABAPERP",
+   "random_side": 1,
+   "reason": "Up into the 2026-11-24 report (not-supplied).",
+   "report": "2026-11-24",
+   "report_time": "not-supplied",
+   "side": 1,
+   "sym": "BABA"
+  },
+  {
+   "entry_due": "2026-11-16T21:00:00Z",
+   "exit_due": "2026-11-23T21:00:00Z",
+   "family": "runup",
+   "id": "runup:DELL:2026-11-24",
+   "logged_at": "2026-11-07T03:49:33Z",
+   "perp": "KXDELLPERP",
+   "random_side": -1,
+   "reason": "Up into the 2026-11-24 report (not-supplied).",
+   "report": "2026-11-24",
+   "report_time": "not-supplied",
+   "side": 1,
+   "sym": "DELL"
+  },
+  {
+   "entry_due": "2026-11-17T21:00:00Z",
+   "exit_due": "2026-11-24T21:00:00Z",
+   "family": "runup",
+   "id": "runup:DE:2026-11-25",
+   "logged_at": "2026-11-07T03:49:33Z",
+   "perp": "KXDEPERP",
+   "random_side": 1,
+   "reason": "Up into the 2026-11-25 report (pre-market).",
+   "report": "2026-11-25",
+   "report_time": "pre-market",
+   "side": 1,
+   "sym": "DE"
+  },
+  {
+   "call": {
+    "status": "pending"
+   },
+   "crowd_up": 0.322,
+   "day": "2026-11-06",
+   "entry_due": "2026-11-07T03:49:33Z",
+   "exit_due": "2026-11-10T03:49:00Z",
+   "family": "sentiment",
+   "id": "sentiment:AMAT:2026-11-06",
+   "logged_at": "2026-11-07T03:49:33Z",
+   "perp": "KXAMATPERP",
+   "random_side": 1,
+   "reason": "Kalshi traders 32% Up on 24h taker volume.",
+   "side": -1,
+   "status": "pending",
+   "sym": "AMAT"
+  },
+  {
+   "call": {
+    "status": "pending"
+   },
+   "crowd_up": 0.169,
+   "day": "2026-11-06",
+   "entry_due": "2026-11-07T03:49:33Z",
+   "exit_due": "2026-11-10T03:49:00Z",
+   "family": "sentiment",
+   "id": "sentiment:META:2026-11-06",
+   "logged_at": "2026-11-07T03:49:33Z",
+   "perp": "KXMETAPERP",
+   "random_side": 1,
+   "reason": "Kalshi traders 17% Up on 24h taker volume.",
+   "side": -1,
+   "status": "pending",
+   "sym": "META"
+  }
+ ],
+ "registered": "2026-11-07",
+ "sentiment_days": [
+  "2026-11-06"
+ ]
+}
