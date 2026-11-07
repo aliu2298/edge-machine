@@ -113,6 +113,10 @@
    "entries": "entered",
    "pool": "entered"
   },
+  "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV07NFOMCI-7\", \"b\"]]": {
+   "at": "2026-11-07T14:03:40.378413+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXLALIGACORNERS-26NOV06SEVALA-8\", \"b\"]]": {
    "at": "2026-11-06T16:03:36.782279+00:00",
    "pool": "entered"
@@ -179,8 +183,36 @@
    "at": "2026-11-06T13:09:08.900685+00:00",
    "pool": "entered"
   },
+  "[\"soccer_rules_ledger.json\", \"A2\", [\"A2:KXBUNDESLIGATOTAL-26NOV07RBLFCA\", \"yes\"]]": {
+   "at": "2026-11-07T14:03:40.378413+00:00",
+   "pool": "entered"
+  },
   "[\"soccer_rules_ledger.json\", \"A6\", [\"A6:KXEPLTOTAL-26NOV06EVECOV\", \"no\"]]": {
    "at": "2026-11-06T18:39:06.373180+00:00",
+   "pool": "entered"
+  },
+  "[\"soccer_rules_ledger.json\", \"A6\", [\"A6:KXEPLTOTAL-26NOV07ARSHUL\", \"no\"]]": {
+   "at": "2026-11-07T14:03:40.378413+00:00",
+   "pool": "entered"
+  },
+  "[\"soccer_rules_ledger.json\", \"C2\", [\"C2:KXLALIGATOTAL-26NOV07ESPDEP\", \"yes\"]]": {
+   "at": "2026-11-07T14:03:40.378413+00:00",
+   "pool": "entered"
+  },
+  "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXBUNDESLIGATEAMTOTAL-26NOV07RBLFCA:away\", \"yes\"]]": {
+   "at": "2026-11-07T14:03:40.378413+00:00",
+   "pool": "entered"
+  },
+  "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXBUNDESLIGATEAMTOTAL-26NOV07RBLFCA:home\", \"yes\"]]": {
+   "at": "2026-11-07T14:03:40.378413+00:00",
+   "pool": "entered"
+  },
+  "[\"soccer_team_rules_ledger.json\", \"T1H\", [\"T1H:KXBUNDESLIGATEAMTOTAL-26NOV07RBLFCA:home\", \"yes\"]]": {
+   "at": "2026-11-07T14:03:40.378413+00:00",
+   "pool": "duplicate"
+  },
+  "[\"soccer_team_rules_ledger.json\", \"T3\", [\"T3:KXLALIGATEAMTOTAL-26NOV07ESPDEP:away\", \"yes\"]]": {
+   "at": "2026-11-07T14:03:40.378413+00:00",
    "pool": "entered"
   },
   "[\"soccer_team_rules_ledger.json\", \"T4\", [\"T4:KXEPLTEAMTOTAL-26NOV07LEETOT:away\", \"yes\"]]": {
@@ -726,7 +758,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-07T13:04:24.916910+00:00",
+ "last_run": "2026-11-07T14:03:40.378413+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -1916,6 +1948,175 @@
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_team_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXBUNDESLIGATOTAL-26NOV07RBLFCA-4",
+   "entered_at": "2026-11-07T14:03:40.378413+00:00",
+   "entities": [
+    "RB Leipzig",
+    "FC Augsburg"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"A2\", [\"A2:KXBUNDESLIGATOTAL-26NOV07RBLFCA\", \"yes\"]]",
+   "lane": "A2",
+   "logged": "2026-11-07T13:01:29.982008+00:00",
+   "matched": [
+    "FC Augsburg",
+    "RB Leipzig"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"A2\", [\"A2:KXBUNDESLIGATOTAL-26NOV07RBLFCA\", \"yes\"]]",
+   "price": 0.59,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXBUNDESLIGATEAMTOTAL-26NOV07RBLFCA-FCA2",
+   "entered_at": "2026-11-07T14:03:40.378413+00:00",
+   "entities": [
+    "FC Augsburg"
+   ],
+   "id": "superpack:[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXBUNDESLIGATEAMTOTAL-26NOV07RBLFCA:away\", \"yes\"]]",
+   "lane": "T1",
+   "logged": "2026-11-07T13:02:15.289772+00:00",
+   "matched": [
+    "FC Augsburg"
+   ],
+   "pid": "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXBUNDESLIGATEAMTOTAL-26NOV07RBLFCA:away\", \"yes\"]]",
+   "price": 0.4,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_team_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXBUNDESLIGATEAMTOTAL-26NOV07RBLFCA-RBL2",
+   "entered_at": "2026-11-07T14:03:40.378413+00:00",
+   "entities": [
+    "RB Leipzig"
+   ],
+   "id": "superpack:[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXBUNDESLIGATEAMTOTAL-26NOV07RBLFCA:home\", \"yes\"]]",
+   "lane": "T1",
+   "logged": "2026-11-07T13:02:15.289772+00:00",
+   "matched": [
+    "RB Leipzig"
+   ],
+   "pid": "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXBUNDESLIGATEAMTOTAL-26NOV07RBLFCA:home\", \"yes\"]]",
+   "price": 0.79,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_team_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXEPLTOTAL-26NOV07ARSHUL-3",
+   "entered_at": "2026-11-07T14:03:40.378413+00:00",
+   "entities": [
+    "Arsenal",
+    "Hull City"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"A6\", [\"A6:KXEPLTOTAL-26NOV07ARSHUL\", \"no\"]]",
+   "lane": "A6",
+   "logged": "2026-11-07T13:31:26.816952+00:00",
+   "matched": [
+    "Arsenal",
+    "Hull City"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"A6\", [\"A6:KXEPLTOTAL-26NOV07ARSHUL\", \"no\"]]",
+   "price": 0.36,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "no",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXLALIGATOTAL-26NOV07ESPDEP-3",
+   "entered_at": "2026-11-07T14:03:40.378413+00:00",
+   "entities": [
+    "Espanyol",
+    "Deportivo"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"C2\", [\"C2:KXLALIGATOTAL-26NOV07ESPDEP\", \"yes\"]]",
+   "lane": "C2",
+   "logged": "2026-11-07T13:46:38.031048+00:00",
+   "matched": [
+    "Deportivo",
+    "Espanyol"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"C2\", [\"C2:KXLALIGATOTAL-26NOV07ESPDEP\", \"yes\"]]",
+   "price": 0.47,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXLALIGATEAMTOTAL-26NOV07ESPDEP-DEP3",
+   "entered_at": "2026-11-07T14:03:40.378413+00:00",
+   "entities": [
+    "Deportivo"
+   ],
+   "id": "superpack:[\"soccer_team_rules_ledger.json\", \"T3\", [\"T3:KXLALIGATEAMTOTAL-26NOV07ESPDEP:away\", \"yes\"]]",
+   "lane": "T3",
+   "logged": "2026-11-07T13:46:59.158959+00:00",
+   "matched": [
+    "Deportivo"
+   ],
+   "pid": "[\"soccer_team_rules_ledger.json\", \"T3\", [\"T3:KXLALIGATEAMTOTAL-26NOV07ESPDEP:away\", \"yes\"]]",
+   "price": 0.12,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_team_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXEPLCORNERS-26NOV07NFOMCI-7",
+   "entered_at": "2026-11-07T14:03:40.378413+00:00",
+   "entities": [
+    "Nottingham Forest",
+    "Manchester City"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV07NFOMCI-7\", \"b\"]]",
+   "lane": "corners_total_under",
+   "logged": "2026-11-07T14:03:22+00:00",
+   "matched": [
+    "Manchester City",
+    "Nottingham Forest"
+   ],
+   "pid": "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV07NFOMCI-7\", \"b\"]]",
+   "price": 0.16,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
    "status": "open"
   }
  ],

@@ -138599,6 +138599,58 @@
   "venue": "kalshi"
  },
  {
+  "bet": true,
+  "close_at": "2026-09-22T11:24:48+00:00",
+  "close_price": 0.5893,
+  "date": "2026-09-22",
+  "edge": null,
+  "id": "tennis_combo3:combo3:2026-09-22:707c73d401",
+  "label": "3-leg tennis combo: Andres Martin + Dalibor Svrcina + Mirra Andreeva",
+  "legs": [
+   {
+    "market_id": "KXATPCHALLENGERMATCH-26SEP22HANMAR",
+    "pick": "b",
+    "venue": "kalshi"
+   },
+   {
+    "market_id": "KXATPMATCH-26SEP22SVRNOG",
+    "pick": "a",
+    "venue": "kalshi"
+   },
+   {
+    "market_id": "KXWTAMATCH-26SEP22ANDSAS",
+    "pick": "a",
+    "venue": "kalshi"
+   }
+  ],
+  "liquidity": null,
+  "logged": "2026-09-22T11:24:48+00:00",
+  "market_id": "combo3:2026-09-22:707c73d401",
+  "pick": "a",
+  "pnl": -100.0,
+  "price": 0.5893,
+  "price_a": 0.5893,
+  "price_b": 0.4107,
+  "price_draw": null,
+  "prob_a": null,
+  "result": "b",
+  "settled": "2026-09-23T13:41:11+00:00",
+  "side_a": "All 3 win",
+  "side_b": "Any one loses",
+  "source": "tennis_combo3",
+  "sport": "tennis_combo",
+  "spread": null,
+  "stake": 100.0,
+  "start": "2026-09-22T21:30:00+00:00",
+  "start_source": null,
+  "status": "lost",
+  "uncovered": null,
+  "untraded": false,
+  "url": "https://kalshi.com/combos",
+  "venue": "combo",
+  "venue_start": null
+ },
+ {
   "bet": false,
   "compact": true,
   "id": "polymarket_us:aec-atp-murcas-cletab-2026-09-21",
@@ -138614,6 +138666,63 @@
   "start": "2026-09-22T16:00:00+00:00",
   "status": "graded",
   "venue": "polymarket_us"
+ },
+ {
+  "bet": true,
+  "close_at": "2026-09-22T16:55:42+00:00",
+  "close_price": 0.4528,
+  "date": "2026-09-22",
+  "edge": null,
+  "id": "tennis_combo4:combo4:2026-09-22:5868ebd1bf",
+  "label": "4-leg tennis combo: Andres Martin + Dalibor Svrcina + Mirra Andreeva + Maya Joint",
+  "legs": [
+   {
+    "market_id": "KXATPCHALLENGERMATCH-26SEP22HANMAR",
+    "pick": "b",
+    "venue": "kalshi"
+   },
+   {
+    "market_id": "KXATPMATCH-26SEP22SVRNOG",
+    "pick": "a",
+    "venue": "kalshi"
+   },
+   {
+    "market_id": "KXWTAMATCH-26SEP22ANDSAS",
+    "pick": "a",
+    "venue": "kalshi"
+   },
+   {
+    "market_id": "KXWTAMATCH-26SEP22BACJOI",
+    "pick": "b",
+    "venue": "kalshi"
+   }
+  ],
+  "liquidity": null,
+  "logged": "2026-09-22T16:55:42+00:00",
+  "market_id": "combo4:2026-09-22:5868ebd1bf",
+  "pick": "a",
+  "pnl": -100.0,
+  "price": 0.4528,
+  "price_a": 0.4528,
+  "price_b": 0.5472,
+  "price_draw": null,
+  "prob_a": null,
+  "result": "b",
+  "settled": "2026-09-23T13:41:20+00:00",
+  "side_a": "All 4 win",
+  "side_b": "Any one loses",
+  "source": "tennis_combo4",
+  "sport": "tennis_combo",
+  "spread": null,
+  "stake": 100.0,
+  "start": "2026-09-22T21:30:00+00:00",
+  "start_source": null,
+  "status": "lost",
+  "uncovered": null,
+  "untraded": false,
+  "url": "https://kalshi.com/combos",
+  "venue": "combo",
+  "venue_start": null
  },
  {
   "bet": false,
