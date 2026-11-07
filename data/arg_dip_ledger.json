@@ -435,6 +435,31 @@
    "result": "yes",
    "title": "Will over 0.5 goals be scored?",
    "version": "argdip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null,
+    "75": null
+   },
+   "event": "KXARGPREMDIVTOTAL-26NOV07GEMIRM",
+   "id": "KXARGPREMDIVTOTAL-26NOV07GEMIRM-1",
+   "kickoff": 1794074400,
+   "logged": "2026-11-07T20:32:52.201551+00:00",
+   "matchday": "2026-11-07",
+   "p": 0.9,
+   "p_at": 1794070860,
+   "p_bid": 0.89,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.9,
+    "printed": 200.0,
+    "status": "verified"
+   },
+   "prints": 76,
+   "result": "yes",
+   "title": "Will over 0.5 goals be scored?",
+   "version": "argdip-v1"
   }
  ],
  "error": null,
@@ -6390,32 +6415,23 @@
   ]
  },
  "lane": "arg_goalless_dip",
- "last_run": "2026-11-07T16:39:03.263560+00:00",
+ "last_run": "2026-11-07T20:32:52.201551+00:00",
  "observations": {
-  "at": "2026-11-07T16:39:03.263560+00:00",
+  "at": "2026-11-07T20:32:52.201551+00:00",
   "errors": [],
-  "new": 0,
-  "skipped": 0,
+  "new": 1,
+  "skipped": 1,
   "waiting": 0
  },
  "seen": {},
  "since": "2026-10-31",
  "skips": {
   "KXARGPREMDIVTOTAL-26NOV06TIGCAS": "no pregame quote an hour before kickoff",
+  "KXARGPREMDIVTOTAL-26NOV07CATELP": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)",
   "KXARGPREMDIVTOTAL-26OCT31RIECAT": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)",
   "KXARGPREMDIVTOTAL-26OCT31VELSLA": "pregame ask unverified: 9.09 contracts traded at or through the ask within 60 minutes (under 10)"
  },
  "upcoming": [
-  {
-   "event": "KXARGPREMDIVTOTAL-26NOV07CATELP",
-   "kickoff": 1794074400,
-   "title": "Talleres Cordoba vs Estudiantes La Plata: Total Goals"
-  },
-  {
-   "event": "KXARGPREMDIVTOTAL-26NOV07GEMIRM",
-   "kickoff": 1794074400,
-   "title": "Mendoza vs Rivadavia: Total Goals"
-  },
   {
    "event": "KXARGPREMDIVTOTAL-26NOV07ARGHUR",
    "kickoff": 1794083400,
