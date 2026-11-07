@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-07T18:16:45.356490+00:00",
+ "last_run": "2026-11-07T18:31:50.617589+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -1100,6 +1100,29 @@
      "ticker": "KXLALIGATOTAL-26OCT31RBBMCF-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Real Betis O+D- v M\u00e1laga O-D+ \u00b7 Over 3.5 YES 0.44"
+    },
+    {
+     "ask": 0.45,
+     "bid": 0.44,
+     "event": "KXLALIGATOTAL-26NOV07VCFRMA",
+     "group": "B",
+     "id": "B2:KXLALIGATOTAL-26NOV07VCFRMA",
+     "labels": {
+      "away": "O+D-",
+      "home": "O-D+"
+     },
+     "league": "La Liga",
+     "line": 3.5,
+     "logged": "2026-11-07T18:31:50.617589+00:00",
+     "match": "Valencia v Real Madrid",
+     "price": 0.45,
+     "rule": "B2",
+     "side": "yes",
+     "start": "2026-11-07T20:00Z",
+     "status": "open",
+     "ticker": "KXLALIGATOTAL-26NOV07VCFRMA-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Valencia O-D+ v Real Madrid O+D- \u00b7 Over 3.5 YES 0.45"
     }
    ]
   },
@@ -4230,14 +4253,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-03T19:02:03.190411+00:00",
-   "candidates": 5,
-   "due": 7,
-   "labelled": 6,
-   "matched": 5,
-   "new": 0
-  },
-  {
    "at": "2026-11-04T14:01:48.868977+00:00",
    "candidates": 0,
    "due": 1,
@@ -4636,6 +4651,14 @@
    "labelled": 1,
    "matched": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-07T18:31:50.617589+00:00",
+   "candidates": 1,
+   "due": 4,
+   "labelled": 4,
+   "matched": 1,
+   "new": 1
   }
  ],
  "version": "soccer-rules-v1"
