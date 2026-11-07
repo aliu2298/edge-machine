@@ -169,7 +169,7 @@
    "time": "pre-market"
   }
  ],
- "calendar_at": "2026-11-07T03:49:01Z",
+ "calendar_at": "2026-11-07T11:19:28Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -183,6 +183,22 @@
   },
   {
    "at": "2026-11-07T03:49:31Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": null,
+   "sym": "WMT"
+  },
+  {
+   "at": "2026-11-07T11:20:26Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 391037735.8490566,
+    "rungs": 6,
+    "width": 10325406.758448064
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-07T11:20:26Z",
    "event": "KXWMT-26NOVUSCOMP",
    "read": null,
    "sym": "WMT"
