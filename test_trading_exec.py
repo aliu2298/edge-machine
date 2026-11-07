@@ -188,7 +188,7 @@ loose = [p for p in re.findall(r'<(?:p|div) class="(?:note[^"]*|sm[^"]*)">(.*?)<
 eq(loose, [], "no paragraph over 400 characters is open on load")
 
 retired = html[html.find('<section id="retired"'):html.find("<footer>")]
-ok(retired.startswith('<section id="retired" class="sp-section"><details class="fold sp-retired"><summary><h3>Retired stock rules</h3>'),
+ok(retired.startswith('<section id="retired"><details class="fold sp-retired"><summary><h3>Retired stock rules</h3>'),
    "2026-11-06: the retired stock rules, execution detail and cost notes sit in ONE closed block at the bottom")
 ok(all(retired.find(x) > 0 for x in ('class="sm trade-source"', 'class="sm trade-exec"', "<h3>Stock and ETF rules")),
    "  and the source line, execution line and rules table are inside it")

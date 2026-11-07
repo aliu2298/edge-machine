@@ -105,7 +105,7 @@ the ask and sells at the bid from the quote taken at the start of the entry and 
 when quotes exist, else gross. The backtest on 807 days, done the same way, was flat to negative; this lane
 watches it live.</div>""", cls="fold trade-method")
     return L.section(SECTION_ID, "Nasdaq open breakout (paper)",
-                     f"{len(live)} running · never places an order",
+                     f"{len(live)} running · paper",
                      L.rules_list(live, first="Variant", key="nasdaq-orb") + empty + retired + method)
 
 

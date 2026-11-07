@@ -2458,7 +2458,7 @@ def trading_page(now=None):
                   f'rule\'s <b>paper record</b> since its registration, every signal at the bar\'s '
                   f'open; it is not the Alpaca account.</p>'
                   f'{trade_exec_html(fills, MT.exiting(md))}')
-    retired = f"""<section id="retired" class="sp-section"><details class="fold sp-retired"><summary><h3>Retired stock rules</h3><span class="sm mut">· {len(trade_rules)} rules · {trade_n:,} trades logged · {trade_open:,} still open · final records · no new entries</span></summary>
+    retired = f"""<section id="retired"><details class="fold sp-retired"><summary><h3>Retired stock rules</h3><span class="sm mut">· {len(trade_rules)} rules · {trade_n:,} trades logged · {trade_open:,} still open · records kept</span></summary>
 {trade_note}
 <h3>Stock and ETF rules, retired</h3>
 <div class="tbl"><table>{TRADE_HEAD}{trading_rows(md, cost)}</table></div>

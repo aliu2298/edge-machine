@@ -151,7 +151,7 @@ def section(state=None):
 † nothing traded in the entry minute: the first open after it. * nothing traded in the exit
 minute: the last price before it. Last run {esc(last or "not yet")}.</p>""")
     method = L.fold("How the gold breakout is defined", f"""
-<div class="note sm">One contract is 1 oz. The primary anchor is FIXED at 7:30 pm CST = 01:30 UTC all year, which reads
+<div class="note sm">Paper · never places an order · not in Production. One contract is 1 oz. The primary anchor is FIXED at 7:30 pm CST = 01:30 UTC all year, which reads
 8:30 pm CDT until Nov 1 and 7:30 pm CST after. A's range is the 30-minute candle as a chart draws it; B's needs all
 five minutes to have traded. The side is the first minute within 60 minutes (to 03:00 UTC) that closes beyond the
 range, decided only once that minute has finished; no stop. The 01:00 UTC China-open shadow (range 00:30–01:00 UTC)
@@ -166,5 +166,5 @@ Four rows from 2026-10-29 (a crossed book at the entry or the exit poll) were mo
 on 500 nights and −1.2bp on the 250-night holdout, before costs; this lane measures what the venue really pays.</div>""",
                     cls="fold trade-method")
     return L.section("gold-orb", "Gold Asia-open breakout (paper)",
-                     "2 variants · Paper · never places an order · not in Production",
+                     "2 variants · paper",
                      lanes + empty + full + method)

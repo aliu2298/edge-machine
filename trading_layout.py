@@ -59,5 +59,7 @@ def sig(text, tone="n"):
 
 
 def section(sid, title, count_line, inner):
-    return (f'<section id="{esc(sid)}" class="sp-section"><div class="sp-section-head"><h2>{esc(title)}</h2>'
+    # A plain <section>: .sp-section adds a phone scroll-margin that stacks on html's scroll-padding.
+    # The count line is nowrap in .sp-section-head, so keep it short enough for a 360px phone.
+    return (f'<section id="{esc(sid)}"><div class="sp-section-head"><h2>{esc(title)}</h2>'
             f'<span class="sm mut">{count_line}</span></div>{inner}</section>')
