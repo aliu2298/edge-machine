@@ -6,8 +6,8 @@
   "rule": "LOW under the threshold set on the server"
  },
  "engine": {
-  "beat_age_s": 208,
-  "cycle": 54,
+  "beat_age_s": 89,
+  "cycle": 60,
   "last_error": null,
   "mode": "LIVE",
   "service_active": true,
@@ -24,17 +24,17 @@
  "feeds": {
   "production": {
    "actionable": 1,
-   "age_min": 9,
+   "age_min": 19,
    "leads": 36,
    "problems": 0,
-   "status": "HTTP 200"
+   "status": "HTTP 304 (cached)"
   },
   "production_econ": {
-   "actionable": 0,
-   "age_min": 22,
-   "leads": 1,
+   "actionable": 1,
+   "age_min": 8,
+   "leads": 2,
    "problems": 0,
-   "status": "HTTP 304 (cached)"
+   "status": "HTTP 200"
   },
   "production_nba_value": {
    "actionable": 0,
@@ -66,13 +66,13 @@
   "kalshi": 2
  },
  "pnl_sign": {
-  "today": "down",
+  "today": "up",
   "yesterday": "up"
  },
- "published_at": "2026-11-07T03:23:03+00:00",
+ "published_at": "2026-11-07T04:23:07+00:00",
  "schema": 1,
  "server": {
-  "backup_age_h": 20.9,
+  "backup_age_h": 21.9,
   "disk_pct": 27,
   "jobs": {
    "bot-backup": {
@@ -88,6 +88,6 @@
     "timer": "active"
    }
   },
-  "mem_free_mb": 459
+  "mem_free_mb": 462
  }
 }
