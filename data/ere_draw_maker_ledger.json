@@ -17,6 +17,24 @@
    "taker_roi": 2.8005,
    "version": "eredraw-maker-v1",
    "why": "no print below the bid before kickoff"
+  },
+  {
+   "ask": 0.25,
+   "bid": 0.24,
+   "evaluated_ts": 1794070521,
+   "filled": false,
+   "id": "KXEREDIVISIEGAME-26NOV07FORTEL",
+   "kick_ts": 1794065400,
+   "maker_roi": null,
+   "match": "Sittard vs Telstar",
+   "placed_ts": 1793979000,
+   "prints": 154,
+   "start": "2026-11-07T15:30:00+00:00",
+   "status": "open",
+   "taker_price": 0.25,
+   "taker_roi": null,
+   "version": "eredraw-maker-v1",
+   "why": "no print below the bid before kickoff"
   }
  ],
  "error": null,
@@ -457,7 +475,7 @@
    "why": "no print below the bid before kickoff"
   }
  ],
- "last_run": "2026-11-07T10:28:47.108141+00:00",
+ "last_run": "2026-11-07T16:55:21.944261+00:00",
  "since": "2026-11-06",
  "version": "eredraw-maker-v1"
 }
