@@ -440,6 +440,18 @@ def ere_draw_maker_row(state=None):
     return r
 
 
+def mls_tie_row(state=None):
+    """MLS pre-match tie with a split 2x/3x sell (mls_tie_split.py, 2026-11-07): one Sandbox row. The record is the settled
+    entries since the lane began, split exit, after fees."""
+    import mls_tie_split as M
+    import mls_tie_split_build as MB
+    state = state if state is not None else M.load()
+    s = M.summary(state.get("entries") or [])
+    return row(M.LANE, "soccer", M.LABEL, "Match winner · Tie", inplay_record(s["n"], s["won"], s["roi"], s["z"]), MB.panel(state),
+               prod=False, pair=None, anchor="mls-tie", kind="In-play",
+               note="Record: the split sell (half at 2x, half at 3x) on the settled entries, taker in, maker out.")
+
+
 def dip_row(page):
     import arg_dip as A
     import arg_dip_build as AB
@@ -517,6 +529,10 @@ def rows_and_inputs(d, st, now):
         live.append(ere_draw_maker_row())
     except Exception as exc:                                    # noqa: BLE001
         print(f"soccer_lanes: the Eredivisie draw maker failed: {type(exc).__name__}: {exc}")
+    try:
+        live.append(mls_tie_row())
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"soccer_lanes: the MLS tie split failed: {type(exc).__name__}: {exc}")
     try:
         import arg_dip_build as AB
         live.append(dip_row(AB.ARG_PAGE))

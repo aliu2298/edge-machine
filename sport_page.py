@@ -512,10 +512,15 @@ def sp_name(row):
     return B.rule_name(row)
 
 
-def place_after(rows):
+def place_after(rows, given=None):
     """Rows with row["after"] = a source id go right under that row, in the order given (2026-11-06: T1's siblings
-    T1-H and T1-M under T1), instead of where the sort puts them. A row whose parent is not in the list stays put."""
+    T1-H and T1-M under T1), instead of where the sort puts them. A row whose parent is not in the list stays put.
+    `given` is the list in its original (unsorted) order: the children keep that order, not the sort's (2026-11-07: the
+    sort had put T1-M above T1-H once their records differed)."""
     kids = [r for r in rows if r.get("after") and any(x["name"] == r["after"] and not x.get("after") for x in rows)]
+    if given is not None:
+        pos = {id(r): i for i, r in enumerate(given)}
+        kids.sort(key=lambda r: pos.get(id(r), len(pos)))
     out = [r for r in rows if not any(r is k for k in kids)]
     for k in reversed(kids):
         i = next(i for i, x in enumerate(out) if x["name"] == k["after"])
@@ -524,8 +529,8 @@ def place_after(rows):
 
 
 def rules_html(sp, d, rows, now, ev_list):
-    prod = place_after(sorted((r for r in rows if r.get("prod")), key=production_order))
-    sand = place_after(sorted((r for r in rows if not r.get("prod")), key=sandbox_order))
+    prod = place_after(sorted((r for r in rows if r.get("prod")), key=production_order), rows)
+    sand = place_after(sorted((r for r in rows if not r.get("prod")), key=sandbox_order), rows)
     scoped = sp["scoped"] and len(scopes_present(rows)) > 1
     family = esc(sp["family"] if sp["family"].isupper() else sp["family"].lower())   # "NBA", not "nba"
     if prod:

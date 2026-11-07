@@ -1,0 +1,7459 @@
+{
+ "entries": [],
+ "error": null,
+ "insample": {
+  "built": "2026-11-07T19:46:14.927733+00:00",
+  "entries": [
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1785623400,
+    "event": "KXMLSGAME-26AUG01DCUNSH",
+    "hold": 2.5236,
+    "id": "KXMLSGAME-26AUG01DCUNSH-TIE",
+    "kickoff": 1785627000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1785633435,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1785634203,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-01",
+    "prints": 4287,
+    "quote_ts": 1785623460,
+    "roi": 1.3661,
+    "title": "DC United vs Nashville Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1785623400,
+    "event": "KXMLSGAME-26AUG01MTLNE",
+    "hold": 2.5236,
+    "id": "KXMLSGAME-26AUG01MTLNE-TIE",
+    "kickoff": 1785627000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1785633219,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1785634154,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-01",
+    "prints": 1743,
+    "quote_ts": 1785623220,
+    "roi": 1.3661,
+    "title": "Montreal vs New England Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1785623400,
+    "event": "KXMLSGAME-26AUG01NYRBORL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG01NYRBORL-TIE",
+    "kickoff": 1785627000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1785634228,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-01",
+    "prints": 2598,
+    "quote_ts": 1785623460,
+    "roi": -0.0601,
+    "title": "New York RB vs Orlando Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.22,
+    "bid": 0.21,
+    "check": "verified",
+    "cost": 0.23201,
+    "entry_ts": 1785623400,
+    "event": "KXMLSGAME-26AUG01PHIATL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG01PHIATL-TIE",
+    "kickoff": 1785627000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1785632219,
+      "target": 0.44
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1785632219,
+      "target": 0.66
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-01",
+    "prints": 5180,
+    "quote_ts": 1785623460,
+    "roi": 1.3528,
+    "title": "Philadelphia vs Atlanta Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1785623400,
+    "event": "KXMLSGAME-26AUG01VANLAFC",
+    "hold": 3.1255,
+    "id": "KXMLSGAME-26AUG01VANLAFC-TIE",
+    "kickoff": 1785627000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1785633237,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1785633806,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-01",
+    "prints": 4769,
+    "quote_ts": 1785623460,
+    "roi": 1.3555,
+    "title": "Vancouver vs Los Angeles F Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.2,
+    "bid": 0.19,
+    "check": "verified",
+    "cost": 0.2112,
+    "entry_ts": 1785625800,
+    "event": "KXMLSGAME-26AUG01MIACLB",
+    "hold": 3.7348,
+    "id": "KXMLSGAME-26AUG01MIACLB-TIE",
+    "kickoff": 1785629400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1785635944,
+      "target": 0.4
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1785635946,
+      "target": 0.6
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-01",
+    "prints": 6528,
+    "quote_ts": 1785625860,
+    "roi": 1.3475,
+    "title": "Miami vs Columbus Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.2,
+    "bid": 0.19,
+    "check": "verified",
+    "cost": 0.2112,
+    "entry_ts": 1785627000,
+    "event": "KXMLSGAME-26AUG01CHICLT",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG01CHICLT-TIE",
+    "kickoff": 1785630600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1785634110,
+      "target": 0.4
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1785636328,
+      "target": 0.6
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-01",
+    "prints": 2702,
+    "quote_ts": 1785627060,
+    "roi": 1.3475,
+    "title": "Chicago Fire vs Charlotte Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1785627000,
+    "event": "KXMLSGAME-26AUG01MINSD",
+    "hold": 2.8005,
+    "id": "KXMLSGAME-26AUG01MINSD-TIE",
+    "kickoff": 1785630600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1785636285,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1785637539,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-01",
+    "prints": 3111,
+    "quote_ts": 1785627060,
+    "roi": 1.3607,
+    "title": "Minnesota vs San Diego FC Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1785627000,
+    "event": "KXMLSGAME-26AUG01SKCHOU",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG01SKCHOU-TIE",
+    "kickoff": 1785630600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-01",
+    "prints": 992,
+    "quote_ts": 1785627060,
+    "roi": -1.0,
+    "title": "Kansas City vs Houston Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1785627000,
+    "event": "KXMLSGAME-26AUG01STLRSL",
+    "hold": 2.8005,
+    "id": "KXMLSGAME-26AUG01STLRSL-TIE",
+    "kickoff": 1785630600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1785635279,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1785635279,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-01",
+    "prints": 3343,
+    "quote_ts": 1785626880,
+    "roi": 1.3607,
+    "title": "Saint Louis vs Salt Lake Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1785630600,
+    "event": "KXMLSGAME-26AUG01COLATX",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG01COLATX-TIE",
+    "kickoff": 1785634200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1785639906,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1785640842,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-01",
+    "prints": 5268,
+    "quote_ts": 1785630660,
+    "roi": 1.3581,
+    "title": "Colorado vs Austin Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.21,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1785631560,
+    "event": "KXMLSGAME-26AUG01CINSJ",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG01CINSJ-TIE",
+    "kickoff": 1785635160,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1785641012,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-01",
+    "prints": 7139,
+    "quote_ts": 1785631620,
+    "roi": -0.0601,
+    "title": "Cincinnati vs San Jose Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1785634200,
+    "event": "KXMLSGAME-26AUG01LAGDAL",
+    "hold": 2.6567,
+    "id": "KXMLSGAME-26AUG01LAGDAL-TIE",
+    "kickoff": 1785637800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1785640746,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1785644393,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-01",
+    "prints": 6834,
+    "quote_ts": 1785634260,
+    "roi": 1.3634,
+    "title": "Los Angeles G vs Dallas Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1785635100,
+    "event": "KXMLSGAME-26AUG01PORSEA",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG01PORSEA-TIE",
+    "kickoff": 1785638700,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1785644862,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1785645366,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-01",
+    "prints": 9298,
+    "quote_ts": 1785635160,
+    "roi": 1.3555,
+    "title": "Portland vs Seattle Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1786217400,
+    "event": "KXMLSGAME-26AUG08NEHOU",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG08NEHOU-TIE",
+    "kickoff": 1786221000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-08",
+    "prints": 3126,
+    "quote_ts": 1786217400,
+    "roi": -1.0,
+    "title": "New England vs Houston Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1786833000,
+    "event": "KXMLSGAME-26AUG15ATLNYRB",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG15ATLNYRB-TIE",
+    "kickoff": 1786836600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1786842500,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-15",
+    "prints": 1869,
+    "quote_ts": 1786833060,
+    "roi": -0.0592,
+    "title": "Atlanta vs New York RB Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1786833000,
+    "event": "KXMLSGAME-26AUG15CLTCLB",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG15CLTCLB-TIE",
+    "kickoff": 1786836600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-15",
+    "prints": 1774,
+    "quote_ts": 1786833060,
+    "roi": -1.0,
+    "title": "Charlotte vs Columbus Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1786833000,
+    "event": "KXMLSGAME-26AUG15MTLDCU",
+    "hold": 2.5236,
+    "id": "KXMLSGAME-26AUG15MTLDCU-TIE",
+    "kickoff": 1786836600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1786842596,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1786843645,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-15",
+    "prints": 1827,
+    "quote_ts": 1786833060,
+    "roi": 1.3661,
+    "title": "Montreal vs DC United Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.22,
+    "bid": 0.21,
+    "check": "verified",
+    "cost": 0.23201,
+    "entry_ts": 1786833000,
+    "event": "KXMLSGAME-26AUG15ORLCIN",
+    "hold": 3.3101,
+    "id": "KXMLSGAME-26AUG15ORLCIN-TIE",
+    "kickoff": 1786836600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1786841430,
+      "target": 0.44
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1786843728,
+      "target": 0.66
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-15",
+    "prints": 3333,
+    "quote_ts": 1786833060,
+    "roi": 1.3528,
+    "title": "Orlando vs Cincinnati Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1786833000,
+    "event": "KXMLSGAME-26AUG15TORNE",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG15TORNE-TIE",
+    "kickoff": 1786836600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-15",
+    "prints": 1114,
+    "quote_ts": 1786833060,
+    "roi": -1.0,
+    "title": "Toronto vs New England Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1786836600,
+    "event": "KXMLSGAME-26AUG15HOULAG",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG15HOULAG-TIE",
+    "kickoff": 1786840200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-15",
+    "prints": 2470,
+    "quote_ts": 1786836660,
+    "roi": -1.0,
+    "title": "Houston vs Los Angeles G Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1786836600,
+    "event": "KXMLSGAME-26AUG15NSHMIA",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG15NSHMIA-TIE",
+    "kickoff": 1786840200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-15",
+    "prints": 5604,
+    "quote_ts": 1786836660,
+    "roi": -1.0,
+    "title": "Nashville vs Miami Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.19,
+    "bid": 0.18,
+    "check": "verified",
+    "cost": 0.20077,
+    "entry_ts": 1786840200,
+    "event": "KXMLSGAME-26AUG15COLSKC",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG15COLSKC-TIE",
+    "kickoff": 1786843800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1786849981,
+      "target": 0.38
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.57
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-15",
+    "prints": 2269,
+    "quote_ts": 1786840260,
+    "roi": -0.0639,
+    "title": "Colorado vs Kansas City Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1786840200,
+    "event": "KXMLSGAME-26AUG15RSLMIN",
+    "hold": 2.8005,
+    "id": "KXMLSGAME-26AUG15RSLMIN-TIE",
+    "kickoff": 1786843800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1786849682,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1786850814,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-15",
+    "prints": 5060,
+    "quote_ts": 1786840260,
+    "roi": 1.3607,
+    "title": "Salt Lake vs Minnesota Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.21,
+    "bid": 0.2,
+    "check": "verified",
+    "cost": 0.22161,
+    "entry_ts": 1786843800,
+    "event": "KXMLSGAME-26AUG15LAFCSD",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG15LAFCSD-TIE",
+    "kickoff": 1786847400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1786852803,
+      "target": 0.42
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1786853932,
+      "target": 0.63
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-15",
+    "prints": 8635,
+    "quote_ts": 1786843860,
+    "roi": 1.3502,
+    "title": "Los Angeles F vs San Diego FC Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1786843800,
+    "event": "KXMLSGAME-26AUG15SJSTL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG15SJSTL-TIE",
+    "kickoff": 1786847400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-15",
+    "prints": 1636,
+    "quote_ts": 1786843860,
+    "roi": -1.0,
+    "title": "San Jose vs Saint Louis Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.2,
+    "bid": 0.19,
+    "check": "verified",
+    "cost": 0.2112,
+    "entry_ts": 1786914000,
+    "event": "KXMLSGAME-26AUG16CHIPOR",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG16CHIPOR-TIE",
+    "kickoff": 1786917600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.4
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.6
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-16",
+    "prints": 1834,
+    "quote_ts": 1786914060,
+    "roi": -1.0,
+    "title": "Chicago Fire vs Portland Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1786914000,
+    "event": "KXMLSGAME-26AUG16NYCPHI",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG16NYCPHI-TIE",
+    "kickoff": 1786917600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1786923791,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-16",
+    "prints": 4890,
+    "quote_ts": 1786914060,
+    "roi": -0.0563,
+    "title": "New York City vs Philadelphia Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1786923000,
+    "event": "KXMLSGAME-26AUG16ATXDAL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG16ATXDAL-TIE",
+    "kickoff": 1786926600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-16",
+    "prints": 7289,
+    "quote_ts": 1786923060,
+    "roi": -1.0,
+    "title": "Austin vs Dallas Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1786930200,
+    "event": "KXMLSGAME-26AUG16SEAVAN",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG16SEAVAN-TIE",
+    "kickoff": 1786933800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1786939903,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-16",
+    "prints": 6017,
+    "quote_ts": 1786930260,
+    "roi": -0.0582,
+    "title": "Seattle vs Vancouver Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1787178600,
+    "event": "KXMLSGAME-26AUG19CINNYC",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG19CINNYC-TIE",
+    "kickoff": 1787182200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1787188039,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1787189105,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-19",
+    "prints": 2662,
+    "quote_ts": 1787178660,
+    "roi": 1.3555,
+    "title": "Cincinnati vs New York City Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1787178600,
+    "event": "KXMLSGAME-26AUG19CLBMTL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG19CLBMTL-TIE",
+    "kickoff": 1787182200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1787187953,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-19",
+    "prints": 1966,
+    "quote_ts": 1787178660,
+    "roi": -0.0601,
+    "title": "Columbus vs Montreal Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1787178600,
+    "event": "KXMLSGAME-26AUG19DCUNE",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG19DCUNE-TIE",
+    "kickoff": 1787182200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-19",
+    "prints": 598,
+    "quote_ts": 1787178660,
+    "roi": -1.0,
+    "title": "DC United vs New England Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1787178600,
+    "event": "KXMLSGAME-26AUG19NYRBNSH",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG19NYRBNSH-TIE",
+    "kickoff": 1787182200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1787188305,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1787189211,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-19",
+    "prints": 3803,
+    "quote_ts": 1787178660,
+    "roi": 1.3634,
+    "title": "New York RB vs Nashville Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1787178600,
+    "event": "KXMLSGAME-26AUG19ORLCHI",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG19ORLCHI-TIE",
+    "kickoff": 1787182200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1787194237,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-19",
+    "prints": 5618,
+    "quote_ts": 1787178660,
+    "roi": -0.0592,
+    "title": "Orlando vs Chicago Fire Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.22,
+    "bid": 0.21,
+    "check": "verified",
+    "cost": 0.23201,
+    "entry_ts": 1787178600,
+    "event": "KXMLSGAME-26AUG19PHIMIA",
+    "hold": 3.3101,
+    "id": "KXMLSGAME-26AUG19PHIMIA-TIE",
+    "kickoff": 1787182200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1787188377,
+      "target": 0.44
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1787189190,
+      "target": 0.66
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-19",
+    "prints": 13550,
+    "quote_ts": 1787178660,
+    "roi": 1.3528,
+    "title": "Philadelphia vs Miami Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1787178600,
+    "event": "KXMLSGAME-26AUG19TORCLT",
+    "hold": 2.6567,
+    "id": "KXMLSGAME-26AUG19TORCLT-TIE",
+    "kickoff": 1787182200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1787189398,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1787189416,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-19",
+    "prints": 3461,
+    "quote_ts": 1787178600,
+    "roi": 1.3634,
+    "title": "Toronto vs Charlotte Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1787180400,
+    "event": "KXMLSGAME-26AUG19SKCSTL",
+    "hold": 2.9562,
+    "id": "KXMLSGAME-26AUG19SKCSTL-TIE",
+    "kickoff": 1787184000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1787190707,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1787191729,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-19",
+    "prints": 5229,
+    "quote_ts": 1787180460,
+    "roi": 1.3581,
+    "title": "Kansas City vs Saint Louis Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.22,
+    "bid": 0.21,
+    "check": "verified",
+    "cost": 0.23201,
+    "entry_ts": 1787182200,
+    "event": "KXMLSGAME-26AUG19MINATL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG19MINATL-TIE",
+    "kickoff": 1787185800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1787191007,
+      "target": 0.44
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1787192487,
+      "target": 0.66
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-19",
+    "prints": 3487,
+    "quote_ts": 1787182260,
+    "roi": 1.3528,
+    "title": "Minnesota vs Atlanta Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1787185800,
+    "event": "KXMLSGAME-26AUG19COLLAFC",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG19COLLAFC-TIE",
+    "kickoff": 1787189400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-19",
+    "prints": 4908,
+    "quote_ts": 1787185860,
+    "roi": -1.0,
+    "title": "Colorado vs Los Angeles F Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1787185800,
+    "event": "KXMLSGAME-26AUG19RSLDAL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG19RSLDAL-TIE",
+    "kickoff": 1787189400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1787195770,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1787196466,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-19",
+    "prints": 6820,
+    "quote_ts": 1787185860,
+    "roi": 1.3634,
+    "title": "Salt Lake vs Dallas Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1787185800,
+    "event": "KXMLSGAME-26AUG19SEAATX",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG19SEAATX-TIE",
+    "kickoff": 1787189400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-19",
+    "prints": 3526,
+    "quote_ts": 1787185860,
+    "roi": -1.0,
+    "title": "Seattle vs Austin Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1787189400,
+    "event": "KXMLSGAME-26AUG19LAGSJ",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG19LAGSJ-TIE",
+    "kickoff": 1787193000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1787198966,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-19",
+    "prints": 7040,
+    "quote_ts": 1787189460,
+    "roi": -0.0592,
+    "title": "Los Angeles G vs San Jose Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1787189400,
+    "event": "KXMLSGAME-26AUG19PORSD",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG19PORSD-TIE",
+    "kickoff": 1787193000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-19",
+    "prints": 2467,
+    "quote_ts": 1787189460,
+    "roi": -1.0,
+    "title": "Portland vs San Diego FC Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.21,
+    "bid": 0.2,
+    "check": "verified",
+    "cost": 0.22161,
+    "entry_ts": 1787189400,
+    "event": "KXMLSGAME-26AUG19VANHOU",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG19VANHOU-TIE",
+    "kickoff": 1787193000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1787198618,
+      "target": 0.42
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.63
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-19",
+    "prints": 5338,
+    "quote_ts": 1787189460,
+    "roi": -0.062,
+    "title": "Vancouver vs Houston Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.21,
+    "bid": 0.2,
+    "check": "verified",
+    "cost": 0.22161,
+    "entry_ts": 1787437800,
+    "event": "KXMLSGAME-26AUG22CINSEA",
+    "hold": 3.5124,
+    "id": "KXMLSGAME-26AUG22CINSEA-TIE",
+    "kickoff": 1787441400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1787448072,
+      "target": 0.42
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1787448072,
+      "target": 0.63
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-22",
+    "prints": 2172,
+    "quote_ts": 1787437860,
+    "roi": 1.3502,
+    "title": "Cincinnati vs Seattle Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1787437800,
+    "event": "KXMLSGAME-26AUG22CLTDCU",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG22CLTDCU-TIE",
+    "kickoff": 1787441400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-22",
+    "prints": 734,
+    "quote_ts": 1787437860,
+    "roi": -1.0,
+    "title": "Charlotte vs DC United Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.16,
+    "bid": 0.15,
+    "check": "verified",
+    "cost": 0.16941,
+    "entry_ts": 1787437800,
+    "event": "KXMLSGAME-26AUG22MIATOR",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG22MIATOR-TIE",
+    "kickoff": 1787441400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1787446304,
+      "target": 0.32
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.48
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-22",
+    "prints": 7996,
+    "quote_ts": 1787437860,
+    "roi": -0.0668,
+    "title": "Miami vs Toronto Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1787437800,
+    "event": "KXMLSGAME-26AUG22MTLLAG",
+    "hold": 2.6567,
+    "id": "KXMLSGAME-26AUG22MTLLAG-TIE",
+    "kickoff": 1787441400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1787447854,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1787448630,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-22",
+    "prints": 2637,
+    "quote_ts": 1787437860,
+    "roi": 1.3634,
+    "title": "Montreal vs Los Angeles G Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1787437800,
+    "event": "KXMLSGAME-26AUG22NYRBCHI",
+    "hold": 2.9562,
+    "id": "KXMLSGAME-26AUG22NYRBCHI-TIE",
+    "kickoff": 1787441400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1787448412,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1787448434,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-22",
+    "prints": 2391,
+    "quote_ts": 1787437860,
+    "roi": 1.3581,
+    "title": "New York RB vs Chicago Fire Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1787437800,
+    "event": "KXMLSGAME-26AUG22ORLRSL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG22ORLRSL-TIE",
+    "kickoff": 1787441400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1787446500,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-22",
+    "prints": 2258,
+    "quote_ts": 1787437860,
+    "roi": -0.0601,
+    "title": "Orlando vs Salt Lake Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1787441400,
+    "event": "KXMLSGAME-26AUG22NSHCLB",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG22NSHCLB-TIE",
+    "kickoff": 1787445000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1787450879,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1787452522,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-22",
+    "prints": 5616,
+    "quote_ts": 1787441460,
+    "roi": 1.3581,
+    "title": "Nashville vs Columbus Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1787441400,
+    "event": "KXMLSGAME-26AUG22STLHOU",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG22STLHOU-TIE",
+    "kickoff": 1787445000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1787451140,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-22",
+    "prints": 3992,
+    "quote_ts": 1787441460,
+    "roi": -0.0563,
+    "title": "Saint Louis vs Houston Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1787443200,
+    "event": "KXMLSGAME-26AUG22ATXPHI",
+    "hold": 2.8005,
+    "id": "KXMLSGAME-26AUG22ATXPHI-TIE",
+    "kickoff": 1787446800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1787452744,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1787453587,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-22",
+    "prints": 5549,
+    "quote_ts": 1787443260,
+    "roi": 1.3607,
+    "title": "Austin vs Philadelphia Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.2,
+    "bid": 0.19,
+    "check": "verified",
+    "cost": 0.2112,
+    "entry_ts": 1787445000,
+    "event": "KXMLSGAME-26AUG22VANDAL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG22VANDAL-TIE",
+    "kickoff": 1787448600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.4
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.6
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-22",
+    "prints": 959,
+    "quote_ts": 1787445060,
+    "roi": -1.0,
+    "title": "Vancouver vs Dallas Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.21,
+    "bid": 0.2,
+    "check": "verified",
+    "cost": 0.22161,
+    "entry_ts": 1787448600,
+    "event": "KXMLSGAME-26AUG22LAFCPOR",
+    "hold": 3.5124,
+    "id": "KXMLSGAME-26AUG22LAFCPOR-TIE",
+    "kickoff": 1787452200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1787458695,
+      "target": 0.42
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1787458696,
+      "target": 0.63
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-22",
+    "prints": 8413,
+    "quote_ts": 1787448660,
+    "roi": 1.3502,
+    "title": "Los Angeles F vs Portland Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1787448600,
+    "event": "KXMLSGAME-26AUG22SDCOL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG22SDCOL-TIE",
+    "kickoff": 1787452200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-22",
+    "prints": 1187,
+    "quote_ts": 1787448660,
+    "roi": -1.0,
+    "title": "San Diego FC vs Colorado Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1787448600,
+    "event": "KXMLSGAME-26AUG22SJMIN",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG22SJMIN-TIE",
+    "kickoff": 1787452200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-22",
+    "prints": 1568,
+    "quote_ts": 1787448660,
+    "roi": -1.0,
+    "title": "San Jose vs Minnesota Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1787513400,
+    "event": "KXMLSGAME-26AUG23NENYC",
+    "hold": 2.5236,
+    "id": "KXMLSGAME-26AUG23NENYC-TIE",
+    "kickoff": 1787517000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1787522928,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1787524029,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-23",
+    "prints": 6335,
+    "quote_ts": 1787513460,
+    "roi": 1.3661,
+    "title": "New England vs New York City Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.22,
+    "bid": 0.21,
+    "check": "verified",
+    "cost": 0.23201,
+    "entry_ts": 1787522400,
+    "event": "KXMLSGAME-26AUG23ATLSKC",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG23ATLSKC-TIE",
+    "kickoff": 1787526000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.44
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.66
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-23",
+    "prints": 4361,
+    "quote_ts": 1787522460,
+    "roi": -1.0,
+    "title": "Atlanta vs Kansas City Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1788031800,
+    "event": "KXMLSGAME-26AUG29SEACHI",
+    "hold": 2.9562,
+    "id": "KXMLSGAME-26AUG29SEACHI-TIE",
+    "kickoff": 1788035400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1788042027,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1788042039,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-29",
+    "prints": 11724,
+    "quote_ts": 1788031860,
+    "roi": 1.3581,
+    "title": "Seattle vs Chicago Fire Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1788042600,
+    "event": "KXMLSGAME-26AUG29ATLCLT",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG29ATLCLT-TIE",
+    "kickoff": 1788046200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-29",
+    "prints": 804,
+    "quote_ts": 1788042660,
+    "roi": -1.0,
+    "title": "Atlanta vs Charlotte Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1788042600,
+    "event": "KXMLSGAME-26AUG29DCULAFC",
+    "hold": 2.8005,
+    "id": "KXMLSGAME-26AUG29DCULAFC-TIE",
+    "kickoff": 1788046200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1788051337,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1788052962,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-29",
+    "prints": 5220,
+    "quote_ts": 1788042660,
+    "roi": 1.3607,
+    "title": "DC United vs Los Angeles F Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.16,
+    "bid": 0.15,
+    "check": "verified",
+    "cost": 0.16941,
+    "entry_ts": 1788042600,
+    "event": "KXMLSGAME-26AUG29MIAMTL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG29MIAMTL-TIE",
+    "kickoff": 1788046200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.32
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.48
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-29",
+    "prints": 2661,
+    "quote_ts": 1788042540,
+    "roi": -1.0,
+    "title": "Miami vs Montreal Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1788042600,
+    "event": "KXMLSGAME-26AUG29NYRBPHI",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG29NYRBPHI-TIE",
+    "kickoff": 1788046200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-29",
+    "prints": 574,
+    "quote_ts": 1788042660,
+    "roi": -1.0,
+    "title": "New York RB vs Philadelphia Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1788042600,
+    "event": "KXMLSGAME-26AUG29TORNYC",
+    "hold": 2.6567,
+    "id": "KXMLSGAME-26AUG29TORNYC-TIE",
+    "kickoff": 1788046200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1788052170,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1788053117,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-29",
+    "prints": 1713,
+    "quote_ts": 1788042660,
+    "roi": 1.3634,
+    "title": "Toronto vs New York City Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1788046200,
+    "event": "KXMLSGAME-26AUG29HOUSJ",
+    "hold": 3.1255,
+    "id": "KXMLSGAME-26AUG29HOUSJ-TIE",
+    "kickoff": 1788049800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1788055310,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1788056667,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-29",
+    "prints": 3734,
+    "quote_ts": 1788046260,
+    "roi": 1.3555,
+    "title": "Houston vs San Jose Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1788046200,
+    "event": "KXMLSGAME-26AUG29MINORL",
+    "hold": 3.1255,
+    "id": "KXMLSGAME-26AUG29MINORL-TIE",
+    "kickoff": 1788049800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1788056130,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1788057276,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-29",
+    "prints": 6092,
+    "quote_ts": 1788046140,
+    "roi": 1.3555,
+    "title": "Minnesota vs Orlando Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1788046200,
+    "event": "KXMLSGAME-26AUG29NSHCIN",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG29NSHCIN-TIE",
+    "kickoff": 1788049800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-29",
+    "prints": 1061,
+    "quote_ts": 1788046260,
+    "roi": -1.0,
+    "title": "Nashville vs Cincinnati Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.18,
+    "bid": 0.17,
+    "check": "verified",
+    "cost": 0.19033,
+    "entry_ts": 1788046200,
+    "event": "KXMLSGAME-26AUG29SKCVAN",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG29SKCVAN-TIE",
+    "kickoff": 1788049800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.36
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.54
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-29",
+    "prints": 500,
+    "quote_ts": 1788046260,
+    "roi": -1.0,
+    "title": "Kansas City vs Vancouver Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1788049800,
+    "event": "KXMLSGAME-26AUG29COLRSL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG29COLRSL-TIE",
+    "kickoff": 1788053400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-29",
+    "prints": 2849,
+    "quote_ts": 1788049860,
+    "roi": -1.0,
+    "title": "Colorado vs Salt Lake Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.21,
+    "bid": 0.2,
+    "check": "verified",
+    "cost": 0.22161,
+    "entry_ts": 1788053400,
+    "event": "KXMLSGAME-26AUG29PORATX",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG29PORATX-TIE",
+    "kickoff": 1788057000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1788063548,
+      "target": 0.42
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1788063723,
+      "target": 0.63
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-29",
+    "prints": 7595,
+    "quote_ts": 1788053340,
+    "roi": 1.3502,
+    "title": "Portland vs Austin Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.22,
+    "bid": 0.21,
+    "check": "verified",
+    "cost": 0.23201,
+    "entry_ts": 1788053400,
+    "event": "KXMLSGAME-26AUG29SDLAG",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG29SDLAG-TIE",
+    "kickoff": 1788057000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1788062267,
+      "target": 0.44
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.66
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-29",
+    "prints": 5545,
+    "quote_ts": 1788053460,
+    "roi": -0.0611,
+    "title": "San Diego FC vs Los Angeles G Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1788118200,
+    "event": "KXMLSGAME-26AUG29CLBNE",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26AUG29CLBNE-TIE",
+    "kickoff": 1788121800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-29",
+    "prints": 4188,
+    "quote_ts": 1788118260,
+    "roi": -1.0,
+    "title": "Columbus vs New England Winner?",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1788127200,
+    "event": "KXMLSGAME-26AUG30STLDAL",
+    "hold": 2.5236,
+    "id": "KXMLSGAME-26AUG30STLDAL-TIE",
+    "kickoff": 1788130800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1788138543,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1788138548,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-08-30",
+    "prints": 7076,
+    "quote_ts": 1788127260,
+    "roi": 1.3661,
+    "title": "Saint Louis vs Dallas Winner?",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1788561000,
+    "event": "KXMLSGAME-26SEP04NYCNSH",
+    "hold": 2.5236,
+    "id": "KXMLSGAME-26SEP04NYCNSH-TIE",
+    "kickoff": 1788564600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1788570473,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1788571507,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-04",
+    "prints": 5475,
+    "quote_ts": 1788561060,
+    "roi": 1.3661,
+    "title": "Tie wins",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1788647400,
+    "event": "KXMLSGAME-26SEP05CLBCOL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP05CLBCOL-TIE",
+    "kickoff": 1788651000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-05",
+    "prints": 987,
+    "quote_ts": 1788647460,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1788647400,
+    "event": "KXMLSGAME-26SEP05CLTHOU",
+    "hold": 2.5236,
+    "id": "KXMLSGAME-26SEP05CLTHOU-TIE",
+    "kickoff": 1788651000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1788657151,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1788658303,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-05",
+    "prints": 2814,
+    "quote_ts": 1788647460,
+    "roi": 1.3661,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1788647400,
+    "event": "KXMLSGAME-26SEP05ORLSD",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP05ORLSD-TIE",
+    "kickoff": 1788651000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-05",
+    "prints": 1995,
+    "quote_ts": 1788647460,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.18,
+    "bid": 0.17,
+    "check": "verified",
+    "cost": 0.19033,
+    "entry_ts": 1788647400,
+    "event": "KXMLSGAME-26SEP05PHIMTL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP05PHIMTL-TIE",
+    "kickoff": 1788651000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1788656751,
+      "target": 0.36
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.54
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-05",
+    "prints": 1100,
+    "quote_ts": 1788647460,
+    "roi": -0.0649,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1788647400,
+    "event": "KXMLSGAME-26SEP05TORCHI",
+    "hold": 2.6567,
+    "id": "KXMLSGAME-26SEP05TORCHI-TIE",
+    "kickoff": 1788651000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1788658273,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1788658285,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-05",
+    "prints": 7053,
+    "quote_ts": 1788647460,
+    "roi": 1.3634,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1788651000,
+    "event": "KXMLSGAME-26SEP05ATXSJ",
+    "hold": 2.6567,
+    "id": "KXMLSGAME-26SEP05ATXSJ-TIE",
+    "kickoff": 1788654600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1788662287,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1788662300,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-05",
+    "prints": 2102,
+    "quote_ts": 1788651000,
+    "roi": 1.3634,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.18,
+    "bid": 0.17,
+    "check": "verified",
+    "cost": 0.19033,
+    "entry_ts": 1788651000,
+    "event": "KXMLSGAME-26SEP05DALSKC",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP05DALSKC-TIE",
+    "kickoff": 1788654600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1788659419,
+      "target": 0.36
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1788661331,
+      "target": 0.54
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-05",
+    "prints": 7633,
+    "quote_ts": 1788651060,
+    "roi": 1.3423,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1788651000,
+    "event": "KXMLSGAME-26SEP05SEANYRB",
+    "hold": 2.9562,
+    "id": "KXMLSGAME-26SEP05SEANYRB-TIE",
+    "kickoff": 1788654600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1788660716,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1788661721,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-05",
+    "prints": 2272,
+    "quote_ts": 1788651000,
+    "roi": 1.3581,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.14,
+    "bid": 0.13,
+    "check": "verified",
+    "cost": 0.14843,
+    "entry_ts": 1788653100,
+    "event": "KXMLSGAME-26SEP05MIAATL",
+    "hold": 5.7373,
+    "id": "KXMLSGAME-26SEP05MIAATL-TIE",
+    "kickoff": 1788656700,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1788662287,
+      "target": 0.28
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1788662307,
+      "target": 0.42
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-05",
+    "prints": 11482,
+    "quote_ts": 1788653160,
+    "roi": 1.3318,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1788654600,
+    "event": "KXMLSGAME-26SEP05LAGNE",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP05LAGNE-TIE",
+    "kickoff": 1788658200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-05",
+    "prints": 976,
+    "quote_ts": 1788654600,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1788654600,
+    "event": "KXMLSGAME-26SEP05RSLLAFC",
+    "hold": 2.6567,
+    "id": "KXMLSGAME-26SEP05RSLLAFC-TIE",
+    "kickoff": 1788658200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1788664540,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1788665417,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-05",
+    "prints": 5622,
+    "quote_ts": 1788654660,
+    "roi": 1.3634,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1788658200,
+    "event": "KXMLSGAME-26SEP05PORMIN",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP05PORMIN-TIE",
+    "kickoff": 1788661800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-05",
+    "prints": 5139,
+    "quote_ts": 1788658260,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.19,
+    "bid": 0.18,
+    "check": "verified",
+    "cost": 0.20077,
+    "entry_ts": 1788658200,
+    "event": "KXMLSGAME-26SEP05VANSTL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP05VANSTL-TIE",
+    "kickoff": 1788661800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1788664888,
+      "target": 0.38
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.57
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-05",
+    "prints": 2637,
+    "quote_ts": 1788658260,
+    "roi": -0.0639,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1788993000,
+    "event": "KXMLSGAME-26SEP09ATLORL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP09ATLORL-TIE",
+    "kickoff": 1788996600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-09",
+    "prints": 2711,
+    "quote_ts": 1788993000,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1788993000,
+    "event": "KXMLSGAME-26SEP09DCUCLB",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP09DCUCLB-TIE",
+    "kickoff": 1788996600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-09",
+    "prints": 2380,
+    "quote_ts": 1788993000,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1788993000,
+    "event": "KXMLSGAME-26SEP09MTLCLT",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP09MTLCLT-TIE",
+    "kickoff": 1788996600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789002775,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-09",
+    "prints": 2310,
+    "quote_ts": 1788992880,
+    "roi": -0.0572,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1788993000,
+    "event": "KXMLSGAME-26SEP09TORNSH",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP09TORNSH-TIE",
+    "kickoff": 1788996600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789002609,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1789003559,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-09",
+    "prints": 6746,
+    "quote_ts": 1788993060,
+    "roi": 1.3634,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.21,
+    "bid": 0.2,
+    "check": "verified",
+    "cost": 0.22161,
+    "entry_ts": 1788993900,
+    "event": "KXMLSGAME-26SEP09PHICIN",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP09PHICIN-TIE",
+    "kickoff": 1788997500,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.42
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.63
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-09",
+    "prints": 1099,
+    "quote_ts": 1788993960,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1788994800,
+    "event": "KXMLSGAME-26SEP09NYCNE",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP09NYCNE-TIE",
+    "kickoff": 1788998400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789004205,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1789005551,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-09",
+    "prints": 6843,
+    "quote_ts": 1788994860,
+    "roi": 1.3661,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.29,
+    "bid": 0.27,
+    "check": "verified",
+    "cost": 0.30441,
+    "entry_ts": 1788996600,
+    "event": "KXMLSGAME-26SEP09ATXCOL",
+    "hold": 2.285,
+    "id": "KXMLSGAME-26SEP09ATXCOL-TIE",
+    "kickoff": 1789000200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789006826,
+      "target": 0.58
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1789007551,
+      "target": 0.87
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-09",
+    "prints": 3049,
+    "quote_ts": 1788996660,
+    "roi": 1.3714,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1788996600,
+    "event": "KXMLSGAME-26SEP09CHIMIA",
+    "hold": 3.1255,
+    "id": "KXMLSGAME-26SEP09CHIMIA-TIE",
+    "kickoff": 1789000200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789006374,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1789007188,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-09",
+    "prints": 12445,
+    "quote_ts": 1788996660,
+    "roi": 1.3555,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1788996600,
+    "event": "KXMLSGAME-26SEP09HOURSL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP09HOURSL-TIE",
+    "kickoff": 1789000200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789006498,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-09",
+    "prints": 3038,
+    "quote_ts": 1788996540,
+    "roi": -0.0572,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1788996600,
+    "event": "KXMLSGAME-26SEP09MINDAL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP09MINDAL-TIE",
+    "kickoff": 1789000200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789006173,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-09",
+    "prints": 3444,
+    "quote_ts": 1788996660,
+    "roi": -0.0582,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.18,
+    "bid": 0.17,
+    "check": "verified",
+    "cost": 0.19033,
+    "entry_ts": 1789003800,
+    "event": "KXMLSGAME-26SEP09LAFCNYRB",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP09LAFCNYRB-TIE",
+    "kickoff": 1789007400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.36
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.54
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-09",
+    "prints": 2783,
+    "quote_ts": 1789003860,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1789003800,
+    "event": "KXMLSGAME-26SEP09PORSTL",
+    "hold": 2.9562,
+    "id": "KXMLSGAME-26SEP09PORSTL-TIE",
+    "kickoff": 1789007400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789014707,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1789014715,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-09",
+    "prints": 9117,
+    "quote_ts": 1789003860,
+    "roi": 1.3581,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.22,
+    "bid": 0.21,
+    "check": "verified",
+    "cost": 0.23201,
+    "entry_ts": 1789003800,
+    "event": "KXMLSGAME-26SEP09SDSJ",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP09SDSJ-TIE",
+    "kickoff": 1789007400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.44
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.66
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-09",
+    "prints": 6733,
+    "quote_ts": 1789003860,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.16,
+    "bid": 0.15,
+    "check": "verified",
+    "cost": 0.16941,
+    "entry_ts": 1789003800,
+    "event": "KXMLSGAME-26SEP09VANLAG",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP09VANLAG-TIE",
+    "kickoff": 1789007400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.32
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.48
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-09",
+    "prints": 3183,
+    "quote_ts": 1789003860,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1789252200,
+    "event": "KXMLSGAME-26SEP12CINCLT",
+    "hold": 3.1255,
+    "id": "KXMLSGAME-26SEP12CINCLT-TIE",
+    "kickoff": 1789255800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789260967,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1789263393,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-12",
+    "prints": 4482,
+    "quote_ts": 1789252260,
+    "roi": 1.3555,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.21,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1789252200,
+    "event": "KXMLSGAME-26SEP12CLBNYRB",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP12CLBNYRB-TIE",
+    "kickoff": 1789255800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789261653,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1789262641,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-12",
+    "prints": 1501,
+    "quote_ts": 1789252260,
+    "roi": 1.3555,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1789252200,
+    "event": "KXMLSGAME-26SEP12DCUATL",
+    "hold": 2.6567,
+    "id": "KXMLSGAME-26SEP12DCUATL-TIE",
+    "kickoff": 1789255800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789261729,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1789262733,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-12",
+    "prints": 1481,
+    "quote_ts": 1789252260,
+    "roi": 1.3634,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1789252200,
+    "event": "KXMLSGAME-26SEP12MIANSH",
+    "hold": 3.1255,
+    "id": "KXMLSGAME-26SEP12MIANSH-TIE",
+    "kickoff": 1789255800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789262990,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1789262991,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-12",
+    "prints": 7974,
+    "quote_ts": 1789252260,
+    "roi": 1.3555,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1789252200,
+    "event": "KXMLSGAME-26SEP12ORLTOR",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP12ORLTOR-TIE",
+    "kickoff": 1789255800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-12",
+    "prints": 1929,
+    "quote_ts": 1789252140,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.22,
+    "bid": 0.21,
+    "check": "verified",
+    "cost": 0.23201,
+    "entry_ts": 1789255800,
+    "event": "KXMLSGAME-26SEP12DALPOR",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP12DALPOR-TIE",
+    "kickoff": 1789259400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789266187,
+      "target": 0.44
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.66
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-12",
+    "prints": 2206,
+    "quote_ts": 1789255860,
+    "roi": -0.0611,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1789255800,
+    "event": "KXMLSGAME-26SEP12SKCLAFC",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP12SKCLAFC-TIE",
+    "kickoff": 1789259400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789265234,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-12",
+    "prints": 3331,
+    "quote_ts": 1789255860,
+    "roi": -0.0601,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1789255800,
+    "event": "KXMLSGAME-26SEP12STLMIN",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP12STLMIN-TIE",
+    "kickoff": 1789259400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-12",
+    "prints": 896,
+    "quote_ts": 1789255860,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.22,
+    "bid": 0.21,
+    "check": "verified",
+    "cost": 0.23201,
+    "entry_ts": 1789259400,
+    "event": "KXMLSGAME-26SEP12COLMTL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP12COLMTL-TIE",
+    "kickoff": 1789263000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.44
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.66
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-12",
+    "prints": 1413,
+    "quote_ts": 1789259340,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1789259400,
+    "event": "KXMLSGAME-26SEP12RSLNYC",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP12RSLNYC-TIE",
+    "kickoff": 1789263000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-12",
+    "prints": 1550,
+    "quote_ts": 1789259460,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1789263000,
+    "event": "KXMLSGAME-26SEP12LAGSEA",
+    "hold": 2.8005,
+    "id": "KXMLSGAME-26SEP12LAGSEA-TIE",
+    "kickoff": 1789266600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789273138,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1789273522,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-12",
+    "prints": 5945,
+    "quote_ts": 1789263060,
+    "roi": 1.3607,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1789263000,
+    "event": "KXMLSGAME-26SEP12SJHOU",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP12SJHOU-TIE",
+    "kickoff": 1789266600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-12",
+    "prints": 2215,
+    "quote_ts": 1789263000,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1789331400,
+    "event": "KXMLSGAME-26SEP13CHINE",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP13CHINE-TIE",
+    "kickoff": 1789335000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789341398,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-13",
+    "prints": 6789,
+    "quote_ts": 1789331460,
+    "roi": -0.0582,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.15,
+    "bid": 0.14,
+    "check": "verified",
+    "cost": 0.15892,
+    "entry_ts": 1789335000,
+    "event": "KXMLSGAME-26SEP13VANATX",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP13VANATX-TIE",
+    "kickoff": 1789338600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789341461,
+      "target": 0.3
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1789344718,
+      "target": 0.45
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-13",
+    "prints": 9154,
+    "quote_ts": 1789335060,
+    "roi": 1.3344,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1789344000,
+    "event": "KXMLSGAME-26SEP13SDPHI",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP13SDPHI-TIE",
+    "kickoff": 1789347600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-13",
+    "prints": 3308,
+    "quote_ts": 1789344060,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1789770600,
+    "event": "KXMLSGAME-26SEP18NYCNYRB",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP18NYCNYRB-TIE",
+    "kickoff": 1789774200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-18",
+    "prints": 4448,
+    "quote_ts": 1789770660,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1789857000,
+    "event": "KXMLSGAME-26SEP19DCUCLT",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP19DCUCLT-TIE",
+    "kickoff": 1789860600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-19",
+    "prints": 2255,
+    "quote_ts": 1789856820,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1789857000,
+    "event": "KXMLSGAME-26SEP19MTLCLB",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP19MTLCLB-TIE",
+    "kickoff": 1789860600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-19",
+    "prints": 736,
+    "quote_ts": 1789857060,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.22,
+    "bid": 0.21,
+    "check": "verified",
+    "cost": 0.23201,
+    "entry_ts": 1789857000,
+    "event": "KXMLSGAME-26SEP19NEORL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP19NEORL-TIE",
+    "kickoff": 1789860600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789867327,
+      "target": 0.44
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1789867583,
+      "target": 0.66
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-19",
+    "prints": 4443,
+    "quote_ts": 1789857060,
+    "roi": 1.3528,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1789857000,
+    "event": "KXMLSGAME-26SEP19SJLAFC",
+    "hold": 2.9562,
+    "id": "KXMLSGAME-26SEP19SJLAFC-TIE",
+    "kickoff": 1789860600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789868210,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1789868211,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-19",
+    "prints": 5834,
+    "quote_ts": 1789856760,
+    "roi": 1.3581,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.22,
+    "bid": 0.21,
+    "check": "verified",
+    "cost": 0.23201,
+    "entry_ts": 1789860600,
+    "event": "KXMLSGAME-26SEP19DALATX",
+    "hold": 3.3101,
+    "id": "KXMLSGAME-26SEP19DALATX-TIE",
+    "kickoff": 1789864200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789869882,
+      "target": 0.44
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1789871101,
+      "target": 0.66
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-19",
+    "prints": 2783,
+    "quote_ts": 1789860660,
+    "roi": 1.3528,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "unverified",
+    "cost": 0.25277,
+    "entry_ts": 1789860600,
+    "event": "KXMLSGAME-26SEP19HOUCIN",
+    "hold": 2.9562,
+    "id": "KXMLSGAME-26SEP19HOUCIN-TIE",
+    "kickoff": 1789864200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789871802,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1789871827,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-19",
+    "prints": 2929,
+    "quote_ts": 1789860660,
+    "roi": 1.3581,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.22,
+    "bid": 0.21,
+    "check": "verified",
+    "cost": 0.23201,
+    "entry_ts": 1789860600,
+    "event": "KXMLSGAME-26SEP19MINLAG",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP19MINLAG-TIE",
+    "kickoff": 1789864200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789870679,
+      "target": 0.44
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.66
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-19",
+    "prints": 1884,
+    "quote_ts": 1789860480,
+    "roi": -0.0611,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.19,
+    "bid": 0.18,
+    "check": "verified",
+    "cost": 0.20077,
+    "entry_ts": 1789860600,
+    "event": "KXMLSGAME-26SEP19SKCPHI",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP19SKCPHI-TIE",
+    "kickoff": 1789864200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789870173,
+      "target": 0.38
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.57
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-19",
+    "prints": 4334,
+    "quote_ts": 1789860480,
+    "roi": -0.0639,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.22,
+    "bid": 0.2,
+    "check": "verified",
+    "cost": 0.23201,
+    "entry_ts": 1789860600,
+    "event": "KXMLSGAME-26SEP19STLTOR",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP19STLTOR-TIE",
+    "kickoff": 1789864200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.44
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.66
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-19",
+    "prints": 360,
+    "quote_ts": 1789860480,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1789864200,
+    "event": "KXMLSGAME-26SEP19COLSEA",
+    "hold": 2.9562,
+    "id": "KXMLSGAME-26SEP19COLSEA-TIE",
+    "kickoff": 1789867800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789878071,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1789878076,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-19",
+    "prints": 4941,
+    "quote_ts": 1789864260,
+    "roi": 1.3581,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1789864200,
+    "event": "KXMLSGAME-26SEP19NSHCHI",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP19NSHCHI-TIE",
+    "kickoff": 1789867800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-19",
+    "prints": 2197,
+    "quote_ts": 1789864260,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1789864200,
+    "event": "KXMLSGAME-26SEP19RSLVAN",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP19RSLVAN-TIE",
+    "kickoff": 1789867800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-19",
+    "prints": 732,
+    "quote_ts": 1789864260,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1789867800,
+    "event": "KXMLSGAME-26SEP19PORATL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP19PORATL-TIE",
+    "kickoff": 1789871400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-19",
+    "prints": 3615,
+    "quote_ts": 1789867800,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.15,
+    "bid": 0.14,
+    "check": "verified",
+    "cost": 0.15892,
+    "entry_ts": 1789941600,
+    "event": "KXMLSGAME-26SEP20MIASD",
+    "hold": 5.2923,
+    "id": "KXMLSGAME-26SEP20MIASD-TIE",
+    "kickoff": 1789945200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1789947394,
+      "target": 0.3
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1789952415,
+      "target": 0.45
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-20",
+    "prints": 19662,
+    "quote_ts": 1789941660,
+    "roi": 1.3344,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1790209800,
+    "event": "KXMLSGAME-26SEP23SEARSL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP23SEARSL-TIE",
+    "kickoff": 1790213400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-23",
+    "prints": 4603,
+    "quote_ts": 1790209860,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1790461800,
+    "event": "KXMLSGAME-26SEP26ATLNYC",
+    "hold": 2.5236,
+    "id": "KXMLSGAME-26SEP26ATLNYC-TIE",
+    "kickoff": 1790465400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1790471703,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1790472665,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-26",
+    "prints": 5689,
+    "quote_ts": 1790461860,
+    "roi": 1.3661,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1790461800,
+    "event": "KXMLSGAME-26SEP26CLTCHI",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP26CLTCHI-TIE",
+    "kickoff": 1790465400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1790472418,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-26",
+    "prints": 2527,
+    "quote_ts": 1790461860,
+    "roi": -0.0582,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1790461800,
+    "event": "KXMLSGAME-26SEP26MTLCIN",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP26MTLCIN-TIE",
+    "kickoff": 1790465400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1790471263,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-26",
+    "prints": 1452,
+    "quote_ts": 1790461680,
+    "roi": -0.0582,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.19,
+    "bid": 0.18,
+    "check": "verified",
+    "cost": 0.20077,
+    "entry_ts": 1790461800,
+    "event": "KXMLSGAME-26SEP26PHIORL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP26PHIORL-TIE",
+    "kickoff": 1790465400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.38
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.57
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-26",
+    "prints": 1107,
+    "quote_ts": 1790461860,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1790465400,
+    "event": "KXMLSGAME-26SEP26ATXSD",
+    "hold": 2.5236,
+    "id": "KXMLSGAME-26SEP26ATXSD-TIE",
+    "kickoff": 1790469000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1790476109,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1790476506,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-26",
+    "prints": 3035,
+    "quote_ts": 1790465460,
+    "roi": 1.3661,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.28,
+    "bid": 0.27,
+    "check": "verified",
+    "cost": 0.29411,
+    "entry_ts": 1790465400,
+    "event": "KXMLSGAME-26SEP26DALLAFC",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP26DALLAFC-TIE",
+    "kickoff": 1790469000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1790475067,
+      "target": 0.56
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.84
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-26",
+    "prints": 2736,
+    "quote_ts": 1790465460,
+    "roi": -0.0553,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.22,
+    "bid": 0.21,
+    "check": "verified",
+    "cost": 0.23201,
+    "entry_ts": 1790465400,
+    "event": "KXMLSGAME-26SEP26HOUSKC",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP26HOUSKC-TIE",
+    "kickoff": 1790469000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.44
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.66
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-26",
+    "prints": 1034,
+    "quote_ts": 1790465460,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.18,
+    "bid": 0.17,
+    "check": "verified",
+    "cost": 0.19033,
+    "entry_ts": 1790465400,
+    "event": "KXMLSGAME-26SEP26NSHTOR",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP26NSHTOR-TIE",
+    "kickoff": 1790469000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.36
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.54
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-26",
+    "prints": 1208,
+    "quote_ts": 1790465460,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1790465400,
+    "event": "KXMLSGAME-26SEP26SEAMIN",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP26SEAMIN-TIE",
+    "kickoff": 1790469000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-26",
+    "prints": 931,
+    "quote_ts": 1790465460,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1790469000,
+    "event": "KXMLSGAME-26SEP26RSLNE",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP26RSLNE-TIE",
+    "kickoff": 1790472600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-26",
+    "prints": 2377,
+    "quote_ts": 1790469060,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1790472600,
+    "event": "KXMLSGAME-26SEP26LAGCOL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP26LAGCOL-TIE",
+    "kickoff": 1790476200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1790482187,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-26",
+    "prints": 5194,
+    "quote_ts": 1790472660,
+    "roi": -0.0582,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1790472600,
+    "event": "KXMLSGAME-26SEP26SJPOR",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP26SJPOR-TIE",
+    "kickoff": 1790476200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-26",
+    "prints": 1039,
+    "quote_ts": 1790472660,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.14,
+    "bid": 0.13,
+    "check": "verified",
+    "cost": 0.14843,
+    "entry_ts": 1790472600,
+    "event": "KXMLSGAME-26SEP26VANDCU",
+    "hold": 5.7373,
+    "id": "KXMLSGAME-26SEP26VANDCU-TIE",
+    "kickoff": 1790476200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1790478143,
+      "target": 0.28
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1790481956,
+      "target": 0.42
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-26",
+    "prints": 8049,
+    "quote_ts": 1790472660,
+    "roi": 1.3318,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1790546400,
+    "event": "KXMLSGAME-26SEP27CLBMIA",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP27CLBMIA-TIE",
+    "kickoff": 1790550000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1790556495,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1790557430,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-27",
+    "prints": 14494,
+    "quote_ts": 1790546460,
+    "roi": 1.3555,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1790807400,
+    "event": "KXMLSGAME-26SEP30NYRBSTL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26SEP30NYRBSTL-TIE",
+    "kickoff": 1790811000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-09-30",
+    "prints": 3743,
+    "quote_ts": 1790807460,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.2,
+    "bid": 0.19,
+    "check": "verified",
+    "cost": 0.2112,
+    "entry_ts": 1790901000,
+    "event": "KXMLSGAME-26OCT01SEASKC",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT01SEASKC-TIE",
+    "kickoff": 1790904600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1790910158,
+      "target": 0.4
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1790911117,
+      "target": 0.6
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-01",
+    "prints": 7783,
+    "quote_ts": 1790901060,
+    "roi": 1.3475,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1791329400,
+    "event": "KXMLSGAME-26OCT06CHIVAN",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT06CHIVAN-TIE",
+    "kickoff": 1791333000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-06",
+    "prints": 5462,
+    "quote_ts": 1791329460,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1791648000,
+    "event": "KXMLSGAME-26OCT10TORMTL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT10TORMTL-TIE",
+    "kickoff": 1791651600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1791659104,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1791659106,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-10",
+    "prints": 4966,
+    "quote_ts": 1791648060,
+    "roi": 1.3607,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1791653400,
+    "event": "KXMLSGAME-26OCT10CHINYC",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT10CHINYC-TIE",
+    "kickoff": 1791657000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1791662912,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-10",
+    "prints": 7520,
+    "quote_ts": 1791653400,
+    "roi": -0.0582,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1791671400,
+    "event": "KXMLSGAME-26OCT10ATLCIN",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT10ATLCIN-TIE",
+    "kickoff": 1791675000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1791680735,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-10",
+    "prints": 3261,
+    "quote_ts": 1791671460,
+    "roi": -0.0592,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1791671400,
+    "event": "KXMLSGAME-26OCT10CLTDAL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT10CLTDAL-TIE",
+    "kickoff": 1791675000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1791681121,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1791682031,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-10",
+    "prints": 3980,
+    "quote_ts": 1791671460,
+    "roi": 1.3581,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.18,
+    "bid": 0.17,
+    "check": "verified",
+    "cost": 0.19033,
+    "entry_ts": 1791671400,
+    "event": "KXMLSGAME-26OCT10MIADCU",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT10MIADCU-TIE",
+    "kickoff": 1791675000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.36
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.54
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-10",
+    "prints": 1930,
+    "quote_ts": 1791671460,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1791671400,
+    "event": "KXMLSGAME-26OCT10NESEA",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT10NESEA-TIE",
+    "kickoff": 1791675000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-10",
+    "prints": 1437,
+    "quote_ts": 1791671460,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1791671400,
+    "event": "KXMLSGAME-26OCT10NYRBSD",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT10NYRBSD-TIE",
+    "kickoff": 1791675000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-10",
+    "prints": 1519,
+    "quote_ts": 1791671460,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1791671400,
+    "event": "KXMLSGAME-26OCT10ORLCLB",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT10ORLCLB-TIE",
+    "kickoff": 1791675000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1791680994,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1791682051,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-10",
+    "prints": 4239,
+    "quote_ts": 1791671460,
+    "roi": 1.3581,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.17,
+    "bid": 0.16,
+    "check": "verified",
+    "cost": 0.17988,
+    "entry_ts": 1791671400,
+    "event": "KXMLSGAME-26OCT10PHIRSL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT10PHIRSL-TIE",
+    "kickoff": 1791675000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1791681665,
+      "target": 0.34
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.51
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-10",
+    "prints": 1601,
+    "quote_ts": 1791671460,
+    "roi": -0.0658,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1791675000,
+    "event": "KXMLSGAME-26OCT10ATXNSH",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT10ATXNSH-TIE",
+    "kickoff": 1791678600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-10",
+    "prints": 2957,
+    "quote_ts": 1791675060,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1791675000,
+    "event": "KXMLSGAME-26OCT10MINHOU",
+    "hold": 2.5236,
+    "id": "KXMLSGAME-26OCT10MINHOU-TIE",
+    "kickoff": 1791678600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1791684750,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1791685932,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-10",
+    "prints": 5634,
+    "quote_ts": 1791675060,
+    "roi": 1.3661,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1791675000,
+    "event": "KXMLSGAME-26OCT10SKCPOR",
+    "hold": 3.1255,
+    "id": "KXMLSGAME-26OCT10SKCPOR-TIE",
+    "kickoff": 1791678600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1791685047,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1791685837,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-10",
+    "prints": 3723,
+    "quote_ts": 1791675060,
+    "roi": 1.3555,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1791678600,
+    "event": "KXMLSGAME-26OCT10COLSJ",
+    "hold": 2.8005,
+    "id": "KXMLSGAME-26OCT10COLSJ-TIE",
+    "kickoff": 1791682200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1791688510,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1791689498,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-10",
+    "prints": 6563,
+    "quote_ts": 1791678660,
+    "roi": 1.3607,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1791682200,
+    "event": "KXMLSGAME-26OCT10LAFCVAN",
+    "hold": 2.6567,
+    "id": "KXMLSGAME-26OCT10LAFCVAN-TIE",
+    "kickoff": 1791685800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1791692346,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1791693136,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-10",
+    "prints": 6887,
+    "quote_ts": 1791682260,
+    "roi": 1.3634,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.19,
+    "bid": 0.18,
+    "check": "verified",
+    "cost": 0.20077,
+    "entry_ts": 1791756000,
+    "event": "KXMLSGAME-26OCT11STLLAG",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT11STLLAG-TIE",
+    "kickoff": 1791759600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.38
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.57
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-11",
+    "prints": 1858,
+    "quote_ts": 1791756060,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1792017000,
+    "event": "KXMLSGAME-26OCT14CINNE",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT14CINNE-TIE",
+    "kickoff": 1792020600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792027758,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-14",
+    "prints": 4075,
+    "quote_ts": 1792017060,
+    "roi": -0.0601,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1792017000,
+    "event": "KXMLSGAME-26OCT14CLBCLT",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT14CLBCLT-TIE",
+    "kickoff": 1792020600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-14",
+    "prints": 2444,
+    "quote_ts": 1792017060,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1792017000,
+    "event": "KXMLSGAME-26OCT14DCUNYRB",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT14DCUNYRB-TIE",
+    "kickoff": 1792020600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-14",
+    "prints": 5095,
+    "quote_ts": 1792017060,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.19,
+    "bid": 0.18,
+    "check": "verified",
+    "cost": 0.20077,
+    "entry_ts": 1792017000,
+    "event": "KXMLSGAME-26OCT14MIANYC",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT14MIANYC-TIE",
+    "kickoff": 1792020600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.38
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.57
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-14",
+    "prints": 2470,
+    "quote_ts": 1792017060,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1792017000,
+    "event": "KXMLSGAME-26OCT14MTLATL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT14MTLATL-TIE",
+    "kickoff": 1792020600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-14",
+    "prints": 1653,
+    "quote_ts": 1792017000,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1792017000,
+    "event": "KXMLSGAME-26OCT14TORORL",
+    "hold": 2.8005,
+    "id": "KXMLSGAME-26OCT14TORORL-TIE",
+    "kickoff": 1792020600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792027041,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1792027810,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-14",
+    "prints": 6920,
+    "quote_ts": 1792016940,
+    "roi": 1.3607,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1792020600,
+    "event": "KXMLSGAME-26OCT14CHIPHI",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT14CHIPHI-TIE",
+    "kickoff": 1792024200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-14",
+    "prints": 4161,
+    "quote_ts": 1792020660,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1792020600,
+    "event": "KXMLSGAME-26OCT14DALSEA",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT14DALSEA-TIE",
+    "kickoff": 1792024200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-14",
+    "prints": 3089,
+    "quote_ts": 1792020660,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.12,
+    "bid": 0.11,
+    "check": "verified",
+    "cost": 0.12739,
+    "entry_ts": 1792020600,
+    "event": "KXMLSGAME-26OCT14NSHSKC",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT14NSHSKC-TIE",
+    "kickoff": 1792024200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.24
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.36
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-14",
+    "prints": 636,
+    "quote_ts": 1792020660,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1792020600,
+    "event": "KXMLSGAME-26OCT14STLVAN",
+    "hold": 2.8005,
+    "id": "KXMLSGAME-26OCT14STLVAN-TIE",
+    "kickoff": 1792024200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792030407,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1792031557,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-14",
+    "prints": 5858,
+    "quote_ts": 1792020660,
+    "roi": 1.3607,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1792024200,
+    "event": "KXMLSGAME-26OCT14COLMIN",
+    "hold": 2.8005,
+    "id": "KXMLSGAME-26OCT14COLMIN-TIE",
+    "kickoff": 1792027800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792033925,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1792034908,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-14",
+    "prints": 9264,
+    "quote_ts": 1792024260,
+    "roi": 1.3607,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1792024200,
+    "event": "KXMLSGAME-26OCT14RSLSJ",
+    "hold": 2.8005,
+    "id": "KXMLSGAME-26OCT14RSLSJ-TIE",
+    "kickoff": 1792027800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792033617,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1792035007,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-14",
+    "prints": 5931,
+    "quote_ts": 1792024260,
+    "roi": 1.3607,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.19,
+    "bid": 0.18,
+    "check": "verified",
+    "cost": 0.20077,
+    "entry_ts": 1792027800,
+    "event": "KXMLSGAME-26OCT14LAFCATX",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT14LAFCATX-TIE",
+    "kickoff": 1792031400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792036897,
+      "target": 0.38
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.57
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-14",
+    "prints": 4826,
+    "quote_ts": 1792027860,
+    "roi": -0.0639,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1792027800,
+    "event": "KXMLSGAME-26OCT14LAGPOR",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT14LAGPOR-TIE",
+    "kickoff": 1792031400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-14",
+    "prints": 3323,
+    "quote_ts": 1792027860,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1792027800,
+    "event": "KXMLSGAME-26OCT14SDHOU",
+    "hold": 2.6567,
+    "id": "KXMLSGAME-26OCT14SDHOU-TIE",
+    "kickoff": 1792031400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792038687,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1792038844,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-14",
+    "prints": 12091,
+    "quote_ts": 1792027860,
+    "roi": 1.3634,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.18,
+    "bid": 0.17,
+    "check": "verified",
+    "cost": 0.19033,
+    "entry_ts": 1792258200,
+    "event": "KXMLSGAME-26OCT17PHICLT",
+    "hold": 4.254,
+    "id": "KXMLSGAME-26OCT17PHICLT-TIE",
+    "kickoff": 1792261800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792267469,
+      "target": 0.36
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1792267918,
+      "target": 0.54
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-17",
+    "prints": 10026,
+    "quote_ts": 1792258260,
+    "roi": 1.3423,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1792265400,
+    "event": "KXMLSGAME-26OCT17MINSTL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT17MINSTL-TIE",
+    "kickoff": 1792269000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792275134,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-17",
+    "prints": 7692,
+    "quote_ts": 1792265460,
+    "roi": -0.0582,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.22,
+    "bid": 0.21,
+    "check": "verified",
+    "cost": 0.23201,
+    "entry_ts": 1792276200,
+    "event": "KXMLSGAME-26OCT17ATLMIA",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT17ATLMIA-TIE",
+    "kickoff": 1792279800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.44
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.66
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-17",
+    "prints": 2284,
+    "quote_ts": 1792276260,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1792276200,
+    "event": "KXMLSGAME-26OCT17NECHI",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT17NECHI-TIE",
+    "kickoff": 1792279800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-17",
+    "prints": 2183,
+    "quote_ts": 1792276260,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.28,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.29411,
+    "entry_ts": 1792276200,
+    "event": "KXMLSGAME-26OCT17NYCLAFC",
+    "hold": 2.4001,
+    "id": "KXMLSGAME-26OCT17NYCLAFC-TIE",
+    "kickoff": 1792279800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792285946,
+      "target": 0.56
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1792287063,
+      "target": 0.84
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-17",
+    "prints": 2618,
+    "quote_ts": 1792276260,
+    "roi": 1.3687,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.21,
+    "bid": 0.2,
+    "check": "verified",
+    "cost": 0.22161,
+    "entry_ts": 1792276200,
+    "event": "KXMLSGAME-26OCT17NYRBTOR",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT17NYRBTOR-TIE",
+    "kickoff": 1792279800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792286411,
+      "target": 0.42
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.63
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-17",
+    "prints": 1668,
+    "quote_ts": 1792276140,
+    "roi": -0.062,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.21,
+    "bid": 0.2,
+    "check": "verified",
+    "cost": 0.22161,
+    "entry_ts": 1792276200,
+    "event": "KXMLSGAME-26OCT17ORLDCU",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT17ORLDCU-TIE",
+    "kickoff": 1792279800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.42
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.63
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-17",
+    "prints": 825,
+    "quote_ts": 1792276260,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.22,
+    "bid": 0.21,
+    "check": "verified",
+    "cost": 0.23201,
+    "entry_ts": 1792279800,
+    "event": "KXMLSGAME-26OCT17ATXVAN",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT17ATXVAN-TIE",
+    "kickoff": 1792283400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792289078,
+      "target": 0.44
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.66
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-17",
+    "prints": 4631,
+    "quote_ts": 1792279500,
+    "roi": -0.0611,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.28,
+    "bid": 0.27,
+    "check": "verified",
+    "cost": 0.29411,
+    "entry_ts": 1792279800,
+    "event": "KXMLSGAME-26OCT17HOUDAL",
+    "hold": 2.4001,
+    "id": "KXMLSGAME-26OCT17HOUDAL-TIE",
+    "kickoff": 1792283400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792289761,
+      "target": 0.56
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1792290692,
+      "target": 0.84
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-17",
+    "prints": 8905,
+    "quote_ts": 1792279860,
+    "roi": 1.3687,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1792279800,
+    "event": "KXMLSGAME-26OCT17SKCRSL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT17SKCRSL-TIE",
+    "kickoff": 1792283400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-17",
+    "prints": 775,
+    "quote_ts": 1792279860,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1792287000,
+    "event": "KXMLSGAME-26OCT17LAGSD",
+    "hold": 2.9562,
+    "id": "KXMLSGAME-26OCT17LAGSD-TIE",
+    "kickoff": 1792290600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792296872,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1792297759,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-17",
+    "prints": 7024,
+    "quote_ts": 1792286880,
+    "roi": 1.3581,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1792287000,
+    "event": "KXMLSGAME-26OCT17PORCOL",
+    "hold": 2.8005,
+    "id": "KXMLSGAME-26OCT17PORCOL-TIE",
+    "kickoff": 1792290600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792296759,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1792297733,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-17",
+    "prints": 3329,
+    "quote_ts": 1792287060,
+    "roi": 1.3607,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.18,
+    "bid": 0.17,
+    "check": "verified",
+    "cost": 0.19033,
+    "entry_ts": 1792287000,
+    "event": "KXMLSGAME-26OCT17SEAMTL",
+    "hold": 4.254,
+    "id": "KXMLSGAME-26OCT17SEAMTL-TIE",
+    "kickoff": 1792290600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792296164,
+      "target": 0.36
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1792296855,
+      "target": 0.54
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-17",
+    "prints": 5932,
+    "quote_ts": 1792286460,
+    "roi": 1.3423,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1792287000,
+    "event": "KXMLSGAME-26OCT17SJNSH",
+    "hold": 2.9562,
+    "id": "KXMLSGAME-26OCT17SJNSH-TIE",
+    "kickoff": 1792290600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792296677,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1792297520,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-17",
+    "prints": 4556,
+    "quote_ts": 1792287060,
+    "roi": 1.3581,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1792353600,
+    "event": "KXMLSGAME-26OCT18CINCLB",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT18CINCLB-TIE",
+    "kickoff": 1792357200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-18",
+    "prints": 3794,
+    "quote_ts": 1792353660,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.2,
+    "bid": 0.19,
+    "check": "verified",
+    "cost": 0.2112,
+    "entry_ts": 1792620000,
+    "event": "KXMLSGAME-26OCT21CINDCU",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT21CINDCU-TIE",
+    "kickoff": 1792623600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.4
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.6
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-21",
+    "prints": 5138,
+    "quote_ts": 1792620060,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.2,
+    "bid": 0.19,
+    "check": "verified",
+    "cost": 0.2112,
+    "entry_ts": 1792859400,
+    "event": "KXMLSGAME-26OCT24MTLNSH",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT24MTLNSH-TIE",
+    "kickoff": 1792863000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.4
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.6
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-24",
+    "prints": 1993,
+    "quote_ts": 1792859460,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.22,
+    "bid": 0.21,
+    "check": "verified",
+    "cost": 0.23201,
+    "entry_ts": 1792866600,
+    "event": "KXMLSGAME-26OCT24CLBTOR",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT24CLBTOR-TIE",
+    "kickoff": 1792870200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.44
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.66
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-24",
+    "prints": 1732,
+    "quote_ts": 1792866240,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1792873800,
+    "event": "KXMLSGAME-26OCT24NYRBMIA",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT24NYRBMIA-TIE",
+    "kickoff": 1792877400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792884393,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-24",
+    "prints": 7241,
+    "quote_ts": 1792873860,
+    "roi": -0.0601,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1792881000,
+    "event": "KXMLSGAME-26OCT24ATLCHI",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT24ATLCHI-TIE",
+    "kickoff": 1792884600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-24",
+    "prints": 3340,
+    "quote_ts": 1792881060,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1792881000,
+    "event": "KXMLSGAME-26OCT24ORLNYC",
+    "hold": 2.8005,
+    "id": "KXMLSGAME-26OCT24ORLNYC-TIE",
+    "kickoff": 1792884600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792891423,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1792892555,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-24",
+    "prints": 3856,
+    "quote_ts": 1792880940,
+    "roi": 1.3607,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.2,
+    "bid": 0.19,
+    "check": "verified",
+    "cost": 0.2112,
+    "entry_ts": 1792881000,
+    "event": "KXMLSGAME-26OCT24PHINE",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT24PHINE-TIE",
+    "kickoff": 1792884600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.4
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.6
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-24",
+    "prints": 3242,
+    "quote_ts": 1792881000,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1792884600,
+    "event": "KXMLSGAME-26OCT24DALSJ",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT24DALSJ-TIE",
+    "kickoff": 1792888200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792893973,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-24",
+    "prints": 2510,
+    "quote_ts": 1792884540,
+    "roi": -0.0592,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1792884600,
+    "event": "KXMLSGAME-26OCT24HOUMIN",
+    "hold": 2.6567,
+    "id": "KXMLSGAME-26OCT24HOUMIN-TIE",
+    "kickoff": 1792888200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792894389,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1792895468,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-24",
+    "prints": 3250,
+    "quote_ts": 1792884600,
+    "roi": 1.3634,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1792884600,
+    "event": "KXMLSGAME-26OCT24SKCATX",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT24SKCATX-TIE",
+    "kickoff": 1792888200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792894232,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-24",
+    "prints": 3187,
+    "quote_ts": 1792884660,
+    "roi": -0.0592,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1792888200,
+    "event": "KXMLSGAME-26OCT24COLVAN",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT24COLVAN-TIE",
+    "kickoff": 1792891800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792897682,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-24",
+    "prints": 3292,
+    "quote_ts": 1792888260,
+    "roi": -0.0572,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1792888200,
+    "event": "KXMLSGAME-26OCT24RSLSTL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT24RSLSTL-TIE",
+    "kickoff": 1792891800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-24",
+    "prints": 1051,
+    "quote_ts": 1792888080,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1792891800,
+    "event": "KXMLSGAME-26OCT24PORCLT",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT24PORCLT-TIE",
+    "kickoff": 1792895400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792901415,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1792902435,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-24",
+    "prints": 7593,
+    "quote_ts": 1792891860,
+    "roi": 1.3555,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1792891800,
+    "event": "KXMLSGAME-26OCT24SDSEA",
+    "hold": 2.9562,
+    "id": "KXMLSGAME-26OCT24SDSEA-TIE",
+    "kickoff": 1792895400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792902665,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1792902678,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-24",
+    "prints": 6223,
+    "quote_ts": 1792891860,
+    "roi": 1.3581,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.21,
+    "bid": 0.2,
+    "check": "verified",
+    "cost": 0.22161,
+    "entry_ts": 1792972800,
+    "event": "KXMLSGAME-26OCT25LAFCLAG",
+    "hold": 3.5124,
+    "id": "KXMLSGAME-26OCT25LAFCLAG-TIE",
+    "kickoff": 1792976400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1792982569,
+      "target": 0.42
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1792983405,
+      "target": 0.63
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-25",
+    "prints": 12185,
+    "quote_ts": 1792972860,
+    "roi": 1.3502,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.21,
+    "bid": 0.2,
+    "check": "verified",
+    "cost": 0.22161,
+    "entry_ts": 1793226600,
+    "event": "KXMLSGAME-26OCT28CLTMTL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT28CLTMTL-TIE",
+    "kickoff": 1793230200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.42
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.63
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-28",
+    "prints": 843,
+    "quote_ts": 1793226660,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.19,
+    "bid": 0.18,
+    "check": "verified",
+    "cost": 0.20077,
+    "entry_ts": 1793226600,
+    "event": "KXMLSGAME-26OCT28MIACIN",
+    "hold": 3.9807,
+    "id": "KXMLSGAME-26OCT28MIACIN-TIE",
+    "kickoff": 1793230200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1793236679,
+      "target": 0.38
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1793236711,
+      "target": 0.57
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-28",
+    "prints": 11553,
+    "quote_ts": 1793226660,
+    "roi": 1.3449,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1793226600,
+    "event": "KXMLSGAME-26OCT28NENYRB",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT28NENYRB-TIE",
+    "kickoff": 1793230200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1793236357,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-28",
+    "prints": 3831,
+    "quote_ts": 1793226660,
+    "roi": -0.0592,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1793226600,
+    "event": "KXMLSGAME-26OCT28NYCATL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT28NYCATL-TIE",
+    "kickoff": 1793230200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1793236135,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1793237423,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-28",
+    "prints": 5311,
+    "quote_ts": 1793226660,
+    "roi": 1.3581,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1793226600,
+    "event": "KXMLSGAME-26OCT28TORDCU",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT28TORDCU-TIE",
+    "kickoff": 1793230200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1793236162,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-28",
+    "prints": 3947,
+    "quote_ts": 1793226600,
+    "roi": -0.0582,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1793230200,
+    "event": "KXMLSGAME-26OCT28ATXRSL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT28ATXRSL-TIE",
+    "kickoff": 1793233800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1793240411,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-28",
+    "prints": 3750,
+    "quote_ts": 1793230260,
+    "roi": -0.0572,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.18,
+    "bid": 0.17,
+    "check": "verified",
+    "cost": 0.19033,
+    "entry_ts": 1793230200,
+    "event": "KXMLSGAME-26OCT28CHIORL",
+    "hold": 4.254,
+    "id": "KXMLSGAME-26OCT28CHIORL-TIE",
+    "kickoff": 1793233800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1793239772,
+      "target": 0.36
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1793240442,
+      "target": 0.54
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-28",
+    "prints": 8634,
+    "quote_ts": 1793230260,
+    "roi": 1.3423,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1793230200,
+    "event": "KXMLSGAME-26OCT28DALCLB",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT28DALCLB-TIE",
+    "kickoff": 1793233800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-28",
+    "prints": 2769,
+    "quote_ts": 1793230260,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.18,
+    "bid": 0.17,
+    "check": "verified",
+    "cost": 0.19033,
+    "entry_ts": 1793230200,
+    "event": "KXMLSGAME-26OCT28MINSKC",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT28MINSKC-TIE",
+    "kickoff": 1793233800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1793239910,
+      "target": 0.36
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.54
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-28",
+    "prints": 2336,
+    "quote_ts": 1793230260,
+    "roi": -0.0649,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1793230200,
+    "event": "KXMLSGAME-26OCT28NSHPHI",
+    "hold": 3.1255,
+    "id": "KXMLSGAME-26OCT28NSHPHI-TIE",
+    "kickoff": 1793233800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1793238907,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1793240425,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-28",
+    "prints": 3644,
+    "quote_ts": 1793230260,
+    "roi": 1.3555,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1793230200,
+    "event": "KXMLSGAME-26OCT28STLPOR",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT28STLPOR-TIE",
+    "kickoff": 1793233800,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-28",
+    "prints": 2172,
+    "quote_ts": 1793230260,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1793237400,
+    "event": "KXMLSGAME-26OCT28SEAHOU",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT28SEAHOU-TIE",
+    "kickoff": 1793241000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1793247746,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-28",
+    "prints": 3767,
+    "quote_ts": 1793237460,
+    "roi": -0.0592,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.27,
+    "bid": 0.26,
+    "check": "verified",
+    "cost": 0.2838,
+    "entry_ts": 1793237400,
+    "event": "KXMLSGAME-26OCT28SJCOL",
+    "hold": 2.5236,
+    "id": "KXMLSGAME-26OCT28SJCOL-TIE",
+    "kickoff": 1793241000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1793247719,
+      "target": 0.54
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1793248315,
+      "target": 0.81
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-28",
+    "prints": 7696,
+    "quote_ts": 1793237460,
+    "roi": 1.3661,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.18,
+    "bid": 0.17,
+    "check": "verified",
+    "cost": 0.19033,
+    "entry_ts": 1793237400,
+    "event": "KXMLSGAME-26OCT28VANSD",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT28VANSD-TIE",
+    "kickoff": 1793241000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.36
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.54
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-28",
+    "prints": 1445,
+    "quote_ts": 1793237460,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.22,
+    "bid": 0.21,
+    "check": "verified",
+    "cost": 0.23201,
+    "entry_ts": 1793462400,
+    "event": "KXMLSGAME-26OCT31CLTORL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT31CLTORL-TIE",
+    "kickoff": 1793466000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.44
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.66
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-31",
+    "prints": 1510,
+    "quote_ts": 1793462400,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1793466000,
+    "event": "KXMLSGAME-26OCT31CINPHI",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT31CINPHI-TIE",
+    "kickoff": 1793469600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1793476018,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-31",
+    "prints": 3758,
+    "quote_ts": 1793466060,
+    "roi": -0.0582,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.19,
+    "bid": 0.18,
+    "check": "verified",
+    "cost": 0.20077,
+    "entry_ts": 1793466000,
+    "event": "KXMLSGAME-26OCT31CLBDCU",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT31CLBDCU-TIE",
+    "kickoff": 1793469600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.38
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.57
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-31",
+    "prints": 490,
+    "quote_ts": 1793466060,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.2,
+    "bid": 0.18,
+    "check": "verified",
+    "cost": 0.2112,
+    "entry_ts": 1793466000,
+    "event": "KXMLSGAME-26OCT31NYCMTL",
+    "hold": 3.7348,
+    "id": "KXMLSGAME-26OCT31NYCMTL-TIE",
+    "kickoff": 1793469600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1793476737,
+      "target": 0.4
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1793476737,
+      "target": 0.6
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-31",
+    "prints": 2862,
+    "quote_ts": 1793466060,
+    "roi": 1.3475,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "unverified",
+    "cost": 0.25277,
+    "entry_ts": 1793469600,
+    "event": "KXMLSGAME-26OCT31SKCDAL",
+    "hold": 2.9562,
+    "id": "KXMLSGAME-26OCT31SKCDAL-TIE",
+    "kickoff": 1793473200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1793479190,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1793480092,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-31",
+    "prints": 5826,
+    "quote_ts": 1793469660,
+    "roi": 1.3581,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": true
+   },
+   {
+    "ask": 0.21,
+    "bid": 0.2,
+    "check": "verified",
+    "cost": 0.22161,
+    "entry_ts": 1793469600,
+    "event": "KXMLSGAME-26OCT31STLSD",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT31STLSD-TIE",
+    "kickoff": 1793473200,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.42
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.63
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-31",
+    "prints": 2555,
+    "quote_ts": 1793469660,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.18,
+    "bid": 0.17,
+    "check": "verified",
+    "cost": 0.19033,
+    "entry_ts": 1793476800,
+    "event": "KXMLSGAME-26OCT31LAGATX",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT31LAGATX-TIE",
+    "kickoff": 1793480400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.36
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.54
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-31",
+    "prints": 1132,
+    "quote_ts": 1793476860,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.25,
+    "bid": 0.24,
+    "check": "verified",
+    "cost": 0.26312,
+    "entry_ts": 1793476800,
+    "event": "KXMLSGAME-26OCT31SJRSL",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT31SJRSL-TIE",
+    "kickoff": 1793480400,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.5
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.75
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-31",
+    "prints": 3599,
+    "quote_ts": 1793476860,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.26,
+    "bid": 0.25,
+    "check": "verified",
+    "cost": 0.27347,
+    "entry_ts": 1793493000,
+    "event": "KXMLSGAME-26OCT31COLCHI",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26OCT31COLCHI-TIE",
+    "kickoff": 1793496600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.52
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.78
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-10-31",
+    "prints": 7087,
+    "quote_ts": 1793493060,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1793561400,
+    "event": "KXMLSGAME-26NOV01VANSEA",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26NOV01VANSEA-TIE",
+    "kickoff": 1793565000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-11-01",
+    "prints": 716,
+    "quote_ts": 1793561460,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1793565000,
+    "event": "KXMLSGAME-26NOV01ATLTOR",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26NOV01ATLTOR-TIE",
+    "kickoff": 1793568600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-11-01",
+    "prints": 1474,
+    "quote_ts": 1793565060,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.19,
+    "bid": 0.18,
+    "check": "verified",
+    "cost": 0.20077,
+    "entry_ts": 1793565000,
+    "event": "KXMLSGAME-26NOV01NSHNYRB",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26NOV01NSHNYRB-TIE",
+    "kickoff": 1793568600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1793575166,
+      "target": 0.38
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1793575609,
+      "target": 0.57
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-11-01",
+    "prints": 12873,
+    "quote_ts": 1793565060,
+    "roi": 1.3449,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.23,
+    "bid": 0.22,
+    "check": "verified",
+    "cost": 0.2424,
+    "entry_ts": 1793574000,
+    "event": "KXMLSGAME-26NOV01NEMIA",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26NOV01NEMIA-TIE",
+    "kickoff": 1793577600,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": 1793584526,
+      "target": 0.46
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": 1793585434,
+      "target": 0.69
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-11-01",
+    "prints": 16574,
+    "quote_ts": 1793574060,
+    "roi": 1.3555,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.21,
+    "bid": 0.2,
+    "check": "verified",
+    "cost": 0.22161,
+    "entry_ts": 1793579400,
+    "event": "KXMLSGAME-26NOV01LAFCMIN",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26NOV01LAFCMIN-TIE",
+    "kickoff": 1793583000,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.42
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.63
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-11-01",
+    "prints": 4128,
+    "quote_ts": 1793579460,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   },
+   {
+    "ask": 0.24,
+    "bid": 0.23,
+    "check": "verified",
+    "cost": 0.25277,
+    "entry_ts": 1793583900,
+    "event": "KXMLSGAME-26NOV01PORHOU",
+    "hold": -1.0,
+    "id": "KXMLSGAME-26NOV01PORHOU-TIE",
+    "kickoff": 1793587500,
+    "legs": [
+     {
+      "multiple": 2.0,
+      "sold_ts": null,
+      "target": 0.48
+     },
+     {
+      "multiple": 3.0,
+      "sold_ts": null,
+      "target": 0.72
+     }
+    ],
+    "logged": "2026-11-07T19:46:14.927733+00:00",
+    "matchday": "2026-11-01",
+    "prints": 6429,
+    "quote_ts": 1793583960,
+    "roi": -1.0,
+    "title": "Tie is the result",
+    "version": "mlstie-v1",
+    "won": false
+   }
+  ],
+  "skips": {},
+  "window": [
+   "2026-08-01",
+   "2026-11-07"
+  ]
+ },
+ "lane": "mls_tie_split",
+ "last_run": null,
+ "since": "2026-11-08",
+ "skips": {},
+ "version": "mlstie-v1"
+}
