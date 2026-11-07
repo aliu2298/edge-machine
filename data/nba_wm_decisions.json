@@ -2249,6 +2249,45 @@
    "yes_ask": 0.16,
    "yes_bid": 0.14
   },
+  "no:KXNBAWINMARGIN-26NOV06MINNOP-MIN21PLUS": {
+   "bot_version": "wm-nofade-v3",
+   "bucket": "MIN21PLUS",
+   "decided_at": "2026-11-07T00:15:56+00:00",
+   "event": "KXNBAWINMARGIN-26NOV06MINNOP",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV06",
+   "ticker": "KXNBAWINMARGIN-26NOV06MINNOP-MIN21PLUS",
+   "tip": "2026-11-07T01:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
+  "no:KXNBAWINMARGIN-26NOV06MINNOP-MIN6TO10": {
+   "bot_version": "wm-nofade-v3",
+   "bucket": "MIN6TO10",
+   "decided_at": "2026-11-07T00:15:56+00:00",
+   "event": "KXNBAWINMARGIN-26NOV06MINNOP",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV06",
+   "ticker": "KXNBAWINMARGIN-26NOV06MINNOP-MIN6TO10",
+   "tip": "2026-11-07T01:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
+  "no:KXNBAWINMARGIN-26NOV06MINNOP-NOP11TO20": {
+   "bot_version": "wm-nofade-v3",
+   "bucket": "NOP11TO20",
+   "decided_at": "2026-11-07T00:15:56+00:00",
+   "event": "KXNBAWINMARGIN-26NOV06MINNOP",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV06",
+   "ticker": "KXNBAWINMARGIN-26NOV06MINNOP-NOP11TO20",
+   "tip": "2026-11-07T01:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "no:KXNBAWINMARGIN-26NOV06MINNOP-NOP1TO5": {
    "P": 0.91,
    "bot_version": "wm-nofade-v3",
@@ -2268,6 +2307,19 @@
    "why": null,
    "yes_ask": 0.13,
    "yes_bid": 0.09
+  },
+  "no:KXNBAWINMARGIN-26NOV06MINNOP-NOP21PLUS": {
+   "bot_version": "wm-nofade-v3",
+   "bucket": "NOP21PLUS",
+   "decided_at": "2026-11-07T00:15:56+00:00",
+   "event": "KXNBAWINMARGIN-26NOV06MINNOP",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV06",
+   "ticker": "KXNBAWINMARGIN-26NOV06MINNOP-NOP21PLUS",
+   "tip": "2026-11-07T01:00:00+00:00",
+   "why": "no tight read inside the entry window"
   },
   "no:KXNBAWINMARGIN-26NOV06MINNOP-NOP6TO10": {
    "P": 0.91,
@@ -2327,6 +2379,32 @@
    "why": null,
    "yes_ask": 0.1,
    "yes_bid": 0.07
+  },
+  "no:KXNBAWINMARGIN-26NOV06OKCMEM-MEM21PLUS": {
+   "bot_version": "wm-nofade-v3",
+   "bucket": "MEM21PLUS",
+   "decided_at": "2026-11-07T00:15:56+00:00",
+   "event": "KXNBAWINMARGIN-26NOV06OKCMEM",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV06",
+   "ticker": "KXNBAWINMARGIN-26NOV06OKCMEM-MEM21PLUS",
+   "tip": "2026-11-07T01:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
+  "no:KXNBAWINMARGIN-26NOV06OKCMEM-MEM6TO10": {
+   "bot_version": "wm-nofade-v3",
+   "bucket": "MEM6TO10",
+   "decided_at": "2026-11-07T00:15:56+00:00",
+   "event": "KXNBAWINMARGIN-26NOV06OKCMEM",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV06",
+   "ticker": "KXNBAWINMARGIN-26NOV06OKCMEM-MEM6TO10",
+   "tip": "2026-11-07T01:00:00+00:00",
+   "why": "no tight read inside the entry window"
   },
   "no:KXNBAWINMARGIN-26NOV06OKCMEM-OKC11TO20": {
    "P": 0.84,
@@ -2564,6 +2642,19 @@
    "yes_ask": 0.2,
    "yes_bid": 0.16
   },
+  "no:KXNBAWINMARGIN-26NOV06TORMIL-MIL11TO20": {
+   "bot_version": "wm-nofade-v3",
+   "bucket": "MIL11TO20",
+   "decided_at": "2026-11-07T00:15:56+00:00",
+   "event": "KXNBAWINMARGIN-26NOV06TORMIL",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV06",
+   "ticker": "KXNBAWINMARGIN-26NOV06TORMIL-MIL11TO20",
+   "tip": "2026-11-07T01:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "no:KXNBAWINMARGIN-26NOV06TORMIL-MIL1TO5": {
    "P": 0.91,
    "bot_version": "wm-nofade-v3",
@@ -2583,6 +2674,32 @@
    "why": null,
    "yes_ask": 0.13,
    "yes_bid": 0.09
+  },
+  "no:KXNBAWINMARGIN-26NOV06TORMIL-MIL21PLUS": {
+   "bot_version": "wm-nofade-v3",
+   "bucket": "MIL21PLUS",
+   "decided_at": "2026-11-07T00:15:56+00:00",
+   "event": "KXNBAWINMARGIN-26NOV06TORMIL",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV06",
+   "ticker": "KXNBAWINMARGIN-26NOV06TORMIL-MIL21PLUS",
+   "tip": "2026-11-07T01:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
+  "no:KXNBAWINMARGIN-26NOV06TORMIL-MIL6TO10": {
+   "bot_version": "wm-nofade-v3",
+   "bucket": "MIL6TO10",
+   "decided_at": "2026-11-07T00:15:56+00:00",
+   "event": "KXNBAWINMARGIN-26NOV06TORMIL",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV06",
+   "ticker": "KXNBAWINMARGIN-26NOV06TORMIL-MIL6TO10",
+   "tip": "2026-11-07T01:00:00+00:00",
+   "why": "no tight read inside the entry window"
   },
   "no:KXNBAWINMARGIN-26NOV06TORMIL-TOR11TO20": {
    "P": 0.84,
@@ -2724,6 +2841,32 @@
    "yes_ask": 0.16,
    "yes_bid": 0.13
   },
+  "no:KXNBAWINMARGIN-26NOV06UTADAL-DAL6TO10": {
+   "bot_version": "wm-nofade-v3",
+   "bucket": "DAL6TO10",
+   "decided_at": "2026-11-07T00:15:56+00:00",
+   "event": "KXNBAWINMARGIN-26NOV06UTADAL",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV06",
+   "ticker": "KXNBAWINMARGIN-26NOV06UTADAL-DAL6TO10",
+   "tip": "2026-11-07T01:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
+  "no:KXNBAWINMARGIN-26NOV06UTADAL-UTA11TO20": {
+   "bot_version": "wm-nofade-v3",
+   "bucket": "UTA11TO20",
+   "decided_at": "2026-11-07T00:15:56+00:00",
+   "event": "KXNBAWINMARGIN-26NOV06UTADAL",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV06",
+   "ticker": "KXNBAWINMARGIN-26NOV06UTADAL-UTA11TO20",
+   "tip": "2026-11-07T01:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "no:KXNBAWINMARGIN-26NOV06UTADAL-UTA1TO5": {
    "P": 0.89,
    "bot_version": "wm-nofade-v3",
@@ -2742,6 +2885,32 @@
    "why": "ask check: 6.62 contracts offered at or under 0.89 (under 10)",
    "yes_ask": 0.13,
    "yes_bid": 0.11
+  },
+  "no:KXNBAWINMARGIN-26NOV06UTADAL-UTA21PLUS": {
+   "bot_version": "wm-nofade-v3",
+   "bucket": "UTA21PLUS",
+   "decided_at": "2026-11-07T00:15:56+00:00",
+   "event": "KXNBAWINMARGIN-26NOV06UTADAL",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV06",
+   "ticker": "KXNBAWINMARGIN-26NOV06UTADAL-UTA21PLUS",
+   "tip": "2026-11-07T01:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
+  "no:KXNBAWINMARGIN-26NOV06UTADAL-UTA6TO10": {
+   "bot_version": "wm-nofade-v3",
+   "bucket": "UTA6TO10",
+   "decided_at": "2026-11-07T00:15:56+00:00",
+   "event": "KXNBAWINMARGIN-26NOV06UTADAL",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV06",
+   "ticker": "KXNBAWINMARGIN-26NOV06UTADAL-UTA6TO10",
+   "tip": "2026-11-07T01:00:00+00:00",
+   "why": "no tight read inside the entry window"
   },
   "no:KXNBAWINMARGIN-26NOV06WASATL-ATL11TO20": {
    "P": 0.79,
@@ -4147,6 +4316,19 @@
    "yes_ask": 0.16,
    "yes_bid": 0.14
   },
+  "yes:KXNBAWINMARGIN-26NOV06MINNOP-MIN6TO10": {
+   "bot_version": "wm-yes-v3",
+   "bucket": "MIN6TO10",
+   "decided_at": "2026-11-07T00:15:56+00:00",
+   "event": "KXNBAWINMARGIN-26NOV06MINNOP",
+   "lane": "nba_winmargin_live",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV06",
+   "ticker": "KXNBAWINMARGIN-26NOV06MINNOP-MIN6TO10",
+   "tip": "2026-11-07T01:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "yes:KXNBAWINMARGIN-26NOV06MINNOP-NOP1TO5": {
    "bot_version": "wm-yes-v3",
    "bucket": "NOP1TO5",
@@ -4197,6 +4379,19 @@
    "why": "ask check: 2 contracts offered at or under 0.10 (under 10)",
    "yes_ask": 0.1,
    "yes_bid": 0.07
+  },
+  "yes:KXNBAWINMARGIN-26NOV06OKCMEM-MEM6TO10": {
+   "bot_version": "wm-yes-v3",
+   "bucket": "MEM6TO10",
+   "decided_at": "2026-11-07T00:15:56+00:00",
+   "event": "KXNBAWINMARGIN-26NOV06OKCMEM",
+   "lane": "nba_winmargin_live",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV06",
+   "ticker": "KXNBAWINMARGIN-26NOV06OKCMEM-MEM6TO10",
+   "tip": "2026-11-07T01:00:00+00:00",
+   "why": "no tight read inside the entry window"
   },
   "yes:KXNBAWINMARGIN-26NOV06OKCMEM-OKC1TO5": {
    "bot_version": "wm-yes-v3",
@@ -4341,6 +4536,19 @@
    "yes_ask": 0.13,
    "yes_bid": 0.09
   },
+  "yes:KXNBAWINMARGIN-26NOV06TORMIL-MIL6TO10": {
+   "bot_version": "wm-yes-v3",
+   "bucket": "MIL6TO10",
+   "decided_at": "2026-11-07T00:15:56+00:00",
+   "event": "KXNBAWINMARGIN-26NOV06TORMIL",
+   "lane": "nba_winmargin_live",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV06",
+   "ticker": "KXNBAWINMARGIN-26NOV06TORMIL-MIL6TO10",
+   "tip": "2026-11-07T01:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "yes:KXNBAWINMARGIN-26NOV06TORMIL-TOR1TO5": {
    "bot_version": "wm-yes-v3",
    "bucket": "TOR1TO5",
@@ -4400,6 +4608,19 @@
    "yes_ask": 0.17,
    "yes_bid": 0.13
   },
+  "yes:KXNBAWINMARGIN-26NOV06UTADAL-DAL6TO10": {
+   "bot_version": "wm-yes-v3",
+   "bucket": "DAL6TO10",
+   "decided_at": "2026-11-07T00:15:56+00:00",
+   "event": "KXNBAWINMARGIN-26NOV06UTADAL",
+   "lane": "nba_winmargin_live",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV06",
+   "ticker": "KXNBAWINMARGIN-26NOV06UTADAL-DAL6TO10",
+   "tip": "2026-11-07T01:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "yes:KXNBAWINMARGIN-26NOV06UTADAL-UTA1TO5": {
    "bot_version": "wm-yes-v3",
    "bucket": "UTA1TO5",
@@ -4420,6 +4641,19 @@
    "why": null,
    "yes_ask": 0.13,
    "yes_bid": 0.11
+  },
+  "yes:KXNBAWINMARGIN-26NOV06UTADAL-UTA6TO10": {
+   "bot_version": "wm-yes-v3",
+   "bucket": "UTA6TO10",
+   "decided_at": "2026-11-07T00:15:56+00:00",
+   "event": "KXNBAWINMARGIN-26NOV06UTADAL",
+   "lane": "nba_winmargin_live",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV06",
+   "ticker": "KXNBAWINMARGIN-26NOV06UTADAL-UTA6TO10",
+   "tip": "2026-11-07T01:00:00+00:00",
+   "why": "no tight read inside the entry window"
   },
   "yes:KXNBAWINMARGIN-26NOV06WASATL-ATL1TO5": {
    "bot_version": "wm-yes-v3",
@@ -4490,6 +4724,6 @@
    "why": "no tight read inside the entry window"
   }
  },
- "updated_at": "2026-11-07T00:09:17+00:00",
+ "updated_at": "2026-11-07T00:15:56+00:00",
  "version": 1
 }
