@@ -205,6 +205,11 @@
    "at": "2026-11-07T14:03:40.378413+00:00",
    "pool": "entered"
   },
+  "[\"soccer_rules_ledger.json\", \"B2\", [\"B2:KXLALIGATOTAL-26NOV07VCFRMA\", \"yes\"]]": {
+   "at": "2026-11-07T18:44:59.025179+00:00",
+   "entries": "entered",
+   "pool": "entered"
+  },
   "[\"soccer_rules_ledger.json\", \"B4\", [\"B4:KXSCOTTISHPREMTOTAL-26NOV07ABEHIB\", \"no\"]]": {
    "at": "2026-11-07T16:43:15.762503+00:00",
    "pool": "entered"
@@ -856,11 +861,99 @@
    "sport": "Soccer",
    "src": "sandbox",
    "status": "open"
+  },
+  {
+   "contract": "KXLALIGATOTAL-26NOV07VCFRMA-4",
+   "entered_at": "2026-11-07T18:44:59.025179+00:00",
+   "entities": [
+    "Valencia",
+    "Real Madrid"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"B2\", [\"B2:KXLALIGATOTAL-26NOV07VCFRMA\", \"yes\"]]",
+   "lane": "B2",
+   "logged": "2026-11-07T18:31:50.617589+00:00",
+   "matched": [
+    "Real Madrid"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"B2\", [\"B2:KXLALIGATOTAL-26NOV07VCFRMA\", \"yes\"]]",
+   "price": 0.45,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": {
+    "as_of": "2026-11-07T18:31:50.617589+00:00",
+    "names": [
+     {
+      "bets": 11,
+      "name": "Real Madrid",
+      "profit": 11.0395,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Napoli",
+      "profit": 5.7771,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Como",
+      "profit": 5.7566,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Manchester United",
+      "profit": 5.3737,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 19,
+      "name": "Bitcoin",
+      "profit": 5.0941,
+      "sport": "Crypto"
+     },
+     {
+      "bets": 5,
+      "name": "Charlotte FC",
+      "profit": 4.7894,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Bayern Munich",
+      "profit": 3.8901,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "AFC Bournemouth",
+      "profit": 3.7752,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "AS Roma",
+      "profit": 3.7712,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Columbus Crew",
+      "profit": 3.628,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-07T18:33:33.518683+00:00",
+ "last_run": "2026-11-07T18:44:59.025179+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -2376,6 +2469,31 @@
    "scope": null,
    "settled": null,
    "side": "no",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXLALIGATOTAL-26NOV07VCFRMA-4",
+   "entered_at": "2026-11-07T18:44:59.025179+00:00",
+   "entities": [
+    "Valencia",
+    "Real Madrid"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"B2\", [\"B2:KXLALIGATOTAL-26NOV07VCFRMA\", \"yes\"]]",
+   "lane": "B2",
+   "logged": "2026-11-07T18:31:50.617589+00:00",
+   "matched": [
+    "Real Madrid",
+    "Valencia"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"B2\", [\"B2:KXLALIGATOTAL-26NOV07VCFRMA\", \"yes\"]]",
+   "price": 0.45,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
