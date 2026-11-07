@@ -134425,6 +134425,58 @@
   "venue": "polymarket_us"
  },
  {
+  "bet": true,
+  "close_at": "2026-09-22T07:44:50+00:00",
+  "close_price": 0.4786,
+  "date": "2026-09-22",
+  "edge": null,
+  "id": "tennis_combo3:combo3:2026-09-22:f65b14d1b3",
+  "label": "3-leg tennis combo: Henry Searle + Trevor Svajda + Lanlana Tararudee",
+  "legs": [
+   {
+    "market_id": "KXATPCHALLENGERMATCH-26SEP22ZHUSEA",
+    "pick": "b",
+    "venue": "kalshi"
+   },
+   {
+    "market_id": "KXATPCHALLENGERMATCH-26SEP22ARUSVA",
+    "pick": "b",
+    "venue": "kalshi"
+   },
+   {
+    "market_id": "KXWTAMATCH-26SEP22TARPAR",
+    "pick": "a",
+    "venue": "kalshi"
+   }
+  ],
+  "liquidity": null,
+  "logged": "2026-09-22T07:44:50+00:00",
+  "market_id": "combo3:2026-09-22:f65b14d1b3",
+  "pick": "a",
+  "pnl": 108.94,
+  "price": 0.4786,
+  "price_a": 0.4786,
+  "price_b": 0.5214,
+  "price_draw": null,
+  "prob_a": null,
+  "result": "a",
+  "settled": "2026-09-23T05:08:58+00:00",
+  "side_a": "All 3 win",
+  "side_b": "Any one loses",
+  "source": "tennis_combo3",
+  "sport": "tennis_combo",
+  "spread": null,
+  "stake": 100.0,
+  "start": "2026-09-22T18:00:00+00:00",
+  "start_source": null,
+  "status": "won",
+  "uncovered": null,
+  "untraded": false,
+  "url": "https://kalshi.com/combos",
+  "venue": "combo",
+  "venue_start": null
+ },
+ {
   "bet": false,
   "compact": true,
   "id": "polymarket_us:aec-itfme-neonie-patalv-2026-09-22",
