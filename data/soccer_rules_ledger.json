@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-07T13:31:26.816952+00:00",
+ "last_run": "2026-11-07T13:46:38.031048+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -1612,7 +1612,31 @@
    ]
   },
   "C2": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.47,
+     "bid": 0.46,
+     "event": "KXLALIGATOTAL-26NOV07ESPDEP",
+     "group": "C",
+     "id": "C2:KXLALIGATOTAL-26NOV07ESPDEP",
+     "labels": {
+      "away": "O+D-",
+      "home": "O-D-"
+     },
+     "league": "La Liga",
+     "line": 2.5,
+     "logged": "2026-11-07T13:46:38.031048+00:00",
+     "match": "Espanyol v Deportivo",
+     "price": 0.47,
+     "rule": "C2",
+     "side": "yes",
+     "start": "2026-11-07T15:15Z",
+     "status": "open",
+     "ticker": "KXLALIGATOTAL-26NOV07ESPDEP-3",
+     "title": "Will over 2.5 goals be scored?",
+     "why": "Espanyol O-D- v Deportivo O+D- \u00b7 Over 2.5 YES 0.47"
+    }
+   ]
   },
   "C3": {
    "picks": [
@@ -4174,14 +4198,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-02T16:31:50.276219+00:00",
-   "candidates": 0,
-   "due": 2,
-   "labelled": 2,
-   "matched": 0,
-   "new": 0
-  },
-  {
    "at": "2026-11-02T18:16:54.740410+00:00",
    "candidates": 0,
    "due": 2,
@@ -4579,6 +4595,14 @@
    "due": 10,
    "labelled": 10,
    "matched": 2,
+   "new": 1
+  },
+  {
+   "at": "2026-11-07T13:46:38.031048+00:00",
+   "candidates": 3,
+   "due": 9,
+   "labelled": 9,
+   "matched": 3,
    "new": 1
   }
  ],
