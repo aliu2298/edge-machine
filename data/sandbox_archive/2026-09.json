@@ -135531,6 +135531,107 @@
   "venue": "polymarket_us"
  },
  {
+  "bet": true,
+  "close_at": "2026-09-22T05:23:12+00:00",
+  "close_price": 0.6696,
+  "date": "2026-09-22",
+  "edge": null,
+  "id": "tennis_combo2:combo2:2026-09-22:3d372a85fa",
+  "label": "2-leg tennis combo: Maya Joint + Amanda Anisimova",
+  "legs": [
+   {
+    "market_id": "KXWTAMATCH-26SEP22BACJOI",
+    "pick": "b",
+    "venue": "kalshi"
+   },
+   {
+    "market_id": "KXWTAMATCH-26SEP22GIBANI",
+    "pick": "b",
+    "venue": "kalshi"
+   }
+  ],
+  "liquidity": null,
+  "logged": "2026-09-22T05:23:12+00:00",
+  "market_id": "combo2:2026-09-22:3d372a85fa",
+  "pick": "a",
+  "pnl": 17.98,
+  "price": 0.6696,
+  "price_a": 0.6696,
+  "price_b": 0.3304,
+  "price_draw": null,
+  "prob_a": null,
+  "result": "price",
+  "settle_px": 0.79,
+  "settled": "2026-09-23T07:47:21+00:00",
+  "side_a": "All 2 win",
+  "side_b": "Any one loses",
+  "source": "tennis_combo2",
+  "sport": "tennis_combo",
+  "spread": null,
+  "stake": 100.0,
+  "start": "2026-09-23T03:00:00+00:00",
+  "start_source": null,
+  "status": "settled",
+  "uncovered": null,
+  "untraded": false,
+  "url": "https://kalshi.com/combos",
+  "venue": "combo",
+  "venue_start": null
+ },
+ {
+  "bet": true,
+  "close_at": "2026-09-22T05:23:12+00:00",
+  "close_price": 0.557,
+  "date": "2026-09-22",
+  "edge": null,
+  "id": "tennis_combo3:combo3:2026-09-22:a94dc1f023",
+  "label": "3-leg tennis combo: Maya Joint + Amanda Anisimova + Alina Korneeva",
+  "legs": [
+   {
+    "market_id": "KXWTAMATCH-26SEP22BACJOI",
+    "pick": "b",
+    "venue": "kalshi"
+   },
+   {
+    "market_id": "KXWTAMATCH-26SEP22GIBANI",
+    "pick": "b",
+    "venue": "kalshi"
+   },
+   {
+    "market_id": "KXWTAMATCH-26SEP22KORAST",
+    "pick": "a",
+    "venue": "kalshi"
+   }
+  ],
+  "liquidity": null,
+  "logged": "2026-09-22T05:23:12+00:00",
+  "market_id": "combo3:2026-09-22:a94dc1f023",
+  "pick": "a",
+  "pnl": 41.83,
+  "price": 0.557,
+  "price_a": 0.557,
+  "price_b": 0.443,
+  "price_draw": null,
+  "prob_a": null,
+  "result": "price",
+  "settle_px": 0.79,
+  "settled": "2026-09-23T07:47:21+00:00",
+  "side_a": "All 3 win",
+  "side_b": "Any one loses",
+  "source": "tennis_combo3",
+  "sport": "tennis_combo",
+  "spread": null,
+  "stake": 100.0,
+  "start": "2026-09-23T03:00:00+00:00",
+  "start_source": null,
+  "status": "settled",
+  "uncovered": null,
+  "untraded": false,
+  "url": "https://kalshi.com/combos",
+  "venue": "combo",
+  "venue_start": null
+ },
+ {
   "bet": false,
   "compact": true,
   "id": "pinnacle:KXWTAMATCH-26SEP22OLICHW",
