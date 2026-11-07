@@ -1575,7 +1575,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
 <td class="num">{whole['n']}<div class="sm mut">settled</div></td>
 <td class="num"><span class="{tone(whole['roi_fee'], whole['n'])}">{pct(whole['roi_fee'])}</span><div class="sm mut">after fees</div></td>
 <td class="num">{clv}<div class="sm mut">v the close</div></td>
-<td class="num">{'<span class="mut">no live<br>orders yet</span>' if no_orders else (PL.wfl(live) if live.get("wfl") else T.record_html(live))}{'' if no_orders else f'<div class="sm mut">{esc(since_note)}</div>'}{live_rec}</td>
+<td class="num">{'<span class="mut">no live<br>orders<br>yet</span>' if no_orders else (PL.wfl(live) if live.get("wfl") else T.record_html(live))}{'' if no_orders else f'<div class="sm mut">{esc(since_note)}</div>'}{live_rec}</td>
 <td class="num"><span class="{tone(live['roi_fee'], live['n'] >= EARLY_N)}">{pct(live['roi_fee'])}</span>{'<div class="sm mut">too early</div>' if 0 < live['n'] < EARLY_N else ''}{live_roi}</td>
 <td class="num light">{light} <span class="sm mut">{esc(why)}</span></td>
 <td class="num"><span class="{reach_tone}">{reach}</span><div class="sm mut">reachable</div></td>
