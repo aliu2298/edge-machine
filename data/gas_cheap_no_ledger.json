@@ -713,19 +713,70 @@
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.69
     }
    ],
    "logged": "2026-11-06T15:58:39.442827+00:00",
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.0146,
    "price": 0.23,
+   "roi": -0.0601,
+   "roi_2x": 0.8798,
+   "roi_held": -1.0,
+   "settled": "2026-11-07T15:43:16.155849+00:00",
    "side": "no",
    "spread": 0.04,
    "spread_cost": null,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Above 4.0350"
+  },
+  {
+   "ask_check": {
+    "book": null,
+    "first_quotes": true,
+    "how": "print",
+    "last_trade": 0.21,
+    "printed": 20403.2,
+    "source": "replayed",
+    "status": "verified"
+   },
+   "bid": 0.17,
+   "entry_at": "2026-11-07T13:02:00+00:00",
+   "event": "KXAAAGASD-26NOV08",
+   "id": "KXAAAGASD-26NOV08-4.0150",
+   "last_trade": 0.21,
+   "last_trade_at": "2026-11-07T13:02:00+00:00",
+   "legs": [
+    {
+     "fill_px": 0.44,
+     "filled_at": "2026-11-07T14:00:00+00:00",
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.44
+    },
+    {
+     "fill_px": 0.66,
+     "filled_at": "2026-11-07T14:00:00+00:00",
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.66
+    }
+   ],
+   "logged": "2026-11-07T15:43:16.155849+00:00",
+   "payout": null,
+   "pnl": 0.3139,
+   "price": 0.22,
+   "roi": 1.3528,
+   "roi_2x": 0.8779,
+   "side": "no",
+   "spread": 0.05,
+   "spread_cost": 0.01,
+   "status": "filled",
+   "traded_to_entry": 42.0,
+   "word": "Above 4.0150"
   }
  ],
  "error": null,
@@ -737,6 +788,7 @@
   "KXAAAGASD-26NOV05": "2026-11-04T15:29:44.093460+00:00",
   "KXAAAGASD-26NOV06": "2026-11-05T17:00:35.833923+00:00",
   "KXAAAGASD-26NOV07": "2026-11-06T15:58:39.442827+00:00",
+  "KXAAAGASD-26NOV08": "2026-11-07T15:43:16.155849+00:00",
   "KXAAAGASD-26OCT27": "2026-10-27T03:36:13.936099+00:00",
   "KXAAAGASD-26OCT28": "2026-10-27T13:18:27.785504+00:00",
   "KXAAAGASD-26OCT29": "2026-10-28T13:05:29.619697+00:00",
@@ -744,16 +796,16 @@
   "KXAAAGASD-26OCT31": "2026-10-30T14:57:20.807863+00:00"
  },
  "lane": "gas_cheap_no",
- "last_success": "2026-11-07T08:53:00.551838+00:00",
+ "last_success": "2026-11-07T15:43:16.155849+00:00",
  "observations": {
-  "at": "2026-11-07T08:53:00.551838+00:00",
+  "at": "2026-11-07T15:43:16.155849+00:00",
   "checking": 0,
-  "entered": 0,
-  "events": 1,
-  "filled": 0,
+  "entered": 1,
+  "events": 2,
+  "filled": 2,
   "skipped": 0,
   "unverified": 0,
-  "waiting": 0
+  "waiting": 16
  },
  "skips": {
   "KXAAAGASD-26NOV01-4.1450": {
