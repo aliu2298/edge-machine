@@ -4954,10 +4954,10 @@ OWN_LEDGER_LABELS = {
     "st_t7": "O+D+ v O+D+ · team 3+ goals · NO",
     "o35_cheap_no_wave": "Over 3.5 cheap NO (live)",
     "top5_goalless_dip_live": "Top-5 goalless dip (live)",
-    "nba_winmargin_live": "Win margin YES split (live, v2)",
-    "nba_wm_nofade": "Win margin NO fade (live, v2)",
-    "nba_winmargin_v3": "Win margin YES split (live, v3)",
-    "nba_wm_nofade_v3": "Win margin NO fade (live, v3)",
+    "nba_winmargin_live": "Win margin YES split (v2)",
+    "nba_wm_nofade": "Win margin NO fade (v2)",
+    "nba_winmargin_v3": "Win margin YES split (v3)",
+    "nba_wm_nofade_v3": "Win margin NO fade (v3)",
 }
 
 

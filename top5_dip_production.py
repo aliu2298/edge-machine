@@ -98,26 +98,35 @@ def _codes(event):
 
 
 def _result_quote(e):
-    """One counted fill of the live paper record as a Sandbox-style quote, or None. A bid that never filled is not a bet."""
+    """One counted fill of the live paper record as a Sandbox-style quote, or None. A bid that never filled is not a bet.
+
+    A PROVISIONAL entry (the market has not settled yet) is already a sold trade when its sell filled at P, and an open one when the fill is
+    still held: it reads "sold at P" or "filled, open" and is completed with its result when Kalshi settles."""
     b = (e.get("buys") or {}).get(A.vkey(FRACTION))
     if not b or not b.get("counted") or str(e.get("matchday") or "") < MOVED_ON:
         return None
+    provisional = bool(e.get("provisional"))
     cost = b["limit"] + A.fee(b["limit"])
-    proceeds = (e["p"] - A.fee(e["p"])) if b["sold"] else b["payout"]
-    roi = (proceeds - cost) / cost
     kick = dt.datetime.fromtimestamp(e["kickoff"], UTC)
     logged = dt.datetime.fromtimestamp(b["fill_at"], UTC)
     over = e.get("result") == "yes"
+    if provisional and not b["sold"]:
+        status, roi, rule, result = "open", 0.0, "filled, open", None
+    else:
+        proceeds = (e["p"] - A.fee(e["p"])) if b["sold"] else b["payout"]
+        roi = (proceeds - cost) / cost
+        status, rule = ("won" if roi > 0 else "lost"), ("sold at P" if b["sold"] else "held to settlement")
+        result = None if provisional else ("a" if over else "b")
     return dict(
         id=f"{LANE}:{e['id']}", source=LANE, sport=SPORT, venue="kalshi_binary", market_id=e["id"], event=e.get("event"),
         label=f"{_event_label(e.get('event'))} · {e.get('league')}: over 1.5 goals (dip bid)",
         side_a="Yes", side_b="No", kalshi_title="Over 1.5 goals", league=FEED_LEAGUE.get(e.get("league"), e.get("league")), date=kick.date().isoformat(),
         start=kick.isoformat(), logged=logged.isoformat(), price=b["limit"], price_a=b["limit"], price_b=None, price_draw=None,
-        pick="a", bet=True, stake=100.0, status="won" if roi > 0 else "lost", pnl=round(roi * 100, 2),
+        pick="a", bet=True, stake=100.0, status=status, pnl=round(roi * 100, 2),
         pnl_fee_override=round(roi * 100, 2),            # the sell at P, not a re-grade of a dip fill paid at settlement
-        result="a" if over else "b", settle_px=None, settled=None, prob_a=None, edge=None, untraded=False,
+        result=result, settle_px=None, settled=None, prob_a=None, edge=None, untraded=False,
         start_source="espn", url="", espn_home=_codes(e.get("event"))[0], espn_away=_codes(e.get("event"))[1],
-        rule=("sold at P" if b["sold"] else "held to settlement"))
+        rule=rule)
 
 
 def _open_quote(lead):

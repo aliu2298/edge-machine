@@ -129,6 +129,13 @@ def live_cell(lane, live):
     orders = ((live or {}).get("lanes") or {}).get(LIVE_KEY[lane]) or []
     if not orders:
         return '<span class="mut">—</span>'
+    if PL.current_schema(orders):
+        # each entry as a trade after fees: the sells the follower logged plus the unsold remainder (2026-11-07)
+        t = PL.own_summary(orders)
+        roi = "" if t["roi"] is None else f' <small class="mut">{t["roi"] * 100:+.1f}%</small>'
+        legs = f' <small class="mut">· legs 2x {t["legs2"]}, 3x {t["legs3"]}</small>' if t["split"] else ""
+        open_ = f' <small class="mut">· {t["open"]} open</small>' if t["open"] else ""
+        return f'{t["won"]}–{t["lost"]}{roi}{legs}{open_}'
     rec = PL.record(orders)
     tail = f' <small class="mut">· {rec["open"]} open</small>' if rec["open"] else ""
     if LIVE_KEY[lane] in PL.EXITS and not rec["sold"]:
@@ -335,7 +342,11 @@ def tiles(rows_, d, st, live):
     lrec = PL.record(orders) if orders else None
     yes_pending = not PL.record(((live or {}).get("lanes") or {}).get("nba_wm_yes") or [])["sold"]
     live_big = f'{lrec["won"]}–{lrec["lost"]}' if lrec and lrec["n"] else "—"
-    live_label = "live record · held to settlement" + (" · YES exits pending" if yes_pending else "")
+    if orders and PL.current_schema(orders):
+        live_big = f'{PL.own_summary(orders)["won"]}–{PL.own_summary(orders)["lost"]}'
+        live_label = "live record · trades after fees"
+    else:
+        live_label = "live record · held to settlement" + (" · YES exits pending" if yes_pending else "")
     return ('<div class="tiles sp-tiles">'
             f'<div class="tile"><b>{lrec["open"] if lrec else 0}</b><span>open bets · live</span></div>'
             f'<div class="tile"><b>{sum(1 for r in rows_ if r.get("v") != "retired")}</b><span>active lanes</span></div>'

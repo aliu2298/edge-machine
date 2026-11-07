@@ -60,19 +60,73 @@ for label, bad in (("a dollar sign", dict(id="Above $94", ko="x", side="yes", st
     except X.Refused:
         check(f"refuses {label}", "refused", "refused")
 
-print("\nthe own-state lanes use their own fill and the market result")
+print("\nthe own-state lanes are TRADES after fees: the logged sells plus the unsold remainder at settlement")
+fee = X.fee_per_contract
+check("the fee model: a taker pays 0.07 p (1-p) rounded up to $0.0001, a resting fill a quarter", (fee(0.16), fee(0.16, taker=False), fee(0.5)), (0.0095, 0.002375, 0.0175))
+sf = lambda leg, size, price: {"c": dict(leg=leg, size=size, price=price, fee=round(fee(price, False) * size, 6))}
+# a YES split: 6 bought at 0.16 (taker), 3 sold at 0.32 (2x leg) and 3 at 0.48 (3x leg)
+t, stake = X.own_trade("yes", 0.16, 6.0, True, {"a": sf("2x", 3.0, 0.32)["c"], "b": sf("3x", 3.0, 0.48)["c"]}, "no", split=True)
+want = (3 * 0.32 + 3 * 0.48 - 3 * fee(0.32, False) - 3 * fee(0.48, False) - (6 * 0.16 + 6 * fee(0.16))) / (6 * 0.16 + 6 * fee(0.16))
+check("both legs filled: the trade is won on the sells whatever the market settled, legs 2x+3x", (t["st"], t["legs"], t["r"]), ("won", "2x+3x", round(want, 4)))
+check("the same entry held to a lost settlement is the hold control", t["hold_r"], round((0 - stake) / stake, 4))
+t, _ = X.own_trade("yes", 0.16, 6.0, True, {"a": sf("2x", 3.0, 0.32)["c"]}, "no", split=True)
+check("only the 2x leg filled: half sold, the unsold half loses at settlement; the trade is still counted by its realised return (legs 2x)",
+      (t["legs"], t["st"], t["r"] is not None and t["r"] > -1), ("2x", "won" if t["r"] > 0 else "lost", True))
+t, _ = X.own_trade("yes", 0.16, 6.0, True, {}, "no", split=True)
+check("no leg filled and the bucket missed: lost, -100% of the stake", (t["st"], t["r"], t["legs"]), ("lost", -1.0, ""))
+t, _ = X.own_trade("yes", 0.16, 6.0, True, {}, None, split=True)
+check("an unsettled remainder keeps the trade open", (t["st"], t["r"]), ("open", None))
+t, _ = X.own_trade("yes", 0.16, 6.0, True, {"a": sf("2x", 3.0, 0.32)["c"], "b": sf("3x", 3.0, 0.48)["c"]}, None, split=True)
+check("everything sold: settled before the market is", t["st"], "won")
+t, _ = X.own_trade("no", 0.65, 1.0, False, sf("sold", 1.0, 0.87), "yes")
+check("a NO fade sold at P and the NO later lost is a WIN on the trade", (t["st"], t["legs"], round(t["r"], 3) > 0.25), ("won", "sold", True))
+t, _ = X.own_trade("no", 0.65, 1.0, False, {}, "yes")
+check("a NO fade never sold and lost at settlement is a loss", (t["st"], t["r"]), ("lost", -1.0))
+
 with tempfile.TemporaryDirectory() as d:
+    sell = {"c1": dict(leg="sell", size=10.0, price=0.4, fee=round(fee(0.4, False) * 10, 6))}
     json.dump({"matches": {"KXUCLTOTAL-26NOV03FEYINT-4": dict(filled=10.0, bid=dict(price=0.1), kickoff=1793650800, sells=[]),
-                           "KXUCLTOTAL-26NOV04FCPNAP-4": dict(filled=10.0, bid=dict(price=0.1), kickoff=1793650800, sells=[dict(qty=10)])}},
+                           "KXUCLTOTAL-26NOV07FCPNAP-4": dict(filled=10.0, bid=dict(price=0.1), kickoff=1794200000, sells=[dict(qty=10)], sell_fills=sell)}},
               open(os.path.join(d, "o35_state.json"), "w"))
     json.dump({"matches": {"no:KXNBAWINMARGIN-26NOV02ATLIND-ATL1TO5": dict(filled=1.0, bid=dict(price=0.65), tip=1793665800),
                            "yes:KXNBAWINMARGIN-26NOV02ATLIND-ATL1TO5": dict(filled=6.0, buy=dict(ask=0.16), tip=1793665800)}},
               open(os.path.join(d, "nba_wm_state.json"), "w"))
-    lanes = X.lane_rows(d, lambda t: "no" if t.startswith("KXUCL") else "yes", "")
-    check("o35: a NO bought at 10c on a market that settled no wins 9:1; the exited one is left out",
-          [(r["st"], r["r"]) for r in lanes["o35_cheap_no"]], [("won", 9.0), ("sold", None)])
-    check("nba_wm: the NO fade loses on a yes result, the YES split wins", ([r["st"] for r in lanes["nba_wm_nofade"]], [r["st"] for r in lanes["nba_wm_yes"]]),
-          (["lost"], ["won"]))
+    json.dump({"matches": {"KXEPLTOTAL-26NOV06EVECOV-2": dict(filled=2.0, bid=dict(price=0.44), kickoff=1793993400,
+                                                              sell_fills={"s": dict(leg="sell", size=2.0, price=0.8, fee=0.0056)})}},
+              open(os.path.join(d, "top5_dip_state.json"), "w"))
+    recon = {("o35_cheap_no", "KXUCLTOTAL-26NOV03FEYINT-4"): dict(lane="o35_cheap_no", id="KXUCLTOTAL-26NOV03FEYINT-4", st="lost", r=-1.0, w=1.0, legs="", hold_r=None)}
+    lanes = X.lane_rows(d, lambda t: "no" if t.startswith("KXUCL") else "yes", "", recon)
+    check("o35: a pre-logging entry reads the reconstruction (labelled), a logged sell reads its own fill",
+          [(r["st"], r["src"], r["legs"]) for r in lanes["o35_cheap_no"]], [("lost", "reconstructed", ""), ("won", "fills", "sold")])
+    check("o35: the sold-at-4x trade is a win after fees (4x less the maker fees both ways)", round(lanes["o35_cheap_no"][1]["r"], 3) > 2.5, True)
+    check("nba_wm: the NO fade loses on a yes result, the YES split (no sell logged) is held to settlement and wins",
+          ([r["st"] for r in lanes["nba_wm_nofade"]], [r["st"] for r in lanes["nba_wm_yes"]]), (["lost"], ["won"]))
+    check("the YES split row carries its hold control", lanes["nba_wm_yes"][0]["hold_r"] is not None, True)
+    dip = lanes["top5_dip"][0]
+    check("the top-5 dip is a lane: sold at P is a win, 80c in on a 44c bid", (dip["st"], dip["legs"], dip["src"], round(dip["r"], 2)), ("won", "sold", "fills", round((2 * 0.8 - 0.0056 - 2 * (0.44 + fee(0.44, False))) / (2 * (0.44 + fee(0.44, False))), 2)))
+    X.check_lanes(dict(lanes=lanes))
+    check("and the whole lanes blob passes the whitelist", True, True)
+    for bad, why in ((dict(lanes[ "top5_dip"][0], balance=1.0), "an extra field"), (dict(lanes["top5_dip"][0], legs="3x+9x"), "legs outside the whitelist"),
+                     (dict(lanes["top5_dip"][0], src="vps"), "a source outside the whitelist"), (dict(lanes["top5_dip"][0], r=500.0), "a return out of range"),
+                     (dict(lanes["top5_dip"][0], id="$5"), "a dollar sign")):
+        try:
+            X.check_lanes(dict(lanes={"top5_dip": [bad]}))
+            check(f"refuses {why}", "accepted", "refused")
+        except X.Refused:
+            check(f"refuses {why}", "refused", "refused")
+
+print("\nthe committed reconstruction")
+rec_blob = json.load(open(X.RECON))
+X.check_reconstructed(rec_blob)
+check("it passes the whitelist and says where it comes from", ("reconstructed from the exchange order list" in rec_blob["header"], "$" in json.dumps(rec_blob)), (True, False))
+check("only the three pre-logging lanes, every tip before the cutoff", ({r["lane"] for r in rec_blob["rows"]} <= {"o35_cheap_no", "nba_wm_yes", "nba_wm_nofade"}, all(r["ko"] < X.RECON_BEFORE for r in rec_blob["rows"])), (True, True))
+check("only the YES split carries a hold control", {r["lane"] for r in rec_blob["rows"] if r.get("hold_r") is not None}, {"nba_wm_yes"})
+bad_blob = dict(rec_blob, rows=rec_blob["rows"] + [dict(lane="nba_wm_yes", id="x", ko="2026-11-01T00:00", side="yes", st="won", r=1.0, w=1.0, legs="", hold_r=None, order_id="abc")])
+try:
+    X.check_reconstructed(bad_blob)
+    check("a reconstruction row with an extra field is refused", "accepted", "refused")
+except X.Refused:
+    check("a reconstruction row with an extra field is refused", "refused", "refused")
 
 print("\nthe page cells")
 orders = [dict(id="q1", ko="2026-11-03T20:00", side="yes", st="won", w=1.0, r=1.0), dict(id="q2", ko="2026-11-03T20:00", side="yes", st="lost", w=1.0, r=-1.0),
@@ -92,7 +146,9 @@ check("the gap is explained: refused, older than the feed, settled the other way
 sec = PL.gap_section([("Pair A", "a|b", 4, 0.25, data)], {"a|b": paper}, {"q1"}, {})
 check("the section lists a pair whose counts differ by more than one bet", ("Pair A" in sec, "Where live and paper differ" in sec), (True, True))
 check("and stays out when they agree", PL.gap_section([("Pair A", "a|b", 2, 0.0, data)], {"a|b": []}), "")
-check("the own-state lanes are a separate live-only table", "Over 3.5 cheap NO" in PL.lanes_table(dict(lanes={"o35_cheap_no": orders}, lane_note="n")), True)
+check("the own-state lanes are a separate live-only table", "Over 3.5 cheap NO" in PL.lanes_table(dict(lanes={"o35_cheap_no": [dict(o, src="fills") for o in orders]}, lane_note="n")), True)
+check("an export from before the trades schema (no source on a row) is not shown as a live record",
+      (PL.lanes_table(dict(lanes={"o35_cheap_no": orders}, lane_note="n")), PL.own_rows(dict(lanes={"o35_cheap_no": orders}), "o35_cheap_no_wave|soccer_u35")), ("", None))
 
 print("\nthe committed export")
 real = json.load(open(X.OUT))

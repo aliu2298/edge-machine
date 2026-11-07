@@ -10,6 +10,7 @@ import tempfile
 import o35_cheap_no as O
 import o35_production as X
 import production as P
+import production_live as PL
 import sandbox_audit
 
 FAILS = []
@@ -54,6 +55,13 @@ FEED = dict(lane=O.LANE, updated_at=(NOW - dt.timedelta(minutes=30)).isoformat()
 _tmp = tempfile.mkdtemp(prefix="o35-page-")
 X.PATH = os.path.join(_tmp, "production_o35_leads.json")
 assert _tmp in X.PATH
+# Since Production reads the follower's real trades (data/live_record.json), never the committed file here: a fixture of three trades
+PL.PATH = os.path.join(_tmp, "live_record.json")
+json.dump(dict(generated="2026-11-02T12:00Z", pairs={}, lanes={"o35_cheap_no": [
+    dict(id="KXSUPERLIGTOTAL-26NOV01KASBES-4", ko="2026-11-01T10:00", side="no", st="won", w=1.0, r=3.0, legs="sold", src="fills"),
+    dict(id="KXSUPERLIGTOTAL-26NOV01AAABBB-4", ko="2026-11-01T12:00", side="no", st="won", w=1.0, r=8.9, legs="", src="fills"),
+    dict(id="KXSUPERLIGTOTAL-26NOV01CCCDDD-4", ko="2026-11-01T14:00", side="no", st="lost", w=1.0, r=-1.0, legs="", src="fills")]},
+    lane_note="n"), open(PL.PATH, "w"))
 X.ENDED_ON = None      # the Production adapter is tested as it ran while the lane traded (it is a no-op once ENDED_ON is set, below)
 print("quotes")
 qs = X.quotes(LEDGER, FEED)

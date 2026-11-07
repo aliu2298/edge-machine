@@ -1452,6 +1452,13 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
 
     # ---- the pairs, each with the evidence it was moved on and what it has done since ----
     live_blob = PL.load()
+    # The pairs the follower runs from its own state files read their live trades (production_live.OWN_PAIRS); a pair that ended when its next
+    # version started (NBA win margin version 2) is listed in an "Older versions" fold inside its sport's block, not as an active pair.
+    v3_since = ((nba_wm or {}).get("v3") or {}).get("since")
+    older_keys = set()
+    if nba_wm is not None:
+        import nba_wm_production
+        older_keys = nba_wm_production.older_pairs((nba_wm or {}).get("v3"))
     live_gap_rows, paper_bets, raised_rows = [], {}, []
     cards = []
     n_early = 0
@@ -1528,7 +1535,17 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
                 since_note = "none yet"
             early = early_state(pair, live["n"])
             paper_bets[key] = [dict(id=q.get("id"), status=q.get("status"), price=q.get("price"), ko=(_kickoff(q).isoformat() if _kickoff(q) else None)) for q in mine_since if q.get("bet")]
-            live_rec, live_roi, live_data = PL.cells(key, since, dict(roi=live["roi_fee"] if live["n"] else None), live_blob)
+            own = PL.own_rows(live_blob, key, v3_since)
+            if own is not None:
+                # Since Production is the follower's REAL record: each entry as a trade after fees (its sells plus the unsold remainder at
+                # settlement), won = realised return above zero. The Sandbox record column beside it stays the paper one.
+                summ = PL.own_summary(own)
+                live = PL.own_live(live, summ)
+                live_rec, live_roi = PL.own_fragments(summ)
+                live_data = None
+                since_note = f"{live['n']} settled" if live["n"] else (f"{summ['open']} running" if summ["open"] else since_note)
+            else:
+                live_rec, live_roi, live_data = PL.cells(key, since, dict(roi=live["roi_fee"] if live["n"] else None), live_blob)
             live_gap_rows.append((name(key), key, live["n"], live["roi_fee"] if live["n"] else None, live_data))
             if raised_at:
                 old = _assess_since_kickoff(raw, key, pair_orig, late=late_set(blob), until=raised_at, tradeable=True)
@@ -1548,12 +1565,16 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
             # The build keeps going with this pair's row saying why it has no numbers, and a
             # ::warning:: names it in the run. The cause still raises everywhere it is tested
             # (test_sandbox.py, SANDBOX_TEST_GROUP=live), so it stays visible.
-            groups.setdefault(sport_group(sport), dict(rows=[], lives=[], to_come=0, early=0))["rows"].append(len(cards))
+            groups.setdefault(sport_group(sport), dict(rows=[], lives=[], to_come=0, early=0, older=[]))["rows"].append(len(cards))
             cards.append(unavailable_row(key, name(key), sport_of(key), record_unavailable(key, exc)))
+            continue
+        group = groups.setdefault(sport_group(sport), dict(rows=[], lives=[], to_come=0, early=0, older=[]))
+        if key in older_keys:
+            group.setdefault("older", []).append(len(cards))
+            cards.append(card)
             continue
         if early:
             n_early += 1
-        group = groups.setdefault(sport_group(sport), dict(rows=[], lives=[], to_come=0, early=0))
         group["lives"].append(live)
         group["to_come"] += to_come
         group["early"] += 1 if early else 0
@@ -1581,11 +1602,15 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
             bits.append("nothing settled since Production")
         bits.append(f'{grp["to_come"]} lead{"s" if grp["to_come"] != 1 else ""} to come')
         rows = "".join(cards[i] for i in grp["rows"])
+        older_html = ""
+        if grp.get("older"):
+            older_html = (f'<details class="fold"><summary>Older versions<span class="mut sm">· version 2, ended {esc(v3_since)}</span></summary>'
+                     f'<div class="tbl"><table>{pairs_head}{"".join(cards[i] for i in grp["older"])}</table></div></details>')
         sections.append(
             f'<details class="fold sport-fold" data-sport="{esc(sport_key(g))}"'
             f'{" open" if grp["to_come"] else ""}>'
             f'<summary><h3>{esc(g)}</h3><span class="mut sm">· {" · ".join(bits)}</span></summary>'
-            f'<div class="tbl"><table>{pairs_head}{rows}</table></div></details>')
+            f'<div class="tbl"><table>{pairs_head}{rows}</table></div>{older_html}</details>')
     pairs_html = ("".join(sections) + PL.gap_section(live_gap_rows, paper_bets, {l.get('sandbox_quote') for l in leads if l.get('sandbox_quote')},
                                                                   _feed_from(leads), horizon=(now_dt - datetime.timedelta(days=KEEP_SETTLED_DAYS)).isoformat()) + PL.lanes_table(live_blob) + PL.pulled_table(live_blob, name) + PL.raised_fold(raised_rows) +
                   ('<p class="sm mut">Live fills: orders the follower placed and Kalshi settled, counted from the pair\'s Production date, ROI per $1 staked after fees, '
