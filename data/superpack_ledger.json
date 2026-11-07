@@ -197,6 +197,10 @@
    "at": "2026-11-05T21:49:22.360613+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLALIGATEAMTOTAL-26NOV08VILGET-VIL2\", \"a\"]]": {
+   "at": "2026-11-07T23:04:03.124924+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXSERIEATEAMTOTAL-26NOV07PARBFC-BFC2\", \"a\"]]": {
    "at": "2026-11-05T18:05:03.605874+00:00",
    "pool": "entered"
@@ -207,6 +211,10 @@
   },
   "[\"sandbox\", \"u35_low_o15\", [\"u35_low_o15:KXSUPERLIGTOTAL-26NOV07SAMKON-2\", \"a\"]]": {
    "at": "2026-11-06T13:09:08.900685+00:00",
+   "pool": "entered"
+  },
+  "[\"soccer_rules_ledger.json\", \"A1\", [\"A1:KXMLSTOTAL-26NOV07DALCOL\", \"no\"]]": {
+   "at": "2026-11-07T23:04:03.124924+00:00",
    "pool": "entered"
   },
   "[\"soccer_rules_ledger.json\", \"A1\", [\"A1:KXMLSTOTAL-26NOV07DCUNYC\", \"no\"]]": {
@@ -223,6 +231,10 @@
   },
   "[\"soccer_rules_ledger.json\", \"A6\", [\"A6:KXEPLTOTAL-26NOV07ARSHUL\", \"no\"]]": {
    "at": "2026-11-07T14:03:40.378413+00:00",
+   "pool": "entered"
+  },
+  "[\"soccer_rules_ledger.json\", \"B1\", [\"B1:KXMLSTOTAL-26NOV07ATXPOR\", \"no\"]]": {
+   "at": "2026-11-07T23:04:03.124924+00:00",
    "pool": "entered"
   },
   "[\"soccer_rules_ledger.json\", \"B2\", [\"B2:KXLALIGATOTAL-26NOV07VCFRMA\", \"yes\"]]": {
@@ -261,6 +273,15 @@
   },
   "[\"soccer_team_rules_ledger.json\", \"T3\", [\"T3:KXLALIGATEAMTOTAL-26NOV07ESPDEP:away\", \"yes\"]]": {
    "at": "2026-11-07T14:03:40.378413+00:00",
+   "pool": "entered"
+  },
+  "[\"soccer_team_rules_ledger.json\", \"T3\", [\"T3:KXMLSTEAMTOTAL-26NOV07HOUSTL:away\", \"yes\"]]": {
+   "at": "2026-11-07T23:04:03.124924+00:00",
+   "mirror": "entered",
+   "pool": "entered"
+  },
+  "[\"soccer_team_rules_ledger.json\", \"T3\", [\"T3:KXMLSTEAMTOTAL-26NOV07SEALAFC:home\", \"yes\"]]": {
+   "at": "2026-11-07T23:04:03.124924+00:00",
    "pool": "entered"
   },
   "[\"soccer_team_rules_ledger.json\", \"T4\", [\"T4:KXEPLTEAMTOTAL-26NOV07LEETOT:away\", \"yes\"]]": {
@@ -818,9 +839,9 @@
    ],
    "pid": "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXLALIGACORNERS-26NOV07VCFRMA-9\", \"b\"]]",
    "price": 0.35,
-   "profit": null,
+   "profit": 1.8571,
    "scope": "soccer_corners",
-   "settled": null,
+   "settled": "2026-11-07T23:03:59+00:00",
    "side": "b",
    "snapshot": {
     "as_of": "2026-11-07T16:01:10+00:00",
@@ -889,7 +910,7 @@
    },
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXLALIGATOTAL-26NOV07VCFRMA-4",
@@ -906,9 +927,9 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"B2\", [\"B2:KXLALIGATOTAL-26NOV07VCFRMA\", \"yes\"]]",
    "price": 0.45,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-07T22:31:42.860035+00:00",
    "side": "yes",
    "snapshot": {
     "as_of": "2026-11-07T18:31:50.617589+00:00",
@@ -977,7 +998,7 @@
    },
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXMLSTOTAL-26NOV07CHICLB-4",
@@ -994,9 +1015,9 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"C1\", [\"C1:KXMLSTOTAL-26NOV07CHICLB\", \"yes\"]]",
    "price": 0.46,
-   "profit": null,
+   "profit": 1.0947,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-07T22:31:42.860035+00:00",
    "side": "yes",
    "snapshot": {
     "as_of": "2026-11-07T19:31:20.641303+00:00",
@@ -1065,12 +1086,12 @@
    },
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "won"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-07T22:03:37.428662+00:00",
+ "last_run": "2026-11-07T23:04:03.124924+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -1245,6 +1266,93 @@
    "sport": "Commodities",
    "src": "contract",
    "status": "lost"
+  },
+  {
+   "contract": "KXMLSTEAMTOTAL-26NOV07HOUSTL-STL3",
+   "entered_at": "2026-11-07T23:04:03.124924+00:00",
+   "entities": [
+    "St. Louis CITY SC"
+   ],
+   "id": "superpack:[\"soccer_team_rules_ledger.json\", \"T3\", [\"T3:KXMLSTEAMTOTAL-26NOV07HOUSTL:away\", \"yes\"]]",
+   "lane": "T3",
+   "logged": "2026-11-07T22:31:57.335770+00:00",
+   "matched": [
+    "St. Louis CITY SC"
+   ],
+   "pid": "[\"soccer_team_rules_ledger.json\", \"T3\", [\"T3:KXMLSTEAMTOTAL-26NOV07HOUSTL:away\", \"yes\"]]",
+   "price": 0.16,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": {
+    "as_of": "2026-11-07T22:31:57.335770+00:00",
+    "names": [
+     {
+      "bets": 7,
+      "name": "Brighton & Hove Albion",
+      "profit": -7.0,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Lyon",
+      "profit": -5.0,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Real Betis",
+      "profit": -4.6728,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "PSV Eindhoven",
+      "profit": -4.6111,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "St. Louis CITY SC",
+      "profit": -4.3251,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 12,
+      "name": "Sevilla",
+      "profit": -3.6029,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Feyenoord Rotterdam",
+      "profit": -3.5706,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "SC Freiburg",
+      "profit": -2.7648,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Kilmarnock",
+      "profit": -2.5459,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 9,
+      "name": "Manchester City",
+      "profit": -2.3502,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Soccer",
+   "src": "soccer_team_rules_ledger.json",
+   "status": "open"
   }
  ],
  "pool": [
@@ -2484,14 +2592,14 @@
    ],
    "pid": "[\"soccer_team_rules_ledger.json\", \"T3\", [\"T3:KXLALIGATEAMTOTAL-26NOV07ESPDEP:away\", \"yes\"]]",
    "price": 0.12,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-07T22:31:57.335770+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_team_rules_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXEPLCORNERS-26NOV07NFOMCI-7",
@@ -2557,14 +2665,14 @@
    ],
    "pid": "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXLALIGACORNERS-26NOV07VCFRMA-9\", \"b\"]]",
    "price": 0.35,
-   "profit": null,
+   "profit": 1.8571,
    "scope": "soccer_corners",
-   "settled": null,
+   "settled": "2026-11-07T23:03:59+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXSCOTTISHPREMTOTAL-26NOV07ABEHIB-4",
@@ -2607,14 +2715,14 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"B2\", [\"B2:KXLALIGATOTAL-26NOV07VCFRMA\", \"yes\"]]",
    "price": 0.45,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-07T22:31:42.860035+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXLALIGATOTAL-26NOV07MCFSAN-4",
@@ -2757,14 +2865,14 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"C1\", [\"C1:KXMLSTOTAL-26NOV07CHICLB\", \"yes\"]]",
    "price": 0.46,
-   "profit": null,
+   "profit": 1.0947,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-07T22:31:42.860035+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXMLSTOTAL-26NOV07CINNSH-4",
@@ -2789,6 +2897,125 @@
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXMLSTOTAL-26NOV07DALCOL-4",
+   "entered_at": "2026-11-07T23:04:03.124924+00:00",
+   "entities": [
+    "FC Dallas",
+    "Colorado Rapids"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"A1\", [\"A1:KXMLSTOTAL-26NOV07DALCOL\", \"no\"]]",
+   "lane": "A1",
+   "logged": "2026-11-07T22:31:42.860035+00:00",
+   "matched": [
+    "Colorado Rapids",
+    "FC Dallas"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"A1\", [\"A1:KXMLSTOTAL-26NOV07DALCOL\", \"no\"]]",
+   "price": 0.67,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "no",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXMLSTOTAL-26NOV07ATXPOR-4",
+   "entered_at": "2026-11-07T23:04:03.124924+00:00",
+   "entities": [
+    "Austin FC",
+    "Portland Timbers"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"B1\", [\"B1:KXMLSTOTAL-26NOV07ATXPOR\", \"no\"]]",
+   "lane": "B1",
+   "logged": "2026-11-07T22:31:42.860035+00:00",
+   "matched": [
+    "Austin FC",
+    "Portland Timbers"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"B1\", [\"B1:KXMLSTOTAL-26NOV07ATXPOR\", \"no\"]]",
+   "price": 0.48,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "no",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXMLSTEAMTOTAL-26NOV07HOUSTL-STL3",
+   "entered_at": "2026-11-07T23:04:03.124924+00:00",
+   "entities": [
+    "St. Louis CITY SC"
+   ],
+   "id": "superpack:[\"soccer_team_rules_ledger.json\", \"T3\", [\"T3:KXMLSTEAMTOTAL-26NOV07HOUSTL:away\", \"yes\"]]",
+   "lane": "T3",
+   "logged": "2026-11-07T22:31:57.335770+00:00",
+   "matched": [
+    "St. Louis CITY SC"
+   ],
+   "pid": "[\"soccer_team_rules_ledger.json\", \"T3\", [\"T3:KXMLSTEAMTOTAL-26NOV07HOUSTL:away\", \"yes\"]]",
+   "price": 0.16,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_team_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXMLSTEAMTOTAL-26NOV07SEALAFC-SEA3",
+   "entered_at": "2026-11-07T23:04:03.124924+00:00",
+   "entities": [
+    "Seattle Sounders FC"
+   ],
+   "id": "superpack:[\"soccer_team_rules_ledger.json\", \"T3\", [\"T3:KXMLSTEAMTOTAL-26NOV07SEALAFC:home\", \"yes\"]]",
+   "lane": "T3",
+   "logged": "2026-11-07T22:31:57.335770+00:00",
+   "matched": [
+    "Seattle Sounders FC"
+   ],
+   "pid": "[\"soccer_team_rules_ledger.json\", \"T3\", [\"T3:KXMLSTEAMTOTAL-26NOV07SEALAFC:home\", \"yes\"]]",
+   "price": 0.29,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_team_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXLALIGATEAMTOTAL-26NOV08VILGET-VIL2",
+   "entered_at": "2026-11-07T23:04:03.124924+00:00",
+   "entities": [
+    "Villarreal"
+   ],
+   "id": "superpack:[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLALIGATEAMTOTAL-26NOV08VILGET-VIL2\", \"a\"]]",
+   "lane": "team2_ranked",
+   "logged": "2026-11-07T23:03:37+00:00",
+   "matched": [
+    "Villarreal"
+   ],
+   "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLALIGATEAMTOTAL-26NOV08VILGET-VIL2\", \"a\"]]",
+   "price": 0.62,
+   "profit": null,
+   "scope": "soccer_team2",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
    "status": "open"
   }
  ],
