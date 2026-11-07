@@ -1459,7 +1459,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
     if nba_wm is not None:
         import nba_wm_production
         older_keys = nba_wm_production.older_pairs((nba_wm or {}).get("v3"))
-    live_gap_rows, paper_bets, raised_rows = [], {}, []
+    live_gap_rows, paper_bets, raised_rows, no_order_rows = [], {}, [], []
     own_items = {}
     cards = []
     n_early = 0
@@ -1534,9 +1534,10 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
                 since_note = f"nothing in {idle_days}d"
             else:
                 since_note = "none yet"
-            early = early_state(pair, live["n"])
             paper_bets[key] = [dict(id=q.get("id"), status=q.get("status"), price=q.get("price"), ko=(_kickoff(q).isoformat() if _kickoff(q) else None)) for q in mine_since if q.get("bet")]
+            paper_since = live                       # the Sandbox grade of the same bets: it stays beside the live record in the gap list, not in Since Production
             own = PL.own_rows(live_blob, key, v3_since)
+            no_orders = False
             if own is not None:
                 # Since Production is the follower's REAL record: each entry as a trade after fees (its sells plus the unsold remainder at
                 # settlement), won = realised return above zero. The Sandbox record column beside it stays the paper one.
@@ -1546,9 +1547,25 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
                 own_items.setdefault(sport_group(sport), []).append((name(key) + (" (older version)" if key in older_keys else ""), summ))
                 live_data = None
                 since_note = f"{live['n']} settled" if live["n"] else (f"{summ['open']} running" if summ["open"] else since_note)
+            elif key in PL.OWN_PAIRS:
+                live_rec, live_roi, live_data = PL.cells(key, since, dict(roi=live["roi_fee"] if live["n"] else None), live_blob)     # an own-state pair whose lane is not in the file yet
             else:
-                live_rec, live_roi, live_data = PL.cells(key, since, dict(roi=live["roi_fee"] if live["n"] else None), live_blob)
-            live_gap_rows.append((name(key), key, live["n"], live["roi_fee"] if live["n"] else None, live_data))
+                orders, block = PL.fill_window(live_blob, key, since)
+                if orders is None:
+                    live_rec, live_roi, live_data = "", "", None          # no live file yet: the paper record stays until one is published
+                else:
+                    # Since Production is the follower's own fills on this pair (2026-11-07): each order priced from the exchange's fills,
+                    # counted from the pair's Production date or its stake raise. A pair with no order shows none, never the paper record.
+                    rec = PL.record(orders)
+                    live = PL.fill_live(live, rec)
+                    live_rec, live_roi = PL.fill_fragment(rec), ""
+                    live_data = dict(orders=orders, rec=rec, refused=(block or {}).get("refused") or {})
+                    no_orders = not orders
+                    since_note = f"{rec['won'] + rec['lost']} settled" if rec["won"] + rec["lost"] else ""
+                    if no_orders:
+                        no_order_rows.append((name(key), PL.no_orders_reason(key, live_data["refused"], len(mine))))
+            early = early_state(pair, live["n"])
+            live_gap_rows.append((name(key), key, paper_since["n"], paper_since["roi_fee"] if paper_since["n"] else None, live_data))
             if raised_at:
                 old = _assess_since_kickoff(raw, key, pair_orig, late=late_set(blob), until=raised_at, tradeable=True)
                 raised_rows.append((name(key), raised_at, old, PL.record(PL.window(((live_blob or {}).get("pairs") or {}).get(key, {}).get("orders") or [],
@@ -1558,7 +1575,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
 <td class="num">{whole['n']}<div class="sm mut">settled</div></td>
 <td class="num"><span class="{tone(whole['roi_fee'], whole['n'])}">{pct(whole['roi_fee'])}</span><div class="sm mut">after fees</div></td>
 <td class="num">{clv}<div class="sm mut">v the close</div></td>
-<td class="num">{PL.wfl(live) if live.get("wfl") else T.record_html(live)}<div class="sm mut">{esc(since_note)}</div>{live_rec}</td>
+<td class="num">{'<span class="mut">no live orders yet</span>' if no_orders else (PL.wfl(live) if live.get("wfl") else T.record_html(live))}{'' if no_orders else f'<div class="sm mut">{esc(since_note)}</div>'}{live_rec}</td>
 <td class="num"><span class="{tone(live['roi_fee'], live['n'] >= EARLY_N)}">{pct(live['roi_fee'])}</span>{'<div class="sm mut">too early</div>' if 0 < live['n'] < EARLY_N else ''}{live_roi}</td>
 <td class="num light">{light} <span class="sm mut">{esc(why)}</span></td>
 <td class="num"><span class="{reach_tone}">{reach}</span><div class="sm mut">reachable</div></td>
@@ -1616,9 +1633,9 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
             f'<div class="tbl"><table>{pairs_head}{rows}</table></div>'
             + PL.details_fold(own_items.get(g, [])) + f'{older_html}</details>')
     pairs_html = ("".join(sections) + PL.gap_section(live_gap_rows, paper_bets, {l.get('sandbox_quote') for l in leads if l.get('sandbox_quote')},
-                                                                  _feed_from(leads), horizon=(now_dt - datetime.timedelta(days=KEEP_SETTLED_DAYS)).isoformat()) + PL.lanes_table(live_blob) + PL.pulled_table(live_blob, name) + PL.raised_fold(raised_rows) +
-                  ('<p class="sm mut">Live fills: orders the follower placed and Kalshi settled, counted from the pair\'s Production date, ROI per $1 staked after fees, '
-                   f'read {esc((live_blob or {}).get("generated") or "not yet")}. Paper is the Sandbox grade of the same bets.</p>' if live_blob else "") +
+                                                                  _feed_from(leads), horizon=(now_dt - datetime.timedelta(days=KEEP_SETTLED_DAYS)).isoformat()) + PL.no_orders_fold(no_order_rows) + PL.lanes_table(live_blob) + PL.pulled_table(live_blob, name) + PL.raised_fold(raised_rows) +
+                  ('<p class="sm mut">Since Production is the follower\'s own fills, priced from the exchange\'s fills and fees and counted from the pair\'s Production date (or its stake raise), ROI per $1 staked after fees, '
+                   f'read {esc((live_blob or {}).get("generated") or "not yet")}. Paper is the Sandbox grade of the same bets, kept in the Sandbox record.</p>' if live_blob else "") +
                   '<p class="sm mut">Reaches the feed counts the pair\'s bets the feed could publish. A tip is unreachable when no Kalshi or Polymarket US market was listed for it, or its Kalshi market had no verified start time, so it stays in the Sandbox record and the feed cannot carry it.</p>'
                   if cards else
                   '<div class="note">Nothing is in Production. A pair arrives here by hand, on the record '

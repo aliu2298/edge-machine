@@ -8,6 +8,8 @@ ask for logged >= entered_at, so the same bet was missing there.
 
 The fixture is built here. Nothing in this file opens data/.
 """
+import production_live as _PL
+_PL.load = lambda path=None: None      # hermetic: these fixtures pin the paper record; the real live file is covered by test_live_since_production.py
 import datetime
 import re
 import sys

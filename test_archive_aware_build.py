@@ -10,6 +10,8 @@ Two archive shapes are checked. Today's prune copies won, lost, and
 settled+price bets. The later shape copies every bet, voids included.
 Compact price rows are not bets and must not be counted.
 """
+import production_live as _PL
+_PL.load = lambda path=None: None      # hermetic: these fixtures pin the paper record; the real live file is covered by test_live_since_production.py
 import copy
 import datetime
 import re

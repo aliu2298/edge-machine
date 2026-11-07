@@ -116,13 +116,31 @@ def refusals(path, leads):
     return {leads[i][1]: c for i, c in last.items() if leads[i][1]}
 
 
-def order_row(key, o, res, kres=None):
+FILLS = os.path.expanduser(os.environ.get("LIVE_RECORD_FILLS") or "~/live_record_fills.json")
+
+
+def order_fills(o, fills):
+    """(contracts, average price, fee) the EXCHANGE booked for this order's own buy fills, or None when it has none on file.
+    Attributed by the order's own id (the one the lane sent), never by the market's netted position, so a contract another lane
+    holds in the same market cannot lend its stake or its fee; the fee is the exchange's charged fee_cost per fill."""
+    ids = [i for i in ([o.get("order_id")] + list(o.get("order_ids") or [])) if i]
+    got = [fills[i] for i in dict.fromkeys(ids) if i in (fills or {})]
+    qty = sum(g["qty"] for g in got)
+    if not got or qty <= 0:
+        return None
+    return qty, sum(g["qty"] * g["px"] for g in got) / qty, sum(g["fee"] for g in got)
+
+
+def order_row(key, o, res, kres=None, fills=None):
     lead = o.get("lead") or {}
     qty = o.get("filled")
     if qty is None:
         qty = o.get("actual_qty")
     px = o.get("avg_px") or o.get("actual_avg_px") or o.get("price")
     fee = o.get("commission") or 0.0
+    booked = order_fills(o, fills)
+    if booked:
+        qty, px, fee = booked
     state = o.get("order_state")
     base = dict(id=lead.get("sandbox_quote") or "", ko=str(lead.get("kickoff") or "")[:16], side=str(o.get("side") or "").lower() or None)
     if o.get("state") == "unfilled" or state in ("ORDER_STATE_CANCELED", "ORDER_STATE_EXPIRED") and not qty:
@@ -285,15 +303,16 @@ def lane_rows(src_dir, fetch=None, cache_path=None, recon=None):
     return {k: sorted(v, key=lambda r: (r["ko"], r["id"])) for k, v in out.items()}
 
 
-def build(src_dir=SRC_DIR, fetch=None, cache_path=None):
+def build(src_dir=SRC_DIR, fetch=None, cache_path=None, fills=None):
     orders = load(os.path.join(src_dir, "orders_placed.json"), {})
+    fills = load(FILLS, {}) if fills is None else fills
     res = {r.get("pick_id"): r for r in (load(os.path.join(src_dir, "results.json"), {}).get("rows") or [])}
     leads, entered = feed_index()
     mine = {k: o for k, o in orders.items() if (o.get("lead") or {}).get("pair") in entered}
     kres = results_for({o.get("market") for o in mine.values() if str(o.get("market") or "").startswith("KX")}, fetch, cache_path)
     by_pair = {}
     for key, o in mine.items():
-        by_pair.setdefault(o["lead"]["pair"], []).append(order_row(key, o, res, kres))
+        by_pair.setdefault(o["lead"]["pair"], []).append(order_row(key, o, res, kres, fills))
     out = {}
     for pair in sorted(entered):
         got = by_pair.get(pair, [])
@@ -316,7 +335,7 @@ def build(src_dir=SRC_DIR, fetch=None, cache_path=None):
     gone_res = results_for({o.get("market") for o in gone.values() if str(o.get("market") or "").startswith("KX")}, fetch, cache_path)
     pulled = {}
     for key, o in gone.items():
-        row, _stake = order_row(key, o, res, gone_res)
+        row, _stake = order_row(key, o, res, gone_res, fills)
         pulled.setdefault(o["lead"]["pair"], []).append(row)
     pulled = {p: sorted(rows, key=lambda r: (r["ko"], str(r["id"]))) for p, rows in sorted(pulled.items())}
     return dict(generated=dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%MZ"), pairs=out, pulled=pulled,

@@ -13,6 +13,8 @@ pair moved before that date. No network, nothing read from data/.
 """
 import live_caps as _LC
 _LC.load = lambda path=None: {}      # hermetic: the real follower caps raise commod_fav_band, which would restart these fixtures' record (test_fresh_record.py covers that)
+import production_live as _PL
+_PL.load = lambda path=None: None      # hermetic: these fixtures pin the paper record; the real live file is covered by test_live_since_production.py
 import datetime
 import html as html_mod
 import re

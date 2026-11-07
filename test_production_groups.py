@@ -4,6 +4,8 @@ combined since-Production line, a sport pill row over Coming up and Recently
 settled, the next 24h open with later days folded, the last 7 days open with
 older leads folded. The fixture is built here; nothing reads data/ or the network.
 """
+import production_live as _PL
+_PL.load = lambda path=None: None      # hermetic: these fixtures pin the paper record; the real live file is covered by test_live_since_production.py
 import datetime
 import os
 import re
