@@ -109,21 +109,44 @@ def own_rows(live_blob, key, v3_since=None):
     return list(rows)
 
 
+FLAT = 0.02                 # within +-2% after fees is flat (F); above it won (W); below it lost (L)
+FLAT_NOTE = "F = flat, within ±2% after fees"
+
+
+def own_class(o):
+    """'W', 'F' or 'L' for one settled own-state result, by its return after fees (None while open)."""
+    r = o.get("r")
+    if o["st"] not in ("won", "flat", "lost") or r is None:
+        return None
+    return "W" if r > FLAT else ("L" if r < -FLAT else "F")
+
+
 def own_summary(rows):
-    """An own-state lane's live record as TRADES after fees: won = realised return above zero (a bet sold at its target is won whatever the
-    market later did), lost = at or below zero; stake-weighted ROI; the legs filled (YES split) and the same entries held to settlement."""
-    rec = record(rows)
-    done = [o for o in rows if o["st"] in SETTLED]
+    """An own-state lane's live record as TRADES after exchange fees: W = realised return above +2% (a bet sold at its target is won whatever the
+    market later did), F = flat within +-2%, L = below -2%; stake-weighted ROI over every settled trade; the legs filled (YES split) and the
+    same entries held to settlement."""
+    done = [o for o in rows if own_class(o)]
+    won = sum(1 for o in done if own_class(o) == "W")
+    flat = sum(1 for o in done if own_class(o) == "F")
+    wl = [o for o in done if o.get("w")]
+    w = sum(o["w"] for o in wl)
     hold = [o for o in done if o.get("hold_r") is not None and o.get("w")]
     hw = sum(o["w"] for o in hold)
-    return dict(rec, legs2=sum(1 for o in done if "2x" in (o.get("legs") or "")), legs3=sum(1 for o in done if "3x" in (o.get("legs") or "")),
+    return dict(won=won, flat=flat, lost=len(done) - won - flat, n=len(done), open=sum(1 for o in rows if o["st"] == "open"),
+                roi=(sum(o["w"] * o["r"] for o in wl) / w if w else None),
+                legs2=sum(1 for o in done if "2x" in (o.get("legs") or "")), legs3=sum(1 for o in done if "3x" in (o.get("legs") or "")),
                 sold_any=sum(1 for o in done if o.get("legs")), reconstructed=sum(1 for o in rows if o.get("src") == "reconstructed"),
                 hold_roi=(sum(o["w"] * o["hold_r"] for o in hold) / hw if hw else None), split=any(o.get("hold_r") is not None for o in done))
 
 
+def wfl(summ):
+    lost = summ["lost"] if "lost" in summ else summ["n"] - summ["won"] - summ.get("flat", 0)
+    return f'{summ["won"]}–{summ.get("flat", 0)}–{lost}'
+
+
 def own_live(live, summ):
-    """The pair's since-Production counts replaced by the live trades': n settled, won, ROI after fees (no no-result bets)."""
-    return dict(live, n=summ["n"], won=summ["won"], n_price=0, roi_fee=summ["roi"])
+    """The pair's since-Production counts replaced by the live trades': n settled, won, flat, ROI after fees (no no-result bets)."""
+    return dict(live, n=summ["n"], won=summ["won"], flat=summ["flat"], n_price=0, roi_fee=summ["roi"], wfl=True)
 
 
 def own_fragments(summ):
@@ -317,8 +340,8 @@ def raised_fold(rows):
 def lanes_table(live_blob):
     """The own-state lanes (o35, nba_wm, the top-5 dip), live only: their paper record sits on their own lane pages.
 
-    Each entry is a trade after fees: the sells the follower logged (or, before 2026-11-06 18:07Z, the exchange order list's) plus the unsold
-    remainder at settlement. Won = the entry's realised return is above zero."""
+    Each entry is a trade after the exchange's fees: the sells the follower logged (or, before 2026-11-06 18:07Z, the exchange order list's) plus the unsold
+    remainder at settlement. W above +2%, F within +-2%, L below -2%."""
     if not live_blob or not live_blob.get("lanes"):
         return ""
     body = ""
@@ -338,10 +361,10 @@ def lanes_table(live_blob):
         if rec["reconstructed"]:
             extra.append(f'{rec["reconstructed"]} reconstructed from the exchange order list (before Nov 6)')
         roi = "—" if rec["roi"] is None else f'{rec["roi"] * 100:+.1f}%'
-        body += (f'<tr><td>{esc(LANE_NAMES.get(lane, lane))}</td><td class="num"><b>{rec["won"]}–{rec["lost"]}</b></td>'
+        body += (f'<tr><td>{esc(LANE_NAMES.get(lane, lane))}</td><td class="num"><b>{wfl(rec)}</b></td>'
                  f'<td class="num">{roi}</td><td class="sm mut">{esc(" · ".join(extra) or "—")}</td></tr>')
     if not body:
         return ""
     return ('<details class="fold"><summary>Own-state lanes, live (over 3.5 cheap NO, NBA win margin, top-5 dip)</summary>'
-            '<div class="tbl"><table><thead><tr><th>Lane</th><th class="num">Live W–L</th><th class="num">ROI</th><th>Notes</th></tr></thead>'
-            f'<tbody>{body}</tbody></table></div><p class="sm mut">{esc(live_blob.get("lane_note") or "")}</p></details>')
+            '<div class="tbl"><table><thead><tr><th>Lane</th><th class="num">Live W–F–L</th><th class="num">ROI</th><th>Notes</th></tr></thead>'
+            f'<tbody>{body}</tbody></table></div><p class="sm mut">{esc(FLAT_NOTE)}. {esc(live_blob.get("lane_note") or "")}</p></details>')

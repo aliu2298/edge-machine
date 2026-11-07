@@ -1,7 +1,7 @@
 {
  "cutoff": "2026-11-06T18:07",
- "generated": "2026-11-07T00:40Z",
- "header": "reconstructed from the exchange order list and fills, pre-2026-11-06 18:07Z (before per-sell fill logging went live). Public fields only: per order the lane, market, kickoff or tip, side, legs sold, return per unit staked after modelled fees (maker at a quarter of the taker fee), the stake as a multiple of the lane's median stake, and the same entry held to settlement (YES split only). Orders from 2026-11-06 18:07Z on carry their own logged sells and are not in this file.",
+ "generated": "2026-11-07T01:30Z",
+ "header": "reconstructed from the exchange order list and fills, pre-2026-11-06 18:07Z (before per-sell fill logging went live). Public fields only: per order the lane, market, kickoff or tip, side, legs sold, return per unit staked after the exchange's own charged fees (a taker fill pays its fee, a resting fill none; read from the fills, not modelled), the stake as a multiple of the lane's median stake, and the same entry held to settlement (YES split only). Won is a return above +2%, lost below -2%, flat between. Orders from 2026-11-06 18:07Z on carry their own logged sells and are not in this file.",
  "rows": [
   {
    "hold_r": null,
@@ -9,10 +9,10 @@
    "ko": "2026-11-03T01:30",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.321,
+   "r": 0.3333,
    "side": "no",
    "st": "won",
-   "w": 0.97
+   "w": 0.95
   },
   {
    "hold_r": null,
@@ -20,10 +20,10 @@
    "ko": "2026-11-03T02:00",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3226,
+   "r": 0.3333,
    "side": "no",
    "st": "won",
-   "w": 1.02
+   "w": 1.0
   },
   {
    "hold_r": null,
@@ -31,10 +31,10 @@
    "ko": "2026-11-05T00:00",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3163,
+   "r": 0.3281,
    "side": "no",
    "st": "won",
-   "w": 0.98
+   "w": 0.97
   },
   {
    "hold_r": null,
@@ -42,10 +42,10 @@
    "ko": "2026-11-05T00:30",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3138,
+   "r": 0.3235,
    "side": "no",
    "st": "won",
-   "w": 1.05
+   "w": 1.03
   },
   {
    "hold_r": null,
@@ -53,10 +53,10 @@
    "ko": "2026-11-05T00:30",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3245,
+   "r": 0.339,
    "side": "no",
    "st": "won",
-   "w": 0.91
+   "w": 0.89
   },
   {
    "hold_r": null,
@@ -64,10 +64,10 @@
    "ko": "2026-11-05T00:30",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.321,
+   "r": 0.3333,
    "side": "no",
    "st": "won",
-   "w": 0.97
+   "w": 0.95
   },
   {
    "hold_r": null,
@@ -75,10 +75,10 @@
    "ko": "2026-11-05T00:30",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3182,
+   "r": 0.3284,
    "side": "no",
    "st": "won",
-   "w": 1.03
+   "w": 1.02
   },
   {
    "hold_r": null,
@@ -86,10 +86,10 @@
    "ko": "2026-11-05T01:00",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3117,
+   "r": 0.3231,
    "side": "no",
    "st": "won",
-   "w": 1.0
+   "w": 0.98
   },
   {
    "hold_r": null,
@@ -100,7 +100,7 @@
    "r": -1.0,
    "side": "no",
    "st": "lost",
-   "w": 1.0
+   "w": 0.98
   },
   {
    "hold_r": null,
@@ -108,10 +108,10 @@
    "ko": "2026-11-05T01:00",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3226,
+   "r": 0.3333,
    "side": "no",
    "st": "won",
-   "w": 0.97
+   "w": 0.96
   },
   {
    "hold_r": null,
@@ -119,10 +119,10 @@
    "ko": "2026-11-05T01:00",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3117,
+   "r": 0.3231,
    "side": "no",
    "st": "won",
-   "w": 1.0
+   "w": 0.98
   },
   {
    "hold_r": null,
@@ -130,10 +130,10 @@
    "ko": "2026-11-05T01:30",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3259,
+   "r": 0.3387,
    "side": "no",
    "st": "won",
-   "w": 0.95
+   "w": 0.94
   },
   {
    "hold_r": null,
@@ -141,10 +141,10 @@
    "ko": "2026-11-05T02:00",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3226,
+   "r": 0.3333,
    "side": "no",
    "st": "won",
-   "w": 1.02
+   "w": 1.0
   },
   {
    "hold_r": null,
@@ -155,7 +155,7 @@
    "r": -1.0,
    "side": "no",
    "st": "lost",
-   "w": 1.0
+   "w": 0.98
   },
   {
    "hold_r": null,
@@ -163,10 +163,10 @@
    "ko": "2026-11-05T02:30",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3344,
+   "r": 0.3429,
    "side": "no",
    "st": "won",
-   "w": 1.08
+   "w": 1.06
   },
   {
    "hold_r": null,
@@ -174,10 +174,10 @@
    "ko": "2026-11-05T02:30",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3117,
+   "r": 0.3231,
    "side": "no",
    "st": "won",
-   "w": 1.0
+   "w": 0.98
   },
   {
    "hold_r": null,
@@ -185,10 +185,10 @@
    "ko": "2026-11-05T02:30",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3163,
+   "r": 0.3281,
    "side": "no",
    "st": "won",
-   "w": 0.98
+   "w": 0.97
   },
   {
    "hold_r": null,
@@ -199,7 +199,7 @@
    "r": -1.0,
    "side": "no",
    "st": "lost",
-   "w": 1.06
+   "w": 1.05
   },
   {
    "hold_r": null,
@@ -207,10 +207,10 @@
    "ko": "2026-11-05T02:30",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3117,
+   "r": 0.3231,
    "side": "no",
    "st": "won",
-   "w": 1.0
+   "w": 0.98
   },
   {
    "hold_r": null,
@@ -218,10 +218,10 @@
    "ko": "2026-11-05T03:00",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3117,
+   "r": 0.3231,
    "side": "no",
    "st": "won",
-   "w": 1.0
+   "w": 0.98
   },
   {
    "hold_r": null,
@@ -229,10 +229,10 @@
    "ko": "2026-11-05T03:00",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3245,
+   "r": 0.339,
    "side": "no",
    "st": "won",
-   "w": 0.91
+   "w": 0.89
   },
   {
    "hold_r": null,
@@ -240,10 +240,10 @@
    "ko": "2026-11-05T03:00",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3243,
+   "r": 0.3333,
    "side": "no",
    "st": "won",
-   "w": 1.06
+   "w": 1.05
   },
   {
    "hold_r": null,
@@ -251,10 +251,10 @@
    "ko": "2026-11-05T03:00",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3259,
+   "r": 0.3387,
    "side": "no",
    "st": "won",
-   "w": 0.95
+   "w": 0.94
   },
   {
    "hold_r": null,
@@ -262,10 +262,10 @@
    "ko": "2026-11-05T03:30",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.4403,
+   "r": 0.4481,
    "side": "no",
    "st": "won",
-   "w": 1.06
+   "w": 1.05
   },
   {
    "hold_r": null,
@@ -273,10 +273,10 @@
    "ko": "2026-11-05T03:30",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3138,
+   "r": 0.3235,
    "side": "no",
    "st": "won",
-   "w": 1.05
+   "w": 1.03
   },
   {
    "hold_r": null,
@@ -287,7 +287,7 @@
    "r": -1.0,
    "side": "no",
    "st": "lost",
-   "w": 1.05
+   "w": 1.03
   },
   {
    "hold_r": null,
@@ -295,10 +295,10 @@
    "ko": "2026-11-06T02:00",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3182,
+   "r": 0.3284,
    "side": "no",
    "st": "won",
-   "w": 1.03
+   "w": 1.02
   },
   {
    "hold_r": null,
@@ -306,10 +306,10 @@
    "ko": "2026-11-06T02:00",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3138,
+   "r": 0.3235,
    "side": "no",
    "st": "won",
-   "w": 1.05
+   "w": 1.03
   },
   {
    "hold_r": null,
@@ -317,10 +317,10 @@
    "ko": "2026-11-06T03:00",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3226,
+   "r": 0.3333,
    "side": "no",
    "st": "won",
-   "w": 1.02
+   "w": 1.0
   },
   {
    "hold_r": null,
@@ -328,10 +328,10 @@
    "ko": "2026-11-06T03:00",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3243,
+   "r": 0.3333,
    "side": "no",
    "st": "won",
-   "w": 1.06
+   "w": 1.05
   },
   {
    "hold_r": null,
@@ -339,10 +339,10 @@
    "ko": "2026-11-06T03:00",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.33,
+   "r": 0.338,
    "side": "no",
    "st": "won",
-   "w": 1.09
+   "w": 1.08
   },
   {
    "hold_r": null,
@@ -350,18 +350,18 @@
    "ko": "2026-11-06T03:00",
    "lane": "nba_wm_nofade",
    "legs": "sold",
-   "r": 0.3138,
+   "r": 0.3235,
    "side": "no",
    "st": "won",
-   "w": 1.05
+   "w": 1.03
   },
   {
-   "hold_r": 5.2893,
+   "hold_r": 5.2919,
    "id": "KXNBAWINMARGIN-26NOV02OKCCLE-OKC1TO5",
    "ko": "2026-11-03T00:00",
    "lane": "nba_wm_yes",
    "legs": "2x+3x",
-   "r": 1.3333,
+   "r": 1.3595,
    "side": "yes",
    "st": "won",
    "w": 0.95
@@ -372,18 +372,18 @@
    "ko": "2026-11-03T00:00",
    "lane": "nba_wm_yes",
    "legs": "2x+3x",
-   "r": 1.3975,
+   "r": 1.4254,
    "side": "yes",
    "st": "won",
-   "w": 1.04
+   "w": 1.03
   },
   {
-   "hold_r": 4.8997,
+   "hold_r": 4.9026,
    "id": "KXNBAWINMARGIN-26NOV02ATLIND-ATL1TO5",
    "ko": "2026-11-03T00:30",
    "lane": "nba_wm_yes",
    "legs": "2x+3x",
-   "r": 1.3357,
+   "r": 1.361,
    "side": "yes",
    "st": "won",
    "w": 1.01
@@ -394,7 +394,7 @@
    "ko": "2026-11-03T00:30",
    "lane": "nba_wm_yes",
    "legs": "2x",
-   "r": -0.1751,
+   "r": -0.1633,
    "side": "yes",
    "st": "lost",
    "w": 1.05
@@ -405,10 +405,10 @@
    "ko": "2026-11-03T00:30",
    "lane": "nba_wm_yes",
    "legs": "2x",
-   "r": -0.2528,
+   "r": -0.2439,
    "side": "yes",
    "st": "lost",
-   "w": 0.9
+   "w": 0.89
   },
   {
    "hold_r": -1.0,
@@ -416,10 +416,10 @@
    "ko": "2026-11-03T00:30",
    "lane": "nba_wm_yes",
    "legs": "2x+3x",
-   "r": 1.3975,
+   "r": 1.4254,
    "side": "yes",
    "st": "won",
-   "w": 1.04
+   "w": 1.03
   },
   {
    "hold_r": -1.0,
@@ -427,7 +427,7 @@
    "ko": "2026-11-03T00:30",
    "lane": "nba_wm_yes",
    "legs": "2x+3x",
-   "r": 1.441,
+   "r": 1.4621,
    "side": "yes",
    "st": "won",
    "w": 1.05
@@ -460,7 +460,7 @@
    "ko": "2026-11-05T00:00",
    "lane": "nba_wm_yes",
    "legs": "2x",
-   "r": -0.0673,
+   "r": -0.0556,
    "side": "yes",
    "st": "lost",
    "w": 1.01
@@ -471,7 +471,7 @@
    "ko": "2026-11-05T00:00",
    "lane": "nba_wm_yes",
    "legs": "2x",
-   "r": -0.8806,
+   "r": -0.8791,
    "side": "yes",
    "st": "lost",
    "w": 1.0
@@ -482,7 +482,7 @@
    "ko": "2026-11-05T00:30",
    "lane": "nba_wm_yes",
    "legs": "2x",
-   "r": -0.0682,
+   "r": -0.0562,
    "side": "yes",
    "st": "lost",
    "w": 0.95
@@ -515,10 +515,10 @@
    "ko": "2026-11-05T00:30",
    "lane": "nba_wm_yes",
    "legs": "2x+3x",
-   "r": 1.4335,
+   "r": 1.4572,
    "side": "yes",
    "st": "won",
-   "w": 0.9
+   "w": 0.89
   },
   {
    "hold_r": -1.0,
@@ -526,18 +526,18 @@
    "ko": "2026-11-05T00:30",
    "lane": "nba_wm_yes",
    "legs": "2x+3x",
-   "r": 1.3975,
+   "r": 1.4254,
    "side": "yes",
    "st": "won",
-   "w": 1.04
+   "w": 1.03
   },
   {
-   "hold_r": 4.2521,
+   "hold_r": 4.2538,
    "id": "KXNBAWINMARGIN-26NOV04MILBOS-BOS6TO10",
    "ko": "2026-11-05T00:30",
    "lane": "nba_wm_yes",
    "legs": "2x+3x",
-   "r": 1.4358,
+   "r": 1.4588,
    "side": "yes",
    "st": "won",
    "w": 0.95
@@ -551,7 +551,7 @@
    "r": -1.0,
    "side": "yes",
    "st": "lost",
-   "w": 1.04
+   "w": 1.03
   },
   {
    "hold_r": -1.0,
@@ -565,23 +565,23 @@
    "w": 0.95
   },
   {
-   "hold_r": 4.2521,
+   "hold_r": 4.2538,
    "id": "KXNBAWINMARGIN-26NOV04CLEOKC-OKC6TO10",
    "ko": "2026-11-05T01:00",
    "lane": "nba_wm_yes",
    "legs": "2x+3x",
-   "r": 1.4358,
+   "r": 1.4588,
    "side": "yes",
    "st": "won",
    "w": 0.95
   },
   {
-   "hold_r": 5.2893,
+   "hold_r": 5.2919,
    "id": "KXNBAWINMARGIN-26NOV04INDMEM-IND1TO5",
    "ko": "2026-11-05T01:00",
    "lane": "nba_wm_yes",
    "legs": "2x+3x",
-   "r": 1.3333,
+   "r": 1.3595,
    "side": "yes",
    "st": "won",
    "w": 0.95
@@ -592,7 +592,7 @@
    "ko": "2026-11-05T01:00",
    "lane": "nba_wm_yes",
    "legs": "2x+3x",
-   "r": 1.3946,
+   "r": 1.4236,
    "side": "yes",
    "st": "won",
    "w": 0.96
@@ -603,10 +603,10 @@
    "ko": "2026-11-05T01:00",
    "lane": "nba_wm_yes",
    "legs": "2x",
-   "r": -0.2528,
+   "r": -0.2439,
    "side": "yes",
    "st": "lost",
-   "w": 0.9
+   "w": 0.89
   },
   {
    "hold_r": -1.0,
@@ -614,7 +614,7 @@
    "ko": "2026-11-05T01:00",
    "lane": "nba_wm_yes",
    "legs": "2x+3x",
-   "r": 1.4358,
+   "r": 1.4588,
    "side": "yes",
    "st": "won",
    "w": 0.95
@@ -625,7 +625,7 @@
    "ko": "2026-11-05T01:00",
    "lane": "nba_wm_yes",
    "legs": "2x+3x",
-   "r": 1.3946,
+   "r": 1.4236,
    "side": "yes",
    "st": "won",
    "w": 0.96
@@ -636,7 +636,7 @@
    "ko": "2026-11-05T01:30",
    "lane": "nba_wm_yes",
    "legs": "2x+3x",
-   "r": 1.3357,
+   "r": 1.361,
    "side": "yes",
    "st": "won",
    "w": 1.01
@@ -647,7 +647,7 @@
    "ko": "2026-11-05T01:30",
    "lane": "nba_wm_yes",
    "legs": "2x",
-   "r": -0.2512,
+   "r": -0.243,
    "side": "yes",
    "st": "lost",
    "w": 1.0
@@ -658,10 +658,10 @@
    "ko": "2026-11-05T01:30",
    "lane": "nba_wm_yes",
    "legs": "2x+3x",
-   "r": 1.3975,
+   "r": 1.4254,
    "side": "yes",
    "st": "won",
-   "w": 1.04
+   "w": 1.03
   },
   {
    "hold_r": -1.0,
@@ -669,7 +669,7 @@
    "ko": "2026-11-05T02:00",
    "lane": "nba_wm_yes",
    "legs": "2x",
-   "r": -0.0682,
+   "r": -0.0562,
    "side": "yes",
    "st": "lost",
    "w": 0.95
@@ -680,10 +680,10 @@
    "ko": "2026-11-05T02:00",
    "lane": "nba_wm_yes",
    "legs": "2x+3x",
-   "r": 1.3975,
+   "r": 1.4254,
    "side": "yes",
    "st": "won",
-   "w": 1.04
+   "w": 1.03
   },
   {
    "hold_r": -1.0,
@@ -694,7 +694,7 @@
    "r": -1.0,
    "side": "yes",
    "st": "lost",
-   "w": 0.9
+   "w": 0.89
   },
   {
    "hold_r": -1.0,
@@ -705,7 +705,7 @@
    "r": -1.0,
    "side": "yes",
    "st": "lost",
-   "w": 0.9
+   "w": 0.89
   },
   {
    "hold_r": -1.0,
@@ -713,10 +713,10 @@
    "ko": "2026-11-05T02:00",
    "lane": "nba_wm_yes",
    "legs": "2x",
-   "r": -0.0706,
+   "r": -0.0581,
    "side": "yes",
    "st": "lost",
-   "w": 1.02
+   "w": 1.01
   },
   {
    "hold_r": -1.0,
@@ -724,7 +724,7 @@
    "ko": "2026-11-05T02:30",
    "lane": "nba_wm_yes",
    "legs": "2x+3x",
-   "r": 1.4391,
+   "r": 1.4604,
    "side": "yes",
    "st": "won",
    "w": 1.0
@@ -735,10 +735,10 @@
    "ko": "2026-11-05T03:00",
    "lane": "nba_wm_yes",
    "legs": "2x",
-   "r": -0.0706,
+   "r": -0.0581,
    "side": "yes",
    "st": "lost",
-   "w": 1.02
+   "w": 1.01
   },
   {
    "hold_r": -1.0,
@@ -746,10 +746,10 @@
    "ko": "2026-11-05T03:30",
    "lane": "nba_wm_yes",
    "legs": "2x+3x",
-   "r": 1.3263,
+   "r": 1.3548,
    "side": "yes",
    "st": "won",
-   "w": 1.02
+   "w": 1.01
   },
   {
    "hold_r": -1.0,
@@ -757,7 +757,7 @@
    "ko": "2026-11-06T02:00",
    "lane": "nba_wm_yes",
    "legs": "2x",
-   "r": -0.0682,
+   "r": -0.0562,
    "side": "yes",
    "st": "lost",
    "w": 0.95
@@ -771,7 +771,7 @@
    "r": -1.0,
    "side": "yes",
    "st": "lost",
-   "w": 1.04
+   "w": 1.03
   },
   {
    "hold_r": -1.0,
@@ -779,7 +779,7 @@
    "ko": "2026-11-06T02:00",
    "lane": "nba_wm_yes",
    "legs": "2x",
-   "r": -0.0682,
+   "r": -0.0562,
    "side": "yes",
    "st": "lost",
    "w": 0.95
@@ -790,10 +790,10 @@
    "ko": "2026-11-06T02:00",
    "lane": "nba_wm_yes",
    "legs": "2x+3x",
-   "r": 1.3975,
+   "r": 1.4254,
    "side": "yes",
    "st": "won",
-   "w": 1.04
+   "w": 1.03
   },
   {
    "hold_r": -1.0,
@@ -801,7 +801,7 @@
    "ko": "2026-11-06T03:00",
    "lane": "nba_wm_yes",
    "legs": "2x+3x",
-   "r": 1.3357,
+   "r": 1.361,
    "side": "yes",
    "st": "won",
    "w": 1.01
@@ -812,10 +812,10 @@
    "ko": "2026-11-06T03:00",
    "lane": "nba_wm_yes",
    "legs": "2x",
-   "r": -0.2022,
+   "r": -0.1915,
    "side": "yes",
    "st": "lost",
-   "w": 1.04
+   "w": 1.03
   },
   {
    "hold_r": -1.0,
@@ -823,10 +823,10 @@
    "ko": "2026-11-06T03:00",
    "lane": "nba_wm_yes",
    "legs": "2x+3x",
-   "r": 1.3263,
+   "r": 1.3548,
    "side": "yes",
    "st": "won",
-   "w": 1.02
+   "w": 1.01
   },
   {
    "hold_r": null,
@@ -911,7 +911,7 @@
    "ko": "2026-11-02T00:00",
    "lane": "o35_cheap_no",
    "legs": "sold",
-   "r": 2.8954,
+   "r": 3.0,
    "side": "no",
    "st": "won",
    "w": 1.0
@@ -966,7 +966,7 @@
    "ko": "2026-11-03T20:00",
    "lane": "o35_cheap_no",
    "legs": "sold",
-   "r": 2.8954,
+   "r": 3.0,
    "side": "no",
    "st": "won",
    "w": 1.0
@@ -1010,7 +1010,7 @@
    "ko": "2026-11-04T20:00",
    "lane": "o35_cheap_no",
    "legs": "sold",
-   "r": 2.8954,
+   "r": 3.0,
    "side": "no",
    "st": "won",
    "w": 0.82
@@ -1021,7 +1021,7 @@
    "ko": "2026-11-04T20:00",
    "lane": "o35_cheap_no",
    "legs": "sold",
-   "r": 3.2129,
+   "r": 3.2808,
    "side": "no",
    "st": "won",
    "w": 1.0

@@ -1319,7 +1319,7 @@ def _group_record(lives):
     stakes = sum(int(l.get("n") or 0) + int(l.get("n_price") or 0) for l in lives)
     roi = (sum((l.get("roi_fee") or 0) * (int(l.get("n") or 0) + int(l.get("n_price") or 0))
                for l in lives) / stakes) if stakes else None
-    return dict(n=n, won=won, n_price=n_price, roi_fee=roi)
+    return dict(n=n, won=won, n_price=n_price, roi_fee=roi, flat=sum(int(l.get("flat") or 0) for l in lives), wfl=any(l.get("wfl") for l in lives))
 
 
 def sport_chips(groups):
@@ -1556,7 +1556,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
 <td class="num">{whole['n']}<div class="sm mut">settled</div></td>
 <td class="num"><span class="{tone(whole['roi_fee'], whole['n'])}">{pct(whole['roi_fee'])}</span><div class="sm mut">after fees</div></td>
 <td class="num">{clv}<div class="sm mut">v the close</div></td>
-<td class="num">{T.record_html(live)}<div class="sm mut">{esc(since_note)}</div>{live_rec}</td>
+<td class="num">{PL.wfl(live) if live.get("wfl") else T.record_html(live)}<div class="sm mut">{esc(since_note)}</div>{live_rec}</td>
 <td class="num"><span class="{tone(live['roi_fee'], live['n'] >= EARLY_N)}">{pct(live['roi_fee'])}</span>{'<div class="sm mut">too early</div>' if 0 < live['n'] < EARLY_N else ''}{live_roi}</td>
 <td class="num light">{light} <span class="sm mut">{esc(why)}</span></td>
 <td class="num"><span class="{reach_tone}">{reach}</span><div class="sm mut">reachable</div></td>
@@ -1565,10 +1565,10 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
             # The build keeps going with this pair's row saying why it has no numbers, and a
             # ::warning:: names it in the run. The cause still raises everywhere it is tested
             # (test_sandbox.py, SANDBOX_TEST_GROUP=live), so it stays visible.
-            groups.setdefault(sport_group(sport), dict(rows=[], lives=[], to_come=0, early=0, older=[]))["rows"].append(len(cards))
+            groups.setdefault(sport_group(sport), dict(rows=[], lives=[], to_come=0, early=0, older=[], wfl=False))["rows"].append(len(cards))
             cards.append(unavailable_row(key, name(key), sport_of(key), record_unavailable(key, exc)))
             continue
-        group = groups.setdefault(sport_group(sport), dict(rows=[], lives=[], to_come=0, early=0, older=[]))
+        group = groups.setdefault(sport_group(sport), dict(rows=[], lives=[], to_come=0, early=0, older=[], wfl=False))
         if key in older_keys:
             group.setdefault("older", []).append(len(cards))
             cards.append(card)
@@ -1576,6 +1576,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
         if early:
             n_early += 1
         group["lives"].append(live)
+        group["wfl"] = group.get("wfl", False) or bool(live.get("wfl"))
         group["to_come"] += to_come
         group["early"] += 1 if early else 0
         group["rows"].append(len(cards))
@@ -1595,7 +1596,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
         bits = [f'{n_pairs} pair{"s" if n_pairs != 1 else ""}'
                 + (f' ({grp["early"]} early)' if grp["early"] else "")]
         if rec["n"] or rec["n_price"]:
-            bits.append(f'since Production {T.record_text(rec)}')
+            bits.append(f'since Production {PL.wfl(dict(won=rec["won"], flat=rec["flat"], lost=rec["n"] - rec["won"] - rec["flat"])) if rec["wfl"] else T.record_text(rec)}')
             bits.append(f'<span class="{tone(rec["roi_fee"], rec["n"] >= EARLY_N)}">{pct(rec["roi_fee"])}</span>'
                         + (' <span class="sm">too early</span>' if rec["n"] < EARLY_N else ""))
         else:
@@ -1610,7 +1611,8 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
             f'<details class="fold sport-fold" data-sport="{esc(sport_key(g))}"'
             f'{" open" if grp["to_come"] else ""}>'
             f'<summary><h3>{esc(g)}</h3><span class="mut sm">· {" · ".join(bits)}</span></summary>'
-            f'<div class="tbl"><table>{pairs_head}{rows}</table></div>{older_html}</details>')
+            f'<div class="tbl"><table>{pairs_head}{rows}</table></div>'
+            + (f'<p class="sm mut">Rows read W–F–L: {esc(PL.FLAT_NOTE)}.</p>' if grp["wfl"] or grp.get("older") else "") + f'{older_html}</details>')
     pairs_html = ("".join(sections) + PL.gap_section(live_gap_rows, paper_bets, {l.get('sandbox_quote') for l in leads if l.get('sandbox_quote')},
                                                                   _feed_from(leads), horizon=(now_dt - datetime.timedelta(days=KEEP_SETTLED_DAYS)).isoformat()) + PL.lanes_table(live_blob) + PL.pulled_table(live_blob, name) + PL.raised_fold(raised_rows) +
                   ('<p class="sm mut">Live fills: orders the follower placed and Kalshi settled, counted from the pair\'s Production date, ROI per $1 staked after fees, '

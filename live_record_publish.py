@@ -46,12 +46,15 @@ FIELDS = {"id", "ko", "side", "st", "w", "r"}
 LANE_FIELDS = FIELDS | {"legs", "hold_r", "src"}
 LEGS = {"", "2x", "3x", "2x+3x", "sold"}
 SRCS = {"fills", "reconstructed"}
-STATES = {"won", "lost", "open", "sold", "unfilled", "unconfirmed"}
+STATES = {"won", "flat", "lost", "open", "sold", "unfilled", "unconfirmed"}
+FLAT = 0.02          # an own-state trade within +-2% after fees is flat (F), above it won (W), below it lost (L)
 RECON = os.path.join(ROOT, "data", "live_reconstructed.json")
 RECON_BEFORE = "2026-11-06T18:07"      # per-sell fill logging went live on the VPS at this instant (UTC): earlier tips are reconstructed
 LANES = ("o35_cheap_no", "nba_wm_yes", "nba_wm_nofade", "top5_dip")
-# Kalshi's fee per contract, as the follower models it (0.07 p (1-p) rounded up to $0.0001; a resting fill pays a quarter), so the live
-# record is after fees on the same footing as the paper one.
+# Fees are the EXCHANGE's, not a model. The exchange charged a taker fill 0.07 p (1-p) rounded up to $0.0001 and a resting (maker) fill nothing
+# (fee_cost 0 on every resting fill read from /portfolio/fills). The state files carry no fee for a buy, so the buy fee is that taker formula for a
+# taker buy (the YES split's immediate-or-cancel entry) and 0 for a resting bid; a logged sell piece carries its `taker` flag and
+# `fee_per_contract`, used for a taker/IOC piece, and a resting piece pays 0 (the recorded `fee` field is the follower's modelled maker fee and is NOT used).
 FEE_CAP, FEE_TAKER, FEE_MAKER_SHARE, FEE_GRID = 0.035, 0.07, 0.25, 0.0001
 BAD = re.compile(r"\$|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", re.I)
 KEYLIKE = re.compile(r"[A-Za-z0-9+/_-]{64,}")
@@ -181,6 +184,11 @@ def fee_per_contract(price, taker=True):
     return round(f if taker else f * FEE_MAKER_SHARE, 6)
 
 
+def sell_fee(rec):
+    """The exchange fee on one logged sell record: its taker pieces at the taker fee per contract, its resting (maker) pieces at 0."""
+    return sum(float(f.get("size") or 0) * float(f.get("fee_per_contract") or 0) for f in (rec.get("fills") or []) if f.get("taker"))
+
+
 def _legs(names):
     got = sorted({n for n in names if n in ("2x", "3x")})
     return "+".join(got) if got else ("sold" if names else "")
@@ -191,12 +199,12 @@ def own_trade(side, px, qty, buy_taker, sell_fills, result, split=False):
 
     Cost is the contracts bought at the price paid plus the buy fee; proceeds are the logged sells (size x price, less their fee) plus
     the unsold remainder at the market's settled value (1 if it settled to this side, else 0; no fee at settlement). Open while a
-    remainder is unsettled. Won = the realised return after fees is above zero: a bet sold at its target is won whatever the market
-    later did, and a bet held to a lost settlement is lost."""
-    stake = qty * px + qty * fee_per_contract(px, buy_taker)
+    remainder is unsettled. Won = the realised return after fees is above +2%, lost = below -2%, flat in between: a bet sold at its target is
+    won whatever the market later did, and a bet held to a lost settlement is lost."""
+    stake = qty * px + (qty * fee_per_contract(px, True) if buy_taker else 0.0)
     sells = list((sell_fills or {}).values())
     sold = min(qty, sum(float(x.get("size") or 0) for x in sells))
-    proceeds = sum(float(x.get("size") or 0) * float(x.get("price") or 0) - float(x.get("fee") or 0) for x in sells)
+    proceeds = sum(float(x.get("size") or 0) * float(x.get("price") or 0) - sell_fee(x) for x in sells)
     rem = max(0.0, qty - sold)
     legs = _legs([x.get("leg") for x in sells if float(x.get("size") or 0) > 0.004])
     if rem > 0.004 and result is None:
@@ -204,7 +212,8 @@ def own_trade(side, px, qty, buy_taker, sell_fills, result, split=False):
     payout = 1.0 if result == side else 0.0
     ret = (proceeds + rem * payout - stake) / stake
     hold = round((qty * payout - stake) / stake, 4) if split and result else None
-    return dict(st="won" if ret > 0 else "lost", r=round(ret, 4), legs=legs, hold_r=hold), stake
+    ret = round(ret, 4)
+    return dict(st=("won" if ret > FLAT else "lost" if ret < -FLAT else "flat"), r=ret, legs=legs, hold_r=hold), stake
 
 
 def load_reconstructed(path=None):
@@ -305,7 +314,7 @@ def build(src_dir=SRC_DIR, fetch=None, cache_path=None):
     return dict(generated=dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%MZ"), pairs=out, pulled=pulled,
                 lanes=lane_rows(src_dir, fetch, cache_path),
                 lane_note=("own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled "
-                           "result); a bet is won when its realised return is above zero. Entries with a tip before 2026-11-06 18:07Z are reconstructed "
+                           "result); a bet is won above +2% after fees, lost below -2%, flat between. Entries with a tip before 2026-11-06 18:07Z are reconstructed "
                            "from the exchange order list; later ones use the sell fills the follower logged"))
 
 

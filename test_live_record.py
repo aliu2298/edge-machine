@@ -62,16 +62,22 @@ for label, bad in (("a dollar sign", dict(id="Above $94", ko="x", side="yes", st
 
 print("\nthe own-state lanes are TRADES after fees: the logged sells plus the unsold remainder at settlement")
 fee = X.fee_per_contract
-check("the fee model: a taker pays 0.07 p (1-p) rounded up to $0.0001, a resting fill a quarter", (fee(0.16), fee(0.16, taker=False), fee(0.5)), (0.0095, 0.002375, 0.0175))
-sf = lambda leg, size, price: {"c": dict(leg=leg, size=size, price=price, fee=round(fee(price, False) * size, 6))}
+check("the taker fee: 0.07 p (1-p) rounded up to $0.0001", (fee(0.16), fee(0.5)), (0.0095, 0.0175))
+# fees are the EXCHANGE's: a resting sell piece pays nothing (its recorded `fee` field is the follower's modelled maker fee and is ignored); a taker piece pays the taker fee
+piece = lambda size, price, taker=False: dict(size=size, price=price, taker=taker, fee_per_contract=fee(price))
+sf = lambda leg, size, price, taker=False: {"c": dict(leg=leg, size=size, price=price, fee=0.123, fills=[piece(size, price, taker)])}
+check("sell_fee: a resting piece is free, a taker piece pays the taker fee, the modelled `fee` is ignored",
+      (X.sell_fee(sf("2x", 3.0, 0.32)["c"]), round(X.sell_fee(sf("2x", 3.0, 0.32, True)["c"]), 6)), (0, round(3 * fee(0.32), 6)))
 # a YES split: 6 bought at 0.16 (taker), 3 sold at 0.32 (2x leg) and 3 at 0.48 (3x leg)
 t, stake = X.own_trade("yes", 0.16, 6.0, True, {"a": sf("2x", 3.0, 0.32)["c"], "b": sf("3x", 3.0, 0.48)["c"]}, "no", split=True)
-want = (3 * 0.32 + 3 * 0.48 - 3 * fee(0.32, False) - 3 * fee(0.48, False) - (6 * 0.16 + 6 * fee(0.16))) / (6 * 0.16 + 6 * fee(0.16))
+want = (3 * 0.32 + 3 * 0.48 - (6 * 0.16 + 6 * fee(0.16))) / (6 * 0.16 + 6 * fee(0.16))
 check("both legs filled: the trade is won on the sells whatever the market settled, legs 2x+3x", (t["st"], t["legs"], t["r"]), ("won", "2x+3x", round(want, 4)))
 check("the same entry held to a lost settlement is the hold control", t["hold_r"], round((0 - stake) / stake, 4))
 t, _ = X.own_trade("yes", 0.16, 6.0, True, {"a": sf("2x", 3.0, 0.32)["c"]}, "no", split=True)
-check("only the 2x leg filled: half sold, the unsold half loses at settlement; the trade is still counted by its realised return (legs 2x)",
-      (t["legs"], t["st"], t["r"] is not None and t["r"] > -1), ("2x", "won" if t["r"] > 0 else "lost", True))
+check("only the 2x leg filled: half sold at 2x (cost back), the unsold half loses; minus the entry fee that is below -2%: lost (legs 2x)",
+      (t["legs"], t["st"], -0.1 < t["r"] < -0.02), ("2x", "lost", True))
+t, _ = X.own_trade("no", 0.5, 2.0, False, {"a": sf("sold", 2.0, 0.51)["c"]}, "yes")
+check("a sale 2% over the bid with no fee is exactly +2%: flat, not won", (t["st"], t["r"]), ("flat", 0.02))
 t, _ = X.own_trade("yes", 0.16, 6.0, True, {}, "no", split=True)
 check("no leg filled and the bucket missed: lost, -100% of the stake", (t["st"], t["r"], t["legs"]), ("lost", -1.0, ""))
 t, _ = X.own_trade("yes", 0.16, 6.0, True, {}, None, split=True)
@@ -84,7 +90,7 @@ t, _ = X.own_trade("no", 0.65, 1.0, False, {}, "yes")
 check("a NO fade never sold and lost at settlement is a loss", (t["st"], t["r"]), ("lost", -1.0))
 
 with tempfile.TemporaryDirectory() as d:
-    sell = {"c1": dict(leg="sell", size=10.0, price=0.4, fee=round(fee(0.4, False) * 10, 6))}
+    sell = {"c1": dict(leg="sell", size=10.0, price=0.4, fee=0.5, fills=[piece(10.0, 0.4)])}
     json.dump({"matches": {"KXUCLTOTAL-26NOV03FEYINT-4": dict(filled=10.0, bid=dict(price=0.1), kickoff=1793650800, sells=[]),
                            "KXUCLTOTAL-26NOV07FCPNAP-4": dict(filled=10.0, bid=dict(price=0.1), kickoff=1794200000, sells=[dict(qty=10)], sell_fills=sell)}},
               open(os.path.join(d, "o35_state.json"), "w"))
@@ -92,18 +98,18 @@ with tempfile.TemporaryDirectory() as d:
                            "yes:KXNBAWINMARGIN-26NOV02ATLIND-ATL1TO5": dict(filled=6.0, buy=dict(ask=0.16), tip=1793665800)}},
               open(os.path.join(d, "nba_wm_state.json"), "w"))
     json.dump({"matches": {"KXEPLTOTAL-26NOV06EVECOV-2": dict(filled=2.0, bid=dict(price=0.44), kickoff=1793993400,
-                                                              sell_fills={"s": dict(leg="sell", size=2.0, price=0.8, fee=0.0056)})}},
+                                                              sell_fills={"s": dict(leg="sell", size=2.0, price=0.8, fee=0.0056, fills=[piece(2.0, 0.8)])})}},
               open(os.path.join(d, "top5_dip_state.json"), "w"))
     recon = {("o35_cheap_no", "KXUCLTOTAL-26NOV03FEYINT-4"): dict(lane="o35_cheap_no", id="KXUCLTOTAL-26NOV03FEYINT-4", st="lost", r=-1.0, w=1.0, legs="", hold_r=None)}
     lanes = X.lane_rows(d, lambda t: "no" if t.startswith("KXUCL") else "yes", "", recon)
     check("o35: a pre-logging entry reads the reconstruction (labelled), a logged sell reads its own fill",
           [(r["st"], r["src"], r["legs"]) for r in lanes["o35_cheap_no"]], [("lost", "reconstructed", ""), ("won", "fills", "sold")])
-    check("o35: the sold-at-4x trade is a win after fees (4x less the maker fees both ways)", round(lanes["o35_cheap_no"][1]["r"], 3) > 2.5, True)
+    check("o35: the sold-at-4x trade is a win of exactly 3x with no fee on either resting fill", lanes["o35_cheap_no"][1]["r"], 3.0)
     check("nba_wm: the NO fade loses on a yes result, the YES split (no sell logged) is held to settlement and wins",
           ([r["st"] for r in lanes["nba_wm_nofade"]], [r["st"] for r in lanes["nba_wm_yes"]]), (["lost"], ["won"]))
     check("the YES split row carries its hold control", lanes["nba_wm_yes"][0]["hold_r"] is not None, True)
     dip = lanes["top5_dip"][0]
-    check("the top-5 dip is a lane: sold at P is a win, 80c in on a 44c bid", (dip["st"], dip["legs"], dip["src"], round(dip["r"], 2)), ("won", "sold", "fills", round((2 * 0.8 - 0.0056 - 2 * (0.44 + fee(0.44, False))) / (2 * (0.44 + fee(0.44, False))), 2)))
+    check("the top-5 dip is a lane: sold at P is a win, 80c in on a 44c bid", (dip["st"], dip["legs"], dip["src"], round(dip["r"], 2)), ("won", "sold", "fills", round((0.8 - 0.44) / 0.44, 2)))
     X.check_lanes(dict(lanes=lanes))
     check("and the whole lanes blob passes the whitelist", True, True)
     for bad, why in ((dict(lanes[ "top5_dip"][0], balance=1.0), "an extra field"), (dict(lanes["top5_dip"][0], legs="3x+9x"), "legs outside the whitelist"),
