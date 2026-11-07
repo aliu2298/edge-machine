@@ -240,6 +240,25 @@
    "yes_ask": 0.7,
    "yes_bid": 0.69
   },
+  "KXLALIGATOTAL-26NOV07VCFRMA-2": {
+   "P": 0.87,
+   "bot_version": "top5dip-live-v1",
+   "decided_at": "2026-11-07T19:00:44+00:00",
+   "event": "KXLALIGATOTAL-26NOV07VCFRMA",
+   "kickoff": "2026-11-07T20:00:00+00:00",
+   "lane": "top5_goalless_dip_live",
+   "league": "La Liga",
+   "limit": 0.48,
+   "matchday": "26NOV07",
+   "outcome": "planned",
+   "qty": 2.0,
+   "rule_ok": true,
+   "spread": 0.01,
+   "ticker": "KXLALIGATOTAL-26NOV07VCFRMA-2",
+   "why": null,
+   "yes_ask": 0.87,
+   "yes_bid": 0.86
+  },
   "KXLIGUE1TOTAL-26NOV06TFCRCS-2": {
    "P": 0.83,
    "bot_version": "top5dip-live-v1",
@@ -375,6 +394,6 @@
    "why": null
   }
  },
- "updated_at": "2026-11-07T18:45:19+00:00",
+ "updated_at": "2026-11-07T19:00:44+00:00",
  "version": 1
 }
