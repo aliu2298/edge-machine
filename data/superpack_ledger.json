@@ -953,7 +953,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-07T19:09:13.068595+00:00",
+ "last_run": "2026-11-07T19:37:22.796082+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -1699,14 +1699,14 @@
    ],
    "pid": "[\"sandbox\", \"liga_btts_even\", [\"liga_btts_even:KXLALIGABTTS-26NOV07OSAATH-BTTS\", \"a\"]]",
    "price": 0.51,
-   "profit": null,
+   "profit": 0.9608,
    "scope": "soccer_btts",
-   "settled": null,
+   "settled": "2026-11-07T19:36:52+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXNFLTEAMTOTAL-26NOV05JACBAL-BAL17",
@@ -2392,14 +2392,14 @@
    ],
    "pid": "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV07NFOMCI-7\", \"b\"]]",
    "price": 0.16,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_corners",
-   "settled": null,
+   "settled": "2026-11-07T19:36:59+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXAAAGASD-26NOV07-4.0350",
