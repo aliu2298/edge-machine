@@ -588,15 +588,17 @@
    ],
    "logged": "2026-11-07T19:00:21.902572+00:00",
    "minutes_to_start": 59.0,
-   "payout": null,
+   "payout": 0.0,
    "pnl": 0.1121,
    "price": 0.08,
    "roi": 1.3162,
    "roi_2x": 0.8514,
+   "roi_held": -1.0,
+   "settled": "2026-11-07T22:00:28.319526+00:00",
    "side": "yes",
    "spread": 0.01,
    "spread_cost": null,
-   "status": "filled",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Connal Mcdonald"
   },
@@ -684,11 +686,17 @@
    "last_trade_at": null,
    "legs": [
     {
+     "fill_px": 0.1,
+     "fill_volume": 929.96,
+     "filled_at": "2026-11-07T21:01:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.1
     },
     {
+     "fill_px": 0.15,
+     "fill_volume": 929.96,
+     "filled_at": "2026-11-07T21:01:00+00:00",
      "multiple": 3.0,
      "share": 0.5,
      "target": 0.15
@@ -696,12 +704,17 @@
    ],
    "logged": "2026-11-07T20:00:19.032868+00:00",
    "minutes_to_start": 59.0,
-   "payout": null,
+   "payout": 0.0,
+   "pnl": 0.0698,
    "price": 0.05,
+   "roi": 1.3084,
+   "roi_2x": 0.8458,
+   "roi_held": -1.0,
+   "settled": "2026-11-07T22:00:28.319526+00:00",
    "side": "yes",
    "spread": 0.01,
    "spread_cost": null,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Ivan Balaz"
   }
@@ -746,12 +759,12 @@
   "KXBOXING-26OCT31TSUTSUROJAS": "2026-10-31T20:06:27.383501+00:00"
  },
  "lane": "boxing_cheap_dog",
- "last_success": "2026-11-07T21:00:19.856755+00:00",
+ "last_success": "2026-11-07T22:00:28.319526+00:00",
  "observations": {
-  "at": "2026-11-07T21:00:19.856755+00:00",
+  "at": "2026-11-07T22:00:28.319526+00:00",
   "entered": 0,
   "events": 3,
-  "filled": 1,
+  "filled": 2,
   "no_start": 0,
   "skipped": 0,
   "unverified": 0,
