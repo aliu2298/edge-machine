@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-07T03:07Z",
+ "generated": "2026-11-07T04:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "nba_wm_nofade": [
@@ -397,7 +397,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.85
+    "w": 0.88
    },
    {
     "g": 0.3284,
@@ -409,7 +409,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 1.03
    },
    {
     "g": 0.2715,
@@ -421,7 +421,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.97
+    "w": 1.0
    },
    {
     "g": 0.3286,
@@ -433,31 +433,43 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.04
+    "w": 1.08
    },
    {
-    "g": null,
+    "g": -1.0,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06PHICLE-CLE21PLUS",
     "ko": "2026-11-07T00:30",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "no",
     "src": "fills",
-    "st": "open",
-    "w": 1.06
+    "st": "lost",
+    "w": 1.09
    },
    {
-    "g": null,
+    "g": 0.3855,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06PHICLE-CLE6TO10",
     "ko": "2026-11-07T00:30",
     "legs": "sold",
-    "r": null,
+    "r": 0.3855,
     "side": "no",
     "src": "fills",
-    "st": "open",
-    "w": 1.03
+    "st": "won",
+    "w": 1.06
+   },
+   {
+    "g": 0.3333,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV06MINNOP-MIN11TO20",
+    "ko": "2026-11-07T01:00",
+    "legs": "sold",
+    "r": 0.3333,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 0.97
    },
    {
     "g": 0.3231,
@@ -469,19 +481,19 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.97
+    "w": 1.0
    },
    {
-    "g": null,
+    "g": 0.3382,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06MINNOP-NOP1TO5",
     "ko": "2026-11-07T01:00",
-    "legs": "",
-    "r": null,
+    "legs": "sold",
+    "r": 0.3382,
     "side": "no",
     "src": "fills",
-    "st": "open",
-    "w": 1.01
+    "st": "won",
+    "w": 1.05
    },
    {
     "g": 0.3286,
@@ -493,7 +505,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.04
+    "w": 1.08
    },
    {
     "g": 0.3333,
@@ -505,7 +517,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.94
+    "w": 0.97
    },
    {
     "g": 0.4516,
@@ -517,31 +529,67 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.93
+    "w": 0.95
    },
    {
-    "g": null,
+    "g": -1.0,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06OKCMEM-OKC21PLUS",
     "ko": "2026-11-07T01:00",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "no",
     "src": "fills",
-    "st": "open",
-    "w": 1.04
+    "st": "lost",
+    "w": 1.08
    },
    {
-    "g": null,
+    "g": 0.3333,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV06TORMIL-TOR11TO20",
+    "ko": "2026-11-07T01:00",
+    "legs": "sold",
+    "r": 0.3333,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 0.97
+   },
+   {
+    "g": 0.3333,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV06TORMIL-TOR1TO5",
+    "ko": "2026-11-07T01:00",
+    "legs": "sold",
+    "r": 0.3333,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 1.02
+   },
+   {
+    "g": 0.3333,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV06TORMIL-TOR6TO10",
+    "ko": "2026-11-07T01:00",
+    "legs": "sold",
+    "r": 0.3333,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 1.02
+   },
+   {
+    "g": -1.0,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06UTADAL-DAL11TO20",
     "ko": "2026-11-07T01:00",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "no",
     "src": "fills",
-    "st": "open",
-    "w": 0.88
+    "st": "lost",
+    "w": 0.91
    },
    {
     "g": 0.3385,
@@ -553,7 +601,43 @@
     "side": "no",
     "src": "fills",
     "st": "won",
+    "w": 1.0
+   },
+   {
+    "g": 0.3387,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV06PORLAL-LAL11TO20",
+    "ko": "2026-11-07T03:00",
+    "legs": "sold",
+    "r": 0.3387,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 0.95
+   },
+   {
+    "g": 0.3333,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV06PORLAL-LAL1TO5",
+    "ko": "2026-11-07T03:00",
+    "legs": "sold",
+    "r": 0.3333,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
     "w": 0.97
+   },
+   {
+    "g": 0.3333,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV06SASSAC-SAS11TO15",
+    "ko": "2026-11-07T03:00",
+    "legs": "sold",
+    "r": 0.3333,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 1.02
    }
   ],
   "nba_wm_yes": [
@@ -1134,20 +1218,20 @@
     "w": 0.96
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": 0.0,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV06PHICLE-CLE1TO5",
     "ko": "2026-11-07T00:30",
     "legs": "2x",
-    "r": null,
+    "r": -0.0566,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "flat",
     "w": 0.95
    },
    {
     "g": 1.5556,
-    "hold_r": null,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV06PHICLE-CLE6TO10",
     "ko": "2026-11-07T00:30",
     "legs": "2x+3x",
@@ -1158,99 +1242,99 @@
     "w": 1.05
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": -1.0,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV06PHICLE-PHI1TO5",
     "ko": "2026-11-07T00:30",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 0.95
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": -1.0,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV06PHICLE-PHI6TO10",
     "ko": "2026-11-07T00:30",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 1.05
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": 1.5,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV06MINNOP-MIN1TO5",
     "ko": "2026-11-07T01:00",
-    "legs": "2x",
-    "r": null,
+    "legs": "2x+3x",
+    "r": 1.3599,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "won",
     "w": 1.01
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": -0.2,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV06OKCMEM-OKC1TO5",
     "ko": "2026-11-07T01:00",
     "legs": "2x",
-    "r": null,
+    "r": -0.2437,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 0.95
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": -0.2,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV06OKCMEM-OKC6TO10",
     "ko": "2026-11-07T01:00",
     "legs": "2x",
-    "r": null,
+    "r": -0.244,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 0.9
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": 1.5,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV06TORMIL-TOR6TO10",
     "ko": "2026-11-07T01:00",
-    "legs": "2x",
-    "r": null,
+    "legs": "2x+3x",
+    "r": 1.3599,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "won",
     "w": 1.01
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": -0.2,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV06UTADAL-DAL1TO5",
     "ko": "2026-11-07T01:00",
     "legs": "2x",
-    "r": null,
+    "r": -0.244,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 0.9
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": -1.0,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV06UTADAL-UTA1TO5",
     "ko": "2026-11-07T01:00",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 0.96
    },
    {
@@ -1258,7 +1342,7 @@
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06PORLAL-LAL1TO5",
     "ko": "2026-11-07T03:00",
-    "legs": "",
+    "legs": "2x",
     "r": null,
     "side": "yes",
     "src": "fills",
@@ -1282,7 +1366,7 @@
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06PORLAL-POR1TO5",
     "ko": "2026-11-07T03:00",
-    "legs": "",
+    "legs": "2x",
     "r": null,
     "side": "yes",
     "src": "fills",
@@ -1290,15 +1374,15 @@
     "w": 1.04
    },
    {
-    "g": null,
+    "g": 1.5,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06PORLAL-POR6TO10",
     "ko": "2026-11-07T03:00",
-    "legs": "",
-    "r": null,
+    "legs": "2x+3x",
+    "r": 1.3548,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "won",
     "w": 1.02
    },
    {
@@ -1306,7 +1390,7 @@
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV06SASSAC-SAS6TO10",
     "ko": "2026-11-07T03:00",
-    "legs": "",
+    "legs": "2x",
     "r": null,
     "side": "yes",
     "src": "fills",
@@ -1794,7 +1878,7 @@
     {
      "id": "commod_fav_band:KXWTI-26NOV0314-T94.99",
      "ko": "2026-11-03T19:30",
-     "r": 0.2942,
+     "r": 0.294,
      "side": "yes",
      "st": "won",
      "w": 11.85
@@ -1802,7 +1886,7 @@
     {
      "id": "commod_fav_band:KXSILVERD-26NOV0317-T49.50",
      "ko": "2026-11-03T22:00",
-     "r": 0.3273,
+     "r": 0.3272,
      "side": "yes",
      "st": "won",
      "w": 12.52
@@ -1996,7 +2080,9 @@
      "w": 1.0
     }
    ],
-   "refused": {}
+   "refused": {
+    "econ_nc_yes:KXDIESELD-26NOV07-T6.205": "other"
+   }
   },
   "ftts_no_70_80|soccer_ftts": {
    "entered": "2026-10-16T17:17:38+00:00",
@@ -2562,7 +2648,7 @@
     {
      "id": "team2_ranked:KXSERIEATEAMTOTAL-26NOV01LECGEN-GEN2",
      "ko": "2026-11-01T17:00",
-     "r": 1.6589,
+     "r": 1.6585,
      "side": "yes",
      "st": "won",
      "w": 1.0
@@ -2894,7 +2980,7 @@
    {
     "id": "corners_team_fade:KXUCLTCORNERS-26OCT20LFCVIL-LFC7",
     "ko": "2026-10-20T19:00",
-    "r": 1.14,
+    "r": 1.1397,
     "side": "yes",
     "st": "won"
    }
@@ -3162,7 +3248,7 @@
    {
     "id": "ere_draw:KXEREDIVISIEGAME-26OCT18NIJFOR",
     "ko": "2026-10-18T18:00",
-    "r": 3.2159,
+    "r": 3.2154,
     "side": "yes",
     "st": "won"
    },
@@ -3197,7 +3283,7 @@
    {
     "id": "ere_draw:KXEREDIVISIEGAME-26OCT25NIJGRO",
     "ko": "2026-10-25T13:30",
-    "r": 2.8008,
+    "r": 2.8004,
     "side": "yes",
     "st": "won"
    },
@@ -4168,7 +4254,7 @@
    {
     "id": "nba_tt_value_1h:401909861:LAL",
     "ko": "2026-10-25T21:00",
-    "r": 1.3425,
+    "r": 1.3422,
     "side": "yes",
     "st": "won"
    },
@@ -4554,7 +4640,7 @@
    {
     "id": "o15_ranked:KXSERIEATOTAL-26OCT18JUVLAZ-2",
     "ko": "2026-10-18T18:45",
-    "r": 0.3171,
+    "r": 0.317,
     "side": "yes",
     "st": "won"
    },
@@ -4598,7 +4684,7 @@
    {
     "id": "",
     "ko": "2026-10-03T18:00",
-    "r": 0.3443,
+    "r": 0.3442,
     "side": null,
     "st": "won"
    },
@@ -4721,7 +4807,7 @@
    {
     "id": "",
     "ko": "2026-10-02T16:00",
-    "r": 1.5887,
+    "r": 1.5883,
     "side": null,
     "st": "won"
    },
@@ -5055,7 +5141,7 @@
    {
     "id": "sr_d3:KXSERIEABTTS-26OCT27ROMCAG-BTTS",
     "ko": "2026-10-27T19:45",
-    "r": 1.3425,
+    "r": 1.3422,
     "side": "yes",
     "st": "won"
    },
@@ -5236,7 +5322,7 @@
    {
     "id": "team1_form_l5:KXUCLTEAMTOTAL-26OCT13RCLSPO-SPO1",
     "ko": "2026-10-13T16:45",
-    "r": 0.2326,
+    "r": 0.2325,
     "side": null,
     "st": "won"
    },
