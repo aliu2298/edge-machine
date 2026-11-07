@@ -4,6 +4,7 @@ import html as _h
 import os
 
 import gold_orb as G
+import trading_layout as L
 
 WORDS = {"no_range": "no range (too few minutes traded)", "no_break": "no close beyond the range within the hour",
          "pending": "waiting", "ranged": "watching", "open": "in the trade", "error": "run error"}
@@ -97,6 +98,36 @@ def _summary_row(variant, key, label, rows):
     return out
 
 
+def _status(s):
+    if s["n"] >= G.READ_AT:
+        return L.sig("review due", "w")
+    return L.sig(f'{s["n"]}/{G.READ_AT} to review')
+
+
+def _variant_row(v, rows):
+    """One lane row per variant, on the primary anchor; every anchor's nights sit in its fold."""
+    mine = [r for r in rows if r.get("variant") == v]
+    s = G.summary([r for r in mine if r.get("anchor") == "utc_0130"])
+    rng, _w, name = G.VARIANTS[v]
+    nights = "".join(_row(r) for r in mine[:60]) or (
+        '<tr><td colspan="9" class="mut">No nights yet: the first is the next Sunday-to-Thursday evening.</td></tr>')
+    body = (f'<p class="sp-def">On the Coinbase GOL gold future: the first minute after 02:00 UTC that closes beyond the '
+            f'{"01:30–02:00" if rng == 30 else "01:55–02:00"} UTC range; enter at the next open, exit 15 minutes later. '
+            f'Paper, one contract, never places an order.</p>'
+            + L.params([("Settled", f'{s["n"]} nights on the 01:30 UTC anchor, net after the spread and fee'),
+                        ("Avg gross", f'{_num(s["gross"])}bp'),
+                        ("Avg spread", f'{_num(s["spread"], "{:.1f}")}bp')])
+            + L.fold("Nightly rows, every anchor",
+                     '<div class="tbl"><table><thead><tr><th>Night</th><th>Variant</th><th>Anchor</th><th>Side</th>'
+                     '<th class="num">Entry</th><th class="num">Exit</th><th class="num">Gross bp</th>'
+                     '<th class="num">Spread bp entry / exit</th><th class="num">Net bp · $</th></tr></thead>'
+                     f'<tbody>{nights}</tbody></table></div>'))
+    win = "—" if s["win"] is None else f'{s["win"] * 100:.0f}%'
+    net = "—" if s["net"] is None else f'{_num(s["net"])}bp'
+    t = "—" if s["t"] is None else f'{s["t"]:+.2f}'
+    return L.rule(f"gold_orb_{v}", name, "Coinbase GOL", str(s["n"]), win, net, t, _status(s), body)
+
+
 def section(state=None):
     if state is None:
         state = G.load() if os.path.exists(G.PATH) else {"nights": []}
@@ -106,16 +137,20 @@ def section(state=None):
     present = {r.get("anchor") for r in rows}
     summ = "".join(_summary_row(v, k, label, rows) for v in G.VARIANTS for k, label in ANCHORS
                    if k in present or k != "ct_2000")
-    body = "".join(_row(r) for r in rows[:120]) or (
-        '<tr><td colspan="9" class="mut">No nights yet: the first is the next Sunday-to-Thursday '
-        'evening, from 8:30 pm CDT.</td></tr>')
+    empty = "" if rows else ('<p class="sm mut">No nights yet: the first is the next Sunday-to-Thursday '
+                             'evening, from 8:30 pm CDT.</p>')
     last = state.get("last_run")
-    return f"""<section id="gold-orb">
-<h2>Gold Asia-open breakout (paper)</h2>
-<p class="sm"><b>Definition:</b> on Coinbase's GOL gold future, the first minute after 02:00 UTC (8:00 pm CST) that closes
-beyond the 01:30–02:00 UTC range (A) or the 01:55–02:00 UTC range (B); enter at the next open, exit 15 minutes later.
-Paper · never places an order · not in Production.</p>
-<details class="fold trade-method"><summary>How the gold breakout is defined</summary>
+    lanes = L.rules_list([_variant_row(v, rows) for v in G.VARIANTS], first="Variant", key="gold-orb")
+    full = L.fold("Every anchor, the backfill and the gross-only lines", f"""
+<div class="tbl"><table><thead><tr><th>Variant</th><th>Anchor</th><th class="num">Settled nights</th>
+<th class="num">Won</th><th class="num">Avg gross bp</th><th class="num">Avg net bp · $</th>
+<th class="num">Avg spread bp</th><th class="num">t (net)</th></tr></thead>
+<tbody>{summ}</tbody></table></div>
+<p class="sm mut">Olu reviews at {G.READ_AT}+ settled nights per variant. Net buys at the ask and sells at the bid
+(the book at the entry poll and the exit poll), {esc(G.FEE_NOTE)}. Won = net above zero.
+† nothing traded in the entry minute: the first open after it. * nothing traded in the exit
+minute: the last price before it. Last run {esc(last or "not yet")}.</p>""")
+    method = L.fold("How the gold breakout is defined", f"""
 <div class="note sm">One contract is 1 oz. The primary anchor is FIXED at 7:30 pm CST = 01:30 UTC all year, which reads
 8:30 pm CDT until Nov 1 and 7:30 pm CST after. A's range is the 30-minute candle as a chart draws it; B's needs all
 five minutes to have traded. The side is the first minute within 60 minutes (to 03:00 UTC) that closes beyond the
@@ -127,19 +162,9 @@ marked backfilled, show their gross return and no spread, and stay out of every 
 <div class="note sm"><b>Book guard 2026-11-04.</b> A book with a side missing, bid at or above ask, or older than a few
 seconds is re-polled; if none arrives the row is marked <i>book invalid</i> and leaves the net figures, keeping its gross.
 Four rows from 2026-10-29 (a crossed book at the entry or the exit poll) were moved out that way.</div>
-</details>
-<div class="tbl"><table><thead><tr><th>Variant</th><th>Anchor</th><th class="num">Settled nights</th>
-<th class="num">Won</th><th class="num">Avg gross bp</th><th class="num">Avg net bp · $</th>
-<th class="num">Avg spread bp</th><th class="num">t (net)</th></tr></thead>
-<tbody>{summ}</tbody></table></div>
-<p class="sm mut">Olu reviews at {G.READ_AT}+ settled nights per variant. Net buys at the ask and sells at the bid
-(the book at the entry poll and the exit poll), {esc(G.FEE_NOTE)}. Won = net above zero.</p>
-<div class="tbl"><table><thead><tr><th>Night</th><th>Variant</th><th>Anchor</th><th>Side</th>
-<th class="num">Entry</th><th class="num">Exit</th><th class="num">Gross bp</th>
-<th class="num">Spread bp entry / exit</th><th class="num">Net bp · $</th></tr></thead>
-<tbody>{body}</tbody></table></div>
-<p class="sm mut">† nothing traded in the entry minute: the first open after it. * nothing traded in the exit
-minute: the last price before it. Research, look-ahead-free: the 5-minute range made +0.9bp a trade (t +0.91)
-on 500 nights and −1.2bp on the 250-night holdout, before costs; this lane measures what the venue really pays.
-Last run {esc(last or "not yet")}.</p>
-</section>"""
+<div class="note sm">Research, look-ahead-free: the 5-minute range made +0.9bp a trade (t +0.91)
+on 500 nights and −1.2bp on the 250-night holdout, before costs; this lane measures what the venue really pays.</div>""",
+                    cls="fold trade-method")
+    return L.section("gold-orb", "Gold Asia-open breakout (paper)",
+                     "2 variants · Paper · never places an order · not in Production",
+                     lanes + empty + full + method)

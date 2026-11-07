@@ -176,9 +176,9 @@ ok("<b>paper record</b> since its registration" in src and "not the Alpaca accou
 for old in ("scanned and graded", "market data keys", "built elsewhere"):
     ok(old not in html, f"the old wording is gone ({old!r})")
 ok(html.count('<p class="sm trade-exec">') == 1, "the execution line is on the page once")
-ok(html.find('class="sm trade-source"') < html.find('class="sm trade-exec"') < html.find("<h2>Stock and ETF rules"),
+ok(html.find('class="sm trade-source"') < html.find('class="sm trade-exec"') < html.find("<h3>Stock and ETF rules"),
    "source line, then the execution line, then the table")
-method = html[html.find('<details class="fold trade-method">'):]
+method = html[html.find('<details class="fold trade-method"><summary>How the record is kept'):]
 ok(method.startswith('<details class="fold trade-method"><summary>How the record is kept</summary>'),
    "the long method note is in a closed fold")
 main_text = html[html.find("<h1>Trading"):html.find("<footer>")]
@@ -186,6 +186,14 @@ shown = re.sub(r"<details.*?</details>", "", main_text, flags=re.S)
 loose = [p for p in re.findall(r'<(?:p|div) class="(?:note[^"]*|sm[^"]*)">(.*?)</(?:p|div)>', shown, re.S)
          if len(re.sub(r"<[^>]+>", "", p)) > 400]
 eq(loose, [], "no paragraph over 400 characters is open on load")
+
+retired = html[html.find('<section id="retired"'):html.find("<footer>")]
+ok(retired.startswith('<section id="retired" class="sp-section"><details class="fold sp-retired"><summary><h3>Retired stock rules</h3>'),
+   "2026-11-06: the retired stock rules, execution detail and cost notes sit in ONE closed block at the bottom")
+ok(all(retired.find(x) > 0 for x in ('class="sm trade-source"', 'class="sm trade-exec"', "<h3>Stock and ETF rules")),
+   "  and the source line, execution line and rules table are inside it")
+ok(html.find('id="invest"') < html.find('id="gold-orb"') < html.find('id="nasdaq-orb"') < html.find('id="retired"'),
+   "  Invest first, then gold, Nasdaq, and the retired block last")
 
 print("\nthe VPS publishes the report")
 script = open(os.path.join(ROOT, "scripts", "market_daily.sh")).read()

@@ -14,9 +14,11 @@ import sandbox_build as SB
 FAILS = []
 NOW = datetime.datetime(2026, 10, 4, 12, tzinfo=datetime.timezone.utc)
 OLD = "Stock and crypto rules under test"
-LEDE = "Stock and ETF rules under test, judged per entry day. Paper only."
-META = "Stock and ETF rules under test, judged per entry day at real prices."
-HEADING = "Stock and ETF rules under test"
+# 2026-11-06: every stock and ETF rule is retired; the page leads with the running paper lanes and keeps the
+# retired stock rules in one closed block at the bottom.
+LEDE = "Paper lanes: big moves on Kalshi Invest, the gold and Nasdaq breakouts. Paper only."
+META = "Paper trading lanes: Kalshi Invest big moves, gold and Nasdaq breakouts; retired stock rules kept at the bottom."
+HEADING = "Stock and ETF rules, retired"
 
 
 def ok(cond, why):
@@ -29,10 +31,10 @@ def main():
     print("\nthe trading lede and meta match the rules still on the page")
     html = SB.trading_page(NOW)
     ok(OLD not in html, "the old stock-and-crypto sentence is gone from the page and the meta")
-    ok(f'<p class="lede">{LEDE}</p>' in html, "the lede names stock and ETF rules")
+    ok(f'<p class="lede">{LEDE}</p>' in html, "the lede names the running lanes")
     ok(f'<meta name="description" content="{META}">' in html,
-       "the meta description names stock and ETF rules")
-    ok(f"<h2>{HEADING}</h2>" in html, "the section heading names stock and ETF rules")
+       "the meta description names the running lanes")
+    ok(f"<h3>{HEADING}</h3>" in html, "the retired block's table heading says the stock and ETF rules are retired")
     ok(all(MT.rule_removed(n) for n, r in MT.RULES.items() if r.get("lane") == "crypto"),
        "no crypto rule renders")
     print(f"\n{'FAILED: ' + str(len(FAILS)) if FAILS else 'trading lede passed'}")
