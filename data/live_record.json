@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-07T18:07Z",
+ "generated": "2026-11-07T19:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "nba_wm_nofade": [
@@ -1687,7 +1687,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.98
+    "w": 0.95
    },
    {
     "g": 0.8182,
@@ -1699,7 +1699,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.02
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -1711,7 +1711,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.86
+    "w": 0.84
    },
    {
     "g": 0.8095,
@@ -1723,7 +1723,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.98
+    "w": 0.95
    },
    {
     "g": -1.0,
@@ -1735,7 +1735,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.12
+    "w": 1.09
    },
    {
     "g": 0.814,
@@ -1747,7 +1747,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 0.98
    },
    {
     "g": -1.0,
@@ -1759,7 +1759,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.09
+    "w": 1.07
    },
    {
     "g": 0.8,
@@ -1771,7 +1771,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.05
+    "w": 1.02
    },
    {
     "g": -1.0,
@@ -1783,7 +1783,19 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.93
+    "w": 0.91
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXLIGUE1TOTAL-26NOV07AUXPAR-2",
+    "ko": "2026-11-07T16:15",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.0
    }
   ]
  },
@@ -2773,9 +2785,9 @@
     {
      "id": "team2_ranked:KXSERIEATEAMTOTAL-26NOV07PARBFC-BFC2",
      "ko": "2026-11-07T17:00",
-     "r": null,
+     "r": 1.0515,
      "side": "yes",
-     "st": "open",
+     "st": "won",
      "w": 1.3
     }
    ],
