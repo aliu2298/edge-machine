@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-07T15:07Z",
+ "generated": "2026-11-07T16:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "nba_wm_nofade": [
@@ -1687,7 +1687,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 0.98
    },
    {
     "g": 0.8182,
@@ -1699,7 +1699,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.05
+    "w": 1.02
    },
    {
     "g": -1.0,
@@ -1711,7 +1711,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.88
+    "w": 0.86
    },
    {
     "g": 0.8095,
@@ -1723,19 +1723,31 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 0.98
    },
    {
-    "g": null,
+    "g": -1.0,
+    "hold_r": null,
+    "id": "KXSERIEATOTAL-26NOV07CAGFRO-2",
+    "ko": "2026-11-07T14:00",
+    "legs": "",
+    "r": -1.0,
+    "side": "yes",
+    "src": "fills",
+    "st": "lost",
+    "w": 1.12
+   },
+   {
+    "g": 0.814,
     "hold_r": null,
     "id": "KXSERIEATOTAL-26NOV07TORLEC-2",
     "ko": "2026-11-07T14:00",
-    "legs": "",
-    "r": null,
+    "legs": "sold",
+    "r": 0.814,
     "side": "yes",
     "src": "fills",
-    "st": "open",
-    "w": 1.02
+    "st": "won",
+    "w": 1.0
    }
   ]
  },
@@ -2116,7 +2128,9 @@
      "w": 1.0
     }
    ],
-   "refused": {}
+   "refused": {
+    "econ_nc_yes:KXDIESELD-26NOV07-T6.205": "other"
+   }
   },
   "ftts_no_70_80|soccer_ftts": {
    "entered": "2026-10-16T17:17:38+00:00",
@@ -2488,7 +2502,9 @@
   "st_t4|soccer_team2": {
    "entered": "2026-11-05T02:50:00+00:00",
    "orders": [],
-   "refused": {}
+   "refused": {
+    "st_t4:KXEPLTEAMTOTAL-26NOV07LEETOT-TOT2": "published inside 30 min of kickoff"
+   }
   },
   "st_t7|soccer_team3": {
    "entered": "2026-10-29T00:59:00+00:00",
