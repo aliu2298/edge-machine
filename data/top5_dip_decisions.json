@@ -80,6 +80,25 @@
    "ticker": "KXBUNDESLIGATOTAL-26NOV07RBLFCA-2",
    "why": null
   },
+  "KXBUNDESLIGATOTAL-26NOV07VFBSVW-2": {
+   "P": 0.89,
+   "bot_version": "top5dip-live-v1",
+   "decided_at": "2026-11-07T16:30:34+00:00",
+   "event": "KXBUNDESLIGATOTAL-26NOV07VFBSVW",
+   "kickoff": "2026-11-07T17:30:00+00:00",
+   "lane": "top5_goalless_dip_live",
+   "league": "Bundesliga",
+   "limit": 0.49,
+   "matchday": "26NOV07",
+   "outcome": "planned",
+   "qty": 2.0,
+   "rule_ok": true,
+   "spread": 0.02,
+   "ticker": "KXBUNDESLIGATOTAL-26NOV07VFBSVW-2",
+   "why": null,
+   "yes_ask": 0.89,
+   "yes_bid": 0.87
+  },
   "KXEPLTOTAL-26NOV06EVECOV-2": {
    "P": 0.8,
    "bot_version": "top5dip-live-v1",
@@ -144,6 +163,25 @@
    "ticker": "KXEPLTOTAL-26NOV07LEETOT-2",
    "why": null
   },
+  "KXEPLTOTAL-26NOV07NFOMCI-2": {
+   "P": 0.81,
+   "bot_version": "top5dip-live-v1",
+   "decided_at": "2026-11-07T16:30:34+00:00",
+   "event": "KXEPLTOTAL-26NOV07NFOMCI",
+   "kickoff": "2026-11-07T17:30:00+00:00",
+   "lane": "top5_goalless_dip_live",
+   "league": "EPL",
+   "limit": 0.45,
+   "matchday": "26NOV07",
+   "outcome": "planned",
+   "qty": 2.0,
+   "rule_ok": true,
+   "spread": 0.01,
+   "ticker": "KXEPLTOTAL-26NOV07NFOMCI-2",
+   "why": null,
+   "yes_ask": 0.81,
+   "yes_bid": 0.8
+  },
   "KXLALIGATOTAL-26NOV06SEVALA-2": {
    "P": 0.68,
    "bot_version": "top5dip-live-v1",
@@ -191,6 +229,22 @@
    "rule_ok": true,
    "ticker": "KXLALIGATOTAL-26NOV07MCFSAN-2",
    "why": null
+  },
+  "KXLALIGATOTAL-26NOV07OSAATH-2": {
+   "bot_version": "top5dip-live-v1",
+   "decided_at": "2026-11-07T16:30:34+00:00",
+   "event": "KXLALIGATOTAL-26NOV07OSAATH",
+   "kickoff": "2026-11-07T17:30:00+00:00",
+   "lane": "top5_goalless_dip_live",
+   "league": "La Liga",
+   "matchday": "26NOV07",
+   "outcome": "skip",
+   "rule_ok": false,
+   "spread": 0.01,
+   "ticker": "KXLALIGATOTAL-26NOV07OSAATH-2",
+   "why": "ask check: 5 contracts offered at or under 0.70 (under 10)",
+   "yes_ask": 0.7,
+   "yes_bid": 0.69
   },
   "KXLIGUE1TOTAL-26NOV06TFCRCS-2": {
    "P": 0.83,
@@ -292,6 +346,6 @@
    "why": null
   }
  },
- "updated_at": "2026-11-07T16:15:03+00:00",
+ "updated_at": "2026-11-07T16:30:34+00:00",
  "version": 1
 }
