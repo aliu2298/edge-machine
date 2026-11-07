@@ -67,21 +67,18 @@
   "KXLALIGATOTAL-26NOV07MCFSAN-2": {
    "P": 0.82,
    "bot_version": "top5dip-live-v1",
-   "decided_at": "2026-11-07T12:00:24+00:00",
+   "decided_at": "2026-11-07T13:00:33+00:00",
    "event": "KXLALIGATOTAL-26NOV07MCFSAN",
    "kickoff": "2026-11-07T13:00:00+00:00",
    "lane": "top5_goalless_dip_live",
    "league": "La Liga",
    "limit": 0.45,
    "matchday": "26NOV07",
-   "outcome": "planned",
+   "outcome": "entered",
    "qty": 2.0,
    "rule_ok": true,
-   "spread": 0.01,
    "ticker": "KXLALIGATOTAL-26NOV07MCFSAN-2",
-   "why": null,
-   "yes_ask": 0.82,
-   "yes_bid": 0.81
+   "why": null
   },
   "KXLIGUE1TOTAL-26NOV06TFCRCS-2": {
    "P": 0.83,
@@ -114,8 +111,46 @@
    "rule_ok": true,
    "ticker": "KXSERIEATOTAL-26NOV06VENUDI-2",
    "why": null
+  },
+  "KXSERIEATOTAL-26NOV07CAGFRO-2": {
+   "P": 0.87,
+   "bot_version": "top5dip-live-v1",
+   "decided_at": "2026-11-07T13:00:33+00:00",
+   "event": "KXSERIEATOTAL-26NOV07CAGFRO",
+   "kickoff": "2026-11-07T14:00:00+00:00",
+   "lane": "top5_goalless_dip_live",
+   "league": "Serie A",
+   "limit": 0.48,
+   "matchday": "26NOV07",
+   "outcome": "planned",
+   "qty": 2.0,
+   "rule_ok": true,
+   "spread": 0.02,
+   "ticker": "KXSERIEATOTAL-26NOV07CAGFRO-2",
+   "why": null,
+   "yes_ask": 0.87,
+   "yes_bid": 0.85
+  },
+  "KXSERIEATOTAL-26NOV07TORLEC-2": {
+   "P": 0.78,
+   "bot_version": "top5dip-live-v1",
+   "decided_at": "2026-11-07T13:00:33+00:00",
+   "event": "KXSERIEATOTAL-26NOV07TORLEC",
+   "kickoff": "2026-11-07T14:00:00+00:00",
+   "lane": "top5_goalless_dip_live",
+   "league": "Serie A",
+   "limit": 0.43,
+   "matchday": "26NOV07",
+   "outcome": "planned",
+   "qty": 2.0,
+   "rule_ok": true,
+   "spread": 0.02,
+   "ticker": "KXSERIEATOTAL-26NOV07TORLEC-2",
+   "why": null,
+   "yes_ask": 0.78,
+   "yes_bid": 0.76
   }
  },
- "updated_at": "2026-11-07T12:30:39+00:00",
+ "updated_at": "2026-11-07T13:00:33+00:00",
  "version": 1
 }
