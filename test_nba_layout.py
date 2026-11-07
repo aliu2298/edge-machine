@@ -70,7 +70,10 @@ if v3.get("since"):
                                                      or L._pct(C.stats(g)["roi"]) in no), (True, True))
 live = json.load(open("data/live_record.json")) if os.path.exists("data/live_record.json") else {}
 yes_orders = (live.get("lanes") or {}).get("nba_wm_yes") or []
-if yes_orders and not any(o["st"] == "sold" for o in yes_orders):
+if yes_orders and all("src" in o for o in yes_orders):
+    seg = r[r.find('id="wm-yes"'):r.find('id="wm-no"')]
+    check("YES live fills: the trades schema reads W–F–L, never 'exits pending'", ("exits pending" in seg, "legs 2x" in seg), (False, True))
+elif yes_orders and not any(o["st"] == "sold" for o in yes_orders):
     check("YES live fills: held only, exits pending, until its sell fills are published",
           "exits pending" in r[r.find('id="wm-yes"'):r.find('id="wm-no"')], True)
 

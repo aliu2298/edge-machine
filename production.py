@@ -1460,6 +1460,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
         import nba_wm_production
         older_keys = nba_wm_production.older_pairs((nba_wm or {}).get("v3"))
     live_gap_rows, paper_bets, raised_rows = [], {}, []
+    own_items = {}
     cards = []
     n_early = 0
     # Each pair's row, its since-Production record and its leads to come, by sport.
@@ -1541,7 +1542,8 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
                 # settlement), won = realised return above zero. The Sandbox record column beside it stays the paper one.
                 summ = PL.own_summary(own)
                 live = PL.own_live(live, summ)
-                live_rec, live_roi = PL.own_fragments(summ)
+                live_rec, live_roi = "", ""
+                own_items.setdefault(sport_group(sport), []).append((name(key) + (" (older version)" if key in older_keys else ""), summ))
                 live_data = None
                 since_note = f"{live['n']} settled" if live["n"] else (f"{summ['open']} running" if summ["open"] else since_note)
             else:
@@ -1612,7 +1614,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
             f'{" open" if grp["to_come"] else ""}>'
             f'<summary><h3>{esc(g)}</h3><span class="mut sm">· {" · ".join(bits)}</span></summary>'
             f'<div class="tbl"><table>{pairs_head}{rows}</table></div>'
-            + (f'<p class="sm mut">Rows read W–F–L: {esc(PL.FLAT_NOTE)}.</p>' if grp["wfl"] or grp.get("older") else "") + f'{older_html}</details>')
+            + PL.details_fold(own_items.get(g, [])) + f'{older_html}</details>')
     pairs_html = ("".join(sections) + PL.gap_section(live_gap_rows, paper_bets, {l.get('sandbox_quote') for l in leads if l.get('sandbox_quote')},
                                                                   _feed_from(leads), horizon=(now_dt - datetime.timedelta(days=KEEP_SETTLED_DAYS)).isoformat()) + PL.lanes_table(live_blob) + PL.pulled_table(live_blob, name) + PL.raised_fold(raised_rows) +
                   ('<p class="sm mut">Live fills: orders the follower placed and Kalshi settled, counted from the pair\'s Production date, ROI per $1 staked after fees, '

@@ -42,8 +42,8 @@ CHAOS = dict(lanes={X.YES_LANE: dict(id=X.YES_LANE, since="2026-11-02", exits=["
          night="2026-11-02", entry=0.15, spread=0.03, entry_ts=TIP3 - 200000, start_ts=TIP3 - 190000, cost=0.16, profit=0.2, roi=1.2, won=True, reason="split", side_won=True)])})
 
 
-def row(i, ko, st, r, legs="", hold=None, src="fills", side="yes", w=1.0):
-    return dict(id=i, ko=ko, side=side, st=st, w=w, r=r, legs=legs, hold_r=hold, src=src)
+def row(i, ko, st, r, legs="", hold=None, src="fills", side="yes", w=1.0, g=None):
+    return dict(id=i, ko=ko, side=side, st=st, w=w, r=r, g=r if g is None else g, legs=legs, hold_r=hold, src=src)
 
 
 LIVE = dict(generated="2026-11-07T11:00Z", pairs={}, lane_note="n", lanes={
@@ -52,6 +52,7 @@ LIVE = dict(generated="2026-11-07T11:00Z", pairs={}, lane_note="n", lanes={
         row("KXNBAWINMARGIN-26NOV04CHINYK-NYK1TO5", "2026-11-05T00:30", "won", 0.5, "2x+3x", -1.0, "reconstructed"),            # version 3
         row("KXNBAWINMARGIN-26NOV04CHINYK-NYK6TO10", "2026-11-05T00:30", "won", 0.2, "2x", -1.0, "reconstructed"),
         row("KXNBAWINMARGIN-26NOV04MILBOS-BOS1TO5", "2026-11-05T00:30", "lost", -1.0, "", -1.0, "reconstructed"),
+        row("KXNBAWINMARGIN-26NOV04MILBOS-MIL6TO10", "2026-11-05T00:30", "flat", -0.056, "2x", -1.0, "reconstructed", g=0.0),      # half sold at 2x, half expired: a scratch
         row("KXNBAWINMARGIN-26NOV06WASATL-ATL1TO5", "2026-11-07T01:00", "open", None, "2x", None)],
     "nba_wm_nofade": [
         row("KXNBAWINMARGIN-26NOV02BOSHOU-HOU6TO10", "2026-11-03T01:30", "lost", -1.0, "", None, "reconstructed", "no"),        # version 2
@@ -81,14 +82,15 @@ html = P.page(d, st, blob, "", now=NOW, nba_wm=dict(chaos=CHAOS, nofade={"entrie
 b = block(html, "nba-wm")
 head = b.split("</summary>", 1)[0]
 older_at = b.index("Older versions")
-main, older = b[:older_at], b[older_at:]
+det_at = b.index("Live record details")
+main, older, det = b[:min(older_at, det_at)], b[older_at:], b[det_at:older_at] if det_at < older_at else b[det_at:]
 
 print("two rows, version 2 folded")
 check("the sport block counts 2 pairs, not 4", ("2 pairs" in head, "4 pairs" in head), (True, False))
 check("the active table names the two v3 pairs", (X.YES3_NAME in main, X.NO3_NAME in main), (True, True))
 check("version 2 is not in the active table", (X.YES_NAME in main, X.NO_NAME in main), (False, False))
 check("version 2 sits in the 'Older versions' fold inside the block", (X.YES_NAME in older, X.NO_NAME in older, "<details" in b[older_at - 40:older_at]), (True, True, True))
-check("no loose text: the fold is the last thing in the block", b.rstrip().endswith("</details></details>"), True)
+check("no loose text: after the table the sport block holds only folds", re.sub(r"<details.*?</details>", "", b[b.index("</table></div>") + 14:], flags=re.S).replace("</details>", "").strip(), "")
 check("names are the short ones", (X.YES3_NAME, X.NO3_NAME, S.scoped_rule(f"{X.YES3_LANE}", "nba_wm")), ("Win margin YES split (v3)", "Win margin NO fade (v3)", "Win margin YES split (v3)"))
 
 print("the moved dates")
@@ -96,15 +98,15 @@ check("v3 says moved 2026-11-04 (its first night), v2 keeps 2026-11-02", (main.c
 
 print("Since Production is the live record of v3 only")
 # v3 live: YES won/won/lost (2 settled wins), NO won/won -> 4 won, 1 lost over 5 settled; v2 trades are not counted
-check("the header is the live v3 record: 4-1, not the paper numbers and not v2's rows", ("since Production 4–0–1" in head, "since Production 3–0–2" in head), (True, False))
+check("the header is the live v3 record: 4-1, not the paper numbers and not v2's rows", ("since Production 4–1–1" in head, "since Production 3–0–2" in head), (True, False))
 rows_main = main.split("<tr>")
 yes_row = next(r for r in rows_main if X.YES3_NAME in r)
 no_row = next(r for r in rows_main if X.NO3_NAME in r)
 check("YES row: the live W-L is on the trade outcome (2 won, 1 lost), with legs filled and the hold control, not a held-only W-L",
-      ("2–0–1" in yes_row, "legs filled: 2x <b>2</b> · 3x <b>1</b> of 3" in yes_row, "same entries held: -100.0%" in yes_row), (True, True, True))
-check("YES row: ROI is the stake-weighted live trades after fees (0.5, 0.2, -1.0 -> -10.0%)", ("−10.0%" in yes_row or "-10.0%" in yes_row), True)
+      ("2–1–1" in yes_row, "legs filled: 2x 3 · 3x 1 of 4" in det, "same 4 entries held to settlement: -100.0%" in det), (True, True, True))
+check("YES row: ROI is the stake-weighted live trades after fees (0.5, 0.2, -1.0, -0.056 -> -8.9%)", ("−8.9%" in yes_row or "-8.9%" in yes_row), True)
 check("NO row: 2 trades won (sold at P), +32.0%", ("2–0–0" in no_row, "+32.0%" in no_row), (True, True))
-check("reconstructed rows are labelled on the row", ("reconstructed from the exchange order list" in yes_row, "reconstructed from the exchange order list" in no_row), (True, True))
+check("reconstructed rows are labelled on the row", ("reconstructed from the exchange order list" in det, "reconstructed" in yes_row or "reconstructed" in no_row), (True, False))
 check("v2's own rows read v2's trades (YES won 1-0, NO lost 0-1)", ("1–0–0" in next(r for r in older.split("<tr>") if X.YES_NAME in r), "0–0–1" in next(r for r in older.split("<tr>") if X.NO_NAME in r)), (True, True))
 check("the Sandbox record column is untouched (paper v3: 1 settled at +90% on YES)", "+90.0%" in yes_row, True)
 check("no guarded phrase, no dollar amount in the block", (sandbox_audit.COPY_RE.search(b), "$" in b), (None, False))
@@ -119,23 +121,31 @@ t = PL.lanes_table(LIVE)
 check("the top-5 dip is listed beside the others", all(n in t for n in ("Top-5 goalless dip", "Over 3.5 cheap NO", "NBA win margin YES split", "NBA win margin NO fade")), True)
 check("no 'held to settlement only; exits not counted' text any more", "exits not counted" in t, False)
 yes_line = next(r for r in t.split("<tr>") if "NBA win margin YES split" in r)
-check("YES split: W-L on the trade outcome (3 won, 1 lost), legs filled, the hold control, the open one named",
-      ("3–0–1" in yes_line, "legs filled 2x 3, 3x 2 of 4" in yes_line, "held to settlement -100.0%" in yes_line, "1 open" in yes_line), (True, True, True, True))
+yes_note = next(r for r in t.split("<li>") if r.startswith("<b>NBA win margin YES split"))
+check("YES split: the cells are W–F–L and ROI only; the legs, hold control and the open one sit in the notes list below",
+      ("3–1–1" in yes_line, "legs filled" in yes_line, "legs filled: 2x 4 · 3x 2 of 5" in yes_note, "entries held to settlement" in yes_note, "1 open, not counted above" in yes_note), (True, False, True, True, True))
 o35_line = next(r for r in t.split("<tr>") if "Over 3.5 cheap NO" in r)
-check("over 3.5: 1 won (sold early), 1 lost; reconstructed rows are named", ("1–0–1" in o35_line, "1 sold early" in o35_line, "2 reconstructed" in o35_line), (True, True, True))
+check("over 3.5: 1 won (sold early), 1 lost; reconstructed rows are named", ("1–0–1" in o35_line, "sold early" in o35_line, "2 reconstructed" in t), (True, False, True))
 dip_line = next(r for r in t.split("<tr>") if "Top-5 goalless dip" in r)
-check("the dip: two sold at P, both wins", ("2–0–0" in dip_line, "+75.0%" in dip_line, "2 sold early" in dip_line), (True, True, True))
+check("the dip: two sold at P, both wins", ("2–0–0" in dip_line, "+75.0%" in dip_line, "sold early: 2 of 2" in t), (True, True, True))
 
-print("F = flat, within +-2% after fees")
+print("F = flat: within +-2% of cost before OR after fees; open trades are in no bucket")
 FL = dict(LIVE, lanes=dict(LIVE["lanes"], top5_dip=LIVE["lanes"]["top5_dip"] + [row("KXSERIEATOTAL-26NOV06FLAT-2", "2026-11-06T19:00", "flat", 0.015, "", None, "fills")]))
-check("a trade at +1.5% is F, at +2.5% W, at -2.5% L", [PL.own_class(dict(st="won", r=r)) for r in (0.015, 0.025, -0.025, -0.02, 0.02)], ["F", "W", "L", "F", "F"])
-check("the table reads W–F–L and carries the F line", ("2–1–0" in PL.lanes_table(FL), "F = flat, within ±2% after fees" in PL.lanes_table(FL), "Live W–F–L" in PL.lanes_table(FL)), (True, True, True))
-check("the block carries the F line inside a fold (the sport fold and the older fold)", ("F = flat, within ±2% after fees" in b, b.count("F = flat") >= 1), (True, True))
+check("a trade at +1.5% is F, at +2.5% W, at -2.5% L (no gross return)", [PL.own_class(dict(st="won", r=r)) for r in (0.015, 0.025, -0.025, -0.02, 0.02)], ["F", "W", "L", "F", "F"])
+check("a scratch (gross 0, -5.6% after the entry fee) is F; a real loss with a -1% gross is not a scratch but -30% gross is L; an open trade is None",
+      [PL.own_class(dict(st="flat", r=-0.056, g=0.0)), PL.own_class(dict(st="lost", r=-0.3, g=-0.25)), PL.own_class(dict(st="won", r=0.5, g=0.55)), PL.own_class(dict(st="open", r=None, g=None))], ["F", "L", "W", None])
+op = PL.own_summary([row("a", "2026-11-05T00:30", "open", None, "2x", None, g=None), row("b", "2026-11-05T00:30", "lost", -1.0, "", -1.0)])
+check("an open trade is not a loss: it is counted open and nowhere in W–F–L, and the held control covers the settled trades only", (PL.wfl(op), op["open"], op["n"], op["hold_n"]), ("0–0–1", 1, 1, 1))
+sw = PL.own_summary(own_v3 := PL.own_rows(LIVE, "nba_winmargin_v3|nba_wm", "2026-11-04"))
+check("the held figure sits over exactly the settled v3 trades the record counts (open and v2 rows are out)", (sw["n"], sw["hold_n"], len(own_v3) - sw["open"]), (4, 4, 4))
+check("the table reads W–F–L and carries the F line once, in its fold", ("2–1–0" in PL.lanes_table(FL), PL.lanes_table(FL).count("F = flat, within ±2% of cost before or after fees"), "Live W–F–L" in PL.lanes_table(FL)), (True, 1, True))
+check("the F line says flat means exited at cost and the entry fee still counts", "Flat = exited at cost; the entry fee still counts in ROI" in PL.lanes_table(FL), True)
+check("the block carries the F line once, inside the details fold, not loose", (b.count("F = flat"), "F = flat" in det), (1, True))
 
 print("the NBA page reads the same trades")
 import nba_page as NP
 cell = NP.live_cell(NP.YES_ID, LIVE)
-check("its live cell is the trade record with legs, not 'held, exits pending'", ("3–0–1" in cell, "legs 2x 3, 3x 2" in cell, "exits pending" in cell), (True, True, False))
+check("its live cell is the trade record with legs, not 'held, exits pending'", ("3–1–1" in cell, "legs 2x 4, 3x 2" in cell, "exits pending" in cell), (True, True, False))
 old = dict(lanes={"nba_wm_yes": [dict(id="x", ko="2026-11-05T00:30", side="yes", st="won", w=1.0, r=1.0)]})
 check("an export from before the trades schema still reads as held to settlement", "exits pending" in NP.live_cell(NP.YES_ID, old), True)
 
