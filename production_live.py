@@ -109,16 +109,18 @@ def own_rows(live_blob, key, v3_since=None):
     return list(rows)
 
 
-FLAT = 0.02                 # within +-2% after fees is flat (F); above it won (W); below it lost (L)
-FLAT_NOTE = "F = flat, within ±2% after fees"
+FLAT = 0.02                 # flat (F): within +-2% of cost before OR after fees; W: above +2% after fees and not flat; L: the rest
+FLAT_NOTE = "F = flat, within ±2% of cost before or after fees. Flat = exited at cost; the entry fee still counts in ROI"
 
 
 def own_class(o):
     """'W', 'F' or 'L' for one settled own-state result, by its return after fees (None while open)."""
-    r = o.get("r")
+    r, g = o.get("r"), o.get("g")
     if o["st"] not in ("won", "flat", "lost") or r is None:
-        return None
-    return "W" if r > FLAT else ("L" if r < -FLAT else "F")
+        return None                      # an open trade is in no bucket
+    if abs(r) <= FLAT + 1e-9 or (g is not None and abs(g) <= FLAT + 1e-9):
+        return "F"
+    return "W" if r > FLAT else "L"
 
 
 def own_summary(rows):
@@ -136,7 +138,7 @@ def own_summary(rows):
                 roi=(sum(o["w"] * o["r"] for o in wl) / w if w else None),
                 legs2=sum(1 for o in done if "2x" in (o.get("legs") or "")), legs3=sum(1 for o in done if "3x" in (o.get("legs") or "")),
                 sold_any=sum(1 for o in done if o.get("legs")), reconstructed=sum(1 for o in rows if o.get("src") == "reconstructed"),
-                hold_roi=(sum(o["w"] * o["hold_r"] for o in hold) / hw if hw else None), split=any(o.get("hold_r") is not None for o in done))
+                hold_roi=(sum(o["w"] * o["hold_r"] for o in hold) / hw if hw else None), hold_n=len(hold), split=any(o.get("hold_r") is not None for o in done))
 
 
 def wfl(summ):
@@ -149,23 +151,29 @@ def own_live(live, summ):
     return dict(live, n=summ["n"], won=summ["won"], flat=summ["flat"], n_price=0, roi_fee=summ["roi"], wfl=True)
 
 
-def own_fragments(summ):
-    """(record fragment, ROI fragment) under an own-state pair's live record and ROI: legs filled and the hold control for the YES split,
-    exits for the others, open bets, and how many rows are reconstructed. Fragments, as cells() returns them."""
+def own_detail(summ):
+    """The short list under a pair in its details fold: legs filled and the held control (YES split), early exits, open trades, reconstructed
+    rows. The held-to-settlement figure is over exactly the settled trades the record next to it counts."""
     bits = []
     if summ["split"]:
-        bits.append(f'legs filled: 2x <b>{summ["legs2"]}</b> · 3x <b>{summ["legs3"]}</b> of {summ["n"]}')
+        bits.append(f'legs filled: 2x {summ["legs2"]} · 3x {summ["legs3"]} of {summ["n"]}')
+        if summ["hold_roi"] is not None:
+            bits.append(f'same {summ["hold_n"]} entries held to settlement: {summ["hold_roi"] * 100:+.1f}%')
     elif summ["n"]:
-        bits.append(f'sold early: <b>{summ["sold_any"]}</b> of {summ["n"]}')
+        bits.append(f'sold early: {summ["sold_any"]} of {summ["n"]}')
     if summ["open"]:
-        bits.append(f'{summ["open"]} open')
-    rec_frag = f'<div class="sm live-line" title="the follower\'s own fills: sells counted, the rest settled by Kalshi">{" · ".join(bits)}</div>' if bits else ""
+        bits.append(f'{summ["open"]} open, not counted above')
     if summ["reconstructed"]:
-        rec_frag += (f'<div class="sm mut live-line">{summ["reconstructed"]} reconstructed from the exchange order list</div>')
-    roi_frag = ""
-    if summ["split"] and summ["hold_roi"] is not None:
-        roi_frag = f'<div class="sm mut live-line">same entries held: {summ["hold_roi"] * 100:+.1f}%</div>'
-    return rec_frag, roi_frag
+        bits.append(f'{summ["reconstructed"]} reconstructed from the exchange order list')
+    return "; ".join(bits) or "—"
+
+
+def details_fold(items):
+    """One fold per sport block for the own-state pairs: `items` [(pair name, summary)]. Carries the one-line W–F–L definition."""
+    if not items:
+        return ""
+    lis = "".join(f"<li><b>{esc(n)}</b> · {esc(own_detail(s))}</li>" for n, s in items)
+    return (f'<details class="fold"><summary>Live record details</summary><p class="sm mut">{esc(FLAT_NOTE)}.</p><ul class="sm">{lis}</ul></details>')
 
 
 def link_orders(paper, orders):
@@ -340,31 +348,23 @@ def raised_fold(rows):
 def lanes_table(live_blob):
     """The own-state lanes (o35, nba_wm, the top-5 dip), live only: their paper record sits on their own lane pages.
 
-    Each entry is a trade after the exchange's fees: the sells the follower logged (or, before 2026-11-06 18:07Z, the exchange order list's) plus the unsold
-    remainder at settlement. W above +2%, F within +-2%, L below -2%."""
+    Each entry is a trade after the exchange's fees: the sells the follower logged (or, before 2026-11-06 18:07Z, the exchange order list's) plus
+    the unsold remainder at settlement. Settled trades only: W above +2% after fees and not flat, F within +-2% of cost before or after fees, L the
+    rest. The cells are the record and ROI; the notes sit in the fold under the table."""
     if not live_blob or not live_blob.get("lanes"):
         return ""
-    body = ""
+    body, notes = "", []
     for lane, rows in live_blob["lanes"].items():
         if not rows or not current_schema(rows):
             continue
         rec = own_summary(rows)
-        extra = []
-        if rec["split"]:
-            extra.append(f'legs filled 2x {rec["legs2"]}, 3x {rec["legs3"]} of {rec["n"]}')
-            if rec["hold_roi"] is not None:
-                extra.append(f'held to settlement {rec["hold_roi"] * 100:+.1f}%')
-        elif rec["n"]:
-            extra.append(f'{rec["sold_any"]} sold early')
-        if rec["open"]:
-            extra.append(f'{rec["open"]} open')
-        if rec["reconstructed"]:
-            extra.append(f'{rec["reconstructed"]} reconstructed from the exchange order list (before Nov 6)')
         roi = "—" if rec["roi"] is None else f'{rec["roi"] * 100:+.1f}%'
-        body += (f'<tr><td>{esc(LANE_NAMES.get(lane, lane))}</td><td class="num"><b>{wfl(rec)}</b></td>'
-                 f'<td class="num">{roi}</td><td class="sm mut">{esc(" · ".join(extra) or "—")}</td></tr>')
+        name = LANE_NAMES.get(lane, lane)
+        body += (f'<tr><td>{esc(name)}</td><td class="num"><b>{wfl(rec)}</b></td><td class="num">{roi}</td></tr>')
+        notes.append(f"<li><b>{esc(name)}</b> · {esc(own_detail(rec))}</li>")
     if not body:
         return ""
     return ('<details class="fold"><summary>Own-state lanes, live (over 3.5 cheap NO, NBA win margin, top-5 dip)</summary>'
-            '<div class="tbl"><table><thead><tr><th>Lane</th><th class="num">Live W–F–L</th><th class="num">ROI</th><th>Notes</th></tr></thead>'
-            f'<tbody>{body}</tbody></table></div><p class="sm mut">{esc(FLAT_NOTE)}. {esc(live_blob.get("lane_note") or "")}</p></details>')
+            '<div class="tbl"><table><thead><tr><th>Lane</th><th class="num">Live W–F–L</th><th class="num">ROI</th></tr></thead>'
+            f'<tbody>{body}</tbody></table></div><p class="sm mut">{esc(FLAT_NOTE)}.</p><ul class="sm">{"".join(notes)}</ul>'
+            f'<p class="sm mut">{esc(live_blob.get("lane_note") or "")}</p></details>')

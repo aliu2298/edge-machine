@@ -74,8 +74,20 @@ want = (3 * 0.32 + 3 * 0.48 - (6 * 0.16 + 6 * fee(0.16))) / (6 * 0.16 + 6 * fee(
 check("both legs filled: the trade is won on the sells whatever the market settled, legs 2x+3x", (t["st"], t["legs"], t["r"]), ("won", "2x+3x", round(want, 4)))
 check("the same entry held to a lost settlement is the hold control", t["hold_r"], round((0 - stake) / stake, 4))
 t, _ = X.own_trade("yes", 0.16, 6.0, True, {"a": sf("2x", 3.0, 0.32)["c"]}, "no", split=True)
-check("only the 2x leg filled: half sold at 2x (cost back), the unsold half loses; minus the entry fee that is below -2%: lost (legs 2x)",
-      (t["legs"], t["st"], -0.1 < t["r"] < -0.02), ("2x", "lost", True))
+check("only the 2x leg filled: half sold at 2x (cost back), the other half expires: gross 0%, -5.6% after the entry fee: FLAT (a scratch), legs 2x",
+      (t["legs"], t["st"], t["g"], -0.1 < t["r"] < -0.02), ("2x", "flat", 0.0, True))
+t, _ = X.own_trade("yes", 0.16, 6.0, True, {"a": sf("2x", 1.0, 0.32)["c"]}, "no", split=True)
+check("one contract of six sold at 2x: gross -83%, a real loss", (t["st"], t["g"] < -0.5), ("lost", True))
+t, _ = X.own_trade("yes", 0.16, 6.0, True, {}, None, split=True)
+check("an open trade carries no return, gross or state bucket", (t["st"], t["r"], t["g"]), ("open", None, None))
+check("result_state: scratch before fees is flat, +3% after fees is won, -3% with a -3% gross is lost",
+      (X.result_state(-0.056, 0.0), X.result_state(0.03, 0.04), X.result_state(-0.03, -0.03)), ("flat", "won", "lost"))
+for bad, why in ((dict(id="x", ko="2026-11-01T00:00", side="yes", st="won", r=1.0, g=900.0, w=1.0, legs="", hold_r=None, src="fills"), "a gross return out of range"),):
+    try:
+        X.check_lanes(dict(lanes={"top5_dip": [bad]}))
+        check(f"refuses {why}", "accepted", "refused")
+    except X.Refused:
+        check(f"refuses {why}", "refused", "refused")
 t, _ = X.own_trade("no", 0.5, 2.0, False, {"a": sf("sold", 2.0, 0.51)["c"]}, "yes")
 check("a sale 2% over the bid with no fee is exactly +2%: flat, not won", (t["st"], t["r"]), ("flat", 0.02))
 t, _ = X.own_trade("yes", 0.16, 6.0, True, {}, "no", split=True)
@@ -125,6 +137,7 @@ print("\nthe committed reconstruction")
 rec_blob = json.load(open(X.RECON))
 X.check_reconstructed(rec_blob)
 check("it passes the whitelist and says where it comes from", ("reconstructed from the exchange order list" in rec_blob["header"], "$" in json.dumps(rec_blob)), (True, False))
+check("every reconstructed row carries a gross return; a flat row is a scratch (|r| or |g| within 2%)", (all("g" in r for r in rec_blob["rows"]), all((r["st"] == "flat") == (abs(r["r"]) <= 0.02 or abs(r["g"]) <= 0.02) for r in rec_blob["rows"])), (True, True))
 check("only the three pre-logging lanes, every tip before the cutoff", ({r["lane"] for r in rec_blob["rows"]} <= {"o35_cheap_no", "nba_wm_yes", "nba_wm_nofade"}, all(r["ko"] < X.RECON_BEFORE for r in rec_blob["rows"])), (True, True))
 check("only the YES split carries a hold control", {r["lane"] for r in rec_blob["rows"] if r.get("hold_r") is not None}, {"nba_wm_yes"})
 bad_blob = dict(rec_blob, rows=rec_blob["rows"] + [dict(lane="nba_wm_yes", id="x", ko="2026-11-01T00:00", side="yes", st="won", r=1.0, w=1.0, legs="", hold_r=None, order_id="abc")])

@@ -1,9 +1,10 @@
 {
  "cutoff": "2026-11-06T18:07",
  "generated": "2026-11-07T01:30Z",
- "header": "reconstructed from the exchange order list and fills, pre-2026-11-06 18:07Z (before per-sell fill logging went live). Public fields only: per order the lane, market, kickoff or tip, side, legs sold, return per unit staked after the exchange's own charged fees (a taker fill pays its fee, a resting fill none; read from the fills, not modelled), the stake as a multiple of the lane's median stake, and the same entry held to settlement (YES split only). Won is a return above +2%, lost below -2%, flat between. Orders from 2026-11-06 18:07Z on carry their own logged sells and are not in this file.",
+ "header": "reconstructed from the exchange order list and fills, pre-2026-11-06 18:07Z (before per-sell fill logging went live). Public fields only: per order the lane, market, kickoff or tip, side, legs sold, return per unit staked after the exchange's own charged fees (a taker fill pays its fee, a resting fill none; read from the fills, not modelled), the stake as a multiple of the lane's median stake, and the same entry held to settlement (YES split only). g is the same trade's return before any fee. Flat = exited at cost (return within +-2% either before or after fees; the entry fee still counts in the return); won = above +2% after fees and not flat; lost = the rest. Orders from 2026-11-06 18:07Z on carry their own logged sells and are not in this file.",
  "rows": [
   {
+   "g": 0.3333,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV02BOSHOU-HOU6TO10",
    "ko": "2026-11-03T01:30",
@@ -15,6 +16,7 @@
    "w": 0.95
   },
   {
+   "g": 0.3333,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV02PORDEN-DEN1TO5",
    "ko": "2026-11-03T02:00",
@@ -26,6 +28,7 @@
    "w": 1.0
   },
   {
+   "g": 0.3281,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04ATLWAS-WAS1TO5",
    "ko": "2026-11-05T00:00",
@@ -37,6 +40,7 @@
    "w": 0.97
   },
   {
+   "g": 0.3235,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04CHABKN-BKN1TO5",
    "ko": "2026-11-05T00:30",
@@ -48,6 +52,7 @@
    "w": 1.03
   },
   {
+   "g": 0.339,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04CHINYK-NYK16TO25",
    "ko": "2026-11-05T00:30",
@@ -59,6 +64,7 @@
    "w": 0.89
   },
   {
+   "g": 0.3333,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04CHINYK-NYK6TO10",
    "ko": "2026-11-05T00:30",
@@ -70,6 +76,7 @@
    "w": 0.95
   },
   {
+   "g": 0.3284,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04MILBOS-BOS1TO5",
    "ko": "2026-11-05T00:30",
@@ -81,6 +88,7 @@
    "w": 1.02
   },
   {
+   "g": 0.3231,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04CLEOKC-OKC6TO10",
    "ko": "2026-11-05T01:00",
@@ -92,6 +100,7 @@
    "w": 0.98
   },
   {
+   "g": -1.0,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04INDMEM-IND1TO5",
    "ko": "2026-11-05T01:00",
@@ -103,6 +112,7 @@
    "w": 0.98
   },
   {
+   "g": 0.3333,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04INDMEM-MEM6TO10",
    "ko": "2026-11-05T01:00",
@@ -114,6 +124,7 @@
    "w": 0.96
   },
   {
+   "g": 0.3231,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04UTANOP-NOP1TO5",
    "ko": "2026-11-05T01:00",
@@ -125,6 +136,7 @@
    "w": 0.98
   },
   {
+   "g": 0.3387,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04MINHOU-HOU6TO10",
    "ko": "2026-11-05T01:30",
@@ -136,6 +148,7 @@
    "w": 0.94
   },
   {
+   "g": 0.3333,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04PORPHX-PHX1TO5",
    "ko": "2026-11-05T02:00",
@@ -147,6 +160,7 @@
    "w": 1.0
   },
   {
+   "g": -1.0,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04PORPHX-POR11TO20",
    "ko": "2026-11-05T02:00",
@@ -158,6 +172,7 @@
    "w": 0.98
   },
   {
+   "g": 0.3429,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04DALSAS-DAL1TO5",
    "ko": "2026-11-05T02:30",
@@ -169,6 +184,7 @@
    "w": 1.06
   },
   {
+   "g": 0.3231,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04DALSAS-SAS11TO15",
    "ko": "2026-11-05T02:30",
@@ -180,6 +196,7 @@
    "w": 0.98
   },
   {
+   "g": 0.3281,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04DALSAS-SAS16TO25",
    "ko": "2026-11-05T02:30",
@@ -191,6 +208,7 @@
    "w": 0.97
   },
   {
+   "g": -1.0,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04DALSAS-SAS1TO5",
    "ko": "2026-11-05T02:30",
@@ -202,6 +220,7 @@
    "w": 1.05
   },
   {
+   "g": 0.3231,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04DALSAS-SAS6TO10",
    "ko": "2026-11-05T02:30",
@@ -213,6 +232,7 @@
    "w": 0.98
   },
   {
+   "g": 0.3231,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04LALSAC-LAL11TO15",
    "ko": "2026-11-05T03:00",
@@ -224,6 +244,7 @@
    "w": 0.98
   },
   {
+   "g": 0.339,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04LALSAC-LAL16TO25",
    "ko": "2026-11-05T03:00",
@@ -235,6 +256,7 @@
    "w": 0.89
   },
   {
+   "g": 0.3333,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04LALSAC-LAL1TO5",
    "ko": "2026-11-05T03:00",
@@ -246,6 +268,7 @@
    "w": 1.05
   },
   {
+   "g": 0.3387,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04LALSAC-LAL6TO10",
    "ko": "2026-11-05T03:00",
@@ -257,6 +280,7 @@
    "w": 0.94
   },
   {
+   "g": 0.4481,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04MIALAC-LAC1TO5",
    "ko": "2026-11-05T03:30",
@@ -268,6 +292,7 @@
    "w": 1.05
   },
   {
+   "g": 0.3235,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV04MIALAC-MIA21PLUS",
    "ko": "2026-11-05T03:30",
@@ -279,6 +304,7 @@
    "w": 1.03
   },
   {
+   "g": -1.0,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV05ORLPHX-PHX11TO20",
    "ko": "2026-11-06T02:00",
@@ -290,6 +316,7 @@
    "w": 1.03
   },
   {
+   "g": 0.3284,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV05ORLPHX-PHX1TO5",
    "ko": "2026-11-06T02:00",
@@ -301,6 +328,7 @@
    "w": 1.02
   },
   {
+   "g": 0.3235,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV05ORLPHX-PHX6TO10",
    "ko": "2026-11-06T02:00",
@@ -312,6 +340,7 @@
    "w": 1.03
   },
   {
+   "g": 0.3333,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV05MIAGSW-GSW1TO5",
    "ko": "2026-11-06T03:00",
@@ -323,6 +352,7 @@
    "w": 1.0
   },
   {
+   "g": 0.3333,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV05MIAGSW-GSW21PLUS",
    "ko": "2026-11-06T03:00",
@@ -334,6 +364,7 @@
    "w": 1.05
   },
   {
+   "g": 0.338,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV05MIAGSW-MIA11TO20",
    "ko": "2026-11-06T03:00",
@@ -345,6 +376,7 @@
    "w": 1.08
   },
   {
+   "g": 0.3235,
    "hold_r": null,
    "id": "KXNBAWINMARGIN-26NOV05MIAGSW-MIA1TO5",
    "ko": "2026-11-06T03:00",
@@ -356,6 +388,7 @@
    "w": 1.03
   },
   {
+   "g": 1.5,
    "hold_r": 5.2919,
    "id": "KXNBAWINMARGIN-26NOV02OKCCLE-OKC1TO5",
    "ko": "2026-11-03T00:00",
@@ -367,6 +400,7 @@
    "w": 0.95
   },
   {
+   "g": 1.5714,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV02OKCCLE-OKC6TO10",
    "ko": "2026-11-03T00:00",
@@ -378,6 +412,7 @@
    "w": 1.03
   },
   {
+   "g": 1.5,
    "hold_r": 4.9026,
    "id": "KXNBAWINMARGIN-26NOV02ATLIND-ATL1TO5",
    "ko": "2026-11-03T00:30",
@@ -389,6 +424,7 @@
    "w": 1.01
   },
   {
+   "g": -0.1111,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV02ATLIND-IND1TO5",
    "ko": "2026-11-03T00:30",
@@ -400,6 +436,7 @@
    "w": 1.05
   },
   {
+   "g": -0.2,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV02BKNNYK-NYK6TO10",
    "ko": "2026-11-03T00:30",
@@ -411,6 +448,7 @@
    "w": 0.89
   },
   {
+   "g": 1.5714,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV02CHIPHI-PHI1TO5",
    "ko": "2026-11-03T00:30",
@@ -422,6 +460,7 @@
    "w": 1.03
   },
   {
+   "g": 1.6,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV02CHIPHI-PHI6TO10",
    "ko": "2026-11-03T00:30",
@@ -433,6 +472,7 @@
    "w": 1.05
   },
   {
+   "g": -1.0,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV02DETCHA-DET6TO10",
    "ko": "2026-11-03T00:30",
@@ -444,6 +484,7 @@
    "w": 1.0
   },
   {
+   "g": -1.0,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04ATLWAS-ATL1TO5",
    "ko": "2026-11-05T00:00",
@@ -455,6 +496,7 @@
    "w": 0.95
   },
   {
+   "g": 0.0,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04ATLWAS-WAS1TO5",
    "ko": "2026-11-05T00:00",
@@ -462,10 +504,11 @@
    "legs": "2x",
    "r": -0.0556,
    "side": "yes",
-   "st": "lost",
+   "st": "flat",
    "w": 1.01
   },
   {
+   "g": -0.872,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04PHIDET-DET6TO10",
    "ko": "2026-11-05T00:00",
@@ -477,6 +520,7 @@
    "w": 1.0
   },
   {
+   "g": -0.0,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04CHABKN-BKN1TO5",
    "ko": "2026-11-05T00:30",
@@ -484,10 +528,11 @@
    "legs": "2x",
    "r": -0.0562,
    "side": "yes",
-   "st": "lost",
+   "st": "flat",
    "w": 0.95
   },
   {
+   "g": -1.0,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04CHABKN-CHA1TO5",
    "ko": "2026-11-05T00:30",
@@ -499,6 +544,7 @@
    "w": 1.01
   },
   {
+   "g": -1.0,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04CHINYK-NYK1TO5",
    "ko": "2026-11-05T00:30",
@@ -510,6 +556,7 @@
    "w": 1.06
   },
   {
+   "g": 1.6,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04CHINYK-NYK6TO10",
    "ko": "2026-11-05T00:30",
@@ -521,6 +568,7 @@
    "w": 0.89
   },
   {
+   "g": 1.5714,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04MILBOS-BOS1TO5",
    "ko": "2026-11-05T00:30",
@@ -532,6 +580,7 @@
    "w": 1.03
   },
   {
+   "g": 1.6,
    "hold_r": 4.2538,
    "id": "KXNBAWINMARGIN-26NOV04MILBOS-BOS6TO10",
    "ko": "2026-11-05T00:30",
@@ -543,6 +592,7 @@
    "w": 0.95
   },
   {
+   "g": -1.0,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04CLEOKC-CLE1TO5",
    "ko": "2026-11-05T01:00",
@@ -554,6 +604,7 @@
    "w": 1.03
   },
   {
+   "g": -1.0,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04CLEOKC-OKC1TO5",
    "ko": "2026-11-05T01:00",
@@ -565,6 +616,7 @@
    "w": 0.95
   },
   {
+   "g": 1.6,
    "hold_r": 4.2538,
    "id": "KXNBAWINMARGIN-26NOV04CLEOKC-OKC6TO10",
    "ko": "2026-11-05T01:00",
@@ -576,6 +628,7 @@
    "w": 0.95
   },
   {
+   "g": 1.5,
    "hold_r": 5.2919,
    "id": "KXNBAWINMARGIN-26NOV04INDMEM-IND1TO5",
    "ko": "2026-11-05T01:00",
@@ -587,6 +640,7 @@
    "w": 0.95
   },
   {
+   "g": 1.5714,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04INDMEM-IND6TO10",
    "ko": "2026-11-05T01:00",
@@ -598,6 +652,7 @@
    "w": 0.96
   },
   {
+   "g": -0.2,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04INDMEM-MEM6TO10",
    "ko": "2026-11-05T01:00",
@@ -609,6 +664,7 @@
    "w": 0.89
   },
   {
+   "g": 1.6,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04UTANOP-NOP1TO5",
    "ko": "2026-11-05T01:00",
@@ -620,6 +676,7 @@
    "w": 0.95
   },
   {
+   "g": 1.5714,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04UTANOP-UTA1TO5",
    "ko": "2026-11-05T01:00",
@@ -631,6 +688,7 @@
    "w": 0.96
   },
   {
+   "g": 1.5,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04MINHOU-HOU1TO5",
    "ko": "2026-11-05T01:30",
@@ -642,6 +700,7 @@
    "w": 1.01
   },
   {
+   "g": -0.2,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04MINHOU-HOU6TO10",
    "ko": "2026-11-05T01:30",
@@ -653,6 +712,7 @@
    "w": 1.0
   },
   {
+   "g": 1.5714,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04MINHOU-MIN1TO5",
    "ko": "2026-11-05T01:30",
@@ -664,6 +724,7 @@
    "w": 1.03
   },
   {
+   "g": -0.0,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04PORPHX-PHX1TO5",
    "ko": "2026-11-05T02:00",
@@ -671,10 +732,11 @@
    "legs": "2x",
    "r": -0.0562,
    "side": "yes",
-   "st": "lost",
+   "st": "flat",
    "w": 0.95
   },
   {
+   "g": 1.5714,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04PORPHX-POR6TO10",
    "ko": "2026-11-05T02:00",
@@ -686,6 +748,7 @@
    "w": 1.03
   },
   {
+   "g": -1.0,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04TORDEN-DEN1TO5",
    "ko": "2026-11-05T02:00",
@@ -697,6 +760,7 @@
    "w": 0.89
   },
   {
+   "g": -1.0,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04TORDEN-DEN6TO10",
    "ko": "2026-11-05T02:00",
@@ -708,6 +772,7 @@
    "w": 0.89
   },
   {
+   "g": 0.0,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04TORDEN-TOR1TO5",
    "ko": "2026-11-05T02:00",
@@ -715,10 +780,11 @@
    "legs": "2x",
    "r": -0.0581,
    "side": "yes",
-   "st": "lost",
+   "st": "flat",
    "w": 1.01
   },
   {
+   "g": 1.6,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04DALSAS-SAS6TO10",
    "ko": "2026-11-05T02:30",
@@ -730,6 +796,7 @@
    "w": 1.0
   },
   {
+   "g": 0.0,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04LALSAC-LAL1TO5",
    "ko": "2026-11-05T03:00",
@@ -737,10 +804,11 @@
    "legs": "2x",
    "r": -0.0581,
    "side": "yes",
-   "st": "lost",
+   "st": "flat",
    "w": 1.01
   },
   {
+   "g": 1.5,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV04MIALAC-LAC1TO5",
    "ko": "2026-11-05T03:30",
@@ -752,6 +820,7 @@
    "w": 1.01
   },
   {
+   "g": 0.0,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV05ORLPHX-ORL1TO5",
    "ko": "2026-11-06T02:00",
@@ -759,10 +828,11 @@
    "legs": "2x",
    "r": -0.0562,
    "side": "yes",
-   "st": "lost",
+   "st": "flat",
    "w": 0.95
   },
   {
+   "g": -1.0,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV05ORLPHX-ORL6TO10",
    "ko": "2026-11-06T02:00",
@@ -774,6 +844,7 @@
    "w": 1.03
   },
   {
+   "g": 0.0,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV05ORLPHX-PHX1TO5",
    "ko": "2026-11-06T02:00",
@@ -781,10 +852,11 @@
    "legs": "2x",
    "r": -0.0562,
    "side": "yes",
-   "st": "lost",
+   "st": "flat",
    "w": 0.95
   },
   {
+   "g": 1.5714,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV05ORLPHX-PHX6TO10",
    "ko": "2026-11-06T02:00",
@@ -796,6 +868,7 @@
    "w": 1.03
   },
   {
+   "g": 1.5,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV05MIAGSW-GSW1TO5",
    "ko": "2026-11-06T03:00",
@@ -807,6 +880,7 @@
    "w": 1.01
   },
   {
+   "g": -0.1429,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV05MIAGSW-MIA1TO5",
    "ko": "2026-11-06T03:00",
@@ -818,6 +892,7 @@
    "w": 1.03
   },
   {
+   "g": 1.5,
    "hold_r": -1.0,
    "id": "KXNBAWINMARGIN-26NOV05MIAGSW-MIA6TO10",
    "ko": "2026-11-06T03:00",
@@ -829,6 +904,7 @@
    "w": 1.01
   },
   {
+   "g": -1.0,
    "hold_r": null,
    "id": "KXSUPERLIGTOTAL-26NOV01AMSEYU-4",
    "ko": "2026-11-01T10:30",
@@ -840,6 +916,7 @@
    "w": 1.0
   },
   {
+   "g": -1.0,
    "hold_r": null,
    "id": "KXLALIGATOTAL-26NOV01GETSEV-4",
    "ko": "2026-11-01T13:00",
@@ -851,6 +928,7 @@
    "w": 1.0
   },
   {
+   "g": -1.0,
    "hold_r": null,
    "id": "KXLIGUE1TOTAL-26NOV01RCSAUX-4",
    "ko": "2026-11-01T14:00",
@@ -862,6 +940,7 @@
    "w": 1.0
   },
   {
+   "g": -1.0,
    "hold_r": null,
    "id": "KXSUPERLIGTOTAL-26NOV01KASBES-4",
    "ko": "2026-11-01T16:00",
@@ -873,6 +952,7 @@
    "w": 1.0
   },
   {
+   "g": -1.0,
    "hold_r": null,
    "id": "KXLIGUE1TOTAL-26NOV01PARASM-4",
    "ko": "2026-11-01T16:15",
@@ -884,6 +964,7 @@
    "w": 1.0
   },
   {
+   "g": -1.0,
    "hold_r": null,
    "id": "KXBUNDESLIGATOTAL-26NOV01SGEHSV-4",
    "ko": "2026-11-01T16:30",
@@ -895,6 +976,7 @@
    "w": 1.0
   },
   {
+   "g": -1.0,
    "hold_r": null,
    "id": "KXMLSTOTAL-26NOV01ATLTOR-4",
    "ko": "2026-11-01T21:30",
@@ -906,6 +988,7 @@
    "w": 1.0
   },
   {
+   "g": 3.0,
    "hold_r": null,
    "id": "KXMLSTOTAL-26NOV01NEMIA-4",
    "ko": "2026-11-02T00:00",
@@ -917,6 +1000,7 @@
    "w": 1.0
   },
   {
+   "g": -1.0,
    "hold_r": null,
    "id": "KXMLSTOTAL-26NOV01LAFCMIN-4",
    "ko": "2026-11-02T01:30",
@@ -928,6 +1012,7 @@
    "w": 1.0
   },
   {
+   "g": -1.0,
    "hold_r": null,
    "id": "KXMLSTOTAL-26NOV01PORHOU-4",
    "ko": "2026-11-02T02:45",
@@ -939,6 +1024,7 @@
    "w": 1.0
   },
   {
+   "g": -1.0,
    "hold_r": null,
    "id": "KXSUPERLIGTOTAL-26NOV02GENALA-4",
    "ko": "2026-11-02T17:00",
@@ -950,6 +1036,7 @@
    "w": 1.0
   },
   {
+   "g": -1.0,
    "hold_r": null,
    "id": "KXSERIEATOTAL-26NOV02SASFIO-4",
    "ko": "2026-11-02T17:30",
@@ -961,6 +1048,7 @@
    "w": 1.0
   },
   {
+   "g": 3.0,
    "hold_r": null,
    "id": "KXUCLTOTAL-26NOV03FEYINT-4",
    "ko": "2026-11-03T20:00",
@@ -972,6 +1060,7 @@
    "w": 1.0
   },
   {
+   "g": -1.0,
    "hold_r": null,
    "id": "KXUCLTOTAL-26NOV03MUNROM-4",
    "ko": "2026-11-03T20:00",
@@ -983,6 +1072,7 @@
    "w": 1.0
   },
   {
+   "g": -1.0,
    "hold_r": null,
    "id": "KXUCLTOTAL-26NOV04AEKRMA-4",
    "ko": "2026-11-04T17:45",
@@ -994,6 +1084,7 @@
    "w": 1.0
   },
   {
+   "g": -1.0,
    "hold_r": null,
    "id": "KXUCLTOTAL-26NOV04FENLFC-4",
    "ko": "2026-11-04T17:45",
@@ -1005,6 +1096,7 @@
    "w": 1.0
   },
   {
+   "g": 3.0,
    "hold_r": null,
    "id": "KXUCLTOTAL-26NOV04BVBRBB-4",
    "ko": "2026-11-04T20:00",
@@ -1016,6 +1108,7 @@
    "w": 0.82
   },
   {
+   "g": 3.452,
    "hold_r": null,
    "id": "KXUCLTOTAL-26NOV04FCPNAP-4",
    "ko": "2026-11-04T20:00",
@@ -1027,6 +1120,7 @@
    "w": 1.0
   },
   {
+   "g": -1.0,
    "hold_r": null,
    "id": "KXUCLTOTAL-26NOV04RBLMCI-4",
    "ko": "2026-11-04T20:00",
@@ -1038,6 +1132,7 @@
    "w": 1.0
   },
   {
+   "g": -1.0,
    "hold_r": null,
    "id": "KXUCLTOTAL-26NOV04RCLCOM-4",
    "ko": "2026-11-04T20:00",
@@ -1049,6 +1144,7 @@
    "w": 1.0
   },
   {
+   "g": -1.0,
    "hold_r": null,
    "id": "KXUCLTOTAL-26NOV04VIKSBH-4",
    "ko": "2026-11-04T20:00",

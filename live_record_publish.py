@@ -43,11 +43,18 @@ REASONS = (
 FIELDS = {"id", "ko", "side", "st", "w", "r"}
 # An own-state lane row also carries the legs it sold ("", "2x", "3x", "2x+3x", "sold"), the same entry held to settlement (YES split only)
 # and where its sells come from: "fills" (the sell fills the follower logged) or "reconstructed" (data/live_reconstructed.json).
-LANE_FIELDS = FIELDS | {"legs", "hold_r", "src"}
+LANE_FIELDS = FIELDS | {"legs", "hold_r", "src", "g"}      # g = the same trade's return before any fee
 LEGS = {"", "2x", "3x", "2x+3x", "sold"}
 SRCS = {"fills", "reconstructed"}
 STATES = {"won", "flat", "lost", "open", "sold", "unfilled", "unconfirmed"}
-FLAT = 0.02          # an own-state trade within +-2% after fees is flat (F), above it won (W), below it lost (L)
+FLAT = 0.02          # flat (F) = exited at cost: return within +-2% before OR after fees; won (W) = above +2% after fees and not flat; lost (L) = the rest
+
+
+def result_state(ret, gross):
+    """won / flat / lost for a settled own-state result, by its return after fees and its return before fees."""
+    if abs(ret) <= FLAT + 1e-9 or (gross is not None and abs(gross) <= FLAT + 1e-9):
+        return "flat"
+    return "won" if ret > FLAT else "lost"
 RECON = os.path.join(ROOT, "data", "live_reconstructed.json")
 RECON_BEFORE = "2026-11-06T18:07"      # per-sell fill logging went live on the VPS at this instant (UTC): earlier tips are reconstructed
 LANES = ("o35_cheap_no", "nba_wm_yes", "nba_wm_nofade", "top5_dip")
@@ -199,7 +206,7 @@ def own_trade(side, px, qty, buy_taker, sell_fills, result, split=False):
 
     Cost is the contracts bought at the price paid plus the buy fee; proceeds are the logged sells (size x price, less their fee) plus
     the unsold remainder at the market's settled value (1 if it settled to this side, else 0; no fee at settlement). Open while a
-    remainder is unsettled. Won = the realised return after fees is above +2%, lost = below -2%, flat in between: a bet sold at its target is
+    remainder is unsettled. Flat = within +-2% of cost before or after fees (exited at cost; the entry fee still counts in the return), won = above +2% after fees and not flat, lost = the rest: a bet sold at its target is
     won whatever the market later did, and a bet held to a lost settlement is lost."""
     stake = qty * px + (qty * fee_per_contract(px, True) if buy_taker else 0.0)
     sells = list((sell_fills or {}).values())
@@ -208,12 +215,13 @@ def own_trade(side, px, qty, buy_taker, sell_fills, result, split=False):
     rem = max(0.0, qty - sold)
     legs = _legs([x.get("leg") for x in sells if float(x.get("size") or 0) > 0.004])
     if rem > 0.004 and result is None:
-        return dict(st="open", r=None, legs=legs, hold_r=None), stake
+        return dict(st="open", r=None, g=None, legs=legs, hold_r=None), stake
     payout = 1.0 if result == side else 0.0
     ret = (proceeds + rem * payout - stake) / stake
     hold = round((qty * payout - stake) / stake, 4) if split and result else None
     ret = round(ret, 4)
-    return dict(st=("won" if ret > FLAT else "lost" if ret < -FLAT else "flat"), r=ret, legs=legs, hold_r=hold), stake
+    gross = round((sum(float(x.get("size") or 0) * float(x.get("price") or 0) for x in sells) + rem * payout - qty * px) / (qty * px), 4)
+    return dict(st=result_state(ret, gross), r=ret, g=gross, legs=legs, hold_r=hold), stake
 
 
 def load_reconstructed(path=None):
@@ -245,7 +253,7 @@ def lane_rows(src_dir, fetch=None, cache_path=None, recon=None):
         base = dict(id=tk, ko=ko, side=side)
         old = recon.get((lane, tk))
         if not m.get("sell_fills") and old is not None and ko < RECON_BEFORE:
-            keep = {k: old.get(k) for k in ("st", "r", "w", "legs", "hold_r") if k in old}
+            keep = {k: old.get(k) for k in ("st", "r", "g", "w", "legs", "hold_r") if k in old}
             if lane != "nba_wm_yes":
                 keep["hold_r"] = None                 # the hold control is the YES split's (the other lanes' sells are their rule)
             out[lane].append(dict(base, src="reconstructed", **keep))
@@ -314,7 +322,7 @@ def build(src_dir=SRC_DIR, fetch=None, cache_path=None):
     return dict(generated=dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%MZ"), pairs=out, pulled=pulled,
                 lanes=lane_rows(src_dir, fetch, cache_path),
                 lane_note=("own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled "
-                           "result); a bet is won above +2% after fees, lost below -2%, flat between. Entries with a tip before 2026-11-06 18:07Z are reconstructed "
+                           "result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed "
                            "from the exchange order list; later ones use the sell fills the follower logged"))
 
 
@@ -351,7 +359,7 @@ def check_lanes(blob):
                 raise Refused(f"{lane}: an entry carries a field, state or value outside the whitelist")
             if r.get("legs", "") not in LEGS or r.get("src", "fills") not in SRCS:
                 raise Refused(f"{lane}: legs or source outside the whitelist")
-            for k, lo, hi in (("w", 0, 1000), ("r", -1.5, 100), ("hold_r", -1.5, 100)):
+            for k, lo, hi in (("w", 0, 1000), ("r", -1.5, 100), ("g", -1.5, 100), ("hold_r", -1.5, 100)):
                 v = r.get(k)
                 if v is not None and not (isinstance(v, (int, float)) and lo < v < hi):
                     raise Refused(f"{lane}: {k} {v!r} is out of range")
