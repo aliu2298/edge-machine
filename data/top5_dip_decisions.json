@@ -272,6 +272,25 @@
    "ticker": "KXLIGUE1TOTAL-26NOV07AUXPAR-2",
    "why": null
   },
+  "KXLIGUE1TOTAL-26NOV07PSGEST-2": {
+   "P": 0.9,
+   "bot_version": "top5dip-live-v1",
+   "decided_at": "2026-11-07T18:45:19+00:00",
+   "event": "KXLIGUE1TOTAL-26NOV07PSGEST",
+   "kickoff": "2026-11-07T19:45:00+00:00",
+   "lane": "top5_goalless_dip_live",
+   "league": "Ligue 1",
+   "limit": 0.5,
+   "matchday": "26NOV07",
+   "outcome": "planned",
+   "qty": 2.0,
+   "rule_ok": true,
+   "spread": 0.01,
+   "ticker": "KXLIGUE1TOTAL-26NOV07PSGEST-2",
+   "why": null,
+   "yes_ask": 0.9,
+   "yes_bid": 0.89
+  },
   "KXSERIEATOTAL-26NOV06VENUDI-2": {
    "P": 0.77,
    "bot_version": "top5dip-live-v1",
@@ -320,6 +339,25 @@
    "ticker": "KXSERIEATOTAL-26NOV07PARBFC-2",
    "why": null
   },
+  "KXSERIEATOTAL-26NOV07ROMSAS-2": {
+   "P": 0.89,
+   "bot_version": "top5dip-live-v1",
+   "decided_at": "2026-11-07T18:45:19+00:00",
+   "event": "KXSERIEATOTAL-26NOV07ROMSAS",
+   "kickoff": "2026-11-07T19:45:00+00:00",
+   "lane": "top5_goalless_dip_live",
+   "league": "Serie A",
+   "limit": 0.49,
+   "matchday": "26NOV07",
+   "outcome": "planned",
+   "qty": 2.0,
+   "rule_ok": true,
+   "spread": 0.02,
+   "ticker": "KXSERIEATOTAL-26NOV07ROMSAS-2",
+   "why": null,
+   "yes_ask": 0.89,
+   "yes_bid": 0.87
+  },
   "KXSERIEATOTAL-26NOV07TORLEC-2": {
    "P": 0.78,
    "bot_version": "top5dip-live-v1",
@@ -337,6 +375,6 @@
    "why": null
   }
  },
- "updated_at": "2026-11-07T17:30:07+00:00",
+ "updated_at": "2026-11-07T18:45:19+00:00",
  "version": 1
 }
