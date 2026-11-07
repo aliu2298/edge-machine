@@ -368,6 +368,58 @@
   },
   {
    "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV08PHICHI",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08PHICHI-PHI6TO10",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "PHI",
+   "ticker": "KXNBAWINMARGIN-26NOV08PHICHI-PHI6TO10",
+   "tip": "2026-11-08T20:30:00+00:00",
+   "title": "Philadelphia wins by 6-10 points",
+   "version": "wm-yes-v3"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV08PHICHI",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08PHICHI-PHI1TO5",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "PHI",
+   "ticker": "KXNBAWINMARGIN-26NOV08PHICHI-PHI1TO5",
+   "tip": "2026-11-08T20:30:00+00:00",
+   "title": "Philadelphia wins by 1-5 points",
+   "version": "wm-yes-v3"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV08PHICHI",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08PHICHI-CHI1TO5",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "CHI",
+   "ticker": "KXNBAWINMARGIN-26NOV08PHICHI-CHI1TO5",
+   "tip": "2026-11-08T20:30:00+00:00",
+   "title": "Chicago wins by 1-5 points",
+   "version": "wm-yes-v3"
+  },
+  {
+   "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV08PHICHI",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08PHICHI-CHI6TO10",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "CHI",
+   "ticker": "KXNBAWINMARGIN-26NOV08PHICHI-CHI6TO10",
+   "tip": "2026-11-08T20:30:00+00:00",
+   "title": "Chicago wins by 6-10 points",
+   "version": "wm-yes-v3"
+  },
+  {
+   "bucket": "6-10",
    "event": "KXNBAWINMARGIN-26NOV08LALDET",
    "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08LALDET-LAL6TO10",
    "lane": "nba_winmargin_live",
@@ -447,6 +499,6 @@
   "side": "yes",
   "stake_usd": 1.0
  },
- "updated_at": "2026-11-07T21:30:55+00:00",
+ "updated_at": "2026-11-07T22:00:58+00:00",
  "version": "wm-yes-v3"
 }
