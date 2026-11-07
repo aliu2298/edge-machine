@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-07T04:30:31+00:00",
+ "board_built_at": "2026-11-07T05:00:51+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -40,43 +40,6 @@
    "source": "econ_nc_yes",
    "sport": "econ_daily",
    "status": "hit"
-  },
-  "2026-11-07|KXDIESELD-26NOV07-T6.205|Above $6.205 at the close \u00b7 Near-certain \u00b7 last hour \u00b7 YES": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-11-07",
-   "edge_at_log": null,
-   "first_seen": "2026-11-07",
-   "headline": "Above $6.205 at the close",
-   "home": null,
-   "id": "2026-11-07|KXDIESELD-26NOV07-T6.205|Above $6.205 at the close \u00b7 Near-certain \u00b7 last hour \u00b7 YES",
-   "kickoff": "2026-11-07T04:59Z",
-   "lane": "production",
-   "last_seen": "2026-11-07",
-   "last_seen_at": "2026-11-07T04:30:31+00:00",
-   "league": "Econ Daily",
-   "match": "Diesel price (daily)",
-   "pair": "econ_nc_yes|econ_daily",
-   "price_at_log": 0.94,
-   "published_at": "2026-11-07T03:45:20+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 73,
-   "route": {
-    "claim": "Above $6.205 at the close",
-    "event": "KXDIESELD-26NOV07",
-    "market": "KXDIESELD-26NOV07-T6.205",
-    "outcome": "Above $6.205",
-    "outcome_side": "yes",
-    "price_at_log": 0.94,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "econ_nc_yes:KXDIESELD-26NOV07-T6.205",
-   "source": "econ_nc_yes",
-   "sport": "econ_daily",
-   "status": "pending"
   }
  },
  "pairs": {
@@ -87,9 +50,9 @@
    "ready_at": "2026-10-20T05:00:00+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 2,
+    "leads": 1,
     "problem": null,
-    "routed": 2,
+    "routed": 1,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -101,7 +64,7 @@
    "sandbox_roi_fee": 0.0322,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 0,
     "under_target": 0
    }
   }
@@ -110,5 +73,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-07T04:30:31+00:00"
+ "updated_at": "2026-11-07T05:00:51+00:00"
 }
