@@ -13789,17 +13789,65 @@
     }
    },
    "version": "o35-v4"
+  },
+  {
+   "bids": {
+    "10": null,
+    "10e": null
+   },
+   "crossed": null,
+   "event": "KXEPLTOTAL-26NOV07LEETOT",
+   "form_rule": false,
+   "honest": {
+    "10": null
+   },
+   "id": "KXEPLTOTAL-26NOV07LEETOT-4",
+   "kickoff": 1794054600,
+   "league": "Premier League",
+   "logged": "2026-11-07T15:08:26.410238+00:00",
+   "night": "2026-11-07",
+   "prints": 412,
+   "result": "no",
+   "series": "KXEPLTOTAL",
+   "v5": {
+    "10": null
+   },
+   "version": "o35-v4"
+  },
+  {
+   "bids": {
+    "10": null,
+    "10e": null
+   },
+   "crossed": null,
+   "event": "KXSUPERLIGTOTAL-26NOV07EYUKOC",
+   "form_rule": false,
+   "honest": {
+    "10": null
+   },
+   "id": "KXSUPERLIGTOTAL-26NOV07EYUKOC-4",
+   "kickoff": 1794047400,
+   "league": "Turkish Super Lig",
+   "logged": "2026-11-07T15:08:26.410238+00:00",
+   "night": "2026-11-07",
+   "prints": 270,
+   "result": "no",
+   "series": "KXSUPERLIGTOTAL",
+   "v5": {
+    "10": null
+   },
+   "version": "o35-v4"
   }
  ],
  "error": null,
  "lane": "o35_cheap_no_wave",
- "last_run": "2026-11-07T07:46:36.352752+00:00",
+ "last_run": "2026-11-07T15:08:26.410238+00:00",
  "observations": {
-  "at": "2026-11-07T07:46:36.352752+00:00",
+  "at": "2026-11-07T15:08:26.410238+00:00",
   "backfill_left": 0,
-  "backfilled": 4,
+  "backfilled": 0,
   "errors": [],
-  "new": 0,
+  "new": 2,
   "waiting": 3
  },
  "seen": {
@@ -13815,6 +13863,7 @@
   "KXEPLTOTAL-26NOV01LFCARS": "2026-11-02T11:41:22.679309+00:00",
   "KXEPLTOTAL-26NOV02NEWEVE": "2026-11-03T03:04:22.325628+00:00",
   "KXEPLTOTAL-26NOV06EVECOV": "2026-11-07T01:12:21.026664+00:00",
+  "KXEPLTOTAL-26NOV07LEETOT": "2026-11-07T15:08:26.410238+00:00",
   "KXEPLTOTAL-26OCT31AVLFUL": "before the lane's first night",
   "KXEPLTOTAL-26OCT31BOULEE": "before the lane's first night",
   "KXEPLTOTAL-26OCT31BRENFO": "before the lane's first night",
@@ -13886,6 +13935,7 @@
   "KXSUPERLIGTOTAL-26NOV01TRAGAZ": "2026-11-02T11:41:22.679309+00:00",
   "KXSUPERLIGTOTAL-26NOV02GENALA": "2026-11-02T20:53:24.102976+00:00",
   "KXSUPERLIGTOTAL-26NOV06GAZKAS": "2026-11-06T21:04:01.875262+00:00",
+  "KXSUPERLIGTOTAL-26NOV07EYUKOC": "2026-11-07T15:08:26.410238+00:00",
   "KXSUPERLIGTOTAL-26OCT31ERZCOR": "before the lane's first night",
   "KXSUPERLIGTOTAL-26OCT31FENGOZ": "before the lane's first night",
   "KXSUPERLIGTOTAL-26OCT31KOCRIZ": "before the lane's first night",
