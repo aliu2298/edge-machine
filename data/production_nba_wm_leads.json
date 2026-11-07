@@ -4,58 +4,6 @@
  "leads": [
   {
    "bucket": "6-10",
-   "event": "KXNBAWINMARGIN-26NOV06MINNOP",
-   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV06MINNOP-MIN6TO10",
-   "lane": "nba_winmargin_live",
-   "side": "yes",
-   "stake_usd": 1.0,
-   "team": "MIN",
-   "ticker": "KXNBAWINMARGIN-26NOV06MINNOP-MIN6TO10",
-   "tip": "2026-11-07T01:00:00+00:00",
-   "title": "Minnesota wins by 6-10 points",
-   "version": "wm-yes-v3"
-  },
-  {
-   "bucket": "1-5",
-   "event": "KXNBAWINMARGIN-26NOV06MINNOP",
-   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV06MINNOP-MIN1TO5",
-   "lane": "nba_winmargin_live",
-   "side": "yes",
-   "stake_usd": 1.0,
-   "team": "MIN",
-   "ticker": "KXNBAWINMARGIN-26NOV06MINNOP-MIN1TO5",
-   "tip": "2026-11-07T01:00:00+00:00",
-   "title": "Minnesota wins by 1-5 points",
-   "version": "wm-yes-v3"
-  },
-  {
-   "bucket": "1-5",
-   "event": "KXNBAWINMARGIN-26NOV06MINNOP",
-   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV06MINNOP-NOP1TO5",
-   "lane": "nba_winmargin_live",
-   "side": "yes",
-   "stake_usd": 1.0,
-   "team": "NOP",
-   "ticker": "KXNBAWINMARGIN-26NOV06MINNOP-NOP1TO5",
-   "tip": "2026-11-07T01:00:00+00:00",
-   "title": "New Orleans wins by 1-5 points",
-   "version": "wm-yes-v3"
-  },
-  {
-   "bucket": "6-10",
-   "event": "KXNBAWINMARGIN-26NOV06MINNOP",
-   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV06MINNOP-NOP6TO10",
-   "lane": "nba_winmargin_live",
-   "side": "yes",
-   "stake_usd": 1.0,
-   "team": "NOP",
-   "ticker": "KXNBAWINMARGIN-26NOV06MINNOP-NOP6TO10",
-   "tip": "2026-11-07T01:00:00+00:00",
-   "title": "New Orleans wins by 6-10 points",
-   "version": "wm-yes-v3"
-  },
-  {
-   "bucket": "6-10",
    "event": "KXNBAWINMARGIN-26NOV06PORLAL",
    "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV06PORLAL-POR6TO10",
    "lane": "nba_winmargin_live",
@@ -551,6 +499,6 @@
   "side": "yes",
   "stake_usd": 1.0
  },
- "updated_at": "2026-11-07T03:45:53+00:00",
+ "updated_at": "2026-11-07T04:15:58+00:00",
  "version": "wm-yes-v3"
 }
