@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-08T12:07Z",
+ "generated": "2026-11-08T13:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -2609,6 +2609,14 @@
      "r": 0.8265,
      "side": "yes",
      "st": "won",
+     "w": 0.6
+    },
+    {
+     "id": "sr_c4:KXSERIEATOTAL-26NOV08GENACM-3",
+     "ko": "2026-11-08T14:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
      "w": 1.0
     }
    ],
@@ -2616,12 +2624,30 @@
   },
   "st_t1h|soccer_team2": {
    "entered": "2026-11-08T12:00:00+00:00",
-   "orders": [],
+   "orders": [
+    {
+     "id": "st_t1h:KXEPLTEAMTOTAL-26NOV08BRIBRE-BRI2",
+     "ko": "2026-11-08T14:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 1.0
+    }
+   ],
    "refused": {}
   },
   "st_t1m|soccer_u35": {
    "entered": "2026-11-08T12:00:00+00:00",
-   "orders": [],
+   "orders": [
+    {
+     "id": "st_t1m:KXEPLTOTAL-26NOV08BRIBRE-4",
+     "ko": "2026-11-08T14:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 1.0
+    }
+   ],
    "refused": {}
   },
   "st_t7|soccer_team3": {
