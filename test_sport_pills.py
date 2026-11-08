@@ -529,7 +529,7 @@ def _browser():
                 page.wait_for_url("**/trading.html")
                 traded = page.evaluate("""() => {
                   const current = document.querySelector('nav.main [aria-current="page"]');
-                  const crypto = document.querySelector('nav.main a[href="./crypto.html"]');
+                  const crypto = document.querySelector('nav.main a[href="./daily_markets.html"]');
                   return {
                     href: location.pathname,
                     current: current ? current.textContent.trim() : "",
@@ -540,8 +540,8 @@ def _browser():
                   };
                 }""")
                 eq(traded["current"], "Trading", "the Trading page pill still opens Trading")
-                eq(traded["crypto"], "./crypto.html",
-                   "Trading keeps its own crypto link")
+                eq(traded["crypto"], "./daily_markets.html",
+                   "Trading keeps its Daily Markets link (crypto's tab since 2026-11-08)")
                 eq(traded["rows"], 0, "Trading has no Running rows to filter")
                 ok(traded["shell"] is False and traded["sports"] == 0,
                    f"Trading loads neither the shell script nor sport pills ({traded})")
