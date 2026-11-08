@@ -46,7 +46,8 @@ check("the map", {p: list(v) for p, v in CB.HOMES.items()},
        "nba": ["nba_ml_dog_tp50", "nba_winmargin_live", "nba_winmargin_split", "nba_winmargin_split_insample", "nba_tt_cheap_tp30"],
        "nfl": ["cfb_home_dog_x4", "cfb_dog_tp50"]})
 check("every home page is in the nav's Markets menu", all(p in SC.MARKET_GROUP for p in CB.HOMES), True)
-check("and so are Culture, Commodities and Fights", all(p in SC.MARKET_GROUP for p in ("culture", "commodities", "fights")), True)
+check("and so are Culture, Daily Markets (Commodities' tab since 2026-11-08) and Fights",
+      all(p in SC.MARKET_GROUP for p in ("culture", "daily_markets", "fights")), True)
 
 print("\nthe sport pages")
 import nfl_build

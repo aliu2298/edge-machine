@@ -151,8 +151,8 @@ ok("pressSport" in js and "refreshCounts" in js and "data-dimmed" in js,
 trading = open(os.path.join(ROOT, "public_site", "trading.html"), encoding="utf-8").read()
 ok('href="./trading.html" aria-current="page"' in trading,
    "the Trading page still marks its own pill")
-ok('href="./crypto.html"' in trading and "shell.js" not in trading,
-   "the Trading page keeps its crypto link and does not load the shell")
+ok('href="./daily_markets.html"' in trading and "shell.js" not in trading,
+   "the Trading page keeps its Daily Markets link (crypto's tab since 2026-11-08) and does not load the shell")
 ok('class="running-row"' not in trading and 'id="sports-soon"' not in trading,
    "the Trading page has no Running list and no Coming soon note")
 

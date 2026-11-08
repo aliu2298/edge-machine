@@ -390,7 +390,7 @@ cards = re.findall(r'<article class="cc-card cc-(\w+)" data-area="(\w+)"', html)
 eq([c[1] for c in cards], ["soccer", "cricket", "tennis", "crypto", "commodities", "nba", "trading"], "one card per area, in order")
 ok('<span class="sig x">Attention</span>' in html and '<span class="sig y">Healthy</span>' in html,
    "cards carry Healthy and Attention chips")
-for href in ("./soccer.html", "./cricket.html", "./tennis.html", "./crypto.html", "./commodities.html", "./nba.html", "./trading.html"):
+for href in ("./soccer.html", "./cricket.html", "./tennis.html", "./daily_markets.html#crypto", "./daily_markets.html#commodities", "./nba.html", "./trading.html"):
     ok(f'<a class="cc-open" href="{href}">Open →</a>' in html, f"the card opens {href}")
 ok("last read Today" in html or "last read " in html, "a card says when the area was last read, in CT")
 ok('<ol class="cc-attention">' in html and html.count('<li class="cc-item') == 6, "the attention list has one row per item")

@@ -65,7 +65,7 @@ try:
     C._ARCHIVED = frozenset({"cricket", "fights"})
     links = lambda key: re.findall(r"<a [^>]*>([^<]+)</a>", C.nav(key))   # noqa: E731
     check("an archived tab leaves the top nav", ("Cricket" in links("soccer"), "Fights" in links("soccer")), (False, False))
-    check("the other market tabs stay in the menu", all(x in links("soccer") for x in ("NBA", "NFL", "Soccer", "Tennis", "Crypto", "Culture")), True)
+    check("the other market tabs stay in the menu", all(x in links("soccer") for x in ("NBA", "NFL", "Soccer", "Tennis", "Daily Markets", "Culture")), True)
     check("its own page (still built, linked from Archives) keeps its link, current",
           bool(re.search(r'href="\./cricket\.html" aria-current="page">Cricket<', C.nav("cricket"))), True)
     C._ARCHIVED = frozenset()

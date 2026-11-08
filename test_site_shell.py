@@ -37,12 +37,11 @@ _NAV_HREFS = (
     'href="./soccer.html"',
     'href="./tennis.html"',
     'href="./cricket.html"',
-    'href="./crypto.html"',
-    'href="./commodities.html"',
+    'href="./daily_markets.html"',      # 2026-11-08: Crypto, Commodities, Econ and Finance Daily are one tab
     'href="./sandbox.html#method"',
 )
 _NAV_LABELS = ["Archives", "Production", "Trading", "NBA", "NFL", "NHL", "Soccer", "Tennis", "Cricket",
-               "Crypto", "Commodities", "Econ Daily", "Finance Daily", "Culture", "Fights", "Leaderboard", "Method"]
+               "Daily Markets", "Culture", "Fights", "Leaderboard", "Method"]
 _CURRENT = {
     "sandbox": 'href="./sandbox.html" aria-current="page"',
     "production": 'href="./production.html" aria-current="page"',
@@ -51,8 +50,10 @@ _CURRENT = {
     "soccer": 'href="./soccer.html" aria-current="page"',
     "tennis": 'href="./tennis.html" aria-current="page"',
     "cricket": 'href="./cricket.html" aria-current="page"',
-    "crypto": 'href="./crypto.html" aria-current="page"',
-    "commodities": 'href="./commodities.html" aria-current="page"',
+    # Their builders still pass their own key; the nav marks the Daily Markets tab they now live on.
+    "crypto": 'href="./daily_markets.html" aria-current="page"',
+    "commodities": 'href="./daily_markets.html" aria-current="page"',
+    "daily_markets": 'href="./daily_markets.html" aria-current="page"',
     # The site root is the brand, not a pill. No pill is current there.
     "index": '<a class="brand" href="./index.html" aria-current="page">Edge Machine</a>',
 }
@@ -152,6 +153,13 @@ def _commodities(now):
     return commodities_build.build({"quotes": []}, {"pairs": {}}, now=now)
 
 
+def _daily_markets(now):
+    """The Daily Markets tab (2026-11-08) off empty ledgers."""
+    import daily_markets_build as DM
+    return DM.build(now=now, builders={"crypto": _crypto, "commodities": _commodities,
+                                       "econ": _crypto, "finance": _commodities})
+
+
 def _pages():
     """Each published page, even when a later one cannot be built yet."""
     import sandbox_build as SB
@@ -171,6 +179,7 @@ def _pages():
         ("cricket.html", "cricket", lambda: _cricket(now)),
         ("crypto.html", "crypto", lambda: _crypto(now)),
         ("commodities.html", "commodities", lambda: _commodities(now)),
+        ("daily_markets.html", "daily_markets", lambda: _daily_markets(now)),
         ("index.html", "index", lambda: site_root.root_stub(now)),
     )
     for name, current, build in builders:

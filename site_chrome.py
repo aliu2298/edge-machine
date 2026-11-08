@@ -23,10 +23,9 @@ PAGES = (
     ("soccer", "Soccer", "./soccer.html"),
     ("tennis", "Tennis", "./tennis.html"),
     ("cricket", "Cricket", "./cricket.html"),
-    ("crypto", "Crypto", "./crypto.html"),
-    ("commodities", "Commodities", "./commodities.html"),
-    ("econ_daily", "Econ Daily", "./econ_daily.html"),
-    ("finance_daily", "Finance Daily", "./finance_daily.html"),
+    # 2026-11-08 (Olu): Crypto, Commodities, Econ Daily and Finance Daily are ONE tab, Daily Markets
+    # (daily_markets_build.py). The old files redirect to their anchor there.
+    ("daily_markets", "Daily Markets", "./daily_markets.html"),
     ("culture", "Culture", "./culture.html"),
     ("fights", "Fights", "./fights.html"),
     ("leaderboard", "Leaderboard", "./leaderboard.html"),
@@ -49,6 +48,7 @@ PAGE_FILES = {
     "commodities": "commodities.html",
     "econ_daily": "econ_daily.html",
     "finance_daily": "finance_daily.html",
+    "daily_markets": "daily_markets.html",
     "culture": "culture.html",
     "fights": "fights.html",
     "leaderboard": "leaderboard.html",
@@ -109,8 +109,11 @@ def title_for(page):
 # The market pages sit in one "Markets" menu from 641px up (2026-10-16): thirteen pills had
 # wrapped onto two rows at 1280px and four on a tablet. Every link stays in nav.main in the same
 # order, so the phone's single swipe row (site.css, max-width 640px) still shows each one inline.
-MARKET_GROUP = ("nba", "nfl", "nhl", "soccer", "tennis", "cricket", "crypto", "commodities",
-                "econ_daily", "finance_daily", "culture", "fights", "leaderboard")
+MARKET_GROUP = ("nba", "nfl", "nhl", "soccer", "tennis", "cricket", "daily_markets", "culture", "fights", "leaderboard")
+# The four groups merged into Daily Markets (2026-11-08). Their builders still pass their own key; the nav marks
+# Daily Markets for them, and Daily Markets leaves the nav only when all four are archived.
+MERGED = {"crypto": "daily_markets", "commodities": "daily_markets",
+          "econ_daily": "daily_markets", "finance_daily": "daily_markets"}
 
 
 _ARCHIVED = None
@@ -130,7 +133,11 @@ def archived_tabs():
 
 def shown_pages(active=None):
     """PAGES as the nav shows them on `active`'s page: the archived tabs left out, except the page's own."""
-    gone = archived_tabs() - {active}
+    active = MERGED.get(active, active)
+    gone = set(archived_tabs())
+    if all(k in gone for k in MERGED):
+        gone.add("daily_markets")
+    gone -= {active}
     return [p for p in PAGES if p[0] not in gone]
 
 
@@ -142,6 +149,7 @@ def nav(active, prefix="./"):
     """
     parts, group = [], []
     current = 0
+    active = MERGED.get(active, active)
     # A tab with no active lane is archived (tab_activity, 2026-11-05): it leaves the nav, except on its own page,
     # which is still built and linked from Archives. The market menu keeps whatever tabs remain.
     shown = shown_pages(active)

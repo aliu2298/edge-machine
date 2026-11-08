@@ -272,6 +272,10 @@ jobs:
             if [ -f public_site/finance_daily.html ]; then
               git add public_site/finance_daily.html
             fi
+            # The Daily Markets tab (2026-11-08) holds the four pages above; they are now its redirects.
+            if [ -f public_site/daily_markets.html ]; then
+              git add public_site/daily_markets.html
+            fi
             if [ -f public_site/nfl.html ]; then
               git add public_site/nfl.html
             fi

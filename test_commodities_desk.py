@@ -79,10 +79,11 @@ for anchor in ("rules", "events", "method"):
     ok(f'id="{anchor}"' in html and f'href="#{anchor}"' in html, f"section and sub-nav pill for #{anchor}")
 ok(html.find('id="rules"') < html.find('id="events"') < html.find('id="method"'),
    "the rule first, then the events, then the folded method")
-ok('href="./commodities.html" aria-current="page"' in html and 'href="./crypto.html"' in html,
-   "the shared nav carries Commodities after Crypto and marks it current")
-ok(html.find('href="./crypto.html"') < html.find('href="./commodities.html"') < html.find('href="./sandbox.html#method"'),
-   "the Commodities pill sits after Crypto and before Method")
+# 2026-11-08: Commodities is a section of the Daily Markets tab; its builder's nav marks that tab.
+ok('href="./daily_markets.html" aria-current="page"' in html and 'href="./crypto.html"' not in html,
+   "the shared nav marks Daily Markets current, and has no separate Crypto pill")
+ok(html.find('href="./daily_markets.html"') < html.find('href="./sandbox.html#method"'),
+   "the Daily Markets pill sits before Method")
 eq(B.label_cells(html), html, "the tracker's labelling pass leaves the page unchanged")
 for gone in ("progressbar", "crypto-hero", "<meter", "<progress", "tn-pick", "cr-pick", "cr-rules", "tn-tiles"):
     ok(gone not in html, f"the page does not print {gone!r}")
@@ -183,10 +184,13 @@ with patch.object(S, "COMMOD_FAV_BAND", (0.6, 0.9)), patch.object(S, "COMMOD_FAV
        "the parameters follow the registered constants")
 ok("<script" not in main.replace('<script src="./', ""), "no inline script")
 published = os.path.join(ROOT, "public_site", "commodities.html")
-ok(os.path.exists(published) and 'class="sp-head"' in open(published, encoding="utf-8").read(),
-   "public_site/commodities.html is built on the template")
+ok(os.path.exists(published) and 'url=./daily_markets.html#commodities' in open(published, encoding="utf-8").read(),
+   "public_site/commodities.html forwards to its section on Daily Markets (2026-11-08)")
+merged = open(os.path.join(ROOT, "public_site", "daily_markets.html"), encoding="utf-8").read()
+ok('data-sp-group="commodities"' in merged and 'class="sp-head"' in merged.split('data-sp-group="commodities"')[1],
+   "and that section is built on the template")
 sitemap = open(os.path.join(ROOT, "public_site", "sitemap.txt"), encoding="utf-8").read()
-ok("edge-machine/commodities.html" in sitemap, "the sitemap lists the page")
+ok("edge-machine/daily_markets.html" in sitemap, "the sitemap lists the Daily Markets page")
 
 print("\nbrowser")
 from require_browser import require_browser

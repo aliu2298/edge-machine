@@ -82,11 +82,11 @@ _SPORT_PAGES = {
     "tennis": "./tennis.html",
     "cricket": "./cricket.html",
     "nba": "./nba.html",
-    "crypto": "./crypto.html",
+    "crypto": "./daily_markets.html#crypto",          # 2026-11-08: sections of the Daily Markets tab
     # The favourite-band lane only. The commodity price baseline and the gasoline
     # rule trade the `commodities` domain and file under Markets, so a prefix that
     # caught them would send their rows to a page they are not on.
-    "commodities_fav": "./commodities.html",
+    "commodities_fav": "./daily_markets.html#commodities",
 }
 
 
