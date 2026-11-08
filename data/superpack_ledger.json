@@ -213,6 +213,10 @@
    "entries": "entered",
    "pool": "entered"
   },
+  "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXLALIGACORNERS-26NOV08ATMBAR-10\", \"b\"]]": {
+   "at": "2026-11-08T16:03:39.944534+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV0517-T76499.99\", \"b\"]]": {
    "at": "2026-11-05T18:35:00.864249+00:00",
    "entries": "entered",
@@ -1248,9 +1252,9 @@
    ],
    "pid": "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV08IPSBOU-9\", \"b\"]]",
    "price": 0.43,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_corners",
-   "settled": null,
+   "settled": "2026-11-08T16:03:23+00:00",
    "side": "b",
    "snapshot": {
     "as_of": "2026-11-08T10:03:27+00:00",
@@ -1319,7 +1323,7 @@
    },
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXSERIEATOTAL-26NOV08NAPLAZ-3",
@@ -1499,7 +1503,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-08T15:40:57.807739+00:00",
+ "last_run": "2026-11-08T16:03:39.944534+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -4099,14 +4103,14 @@
    ],
    "pid": "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV08IPSBOU-9\", \"b\"]]",
    "price": 0.43,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_corners",
-   "settled": null,
+   "settled": "2026-11-08T16:03:23+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXSERIEATEAMTOTAL-26NOV08NAPLAZ-LAZ2",
@@ -4575,6 +4579,31 @@
    "scope": "soccer_team2",
    "settled": null,
    "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXLALIGACORNERS-26NOV08ATMBAR-10",
+   "entered_at": "2026-11-08T16:03:39.944534+00:00",
+   "entities": [
+    "Atl\u00e9tico Madrid",
+    "Barcelona"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXLALIGACORNERS-26NOV08ATMBAR-10\", \"b\"]]",
+   "lane": "corners_total_under",
+   "logged": "2026-11-08T16:03:00+00:00",
+   "matched": [
+    "Atl\u00e9tico Madrid",
+    "Barcelona"
+   ],
+   "pid": "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXLALIGACORNERS-26NOV08ATMBAR-10\", \"b\"]]",
+   "price": 0.45,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
