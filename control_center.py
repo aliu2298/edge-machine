@@ -246,7 +246,8 @@ def inputs(runs=False, opener=None):
                 top5_dip=_read_json(os.path.join(ROOT, 'data', 'top5_dip_live.json')),
                 nba_wm=dict(chaos=_read_json(os.path.join(ROOT, 'data', 'chaos_ledger.json')),
                             nofade=_read_json(os.path.join(ROOT, 'data', 'nba_wm_nofade.json')),
-                            v3=_read_json(os.path.join(ROOT, 'data', 'nba_wm_v3.json'))))
+                            v3=_read_json(os.path.join(ROOT, 'data', 'nba_wm_v3.json')),
+                            v4=_read_json(os.path.join(ROOT, 'data', 'nba_wm_v4prod.json'))))
 
 
 def _soccer_rules_states():
@@ -578,7 +579,7 @@ def running_inputs(d, st, blob, now, daily=None, culture=None, soccer_rules=None
     if nba_wm is not None:
         # The NBA win margin YES split and NO fade, live since 2026-11-03 (nba_wm_production), from the paper lanes' version 2.
         import nba_wm_production
-        d, st, blob = nba_wm_production.page_inputs(d, st, blob, nba_wm.get("chaos"), nba_wm.get("nofade"), now=now, v3=nba_wm.get("v3"))
+        d, st, blob = nba_wm_production.page_inputs(d, st, blob, nba_wm.get("chaos"), nba_wm.get("nofade"), now=now, v3=nba_wm.get("v3"), v4=nba_wm.get("v4"))
     if o35 is not None:
         # Over 3.5 cheap NO, live since 2026-11-01 (o35_production), from the Sandbox v3 ledger.
         import o35_production
@@ -666,6 +667,8 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
         sr_names += [nba_wm_production.YES_NAME, nba_wm_production.NO_NAME]
         if nba_wm_production.v3_since(nba_wm.get("v3")):
             sr_names += [nba_wm_production.YES3_NAME, nba_wm_production.NO3_NAME]
+        if nba_wm_production.v4_since(nba_wm.get("v4")):
+            sr_names += [nba_wm_production.YES4_NAME, nba_wm_production.NO4_NAME]
     # Trump mentions publishes through its own feed while it is listed (2026-10-20 to 2026-10-26);
     # out of Production it is named once, with the day it left and the record it left on.
     culture_listed, culture_left = False, []

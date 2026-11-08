@@ -3,8 +3,10 @@ lane: the win margin YES split and the NO fade), an empty Sandbox fold; nba_pace
 the method around it.
 
 Presentation only. Every figure is read from the ledgers nba_layout already read:
-  * the record is version 3 (nba_wm_v3: the executor's own decisions, fills replayed from prints) once it has started,
-    counted per GAME as the page has always counted it (chaos_replay.stats over the YES entries; nba_wm_v3.no_games for
+  * the record is version 4 (nba_wm_v4prod, from the night of 2026-11-08), else version 3 (nba_wm_v3), the executor's own decisions with the
+    fills replayed from prints; older versions sit in the Older versions fold. Two Sandbox rows are the comparison (2026-11-08): the version 3
+    YES rule and the 75% NO bid on paper, fresh from the switch night.
+    Counted per GAME as the page has always counted it (chaos_replay.stats over the YES entries; nba_wm_v3.no_games for
     the NO fade, a game's filled buckets one row). The Record cell is games won-lost (a game is won when its entries'
     summed profit is positive, the NO fade's own rule); "Entries won" is the entries, which is what Production counts;
   * live fills are the follower's own orders (data/live_record.json, production_live.record). The YES split sells early,
@@ -25,12 +27,14 @@ import fmt
 import mentions_split as MS
 import nba_wm_v3 as V3
 import nba_wm_v4 as V4
+import nba_wm_v4prod as V4P
 import sport_page as SP
 
 NO_DIP = V4.NO_DIP
 STALE_H = 12                 # a ledger read this long before the newest read on the page is tagged stale
 YES_ID, NO_ID = NL.YES_ID, NL.NO_ID
-YES4_ID, NO65_ID = V4.YES_LANE, V4.NO_LANE
+YES3P_ID, NO75_ID = V4.RULE_V3["lane"], V4.NO75_LANE      # the Sandbox comparison lanes: the version 3 YES rule and the 75% NO bid, on paper
+SWITCH_ON = V4P.SWITCH_ON
 LIVE_KEY = {YES_ID: "nba_wm_yes", NO_ID: "nba_wm_nofade"}
 RULE_LINES = {
     YES_ID: ("Entry: buy YES on a 1-5 or 6-10 win margin bucket (either team) at the ask, 10-20c, an hour before the tip.",
@@ -43,13 +47,23 @@ RULE_LINES = {
 
 
 RULE_LINES_V4 = {
-    YES4_ID: ("Entry: buy YES on a 1-5, 6-10 or 11-20 win margin bucket (either team) at the ask, 10-20c, an hour before the tip; "
-              "skip a game whose favourite's pregame win share is 70% or more.",
-              "Exit: rest half at 2x and half at 2.5x of the ask, filled only by prints strictly through the target from the tip on; "
-              "the rest is held to settlement. Sandbox, paper."),
-    NO65_ID: ("Entry: after the tip, rest a post-only NO bid at 65% of a bucket's pregame NO price (10-95c); a bucket already at "
+    YES_ID: ("Entry: buy YES on a 1-5, 6-10 or 11-20 win margin bucket (either team) at the ask, 10-20c, an hour before the tip; "
+             "skip a game whose favourite's pregame win share is 70% or more.",
+             "Exit: rest half at 2x and half at 2.5x of the ask, filled only by prints strictly through the target from the tip on; "
+             "the rest is held to settlement. Production: traded live, version 4 from the night of 2026-11-08."),
+    NO_ID: ("Entry: after the tip, rest a post-only NO bid at 65% of a bucket's pregame NO price (10-95c); a bucket already at "
+            "or under the bid at the tip is no entry.",
+            "Exit: sell it back at the pregame price on a print strictly above it, else hold to settlement. "
+            "Production: traded live, version 4 from the night of 2026-11-08."),
+}
+RULE_LINES_PAPER = {
+    YES3P_ID: ("Entry: buy YES on a 1-5 or 6-10 win margin bucket (either team) at the ask, 10-20c, an hour before the tip; no matchup skip.",
+               "Exit: rest half at 2x and half at 3x, filled only by prints strictly through the target from the tip on; the rest is held. "
+               "Sandbox, paper: the version 3 rule, kept running from the night of 2026-11-08 to compare with Production."),
+    NO75_ID: ("Entry: after the tip, rest a post-only NO bid at 75% of a bucket's pregame NO price (10-95c); a bucket already at "
               "or under the bid at the tip is no entry.",
-              "Exit: sell it back at the pregame price on a print strictly above it, else hold to settlement. Sandbox, paper."),
+              "Exit: sell it back at the pregame price on a print strictly above it, else hold to settlement. "
+              "Sandbox, paper: the version 3 rule, kept running from the night of 2026-11-08 to compare with Production."),
 }
 
 
@@ -85,8 +99,8 @@ def load_all():
     return chaos, N.load(), V3.load(), PL.load() or {}
 
 
-def latest_read(chaos, nofade, v3):
-    stamps = [_t(x.get("last_run")) for x in (chaos, nofade, v3) if x]
+def latest_read(chaos, nofade, v3, v4p=None):
+    stamps = [_t(x.get("last_run")) for x in (chaos, nofade, v3, v4p) if x]
     stamps = [s for s in stamps if s]
     return max(stamps).isoformat() if stamps else None
 
@@ -100,19 +114,21 @@ def games_of(rows):
     return sum(1 for p in by.values() if p > 0), len(by)
 
 
-def yes_record(chaos, v3):
-    """(a, entries, entries_won) for the YES split: version 3, the page's headline since 2026-11-04 (empty before it)."""
-    yr = V3.yes_rows(v3) if (v3 or {}).get("since") else []
+def yes_record(chaos, v3, v4p=None):
+    """(a, entries, entries_won) for the YES split: version 4, the page's headline since 2026-11-08, else version 3 (since 2026-11-04;
+    empty before it)."""
+    yr = V3.yes_rows(v4p) if (v4p or {}).get("since") else V3.yes_rows(v3) if (v3 or {}).get("since") else []
     s = C.stats(yr)
     gw, gn = games_of(yr)
     return dict(n=gn, won=gw, n_price=0, expected=None, roi_fee=s["roi"], z=s["z"] if s["z"] is not None else 0.0,
                 z_known=s["z"] is not None, unit="game"), s["n"], s["won"]
 
 
-def no_record(nofade, v3):
-    if (v3 or {}).get("since"):
-        g = V3.no_games(v3)
-        rows = [r for r in v3["rows"].values() if r["lane"] == V3.NO_LANE and not r.get("no_entry") and "profit" in r]
+def no_record(nofade, v3, v4p=None):
+    head = v4p if (v4p or {}).get("since") else v3
+    if (head or {}).get("since"):
+        g = V3.no_games(head)
+        rows = [r for r in head["rows"].values() if r["lane"] == V3.NO_LANE and not r.get("no_entry") and "profit" in r]
     else:
         g = N.game_rows(nofade["entries"], N.vkey(N.HEAD), None, "v2")
         rows = []
@@ -123,17 +139,29 @@ def no_record(nofade, v3):
                 z_known=s["z"] is not None, unit="game"), entries, won_entries
 
 
-def live_cell(lane, live):
-    """The follower's own fills for this lane, as the Production page reads them (held to settlement)."""
+def live_orders(lane, live, pair=None, since3=None, since4=None):
+    """The follower's own trades of this lane: all of them, or (with `pair`) those of the version window that pair reads."""
     import production_live as PL
     orders = ((live or {}).get("lanes") or {}).get(LIVE_KEY[lane]) or []
+    if pair:
+        win = PL.own_rows(live, pair, since3, since4)
+        if win is not None:
+            return win
+    return orders
+
+
+def live_cell(lane, live, pair=None, since3=None, since4=None):
+    """The follower's own fills for this lane, as the Production page reads them (held to settlement). With `pair`, only the version window
+    that pair reads (version 4 counts from its first slate, not the older versions' trades)."""
+    import production_live as PL
+    orders = live_orders(lane, live, pair, since3, since4)
     if not orders:
         return '<span class="mut">—</span>'
     if PL.current_schema(orders):
         # each entry as a trade after fees: the sells the follower logged plus the unsold remainder (2026-11-07)
-        t = PL.own_summary(orders)
+        t = PL.own_summary(orders, third="2.5x" if pair and pair.startswith("nba_winmargin_v4") else "3x")
         roi = "" if t["roi"] is None else f' <small class="mut">{t["roi"] * 100:+.1f}%</small>'
-        legs = f' <small class="mut">· legs 2x {t["legs2"]}, 3x {t["legs3"]}</small>' if t["split"] else ""
+        legs = f' <small class="mut">· legs 2x {t["legs2"]}, {t["third"]} {t["legs3"]}</small>' if t["split"] else ""
         open_ = f' <small class="mut">· {t["open"]} open</small>' if t["open"] else ""
         return f'{PL.wfl(t)}{roi}{legs}{open_}'
     rec = PL.record(orders)
@@ -146,50 +174,61 @@ def live_cell(lane, live):
 
 
 # ------------------------------------------------------------------ the rows
-def v4_record(v4):
-    yr = V4.yes_rows(v4 or {"rows": {}})
-    s = C.stats(yr)
-    gw, gn = games_of(yr)
+def _rec(rows):
+    s = C.stats(rows)
+    gw, gn = games_of(rows)
     return dict(n=gn, won=gw, n_price=0, expected=None, roi_fee=s["roi"], z=s["z"] if s["z"] is not None else 0.0,
                 z_known=s["z"] is not None, unit="game"), s["n"], s["won"]
 
 
-def no65_record(nofade):
-    g = V4.no_games(nofade)
+def v3paper_record(v3p):
+    return _rec(V4.yes_rows(v3p or {"rows": {}}))
+
+
+def no75_record(nofade):
+    g = V4.no75_games(nofade)
     s = C.stats(g)
     return dict(n=s["n"], won=s["won"], n_price=0, expected=None, roi_fee=s["roi"], z=s["z"] if s["z"] is not None else 0.0,
                 z_known=s["z"] is not None, unit="game"), sum(r.get("fills", 1) for r in g), None
 
 
-def sandbox_rows(nofade, v4):
+def sandbox_rows(nofade, v3p):
+    """The two Sandbox rows are the comparison (2026-11-08): the version 3 YES rule and the 75% NO bid on paper, fresh from the switch night.
+    The 2026-11-06 paper lanes of version 4's rules are Production's now and are not listed twice (their ledger stays)."""
     import sandbox_build as B
     out = []
     for lane, (a, n_e, w_e), label, market, anchor in (
-            (YES4_ID, v4_record(v4), "Win margin · YES v4", "Win margin · YES", "wm-yes-v4-row"),
-            (NO65_ID, no65_record(nofade), "Win margin · NO fade 65%", "Win margin · NO", "wm-no-65-row")):
+            (YES3P_ID, v3paper_record(v3p), "Win margin · YES v3 (paper)", "Win margin · YES", "wm-yes-v3-paper-row"),
+            (NO75_ID, no75_record(nofade), "Win margin · NO fade 75% (paper)", "Win margin · NO", "wm-no-75-row")):
         out.append(dict(name=lane, sport="nba_wm", meta=dict(label=label, kind="Rule"), a=a, prod=False, open=0,
-                        since=V4.SINCE_YES, v=B.verdict(a) if a.get("z_known") or not a["n"] else "early", anchor=anchor,
+                        since=V4.SINCE_V3_PAPER, v=B.verdict(a) if a.get("z_known") or not a["n"] else "early", anchor=anchor,
                         entries=n_e, entries_won=w_e, live=None, market=market, label=label))
     return out
 
 
-def rows(chaos, nofade, v3, live, v4=None):
+def rows(chaos, nofade, v3, live, v4=None, v4p=None, v3p=None):
+    """`v4` is kept for callers of the 2026-11-06 signature (the Sandbox paper ledger of version 4's rules); `v4p` is Production version 4's
+    ledger, `v3p` the version 3 YES paper ledger."""
     import nba_wm_production as P
-    since = (v3 or {}).get("since")
-    ya, yn, yw = yes_record(chaos, v3)
-    na, nn, nw = no_record(nofade, v3)
-    yes_pair = f"{P.YES3_LANE if since else P.YES_LANE}|{P.SPORT}"
-    no_pair = f"{P.NO3_LANE if since else P.NO_LANE}|{P.SPORT}"
+    v4p = v4p if v4p is not None else V4P.load()
+    v3p = v3p if v3p is not None else V4.load(None, V4.RULE_V3)
+    since, since4 = (v3 or {}).get("since"), (v4p or {}).get("since")
+    cur = P.current_version(v3, v4p)
+    ya, yn, yw = yes_record(chaos, v3, v4p)
+    na, nn, nw = no_record(nofade, v3, v4p)
+    yes_lane, no_lane = {"v4": (P.YES4_LANE, P.NO4_LANE), "v3": (P.YES3_LANE, P.NO3_LANE), "v2": (P.YES_LANE, P.NO_LANE)}[cur]
+    yes_pair, no_pair = f"{yes_lane}|{P.SPORT}", f"{no_lane}|{P.SPORT}"
+    tag = " (v4)" if cur == "v4" else ""
     import sandbox_build as B
     out = []
     for lane, a, n_e, w_e, pair, label, market in (
-            (YES_ID, ya, yn, yw, yes_pair, "Win margin · YES split", "Win margin · YES"),
-            (NO_ID, na, nn, nw, no_pair, "Win margin · NO fade", "Win margin · NO")):
+            (YES_ID, ya, yn, yw, yes_pair, "Win margin · YES split" + tag, "Win margin · YES"),
+            (NO_ID, na, nn, nw, no_pair, "Win margin · NO fade" + tag, "Win margin · NO")):
         out.append(dict(name=lane, sport="nba_wm", meta=dict(label=label, kind="Rule"), a=a, prod=True, pair=pair, open=0,
                         # z by night needs 3 nights (chaos_replay.MIN_NIGHTS_Z): until then the record cannot be read either way.
-                        since=since, v=B.verdict(a) if a.get("z_known") or not a["n"] else "early", anchor=("wm-yes" if lane == YES_ID else "wm-no"),
-                        entries=n_e, entries_won=w_e, live=live_cell(lane, live), market=market, label=label))
-    return out + sandbox_rows(nofade, v4)
+                        since=since4 or since, v=B.verdict(a) if a.get("z_known") or not a["n"] else "early", anchor=("wm-yes" if lane == YES_ID else "wm-no"),
+                        entries=n_e, entries_won=w_e, live=live_cell(lane, live, pair, since, since4), market=market, label=label))
+    return out + sandbox_rows(nofade, v3p)
 
 
 def entries_cell(row):
@@ -200,18 +239,45 @@ def entries_cell(row):
 
 
 # ------------------------------------------------------------------ the folds
-def yes_panel(chaos, nofade, v3, latest):
+def switch_note(v4p):
+    """The one-paragraph note on what changed and when, in the Production folds (2026-11-08)."""
+    since = (v4p or {}).get("since")
+    when = f"from the night of {esc(since)}" if since else f"from the night of {esc(SWITCH_ON)} (its first entries have not settled yet)"
+    return ('<p class="sm"><b>What changed.</b> Production moved to version 4 ' + when + ': the YES split also buys the 11-20 bucket, skips games whose '
+            'favourite has a 70% or higher pregame win share, and sells half at 2x and half at 2.5x (was 2x and 3x); the NO fade bids at 65% of '
+            'the pregame price (was 75%). The record starts fresh. Version 3 stays below under Older versions, and the version 3 YES rule and '
+            'the 75% bid keep running on paper in the Sandbox, to compare.</p>')
+
+
+def pre_switch_fold(v4, nofade, kind):
+    """The Sandbox paper lanes of 2026-11-06 (the version 4 rules before they were Production): the nights before the switch, apart."""
+    if kind == "yes":
+        rows = [r for r in V4.yes_rows(v4 or {"rows": {}}) if r["night"] < SWITCH_ON]
+        body = _block("Version 4 rule on paper", rows, V4.SINCE_YES, "wm-yes-v4-paper",
+                      "the tracker's rows as the entries, fills replayed from prints; the nights before the switch")
+    else:
+        rows = [r for r in V4.no_games(nofade) if r["night"] < SWITCH_ON]
+        body = _block("NO fade 65% on paper", rows, V4.SINCE_NO, "wm-no-65-paper", "the 65% bid replayed from prints; the nights before the switch")
+    return fold("Sandbox paper before the switch", f"{V4.SINCE_YES} to the night before {SWITCH_ON}, the version 4 rule on paper", body)
+
+
+def yes_panel(chaos, nofade, v3, latest, v4p=None, v4=None):
     lanes = NL._lanes(chaos)
     L = lanes.get(YES_ID)
     since = (v3 or {}).get("since")
+    since4 = (v4p or {}).get("since")
     ch_tag = stale_tag(chaos.get("last_run"), latest)
     nf_tag = stale_tag(nofade.get("last_run"), latest)
-    head = (NL._v3_block("Version 3", V3.yes_rows(v3), since, "wm-yes-v3") if since else (NL._record(L) if L else ""))
-    out = "".join(f'<p class="sm sp-rule-line">{esc(x)}</p>' for x in RULE_LINES[YES_ID]) + head
-    if since:
-        yr = V3.yes_rows(v3)
+    if since4:
+        head = NL._v3_block("Version 4", V3.yes_rows(v4p), since4, "wm-yes-v4")
+    else:
+        head = (NL._v3_block("Version 3", V3.yes_rows(v3), since, "wm-yes-v3") if since else (NL._record(L) if L else ""))
+    out = "".join(f'<p class="sm sp-rule-line">{esc(x)}</p>' for x in (RULE_LINES_V4 if since4 else RULE_LINES)[YES_ID]) + switch_note(v4p) + head
+    cur_rows = V3.yes_rows(v4p) if since4 else (V3.yes_rows(v3) if since else [])
+    if cur_rows:
+        yr = cur_rows
         hold = (sum(r["hold_roi"] for r in yr) / len(yr)) if yr else None
-        hold_line = (f'<p class="sm">Version 3 · the same {len(yr)} entries held to settlement: '
+        hold_line = (f'<p class="sm">Version {4 if since4 else 3} · the same {len(yr)} entries held to settlement: '
                      f'{NL._pct(hold)} after fees (the split headline is {NL._pct(C.stats(yr)["roi"])}).</p>')
     else:
         hold_line = ""
@@ -222,13 +288,16 @@ def yes_panel(chaos, nofade, v3, latest):
         out += fold("Alternate exits", "hold, sell all at 2x and the other exits, each against its hold control",
                     hold_line + (CB.variant_table(L, skip=(C.SPLIT,)) if others else ""), tag=ch_tag)
         v1 = lanes.get(NL.V1_ID)
-        older = (fold(f"Version 2 (to the night before {since})" if since else "Version 2", "entries judged from prints; its record stays",
-                      CB.voided_line(L) + NL._record(L), ident="wm-yes-v2", tag=ch_tag) if since else "")
+        older = (fold(f"Version 3 (to the night before {since4})", "executor decisions, fills from prints; its record stays",
+                      NL._v3_block("Version 3", V3.yes_rows(v3), since, "wm-yes-v3"), ident="wm-yes-v3-fold") if since4 else "")
+        older += (fold(f"Version 2 (to the night before {since})" if since else "Version 2", "entries judged from prints; its record stays",
+                       CB.voided_line(L) + NL._record(L), ident="wm-yes-v2", tag=ch_tag) if since else "")
         if v1 is not None:
             older += fold("Paper version 1 (folded)", f"{v1.get('since')} to 2026-11-01 · sells filled on a print at the target",
                           '<p class="sm mut">The paper lane before it mirrored live orders. Its record stays as it was; it is not the '
                           f'Production record.</p>{NL._record(v1)}', ident="wm-yes-v1")
-        out += fold("Older versions", "version 2 and paper version 1", older)
+        out += fold("Older versions", "version 3, version 2 and paper version 1" if since4 else "version 2 and paper version 1", older)
+        out += pre_switch_fold(v4, nofade, "yes")
         sample = lanes.get(NL.SAMPLE_ID)
         if sample is not None:
             out += fold("In-sample research (not evidence)", f"{sample.get('since')} to {sample.get('until') or 'the first night'}, the days the rule was chosen on",
@@ -240,24 +309,29 @@ def yes_panel(chaos, nofade, v3, latest):
     return out
 
 
-def no_panel(chaos, nofade, v3, latest):
+def no_panel(chaos, nofade, v3, latest, v4p=None, v4=None):
     since = (v3 or {}).get("since")
+    since4 = (v4p or {}).get("since")
     nf_tag = stale_tag(nofade.get("last_run"), latest)
     c = N.counts(nofade["entries"], None, "v2")
     i = N.counts(nofade["entries"], True)
     c1 = N.counts(nofade["entries"], None, "v1")
-    head = (NL._v3_block("Version 3", V3.no_games(v3), since, "wm-no-v3") if since
+    head = (NL._v3_block("Version 4", V3.no_games(v4p), since4, "wm-no-v4") if since4 else
+            NL._v3_block("Version 3", V3.no_games(v3), since, "wm-no-v3") if since
             else NB.variant_rows(nofade, False, dips=(N.HEAD,), phase="v2"))
-    out = "".join(f'<p class="sm sp-rule-line">{esc(x)}</p>' for x in RULE_LINES[NO_ID]) + head
+    out = "".join(f'<p class="sm sp-rule-line">{esc(x)}</p>' for x in (RULE_LINES_V4 if since4 else RULE_LINES)[NO_ID]) + switch_note(v4p) + head
     out += f'<p class="sm mut">Skipped as unverified ask: {c["unverified"]} of {c["unverified"] + c["verified"]} buckets.</p>'
-    out += fold("Alternate exits", "the NO bid at 85% and 65% of pregame (75% is the rule); it sells back at pregame, so no hold row",
-                NB.variant_rows(nofade, False, dips=tuple(x for x in N.DIPS if x != N.HEAD), phase="v2"), tag=nf_tag)
-    older = (fold(f"Version 2 (to the night before {since})", "entries judged from prints; its record stays",
-                  NB.variant_rows(nofade, False, dips=(N.HEAD,), phase="v2"), ident="wm-no-v2", tag=nf_tag) if since else "")
+    out += fold("Alternate exits", f"the NO bid at 85% and {'75%' if since4 else '65%'} of pregame ({'65%' if since4 else '75%'} is the rule); it sells back at pregame, so no hold row",
+                NB.variant_rows(nofade, False, dips=tuple(x for x in N.DIPS if x != (V4P.NO_DIP if since4 else N.HEAD)), phase="v2"), tag=nf_tag)
+    older = (fold(f"Version 3 (to the night before {since4})", "executor decisions, fills from prints; its record stays",
+                  NL._v3_block("Version 3", V3.no_games(v3), since, "wm-no-v3"), ident="wm-no-v3-fold") if since4 else "")
+    older += (fold(f"Version 2 (to the night before {since})", "entries judged from prints; its record stays",
+                   NB.variant_rows(nofade, False, dips=(N.HEAD,), phase="v2"), ident="wm-no-v2", tag=nf_tag) if since else "")
     older += fold("Paper version 1 (folded)", f"{N.SINCE} to {N.V2_FROM}, fills and sells on a print at the price · {c1['games']} games read",
                   '<p class="sm mut">The paper lane before it mirrored live orders. Its record stays as it was; it is not the Production record.</p>'
                   + NB.variant_rows(nofade, False, dips=(N.HEAD,), phase="v1"), ident="nofade-v1")
-    out += fold("Older versions", "version 2 and paper version 1", older)
+    out += fold("Older versions", "version 3, version 2 and paper version 1" if since4 else "version 2 and paper version 1", older)
+    out += pre_switch_fold(v4, nofade, "no")
     out += fold("In-sample research (not evidence)", f"{N.SINCE_IN} to {N.SINCE}, the days the rule was chosen on",
                 f'<p class="sm mut">The same rule on Oct 20-30. {i["games"]} games read, {i["unverified"]} of {i["unverified"] + i["verified"]} '
                 'buckets skipped as unverified ask. NOT evidence, never the headline.</p>' + NB.variant_rows(nofade, True), ident="nofade-insample")
@@ -290,57 +364,54 @@ def _compare(rows_by_label):
             f'<th class="num">z (by night)</th><th class="num">Nights</th></tr>{body}</table></div>')
 
 
-def yes4_panel(v4):
-    yr = V4.yes_rows(v4)
-    out = "".join(f'<p class="sm sp-rule-line">{esc(x)}</p>' for x in RULE_LINES_V4[YES4_ID])
-    out += _block("Version 4", yr, V4.SINCE_YES, "wm-yes-v4", "the tracker's rows as the entries, fills replayed from prints")
-    skips = list((v4.get("skips") or {}).values())
-    out += (f'<p class="sm mut">Skipped: {sum(1 for x in skips if x.startswith("favourite"))} on the matchup filter, '
-            f'{sum(1 for x in skips if x == "unverified ask")} as unverified ask.</p>')
+def yes3p_panel(v3p):
+    yr = V4.yes_rows(v3p)
+    out = "".join(f'<p class="sm sp-rule-line">{esc(x)}</p>' for x in RULE_LINES_PAPER[YES3P_ID])
+    out += ('<p class="sm mut">This row is the comparison: Production moved to version 4 on the night of ' + esc(SWITCH_ON) + ', and this is what the version 3 YES rule '
+            'would have done since, on paper, with its own fresh record.</p>')
+    out += _block("Version 3 on paper", yr, V4.SINCE_V3_PAPER, "wm-yes-v3-paper", "the tracker's rows as the entries, fills replayed from prints")
     hold = (sum(r["hold_roi"] for r in yr) / len(yr)) if yr else None
-    f2, f25 = sum(1 for r in yr if r["filled_2x"]), sum(1 for r in yr if r["filled_25x"])
+    f2, f3 = sum(1 for r in yr if r["filled_2x"]), sum(1 for r in yr if r["filled_3x"])
     out += fold("Alternate exits", "the same entries held to settlement",
                 f'<p class="sm">The same {len(yr)} entries held: {NL._pct(hold)} after fees (the split headline is {NL._pct(C.stats(yr)["roi"])}). '
-                f'Legs filled: 2x {f2}, 2.5x {f25}.</p>')
-    rows_ = "".join(f'<tr><td>{esc(a)}</td><td class="num">{esc(b)}</td></tr>' for a, b in V4.IN_SAMPLE)
-    out += fold("In-sample research (not evidence)", "tracker, Oct 20 to Nov 5, 544 eligible contracts, the days the rule was chosen on",
-                '<div class="tbl"><table><tr><th>Row</th><th class="num">ROI after fees</th></tr>' + rows_ + '</table></div>',
-                ident="wm-yes-v4-insample")
+                f'Legs filled: 2x {f2}, 3x {f3}.</p>')
     return out
 
 
-def no65_panel(nofade, latest):
+def no75_panel(nofade, latest):
     nf_tag = stale_tag(nofade.get("last_run"), latest)
-    out = "".join(f'<p class="sm sp-rule-line">{esc(x)}</p>' for x in RULE_LINES_V4[NO65_ID])
-    out += _block("NO fade 65%", V4.no_games(nofade), V4.SINCE_NO, "wm-no-65",
-                  "the 65% variant of the v3 NO fade, replayed from prints under the follower's strict rules")
-    c = N.counts(V4.no_entries(nofade), None, "v2")
+    out = "".join(f'<p class="sm sp-rule-line">{esc(x)}</p>' for x in RULE_LINES_PAPER[NO75_ID])
+    out += ('<p class="sm mut">This row is the comparison: Production moved to the 65% bid on the night of ' + esc(SWITCH_ON) + ', and this is the 75% bid on the '
+            'same games, on paper, with its own fresh record.</p>')
+    out += _block("NO fade 75%", V4.no75_games(nofade), V4.SINCE_V3_PAPER, "wm-no-75",
+                  "the 75% bid replayed from prints under the follower's strict rules")
+    c = N.counts([e for e in nofade["entries"] if e["night"] >= V4.SINCE_V3_PAPER and N.phase_of(e["night"]) == "v2"], None, "v2")
     out += f'<p class="sm mut">Skipped as unverified ask: {c["unverified"]} of {c["unverified"] + c["verified"]} buckets.</p>'
-    out += fold("Alternate exits", "the 75% bid (the Production rule) on the same nights; it sells back at pregame, so no hold row",
-                _compare([("NO fade · 65%", V4.no_games(nofade)), ("NO fade · 75%", V4.no_games(nofade, N.HEAD))]), tag=nf_tag)
-    out += fold("In-sample research (not evidence)", "the nights before the lane, the days the variant was chosen on",
-                _compare([("NO fade · 65%", V4.before_games(nofade, NO_DIP)), ("NO fade · 75%", V4.before_games(nofade, N.HEAD))]),
-                ident="wm-no-65-insample", tag=nf_tag)
+    out += fold("Alternate exits", "the 65% bid (the Production rule) on the same nights; it sells back at pregame, so no hold row",
+                _compare([("NO fade · 75%", V4.no75_games(nofade)), ("NO fade · 65%", V4.no_games(nofade, V4P.NO_DIP, V4.SINCE_V3_PAPER))]), tag=nf_tag)
     return out
 
 
 # ------------------------------------------------------------------ the tiles
-def tiles(rows_, d, st, live):
+def tiles(rows_, d, st, live, v3=None, v4p=None):
     """Open bets (live), active lanes, the since-Production record and ROI (the Production page's own, every pair of the
-    two lanes: version 2 to the night before version 3, version 3 since), and the live record (held to settlement)."""
+    two lanes: each version from its own first night), and the live record of the version Production is on."""
     import nba_wm_production as P
     import production
     import production_live as PL
     import sandbox_build as B
     import tennis_cards
-    pseudo = [dict(name=k.split("|")[0], sport=k.split("|")[1], prod=True, pair=k) for k in P.pairs(None) | P.pairs({"since": "x"})]
+    pseudo = [dict(name=k.split("|")[0], sport=k.split("|")[1], prod=True, pair=k) for k in P.pairs(None) | P.pairs({"since": "x"}, {"since": "x"})]
     rec, _names = SP.since_production(d, st, pseudo)
     n = int(rec.get("n") or 0)
     roi = ('<b class="mut">—</b>' if not n or rec.get("roi_fee") is None else
            f'<b class="{"mut" if n < production.EARLY_N else fmt.tone(rec["roi_fee"], ".1f", 100)}">{B.pct(rec["roi_fee"], sign=True)}</b>')
-    orders = [o for k in LIVE_KEY.values() for o in ((live or {}).get("lanes") or {}).get(k) or []]
+    s3, s4 = (v3 or {}).get("since"), (v4p or {}).get("since")
+    cur = P.current_version(v3, v4p)
+    lanes_ = {"v4": (P.YES4_LANE, P.NO4_LANE), "v3": (P.YES3_LANE, P.NO3_LANE), "v2": (P.YES_LANE, P.NO_LANE)}[cur]
+    orders = [o for lane, k in zip(lanes_, (YES_ID, NO_ID)) for o in live_orders(k, live, f"{lane}|{P.SPORT}", s3, s4)]
     lrec = PL.record(orders) if orders else None
-    yes_pending = not PL.record(((live or {}).get("lanes") or {}).get("nba_wm_yes") or [])["sold"]
+    yes_pending = not PL.record(live_orders(YES_ID, live, f"{lanes_[0]}|{P.SPORT}", s3, s4) or [])["sold"]
     live_big = f'{lrec["won"]}–{lrec["lost"]}' if lrec and lrec["n"] else "—"
     if orders and PL.current_schema(orders):
         live_big = PL.wfl(PL.own_summary(orders))
@@ -365,7 +436,7 @@ def spec(rows_, details):
         extra_cols=(("record", "Entries won", entries_cell), ("roi", "Live fills", lambda r: r.get("live") or "—")))
 
 
-def rules_section(chaos=None, nofade=None, v3=None, live=None, now=None, v4=None):
+def rules_section(chaos=None, nofade=None, v3=None, live=None, now=None, v4=None, v4p=None, v3p=None):
     """(tiles_and_filters_html, rules_html, rows): the head figures and the Rules section. Never raises for a lane:
     a lane whose fold fails says so inside its fold."""
     if chaos is None or nofade is None or v3 is None or live is None:
@@ -373,17 +444,19 @@ def rules_section(chaos=None, nofade=None, v3=None, live=None, now=None, v4=None
         chaos, nofade, v3, live = chaos or c0, nofade or n0, v3 or v0, live if live is not None else l0
     now = now or dt.datetime.now(dt.timezone.utc)
     v4 = v4 if v4 is not None else V4.load()
-    rows_ = rows(chaos, nofade, v3, live, v4)
-    latest = latest_read(chaos, nofade, v3)
+    v4p = v4p if v4p is not None else V4P.load()
+    v3p = v3p if v3p is not None else V4.load(None, V4.RULE_V3)
+    rows_ = rows(chaos, nofade, v3, live, v4, v4p, v3p)
+    latest = latest_read(chaos, nofade, v3, v4p)
     details = {}
-    for lane, fn in ((YES_ID, lambda: yes_panel(chaos, nofade, v3, latest)), (NO_ID, lambda: no_panel(chaos, nofade, v3, latest)),
-                     (YES4_ID, lambda: yes4_panel(v4)), (NO65_ID, lambda: no65_panel(nofade, latest))):
+    for lane, fn in ((YES_ID, lambda: yes_panel(chaos, nofade, v3, latest, v4p, v4)), (NO_ID, lambda: no_panel(chaos, nofade, v3, latest, v4p, v4)),
+                     (YES3P_ID, lambda: yes3p_panel(v3p)), (NO75_ID, lambda: no75_panel(nofade, latest))):
         try:
             details[lane] = fn()
         except Exception as exc:                                # noqa: BLE001
             details[lane] = f'<p class="sm mut">This lane\'s details could not be built ({esc(type(exc).__name__)}).</p>'
     sp = spec(rows_, details)
     import nba_wm_production as P
-    d, st, _blob = P.page_inputs({"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}, chaos, nofade, now=now, v3=v3)
-    head = tiles(rows_, d, st, live) + SP.filters_html(sp, rows_)
+    d, st, _blob = P.page_inputs({"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}, chaos, nofade, now=now, v3=v3, v4=v4p)
+    head = tiles(rows_, d, st, live, v3, v4p) + SP.filters_html(sp, rows_)
     return head, SP.rules_html(sp, d, rows_, now, []), rows_

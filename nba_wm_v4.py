@@ -20,6 +20,13 @@ with a 2x / 2.5x split +41% against the 2x / 3x split +34% (the 3x leg fell to +
 +25%; 11-20 at 10-20c +40% (46 contracts); 21+ about zero.
 
 Own ledger data/nba_wm_v4.json (the YES v4 rows). Rows are stamped and never rewritten.
+
+SWITCH (2026-11-08, Olu): version 4 is now Production (nba_wm_v4prod.py). These two lanes' rules are Production's, so from the switch night the
+Sandbox pages stop listing them (their ledger and history stay). The Sandbox instead keeps the OLD Production rules as paper, for the comparison:
+  YES v3 paper (lane nba_wm_yes_v3)  the same tracker rows with the version 3 terms: buckets 1-5 and 6-10, no matchup skip, 2x / 3x sells.
+                                     Own ledger data/nba_wm_v3paper.json, fresh from SINCE_V3_PAPER.
+  NO fade 75% paper (lane nba_wm_nofade_75)  the 75% bid's games from SINCE_V3_PAPER on (nba_wm_nofade.py's replay), its own fresh record.
+The parameters live in RULE_V4 / RULE_V3 below; the functions take the rule.
 """
 import datetime as dt
 import json
@@ -43,6 +50,12 @@ MAX_SPREAD = 0.05
 MAX_FAV_SHARE = 0.70
 SELLS = ((2.0, 0.5), (2.5, 0.5))
 SELL_CAP = 0.98
+SINCE_V3_PAPER = "2026-11-08"
+NO75_LANE = "nba_wm_nofade_75"
+PATH_V3_PAPER = os.path.join(ROOT, "data", "nba_wm_v3paper.json")
+RULE_V4 = dict(lane=YES_LANE, version=YES_VERSION, path=PATH, since=SINCE_YES, buckets=BUCKETS, max_fav=MAX_FAV_SHARE, sells=SELLS)
+RULE_V3 = dict(lane="nba_wm_yes_v3", version="wm-yes-v3-paper", path=PATH_V3_PAPER, since=SINCE_V3_PAPER, buckets=("1-5", "6-10"), max_fav=None,
+               sells=((2.0, 0.5), (3.0, 0.5)))
 REVIEW_N, DECIDE_N = C.REVIEW_N, C.PROMOTE_N
 EPS = 1e-9
 # The tracker's in-sample read of the YES rule (544 eligible contracts, Oct 20 - Nov 5): a fixed note, not a live figure.
@@ -51,14 +64,15 @@ IN_SAMPLE = (("Core 10-20c, 2x / 2.5x split", "+41%"), ("Core 10-20c, 2x / 3x sp
              ("11-20 bucket at 10-20c (46 contracts)", "+40%"), ("21+ bucket", "about 0"))
 
 
-def load(path=None):
+def load(path=None, rule=None):
+    rule = rule or RULE_V4
     try:
-        with open(path or PATH) as f:
+        with open(path or rule["path"]) as f:
             s = json.load(f)
     except FileNotFoundError:
         s = {}
-    s.setdefault("version", YES_VERSION)
-    s.setdefault("since", SINCE_YES)
+    s.setdefault("version", rule["version"])
+    s.setdefault("since", rule["since"])
     s.setdefault("rows", {})
     s.setdefault("skips", {})
     return s
@@ -74,16 +88,17 @@ def favourite_share(rows):
     return out
 
 
-def candidates(tracker_rows, since=SINCE_YES):
+def candidates(tracker_rows, since=SINCE_YES, rule=None):
     """(entries, skips): the tracker rows that pass the rule, and {id: reason} for the eligible rows the matchup or the ask check left out."""
+    rule = rule or RULE_V4
     fav = favourite_share(tracker_rows)
     ok, skips = [], {}
     for r in tracker_rows:
-        if r.get("night", "") < since or r.get("bucket") not in BUCKETS or not r.get("eligible"):
+        if r.get("night", "") < since or r.get("bucket") not in rule["buckets"] or not r.get("eligible"):
             continue
         if not ASK_BAND[0] - EPS <= r["ask"] <= ASK_BAND[1] + EPS or r["spread"] > MAX_SPREAD + EPS:
             continue
-        if fav.get(r["event"], 0.0) >= MAX_FAV_SHARE - EPS:
+        if rule["max_fav"] is not None and fav.get(r["event"], 0.0) >= rule["max_fav"] - EPS:
             skips[r["id"]] = f"favourite share {fav[r['event']]:.2f} (0.70 or more)"
             continue
         if r.get("ask_ok") is not True:
@@ -93,25 +108,27 @@ def candidates(tracker_rows, since=SINCE_YES):
     return ok, skips
 
 
-def trade(path, ask, won):
-    """The 2x / 2.5x split from the tracker's price path [[seconds from the tip, price cents, contracts]]: cost = the ask + the taker fee;
+def trade(path, ask, won, sells=SELLS):
+    """The 2x / 2.5x split (`sells`: version 3's 2x / 3x for the paper copy) from the tracker's price path [[seconds from the tip, price cents, contracts]]: cost = the ask + the taker fee;
     each leg fills on a print from the tip on STRICTLY above its target; an unfilled leg settles."""
     pay = 1.0 if won else 0.0
     cost = C.cost(ask)
     proceeds, legs = 0.0, []
-    for mult, share in SELLS:
+    for mult, share in sells:
         target = round(min(ask * mult, SELL_CAP), 2)
         hit = any(t >= 0 and c / 100 > target + EPS for t, c, _n in path or [])
         legs.append(dict(multiple=mult, target=target, filled=hit))
         proceeds += share * ((target - C.maker_fee(target)) if hit else pay)
     return dict(ask=ask, cost=round(cost, 5), profit=round(proceeds - cost, 5), roi=round((proceeds - cost) / cost, 4), won=proceeds > cost,
-                hold_roi=round((pay - cost) / cost, 4), filled_2x=legs[0]["filled"], filled_25x=legs[1]["filled"], reason="split")
+                hold_roi=round((pay - cost) / cost, 4), filled_2x=legs[0]["filled"], reason="split",
+                **{"filled_" + f"{sells[1][0]:g}".replace(".", "") + "x": legs[1]["filled"]})
 
 
-def run(state, tracker, now=None):
+def run(state, tracker, now=None, rule=None):
     """Add a row for every candidate tracker row not yet recorded. The tracker only lists settled games, so a row is final."""
     now = now or dt.datetime.now(dt.timezone.utc)
-    ok, skips = candidates(tracker.get("rows") or [], state.get("since") or SINCE_YES)
+    rule = rule or RULE_V4
+    ok, skips = candidates(tracker.get("rows") or [], state.get("since") or rule["since"], rule)
     new = 0
     for r in ok:
         if r["id"] in state["rows"]:
@@ -119,9 +136,9 @@ def run(state, tracker, now=None):
         if not r.get("path") and not r.get("m"):
             state["skips"][r["id"]] = "no price path"
             continue
-        row = dict(key=r["id"], lane=YES_LANE, version=YES_VERSION, event=r["event"], night=r["night"], tip=r["tip"], team=r["team"],
+        row = dict(key=r["id"], lane=rule["lane"], version=rule["version"], event=r["event"], night=r["night"], tip=r["tip"], team=r["team"],
                    bucket=r["bucket"], team_share=r.get("team_share"), logged=now.isoformat())
-        row.update(trade(r.get("path"), r["ask"], bool(r["won"])))
+        row.update(trade(r.get("path"), r["ask"], bool(r["won"]), rule["sells"]))
         state["rows"][r["id"]] = row
         new += 1
     state["skips"].update({k: v for k, v in skips.items() if k not in state["rows"]})
@@ -143,6 +160,11 @@ def no_games(nofade, dip=NO_DIP, since=SINCE_NO):
     return N.game_rows(no_entries(nofade, since), N.vkey(dip))
 
 
+def no75_games(nofade, since=SINCE_V3_PAPER):
+    """The 75% bid's games on the paper lane's fresh record (Production's rule before the switch)."""
+    return no_games(nofade, N.HEAD, since)
+
+
 def before_games(nofade, dip, since=SINCE_NO):
     """The same variant on the nights before the lane (v2 and the in-sample days): the rule was chosen on them."""
     es = [e for e in nofade["entries"] if e["night"] < since]
@@ -150,21 +172,22 @@ def before_games(nofade, dip, since=SINCE_NO):
 
 
 def main(argv=None):
-    st = load()
-    try:
-        with open(W.PATH) as f:
-            tracker = json.load(f)
-        run(st, tracker)
-        st["error"] = None
-    except Exception as e:                                       # noqa: BLE001
-        st["error"] = (type(e).__name__ + ": " + str(e))[:300]
-    os.makedirs(os.path.dirname(PATH), exist_ok=True)
-    tmp = PATH + ".tmp"
-    with open(tmp, "w") as f:
-        json.dump(st, f, indent=1, sort_keys=True)
-        f.write("\n")
-    os.replace(tmp, PATH)
-    print("nba_wm_v4 rows", len(st["rows"]), "since", st["since"], st.get("observations"), "error", st.get("error"))
+    for rule in (RULE_V4, RULE_V3):
+        st = load(None, rule)
+        try:
+            with open(W.PATH) as f:
+                tracker = json.load(f)
+            run(st, tracker, rule=rule)
+            st["error"] = None
+        except Exception as e:                                       # noqa: BLE001
+            st["error"] = (type(e).__name__ + ": " + str(e))[:300]
+        os.makedirs(os.path.dirname(rule["path"]), exist_ok=True)
+        tmp = rule["path"] + ".tmp"
+        with open(tmp, "w") as f:
+            json.dump(st, f, indent=1, sort_keys=True)
+            f.write("\n")
+        os.replace(tmp, rule["path"])
+        print("nba_wm_v4", rule["lane"], "rows", len(st["rows"]), "since", st["since"], st.get("observations"), "error", st.get("error"))
     return 0
 
 

@@ -130,7 +130,8 @@ def index_row(state=None, v3=None):
     import nba_wm_v3 as V3
     if state is None:
         state = N.load()
-    v3 = v3 if v3 is not None else V3.load()
+    import nba_wm_v4prod as V4P
+    v3 = v3 if v3 is not None else V4P.headline_state()      # version 4 from 2026-11-08, else version 3
     if v3.get("since"):
         g = V3.no_games(v3)
         fills = [r for r in v3["rows"].values() if r["lane"] == V3.NO_LANE and not r.get("no_entry") and "profit" in r]

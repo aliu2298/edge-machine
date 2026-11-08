@@ -1402,7 +1402,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
     if nba_wm is not None:
         # The NBA win margin YES split and NO fade, live since 2026-11-03 (nba_wm_production): the paper lanes' version 2 is the record.
         import nba_wm_production
-        d, st, blob = nba_wm_production.page_inputs(d, st, blob, nba_wm.get("chaos"), nba_wm.get("nofade"), now=now_dt, v3=nba_wm.get("v3"))
+        d, st, blob = nba_wm_production.page_inputs(d, st, blob, nba_wm.get("chaos"), nba_wm.get("nofade"), now=now_dt, v3=nba_wm.get("v3"), v4=nba_wm.get("v4"))
     if o35 is not None:
         # Over 3.5 cheap NO, live since 2026-11-01 (o35_production): the Sandbox v3 ledger is its record,
         # data/production_o35_leads.json its upcoming list.
@@ -1455,10 +1455,11 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
     # The pairs the follower runs from its own state files read their live trades (production_live.OWN_PAIRS); a pair that ended when its next
     # version started (NBA win margin version 2) is listed in an "Older versions" fold inside its sport's block, not as an active pair.
     v3_since = ((nba_wm or {}).get("v3") or {}).get("since")
+    v4_since = ((nba_wm or {}).get("v4") or {}).get("since")
     older_keys = set()
     if nba_wm is not None:
         import nba_wm_production
-        older_keys = nba_wm_production.older_pairs((nba_wm or {}).get("v3"))
+        older_keys = nba_wm_production.older_pairs((nba_wm or {}).get("v3"), (nba_wm or {}).get("v4"))
     live_gap_rows, paper_bets, raised_rows, no_order_rows = [], {}, [], []
     own_items = {}
     cards = []
@@ -1536,12 +1537,12 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
                 since_note = "none yet"
             paper_bets[key] = [dict(id=q.get("id"), status=q.get("status"), price=q.get("price"), ko=(_kickoff(q).isoformat() if _kickoff(q) else None)) for q in mine_since if q.get("bet")]
             paper_since = live                       # the Sandbox grade of the same bets: it stays beside the live record in the gap list, not in Since Production
-            own = PL.own_rows(live_blob, key, v3_since)
+            own = PL.own_rows(live_blob, key, v3_since, v4_since)
             no_orders = False
             if own is not None:
                 # Since Production is the follower's REAL record: each entry as a trade after fees (its sells plus the unsold remainder at
                 # settlement), won = realised return above zero. The Sandbox record column beside it stays the paper one.
-                summ = PL.own_summary(own)
+                summ = PL.own_summary(own, third="2.5x" if PL.OWN_PAIRS.get(key, (None, None))[1] == "v4" else "3x")
                 live = PL.own_live(live, summ)
                 live_rec, live_roi = "", ""
                 own_items.setdefault(sport_group(sport), []).append((name(key) + (" (older version)" if key in older_keys else ""), summ))
@@ -1624,7 +1625,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
         rows = "".join(cards[i] for i in grp["rows"])
         older_html = ""
         if grp.get("older"):
-            older_html = (f'<details class="fold"><summary>Older versions<span class="mut sm">· version 2, ended {esc(v3_since)}</span></summary>'
+            older_html = (f'<details class="fold"><summary>Older versions<span class="mut sm">· {("version 2 ended " + esc(v3_since) + ", version 3 ended " + esc(v4_since)) if v4_since else ("version 2, ended " + esc(v3_since))}</span></summary>'
                      f'<div class="tbl"><table>{pairs_head}{"".join(cards[i] for i in grp["older"])}</table></div></details>')
         sections.append(
             f'<details class="fold sport-fold" data-sport="{esc(sport_key(g))}"'
