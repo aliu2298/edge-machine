@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-08T02:04:12+00:00",
+ "board_built_at": "2026-11-08T02:46:53+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -1167,6 +1167,41 @@
    "sport": "soccer_team2",
    "status": "hit"
   },
+  "2026-11-08|Houston Dynamo FC|St. Louis CITY SC|St. Louis CITY SC +0.5 (Houston Dynamo FC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
+   "away": "St. Louis CITY SC",
+   "bet": {
+    "kind": "win_no",
+    "team": "Houston Dynamo FC"
+   },
+   "date": "2026-11-08",
+   "edge_at_log": null,
+   "first_seen": "2026-11-07",
+   "headline": "St. Louis CITY SC +0.5 (Houston Dynamo FC not to win)",
+   "home": "Houston Dynamo FC",
+   "id": "2026-11-08|Houston Dynamo FC|St. Louis CITY SC|St. Louis CITY SC +0.5 (Houston Dynamo FC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45",
+   "kickoff": "2026-11-08T00:00Z",
+   "lane": "production",
+   "league": "MLS",
+   "match": "Houston Dynamo FC v St. Louis CITY SC",
+   "pair": "mls_fade_home|soccer_p05",
+   "price_at_log": 0.6,
+   "published_at": "2026-11-08T02:46:53+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "St. Louis CITY SC +0.5 (Houston Dynamo FC not to win)",
+    "event": "KXMLSGAME-26NOV07HOUSTL",
+    "market": "KXMLSGAME-26NOV07HOUSTL-HOU",
+    "outcome": "Houston",
+    "outcome_side": "no",
+    "price_at_log": 0.6,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "mls_fade_home:KXMLSGAME-26NOV07HOUSTL-HOU",
+   "source": "mls_fade_home",
+   "sport": "soccer_p05",
+   "status": "hit"
+  },
   "2026-11-08|Villarreal|Getafe|Villarreal to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
    "away": "Getafe",
    "bet": {
@@ -1183,7 +1218,7 @@
    "kickoff": "2026-11-08T17:30Z",
    "lane": "production",
    "last_seen": "2026-11-08",
-   "last_seen_at": "2026-11-08T02:04:12+00:00",
+   "last_seen_at": "2026-11-08T02:46:53+00:00",
    "league": "La Liga",
    "match": "Villarreal v Getafe",
    "pair": "team2_ranked|soccer_team2",
@@ -1289,18 +1324,18 @@
    "ready_at": "2026-10-16T17:17:38+00:00",
    "route": "moved by hand on 2026-10-16",
    "routing": {
-    "leads": 1,
+    "leads": 2,
     "problem": null,
-    "routed": 1,
+    "routed": 2,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": -0.0041,
-   "sandbox_n": 17,
-   "sandbox_roi": 0.143,
-   "sandbox_roi_fee": 0.1093,
+   "sandbox_clv": -0.0044,
+   "sandbox_n": 18,
+   "sandbox_roi": 0.1721,
+   "sandbox_roi_fee": 0.1378,
    "timing": {
     "late": [],
     "timed": 0,
@@ -1447,5 +1482,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-08T02:04:12+00:00"
+ "updated_at": "2026-11-08T02:46:53+00:00"
 }
