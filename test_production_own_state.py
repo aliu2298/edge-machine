@@ -150,10 +150,10 @@ old = dict(lanes={"nba_wm_yes": [dict(id="x", ko="2026-11-05T00:30", side="yes",
 check("an export from before the trades schema still reads as held to settlement", "exits pending" in NP.live_cell(NP.YES_ID, old), True)
 
 print("pair and lane names stay in step")
-import top5_dip_production as TD, o35_production as OP
+import top5_dip_production as TD, o35_production as OP, arg_dip_production as AD
 check("the pairs read the lanes the follower publishes", {k: v[0] for k, v in PL.OWN_PAIRS.items()},
       {f"{X.YES4_LANE}|nba_wm": "nba_wm_yes", f"{X.NO4_LANE}|nba_wm": "nba_wm_nofade", f"{X.YES3_LANE}|nba_wm": "nba_wm_yes", f"{X.NO3_LANE}|nba_wm": "nba_wm_nofade", f"{X.YES_LANE}|nba_wm": "nba_wm_yes", f"{X.NO_LANE}|nba_wm": "nba_wm_nofade",
-       f"{OP.LANE}|{OP.SPORT}": "o35_cheap_no", f"{TD.LANE}|{TD.SPORT}": "top5_dip"})
+       f"{OP.LANE}|{OP.SPORT}": "o35_cheap_no", f"{TD.LANE}|{TD.SPORT}": "top5_dip", f"{AD.LANE}|{AD.SPORT}": "arg_dip"})
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

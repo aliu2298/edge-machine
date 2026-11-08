@@ -178,7 +178,9 @@ check("the committed export passes the whitelist and carries no dollar sign", "$
 import production as P
 import raised_stakes as RS
 check("a raised stake shows its date under the pair, with no amount", ("stake raised Nov 6" in P.stake_note("sr_a7|soccer_u35"), "$" in P.stake_note("sr_a7|soccer_u35"), P.stake_note("sr_c1|soccer_u35")), (True, False, ""))
-check("the raised pairs are the follower's own four still in Production (the commodities band went back to the Sandbox)", sorted(RS.pairs()), sorted(["mls_fade_home|soccer_p05", "crypto_fav_band_below|crypto_fav", "team2_ranked|soccer_team2", "sr_a7|soccer_u35"]))
+check("the raised pairs are the follower's own seven in Production (the commodities band went back to the Sandbox 2026-11-08; sr_a6, Team 1+ and Under 3.5 Internationals raised the same day)", sorted(RS.pairs()),
+      sorted(["mls_fade_home|soccer_p05", "crypto_fav_band_below|crypto_fav", "team2_ranked|soccer_team2", "sr_a7|soccer_u35", "sr_a6|soccer_o25",
+              "team1_form_l5|soccer_team1_intl", "u35_low_scoring|soccer_u35_intl"]))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

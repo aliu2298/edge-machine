@@ -21,9 +21,13 @@ jobs:
         with:
           python-version: '3.12'
       - name: Tests
-        run: python3 test_arg_dip.py
+        run: python3 test_arg_dip.py && python3 test_arg_dip_live.py && python3 test_arg_dip_production.py
       - name: Argentina goalless dip (Sandbox paper since 2026-10-31, trade-print fills)
         run: python3 arg_dip.py
+      - name: Live paper record (follows the executor's own decision snapshots; fills replayed from trade prints)
+        run: python3 arg_dip_live.py
+      - name: Production feed for the follower's resting-bid executor (a live Kalshi read, not the ledger)
+        run: python3 arg_dip_production.py
       - name: Save records
         env:
           GH_TOKEN: ${{ github.token }}
@@ -33,4 +37,6 @@ jobs:
           git config user.email "77032228+aliu2298@users.noreply.github.com"
           python3 save_records.py --message "Argentina goalless dip paper observations" \
             --add data/arg_dip_ledger.json \
+            --add data/arg_dip_live.json \
+            --derived data/production_arg_dip_leads.json "python3 arg_dip_production.py" \
             --after "gh workflow run sandbox-tracker.yml --ref main"

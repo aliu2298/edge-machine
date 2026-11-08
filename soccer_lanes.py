@@ -503,6 +503,25 @@ def top5_live_row(live_ledger, now):
                pair=f"{TP.LANE}|{TP.SPORT}", kind="In-play")
 
 
+def arg_live_row(live_ledger, now):
+    """The top-5 goalless dip in Production (arg_dip_production, 2026-11-05): its record is the paper record that follows
+    the follower's own decisions (arg_dip_live), counted per counted fill as the Production page counts it."""
+    import arg_dip_production as TP
+    qs = [q for q in TP.quotes(live_ledger or {}, {}) if q["status"] != "open"]
+    n = len(qs)
+    a = inplay_record(n, sum(q["status"] == "won" for q in qs), (sum(q["pnl"] for q in qs) / (100 * n)) if n else None, None)
+    details = params_html([
+        ("Rule", "An hour before kickoff the follower reads the YES ask P of the over 0.5 rung; from kickoff it rests one "
+                 "post-only YES bid at 65% of P, a small fixed size a match; on a fill, a resting sell at P; an unsold "
+                 "position is held to settlement. A bid that would cross the book is no entry. Never chases."),
+        ("Leagues", "Argentine league"),
+        ("Record", f"Production from {TP.MOVED_ON}, fresh: the paper record that follows the follower's own decisions. "
+                   "The research record is the Sandbox row Argentina goalless dip."),
+    ])
+    return row(TP.LANE, TP.SPORT, TP.NAME, "Over 0.5 · in-play", a, details, prod=True,
+               pair=f"{TP.LANE}|{TP.SPORT}", kind="In-play")
+
+
 # ------------------------------------------------------------------ everything
 def rows_and_inputs(d, st, now):
     """(live rows, retired rows, d, st): the own-ledger lanes as rows, and the page's ledger and stages with their
@@ -567,4 +586,11 @@ def rows_and_inputs(d, st, now):
         d, st, blob = TP.page_inputs(d, st, blob, ledger, now=now)
     except Exception as exc:                                    # noqa: BLE001
         print(f"soccer_lanes: the top-5 dip in Production failed: {type(exc).__name__}: {exc}")
+    try:
+        import arg_dip_production as AP
+        ledger = _read(os.path.join(ROOT, "data", "arg_dip_live.json")) or {}
+        live.append(arg_live_row(ledger, now))
+        d, st, blob = AP.page_inputs(d, st, blob, ledger, now=now)
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"soccer_lanes: the Argentina dip in Production failed: {type(exc).__name__}: {exc}")
     return live, gone, d, st

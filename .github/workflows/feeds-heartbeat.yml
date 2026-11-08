@@ -50,6 +50,8 @@ jobs:
         run: python3 o35_production.py --heartbeat
       - name: Top-5 goalless dip feed (live Kalshi read)
         run: python3 top5_dip_production.py --heartbeat
+      - name: Argentina goalless dip feed (live Kalshi read)
+        run: python3 arg_dip_production.py --heartbeat
       - name: NBA win margin feeds (live Kalshi read)
         run: python3 nba_wm_production.py --heartbeat
       - name: Production feed build gap (status only; the daily health check reads data/feed_gap.json)
@@ -70,6 +72,7 @@ jobs:
             --derived data/econ_production_leads.json "python3 daily_production.py --heartbeat" \
             --derived data/production_o35_leads.json "python3 o35_production.py --heartbeat" \
             --derived data/production_top5_dip_leads.json "python3 top5_dip_production.py --heartbeat" \
+            --derived data/production_arg_dip_leads.json "python3 arg_dip_production.py --heartbeat" \
             --derived data/production_nba_wm_leads.json "python3 nba_wm_production.py --heartbeat" \
             --derived data/production_nba_wm_nofade_leads.json "python3 nba_wm_production.py --heartbeat" \
             --derived data/feed_gap.json "python3 feed_gap.py"

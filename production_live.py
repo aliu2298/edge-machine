@@ -17,7 +17,7 @@ PATH = os.path.join(ROOT, "data", "live_record.json")
 GAP_BETS = 1.0              # a gap beyond about one bet is explained
 SETTLED = ("won", "lost")
 LANE_NAMES = {"o35_cheap_no": "Over 3.5 cheap NO", "nba_wm_yes": "NBA win margin YES split", "nba_wm_nofade": "NBA win margin NO fade",
-              "top5_dip": "Top-5 goalless dip"}
+              "top5_dip": "Top-5 goalless dip", "arg_dip": "Argentina goalless dip"}
 CLUSTERED = ("commodities_fav", "crypto_fav")    # the paper record counts one result per market-day (a day's rungs grade together)
 EXITS = {"o35_cheap_no", "nba_wm_yes"}      # lanes that sell early: an export from before the trades schema counted only their held-to-settle bets
 # The Production pairs the follower runs from its own state files (no orders_placed rows), and the live rows each reads: pair key -> (lane in
@@ -27,6 +27,7 @@ OWN_PAIRS = {
     "nba_winmargin_v3|nba_wm": ("nba_wm_yes", "v3"), "nba_wm_nofade_v3|nba_wm": ("nba_wm_nofade", "v3"),
     "nba_winmargin_live|nba_wm": ("nba_wm_yes", "v2"), "nba_wm_nofade|nba_wm": ("nba_wm_nofade", "v2"),
     "o35_cheap_no_wave|soccer_u35": ("o35_cheap_no", None), "top5_goalless_dip_live|soccer_o15": ("top5_dip", None),
+    "arg_goalless_dip_live|soccer_o05": ("arg_dip", None),
 }
 SLATE_RE = re.compile(r"-(\d{2})([A-Z]{3})(\d{2})[A-Z]{6}-")
 MONTHS = {m: i + 1 for i, m in enumerate("JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC".split())}
