@@ -20715,15 +20715,75 @@
    "night": "2026-11-07",
    "tip": 1794097800,
    "version": "nofade-v2"
+  },
+  {
+   "buckets": [
+    {
+     "P": 0.88,
+     "ask": {
+      "how": "print",
+      "last": 0.84,
+      "printed": 13.47,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "1-5",
+     "fills": {
+      "d65": {
+       "cost": 0.57429,
+       "fill_at": 1794177225,
+       "fill_print": 0.56,
+       "limit": 0.57,
+       "printed": 721.09,
+       "profit": 0.30386,
+       "reason": "sold",
+       "sold_at": 1794178050,
+       "won": true
+      },
+      "d75": {
+       "cost": 0.66393,
+       "fill_at": 1794176599,
+       "fill_print": 0.65,
+       "limit": 0.66,
+       "printed": 1035.41,
+       "profit": 0.21422,
+       "reason": "sold",
+       "sold_at": 1794178050,
+       "won": true
+      },
+      "d85": {
+       "cost": 0.75328,
+       "fill_at": 1794174017,
+       "fill_print": 0.74,
+       "limit": 0.75,
+       "printed": 497.41,
+       "profit": 0.12487,
+       "reason": "sold",
+       "sold_at": 1794178050,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV08PHICHI-PHI1TO5",
+     "no_wins": true,
+     "spread": 0.03,
+     "team": "PHI"
+    }
+   ],
+   "event": "KXNBAWINMARGIN-26NOV08PHICHI",
+   "insample": false,
+   "logged": "2026-11-08T23:11:55.606986+00:00",
+   "night": "2026-11-08",
+   "tip": 1794169800,
+   "version": "nofade-v2"
   }
  ],
  "error": null,
  "lane": "nba_wm_nofade",
- "last_run": "2026-11-08T19:12:14.751712+00:00",
+ "last_run": "2026-11-08T23:11:55.606986+00:00",
  "observations": {
-  "at": "2026-11-08T19:12:14.751712+00:00",
+  "at": "2026-11-08T23:11:55.606986+00:00",
   "errors": [],
-  "new": 0,
+  "new": 1,
   "waiting": 0
  },
  "seen": {
@@ -20778,6 +20838,7 @@
   "KXNBAWINMARGIN-26NOV07ORLGSW": "2026-11-08T06:18:25.466091+00:00",
   "KXNBAWINMARGIN-26NOV07SASPOR": "2026-11-08T06:18:25.466091+00:00",
   "KXNBAWINMARGIN-26NOV07WASOKC": "2026-11-08T06:18:25.466091+00:00",
+  "KXNBAWINMARGIN-26NOV08PHICHI": "2026-11-08T23:11:55.606986+00:00",
   "KXNBAWINMARGIN-26OCT20BOSDET": "2026-10-30T19:46:54.954817+00:00",
   "KXNBAWINMARGIN-26OCT20OKCSAS": "2026-10-30T19:46:54.954817+00:00",
   "KXNBAWINMARGIN-26OCT20PHINYK": "2026-10-30T19:46:54.954817+00:00",
