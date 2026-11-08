@@ -1623,7 +1623,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-08T17:22:39.379759+00:00",
+ "last_run": "2026-11-08T18:03:40.562458+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -4530,14 +4530,14 @@
    ],
    "pid": "[\"soccer_team_rules_ledger.json\", \"T7\", [\"T7:KXLALIGATEAMTOTAL-26NOV08RSORVC:away\", \"no\"]]",
    "price": 0.9,
-   "profit": null,
+   "profit": 0.1034,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-08T17:31:24.951678+00:00",
    "side": "no",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_team_rules_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXLALIGATEAMTOTAL-26NOV08RSORVC-RSO3",
@@ -4553,14 +4553,14 @@
    ],
    "pid": "[\"soccer_team_rules_ledger.json\", \"T7\", [\"T7:KXLALIGATEAMTOTAL-26NOV08RSORVC:home\", \"no\"]]",
    "price": 0.71,
-   "profit": null,
+   "profit": 0.3804,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-08T17:31:24.951678+00:00",
    "side": "no",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_team_rules_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXLALIGACORNERS-26NOV08RSORVC-12",
