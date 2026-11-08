@@ -22,6 +22,9 @@ TP.LABELS["st_t4"] = TP.PAIRS["T4"][2]
 # (2026-10-24 to 2026-10-28) by listing it again for this run; the real state is checked first.
 _NOW_PAIRS = sorted(TP.PAIRS)
 _NOW_MOVED = (TP.MOVED_ON, TP.PROMOTED)
+# T1's two siblings (T1-H, T1-M) are Production pairs since 2026-11-08 (checked on their own at the bottom); the era replays below keep them out.
+for _k in TP.SIBLING_PAIRS:
+    TP.PAIRS.pop(_k); TP.PROMOTED_AT.pop(_k); TP.MOVED.pop(_k)
 _REAL = (dict(TP.PROMOTED_AT), dict(TP.PAIRS))
 _REAL_MOVED = dict(TP.MOVED)
 # T4 (2026-11-04) is checked on its own below; the 2026-10-25 replay keeps it out.
@@ -76,7 +79,7 @@ state = {"last_run": (NOW - dt.timedelta(minutes=10)).isoformat(), "error": None
                           "Newcastle", "Premier League", 0.45)]}}}
 
 print("T5 and T7 since 2026-10-28; T1 (out 2026-10-28) replayed for the checks below")
-check("T7 is the one pair, listed 2026-10-28; T5 went back to the Sandbox 2026-11-02", (_NOW_PAIRS, _NOW_MOVED[0], TP.T5_PULLED[1]), (["T4", "T7"], "2026-10-28", "2026-11-02"))
+check("T7 is the one pair, listed 2026-10-28; T5 went back to the Sandbox 2026-11-02", (_NOW_PAIRS, _NOW_MOVED[0], TP.T5_PULLED[1]), (["T1H", "T1M", "T4", "T7"], "2026-10-28", "2026-11-02"))
 print("only T1, on the existing team 2+ claim")
 qs = TP.quotes(state)
 check("T1, T5 and T7, their own leagues only", sorted(q["market_id"] for q in qs),

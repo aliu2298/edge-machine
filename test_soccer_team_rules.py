@@ -189,7 +189,7 @@ live, gone, quotes = soccer_lanes.team_rows(st)
 rows = {r["own"]["label"].split(" · ")[0]: r for r in live + gone}
 check("every team rule is one row, and T1's two siblings (2026-11-06)", sorted(rows),
       sorted(list(TR.RULES) + [m["name"] for m in TR.SIBLINGS.values()]))
-check("the Production rules are their pairs' rows", sorted(k for k, r in rows.items() if r["prod"]), sorted(TRP.PAIRS))
+check("the Production rules are their pairs' rows (T1-H and T1-M are rows named by their sibling names)", sorted(k for k, r in rows.items() if r["prod"]), sorted(k if k in TR.RULES else TR.SIBLINGS[k]["name"] for k in TRP.PAIRS))
 check("retired rules sit in the Retired fold", sorted(k for k, r in rows.items() if r["gone"]), sorted(TR.RETIRED))
 check("a row's record is the section's own count (settled, won)",
       all((r["a"]["n"] + r["a"]["n_price"], r["a"]["won"]) == SB._record((st["rules"].get(k.replace("-", "")) or {}).get("picks") or [])[:2]

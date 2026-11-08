@@ -145,7 +145,7 @@ check("the three new lanes went to Production by hand on 2026-10-15; corners_tea
               if k.split("|")[0] in ("corners_total_under", "corners_ucl_fade", "corners_team_fade")),
        T.PAIR_REMOVALS["corners_team_fade|soccer_corners"], T.PAIR_REMOVALS["corners_ucl_fade|soccer_corners"],
        T.PAIR_REMOVALS["corners_total_under|soccer_corners"]),
-      ([],
+      ([("corners_ucl_fade|soccer_corners", "2026-11-08")],        # back in Production 2026-11-08 (Olu: promote all four), the removal above stands as the record it left on
        dict(removed_on="2026-10-20", keep_record=True), dict(removed_on="2026-10-21", keep_record=True),
        dict(removed_on="2026-10-27", keep_record=True)))
 print("\nthe feed: a fade is the YES of the exact rung, the under the NO")

@@ -435,6 +435,9 @@ PAIR_OVERRIDES = {
     # the series does not trade (S.ladder_close_trades). One rung per commodity per
     # close, the 3c spread, the 25-contract ask and the 2-3.5h window are the Sandbox
     # rule's gates at logging; the feed publishes only what the rule logged.
+    # 2026-11-08, as asked (Olu: "promote all four"): the Champions League corners fade back into Production on a fresh Production record,
+    # its Sandbox paper (6 settled) still running. Re-listed with a date after its 2026-10-21 removal, which stands as the record it left on.
+    "corners_ucl_fade|soccer_corners": dict(moved_on="2026-11-08", production_at=None),
     #   commod_fav_band|commodities_fav — OUT 2026-11-08, back to the Sandbox, as asked (Olu): live 4-2 at -13.2% since the stake raise. Whole record
     #   kept (PAIR_REMOVALS); it keeps collecting in the Sandbox, and its live fills stay on the Production page as history.
     # 2026-10-11, as asked: SIX more rules, EARLY like the rest, on their whole records at
