@@ -170,11 +170,6 @@
    "lead_min": 8.6,
    "price": 0.84
   },
-  "commod_nc_no:KXWTI-26OCT2914-T102.49": {
-   "at": "2026-10-29T17:49:58+00:00",
-   "lead_min": 10.0,
-   "price": 0.84
-  },
   "commod_nc_no:KXWTI-26OCT3014-T105.99": {
    "at": "2026-10-30T17:29:48+00:00",
    "lead_min": 30.2,
@@ -268,11 +263,6 @@
   "commod_nc_yes:KXWTI-26NOV0614-T88.99": {
    "at": "2026-11-06T18:51:23+00:00",
    "lead_min": 8.6,
-   "price": 0.98
-  },
-  "commod_nc_yes:KXWTI-26OCT2914-T100.99": {
-   "at": "2026-10-29T17:49:58+00:00",
-   "lead_min": 10.0,
    "price": 0.98
   },
   "commod_nc_yes:KXWTI-26OCT3014-T103.99": {
@@ -544,6 +534,11 @@
    "at": "2026-11-08T15:44:53+00:00",
    "lead_min": 0.1,
    "price": 0.2
+  },
+  "ere_draw:KXEREDIVISIEGAME-26NOV08FCUNIJ": {
+   "at": "2026-11-08T18:00:57+00:00",
+   "lead_min": 59.0,
+   "price": 0.25
   },
   "ere_draw:KXEREDIVISIEGAME-26NOV08HEEFEY": {
    "at": "2026-11-08T11:13:02+00:00",
@@ -996,5 +991,5 @@
    "price": 0.79
   }
  },
- "updated": "2026-11-08T16:45:09+00:00"
+ "updated": "2026-11-08T18:00:57+00:00"
 }
