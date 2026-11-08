@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-08T16:45:55.731550+00:00",
+ "last_run": "2026-11-08T17:15:09.927752+00:00",
  "registered": "2026-11-08",
  "rules": {
   "nfl_tt_main1": {
@@ -46,11 +46,14 @@
      "main_mid": 0.525,
      "main_ticker": "KXNFLTEAMTOTAL-26NOV08CINATL-CIN28",
      "mid": 0.475,
+     "payout": 1.0,
      "price": 0.48,
+     "profit": 101.02,
      "rule": "nfl_tt_main1",
+     "settled": "2026-11-08T17:15:09.927752+00:00",
      "side": "yes",
      "start": "2026-11-08T14:30:00+00:00",
-     "status": "open",
+     "status": "won",
      "team": "CIN",
      "ticker": "KXNFLTEAMTOTAL-26NOV08CINATL-CIN29",
      "title": "Cincinnati over 28.5 points",
@@ -455,6 +458,14 @@
    "entered": 14,
    "matched": 7,
    "new": 14,
+   "skipped": 0
+  },
+  {
+   "at": "2026-11-08T17:15:09.927752+00:00",
+   "due": 0,
+   "entered": 0,
+   "matched": 0,
+   "new": 0,
    "skipped": 0
   }
  ],
