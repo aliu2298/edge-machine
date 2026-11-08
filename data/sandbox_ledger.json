@@ -41,10 +41,10 @@
    "kalshi_venue": 275
   },
   "economics": {
-   "kalshi_venue": 34
+   "kalshi_venue": 23
   },
   "finance": {
-   "kalshi_venue": 45
+   "kalshi_venue": 30
   },
   "mma": {
    "kalshi_venue": 0,
@@ -69,7 +69,7 @@
     "offered": 0,
     "picked": 0
    },
-   "kalshi_venue": 17,
+   "kalshi_venue": 15,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -355,7 +355,7 @@
    "kalshi_venue": 14,
    "polymarket_us": 40,
    "polymarket_us_listed": 469,
-   "polymarket_us_priced": 175
+   "polymarket_us_priced": 174
   },
   "tennis_combo": {
    "combo": 0,
@@ -367,46 +367,46 @@
   }
  },
  "feed_status": {
-  "pin_totals": "ok"
+  "pin_totals": "down: no paced credit left for this run"
  },
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-08T23:14:10+00:00",
-   "commodities": "2026-11-08T23:14:10+00:00",
-   "commodities_fav": "2026-11-08T23:14:10+00:00",
-   "cricket": "2026-11-08T23:14:10+00:00",
-   "crypto": "2026-11-08T23:14:10+00:00",
-   "crypto_fav": "2026-11-08T23:14:10+00:00",
-   "economics": "2026-11-08T23:14:10+00:00",
-   "finance": "2026-11-08T23:14:10+00:00",
+   "boxing": "2026-11-08T23:18:21+00:00",
+   "commodities": "2026-11-08T23:18:21+00:00",
+   "commodities_fav": "2026-11-08T23:18:21+00:00",
+   "cricket": "2026-11-08T23:18:21+00:00",
+   "crypto": "2026-11-08T23:18:21+00:00",
+   "crypto_fav": "2026-11-08T23:18:21+00:00",
+   "economics": "2026-11-08T23:18:21+00:00",
+   "finance": "2026-11-08T23:18:21+00:00",
    "mma": "2026-11-08T03:03:20+00:00",
-   "nfl": "2026-11-08T23:14:10+00:00",
-   "nhl_pl": "2026-11-08T23:14:10+00:00",
-   "nhl_rest": "2026-11-08T23:14:10+00:00",
-   "soccer": "2026-11-08T23:14:10+00:00",
+   "nfl": "2026-11-08T23:18:21+00:00",
+   "nhl_pl": "2026-11-08T23:18:21+00:00",
+   "nhl_rest": "2026-11-08T23:18:21+00:00",
+   "soccer": "2026-11-08T23:18:21+00:00",
    "soccer_btts": "2026-11-08T20:07:32+00:00",
    "soccer_btts_cup": "2026-11-05T19:33:47+00:00",
-   "soccer_btts_intl": "2026-11-08T23:14:10+00:00",
+   "soccer_btts_intl": "2026-11-08T23:18:21+00:00",
    "soccer_corners": "2026-11-08T19:58:15+00:00",
    "soccer_ftts": "2026-10-19T18:33:38+00:00",
    "soccer_o15": "2026-11-08T20:07:32+00:00",
    "soccer_o15_cup": "2026-11-05T19:33:47+00:00",
-   "soccer_o15_intl": "2026-11-08T23:14:10+00:00",
+   "soccer_o15_intl": "2026-11-08T23:18:21+00:00",
    "soccer_o25": "2026-11-08T20:07:32+00:00",
    "soccer_o25_cup": "2026-11-05T19:33:47+00:00",
-   "soccer_o25_intl": "2026-11-08T23:14:10+00:00",
+   "soccer_o25_intl": "2026-11-08T23:18:21+00:00",
    "soccer_p05": "2026-11-08T20:07:32+00:00",
-   "soccer_p05_cup": "2026-11-08T23:14:10+00:00",
-   "soccer_p05_intl": "2026-11-08T23:14:10+00:00",
+   "soccer_p05_cup": "2026-11-08T23:18:21+00:00",
+   "soccer_p05_intl": "2026-11-08T23:18:21+00:00",
    "soccer_team1": "2026-11-08T19:58:15+00:00",
    "soccer_team1_cup": "2026-11-05T19:33:47+00:00",
    "soccer_team2": "2026-11-08T19:58:15+00:00",
    "soccer_team2_cup": "2026-11-05T19:33:47+00:00",
    "soccer_u35": "2026-11-08T20:07:32+00:00",
    "soccer_u35_cup": "2026-11-05T19:33:47+00:00",
-   "soccer_u35_intl": "2026-11-08T23:14:10+00:00",
-   "tennis": "2026-11-08T23:14:10+00:00",
+   "soccer_u35_intl": "2026-11-08T23:18:21+00:00",
+   "tennis": "2026-11-08T23:18:21+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -526,58 +526,9 @@
    }
   },
   "odds_api": {
-   "allowance": 1,
-   "at": "2026-11-08T23:14:10+00:00",
-   "calls": 1,
+   "allowance": 0,
+   "at": "2026-11-08T23:18:21+00:00",
    "remaining": 341,
-   "totals_on": [
-    {
-     "empty": {
-      "no_event": 0,
-      "no_totals": 4,
-      "other_point": 2,
-      "points": [
-       3.25,
-       3.0
-      ],
-      "stale": 0
-     },
-     "key": "soccer_uefa_nations_league",
-     "listed": 6,
-     "rows": [
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV12ARMCYP-3"
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV12ALBFIN-3"
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV12ENGCRO-3",
-       "points": [
-        3.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV12ITAFRA-3",
-       "points": [
-        3.0
-       ]
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV12MNELAT-3"
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV12SMRBLR-3"
-      }
-     ]
-    }
-   ],
    "used": 159
   },
   "outages": [
@@ -597,7 +548,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 1379,
+  "runs": 1380,
   "tennis_shortlist": {
    "audit": [
     {
@@ -609,7 +560,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-08T23:14:38+00:00"
+  "updated": "2026-11-08T23:18:47+00:00"
  },
  "quotes": [
   {
@@ -95665,41 +95616,6 @@
    "venue_start": null
   },
   {
-   "bet": true,
-   "close_at": "2026-09-24T19:01:55+00:00",
-   "close_price": 0.99,
-   "date": "2026-09-24",
-   "edge": null,
-   "id": "spot:KXSOLD-26SEP2417-T114.9999",
-   "label": "SOL price on Sep 24, 2026?",
-   "liquidity": null,
-   "logged": "2026-09-23T22:15:23+00:00",
-   "market_id": "KXSOLD-26SEP2417-T114.9999",
-   "pick": "a",
-   "pnl": 72.41,
-   "price": 0.58,
-   "price_a": 0.58,
-   "price_b": 0.45,
-   "price_draw": null,
-   "prob_a": null,
-   "result": "a",
-   "settled": "2026-09-24T23:17:40+00:00",
-   "side_a": "$115 or above",
-   "side_b": "No",
-   "source": "spot",
-   "sport": "crypto",
-   "spread": null,
-   "stake": 100.0,
-   "start": "2026-09-24T21:05:00+00:00",
-   "start_source": null,
-   "status": "won",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://kalshi.com/markets/kxsold",
-   "venue": "kalshi_binary",
-   "venue_start": null
-  },
-  {
    "bet": false,
    "date": "2026-09-26",
    "edge": -0.0025,
@@ -98261,41 +98177,6 @@
   },
   {
    "bet": true,
-   "close_at": "2026-09-24T18:16:27+00:00",
-   "close_price": 0.99,
-   "date": "2026-09-24",
-   "edge": null,
-   "id": "spot:KXSOLD-26SEP2417-T113.9999",
-   "label": "SOL price on Sep 24, 2026?",
-   "liquidity": null,
-   "logged": "2026-09-24T01:25:35+00:00",
-   "market_id": "KXSOLD-26SEP2417-T113.9999",
-   "pick": "a",
-   "pnl": 61.29,
-   "price": 0.62,
-   "price_a": 0.62,
-   "price_b": 0.41,
-   "price_draw": null,
-   "prob_a": null,
-   "result": "a",
-   "settled": "2026-09-24T23:17:42+00:00",
-   "side_a": "$114 or above",
-   "side_b": "No",
-   "source": "spot",
-   "sport": "crypto",
-   "spread": null,
-   "stake": 100.0,
-   "start": "2026-09-24T21:05:00+00:00",
-   "start_source": null,
-   "status": "won",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://kalshi.com/markets/kxsold",
-   "venue": "kalshi_binary",
-   "venue_start": null
-  },
-  {
-   "bet": true,
    "close_at": "2026-09-24T01:25:35+00:00",
    "close_price": 0.3,
    "date": "2026-09-24",
@@ -100375,41 +100256,6 @@
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxhighden",
-   "venue": "kalshi_binary",
-   "venue_start": null
-  },
-  {
-   "bet": true,
-   "close_at": "2026-09-24T13:36:44+00:00",
-   "close_price": 0.82,
-   "date": "2026-09-24",
-   "edge": null,
-   "id": "spot:KXSOLD-26SEP2417-T112.9999",
-   "label": "SOL price on Sep 24, 2026?",
-   "liquidity": null,
-   "logged": "2026-09-24T11:22:33+00:00",
-   "market_id": "KXSOLD-26SEP2417-T112.9999",
-   "pick": "a",
-   "pnl": 75.44,
-   "price": 0.57,
-   "price_a": 0.57,
-   "price_b": 0.46,
-   "price_draw": null,
-   "prob_a": null,
-   "result": "a",
-   "settled": "2026-09-24T23:17:51+00:00",
-   "side_a": "$113 or above",
-   "side_b": "No",
-   "source": "spot",
-   "sport": "crypto",
-   "spread": null,
-   "stake": 100.0,
-   "start": "2026-09-24T21:05:00+00:00",
-   "start_source": null,
-   "status": "won",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://kalshi.com/markets/kxsold",
    "venue": "kalshi_binary",
    "venue_start": null
   },
@@ -103958,150 +103804,6 @@
    "venue_start": null
   },
   {
-   "bet": true,
-   "close_at": "2026-09-24T19:01:55+00:00",
-   "close_price": 0.91,
-   "date": "2026-09-24",
-   "edge": null,
-   "id": "spot:KXSOLD-26SEP2417-T115.9999",
-   "label": "SOL price on Sep 24, 2026?",
-   "liquidity": null,
-   "logged": "2026-09-24T17:25:24+00:00",
-   "market_id": "KXSOLD-26SEP2417-T115.9999",
-   "pick": "a",
-   "pnl": 31.58,
-   "price": 0.76,
-   "price_a": 0.76,
-   "price_b": 0.27,
-   "price_draw": null,
-   "prob_a": null,
-   "result": "a",
-   "settled": "2026-09-24T23:18:09+00:00",
-   "side_a": "$116 or above",
-   "side_b": "No",
-   "source": "spot",
-   "sport": "crypto",
-   "spread": null,
-   "stake": 100.0,
-   "start": "2026-09-24T21:05:00+00:00",
-   "start_source": null,
-   "status": "won",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://kalshi.com/markets/kxsold",
-   "venue": "kalshi_binary",
-   "venue_start": null
-  },
-  {
-   "bet": true,
-   "close_at": "2026-09-24T18:01:17+00:00",
-   "close_price": 0.6134,
-   "date": "2026-09-24",
-   "edge": null,
-   "id": "pm_combo2:pmcombo2:2026-09-24:f1d395d63c",
-   "label": "2-leg tennis combo: Elicha Navas, Gabriel + Joao Eduardo Schiessl",
-   "legs": [
-    {
-     "market_id": "aec-utr-malszy-eligab-2026-09-22",
-     "name": "Elicha Navas, Gabriel",
-     "pick": "b",
-     "start": "2026-09-24T18:10:00+00:00",
-     "venue": "polymarket_us"
-    },
-    {
-     "market_id": "aec-itfme-giobra-joasch-2026-09-24",
-     "name": "Joao Eduardo Schiessl",
-     "pick": "b",
-     "start": "2026-09-24T18:17:44+00:00",
-     "venue": "polymarket_us"
-    }
-   ],
-   "liquidity": null,
-   "logged": "2026-09-24T17:25:24+00:00",
-   "market_id": "pmcombo2:2026-09-24:f1d395d63c",
-   "pick": "a",
-   "pnl": 60.08,
-   "price": 0.6247,
-   "price_a": 0.6247,
-   "price_b": 0.3753,
-   "price_draw": null,
-   "prob_a": null,
-   "result": "a",
-   "settled": "2026-09-24T23:18:09+00:00",
-   "side_a": "All 2 win",
-   "side_b": "Any one loses",
-   "source": "pm_combo2",
-   "sport": "tennis_pmcombo",
-   "spread": null,
-   "stake": 100.0,
-   "start": "2026-09-24T18:10:00+00:00",
-   "start_source": null,
-   "status": "won",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://polymarket.us",
-   "venue": "combo",
-   "venue_start": null
-  },
-  {
-   "bet": true,
-   "close_at": "2026-09-24T18:01:17+00:00",
-   "close_price": 0.4857,
-   "date": "2026-09-24",
-   "edge": null,
-   "id": "pm_combo3:pmcombo3:2026-09-24:3eaa6451de",
-   "label": "3-leg tennis combo: Elicha Navas, Gabriel + Joao Eduardo Schiessl + Leticia Garcia Vidal",
-   "legs": [
-    {
-     "market_id": "aec-utr-malszy-eligab-2026-09-22",
-     "name": "Elicha Navas, Gabriel",
-     "pick": "b",
-     "start": "2026-09-24T18:10:00+00:00",
-     "venue": "polymarket_us"
-    },
-    {
-     "market_id": "aec-itfme-giobra-joasch-2026-09-24",
-     "name": "Joao Eduardo Schiessl",
-     "pick": "b",
-     "start": "2026-09-24T18:17:44+00:00",
-     "venue": "polymarket_us"
-    },
-    {
-     "market_id": "aec-itfwo-letvid-alirei-2026-09-24",
-     "name": "Leticia Garcia Vidal",
-     "pick": "a",
-     "start": "2026-09-24T19:00:00+00:00",
-     "venue": "polymarket_us"
-    }
-   ],
-   "liquidity": null,
-   "logged": "2026-09-24T17:25:24+00:00",
-   "market_id": "pmcombo3:2026-09-24:3eaa6451de",
-   "pick": "a",
-   "pnl": 101.29,
-   "price": 0.4968,
-   "price_a": 0.4968,
-   "price_b": 0.5032,
-   "price_draw": null,
-   "prob_a": null,
-   "result": "a",
-   "settled": "2026-09-24T23:18:09+00:00",
-   "side_a": "All 3 win",
-   "side_b": "Any one loses",
-   "source": "pm_combo3",
-   "sport": "tennis_pmcombo",
-   "spread": null,
-   "stake": 100.0,
-   "start": "2026-09-24T18:10:00+00:00",
-   "start_source": null,
-   "status": "won",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://polymarket.us",
-   "venue": "combo",
-   "venue_start": null
-  },
-  {
    "bet": false,
    "date": "2026-09-25",
    "edge": -0.0079,
@@ -105097,41 +104799,6 @@
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxnhlspread",
-   "venue": "kalshi_binary",
-   "venue_start": null
-  },
-  {
-   "bet": true,
-   "close_at": "2026-09-24T19:01:55+00:00",
-   "close_price": 0.62,
-   "date": "2026-09-24",
-   "edge": null,
-   "id": "spot:KXSOLD-26SEP2417-T116.9999",
-   "label": "SOL price on Sep 24, 2026?",
-   "liquidity": null,
-   "logged": "2026-09-24T18:29:20+00:00",
-   "market_id": "KXSOLD-26SEP2417-T116.9999",
-   "pick": "a",
-   "pnl": -100.0,
-   "price": 0.65,
-   "price_a": 0.65,
-   "price_b": 0.4,
-   "price_draw": null,
-   "prob_a": null,
-   "result": "b",
-   "settled": "2026-09-24T23:18:21+00:00",
-   "side_a": "$117 or above",
-   "side_b": "No",
-   "source": "spot",
-   "sport": "crypto",
-   "spread": null,
-   "stake": 100.0,
-   "start": "2026-09-24T21:05:00+00:00",
-   "start_source": null,
-   "status": "lost",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://kalshi.com/markets/kxsold",
    "venue": "kalshi_binary",
    "venue_start": null
   },
@@ -430550,24 +430217,24 @@
    "won": 0
   },
   "pm_combo2": {
-   "bets": 4,
+   "bets": 5,
    "brier_n": 0,
    "brier_sum": 0.0,
-   "pnl": -71.32000000000001,
-   "quotes": 4,
-   "settled": 4,
-   "staked": 400.0,
-   "won": 2
+   "pnl": -11.240000000000009,
+   "quotes": 5,
+   "settled": 5,
+   "staked": 500.0,
+   "won": 3
   },
   "pm_combo3": {
-   "bets": 2,
+   "bets": 3,
    "brier_n": 0,
    "brier_sum": 0.0,
-   "pnl": -200.0,
-   "quotes": 2,
-   "settled": 2,
-   "staked": 200.0,
-   "won": 0
+   "pnl": -98.71,
+   "quotes": 3,
+   "settled": 3,
+   "staked": 300.0,
+   "won": 1
   },
   "pm_combo4": {
    "bets": 2,
@@ -430600,14 +430267,14 @@
    "won": 0
   },
   "spot": {
-   "bets": 56,
+   "bets": 61,
    "brier_n": 0,
    "brier_sum": 0.0,
-   "pnl": 730.21,
-   "quotes": 56,
-   "settled": 56,
-   "staked": 5600.0,
-   "won": 38
+   "pnl": 870.93,
+   "quotes": 61,
+   "settled": 61,
+   "staked": 6100.0,
+   "won": 42
   },
   "team1_form_l5": {
    "bets": 18,
