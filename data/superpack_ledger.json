@@ -272,6 +272,10 @@
    "at": "2026-11-07T23:04:03.124924+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLIGUE1TEAMTOTAL-26NOV08HACFCL-FCL2\", \"a\"]]": {
+   "at": "2026-11-08T15:36:09.421486+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXSERIEATEAMTOTAL-26NOV07PARBFC-BFC2\", \"a\"]]": {
    "at": "2026-11-05T18:05:03.605874+00:00",
    "pool": "entered"
@@ -370,6 +374,15 @@
    "mirror": "entered",
    "pool": "entered"
   },
+  "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXSERIEATEAMTOTAL-26NOV08INTCOM:away\", \"yes\"]]": {
+   "at": "2026-11-08T15:36:09.421486+00:00",
+   "entries": "entered",
+   "pool": "entered"
+  },
+  "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXSERIEATEAMTOTAL-26NOV08INTCOM:home\", \"yes\"]]": {
+   "at": "2026-11-08T15:36:09.421486+00:00",
+   "pool": "entered"
+  },
   "[\"soccer_team_rules_ledger.json\", \"T1H\", [\"T1H:KXBUNDESLIGATEAMTOTAL-26NOV07RBLFCA:home\", \"yes\"]]": {
    "at": "2026-11-07T14:03:40.378413+00:00",
    "pool": "duplicate"
@@ -377,6 +390,10 @@
   "[\"soccer_team_rules_ledger.json\", \"T1H\", [\"T1H:KXEPLTEAMTOTAL-26NOV08BRIBRE:home\", \"yes\"]]": {
    "at": "2026-11-08T13:04:49.084515+00:00",
    "mirror": "duplicate",
+   "pool": "duplicate"
+  },
+  "[\"soccer_team_rules_ledger.json\", \"T1H\", [\"T1H:KXSERIEATEAMTOTAL-26NOV08INTCOM:home\", \"yes\"]]": {
+   "at": "2026-11-08T15:36:09.421486+00:00",
    "pool": "duplicate"
   },
   "[\"soccer_team_rules_ledger.json\", \"T3\", [\"T3:KXLALIGATEAMTOTAL-26NOV07ESPDEP:away\", \"yes\"]]": {
@@ -1391,11 +1408,98 @@
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
    "status": "lost"
+  },
+  {
+   "contract": "KXSERIEATEAMTOTAL-26NOV08INTCOM-COM2",
+   "entered_at": "2026-11-08T15:36:09.421486+00:00",
+   "entities": [
+    "Como"
+   ],
+   "id": "superpack:[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXSERIEATEAMTOTAL-26NOV08INTCOM:away\", \"yes\"]]",
+   "lane": "T1",
+   "logged": "2026-11-08T15:31:15.337784+00:00",
+   "matched": [
+    "Como"
+   ],
+   "pid": "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXSERIEATEAMTOTAL-26NOV08INTCOM:away\", \"yes\"]]",
+   "price": 0.41,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": {
+    "as_of": "2026-11-08T15:31:15.337784+00:00",
+    "names": [
+     {
+      "bets": 14,
+      "name": "Real Madrid",
+      "profit": 10.8966,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Como",
+      "profit": 5.7566,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Manchester United",
+      "profit": 5.3737,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 19,
+      "name": "Bitcoin",
+      "profit": 5.0941,
+      "sport": "Crypto"
+     },
+     {
+      "bets": 5,
+      "name": "Charlotte FC",
+      "profit": 4.7894,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Napoli",
+      "profit": 4.7771,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "AS Roma",
+      "profit": 4.7712,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Columbus Crew",
+      "profit": 4.7227,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "AFC Bournemouth",
+      "profit": 3.7752,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 31,
+      "name": "WTI",
+      "profit": 3.6524,
+      "sport": "Commodities"
+     }
+    ]
+   },
+   "sport": "Soccer",
+   "src": "soccer_team_rules_ledger.json",
+   "status": "open"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-08T15:31:17.697170+00:00",
+ "last_run": "2026-11-08T15:36:09.421486+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -4405,6 +4509,75 @@
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_team_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXSERIEATEAMTOTAL-26NOV08INTCOM-COM2",
+   "entered_at": "2026-11-08T15:36:09.421486+00:00",
+   "entities": [
+    "Como"
+   ],
+   "id": "superpack:[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXSERIEATEAMTOTAL-26NOV08INTCOM:away\", \"yes\"]]",
+   "lane": "T1",
+   "logged": "2026-11-08T15:31:15.337784+00:00",
+   "matched": [
+    "Como"
+   ],
+   "pid": "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXSERIEATEAMTOTAL-26NOV08INTCOM:away\", \"yes\"]]",
+   "price": 0.41,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_team_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXSERIEATEAMTOTAL-26NOV08INTCOM-INT2",
+   "entered_at": "2026-11-08T15:36:09.421486+00:00",
+   "entities": [
+    "Internazionale"
+   ],
+   "id": "superpack:[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXSERIEATEAMTOTAL-26NOV08INTCOM:home\", \"yes\"]]",
+   "lane": "T1",
+   "logged": "2026-11-08T15:31:15.337784+00:00",
+   "matched": [
+    "Internazionale"
+   ],
+   "pid": "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXSERIEATEAMTOTAL-26NOV08INTCOM:home\", \"yes\"]]",
+   "price": 0.56,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_team_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXLIGUE1TEAMTOTAL-26NOV08HACFCL-FCL2",
+   "entered_at": "2026-11-08T15:36:09.421486+00:00",
+   "entities": [
+    "Lorient"
+   ],
+   "id": "superpack:[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLIGUE1TEAMTOTAL-26NOV08HACFCL-FCL2\", \"a\"]]",
+   "lane": "team2_ranked",
+   "logged": "2026-11-08T15:35:34+00:00",
+   "matched": [
+    "Lorient"
+   ],
+   "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLIGUE1TEAMTOTAL-26NOV08HACFCL-FCL2\", \"a\"]]",
+   "price": 0.39,
+   "profit": null,
+   "scope": "soccer_team2",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
    "status": "open"
   }
  ],
