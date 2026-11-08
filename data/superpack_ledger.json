@@ -154,6 +154,14 @@
    "at": "2026-11-08T17:03:19.273537+00:00",
    "pool": "entered"
   },
+  "[\"nfl_tt_ledger.json\", \"nfl_tt_over_3545\", [\"nfl_tt_over_3545:KXNFLTEAMTOTAL-26NOV08HOULAC:HOU\", \"yes\"]]": {
+   "at": "2026-11-08T20:08:21.142285+00:00",
+   "pool": "entered"
+  },
+  "[\"nfl_tt_ledger.json\", \"nfl_tt_over_3545\", [\"nfl_tt_over_3545:KXNFLTEAMTOTAL-26NOV08HOULAC:LAC\", \"yes\"]]": {
+   "at": "2026-11-08T20:08:21.142285+00:00",
+   "pool": "entered"
+  },
   "[\"nfl_tt_ledger.json\", \"nfl_tt_over_3545\", [\"nfl_tt_over_3545:KXNFLTEAMTOTAL-26NOV08LARWAS:LAR\", \"yes\"]]": {
    "at": "2026-11-08T17:03:19.273537+00:00",
    "pool": "entered"
@@ -216,6 +224,14 @@
   },
   "[\"nfl_tt_main1_ledger.json\", \"nfl_tt_main1\", [\"nfl_tt_main1:KXNFLTEAMTOTAL-26NOV08DETMIA:MIA\", \"yes\"]]": {
    "at": "2026-11-08T17:03:19.273537+00:00",
+   "pool": "duplicate"
+  },
+  "[\"nfl_tt_main1_ledger.json\", \"nfl_tt_main1\", [\"nfl_tt_main1:KXNFLTEAMTOTAL-26NOV08HOULAC:HOU\", \"yes\"]]": {
+   "at": "2026-11-08T20:08:21.142285+00:00",
+   "pool": "duplicate"
+  },
+  "[\"nfl_tt_main1_ledger.json\", \"nfl_tt_main1\", [\"nfl_tt_main1:KXNFLTEAMTOTAL-26NOV08HOULAC:LAC\", \"yes\"]]": {
+   "at": "2026-11-08T20:08:21.142285+00:00",
    "pool": "duplicate"
   },
   "[\"nfl_tt_main1_ledger.json\", \"nfl_tt_main1\", [\"nfl_tt_main1:KXNFLTEAMTOTAL-26NOV08LARWAS:LAR\", \"yes\"]]": {
@@ -1727,7 +1743,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-08T20:03:59.048058+00:00",
+ "last_run": "2026-11-08T20:08:21.142285+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -4565,14 +4581,14 @@
    ],
    "pid": "[\"nfl_tt_ledger.json\", \"nfl_tt_over_3545\", [\"nfl_tt_over_3545:KXNFLTEAMTOTAL-26NOV08CINATL:CIN\", \"yes\"]]",
    "price": 0.35,
-   "profit": null,
+   "profit": 1.7328,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-08T20:00:29.830138+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Football",
    "src": "nfl_tt_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXNFLTEAMTOTAL-26NOV08CINATL-ATL29",
@@ -4588,14 +4604,14 @@
    ],
    "pid": "[\"nfl_tt_main1_ledger.json\", \"nfl_tt_main1\", [\"nfl_tt_main1:KXNFLTEAMTOTAL-26NOV08CINATL:ATL\", \"yes\"]]",
    "price": 0.33,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-08T20:00:59.821505+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Football",
    "src": "nfl_tt_main1_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXNFLTEAMTOTAL-26NOV08CINATL-CIN29",
@@ -5367,6 +5383,52 @@
    "sport": "Culture",
    "src": "contract",
    "status": "lost"
+  },
+  {
+   "contract": "KXNFLTEAMTOTAL-26NOV08HOULAC-HOU25",
+   "entered_at": "2026-11-08T20:08:21.142285+00:00",
+   "entities": [
+    "Houston Texans"
+   ],
+   "id": "superpack:[\"nfl_tt_ledger.json\", \"nfl_tt_over_3545\", [\"nfl_tt_over_3545:KXNFLTEAMTOTAL-26NOV08HOULAC:HOU\", \"yes\"]]",
+   "lane": "nfl_tt_over_3545",
+   "logged": "2026-11-08T20:00:29.830138+00:00",
+   "matched": [
+    "Houston Texans"
+   ],
+   "pid": "[\"nfl_tt_ledger.json\", \"nfl_tt_over_3545\", [\"nfl_tt_over_3545:KXNFLTEAMTOTAL-26NOV08HOULAC:HOU\", \"yes\"]]",
+   "price": 0.43,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Football",
+   "src": "nfl_tt_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXNFLTEAMTOTAL-26NOV08HOULAC-LAC21",
+   "entered_at": "2026-11-08T20:08:21.142285+00:00",
+   "entities": [
+    "Los Angeles Chargers"
+   ],
+   "id": "superpack:[\"nfl_tt_ledger.json\", \"nfl_tt_over_3545\", [\"nfl_tt_over_3545:KXNFLTEAMTOTAL-26NOV08HOULAC:LAC\", \"yes\"]]",
+   "lane": "nfl_tt_over_3545",
+   "logged": "2026-11-08T20:00:29.830138+00:00",
+   "matched": [
+    "Los Angeles Chargers"
+   ],
+   "pid": "[\"nfl_tt_ledger.json\", \"nfl_tt_over_3545\", [\"nfl_tt_over_3545:KXNFLTEAMTOTAL-26NOV08HOULAC:LAC\", \"yes\"]]",
+   "price": 0.35,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Football",
+   "src": "nfl_tt_ledger.json",
+   "status": "open"
   }
  ],
  "registered": "2026-11-05",
