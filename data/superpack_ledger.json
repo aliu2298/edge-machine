@@ -170,6 +170,16 @@
    "at": "2026-11-07T14:03:40.378413+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV08BRIBRE-10\", \"b\"]]": {
+   "at": "2026-11-08T10:04:40.588331+00:00",
+   "mirror": "entered",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV08IPSBOU-9\", \"b\"]]": {
+   "at": "2026-11-08T10:04:40.588331+00:00",
+   "entries": "entered",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXLALIGACORNERS-26NOV06SEVALA-8\", \"b\"]]": {
    "at": "2026-11-06T16:03:36.782279+00:00",
    "pool": "entered"
@@ -277,6 +287,11 @@
   "[\"soccer_rules_ledger.json\", \"B2\", [\"B2:KXLALIGATOTAL-26NOV07VCFRMA\", \"yes\"]]": {
    "at": "2026-11-07T18:44:59.025179+00:00",
    "entries": "entered",
+   "pool": "entered"
+  },
+  "[\"soccer_rules_ledger.json\", \"B3\", [\"B3:KXEREDIVISIETOTAL-26NOV08HEEFEY\", \"yes\"]]": {
+   "at": "2026-11-08T10:04:40.588331+00:00",
+   "mirror": "entered",
    "pool": "entered"
   },
   "[\"soccer_rules_ledger.json\", \"B4\", [\"B4:KXSCOTTISHPREMTOTAL-26NOV07ABEHIB\", \"no\"]]": {
@@ -1124,11 +1139,99 @@
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
    "status": "won"
+  },
+  {
+   "contract": "KXEPLCORNERS-26NOV08IPSBOU-9",
+   "entered_at": "2026-11-08T10:04:40.588331+00:00",
+   "entities": [
+    "Ipswich Town",
+    "AFC Bournemouth"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV08IPSBOU-9\", \"b\"]]",
+   "lane": "corners_total_under",
+   "logged": "2026-11-08T10:03:27+00:00",
+   "matched": [
+    "AFC Bournemouth"
+   ],
+   "pid": "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV08IPSBOU-9\", \"b\"]]",
+   "price": 0.43,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": {
+    "as_of": "2026-11-08T10:03:27+00:00",
+    "names": [
+     {
+      "bets": 14,
+      "name": "Real Madrid",
+      "profit": 10.8966,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Napoli",
+      "profit": 5.7771,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Como",
+      "profit": 5.7566,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Manchester United",
+      "profit": 5.3737,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 19,
+      "name": "Bitcoin",
+      "profit": 5.0941,
+      "sport": "Crypto"
+     },
+     {
+      "bets": 5,
+      "name": "Charlotte FC",
+      "profit": 4.7894,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "AS Roma",
+      "profit": 4.7712,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Columbus Crew",
+      "profit": 4.7227,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "AFC Bournemouth",
+      "profit": 3.7752,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 31,
+      "name": "WTI",
+      "profit": 3.6524,
+      "sport": "Commodities"
+     }
+    ]
+   },
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-08T09:40:24.460987+00:00",
+ "last_run": "2026-11-08T10:04:40.588331+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -1477,6 +1580,182 @@
    "sport": "Soccer",
    "src": "sandbox",
    "status": "won"
+  },
+  {
+   "contract": "KXEREDIVISIETOTAL-26NOV08HEEFEY-4",
+   "entered_at": "2026-11-08T10:04:40.588331+00:00",
+   "entities": [
+    "Heerenveen",
+    "Feyenoord Rotterdam"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"B3\", [\"B3:KXEREDIVISIETOTAL-26NOV08HEEFEY\", \"yes\"]]",
+   "lane": "B3",
+   "logged": "2026-11-08T09:46:13.252678+00:00",
+   "matched": [
+    "Feyenoord Rotterdam"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"B3\", [\"B3:KXEREDIVISIETOTAL-26NOV08HEEFEY\", \"yes\"]]",
+   "price": 0.5,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": {
+    "as_of": "2026-11-08T09:46:13.252678+00:00",
+    "names": [
+     {
+      "bets": 7,
+      "name": "Brighton & Hove Albion",
+      "profit": -7.0,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Lyon",
+      "profit": -5.0,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Real Betis",
+      "profit": -4.6728,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 8,
+      "name": "St. Louis CITY SC",
+      "profit": -4.6584,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "PSV Eindhoven",
+      "profit": -4.6111,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "FC Dallas",
+      "profit": -4.2143,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 12,
+      "name": "Sevilla",
+      "profit": -3.6029,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Feyenoord Rotterdam",
+      "profit": -3.5706,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "SC Freiburg",
+      "profit": -2.7648,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Kilmarnock",
+      "profit": -2.5459,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXEPLCORNERS-26NOV08BRIBRE-10",
+   "entered_at": "2026-11-08T10:04:40.588331+00:00",
+   "entities": [
+    "Brighton & Hove Albion",
+    "Brentford"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV08BRIBRE-10\", \"b\"]]",
+   "lane": "corners_total_under",
+   "logged": "2026-11-08T10:03:27+00:00",
+   "matched": [
+    "Brighton & Hove Albion"
+   ],
+   "pid": "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV08BRIBRE-10\", \"b\"]]",
+   "price": 0.43,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": {
+    "as_of": "2026-11-08T10:03:27+00:00",
+    "names": [
+     {
+      "bets": 7,
+      "name": "Brighton & Hove Albion",
+      "profit": -7.0,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Lyon",
+      "profit": -5.0,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Real Betis",
+      "profit": -4.6728,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 8,
+      "name": "St. Louis CITY SC",
+      "profit": -4.6584,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "PSV Eindhoven",
+      "profit": -4.6111,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "FC Dallas",
+      "profit": -4.2143,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 12,
+      "name": "Sevilla",
+      "profit": -3.6029,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Feyenoord Rotterdam",
+      "profit": -3.5706,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "SC Freiburg",
+      "profit": -2.7648,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Kilmarnock",
+      "profit": -2.5459,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
   }
  ],
  "pool": [
@@ -3309,6 +3588,81 @@
    "snapshot": null,
    "sport": "Commodities",
    "src": "daily",
+   "status": "open"
+  },
+  {
+   "contract": "KXEREDIVISIETOTAL-26NOV08HEEFEY-4",
+   "entered_at": "2026-11-08T10:04:40.588331+00:00",
+   "entities": [
+    "Heerenveen",
+    "Feyenoord Rotterdam"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"B3\", [\"B3:KXEREDIVISIETOTAL-26NOV08HEEFEY\", \"yes\"]]",
+   "lane": "B3",
+   "logged": "2026-11-08T09:46:13.252678+00:00",
+   "matched": [
+    "Feyenoord Rotterdam",
+    "Heerenveen"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"B3\", [\"B3:KXEREDIVISIETOTAL-26NOV08HEEFEY\", \"yes\"]]",
+   "price": 0.5,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXEPLCORNERS-26NOV08BRIBRE-10",
+   "entered_at": "2026-11-08T10:04:40.588331+00:00",
+   "entities": [
+    "Brighton & Hove Albion",
+    "Brentford"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV08BRIBRE-10\", \"b\"]]",
+   "lane": "corners_total_under",
+   "logged": "2026-11-08T10:03:27+00:00",
+   "matched": [
+    "Brentford",
+    "Brighton & Hove Albion"
+   ],
+   "pid": "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV08BRIBRE-10\", \"b\"]]",
+   "price": 0.43,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXEPLCORNERS-26NOV08IPSBOU-9",
+   "entered_at": "2026-11-08T10:04:40.588331+00:00",
+   "entities": [
+    "Ipswich Town",
+    "AFC Bournemouth"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV08IPSBOU-9\", \"b\"]]",
+   "lane": "corners_total_under",
+   "logged": "2026-11-08T10:03:27+00:00",
+   "matched": [
+    "AFC Bournemouth",
+    "Ipswich Town"
+   ],
+   "pid": "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV08IPSBOU-9\", \"b\"]]",
+   "price": 0.43,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
    "status": "open"
   }
  ],
