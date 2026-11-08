@@ -347,6 +347,11 @@
    "entries": "entered",
    "pool": "entered"
   },
+  "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV0817-T75999.99\", \"b\"]]": {
+   "at": "2026-11-08T18:48:39.703505+00:00",
+   "entries": "entered",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXETHD-26NOV0517-T2259.99\", \"b\"]]": {
    "at": "2026-11-05T19:09:22.391845+00:00",
    "pool": "entered"
@@ -1619,11 +1624,98 @@
    "sport": "Soccer",
    "src": "soccer_team_rules_ledger.json",
    "status": "open"
+  },
+  {
+   "contract": "KXBTCD-26NOV0817-T75999.99",
+   "entered_at": "2026-11-08T18:48:39.703505+00:00",
+   "entities": [
+    "Bitcoin"
+   ],
+   "id": "superpack:[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV0817-T75999.99\", \"b\"]]",
+   "lane": "crypto_fav_band_below",
+   "logged": "2026-11-08T18:47:53+00:00",
+   "matched": [
+    "Bitcoin"
+   ],
+   "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV0817-T75999.99\", \"b\"]]",
+   "price": 0.75,
+   "profit": null,
+   "scope": "crypto_fav",
+   "settled": null,
+   "side": "b",
+   "snapshot": {
+    "as_of": "2026-11-08T18:47:53+00:00",
+    "names": [
+     {
+      "bets": 14,
+      "name": "Real Madrid",
+      "profit": 10.8966,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Como",
+      "profit": 5.7566,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Manchester United",
+      "profit": 5.3737,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 19,
+      "name": "Bitcoin",
+      "profit": 5.0941,
+      "sport": "Crypto"
+     },
+     {
+      "bets": 5,
+      "name": "Charlotte FC",
+      "profit": 4.7894,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Napoli",
+      "profit": 4.7771,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "AS Roma",
+      "profit": 4.7712,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Columbus Crew",
+      "profit": 4.7227,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 31,
+      "name": "WTI",
+      "profit": 3.6524,
+      "sport": "Commodities"
+     },
+     {
+      "bets": 7,
+      "name": "Nottingham Forest",
+      "profit": 3.2002,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Crypto",
+   "src": "sandbox",
+   "status": "open"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-08T18:03:40.562458+00:00",
+ "last_run": "2026-11-08T18:48:39.703505+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -4695,14 +4787,14 @@
    ],
    "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLIGUE1TEAMTOTAL-26NOV08HACFCL-FCL2\", \"a\"]]",
    "price": 0.39,
-   "profit": null,
+   "profit": 1.5641,
    "scope": "soccer_team2",
-   "settled": null,
+   "settled": "2026-11-08T18:48:32+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXLALIGACORNERS-26NOV08ATMBAR-10",
@@ -5169,10 +5261,34 @@
    "sport": "Soccer",
    "src": "contract",
    "status": "lost"
+  },
+  {
+   "contract": "KXBTCD-26NOV0817-T75999.99",
+   "entered_at": "2026-11-08T18:48:39.703505+00:00",
+   "entities": [
+    "Bitcoin"
+   ],
+   "id": "superpack:[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV0817-T75999.99\", \"b\"]]",
+   "lane": "crypto_fav_band_below",
+   "logged": "2026-11-08T18:47:53+00:00",
+   "matched": [
+    "Bitcoin"
+   ],
+   "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV0817-T75999.99\", \"b\"]]",
+   "price": 0.75,
+   "profit": null,
+   "scope": "crypto_fav",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Crypto",
+   "src": "sandbox",
+   "status": "open"
   }
  ],
  "registered": "2026-11-05",
  "seen_settled": {
+  "[\"contract\", \"album_cheap_no_ledger.json\", [\"KXALBUMEQUIV-HOW26NOV05-2K\", \"no\"]]": "2026-11-08T18:48:39.703505+00:00",
   "[\"contract\", \"album_cheap_no_ledger.json\", [\"KXALBUMEQUIV-WAT26OCT29-8K\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"atp_coinflip_tp30\", [\"KXATPMATCH-26OCT25BRUBER-BER\", \"yes\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"atp_coinflip_tp30\", [\"KXATPMATCH-26OCT25DARARN-DAR\", \"yes\"]]": "2026-11-05T03:09:04.962721+00:00",

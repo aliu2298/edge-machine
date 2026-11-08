@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-08T18:03:40+00:00",
+ "board_built_at": "2026-11-08T18:48:39+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -673,6 +673,43 @@
    "source": "mls_fade_home",
    "sport": "soccer_p05",
    "status": "hit"
+  },
+  "2026-11-08|KXBTCD-26NOV0817-T75999.99|Below $76,000 at the close \u00b7 Crypto favourite band, below": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-11-08",
+   "edge_at_log": null,
+   "first_seen": "2026-11-08",
+   "headline": "Below $76,000 at the close",
+   "home": null,
+   "id": "2026-11-08|KXBTCD-26NOV0817-T75999.99|Below $76,000 at the close \u00b7 Crypto favourite band, below",
+   "kickoff": "2026-11-08T22:05Z",
+   "lane": "production",
+   "last_seen": "2026-11-08",
+   "last_seen_at": "2026-11-08T18:48:39+00:00",
+   "league": "Crypto \u00b7 Favourite band",
+   "match": "Bitcoin price on Nov 8, 2026",
+   "pair": "crypto_fav_band_below|crypto_fav",
+   "price_at_log": 0.75,
+   "published_at": "2026-11-08T18:48:39+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 196,
+   "route": {
+    "claim": "Below $76,000 at the close",
+    "event": "KXBTCD-26NOV0817",
+    "market": "KXBTCD-26NOV0817-T75999.99",
+    "outcome": "$76,000 or above",
+    "outcome_side": "no",
+    "price_at_log": 0.75,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "crypto_fav_band_below:KXBTCD-26NOV0817-T75999.99",
+   "source": "crypto_fav_band_below",
+   "sport": "crypto_fav",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -708,9 +745,9 @@
    "ready_at": "2026-10-21T00:47:16+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 13,
+    "leads": 14,
     "problem": null,
-    "routed": 13,
+    "routed": 14,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -722,7 +759,7 @@
    "sandbox_roi_fee": 0.1705,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -841,10 +878,10 @@
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": -0.0012,
-   "sandbox_n": 24,
-   "sandbox_roi": 0.1385,
-   "sandbox_roi_fee": 0.101,
+   "sandbox_clv": -0.0016,
+   "sandbox_n": 25,
+   "sandbox_roi": 0.1955,
+   "sandbox_roi_fee": 0.1553,
    "timing": {
     "late": [],
     "timed": 0,
@@ -916,5 +953,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-08T18:03:40+00:00"
+ "updated_at": "2026-11-08T18:48:39+00:00"
 }
