@@ -22,6 +22,14 @@
    "cap": 0.99,
    "max_ask": 0.98
   },
+  "finance_spx_nc_no|finance_daily": {
+   "band": [
+    0.9,
+    0.98
+   ],
+   "cap": 0.99,
+   "max_ask": 0.98
+  },
   "ftts_no_70_80|soccer_ftts": {
    "band": null,
    "cap": 0.85,
@@ -136,5 +144,5 @@
    "raised_at": "2026-11-08T08:07:13+00:00"
   }
  },
- "generated": "2026-11-08T09:07Z"
+ "generated": "2026-11-08T10:07Z"
 }
