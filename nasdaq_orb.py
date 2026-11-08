@@ -63,7 +63,12 @@ VARIANTS = {
 RETIRED = {
     "A": ("2026-10-30", "no edge"),
     "B": ("2026-10-30", "no edge"),
+    # Olu, 2026-11-08: C30 retired at its 15-day review — 33% won, +6.8bp gross, about +3bp after the spread,
+    # t +0.37. Friday 2026-11-06 is its last day; from Monday 2026-11-09 it logs nothing. Its record stays.
+    "C30": ("2026-11-06", "no edge after the spread"),
 }
+# Read target per variant once past the first review (Olu, 2026-11-08: C15 keeps collecting to 30 days).
+READ_TARGET = {"C15": 30}
 
 
 def variants_on(day):
