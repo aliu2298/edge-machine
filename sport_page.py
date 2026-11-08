@@ -498,11 +498,12 @@ def list_head(scoped, first="Rule", sp=None):
 
 
 def sandbox_order(row):
-    """Most evidence first; a too-early row sinks under every read one; retired last."""
+    """Most evidence first; a too-early row sinks under every read one; retired last. A row with row["pin"] set goes first
+    (2026-11-08: the soccer phase-4 WATCH lanes, asked for near the top of the Soccer page while they have no record)."""
     a = row["a"]
     retired = bool(row.get("gone")) or row.get("v") == "retired"
     roi = a["roi_fee"] if a.get("n") and a.get("roi_fee") is not None else float("-inf")
-    return (retired, is_early(row), -int(a.get("n") or 0), -roi, sp_name(row))
+    return (retired, not row.get("pin"), is_early(row), -int(a.get("n") or 0), -roi, sp_name(row))
 
 
 production_order = sandbox_order
