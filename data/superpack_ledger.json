@@ -340,6 +340,10 @@
    "at": "2026-11-07T11:43:13.735039+00:00",
    "pool": "entered"
   },
+  "[\"soccer_team_rules_ledger.json\", \"T5\", [\"T5:KXSERIEATEAMTOTAL-26NOV08NAPLAZ:away\", \"yes\"]]": {
+   "at": "2026-11-08T10:10:07.477021+00:00",
+   "pool": "entered"
+  },
   "[\"soccer_team_rules_ledger.json\", \"T5\", [\"T5:KXUELTEAMTOTAL-26NOV05CELBES:away\", \"yes\"]]": {
    "at": "2026-11-05T18:49:25.263865+00:00",
    "pool": "entered"
@@ -1231,7 +1235,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-08T10:04:40.588331+00:00",
+ "last_run": "2026-11-08T10:10:07.477021+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -3663,6 +3667,29 @@
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXSERIEATEAMTOTAL-26NOV08NAPLAZ-LAZ2",
+   "entered_at": "2026-11-08T10:10:07.477021+00:00",
+   "entities": [
+    "Lazio"
+   ],
+   "id": "superpack:[\"soccer_team_rules_ledger.json\", \"T5\", [\"T5:KXSERIEATEAMTOTAL-26NOV08NAPLAZ:away\", \"yes\"]]",
+   "lane": "T5",
+   "logged": "2026-11-08T10:01:25.755826+00:00",
+   "matched": [
+    "Lazio"
+   ],
+   "pid": "[\"soccer_team_rules_ledger.json\", \"T5\", [\"T5:KXSERIEATEAMTOTAL-26NOV08NAPLAZ:away\", \"yes\"]]",
+   "price": 0.43,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_team_rules_ledger.json",
    "status": "open"
   }
  ],
