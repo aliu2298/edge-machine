@@ -452,8 +452,12 @@
    "KXLIGUE1TOTAL-26OCT26PSGOL": "no settled over 3.5 market"
   }
  },
- "last_run": null,
+ "last_run": "2026-11-08T22:22:34.719168+00:00",
  "registered": "2026-11-09T00:00:00Z",
- "skips": {},
+ "skips": {
+  "T1M:KXBUNDESLIGATOTAL-26NOV07RBLFCA": "kicked off before the readout was registered (in the backfill, not the record)",
+  "T1M:KXEPLTOTAL-26NOV08BRIBRE": "kicked off before the readout was registered (in the backfill, not the record)",
+  "T1M:KXSERIEATOTAL-26NOV08INTCOM": "kicked off before the readout was registered (in the backfill, not the record)"
+ },
  "version": "t1m-sell15-v1"
 }
