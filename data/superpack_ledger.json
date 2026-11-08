@@ -1727,7 +1727,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-08T19:19:30.918274+00:00",
+ "last_run": "2026-11-08T19:33:16.764306+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -4083,14 +4083,14 @@
    ],
    "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLALIGATEAMTOTAL-26NOV08VILGET-VIL2\", \"a\"]]",
    "price": 0.62,
-   "profit": null,
+   "profit": 0.6129,
    "scope": "soccer_team2",
-   "settled": null,
+   "settled": "2026-11-08T19:32:43+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXEPLTOTAL-26NOV07NFOMCI-4",
@@ -4707,14 +4707,14 @@
    ],
    "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXLALIGACORNERS-26NOV08VILGET-11\", \"b\"]]",
    "price": 0.62,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_corners",
-   "settled": null,
+   "settled": "2026-11-08T19:32:43+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXLIGUE1TEAMTOTAL-26NOV08STBOL-STB3",
