@@ -41,6 +41,10 @@
    "at": "2026-11-08T17:18:14.400848+00:00",
    "pool": "entered"
   },
+  "[\"contract\", \"o35_cheap_no\", [\"KXEREDIVISIETOTAL-26NOV08FCUNIJ-4\", \"no\"]]": {
+   "at": "2026-11-08T21:26:29.013870+00:00",
+   "pool": "entered"
+  },
   "[\"contract\", \"o35_cheap_no\", [\"KXEREDIVISIETOTAL-26NOV08TWEAJA-4\", \"no\"]]": {
    "at": "2026-11-08T17:18:14.400848+00:00",
    "pool": "opposite"
@@ -1775,7 +1779,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-08T21:08:39.753069+00:00",
+ "last_run": "2026-11-08T21:26:29.013870+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -5645,6 +5649,31 @@
    "sport": "Football",
    "src": "nfl_tt_main1_ledger.json",
    "status": "open"
+  },
+  {
+   "contract": "KXEREDIVISIETOTAL-26NOV08FCUNIJ-4",
+   "entered_at": "2026-11-08T21:26:29.013870+00:00",
+   "entities": [
+    "FC Utrecht",
+    "NEC Nijmegen"
+   ],
+   "id": "superpack:[\"contract\", \"o35_cheap_no\", [\"KXEREDIVISIETOTAL-26NOV08FCUNIJ-4\", \"no\"]]",
+   "lane": "o35_cheap_no",
+   "logged": "2026-11-08T20:16:31+00:00",
+   "matched": [
+    "FC Utrecht",
+    "NEC Nijmegen"
+   ],
+   "pid": "[\"contract\", \"o35_cheap_no\", [\"KXEREDIVISIETOTAL-26NOV08FCUNIJ-4\", \"no\"]]",
+   "price": null,
+   "profit": -1.0,
+   "scope": null,
+   "settled": "2026-11-08T21:26:29.013870+00:00",
+   "side": "no",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "contract",
+   "status": "lost"
   }
  ],
  "registered": "2026-11-05",
@@ -5982,6 +6011,7 @@
   "[\"contract\", \"o35_cheap_no\", [\"KXEPLTOTAL-26OCT31HULIPS-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXEREDIVISIETOTAL-26NOV07ADOSPA-4\", \"no\"]]": "2026-11-07T23:11:18.227740+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXEREDIVISIETOTAL-26NOV08AZAGRO-4\", \"no\"]]": "2026-11-08T17:18:14.400848+00:00",
+  "[\"contract\", \"o35_cheap_no\", [\"KXEREDIVISIETOTAL-26NOV08FCUNIJ-4\", \"no\"]]": "2026-11-08T21:26:29.013870+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXEREDIVISIETOTAL-26NOV08TWEAJA-4\", \"no\"]]": "2026-11-08T17:18:14.400848+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXEREDIVISIETOTAL-26OCT31CAMGAE-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXEREDIVISIETOTAL-26OCT31PSVWIL-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
