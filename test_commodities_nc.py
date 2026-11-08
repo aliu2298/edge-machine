@@ -82,6 +82,14 @@ eq((S.COMMOD_NC_MAX_SPREAD, S.COMMOD_NC_MIN_ASK_SIZE), (S.COMMOD_FAV_MAX_SPREAD,
 eq((S.COMMOD_NC_MAX_SPREAD, S.COMMOD_NC_MIN_ASK_SIZE), (0.03, 25), "and that is 3c and 25 contracts")
 eq(S.COMMOD_NC_READ_DAYS, T.READ_FLOOR, "read at 30 market-days")
 eq(S.COMMOD_LANE_PRIORITY, ("commod_fav_band", "commod_nc_yes", "commod_nc_no"), "the lane order")
+# 2026-11-08 (Olu): commod_nc_no (D7) retired, off the run, record kept. The machinery below replays it as
+# registered, so it is put back on the run IN-PROCESS only.
+eq((S.SOURCES["commod_nc_no"]["sports"], S.SOURCES["commod_nc_no"]["retired_sports"]),
+   ([], {"commodities_fav": S.COMMOD_NC_NO_RETIRED_WHY}), "commod_nc_no: retired 2026-11-08, off the run")
+ok("Retired 2026-11-08 by Olu" in S.COMMOD_NC_NO_RETIRED_WHY and "12–1" in S.COMMOD_NC_NO_RETIRED_WHY,
+   "and the reason carries the date and the record it stopped on")
+S.SOURCES["commod_nc_no"] = dict(S.SOURCES["commod_nc_no"], sports=["commodities_fav"])
+S.SOURCES["commod_nc_no"].pop("retired_sports", None)
 for name, side in (("commod_nc_yes", "a"), ("commod_nc_no", "b")):
     m = S.SOURCES[name]
     eq(m["sports"], ["commodities_fav"], f"{name}: the commodity lane's own sport")

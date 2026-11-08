@@ -52,6 +52,10 @@ def _record(picks):
     return a, days
 
 
+FIN_PROMOTION_NOTE = ('Amendment 2026-11-08 (Olu): to Production at $1 on a fresh record from 2026-11-08, the way Econ '
+                      'near-certain YES was on 2026-10-20; the paper ledger and its terms are unchanged.')
+
+
 def build(key, state=None, now=None, nc=None):
     state = state if state is not None else D.load()
     lane = state['lanes'][key]
@@ -84,8 +88,9 @@ def build(key, state=None, now=None, nc=None):
         nc_picks = nc.get('picks') or []
         old_row['v'] = 'retired'
         old_row['meta'] = dict(old_row['meta'], note=D.RULE + RETIRED_NOTE)
-        nrow = dict(name=N.KEY, sport=key, meta={'label': N.LABEL, 'note': N.NOTE, 'kind': 'Rule'},
-                    prod=False, open=sum(r['status'] == 'open' for r in nc_picks), since=None, v='waiting',
+        # D3 to Production 2026-11-08 (Olu): its row is the Production record since then (below); paper continues.
+        nrow = dict(name=N.KEY, sport=key, meta={'label': N.LABEL, 'note': N.NOTE + ' ' + FIN_PROMOTION_NOTE, 'kind': 'Rule'},
+                    prod=True, open=sum(r['status'] == 'open' for r in nc_picks), since=None, v='waiting',
                     a=N.record(nc_picks))
         rows.append(nrow)
     all_picks = [r for picks in lane_picks.values() for r in picks]
@@ -120,8 +125,9 @@ def build(key, state=None, now=None, nc=None):
             params = [('Entry', 'NO at 90–98¢ (1 − yes bid), 2–3.5h before the 16:00 ET close'),
                       ('Selection', 'Cheapest in-band KXINXU rung, H1600 event only; one per day, ties by ticker'),
                       ('Liquidity', 'Two-sided quote, ≤3¢ spread, 25+ contracts at the NO ask'),
-                      ('Record', 'Paper only · official settlement · 7% fee · per market-day · read at 30')]
-            return '<dl class="sp-params">'+''.join(f'<dt>{e(k)}</dt><dd>{e(v)}</dd>' for k,v in params)+'</dl>'+SP.definition_html(N.NOTE)
+                      ('Record', 'Production from 2026-11-08 at $1, a fresh record counted from then; the paper ledger '
+                                 'continues · official settlement · 7% fee · per market-day · read at 30')]
+            return '<dl class="sp-params">'+''.join(f'<dt>{e(k)}</dt><dd>{e(v)}</dd>' for k,v in params)+'</dl>'+SP.definition_html(N.NOTE + ' ' + FIN_PROMOTION_NOTE)
         if r['name'] in D.NC_LANES:
             spec = D.NC_LANES[r['name']]
             lo, hi = spec['band']
@@ -187,8 +193,8 @@ def build(key, state=None, now=None, nc=None):
         description = D.NC_RULE['econ_nc_yes']+' '+D.NC_RULE['econ_nc_no']
         scope = 'Near-certain AAA gas and diesel rungs · YES in Production, NO retired'
     elif finance:
-        description = 'S&P 500 near-certain NO, 90–98¢, 2–3.5h before the close; paper only.'
-        scope = 'S&P near-certain NO · paper only'
+        description = 'S&P 500 near-certain NO, 90–98¢, 2–3.5h before the close; in Production from 2026-11-08.'
+        scope = 'S&P near-certain NO · in Production from 2026-11-08'
     else:
         description, scope = D.RULE, 'Daily favourite-band thresholds · paper only'
     spec = SP.spec(family=D.LANES[key],key=key,title='Edge Machine · '+D.LANES[key],description=description,
@@ -199,6 +205,11 @@ def build(key, state=None, now=None, nc=None):
                    recent=lambda d,r,n:(nc_scan() if nrow is not None and r is nrow else scan()),
                    method=method,scoped=False,unit=lambda r:'contract')
     data, stages = {'quotes':[], 'coverage':coverage}, {'pairs':{}}
+    if finance:
+        # D3's Production record (2026-11-08): the same basis as Econ YES's row, the picks since the promotion.
+        import daily_production as DP
+        data['quotes'] = DP.fin_quotes(nc, since=None)
+        stages['pairs'] = DP.pairs()
     if econ:
         import daily_production as DP
         # The Production lane's rows come from the PRODUCTION view (what the feed published and the follower traded: the retired 3h NO lane is
@@ -206,7 +217,7 @@ def build(key, state=None, now=None, nc=None):
         # a pick the follower was offered and traded (2026-10-24 diesel), so this page said 5-0 where the Production page says 6-0.
         data['quotes'] = [q for q in DP.quotes(state, all_lanes=True) if q['source'] in DP.PULLED_NC] + DP.quotes(state)
         stages['pairs'] = DP.pairs()
-    if econ:
+    if econ or finance:
         # ONE BASIS for the Production lane (2026-11-06): its row counts the record since Production the way the header tile and the Production
         # page do (production._assess_since_kickoff: the picks that kicked off after it entered, leads first published too close to kickoff to
         # follow left out), instead of every pick it ever logged. The row said 6–0 +3.2% where the tile said 5–0 +3.1%: one late lead.
@@ -223,7 +234,7 @@ def build(key, state=None, now=None, nc=None):
         if nrow is not None and r is nrow:
             nc_days = len({N.day_of(x) for x in nc_picks if x['status'] != 'open'})
             html = _evidence(html, r['name'], r['a']['n'], f'{nc_days}/{N.READ_AT} market-days')
-            html = _verdict(html, r['name'], r, 'Paper record · not graded')
+            html = _verdict(html, r['name'], r, 'Production · paper record' if r.get('prod') else 'Paper record · not graded')
             continue
         _a, days = _record(lane_picks[r['name']])
         html = _evidence(html, r['name'], r['a']['n'], f'{days}/30 market-days', retired=bool(r.get('gone')))

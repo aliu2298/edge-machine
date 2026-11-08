@@ -77,9 +77,10 @@ check("run() takes no new entry for a retired lane, fills and settlement go on",
 
 print("\nthe Commodities page: WTI in the cheap-side Retired fold, the gas lanes above it")
 ch = CB.build()
-a, j = ch.find('id="cheap-side"'), ch.find('id="retired-cheap"')
-cheap = ch[a:ch.find("</section>", j)]
-check("one fold", (j > a > 0, ch.count('id="retired-cheap"')), (True, 1))
+# 2026-11-08: the cheap-side lanes are rows of the Rules list; the retired WTI lane is a row of the page's Retired fold.
+a, j = ch.find('<section id="rules"'), ch.find('<section id="retired"')
+cheap = ch[a:ch.find('<section id="method"')]
+check("one fold", (j > a > 0, ch.count('<section id="retired"')), (True, 1))
 check("WTI's card in the fold, not above it", ('id="wti-cheap-yes"' in ch[j:], 'id="wti-cheap-yes"' in ch[a:j]), (True, False))
 check("both gas cards live", ('id="gas-cheap-no"' in ch[a:j], 'id="gas-week-cheap-no"' in ch[a:j]), (True, True))
 check("the fold names the record", "split −60.2%, hold −75.6%" in html.unescape(ch[j:]), True)

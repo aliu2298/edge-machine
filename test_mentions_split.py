@@ -478,12 +478,14 @@ check("once the event leaves the open list, the held entry's event is read on it
       (True, 1.0, True, [True, False]))
 import commodities_build as CB
 gh_ = CB.build()
-sec = gh_[gh_.find('id="cheap-side"'):gh_.find('<section id="events"')]
+# 2026-11-08 (Olu: one tab, the Econ Daily design): each cheap-side lane is a row of the Rules list, its card in the fold;
+# the retired WTI lane in the Retired fold; the shared explanation in Method.
+sec = gh_[gh_.find('<section id="rules"'):gh_.find('<section id="method"')]
 stx = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", sec))
-check("the Commodities page: the cheap-side section before the Events, the summary and both cards, phone labels",
-      (bool(sec), "Cheap side + resting take-profit" in stx, "WTI oil · cheap YES (15-30c)" in stx,
+check("the Commodities page: a row per cheap-side lane with its card in the fold, phone labels, the note in Method",
+      (bool(sec), "Cheap side + resting take-profit" in gh_[gh_.find('<section id="method"'):], "WTI oil · cheap YES (15-30c)" in stx,
        "AAA gas · cheap NO (15-30c)" in stx, 'id="wti-cheap-yes"' in sec, 'id="gas-cheap-no"' in sec,
-       'data-l="Split ROI"' in sec, "review at 10, decide at 30" in stx), (True,) * 8)
+       'data-source="gas_cheap_no"' in sec, "review at 10, decide at 30" in stx), (True,) * 8)
 check("the existing commodities rules are still on the page", all(n in gh_ for n in CB.RULE_NAMES.values()), True)
 check("no guarded public phrase in the commodities section", sandbox_audit.COPY_RE.findall(stx), [])
 
@@ -499,11 +501,11 @@ check("the wide rule: a 10c spread at NO 0.23 enters (the daily gas lane, 5c, wo
 check("its rule text says 10c and that it is small and slow",
       ("a spread of 10c or less" in GW["rule"], "about 3 entries a week" in GW["rule"], "5c" in GW["rule"]), (True, True, False))
 gw_h = CB.build()
-gsec = gw_h[gw_h.find('id="cheap-side"'):gw_h.find('<section id="events"')]
+gsec = gw_h[gw_h.find('<section id="rules"'):]
 gtx = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", gsec))
-check("the Commodities page: a summary row and its card after gas_cheap_no, with the small-and-slow note",
+check("the Commodities page: a row and its card after gas_cheap_no, with the small-and-slow note (in Method)",
       ("AAA gas weekly · cheap NO (15-30c, 10c spread)" in gtx,
-       gsec.find('id="gas-cheap-no"') < gsec.find('id="gas-week-note"') < gsec.find('id="gas-week-cheap-no"'),
+       gsec.find('id="gas-cheap-no"') < gsec.find('id="gas-week-cheap-no"'),
        "about 3 entries a week, all on one weekly event, so 10 settled events takes about ten weeks. Review at 10, decide at 30." in gtx), (True, True, True))
 
 print("\nthe outcome unit is the Kalshi event, not the rung (2026-10-29)")

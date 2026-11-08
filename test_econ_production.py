@@ -49,7 +49,7 @@ def state(yes=True,no=True,old=True):
 
 class EconProduction(unittest.TestCase):
     def test_production_is_the_yes_lane_the_no_lane_is_back_in_the_sandbox_and_the_band_is_demoted(self):
-        self.assertEqual(set(DP.pairs()),{YES_PAIR})
+        self.assertEqual(set(DP.pairs()),{YES_PAIR,DP.FIN_PAIR})   # D3, the S&P NO, from 2026-11-08 (test_finance_production.py)
         self.assertEqual(DP.PULLED_NC,{'econ_nc_no':'2026-10-28'})
         self.assertNotIn(DP.OLD_PAIR,DP.pairs())
         self.assertEqual(T.PAIR_REMOVALS[DP.OLD_PAIR],dict(removed_on='2026-10-20',keep_record=True))
@@ -62,7 +62,7 @@ class EconProduction(unittest.TestCase):
     def test_yes_and_no_routes_name_the_exact_contract_and_side(self):
         s=state();before=copy.deepcopy(s);f=DP.feed(s,now=NOW)
         self.assertEqual(s,before)
-        self.assertEqual(set(f['pairs']),{YES_PAIR})
+        self.assertEqual(set(f['pairs']),{YES_PAIR,DP.FIN_PAIR})
         live={l['pair']:l for l in f['leads'].values() if l.get('lane')!='retired'}
         self.assertEqual(set(live),{YES_PAIR})     # the NO lane is paper since 2026-10-28: no lead
         y=live[YES_PAIR]
@@ -123,7 +123,7 @@ class EconProduction(unittest.TestCase):
         self.assertNotIn('Not Above $6.320',prod)    # the NO lane is paper again
         self.assertNotIn('Montana gas price',prod)
         model=C.model(d,st,blob,NOW,daily=s)
-        self.assertEqual(model['tiles']['pairs'],1)
+        self.assertEqual(model['tiles']['pairs'],2)       # econ_nc_yes and D3 (2026-11-08)
 
     def test_page_merge_does_not_mutate_sports_inputs_or_reset_sports_clock(self):
         d={'quotes':[]};st={'pairs':{}};blob={'updated_at':'2026-10-15T12:00Z','pairs':{},'leads':{}}

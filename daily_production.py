@@ -14,6 +14,7 @@ import json
 import os
 import re
 import daily_track as D
+import finance_nc as FN
 
 # The old lane, now a Sandbox lane. It keeps its whole record (sandbox_track.PAIR_REMOVALS
 # names it too, keep_record). No Production listing is left for it, so nothing re-promotes it
@@ -35,10 +36,21 @@ NC_PUBLISHED = tuple(lane for lane in D.NC_LANES if lane not in PULLED_NC)
 NC_PAIRS = {lane: lane+'|econ_daily' for lane in NC_PUBLISHED}
 PATH = os.path.join(D.ROOT, 'data', 'econ_production_leads.json')
 
+# 2026-11-08 (Olu): D3, S&P near-certain · NO 90-98c · 3h (finance_nc, paper 12-0 +7.0% at 12/30 market-days), to
+# Production at $1 the way econ_nc_yes was on 2026-10-20: published in THIS feed, on a fresh record from the
+# promotion (only rows logged from FIN_PROMOTED on), its paper ledger untouched and still read on the Daily Markets
+# page. The follower routes it as an Econ Daily ladder NO on the KXINXU rung.
+FIN_LANE = FN.KEY
+FIN_PAIR = FIN_LANE + '|finance_daily'
+FIN_PROMOTED = '2026-11-08T06:00:00+00:00'          # 00:00 CT on the promotion date
+FIN_MINUTES = (120, 210)                             # 3.5-2h before the 16:00 ET close
+
 
 def pairs():
-    return {pair: dict(stage='production', ready_at=NC_PROMOTED, promoted_at=NC_PROMOTED, by_hand=D.NC_REGISTERED)
-            for pair in NC_PAIRS.values()}
+    out = {pair: dict(stage='production', ready_at=NC_PROMOTED, promoted_at=NC_PROMOTED, by_hand=D.NC_REGISTERED)
+           for pair in NC_PAIRS.values()}
+    out[FIN_PAIR] = dict(stage='production', ready_at=FIN_PROMOTED, promoted_at=FIN_PROMOTED, by_hand='2026-11-08')
+    return out
 
 
 def _old_pairs():
@@ -123,16 +135,44 @@ def quotes(state, all_lanes=False):
     return out
 
 
+def fin_quotes(fin, since=FIN_PROMOTED):
+    """D3's rows as ledger quotes (sport finance_daily), the ones logged from `since` on (None: every row).
+    A row that does not meet the lane's own registered terms is not published."""
+    out = []
+    for r in (fin or {}).get('picks') or []:
+        close, logged = D.instant(r.get('close')), D.instant(r.get('logged'))
+        price, bid, size = (D.number(r.get(k)) for k in ('price', 'bid', 'size'))
+        if (not close or not logged or r.get('series') != FN.SERIES or r.get('side') != 'no'
+                or any(v is None for v in (price, bid, size))
+                or not FN.eligible(dict(ask=price, bid=bid, size=size))
+                or not FIN_MINUTES[0] <= (close - logged).total_seconds() / 60 <= FIN_MINUTES[1]
+                or not str(r.get('event') or '').endswith(FN.EVENT_CLOCK)
+                or not str(r.get('id') or '').startswith(str(r.get('event') or '') + '-')
+                or r.get('status') not in ('open', 'won', 'lost', 'no_result')):
+            continue
+        if since and logged < D.instant(since):
+            continue
+        # The NO's own payout is stored (finance_nc: 1 when the NO won). _row reads the YES's quote for price_a: the
+        # YES ask is 1 - the NO bid.
+        # The ledger titles the NO ("NO · 7,470 or above"); the contract's own name is the YES rung's.
+        title = str(r.get('title') or '').removeprefix('NO · ')
+        row = _row(FIN_LANE, dict(r, title=title, yes_ask=round(1 - bid, 6)), price, bid, size, 'b', r.get('payout'))
+        row.update(sport='finance_daily', label=r.get('name') or FN.META['name'])
+        out.append(row)
+    return out
+
+
 def _healthy(lane, now):
     stamp=D.instant(lane.get('last_success'))
     return stamp, stamp is not None and not lane.get('error') and dt.timedelta(0)<=now-stamp<=dt.timedelta(hours=3)
 
 
-def feed(state, now=None, previous=None, heartbeat=False):
+def feed(state, now=None, previous=None, heartbeat=False, fin=None):
     """The feed; `heartbeat` stamps it with the clock (see soccer_rules_production.feed for why that is safe)."""
     import production as P
     now=now or dt.datetime.now(dt.timezone.utc)
     nc=state.get('nc') or {}
+    fin=FN.load() if fin is None else fin
     stamps,healthy=[],True
     for lane in NC_PUBLISHED:
         stamp,ok=_healthy(nc.get(lane) or {},now)
@@ -140,6 +180,11 @@ def feed(state, now=None, previous=None, heartbeat=False):
     rows=quotes(state)
     # Failed/stale scans retain settled history but publish no actionable entries.
     if not healthy:rows=[r for r in rows if r['status']!='open']
+    # D3 (2026-11-08) on its own collector's health: a stale S&P scan withholds only its own open leads.
+    fstamp,fok=_healthy(fin,now)
+    stamps.append(fstamp)
+    frows=fin_quotes(fin)
+    rows+=frows if fok else [r for r in frows if r['status']!='open']
     built=min([s for s in stamps if s] or [None]) if all(stamps) else None
     built=now if heartbeat else (built or now)
     blob=P.build_feed({'quotes':rows}, {'pairs':pairs()}, now=built, previous=previous)
@@ -153,9 +198,9 @@ def feed(state, now=None, previous=None, heartbeat=False):
             # Settled leads only: a pending one would be a lead with nothing to act on.
             if lid not in blob['leads'] and lead.get('status')!='pending':
                 blob['leads'][lid]=dict(lead,lane='retired',retired_on=DEMOTED_ON)
-    errors=[(nc.get(l) or {}).get('error') for l in NC_PUBLISHED]
+    errors=[(nc.get(l) or {}).get('error') for l in NC_PUBLISHED]+[fin.get('error')]
     blob['collector_error']='; '.join(e for e in errors if e) or None
-    blob['collector_healthy']=healthy
+    blob['collector_healthy']=healthy and fok
     return blob
 
 
@@ -163,10 +208,11 @@ def _live_leads(leads):
     return {k:v for k,v in (leads or {}).items() if v.get('lane')!='retired'}
 
 
-def page_inputs(d, st, blob, state, now=None):
+def page_inputs(d, st, blob, state, now=None, fin=None):
     """Augment page inputs in memory, preserving all original ledger/feed objects."""
-    current=feed(state,now=now)
-    return (dict(d,quotes=list(d.get('quotes') or [])+quotes(state)),
+    fin=FN.load() if fin is None else fin
+    current=feed(state,now=now,fin=fin)
+    return (dict(d,quotes=list(d.get('quotes') or [])+quotes(state)+fin_quotes(fin)),
             dict(st,pairs={**(st.get('pairs') or {}),**pairs()}),
             dict(blob,leads={**(blob.get('leads') or {}),**_live_leads(current['leads'])},
                  pairs={**(blob.get('pairs') or {}),**current['pairs']}))
