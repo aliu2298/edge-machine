@@ -13,7 +13,7 @@
    0.97
   ]
  },
- "board_built_at": "2026-11-08T15:01:12+00:00",
+ "board_built_at": "2026-11-08T15:16:13+00:00",
  "collector_error": null,
  "collector_healthy": {
   "st_t1h": true,
@@ -23,84 +23,7 @@
  "corners_selections": {},
  "first_publish_min": 45,
  "late_publication_skipped": 0,
- "leads": {
-  "2026-11-08|Real Sociedad|Rayo Vallecano|Rayo Vallecano to score under 2.5 \u00b7 O+D+ v O+D+ \u00b7 team 3+ goals \u00b7 NO": {
-   "away": "Rayo Vallecano",
-   "bet": {
-    "kind": "team_lte",
-    "n": 2,
-    "team": "Rayo Vallecano"
-   },
-   "date": "2026-11-08",
-   "edge_at_log": null,
-   "first_seen": "2026-11-08",
-   "headline": "Rayo Vallecano to score under 2.5",
-   "home": "Real Sociedad",
-   "id": "2026-11-08|Real Sociedad|Rayo Vallecano|Rayo Vallecano to score under 2.5 \u00b7 O+D+ v O+D+ \u00b7 team 3+ goals \u00b7 NO",
-   "kickoff": "2026-11-08T15:15Z",
-   "lane": "production",
-   "last_seen": "2026-11-08",
-   "last_seen_at": "2026-11-08T15:01:12+00:00",
-   "league": "La Liga",
-   "match": "Real Sociedad v Rayo Vallecano",
-   "pair": "st_t7|soccer_team3",
-   "price_at_log": 0.9,
-   "published_at": "2026-11-08T13:46:13+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 88,
-   "route": {
-    "claim": "Rayo Vallecano to score under 2.5",
-    "event": "KXLALIGATEAMTOTAL-26NOV08RSORVC",
-    "market": "KXLALIGATEAMTOTAL-26NOV08RSORVC-RVC3",
-    "outcome": "Vallecano over 2.5 goals",
-    "outcome_side": "no",
-    "price_at_log": 0.9,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "st_t7:KXLALIGATEAMTOTAL-26NOV08RSORVC-RVC3",
-   "source": "st_t7",
-   "sport": "soccer_team3",
-   "status": "pending"
-  },
-  "2026-11-08|Real Sociedad|Rayo Vallecano|Real Sociedad to score under 2.5 \u00b7 O+D+ v O+D+ \u00b7 team 3+ goals \u00b7 NO": {
-   "away": "Rayo Vallecano",
-   "bet": {
-    "kind": "team_lte",
-    "n": 2,
-    "team": "Real Sociedad"
-   },
-   "date": "2026-11-08",
-   "edge_at_log": null,
-   "first_seen": "2026-11-08",
-   "headline": "Real Sociedad to score under 2.5",
-   "home": "Real Sociedad",
-   "id": "2026-11-08|Real Sociedad|Rayo Vallecano|Real Sociedad to score under 2.5 \u00b7 O+D+ v O+D+ \u00b7 team 3+ goals \u00b7 NO",
-   "kickoff": "2026-11-08T15:15Z",
-   "lane": "production",
-   "last_seen": "2026-11-08",
-   "last_seen_at": "2026-11-08T15:01:12+00:00",
-   "league": "La Liga",
-   "match": "Real Sociedad v Rayo Vallecano",
-   "pair": "st_t7|soccer_team3",
-   "price_at_log": 0.71,
-   "published_at": "2026-11-08T13:46:13+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 88,
-   "route": {
-    "claim": "Real Sociedad to score under 2.5",
-    "event": "KXLALIGATEAMTOTAL-26NOV08RSORVC",
-    "market": "KXLALIGATEAMTOTAL-26NOV08RSORVC-RSO3",
-    "outcome": "Real Sociedad over 2.5 goals",
-    "outcome_side": "no",
-    "price_at_log": 0.71,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "st_t7:KXLALIGATEAMTOTAL-26NOV08RSORVC-RSO3",
-   "source": "st_t7",
-   "sport": "soccer_team3",
-   "status": "pending"
-  }
- },
+ "leads": {},
  "pairs": {
   "st_t1h|soccer_team2": {
    "by_hand": "2026-11-08",
@@ -159,9 +82,9 @@
    "ready_at": "2026-10-29T00:59:00+00:00",
    "route": "moved by hand on 2026-10-28",
    "routing": {
-    "leads": 2,
+    "leads": 0,
     "problem": null,
-    "routed": 2,
+    "routed": 0,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -173,7 +96,7 @@
    "sandbox_roi_fee": 0.2763,
    "timing": {
     "late": [],
-    "timed": 2,
+    "timed": 0,
     "under_target": 0
    }
   }
@@ -182,5 +105,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-08T15:01:12+00:00"
+ "updated_at": "2026-11-08T15:16:13+00:00"
 }
