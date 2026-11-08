@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-08T07:45Z",
+ "generated": "2026-11-08T08:04Z",
  "rule": "active = not retired, not a baseline, a bet or an open pick in its current record window",
  "tabs": {
   "commodities": {
@@ -79,6 +79,12 @@
    "archived": false,
    "error": null,
    "since": null
+  },
+  "nhl": {
+   "active": [],
+   "archived": true,
+   "error": null,
+   "since": "2026-11-08"
   },
   "soccer": {
    "active": [
