@@ -363,13 +363,19 @@ def gap_section(rows, paper_by_pair, in_feed=None, feed_from=None, horizon=None)
     return ('<details class="fold"><summary>Where live and paper differ by more than about one bet</summary>' + "".join(items) + "</details>")
 
 
+# Non-soccer pairs whose live fills stay listed after the pair went back to the Sandbox (2026-11-08: the commodities favourite band).
+HISTORY_SPORTS = ("commodities_fav",)
+ENDED_LANES = {"o35_cheap_no": "Nov 6", "top5_dip": "Nov 8"}      # own-state lanes back in the Sandbox: their live fills stay as history
+
+
 def pulled_table(live_blob, name):
     """Live fills on pairs that are no longer in Production (their own pair, never another scope's), one fold under the lanes table.
     `name(pair)` words the pair as the page does. Settled fills only: won, lost; the rest is counted open or unfilled."""
     import sandbox_sources as S
     pulled = (live_blob or {}).get("pulled") or {}
     # Soccer pairs that left Production, never a removed lane (removed lanes render nowhere).
-    pulled = {p: o for p, o in pulled.items() if p.split("|")[-1].startswith("soccer") and not S.lane_removed(*p.split("|", 1))}
+    pulled = {p: o for p, o in pulled.items() if (p.split("|")[-1].startswith("soccer") or p.split("|")[-1] in HISTORY_SPORTS)
+              and not S.lane_removed(*p.split("|", 1))}
     rows = [(p, record(o)) for p, o in pulled.items() if o]
     rows = [(p, r) for p, r in rows if r["won"] or r["lost"] or r["open"]]
     if not rows:
@@ -418,12 +424,12 @@ def lanes_table(live_blob):
             continue
         rec = own_summary(rows)
         roi = "—" if rec["roi"] is None else f'{rec["roi"] * 100:+.1f}%'
-        name = LANE_NAMES.get(lane, lane)
+        name = LANE_NAMES.get(lane, lane) + (f" · back in the Sandbox {ENDED_LANES[lane]}" if lane in ENDED_LANES else "")
         body += (f'<tr><td>{esc(name)}</td><td class="num"><b>{wfl(rec)}</b></td><td class="num">{roi}</td></tr>')
         notes.append(f"<li><b>{esc(name)}</b> · {esc(own_detail(rec))}</li>")
     if not body:
         return ""
-    return ('<details class="fold"><summary>Own-state lanes, live (over 3.5 cheap NO, NBA win margin, top-5 dip)</summary>'
+    return ('<details class="fold"><summary>Own-state lanes, live fills (NBA win margin; over 3.5 cheap NO and the top-5 dip stay as history)</summary>'
             '<div class="tbl"><table><thead><tr><th>Lane</th><th class="num">Live W–F–L</th><th class="num">ROI</th></tr></thead>'
             f'<tbody>{body}</tbody></table></div><p class="sm mut">{esc(FLAT_NOTE)}.</p><ul class="sm">{"".join(notes)}</ul>'
             f'<p class="sm mut">{esc(live_blob.get("lane_note") or "")}</p></details>')

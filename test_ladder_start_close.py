@@ -68,9 +68,8 @@ import production as P
 # Either WTI ticker format (KXWTI-26NOV03-... or KXWTI-26NOV0314-...): the feed re-keyed the lead on the
 # 26NOV0314 market after the fix, and it is the same Nov 3 lead with the same result.
 leads = [l for l in P.load_feed()["leads"].values() if "|KXWTI-26NOV03" in l["id"]]
-check("the Production lead is a Nov 3 lead with its graded result",
-      [(l["date"], l["kickoff"], l["match"], l["status"], l["id"].startswith("2026-11-03|")) for l in leads],
-      [("2026-11-03", "2026-11-03T19:30Z", "WTI crude close on Nov 3, 2026", "hit", True)])
+check("the commodities band is back in the Sandbox (2026-11-08): the Production feed no longer names its Nov 3 lead; the graded quote above keeps its result",
+      leads, [])
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

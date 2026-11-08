@@ -1956,6 +1956,12 @@
    "pair": "team2_form_l10|soccer_team2_intl",
    "reason": "moved by hand \u2014 ready from this run",
    "to": "ready"
+  },
+  {
+   "at": "2026-11-08T06:55:25+00:00",
+   "pair": "commod_fav_band|commodities_fav",
+   "reason": "taken off the Production list by hand, record kept",
+   "to": "sandbox"
   }
  ],
  "pairs": {
@@ -1970,24 +1976,9 @@
    "stage": "sandbox"
   },
   "commod_fav_band|commodities_fav": {
-   "by_hand": "2026-10-09",
-   "entry": {
-    "base_roi": 0.2553,
-    "clv": 0.1033,
-    "clv_n": 1,
-    "n": 1,
-    "own_roi": 0.2553,
-    "roi": 0.2553,
-    "roi_fee": 0.2376,
-    "span_days": 0.0,
-    "weeks": 0,
-    "z": 0.5052
-   },
-   "entry_since": null,
-   "promoted_at": "2026-10-09T04:31:34+00:00",
-   "ready_at": "2026-10-09T04:31:34+00:00",
-   "ready_since": "2026-10-09T04:31:34+00:00",
-   "stage": "production"
+   "demoted_at": "2026-11-08T06:55:25+00:00",
+   "since": null,
+   "stage": "sandbox"
   },
   "corners_team_fade|soccer_corners": {
    "demoted_at": "2026-10-20T16:42:42+00:00",
@@ -2339,5 +2330,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-11-08T06:28:04+00:00"
+ "updated": "2026-11-08T07:09:07+00:00"
 }
