@@ -1,7 +1,518 @@
 {
  "error": null,
- "games": [],
- "last_run": "2026-11-08T21:00:18.310425+00:00",
+ "games": [
+  {
+   "day": "2026-11-08",
+   "entries": [
+    {
+     "ask": 0.99,
+     "away_goals": 0,
+     "bid": 0.98,
+     "goal_side": "home",
+     "home_goals": 1,
+     "kind": "over",
+     "maker": {
+      "cost": 0.98034,
+      "filled": false,
+      "roi": null
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 1.5,
+     "taker": {
+      "cost": 0.99069,
+      "depth": 51.61,
+      "filled": true,
+      "roi": 0.0094
+     },
+     "ticker": "KXNHLTOTAL-26NOV08FLABOS-2",
+     "ts": 1794162120,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.98,
+     "away_goals": 0,
+     "bid": 0.96,
+     "goal_side": "home",
+     "home_goals": 1,
+     "kind": "over",
+     "maker": {
+      "cost": 0.96067,
+      "filled": false,
+      "roi": null
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 2.5,
+     "taker": {
+      "cost": 0.98137,
+      "depth": 106.0,
+      "filled": true,
+      "roi": 0.019
+     },
+     "ticker": "KXNHLTOTAL-26NOV08FLABOS-3",
+     "ts": 1794162120,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.78,
+     "away_goals": 0,
+     "bid": 0.76,
+     "goal_side": "home",
+     "home_goals": 1,
+     "kind": "over",
+     "maker": {
+      "cost": 0.76319,
+      "filled": false,
+      "roi": null
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 4.5,
+     "taker": {
+      "cost": 0.79201,
+      "depth": 9.0,
+      "filled": false,
+      "roi": 0.2626
+     },
+     "ticker": "KXNHLTOTAL-26NOV08FLABOS-5",
+     "ts": 1794162120,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.72,
+     "away_goals": 0,
+     "bid": 0.69,
+     "goal_side": "home",
+     "home_goals": 2,
+     "kind": "pl",
+     "maker": {
+      "cost": 0.69374,
+      "filled": false,
+      "roi": null
+     },
+     "period": 1,
+     "side": "no",
+     "strike": 3.5,
+     "taker": {
+      "cost": 0.73411,
+      "depth": 12.7,
+      "filled": false,
+      "roi": 0.3622
+     },
+     "ticker": "KXNHLSPREAD-26NOV08FLABOS-BOS4",
+     "ts": 1794162360,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.78,
+     "away_goals": 0,
+     "bid": 0.77,
+     "goal_side": "home",
+     "home_goals": 2,
+     "kind": "over",
+     "maker": {
+      "cost": 0.7731,
+      "filled": true,
+      "roi": -1.0
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 5.5,
+     "taker": {
+      "cost": 0.79201,
+      "depth": 1.86,
+      "filled": false,
+      "roi": -1.0
+     },
+     "ticker": "KXNHLTOTAL-26NOV08FLABOS-6",
+     "ts": 1794162360,
+     "v2": true,
+     "won": false
+    },
+    {
+     "ask": 0.65,
+     "away_goals": 0,
+     "bid": 0.64,
+     "goal_side": "home",
+     "home_goals": 2,
+     "kind": "over",
+     "maker": {
+      "cost": 0.64403,
+      "filled": true,
+      "roi": -1.0
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 6.5,
+     "taker": {
+      "cost": 0.66592,
+      "depth": 564.97,
+      "filled": true,
+      "roi": -1.0
+     },
+     "ticker": "KXNHLTOTAL-26NOV08FLABOS-7",
+     "ts": 1794162360,
+     "v2": true,
+     "won": false
+    },
+    {
+     "ask": 0.96,
+     "away_goals": 0,
+     "bid": 0.95,
+     "goal_side": "home",
+     "home_goals": 2,
+     "kind": "over",
+     "maker": {
+      "cost": 0.95083,
+      "filled": true,
+      "roi": 0.0517
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 3.5,
+     "taker": {
+      "cost": 0.96269,
+      "depth": 321.43,
+      "filled": true,
+      "roi": 0.0388
+     },
+     "ticker": "KXNHLTOTAL-26NOV08FLABOS-4",
+     "ts": 1794162360,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.99,
+     "away_goals": 0,
+     "bid": 0.97,
+     "goal_side": "home",
+     "home_goals": 2,
+     "kind": "over",
+     "maker": {
+      "cost": 0.97051,
+      "filled": false,
+      "roi": null
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 2.5,
+     "taker": {
+      "cost": 0.99069,
+      "depth": 0,
+      "filled": false,
+      "roi": 0.0094
+     },
+     "ticker": "KXNHLTOTAL-26NOV08FLABOS-3",
+     "ts": 1794162360,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.91,
+     "away_goals": 0,
+     "bid": 0.89,
+     "goal_side": "home",
+     "home_goals": 2,
+     "kind": "over",
+     "maker": {
+      "cost": 0.89171,
+      "filled": true,
+      "roi": 0.1214
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 4.5,
+     "taker": {
+      "cost": 0.91573,
+      "depth": 25.11,
+      "filled": false,
+      "roi": 0.092
+     },
+     "ticker": "KXNHLTOTAL-26NOV08FLABOS-5",
+     "ts": 1794162360,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.77,
+     "away_goals": 0,
+     "bid": 0.75,
+     "goal_side": "home",
+     "home_goals": 3,
+     "kind": "pl",
+     "maker": {
+      "cost": 0.75328,
+      "filled": false,
+      "roi": null
+     },
+     "period": 1,
+     "side": "no",
+     "strike": 4.5,
+     "taker": {
+      "cost": 0.7824,
+      "depth": 0,
+      "filled": false,
+      "roi": 0.2781
+     },
+     "ticker": "KXNHLSPREAD-26NOV08FLABOS-BOS5",
+     "ts": 1794164100,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.85,
+     "away_goals": 0,
+     "bid": 0.8,
+     "goal_side": "home",
+     "home_goals": 3,
+     "kind": "over",
+     "maker": {
+      "cost": 0.8028,
+      "filled": false,
+      "roi": null
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 5.5,
+     "taker": {
+      "cost": 0.85892,
+      "depth": 240.94,
+      "filled": true,
+      "roi": -1.0
+     },
+     "ticker": "KXNHLTOTAL-26NOV08FLABOS-6",
+     "ts": 1794164100,
+     "v2": true,
+     "won": false
+    },
+    {
+     "ask": 0.66,
+     "away_goals": 0,
+     "bid": 0.65,
+     "goal_side": "home",
+     "home_goals": 3,
+     "kind": "over",
+     "maker": {
+      "cost": 0.65398,
+      "filled": false,
+      "roi": null
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 6.5,
+     "taker": {
+      "cost": 0.67571,
+      "depth": 26.05,
+      "filled": false,
+      "roi": -1.0
+     },
+     "ticker": "KXNHLTOTAL-26NOV08FLABOS-7",
+     "ts": 1794164100,
+     "v2": true,
+     "won": false
+    },
+    {
+     "ask": 0.99,
+     "away_goals": 0,
+     "bid": 0.97,
+     "goal_side": "home",
+     "home_goals": 3,
+     "kind": "over",
+     "maker": {
+      "cost": 0.97051,
+      "filled": false,
+      "roi": null
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 3.5,
+     "taker": {
+      "cost": 0.99069,
+      "depth": 654.93,
+      "filled": true,
+      "roi": 0.0094
+     },
+     "ticker": "KXNHLTOTAL-26NOV08FLABOS-4",
+     "ts": 1794164100,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.93,
+     "away_goals": 0,
+     "bid": 0.91,
+     "goal_side": "home",
+     "home_goals": 3,
+     "kind": "over",
+     "maker": {
+      "cost": 0.91143,
+      "filled": false,
+      "roi": null
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 4.5,
+     "taker": {
+      "cost": 0.93456,
+      "depth": 1.0,
+      "filled": false,
+      "roi": 0.07
+     },
+     "ticker": "KXNHLTOTAL-26NOV08FLABOS-5",
+     "ts": 1794164100,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.74,
+     "away_goals": 1,
+     "bid": 0.73,
+     "goal_side": "away",
+     "home_goals": 3,
+     "kind": "pl",
+     "maker": {
+      "cost": 0.73345,
+      "filled": true,
+      "roi": 0.3634
+     },
+     "period": 1,
+     "side": "no",
+     "strike": 3.5,
+     "taker": {
+      "cost": 0.75347,
+      "depth": 17.98,
+      "filled": false,
+      "roi": 0.3272
+     },
+     "ticker": "KXNHLSPREAD-26NOV08FLABOS-BOS4",
+     "ts": 1794164460,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.94,
+     "away_goals": 1,
+     "bid": 0.92,
+     "goal_side": "away",
+     "home_goals": 3,
+     "kind": "over",
+     "maker": {
+      "cost": 0.92129,
+      "filled": false,
+      "roi": null
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 5.5,
+     "taker": {
+      "cost": 0.94395,
+      "depth": 2475.29,
+      "filled": true,
+      "roi": -1.0
+     },
+     "ticker": "KXNHLTOTAL-26NOV08FLABOS-6",
+     "ts": 1794164460,
+     "v2": true,
+     "won": false
+    },
+    {
+     "ask": 0.86,
+     "away_goals": 1,
+     "bid": 0.85,
+     "goal_side": "away",
+     "home_goals": 3,
+     "kind": "over",
+     "maker": {
+      "cost": 0.85223,
+      "filled": true,
+      "roi": -1.0
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 6.5,
+     "taker": {
+      "cost": 0.86843,
+      "depth": 317.01,
+      "filled": true,
+      "roi": -1.0
+     },
+     "ticker": "KXNHLTOTAL-26NOV08FLABOS-7",
+     "ts": 1794164460,
+     "v2": true,
+     "won": false
+    },
+    {
+     "ask": 0.98,
+     "away_goals": 1,
+     "bid": 0.97,
+     "goal_side": "away",
+     "home_goals": 3,
+     "kind": "over",
+     "maker": {
+      "cost": 0.97051,
+      "filled": false,
+      "roi": null
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 4.5,
+     "taker": {
+      "cost": 0.98137,
+      "depth": 369.0,
+      "filled": true,
+      "roi": 0.019
+     },
+     "ticker": "KXNHLTOTAL-26NOV08FLABOS-5",
+     "ts": 1794164460,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.87,
+     "away_goals": 1,
+     "bid": 0.86,
+     "goal_side": "home",
+     "home_goals": 4,
+     "kind": "over",
+     "maker": {
+      "cost": 0.86211,
+      "filled": true,
+      "roi": -1.0
+     },
+     "period": 3,
+     "side": "yes",
+     "strike": 5.5,
+     "taker": {
+      "cost": 0.87792,
+      "depth": 950.07,
+      "filled": true,
+      "roi": -1.0
+     },
+     "ticker": "KXNHLTOTAL-26NOV08FLABOS-6",
+     "ts": 1794169980,
+     "v2": true,
+     "won": false
+    }
+   ],
+   "event": "KXNHLGAME-26NOV08FLABOS",
+   "fav": "home",
+   "favmid": 0.585,
+   "goals": 5,
+   "ko": 1794160800,
+   "logged": "2026-11-08T22:04:06.671859+00:00",
+   "thin": false,
+   "timed": 5,
+   "title": "FLA at BOS",
+   "version": "nhlgoal-v1",
+   "vol": 68127.91
+  }
+ ],
+ "last_run": "2026-11-08T22:04:06.671859+00:00",
  "registered": "2026-11-08T07:45:00Z",
  "since": "2026-11-08",
  "skips": {},
