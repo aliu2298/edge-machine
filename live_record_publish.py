@@ -57,7 +57,7 @@ def result_state(ret, gross):
     return "won" if ret > FLAT else "lost"
 RECON = os.path.join(ROOT, "data", "live_reconstructed.json")
 RECON_BEFORE = "2026-11-06T18:07"      # per-sell fill logging went live on the VPS at this instant (UTC): earlier tips are reconstructed
-LANES = ("o35_cheap_no", "nba_wm_yes", "nba_wm_nofade", "top5_dip")
+LANES = ("o35_cheap_no", "nba_wm_yes", "nba_wm_nofade", "top5_dip", "arg_dip")
 # Fees are the EXCHANGE's, not a model. The exchange charged a taker fill 0.07 p (1-p) rounded up to $0.0001 and a resting (maker) fill nothing
 # (fee_cost 0 on every resting fill read from /portfolio/fills). The state files carry no fee for a buy, so the buy fee is that taker formula for a
 # taker buy (the YES split's immediate-or-cancel entry) and 0 for a resting bid; a logged sell piece carries its `taker` flag and
@@ -257,9 +257,10 @@ def lane_rows(src_dir, fetch=None, cache_path=None, recon=None):
     o35 = load(os.path.join(src_dir, "o35_state.json"), {}).get("matches") or {}
     wm = load(os.path.join(src_dir, "nba_wm_state.json"), {}).get("matches") or {}
     t5 = load(os.path.join(src_dir, "top5_dip_state.json"), {}).get("matches") or {}
+    ag = load(os.path.join(src_dir, "arg_dip_state.json"), {}).get("matches") or {}
     recon = load_reconstructed() if recon is None else recon
     tickers = ({tk for tk, m in o35.items() if m.get("filled")} | {k.split(":", 1)[1] for k, m in wm.items() if m.get("filled")}
-               | {tk for tk, m in t5.items() if m.get("filled")})
+               | {tk for tk, m in t5.items() if m.get("filled")} | {tk for tk, m in ag.items() if m.get("filled")})
     res = results_for(tickers, fetch, cache_path)
     out = {lane: [] for lane in LANES}
     stakes = {lane: [] for lane in LANES}
@@ -294,6 +295,10 @@ def lane_rows(src_dir, fetch=None, cache_path=None, recon=None):
         px = (m.get("bid") or {}).get("price")
         if m.get("filled") and px:
             row("top5_dip", tk, when(m.get("kickoff")), "yes", px, m["filled"], False, m)
+    for tk, m in ag.items():
+        px = (m.get("bid") or {}).get("price")
+        if m.get("filled") and px:
+            row("arg_dip", tk, when(m.get("kickoff")), "yes", px, m["filled"], False, m)
     for lane in LANES:
         paid = sorted(s for s in stakes[lane] if s)
         med = paid[len(paid) // 2] if paid else None

@@ -3496,7 +3496,8 @@ VERIFIED_STARTS = ("tennisexplorer", "espn", "mlb", "kalshi_milestone")
 # here, rather than at each place that reads a bet. Added 2026-10-04 with
 # u35_low_scoring|soccer_u35_intl, which had logged 18 settled bets that nothing could
 # publish because the feed knew only how to say Yes.
-FEED_BETS = {"soccer_o15": {"kind": "total_gte", "n": 2},
+FEED_BETS = {"soccer_o05": {"kind": "total_gte", "n": 1},          # 2026-11-08: the Argentina goalless dip, the Yes of the league over 0.5 contract (-1)
+             "soccer_o15": {"kind": "total_gte", "n": 2},
              "soccer_o15_intl": {"kind": "total_gte", "n": 2},
              "soccer_team1": {"kind": "team_gte", "n": 1},
              "soccer_team1_intl": {"kind": "team_gte", "n": 1},

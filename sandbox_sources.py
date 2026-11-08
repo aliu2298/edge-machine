@@ -44,6 +44,7 @@ SPORTS = {
     # domain id; "sport" in the code means "one of these", nothing narrower.
     "soccer":       "Soccer",
     "soccer_btts":  "Soccer · BTTS",
+    "soccer_o05":   "Soccer · Over 0.5",
     "soccer_o15":   "Soccer · Over 1.5",
     "soccer_o25":   "Soccer · Over 2.5",
     "soccer_team1": "Soccer · Team 1+",
@@ -4954,6 +4955,9 @@ OWN_LEDGER_LABELS = {
     "st_t7": "O+D+ v O+D+ · team 3+ goals · NO",
     "o35_cheap_no_wave": "Over 3.5 cheap NO (live)",
     "top5_goalless_dip_live": "Top-5 goalless dip (live)",
+    "arg_goalless_dip_live": "Argentina goalless dip (live)",
+    "st_t1h": "T1 matches · home team 2+ goals",
+    "st_t1m": "T1 matches · match over 3.5 goals",
     "nba_winmargin_live": "Win margin YES split (v2)",
     "nba_wm_nofade": "Win margin NO fade (v2)",
     "nba_winmargin_v3": "Win margin YES split (v3)",
