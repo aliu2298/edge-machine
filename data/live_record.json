@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-08T19:07Z",
+ "generated": "2026-11-08T23:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -759,6 +759,18 @@
     "src": "fills",
     "st": "won",
     "w": 1.0
+   },
+   {
+    "g": 0.5439,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV08PHICHI-PHI1TO5",
+    "ko": "2026-11-08T20:30",
+    "legs": "sold",
+    "r": 0.5439,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 0.88
    }
   ],
   "nba_wm_yes": [
@@ -1637,6 +1649,30 @@
     "src": "fills",
     "st": "lost",
     "w": 0.96
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV08LALDET-DET1TO5",
+    "ko": "2026-11-08T23:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.96
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV08LALDET-LAL1TO5",
+    "ko": "2026-11-08T23:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.02
    }
   ],
   "o35_cheap_no": [
@@ -2185,9 +2221,9 @@
     {
      "id": "crypto_fav_band_below:KXBTCD-26NOV0817-T75999.99",
      "ko": "2026-11-08T22:05",
-     "r": null,
+     "r": 0.3273,
      "side": "no",
-     "st": "open",
+     "st": "won",
      "w": 12.67
     }
    ],
@@ -2609,9 +2645,9 @@
     {
      "id": "sr_c3:KXSERIEATOTAL-26NOV08FIOJUV-3",
      "ko": "2026-11-08T19:45",
-     "r": null,
+     "r": 0.8957,
      "side": "yes",
-     "st": "open",
+     "st": "won",
      "w": 1.0
     }
    ],
@@ -2932,9 +2968,9 @@
     {
      "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV08VILGET-VIL2",
      "ko": "2026-11-08T17:30",
-     "r": null,
+     "r": 0.5711,
      "side": "yes",
-     "st": "open",
+     "st": "won",
      "w": 12.69
     }
    ],
