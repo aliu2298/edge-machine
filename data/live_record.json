@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-08T18:07Z",
+ "generated": "2026-11-08T19:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -2181,6 +2181,14 @@
      "side": "no",
      "st": "won",
      "w": 12.51
+    },
+    {
+     "id": "crypto_fav_band_below:KXBTCD-26NOV0817-T75999.99",
+     "ko": "2026-11-08T22:05",
+     "r": null,
+     "side": "no",
+     "st": "open",
+     "w": 12.67
     }
    ],
    "refused": {
@@ -2231,7 +2239,8 @@
     }
    ],
    "refused": {
-    "econ_nc_yes:KXDIESELD-26NOV07-T6.205": "other"
+    "econ_nc_yes:KXDIESELD-26NOV07-T6.205": "other",
+    "econ_nc_yes:KXDIESELD-26NOV08-T6.190": "other"
    }
   },
   "finance_spx_nc_no|finance_daily": {
@@ -2596,6 +2605,14 @@
      "side": "yes",
      "st": "lost",
      "w": 1.0
+    },
+    {
+     "id": "sr_c3:KXSERIEATOTAL-26NOV08FIOJUV-3",
+     "ko": "2026-11-08T19:45",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 1.0
     }
    ],
    "refused": {}
@@ -2636,9 +2653,9 @@
     {
      "id": "st_t1h:KXSERIEATEAMTOTAL-26NOV08INTCOM-INT2",
      "ko": "2026-11-08T17:00",
-     "r": null,
+     "r": 0.7322,
      "side": "yes",
-     "st": "open",
+     "st": "won",
      "w": 0.98
     }
    ],
@@ -2658,9 +2675,9 @@
     {
      "id": "st_t1m:KXSERIEATOTAL-26NOV08INTCOM-4",
      "ko": "2026-11-08T17:00",
-     "r": null,
+     "r": -1.0,
      "side": "yes",
-     "st": "open",
+     "st": "lost",
      "w": 1.0
     }
    ],
