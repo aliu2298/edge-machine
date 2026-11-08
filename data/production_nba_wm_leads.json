@@ -3,6 +3,19 @@
  "lane": "nba_winmargin_live",
  "leads": [
   {
+   "bucket": "11-20",
+   "event": "KXNBAWINMARGIN-26NOV08PHICHI",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08PHICHI-PHI11TO20",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "PHI",
+   "ticker": "KXNBAWINMARGIN-26NOV08PHICHI-PHI11TO20",
+   "tip": "2026-11-08T20:30:00+00:00",
+   "title": "Philadelphia wins by 11-20 points",
+   "version": "wm-yes-v4"
+  },
+  {
    "bucket": "6-10",
    "event": "KXNBAWINMARGIN-26NOV08PHICHI",
    "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08PHICHI-PHI6TO10",
@@ -13,7 +26,7 @@
    "ticker": "KXNBAWINMARGIN-26NOV08PHICHI-PHI6TO10",
    "tip": "2026-11-08T20:30:00+00:00",
    "title": "Philadelphia wins by 6-10 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "1-5",
@@ -26,7 +39,7 @@
    "ticker": "KXNBAWINMARGIN-26NOV08PHICHI-PHI1TO5",
    "tip": "2026-11-08T20:30:00+00:00",
    "title": "Philadelphia wins by 1-5 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "1-5",
@@ -39,7 +52,7 @@
    "ticker": "KXNBAWINMARGIN-26NOV08PHICHI-CHI1TO5",
    "tip": "2026-11-08T20:30:00+00:00",
    "title": "Chicago wins by 1-5 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "6-10",
@@ -52,7 +65,33 @@
    "ticker": "KXNBAWINMARGIN-26NOV08PHICHI-CHI6TO10",
    "tip": "2026-11-08T20:30:00+00:00",
    "title": "Chicago wins by 6-10 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
+  },
+  {
+   "bucket": "11-20",
+   "event": "KXNBAWINMARGIN-26NOV08PHICHI",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08PHICHI-CHI11TO20",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "CHI",
+   "ticker": "KXNBAWINMARGIN-26NOV08PHICHI-CHI11TO20",
+   "tip": "2026-11-08T20:30:00+00:00",
+   "title": "Chicago wins by 11-20 points",
+   "version": "wm-yes-v4"
+  },
+  {
+   "bucket": "11-20",
+   "event": "KXNBAWINMARGIN-26NOV08LALDET",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08LALDET-LAL11TO20",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "LAL",
+   "ticker": "KXNBAWINMARGIN-26NOV08LALDET-LAL11TO20",
+   "tip": "2026-11-08T23:00:00+00:00",
+   "title": "Los Angeles L wins by 11-20 points",
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "6-10",
@@ -65,7 +104,7 @@
    "ticker": "KXNBAWINMARGIN-26NOV08LALDET-LAL6TO10",
    "tip": "2026-11-08T23:00:00+00:00",
    "title": "Los Angeles L wins by 6-10 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "1-5",
@@ -78,7 +117,7 @@
    "ticker": "KXNBAWINMARGIN-26NOV08LALDET-LAL1TO5",
    "tip": "2026-11-08T23:00:00+00:00",
    "title": "Los Angeles L wins by 1-5 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "1-5",
@@ -91,7 +130,7 @@
    "ticker": "KXNBAWINMARGIN-26NOV08LALDET-DET1TO5",
    "tip": "2026-11-08T23:00:00+00:00",
    "title": "Detroit wins by 1-5 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "6-10",
@@ -104,7 +143,20 @@
    "ticker": "KXNBAWINMARGIN-26NOV08LALDET-DET6TO10",
    "tip": "2026-11-08T23:00:00+00:00",
    "title": "Detroit wins by 6-10 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
+  },
+  {
+   "bucket": "11-20",
+   "event": "KXNBAWINMARGIN-26NOV08LALDET",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08LALDET-DET11TO20",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "DET",
+   "ticker": "KXNBAWINMARGIN-26NOV08LALDET-DET11TO20",
+   "tip": "2026-11-08T23:00:00+00:00",
+   "title": "Detroit wins by 11-20 points",
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "6-10",
@@ -117,7 +169,7 @@
    "ticker": "KXNBAWINMARGIN-26NOV08UTAMIN-UTA6TO10",
    "tip": "2026-11-09T00:00:00+00:00",
    "title": "Utah wins by 6-10 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "1-5",
@@ -130,7 +182,7 @@
    "ticker": "KXNBAWINMARGIN-26NOV08UTAMIN-UTA1TO5",
    "tip": "2026-11-09T00:00:00+00:00",
    "title": "Utah wins by 1-5 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "1-5",
@@ -143,7 +195,7 @@
    "ticker": "KXNBAWINMARGIN-26NOV08UTAMIN-MIN1TO5",
    "tip": "2026-11-09T00:00:00+00:00",
    "title": "Minnesota wins by 1-5 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "6-10",
@@ -156,7 +208,20 @@
    "ticker": "KXNBAWINMARGIN-26NOV08UTAMIN-MIN6TO10",
    "tip": "2026-11-09T00:00:00+00:00",
    "title": "Minnesota wins by 6-10 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
+  },
+  {
+   "bucket": "11-20",
+   "event": "KXNBAWINMARGIN-26NOV08BKNDAL",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08BKNDAL-BKN11TO20",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "BKN",
+   "ticker": "KXNBAWINMARGIN-26NOV08BKNDAL-BKN11TO20",
+   "tip": "2026-11-09T00:30:00+00:00",
+   "title": "Brooklyn wins by 11-20 points",
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "6-10",
@@ -169,7 +234,7 @@
    "ticker": "KXNBAWINMARGIN-26NOV08BKNDAL-BKN6TO10",
    "tip": "2026-11-09T00:30:00+00:00",
    "title": "Brooklyn wins by 6-10 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "1-5",
@@ -182,7 +247,7 @@
    "ticker": "KXNBAWINMARGIN-26NOV08BKNDAL-BKN1TO5",
    "tip": "2026-11-09T00:30:00+00:00",
    "title": "Brooklyn wins by 1-5 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "1-5",
@@ -195,7 +260,7 @@
    "ticker": "KXNBAWINMARGIN-26NOV08BKNDAL-DAL1TO5",
    "tip": "2026-11-09T00:30:00+00:00",
    "title": "Dallas wins by 1-5 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "6-10",
@@ -208,7 +273,20 @@
    "ticker": "KXNBAWINMARGIN-26NOV08BKNDAL-DAL6TO10",
    "tip": "2026-11-09T00:30:00+00:00",
    "title": "Dallas wins by 6-10 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
+  },
+  {
+   "bucket": "11-20",
+   "event": "KXNBAWINMARGIN-26NOV08BKNDAL",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08BKNDAL-DAL11TO20",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "DAL",
+   "ticker": "KXNBAWINMARGIN-26NOV08BKNDAL-DAL11TO20",
+   "tip": "2026-11-09T00:30:00+00:00",
+   "title": "Dallas wins by 11-20 points",
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "6-10",
@@ -221,7 +299,7 @@
    "ticker": "KXNBAWINMARGIN-26NOV08BOSMIL-BOS6TO10",
    "tip": "2026-11-09T01:00:00+00:00",
    "title": "Boston wins by 6-10 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "1-5",
@@ -234,7 +312,7 @@
    "ticker": "KXNBAWINMARGIN-26NOV08BOSMIL-BOS1TO5",
    "tip": "2026-11-09T01:00:00+00:00",
    "title": "Boston wins by 1-5 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "1-5",
@@ -247,7 +325,7 @@
    "ticker": "KXNBAWINMARGIN-26NOV08BOSMIL-MIL1TO5",
    "tip": "2026-11-09T01:00:00+00:00",
    "title": "Milwaukee wins by 1-5 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "6-10",
@@ -260,7 +338,20 @@
    "ticker": "KXNBAWINMARGIN-26NOV08BOSMIL-MIL6TO10",
    "tip": "2026-11-09T01:00:00+00:00",
    "title": "Milwaukee wins by 6-10 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
+  },
+  {
+   "bucket": "11-20",
+   "event": "KXNBAWINMARGIN-26NOV08MIASAC",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08MIASAC-MIA11TO20",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "MIA",
+   "ticker": "KXNBAWINMARGIN-26NOV08MIASAC-MIA11TO20",
+   "tip": "2026-11-09T02:00:00+00:00",
+   "title": "Miami wins by 11-20 points",
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "6-10",
@@ -273,7 +364,7 @@
    "ticker": "KXNBAWINMARGIN-26NOV08MIASAC-MIA6TO10",
    "tip": "2026-11-09T02:00:00+00:00",
    "title": "Miami wins by 6-10 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "1-5",
@@ -286,7 +377,7 @@
    "ticker": "KXNBAWINMARGIN-26NOV08MIASAC-MIA1TO5",
    "tip": "2026-11-09T02:00:00+00:00",
    "title": "Miami wins by 1-5 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "1-5",
@@ -299,7 +390,7 @@
    "ticker": "KXNBAWINMARGIN-26NOV08MIASAC-SAC1TO5",
    "tip": "2026-11-09T02:00:00+00:00",
    "title": "Sacramento wins by 1-5 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "6-10",
@@ -312,7 +403,33 @@
    "ticker": "KXNBAWINMARGIN-26NOV08MIASAC-SAC6TO10",
    "tip": "2026-11-09T02:00:00+00:00",
    "title": "Sacramento wins by 6-10 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
+  },
+  {
+   "bucket": "11-20",
+   "event": "KXNBAWINMARGIN-26NOV08MIASAC",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08MIASAC-SAC11TO20",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "SAC",
+   "ticker": "KXNBAWINMARGIN-26NOV08MIASAC-SAC11TO20",
+   "tip": "2026-11-09T02:00:00+00:00",
+   "title": "Sacramento wins by 11-20 points",
+   "version": "wm-yes-v4"
+  },
+  {
+   "bucket": "11-20",
+   "event": "KXNBAWINMARGIN-26NOV08NOPLAC",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08NOPLAC-NOP11TO20",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "NOP",
+   "ticker": "KXNBAWINMARGIN-26NOV08NOPLAC-NOP11TO20",
+   "tip": "2026-11-09T02:00:00+00:00",
+   "title": "New Orleans wins by 11-20 points",
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "6-10",
@@ -325,7 +442,7 @@
    "ticker": "KXNBAWINMARGIN-26NOV08NOPLAC-NOP6TO10",
    "tip": "2026-11-09T02:00:00+00:00",
    "title": "New Orleans wins by 6-10 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "1-5",
@@ -338,7 +455,7 @@
    "ticker": "KXNBAWINMARGIN-26NOV08NOPLAC-NOP1TO5",
    "tip": "2026-11-09T02:00:00+00:00",
    "title": "New Orleans wins by 1-5 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "1-5",
@@ -351,7 +468,7 @@
    "ticker": "KXNBAWINMARGIN-26NOV08NOPLAC-LAC1TO5",
    "tip": "2026-11-09T02:00:00+00:00",
    "title": "Los Angeles C wins by 1-5 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
   },
   {
    "bucket": "6-10",
@@ -364,7 +481,20 @@
    "ticker": "KXNBAWINMARGIN-26NOV08NOPLAC-LAC6TO10",
    "tip": "2026-11-09T02:00:00+00:00",
    "title": "Los Angeles C wins by 6-10 points",
-   "version": "wm-yes-v3"
+   "version": "wm-yes-v4"
+  },
+  {
+   "bucket": "11-20",
+   "event": "KXNBAWINMARGIN-26NOV08NOPLAC",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08NOPLAC-LAC11TO20",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "LAC",
+   "ticker": "KXNBAWINMARGIN-26NOV08NOPLAC-LAC11TO20",
+   "tip": "2026-11-09T02:00:00+00:00",
+   "title": "Los Angeles C wins by 11-20 points",
+   "version": "wm-yes-v4"
   }
  ],
  "moved_on": "2026-11-02",
@@ -376,9 +506,11 @@
   ],
   "buckets": [
    "1-5",
-   "6-10"
+   "6-10",
+   "11-20"
   ],
   "entry_before_tip_min": 60,
+  "max_favourite_share": 0.7,
   "max_spread": 0.05,
   "sell_cap": 0.98,
   "sells": [
@@ -387,7 +519,7 @@
     "share": 0.5
    },
    {
-    "multiple": 3.0,
+    "multiple": 2.5,
     "share": 0.5
    }
   ],
@@ -395,6 +527,6 @@
   "side": "yes",
   "stake_usd": 1.0
  },
- "updated_at": "2026-11-08T06:44:40+00:00",
- "version": "wm-yes-v3"
+ "updated_at": "2026-11-08T07:35:01+00:00",
+ "version": "wm-yes-v4"
 }
