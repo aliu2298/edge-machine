@@ -33,8 +33,13 @@ live = [x for x in N.LANES if x not in N.RETIRED]
 print("the tiles count the team-total lanes")
 check("active rules counts every live team-total lane", int(tiles.get("active rules", 0)) >= len(live), True)
 a = N.stats(TB._picks(state, "nfl_tt_over_3545"))
-check("the Sandbox record is the lanes' own (team total over's won–lost)", tiles.get("Sandbox record · paper"),
-      f'{a["won"]}–{a["n"] - a["won"]}' if len(live) == 1 else tiles.get("Sandbox record · paper"))
+# Since #351 the tile pools every Sandbox lane on the page: team total over AND main line +1 (nfl_tt_main1, own ledger).
+import nfl_tt_main1 as M1
+import nfl_tt_main1_build as MB1
+b = M1.stats(MB1._picks(M1.load()))
+won, n = a["won"] + b["won"], a["n"] + b["n"]
+check("the Sandbox record is the lanes' own (team total over's plus main line +1's won–lost)",
+      tiles.get("Sandbox record · paper"), f'{won}–{n - won}' if len(live) == 1 else tiles.get("Sandbox record · paper"))
 check("open picks counts their open entries", int(tiles.get("open picks", 0)) >= a["open"], True)
 
 print("\nthe rows")
