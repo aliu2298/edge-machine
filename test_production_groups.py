@@ -8,6 +8,8 @@ import live_caps as _LC
 _LC.load = lambda path=None: {}      # hermetic: the real follower caps carry the raised pairs, which restart these fixtures' windows (test_fresh_record.py covers that)
 import production_live as _PL
 _PL.load = lambda path=None: None      # hermetic: these fixtures pin the paper record; the real live file is covered by test_live_since_production.py
+import live_caps as _LC
+_LC.raised_at = lambda pair: None        # hermetic too: a stake the follower raises (data/live_caps.json, 2026-11-08: team1_form_l5) restarts a pair's window
 import datetime
 import os
 import re
