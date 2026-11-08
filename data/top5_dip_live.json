@@ -469,18 +469,82 @@
    "result": "yes",
    "title": "Will over 1.5 goals be scored?",
    "version": "top5dip-live-v1"
+  },
+  {
+   "bot_limit": 0.5,
+   "buys": {
+    "55": {
+     "counted": true,
+     "fill_at": 1794087664,
+     "fill_print": 0.5,
+     "fill_volume": 76197.08,
+     "held": true,
+     "limit": 0.5,
+     "payout": 0.0,
+     "sold": true,
+     "sold_at": 1794087874
+    }
+   },
+   "event": "KXLIGUE1TOTAL-26NOV07PSGEST",
+   "id": "KXLIGUE1TOTAL-26NOV07PSGEST-2",
+   "kickoff": 1794080700,
+   "league": "Ligue 1",
+   "logged": "2026-11-08T00:02:27.108253+00:00",
+   "matchday": "26NOV07",
+   "outcome": "entered",
+   "p": 0.9,
+   "prints": 1478,
+   "result": "no",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-live-v1"
+  },
+  {
+   "bot_limit": 0.49,
+   "buys": {
+    "55": null
+   },
+   "event": "KXSERIEATOTAL-26NOV07ROMSAS",
+   "id": "KXSERIEATOTAL-26NOV07ROMSAS-2",
+   "kickoff": 1794080700,
+   "league": "Serie A",
+   "logged": "2026-11-08T00:02:27.108253+00:00",
+   "matchday": "26NOV07",
+   "outcome": "entered",
+   "p": 0.89,
+   "prints": 167,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-live-v1"
+  },
+  {
+   "bot_limit": 0.48,
+   "buys": {
+    "55": null
+   },
+   "event": "KXLALIGATOTAL-26NOV07VCFRMA",
+   "id": "KXLALIGATOTAL-26NOV07VCFRMA-2",
+   "kickoff": 1794081600,
+   "league": "La Liga",
+   "logged": "2026-11-08T00:02:27.108253+00:00",
+   "matchday": "26NOV07",
+   "outcome": "entered",
+   "p": 0.87,
+   "prints": 441,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-live-v1"
   }
  ],
  "error": null,
  "lane": "top5_goalless_dip_live",
- "last_run": "2026-11-07T20:35:03.117830+00:00",
+ "last_run": "2026-11-08T00:02:27.108253+00:00",
  "no_entry": {},
  "observations": {
-  "at": "2026-11-07T20:35:03.117830+00:00",
+  "at": "2026-11-08T00:02:27.108253+00:00",
   "errors": [],
-  "new": 11,
+  "new": 3,
   "provisional": 0,
-  "waiting": 3
+  "waiting": 0
  },
  "since": "26NOV06",
  "version": "top5dip-live-v1"
