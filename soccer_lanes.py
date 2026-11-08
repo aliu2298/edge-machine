@@ -277,6 +277,11 @@ def team_rows(state=None):
                 r2, q2 = sibling_row(sk, state)
                 live.append(r2)
                 quotes += q2
+            try:                                # T1-M's 1.5x sell readout, observation only (2026-11-08)
+                import t1m_sell15_build
+                live.append(t1m_sell15_build.row())
+            except Exception as exc:            # noqa: BLE001
+                print(f"soccer_lanes: the T1-M 1.5x sell readout failed: {type(exc).__name__}: {exc}")
     return live, gone_rows, quotes
 
 
@@ -330,6 +335,12 @@ def sibling_row(key, state):
     tp = LC.split(pair, picks)[0] if prod else picks
     if prod:
         details = (params_html([("History", f"Production since {TRP.MOVED[key]} (moved by hand); paper keeps running in the Sandbox")]) + details)
+    if key == "T1M":                             # the 1.5x sell readout on the same entries (2026-11-08), observation only
+        try:
+            import t1m_sell15_build
+            details += t1m_sell15_build.fold_html()
+        except Exception as exc:                 # noqa: BLE001
+            print(f"soccer_lanes: the T1-M 1.5x sell readout fold failed: {type(exc).__name__}: {exc}")
     r = row(src, sport, f"{meta['name']} · {meta['label']}", market, pick_record(tp), details, prod=prod, pair=pair,
             open_n=sum(p.get("status") == "open" for p in tp), entries=entries_table(picks, cols))
     r["after"] = "st_t1"                         # shown right under T1 in the rules table

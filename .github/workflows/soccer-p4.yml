@@ -26,10 +26,12 @@ jobs:
         with:
           python-version: '3.12'
       - name: Tests
-        run: python3 test_soccer_p4_lanes.py
+        run: python3 test_soccer_p4_lanes.py && python3 test_t1m_sell15.py
       - name: Mid NO Mismatch, Late Over Calm, Late Under Leaky (Sandbox paper since 2026-11-09)
         # Fetches the ESPN fixtures (data/streaks_raw.json, not committed) for the labels, only when a match has a row.
         run: python3 soccer_p4_lanes.py
+      - name: T1-M 1.5x sell readout (observation only, same hourly read; reads T1-M's ledger, never writes it)
+        run: python3 t1m_sell15.py
       - name: Save records
         env:
           GH_TOKEN: ${{ github.token }}
@@ -38,5 +40,5 @@ jobs:
           git config user.name "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
           python3 save_records.py --message "Soccer phase-4 lanes paper observations" \
-            --add data/soccer_p4_lanes_ledger.json \
+            --add data/soccer_p4_lanes_ledger.json data/t1m_sell15_ledger.json \
             --after "gh workflow run sandbox-tracker.yml --ref main"

@@ -513,6 +513,11 @@ def _extra_index_rows():
         rows.append(nba_wm_nofade_build.index_row())
     except Exception:                                           # noqa: BLE001
         pass
+    try:                                                        # T1-M's 1.5x sell readout (2026-11-08): its row is on Soccer
+        import t1m_sell15_build
+        rows.append(t1m_sell15_build.index_row())
+    except Exception:                                           # noqa: BLE001
+        pass
     try:                                                        # Superpack (2026-11-05): its card is on the Leaderboard
         import leaderboard_build
         rows.append(leaderboard_build.superpack_index_row())
