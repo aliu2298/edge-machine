@@ -316,6 +316,58 @@
   },
   {
    "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV08BKNDAL",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08BKNDAL-BKN6TO10",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "BKN",
+   "ticker": "KXNBAWINMARGIN-26NOV08BKNDAL-BKN6TO10",
+   "tip": "2026-11-09T00:30:00+00:00",
+   "title": "Brooklyn wins by 6-10 points",
+   "version": "wm-yes-v3"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV08BKNDAL",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08BKNDAL-BKN1TO5",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "BKN",
+   "ticker": "KXNBAWINMARGIN-26NOV08BKNDAL-BKN1TO5",
+   "tip": "2026-11-09T00:30:00+00:00",
+   "title": "Brooklyn wins by 1-5 points",
+   "version": "wm-yes-v3"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV08BKNDAL",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08BKNDAL-DAL1TO5",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "DAL",
+   "ticker": "KXNBAWINMARGIN-26NOV08BKNDAL-DAL1TO5",
+   "tip": "2026-11-09T00:30:00+00:00",
+   "title": "Dallas wins by 1-5 points",
+   "version": "wm-yes-v3"
+  },
+  {
+   "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV08BKNDAL",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08BKNDAL-DAL6TO10",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "DAL",
+   "ticker": "KXNBAWINMARGIN-26NOV08BKNDAL-DAL6TO10",
+   "tip": "2026-11-09T00:30:00+00:00",
+   "title": "Dallas wins by 6-10 points",
+   "version": "wm-yes-v3"
+  },
+  {
+   "bucket": "6-10",
    "event": "KXNBAWINMARGIN-26NOV08BOSMIL",
    "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08BOSMIL-BOS6TO10",
    "lane": "nba_winmargin_live",
@@ -499,6 +551,6 @@
   "side": "yes",
   "stake_usd": 1.0
  },
- "updated_at": "2026-11-08T03:30:52+00:00",
+ "updated_at": "2026-11-08T04:00:51+00:00",
  "version": "wm-yes-v3"
 }
