@@ -2617,6 +2617,14 @@ def main():
         print(f"wrote {nfl_out}")
     except Exception as exc:                                    # noqa: BLE001
         print(f"::warning::nfl page not rebuilt ({type(exc).__name__}: {exc})")
+    # The NHL tab (2026-11-08): two in-play paper lanes after a goal, own ledger (nhl_goal_lanes.py).
+    try:
+        import nhl_build
+        nhl_out = os.path.join(os.path.dirname(OUT), "nhl.html")
+        _write(nhl_out, label_cells(nhl_build.build(now=now)))
+        print(f"wrote {nhl_out}")
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"::warning::nhl page not rebuilt ({type(exc).__name__}: {exc})")
     # Crypto is the one domain page whose record is counted in MARKET-DAYS rather than
     # bets, because its coins move together. The page exists to say so where the record is
     # read; the Sandbox shows both pairs inside the folding Markets section.

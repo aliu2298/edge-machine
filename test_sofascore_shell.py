@@ -30,6 +30,7 @@ PAGE_HREFS = (
     'href="./trading.html"',
     'href="./nba.html"',
     'href="./nfl.html"',
+    'href="./nhl.html"',
     'href="./soccer.html"',
     'href="./tennis.html"',
     'href="./cricket.html"',
@@ -42,7 +43,7 @@ PAGE_HREFS = (
     'href="./leaderboard.html"',
     'href="./sandbox.html#method"',
 )
-PAGE_LABELS = ["Archives", "Production", "Trading", "NBA", "NFL", "Soccer", "Tennis", "Cricket", "Crypto",
+PAGE_LABELS = ["Archives", "Production", "Trading", "NBA", "NFL", "NHL", "Soccer", "Tennis", "Cricket", "Crypto",
                "Commodities", "Econ Daily", "Finance Daily", "Culture", "Fights", "Leaderboard", "Method"]
 # The archived tabs (tab_activity, 2026-11-05) leave the nav: the root's pills are the shown pages.
 import site_chrome as _SC

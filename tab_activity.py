@@ -24,7 +24,7 @@ import fmt
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 PATH = os.path.join(ROOT, "data", "tab_activity.json")
-TABS = ("nba", "nfl", "soccer", "tennis", "cricket", "crypto", "commodities", "econ_daily", "finance_daily", "culture", "fights")
+TABS = ("nba", "nfl", "nhl", "soccer", "tennis", "cricket", "crypto", "commodities", "econ_daily", "finance_daily", "culture", "fights")
 # The one line an archived tab's Archives entry carries (2026-11-05). A tab archived with no note here gets the rule's words.
 NOTES = {
     "cricket": ("Archived 2026-11-05 (Olu: if nothing is running, archive it): Oddspedia and Cricket consensus are retired, "
@@ -100,6 +100,14 @@ def nfl(d, st, now):
             + [x for x in N.LANES if x not in N.RETIRED and _row_active(TB.template_row(x, tt))])
 
 
+def nhl(d, st, now):
+    """The two NHL goal lanes (nhl_goal_lanes.py, 2026-11-08): active once a lane (not a baseline) has a settled entry."""
+    import nhl_build as NB
+    import nhl_goal_lanes as N
+    state = N.load()
+    return [lane for lane in NB.HEADLINES if _row_active(NB.template_row(state, lane))]
+
+
 def tennis(d, st, now):
     out = _family(d, st, "Tennis") + _chaos("tennis")
     try:
@@ -158,7 +166,7 @@ def fights(d, st, now):
     return _own(FS.LIVE)
 
 
-ADAPTERS = dict(nba=nba, nfl=nfl, soccer=soccer, tennis=tennis, cricket=cricket, crypto=crypto, commodities=commodities,
+ADAPTERS = dict(nba=nba, nfl=nfl, nhl=nhl, soccer=soccer, tennis=tennis, cricket=cricket, crypto=crypto, commodities=commodities,
                 econ_daily=econ_daily, finance_daily=finance_daily, culture=culture, fights=fights)
 
 
@@ -184,7 +192,7 @@ def check(d=None, st=None, now=None, previous=None):
 
 # ------------------------------------------------------------------ the Archives entry
 FAMILY = dict(nba="NBA", nfl="NFL", soccer="Soccer", tennis="Tennis", cricket="Cricket")
-LABEL = dict(nba="NBA", nfl="NFL", soccer="Soccer", tennis="Tennis", cricket="Cricket", crypto="Crypto", commodities="Commodities",
+LABEL = dict(nba="NBA", nfl="NFL", nhl="NHL", soccer="Soccer", tennis="Tennis", cricket="Cricket", crypto="Crypto", commodities="Commodities",
              econ_daily="Econ Daily", finance_daily="Finance Daily", culture="Culture", fights="Fights")
 
 
