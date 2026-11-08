@@ -178,7 +178,15 @@ check("the committed export passes the whitelist and carries no dollar sign", "$
 import production as P
 import raised_stakes as RS
 check("a raised stake shows its date under the pair, with no amount", ("stake raised Nov 6" in P.stake_note("sr_a7|soccer_u35"), "$" in P.stake_note("sr_a7|soccer_u35"), P.stake_note("sr_c1|soccer_u35")), (True, False, ""))
-check("the raised pairs are the follower's own four still in Production (the commodities band went back to the Sandbox)", sorted(RS.pairs()), sorted(["mls_fade_home|soccer_p05", "crypto_fav_band_below|crypto_fav", "team2_ranked|soccer_team2", "sr_a7|soccer_u35"]))
+# The raised pairs come from the committed caps (the VPS writes raised_at when Olu approves a raise), so the list is not
+# hardcoded: it moved from four to seven on 2026-11-08 (sr_a6, team1_form_l5 intl, u35_low_scoring intl). The invariants hold.
+_caps = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "live_caps.json")))["caps"]
+_raised = {k: g["raised_at"] for k, g in _caps.items() if g.get("raised_at")}
+check("the raised pairs are exactly the committed caps with a raise date", RS.pairs(), _raised)
+check("the original four raises are still among them",
+      {"mls_fade_home|soccer_p05", "crypto_fav_band_below|crypto_fav", "team2_ranked|soccer_team2", "sr_a7|soccer_u35"} <= set(RS.pairs()), True)
+import datetime as _dt
+check("every raise date is an ISO instant", all(_dt.datetime.fromisoformat(str(v)).tzinfo is not None for v in RS.pairs().values()), True)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
