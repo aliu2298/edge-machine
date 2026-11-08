@@ -3884,21 +3884,19 @@
    "P": 0.88,
    "bot_version": "wm-nofade-v3",
    "bucket": "POR1TO5",
-   "decided_at": "2026-11-08T02:00:28+00:00",
-   "depth": 17.0,
+   "decided_at": "2026-11-08T03:00:28+00:00",
    "event": "KXNBAWINMARGIN-26NOV07SASPOR",
    "lane": "nba_wm_nofade",
    "limit": 0.66,
-   "outcome": "plan",
+   "night_cap": 30,
+   "night_count": 11,
+   "outcome": "bid_posted",
    "qty": 1.0,
    "rule_ok": true,
    "slate": "26NOV07",
-   "spread": 0.01,
    "ticker": "KXNBAWINMARGIN-26NOV07SASPOR-POR1TO5",
    "tip": "2026-11-08T03:00:00+00:00",
-   "why": null,
-   "yes_ask": 0.13,
-   "yes_bid": 0.12
+   "why": null
   },
   "no:KXNBAWINMARGIN-26NOV07SASPOR-POR21PLUS": {
    "bot_version": "wm-nofade-v3",
@@ -3917,21 +3915,19 @@
    "P": 0.88,
    "bot_version": "wm-nofade-v3",
    "bucket": "POR6TO10",
-   "decided_at": "2026-11-08T02:00:28+00:00",
-   "depth": 17.0,
+   "decided_at": "2026-11-08T03:00:28+00:00",
    "event": "KXNBAWINMARGIN-26NOV07SASPOR",
    "lane": "nba_wm_nofade",
    "limit": 0.66,
-   "outcome": "plan",
+   "night_cap": 30,
+   "night_count": 12,
+   "outcome": "bid_posted",
    "qty": 1.0,
    "rule_ok": true,
    "slate": "26NOV07",
-   "spread": 0.01,
    "ticker": "KXNBAWINMARGIN-26NOV07SASPOR-POR6TO10",
    "tip": "2026-11-08T03:00:00+00:00",
-   "why": null,
-   "yes_ask": 0.13,
-   "yes_bid": 0.12
+   "why": null
   },
   "no:KXNBAWINMARGIN-26NOV07SASPOR-SAS11TO20": {
    "bot_version": "wm-nofade-v3",
@@ -6377,6 +6373,6 @@
    "why": "no tight read inside the entry window"
   }
  },
- "updated_at": "2026-11-08T02:15:21+00:00",
+ "updated_at": "2026-11-08T03:00:28+00:00",
  "version": 1
 }
