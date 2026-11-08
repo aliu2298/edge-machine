@@ -3867,6 +3867,19 @@
    "tip": "2026-11-08T01:30:00+00:00",
    "why": "no tight read inside the entry window"
   },
+  "no:KXNBAWINMARGIN-26NOV07SASPOR-POR11TO20": {
+   "bot_version": "wm-nofade-v3",
+   "bucket": "POR11TO20",
+   "decided_at": "2026-11-08T02:15:21+00:00",
+   "event": "KXNBAWINMARGIN-26NOV07SASPOR",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV07",
+   "ticker": "KXNBAWINMARGIN-26NOV07SASPOR-POR11TO20",
+   "tip": "2026-11-08T03:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "no:KXNBAWINMARGIN-26NOV07SASPOR-POR1TO5": {
    "P": 0.88,
    "bot_version": "wm-nofade-v3",
@@ -3887,6 +3900,19 @@
    "yes_ask": 0.13,
    "yes_bid": 0.12
   },
+  "no:KXNBAWINMARGIN-26NOV07SASPOR-POR21PLUS": {
+   "bot_version": "wm-nofade-v3",
+   "bucket": "POR21PLUS",
+   "decided_at": "2026-11-08T02:15:21+00:00",
+   "event": "KXNBAWINMARGIN-26NOV07SASPOR",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV07",
+   "ticker": "KXNBAWINMARGIN-26NOV07SASPOR-POR21PLUS",
+   "tip": "2026-11-08T03:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "no:KXNBAWINMARGIN-26NOV07SASPOR-POR6TO10": {
    "P": 0.88,
    "bot_version": "wm-nofade-v3",
@@ -3906,6 +3932,58 @@
    "why": null,
    "yes_ask": 0.13,
    "yes_bid": 0.12
+  },
+  "no:KXNBAWINMARGIN-26NOV07SASPOR-SAS11TO20": {
+   "bot_version": "wm-nofade-v3",
+   "bucket": "SAS11TO20",
+   "decided_at": "2026-11-08T02:15:21+00:00",
+   "event": "KXNBAWINMARGIN-26NOV07SASPOR",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV07",
+   "ticker": "KXNBAWINMARGIN-26NOV07SASPOR-SAS11TO20",
+   "tip": "2026-11-08T03:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
+  "no:KXNBAWINMARGIN-26NOV07SASPOR-SAS1TO5": {
+   "bot_version": "wm-nofade-v3",
+   "bucket": "SAS1TO5",
+   "decided_at": "2026-11-08T02:15:21+00:00",
+   "event": "KXNBAWINMARGIN-26NOV07SASPOR",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV07",
+   "ticker": "KXNBAWINMARGIN-26NOV07SASPOR-SAS1TO5",
+   "tip": "2026-11-08T03:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
+  "no:KXNBAWINMARGIN-26NOV07SASPOR-SAS21PLUS": {
+   "bot_version": "wm-nofade-v3",
+   "bucket": "SAS21PLUS",
+   "decided_at": "2026-11-08T02:15:21+00:00",
+   "event": "KXNBAWINMARGIN-26NOV07SASPOR",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV07",
+   "ticker": "KXNBAWINMARGIN-26NOV07SASPOR-SAS21PLUS",
+   "tip": "2026-11-08T03:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
+  "no:KXNBAWINMARGIN-26NOV07SASPOR-SAS6TO10": {
+   "bot_version": "wm-nofade-v3",
+   "bucket": "SAS6TO10",
+   "decided_at": "2026-11-08T02:15:21+00:00",
+   "event": "KXNBAWINMARGIN-26NOV07SASPOR",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV07",
+   "ticker": "KXNBAWINMARGIN-26NOV07SASPOR-SAS6TO10",
+   "tip": "2026-11-08T03:00:00+00:00",
+   "why": "no tight read inside the entry window"
   },
   "no:KXNBAWINMARGIN-26NOV07WASOKC-OKC11TO15": {
    "P": 0.87,
@@ -6212,6 +6290,32 @@
    "yes_ask": 0.13,
    "yes_bid": 0.12
   },
+  "yes:KXNBAWINMARGIN-26NOV07SASPOR-SAS1TO5": {
+   "bot_version": "wm-yes-v3",
+   "bucket": "SAS1TO5",
+   "decided_at": "2026-11-08T02:15:21+00:00",
+   "event": "KXNBAWINMARGIN-26NOV07SASPOR",
+   "lane": "nba_winmargin_live",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV07",
+   "ticker": "KXNBAWINMARGIN-26NOV07SASPOR-SAS1TO5",
+   "tip": "2026-11-08T03:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
+  "yes:KXNBAWINMARGIN-26NOV07SASPOR-SAS6TO10": {
+   "bot_version": "wm-yes-v3",
+   "bucket": "SAS6TO10",
+   "decided_at": "2026-11-08T02:15:21+00:00",
+   "event": "KXNBAWINMARGIN-26NOV07SASPOR",
+   "lane": "nba_winmargin_live",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV07",
+   "ticker": "KXNBAWINMARGIN-26NOV07SASPOR-SAS6TO10",
+   "tip": "2026-11-08T03:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "yes:KXNBAWINMARGIN-26NOV07WASOKC-OKC1TO5": {
    "bot_version": "wm-yes-v3",
    "bucket": "OKC1TO5",
@@ -6273,6 +6377,6 @@
    "why": "no tight read inside the entry window"
   }
  },
- "updated_at": "2026-11-08T02:00:28+00:00",
+ "updated_at": "2026-11-08T02:15:21+00:00",
  "version": 1
 }
