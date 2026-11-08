@@ -186,7 +186,10 @@ import soccer_rules_build as SB
 import soccer_team_rules_production as TRP
 # 2026-11-05 (Olu): each rule is one row of the Soccer page (soccer_lanes); a Production rule is its pair's row.
 live, gone, quotes = soccer_lanes.team_rows(st)
-rows = {r["own"]["label"].split(" · ")[0]: r for r in live + gone}
+# T1-M's 1.5x sell readout (2026-11-08) is an observation row under T1, not a team rule: its label also starts "T1-M · ".
+check("T1-M's 1.5x sell readout rides under T1, outside the rules", [r["name"] for r in live if r["name"] == "t1m_sell15"],
+      ["t1m_sell15"])
+rows = {r["own"]["label"].split(" · ")[0]: r for r in live + gone if r["name"] != "t1m_sell15"}
 check("every team rule is one row, and T1's two siblings (2026-11-06)", sorted(rows),
       sorted(list(TR.RULES) + [m["name"] for m in TR.SIBLINGS.values()]))
 check("the Production rules are their pairs' rows (T1-H and T1-M are rows named by their sibling names)", sorted(k for k, r in rows.items() if r["prod"]), sorted(k if k in TR.RULES else TR.SIBLINGS[k]["name"] for k in TRP.PAIRS))
