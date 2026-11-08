@@ -13,7 +13,7 @@
    0.97
   ]
  },
- "board_built_at": "2026-11-08T16:31:14+00:00",
+ "board_built_at": "2026-11-08T17:04:50+00:00",
  "collector_error": null,
  "collector_healthy": {
   "st_t1h": true,
@@ -94,81 +94,6 @@
    "source": "st_t1m",
    "sport": "soccer_u35",
    "status": "miss"
-  },
-  "2026-11-08|Internazionale|Como|Internazionale to score 2+ \u00b7 T1 matches \u00b7 home team 2+ goals": {
-   "away": "Como",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "Internazionale"
-   },
-   "date": "2026-11-08",
-   "edge_at_log": null,
-   "first_seen": "2026-11-08",
-   "headline": "Internazionale to score 2+",
-   "home": "Internazionale",
-   "id": "2026-11-08|Internazionale|Como|Internazionale to score 2+ \u00b7 T1 matches \u00b7 home team 2+ goals",
-   "kickoff": "2026-11-08T17:00Z",
-   "lane": "production",
-   "last_seen": "2026-11-08",
-   "last_seen_at": "2026-11-08T16:31:14+00:00",
-   "league": "Serie A",
-   "match": "Internazionale v Como",
-   "pair": "st_t1h|soccer_team2",
-   "price_at_log": 0.56,
-   "published_at": "2026-11-08T15:31:15+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 88,
-   "route": {
-    "claim": "Internazionale to score 2+",
-    "event": "KXSERIEATEAMTOTAL-26NOV08INTCOM",
-    "market": "KXSERIEATEAMTOTAL-26NOV08INTCOM-INT2",
-    "outcome": "Inter over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.56,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "st_t1h:KXSERIEATEAMTOTAL-26NOV08INTCOM-INT2",
-   "source": "st_t1h",
-   "sport": "soccer_team2",
-   "status": "pending"
-  },
-  "2026-11-08|Internazionale|Como|Over 3.5 goals \u00b7 T1 matches \u00b7 match over 3.5 goals": {
-   "away": "Como",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-11-08",
-   "edge_at_log": null,
-   "first_seen": "2026-11-08",
-   "headline": "Over 3.5 goals",
-   "home": "Internazionale",
-   "id": "2026-11-08|Internazionale|Como|Over 3.5 goals \u00b7 T1 matches \u00b7 match over 3.5 goals",
-   "kickoff": "2026-11-08T17:00Z",
-   "lane": "production",
-   "last_seen": "2026-11-08",
-   "last_seen_at": "2026-11-08T16:31:14+00:00",
-   "league": "Serie A",
-   "match": "Internazionale v Como",
-   "pair": "st_t1m|soccer_u35",
-   "price_at_log": 0.41,
-   "published_at": "2026-11-08T15:31:15+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 88,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXSERIEATOTAL-26NOV08INTCOM",
-    "market": "KXSERIEATOTAL-26NOV08INTCOM-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.41,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "st_t1m:KXSERIEATOTAL-26NOV08INTCOM-4",
-   "source": "st_t1m",
-   "sport": "soccer_u35",
-   "status": "pending"
   }
  },
  "pairs": {
@@ -179,9 +104,9 @@
    "ready_at": "2026-11-08T12:00:00+00:00",
    "route": "moved by hand on 2026-11-08",
    "routing": {
-    "leads": 2,
+    "leads": 1,
     "problem": null,
-    "routed": 2,
+    "routed": 1,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -193,7 +118,7 @@
    "sandbox_roi_fee": 0.7031,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 0,
     "under_target": 0
    }
   },
@@ -204,9 +129,9 @@
    "ready_at": "2026-11-08T12:00:00+00:00",
    "route": "moved by hand on 2026-11-08",
    "routing": {
-    "leads": 2,
+    "leads": 1,
     "problem": null,
-    "routed": 2,
+    "routed": 1,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -218,7 +143,7 @@
    "sandbox_roi_fee": -1.0,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 0,
     "under_target": 0
    }
   },
@@ -252,5 +177,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-08T16:31:14+00:00"
+ "updated_at": "2026-11-08T17:04:50+00:00"
 }
