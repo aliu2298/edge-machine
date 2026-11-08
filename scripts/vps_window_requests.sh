@@ -24,6 +24,7 @@
 #   data/nba_value_window/**                           -> nba-value.yml (2026-10-21)
 #   data/chaos_window/**                               -> chaos.yml (2026-10-25)
 #   data/fights_window/**                              -> fights.yml (2026-11-01)
+#   data/nhl_goal_window/**                            -> nhl-goal.yml (2026-11-08)
 #
 # The stamp names the close and the read number, so git is the once-per-read guard: the
 # second 15-minute run inside a read finds nothing to commit, and every later run is a free
@@ -50,7 +51,7 @@ stamp() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 
 allowed_path() {
   case "$1" in
-    data/crypto_window/request.txt|data/commodities_window/request.txt|data/daily_window/request.txt|data/ftts_window/request.txt|data/nba_window/request.txt|data/culture_window/request.txt|data/soccer_rules_window/request.txt|data/soccer_team_rules_window/request.txt|data/tennis_totals_window/request.txt|data/nfl_tt_window/request.txt|data/nba_value_window/request.txt|data/chaos_window/request.txt|data/fights_window/request.txt) return 0 ;;
+    data/crypto_window/request.txt|data/commodities_window/request.txt|data/daily_window/request.txt|data/ftts_window/request.txt|data/nba_window/request.txt|data/culture_window/request.txt|data/soccer_rules_window/request.txt|data/soccer_team_rules_window/request.txt|data/tennis_totals_window/request.txt|data/nfl_tt_window/request.txt|data/nba_value_window/request.txt|data/chaos_window/request.txt|data/fights_window/request.txt|data/nhl_goal_window/request.txt) return 0 ;;
   esac
   return 1
 }

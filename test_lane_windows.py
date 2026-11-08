@@ -56,7 +56,7 @@ sat = at(2026, 10, 17, 12, 0)
 # An empty ledger: the lineup windows come from the real ledger's kickoffs, which this test must
 # not depend on (it read real Oct 17 fixtures once they were logged).
 lanes_sat = {(w["lane"], w["label"]) for w in W.windows(sat, ledger={"quotes": []}, games=[], fixtures=[])
-             if w["close"].date() == dt.date(2026, 10, 17) and w["lane"] not in ("culture", "chaos", "fights")}
+             if w["close"].date() == dt.date(2026, 10, 17) and w["lane"] not in ("culture", "chaos", "fights", "nhl_goal")}
 check("Saturday: crypto, gas/diesel (and the near-certain YES hour) and the first-to-score NO pick, "
       "no Treasury, index or commodity",
       sorted(l for l, _ in lanes_sat), ["crypto_fav_band", "econ_daily", "econ_daily", "econ_nc_yes", "ftts_no"])
@@ -106,6 +106,7 @@ print("\nstamps: one file per workflow, a crypto and a commodity read in one pus
 lines = W.stamp_lines(at(2026, 10, 13, 17, 35), ledger={"quotes": []}, games=[], fixtures=[])
 lines.pop("data/culture_window/request.txt", None)      # the hourly culture read (2026-10-17), tested below
 lines.pop("data/fights_window/request.txt", None)       # the hourly fights read (2026-11-01), tested below
+lines.pop("data/nhl_goal_window/request.txt", None)     # the hourly NHL goal read (2026-11-08), tested below
 check("17:35Z: crypto and commodities stamps both written, and the index window's daily stamp",
       sorted(lines), ["data/commodities_window/request.txt", "data/crypto_window/request.txt",
                       "data/daily_window/request.txt"])
@@ -127,6 +128,16 @@ check("the stamp goes to the fights file, named for the hour",
 check("the VPS script may write that stamp and the workflow runs on it",
       ("data/fights_window/request.txt" in open("scripts/vps_window_requests.sh").read()
        and 'data/fights_window/**' in open(".github/workflows/fights.yml").read()), True)
+
+print("\nthe NHL goal lanes are asked for every hour (2026-11-08)")
+nl = [k for w, k in W.due(at(2026, 11, 8, 20, 41), {"quotes": []}, [], []) if w["lane"] == "nhl_goal"]
+check("NHL goal reads once every hour", nl, [1])
+check("the stamp goes to the NHL file, named for the hour",
+      W.stamp_lines(at(2026, 11, 8, 20, 41), {"quotes": []}, [], []).get("data/nhl_goal_window/request.txt"),
+      "nhl_goal 2026-11-08T21:00:00+00:00 read 1")
+check("the VPS script may write that stamp and the workflow runs on it",
+      ("data/nhl_goal_window/request.txt" in open("scripts/vps_window_requests.sh").read()
+       and 'data/nhl_goal_window/**' in open(".github/workflows/nhl-goal.yml").read()), True)
 
 print("\nNBA rules and culture reads (2026-10-17)")
 nba = [dict(start="2026-10-20T19:00Z", completed=False), dict(start="2026-10-20T23:30Z", completed=False),
