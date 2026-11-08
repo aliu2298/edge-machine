@@ -23,8 +23,8 @@ st = json.load(open("data/stages.json"))
 check("commodities band: the committed stage is the Sandbox, with the date it left", st["pairs"][K]["stage"] == "sandbox" and st["pairs"][K].get("demoted_at"))
 feed = json.load(open("data/production_leads.json"))
 check("commodities band: the Production feed names no lead or pair for it", not any(l.get("pair") == K for l in feed["leads"].values()) and K not in feed["pairs"])
-dip = json.load(open("data/production_top5_dip_leads.json"))
-check("top-5 dip: its feed is valid and names no match", dip["lane"] == TD.LANE and dip["leads"] == [] and dip["ended_on"] == "2026-11-08")
+dip = TD.feed()          # what its workflow writes from now on (the committed file is restamped by the heartbeat and rewritten on the next run)
+check("top-5 dip: its feed is valid and names no match", dip["lane"] == TD.LANE and dip["leads"] == [] and dip["errors"] == [] and dip["ended_on"] == "2026-11-08")
 check("top-5 dip: no Production pair", TD.pairs() == {})
 
 blob = dict(generated="x", pairs={}, pulled={K: [dict(id="q1", ko="2026-11-02T18:00", side="yes", st="won", w=1.0, r=0.3),
