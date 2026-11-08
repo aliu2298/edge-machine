@@ -1,7 +1,8 @@
 {
- "generated": "2026-11-08T08:07Z",
+ "generated": "2026-11-08T09:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
+  "arg_dip": [],
   "nba_wm_nofade": [
    {
     "g": 0.3333,
@@ -2052,6 +2053,28 @@
   ]
  },
  "pairs": {
+  "corners_ucl_fade|soccer_corners": {
+   "entered": "2026-11-08T08:37:32+00:00",
+   "orders": [
+    {
+     "id": "corners_ucl_fade:KXUCLCORNERS-26OCT20MCIAEK-10",
+     "ko": "2026-10-20T19:00",
+     "r": 0.794,
+     "side": "yes",
+     "st": "won",
+     "w": 0.86
+    },
+    {
+     "id": "corners_ucl_fade:KXUCLCORNERS-26OCT20PSGBAR-9",
+     "ko": "2026-10-20T19:00",
+     "r": -1.0,
+     "side": "yes",
+     "st": "lost",
+     "w": 1.0
+    }
+   ],
+   "refused": {}
+  },
   "crypto_fav_band_below|crypto_fav": {
    "entered": "2026-10-21T00:47:16+00:00",
    "orders": [
@@ -2584,6 +2607,16 @@
      "w": 1.0
     }
    ],
+   "refused": {}
+  },
+  "st_t1h|soccer_team2": {
+   "entered": "2026-11-08T12:00:00+00:00",
+   "orders": [],
+   "refused": {}
+  },
+  "st_t1m|soccer_u35": {
+   "entered": "2026-11-08T12:00:00+00:00",
+   "orders": [],
    "refused": {}
   },
   "st_t7|soccer_team3": {
@@ -3399,22 +3432,6 @@
     "ko": "2026-10-26T20:00",
     "r": -1.0,
     "side": "no",
-    "st": "lost"
-   }
-  ],
-  "corners_ucl_fade|soccer_corners": [
-   {
-    "id": "corners_ucl_fade:KXUCLCORNERS-26OCT20MCIAEK-10",
-    "ko": "2026-10-20T19:00",
-    "r": 0.794,
-    "side": "yes",
-    "st": "won"
-   },
-   {
-    "id": "corners_ucl_fade:KXUCLCORNERS-26OCT20PSGBAR-9",
-    "ko": "2026-10-20T19:00",
-    "r": -1.0,
-    "side": "yes",
     "st": "lost"
    }
   ],
