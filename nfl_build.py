@@ -57,6 +57,14 @@ def build(d=None, st=None, now=None, own_lanes=True):
                 (retired if r.get("gone") else rows).append(r)
         except Exception as exc:                                # noqa: BLE001
             print(f"nfl_build: the team-total lanes failed: {type(exc).__name__}: {exc}")
+        try:
+            # nfl_tt_main1 (2026-11-08): its own ledger and module, the same template row.
+            import nfl_tt_main1 as M1
+            import nfl_tt_main1_build as MB
+            for lane in M1.LANES:
+                rows.append(MB.template_row(lane, None, tt_state))
+        except Exception as exc:                                # noqa: BLE001
+            print(f"nfl_build: the main line +1 lane failed: {type(exc).__name__}: {exc}")
     tracker = lambda rs: [r for r in rs if not r.get("own")]    # noqa: E731
     own = lambda rs: [r for r in rs if r.get("own")]            # noqa: E731
 
@@ -64,7 +72,13 @@ def build(d=None, st=None, now=None, own_lanes=True):
         out = CC.events(d_, tracker(rs), now_)
         if own(rs):
             import nfl_tt_build as TB
-            out += TB.events(own(rs), tt_state, now_)
+            tt = [r for r in own(rs) if r.get("ledger") != "main1"]
+            m1 = [r for r in own(rs) if r.get("ledger") == "main1"]
+            if tt:
+                out += TB.events(tt, tt_state, now_)
+            if m1:
+                import nfl_tt_main1_build as MB
+                out += MB.events(m1, None, now_)
         return out
 
     def empty_reason(d_, rs, idle_, now_):

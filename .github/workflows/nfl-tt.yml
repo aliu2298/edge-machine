@@ -26,13 +26,20 @@ jobs:
         with:
           python-version: '3.12'
       - name: Tests
-        run: python3 test_nfl_tt.py
+        run: |
+          set -euo pipefail
+          python3 test_nfl_tt.py
+          python3 test_nfl_tt_main1.py
       - name: Enter due games and settle (nfl_tt_over_3545, nfl_tt_over_main, own ledger)
         run: python3 nfl_tt.py
+      # nfl_tt_main1 (2026-11-08): the same windows, its own ledger, after the lanes above. An ESPN or Kalshi
+      # outage is written into its ledger's error, not raised, so it never stops the lanes above from saving.
+      - name: Enter due games and settle (nfl_tt_main1, own ledger)
+        run: python3 nfl_tt_main1.py
       - name: Save records
         run: |
           set -euo pipefail
           git config user.name "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
           python3 save_records.py --message "NFL team totals paper observations" \
-            --add data/nfl_tt_ledger.json
+            --add data/nfl_tt_ledger.json --add data/nfl_tt_main1_ledger.json

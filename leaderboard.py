@@ -561,7 +561,8 @@ ASSET_BY_SERIES = {"KXGOLDD": "Gold", "KXSILVERD": "Silver", "KXBRENTD": "Brent"
 RULE_LEDGERS = (
     ("soccer_rules_ledger.json", "Soccer", "match"), ("soccer_team_rules_ledger.json", "Soccer", "team"),
     ("sa_o15_ledger.json", "Soccer", "match"), ("contender_overs_ledger.json", "Soccer", "match"),
-    ("nfl_tt_ledger.json", "Football", "code"), ("tennis_totals_ledger.json", "Tennis", "match"),
+    ("nfl_tt_ledger.json", "Football", "code"), ("nfl_tt_main1_ledger.json", "Football", "code"),
+    ("tennis_totals_ledger.json", "Tennis", "match"),
     ("nba_rules_ledger.json", "NBA", "code"), ("nba_value_ledger.json", "NBA", "code"),
 )
 
@@ -866,6 +867,7 @@ def lane_stages(now=None, st=None):
     import nba_rules as NR
     import nba_value as NV
     import nfl_tt as NT
+    import nfl_tt_main1 as NT1
     import o35_production as OP
     import production as P
     import sa_o15 as SA
@@ -883,6 +885,7 @@ def lane_stages(now=None, st=None):
     rule_engines = {
         "soccer_rules_ledger.json": (SR, set(SRP.PAIRS)), "soccer_team_rules_ledger.json": (STR, set(STRP.PAIRS)),
         "sa_o15_ledger.json": (SA, set()), "contender_overs_ledger.json": (CO, set()), "nfl_tt_ledger.json": (NT, set()),
+        "nfl_tt_main1_ledger.json": (NT1, set()),
         "nba_rules_ledger.json": (NR, set()), "nba_value_ledger.json": (NV, set()),
     }
     chaos = {L_["id"]: L_ for L_ in chaos_lanes.LANES}
