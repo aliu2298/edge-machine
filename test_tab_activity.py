@@ -85,6 +85,16 @@ check("Cricket's entry: its one line why, its retired lanes and the registered r
 f = h[h.find('id="archived-fights"'):]
 check("Fights' entry keeps the baseline and the retired UFC record", ("Boxing" in f and "baseline" in f, "UFC" in f and "retired" in f), (True, True))
 check("no archived tab: no section", A.archive_html({"tabs": {"nba": {"archived": False}}}), "")
+print("\nthe NHL pin (2026-11-08, Olu: pin it in the menu now)")
+saved = {k: A.ADAPTERS[k] for k in ("nhl", "cricket")}
+A.ADAPTERS["nhl"] = A.ADAPTERS["cricket"] = lambda d, st, now: []
+try:
+    pin = A.check()
+finally:
+    A.ADAPTERS.update(saved)
+check("a pinned tab with no active lane stays in the nav; an unpinned one is still archived",
+      (pin["nhl"]["archived"], pin["nhl"]["active"], pin["cricket"]["archived"]), (False, [], True))
+check("the pin is narrow: NHL only, dated", (sorted(A.PINNED), A.PINNED["nhl"][0]), (["nhl"], "2026-11-08"))
 import sandbox_audit
 check("no guarded phrase in the entry", sandbox_audit.COPY_RE.search(h), None)
 

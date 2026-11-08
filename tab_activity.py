@@ -35,6 +35,13 @@ NOTES = {
 }
 
 
+# Tabs shown in the nav even with no active lane yet (2026-11-08, Olu: "yes, pin it in the menu now"). A narrow exception:
+# the archive rule is unchanged for every other tab, and a pinned tab still reports its active lanes honestly.
+PINNED = {
+    "nhl": ("2026-11-08", "two NHL goal lanes registered 2026-11-08; pinned so the tab shows before their first settled entry"),
+}
+
+
 def _row_active(r):
     """The template row rule: not retired, not a baseline, a settled count or an open pick on its record clock."""
     a = r.get("a") or {}
@@ -195,7 +202,7 @@ def check(d=None, st=None, now=None, previous=None):
             err = None
         except Exception as exc:                                # noqa: BLE001
             lanes, err = None, f"{type(exc).__name__}: {exc}"[:200]
-        archived = lanes is not None and not lanes
+        archived = lanes is not None and not lanes and tab not in PINNED
         since = ((prev.get(tab) or {}).get("since") or fmt.chicago(now).date().isoformat()) if archived else None
         out[tab] = dict(active=lanes or [], archived=archived, since=since, error=err)
     return out
