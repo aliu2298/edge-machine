@@ -130,9 +130,9 @@ check("a day missing from the calendar is a holiday", N.session(dt.date(2026, 11
 check("the fallback list knows Thanksgiving and the day after",
       (N.session(dt.date(2026, 11, 26)), N.session(dt.date(2026, 11, 27))), ("holiday", "half_day"))
 sk = N.grade_day(dt.date(2026, 11, 27), flat(dt.date(2026, 11, 27)), cal=[dict(date="2026-11-27", close="13:00")])
-check("a half-day logs every running variant as skipped (A and B are retired by then)",
+check("a half-day logs every running variant as skipped (A, B and C30 are retired by then)",
       ([x["id"] for x in sk], [x["status"] for x in sk], sk[0]["note"]),
-      (["2026-11-27:C15", "2026-11-27:C30"], ["skipped"] * 2, "half-day (early close)"))
+      (["2026-11-27:C15"], ["skipped"], "half-day (early close)"))
 check("a Saturday is never a session", N.session(dt.date(2026, 10, 24)), "holiday")
 
 print("\nthe ledger: one row per variant per day, settled rows final")
@@ -189,12 +189,12 @@ with tempfile.TemporaryDirectory() as tmp:
     check("no order endpoint is ever called", any("/orders" in u or "/positions" in u for u in calls), False)
     hol = {"t": dt.datetime(2026, 11, 26, 14, 5, tzinfo=UTC)}
     sk = N.live(day_path, now_fn=lambda: hol["t"], sleeper=lambda s: None, get=lambda u: [] if "calendar" in u else {})
-    check("on a holiday the live run logs skips and polls nothing", [x["status"] for x in sk["rows"]], ["skipped"] * 2)
+    check("on a holiday the live run logs skips and polls nothing (C15 only after C30's retirement)", [x["status"] for x in sk["rows"]], ["skipped"])
 
 print("\nA and B retire after 2026-10-30, their 10th day; C15 and C30 keep running")
 LAST, AFTER = dt.date(2026, 10, 30), dt.date(2026, 11, 2)
-check("the retirement is A and B on 2026-10-30, and nothing else", sorted((k, v[0]) for k, v in N.RETIRED.items()),
-      [("A", "2026-10-30"), ("B", "2026-10-30")])
+check("the retirements are A and B on 2026-10-30 and C30 on 2026-11-06, and nothing else", sorted((k, v[0]) for k, v in N.RETIRED.items()),
+      [("A", "2026-10-30"), ("B", "2026-10-30"), ("C30", "2026-11-06")])
 check("Thursday 2026-10-30 still logs all four (it is A and B's 10th day)",
       [x["variant"] for x in N.grade_day(LAST, flat(LAST), cal=[dict(date="2026-10-30", close="16:00")])],
       ["A", "B", "C15", "C30"])
@@ -210,11 +210,22 @@ check("the summary keeps A and B's record and marks them retired",
       (12, "2026-10-30", "no edge", None))
 hr = NB.section(ret)
 check("once 2026-10-30 is in the ledger the row reads Retired at its day count",
-      ("Retired 2026-10-30 at 12 days, no edge" in hr, "A and B are retired" in hr), (True, True))
+      ("Retired 2026-10-30 at 12 days, no edge" in hr, "A and B retired after 2026-10-30" in hr), (True, True))
 pre = {"rows": [x for x in ret["rows"] if x["day"] < "2026-10-30"]}
 check("before then it names the last day", "last day 2026-10-30, then retired (no edge)" in NB.section(pre), True)
-check("C15 and C30 are not marked retired", [("etired" in NB.section(ret).split(f"<b>{k}</b>")[1].split("</tr>")[0]) for k in ("C15", "C30")],
-      [False, False])
+check("C15 is not marked retired", "etired" in NB.section(ret).split("<b>C15</b>")[1].split("</tr>")[0], False)
+
+print("\nC30 retired, C15 to 30 days (2026-11-08, Olu)")
+import datetime as _dt
+check("Friday 2026-11-06 is C30's last day; from Monday 2026-11-09 only C15 logs",
+      (N.variants_on(_dt.date(2026, 11, 6)), N.variants_on(_dt.date(2026, 11, 9))), (["C15", "C30"], ["C15"]))
+live = N.load()
+page = NB.section(live)
+c15 = page.split('data-source="nasdaq_orb_C15"')[1].split("</summary>")[0]
+check("C15's row reads collecting n/30, not review due", ("collecting" in c15 and "/30" in c15, "review due" in c15), (True, False))
+retired_fold = page.split("Retired variants")[1]
+check("C30's row sits in the Retired variants fold with its record", 'data-source="nasdaq_orb_C30"' in retired_fold, True)
+check("and the main list no longer carries it", 'data-source="nasdaq_orb_C30"' in page.split("Retired variants")[0], False)
 check("no guarded public phrase in the retired copy", sandbox_audit.COPY_RE.findall(hr + NB.section(pre)), [])
 
 print("\nthe Trading section")

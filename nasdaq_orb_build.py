@@ -21,10 +21,11 @@ def _retired_line():
     """One sentence naming the retired variants, from nasdaq_orb.RETIRED."""
     if not N.RETIRED:
         return ""
-    names = " and ".join(sorted(N.RETIRED))
-    last = sorted({v[0] for v in N.RETIRED.values()})
-    return (f"{names} are retired: last day {' / '.join(last)}, the review point at {N.REVIEW_AT} days. No edge, and "
-            "they lost before costs too. They log no new days after it; their record stays below.")
+    by_day = {}
+    for k, (last, why) in sorted(N.RETIRED.items()):
+        by_day.setdefault((last, why), []).append(k)
+    parts = [f'{" and ".join(ks)} retired after {last} ({why})' for (last, why), ks in sorted(by_day.items())]
+    return "; ".join(parts) + ". They log no new days; their records stay below."
 
 
 DAY_HEAD = ('<div class="tbl"><table><thead><tr><th>Day</th><th>Variant</th><th>Range</th><th>Side</th><th>Signal</th>'
@@ -57,6 +58,10 @@ def _review(k, s, state):
                for r in state.get("rows") or []):
             return L.sig(f'Retired {s["retired"]} at {s["days"]} days, {s["retired_why"]}', "x")
         return L.sig(f'last day {s["retired"]}, then retired ({s["retired_why"]})', "x")
+    target = N.READ_TARGET.get(k)
+    if target and s["days"] >= N.REVIEW_AT:
+        # Past the first review and kept collecting to a later read (C15, 2026-11-08).
+        return L.sig(f'collecting {min(s["days"], target)}/{target}', "w" if s["days"] >= target else "n")
     return L.sig("review due", "w") if not need else L.sig(f'{s["days"]}/{N.REVIEW_AT} to review')
 
 
