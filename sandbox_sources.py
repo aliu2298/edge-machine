@@ -11410,3 +11410,5 @@ CHALLENGERS = {
 # nothing new, while their open bets still settle and their record stays on the board.
 CHALLENGERS = {k: v for k, v in CHALLENGERS.items() if SOURCES[k]["connected"]}
 
+# 2026-11-08 (Olu): the commodities favourite band is back in the Sandbox on its whole record (paper, still collecting); its live fills stay on the Production page as history.
+SOURCES["commod_fav_band"]["note"] += " Production 2026-10-09 to 2026-11-08, back in the Sandbox with its whole record (paper)."

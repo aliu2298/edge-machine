@@ -435,7 +435,8 @@ PAIR_OVERRIDES = {
     # the series does not trade (S.ladder_close_trades). One rung per commodity per
     # close, the 3c spread, the 25-contract ask and the 2-3.5h window are the Sandbox
     # rule's gates at logging; the feed publishes only what the rule logged.
-    "commod_fav_band|commodities_fav": dict(moved_on="2026-10-09", production_at=None),
+    #   commod_fav_band|commodities_fav — OUT 2026-11-08, back to the Sandbox, as asked (Olu): live 4-2 at -13.2% since the stake raise. Whole record
+    #   kept (PAIR_REMOVALS); it keeps collecting in the Sandbox, and its live fills stay on the Production page as history.
     # 2026-10-11, as asked: SIX more rules, EARLY like the rest, on their whole records at
     # listing. Promotion changes where their picks publish and nothing about what they pick.
     #
@@ -557,6 +558,10 @@ PAIR_REMOVALS = {
     "liga_btts_even|soccer_btts": dict(removed_on="2026-11-02", keep_record=True),
     "team2_form_l10|soccer_team2": dict(removed_on="2026-11-02", keep_record=True),
     "o15_ranked|soccer_o15_intl": dict(removed_on="2026-11-02", keep_record=True),
+    # 2026-11-08, as asked (Olu): the commodities favourite band back to the Sandbox on its whole record, paper and still collecting. No
+    # override is left for it (#176). Its live fills stay on the Production page (production_live.pulled_table); the follower is not told to
+    # do anything: a pair outside the feed gets no new order, and what it holds settles on its own.
+    "commod_fav_band|commodities_fav": dict(removed_on="2026-11-08", keep_record=True),
 }
 
 

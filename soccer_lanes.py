@@ -482,6 +482,14 @@ def top5_live_row(live_ledger, now):
         ("Record", f"Production from {TP.MOVED_ON}, fresh: the paper record that follows the follower's own decisions. "
                    "The research record is the Sandbox row Top-5 goalless dip."),
     ])
+    if TP.ENDED_ON:                          # back in the Sandbox: its own closed row, the live run as history
+        details = params_html([
+            ("Run", f"Traded live on Kalshi from {TP.MOVED_ON} to {TP.ENDED_ON} in a small fixed size; the feed names no match since {TP.ENDED_ON}, "
+                    "so no new bid is opened. A position already held settles on its own."),
+            ("Record", "The paper record that followed the follower's own decisions during the run, per counted fill; the research record is the Sandbox row Top-5 goalless dip, which keeps running."),
+        ])
+        return row("top5_dip_live_run", TP.SPORT, "Top-5 goalless dip · live run (ended)", "Over 1.5 · in-play", a, details,
+                   prod=False, pair=None, kind="In-play", note="The follower's own decisions, closed.")
     return row(TP.LANE, TP.SPORT, TP.NAME, "Over 1.5 · in-play", a, details, prod=True,
                pair=f"{TP.LANE}|{TP.SPORT}", kind="In-play")
 

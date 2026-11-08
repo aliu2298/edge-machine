@@ -27,6 +27,7 @@ NAME = "Top-5 goalless dip (live)"
 LANE = L.LANE
 VERSION = L.VERSION
 MOVED_ON = "2026-11-05"
+ENDED_ON = "2026-11-08"          # Olu: back to the Sandbox. The feed lists no match, so the follower opens no new bid; what it holds is managed on its own
 FRACTION = L.HEADLINE
 STAKE_USD = 1.0
 LOOKAHEAD_H = 30
@@ -63,8 +64,8 @@ def leads(now, fetch=D.get):
 
 def feed(now=None, fetch=D.get):
     now = now or dt.datetime.now(UTC)
-    rows, errors = leads(now, fetch)
-    return dict(lane=LANE, name=NAME, version=VERSION, moved_on=MOVED_ON, updated_at=now.replace(microsecond=0).isoformat(),
+    rows, errors = ([], []) if ENDED_ON else leads(now, fetch)       # ended: a valid, fresh feed that names no match (the follower's new-bid path reads only the leads)
+    return dict(lane=LANE, name=NAME, version=VERSION, moved_on=MOVED_ON, ended_on=ENDED_ON, updated_at=now.replace(microsecond=0).isoformat(),
                 rule=dict(side="yes", fraction=FRACTION, stake_usd=STAKE_USD, kickoff_back_h=A.KICKOFF_BACK_H,
                           leagues=sorted(T.LEAGUES.values()), strike=T.TOP5["strike"]),
                 errors=errors, leads=rows)
@@ -79,6 +80,8 @@ HEALTHY_HOURS = 3
 
 
 def pairs():
+    if ENDED_ON:                           # back in the Sandbox: no Production pair (its live fills stay on the Production page as history)
+        return {}
     return {f"{LANE}|{SPORT}": dict(stage="production", ready_at=PROMOTED, promoted_at=PROMOTED, by_hand=MOVED_ON)}
 
 
@@ -171,6 +174,8 @@ def quotes(ledger, leads_feed):
 def page_inputs(d, st, blob, live_ledger, now=None, leads_feed=None):
     """Augment page inputs in memory; the original ledger, stage and feed objects are untouched. `live_ledger` is data/top5_dip_live.json;
     `leads_feed` defaults to data/production_top5_dip_leads.json."""
+    if ENDED_ON:                           # back in the Sandbox: no Production pair, quotes or upcoming list
+        return d, st, blob
     now = now or dt.datetime.now(UTC)
     if leads_feed is None:
         leads_feed = P.load_feed(PATH) or {}
