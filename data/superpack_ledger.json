@@ -1779,7 +1779,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-08T22:07:48.502216+00:00",
+ "last_run": "2026-11-08T22:12:33.117063+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -4876,14 +4876,14 @@
    ],
    "pid": "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXLALIGACORNERS-26NOV08ATMBAR-10\", \"b\"]]",
    "price": 0.45,
-   "profit": null,
+   "profit": 1.2222,
    "scope": "soccer_corners",
-   "settled": null,
+   "settled": "2026-11-08T22:12:17+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXNFLTEAMTOTAL-26NOV08CLENO-CLE22",
