@@ -13,7 +13,7 @@
    0.97
   ]
  },
- "board_built_at": "2026-11-08T13:46:13+00:00",
+ "board_built_at": "2026-11-08T14:01:13+00:00",
  "collector_error": null,
  "collector_healthy": {
   "st_t1h": true,
@@ -24,81 +24,6 @@
  "first_publish_min": 45,
  "late_publication_skipped": 0,
  "leads": {
-  "2026-11-08|Brighton & Hove Albion|Brentford|Brighton & Hove Albion to score 2+ \u00b7 T1 matches \u00b7 home team 2+ goals": {
-   "away": "Brentford",
-   "bet": {
-    "kind": "team_gte",
-    "n": 2,
-    "team": "Brighton & Hove Albion"
-   },
-   "date": "2026-11-08",
-   "edge_at_log": null,
-   "first_seen": "2026-11-08",
-   "headline": "Brighton & Hove Albion to score 2+",
-   "home": "Brighton & Hove Albion",
-   "id": "2026-11-08|Brighton & Hove Albion|Brentford|Brighton & Hove Albion to score 2+ \u00b7 T1 matches \u00b7 home team 2+ goals",
-   "kickoff": "2026-11-08T14:00Z",
-   "lane": "production",
-   "last_seen": "2026-11-08",
-   "last_seen_at": "2026-11-08T13:46:13+00:00",
-   "league": "Premier League",
-   "match": "Brighton & Hove Albion v Brentford",
-   "pair": "st_t1h|soccer_team2",
-   "price_at_log": 0.57,
-   "published_at": "2026-11-08T12:31:17+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 88,
-   "route": {
-    "claim": "Brighton & Hove Albion to score 2+",
-    "event": "KXEPLTEAMTOTAL-26NOV08BRIBRE",
-    "market": "KXEPLTEAMTOTAL-26NOV08BRIBRE-BRI2",
-    "outcome": "Brighton over 1.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.57,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "st_t1h:KXEPLTEAMTOTAL-26NOV08BRIBRE-BRI2",
-   "source": "st_t1h",
-   "sport": "soccer_team2",
-   "status": "pending"
-  },
-  "2026-11-08|Brighton & Hove Albion|Brentford|Over 3.5 goals \u00b7 T1 matches \u00b7 match over 3.5 goals": {
-   "away": "Brentford",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-11-08",
-   "edge_at_log": null,
-   "first_seen": "2026-11-08",
-   "headline": "Over 3.5 goals",
-   "home": "Brighton & Hove Albion",
-   "id": "2026-11-08|Brighton & Hove Albion|Brentford|Over 3.5 goals \u00b7 T1 matches \u00b7 match over 3.5 goals",
-   "kickoff": "2026-11-08T14:00Z",
-   "lane": "production",
-   "last_seen": "2026-11-08",
-   "last_seen_at": "2026-11-08T13:46:13+00:00",
-   "league": "Premier League",
-   "match": "Brighton & Hove Albion v Brentford",
-   "pair": "st_t1m|soccer_u35",
-   "price_at_log": 0.39,
-   "published_at": "2026-11-08T12:31:17+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 88,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXEPLTOTAL-26NOV08BRIBRE",
-    "market": "KXEPLTOTAL-26NOV08BRIBRE-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.39,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "st_t1m:KXEPLTOTAL-26NOV08BRIBRE-4",
-   "source": "st_t1m",
-   "sport": "soccer_u35",
-   "status": "pending"
-  },
   "2026-11-08|Real Sociedad|Rayo Vallecano|Rayo Vallecano to score under 2.5 \u00b7 O+D+ v O+D+ \u00b7 team 3+ goals \u00b7 NO": {
    "away": "Rayo Vallecano",
    "bet": {
@@ -115,7 +40,7 @@
    "kickoff": "2026-11-08T15:15Z",
    "lane": "production",
    "last_seen": "2026-11-08",
-   "last_seen_at": "2026-11-08T13:46:13+00:00",
+   "last_seen_at": "2026-11-08T14:01:13+00:00",
    "league": "La Liga",
    "match": "Real Sociedad v Rayo Vallecano",
    "pair": "st_t7|soccer_team3",
@@ -153,7 +78,7 @@
    "kickoff": "2026-11-08T15:15Z",
    "lane": "production",
    "last_seen": "2026-11-08",
-   "last_seen_at": "2026-11-08T13:46:13+00:00",
+   "last_seen_at": "2026-11-08T14:01:13+00:00",
    "league": "La Liga",
    "match": "Real Sociedad v Rayo Vallecano",
    "pair": "st_t7|soccer_team3",
@@ -184,9 +109,9 @@
    "ready_at": "2026-11-08T12:00:00+00:00",
    "route": "moved by hand on 2026-11-08",
    "routing": {
-    "leads": 1,
+    "leads": 0,
     "problem": null,
-    "routed": 1,
+    "routed": 0,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -198,7 +123,7 @@
    "sandbox_roi_fee": null,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 0,
     "under_target": 0
    }
   },
@@ -209,9 +134,9 @@
    "ready_at": "2026-11-08T12:00:00+00:00",
    "route": "moved by hand on 2026-11-08",
    "routing": {
-    "leads": 1,
+    "leads": 0,
     "problem": null,
-    "routed": 1,
+    "routed": 0,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -223,7 +148,7 @@
    "sandbox_roi_fee": null,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 0,
     "under_target": 0
    }
   },
@@ -257,5 +182,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-08T13:46:13+00:00"
+ "updated_at": "2026-11-08T14:01:13+00:00"
 }
