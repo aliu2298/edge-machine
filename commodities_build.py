@@ -381,6 +381,13 @@ def _cheap_row(cfg, st, retired=False):
     else:
         verdict = SP.verdict_badge(dict(v="promising" if (r["roi"] or 0) > 0 else "behind", a={"n": n}))
     badges = '<span class="sp-badges"><span class="badge stage">Retired</span></span>' if retired else ""
+    side = str(cfg.get("side") or "yes").upper()
+    lo, hi = cfg.get("band") or (0, 0)
+    params = ('<dl class="sp-params">'
+              f'<dt>Entry</dt><dd>{side} at {lo * 100:g}–{hi * 100:g}¢, the real ask, when a {e(cfg.get("series", ""))} rung opens</dd>'
+              f'<dt>Exit</dt><dd>Half resting at 2x, half at 3x, filled only on a traded print; else held to settlement</dd>'
+              f'<dt>Liquidity</dt><dd>Spread ≤{float(cfg.get("spread") or 0) * 100:g}¢; the ask counted only when it was really there</dd>'
+              f'<dt>Record</dt><dd>Sandbox, paper, a fresh record from the first entry · review at 10 settled events, decide at 30</dd></dl>')
     gone = cfg.get("retired") or {}
     gone_line = (f'<p class="sp-def">Retired {e(gone.get("on", ""))} at {e(gone.get("at", ""))}: {e(gone.get("reason", ""))}. '
                  f'Its rows stay; any open entry still settles.</p>' if retired and gone else "")
@@ -397,7 +404,7 @@ def _cheap_row(cfg, st, retired=False):
             f'<span class="sp-cell num" data-l="Evidence">{n}/30</span>'
             f'<span class="sp-cell sp-c-verdict" data-l="Verdict">{verdict}</span></summary>'
             f'<div class="sp-details-body"><p class="sp-details-name"><b>{e(cfg["label"])}</b> · Kalshi · cheap side + '
-            f'resting take-profit · {e(MS.lane_status(cfg, n))}</p>{gone_line}{MS.label_cells(MS.section(st, e, cfg))}</div></details>')
+            f'resting take-profit · {e(MS.lane_status(cfg, n))}</p>{params}{gone_line}{MS.label_cells(MS.section(st, e, cfg))}</div></details>')
 
 
 def _insert_rows(html, list_key, rows_html):
