@@ -1,13 +1,23 @@
 {
  "bands": {
+  "st_t1h|soccer_team2": [
+   0.03,
+   0.97
+  ],
+  "st_t1m|soccer_u35": [
+   0.03,
+   0.97
+  ],
   "st_t7|soccer_team3": [
    0.03,
    0.97
   ]
  },
- "board_built_at": "2026-11-08T08:01:04+00:00",
+ "board_built_at": "2026-11-08T08:34:47+00:00",
  "collector_error": null,
  "collector_healthy": {
+  "st_t1h": true,
+  "st_t1m": true,
   "st_t7": true
  },
  "corners_selections": {},
@@ -15,6 +25,56 @@
  "late_publication_skipped": 0,
  "leads": {},
  "pairs": {
+  "st_t1h|soccer_team2": {
+   "by_hand": "2026-11-08",
+   "entered_at": "2026-11-08T12:00:00+00:00",
+   "promoted_at": "2026-11-08T12:00:00+00:00",
+   "ready_at": "2026-11-08T12:00:00+00:00",
+   "route": "moved by hand on 2026-11-08",
+   "routing": {
+    "leads": 0,
+    "problem": null,
+    "routed": 0,
+    "unlisted": 0,
+    "unrouted": 0,
+    "unverified": 0,
+    "why": []
+   },
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null,
+   "timing": {
+    "late": [],
+    "timed": 0,
+    "under_target": 0
+   }
+  },
+  "st_t1m|soccer_u35": {
+   "by_hand": "2026-11-08",
+   "entered_at": "2026-11-08T12:00:00+00:00",
+   "promoted_at": "2026-11-08T12:00:00+00:00",
+   "ready_at": "2026-11-08T12:00:00+00:00",
+   "route": "moved by hand on 2026-11-08",
+   "routing": {
+    "leads": 0,
+    "problem": null,
+    "routed": 0,
+    "unlisted": 0,
+    "unrouted": 0,
+    "unverified": 0,
+    "why": []
+   },
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null,
+   "timing": {
+    "late": [],
+    "timed": 0,
+    "under_target": 0
+   }
+  },
   "st_t7|soccer_team3": {
    "by_hand": "2026-10-28",
    "entered_at": "2026-10-29T00:59:00+00:00",
@@ -45,5 +105,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-08T08:01:04+00:00"
+ "updated_at": "2026-11-08T08:34:47+00:00"
 }
