@@ -97,7 +97,18 @@ def nfl(d, st, now):
     import nfl_tt_build as TB
     tt = TB._state(None)
     return (_family(d, st, "NFL") + _chaos("nfl")
-            + [x for x in N.LANES if x not in N.RETIRED and _row_active(TB.template_row(x, tt))])
+            + [x for x in N.LANES if x not in N.RETIRED and _row_active(TB.template_row(x, tt))]
+            + _nfl_main1())
+
+
+def _nfl_main1():
+    try:
+        import nfl_tt_main1 as M1
+        import nfl_tt_main1_build as MB
+        m1 = MB._state(None)
+        return [x for x in M1.LANES if x not in M1.RETIRED and _row_active(MB.template_row(x, m1))]
+    except Exception:                                           # noqa: BLE001
+        return []
 
 
 def tennis(d, st, now):
