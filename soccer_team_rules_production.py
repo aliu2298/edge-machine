@@ -43,14 +43,13 @@ PULLED_ON = "2026-10-28"
 T5_PULLED = ("2026-10-28", "2026-11-02")
 # T4 (O+D− v O−D+ · team 2+ goals YES · MLS, La Liga, EPL; Sandbox 8–3 on 11, +10.6%) moved by hand
 # 2026-11-04 (Olu), live $1 bets, only for fixtures after the promotion time.
-T4_PROMOTED = "2026-11-05T02:50:00+00:00"
-T4_MOVED_ON = "2026-11-04"
+# T4 went back to the Sandbox 2026-11-08 (Olu): paper 8-4, +1.4% on 12, the price the label rule is worth; still logged by soccer_team_rules.py.
+T4_PULLED = ("2026-11-04", "2026-11-08")
 PAIRS = {
-    "T4": ("st_t4", "soccer_team2", "O+D− v O−D+ · team 2+ goals"),
     "T7": ("st_t7", "soccer_team3", "O+D+ v O+D+ · team 3+ goals · NO"),
 }
-PROMOTED_AT = {"T4": T4_PROMOTED, "T7": PROMOTED}
-MOVED = {"T4": T4_MOVED_ON, "T7": MOVED_ON}
+PROMOTED_AT = {"T7": PROMOTED}
+MOVED = {"T7": MOVED_ON}
 LABELS = {src: name for src, _sport, name in PAIRS.values()}
 BAND = (TR.PRICE_LO, TR.PRICE_HI)
 TITLE_RE = re.compile(r"^Will (.+?) score over (\d+(?:\.\d+)?) goals\??$", re.I)

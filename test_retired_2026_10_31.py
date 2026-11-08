@@ -50,7 +50,7 @@ f = dict(league="Premier League", home="A", away="B", kickoff="2026-11-01T15:00:
 import re
 import inspect
 check("picks_for skips a retired rule before building any entry", "if retired(rule, now):" in inspect.getsource(TR.picks_for), True)
-check("the Production team-rule pairs are T4 (2026-11-04) and T7 (T5 went back to the Sandbox 2026-11-02)", sorted(TRP.PAIRS), ["T4", "T7"])
+check("the Production team-rule pairs are T7 (T4 2026-11-04 to 2026-11-08 and T5 went back to the Sandbox)", sorted(TRP.PAIRS), ["T7"])
 
 print("\ncontender overs: the over 3.5 variant only")
 check("O35 retired on 2026-10-31; O15 and O25 are not yet then", (CO.retired("O35", AFTER), CO.retired("O15", AFTER), CO.retired("O25", AFTER),
@@ -97,8 +97,8 @@ check("fetch_u35_low_o15 still selects a low-scoring match (retiring the Clubs u
       [x["market_id"] for x in out], ["KXEPLTOTAL-26NOV01-1"])
 
 print("\nProduction soccer feeds still publish the Production rules")
-check("rules feed pairs A6, A7, C3, C4; team feed T4, T7", (sorted(SRP.PAIRS), sorted(TRP.PAIRS)),
-      (sorted(SRP.PAIRS), ["T4", "T7"]))
+check("rules feed pairs A6, A7, C3, C4; team feed T7", (sorted(SRP.PAIRS), sorted(TRP.PAIRS)),
+      (sorted(SRP.PAIRS), ["T7"]))
 check("none of the retired rules is a Production pair",
       sorted((set(SRP.PAIRS) | set(TRP.PAIRS)) & {"D1", "C5", "C6", "C7", "T6", "T8", "O35"}), [])
 check("no guarded phrase in the retirement copy",

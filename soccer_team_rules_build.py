@@ -1,5 +1,5 @@
 """The Soccer page's Team scoring rules section: the 8 Sandbox team-total label rules
-(soccer_team_rules.py): paper; T4 in Production since 2026-11-04, T7 since 2026-10-28, T1 (2026-10-24 to 2026-10-28) and T5 (2026-10-28 to 2026-11-02) back in the Sandbox."""
+(soccer_team_rules.py): paper; T7 in Production since 2026-10-28; T1 (2026-10-24 to 2026-10-28), T5 (2026-10-28 to 2026-11-02) and T4 (2026-11-04 to 2026-11-08) back in the Sandbox."""
 import html as _h
 import os
 
@@ -30,6 +30,7 @@ def section(state=None):
             # record stays here.
             label = meta["label"] + (f" · Production {TRP.T1_MOVED_ON} to {TRP.PULLED_ON}, back in the Sandbox" if key == "T1"
                                     else f" · Production {TRP.T5_PULLED[0]} to {TRP.T5_PULLED[1]}, back in the Sandbox" if key == "T5"
+                                    else f" · Production {TRP.T4_PULLED[0]} to {TRP.T4_PULLED[1]}, back in the Sandbox" if key == "T4"
                                     else f" · Production since {TRP.MOVED[key]}" if key in TRP.PAIRS else "")
             if key == "T1":                    # kept in the Sandbox, unchanged (Olu, 2026-11-01)
                 label += " · Re-read at 50 settled (Olu, 2026-11-01)"
@@ -56,7 +57,7 @@ def section(state=None):
                                   'once both teams carry a label and Kalshi quotes the team total with a spread of 5c or less.</td></tr>')
     last = state.get("last_run")
     return f"""<section id="team-rules">
-<div class="nba-section-head"><div><h2>Team scoring rules</h2><p class="shell-kicker">8 team-total label rules from 411 matches, Aug 1 – Oct 17 2026 (T6 and T8 retired 2026-10-31, T2 2026-11-01) · paper · T4 in Production since 2026-11-04, T7 since 2026-10-28; T1 (2026-10-24 to 2026-10-28) and T5 (2026-10-28 to 2026-11-02) back in the Sandbox · Kalshi price, 7% fee</p></div></div>
+<div class="nba-section-head"><div><h2>Team scoring rules</h2><p class="shell-kicker">8 team-total label rules from 411 matches, Aug 1 – Oct 17 2026 (T6 and T8 retired 2026-10-31, T2 2026-11-01) · paper · T7 in Production since 2026-10-28; T1 (2026-10-24 to 2026-10-28), T5 (2026-10-28 to 2026-11-02) and T4 (2026-11-04 to 2026-11-08) back in the Sandbox · Kalshi price, 7% fee</p></div></div>
 {"".join(groups)}
 <details class="section-disclosure"><summary><b>Entries</b><span>latest 25</span></summary>
 <div class="tbl"><table><thead><tr><th>Kickoff</th><th>Match</th><th>Team</th><th>Labels</th><th>Rule</th><th>Contract</th><th>Side</th><th class="num">Price</th><th>Result</th></tr></thead>

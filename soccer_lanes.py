@@ -241,6 +241,8 @@ def team_rows(state=None):
             history.append("Re-read at 50 settled (Olu, 2026-11-01)")
         elif key == "T5":
             history.append(f"Production {TRP.T5_PULLED[0]} to {TRP.T5_PULLED[1]}, back in the Sandbox")
+        elif key == "T4":
+            history.append(f"Production {TRP.T4_PULLED[0]} to {TRP.T4_PULLED[1]}, back in the Sandbox")
         elif key in TRP.PAIRS:
             history.append(f"Production since {TRP.MOVED[key]} (moved by hand)")
         gone = TR.RETIRED.get(key)
