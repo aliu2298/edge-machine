@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-08T22:45:15.413487+00:00",
+ "last_run": "2026-11-08T23:18:02.825223+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -2240,6 +2240,50 @@
      "ticker": "KXNBATEAMTOTAL-26NOV06BOSCHA-BOS103",
      "title": "Boston over 102.5 points",
      "why": "BOS O-D- v CHA O-D- \u00b7 cheapest NO 0.31 at 102.5"
+    },
+    {
+     "game": "401909948",
+     "id": "R4:KXNBATEAMTOTAL-26NOV08BKNDAL-DAL108",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O-D-",
+      "home": "O-D-",
+      "home_h1": "O-D+"
+     },
+     "logged": "2026-11-08T23:18:02.825223+00:00",
+     "match": "BKN @ DAL",
+     "price": 0.26,
+     "rule": "R4",
+     "side": "no",
+     "start": "2026-11-09T00:30Z",
+     "status": "open",
+     "strike": 107.5,
+     "team": "DAL",
+     "ticker": "KXNBATEAMTOTAL-26NOV08BKNDAL-DAL108",
+     "title": "Dallas over 107.5 points",
+     "why": "DAL O-D- v BKN O-D- \u00b7 cheapest NO 0.26 at 107.5"
+    },
+    {
+     "game": "401909948",
+     "id": "R4:KXNBATEAMTOTAL-26NOV08BKNDAL-BKN101",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O-D-",
+      "home": "O-D-",
+      "home_h1": "O-D+"
+     },
+     "logged": "2026-11-08T23:18:02.825223+00:00",
+     "match": "BKN @ DAL",
+     "price": 0.26,
+     "rule": "R4",
+     "side": "no",
+     "start": "2026-11-09T00:30Z",
+     "status": "open",
+     "strike": 100.5,
+     "team": "BKN",
+     "ticker": "KXNBATEAMTOTAL-26NOV08BKNDAL-BKN101",
+     "title": "Brooklyn over 100.5 points",
+     "why": "BKN O-D- v DAL O-D- \u00b7 cheapest NO 0.26 at 100.5"
     }
    ]
   },
@@ -4677,16 +4721,33 @@
      "ticker": "KXNBATEAMTOTAL-26NOV07WASOKC-OKC116",
      "title": "Oklahoma City over 115.5 points",
      "why": "OKC O+D- v WSH O-D- \u00b7 both D\u2212 \u00b7 115+ NO 0.41"
+    },
+    {
+     "game": "401909948",
+     "id": "R7:KXNBATEAMTOTAL-26NOV08BKNDAL-DAL116",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O-D-",
+      "home": "O-D-",
+      "home_h1": "O-D+"
+     },
+     "logged": "2026-11-08T23:18:02.825223+00:00",
+     "match": "BKN @ DAL",
+     "price": 0.51,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-11-09T00:30Z",
+     "status": "open",
+     "strike": 115.5,
+     "team": "DAL",
+     "ticker": "KXNBATEAMTOTAL-26NOV08BKNDAL-DAL116",
+     "title": "Dallas over 115.5 points",
+     "why": "DAL O-D- v BKN O-D- \u00b7 both D\u2212 \u00b7 115+ NO 0.51"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-04T22:02:30.189992+00:00",
-   "due": 0,
-   "new": 0
-  },
   {
    "at": "2026-11-04T22:30:16.036687+00:00",
    "due": 2,
@@ -4936,6 +4997,11 @@
    "at": "2026-11-08T22:45:15.413487+00:00",
    "due": 1,
    "new": 0
+  },
+  {
+   "at": "2026-11-08T23:18:02.825223+00:00",
+   "due": 2,
+   "new": 3
   }
  ],
  "version": "nba-rules-v1"
