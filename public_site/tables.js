@@ -437,10 +437,21 @@
   // cards, the Sandbox rows and the event lines together; the events sit in
   // three tabs. With script off every panel is on the page under its own
   // heading and the chips and tabs do nothing.
+  // A page that stacks several sport bodies (Daily Markets, 2026-11-08) marks each with [data-sp-group]; its ids are
+  // prefixed, so each group is wired on its own from its [data-sp-role] sections.
   function wireSportPage(doc) {
-    var filters = doc.querySelector(".sp-filters[data-controls]");
-    var events = doc.getElementById("events");
-    var rules = doc.getElementById("rules");
+    var groups = typeof doc.querySelectorAll === "function" ? doc.querySelectorAll("[data-sp-group]") : [];
+    if (groups.length) {
+      Array.prototype.forEach.call(groups, function (g) { wireSportBody(doc, g); });
+      return;
+    }
+    wireSportBody(doc, null);
+  }
+
+  function wireSportBody(doc, root) {
+    var filters = (root || doc).querySelector(".sp-filters[data-controls]");
+    var events = root ? root.querySelector('[data-sp-role="events"]') : doc.getElementById("events");
+    var rules = root ? root.querySelector('[data-sp-role="rules"]') : doc.getElementById("rules");
     if (!filters && !events) return;
     var state = { scope: "all", stage: "all" };
     function matches(el) {

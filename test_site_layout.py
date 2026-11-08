@@ -59,7 +59,7 @@ def _read(rel):
 def _published_pages():
     """Sandbox, production, trading, and whatever archive weeks are on disk."""
     pages = ["index.html", "sandbox.html", "production.html", "trading.html", "soccer.html",
-             "tennis.html", "cricket.html", "nba.html", "crypto.html", "archive/index.html"]
+             "tennis.html", "cricket.html", "nba.html", "daily_markets.html", "archive/index.html"]
     archive = os.path.join(ROOT, "public_site", "archive")
     if os.path.isdir(archive):
         weeks = sorted(

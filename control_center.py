@@ -66,12 +66,14 @@ AREAS = (
     ("soccer", "Soccer", "./soccer.html"),
     ("cricket", "Cricket", "./cricket.html"),
     ("tennis", "Tennis", "./tennis.html"),
-    ("crypto", "Crypto", "./crypto.html"),
-    ("commodities", "Commodities", "./commodities.html"),
+    # 2026-11-08: sections of the Daily Markets tab.
+    ("crypto", "Crypto", "./daily_markets.html#crypto"),
+    ("commodities", "Commodities", "./daily_markets.html#commodities"),
     ("nba", "NBA", "./nba.html"),
     ("trading", "Trading", "./trading.html"),
 )
 AREA_HREF = {key: href for key, _label, href in AREAS}
+DAILY_HREF = {"econ_daily": "./daily_markets.html#econ", "finance_daily": "./daily_markets.html#finance"}
 AREA_LABEL = {key: label for key, label, _href in AREAS}
 # sandbox_build.family -> area key, for the lanes the Sandbox ledger carries.
 FAMILY_AREA = {"Soccer": "soccer", "Cricket": "cricket", "Tennis": "tennis",
@@ -632,11 +634,11 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
                            else 'stale' if last < now - timedelta(hours=EXPECTED[key][0]) else 'healthy')
             daily_items = []
             if lane.get('error') or status_word == 'stale':
-                item = dict(kind='feed', area=key, href='./'+key+'.html',
+                item = dict(kind='feed', area=key, href=DAILY_HREF[key],
                             text=label+': '+(lane.get('error') or f'no successful paper scan in the last {EXPECTED[key][0]} hours'))
                 attention.append(item)
                 daily_items.append(item)
-            areas.append(dict(key=key, label=label, href='./'+key+'.html',
+            areas.append(dict(key=key, label=label, href=DAILY_HREF[key],
                 open=sum(x.get('status')=='open' for x in picks),
                 settled=sum(x.get('status')!='open' and _in_window(_utc(x.get('settled')),now) for x in picks),
                 next24=sum(x.get('status')=='open' and _utc(x.get('close')) is not None

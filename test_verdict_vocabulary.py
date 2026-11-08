@@ -188,7 +188,8 @@ empty_tr = next(t for t in trs if 'data-records="0"' in t)
 ok('data-verdict="waiting">Too early<' in empty_tr or 'data-verdict="nobets">Too early<' in empty_tr,
    "a rule with nothing settled reads Too early")
 ok("cc-winrate" not in empty_tr and "z " not in re.sub(r"<[^>]+>", " ", empty_tr), "and has no win rate or z")
-ok('href="./soccer.html"' in prod_tr and 'href="./crypto.html"' in crypto_tr, "each rule links its sport page")
+ok('href="./soccer.html"' in prod_tr and 'href="./daily_markets.html#crypto"' in crypto_tr,
+   "each rule links its sport page (crypto: its Daily Markets section, 2026-11-08)")
 eq(CC._scorecard_html([]), '<p class="shell-empty">No rule has a record yet.</p>', "no rules, one line")
 
 print("\nthe scorecard on the Control Center")

@@ -19,7 +19,7 @@ for key in T.LANES:
     for token in tokens:
         assert token in html and all(token in r for r in reference), token
     assert html.count('class="tile"')==4
-    assert 'Econ Daily' in html and 'Finance Daily' in html
+    assert 'Daily Markets' in html          # 2026-11-08: both are sections of the Daily Markets tab
     assert 'Scan reasons &amp; coverage' in html
     assert '<style' not in html and 'onclick=' not in html
     if key=='econ_daily': assert 'Production · paper record' in html

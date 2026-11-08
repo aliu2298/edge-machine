@@ -34,17 +34,14 @@ PAGE_HREFS = (
     'href="./soccer.html"',
     'href="./tennis.html"',
     'href="./cricket.html"',
-    'href="./crypto.html"',
-    'href="./commodities.html"',
-    'href="./econ_daily.html"',
-    'href="./finance_daily.html"',
+    'href="./daily_markets.html"',      # 2026-11-08: Crypto, Commodities, Econ and Finance Daily are one tab
     'href="./culture.html"',
     'href="./fights.html"',
     'href="./leaderboard.html"',
     'href="./sandbox.html#method"',
 )
-PAGE_LABELS = ["Archives", "Production", "Trading", "NBA", "NFL", "NHL", "Soccer", "Tennis", "Cricket", "Crypto",
-               "Commodities", "Econ Daily", "Finance Daily", "Culture", "Fights", "Leaderboard", "Method"]
+PAGE_LABELS = ["Archives", "Production", "Trading", "NBA", "NFL", "NHL", "Soccer", "Tennis", "Cricket", "Daily Markets",
+               "Culture", "Fights", "Leaderboard", "Method"]
 # The archived tabs (tab_activity, 2026-11-05) leave the nav: the root's pills are the shown pages.
 import site_chrome as _SC
 _GONE = _SC.archived_tabs()

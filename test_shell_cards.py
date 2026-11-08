@@ -363,7 +363,7 @@ crypto = _contests([
     _lead("k", "Coin", "Band", "2026-10-06T15:00:00Z", "pending",
           "spot|crypto", "crypto", 0.55),
 ])
-eq(crypto[0]["page"], "./crypto.html", "crypto links to crypto.html")
+eq(crypto[0]["page"], "./daily_markets.html#crypto", "crypto links to its Daily Markets section (2026-11-08)")
 
 page = shell_build.page(NOW, d={"quotes": []}, st={"pairs": {}}, blob=_blob(mix))
 rows = _rows(page)
