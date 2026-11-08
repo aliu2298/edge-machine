@@ -4571,5 +4571,39 @@
   "start": "2026-11-01T10:30:33+00:00",
   "status": "graded",
   "venue": "polymarket_us"
+ },
+ {
+  "bet": false,
+  "compact": true,
+  "id": "polymarket_us:aec-boxing-canalv-chrmbi-2026-10-31-canalv-chrmbi",
+  "logged": "2026-10-28T05:41:48+00:00",
+  "market_id": "aec-boxing-canalv-chrmbi-2026-10-31-canalv-chrmbi",
+  "price_a": 0.74,
+  "price_b": 0.28,
+  "price_draw": null,
+  "result": "a",
+  "settled": "2026-11-01T15:37:56+00:00",
+  "source": "polymarket_us",
+  "sport": "boxing",
+  "start": "2026-10-31T21:30:00+00:00",
+  "status": "graded",
+  "venue": "polymarket_us"
+ },
+ {
+  "bet": false,
+  "compact": true,
+  "id": "polymarket_us:aec-itfme-benpie-miljon-2026-11-01",
+  "logged": "2026-11-01T08:14:48+00:00",
+  "market_id": "aec-itfme-benpie-miljon-2026-11-01",
+  "price_a": 0.61,
+  "price_b": 0.4,
+  "price_draw": null,
+  "result": "b",
+  "settled": "2026-11-01T15:38:18+00:00",
+  "source": "polymarket_us",
+  "sport": "tennis",
+  "start": "2026-11-01T09:00:00+00:00",
+  "status": "graded",
+  "venue": "polymarket_us"
  }
 ]
