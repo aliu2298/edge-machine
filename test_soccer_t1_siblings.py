@@ -83,9 +83,9 @@ check("the siblings read t1_sides, not their own labels or leagues",
 check("T1 itself is unchanged", (TR.RULES["T1"]["own"], TR.RULES["T1"]["opp"], TR.RULES["T1"]["line"], TR.RULES["T1"]["side"],
                                  TR.RULES["T1"]["leagues"]),
       ("O+D-", "O+D-", 1.5, "yes", ("Serie A", "Champions League", "Premier League", "Bundesliga", "Ligue 1")))
-check("two siblings, registered today, neither a Production pair",
+check("two siblings, registered 2026-11-06, Production pairs since 2026-11-08 (Olu: promote all four)",
       ([m["name"] for m in TR.SIBLINGS.values()], {m["registered"] for m in TR.SIBLINGS.values()}, set(TR.SIBLINGS) & set(TRP.PAIRS)),
-      (["T1-H", "T1-M"], {"2026-11-06"}, set()))
+      (["T1-H", "T1-M"], {"2026-11-06"}, {"T1H", "T1M"}))
 check("a fresh ledger carries both lanes", sorted(TR.load("/nonexistent/x.json")["rules"]), sorted(list(TR.RULES) + ["T1H", "T1M"]))
 
 print("\nthe run")
@@ -153,15 +153,19 @@ check("not a T1 match: no sibling entry and no skip", (s4["rules"]["T1H"]["picks
                                                       s4["rules"]["T1H"].get("skips"), s4["rules"]["T1M"].get("skips")),
       ([], [], None, None))
 
-print("\nnot published: paper only")
-check("the Production feed reads its pairs only", [q for q in TRP.quotes(st) if q.get("rule") in ("T1H", "T1M")], [])
+print("\npublished since 2026-11-08: the Production feed reads their entries")
+_pq = [q for q in TRP.quotes(st) if q.get("rule") in ("T1H", "T1M")]
+check("T1-H is the Yes of the home team's over-1.5 contract, T1-M the Yes of the match's over-3.5 contract",
+      sorted({(q["source"], q["sport"], q["pick"], q["kalshi_title"].endswith(" over 1.5 goals") or q["kalshi_title"] == "Over 3.5 goals scored") for q in _pq}),
+      sorted({(q["source"], q["sport"], "a", True) for q in _pq}))
+check("each rule publishes its own source", {q["source"] for q in _pq} <= {"st_t1h", "st_t1m"}, True)
 
 print("\nthe Soccer page: one row each, right under T1")
 html = SBLD.build()
 rules = html[html.find('<section id="rules"'):html.find('<section id="events"')]
 order = [x for x in re.findall(r'data-source="([^"]+)"', rules)]
 i = order.index("st_t1")
-check("T1, then T1-H, then T1-M", order[i:i + 3], ["st_t1", "st_t1h", "st_t1m"])
+check("T1-H and T1-M are Production rows now (the Production rules are listed first), T1 stays paper", (order.index("st_t1h") < i, order.index("st_t1m") < i), (True, True))
 check("one row each", (order.count("st_t1h"), order.count("st_t1m")), (1, 1))
 check("no new section or heading", (html.count('<section id="'), "T1-H</h" in html), (SBLD.build().count('<section id="'), False))
 live, _gone, _q = L.team_rows(st)
@@ -172,7 +176,7 @@ for src, market in (("st_t1h", "Home 2+"), ("st_t1m", "Over 3.5")):
           (rows[src]["own"]["market"], "<dt>Entry</dt>" in d, "<dt>Exit</dt>" in d, "<th class=\"num\">Priced to win</th>" in d,
            '<details class="section-disclosure"><summary><b>In-sample</b>' in d, "review at 10 settled, decide at 30" in d),
           (market, True, True, True, True, True))
-    check(f"{src}: Sandbox, after its own record", (rows[src]["prod"], rows[src]["a"]["n"], rows[src]["after"]), (False, 1, "st_t1"))
+    check(f"{src}: a Production row since 2026-11-08, after its own record", (rows[src]["prod"], rows[src]["a"]["n"], rows[src]["after"]), (True, 1, "st_t1"))
 check("the T1-M record table reads its ledger (1 settled, 1 won, priced 0.3)",
       re.findall(r'<td class="num" data-l="[^"]+">([^<]*)</td>', rows["st_t1m"]["own"]["details"]), ["1", "1", "0.3", f"{m['profit']:+.1f}%", "0"])
 check("no guarded phrase in the copy", sandbox_audit.COPY_RE.search(rows["st_t1h"]["own"]["details"] + rows["st_t1m"]["own"]["details"]

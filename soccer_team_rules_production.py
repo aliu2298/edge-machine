@@ -45,14 +45,31 @@ T5_PULLED = ("2026-10-28", "2026-11-02")
 # 2026-11-04 (Olu), live $1 bets, only for fixtures after the promotion time.
 # T4 went back to the Sandbox 2026-11-08 (Olu): paper 8-4, +1.4% on 12, the price the label rule is worth; still logged by soccer_team_rules.py.
 T4_PULLED = ("2026-11-04", "2026-11-08")
+# T1's two paper siblings moved to Production 2026-11-08 (Olu: "promote all four"), $1, on 1 settled bet each. They are read from the same ledger
+# (their own rule keys T1H / T1M, soccer_team_rules.SIBLINGS) and published like any rule: T1-H is the Yes of the home team's over-1.5 contract
+# (the team 2+ claim), T1-M the Yes of the match's over-3.5 contract (the league under-3.5 domain's YES twin, as A2 and A7 publish it).
+SIBLING_MOVED_ON = "2026-11-08"
+SIBLING_PROMOTED = "2026-11-08T12:00:00+00:00"
+SIBLING_PAIRS = {
+    "T1H": ("st_t1h", "soccer_team2", "T1 matches · home team 2+ goals"),
+    "T1M": ("st_t1m", "soccer_u35", "T1 matches · match over 3.5 goals"),
+}
 PAIRS = {
     "T7": ("st_t7", "soccer_team3", "O+D+ v O+D+ · team 3+ goals · NO"),
+    **SIBLING_PAIRS,
 }
-PROMOTED_AT = {"T7": PROMOTED}
-MOVED = {"T7": MOVED_ON}
+PROMOTED_AT = {"T7": PROMOTED, **{k: SIBLING_PROMOTED for k in SIBLING_PAIRS}}
+MOVED = {"T7": MOVED_ON, **{k: SIBLING_MOVED_ON for k in SIBLING_PAIRS}}
 LABELS = {src: name for src, _sport, name in PAIRS.values()}
 BAND = (TR.PRICE_LO, TR.PRICE_HI)
 TITLE_RE = re.compile(r"^Will (.+?) score over (\d+(?:\.\d+)?) goals\??$", re.I)
+
+
+def spec_of(rule):
+    """The rule's terms (side, line, goals, leagues): a team rule's own, or a sibling's on its parent T1's leagues."""
+    if rule in TR.RULES:
+        return TR.RULES[rule]
+    return dict(TR.SIBLINGS[rule], leagues=TR.RULES[TR.SIBLINGS[rule]["parent"]]["leagues"])
 
 
 def pairs():
@@ -79,7 +96,9 @@ def _quote(rule, r):
     start, logged, price = D.instant(r.get("start")), D.instant(r.get("logged")), D.number(r.get("price"))
     home, _, away = str(r.get("match") or "").partition(" v ")
     team, opp = r.get("team"), r.get("opponent")
-    spec = TR.RULES.get(rule) or {}
+    spec = spec_of(rule) if rule in TR.RULES or rule in TR.SIBLINGS else {}
+    if rule == "T1M":                         # the match total over 3.5: no team, the Yes of the league's own over-3.5 contract
+        return _match_quote(rule, r, src, sport, start, logged, price)
     if (not start or not logged or price is None or not 0 < price < 1 or not (home and away and team and opp)
             or r.get("side") != spec.get("side") or r.get("line") != spec.get("line")):
         return None
@@ -103,14 +122,33 @@ def _quote(rule, r):
         start_source="espn", url="", rule=rule)
 
 
+def _match_quote(rule, r, src, sport, start, logged, price):
+    """T1-M's entry as a Sandbox-style quote: the Yes of the match's over 3.5 contract (kalshi title as A2 and A7 publish it)."""
+    home, _, away = str(r.get("match") or "").partition(" v ")
+    status = {"open": "open", "won": "won", "lost": "lost", "no_result": "settled"}.get(r.get("status"))
+    if (not start or not logged or price is None or not 0 < price < 1 or not (home and away) or status is None
+            or r.get("side") != "yes" or r.get("line") != 3.5):
+        return None
+    won_side = "a" if status == "won" else "b"
+    return dict(
+        id=f"{src}:{r['ticker']}", source=src, sport=sport, venue="kalshi_binary", market_id=r["ticker"],
+        event=r.get("event"), label=f"{home} v {away}", side_a="Yes", side_b="No", kalshi_title="Over 3.5 goals scored",
+        league=r.get("league"), espn_home=home, espn_away=away, date=start.date().isoformat(), start=start.isoformat(),
+        logged=logged.isoformat(), price=price, price_a=price, price_b=None, price_draw=None, pick="a", bet=True,
+        stake=100.0, status=status, pnl=round(float(r.get("profit") or 0), 2) if status != "open" else 0.0,
+        result=("price" if status == "settled" else won_side) if status != "open" else None,
+        settle_px=r.get("payout"), settled=r.get("settled"), prob_a=None, edge=None, untraded=False,
+        start_source="espn", url="", rule=rule)
+
+
 def quotes(state):
     """The listed rules' entries as Sandbox-style quotes. Read-only."""
     out = []
     for rule in PAIRS:
-        if rule not in TR.RULES:
+        if rule not in TR.RULES and rule not in TR.SIBLINGS:
             continue
         for r in ((state.get("rules") or {}).get(rule) or {}).get("picks") or []:
-            if r.get("league") not in TR.RULES[rule]["leagues"]:
+            if r.get("league") not in spec_of(rule)["leagues"]:
                 continue
             q = _quote(rule, r)
             if q:

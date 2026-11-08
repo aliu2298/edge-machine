@@ -323,12 +323,19 @@ def sibling_row(key, state):
     cols = ([KICK, MATCH, ("Team", lambda p: p.get("team") or ""), contract, PRICE, RESULT] if team
             else [KICK, MATCH, contract, side, PRICE, RESULT])
     market = "Home 2+" if team else "Over 3.5"
-    r = row(src, sport, f"{meta['name']} · {meta['label']}", market, pick_record(picks), details,
-            open_n=sum(p.get("status") == "open" for p in picks), entries=entries_table(picks, cols))
+    import live_caps as LC
+    import soccer_team_rules_production as TRP
+    prod = key in TRP.PAIRS                      # in Production since 2026-11-08 (Olu): its record is the tradeable picks since then
+    pair = f"{src}|{sport}" if prod else None
+    tp = LC.split(pair, picks)[0] if prod else picks
+    if prod:
+        details = (params_html([("History", f"Production since {TRP.MOVED[key]} (moved by hand); paper keeps running in the Sandbox")]) + details)
+    r = row(src, sport, f"{meta['name']} · {meta['label']}", market, pick_record(tp), details, prod=prod, pair=pair,
+            open_n=sum(p.get("status") == "open" for p in tp), entries=entries_table(picks, cols))
     r["after"] = "st_t1"                         # shown right under T1 in the rules table
     text = (lambda p: f"{p.get('team') or ''} to score 2+") if team else (lambda p: "over 3.5 goals")
     quotes = []
-    for p in picks:
+    for p in ([] if prod else picks):            # a Production pair's quotes come from the adapter (soccer_team_rules_production)
         q = pick_quote(src, sport, p, text(p), title=_team_title(p) if team else None)
         if q:
             quotes.append(dict(q, team=p.get("team"), opponent=p.get("opponent")) if team else q)
