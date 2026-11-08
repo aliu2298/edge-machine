@@ -749,6 +749,7 @@
   "KXBOXING-26NOV07RAFFERMARTIR": "2026-11-07T19:00:21.902572+00:00",
   "KXBOXING-26NOV07REATAYLOR": "2026-11-07T19:00:21.902572+00:00",
   "KXBOXING-26NOV07ROEHRIMCDONA": "2026-11-07T19:00:21.902572+00:00",
+  "KXBOXING-26NOV07TAYLORROGAVA": "2026-11-08T00:47:04.390704+00:00",
   "KXBOXING-26NOV07UMMATASANTAN": "2026-11-07T16:55:00.621295+00:00",
   "KXBOXING-26NOV07VANHOUBALAZ": "2026-11-07T20:00:19.032868+00:00",
   "KXBOXING-26OCT23ULDEDACAPARE": "2026-10-27T04:45:21.662265+00:00",
@@ -761,16 +762,16 @@
   "KXBOXING-26OCT31TSUTSUROJAS": "2026-10-31T20:06:27.383501+00:00"
  },
  "lane": "boxing_cheap_dog",
- "last_success": "2026-11-08T00:00:22.174690+00:00",
+ "last_success": "2026-11-08T00:47:04.390704+00:00",
  "observations": {
-  "at": "2026-11-08T00:00:22.174690+00:00",
+  "at": "2026-11-08T00:47:04.390704+00:00",
   "entered": 0,
   "events": 1,
   "filled": 0,
   "no_start": 0,
-  "skipped": 0,
+  "skipped": 2,
   "unverified": 0,
-  "waiting": 11
+  "waiting": 10
  },
  "skips": {
   "KXBOXING-26NOV06AOKUSOKHAHRA-AOKUSO": {
@@ -1030,6 +1031,18 @@
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
    "start": "2026-11-07T19:00:00+00:00",
    "word": "Lucas Roehrig"
+  },
+  "KXBOXING-26NOV07TAYLORROGAVA-ROGAVA": {
+   "event": "KXBOXING-26NOV07TAYLORROGAVA",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-08T01:20:00+00:00",
+   "word": "Tsotne Rogava"
+  },
+  "KXBOXING-26NOV07TAYLORROGAVA-TAYLOR": {
+   "event": "KXBOXING-26NOV07TAYLORROGAVA",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-08T01:20:00+00:00",
+   "word": "Pryce Taylor"
   },
   "KXBOXING-26NOV07UMMATASANTAN-SANTAN": {
    "event": "KXBOXING-26NOV07UMMATASANTAN",
