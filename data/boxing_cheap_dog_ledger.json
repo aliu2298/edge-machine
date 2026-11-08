@@ -752,6 +752,9 @@
    "last_trade_at": null,
    "legs": [
     {
+     "fill_px": 0.18,
+     "fill_volume": 53.35,
+     "filled_at": "2026-11-08T01:38:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.18
@@ -799,6 +802,7 @@
   "KXBOXING-26NOV07MILLERPOWAR": "2026-11-07T19:00:21.902572+00:00",
   "KXBOXING-26NOV07OBERLTNICHOL": "2026-11-08T01:00:39.209750+00:00",
   "KXBOXING-26NOV07PARKERDZAMBE": "2026-11-07T17:00:19.647036+00:00",
+  "KXBOXING-26NOV07PEREZRIVERA": "2026-11-08T02:00:23.235171+00:00",
   "KXBOXING-26NOV07PHILLIDRAGON": "2026-11-07T16:00:21.112998+00:00",
   "KXBOXING-26NOV07RAFFERMARTIR": "2026-11-07T19:00:21.902572+00:00",
   "KXBOXING-26NOV07REATAYLOR": "2026-11-07T19:00:21.902572+00:00",
@@ -816,16 +820,16 @@
   "KXBOXING-26OCT31TSUTSUROJAS": "2026-10-31T20:06:27.383501+00:00"
  },
  "lane": "boxing_cheap_dog",
- "last_success": "2026-11-08T01:00:39.209750+00:00",
+ "last_success": "2026-11-08T02:00:23.235171+00:00",
  "observations": {
-  "at": "2026-11-08T01:00:39.209750+00:00",
-  "entered": 1,
-  "events": 1,
-  "filled": 0,
+  "at": "2026-11-08T02:00:23.235171+00:00",
+  "entered": 0,
+  "events": 2,
+  "filled": 1,
   "no_start": 0,
-  "skipped": 1,
+  "skipped": 2,
   "unverified": 0,
-  "waiting": 9
+  "waiting": 8
  },
  "skips": {
   "KXBOXING-26NOV06AOKUSOKHAHRA-AOKUSO": {
@@ -1061,6 +1065,18 @@
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
    "start": "2026-11-07T17:40:00+00:00",
    "word": "Zach Parker"
+  },
+  "KXBOXING-26NOV07PEREZRIVERA-PEREZ": {
+   "event": "KXBOXING-26NOV07PEREZRIVERA",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-08T02:00:00+00:00",
+   "word": "Abraham Perez"
+  },
+  "KXBOXING-26NOV07PEREZRIVERA-RIVERA": {
+   "event": "KXBOXING-26NOV07PEREZRIVERA",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-08T02:00:00+00:00",
+   "word": "Yankiel Rivera"
   },
   "KXBOXING-26NOV07PHILLIDRAGON-PHILLI": {
    "event": "KXBOXING-26NOV07PHILLIDRAGON",
