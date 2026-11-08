@@ -2324,6 +2324,31 @@
    "result": "yes",
    "title": "Will over 1.5 goals be scored?",
    "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXSERIEATOTAL-26NOV08NAPLAZ",
+   "id": "KXSERIEATOTAL-26NOV08NAPLAZ-2",
+   "kickoff": 1794137400,
+   "league": "Serie A",
+   "logged": "2026-11-08T13:55:31.069085+00:00",
+   "matchday": "2026-11-08",
+   "p": 0.83,
+   "p_at": 1794133860,
+   "p_bid": 0.82,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.83,
+    "printed": 938.12,
+    "status": "verified"
+   },
+   "prints": 160,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
   }
  ],
  "error": null,
@@ -16378,11 +16403,11 @@
   ]
  },
  "lane": "top5_goalless_dip",
- "last_run": "2026-11-08T06:59:45.267723+00:00",
+ "last_run": "2026-11-08T13:55:31.069085+00:00",
  "observations": {
-  "at": "2026-11-08T06:59:45.267723+00:00",
+  "at": "2026-11-08T13:55:31.069085+00:00",
   "errors": [],
-  "new": 0,
+  "new": 1,
   "skipped": 0,
   "waiting": 0
  },
@@ -16404,11 +16429,6 @@
   "KXLIGUE1TOTAL-26OCT31OLANG": "no pregame quote an hour before kickoff"
  },
  "upcoming": [
-  {
-   "event": "KXSERIEATOTAL-26NOV08NAPLAZ",
-   "kickoff": 1794137400,
-   "title": "Napoli vs Lazio: Total Goals"
-  },
   {
    "event": "KXLALIGATOTAL-26NOV08ELCRBB",
    "kickoff": 1794142800,
@@ -16453,6 +16473,11 @@
    "event": "KXBUNDESLIGATOTAL-26NOV08KOELEV",
    "kickoff": 1794148200,
    "title": "FC K\u00f6ln vs Leverkusen: Total Goals"
+  },
+  {
+   "event": "KXLALIGATOTAL-26NOV08RSORVC",
+   "kickoff": 1794150900,
+   "title": "Real Sociedad vs Vallecano: Total Goals"
   }
  ],
  "version": "top5dip-v1"
