@@ -1128,7 +1128,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-08T06:22:53.983194+00:00",
+ "last_run": "2026-11-08T06:28:05.058930+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -1318,9 +1318,9 @@
    ],
    "pid": "[\"soccer_team_rules_ledger.json\", \"T3\", [\"T3:KXMLSTEAMTOTAL-26NOV07HOUSTL:away\", \"yes\"]]",
    "price": 0.16,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-08T06:19:12.114186+00:00",
    "side": "yes",
    "snapshot": {
     "as_of": "2026-11-07T22:31:57.335770+00:00",
@@ -1389,7 +1389,7 @@
    },
    "sport": "Soccer",
    "src": "soccer_team_rules_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXMLSGAME-26NOV07HOUSTL-HOU",
@@ -2964,14 +2964,14 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"A1\", [\"A1:KXMLSTOTAL-26NOV07DCUNYC\", \"no\"]]",
    "price": 0.71,
-   "profit": null,
+   "profit": 0.3804,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-08T06:19:04.747660+00:00",
    "side": "no",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXMLSTOTAL-26NOV07CHICLB-4",
@@ -3014,14 +3014,14 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"C1\", [\"C1:KXMLSTOTAL-26NOV07CINNSH\", \"yes\"]]",
    "price": 0.4,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-08T06:19:04.747660+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXMLSTOTAL-26NOV07DALCOL-4",
@@ -3039,14 +3039,14 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"A1\", [\"A1:KXMLSTOTAL-26NOV07DALCOL\", \"no\"]]",
    "price": 0.67,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-08T06:19:04.747660+00:00",
    "side": "no",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXMLSTOTAL-26NOV07ATXPOR-4",
@@ -3064,14 +3064,14 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"B1\", [\"B1:KXMLSTOTAL-26NOV07ATXPOR\", \"no\"]]",
    "price": 0.48,
-   "profit": null,
+   "profit": 1.0102,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-08T06:19:04.747660+00:00",
    "side": "no",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXMLSTEAMTOTAL-26NOV07HOUSTL-STL3",
@@ -3087,14 +3087,14 @@
    ],
    "pid": "[\"soccer_team_rules_ledger.json\", \"T3\", [\"T3:KXMLSTEAMTOTAL-26NOV07HOUSTL:away\", \"yes\"]]",
    "price": 0.16,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-08T06:19:12.114186+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_team_rules_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXMLSTEAMTOTAL-26NOV07SEALAFC-SEA3",
@@ -3110,14 +3110,14 @@
    ],
    "pid": "[\"soccer_team_rules_ledger.json\", \"T3\", [\"T3:KXMLSTEAMTOTAL-26NOV07SEALAFC:home\", \"yes\"]]",
    "price": 0.29,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-08T06:19:12.114186+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_team_rules_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXLALIGATEAMTOTAL-26NOV08VILGET-VIL2",
@@ -3353,6 +3353,35 @@
   "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV06TCUARIZ-TCU\", \"yes\"]]": "2026-11-07T09:08:10.545829+00:00",
   "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV06UNMNEV-NEV\", \"yes\"]]": "2026-11-07T09:08:10.545829+00:00",
   "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV06VTSMU-VT\", \"yes\"]]": "2026-11-07T09:08:10.545829+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07RICHVILL-RICH\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07RMUDUQ-RMU\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07RUTGWIS-RUTG\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07SAMETSU-SAM\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07SDSTUNI-UNI\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07SEMOTNST-TNST\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07SFALAM-LAM\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07SHSUJVST-SHSU\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07SIUINST-INST\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07STONCAMP-STON\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07TEMNAVY-TEM\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07TXAMSCAR-TXAM\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07UCFKU-UCF\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07UCLAMINN-MINN\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07UGAMISS-MISS\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07UKTENN-UK\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07ULMARST-ULM\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07UNCCONN-CONN\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07UNCOSUU-UNCO\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07URIUNH-UNH\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07USAULL-USA\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07UTMCHSO-UTM\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07UTUUCD-UTU\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07UWFLUNA-UWFL\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07UWGACARK-UWGA\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07VALPDAY-VALP\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07WAGMHU-WAG\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07WIUEIU-EIU\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
+  "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26NOV07WOFWCU-WOF\", \"yes\"]]": "2026-11-08T06:28:05.058930+00:00",
   "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26OCT27SHSUMOSU-SHSU\", \"yes\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26OCT29FAUUNT-FAU\", \"yes\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"cfb_dog_tp50\", [\"KXNCAAFGAME-26OCT29SCSTMORG-MORG\", \"yes\"]]": "2026-11-05T03:09:04.962721+00:00",
