@@ -510,9 +510,129 @@
    "title": "FLA at BOS",
    "version": "nhlgoal-v1",
    "vol": 68127.91
+  },
+  {
+   "day": "2026-11-08",
+   "entries": [
+    {
+     "ask": 0.98,
+     "away_goals": 2,
+     "bid": 0.95,
+     "goal_side": "away",
+     "home_goals": 0,
+     "kind": "over",
+     "maker": {
+      "cost": 0.95083,
+      "filled": true,
+      "roi": 0.0517
+     },
+     "period": 2,
+     "side": "yes",
+     "strike": 2.5,
+     "taker": {
+      "cost": 0.98137,
+      "depth": 60.0,
+      "filled": true,
+      "roi": 0.019
+     },
+     "ticker": "KXNHLTOTAL-26NOV08VGKBUF-3",
+     "ts": 1794175140,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.79,
+     "away_goals": 2,
+     "bid": 0.78,
+     "goal_side": "away",
+     "home_goals": 0,
+     "kind": "over",
+     "maker": {
+      "cost": 0.783,
+      "filled": true,
+      "roi": 0.2771
+     },
+     "period": 2,
+     "side": "yes",
+     "strike": 3.5,
+     "taker": {
+      "cost": 0.80161,
+      "depth": 118.95,
+      "filled": true,
+      "roi": 0.2475
+     },
+     "ticker": "KXNHLTOTAL-26NOV08VGKBUF-4",
+     "ts": 1794175140,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.9,
+     "away_goals": 3,
+     "bid": 0.89,
+     "goal_side": "away",
+     "home_goals": 1,
+     "kind": "over",
+     "maker": {
+      "cost": 0.89171,
+      "filled": false,
+      "roi": null
+     },
+     "period": 3,
+     "side": "yes",
+     "strike": 4.5,
+     "taker": {
+      "cost": 0.9063,
+      "depth": 41.23,
+      "filled": false,
+      "roi": 0.1034
+     },
+     "ticker": "KXNHLTOTAL-26NOV08VGKBUF-5",
+     "ts": 1794177840,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.76,
+     "away_goals": 4,
+     "bid": 0.73,
+     "goal_side": "away",
+     "home_goals": 1,
+     "kind": "over",
+     "maker": {
+      "cost": 0.73345,
+      "filled": true,
+      "roi": -1.0
+     },
+     "period": 3,
+     "side": "yes",
+     "strike": 5.5,
+     "taker": {
+      "cost": 0.77277,
+      "depth": 12417.38,
+      "filled": true,
+      "roi": -1.0
+     },
+     "ticker": "KXNHLTOTAL-26NOV08VGKBUF-6",
+     "ts": 1794178200,
+     "v2": true,
+     "won": false
+    }
+   ],
+   "event": "KXNHLGAME-26NOV08VGKBUF",
+   "fav": null,
+   "favmid": 0.505,
+   "goals": 5,
+   "ko": 1794169800,
+   "logged": "2026-11-08T23:30:17.001930+00:00",
+   "thin": true,
+   "timed": 5,
+   "title": "VGK at BUF",
+   "version": "nhlgoal-v1",
+   "vol": 1111.47
   }
  ],
- "last_run": "2026-11-08T22:04:06.671859+00:00",
+ "last_run": "2026-11-08T23:30:17.001930+00:00",
  "registered": "2026-11-08T07:45:00Z",
  "since": "2026-11-08",
  "skips": {},
