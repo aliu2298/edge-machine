@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-08T13:04Z",
+ "generated": "2026-11-08T13:58Z",
  "rule": "active = not retired, not a baseline, a bet or an open pick in its current record window",
  "tabs": {
   "commodities": {
@@ -73,6 +73,7 @@
   "nfl": {
    "active": [
     "cfb_home_dog_x4",
+    "nfl_tt_main1",
     "nfl_tt_over_3545"
    ],
    "archived": false,
@@ -89,6 +90,7 @@
    "active": [
     "arg_goalless_dip",
     "btts_form_l10|soccer_btts_intl",
+    "corners_fav_no|soccer_corners",
     "corners_total_under|soccer_corners",
     "corners_ucl_fade|soccer_corners",
     "ere_draw|soccer",
