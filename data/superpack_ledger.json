@@ -1723,7 +1723,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-08T18:53:01.349320+00:00",
+ "last_run": "2026-11-08T19:03:42.534799+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -4248,14 +4248,14 @@
    ],
    "pid": "[\"daily\", \"econ_nc_yes\", [\"KXDIESELD-26NOV08-T6.190\", \"yes\"]]",
    "price": 0.93,
-   "profit": null,
+   "profit": 0.07,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-08T18:52:05.496188+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Commodities",
    "src": "daily",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXEREDIVISIETOTAL-26NOV08HEEFEY-4",
