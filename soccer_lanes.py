@@ -562,6 +562,11 @@ def rows_and_inputs(d, st, now):
     except Exception as exc:                                    # noqa: BLE001
         print(f"soccer_lanes: the over 3.5 cheap NO failed: {type(exc).__name__}: {exc}")
     try:
+        import soccer_p4_build
+        live += soccer_p4_build.rows()
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"soccer_lanes: the phase-4 WATCH lanes failed: {type(exc).__name__}: {exc}")
+    try:
         live.append(ere_draw_maker_row())
     except Exception as exc:                                    # noqa: BLE001
         print(f"soccer_lanes: the Eredivisie draw maker failed: {type(exc).__name__}: {exc}")

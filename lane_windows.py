@@ -101,6 +101,8 @@ STAMP = {
     # 2026-11-08: the NHL goal lanes (nhl_goal_lanes.py) read each game once after the final horn. GitHub's hourly cron fired
     # twice in a day, so the VPS asks every hour (a read of a game still in play adds nothing and the next hour finds it).
     "nhl_goal": "data/nhl_goal_window/request.txt",
+    # 2026-11-08: the soccer phase-4 WATCH lanes (soccer_p4_lanes.py) read each settled match once, after the fact, every hour.
+    "soccer_p4": "data/soccer_p4_window/request.txt",
 }
 # nfl_tt.WINDOW_MIN (45, 75), copied; test_nfl_tt.py checks the two agree.
 NFL_FROM, NFL_TO = 75, 45                # minutes before the ESPN kickoff
@@ -370,6 +372,13 @@ def nhl_goal_windows(now):
                  start=h, end=h + dt.timedelta(hours=1), every=dt.timedelta(hours=1), last_ask=dt.timedelta(0))]
 
 
+def soccer_p4_windows(now):
+    """The soccer phase-4 WATCH lanes read once an hour, every hour (soccer-p4.yml)."""
+    h = now.replace(minute=0, second=0, microsecond=0)
+    return [dict(lane="soccer_p4", label=f"Soccer p4 {h:%H}:00Z", series=(), close=h + dt.timedelta(hours=1),
+                 start=h, end=h + dt.timedelta(hours=1), every=dt.timedelta(hours=1), last_ask=dt.timedelta(0))]
+
+
 def tennis_starts(now):
     """Valid ATP singles starts in the next day (tennis_atp_low_over, 2026-10-21), read live.
 
@@ -545,6 +554,7 @@ def windows(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, 
     out += culture_windows(now)
     out += fights_windows(now)
     out += nhl_goal_windows(now)
+    out += soccer_p4_windows(now)
     out += tennis_windows(now, tennis)
     out += nfl_windows(now, nfl)
     out += nba_value_windows(now, nba_value)

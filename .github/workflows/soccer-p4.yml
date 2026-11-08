@@ -1,0 +1,42 @@
+name: Soccer phase-4 WATCH lanes paper research
+on:
+  schedule:
+    # Backup only. The VPS asks for the hourly read by pushing a stamp (scripts/vps_window_requests.sh, lane_windows.py).
+    # Every settled match of the nine leagues is read once, after the fact, from its 1-minute candles and trade prints, so a
+    # late run only delays a row.
+    - cron: '53 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "data/soccer_p4_window/**"
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: soccer-p4
+  cancel-in-progress: false
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Tests
+        run: python3 test_soccer_p4_lanes.py
+      - name: Mid NO Mismatch, Late Over Calm, Late Under Leaky (Sandbox paper since 2026-11-09)
+        # Fetches the ESPN fixtures (data/streaks_raw.json, not committed) for the labels, only when a match has a row.
+        run: python3 soccer_p4_lanes.py
+      - name: Save records
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+          python3 save_records.py --message "Soccer phase-4 lanes paper observations" \
+            --add data/soccer_p4_lanes_ledger.json \
+            --after "gh workflow run sandbox-tracker.yml --ref main"
