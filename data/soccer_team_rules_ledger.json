@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-08T14:24:25.627217+00:00",
+ "last_run": "2026-11-08T14:46:12.451926+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -2665,6 +2665,33 @@
      "ticker": "KXSERIEATEAMTOTAL-26NOV08GENACM-ACM3",
      "title": "Will Milan score over 2.5 goals?",
      "why": "AC Milan O+D- v Genoa O-D- \u00b7 3+ YES 0.19"
+    },
+    {
+     "ask": 0.16,
+     "bid": 0.14,
+     "event": "KXLIGUE1TEAMTOTAL-26NOV08STBOL",
+     "group": "B",
+     "id": "T3:KXLIGUE1TEAMTOTAL-26NOV08STBOL:home",
+     "labels": {
+      "opp": "O-D-",
+      "own": "O+D-"
+     },
+     "league": "Ligue 1",
+     "line": 2.5,
+     "logged": "2026-11-08T14:46:12.451926+00:00",
+     "match": "Brest v Lyon",
+     "opponent": "Lyon",
+     "price": 0.16,
+     "rule": "T3",
+     "side": "yes",
+     "start": "2026-11-08T16:15Z",
+     "status": "open",
+     "sub": "Stade Brest 29 over 2.5 goals",
+     "team": "Brest",
+     "team_side": "home",
+     "ticker": "KXLIGUE1TEAMTOTAL-26NOV08STBOL-STB3",
+     "title": "Will Stade Brest 29 score over 2.5 goals?",
+     "why": "Brest O+D- v Lyon O-D- \u00b7 3+ YES 0.16"
     }
    ]
   },
@@ -4967,14 +4994,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-02T16:31:56.497832+00:00",
-   "candidates": 0,
-   "due": 1,
-   "labelled": 1,
-   "matched": 0,
-   "new": 0
-  },
-  {
    "at": "2026-11-02T18:16:17.545260+00:00",
    "candidates": 1,
    "due": 2,
@@ -5373,6 +5392,14 @@
    "labelled": 1,
    "matched": 1,
    "new": 0
+  },
+  {
+   "at": "2026-11-08T14:46:12.451926+00:00",
+   "candidates": 4,
+   "due": 5,
+   "labelled": 5,
+   "matched": 4,
+   "new": 1
   }
  ],
  "version": "soccer-team-rules-v1"
