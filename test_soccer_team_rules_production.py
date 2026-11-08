@@ -12,6 +12,12 @@ import soccer_team_rules as TR
 import soccer_team_rules_build as TB
 import soccer_team_rules_production as TP
 
+# T4 went back to the Sandbox on 2026-11-08 (T4_PULLED). Its machinery is checked below on its 2026-11-04 to 2026-11-08 Production era, listed again for this run.
+assert "T4" not in TP.PAIRS and TP.T4_PULLED == ("2026-11-04", "2026-11-08"), "T4 is back in the Sandbox"
+TP.T4_PROMOTED, TP.T4_MOVED_ON = "2026-11-05T02:50:00+00:00", "2026-11-04"
+TP.PAIRS["T4"] = ("st_t4", "soccer_team2", "O+D− v O−D+ · team 2+ goals")
+TP.PROMOTED_AT["T4"], TP.MOVED["T4"] = TP.T4_PROMOTED, TP.T4_MOVED_ON
+TP.LABELS["st_t4"] = TP.PAIRS["T4"][2]
 # T1 went back to the Sandbox on 2026-10-28. The checks below replay its Production era
 # (2026-10-24 to 2026-10-28) by listing it again for this run; the real state is checked first.
 _NOW_PAIRS = sorted(TP.PAIRS)
@@ -147,7 +153,7 @@ check("the Control Center counts it once and names it", (m1["tiles"]["pairs"] - 
 sec = TB.section(state)
 check("the Soccer page says T1 was in Production 2026-10-24 to 2026-10-28 and is back in the Sandbox",
       (sec.count("Production 2026-10-24 to 2026-10-28, back in the Sandbox") >= 1,
-       "T4 in Production since 2026-11-04, T7 since 2026-10-28; T1 (2026-10-24 to 2026-10-28) and T5 (2026-10-28 to 2026-11-02) back in the Sandbox" in sec), (True, True))
+       "T7 in Production since 2026-10-28; T1 (2026-10-24 to 2026-10-28), T5 (2026-10-28 to 2026-11-02) and T4 (2026-11-04 to 2026-11-08) back in the Sandbox" in sec), (True, True))
 check("no guarded public phrase in the leads or the section",
       sandbox_audit.COPY_RE.findall(" ".join(l["headline"] + " " + l["id"] for l in f["leads"].values()) + sec), [])
 
