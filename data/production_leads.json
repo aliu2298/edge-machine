@@ -219,41 +219,6 @@
    "sport": "soccer_team2",
    "status": "hit"
   },
-  "2026-11-02|KXBRENTD-26NOV0217-T104.00|Above $104.00 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-11-02",
-   "edge_at_log": null,
-   "first_seen": "2026-11-02",
-   "headline": "Above $104.00 at the close",
-   "home": null,
-   "id": "2026-11-02|KXBRENTD-26NOV0217-T104.00|Above $104.00 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-11-02T22:00Z",
-   "lane": "production",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "Brent crude close on Nov 2, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.71,
-   "published_at": "2026-11-03T00:05:36+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Above $104.00 at the close",
-    "event": "KXBRENTD-26NOV0217",
-    "market": "KXBRENTD-26NOV0217-T104.00",
-    "outcome": "Above $104.00",
-    "outcome_side": "yes",
-    "price_at_log": 0.71,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXBRENTD-26NOV0217-T104.00",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
-   "status": "hit"
-  },
   "2026-11-02|KXBTCD-26NOV0217-T77249.99|Below $77,250 at the close \u00b7 Crypto favourite band, below": {
    "away": null,
    "bet": {
@@ -287,111 +252,6 @@
    "sandbox_quote": "crypto_fav_band_below:KXBTCD-26NOV0217-T77249.99",
    "source": "crypto_fav_band_below",
    "sport": "crypto_fav",
-   "status": "hit"
-  },
-  "2026-11-02|KXGOLDD-26NOV0217-T3944|Above $3944 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-11-02",
-   "edge_at_log": null,
-   "first_seen": "2026-11-02",
-   "headline": "Above $3944 at the close",
-   "home": null,
-   "id": "2026-11-02|KXGOLDD-26NOV0217-T3944|Above $3944 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-11-02T22:00Z",
-   "lane": "production",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "Gold close on Nov 2, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.8,
-   "published_at": "2026-11-03T00:05:36+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Above $3944 at the close",
-    "event": "KXGOLDD-26NOV0217",
-    "market": "KXGOLDD-26NOV0217-T3944",
-    "outcome": "Above $3944",
-    "outcome_side": "yes",
-    "price_at_log": 0.8,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXGOLDD-26NOV0217-T3944",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
-   "status": "hit"
-  },
-  "2026-11-02|KXWTI-26NOV0214-T96.49|Above $96.49 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-11-02",
-   "edge_at_log": null,
-   "first_seen": "2026-11-02",
-   "headline": "Above $96.49 at the close",
-   "home": null,
-   "id": "2026-11-02|KXWTI-26NOV0214-T96.49|Above $96.49 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-11-02T19:30Z",
-   "lane": "production",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "WTI crude close on Nov 2, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.79,
-   "published_at": "2026-11-03T05:04:49+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Above $96.49 at the close",
-    "event": "KXWTI-26NOV0214",
-    "market": "KXWTI-26NOV0214-T96.49",
-    "outcome": "Above $96.49",
-    "outcome_side": "yes",
-    "price_at_log": 0.79,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXWTI-26NOV0214-T96.49",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
-   "status": "miss"
-  },
-  "2026-11-03|KXBRENTD-26NOV0317-T103|Above $103 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-11-03",
-   "edge_at_log": null,
-   "first_seen": "2026-11-03",
-   "headline": "Above $103 at the close",
-   "home": null,
-   "id": "2026-11-03|KXBRENTD-26NOV0317-T103|Above $103 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-11-03T22:00Z",
-   "lane": "production",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "Brent crude close on Nov 3, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.74,
-   "published_at": "2026-11-04T00:05:25+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Above $103 at the close",
-    "event": "KXBRENTD-26NOV0317",
-    "market": "KXBRENTD-26NOV0317-T103",
-    "outcome": "Above $103",
-    "outcome_side": "yes",
-    "price_at_log": 0.74,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXBRENTD-26NOV0317-T103",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
    "status": "hit"
   },
   "2026-11-03|KXBTCD-26NOV0317-T77999.99|Below $78,000 at the close \u00b7 Crypto favourite band, below": {
@@ -429,41 +289,6 @@
    "sport": "crypto_fav",
    "status": "hit"
   },
-  "2026-11-03|KXSILVERD-26NOV0317-T49.50|Above $49.50 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-11-03",
-   "edge_at_log": null,
-   "first_seen": "2026-11-03",
-   "headline": "Above $49.50 at the close",
-   "home": null,
-   "id": "2026-11-03|KXSILVERD-26NOV0317-T49.50|Above $49.50 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-11-03T22:00Z",
-   "lane": "production",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "Silver close on Nov 3, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.8,
-   "published_at": "2026-11-04T00:05:25+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Above $49.50 at the close",
-    "event": "KXSILVERD-26NOV0317",
-    "market": "KXSILVERD-26NOV0317-T49.50",
-    "outcome": "Above $49.50",
-    "outcome_side": "yes",
-    "price_at_log": 0.8,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXSILVERD-26NOV0317-T49.50",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
-   "status": "hit"
-  },
   "2026-11-03|KXSOLD-26NOV0317-T93.9999|Below $94 at the close \u00b7 Crypto favourite band, below": {
    "away": null,
    "bet": {
@@ -497,76 +322,6 @@
    "sandbox_quote": "crypto_fav_band_below:KXSOLD-26NOV0317-T93.9999",
    "source": "crypto_fav_band_below",
    "sport": "crypto_fav",
-   "status": "hit"
-  },
-  "2026-11-03|KXWTI-26NOV0314-T94.99|Above $94.99 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-11-03",
-   "edge_at_log": null,
-   "first_seen": "2026-11-03",
-   "headline": "Above $94.99 at the close",
-   "home": null,
-   "id": "2026-11-03|KXWTI-26NOV0314-T94.99|Above $94.99 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-11-03T19:30Z",
-   "lane": "production",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "WTI crude close on Nov 3, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.75,
-   "published_at": "2026-11-04T03:03:33+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Above $94.99 at the close",
-    "event": "KXWTI-26NOV0314",
-    "market": "KXWTI-26NOV0314-T94.99",
-    "outcome": "Above $94.99",
-    "outcome_side": "yes",
-    "price_at_log": 0.75,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXWTI-26NOV0314-T94.99",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
-   "status": "hit"
-  },
-  "2026-11-04|KXBRENTD-26NOV0417-T94.00|Above $94.00 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-11-04",
-   "edge_at_log": null,
-   "first_seen": "2026-11-04",
-   "headline": "Above $94.00 at the close",
-   "home": null,
-   "id": "2026-11-04|KXBRENTD-26NOV0417-T94.00|Above $94.00 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-11-04T22:00Z",
-   "lane": "production",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "Brent crude close on Nov 4, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.74,
-   "published_at": "2026-11-05T00:05:04+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Above $94.00 at the close",
-    "event": "KXBRENTD-26NOV0417",
-    "market": "KXBRENTD-26NOV0417-T94.00",
-    "outcome": "Above $94.00",
-    "outcome_side": "yes",
-    "price_at_log": 0.74,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXBRENTD-26NOV0417-T94.00",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
    "status": "hit"
   },
   "2026-11-04|KXBTCD-26NOV0417-T80749.99|Below $80,750 at the close \u00b7 Crypto favourite band, below": {
@@ -604,76 +359,6 @@
    "sport": "crypto_fav",
    "status": "hit"
   },
-  "2026-11-04|KXGOLDD-26NOV0417-T4058|Above $4058 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-11-04",
-   "edge_at_log": null,
-   "first_seen": "2026-11-04",
-   "headline": "Above $4058 at the close",
-   "home": null,
-   "id": "2026-11-04|KXGOLDD-26NOV0417-T4058|Above $4058 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-11-04T22:00Z",
-   "lane": "production",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "Gold close on Nov 4, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.74,
-   "published_at": "2026-11-05T00:05:04+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Above $4058 at the close",
-    "event": "KXGOLDD-26NOV0417",
-    "market": "KXGOLDD-26NOV0417-T4058",
-    "outcome": "Above $4058",
-    "outcome_side": "yes",
-    "price_at_log": 0.74,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXGOLDD-26NOV0417-T4058",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
-   "status": "hit"
-  },
-  "2026-11-04|KXWTI-26NOV0414-T90.99|Above $90.99 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-11-04",
-   "edge_at_log": null,
-   "first_seen": "2026-11-04",
-   "headline": "Above $90.99 at the close",
-   "home": null,
-   "id": "2026-11-04|KXWTI-26NOV0414-T90.99|Above $90.99 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-11-04T19:30Z",
-   "lane": "production",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "WTI crude close on Nov 4, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.73,
-   "published_at": "2026-11-05T15:47:50+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Above $90.99 at the close",
-    "event": "KXWTI-26NOV0414",
-    "market": "KXWTI-26NOV0414-T90.99",
-    "outcome": "Above $90.99",
-    "outcome_side": "yes",
-    "price_at_log": 0.73,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXWTI-26NOV0414-T90.99",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
-   "status": "miss"
-  },
   "2026-11-04|Slavia Prague|Arsenal|Arsenal to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
    "away": "Arsenal",
    "bet": {
@@ -708,41 +393,6 @@
    "sandbox_quote": "team2_ranked:KXUCLTEAMTOTAL-26NOV04SLAARS-ARS2",
    "source": "team2_ranked",
    "sport": "soccer_team2",
-   "status": "hit"
-  },
-  "2026-11-05|KXBRENTD-26NOV0517-T97.50|Above $97.50 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-11-05",
-   "edge_at_log": null,
-   "first_seen": "2026-11-05",
-   "headline": "Above $97.50 at the close",
-   "home": null,
-   "id": "2026-11-05|KXBRENTD-26NOV0517-T97.50|Above $97.50 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-11-05T22:00Z",
-   "lane": "production",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "Brent crude close on Nov 5, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.7,
-   "published_at": "2026-11-06T00:04:04+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Above $97.50 at the close",
-    "event": "KXBRENTD-26NOV0517",
-    "market": "KXBRENTD-26NOV0517-T97.50",
-    "outcome": "Above $97.50",
-    "outcome_side": "yes",
-    "price_at_log": 0.7,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXBRENTD-26NOV0517-T97.50",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
    "status": "hit"
   },
   "2026-11-05|KXBTCD-26NOV0517-T76499.99|Below $76,500 at the close \u00b7 Crypto favourite band, below": {
@@ -815,41 +465,6 @@
    "sport": "crypto_fav",
    "status": "hit"
   },
-  "2026-11-05|KXSILVERD-26NOV0517-T52.25|Above $52.25 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-11-05",
-   "edge_at_log": null,
-   "first_seen": "2026-11-05",
-   "headline": "Above $52.25 at the close",
-   "home": null,
-   "id": "2026-11-05|KXSILVERD-26NOV0517-T52.25|Above $52.25 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-11-05T22:00Z",
-   "lane": "production",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "Silver close on Nov 5, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.75,
-   "published_at": "2026-11-06T00:04:04+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Above $52.25 at the close",
-    "event": "KXSILVERD-26NOV0517",
-    "market": "KXSILVERD-26NOV0517-T52.25",
-    "outcome": "Above $52.25",
-    "outcome_side": "yes",
-    "price_at_log": 0.75,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXSILVERD-26NOV0517-T52.25",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
-   "status": "miss"
-  },
   "2026-11-05|KXSOLD-26NOV0517-T89.9999|Below $90 at the close \u00b7 Crypto favourite band, below": {
    "away": null,
    "bet": {
@@ -883,41 +498,6 @@
    "sandbox_quote": "crypto_fav_band_below:KXSOLD-26NOV0517-T89.9999",
    "source": "crypto_fav_band_below",
    "sport": "crypto_fav",
-   "status": "hit"
-  },
-  "2026-11-05|KXWTI-26NOV0514-T89.49|Above $89.49 at the close \u00b7 Commodities favourite band": {
-   "away": null,
-   "bet": {
-    "kind": "ladder",
-    "side": "yes"
-   },
-   "date": "2026-11-05",
-   "edge_at_log": null,
-   "first_seen": "2026-11-05",
-   "headline": "Above $89.49 at the close",
-   "home": null,
-   "id": "2026-11-05|KXWTI-26NOV0514-T89.49|Above $89.49 at the close \u00b7 Commodities favourite band",
-   "kickoff": "2026-11-05T19:30Z",
-   "lane": "production",
-   "league": "Commodities \u00b7 Favourite band",
-   "match": "WTI crude close on Nov 5, 2026",
-   "pair": "commod_fav_band|commodities_fav",
-   "price_at_log": 0.74,
-   "published_at": "2026-11-05T23:56:16+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Above $89.49 at the close",
-    "event": "KXWTI-26NOV0514",
-    "market": "KXWTI-26NOV0514-T89.49",
-    "outcome": "Above $89.49",
-    "outcome_side": "yes",
-    "price_at_log": 0.74,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "commod_fav_band:KXWTI-26NOV0514-T89.49",
-   "source": "commod_fav_band",
-   "sport": "commodities_fav",
    "status": "hit"
   },
   "2026-11-05|KXXRPD-26NOV0517-T1.2399|Below $1.23991 at the close \u00b7 Crypto favourite band, below": {
@@ -1242,31 +822,6 @@
   }
  },
  "pairs": {
-  "commod_fav_band|commodities_fav": {
-   "by_hand": "2026-10-09",
-   "entered_at": "2026-10-09T04:31:34+00:00",
-   "promoted_at": "2026-10-09T04:31:34+00:00",
-   "ready_at": "2026-10-09T04:31:34+00:00",
-   "route": "moved by hand on 2026-10-09",
-   "routing": {
-    "leads": 12,
-    "problem": null,
-    "routed": 12,
-    "unlisted": 0,
-    "unrouted": 0,
-    "unverified": 0,
-    "why": []
-   },
-   "sandbox_clv": -0.0168,
-   "sandbox_n": 19,
-   "sandbox_roi": 0.1597,
-   "sandbox_roi_fee": 0.1396,
-   "timing": {
-    "late": [],
-    "timed": 0,
-    "under_target": 0
-   }
-  },
   "crypto_fav_band_below|crypto_fav": {
    "by_hand": "2026-10-20",
    "entered_at": "2026-10-21T00:47:16+00:00",
@@ -1468,6 +1023,7 @@
    }
   }
  },
+ "pruned_at": "2026-11-08T06:20:21+00:00",
  "publication_withheld": {
   "2026-11-01|Telstar|Utrecht|Draw \u00b7 Eredivisie draw band": {
    "headline": "Draw",

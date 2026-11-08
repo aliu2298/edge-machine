@@ -8,6 +8,8 @@ import top5_dip_publish as PUB
 
 FAILS = []
 UTC = dt.timezone.utc
+_ENDED = X.ENDED_ON
+X.ENDED_ON = ""          # these checks are the running lane's machinery; the ended lane is checked at the bottom
 
 
 def check(label, got, want):
@@ -117,5 +119,13 @@ check("a uuid in a reason is refused", refused(lambda r: r.update(why="order 9c6
 check("an unknown outcome is refused", refused(lambda r: r.update(outcome="filled")), True)
 check("a price outside 0-1 is refused", refused(lambda r: r.update(P=44.0)), True)
 check("another lane is refused", refused(lambda r: r.update(lane="nba_winmargin_live")), True)
+
+print("back in the Sandbox (2026-11-08)")
+X.ENDED_ON = _ENDED
+check("ended: the feed is valid, fresh and names no match, so the follower opens no new bid", (X.feed(NOW, fetch)["leads"], X.feed(NOW, fetch)["ended_on"]), ([], "2026-11-08"))
+check("ended: no Production pair, no page inputs", (X.pairs(), X.page_inputs({"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}, {}, now=NOW)),
+      ({}, ({"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}})))
+X.ENDED_ON = ""
+
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

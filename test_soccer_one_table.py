@@ -63,9 +63,9 @@ for key in TR.RULES:
     where = "retired" if key in TR.RETIRED else "rules"
     check(f"team rule {key}: one row, in {where}", (src in in_retired) if where == "retired" else (src in srcs), True)
 check("the Production label and team rules are Production rows", {RP.PAIRS[k][0] for k in RP.PAIRS} | {TRP.PAIRS[k][0] for k in TRP.PAIRS} <= prod, True)
-check("the in-play lanes: the top-5 dip's live lane in Production; the cheap NO (back in the Sandbox 2026-11-06), its v5 and its ended live run, both dips' paper lanes in the Sandbox",
+check("the in-play lanes: the cheap NO (back in the Sandbox 2026-11-06) and the top-5 dip's live lane (back 2026-11-08) are Sandbox rows, with their ended live runs, both dips' paper lanes in the Sandbox",
       ("o35_cheap_no_wave" in prod, "top5_goalless_dip_live" in prod,
-       {"arg_goalless_dip", "top5_goalless_dip", "o35_cheap_no_wave", "o35_cheap_no_v5", "o35_cheap_no_wave_live"} <= srcs - prod), (False, True, True))
+       {"arg_goalless_dip", "top5_goalless_dip", "o35_cheap_no_wave", "o35_cheap_no_v5", "o35_cheap_no_wave_live", "top5_dip_live_run"} <= srcs - prod), (False, False, True))
 check("the Eredivisie draw is a row", "ere_draw" in srcs, True)
 check("contenders and Argentina & Brasileirao over 1.5 are in the Retired fold",
       {"co_o15", "co_o25", "co_o35", "sa_o15_arg", "sa_o15_bra"} <= set(in_retired), True)

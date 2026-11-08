@@ -659,7 +659,8 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
             sr_names.append(o35_production.NAME)
     if top5_dip is not None:
         import top5_dip_production
-        sr_names.append(top5_dip_production.NAME)
+        if not top5_dip_production.ENDED_ON:         # back in the Sandbox 2026-11-08: not a Production lane any more
+            sr_names.append(top5_dip_production.NAME)
     if nba_wm is not None:
         import nba_wm_production
         sr_names += [nba_wm_production.YES_NAME, nba_wm_production.NO_NAME]
