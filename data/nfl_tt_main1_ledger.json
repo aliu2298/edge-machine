@@ -1,11 +1,22 @@
 {
+ "error": null,
+ "last_run": "2026-11-08T10:46:59.572150+00:00",
  "registered": "2026-11-08",
  "rules": {
   "nfl_tt_main1": {
    "picks": []
   }
  },
- "runs": [],
+ "runs": [
+  {
+   "at": "2026-11-08T10:46:59.572150+00:00",
+   "due": 0,
+   "entered": 0,
+   "matched": 0,
+   "new": 0,
+   "skipped": 0
+  }
+ ],
  "skips": [],
  "version": "nfl-tt-main1-v1"
 }
