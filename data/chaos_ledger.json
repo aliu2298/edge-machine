@@ -191612,6 +191612,13 @@
     "KXATPCHALLENGERMATCH-26NOV07SVRROD": 0,
     "KXATPCHALLENGERMATCH-26NOV07WONWAT": 0,
     "KXATPCHALLENGERMATCH-26NOV07ZHUFAN": 1,
+    "KXATPCHALLENGERMATCH-26NOV08BOIREC": 1,
+    "KXATPCHALLENGERMATCH-26NOV08FELMAR": 0,
+    "KXATPCHALLENGERMATCH-26NOV08GADURS": 0,
+    "KXATPCHALLENGERMATCH-26NOV08KRUWEH": 0,
+    "KXATPCHALLENGERMATCH-26NOV08KYMROD": 0,
+    "KXATPCHALLENGERMATCH-26NOV08LAOLI": 0,
+    "KXATPCHALLENGERMATCH-26NOV08ROLGOM": 0,
     "KXATPCHALLENGERMATCH-26NOV08WATKUM": 0
    },
    "series": [
@@ -193579,6 +193586,41 @@
      "unreachable": false,
      "variant": "t1h_hold",
      "won": false
+    },
+    {
+     "ask": {
+      "book": null,
+      "first_quotes": false,
+      "how": "print",
+      "last_trade": 0.3,
+      "printed": 10.0,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "cost": 0.3147,
+     "entry": 0.3,
+     "entry_i": 796,
+     "entry_ts": 1794140580,
+     "event": "KXATPCHALLENGERMATCH-26NOV08BOIREC",
+     "exit": 1.0,
+     "exit_i": 978,
+     "exit_key": "hold",
+     "exit_ts": 1794151500,
+     "hours": 1,
+     "night": "2026-11-08",
+     "profit": 0.6853,
+     "reason": "settled",
+     "roi": 2.1776,
+     "side": "yes",
+     "spread": 0.02,
+     "start_how": "price path",
+     "start_ts": 1794144180,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26NOV08BOIREC-REC",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": true
     }
    ],
    "voided": {
@@ -218095,6 +218137,13 @@
     "KXATPCHALLENGERMATCH-26NOV07SVRROD": 0,
     "KXATPCHALLENGERMATCH-26NOV07WONWAT": 0,
     "KXATPCHALLENGERMATCH-26NOV07ZHUFAN": 0,
+    "KXATPCHALLENGERMATCH-26NOV08BOIREC": 0,
+    "KXATPCHALLENGERMATCH-26NOV08FELMAR": 0,
+    "KXATPCHALLENGERMATCH-26NOV08GADURS": 0,
+    "KXATPCHALLENGERMATCH-26NOV08KRUWEH": 0,
+    "KXATPCHALLENGERMATCH-26NOV08KYMROD": 0,
+    "KXATPCHALLENGERMATCH-26NOV08LAOLI": 0,
+    "KXATPCHALLENGERMATCH-26NOV08ROLGOM": 0,
     "KXATPCHALLENGERMATCH-26NOV08WATKUM": 0
    },
    "series": [
@@ -361357,17 +361406,8 @@
    "watch": false
   }
  },
- "last_run": "2026-11-08T10:00:24.358806+00:00",
+ "last_run": "2026-11-08T16:01:45.985689+00:00",
  "runs": [
-  {
-   "at": "2026-10-30T02:46:13.256607+00:00",
-   "new": {
-    "atp_coinflip_tp30": 11,
-    "challenger_cheap_split": 8,
-    "nba_ml_dog_tp50": 11,
-    "nba_winmargin_split_insample": 530
-   }
-  },
   {
    "at": "2026-10-30T02:47:29.024496+00:00",
    "new": {
@@ -361671,6 +361711,13 @@
   {
    "at": "2026-11-08T10:00:24.358806+00:00",
    "new": {}
+  },
+  {
+   "at": "2026-11-08T16:01:45.985689+00:00",
+   "new": {
+    "challenger_cheap_hold_base": 1,
+    "challenger_won_here_hold": 0
+   }
   }
  ],
  "version": "chaos-v2"
