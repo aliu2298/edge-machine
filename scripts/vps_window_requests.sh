@@ -46,6 +46,11 @@
 set -uo pipefail
 DIR="${EDGE_WINDOWS_DIR:-$HOME/edge-machine-closes}"
 PY="${EDGE_WINDOWS_PY:-/usr/bin/python3}"
+# (e) 2026-11-08: the text THIS process is running, hashed on its first line, before it waits for the lock. #359's first VPS
+# run (18:30Z) waited behind local_closes.sh, which pulled the new script in the meantime; the old text then hashed the NEW
+# file as "before", saw no change, and refused the new stamp path. Compared against the file after OUR pull, this catches
+# a rewrite by anyone, at any point after the start.
+RUNNING="$(git hash-object "$0" 2>/dev/null || true)"
 STAMP_GLOB='data/*_window/request.txt'
 stamp() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 
@@ -92,12 +97,11 @@ main() {
     printf '%s\n' "$DIRTY" | while IFS= read -r f; do git reset -q -- "$f"; git checkout -q -- "$f"; done
   fi
 
-  BEFORE="$(git hash-object "$0" 2>/dev/null || true)"
   git pull -q --rebase origin main || { echo "$(stamp) pull failed"; exit 0; }
   # (c) the pull may have rewritten this very script: run the new text, once, so the allow-list and
   # lane_windows.py agree.
   AFTER="$(git hash-object "$0" 2>/dev/null || true)"
-  if [ -n "$BEFORE" ] && [ "$BEFORE" != "$AFTER" ] && [ -z "${EDGE_WINDOWS_REEXEC:-}" ]; then
+  if [ -n "$RUNNING" ] && [ "$RUNNING" != "$AFTER" ] && [ -z "${EDGE_WINDOWS_REEXEC:-}" ]; then
     echo "$(stamp) the script changed in the pull; running the new one"
     EDGE_WINDOWS_REEXEC=1 exec "$0" "$@"
   fi

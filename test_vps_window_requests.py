@@ -150,5 +150,32 @@ with tempfile.TemporaryDirectory() as tmp:
                                           "culture n read 1" in git(tmp, "--git-dir", origin, "show", "main:data/culture_window/request.txt")), (True, True))
     check("the clone is clean afterwards", git(clone, "status", "--porcelain", "--untracked-files=all"), "")
 
+print("\n(e) a script rewritten by ANOTHER job while this one waits for the lock still runs its new text (2026-11-08)")
+import shutil as _sh
+if not _sh.which("flock"):
+    print("  skip (no flock on this machine; CI runs it)")
+else:
+    import fcntl, time
+    with tempfile.TemporaryDirectory() as tmp:
+        old_text = open(SCRIPT).read().replace("|data/fights_window/request.txt", "")
+        origin, work, clone = world(tmp, script_text=old_text)
+        shutil.copy(SCRIPT, os.path.join(work, "scripts", "vps_window_requests.sh"))
+        open(os.path.join(work, "due.txt"), "w").write(tab("data/culture_window/request.txt", "culture n read 1") + tab("data/fights_window/request.txt", "fights n read 1"))
+        git(work, "add", "-A")
+        git(work, "commit", "-q", "-m", "new script and a fights lane")
+        git(work, "push", "-q", "origin", "main")
+        lock = open(os.path.join(git(clone, "rev-parse", "--absolute-git-dir"), "edge-shared.lock"), "w")
+        fcntl.flock(lock, fcntl.LOCK_EX)                     # the sibling job holds the clone
+        env = dict(os.environ, EDGE_WINDOWS_DIR=clone, EDGE_WINDOWS_PY=sys.executable,
+                   GIT_AUTHOR_NAME="t", GIT_AUTHOR_EMAIL="t@t", GIT_COMMITTER_NAME="t", GIT_COMMITTER_EMAIL="t@t")
+        proc = subprocess.Popen(["bash", os.path.join(clone, "scripts", "vps_window_requests.sh")], stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT, text=True, env=env)
+        time.sleep(1.5)                                      # the old text is running and waiting
+        git(clone, "pull", "-q", "--rebase", "origin", "main")   # the sibling pulls: the file on disk is now NEW
+        fcntl.flock(lock, fcntl.LOCK_UN)
+        out, _ = proc.communicate(timeout=60)
+        check("the waiting run noticed its own text was stale and ran the new script", (proc.returncode, "the script changed in the pull" in out, "asked: culture" in out), (0, True, True))
+        check("fights was accepted and is on origin", "fights n read 1" in git(tmp, "--git-dir", origin, "show", "main:data/fights_window/request.txt"), True)
+
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
