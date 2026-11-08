@@ -797,5 +797,39 @@
   "start": "2026-11-01T00:00:00+00:00",
   "status": "graded",
   "venue": "polymarket_us"
+ },
+ {
+  "bet": false,
+  "compact": true,
+  "id": "polymarket_us:aec-itfme-kaznak-yuexia-2026-11-01",
+  "logged": "2026-11-01T00:25:55+00:00",
+  "market_id": "aec-itfme-kaznak-yuexia-2026-11-01",
+  "price_a": 0.29,
+  "price_b": 0.72,
+  "price_draw": null,
+  "result": "b",
+  "settled": "2026-11-01T06:04:59+00:00",
+  "source": "polymarket_us",
+  "sport": "tennis",
+  "start": "2026-11-01T03:00:00+00:00",
+  "status": "graded",
+  "venue": "polymarket_us"
+ },
+ {
+  "bet": false,
+  "compact": true,
+  "id": "polymarket_us:aec-itfwo-vioapi-thanak-2026-11-01",
+  "logged": "2026-11-01T02:01:22+00:00",
+  "market_id": "aec-itfwo-vioapi-thanak-2026-11-01",
+  "price_a": 0.6,
+  "price_b": 0.41,
+  "price_draw": null,
+  "result": "b",
+  "settled": "2026-11-01T06:05:09+00:00",
+  "source": "polymarket_us",
+  "sport": "tennis",
+  "start": "2026-11-01T03:30:00+00:00",
+  "status": "graded",
+  "venue": "polymarket_us"
  }
 ]
