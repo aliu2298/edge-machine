@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-08T14:46:12.451926+00:00",
+ "last_run": "2026-11-08T15:01:12.553016+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -4994,14 +4994,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-02T18:16:17.545260+00:00",
-   "candidates": 1,
-   "due": 2,
-   "labelled": 2,
-   "matched": 1,
-   "new": 0
-  },
-  {
    "at": "2026-11-02T18:31:33.814355+00:00",
    "candidates": 2,
    "due": 4,
@@ -5400,6 +5392,14 @@
    "labelled": 5,
    "matched": 4,
    "new": 1
+  },
+  {
+   "at": "2026-11-08T15:01:12.553016+00:00",
+   "candidates": 3,
+   "due": 6,
+   "labelled": 6,
+   "matched": 3,
+   "new": 0
   }
  ],
  "version": "soccer-team-rules-v1"
