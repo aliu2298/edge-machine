@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-08T02:00:22.154554+00:00",
+ "last_run": "2026-11-08T08:28:33.096201+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -4614,11 +4614,14 @@
      },
      "logged": "2026-11-07T23:30:17.713693+00:00",
      "match": "NY @ CLE",
+     "payout": 1.0,
      "price": 0.51,
+     "profit": 89.58,
      "rule": "R7",
+     "settled": "2026-11-08T08:28:33.096201+00:00",
      "side": "no",
      "start": "2026-11-08T01:00Z",
-     "status": "open",
+     "status": "won",
      "strike": 109.5,
      "team": "CLE",
      "ticker": "KXNBATEAMTOTAL-26NOV07NYKCLE-CLE110",
@@ -4636,11 +4639,14 @@
      },
      "logged": "2026-11-07T23:30:17.713693+00:00",
      "match": "NY @ CLE",
+     "payout": 1.0,
      "price": 0.51,
+     "profit": 89.58,
      "rule": "R7",
+     "settled": "2026-11-08T08:28:33.096201+00:00",
      "side": "no",
      "start": "2026-11-08T01:00Z",
-     "status": "open",
+     "status": "won",
      "strike": 113.5,
      "team": "NY",
      "ticker": "KXNBATEAMTOTAL-26NOV07NYKCLE-NYK114",
@@ -4658,11 +4664,14 @@
      },
      "logged": "2026-11-08T00:00:20.806708+00:00",
      "match": "WSH @ OKC",
+     "payout": 1.0,
      "price": 0.41,
+     "profit": 134.23,
      "rule": "R7",
+     "settled": "2026-11-08T08:28:33.096201+00:00",
      "side": "no",
      "start": "2026-11-08T01:00Z",
-     "status": "open",
+     "status": "won",
      "strike": 115.5,
      "team": "OKC",
      "ticker": "KXNBATEAMTOTAL-26NOV07WASOKC-OKC116",
@@ -4673,11 +4682,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-11-03T01:30:16.395464+00:00",
-   "due": 4,
-   "new": 0
-  },
   {
    "at": "2026-11-03T02:00:37.580045+00:00",
    "due": 3,
@@ -4926,6 +4930,11 @@
   {
    "at": "2026-11-08T02:00:22.154554+00:00",
    "due": 1,
+   "new": 0
+  },
+  {
+   "at": "2026-11-08T08:28:33.096201+00:00",
+   "due": 0,
    "new": 0
   }
  ],
