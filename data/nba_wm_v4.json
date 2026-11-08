@@ -1,10 +1,10 @@
 {
  "error": null,
- "last_run": "2026-11-08T06:18:49.636705+00:00",
+ "last_run": "2026-11-08T06:44:40.217706+00:00",
  "observations": {
-  "at": "2026-11-08T06:18:49.636705+00:00",
-  "new": 0,
-  "skipped": 12
+  "at": "2026-11-08T06:44:40.217706+00:00",
+  "new": 3,
+  "skipped": 15
  },
  "rows": {
   "KXNBAWINMARGIN-26NOV06MINNOP-MIN1TO5": {
@@ -363,6 +363,69 @@
    "tip": 1794013200,
    "version": "wm-yes-v4",
    "won": true
+  },
+  "KXNBAWINMARGIN-26NOV07NYKCLE-CLE1TO5": {
+   "ask": 0.14,
+   "bucket": "1-5",
+   "cost": 0.14843,
+   "event": "KXNBAWINMARGIN-26NOV07NYKCLE",
+   "filled_25x": false,
+   "filled_2x": true,
+   "hold_roi": -1.0,
+   "key": "KXNBAWINMARGIN-26NOV07NYKCLE-CLE1TO5",
+   "lane": "nba_wm_yes_v4",
+   "logged": "2026-11-08T06:44:40.217706+00:00",
+   "night": "2026-11-07",
+   "profit": -0.01019,
+   "reason": "split",
+   "roi": -0.0687,
+   "team": "CLE",
+   "team_share": 0.358,
+   "tip": 1794099600,
+   "version": "wm-yes-v4",
+   "won": false
+  },
+  "KXNBAWINMARGIN-26NOV07SASPOR-POR1TO5": {
+   "ask": 0.13,
+   "bucket": "1-5",
+   "cost": 0.13792,
+   "event": "KXNBAWINMARGIN-26NOV07SASPOR",
+   "filled_25x": false,
+   "filled_2x": true,
+   "hold_roi": -1.0,
+   "key": "KXNBAWINMARGIN-26NOV07SASPOR-POR1TO5",
+   "lane": "nba_wm_yes_v4",
+   "logged": "2026-11-08T06:44:40.217706+00:00",
+   "night": "2026-11-07",
+   "profit": -0.0096,
+   "reason": "split",
+   "roi": -0.0696,
+   "team": "POR",
+   "team_share": 0.3722,
+   "tip": 1794106800,
+   "version": "wm-yes-v4",
+   "won": false
+  },
+  "KXNBAWINMARGIN-26NOV07SASPOR-POR6TO10": {
+   "ask": 0.13,
+   "bucket": "6-10",
+   "cost": 0.13792,
+   "event": "KXNBAWINMARGIN-26NOV07SASPOR",
+   "filled_25x": false,
+   "filled_2x": false,
+   "hold_roi": -1.0,
+   "key": "KXNBAWINMARGIN-26NOV07SASPOR-POR6TO10",
+   "lane": "nba_wm_yes_v4",
+   "logged": "2026-11-08T06:44:40.217706+00:00",
+   "night": "2026-11-07",
+   "profit": -0.13792,
+   "reason": "split",
+   "roi": -1.0,
+   "team": "POR",
+   "team_share": 0.3722,
+   "tip": 1794106800,
+   "version": "wm-yes-v4",
+   "won": false
   }
  },
  "since": "2026-11-06",
@@ -376,9 +439,12 @@
   "KXNBAWINMARGIN-26NOV06UTADAL-DAL1TO5": "favourite share 0.72 (0.70 or more)",
   "KXNBAWINMARGIN-26NOV06UTADAL-UTA1TO5": "favourite share 0.72 (0.70 or more)",
   "KXNBAWINMARGIN-26NOV06WASATL-WAS1TO5": "favourite share 0.72 (0.70 or more)",
+  "KXNBAWINMARGIN-26NOV07BKNATL-ATL1TO5": "favourite share 0.73 (0.70 or more)",
+  "KXNBAWINMARGIN-26NOV07BKNATL-ATL6TO10": "favourite share 0.73 (0.70 or more)",
   "KXNBAWINMARGIN-26NOV07DENIND-DEN1TO5": "favourite share 0.73 (0.70 or more)",
   "KXNBAWINMARGIN-26NOV07DENIND-DEN6TO10": "favourite share 0.73 (0.70 or more)",
-  "KXNBAWINMARGIN-26NOV07DENIND-IND1TO5": "favourite share 0.73 (0.70 or more)"
+  "KXNBAWINMARGIN-26NOV07DENIND-IND1TO5": "favourite share 0.73 (0.70 or more)",
+  "KXNBAWINMARGIN-26NOV07WASOKC-OKC6TO10": "favourite share 0.85 (0.70 or more)"
  },
  "version": "wm-yes-v4"
 }
