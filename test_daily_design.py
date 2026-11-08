@@ -22,14 +22,13 @@ for key in T.LANES:
     assert 'Daily Markets' in html          # 2026-11-08: both are sections of the Daily Markets tab
     assert 'Scan reasons &amp; coverage' in html
     assert '<style' not in html and 'onclick=' not in html
-    if key=='econ_daily': assert 'Production · paper record' in html
-    else: assert 'No '+T.LANES[key].lower()+' rule is in Production.' in html
+    assert 'Production · paper record' in html   # Econ YES; Finance's S&P NO (D3) since 2026-11-08
     sample=copy.deepcopy(state)
     sample['lanes'][key]['picks']=[dict(id='KXINX-26OCT12-T6000',event='KXINX-26OCT12',
         series='KXINX',name='S&P close',title='Above 6000',close='2026-10-12T20:00Z',
         price=.75,bid=.73,size=25,logged='2026-10-12T17:00Z',status='won',profit=31.04,settled='2026-10-12T21:00Z')]
     rendered=D.build(key,sample,now)
     assert 'Above 6000' in rendered and '1/30 market-days' in rendered
-    assert ('Production · paper record' if key=='econ_daily' else 'Paper record · not graded') in rendered
+    assert 'Production · paper record' in rendered   # both Daily lanes have a Production rule since 2026-11-08
     assert sample['lanes'][key]['picks'][0]['profit']==31.04
 print('PASS: current shared template, four tiles, rule folds, filters, event tabs, scripts, and unchanged paper records')

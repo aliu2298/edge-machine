@@ -91,7 +91,8 @@ for gone in ("progressbar", "crypto-hero", "<meter", "<progress", "tn-pick", "cr
 print("\ntiles")
 # The cheap-side section (2026-10-27) carries its own lane cards' tiles; the page's header tiles
 # are the ones before it.
-cells = re.findall(r'<div class="tile">(.*?)</div>', main.split('id="cheap-side"', 1)[0])
+# The header tiles only: since 2026-11-08 the cheap-side lanes' cards (with their own tiles) sit in their rows' folds.
+cells = re.findall(r'<div class="tile">(.*?)</div>', main.split('<section id="rules"', 1)[0])
 eq(len(cells), 4, "four stat tiles")
 rows = C.commod_rows(ledger, stages)
 fav = C._fav_row(rows)
@@ -109,8 +110,14 @@ print("\nrules: one row")
 rule = _section(main, "rules")
 from sport_rows_testlib import rule_rows, text as row_text
 ok("No commodities rule is in Production." in rule and 'data-list="sandbox"' in rule, "the Sandbox rule is a row in the Sandbox fold")
-r = rule_rows(rule)[0]
+rows_all = rule_rows(rule)
+r = next(x for x in rows_all if x["name"] == "Favourite band · 3h to the close")
 eq(r["name"], "Favourite band · 3h to the close", "named")
+# 2026-11-08 (Olu: one tab, the Econ Daily design): the cheap-side lanes are rows of the same list, same columns.
+cheap = [x for x in rows_all if "cheap" in x["name"]]
+ok(cheap and all(set(x["cells"]) >= {"Market", "Record", "ROI after fees", "Won v priced", "Evidence", "Verdict"} for x in cheap),
+   "the cheap-side lanes are rows of the same Rules list, on the same columns")
+ok('id="cheap-side"' not in html, "and there is no separate cheap-side section")
 ok(r["cells"]["ROI after fees"] == SP.roi_html(fav) and r["cells"]["Evidence"] == f'{a["n"]}/{T.READ_FLOOR}', "ROI and evidence are the row's own")
 detail = r["body"]
 ok(not r["open"], "its Rule details fold starts closed")

@@ -205,7 +205,7 @@ def ladder_contest(q):
     market's title is a whole sentence, so its contest is the commodity and the close
     it settles on ("WTI crude close on Oct 8, 2026", "Gold close on Oct 8, 2026").
     """
-    if q.get("sport") == "econ_daily":
+    if q.get("sport") in ("econ_daily", "finance_daily"):
         return str(q.get("label") or "Economic daily close")
     series = str(q.get("market_id") or "").split("-")[0]
     name = S.COMMOD_FAV_SERIES.get(series) if q.get("sport") == "commodities_fav" else None
@@ -1292,6 +1292,8 @@ RECENT_DAYS = 7
 def sport_group(sport):
     if sport == "econ_daily":
         return "Econ Daily"
+    if sport == "finance_daily":
+        return "Finance Daily"
     """The sport a pair belongs to, from its registered label: 'Soccer · Over 1.5' is
     Soccer, 'Commodities · Favourite band' is Commodities. A lane not in the registry
     is its own group under its key, so a new lane cannot fall out of the page."""
@@ -1431,6 +1433,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
     import sandbox_build as _B
     _sides = _B.pair_sides(d)
     _plain = lambda key: S.SPORTS.get(key.split("|")[1], "Econ Daily" if key.endswith("|econ_daily")
+                                      else "Finance Daily" if key.endswith("|finance_daily")
                                       else S.OWN_LEDGER_SPORTS.get(key.split("|")[1], key.split("|")[1]))
     sport_of = lambda key: (_B.side_words(key.split("|")[1], _sides.get(tuple(key.split("|", 1))), words=_plain(key))
                             if "|" in key and key.split("|")[1] in S.SPORTS else _plain(key))

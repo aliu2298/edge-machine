@@ -212,6 +212,9 @@ TURKEY_BTTS_DOG_RETIRED_WHY = ("Retired 2026-11-04 by Olu: no edge at 8 settled 
 ECON_NC_NO_RETIRED_WHY = ("Retired 2026-11-06 by Olu: no edge at 20 settled contracts on 16 market-days — 18 won v 18.1 priced, "
                           "−1.6% after fees. It was in Production 2026-10-20 to 2026-10-28, paper after that. No new entries from "
                           "2026-11-06; its rows stay on file and its open bets still settle.")
+COMMOD_NC_NO_RETIRED_WHY = ("Retired 2026-11-08 by Olu: behind its prices at 13 market-days — 12–1, 12 won v 12.2 priced, "
+                            "−2.6% after fees. Never in Production. No new entries from 2026-11-08; its rows stay on file and "
+                            "its open bets still settle.")
 # The Turkey pair retired together: tests that replay them from before then re-enable them in-process.
 TURKEY_RETIRED_ON_2026_11_04 = ("turkey_o25_dog|soccer_o25", "turkey_btts_dog|soccer_btts")
 
@@ -1703,7 +1706,8 @@ SOURCES = {
              "the other lanes use)."),
     "commod_nc_no": dict(
         label="Commodities near-certain, No (No 0.90-0.98, the last hour to the close)",
-        kind="Rule", connected=True, site="edge-machine", sports=["commodities_fav"],
+        kind="Rule", connected=True, site="edge-machine", sports=[],
+        retired_sports={"commodities_fav": COMMOD_NC_NO_RETIRED_WHY},
         baseline="favourite_population",
         # Judged against the NO favourites this sport logged inside ITS band only.
         favourite_side="b", favourite_band=(0.90, 0.98),

@@ -16,6 +16,7 @@ import fmt
 import sandbox_build as B
 import sandbox_sources as S
 import sandbox_track as T
+import sport_tab
 import site_chrome as C
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -232,7 +233,9 @@ def page_rows(d, st):
     """The Sandbox rows, and the registration of each lane that has not bet yet."""
     rows = commod_rows(d, st)
     have = {r.get("name") for r in rows}
-    return rows + [registered_row(name) for name in LANES if name not in have]
+    # A retired lane (retired_sports, commod_nc_no 2026-11-08) is listed in the Retired fold, not as a registration.
+    return rows + [registered_row(name) for name in LANES
+                   if name not in have and not (S.SOURCES.get(name) or {}).get("retired_sports")]
 
 
 def rule_name(row):
@@ -289,7 +292,7 @@ def method(d, rows, now):
 <p class="sm">A day is one bet because the commodities move in pairs: on the ledger's own graded rungs gold and silver moved together at +{gs:.2f} and WTI and Brent at +{wb:.2f}, with copper riding the metals, so a day where both members of a pair fire is reported per commodity here and judged as one outcome in the record. A market-day is a trading day: a weekend or a US exchange holiday is no market-day at all, so the {S.COMMOD_FAV_READ_DAYS}-day read takes about seven weeks. Each contract is logged at the Yes ask inside its window with the bid, ask and ask size it was taken at, settled on Kalshi's own result at a flat ${int(T.STAKE)} stake, and the day is graded as a single outcome against backing every in-band rung that day.</p>
 <p class="sm"><b>Scheduling.</b> Two reads a day, one per close: WTI settles at 14:30 Eastern, so its window is 10:00–11:30 Central, and the other five settle at 17:00 Eastern, so theirs is 12:30–2:00 Central, the crypto lane's window. Each is asked for from the always-on box inside its own window by the same stamp-file mechanism the crypto lane uses, because GitHub's cron cannot hold a 90-minute window. The close is matched in Eastern, not UTC, so the November clock change moves it with the exchange.</p>
 <p class="sm"><b>The near-certain lanes.</b> The two Sandbox lanes registered 2026-10-20 back the Yes or the No at {S.COMMOD_NC_BAND[0] * 100:g}–{S.COMMOD_NC_BAND[1] * 100:g}¢ in the last hour, {S.COMMOD_NC_FROM_MIN} to {S.COMMOD_NC_TO_MIN} minutes before each close (12:15–12:45 Central for WTI, 2:45–3:15 Central for the rest), on paper only. Each contract is logged at the ask of the side it backs, and the No book is read as the Yes book's complement. A market belongs to one lane only, in the order favourite band, near-certain Yes, near-certain No. These lanes win about 3¢ a time, so one loss costs about 16 wins; they are read at {S.COMMOD_NC_READ_DAYS} market-days like the others.</p>'''
-    inner += reading_note(d)
+    inner += reading_note(d) + CHEAP_NOTE
     return "Method", "why a day is one bet · scheduling", inner, False
 
 
@@ -334,11 +337,90 @@ def build(d=None, st=None, now=None):
         scope="Daily favourite-band and near-certain picks on Kalshi commodity closes", venue="Kalshi",
         rows=rows, events=events, rule_name=rule_name, market=market,
         definition=definition, recent=recent_html, method=method, scoped=False,
-        unit=lambda row: "market-day")
+        unit=lambda row: "market-day",
+        # The Retired fold, as on the Crypto and Econ pages (2026-11-08: commod_nc_no retired).
+        retired=sport_tab.retired_rows(d, st, "Commodities"))
     html = SP.page(sp, d, st, now, rows=rows)
-    # The cheap-side lanes (2026-10-27), their own ledgers, before the Events. The existing lanes
-    # above are untouched.
-    return html.replace('<section id="events"', cheap_side() + '<section id="events"', 1)
+    # The cheap-side lanes (2026-10-27, own ledgers) are rows of the same Rules list since 2026-11-08 (Olu: one
+    # tab, the Econ Daily design): one row per lane on the same columns, the full card in its fold, the retired
+    # one in the Retired fold. Their records are read exactly as before (mentions_split).
+    return with_cheap_rows(html)
+
+
+CHEAP_NOTE = ('<p class="sm"><b>Cheap side + resting take-profit.</b> Buy the cheap side when a ladder rung opens, at '
+              'the real ask; rest a split sell, half at 2x and half at 3x; a fill counts only on a traded print; every '
+              'lane is shown next to the same entries held. Sandbox, paper only, fresh records from the first entry: '
+              'review at 10 settled events, decide at 30. An event is one outcome (a WTI day, a gas day, a gas week): '
+              'its rungs move together, so they count once, and Evidence on a cheap-side row counts settled events. '
+              'Record and Won v priced count settled entries; ROI after fees is the split ROI (pending until the '
+              'first settled event). The weekly gas lane is small and slow: about 3 entries a week, all on one weekly '
+              'event, so 10 settled events takes about ten weeks. Review at 10, decide at 30. The same engine and '
+              'wording as the Culture page.</p>')
+
+
+def _cheap_row(cfg, st, retired=False):
+    """One cheap-side lane as a Rules-list row (sport_page.rule_row's markup and columns), its card in the fold."""
+    import mentions_split as MS
+    import sport_page as SP
+    e = C.esc
+    es = MS.counted(st)
+    r = MS.record(es)
+    settled = [x for x in es if x.get("payout") is not None]
+    won = sum(x.get("payout") == 1 for x in settled)
+    priced = sum(float(x.get("price") or 0) for x in settled)
+    record = f"{won}–{len(settled) - won}" if settled else '<span class="mut">—</span>'
+    roi = MS._headline(r["roi"], r)
+    roi_cell = (f'<span class="mut">{e(roi)}</span>' if roi in ("pending", "—") or r["settled_events"] < 10
+                else f'<span class="{fmt.tone(r["roi"], ".1f", 100)}">{e(roi)}</span>')
+    wvp = f"{won} v {priced:.1f}" if settled else "—"
+    n = r["settled_events"]
+    if retired:
+        verdict = SP.verdict_badge(dict(v="retired", a={"n": n}))
+    elif n < 10:
+        verdict = SP.verdict_badge(dict(v="early", a={"n": n}))
+    else:
+        verdict = SP.verdict_badge(dict(v="promising" if (r["roi"] or 0) > 0 else "behind", a={"n": n}))
+    badges = '<span class="sp-badges"><span class="badge stage">Retired</span></span>' if retired else ""
+    gone = cfg.get("retired") or {}
+    gone_line = (f'<p class="sp-def">Retired {e(gone.get("on", ""))} at {e(gone.get("at", ""))}: {e(gone.get("reason", ""))}. '
+                 f'Its rows stay; any open entry still settles.</p>' if retired and gone else "")
+    early = " is-early" if (not retired and n < 10) else ""
+    return (f'<details class="sp-rule{early}" data-source="{e(cfg["lane"])}" data-sport="commodities_cheap" '
+            f'data-scope="clubs" data-stage="sandbox"{" data-early=\"1\"" if early else ""}>'
+            f'<summary class="sp-line"><span class="sp-cell sp-c-name"><span class="sp-chev" aria-hidden="true">›</span>'
+            f'<b class="sp-name" title="{e(cfg["label"])}">{e(cfg["label"])}</b>{badges}'
+            f'<span class="sr-only"> · Rule details</span></span>'
+            f'<span class="sp-cell sp-c-market" data-l="Market">Kalshi</span>'
+            f'<span class="sp-cell num" data-l="Record">{record}</span>'
+            f'<span class="sp-cell num" data-l="ROI after fees">{roi_cell}</span>'
+            f'<span class="sp-cell num" data-l="Won v priced">{e(wvp)}</span>'
+            f'<span class="sp-cell num" data-l="Evidence">{n}/30</span>'
+            f'<span class="sp-cell sp-c-verdict" data-l="Verdict">{verdict}</span></summary>'
+            f'<div class="sp-details-body"><p class="sp-details-name"><b>{e(cfg["label"])}</b> · Kalshi · cheap side + '
+            f'resting take-profit · {e(MS.lane_status(cfg, n))}</p>{gone_line}{MS.label_cells(MS.section(st, e, cfg))}</div></details>')
+
+
+def _insert_rows(html, list_key, rows_html):
+    """Put rows at the top of a Rules list (data-list=...), right after its header line."""
+    at = html.find(f'data-list="{list_key}">')
+    if at < 0 or not rows_html:
+        return html, False
+    head_end = html.find("</div>", at) + len("</div>")       # the header line holds spans only
+    return html[:head_end] + rows_html + html[head_end:], True
+
+
+def with_cheap_rows(html, states=None):
+    """The page with the cheap-side lanes as Rules rows: live ones in the Sandbox list, retired ones in the Retired fold.
+    A page with no Sandbox list or Retired fold to hold them keeps the old section, so no lane ever drops off."""
+    import mentions_split as MS
+    states = states or {cfg["lane"]: MS.load(cfg=cfg) for cfg in MS.COMMOD_LANES}
+    live = "".join(_cheap_row(c, states[c["lane"]]) for c in MS.LIVE_COMMOD)
+    gone = "".join(_cheap_row(c, states[c["lane"]], retired=True) for c in MS.GONE_COMMOD)
+    out, ok_live = _insert_rows(html, "sandbox", live)
+    out, ok_gone = _insert_rows(out, "retired", gone)
+    if not (ok_live and (ok_gone or not gone)):
+        return html.replace('<section id="events"', cheap_side(states) + '<section id="events"', 1)
+    return out
 
 
 def cheap_side(states=None):
