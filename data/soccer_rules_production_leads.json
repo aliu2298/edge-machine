@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-08T16:01:02+00:00",
+ "board_built_at": "2026-11-08T16:31:12+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sr_a2": true,
@@ -502,6 +502,41 @@
    "source": "sr_a2",
    "sport": "soccer_u35",
    "status": "hit"
+  },
+  "2026-11-08|Genoa|AC Milan|Over 2.5 goals \u00b7 Serie A O\u2212D\u2212 v O+D\u2212 \u00b7 over 2.5": {
+   "away": "AC Milan",
+   "bet": {
+    "kind": "total_gte",
+    "n": 3
+   },
+   "date": "2026-11-08",
+   "edge_at_log": null,
+   "first_seen": "2026-11-08",
+   "headline": "Over 2.5 goals",
+   "home": "Genoa",
+   "id": "2026-11-08|Genoa|AC Milan|Over 2.5 goals \u00b7 Serie A O\u2212D\u2212 v O+D\u2212 \u00b7 over 2.5",
+   "kickoff": "2026-11-08T14:00Z",
+   "lane": "production",
+   "league": "Serie A",
+   "match": "Genoa v AC Milan",
+   "pair": "sr_c4|soccer_o25",
+   "price_at_log": 0.44,
+   "published_at": "2026-11-08T16:31:12+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Over 2.5 goals",
+    "event": "KXSERIEATOTAL-26NOV08GENACM",
+    "market": "KXSERIEATOTAL-26NOV08GENACM-3",
+    "outcome": "Over 2.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.44,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_c4:KXSERIEATOTAL-26NOV08GENACM-3",
+   "source": "sr_c4",
+   "sport": "soccer_o25",
+   "status": "hit"
   }
  },
  "pairs": {
@@ -637,18 +672,18 @@
    "ready_at": "2026-10-29T00:59:00+00:00",
    "route": "moved by hand on 2026-10-28",
    "routing": {
-    "leads": 0,
+    "leads": 1,
     "problem": null,
-    "routed": 0,
+    "routed": 1,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 1,
-   "sandbox_roi": 0.8267,
-   "sandbox_roi_fee": 0.8267,
+   "sandbox_n": 2,
+   "sandbox_roi": 1.0069,
+   "sandbox_roi_fee": 1.0069,
    "timing": {
     "late": [],
     "timed": 0,
@@ -670,5 +705,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-08T16:01:02+00:00"
+ "updated_at": "2026-11-08T16:31:12+00:00"
 }
