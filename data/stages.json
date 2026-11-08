@@ -1962,6 +1962,42 @@
    "pair": "commod_fav_band|commodities_fav",
    "reason": "taken off the Production list by hand, record kept",
    "to": "sandbox"
+  },
+  {
+   "at": "2026-11-08T08:37:32+00:00",
+   "evidence": {
+    "base_roi": -0.1064,
+    "clv": -0.0067,
+    "clv_n": 6,
+    "n": 6,
+    "own_roi": 0.3157,
+    "roi": 0.3157,
+    "roi_fee": 0.2828,
+    "span_days": 15.0417,
+    "weeks": 2,
+    "z": 1.0153
+   },
+   "pair": "corners_ucl_fade|soccer_corners",
+   "reason": "moved to Production by hand on 2026-11-08",
+   "to": "production"
+  },
+  {
+   "at": "2026-11-08T08:37:32+00:00",
+   "evidence": {
+    "base_roi": -0.1064,
+    "clv": -0.0067,
+    "clv_n": 6,
+    "n": 6,
+    "own_roi": 0.3157,
+    "roi": 0.3157,
+    "roi_fee": 0.2828,
+    "span_days": 15.0417,
+    "weeks": 2,
+    "z": 1.0153
+   },
+   "pair": "corners_ucl_fade|soccer_corners",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
   }
  ],
  "pairs": {
@@ -1991,9 +2027,24 @@
    "stage": "sandbox"
   },
   "corners_ucl_fade|soccer_corners": {
-   "demoted_at": "2026-10-21T02:37:06+00:00",
-   "since": null,
-   "stage": "sandbox"
+   "by_hand": "2026-11-08",
+   "entry": {
+    "base_roi": -0.1064,
+    "clv": -0.0067,
+    "clv_n": 6,
+    "n": 6,
+    "own_roi": 0.3157,
+    "roi": 0.3157,
+    "roi_fee": 0.2828,
+    "span_days": 15.0417,
+    "weeks": 2,
+    "z": 1.0153
+   },
+   "entry_since": null,
+   "promoted_at": "2026-11-08T08:37:32+00:00",
+   "ready_at": "2026-11-08T08:37:32+00:00",
+   "ready_since": "2026-11-08T08:37:32+00:00",
+   "stage": "production"
   },
   "corners_under|soccer_corners": {
    "demoted_at": "2026-10-15T06:13:04+00:00",
@@ -2330,5 +2381,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-11-08T08:09:33+00:00"
+ "updated": "2026-11-08T08:37:32+00:00"
 }
