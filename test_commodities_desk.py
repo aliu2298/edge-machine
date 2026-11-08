@@ -223,7 +223,7 @@ if playwright is not None:
             ok(page.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), f"{width}px still fits with both open")
             eq(page.locator("nav.toc a").evaluate_all("a => a.map(x => x.getAttribute('href'))"),
                ["#rules", "#events", "#method"], f"{width}px sub-nav is Rules / Events / Method")
-            eq(page.locator("nav.main a[aria-current='page']").text_content(), "Commodities", f"{width}px the nav marks the page")
+            eq(page.locator("nav.main a[aria-current='page']").text_content(), "Daily Markets", f"{width}px the nav marks the page (Commodities' tab since 2026-11-08)")
             page.close()
         browser.close()
 
