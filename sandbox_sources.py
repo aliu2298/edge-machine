@@ -4958,6 +4958,8 @@ OWN_LEDGER_LABELS = {
     "nba_wm_nofade": "Win margin NO fade (v2)",
     "nba_winmargin_v3": "Win margin YES split (v3)",
     "nba_wm_nofade_v3": "Win margin NO fade (v3)",
+    "nba_winmargin_v4": "Win margin YES split (v4)",
+    "nba_wm_nofade_v4": "Win margin NO fade (v4)",
 }
 
 

@@ -82,13 +82,13 @@ def fake(path):
 
 
 yes, no = X.feeds(NOW, fake)
-check("a game inside the window lists its OPEN buckets; the YES feed only the 1-5 and 6-10 ones (the 11-20 and the settled are out), the NO feed every open one",
-      ([l["ticker"].rsplit("-", 1)[1] for l in yes["leads"]], [l["ticker"].rsplit("-", 1)[1] for l in no["leads"]]), (["BOS1TO5"], ["BOS1TO5", "BOS11TO20"]))
+check("a game inside the window lists its OPEN buckets; the YES feed the 1-5, 6-10 and 11-20 ones (version 4; the settled are out), the NO feed every open one",
+      ([l["ticker"].rsplit("-", 1)[1] for l in yes["leads"]], [l["ticker"].rsplit("-", 1)[1] for l in no["leads"]]), (["BOS1TO5", "BOS11TO20"], ["BOS1TO5", "BOS11TO20"]))
 check("a game days away is not listed", all("FARAWAY" not in l["event"] for l in yes["leads"] + no["leads"]), True)
 check("tip = the KXNBAGAME expiry minus 3 hours", yes["leads"][0]["tip"], (NOW + dt.timedelta(hours=6)).isoformat())
-check("the rule is in the header: YES 10-20c, spread 5c, sells 2x/3x from the tip; NO 75% dip, pregame sell, post-only",
+check("the rule is in the header: YES 10-20c, spread 5c, sells 2x/2.5x from the tip, favourite share under 0.70; NO 65% dip, pregame sell, post-only",
       (yes["rule"]["band"], yes["rule"]["max_spread"], [s["multiple"] for s in yes["rule"]["sells"]], yes["rule"]["sells_from"],
-       no["rule"]["dip"], no["rule"]["sell"], no["rule"]["post_only"]), ([0.1, 0.2], 0.05, [2.0, 3.0], "tip", 0.75, "pregame", True))
+       no["rule"]["dip"], no["rule"]["sell"], no["rule"]["post_only"], yes["rule"]["max_favourite_share"]), ([0.1, 0.2], 0.05, [2.0, 2.5], "tip", 0.65, "pregame", True, 0.70))
 check("the lead carries lane, version, side and the stake", (yes["leads"][0]["lane"], yes["leads"][0]["version"], yes["leads"][0]["side"], yes["leads"][0]["stake_usd"]),
       (X.YES_LANE, X.YES_VERSION, "yes", 1.0))
 

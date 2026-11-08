@@ -135,7 +135,7 @@ check("v3's quotes are the settled v3 entries under the v3 source ids", sorted((
 d, s_, b_ = {"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}
 html = P.page(d, s_, b_, "", now=NOW, nba_wm=dict(chaos=CHAOS, nofade={"entries": []}, v3=st))
 check("the Production page names v2 and v3 apart", (X.YES_NAME in html, X.YES3_NAME in html, X.NO3_NAME in html), (True, True, True))
-check("the feeds carry the v3 versions the executor pins", (X.YES_VERSION, X.NO_VERSION), ("wm-yes-v3", "wm-nofade-v3"))
+check("the feeds carry the v4 versions the executor pins (from 2026-11-08)", (X.YES_VERSION, X.NO_VERSION), ("wm-yes-v4", "wm-nofade-v4"))
 check("no guarded public phrase", sandbox_audit.COPY_RE.search(html.split(X.YES3_NAME, 1)[-1][:4000]), None)
 
 print("\nthe NBA page")

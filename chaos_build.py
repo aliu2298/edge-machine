@@ -470,7 +470,8 @@ def _v3_headline(L, r):
         return r
     try:
         import nba_wm_v3 as V3
-        v3 = V3.load()
+        import nba_wm_v4prod as V4P
+        v3 = V4P.headline_state()                              # version 4 from 2026-11-08, else version 3
         if not v3.get("since"):
             return r
         yr = V3.yes_rows(v3)

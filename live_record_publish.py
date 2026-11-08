@@ -44,7 +44,7 @@ FIELDS = {"id", "ko", "side", "st", "w", "r"}
 # An own-state lane row also carries the legs it sold ("", "2x", "3x", "2x+3x", "sold"), the same entry held to settlement (YES split only)
 # and where its sells come from: "fills" (the sell fills the follower logged) or "reconstructed" (data/live_reconstructed.json).
 LANE_FIELDS = FIELDS | {"legs", "hold_r", "src", "g"}      # g = the same trade's return before any fee
-LEGS = {"", "2x", "3x", "2x+3x", "sold"}
+LEGS = {"", "2x", "3x", "2.5x", "2x+3x", "2x+2.5x", "sold"}
 SRCS = {"fills", "reconstructed"}
 STATES = {"won", "flat", "lost", "open", "sold", "unfilled", "unconfirmed"}
 FLAT = 0.02          # flat (F) = exited at cost: return within +-2% before OR after fees; won (W) = above +2% after fees and not flat; lost (L) = the rest
@@ -215,7 +215,7 @@ def sell_fee(rec):
 
 
 def _legs(names):
-    got = sorted({n for n in names if n in ("2x", "3x")})
+    got = sorted({n for n in names if n in ("2x", "3x", "2.5x")}, key=lambda n: float(n[:-1]))
     return "+".join(got) if got else ("sold" if names else "")
 
 

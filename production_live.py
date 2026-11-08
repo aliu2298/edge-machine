@@ -21,8 +21,9 @@ LANE_NAMES = {"o35_cheap_no": "Over 3.5 cheap NO", "nba_wm_yes": "NBA win margin
 CLUSTERED = ("commodities_fav", "crypto_fav")    # the paper record counts one result per market-day (a day's rungs grade together)
 EXITS = {"o35_cheap_no", "nba_wm_yes"}      # lanes that sell early: an export from before the trades schema counted only their held-to-settle bets
 # The Production pairs the follower runs from its own state files (no orders_placed rows), and the live rows each reads: pair key -> (lane in
-# data/live_record.json, version window). "v3" = slates from the v3 start on, "v2" = the slates before it, None = every row.
+# data/live_record.json, version window). "v4" = slates from the v4 start on, "v3" = slates from the v3 start up to the v4 start, "v2" = the slates before v3, None = every row.
 OWN_PAIRS = {
+    "nba_winmargin_v4|nba_wm": ("nba_wm_yes", "v4"), "nba_wm_nofade_v4|nba_wm": ("nba_wm_nofade", "v4"),
     "nba_winmargin_v3|nba_wm": ("nba_wm_yes", "v3"), "nba_wm_nofade_v3|nba_wm": ("nba_wm_nofade", "v3"),
     "nba_winmargin_live|nba_wm": ("nba_wm_yes", "v2"), "nba_wm_nofade|nba_wm": ("nba_wm_nofade", "v2"),
     "o35_cheap_no_wave|soccer_u35": ("o35_cheap_no", None), "top5_goalless_dip_live|soccer_o15": ("top5_dip", None),
@@ -92,9 +93,10 @@ def current_schema(rows):
     return all("src" in r for r in rows)
 
 
-def own_rows(live_blob, key, v3_since=None):
+def own_rows(live_blob, key, v3_since=None, v4_since=None):
     """The live trades of an own-state Production pair (OWN_PAIRS), or None when the pair is not one or the file has no such lane.
-    Version 3 is the slates from `v3_since`, version 2 the ones before it (all of them when there is no version 3)."""
+    Version 4 is the slates from `v4_since`, version 3 the ones from `v3_since` up to it, version 2 the ones before version 3 (all of them when
+    there is no version 3)."""
     spec = OWN_PAIRS.get(key)
     if spec is None or not live_blob:
         return None
@@ -102,8 +104,10 @@ def own_rows(live_blob, key, v3_since=None):
     rows = (live_blob.get("lanes") or {}).get(lane)
     if rows is None or not current_schema(rows):
         return None
+    if ver == "v4":
+        return [r for r in rows if v4_since and slate(r) >= v4_since]
     if ver == "v3":
-        return [r for r in rows if v3_since and slate(r) >= v3_since]
+        return [r for r in rows if v3_since and slate(r) >= v3_since and not (v4_since and slate(r) >= v4_since)]
     if ver == "v2":
         return [r for r in rows if not v3_since or slate(r) < v3_since]
     return list(rows)
@@ -123,7 +127,7 @@ def own_class(o):
     return "W" if r > FLAT else "L"
 
 
-def own_summary(rows):
+def own_summary(rows, third="3x"):
     """An own-state lane's live record as TRADES after exchange fees: W = realised return above +2% (a bet sold at its target is won whatever the
     market later did), F = flat within +-2%, L = below -2%; stake-weighted ROI over every settled trade; the legs filled (YES split) and the
     same entries held to settlement."""
@@ -136,7 +140,7 @@ def own_summary(rows):
     hw = sum(o["w"] for o in hold)
     return dict(won=won, flat=flat, lost=len(done) - won - flat, n=len(done), open=sum(1 for o in rows if o["st"] == "open"),
                 roi=(sum(o["w"] * o["r"] for o in wl) / w if w else None),
-                legs2=sum(1 for o in done if "2x" in (o.get("legs") or "")), legs3=sum(1 for o in done if "3x" in (o.get("legs") or "")),
+                legs2=sum(1 for o in done if "2x" in (o.get("legs") or "")), legs3=sum(1 for o in done if third in (o.get("legs") or "")), third=third,
                 sold_any=sum(1 for o in done if o.get("legs")), reconstructed=sum(1 for o in rows if o.get("src") == "reconstructed"),
                 hold_roi=(sum(o["w"] * o["hold_r"] for o in hold) / hw if hw else None), hold_n=len(hold), split=any(o.get("hold_r") is not None for o in done))
 
@@ -156,7 +160,7 @@ def own_detail(summ):
     rows. The held-to-settlement figure is over exactly the settled trades the record next to it counts."""
     bits = []
     if summ["split"]:
-        bits.append(f'legs filled: 2x {summ["legs2"]} · 3x {summ["legs3"]} of {summ["n"]}')
+        bits.append(f'legs filled: 2x {summ["legs2"]} · {summ.get("third", "3x")} {summ["legs3"]} of {summ["n"]}')
         if summ["hold_roi"] is not None:
             bits.append(f'same {summ["hold_n"]} entries held to settlement: {summ["hold_roi"] * 100:+.1f}%')
     elif summ["n"]:
