@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-08T13:31:29.228170+00:00",
+ "last_run": "2026-11-08T13:46:13.879344+00:00",
  "rules": {
   "T1": {
    "picks": [
@@ -4519,6 +4519,60 @@
      "ticker": "KXEPLTEAMTOTAL-26OCT31TOTCRY-CRY3",
      "title": "Will Crystal Palace score over 2.5 goals?",
      "why": "Crystal Palace O+D+ v Tottenham Hotspur O+D+ \u00b7 3+ NO 0.93"
+    },
+    {
+     "ask": 0.31,
+     "bid": 0.29,
+     "event": "KXLALIGATEAMTOTAL-26NOV08RSORVC",
+     "group": "C",
+     "id": "T7:KXLALIGATEAMTOTAL-26NOV08RSORVC:home",
+     "labels": {
+      "opp": "O+D+",
+      "own": "O+D+"
+     },
+     "league": "La Liga",
+     "line": 2.5,
+     "logged": "2026-11-08T13:46:13.879344+00:00",
+     "match": "Real Sociedad v Rayo Vallecano",
+     "opponent": "Rayo Vallecano",
+     "price": 0.71,
+     "rule": "T7",
+     "side": "no",
+     "start": "2026-11-08T15:15Z",
+     "status": "open",
+     "sub": "Real Sociedad over 2.5 goals",
+     "team": "Real Sociedad",
+     "team_side": "home",
+     "ticker": "KXLALIGATEAMTOTAL-26NOV08RSORVC-RSO3",
+     "title": "Will Real Sociedad score over 2.5 goals?",
+     "why": "Real Sociedad O+D+ v Rayo Vallecano O+D+ \u00b7 3+ NO 0.71"
+    },
+    {
+     "ask": 0.12,
+     "bid": 0.1,
+     "event": "KXLALIGATEAMTOTAL-26NOV08RSORVC",
+     "group": "C",
+     "id": "T7:KXLALIGATEAMTOTAL-26NOV08RSORVC:away",
+     "labels": {
+      "opp": "O+D+",
+      "own": "O+D+"
+     },
+     "league": "La Liga",
+     "line": 2.5,
+     "logged": "2026-11-08T13:46:13.879344+00:00",
+     "match": "Real Sociedad v Rayo Vallecano",
+     "opponent": "Real Sociedad",
+     "price": 0.9,
+     "rule": "T7",
+     "side": "no",
+     "start": "2026-11-08T15:15Z",
+     "status": "open",
+     "sub": "Vallecano over 2.5 goals",
+     "team": "Rayo Vallecano",
+     "team_side": "away",
+     "ticker": "KXLALIGATEAMTOTAL-26NOV08RSORVC-RVC3",
+     "title": "Will Vallecano score over 2.5 goals?",
+     "why": "Rayo Vallecano O+D+ v Real Sociedad O+D+ \u00b7 3+ NO 0.90"
     }
    ]
   },
@@ -4912,14 +4966,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-11-02T01:16:28.455021+00:00",
-   "candidates": 0,
-   "due": 1,
-   "labelled": 1,
-   "matched": 0,
-   "new": 0
-  },
   {
    "at": "2026-11-02T01:46:38.789615+00:00",
    "candidates": 0,
@@ -5319,6 +5365,14 @@
    "labelled": 8,
    "matched": 4,
    "new": 0
+  },
+  {
+   "at": "2026-11-08T13:46:13.879344+00:00",
+   "candidates": 1,
+   "due": 2,
+   "labelled": 2,
+   "matched": 1,
+   "new": 2
   }
  ],
  "version": "soccer-team-rules-v1"
