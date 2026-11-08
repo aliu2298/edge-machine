@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-08T19:31:10+00:00",
+ "board_built_at": "2026-11-08T20:01:19+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sr_a2": true,
@@ -13,41 +13,6 @@
  "first_publish_min": 45,
  "late_publication_skipped": 1,
  "leads": {
-  "2026-11-01|Juventus|Napoli|Over 2.5 goals \u00b7 Serie A O+D\u2212 v O+D+ \u00b7 over 2.5": {
-   "away": "Napoli",
-   "bet": {
-    "kind": "total_gte",
-    "n": 3
-   },
-   "date": "2026-11-01",
-   "edge_at_log": null,
-   "first_seen": "2026-11-01",
-   "headline": "Over 2.5 goals",
-   "home": "Juventus",
-   "id": "2026-11-01|Juventus|Napoli|Over 2.5 goals \u00b7 Serie A O+D\u2212 v O+D+ \u00b7 over 2.5",
-   "kickoff": "2026-11-01T19:45Z",
-   "lane": "production",
-   "league": "Serie A",
-   "match": "Juventus v Napoli",
-   "pair": "sr_c3|soccer_o25",
-   "price_at_log": 0.51,
-   "published_at": "2026-11-01T22:16:41+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 2.5 goals",
-    "event": "KXSERIEATOTAL-26NOV01JUVNAP",
-    "market": "KXSERIEATOTAL-26NOV01JUVNAP-3",
-    "outcome": "Over 2.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.51,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "sr_c3:KXSERIEATOTAL-26NOV01JUVNAP-3",
-   "source": "sr_c3",
-   "sport": "soccer_o25",
-   "status": "miss"
-  },
   "2026-11-03|Atl\u00e9tico Madrid|Bayern Munich|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5": {
    "away": "Bayern Munich",
    "bet": {
@@ -503,43 +468,6 @@
    "sport": "soccer_u35",
    "status": "hit"
   },
-  "2026-11-08|Fiorentina|Juventus|Over 2.5 goals \u00b7 Serie A O+D\u2212 v O+D+ \u00b7 over 2.5": {
-   "away": "Juventus",
-   "bet": {
-    "kind": "total_gte",
-    "n": 3
-   },
-   "date": "2026-11-08",
-   "edge_at_log": null,
-   "first_seen": "2026-11-08",
-   "headline": "Over 2.5 goals",
-   "home": "Fiorentina",
-   "id": "2026-11-08|Fiorentina|Juventus|Over 2.5 goals \u00b7 Serie A O+D\u2212 v O+D+ \u00b7 over 2.5",
-   "kickoff": "2026-11-08T19:45Z",
-   "lane": "production",
-   "last_seen": "2026-11-08",
-   "last_seen_at": "2026-11-08T19:31:10+00:00",
-   "league": "Serie A",
-   "match": "Fiorentina v Juventus",
-   "pair": "sr_c3|soccer_o25",
-   "price_at_log": 0.51,
-   "published_at": "2026-11-08T18:46:00+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 59,
-   "route": {
-    "claim": "Over 2.5 goals",
-    "event": "KXSERIEATOTAL-26NOV08FIOJUV",
-    "market": "KXSERIEATOTAL-26NOV08FIOJUV-3",
-    "outcome": "Over 2.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.51,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "sr_c3:KXSERIEATOTAL-26NOV08FIOJUV-3",
-   "source": "sr_c3",
-   "sport": "soccer_o25",
-   "status": "pending"
-  },
   "2026-11-08|Genoa|AC Milan|Over 2.5 goals \u00b7 Serie A O\u2212D\u2212 v O+D\u2212 \u00b7 over 2.5": {
    "away": "AC Milan",
    "bet": {
@@ -684,9 +612,9 @@
    "ready_at": "2026-10-29T00:59:00+00:00",
    "route": "moved by hand on 2026-10-28",
    "routing": {
-    "leads": 2,
+    "leads": 0,
     "problem": null,
-    "routed": 2,
+    "routed": 0,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -698,8 +626,8 @@
    "sandbox_roi_fee": -1.0,
    "timing": {
     "late": [],
-    "timed": 1,
-    "under_target": 1
+    "timed": 0,
+    "under_target": 0
    }
   },
   "sr_c4|soccer_o25": {
@@ -742,5 +670,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-08T19:31:10+00:00"
+ "updated_at": "2026-11-08T20:01:19+00:00"
 }
