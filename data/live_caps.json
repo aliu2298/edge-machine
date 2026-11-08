@@ -50,7 +50,8 @@
     0.55
    ],
    "cap": 0.85,
-   "max_ask": 0.84
+   "max_ask": 0.84,
+   "raised_at": "2026-11-08T08:07:13+00:00"
   },
   "sr_a7|soccer_u35": {
    "band": [
@@ -77,14 +78,6 @@
    "cap": 0.85,
    "max_ask": 0.84
   },
-  "st_t4|soccer_team2": {
-   "band": [
-    0.03,
-    0.97
-   ],
-   "cap": 0.85,
-   "max_ask": 0.84
-  },
   "st_t7|soccer_team3": {
    "band": [
     0.03,
@@ -96,7 +89,8 @@
   "team1_form_l5|soccer_team1_intl": {
    "band": null,
    "cap": 0.88,
-   "max_ask": 0.87
+   "max_ask": 0.87,
+   "raised_at": "2026-11-08T08:07:13+00:00"
   },
   "team2_form_l10|soccer_team2_intl": {
    "band": null,
@@ -117,8 +111,9 @@
   "u35_low_scoring|soccer_u35_intl": {
    "band": null,
    "cap": 0.92,
-   "max_ask": 0.91
+   "max_ask": 0.91,
+   "raised_at": "2026-11-08T08:07:13+00:00"
   }
  },
- "generated": "2026-11-08T07:07Z"
+ "generated": "2026-11-08T08:07Z"
 }
