@@ -1703,9 +1703,9 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV0817-T75999.99\", \"b\"]]",
    "price": 0.75,
-   "profit": null,
+   "profit": 0.3333,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-09T00:08:52+00:00",
    "side": "b",
    "snapshot": {
     "as_of": "2026-11-08T18:47:53+00:00",
@@ -1774,12 +1774,12 @@
    },
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-09T00:04:06.539078+00:00",
+ "last_run": "2026-11-09T00:08:58.126533+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -5340,14 +5340,14 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV0817-T75999.99\", \"b\"]]",
    "price": 0.75,
-   "profit": null,
+   "profit": 0.3333,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-09T00:08:52+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXSERIEATOTAL-26NOV08FIOJUV-3",
