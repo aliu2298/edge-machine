@@ -28,7 +28,7 @@ REGISTERED = "2026-11-09"
 FROM = "2026-11-09T14:00:00+00:00"           # hte-v1/v2 record: windows opening at or after this
 # hte-v3 (Olu, 2026-11-09): hte-v2 (GBPUSD 35c) retired at its decide-at-30 read; one new cell, 35c on USDCAD, with a
 # FRESH record from FROM_V3 (the first window after the merge). USDCAD's hte-v1 35c result is not carried over.
-FROM_V3 = "2026-11-09T23:15:00+00:00"
+FROM_V3 = "2026-11-09T23:00:00+00:00"
 RETIRED_AT = "2026-11-09T22:00:00+00:00"     # hte-v2's last counted window opens before this
 PICKED_ON = "windows opening 06:00-12:00Z on 2026-11-09"
 PATH = os.path.join(W.ROOT, "data", "holdtoend_ledger.json")

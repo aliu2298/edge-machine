@@ -65,8 +65,8 @@ print("\nhte-v2 retired, hte-v3 fresh")
 G = "KXGBPUSD15M"
 ws2 = ws + [win(G, "2026-11-09T21:45:00Z", {"0.35": E("yes", 1.0)}),        # hte-v2, counted in its final record
             win(G, "2026-11-09T22:00:00Z", {"0.35": E("yes", 1.0)}),        # after retirement: never counted
-            win("KXUSDCAD15M", "2026-11-09T23:00:00Z", {"0.35": E("no", 1.0)}),   # before FROM_V3: not counted
-            win("KXUSDCAD15M", "2026-11-09T23:15:00Z", {"0.35": E("no", 0.0)})]   # hte-v3's first window
+            win("KXUSDCAD15M", "2026-11-09T22:45:00Z", {"0.35": E("no", 1.0)}),   # before FROM_V3: not counted
+            win("KXUSDCAD15M", "2026-11-09T23:00:00Z", {"0.35": E("no", 0.0)})]   # hte-v3's first window
 state = dict(W.empty(), windows={v["ticker"]: v for v in ws2})
 ret = H.records(state, retired=True)["holdtoend_35"]
 check("hte-v2's final record: GBPUSD windows before RETIRED_AT only", (ret["all"]["n"], ret["series"][G]["hits"]), (1, 1))
