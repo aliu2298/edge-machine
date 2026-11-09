@@ -20,7 +20,7 @@ import sys
 import flipside_v2 as F
 import swing15 as W
 
-VERSION = "hte-v1"
+VERSION = "hte-v2"                  # hte-v1 until 2026-11-09 18:00Z (the registered cells: CELLS_V1)
 REGISTERED = "2026-11-09"
 FROM = "2026-11-09T14:00:00+00:00"           # fresh record: windows opening at or after this (after the merge)
 PICKED_ON = "windows opening 06:00-12:00Z on 2026-11-09"
@@ -31,11 +31,20 @@ def _kx(names):
     return tuple(f"KX{n}15M" for n in names.split())
 
 
-# The frozen pre-registration (2026-11-09). Do not edit.
-CELLS = {
+# 2026-11-09 (Olu, from the 17:02Z ledgers): the negative markets are removed. Surviving cells keep their running record
+# from FROM; a removed cell stops counting at REMOVED_AT and its final record is kept (records(..., removed=True)).
+REMOVED_AT = "2026-11-09T18:00:00+00:00"
+# The frozen pre-registration (hte-v1, 2026-11-09). Do not edit.
+CELLS_V1 = {
     "holdtoend_25": _kx("USDCAD 30YRRATE 5YRRATE"),
     "holdtoend_35": _kx("10YRRATE GBPUSD USDCAD USDJPY 30YRRATE GOLD"),
 }
+# hte-v2: the frozen keep list (2026-11-09). The 25c row is removed entirely (all three markets negative). Do not edit.
+CELLS = {
+    "holdtoend_25": (),
+    "holdtoend_35": _kx("GBPUSD"),
+}
+REMOVED = {k: tuple(s for s in v if s not in CELLS[k]) for k, v in CELLS_V1.items()}
 BAND = {"holdtoend_25": "0.25", "holdtoend_35": "0.35"}
 LABELS = {"holdtoend_25": "Hold to End · 25c", "holdtoend_35": "Hold to End · 35c"}
 
@@ -53,13 +62,17 @@ def entry(w, strat):
     return dict(side=e["side"], price=p, won=e["won"], roi=round(e["won"] / cost - 1, 4))
 
 
-def records(state):
-    """{strat: {"all": cell, "series": {series: cell or None}, "skips": {reason: n}}} (flipside_v2's cell shape)."""
+def records(state, removed=False):
+    """{strat: {"all": cell, "series": {series: cell or None}, "skips": {reason: n}}} (flipside_v2's cell shape). With
+    removed=True: the removed cells' final records (windows opening before REMOVED_AT)."""
+    cells, until = (REMOVED, REMOVED_AT) if removed else (CELLS, None)
     out = {}
-    for strat, series in CELLS.items():
+    for strat, series in cells.items():
         by, skips = {s: [] for s in series}, {}
         for w in (state.get("windows") or {}).values():
             if W._ts(w["open"]) < W._ts(FROM) or w["series"] not in series:
+                continue
+            if until and W._ts(w["open"]) >= W._ts(until):
                 continue
             x = entry(w, strat)
             if x is None:
@@ -77,9 +90,12 @@ def ledger(state, now=None):
     now = now or dt.datetime.now(dt.timezone.utc)
     slim = lambda c: None if not c else {k: c[k] for k in ("n", "hits", "hit_rate", "fair", "mean_roi", "z", "days")}
     return dict(version=VERSION, registered=REGISTERED, **{"from": FROM}, picked_on=PICKED_ON,
-                cells={k: list(v) for k, v in CELLS.items()}, updated=now.isoformat(timespec="seconds"),
+                cells={k: list(v) for k, v in CELLS.items()}, cells_v1={k: list(v) for k, v in CELLS_V1.items()}, updated=now.isoformat(timespec="seconds"),
                 records={k: dict(all=slim(v["all"]), series={s: slim(c) for s, c in v["series"].items()}, skips=v["skips"])
-                         for k, v in records(state).items()})
+                         for k, v in records(state).items()},
+                removed_at=REMOVED_AT, removed={k: list(v) for k, v in REMOVED.items()},
+                removed_records={k: dict(all=slim(v["all"]), series={s: slim(c) for s, c in v["series"].items()})
+                                 for k, v in records(state, removed=True).items()})
 
 
 def main():

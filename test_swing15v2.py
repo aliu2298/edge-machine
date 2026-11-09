@@ -29,15 +29,26 @@ def row(series, open_iso, s1_roi, s1_filled, s2=None, s3=None, s1_band="0.35"):
 
 
 print("the pre-registration")
-check("ids and version", (tuple(V.CELLS), V.VERSION), (("swing15v2_s1", "swing15v2_s2", "swing15v2_s3"), "sw15-v2"))
-check("cell counts: S1 10 markets, S2 9, S3 14", tuple(len(v) for v in V.CELLS.values()), (10, 9, 14))
-check("series tickers are KX<NAME>15M", (V.CELLS["swing15v2_s1"][-2:], V.CELLS["swing15v2_s3"][-1]),
+check("ids and version (sw15-v3 since 2026-11-09 18:00Z)", (tuple(V.CELLS), V.VERSION), (("swing15v2_s1", "swing15v2_s2", "swing15v2_s3"), "sw15-v3"))
+check("the sw15-v2 registration is kept as it was: S1 10 markets, S2 9, S3 14", tuple(len(v) for v in V.CELLS_V2.values()), (10, 9, 14))
+check("series tickers are KX<NAME>15M", (V.CELLS_V2["swing15v2_s1"][-2:], V.CELLS_V2["swing15v2_s3"][-1]),
       (("KX10YRRATE15M", "KX30YRRATE15M"), "KX2YRRATE15M"))
 check("S1 is the 35c band, 3x, held", (V.S1_CELL, V.v1_key("swing15v2_s1")), (("0.35", "3.0", "hold"), ("swing15_s1", "0.35", "3.0", "hold")))
 check("S2/S3 read the v1 favourite cells", (V.v1_key("swing15v2_s2"), V.v1_key("swing15v2_s3")), (("swing15_s2",), ("swing15_s3",)))
 check("the record starts after the 06:00-12:00Z selection windows", W._ts(V.FROM) >= W._ts("2026-11-09T12:00:00+00:00"), True)
 
-print("\nthe filter over the v1 rows")
+print("\nsw15-v3: the frozen keep list (Olu, 2026-11-09, from the 17:02Z ledgers)")
+check("S1 keeps NATGAS, GBPUSD, ZEC, GOLD", V.CELLS["swing15v2_s1"], ("KXNATGAS15M", "KXGBPUSD15M", "KXZEC15M", "KXGOLD15M"))
+check("S2 keeps WTI, BTC, SOL", V.CELLS["swing15v2_s2"], ("KXWTI15M", "KXBTC15M", "KXSOL15M"))
+check("S3 keeps USDJPY, 2YRRATE, GOLD, ETH, BNB, BTC", V.CELLS["swing15v2_s3"],
+      ("KXUSDJPY15M", "KX2YRRATE15M", "KXGOLD15M", "KXETH15M", "KXBNB15M", "KXBTC15M"))
+check("every kept market was registered, and removed = registered - kept",
+      all(set(V.CELLS[k]) <= set(V.CELLS_V2[k]) and set(V.REMOVED[k]) == set(V.CELLS_V2[k]) - set(V.CELLS[k]) for k in V.CELLS), True)
+check("the cut", V.REMOVED_AT, "2026-11-09T18:00:00+00:00")
+
+print("\nthe filter over the v1 rows (on the sw15-v2 cells)")
+KEEP = V.CELLS
+V.CELLS = V.CELLS_V2
 fav = lambda roi, won, price=.6: dict(status="filled", side="yes", price=price, won=won, roi=roi)
 ws = [row("KXGOLD15M", "2026-11-09T13:00:00Z", 2.0, True, s2=fav(.6, 1.0), s3=fav(.6, 1.0)),
       row("KXGOLD15M", "2026-11-09T13:15:00Z", -1.0, False, s2=fav(-1.0, 0.0)),
@@ -54,19 +65,34 @@ check("S2: GOLD 2 + BTC 1", (rec["swing15v2_s2"]["all"]["n"], rec["swing15v2_s2"
 check("S3: GOLD 1 + BTC 1; a market with no windows is None", (rec["swing15v2_s3"]["all"]["n"], rec["swing15v2_s3"]["series"]["KXETH15M"]), (2, None))
 before = copy.deepcopy(state)
 check("v1's own record is untouched: v1 S2 counts every window", W.cells(before)[("swing15_s2",)]["n"], 5)
+V.CELLS = KEEP
+
+print("\nsw15-v3 records: survivors keep running, removed cells stop at the cut")
+ws.append(row("KXGOLD15M", "2026-11-09T18:15:00Z", 2.0, True, s2=fav(.6, 1.0)))     # GOLD S2 after the cut
+state = dict(W.empty(), windows={w["ticker"]: w for w in ws})
+rec = V.records(state)
+check("S1 GOLD survives: its record runs on past the cut (13:00, 13:15 and 18:15)", rec["swing15v2_s1"]["series"]["KXGOLD15M"]["n"], 3)
+check("S2: GOLD is removed; BTC survives", (set(rec["swing15v2_s2"]["series"]), rec["swing15v2_s2"]["all"]["n"]),
+      ({"KXWTI15M", "KXBTC15M", "KXSOL15M"}, 1))
+gone = V.records(state, removed=True)
+check("S2 GOLD's final record: the two windows before the cut, not the 18:15 one", gone["swing15v2_s2"]["series"]["KXGOLD15M"]["n"], 2)
 blob = V.ledger(state)
-check("the ledger carries the frozen cells and the start", (blob["version"], blob["from"], len(blob["cells"]["swing15v2_s3"])),
-      ("sw15-v2", V.FROM, 14))
+check("the ledger carries v3 cells, the v2 registration, the cut and the removed records",
+      (blob["version"], len(blob["cells"]["swing15v2_s3"]), len(blob["cells_v2"]["swing15v2_s3"]), blob["removed_at"],
+       blob["removed_records"]["swing15v2_s2"]["series"]["KXGOLD15M"]["n"]), ("sw15-v3", 6, 14, V.REMOVED_AT, 2))
 
 print("\nthe page")
 html = WB.section(state)
-check("the v2 block sits above v1", html.index("15-Minute Swing v2") < html.index('data-source="swing15_s1"'), True)
+check("the v3 block sits above v1", html.index("15-Minute Swing v3") < html.index('data-source="swing15_s1"'), True)
+check("the cut line", "sw15-v3 from 2026-11-09 18:00 UTC: negative markets removed after ~4h of results." in html, True)
+check("a collapsed Removed fold with readable names", ('<details class="fold sw15-removed"><summary>Removed 2026-11-09 18:00 UTC' in html,
+      '<span title="KXGOLD15M">Gold</span>' in html.split("sw15-removed")[1]), (True, True))
 check("the line under the header", "Cells picked from one overnight session; fresh record from 2026-11-09 13:00 UTC; "
       "review at 10, decide at 30." in html, True)
 check("three v2 rows", re.findall(r'data-source="(swing15v2_s\d)"', html), ["swing15v2_s1", "swing15v2_s2", "swing15v2_s3"])
 check("v1's three rows are still there", re.findall(r'data-source="(swing15_s\d)"', html), ["swing15_s1", "swing15_s2", "swing15_s3"])
 check("no dollar sign, no guarded phrase", (re.search(r"\$\d", html), sandbox_audit.COPY_RE.findall(html + WB.index_html(state))), (None, []))
-check("the Sandbox index lists v2 too", [r["lane"] for r in WB.index_rows(state)][3:6], list(V.CELLS))
+check("the Sandbox index lists v3 too", [r["lane"] for r in WB.index_rows(state)][3:6], list(V.CELLS))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

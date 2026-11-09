@@ -108,9 +108,9 @@ L.PATH = os.path.join(tmp, "leadswap_ledger.json")
 with open(L.PATH, "w") as f:
     json.dump(led, f)
 html = WB.section(state)
-order = [html.index(x) for x in ("Lead Swap Board", "15-Minute Swing v2", "The Flip Side v2", ">Hold to End<",
+order = [html.index(x) for x in ("Lead Swap Board", "15-Minute Swing v3", "The Flip Side v3", ">Hold to End v2<",
                                   "15-Minute Swing v1 · every market")]
-check("the order: Lead Swap Board, Swing v2, Flip Side v2, Hold to End, v1", order == sorted(order), True)
+check("the order: Lead Swap Board, Swing v3, Flip Side v3, Hold to End v2, v1", order == sorted(order), True)
 check("v1 is collapsed by default", bool(re.search(r'<details class="fold sw15-v1"><summary>', html)), True)
 check("the page notes a live version could act only from :05", "could only act from :05" in html, True)
 check("the within-block persistence table", "Stayed top" in html, True)

@@ -22,7 +22,7 @@ import sys
 
 import swing15 as W
 
-VERSION = "flip-v2"
+VERSION = "flip-v3"                 # flip-v2 until 2026-11-09 18:00Z (the registered cells: CELLS_V2)
 REGISTERED = "2026-11-09"
 FROM = "2026-11-09T13:15:00+00:00"           # fresh record: windows opening at or after this (after the merge)
 PICKED_ON = "windows opening 06:00-12:00Z on 2026-11-09"
@@ -34,13 +34,24 @@ def _kx(names):
     return tuple(f"KX{n}15M" for n in names.split())
 
 
-# The frozen pre-registration (2026-11-09). Do not edit.
-CELLS = {
+# 2026-11-09 (Olu, from the 17:02Z ledgers): the negative markets are removed. Surviving cells keep their running record
+# from FROM; a removed cell stops counting at REMOVED_AT and its final record is kept (records(..., removed=True)).
+REMOVED_AT = "2026-11-09T18:00:00+00:00"
+# The frozen pre-registration (flip-v2, 2026-11-09). Do not edit.
+CELLS_V2 = {
     "flipside_v2_f1": _kx("10YRRATE BRENT BTC COPPER ETH GOLD HYPE NATGAS NEAR PALLADIUM PLATINUM SILVER WTI XRP ZEC"),
     "flipside_v2_f2": _kx("2YRRATE AUDUSD BRENT BTC ETH EURUSD HYPE NEAR PLATINUM SILVER WTI XRP"),
     "flipside_v2_f3": _kx("10YRRATE 30YRRATE 5YRRATE AUDUSD DOGE EURUSD HYPE NATGAS PALLADIUM USDCAD USDJPY XRP ZEC"),
     "flipside_v2_f4": _kx("30YRRATE 5YRRATE DOGE HYPE NEAR USDCAD XRP ZEC"),
 }
+# flip-v3: the frozen keep list (2026-11-09). Do not edit.
+CELLS = {
+    "flipside_v2_f1": _kx("ETH GOLD BTC PLATINUM WTI XRP HYPE NEAR"),
+    "flipside_v2_f2": _kx("WTI HYPE PLATINUM XRP BRENT BTC"),
+    "flipside_v2_f3": _kx("EURUSD NATGAS USDCAD"),
+    "flipside_v2_f4": _kx("ZEC"),
+}
+REMOVED = {k: tuple(s for s in v if s not in CELLS[k]) for k, v in CELLS_V2.items()}
 LABELS = {"flipside_v2_f1": "F1 Flip 25c", "flipside_v2_f2": "F2 Flip 35c",
           "flipside_v2_f3": "F3 Underdog at minute 2", "flipside_v2_f4": "F4 Underdog at minute 10"}
 SOURCE = {"flipside_v2_f1": ("s1", "0.25"), "flipside_v2_f2": ("s1", "0.35"),
@@ -92,8 +103,11 @@ def flip(w, strat):
     return dict(side=side, price=p, won=won, roi=round(won / cost - 1, 4))
 
 
-def in_flip(w, strat):
-    return W._ts(w["open"]) >= W._ts(FROM) and w["series"] in CELLS[strat]
+def in_flip(w, strat, cells=None, until=None):
+    cells = CELLS if cells is None else cells
+    if until and W._ts(w["open"]) >= W._ts(until):
+        return False
+    return W._ts(w["open"]) >= W._ts(FROM) and w["series"] in cells[strat]
 
 
 def _cell(rows):
@@ -110,13 +124,15 @@ def _cell(rows):
                 half_roi=[sum(x) / len(x) if x else None for x in h])
 
 
-def records(state):
-    """{strat: {"all": cell, "series": {series: cell or None}, "skips": {reason: n}}}."""
+def records(state, removed=False):
+    """{strat: {"all": cell, "series": {series: cell or None}, "skips": {reason: n}}}. With removed=True: the removed
+    cells' final records (windows opening before REMOVED_AT)."""
+    cells, until = (REMOVED, REMOVED_AT) if removed else (CELLS, None)
     out = {}
-    for strat, series in CELLS.items():
+    for strat, series in cells.items():
         by, skips = {s: [] for s in series}, {}
         for w in (state.get("windows") or {}).values():
-            if not in_flip(w, strat):
+            if not in_flip(w, strat, cells, until):
                 continue
             f = flip(w, strat)
             if f is None:
@@ -134,9 +150,12 @@ def ledger(state, now=None):
     now = now or dt.datetime.now(dt.timezone.utc)
     slim = lambda c: None if not c else {k: c[k] for k in ("n", "hits", "hit_rate", "fair", "mean_roi", "z", "days")}
     return dict(version=VERSION, registered=REGISTERED, **{"from": FROM}, picked_on=PICKED_ON,
-                cells={k: list(v) for k, v in CELLS.items()}, updated=now.isoformat(timespec="seconds"),
+                cells={k: list(v) for k, v in CELLS.items()}, cells_v2={k: list(v) for k, v in CELLS_V2.items()}, updated=now.isoformat(timespec="seconds"),
                 records={k: dict(all=slim(v["all"]), series={s: slim(c) for s, c in v["series"].items()}, skips=v["skips"])
-                         for k, v in records(state).items()})
+                         for k, v in records(state).items()},
+                removed_at=REMOVED_AT, removed={k: list(v) for k, v in REMOVED.items()},
+                removed_records={k: dict(all=slim(v["all"]), series={s: slim(c) for s, c in v["series"].items()})
+                                 for k, v in records(state, removed=True).items()})
 
 
 def main():
