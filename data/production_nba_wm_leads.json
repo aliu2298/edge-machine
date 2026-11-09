@@ -575,6 +575,58 @@
    "version": "wm-yes-v4"
   },
   {
+   "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV10MILNYK",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV10MILNYK-MIL6TO10",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "MIL",
+   "ticker": "KXNBAWINMARGIN-26NOV10MILNYK-MIL6TO10",
+   "tip": "2026-11-11T00:30:00+00:00",
+   "title": "Milwaukee wins by 6-10 points",
+   "version": "wm-yes-v4"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV10MILNYK",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV10MILNYK-MIL1TO5",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "MIL",
+   "ticker": "KXNBAWINMARGIN-26NOV10MILNYK-MIL1TO5",
+   "tip": "2026-11-11T00:30:00+00:00",
+   "title": "Milwaukee wins by 1-5 points",
+   "version": "wm-yes-v4"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV10MILNYK",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV10MILNYK-NYK1TO5",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "NYK",
+   "ticker": "KXNBAWINMARGIN-26NOV10MILNYK-NYK1TO5",
+   "tip": "2026-11-11T00:30:00+00:00",
+   "title": "New York wins by 1-5 points",
+   "version": "wm-yes-v4"
+  },
+  {
+   "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV10MILNYK",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV10MILNYK-NYK6TO10",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "NYK",
+   "ticker": "KXNBAWINMARGIN-26NOV10MILNYK-NYK6TO10",
+   "tip": "2026-11-11T00:30:00+00:00",
+   "title": "New York wins by 6-10 points",
+   "version": "wm-yes-v4"
+  },
+  {
    "bucket": "11-20",
    "event": "KXNBAWINMARGIN-26NOV10BOSPHI",
    "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV10BOSPHI-BOS11TO20",
@@ -683,6 +735,6 @@
   "side": "yes",
   "stake_usd": 1.0
  },
- "updated_at": "2026-11-09T22:01:30+00:00",
+ "updated_at": "2026-11-09T22:27:59+00:00",
  "version": "wm-yes-v4"
 }
