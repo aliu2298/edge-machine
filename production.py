@@ -1363,6 +1363,17 @@ def unavailable_row(key, label, sport_label, note):
             f'<td colspan="8" class="neg">{esc(note)}</td></tr>')
 
 
+def _bucket_priority_html(group, nba_wm):
+    """The Bucket Priority note (nba_wm_bucket_priority) under the NBA win margin block, once version 4 is the record or a row has been ceded."""
+    if not nba_wm or group != sport_group("nba_wm"):
+        return ""
+    v3, v4 = nba_wm.get("v3"), nba_wm.get("v4")
+    if not ((v4 or {}).get("since") or (v3 or {}).get("ceded") or (v4 or {}).get("ceded")):
+        return ""
+    import nba_wm_bucket_priority
+    return nba_wm_bucket_priority.note_html(v3, v4)
+
+
 def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=None, nba_value=None, soccer_team_rules=None, o35=None, nba_wm=None, top5_dip=None, arg_dip=None):
     """public_site/production.html — shares the Sandbox stylesheet.
 
@@ -1639,7 +1650,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
             f'{" open" if grp["to_come"] else ""}>'
             f'<summary><h3>{esc(g)}</h3><span class="mut sm">· {" · ".join(bits)}</span></summary>'
             f'<div class="tbl"><table>{pairs_head}{rows}</table></div>'
-            + PL.details_fold(own_items.get(g, [])) + f'{older_html}</details>')
+            + PL.details_fold(own_items.get(g, [])) + _bucket_priority_html(g, nba_wm) + f'{older_html}</details>')
     pairs_html = ("".join(sections) + PL.gap_section(live_gap_rows, paper_bets, {l.get('sandbox_quote') for l in leads if l.get('sandbox_quote')},
                                                                   _feed_from(leads), horizon=(now_dt - datetime.timedelta(days=KEEP_SETTLED_DAYS)).isoformat()) + PL.no_orders_fold(no_order_rows) + PL.lanes_table(live_blob) + PL.pulled_table(live_blob, name) + PL.raised_fold(raised_rows) +
                   ('<p class="sm mut">Since Production is the follower\'s own fills, priced from the exchange\'s fills and fees and counted from the pair\'s Production date (or its stake raise), ROI per $1 staked after fees, '

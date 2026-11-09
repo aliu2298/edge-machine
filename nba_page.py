@@ -21,6 +21,7 @@ import os
 import chaos_build as CB
 import chaos_replay as C
 import nba_layout as NL
+import nba_wm_bucket_priority as CP
 import nba_wm_nofade as N
 import nba_wm_nofade_build as NB
 import fmt
@@ -249,6 +250,13 @@ def switch_note(v4p):
             'the 75% bid keep running on paper in the Sandbox, to compare.</p>')
 
 
+def bucket_priority_note(v3, v4p):
+    """The Bucket Priority note (nba_wm_bucket_priority), once version 4 is the record or any row has been ceded; else nothing."""
+    if (v4p or {}).get("since") or any((x or {}).get("ceded") for x in (v3, v4p)):
+        return CP.note_html(v3, v4p)
+    return ""
+
+
 def pre_switch_fold(v4, nofade, kind):
     """The Sandbox paper lanes of 2026-11-06 (the version 4 rules before they were Production): the nights before the switch, apart."""
     if kind == "yes":
@@ -272,7 +280,7 @@ def yes_panel(chaos, nofade, v3, latest, v4p=None, v4=None):
         head = NL._v3_block("Version 4", V3.yes_rows(v4p), since4, "wm-yes-v4")
     else:
         head = (NL._v3_block("Version 3", V3.yes_rows(v3), since, "wm-yes-v3") if since else (NL._record(L) if L else ""))
-    out = "".join(f'<p class="sm sp-rule-line">{esc(x)}</p>' for x in (RULE_LINES_V4 if since4 else RULE_LINES)[YES_ID]) + switch_note(v4p) + head
+    out = "".join(f'<p class="sm sp-rule-line">{esc(x)}</p>' for x in (RULE_LINES_V4 if since4 else RULE_LINES)[YES_ID]) + switch_note(v4p) + bucket_priority_note(v3, v4p) + head
     cur_rows = V3.yes_rows(v4p) if since4 else (V3.yes_rows(v3) if since else [])
     if cur_rows:
         yr = cur_rows
@@ -319,7 +327,7 @@ def no_panel(chaos, nofade, v3, latest, v4p=None, v4=None):
     head = (NL._v3_block("Version 4", V3.no_games(v4p), since4, "wm-no-v4") if since4 else
             NL._v3_block("Version 3", V3.no_games(v3), since, "wm-no-v3") if since
             else NB.variant_rows(nofade, False, dips=(N.HEAD,), phase="v2"))
-    out = "".join(f'<p class="sm sp-rule-line">{esc(x)}</p>' for x in (RULE_LINES_V4 if since4 else RULE_LINES)[NO_ID]) + switch_note(v4p) + head
+    out = "".join(f'<p class="sm sp-rule-line">{esc(x)}</p>' for x in (RULE_LINES_V4 if since4 else RULE_LINES)[NO_ID]) + switch_note(v4p) + bucket_priority_note(v3, v4p) + head
     out += f'<p class="sm mut">Skipped as unverified ask: {c["unverified"]} of {c["unverified"] + c["verified"]} buckets.</p>'
     out += fold("Alternate exits", f"the NO bid at 85% and {'75%' if since4 else '65%'} of pregame ({'65%' if since4 else '75%'} is the rule); it sells back at pregame, so no hold row",
                 NB.variant_rows(nofade, False, dips=tuple(x for x in N.DIPS if x != (V4P.NO_DIP if since4 else N.HEAD)), phase="v2"), tag=nf_tag)
