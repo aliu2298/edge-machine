@@ -65,13 +65,15 @@ class Bucket:
     """A token bucket shared by every Kalshi request."""
 
     def __init__(self, rate):
-        self.rate, self.tokens, self.last, self.lock = rate, rate, time.monotonic(), threading.Lock()
+        # Capacity at least one token: a rate under 1 a second must still be able to hold the one a request needs.
+        self.rate, self.cap = rate, max(1.0, rate)
+        self.tokens, self.last, self.lock = self.cap, time.monotonic(), threading.Lock()
 
     def take(self):
         while True:
             with self.lock:
                 now = time.monotonic()
-                self.tokens = min(self.rate, self.tokens + (now - self.last) * self.rate)
+                self.tokens = min(self.cap, self.tokens + (now - self.last) * self.rate)
                 self.last = now
                 if self.tokens >= 1:
                     self.tokens -= 1
@@ -156,10 +158,8 @@ class Recorder:
                     with self.lock:
                         self.pending.append((m["close"] + TRADES_DELAY_S, coin, m["ticker"], m["open"], m["close"]))
                     self.markets.pop(coin, None)
-                try:
-                    self.discover(coin)
-                except Exception:                                # noqa: BLE001
-                    self.errors["discover"] += 1
+        # The next market is found by discover_loop on its own thread: right after a close Kalshi can take ~20s to
+        # list it, and a lookup here would hold up the book of the other coins.
         tickers = [m["ticker"] for m in self.markets.values()]
         if not tickers:
             return
@@ -251,6 +251,7 @@ class Recorder:
                    for c in COINS]
         threads.append(threading.Thread(target=self.every_second, args=(self.book_once, "book"), daemon=True))
         threads.append(threading.Thread(target=self.trades_loop, daemon=True))
+        threads.append(threading.Thread(target=self.every_second, args=(self.discover_missing, "discover"), daemon=True))
         for t in threads:
             t.start()
         try:
@@ -264,6 +265,14 @@ class Recorder:
             self.store.close()
         print("reached --until: stopped", flush=True)
         return 0
+
+    def discover_missing(self):
+        for coin in COINS:
+            if coin not in self.markets:
+                try:
+                    self.discover(coin)
+                except Exception:                                # noqa: BLE001
+                    self.errors["discover"] += 1
 
     def trades_loop(self):
         while not self.stop.is_set():
