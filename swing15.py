@@ -42,9 +42,21 @@ from zoneinfo import ZoneInfo
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 PATH = os.path.join(ROOT, "data", "swing15_ledger.json")       # the index: version, series, runs
-SHARDS = os.path.join(ROOT, "data", "swing15")                  # the graded windows, one file per ET day (YYYY-MM-DD.json)
+SHARDS = os.path.join(ROOT, "data", "swing15")                  # the graded windows: <ET day>/<ET hour of the open>.json
+# 2026-11-09: one file per ET HOUR (data/swing15/YYYY-MM-DD/HH.json), not per day. A schema-2 row is ~4 KB and there are
+# ~2,400 windows a day; a day file rewritten every hour would put ~24 growing copies of it into git a day, an hour file is
+# written about once. Day files from before (data/swing15/YYYY-MM-DD.json, schema 1) are not read.
 API = "https://api.elections.kalshi.com/trade-api/v2"
 VERSION = "sw15-v1"
+# 2026-11-09: the row schema, not the rules. Schema 2 stores the market's strike and settlement value, every minute's
+# quotes, the S1 trigger print, each target's touch time and volume, the S2/S3 quotes and every skip reason, so the
+# windows can be re-analysed later. A row below SCHEMA inside the lookback is graded again (the rules are unchanged).
+SCHEMA = 2
+MARKET_KEYS = ("event_ticker", "close_time", "strike_type", "floor_strike", "cap_strike", "functional_strike",
+               "custom_strike", "yes_sub_title", "expiration_value", "settlement_value_dollars", "settlement_ts",
+               "can_close_early", "volume_fp", "open_interest_fp")
+# One row a minute, minute 0..14 of the window (minute m is the candle ending open + 60(m+1)); NO bid = 1 - YES ask.
+MINUTE_COLS = ("m", "yes_bid", "yes_ask", "no_bid", "no_ask", "low", "high", "last", "volume", "open_interest")
 REGISTERED = "2026-11-08"
 FROM = "2026-11-09T06:00:00+00:00"           # windows opening at or after this are graded (forward from the merge)
 GROUPS = ("Crypto", "Commodities", "Financials")
@@ -150,6 +162,19 @@ class Window:
             if 1 <= k <= 15:
                 self.candles[k] = c
 
+    def minutes(self):
+        """[[m, yes_bid, yes_ask, no_bid, no_ask, low, high, last, volume, open_interest]] for m = 0..14 (MINUTE_COLS)."""
+        out = []
+        for k in range(1, 16):
+            if k not in self.candles:
+                continue
+            yb, ya = self.c(k, "yes_bid", "close_dollars"), self.c(k, "yes_ask", "close_dollars")
+            c = self.candles[k]
+            out.append([k - 1, yb, ya, None if ya is None else round(1 - ya, 4), None if yb is None else round(1 - yb, 4),
+                        self.c(k, "price", "low_dollars"), self.c(k, "price", "high_dollars"),
+                        self.c(k, "price", "close_dollars"), _num(c.get("volume_fp")), _num(c.get("open_interest_fp"))])
+        return out
+
     def c(self, k, field, what):
         return _num(((self.candles.get(k) or {}).get(field) or {}).get(what))
 
@@ -185,29 +210,40 @@ def s1(w, band, payout_yes, mult_fee):
         lo, hi = w.c(k, "price", "low_dollars"), w.c(k, "price", "high_dollars")
         if lo is None or hi is None or not (lo <= band + 1e-9 or hi >= 1 - band - 1e-9):
             continue
-        for ts, yes, _n in w.prints(k):
+        for ts, yes, n in w.prints(k):
             if yes is None:
                 continue
             if yes <= band + 1e-9:
-                entry = ("yes", ts)
+                entry = ("yes", ts, k, yes, n)
             elif yes >= 1 - band - 1e-9:
-                entry = ("no", ts)
+                entry = ("no", ts, k, yes, n)
             if entry:
                 break
         if entry:
             break
     if not entry:
         return None
-    side, ets = entry
+    side, ets, ek, eyes, en = entry
+    # Contracts printed at or through the band on the entry side in the entry minute, from the trigger print on.
+    at_or_under = sum(n for ts, yes, n in w.prints(ek) if yes is not None and ts >= ets
+                      and _side_price(side, yes) <= band + 1e-9)
     cost = band + fee(band, TAKER, mult_fee)
     won = payout_yes if side == "yes" else (None if payout_yes is None else 1 - payout_yes)
     bid14 = w.c(BID_EXIT_MIN, "yes_bid", "close_dollars") if side == "yes" else (
         None if w.c(BID_EXIT_MIN, "yes_ask", "close_dollars") is None else round(1 - w.c(BID_EXIT_MIN, "yes_ask", "close_dollars"), 4))
-    out = dict(side=side, won=won, bid14=bid14, exits={})
+    out = dict(side=side, won=won, bid14=bid14, exits={},
+               trigger=dict(band=band, minute=ek - 1, ts=ets, print_yes=eyes, print_side=round(_side_price(side, eyes), 4),
+                            print_contracts=en, contracts_at_or_under=round(at_or_under, 2)))
+    # The entry side's best price after the entry (candle highs), for any later exit study.
+    peaks = [(w.c(k, "price", "high_dollars") if side == "yes" else
+              (None if w.c(k, "price", "low_dollars") is None else 1 - w.c(k, "price", "low_dollars")))
+             for k in range(ek, 16)]
+    peaks = [x for x in peaks if x is not None]
+    out["peak_side"] = round(max(peaks), 4) if peaks else None
     first_k = max(1, math.floor((ets + SELL_DELAY_S - w.open) / 60) + 1)
     for mult in MULTS:
         target = min(0.99, round(band * mult, 4))
-        filled = None
+        filled = touch = None
         cum = 0.0
         for k in range(first_k, 16):
             lo, hi = w.c(k, "price", "low_dollars"), w.c(k, "price", "high_dollars")
@@ -218,12 +254,10 @@ def s1(w, band, payout_yes, mult_fee):
                 if yes is None or ts < ets + SELL_DELAY_S:
                     continue
                 if _side_price(side, yes) >= target - 1e-9:
+                    touch = touch or ts
                     cum += n
-                    if cum >= SELL_CONTRACTS:
+                    if cum >= SELL_CONTRACTS and not filled:
                         filled = ts
-                        break
-            if filled:
-                break
         if filled:
             proceeds = target - fee(target, MAKER, mult_fee)
             r_hold = r_bid = proceeds / cost - 1
@@ -231,29 +265,54 @@ def s1(w, band, payout_yes, mult_fee):
             r_hold = None if won is None else won / cost - 1
             # No bid with a minute left: nothing to sell into, so the position is held to settlement.
             r_bid = (r_hold if bid14 is None or bid14 <= 0 else (bid14 - fee(bid14, TAKER, mult_fee)) / cost - 1)
-        out["exits"][str(mult)] = dict(filled=bool(filled),
+        out["exits"][str(mult)] = dict(filled=bool(filled), target=target, touch_ts=touch, fill_ts=filled,
+                                       touch_contracts=round(cum, 2),
                                        roi_hold=None if r_hold is None else round(r_hold, 4),
                                        roi_bid=None if r_bid is None else round(r_bid, 4))
     return out
 
 
+def s1_skip(w, band):
+    """Why a band has no entry: no_candles (no candle in minutes 0-4), not_reached (the range never touched the band on
+    either side), no_print (it touched, but no trade printed at or through it), or None (an entry)."""
+    ks = [k for k in range(1, ENTRY_MIN + 1) if k in w.candles]
+    if not ks:
+        return "no_candles"
+    touched = []
+    for k in ks:
+        lo, hi = w.c(k, "price", "low_dollars"), w.c(k, "price", "high_dollars")
+        if lo is not None and hi is not None and (lo <= band + 1e-9 or hi >= 1 - band - 1e-9):
+            touched.append(k)
+    if not touched:
+        return "not_reached"
+    for k in touched:
+        if any(yes is not None and (yes <= band + 1e-9 or yes >= 1 - band - 1e-9) for _ts, yes, _n in w.prints(k)):
+            return None
+    return "no_print"
+
+
 def fav(w, k0, payout_yes, mult_fee):
     """S2/S3: the side above 50c at minute k0, bought at its ask, filled only on a print at or through it next minute."""
     bid, ask = w.c(k0, "yes_bid", "close_dollars"), w.c(k0, "yes_ask", "close_dollars")
+    lo, hi = w.c(k0 + 1, "price", "low_dollars"), w.c(k0 + 1, "price", "high_dollars")
+    # The quote read at minute k0 (the candle ending open + 60*k0) and the next minute's traded range, on every status.
+    q = dict(minute=k0, yes_bid=bid, yes_ask=ask, next_low=lo, next_high=hi)
+    if k0 not in w.candles:
+        return dict(q, status="no_candle")
     if bid is None or ask is None or not 0 < bid <= ask < 1:
-        return dict(status="no_quote")
+        return dict(q, status="no_quote")
     mid = (bid + ask) / 2
+    q["mid"] = round(mid, 4)
     if abs(mid - 0.5) < 1e-9:
-        return dict(status="no_favourite")
+        return dict(q, status="no_favourite")
     side = "yes" if mid > 0.5 else "no"
     price = ask if side == "yes" else round(1 - bid, 4)
-    lo, hi = w.c(k0 + 1, "price", "low_dollars"), w.c(k0 + 1, "price", "high_dollars")
     through = (lo is not None and lo <= ask + 1e-9) if side == "yes" else (hi is not None and hi >= bid - 1e-9)
     if not through:
-        return dict(status="no_fill", side=side, price=price)
+        return dict(q, status="no_fill", side=side, price=price)
     won = payout_yes if side == "yes" else (None if payout_yes is None else 1 - payout_yes)
     roi = None if won is None else won / (price + fee(price, TAKER, mult_fee)) - 1
-    return dict(status="filled", side=side, price=price, won=won, roi=None if roi is None else round(roi, 4))
+    return dict(q, status="filled", side=side, price=price, won=won, roi=None if roi is None else round(roi, 4))
 
 
 def grade(series, group, mult_fee, m, get=_get):
@@ -262,10 +321,20 @@ def grade(series, group, mult_fee, m, get=_get):
     w = Window(series, m, get=get)
     t_open = dt.datetime.fromtimestamp(w.open, ET)
     m_of_day = t_open.hour * 60 + t_open.minute
+    s1s = {str(b): s1(w, b, payout_yes, mult_fee) for b in BANDS}
+    mins = w.minutes()
+    span = w.close - w.open
+    settled_at = _ts(m["settlement_ts"]) if m.get("settlement_ts") else None
     return dict(ticker=w.ticker, series=series, group=group, open=m["open_time"], result=res or None,
                 day=t_open.date().isoformat(), us_hours=t_open.weekday() < 5 and 570 <= m_of_day < 960,
-                s1={str(b): s1(w, b, payout_yes, mult_fee) for b in BANDS},
-                s2=fav(w, S2_MIN, payout_yes, mult_fee), s3=fav(w, S3_MIN, payout_yes, mult_fee))
+                s1=s1s, s2=fav(w, S2_MIN, payout_yes, mult_fee), s3=fav(w, S3_MIN, payout_yes, mult_fee),
+                schema=SCHEMA, close=m.get("close_time"), fee_multiplier=mult_fee,
+                market={k: m[k] for k in MARKET_KEYS if m.get(k) is not None},
+                minute_cols=list(MINUTE_COLS), minutes=mins,
+                # A window that closed before its 15 minutes, or is missing minutes, is flagged, not dropped.
+                closed_early=span < 900 or (settled_at is not None and settled_at < w.open + 900 - 1),
+                missing_minutes=[k - 1 for k in range(1, 16) if k not in w.candles],
+                s1_skip={b: (None if e else s1_skip(w, float(b))) for b, e in s1s.items()})
 
 
 # ------------------------------------------------------------------ the ledger
@@ -282,14 +351,23 @@ def _read(path, default):
         return default
 
 
+def shard_of(w):
+    """'YYYY-MM-DD/HH': the ET day and the ET hour the window opened in."""
+    return w["day"] + "/" + dt.datetime.fromtimestamp(_ts(w["open"]), ET).strftime("%H")
+
+
 def load(path=PATH, shards=SHARDS, days=None):
     """The index plus every graded window (or only the shards for `days`), keyed by market ticker."""
     state = dict(empty(), **_read(path, {}))
     state["windows"] = {}
     if os.path.isdir(shards):
-        for name in sorted(os.listdir(shards)):
-            if name.endswith(".json") and (days is None or name[:-5] in days):
-                state["windows"].update(_read(os.path.join(shards, name), {}))
+        for day in sorted(os.listdir(shards)):
+            d = os.path.join(shards, day)
+            if not os.path.isdir(d) or (days is not None and day not in days):
+                continue
+            for name in sorted(os.listdir(d)):
+                if name.endswith(".json"):
+                    state["windows"].update(_read(os.path.join(d, name), {}))
     return state
 
 
@@ -302,16 +380,16 @@ def _write(path, blob):
 
 
 def save(state, path=PATH, shards=SHARDS, touched=None):
-    """The index, and each day shard holding a window graded this run (all of them when `touched` is None)."""
-    by_day = {}
+    """The index, and each hour shard holding a window graded this run (all of them when `touched` is None)."""
+    by = {}
     for t, w in (state.get("windows") or {}).items():
-        by_day.setdefault(w["day"], {})[t] = w
-    for day, ws in by_day.items():
-        if touched is None or day in touched:
-            old = _read(os.path.join(shards, day + ".json"), {})
-            _write(os.path.join(shards, day + ".json"), dict(old, **ws))
+        by.setdefault(shard_of(w), {})[t] = w
+    for key, ws in by.items():
+        if touched is None or key in touched:
+            f = os.path.join(shards, key + ".json")
+            _write(f, dict(_read(f, {}), **ws))
     _write(path, {k: v for k, v in state.items() if k != "windows"})
-    return sorted(by_day if touched is None else touched)
+    return sorted(by if touched is None else touched)
 
 
 def run(state, now=None, get=_get, budget_s=RUN_BUDGET_S, log=print):
@@ -325,7 +403,8 @@ def run(state, now=None, get=_get, budget_s=RUN_BUDGET_S, log=print):
     for ticker, group, mult_fee in series:
         try:
             for m in settled_markets(ticker, since, now.timestamp(), get=get):
-                if m["ticker"] in state["windows"]:
+                old = state["windows"].get(m["ticker"])
+                if old and old.get("schema", 1) >= SCHEMA:
                     continue
                 if _ts(m["open_time"]) < _ts(FROM):
                     skipped_old += 1
@@ -341,8 +420,8 @@ def run(state, now=None, get=_get, budget_s=RUN_BUDGET_S, log=print):
         try:
             g = grade(ticker, group, mult_fee, m, get=get)
             state["windows"][m["ticker"]] = g
-            if g["day"] not in state["touched"]:
-                state["touched"].append(g["day"])
+            if shard_of(g) not in state["touched"]:
+                state["touched"].append(shard_of(g))
             added += 1
         except Exception as e:                                   # noqa: BLE001
             errors.append(f"{m['ticker']}: {type(e).__name__}")
@@ -417,8 +496,8 @@ def main(argv=None):
     state["touched"] = []
     run(state, now=now, budget_s=a.budget)
     touched = state.pop("touched")
-    for day in save(state, a.path, touched=touched):
-        print("wrote", os.path.join(SHARDS, day + ".json"))
+    for key in save(state, a.path, touched=touched):
+        print("wrote", os.path.join(SHARDS, key + ".json"))
     return 0
 
 
