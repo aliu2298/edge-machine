@@ -387,6 +387,10 @@
    "at": "2026-11-05T20:48:54.733146+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXGOLDD-26NOV0917-T4125\", \"a\"]]": {
+   "at": "2026-11-09T20:49:00.759361+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXNATGASD-26NOV0517-T2.935\", \"a\"]]": {
    "at": "2026-11-05T21:04:31.137565+00:00",
    "pool": "entered"
@@ -2032,7 +2036,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-09T20:06:19.159549+00:00",
+ "last_run": "2026-11-09T20:49:00.759361+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -6465,6 +6469,29 @@
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXGOLDD-26NOV0917-T4125",
+   "entered_at": "2026-11-09T20:49:00.759361+00:00",
+   "entities": [
+    "Gold"
+   ],
+   "id": "superpack:[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXGOLDD-26NOV0917-T4125\", \"a\"]]",
+   "lane": "commod_nc_yes",
+   "logged": "2026-11-09T20:48:06+00:00",
+   "matched": [
+    "Gold"
+   ],
+   "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXGOLDD-26NOV0917-T4125\", \"a\"]]",
+   "price": 0.97,
+   "profit": null,
+   "scope": "commodities_fav",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Commodities",
    "src": "sandbox",
    "status": "open"
   }
