@@ -25,6 +25,7 @@ import sys
 import chaos_replay as C
 import daily_track as D
 import nba_winmargin as W
+import nba_wm_bucket_priority as CP
 import nba_wm_nofade as N
 import o35_cheap_no as O
 
@@ -116,6 +117,9 @@ def run(state, decisions=None, now=None, fetch=D.get, cfg=None):
     now = now or dt.datetime.now(UTC)
     decisions = load_decisions() if decisions is None else decisions
     decisions = {k: d for k, d in decisions.items() if cfg["take"](d)}
+    # A decision the executor ceded to the other lane (nba_wm_bucket_priority) was never traded: it is counted, not replayed or graded.
+    state.setdefault("ceded", {}).update(CP.ceded_records(decisions))
+    decisions = {k: d for k, d in decisions.items() if not CP.is_ceded(d)}
     state["since"] = state.get("since") or first_night(decisions, cfg["take"])
     obs = dict(at=now.isoformat(), new=0, waiting=0, errors=[])
     todo = [(k, d) for k, d in sorted(decisions.items(), key=lambda kv: kv[1].get("tip") or "") if k not in state["rows"] and d.get("rule_ok")
