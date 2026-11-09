@@ -379,6 +379,10 @@
    "at": "2026-11-05T20:48:54.733146+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXBRENTD-26NOV0917-T91.50\", \"a\"]]": {
+   "at": "2026-11-09T21:03:58.807869+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXCOPPERD-26NOV0517-T6.26\", \"a\"]]": {
    "at": "2026-11-05T21:04:31.137565+00:00",
    "pool": "entered"
@@ -2036,7 +2040,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-09T20:49:00.759361+00:00",
+ "last_run": "2026-11-09T21:03:58.807869+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -6486,6 +6490,29 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXGOLDD-26NOV0917-T4125\", \"a\"]]",
    "price": 0.97,
+   "profit": null,
+   "scope": "commodities_fav",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Commodities",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXBRENTD-26NOV0917-T91.50",
+   "entered_at": "2026-11-09T21:03:58.807869+00:00",
+   "entities": [
+    "Brent"
+   ],
+   "id": "superpack:[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXBRENTD-26NOV0917-T91.50\", \"a\"]]",
+   "lane": "commod_nc_yes",
+   "logged": "2026-11-09T21:03:08+00:00",
+   "matched": [
+    "Brent"
+   ],
+   "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXBRENTD-26NOV0917-T91.50\", \"a\"]]",
+   "price": 0.98,
    "profit": null,
    "scope": "commodities_fav",
    "settled": null,
