@@ -101,6 +101,18 @@
   },
   {
    "date": "2026-11-19",
+   "eps_forecast": "$1.31",
+   "fiscal_q": "Sep/2026",
+   "kpi": [],
+   "mentions": [],
+   "n_ests": "3",
+   "name": "Alibaba Group Holding Limited",
+   "perp": "KXBABAPERP",
+   "sym": "BABA",
+   "time": "pre-market"
+  },
+  {
+   "date": "2026-11-19",
    "eps_forecast": "$0.64",
    "fiscal_q": "Oct/2026",
    "kpi": [
@@ -132,18 +144,6 @@
   },
   {
    "date": "2026-11-24",
-   "eps_forecast": "$1.31",
-   "fiscal_q": "Sep/2026",
-   "kpi": [],
-   "mentions": [],
-   "n_ests": "3",
-   "name": "Alibaba Group Holding Limited",
-   "perp": "KXBABAPERP",
-   "sym": "BABA",
-   "time": "not-supplied"
-  },
-  {
-   "date": "2026-11-24",
    "eps_forecast": "$6.41",
    "fiscal_q": "Oct/2026",
    "kpi": [],
@@ -169,7 +169,7 @@
    "time": "pre-market"
   }
  ],
- "calendar_at": "2026-11-09T07:10:44Z",
+ "calendar_at": "2026-11-09T17:48:53Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -327,6 +327,22 @@
   },
   {
    "at": "2026-11-09T07:11:50Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": null,
+   "sym": "WMT"
+  },
+  {
+   "at": "2026-11-09T17:49:53Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 391101694.91525424,
+    "rungs": 6,
+    "width": 9363745.498199284
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-09T17:49:53Z",
    "event": "KXWMT-26NOVUSCOMP",
    "read": null,
    "sym": "WMT"
@@ -512,6 +528,20 @@
    "side": -1,
    "status": "open",
    "sym": "META"
+  },
+  {
+   "entry_due": "2026-11-11T21:00:00Z",
+   "exit_due": "2026-11-18T21:00:00Z",
+   "family": "runup",
+   "id": "runup:BABA:2026-11-19",
+   "logged_at": "2026-11-09T17:49:55Z",
+   "perp": "KXBABAPERP",
+   "random_side": -1,
+   "reason": "Up into the 2026-11-19 report (pre-market).",
+   "report": "2026-11-19",
+   "report_time": "pre-market",
+   "side": 1,
+   "sym": "BABA"
   }
  ],
  "registered": "2026-11-07",
