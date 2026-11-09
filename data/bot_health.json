@@ -2,12 +2,12 @@
  "balances": {
   "kalshi": "OK",
   "polymarket": "OK",
-  "read_at": "2026-11-08T00:08",
+  "read_at": "2026-11-09T00:03",
   "rule": "LOW under the threshold set on the server"
  },
  "engine": {
-  "beat_age_s": 563,
-  "cycle": 1,
+  "beat_age_s": 437,
+  "cycle": 24,
   "last_error": null,
   "mode": "LIVE",
   "service_active": true,
@@ -24,39 +24,39 @@
  },
  "feeds": {
   "production": {
-   "actionable": 1,
-   "age_min": 14,
-   "leads": 20,
+   "actionable": 0,
+   "age_min": 9,
+   "leads": 18,
    "problems": 0,
    "status": "HTTP 200"
   },
   "production_econ": {
    "actionable": 0,
-   "age_min": 22,
+   "age_min": 27,
    "leads": 3,
    "problems": 0,
-   "status": "HTTP 200"
+   "status": "HTTP 304 (cached)"
   },
   "production_nba_value": {
    "actionable": 0,
-   "age_min": 22,
+   "age_min": 27,
    "leads": 0,
    "problems": 0,
-   "status": "HTTP 200"
+   "status": "HTTP 304 (cached)"
   },
   "production_soccer_rules": {
    "actionable": 0,
-   "age_min": 22,
+   "age_min": 27,
    "leads": 14,
    "problems": 0,
-   "status": "HTTP 200"
+   "status": "HTTP 304 (cached)"
   },
   "production_soccer_team_rules": {
    "actionable": 0,
-   "age_min": 22,
+   "age_min": 27,
    "leads": 4,
    "problems": 0,
-   "status": "HTTP 200"
+   "status": "HTTP 304 (cached)"
   }
  },
  "loss_cap": {
@@ -64,17 +64,17 @@
   "state": "ok"
  },
  "orders_24h": {
-  "kalshi": 10
+  "kalshi": 8
  },
  "pnl_sign": {
-  "today": "up",
+  "today": "flat",
   "yesterday": "up"
  },
- "published_at": "2026-11-08T21:23:03+00:00",
+ "published_at": "2026-11-09T01:25:21+00:00",
  "schema": 1,
  "server": {
-  "backup_age_h": 14.9,
-  "disk_pct": 28,
+  "backup_age_h": 18.9,
+  "disk_pct": 27,
   "jobs": {
    "bot-backup": {
     "last": "ok",
@@ -89,6 +89,6 @@
     "timer": "active"
    }
   },
-  "mem_free_mb": 464
+  "mem_free_mb": 602
  }
 }
