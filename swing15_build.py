@@ -16,6 +16,37 @@ def esc(x):
     return _h.escape(str(x))
 
 
+# 2026-11-09 (Olu): readable market names everywhere in the 15-Minute section; display only, tickers stay in the data.
+NAMES = {
+    "KXBTC15M": "Bitcoin", "KXETH15M": "Ethereum", "KXSOL15M": "Solana", "KXXRP15M": "XRP", "KXBNB15M": "BNB",
+    "KXDOGE15M": "Dogecoin", "KXHYPE15M": "Hyperliquid", "KXNEAR15M": "NEAR", "KXZEC15M": "Zcash",
+    "KXCRYPTOLEAD15M": "Coin Race (biggest gainer)",
+    "KXGOLD15M": "Gold", "KXSILVER15M": "Silver", "KXCOPPER15M": "Copper", "KXPLATINUM15M": "Platinum",
+    "KXPALLADIUM15M": "Palladium", "KXWTI15M": "WTI Crude Oil", "KXBRENT15M": "Brent Crude Oil",
+    "KXNATGAS15M": "Natural Gas",
+    "KXINX15M": "S&P 500", "KXNDQ15M": "Nasdaq 100", "KXDJIA15M": "Dow Jones",
+    "KX2YRRATE15M": "2-Year Treasury Yield", "KX5YRRATE15M": "5-Year Treasury Yield",
+    "KX10YRRATE15M": "10-Year Treasury Yield", "KX30YRRATE15M": "30-Year Treasury Yield",
+    "KXEURUSD15M": "EUR/USD (Euro)", "KXGBPUSD15M": "GBP/USD (British Pound)", "KXUSDJPY15M": "USD/JPY (Japanese Yen)",
+    "KXUSDCAD15M": "USD/CAD (Canadian Dollar)", "KXAUDUSD15M": "AUD/USD (Australian Dollar)",
+}
+
+
+def name(ticker):
+    """The display name; a series not in NAMES falls back to the ticker without KX and 15M, never a blank."""
+    t = str(ticker or "")
+    if t in NAMES:
+        return NAMES[t]
+    core = t[2:] if t.startswith("KX") else t
+    core = core[:-3] if core.endswith("15M") else core
+    return core or t or "?"
+
+
+def mkt(ticker):
+    """A market cell's text: the readable name, the ticker in a hover title so it is still findable."""
+    return f'<span title="{esc(ticker)}">{esc(name(ticker))}</span>'
+
+
 def pct(x, d=1):
     return "—" if x is None else f"{x * 100:+.{d}f}%".replace("-", "−")
 
@@ -72,11 +103,12 @@ def _table(head, rows):
             + "</tr></thead><tbody>" + "".join(rows) + "</tbody></table></div>")
 
 
-def _cell_tr(name, c):
+def _cell_tr(label, c, ticker=None):
+    first = mkt(ticker) if ticker else esc(label)
     if not c:
-        return f'<tr><td>{esc(name)}</td>' + '<td class="num">—</td>' * 6 + '</tr>'
+        return f'<tr><td>{first}</td>' + '<td class="num">—</td>' * 6 + '</tr>'
     h0, h1 = c["half_roi"]
-    return (f'<tr><td>{esc(name)}</td><td class="num">{c["n"]}</td><td class="num">{c["hit_rate"] * 100:.0f}%</td>'
+    return (f'<tr><td>{first}</td><td class="num">{c["n"]}</td><td class="num">{c["hit_rate"] * 100:.0f}%</td>'
             f'<td class="num">{c["fair"] * 100:.0f}%</td><td class="num">{pct(c["mean_roi"])}</td>'
             f'<td class="num">{_z(c["z"])}</td><td class="num">{pct(h0)} / {pct(h1)}</td></tr>')
 
@@ -94,7 +126,7 @@ def _splits(state, key):
     for s in sorted({w["series"] for w in state["windows"].values()}):
         c = W.cells(state, lambda w, s=s: w["series"] == s).get(key)
         if c:
-            rows.append(_cell_tr(s, c))
+            rows.append(_cell_tr(s, c, ticker=s))
     return _table(HEAD, rows)
 
 
@@ -104,7 +136,7 @@ def _frozen_block(anchor, title, line, version, labels, rec, sport, won_word):
     for strat, label in labels.items():
         r = rec[strat]
         per = {s: (x["n"] if x else 0) for s, x in r["series"].items()}
-        trs = [f'<tr><td>{esc(s)}</td><td class="num">{x["n"] if x else 0}</td>'
+        trs = [f'<tr><td>{mkt(s)}</td><td class="num">{x["n"] if x else 0}</td>'
                f'<td class="num">{x["hits"] if x else "—"}</td><td class="num">{pct(x["mean_roi"]) if x else "—"}</td></tr>'
                for s, x in r["series"].items()]
         skips = r.get("skips") or {}
@@ -162,7 +194,7 @@ def _bars(vals, labels):
 
 
 def _rank_tr(r):
-    return (f'<tr><td>{esc(r[0])}</td><td class="num">{r[1]:.2f}</td><td class="num">{r[2]}</td>'
+    return (f'<tr><td>{mkt(r[0])}</td><td class="num">{r[1]:.2f}</td><td class="num">{r[2]}</td>'
             f'<td class="num">{r[3]:.0f}c</td></tr>')
 
 
@@ -176,7 +208,7 @@ def leadswap_block(state):
     rows = []
     for strat, label in L.STRATS.items():
         c = rt.get(strat)
-        trs = [f'<tr><td>{esc(s)}</td><td class="num">{v[0]}</td><td class="num">{v[1]}</td>'
+        trs = [f'<tr><td>{mkt(s)}</td><td class="num">{v[0]}</td><td class="num">{v[1]}</td>'
                f'<td class="num">{pct(v[2] / v[0])}</td></tr>' for s, v in sorted(((c or {}).get("series") or {}).items())]
         what = ("v1's S1 35c entry held to settlement" if "swing" in strat else "v1's S3 favourite at minute 10, held")
         clus = "" if not c else "; %d clusters, z %s" % (c["clusters"], _z(c["z"]))
@@ -199,11 +231,18 @@ def leadswap_block(state):
             f"Spot lag recorder: recording since {_start(sl['since'])}"
             + (f", until {_start(sl['until'])}" if sl.get("until") else "")
             + " (Coinbase spot v Kalshi BTC/ETH/SOL 15-minute books, every second; record only)")
-    rh = ("Series", "Swaps a window", "Windows", "Mid range 0-9")
+    pk = led.get("picks") or {}
+    last = pk[max(pk)] if pk else None
+    picks_line = ("" if not last else
+                  f'<p class="sm">Picks for {esc(_start(max(pk)))} (frozen {esc(_start(last.get("at") or max(pk)))}): '
+                  f'swing → {", ".join(mkt(t) for t in last.get("top") or []) or "none"}; favourite → '
+                  f'{", ".join(mkt(t) for t in last.get("bottom") or []) or "none"}.</p>')
+    rh = ("Market", "Swaps a window", "Windows", "Mid range 0-9")
     med = "—" if b["median_swing"] is None else "%gc" % b["median_swing"]
     f14 = "—" if b["fav14_won"] is None else "%.0f%%" % (b["fav14_won"] * 100)
     p2, p24 = b["past2h"], b["past24h"]
     board = (f'<details class="fold" open><summary>Board · last 2 hours (8 windows) and last 24 hours</summary>'
+             f'{picks_line}'
              f'<p class="sm">Most swaps, last 2 hours</p>{_table(rh, [_rank_tr(r) for r in p2[:5]])}'
              f'<p class="sm">Most stable, last 2 hours</p>{_table(rh, [_rank_tr(r) for r in p2[::-1][:5]])}'
              f'<p class="sm">Most swaps, last 24 hours</p>{_table(rh, [_rank_tr(r) for r in p24[:5]])}'
@@ -223,9 +262,9 @@ def leadswap_block(state):
                 continue
             r = v[0] / v[1]
             cells.append(f'<td class="num" style="background:rgba(127,127,127,{min(.6, r / 4):.2f})">{r:.1f}</td>')
-        heat_rows.append(f'<tr><td>{esc(s)}</td>{"".join(cells)}</tr>')
+        heat_rows.append(f'<tr><td>{mkt(s)}</td>{"".join(cells)}</tr>')
     heat = ('<details class="fold"><summary>Swaps a window by hour of day (ET), every series</summary><div class="tbl">'
-            '<table><thead><tr><th>Series</th>' + "".join(f'<th class="num">{h}</th>' for h in hours)
+            '<table><thead><tr><th>Market</th>' + "".join(f'<th class="num">{h}</th>' for h in hours)
             + '</tr></thead><tbody>' + "".join(heat_rows) + '</tbody></table></div></details>')
     corr = [f'<tr><td>{esc(f)}</td><td class="num">{v["n"]}</td><td class="num">{_z(v["corr"])}</td></tr>'
             for f, v in (per.get("corr") or {}).items()]
