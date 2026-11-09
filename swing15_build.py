@@ -171,7 +171,7 @@ def _v1_markets(state, key):
     return count_line(good, bad), _split_html(("Market",) + HEAD[1:], good, bad, tr, none)
 
 
-def _removed_fold(labels, removed, removed_at, won_word):
+def _removed_fold(labels, removed, removed_at, won_word, word="Removed", note=""):
     """The cells taken out at a cut: their final n, wins and ROI (windows before the cut), collapsed."""
     trs = []
     for strat, label in labels.items():
@@ -182,11 +182,11 @@ def _removed_fold(labels, removed, removed_at, won_word):
                        f'<td class="num">{pct(x["mean_roi"]) if x else "—"}</td></tr>')
     if not trs:
         return ""
-    return (f'<details class="fold sw15-removed"><summary>Removed {esc(_start(removed_at))} · {len(trs)} markets, '
-            f'final records</summary>' + _table(("Rule", "Market", "n", "Wins", "ROI after fees"), trs) + '</details>')
+    return (f'<details class="fold sw15-removed"><summary>{esc(word)} {esc(_start(removed_at))} · {len(trs)} markets, '
+            f'final records</summary>{note}' + _table(("Rule", "Market", "n", "Wins", "ROI after fees"), trs) + '</details>')
 
 
-def _frozen_block(anchor, title, line, version, labels, rec, sport, won_word, removed=None, removed_at=None):
+def _frozen_block(anchor, title, line, version, labels, rec, sport, won_word, removed=None, removed_at=None, extra=""):
     """A frozen-cell lane block (sw15, flip, hte): one row per strategy with cells, each market's n, wins and ROI in its
     fold, then the removed cells' final records (collapsed)."""
     rows = []
@@ -216,7 +216,7 @@ def _frozen_block(anchor, title, line, version, labels, rec, sport, won_word, re
     return (f'<h3 class="dm-title" id="{anchor}">{esc(title)}</h3><p class="scope">{esc(line)}</p>'
             f'<p class="sm mut">{SORT_LINE}</p>'
             f'<div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>'
-            + (_removed_fold(labels, removed, removed_at, won_word) if removed_at else ""))
+            + extra + (_removed_fold(labels, removed, removed_at, won_word) if removed_at else ""))
 
 
 def _cut_line(M):
@@ -246,14 +246,31 @@ def v2_block(state):
         pass
     try:
         import holdtoend as H
-        out += _frozen_block("holdtoend", "Hold to End v2",
-                             "Cheap side bought at 25c/35c in the first 5 minutes, held to settlement, no sell; cells over "
-                             f"+10% in one overnight session; fresh record from {_start(H.FROM)}; review at "
-                             f"{W.REVIEW_AT}, decide at {W.DECIDE_AT}." + _cut_line(H), H.VERSION, H.LABELS,
-                             H.records(state), "holdtoend", lambda k: "Won", H.records(state, removed=True), H.REMOVED_AT)
+        out += holdtoend_block(state, H)
     except Exception:                                           # noqa: BLE001  (never breaks the section)
         pass
     return out
+
+
+def holdtoend_block(state, H):
+    """Hold to End v3: one live cell (USDCAD 35c) on a fresh record; USDCAD's earlier hte-v1 result as a muted
+    not-counted line; hte-v2 (GBPUSD 35c) in a Retired fold; the 18:00Z cut in the Removed fold."""
+    gone = H.records(state, removed=True)
+    early = (gone.get("holdtoend_35") or {}).get("series", {}).get("KXUSDCAD15M")
+    early_line = ("" if not early else
+                  f'<p class="sm mut hte-earlier">Earlier result, not counted: USD/CAD 35c went {early["hits"]}/{early["n"]}, '
+                  f'{pct(early["mean_roi"])} after fees ({esc(_start(H.FROM))} to {esc(_start(H.REMOVED_AT))}, hte-v1).</p>')
+    ret = H.records(state, retired=True)
+    r35 = (ret.get("holdtoend_35") or {}).get("all")
+    note = ("" if not r35 else
+            f'<p class="sm">hte-v2 final (decide at {W.DECIDE_AT}): {r35["hits"]}/{r35["n"]} against '
+            f'{r35["fair"] * r35["n"]:.1f} priced, {pct(r35["mean_roi"])} after fees. No new entries.</p>')
+    retired = _removed_fold({"holdtoend_35": "Hold to End v2 · 35c"}, {"holdtoend_35": ret.get("holdtoend_35")},
+                            H.RETIRED_AT, lambda k: "Won", word="Retired", note=note)
+    line = (f"Hold to End v3 · USD/CAD at 35c · fresh record from {_start(H.FROM_V3)} · review at {W.REVIEW_AT}, "
+            f"decide at {W.DECIDE_AT}.")
+    return _frozen_block("holdtoend", "Hold to End v3", line, H.VERSION, H.LABELS, H.records(state), "holdtoend",
+                         lambda k: "Won", gone, H.REMOVED_AT, extra=early_line + retired)
 
 
 def _bars(vals, labels):
@@ -519,7 +536,7 @@ def index_rows(state=None):
             continue                                            # hte-v2 removed the 25c row entirely
         c = r["all"]
         best = max(((x or {}).get("n", 0) for x in r["series"].values()), default=0)
-        out.append(dict(lane=key, label="Hold to End v2 · " + H.LABELS[key].replace("Hold to End · ", ""), n=c["n"] if c else 0,
+        out.append(dict(lane=key, label="Hold to End v3 · " + H.LABELS[key].replace("Hold to End · ", ""), n=c["n"] if c else 0,
                         roi=c["mean_roi"] if c else None, hit=c["hit_rate"] if c else None,
                         fair=c["fair"] if c else None, status=f"{best}/{W.DECIDE_AT} in its best market"))
     rt = (L.load().get("routing") or {})                        # Lead Swap Board routing (2026-11-09)
