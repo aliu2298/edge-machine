@@ -57,6 +57,10 @@
    "at": "2026-11-07T01:17:11.141120+00:00",
    "pool": "entered"
   },
+  "[\"contract\", \"o35_cheap_no\", [\"KXLIGUE1TOTAL-26NOV08RCLOLM-4\", \"no\"]]": {
+   "at": "2026-11-09T01:16:22.905451+00:00",
+   "pool": "entered"
+  },
   "[\"contract\", \"o35_cheap_no\", [\"KXMLSTOTAL-26NOV07DALCOL-4\", \"no\"]]": {
    "at": "2026-11-08T02:46:53.682125+00:00",
    "pool": "duplicate"
@@ -1779,7 +1783,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-09T01:07:56.339234+00:00",
+ "last_run": "2026-11-09T01:16:22.905451+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -5674,6 +5678,31 @@
    "sport": "Soccer",
    "src": "contract",
    "status": "lost"
+  },
+  {
+   "contract": "KXLIGUE1TOTAL-26NOV08RCLOLM-4",
+   "entered_at": "2026-11-09T01:16:22.905451+00:00",
+   "entities": [
+    "Lens",
+    "Marseille"
+   ],
+   "id": "superpack:[\"contract\", \"o35_cheap_no\", [\"KXLIGUE1TOTAL-26NOV08RCLOLM-4\", \"no\"]]",
+   "lane": "o35_cheap_no",
+   "logged": "2026-11-08T21:36:27+00:00",
+   "matched": [
+    "Lens",
+    "Marseille"
+   ],
+   "pid": "[\"contract\", \"o35_cheap_no\", [\"KXLIGUE1TOTAL-26NOV08RCLOLM-4\", \"no\"]]",
+   "price": null,
+   "profit": 1.4294,
+   "scope": null,
+   "settled": "2026-11-09T01:16:22.905451+00:00",
+   "side": "no",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "contract",
+   "status": "won"
   }
  ],
  "registered": "2026-11-05",
@@ -6023,6 +6052,7 @@
   "[\"contract\", \"o35_cheap_no\", [\"KXLIGUE1TOTAL-26NOV01PARASM-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXLIGUE1TOTAL-26NOV01RCSAUX-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXLIGUE1TOTAL-26NOV06TFCRCS-4\", \"no\"]]": "2026-11-07T01:17:11.141120+00:00",
+  "[\"contract\", \"o35_cheap_no\", [\"KXLIGUE1TOTAL-26NOV08RCLOLM-4\", \"no\"]]": "2026-11-09T01:16:22.905451+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXLIGUE1TOTAL-26OCT30HACPSG-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXMLSTOTAL-26NOV01ATLTOR-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXMLSTOTAL-26NOV01LAFCMIN-4\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
