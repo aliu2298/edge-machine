@@ -98,35 +98,51 @@ def _splits(state, key):
     return _table(HEAD, rows)
 
 
-def v2_block(state):
-    """15-Minute Swing v2 (swing15v2.py): one row per strategy, its markets' records in the fold. Above v1."""
-    import swing15v2 as V
-    rec = V.records(state)
-    start = V.FROM[:16].replace("T", " ") + " UTC"
+def _frozen_block(anchor, title, line, version, labels, rec, sport, won_word):
+    """A frozen-cell lane block (sw15-v2, flip-v2): one row per strategy, each market's n, wins and ROI in its fold."""
     rows = []
-    for strat, label in V.LABELS.items():
+    for strat, label in labels.items():
         r = rec[strat]
-        c = r["all"]
         per = {s: (x["n"] if x else 0) for s, x in r["series"].items()}
-        won = "Sells filled" if strat == "swing15v2_s1" else "Won"
-        trs = []
-        for s, x in r["series"].items():
-            trs.append(f'<tr><td>{esc(s)}</td><td class="num">{x["n"] if x else 0}</td>'
-                       f'<td class="num">{x["hits"] if x else "—"}</td><td class="num">{pct(x["mean_roi"]) if x else "—"}</td></tr>')
-        body = (f'<p class="sp-details-name"><b>{esc(label)}</b> · Kalshi 15-minute windows · paper · {esc(V.VERSION)}</p>'
-                f'<p class="sp-def">The same rule, fills, fees and grading as {esc(W.VERSION)}, on these markets only, '
-                f'frozen at registration ({len(r["series"])} markets).</p>'
-                + _table(("Market", "n", won, "ROI after fees"), trs))
-        rows.append(_row(strat, label, c, per, body).replace('data-sport="swing15"', 'data-sport="swing15v2"'))
+        trs = [f'<tr><td>{esc(s)}</td><td class="num">{x["n"] if x else 0}</td>'
+               f'<td class="num">{x["hits"] if x else "—"}</td><td class="num">{pct(x["mean_roi"]) if x else "—"}</td></tr>'
+               for s, x in r["series"].items()]
+        skips = r.get("skips") or {}
+        body = (f'<p class="sp-details-name"><b>{esc(label)}</b> · Kalshi 15-minute windows · paper · {esc(version)}</p>'
+                f'<p class="sp-def">Frozen at registration: {len(r["series"])} markets. Held to settlement; taker fee '
+                f'on entry.</p>' + _table(("Market", "n", won_word(strat), "ROI after fees"), trs)
+                + (f'<p class="sm mut">Skipped: {esc(", ".join(f"{k} {v}" for k, v in sorted(skips.items())))}</p>'
+                   if skips else ""))
+        rows.append(_row(strat, label, r["all"], per, body).replace('data-sport="swing15"', f'data-sport="{sport}"'))
     head = ('<div class="sp-line sp-head-line" aria-hidden="true"><span class="sp-cell sp-c-name">Rule</span>'
             '<span class="sp-cell sp-c-market">Market</span><span class="sp-cell num">Record</span>'
             '<span class="sp-cell num">ROI after fees</span><span class="sp-cell num">Won v priced</span>'
             '<span class="sp-cell num">Evidence</span><span class="sp-cell sp-c-verdict">Verdict</span></div>')
-    return (f'<h3 class="dm-title" id="swing15v2">15-Minute Swing v2</h3>'
-            f'<p class="scope">Cells picked from one overnight session; fresh record from {esc(start)}; review at '
-            f'{W.REVIEW_AT}, decide at {W.DECIDE_AT}.</p>'
-            f'<div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>'
-            '<h3 class="dm-title">15-Minute Swing v1 · every market</h3>')
+    return (f'<h3 class="dm-title" id="{anchor}">{esc(title)}</h3><p class="scope">{esc(line)}</p>'
+            f'<div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>')
+
+
+def _start(iso):
+    return iso[:16].replace("T", " ") + " UTC"
+
+
+def v2_block(state):
+    """15-Minute Swing v2 (swing15v2.py), then The Flip Side v2 (flipside_v2.py). Above v1."""
+    import swing15v2 as V
+    out = _frozen_block("swing15v2", "15-Minute Swing v2",
+                        f"Cells picked from one overnight session; fresh record from {_start(V.FROM)}; review at "
+                        f"{W.REVIEW_AT}, decide at {W.DECIDE_AT}.", V.VERSION, V.LABELS, V.records(state), "swing15v2",
+                        lambda k: "Sells filled" if k == "swing15v2_s1" else "Won")
+    try:
+        import flipside_v2 as F
+        out += _frozen_block("flipside_v2", "The Flip Side v2",
+                             "Opposite side of the 15-Minute Swing; cells picked from one overnight session; 14-day "
+                             f"backtest of the flips ran −0.5% to −16%; fresh record from {_start(F.FROM)}; review at "
+                             f"{W.REVIEW_AT}, decide at {W.DECIDE_AT}.", F.VERSION, F.LABELS, F.records(state),
+                             "flipside_v2", lambda k: "Won")
+    except Exception:                                           # noqa: BLE001  (never breaks the section)
+        pass
+    return out + '<h3 class="dm-title">15-Minute Swing v1 · every market</h3>'
 
 
 def section(state=None):
@@ -204,6 +220,13 @@ def index_rows(state=None):
         out.append(dict(lane=key, label="v2 · " + V.LABELS[key], n=c["n"] if c else 0, roi=c["mean_roi"] if c else None,
                         hit=c["hit_rate"] if c else None, fair=c["fair"] if c else None,
                         status=f"{best}/{W.DECIDE_AT} in its best market"))
+    import flipside_v2 as F                                     # The Flip Side v2 (2026-11-09)
+    for key, r in F.records(state).items():
+        c = r["all"]
+        best = max(((x or {}).get("n", 0) for x in r["series"].values()), default=0)
+        out.append(dict(lane=key, label="Flip Side v2 · " + F.LABELS[key], n=c["n"] if c else 0,
+                        roi=c["mean_roi"] if c else None, hit=c["hit_rate"] if c else None,
+                        fair=c["fair"] if c else None, status=f"{best}/{W.DECIDE_AT} in its best market"))
     return out
 
 

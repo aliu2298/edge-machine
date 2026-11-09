@@ -66,7 +66,7 @@ check("the line under the header", "Cells picked from one overnight session; fre
 check("three v2 rows", re.findall(r'data-source="(swing15v2_s\d)"', html), ["swing15v2_s1", "swing15v2_s2", "swing15v2_s3"])
 check("v1's three rows are still there", re.findall(r'data-source="(swing15_s\d)"', html), ["swing15_s1", "swing15_s2", "swing15_s3"])
 check("no dollar sign, no guarded phrase", (re.search(r"\$\d", html), sandbox_audit.COPY_RE.findall(html + WB.index_html(state))), (None, []))
-check("the Sandbox index lists v2 too", [r["lane"] for r in WB.index_rows(state)][3:], list(V.CELLS))
+check("the Sandbox index lists v2 too", [r["lane"] for r in WB.index_rows(state)][3:6], list(V.CELLS))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
