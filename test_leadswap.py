@@ -108,9 +108,9 @@ L.PATH = os.path.join(tmp, "leadswap_ledger.json")
 with open(L.PATH, "w") as f:
     json.dump(led, f)
 html = WB.section(state)
-order = [html.index(x) for x in ("Lead Swap Board", "15-Minute Swing v3", "The Flip Side v3", ">Hold to End v2<",
+order = [html.index(x) for x in ("Lead Swap Board", "15-Minute Swing v3", "The Flip Side v3", ">Hold to End v3<",
                                   "15-Minute Swing v1 · every market")]
-check("the order: Lead Swap Board, Swing v3, Flip Side v3, Hold to End v2, v1", order == sorted(order), True)
+check("the order: Lead Swap Board, Swing v3, Flip Side v3, Hold to End v3, v1", order == sorted(order), True)
 check("v1 is collapsed by default", bool(re.search(r'<details class="fold sw15-v1"><summary>', html)), True)
 check("the page notes a live version could act only from :05", "could only act from :05" in html, True)
 check("the within-block persistence table", "Stayed top" in html, True)
@@ -129,6 +129,45 @@ check("persistence, minute histogram and the hour-of-day heatmap folds",
       all(x in html for x in ("Persistence:", "When in the window", "by hour of day (ET)")), True)
 check("the Sandbox index lists the routing rows last", [r["lane"] for r in WB.index_rows(state)][-4:], list(L.STRATS))
 check("no dollar sign, no guarded phrase", (re.search(r"\$\d", html), sandbox_audit.COPY_RE.findall(html + WB.index_html(state))), (None, []))
+
+print("\nthe doing-well / not-doing-well groups")
+rt_ = {"leadswap_swing": {"series": {"KXA15M": [12, 7, 1.5], "KXB15M": [4, 0, -4.0], "KXC15M": [6, 3, 0.0], "KXD15M": [8, 4, 0.4]}},
+       "leadswap_swing_ctrl": {"series": {"KXA15M": [3, 1, -0.5]}},
+       "leadswap_fav": {"series": {"KXC15M": [5, 4, 0.2]}}, "leadswap_fav_ctrl": None}
+pk_ = {"h1": {"top": ["KXA15M", "KXD15M"], "bottom": ["KXC15M"]}, "h2": {"top": ["KXA15M", "KXC15M"], "bottom": ["KXE15M"]}}
+g = WB.ls_groups(rt_, pk_, ranked=["KXA15M", "KXF15M"])
+good, bad, none = g["leadswap_swing"]
+check("doing well = return > 0, sorted by bets", [r[0] for r in good], ["KXA15M", "KXD15M"])
+check("not doing well = return <= 0 (a flat 0 is not doing well), by bets", [r[0] for r in bad], ["KXC15M", "KXB15M"])
+check("a market picked both ways sits under each trade it traded in",
+      ("KXC15M" in [r[0] for r in bad], [r[0] for r in g["leadswap_fav"][0]]), (True, ["KXC15M"]))
+check("control beside the same market; times picked top/bottom", (good[0][2], good[0][3], bad[0][3]), ([3, 1, -0.5], [2, 0], [1, 1]))
+check("not picked yet: ranked or picked markets with no bets in the trade", (none, g["leadswap_fav"][2]),
+      (["KXE15M", "KXF15M"], ["KXA15M", "KXD15M", "KXE15M", "KXF15M"]))
+gh = WB.ls_groups_html(rt_, pk_, ["KXF15M"])
+check("the copy line, the red-tinted header, the under-10 tag and the trade headings",
+      ("Sorted automatically each hour by return after fees; nothing is removed." in gh, 'thead style="background:rgba(220,38,38' in gh,
+       gh.count("under 10"), "Swing on swappy markets" in gh and "Favourite on steady markets" in gh), (True, True, 4, True))
+check("the groups render on the page above the board", 0 < html.index('data-trade="leadswap_swing"') < html.index("Board · last 2 hours"), True)
+
+print("\nevery 15-Minute lane: the same split")
+check("split_markets: > 0 doing, <= 0 not, by bets; no-bet markets apart",
+      WB.split_markets([("KXA15M", 3, 0.1), ("KXB15M", 9, -0.2), ("KXC15M", 12, 0.3), ("KXD15M", 0, 0), ("KXE15M", 5, 0.0)]),
+      ([("KXC15M", 12, 0.3), ("KXA15M", 3, 0.1)], [("KXB15M", 9, -0.2), ("KXE15M", 5, 0.0)], ["KXD15M"]))
+check("z by day reads 'needs 2+ days' on one day, the number from two",
+      (WB._zd(dict(z=1.0, days=1)), WB._zd(dict(z=-1.0, days=0)), WB._zd(dict(z=1.234, days=2))), ("needs 2+ days", "needs 2+ days", "+1.23"))
+cell = lambda n, h, r, d=1: dict(n=n, hits=h, hit_rate=h / n, fair=.5, mean_roi=r, z=1.0, days=d)
+rec = {"x_s1": dict(all=cell(30, 15, .02), series={"KXA15M": cell(12, 8, .2), "KXB15M": cell(8, 2, -.3), "KXC15M": cell(10, 5, 0.0, 3), "KXD15M": None})}
+fb = WB._frozen_block("x", "X v3", "line", "x-v3", {"x_s1": "S1"}, rec, "x", lambda k: "Won",
+                      {"x_s1": dict(series={"KXZ15M": cell(4, 1, -.5)})}, "2026-11-09T18:00:00+00:00")
+check("a frozen lane: count, sort line, doing well above the red-headed not doing well, removed fold last",
+      ("1 doing well · 2 not" in fb, "Sorted automatically each hour by return after fees; nothing is removed." in fb,
+       fb.index("Doing well") < fb.index("Not doing well") < fb.index(WB.BAD_THEAD) < fb.index("sw15-removed")), (True, True, True))
+check("frozen rows: under-10 tag only under 10 bets, z needs 2+ days until 2 days, no-bet market listed",
+      (fb.count("under 10"), fb.count("needs 2+ days"), "−1.00" not in fb and "+1.00" in fb, "No bets yet" in fb), (1, 2, True, True))
+check("the not-doing-well table keeps the order by bets (C 10 before B 8)", fb.index('title="KXC15M"') < fb.index('title="KXB15M"'), True)
+check("every lane on the page carries the count and the sort line",
+      (len(re.findall(r"\d+ doing well · \d+ not", html)) >= 2 + 3, html.count(WB.SORT_LINE) >= 2), (True, True))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

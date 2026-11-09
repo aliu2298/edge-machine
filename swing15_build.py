@@ -103,6 +103,42 @@ def _table(head, rows):
             + "</tr></thead><tbody>" + "".join(rows) + "</tbody></table></div>")
 
 
+SORT_LINE = "Sorted automatically each hour by return after fees; nothing is removed."
+BAD_THEAD = '<thead style="background:rgba(220,38,38,.14)">'
+
+
+def _zd(c):
+    """z clustered by day means nothing on one day: 'needs 2+ days' until there are two."""
+    return "needs 2+ days" if (c.get("days") or 0) < 2 else _z(c.get("z"))
+
+
+def _under10(n):
+    return ' <span class="mut sm">under 10</span>' if n < 10 else ""
+
+
+def split_markets(items):
+    """items: [(series, n, roi)] -> (doing, not_doing, no_bets): return after fees > 0 v <= 0, each by bets descending
+    (then name); markets with no bets yet listed apart. Recomputed from the live record on every build."""
+    key = lambda r: (-r[1], name(r[0]))
+    bet = [r for r in items if r[1]]
+    return (sorted([r for r in bet if r[2] > 0], key=key), sorted([r for r in bet if r[2] <= 0], key=key),
+            sorted([r[0] for r in items if not r[1]], key=name))
+
+
+def count_line(good, bad):
+    return f'<p class="sm ls-count"><b>{len(good)} doing well · {len(bad)} not</b></p>'
+
+
+def _split_html(head, good, bad, tr, none=()):
+    """Doing well, then Not doing well (red header) directly below, then any no-bet markets on one line."""
+    return (f'<p class="sm">Doing well · return after fees above 0 ({len(good)})</p>'
+            + (_table(head, [tr(r) for r in good]) if good else '<p class="sm mut">None yet.</p>')
+            + f'<p class="sm ls-bad">Not doing well · return after fees 0 or below ({len(bad)})</p>'
+            + (_table(head, [tr(r) for r in bad]).replace("<thead>", BAD_THEAD, 1) if bad
+               else '<p class="sm mut">None yet.</p>')
+            + (f'<p class="sm mut">No bets yet: {", ".join(mkt(t) for t in none)}</p>' if none else ""))
+
+
 def _cell_tr(label, c, ticker=None):
     first = mkt(ticker) if ticker else esc(label)
     if not c:
@@ -110,7 +146,7 @@ def _cell_tr(label, c, ticker=None):
     h0, h1 = c["half_roi"]
     return (f'<tr><td>{first}</td><td class="num">{c["n"]}</td><td class="num">{c["hit_rate"] * 100:.0f}%</td>'
             f'<td class="num">{c["fair"] * 100:.0f}%</td><td class="num">{pct(c["mean_roi"])}</td>'
-            f'<td class="num">{_z(c["z"])}</td><td class="num">{pct(h0)} / {pct(h1)}</td></tr>')
+            f'<td class="num">{_zd(c)}</td><td class="num">{pct(h0)} / {pct(h1)}</td></tr>')
 
 
 HEAD = ("Cell", "n", "Hit", "Fair", "ROI after fees", "z (by day)", "Halves")
@@ -123,14 +159,19 @@ def _splits(state, key):
             ("US hours (9:30–16:00 ET weekdays)", lambda w: w["us_hours"]),
             ("Overnight and weekends", lambda w: not w["us_hours"])):
         rows.append(_cell_tr(name, W.cells(state, flt).get(key)))
-    for s in sorted({w["series"] for w in state["windows"].values()}):
-        c = W.cells(state, lambda w, s=s: w["series"] == s).get(key)
-        if c:
-            rows.append(_cell_tr(s, c, ticker=s))
     return _table(HEAD, rows)
 
 
-def _removed_fold(labels, removed, removed_at, won_word):
+def _v1_markets(state, key):
+    """(count line, split tables) for one v1 strategy cell, by series."""
+    cs = {s: W.cells(state, lambda w, s=s: w["series"] == s).get(key)
+          for s in sorted({w["series"] for w in state["windows"].values()})}
+    good, bad, none = split_markets([(s, c["n"] if c else 0, c["mean_roi"] if c else 0) for s, c in cs.items()])
+    tr = lambda r: _cell_tr(r[0], cs[r[0]], ticker=r[0]).replace(f"{mkt(r[0])}</td>", f"{mkt(r[0])}{_under10(r[1])}</td>", 1)
+    return count_line(good, bad), _split_html(("Market",) + HEAD[1:], good, bad, tr, none)
+
+
+def _removed_fold(labels, removed, removed_at, won_word, word="Removed", note=""):
     """The cells taken out at a cut: their final n, wins and ROI (windows before the cut), collapsed."""
     trs = []
     for strat, label in labels.items():
@@ -141,11 +182,11 @@ def _removed_fold(labels, removed, removed_at, won_word):
                        f'<td class="num">{pct(x["mean_roi"]) if x else "—"}</td></tr>')
     if not trs:
         return ""
-    return (f'<details class="fold sw15-removed"><summary>Removed {esc(_start(removed_at))} · {len(trs)} markets, '
-            f'final records</summary>' + _table(("Rule", "Market", "n", "Wins", "ROI after fees"), trs) + '</details>')
+    return (f'<details class="fold sw15-removed"><summary>{esc(word)} {esc(_start(removed_at))} · {len(trs)} markets, '
+            f'final records</summary>{note}' + _table(("Rule", "Market", "n", "Wins", "ROI after fees"), trs) + '</details>')
 
 
-def _frozen_block(anchor, title, line, version, labels, rec, sport, won_word, removed=None, removed_at=None):
+def _frozen_block(anchor, title, line, version, labels, rec, sport, won_word, removed=None, removed_at=None, extra=""):
     """A frozen-cell lane block (sw15, flip, hte): one row per strategy with cells, each market's n, wins and ROI in its
     fold, then the removed cells' final records (collapsed)."""
     rows = []
@@ -154,13 +195,17 @@ def _frozen_block(anchor, title, line, version, labels, rec, sport, won_word, re
         if not r["series"]:
             continue                                             # a row with every market removed shows only below
         per = {s: (x["n"] if x else 0) for s, x in r["series"].items()}
-        trs = [f'<tr><td>{mkt(s)}</td><td class="num">{x["n"] if x else 0}</td>'
-               f'<td class="num">{x["hits"] if x else "—"}</td><td class="num">{pct(x["mean_roi"]) if x else "—"}</td></tr>'
-               for s, x in r["series"].items()]
+        ser = r["series"]
+        good, bad, none = split_markets([(s, x["n"] if x else 0, x["mean_roi"] if x else 0) for s, x in ser.items()])
+        tr = lambda q: (f'<tr><td>{mkt(q[0])}{_under10(q[1])}</td><td class="num">{q[1]}</td>'
+                        f'<td class="num">{ser[q[0]]["hits"]}</td><td class="num">{pct(ser[q[0]]["mean_roi"])}</td>'
+                        f'<td class="num">{_zd(ser[q[0]])}</td></tr>')
         skips = r.get("skips") or {}
-        body = (f'<p class="sp-details-name"><b>{esc(label)}</b> · Kalshi 15-minute windows · paper · {esc(version)}</p>'
+        body = (count_line(good, bad)
+                + f'<p class="sp-details-name"><b>{esc(label)}</b> · Kalshi 15-minute windows · paper · {esc(version)}</p>'
                 f'<p class="sp-def">Frozen: {len(r["series"])} markets. Held to settlement; taker fee '
-                f'on entry.</p>' + _table(("Market", "n", won_word(strat), "ROI after fees"), trs)
+                f'on entry.</p>' + _split_html(("Market", "n", won_word(strat), "ROI after fees", "z (by day)"),
+                                               good, bad, tr, none)
                 + (f'<p class="sm mut">Skipped: {esc(", ".join(f"{k} {v}" for k, v in sorted(skips.items())))}</p>'
                    if skips else ""))
         rows.append(_row(strat, label, r["all"], per, body).replace('data-sport="swing15"', f'data-sport="{sport}"'))
@@ -169,8 +214,9 @@ def _frozen_block(anchor, title, line, version, labels, rec, sport, won_word, re
             '<span class="sp-cell num">ROI after fees</span><span class="sp-cell num">Won v priced</span>'
             '<span class="sp-cell num">Evidence</span><span class="sp-cell sp-c-verdict">Verdict</span></div>')
     return (f'<h3 class="dm-title" id="{anchor}">{esc(title)}</h3><p class="scope">{esc(line)}</p>'
+            f'<p class="sm mut">{SORT_LINE}</p>'
             f'<div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>'
-            + (_removed_fold(labels, removed, removed_at, won_word) if removed_at else ""))
+            + extra + (_removed_fold(labels, removed, removed_at, won_word) if removed_at else ""))
 
 
 def _cut_line(M):
@@ -200,14 +246,31 @@ def v2_block(state):
         pass
     try:
         import holdtoend as H
-        out += _frozen_block("holdtoend", "Hold to End v2",
-                             "Cheap side bought at 25c/35c in the first 5 minutes, held to settlement, no sell; cells over "
-                             f"+10% in one overnight session; fresh record from {_start(H.FROM)}; review at "
-                             f"{W.REVIEW_AT}, decide at {W.DECIDE_AT}." + _cut_line(H), H.VERSION, H.LABELS,
-                             H.records(state), "holdtoend", lambda k: "Won", H.records(state, removed=True), H.REMOVED_AT)
+        out += holdtoend_block(state, H)
     except Exception:                                           # noqa: BLE001  (never breaks the section)
         pass
     return out
+
+
+def holdtoend_block(state, H):
+    """Hold to End v3: one live cell (USDCAD 35c) on a fresh record; USDCAD's earlier hte-v1 result as a muted
+    not-counted line; hte-v2 (GBPUSD 35c) in a Retired fold; the 18:00Z cut in the Removed fold."""
+    gone = H.records(state, removed=True)
+    early = (gone.get("holdtoend_35") or {}).get("series", {}).get("KXUSDCAD15M")
+    early_line = ("" if not early else
+                  f'<p class="sm mut hte-earlier">Earlier result, not counted: USD/CAD 35c went {early["hits"]}/{early["n"]}, '
+                  f'{pct(early["mean_roi"])} after fees ({esc(_start(H.FROM))} to {esc(_start(H.REMOVED_AT))}, hte-v1).</p>')
+    ret = H.records(state, retired=True)
+    r35 = (ret.get("holdtoend_35") or {}).get("all")
+    note = ("" if not r35 else
+            f'<p class="sm">hte-v2 final (decide at {W.DECIDE_AT}): {r35["hits"]}/{r35["n"]} against '
+            f'{r35["fair"] * r35["n"]:.1f} priced, {pct(r35["mean_roi"])} after fees. No new entries.</p>')
+    retired = _removed_fold({"holdtoend_35": "Hold to End v2 · 35c"}, {"holdtoend_35": ret.get("holdtoend_35")},
+                            H.RETIRED_AT, lambda k: "Won", word="Retired", note=note)
+    line = (f"Hold to End v3 · USD/CAD at 35c · fresh record from {_start(H.FROM_V3)} · review at {W.REVIEW_AT}, "
+            f"decide at {W.DECIDE_AT}.")
+    return _frozen_block("holdtoend", "Hold to End v3", line, H.VERSION, H.LABELS, H.records(state), "holdtoend",
+                         lambda k: "Won", gone, H.REMOVED_AT, extra=early_line + retired)
 
 
 def _bars(vals, labels):
@@ -220,6 +283,62 @@ def _bars(vals, labels):
 def _rank_tr(r):
     return (f'<tr><td>{mkt(r[0])}</td><td class="num">{r[1]:.2f}</td><td class="num">{r[2]}</td>'
             f'<td class="num">{r[3]:.0f}c</td></tr>')
+
+
+LS_TRADES = (("leadswap_swing", "leadswap_swing_ctrl", "Swing on swappy markets"),
+             ("leadswap_fav", "leadswap_fav_ctrl", "Favourite on steady markets"))
+
+
+def _picked(picks):
+    """{series: [hours in the top 3, hours in the bottom 3]} over every frozen hour."""
+    out = {}
+    for p in (picks or {}).values():
+        for i, side in enumerate(("top", "bottom")):
+            for t in p.get(side) or []:
+                out.setdefault(t, [0, 0])[i] += 1
+    return out
+
+
+def ls_groups(rt, picks, ranked=()):
+    """{trade: (doing, not_doing, not_picked)}: the trade's markets split by REAL return after fees (> 0 doing well,
+    <= 0 not), each sorted by bets descending; rows are (series, [n, wins, roi sum], control or None, [top, bottom]).
+    not_picked: ranked markets with no bets in the trade. Recomputed from the live record every build."""
+    times = _picked(picks)
+    out = {}
+    for strat, ctrl, _label in LS_TRADES:
+        ser = ((rt or {}).get(strat) or {}).get("series") or {}
+        cs = ((rt or {}).get(ctrl) or {}).get("series") or {}
+        rows = [(s, v, cs.get(s), times.get(s, [0, 0])) for s, v in ser.items() if v and v[0]]
+        rows.sort(key=lambda r: (-r[1][0], name(r[0])))
+        traded = {r[0] for r in rows}
+        seen = sorted({t for t in list(ranked) + list(times) if t not in traded}, key=name)
+        out[strat] = ([r for r in rows if r[1][2] > 0], [r for r in rows if r[1][2] <= 0], seen)
+    return out
+
+
+def _ls_tr(r):
+    s, v, c, t = r
+    tag = _under10(v[0])
+    ctl = "—" if not c or not c[0] else f"{c[1]}/{c[0]}, {pct(c[2] / c[0])}"
+    return (f'<tr><td>{mkt(s)}{tag}</td><td class="num">{v[0]}</td><td class="num">{v[1]}</td>'
+            f'<td class="num">{pct(v[2] / v[0])}</td><td class="num">{ctl}</td><td class="num">{t[0]} / {t[1]}</td></tr>')
+
+
+LS_HEAD = ("Market", "Bets", "Wins", "Return after fees", "Control (wins/bets, return)",
+           "Times picked (hours top 3 / bottom 3)")
+
+
+def ls_groups_html(rt, picks, ranked=()):
+    g = ls_groups(rt, picks, ranked)
+    parts = [f'<p class="sm mut">{SORT_LINE}</p>']
+    for strat, _ctrl, label in LS_TRADES:
+        good, bad, none = g[strat]
+        parts.append(
+            f'<div class="ls-trade" data-trade="{strat}"><h4>{esc(label)}</h4>{count_line(good, bad)}'
+            + _split_html(LS_HEAD, good, bad, _ls_tr)
+            + f'<details class="fold"><summary>Not picked yet ({len(none)})</summary><p class="sm">'
+            + (", ".join(mkt(t) for t in none) or "none") + '</p></details></div>')
+    return "".join(parts)
 
 
 def leadswap_block(state):
@@ -309,6 +428,7 @@ def leadswap_block(state):
             f'against its opposite; picks frozen at about :04 each hour (a live version could only act from :05); fresh '
             f'record from {esc(_start(L.FROM))}; review at {W.REVIEW_AT}, decide at {W.DECIDE_AT}.</p><p class="sm mut" id="spotlag-status">{esc(spot)}</p>'
             f'<div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>'
+            f'{ls_groups_html(rt, pk, [r[0] for r in (b.get("past24h") or []) + (b.get("past2h") or [])])}'
             f'{board}{persist}{timing}{heat}')
 
 
@@ -344,9 +464,11 @@ def section(state=None):
                 '<dt>Fees</dt><dd>Taker 0.07·p(1−p) on an entry and a sell at the bid; maker 0.0175·p(1−p) on a resting '
                 'sell</dd><dt>Read</dt><dd>Review at 10 and decide at 30 settled windows per strategy and series; z '
                 'clustered by day</dd></dl>')
+        cnt, mk = _v1_markets(state, ck)
+        body = cnt + body + f'<p class="sm mut">{SORT_LINE}</p>' + mk
         if key == "swing15_s1":
             body += '<details class="fold"><summary>The whole S1 grid</summary>' + _table(HEAD, s1_grid) + "</details>"
-        body += f'<details class="fold"><summary>Splits: group, hours, series</summary>{_splits(state, ck)}</details>'
+        body += f'<details class="fold"><summary>Splits: group and hours</summary>{_splits(state, ck)}</details>'
         rows.append(_row(key, label, allc.get(ck), per, body))
     head = ('<div class="sp-line sp-head-line" aria-hidden="true"><span class="sp-cell sp-c-name">Rule</span>'
             '<span class="sp-cell sp-c-market">Market</span><span class="sp-cell num">Record</span>'
@@ -414,7 +536,7 @@ def index_rows(state=None):
             continue                                            # hte-v2 removed the 25c row entirely
         c = r["all"]
         best = max(((x or {}).get("n", 0) for x in r["series"].values()), default=0)
-        out.append(dict(lane=key, label="Hold to End v2 · " + H.LABELS[key].replace("Hold to End · ", ""), n=c["n"] if c else 0,
+        out.append(dict(lane=key, label="Hold to End v3 · " + H.LABELS[key].replace("Hold to End · ", ""), n=c["n"] if c else 0,
                         roi=c["mean_roi"] if c else None, hit=c["hit_rate"] if c else None,
                         fair=c["fair"] if c else None, status=f"{best}/{W.DECIDE_AT} in its best market"))
     rt = (L.load().get("routing") or {})                        # Lead Swap Board routing (2026-11-09)
