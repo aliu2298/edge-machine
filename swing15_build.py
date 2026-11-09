@@ -98,6 +98,37 @@ def _splits(state, key):
     return _table(HEAD, rows)
 
 
+def v2_block(state):
+    """15-Minute Swing v2 (swing15v2.py): one row per strategy, its markets' records in the fold. Above v1."""
+    import swing15v2 as V
+    rec = V.records(state)
+    start = V.FROM[:16].replace("T", " ") + " UTC"
+    rows = []
+    for strat, label in V.LABELS.items():
+        r = rec[strat]
+        c = r["all"]
+        per = {s: (x["n"] if x else 0) for s, x in r["series"].items()}
+        won = "Sells filled" if strat == "swing15v2_s1" else "Won"
+        trs = []
+        for s, x in r["series"].items():
+            trs.append(f'<tr><td>{esc(s)}</td><td class="num">{x["n"] if x else 0}</td>'
+                       f'<td class="num">{x["hits"] if x else "—"}</td><td class="num">{pct(x["mean_roi"]) if x else "—"}</td></tr>')
+        body = (f'<p class="sp-details-name"><b>{esc(label)}</b> · Kalshi 15-minute windows · paper · {esc(V.VERSION)}</p>'
+                f'<p class="sp-def">The same rule, fills, fees and grading as {esc(W.VERSION)}, on these markets only, '
+                f'frozen at registration ({len(r["series"])} markets).</p>'
+                + _table(("Market", "n", won, "ROI after fees"), trs))
+        rows.append(_row(strat, label, c, per, body).replace('data-sport="swing15"', 'data-sport="swing15v2"'))
+    head = ('<div class="sp-line sp-head-line" aria-hidden="true"><span class="sp-cell sp-c-name">Rule</span>'
+            '<span class="sp-cell sp-c-market">Market</span><span class="sp-cell num">Record</span>'
+            '<span class="sp-cell num">ROI after fees</span><span class="sp-cell num">Won v priced</span>'
+            '<span class="sp-cell num">Evidence</span><span class="sp-cell sp-c-verdict">Verdict</span></div>')
+    return (f'<h3 class="dm-title" id="swing15v2">15-Minute Swing v2</h3>'
+            f'<p class="scope">Cells picked from one overnight session; fresh record from {esc(start)}; review at '
+            f'{W.REVIEW_AT}, decide at {W.DECIDE_AT}.</p>'
+            f'<div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>'
+            '<h3 class="dm-title">15-Minute Swing v1 · every market</h3>')
+
+
 def section(state=None):
     state = W.load() if state is None else state
     allc = W.cells(state)
@@ -145,7 +176,11 @@ def section(state=None):
               'them, from its own 1-minute candles and trade prints. A minute is read print by print only where its candle '
               'shows the price could have touched an entry or a target. Paper only; nothing is placed.</p>'
               f'<p class="sm mut">{n_w} windows graded. Last run {esc(last)}.</p></div></details></section>')
-    return (f'<h2 class="dm-title">15-Minute Swing</h2><p class="scope">Every Kalshi 15-minute window in Crypto, '
+    try:
+        v2 = v2_block(state)
+    except Exception:                                           # noqa: BLE001  (v2 never breaks the v1 section)
+        v2 = ""
+    return (f'<h2 class="dm-title">15-Minute Swing</h2>{v2}<p class="scope">Every Kalshi 15-minute window in Crypto, '
             f'Commodities and Financials · three pre-registered strategies · paper</p>'
             f'<div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>{method}')
 
@@ -162,6 +197,13 @@ def index_rows(state=None):
                         n=c["n"] if c else 0, roi=c["mean_roi"] if c else None,
                         hit=c["hit_rate"] if c else None, fair=c["fair"] if c else None,
                         status=(f"{max(per.values(), default=0)}/{W.DECIDE_AT} in its best series")))
+    import swing15v2 as V                                       # v2 (2026-11-09): its own rows, a fresh record
+    for key, r in V.records(state).items():
+        c = r["all"]
+        best = max(((x or {}).get("n", 0) for x in r["series"].values()), default=0)
+        out.append(dict(lane=key, label="v2 · " + V.LABELS[key], n=c["n"] if c else 0, roi=c["mean_roi"] if c else None,
+                        hit=c["hit_rate"] if c else None, fair=c["fair"] if c else None,
+                        status=f"{best}/{W.DECIDE_AT} in its best market"))
     return out
 
 
