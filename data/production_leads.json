@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-09T19:20:24+00:00",
+ "board_built_at": "2026-11-09T19:33:31+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -675,6 +675,43 @@
    "sport": "soccer_team2",
    "status": "hit"
   },
+  "2026-11-09|KXBTCD-26NOV0917-T74749.99|Below $74,750 at the close \u00b7 Crypto favourite band, below": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-11-09",
+   "edge_at_log": null,
+   "first_seen": "2026-11-09",
+   "headline": "Below $74,750 at the close",
+   "home": null,
+   "id": "2026-11-09|KXBTCD-26NOV0917-T74749.99|Below $74,750 at the close \u00b7 Crypto favourite band, below",
+   "kickoff": "2026-11-09T22:05Z",
+   "lane": "production",
+   "last_seen": "2026-11-09",
+   "last_seen_at": "2026-11-09T19:33:31+00:00",
+   "league": "Crypto \u00b7 Favourite band",
+   "match": "Bitcoin price on Nov 9, 2026",
+   "pair": "crypto_fav_band_below|crypto_fav",
+   "price_at_log": 0.71,
+   "published_at": "2026-11-09T19:33:31+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 151,
+   "route": {
+    "claim": "Below $74,750 at the close",
+    "event": "KXBTCD-26NOV0917",
+    "market": "KXBTCD-26NOV0917-T74749.99",
+    "outcome": "$74,750 or above",
+    "outcome_side": "no",
+    "price_at_log": 0.71,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "crypto_fav_band_below:KXBTCD-26NOV0917-T74749.99",
+   "source": "crypto_fav_band_below",
+   "sport": "crypto_fav",
+   "status": "pending"
+  },
   "2026-11-13|Moldova|Kazakhstan|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
    "away": "Kazakhstan",
    "bet": {
@@ -690,7 +727,7 @@
    "kickoff": "2026-11-13T17:00Z",
    "lane": "production",
    "last_seen": "2026-11-09",
-   "last_seen_at": "2026-11-09T19:20:24+00:00",
+   "last_seen_at": "2026-11-09T19:33:31+00:00",
    "league": "UEFA Nations League",
    "match": "Moldova v Kazakhstan",
    "pair": "u35_low_scoring|soccer_u35_intl",
@@ -746,9 +783,9 @@
    "ready_at": "2026-10-21T00:47:16+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 13,
+    "leads": 14,
     "problem": null,
-    "routed": 13,
+    "routed": 14,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -760,7 +797,7 @@
    "sandbox_roi_fee": 0.1782,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -954,5 +991,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-09T19:20:24+00:00"
+ "updated_at": "2026-11-09T19:33:31+00:00"
 }
