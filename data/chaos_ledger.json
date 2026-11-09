@@ -191644,7 +191644,8 @@
     "KXATPCHALLENGERMATCH-26NOV08SEYUGO": 0,
     "KXATPCHALLENGERMATCH-26NOV08SMIHSU": 0,
     "KXATPCHALLENGERMATCH-26NOV08WATKUM": 0,
-    "KXATPCHALLENGERMATCH-26NOV08ZAHDOM": 0
+    "KXATPCHALLENGERMATCH-26NOV08ZAHDOM": 0,
+    "KXATPCHALLENGERMATCH-26NOV09PIEVAS": 0
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -218369,7 +218370,8 @@
     "KXATPCHALLENGERMATCH-26NOV08SEYUGO": 0,
     "KXATPCHALLENGERMATCH-26NOV08SMIHSU": 0,
     "KXATPCHALLENGERMATCH-26NOV08WATKUM": 0,
-    "KXATPCHALLENGERMATCH-26NOV08ZAHDOM": 0
+    "KXATPCHALLENGERMATCH-26NOV08ZAHDOM": 0,
+    "KXATPCHALLENGERMATCH-26NOV09PIEVAS": 0
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -363033,17 +363035,8 @@
    "watch": false
   }
  },
- "last_run": "2026-11-09T09:00:20.475142+00:00",
+ "last_run": "2026-11-09T09:30:23.198010+00:00",
  "runs": [
-  {
-   "at": "2026-10-30T08:00:17.222790+00:00",
-   "new": {
-    "cfb_dog_tp50": 55,
-    "challenger_cheap_split": 6,
-    "nba_ml_dog_tp50": 11,
-    "nba_winmargin_split_insample": 15
-   }
-  },
   {
    "at": "2026-10-30T08:30:18.233643+00:00",
    "new": {}
@@ -363346,6 +363339,13 @@
     "challenger_cheap_hold_base": 5,
     "challenger_won_here_hold": 1,
     "nba_winmargin_live": 32
+   }
+  },
+  {
+   "at": "2026-11-09T09:30:23.198010+00:00",
+   "new": {
+    "challenger_cheap_hold_base": 0,
+    "challenger_won_here_hold": 0
    }
   }
  ],
