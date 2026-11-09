@@ -43,7 +43,8 @@ TOP = 3
 STRATS = {"leadswap_swing": "Swing to the most swaps", "leadswap_fav": "Favourite to the most stable",
           "leadswap_swing_ctrl": "Control · swing to the most stable", "leadswap_fav_ctrl": "Control · favourite to the most swaps"}
 # The spot lag recorder (scripts/spotlag_recorder.py, a user service on the VPS, record only): set when it starts.
-SPOTLAG = dict(since=None, until=None, where="edge-vps, spotlag-recorder (user unit)")
+SPOTLAG = dict(since="2026-11-09T18:04:34+00:00", until="2026-11-14T18:05:00+00:00",
+               where="edge-vps, spotlag-recorder (user unit)")   # started 2026-11-09 (Olu's OK in chat)
 METALS = ("GOLD", "SILVER", "COPPER", "PLATINUM", "PALLADIUM")
 ENERGY = ("WTI", "BRENT", "NATGAS", "GAS", "OIL")
 # 2026-11-09: ONE block map for the board, the persistence readout and the cluster grading. The board once called
