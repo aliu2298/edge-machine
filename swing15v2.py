@@ -45,12 +45,18 @@ CELLS_V2 = {
                         "AUDUSD", "10YRRATE", "2YRRATE"),
 }
 # sw15-v3: the frozen keep list (2026-11-09). Do not edit.
-CELLS = {
+CELLS_V3 = {
     "swing15v2_s1": _kx("NATGAS", "GBPUSD", "ZEC", "GOLD"),
     "swing15v2_s2": _kx("WTI", "BTC", "SOL"),
     "swing15v2_s3": _kx("USDJPY", "2YRRATE", "GOLD", "ETH", "BNB", "BTC"),
 }
-REMOVED = {k: tuple(s for s in v if s not in CELLS[k]) for k, v in CELLS_V2.items()}
+# 2026-11-09 (Olu): S1 (the Swing) retired at RETIRED_AT, replaced by Steady Favourites (steadyfav.py); its final record
+# is records(..., retired=True). S2 and S3 run on unchanged. v1 keeps grading S1 entries: The Flip Side, Hold to End and
+# the Lead Swap Board read them.
+RETIRED_AT = "2026-11-09T22:00:00+00:00"
+RETIRED = {"swing15v2_s1": CELLS_V3["swing15v2_s1"]}
+CELLS = dict(CELLS_V3, swing15v2_s1=())
+REMOVED = {k: tuple(s for s in v if s not in CELLS_V3[k]) for k, v in CELLS_V2.items()}
 LABELS = {"swing15v2_s1": "S1 Swing · 35c · 3x · else hold", "swing15v2_s2": "S2 Favourite at start",
           "swing15v2_s3": "S3 Favourite at 5 minutes left"}
 
@@ -60,22 +66,23 @@ def v1_key(strat):
     return ("swing15_s1",) + S1_CELL if strat == "swing15v2_s1" else ("swing15_" + strat.rsplit("_", 1)[1],)
 
 
-def in_v2(w, strat=None, cells=None, until=None):
+def in_v2(w, strat=None, cells=None, until=None, start=None):
     cells = CELLS if cells is None else cells
-    if W._ts(w["open"]) < W._ts(FROM) or (until and W._ts(w["open"]) >= W._ts(until)):
+    if W._ts(w["open"]) < W._ts(start or FROM) or (until and W._ts(w["open"]) >= W._ts(until)):
         return False
     return w["series"] in (cells[strat] if strat else {s for c in cells.values() for s in c})
 
 
-def records(state, removed=False):
+def records(state, removed=False, retired=False, start=None):
     """{strat: {"all": cell, "series": {series: cell or None}}}, where a cell is swing15.cells()' record. With
-    removed=True: the removed cells' final records (windows opening before REMOVED_AT)."""
-    cells, until = (REMOVED, REMOVED_AT) if removed else (CELLS, None)
+    removed=True: the removed cells' final records (windows opening before REMOVED_AT). retired=True: S1's final record
+    (windows opening before RETIRED_AT); start narrows it (e.g. since the 18:00Z cut)."""
+    cells, until = (REMOVED, REMOVED_AT) if removed else (RETIRED, RETIRED_AT) if retired else (CELLS, None)
     out = {}
     for strat, series in cells.items():
         key = v1_key(strat)
-        out[strat] = dict(all=W.cells(state, lambda w, s=strat: in_v2(w, s, cells, until)).get(key),
-                          series={s: W.cells(state, lambda w, s=s, t=strat: in_v2(w, t, cells, until)
+        out[strat] = dict(all=W.cells(state, lambda w, s=strat: in_v2(w, s, cells, until, start)).get(key),
+                          series={s: W.cells(state, lambda w, s=s, t=strat: in_v2(w, t, cells, until, start)
                                              and w["series"] == s).get(key) for s in series})
     return out
 
@@ -86,6 +93,9 @@ def ledger(state, now=None):
     rec = records(state)
     return dict(version=VERSION, registered=REGISTERED, **{"from": FROM}, picked_on=PICKED_ON,
                 cells={k: list(v) for k, v in CELLS.items()}, cells_v2={k: list(v) for k, v in CELLS_V2.items()},
+                cells_v3={k: list(v) for k, v in CELLS_V3.items()}, retired_at=RETIRED_AT,
+                retired_records={k: dict(all=slim(v["all"]), series={s: slim(c) for s, c in v["series"].items()})
+                                 for k, v in records(state, retired=True).items()},
                 removed_at=REMOVED_AT, removed={k: list(v) for k, v in REMOVED.items()}, s1_cell=list(S1_CELL),
                 updated=now.isoformat(timespec="seconds"),
                 records={k: dict(all=slim(v["all"]), series={s: slim(c) for s, c in v["series"].items()})

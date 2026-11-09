@@ -234,7 +234,7 @@ def v2_block(state):
                         f"Cells picked from one overnight session; fresh record from {_start(V.FROM)}; review at "
                         f"{W.REVIEW_AT}, decide at {W.DECIDE_AT}." + _cut_line(V), V.VERSION, V.LABELS, V.records(state),
                         "swing15v2", lambda k: "Sells filled" if k == "swing15v2_s1" else "Won",
-                        V.records(state, removed=True), V.REMOVED_AT)
+                        V.records(state, removed=True), V.REMOVED_AT, extra=_v3_s1_retired(state, V))
     try:
         import flipside_v2 as F
         out += _frozen_block("flipside_v2", "The Flip Side v3",
@@ -250,6 +250,90 @@ def v2_block(state):
     except Exception:                                           # noqa: BLE001  (never breaks the section)
         pass
     return out
+
+
+def _v3_s1_retired(state, V):
+    """S1 (sw15-v3) retired 2026-11-09 22:00Z for Steady Favourites: its final record, collapsed."""
+    ret = V.records(state, retired=True)
+    a = (ret.get("swing15v2_s1") or {}).get("all")
+    since = (V.records(state, retired=True, start=V.REMOVED_AT).get("swing15v2_s1") or {}).get("all")
+    note = ("" if not a else
+            f'<p class="sm">S1 final: {a["hits"]}/{a["n"]} sells filled against {a["fair"] * a["n"]:.1f} priced, '
+            f'{pct(a["mean_roi"])} after fees'
+            + ("" if not since else f'; since the 18:00 UTC cut, {since["hits"]}/{since["n"]}, {pct(since["mean_roi"])}')
+            + '. Replaced by Steady Favourites. No new entries.</p>')
+    return _removed_fold({"swing15v2_s1": V.LABELS["swing15v2_s1"]}, ret, V.RETIRED_AT,
+                         lambda k: "Sells filled", word="Retired", note=note)
+
+
+def _v1_s1_retired(state, allc_before):
+    """S1 (sw15-v1) retired 2026-11-09 22:00Z: the headline cell's final record and the whole grid, collapsed. v1 keeps
+    grading S1 entries underneath (The Flip Side, Hold to End and the Lead Swap Board read them)."""
+    import swing15v2 as V
+    c = allc_before.get(HEADLINE_S1)
+    grid = [_cell_tr(f'{float(b) * 100:g}c · {float(m):g}x · {EXIT_WORDS[how]}', allc_before.get(("swing15_s1", b, m, how)))
+            for b in map(str, W.BANDS) for m in map(str, W.MULTS) for how in ("hold", "bid")]
+    neg = sum(1 for b in map(str, W.BANDS) for m in map(str, W.MULTS) for how in ("hold", "bid")
+              if (allc_before.get(("swing15_s1", b, m, how)) or {}).get("mean_roi", 0) < 0)
+    note = ("" if not c else
+            f'<p class="sm">S1 Swing · 25c · 2x · else hold, final: {c["hits"]}–{c["n"] - c["hits"]} against '
+            f'{c["fair"] * c["n"]:.1f} priced, {pct(c["mean_roi"])} after fees; {neg} of {len(grid)} grid cells negative. '
+            f'Replaced by Steady Favourites. No new entries.</p>')
+    return (f'<details class="fold sw15-removed"><summary>Retired {esc(_start(V.RETIRED_AT))} · S1 Swing, final '
+            f'records</summary>{note}' + _table(HEAD, grid) + '</details>')
+
+
+def steadyfav_block(state):
+    """Steady Favourites (steadyfav.py, sw15-sf1): rules A and B on four fixed markets, then the pooled controls."""
+    import steadyfav as S
+    rec = S.records(state)
+    rows = []
+    defs = {"steadyfav_a": "At minute 2, buy the side above 50c (by the mid) at its ask, filled only on a print at or "
+                           "through it in the next minute; held to settlement; taker fee on entry (v1's S2).",
+            "steadyfav_b": "The same at minute 10, with 5 minutes left (v1's S3)."}
+    for rule, text in defs.items():
+        r = rec[rule]
+        ser = r["series"]
+        good, bad, none = split_markets([(s, x["n"] if x else 0, x["mean_roi"] if x else 0) for s, x in ser.items()])
+        tr = lambda q, ser=ser: (f'<tr><td>{mkt(q[0])}{_under10(q[1])}</td><td class="num">{q[1]}</td>'
+                                 f'<td class="num">{ser[q[0]]["hits"]} v {ser[q[0]]["fair"] * q[1]:.1f}</td>'
+                                 f'<td class="num">{pct(ser[q[0]]["mean_roi"])}</td><td class="num">{_zd(ser[q[0]])}</td></tr>')
+        c = (rec[rule + "_ctrl"] or {}).get("all")
+        ctl = ("no control windows yet" if not c else
+               f'{c["hits"]}/{c["n"]} won against {c["fair"] * c["n"]:.1f} priced, {pct(c["mean_roi"])} after fees')
+        body = (count_line(good, bad)
+                + f'<p class="sp-details-name"><b>{esc(S.LABELS[rule])}</b> · Kalshi 15-minute windows · paper · '
+                  f'{esc(S.VERSION)}</p><p class="sp-def">{esc(text)} Frozen: {len(S.MARKETS)} markets.</p>'
+                + _split_html(("Market", "Bets", "Won v priced", "Return after fees", "z (by day)"), good, bad, tr, none)
+                + f'<p class="sm">Control (the same rule on the other markets, pooled): {esc(ctl)}.</p>')
+        per = {s: (x["n"] if x else 0) for s, x in ser.items()}
+        rows.append(_row(rule, S.LABELS[rule], r["all"], per, body).replace('data-sport="swing15"', 'data-sport="steadyfav"'))
+    for ctrl, rule in S.CONTROLS.items():
+        c = rec[ctrl]["all"]
+        body = (f'<p class="sp-details-name"><b>{esc(S.LABELS[ctrl])}</b> · paper · {esc(S.VERSION)}</p>'
+                f'<p class="sp-def">Rule {rule[-1].upper()} on the other {rec[ctrl]["markets"]} 15-minute markets, one '
+                f'pooled row: does "steady" beat everything else?</p>'
+                + (_table(("Pooled", "Bets", "Won v priced", "Return after fees", "z (by day)"),
+                          [f'<tr><td>Other markets</td><td class="num">{c["n"]}</td><td class="num">{c["hits"]} v '
+                           f'{c["fair"] * c["n"]:.1f}</td><td class="num">{pct(c["mean_roi"])}</td>'
+                           f'<td class="num">{_zd(c)}</td></tr>']) if c else '<p class="sm mut">No windows yet.</p>'))
+        rows.append(_row(ctrl, S.LABELS[ctrl], c, {"all": c["n"] if c else 0}, body)
+                    .replace('data-sport="swing15"', 'data-sport="steadyfav"'))
+    old = S.records(state, earlier=True)
+    ea, eb = old["steadyfav_a"]["all"], old["steadyfav_b"]["all"]
+    early = ("" if not (ea or eb) else
+             '<p class="sm mut sf-earlier">Earlier result, not counted (v1 on these four markets, before the start): '
+             + "; ".join(f'{k} {x["hits"]}/{x["n"]}, {pct(x["mean_roi"])}' for k, x in (("A", ea), ("B", eb)) if x) + '.</p>')
+    head = ('<div class="sp-line sp-head-line" aria-hidden="true"><span class="sp-cell sp-c-name">Rule</span>'
+            '<span class="sp-cell sp-c-market">Market</span><span class="sp-cell num">Record</span>'
+            '<span class="sp-cell num">ROI after fees</span><span class="sp-cell num">Won v priced</span>'
+            '<span class="sp-cell num">Evidence</span><span class="sp-cell sp-c-verdict">Verdict</span></div>')
+    names = ", ".join(name(s) for s in S.MARKETS)
+    return (f'<h3 class="dm-title" id="steadyfav">Steady Favourites</h3><p class="scope">Steady Favourites · '
+            f'{esc(names)} · the favourite bought at minute 2 (A) and at 5 minutes left (B), held to settlement · fresh '
+            f'record from {esc(_start(S.FROM))} · review at {W.REVIEW_AT}, decide at {W.DECIDE_AT}. Replaces the S1 '
+            f'Swing.</p><p class="sm mut">{SORT_LINE}</p>'
+            f'<div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>{early}')
 
 
 def holdtoend_block(state, H):
@@ -436,16 +520,9 @@ def section(state=None):
     state = W.load() if state is None else state
     allc = W.cells(state)
     n_w = len(state.get("windows") or {})
-    s1_grid = [_cell_tr(f'{float(b) * 100:g}c · {float(m):g}x · {EXIT_WORDS[how]}', allc.get(("swing15_s1", b, m, how)))
-               for b in map(str, W.BANDS) for m in map(str, W.MULTS) for how in ("hold", "bid")]
+    import swing15v2 as V
+    s1_final = W.cells(state, lambda w: W._ts(w["open"]) < W._ts(V.RETIRED_AT))
     defs = {
-        "swing15_s1": ("S1 Swing · 25c · 2x · else hold",
-                       "A resting buy at the band on whichever side prints there first in the window's first 5 minutes "
-                       "(15c, 25c or 35c), filled at the band only on a print at or through it; a resting sell at 1.5x, 2x "
-                       "or 3x (capped at 99c), filled only on 50+ contracts printed at or above it 60s+ after the entry. "
-                       "Unfilled: recorded both held to settlement and sold at the bid with 1 minute left. Judged against "
-                       "the fair touch rate, entry / target. The row is the 25c · 2x · hold cell, fixed at registration; "
-                       "the whole grid is below."),
         "swing15_s2": ("S2 Favourite at start",
                        "At minute 2, buy the side above 50c (by the mid) at its ask, filled only on a print at or through "
                        "it in the next minute; held to settlement. Judged against the price paid."),
@@ -466,8 +543,6 @@ def section(state=None):
                 'clustered by day</dd></dl>')
         cnt, mk = _v1_markets(state, ck)
         body = cnt + body + f'<p class="sm mut">{SORT_LINE}</p>' + mk
-        if key == "swing15_s1":
-            body += '<details class="fold"><summary>The whole S1 grid</summary>' + _table(HEAD, s1_grid) + "</details>"
         body += f'<details class="fold"><summary>Splits: group and hours</summary>{_splits(state, ck)}</details>'
         rows.append(_row(key, label, allc.get(ck), per, body))
     head = ('<div class="sp-line sp-head-line" aria-hidden="true"><span class="sp-cell sp-c-name">Rule</span>'
@@ -491,19 +566,32 @@ def section(state=None):
         lsb = ""
     # 2026-11-09 (Olu: easy to review): one block, in order: the Lead Swap Board, Swing v2, The Flip Side v2, Hold to
     # End, then v1, the full collector on every series, collapsed by default.
-    return (f'<h2 class="dm-title">15-Minute Swing</h2>{lsb}{v2}'
+    try:
+        sf = steadyfav_block(state)
+    except Exception:                                           # noqa: BLE001  (never breaks the section)
+        sf = ""
+    return (f'<h2 class="dm-title">15-Minute Swing</h2>{sf}{lsb}{v2}'
             f'<details class="fold sw15-v1"><summary><b>15-Minute Swing v1 · every market</b> · the full collector; '
             f'record from {esc(_start(W.FROM))}</summary>'
             f'<p class="scope">Every Kalshi 15-minute window in Crypto, '
-            f'Commodities and Financials · three pre-registered strategies · paper</p>'
-            f'<div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>{method}</details>')
+            f'Commodities and Financials · S2 and S3 pre-registered (S1 retired) · paper</p>'
+            f'<div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>{_v1_s1_retired(state, s1_final)}'
+            f'{method}</details>')
 
 
 def index_rows(state=None):
     state = W.load() if state is None else state
     allc = W.cells(state)
     out = []
+    import steadyfav as S                                       # Steady Favourites (2026-11-09): first
+    for key, r in S.records(state).items():
+        c = r["all"]
+        out.append(dict(lane=key, label="Steady Favourites · " + S.LABELS[key], n=c["n"] if c else 0,
+                        roi=c["mean_roi"] if c else None, hit=c["hit_rate"] if c else None,
+                        fair=c["fair"] if c else None, status=f"{c['n'] if c else 0}/{W.DECIDE_AT}"))
     for key, label in W.STRATS.items():
+        if key == "swing15_s1":
+            continue                                             # retired 2026-11-09 22:00Z (graded underneath)
         ck = HEADLINE_S1 if key == "swing15_s1" else (key,)
         c = allc.get(ck)
         per = _per_series(state, ck)
@@ -561,7 +649,7 @@ def index_html(state=None):
         f'<td><a href="./daily_markets.html#swing15">Daily Markets</a></td><td class="num">{r["n"]}</td>'
         f'<td class="num">{hv(r)}</td><td class="num">{pct(r["roi"])}</td><td>{esc(r["status"])}</td></tr>' for r in rs)
     return ('<section id="swing15-index"><h2>15-Minute Swing</h2><p class="shell-kicker">Every Kalshi 15-minute window in '
-            'Crypto, Commodities and Financials · three pre-registered strategies · paper · not in Production</p>'
+            'Crypto, Commodities and Financials · pre-registered strategies · paper · not in Production</p>'
             '<div class="tbl"><table><tr><th>Strategy</th><th>Page</th><th class="num">Windows</th>'
             '<th class="num">Hit v fair</th><th class="num">ROI after fees</th><th>Evidence</th></tr>'
             + rows + '</table></div></section>')
