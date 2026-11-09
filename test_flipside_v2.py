@@ -34,9 +34,15 @@ def trig(side, minute):
 
 
 print("the pre-registration")
-check("ids and version", (tuple(F.CELLS), F.VERSION), (("flipside_v2_f1", "flipside_v2_f2", "flipside_v2_f3", "flipside_v2_f4"), "flip-v2"))
-check("cell counts 15 / 12 / 13 / 8", tuple(len(v) for v in F.CELLS.values()), (15, 12, 13, 8))
-check("tickers", (F.CELLS["flipside_v2_f1"][0], F.CELLS["flipside_v2_f4"][-1]), ("KX10YRRATE15M", "KXZEC15M"))
+check("ids and version (flip-v3 since 2026-11-09 18:00Z)", (tuple(F.CELLS), F.VERSION), (("flipside_v2_f1", "flipside_v2_f2", "flipside_v2_f3", "flipside_v2_f4"), "flip-v3"))
+check("the flip-v2 registration as it was: 15 / 12 / 13 / 8", tuple(len(v) for v in F.CELLS_V2.values()), (15, 12, 13, 8))
+check("tickers", (F.CELLS_V2["flipside_v2_f1"][0], F.CELLS_V2["flipside_v2_f4"][-1]), ("KX10YRRATE15M", "KXZEC15M"))
+check("flip-v3 keep lists (Olu, 2026-11-09)", {k: tuple(t[2:-3] for t in v) for k, v in F.CELLS.items()},
+      {"flipside_v2_f1": ("ETH", "GOLD", "BTC", "PLATINUM", "WTI", "XRP", "HYPE", "NEAR"),
+       "flipside_v2_f2": ("WTI", "HYPE", "PLATINUM", "XRP", "BRENT", "BTC"),
+       "flipside_v2_f3": ("EURUSD", "NATGAS", "USDCAD"), "flipside_v2_f4": ("ZEC",)})
+check("kept within registered; removed = registered - kept",
+      all(set(F.CELLS[k]) <= set(F.CELLS_V2[k]) and set(F.REMOVED[k]) == set(F.CELLS_V2[k]) - set(F.CELLS[k]) for k in F.CELLS), True)
 check("the record starts after the selection windows", W._ts(F.FROM) >= W._ts("2026-11-09T12:00:00+00:00"), True)
 
 print("\nthe flipped entries")
@@ -68,6 +74,8 @@ print("\nthe record")
 old = win("KXBTC15M", "2026-11-09T11:00:00Z", "no", s1=w1["s1"], minutes=w1["minutes"])
 doge = win("KXDOGE15M", T, "no", s1=w1["s1"], minutes=w1["minutes"])          # DOGE is not an F1 cell
 state = dict(W.empty(), windows={k: w for k, w in (("a", w1), ("b", w2), ("c", old), ("d", doge), ("e", w3), ("f", w5))})
+KEEP = F.CELLS
+F.CELLS = F.CELLS_V2                                            # the filter, on the registered flip-v2 cells
 rec = F.records(state)
 r1 = rec["flipside_v2_f1"]
 check("F1: BTC's two fresh windows (not the 11:00Z window, not DOGE), one won",
@@ -76,12 +84,20 @@ check("its fair rate is the mean price paid", round(r1["all"]["fair"], 4), round
 check("skips are counted by reason", r1["skips"], {"no_minute_row": 1})
 check("F3 and F4: USDJPY counts for F3; F4 has no USDJPY cell",
       (rec["flipside_v2_f3"]["all"]["n"], rec["flipside_v2_f4"]["all"]), (1, None))
-check("the ledger", (F.ledger(state)["version"], F.ledger(state)["records"]["flipside_v2_f1"]["all"]["n"]), ("flip-v2", 2))
+F.CELLS = KEEP
+rec3, gone = F.records(state), F.records(state, removed=True)
+check("flip-v3: BTC survives in F1 (2); USDJPY is removed from F3, its final record kept (1, before the cut)",
+      (rec3["flipside_v2_f1"]["all"]["n"], rec3["flipside_v2_f3"]["all"], gone["flipside_v2_f3"]["series"]["KXUSDJPY15M"]["n"]),
+      (2, None, 1))
+lg = F.ledger(state)
+check("the ledger", (lg["version"], lg["records"]["flipside_v2_f1"]["all"]["n"], lg["removed_at"], len(lg["cells_v2"]["flipside_v2_f1"])),
+      ("flip-v3", 2, F.REMOVED_AT, 15))
 
 print("\nthe page")
 html = WB.section(state)
-check("the block sits under 15-Minute Swing v2 and above v1",
-      html.index("15-Minute Swing v2") < html.index("The Flip Side v2") < html.index('data-source="swing15_s1"'), True)
+check("the block sits under 15-Minute Swing v3 and above v1",
+      html.index("15-Minute Swing v3") < html.index("The Flip Side v3") < html.index('data-source="swing15_s1"'), True)
+check("the cut line", "flip-v3 from 2026-11-09 18:00 UTC: negative markets removed after ~4h of results." in html, True)
 check("the header line", "Opposite side of the 15-Minute Swing; cells picked from one overnight session; 14-day backtest of "
       "the flips ran −0.5% to −16%; fresh record from 2026-11-09 13:15 UTC; review at 10, decide at 30." in html, True)
 check("four rows", re.findall(r'data-source="(flipside_v2_f\d)"', html),

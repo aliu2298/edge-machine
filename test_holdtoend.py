@@ -26,9 +26,11 @@ def win(series, open_iso, s1):
 E = lambda side, won: dict(side=side, won=won, exits={"3.0": dict(filled=True, roi_hold=1.0, roi_bid=1.0)})
 
 print("the pre-registration")
-check("ids, version and cells", (tuple(H.CELLS), H.VERSION, tuple(len(v) for v in H.CELLS.values())),
-      (("holdtoend_25", "holdtoend_35"), "hte-v1", (3, 6)))
-check("tickers", (H.CELLS["holdtoend_25"], H.CELLS["holdtoend_35"][-1]), (("KXUSDCAD15M", "KX30YRRATE15M", "KX5YRRATE15M"), "KXGOLD15M"))
+check("ids, version and the hte-v1 registration as it was", (tuple(H.CELLS), H.VERSION, tuple(len(v) for v in H.CELLS_V1.values())),
+      (("holdtoend_25", "holdtoend_35"), "hte-v2", (3, 6)))
+check("tickers", (H.CELLS_V1["holdtoend_25"], H.CELLS_V1["holdtoend_35"][-1]), (("KXUSDCAD15M", "KX30YRRATE15M", "KX5YRRATE15M"), "KXGOLD15M"))
+check("hte-v2 keep list (Olu, 2026-11-09): the 25c row removed entirely, 35c on GBPUSD only",
+      (H.CELLS["holdtoend_25"], H.CELLS["holdtoend_35"], H.REMOVED["holdtoend_25"]), ((), ("KXGBPUSD15M",), H.CELLS_V1["holdtoend_25"]))
 check("the record starts after the selection windows", W._ts(H.FROM) >= W._ts("2026-11-09T12:00:00+00:00"), True)
 
 print("\nheld to settlement, whatever the sell did")
@@ -46,18 +48,24 @@ ws = [w, win("KXUSDCAD15M", "2026-11-09T15:15:00Z", {"0.25": E("yes", 0.0), "0.3
       win("KXUSDCAD15M", "2026-11-09T11:00:00Z", {"0.25": E("yes", 1.0), "0.35": None}),   # selection window
       win("KXBTC15M", T, {"0.25": E("yes", 1.0), "0.35": E("yes", 1.0)})]                     # not a cell
 state = dict(W.empty(), windows={v["ticker"]: v for v in ws})
+KEEP = H.CELLS
+H.CELLS = H.CELLS_V1                                            # the filter, on the registered hte-v1 cells
 rec = H.records(state)
 check("25c: USDCAD's two fresh windows, one won", (rec["holdtoend_25"]["all"]["n"], rec["holdtoend_25"]["all"]["hits"]), (2, 1))
 check("35c: USDCAD once (BTC is no cell)", (rec["holdtoend_35"]["all"]["n"], rec["holdtoend_35"]["series"]["KXGOLD15M"]), (1, None))
+H.CELLS = KEEP
+gone = H.records(state, removed=True)
+check("hte-v2: USDCAD's 25c and 35c records are final in the removed set", (gone["holdtoend_25"]["all"]["n"], gone["holdtoend_35"]["all"]["n"]), (2, 1))
 
 print("\nthe page")
 html = WB.section(state)
-check("under The Flip Side v2, above v1",
-      html.index("The Flip Side v2") < html.index(">Hold to End<") < html.index('data-source="swing15_s1"'), True)
+check("under The Flip Side v3, above v1",
+      html.index("The Flip Side v3") < html.index(">Hold to End v2<") < html.index('data-source="swing15_s1"'), True)
+check("the 25c row shows only in the Removed fold", (re.findall(r'data-source="(holdtoend_\d+)"', html),
+      "Hold to End · 25c" in html.split('id="holdtoend"')[1].split("sw15-removed")[1]), (["holdtoend_35"], True))
 check("the header line", "Cheap side bought at 25c/35c in the first 5 minutes, held to settlement, no sell; cells over +10% "
       "in one overnight session; fresh record from 2026-11-09 14:00 UTC; review at 10, decide at 30." in html, True)
-check("two rows", re.findall(r'data-source="(holdtoend_\d+)"', html), ["holdtoend_25", "holdtoend_35"])
-check("the Sandbox index lists them after the Flip Side", [r["lane"] for r in WB.index_rows(state)][10:12], list(H.CELLS))
+check("the Sandbox index lists them after the Flip Side", [r["lane"] for r in WB.index_rows(state)][10:11], ["holdtoend_35"])
 check("no dollar sign, no guarded phrase", (re.search(r"\$\d", html), sandbox_audit.COPY_RE.findall(html + WB.index_html(state))), (None, []))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
