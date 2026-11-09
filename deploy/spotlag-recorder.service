@@ -1,0 +1,23 @@
+# Spot lag recorder (2026-11-09): a USER unit for the bot user on edge-vps (no root; Linger=yes), record only.
+# Installed at /home/bot/.config/systemd/user/spotlag-recorder.service; runs a pinned copy of
+# scripts/spotlag_recorder.py from /home/bot/spotlag. Stops by itself at --until (exit 0, so on-failure never restarts it).
+# cpu and memory are delegated to the user manager on this host, so MemoryMax and CPUQuota are enforced.
+[Unit]
+Description=Spot v Kalshi 15-minute crypto lag recorder (record only, 5 days)
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/bot/spotlag
+ExecStart=/usr/bin/python3 /home/bot/spotlag/spotlag_recorder.py --out /home/bot/spotlag/data --until __UNTIL__
+Environment=PYTHONUNBUFFERED=1
+Restart=on-failure
+RestartSec=30
+MemoryMax=120M
+CPUQuota=20%
+Nice=10
+StandardOutput=append:/home/bot/spotlag/recorder.log
+StandardError=append:/home/bot/spotlag/recorder.log
+
+[Install]
+WantedBy=default.target

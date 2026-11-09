@@ -191,6 +191,11 @@ def leadswap_block(state):
             '<span class="sp-cell sp-c-market">Market</span><span class="sp-cell num">Record</span>'
             '<span class="sp-cell num">ROI after fees</span><span class="sp-cell num">Won v priced</span>'
             '<span class="sp-cell num">Evidence</span><span class="sp-cell sp-c-verdict">Verdict</span></div>')
+    sl = L.SPOTLAG
+    spot = ("Spot lag recorder: not started" if not sl.get("since") else
+            f"Spot lag recorder: recording since {_start(sl['since'])}"
+            + (f", until {_start(sl['until'])}" if sl.get("until") else "")
+            + " (Coinbase spot v Kalshi BTC/ETH/SOL 15-minute books, every second; record only)")
     rh = ("Series", "Swaps a window", "Windows", "Mid range 0-9")
     med = "—" if b["median_swing"] is None else "%gc" % b["median_swing"]
     f14 = "—" if b["fav14_won"] is None else "%.0f%%" % (b["fav14_won"] * 100)
@@ -230,7 +235,8 @@ def leadswap_block(state):
     return (f'<h3 class="dm-title" id="leadswap">Lead Swap Board</h3><p class="scope">How often the lead (YES mid across '
             f'50c) swaps on every 15-minute series; swing trade to the most swaps, favourite to the most stable, each '
             f'against its opposite; fresh record from {esc(_start(L.FROM))}; review at {W.REVIEW_AT}, decide at '
-            f'{W.DECIDE_AT}.</p><div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>'
+            f'{W.DECIDE_AT}.</p><p class="sm mut" id="spotlag-status">{esc(spot)}</p>'
+            f'<div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>'
             f'{board}{persist}{timing}{heat}')
 
 
