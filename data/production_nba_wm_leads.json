@@ -3,84 +3,6 @@
  "lane": "nba_winmargin_live",
  "leads": [
   {
-   "bucket": "11-20",
-   "event": "KXNBAWINMARGIN-26NOV08LALDET",
-   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08LALDET-LAL11TO20",
-   "lane": "nba_winmargin_live",
-   "side": "yes",
-   "stake_usd": 1.0,
-   "team": "LAL",
-   "ticker": "KXNBAWINMARGIN-26NOV08LALDET-LAL11TO20",
-   "tip": "2026-11-08T23:00:00+00:00",
-   "title": "Los Angeles L wins by 11-20 points",
-   "version": "wm-yes-v4"
-  },
-  {
-   "bucket": "6-10",
-   "event": "KXNBAWINMARGIN-26NOV08LALDET",
-   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08LALDET-LAL6TO10",
-   "lane": "nba_winmargin_live",
-   "side": "yes",
-   "stake_usd": 1.0,
-   "team": "LAL",
-   "ticker": "KXNBAWINMARGIN-26NOV08LALDET-LAL6TO10",
-   "tip": "2026-11-08T23:00:00+00:00",
-   "title": "Los Angeles L wins by 6-10 points",
-   "version": "wm-yes-v4"
-  },
-  {
-   "bucket": "1-5",
-   "event": "KXNBAWINMARGIN-26NOV08LALDET",
-   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08LALDET-LAL1TO5",
-   "lane": "nba_winmargin_live",
-   "side": "yes",
-   "stake_usd": 1.0,
-   "team": "LAL",
-   "ticker": "KXNBAWINMARGIN-26NOV08LALDET-LAL1TO5",
-   "tip": "2026-11-08T23:00:00+00:00",
-   "title": "Los Angeles L wins by 1-5 points",
-   "version": "wm-yes-v4"
-  },
-  {
-   "bucket": "1-5",
-   "event": "KXNBAWINMARGIN-26NOV08LALDET",
-   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08LALDET-DET1TO5",
-   "lane": "nba_winmargin_live",
-   "side": "yes",
-   "stake_usd": 1.0,
-   "team": "DET",
-   "ticker": "KXNBAWINMARGIN-26NOV08LALDET-DET1TO5",
-   "tip": "2026-11-08T23:00:00+00:00",
-   "title": "Detroit wins by 1-5 points",
-   "version": "wm-yes-v4"
-  },
-  {
-   "bucket": "6-10",
-   "event": "KXNBAWINMARGIN-26NOV08LALDET",
-   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08LALDET-DET6TO10",
-   "lane": "nba_winmargin_live",
-   "side": "yes",
-   "stake_usd": 1.0,
-   "team": "DET",
-   "ticker": "KXNBAWINMARGIN-26NOV08LALDET-DET6TO10",
-   "tip": "2026-11-08T23:00:00+00:00",
-   "title": "Detroit wins by 6-10 points",
-   "version": "wm-yes-v4"
-  },
-  {
-   "bucket": "11-20",
-   "event": "KXNBAWINMARGIN-26NOV08LALDET",
-   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08LALDET-DET11TO20",
-   "lane": "nba_winmargin_live",
-   "side": "yes",
-   "stake_usd": 1.0,
-   "team": "DET",
-   "ticker": "KXNBAWINMARGIN-26NOV08LALDET-DET11TO20",
-   "tip": "2026-11-08T23:00:00+00:00",
-   "title": "Detroit wins by 11-20 points",
-   "version": "wm-yes-v4"
-  },
-  {
    "bucket": "6-10",
    "event": "KXNBAWINMARGIN-26NOV08UTAMIN",
    "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV08UTAMIN-UTA6TO10",
@@ -419,6 +341,58 @@
    "version": "wm-yes-v4"
   },
   {
+   "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV09WASDET",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV09WASDET-WAS6TO10",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "WAS",
+   "ticker": "KXNBAWINMARGIN-26NOV09WASDET-WAS6TO10",
+   "tip": "2026-11-10T00:00:00+00:00",
+   "title": "Washington wins by 6-10 points",
+   "version": "wm-yes-v4"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV09WASDET",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV09WASDET-WAS1TO5",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "WAS",
+   "ticker": "KXNBAWINMARGIN-26NOV09WASDET-WAS1TO5",
+   "tip": "2026-11-10T00:00:00+00:00",
+   "title": "Washington wins by 1-5 points",
+   "version": "wm-yes-v4"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV09WASDET",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV09WASDET-DET1TO5",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "DET",
+   "ticker": "KXNBAWINMARGIN-26NOV09WASDET-DET1TO5",
+   "tip": "2026-11-10T00:00:00+00:00",
+   "title": "Detroit wins by 1-5 points",
+   "version": "wm-yes-v4"
+  },
+  {
+   "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV09WASDET",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV09WASDET-DET6TO10",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "DET",
+   "ticker": "KXNBAWINMARGIN-26NOV09WASDET-DET6TO10",
+   "tip": "2026-11-10T00:00:00+00:00",
+   "title": "Detroit wins by 6-10 points",
+   "version": "wm-yes-v4"
+  },
+  {
    "bucket": "11-20",
    "event": "KXNBAWINMARGIN-26NOV09DENHOU",
    "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV09DENHOU-DEN11TO20",
@@ -605,6 +579,6 @@
   "side": "yes",
   "stake_usd": 1.0
  },
- "updated_at": "2026-11-09T01:36:52+00:00",
+ "updated_at": "2026-11-09T02:02:16+00:00",
  "version": "wm-yes-v4"
 }
