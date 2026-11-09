@@ -1,8 +1,8 @@
 {
  "meta": {
-  "code_sha": "19aa27d93523bd7ee3b0e47550ec77a5cd54760f",
+  "code_sha": "a02b912793c44cbff3399187625c30d636d8ef03",
   "live_from": "2026-09-19",
-  "updated": "2026-11-06T21:13:17+00:00"
+  "updated": "2026-11-09T21:11:37+00:00"
  },
  "research": {
   "cr_btc_2200": {
@@ -19884,19 +19884,19 @@
    "symbol": "DDOG"
   },
   {
-   "bars_held": null,
-   "bench_ret": null,
+   "bars_held": 3,
+   "bench_ret": -0.014184,
    "entry": 340.58,
    "entry_day": "2026-11-03",
-   "exit": null,
-   "exit_day": null,
+   "exit": 344.0,
+   "exit_day": "2026-11-09",
    "id": "sw_rsi2_pullback|CRL|2026-11-02",
    "lane": "swing",
-   "ret_gross": null,
-   "ret_net": null,
+   "ret_gross": 0.010042,
+   "ret_net": 0.009042,
    "rule": "sw_rsi2_pullback",
    "signal_day": "2026-11-02",
-   "status": "open",
+   "status": "closed",
    "symbol": "CRL"
   },
   {
@@ -20748,19 +20748,19 @@
    "symbol": "PSX"
   },
   {
-   "bars_held": null,
-   "bench_ret": null,
+   "bars_held": 2,
+   "bench_ret": -0.027621,
    "entry": 194.925,
    "entry_day": "2026-11-04",
-   "exit": null,
-   "exit_day": null,
+   "exit": 195.24,
+   "exit_day": "2026-11-09",
    "id": "sw_rsi2_pullback|PTC|2026-11-03",
    "lane": "swing",
-   "ret_gross": null,
-   "ret_net": null,
+   "ret_gross": 0.001616,
+   "ret_net": 0.000616,
    "rule": "sw_rsi2_pullback",
    "signal_day": "2026-11-03",
-   "status": "open",
+   "status": "closed",
    "symbol": "PTC"
   },
   {
@@ -20828,19 +20828,19 @@
    "symbol": "SLB"
   },
   {
-   "bars_held": null,
-   "bench_ret": null,
+   "bars_held": 2,
+   "bench_ret": -0.027621,
    "entry": 536.93,
    "entry_day": "2026-11-04",
-   "exit": null,
-   "exit_day": null,
+   "exit": 553.02,
+   "exit_day": "2026-11-09",
    "id": "sw_rsi2_pullback|VRTX|2026-11-03",
    "lane": "swing",
-   "ret_gross": null,
-   "ret_net": null,
+   "ret_gross": 0.029967,
+   "ret_net": 0.028967,
    "rule": "sw_rsi2_pullback",
    "signal_day": "2026-11-03",
-   "status": "open",
+   "status": "closed",
    "symbol": "VRTX"
   },
   {
