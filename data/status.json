@@ -1,5 +1,11 @@
 {
- "broken_feeds": [],
+ "broken_feeds": [
+  {
+   "label": "Pinnacle's goal total v Kalshi's",
+   "reason": "no paced credit left for this run",
+   "source": "pin_totals"
+  }
+ ],
  "lanes": {
   "btts_form_l10|soccer_btts_cup": {
    "kind": "Rule",
@@ -57,7 +63,7 @@
    "kind": "Baseline",
    "label": "Kalshi BTTS price (every match)",
    "last_quote": "2026-11-09T17:03:37+00:00",
-   "last_read": "2026-11-09T17:58:04.305381+00:00",
+   "last_read": "2026-11-09T18:03:48.003653+00:00",
    "offered": 12,
    "open": 0,
    "paused": false,
@@ -70,11 +76,11 @@
    "kind": "Baseline",
    "label": "Kalshi commodity price (every listed strike)",
    "last_quote": "2026-11-09T17:42:50+00:00",
-   "last_read": "2026-11-09T17:58:04.305381+00:00",
-   "offered": 240,
+   "last_read": "2026-11-09T18:03:48.003653+00:00",
+   "offered": 210,
    "open": 0,
    "paused": false,
-   "picked": 240,
+   "picked": 210,
    "read": "ok",
    "source": "cmd_market",
    "sport": "commodities"
@@ -83,8 +89,8 @@
    "kind": "Rule",
    "label": "Commodities favourite band (Yes 0.70-0.80, 3 hours to the close)",
    "last_quote": "2026-11-09T16:05:55+00:00",
-   "last_read": "2026-11-09T17:58:04.305381+00:00",
-   "offered": 520,
+   "last_read": "2026-11-09T18:03:48.003653+00:00",
+   "offered": 460,
    "open": 1,
    "paused": false,
    "picked": 0,
@@ -96,8 +102,8 @@
    "kind": "Rule",
    "label": "Commodities near-certain, Yes (Yes 0.90-0.98, the last hour to the close)",
    "last_quote": "2026-11-06T18:18:49+00:00",
-   "last_read": "2026-11-09T17:58:04.305381+00:00",
-   "offered": 520,
+   "last_read": "2026-11-09T18:03:48.003653+00:00",
+   "offered": 460,
    "open": 0,
    "paused": false,
    "picked": 0,
@@ -161,7 +167,7 @@
    "kind": "Rule",
    "label": "Crypto favourite band, below (No 0.70-0.80 on the rung above the price, 3 hours to the close)",
    "last_quote": "2026-11-08T18:47:53+00:00",
-   "last_read": "2026-11-09T17:58:04.305381+00:00",
+   "last_read": "2026-11-09T18:03:48.003653+00:00",
    "offered": 275,
    "open": 0,
    "paused": false,
@@ -304,7 +310,7 @@
    "kind": "Baseline",
    "label": "Kalshi goals price (every match)",
    "last_quote": "2026-11-09T17:03:37+00:00",
-   "last_read": "2026-11-09T17:58:04.305381+00:00",
+   "last_read": "2026-11-09T18:03:48.003653+00:00",
    "offered": 12,
    "open": 0,
    "paused": false,
@@ -343,7 +349,7 @@
    "kind": "Baseline",
    "label": "Kalshi goals price (every match)",
    "last_quote": "2026-11-09T17:03:37+00:00",
-   "last_read": "2026-11-09T17:58:04.305381+00:00",
+   "last_read": "2026-11-09T18:03:48.003653+00:00",
    "offered": 12,
    "open": 0,
    "paused": false,
@@ -369,7 +375,7 @@
    "kind": "Baseline",
    "label": "Kalshi goals price (every match)",
    "last_quote": "2026-11-08T18:03:08+00:00",
-   "last_read": "2026-11-09T17:58:04.305381+00:00",
+   "last_read": "2026-11-09T18:03:48.003653+00:00",
    "offered": 4,
    "open": 0,
    "paused": false,
@@ -382,7 +388,7 @@
    "kind": "Baseline",
    "label": "Kalshi goals price (every match)",
    "last_quote": "2026-11-09T17:03:37+00:00",
-   "last_read": "2026-11-09T17:58:04.305381+00:00",
+   "last_read": "2026-11-09T18:03:48.003653+00:00",
    "offered": 34,
    "open": 0,
    "paused": false,
@@ -499,7 +505,7 @@
    "kind": "Baseline",
    "label": "Kalshi goals price (every match)",
    "last_quote": "2026-11-09T17:03:37+00:00",
-   "last_read": "2026-11-09T17:58:04.305381+00:00",
+   "last_read": "2026-11-09T18:03:48.003653+00:00",
    "offered": 12,
    "open": 0,
    "paused": false,
@@ -590,7 +596,7 @@
    "kind": "Rule",
    "label": "Over 1.5, ranked: the day's top 2 mismatches under 0.80",
    "last_quote": "2026-10-04T20:09:16+00:00",
-   "last_read": "2026-11-09T17:58:04.305381+00:00",
+   "last_read": "2026-11-09T18:03:48.003653+00:00",
    "offered": 12,
    "open": 0,
    "paused": false,
@@ -608,7 +614,7 @@
    "open": 0,
    "paused": false,
    "picked": 0,
-   "read": "ok",
+   "read": "down: no paced credit left for this run",
    "source": "pin_totals",
    "sport": "soccer_o25"
   },
@@ -621,7 +627,7 @@
    "open": 0,
    "paused": false,
    "picked": 0,
-   "read": "ok",
+   "read": "down: no paced credit left for this run",
    "source": "pin_totals",
    "sport": "soccer_o25_cup"
   },
@@ -634,7 +640,7 @@
    "open": 0,
    "paused": false,
    "picked": 0,
-   "read": "ok",
+   "read": "down: no paced credit left for this run",
    "source": "pin_totals",
    "sport": "soccer_o25_intl"
   },
@@ -915,7 +921,7 @@
    "kind": "Rule",
    "label": "Under 3.5 low-scoring rule (both teams scored \u22641 in 7+/10)",
    "last_quote": "2026-11-09T17:03:37+00:00",
-   "last_read": "2026-11-09T17:58:04.305381+00:00",
+   "last_read": "2026-11-09T18:03:48.003653+00:00",
    "offered": 12,
    "open": 1,
    "paused": false,
@@ -925,7 +931,7 @@
    "sport": "soccer_u35_intl"
   }
  },
- "ledger_updated": "2026-11-09T17:58:03+00:00",
+ "ledger_updated": "2026-11-09T18:03:47+00:00",
  "overdue_open": [],
- "written": "2026-11-09T17:58:04.305381+00:00"
+ "written": "2026-11-09T18:03:48.003653+00:00"
 }
