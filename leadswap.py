@@ -42,6 +42,8 @@ MIN_PAST, MIN_DAY = 4, 24
 TOP = 3
 STRATS = {"leadswap_swing": "Swing to the most swaps", "leadswap_fav": "Favourite to the most stable",
           "leadswap_swing_ctrl": "Control · swing to the most stable", "leadswap_fav_ctrl": "Control · favourite to the most swaps"}
+# The spot lag recorder (scripts/spotlag_recorder.py, a user service on the VPS, record only): set when it starts.
+SPOTLAG = dict(since=None, until=None, where="edge-vps, spotlag-recorder (user unit)")
 METALS = ("GOLD", "SILVER", "COPPER", "PLATINUM", "PALLADIUM")
 ENERGY = ("WTI", "BRENT", "NATGAS", "GAS", "OIL")
 FX = ("USD", "EUR", "GBP", "JPY", "CAD", "AUD", "CHF", "NZD", "MXN", "CNY")
