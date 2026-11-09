@@ -1,8 +1,8 @@
 {
  "collector": {
-  "last_ts": 1794236402,
+  "last_ts": 1794240001,
   "markets": 60,
-  "rows_24h": 79408
+  "rows_24h": 79468
  },
  "events": [],
  "flags": [
@@ -2554,6 +2554,7 @@
    "gap": 0.09324,
    "gap_15m": 0.0001,
    "gap_5m": 0.00018,
+   "gap_60m": 2e-05,
    "rth": true,
    "spread_bp": 1726.0,
    "sym": "NEM",
@@ -2564,6 +2565,7 @@
    "gap": 0.01037,
    "gap_15m": 0.00041,
    "gap_5m": 3e-05,
+   "gap_60m": 0.00065,
    "rth": false,
    "spread_bp": 0.6,
    "sym": "US Tech 100",
@@ -2571,7 +2573,7 @@
    "ts": 1794234541
   }
  ],
- "last_run": "2026-11-09T15:00:08+00:00",
+ "last_run": "2026-11-09T16:00:07+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
