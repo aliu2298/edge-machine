@@ -1,8 +1,8 @@
 {
  "collector": {
-  "last_ts": 1794261602,
+  "last_ts": 1794265202,
   "markets": 60,
-  "rows_24h": 81780
+  "rows_24h": 82860
  },
  "events": [],
  "flags": [
@@ -2571,9 +2571,105 @@
    "sym": "US Tech 100",
    "ticker": "KXUSTECH100PERP",
    "ts": 1794234541
+  },
+  {
+   "gap": 0.02311,
+   "rth": false,
+   "spread_bp": 3006.5,
+   "sym": "AMAT",
+   "ticker": "KXAMATPERP",
+   "ts": 1794265202
+  },
+  {
+   "gap": -0.08562,
+   "rth": false,
+   "spread_bp": 3034.9,
+   "sym": "AMZN",
+   "ticker": "KXAMZNPERP",
+   "ts": 1794265202
+  },
+  {
+   "gap": 0.07781,
+   "rth": false,
+   "spread_bp": 1825.7,
+   "sym": "BAC",
+   "ticker": "KXBACPERP",
+   "ts": 1794265202
+  },
+  {
+   "gap": -0.02945,
+   "rth": false,
+   "spread_bp": 2988.5,
+   "sym": "COP",
+   "ticker": "KXCOPPERP",
+   "ts": 1794265202
+  },
+  {
+   "gap": 0.02187,
+   "rth": false,
+   "spread_bp": 1557.7,
+   "sym": "INTC",
+   "ticker": "KXINTCPERP",
+   "ts": 1794265202
+  },
+  {
+   "gap": 0.02496,
+   "rth": false,
+   "spread_bp": 864.3,
+   "sym": "MCD",
+   "ticker": "KXMCDPERP",
+   "ts": 1794265202
+  },
+  {
+   "gap": 0.01164,
+   "rth": false,
+   "spread_bp": 2208.6,
+   "sym": "META",
+   "ticker": "KXMETAPERP",
+   "ts": 1794265202
+  },
+  {
+   "gap": -0.05577,
+   "rth": false,
+   "spread_bp": 1405.2,
+   "sym": "NEM",
+   "ticker": "KXNEMPERP",
+   "ts": 1794265202
+  },
+  {
+   "gap": 0.03482,
+   "rth": false,
+   "spread_bp": 4573.4,
+   "sym": "PEP",
+   "ticker": "KXPEPPERP",
+   "ts": 1794265202
+  },
+  {
+   "gap": 0.02941,
+   "rth": false,
+   "spread_bp": 1142.9,
+   "sym": "PLTR",
+   "ticker": "KXPLTRPERP",
+   "ts": 1794265202
+  },
+  {
+   "gap": -0.09851,
+   "rth": false,
+   "spread_bp": 2272.3,
+   "sym": "VZ",
+   "ticker": "KXVZPERP",
+   "ts": 1794265202
+  },
+  {
+   "gap": -0.08233,
+   "rth": false,
+   "spread_bp": 2581.2,
+   "sym": "WMT",
+   "ticker": "KXWMTPERP",
+   "ts": 1794265202
   }
  ],
- "last_run": "2026-11-09T22:00:07+00:00",
+ "last_run": "2026-11-09T23:00:07+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
