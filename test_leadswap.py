@@ -146,9 +146,28 @@ check("not picked yet: ranked or picked markets with no bets in the trade", (non
       (["KXE15M", "KXF15M"], ["KXA15M", "KXD15M", "KXE15M", "KXF15M"]))
 gh = WB.ls_groups_html(rt_, pk_, ["KXF15M"])
 check("the copy line, the red-tinted header, the under-10 tag and the trade headings",
-      ("Groups re-sort every hour from the record; no market is removed." in gh, 'thead style="background:rgba(220,38,38' in gh,
+      ("Sorted automatically each hour by return after fees; nothing is removed." in gh, 'thead style="background:rgba(220,38,38' in gh,
        gh.count("under 10"), "Swing on swappy markets" in gh and "Favourite on steady markets" in gh), (True, True, 4, True))
 check("the groups render on the page above the board", 0 < html.index('data-trade="leadswap_swing"') < html.index("Board · last 2 hours"), True)
+
+print("\nevery 15-Minute lane: the same split")
+check("split_markets: > 0 doing, <= 0 not, by bets; no-bet markets apart",
+      WB.split_markets([("KXA15M", 3, 0.1), ("KXB15M", 9, -0.2), ("KXC15M", 12, 0.3), ("KXD15M", 0, 0), ("KXE15M", 5, 0.0)]),
+      ([("KXC15M", 12, 0.3), ("KXA15M", 3, 0.1)], [("KXB15M", 9, -0.2), ("KXE15M", 5, 0.0)], ["KXD15M"]))
+check("z by day reads 'needs 2+ days' on one day, the number from two",
+      (WB._zd(dict(z=1.0, days=1)), WB._zd(dict(z=-1.0, days=0)), WB._zd(dict(z=1.234, days=2))), ("needs 2+ days", "needs 2+ days", "+1.23"))
+cell = lambda n, h, r, d=1: dict(n=n, hits=h, hit_rate=h / n, fair=.5, mean_roi=r, z=1.0, days=d)
+rec = {"x_s1": dict(all=cell(30, 15, .02), series={"KXA15M": cell(12, 8, .2), "KXB15M": cell(8, 2, -.3), "KXC15M": cell(10, 5, 0.0, 3), "KXD15M": None})}
+fb = WB._frozen_block("x", "X v3", "line", "x-v3", {"x_s1": "S1"}, rec, "x", lambda k: "Won",
+                      {"x_s1": dict(series={"KXZ15M": cell(4, 1, -.5)})}, "2026-11-09T18:00:00+00:00")
+check("a frozen lane: count, sort line, doing well above the red-headed not doing well, removed fold last",
+      ("1 doing well · 2 not" in fb, "Sorted automatically each hour by return after fees; nothing is removed." in fb,
+       fb.index("Doing well") < fb.index("Not doing well") < fb.index(WB.BAD_THEAD) < fb.index("sw15-removed")), (True, True, True))
+check("frozen rows: under-10 tag only under 10 bets, z needs 2+ days until 2 days, no-bet market listed",
+      (fb.count("under 10"), fb.count("needs 2+ days"), "−1.00" not in fb and "+1.00" in fb, "No bets yet" in fb), (1, 2, True, True))
+check("the not-doing-well table keeps the order by bets (C 10 before B 8)", fb.index('title="KXC15M"') < fb.index('title="KXB15M"'), True)
+check("every lane on the page carries the count and the sort line",
+      (len(re.findall(r"\d+ doing well · \d+ not", html)) >= 2 + 3, html.count(WB.SORT_LINE) >= 2), (True, True))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

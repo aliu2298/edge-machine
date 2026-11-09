@@ -103,6 +103,42 @@ def _table(head, rows):
             + "</tr></thead><tbody>" + "".join(rows) + "</tbody></table></div>")
 
 
+SORT_LINE = "Sorted automatically each hour by return after fees; nothing is removed."
+BAD_THEAD = '<thead style="background:rgba(220,38,38,.14)">'
+
+
+def _zd(c):
+    """z clustered by day means nothing on one day: 'needs 2+ days' until there are two."""
+    return "needs 2+ days" if (c.get("days") or 0) < 2 else _z(c.get("z"))
+
+
+def _under10(n):
+    return ' <span class="mut sm">under 10</span>' if n < 10 else ""
+
+
+def split_markets(items):
+    """items: [(series, n, roi)] -> (doing, not_doing, no_bets): return after fees > 0 v <= 0, each by bets descending
+    (then name); markets with no bets yet listed apart. Recomputed from the live record on every build."""
+    key = lambda r: (-r[1], name(r[0]))
+    bet = [r for r in items if r[1]]
+    return (sorted([r for r in bet if r[2] > 0], key=key), sorted([r for r in bet if r[2] <= 0], key=key),
+            sorted([r[0] for r in items if not r[1]], key=name))
+
+
+def count_line(good, bad):
+    return f'<p class="sm ls-count"><b>{len(good)} doing well · {len(bad)} not</b></p>'
+
+
+def _split_html(head, good, bad, tr, none=()):
+    """Doing well, then Not doing well (red header) directly below, then any no-bet markets on one line."""
+    return (f'<p class="sm">Doing well · return after fees above 0 ({len(good)})</p>'
+            + (_table(head, [tr(r) for r in good]) if good else '<p class="sm mut">None yet.</p>')
+            + f'<p class="sm ls-bad">Not doing well · return after fees 0 or below ({len(bad)})</p>'
+            + (_table(head, [tr(r) for r in bad]).replace("<thead>", BAD_THEAD, 1) if bad
+               else '<p class="sm mut">None yet.</p>')
+            + (f'<p class="sm mut">No bets yet: {", ".join(mkt(t) for t in none)}</p>' if none else ""))
+
+
 def _cell_tr(label, c, ticker=None):
     first = mkt(ticker) if ticker else esc(label)
     if not c:
@@ -110,7 +146,7 @@ def _cell_tr(label, c, ticker=None):
     h0, h1 = c["half_roi"]
     return (f'<tr><td>{first}</td><td class="num">{c["n"]}</td><td class="num">{c["hit_rate"] * 100:.0f}%</td>'
             f'<td class="num">{c["fair"] * 100:.0f}%</td><td class="num">{pct(c["mean_roi"])}</td>'
-            f'<td class="num">{_z(c["z"])}</td><td class="num">{pct(h0)} / {pct(h1)}</td></tr>')
+            f'<td class="num">{_zd(c)}</td><td class="num">{pct(h0)} / {pct(h1)}</td></tr>')
 
 
 HEAD = ("Cell", "n", "Hit", "Fair", "ROI after fees", "z (by day)", "Halves")
@@ -123,11 +159,16 @@ def _splits(state, key):
             ("US hours (9:30–16:00 ET weekdays)", lambda w: w["us_hours"]),
             ("Overnight and weekends", lambda w: not w["us_hours"])):
         rows.append(_cell_tr(name, W.cells(state, flt).get(key)))
-    for s in sorted({w["series"] for w in state["windows"].values()}):
-        c = W.cells(state, lambda w, s=s: w["series"] == s).get(key)
-        if c:
-            rows.append(_cell_tr(s, c, ticker=s))
     return _table(HEAD, rows)
+
+
+def _v1_markets(state, key):
+    """(count line, split tables) for one v1 strategy cell, by series."""
+    cs = {s: W.cells(state, lambda w, s=s: w["series"] == s).get(key)
+          for s in sorted({w["series"] for w in state["windows"].values()})}
+    good, bad, none = split_markets([(s, c["n"] if c else 0, c["mean_roi"] if c else 0) for s, c in cs.items()])
+    tr = lambda r: _cell_tr(r[0], cs[r[0]], ticker=r[0]).replace(f"{mkt(r[0])}</td>", f"{mkt(r[0])}{_under10(r[1])}</td>", 1)
+    return count_line(good, bad), _split_html(("Market",) + HEAD[1:], good, bad, tr, none)
 
 
 def _removed_fold(labels, removed, removed_at, won_word):
@@ -154,13 +195,17 @@ def _frozen_block(anchor, title, line, version, labels, rec, sport, won_word, re
         if not r["series"]:
             continue                                             # a row with every market removed shows only below
         per = {s: (x["n"] if x else 0) for s, x in r["series"].items()}
-        trs = [f'<tr><td>{mkt(s)}</td><td class="num">{x["n"] if x else 0}</td>'
-               f'<td class="num">{x["hits"] if x else "—"}</td><td class="num">{pct(x["mean_roi"]) if x else "—"}</td></tr>'
-               for s, x in r["series"].items()]
+        ser = r["series"]
+        good, bad, none = split_markets([(s, x["n"] if x else 0, x["mean_roi"] if x else 0) for s, x in ser.items()])
+        tr = lambda q: (f'<tr><td>{mkt(q[0])}{_under10(q[1])}</td><td class="num">{q[1]}</td>'
+                        f'<td class="num">{ser[q[0]]["hits"]}</td><td class="num">{pct(ser[q[0]]["mean_roi"])}</td>'
+                        f'<td class="num">{_zd(ser[q[0]])}</td></tr>')
         skips = r.get("skips") or {}
-        body = (f'<p class="sp-details-name"><b>{esc(label)}</b> · Kalshi 15-minute windows · paper · {esc(version)}</p>'
+        body = (count_line(good, bad)
+                + f'<p class="sp-details-name"><b>{esc(label)}</b> · Kalshi 15-minute windows · paper · {esc(version)}</p>'
                 f'<p class="sp-def">Frozen: {len(r["series"])} markets. Held to settlement; taker fee '
-                f'on entry.</p>' + _table(("Market", "n", won_word(strat), "ROI after fees"), trs)
+                f'on entry.</p>' + _split_html(("Market", "n", won_word(strat), "ROI after fees", "z (by day)"),
+                                               good, bad, tr, none)
                 + (f'<p class="sm mut">Skipped: {esc(", ".join(f"{k} {v}" for k, v in sorted(skips.items())))}</p>'
                    if skips else ""))
         rows.append(_row(strat, label, r["all"], per, body).replace('data-sport="swing15"', f'data-sport="{sport}"'))
@@ -169,6 +214,7 @@ def _frozen_block(anchor, title, line, version, labels, rec, sport, won_word, re
             '<span class="sp-cell num">ROI after fees</span><span class="sp-cell num">Won v priced</span>'
             '<span class="sp-cell num">Evidence</span><span class="sp-cell sp-c-verdict">Verdict</span></div>')
     return (f'<h3 class="dm-title" id="{anchor}">{esc(title)}</h3><p class="scope">{esc(line)}</p>'
+            f'<p class="sm mut">{SORT_LINE}</p>'
             f'<div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>'
             + (_removed_fold(labels, removed, removed_at, won_word) if removed_at else ""))
 
@@ -255,7 +301,7 @@ def ls_groups(rt, picks, ranked=()):
 
 def _ls_tr(r):
     s, v, c, t = r
-    tag = ' <span class="mut sm">under 10</span>' if v[0] < 10 else ""
+    tag = _under10(v[0])
     ctl = "—" if not c or not c[0] else f"{c[1]}/{c[0]}, {pct(c[2] / c[0])}"
     return (f'<tr><td>{mkt(s)}{tag}</td><td class="num">{v[0]}</td><td class="num">{v[1]}</td>'
             f'<td class="num">{pct(v[2] / v[0])}</td><td class="num">{ctl}</td><td class="num">{t[0]} / {t[1]}</td></tr>')
@@ -267,17 +313,12 @@ LS_HEAD = ("Market", "Bets", "Wins", "Return after fees", "Control (wins/bets, r
 
 def ls_groups_html(rt, picks, ranked=()):
     g = ls_groups(rt, picks, ranked)
-    parts = ['<p class="sm mut">Groups re-sort every hour from the record; no market is removed.</p>']
+    parts = [f'<p class="sm mut">{SORT_LINE}</p>']
     for strat, _ctrl, label in LS_TRADES:
         good, bad, none = g[strat]
-        bad_t = _table(LS_HEAD, [_ls_tr(r) for r in bad]).replace(
-            "<thead>", '<thead style="background:rgba(220,38,38,.14)">', 1)
         parts.append(
-            f'<div class="ls-trade" data-trade="{strat}"><h4>{esc(label)}</h4>'
-            f'<p class="sm">Doing well · return after fees above 0 ({len(good)})</p>'
-            + (_table(LS_HEAD, [_ls_tr(r) for r in good]) if good else '<p class="sm mut">None yet.</p>')
-            + f'<p class="sm ls-bad">Not doing well · return after fees 0 or below ({len(bad)})</p>'
-            + (bad_t if bad else '<p class="sm mut">None yet.</p>')
+            f'<div class="ls-trade" data-trade="{strat}"><h4>{esc(label)}</h4>{count_line(good, bad)}'
+            + _split_html(LS_HEAD, good, bad, _ls_tr)
             + f'<details class="fold"><summary>Not picked yet ({len(none)})</summary><p class="sm">'
             + (", ".join(mkt(t) for t in none) or "none") + '</p></details></div>')
     return "".join(parts)
@@ -406,9 +447,11 @@ def section(state=None):
                 '<dt>Fees</dt><dd>Taker 0.07·p(1−p) on an entry and a sell at the bid; maker 0.0175·p(1−p) on a resting '
                 'sell</dd><dt>Read</dt><dd>Review at 10 and decide at 30 settled windows per strategy and series; z '
                 'clustered by day</dd></dl>')
+        cnt, mk = _v1_markets(state, ck)
+        body = cnt + body + f'<p class="sm mut">{SORT_LINE}</p>' + mk
         if key == "swing15_s1":
             body += '<details class="fold"><summary>The whole S1 grid</summary>' + _table(HEAD, s1_grid) + "</details>"
-        body += f'<details class="fold"><summary>Splits: group, hours, series</summary>{_splits(state, ck)}</details>'
+        body += f'<details class="fold"><summary>Splits: group and hours</summary>{_splits(state, ck)}</details>'
         rows.append(_row(key, label, allc.get(ck), per, body))
     head = ('<div class="sp-line sp-head-line" aria-hidden="true"><span class="sp-cell sp-c-name">Rule</span>'
             '<span class="sp-cell sp-c-market">Market</span><span class="sp-cell num">Record</span>'
