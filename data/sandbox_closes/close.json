@@ -5,6 +5,16 @@
    "lead_min": 50.2,
    "price": 0.98
   },
+  "commod_fav_band:KXBRENTD-26NOV0917-T90.50": {
+   "at": "2026-11-09T20:40:43+00:00",
+   "lead_min": 49.3,
+   "price": 0.98
+  },
+  "commod_fav_band:KXNATGASD-26NOV0917-T3.280": {
+   "at": "2026-11-09T20:40:43+00:00",
+   "lead_min": 49.3,
+   "price": 0.96
+  },
   "commod_fav_band:KXSILVERD-26NOV0317-T49.50": {
    "at": "2026-11-03T20:39:47+00:00",
    "lead_min": 50.2,
@@ -38,31 +48,6 @@
   "corners_total_under:KXLALIGACORNERS-26OCT31BARALA-10": {
    "at": "2026-10-31T19:31:35+00:00",
    "lead_min": 28.4,
-   "price": 0.38
-  },
-  "crypto_fav_band:KXBTCD-26OCT3017-T76499.99": {
-   "at": "2026-10-30T18:50:24+00:00",
-   "lead_min": 14.6,
-   "price": 0.56
-  },
-  "crypto_fav_band:KXSOLD-26OCT3017-T93.9999": {
-   "at": "2026-10-30T18:50:24+00:00",
-   "lead_min": 14.6,
-   "price": 0.38
-  },
-  "crypto_fav_band_60:KXBTCD-26OCT3017-T76499.99": {
-   "at": "2026-10-30T18:50:24+00:00",
-   "lead_min": 14.6,
-   "price": 0.56
-  },
-  "crypto_fav_band_below:KXBTCD-26OCT3017-T77499.99": {
-   "at": "2026-10-30T18:50:24+00:00",
-   "lead_min": 14.6,
-   "price": 0.96
-  },
-  "crypto_sol_fav_both:KXSOLD-26OCT3017-T93.9999": {
-   "at": "2026-10-30T18:50:24+00:00",
-   "lead_min": 14.6,
    "price": 0.38
   },
   "ere_draw:KXEREDIVISIEGAME-26NOV06WILZWO": {
@@ -191,5 +176,5 @@
    "price": 0.78
   }
  },
- "updated": "2026-11-08T18:29:31+00:00"
+ "updated": "2026-11-09T20:40:43+00:00"
 }
