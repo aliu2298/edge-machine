@@ -142,6 +142,15 @@ def v2_block(state):
                              "flipside_v2", lambda k: "Won")
     except Exception:                                           # noqa: BLE001  (never breaks the section)
         pass
+    try:
+        import holdtoend as H
+        out += _frozen_block("holdtoend", "Hold to End",
+                             "Cheap side bought at 25c/35c in the first 5 minutes, held to settlement, no sell; cells over "
+                             f"+10% in one overnight session; fresh record from {_start(H.FROM)}; review at "
+                             f"{W.REVIEW_AT}, decide at {W.DECIDE_AT}.", H.VERSION, H.LABELS, H.records(state),
+                             "holdtoend", lambda k: "Won")
+    except Exception:                                           # noqa: BLE001  (never breaks the section)
+        pass
     return out + '<h3 class="dm-title">15-Minute Swing v1 · every market</h3>'
 
 
@@ -225,6 +234,13 @@ def index_rows(state=None):
         c = r["all"]
         best = max(((x or {}).get("n", 0) for x in r["series"].values()), default=0)
         out.append(dict(lane=key, label="Flip Side v2 · " + F.LABELS[key], n=c["n"] if c else 0,
+                        roi=c["mean_roi"] if c else None, hit=c["hit_rate"] if c else None,
+                        fair=c["fair"] if c else None, status=f"{best}/{W.DECIDE_AT} in its best market"))
+    import holdtoend as H                                       # Hold to End (2026-11-09)
+    for key, r in H.records(state).items():
+        c = r["all"]
+        best = max(((x or {}).get("n", 0) for x in r["series"].values()), default=0)
+        out.append(dict(lane=key, label=H.LABELS[key], n=c["n"] if c else 0,
                         roi=c["mean_roi"] if c else None, hit=c["hit_rate"] if c else None,
                         fair=c["fair"] if c else None, status=f"{best}/{W.DECIDE_AT} in its best market"))
     return out

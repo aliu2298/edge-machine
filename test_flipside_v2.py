@@ -86,7 +86,7 @@ check("the header line", "Opposite side of the 15-Minute Swing; cells picked fro
       "the flips ran −0.5% to −16%; fresh record from 2026-11-09 13:15 UTC; review at 10, decide at 30." in html, True)
 check("four rows", re.findall(r'data-source="(flipside_v2_f\d)"', html),
       ["flipside_v2_f1", "flipside_v2_f2", "flipside_v2_f3", "flipside_v2_f4"])
-check("the Sandbox index lists them", [r["lane"] for r in WB.index_rows(state)][-4:], list(F.CELLS))
+check("the Sandbox index lists them", [r["lane"] for r in WB.index_rows(state)][6:10], list(F.CELLS))
 check("no dollar sign, no guarded phrase", (re.search(r"\$\d", html), sandbox_audit.COPY_RE.findall(html + WB.index_html(state))), (None, []))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
