@@ -46,6 +46,11 @@ STRATS = {"leadswap_swing": "Swing to the most swaps", "leadswap_fav": "Favourit
 SPOTLAG = dict(since=None, until=None, where="edge-vps, spotlag-recorder (user unit)")
 METALS = ("GOLD", "SILVER", "COPPER", "PLATINUM", "PALLADIUM")
 ENERGY = ("WTI", "BRENT", "NATGAS", "GAS", "OIL")
+# 2026-11-09: ONE block map for the board, the persistence readout and the cluster grading. The board once called
+# block() with a bare ticker and no group, which sent every crypto series to "indices"; a bare ticker now resolves the
+# same way a window does (known crypto names, then the group-free rules).
+CRYPTO = ("BTC", "ETH", "SOL", "XRP", "BNB", "DOGE", "HYPE", "NEAR", "ZEC", "ADA", "AVAX", "LTC", "LINK", "SHIB", "SUI",
+          "TRX", "DOT", "XLM", "BCH", "CRYPTO")
 FX = ("USD", "EUR", "GBP", "JPY", "CAD", "AUD", "CHF", "NZD", "MXN", "CNY")
 
 
@@ -54,7 +59,7 @@ def block(w_or_series, group=None):
     s = w_or_series if isinstance(w_or_series, str) else w_or_series["series"]
     group = group or ({} if isinstance(w_or_series, str) else w_or_series).get("group")
     name = s[2:-3] if s.startswith("KX") and s.endswith("15M") else s
-    if group == "Crypto":
+    if group == "Crypto" or (group is None and name in CRYPTO):
         return "crypto"
     if group == "Commodities" or any(m in name for m in METALS + ENERGY):
         return "metals" if any(m in name for m in METALS) else "energy"
@@ -174,6 +179,9 @@ def persistence(rows):
     keep_t = keep_b = slots = 0
     chance = []
     hours = 0
+    # (b) within each block: the top k (k = min(3, n // 2)) of a block by the past 2h, kept in that block's top k of
+    # the hour. Chance is k / n. Separates "FX stays on top because FX swaps more" from hour-to-hour carry.
+    wb = {}
     while h + 3600 <= last + 900:
         past = rank(rows, h, PAST_H, MIN_PAST)
         nxt = {}
@@ -192,6 +200,20 @@ def persistence(rows):
             slots += TOP
             chance.append(TOP / len(common))
             hours += 1
+        groups = {}
+        for x in rows:
+            groups.setdefault(x[0], block(x[0], x[1]))
+        for bk in sorted(set(groups.values())):
+            inb = {s for s in common if groups.get(s) == bk}
+            k = min(TOP, len(inb) // 2)
+            if k < 1:
+                continue
+            p0 = [r[0] for r in past if r[0] in inb][:k]
+            p1 = [r[0] for r in now_r if r[0] in inb][:k]
+            c = wb.setdefault(bk, [0, 0, 0.0])
+            c[0] += len(set(p0) & set(p1))
+            c[1] += k
+            c[2] += k * (k / len(inb))
         h += 3600
     corr = {}
     pairs = {}
@@ -208,7 +230,12 @@ def persistence(rows):
     for fam, ps in sorted(pairs.items()):
         c = _corr([p[0] for p in ps], [p[1] for p in ps])
         corr[fam] = dict(n=len(ps), corr=None if c is None else round(c, 3))
-    return dict(hours=hours, top=None if not slots else round(keep_t / slots, 3),
+    within = {bk: dict(slots=c[1], stay=round(c[0] / c[1], 3), chance=round(c[2] / c[1], 3)) for bk, c in wb.items() if c[1]}
+    tot = [sum(c[i] for c in wb.values()) for i in range(3)]
+    return dict(hours=hours, within=within,
+                within_all=None if not tot[1] else dict(slots=tot[1], stay=round(tot[0] / tot[1], 3),
+                                                        chance=round(tot[2] / tot[1], 3)),
+                top=None if not slots else round(keep_t / slots, 3),
                 bottom=None if not slots else round(keep_b / slots, 3),
                 chance=None if not chance else round(sum(chance) / len(chance), 3), corr=corr)
 
@@ -227,6 +254,19 @@ def _trade(w, strat):
     return int(x["won"] == 1), x["price"], x["roi"]
 
 
+def _before_freeze(w, strat, p):
+    """True when the entry happened before the hour's picks were frozen (the run's time, ~:04). The picks use only
+    data that ended at :00, so the paper record is fair, but a live version could only act from the freeze on."""
+    at = p.get("at")
+    if not at:
+        return None
+    if strat in ("leadswap_swing", "leadswap_swing_ctrl"):
+        ts = (((w.get("s1") or {}).get("0.35") or {}).get("trigger") or {}).get("ts")
+    else:
+        ts = W._ts(w["open"]) + 60 * W.S3_MIN                   # S3 enters at minute 10
+    return None if ts is None else ts < W._ts(at)
+
+
 def routing(rows, picks):
     """{strat: cell}: each frozen hour's picks applied to the windows opening in that hour."""
     found = {k: [] for k in STRATS}
@@ -242,7 +282,7 @@ def routing(rows, picks):
             if s in p[side]:
                 t = _trade(w, strat)
                 if t:
-                    found[strat].append((f"{o}|{block(w)}", o, t[0], t[1], t[2], s))
+                    found[strat].append((f"{o}|{block(w)}", o, t[0], t[1], t[2], s, _before_freeze(w, strat, p)))
     out = {}
     for strat, rs in found.items():
         if not rs:
@@ -252,7 +292,7 @@ def routing(rows, picks):
         out[strat] = dict(n=n, hits=int(sum(r[2] for r in rs)), hit_rate=sum(r[2] for r in rs) / n,
                           fair=sum(r[3] for r in rs) / n, mean_roi=sum(r[4] for r in rs) / n,
                           z=W.cluster_z([(r[0], r[2], r[3]) for r in rs]), clusters=len({r[0] for r in rs}),
-                          series={})
+                          before_freeze=sum(bool(r[6]) for r in rs), series={})
         for r in rs:
             c = out[strat]["series"].setdefault(r[5], [0, 0, 0.0])
             c[0] += 1
@@ -281,7 +321,7 @@ def board(rows, now_ts):
                 swaps_24h=sum(r[4]["swaps"] for r in day), median_swing=sorted(sizes)[len(sizes) // 2] if sizes else None,
                 fav14_won=None if not fav else round(sum(fav) / len(fav), 3),
                 heat={s: {str(h): [c[0], c[1]] for h, c in hs.items()} for s, hs in sorted(heat.items())},
-                blocks={s: block(s) for s in heat})
+                blocks={s: block(s, g) for s, g, *_ in rows})
 
 
 def empty():

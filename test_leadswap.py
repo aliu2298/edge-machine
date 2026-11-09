@@ -45,6 +45,9 @@ check("an empty book (0/100c) is skipped, not a swap", L.metrics(e)["quoted"], 1
 check("blocks", [L.block(s, g) for s, g in (("KXBTC15M", "Crypto"), ("KXGOLD15M", "Commodities"), ("KXWTI15M", "Commodities"),
                                             ("KX10YRRATE15M", "Financials"), ("KXUSDJPY15M", "Financials"), ("KXINX15M", "Financials"))],
       ["crypto", "metals", "energy", "yields", "fx", "indices"])
+check("a bare ticker resolves like its window (the board once sent every crypto series to indices)",
+      [L.block(t) for t in ("KXBTC15M", "KXSOL15M", "KXZEC15M", "KXINX15M", "KXGOLD15M", "KXUSDJPY15M", "KX2YRRATE15M")],
+      ["crypto", "crypto", "crypto", "indices", "metals", "fx", "yields"])
 check("families fold metals and energy into commodities", (L.family("metals"), L.family("energy"), L.family("fx")),
       ("commodities", "commodities", "fx"))
 
@@ -89,6 +92,11 @@ check("controls take the opposite end", (sorted(rt["leadswap_swing_ctrl"]["serie
 check("one crypto block a window is one cluster: 4 windows -> 4 clusters", rt["leadswap_swing"]["clusters"], 4)
 check("windows before FROM never route", L.routing(rows, {iso(H - 3600).replace("Z", "+00:00"): dict(top=["KXA15M"], bottom=[])})["leadswap_swing"], None)
 pr = led["persistence"]
+check("the board's block map comes from the windows' own groups: crypto, not indices", set(led["board"]["blocks"].values()), {"crypto"})
+check("within-block stay: one crypto block of 7, k = 3, the swappy three stay (chance 3/7)",
+      (pr["within"]["crypto"]["stay"], pr["within"]["crypto"]["chance"], pr["within_all"]["stay"]), (1.0, round(3 / 7, 3), 1.0))
+check("each routed entry records whether it came before the picks froze (fixtures have no trigger time: None)",
+      rt["leadswap_swing"]["before_freeze"], 0)
 check("persistence: the swappy three stay on top (100% v chance 3/7)", (pr["top"], pr["chance"]), (1.0, round(3 / 7, 3)))
 b = led["board"]
 check("the minute histogram: 3 swappy series x 12 windows, one swap at each of minutes 1-6", b["minutes"][:8], [0] + [36] * 6 + [0])
@@ -104,6 +112,8 @@ order = [html.index(x) for x in ("Lead Swap Board", "15-Minute Swing v2", "The F
                                   "15-Minute Swing v1 · every market")]
 check("the order: Lead Swap Board, Swing v2, Flip Side v2, Hold to End, v1", order == sorted(order), True)
 check("v1 is collapsed by default", bool(re.search(r'<details class="fold sw15-v1"><summary>', html)), True)
+check("the page notes a live version could act only from :05", "could only act from :05" in html, True)
+check("the within-block persistence table", "Stayed top" in html, True)
 check("four routing rows", re.findall(r'data-source="(leadswap_[a-z_]+)"', html), list(L.STRATS))
 check("the board shows the most swaps and the most stable", ("Most swaps, last 2 hours" in html, "Most stable, last 24 hours" in html), (True, True))
 check("persistence, minute histogram and the hour-of-day heatmap folds",
