@@ -114,6 +114,15 @@ check("the order: Lead Swap Board, Swing v2, Flip Side v2, Hold to End, v1", ord
 check("v1 is collapsed by default", bool(re.search(r'<details class="fold sw15-v1"><summary>', html)), True)
 check("the page notes a live version could act only from :05", "could only act from :05" in html, True)
 check("the within-block persistence table", "Stayed top" in html, True)
+import swing15 as W_
+real = W_.load()
+check("every series in the current shards has a display name (never blank, never the raw ticker)",
+      [t for t in sorted({w["series"] for w in real["windows"].values()}) if not WB.name(t) or WB.name(t) == t], [])
+check("names: the map, then the KX/15M fallback", (WB.name("KXAUDUSD15M"), WB.name("KXNEWCOIN15M"), WB.name("")),
+      ("AUD/USD (Australian Dollar)", "NEWCOIN", "?"))
+check("market cells show the name with the ticker in a hover title",
+      WB.mkt("KXBTC15M"), '<span title="KXBTC15M">Bitcoin</span>')
+check("no raw series ticker as visible text in the section", re.findall(r">(KX[A-Z0-9]+15M)<", html), [])
 check("four routing rows", re.findall(r'data-source="(leadswap_[a-z_]+)"', html), list(L.STRATS))
 check("the board shows the most swaps and the most stable", ("Most swaps, last 2 hours" in html, "Most stable, last 24 hours" in html), (True, True))
 check("persistence, minute histogram and the hour-of-day heatmap folds",
