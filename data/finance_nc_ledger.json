@@ -887,20 +887,34 @@
       "status": "open",
       "title": "NO \u00b7 7,575 or above",
       "yes_bid": 0.09
+    },
+    {
+      "bid": 0.91,
+      "close": "2026-11-09T21:00:00Z",
+      "event": "KXINXU-26NOV09H1600",
+      "id": "KXINXU-26NOV09H1600-T7569.9999",
+      "logged": "2026-11-09T18:30:49.149972+00:00",
+      "name": "S&P 500 above/below",
+      "price": 0.93,
+      "series": "KXINXU",
+      "side": "no",
+      "size": 154.0,
+      "status": "open",
+      "title": "NO \u00b7 7,570 or above",
+      "yes_bid": 0.07
     }
   ],
   "error": null,
   "key": "finance_spx_nc_no",
-  "last_run": "2026-11-09T18:00:52.176526+00:00",
-  "last_success": "2026-11-09T18:00:52.176526+00:00",
+  "last_run": "2026-11-09T18:30:49.149972+00:00",
+  "last_success": "2026-11-09T18:30:49.149972+00:00",
   "observation": {
-    "at": "2026-11-09T18:00:52.176526+00:00",
+    "at": "2026-11-09T18:30:49.149972+00:00",
     "eligible": 3,
     "listed": 300,
     "reasons": {
       "Not the 16:00 ET event": 200,
-      "Order-book price, spread, depth or two-sided gate": 1,
-      "Price or spread gate": 96
+      "Price or spread gate": 97
     }
   },
   "picks": [
