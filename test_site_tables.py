@@ -462,12 +462,22 @@ ok(_feed_raised is None, "build_feed does not crash on an out-of-range kickoff"
 
 print("\ntest_running_rows_match_header_and_keep_sport")
 
-_run = _section(_sandbox, "running")
+# The Running table exists only while some bet is open, and the live ledger has none overnight and after the last slate. Seed one plain open
+# bet (a normal sport and source, no exclusion flag) into a copy of the ledger so the table's shape is checked on every run, never by luck.
+_run_fx_row = {
+    "id": "fixture-running-open", "bet": True, "status": "open", "sport": "soccer", "source": "fixture", "pick": "a",
+    "side_a": "Running Fixture A", "side_b": "Running Fixture B", "price": 0.4, "pnl": None, "label": "Running Fixture A v Running Fixture B",
+    "date": "2026-09-28", "start": "2026-09-28T18:00:00Z", "venue": "kalshi", "market_id": "fixture-running-open",
+}
+_run_fx = dict(T.load(), quotes=list(T.load()["quotes"]) + [_run_fx_row])
+_run_page = SB.label_cells(SB.build(now=NOW, d=_run_fx, st=T.load_stages()))
+_run = _section(_run_page, "running")
 _run_tables = _sortable_tables(_run)
 ok(len(_run_tables) == 1, "sandbox.html has one Running table")
+ok("fixture-running-open" in _ids(_run), "the seeded open bet is a row of the Running table")
 if _run_tables:
     _head_n = len(re.findall(r"<th\b", _run_tables[0]))
-    _sports = {q["id"]: (q.get("sport") or "") for q in T.load()["quotes"]
+    _sports = {q["id"]: (q.get("sport") or "") for q in _run_fx["quotes"]
                if q.get("bet") and q.get("status") == "open"
                and not T.climate_excluded(q) and not S.removed_row(q)
                and not S.tennis_refused_row(q)}
