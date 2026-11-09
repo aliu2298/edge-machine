@@ -125,7 +125,8 @@ def section(state=None):
         body = (f'<p class="sp-details-name"><b>{esc(label)}</b> · Kalshi 15-minute windows · paper · {esc(W.VERSION)}</p>'
                 f'<p class="sp-def">{esc(text)}</p>'
                 '<dl class="sp-params"><dt>Scope</dt><dd>Every Kalshi 15-minute series in Crypto, Commodities and '
-                f'Financials ({len(state.get("series") or [])} series)</dd>'
+                f'Financials (scanned {len(state.get("series") or [])} / with windows '
+                f'{len({w["series"] for w in (state.get("windows") or {}).values()})})</dd>'
                 '<dt>Fees</dt><dd>Taker 0.07·p(1−p) on an entry and a sell at the bid; maker 0.0175·p(1−p) on a resting '
                 'sell</dd><dt>Read</dt><dd>Review at 10 and decide at 30 settled windows per strategy and series; z '
                 'clustered by day</dd></dl>')

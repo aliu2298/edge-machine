@@ -112,6 +112,8 @@ check("the schema and the minute table: 15 rows, minute 0..14, one column per MI
       (2, 15, 0, 14, len(W.MINUTE_COLS), ["m", "yes_bid", "yes_ask", "no_bid", "no_ask"]))
 check("minute 1's row: YES bid/ask, NO bid = 1 − YES ask, the traded range and last",
       r["minutes"][1][1:8], [.24, .26, .74, .76, .20, .55, None])
+check("the market block has numeric volume, open interest and the result at settlement",
+      {k: r["market"].get(k) for k in ("volume", "open_interest", "result")}, dict(volume=None, open_interest=None, result="yes"))
 check("the window close and the skip flags", (r["close"], r["closed_early"], r["missing_minutes"]),
       (ISO(OPEN + 900), False, []))
 t = e["trigger"]
@@ -150,6 +152,7 @@ with tempfile.TemporaryDirectory() as tmp:
     st2["touched"] = []
     W.run(st2, now=dt.datetime.fromtimestamp(OPEN + 3600, dt.timezone.utc), get=g, log=lambda *_: None)
     check("de-duplicated by ticker: a second run grades nothing", st2["runs"][-1]["graded"], 0)
+    check("the run counts series scanned and series with windows", (st["runs"][-1]["series"], st["runs"][-1]["series_with_windows"]), (1, 1))
     check("the index holds no windows", "windows" in json.load(open(path)), False)
     st3 = W.load(path, shards)
     st3["windows"][m["ticker"]]["schema"] = 1
@@ -176,6 +179,7 @@ check("the same seven columns as Daily Markets",
       re.sub(r"<[^>]+>", "|", html.split('sp-head-line')[1].split("</div>")[0]).count("|") > 0
       and all(h in html for h in ("Market", "Record", "ROI after fees", "Won v priced", "Evidence", "Verdict")), True)
 check("too early under 10 windows a series", "Too early" in html, True)
+check("the scope says scanned / with windows", "scanned 1 / with windows 1" in html, True)
 check("no dollar sign, no guarded phrase", (re.search(r"\$\d", html), sandbox_audit.COPY_RE.findall(html + WB.index_html(state))), (None, []))
 check("the Sandbox index rows link to the section", 'href="./daily_markets.html#swing15"' in WB.index_html(state), True)
 

@@ -329,7 +329,10 @@ def grade(series, group, mult_fee, m, get=_get):
                 day=t_open.date().isoformat(), us_hours=t_open.weekday() < 5 and 570 <= m_of_day < 960,
                 s1=s1s, s2=fav(w, S2_MIN, payout_yes, mult_fee), s3=fav(w, S3_MIN, payout_yes, mult_fee),
                 schema=SCHEMA, close=m.get("close_time"), fee_multiplier=mult_fee,
-                market={k: m[k] for k in MARKET_KEYS if m.get(k) is not None},
+                market=dict({k: m[k] for k in MARKET_KEYS if m.get(k) is not None},
+                            # Numeric copies at settlement, for depth and liquidity splits (volume_fp etc. are strings).
+                            volume=_num(m.get("volume_fp")), open_interest=_num(m.get("open_interest_fp")),
+                            result=res or None),
                 minute_cols=list(MINUTE_COLS), minutes=mins,
                 # A window that closed before its 15 minutes, or is missing minutes, is flagged, not dropped.
                 closed_early=span < 900 or (settled_at is not None and settled_at < w.open + 900 - 1),
@@ -399,6 +402,7 @@ def run(state, now=None, get=_get, budget_s=RUN_BUDGET_S, log=print):
     series = discover(get)
     state["series"] = [dict(ticker=t, group=g, fee_multiplier=f) for t, g, f in series]
     added, errors, skipped_old = 0, [], 0
+    with_windows = set()
     todo = []
     for ticker, group, mult_fee in series:
         try:
@@ -419,6 +423,7 @@ def run(state, now=None, get=_get, budget_s=RUN_BUDGET_S, log=print):
             break
         try:
             g = grade(ticker, group, mult_fee, m, get=get)
+            with_windows.add(ticker)
             state["windows"][m["ticker"]] = g
             if shard_of(g) not in state["touched"]:
                 state["touched"].append(shard_of(g))
@@ -426,10 +431,10 @@ def run(state, now=None, get=_get, budget_s=RUN_BUDGET_S, log=print):
         except Exception as e:                                   # noqa: BLE001
             errors.append(f"{m['ticker']}: {type(e).__name__}")
     state["runs"] = (state.get("runs") or [])[-200:] + [dict(
-        at=now.isoformat(timespec="seconds"), series=len(series), graded=added, waiting=len(todo) - added,
+        at=now.isoformat(timespec="seconds"), series=len(series), series_with_windows=len(with_windows), graded=added, waiting=len(todo) - added,
         errors=errors[:20])]
     state["last_run"] = now.isoformat(timespec="seconds")
-    log(f"series {len(series)} graded {added} waiting {len(todo) - added} errors {len(errors)}")
+    log(f"series scanned {len(series)} / with windows {len(with_windows)} graded {added} waiting {len(todo) - added} errors {len(errors)}")
     return state
 
 
