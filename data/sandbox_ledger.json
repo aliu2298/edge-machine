@@ -41,10 +41,10 @@
    "kalshi_venue": 275
   },
   "economics": {
-   "kalshi_venue": 38
+   "kalshi_venue": 15
   },
   "finance": {
-   "kalshi_venue": 31
+   "kalshi_venue": 45
   },
   "mma": {
    "kalshi_venue": 0,
@@ -69,7 +69,7 @@
     "offered": 0,
     "picked": 0
    },
-   "kalshi_venue": 17,
+   "kalshi_venue": 18,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -354,8 +354,8 @@
   "tennis": {
    "kalshi_venue": 13,
    "polymarket_us": 40,
-   "polymarket_us_listed": 444,
-   "polymarket_us_priced": 184
+   "polymarket_us_listed": 454,
+   "polymarket_us_priced": 191
   },
   "tennis_combo": {
    "combo": 0,
@@ -372,41 +372,41 @@
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-09T01:15:57+00:00",
-   "commodities": "2026-11-09T01:15:57+00:00",
-   "commodities_fav": "2026-11-09T01:15:57+00:00",
-   "cricket": "2026-11-09T01:15:57+00:00",
-   "crypto": "2026-11-09T01:15:57+00:00",
-   "crypto_fav": "2026-11-09T01:15:57+00:00",
-   "economics": "2026-11-09T01:15:57+00:00",
-   "finance": "2026-11-09T01:15:57+00:00",
+   "boxing": "2026-11-09T01:20:37+00:00",
+   "commodities": "2026-11-09T01:20:37+00:00",
+   "commodities_fav": "2026-11-09T01:20:37+00:00",
+   "cricket": "2026-11-09T01:20:37+00:00",
+   "crypto": "2026-11-09T01:20:37+00:00",
+   "crypto_fav": "2026-11-09T01:20:37+00:00",
+   "economics": "2026-11-09T01:20:37+00:00",
+   "finance": "2026-11-09T01:20:37+00:00",
    "mma": "2026-11-08T03:03:20+00:00",
-   "nfl": "2026-11-09T01:15:57+00:00",
-   "nhl_pl": "2026-11-09T01:15:57+00:00",
-   "nhl_rest": "2026-11-09T01:15:57+00:00",
-   "soccer": "2026-11-09T01:15:57+00:00",
+   "nfl": "2026-11-09T01:20:37+00:00",
+   "nhl_pl": "2026-11-09T01:20:37+00:00",
+   "nhl_rest": "2026-11-09T01:20:37+00:00",
+   "soccer": "2026-11-09T01:20:37+00:00",
    "soccer_btts": "2026-11-08T20:07:32+00:00",
    "soccer_btts_cup": "2026-11-05T19:33:47+00:00",
-   "soccer_btts_intl": "2026-11-09T01:15:57+00:00",
+   "soccer_btts_intl": "2026-11-09T01:20:37+00:00",
    "soccer_corners": "2026-11-08T19:58:15+00:00",
    "soccer_ftts": "2026-10-19T18:33:38+00:00",
    "soccer_o15": "2026-11-08T20:07:32+00:00",
    "soccer_o15_cup": "2026-11-05T19:33:47+00:00",
-   "soccer_o15_intl": "2026-11-09T01:15:57+00:00",
+   "soccer_o15_intl": "2026-11-09T01:20:37+00:00",
    "soccer_o25": "2026-11-08T20:07:32+00:00",
    "soccer_o25_cup": "2026-11-05T19:33:47+00:00",
-   "soccer_o25_intl": "2026-11-09T01:15:57+00:00",
+   "soccer_o25_intl": "2026-11-09T01:20:37+00:00",
    "soccer_p05": "2026-11-08T20:07:32+00:00",
-   "soccer_p05_cup": "2026-11-09T01:15:57+00:00",
-   "soccer_p05_intl": "2026-11-09T01:15:57+00:00",
+   "soccer_p05_cup": "2026-11-09T01:20:37+00:00",
+   "soccer_p05_intl": "2026-11-09T01:20:37+00:00",
    "soccer_team1": "2026-11-08T19:58:15+00:00",
    "soccer_team1_cup": "2026-11-05T19:33:47+00:00",
    "soccer_team2": "2026-11-08T19:58:15+00:00",
    "soccer_team2_cup": "2026-11-05T19:33:47+00:00",
    "soccer_u35": "2026-11-08T20:07:32+00:00",
    "soccer_u35_cup": "2026-11-05T19:33:47+00:00",
-   "soccer_u35_intl": "2026-11-09T01:15:57+00:00",
-   "tennis": "2026-11-09T01:15:57+00:00",
+   "soccer_u35_intl": "2026-11-09T01:20:37+00:00",
+   "tennis": "2026-11-09T01:20:37+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -527,7 +527,7 @@
   },
   "odds_api": {
    "allowance": 0,
-   "at": "2026-11-09T01:15:57+00:00",
+   "at": "2026-11-09T01:20:37+00:00",
    "remaining": 340,
    "used": 160
   },
@@ -548,7 +548,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 1390,
+  "runs": 1391,
   "tennis_shortlist": {
    "audit": [
     {
@@ -560,7 +560,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-09T01:16:21+00:00"
+  "updated": "2026-11-09T01:21:02+00:00"
  },
  "quotes": [
   {
@@ -429428,6 +429428,39 @@
    "untraded": false,
    "url": "https://polymarket.us/event/nfl-was-nyg-2026-11-12",
    "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-09",
+   "edge": 0.0,
+   "id": "cmd_market:KXSILVERD-26NOV0917-T56.75",
+   "label": "Will the silver close price be above 56.75 USD/t.oz on November 09, 2026 at 5:00 PM EST?",
+   "liquidity": null,
+   "logged": "2026-11-09T01:20:37+00:00",
+   "market_id": "KXSILVERD-26NOV0917-T56.75",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.02,
+   "price_b": 0.99,
+   "price_draw": null,
+   "prob_a": 0.02,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $56.75",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-09T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxsilverd",
+   "venue": "kalshi_binary",
    "venue_start": null
   }
  ],

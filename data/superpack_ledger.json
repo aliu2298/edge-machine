@@ -1783,7 +1783,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-09T01:16:22.905451+00:00",
+ "last_run": "2026-11-09T01:21:03.664234+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -4903,14 +4903,14 @@
    ],
    "pid": "[\"nfl_tt_ledger.json\", \"nfl_tt_over_3545\", [\"nfl_tt_over_3545:KXNFLTEAMTOTAL-26NOV08CLENO:CLE\", \"yes\"]]",
    "price": 0.4,
-   "profit": null,
+   "profit": 1.3992,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-09T01:14:12.212809+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Football",
    "src": "nfl_tt_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXNFLTEAMTOTAL-26NOV08CLENO-NO25",
@@ -4926,14 +4926,14 @@
    ],
    "pid": "[\"nfl_tt_ledger.json\", \"nfl_tt_over_3545\", [\"nfl_tt_over_3545:KXNFLTEAMTOTAL-26NOV08CLENO:NO\", \"yes\"]]",
    "price": 0.43,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-09T01:14:12.212809+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Football",
    "src": "nfl_tt_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXNFLTEAMTOTAL-26NOV08DALIND-DAL32",
@@ -4949,14 +4949,14 @@
    ],
    "pid": "[\"nfl_tt_ledger.json\", \"nfl_tt_over_3545\", [\"nfl_tt_over_3545:KXNFLTEAMTOTAL-26NOV08DALIND:DAL\", \"yes\"]]",
    "price": 0.36,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-09T01:14:12.212809+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Football",
    "src": "nfl_tt_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXNFLTEAMTOTAL-26NOV08DALIND-IND25",
@@ -4972,14 +4972,14 @@
    ],
    "pid": "[\"nfl_tt_ledger.json\", \"nfl_tt_over_3545\", [\"nfl_tt_over_3545:KXNFLTEAMTOTAL-26NOV08DALIND:IND\", \"yes\"]]",
    "price": 0.44,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-09T01:14:12.212809+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Football",
    "src": "nfl_tt_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXNFLTEAMTOTAL-26NOV08DENCAR-CAR25",
@@ -5438,14 +5438,14 @@
    ],
    "pid": "[\"nfl_tt_ledger.json\", \"nfl_tt_over_3545\", [\"nfl_tt_over_3545:KXNFLTEAMTOTAL-26NOV08HOULAC:HOU\", \"yes\"]]",
    "price": 0.43,
-   "profit": null,
+   "profit": 1.2364,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-09T01:14:12.212809+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Football",
    "src": "nfl_tt_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXNFLTEAMTOTAL-26NOV08HOULAC-LAC21",
@@ -5461,14 +5461,14 @@
    ],
    "pid": "[\"nfl_tt_ledger.json\", \"nfl_tt_over_3545\", [\"nfl_tt_over_3545:KXNFLTEAMTOTAL-26NOV08HOULAC:LAC\", \"yes\"]]",
    "price": 0.35,
-   "profit": null,
+   "profit": 1.7328,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-09T01:14:12.212809+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Football",
    "src": "nfl_tt_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXNFLTEAMTOTAL-26NOV08ARISEA-ARI18",
@@ -5484,14 +5484,14 @@
    ],
    "pid": "[\"nfl_tt_ledger.json\", \"nfl_tt_over_3545\", [\"nfl_tt_over_3545:KXNFLTEAMTOTAL-26NOV08ARISEA:ARI\", \"yes\"]]",
    "price": 0.35,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-09T01:14:12.212809+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Football",
    "src": "nfl_tt_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXNFLTEAMTOTAL-26NOV08GBNE-GB23",
@@ -5507,14 +5507,14 @@
    ],
    "pid": "[\"nfl_tt_ledger.json\", \"nfl_tt_over_3545\", [\"nfl_tt_over_3545:KXNFLTEAMTOTAL-26NOV08GBNE:GB\", \"yes\"]]",
    "price": 0.44,
-   "profit": null,
+   "profit": 1.187,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-09T01:14:12.212809+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Football",
    "src": "nfl_tt_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXNFLTEAMTOTAL-26NOV08ARISEA-ARI17",
@@ -5530,14 +5530,14 @@
    ],
    "pid": "[\"nfl_tt_main1_ledger.json\", \"nfl_tt_main1\", [\"nfl_tt_main1:KXNFLTEAMTOTAL-26NOV08ARISEA:ARI\", \"yes\"]]",
    "price": 0.42,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-09T01:14:30.197769+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Football",
    "src": "nfl_tt_main1_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXNFLTEAMTOTAL-26NOV08ARISEA-SEA29",
@@ -5553,14 +5553,14 @@
    ],
    "pid": "[\"nfl_tt_main1_ledger.json\", \"nfl_tt_main1\", [\"nfl_tt_main1:KXNFLTEAMTOTAL-26NOV08ARISEA:SEA\", \"yes\"]]",
    "price": 0.34,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-09T01:14:30.197769+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Football",
    "src": "nfl_tt_main1_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXNFLTEAMTOTAL-26NOV08GBNE-GB22",
@@ -5576,14 +5576,14 @@
    ],
    "pid": "[\"nfl_tt_main1_ledger.json\", \"nfl_tt_main1\", [\"nfl_tt_main1:KXNFLTEAMTOTAL-26NOV08GBNE:GB\", \"yes\"]]",
    "price": 0.46,
-   "profit": null,
+   "profit": 1.0947,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-09T01:14:30.197769+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Football",
    "src": "nfl_tt_main1_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXNFLTEAMTOTAL-26NOV08GBNE-NE29",
@@ -5599,14 +5599,14 @@
    ],
    "pid": "[\"nfl_tt_main1_ledger.json\", \"nfl_tt_main1\", [\"nfl_tt_main1:KXNFLTEAMTOTAL-26NOV08GBNE:NE\", \"yes\"]]",
    "price": 0.31,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-09T01:14:30.197769+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Football",
    "src": "nfl_tt_main1_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXNFLTEAMTOTAL-26NOV08LVSF-LV22",
@@ -5622,14 +5622,14 @@
    ],
    "pid": "[\"nfl_tt_main1_ledger.json\", \"nfl_tt_main1\", [\"nfl_tt_main1:KXNFLTEAMTOTAL-26NOV08LVSF:LV\", \"yes\"]]",
    "price": 0.47,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-09T01:14:30.197769+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Football",
    "src": "nfl_tt_main1_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXNFLTEAMTOTAL-26NOV08LVSF-SF36",
@@ -5645,14 +5645,14 @@
    ],
    "pid": "[\"nfl_tt_main1_ledger.json\", \"nfl_tt_main1\", [\"nfl_tt_main1:KXNFLTEAMTOTAL-26NOV08LVSF:SF\", \"yes\"]]",
    "price": 0.32,
-   "profit": null,
+   "profit": 1.983,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-09T01:14:30.197769+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Football",
    "src": "nfl_tt_main1_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXEREDIVISIETOTAL-26NOV08FCUNIJ-4",
