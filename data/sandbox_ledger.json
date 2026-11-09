@@ -41,10 +41,10 @@
    "kalshi_venue": 275
   },
   "economics": {
-   "kalshi_venue": 0
+   "kalshi_venue": 15
   },
   "finance": {
-   "kalshi_venue": 45
+   "kalshi_venue": 30
   },
   "mma": {
    "kalshi_venue": 0,
@@ -69,7 +69,7 @@
     "offered": 0,
     "picked": 0
    },
-   "kalshi_venue": 20,
+   "kalshi_venue": 15,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -352,10 +352,10 @@
    }
   },
   "tennis": {
-   "kalshi_venue": 24,
+   "kalshi_venue": 42,
    "polymarket_us": 40,
    "polymarket_us_listed": 454,
-   "polymarket_us_priced": 235
+   "polymarket_us_priced": 237
   },
   "tennis_combo": {
    "combo": 0,
@@ -372,41 +372,41 @@
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-09T03:02:50+00:00",
-   "commodities": "2026-11-09T03:02:50+00:00",
-   "commodities_fav": "2026-11-09T03:02:50+00:00",
-   "cricket": "2026-11-09T03:02:50+00:00",
-   "crypto": "2026-11-09T03:02:50+00:00",
-   "crypto_fav": "2026-11-09T03:02:50+00:00",
-   "economics": "2026-11-09T02:37:35+00:00",
-   "finance": "2026-11-09T03:02:50+00:00",
+   "boxing": "2026-11-09T03:07:16+00:00",
+   "commodities": "2026-11-09T03:07:16+00:00",
+   "commodities_fav": "2026-11-09T03:07:16+00:00",
+   "cricket": "2026-11-09T03:07:16+00:00",
+   "crypto": "2026-11-09T03:07:16+00:00",
+   "crypto_fav": "2026-11-09T03:07:16+00:00",
+   "economics": "2026-11-09T03:07:16+00:00",
+   "finance": "2026-11-09T03:07:16+00:00",
    "mma": "2026-11-08T03:03:20+00:00",
-   "nfl": "2026-11-09T03:02:50+00:00",
-   "nhl_pl": "2026-11-09T03:02:50+00:00",
-   "nhl_rest": "2026-11-09T03:02:50+00:00",
-   "soccer": "2026-11-09T03:02:50+00:00",
+   "nfl": "2026-11-09T03:07:16+00:00",
+   "nhl_pl": "2026-11-09T03:07:16+00:00",
+   "nhl_rest": "2026-11-09T03:07:16+00:00",
+   "soccer": "2026-11-09T03:07:16+00:00",
    "soccer_btts": "2026-11-08T20:07:32+00:00",
    "soccer_btts_cup": "2026-11-05T19:33:47+00:00",
-   "soccer_btts_intl": "2026-11-09T03:02:50+00:00",
+   "soccer_btts_intl": "2026-11-09T03:07:16+00:00",
    "soccer_corners": "2026-11-08T19:58:15+00:00",
    "soccer_ftts": "2026-10-19T18:33:38+00:00",
    "soccer_o15": "2026-11-08T20:07:32+00:00",
    "soccer_o15_cup": "2026-11-05T19:33:47+00:00",
-   "soccer_o15_intl": "2026-11-09T03:02:50+00:00",
+   "soccer_o15_intl": "2026-11-09T03:07:16+00:00",
    "soccer_o25": "2026-11-08T20:07:32+00:00",
    "soccer_o25_cup": "2026-11-05T19:33:47+00:00",
-   "soccer_o25_intl": "2026-11-09T03:02:50+00:00",
+   "soccer_o25_intl": "2026-11-09T03:07:16+00:00",
    "soccer_p05": "2026-11-08T20:07:32+00:00",
-   "soccer_p05_cup": "2026-11-09T03:02:50+00:00",
-   "soccer_p05_intl": "2026-11-09T03:02:50+00:00",
+   "soccer_p05_cup": "2026-11-09T03:07:16+00:00",
+   "soccer_p05_intl": "2026-11-09T03:07:16+00:00",
    "soccer_team1": "2026-11-08T19:58:15+00:00",
    "soccer_team1_cup": "2026-11-05T19:33:47+00:00",
    "soccer_team2": "2026-11-08T19:58:15+00:00",
    "soccer_team2_cup": "2026-11-05T19:33:47+00:00",
    "soccer_u35": "2026-11-08T20:07:32+00:00",
    "soccer_u35_cup": "2026-11-05T19:33:47+00:00",
-   "soccer_u35_intl": "2026-11-09T03:02:50+00:00",
-   "tennis": "2026-11-09T03:02:50+00:00",
+   "soccer_u35_intl": "2026-11-09T03:07:16+00:00",
+   "tennis": "2026-11-09T03:07:16+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -527,7 +527,7 @@
   },
   "odds_api": {
    "allowance": 0,
-   "at": "2026-11-09T03:02:50+00:00",
+   "at": "2026-11-09T03:07:16+00:00",
    "remaining": 339,
    "used": 161
   },
@@ -548,7 +548,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 1395,
+  "runs": 1396,
   "tennis_shortlist": {
    "audit": [
     {
@@ -560,7 +560,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-09T03:03:20+00:00"
+  "updated": "2026-11-09T03:07:48+00:00"
  },
  "quotes": [
   {
@@ -250303,74 +250303,6 @@
    "bet": false,
    "date": "2026-11-02",
    "edge": -0.005,
-   "id": "polymarket_us:aec-utr-suzeit-oguewa-2026-11-03",
-   "label": "Suzuki, Eita vs Ogura, Ewan",
-   "liquidity": null,
-   "logged": "2026-11-01T20:55:47+00:00",
-   "market_id": "aec-utr-suzeit-oguewa-2026-11-03",
-   "pick": null,
-   "pnl": 0.0,
-   "price": null,
-   "price_a": 0.28,
-   "price_b": 0.73,
-   "price_draw": null,
-   "prob_a": 0.275,
-   "result": "b",
-   "settled": "2026-11-02T03:04:44+00:00",
-   "side_a": "Suzuki, Eita",
-   "side_b": "Ogura, Ewan",
-   "source": "polymarket_us",
-   "sport": "tennis",
-   "spread": 0.01,
-   "stake": 0.0,
-   "start": "2026-11-02T01:00:00+00:00",
-   "start_source": null,
-   "status": "graded",
-   "tier": "utr",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://polymarket.us/event/utr-suzeit-oguewa-2026-11-03",
-   "venue": "polymarket_us",
-   "venue_start": null
-  },
-  {
-   "bet": false,
-   "date": "2026-11-02",
-   "edge": -0.005,
-   "id": "polymarket_us:aec-utr-tsukoj-hasdai-2026-11-03",
-   "label": "Tsukamoto, Koji vs Hashimoto, Daisuke",
-   "liquidity": null,
-   "logged": "2026-11-01T20:55:47+00:00",
-   "market_id": "aec-utr-tsukoj-hasdai-2026-11-03",
-   "pick": null,
-   "pnl": 0.0,
-   "price": null,
-   "price_a": 0.63,
-   "price_b": 0.38,
-   "price_draw": null,
-   "prob_a": 0.625,
-   "result": "b",
-   "settled": "2026-11-02T03:04:44+00:00",
-   "side_a": "Tsukamoto, Koji",
-   "side_b": "Hashimoto, Daisuke",
-   "source": "polymarket_us",
-   "sport": "tennis",
-   "spread": 0.01,
-   "stake": 0.0,
-   "start": "2026-11-02T01:00:00+00:00",
-   "start_source": null,
-   "status": "graded",
-   "tier": "utr",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://polymarket.us/event/utr-tsukoj-hasdai-2026-11-03",
-   "venue": "polymarket_us",
-   "venue_start": null
-  },
-  {
-   "bet": false,
-   "date": "2026-11-02",
-   "edge": -0.005,
    "id": "polymarket_us:aec-itfme-siuche-aidbiy-2026-11-02",
    "label": "Siu Chi Nicholas Cheng vs Aidan Biyan",
    "liquidity": null,
@@ -250785,43 +250717,6 @@
    "url": "https://kalshi.com/markets/kxeplcorners",
    "venue": "kalshi_binary",
    "venue_start": null
-  },
-  {
-   "ask_size": 821.24,
-   "bet": false,
-   "book_at": "2026-11-01T22:01:44.630711+00:00",
-   "cost": 0.751544,
-   "date": "2026-11-02",
-   "edge": null,
-   "id": "tennis_utr_shortlist_pool_v1:aec-utr-suzeit-oguewa-2026-11-03",
-   "label": "Suzuki, Eita vs Ogura, Ewan",
-   "liquidity": null,
-   "logged": "2026-11-01T22:01:57+00:00",
-   "market_id": "aec-utr-suzeit-oguewa-2026-11-03",
-   "mid_a": 0.27,
-   "pick": "b",
-   "pm_league": "utr",
-   "pnl": 0.0,
-   "price": 0.74,
-   "price_a": 0.28,
-   "price_b": 0.74,
-   "prob_a": null,
-   "result": "b",
-   "settled": "2026-11-02T03:04:44+00:00",
-   "shortlist_selected": true,
-   "side_a": "Suzuki, Eita",
-   "side_b": "Ogura, Ewan",
-   "source": "tennis_utr_shortlist_pool_v1",
-   "sport": "tennis",
-   "spread": 0.02,
-   "stake": 0.0,
-   "start": "2026-11-02T01:00:00+00:00",
-   "status": "graded",
-   "tier": "utr",
-   "untraded": false,
-   "url": "https://polymarket.us/event/utr-suzeit-oguewa-2026-11-03",
-   "venue": "polymarket_us",
-   "volume": 0.0
   },
   {
    "bet": false,
@@ -429929,10 +429824,10 @@
   },
   "polymarket_us": {
    "bets": 0,
-   "brier_n": 13596,
-   "brier_sum": 2612.390915159983,
+   "brier_n": 13598,
+   "brier_sum": 2612.8571651599827,
    "pnl": 0.0,
-   "quotes": 13973,
+   "quotes": 13975,
    "settled": 0,
    "staked": 0.0,
    "won": 0
@@ -430022,7 +429917,7 @@
    "brier_n": 0,
    "brier_sum": 0.0,
    "pnl": 0.0,
-   "quotes": 55,
+   "quotes": 56,
    "settled": 0,
    "staked": 0.0,
    "won": 0
