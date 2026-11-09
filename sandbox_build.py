@@ -2383,9 +2383,16 @@ def chaos_html():
         return f'<section id="chaos"><p class="sm mut">Chaos section unavailable ({type(exc).__name__}).</p></section>'
     # Resting in-play buys (arg_goalless_dip, 2026-10-30) index right after it, as their own section.
     try:
-        return html + chaos_build.in_play_index()
+        html += chaos_build.in_play_index()
     except Exception:                                           # noqa: BLE001
-        return html
+        pass
+    # The 15-Minute Swing (swing15, 2026-11-08): its index rows; the section is on the Daily Markets tab.
+    try:
+        import swing15_build
+        html += swing15_build.index_html()
+    except Exception:                                           # noqa: BLE001
+        pass
+    return html
 
 
 def invest_html():

@@ -1,0 +1,38 @@
+name: 15-Minute Swing paper tracker
+# swing15.py (2026-11-08, sw15-v1): grades every settled Kalshi 15-minute window in Crypto, Commodities and Financials
+# from Kalshi's own candles and trade prints, once each, after it settles. Public data only; nothing is placed.
+# Hourly: a window is graded on the first run after it settles; the lookback is 36 hours, so a missed run catches up.
+on:
+  schedule:
+    - cron: '23 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: swing15
+  cancel-in-progress: false
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Tests
+        run: python3 test_swing15.py
+      - name: Grade settled windows
+        id: grade
+        run: python3 swing15.py --budget 900
+      - name: Save the ledger
+        if: ${{ !cancelled() && (steps.grade.outcome == 'success' || steps.grade.outcome == 'failure') }}
+        run: |
+          set -euo pipefail
+          git config user.name "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+          days=""
+          for i in 0 1 2; do days="$days data/swing15/$(TZ=America/New_York date -d "-$i day" +%F).json"; done
+          python3 save_records.py --message "15-Minute Swing paper windows" \
+            --add data/swing15_ledger.json \
+            --optional $days
