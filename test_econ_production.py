@@ -128,7 +128,7 @@ class EconProduction(unittest.TestCase):
     def test_page_merge_does_not_mutate_sports_inputs_or_reset_sports_clock(self):
         d={'quotes':[]};st={'pairs':{}};blob={'updated_at':'2026-10-15T12:00Z','pairs':{},'leads':{}}
         before=copy.deepcopy((d,st,blob))
-        dd,ss,bb=DP.page_inputs(d,st,blob,state(),now=NOW)
+        dd,ss,bb=DP.page_inputs(d,st,blob,state(),now=NOW,fin={})   # no live D3 ledger (2026-11-09: it made the count data-dependent)
         self.assertEqual((d,st,blob),before)
         self.assertEqual(bb['updated_at'],blob['updated_at'])
         self.assertEqual({YES_PAIR,NO_PAIR}&set(ss['pairs']),{YES_PAIR})
