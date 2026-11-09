@@ -81,7 +81,7 @@ print("\nthe page")
 html = WB.section(state)
 blk = html.split('id="holdtoend"')[1].split("15-Minute Swing v1")[0]
 check("under The Flip Side v3, above v1",
-      html.index("The Flip Side v3") < html.index(">Hold to End v3<") < html.index('data-source="swing15_s1"'), True)
+      html.index("The Flip Side v3") < html.index(">Hold to End v3<") < html.index('data-source="swing15_s2"'), True)
 check("the section copy", f"Hold to End v3 · USD/CAD at 35c · fresh record from {H.FROM_V3[:16].replace('T', ' ')} UTC · "
       "review at 10, decide at 30." in html, True)
 check("one live row (35c), the 25c row only in the Removed fold", (re.findall(r'data-source="(holdtoend_\d+)"', html),

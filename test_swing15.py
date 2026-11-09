@@ -173,8 +173,8 @@ check("cluster z by day: two misses on one day against 0.5 each", round(c[WB.HEA
 
 print("\nthe page")
 html = WB.section(state)
-check("three headline rows, one per strategy, in the Rules-list design",
-      re.findall(r'data-source="(swing15_s\d)"', html), ["swing15_s1", "swing15_s2", "swing15_s3"])
+check("S2 and S3 rows in the Rules-list design; S1 retired (2026-11-09) but still graded underneath",
+      (re.findall(r'data-source="(swing15_s\d)"', html), c[WB.HEADLINE_S1]["n"]), (["swing15_s2", "swing15_s3"], 2))
 check("the same seven columns as Daily Markets",
       re.sub(r"<[^>]+>", "|", html.split('sp-head-line')[1].split("</div>")[0]).count("|") > 0
       and all(h in html for h in ("Market", "Record", "ROI after fees", "Won v priced", "Evidence", "Verdict")), True)
