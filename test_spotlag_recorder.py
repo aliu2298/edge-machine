@@ -106,6 +106,29 @@ check("the unit: capped, restarts only on failure, its own interpreter, not the 
       all(x in unit for x in ("MemoryMax=120M", "CPUQuota=20%", "Restart=on-failure", "ExecStart=/usr/bin/python3 ", "--until"))
       and "polymarket" not in unit.split("[Service]")[1], True)
 
+def get_ahead(url):
+    """Kalshi lists the next market (status initialized) before the close: both come back from the close-time query."""
+    if "series_ticker" in url:
+        s_ = url.split("series_ticker=")[1].split("&")[0]
+        return {"markets": [dict(ticker=f"{s_}-OLD", open_time=iso(T0 - 900), close_time=iso(T0)),
+                            dict(ticker=f"{s_}-NEW", open_time=iso(T0), close_time=iso(T0 + 900))]}
+    return get(url)
+
+
+with tempfile.TemporaryDirectory() as out2:
+    now[0] = T0 - 10
+    r3 = R.Recorder(out2, until=T0 + 3600, get=get_ahead, clock=lambda: now[0], sleep=lambda s: None)
+    r3.bucket = r3.background = type("B", (), {"take": lambda self: None})()
+    r3.discover_missing()
+    check("before the close: current OLD, next NEW already known", (r3.markets["BTC"]["ticker"], [x["ticker"] for x in r3.upcoming["BTC"]]),
+          ("KXBTC15M-OLD", ["KXBTC15M-OLD", "KXBTC15M-NEW"]))
+    now[0] = T0 + 0.5
+    n0 = len(calls)
+    r3.book_once()
+    check("the close second: the book switches to NEW at once, with no lookup on the book thread",
+          (r3.markets["BTC"]["ticker"], sum("series_ticker" in u for u in calls[n0:])), ("KXBTC15M-NEW", 0))
+    r3.store.close()
+
 check("Kalshi budget: book + background stay under 2 requests a second", R.BOOK_RPS + R.BACKGROUND_RPS < 2, True)
 b = R.Bucket(0.7)
 t = R.time.monotonic()

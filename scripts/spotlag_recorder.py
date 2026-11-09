@@ -129,6 +129,7 @@ class Recorder:
         self.markets = {}              # coin -> {"ticker", "close"}
         self.pending = []              # [(due, coin, ticker, open_ts, close_ts)] trades to read after a close
         self.queued = set()            # tickers whose trades are queued or read (each window read once)
+        self.upcoming = {}             # coin -> [the current market, the next one] from discover()
         self.errors = {"spot": 0, "book": 0, "trade": 0, "discover": 0}
         self.lock = threading.Lock()
 
@@ -138,15 +139,19 @@ class Recorder:
         return self.get(KALSHI + path)
 
     def discover(self, coin):
-        d = self.kget("/markets?" + urllib.parse.urlencode({"series_ticker": COINS[coin], "status": "open", "limit": 5}),
-                      self.background)
+        """The current market and the next one. Kalshi creates each 15-minute market hours ahead (status initialized)
+        but lists it as open only ~30s after its window starts, so the next market is known BEFORE the close and the
+        book switches to it the moment the current one closes. A market that has closed never counts."""
         now = self.clock()
-        # Just after a close Kalshi still lists that market as open for a moment: only a market still to close counts.
+        d = self.kget("/markets?" + urllib.parse.urlencode({"series_ticker": COINS[coin], "min_close_ts": int(now),
+                                                            "max_close_ts": int(now) + 1800, "limit": 10}),
+                      self.background)
         ms = sorted((m for m in d.get("markets") or [] if _ts(m["close_time"]) > now + 1), key=lambda m: m["close_time"])
-        if ms:
-            m = ms[0]
-            self.markets[coin] = dict(ticker=m["ticker"], open=_ts(m["open_time"]), close=_ts(m["close_time"]),
-                                      strike=m.get("floor_strike"))
+        self.upcoming[coin] = [dict(ticker=m["ticker"], open=_ts(m["open_time"]), close=_ts(m["close_time"]),
+                                    strike=m.get("floor_strike")) for m in ms[:2]]
+        cur = [m for m in self.upcoming[coin] if m["open"] <= now + 1]
+        if cur and coin not in self.markets:
+            self.markets[coin] = cur[0]
 
     def book_once(self):
         now = self.clock()
@@ -158,6 +163,10 @@ class Recorder:
                     with self.lock:
                         self.pending.append((m["close"] + TRADES_DELAY_S, coin, m["ticker"], m["open"], m["close"]))
                     self.markets.pop(coin, None)
+                # Switch to the next market at once, from the list discover() keeps (no lookup on this thread).
+                nxt = [x for x in self.upcoming.get(coin) or [] if x["close"] > now + 1 and x["open"] <= now + 1]
+                if nxt:
+                    self.markets[coin] = nxt[0]
         # The next market is found by discover_loop on its own thread: right after a close Kalshi can take ~20s to
         # list it, and a lookup here would hold up the book of the other coins.
         tickers = [m["ticker"] for m in self.markets.values()]
@@ -267,8 +276,11 @@ class Recorder:
         return 0
 
     def discover_missing(self):
+        """Look up a coin with no current market, or with no next market known yet (refreshed once per window)."""
+        now = self.clock()
         for coin in COINS:
-            if coin not in self.markets:
+            ahead = [x for x in self.upcoming.get(coin) or [] if x["open"] > now]
+            if coin not in self.markets or not ahead:
                 try:
                     self.discover(coin)
                 except Exception:                                # noqa: BLE001
