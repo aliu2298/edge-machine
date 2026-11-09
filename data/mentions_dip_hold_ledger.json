@@ -24118,11 +24118,11 @@
     "KXTRUMPSAY-26NOV09-ANTI": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0727423c-1a31-b024-222b-ecb67b780137"
+      "0726bc94-9e11-94ac-06dc-63959c382c4f"
      ],
      "first_px": 0.5,
      "first_ts": 1793634734,
-     "last_ts": 1794208493,
+     "last_ts": 1794231160,
      "lows": [
       [
        1793634734,
@@ -25498,9 +25498,19 @@
        1794208493,
        0.01,
        8.41
+      ],
+      [
+       1794230200,
+       0.01,
+       93.51
+      ],
+      [
+       1794231160,
+       0.01,
+       51.43
       ]
      ],
-     "n_prints": 482,
+     "n_prints": 484,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -25509,11 +25519,11 @@
     "KXTRUMPSAY-26NOV09-AUTO": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "07274574-f8f9-a0ce-0b92-cf4e6d1bc9ba"
+      "0726bf53-fe59-b4da-6ec6-a6b634eacdd6"
      ],
      "first_px": 0.65,
      "first_ts": 1793635969,
-     "last_ts": 1794205273,
+     "last_ts": 1794230848,
      "lows": [
       [
        1793908178,
@@ -26204,9 +26214,14 @@
        1794205273,
        0.01,
        1.21
+      ],
+      [
+       1794230848,
+       0.01,
+       93.51
       ]
      ],
-     "n_prints": 259,
+     "n_prints": 260,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -26268,11 +26283,11 @@
     "KXTRUMPSAY-26NOV09-CEAS": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0726be00-2fd1-a32e-1bf3-9e6843261ebf"
+      "0726c2aa-2479-b0c8-0523-8b5ddd48e7cb"
      ],
      "first_px": 0.82,
      "first_ts": 1793631307,
-     "last_ts": 1794227221,
+     "last_ts": 1794231712,
      "lows": [
       [
        1793931989,
@@ -28858,9 +28873,34 @@
        1794227221,
        0.02,
        16.21
+      ],
+      [
+       1794229935,
+       0.01,
+       1000.0
+      ],
+      [
+       1794230165,
+       0.02,
+       46.79
+      ],
+      [
+       1794231292,
+       0.02,
+       28.07
+      ],
+      [
+       1794231407,
+       0.02,
+       233.95
+      ],
+      [
+       1794231712,
+       0.01,
+       9.66
       ]
      ],
-     "n_prints": 1424,
+     "n_prints": 1429,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -28871,6 +28911,7 @@
      "edge_ids": [
       "0727420c-02d9-92f5-837d-fb669efb571f"
      ],
+     "final": true,
      "first_px": 0.83,
      "first_ts": 1793603083,
      "last_ts": 1794221271,
@@ -30714,7 +30755,7 @@
      "n_prints": 661,
      "open_ts": 1793595600,
      "result": "yes",
-     "status": "determined",
+     "status": "finalized",
      "word": "Crypto / Bitcoin"
     },
     "KXTRUMPSAY-26NOV09-CUBA": {
@@ -30722,6 +30763,7 @@
      "edge_ids": [
       "07274cd2-3da1-99c6-3d6d-e26c851f2f73"
      ],
+     "final": true,
      "first_px": 0.97,
      "first_ts": 1793636231,
      "last_ts": 1794205236,
@@ -30735,7 +30777,7 @@
      "n_prints": 402,
      "open_ts": 1793595600,
      "result": "yes",
-     "status": "determined",
+     "status": "finalized",
      "word": "Cuba / Cuban"
     },
     "KXTRUMPSAY-26NOV09-CYBE": {
@@ -32609,23 +32651,24 @@
      "edge_ids": [
       "0726bc89-3419-bdd9-a7c2-cf087200b955"
      ],
+     "final": true,
      "first_px": 0.98,
      "first_ts": 1793652073,
      "last_ts": 1794227349,
      "n_prints": 2627,
      "open_ts": 1793595600,
      "result": "yes",
-     "status": "determined",
+     "status": "finalized",
      "word": "Diesel"
     },
     "KXTRUMPSAY-26NOV09-DIVI": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0726be3e-1911-8fbe-64b1-8bab9ba532ec"
+      "0726c29d-2f61-8a44-4e6d-a108c1c3cad1"
      ],
      "first_px": 0.9,
      "first_ts": 1793596505,
-     "last_ts": 1794226515,
+     "last_ts": 1794231391,
      "lows": [
       [
        1793773500,
@@ -34031,9 +34074,29 @@
        1794226515,
        0.01,
        6.23
+      ],
+      [
+       1794230104,
+       0.01,
+       187.03
+      ],
+      [
+       1794231210,
+       0.01,
+       45.66
+      ],
+      [
+       1794231210,
+       0.02,
+       23.39
+      ],
+      [
+       1794231391,
+       0.01,
+       1000.0
       ]
      ],
-     "n_prints": 744,
+     "n_prints": 748,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -36896,6 +36959,7 @@
      "edge_ids": [
       "07274292-c659-899d-bfe4-86ca143b52d6"
      ],
+     "final": true,
      "first_px": 0.99,
      "first_ts": 1793668593,
      "last_ts": 1794206775,
@@ -37209,7 +37273,7 @@
      "n_prints": 220,
      "open_ts": 1793595600,
      "result": "yes",
-     "status": "determined",
+     "status": "finalized",
      "word": "Finland / Finnish"
     },
     "KXTRUMPSAY-26NOV09-GDP": {
@@ -40668,11 +40732,11 @@
     "KXTRUMPSAY-26NOV09-ILHA": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0726be77-02f9-823b-e6b2-74a5fe89505c"
+      "0726bcb2-8ef9-8bff-fa00-b943acc7f61c"
      ],
      "first_px": 0.89,
      "first_ts": 1793598202,
-     "last_ts": 1794226220,
+     "last_ts": 1794231372,
      "lows": [
       [
        1794152807,
@@ -44128,9 +44192,14 @@
        1794226220,
        0.01,
        93.51
+      ],
+      [
+       1794231372,
+       0.01,
+       20.0
       ]
      ],
-     "n_prints": 2559,
+     "n_prints": 2560,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -46556,11 +46625,11 @@
     "KXTRUMPSAY-26NOV09-MELA": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0726c0de-3299-80de-1388-6ae28ed2d414"
+      "0726c234-c1d9-976a-f432-ad5c0bb73fe0"
      ],
      "first_px": 0.96,
      "first_ts": 1793635908,
-     "last_ts": 1794226537,
+     "last_ts": 1794231435,
      "lows": [
       [
        1793788050,
@@ -50266,9 +50335,14 @@
        1794226537,
        0.01,
        6.64
+      ],
+      [
+       1794231435,
+       0.01,
+       280.55
       ]
      ],
-     "n_prints": 2192,
+     "n_prints": 2193,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -50279,6 +50353,7 @@
      "edge_ids": [
       "07274b43-fba1-9136-b140-f04d75eb11df"
      ],
+     "final": true,
      "first_px": 0.63,
      "first_ts": 1793644850,
      "last_ts": 1794214009,
@@ -50297,7 +50372,7 @@
      "n_prints": 744,
      "open_ts": 1793595600,
      "result": "yes",
-     "status": "determined",
+     "status": "finalized",
      "word": "Moon"
     },
     "KXTRUMPSAY-26NOV09-MORT": {
@@ -56965,13 +57040,14 @@
      "edge_ids": [
       "0726be44-2459-91b5-3a24-c3fcdd488dbb"
      ],
+     "final": true,
      "first_px": 0.68,
      "first_ts": 1793715570,
      "last_ts": 1794228369,
      "n_prints": 1237,
      "open_ts": 1793595600,
      "result": "yes",
-     "status": "determined",
+     "status": "finalized",
      "word": "Ranked Choice / Ranked-Choice"
     },
     "KXTRUMPSAY-26NOV09-REFI": {
@@ -57613,13 +57689,14 @@
     "KXTRUMPSAY-26NOV09-RIGG": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0726c1d8-2231-a064-ea9f-fec67850fa54",
-      "0726c1d9-20e1-a8d9-e781-fab74771beac",
-      "0726c1db-8d19-a5b4-d12e-a4bf83484ab7"
+      "0726c2e0-5259-90cb-8fa3-dd638ee7f25a",
+      "0726c2f7-d8b9-982b-805b-9e80ac109d1a",
+      "0726c2fb-63a9-963f-9137-c351216dfdd2",
+      "0726c2ff-eef9-9fa8-bbc9-a7f6c2aa2c9f"
      ],
      "first_px": 0.97,
      "first_ts": 1793635129,
-     "last_ts": 1794229010,
+     "last_ts": 1794232842,
      "lows": [
       [
        1793764852,
@@ -57627,7 +57704,7 @@
        16.14
       ]
      ],
-     "n_prints": 6545,
+     "n_prints": 6572,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -58617,11 +58694,11 @@
     "KXTRUMPSAY-26NOV09-THIR": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "0726bfe9-8491-8f48-f956-2d692a4a8926"
+      "0726bf1c-7391-a694-d129-bcc3b6c88d5a"
      ],
      "first_px": 0.63,
      "first_ts": 1793600774,
-     "last_ts": 1794227741,
+     "last_ts": 1794230181,
      "lows": [
       [
        1793653337,
@@ -60142,9 +60219,19 @@
        1794227741,
        0.01,
        0.6
+      ],
+      [
+       1794230152,
+       0.01,
+       187.03
+      ],
+      [
+       1794230181,
+       0.01,
+       187.03
       ]
      ],
-     "n_prints": 848,
+     "n_prints": 850,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -60222,6 +60309,7 @@
      "edge_ids": [
       "0726bc80-dd41-8498-716e-a4ef91b05d6a"
      ],
+     "final": true,
      "first_px": 0.11,
      "first_ts": 1793636243,
      "last_ts": 1794227486,
@@ -62425,17 +62513,17 @@
      "n_prints": 1006,
      "open_ts": 1793595600,
      "result": "yes",
-     "status": "determined",
+     "status": "finalized",
      "word": "UFO / UAP"
     },
     "KXTRUMPSAY-26NOV09-URAN": {
      "close_ts": 1794236400,
      "edge_ids": [
-      "072740e4-60d1-b110-bb71-60bccc0a983e"
+      "0726bc91-7031-883c-687b-48016832d242"
      ],
      "first_px": 0.11,
      "first_ts": 1793636235,
-     "last_ts": 1794215488,
+     "last_ts": 1794231955,
      "lows": [
       [
        1793636235,
@@ -65126,9 +65214,19 @@
        1794215488,
        0.01,
        93.51
+      ],
+      [
+       1794231397,
+       0.01,
+       88.84
+      ],
+      [
+       1794231955,
+       0.01,
+       33.0
       ]
      ],
-     "n_prints": 683,
+     "n_prints": 685,
      "open_ts": 1793595600,
      "result": "",
      "status": "active",
@@ -66321,16 +66419,315 @@
      "word": "Zohran / Mamdani"
     }
    }
+  },
+  "KXTRUMPSAY-26NOV16": {
+   "first_seen": "2026-11-09T14:00:47.496558+00:00",
+   "markets": {
+    "KXTRUMPSAY-26NOV16-ABUD": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Abu Dhabi"
+    },
+    "KXTRUMPSAY-26NOV16-ANTI": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Antifa"
+    },
+    "KXTRUMPSAY-26NOV16-AUTO": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Autopen / Auto Pen"
+    },
+    "KXTRUMPSAY-26NOV16-BIBI": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Bibi / Netanyahu"
+    },
+    "KXTRUMPSAY-26NOV16-BLOC": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Blockade"
+    },
+    "KXTRUMPSAY-26NOV16-CANA": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Canada / Canadian"
+    },
+    "KXTRUMPSAY-26NOV16-CEAS": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Ceasefire"
+    },
+    "KXTRUMPSAY-26NOV16-CRYP": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Crypto / Bitcoin"
+    },
+    "KXTRUMPSAY-26NOV16-CUBA": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Cuba / Cuban"
+    },
+    "KXTRUMPSAY-26NOV16-CYBE": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Cybersecurity / Cyber Security"
+    },
+    "KXTRUMPSAY-26NOV16-DIES": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Diesel"
+    },
+    "KXTRUMPSAY-26NOV16-DIVI": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Dividend / Stimulus"
+    },
+    "KXTRUMPSAY-26NOV16-EPST": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Epstein"
+    },
+    "KXTRUMPSAY-26NOV16-ETHA": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Ethanol"
+    },
+    "KXTRUMPSAY-26NOV16-FILI": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Filibuster"
+    },
+    "KXTRUMPSAY-26NOV16-FINL": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Finland / Finnish"
+    },
+    "KXTRUMPSAY-26NOV16-GDP": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "GDP"
+    },
+    "KXTRUMPSAY-26NOV16-GOLD": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Golden Dome"
+    },
+    "KXTRUMPSAY-26NOV16-HOUT": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Houthi"
+    },
+    "KXTRUMPSAY-26NOV16-ILHA": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Ilhan / Omar"
+    },
+    "KXTRUMPSAY-26NOV16-MAKE": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Make Iran Great Again"
+    },
+    "KXTRUMPSAY-26NOV16-MARI": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Marijuana / Weed / Cannabis"
+    },
+    "KXTRUMPSAY-26NOV16-MELA": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Melania"
+    },
+    "KXTRUMPSAY-26NOV16-MOON": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Moon"
+    },
+    "KXTRUMPSAY-26NOV16-MORT": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Mortgage"
+    },
+    "KXTRUMPSAY-26NOV16-NOBE": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Nobel"
+    },
+    "KXTRUMPSAY-26NOV16-PEAC": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Peace in the Middle East"
+    },
+    "KXTRUMPSAY-26NOV16-PRED": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Prediction Market / Predictive Market"
+    },
+    "KXTRUMPSAY-26NOV16-QUAN": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Quantum"
+    },
+    "KXTRUMPSAY-26NOV16-RANK": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Ranked Choice / Ranked-Choice"
+    },
+    "KXTRUMPSAY-26NOV16-REFI": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Refinery"
+    },
+    "KXTRUMPSAY-26NOV16-RIGG": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Rigged Election / Stolen Election"
+    },
+    "KXTRUMPSAY-26NOV16-ROBO": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Robot / Robotic / Robotics"
+    },
+    "KXTRUMPSAY-26NOV16-SOLE": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Soleimani"
+    },
+    "KXTRUMPSAY-26NOV16-SPAC": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Space Force"
+    },
+    "KXTRUMPSAY-26NOV16-SUPE": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Superintelligence / Super Intelligence"
+    },
+    "KXTRUMPSAY-26NOV16-THIR": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Third Term"
+    },
+    "KXTRUMPSAY-26NOV16-TOMA": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Tomahawk"
+    },
+    "KXTRUMPSAY-26NOV16-UFO": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "UFO / UAP"
+    },
+    "KXTRUMPSAY-26NOV16-URAN": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Uranium"
+    },
+    "KXTRUMPSAY-26NOV16-VIVE": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Vivek / Ramaswamy"
+    },
+    "KXTRUMPSAY-26NOV16-ZOHR": {
+     "close_ts": 1794841200,
+     "open_ts": 1794231000,
+     "result": "",
+     "status": "active",
+     "word": "Zohran / Mamdani"
+    }
+   }
   }
  },
  "lane": "mentions_dip_hold",
- "last_success": "2026-11-09T13:00:46.173366+00:00",
+ "last_success": "2026-11-09T14:00:47.496558+00:00",
  "observations": {
-  "at": "2026-11-09T13:00:46.173366+00:00",
+  "at": "2026-11-09T14:00:47.496558+00:00",
   "errors": [],
-  "events": 1,
-  "markets": 32,
-  "prints": 65
+  "events": 2,
+  "markets": 74,
+  "prints": 45
  },
  "since": "2026-10-26T04:00:00+00:00"
 }
