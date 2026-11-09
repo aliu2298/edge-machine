@@ -169,7 +169,7 @@
    "time": "pre-market"
   }
  ],
- "calendar_at": "2026-11-08T19:56:54Z",
+ "calendar_at": "2026-11-09T00:00:43Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -295,6 +295,22 @@
   },
   {
    "at": "2026-11-08T19:57:54Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": null,
+   "sym": "WMT"
+  },
+  {
+   "at": "2026-11-09T00:01:48Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 391016949.15254235,
+    "rungs": 6,
+    "width": 9584980.237154126
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-09T00:01:48Z",
    "event": "KXWMT-26NOVUSCOMP",
    "read": null,
    "sym": "WMT"
@@ -443,7 +459,9 @@
   },
   {
    "call": {
-    "status": "pending"
+    "entry": 6.647,
+    "entry_ts": 1794178920,
+    "status": "open"
    },
    "crowd_up": 0.322,
    "day": "2026-11-06",
@@ -456,12 +474,14 @@
    "random_side": 1,
    "reason": "Kalshi traders 32% Up on 24h taker volume.",
    "side": -1,
-   "status": "pending",
+   "status": "open",
    "sym": "AMAT"
   },
   {
    "call": {
-    "status": "pending"
+    "entry": 12.3298,
+    "entry_ts": 1794179160,
+    "status": "open"
    },
    "crowd_up": 0.169,
    "day": "2026-11-06",
@@ -474,7 +494,7 @@
    "random_side": 1,
    "reason": "Kalshi traders 17% Up on 24h taker volume.",
    "side": -1,
-   "status": "pending",
+   "status": "open",
    "sym": "META"
   }
  ],
