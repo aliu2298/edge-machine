@@ -98,9 +98,9 @@ with tempfile.TemporaryDirectory() as out:
     check("started after --until: exits 0 at once and records nothing", r2.run(), 0)
 
 unit = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "deploy", "spotlag-recorder.service")).read()
-check("the unit: capped, restarts only on failure, its own interpreter, not the bot's",
+check("the unit: capped, restarts only on failure, its own interpreter, not the trading engine venv",
       all(x in unit for x in ("MemoryMax=120M", "CPUQuota=20%", "Restart=on-failure", "ExecStart=/usr/bin/python3 ", "--until"))
-      and "polymarket-bot" not in unit.split("[Service]")[1], True)
+      and "polymarket" not in unit.split("[Service]")[1], True)
 
 check("Kalshi budget: book + background stay under 2 requests a second", R.BOOK_RPS + R.BACKGROUND_RPS < 2, True)
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")

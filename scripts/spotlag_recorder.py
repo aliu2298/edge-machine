@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Spot lag recorder (2026-11-09): RECORD ONLY. No orders, no account, no keys, nothing to do with the bot.
+"""Spot lag recorder (2026-11-09): RECORD ONLY. No orders, no account, no keys, nothing to do with the trading engine.
 
 Question: do Kalshi's 15-minute crypto markets (KXBTC15M, KXETH15M, KXSOL15M) lag the real spot price by a few
 seconds? A 1-minute test was suggestive but unproven ("spot moved >= 5bps, Kalshi had not followed" won ~60 v 50.5
