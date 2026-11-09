@@ -151,7 +151,87 @@ def v2_block(state):
                              "holdtoend", lambda k: "Won")
     except Exception:                                           # noqa: BLE001  (never breaks the section)
         pass
-    return out + '<h3 class="dm-title">15-Minute Swing v1 · every market</h3>'
+    return out
+
+
+def _bars(vals, labels):
+    top = max(vals) or 1
+    return _table(("Minute", "Swaps", ""), [
+        f'<tr><td>{esc(l)}</td><td class="num">{v}</td><td><span aria-hidden="true" style="display:inline-block;height:.6em;'
+        f'width:{round(100 * v / top)}px;background:currentColor;opacity:.45"></span></td></tr>' for v, l in zip(vals, labels)])
+
+
+def _rank_tr(r):
+    return (f'<tr><td>{esc(r[0])}</td><td class="num">{r[1]:.2f}</td><td class="num">{r[2]}</td>'
+            f'<td class="num">{r[3]:.0f}c</td></tr>')
+
+
+def leadswap_block(state):
+    """The Lead Swap Board (leadswap.py): the routing record rows, then the board, persistence and timing folds."""
+    import leadswap as L
+    led = L.load()
+    if not led.get("board"):
+        led = L.update(state, L.empty())
+    b, per, rt = led["board"], led["persistence"] or {}, led["routing"] or {}
+    rows = []
+    for strat, label in L.STRATS.items():
+        c = rt.get(strat)
+        trs = [f'<tr><td>{esc(s)}</td><td class="num">{v[0]}</td><td class="num">{v[1]}</td>'
+               f'<td class="num">{pct(v[2] / v[0])}</td></tr>' for s, v in sorted(((c or {}).get("series") or {}).items())]
+        what = ("v1's S1 35c entry held to settlement" if "swing" in strat else "v1's S3 favourite at minute 10, held")
+        clus = "" if not c else "; %d clusters, z %s" % (c["clusters"], _z(c["z"]))
+        who = ("the top 3" if strat in ("leadswap_swing", "leadswap_fav_ctrl") else "the bottom 3")
+        body = (f'<p class="sp-details-name"><b>{esc(label)}</b> · Kalshi 15-minute windows · paper · {esc(L.VERSION)}</p>'
+                f'<p class="sp-def">{esc(what)}, on {esc(who)} series by lead swaps over the past 2 hours, picked at the '
+                f'top of each hour and frozen. z clusters one block (crypto, metals, energy, yields, FX, indices) in one '
+                f'window{clus}.</p>'
+                + _table(("Market", "n", "Won", "ROI after fees"), trs))
+        rows.append(_row(strat, label, c, {"all": c["n"] if c else 0}, body).replace('data-sport="swing15"', 'data-sport="leadswap"'))
+    head = ('<div class="sp-line sp-head-line" aria-hidden="true"><span class="sp-cell sp-c-name">Rule</span>'
+            '<span class="sp-cell sp-c-market">Market</span><span class="sp-cell num">Record</span>'
+            '<span class="sp-cell num">ROI after fees</span><span class="sp-cell num">Won v priced</span>'
+            '<span class="sp-cell num">Evidence</span><span class="sp-cell sp-c-verdict">Verdict</span></div>')
+    rh = ("Series", "Swaps a window", "Windows", "Mid range 0-9")
+    med = "—" if b["median_swing"] is None else "%gc" % b["median_swing"]
+    f14 = "—" if b["fav14_won"] is None else "%.0f%%" % (b["fav14_won"] * 100)
+    p2, p24 = b["past2h"], b["past24h"]
+    board = (f'<details class="fold" open><summary>Board · last 2 hours (8 windows) and last 24 hours</summary>'
+             f'<p class="sm">Most swaps, last 2 hours</p>{_table(rh, [_rank_tr(r) for r in p2[:5]])}'
+             f'<p class="sm">Most stable, last 2 hours</p>{_table(rh, [_rank_tr(r) for r in p2[::-1][:5]])}'
+             f'<p class="sm">Most swaps, last 24 hours</p>{_table(rh, [_rank_tr(r) for r in p24[:5]])}'
+             f'<p class="sm">Most stable, last 24 hours</p>{_table(rh, [_rank_tr(r) for r in p24[::-1][:5]])}'
+             f'<p class="sm mut">Last 24 hours: {b["windows_24h"]} windows, {b["swaps_24h"]} swaps; median swing '
+             f'{med}; the minute-14 favourite won {f14}.</p></details>')
+    timing = (f'<details class="fold"><summary>When in the window the swaps happen (last 24 hours)</summary>'
+              f'{_bars(b["minutes"], [str(m) for m in range(15)])}</details>')
+    hours = list(range(24))
+    heat_rows = []
+    for s, hs in sorted(b["heat"].items(), key=lambda kv: (b["blocks"].get(kv[0], ""), kv[0])):
+        cells = []
+        for h in hours:
+            v = hs.get(str(h))
+            if not v or not v[1]:
+                cells.append('<td class="num mut">·</td>')
+                continue
+            r = v[0] / v[1]
+            cells.append(f'<td class="num" style="background:rgba(127,127,127,{min(.6, r / 4):.2f})">{r:.1f}</td>')
+        heat_rows.append(f'<tr><td>{esc(s)}</td>{"".join(cells)}</tr>')
+    heat = ('<details class="fold"><summary>Swaps a window by hour of day (ET), every series</summary><div class="tbl">'
+            '<table><thead><tr><th>Series</th>' + "".join(f'<th class="num">{h}</th>' for h in hours)
+            + '</tr></thead><tbody>' + "".join(heat_rows) + '</tbody></table></div></details>')
+    corr = [f'<tr><td>{esc(f)}</td><td class="num">{v["n"]}</td><td class="num">{_z(v["corr"])}</td></tr>'
+            for f, v in (per.get("corr") or {}).items()]
+    frac = lambda x: "—" if x is None else f"{x * 100:.0f}%"
+    persist = (f'<details class="fold"><summary>Persistence: does the ranking carry into the next hour?</summary>'
+               f'<p class="sm">Over {per.get("hours", 0)} hours, the past-2h top 3 were still top 3 in that hour '
+               f'{frac(per.get("top"))} of the time and the bottom 3 stayed bottom 3 {frac(per.get("bottom"))}; '
+               f'chance is {frac(per.get("chance"))}.</p>'
+               + _table(("Group", "Windows", "Corr: past-2h swaps v the window"), corr) + '</details>')
+    return (f'<h3 class="dm-title" id="leadswap">Lead Swap Board</h3><p class="scope">How often the lead (YES mid across '
+            f'50c) swaps on every 15-minute series; swing trade to the most swaps, favourite to the most stable, each '
+            f'against its opposite; fresh record from {esc(_start(L.FROM))}; review at {W.REVIEW_AT}, decide at '
+            f'{W.DECIDE_AT}.</p><div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>'
+            f'{board}{persist}{timing}{heat}')
 
 
 def section(state=None):
@@ -205,9 +285,18 @@ def section(state=None):
         v2 = v2_block(state)
     except Exception:                                           # noqa: BLE001  (v2 never breaks the v1 section)
         v2 = ""
-    return (f'<h2 class="dm-title">15-Minute Swing</h2>{v2}<p class="scope">Every Kalshi 15-minute window in Crypto, '
+    try:
+        lsb = leadswap_block(state)
+    except Exception:                                           # noqa: BLE001  (the board never breaks the section)
+        lsb = ""
+    # 2026-11-09 (Olu: easy to review): one block, in order: the Lead Swap Board, Swing v2, The Flip Side v2, Hold to
+    # End, then v1, the full collector on every series, collapsed by default.
+    return (f'<h2 class="dm-title">15-Minute Swing</h2>{lsb}{v2}'
+            f'<details class="fold sw15-v1"><summary><b>15-Minute Swing v1 · every market</b> · the full collector; '
+            f'record from {esc(_start(W.FROM))}</summary>'
+            f'<p class="scope">Every Kalshi 15-minute window in Crypto, '
             f'Commodities and Financials · three pre-registered strategies · paper</p>'
-            f'<div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>{method}')
+            f'<div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>{method}</details>')
 
 
 def index_rows(state=None):
@@ -237,12 +326,19 @@ def index_rows(state=None):
                         roi=c["mean_roi"] if c else None, hit=c["hit_rate"] if c else None,
                         fair=c["fair"] if c else None, status=f"{best}/{W.DECIDE_AT} in its best market"))
     import holdtoend as H                                       # Hold to End (2026-11-09)
+    import leadswap as L
     for key, r in H.records(state).items():
         c = r["all"]
         best = max(((x or {}).get("n", 0) for x in r["series"].values()), default=0)
         out.append(dict(lane=key, label=H.LABELS[key], n=c["n"] if c else 0,
                         roi=c["mean_roi"] if c else None, hit=c["hit_rate"] if c else None,
                         fair=c["fair"] if c else None, status=f"{best}/{W.DECIDE_AT} in its best market"))
+    rt = (L.load().get("routing") or {})                        # Lead Swap Board routing (2026-11-09)
+    for key, label in L.STRATS.items():
+        c = rt.get(key)
+        out.append(dict(lane=key, label="Lead Swap · " + label, n=c["n"] if c else 0,
+                        roi=c["mean_roi"] if c else None, hit=c["hit_rate"] if c else None,
+                        fair=c["fair"] if c else None, status=f"{c['n'] if c else 0}/{W.DECIDE_AT}"))
     return out
 
 

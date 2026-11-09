@@ -57,7 +57,7 @@ check("under The Flip Side v2, above v1",
 check("the header line", "Cheap side bought at 25c/35c in the first 5 minutes, held to settlement, no sell; cells over +10% "
       "in one overnight session; fresh record from 2026-11-09 14:00 UTC; review at 10, decide at 30." in html, True)
 check("two rows", re.findall(r'data-source="(holdtoend_\d+)"', html), ["holdtoend_25", "holdtoend_35"])
-check("the Sandbox index lists them last", [r["lane"] for r in WB.index_rows(state)][-2:], list(H.CELLS))
+check("the Sandbox index lists them after the Flip Side", [r["lane"] for r in WB.index_rows(state)][10:12], list(H.CELLS))
 check("no dollar sign, no guarded phrase", (re.search(r"\$\d", html), sandbox_audit.COPY_RE.findall(html + WB.index_html(state))), (None, []))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
