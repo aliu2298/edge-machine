@@ -12190,5 +12190,22 @@
   "start": "2026-11-01T22:25:00+00:00",
   "status": "graded",
   "venue": "polymarket_us"
+ },
+ {
+  "bet": false,
+  "compact": true,
+  "id": "btts_market:KXMLSBTTS-26NOV01NEMIA-BTTS",
+  "logged": "2026-10-29T00:55:00+00:00",
+  "market_id": "KXMLSBTTS-26NOV01NEMIA-BTTS",
+  "price_a": 0.72,
+  "price_b": 0.29,
+  "price_draw": null,
+  "result": "a",
+  "settled": "2026-11-02T02:40:10+00:00",
+  "source": "btts_market",
+  "sport": "soccer_btts",
+  "start": "2026-11-02T00:00:00+00:00",
+  "status": "graded",
+  "venue": "kalshi_binary"
  }
 ]
