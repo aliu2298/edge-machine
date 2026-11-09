@@ -106,6 +106,36 @@ cs3[10] = candle(11, .60, .62, .55, .57)
 m3, g3 = fake(cs3, pr)
 check("no print at or through the ask in the next minute: no fill", W.grade("KXBTC15M", "Crypto", 1.0, m3, get=g3)["s3"]["status"], "no_fill")
 
+print("\nschema 2: every graded row keeps enough to re-analyse it (2026-11-09)")
+check("the schema and the minute table: 15 rows, minute 0..14, one column per MINUTE_COLS",
+      (r["schema"], len(r["minutes"]), r["minutes"][0][0], r["minutes"][-1][0], len(r["minutes"][0]), r["minute_cols"][:5]),
+      (2, 15, 0, 14, len(W.MINUTE_COLS), ["m", "yes_bid", "yes_ask", "no_bid", "no_ask"]))
+check("minute 1's row: YES bid/ask, NO bid = 1 − YES ask, the traded range and last",
+      r["minutes"][1][1:8], [.24, .26, .74, .76, .20, .55, None])
+check("the window close and the skip flags", (r["close"], r["closed_early"], r["missing_minutes"]),
+      (ISO(OPEN + 900), False, []))
+t = e["trigger"]
+check("the S1 trigger: band, minute 1 (the second minute), the 24c print of 5 contracts",
+      (t["band"], t["minute"], t["ts"], t["print_yes"], t["print_side"], t["print_contracts"]), (.25, 1, OPEN + 75, .24, .24, 5))
+check("contracts at or under the band in the entry minute, from the trigger on", t["contracts_at_or_under"], 5)
+check("2x: the first touch at or above 50c 60s+ after entry, 45 contracts in all, never filled",
+      (x["target"], x["touch_ts"], x["fill_ts"], x["touch_contracts"]), (.5, OPEN + 200, None, 45))
+check("1.5x: touched and filled, with its fill time", (x15["touch_ts"], x15["fill_ts"] is not None), (OPEN + 200, True))
+check("the entry side's peak after entry", e["peak_side"], .9)
+check("the skip reason for each band: 15c was never in the range (lows 20c, highs 60c)",
+      (r["s1_skip"]["0.15"], r["s1_skip"]["0.25"]), ("not_reached", None))
+check("S2 keeps the quote it read and the next minute's range",
+      {k: r["s2"][k] for k in ("minute", "yes_bid", "yes_ask", "mid", "next_low")}, dict(minute=2, yes_bid=.24, yes_ask=.26, mid=.25, next_low=.20))
+check("S3's no_fill keeps its quote too", (W.grade("KXBTC15M", "Crypto", 1.0, m3, get=g3)["s3"]["yes_ask"]), .57)
+# A range that reaches 15c with no print there: no_print.
+mn, gn = fake([candle(1, .10, .55, .49, .51)] + cs[1:], pr)
+check("15c inside minute 0's range but never printed: no_print", W.grade("KXBTC15M", "Crypto", 1.0, mn, get=gn)["s1_skip"]["0.15"], "no_print")
+mk, gk = fake([], [])
+rk = W.grade("KXBTC15M", "Crypto", 1.0, dict(mk, close_time=ISO(OPEN + 600)), get=gk)
+check("no candles at all: every band says no_candles, S2 no_candle, closed early and all 15 minutes missing",
+      (set(rk["s1_skip"].values()), rk["s2"]["status"], rk["closed_early"], len(rk["missing_minutes"])),
+      ({"no_candles"}, "no_candle", True, 15))
+
 print("\nthe run and the ledger")
 with tempfile.TemporaryDirectory() as tmp:
     path, shards = os.path.join(tmp, "swing15_ledger.json"), os.path.join(tmp, "swing15")
@@ -114,12 +144,18 @@ with tempfile.TemporaryDirectory() as tmp:
     W.run(st, now=dt.datetime.fromtimestamp(OPEN + 3600, dt.timezone.utc), get=g, log=lambda *_: None)
     touched = st.pop("touched")
     W.save(st, path, shards, touched=touched)
-    check("one window graded into its ET day's shard", sorted(os.listdir(shards)), ["2026-11-09.json"])
+    check("one window graded into its ET day and hour's shard (10:00 ET opens in hour 10)",
+          (sorted(os.listdir(shards)), sorted(os.listdir(os.path.join(shards, "2026-11-09")))), (["2026-11-09"], ["10.json"]))
     st2 = W.load(path, shards)
     st2["touched"] = []
     W.run(st2, now=dt.datetime.fromtimestamp(OPEN + 3600, dt.timezone.utc), get=g, log=lambda *_: None)
     check("de-duplicated by ticker: a second run grades nothing", st2["runs"][-1]["graded"], 0)
     check("the index holds no windows", "windows" in json.load(open(path)), False)
+    st3 = W.load(path, shards)
+    st3["windows"][m["ticker"]]["schema"] = 1
+    st3["touched"] = []
+    W.run(st3, now=dt.datetime.fromtimestamp(OPEN + 3600, dt.timezone.utc), get=g, log=lambda *_: None)
+    check("a row from before schema 2 is graded again", (st3["runs"][-1]["graded"], st3["windows"][m["ticker"]]["schema"]), (1, 2))
     old = dict(m, open_time=ISO(int(W._ts(W.FROM)) - 900))
     check("a window that opened before the registration is never graded",
           W.run(W.empty(), now=dt.datetime.fromtimestamp(OPEN + 3600, dt.timezone.utc),
