@@ -68,10 +68,22 @@ def scoped_body(page_html, group):
     return body.strip()
 
 
+def swing15_html():
+    """The 15-Minute Swing section (swing15_build.py, 2026-11-08), first on the tab. Never breaks the page."""
+    try:
+        import swing15_build
+        inner = swing15_build.section()
+    except Exception as exc:                                    # noqa: BLE001
+        inner = (f'<h2 class="dm-title">15-Minute Swing</h2>'
+                 f'<p class="sm mut">This section could not be built ({esc(type(exc).__name__)}).</p>')
+    return f'<section id="swing15" class="dm-group" data-sp-group="swing15">\n{inner}\n</section>'
+
+
 def body_html(parts):
     links = " · ".join(f'<a href="#{g}">{esc(label)}</a>' for g, label, _f in GROUPS)
     out = [f'<h1>{TITLE}</h1>\n<p class="lede">Kalshi daily-close ladders, one section per group: {links}. '
-           f'Every rule keeps its own record, stage and folds. Paper unless a row says Production.</p>']
+           f'Every rule keeps its own record, stage and folds. Paper unless a row says Production.</p>',
+           swing15_html()]
     for g, label, _f in GROUPS:
         out.append(f'<section id="{g}" class="dm-group" data-sp-group="{g}">\n{parts[g]}\n</section>')
     out.append(f"<footer>{esc(_foot())}</footer>")
@@ -97,7 +109,7 @@ def build(now=None, builders=None):
     html = C.document(
         f"{C.SITE_NAME} · {TITLE}",
         "Kalshi daily-close ladder lanes in one tab: crypto, commodities, econ and finance, each rule's record per market-day.",
-        KEY, tuple((g, label) for g, label, _f in GROUPS), C.stamp(now), body_html(parts),
+        KEY, (("swing15", "15-min Swing"),) + tuple((g, label) for g, label, _f in GROUPS), C.stamp(now), body_html(parts),
         script_src="./site.js", scripts=("./tables.js",), sports=True)
     return B.label_cells(html)
 
