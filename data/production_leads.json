@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-09T19:33:31+00:00",
+ "board_built_at": "2026-11-09T19:56:29+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -690,7 +690,7 @@
    "kickoff": "2026-11-09T22:05Z",
    "lane": "production",
    "last_seen": "2026-11-09",
-   "last_seen_at": "2026-11-09T19:33:31+00:00",
+   "last_seen_at": "2026-11-09T19:56:29+00:00",
    "league": "Crypto \u00b7 Favourite band",
    "match": "Bitcoin price on Nov 9, 2026",
    "pair": "crypto_fav_band_below|crypto_fav",
@@ -712,6 +712,117 @@
    "sport": "crypto_fav",
    "status": "pending"
   },
+  "2026-11-13|Andorra|Gibraltar|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
+   "away": "Gibraltar",
+   "bet": {
+    "kind": "total_lte",
+    "n": 3
+   },
+   "date": "2026-11-13",
+   "edge_at_log": null,
+   "first_seen": "2026-11-09",
+   "headline": "Under 3.5 goals",
+   "home": "Andorra",
+   "id": "2026-11-13|Andorra|Gibraltar|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
+   "kickoff": "2026-11-13T19:45Z",
+   "lane": "production",
+   "last_seen": "2026-11-09",
+   "last_seen_at": "2026-11-09T19:56:29+00:00",
+   "league": "UEFA Nations League",
+   "match": "Andorra v Gibraltar",
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "price_at_log": 0.9,
+   "published_at": "2026-11-09T19:56:29+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5748,
+   "route": {
+    "claim": "Under 3.5 goals",
+    "event": "KXUEFANLTOTAL-26NOV13ANDGIB",
+    "market": "KXUEFANLTOTAL-26NOV13ANDGIB-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "no",
+    "price_at_log": 0.9,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "u35_low_scoring:KXUEFANLTOTAL-26NOV13ANDGIB-4",
+   "source": "u35_low_scoring",
+   "sport": "soccer_u35_intl",
+   "status": "pending"
+  },
+  "2026-11-13|Liechtenstein|Azerbaijan|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
+   "away": "Azerbaijan",
+   "bet": {
+    "kind": "total_lte",
+    "n": 3
+   },
+   "date": "2026-11-13",
+   "edge_at_log": null,
+   "first_seen": "2026-11-09",
+   "headline": "Under 3.5 goals",
+   "home": "Liechtenstein",
+   "id": "2026-11-13|Liechtenstein|Azerbaijan|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
+   "kickoff": "2026-11-13T19:45Z",
+   "lane": "production",
+   "last_seen": "2026-11-09",
+   "last_seen_at": "2026-11-09T19:56:29+00:00",
+   "league": "UEFA Nations League",
+   "match": "Liechtenstein v Azerbaijan",
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "price_at_log": 0.79,
+   "published_at": "2026-11-09T19:56:29+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5748,
+   "route": {
+    "claim": "Under 3.5 goals",
+    "event": "KXUEFANLTOTAL-26NOV13LIEAZE",
+    "market": "KXUEFANLTOTAL-26NOV13LIEAZE-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "no",
+    "price_at_log": 0.79,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "u35_low_scoring:KXUEFANLTOTAL-26NOV13LIEAZE-4",
+   "source": "u35_low_scoring",
+   "sport": "soccer_u35_intl",
+   "status": "pending"
+  },
+  "2026-11-13|Luxembourg|Estonia|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
+   "away": "Estonia",
+   "bet": {
+    "kind": "total_lte",
+    "n": 3
+   },
+   "date": "2026-11-13",
+   "edge_at_log": null,
+   "first_seen": "2026-11-09",
+   "headline": "Under 3.5 goals",
+   "home": "Luxembourg",
+   "id": "2026-11-13|Luxembourg|Estonia|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
+   "kickoff": "2026-11-13T19:45Z",
+   "lane": "production",
+   "last_seen": "2026-11-09",
+   "last_seen_at": "2026-11-09T19:56:29+00:00",
+   "league": "UEFA Nations League",
+   "match": "Luxembourg v Estonia",
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "price_at_log": 0.84,
+   "published_at": "2026-11-09T19:56:29+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5748,
+   "route": {
+    "claim": "Under 3.5 goals",
+    "event": "KXUEFANLTOTAL-26NOV13LUXEST",
+    "market": "KXUEFANLTOTAL-26NOV13LUXEST-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "no",
+    "price_at_log": 0.84,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "u35_low_scoring:KXUEFANLTOTAL-26NOV13LUXEST-4",
+   "source": "u35_low_scoring",
+   "sport": "soccer_u35_intl",
+   "status": "pending"
+  },
   "2026-11-13|Moldova|Kazakhstan|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
    "away": "Kazakhstan",
    "bet": {
@@ -727,7 +838,7 @@
    "kickoff": "2026-11-13T17:00Z",
    "lane": "production",
    "last_seen": "2026-11-09",
-   "last_seen_at": "2026-11-09T19:33:31+00:00",
+   "last_seen_at": "2026-11-09T19:56:29+00:00",
    "league": "UEFA Nations League",
    "match": "Moldova v Kazakhstan",
    "pair": "u35_low_scoring|soccer_u35_intl",
@@ -745,6 +856,43 @@
     "venue": "kalshi"
    },
    "sandbox_quote": "u35_low_scoring:KXUEFANLTOTAL-26NOV13MDAKAZ-4",
+   "source": "u35_low_scoring",
+   "sport": "soccer_u35_intl",
+   "status": "pending"
+  },
+  "2026-11-13|Scotland|North Macedonia|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
+   "away": "North Macedonia",
+   "bet": {
+    "kind": "total_lte",
+    "n": 3
+   },
+   "date": "2026-11-13",
+   "edge_at_log": null,
+   "first_seen": "2026-11-09",
+   "headline": "Under 3.5 goals",
+   "home": "Scotland",
+   "id": "2026-11-13|Scotland|North Macedonia|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
+   "kickoff": "2026-11-13T19:45Z",
+   "lane": "production",
+   "last_seen": "2026-11-09",
+   "last_seen_at": "2026-11-09T19:56:29+00:00",
+   "league": "UEFA Nations League",
+   "match": "Scotland v North Macedonia",
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "price_at_log": 0.67,
+   "published_at": "2026-11-09T19:56:29+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 5748,
+   "route": {
+    "claim": "Under 3.5 goals",
+    "event": "KXUEFANLTOTAL-26NOV13SCOMKD",
+    "market": "KXUEFANLTOTAL-26NOV13SCOMKD-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "no",
+    "price_at_log": 0.67,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "u35_low_scoring:KXUEFANLTOTAL-26NOV13SCOMKD-4",
    "source": "u35_low_scoring",
    "sport": "soccer_u35_intl",
    "status": "pending"
@@ -958,9 +1106,9 @@
    "ready_at": "2026-10-04T07:03:02+00:00",
    "route": "moved by hand on 2026-10-04",
    "routing": {
-    "leads": 1,
+    "leads": 5,
     "problem": null,
-    "routed": 1,
+    "routed": 5,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -972,7 +1120,7 @@
    "sandbox_roi_fee": 0.2334,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 5,
     "under_target": 0
    }
   }
@@ -991,5 +1139,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-09T19:33:31+00:00"
+ "updated_at": "2026-11-09T19:56:29+00:00"
 }
