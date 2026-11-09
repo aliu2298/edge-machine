@@ -180,11 +180,14 @@ def leadswap_block(state):
                f'<td class="num">{pct(v[2] / v[0])}</td></tr>' for s, v in sorted(((c or {}).get("series") or {}).items())]
         what = ("v1's S1 35c entry held to settlement" if "swing" in strat else "v1's S3 favourite at minute 10, held")
         clus = "" if not c else "; %d clusters, z %s" % (c["clusters"], _z(c["z"]))
+        bf = ("" if not c or c.get("before_freeze") is None else
+              " %d of %d entries came before that hour's picks were frozen (~:04); the picks use only data to :00, "
+              "but a live version could only act from :05." % (c["before_freeze"], c["n"]))
         who = ("the top 3" if strat in ("leadswap_swing", "leadswap_fav_ctrl") else "the bottom 3")
         body = (f'<p class="sp-details-name"><b>{esc(label)}</b> · Kalshi 15-minute windows · paper · {esc(L.VERSION)}</p>'
                 f'<p class="sp-def">{esc(what)}, on {esc(who)} series by lead swaps over the past 2 hours, picked at the '
                 f'top of each hour and frozen. z clusters one block (crypto, metals, energy, yields, FX, indices) in one '
-                f'window{clus}.</p>'
+                f'window{clus}.{bf}</p>'
                 + _table(("Market", "n", "Won", "ROI after fees"), trs))
         rows.append(_row(strat, label, c, {"all": c["n"] if c else 0}, body).replace('data-sport="swing15"', 'data-sport="leadswap"'))
     head = ('<div class="sp-line sp-head-line" aria-hidden="true"><span class="sp-cell sp-c-name">Rule</span>'
@@ -230,12 +233,18 @@ def leadswap_block(state):
     persist = (f'<details class="fold"><summary>Persistence: does the ranking carry into the next hour?</summary>'
                f'<p class="sm">Over {per.get("hours", 0)} hours, the past-2h top 3 were still top 3 in that hour '
                f'{frac(per.get("top"))} of the time and the bottom 3 stayed bottom 3 {frac(per.get("bottom"))}; '
-               f'chance is {frac(per.get("chance"))}.</p>'
+               f'chance is {frac(per.get("chance"))}. FX swaps more by construction (small moves against the strike), so '
+               f'the top 3 is mostly FX; within each block, the past-2h top stayed top '
+               f'{frac((per.get("within_all") or {}).get("stay"))} against chance '
+               f'{frac((per.get("within_all") or {}).get("chance"))}.</p>'
+               + _table(("Block", "Slots", "Stayed top", "Chance"),
+                        [f'<tr><td>{esc(bk)}</td><td class="num">{v["slots"]}</td><td class="num">{frac(v["stay"])}</td>'
+                         f'<td class="num">{frac(v["chance"])}</td></tr>' for bk, v in (per.get("within") or {}).items()])
                + _table(("Group", "Windows", "Corr: past-2h swaps v the window"), corr) + '</details>')
     return (f'<h3 class="dm-title" id="leadswap">Lead Swap Board</h3><p class="scope">How often the lead (YES mid across '
             f'50c) swaps on every 15-minute series; swing trade to the most swaps, favourite to the most stable, each '
-            f'against its opposite; fresh record from {esc(_start(L.FROM))}; review at {W.REVIEW_AT}, decide at '
-            f'{W.DECIDE_AT}.</p><p class="sm mut" id="spotlag-status">{esc(spot)}</p>'
+            f'against its opposite; picks frozen at about :04 each hour (a live version could only act from :05); fresh '
+            f'record from {esc(_start(L.FROM))}; review at {W.REVIEW_AT}, decide at {W.DECIDE_AT}.</p><p class="sm mut" id="spotlag-status">{esc(spot)}</p>'
             f'<div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>'
             f'{board}{persist}{timing}{heat}')
 
