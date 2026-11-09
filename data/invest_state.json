@@ -1,8 +1,8 @@
 {
  "collector": {
-  "last_ts": 1794229201,
+  "last_ts": 1794232801,
   "markets": 60,
-  "rows_24h": 79170
+  "rows_24h": 79230
  },
  "events": [],
  "flags": [
@@ -2519,7 +2519,9 @@
   },
   {
    "gap": 0.01012,
+   "gap_15m": 0.00994,
    "gap_5m": 0.00899,
+   "gap_60m": 0.00997,
    "rth": false,
    "spread_bp": 1.1,
    "sym": "US500",
@@ -2528,15 +2530,26 @@
   },
   {
    "gap": 0.01084,
+   "gap_15m": 0.00958,
    "gap_5m": 0.0091,
+   "gap_60m": 0.00988,
    "rth": false,
    "spread_bp": 0.6,
    "sym": "US Tech 100",
    "ticker": "KXUSTECH100PERP",
    "ts": 1794228661
+  },
+  {
+   "gap": 0.01014,
+   "gap_5m": 0.01006,
+   "rth": false,
+   "spread_bp": 1.1,
+   "sym": "US500",
+   "ticker": "KXUS500PERP",
+   "ts": 1794232261
   }
  ],
- "last_run": "2026-11-09T13:00:06+00:00",
+ "last_run": "2026-11-09T14:00:06+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
