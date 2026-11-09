@@ -83,12 +83,45 @@ ok('matchMedia("(max-width:760px)")' in site_js and "(max-width:640px)" not in s
    "site.js makes cards the default under 760px with no 640px table override")
 
 
+def _sandbox_with_open_bet():
+    """sandbox.html rebuilt from the ledger plus one plain open bet, written to a temp file (its path), or None if the build fails.
+    The published page has a Running table only while some bet is open; overnight and after the last slate none is, and the table
+    this test measures is then missing. The fixture makes the measurement independent of that."""
+    import datetime
+    import tempfile
+    try:
+        import sandbox_build as SB
+        import sandbox_track as T
+        now = datetime.datetime.now(datetime.timezone.utc)
+        start = (now + datetime.timedelta(hours=3)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        row = {"id": "fixture-running-open", "bet": True, "status": "open", "sport": "soccer", "source": "fixture", "pick": "a",
+               "side_a": "Running Fixture A", "side_b": "Running Fixture B", "price": 0.4, "pnl": None,
+               "label": "Running Fixture A v Running Fixture B", "date": now.strftime("%Y-%m-%d"), "start": start,
+               "venue": "kalshi", "market_id": "fixture-running-open"}
+        d = T.load()
+        page = SB.label_cells(SB.build(now=now, d=dict(d, quotes=list(d["quotes"]) + [row]), st=T.load_stages()))
+        fd, path = tempfile.mkstemp(suffix=".html")
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            f.write(page)
+        return path
+    except Exception as e:                                       # noqa: BLE001
+        print(f"  note: fixture sandbox page not built ({type(e).__name__}: {e}); serving the published one")
+        return None
+
+
 def _serve():
     site = os.path.join(ROOT, "public_site")
+    fixture = _sandbox_with_open_bet()
 
     class Handler(SimpleHTTPRequestHandler):
         def __init__(self, *args, **kwargs):
             super().__init__(*args, directory=site, **kwargs)
+
+        def translate_path(self, path):
+            real = super().translate_path(path)
+            if fixture and real == os.path.join(site, "sandbox.html"):
+                return fixture
+            return real
 
         def log_message(self, fmt, *args):
             return
