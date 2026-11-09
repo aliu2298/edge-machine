@@ -105,9 +105,9 @@
    "placed_ts": 1794078000,
    "prints": 452,
    "start": "2026-11-08T19:00:00+00:00",
-   "status": "open",
+   "status": "lost",
    "taker_price": 0.25,
-   "taker_roi": null,
+   "taker_roi": -1.0,
    "version": "eredraw-maker-v1",
    "why": "no print below the bid before kickoff"
   }
@@ -550,7 +550,7 @@
    "why": "no print below the bid before kickoff"
   }
  ],
- "last_run": "2026-11-08T20:37:48.844677+00:00",
+ "last_run": "2026-11-09T01:01:42.890649+00:00",
  "since": "2026-11-06",
  "version": "eredraw-maker-v1"
 }
