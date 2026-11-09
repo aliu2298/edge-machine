@@ -222,6 +222,67 @@ def _rank_tr(r):
             f'<td class="num">{r[3]:.0f}c</td></tr>')
 
 
+LS_TRADES = (("leadswap_swing", "leadswap_swing_ctrl", "Swing on swappy markets"),
+             ("leadswap_fav", "leadswap_fav_ctrl", "Favourite on steady markets"))
+
+
+def _picked(picks):
+    """{series: [hours in the top 3, hours in the bottom 3]} over every frozen hour."""
+    out = {}
+    for p in (picks or {}).values():
+        for i, side in enumerate(("top", "bottom")):
+            for t in p.get(side) or []:
+                out.setdefault(t, [0, 0])[i] += 1
+    return out
+
+
+def ls_groups(rt, picks, ranked=()):
+    """{trade: (doing, not_doing, not_picked)}: the trade's markets split by REAL return after fees (> 0 doing well,
+    <= 0 not), each sorted by bets descending; rows are (series, [n, wins, roi sum], control or None, [top, bottom]).
+    not_picked: ranked markets with no bets in the trade. Recomputed from the live record every build."""
+    times = _picked(picks)
+    out = {}
+    for strat, ctrl, _label in LS_TRADES:
+        ser = ((rt or {}).get(strat) or {}).get("series") or {}
+        cs = ((rt or {}).get(ctrl) or {}).get("series") or {}
+        rows = [(s, v, cs.get(s), times.get(s, [0, 0])) for s, v in ser.items() if v and v[0]]
+        rows.sort(key=lambda r: (-r[1][0], name(r[0])))
+        traded = {r[0] for r in rows}
+        seen = sorted({t for t in list(ranked) + list(times) if t not in traded}, key=name)
+        out[strat] = ([r for r in rows if r[1][2] > 0], [r for r in rows if r[1][2] <= 0], seen)
+    return out
+
+
+def _ls_tr(r):
+    s, v, c, t = r
+    tag = ' <span class="mut sm">under 10</span>' if v[0] < 10 else ""
+    ctl = "—" if not c or not c[0] else f"{c[1]}/{c[0]}, {pct(c[2] / c[0])}"
+    return (f'<tr><td>{mkt(s)}{tag}</td><td class="num">{v[0]}</td><td class="num">{v[1]}</td>'
+            f'<td class="num">{pct(v[2] / v[0])}</td><td class="num">{ctl}</td><td class="num">{t[0]} / {t[1]}</td></tr>')
+
+
+LS_HEAD = ("Market", "Bets", "Wins", "Return after fees", "Control (wins/bets, return)",
+           "Times picked (hours top 3 / bottom 3)")
+
+
+def ls_groups_html(rt, picks, ranked=()):
+    g = ls_groups(rt, picks, ranked)
+    parts = ['<p class="sm mut">Groups re-sort every hour from the record; no market is removed.</p>']
+    for strat, _ctrl, label in LS_TRADES:
+        good, bad, none = g[strat]
+        bad_t = _table(LS_HEAD, [_ls_tr(r) for r in bad]).replace(
+            "<thead>", '<thead style="background:rgba(220,38,38,.14)">', 1)
+        parts.append(
+            f'<div class="ls-trade" data-trade="{strat}"><h4>{esc(label)}</h4>'
+            f'<p class="sm">Doing well · return after fees above 0 ({len(good)})</p>'
+            + (_table(LS_HEAD, [_ls_tr(r) for r in good]) if good else '<p class="sm mut">None yet.</p>')
+            + f'<p class="sm ls-bad">Not doing well · return after fees 0 or below ({len(bad)})</p>'
+            + (bad_t if bad else '<p class="sm mut">None yet.</p>')
+            + f'<details class="fold"><summary>Not picked yet ({len(none)})</summary><p class="sm">'
+            + (", ".join(mkt(t) for t in none) or "none") + '</p></details></div>')
+    return "".join(parts)
+
+
 def leadswap_block(state):
     """The Lead Swap Board (leadswap.py): the routing record rows, then the board, persistence and timing folds."""
     import leadswap as L
@@ -309,6 +370,7 @@ def leadswap_block(state):
             f'against its opposite; picks frozen at about :04 each hour (a live version could only act from :05); fresh '
             f'record from {esc(_start(L.FROM))}; review at {W.REVIEW_AT}, decide at {W.DECIDE_AT}.</p><p class="sm mut" id="spotlag-status">{esc(spot)}</p>'
             f'<div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>'
+            f'{ls_groups_html(rt, pk, [r[0] for r in (b.get("past24h") or []) + (b.get("past2h") or [])])}'
             f'{board}{persist}{timing}{heat}')
 
 

@@ -130,5 +130,25 @@ check("persistence, minute histogram and the hour-of-day heatmap folds",
 check("the Sandbox index lists the routing rows last", [r["lane"] for r in WB.index_rows(state)][-4:], list(L.STRATS))
 check("no dollar sign, no guarded phrase", (re.search(r"\$\d", html), sandbox_audit.COPY_RE.findall(html + WB.index_html(state))), (None, []))
 
+print("\nthe doing-well / not-doing-well groups")
+rt_ = {"leadswap_swing": {"series": {"KXA15M": [12, 7, 1.5], "KXB15M": [4, 0, -4.0], "KXC15M": [6, 3, 0.0], "KXD15M": [8, 4, 0.4]}},
+       "leadswap_swing_ctrl": {"series": {"KXA15M": [3, 1, -0.5]}},
+       "leadswap_fav": {"series": {"KXC15M": [5, 4, 0.2]}}, "leadswap_fav_ctrl": None}
+pk_ = {"h1": {"top": ["KXA15M", "KXD15M"], "bottom": ["KXC15M"]}, "h2": {"top": ["KXA15M", "KXC15M"], "bottom": ["KXE15M"]}}
+g = WB.ls_groups(rt_, pk_, ranked=["KXA15M", "KXF15M"])
+good, bad, none = g["leadswap_swing"]
+check("doing well = return > 0, sorted by bets", [r[0] for r in good], ["KXA15M", "KXD15M"])
+check("not doing well = return <= 0 (a flat 0 is not doing well), by bets", [r[0] for r in bad], ["KXC15M", "KXB15M"])
+check("a market picked both ways sits under each trade it traded in",
+      ("KXC15M" in [r[0] for r in bad], [r[0] for r in g["leadswap_fav"][0]]), (True, ["KXC15M"]))
+check("control beside the same market; times picked top/bottom", (good[0][2], good[0][3], bad[0][3]), ([3, 1, -0.5], [2, 0], [1, 1]))
+check("not picked yet: ranked or picked markets with no bets in the trade", (none, g["leadswap_fav"][2]),
+      (["KXE15M", "KXF15M"], ["KXA15M", "KXD15M", "KXE15M", "KXF15M"]))
+gh = WB.ls_groups_html(rt_, pk_, ["KXF15M"])
+check("the copy line, the red-tinted header, the under-10 tag and the trade headings",
+      ("Groups re-sort every hour from the record; no market is removed." in gh, 'thead style="background:rgba(220,38,38' in gh,
+       gh.count("under 10"), "Swing on swappy markets" in gh and "Favourite on steady markets" in gh), (True, True, 4, True))
+check("the groups render on the page above the board", 0 < html.index('data-trade="leadswap_swing"') < html.index("Board · last 2 hours"), True)
+
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
