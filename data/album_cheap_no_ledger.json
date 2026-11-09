@@ -896,6 +896,208 @@
    "status": "open",
    "traded_to_entry": 0.0,
    "word": "Above 70K"
+  },
+  {
+   "ask_check": {
+    "book": 1.0,
+    "first_quotes": false,
+    "last_trade": 0.01,
+    "source": "live",
+    "status": "checking"
+   },
+   "bid": 0.03,
+   "book": {
+    "ask_depth": 355.0,
+    "ask_levels": 16,
+    "ask_size": 1.0,
+    "at": "2026-11-09T22:00:54.772042+00:00",
+    "at_or_under": 1.0,
+    "best_ask": 0.03,
+    "best_bid": null,
+    "bid_depth": 0,
+    "bid_levels": 0,
+    "bid_size": null
+   },
+   "book_at": "2026-11-09T22:00:54.772042+00:00",
+   "book_size": 1.0,
+   "entry_at": "2026-11-09T21:06:00+00:00",
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "id": "KXALBUMEQUIV-FRE26NOV12-30K",
+   "last_trade": 0.01,
+   "last_trade_at": "2026-11-09T20:41:00+00:00",
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.08
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.12
+    }
+   ],
+   "logged": "2026-11-09T22:00:54.772042+00:00",
+   "payout": null,
+   "price": 0.04,
+   "side": "no",
+   "spread": 0.01,
+   "spread_cost": 0.03,
+   "status": "open",
+   "traded_to_entry": 55.0,
+   "word": "Above 30K"
+  },
+  {
+   "ask_check": {
+    "book": 0,
+    "first_quotes": false,
+    "how": "print",
+    "last_trade": null,
+    "printed": 50.0,
+    "source": "live",
+    "status": "verified"
+   },
+   "bid": 0.03,
+   "book": {
+    "ask_depth": 231.0,
+    "ask_levels": 6,
+    "ask_size": 6.0,
+    "at": "2026-11-09T22:00:54.772042+00:00",
+    "at_or_under": 0,
+    "best_ask": 0.4,
+    "best_bid": null,
+    "bid_depth": 0,
+    "bid_levels": 0,
+    "bid_size": null
+   },
+   "book_at": "2026-11-09T22:00:54.772042+00:00",
+   "book_size": 0,
+   "entry_at": "2026-11-09T20:55:00+00:00",
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "id": "KXALBUMEQUIV-FRE26NOV12-35K",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.24
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.36
+    }
+   ],
+   "logged": "2026-11-09T22:00:54.772042+00:00",
+   "payout": null,
+   "price": 0.12,
+   "side": "no",
+   "spread": 0.09,
+   "spread_cost": null,
+   "status": "open",
+   "traded_to_entry": 0.0,
+   "word": "Above 35K"
+  },
+  {
+   "ask_check": {
+    "book": 1.0,
+    "first_quotes": false,
+    "last_trade": 0.02,
+    "source": "live",
+    "status": "checking"
+   },
+   "bid": 0.01,
+   "book": {
+    "ask_depth": 40561.0,
+    "ask_levels": 13,
+    "ask_size": 1.0,
+    "at": "2026-11-09T22:00:54.772042+00:00",
+    "at_or_under": 1.0,
+    "best_ask": 0.05,
+    "best_bid": 0.01,
+    "bid_depth": 201.0,
+    "bid_levels": 1,
+    "bid_size": 201.0
+   },
+   "book_at": "2026-11-09T22:00:54.772042+00:00",
+   "book_size": 1.0,
+   "entry_at": "2026-11-09T21:16:00+00:00",
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "id": "KXALBUMEQUIV-FRE26NOV12-55K",
+   "last_trade": 0.02,
+   "last_trade_at": "2026-11-09T21:10:00+00:00",
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.12
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.18
+    }
+   ],
+   "logged": "2026-11-09T22:00:54.772042+00:00",
+   "payout": null,
+   "price": 0.06,
+   "side": "no",
+   "spread": 0.05,
+   "spread_cost": 0.04,
+   "status": "open",
+   "traded_to_entry": 50.0,
+   "word": "Above 55K"
+  },
+  {
+   "ask_check": {
+    "book": 2.0,
+    "first_quotes": false,
+    "last_trade": 0.01,
+    "source": "live",
+    "status": "checking"
+   },
+   "bid": 0.01,
+   "book": {
+    "ask_depth": 408.63,
+    "ask_levels": 7,
+    "ask_size": 1.0,
+    "at": "2026-11-09T22:00:54.772042+00:00",
+    "at_or_under": 2.0,
+    "best_ask": 0.03,
+    "best_bid": 0.01,
+    "bid_depth": 199.0,
+    "bid_levels": 1,
+    "bid_size": 199.0
+   },
+   "book_at": "2026-11-09T22:00:54.772042+00:00",
+   "book_size": 2.0,
+   "entry_at": "2026-11-09T21:31:00+00:00",
+   "event": "KXALBUMEQUIV-DREAM26NOV12",
+   "id": "KXALBUMEQUIV-DREAM26NOV12-5K",
+   "last_trade": 0.01,
+   "last_trade_at": "2026-11-09T21:29:00+00:00",
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.08
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.12
+    }
+   ],
+   "logged": "2026-11-09T22:00:54.772042+00:00",
+   "payout": null,
+   "price": 0.04,
+   "side": "no",
+   "spread": 0.03,
+   "spread_cost": 0.03,
+   "status": "open",
+   "traded_to_entry": 57.0,
+   "word": "Above 5K"
   }
  ],
  "error": null,
@@ -921,16 +1123,16 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:50.419359+00:00"
  },
  "lane": "album_cheap_no",
- "last_success": "2026-11-09T21:01:02.272253+00:00",
+ "last_success": "2026-11-09T22:00:54.772042+00:00",
  "observations": {
-  "at": "2026-11-09T21:01:02.272253+00:00",
-  "checking": 0,
-  "entered": 0,
+  "at": "2026-11-09T22:00:54.772042+00:00",
+  "checking": 3,
+  "entered": 4,
   "events": 19,
   "filled": 0,
   "skipped": 0,
   "unverified": 14,
-  "waiting": 6
+  "waiting": 9
  },
  "skips": {
   "KXALBUMEQUIV-BLEACH26NOV05-10K": {

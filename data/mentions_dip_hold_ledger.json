@@ -66719,12 +66719,12 @@
     "KXTRUMPSAY-26NOV16-ABUD": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c968-24d9-b946-6037-06cee61352f5"
+      "0726cb66-a889-ba43-eecc-489ed6011c25"
      ],
      "first_px": 0.25,
      "first_ts": 1794234343,
-     "last_ts": 1794257379,
-     "n_prints": 11,
+     "last_ts": 1794261058,
+     "n_prints": 23,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -66733,11 +66733,13 @@
     "KXTRUMPSAY-26NOV16-ANTI": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726ca72-c8b1-b37e-9610-5ee1afa6af37"
+      "0726c883-bf29-92c2-b9f0-f741f16d6d8d",
+      "0726cb5b-b301-9426-8042-5ebbfe9d0057",
+      "0726cb5b-b301-9dbd-87d8-a7974044b109"
      ],
      "first_px": 0.13,
      "first_ts": 1794242697,
-     "last_ts": 1794257862,
+     "last_ts": 1794260819,
      "lows": [
       [
        1794242697,
@@ -66763,9 +66765,19 @@
        1794256490,
        0.15,
        50.0
+      ],
+      [
+       1794260819,
+       0.15,
+       1.0
+      ],
+      [
+       1794260819,
+       0.14,
+       4.44
       ]
      ],
-     "n_prints": 21,
+     "n_prints": 26,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -66774,12 +66786,12 @@
     "KXTRUMPSAY-26NOV16-AUTO": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c953-1ea9-afb5-4eab-df939940e783"
+      "0726c82e-d029-b709-419a-7f9c16bfd65b"
      ],
      "first_px": 0.29,
      "first_ts": 1794235178,
-     "last_ts": 1794257768,
-     "n_prints": 5,
+     "last_ts": 1794260844,
+     "n_prints": 6,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -66788,14 +66800,16 @@
     "KXTRUMPSAY-26NOV16-BIBI": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c986-a109-9529-2845-7adced9a3019",
-      "0726c9a9-1231-96e8-2eed-c3ef35f2ce82",
-      "0726c9a9-fe21-984f-3b61-88e5d7bc9ffb"
+      "0726cae1-b129-8d6c-2ceb-923d1c57acb4",
+      "0726cae1-bd11-8d89-303f-db360f349600",
+      "0726cae2-ab71-8059-1ddd-e32f603f4a65",
+      "0726cae2-ae89-8cbc-38f5-538f574251cb",
+      "0726caff-9b91-8566-1839-6f3408806b41"
      ],
      "first_px": 0.6,
      "first_ts": 1794233116,
-     "last_ts": 1794257941,
-     "n_prints": 20,
+     "last_ts": 1794259612,
+     "n_prints": 28,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -66804,12 +66818,20 @@
     "KXTRUMPSAY-26NOV16-BLOC": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c69b-7b69-9215-10eb-317fa8042481"
+      "0726c816-9161-8897-613f-d7216a9d4bcf",
+      "0726c91f-16d9-8c76-46b9-27e49e56e8bf",
+      "0726c936-fe61-a335-d973-8e62c97191c0",
+      "0726c95c-92b9-a368-ca05-581221affbcf",
+      "0726c95c-c481-a060-fe8a-9ff76d172a0c",
+      "0726c9aa-a1c1-a3b6-e424-c695c0b10430",
+      "0726cac2-1b39-a1fa-c25b-e60ca9b438cd",
+      "0726cae9-0e81-aad6-fc68-e4c314aedce8",
+      "0726caf0-4371-a40a-dc89-7a119aa8813c"
      ],
      "first_px": 0.94,
      "first_ts": 1794233688,
-     "last_ts": 1794254305,
-     "n_prints": 9,
+     "last_ts": 1794259770,
+     "n_prints": 19,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -66818,14 +66840,12 @@
     "KXTRUMPSAY-26NOV16-CANA": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c711-a799-b6fe-e825-cb8cc27400b0",
-      "0726c71d-27c1-b3ea-faad-90803c05bc2e",
-      "0726c7ee-55e9-b2df-d547-633fa7340fda"
+      "0726cb3c-4fb9-82fa-1759-ad46b5e9399c"
      ],
      "first_px": 0.88,
      "first_ts": 1794233700,
-     "last_ts": 1794249494,
-     "n_prints": 10,
+     "last_ts": 1794261197,
+     "n_prints": 11,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -66834,12 +66854,12 @@
     "KXTRUMPSAY-26NOV16-CEAS": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726ca4b-2251-a441-dec3-ea909b395590"
+      "0726caba-5561-a1a8-d86a-b758009b05a9"
      ],
      "first_px": 0.53,
      "first_ts": 1794233597,
-     "last_ts": 1794257315,
-     "n_prints": 45,
+     "last_ts": 1794258706,
+     "n_prints": 46,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -66848,14 +66868,18 @@
     "KXTRUMPSAY-26NOV16-CRYP": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c62e-90f1-9451-3f28-4cc304e47349",
-      "0726c62e-98a1-9ca1-0f66-82b33f77590a",
-      "0726c630-4bb9-9951-173c-1ee22cfc8f92"
+      "0726c8bc-4071-9bf1-91a5-40ace9030770",
+      "0726cb1e-4ad9-9185-a17f-d6fe4f3b99f7",
+      "0726cb1e-5651-9a5b-8f8c-d673bde4ac37",
+      "0726cb1e-e271-9de4-9fd2-0549c9c7cf71",
+      "0726cb1f-44d9-953c-a0e7-fece643eabb9",
+      "0726cb1f-44d9-9e25-9bf6-29f1db4e2f02",
+      "0726cb79-8b21-997e-a916-daf00687c5e4"
      ],
      "first_px": 0.34,
      "first_ts": 1794233653,
-     "last_ts": 1794255499,
-     "n_prints": 34,
+     "last_ts": 1794261587,
+     "n_prints": 46,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -66878,11 +66902,11 @@
     "KXTRUMPSAY-26NOV16-CYBE": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c627-66f9-ad37-8806-0e98ff6a60f5"
+      "0726c985-1359-92a4-fa2c-b25380fd3393"
      ],
      "first_px": 0.22,
      "first_ts": 1794233319,
-     "last_ts": 1794253897,
+     "last_ts": 1794259624,
      "lows": [
       [
        1794238204,
@@ -66890,7 +66914,7 @@
        14.0
       ]
      ],
-     "n_prints": 14,
+     "n_prints": 15,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -66899,12 +66923,13 @@
     "KXTRUMPSAY-26NOV16-DIES": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c6c0-02c1-9479-a9bd-d419a0f09dc2"
+      "0726c824-fc41-925b-5d2b-b7bbab9c1c9c",
+      "0726cb36-55a1-9fa2-76d3-c158b7d90675"
      ],
      "first_px": 0.45,
      "first_ts": 1794233713,
-     "last_ts": 1794253821,
-     "n_prints": 33,
+     "last_ts": 1794260775,
+     "n_prints": 38,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -66913,11 +66938,16 @@
     "KXTRUMPSAY-26NOV16-DIVI": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c68f-d2b1-a275-3ab2-b14504c0537d"
+      "0726c8d9-8ce1-94fc-9171-f5d869c775c4",
+      "0726c8da-35c9-9181-b0ec-b72940b6b5ce",
+      "0726c8da-35c9-94de-a163-1bca969d5b7f",
+      "0726cb2c-5b91-9fd0-bceb-5e7a8022d7c8",
+      "0726cb2c-95d9-9d9f-bd6d-811f07c75b84",
+      "0726cb73-4e81-94a9-be57-f73599077097"
      ],
      "first_px": 0.4,
      "first_ts": 1794237242,
-     "last_ts": 1794253130,
+     "last_ts": 1794261186,
      "lows": [
       [
        1794238382,
@@ -66935,7 +66965,7 @@
        2.0
       ]
      ],
-     "n_prints": 15,
+     "n_prints": 21,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -66944,13 +66974,12 @@
     "KXTRUMPSAY-26NOV16-EPST": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c974-4df1-a138-6c6a-b4ca5913204c",
-      "0726c9ca-c771-ac3e-737c-e3681f0bb4f0",
-      "0726c9d6-2339-ace1-426d-48f0c305f739"
+      "0726c954-7fc9-abda-2ee7-aaa873e8b495",
+      "0726ca9a-da59-a3d5-0a22-7e72f62cf062"
      ],
      "first_px": 0.18,
      "first_ts": 1794242665,
-     "last_ts": 1794256787,
+     "last_ts": 1794259147,
      "lows": [
       [
        1794243092,
@@ -66993,7 +67022,7 @@
        0.58
       ]
      ],
-     "n_prints": 21,
+     "n_prints": 25,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -67068,12 +67097,12 @@
     "KXTRUMPSAY-26NOV16-GDP": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c615-e8d1-bdd8-93c0-8c622a95ee5a"
+      "0726c814-a479-aeee-7e2e-628996d3380a"
      ],
      "first_px": 0.31,
      "first_ts": 1794233777,
-     "last_ts": 1794255860,
-     "n_prints": 16,
+     "last_ts": 1794261388,
+     "n_prints": 18,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -67175,12 +67204,13 @@
     "KXTRUMPSAY-26NOV16-ILHA": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c890-d969-b62d-ad76-8657ad658b73"
+      "0726c8aa-f789-9023-12c1-8ee87ff7a441",
+      "0726cb5b-a2f1-9239-2fcd-4b622229156f"
      ],
      "first_px": 0.38,
      "first_ts": 1794234857,
-     "last_ts": 1794257812,
-     "n_prints": 24,
+     "last_ts": 1794261426,
+     "n_prints": 30,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -67189,13 +67219,13 @@
     "KXTRUMPSAY-26NOV16-MAKE": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c640-46f9-a402-f627-aca51e9c1a78",
-      "0726c65b-5cd1-a3d5-cc68-4744ebb929ae",
-      "0726c65b-60f9-a6ee-db73-fcaf21800596"
+      "0726c81f-3431-8e71-987f-0a68ee9db8c6",
+      "0726cb20-c8c1-8aa9-8358-40ddd044f61a",
+      "0726cb3f-d979-87e7-8425-4fc09a237470"
      ],
      "first_px": 0.01,
      "first_ts": 1794239067,
-     "last_ts": 1794253861,
+     "last_ts": 1794261134,
      "lows": [
       [
        1794239067,
@@ -67251,9 +67281,24 @@
        1794253861,
        0.07,
        9.0
+      ],
+      [
+       1794261134,
+       0.06,
+       3.44
+      ],
+      [
+       1794261134,
+       0.05,
+       9.0
+      ],
+      [
+       1794261134,
+       0.05,
+       5.59
       ]
      ],
-     "n_prints": 11,
+     "n_prints": 14,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -67262,14 +67307,12 @@
     "KXTRUMPSAY-26NOV16-MARI": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c975-1cf9-8efa-5a8c-c35b952ce0d3",
-      "0726c9a1-5899-86f7-57c3-e0f1b9df60d1",
-      "0726c9de-c5d1-8712-62d6-bb25ffc8a7c8",
-      "0726c9df-0b39-858f-6132-581a76885cd3"
+      "0726ca60-15d9-b9dd-0eda-5a20ee6cce5b",
+      "0726ca62-0261-b4b1-19d7-2c22fc713fdb"
      ],
      "first_px": 0.04,
      "first_ts": 1794243027,
-     "last_ts": 1794256932,
+     "last_ts": 1794258127,
      "lows": [
       [
        1794243027,
@@ -67330,9 +67373,19 @@
        1794256932,
        0.13,
        1.0
+      ],
+      [
+       1794258127,
+       0.12,
+       1.0
+      ],
+      [
+       1794258127,
+       0.13,
+       6.3
       ]
      ],
-     "n_prints": 13,
+     "n_prints": 15,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -67341,12 +67394,12 @@
     "KXTRUMPSAY-26NOV16-MELA": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726ca64-9a59-add4-f38c-0601ee0ab44e"
+      "0726cb12-e711-8f27-d40c-96a83e23a61d"
      ],
      "first_px": 0.53,
      "first_ts": 1794233529,
-     "last_ts": 1794257864,
-     "n_prints": 45,
+     "last_ts": 1794261053,
+     "n_prints": 58,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -67355,12 +67408,12 @@
     "KXTRUMPSAY-26NOV16-MOON": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c6db-0c21-adb8-ffe5-2929195288a6"
+      "0726c812-73b9-840e-5960-81afda1ee271"
      ],
      "first_px": 0.33,
      "first_ts": 1794233426,
-     "last_ts": 1794254323,
-     "n_prints": 21,
+     "last_ts": 1794261305,
+     "n_prints": 25,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -67390,11 +67443,11 @@
     "KXTRUMPSAY-26NOV16-NOBE": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c655-8971-844e-d8f0-daad69e0372e"
+      "0726ca9e-eaa1-a8fb-b7d1-7979406a9a3c"
      ],
      "first_px": 0.38,
      "first_ts": 1794233760,
-     "last_ts": 1794255016,
+     "last_ts": 1794259152,
      "lows": [
       [
        1794238240,
@@ -67452,7 +67505,7 @@
        2.0
       ]
      ],
-     "n_prints": 23,
+     "n_prints": 24,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -67701,11 +67754,11 @@
     "KXTRUMPSAY-26NOV16-REFI": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c649-f739-ab04-a9e6-5aaf25712ce4"
+      "0726c814-bbd9-91e5-3dce-bdd761cbca21"
      ],
      "first_px": 0.32,
      "first_ts": 1794233769,
-     "last_ts": 1794255862,
+     "last_ts": 1794261577,
      "lows": [
       [
        1794243084,
@@ -67713,7 +67766,7 @@
        2.0
       ]
      ],
-     "n_prints": 30,
+     "n_prints": 32,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -67722,12 +67775,12 @@
     "KXTRUMPSAY-26NOV16-RIGG": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726ca78-de01-8de6-e348-47a4430c08f3"
+      "0726cb1f-0279-9d85-24f2-fa3daec1cc53"
      ],
      "first_px": 0.37,
      "first_ts": 1794233524,
-     "last_ts": 1794257890,
-     "n_prints": 54,
+     "last_ts": 1794261605,
+     "n_prints": 71,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -67750,13 +67803,13 @@
     "KXTRUMPSAY-26NOV16-SOLE": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c220-b811-af78-e8bd-e28434647d75",
-      "0726c2e3-dd81-af17-f977-ad9cd06af59d",
-      "0726c313-fe69-a158-dbfc-ff565d71d5ef"
+      "0726c867-d519-9d79-f27d-7008ec0cefaa",
+      "0726cb3c-25e9-9b28-e602-784b070ba959",
+      "0726cb7c-4be1-96b9-ffe7-d515f01ebc2e"
      ],
      "first_px": 0.33,
      "first_ts": 1794233212,
-     "last_ts": 1794256857,
+     "last_ts": 1794261238,
      "lows": [
       [
        1794256857,
@@ -67764,7 +67817,7 @@
        6.0
       ]
      ],
-     "n_prints": 11,
+     "n_prints": 16,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -67773,12 +67826,12 @@
     "KXTRUMPSAY-26NOV16-SPAC": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c5d3-eb89-831b-82a2-df8e3c3632fa"
+      "0726c91c-ee21-a27f-c807-147150f95620"
      ],
      "first_px": 0.49,
      "first_ts": 1794233157,
-     "last_ts": 1794243214,
-     "n_prints": 19,
+     "last_ts": 1794259079,
+     "n_prints": 20,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -67787,12 +67840,13 @@
     "KXTRUMPSAY-26NOV16-SUPE": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726ca64-91f9-be16-1b82-14d2ecd31507"
+      "0726cb16-8c19-a563-4aa8-466bc342e49a",
+      "0726cb48-2071-a348-7a8b-f9fc5362e77e"
      ],
      "first_px": 0.22,
      "first_ts": 1794233050,
-     "last_ts": 1794257992,
-     "n_prints": 46,
+     "last_ts": 1794261501,
+     "n_prints": 51,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -67801,11 +67855,11 @@
     "KXTRUMPSAY-26NOV16-THIR": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726ca64-4c09-8f72-4f2e-755829be2469"
+      "0726caa5-b6b9-b129-44fe-414638d5cee6"
      ],
      "first_px": 0.04,
      "first_ts": 1794239121,
-     "last_ts": 1794257883,
+     "last_ts": 1794259165,
      "lows": [
       [
        1794239121,
@@ -67846,9 +67900,14 @@
        1794257076,
        0.1,
        5.48
+      ],
+      [
+       1794259165,
+       0.08,
+       1.07
       ]
      ],
-     "n_prints": 19,
+     "n_prints": 20,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -67857,13 +67916,12 @@
     "KXTRUMPSAY-26NOV16-TOMA": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c1c7-8939-ab94-fa1a-ad21a8d5c5da",
-      "0726c22f-2da1-aa1d-f543-b30223330a54"
+      "0726cb1f-0fd1-954d-3054-9f758264bc8b"
      ],
      "first_px": 0.17,
      "first_ts": 1794238411,
-     "last_ts": 1794256776,
-     "n_prints": 17,
+     "last_ts": 1794261603,
+     "n_prints": 45,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -67872,11 +67930,11 @@
     "KXTRUMPSAY-26NOV16-UFO": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c61e-6f39-b196-5b52-53494c12ca08"
+      "0726c8d0-7621-96b1-931d-f433d397b05c"
      ],
      "first_px": 0.29,
      "first_ts": 1794236834,
-     "last_ts": 1794255864,
+     "last_ts": 1794261271,
      "lows": [
       [
        1794238169,
@@ -67904,7 +67962,7 @@
        2.0
       ]
      ],
-     "n_prints": 49,
+     "n_prints": 55,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -67913,11 +67971,14 @@
     "KXTRUMPSAY-26NOV16-URAN": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726ca7f-1fb9-97bb-04d7-1a42c43e77d0"
+      "0726cb1e-7971-a6f7-c1e1-3e159ff76d8e",
+      "0726cb1f-8121-a252-ec45-3010b8f6bb38",
+      "0726cb1f-bbf1-a93c-d76b-83290a8d311a",
+      "0726cb1f-c3a1-a440-c6ad-c8c860917730"
      ],
      "first_px": 0.35,
      "first_ts": 1794233792,
-     "last_ts": 1794257847,
+     "last_ts": 1794261606,
      "lows": [
       [
        1794238305,
@@ -67963,9 +68024,19 @@
        1794245179,
        0.13,
        5.27
+      ],
+      [
+       1794261517,
+       0.07,
+       17.19
+      ],
+      [
+       1794261517,
+       0.07,
+       14.0
       ]
      ],
-     "n_prints": 29,
+     "n_prints": 51,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -67988,12 +68059,14 @@
     "KXTRUMPSAY-26NOV16-ZOHR": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726c67b-bcc1-848f-ad69-50e4d34848fa"
+      "0726c9ec-8ad1-8e11-c947-f626223dda1b",
+      "0726ca9e-bd69-81d3-e745-f36048eace0d",
+      "0726caaa-0399-83b9-d6aa-86abee670506"
      ],
      "first_px": 0.3,
      "first_ts": 1794233552,
-     "last_ts": 1794254516,
-     "n_prints": 37,
+     "last_ts": 1794259112,
+     "n_prints": 40,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -68003,13 +68076,13 @@
   }
  },
  "lane": "mentions_dip_hold",
- "last_success": "2026-11-09T21:01:03.081765+00:00",
+ "last_success": "2026-11-09T22:00:59.234685+00:00",
  "observations": {
-  "at": "2026-11-09T21:01:03.081765+00:00",
+  "at": "2026-11-09T22:00:59.234685+00:00",
   "errors": [],
   "events": 1,
   "markets": 42,
-  "prints": 102
+  "prints": 187
  },
  "since": "2026-10-26T04:00:00+00:00"
 }
