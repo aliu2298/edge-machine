@@ -917,19 +917,34 @@
       "status": "won",
       "title": "NO \u00b7 7,570 or above",
       "yes_bid": 0.07
+    },
+    {
+      "bid": 0.88,
+      "close": "2026-11-10T21:00:00Z",
+      "event": "KXINXU-26NOV10H1600",
+      "id": "KXINXU-26NOV10H1600-T7529.9999",
+      "logged": "2026-11-10T17:30:46.144742+00:00",
+      "name": "S&P 500 above/below",
+      "price": 0.9,
+      "series": "KXINXU",
+      "side": "no",
+      "size": 850.0,
+      "status": "open",
+      "title": "NO \u00b7 7,530 or above",
+      "yes_bid": 0.1
     }
   ],
   "error": null,
   "key": "finance_spx_nc_no",
-  "last_run": "2026-11-10T17:00:50.729520+00:00",
-  "last_success": "2026-11-10T17:00:50.729520+00:00",
+  "last_run": "2026-11-10T17:30:46.144742+00:00",
+  "last_success": "2026-11-10T17:30:46.144742+00:00",
   "observation": {
-    "at": "2026-11-10T17:00:50.729520+00:00",
-    "eligible": 0,
+    "at": "2026-11-10T17:30:46.144742+00:00",
+    "eligible": 1,
     "listed": 360,
     "reasons": {
       "Not the 16:00 ET event": 270,
-      "Outside entry window": 90
+      "Price or spread gate": 89
     }
   },
   "picks": [
@@ -1166,6 +1181,21 @@
       "status": "won",
       "title": "NO \u00b7 7,575 or above",
       "yes_bid": 0.09
+    },
+    {
+      "bid": 0.88,
+      "close": "2026-11-10T21:00:00Z",
+      "event": "KXINXU-26NOV10H1600",
+      "id": "KXINXU-26NOV10H1600-T7529.9999",
+      "logged": "2026-11-10T17:30:46.144742+00:00",
+      "name": "S&P 500 above/below",
+      "price": 0.9,
+      "series": "KXINXU",
+      "side": "no",
+      "size": 850.0,
+      "status": "open",
+      "title": "NO \u00b7 7,530 or above",
+      "yes_bid": 0.1
     }
   ],
   "registered": "2026-10-20",
