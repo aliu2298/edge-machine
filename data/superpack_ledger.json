@@ -359,6 +359,10 @@
    "at": "2026-11-09T19:05:56.281986+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXNATGASD-26NOV1017-T3.425\", \"a\"]]": {
+   "at": "2026-11-10T19:09:00.358187+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXSILVERD-26NOV0517-T52.25\", \"a\"]]": {
    "at": "2026-11-05T18:35:00.864249+00:00",
    "pool": "entered"
@@ -2184,7 +2188,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-10T19:03:58.705922+00:00",
+ "last_run": "2026-11-10T19:09:00.358187+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -6991,6 +6995,29 @@
    "side": "b",
    "snapshot": null,
    "sport": "Crypto",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXNATGASD-26NOV1017-T3.425",
+   "entered_at": "2026-11-10T19:09:00.358187+00:00",
+   "entities": [
+    "Natural gas"
+   ],
+   "id": "superpack:[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXNATGASD-26NOV1017-T3.425\", \"a\"]]",
+   "lane": "commod_fav_band",
+   "logged": "2026-11-10T19:08:11+00:00",
+   "matched": [
+    "Natural gas"
+   ],
+   "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXNATGASD-26NOV1017-T3.425\", \"a\"]]",
+   "price": 0.78,
+   "profit": null,
+   "scope": "commodities_fav",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Commodities",
    "src": "sandbox",
    "status": "open"
   }
