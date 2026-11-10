@@ -27,13 +27,13 @@ jobs:
         with:
           python-version: '3.12'
       - name: Tests
-        run: python3 test_swing15.py && python3 test_swing15v2.py && python3 test_flipside_v2.py && python3 test_holdtoend.py && python3 test_leadswap.py && python3 test_steadyfav.py && python3 test_lossreader.py && python3 test_s3v2.py
+        run: python3 test_swing15.py && python3 test_swing15v2.py && python3 test_flipside_v2.py && python3 test_holdtoend.py && python3 test_leadswap.py && python3 test_steadyfav.py && python3 test_lossreader.py && python3 test_s3v2.py && python3 test_flipf1v2.py && python3 test_flipf2v2.py && python3 test_flipf3v2.py && python3 test_allowgate.py
       - name: Grade settled windows
         id: grade
         run: python3 swing15.py --budget 900
       - name: v2 records (sw15-v2 and flip-v2, filters over the v1 rows)
         if: ${{ !cancelled() && (steps.grade.outcome == 'success' || steps.grade.outcome == 'failure') }}
-        run: python3 swing15v2.py && python3 flipside_v2.py && python3 holdtoend.py && python3 leadswap.py && python3 steadyfav.py && python3 lossreader.py && python3 s3v2.py
+        run: python3 swing15v2.py && python3 flipside_v2.py && python3 holdtoend.py && python3 leadswap.py && python3 steadyfav.py && python3 lossreader.py && python3 s3v2.py && python3 flipf1v2.py && python3 flipf2v2.py && python3 flipf3v2.py
       - name: Save the ledger
         if: ${{ !cancelled() && (steps.grade.outcome == 'success' || steps.grade.outcome == 'failure') }}
         run: |
@@ -44,4 +44,4 @@ jobs:
           shards=$(git status --porcelain --untracked-files=all -- data/swing15 | awk '{print $NF}' | grep '\.json$' || true)
           python3 save_records.py --message "15-Minute Swing paper windows" \
             --add data/swing15_ledger.json \
-            --optional data/swing15v2_ledger.json data/flipside_v2_ledger.json data/holdtoend_ledger.json data/leadswap_ledger.json data/steadyfav_ledger.json data/lossreader_ledger.json data/s3v2_ledger.json $shards
+            --optional data/swing15v2_ledger.json data/flipside_v2_ledger.json data/holdtoend_ledger.json data/leadswap_ledger.json data/steadyfav_ledger.json data/lossreader_ledger.json data/s3v2_ledger.json data/flipf1v2_ledger.json data/flipf2v2_ledger.json data/flipf3v2_ledger.json $shards

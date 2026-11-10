@@ -261,7 +261,7 @@ def _removed_fold(labels, removed, removed_at, won_word, word="Removed", note=""
 
 
 
-def _frozen_block(anchor, title, start, version, labels, rec, sport, won_word, how=(), intro=""):
+def _frozen_block(anchor, title, start, version, labels, rec, sport, won_word, how=(), intro="", extra_cards=()):
     """A frozen-cell lane block (sw15, flip, hte): one card per strategy with cells: the row (rule details folded) and
     its markets' n, wins, return and z open beneath, split Doing well / Not doing well. Removed and retired cells live in
     the archive at the bottom of the section."""
@@ -286,7 +286,8 @@ def _frozen_block(anchor, title, start, version, labels, rec, sport, won_word, h
         cards.append(_card(_row(strat, label, r["all"], per, body, anchor=lid, sport=sport),
                            count_line(good, bad) + _split_html(("Market", "n", won_word(strat), "Return after fees",
                                                                 "z (by day)"), good, bad, tr, none)))
-    return f'<h3 class="dm-title" id="{anchor}">{esc(title)}</h3>' + _intro(start, intro) + _list(cards) + _how(*how)
+    return (f'<h3 class="dm-title" id="{anchor}">{esc(title)}</h3>' + _intro(start, intro) + _list(list(extra_cards) + cards)
+            + _how(*how))
 
 
 def _cut_line(M):
@@ -359,46 +360,59 @@ def lossreader_block(state, now=None):
     return f'<h3 class="dm-title" id="lossreader">{esc(LR.LABEL)}</h3>' + intro + _list([_card(row, split)]) + how
 
 
-def s3v2_block(state):
-    """Rule 2 v2 · Every Positive Setting (s3v2.py, sw15-s3v2): one collapsed row, the per-market split inside, the
-    old S3 on the same 6 markets as its comparison, the frozen allow-list in Rule details."""
-    import s3v2 as S
-    rec = S.records(state)
+NEVER_WORD = {"price": "price", "trigger_minute": "trigger minute", "lead_changes": "lead-change setting",
+              "time_ct": "time of day"}
+SETTING_HEAD = {"price": "Price of the side bought", "trigger_minute": "Trigger minute",
+                "lead_changes": "Lead changes before the entry", "time_ct": "Open hour (CT)"}
+
+
+def eps_card(M, state, key, comp_label, rule_text):
+    """One "Every Positive Setting" rule (an allowgate.py lane module M: records, ALLOW, LABEL, VERSION, fingerprint,
+    REVIEW_AT, DECIDE_AT): a collapsed row whose fold holds the per-market split and the lane against its comparison
+    book, with the frozen allow-list as a table in Rule details. -> the card (a row for _list)."""
+    rec = M.records(state)
     lane, every = rec["lane"], rec["every"]
-    c = lane["all"]
+    c, e = lane["all"], every["all"]
     n = c["n"] if c else 0
-    chip = (f'<span class="sig w">Ready to decide ({S.DECIDE_AT} bets)</span>' if n >= S.DECIDE_AT else
-            '<span class="sig w">Review</span>' if n >= S.REVIEW_AT else f'<span class="sig n">Too early ({n}/{S.REVIEW_AT})</span>')
+    chip = (f'<span class="sig w">Ready to decide ({M.DECIDE_AT} bets)</span>' if n >= M.DECIDE_AT else
+            '<span class="sig w">Review</span>' if n >= M.REVIEW_AT else f'<span class="sig n">Too early ({n}/{M.REVIEW_AT})</span>')
     ser = lane["series"]
     good, bad, none = split_markets([(m, x["n"] if x else 0, x["mean_roi"] if x else 0) for m, x in ser.items()])
     tr = lambda q: (f'<tr><td>{mkt(q[0])}{_under10(q[1])}</td><td class="num">{q[1]}</td>'
                     f'<td class="num">{ser[q[0]]["hits"]} v {ser[q[0]]["fair"] * q[1]:.1f}</td>'
                     f'<td class="num">{pct(ser[q[0]]["mean_roi"])}</td><td class="num">{_zd(ser[q[0]])}</td></tr>')
-    e = every["all"]
     comp = lambda name_, x: (f'<tr><td>{esc(name_)}</td><td class="num">{x["n"]}</td><td class="num">{x["hits"]} v '
                              f'{x["fair"] * x["n"]:.1f}</td><td class="num">{pct(x["mean_roi"])}</td></tr>' if x else
                              f'<tr><td>{esc(name_)}</td><td class="num">0</td><td class="num">—</td><td class="num">—</td></tr>')
     split = (count_line(good, bad)
              + _split_html(("Market", "Bets", "Won v priced", "Return after fees", "z (by day)"), good, bad, tr, none)
              + '<p class="sm">Compared over the same windows</p>'
-             + _table(("Book", "Bets", "Won v priced", "Return after fees"),
-                      [comp(S.LABEL, c), comp("Every bet (old S3 on the same 6 markets)", e)]))
-    allow = _table(("Market", "Price of the side bought", "Lead changes before minute 10", "Open hour (CT)"),
-                   [f'<tr><td>{mkt(m)}</td><td>{esc(", ".join(a["price"]))}</td><td>{esc(", ".join(a["lead_changes"]))}</td>'
-                    f'<td>{esc(", ".join(a["time_ct"]))}</td></tr>' for m, a in S.ALLOW.items()])
-    body = (f'<p class="sp-details-name"><b>{esc(S.LABEL)}</b> · Kalshi 15-minute windows · paper · {esc(S.VERSION)}</p>'
-            '<p class="sp-def">S3: at minute 10, buy the favourite at its ask, filled only on a print at or through it in '
-            'the next minute; held to settlement; taker fee. Bet only when the price band, the lead changes and the open '
-            'hour are all in the market\'s allow-list (frozen, fingerprinted); any hour outside 07-22 CT is never bet.</p>'
-            + allow + f'<p class="sm mut">Allow-list fingerprint {esc(S.fingerprint()[:12])}</p>')
-    row = _row("s3v2", S.LABEL, c, {"all": n}, body, ctrl=e, anchor="sw15-s3v2", sport="s3v2", status=chip,
-               evidence=f"{min(n, S.DECIDE_AT)}/{S.DECIDE_AT}")
+             + _table(("Book", "Bets", "Won v priced", "Return after fees"), [comp(M.LABEL, c), comp(comp_label, e)]))
+    keys = list(next(iter(M.ALLOW.values())))
+    allow = _table(("Market",) + tuple(SETTING_HEAD.get(k, k) for k in keys),
+                   [f'<tr><td>{mkt(m)}</td>' + "".join(f'<td>{esc(", ".join(a[k]) or "none (never bets)")}</td>' for k in keys)
+                    + '</tr>' for m, a in M.ALLOW.items()])
+    body = (f'<p class="sp-details-name"><b>{esc(M.LABEL)}</b> · Kalshi 15-minute windows · paper · {esc(M.VERSION)}</p>'
+            f'<p class="sp-def">{esc(rule_text)} Bet only when every setting is in the market\'s allow-list (frozen, '
+            f'fingerprinted); any hour outside 07-22 CT is never bet.</p>'
+            + allow + f'<p class="sm mut">Allow-list fingerprint {esc(M.fingerprint()[:12])}</p>')
+    row = _row(key, M.LABEL, c, {"all": n}, body, ctrl=e, anchor=f"sw15-{key}", sport=key, status=chip,
+               evidence=f"{min(n, M.DECIDE_AT)}/{M.DECIDE_AT}")
+    return _card(row, split)
+
+
+def s3v2_block(state):
+    """Rule 2 v2 · Every Positive Setting (s3v2.py, sw15-s3v2): its own lane, one collapsed row."""
+    import s3v2 as S
+    card = eps_card(S, state, "s3v2", "Every bet (old S3 on the same 6 markets)",
+                    "S3: at minute 10, buy the favourite at its ask, filled only on a print at or through it in the next "
+                    "minute; held to settlement; taker fee.")
     intro = (f'<p class="scope sw15-intro">Paper · fresh record from {esc(_start(S.FROM))} · review {S.REVIEW_AT}, '
              f'decide {S.DECIDE_AT} bets</p>')
     how = _how("Replaces Swing v3 S3. The allow-list was chosen from each market's positive cells on Nov 9; the "
                "comparison is the old S3 on the same 6 markets over the same windows, to show whether the filter adds "
                "anything.", f'<p class="sm mut s3v2-in-sample">{esc(S.IN_SAMPLE)}</p>')
-    return f'<h3 class="dm-title" id="s3v2">{esc(S.LABEL)}</h3>' + intro + _list([_card(row, split)]) + how
+    return f'<h3 class="dm-title" id="s3v2">{esc(S.LABEL)}</h3>' + intro + _list([card]) + how
 
 
 def swing_v3_block(state):
@@ -408,12 +422,32 @@ def swing_v3_block(state):
                          how=("Cells picked from one overnight session.", _cut_line(V)))
 
 
+FLIP_EPS = (("flipf1v2", "F1"), ("flipf2v2", "F2"), ("flipf3v2", "F3"))
+FLIP_TRADE = {
+    "F1": "F1: when the cheap side prints at 25c in the first 5 minutes, buy the other side at its ask at the end of the "
+          "trigger minute; held to settlement; taker fee.",
+    "F2": "F2: when the cheap side prints at 35c in the first 5 minutes, buy the other side at its ask at the end of the "
+          "trigger minute; held to settlement; taker fee.",
+    "F3": "F3: the underdog (the side opposite the minute-2 favourite) at its ask from the minute-2 quote; held to "
+          "settlement; taker fee.",
+}
+
+
 def flip_block(state):
     import flipside_v2 as F
+    cards, how_eps = [], []
+    for name, old in FLIP_EPS:                                   # Rules 3-5 v2 (2026-11-10) replace F1-F3, in this list
+        try:
+            M = __import__(name)
+            cards.append(eps_card(M, state, name, M.COMP_LABEL, FLIP_TRADE[old]))
+            how_eps += [f"{M.LABEL} replaces {old}: fresh record from {_start(M.FROM)}, review {M.REVIEW_AT}, decide "
+                        f"{M.DECIDE_AT} bets.", f'<p class="sm mut {name}-in-sample">{esc(M.IN_SAMPLE)}</p>']
+        except Exception:                                        # noqa: BLE001  (never breaks the section)
+            pass
     return _frozen_block("flipside_v2", "The Flip Side v3", F.FROM, F.VERSION, F.LABELS, F.records(state),
                          "flipside_v2", lambda k: "Won",
                          how=("Opposite side of the 15-Minute Swing; cells picked from one overnight session; the 14-day "
-                              "backtest of the flips ran −0.5% to −16%.", _cut_line(F)))
+                              "backtest of the flips ran −0.5% to −16%.", _cut_line(F)) + tuple(how_eps), extra_cards=cards)
 
 
 def _v3_s3_retired(state, V):
@@ -736,7 +770,29 @@ def _archive(state, s1_final):
         + _removed_fold(V.LABELS, V.records(state, removed=True), V.REMOVED_AT, lambda k: "Won"))
     def flip():
         import flipside_v2 as F
-        return _removed_fold(F.LABELS, F.records(state, removed=True), F.REMOVED_AT, lambda k: "Won")
+        import allowgate as G
+        ret = F.records(state, retired=True)
+        out = ""
+        for name, old in FLIP_EPS:
+            strat = f"flipside_v2_{old.lower()}"
+            r = ret.get(strat) or {}
+            a = r.get("all")
+            try:
+                M = __import__(name)
+                label, nv = M.LABEL, G.never(M.ALLOW)
+            except Exception:                                    # noqa: BLE001
+                label, nv = "its v2 rule", {}
+            note = ("" if not a else
+                    f'<p class="sm">{old} final: {a["hits"]}/{a["n"]} won against {a["fair"] * a["n"]:.1f} priced, '
+                    f'{pct(a["mean_roi"])} after fees. Replaced by {esc(label)}. No new entries.</p>')
+            out += _removed_fold({strat: F.LABELS[strat]}, {strat: r}, F.RETIRED_TIMES[strat], lambda k: "Won",
+                                 word="Retired", note=note)
+            if nv:
+                out += (f'<p class="sm mut {name}-never">{esc(label)} · no positive setting (never bets): '
+                        + "; ".join(f'{mkt(m)} (' + ("no positive setting at all" if len(ks) == len(M.ALLOW[m]) else
+                                                    "no positive " + " or ".join(NEVER_WORD.get(k, k) for k in ks)) + ")"
+                                    for m, ks in nv.items()) + '.</p>')
+        return out + _removed_fold(F.LABELS, F.records(state, removed=True), F.REMOVED_AT, lambda k: "Won")
     grp("The Flip Side v3", flip)
     def hte():
         import holdtoend as H
@@ -793,6 +849,15 @@ def index_rows(state=None):
                         status=f"{c['n'] if c else 0}/{S32.DECIDE_AT} bets"))
     except Exception:                                           # noqa: BLE001  (never breaks the index)
         pass
+    for name, _old in FLIP_EPS:                                 # Rules 3-5 v2 · Every Positive Setting (2026-11-10)
+        try:
+            M = __import__(name)
+            c = M.records(state)["lane"]["all"]
+            out.append(dict(lane=name, label=M.LABEL, n=c["n"] if c else 0, roi=c["mean_roi"] if c else None,
+                            hit=c["hit_rate"] if c else None, fair=c["fair"] if c else None,
+                            status=f"{c['n'] if c else 0}/{M.DECIDE_AT} bets"))
+        except Exception:                                       # noqa: BLE001  (never breaks the index)
+            pass
     import steadyfav as S                                       # Steady Favourites (2026-11-09)
     for key, r in S.records(state).items():
         c = r["all"]

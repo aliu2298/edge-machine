@@ -83,7 +83,7 @@ check("A's split: BTC (2 bets, one win at 60c) is not doing well; counts on top"
 check("z reads 'needs 2+ days' on one day", "needs 2+ days" in sf, True)
 check("the control sits beside each rule", "Control (the same rule on the other markets, pooled): 1/2 won" in sf, True)
 check("one muted earlier line, not counted", len(re.findall(r'sf-earlier">Earlier result, not counted', sf)), 1)
-check("the Sandbox index lists the four rows after the Loss Reader", [r["lane"] for r in WB.index_rows(state)][:6], ["lossreader", "s3v2"] + list(S.LABELS))
+check("the Sandbox index lists the four rows after the Loss Reader", [r["lane"] for r in WB.index_rows(state)][:9], ["lossreader", "s3v2", "flipf1v2", "flipf2v2", "flipf3v2"] + list(S.LABELS))
 check("no dollar sign, no guarded phrase", (re.search(r"\$\d", html), sandbox_audit.COPY_RE.findall(html + WB.index_html(state))), (None, []))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
