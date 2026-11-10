@@ -966,16 +966,14 @@
   ],
   "error": null,
   "key": "finance_spx_nc_no",
-  "last_run": "2026-11-10T18:30:46.015971+00:00",
-  "last_success": "2026-11-10T18:30:46.015971+00:00",
+  "last_run": "2026-11-10T20:52:32.261103+00:00",
+  "last_success": "2026-11-10T20:52:32.261103+00:00",
   "observation": {
-    "at": "2026-11-10T18:30:46.015971+00:00",
-    "eligible": 2,
-    "listed": 270,
+    "at": "2026-11-10T20:52:32.261103+00:00",
+    "eligible": 0,
+    "listed": 90,
     "reasons": {
-      "Not the 16:00 ET event": 180,
-      "Order-book price, spread, depth or two-sided gate": 1,
-      "Price or spread gate": 87
+      "Outside entry window": 90
     }
   },
   "picks": [

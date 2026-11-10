@@ -517,6 +517,8 @@
    "last_trade_at": null,
    "legs": [
     {
+     "fill_px": 0.56,
+     "filled_at": "2026-11-10T19:00:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.56
@@ -545,13 +547,13 @@
   "KXAAAGASW-26NOV16": "2026-11-09T17:00:46.151988+00:00"
  },
  "lane": "gas_week_cheap_no",
- "last_success": "2026-11-10T18:30:47.405030+00:00",
+ "last_success": "2026-11-10T20:52:33.418700+00:00",
  "observations": {
-  "at": "2026-11-10T18:30:47.405030+00:00",
+  "at": "2026-11-10T20:52:33.418700+00:00",
   "checking": 0,
   "entered": 0,
   "events": 1,
-  "filled": 0,
+  "filled": 1,
   "skipped": 0,
   "unverified": 3,
   "waiting": 0
