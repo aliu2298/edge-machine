@@ -110,6 +110,9 @@ _k = next(iter(DEC))
 _ceded = dict(DEC[_k], outcome="ceded", ceded_to="wm-nofade-v4", bucket_priority="bp-v1", fav_share=0.5275, why="ceded to wm-nofade-v4 (Bucket Priority bp-v1, 6-10)", rule_ok=True)
 check("the version 4 fields (fav_share) and a Bucket Priority cede (ceded, ceded_to, bucket_priority) are published, not refused (a refusal stops every snapshot)",
       PUB.sanitise({"updated_at": "x", "decisions": {_k: _ceded}})["decisions"][_k]["ceded_to"], "wm-nofade-v4")
+_kept = dict(DEC[_k], outcome="kept", kept=True, kept_why="NO could not fill (ask check: 0 contracts offered at or under 0.88 (under 10))", bucket_priority="bp-v2", rule_ok=True)
+check("bp-v2: a kept decision (outcome kept, kept, kept_why) is published, not refused",
+      PUB.sanitise({"updated_at": "x", "decisions": {_k: _kept}})["decisions"][_k]["kept"], True)
 for label, bad in (("an order id field", {"order_id": "o1"}), ("a balance field", {"balance": 12.0}), ("a dollar sign in a reason", {"why": "short $4"}),
                    ("an id-like string", {"why": "123e4567-e89b-12d3-a456-426614174000"}), ("an unknown lane", {"lane": "other"})):
     b = json.loads(json.dumps(good)); b["decisions"]["yes:" + YT].update(bad)
