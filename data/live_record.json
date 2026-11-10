@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-09T23:07Z",
+ "generated": "2026-11-10T00:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -1737,8 +1737,92 @@
    {
     "g": null,
     "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV09LALATL-ATL1TO5",
+    "ko": "2026-11-10T00:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.01
+   },
+   {
+    "g": null,
+    "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV09LALATL-LAL11TO20",
     "ko": "2026-11-10T00:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.96
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV09LALATL-LAL1TO5",
+    "ko": "2026-11-10T00:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.95
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV09MEMTOR-MEM11TO20",
+    "ko": "2026-11-10T00:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.95
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV09MEMTOR-TOR11TO20",
+    "ko": "2026-11-10T00:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.95
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV09MEMTOR-TOR1TO5",
+    "ko": "2026-11-10T00:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.01
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV09INDDAL-DAL1TO5",
+    "ko": "2026-11-10T01:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.9
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV09INDDAL-IND1TO5",
+    "ko": "2026-11-10T01:00",
     "legs": "",
     "r": null,
     "side": "yes",
@@ -2365,9 +2449,9 @@
     {
      "id": "finance_spx_nc_no:KXINXU-26NOV09H1600-T7574.9999",
      "ko": "2026-11-09T21:00",
-     "r": null,
+     "r": 0.1269,
      "side": "no",
-     "st": "open",
+     "st": "won",
      "w": 1.0
     }
    ],
