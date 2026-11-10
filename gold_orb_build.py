@@ -56,12 +56,13 @@ def _row(r):
     log = ""
     if r.get("restored") and "vps_log" in r:                     # 2026-11-08: what the live run printed, beside the rebuild
         v = r["vps_log"]
-        log = (f' · VPS log: {esc(WORDS.get(v, v)) if isinstance(v, str) else _num(v) + 'bp'}'
+        log = ('<span class="sm mut gold-log">VPS log: '
+               + (esc(WORDS.get(v, v)) if isinstance(v, str) else _num(v) + "bp")
                + ("" if r.get("vps_log_status_match", True) else " (status differs)")
-               + (f' (rebuild differs by {_num(r["vps_log_diff_bp"])}bp: candles, not the live book)'
-                  if r.get("vps_log_diff_bp") not in (None, 0) else ""))
+               + (f'; rebuild {_num(r["vps_log_diff_bp"])}bp off (candles, not the live book)'
+                  if r.get("vps_log_diff_bp") not in (None, 0) else "") + '</span>')
     if r["status"] not in ("settled", "open"):
-        return f'<tr class="mut">{head}<td colspan="6">{esc(WORDS.get(r["status"], r["status"]))}{log}</td></tr>'
+        return f'<tr class="mut">{head}<td colspan="6">{esc(WORDS.get(r["status"], r["status"]))}{" · " + log if log else ""}</td></tr>'
     entry = "—" if r.get("entry_px") is None else f'{r["entry_px"]:.1f}' + (" †" if r.get("entry_late") else "")
     exit_ = "—" if r.get("exit_px") is None else f'{r["exit_px"]:.1f}' + (" *" if r.get("exit_carried") else "")
     if r.get("backfilled"):

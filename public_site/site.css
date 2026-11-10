@@ -2080,3 +2080,7 @@ details.fold.later > summary .sm { font-weight: 500; }
 .health-card ul { margin: 6px 0 0; padding-left: 18px; }
 .health-card li.red b { color: var(--neg); }
 .health-card li.amber b { color: var(--warn); }
+
+/* Gold breakout: a restored night's VPS-log note (gold_orb_build.py, 2026-11-10) wraps on its own line, never widening
+   the page on a phone. */
+.gold-log { display: block; white-space: normal; overflow-wrap: anywhere; text-align: right; }

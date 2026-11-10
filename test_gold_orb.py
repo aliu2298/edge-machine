@@ -456,7 +456,7 @@ check("restored rows: flagged, out of net (backfilled), the VPS log value kept b
 import gold_orb_build as _GB
 rr = _GB._row(dict(rest[0], night="2026-11-08", side="long", entry_px=4112.2, exit_px=4115.9))
 check("the page row: the restored badge, gross only, the VPS log figure and why it differs",
-      ("Restored · not live-recorded" in rr, "VPS log: +9.5bp" in rr, "candles, not the live book" in rr, "+9.0" in rr), (True, True, True, True))
+      ("Restored · not live-recorded" in rr, "VPS log: +9.5bp" in rr, "candles, not the live book" in rr and "gold-log" in rr, "+9.0" in rr), (True, True, True, True))
 check("the no-range row shows its VPS log status", "VPS log: no range" in _GB._row(dict(rest[1], night="2026-11-08")), True)
 
 print("\nend to end: the real script, an unpublished night, the next start (2026-11-09)")
