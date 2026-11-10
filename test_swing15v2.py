@@ -45,7 +45,7 @@ check("S3 keeps USDJPY, 2YRRATE, GOLD, ETH, BNB, BTC", V.CELLS_V3["swing15v2_s3"
 check("every kept market was registered, and removed = registered - kept",
       all(set(V.CELLS_V3[k]) <= set(V.CELLS_V2[k]) and set(V.REMOVED[k]) == set(V.CELLS_V2[k]) - set(V.CELLS_V3[k]) for k in V.CELLS), True)
 check("S1 retired 2026-11-09 22:00Z and S3 retired 2026-11-10 (Olu): only S2 lives on; the retired sets are the v3 keep lists",
-      (V.CELLS["swing15v2_s1"], V.CELLS["swing15v2_s3"], V.CELLS["swing15v2_s2"] == V.CELLS_V3["swing15v2_s2"], V.RETIRED,
+      (V.CELLS["swing15v2_s1"], V.CELLS["swing15v2_s3"], V.CELLS["swing15v2_s2"] == ("KXBTC15M",), V.RETIRED,
        V.RETIRED_TIMES),
       ((), (), True, {"swing15v2_s1": V.CELLS_V3["swing15v2_s1"], "swing15v2_s3": V.CELLS_V3["swing15v2_s3"]},
        {"swing15v2_s1": "2026-11-09T22:00:00+00:00", "swing15v2_s3": V.RETIRED_S3_AT}))
@@ -86,8 +86,9 @@ check("S1 GOLD's final record runs past the 18:00 cut and stops at retirement (1
       (ret["swing15v2_s1"]["series"]["KXGOLD15M"]["n"], rec["swing15v2_s1"]["all"]), (3, None))
 check("since the 18:00 cut: the 18:15 window only",
       V.records(state, retired=True, start=V.REMOVED_AT)["swing15v2_s1"]["all"]["n"], 1)
-check("S2: GOLD is removed; BTC survives", (set(rec["swing15v2_s2"]["series"]), rec["swing15v2_s2"]["all"]["n"]),
-      ({"KXWTI15M", "KXBTC15M", "KXSOL15M"}, 1))
+check("S2: GOLD is removed; BTC survives (Solana and WTI cut 2026-11-10)", (set(rec["swing15v2_s2"]["series"]), rec["swing15v2_s2"]["all"]["n"]),
+      ({"KXBTC15M"}, 1))
+check("S2's 2026-11-10 cut: Solana and WTI", V.CUT2, {"swing15v2_s2": ("KXSOL15M", "KXWTI15M")})
 gone = V.records(state, removed=True)
 check("S2 GOLD's final record: the two windows before the cut, not the 18:15 one", gone["swing15v2_s2"]["series"]["KXGOLD15M"]["n"], 2)
 blob = V.ledger(state)

@@ -31,6 +31,7 @@ import os
 import sys
 from zoneinfo import ZoneInfo
 
+import sw15cuts as C
 import swing15 as W
 
 VERSION = "sw15-lr1"
@@ -111,7 +112,7 @@ def replay(windows):
     for t in sorted(by_t):
         cands = []
         for i, m in enumerate(MARKETS):
-            if t < stop_until[m]:
+            if t < stop_until[m] or C.is_cut("lossreader", m, t):     # a cut market is never a candidate (2026-11-10)
                 continue
             k, score, _ = mk[m].learn(t)
             w = by_t[t].get(m)
@@ -167,6 +168,9 @@ def now_line(state, t):
     import swing15_build as WB
     parts = []
     for m in MARKETS:
+        if C.is_cut("lossreader", m, t):
+            parts.append(f"{WB.name(m)} cut")
+            continue
         if t < state["stop_until"][m]:
             back = dt.datetime.fromtimestamp(state["stop_until"][m], CT)
             parts.append(f"{WB.name(m)} Off (2 losing bets; back {back.hour % 12 or 12}:{back:%M} "
@@ -195,15 +199,19 @@ def ledger(state, now=None):
     windows = from_shards(state)
     bets, st = replay(windows)
     start = int(W._ts(FROM))
-    mine = [b for b in bets if b["t"] >= start]
+    kept = [m for m in MARKETS if m not in C.cut("lossreader")]
+    allmine = [b for b in bets if b["t"] >= start]
+    mine = [b for b in allmine if b["m"] in kept]                   # totals over the kept markets (2026-11-10 cut)
+    gone = [b for b in allmine if b["m"] not in kept and b["t"] < W._ts(C.CUT_AT)]
     every, fixed = compare(windows, start)
     nxt = (int(now.timestamp()) // WINDOW_S + 1) * WINDOW_S
-    per = {m: stats([b for b in mine if b["m"] == m]) for m in MARKETS}
+    per = {m: stats([b for b in mine if b["m"] == m]) for m in kept}
     days = sorted({ct_day(b["t"]).isoformat() for b in mine})
     return dict(version=VERSION, registered=REGISTERED, **{"from": FROM}, markets=list(MARKETS),
                 updated=now.isoformat(timespec="seconds"), now=now_line(st, nxt), now_for=nxt,
                 record=stats(mine), per_market=per, every=stats(every), fixed2=stats(fixed),
-                no_fills=sum(1 for b in mine if b["status"] == "no_fill"), days=days,
+                no_fills=sum(1 for b in mine if b["status"] == "no_fill"), days=days, kept=kept,
+                cut={m: stats([b for b in gone if b["m"] == m]) for m in C.cut("lossreader")}, cut_at=C.CUT_AT,
                 bets=[dict(b, at=dt.datetime.fromtimestamp(b["t"], dt.timezone.utc).isoformat()) for b in mine][-200:])
 
 

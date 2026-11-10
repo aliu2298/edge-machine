@@ -19,6 +19,7 @@ import json
 import os
 import sys
 
+import sw15cuts as C
 import swing15 as W
 
 VERSION = "sw15-v3"                 # sw15-v2 until 2026-11-09 18:00Z (the registered cells: CELLS_V2)
@@ -58,7 +59,10 @@ RETIRED_AT = "2026-11-09T22:00:00+00:00"
 RETIRED_S3_AT = "2026-11-10T05:00:00+00:00"
 RETIRED = {"swing15v2_s1": CELLS_V3["swing15v2_s1"], "swing15v2_s3": CELLS_V3["swing15v2_s3"]}
 RETIRED_TIMES = {"swing15v2_s1": RETIRED_AT, "swing15v2_s3": RETIRED_S3_AT}
-CELLS = dict(CELLS_V3, swing15v2_s1=(), swing15v2_s3=())
+# 2026-11-10 (Olu, sw15cuts): S2's negative markets cut at sw15cuts.CUT_AT (Solana, WTI); Bitcoin continues.
+CUT2 = {"swing15v2_s2": C.cut("swing15v2_s2")}
+CELLS = dict(CELLS_V3, swing15v2_s1=(), swing15v2_s3=(),
+             swing15v2_s2=tuple(m for m in CELLS_V3["swing15v2_s2"] if m not in CUT2["swing15v2_s2"]))
 REMOVED = {k: tuple(s for s in v if s not in CELLS_V3[k]) for k, v in CELLS_V2.items()}
 LABELS = {"swing15v2_s1": "S1 Swing · 35c · 3x · else hold", "swing15v2_s2": "S2 Favourite at start",
           "swing15v2_s3": "S3 Favourite at 5 minutes left"}
@@ -76,11 +80,12 @@ def in_v2(w, strat=None, cells=None, until=None, start=None):
     return w["series"] in (cells[strat] if strat else {s for c in cells.values() for s in c})
 
 
-def records(state, removed=False, retired=False, start=None):
+def records(state, removed=False, retired=False, start=None, cut=False):
     """{strat: {"all": cell, "series": {series: cell or None}}}, where a cell is swing15.cells()' record. With
     removed=True: the removed cells' final records (windows opening before REMOVED_AT). retired=True: S1's final record
     (windows opening before RETIRED_AT); start narrows it (e.g. since the 18:00Z cut)."""
-    cells, until = (REMOVED, REMOVED_AT) if removed else (RETIRED, None) if retired else (CELLS, None)
+    cells, until = ((REMOVED, REMOVED_AT) if removed else (RETIRED, None) if retired else (CUT2, C.CUT_AT) if cut
+                    else (CELLS, None))
     out = {}
     for strat, series in cells.items():
         key = v1_key(strat)

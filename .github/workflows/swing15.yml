@@ -27,7 +27,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Tests
-        run: python3 test_swing15.py && python3 test_swing15v2.py && python3 test_flipside_v2.py && python3 test_holdtoend.py && python3 test_leadswap.py && python3 test_steadyfav.py && python3 test_lossreader.py && python3 test_s3v2.py && python3 test_flipf1v2.py && python3 test_flipf2v2.py && python3 test_flipf3v2.py && python3 test_flipf4v2.py && python3 test_allowgate.py
+        run: python3 test_swing15.py && python3 test_swing15v2.py && python3 test_flipside_v2.py && python3 test_holdtoend.py && python3 test_leadswap.py && python3 test_steadyfav.py && python3 test_lossreader.py && python3 test_sw15cuts.py && python3 test_s3v2.py && python3 test_flipf1v2.py && python3 test_flipf2v2.py && python3 test_flipf3v2.py && python3 test_flipf4v2.py && python3 test_allowgate.py
       - name: Grade settled windows
         id: grade
         run: python3 swing15.py --budget 900

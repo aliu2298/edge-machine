@@ -37,18 +37,28 @@ REGISTERED = "2026-11-09"
 FROM = "2026-11-09T15:00:00+00:00"           # routing record: windows opening at or after this (after the merge)
 PATH = os.path.join(W.ROOT, "data", "leadswap_ledger.json")
 EXCLUDE = ("KXCRYPTOLEAD15M",)
-# 2026-11-10 (Olu, from the 04:04Z ledger): the markets each trade SKIPS from now on. The board's hourly ranking is
-# unchanged; when it picks an excluded market for a trade, that trade skips it (no backfill from the next rank). Any
-# market not listed, including one never picked yet, stays eligible. The kept markets' records continue; the excluded
-# markets' rows end at EXCLUDED_AT (records in removed_routing); the controls exclude nothing. Frozen: do not edit.
-EXCLUDED_AT = "2026-11-10T05:30:00+00:00"
-EXCLUDED = {
-    "leadswap_swing": ("KXBTC15M", "KXDOGE15M", "KXPALLADIUM15M", "KXPLATINUM15M", "KXWTI15M", "KXZEC15M", "KXAUDUSD15M",
-                       "KXNEAR15M", "KX5YRRATE15M", "KXSILVER15M", "KXUSDJPY15M"),
-    "leadswap_fav": ("KXXRP15M", "KXSILVER15M", "KXBNB15M", "KXNATGAS15M", "KXHYPE15M", "KXSOL15M", "KXBRENT15M",
-                     "KX30YRRATE15M"),
-}
-EXCLUDED_SHA256 = "23f753c50239a04a5f72edd23837a3ca2e4ffdd12e073cef371462fa176dff71"   # sha256 of allowgate.fingerprint(EXCLUDED), set at registration
+# Olu, 2026-11-10: the markets each trade SKIPS, in frozen rounds. The board's hourly ranking is unchanged; when it
+# picks an excluded market for a trade, that trade skips it (no backfill from the next rank). Any market not listed,
+# including one never picked yet, stays eligible. The kept markets' records continue (lane totals over them); each
+# excluded market's rows end at its own round's cut (records in removed_routing); the controls exclude nothing.
+# Frozen: a new round is added, never an edit to an earlier one.
+ROUNDS = (
+    dict(n=1, cut="2026-11-10T05:30:00+00:00", data="the 04:04Z ledger", markets={
+        "leadswap_swing": ("KXBTC15M", "KXDOGE15M", "KXPALLADIUM15M", "KXPLATINUM15M", "KXWTI15M", "KXZEC15M",
+                           "KXAUDUSD15M", "KXNEAR15M", "KX5YRRATE15M", "KXSILVER15M", "KXUSDJPY15M"),
+        "leadswap_fav": ("KXXRP15M", "KXSILVER15M", "KXBNB15M", "KXNATGAS15M", "KXHYPE15M", "KXSOL15M", "KXBRENT15M",
+                         "KX30YRRATE15M"),
+    }),
+    dict(n=2, cut="2026-11-10T19:00:00+00:00", data="the 17:09Z ledger", markets={
+        "leadswap_swing": ("KX2YRRATE15M", "KXGOLD15M", "KXBRENT15M", "KX10YRRATE15M"),
+        "leadswap_fav": ("KXZEC15M", "KXGBPUSD15M", "KXGOLD15M", "KXCOPPER15M", "KXAUDUSD15M", "KXDOGE15M"),
+    }),
+)
+EXCLUDED_AT = ROUNDS[0]["cut"]                 # round 1's cut (kept for older readers)
+EXCLUDED = {k: tuple(m for r in ROUNDS for m in r["markets"].get(k, ())) for k in ("leadswap_swing", "leadswap_fav")}
+CUT = {(k, m): r["cut"] for r in ROUNDS for k, ms in r["markets"].items() for m in ms}
+ROUND1_SHA256 = "23f753c50239a04a5f72edd23837a3ca2e4ffdd12e073cef371462fa176dff71"   # round 1 alone, as registered
+EXCLUDED_SHA256 = "59e940e4b20c695f9ad93085d651159cbf5dad34474fc875087cd93b825229a1"   # sha256 of excluded_fingerprint() (every round), set at registration
 PAST_H, DAY_H = 2, 24
 MIN_PAST, MIN_DAY = 4, 24
 TOP = 3
@@ -280,18 +290,19 @@ def _before_freeze(w, strat, p):
     return None if ts is None else ts < W._ts(at)
 
 
-def excluded_fingerprint():
+def excluded_fingerprint(rounds=None):
+    """sha256 over every round's cut and lists (round 1 alone: allowgate.fingerprint(ROUNDS[0]["markets"]))."""
     import allowgate
-    return allowgate.fingerprint(EXCLUDED)
+    return allowgate.fingerprint({str(r["n"]): dict(cut=r["cut"], markets=r["markets"]) for r in (rounds or ROUNDS)})
 
 
 def routing(rows, picks, removed=False):
     """{strat: cell}: each frozen hour's picks applied to the windows opening in that hour. A trade skips the markets it
-    excludes (EXCLUDED; the controls exclude nothing). removed=True: only the excluded markets' entries, before
-    EXCLUDED_AT (their final records)."""
+    excludes (EXCLUDED; the controls exclude nothing). removed=True: only the excluded markets' entries, each before
+    its own round's cut (CUT; their final records)."""
     found = {k: [] for k in STRATS}
     for s, _g, o, _c, _m, w in rows:
-        if o < W._ts(FROM) or (removed and o >= W._ts(EXCLUDED_AT)):
+        if o < W._ts(FROM):
             continue
         hk = dt.datetime.fromtimestamp(o - o % 3600, dt.timezone.utc).isoformat()
         p = picks.get(hk)
@@ -300,6 +311,8 @@ def routing(rows, picks, removed=False):
         for strat, side in (("leadswap_swing", "top"), ("leadswap_fav", "bottom"),
                             ("leadswap_swing_ctrl", "bottom"), ("leadswap_fav_ctrl", "top")):
             gone = s in EXCLUDED.get(strat, ())
+            if removed and gone and o >= W._ts(CUT[(strat, s)]):
+                continue
             if s in p[side] and gone == removed:
                 t = _trade(w, strat)
                 if t:
@@ -366,6 +379,8 @@ def update(state, led, now=None):
     led["routing"] = routing(rows, led["picks"])
     led["removed_routing"] = {k: v for k, v in routing(rows, led["picks"], removed=True).items() if k in EXCLUDED}
     led.update(excluded={k: list(v) for k, v in EXCLUDED.items()}, excluded_at=EXCLUDED_AT,
+               exclusion_rounds=[dict(n=r["n"], cut=r["cut"], data=r["data"],
+                                      markets={k: list(v) for k, v in r["markets"].items()}) for r in ROUNDS],
                excluded_sha256=excluded_fingerprint())
     led["updated"] = now.isoformat(timespec="seconds")
     return led

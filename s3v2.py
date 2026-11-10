@@ -19,6 +19,7 @@ import os
 import sys
 
 import allowgate as G
+import sw15cuts as C
 import swing15 as W
 
 VERSION = "sw15-s3v2"
@@ -78,12 +79,19 @@ def in_record(w, start=None):
 
 
 def records(state, start=None):
-    """{"lane": {"all", "series"}, "every": {"all", "series"}}: the filtered lane and old S3 on the same 6 markets."""
+    """{"lane", "every", "cut"}: the filtered lane over the kept markets (sw15cuts, 2026-11-10), old S3 on the same 6
+    markets, and the cut markets' final records (filtered, before the cut)."""
+    kept = tuple(m for m in MARKETS if m not in C.cut("s3v2"))
+    gone = C.cut("s3v2")
     out = {}
-    for key, flt in (("lane", lambda w: in_record(w, start) and allowed(w)), ("every", lambda w: in_record(w, start))):
+    for key, flt, mk in (
+            ("lane", lambda w: in_record(w, start) and allowed(w) and w["series"] in kept, kept),
+            ("every", lambda w: in_record(w, start), MARKETS),
+            ("cut", lambda w: in_record(w, start) and allowed(w) and w["series"] in gone
+             and W._ts(w["open"]) < W._ts(C.CUT_AT), gone)):
         out[key] = dict(all=W.cells(state, flt).get(("swing15_s3",)),
                         series={m: W.cells(state, lambda w, m=m, f=flt: f(w) and w["series"] == m).get(("swing15_s3",))
-                                for m in MARKETS})
+                                for m in mk})
     return out
 
 
@@ -91,7 +99,7 @@ def entries(state, start=None):
     """The lane's graded entries, newest first: [{"at", "market", "settings", "price", "won", "roi"}]."""
     rows = []
     for w in (state.get("windows") or {}).values():
-        if not (in_record(w, start) and allowed(w)):
+        if not (in_record(w, start) and allowed(w)) or w["series"] in C.cut("s3v2"):
             continue
         s3 = w.get("s3") or {}
         if s3.get("status") != "filled":
