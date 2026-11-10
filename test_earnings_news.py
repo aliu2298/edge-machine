@@ -92,6 +92,11 @@ check("no print on the first quote: the next quote 5 minutes later fills (a sell
 check("a quote too recent to have its 5-minute window is pending",
       E.honest_fill("KXAAAPERP", dt.datetime.fromtimestamp(T0, UTC), True, get=g,
                     now=dt.datetime.fromtimestamp(T0 + 120, UTC))[0], "pending")
+late_book = {"KXAAAPERP": flat_book(T0 - 600, T0 + 6 * 3600, 10.0, 10.1) + [(T0 + 6 * 3600 + 60, 12.0, 12.1)]}
+late = Fake(late_book, {"KXAAAPERP": [(T0 + 90, 10.1), (T0 + 6 * 3600 + 90, 12.1)]})
+check("a run 6 hours late still fills at the due-time quote, never the price when the run fires (2026-11-09)",
+      E.honest_fill("KXAAAPERP", dt.datetime.fromtimestamp(T0, UTC), True, get=late,
+                    now=dt.datetime.fromtimestamp(T0 + 6 * 3600 + 600, UTC)), ("filled", T0, 10.1))
 SAT = ts(2026, 11, 7, 15)
 check("a call logged while the perp is closed waits for the reopen",
       E.honest_fill("KXAAAPERP", dt.datetime.fromtimestamp(SAT, UTC), True,
@@ -181,6 +186,20 @@ check("counts", (n, settled), (5, 12))
 check("no guarded public phrase", sandbox_audit.COPY_RE.findall(h + EB.CAVEAT + str(EB.DEFS)), [])
 check("no dollar amounts in the public copy", re.findall(r"\$\s?\d", h), [])
 check("no market ids in the public copy", re.findall(r"\bKX[A-Z0-9-]{3,}", h), [])
+print("\nthe Last run line (2026-11-09)")
+N = dt.datetime(2026, 11, 10, 1, 30, tzinfo=UTC)
+fresh = EB.last_run_line({"last_run": "2026-11-10T00:50:00Z"}, now=N)
+stale = EB.last_run_line({"last_run": "2026-11-09T17:50:00Z"}, now=N)
+check("fresh: the time in CT, muted", ("Last run Nov 9, 6:50 PM CT." in fresh, "en-stale" in fresh), (True, False))
+check("more than 2 hours old: the warning colour and the age", ("en-stale" in stale, "Nov 9, 11:50 AM CT · 8 hours ago" in stale),
+      (True, True))
+check("never run: a warning, not a blank", "en-stale" in EB.last_run_line({}, now=N), True)
+check("the section shows it first", EB.section_and_counts(dict(sp, last_run="2026-11-10T00:50:00Z"), now=N)[0].index("Last run")
+      < EB.section_and_counts(dict(sp, last_run="2026-11-10T00:50:00Z"), now=N)[0].index("a headline is not an edge"), True)
+check("the run writes last_run", 'state["last_run"] = iso(now_utc())' in open(E.__file__).read(), True)
+check("a no-fill call is shown as no fill, with why, never left blank",
+      ("no fill · no trade at the quote in 30 min" in EB._result({"side": 1, "status": "no_fill"}),
+       "no fill at the exit" in EB._result({"side": 1, "status": "exit_no_fill"})), (True, True))
 real = E.load()
 check("the committed ledger renders", "earnings-news" in EB.safe_section(), True)
 check("every committed prediction was logged before its entry",

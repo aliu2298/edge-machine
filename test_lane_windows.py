@@ -56,7 +56,7 @@ sat = at(2026, 10, 17, 12, 0)
 # An empty ledger: the lineup windows come from the real ledger's kickoffs, which this test must
 # not depend on (it read real Oct 17 fixtures once they were logged).
 lanes_sat = {(w["lane"], w["label"]) for w in W.windows(sat, ledger={"quotes": []}, games=[], fixtures=[])
-             if w["close"].date() == dt.date(2026, 10, 17) and w["lane"] not in ("culture", "chaos", "fights", "nhl_goal", "soccer_p4", "swing15")}
+             if w["close"].date() == dt.date(2026, 10, 17) and w["lane"] not in ("culture", "chaos", "fights", "nhl_goal", "soccer_p4", "swing15", "earnings_news")}
 check("Saturday: crypto, gas/diesel (and the near-certain YES hour) and the first-to-score NO pick, "
       "no Treasury, index or commodity",
       sorted(l for l, _ in lanes_sat), ["crypto_fav_band", "econ_daily", "econ_daily", "econ_nc_yes", "ftts_no"])
@@ -109,6 +109,7 @@ lines.pop("data/fights_window/request.txt", None)       # the hourly fights read
 lines.pop("data/nhl_goal_window/request.txt", None)     # the hourly NHL goal read (2026-11-08), tested below
 lines.pop("data/soccer_p4_window/request.txt", None)    # the hourly soccer p4 read (2026-11-08), tested below
 lines.pop("data/swing15_window/request.txt", None)      # the hourly 15-Minute Swing read (2026-11-09), tested below
+lines.pop("data/earnings_news_window/request.txt", None)  # the hourly Earnings & news read (2026-11-09), tested below
 check("17:35Z: crypto and commodities stamps both written, and the index window's daily stamp",
       sorted(lines), ["data/commodities_window/request.txt", "data/crypto_window/request.txt",
                       "data/daily_window/request.txt"])
@@ -150,6 +151,16 @@ check("the stamp goes to the swing15 file, named for the hour",
 check("the VPS script may write that stamp and the workflow runs on it",
       ("data/swing15_window/request.txt" in open("scripts/vps_window_requests.sh").read()
        and 'data/swing15_window/**' in open(".github/workflows/swing15.yml").read()), True)
+
+print("\nthe Earnings & news lane is asked for every hour (2026-11-09)")
+el = [k for w, k in W.due(at(2026, 11, 9, 21, 2), {"quotes": []}, [], []) if w["lane"] == "earnings_news"]
+check("earnings_news reads once every hour", el, [1])
+check("the stamp goes to the earnings_news file, named for the hour",
+      W.stamp_lines(at(2026, 11, 9, 21, 2), {"quotes": []}, [], []).get("data/earnings_news_window/request.txt"),
+      "earnings_news 2026-11-09T22:00:00+00:00 read 1")
+check("the VPS script may write that stamp and the workflow runs on it",
+      ("data/earnings_news_window/request.txt" in open("scripts/vps_window_requests.sh").read()
+       and 'data/earnings_news_window/**' in open(".github/workflows/earnings-news.yml").read()), True)
 
 print("\nthe soccer phase-4 WATCH lanes are asked for every hour (2026-11-08)")
 sl = [k for w, k in W.due(at(2026, 11, 8, 20, 41), {"quotes": []}, [], []) if w["lane"] == "soccer_p4"]

@@ -6,6 +6,12 @@ on:
     # is logged; grading reads Kalshi's public 1-minute perp quotes and prints, so it can run late.
     - cron: '41 * * * *'
   workflow_dispatch:
+  # 2026-11-09: GitHub fired the hourly cron at 00:00, 07:10 and 17:48Z only, so the VPS asks every hour by pushing a
+  # stamp (scripts/vps_window_requests.sh, lane_windows.py); the cron stays as a backup.
+  push:
+    branches: [main]
+    paths:
+      - "data/earnings_news_window/**"
 permissions:
   contents: write
 concurrency:

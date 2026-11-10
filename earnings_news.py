@@ -680,6 +680,8 @@ def main(argv=None):
         print("logged:", p["id"])
     if a.cmd in ("run", "grade"):
         grade(state)
+    if a.cmd == "run":
+        state["last_run"] = iso(now_utc())     # the Trading page's "Last run" line (2026-11-09)
     save(state)
 
 
