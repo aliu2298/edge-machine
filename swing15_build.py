@@ -516,7 +516,7 @@ def steadyfav_block(state):
         ctl = ("no control windows yet" if not c else
                f'{c["hits"]}/{c["n"]} won against {c["fair"] * c["n"]:.1f} priced, {pct(c["mean_roi"])} after fees')
         body = (f'<p class="sp-details-name"><b>{esc(S.LABELS[rule])}</b> · Kalshi 15-minute windows · paper · '
-                f'{esc(S.VERSION)}</p><p class="sp-def">{esc(text)} Frozen: {len(S.MARKETS)} markets. Control: the same '
+                f'{esc(S.VERSION)}</p><p class="sp-def">{esc(text)} Markets: {len(S.LIVE)} (USD/JPY removed). Control: the same '
                 f'rule on the other {ctl_rec.get("markets", 0)} 15-minute markets, pooled.</p>')
         per = {s: (x["n"] if x else 0) for s, x in ser.items()}
         lid = f"sw15-{rule}"
@@ -529,7 +529,7 @@ def steadyfav_block(state):
     early = ("" if not (ea or eb) else
              '<p class="sm mut sf-earlier">Earlier result, not counted (v1 on these four markets, before the start): '
              + "; ".join(f'{k} {x["hits"]}/{x["n"]}, {pct(x["mean_roi"])}' for k, x in (("A", ea), ("B", eb)) if x) + '.</p>')
-    names = ", ".join(name(s) for s in S.MARKETS)
+    names = ", ".join(name(s) for s in S.LIVE)
     return (f'<h3 class="dm-title" id="steadyfav">Steady Favourites</h3>' + _intro(S.FROM) + _list(cards)
             + _how(f"{names}: the favourite bought at minute 2 (A) and at 5 minutes left (B), held to settlement. "
                    "Replaces the S1 Swing. Each rule's control is the same rule on every other 15-minute market, pooled.",
@@ -801,6 +801,10 @@ def _archive(state, s1_final):
         return _hte_archive(state, H)
     grp("Hold to End", hte)
     grp("15-Minute Swing v1", lambda: _v1_s1_retired(state, s1_final))
+    def sf():
+        import steadyfav as S
+        return _removed_fold(S.LABELS, S.records(state, removed=True), S.REMOVED_AT, lambda k: "Won")
+    grp("Steady Favourites", sf)
     if not parts:
         return ""
     return ('<details class="fold sw15-archive" id="sw15-archive"><summary><b>Retired &amp; removed · final records</b>'

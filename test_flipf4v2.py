@@ -47,7 +47,7 @@ check("a collapsed row in The Flip Side; no F rows left; 'every hour', not the 0
       ('data-source="flipside_v2_f' in flip, "Every bet (old F4)" in row, "; every hour." in row, "07-22 CT is never bet" in row.split("Rule details")[1].split("</details>")[0]),
       (False, True, True, False))
 check("the in-sample line, and F4's final record in the archive",
-      ("Nov 9 in-sample: 9/22, +38% — not counted" in flip, "F4 final:" in html.split('id="sw15-archive"')[1]), (True, True))
+      ("Nov 9 in-sample: 9/22, +41.7% — not counted" in flip, "F4 final:" in html.split('id="sw15-archive"')[1]), (True, True))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

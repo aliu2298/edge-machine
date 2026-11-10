@@ -28,7 +28,7 @@ def _settings(w, f):
 LANE = flipeps.FlipEPS(
     "flipf4v2", "flip-f4v2", "Rule 6 v2 · Zcash underdog at 20c+", "flipside_v2_f4", ALLOW, ALLOW_SHA256,
     "2026-11-10T05:30:00+00:00",                 # fresh record: the first window after the merge (= F4's cut)
-    "Nov 9 in-sample: 9/22, +38% — not counted (+41.7% as this page measures it: the mean return after fees a bet)",
+    "Nov 9 in-sample: 9/22, +41.7% — not counted",
     _settings, "Every bet (old F4)")
 flipeps.expose(LANE, globals())
 REGISTERED = "2026-11-10"

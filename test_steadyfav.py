@@ -48,7 +48,21 @@ state = dict(W.empty(), windows={w["ticker"]: w for w in ws})
 rec = S.records(state)
 a, b = rec["steadyfav_a"], rec["steadyfav_b"]
 check("A: BTC's two fresh windows (1 won), not the 23:45Z one", (a["all"]["n"], a["all"]["hits"], a["series"]["KXBTC15M"]["n"]), (2, 1, 2))
-check("B: BTC 1 + GOLD 1; a market with no windows is None", (b["all"]["n"], b["series"]["KXGOLD15M"]["hits"], b["series"]["KXUSDJPY15M"]), (2, 0, None))
+check("B: BTC 1 + GOLD 1; a market with no windows is None", (b["all"]["n"], b["series"]["KXGOLD15M"]["hits"], b["series"]["KX2YRRATE15M"]), (2, 0, None))
+
+print("\nUSD/JPY removed (2026-11-10, Olu)")
+check("removed from A and B at a window boundary; the live markets are the other three",
+      (S.REMOVED, S.LIVE, W._ts(S.REMOVED_AT) % 900), (("KXUSDJPY15M",), ("KXBTC15M", "KXGOLD15M", "KX2YRRATE15M"), 0))
+jp = [row("KXUSDJPY15M", T, s2=fav(0.0)), row("KXUSDJPY15M", "2026-11-10T06:00:00Z", s2=fav(1.0)),
+      row("KXBTC15M", "2026-11-10T06:00:00Z", s2=fav(1.0))]
+st2 = dict(W.empty(), windows={w["ticker"]: w for w in ws + jp})
+r2, g2 = S.records(st2), S.records(st2, removed=True)
+check("USD/JPY's final record: its windows before the cut only (1 lost); the 06:00Z window counts nowhere",
+      (g2["steadyfav_a"]["all"]["n"], g2["steadyfav_a"]["all"]["hits"], list(g2["steadyfav_a"]["series"])), (1, 0, ["KXUSDJPY15M"]))
+check("the surviving record continues (BTC 2 + the 06:00Z BTC window = 3); no USD/JPY in the live rows",
+      (r2["steadyfav_a"]["all"]["n"], "KXUSDJPY15M" in r2["steadyfav_a"]["series"]), (3, False))
+check("the controls never take USD/JPY (still the other markets only)", (r2["steadyfav_a_ctrl"]["all"]["n"], r2["steadyfav_a_ctrl"]["markets"]),
+      (rec["steadyfav_a_ctrl"]["all"]["n"], rec["steadyfav_a_ctrl"]["markets"]))
 check("won v priced: fair is the mean entry price", round(b["all"]["fair"], 2), .75)
 check("controls pool the other markets (ETH, WTI), not CRYPTOLEAD, not the four",
       (rec["steadyfav_a_ctrl"]["all"]["n"], rec["steadyfav_a_ctrl"]["all"]["hits"], rec["steadyfav_b_ctrl"]["all"]["n"],
@@ -74,7 +88,7 @@ check("the order after #378/#379: Steady Favourites, Lead Swap, Swing v3, Flip v
       (pos == sorted(pos), all(x in html for x in ('id="steadyfav"', 'id="leadswap"', 'id="sw15-v1"')), "sw15-scoreboard" in html),
       (True, True, False))
 check("the copy: markets, fresh start time, review/decide, the sort line",
-      ("Bitcoin, USD/JPY (Japanese Yen), Gold, 2-Year Treasury Yield" in sf, "fresh record from Nov 9, 6:00 PM CT" in sf,
+      ("Bitcoin, Gold, 2-Year Treasury Yield" in sf, "fresh record from Nov 9, 6:00 PM CT" in sf,
        "review 10, decide 30" in sf, WB.SORT_LINE in sf), (True, True, True, True))
 check("two rows, A and B; the pooled controls are not rows", re.findall(r'data-source="(steadyfav_[a-z_]+)"', html),
       ["steadyfav_a", "steadyfav_b"])
@@ -84,6 +98,10 @@ check("z reads 'needs 2+ days' on one day", "needs 2+ days" in sf, True)
 check("the control sits beside each rule", "Control (the same rule on the other markets, pooled): 1/2 won" in sf, True)
 check("one muted earlier line, not counted", len(re.findall(r'sf-earlier">Earlier result, not counted', sf)), 1)
 check("the Sandbox index lists the four rows after the Loss Reader", [r["lane"] for r in WB.index_rows(state)][:10], ["lossreader", "s3v2", "flipf1v2", "flipf2v2", "flipf3v2", "flipf4v2"] + list(S.LABELS))
+html2 = WB.section(st2)
+check("USD/JPY's rows in the archive, under Steady Favourites, with readable names",
+      ("<h4>Steady Favourites</h4>" in html2.split('id="sw15-archive"')[1],
+       'title="KXUSDJPY15M">USD/JPY' in html2.split("<h4>Steady Favourites</h4>")[1]), (True, True))
 check("no dollar sign, no guarded phrase", (re.search(r"\$\d", html), sandbox_audit.COPY_RE.findall(html + WB.index_html(state))), (None, []))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
