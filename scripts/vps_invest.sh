@@ -37,7 +37,10 @@ main() {
     fi
   }
   locked git pull -q --rebase origin main || echo "$(stamp) pull failed; tracking on the checkout as it is"
-  [ -f data/invest_state.json ] && cp data/invest_state.json "$WORK/state.json"
+  # 2026-11-09: while a publish is pending ($WORK/.publish-pending), $WORK/state.json is ahead of the repo: never copy over it.
+  if [ ! -f "$WORK/.publish-pending" ]; then
+    [ -f data/invest_state.json ] && cp data/invest_state.json "$WORK/state.json"
+  fi
   "$PY" invest.py track --work "$WORK" --state "$WORK/state.json" >/dev/null || { echo "$(stamp) track failed"; exit 1; }
   "$PY" -c 'import json,sys; json.load(open(sys.argv[1]))' "$WORK/state.json" || { echo "$(stamp) state is not valid JSON"; exit 1; }
 
@@ -60,8 +63,16 @@ main() {
     echo "$(stamp) push failed after 3 attempts; the state stays at $WORK/state.json"
     return 1
   }
-  # Publish hourly (minute 0) to keep commits few; the state is current in $WORK in between.
-  [ "$minute" -eq 0 ] && locked publish
+  # Publish hourly (minute 0) to keep commits few; the state is current in $WORK in between. A publish that fails (a busy
+  # clone lock, a rejected push) is retried at every 15-minute tick until it goes out, instead of waiting for the next hour.
+  if [ "$minute" -eq 0 ] || [ -f "$WORK/.publish-pending" ]; then
+    if locked publish; then
+      rm -f "$WORK/.publish-pending"
+    else
+      touch "$WORK/.publish-pending"
+      echo "$(stamp) publish failed; retrying at the next 15-minute tick"
+    fi
+  fi
 }
 
 main "$@"

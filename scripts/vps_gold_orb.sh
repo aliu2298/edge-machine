@@ -45,7 +45,14 @@ main() {
 
   echo "=== $(stamp) gold orb ==="
   locked git pull -q --rebase origin main || echo "$(stamp) pull failed; running on the checkout as it is"
-  if [ -f data/gold_orb_ledger.json ]; then
+  # 2026-11-09: MERGE the repo ledger into the work file, never copy it over: a night whose publish failed lives only in
+  # $WORK/ledger.json, and the Nov 8 night was erased by that copy. The repo's rows win on the same id (a re-grade
+  # merged by PR is kept); every row only the work file holds is carried.
+  if [ -f "$WORK/ledger.json" ] && [ -f data/gold_orb_ledger.json ]; then
+    "$PY" gold_orb.py --from data/gold_orb_ledger.json --merge-unpublished "$WORK/ledger.json" --out "$WORK/ledger.merged.json" \
+      && mv "$WORK/ledger.merged.json" "$WORK/ledger.json" \
+      || echo "$(stamp) could not merge the ledgers; keeping $WORK/ledger.json as it is"
+  elif [ -f data/gold_orb_ledger.json ]; then
     cp data/gold_orb_ledger.json "$WORK/ledger.json"
   fi
   "$PY" gold_orb.py --run --from "$WORK/ledger.json" --out "$WORK/ledger.json" || { echo "$(stamp) gold_orb.py failed"; exit 1; }
@@ -53,13 +60,19 @@ main() {
 
   publish() {
     git pull -q --rebase origin main || { echo "$(stamp) pull failed before publishing"; return 1; }
-    cp "$WORK/ledger.json" data/gold_orb_ledger.json
+    # Merge, too: a row the repo gained during the night (a restore or re-grade merged by PR) is never overwritten.
+    "$PY" gold_orb.py --from data/gold_orb_ledger.json --merge-unpublished "$WORK/ledger.json" --out data/gold_orb_ledger.json \
+      || { echo "$(stamp) merge failed before publishing"; git checkout -q -- data/gold_orb_ledger.json; return 1; }
     git add -- data/gold_orb_ledger.json
     if git diff --cached --quiet; then
-      echo "$(stamp) nothing new to publish"
-      return 0
+      if [ "$(git rev-list --count origin/main..HEAD 2>/dev/null || echo 0)" = "0" ]; then
+        echo "$(stamp) nothing new to publish"
+        return 0
+      fi
+      echo "$(stamp) pushing the night committed by an earlier attempt"
+    else
+      git commit -q -m "Gold Asia-open breakout paper night ($(date -u +%Y-%m-%d))"
     fi
-    git commit -q -m "Gold Asia-open breakout paper night ($(date -u +%Y-%m-%d))"
     local attempt
     for attempt in 1 2 3; do
       if git push -q origin HEAD:main; then
@@ -71,7 +84,21 @@ main() {
     echo "$(stamp) push failed after 3 attempts; the ledger stays at $WORK/ledger.json"
     return 1
   }
-  locked publish
+  # 2026-11-09: one busy-lock wait (2 min) used to end the night unpublished ("the clone is busy"). Retry with backoff,
+  # about 40 minutes in all; a night still unpublished after that stays in the work file, is merged into the next
+  # night's start (above) and goes out with it.
+  local try pause=60
+  for try in 1 2 3 4 5 6; do
+    if locked publish; then
+      return 0
+    fi
+    [ "$try" -lt 6 ] || break
+    echo "$(stamp) publish attempt $try failed; retrying in ${pause}s"
+    sleep "$pause"
+    pause=$((pause * 2 > 600 ? 600 : pause * 2))
+  done
+  echo "$(stamp) not published after 6 attempts; the night stays in $WORK/ledger.json and goes out with the next run"
+  return 1
 }
 
 main "$@"

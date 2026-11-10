@@ -26,7 +26,14 @@ echo "$(stamp) start $DAY"
 
 if command -v flock >/dev/null 2>&1; then
   exec 9>"$(git rev-parse --git-dir)/edge-shared.lock"
-  flock -w 600 9 || { echo "$(stamp) the clone is busy; day file kept at $DAYFILE"; exit 0; }
+  # 2026-11-09: one 10-minute wait used to give up for good (nothing re-merges a kept day file). Wait up to 4 times,
+  # 40 minutes in all.
+  got=0
+  for wait_try in 1 2 3 4; do
+    if flock -w 600 9; then got=1; break; fi
+    echo "$(stamp) the clone is busy (try $wait_try of 4)"
+  done
+  [ "$got" = "1" ] || { echo "$(stamp) the clone stayed busy for 40 minutes; day file kept at $DAYFILE"; exit 0; }
 fi
 for attempt in 1 2 3; do
   git pull -q --rebase origin main || { echo "$(stamp) pull failed"; sleep 30; continue; }
