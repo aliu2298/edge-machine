@@ -197,6 +197,9 @@ check("never run: a warning, not a blank", "en-stale" in EB.last_run_line({}, no
 check("the section shows it first", EB.section_and_counts(dict(sp, last_run="2026-11-10T00:50:00Z"), now=N)[0].index("Last run")
       < EB.section_and_counts(dict(sp, last_run="2026-11-10T00:50:00Z"), now=N)[0].index("a headline is not an edge"), True)
 check("the run writes last_run", 'state["last_run"] = iso(now_utc())' in open(E.__file__).read(), True)
+check("a no-fill call is shown as no fill, with why, never left blank",
+      ("no fill · no trade at the quote in 30 min" in EB._result({"side": 1, "status": "no_fill"}),
+       "no fill at the exit" in EB._result({"side": 1, "status": "exit_no_fill"})), (True, True))
 real = E.load()
 check("the committed ledger renders", "earnings-news" in EB.safe_section(), True)
 check("every committed prediction was logged before its entry",

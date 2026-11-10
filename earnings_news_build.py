@@ -98,8 +98,10 @@ def _result(p):
         return _sig("no call", "n")
     if st == "settled":
         return _sig(_pct(p["net"]), "y" if p["net"] > 0 else "x")
-    if st in ("no_fill", "exit_no_fill"):
-        return _sig("no fill", "n")
+    if st == "no_fill":                       # e.g. DIS 2026-11-09: no print at or through the quote in 30 minutes
+        return _sig("no fill · no trade at the quote in 30 min", "n")
+    if st == "exit_no_fill":
+        return _sig("no fill at the exit · no trade at the quote in 30 min", "n")
     if st == "open":
         return _sig("open", "w")
     return _sig("waiting", "n")
