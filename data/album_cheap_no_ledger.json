@@ -1233,16 +1233,16 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:50.419359+00:00"
  },
  "lane": "album_cheap_no",
- "last_success": "2026-11-10T03:01:12.517943+00:00",
+ "last_success": "2026-11-10T04:01:21.111293+00:00",
  "observations": {
-  "at": "2026-11-10T03:01:12.517943+00:00",
+  "at": "2026-11-10T04:01:21.111293+00:00",
   "checking": 0,
   "entered": 0,
   "events": 19,
   "filled": 0,
-  "skipped": 1,
+  "skipped": 7,
   "unverified": 18,
-  "waiting": 7
+  "waiting": 0
  },
  "skips": {
   "KXALBUMEQUIV-BLEACH26NOV05-10K": {
@@ -1359,6 +1359,16 @@
    "event": "KXALBUMEQUIV-DREAM26NOV12",
    "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
    "word": "Above 10K"
+  },
+  "KXALBUMEQUIV-DREAM26NOV12-12K": {
+   "event": "KXALBUMEQUIV-DREAM26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 12K"
+  },
+  "KXALBUMEQUIV-DREAM26NOV12-15K": {
+   "event": "KXALBUMEQUIV-DREAM26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 15K"
   },
   "KXALBUMEQUIV-DREAM26NOV12-20K": {
    "event": "KXALBUMEQUIV-DREAM26NOV12",
@@ -1544,6 +1554,11 @@
    "event": "KXALBUMEQUIV-FRE26NOV12",
    "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
    "word": "Above 400K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-65K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 65K"
   },
   "KXALBUMEQUIV-FRE26NOV12-90K": {
    "event": "KXALBUMEQUIV-FRE26NOV12",
@@ -2030,10 +2045,20 @@
    "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
    "word": "Above 3K"
   },
+  "KXALBUMEQUIV-SWALLOW26NOV12-4K": {
+   "event": "KXALBUMEQUIV-SWALLOW26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 4K"
+  },
   "KXALBUMEQUIV-SWALLOW26NOV12-5K": {
    "event": "KXALBUMEQUIV-SWALLOW26NOV12",
    "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
    "word": "Above 5K"
+  },
+  "KXALBUMEQUIV-SWALLOW26NOV12-6K": {
+   "event": "KXALBUMEQUIV-SWALLOW26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 6K"
   },
   "KXALBUMEQUIV-SWALLOW26NOV12-8K": {
    "event": "KXALBUMEQUIV-SWALLOW26NOV12",
@@ -2089,6 +2114,16 @@
    "event": "KXALBUMEQUIV-SWE26NOV12",
    "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
    "word": "Above 75K"
+  },
+  "KXALBUMEQUIV-SWE26NOV12-8K": {
+   "event": "KXALBUMEQUIV-SWE26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 8K"
+  },
+  "KXALBUMEQUIV-SWE26NOV12-9K": {
+   "event": "KXALBUMEQUIV-SWE26NOV12",
+   "reason": "no quote with a 10c spread and a NO ask of 0.03-0.15 inside 6h",
+   "word": "Above 9K"
   },
   "KXALBUMEQUIV-WAT26OCT29-100K": {
    "event": "KXALBUMEQUIV-WAT26OCT29",
