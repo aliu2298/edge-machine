@@ -1,10 +1,24 @@
 {
  "collector": {
-  "last_ts": 1794322802,
+  "last_ts": 1794326402,
   "markets": 60,
   "rows_24h": 86400
  },
- "events": [],
+ "events": [
+  {
+   "day": "2026-11-10",
+   "entry": 16.9468,
+   "entry_ts": 1794326341,
+   "id": "fade_drop|KXSNDKPERP|2026-11-10",
+   "move": -0.05238,
+   "rule": "fade_drop",
+   "signal_ts": 1794326281,
+   "spread_in": 4.3,
+   "status": "open",
+   "sym": "SNDK",
+   "ticker": "KXSNDKPERP"
+  }
+ ],
  "flags": [
   {
    "gap": -0.10024,
@@ -3255,7 +3269,7 @@
    "ts": 1794317581
   }
  ],
- "last_run": "2026-11-10T15:00:08+00:00",
+ "last_run": "2026-11-10T16:00:08+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
