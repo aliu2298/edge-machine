@@ -111,9 +111,9 @@ check("the NBA page folds nba_ml_dog_tp50 (retired 2026-11-01) and nba_tt_cheap_
        'id="baseline-nba_ml_dog_tp50"' in pages["nba"]), (True, True, False))
 rules = pages["nba"][pages["nba"].find('<section id="rules"'):pages["nba"].find('<section id="research"')]
 _ids = re.findall(r'<details class="sp-rule[^"]*" id="([^"]+)"', rules)
-check("NBA: the Rules table lists the two Production lanes in order, then the two Sandbox paper lanes (2026-11-08, the version 3 comparison), each its own row "
-      "(the two paper rows are ranked by sample size, so their order moves with the data)",
-      (_ids[:2], sorted(_ids[2:])), (["wm-yes", "wm-no"], ["wm-no-75-row", "wm-yes-v3-paper-row"]))
+check("NBA: the Rules table lists the two Production lanes first, then the two Sandbox paper lanes (2026-11-08, the version 3 comparison), each its own row "
+      "(rows within each pair are ranked by sample size, so their order moves with the data)",
+      (sorted(_ids[:2]), sorted(_ids[2:])), (["wm-no", "wm-yes"], ["wm-no-75-row", "wm-yes-v3-paper-row"]))
 
 print("\nblind lanes demoted to baselines (2026-11-01, Olu: a lane needs a team or matchup filter)")
 for lid, at in (("cfb_dog_tp50", "33 settled events; split -0.5%, hold -15.9%"),):
