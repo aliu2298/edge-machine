@@ -169153,6 +169153,57 @@
   "venue": "polymarket_us"
  },
  {
+  "bet": true,
+  "close_at": "2026-09-25T21:49:32+00:00",
+  "close_price": 0.6214,
+  "date": "2026-09-25",
+  "edge": null,
+  "id": "pm_combo2:pmcombo2:2026-09-25:2451c2ac85",
+  "label": "2-leg tennis combo: Bernardes - Dourado + Silva - Sanchez",
+  "legs": [
+   {
+    "market_id": "aec-itfwo-biaberjendou-sofalbgiufer-2026-09-25",
+    "name": "Bernardes - Dourado",
+    "pick": "a",
+    "start": "2026-09-25T22:00:00+00:00",
+    "venue": "polymarket_us"
+   },
+   {
+    "market_id": "aec-itfwo-julsilanasan-sabdialetvid-2026-09-25",
+    "name": "Silva - Sanchez",
+    "pick": "a",
+    "start": "2026-09-25T22:00:00+00:00",
+    "venue": "polymarket_us"
+   }
+  ],
+  "liquidity": null,
+  "logged": "2026-09-25T18:37:08+00:00",
+  "market_id": "pmcombo2:2026-09-25:2451c2ac85",
+  "pick": "a",
+  "pnl": -100.0,
+  "price": 0.649,
+  "price_a": 0.649,
+  "price_b": 0.351,
+  "price_draw": null,
+  "prob_a": null,
+  "result": "b",
+  "settled": "2026-09-26T03:02:03+00:00",
+  "side_a": "All 2 win",
+  "side_b": "Any one loses",
+  "source": "pm_combo2",
+  "sport": "tennis_pmcombo",
+  "spread": null,
+  "stake": 100.0,
+  "start": "2026-09-25T22:00:00+00:00",
+  "start_source": null,
+  "status": "lost",
+  "uncovered": null,
+  "untraded": false,
+  "url": "https://polymarket.us",
+  "venue": "combo",
+  "venue_start": null
+ },
+ {
   "bet": false,
   "compact": true,
   "id": "polymarket_us:aec-atp-nisbas-andand-2026-09-25",
