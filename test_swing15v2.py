@@ -112,7 +112,7 @@ check("no Retired or Removed fold outside the archive", html.split('id="sw15-arc
 check("v1's Retired fold: S1's headline record and the whole grid", ("S1 Swing, final records" in html, "15c · 1.5x · else hold" in html.split("S1 Swing, final records")[1]),
       (True, True))
 check("no dollar sign, no guarded phrase", (re.search(r"\$\d", html), sandbox_audit.COPY_RE.findall(html + WB.index_html(state))), (None, []))
-check("the Sandbox index: v3 S2/S3 after v1's, no S1 rows", ([r["lane"] for r in WB.index_rows(state)][6:8],
+check("the Sandbox index: v3 S2/S3 after v1's, no S1 rows", ([r["lane"] for r in WB.index_rows(state)][7:9],
       [r["lane"] for r in WB.index_rows(state) if r["lane"].endswith("_s1")]), (["swing15v2_s2", "swing15v2_s3"], []))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
