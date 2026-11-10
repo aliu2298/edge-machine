@@ -133,28 +133,6 @@
    "symbol": "HPE"
   },
   {
-   "qty": 2,
-   "rules": [
-    {
-     "id": "sw_rsi2_pullback|MPC|2026-10-23",
-     "qty": 2,
-     "rule": "sw_rsi2_pullback"
-    }
-   ],
-   "symbol": "MPC"
-  },
-  {
-   "qty": 5,
-   "rules": [
-    {
-     "id": "sw_rsi2_pullback|MRVL|2026-10-30",
-     "qty": 5,
-     "rule": "sw_rsi2_pullback"
-    }
-   ],
-   "symbol": "MRVL"
-  },
-  {
    "qty": 1,
    "rules": [
     {
@@ -223,22 +201,6 @@
     }
    ],
    "symbol": "PANW"
-  },
-  {
-   "qty": 10,
-   "rules": [
-    {
-     "id": "sw_rsi2_pullback|PLTR|2026-10-29",
-     "qty": 5,
-     "rule": "sw_rsi2_pullback"
-    },
-    {
-     "id": "sw_rsi2_pullback|PLTR|2026-10-30",
-     "qty": 5,
-     "rule": "sw_rsi2_pullback"
-    }
-   ],
-   "symbol": "PLTR"
   },
   {
    "qty": 2,
@@ -344,6 +306,39 @@
  "rows": [
   {
    "fill": null,
+   "id": "sw_rsi2_pullback|CSCO|2026-10-29",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "CSCO"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|CSCO|2026-10-30",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "CSCO"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|CSCO|2026-11-02",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "CSCO"
+  },
+  {
+   "fill": null,
    "id": "sw_rsi2_pullback|DE|2026-10-09",
    "ledger": 621.24,
    "qty": 0,
@@ -352,6 +347,50 @@
    "slip_bps": null,
    "status": "expired",
    "symbol": "DE"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|FTNT|2026-10-29",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "FTNT"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|FTNT|2026-10-30",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "FTNT"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|HPE|2026-10-29",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "HPE"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|HPE|2026-10-30",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "HPE"
   },
   {
    "fill": null,
@@ -399,25 +438,36 @@
   },
   {
    "fill": null,
-   "id": "sw_rsi2_pullback|MPC|2026-10-23",
+   "id": "sw_rsi2_pullback|MU|2026-10-30",
    "ledger": null,
    "qty": 0,
    "rule": "sw_rsi2_pullback",
    "side": "sell",
    "slip_bps": null,
    "status": "accepted",
-   "symbol": "MPC"
+   "symbol": "MU"
   },
   {
    "fill": null,
-   "id": "sw_rsi2_pullback|MRVL|2026-10-30",
+   "id": "sw_rsi2_pullback|NTAP|2026-10-29",
    "ledger": null,
    "qty": 0,
    "rule": "sw_rsi2_pullback",
    "side": "sell",
    "slip_bps": null,
    "status": "accepted",
-   "symbol": "MRVL"
+   "symbol": "NTAP"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|NTAP|2026-10-30",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "NTAP"
   },
   {
    "fill": null,
@@ -432,25 +482,14 @@
   },
   {
    "fill": null,
-   "id": "sw_rsi2_pullback|PLTR|2026-10-29",
+   "id": "sw_rsi2_pullback|P|2026-10-30",
    "ledger": null,
    "qty": 0,
    "rule": "sw_rsi2_pullback",
    "side": "sell",
    "slip_bps": null,
    "status": "accepted",
-   "symbol": "PLTR"
-  },
-  {
-   "fill": null,
-   "id": "sw_rsi2_pullback|PLTR|2026-10-30",
-   "ledger": null,
-   "qty": 0,
-   "rule": "sw_rsi2_pullback",
-   "side": "sell",
-   "slip_bps": null,
-   "status": "accepted",
-   "symbol": "PLTR"
+   "symbol": "P"
   },
   {
    "fill": null,
@@ -484,6 +523,17 @@
    "slip_bps": null,
    "status": "expired",
    "symbol": "SMCI"
+  },
+  {
+   "fill": null,
+   "id": "sw_rsi2_pullback|TWLO|2026-10-29",
+   "ledger": null,
+   "qty": 0,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": null,
+   "status": "accepted",
+   "symbol": "TWLO"
   },
   {
    "fill": null,
@@ -4605,6 +4655,58 @@
    "slip_bps": 47.67,
    "status": "filled",
    "symbol": "CRL"
+  },
+  {
+   "day": "2026-11-10",
+   "fill": 380.92,
+   "filled_at": "2026-11-10T14:31:55",
+   "id": "sw_rsi2_pullback|MPC|2026-10-23",
+   "ledger": 380.79,
+   "qty": 2,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": -3.41,
+   "status": "filled",
+   "symbol": "MPC"
+  },
+  {
+   "day": "2026-11-10",
+   "fill": 148.75,
+   "filled_at": "2026-11-10T14:32:38",
+   "id": "sw_rsi2_pullback|MRVL|2026-10-30",
+   "ledger": 149.97,
+   "qty": 5,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 81.35,
+   "status": "filled",
+   "symbol": "MRVL"
+  },
+  {
+   "day": "2026-11-10",
+   "fill": 166.54,
+   "filled_at": "2026-11-10T14:34:05",
+   "id": "sw_rsi2_pullback|PLTR|2026-10-29",
+   "ledger": 167.86,
+   "qty": 5,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 78.64,
+   "status": "filled",
+   "symbol": "PLTR"
+  },
+  {
+   "day": "2026-11-10",
+   "fill": 166.854,
+   "filled_at": "2026-11-10T14:33:32",
+   "id": "sw_rsi2_pullback|PLTR|2026-10-30",
+   "ledger": 167.86,
+   "qty": 5,
+   "rule": "sw_rsi2_pullback",
+   "side": "sell",
+   "slip_bps": 59.93,
+   "status": "filled",
+   "symbol": "PLTR"
   }
  ],
  "summary": {
@@ -4624,24 +4726,24 @@
     "n": 48
    },
    "sw_rsi2_pullback": {
-    "mean_bps": 27.71,
-    "n": 240
+    "mean_bps": 28.15,
+    "n": 244
    }
   },
-  "fills": 314,
+  "fills": 318,
   "in_flight": 0,
-  "mean_bps": 23.83,
-  "median_bps": 15.52,
+  "mean_bps": 24.21,
+  "median_bps": 15.81,
   "orders": {
-   "filled": 317,
-   "sent": 331,
+   "filled": 321,
+   "sent": 343,
    "since": "2026-10-12",
    "unfilled": 10,
-   "working": 4
+   "working": 12
   },
   "orphans": 3,
-  "unfilled": 14,
+  "unfilled": 22,
   "worst_bps": 554.01
  },
- "updated": "2026-11-09T21:11:59+00:00"
+ "updated": "2026-11-10T21:12:47+00:00"
 }
