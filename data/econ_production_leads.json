@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-10T01:00:51+00:00",
+ "board_built_at": "2026-11-10T01:30:29+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -75,6 +75,41 @@
    "source": "econ_nc_yes",
    "sport": "econ_daily",
    "status": "hit"
+  },
+  "2026-11-09|KXINXU-26NOV09H1600-T7574.9999|Below 7,575 at the close \u00b7 finance_spx_nc_no": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-11-09",
+   "edge_at_log": null,
+   "first_seen": "2026-11-09",
+   "headline": "Below 7,575 at the close",
+   "home": null,
+   "id": "2026-11-09|KXINXU-26NOV09H1600-T7574.9999|Below 7,575 at the close \u00b7 finance_spx_nc_no",
+   "kickoff": "2026-11-09T21:00Z",
+   "lane": "production",
+   "league": null,
+   "match": "S&P 500 above/below",
+   "pair": "finance_spx_nc_no|finance_daily",
+   "price_at_log": 0.91,
+   "published_at": "2026-11-10T01:30:29+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Below 7,575 at the close",
+    "event": "KXINXU-26NOV09H1600",
+    "market": "KXINXU-26NOV09H1600-T7574.9999",
+    "outcome": "7,575 or above",
+    "outcome_side": "no",
+    "price_at_log": 0.91,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "finance_spx_nc_no:KXINXU-26NOV09H1600-T7574.9999",
+   "source": "finance_spx_nc_no",
+   "sport": "finance_daily",
+   "status": "hit"
   }
  },
  "pairs": {
@@ -110,18 +145,18 @@
    "ready_at": "2026-11-08T06:00:00+00:00",
    "route": "moved by hand on 2026-11-08",
    "routing": {
-    "leads": 0,
+    "leads": 1,
     "problem": null,
-    "routed": 0,
+    "routed": 1,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 0,
-   "sandbox_roi": null,
-   "sandbox_roi_fee": null,
+   "sandbox_n": 1,
+   "sandbox_roi": 0.0989,
+   "sandbox_roi_fee": 0.092,
    "timing": {
     "late": [],
     "timed": 0,
@@ -133,5 +168,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-10T01:00:51+00:00"
+ "updated_at": "2026-11-10T01:30:29+00:00"
 }
