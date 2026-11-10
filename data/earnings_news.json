@@ -169,7 +169,7 @@
    "time": "pre-market"
   }
  ],
- "calendar_at": "2026-11-10T03:15:20Z",
+ "calendar_at": "2026-11-10T04:00:17Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -378,9 +378,25 @@
    "event": "KXWMT-26NOVUSCOMP",
    "read": null,
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-10T04:01:17Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 391000000.0,
+    "rungs": 6,
+    "width": 9270833.333333313
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-10T04:01:17Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": null,
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-10T03:16:43Z",
+ "last_run": "2026-11-10T04:01:22Z",
  "predictions": [
   {
    "call": {
@@ -533,30 +549,64 @@
    "sym": "DE"
   },
   {
+   "baselines": {
+    "random": {
+     "entry": 6.6779,
+     "entry_ts": 1794178920,
+     "exit": 7.2603,
+     "exit_ts": 1794282540,
+     "net": 0.084813,
+     "status": "settled"
+    },
+    "spy": {
+     "entry": 14.7024,
+     "entry_ts": 1794178860,
+     "exit": 15.0509,
+     "exit_ts": 1794282540,
+     "net": 0.021304,
+     "status": "settled"
+    },
+    "up": {
+     "entry": 6.6779,
+     "entry_ts": 1794178920,
+     "exit": 7.2603,
+     "exit_ts": 1794282540,
+     "net": 0.084813,
+     "status": "settled"
+    }
+   },
    "call": {
     "entry": 6.647,
     "entry_ts": 1794178920,
-    "status": "open"
+    "exit": 7.2671,
+    "exit_ts": 1794282540,
+    "net": -0.09569,
+    "status": "settled"
    },
    "crowd_up": 0.322,
    "day": "2026-11-06",
    "entry_due": "2026-11-07T03:49:33Z",
    "exit_due": "2026-11-10T03:49:00Z",
    "family": "sentiment",
+   "graded_at": "2026-11-10T04:01:18Z",
    "id": "sentiment:AMAT:2026-11-06",
    "logged_at": "2026-11-07T03:49:33Z",
+   "net": -0.09569,
    "perp": "KXAMATPERP",
    "random_side": 1,
    "reason": "Kalshi traders 32% Up on 24h taker volume.",
    "side": -1,
-   "status": "open",
+   "status": "settled",
    "sym": "AMAT"
   },
   {
    "call": {
     "entry": 12.3298,
     "entry_ts": 1794179160,
-    "status": "open"
+    "exit": 12.8168,
+    "exit_ts": 1794282540,
+    "net": -0.041898,
+    "status": "settled"
    },
    "crowd_up": 0.169,
    "day": "2026-11-06",
