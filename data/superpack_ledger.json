@@ -621,6 +621,10 @@
    "at": "2026-11-10T14:04:32.970074+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXUEFANLTOTAL-26NOV14NIRUKR-4\", \"b\"]]": {
+   "at": "2026-11-10T20:04:23.897092+00:00",
+   "pool": "entered"
+  },
   "[\"soccer_rules_ledger.json\", \"A1\", [\"A1:KXMLSTOTAL-26NOV07DALCOL\", \"no\"]]": {
    "at": "2026-11-07T23:04:03.124924+00:00",
    "pool": "entered"
@@ -2188,7 +2192,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-10T19:33:54.634602+00:00",
+ "last_run": "2026-11-10T20:04:23.897092+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -7018,6 +7022,31 @@
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUEFANLTOTAL-26NOV14NIRUKR-4",
+   "entered_at": "2026-11-10T20:04:23.897092+00:00",
+   "entities": [
+    "Northern Ireland",
+    "Ukraine"
+   ],
+   "id": "superpack:[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXUEFANLTOTAL-26NOV14NIRUKR-4\", \"b\"]]",
+   "lane": "u35_low_scoring",
+   "logged": "2026-11-10T20:03:24+00:00",
+   "matched": [
+    "Northern Ireland",
+    "Ukraine"
+   ],
+   "pid": "[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXUEFANLTOTAL-26NOV14NIRUKR-4\", \"b\"]]",
+   "price": 0.85,
+   "profit": null,
+   "scope": "soccer_u35_intl",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
    "src": "sandbox",
    "status": "open"
   }
