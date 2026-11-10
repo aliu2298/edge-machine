@@ -1,8 +1,8 @@
 {
  "collector": {
-  "last_ts": 1794279601,
+  "last_ts": 1794283201,
   "markets": 60,
-  "rows_24h": 84300
+  "rows_24h": 84900
  },
  "events": [],
  "flags": [
@@ -2818,14 +2818,115 @@
    "gap": -0.01937,
    "gap_15m": -0.01818,
    "gap_5m": -0.01974,
+   "gap_60m": -0.02363,
    "rth": false,
    "spread_bp": 12.6,
    "sym": "BABA",
    "ticker": "KXBABAPERP",
    "ts": 1794278221
+  },
+  {
+   "gap": -0.01048,
+   "gap_15m": -0.01485,
+   "gap_5m": -0.01577,
+   "rth": false,
+   "spread_bp": 16.7,
+   "sym": "AMAT",
+   "ticker": "KXAMATPERP",
+   "ts": 1794281821
+  },
+  {
+   "gap": -0.0102,
+   "gap_15m": -0.0176,
+   "gap_5m": -0.01313,
+   "rth": false,
+   "spread_bp": 7.8,
+   "sym": "AMD",
+   "ticker": "KXAMDPERP",
+   "ts": 1794281102
+  },
+  {
+   "gap": -0.01056,
+   "gap_15m": -0.01011,
+   "gap_5m": -0.01011,
+   "rth": false,
+   "spread_bp": 8.5,
+   "sym": "AVGO",
+   "ticker": "KXAVGOPERP",
+   "ts": 1794282241
+  },
+  {
+   "gap": -0.02363,
+   "gap_15m": -0.02533,
+   "gap_5m": -0.02559,
+   "rth": false,
+   "spread_bp": 6.8,
+   "sym": "BABA",
+   "ticker": "KXBABAPERP",
+   "ts": 1794281821
+  },
+  {
+   "gap": -0.01099,
+   "gap_15m": -0.01703,
+   "gap_5m": -0.01293,
+   "rth": false,
+   "spread_bp": 6.8,
+   "sym": "INTC",
+   "ticker": "KXINTCPERP",
+   "ts": 1794281641
+  },
+  {
+   "gap": -0.01082,
+   "gap_15m": -0.01004,
+   "gap_5m": -0.01277,
+   "rth": false,
+   "spread_bp": 5.3,
+   "sym": "NVDA",
+   "ticker": "KXNVDAPERP",
+   "ts": 1794282121
+  },
+  {
+   "gap": -0.01063,
+   "gap_15m": -0.01158,
+   "gap_5m": -0.01193,
+   "rth": false,
+   "spread_bp": 16.9,
+   "sym": "QCOM",
+   "ticker": "KXQCOMPERP",
+   "ts": 1794282121
+  },
+  {
+   "gap": -0.01181,
+   "gap_15m": -0.00785,
+   "gap_5m": -0.01151,
+   "rth": false,
+   "spread_bp": 4.8,
+   "sym": "SNDK",
+   "ticker": "KXSNDKPERP",
+   "ts": 1794282241
+  },
+  {
+   "gap": -0.0114,
+   "gap_15m": -0.00899,
+   "gap_5m": -0.0108,
+   "rth": false,
+   "spread_bp": 4.3,
+   "sym": "SPCX",
+   "ticker": "KXSPCXPERP",
+   "ts": 1794282241
+  },
+  {
+   "gap": -0.01023,
+   "gap_15m": -0.01583,
+   "gap_5m": -0.01184,
+   "rth": false,
+   "spread_bp": 19.9,
+   "sym": "TXN",
+   "ticker": "KXTXNPERP",
+   "ts": 1794281641
   }
  ],
- "last_run": "2026-11-10T03:00:07+00:00",
+ "last_run": "2026-11-10T04:00:08+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
