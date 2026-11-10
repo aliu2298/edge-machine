@@ -82,7 +82,7 @@ html = WB.section(state)
 flip = html.split('id="flipside_v2"')[1].split('<div class="sw15-lane">')[0]
 check("one collapsed row, first in The Flip Side's list; F1 gone as a row",
       (re.findall(r'data-source="(flipf\dv2|flipside_v2_f\d)"', flip), bool(re.search(r'<details class="sp-rule[^"]*"[^>]* open', flip))),
-      (["flipf1v2", "flipf2v2", "flipf3v2", "flipside_v2_f4"], False))
+      (["flipf1v2", "flipf2v2", "flipf3v2", "flipf4v2"], False))
 row = flip.split('data-source="flipf1v2"')[1].split('data-source="flipf2v2"')[0]
 check("inside: the split, the comparison row, the allow-list table (with 'none (never bets)') in Rule details",
       ("1 doing well · 1 not" in row, "Every bet (old F1 on the same 8 markets)" in row,

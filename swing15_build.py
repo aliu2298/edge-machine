@@ -394,7 +394,7 @@ def eps_card(M, state, key, comp_label, rule_text):
                     + '</tr>' for m, a in M.ALLOW.items()])
     body = (f'<p class="sp-details-name"><b>{esc(M.LABEL)}</b> · Kalshi 15-minute windows · paper · {esc(M.VERSION)}</p>'
             f'<p class="sp-def">{esc(rule_text)} Bet only when every setting is in the market\'s allow-list (frozen, '
-            f'fingerprinted); any hour outside 07-22 CT is never bet.</p>'
+            f'fingerprinted){"; any hour outside 07-22 CT is never bet" if "time_ct" in keys else "; every hour"}.</p>'
             + allow + f'<p class="sm mut">Allow-list fingerprint {esc(M.fingerprint()[:12])}</p>')
     row = _row(key, M.LABEL, c, {"all": n}, body, ctrl=e, anchor=f"sw15-{key}", sport=key, status=chip,
                evidence=f"{min(n, M.DECIDE_AT)}/{M.DECIDE_AT}")
@@ -422,7 +422,7 @@ def swing_v3_block(state):
                          how=("Cells picked from one overnight session.", _cut_line(V)))
 
 
-FLIP_EPS = (("flipf1v2", "F1"), ("flipf2v2", "F2"), ("flipf3v2", "F3"))
+FLIP_EPS = (("flipf1v2", "F1"), ("flipf2v2", "F2"), ("flipf3v2", "F3"), ("flipf4v2", "F4"))
 FLIP_TRADE = {
     "F1": "F1: when the cheap side prints at 25c in the first 5 minutes, buy the other side at its ask at the end of the "
           "trigger minute; held to settlement; taker fee.",
@@ -430,6 +430,8 @@ FLIP_TRADE = {
           "trigger minute; held to settlement; taker fee.",
     "F3": "F3: the underdog (the side opposite the minute-2 favourite) at its ask from the minute-2 quote; held to "
           "settlement; taker fee.",
+    "F4": "F4 on Zcash: the underdog (the side opposite the minute-10 favourite) at its ask from the minute-10 quote; "
+          "held to settlement; taker fee; every hour.",
 }
 
 

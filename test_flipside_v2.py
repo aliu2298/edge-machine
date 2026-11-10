@@ -37,11 +37,11 @@ print("the pre-registration")
 check("ids and version (flip-v3 since 2026-11-09 18:00Z)", (tuple(F.CELLS), F.VERSION), (("flipside_v2_f1", "flipside_v2_f2", "flipside_v2_f3", "flipside_v2_f4"), "flip-v3"))
 check("the flip-v2 registration as it was: 15 / 12 / 13 / 8", tuple(len(v) for v in F.CELLS_V2.values()), (15, 12, 13, 8))
 check("tickers", (F.CELLS_V2["flipside_v2_f1"][0], F.CELLS_V2["flipside_v2_f4"][-1]), ("KX10YRRATE15M", "KXZEC15M"))
-check("F1-F3 retired 2026-11-10 (Olu) for Rules 3-5 v2: no live F1-F3 cells; F4 unchanged; their final sets are the v3 keep lists",
-      ([F.CELLS[f"flipside_v2_f{i}"] for i in (1, 2, 3)], F.RETIRED,
-       F.CELLS["flipside_v2_f4"] == F.CELLS_V3["flipside_v2_f4"], W._ts(F.RETIRED_F1_AT) % 900,
-       [F.RETIRED_TIMES[f"flipside_v2_f{i}"] == __import__(f"flipf{i}v2").FROM for i in (1, 2, 3)]),
-      ([(), (), ()], {f"flipside_v2_f{i}": F.CELLS_V3[f"flipside_v2_f{i}"] for i in (1, 2, 3)}, True, 0, [True] * 3))
+check("F1-F4 retired 2026-11-10 (Olu) for Rules 3-6 v2: no live F cells; their final sets are the v3 keep lists",
+      ([F.CELLS[f"flipside_v2_f{i}"] for i in (1, 2, 3, 4)], F.RETIRED,
+       [W._ts(F.RETIRED_TIMES[f"flipside_v2_f{i}"]) % 900 for i in (1, 2, 3, 4)],
+       [F.RETIRED_TIMES[f"flipside_v2_f{i}"] == __import__(f"flipf{i}v2").FROM for i in (1, 2, 3, 4)]),
+      ([(), (), (), ()], {f"flipside_v2_f{i}": F.CELLS_V3[f"flipside_v2_f{i}"] for i in (1, 2, 3, 4)}, [0] * 4, [True] * 4))
 check("flip-v3 keep lists (Olu, 2026-11-09)", {k: tuple(t[2:-3] for t in v) for k, v in F.CELLS_V3.items()},
       {"flipside_v2_f1": ("ETH", "GOLD", "BTC", "PLATINUM", "WTI", "XRP", "HYPE", "NEAR"),
        "flipside_v2_f2": ("WTI", "HYPE", "PLATINUM", "XRP", "BRENT", "BTC"),
@@ -107,10 +107,9 @@ check("the header line, then the backtest note in the How-kept fold",
       ("Paper · fresh record from Nov 9, 7:15 AM CT · review 10, decide 30" in html,
        "the 14-day backtest of the flips ran −0.5% to −16%." in html.split('id="flipside_v2"')[1].split("How the record is kept")[1]),
       (True, True))
-check("Rules 3-5 v2 first, then F4; F1-F3 only in the archive", re.findall(r'data-source="(flipf\dv2|flipside_v2_f\d)"', html),
-      ["flipf1v2", "flipf2v2", "flipf3v2", "flipside_v2_f4"])
-check("the Sandbox index lists F4", [r["lane"] for r in WB.index_rows(state) if r["lane"].startswith("flipside")],
-      ["flipside_v2_f4"])
+check("Rules 3-6 v2 only; F1-F4 only in the archive", re.findall(r'data-source="(flipf\dv2|flipside_v2_f\d)"', html),
+      ["flipf1v2", "flipf2v2", "flipf3v2", "flipf4v2"])
+check("the Sandbox index lists no old F rows", [r["lane"] for r in WB.index_rows(state) if r["lane"].startswith("flipside")], [])
 check("no dollar sign, no guarded phrase", (re.search(r"\$\d", html), sandbox_audit.COPY_RE.findall(html + WB.index_html(state))), (None, []))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
