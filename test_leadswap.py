@@ -215,8 +215,13 @@ check("the sub-nav says 15-Minute", '(("swing15", "15-Minute"),)' in open(DMB.__
 
 print("\nexclusions (2026-11-10, Olu): an excluded pick is skipped, never backfilled")
 import allowgate as _G
-check("the exclusion lists are frozen (fingerprint) and the cut is a window boundary",
-      (_G.fingerprint(L.EXCLUDED) == L.EXCLUDED_SHA256, W_._ts(L.EXCLUDED_AT) % 900), (True, 0))
+check("the exclusion rounds are frozen (one fingerprint over every round; round 1's as registered) and each cut is a "
+      "window boundary", (L.excluded_fingerprint() == L.EXCLUDED_SHA256, _G.fingerprint(L.ROUNDS[0]["markets"]) == L.ROUND1_SHA256,
+                          [W_._ts(r["cut"]) % 900 for r in L.ROUNDS]), (True, True, [0, 0]))
+check("round 2 (2026-11-10, from the 17:09Z ledger): the lists as relayed, cut after round 1",
+      (L.ROUNDS[1]["markets"], L.ROUNDS[1]["cut"] > L.ROUNDS[0]["cut"]),
+      ({"leadswap_swing": ("KX2YRRATE15M", "KXGOLD15M", "KXBRENT15M", "KX10YRRATE15M"),
+        "leadswap_fav": ("KXZEC15M", "KXGBPUSD15M", "KXGOLD15M", "KXCOPPER15M", "KXAUDUSD15M", "KXDOGE15M")}, True))
 H0 = W_._ts("2026-11-10T14:00:00+00:00")                      # after the cut
 HB = W_._ts("2026-11-10T03:00:00+00:00")                      # before the cut
 def xw(series, o, won=1.0):
@@ -238,6 +243,19 @@ check("an unlisted market stays eligible", "KXOTHER15M" not in L.EXCLUDED["leads
 g3 = WB.ls_groups(live, xpicks, ranked=["KXBTC15M", "KXOTHER15M"])
 check("an excluded market is never listed as 'not picked yet'", ("KXBTC15M" in g3["leadswap_swing"][2], "KXOTHER15M" in g3["leadswap_swing"][2]),
       (False, True))
+
+print("\nround 2: a market's rows end at its own round's cut")
+C1, C2 = W_._ts(L.ROUNDS[0]["cut"]), W_._ts(L.ROUNDS[1]["cut"])
+r2rows = [(s, "Crypto", o, o + 900, {}, xw(s, o)) for s in ("KXGOLD15M", "KXBTC15M", "KXEURUSD15M")
+          for o in (C1 - 3600, C2 - 3600, C2 + 3600)]
+r2picks = {key(o - o % 3600): dict(top=["KXGOLD15M", "KXBTC15M", "KXEURUSD15M"], bottom=[], at=key(o - o % 3600 + 240))
+           for o in (C1 - 3600, C2 - 3600, C2 + 3600)}
+lv, gn = L.routing(r2rows, r2picks), L.routing(r2rows, r2picks, removed=True)
+check("swing: Gold (round 2) and BTC (round 1) are skipped for good; EUR/USD (kept) continues through both cuts",
+      sorted((lv["leadswap_swing"] or {}).get("series") or {}), ["KXEURUSD15M"])
+check("final records: BTC before round 1's cut (1 entry), Gold before round 2's (2 entries); nothing after either",
+      ({m: v[0] for m, v in gn["leadswap_swing"]["series"].items()}), {"KXBTC15M": 1, "KXGOLD15M": 2})
+check("the controls exclude nothing", sorted(lv["leadswap_fav_ctrl"]["series"]), ["KXBTC15M", "KXEURUSD15M", "KXGOLD15M"])
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

@@ -652,10 +652,13 @@ def leadswap_block(state):
                 f'<p class="sp-def">{esc(what)}, on {esc(who)} series by lead swaps over the past 2 hours, picked at the '
                 f'top of each hour and frozen. Control: the same entry on {esc(opp)}. z clusters one block (crypto, '
                 f'metals, energy, yields, FX, indices) in one window{clus}.{bf}</p>'
-                + (f'<p class="sm">Excluded from {_start(L.EXCLUDED_AT)} (the board still ranks them; this trade skips '
-                   f'them, no backfill; the control keeps them):</p>'
-                   + _table(("Excluded market",), [f'<tr><td>{mkt(m)}</td></tr>' for m in L.EXCLUDED[strat]])
-                   + f'<p class="sm mut">Exclusion list fingerprint {esc(L.excluded_fingerprint()[:12])}</p>'
+                + (f'<p class="sm">Excluded markets (the board still ranks them; this trade skips them, no backfill; '
+                   f'the control keeps them):</p>'
+                   + _table(("Round", "Excluded from", "Chosen on", "Excluded markets"),
+                            [f'<tr><td>{r["n"]}</td><td>{esc(_start(r["cut"]))}</td><td>{esc(r["data"])}</td>'
+                             f'<td>{", ".join(mkt(m) for m in r["markets"].get(strat, ()))}</td></tr>'
+                             for r in L.ROUNDS if r["markets"].get(strat)])
+                   + f'<p class="sm mut">Exclusion lists fingerprint {esc(L.excluded_fingerprint()[:12])} (every round)</p>'
                    if L.EXCLUDED.get(strat) else ""))
         good, bad, _none = g[strat]
         lid = f"sw15-{strat}"
@@ -806,17 +809,18 @@ def _archive(state, s1_final):
     def lsb():
         import leadswap as L
         led = L.load()
-        rr = led.get("removed_routing")
-        if rr is None:                                           # a ledger from before the exclusions: compute them
-            rr = {k: v for k, v in L.routing(L.table(state), led.get("picks") or {}, removed=True).items() if k in L.EXCLUDED}
-        trs = [f'<tr><td>{esc(L.STRATS[k])}</td><td>{mkt(m)}</td><td class="num">{v[0]}</td><td class="num">{v[1]}</td>'
-               f'<td class="num">{pct(v[2] / v[0]) if v[0] else "—"}</td></tr>'
-               for k in L.EXCLUDED for m, v in sorted(((rr.get(k) or {}).get("series") or {}).items(), key=lambda kv: name(kv[0]))]
+        # Always from the frozen picks: a market excluded in a later round shows before the next hourly ledger.
+        rr = {k: v for k, v in L.routing(L.table(state), led.get("picks") or {}, removed=True).items() if k in L.EXCLUDED}
+        rows = sorted(((L.CUT[(k, m)], k, m, v) for k in L.EXCLUDED
+                       for m, v in ((rr.get(k) or {}).get("series") or {}).items()), key=lambda x: (x[0], x[1], name(x[2])))
+        trs = [f'<tr><td>{esc(_start(cut))}</td><td>{esc(L.STRATS[k])}</td><td>{mkt(m)}</td><td class="num">{v[0]}</td>'
+               f'<td class="num">{v[1]}</td><td class="num">{pct(v[2] / v[0]) if v[0] else "—"}</td></tr>'
+               for cut, k, m, v in rows]
         if not trs:
             return ""
-        return (f'<details class="fold sw15-removed"><summary>Excluded {esc(_start(L.EXCLUDED_AT))} · {len(trs)} '
-                f'market rows, final records</summary>'
-                + _table(("Trade", "Market", "n", "Wins", "Return after fees"), trs) + '</details>')
+        return (f'<details class="fold sw15-removed"><summary>Excluded · {len(L.ROUNDS)} rounds · {len(trs)} market rows, '
+                f'final records</summary>'
+                + _table(("Excluded from", "Trade", "Market", "n", "Wins", "Return after fees"), trs) + '</details>')
     grp("Lead Swap Board", lsb)
     grp("15-Minute Swing v1", lambda: _v1_s1_retired(state, s1_final))
     def sf():
