@@ -15,19 +15,16 @@ the pre-registration: frozen, fingerprinted (ALLOW_SHA256) and stored in the led
 (data/swing15/<ET day>/<HH>.json); a fresh record from FROM; written to data/s3v2_ledger.json by swing15.yml.
 """
 import datetime as dt
-import hashlib
-import json
 import os
 import sys
-from zoneinfo import ZoneInfo
 
+import allowgate as G
 import swing15 as W
 
 VERSION = "sw15-s3v2"
 REGISTERED = "2026-11-10"
 FROM = "2026-11-10T05:00:00+00:00"           # fresh record: the first window after the merge (= Swing v3 S3's cut)
 PATH = os.path.join(W.ROOT, "data", "s3v2_ledger.json")
-CT = ZoneInfo("America/Chicago")
 LABEL = "Rule 2 v2 · Every Positive Setting"
 REVIEW_AT, DECIDE_AT = 30, 100
 # The frozen pre-registration (sw15-s3v2, 2026-11-10). Do not edit: a change is a new version.
@@ -43,44 +40,23 @@ ALLOW_SHA256 = "483f343525cdac937e9d9d1de6e5301baeea052c1c87561936b67850c4780d15
 MARKETS = tuple(ALLOW)
 IN_SAMPLE = "Nov 9 in-sample, these settings would have gone 125/131, +14.1% — not counted"
 PRICE_BANDS = ("50-80", "80-90", "90-95", "95+")
-LEAD_BUCKETS = ("0", "1", "2+")
-TIME_BUCKETS = ("07-11", "12-16", "17-22")
+LEAD_BUCKETS, TIME_BUCKETS = G.LEAD_BUCKETS, G.TIME_BUCKETS
 
 
 def fingerprint(allow=None):
-    return hashlib.sha256(json.dumps(allow or ALLOW, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+    return G.fingerprint(allow or ALLOW)
 
 
 def price_band(p):
     return "50-80" if p < 0.80 else "80-90" if p < 0.90 else "90-95" if p < 0.95 else "95+"
 
 
-def time_bucket(open_iso):
-    h = dt.datetime.fromisoformat(open_iso.replace("Z", "+00:00")).astimezone(CT).hour
-    return "07-11" if 7 <= h <= 11 else "12-16" if 12 <= h <= 16 else "17-22" if 17 <= h <= 22 else None
+time_bucket = G.time_bucket
 
 
 def lead_changes(w, upto=9):
     """Crossings of 50c by the YES mid over the minute rows m = 0..upto (closes of minutes 1-10), bucketed."""
-    cols = w.get("minute_cols") or []
-    if "yes_bid" not in cols or "yes_ask" not in cols:
-        return None
-    ib, ia = cols.index("yes_bid"), cols.index("yes_ask")
-    side, n = None, 0
-    for r in w.get("minutes") or []:
-        if r[0] > upto:
-            break
-        b, a = r[ib], r[ia]
-        if b is None or a is None:
-            continue
-        mid = (b + a) / 2
-        if mid == 0.5:
-            continue
-        up = mid > 0.5
-        if side is not None and up != side:
-            n += 1
-        side = up
-    return "0" if n == 0 else "1" if n == 1 else "2+"
+    return G.lead_changes(w, upto)
 
 
 def settings(w):
@@ -94,11 +70,7 @@ def settings(w):
 def allowed(w):
     """True when the window's market is listed and all three settings are in its allow-list; an hour outside 07-22 CT
     (time_ct None) is never allowed."""
-    a = ALLOW.get(w.get("series"))
-    st = settings(w)
-    if not a or not st or st["time_ct"] is None or st["lead_changes"] is None:
-        return False
-    return all(st[k] in a[k] for k in ("price", "lead_changes", "time_ct"))
+    return G.allowed(ALLOW, w.get("series"), settings(w))
 
 
 def in_record(w, start=None):

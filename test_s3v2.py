@@ -89,7 +89,7 @@ check("one intro line", re.findall(r'sw15-intro">(.*?)</p>', blk),
       [f"Paper · fresh record from {WB._start(S.FROM)} · review 30, decide 100 bets"])
 check("the split, the comparison row and the allow-list table in Rule details",
       ("1 doing well · 1 not" in blk, "Every bet (old S3 on the same 6 markets)" in blk,
-       "Lead changes before minute 10" in blk.split("Rule details")[-1]), (True, True, True))
+       "Lead changes before the entry" in blk.split("Rule details")[-1]), (True, True, True))
 check("the in-sample line, muted, not counted", 'class="sm mut s3v2-in-sample">Nov 9 in-sample, these settings would have gone '
       '125/131, +14.1% — not counted' in blk, True)
 check("Swing v3 S3 is gone as a lane and sits in the archive as Retired", (re.findall(r'data-source="swing15v2_s3"', html),

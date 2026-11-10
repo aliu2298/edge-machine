@@ -37,12 +37,16 @@ print("the pre-registration")
 check("ids and version (flip-v3 since 2026-11-09 18:00Z)", (tuple(F.CELLS), F.VERSION), (("flipside_v2_f1", "flipside_v2_f2", "flipside_v2_f3", "flipside_v2_f4"), "flip-v3"))
 check("the flip-v2 registration as it was: 15 / 12 / 13 / 8", tuple(len(v) for v in F.CELLS_V2.values()), (15, 12, 13, 8))
 check("tickers", (F.CELLS_V2["flipside_v2_f1"][0], F.CELLS_V2["flipside_v2_f4"][-1]), ("KX10YRRATE15M", "KXZEC15M"))
-check("flip-v3 keep lists (Olu, 2026-11-09)", {k: tuple(t[2:-3] for t in v) for k, v in F.CELLS.items()},
+check("F1 retired 2026-11-10 (Olu) for Rule 3 v2: no live F1 cell; F2-F4 unchanged; its final set is the v3 keep list",
+      (F.CELLS["flipside_v2_f1"], F.RETIRED, F.CELLS["flipside_v2_f2"] == F.CELLS_V3["flipside_v2_f2"],
+       W._ts(F.RETIRED_F1_AT) % 900, F.RETIRED_F1_AT == __import__("flipf1v2").FROM),
+      ((), {"flipside_v2_f1": F.CELLS_V3["flipside_v2_f1"]}, True, 0, True))
+check("flip-v3 keep lists (Olu, 2026-11-09)", {k: tuple(t[2:-3] for t in v) for k, v in F.CELLS_V3.items()},
       {"flipside_v2_f1": ("ETH", "GOLD", "BTC", "PLATINUM", "WTI", "XRP", "HYPE", "NEAR"),
        "flipside_v2_f2": ("WTI", "HYPE", "PLATINUM", "XRP", "BRENT", "BTC"),
        "flipside_v2_f3": ("EURUSD", "NATGAS", "USDCAD"), "flipside_v2_f4": ("ZEC",)})
 check("kept within registered; removed = registered - kept",
-      all(set(F.CELLS[k]) <= set(F.CELLS_V2[k]) and set(F.REMOVED[k]) == set(F.CELLS_V2[k]) - set(F.CELLS[k]) for k in F.CELLS), True)
+      all(set(F.CELLS_V3[k]) <= set(F.CELLS_V2[k]) and set(F.REMOVED[k]) == set(F.CELLS_V2[k]) - set(F.CELLS_V3[k]) for k in F.CELLS_V3), True)
 check("the record starts after the selection windows", W._ts(F.FROM) >= W._ts("2026-11-09T12:00:00+00:00"), True)
 
 print("\nthe flipped entries")
@@ -86,12 +90,12 @@ check("F3 and F4: USDJPY counts for F3; F4 has no USDJPY cell",
       (rec["flipside_v2_f3"]["all"]["n"], rec["flipside_v2_f4"]["all"]), (1, None))
 F.CELLS = KEEP
 rec3, gone = F.records(state), F.records(state, removed=True)
-check("flip-v3: BTC survives in F1 (2); USDJPY is removed from F3, its final record kept (1, before the cut)",
-      (rec3["flipside_v2_f1"]["all"]["n"], rec3["flipside_v2_f3"]["all"], gone["flipside_v2_f3"]["series"]["KXUSDJPY15M"]["n"]),
-      (2, None, 1))
+check("flip-v3: BTC survived in F1 (2, now F1's retired final record); USDJPY is removed from F3, its final record kept",
+      (F.records(state, retired=True)["flipside_v2_f1"]["all"]["n"], rec3["flipside_v2_f1"]["all"], rec3["flipside_v2_f3"]["all"],
+       gone["flipside_v2_f3"]["series"]["KXUSDJPY15M"]["n"]), (2, None, None, 1))
 lg = F.ledger(state)
-check("the ledger", (lg["version"], lg["records"]["flipside_v2_f1"]["all"]["n"], lg["removed_at"], len(lg["cells_v2"]["flipside_v2_f1"])),
-      ("flip-v3", 2, F.REMOVED_AT, 15))
+check("the ledger", (lg["version"], lg["retired_records"]["flipside_v2_f1"]["all"]["n"], lg["removed_at"],
+      len(lg["cells_v2"]["flipside_v2_f1"]), lg["retired_f1_at"]), ("flip-v3", 2, F.REMOVED_AT, 15, F.RETIRED_F1_AT))
 
 print("\nthe page")
 html = WB.section(state)
@@ -102,9 +106,10 @@ check("the header line, then the backtest note in the How-kept fold",
       ("Paper · fresh record from Nov 9, 7:15 AM CT · review 10, decide 30" in html,
        "the 14-day backtest of the flips ran −0.5% to −16%." in html.split('id="flipside_v2"')[1].split("How the record is kept")[1]),
       (True, True))
-check("four rows", re.findall(r'data-source="(flipside_v2_f\d)"', html),
-      ["flipside_v2_f1", "flipside_v2_f2", "flipside_v2_f3", "flipside_v2_f4"])
-check("the Sandbox index lists them", [r["lane"] for r in WB.index_rows(state) if r["lane"].startswith("flipside")], list(F.CELLS))
+check("Rule 3 v2 first, then F2-F4; F1 only in the archive", re.findall(r'data-source="(flipf1v2|flipside_v2_f\d)"', html),
+      ["flipf1v2", "flipside_v2_f2", "flipside_v2_f3", "flipside_v2_f4"])
+check("the Sandbox index lists F2-F4", [r["lane"] for r in WB.index_rows(state) if r["lane"].startswith("flipside")],
+      ["flipside_v2_f2", "flipside_v2_f3", "flipside_v2_f4"])
 check("no dollar sign, no guarded phrase", (re.search(r"\$\d", html), sandbox_audit.COPY_RE.findall(html + WB.index_html(state))), (None, []))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")

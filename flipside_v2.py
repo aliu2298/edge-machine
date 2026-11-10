@@ -45,13 +45,18 @@ CELLS_V2 = {
     "flipside_v2_f4": _kx("30YRRATE 5YRRATE DOGE HYPE NEAR USDCAD XRP ZEC"),
 }
 # flip-v3: the frozen keep list (2026-11-09). Do not edit.
-CELLS = {
+CELLS_V3 = {
     "flipside_v2_f1": _kx("ETH GOLD BTC PLATINUM WTI XRP HYPE NEAR"),
     "flipside_v2_f2": _kx("WTI HYPE PLATINUM XRP BRENT BTC"),
     "flipside_v2_f3": _kx("EURUSD NATGAS USDCAD"),
     "flipside_v2_f4": _kx("ZEC"),
 }
-REMOVED = {k: tuple(s for s in v if s not in CELLS[k]) for k, v in CELLS_V2.items()}
+REMOVED = {k: tuple(s for s in v if s not in CELLS_V3[k]) for k, v in CELLS_V2.items()}
+# 2026-11-10 (Olu): F1 retired at RETIRED_F1_AT, replaced by Rule 3 v2 · Every Positive Setting (flipf1v2.py). Its final
+# record is records(..., retired=True); F2-F4 run on unchanged.
+RETIRED_F1_AT = "2026-11-10T05:15:00+00:00"
+RETIRED = {"flipside_v2_f1": CELLS_V3["flipside_v2_f1"]}
+CELLS = dict(CELLS_V3, flipside_v2_f1=())
 LABELS = {"flipside_v2_f1": "F1 Flip 25c", "flipside_v2_f2": "F2 Flip 35c",
           "flipside_v2_f3": "F3 Underdog at minute 2", "flipside_v2_f4": "F4 Underdog at minute 10"}
 SOURCE = {"flipside_v2_f1": ("s1", "0.25"), "flipside_v2_f2": ("s1", "0.35"),
@@ -124,10 +129,10 @@ def _cell(rows):
                 half_roi=[sum(x) / len(x) if x else None for x in h])
 
 
-def records(state, removed=False):
+def records(state, removed=False, retired=False):
     """{strat: {"all": cell, "series": {series: cell or None}, "skips": {reason: n}}}. With removed=True: the removed
-    cells' final records (windows opening before REMOVED_AT)."""
-    cells, until = (REMOVED, REMOVED_AT) if removed else (CELLS, None)
+    cells' final records (windows opening before REMOVED_AT); retired=True: F1's (before RETIRED_F1_AT)."""
+    cells, until = (REMOVED, REMOVED_AT) if removed else (RETIRED, RETIRED_F1_AT) if retired else (CELLS, None)
     out = {}
     for strat, series in cells.items():
         by, skips = {s: [] for s in series}, {}
@@ -150,7 +155,11 @@ def ledger(state, now=None):
     now = now or dt.datetime.now(dt.timezone.utc)
     slim = lambda c: None if not c else {k: c[k] for k in ("n", "hits", "hit_rate", "fair", "mean_roi", "z", "days")}
     return dict(version=VERSION, registered=REGISTERED, **{"from": FROM}, picked_on=PICKED_ON,
-                cells={k: list(v) for k, v in CELLS.items()}, cells_v2={k: list(v) for k, v in CELLS_V2.items()}, updated=now.isoformat(timespec="seconds"),
+                cells={k: list(v) for k, v in CELLS.items()}, cells_v2={k: list(v) for k, v in CELLS_V2.items()},
+                cells_v3={k: list(v) for k, v in CELLS_V3.items()}, retired_f1_at=RETIRED_F1_AT,
+                retired_records={k: dict(all=slim(v["all"]), series={s: slim(c) for s, c in v["series"].items()})
+                                 for k, v in records(state, retired=True).items()},
+                updated=now.isoformat(timespec="seconds"),
                 records={k: dict(all=slim(v["all"]), series={s: slim(c) for s, c in v["series"].items()}, skips=v["skips"])
                          for k, v in records(state).items()},
                 removed_at=REMOVED_AT, removed={k: list(v) for k, v in REMOVED.items()},
