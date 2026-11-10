@@ -35,7 +35,7 @@ import swing15 as W
 
 VERSION = "sw15-lr1"
 REGISTERED = "2026-11-10"
-FROM = "2026-11-10T04:45:00+00:00"            # fresh record: the first window after the merge
+FROM = "2026-11-10T04:30:00+00:00"            # fresh record: the first window after the merge (04:24:58Z)
 PATH = os.path.join(W.ROOT, "data", "lossreader_ledger.json")
 CT = ZoneInfo("America/Chicago")
 # The frozen pre-registration (sw15-lr1, 2026-11-10). Do not edit.
