@@ -2080,3 +2080,7 @@ details.fold.later > summary .sm { font-weight: 500; }
 .health-card ul { margin: 6px 0 0; padding-left: 18px; }
 .health-card li.red b { color: var(--neg); }
 .health-card li.amber b { color: var(--warn); }
+
+/* Earnings & news calls (earnings_news_build.py, 2026-11-09): the "Last run" line turns to the warning colour past 2h. */
+.en-last-run { margin: 2px 0 8px; }
+.en-last-run.en-stale { color: var(--warn); font-weight: 600; }

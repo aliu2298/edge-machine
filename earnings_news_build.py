@@ -178,14 +178,35 @@ def _method_fold():
             f'decide at {E.DECIDE_AT}: <i>paying</i> needs z ≥ 2 against every baseline.</div></details>')
 
 
-def section_and_counts(state=None):
+CT = E.ZoneInfo("America/Chicago")
+STALE_H = 2                                     # the lane runs hourly: past 2 hours the line turns to a warning
+
+
+def last_run_line(state, now=None):
+    """'Last run <time CT>', in the warning colour when it is more than STALE_H hours old (2026-11-09: GitHub fired the
+    hourly cron 3 times in a day and two entries came due unread)."""
+    now = now or E.now_utc()
+    at = state.get("last_run")
+    if not at:
+        return '<p class="sm en-last-run en-stale">Last run: not recorded yet.</p>'
+    t = E.parse(at)
+    loc = t.astimezone(CT)
+    when = f"{loc:%b} {loc.day}, {loc.hour % 12 or 12}:{loc:%M} {'AM' if loc.hour < 12 else 'PM'} CT"
+    age_h = (now - t).total_seconds() / 3600
+    stale = age_h > STALE_H
+    return (f'<p class="sm en-last-run{" en-stale" if stale else " mut"}">Last run {esc(when)}'
+            + (f' · {age_h:.0f} hours ago, more than {STALE_H}: calls due since then are graded on the next run, '
+               f'at their own due-time prices' if stale else "") + '.</p>')
+
+
+def section_and_counts(state=None, now=None):
     """-> (html, families, settled, open)."""
     state = E.load() if state is None else state
     summ = E.summary(state)
     rows = [_family_row(k, summ[k], [p for p in state["predictions"] if p["family"] == k]) for k in E.FAMILIES]
     caveat = (f'<details class="fold"><summary>Read this first: a headline is not an edge</summary>'
               f'<p class="sm">{esc(CAVEAT)}</p></details>')
-    inner = (caveat + f'<div class="sp-rules-list" data-list="earnings-news">{_head_line()}{"".join(rows)}</div>'
+    inner = (last_run_line(state, now) + caveat + f'<div class="sp-rules-list" data-list="earnings-news">{_head_line()}{"".join(rows)}</div>'
              + _calendar_fold(state) + _method_fold())
     count = f"{len(E.FAMILIES)} families · paper · 1x"
     html = (f'<section id="{SECTION_ID}"><div class="sp-section-head"><h2>{esc(TITLE)}</h2>'
