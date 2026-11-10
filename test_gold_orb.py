@@ -341,7 +341,11 @@ check("the page carries the dated amendment, both CT renderings and the fixed UT
        "8:30 pm CDT until Nov 1 and 7:30 pm CST after" in page_bf, "01:30–02:00 UTC" in page_bf), (True, True, True))
 check("the primary row's anchor reads 8:30 pm CDT in October", "7:30 pm CST fixed (01:30 UTC) · 8:30 pm CDT" in page_bf, True)
 real = json.load(open(os.path.join(G.ROOT, "data", "gold_orb_ledger.json")))
-real_bf = [r for r in real["nights"] if r.get("backfilled")]
+real_bf = [r for r in real["nights"] if r.get("backfilled") and not r.get("restored")]   # the 2026-10-24 backfill
+real_rs = [r for r in real["nights"] if r.get("restored")]
+check("the committed ledger: the restored 2026-11-08 night, all four rows, out of net, statuses matching the VPS log",
+      (sorted(r["id"] for r in real_rs), all("net_bp" not in r and r.get("backfilled") and r.get("vps_log_status_match") for r in real_rs)),
+      (sorted(f"{v}:{k}:2026-11-08" for v in "AB" for k in ("utc_0100", "utc_0130")), True))
 check("the committed ledger: backfilled rows are all utc_0130, none carries a net or a spread, the 2026-10-18..22 nights are covered",
       (all(r["anchor"] == "utc_0130" and "net_bp" not in r and r.get("entry_spread_bp") is None for r in real_bf),
        sorted({r["night"] for r in real_bf})), (True, [f"2026-10-{d}" for d in (18, 19, 20, 21, 22)]))
