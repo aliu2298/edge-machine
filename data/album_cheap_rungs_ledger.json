@@ -3427,6 +3427,214 @@
    "status": "open",
    "traded_to_entry": 0.0,
    "word": "Above 12K"
+  },
+  {
+   "ask_check": {
+    "book": 0,
+    "first_quotes": false,
+    "last_trade": null,
+    "printed": 0,
+    "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+    "source": "live",
+    "status": "unverified"
+   },
+   "bid": 0.03,
+   "book": {
+    "ask_depth": 20.0,
+    "ask_levels": 3,
+    "ask_size": 1.0,
+    "at": "2026-11-09T23:01:06.156127+00:00",
+    "at_or_under": 0,
+    "best_ask": 0.19,
+    "best_bid": 0.11,
+    "bid_depth": 1.0,
+    "bid_levels": 1,
+    "bid_size": 1.0
+   },
+   "book_at": "2026-11-09T23:01:06.156127+00:00",
+   "book_size": 0,
+   "entry_at": "2026-11-09T22:33:00+00:00",
+   "event": "KXALBUMEQUIV-SWE26NOV12",
+   "id": "KXALBUMEQUIV-SWE26NOV12-9K",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.14
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.21
+    }
+   ],
+   "logged": "2026-11-09T23:01:06.156127+00:00",
+   "payout": null,
+   "price": 0.07,
+   "side": "yes",
+   "spread": 0.04,
+   "spread_cost": null,
+   "status": "open",
+   "traded_to_entry": 0.0,
+   "word": "Above 9K"
+  },
+  {
+   "ask_check": {
+    "book": 1.0,
+    "first_quotes": false,
+    "last_trade": null,
+    "printed": 0,
+    "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+    "source": "live",
+    "status": "unverified"
+   },
+   "bid": 0.02,
+   "book": {
+    "ask_depth": 6.0,
+    "ask_levels": 2,
+    "ask_size": 1.0,
+    "at": "2026-11-09T23:01:06.156127+00:00",
+    "at_or_under": 1.0,
+    "best_ask": 0.05,
+    "best_bid": 0.02,
+    "bid_depth": 71.0,
+    "bid_levels": 2,
+    "bid_size": 20.0
+   },
+   "book_at": "2026-11-09T23:01:06.156127+00:00",
+   "book_size": 1.0,
+   "entry_at": "2026-11-09T22:33:00+00:00",
+   "event": "KXALBUMEQUIV-SWALLOW26NOV12",
+   "id": "KXALBUMEQUIV-SWALLOW26NOV12-6K",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.1
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.15
+    }
+   ],
+   "logged": "2026-11-09T23:01:06.156127+00:00",
+   "payout": null,
+   "price": 0.05,
+   "side": "yes",
+   "spread": 0.03,
+   "spread_cost": null,
+   "status": "open",
+   "traded_to_entry": 0.0,
+   "word": "Above 6K"
+  },
+  {
+   "ask_check": {
+    "book": 0,
+    "first_quotes": false,
+    "last_trade": null,
+    "printed": 0,
+    "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+    "source": "live",
+    "status": "unverified"
+   },
+   "bid": 0.06,
+   "book": {
+    "ask_depth": 26.0,
+    "ask_levels": 3,
+    "ask_size": 7.0,
+    "at": "2026-11-10T00:01:02.452370+00:00",
+    "at_or_under": 0,
+    "best_ask": 0.08,
+    "best_bid": 0.04,
+    "bid_depth": 7.0,
+    "bid_levels": 1,
+    "bid_size": 7.0
+   },
+   "book_at": "2026-11-10T00:01:02.452370+00:00",
+   "book_size": 0,
+   "entry_at": "2026-11-09T23:23:00+00:00",
+   "event": "KXALBUMEQUIV-DREAM26NOV12",
+   "id": "KXALBUMEQUIV-DREAM26NOV12-12K",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.14
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.21
+    }
+   ],
+   "logged": "2026-11-10T00:01:02.452370+00:00",
+   "payout": null,
+   "price": 0.07,
+   "side": "yes",
+   "spread": 0.01,
+   "spread_cost": null,
+   "status": "open",
+   "traded_to_entry": 0.0,
+   "word": "Above 12K"
+  },
+  {
+   "ask_check": {
+    "book": 6.0,
+    "first_quotes": false,
+    "last_trade": null,
+    "printed": 0,
+    "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+    "source": "live",
+    "status": "unverified"
+   },
+   "bid": 0.01,
+   "book": {
+    "ask_depth": 25.0,
+    "ask_levels": 3,
+    "ask_size": 6.0,
+    "at": "2026-11-10T00:01:02.452370+00:00",
+    "at_or_under": 6.0,
+    "best_ask": 0.04,
+    "best_bid": null,
+    "bid_depth": 0,
+    "bid_levels": 0,
+    "bid_size": null
+   },
+   "book_at": "2026-11-10T00:01:02.452370+00:00",
+   "book_size": 6.0,
+   "entry_at": "2026-11-09T23:23:00+00:00",
+   "event": "KXALBUMEQUIV-DREAM26NOV12",
+   "id": "KXALBUMEQUIV-DREAM26NOV12-15K",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.1
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.15
+    }
+   ],
+   "logged": "2026-11-10T00:01:02.452370+00:00",
+   "payout": null,
+   "price": 0.05,
+   "side": "yes",
+   "spread": 0.04,
+   "spread_cost": null,
+   "status": "open",
+   "traded_to_entry": 0.0,
+   "word": "Above 15K"
   }
  ],
  "error": null,
@@ -3452,16 +3660,16 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:42.883824+00:00"
  },
  "lane": "album_cheap_rungs",
- "last_success": "2026-11-09T22:00:52.780032+00:00",
+ "last_success": "2026-11-10T01:00:46.352772+00:00",
  "observations": {
-  "at": "2026-11-09T22:00:52.780032+00:00",
+  "at": "2026-11-10T01:00:46.352772+00:00",
   "checking": 0,
   "entered": 0,
   "events": 19,
   "filled": 0,
-  "skipped": 0,
-  "unverified": 65,
-  "waiting": 13
+  "skipped": 6,
+  "unverified": 69,
+  "waiting": 10
  },
  "skips": {
   "KXALBUMEQUIV-BLEACH26NOV05-10K": {
@@ -3718,6 +3926,36 @@
    "event": "KXALBUMEQUIV-FRE26NOV12",
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
    "word": "Above 90K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-130K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 130K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-150K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 150K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-170K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 170K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-190K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 190K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-210K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 210K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-230K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 230K"
   },
   "KXALBUMEQUIV-HEAVYCROWN26OCT29-15K": {
    "event": "KXALBUMEQUIV-HEAVYCROWN26OCT29",

@@ -315,6 +315,14 @@
    "at": "2026-11-08T17:03:19.273537+00:00",
    "pool": "entered"
   },
+  "[\"nfl_tt_main1_ledger.json\", \"nfl_tt_main1\", [\"nfl_tt_main1:KXNFLTEAMTOTAL-26NOV09BUFMIN:BUF\", \"yes\"]]": {
+   "at": "2026-11-10T00:08:54.875663+00:00",
+   "pool": "entered"
+  },
+  "[\"nfl_tt_main1_ledger.json\", \"nfl_tt_main1\", [\"nfl_tt_main1:KXNFLTEAMTOTAL-26NOV09BUFMIN:MIN\", \"yes\"]]": {
+   "at": "2026-11-10T00:08:54.875663+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXBRENTD-26NOV0517-T97.50\", \"a\"]]": {
    "at": "2026-11-05T18:35:00.864249+00:00",
    "pool": "entered"
@@ -1964,9 +1972,9 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV0917-T74749.99\", \"b\"]]",
    "price": 0.71,
-   "profit": null,
+   "profit": -1.0,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-10T00:08:44+00:00",
    "side": "b",
    "snapshot": {
     "as_of": "2026-11-09T19:32:56+00:00",
@@ -2035,12 +2043,12 @@
    },
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-09T22:08:11.083238+00:00",
+ "last_run": "2026-11-10T01:09:50.717624+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -6202,14 +6210,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXCOPPERD-26NOV0917-T6.42\", \"a\"]]",
    "price": 0.73,
-   "profit": null,
+   "profit": 0.3699,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-10T00:03:27+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXWTI-26NOV0914-T86.99",
@@ -6248,14 +6256,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXGOLDD-26NOV0917-T4095\", \"a\"]]",
    "price": 0.79,
-   "profit": null,
+   "profit": 0.2658,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-10T00:03:27+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXNATGASD-26NOV0917-T3.280",
@@ -6271,14 +6279,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXNATGASD-26NOV0917-T3.280\", \"a\"]]",
    "price": 0.78,
-   "profit": null,
+   "profit": 0.2821,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-10T00:03:29+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXBTCD-26NOV0917-T74749.99",
@@ -6294,14 +6302,14 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV0917-T74749.99\", \"b\"]]",
    "price": 0.71,
-   "profit": null,
+   "profit": -1.0,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-10T00:08:44+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXBRENTD-26NOV0917-T90.50",
@@ -6317,14 +6325,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXBRENTD-26NOV0917-T90.50\", \"a\"]]",
    "price": 0.7,
-   "profit": null,
+   "profit": 0.4286,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-10T00:03:29+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXUEFANLTOTAL-26NOV12MNELAT-2",
@@ -6490,14 +6498,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXGOLDD-26NOV0917-T4125\", \"a\"]]",
    "price": 0.97,
-   "profit": null,
+   "profit": 0.0309,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-10T00:03:31+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXBRENTD-26NOV0917-T91.50",
@@ -6513,13 +6521,59 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXBRENTD-26NOV0917-T91.50\", \"a\"]]",
    "price": 0.98,
-   "profit": null,
+   "profit": 0.0204,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-10T00:03:34+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
+   "status": "won"
+  },
+  {
+   "contract": "KXNFLTEAMTOTAL-26NOV09BUFMIN-BUF29",
+   "entered_at": "2026-11-10T00:08:54.875663+00:00",
+   "entities": [
+    "Buffalo Bills"
+   ],
+   "id": "superpack:[\"nfl_tt_main1_ledger.json\", \"nfl_tt_main1\", [\"nfl_tt_main1:KXNFLTEAMTOTAL-26NOV09BUFMIN:BUF\", \"yes\"]]",
+   "lane": "nfl_tt_main1",
+   "logged": "2026-11-10T00:00:33.473633+00:00",
+   "matched": [
+    "Buffalo Bills"
+   ],
+   "pid": "[\"nfl_tt_main1_ledger.json\", \"nfl_tt_main1\", [\"nfl_tt_main1:KXNFLTEAMTOTAL-26NOV09BUFMIN:BUF\", \"yes\"]]",
+   "price": 0.33,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Football",
+   "src": "nfl_tt_main1_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXNFLTEAMTOTAL-26NOV09BUFMIN-MIN22",
+   "entered_at": "2026-11-10T00:08:54.875663+00:00",
+   "entities": [
+    "Minnesota Vikings"
+   ],
+   "id": "superpack:[\"nfl_tt_main1_ledger.json\", \"nfl_tt_main1\", [\"nfl_tt_main1:KXNFLTEAMTOTAL-26NOV09BUFMIN:MIN\", \"yes\"]]",
+   "lane": "nfl_tt_main1",
+   "logged": "2026-11-10T00:00:33.473633+00:00",
+   "matched": [
+    "Minnesota Vikings"
+   ],
+   "pid": "[\"nfl_tt_main1_ledger.json\", \"nfl_tt_main1\", [\"nfl_tt_main1:KXNFLTEAMTOTAL-26NOV09BUFMIN:MIN\", \"yes\"]]",
+   "price": 0.46,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Football",
+   "src": "nfl_tt_main1_ledger.json",
    "status": "open"
   }
  ],

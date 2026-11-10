@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-09T19:13:26.848146+00:00",
+ "last_run": "2026-11-10T00:15:30.769746+00:00",
  "registered": "2026-11-08",
  "rules": {
   "nfl_tt_main1": {
@@ -700,6 +700,58 @@
      "title": "Seattle over 28.5 points",
      "week": "2026-2-W09",
      "why": "SEA over 28.5 YES 0.34 (main line 24.5)"
+    },
+    {
+     "ask": 0.33,
+     "ask_size": 758.79,
+     "bid": 0.32,
+     "espn_id": "401873051",
+     "event": "KXNFLTEAMTOTAL-26NOV09BUFMIN",
+     "game": "BUF @ MIN",
+     "id": "nfl_tt_main1:KXNFLTEAMTOTAL-26NOV09BUFMIN:BUF",
+     "lead_min": 74.4,
+     "line": 28.5,
+     "logged": "2026-11-10T00:00:33.473633+00:00",
+     "main_line": 24.5,
+     "main_mid": 0.485,
+     "main_ticker": "KXNFLTEAMTOTAL-26NOV09BUFMIN-BUF25",
+     "mid": 0.325,
+     "price": 0.33,
+     "rule": "nfl_tt_main1",
+     "side": "yes",
+     "start": "2026-11-10T01:15:00+00:00",
+     "status": "open",
+     "team": "BUF",
+     "ticker": "KXNFLTEAMTOTAL-26NOV09BUFMIN-BUF29",
+     "title": "Buffalo over 28.5 points",
+     "week": "2026-2-W09",
+     "why": "BUF over 28.5 YES 0.33 (main line 24.5)"
+    },
+    {
+     "ask": 0.46,
+     "ask_size": 64.46,
+     "bid": 0.45,
+     "espn_id": "401873051",
+     "event": "KXNFLTEAMTOTAL-26NOV09BUFMIN",
+     "game": "BUF @ MIN",
+     "id": "nfl_tt_main1:KXNFLTEAMTOTAL-26NOV09BUFMIN:MIN",
+     "lead_min": 74.4,
+     "line": 21.5,
+     "logged": "2026-11-10T00:00:33.473633+00:00",
+     "main_line": 20.5,
+     "main_mid": 0.525,
+     "main_ticker": "KXNFLTEAMTOTAL-26NOV09BUFMIN-MIN21",
+     "mid": 0.455,
+     "price": 0.46,
+     "rule": "nfl_tt_main1",
+     "side": "yes",
+     "start": "2026-11-10T01:15:00+00:00",
+     "status": "open",
+     "team": "MIN",
+     "ticker": "KXNFLTEAMTOTAL-26NOV09BUFMIN-MIN22",
+     "title": "Minnesota over 21.5 points",
+     "week": "2026-2-W09",
+     "why": "MIN over 21.5 YES 0.46 (main line 20.5)"
     }
    ]
   }
@@ -790,6 +842,22 @@
    "due": 0,
    "entered": 0,
    "matched": 0,
+   "new": 0,
+   "skipped": 0
+  },
+  {
+   "at": "2026-11-10T00:00:33.473633+00:00",
+   "due": 1,
+   "entered": 2,
+   "matched": 1,
+   "new": 2,
+   "skipped": 0
+  },
+  {
+   "at": "2026-11-10T00:15:30.769746+00:00",
+   "due": 1,
+   "entered": 0,
+   "matched": 1,
    "new": 0,
    "skipped": 0
   }
