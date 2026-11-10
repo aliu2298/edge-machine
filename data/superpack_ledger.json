@@ -560,6 +560,10 @@
    "at": "2026-11-06T13:09:08.900685+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXINTLFRIENDLYTOTAL-26NOV13QATAUS-4\", \"b\"]]": {
+   "at": "2026-11-10T15:34:04.816609+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXUEFANLTOTAL-26NOV13ANDGIB-4\", \"b\"]]": {
    "at": "2026-11-09T19:56:29.643955+00:00",
    "pool": "entered"
@@ -2064,7 +2068,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-10T15:06:27.072856+00:00",
+ "last_run": "2026-11-10T15:34:04.816609+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -6679,6 +6683,31 @@
    ],
    "pid": "[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXUEFANLTOTAL-26NOV14KOSISR-4\", \"b\"]]",
    "price": 0.74,
+   "profit": null,
+   "scope": "soccer_u35_intl",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXINTLFRIENDLYTOTAL-26NOV13QATAUS-4",
+   "entered_at": "2026-11-10T15:34:04.816609+00:00",
+   "entities": [
+    "Qatar",
+    "Australia"
+   ],
+   "id": "superpack:[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXINTLFRIENDLYTOTAL-26NOV13QATAUS-4\", \"b\"]]",
+   "lane": "u35_low_scoring",
+   "logged": "2026-11-10T15:33:12+00:00",
+   "matched": [
+    "Australia",
+    "Qatar"
+   ],
+   "pid": "[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXINTLFRIENDLYTOTAL-26NOV13QATAUS-4\", \"b\"]]",
+   "price": 0.79,
    "profit": null,
    "scope": "soccer_u35_intl",
    "settled": null,
