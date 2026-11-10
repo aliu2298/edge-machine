@@ -18,9 +18,11 @@ _FOUND = sorted(glob.glob(os.path.expanduser("~/poly*/nba_wm_decisions.json")))
 SRC = os.path.expanduser(os.environ.get("NBA_WM_DECISIONS") or (_FOUND[0] if _FOUND else "~/nba_wm_decisions.json"))
 OUT = os.path.join(ROOT, "data", "nba_wm_decisions.json")
 FIELDS = {"lane", "bot_version", "ticker", "event", "bucket", "slate", "tip", "decided_at", "outcome", "why", "rule_ok", "yes_bid", "yes_ask",
-          "spread", "depth", "qty", "P", "limit", "night_count", "night_cap", "filled"}
+          "spread", "depth", "qty", "P", "limit", "night_count", "night_cap", "filled",
+          # version 4 (2026-11-08): the favourite-share read behind the matchup skip; Bucket Priority bp-v1 (2026-11-09): who a ceded row went to
+          "fav_share", "ceded_to", "bucket_priority"}
 LANES = {"nba_winmargin_live", "nba_wm_nofade"}
-OUTCOMES = {"enter", "skip", "plan", "bid_posted", "bid_crossed", "bid_late", "would_enter"}
+OUTCOMES = {"enter", "skip", "plan", "bid_posted", "bid_crossed", "bid_late", "would_enter", "ceded"}
 TICKER = re.compile(r"^KXNBAWINMARGIN-[0-9A-Z]+-[A-Z0-9]+$")
 UUID = re.compile(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", re.I)
 KEYLIKE = re.compile(r"[A-Za-z0-9+/_-]{32,}")
