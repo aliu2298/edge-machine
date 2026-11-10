@@ -36,8 +36,8 @@
    "price": 0.94
   },
   "commod_fav_band:KXGOLDD-26NOV1017-T4016": {
-   "at": "2026-11-10T20:44:07+00:00",
-   "lead_min": 45.9,
+   "at": "2026-11-10T20:59:09+00:00",
+   "lead_min": 30.8,
    "price": 0.99
   },
   "commod_fav_band:KXNATGASD-26NOV0917-T3.280": {
@@ -46,8 +46,8 @@
    "price": 0.98
   },
   "commod_fav_band:KXNATGASD-26NOV1017-T3.425": {
-   "at": "2026-11-10T20:44:07+00:00",
-   "lead_min": 45.9,
+   "at": "2026-11-10T20:59:09+00:00",
+   "lead_min": 30.8,
    "price": 0.99
   },
   "commod_fav_band:KXSILVERD-26NOV0317-T49.50": {
@@ -195,6 +195,11 @@
    "lead_min": 3.6,
    "price": 0.99
   },
+  "commod_nc_yes:KXBRENTD-26NOV1017-T90.00": {
+   "at": "2026-11-10T20:59:09+00:00",
+   "lead_min": 30.8,
+   "price": 0.99
+  },
   "commod_nc_yes:KXCOPPERD-26NOV0517-T6.26": {
    "at": "2026-11-05T21:15:27+00:00",
    "lead_min": 14.5,
@@ -254,6 +259,11 @@
    "at": "2026-11-05T21:15:27+00:00",
    "lead_min": 14.5,
    "price": 0.98
+  },
+  "commod_nc_yes:KXSILVERD-26NOV1017-T51.25": {
+   "at": "2026-11-10T20:59:09+00:00",
+   "lead_min": 30.8,
+   "price": 0.99
   },
   "commod_nc_yes:KXWTI-26NOV0214-T94.49": {
    "at": "2026-11-02T18:46:47+00:00",
@@ -615,11 +625,6 @@
    "lead_min": 4.6,
    "price": 0.75
   },
-  "mls_away_band_fade:KXMLSGAME-26OCT31LAGATX-ATX": {
-   "at": "2026-10-31T20:56:11+00:00",
-   "lead_min": 3.8,
-   "price": 0.88
-  },
   "mls_fade_home:KXMLSGAME-26NOV01ATLTOR-ATL": {
    "at": "2026-11-01T21:25:48+00:00",
    "lead_min": 4.2,
@@ -634,11 +639,6 @@
    "at": "2026-11-01T01:17:08+00:00",
    "lead_min": 12.9,
    "price": 0.6
-  },
-  "mls_fade_home:KXMLSGAME-26OCT31SJRSL-SJ": {
-   "at": "2026-10-31T20:56:11+00:00",
-   "lead_min": 3.8,
-   "price": 0.63
   },
   "oddspedia:KXT20MATCH-26NOV010730TTNLIO": {
    "at": "2026-11-01T12:20:41+00:00",
@@ -816,5 +816,5 @@
    "price": 0.79
   }
  },
- "updated": "2026-11-10T20:44:07+00:00"
+ "updated": "2026-11-10T20:59:09+00:00"
 }
