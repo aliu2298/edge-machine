@@ -115,7 +115,7 @@ HEAD_LINE = ('<div class="sp-line sp-head-line" aria-hidden="true"><span class="
              '<span class="sp-cell num">Evidence</span><span class="sp-cell sp-c-verdict">Status</span></div>')
 
 
-def _row(key, label, c, per, body, ctrl=None, anchor=None, sport="swing15"):
+def _row(key, label, c, per, body, ctrl=None, anchor=None, sport="swing15", status=None, evidence=None):
     """One rule row in the Rules-list design. Its fold holds the rule details only; the per-market tables sit open
     beneath it (_card)."""
     record = '<span class="mut">—</span>' if not c else f'{c["hits"]}–{c["n"] - c["hits"]}'
@@ -131,8 +131,8 @@ def _row(key, label, c, per, body, ctrl=None, anchor=None, sport="swing15"):
             f'<span class="sp-cell num" data-l="Record">{record}</span>'
             f'<span class="sp-cell num" data-l="Return after fees">{roi}</span>'
             f'<span class="sp-cell num" data-l="Won v priced">{esc(wvp)}</span>'
-            f'<span class="sp-cell num" data-l="Evidence">{min(best, W.DECIDE_AT)}/{W.DECIDE_AT}</span>'
-            f'<span class="sp-cell sp-c-verdict" data-l="Status">{status_chip(per)}</span></summary>'
+            f'<span class="sp-cell num" data-l="Evidence">{evidence or f"{min(best, W.DECIDE_AT)}/{W.DECIDE_AT}"}</span>'
+            f'<span class="sp-cell sp-c-verdict" data-l="Status">{status or status_chip(per)}</span></summary>'
             f'<div class="sp-details-body">{body}</div></details>')
 
 
@@ -291,6 +291,72 @@ def _frozen_block(anchor, title, start, version, labels, rec, sport, won_word, h
 
 def _cut_line(M):
     return f"{M.VERSION} from {_start(M.REMOVED_AT)}: negative markets removed after ~4h of results."
+
+
+def lossreader_block(state, now=None):
+    """Rule 1 v2 · Loss Reader (lossreader.py, sw15-lr1): one collapsed row; inside, the Now line, today's bets, the
+    per-market split and the two comparison books; the rules and the backtest in the How-kept fold."""
+    import json as _json
+    import lossreader as LR
+    led = LR.ledger(state, now)
+    c, every, fixed = led["record"], led["every"], led["fixed2"]
+    n = c["n"] if c else 0
+    days = len(led["days"])
+    if n >= LR.DECIDE_BETS or days >= LR.DECIDE_DAYS:
+        chip = f'<span class="sig w">Ready to decide ({LR.DECIDE_BETS} bets or {LR.DECIDE_DAYS} days)</span>'
+    elif n >= LR.REVIEW_AT:
+        chip = '<span class="sig w">Review</span>'
+    else:
+        chip = f'<span class="sig n">Too early ({n}/{LR.REVIEW_AT})</span>'
+    per = led["per_market"]
+    good, bad, none = split_markets([(m, (per[m] or {}).get("n", 0), (per[m] or {}).get("mean_roi", 0)) for m in LR.MARKETS])
+    tr = lambda q: (f'<tr><td>{mkt(q[0])}{_under10(q[1])}</td><td class="num">{q[1]}</td>'
+                    f'<td class="num">{per[q[0]]["hits"]} v {per[q[0]]["fair"] * q[1]:.1f}</td>'
+                    f'<td class="num">{pct(per[q[0]]["mean_roi"])}</td></tr>')
+    today = LR.ct_day((now or __import__("datetime").datetime.now(__import__("datetime").timezone.utc)).timestamp())
+    todays = [b for b in led["bets"] if LR.ct_day(b["t"]) == today]
+    bet_rows = [f'<tr><td>{esc(_start(b["at"]).replace(today.strftime("%b") + f" {today.day}, ", ""))}</td><td>{mkt(b["m"])}</td>'
+                f'<td>{esc(LR.trigger_word(b["k"]))}</td><td class="num">{b["price"] * 100:.0f}c</td>'
+                + (f'<td>{"won" if b["won"] else "lost"}</td><td class="num">{pct(b["roi"])}</td>' if b["status"] == "filled"
+                   else '<td>no fill</td><td class="num">—</td>') + '</tr>' for b in reversed(todays)]
+    comp = lambda name_, x: (f'<tr><td>{esc(name_)}</td><td class="num">{x["n"]}</td><td class="num">{x["hits"]} v '
+                             f'{x["fair"] * x["n"]:.1f}</td><td class="num">{pct(x["mean_roi"])}</td></tr>' if x else
+                             f'<tr><td>{esc(name_)}</td><td class="num">0</td><td class="num">—</td><td class="num">—</td></tr>')
+    split = (f'<p class="sw15-now"><b>{esc(led["now"])}</b></p>'
+             + f'<p class="sm">Today\'s bets ({len(todays)})</p>'
+             + (_table(("Time (CT)", "Market", "Trigger", "Price", "Result", "Return after fees"), bet_rows) if bet_rows
+                else '<p class="sm mut">None yet today.</p>')
+             + count_line(good, bad)
+             + _split_html(("Market", "Bets", "Won v priced", "Return after fees"), good, bad, tr, none)
+             + '<p class="sm">Compared over the same windows</p>'
+             + _table(("Book", "Bets", "Won v priced", "Return after fees"),
+                      [comp("Loss Reader", c), comp("Every bet (S2 on the 3 markets)", every), comp("Fixed after 2 losses", fixed)]))
+    body = ('<p class="sp-details-name"><b>' + esc(LR.LABEL) + f'</b> · Kalshi 15-minute windows · paper · {esc(LR.VERSION)}</p>'
+            '<p class="sp-def">Rule 1 = v1\'s S2 on Bitcoin, Solana and WTI: at minute 2, buy the favourite at its ask, filled '
+            'only on a print at or through it in the next minute; held to settlement; taker fee. Each market is bet on its '
+            'best trigger (every window, or after 1, 2 or 3 observed losses in a row), re-learned before every window.</p>')
+    try:
+        bt = _json.load(open(LR.PATH.replace("lossreader_ledger.json", "lossreader_backtest.json")))
+    except (OSError, ValueError):
+        bt = None
+    bt_line = ("" if not bt else
+               f'Backtest (report only, not a gate; {bt["days"]}, candle quotes without the print check): '
+               f'{bt["lane"]["n"]} bets {pct(bt["lane"]["mean_roi"])} after fees, against every bet '
+               f'{pct(bt["every"]["mean_roi"])} ({bt["every"]["n"]}) and fixed after 2 {pct(bt["fixed2"]["mean_roi"])} '
+               f'({bt["fixed2"]["n"]}); it beat every bet on {bt["days_beating_every"]} of {bt["n_days"]} days and was '
+               f'profitable on {bt["days_profitable"]}; shuffling each day\'s outcome order {bt["shuffles"]} times puts '
+               f'the real result at the {bt["shuffle_percentile"]:.0f}th percentile (below 95: not significant).')
+    how = _how("Learning: before every window, each trigger's score on a market is the sum of (won − price) over today's "
+               "observed windows (midnight to midnight CT) where it would have fired, plus a third of the same over the "
+               "previous 3 days; the best trigger is used only with at least 4 such windows today and a score above 0, "
+               "otherwise the market is Off. Two losing bets in a row turn a market Off for its next 4 windows. When "
+               "more than one market fires, only the highest score is bet. Observed = every window where S2 filled, "
+               "bet or not.", bt_line)
+    row = _row("lossreader", LR.LABEL, c, {"all": n}, body, ctrl=every, anchor="sw15-lossreader", sport="lossreader",
+               status=chip, evidence=f"{min(n, LR.DECIDE_BETS)}/{LR.DECIDE_BETS}")
+    intro = (f'<p class="scope sw15-intro">Paper · fresh record from {esc(_start(LR.FROM))} · review {LR.REVIEW_AT}, '
+             f'decide {LR.DECIDE_BETS} bets or {LR.DECIDE_DAYS} trading days</p>')
+    return f'<h3 class="dm-title" id="lossreader">{esc(LR.LABEL)}</h3>' + intro + _list([_card(row, split)]) + how
 
 
 def swing_v3_block(state):
@@ -638,8 +704,10 @@ def section(state=None):
     s1_final = W.cells(state, lambda w: W._ts(w["open"]) < W._ts(V.RETIRED_AT))
     blocks = []
     import holdtoend as H
-    # The order after #378/#379: Steady Favourites, the Lead Swap Board, Swing v3, The Flip Side v3, Hold to End v3.
-    for fn in (lambda: steadyfav_block(state), lambda: leadswap_block(state), lambda: swing_v3_block(state),
+    # The order after #378/#379 (Steady Favourites, the Lead Swap Board, Swing v3, The Flip Side v3, Hold to End v3),
+    # with the newest lane, Rule 1 v2 · Loss Reader (2026-11-10), on top.
+    for fn in (lambda: lossreader_block(state), lambda: steadyfav_block(state), lambda: leadswap_block(state),
+               lambda: swing_v3_block(state),
                lambda: flip_block(state), lambda: holdtoend_block(state, H)):
         try:
             blocks.append(fn())
@@ -655,7 +723,15 @@ def index_rows(state=None):
     state = W.load() if state is None else state
     allc = W.cells(state)
     out = []
-    import steadyfav as S                                       # Steady Favourites (2026-11-09): first
+    try:                                                        # Rule 1 v2 · Loss Reader (2026-11-10): first
+        import lossreader as LR
+        c = LR.ledger(state)["record"]
+        out.append(dict(lane="lossreader", label=LR.LABEL, n=c["n"] if c else 0, roi=c["mean_roi"] if c else None,
+                        hit=(c["hits"] / c["n"]) if c else None, fair=c["fair"] if c else None,
+                        status=f"{c['n'] if c else 0}/{LR.DECIDE_BETS} bets"))
+    except Exception:                                           # noqa: BLE001  (never breaks the index)
+        pass
+    import steadyfav as S                                       # Steady Favourites (2026-11-09)
     for key, r in S.records(state).items():
         c = r["all"]
         out.append(dict(lane=key, label="Steady Favourites · " + S.LABELS[key], n=c["n"] if c else 0,
