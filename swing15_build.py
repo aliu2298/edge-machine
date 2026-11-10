@@ -359,6 +359,48 @@ def lossreader_block(state, now=None):
     return f'<h3 class="dm-title" id="lossreader">{esc(LR.LABEL)}</h3>' + intro + _list([_card(row, split)]) + how
 
 
+def s3v2_block(state):
+    """Rule 2 v2 · Every Positive Setting (s3v2.py, sw15-s3v2): one collapsed row, the per-market split inside, the
+    old S3 on the same 6 markets as its comparison, the frozen allow-list in Rule details."""
+    import s3v2 as S
+    rec = S.records(state)
+    lane, every = rec["lane"], rec["every"]
+    c = lane["all"]
+    n = c["n"] if c else 0
+    chip = (f'<span class="sig w">Ready to decide ({S.DECIDE_AT} bets)</span>' if n >= S.DECIDE_AT else
+            '<span class="sig w">Review</span>' if n >= S.REVIEW_AT else f'<span class="sig n">Too early ({n}/{S.REVIEW_AT})</span>')
+    ser = lane["series"]
+    good, bad, none = split_markets([(m, x["n"] if x else 0, x["mean_roi"] if x else 0) for m, x in ser.items()])
+    tr = lambda q: (f'<tr><td>{mkt(q[0])}{_under10(q[1])}</td><td class="num">{q[1]}</td>'
+                    f'<td class="num">{ser[q[0]]["hits"]} v {ser[q[0]]["fair"] * q[1]:.1f}</td>'
+                    f'<td class="num">{pct(ser[q[0]]["mean_roi"])}</td><td class="num">{_zd(ser[q[0]])}</td></tr>')
+    e = every["all"]
+    comp = lambda name_, x: (f'<tr><td>{esc(name_)}</td><td class="num">{x["n"]}</td><td class="num">{x["hits"]} v '
+                             f'{x["fair"] * x["n"]:.1f}</td><td class="num">{pct(x["mean_roi"])}</td></tr>' if x else
+                             f'<tr><td>{esc(name_)}</td><td class="num">0</td><td class="num">—</td><td class="num">—</td></tr>')
+    split = (count_line(good, bad)
+             + _split_html(("Market", "Bets", "Won v priced", "Return after fees", "z (by day)"), good, bad, tr, none)
+             + '<p class="sm">Compared over the same windows</p>'
+             + _table(("Book", "Bets", "Won v priced", "Return after fees"),
+                      [comp(S.LABEL, c), comp("Every bet (old S3 on the same 6 markets)", e)]))
+    allow = _table(("Market", "Price of the side bought", "Lead changes before minute 10", "Open hour (CT)"),
+                   [f'<tr><td>{mkt(m)}</td><td>{esc(", ".join(a["price"]))}</td><td>{esc(", ".join(a["lead_changes"]))}</td>'
+                    f'<td>{esc(", ".join(a["time_ct"]))}</td></tr>' for m, a in S.ALLOW.items()])
+    body = (f'<p class="sp-details-name"><b>{esc(S.LABEL)}</b> · Kalshi 15-minute windows · paper · {esc(S.VERSION)}</p>'
+            '<p class="sp-def">S3: at minute 10, buy the favourite at its ask, filled only on a print at or through it in '
+            'the next minute; held to settlement; taker fee. Bet only when the price band, the lead changes and the open '
+            'hour are all in the market\'s allow-list (frozen, fingerprinted); any hour outside 07-22 CT is never bet.</p>'
+            + allow + f'<p class="sm mut">Allow-list fingerprint {esc(S.fingerprint()[:12])}</p>')
+    row = _row("s3v2", S.LABEL, c, {"all": n}, body, ctrl=e, anchor="sw15-s3v2", sport="s3v2", status=chip,
+               evidence=f"{min(n, S.DECIDE_AT)}/{S.DECIDE_AT}")
+    intro = (f'<p class="scope sw15-intro">Paper · fresh record from {esc(_start(S.FROM))} · review {S.REVIEW_AT}, '
+             f'decide {S.DECIDE_AT} bets</p>')
+    how = _how("Replaces Swing v3 S3. The allow-list was chosen from each market's positive cells on Nov 9; the "
+               "comparison is the old S3 on the same 6 markets over the same windows, to show whether the filter adds "
+               "anything.", f'<p class="sm mut s3v2-in-sample">{esc(S.IN_SAMPLE)}</p>')
+    return f'<h3 class="dm-title" id="s3v2">{esc(S.LABEL)}</h3>' + intro + _list([_card(row, split)]) + how
+
+
 def swing_v3_block(state):
     import swing15v2 as V
     return _frozen_block("swing15v2", "15-Minute Swing v3", V.FROM, V.VERSION, V.LABELS, V.records(state),
@@ -372,6 +414,17 @@ def flip_block(state):
                          "flipside_v2", lambda k: "Won",
                          how=("Opposite side of the 15-Minute Swing; cells picked from one overnight session; the 14-day "
                               "backtest of the flips ran −0.5% to −16%.", _cut_line(F)))
+
+
+def _v3_s3_retired(state, V):
+    """S3 (sw15-v3) retired 2026-11-10 for Rule 2 v2 · Every Positive Setting: its final record, collapsed."""
+    ret = V.records(state, retired=True)
+    a = (ret.get("swing15v2_s3") or {}).get("all")
+    note = ("" if not a else
+            f'<p class="sm">S3 final: {a["hits"]}/{a["n"]} won against {a["fair"] * a["n"]:.1f} priced, '
+            f'{pct(a["mean_roi"])} after fees. Replaced by Rule 2 v2 · Every Positive Setting. No new entries.</p>')
+    return _removed_fold({"swing15v2_s3": V.LABELS["swing15v2_s3"]}, {"swing15v2_s3": ret.get("swing15v2_s3")},
+                         V.RETIRED_S3_AT, lambda k: "Won", word="Retired", note=note)
 
 
 def _v3_s1_retired(state, V):
@@ -679,7 +732,7 @@ def _archive(state, s1_final):
             html = ""
         if html:
             parts.append(f'<h4>{esc(title)}</h4>{html}')
-    grp("15-Minute Swing v3", lambda: _v3_s1_retired(state, V)
+    grp("15-Minute Swing v3", lambda: _v3_s3_retired(state, V) + _v3_s1_retired(state, V)
         + _removed_fold(V.LABELS, V.records(state, removed=True), V.REMOVED_AT, lambda k: "Won"))
     def flip():
         import flipside_v2 as F
@@ -706,7 +759,8 @@ def section(state=None):
     import holdtoend as H
     # The order after #378/#379 (Steady Favourites, the Lead Swap Board, Swing v3, The Flip Side v3, Hold to End v3),
     # with the newest lane, Rule 1 v2 · Loss Reader (2026-11-10), on top.
-    for fn in (lambda: lossreader_block(state), lambda: steadyfav_block(state), lambda: leadswap_block(state),
+    for fn in (lambda: lossreader_block(state), lambda: s3v2_block(state), lambda: steadyfav_block(state),
+               lambda: leadswap_block(state),
                lambda: swing_v3_block(state),
                lambda: flip_block(state), lambda: holdtoend_block(state, H)):
         try:
@@ -729,6 +783,14 @@ def index_rows(state=None):
         out.append(dict(lane="lossreader", label=LR.LABEL, n=c["n"] if c else 0, roi=c["mean_roi"] if c else None,
                         hit=(c["hits"] / c["n"]) if c else None, fair=c["fair"] if c else None,
                         status=f"{c['n'] if c else 0}/{LR.DECIDE_BETS} bets"))
+    except Exception:                                           # noqa: BLE001  (never breaks the index)
+        pass
+    try:                                                        # Rule 2 v2 · Every Positive Setting (2026-11-10)
+        import s3v2 as S32
+        c = S32.records(state)["lane"]["all"]
+        out.append(dict(lane="s3v2", label=S32.LABEL, n=c["n"] if c else 0, roi=c["mean_roi"] if c else None,
+                        hit=c["hit_rate"] if c else None, fair=c["fair"] if c else None,
+                        status=f"{c['n'] if c else 0}/{S32.DECIDE_AT} bets"))
     except Exception:                                           # noqa: BLE001  (never breaks the index)
         pass
     import steadyfav as S                                       # Steady Favourites (2026-11-09)
