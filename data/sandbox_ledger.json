@@ -2,16 +2,16 @@
  "coverage": {
   "boxing": {
    "kalshi_venue": 0,
-   "polymarket_us": 4,
-   "polymarket_us_listed": 4,
+   "polymarket_us": 5,
+   "polymarket_us_listed": 5,
    "polymarket_us_priced": 0
   },
   "commodities": {
    "cmd_market": {
-    "offered": 210,
-    "picked": 210
+    "offered": 205,
+    "picked": 205
    },
-   "kalshi_venue": 210
+   "kalshi_venue": 205
   },
   "commodities_fav": {
    "commod_fav_band": {
@@ -20,7 +20,7 @@
    },
    "commod_nc_yes": {
     "offered": 450,
-    "picked": 1
+    "picked": 2
    },
    "kalshi_venue": 450
   },
@@ -31,20 +31,20 @@
    "polymarket_us_priced": 0
   },
   "crypto": {
-   "kalshi_venue": 100
+   "kalshi_venue": 80
   },
   "crypto_fav": {
    "crypto_fav_band_below": {
-    "offered": 250,
+    "offered": 525,
     "picked": 0
    },
-   "kalshi_venue": 250
+   "kalshi_venue": 525
   },
   "economics": {
-   "kalshi_venue": 34
+   "kalshi_venue": 32
   },
   "finance": {
-   "kalshi_venue": 40
+   "kalshi_venue": 30
   },
   "mma": {
    "kalshi_venue": 23,
@@ -69,7 +69,7 @@
     "offered": 0,
     "picked": 0
    },
-   "kalshi_venue": 35,
+   "kalshi_venue": 37,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -354,7 +354,7 @@
   "tennis": {
    "kalshi_venue": 16,
    "polymarket_us": 40,
-   "polymarket_us_listed": 372,
+   "polymarket_us_listed": 374,
    "polymarket_us_priced": 196
   },
   "tennis_combo": {
@@ -362,54 +362,53 @@
    "legs": 0
   },
   "tennis_pmcombo": {
-   "combo": 4,
-   "legs": 5
+   "combo": 6,
+   "legs": 7
   }
  },
  "feed_status": {
-  "pin_totals": "down: no paced credit left for this run",
-  "pinnacle": "down: HTTP 429 on /sports/soccer_epl/events"
+  "pin_totals": "down: no paced credit left for this run"
  },
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-10T20:51:36+00:00",
-   "commodities": "2026-11-10T20:51:36+00:00",
-   "commodities_fav": "2026-11-10T20:51:36+00:00",
-   "cricket": "2026-11-10T20:51:36+00:00",
-   "crypto": "2026-11-10T20:51:36+00:00",
-   "crypto_fav": "2026-11-10T20:51:36+00:00",
-   "economics": "2026-11-10T20:51:36+00:00",
-   "finance": "2026-11-10T20:51:36+00:00",
-   "mma": "2026-11-10T20:51:36+00:00",
-   "nfl": "2026-11-10T20:51:36+00:00",
-   "nhl_pl": "2026-11-10T20:51:36+00:00",
-   "nhl_rest": "2026-11-10T20:51:36+00:00",
-   "soccer": "2026-11-10T20:51:36+00:00",
+   "boxing": "2026-11-10T21:03:01+00:00",
+   "commodities": "2026-11-10T21:03:01+00:00",
+   "commodities_fav": "2026-11-10T21:03:01+00:00",
+   "cricket": "2026-11-10T21:03:01+00:00",
+   "crypto": "2026-11-10T21:03:01+00:00",
+   "crypto_fav": "2026-11-10T21:03:01+00:00",
+   "economics": "2026-11-10T21:03:01+00:00",
+   "finance": "2026-11-10T21:03:01+00:00",
+   "mma": "2026-11-10T21:03:01+00:00",
+   "nfl": "2026-11-10T21:03:01+00:00",
+   "nhl_pl": "2026-11-10T21:03:01+00:00",
+   "nhl_rest": "2026-11-10T21:03:01+00:00",
+   "soccer": "2026-11-10T21:03:01+00:00",
    "soccer_btts": "2026-11-08T20:07:32+00:00",
-   "soccer_btts_cup": "2026-11-10T20:51:36+00:00",
-   "soccer_btts_intl": "2026-11-10T20:51:36+00:00",
+   "soccer_btts_cup": "2026-11-10T21:03:01+00:00",
+   "soccer_btts_intl": "2026-11-10T21:03:01+00:00",
    "soccer_corners": "2026-11-08T19:58:15+00:00",
    "soccer_ftts": "2026-10-19T18:33:38+00:00",
    "soccer_o15": "2026-11-08T20:07:32+00:00",
-   "soccer_o15_cup": "2026-11-10T20:51:36+00:00",
-   "soccer_o15_intl": "2026-11-10T20:51:36+00:00",
+   "soccer_o15_cup": "2026-11-10T21:03:01+00:00",
+   "soccer_o15_intl": "2026-11-10T21:03:01+00:00",
    "soccer_o25": "2026-11-08T20:07:32+00:00",
-   "soccer_o25_cup": "2026-11-10T20:51:36+00:00",
-   "soccer_o25_intl": "2026-11-10T20:51:36+00:00",
+   "soccer_o25_cup": "2026-11-10T21:03:01+00:00",
+   "soccer_o25_intl": "2026-11-10T21:03:01+00:00",
    "soccer_p05": "2026-11-08T20:07:32+00:00",
-   "soccer_p05_cup": "2026-11-10T20:51:36+00:00",
-   "soccer_p05_intl": "2026-11-10T20:51:36+00:00",
+   "soccer_p05_cup": "2026-11-10T21:03:01+00:00",
+   "soccer_p05_intl": "2026-11-10T21:03:01+00:00",
    "soccer_team1": "2026-11-08T19:58:15+00:00",
    "soccer_team1_cup": "2026-11-05T19:33:47+00:00",
-   "soccer_team1_intl": "2026-11-10T20:51:36+00:00",
+   "soccer_team1_intl": "2026-11-10T21:03:01+00:00",
    "soccer_team2": "2026-11-08T19:58:15+00:00",
    "soccer_team2_cup": "2026-11-05T19:33:47+00:00",
-   "soccer_team2_intl": "2026-11-10T20:51:36+00:00",
+   "soccer_team2_intl": "2026-11-10T21:03:01+00:00",
    "soccer_u35": "2026-11-08T20:07:32+00:00",
-   "soccer_u35_cup": "2026-11-10T20:51:36+00:00",
-   "soccer_u35_intl": "2026-11-10T20:51:36+00:00",
-   "tennis": "2026-11-10T20:51:36+00:00",
+   "soccer_u35_cup": "2026-11-10T21:03:01+00:00",
+   "soccer_u35_intl": "2026-11-10T21:03:01+00:00",
+   "tennis": "2026-11-10T21:03:01+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -530,7 +529,7 @@
   },
   "odds_api": {
    "allowance": 0,
-   "at": "2026-11-10T20:51:36+00:00",
+   "at": "2026-11-10T21:03:01+00:00",
    "remaining": 315,
    "used": 185
   },
@@ -551,7 +550,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 1530,
+  "runs": 1531,
   "tennis_shortlist": {
    "audit": [
     {
@@ -563,7 +562,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-10T20:52:33+00:00"
+  "updated": "2026-11-10T21:04:06+00:00"
  },
  "quotes": [
   {
@@ -398364,7 +398363,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-10T20:51:36+00:00",
+   "close_at": "2026-11-10T21:03:01+00:00",
    "close_price": 0.84,
    "date": "2026-11-13",
    "edge": null,
@@ -401243,8 +401242,8 @@
    "price_b": 0.26,
    "price_draw": null,
    "prob_a": 0.75,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-10T21:03:04+00:00",
    "side_a": "Yes",
    "side_b": "No",
    "source": "goals_market",
@@ -401253,7 +401252,7 @@
    "stake": 0.0,
    "start": "2026-11-10T19:00:00+00:00",
    "start_source": "espn",
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxcopadelreytotal",
@@ -402235,7 +402234,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-10T20:51:36+00:00",
+   "close_at": "2026-11-10T21:03:01+00:00",
    "close_price": 0.71,
    "date": "2026-11-13",
    "edge": null,
@@ -402275,7 +402274,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-10T20:51:36+00:00",
+   "close_at": "2026-11-10T21:03:01+00:00",
    "close_price": 0.78,
    "date": "2026-11-12",
    "edge": null,
@@ -402999,7 +402998,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-10T20:51:36+00:00",
+   "close_at": "2026-11-10T21:03:01+00:00",
    "close_price": 0.92,
    "date": "2026-11-13",
    "edge": null,
@@ -403039,7 +403038,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-10T20:51:36+00:00",
+   "close_at": "2026-11-10T21:03:01+00:00",
    "close_price": 0.79,
    "date": "2026-11-13",
    "edge": null,
@@ -403079,7 +403078,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-10T20:51:36+00:00",
+   "close_at": "2026-11-10T21:03:01+00:00",
    "close_price": 0.84,
    "date": "2026-11-13",
    "edge": null,
@@ -403119,7 +403118,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-10T20:51:36+00:00",
+   "close_at": "2026-11-10T21:03:01+00:00",
    "close_price": 0.67,
    "date": "2026-11-13",
    "edge": null,
@@ -418441,7 +418440,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-10T20:51:36+00:00",
+   "close_at": "2026-11-10T21:03:01+00:00",
    "close_price": 0.81,
    "date": "2026-11-12",
    "edge": null,
@@ -420761,7 +420760,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-10T20:51:36+00:00",
+   "close_at": "2026-11-10T21:03:01+00:00",
    "close_price": 0.74,
    "date": "2026-11-14",
    "edge": null,
@@ -423128,7 +423127,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-10T20:51:36+00:00",
+   "close_at": "2026-11-10T21:03:01+00:00",
    "close_price": 0.8,
    "date": "2026-11-13",
    "edge": null,
@@ -423662,8 +423661,8 @@
    "price_b": 0.84,
    "price_draw": null,
    "prob_a": 0.165,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-10T21:03:25+00:00",
    "side_a": "Alan Magadan",
    "side_b": "Oriol Roca Batalla",
    "source": "polymarket_us",
@@ -423672,7 +423671,7 @@
    "stake": 0.0,
    "start": "2026-11-10T16:15:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "atpch",
    "tour": "atpch",
    "uncovered": null,
@@ -428305,8 +428304,8 @@
    "price_b": 0.47,
    "price_draw": null,
    "prob_a": 0.535,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-10T21:03:43+00:00",
    "side_a": "Santiago Giamichelle",
    "side_b": "Vihaan Reddy",
    "source": "polymarket_us",
@@ -428315,7 +428314,7 @@
    "stake": 0.0,
    "start": "2026-11-10T18:18:14+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -428611,8 +428610,8 @@
    "price_b": 0.59,
    "price_draw": null,
    "prob_a": 0.415,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-10T21:03:50+00:00",
    "side_a": "Isabella Marton",
    "side_b": "Demi Tran",
    "source": "polymarket_us",
@@ -428621,7 +428620,7 @@
    "stake": 0.0,
    "start": "2026-11-10T18:30:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfwo",
    "uncovered": null,
    "untraded": false,
@@ -429422,7 +429421,7 @@
    "ask_size": 277.09,
    "bet": true,
    "bid": 0.74,
-   "close_at": "2026-11-10T20:51:36+00:00",
+   "close_at": "2026-11-10T21:03:01+00:00",
    "close_price": 0.99,
    "date": "2026-11-10",
    "edge": null,
@@ -430637,7 +430636,7 @@
    "ask_size": 250.0,
    "bet": true,
    "bid": 0.76,
-   "close_at": "2026-11-10T20:51:36+00:00",
+   "close_at": "2026-11-10T21:03:01+00:00",
    "close_price": 0.99,
    "date": "2026-11-10",
    "edge": null,
@@ -431776,7 +431775,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-10T20:51:36+00:00",
+   "close_at": "2026-11-10T21:03:01+00:00",
    "close_price": 0.85,
    "date": "2026-11-14",
    "edge": null,
@@ -434319,8 +434318,8 @@
    "ask_size": 34.0,
    "bet": true,
    "bid": 0.96,
-   "close_at": "2026-11-10T20:51:36+00:00",
-   "close_price": 0.98,
+   "close_at": "2026-11-10T21:03:01+00:00",
+   "close_price": 0.99,
    "date": "2026-11-10",
    "edge": null,
    "id": "commod_nc_yes:KXBRENTD-26NOV1017-T90.00",
@@ -434357,7 +434356,7 @@
    "ask_size": 525.0,
    "bet": true,
    "bid": 0.94,
-   "close_at": "2026-11-10T20:51:36+00:00",
+   "close_at": "2026-11-10T21:03:01+00:00",
    "close_price": 0.99,
    "date": "2026-11-10",
    "edge": null,
@@ -434387,6 +434386,78 @@
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxsilverd",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-10",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-utr-abddan-marots-2026-11-10",
+   "label": "Abdul Hazli, Imran Daniel vs Martikainen, Otso",
+   "liquidity": null,
+   "logged": "2026-11-10T21:03:01+00:00",
+   "market_id": "aec-utr-abddan-marots-2026-11-10",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.54,
+   "price_b": 0.47,
+   "price_draw": null,
+   "prob_a": 0.535,
+   "result": null,
+   "settled": null,
+   "side_a": "Abdul Hazli, Imran Daniel",
+   "side_b": "Martikainen, Otso",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-10T23:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "utr",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/utr-abddan-marots-2026-11-10",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "ask": 0.95,
+   "ask_size": 250.0,
+   "bet": true,
+   "bid": 0.92,
+   "close_at": "2026-11-10T21:03:01+00:00",
+   "close_price": 0.95,
+   "date": "2026-11-10",
+   "edge": null,
+   "id": "commod_nc_yes:KXNATGASD-26NOV1017-T3.445",
+   "label": "Will the natural gas close price be above 3.445 USD/MMBtu on November 10, 2026 at 5:00 PM ",
+   "liquidity": null,
+   "logged": "2026-11-10T21:03:01+00:00",
+   "market_id": "KXNATGASD-26NOV1017-T3.445",
+   "pick": "a",
+   "pnl": 0.0,
+   "price": 0.95,
+   "price_a": 0.95,
+   "price_b": 0.08,
+   "price_draw": null,
+   "prob_a": null,
+   "result": null,
+   "settled": null,
+   "side_a": "Above $3.445",
+   "side_b": "No",
+   "source": "commod_nc_yes",
+   "sport": "commodities_fav",
+   "spread": null,
+   "stake": 100.0,
+   "start": "2026-11-10T22:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxnatgasd",
    "venue": "kalshi_binary",
    "venue_start": null
   }
