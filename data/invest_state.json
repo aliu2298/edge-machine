@@ -1,8 +1,8 @@
 {
  "collector": {
-  "last_ts": 1794276002,
+  "last_ts": 1794279601,
   "markets": 60,
-  "rows_24h": 83940
+  "rows_24h": 84300
  },
  "events": [],
  "flags": [
@@ -2752,6 +2752,7 @@
    "gap": -0.0106,
    "gap_15m": -0.00458,
    "gap_5m": -0.00448,
+   "gap_60m": -0.00222,
    "rth": false,
    "spread_bp": 7.5,
    "sym": "AMD",
@@ -2762,6 +2763,7 @@
    "gap": -0.01103,
    "gap_15m": -0.01477,
    "gap_5m": -0.01513,
+   "gap_60m": -0.01937,
    "rth": false,
    "spread_bp": 11.5,
    "sym": "BABA",
@@ -2772,6 +2774,7 @@
    "gap": 0.02321,
    "gap_15m": -0.00293,
    "gap_5m": -0.00347,
+   "gap_60m": -0.00199,
    "rth": false,
    "spread_bp": 1264.2,
    "sym": "BKNG",
@@ -2782,6 +2785,7 @@
    "gap": -0.01013,
    "gap_15m": -0.00801,
    "gap_5m": -0.01329,
+   "gap_60m": -0.00685,
    "rth": false,
    "spread_bp": 16.6,
    "sym": "IBM",
@@ -2792,6 +2796,7 @@
    "gap": -0.02353,
    "gap_15m": 0.00061,
    "gap_5m": -0.00366,
+   "gap_60m": 0.00177,
    "rth": false,
    "spread_bp": 1370.5,
    "sym": "PG",
@@ -2802,14 +2807,25 @@
    "gap": -0.02922,
    "gap_15m": 0.00266,
    "gap_5m": 0.00231,
+   "gap_60m": 0.00186,
    "rth": false,
    "spread_bp": 1191.1,
    "sym": "SBUX",
    "ticker": "KXSBUXPERP",
    "ts": 1794272461
+  },
+  {
+   "gap": -0.01937,
+   "gap_15m": -0.01818,
+   "gap_5m": -0.01974,
+   "rth": false,
+   "spread_bp": 12.6,
+   "sym": "BABA",
+   "ticker": "KXBABAPERP",
+   "ts": 1794278221
   }
  ],
- "last_run": "2026-11-10T02:00:08+00:00",
+ "last_run": "2026-11-10T03:00:07+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
