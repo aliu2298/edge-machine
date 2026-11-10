@@ -2114,9 +2114,311 @@
    "title": "NYR at EDM",
    "version": "nhlgoal-v1",
    "vol": 18784.25
+  },
+  {
+   "day": "2026-11-09",
+   "entries": [
+    {
+     "ask": 0.66,
+     "away_goals": 1,
+     "bid": 0.65,
+     "goal_side": "away",
+     "home_goals": 0,
+     "kind": "pl",
+     "maker": {
+      "cost": 0.65398,
+      "filled": false,
+      "roi": null
+     },
+     "period": 1,
+     "side": "no",
+     "strike": 2.5,
+     "taker": {
+      "cost": 0.67571,
+      "depth": 43.72,
+      "filled": false,
+      "roi": 0.4799
+     },
+     "ticker": "KXNHLSPREAD-26NOV09PHIVAN-PHI3",
+     "ts": 1794278940,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.7,
+     "away_goals": 1,
+     "bid": 0.69,
+     "goal_side": "away",
+     "home_goals": 0,
+     "kind": "over",
+     "maker": {
+      "cost": 0.69374,
+      "filled": true,
+      "roi": -1.0
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 5.5,
+     "taker": {
+      "cost": 0.7147,
+      "depth": 143.81,
+      "filled": true,
+      "roi": -1.0
+     },
+     "ticker": "KXNHLTOTAL-26NOV09PHIVAN-6",
+     "ts": 1794278940,
+     "v2": true,
+     "won": false
+    },
+    {
+     "ask": 0.99,
+     "away_goals": 1,
+     "bid": 0.96,
+     "goal_side": "away",
+     "home_goals": 0,
+     "kind": "over",
+     "maker": {
+      "cost": 0.96067,
+      "filled": false,
+      "roi": null
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 2.5,
+     "taker": {
+      "cost": 0.99069,
+      "depth": 0,
+      "filled": false,
+      "roi": 0.0094
+     },
+     "ticker": "KXNHLTOTAL-26NOV09PHIVAN-3",
+     "ts": 1794278940,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.94,
+     "away_goals": 1,
+     "bid": 0.92,
+     "goal_side": "away",
+     "home_goals": 0,
+     "kind": "over",
+     "maker": {
+      "cost": 0.92129,
+      "filled": true,
+      "roi": 0.0854
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 3.5,
+     "taker": {
+      "cost": 0.94395,
+      "depth": 0,
+      "filled": false,
+      "roi": 0.0594
+     },
+     "ticker": "KXNHLTOTAL-26NOV09PHIVAN-4",
+     "ts": 1794278940,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.89,
+     "away_goals": 1,
+     "bid": 0.86,
+     "goal_side": "away",
+     "home_goals": 0,
+     "kind": "over",
+     "maker": {
+      "cost": 0.86211,
+      "filled": true,
+      "roi": -1.0
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 4.5,
+     "taker": {
+      "cost": 0.89685,
+      "depth": 0,
+      "filled": false,
+      "roi": -1.0
+     },
+     "ticker": "KXNHLTOTAL-26NOV09PHIVAN-5",
+     "ts": 1794278940,
+     "v2": true,
+     "won": false
+    },
+    {
+     "ask": 0.99,
+     "away_goals": 1,
+     "bid": 0.96,
+     "goal_side": "away",
+     "home_goals": 0,
+     "kind": "over",
+     "maker": {
+      "cost": 0.96067,
+      "filled": false,
+      "roi": null
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 1.5,
+     "taker": {
+      "cost": 0.99069,
+      "depth": 0,
+      "filled": false,
+      "roi": 0.0094
+     },
+     "ticker": "KXNHLTOTAL-26NOV09PHIVAN-2",
+     "ts": 1794278940,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.77,
+     "away_goals": 2,
+     "bid": 0.75,
+     "goal_side": "away",
+     "home_goals": 0,
+     "kind": "pl",
+     "maker": {
+      "cost": 0.75328,
+      "filled": false,
+      "roi": null
+     },
+     "period": 2,
+     "side": "no",
+     "strike": 3.5,
+     "taker": {
+      "cost": 0.7824,
+      "depth": 0,
+      "filled": false,
+      "roi": 0.2781
+     },
+     "ticker": "KXNHLSPREAD-26NOV09PHIVAN-PHI4",
+     "ts": 1794282120,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.99,
+     "away_goals": 2,
+     "bid": 0.96,
+     "goal_side": "away",
+     "home_goals": 0,
+     "kind": "over",
+     "maker": {
+      "cost": 0.96067,
+      "filled": false,
+      "roi": null
+     },
+     "period": 2,
+     "side": "yes",
+     "strike": 2.5,
+     "taker": {
+      "cost": 0.99069,
+      "depth": 0,
+      "filled": false,
+      "roi": 0.0094
+     },
+     "ticker": "KXNHLTOTAL-26NOV09PHIVAN-3",
+     "ts": 1794282120,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.92,
+     "away_goals": 2,
+     "bid": 0.91,
+     "goal_side": "away",
+     "home_goals": 0,
+     "kind": "over",
+     "maker": {
+      "cost": 0.91143,
+      "filled": true,
+      "roi": 0.0972
+     },
+     "period": 2,
+     "side": "yes",
+     "strike": 3.5,
+     "taker": {
+      "cost": 0.92515,
+      "depth": 3.01,
+      "filled": false,
+      "roi": 0.0809
+     },
+     "ticker": "KXNHLTOTAL-26NOV09PHIVAN-4",
+     "ts": 1794282120,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.8,
+     "away_goals": 2,
+     "bid": 0.79,
+     "goal_side": "away",
+     "home_goals": 0,
+     "kind": "over",
+     "maker": {
+      "cost": 0.7929,
+      "filled": true,
+      "roi": -1.0
+     },
+     "period": 2,
+     "side": "yes",
+     "strike": 4.5,
+     "taker": {
+      "cost": 0.8112,
+      "depth": 433.86,
+      "filled": true,
+      "roi": -1.0
+     },
+     "ticker": "KXNHLTOTAL-26NOV09PHIVAN-5",
+     "ts": 1794282120,
+     "v2": true,
+     "won": false
+    },
+    {
+     "ask": 0.78,
+     "away_goals": 2,
+     "bid": 0.77,
+     "goal_side": "home",
+     "home_goals": 1,
+     "kind": "over",
+     "maker": {
+      "cost": 0.7731,
+      "filled": true,
+      "roi": 0.2935
+     },
+     "period": 3,
+     "side": "yes",
+     "strike": 3.5,
+     "taker": {
+      "cost": 0.79201,
+      "depth": 5851.85,
+      "filled": true,
+      "roi": 0.2626
+     },
+     "ticker": "KXNHLTOTAL-26NOV09PHIVAN-4",
+     "ts": 1794286680,
+     "v2": true,
+     "won": true
+    }
+   ],
+   "event": "KXNHLGAME-26NOV09PHIVAN",
+   "fav": "away",
+   "favmid": 0.55,
+   "goals": 4,
+   "ko": 1794277800,
+   "logged": "2026-11-10T06:00:17.824363+00:00",
+   "thin": true,
+   "timed": 4,
+   "title": "PHI at VAN",
+   "version": "nhlgoal-v1",
+   "vol": 3325.81
   }
  ],
- "last_run": "2026-11-10T05:00:18.274409+00:00",
+ "last_run": "2026-11-10T06:00:17.824363+00:00",
  "registered": "2026-11-08T07:45:00Z",
  "since": "2026-11-08",
  "skips": {},
