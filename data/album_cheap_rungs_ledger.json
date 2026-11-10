@@ -3660,16 +3660,16 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:42.883824+00:00"
  },
  "lane": "album_cheap_rungs",
- "last_success": "2026-11-10T02:24:40.562879+00:00",
+ "last_success": "2026-11-10T03:01:08.632684+00:00",
  "observations": {
-  "at": "2026-11-10T02:24:40.562879+00:00",
+  "at": "2026-11-10T03:01:08.632684+00:00",
   "checking": 0,
   "entered": 0,
   "events": 19,
   "filled": 0,
-  "skipped": 0,
+  "skipped": 7,
   "unverified": 69,
-  "waiting": 10
+  "waiting": 3
  },
  "skips": {
   "KXALBUMEQUIV-BLEACH26NOV05-10K": {
@@ -3757,6 +3757,11 @@
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
    "word": "Above 25K"
   },
+  "KXALBUMEQUIV-DREAM26NOV12-10K": {
+   "event": "KXALBUMEQUIV-DREAM26NOV12",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 10K"
+  },
   "KXALBUMEQUIV-DREAM26NOV12-20K": {
    "event": "KXALBUMEQUIV-DREAM26NOV12",
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
@@ -3791,6 +3796,11 @@
    "event": "KXALBUMEQUIV-DREAM26NOV12",
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
    "word": "Above 50K"
+  },
+  "KXALBUMEQUIV-DREAM26NOV12-5K": {
+   "event": "KXALBUMEQUIV-DREAM26NOV12",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 5K"
   },
   "KXALBUMEQUIV-EVE26NOV05-100K": {
    "event": "KXALBUMEQUIV-EVE26NOV05",
@@ -3902,10 +3912,35 @@
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
    "word": "Above 20K"
   },
+  "KXALBUMEQUIV-FRE26NOV12-30K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 30K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-35K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 35K"
+  },
   "KXALBUMEQUIV-FRE26NOV12-40K": {
    "event": "KXALBUMEQUIV-FRE26NOV12",
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
    "word": "Above 40K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-45K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 45K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-50K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 50K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-55K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 55K"
   },
   "KXALBUMEQUIV-FRE26NOV12-60K": {
    "event": "KXALBUMEQUIV-FRE26NOV12",
