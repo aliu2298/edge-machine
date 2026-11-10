@@ -5,6 +5,11 @@
    "lead_min": 6.3,
    "price": 0.96
   },
+  "commod_fav_band:KXWTI-26NOV1014-T84.99": {
+   "at": "2026-11-10T18:58:05+00:00",
+   "lead_min": 1.9,
+   "price": 0.98
+  },
   "commod_nc_no:KXWTI-26NOV0314-T96.99": {
    "at": "2026-11-03T18:53:44+00:00",
    "lead_min": 6.3,
@@ -14,6 +19,11 @@
    "at": "2026-11-06T18:55:25+00:00",
    "lead_min": 4.6,
    "price": 0.54
+  },
+  "commod_nc_yes:KXWTI-26NOV1014-T85.49": {
+   "at": "2026-11-10T18:58:05+00:00",
+   "lead_min": 1.9,
+   "price": 0.91
   },
   "corners_total_under:KXEPLCORNERS-26NOV08BRIBRE-10": {
    "at": "2026-11-08T13:59:36+00:00",
@@ -160,11 +170,6 @@
    "lead_min": 27.5,
    "price": 0.07
   },
-  "liga_u15_dog:KXLALIGATOTAL-26OCT31RBBMCF-2": {
-   "at": "2026-10-31T16:43:48+00:00",
-   "lead_min": 46.2,
-   "price": 0.15
-  },
   "mls_away_band_fade:KXMLSGAME-26NOV01PORHOU-HOU": {
    "at": "2026-11-02T02:05:32+00:00",
    "lead_min": 39.5,
@@ -175,20 +180,10 @@
    "lead_min": 24.2,
    "price": 0.77
   },
-  "mls_away_band_fade:KXMLSGAME-26OCT31CLTORL-ORL": {
-   "at": "2026-10-31T16:43:48+00:00",
-   "lead_min": 16.2,
-   "price": 0.73
-  },
   "oddspedia:KXT20MATCH-26NOV030145JBOBKI": {
    "at": "2026-11-03T06:42:20+00:00",
    "lead_min": 2.7,
    "price": 0.54
-  },
-  "team2_form_l10:KXMLSTEAMTOTAL-26OCT31CLTORL-CLT2": {
-   "at": "2026-10-31T16:43:48+00:00",
-   "lead_min": 16.2,
-   "price": 0.7
   },
   "team2_form_l10:KXSERIEATEAMTOTAL-26NOV01COMVEN-COM2": {
    "at": "2026-11-01T10:36:19+00:00",
@@ -251,5 +246,5 @@
    "price": 0.78
   }
  },
- "updated": "2026-11-10T11:14:38+00:00"
+ "updated": "2026-11-10T18:58:05+00:00"
 }
