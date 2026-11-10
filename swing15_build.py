@@ -536,27 +536,20 @@ def steadyfav_block(state):
                    early))
 
 
-def holdtoend_block(state, H):
-    """Hold to End v3: one live cell (USDCAD 35c) on a fresh record; USDCAD's earlier hte-v1 result as a muted
-    not-counted line. hte-v2 and the 18:00Z cut are in the archive."""
-    gone = H.records(state, removed=True)
-    early = (gone.get("holdtoend_35") or {}).get("series", {}).get("KXUSDCAD15M")
-    early_line = ("" if not early else
-                  f'<p class="sm mut hte-earlier">Earlier result, not counted: USD/CAD 35c went {early["hits"]}/{early["n"]}, '
-                  f'{pct(early["mean_roi"])} after fees ({esc(_start(H.FROM))} to {esc(_start(H.REMOVED_AT))}, hte-v1).</p>')
-    return _frozen_block("holdtoend", "Hold to End v3", H.FROM_V3, H.VERSION,
-                         {k: v.replace("Hold to End · ", "") for k, v in H.LABELS.items()}, H.records(state), "holdtoend",
-                         lambda k: "Won", intro="USD/CAD at 35c",
-                         how=("Buy the 35c side and hold it to settlement.", early_line))
-
-
 def _hte_archive(state, H):
+    v3 = (H.records(state, retired_v3=True).get("holdtoend_35") or {})
+    a = v3.get("all")
+    note3 = ("" if not a else
+             f'<p class="sm">hte-v3 (USD/CAD at 35c) final: {a["hits"]}/{a["n"]} against {a["fair"] * a["n"]:.1f} priced, '
+             f'{pct(a["mean_roi"])} after fees. Retired; no new entries.</p>')
+    out3 = _removed_fold({"holdtoend_35": "Hold to End v3 · 35c"}, {"holdtoend_35": v3}, H.RETIRED_V3_AT,
+                         lambda k: "Won", word="Retired", note=note3)
     ret = H.records(state, retired=True)
     r35 = (ret.get("holdtoend_35") or {}).get("all")
     note = ("" if not r35 else
             f'<p class="sm">hte-v2 final (decide at {W.DECIDE_AT}): {r35["hits"]}/{r35["n"]} against '
             f'{r35["fair"] * r35["n"]:.1f} priced, {pct(r35["mean_roi"])} after fees. No new entries.</p>')
-    return (_removed_fold({"holdtoend_35": "Hold to End v2 · 35c"}, {"holdtoend_35": ret.get("holdtoend_35")},
+    return (out3 + _removed_fold({"holdtoend_35": "Hold to End v2 · 35c"}, {"holdtoend_35": ret.get("holdtoend_35")},
                           H.RETIRED_AT, lambda k: "Won", word="Retired", note=note)
             + _removed_fold(H.LABELS, H.records(state, removed=True), H.REMOVED_AT, lambda k: "Won"))
 
@@ -818,13 +811,12 @@ def section(state=None):
     import swing15v2 as V
     s1_final = W.cells(state, lambda w: W._ts(w["open"]) < W._ts(V.RETIRED_AT))
     blocks = []
-    import holdtoend as H
     # The order after #378/#379 (Steady Favourites, the Lead Swap Board, Swing v3, The Flip Side v3, Hold to End v3),
     # with the newest lane, Rule 1 v2 · Loss Reader (2026-11-10), on top.
     for fn in (lambda: lossreader_block(state), lambda: s3v2_block(state), lambda: steadyfav_block(state),
                lambda: leadswap_block(state),
                lambda: swing_v3_block(state),
-               lambda: flip_block(state), lambda: holdtoend_block(state, H)):
+               lambda: flip_block(state)):         # Hold to End retired 2026-11-10: archive only
         try:
             blocks.append(fn())
         except Exception:                                       # noqa: BLE001  (one lane never breaks the section)
