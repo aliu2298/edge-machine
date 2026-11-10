@@ -37,6 +37,18 @@ REGISTERED = "2026-11-09"
 FROM = "2026-11-09T15:00:00+00:00"           # routing record: windows opening at or after this (after the merge)
 PATH = os.path.join(W.ROOT, "data", "leadswap_ledger.json")
 EXCLUDE = ("KXCRYPTOLEAD15M",)
+# 2026-11-10 (Olu, from the 04:04Z ledger): the markets each trade SKIPS from now on. The board's hourly ranking is
+# unchanged; when it picks an excluded market for a trade, that trade skips it (no backfill from the next rank). Any
+# market not listed, including one never picked yet, stays eligible. The kept markets' records continue; the excluded
+# markets' rows end at EXCLUDED_AT (records in removed_routing); the controls exclude nothing. Frozen: do not edit.
+EXCLUDED_AT = "2026-11-10T05:30:00+00:00"
+EXCLUDED = {
+    "leadswap_swing": ("KXBTC15M", "KXDOGE15M", "KXPALLADIUM15M", "KXPLATINUM15M", "KXWTI15M", "KXZEC15M", "KXAUDUSD15M",
+                       "KXNEAR15M", "KX5YRRATE15M", "KXSILVER15M", "KXUSDJPY15M"),
+    "leadswap_fav": ("KXXRP15M", "KXSILVER15M", "KXBNB15M", "KXNATGAS15M", "KXHYPE15M", "KXSOL15M", "KXBRENT15M",
+                     "KX30YRRATE15M"),
+}
+EXCLUDED_SHA256 = "23f753c50239a04a5f72edd23837a3ca2e4ffdd12e073cef371462fa176dff71"   # sha256 of allowgate.fingerprint(EXCLUDED), set at registration
 PAST_H, DAY_H = 2, 24
 MIN_PAST, MIN_DAY = 4, 24
 TOP = 3
@@ -268,11 +280,18 @@ def _before_freeze(w, strat, p):
     return None if ts is None else ts < W._ts(at)
 
 
-def routing(rows, picks):
-    """{strat: cell}: each frozen hour's picks applied to the windows opening in that hour."""
+def excluded_fingerprint():
+    import allowgate
+    return allowgate.fingerprint(EXCLUDED)
+
+
+def routing(rows, picks, removed=False):
+    """{strat: cell}: each frozen hour's picks applied to the windows opening in that hour. A trade skips the markets it
+    excludes (EXCLUDED; the controls exclude nothing). removed=True: only the excluded markets' entries, before
+    EXCLUDED_AT (their final records)."""
     found = {k: [] for k in STRATS}
     for s, _g, o, _c, _m, w in rows:
-        if o < W._ts(FROM):
+        if o < W._ts(FROM) or (removed and o >= W._ts(EXCLUDED_AT)):
             continue
         hk = dt.datetime.fromtimestamp(o - o % 3600, dt.timezone.utc).isoformat()
         p = picks.get(hk)
@@ -280,7 +299,8 @@ def routing(rows, picks):
             continue
         for strat, side in (("leadswap_swing", "top"), ("leadswap_fav", "bottom"),
                             ("leadswap_swing_ctrl", "bottom"), ("leadswap_fav_ctrl", "top")):
-            if s in p[side]:
+            gone = s in EXCLUDED.get(strat, ())
+            if s in p[side] and gone == removed:
                 t = _trade(w, strat)
                 if t:
                     found[strat].append((f"{o}|{block(w)}", o, t[0], t[1], t[2], s, _before_freeze(w, strat, p)))
@@ -344,6 +364,9 @@ def update(state, led, now=None):
     led["board"] = board(rows, now.timestamp())
     led["persistence"] = persistence(rows)
     led["routing"] = routing(rows, led["picks"])
+    led["removed_routing"] = {k: v for k, v in routing(rows, led["picks"], removed=True).items() if k in EXCLUDED}
+    led.update(excluded={k: list(v) for k, v in EXCLUDED.items()}, excluded_at=EXCLUDED_AT,
+               excluded_sha256=excluded_fingerprint())
     led["updated"] = now.isoformat(timespec="seconds")
     return led
 
@@ -358,6 +381,8 @@ def load(path=PATH):
 
 
 def main():
+    if excluded_fingerprint() != EXCLUDED_SHA256:
+        sys.exit("the lsb exclusion lists changed after registration: a change is a new version, never an edit")
     now = dt.datetime.now(dt.timezone.utc)
     days = {(now - dt.timedelta(days=i)).astimezone(W.ET).date().isoformat() for i in range(8)}
     led = update(W.load(days=days), load(), now)

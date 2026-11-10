@@ -213,5 +213,31 @@ check("no empty summary line anywhere in the section",
 import daily_markets_build as DMB
 check("the sub-nav says 15-Minute", '(("swing15", "15-Minute"),)' in open(DMB.__file__).read(), True)
 
+print("\nexclusions (2026-11-10, Olu): an excluded pick is skipped, never backfilled")
+import allowgate as _G
+check("the exclusion lists are frozen (fingerprint) and the cut is a window boundary",
+      (_G.fingerprint(L.EXCLUDED) == L.EXCLUDED_SHA256, W_._ts(L.EXCLUDED_AT) % 900), (True, 0))
+H0 = W_._ts("2026-11-10T14:00:00+00:00")                      # after the cut
+HB = W_._ts("2026-11-10T03:00:00+00:00")                      # before the cut
+def xw(series, o, won=1.0):
+    return dict(series=series, open=dt.datetime.fromtimestamp(o, dt.timezone.utc).isoformat(), group="Crypto",
+                fee_multiplier=1.0, s1={"0.35": dict(won=won, trigger=dict(ts=o + 60))},
+                s3=dict(status="filled", won=1.0, price=0.8, roi=0.2))
+xrows = [(s, "Crypto", o, o + 900, {}, xw(s, o)) for s in ("KXBTC15M", "KXEURUSD15M", "KXGBPUSD15M", "KXOTHER15M")
+         for o in (H0, HB)]
+key = lambda h: dt.datetime.fromtimestamp(h, dt.timezone.utc).isoformat()
+xpicks = {key(h): dict(top=["KXBTC15M", "KXEURUSD15M"], bottom=["KXSOL15M"], at=key(h + 240)) for h in (H0, HB)}
+live, gone = L.routing(xrows, xpicks), L.routing(xrows, xpicks, removed=True)
+check("the swing trade skips BTC (excluded) and does not backfill the next rank (GBP/USD, OTHER unpicked)",
+      sorted(live["leadswap_swing"]["series"]), ["KXEURUSD15M"])
+check("the control keeps every pick, BTC included", sorted(live["leadswap_fav_ctrl"]["series"]), ["KXBTC15M", "KXEURUSD15M"])
+check("BTC's final record: its entries before the cut only", (gone["leadswap_swing"]["series"]["KXBTC15M"][0],
+      sorted(gone["leadswap_swing"]["series"])), (1, ["KXBTC15M"]))
+check("the kept record continues from the start (EUR/USD before and after the cut)", live["leadswap_swing"]["series"]["KXEURUSD15M"][0], 2)
+check("an unlisted market stays eligible", "KXOTHER15M" not in L.EXCLUDED["leadswap_swing"], True)
+g3 = WB.ls_groups(live, xpicks, ranked=["KXBTC15M", "KXOTHER15M"])
+check("an excluded market is never listed as 'not picked yet'", ("KXBTC15M" in g3["leadswap_swing"][2], "KXOTHER15M" in g3["leadswap_swing"][2]),
+      (False, True))
+
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
