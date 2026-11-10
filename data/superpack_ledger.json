@@ -2052,7 +2052,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-10T10:29:32.982837+00:00",
+ "last_run": "2026-11-10T10:34:33.939777+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -6548,14 +6548,14 @@
    ],
    "pid": "[\"nfl_tt_main1_ledger.json\", \"nfl_tt_main1\", [\"nfl_tt_main1:KXNFLTEAMTOTAL-26NOV09BUFMIN:BUF\", \"yes\"]]",
    "price": 0.33,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-10T10:26:40.970876+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Football",
    "src": "nfl_tt_main1_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXNFLTEAMTOTAL-26NOV09BUFMIN-MIN22",
@@ -6571,14 +6571,14 @@
    ],
    "pid": "[\"nfl_tt_main1_ledger.json\", \"nfl_tt_main1\", [\"nfl_tt_main1:KXNFLTEAMTOTAL-26NOV09BUFMIN:MIN\", \"yes\"]]",
    "price": 0.46,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-10T10:26:40.970876+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Football",
    "src": "nfl_tt_main1_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXDIESELD-26NOV10-T6.155",
