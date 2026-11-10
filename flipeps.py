@@ -11,6 +11,7 @@ import sys
 
 import allowgate as G
 import flipside_v2 as F
+import sw15cuts as C
 import swing15 as W
 
 
@@ -40,14 +41,26 @@ class FlipEPS:
     def in_record(self, w, start=None):
         return W._ts(w["open"]) >= W._ts(start or self.FROM) and w.get("series") in self.MARKETS
 
+    def kept(self):
+        return tuple(m for m in self.MARKETS if m not in C.cut(self.NAME))
+
+    def retired(self):
+        return self.NAME in C.RETIRED
+
     def records(self, state, start=None):
-        """{"lane": {"all", "series"}, "every": {"all", "series"}}: the filtered lane and the old flip on the same
-        markets over the same windows."""
+        """{"lane", "every", "cut"}: the filtered lane over the kept markets (sw15cuts, 2026-11-10; a retired lane
+        counts only windows before the cut), the old flip on the same markets over the same windows, and the cut
+        markets' final records (filtered, before the cut)."""
+        cut_ts = W._ts(C.CUT_AT)
+        kept, gone = self.kept(), C.cut(self.NAME)
+        live = (lambda w: self.allowed(w) and w["series"] in kept
+                and (not self.retired() or W._ts(w["open"]) < cut_ts))
         out = {}
-        for key, gate in (("lane", self.allowed), ("every", lambda w: True)):
-            by = {m: [] for m in self.MARKETS}
+        for key, gate, mk in (("lane", live, kept), ("every", lambda w: True, self.MARKETS),
+                              ("cut", lambda w: self.allowed(w) and w["series"] in gone and W._ts(w["open"]) < cut_ts, gone)):
+            by = {m: [] for m in mk}
             for w in (state.get("windows") or {}).values():
-                if not self.in_record(w, start):
+                if not self.in_record(w, start) or w["series"] not in by:
                     continue
                 f = self.flip_entry(w)
                 if f and gate(w):
@@ -59,7 +72,8 @@ class FlipEPS:
     def entries(self, state, start=None):
         rows = []
         for w in (state.get("windows") or {}).values():
-            if self.in_record(w, start) and self.allowed(w):
+            if self.in_record(w, start) and self.allowed(w) and w["series"] in self.kept() and (
+                    not self.retired() or W._ts(w["open"]) < W._ts(C.CUT_AT)):
                 f = self.flip_entry(w)
                 rows.append(dict(at=w["open"], market=w["series"], settings=self.settings(w), side=f["side"],
                                  price=f["price"], won=f["won"], roi=f["roi"]))
@@ -93,5 +107,6 @@ def expose(lane, g):
     for k in ("NAME", "VERSION", "LABEL", "STRAT", "ALLOW", "ALLOW_SHA256", "FROM", "IN_SAMPLE", "MARKETS", "PATH",
               "REVIEW_AT", "DECIDE_AT", "COMP_LABEL"):
         g[k] = getattr(lane, k)
-    for k in ("fingerprint", "flip_entry", "settings", "allowed", "in_record", "records", "entries", "ledger", "main"):
+    for k in ("fingerprint", "flip_entry", "settings", "allowed", "in_record", "records", "entries", "ledger", "main",
+              "kept", "retired"):
         g[k] = getattr(lane, k)

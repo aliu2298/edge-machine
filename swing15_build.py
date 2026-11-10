@@ -212,6 +212,17 @@ def _how(*parts):
             + f'<p class="sm mut">{SORT_LINE}</p></details>')
 
 
+def _cuts_note(lane):
+    """The frozen 2026-11-10 market cut for a lane, for its Rule details (sw15cuts.py)."""
+    import sw15cuts as C
+    gone = C.cut(lane)
+    if not gone:
+        return ""
+    return (f'<p class="sm sw15-cuts">Cut from {esc(_start(C.CUT_AT))} (return after fees 0 or below on {esc(C.DATA)}; '
+            f'skipped from then, no backfill; their final records are in the archive): '
+            + ", ".join(mkt(m) for m in gone) + f'. <span class="mut">Cut list fingerprint {esc(C.fingerprint()[:12])}</span></p>')
+
+
 def _cell_tr(label, c, ticker=None):
     first = mkt(ticker) if ticker else esc(label)
     if not c:
@@ -279,7 +290,7 @@ def _frozen_block(anchor, title, start, version, labels, rec, sport, won_word, h
         skips = r.get("skips") or {}
         body = (f'<p class="sp-details-name"><b>{esc(label)}</b> · Kalshi 15-minute windows · paper · {esc(version)}</p>'
                 f'<p class="sp-def">Frozen: {len(r["series"])} markets ({esc(", ".join(name(s) for s in r["series"]))}). '
-                f'Held to settlement; taker fee on entry.</p>'
+                f'Held to settlement; taker fee on entry.</p>' + _cuts_note(strat)
                 + (f'<p class="sm mut">Skipped: {esc(", ".join(f"{k} {v}" for k, v in sorted(skips.items())))}</p>'
                    if skips else ""))
         lid = f"sw15-{strat}"
@@ -310,7 +321,7 @@ def lossreader_block(state, now=None):
     else:
         chip = f'<span class="sig n">Too early ({n}/{LR.REVIEW_AT})</span>'
     per = led["per_market"]
-    good, bad, none = split_markets([(m, (per[m] or {}).get("n", 0), (per[m] or {}).get("mean_roi", 0)) for m in LR.MARKETS])
+    good, bad, none = split_markets([(m, (per[m] or {}).get("n", 0), (per[m] or {}).get("mean_roi", 0)) for m in led["kept"]])
     tr = lambda q: (f'<tr><td>{mkt(q[0])}{_under10(q[1])}</td><td class="num">{q[1]}</td>'
                     f'<td class="num">{per[q[0]]["hits"]} v {per[q[0]]["fair"] * q[1]:.1f}</td>'
                     f'<td class="num">{pct(per[q[0]]["mean_roi"])}</td></tr>')
@@ -335,7 +346,8 @@ def lossreader_block(state, now=None):
     body = ('<p class="sp-details-name"><b>' + esc(LR.LABEL) + f'</b> · Kalshi 15-minute windows · paper · {esc(LR.VERSION)}</p>'
             '<p class="sp-def">Rule 1 = v1\'s S2 on Bitcoin, Solana and WTI: at minute 2, buy the favourite at its ask, filled '
             'only on a print at or through it in the next minute; held to settlement; taker fee. Each market is bet on its '
-            'best trigger (every window, or after 1, 2 or 3 observed losses in a row), re-learned before every window.</p>')
+            'best trigger (every window, or after 1, 2 or 3 observed losses in a row), re-learned before every window.</p>'
+            + _cuts_note("lossreader"))
     try:
         bt = _json.load(open(LR.PATH.replace("lossreader_ledger.json", "lossreader_backtest.json")))
     except (OSError, ValueError):
@@ -385,6 +397,7 @@ def eps_card(M, state, key, comp_label, rule_text):
                              f'{x["fair"] * x["n"]:.1f}</td><td class="num">{pct(x["mean_roi"])}</td></tr>' if x else
                              f'<tr><td>{esc(name_)}</td><td class="num">0</td><td class="num">—</td><td class="num">—</td></tr>')
     split = (count_line(good, bad)
+             + ('<p class="sm mut sw15-none-yet">No market with a positive record yet.</p>' if not c and key in __import__("sw15cuts").CUTS else "")
              + _split_html(("Market", "Bets", "Won v priced", "Return after fees", "z (by day)"), good, bad, tr, none)
              + '<p class="sm">Compared over the same windows</p>'
              + _table(("Book", "Bets", "Won v priced", "Return after fees"), [comp(M.LABEL, c), comp(comp_label, e)]))
@@ -395,7 +408,7 @@ def eps_card(M, state, key, comp_label, rule_text):
     body = (f'<p class="sp-details-name"><b>{esc(M.LABEL)}</b> · Kalshi 15-minute windows · paper · {esc(M.VERSION)}</p>'
             f'<p class="sp-def">{esc(rule_text)} Bet only when every setting is in the market\'s allow-list (frozen, '
             f'fingerprinted){"; any hour outside 07-22 CT is never bet" if "time_ct" in keys else "; every hour"}.</p>'
-            + allow + f'<p class="sm mut">Allow-list fingerprint {esc(M.fingerprint()[:12])}</p>')
+            + allow + f'<p class="sm mut">Allow-list fingerprint {esc(M.fingerprint()[:12])}</p>' + _cuts_note(key))
     row = _row(key, M.LABEL, c, {"all": n}, body, ctrl=e, anchor=f"sw15-{key}", sport=key, status=chip,
                evidence=f"{min(n, M.DECIDE_AT)}/{M.DECIDE_AT}")
     return _card(row, split)
@@ -441,6 +454,8 @@ def flip_block(state):
     for name, old in FLIP_EPS:                                   # Rules 3-5 v2 (2026-11-10) replace F1-F3, in this list
         try:
             M = __import__(name)
+            if getattr(M, "retired", lambda: False)():
+                continue                                         # retired 2026-11-10 (sw15cuts): archive only
             cards.append(eps_card(M, state, name, M.COMP_LABEL, FLIP_TRADE[old]))
             how_eps += [f"{M.LABEL} replaces {old}: fresh record from {_start(M.FROM)}, review {M.REVIEW_AT}, decide "
                         f"{M.DECIDE_AT} bets.", f'<p class="sm mut {name}-in-sample">{esc(M.IN_SAMPLE)}</p>']
@@ -504,7 +519,10 @@ def steadyfav_block(state):
     defs = {"steadyfav_a": "At minute 2, buy the side above 50c (by the mid) at its ask, filled only on a print at or "
                            "through it in the next minute; held to settlement; taker fee on entry (v1's S2).",
             "steadyfav_b": "The same at minute 10, with 5 minutes left (v1's S3)."}
+    import sw15cuts as C
     for rule, text in defs.items():
+        if rule in C.RETIRED:
+            continue                                             # rule A retired 2026-11-10: archive only
         r = rec[rule]
         ser = r["series"]
         good, bad, none = split_markets([(s, x["n"] if x else 0, x["mean_roi"] if x else 0) for s, x in ser.items()])
@@ -517,7 +535,7 @@ def steadyfav_block(state):
                f'{c["hits"]}/{c["n"]} won against {c["fair"] * c["n"]:.1f} priced, {pct(c["mean_roi"])} after fees')
         body = (f'<p class="sp-details-name"><b>{esc(S.LABELS[rule])}</b> · Kalshi 15-minute windows · paper · '
                 f'{esc(S.VERSION)}</p><p class="sp-def">{esc(text)} Markets: {len(S.LIVE)} (USD/JPY removed). Control: the same '
-                f'rule on the other {ctl_rec.get("markets", 0)} 15-minute markets, pooled.</p>')
+                f'rule on the other {ctl_rec.get("markets", 0)} 15-minute markets, pooled.</p>' + _cuts_note(rule))
         per = {s: (x["n"] if x else 0) for s, x in ser.items()}
         lid = f"sw15-{rule}"
         split = (count_line(good, bad)
@@ -822,6 +840,35 @@ def _archive(state, s1_final):
                 f'final records</summary>'
                 + _table(("Excluded from", "Trade", "Market", "n", "Wins", "Return after fees"), trs) + '</details>')
     grp("Lead Swap Board", lsb)
+    def cuts():
+        import sw15cuts as C
+        trs = []
+        def add(lane_label, rec_series, kind="Cut"):
+            for m, x in rec_series.items():
+                if x:
+                    trs.append(f'<tr><td>{esc(lane_label)}</td><td>{esc(kind)}</td><td>{mkt(m)}</td><td class="num">{x["n"]}</td>'
+                               f'<td class="num">{x["hits"]}</td><td class="num">{pct(x["mean_roi"])}</td></tr>')
+        import lossreader as LR
+        led = LR.ledger(state)
+        add(LR.LABEL, {m: (dict(c, mean_roi=c["mean_roi"]) if c else None) for m, c in led["cut"].items()})
+        import s3v2 as S32
+        add(S32.LABEL, S32.records(state)["cut"]["series"])
+        for nm, _old in FLIP_EPS:
+            M = __import__(nm)
+            r = M.records(state)
+            add(M.LABEL, r["cut"]["series"])
+            if M.retired():
+                add(M.LABEL, r["lane"]["series"], "Lane retired")
+        import steadyfav as SF
+        for rule, v in SF.records(state, cut=True).items():
+            add("Steady Favourites · " + SF.LABELS[rule], v["series"], "Lane retired" if rule in C.RETIRED else "Cut")
+        add("Swing v3 · " + V.LABELS["swing15v2_s2"], V.records(state, cut=True)["swing15v2_s2"]["series"])
+        if not trs:
+            return ""
+        return (f'<details class="fold sw15-removed sw15-cuts-fold"><summary>Cut {esc(_start(C.CUT_AT))} · {len(trs)} market '
+                f'rows, final records (return after fees 0 or below on {esc(C.DATA)})</summary>'
+                + _table(("Lane", "What", "Market", "n", "Wins", "Return after fees"), trs) + '</details>')
+    grp("Market cuts (Nov 10)", cuts)
     grp("15-Minute Swing v1", lambda: _v1_s1_retired(state, s1_final))
     def sf():
         import steadyfav as S
@@ -879,6 +926,8 @@ def index_rows(state=None):
     for name, _old in FLIP_EPS:                                 # Rules 3-5 v2 · Every Positive Setting (2026-11-10)
         try:
             M = __import__(name)
+            if M.retired():
+                continue
             c = M.records(state)["lane"]["all"]
             out.append(dict(lane=name, label=M.LABEL, n=c["n"] if c else 0, roi=c["mean_roi"] if c else None,
                             hit=c["hit_rate"] if c else None, fair=c["fair"] if c else None,
@@ -886,7 +935,10 @@ def index_rows(state=None):
         except Exception:                                       # noqa: BLE001  (never breaks the index)
             pass
     import steadyfav as S                                       # Steady Favourites (2026-11-09)
+    import sw15cuts as C
     for key, r in S.records(state).items():
+        if key in C.RETIRED:
+            continue                                            # retired 2026-11-10: archive only
         c = r["all"]
         out.append(dict(lane=key, label="Steady Favourites · " + S.LABELS[key], n=c["n"] if c else 0,
                         roi=c["mean_roi"] if c else None, hit=c["hit_rate"] if c else None,

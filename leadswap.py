@@ -49,7 +49,7 @@ ROUNDS = (
         "leadswap_fav": ("KXXRP15M", "KXSILVER15M", "KXBNB15M", "KXNATGAS15M", "KXHYPE15M", "KXSOL15M", "KXBRENT15M",
                          "KX30YRRATE15M"),
     }),
-    dict(n=2, cut="2026-11-10T18:00:00+00:00", data="the 17:09Z ledger", markets={
+    dict(n=2, cut="2026-11-10T19:00:00+00:00", data="the 17:09Z ledger", markets={
         "leadswap_swing": ("KX2YRRATE15M", "KXGOLD15M", "KXBRENT15M", "KX10YRRATE15M"),
         "leadswap_fav": ("KXZEC15M", "KXGBPUSD15M", "KXGOLD15M", "KXCOPPER15M", "KXAUDUSD15M", "KXDOGE15M"),
     }),
@@ -58,7 +58,7 @@ EXCLUDED_AT = ROUNDS[0]["cut"]                 # round 1's cut (kept for older r
 EXCLUDED = {k: tuple(m for r in ROUNDS for m in r["markets"].get(k, ())) for k in ("leadswap_swing", "leadswap_fav")}
 CUT = {(k, m): r["cut"] for r in ROUNDS for k, ms in r["markets"].items() for m in ms}
 ROUND1_SHA256 = "23f753c50239a04a5f72edd23837a3ca2e4ffdd12e073cef371462fa176dff71"   # round 1 alone, as registered
-EXCLUDED_SHA256 = "d35c263466bb6debb58c9ca47c10b58c2a5d007faacf69ce7089f1e64e6d43c3"   # sha256 of excluded_fingerprint() (every round), set at registration
+EXCLUDED_SHA256 = "59e940e4b20c695f9ad93085d651159cbf5dad34474fc875087cd93b825229a1"   # sha256 of excluded_fingerprint() (every round), set at registration
 PAST_H, DAY_H = 2, 24
 MIN_PAST, MIN_DAY = 4, 24
 TOP = 3

@@ -8,6 +8,8 @@ import sandbox_audit
 import swing15 as W
 import swing15_build as WB
 import swing15v2 as V
+import sw15cuts as _CUTS
+_CUTS.CUTS, _CUTS.RETIRED = {}, ()   # these tests check the rule itself; test_sw15cuts.py covers the Nov 10 cuts
 
 FAILS = []
 
