@@ -3635,6 +3635,58 @@
    "status": "open",
    "traded_to_entry": 0.0,
    "word": "Above 15K"
+  },
+  {
+   "ask_check": {
+    "book": 4.0,
+    "first_quotes": true,
+    "last_trade": null,
+    "printed": 1.0,
+    "reason": "1 contracts traded at or through the ask within 60 minutes (under 10)",
+    "source": "live",
+    "status": "unverified"
+   },
+   "bid": 0.07,
+   "book": {
+    "ask_depth": 38.0,
+    "ask_levels": 3,
+    "ask_size": 4.0,
+    "at": "2026-11-10T22:00:53.120639+00:00",
+    "at_or_under": 4.0,
+    "best_ask": 0.09,
+    "best_bid": 0.05,
+    "bid_depth": 4.0,
+    "bid_levels": 1,
+    "bid_size": 4.0
+   },
+   "book_at": "2026-11-10T22:00:53.120639+00:00",
+   "book_size": 4.0,
+   "entry_at": "2026-11-10T20:10:00+00:00",
+   "event": "KXALBUMEQUIV-GOL26NOV19",
+   "id": "KXALBUMEQUIV-GOL26NOV19-400K",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.22
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.33
+    }
+   ],
+   "logged": "2026-11-10T22:00:53.120639+00:00",
+   "payout": null,
+   "price": 0.11,
+   "side": "yes",
+   "spread": 0.04,
+   "spread_cost": null,
+   "status": "open",
+   "traded_to_entry": 0.0,
+   "word": "Above 400K"
   }
  ],
  "error": null,
@@ -3662,16 +3714,16 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:42.883824+00:00"
  },
  "lane": "album_cheap_rungs",
- "last_success": "2026-11-10T21:00:59.324771+00:00",
+ "last_success": "2026-11-10T22:00:53.120639+00:00",
  "observations": {
-  "at": "2026-11-10T21:00:59.324771+00:00",
+  "at": "2026-11-10T22:00:53.120639+00:00",
   "checking": 0,
-  "entered": 0,
+  "entered": 1,
   "events": 21,
   "filled": 0,
   "skipped": 0,
-  "unverified": 69,
-  "waiting": 0
+  "unverified": 70,
+  "waiting": 26
  },
  "skips": {
   "KXALBUMEQUIV-BLEACH26NOV05-10K": {
