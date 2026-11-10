@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-10T03:07Z",
+ "generated": "2026-11-10T04:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -819,6 +819,18 @@
     "src": "fills",
     "st": "lost",
     "w": 0.92
+   },
+   {
+    "g": -1.0,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV09DENHOU-HOU6TO10",
+    "ko": "2026-11-10T01:30",
+    "legs": "",
+    "r": -1.0,
+    "side": "no",
+    "src": "fills",
+    "st": "lost",
+    "w": 0.86
    },
    {
     "g": null,
@@ -1831,20 +1843,20 @@
     "w": 1.01
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": 1.3176,
+    "hold_r": 4.5586,
     "id": "KXNBAWINMARGIN-26NOV09INDDAL-DAL1TO5",
     "ko": "2026-11-10T01:00",
-    "legs": "2x",
-    "r": null,
+    "legs": "2x+2.5x",
+    "r": 1.1901,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "won",
     "w": 0.9
    },
    {
     "g": 1.3077,
-    "hold_r": null,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV09INDDAL-IND1TO5",
     "ko": "2026-11-10T01:00",
     "legs": "2x+2.5x",
@@ -1855,39 +1867,39 @@
     "w": 0.96
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": -1.0,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV09DENHOU-DEN1TO5",
     "ko": "2026-11-10T01:30",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 1.04
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": 1.2842,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV09DENHOU-HOU11TO20",
     "ko": "2026-11-10T01:30",
-    "legs": "",
-    "r": null,
+    "legs": "2x+2.5x",
+    "r": 1.1614,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "won",
     "w": 1.0
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": 0.0,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV09DENHOU-HOU1TO5",
     "ko": "2026-11-10T01:30",
-    "legs": "",
-    "r": null,
+    "legs": "2x",
+    "r": -0.0566,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "flat",
     "w": 0.95
    }
   ],
@@ -2471,7 +2483,7 @@
      "r": 0.0387,
      "side": "yes",
      "st": "won",
-     "w": 0.99
+     "w": 1.0
     },
     {
      "id": "econ_nc_yes:KXDIESELD-26OCT24-T6.330",
@@ -2479,7 +2491,7 @@
      "r": 0.0387,
      "side": "yes",
      "st": "won",
-     "w": 0.99
+     "w": 1.0
     },
     {
      "id": "econ_nc_yes:KXDIESELD-26OCT30-T6.315",
@@ -2487,7 +2499,7 @@
      "r": 0.019,
      "side": "yes",
      "st": "won",
-     "w": 1.01
+     "w": 1.02
     },
     {
      "id": "econ_nc_yes:KXAAAGASD-26NOV02-4.1650",
@@ -2495,7 +2507,15 @@
      "r": 0.0287,
      "side": "yes",
      "st": "won",
-     "w": 1.0
+     "w": 1.01
+    },
+    {
+     "id": "econ_nc_yes:KXDIESELD-26NOV10-T6.155",
+     "ko": "2026-11-10T04:59",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 0.99
     }
    ],
    "refused": {
