@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-10T16:01:41+00:00",
+ "board_built_at": "2026-11-10T17:00:34+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -110,6 +110,41 @@
    "source": "finance_spx_nc_no",
    "sport": "finance_daily",
    "status": "hit"
+  },
+  "2026-11-10|KXDIESELD-26NOV10-T6.155|Above $6.155 at the close \u00b7 Near-certain \u00b7 last hour \u00b7 YES": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-11-10",
+   "edge_at_log": null,
+   "first_seen": "2026-11-10",
+   "headline": "Above $6.155 at the close",
+   "home": null,
+   "id": "2026-11-10|KXDIESELD-26NOV10-T6.155|Above $6.155 at the close \u00b7 Near-certain \u00b7 last hour \u00b7 YES",
+   "kickoff": "2026-11-10T04:59Z",
+   "lane": "production",
+   "league": "Econ Daily",
+   "match": "Diesel price (daily)",
+   "pair": "econ_nc_yes|econ_daily",
+   "price_at_log": 0.93,
+   "published_at": "2026-11-10T17:00:34+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Above $6.155 at the close",
+    "event": "KXDIESELD-26NOV10",
+    "market": "KXDIESELD-26NOV10-T6.155",
+    "outcome": "Above $6.155",
+    "outcome_side": "yes",
+    "price_at_log": 0.93,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "econ_nc_yes:KXDIESELD-26NOV10-T6.155",
+   "source": "econ_nc_yes",
+   "sport": "econ_daily",
+   "status": "hit"
   }
  },
  "pairs": {
@@ -120,18 +155,18 @@
    "ready_at": "2026-10-20T05:00:00+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 2,
+    "leads": 3,
     "problem": null,
-    "routed": 2,
+    "routed": 3,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 8,
-   "sandbox_roi": 0.0433,
-   "sandbox_roi_fee": 0.0404,
+   "sandbox_n": 9,
+   "sandbox_roi": 0.0469,
+   "sandbox_roi_fee": 0.0436,
    "timing": {
     "late": [],
     "timed": 0,
@@ -168,5 +203,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-10T16:01:41+00:00"
+ "updated_at": "2026-11-10T17:00:34+00:00"
 }
