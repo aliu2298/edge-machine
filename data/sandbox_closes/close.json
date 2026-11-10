@@ -20,6 +20,11 @@
    "lead_min": 50.2,
    "price": 0.62
   },
+  "commod_fav_band:KXWTI-26NOV1014-T84.99": {
+   "at": "2026-11-10T18:38:54+00:00",
+   "lead_min": 21.1,
+   "price": 0.98
+  },
   "commod_nc_no:KXWTI-26NOV0614-T90.49": {
    "at": "2026-11-06T18:26:22+00:00",
    "lead_min": 33.6,
@@ -29,6 +34,11 @@
    "at": "2026-11-06T18:26:22+00:00",
    "lead_min": 33.6,
    "price": 0.95
+  },
+  "commod_nc_yes:KXWTI-26NOV1014-T85.49": {
+   "at": "2026-11-10T18:38:54+00:00",
+   "lead_min": 21.1,
+   "price": 0.86
   },
   "corners_total_under:KXEPLCORNERS-26NOV07NFOMCI-7": {
    "at": "2026-11-07T16:38:09+00:00",
@@ -145,16 +155,6 @@
    "lead_min": 21.6,
    "price": 0.72
   },
-  "turkey_btts_dog:KXSUPERLIGBTTS-26OCT31FENGOZ-BTTS": {
-   "at": "2026-10-31T15:17:36+00:00",
-   "lead_min": 42.4,
-   "price": 0.59
-  },
-  "turkey_o25_dog:KXSUPERLIGTOTAL-26OCT31FENGOZ-3": {
-   "at": "2026-10-31T15:17:36+00:00",
-   "lead_min": 42.4,
-   "price": 0.65
-  },
   "u35_low_o15:KXEREDIVISIETOTAL-26NOV06WILZWO-2": {
    "at": "2026-11-06T18:26:22+00:00",
    "lead_min": 33.6,
@@ -171,5 +171,5 @@
    "price": 0.78
   }
  },
- "updated": "2026-11-10T11:03:20+00:00"
+ "updated": "2026-11-10T18:38:54+00:00"
 }
