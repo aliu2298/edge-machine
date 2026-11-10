@@ -728,9 +728,25 @@
    "event": "KXWMT-26NOVUSCOMP",
    "read": null,
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-10T22:00:30Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 391355932.2033898,
+    "rungs": 6,
+    "width": 9215176.715176702
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-10T22:00:30Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": null,
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-10T21:00:32Z",
+ "last_run": "2026-11-10T22:00:32Z",
  "predictions": [
   {
    "call": {
@@ -772,7 +788,9 @@
   },
   {
    "call": {
-    "status": "pending"
+    "entry": 3.3771,
+    "entry_ts": 1794344400,
+    "status": "open"
    },
    "entry_due": "2026-11-10T21:00:00Z",
    "exit_due": "2026-11-17T21:00:00Z",
@@ -785,7 +803,7 @@
    "report": "2026-11-17",
    "report_time": "after-hours",
    "side": 1,
-   "status": "pending",
+   "status": "open",
    "sym": "NVDA"
   },
   {
