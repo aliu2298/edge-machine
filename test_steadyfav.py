@@ -67,12 +67,18 @@ with open(L.PATH, "w") as f:
     json.dump(L.update(state, L.empty()), f)
 html = WB.section(state)
 sf = html.split('id="steadyfav"')[1].split('id="leadswap"')[0]
-check("Steady Favourites is the first section of the 15-Minute area",
-      html.index('id="steadyfav"') < min(html.index(x) for x in ('id="leadswap"', 'id="swing15v2"', "sw15-v1")), True)
+ids = ('id="sw15-scoreboard"', 'id="swing15v2"', 'id="flipside_v2"', 'id="steadyfav"', 'id="holdtoend"', 'id="leadswap"',
+       'id="sw15-v1"', 'id="sw15-archive"')
+pos = [html.index(x) for x in ids if x in html]
+check("the order: scoreboard, Swing v3, Flip v3, Steady Favourites, Hold to End v3, Lead Swap, v1, archive",
+      (pos == sorted(pos), all(x in html for x in ('id="sw15-scoreboard"', 'id="steadyfav"', 'id="leadswap"', 'id="sw15-v1"'))),
+      (True, True))
 check("the copy: markets, fresh start time, review/decide, the sort line",
-      ("Bitcoin, USD/JPY (Japanese Yen), Gold, 2-Year Treasury Yield" in sf, "fresh record from 2026-11-10 00:00 UTC" in sf,
+      ("Bitcoin, USD/JPY (Japanese Yen), Gold, 2-Year Treasury Yield" in sf, "fresh record from Nov 9, 6:00 PM CT" in sf,
        "review at 10, decide at 30" in sf, WB.SORT_LINE in sf), (True, True, True, True))
-check("four rows: A, B, then the two pooled controls", re.findall(r'data-source="(steadyfav_[a-z_]+)"', html), list(S.LABELS))
+check("two rows, A and B; the pooled controls are not rows", re.findall(r'data-source="(steadyfav_[a-z_]+)"', html),
+      ["steadyfav_a", "steadyfav_b"])
+check("each rule's control is a muted vs-control figure in its row", sf.count('title="Control: '), 2)
 check("A's split: BTC (2 bets, one win at 60c) is not doing well; counts on top", ("0 doing well · 1 not" in sf, "under 10" in sf), (True, True))
 check("z reads 'needs 2+ days' on one day", "needs 2+ days" in sf, True)
 check("the control sits beside each rule", "Control (the same rule on the other markets, pooled): 1/2 won" in sf, True)
