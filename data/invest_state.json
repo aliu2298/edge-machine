@@ -1,6 +1,6 @@
 {
  "collector": {
-  "last_ts": 1794315602,
+  "last_ts": 1794319202,
   "markets": 60,
   "rows_24h": 86400
  },
@@ -3220,9 +3220,39 @@
    "sym": "TXN",
    "ticker": "KXTXNPERP",
    "ts": 1794301322
+  },
+  {
+   "gap": 0.05863,
+   "gap_15m": -1e-05,
+   "gap_5m": 8e-05,
+   "rth": false,
+   "spread_bp": 1141.5,
+   "sym": "BRK.B",
+   "ticker": "KXBRKBPERP",
+   "ts": 1794317402
+  },
+  {
+   "gap": -0.0286,
+   "gap_15m": 0.00229,
+   "gap_5m": -0.01122,
+   "rth": false,
+   "spread_bp": 908.9,
+   "sym": "TXN",
+   "ticker": "KXTXNPERP",
+   "ts": 1794317402
+  },
+  {
+   "gap": -0.01003,
+   "gap_15m": -0.00913,
+   "gap_5m": -0.00834,
+   "rth": false,
+   "spread_bp": 1.2,
+   "sym": "US Tech 100",
+   "ticker": "KXUSTECH100PERP",
+   "ts": 1794317581
   }
  ],
- "last_run": "2026-11-10T13:00:08+00:00",
+ "last_run": "2026-11-10T14:00:07+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
