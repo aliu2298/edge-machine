@@ -712,9 +712,25 @@
     "width": 2.2
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-10T21:00:29Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 391355932.2033898,
+    "rungs": 6,
+    "width": 9215176.715176702
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-10T21:00:29Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": null,
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-10T20:01:06Z",
+ "last_run": "2026-11-10T21:00:32Z",
  "predictions": [
   {
    "call": {
@@ -755,6 +771,9 @@
    "sym": "HD"
   },
   {
+   "call": {
+    "status": "pending"
+   },
    "entry_due": "2026-11-10T21:00:00Z",
    "exit_due": "2026-11-17T21:00:00Z",
    "family": "runup",
@@ -766,6 +785,7 @@
    "report": "2026-11-17",
    "report_time": "after-hours",
    "side": 1,
+   "status": "pending",
    "sym": "NVDA"
   },
   {
@@ -783,6 +803,9 @@
    "sym": "PANW"
   },
   {
+   "call": {
+    "status": "pending"
+   },
    "entry_due": "2026-11-10T21:00:00Z",
    "exit_due": "2026-11-17T21:00:00Z",
    "family": "runup",
@@ -794,6 +817,7 @@
    "report": "2026-11-18",
    "report_time": "pre-market",
    "side": 1,
+   "status": "pending",
    "sym": "TJX"
   },
   {
