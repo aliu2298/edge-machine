@@ -67,15 +67,15 @@ with open(L.PATH, "w") as f:
     json.dump(L.update(state, L.empty()), f)
 html = WB.section(state)
 sf = html.split('id="steadyfav"')[1].split('id="leadswap"')[0]
-ids = ('id="sw15-scoreboard"', 'id="swing15v2"', 'id="flipside_v2"', 'id="steadyfav"', 'id="holdtoend"', 'id="leadswap"',
-       'id="sw15-v1"', 'id="sw15-archive"')
+ids = ('id="steadyfav"', 'id="leadswap"', 'id="swing15v2"', 'id="flipside_v2"', 'id="holdtoend"', 'id="sw15-v1"',
+       'id="sw15-archive"')
 pos = [html.index(x) for x in ids if x in html]
-check("the order: scoreboard, Swing v3, Flip v3, Steady Favourites, Hold to End v3, Lead Swap, v1, archive",
-      (pos == sorted(pos), all(x in html for x in ('id="sw15-scoreboard"', 'id="steadyfav"', 'id="leadswap"', 'id="sw15-v1"'))),
-      (True, True))
+check("the order after #378/#379: Steady Favourites, Lead Swap, Swing v3, Flip v3, Hold to End v3, v1, archive; no scoreboard",
+      (pos == sorted(pos), all(x in html for x in ('id="steadyfav"', 'id="leadswap"', 'id="sw15-v1"')), "sw15-scoreboard" in html),
+      (True, True, False))
 check("the copy: markets, fresh start time, review/decide, the sort line",
       ("Bitcoin, USD/JPY (Japanese Yen), Gold, 2-Year Treasury Yield" in sf, "fresh record from Nov 9, 6:00 PM CT" in sf,
-       "review at 10, decide at 30" in sf, WB.SORT_LINE in sf), (True, True, True, True))
+       "review 10, decide 30" in sf, WB.SORT_LINE in sf), (True, True, True, True))
 check("two rows, A and B; the pooled controls are not rows", re.findall(r'data-source="(steadyfav_[a-z_]+)"', html),
       ["steadyfav_a", "steadyfav_b"])
 check("each rule's control is a muted vs-control figure in its row", sf.count('title="Control: '), 2)

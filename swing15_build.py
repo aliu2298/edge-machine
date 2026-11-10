@@ -1,10 +1,11 @@
 """The "15-Minute" section of the Daily Markets tab and its Sandbox index rows (swing15.py). Paper · no orders.
 
-Layout (2026-11-09, Olu: "looks a bit scanty"): a scoreboard of every live lane first, then one block per lane (Swing v3,
-The Flip Side v3, Steady Favourites, Hold to End v3, the Lead Swap Board), each rule a Rules-list row whose fold holds
-only its rule details, with its per-market Doing well / Not doing well tables open beneath; then the v1 baseline and one
-"Retired & removed" archive, both collapsed. Controls are a muted "vs control" figure, never rows of their own. Every time
-reads in Central, as the page header does. Layout only: no rule, record or pick depends on this file.
+Layout (2026-11-10, Olu: fewer words, clean, everything collapsible): one block per lane (Swing v3, The Flip Side v3,
+Steady Favourites, Hold to End v3, the Lead Swap Board), each a one-line intro and its rule rows, collapsed; a row's fold
+opens on its per-market Doing well / Not doing well tables (by return after fees, best first) with the rule's words in a
+nested "Rule details" fold, and every other sentence sits in the lane's "How the record is kept" fold. Then the v1
+baseline and one "Retired & removed" archive, both collapsed. Controls are a muted "vs control" figure, never rows. Times
+read in Central, as the page header does. Layout only: no rule, record or pick depends on this file.
 """
 import datetime as _dt
 import html as _h
@@ -161,9 +162,9 @@ def _under10(n):
 
 
 def split_markets(items):
-    """items: [(series, n, roi)] -> (doing, not_doing, no_bets): return after fees > 0 v <= 0, each by bets descending
-    (then name); markets with no bets yet listed apart. Recomputed from the live record on every build."""
-    key = lambda r: (-r[1], name(r[0]))
+    """items: [(series, n, roi)] -> (doing, not_doing, no_bets): return after fees > 0 v <= 0, each by return after fees,
+    best first (then bets, then name); markets with no bets yet listed apart. Recomputed from the live record on every build."""
+    key = lambda r: (-r[2], -r[1], name(r[0]))
     bet = [r for r in items if r[1]]
     return (sorted([r for r in bet if r[2] > 0], key=key), sorted([r for r in bet if r[2] <= 0], key=key),
             sorted([r[0] for r in items if not r[1]], key=name))
@@ -186,9 +187,29 @@ def _split_html(head, good, bad, tr, none=()):
 
 
 def _card(row, split):
-    """One rule: its row (folded rule details), then its per-market tables, open."""
-    return (f'<div class="sp-rules-list sw15-card" data-list="sandbox">{HEAD_LINE}{row}</div>'
-            f'<div class="sw15-split">{split}</div>')
+    """One rule row, collapsed: its fold opens on the per-market Doing well / Not doing well tables, with the rule's own
+    words in a nested "Rule details" fold below them."""
+    head, body = row.split('<div class="sp-details-body">', 1)
+    body = body[:-len("</div></details>")]
+    return (f'{head}<div class="sp-details-body"><div class="sw15-split">{split}</div>'
+            f'<details class="fold sw15-rule"><summary>Rule details</summary>{body}</details></div></details>')
+
+
+def _list(cards):
+    return f'<div class="sp-rules-list" data-list="sandbox">{HEAD_LINE}{"".join(cards)}</div>'
+
+
+def _intro(start, extra=""):
+    """A lane's one line: 'Paper · fresh record from <CT> · review 10, decide 30'."""
+    return (f'<p class="scope sw15-intro">Paper{" · " + esc(extra) if extra else ""} · fresh record from '
+            f'{esc(_start(start))} · review {W.REVIEW_AT}, decide {W.DECIDE_AT}</p>')
+
+
+def _how(*parts):
+    """Every other sentence about a lane, in one collapsed fold under its rows."""
+    return ('<details class="fold sw15-how"><summary>How the record is kept</summary>'
+            + "".join(p if p.startswith("<") else f'<p class="sm">{esc(p)}</p>' for p in parts if p)
+            + f'<p class="sm mut">{SORT_LINE}</p></details>')
 
 
 def _cell_tr(label, c, ticker=None):
@@ -239,13 +260,8 @@ def _removed_fold(labels, removed, removed_at, won_word, word="Removed", note=""
             + _table(("Rule", "Market", "n", "Wins", "Return after fees"), trs) + '</details>')
 
 
-def _lane(sb, key, label, anchor, c, per, good, bad, ctrl=None):
-    """One scoreboard entry."""
-    if sb is not None:
-        sb.append(dict(key=key, label=label, anchor=anchor, c=c, per=per, good=len(good), bad=len(bad), ctrl=ctrl))
 
-
-def _frozen_block(anchor, title, line, version, labels, rec, sport, won_word, sb=None, short=None, extra=""):
+def _frozen_block(anchor, title, start, version, labels, rec, sport, won_word, how=(), intro=""):
     """A frozen-cell lane block (sw15, flip, hte): one card per strategy with cells: the row (rule details folded) and
     its markets' n, wins, return and z open beneath, split Doing well / Not doing well. Removed and retired cells live in
     the archive at the bottom of the section."""
@@ -270,30 +286,26 @@ def _frozen_block(anchor, title, line, version, labels, rec, sport, won_word, sb
         cards.append(_card(_row(strat, label, r["all"], per, body, anchor=lid, sport=sport),
                            count_line(good, bad) + _split_html(("Market", "n", won_word(strat), "Return after fees",
                                                                 "z (by day)"), good, bad, tr, none)))
-        _lane(sb, strat, f"{short or title} · {label}", lid, r["all"], per, good, bad)
-    return (f'<h3 class="dm-title" id="{anchor}">{esc(title)}</h3><p class="scope">{esc(line)}</p>'
-            f'<p class="sm mut">{SORT_LINE}</p>' + "".join(cards) + extra)
+    return f'<h3 class="dm-title" id="{anchor}">{esc(title)}</h3>' + _intro(start, intro) + _list(cards) + _how(*how)
 
 
 def _cut_line(M):
-    return f" {M.VERSION} from {_start(M.REMOVED_AT)}: negative markets removed after ~4h of results."
+    return f"{M.VERSION} from {_start(M.REMOVED_AT)}: negative markets removed after ~4h of results."
 
 
-def swing_v3_block(state, sb=None):
+def swing_v3_block(state):
     import swing15v2 as V
-    return _frozen_block("swing15v2", "15-Minute Swing v3",
-                         f"Cells picked from one overnight session; fresh record from {_start(V.FROM)}; review at "
-                         f"{W.REVIEW_AT}, decide at {W.DECIDE_AT}." + _cut_line(V), V.VERSION, V.LABELS, V.records(state),
-                         "swing15v2", lambda k: "Won", sb, short="Swing v3")
+    return _frozen_block("swing15v2", "15-Minute Swing v3", V.FROM, V.VERSION, V.LABELS, V.records(state),
+                         "swing15v2", lambda k: "Won",
+                         how=("Cells picked from one overnight session.", _cut_line(V)))
 
 
-def flip_block(state, sb=None):
+def flip_block(state):
     import flipside_v2 as F
-    return _frozen_block("flipside_v2", "The Flip Side v3",
-                         "Opposite side of the 15-Minute Swing; cells picked from one overnight session; 14-day "
-                         f"backtest of the flips ran −0.5% to −16%; fresh record from {_start(F.FROM)}; review at "
-                         f"{W.REVIEW_AT}, decide at {W.DECIDE_AT}." + _cut_line(F), F.VERSION, F.LABELS,
-                         F.records(state), "flipside_v2", lambda k: "Won", sb, short="Flip v3")
+    return _frozen_block("flipside_v2", "The Flip Side v3", F.FROM, F.VERSION, F.LABELS, F.records(state),
+                         "flipside_v2", lambda k: "Won",
+                         how=("Opposite side of the 15-Minute Swing; cells picked from one overnight session; the 14-day "
+                              "backtest of the flips ran −0.5% to −16%.", _cut_line(F)))
 
 
 def _v3_s1_retired(state, V):
@@ -328,7 +340,7 @@ def _v1_s1_retired(state, allc_before):
             f'records</summary>{note}' + _table(HEAD, grid) + '</details>')
 
 
-def steadyfav_block(state, sb=None):
+def steadyfav_block(state):
     """Steady Favourites (steadyfav.py, sw15-sf1): rules A and B on four fixed markets; the pooled control of each
     rule is a muted figure in its row and one muted line under its tables."""
     import steadyfav as S
@@ -357,20 +369,19 @@ def steadyfav_block(state, sb=None):
                  + _split_html(("Market", "Bets", "Won v priced", "Return after fees", "z (by day)"), good, bad, tr, none)
                  + f'<p class="sm mut sf-ctrl">Control (the same rule on the other markets, pooled): {esc(ctl)}.</p>')
         cards.append(_card(_row(rule, S.LABELS[rule], r["all"], per, body, ctrl=c, anchor=lid, sport="steadyfav"), split))
-        _lane(sb, rule, "Steady Favourites · " + S.LABELS[rule], lid, r["all"], per, good, bad, ctrl=c)
     old = S.records(state, earlier=True)
     ea, eb = old["steadyfav_a"]["all"], old["steadyfav_b"]["all"]
     early = ("" if not (ea or eb) else
              '<p class="sm mut sf-earlier">Earlier result, not counted (v1 on these four markets, before the start): '
              + "; ".join(f'{k} {x["hits"]}/{x["n"]}, {pct(x["mean_roi"])}' for k, x in (("A", ea), ("B", eb)) if x) + '.</p>')
     names = ", ".join(name(s) for s in S.MARKETS)
-    return (f'<h3 class="dm-title" id="steadyfav">Steady Favourites</h3><p class="scope">Steady Favourites · '
-            f'{esc(names)} · the favourite bought at minute 2 (A) and at 5 minutes left (B), held to settlement · fresh '
-            f'record from {esc(_start(S.FROM))} · review at {W.REVIEW_AT}, decide at {W.DECIDE_AT}. Replaces the S1 '
-            f'Swing.</p><p class="sm mut">{SORT_LINE}</p>' + "".join(cards) + early)
+    return (f'<h3 class="dm-title" id="steadyfav">Steady Favourites</h3>' + _intro(S.FROM) + _list(cards)
+            + _how(f"{names}: the favourite bought at minute 2 (A) and at 5 minutes left (B), held to settlement. "
+                   "Replaces the S1 Swing. Each rule's control is the same rule on every other 15-minute market, pooled.",
+                   early))
 
 
-def holdtoend_block(state, H, sb=None):
+def holdtoend_block(state, H):
     """Hold to End v3: one live cell (USDCAD 35c) on a fresh record; USDCAD's earlier hte-v1 result as a muted
     not-counted line. hte-v2 and the 18:00Z cut are in the archive."""
     gone = H.records(state, removed=True)
@@ -378,11 +389,10 @@ def holdtoend_block(state, H, sb=None):
     early_line = ("" if not early else
                   f'<p class="sm mut hte-earlier">Earlier result, not counted: USD/CAD 35c went {early["hits"]}/{early["n"]}, '
                   f'{pct(early["mean_roi"])} after fees ({esc(_start(H.FROM))} to {esc(_start(H.REMOVED_AT))}, hte-v1).</p>')
-    line = (f"Hold to End v3 · USD/CAD at 35c · fresh record from {_start(H.FROM_V3)} · review at {W.REVIEW_AT}, "
-            f"decide at {W.DECIDE_AT}.")
-    return _frozen_block("holdtoend", "Hold to End v3", line, H.VERSION,
+    return _frozen_block("holdtoend", "Hold to End v3", H.FROM_V3, H.VERSION,
                          {k: v.replace("Hold to End · ", "") for k, v in H.LABELS.items()}, H.records(state), "holdtoend",
-                         lambda k: "Won", sb, short="Hold to End v3", extra=early_line)
+                         lambda k: "Won", intro="USD/CAD at 35c",
+                         how=("Buy the 35c side and hold it to settlement.", early_line))
 
 
 def _hte_archive(state, H):
@@ -432,7 +442,7 @@ def ls_groups(rt, picks, ranked=()):
         ser = ((rt or {}).get(strat) or {}).get("series") or {}
         cs = ((rt or {}).get(ctrl) or {}).get("series") or {}
         rows = [(s, v, cs.get(s), times.get(s, [0, 0])) for s, v in ser.items() if v and v[0]]
-        rows.sort(key=lambda r: (-r[1][0], name(r[0])))
+        rows.sort(key=lambda r: (-r[1][2] / r[1][0], -r[1][0], name(r[0])))   # return after fees, best first
         traded = {r[0] for r in rows}
         seen = sorted({t for t in list(ranked) + list(times) if t not in traded}, key=name)
         out[strat] = ([r for r in rows if r[1][2] > 0], [r for r in rows if r[1][2] <= 0], seen)
@@ -465,7 +475,7 @@ def ls_groups_html(rt, picks, ranked=()):
         f'<h4>{esc(label)}</h4>' + _ls_trade_split(g, strat) for strat, _c, label in LS_TRADES)
 
 
-def leadswap_block(state, sb=None):
+def leadswap_block(state):
     """The Lead Swap Board (leadswap.py): the two trades (row + open per-market split, each against its control), then
     one collapsed fold with how the board ranks markets (picks, board, persistence, timing, hour of day)."""
     import leadswap as L
@@ -493,7 +503,6 @@ def leadswap_block(state, sb=None):
         lid = f"sw15-{strat}"
         cards.append(_card(_row(strat, label, c, {"all": c["n"] if c else 0}, body, ctrl=ctrl, anchor=lid,
                                 sport="leadswap"), _ls_trade_split(g, strat)))
-        _lane(sb, strat, "Lead Swap · " + label, lid, c, {"all": c["n"] if c else 0}, good, bad, ctrl=ctrl)
     sl = L.SPOTLAG
     spot = ("Spot lag recorder: not started" if not sl.get("since") else
             f"Spot lag recorder: recording since {_start(sl['since'])}"
@@ -548,36 +557,12 @@ def leadswap_block(state, sb=None):
                + _table(("Group", "Windows", "Corr: past-2h swaps v the window"), corr) + '</details>')
     ranks = (f'<details class="fold sw15-ranks"><summary>How the board ranks markets</summary>'
              f'{board}{persist}{timing}{heat}</details>')
-    return (f'<h3 class="dm-title" id="leadswap">Lead Swap Board</h3><p class="scope">How often the lead (YES mid across '
-            f'50c) swaps on every 15-minute series; swing trade to the most swaps, favourite to the most stable, each '
-            f'against its opposite; picks frozen at about :04 each hour (a live version could only act from :05); fresh '
-            f'record from {esc(_start(L.FROM))}; review at {W.REVIEW_AT}, decide at {W.DECIDE_AT}.</p>'
-            f'<p class="sm mut" id="spotlag-status">{esc(spot)}</p><p class="sm mut">{SORT_LINE}</p>'
-            + "".join(cards) + ranks)
-
-
-def scoreboard(sb, base=None):
-    """One row per live lane, best return after fees first: record, won v priced, return, vs control, the per-market
-    split counts and the status chip; each lane name links to its row below."""
-    has = [x for x in sb if x["c"]]
-    rows = sorted(has, key=lambda x: -x["c"]["mean_roi"]) + [x for x in sb if not x["c"]]
-    trs = []
-    for x in rows:
-        c, k = x["c"], x["ctrl"]
-        tint = "" if not c else (" sb-pos" if c["mean_roi"] > 0 else " sb-neg")
-        trs.append(
-            f'<tr class="sw15-sb-row{tint}" data-lane="{esc(x["key"])}"><td><a href="#{esc(x["anchor"])}">{esc(x["label"])}</a></td>'
-            + (f'<td class="num">{c["hits"]}–{c["n"] - c["hits"]}</td><td class="num">{c["hits"]} v {c["fair"] * c["n"]:.1f}</td>'
-               f'<td class="num"><b>{pct(c["mean_roi"])}</b></td>' if c else '<td class="num">—</td>' * 3)
-            + f'<td class="num">{_ctrl_txt(k)}</td><td class="num">{x["good"]} · {x["bad"]}</td>'
-            f'<td>{status_chip(x["per"])}</td></tr>')
-    s2, s3 = (base or {}).get("s2"), (base or {}).get("s3")
-    bl = ("" if not (s2 or s3) else
-          f'<p class="sm sw15-baseline">v1 baseline (every market, nothing picked): S2 {pct((s2 or {}).get("mean_roi"))}, '
-          f'S3 {pct((s3 or {}).get("mean_roi"))}. The baseline is the comparison for everything.</p>')
-    return ('<div class="sw15-sb" id="sw15-scoreboard"><h3 class="dm-title">Scoreboard · live lanes</h3>'
-            + _table(("Lane", "Record", "Won v priced", "Return after fees", "vs control", "Doing well · Not", "Status"), trs)
-            + bl + '</div>')
+    return (f'<h3 class="dm-title" id="leadswap">Lead Swap Board</h3>' + _intro(L.FROM) + _list(cards)
+            + _how("How often the lead (YES mid across 50c) swaps on every 15-minute series; the swing trade goes to the "
+                   "most swaps, the favourite to the most stable, each against its opposite. Picks are frozen at about "
+                   ":04 each hour, so a live version could only act from :05.",
+                   f'<p class="sm mut" id="spotlag-status">{esc(spot)}</p>')
+            + ranks)
 
 
 def _v1_block(state, allc, n_w):
@@ -612,11 +597,9 @@ def _v1_block(state, allc, n_w):
               'shows the price could have touched an entry or a target. Paper only; nothing is placed.</p>'
               f'<p class="sm mut">{n_w} windows graded. Last run {esc(_start(last) if last else "not yet")}.</p>'
               '</div></details></section>')
-    return (f'<details class="fold sw15-v1" id="sw15-v1"><summary><b>v1 baseline · every market</b> · the full collector, '
-            f'nothing picked; record from {esc(_start(W.FROM))}</summary>'
-            f'<p class="scope">Every Kalshi 15-minute window in Crypto, Commodities and Financials · S2 and S3 '
-            f'pre-registered (S1 retired) · paper</p><p class="sm mut">{SORT_LINE}</p>' + "".join(cards) + method
-            + '</details>')
+    return (f'<details class="fold sw15-v1" id="sw15-v1"><summary><b>v1 baseline · every market</b> · nothing picked'
+            f'</summary><p class="scope sw15-intro">Paper · every 15-minute market · record from {esc(_start(W.FROM))}</p>'
+            + _list(cards) + method + '</details>')
 
 
 def _archive(state, s1_final):
@@ -653,19 +636,19 @@ def section(state=None):
     n_w = len(state.get("windows") or {})
     import swing15v2 as V
     s1_final = W.cells(state, lambda w: W._ts(w["open"]) < W._ts(V.RETIRED_AT))
-    sb = []
     blocks = []
     import holdtoend as H
-    for fn in (lambda: swing_v3_block(state, sb), lambda: flip_block(state, sb), lambda: steadyfav_block(state, sb),
-               lambda: holdtoend_block(state, H, sb), lambda: leadswap_block(state, sb)):
+    # The order after #378/#379: Steady Favourites, the Lead Swap Board, Swing v3, The Flip Side v3, Hold to End v3.
+    for fn in (lambda: steadyfav_block(state), lambda: leadswap_block(state), lambda: swing_v3_block(state),
+               lambda: flip_block(state), lambda: holdtoend_block(state, H)):
         try:
             blocks.append(fn())
         except Exception:                                       # noqa: BLE001  (one lane never breaks the section)
             pass
-    # 2026-11-09 (Olu, "looks a bit scanty"): scoreboard, then the lanes, then the v1 baseline and the archive, collapsed.
-    return (f'<h2 class="dm-title">15-Minute</h2>'
-            + scoreboard(sb, dict(s2=allc.get(("swing15_s2",)), s3=allc.get(("swing15_s3",))))
-            + "".join(blocks) + _v1_block(state, allc, n_w) + _archive(state, s1_final))
+    # 2026-11-10 (Olu): no scoreboard, lane rows collapsed, one line per lane; v1 and the archive collapsed at the bottom.
+    # Each lane in its own div: tables.js opens a #swing15 link's first direct-child <details>, which must not be a fold.
+    return (f'<h2 class="dm-title">15-Minute</h2>' + "".join(f'<div class="sw15-lane">{b}</div>' for b in blocks)
+            + f'<div class="sw15-lane">{_v1_block(state, allc, n_w)}{_archive(state, s1_final)}</div>')
 
 
 def index_rows(state=None):

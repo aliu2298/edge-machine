@@ -108,9 +108,9 @@ L.PATH = os.path.join(tmp, "leadswap_ledger.json")
 with open(L.PATH, "w") as f:
     json.dump(led, f)
 html = WB.section(state)
-order = [html.index(x) for x in ('id="sw15-scoreboard"', 'id="swing15v2"', 'id="flipside_v2"', 'id="holdtoend"',
-                                  'id="leadswap"', 'id="sw15-v1"', 'id="sw15-archive"')]
-check("the order: scoreboard, Swing v3, Flip Side v3, Hold to End v3, Lead Swap Board, v1, archive", order == sorted(order), True)
+order = [html.index(x) for x in ('id="leadswap"', 'id="swing15v2"', 'id="flipside_v2"', 'id="holdtoend"', 'id="sw15-v1"',
+                                  'id="sw15-archive"')]
+check("the order: Lead Swap Board, Swing v3, Flip Side v3, Hold to End v3, v1, archive", order == sorted(order), True)
 check("v1 and the archive are collapsed by default", (bool(re.search(r'<details class="fold sw15-v1" id="sw15-v1"><summary>', html)),
       bool(re.search(r'<details class="fold sw15-archive" id="sw15-archive"><summary>', html))), (True, True))
 check("the page notes a live version could act only from :05", "could only act from :05" in html, True)
@@ -154,47 +154,55 @@ gh = WB.ls_groups_html(rt_, pk_, ["KXF15M"])
 check("the copy line, the red-tinted header, the under-10 tag and the trade headings",
       ("Sorted automatically each hour by return after fees; nothing is removed." in gh, WB.BAD_THEAD in gh and 'style=' not in gh,
        gh.count("under 10"), "Swing on swappy markets" in gh and "Favourite on steady markets" in gh), (True, True, 4, True))
-check("each trade's split sits open under its own row, above the board",
+check("each trade's split sits inside its own (collapsed) row, above the board",
       html.index('data-source="leadswap_swing"') < html.index('data-trade="leadswap_swing"') < html.index('data-source="leadswap_fav"')
       < html.index('data-trade="leadswap_fav"') < html.index("Board · last 2 hours"), True)
 
 print("\nevery 15-Minute lane: the same split")
-check("split_markets: > 0 doing, <= 0 not, by bets; no-bet markets apart",
+check("split_markets: > 0 doing, <= 0 not, each by return after fees, best first; no-bet markets apart",
       WB.split_markets([("KXA15M", 3, 0.1), ("KXB15M", 9, -0.2), ("KXC15M", 12, 0.3), ("KXD15M", 0, 0), ("KXE15M", 5, 0.0)]),
-      ([("KXC15M", 12, 0.3), ("KXA15M", 3, 0.1)], [("KXB15M", 9, -0.2), ("KXE15M", 5, 0.0)], ["KXD15M"]))
+      ([("KXC15M", 12, 0.3), ("KXA15M", 3, 0.1)], [("KXE15M", 5, 0.0), ("KXB15M", 9, -0.2)], ["KXD15M"]))
+check("the live page's bug: Gold +6.1% on fewer bets sits ABOVE Ethereum +0.6%",
+      [r[0] for r in WB.split_markets([("KXETH15M", 40, 0.006), ("KXGOLD15M", 12, 0.061)])[0]], ["KXGOLD15M", "KXETH15M"])
+g2 = WB.ls_groups({"leadswap_swing": {"series": {"KXA15M": [20, 9, 0.2], "KXB15M": [5, 4, 0.5]}}}, {})
+check("Lead Swap groups sort by return too (B +10% on 5 bets above A +1% on 20)", [r[0] for r in g2["leadswap_swing"][0]], ["KXB15M", "KXA15M"])
 check("z by day reads 'needs 2+ days' on one day, the number from two",
       (WB._zd(dict(z=1.0, days=1)), WB._zd(dict(z=-1.0, days=0)), WB._zd(dict(z=1.234, days=2))), ("needs 2+ days", "needs 2+ days", "+1.23"))
 cell = lambda n, h, r, d=1: dict(n=n, hits=h, hit_rate=h / n, fair=.5, mean_roi=r, z=1.0, days=d)
 rec = {"x_s1": dict(all=cell(30, 15, .02), series={"KXA15M": cell(12, 8, .2), "KXB15M": cell(8, 2, -.3), "KXC15M": cell(10, 5, 0.0, 3), "KXD15M": None})}
-fb = WB._frozen_block("x", "X v3", "line", "x-v3", {"x_s1": "S1"}, rec, "x", lambda k: "Won")
-check("a frozen lane: count chip, sort line, doing well above the red-headed not doing well, open under the row",
-      ("1 doing well · 2 not" in fb, "Sorted automatically each hour by return after fees; nothing is removed." in fb,
-       fb.index('data-source="x_s1"') < fb.index('class="sw15-split"') < fb.index("Doing well") < fb.index("Not doing well")
-       < fb.index(WB.BAD_THEAD), "sw15-removed" in fb), (True, True, True, False))
+fb = WB._frozen_block("x", "X v3", "2026-11-09T13:00:00+00:00", "x-v3", {"x_s1": "S1"}, rec, "x", lambda k: "Won",
+                      how=("A sentence about the lane.",))
+check("a frozen lane: count chip, doing well above the red-headed not doing well, all INSIDE the row's fold",
+      ("1 doing well · 2 not" in fb, fb.index('data-source="x_s1"') < fb.index('class="sw15-split"') < fb.index("Doing well")
+       < fb.index("Not doing well") < fb.index(WB.BAD_THEAD) < fb.index("</details>"), "sw15-removed" in fb), (True, True, False))
+check("the rule's words in a nested Rule details fold; the lane's sentences and the sort line in How the record is kept",
+      (fb.index(WB.BAD_THEAD) < fb.index('<details class="fold sw15-rule"><summary>Rule details</summary>'),
+       "A sentence about the lane." in fb.split("How the record is kept")[1], WB.SORT_LINE in fb.split("How the record is kept")[1]),
+      (True, True, True))
+check("one line above the rows and nothing else", re.sub(r"<[^>]+>", "|", fb.split("</h3>")[1].split('<div class="sp-rules-list"')[0]).strip("|"),
+      "Paper · fresh record from Nov 9, 7:00 AM CT · review 10, decide 30")
 check("frozen rows: under-10 tag only under 10 bets, z needs 2+ days until 2 days, no-bet market listed",
       (fb.count("under 10"), fb.count("needs 2+ days"), "−1.00" not in fb and "+1.00" in fb, "No bets yet" in fb), (1, 2, True, True))
-check("the not-doing-well table keeps the order by bets (C 10 before B 8)", fb.index('title="KXC15M"') < fb.index('title="KXB15M"'), True)
+check("the not-doing-well table by return, best first (C 0.0% before B −30%)", fb.index('title="KXC15M"') < fb.index('title="KXB15M"'), True)
 check("every lane on the page carries the count and the sort line",
       (len(re.findall(r"\d+ doing well · \d+ not", html)) >= 2 + 3, html.count(WB.SORT_LINE) >= 2), (True, True))
 
-print("\nthe 15-Minute layout: scoreboard, chips, times, archive")
-sbh = html.split('id="sw15-scoreboard"')[1].split("</table>")[0]
-lanes = re.findall(r'data-lane="([a-z0-9_]+)"', sbh)
-check("one scoreboard row per live lane, no controls",
-      (set(lanes) >= {"swing15v2_s2", "swing15v2_s3", "steadyfav_a", "steadyfav_b", "holdtoend_35", "leadswap_swing", "leadswap_fav"},
-       [x for x in lanes if x.endswith("_ctrl") or x.endswith("_s1")]), (True, []))
-rois = [float(x.replace("−", "-").rstrip("%")) for x in re.findall(r'<td[^>]*><b>([^<]+)</b></td>', sbh)]
-check("sorted by return after fees, best first", rois == sorted(rois, reverse=True) and len(rois) > 0, True)
-check("green tint above 0, red at or below", all(("sb-pos" in tr) == (float(r.replace("−", "-").rstrip("%")) > 0)
-      for tr, r in re.findall(r'(<tr class="sw15-sb-row[^"]*")[^>]*>.*?<td[^>]*><b>([^<]+)</b>', sbh)), True)
-check("every lane link lands on an anchor in the section", [a for a in re.findall(r'href="#([^"]+)"', sbh) if f'id="{a}"' not in html], [])
+print("\nthe 15-Minute layout (2026-11-10): collapsed, one line per lane, no scoreboard")
+check("no fold is a direct child of the section (a #swing15 link would open it)",
+      re.findall(r'<h2 class="dm-title">15-Minute</h2>(<details|</div><details)', html), [])
+check("no scoreboard, no open per-market tables", ("sw15-scoreboard" in html, "sw15-card" in html), (False, False))
+check("every rule row is collapsed by default (no open attribute on a row)", re.findall(r'<details class="sp-rule[^"]*"[^>]* open', html), [])
+check("every per-market split sits inside a row's fold",
+      all(html.rfind('<details class="sp-rule', 0, m.start()) > html.rfind('</details></details>', 0, m.start())
+          for m in re.finditer(r'class="sw15-split"', html)), True)
+check("one intro line per lane, nothing else above its rows",
+      [re.sub(r"<[^>]+>", "|", seg.split("</h3>")[1].split('<div class="sp-rules-list"')[0]).strip("|").count("|") for seg in
+       html.split('<h3 class="dm-title"')[1:]], [0] * len(html.split('<h3 class="dm-title"')[1:]))
 check("the status chips", (WB.status_chip({"a": 4}), WB.status_chip({"a": 12, "b": 3}), WB.status_chip({"a": 31, "b": 40})),
       ('<span class="sig n">Too early (4/10)</span>', '<span class="sig w">Review</span>',
        '<span class="sig w">Ready to decide (30+) · 2 markets</span>'))
 check("a pooled lane never says 'series at 30+'", ("series at" in html, WB.status_chip({"all": 40})),
       (False, '<span class="sig w">Ready to decide (30+)</span>'))
-check("the v1 baseline line under the scoreboard",
-      bool(re.search(r"v1 baseline \(every market, nothing picked\): S2 ([+−]\d|—)", html.split('id="swing15v2"')[0])), True)
 check("every time in the section reads in CT (no UTC)", ("UTC" in html, WB._start("2026-11-10T00:00:00+00:00"),
       WB._start("2026-11-09T13:15:00Z")), (False, "Nov 9, 6:00 PM CT", "Nov 9, 7:15 AM CT"))
 check("no inline style attribute (the CSP blocks them) and no Kalshi market column", ("style=" in html, ">Kalshi</span>" in html),
