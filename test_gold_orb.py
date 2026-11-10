@@ -414,5 +414,36 @@ check("  and the four 2026-10-29 rows are flagged",
       sorted(r["id"] for r in real2["nights"] if r.get("book_invalid")),
       sorted(f"{v}:{k}:2026-10-29" for v in "AB" for k in ("utc_0130", "utc_0100")))
 
+print("\nan unpublished night survives the next run (2026-11-09)")
+repo = {"version": 1, "nights": [{"id": "A:utc_0100:2026-11-05", "status": "settled", "regraded": True}],
+        "runs": [{"at": "2026-11-06T00:54:00+00:00"}], "last_run": "2026-11-06T03:21:00+00:00"}
+work = {"version": 1, "nights": [{"id": "A:utc_0100:2026-11-05", "status": "settled"},
+                                 {"id": "A:utc_0100:2026-11-08", "status": "settled", "net_bp": 9.5},
+                                 {"id": "B:utc_0130:2026-11-08", "status": "no_range"}],
+        "runs": [{"at": "2026-11-06T00:54:00+00:00"}, {"at": "2026-11-09T00:54:00+00:00"}],
+        "last_run": "2026-11-09T03:21:00+00:00"}
+merged, added = G.merge_unpublished(repo, work)
+check("the work file's nights the repo lacks are carried, the repo's own rows win (a re-grade is kept)",
+      ([r["id"] for r in merged["nights"]], added, merged["nights"][0].get("regraded")),
+      (["A:utc_0100:2026-11-05", "A:utc_0100:2026-11-08", "B:utc_0130:2026-11-08"],
+       ["A:utc_0100:2026-11-08", "B:utc_0130:2026-11-08"], True))
+check("runs merged by start, last_run the later", ([r["at"] for r in merged["runs"]], merged["last_run"]),
+      (["2026-11-06T00:54:00+00:00", "2026-11-09T00:54:00+00:00"], "2026-11-09T03:21:00+00:00"))
+check("nothing unpublished: nothing added", G.merge_unpublished(repo, repo)[1], [])
+sh = open("scripts/vps_gold_orb.sh").read()
+check("the script retries the publish with backoff and marks a night still unpublished",
+      all(x in sh for x in ('touch "$WORK/.unpublished"', "for try in 1 2 3 4 5 6", 'rm -f "$WORK/.unpublished"', "pause * 2")), True)
+check("the next run merges a marked night instead of copying the repo ledger over it",
+      sh.index('[ -f "$WORK/.unpublished" ]') < sh.index("--merge-unpublished") < sh.index('cp data/gold_orb_ledger.json "$WORK/ledger.json"'),
+      True)
+check("a commit left by a failed push is still pushed", "origin/main..HEAD" in sh, True)
+inv, nq = open("scripts/vps_invest.sh").read(), open("scripts/vps_nasdaq_orb.sh").read()
+check("Invest: a failed publish is retried every 15 minutes and its state is never copied over meanwhile",
+      ('[ -f "$WORK/.publish-pending" ]' in inv, 'if [ ! -f "$WORK/.publish-pending" ]; then' in inv), (True, True))
+check("Nasdaq: the lock is waited for 4 times (40 minutes), not once", "for wait_try in 1 2 3 4" in nq, True)
+import subprocess
+for f_ in ("scripts/vps_gold_orb.sh", "scripts/vps_invest.sh", "scripts/vps_nasdaq_orb.sh"):
+    check(f"{f_} parses", subprocess.run(["bash", "-n", f_]).returncode, 0)
+
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

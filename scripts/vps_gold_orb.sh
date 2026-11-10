@@ -45,7 +45,13 @@ main() {
 
   echo "=== $(stamp) gold orb ==="
   locked git pull -q --rebase origin main || echo "$(stamp) pull failed; running on the checkout as it is"
-  if [ -f data/gold_orb_ledger.json ]; then
+  # 2026-11-09: a night whose publish failed lives only in $WORK/ledger.json (marked by $WORK/.unpublished). Merge
+  # it with the repo ledger instead of copying over it: the Nov 8 night was erased that way.
+  if [ -f "$WORK/.unpublished" ] && [ -f "$WORK/ledger.json" ] && [ -f data/gold_orb_ledger.json ]; then
+    "$PY" gold_orb.py --from data/gold_orb_ledger.json --merge-unpublished "$WORK/ledger.json" --out "$WORK/ledger.merged.json" \
+      && mv "$WORK/ledger.merged.json" "$WORK/ledger.json" \
+      || { echo "$(stamp) could not merge the unpublished night; keeping $WORK/ledger.json as it is"; }
+  elif [ -f data/gold_orb_ledger.json ]; then
     cp data/gold_orb_ledger.json "$WORK/ledger.json"
   fi
   "$PY" gold_orb.py --run --from "$WORK/ledger.json" --out "$WORK/ledger.json" || { echo "$(stamp) gold_orb.py failed"; exit 1; }
@@ -56,10 +62,14 @@ main() {
     cp "$WORK/ledger.json" data/gold_orb_ledger.json
     git add -- data/gold_orb_ledger.json
     if git diff --cached --quiet; then
-      echo "$(stamp) nothing new to publish"
-      return 0
+      if [ "$(git rev-list --count origin/main..HEAD 2>/dev/null || echo 0)" = "0" ]; then
+        echo "$(stamp) nothing new to publish"
+        return 0
+      fi
+      echo "$(stamp) pushing the night committed by an earlier attempt"
+    else
+      git commit -q -m "Gold Asia-open breakout paper night ($(date -u +%Y-%m-%d))"
     fi
-    git commit -q -m "Gold Asia-open breakout paper night ($(date -u +%Y-%m-%d))"
     local attempt
     for attempt in 1 2 3; do
       if git push -q origin HEAD:main; then
@@ -71,7 +81,23 @@ main() {
     echo "$(stamp) push failed after 3 attempts; the ledger stays at $WORK/ledger.json"
     return 1
   }
-  locked publish
+  # 2026-11-09: one busy-lock wait (2 min) used to end the night unpublished ("the clone is busy"). Retry with backoff,
+  # about 40 minutes in all; a night still unpublished after that is marked, merged into the next night's run (above)
+  # and published with it.
+  touch "$WORK/.unpublished"
+  local try pause=60
+  for try in 1 2 3 4 5 6; do
+    if locked publish; then
+      rm -f "$WORK/.unpublished"
+      return 0
+    fi
+    [ "$try" -lt 6 ] || break
+    echo "$(stamp) publish attempt $try failed; retrying in ${pause}s"
+    sleep "$pause"
+    pause=$((pause * 2 > 600 ? 600 : pause * 2))
+  done
+  echo "$(stamp) not published after 6 attempts; the night stays in $WORK/ledger.json and goes out with the next run"
+  return 1
 }
 
 main "$@"

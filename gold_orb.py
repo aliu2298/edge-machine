@@ -503,6 +503,27 @@ def backfill(state, product=BACKFILL_PRODUCT, since=BACKFILL_FROM, until=None, f
     return new
 
 
+# ---------- an unpublished night (2026-11-09) ----------
+
+def merge_unpublished(repo, work):
+    """The repo ledger plus every night row and run the work file holds that the repo lacks, by id / start time.
+
+    vps_gold_orb.sh used to start each night by copying the repo ledger over its work file. On 2026-11-09 the Nov 8
+    publish gave up on a busy clone lock, so the next night's copy erased the only record of that night. When a
+    publish has failed, the script now merges instead: nothing the work file holds is lost, nothing in the repo
+    (a re-grade merged by PR) is overwritten. -> (merged state, ids added)."""
+    out = dict(repo)
+    have = {r["id"] for r in repo.get("nights") or []}
+    added = [r for r in work.get("nights") or [] if r.get("id") and r["id"] not in have]
+    out["nights"] = list(repo.get("nights") or []) + added
+    runs = {r.get("at"): r for r in repo.get("runs") or []}
+    for r in work.get("runs") or []:
+        runs.setdefault(r.get("at"), r)
+    out["runs"] = sorted(runs.values(), key=lambda r: r.get("at") or "")[-61:]
+    out["last_run"] = max(filter(None, (repo.get("last_run"), work.get("last_run"))), default=None)
+    return out, [r["id"] for r in added]
+
+
 # ---------- the live run ----------
 
 def run(state, now_fn=lambda: dt.datetime.now(UTC), fetch=get, sleep=time.sleep, path=None, log=print):
@@ -569,6 +590,12 @@ def main(argv=None):
         moved = regrade(state)
         save(state, out)
         print(f"{len(moved)} rows moved out of net:", moved)
+        return 0
+    if "--merge-unpublished" in argv:
+        work = argv[argv.index("--merge-unpublished") + 1]
+        merged, added = merge_unpublished(load(src), load(work))
+        save(merged, out)
+        print("unpublished rows carried:", added)
         return 0
     if "--run" not in argv and "--backfill" not in argv:
         st = load(src)
