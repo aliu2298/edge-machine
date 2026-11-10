@@ -1,6 +1,6 @@
 {
  "collector": {
-  "last_ts": 1794294002,
+  "last_ts": 1794297602,
   "markets": 60,
   "rows_24h": 86400
  },
@@ -3025,7 +3025,9 @@
   },
   {
    "gap": -0.01009,
+   "gap_15m": -0.00921,
    "gap_5m": -0.00809,
+   "gap_60m": -0.00644,
    "rth": false,
    "spread_bp": 10.1,
    "sym": "AMAT",
@@ -3036,6 +3038,7 @@
    "gap": -0.01124,
    "gap_15m": -0.01195,
    "gap_5m": -0.00984,
+   "gap_60m": -0.01716,
    "rth": false,
    "spread_bp": 10.1,
    "sym": "AMD",
@@ -3046,6 +3049,7 @@
    "gap": -0.01681,
    "gap_15m": -0.01605,
    "gap_5m": -0.0161,
+   "gap_60m": -0.01619,
    "rth": false,
    "spread_bp": 11.6,
    "sym": "BABA",
@@ -3056,6 +3060,7 @@
    "gap": -0.01027,
    "gap_15m": -0.00871,
    "gap_5m": -0.00947,
+   "gap_60m": -0.01158,
    "rth": false,
    "spread_bp": 7.7,
    "sym": "INTC",
@@ -3066,6 +3071,7 @@
    "gap": -0.01057,
    "gap_15m": -0.01034,
    "gap_5m": -0.01066,
+   "gap_60m": -0.00937,
    "rth": false,
    "spread_bp": 10.4,
    "sym": "QCOM",
@@ -3076,14 +3082,55 @@
    "gap": -0.0102,
    "gap_15m": -0.00975,
    "gap_5m": -0.00857,
+   "gap_60m": -0.01501,
    "rth": false,
    "spread_bp": 20.2,
    "sym": "TXN",
    "ticker": "KXTXNPERP",
    "ts": 1794291361
+  },
+  {
+   "gap": -0.01716,
+   "gap_15m": -0.01402,
+   "gap_5m": -0.01412,
+   "rth": false,
+   "spread_bp": 6.7,
+   "sym": "AMD",
+   "ticker": "KXAMDPERP",
+   "ts": 1794294962
+  },
+  {
+   "gap": -0.01619,
+   "gap_15m": -0.01728,
+   "gap_5m": -0.01617,
+   "rth": false,
+   "spread_bp": 13.5,
+   "sym": "BABA",
+   "ticker": "KXBABAPERP",
+   "ts": 1794296281
+  },
+  {
+   "gap": -0.01158,
+   "gap_15m": -0.00879,
+   "gap_5m": -0.00871,
+   "rth": false,
+   "spread_bp": 5.1,
+   "sym": "INTC",
+   "ticker": "KXINTCPERP",
+   "ts": 1794296281
+  },
+  {
+   "gap": -0.01501,
+   "gap_15m": -0.01138,
+   "gap_5m": -0.01374,
+   "rth": false,
+   "spread_bp": 19.6,
+   "sym": "TXN",
+   "ticker": "KXTXNPERP",
+   "ts": 1794294962
   }
  ],
- "last_run": "2026-11-10T07:00:08+00:00",
+ "last_run": "2026-11-10T08:00:07+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
