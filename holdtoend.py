@@ -51,11 +51,15 @@ CELLS_V2 = {
     "holdtoend_25": (),
     "holdtoend_35": _kx("GBPUSD"),
 }
-# hte-v3: the one live cell. The 25c USDCAD cell stays removed. Do not edit.
-CELLS = {
+# hte-v3: the one cell. The 25c USDCAD cell stays removed. Do not edit.
+CELLS_V3 = {
     "holdtoend_25": (),
     "holdtoend_35": _kx("USDCAD"),
 }
+# 2026-11-10 (Olu): hte-v3 retired at RETIRED_V3_AT; no live cell remains. Its final record is records(retired_v3=True)
+# and the lane lives only in the 15-Minute archive. v1 keeps grading S1 underneath (the flips read it, not this file).
+RETIRED_V3_AT = "2026-11-10T05:30:00+00:00"
+CELLS = {"holdtoend_25": (), "holdtoend_35": ()}
 REMOVED = {k: tuple(s for s in v if s not in CELLS_V2[k]) for k, v in CELLS_V1.items()}
 BAND = {"holdtoend_25": "0.25", "holdtoend_35": "0.35"}
 LABELS = {"holdtoend_25": "Hold to End · 25c", "holdtoend_35": "Hold to End · 35c"}
@@ -74,12 +78,12 @@ def entry(w, strat):
     return dict(side=e["side"], price=p, won=e["won"], roi=round(e["won"] / cost - 1, 4))
 
 
-def records(state, removed=False, retired=False):
+def records(state, removed=False, retired=False, retired_v3=False):
     """{strat: {"all": cell, "series": {series: cell or None}, "skips": {reason: n}}} (flipside_v2's cell shape): the
     live hte-v3 cells from FROM_V3. removed=True: the cells cut at REMOVED_AT, final (FROM to REMOVED_AT). retired=True:
     hte-v2's cells, final (FROM to RETIRED_AT)."""
     cells, start, until = ((REMOVED, FROM, REMOVED_AT) if removed else (CELLS_V2, FROM, RETIRED_AT) if retired
-                           else (CELLS, FROM_V3, None))
+                           else (CELLS_V3, FROM_V3, RETIRED_V3_AT) if retired_v3 else (CELLS, FROM_V3, None))
     out = {}
     for strat, series in cells.items():
         by, skips = {s: [] for s in series}, {}
@@ -111,6 +115,9 @@ def ledger(state, now=None):
                 removed_at=REMOVED_AT, removed={k: list(v) for k, v in REMOVED.items()},
                 removed_records={k: dict(all=slim(v["all"]), series={s: slim(c) for s, c in v["series"].items()})
                                  for k, v in records(state, removed=True).items()},
+                retired_v3_at=RETIRED_V3_AT, cells_v3={k: list(v) for k, v in CELLS_V3.items()},
+                retired_v3_records={k: dict(all=slim(v["all"]), series={s: slim(c) for s, c in v["series"].items()})
+                                    for k, v in records(state, retired_v3=True).items()},
                 retired_at=RETIRED_AT,
                 retired_records={k: dict(all=slim(v["all"]), series={s: slim(c) for s, c in v["series"].items()})
                                  for k, v in records(state, retired=True).items()})

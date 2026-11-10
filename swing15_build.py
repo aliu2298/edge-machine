@@ -394,7 +394,7 @@ def eps_card(M, state, key, comp_label, rule_text):
                     + '</tr>' for m, a in M.ALLOW.items()])
     body = (f'<p class="sp-details-name"><b>{esc(M.LABEL)}</b> · Kalshi 15-minute windows · paper · {esc(M.VERSION)}</p>'
             f'<p class="sp-def">{esc(rule_text)} Bet only when every setting is in the market\'s allow-list (frozen, '
-            f'fingerprinted); any hour outside 07-22 CT is never bet.</p>'
+            f'fingerprinted){"; any hour outside 07-22 CT is never bet" if "time_ct" in keys else "; every hour"}.</p>'
             + allow + f'<p class="sm mut">Allow-list fingerprint {esc(M.fingerprint()[:12])}</p>')
     row = _row(key, M.LABEL, c, {"all": n}, body, ctrl=e, anchor=f"sw15-{key}", sport=key, status=chip,
                evidence=f"{min(n, M.DECIDE_AT)}/{M.DECIDE_AT}")
@@ -422,7 +422,7 @@ def swing_v3_block(state):
                          how=("Cells picked from one overnight session.", _cut_line(V)))
 
 
-FLIP_EPS = (("flipf1v2", "F1"), ("flipf2v2", "F2"), ("flipf3v2", "F3"))
+FLIP_EPS = (("flipf1v2", "F1"), ("flipf2v2", "F2"), ("flipf3v2", "F3"), ("flipf4v2", "F4"))
 FLIP_TRADE = {
     "F1": "F1: when the cheap side prints at 25c in the first 5 minutes, buy the other side at its ask at the end of the "
           "trigger minute; held to settlement; taker fee.",
@@ -430,6 +430,8 @@ FLIP_TRADE = {
           "trigger minute; held to settlement; taker fee.",
     "F3": "F3: the underdog (the side opposite the minute-2 favourite) at its ask from the minute-2 quote; held to "
           "settlement; taker fee.",
+    "F4": "F4 on Zcash: the underdog (the side opposite the minute-10 favourite) at its ask from the minute-10 quote; "
+          "held to settlement; taker fee; every hour.",
 }
 
 
@@ -514,7 +516,7 @@ def steadyfav_block(state):
         ctl = ("no control windows yet" if not c else
                f'{c["hits"]}/{c["n"]} won against {c["fair"] * c["n"]:.1f} priced, {pct(c["mean_roi"])} after fees')
         body = (f'<p class="sp-details-name"><b>{esc(S.LABELS[rule])}</b> · Kalshi 15-minute windows · paper · '
-                f'{esc(S.VERSION)}</p><p class="sp-def">{esc(text)} Frozen: {len(S.MARKETS)} markets. Control: the same '
+                f'{esc(S.VERSION)}</p><p class="sp-def">{esc(text)} Markets: {len(S.LIVE)} (USD/JPY removed). Control: the same '
                 f'rule on the other {ctl_rec.get("markets", 0)} 15-minute markets, pooled.</p>')
         per = {s: (x["n"] if x else 0) for s, x in ser.items()}
         lid = f"sw15-{rule}"
@@ -527,34 +529,27 @@ def steadyfav_block(state):
     early = ("" if not (ea or eb) else
              '<p class="sm mut sf-earlier">Earlier result, not counted (v1 on these four markets, before the start): '
              + "; ".join(f'{k} {x["hits"]}/{x["n"]}, {pct(x["mean_roi"])}' for k, x in (("A", ea), ("B", eb)) if x) + '.</p>')
-    names = ", ".join(name(s) for s in S.MARKETS)
+    names = ", ".join(name(s) for s in S.LIVE)
     return (f'<h3 class="dm-title" id="steadyfav">Steady Favourites</h3>' + _intro(S.FROM) + _list(cards)
             + _how(f"{names}: the favourite bought at minute 2 (A) and at 5 minutes left (B), held to settlement. "
                    "Replaces the S1 Swing. Each rule's control is the same rule on every other 15-minute market, pooled.",
                    early))
 
 
-def holdtoend_block(state, H):
-    """Hold to End v3: one live cell (USDCAD 35c) on a fresh record; USDCAD's earlier hte-v1 result as a muted
-    not-counted line. hte-v2 and the 18:00Z cut are in the archive."""
-    gone = H.records(state, removed=True)
-    early = (gone.get("holdtoend_35") or {}).get("series", {}).get("KXUSDCAD15M")
-    early_line = ("" if not early else
-                  f'<p class="sm mut hte-earlier">Earlier result, not counted: USD/CAD 35c went {early["hits"]}/{early["n"]}, '
-                  f'{pct(early["mean_roi"])} after fees ({esc(_start(H.FROM))} to {esc(_start(H.REMOVED_AT))}, hte-v1).</p>')
-    return _frozen_block("holdtoend", "Hold to End v3", H.FROM_V3, H.VERSION,
-                         {k: v.replace("Hold to End · ", "") for k, v in H.LABELS.items()}, H.records(state), "holdtoend",
-                         lambda k: "Won", intro="USD/CAD at 35c",
-                         how=("Buy the 35c side and hold it to settlement.", early_line))
-
-
 def _hte_archive(state, H):
+    v3 = (H.records(state, retired_v3=True).get("holdtoend_35") or {})
+    a = v3.get("all")
+    note3 = ("" if not a else
+             f'<p class="sm">hte-v3 (USD/CAD at 35c) final: {a["hits"]}/{a["n"]} against {a["fair"] * a["n"]:.1f} priced, '
+             f'{pct(a["mean_roi"])} after fees. Retired; no new entries.</p>')
+    out3 = _removed_fold({"holdtoend_35": "Hold to End v3 · 35c"}, {"holdtoend_35": v3}, H.RETIRED_V3_AT,
+                         lambda k: "Won", word="Retired", note=note3)
     ret = H.records(state, retired=True)
     r35 = (ret.get("holdtoend_35") or {}).get("all")
     note = ("" if not r35 else
             f'<p class="sm">hte-v2 final (decide at {W.DECIDE_AT}): {r35["hits"]}/{r35["n"]} against '
             f'{r35["fair"] * r35["n"]:.1f} priced, {pct(r35["mean_roi"])} after fees. No new entries.</p>')
-    return (_removed_fold({"holdtoend_35": "Hold to End v2 · 35c"}, {"holdtoend_35": ret.get("holdtoend_35")},
+    return (out3 + _removed_fold({"holdtoend_35": "Hold to End v2 · 35c"}, {"holdtoend_35": ret.get("holdtoend_35")},
                           H.RETIRED_AT, lambda k: "Won", word="Retired", note=note)
             + _removed_fold(H.LABELS, H.records(state, removed=True), H.REMOVED_AT, lambda k: "Won"))
 
@@ -597,7 +592,12 @@ def ls_groups(rt, picks, ranked=()):
         rows = [(s, v, cs.get(s), times.get(s, [0, 0])) for s, v in ser.items() if v and v[0]]
         rows.sort(key=lambda r: (-r[1][2] / r[1][0], -r[1][0], name(r[0])))   # return after fees, best first
         traded = {r[0] for r in rows}
-        seen = sorted({t for t in list(ranked) + list(times) if t not in traded}, key=name)
+        try:                                                    # excluded markets are never "not picked yet"
+            import leadswap as L
+            gone = set(L.EXCLUDED.get(strat, ()))
+        except Exception:                                       # noqa: BLE001
+            gone = set()
+        seen = sorted({t for t in list(ranked) + list(times) if t not in traded and t not in gone}, key=name)
         out[strat] = ([r for r in rows if r[1][2] > 0], [r for r in rows if r[1][2] <= 0], seen)
     return out
 
@@ -651,7 +651,12 @@ def leadswap_block(state):
         body = (f'<p class="sp-details-name"><b>{esc(label)}</b> · Kalshi 15-minute windows · paper · {esc(L.VERSION)}</p>'
                 f'<p class="sp-def">{esc(what)}, on {esc(who)} series by lead swaps over the past 2 hours, picked at the '
                 f'top of each hour and frozen. Control: the same entry on {esc(opp)}. z clusters one block (crypto, '
-                f'metals, energy, yields, FX, indices) in one window{clus}.{bf}</p>')
+                f'metals, energy, yields, FX, indices) in one window{clus}.{bf}</p>'
+                + (f'<p class="sm">Excluded from {_start(L.EXCLUDED_AT)} (the board still ranks them; this trade skips '
+                   f'them, no backfill; the control keeps them):</p>'
+                   + _table(("Excluded market",), [f'<tr><td>{mkt(m)}</td></tr>' for m in L.EXCLUDED[strat]])
+                   + f'<p class="sm mut">Exclusion list fingerprint {esc(L.excluded_fingerprint()[:12])}</p>'
+                   if L.EXCLUDED.get(strat) else ""))
         good, bad, _none = g[strat]
         lid = f"sw15-{strat}"
         cards.append(_card(_row(strat, label, c, {"all": c["n"] if c else 0}, body, ctrl=ctrl, anchor=lid,
@@ -798,7 +803,26 @@ def _archive(state, s1_final):
         import holdtoend as H
         return _hte_archive(state, H)
     grp("Hold to End", hte)
+    def lsb():
+        import leadswap as L
+        led = L.load()
+        rr = led.get("removed_routing")
+        if rr is None:                                           # a ledger from before the exclusions: compute them
+            rr = {k: v for k, v in L.routing(L.table(state), led.get("picks") or {}, removed=True).items() if k in L.EXCLUDED}
+        trs = [f'<tr><td>{esc(L.STRATS[k])}</td><td>{mkt(m)}</td><td class="num">{v[0]}</td><td class="num">{v[1]}</td>'
+               f'<td class="num">{pct(v[2] / v[0]) if v[0] else "—"}</td></tr>'
+               for k in L.EXCLUDED for m, v in sorted(((rr.get(k) or {}).get("series") or {}).items(), key=lambda kv: name(kv[0]))]
+        if not trs:
+            return ""
+        return (f'<details class="fold sw15-removed"><summary>Excluded {esc(_start(L.EXCLUDED_AT))} · {len(trs)} '
+                f'market rows, final records</summary>'
+                + _table(("Trade", "Market", "n", "Wins", "Return after fees"), trs) + '</details>')
+    grp("Lead Swap Board", lsb)
     grp("15-Minute Swing v1", lambda: _v1_s1_retired(state, s1_final))
+    def sf():
+        import steadyfav as S
+        return _removed_fold(S.LABELS, S.records(state, removed=True), S.REMOVED_AT, lambda k: "Won")
+    grp("Steady Favourites", sf)
     if not parts:
         return ""
     return ('<details class="fold sw15-archive" id="sw15-archive"><summary><b>Retired &amp; removed · final records</b>'
@@ -812,13 +836,12 @@ def section(state=None):
     import swing15v2 as V
     s1_final = W.cells(state, lambda w: W._ts(w["open"]) < W._ts(V.RETIRED_AT))
     blocks = []
-    import holdtoend as H
     # The order after #378/#379 (Steady Favourites, the Lead Swap Board, Swing v3, The Flip Side v3, Hold to End v3),
     # with the newest lane, Rule 1 v2 · Loss Reader (2026-11-10), on top.
     for fn in (lambda: lossreader_block(state), lambda: s3v2_block(state), lambda: steadyfav_block(state),
                lambda: leadswap_block(state),
                lambda: swing_v3_block(state),
-               lambda: flip_block(state), lambda: holdtoend_block(state, H)):
+               lambda: flip_block(state)):         # Hold to End retired 2026-11-10: archive only
         try:
             blocks.append(fn())
         except Exception:                                       # noqa: BLE001  (one lane never breaks the section)

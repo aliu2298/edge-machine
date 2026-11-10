@@ -32,7 +32,10 @@ check("tickers", (H.CELLS_V1["holdtoend_25"], H.CELLS_V1["holdtoend_35"][-1]), (
 check("hte-v2 keep list (Olu, 2026-11-09): the 25c row removed entirely, 35c on GBPUSD only",
       (H.CELLS_V2["holdtoend_25"], H.CELLS_V2["holdtoend_35"], H.REMOVED["holdtoend_25"]), ((), ("KXGBPUSD15M",), H.CELLS_V1["holdtoend_25"]))
 check("hte-v3 (Olu, 2026-11-09): one cell, 35c on USDCAD; the 25c USDCAD cell stays removed",
-      (H.CELLS, "KXUSDCAD15M" in H.REMOVED["holdtoend_25"]), ({"holdtoend_25": (), "holdtoend_35": ("KXUSDCAD15M",)}, True))
+      (H.CELLS_V3, "KXUSDCAD15M" in H.REMOVED["holdtoend_25"]), ({"holdtoend_25": (), "holdtoend_35": ("KXUSDCAD15M",)}, True))
+check("hte-v3 retired 2026-11-10 (Olu): no live cell; the cut is a window boundary after its start",
+      (H.CELLS, W._ts(H.RETIRED_V3_AT) % 900, W._ts(H.RETIRED_V3_AT) > W._ts(H.FROM_V3)),
+      ({"holdtoend_25": (), "holdtoend_35": ()}, 0, True))
 check("hte-v3's fresh record starts after hte-v2 retires, on a window boundary",
       (W._ts(H.FROM_V3) > W._ts(H.RETIRED_AT) > W._ts(H.REMOVED_AT), W._ts(H.FROM_V3) % 900), (True, 0))
 check("the record starts after the selection windows", W._ts(H.FROM) >= W._ts("2026-11-09T12:00:00+00:00"), True)
@@ -70,8 +73,8 @@ ws2 = ws + [win(G, "2026-11-09T21:45:00Z", {"0.35": E("yes", 1.0)}),        # ht
 state = dict(W.empty(), windows={v["ticker"]: v for v in ws2})
 ret = H.records(state, retired=True)["holdtoend_35"]
 check("hte-v2's final record: GBPUSD windows before RETIRED_AT only", (ret["all"]["n"], ret["series"][G]["hits"]), (1, 1))
-live = H.records(state)["holdtoend_35"]
-check("hte-v3 counts from FROM_V3 only, USDCAD only (the 15:00Z USDCAD 35c win is not carried over)",
+live = H.records(state, retired_v3=True)["holdtoend_35"]
+check("hte-v3 counted from FROM_V3 only, USDCAD only (the 15:00Z USDCAD 35c win is not carried over)",
       (live["all"]["n"], live["all"]["hits"], list(live["series"])), (1, 0, ["KXUSDCAD15M"]))
 led = H.ledger(state)
 check("the ledger: version, fresh from, retired record", (led["version"], led["from"], led["retired_records"]["holdtoend_35"]["all"]["n"]),
@@ -79,23 +82,19 @@ check("the ledger: version, fresh from, retired record", (led["version"], led["f
 
 print("\nthe page")
 html = WB.section(state)
-blk = html.split('id="holdtoend"')[1].split('id="sw15-v1"')[0]
 arc = html.split('id="sw15-archive"')[1].split("<h4>15-Minute Swing v1</h4>")[0].split("<h4>Hold to End</h4>")[1]
-check("the last lane: after The Flip Side v3, above v1",
-      html.index('id="flipside_v2"') < html.index('id="holdtoend"') < html.index('data-source="swing15_s2"'), True)
-check("the one-line intro (times in CT)",
-      "Paper · USD/CAD at 35c · fresh record from Nov 9, 5:00 PM CT · review 10, decide 30" in html, True)
-check("one live row (35c), the 25c row only in the archive's Removed fold", (re.findall(r'data-source="(holdtoend_\d+)"', html),
-      "Hold to End · 25c" in arc.split("Removed Nov")[1], "sw15-removed" in blk), (["holdtoend_35"], True, False))
-check("the earlier USDCAD 35c result: a muted not-counted line",
-      bool(re.search(r'class="sm mut hte-earlier">Earlier result, not counted: USD/CAD 35c went 1/1', blk)), True)
-check("hte-v2 in the archive's Retired fold with its final record, above the Removed fold",
-      ("Retired Nov 9, 4:00 PM CT" in arc, "hte-v2 final (decide at 30): 1/1 against 0.3 priced" in arc,
-       arc.index("Retired Nov") < arc.index("Removed Nov")), (True, True, True))
-check("the live cell uses the doing-well split, open under its row", ("0 doing well · 1 not" in blk,
-      blk.index('data-source="holdtoend_35"') < blk.index('class="sw15-split"')), (True, True))
-check("the Sandbox index row is hte-v3", [(r["lane"], r["label"]) for r in WB.index_rows(state) if r["lane"].startswith("holdtoend")],
-      [("holdtoend_35", "Hold to End v3 · 35c")])
+check("no Hold to End section and no Hold to End row in the live area", ('id="holdtoend"' in html,
+      re.findall(r'data-source="(holdtoend_\d+)"', html.split('id="sw15-archive"')[0])), (False, []))
+v3 = H.records(state, retired_v3=True)["holdtoend_35"]["all"]
+check("hte-v3's final record: the USDCAD windows from its start to the cut (the 23:00Z window, lost)", (v3["n"], v3["hits"]), (1, 0))
+check("the archive, in order: hte-v3 retired with its final record, hte-v2 retired, the 18:00 removals",
+      ("hte-v3 (USD/CAD at 35c) final: 0/1" in arc, "hte-v2 final (decide at 30): 1/1 against 0.3 priced" in arc,
+       arc.index("Hold to End v3 · 35c") < arc.index("Hold to End v2 · 35c") < arc.index("Removed Nov"),
+       "Hold to End · 25c" in arc.split("Removed Nov")[1]), (True, True, True, True))
+check("the Sandbox index has no Hold to End row", [r["lane"] for r in WB.index_rows(state) if r["lane"].startswith("holdtoend")], [])
+led = H.ledger(state)
+check("the ledger keeps hte-v3's final record and cut", (led["retired_v3_at"], led["retired_v3_records"]["holdtoend_35"]["all"]["n"]),
+      (H.RETIRED_V3_AT, 1))
 check("no dollar sign, no guarded phrase", (re.search(r"\$\d", html), sandbox_audit.COPY_RE.findall(html + WB.index_html(state))), (None, []))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")

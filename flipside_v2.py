@@ -54,9 +54,11 @@ CELLS_V3 = {
 REMOVED = {k: tuple(s for s in v if s not in CELLS_V3[k]) for k, v in CELLS_V2.items()}
 # 2026-11-10 (Olu): F1 retired at RETIRED_F1_AT, replaced by Rule 3 v2 · Every Positive Setting (flipf1v2.py). Its final
 # record is records(..., retired=True); F2-F4 run on unchanged.
-# F2 and F3 retired with it, replaced by Rules 4 and 5 v2 (flipf2v2.py, flipf3v2.py). F4 runs on unchanged.
+# F2 and F3 retired with it, replaced by Rules 4 and 5 v2 (flipf2v2.py, flipf3v2.py); F4 at RETIRED_F4_AT.
 RETIRED_F1_AT = "2026-11-10T05:15:00+00:00"
-RETIRED_TIMES = {"flipside_v2_f1": RETIRED_F1_AT, "flipside_v2_f2": RETIRED_F1_AT, "flipside_v2_f3": RETIRED_F1_AT}
+RETIRED_F4_AT = "2026-11-10T05:30:00+00:00"  # F4 retired for Rule 6 v2 · Zcash underdog at 20c+ (flipf4v2.py)
+RETIRED_TIMES = {"flipside_v2_f1": RETIRED_F1_AT, "flipside_v2_f2": RETIRED_F1_AT, "flipside_v2_f3": RETIRED_F1_AT,
+                 "flipside_v2_f4": RETIRED_F4_AT}
 RETIRED = {k: CELLS_V3[k] for k in RETIRED_TIMES}
 CELLS = dict(CELLS_V3, **{k: () for k in RETIRED_TIMES})
 LABELS = {"flipside_v2_f1": "F1 Flip 25c", "flipside_v2_f2": "F2 Flip 35c",

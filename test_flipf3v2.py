@@ -54,7 +54,7 @@ state = dict(W.empty(), windows={x["ticker"]: x for x in ws})
 rec = R.records(state)
 check("the lane counts the allowed window; every bet counts both", (rec["lane"]["all"]["n"], rec["every"]["all"]["n"]), (1, 2))
 html = WB.section(state)
-row = html.split('data-source="flipf3v2"')[1].split('data-source="flipside_v2_f4"')[0]
+row = html.split('data-source="flipf3v2"')[1].split('data-source="flipf4v2"')[0]
 check("the row: comparison 'every bet (old F3 on the same 3 markets)'; the in-sample line says what was read",
       ("Every bet (old F3 on the same 3 markets)" in row, "15/27, +39% with the early move read before the entry" in html,
        "17/25, +65% as relayed read the minute-3 quote, after the entry" in html), (True, True, True))

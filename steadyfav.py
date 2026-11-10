@@ -28,7 +28,12 @@ FROM = "2026-11-10T00:00:00+00:00"           # fresh record: windows opening at 
 PATH = os.path.join(W.ROOT, "data", "steadyfav_ledger.json")
 # The frozen pre-registration (sw15-sf1, 2026-11-09). Do not edit.
 MARKETS = ("KXBTC15M", "KXUSDJPY15M", "KXGOLD15M", "KX2YRRATE15M")
-EXCLUDE = ("KXCRYPTOLEAD15M",)               # not a price series (as the Lead Swap Board)
+EXCLUDE = ("KXCRYPTOLEAD15M",)
+# 2026-11-10 (Olu): USD/JPY dropped from A and B at REMOVED_AT; its final records are records(..., removed=True). The
+# surviving markets' records continue. The controls keep excluding all four frozen MARKETS (USD/JPY never joins the pool).
+REMOVED_AT = "2026-11-10T05:30:00+00:00"
+REMOVED = ("KXUSDJPY15M",)
+LIVE = tuple(m for m in MARKETS if m not in REMOVED)               # not a price series (as the Lead Swap Board)
 RULES = {"steadyfav_a": ("swing15_s2",), "steadyfav_b": ("swing15_s3",)}
 CONTROLS = {"steadyfav_a_ctrl": "steadyfav_a", "steadyfav_b_ctrl": "steadyfav_b"}
 LABELS = {"steadyfav_a": "A Favourite at start", "steadyfav_b": "B Favourite at 5 minutes left",
@@ -40,18 +45,20 @@ def in_sf(w, until=None):
     return t >= W._ts(FROM) and (not until or t < W._ts(until))
 
 
-def records(state, earlier=False):
+def records(state, earlier=False, removed=False):
     """{rule: {"all": cell, "series": {market: cell or None}}, control: {"all": cell, "markets": n}}; cells are
     swing15.cells()' records. earlier=True: the same four markets on v1 BEFORE FROM (shown, never counted)."""
     if earlier:
-        flt = lambda w: W._ts(w["open"]) < W._ts(FROM)
+        flt, mk = (lambda w: W._ts(w["open"]) < W._ts(FROM)), MARKETS
+    elif removed:
+        flt, mk = (lambda w: in_sf(w, REMOVED_AT)), REMOVED
     else:
-        flt = in_sf
+        flt, mk = in_sf, LIVE
     out = {}
     for rule, key in RULES.items():
-        out[rule] = dict(all=W.cells(state, lambda w: flt(w) and w["series"] in MARKETS).get(key),
-                         series={s: W.cells(state, lambda w, s=s: flt(w) and w["series"] == s).get(key) for s in MARKETS})
-    if earlier:
+        out[rule] = dict(all=W.cells(state, lambda w: flt(w) and w["series"] in mk).get(key),
+                         series={s: W.cells(state, lambda w, s=s: flt(w) and w["series"] == s).get(key) for s in mk})
+    if earlier or removed:
         return out
     others = lambda w: flt(w) and w["series"] not in MARKETS and w["series"] not in EXCLUDE
     n_other = len({w["series"] for w in (state.get("windows") or {}).values()
@@ -65,7 +72,11 @@ def ledger(state, now=None):
     now = now or dt.datetime.now(dt.timezone.utc)
     slim = lambda c: None if not c else {k: c[k] for k in ("n", "hits", "hit_rate", "fair", "mean_roi", "z", "days")}
     rec = records(state)
-    return dict(version=VERSION, registered=REGISTERED, **{"from": FROM}, markets=list(MARKETS),
+    gone = records(state, removed=True)
+    return dict(version=VERSION, registered=REGISTERED, **{"from": FROM}, markets=list(LIVE), registered_markets=list(MARKETS),
+                removed=list(REMOVED), removed_at=REMOVED_AT,
+                removed_records={k: dict(all=slim(v["all"]), series={s: slim(c) for s, c in v["series"].items()})
+                                 for k, v in gone.items()},
                 updated=now.isoformat(timespec="seconds"),
                 records={k: dict(all=slim(v["all"]), **({"series": {s: slim(c) for s, c in v["series"].items()}}
                                                         if "series" in v else {"markets": v["markets"]}))
