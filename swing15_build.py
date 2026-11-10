@@ -422,23 +422,32 @@ def swing_v3_block(state):
                          how=("Cells picked from one overnight session.", _cut_line(V)))
 
 
+FLIP_EPS = (("flipf1v2", "F1"), ("flipf2v2", "F2"), ("flipf3v2", "F3"))
+FLIP_TRADE = {
+    "F1": "F1: when the cheap side prints at 25c in the first 5 minutes, buy the other side at its ask at the end of the "
+          "trigger minute; held to settlement; taker fee.",
+    "F2": "F2: when the cheap side prints at 35c in the first 5 minutes, buy the other side at its ask at the end of the "
+          "trigger minute; held to settlement; taker fee.",
+    "F3": "F3: the underdog (the side opposite the minute-2 favourite) at its ask from the minute-2 quote; held to "
+          "settlement; taker fee.",
+}
+
+
 def flip_block(state):
     import flipside_v2 as F
-    cards = ()
-    how_f1 = ()
-    try:                                                         # Rule 3 v2 (2026-11-10) replaces F1, in this list
-        import flipf1v2 as F1
-        cards = (eps_card(F1, state, "flipf1v2", "Every bet (old F1 on the same 8 markets)",
-                          "F1: when the cheap side prints at 25c in the first 5 minutes, buy the other side at its ask at "
-                          "the end of the trigger minute; held to settlement; taker fee."),)
-        how_f1 = (f"{F1.LABEL} replaces F1: fresh record from {_start(F1.FROM)}, review {F1.REVIEW_AT}, decide "
-                  f"{F1.DECIDE_AT} bets.", f'<p class="sm mut f1v2-in-sample">{esc(F1.IN_SAMPLE)}</p>')
-    except Exception:                                            # noqa: BLE001  (never breaks the section)
-        pass
+    cards, how_eps = [], []
+    for name, old in FLIP_EPS:                                   # Rules 3-5 v2 (2026-11-10) replace F1-F3, in this list
+        try:
+            M = __import__(name)
+            cards.append(eps_card(M, state, name, M.COMP_LABEL, FLIP_TRADE[old]))
+            how_eps += [f"{M.LABEL} replaces {old}: fresh record from {_start(M.FROM)}, review {M.REVIEW_AT}, decide "
+                        f"{M.DECIDE_AT} bets.", f'<p class="sm mut {name}-in-sample">{esc(M.IN_SAMPLE)}</p>']
+        except Exception:                                        # noqa: BLE001  (never breaks the section)
+            pass
     return _frozen_block("flipside_v2", "The Flip Side v3", F.FROM, F.VERSION, F.LABELS, F.records(state),
                          "flipside_v2", lambda k: "Won",
                          how=("Opposite side of the 15-Minute Swing; cells picked from one overnight session; the 14-day "
-                              "backtest of the flips ran −0.5% to −16%.", _cut_line(F)) + how_f1, extra_cards=cards)
+                              "backtest of the flips ran −0.5% to −16%.", _cut_line(F)) + tuple(how_eps), extra_cards=cards)
 
 
 def _v3_s3_retired(state, V):
@@ -761,23 +770,28 @@ def _archive(state, s1_final):
         + _removed_fold(V.LABELS, V.records(state, removed=True), V.REMOVED_AT, lambda k: "Won"))
     def flip():
         import flipside_v2 as F
-        ret = F.records(state, retired=True).get("flipside_v2_f1") or {}
-        a = ret.get("all")
-        note = ("" if not a else
-                f'<p class="sm">F1 final: {a["hits"]}/{a["n"]} won against {a["fair"] * a["n"]:.1f} priced, '
-                f'{pct(a["mean_roi"])} after fees. Replaced by Rule 3 v2 · Every Positive Setting. No new entries.</p>')
-        out = _removed_fold({"flipside_v2_f1": F.LABELS["flipside_v2_f1"]}, {"flipside_v2_f1": ret}, F.RETIRED_F1_AT,
-                            lambda k: "Won", word="Retired", note=note)
-        try:
-            import allowgate as G
-            import flipf1v2 as F1
-            nv = G.never(F1.ALLOW)
+        import allowgate as G
+        ret = F.records(state, retired=True)
+        out = ""
+        for name, old in FLIP_EPS:
+            strat = f"flipside_v2_{old.lower()}"
+            r = ret.get(strat) or {}
+            a = r.get("all")
+            try:
+                M = __import__(name)
+                label, nv = M.LABEL, G.never(M.ALLOW)
+            except Exception:                                    # noqa: BLE001
+                label, nv = "its v2 rule", {}
+            note = ("" if not a else
+                    f'<p class="sm">{old} final: {a["hits"]}/{a["n"]} won against {a["fair"] * a["n"]:.1f} priced, '
+                    f'{pct(a["mean_roi"])} after fees. Replaced by {esc(label)}. No new entries.</p>')
+            out += _removed_fold({strat: F.LABELS[strat]}, {strat: r}, F.RETIRED_TIMES[strat], lambda k: "Won",
+                                 word="Retired", note=note)
             if nv:
-                out += ('<p class="sm mut f1v2-never">Rule 3 v2 · no positive setting (never bets): '
-                        + "; ".join(f'{mkt(m)} (no positive {" or ".join(NEVER_WORD.get(k, k) for k in ks)})'
+                out += (f'<p class="sm mut {name}-never">{esc(label)} · no positive setting (never bets): '
+                        + "; ".join(f'{mkt(m)} (' + ("no positive setting at all" if len(ks) == len(M.ALLOW[m]) else
+                                                    "no positive " + " or ".join(NEVER_WORD.get(k, k) for k in ks)) + ")"
                                     for m, ks in nv.items()) + '.</p>')
-        except Exception:                                        # noqa: BLE001
-            pass
         return out + _removed_fold(F.LABELS, F.records(state, removed=True), F.REMOVED_AT, lambda k: "Won")
     grp("The Flip Side v3", flip)
     def hte():
@@ -835,14 +849,15 @@ def index_rows(state=None):
                         status=f"{c['n'] if c else 0}/{S32.DECIDE_AT} bets"))
     except Exception:                                           # noqa: BLE001  (never breaks the index)
         pass
-    try:                                                        # Rule 3 v2 · Every Positive Setting (2026-11-10)
-        import flipf1v2 as F1V2
-        c = F1V2.records(state)["lane"]["all"]
-        out.append(dict(lane="flipf1v2", label=F1V2.LABEL, n=c["n"] if c else 0, roi=c["mean_roi"] if c else None,
-                        hit=c["hit_rate"] if c else None, fair=c["fair"] if c else None,
-                        status=f"{c['n'] if c else 0}/{F1V2.DECIDE_AT} bets"))
-    except Exception:                                           # noqa: BLE001  (never breaks the index)
-        pass
+    for name, _old in FLIP_EPS:                                 # Rules 3-5 v2 · Every Positive Setting (2026-11-10)
+        try:
+            M = __import__(name)
+            c = M.records(state)["lane"]["all"]
+            out.append(dict(lane=name, label=M.LABEL, n=c["n"] if c else 0, roi=c["mean_roi"] if c else None,
+                            hit=c["hit_rate"] if c else None, fair=c["fair"] if c else None,
+                            status=f"{c['n'] if c else 0}/{M.DECIDE_AT} bets"))
+        except Exception:                                       # noqa: BLE001  (never breaks the index)
+            pass
     import steadyfav as S                                       # Steady Favourites (2026-11-09)
     for key, r in S.records(state).items():
         c = r["all"]
