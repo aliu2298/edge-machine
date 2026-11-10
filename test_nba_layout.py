@@ -15,6 +15,7 @@ import nba_pace_build as NB
 import nba_page as P
 import nba_wm_nofade_build as NFB
 import nba_wm_v3 as V3
+import nba_wm_v4prod as V4P
 import sandbox_audit
 
 FAILS = []
@@ -48,8 +49,8 @@ print("\nthe Rules table")
 r = main[main.find('<section id="rules"'):main.find('<section id="research"')]
 rule_rows = re.findall(r'<details class="sp-rule[^"]*" id="([^"]+)" data-source="([^"]+)"[^>]*data-stage="(\w+)"', r)
 check("one Production row per lane, linked as #wm-yes and #wm-no",
-      [x for x in rule_rows if x[2] == "production"],
-      [("wm-yes", "nba_winmargin_live", "production"), ("wm-no", "nba_wm_nofade", "production")])
+      sorted(x for x in rule_rows if x[2] == "production"),      # ranked by sample size, so the pair's order moves with the data
+      [("wm-no", "nba_wm_nofade", "production"), ("wm-yes", "nba_winmargin_live", "production")])
 check("two Sandbox rows (2026-11-08): the comparison, the version 3 YES rule and the 75% NO bid on paper",
       sorted((x[1], x[2]) for x in rule_rows if x[2] == "sandbox"), [("nba_wm_nofade_75", "sandbox"), ("nba_wm_yes_v3", "sandbox")])
 check("columns: lane, market, record (games), entries won, ROI after fees, live fills, won v priced, evidence, verdict",
@@ -57,21 +58,26 @@ check("columns: lane, market, record (games), entries won, ROI after fees, live 
       ["Production rule", "Market", "Record (games)", "Entries won", "ROI after fees", "Live fills", "Won v priced", "Evidence", "Verdict"])
 check("the Sandbox fold lists the two paper lanes", ("No NBA rule is in the Sandbox." in r, "Sandbox rules" in r), (False, True))
 v3 = V3.load()
-if v3.get("since"):
-    yr = V3.yes_rows(v3)
+_v4p = V4P.load()
+cur = _v4p if _v4p.get("since") else v3     # the record the page headlines: version 4 once it has a first night, else version 3
+if cur.get("since"):
+    yr = V3.yes_rows(cur)
     s = C.stats(yr)
-    yes = r[r.find('id="wm-yes"'):r.find('id="wm-no"')]
+    def _row(i):                       # one rule row, whatever order the rows are ranked in
+        a = r.find(f'id="{i}"'); b = r.find('<details class="sp-rule', a + 1)
+        return r[a:b if b > 0 else len(r)]
+    yes = _row("wm-yes")
     check("YES: the version 3 record the card headlined (entries won, ROI, games for evidence)",
           (re.search(r'data-l="Entries won">([^<]*)<', yes).group(1), f'{s["won"]}/{s["n"]}',
            f'{len({x["event"] for x in yr})}/30' in yes), (f'{s["won"]}/{s["n"]}', f'{s["won"]}/{s["n"]}', True))
-    g = V3.no_games(v3)
-    no = r[r.find('id="wm-no"'):]
+    g = V3.no_games(cur)
+    no = _row("wm-no")
     check("NO fade: the version 3 games and ROI", (f'{C.stats(g)["n"]}/30' in no, L._pct(C.stats(g)["roi"]).replace("-", "−") in no
                                                      or L._pct(C.stats(g)["roi"]) in no), (True, True))
 live = json.load(open("data/live_record.json")) if os.path.exists("data/live_record.json") else {}
 yes_orders = (live.get("lanes") or {}).get("nba_wm_yes") or []
 if yes_orders and all("src" in o for o in yes_orders):
-    seg = r[r.find('id="wm-yes"'):r.find('id="wm-no"')]
+    seg = r[r.find('id="wm-yes"'):r.find('<details class="sp-rule', r.find('id="wm-yes"') + 1)]
     check("YES live fills: the trades schema reads W–F–L, never 'exits pending'", ("exits pending" in seg, "legs 2x" in seg), (False, True))
 elif yes_orders and not any(o["st"] == "sold" for o in yes_orders):
     check("YES live fills: held only, exits pending, until its sell fills are published",
@@ -118,12 +124,12 @@ print("\nthe Chaos index reads the record the NBA page headlines")
 idx = CB.index(list(CB.with_config(C.load()).get("lanes", {}).values()))
 cells = lambda lane: [re.sub(r"<[^>]+>", "", c) for c in re.findall(r"<td[^>]*>(.*?)</td>", re.search(rf'<tr data-lane="{lane}">(.*?)</tr>', idx, re.S).group(1))]  # noqa: E731
 check("every index row has the header's 8 cells", {len(cells(x)) for x in ("nba_winmargin_live", "nba_wm_nofade")}, {8})
-if v3.get("since"):
-    g = V3.no_games(v3)
-    fills = [x for x in v3["rows"].values() if x["lane"] == V3.NO_LANE and not x.get("no_entry") and "profit" in x]
+if cur.get("since"):
+    g = V3.no_games(cur)
+    fills = [x for x in cur["rows"].values() if x["lane"] == V3.NO_LANE and not x.get("no_entry") and "profit" in x]
     check("NO fade: v3 entries, games, entries won, ROI",
           cells("nba_wm_nofade")[2:6], [str(len(fills)), str(C.stats(g)["n"]), str(sum(1 for x in fills if x["profit"] > 0)), NFB.pct(C.stats(g)["roi"])])
-    yr = V3.yes_rows(v3)
+    yr = V3.yes_rows(cur)
     check("YES split: v3 entries, games, won, ROI",
           cells("nba_winmargin_live")[2:6], [str(len(yr)), str(len({x["event"] for x in yr})), str(C.stats(yr)["won"]), CB._pct(C.stats(yr)["roi"], sign=True)])
 check("the index links land on the new rows", (CB.home_href("nba_winmargin_live"), CB.home_href("nba_ml_dog_tp50"), './nba.html#wm-no' in NFB.index_row()),
