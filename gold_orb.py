@@ -524,6 +524,35 @@ def merge_unpublished(repo, work):
     return out, [r["id"] for r in added]
 
 
+RESTORED_BASIS = "restored, not live-recorded"
+
+
+def restore_night(state, night, product=BACKFILL_PRODUCT, log_values=None, fetch=get, log=print, on=None):
+    """Rebuild one night whose live record was lost (2026-11-08: the publish gave up on a busy lock, the next start
+    copied over it) from Coinbase's 1-minute candles with the normal rules (backfill()). The rows are flagged
+    `restored` with RESTORED_BASIS and, like any backfilled row, carry a gross return only and stay out of every net
+    figure. log_values {"A:utc_0100": 9.484 or "no_range", ...}: what the VPS log printed for the live night; each
+    row keeps it as vps_log and says whether the restored status agrees (`vps_log_status_match`) and by how many bp
+    the restored gross differs from it. -> the new rows."""
+    day = dt.date.fromisoformat(night)
+    until = dt.datetime.combine(day + dt.timedelta(days=1), dt.time(6, 0), UTC)
+    new = backfill(state, product, since=night, until=until, fetch=fetch, log=log)
+    for r in new:
+        key = f'{r["variant"]}:{r["anchor"]}'
+        r.update(restored=True, basis=RESTORED_BASIS, backfilled_on=on or dt.date.today().isoformat())
+        v = (log_values or {}).get(key)
+        if v is None:
+            continue
+        r["vps_log"] = v
+        if isinstance(v, str):
+            r["vps_log_status_match"] = r["status"] == v
+        else:
+            r["vps_log_status_match"] = r["status"] == "settled"
+            if r.get("gross_bp") is not None:
+                r["vps_log_diff_bp"] = round(r["gross_bp"] - v, 3)
+    return new
+
+
 # ---------- the live run ----------
 
 def run(state, now_fn=lambda: dt.datetime.now(UTC), fetch=get, sleep=time.sleep, path=None, log=print):
@@ -590,6 +619,21 @@ def main(argv=None):
         moved = regrade(state)
         save(state, out)
         print(f"{len(moved)} rows moved out of net:", moved)
+        return 0
+    if "--restore" in argv:
+        night = argv[argv.index("--restore") + 1]
+        vals = {}
+        if "--log" in argv:
+            for kv in argv[argv.index("--log") + 1].split(","):
+                k, v = kv.split("=")
+                try:
+                    vals[k] = float(v)
+                except ValueError:
+                    vals[k] = v
+        state = load(src)
+        new = restore_night(state, night, log_values=vals)
+        save(state, out)
+        print("restored:", [(r["id"], r["status"], r.get("gross_bp"), r.get("vps_log")) for r in new])
         return 0
     if "--merge-unpublished" in argv:
         work = argv[argv.index("--merge-unpublished") + 1]

@@ -431,12 +431,68 @@ check("runs merged by start, last_run the later", ([r["at"] for r in merged["run
       (["2026-11-06T00:54:00+00:00", "2026-11-09T00:54:00+00:00"], "2026-11-09T03:21:00+00:00"))
 check("nothing unpublished: nothing added", G.merge_unpublished(repo, repo)[1], [])
 sh = open("scripts/vps_gold_orb.sh").read()
-check("the script retries the publish with backoff and marks a night still unpublished",
-      all(x in sh for x in ('touch "$WORK/.unpublished"', "for try in 1 2 3 4 5 6", 'rm -f "$WORK/.unpublished"', "pause * 2")), True)
-check("the next run merges a marked night instead of copying the repo ledger over it",
-      sh.index('[ -f "$WORK/.unpublished" ]') < sh.index("--merge-unpublished") < sh.index('cp data/gold_orb_ledger.json "$WORK/ledger.json"'),
-      True)
+check("the script retries the publish with backoff",
+      all(x in sh for x in ("for try in 1 2 3 4 5 6", "pause * 2", "locked publish")), True)
+check("the start and the publish MERGE the ledgers; no copy of the repo ledger over an existing work file",
+      (sh.count("--merge-unpublished"), 'cp "$WORK/ledger.json" data/gold_orb_ledger.json' in sh,
+       'if [ -f "$WORK/ledger.json" ] && [ -f data/gold_orb_ledger.json ]' in sh),
+      (2, False, True))
 check("a commit left by a failed push is still pushed", "origin/main..HEAD" in sh, True)
+
+print("\na lost night restored from candles (2026-11-08)")
+_bf = G.backfill
+G.backfill = lambda state, product, since, until, fetch, log: [
+    dict(id="A:utc_0100:2026-11-08", variant="A", anchor="utc_0100", status="settled", gross_bp=8.998, backfilled=True),
+    dict(id="B:utc_0130:2026-11-08", variant="B", anchor="utc_0130", status="no_range", backfilled=True)]
+rest = G.restore_night({"nights": []}, "2026-11-08", log_values={"A:utc_0100": 9.484, "B:utc_0130": "no_range"}, on="2026-11-10")
+G.backfill = _bf
+check("restored rows: flagged, out of net (backfilled), the VPS log value kept beside them with the difference",
+      [(r["restored"], r["basis"], r["backfilled"], r["vps_log"], r["vps_log_status_match"], r.get("vps_log_diff_bp")) for r in rest],
+      [(True, "restored, not live-recorded", True, 9.484, True, -0.486), (True, "restored, not live-recorded", True, "no_range", True, None)])
+import gold_orb_build as _GB
+rr = _GB._row(dict(rest[0], night="2026-11-08", side="long", entry_px=4112.2, exit_px=4115.9))
+check("the page row: the restored badge, gross only, the VPS log figure and why it differs",
+      ("Restored · not live-recorded" in rr, "VPS log: +9.5bp" in rr, "candles, not the live book" in rr, "+9.0" in rr), (True, True, True, True))
+check("the no-range row shows its VPS log status", "VPS log: no range" in _GB._row(dict(rest[1], night="2026-11-08")), True)
+
+print("\nend to end: the real script, an unpublished night, the next start (2026-11-09)")
+import os as _os, shutil, subprocess as _sp, tempfile as _tf
+root = _tf.mkdtemp()
+origin, clone, work = (_os.path.join(root, x) for x in ("origin.git", "clone", "work"))
+run_ = lambda *a, **k: _sp.run(list(a), check=True, capture_output=True, text=True, **k)
+run_("git", "init", "-q", "--bare", "-b", "main", origin)
+run_("git", "clone", "-q", origin, clone)
+_os.makedirs(_os.path.join(clone, "data")); _os.makedirs(_os.path.join(clone, "scripts")); _os.makedirs(work)
+shutil.copy("gold_orb.py", clone); shutil.copy("scripts/vps_gold_orb.sh", _os.path.join(clone, "scripts"))
+G.save({"version": "gold-orb-v2", "nights": [{"id": "A:utc_0100:2026-11-05", "night": "2026-11-05", "status": "settled"}],
+        "runs": [{"at": "2026-11-06T00:54:00+00:00"}]}, _os.path.join(clone, "data", "gold_orb_ledger.json"))
+for c in (("git", "-C", clone, "config", "user.email", "t@t"), ("git", "-C", clone, "config", "user.name", "t"),
+          ("git", "-C", clone, "add", "-A"), ("git", "-C", clone, "commit", "-q", "-m", "seed"),
+          ("git", "-C", clone, "push", "-q", "origin", "HEAD:main")):
+    run_(*c)
+# The Nov 8 night ran but never published: it lives only in the work file.
+G.save({"version": "gold-orb-v2", "nights": [{"id": "A:utc_0100:2026-11-05", "night": "2026-11-05", "status": "settled"},
+                                             {"id": "A:utc_0100:2026-11-08", "night": "2026-11-08", "status": "settled"}],
+        "runs": [{"at": "2026-11-06T00:54:00+00:00"}, {"at": "2026-11-09T00:54:00+00:00"}]}, _os.path.join(work, "ledger.json"))
+# A stand-in python: `--run` records tonight's row (no network); everything else is the real gold_orb.py.
+fake = _os.path.join(root, "py")
+with open(fake, "w") as fh:
+    fh.write(f"""#!/bin/sh
+case " $* " in
+  *" --run "*) exec {sys.executable} -c 'import sys, gold_orb as G
+a = sys.argv[1:]; st = G.load(a[a.index("--from") + 1])
+st["nights"].append(dict(id="A:utc_0100:2026-11-09", night="2026-11-09", status="settled")); G.save(st, a[a.index("--out") + 1])' "$@" ;;
+  *) exec {sys.executable} "$@" ;;
+esac
+""")
+_os.chmod(fake, 0o755)
+env = dict(_os.environ, EDGE_GOLD_DIR=clone, EDGE_GOLD_PY=fake, EDGE_GOLD_WORK=work)
+res = _sp.run(["bash", _os.path.join(clone, "scripts", "vps_gold_orb.sh")], env=env, capture_output=True, text=True)
+pub = json.loads(run_("git", "--git-dir", origin, "show", "main:data/gold_orb_ledger.json").stdout)
+check("the next start carries the unpublished Nov 8 night and publishes it with tonight's",
+      (res.returncode, sorted(r["id"] for r in pub["nights"])),
+      (0, ["A:utc_0100:2026-11-05", "A:utc_0100:2026-11-08", "A:utc_0100:2026-11-09"]))
+shutil.rmtree(root, ignore_errors=True)
 inv, nq = open("scripts/vps_invest.sh").read(), open("scripts/vps_nasdaq_orb.sh").read()
 check("Invest: a failed publish is retried every 15 minutes and its state is never copied over meanwhile",
       ('[ -f "$WORK/.publish-pending" ]' in inv, 'if [ ! -f "$WORK/.publish-pending" ]; then' in inv), (True, True))

@@ -45,12 +45,13 @@ main() {
 
   echo "=== $(stamp) gold orb ==="
   locked git pull -q --rebase origin main || echo "$(stamp) pull failed; running on the checkout as it is"
-  # 2026-11-09: a night whose publish failed lives only in $WORK/ledger.json (marked by $WORK/.unpublished). Merge
-  # it with the repo ledger instead of copying over it: the Nov 8 night was erased that way.
-  if [ -f "$WORK/.unpublished" ] && [ -f "$WORK/ledger.json" ] && [ -f data/gold_orb_ledger.json ]; then
+  # 2026-11-09: MERGE the repo ledger into the work file, never copy it over: a night whose publish failed lives only in
+  # $WORK/ledger.json, and the Nov 8 night was erased by that copy. The repo's rows win on the same id (a re-grade
+  # merged by PR is kept); every row only the work file holds is carried.
+  if [ -f "$WORK/ledger.json" ] && [ -f data/gold_orb_ledger.json ]; then
     "$PY" gold_orb.py --from data/gold_orb_ledger.json --merge-unpublished "$WORK/ledger.json" --out "$WORK/ledger.merged.json" \
       && mv "$WORK/ledger.merged.json" "$WORK/ledger.json" \
-      || { echo "$(stamp) could not merge the unpublished night; keeping $WORK/ledger.json as it is"; }
+      || echo "$(stamp) could not merge the ledgers; keeping $WORK/ledger.json as it is"
   elif [ -f data/gold_orb_ledger.json ]; then
     cp data/gold_orb_ledger.json "$WORK/ledger.json"
   fi
@@ -59,7 +60,9 @@ main() {
 
   publish() {
     git pull -q --rebase origin main || { echo "$(stamp) pull failed before publishing"; return 1; }
-    cp "$WORK/ledger.json" data/gold_orb_ledger.json
+    # Merge, too: a row the repo gained during the night (a restore or re-grade merged by PR) is never overwritten.
+    "$PY" gold_orb.py --from data/gold_orb_ledger.json --merge-unpublished "$WORK/ledger.json" --out data/gold_orb_ledger.json \
+      || { echo "$(stamp) merge failed before publishing"; git checkout -q -- data/gold_orb_ledger.json; return 1; }
     git add -- data/gold_orb_ledger.json
     if git diff --cached --quiet; then
       if [ "$(git rev-list --count origin/main..HEAD 2>/dev/null || echo 0)" = "0" ]; then
@@ -82,13 +85,11 @@ main() {
     return 1
   }
   # 2026-11-09: one busy-lock wait (2 min) used to end the night unpublished ("the clone is busy"). Retry with backoff,
-  # about 40 minutes in all; a night still unpublished after that is marked, merged into the next night's run (above)
-  # and published with it.
-  touch "$WORK/.unpublished"
+  # about 40 minutes in all; a night still unpublished after that stays in the work file, is merged into the next
+  # night's start (above) and goes out with it.
   local try pause=60
   for try in 1 2 3 4 5 6; do
     if locked publish; then
-      rm -f "$WORK/.unpublished"
       return 0
     fi
     [ "$try" -lt 6 ] || break

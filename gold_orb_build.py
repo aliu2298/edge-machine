@@ -48,16 +48,24 @@ def _anchor(r):
 
 def _row(r):
     night = dt.date.fromisoformat(r["night"])
-    flag = ' <span class="badge stage">Backfilled · candles only</span>' if r.get("backfilled") else ""
+    flag = (' <span class="badge stage">Restored · not live-recorded</span>' if r.get("restored")
+            else ' <span class="badge stage">Backfilled · candles only</span>' if r.get("backfilled") else "")
     mut = ' class="mut"' if r.get("retired") else ""
     head = (f'<td>{esc(f"{night:%a %b} {night.day}")}</td><td>{esc(r.get("variant", ""))}</td>'
             f'<td>{esc(_anchor(r))}{flag}</td>')
+    log = ""
+    if r.get("restored") and "vps_log" in r:                     # 2026-11-08: what the live run printed, beside the rebuild
+        v = r["vps_log"]
+        log = (f' · VPS log: {esc(WORDS.get(v, v)) if isinstance(v, str) else _num(v) + 'bp'}'
+               + ("" if r.get("vps_log_status_match", True) else " (status differs)")
+               + (f' (rebuild differs by {_num(r["vps_log_diff_bp"])}bp: candles, not the live book)'
+                  if r.get("vps_log_diff_bp") not in (None, 0) else ""))
     if r["status"] not in ("settled", "open"):
-        return f'<tr class="mut">{head}<td colspan="6">{esc(WORDS.get(r["status"], r["status"]))}</td></tr>'
+        return f'<tr class="mut">{head}<td colspan="6">{esc(WORDS.get(r["status"], r["status"]))}{log}</td></tr>'
     entry = "—" if r.get("entry_px") is None else f'{r["entry_px"]:.1f}' + (" †" if r.get("entry_late") else "")
     exit_ = "—" if r.get("exit_px") is None else f'{r["exit_px"]:.1f}' + (" *" if r.get("exit_carried") else "")
     if r.get("backfilled"):
-        spreads, net = "no spread", "— · —"
+        spreads, net = "no spread", "— · —" + log
     elif r.get("book_invalid"):
         side = r["book_invalid"]
         spreads, net = f'book invalid ({esc(side)}) · {esc(r.get("entry_book_invalid") or r.get("exit_book_invalid") or "")}', "— · —"
