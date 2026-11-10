@@ -5201,19 +5201,17 @@
    "P": 0.88,
    "bot_version": "wm-nofade-v4",
    "bucket": "HOU21PLUS",
-   "decided_at": "2026-11-10T01:30:29+00:00",
+   "decided_at": "2026-11-10T03:57:28+00:00",
    "event": "KXNBAWINMARGIN-26NOV09DENHOU",
    "lane": "nba_wm_nofade",
    "limit": 0.57,
-   "night_cap": 30,
-   "night_count": 14,
-   "outcome": "bid_posted",
+   "outcome": "bid_late",
    "qty": 1.0,
    "rule_ok": true,
    "slate": "26NOV09",
    "ticker": "KXNBAWINMARGIN-26NOV09DENHOU-HOU21PLUS",
    "tip": "2026-11-10T01:30:00+00:00",
-   "why": null
+   "why": "the bid was not posted within 5 minutes of the tip"
   },
   "no:KXNBAWINMARGIN-26NOV09DENHOU-HOU6TO10": {
    "P": 0.86,
@@ -9703,6 +9701,6 @@
    "yes_bid": 0.01
   }
  },
- "updated_at": "2026-11-10T03:47:33+00:00",
+ "updated_at": "2026-11-10T03:57:28+00:00",
  "version": 1
 }
