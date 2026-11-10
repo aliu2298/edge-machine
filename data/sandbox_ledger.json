@@ -28,7 +28,7 @@
    "kalshi_venue": 4,
    "polymarket_us": 10,
    "polymarket_us_listed": 10,
-   "polymarket_us_priced": 1
+   "polymarket_us_priced": 0
   },
   "crypto": {
    "kalshi_venue": 80
@@ -41,7 +41,7 @@
    "kalshi_venue": 525
   },
   "economics": {
-   "kalshi_venue": 38
+   "kalshi_venue": 23
   },
   "finance": {
    "kalshi_venue": 30
@@ -69,7 +69,7 @@
     "offered": 0,
     "picked": 0
    },
-   "kalshi_venue": 28,
+   "kalshi_venue": 41,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -354,8 +354,8 @@
   "tennis": {
    "kalshi_venue": 32,
    "polymarket_us": 40,
-   "polymarket_us_listed": 428,
-   "polymarket_us_priced": 216
+   "polymarket_us_listed": 427,
+   "polymarket_us_priced": 224
   },
   "tennis_combo": {
    "combo": 0,
@@ -372,41 +372,41 @@
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-10T02:21:35+00:00",
-   "commodities": "2026-11-10T02:21:35+00:00",
-   "commodities_fav": "2026-11-10T02:21:35+00:00",
-   "cricket": "2026-11-10T02:21:35+00:00",
-   "crypto": "2026-11-10T02:21:35+00:00",
-   "crypto_fav": "2026-11-10T02:21:35+00:00",
-   "economics": "2026-11-10T02:21:35+00:00",
-   "finance": "2026-11-10T02:21:35+00:00",
-   "mma": "2026-11-10T02:21:35+00:00",
-   "nfl": "2026-11-10T02:21:35+00:00",
-   "nhl_pl": "2026-11-10T02:21:35+00:00",
-   "nhl_rest": "2026-11-10T02:21:35+00:00",
-   "soccer": "2026-11-10T02:21:35+00:00",
+   "boxing": "2026-11-10T02:27:16+00:00",
+   "commodities": "2026-11-10T02:27:16+00:00",
+   "commodities_fav": "2026-11-10T02:27:16+00:00",
+   "cricket": "2026-11-10T02:27:16+00:00",
+   "crypto": "2026-11-10T02:27:16+00:00",
+   "crypto_fav": "2026-11-10T02:27:16+00:00",
+   "economics": "2026-11-10T02:27:16+00:00",
+   "finance": "2026-11-10T02:27:16+00:00",
+   "mma": "2026-11-10T02:27:16+00:00",
+   "nfl": "2026-11-10T02:27:16+00:00",
+   "nhl_pl": "2026-11-10T02:27:16+00:00",
+   "nhl_rest": "2026-11-10T02:27:16+00:00",
+   "soccer": "2026-11-10T02:27:16+00:00",
    "soccer_btts": "2026-11-08T20:07:32+00:00",
-   "soccer_btts_cup": "2026-11-10T02:21:35+00:00",
-   "soccer_btts_intl": "2026-11-10T02:21:35+00:00",
+   "soccer_btts_cup": "2026-11-10T02:27:16+00:00",
+   "soccer_btts_intl": "2026-11-10T02:27:16+00:00",
    "soccer_corners": "2026-11-08T19:58:15+00:00",
    "soccer_ftts": "2026-10-19T18:33:38+00:00",
    "soccer_o15": "2026-11-08T20:07:32+00:00",
-   "soccer_o15_cup": "2026-11-10T02:21:35+00:00",
-   "soccer_o15_intl": "2026-11-10T02:21:35+00:00",
+   "soccer_o15_cup": "2026-11-10T02:27:16+00:00",
+   "soccer_o15_intl": "2026-11-10T02:27:16+00:00",
    "soccer_o25": "2026-11-08T20:07:32+00:00",
-   "soccer_o25_cup": "2026-11-10T02:21:35+00:00",
-   "soccer_o25_intl": "2026-11-10T02:21:35+00:00",
+   "soccer_o25_cup": "2026-11-10T02:27:16+00:00",
+   "soccer_o25_intl": "2026-11-10T02:27:16+00:00",
    "soccer_p05": "2026-11-08T20:07:32+00:00",
-   "soccer_p05_cup": "2026-11-10T02:21:35+00:00",
-   "soccer_p05_intl": "2026-11-10T02:21:35+00:00",
+   "soccer_p05_cup": "2026-11-10T02:27:16+00:00",
+   "soccer_p05_intl": "2026-11-10T02:27:16+00:00",
    "soccer_team1": "2026-11-08T19:58:15+00:00",
    "soccer_team1_cup": "2026-11-05T19:33:47+00:00",
    "soccer_team2": "2026-11-08T19:58:15+00:00",
    "soccer_team2_cup": "2026-11-05T19:33:47+00:00",
    "soccer_u35": "2026-11-08T20:07:32+00:00",
-   "soccer_u35_cup": "2026-11-10T02:21:35+00:00",
-   "soccer_u35_intl": "2026-11-10T02:21:35+00:00",
-   "tennis": "2026-11-10T02:21:35+00:00",
+   "soccer_u35_cup": "2026-11-10T02:27:16+00:00",
+   "soccer_u35_intl": "2026-11-10T02:27:16+00:00",
+   "tennis": "2026-11-10T02:27:16+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -527,7 +527,7 @@
   },
   "odds_api": {
    "allowance": 0,
-   "at": "2026-11-10T02:21:35+00:00",
+   "at": "2026-11-10T02:27:16+00:00",
    "remaining": 326,
    "used": 174
   },
@@ -548,7 +548,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 1474,
+  "runs": 1475,
   "tennis_shortlist": {
    "audit": [
     {
@@ -560,7 +560,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-10T02:22:00+00:00"
+  "updated": "2026-11-10T02:27:44+00:00"
  },
  "quotes": [
   {
@@ -418432,7 +418432,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-10T02:21:35+00:00",
+   "close_at": "2026-11-10T02:27:16+00:00",
    "close_price": 0.85,
    "date": "2026-11-13",
    "edge": null,
@@ -422303,7 +422303,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-10T02:21:35+00:00",
+   "close_at": "2026-11-10T02:27:16+00:00",
    "close_price": 0.7,
    "date": "2026-11-13",
    "edge": null,
@@ -422343,7 +422343,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-10T02:21:35+00:00",
+   "close_at": "2026-11-10T02:27:16+00:00",
    "close_price": 0.78,
    "date": "2026-11-12",
    "edge": null,
@@ -423067,7 +423067,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-10T02:21:35+00:00",
+   "close_at": "2026-11-10T02:27:16+00:00",
    "close_price": 0.9,
    "date": "2026-11-13",
    "edge": null,
@@ -423107,7 +423107,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-10T02:21:35+00:00",
+   "close_at": "2026-11-10T02:27:16+00:00",
    "close_price": 0.79,
    "date": "2026-11-13",
    "edge": null,
@@ -423147,7 +423147,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-10T02:21:35+00:00",
+   "close_at": "2026-11-10T02:27:16+00:00",
    "close_price": 0.83,
    "date": "2026-11-13",
    "edge": null,
@@ -423187,7 +423187,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-10T02:21:35+00:00",
+   "close_at": "2026-11-10T02:27:16+00:00",
    "close_price": 0.67,
    "date": "2026-11-13",
    "edge": null,
@@ -430811,6 +430811,74 @@
    "untraded": false,
    "url": "https://kalshi.com/markets/kxnatgasd",
    "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-10",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfwo-naghan-saenog-2026-11-10",
+   "label": "Nagi Hanatani vs Sae Noguchi",
+   "liquidity": null,
+   "logged": "2026-11-10T02:27:16+00:00",
+   "market_id": "aec-itfwo-naghan-saenog-2026-11-10",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.17,
+   "price_b": 0.84,
+   "price_draw": null,
+   "prob_a": 0.165,
+   "result": null,
+   "settled": null,
+   "side_a": "Nagi Hanatani",
+   "side_b": "Sae Noguchi",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-10T04:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfwo",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfwo-naghan-saenog-2026-11-10",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-10",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfwo-yunkit-kisyos-2026-11-10",
+   "label": "Yuno Kitahara vs Kisa Yoshioka",
+   "liquidity": null,
+   "logged": "2026-11-10T02:27:16+00:00",
+   "market_id": "aec-itfwo-yunkit-kisyos-2026-11-10",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.57,
+   "price_b": 0.44,
+   "price_draw": null,
+   "prob_a": 0.565,
+   "result": null,
+   "settled": null,
+   "side_a": "Yuno Kitahara",
+   "side_b": "Kisa Yoshioka",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-10T04:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfwo",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfwo-yunkit-kisyos-2026-11-10",
+   "venue": "polymarket_us",
    "venue_start": null
   }
  ],
