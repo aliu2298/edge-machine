@@ -93,19 +93,20 @@ check("the ledger carries v3 cells, the v2 registration, the cut and the removed
 
 print("\nthe page")
 html = WB.section(state)
-check("the v3 block sits above v1", html.index("15-Minute Swing v3") < html.index('data-source="swing15_s2"'), True)
-check("the cut line", "sw15-v3 from 2026-11-09 18:00 UTC: negative markets removed after ~4h of results." in html, True)
-check("a collapsed Removed fold with readable names", ('<details class="fold sw15-removed"><summary>Removed 2026-11-09 18:00 UTC' in html,
+check("the v3 block sits above v1", html.index('id="swing15v2"') < html.index('data-source="swing15_s2"'), True)
+check("the cut line", "sw15-v3 from Nov 9, 12:00 PM CT: negative markets removed after ~4h of results." in html, True)
+check("a collapsed Removed fold with readable names", ('<details class="fold sw15-removed"><summary>Removed Nov 9, 12:00 PM CT' in html,
       '<span title="KXGOLD15M">Gold</span>' in html.split("sw15-removed")[1]), (True, True))
-check("the line under the header", "Cells picked from one overnight session; fresh record from 2026-11-09 13:00 UTC; "
+check("the line under the header", "Cells picked from one overnight session; fresh record from Nov 9, 7:00 AM CT; "
       "review at 10, decide at 30." in html, True)
 check("S1 is gone as a lane in v3 and v1; S2/S3 stay", (re.findall(r'data-source="(swing15v2_s\d)"', html),
       re.findall(r'data-source="(swing15_s\d)"', html)), (["swing15v2_s2", "swing15v2_s3"], ["swing15_s2", "swing15_s3"]))
-v3 = html.split('id="swing15v2"')[1].split('id="flipside_v2"')[0]
-check("v3's Retired fold: S1 final, since the cut, collapsed, above the Removed fold",
-      (bool(re.search(r'<details class="fold sw15-removed"><summary>Retired 2026-11-09 22:00 UTC', v3)),
-       "S1 final: 2/3 sells filled" in v3, "since the 18:00 UTC cut, 1/1" in v3, v3.index("Retired 2026") < v3.index("Removed 2026")),
+v3 = html.split('id="sw15-archive"')[1].split("<h4>The Flip Side v3</h4>")[0]
+check("v3's Retired fold (in the archive): S1 final, since the cut, collapsed, above the Removed fold",
+      (bool(re.search(r'<details class="fold sw15-removed"><summary>Retired Nov 9, 4:00 PM CT', v3)),
+       "S1 final: 2/3 sells filled" in v3, "since the Nov 9, 12:00 PM CT cut, 1/1" in v3, v3.index("Retired Nov") < v3.index("Removed Nov")),
       (True, True, True, True))
+check("no Retired or Removed fold outside the archive", html.split('id="sw15-archive"')[0].count("sw15-removed"), 0)
 check("v1's Retired fold: S1's headline record and the whole grid", ("S1 Swing, final records" in html, "15c · 1.5x · else hold" in html.split("S1 Swing, final records")[1]),
       (True, True))
 check("no dollar sign, no guarded phrase", (re.search(r"\$\d", html), sandbox_audit.COPY_RE.findall(html + WB.index_html(state))), (None, []))

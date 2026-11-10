@@ -79,19 +79,22 @@ check("the ledger: version, fresh from, retired record", (led["version"], led["f
 
 print("\nthe page")
 html = WB.section(state)
-blk = html.split('id="holdtoend"')[1].split("15-Minute Swing v1")[0]
-check("under The Flip Side v3, above v1",
-      html.index("The Flip Side v3") < html.index(">Hold to End v3<") < html.index('data-source="swing15_s2"'), True)
-check("the section copy", f"Hold to End v3 · USD/CAD at 35c · fresh record from {H.FROM_V3[:16].replace('T', ' ')} UTC · "
+blk = html.split('id="holdtoend"')[1].split('id="leadswap"')[0]
+arc = html.split('id="sw15-archive"')[1].split("<h4>15-Minute Swing v1</h4>")[0].split("<h4>Hold to End</h4>")[1]
+check("under The Flip Side v3 and Steady Favourites, above the Lead Swap Board and v1",
+      html.index('id="flipside_v2"') < html.index('id="steadyfav"') < html.index('id="holdtoend"') < html.index('id="leadswap"')
+      < html.index('data-source="swing15_s2"'), True)
+check("the section copy (times in CT)", "Hold to End v3 · USD/CAD at 35c · fresh record from Nov 9, 5:00 PM CT · "
       "review at 10, decide at 30." in html, True)
-check("one live row (35c), the 25c row only in the Removed fold", (re.findall(r'data-source="(holdtoend_\d+)"', html),
-      "Hold to End · 25c" in blk.split("Removed 2026")[1]), (["holdtoend_35"], True))
+check("one live row (35c), the 25c row only in the archive's Removed fold", (re.findall(r'data-source="(holdtoend_\d+)"', html),
+      "Hold to End · 25c" in arc.split("Removed Nov")[1], "sw15-removed" in blk), (["holdtoend_35"], True, False))
 check("the earlier USDCAD 35c result: a muted not-counted line",
       bool(re.search(r'class="sm mut hte-earlier">Earlier result, not counted: USD/CAD 35c went 1/1', blk)), True)
-check("hte-v2 in a Retired fold with its final record, above the Removed fold",
-      ("Retired 2026-11-09 22:00 UTC" in blk, "hte-v2 final (decide at 30): 1/1 against 0.3 priced" in blk,
-       blk.index("Retired 2026") < blk.index("Removed 2026")), (True, True, True))
-check("the live cell uses the doing-well split", "0 doing well · 1 not" in blk, True)
+check("hte-v2 in the archive's Retired fold with its final record, above the Removed fold",
+      ("Retired Nov 9, 4:00 PM CT" in arc, "hte-v2 final (decide at 30): 1/1 against 0.3 priced" in arc,
+       arc.index("Retired Nov") < arc.index("Removed Nov")), (True, True, True))
+check("the live cell uses the doing-well split, open under its row", ("0 doing well · 1 not" in blk,
+      blk.index('data-source="holdtoend_35"') < blk.index('class="sw15-split"')), (True, True))
 check("the Sandbox index row is hte-v3", [(r["lane"], r["label"]) for r in WB.index_rows(state) if r["lane"].startswith("holdtoend")],
       [("holdtoend_35", "Hold to End v3 · 35c")])
 check("no dollar sign, no guarded phrase", (re.search(r"\$\d", html), sandbox_audit.COPY_RE.findall(html + WB.index_html(state))), (None, []))
