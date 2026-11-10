@@ -1,8 +1,8 @@
 {
  "collector": {
-  "last_ts": 1794268802,
+  "last_ts": 1794272402,
   "markets": 60,
-  "rows_24h": 83220
+  "rows_24h": 83340
  },
  "events": [],
  "flags": [
@@ -2708,6 +2708,7 @@
    "gap": -0.45526,
    "gap_15m": 0.00084,
    "gap_5m": -0.00066,
+   "gap_60m": -0.00027,
    "rth": false,
    "spread_bp": 16744.0,
    "sym": "JNJ",
@@ -2718,6 +2719,7 @@
    "gap": -0.01673,
    "gap_15m": 0.00102,
    "gap_5m": 0.00136,
+   "gap_60m": -0.00028,
    "rth": false,
    "spread_bp": 393.6,
    "sym": "QCOM",
@@ -2728,14 +2730,23 @@
    "gap": -0.38481,
    "gap_15m": -0.00142,
    "gap_5m": -0.00043,
+   "gap_60m": 7e-05,
    "rth": false,
    "spread_bp": 12551.8,
    "sym": "SBUX",
    "ticker": "KXSBUXPERP",
    "ts": 1794265261
+  },
+  {
+   "gap": -0.08659,
+   "rth": false,
+   "spread_bp": 1915.5,
+   "sym": "COP",
+   "ticker": "KXCOPPERP",
+   "ts": 1794272402
   }
  ],
- "last_run": "2026-11-10T00:00:08+00:00",
+ "last_run": "2026-11-10T01:00:07+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
