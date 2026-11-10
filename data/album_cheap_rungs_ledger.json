@@ -3537,8 +3537,10 @@
     "book": 0,
     "first_quotes": false,
     "last_trade": null,
+    "printed": 0,
+    "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
     "source": "live",
-    "status": "checking"
+    "status": "unverified"
    },
    "bid": 0.06,
    "book": {
@@ -3587,8 +3589,10 @@
     "book": 6.0,
     "first_quotes": false,
     "last_trade": null,
+    "printed": 0,
+    "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
     "source": "live",
-    "status": "checking"
+    "status": "unverified"
    },
    "bid": 0.01,
    "book": {
@@ -3656,16 +3660,16 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:42.883824+00:00"
  },
  "lane": "album_cheap_rungs",
- "last_success": "2026-11-10T00:01:02.452370+00:00",
+ "last_success": "2026-11-10T01:00:46.352772+00:00",
  "observations": {
-  "at": "2026-11-10T00:01:02.452370+00:00",
-  "checking": 2,
-  "entered": 2,
+  "at": "2026-11-10T01:00:46.352772+00:00",
+  "checking": 0,
+  "entered": 0,
   "events": 19,
   "filled": 0,
-  "skipped": 0,
-  "unverified": 67,
-  "waiting": 16
+  "skipped": 6,
+  "unverified": 69,
+  "waiting": 10
  },
  "skips": {
   "KXALBUMEQUIV-BLEACH26NOV05-10K": {
@@ -3922,6 +3926,36 @@
    "event": "KXALBUMEQUIV-FRE26NOV12",
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
    "word": "Above 90K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-130K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 130K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-150K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 150K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-170K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 170K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-190K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 190K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-210K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 210K"
+  },
+  "KXALBUMEQUIV-GTA626NOV26-230K": {
+   "event": "KXALBUMEQUIV-GTA626NOV26",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 230K"
   },
   "KXALBUMEQUIV-HEAVYCROWN26OCT29-15K": {
    "event": "KXALBUMEQUIV-HEAVYCROWN26OCT29",
