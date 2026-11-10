@@ -167,9 +167,23 @@
    "perp": "KXDEPERP",
    "sym": "DE",
    "time": "pre-market"
+  },
+  {
+   "date": "2026-12-01",
+   "eps_forecast": "$0",
+   "fiscal_q": "Oct/2026",
+   "kpi": [],
+   "mentions": [
+    "KXEARNINGSMENTIONCRWD-26DEC01"
+   ],
+   "n_ests": "13",
+   "name": "CrowdStrike Holdings, Inc.",
+   "perp": "KXCRWDPERP",
+   "sym": "CRWD",
+   "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-10T04:00:17Z",
+ "calendar_at": "2026-11-10T05:00:18Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -394,9 +408,25 @@
    "event": "KXWMT-26NOVUSCOMP",
    "read": null,
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-10T05:01:24Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 391101694.91525424,
+    "rungs": 6,
+    "width": 9363745.498199284
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-10T05:01:24Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": null,
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-10T04:01:22Z",
+ "last_run": "2026-11-10T05:01:28Z",
  "predictions": [
   {
    "call": {
@@ -600,6 +630,32 @@
    "sym": "AMAT"
   },
   {
+   "baselines": {
+    "random": {
+     "entry": 12.2235,
+     "entry_ts": 1794178860,
+     "exit": 12.8388,
+     "exit_ts": 1794284040,
+     "net": 0.047937,
+     "status": "settled"
+    },
+    "spy": {
+     "entry": 14.7024,
+     "entry_ts": 1794178860,
+     "exit": 15.0509,
+     "exit_ts": 1794282540,
+     "net": 0.021304,
+     "status": "settled"
+    },
+    "up": {
+     "entry": 12.2235,
+     "entry_ts": 1794178860,
+     "exit": 12.8388,
+     "exit_ts": 1794284040,
+     "net": 0.047937,
+     "status": "settled"
+    }
+   },
    "call": {
     "entry": 12.3298,
     "entry_ts": 1794179160,
@@ -613,13 +669,15 @@
    "entry_due": "2026-11-07T03:49:33Z",
    "exit_due": "2026-11-10T03:49:00Z",
    "family": "sentiment",
+   "graded_at": "2026-11-10T05:01:26Z",
    "id": "sentiment:META:2026-11-06",
    "logged_at": "2026-11-07T03:49:33Z",
+   "net": -0.041898,
    "perp": "KXMETAPERP",
    "random_side": 1,
    "reason": "Kalshi traders 17% Up on 24h taker volume.",
    "side": -1,
-   "status": "open",
+   "status": "settled",
    "sym": "META"
   },
   {
@@ -635,6 +693,20 @@
    "report_time": "pre-market",
    "side": 1,
    "sym": "BABA"
+  },
+  {
+   "entry_due": "2026-11-23T21:00:00Z",
+   "exit_due": "2026-12-01T21:00:00Z",
+   "family": "runup",
+   "id": "runup:CRWD:2026-12-01",
+   "logged_at": "2026-11-10T05:01:26Z",
+   "perp": "KXCRWDPERP",
+   "random_side": 1,
+   "reason": "Up into the 2026-12-01 report (after-hours).",
+   "report": "2026-12-01",
+   "report_time": "after-hours",
+   "side": 1,
+   "sym": "CRWD"
   }
  ],
  "registered": "2026-11-07",
