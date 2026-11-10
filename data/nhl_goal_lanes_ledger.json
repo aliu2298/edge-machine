@@ -2416,9 +2416,389 @@
    "title": "PHI at VAN",
    "version": "nhlgoal-v1",
    "vol": 3325.81
+  },
+  {
+   "day": "2026-11-09",
+   "entries": [
+    {
+     "ask": 0.66,
+     "away_goals": 1,
+     "bid": 0.65,
+     "goal_side": "away",
+     "home_goals": 0,
+     "kind": "pl",
+     "maker": {
+      "cost": 0.65398,
+      "filled": false,
+      "roi": null
+     },
+     "period": 1,
+     "side": "no",
+     "strike": 2.5,
+     "taker": {
+      "cost": 0.67571,
+      "depth": 0,
+      "filled": false,
+      "roi": 0.4799
+     },
+     "ticker": "KXNHLSPREAD-26NOV09NYISJ-NYI3",
+     "ts": 1794280740,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.99,
+     "away_goals": 1,
+     "bid": 0.96,
+     "goal_side": "away",
+     "home_goals": 0,
+     "kind": "over",
+     "maker": {
+      "cost": 0.96067,
+      "filled": false,
+      "roi": null
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 2.5,
+     "taker": {
+      "cost": 0.99069,
+      "depth": 4.0,
+      "filled": false,
+      "roi": 0.0094
+     },
+     "ticker": "KXNHLTOTAL-26NOV09NYISJ-3",
+     "ts": 1794280740,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.99,
+     "away_goals": 1,
+     "bid": 0.96,
+     "goal_side": "away",
+     "home_goals": 0,
+     "kind": "over",
+     "maker": {
+      "cost": 0.96067,
+      "filled": false,
+      "roi": null
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 1.5,
+     "taker": {
+      "cost": 0.99069,
+      "depth": 0,
+      "filled": false,
+      "roi": 0.0094
+     },
+     "ticker": "KXNHLTOTAL-26NOV09NYISJ-2",
+     "ts": 1794280740,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.95,
+     "away_goals": 1,
+     "bid": 0.91,
+     "goal_side": "away",
+     "home_goals": 0,
+     "kind": "over",
+     "maker": {
+      "cost": 0.91143,
+      "filled": false,
+      "roi": null
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 3.5,
+     "taker": {
+      "cost": 0.95332,
+      "depth": 0,
+      "filled": false,
+      "roi": 0.049
+     },
+     "ticker": "KXNHLTOTAL-26NOV09NYISJ-4",
+     "ts": 1794280740,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.86,
+     "away_goals": 1,
+     "bid": 0.85,
+     "goal_side": "away",
+     "home_goals": 0,
+     "kind": "over",
+     "maker": {
+      "cost": 0.85223,
+      "filled": true,
+      "roi": 0.1734
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 4.5,
+     "taker": {
+      "cost": 0.86843,
+      "depth": 1.41,
+      "filled": false,
+      "roi": 0.1515
+     },
+     "ticker": "KXNHLTOTAL-26NOV09NYISJ-5",
+     "ts": 1794280740,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.67,
+     "away_goals": 1,
+     "bid": 0.66,
+     "goal_side": "away",
+     "home_goals": 0,
+     "kind": "over",
+     "maker": {
+      "cost": 0.66393,
+      "filled": true,
+      "roi": -1.0
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 5.5,
+     "taker": {
+      "cost": 0.68548,
+      "depth": 312.64,
+      "filled": true,
+      "roi": -1.0
+     },
+     "ticker": "KXNHLTOTAL-26NOV09NYISJ-6",
+     "ts": 1794280740,
+     "v2": true,
+     "won": false
+    },
+    {
+     "ask": 0.74,
+     "away_goals": 1,
+     "bid": 0.71,
+     "goal_side": "home",
+     "home_goals": 1,
+     "kind": "pl",
+     "maker": {
+      "cost": 0.7136,
+      "filled": true,
+      "roi": 0.4013
+     },
+     "period": 1,
+     "side": "no",
+     "strike": 1.5,
+     "taker": {
+      "cost": 0.75347,
+      "depth": 247.04,
+      "filled": true,
+      "roi": 0.3272
+     },
+     "ticker": "KXNHLSPREAD-26NOV09NYISJ-NYI2",
+     "ts": 1794282000,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.69,
+     "away_goals": 2,
+     "bid": 0.68,
+     "goal_side": "away",
+     "home_goals": 1,
+     "kind": "pl",
+     "maker": {
+      "cost": 0.68381,
+      "filled": false,
+      "roi": null
+     },
+     "period": 2,
+     "side": "no",
+     "strike": 2.5,
+     "taker": {
+      "cost": 0.70497,
+      "depth": 0,
+      "filled": false,
+      "roi": 0.4185
+     },
+     "ticker": "KXNHLSPREAD-26NOV09NYISJ-NYI3",
+     "ts": 1794283620,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.96,
+     "away_goals": 2,
+     "bid": 0.94,
+     "goal_side": "away",
+     "home_goals": 1,
+     "kind": "over",
+     "maker": {
+      "cost": 0.94099,
+      "filled": true,
+      "roi": 0.0627
+     },
+     "period": 2,
+     "side": "yes",
+     "strike": 4.5,
+     "taker": {
+      "cost": 0.96269,
+      "depth": 75.79,
+      "filled": true,
+      "roi": 0.0388
+     },
+     "ticker": "KXNHLTOTAL-26NOV09NYISJ-5",
+     "ts": 1794283620,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.81,
+     "away_goals": 2,
+     "bid": 0.79,
+     "goal_side": "away",
+     "home_goals": 1,
+     "kind": "over",
+     "maker": {
+      "cost": 0.7929,
+      "filled": true,
+      "roi": -1.0
+     },
+     "period": 2,
+     "side": "yes",
+     "strike": 5.5,
+     "taker": {
+      "cost": 0.82077,
+      "depth": 93.19,
+      "filled": true,
+      "roi": -1.0
+     },
+     "ticker": "KXNHLTOTAL-26NOV09NYISJ-6",
+     "ts": 1794283620,
+     "v2": true,
+     "won": false
+    },
+    {
+     "ask": 0.68,
+     "away_goals": 2,
+     "bid": 0.66,
+     "goal_side": "away",
+     "home_goals": 1,
+     "kind": "over",
+     "maker": {
+      "cost": 0.66393,
+      "filled": true,
+      "roi": -1.0
+     },
+     "period": 2,
+     "side": "yes",
+     "strike": 6.5,
+     "taker": {
+      "cost": 0.69523,
+      "depth": 5746.98,
+      "filled": true,
+      "roi": -1.0
+     },
+     "ticker": "KXNHLTOTAL-26NOV09NYISJ-7",
+     "ts": 1794283620,
+     "v2": true,
+     "won": false
+    },
+    {
+     "ask": 0.7,
+     "away_goals": 2,
+     "bid": 0.69,
+     "goal_side": "home",
+     "home_goals": 2,
+     "kind": "pl",
+     "maker": {
+      "cost": 0.69374,
+      "filled": true,
+      "roi": 0.4415
+     },
+     "period": 2,
+     "side": "no",
+     "strike": 1.5,
+     "taker": {
+      "cost": 0.7147,
+      "depth": 860.06,
+      "filled": true,
+      "roi": 0.3992
+     },
+     "ticker": "KXNHLSPREAD-26NOV09NYISJ-NYI2",
+     "ts": 1794284640,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.81,
+     "away_goals": 2,
+     "bid": 0.79,
+     "goal_side": "home",
+     "home_goals": 2,
+     "kind": "over",
+     "maker": {
+      "cost": 0.7929,
+      "filled": true,
+      "roi": -1.0
+     },
+     "period": 2,
+     "side": "yes",
+     "strike": 5.5,
+     "taker": {
+      "cost": 0.82077,
+      "depth": 1204.61,
+      "filled": true,
+      "roi": -1.0
+     },
+     "ticker": "KXNHLTOTAL-26NOV09NYISJ-6",
+     "ts": 1794284640,
+     "v2": true,
+     "won": false
+    },
+    {
+     "ask": 0.71,
+     "away_goals": 2,
+     "bid": 0.7,
+     "goal_side": "home",
+     "home_goals": 2,
+     "kind": "over",
+     "maker": {
+      "cost": 0.70367,
+      "filled": true,
+      "roi": -1.0
+     },
+     "period": 2,
+     "side": "yes",
+     "strike": 6.5,
+     "taker": {
+      "cost": 0.72441,
+      "depth": 1885.71,
+      "filled": true,
+      "roi": -1.0
+     },
+     "ticker": "KXNHLTOTAL-26NOV09NYISJ-7",
+     "ts": 1794284640,
+     "v2": true,
+     "won": false
+    }
+   ],
+   "event": "KXNHLGAME-26NOV09NYISJ",
+   "fav": "away",
+   "favmid": 0.57,
+   "goals": 4,
+   "ko": 1794279600,
+   "logged": "2026-11-10T07:00:18.568556+00:00",
+   "thin": false,
+   "timed": 4,
+   "title": "NYI at SJ",
+   "version": "nhlgoal-v1",
+   "vol": 5149.69
   }
  ],
- "last_run": "2026-11-10T06:00:17.824363+00:00",
+ "last_run": "2026-11-10T07:00:18.568556+00:00",
  "registered": "2026-11-08T07:45:00Z",
  "since": "2026-11-08",
  "skips": {},
