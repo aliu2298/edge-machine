@@ -1812,9 +1812,311 @@
    "title": "PIT at ANA",
    "version": "nhlgoal-v1",
    "vol": 17101.41
+  },
+  {
+   "day": "2026-11-09",
+   "entries": [
+    {
+     "ask": 0.99,
+     "away_goals": 0,
+     "bid": 0.97,
+     "goal_side": "home",
+     "home_goals": 1,
+     "kind": "over",
+     "maker": {
+      "cost": 0.97051,
+      "filled": false,
+      "roi": null
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 1.5,
+     "taker": {
+      "cost": 0.99069,
+      "depth": 0,
+      "filled": false,
+      "roi": 0.0094
+     },
+     "ticker": "KXNHLTOTAL-26NOV09NYREDM-2",
+     "ts": 1794273600,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.99,
+     "away_goals": 0,
+     "bid": 0.98,
+     "goal_side": "home",
+     "home_goals": 1,
+     "kind": "over",
+     "maker": {
+      "cost": 0.98034,
+      "filled": false,
+      "roi": null
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 2.5,
+     "taker": {
+      "cost": 0.99069,
+      "depth": 0,
+      "filled": false,
+      "roi": 0.0094
+     },
+     "ticker": "KXNHLTOTAL-26NOV09NYREDM-3",
+     "ts": 1794273600,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.95,
+     "away_goals": 0,
+     "bid": 0.91,
+     "goal_side": "home",
+     "home_goals": 1,
+     "kind": "over",
+     "maker": {
+      "cost": 0.91143,
+      "filled": true,
+      "roi": 0.0972
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 3.5,
+     "taker": {
+      "cost": 0.95332,
+      "depth": 0,
+      "filled": false,
+      "roi": 0.049
+     },
+     "ticker": "KXNHLTOTAL-26NOV09NYREDM-4",
+     "ts": 1794273600,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.87,
+     "away_goals": 0,
+     "bid": 0.85,
+     "goal_side": "home",
+     "home_goals": 1,
+     "kind": "over",
+     "maker": {
+      "cost": 0.85223,
+      "filled": true,
+      "roi": -1.0
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 4.5,
+     "taker": {
+      "cost": 0.87792,
+      "depth": 0,
+      "filled": false,
+      "roi": -1.0
+     },
+     "ticker": "KXNHLTOTAL-26NOV09NYREDM-5",
+     "ts": 1794273600,
+     "v2": true,
+     "won": false
+    },
+    {
+     "ask": 0.67,
+     "away_goals": 0,
+     "bid": 0.66,
+     "goal_side": "home",
+     "home_goals": 1,
+     "kind": "over",
+     "maker": {
+      "cost": 0.66393,
+      "filled": true,
+      "roi": -1.0
+     },
+     "period": 1,
+     "side": "yes",
+     "strike": 5.5,
+     "taker": {
+      "cost": 0.68548,
+      "depth": 0,
+      "filled": false,
+      "roi": -1.0
+     },
+     "ticker": "KXNHLTOTAL-26NOV09NYREDM-6",
+     "ts": 1794273600,
+     "v2": true,
+     "won": false
+    },
+    {
+     "ask": 0.93,
+     "away_goals": 0,
+     "bid": 0.9,
+     "goal_side": "home",
+     "home_goals": 2,
+     "kind": "over",
+     "maker": {
+      "cost": 0.90158,
+      "filled": false,
+      "roi": null
+     },
+     "period": 2,
+     "side": "yes",
+     "strike": 3.5,
+     "taker": {
+      "cost": 0.93456,
+      "depth": 0,
+      "filled": false,
+      "roi": 0.07
+     },
+     "ticker": "KXNHLTOTAL-26NOV09NYREDM-4",
+     "ts": 1794276420,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.68,
+     "away_goals": 1,
+     "bid": 0.67,
+     "goal_side": "away",
+     "home_goals": 2,
+     "kind": "pl",
+     "maker": {
+      "cost": 0.67387,
+      "filled": false,
+      "roi": null
+     },
+     "period": 2,
+     "side": "no",
+     "strike": 2.5,
+     "taker": {
+      "cost": 0.69523,
+      "depth": 0,
+      "filled": false,
+      "roi": 0.4384
+     },
+     "ticker": "KXNHLSPREAD-26NOV09NYREDM-EDM3",
+     "ts": 1794277020,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.98,
+     "away_goals": 1,
+     "bid": 0.97,
+     "goal_side": "away",
+     "home_goals": 2,
+     "kind": "over",
+     "maker": {
+      "cost": 0.97051,
+      "filled": false,
+      "roi": null
+     },
+     "period": 2,
+     "side": "yes",
+     "strike": 3.5,
+     "taker": {
+      "cost": 0.98137,
+      "depth": 0,
+      "filled": false,
+      "roi": 0.019
+     },
+     "ticker": "KXNHLTOTAL-26NOV09NYREDM-4",
+     "ts": 1794277020,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.96,
+     "away_goals": 1,
+     "bid": 0.95,
+     "goal_side": "away",
+     "home_goals": 2,
+     "kind": "over",
+     "maker": {
+      "cost": 0.95083,
+      "filled": true,
+      "roi": -1.0
+     },
+     "period": 2,
+     "side": "yes",
+     "strike": 4.5,
+     "taker": {
+      "cost": 0.96269,
+      "depth": 2.07,
+      "filled": false,
+      "roi": -1.0
+     },
+     "ticker": "KXNHLTOTAL-26NOV09NYREDM-5",
+     "ts": 1794277020,
+     "v2": true,
+     "won": false
+    },
+    {
+     "ask": 0.75,
+     "away_goals": 1,
+     "bid": 0.74,
+     "goal_side": "away",
+     "home_goals": 2,
+     "kind": "over",
+     "maker": {
+      "cost": 0.74337,
+      "filled": true,
+      "roi": -1.0
+     },
+     "period": 2,
+     "side": "yes",
+     "strike": 5.5,
+     "taker": {
+      "cost": 0.76313,
+      "depth": 175.78,
+      "filled": true,
+      "roi": -1.0
+     },
+     "ticker": "KXNHLTOTAL-26NOV09NYREDM-6",
+     "ts": 1794277020,
+     "v2": true,
+     "won": false
+    },
+    {
+     "ask": 0.99,
+     "away_goals": 1,
+     "bid": 0.96,
+     "goal_side": "home",
+     "home_goals": 3,
+     "kind": "over",
+     "maker": {
+      "cost": 0.96067,
+      "filled": true,
+      "roi": -1.0
+     },
+     "period": 3,
+     "side": "yes",
+     "strike": 4.5,
+     "taker": {
+      "cost": 0.99069,
+      "depth": 9503.76,
+      "filled": true,
+      "roi": -1.0
+     },
+     "ticker": "KXNHLTOTAL-26NOV09NYREDM-5",
+     "ts": 1794282180,
+     "v2": true,
+     "won": false
+    }
+   ],
+   "event": "KXNHLGAME-26NOV09NYREDM",
+   "fav": "home",
+   "favmid": 0.605,
+   "goals": 4,
+   "ko": 1794272400,
+   "logged": "2026-11-10T04:00:20.781893+00:00",
+   "thin": false,
+   "timed": 4,
+   "title": "NYR at EDM",
+   "version": "nhlgoal-v1",
+   "vol": 18784.25
   }
  ],
- "last_run": "2026-11-10T03:00:17.395220+00:00",
+ "last_run": "2026-11-10T04:00:20.781893+00:00",
  "registered": "2026-11-08T07:45:00Z",
  "since": "2026-11-08",
  "skips": {},
