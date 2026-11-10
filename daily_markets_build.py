@@ -109,7 +109,7 @@ def build(now=None, builders=None):
     html = C.document(
         f"{C.SITE_NAME} · {TITLE}",
         "Kalshi daily-close ladder lanes in one tab: crypto, commodities, econ and finance, each rule's record per market-day.",
-        KEY, (("swing15", "15-min Swing"),) + tuple((g, label) for g, label, _f in GROUPS), C.stamp(now), body_html(parts),
+        KEY, (("swing15", "15-Minute"),) + tuple((g, label) for g, label, _f in GROUPS), C.stamp(now), body_html(parts),
         script_src="./site.js", scripts=("./tables.js",), sports=True)
     return B.label_cells(html)
 

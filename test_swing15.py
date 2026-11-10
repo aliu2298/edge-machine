@@ -175,9 +175,10 @@ print("\nthe page")
 html = WB.section(state)
 check("S2 and S3 rows in the Rules-list design; S1 retired (2026-11-09) but still graded underneath",
       (re.findall(r'data-source="(swing15_s\d)"', html), c[WB.HEADLINE_S1]["n"]), (["swing15_s2", "swing15_s3"], 2))
-check("the same seven columns as Daily Markets",
-      re.sub(r"<[^>]+>", "|", html.split('sp-head-line')[1].split("</div>")[0]).count("|") > 0
-      and all(h in html for h in ("Market", "Record", "ROI after fees", "Won v priced", "Evidence", "Verdict")), True)
+check("seven columns: the Kalshi market column is gone, vs control and Status in",
+      all(h in html.split('sp-head-line')[1].split("</div>")[0]
+          for h in ("vs control", "Record", "Return after fees", "Won v priced", "Evidence", "Status"))
+      and ">Kalshi</span>" not in html, True)
 check("too early under 10 windows a series", "Too early" in html, True)
 check("the scope says scanned / with windows", "scanned 1 / with windows 1" in html, True)
 check("no dollar sign, no guarded phrase", (re.search(r"\$\d", html), sandbox_audit.COPY_RE.findall(html + WB.index_html(state))), (None, []))

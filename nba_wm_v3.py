@@ -120,6 +120,7 @@ def run(state, decisions=None, now=None, fetch=D.get, cfg=None):
     # A decision the executor ceded to the other lane (nba_wm_bucket_priority) was never traded: it is counted, not replayed or graded.
     state.setdefault("ceded", {}).update(CP.ceded_records(decisions))
     decisions = {k: d for k, d in decisions.items() if not CP.is_ceded(d)}
+    state.setdefault("kept", {}).update(CP.kept_records(decisions))      # bp-v2: counted only; a kept row is traded and graded as normal
     state["since"] = state.get("since") or first_night(decisions, cfg["take"])
     obs = dict(at=now.isoformat(), new=0, waiting=0, errors=[])
     todo = [(k, d) for k, d in sorted(decisions.items(), key=lambda kv: kv[1].get("tip") or "") if k not in state["rows"] and d.get("rule_ok")

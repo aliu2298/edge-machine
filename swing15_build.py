@@ -1,10 +1,15 @@
-"""The "15-Minute Swing" section of the Daily Markets tab and its Sandbox index row (swing15.py). Paper · no orders.
+"""The "15-Minute" section of the Daily Markets tab and its Sandbox index rows (swing15.py). Paper · no orders.
 
-One headline row per strategy (S1, S2, S3) in the Econ Daily Rules-list design; every number beyond the headline sits
-in that row's fold. S1's headline is its middle cell, fixed when it was registered: the 25c band, a 2x take-profit,
-held to settlement when the sell does not fill. The full S1 grid is in the fold.
+Layout (2026-11-09, Olu: "looks a bit scanty"): a scoreboard of every live lane first, then one block per lane (Swing v3,
+The Flip Side v3, Steady Favourites, Hold to End v3, the Lead Swap Board), each rule a Rules-list row whose fold holds
+only its rule details, with its per-market Doing well / Not doing well tables open beneath; then the v1 baseline and one
+"Retired & removed" archive, both collapsed. Controls are a muted "vs control" figure, never rows of their own. Every time
+reads in Central, as the page header does. Layout only: no rule, record or pick depends on this file.
 """
+import datetime as _dt
 import html as _h
+import re
+from zoneinfo import ZoneInfo
 
 import swing15 as W
 
@@ -55,6 +60,18 @@ def _z(x):
     return "—" if x is None else f"{x:+.2f}".replace("-", "−")
 
 
+
+
+CT = ZoneInfo("America/Chicago")
+
+
+def _start(iso):
+    """A time in this section, in Central like the page header: 'Nov 9, 6:00 PM CT'."""
+    t = _dt.datetime.fromisoformat(str(iso).replace("Z", "+00:00"))
+    t = (t if t.tzinfo else t.replace(tzinfo=_dt.timezone.utc)).astimezone(CT)
+    return f"{t:%b} {t.day}, {t.hour % 12 or 12}:{t:%M} {'AM' if t.hour < 12 else 'PM'} CT"
+
+
 def _tone(c):
     if not c or c["n"] < W.REVIEW_AT:
         return "mut"
@@ -70,41 +87,68 @@ def _per_series(state, key):
     return out
 
 
-def _verdict(per):
+def status_chip(per):
+    """The lane's status from its per-market bet counts ({market: n}; one pooled entry for a pooled lane):
+    'Too early (n/10)' until a market reaches 10, 'Review' from 10, 'Ready to decide (30+)' from 30."""
+    best = max(per.values(), default=0)
     due = sum(n >= W.DECIDE_AT for n in per.values())
-    rev = sum(W.REVIEW_AT <= n < W.DECIDE_AT for n in per.values())
+    many = len(per) > 1
     if due:
-        return f'<span class="sig w">Decide · {due} series at {W.DECIDE_AT}+</span>'
-    if rev:
-        return f'<span class="sig w">Review · {rev} series at {W.REVIEW_AT}+</span>'
-    return '<span class="sig n">Too early</span>'
+        return (f'<span class="sig w">Ready to decide ({W.DECIDE_AT}+)'
+                + (f' · {due} market{"s" * (due != 1)}' if many else "") + '</span>')
+    if best >= W.REVIEW_AT:
+        return '<span class="sig w">Review</span>'
+    return f'<span class="sig n">Too early ({best}/{W.REVIEW_AT})</span>'
 
 
-def _row(key, label, c, per, body):
+def _ctrl_txt(ctrl):
+    """The muted 'vs control' figure: the control's return after fees (its record in the hover)."""
+    if not ctrl:
+        return '<span class="mut">—</span>'
+    return (f'<span class="mut" title="Control: {ctrl["hits"]}/{ctrl["n"]} won">{pct(ctrl["mean_roi"])}</span>')
+
+
+HEAD_LINE = ('<div class="sp-line sp-head-line" aria-hidden="true"><span class="sp-cell sp-c-name">Rule</span>'
+             '<span class="sp-cell sp-c-market">vs control</span><span class="sp-cell num">Record</span>'
+             '<span class="sp-cell num">Return after fees</span><span class="sp-cell num">Won v priced</span>'
+             '<span class="sp-cell num">Evidence</span><span class="sp-cell sp-c-verdict">Status</span></div>')
+
+
+def _row(key, label, c, per, body, ctrl=None, anchor=None, sport="swing15"):
+    """One rule row in the Rules-list design. Its fold holds the rule details only; the per-market tables sit open
+    beneath it (_card)."""
     record = '<span class="mut">—</span>' if not c else f'{c["hits"]}–{c["n"] - c["hits"]}'
     roi = '<span class="mut">—</span>' if not c else f'<span class="{_tone(c)}">{pct(c["mean_roi"])}</span>'
     wvp = "—" if not c else f'{c["hits"]} v {c["fair"] * c["n"]:.1f}'
     best = max(per.values(), default=0)
-    return (f'<details class="sp-rule{"" if c and c["n"] >= W.REVIEW_AT else " is-early"}" data-source="{esc(key)}" '
-            f'data-sport="swing15" data-scope="clubs" data-stage="sandbox">'
+    return (f'<details class="sp-rule{"" if c and c["n"] >= W.REVIEW_AT else " is-early"}"'
+            + (f' id="{esc(anchor)}"' if anchor else "")
+            + f' data-source="{esc(key)}" data-sport="{esc(sport)}" data-scope="clubs" data-stage="sandbox">'
             f'<summary class="sp-line"><span class="sp-cell sp-c-name"><span class="sp-chev" aria-hidden="true">›</span>'
             f'<b class="sp-name" title="{esc(label)}">{esc(label)}</b><span class="sr-only"> · Rule details</span></span>'
-            f'<span class="sp-cell sp-c-market" data-l="Market">Kalshi</span>'
+            f'<span class="sp-cell sp-c-market" data-l="vs control">{_ctrl_txt(ctrl)}</span>'
             f'<span class="sp-cell num" data-l="Record">{record}</span>'
-            f'<span class="sp-cell num" data-l="ROI after fees">{roi}</span>'
+            f'<span class="sp-cell num" data-l="Return after fees">{roi}</span>'
             f'<span class="sp-cell num" data-l="Won v priced">{esc(wvp)}</span>'
             f'<span class="sp-cell num" data-l="Evidence">{min(best, W.DECIDE_AT)}/{W.DECIDE_AT}</span>'
-            f'<span class="sp-cell sp-c-verdict" data-l="Verdict">{_verdict(per)}</span></summary>'
+            f'<span class="sp-cell sp-c-verdict" data-l="Status">{status_chip(per)}</span></summary>'
             f'<div class="sp-details-body">{body}</div></details>')
+
+
+def _label(row, head):
+    """Each cell names its column (data-l) for the phone's card layout. sandbox_build.label_cells skips a table that
+    already has its <thead>, which every table here has, so the cells are labelled here."""
+    it = iter(head)
+    return re.sub(r"<td(?=[ >])", lambda m: f'<td data-l="{esc(next(it, ""))}"', row)
 
 
 def _table(head, rows):
     return ('<div class="tbl"><table><thead><tr>' + "".join(f"<th{' class=\"num\"' if i else ''}>{esc(h)}</th>" for i, h in enumerate(head))
-            + "</tr></thead><tbody>" + "".join(rows) + "</tbody></table></div>")
+            + "</tr></thead><tbody>" + "".join(_label(r, head) for r in rows) + "</tbody></table></div>")
 
 
 SORT_LINE = "Sorted automatically each hour by return after fees; nothing is removed."
-BAD_THEAD = '<thead style="background:rgba(220,38,38,.14)">'
+BAD_THEAD = '<thead class="sw15-bad">'          # a class, not an inline style: the site's CSP blocks style attributes
 
 
 def _zd(c):
@@ -126,7 +170,9 @@ def split_markets(items):
 
 
 def count_line(good, bad):
-    return f'<p class="sm ls-count"><b>{len(good)} doing well · {len(bad)} not</b></p>'
+    """The count as a header chip over a lane's per-market tables."""
+    return (f'<p class="sw15-split-h"><span class="sig n ls-count">{len(good)} doing well · {len(bad)} not</span> '
+            f'<span class="sm mut">per market</span></p>')
 
 
 def _split_html(head, good, bad, tr, none=()):
@@ -139,6 +185,12 @@ def _split_html(head, good, bad, tr, none=()):
             + (f'<p class="sm mut">No bets yet: {", ".join(mkt(t) for t in none)}</p>' if none else ""))
 
 
+def _card(row, split):
+    """One rule: its row (folded rule details), then its per-market tables, open."""
+    return (f'<div class="sp-rules-list sw15-card" data-list="sandbox">{HEAD_LINE}{row}</div>'
+            f'<div class="sw15-split">{split}</div>')
+
+
 def _cell_tr(label, c, ticker=None):
     first = mkt(ticker) if ticker else esc(label)
     if not c:
@@ -149,30 +201,30 @@ def _cell_tr(label, c, ticker=None):
             f'<td class="num">{_zd(c)}</td><td class="num">{pct(h0)} / {pct(h1)}</td></tr>')
 
 
-HEAD = ("Cell", "n", "Hit", "Fair", "ROI after fees", "z (by day)", "Halves")
+HEAD = ("Cell", "n", "Hit", "Fair", "Return after fees", "z (by day)", "Halves")
 
 
 def _splits(state, key):
     rows = []
-    for name, flt in (
+    for label, flt in (
             *[(g, (lambda w, g=g: w["group"] == g)) for g in W.GROUPS],
-            ("US hours (9:30–16:00 ET weekdays)", lambda w: w["us_hours"]),
+            ("US hours (8:30 AM–3:00 PM CT weekdays)", lambda w: w["us_hours"]),
             ("Overnight and weekends", lambda w: not w["us_hours"])):
-        rows.append(_cell_tr(name, W.cells(state, flt).get(key)))
+        rows.append(_cell_tr(label, W.cells(state, flt).get(key)))
     return _table(HEAD, rows)
 
 
 def _v1_markets(state, key):
-    """(count line, split tables) for one v1 strategy cell, by series."""
+    """(good, bad, split tables) for one v1 strategy cell, by series."""
     cs = {s: W.cells(state, lambda w, s=s: w["series"] == s).get(key)
           for s in sorted({w["series"] for w in state["windows"].values()})}
     good, bad, none = split_markets([(s, c["n"] if c else 0, c["mean_roi"] if c else 0) for s, c in cs.items()])
     tr = lambda r: _cell_tr(r[0], cs[r[0]], ticker=r[0]).replace(f"{mkt(r[0])}</td>", f"{mkt(r[0])}{_under10(r[1])}</td>", 1)
-    return count_line(good, bad), _split_html(("Market",) + HEAD[1:], good, bad, tr, none)
+    return good, bad, _split_html(("Market",) + HEAD[1:], good, bad, tr, none)
 
 
 def _removed_fold(labels, removed, removed_at, won_word, word="Removed", note=""):
-    """The cells taken out at a cut: their final n, wins and ROI (windows before the cut), collapsed."""
+    """The cells taken out at a cut: their final n, wins and return (windows before the cut), collapsed."""
     trs = []
     for strat, label in labels.items():
         r = (removed or {}).get(strat) or {}
@@ -182,74 +234,66 @@ def _removed_fold(labels, removed, removed_at, won_word, word="Removed", note=""
                        f'<td class="num">{pct(x["mean_roi"]) if x else "—"}</td></tr>')
     if not trs:
         return ""
-    return (f'<details class="fold sw15-removed"><summary>{esc(word)} {esc(_start(removed_at))} · {len(trs)} markets, '
-            f'final records</summary>{note}' + _table(("Rule", "Market", "n", "Wins", "ROI after fees"), trs) + '</details>')
+    return (f'<details class="fold sw15-removed"><summary>{esc(word)} {esc(_start(removed_at))} · {len(trs)} '
+            f'market{"s" * (len(trs) != 1)}, final records</summary>{note}'
+            + _table(("Rule", "Market", "n", "Wins", "Return after fees"), trs) + '</details>')
 
 
-def _frozen_block(anchor, title, line, version, labels, rec, sport, won_word, removed=None, removed_at=None, extra=""):
-    """A frozen-cell lane block (sw15, flip, hte): one row per strategy with cells, each market's n, wins and ROI in its
-    fold, then the removed cells' final records (collapsed)."""
-    rows = []
+def _lane(sb, key, label, anchor, c, per, good, bad, ctrl=None):
+    """One scoreboard entry."""
+    if sb is not None:
+        sb.append(dict(key=key, label=label, anchor=anchor, c=c, per=per, good=len(good), bad=len(bad), ctrl=ctrl))
+
+
+def _frozen_block(anchor, title, line, version, labels, rec, sport, won_word, sb=None, short=None, extra=""):
+    """A frozen-cell lane block (sw15, flip, hte): one card per strategy with cells: the row (rule details folded) and
+    its markets' n, wins, return and z open beneath, split Doing well / Not doing well. Removed and retired cells live in
+    the archive at the bottom of the section."""
+    cards = []
     for strat, label in labels.items():
         r = rec[strat]
         if not r["series"]:
-            continue                                             # a row with every market removed shows only below
+            continue                                             # a row with every market removed is archive-only
         per = {s: (x["n"] if x else 0) for s, x in r["series"].items()}
         ser = r["series"]
         good, bad, none = split_markets([(s, x["n"] if x else 0, x["mean_roi"] if x else 0) for s, x in ser.items()])
-        tr = lambda q: (f'<tr><td>{mkt(q[0])}{_under10(q[1])}</td><td class="num">{q[1]}</td>'
-                        f'<td class="num">{ser[q[0]]["hits"]}</td><td class="num">{pct(ser[q[0]]["mean_roi"])}</td>'
-                        f'<td class="num">{_zd(ser[q[0]])}</td></tr>')
+        tr = lambda q, ser=ser: (f'<tr><td>{mkt(q[0])}{_under10(q[1])}</td><td class="num">{q[1]}</td>'
+                                 f'<td class="num">{ser[q[0]]["hits"]}</td><td class="num">{pct(ser[q[0]]["mean_roi"])}</td>'
+                                 f'<td class="num">{_zd(ser[q[0]])}</td></tr>')
         skips = r.get("skips") or {}
-        body = (count_line(good, bad)
-                + f'<p class="sp-details-name"><b>{esc(label)}</b> · Kalshi 15-minute windows · paper · {esc(version)}</p>'
-                f'<p class="sp-def">Frozen: {len(r["series"])} markets. Held to settlement; taker fee '
-                f'on entry.</p>' + _split_html(("Market", "n", won_word(strat), "ROI after fees", "z (by day)"),
-                                               good, bad, tr, none)
+        body = (f'<p class="sp-details-name"><b>{esc(label)}</b> · Kalshi 15-minute windows · paper · {esc(version)}</p>'
+                f'<p class="sp-def">Frozen: {len(r["series"])} markets ({esc(", ".join(name(s) for s in r["series"]))}). '
+                f'Held to settlement; taker fee on entry.</p>'
                 + (f'<p class="sm mut">Skipped: {esc(", ".join(f"{k} {v}" for k, v in sorted(skips.items())))}</p>'
                    if skips else ""))
-        rows.append(_row(strat, label, r["all"], per, body).replace('data-sport="swing15"', f'data-sport="{sport}"'))
-    head = ('<div class="sp-line sp-head-line" aria-hidden="true"><span class="sp-cell sp-c-name">Rule</span>'
-            '<span class="sp-cell sp-c-market">Market</span><span class="sp-cell num">Record</span>'
-            '<span class="sp-cell num">ROI after fees</span><span class="sp-cell num">Won v priced</span>'
-            '<span class="sp-cell num">Evidence</span><span class="sp-cell sp-c-verdict">Verdict</span></div>')
+        lid = f"sw15-{strat}"
+        cards.append(_card(_row(strat, label, r["all"], per, body, anchor=lid, sport=sport),
+                           count_line(good, bad) + _split_html(("Market", "n", won_word(strat), "Return after fees",
+                                                                "z (by day)"), good, bad, tr, none)))
+        _lane(sb, strat, f"{short or title} · {label}", lid, r["all"], per, good, bad)
     return (f'<h3 class="dm-title" id="{anchor}">{esc(title)}</h3><p class="scope">{esc(line)}</p>'
-            f'<p class="sm mut">{SORT_LINE}</p>'
-            f'<div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>'
-            + extra + (_removed_fold(labels, removed, removed_at, won_word) if removed_at else ""))
+            f'<p class="sm mut">{SORT_LINE}</p>' + "".join(cards) + extra)
 
 
 def _cut_line(M):
     return f" {M.VERSION} from {_start(M.REMOVED_AT)}: negative markets removed after ~4h of results."
 
 
-def _start(iso):
-    return iso[:16].replace("T", " ") + " UTC"
-
-
-def v2_block(state):
-    """15-Minute Swing v2 (swing15v2.py), then The Flip Side v2 (flipside_v2.py). Above v1."""
+def swing_v3_block(state, sb=None):
     import swing15v2 as V
-    out = _frozen_block("swing15v2", "15-Minute Swing v3",
-                        f"Cells picked from one overnight session; fresh record from {_start(V.FROM)}; review at "
-                        f"{W.REVIEW_AT}, decide at {W.DECIDE_AT}." + _cut_line(V), V.VERSION, V.LABELS, V.records(state),
-                        "swing15v2", lambda k: "Sells filled" if k == "swing15v2_s1" else "Won",
-                        V.records(state, removed=True), V.REMOVED_AT, extra=_v3_s1_retired(state, V))
-    try:
-        import flipside_v2 as F
-        out += _frozen_block("flipside_v2", "The Flip Side v3",
-                             "Opposite side of the 15-Minute Swing; cells picked from one overnight session; 14-day "
-                             f"backtest of the flips ran −0.5% to −16%; fresh record from {_start(F.FROM)}; review at "
-                             f"{W.REVIEW_AT}, decide at {W.DECIDE_AT}." + _cut_line(F), F.VERSION, F.LABELS,
-                             F.records(state), "flipside_v2", lambda k: "Won", F.records(state, removed=True), F.REMOVED_AT)
-    except Exception:                                           # noqa: BLE001  (never breaks the section)
-        pass
-    try:
-        import holdtoend as H
-        out += holdtoend_block(state, H)
-    except Exception:                                           # noqa: BLE001  (never breaks the section)
-        pass
-    return out
+    return _frozen_block("swing15v2", "15-Minute Swing v3",
+                         f"Cells picked from one overnight session; fresh record from {_start(V.FROM)}; review at "
+                         f"{W.REVIEW_AT}, decide at {W.DECIDE_AT}." + _cut_line(V), V.VERSION, V.LABELS, V.records(state),
+                         "swing15v2", lambda k: "Won", sb, short="Swing v3")
+
+
+def flip_block(state, sb=None):
+    import flipside_v2 as F
+    return _frozen_block("flipside_v2", "The Flip Side v3",
+                         "Opposite side of the 15-Minute Swing; cells picked from one overnight session; 14-day "
+                         f"backtest of the flips ran −0.5% to −16%; fresh record from {_start(F.FROM)}; review at "
+                         f"{W.REVIEW_AT}, decide at {W.DECIDE_AT}." + _cut_line(F), F.VERSION, F.LABELS,
+                         F.records(state), "flipside_v2", lambda k: "Won", sb, short="Flip v3")
 
 
 def _v3_s1_retired(state, V):
@@ -260,7 +304,8 @@ def _v3_s1_retired(state, V):
     note = ("" if not a else
             f'<p class="sm">S1 final: {a["hits"]}/{a["n"]} sells filled against {a["fair"] * a["n"]:.1f} priced, '
             f'{pct(a["mean_roi"])} after fees'
-            + ("" if not since else f'; since the 18:00 UTC cut, {since["hits"]}/{since["n"]}, {pct(since["mean_roi"])}')
+            + ("" if not since else f'; since the {_start(V.REMOVED_AT)} cut, {since["hits"]}/{since["n"]}, '
+                                    f'{pct(since["mean_roi"])}')
             + '. Replaced by Steady Favourites. No new entries.</p>')
     return _removed_fold({"swing15v2_s1": V.LABELS["swing15v2_s1"]}, ret, V.RETIRED_AT,
                          lambda k: "Sells filled", word="Retired", note=note)
@@ -283,11 +328,12 @@ def _v1_s1_retired(state, allc_before):
             f'records</summary>{note}' + _table(HEAD, grid) + '</details>')
 
 
-def steadyfav_block(state):
-    """Steady Favourites (steadyfav.py, sw15-sf1): rules A and B on four fixed markets, then the pooled controls."""
+def steadyfav_block(state, sb=None):
+    """Steady Favourites (steadyfav.py, sw15-sf1): rules A and B on four fixed markets; the pooled control of each
+    rule is a muted figure in its row and one muted line under its tables."""
     import steadyfav as S
     rec = S.records(state)
-    rows = []
+    cards = []
     defs = {"steadyfav_a": "At minute 2, buy the side above 50c (by the mid) at its ask, filled only on a print at or "
                            "through it in the next minute; held to settlement; taker fee on entry (v1's S2).",
             "steadyfav_b": "The same at minute 10, with 5 minutes left (v1's S3)."}
@@ -298,70 +344,63 @@ def steadyfav_block(state):
         tr = lambda q, ser=ser: (f'<tr><td>{mkt(q[0])}{_under10(q[1])}</td><td class="num">{q[1]}</td>'
                                  f'<td class="num">{ser[q[0]]["hits"]} v {ser[q[0]]["fair"] * q[1]:.1f}</td>'
                                  f'<td class="num">{pct(ser[q[0]]["mean_roi"])}</td><td class="num">{_zd(ser[q[0]])}</td></tr>')
-        c = (rec[rule + "_ctrl"] or {}).get("all")
+        ctl_rec = rec.get(rule + "_ctrl") or {}
+        c = ctl_rec.get("all")
         ctl = ("no control windows yet" if not c else
                f'{c["hits"]}/{c["n"]} won against {c["fair"] * c["n"]:.1f} priced, {pct(c["mean_roi"])} after fees')
-        body = (count_line(good, bad)
-                + f'<p class="sp-details-name"><b>{esc(S.LABELS[rule])}</b> · Kalshi 15-minute windows · paper · '
-                  f'{esc(S.VERSION)}</p><p class="sp-def">{esc(text)} Frozen: {len(S.MARKETS)} markets.</p>'
-                + _split_html(("Market", "Bets", "Won v priced", "Return after fees", "z (by day)"), good, bad, tr, none)
-                + f'<p class="sm">Control (the same rule on the other markets, pooled): {esc(ctl)}.</p>')
+        body = (f'<p class="sp-details-name"><b>{esc(S.LABELS[rule])}</b> · Kalshi 15-minute windows · paper · '
+                f'{esc(S.VERSION)}</p><p class="sp-def">{esc(text)} Frozen: {len(S.MARKETS)} markets. Control: the same '
+                f'rule on the other {ctl_rec.get("markets", 0)} 15-minute markets, pooled.</p>')
         per = {s: (x["n"] if x else 0) for s, x in ser.items()}
-        rows.append(_row(rule, S.LABELS[rule], r["all"], per, body).replace('data-sport="swing15"', 'data-sport="steadyfav"'))
-    for ctrl, rule in S.CONTROLS.items():
-        c = rec[ctrl]["all"]
-        body = (f'<p class="sp-details-name"><b>{esc(S.LABELS[ctrl])}</b> · paper · {esc(S.VERSION)}</p>'
-                f'<p class="sp-def">Rule {rule[-1].upper()} on the other {rec[ctrl]["markets"]} 15-minute markets, one '
-                f'pooled row: does "steady" beat everything else?</p>'
-                + (_table(("Pooled", "Bets", "Won v priced", "Return after fees", "z (by day)"),
-                          [f'<tr><td>Other markets</td><td class="num">{c["n"]}</td><td class="num">{c["hits"]} v '
-                           f'{c["fair"] * c["n"]:.1f}</td><td class="num">{pct(c["mean_roi"])}</td>'
-                           f'<td class="num">{_zd(c)}</td></tr>']) if c else '<p class="sm mut">No windows yet.</p>'))
-        rows.append(_row(ctrl, S.LABELS[ctrl], c, {"all": c["n"] if c else 0}, body)
-                    .replace('data-sport="swing15"', 'data-sport="steadyfav"'))
+        lid = f"sw15-{rule}"
+        split = (count_line(good, bad)
+                 + _split_html(("Market", "Bets", "Won v priced", "Return after fees", "z (by day)"), good, bad, tr, none)
+                 + f'<p class="sm mut sf-ctrl">Control (the same rule on the other markets, pooled): {esc(ctl)}.</p>')
+        cards.append(_card(_row(rule, S.LABELS[rule], r["all"], per, body, ctrl=c, anchor=lid, sport="steadyfav"), split))
+        _lane(sb, rule, "Steady Favourites · " + S.LABELS[rule], lid, r["all"], per, good, bad, ctrl=c)
     old = S.records(state, earlier=True)
     ea, eb = old["steadyfav_a"]["all"], old["steadyfav_b"]["all"]
     early = ("" if not (ea or eb) else
              '<p class="sm mut sf-earlier">Earlier result, not counted (v1 on these four markets, before the start): '
              + "; ".join(f'{k} {x["hits"]}/{x["n"]}, {pct(x["mean_roi"])}' for k, x in (("A", ea), ("B", eb)) if x) + '.</p>')
-    head = ('<div class="sp-line sp-head-line" aria-hidden="true"><span class="sp-cell sp-c-name">Rule</span>'
-            '<span class="sp-cell sp-c-market">Market</span><span class="sp-cell num">Record</span>'
-            '<span class="sp-cell num">ROI after fees</span><span class="sp-cell num">Won v priced</span>'
-            '<span class="sp-cell num">Evidence</span><span class="sp-cell sp-c-verdict">Verdict</span></div>')
     names = ", ".join(name(s) for s in S.MARKETS)
     return (f'<h3 class="dm-title" id="steadyfav">Steady Favourites</h3><p class="scope">Steady Favourites · '
             f'{esc(names)} · the favourite bought at minute 2 (A) and at 5 minutes left (B), held to settlement · fresh '
             f'record from {esc(_start(S.FROM))} · review at {W.REVIEW_AT}, decide at {W.DECIDE_AT}. Replaces the S1 '
-            f'Swing.</p><p class="sm mut">{SORT_LINE}</p>'
-            f'<div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>{early}')
+            f'Swing.</p><p class="sm mut">{SORT_LINE}</p>' + "".join(cards) + early)
 
 
-def holdtoend_block(state, H):
+def holdtoend_block(state, H, sb=None):
     """Hold to End v3: one live cell (USDCAD 35c) on a fresh record; USDCAD's earlier hte-v1 result as a muted
-    not-counted line; hte-v2 (GBPUSD 35c) in a Retired fold; the 18:00Z cut in the Removed fold."""
+    not-counted line. hte-v2 and the 18:00Z cut are in the archive."""
     gone = H.records(state, removed=True)
     early = (gone.get("holdtoend_35") or {}).get("series", {}).get("KXUSDCAD15M")
     early_line = ("" if not early else
                   f'<p class="sm mut hte-earlier">Earlier result, not counted: USD/CAD 35c went {early["hits"]}/{early["n"]}, '
                   f'{pct(early["mean_roi"])} after fees ({esc(_start(H.FROM))} to {esc(_start(H.REMOVED_AT))}, hte-v1).</p>')
+    line = (f"Hold to End v3 · USD/CAD at 35c · fresh record from {_start(H.FROM_V3)} · review at {W.REVIEW_AT}, "
+            f"decide at {W.DECIDE_AT}.")
+    return _frozen_block("holdtoend", "Hold to End v3", line, H.VERSION,
+                         {k: v.replace("Hold to End · ", "") for k, v in H.LABELS.items()}, H.records(state), "holdtoend",
+                         lambda k: "Won", sb, short="Hold to End v3", extra=early_line)
+
+
+def _hte_archive(state, H):
     ret = H.records(state, retired=True)
     r35 = (ret.get("holdtoend_35") or {}).get("all")
     note = ("" if not r35 else
             f'<p class="sm">hte-v2 final (decide at {W.DECIDE_AT}): {r35["hits"]}/{r35["n"]} against '
             f'{r35["fair"] * r35["n"]:.1f} priced, {pct(r35["mean_roi"])} after fees. No new entries.</p>')
-    retired = _removed_fold({"holdtoend_35": "Hold to End v2 · 35c"}, {"holdtoend_35": ret.get("holdtoend_35")},
-                            H.RETIRED_AT, lambda k: "Won", word="Retired", note=note)
-    line = (f"Hold to End v3 · USD/CAD at 35c · fresh record from {_start(H.FROM_V3)} · review at {W.REVIEW_AT}, "
-            f"decide at {W.DECIDE_AT}.")
-    return _frozen_block("holdtoend", "Hold to End v3", line, H.VERSION, H.LABELS, H.records(state), "holdtoend",
-                         lambda k: "Won", gone, H.REMOVED_AT, extra=early_line + retired)
+    return (_removed_fold({"holdtoend_35": "Hold to End v2 · 35c"}, {"holdtoend_35": ret.get("holdtoend_35")},
+                          H.RETIRED_AT, lambda k: "Won", word="Retired", note=note)
+            + _removed_fold(H.LABELS, H.records(state, removed=True), H.REMOVED_AT, lambda k: "Won"))
 
 
 def _bars(vals, labels):
     top = max(vals) or 1
     return _table(("Minute", "Swaps", ""), [
-        f'<tr><td>{esc(l)}</td><td class="num">{v}</td><td><span aria-hidden="true" style="display:inline-block;height:.6em;'
-        f'width:{round(100 * v / top)}px;background:currentColor;opacity:.45"></span></td></tr>' for v, l in zip(vals, labels)])
+        f'<tr><td>{esc(l)}</td><td class="num">{v}</td><td><span class="sw15-bar sw15-bar-{round(10 * v / top)}" '
+        f'aria-hidden="true"></span></td></tr>' for v, l in zip(vals, labels)])
 
 
 def _rank_tr(r):
@@ -405,60 +444,61 @@ def _ls_tr(r):
     tag = _under10(v[0])
     ctl = "—" if not c or not c[0] else f"{c[1]}/{c[0]}, {pct(c[2] / c[0])}"
     return (f'<tr><td>{mkt(s)}{tag}</td><td class="num">{v[0]}</td><td class="num">{v[1]}</td>'
-            f'<td class="num">{pct(v[2] / v[0])}</td><td class="num">{ctl}</td><td class="num">{t[0]} / {t[1]}</td></tr>')
+            f'<td class="num">{pct(v[2] / v[0])}</td><td class="num mut">{ctl}</td><td class="num">{t[0]} / {t[1]}</td></tr>')
 
 
 LS_HEAD = ("Market", "Bets", "Wins", "Return after fees", "Control (wins/bets, return)",
            "Times picked (hours top 3 / bottom 3)")
 
 
-def ls_groups_html(rt, picks, ranked=()):
-    g = ls_groups(rt, picks, ranked)
-    parts = [f'<p class="sm mut">{SORT_LINE}</p>']
-    for strat, _ctrl, label in LS_TRADES:
-        good, bad, none = g[strat]
-        parts.append(
-            f'<div class="ls-trade" data-trade="{strat}"><h4>{esc(label)}</h4>{count_line(good, bad)}'
-            + _split_html(LS_HEAD, good, bad, _ls_tr)
+def _ls_trade_split(g, strat):
+    good, bad, none = g[strat]
+    return (f'<div class="ls-trade" data-trade="{strat}">{count_line(good, bad)}' + _split_html(LS_HEAD, good, bad, _ls_tr)
             + f'<details class="fold"><summary>Not picked yet ({len(none)})</summary><p class="sm">'
             + (", ".join(mkt(t) for t in none) or "none") + '</p></details></div>')
-    return "".join(parts)
 
 
-def leadswap_block(state):
-    """The Lead Swap Board (leadswap.py): the routing record rows, then the board, persistence and timing folds."""
+def ls_groups_html(rt, picks, ranked=()):
+    """Both trades' per-market splits, each under its trade's name (the block puts each under its own row)."""
+    g = ls_groups(rt, picks, ranked)
+    return f'<p class="sm mut">{SORT_LINE}</p>' + "".join(
+        f'<h4>{esc(label)}</h4>' + _ls_trade_split(g, strat) for strat, _c, label in LS_TRADES)
+
+
+def leadswap_block(state, sb=None):
+    """The Lead Swap Board (leadswap.py): the two trades (row + open per-market split, each against its control), then
+    one collapsed fold with how the board ranks markets (picks, board, persistence, timing, hour of day)."""
     import leadswap as L
     led = L.load()
     if not led.get("board"):
         led = L.update(state, L.empty())
     b, per, rt = led["board"], led["persistence"] or {}, led["routing"] or {}
-    rows = []
-    for strat, label in L.STRATS.items():
-        c = rt.get(strat)
-        trs = [f'<tr><td>{mkt(s)}</td><td class="num">{v[0]}</td><td class="num">{v[1]}</td>'
-               f'<td class="num">{pct(v[2] / v[0])}</td></tr>' for s, v in sorted(((c or {}).get("series") or {}).items())]
+    pk = led.get("picks") or {}
+    g = ls_groups(rt, pk, [r[0] for r in (b.get("past24h") or []) + (b.get("past2h") or [])])
+    cards = []
+    for strat, ctrl_key, _short in LS_TRADES:
+        label = L.STRATS[strat]
+        c, ctrl = rt.get(strat), rt.get(ctrl_key)
         what = ("v1's S1 35c entry held to settlement" if "swing" in strat else "v1's S3 favourite at minute 10, held")
         clus = "" if not c else "; %d clusters, z %s" % (c["clusters"], _z(c["z"]))
         bf = ("" if not c or c.get("before_freeze") is None else
               " %d of %d entries came before that hour's picks were frozen (~:04); the picks use only data to :00, "
               "but a live version could only act from :05." % (c["before_freeze"], c["n"]))
-        who = ("the top 3" if strat in ("leadswap_swing", "leadswap_fav_ctrl") else "the bottom 3")
+        who, opp = (("the top 3", "the bottom 3") if strat == "leadswap_swing" else ("the bottom 3", "the top 3"))
         body = (f'<p class="sp-details-name"><b>{esc(label)}</b> · Kalshi 15-minute windows · paper · {esc(L.VERSION)}</p>'
                 f'<p class="sp-def">{esc(what)}, on {esc(who)} series by lead swaps over the past 2 hours, picked at the '
-                f'top of each hour and frozen. z clusters one block (crypto, metals, energy, yields, FX, indices) in one '
-                f'window{clus}.{bf}</p>'
-                + _table(("Market", "n", "Won", "ROI after fees"), trs))
-        rows.append(_row(strat, label, c, {"all": c["n"] if c else 0}, body).replace('data-sport="swing15"', 'data-sport="leadswap"'))
-    head = ('<div class="sp-line sp-head-line" aria-hidden="true"><span class="sp-cell sp-c-name">Rule</span>'
-            '<span class="sp-cell sp-c-market">Market</span><span class="sp-cell num">Record</span>'
-            '<span class="sp-cell num">ROI after fees</span><span class="sp-cell num">Won v priced</span>'
-            '<span class="sp-cell num">Evidence</span><span class="sp-cell sp-c-verdict">Verdict</span></div>')
+                f'top of each hour and frozen. Control: the same entry on {esc(opp)}. z clusters one block (crypto, '
+                f'metals, energy, yields, FX, indices) in one window{clus}.{bf}</p>')
+        good, bad, _none = g[strat]
+        lid = f"sw15-{strat}"
+        cards.append(_card(_row(strat, label, c, {"all": c["n"] if c else 0}, body, ctrl=ctrl, anchor=lid,
+                                sport="leadswap"), _ls_trade_split(g, strat)))
+        _lane(sb, strat, "Lead Swap · " + label, lid, c, {"all": c["n"] if c else 0}, good, bad, ctrl=ctrl)
     sl = L.SPOTLAG
     spot = ("Spot lag recorder: not started" if not sl.get("since") else
             f"Spot lag recorder: recording since {_start(sl['since'])}"
             + (f", until {_start(sl['until'])}" if sl.get("until") else "")
             + " (Coinbase spot v Kalshi BTC/ETH/SOL 15-minute books, every second; record only)")
-    pk = led.get("picks") or {}
     last = pk[max(pk)] if pk else None
     picks_line = ("" if not last else
                   f'<p class="sm">Picks for {esc(_start(max(pk)))} (frozen {esc(_start(last.get("at") or max(pk)))}): '
@@ -478,20 +518,19 @@ def leadswap_block(state):
              f'{med}; the minute-14 favourite won {f14}.</p></details>')
     timing = (f'<details class="fold"><summary>When in the window the swaps happen (last 24 hours)</summary>'
               f'{_bars(b["minutes"], [str(m) for m in range(15)])}</details>')
-    hours = list(range(24))
     heat_rows = []
     for s, hs in sorted(b["heat"].items(), key=lambda kv: (b["blocks"].get(kv[0], ""), kv[0])):
         cells = []
-        for h in hours:
-            v = hs.get(str(h))
+        for ct in range(24):                                    # Central = Eastern − 1 all year (both switch together)
+            v = hs.get(str((ct + 1) % 24))
             if not v or not v[1]:
                 cells.append('<td class="num mut">·</td>')
                 continue
             r = v[0] / v[1]
-            cells.append(f'<td class="num" style="background:rgba(127,127,127,{min(.6, r / 4):.2f})">{r:.1f}</td>')
-        heat_rows.append(f'<tr><td>{mkt(s)}</td>{"".join(cells)}</tr>')
-    heat = ('<details class="fold"><summary>Swaps a window by hour of day (ET), every series</summary><div class="tbl">'
-            '<table><thead><tr><th>Market</th>' + "".join(f'<th class="num">{h}</th>' for h in hours)
+            cells.append(f'<td class="num sw15-heat sw15-heat-{min(6, int(r / 4 * 10))}">{r:.1f}</td>')
+        heat_rows.append(_label(f'<tr><td>{mkt(s)}</td>{"".join(cells)}</tr>', ['Market'] + [f'{h}:00 CT' for h in range(24)]))
+    heat = ('<details class="fold"><summary>Swaps a window by hour of day (CT), every series</summary><div class="tbl">'
+            '<table><thead><tr><th>Market</th>' + "".join(f'<th class="num">{h}</th>' for h in range(24))
             + '</tr></thead><tbody>' + "".join(heat_rows) + '</tbody></table></div></details>')
     corr = [f'<tr><td>{esc(f)}</td><td class="num">{v["n"]}</td><td class="num">{_z(v["corr"])}</td></tr>'
             for f, v in (per.get("corr") or {}).items()]
@@ -507,21 +546,42 @@ def leadswap_block(state):
                         [f'<tr><td>{esc(bk)}</td><td class="num">{v["slots"]}</td><td class="num">{frac(v["stay"])}</td>'
                          f'<td class="num">{frac(v["chance"])}</td></tr>' for bk, v in (per.get("within") or {}).items()])
                + _table(("Group", "Windows", "Corr: past-2h swaps v the window"), corr) + '</details>')
+    ranks = (f'<details class="fold sw15-ranks"><summary>How the board ranks markets</summary>'
+             f'{board}{persist}{timing}{heat}</details>')
     return (f'<h3 class="dm-title" id="leadswap">Lead Swap Board</h3><p class="scope">How often the lead (YES mid across '
             f'50c) swaps on every 15-minute series; swing trade to the most swaps, favourite to the most stable, each '
             f'against its opposite; picks frozen at about :04 each hour (a live version could only act from :05); fresh '
-            f'record from {esc(_start(L.FROM))}; review at {W.REVIEW_AT}, decide at {W.DECIDE_AT}.</p><p class="sm mut" id="spotlag-status">{esc(spot)}</p>'
-            f'<div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>'
-            f'{ls_groups_html(rt, pk, [r[0] for r in (b.get("past24h") or []) + (b.get("past2h") or [])])}'
-            f'{board}{persist}{timing}{heat}')
+            f'record from {esc(_start(L.FROM))}; review at {W.REVIEW_AT}, decide at {W.DECIDE_AT}.</p>'
+            f'<p class="sm mut" id="spotlag-status">{esc(spot)}</p><p class="sm mut">{SORT_LINE}</p>'
+            + "".join(cards) + ranks)
 
 
-def section(state=None):
-    state = W.load() if state is None else state
-    allc = W.cells(state)
-    n_w = len(state.get("windows") or {})
-    import swing15v2 as V
-    s1_final = W.cells(state, lambda w: W._ts(w["open"]) < W._ts(V.RETIRED_AT))
+def scoreboard(sb, base=None):
+    """One row per live lane, best return after fees first: record, won v priced, return, vs control, the per-market
+    split counts and the status chip; each lane name links to its row below."""
+    has = [x for x in sb if x["c"]]
+    rows = sorted(has, key=lambda x: -x["c"]["mean_roi"]) + [x for x in sb if not x["c"]]
+    trs = []
+    for x in rows:
+        c, k = x["c"], x["ctrl"]
+        tint = "" if not c else (" sb-pos" if c["mean_roi"] > 0 else " sb-neg")
+        trs.append(
+            f'<tr class="sw15-sb-row{tint}" data-lane="{esc(x["key"])}"><td><a href="#{esc(x["anchor"])}">{esc(x["label"])}</a></td>'
+            + (f'<td class="num">{c["hits"]}–{c["n"] - c["hits"]}</td><td class="num">{c["hits"]} v {c["fair"] * c["n"]:.1f}</td>'
+               f'<td class="num"><b>{pct(c["mean_roi"])}</b></td>' if c else '<td class="num">—</td>' * 3)
+            + f'<td class="num">{_ctrl_txt(k)}</td><td class="num">{x["good"]} · {x["bad"]}</td>'
+            f'<td>{status_chip(x["per"])}</td></tr>')
+    s2, s3 = (base or {}).get("s2"), (base or {}).get("s3")
+    bl = ("" if not (s2 or s3) else
+          f'<p class="sm sw15-baseline">v1 baseline (every market, nothing picked): S2 {pct((s2 or {}).get("mean_roi"))}, '
+          f'S3 {pct((s3 or {}).get("mean_roi"))}. The baseline is the comparison for everything.</p>')
+    return ('<div class="sw15-sb" id="sw15-scoreboard"><h3 class="dm-title">Scoreboard · live lanes</h3>'
+            + _table(("Lane", "Record", "Won v priced", "Return after fees", "vs control", "Doing well · Not", "Status"), trs)
+            + bl + '</div>')
+
+
+def _v1_block(state, allc, n_w):
+    """v1, the full collector on every series: the baseline, collapsed. S2 and S3 rows with their per-market split."""
     defs = {
         "swing15_s2": ("S2 Favourite at start",
                        "At minute 2, buy the side above 50c (by the mid) at its ask, filled only on a print at or through "
@@ -529,9 +589,9 @@ def section(state=None):
         "swing15_s3": ("S3 Favourite at 5 minutes left",
                        "The same at minute 10. Judged against the price paid."),
     }
-    rows = []
+    cards = []
     for key, (label, text) in defs.items():
-        ck = HEADLINE_S1 if key == "swing15_s1" else (key,)
+        ck = (key,)
         per = _per_series(state, ck)
         body = (f'<p class="sp-details-name"><b>{esc(label)}</b> · Kalshi 15-minute windows · paper · {esc(W.VERSION)}</p>'
                 f'<p class="sp-def">{esc(text)}</p>'
@@ -540,43 +600,72 @@ def section(state=None):
                 f'{len({w["series"] for w in (state.get("windows") or {}).values()})})</dd>'
                 '<dt>Fees</dt><dd>Taker 0.07·p(1−p) on an entry and a sell at the bid; maker 0.0175·p(1−p) on a resting '
                 'sell</dd><dt>Read</dt><dd>Review at 10 and decide at 30 settled windows per strategy and series; z '
-                'clustered by day</dd></dl>')
-        cnt, mk = _v1_markets(state, ck)
-        body = cnt + body + f'<p class="sm mut">{SORT_LINE}</p>' + mk
-        body += f'<details class="fold"><summary>Splits: group and hours</summary>{_splits(state, ck)}</details>'
-        rows.append(_row(key, label, allc.get(ck), per, body))
-    head = ('<div class="sp-line sp-head-line" aria-hidden="true"><span class="sp-cell sp-c-name">Rule</span>'
-            '<span class="sp-cell sp-c-market">Market</span><span class="sp-cell num">Record</span>'
-            '<span class="sp-cell num">ROI after fees</span><span class="sp-cell num">Won v priced</span>'
-            '<span class="sp-cell num">Evidence</span><span class="sp-cell sp-c-verdict">Verdict</span></div>')
-    last = state.get("last_run") or "not yet"
+                'clustered by day</dd></dl>'
+                f'<details class="fold"><summary>Splits: group and hours</summary>{_splits(state, ck)}</details>')
+        good, bad, mk = _v1_markets(state, ck)
+        cards.append(_card(_row(key, label, allc.get(ck), per, body, anchor=f"sw15-{key}"), count_line(good, bad) + mk))
+    last = state.get("last_run")
     method = (f'<section class="sp-method"><details><summary><b>Method</b><small>registration · fills · fees</small></summary><div>'
               f'<p class="sm">Pre-registered {esc(W.REGISTERED)} as {esc(W.VERSION)}, frozen before any window was graded: '
-              f'windows opening from {esc(W.FROM[:16].replace("T", " "))} UTC are graded once each, after Kalshi settles '
+              f'windows opening from {esc(_start(W.FROM))} are graded once each, after Kalshi settles '
               'them, from its own 1-minute candles and trade prints. A minute is read print by print only where its candle '
               'shows the price could have touched an entry or a target. Paper only; nothing is placed.</p>'
-              f'<p class="sm mut">{n_w} windows graded. Last run {esc(last)}.</p></div></details></section>')
-    try:
-        v2 = v2_block(state)
-    except Exception:                                           # noqa: BLE001  (v2 never breaks the v1 section)
-        v2 = ""
-    try:
-        lsb = leadswap_block(state)
-    except Exception:                                           # noqa: BLE001  (the board never breaks the section)
-        lsb = ""
-    # 2026-11-09 (Olu: easy to review): one block, in order: the Lead Swap Board, Swing v2, The Flip Side v2, Hold to
-    # End, then v1, the full collector on every series, collapsed by default.
-    try:
-        sf = steadyfav_block(state)
-    except Exception:                                           # noqa: BLE001  (never breaks the section)
-        sf = ""
-    return (f'<h2 class="dm-title">15-Minute Swing</h2>{sf}{lsb}{v2}'
-            f'<details class="fold sw15-v1"><summary><b>15-Minute Swing v1 · every market</b> · the full collector; '
-            f'record from {esc(_start(W.FROM))}</summary>'
-            f'<p class="scope">Every Kalshi 15-minute window in Crypto, '
-            f'Commodities and Financials · S2 and S3 pre-registered (S1 retired) · paper</p>'
-            f'<div class="sp-rules-list" data-list="sandbox">{head}{"".join(rows)}</div>{_v1_s1_retired(state, s1_final)}'
-            f'{method}</details>')
+              f'<p class="sm mut">{n_w} windows graded. Last run {esc(_start(last) if last else "not yet")}.</p>'
+              '</div></details></section>')
+    return (f'<details class="fold sw15-v1" id="sw15-v1"><summary><b>v1 baseline · every market</b> · the full collector, '
+            f'nothing picked; record from {esc(_start(W.FROM))}</summary>'
+            f'<p class="scope">Every Kalshi 15-minute window in Crypto, Commodities and Financials · S2 and S3 '
+            f'pre-registered (S1 retired) · paper</p><p class="sm mut">{SORT_LINE}</p>' + "".join(cards) + method
+            + '</details>')
+
+
+def _archive(state, s1_final):
+    """Every retired and removed cell's final record, in one collapsed block, grouped by lane."""
+    import swing15v2 as V
+    parts = []
+    def grp(title, fn):
+        try:
+            html = fn()
+        except Exception:                                       # noqa: BLE001  (never breaks the section)
+            html = ""
+        if html:
+            parts.append(f'<h4>{esc(title)}</h4>{html}')
+    grp("15-Minute Swing v3", lambda: _v3_s1_retired(state, V)
+        + _removed_fold(V.LABELS, V.records(state, removed=True), V.REMOVED_AT, lambda k: "Won"))
+    def flip():
+        import flipside_v2 as F
+        return _removed_fold(F.LABELS, F.records(state, removed=True), F.REMOVED_AT, lambda k: "Won")
+    grp("The Flip Side v3", flip)
+    def hte():
+        import holdtoend as H
+        return _hte_archive(state, H)
+    grp("Hold to End", hte)
+    grp("15-Minute Swing v1", lambda: _v1_s1_retired(state, s1_final))
+    if not parts:
+        return ""
+    return ('<details class="fold sw15-archive" id="sw15-archive"><summary><b>Retired &amp; removed · final records</b>'
+            '</summary>' + "".join(parts) + '</details>')
+
+
+def section(state=None):
+    state = W.load() if state is None else state
+    allc = W.cells(state)
+    n_w = len(state.get("windows") or {})
+    import swing15v2 as V
+    s1_final = W.cells(state, lambda w: W._ts(w["open"]) < W._ts(V.RETIRED_AT))
+    sb = []
+    blocks = []
+    import holdtoend as H
+    for fn in (lambda: swing_v3_block(state, sb), lambda: flip_block(state, sb), lambda: steadyfav_block(state, sb),
+               lambda: holdtoend_block(state, H, sb), lambda: leadswap_block(state, sb)):
+        try:
+            blocks.append(fn())
+        except Exception:                                       # noqa: BLE001  (one lane never breaks the section)
+            pass
+    # 2026-11-09 (Olu, "looks a bit scanty"): scoreboard, then the lanes, then the v1 baseline and the archive, collapsed.
+    return (f'<h2 class="dm-title">15-Minute</h2>'
+            + scoreboard(sb, dict(s2=allc.get(("swing15_s2",)), s3=allc.get(("swing15_s3",))))
+            + "".join(blocks) + _v1_block(state, allc, n_w) + _archive(state, s1_final))
 
 
 def index_rows(state=None):

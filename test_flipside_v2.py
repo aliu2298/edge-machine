@@ -96,10 +96,10 @@ check("the ledger", (lg["version"], lg["records"]["flipside_v2_f1"]["all"]["n"],
 print("\nthe page")
 html = WB.section(state)
 check("the block sits under 15-Minute Swing v3 and above v1",
-      html.index("15-Minute Swing v3") < html.index("The Flip Side v3") < html.index('data-source="swing15_s2"'), True)
-check("the cut line", "flip-v3 from 2026-11-09 18:00 UTC: negative markets removed after ~4h of results." in html, True)
+      html.index('id="swing15v2"') < html.index('id="flipside_v2"') < html.index('data-source="swing15_s2"'), True)
+check("the cut line", "flip-v3 from Nov 9, 12:00 PM CT: negative markets removed after ~4h of results." in html, True)
 check("the header line", "Opposite side of the 15-Minute Swing; cells picked from one overnight session; 14-day backtest of "
-      "the flips ran −0.5% to −16%; fresh record from 2026-11-09 13:15 UTC; review at 10, decide at 30." in html, True)
+      "the flips ran −0.5% to −16%; fresh record from Nov 9, 7:15 AM CT; review at 10, decide at 30." in html, True)
 check("four rows", re.findall(r'data-source="(flipside_v2_f\d)"', html),
       ["flipside_v2_f1", "flipside_v2_f2", "flipside_v2_f3", "flipside_v2_f4"])
 check("the Sandbox index lists them", [r["lane"] for r in WB.index_rows(state) if r["lane"].startswith("flipside")], list(F.CELLS))

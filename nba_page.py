@@ -252,7 +252,7 @@ def switch_note(v4p):
 
 def bucket_priority_note(v3, v4p):
     """The Bucket Priority note (nba_wm_bucket_priority), once version 4 is the record or any row has been ceded; else nothing."""
-    if (v4p or {}).get("since") or any((x or {}).get("ceded") for x in (v3, v4p)):
+    if (v4p or {}).get("since") or any((x or {}).get("ceded") or (x or {}).get("kept") for x in (v3, v4p)):
         return CP.note_html(v3, v4p)
     return ""
 
