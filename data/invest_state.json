@@ -1,6 +1,6 @@
 {
  "collector": {
-  "last_ts": 1794348002,
+  "last_ts": 1794351602,
   "markets": 60,
   "rows_24h": 86400
  },
@@ -3267,9 +3267,129 @@
    "sym": "US Tech 100",
    "ticker": "KXUSTECH100PERP",
    "ts": 1794317581
+  },
+  {
+   "gap": -0.09444,
+   "rth": false,
+   "spread_bp": 4201.2,
+   "sym": "AMAT",
+   "ticker": "KXAMATPERP",
+   "ts": 1794351602
+  },
+  {
+   "gap": -0.01273,
+   "rth": false,
+   "spread_bp": 651.2,
+   "sym": "AMD",
+   "ticker": "KXAMDPERP",
+   "ts": 1794351602
+  },
+  {
+   "gap": 0.07377,
+   "rth": false,
+   "spread_bp": 1825.7,
+   "sym": "BAC",
+   "ticker": "KXBACPERP",
+   "ts": 1794351602
+  },
+  {
+   "gap": -0.07494,
+   "rth": false,
+   "spread_bp": 2161.9,
+   "sym": "BKNG",
+   "ticker": "KXBKNGPERP",
+   "ts": 1794351602
+  },
+  {
+   "gap": 0.05727,
+   "rth": false,
+   "spread_bp": 1345.9,
+   "sym": "INTC",
+   "ticker": "KXINTCPERP",
+   "ts": 1794351602
+  },
+  {
+   "gap": 0.06604,
+   "rth": false,
+   "spread_bp": 2355.9,
+   "sym": "LMT",
+   "ticker": "KXLMTPERP",
+   "ts": 1794351602
+  },
+  {
+   "gap": 0.02491,
+   "rth": false,
+   "spread_bp": 1181.8,
+   "sym": "META",
+   "ticker": "KXMETAPERP",
+   "ts": 1794351602
+  },
+  {
+   "gap": -0.02533,
+   "rth": false,
+   "spread_bp": 1195.0,
+   "sym": "NEM",
+   "ticker": "KXNEMPERP",
+   "ts": 1794351602
+  },
+  {
+   "gap": -0.06954,
+   "rth": false,
+   "spread_bp": 2209.4,
+   "sym": "NFLX",
+   "ticker": "KXNFLXPERP",
+   "ts": 1794351602
+  },
+  {
+   "gap": 0.0437,
+   "rth": false,
+   "spread_bp": 838.5,
+   "sym": "NVDA",
+   "ticker": "KXNVDAPERP",
+   "ts": 1794351602
+  },
+  {
+   "gap": -0.0272,
+   "rth": false,
+   "spread_bp": 4194.5,
+   "sym": "PLTR",
+   "ticker": "KXPLTRPERP",
+   "ts": 1794351602
+  },
+  {
+   "gap": -0.01477,
+   "rth": false,
+   "spread_bp": 2221.6,
+   "sym": "QCOM",
+   "ticker": "KXQCOMPERP",
+   "ts": 1794351602
+  },
+  {
+   "gap": -0.03156,
+   "rth": false,
+   "spread_bp": 3732.8,
+   "sym": "TXN",
+   "ticker": "KXTXNPERP",
+   "ts": 1794351602
+  },
+  {
+   "gap": -0.04308,
+   "rth": false,
+   "spread_bp": 3385.9,
+   "sym": "VZ",
+   "ticker": "KXVZPERP",
+   "ts": 1794351602
+  },
+  {
+   "gap": -0.08255,
+   "rth": false,
+   "spread_bp": 2581.2,
+   "sym": "WMT",
+   "ticker": "KXWMTPERP",
+   "ts": 1794351602
   }
  ],
- "last_run": "2026-11-10T22:00:07+00:00",
+ "last_run": "2026-11-10T23:00:08+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
