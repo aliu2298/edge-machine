@@ -5654,6 +5654,25 @@
    "tip": "2026-11-10T00:30:00+00:00",
    "why": "no tight read inside the entry window"
   },
+  "no:KXNBAWINMARGIN-26NOV09NOPGSW-GSW11TO15": {
+   "P": 0.84,
+   "bot_version": "wm-nofade-v4",
+   "bucket": "GSW11TO15",
+   "decided_at": "2026-11-10T02:13:03+00:00",
+   "depth": 5.0,
+   "event": "KXNBAWINMARGIN-26NOV09NOPGSW",
+   "lane": "nba_wm_nofade",
+   "limit": 0.55,
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV09",
+   "spread": 0.05,
+   "ticker": "KXNBAWINMARGIN-26NOV09NOPGSW-GSW11TO15",
+   "tip": "2026-11-10T03:00:00+00:00",
+   "why": "ask check: 5 contracts offered at or under 0.84 (under 10)",
+   "yes_ask": 0.21,
+   "yes_bid": 0.16
+  },
   "no:KXNBAWINMARGIN-26NOV09NOPGSW-GSW16TO25": {
    "P": 0.83,
    "bot_version": "wm-nofade-v4",
@@ -5692,6 +5711,19 @@
    "yes_ask": 0.15,
    "yes_bid": 0.1
   },
+  "no:KXNBAWINMARGIN-26NOV09NOPGSW-GSW26PLUS": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "GSW26PLUS",
+   "decided_at": "2026-11-10T02:15:51+00:00",
+   "event": "KXNBAWINMARGIN-26NOV09NOPGSW",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV09",
+   "ticker": "KXNBAWINMARGIN-26NOV09NOPGSW-GSW26PLUS",
+   "tip": "2026-11-10T03:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "no:KXNBAWINMARGIN-26NOV09NOPGSW-GSW6TO10": {
    "P": 0.85,
    "bot_version": "wm-nofade-v4",
@@ -5710,6 +5742,19 @@
    "why": "ask check: 6 contracts offered at or under 0.85 (under 10)",
    "yes_ask": 0.2,
    "yes_bid": 0.15
+  },
+  "no:KXNBAWINMARGIN-26NOV09NOPGSW-NOP11PLUS": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "NOP11PLUS",
+   "decided_at": "2026-11-10T02:15:51+00:00",
+   "event": "KXNBAWINMARGIN-26NOV09NOPGSW",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV09",
+   "ticker": "KXNBAWINMARGIN-26NOV09NOPGSW-NOP11PLUS",
+   "tip": "2026-11-10T03:00:00+00:00",
+   "why": "no tight read inside the entry window"
   },
   "no:KXNBAWINMARGIN-26NOV09NOPGSW-NOP1TO5": {
    "P": 0.95,
@@ -9664,6 +9709,6 @@
    "yes_bid": 0.01
   }
  },
- "updated_at": "2026-11-10T02:01:45+00:00",
+ "updated_at": "2026-11-10T02:15:51+00:00",
  "version": 1
 }
