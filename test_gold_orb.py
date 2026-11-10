@@ -341,7 +341,11 @@ check("the page carries the dated amendment, both CT renderings and the fixed UT
        "8:30 pm CDT until Nov 1 and 7:30 pm CST after" in page_bf, "01:30–02:00 UTC" in page_bf), (True, True, True))
 check("the primary row's anchor reads 8:30 pm CDT in October", "7:30 pm CST fixed (01:30 UTC) · 8:30 pm CDT" in page_bf, True)
 real = json.load(open(os.path.join(G.ROOT, "data", "gold_orb_ledger.json")))
-real_bf = [r for r in real["nights"] if r.get("backfilled")]
+real_bf = [r for r in real["nights"] if r.get("backfilled") and not r.get("restored")]   # the 2026-10-24 backfill
+real_rs = [r for r in real["nights"] if r.get("restored")]
+check("the committed ledger: the restored 2026-11-08 night, all four rows, out of net, statuses matching the VPS log",
+      (sorted(r["id"] for r in real_rs), all("net_bp" not in r and r.get("backfilled") and r.get("vps_log_status_match") for r in real_rs)),
+      (sorted(f"{v}:{k}:2026-11-08" for v in "AB" for k in ("utc_0100", "utc_0130")), True))
 check("the committed ledger: backfilled rows are all utc_0130, none carries a net or a spread, the 2026-10-18..22 nights are covered",
       (all(r["anchor"] == "utc_0130" and "net_bp" not in r and r.get("entry_spread_bp") is None for r in real_bf),
        sorted({r["night"] for r in real_bf})), (True, [f"2026-10-{d}" for d in (18, 19, 20, 21, 22)]))
@@ -413,6 +417,93 @@ check("the committed ledger has no crossed book left in any net row",
 check("  and the four 2026-10-29 rows are flagged",
       sorted(r["id"] for r in real2["nights"] if r.get("book_invalid")),
       sorted(f"{v}:{k}:2026-10-29" for v in "AB" for k in ("utc_0130", "utc_0100")))
+
+print("\nan unpublished night survives the next run (2026-11-09)")
+repo = {"version": 1, "nights": [{"id": "A:utc_0100:2026-11-05", "status": "settled", "regraded": True}],
+        "runs": [{"at": "2026-11-06T00:54:00+00:00"}], "last_run": "2026-11-06T03:21:00+00:00"}
+work = {"version": 1, "nights": [{"id": "A:utc_0100:2026-11-05", "status": "settled"},
+                                 {"id": "A:utc_0100:2026-11-08", "status": "settled", "net_bp": 9.5},
+                                 {"id": "B:utc_0130:2026-11-08", "status": "no_range"}],
+        "runs": [{"at": "2026-11-06T00:54:00+00:00"}, {"at": "2026-11-09T00:54:00+00:00"}],
+        "last_run": "2026-11-09T03:21:00+00:00"}
+merged, added = G.merge_unpublished(repo, work)
+check("the work file's nights the repo lacks are carried, the repo's own rows win (a re-grade is kept)",
+      ([r["id"] for r in merged["nights"]], added, merged["nights"][0].get("regraded")),
+      (["A:utc_0100:2026-11-05", "A:utc_0100:2026-11-08", "B:utc_0130:2026-11-08"],
+       ["A:utc_0100:2026-11-08", "B:utc_0130:2026-11-08"], True))
+check("runs merged by start, last_run the later", ([r["at"] for r in merged["runs"]], merged["last_run"]),
+      (["2026-11-06T00:54:00+00:00", "2026-11-09T00:54:00+00:00"], "2026-11-09T03:21:00+00:00"))
+check("nothing unpublished: nothing added", G.merge_unpublished(repo, repo)[1], [])
+sh = open("scripts/vps_gold_orb.sh").read()
+check("the script retries the publish with backoff",
+      all(x in sh for x in ("for try in 1 2 3 4 5 6", "pause * 2", "locked publish")), True)
+check("the start and the publish MERGE the ledgers; no copy of the repo ledger over an existing work file",
+      (sh.count("--merge-unpublished"), 'cp "$WORK/ledger.json" data/gold_orb_ledger.json' in sh,
+       'if [ -f "$WORK/ledger.json" ] && [ -f data/gold_orb_ledger.json ]' in sh),
+      (2, False, True))
+check("a commit left by a failed push is still pushed", "origin/main..HEAD" in sh, True)
+
+print("\na lost night restored from candles (2026-11-08)")
+_bf = G.backfill
+G.backfill = lambda state, product, since, until, fetch, log: [
+    dict(id="A:utc_0100:2026-11-08", variant="A", anchor="utc_0100", status="settled", gross_bp=8.998, backfilled=True),
+    dict(id="B:utc_0130:2026-11-08", variant="B", anchor="utc_0130", status="no_range", backfilled=True)]
+rest = G.restore_night({"nights": []}, "2026-11-08", log_values={"A:utc_0100": 9.484, "B:utc_0130": "no_range"}, on="2026-11-10")
+G.backfill = _bf
+check("restored rows: flagged, out of net (backfilled), the VPS log value kept beside them with the difference",
+      [(r["restored"], r["basis"], r["backfilled"], r["vps_log"], r["vps_log_status_match"], r.get("vps_log_diff_bp")) for r in rest],
+      [(True, "restored, not live-recorded", True, 9.484, True, -0.486), (True, "restored, not live-recorded", True, "no_range", True, None)])
+import gold_orb_build as _GB
+rr = _GB._row(dict(rest[0], night="2026-11-08", side="long", entry_px=4112.2, exit_px=4115.9))
+check("the page row: the restored badge, gross only, the VPS log figure and why it differs",
+      ("Restored · not live-recorded" in rr, "VPS log: +9.5bp" in rr, "candles, not the live book" in rr and "gold-log" in rr, "+9.0" in rr), (True, True, True, True))
+check("the no-range row shows its VPS log status", "VPS log: no range" in _GB._row(dict(rest[1], night="2026-11-08")), True)
+
+print("\nend to end: the real script, an unpublished night, the next start (2026-11-09)")
+import os as _os, shutil, subprocess as _sp, tempfile as _tf
+root = _tf.mkdtemp()
+origin, clone, work = (_os.path.join(root, x) for x in ("origin.git", "clone", "work"))
+run_ = lambda *a, **k: _sp.run(list(a), check=True, capture_output=True, text=True, **k)
+run_("git", "init", "-q", "--bare", "-b", "main", origin)
+run_("git", "clone", "-q", origin, clone)
+_os.makedirs(_os.path.join(clone, "data")); _os.makedirs(_os.path.join(clone, "scripts")); _os.makedirs(work)
+shutil.copy("gold_orb.py", clone); shutil.copy("scripts/vps_gold_orb.sh", _os.path.join(clone, "scripts"))
+G.save({"version": "gold-orb-v2", "nights": [{"id": "A:utc_0100:2026-11-05", "night": "2026-11-05", "status": "settled"}],
+        "runs": [{"at": "2026-11-06T00:54:00+00:00"}]}, _os.path.join(clone, "data", "gold_orb_ledger.json"))
+for c in (("git", "-C", clone, "config", "user.email", "t@t"), ("git", "-C", clone, "config", "user.name", "t"),
+          ("git", "-C", clone, "add", "-A"), ("git", "-C", clone, "commit", "-q", "-m", "seed"),
+          ("git", "-C", clone, "push", "-q", "origin", "HEAD:main")):
+    run_(*c)
+# The Nov 8 night ran but never published: it lives only in the work file.
+G.save({"version": "gold-orb-v2", "nights": [{"id": "A:utc_0100:2026-11-05", "night": "2026-11-05", "status": "settled"},
+                                             {"id": "A:utc_0100:2026-11-08", "night": "2026-11-08", "status": "settled"}],
+        "runs": [{"at": "2026-11-06T00:54:00+00:00"}, {"at": "2026-11-09T00:54:00+00:00"}]}, _os.path.join(work, "ledger.json"))
+# A stand-in python: `--run` records tonight's row (no network); everything else is the real gold_orb.py.
+fake = _os.path.join(root, "py")
+with open(fake, "w") as fh:
+    fh.write(f"""#!/bin/sh
+case " $* " in
+  *" --run "*) exec {sys.executable} -c 'import sys, gold_orb as G
+a = sys.argv[1:]; st = G.load(a[a.index("--from") + 1])
+st["nights"].append(dict(id="A:utc_0100:2026-11-09", night="2026-11-09", status="settled")); G.save(st, a[a.index("--out") + 1])' "$@" ;;
+  *) exec {sys.executable} "$@" ;;
+esac
+""")
+_os.chmod(fake, 0o755)
+env = dict(_os.environ, EDGE_GOLD_DIR=clone, EDGE_GOLD_PY=fake, EDGE_GOLD_WORK=work)
+res = _sp.run(["bash", _os.path.join(clone, "scripts", "vps_gold_orb.sh")], env=env, capture_output=True, text=True)
+pub = json.loads(run_("git", "--git-dir", origin, "show", "main:data/gold_orb_ledger.json").stdout)
+check("the next start carries the unpublished Nov 8 night and publishes it with tonight's",
+      (res.returncode, sorted(r["id"] for r in pub["nights"])),
+      (0, ["A:utc_0100:2026-11-05", "A:utc_0100:2026-11-08", "A:utc_0100:2026-11-09"]))
+shutil.rmtree(root, ignore_errors=True)
+inv, nq = open("scripts/vps_invest.sh").read(), open("scripts/vps_nasdaq_orb.sh").read()
+check("Invest: a failed publish is retried every 15 minutes and its state is never copied over meanwhile",
+      ('[ -f "$WORK/.publish-pending" ]' in inv, 'if [ ! -f "$WORK/.publish-pending" ]; then' in inv), (True, True))
+check("Nasdaq: the lock is waited for 4 times (40 minutes), not once", "for wait_try in 1 2 3 4" in nq, True)
+import subprocess
+for f_ in ("scripts/vps_gold_orb.sh", "scripts/vps_invest.sh", "scripts/vps_nasdaq_orb.sh"):
+    check(f"{f_} parses", subprocess.run(["bash", "-n", f_]).returncode, 0)
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

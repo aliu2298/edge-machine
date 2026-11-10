@@ -1368,7 +1368,7 @@ def _bucket_priority_html(group, nba_wm):
     if not nba_wm or group != sport_group("nba_wm"):
         return ""
     v3, v4 = nba_wm.get("v3"), nba_wm.get("v4")
-    if not ((v4 or {}).get("since") or (v3 or {}).get("ceded") or (v4 or {}).get("ceded")):
+    if not ((v4 or {}).get("since") or (v3 or {}).get("ceded") or (v4 or {}).get("ceded") or (v3 or {}).get("kept") or (v4 or {}).get("kept")):
         return ""
     import nba_wm_bucket_priority
     return nba_wm_bucket_priority.note_html(v3, v4)
