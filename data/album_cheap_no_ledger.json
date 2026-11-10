@@ -1110,8 +1110,10 @@
     "book": 8.0,
     "first_quotes": false,
     "last_trade": 0.02,
+    "printed": 0,
+    "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
     "source": "live",
-    "status": "checking"
+    "status": "unverified"
    },
    "bid": 0.0,
    "book": {
@@ -1160,8 +1162,10 @@
     "book": 7.0,
     "first_quotes": false,
     "last_trade": 0.03,
+    "printed": 0,
+    "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
     "source": "live",
-    "status": "checking"
+    "status": "unverified"
    },
    "bid": 0.01,
    "book": {
@@ -1229,15 +1233,15 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:50.419359+00:00"
  },
  "lane": "album_cheap_no",
- "last_success": "2026-11-09T23:01:10.523447+00:00",
+ "last_success": "2026-11-10T00:01:07.156229+00:00",
  "observations": {
-  "at": "2026-11-09T23:01:10.523447+00:00",
-  "checking": 2,
-  "entered": 2,
+  "at": "2026-11-10T00:01:07.156229+00:00",
+  "checking": 0,
+  "entered": 0,
   "events": 19,
   "filled": 0,
   "skipped": 0,
-  "unverified": 16,
+  "unverified": 18,
   "waiting": 14
  },
  "skips": {
