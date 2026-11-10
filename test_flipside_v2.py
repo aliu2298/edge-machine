@@ -98,8 +98,10 @@ html = WB.section(state)
 check("the block sits under 15-Minute Swing v3 and above v1",
       html.index('id="swing15v2"') < html.index('id="flipside_v2"') < html.index('data-source="swing15_s2"'), True)
 check("the cut line", "flip-v3 from Nov 9, 12:00 PM CT: negative markets removed after ~4h of results." in html, True)
-check("the header line", "Opposite side of the 15-Minute Swing; cells picked from one overnight session; 14-day backtest of "
-      "the flips ran −0.5% to −16%; fresh record from Nov 9, 7:15 AM CT; review at 10, decide at 30." in html, True)
+check("the header line, then the backtest note in the How-kept fold",
+      ("Paper · fresh record from Nov 9, 7:15 AM CT · review 10, decide 30" in html,
+       "the 14-day backtest of the flips ran −0.5% to −16%." in html.split('id="flipside_v2"')[1].split("How the record is kept")[1]),
+      (True, True))
 check("four rows", re.findall(r'data-source="(flipside_v2_f\d)"', html),
       ["flipside_v2_f1", "flipside_v2_f2", "flipside_v2_f3", "flipside_v2_f4"])
 check("the Sandbox index lists them", [r["lane"] for r in WB.index_rows(state) if r["lane"].startswith("flipside")], list(F.CELLS))

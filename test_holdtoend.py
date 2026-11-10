@@ -79,13 +79,12 @@ check("the ledger: version, fresh from, retired record", (led["version"], led["f
 
 print("\nthe page")
 html = WB.section(state)
-blk = html.split('id="holdtoend"')[1].split('id="leadswap"')[0]
+blk = html.split('id="holdtoend"')[1].split('id="sw15-v1"')[0]
 arc = html.split('id="sw15-archive"')[1].split("<h4>15-Minute Swing v1</h4>")[0].split("<h4>Hold to End</h4>")[1]
-check("under The Flip Side v3 and Steady Favourites, above the Lead Swap Board and v1",
-      html.index('id="flipside_v2"') < html.index('id="steadyfav"') < html.index('id="holdtoend"') < html.index('id="leadswap"')
-      < html.index('data-source="swing15_s2"'), True)
-check("the section copy (times in CT)", "Hold to End v3 · USD/CAD at 35c · fresh record from Nov 9, 5:00 PM CT · "
-      "review at 10, decide at 30." in html, True)
+check("the last lane: after The Flip Side v3, above v1",
+      html.index('id="flipside_v2"') < html.index('id="holdtoend"') < html.index('data-source="swing15_s2"'), True)
+check("the one-line intro (times in CT)",
+      "Paper · USD/CAD at 35c · fresh record from Nov 9, 5:00 PM CT · review 10, decide 30" in html, True)
 check("one live row (35c), the 25c row only in the archive's Removed fold", (re.findall(r'data-source="(holdtoend_\d+)"', html),
       "Hold to End · 25c" in arc.split("Removed Nov")[1], "sw15-removed" in blk), (["holdtoend_35"], True, False))
 check("the earlier USDCAD 35c result: a muted not-counted line",

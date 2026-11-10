@@ -97,8 +97,10 @@ check("the v3 block sits above v1", html.index('id="swing15v2"') < html.index('d
 check("the cut line", "sw15-v3 from Nov 9, 12:00 PM CT: negative markets removed after ~4h of results." in html, True)
 check("a collapsed Removed fold with readable names", ('<details class="fold sw15-removed"><summary>Removed Nov 9, 12:00 PM CT' in html,
       '<span title="KXGOLD15M">Gold</span>' in html.split("sw15-removed")[1]), (True, True))
-check("the line under the header", "Cells picked from one overnight session; fresh record from Nov 9, 7:00 AM CT; "
-      "review at 10, decide at 30." in html, True)
+v3b = html.split('id="swing15v2"')[1].split('id="flipside_v2"')[0]
+check("one line under the header; the rest in the collapsed How-kept fold",
+      ('<p class="scope sw15-intro">Paper · fresh record from Nov 9, 7:00 AM CT · review 10, decide 30</p>' in v3b,
+       "Cells picked from one overnight session." in v3b.split("How the record is kept")[1]), (True, True))
 check("S1 is gone as a lane in v3 and v1; S2/S3 stay", (re.findall(r'data-source="(swing15v2_s\d)"', html),
       re.findall(r'data-source="(swing15_s\d)"', html)), (["swing15v2_s2", "swing15v2_s3"], ["swing15_s2", "swing15_s3"]))
 v3 = html.split('id="sw15-archive"')[1].split("<h4>The Flip Side v3</h4>")[0]
