@@ -64,7 +64,7 @@ class EconProduction(unittest.TestCase):
         self.assertEqual(s,before)
         self.assertEqual(set(f['pairs']),{YES_PAIR,DP.FIN_PAIR})
         live={l['pair']:l for l in f['leads'].values() if l.get('lane')!='retired'}
-        self.assertEqual(set(live),{YES_PAIR})     # the NO lane is paper since 2026-10-28: no lead
+        self.assertEqual(set(live),{YES_PAIR,DP.FIN_PAIR})     # the Econ NO lane is paper since 2026-10-28: no lead; the Finance SPX NC NO lane is live (Production)
         y=live[YES_PAIR]
         n=next(q for q in DP.quotes(s,all_lanes=True) if q['source']=='econ_nc_no')
         self.assertEqual((y['route']['market'],y['route']['outcome_side'],y['bet']),

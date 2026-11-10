@@ -169,7 +169,7 @@
    "time": "pre-market"
   }
  ],
- "calendar_at": "2026-11-09T17:48:53Z",
+ "calendar_at": "2026-11-10T01:45:31Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -346,10 +346,29 @@
    "event": "KXWMT-26NOVUSCOMP",
    "read": null,
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-10T01:46:31Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 391065573.7704918,
+    "rungs": 6,
+    "width": 9248670.212765932
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-10T01:46:31Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": null,
+   "sym": "WMT"
   }
  ],
  "predictions": [
   {
+   "call": {
+    "status": "no_fill"
+   },
    "entry_due": "2026-11-09T21:00:00Z",
    "exit_due": "2026-11-16T21:00:00Z",
    "family": "runup",
@@ -361,9 +380,15 @@
    "report": "2026-11-17",
    "report_time": "pre-market",
    "side": 1,
+   "status": "no_fill",
    "sym": "DIS"
   },
   {
+   "call": {
+    "entry": 7.0693,
+    "entry_ts": 1794258000,
+    "status": "open"
+   },
    "entry_due": "2026-11-09T21:00:00Z",
    "exit_due": "2026-11-16T21:00:00Z",
    "family": "runup",
@@ -375,6 +400,7 @@
    "report": "2026-11-17",
    "report_time": "pre-market",
    "side": 1,
+   "status": "open",
    "sym": "HD"
   },
   {
@@ -546,6 +572,7 @@
  ],
  "registered": "2026-11-07",
  "sentiment_days": [
-  "2026-11-06"
+  "2026-11-06",
+  "2026-11-09"
  ]
 }
