@@ -2080,3 +2080,43 @@ details.fold.later > summary .sm { font-weight: 500; }
 .health-card ul { margin: 6px 0 0; padding-left: 18px; }
 .health-card li.red b { color: var(--neg); }
 .health-card li.amber b { color: var(--warn); }
+
+/* The 15-Minute section (swing15_build.py, 2026-11-09 layout): scoreboard first, each rule's per-market split open
+   under its row, controls muted, the v1 baseline and the archive collapsed. Tokens only, so light and dark both hold. */
+.sw15-sb { margin: 4px 0 18px; }
+.sw15-sb .tbl { margin: 0; }
+.sw15-sb tr.sb-pos td, .sw15-sb tr.sb-pos td:first-child { background: var(--pos-bg); }
+.sw15-sb tr.sb-neg td, .sw15-sb tr.sb-neg td:first-child { background: var(--neg-bg); }
+.sw15-sb tr.sb-pos td:first-child { box-shadow: inset 3px 0 0 var(--pos-bd), 1px 0 0 var(--line); }
+.sw15-sb tr.sb-neg td:first-child { box-shadow: inset 3px 0 0 var(--neg-bd), 1px 0 0 var(--line); }
+.sw15-sb td a { color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
+.sw15-sb td a:hover { text-decoration-color: currentColor; }
+.sw15-sb .sig { white-space: nowrap; font-size: 12px; padding: 0 8px; line-height: 1.6; }
+.sw15-baseline { margin: 8px 2px 0; }
+.sw15-card { margin: 10px 0 0; border-radius: var(--r) var(--r) 0 0; }
+.sw15-split { border: 1px solid var(--line); border-top: 0; border-radius: 0 0 var(--r) var(--r); padding: 6px 12px 10px;
+  margin: 0 0 14px; background: var(--tint); min-width: 0; }
+.sw15-split .tbl { margin: 4px 0 8px; }
+.sw15-split-h { margin: 6px 0; }
+.sw15-split-h .sig { font-size: 12px; padding: 0 8px; line-height: 1.6; font-weight: 600; }
+thead.sw15-bad th, thead.sw15-bad th:first-child { background: var(--neg-bg); }
+.sm.ls-bad { color: var(--neg); }
+details.fold.sw15-ranks, details.fold.sw15-archive, details.fold.sw15-v1 { margin: 10px 0 14px; }
+details.fold.sw15-ranks > details.fold, details.fold.sw15-archive details.fold { margin: 6px 0 6px 6px; }
+.sw15-archive h4 { margin: 12px 0 4px; font-size: 14px; }
+.sw15-bar { display: inline-block; height: .6em; background: currentColor; opacity: .45; width: 0; }
+.sw15-bar-1 { width: 10px; } .sw15-bar-2 { width: 20px; } .sw15-bar-3 { width: 30px; } .sw15-bar-4 { width: 40px; }
+.sw15-bar-5 { width: 50px; } .sw15-bar-6 { width: 60px; } .sw15-bar-7 { width: 70px; } .sw15-bar-8 { width: 80px; }
+.sw15-bar-9 { width: 90px; } .sw15-bar-10 { width: 100px; }
+.sw15-heat-1 { background: var(--tint-bd); } .sw15-heat-2 { background: var(--warn-bg); }
+.sw15-heat-3, .sw15-heat-4 { background: var(--warn-bd); } .sw15-heat-5, .sw15-heat-6 { background: var(--att-bd); }
+#swing15 .sp-c-market .mut { font-variant-numeric: tabular-nums; }
+.sw15-sb td:first-child { min-width: 240px; }
+@media (max-width: 640px) { .sw15-sb td:first-child { min-width: 0; } }
+@media (max-width: 760px) {
+  html:not([data-view="table"]) .sw15-sb tr.sb-pos { background: var(--pos-bg); box-shadow: inset 3px 0 0 var(--pos-bd); }
+  html:not([data-view="table"]) .sw15-sb tr.sb-neg { background: var(--neg-bg); box-shadow: inset 3px 0 0 var(--neg-bd); }
+  html:not([data-view="table"]) .sw15-sb tr.sb-pos td, html:not([data-view="table"]) .sw15-sb tr.sb-neg td,
+  html:not([data-view="table"]) .sw15-sb tr td:first-child { background: transparent; box-shadow: none; }
+  .sw15-split { padding: 4px 8px 8px; }
+}
