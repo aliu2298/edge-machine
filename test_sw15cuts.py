@@ -12,6 +12,8 @@ import sw15cuts as C
 import swing15 as W
 import swing15_build as WB
 import swing15v2 as V
+import sw15cuts as _C2, swing15_build as _WB2, leadswap as _L2
+_C2.RETIRED2, _WB2.NARROWED, _L2.TRADES_RETIRED = (), False, {}   # the lane as it ran before the 2026-11-11 narrowing; test_sw15keep.py checks the narrowed page
 
 FAILS = []
 
@@ -75,7 +77,8 @@ check("Rule 6 retired: windows before the cut stay in its final record; nothing 
       (R6.retired(), R6.records(st4)["lane"]["all"]["n"]), (True, 1))
 check("Steady Favourites A retired (no live rows); B continues without Gold", (SF.records(dict(W.empty(), windows={}))["steadyfav_a"]["series"],
       "KXGOLD15M" in SF.records(dict(W.empty(), windows={}))["steadyfav_b"]["series"]), ({}, False))
-check("Swing v3 S2 keeps Bitcoin only", V.CELLS["swing15v2_s2"], ("KXBTC15M",))
+check("Swing v3 S2 kept Bitcoin only (and is retired since 2026-11-11 with that market's record)",
+      (V.CELLS["swing15v2_s2"], V.RETIRED["swing15v2_s2"]), ((), ("KXBTC15M",)))
 
 print("\nthe page")
 html = WB.section(state)
@@ -83,7 +86,8 @@ live = html.split('id="sw15-archive"')[0]
 check("retired lanes are gone from the live area and the index",
       ('data-source="flipf4v2"' in live, 'data-source="steadyfav_a"' in live,
        [x["lane"] for x in WB.index_rows(state) if x["lane"] in ("flipf4v2", "steadyfav_a")]), (False, False, []))
-check("each cut lane names its cut in Rule details", live.count('class="sm sw15-cuts"'), 7)
+check("each cut lane names its cut in Rule details (Swing v3, retired 2026-11-11, has no live row)",
+      live.count('class="sm sw15-cuts"'), 6)
 check("Rule 4 says it has no market with a positive record yet", "No market with a positive record yet." in live, True)
 check("the archive has the one Market cuts group", "<h4>Market cuts (Nov 10)</h4>" in html, True)
 check("no inline style, no dollar sign", ("style=" in html, re.search(r"\$\d", html)), (False, None))

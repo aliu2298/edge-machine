@@ -63,6 +63,10 @@ RETIRED_TIMES = {"swing15v2_s1": RETIRED_AT, "swing15v2_s3": RETIRED_S3_AT}
 CUT2 = {"swing15v2_s2": C.cut("swing15v2_s2")}
 CELLS = dict(CELLS_V3, swing15v2_s1=(), swing15v2_s3=(),
              swing15v2_s2=tuple(m for m in CELLS_V3["swing15v2_s2"] if m not in CUT2["swing15v2_s2"]))
+# 2026-11-11 (Olu, sw15cuts round 2): S2 retired at C.CUT2_AT; its last market (Bitcoin) keeps its final record.
+RETIRED["swing15v2_s2"] = CELLS["swing15v2_s2"]
+RETIRED_TIMES["swing15v2_s2"] = C.CUT2_AT
+CELLS = dict(CELLS, swing15v2_s2=())
 REMOVED = {k: tuple(s for s in v if s not in CELLS_V3[k]) for k, v in CELLS_V2.items()}
 LABELS = {"swing15v2_s1": "S1 Swing · 35c · 3x · else hold", "swing15v2_s2": "S2 Favourite at start",
           "swing15v2_s3": "S3 Favourite at 5 minutes left"}

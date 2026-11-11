@@ -29,11 +29,13 @@ import mentions_split as MS
 import nba_wm_v3 as V3
 import nba_wm_v4 as V4
 import nba_wm_v4prod as V4P
+import nba_wm_v5 as V5
 import sport_page as SP
 
 NO_DIP = V4.NO_DIP
 STALE_H = 12                 # a ledger read this long before the newest read on the page is tagged stale
 YES_ID, NO_ID = NL.YES_ID, NL.NO_ID
+YES5_ID, NO5_ID = V5.YES_LANE, V5.NO_LANE                # the Sandbox candidates for the next version (paper)
 YES3P_ID, NO75_ID = V4.RULE_V3["lane"], V4.NO75_LANE      # the Sandbox comparison lanes: the version 3 YES rule and the 75% NO bid, on paper
 SWITCH_ON = V4P.SWITCH_ON
 LIVE_KEY = {YES_ID: "nba_wm_yes", NO_ID: "nba_wm_nofade"}
@@ -65,6 +67,15 @@ RULE_LINES_PAPER = {
               "or under the bid at the tip is no entry.",
               "Exit: sell it back at the pregame price on a print strictly above it, else hold to settlement. "
               "Sandbox, paper: the version 3 rule, kept running from the night of 2026-11-08 to compare with Production."),
+}
+RULE_LINES_V5 = {
+    YES5_ID: ("Entry: buy YES on a 6-10 or 11-20 win margin bucket (either team) at the ask, 10-20c, an hour before the tip; skip a game whose "
+              "favourite's pregame win share is 70% or more. No 1-5 and no 21+.",
+              "Exit: rest half at 2x and half at 2.5x of the ask, filled only by prints strictly through the target from the tip on; the rest is held. "
+              + V5.LABEL + "."),
+    NO5_ID: ("Entry: after the tip, rest a post-only NO bid at 65% of a bucket's pregame NO price (10-95c) on the 1-5 and 6-10 buckets and the "
+             "alternate ladder (11+, 11-15, 16-25, 26+). No 11-20 on the main ladder and no 21+.",
+             "Exit: sell it back at the pregame price on a print strictly above it, else hold to settlement. " + V5.LABEL + "."),
 }
 
 
@@ -193,7 +204,16 @@ def no75_record(nofade):
                 z_known=s["z"] is not None, unit="game"), sum(r.get("fills", 1) for r in g), None
 
 
-def sandbox_rows(nofade, v3p):
+def v5_records(nofade, v5y):
+    ya, yn, yw = _rec(V5.yes_rows(v5y or {"rows": {}}))
+    g = V5.no_games(nofade)
+    s = C.stats(g)
+    na = dict(n=s["n"], won=s["won"], n_price=0, expected=None, roi_fee=s["roi"], z=s["z"] if s["z"] is not None else 0.0,
+              z_known=s["z"] is not None, unit="game")
+    return (ya, yn, yw), (na, sum(r.get("fills", 1) for r in g), None)
+
+
+def sandbox_rows(nofade, v3p, v5y=None):
     """The two Sandbox rows are the comparison (2026-11-08): the version 3 YES rule and the 75% NO bid on paper, fresh from the switch night.
     The 2026-11-06 paper lanes of version 4's rules are Production's now and are not listed twice (their ledger stays)."""
     import sandbox_build as B
@@ -204,10 +224,16 @@ def sandbox_rows(nofade, v3p):
         out.append(dict(name=lane, sport="nba_wm", meta=dict(label=label, kind="Rule"), a=a, prod=False, open=0,
                         since=V4.SINCE_V3_PAPER, v=B.verdict(a) if a.get("z_known") or not a["n"] else "early", anchor=anchor,
                         entries=n_e, entries_won=w_e, live=None, market=market, label=label))
+    y5, n5 = v5_records(nofade, v5y)
+    for lane, (a, n_e, w_e), label, anchor in ((YES5_ID, y5, "Win margin · YES split v5 (paper)", "wm-yes-v5-row"),
+                                              (NO5_ID, n5, "Win margin · NO fade v5 (paper)", "wm-no-v5-row")):
+        out.append(dict(name=lane, sport="nba_wm", meta=dict(label=label, kind="Rule"), a=a, prod=False, open=0, since=V5.SINCE,
+                        v=B.verdict(a) if a.get("z_known") or not a["n"] else "early", anchor=anchor,
+                        entries=n_e, entries_won=w_e, live=None, market="Win margin · YES" if lane == YES5_ID else "Win margin · NO", label=label))
     return out
 
 
-def rows(chaos, nofade, v3, live, v4=None, v4p=None, v3p=None):
+def rows(chaos, nofade, v3, live, v4=None, v4p=None, v3p=None, v5y=None):
     """`v4` is kept for callers of the 2026-11-06 signature (the Sandbox paper ledger of version 4's rules); `v4p` is Production version 4's
     ledger, `v3p` the version 3 YES paper ledger."""
     import nba_wm_production as P
@@ -229,7 +255,7 @@ def rows(chaos, nofade, v3, live, v4=None, v4p=None, v3p=None):
                         # z by night needs 3 nights (chaos_replay.MIN_NIGHTS_Z): until then the record cannot be read either way.
                         since=since4 or since, v=B.verdict(a) if a.get("z_known") or not a["n"] else "early", anchor=("wm-yes" if lane == YES_ID else "wm-no"),
                         entries=n_e, entries_won=w_e, live=live_cell(lane, live, pair, since, since4), market=market, label=label))
-    return out + sandbox_rows(nofade, v3p)
+    return out + sandbox_rows(nofade, v3p, v5y if v5y is not None else V5.load())
 
 
 def entries_cell(row):
@@ -400,6 +426,51 @@ def no75_panel(nofade, latest):
     return out
 
 
+def _v5_head(label):
+    return (f'<p class="sm"><b>{esc(label)}</b> · fresh record from {esc(V5.SINCE)}, review at 10 nights, decide at 30 entries. '
+            f'Pre-registered in {esc(V5.PREREG)} before the first night. Production is untouched and runs version 4.</p>')
+
+
+def yes5_panel(v5y, v4):
+    yr = V5.yes_rows(v5y)
+    events = {r["event"] for r in yr}
+    out = "".join(f'<p class="sm sp-rule-line">{esc(x)}</p>' for x in RULE_LINES_V5[YES5_ID]) + _v5_head(V5.LABEL)
+    out += _block("YES v5 on paper", yr, V5.SINCE, "wm-yes-v5", "the tracker's rows as the entries, fills replayed from prints")
+    out += fold("Against version 4", "the v4 rule on the same games, and on all of its games since the start",
+                _compare([("YES v5 · its games", _g(yr)), ("YES v4 rule · the same games", _g(V5.yes_v4_rows(v4, events=events))),
+                          ("YES v4 rule · all its games", _g(V5.yes_v4_rows(v4)))]))
+    hold = (sum(r["hold_roi"] for r in yr) / len(yr)) if yr else None
+    out += fold("Alternate exits", "the same entries held to settlement",
+                f'<p class="sm">The same {len(yr)} entries held: {NL._pct(hold)} after fees (the split headline is {NL._pct(C.stats(yr)["roi"])}).</p>')
+    return out
+
+
+def _g(rows):
+    """Entries as one row per game, as the page counts a game (summed cost and profit)."""
+    by = {}
+    for r in rows:
+        g = by.setdefault(r["event"], dict(event=r["event"], night=r["night"], cost=0.0, profit=0.0, reason="game"))
+        g["cost"] += float(r.get("cost") or 0)
+        g["profit"] += float(r.get("profit") or 0)
+    out = []
+    for g in by.values():
+        g["roi"], g["won"] = (g["profit"] / g["cost"] if g["cost"] else 0.0), g["profit"] > 0
+        out.append(g)
+    return out
+
+
+def no5_panel(nofade, latest):
+    nf_tag = stale_tag(nofade.get("last_run"), latest)
+    g5 = V5.no_games(nofade)
+    events = {r["event"] for r in g5}
+    out = "".join(f'<p class="sm sp-rule-line">{esc(x)}</p>' for x in RULE_LINES_V5[NO5_ID]) + _v5_head(V5.LABEL)
+    out += _block("NO fade v5", g5, V5.SINCE, "wm-no-v5", "the 65% bid replayed from prints under the follower's strict rules")
+    out += fold("Against version 4", "the v4 rule (65% on every bucket) on the same games, and on all of its games since the start",
+                _compare([("NO v5 · its games", g5), ("NO v4 rule · the same games", V5.no_v4_games(nofade, events=events)),
+                          ("NO v4 rule · all its games", V5.no_v4_games(nofade))]), tag=nf_tag)
+    return out
+
+
 # ------------------------------------------------------------------ the tiles
 def tiles(rows_, d, st, live, v3=None, v4p=None):
     """Open bets (live), active lanes, the since-Production record and ROI (the Production page's own, every pair of the
@@ -444,7 +515,7 @@ def spec(rows_, details):
         extra_cols=(("record", "Entries won", entries_cell), ("roi", "Live fills", lambda r: r.get("live") or "—")))
 
 
-def rules_section(chaos=None, nofade=None, v3=None, live=None, now=None, v4=None, v4p=None, v3p=None):
+def rules_section(chaos=None, nofade=None, v3=None, live=None, now=None, v4=None, v4p=None, v3p=None, v5y=None):
     """(tiles_and_filters_html, rules_html, rows): the head figures and the Rules section. Never raises for a lane:
     a lane whose fold fails says so inside its fold."""
     if chaos is None or nofade is None or v3 is None or live is None:
@@ -454,11 +525,13 @@ def rules_section(chaos=None, nofade=None, v3=None, live=None, now=None, v4=None
     v4 = v4 if v4 is not None else V4.load()
     v4p = v4p if v4p is not None else V4P.load()
     v3p = v3p if v3p is not None else V4.load(None, V4.RULE_V3)
-    rows_ = rows(chaos, nofade, v3, live, v4, v4p, v3p)
+    v5y = v5y if v5y is not None else V5.load()
+    rows_ = rows(chaos, nofade, v3, live, v4, v4p, v3p, v5y)
     latest = latest_read(chaos, nofade, v3, v4p)
     details = {}
     for lane, fn in ((YES_ID, lambda: yes_panel(chaos, nofade, v3, latest, v4p, v4)), (NO_ID, lambda: no_panel(chaos, nofade, v3, latest, v4p, v4)),
-                     (YES3P_ID, lambda: yes3p_panel(v3p)), (NO75_ID, lambda: no75_panel(nofade, latest))):
+                     (YES3P_ID, lambda: yes3p_panel(v3p)), (NO75_ID, lambda: no75_panel(nofade, latest)),
+                     (YES5_ID, lambda: yes5_panel(v5y, v4)), (NO5_ID, lambda: no5_panel(nofade, latest))):
         try:
             details[lane] = fn()
         except Exception as exc:                                # noqa: BLE001

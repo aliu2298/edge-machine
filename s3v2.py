@@ -85,7 +85,8 @@ def records(state, start=None):
     gone = C.cut("s3v2")
     out = {}
     for key, flt, mk in (
-            ("lane", lambda w: in_record(w, start) and allowed(w) and w["series"] in kept, kept),
+            ("lane", lambda w: in_record(w, start) and allowed(w) and w["series"] in kept
+             and (C.retire_at("s3v2") is None or W._ts(w["open"]) < W._ts(C.retire_at("s3v2"))), kept),
             ("every", lambda w: in_record(w, start), MARKETS),
             ("cut", lambda w: in_record(w, start) and allowed(w) and w["series"] in gone
              and W._ts(w["open"]) < W._ts(C.CUT_AT), gone)):

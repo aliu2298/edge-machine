@@ -25,6 +25,23 @@ RETIRED = ("flipf4v2", "steadyfav_a")
 CUTS_SHA256 = "4d654a40e9f970d123b9883b23861e8f76db47cad8f3d0647585b159df6eb5a9"   # sha256 of fingerprint(), set at registration
 
 
+# ROUND 2 (Olu, 2026-11-11): the section is narrowed to three rules (sw15keep.py A and C, the Lead Swap favourite).
+# Every other live lane is retired at CUT2_AT, its whole record final in the archive. The Loss Reader runs on as a
+# watch row to 30 bets. Frozen like round 1: ROUND2_SHA256 is checked by the tests.
+CUT2_AT = "2026-11-11T22:00:00+00:00"
+RETIRED2 = ("s3v2", "flipf1v2", "flipf2v2", "flipf3v2", "steadyfav_b", "swing15v2_s2", "leadswap_swing")
+ROUND2_SHA256 = "89fe4ce425d0288c0bdfb3712593f0187ed174ede63ab48b38977cb5691ae67e"   # sha256 of fingerprint2(), set at registration
+
+
+def fingerprint2():
+    return allowgate.fingerprint(dict(cut_at=CUT2_AT, retired=list(RETIRED2)))
+
+
+def retire_at(lane):
+    """The cut time a retired lane stops entering at (round 1 or 2), or None for a live lane."""
+    return CUT_AT if lane in RETIRED else CUT2_AT if lane in RETIRED2 else None
+
+
 def fingerprint():
     return allowgate.fingerprint(dict(cut_at=CUT_AT, cuts={k: list(v) for k, v in CUTS.items()}, retired=list(RETIRED)))
 
