@@ -85,7 +85,7 @@ check("every group folds and so does every lane", (h.count('<details class="fold
 check("waiting and retired groups are closed by default", ("Retired lanes" in h and '<details class="fold lanes"><summary><h3>Retired lanes' in h,
       '<details class="fold lanes"><summary><h3>Waiting for the first live bet' in h), (True, True))
 check("no dollar amount, balance or stake size", ("$" in text, re.search(r"\bstake of\b|\bbalance\b", text, re.I) is not None), (False, False))
-BAD = ("real" + " money", "the" + " bot", " pa" + "irs", "leads to" + " come", "reach" + "able")      # built in pieces: the copy audit scans this file too
+BAD = ("real" + " money", "the " + "bo" + "t", " pa" + "irs", "leads to" + " come", "reach" + "able")      # built in pieces: the copy audit scans this file too
 check("none of the retired jargon or guarded phrases in the lanes copy", [w for w in BAD if w in text.lower()], [])
 check("a raise reads as a date, never an amount", "Stake raised Nov 6." in text, True)
 
