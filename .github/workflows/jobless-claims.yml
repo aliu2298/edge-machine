@@ -1,0 +1,41 @@
+name: Jobless claims paper lane
+on:
+  schedule:
+    # Backup only. The VPS asks for the reads (scripts/vps_window_requests.sh, lane_windows.jobless_windows): hourly from
+    # 07:30 to 11:30 ET on Wednesdays and Thursdays. Entries are replayed from Kalshi's 1-minute candles once the window
+    # (3h to 1h before the 8:29 ET close) has ended, so a late run never moves a price; this catches a missed read and a
+    # late settlement.
+    - cron: '23 13,16 * * 3,4'
+    - cron: '23 11 * * 5'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "data/jobless_window/**"
+permissions:
+  contents: write
+concurrency:
+  group: jobless-claims
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Tests
+        run: python3 test_jobless_claims.py
+      - name: Freeze, check and settle the jobless claims entries (paper, public data only)
+        run: python3 jobless_claims.py
+      - name: Save records
+        run: |
+          set -euo pipefail
+          git config user.name "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+          python3 save_records.py --message "Jobless claims paper lane" \
+            --add data/jobless_claims_ledger.json \
+            --regenerate "python3 jobless_claims.py"
+          # The Daily Markets page picks the record up on the tracker's own rebuild.

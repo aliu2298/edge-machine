@@ -108,6 +108,10 @@ STAMP = {
     # VPS asks every hour. Grading reads each call's fill at its own due time from Kalshi's 1-minute history, so a late
     # read never changes a price; it only has to happen.
     "earnings_news": "data/earnings_news_window/request.txt",
+    # 2026-11-11: the jobless claims NO 70-85c paper lane (jobless_claims.py). Its entries are replayed from 1-minute candles
+    # once the window (3h to 1h before the 8:29 ET close) has ended, so the reads only have to happen: hourly from 07:30 to
+    # 11:30 ET on Wednesdays (a holiday-week release) and Thursdays.
+    "jobless": "data/jobless_window/request.txt",
 }
 # nfl_tt.WINDOW_MIN (45, 75), copied; test_nfl_tt.py checks the two agree.
 NFL_FROM, NFL_TO = 75, 45                # minutes before the ESPN kickoff
@@ -384,6 +388,17 @@ def earnings_news_windows(now):
                  start=h, end=h + dt.timedelta(hours=1), every=dt.timedelta(hours=1), last_ask=dt.timedelta(0))]
 
 
+def jobless_windows(now):
+    """The jobless claims lane reads hourly from 07:30 to 11:30 ET (four reads) on Wednesdays and Thursdays, Eastern time, so a
+    DST change or a holiday-week Wednesday release needs nothing (jobless-claims.yml)."""
+    day = now.astimezone(ET).date()
+    if day.weekday() not in (2, 3):
+        return []
+    at = lambda h, m: dt.datetime(day.year, day.month, day.day, h, m, tzinfo=ET).astimezone(dt.timezone.utc)  # noqa: E731
+    return [dict(lane="jobless", label=f"Jobless claims {day:%a %b %d}", series=(), close=at(8, 30), start=at(7, 30),
+                 end=at(11, 30), every=dt.timedelta(hours=1), reads=4, last_ask=dt.timedelta(0))]
+
+
 def soccer_p4_windows(now):
     """The soccer phase-4 WATCH lanes read once an hour, every hour (soccer-p4.yml)."""
     h = now.replace(minute=0, second=0, microsecond=0)
@@ -568,6 +583,7 @@ def windows(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, 
     out += soccer_p4_windows(now)
     out += swing15_windows(now)
     out += earnings_news_windows(now)
+    out += jobless_windows(now)
     out += tennis_windows(now, tennis)
     # nfl_windows (2026-10-21) stopped 2026-11-11: every NFL lane is retired.
     out += nba_value_windows(now, nba_value)
