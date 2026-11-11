@@ -835,6 +835,110 @@
    "version": "wm-nofade-v4"
   },
   {
+   "bucket": "21+",
+   "event": "KXNBAWINMARGIN-26NOV11DENMEM",
+   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV11DENMEM-DEN21PLUS",
+   "lane": "nba_wm_nofade",
+   "side": "no",
+   "stake_usd": 1.0,
+   "team": "DEN",
+   "ticker": "KXNBAWINMARGIN-26NOV11DENMEM-DEN21PLUS",
+   "tip": "2026-11-12T01:00:00+00:00",
+   "title": "Denver wins by 21+ points",
+   "version": "wm-nofade-v4"
+  },
+  {
+   "bucket": "11-20",
+   "event": "KXNBAWINMARGIN-26NOV11DENMEM",
+   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV11DENMEM-DEN11TO20",
+   "lane": "nba_wm_nofade",
+   "side": "no",
+   "stake_usd": 1.0,
+   "team": "DEN",
+   "ticker": "KXNBAWINMARGIN-26NOV11DENMEM-DEN11TO20",
+   "tip": "2026-11-12T01:00:00+00:00",
+   "title": "Denver wins by 11-20 points",
+   "version": "wm-nofade-v4"
+  },
+  {
+   "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV11DENMEM",
+   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV11DENMEM-DEN6TO10",
+   "lane": "nba_wm_nofade",
+   "side": "no",
+   "stake_usd": 1.0,
+   "team": "DEN",
+   "ticker": "KXNBAWINMARGIN-26NOV11DENMEM-DEN6TO10",
+   "tip": "2026-11-12T01:00:00+00:00",
+   "title": "Denver wins by 6-10 points",
+   "version": "wm-nofade-v4"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV11DENMEM",
+   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV11DENMEM-DEN1TO5",
+   "lane": "nba_wm_nofade",
+   "side": "no",
+   "stake_usd": 1.0,
+   "team": "DEN",
+   "ticker": "KXNBAWINMARGIN-26NOV11DENMEM-DEN1TO5",
+   "tip": "2026-11-12T01:00:00+00:00",
+   "title": "Denver wins by 1-5 points",
+   "version": "wm-nofade-v4"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV11DENMEM",
+   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV11DENMEM-MEM1TO5",
+   "lane": "nba_wm_nofade",
+   "side": "no",
+   "stake_usd": 1.0,
+   "team": "MEM",
+   "ticker": "KXNBAWINMARGIN-26NOV11DENMEM-MEM1TO5",
+   "tip": "2026-11-12T01:00:00+00:00",
+   "title": "Memphis wins by 1-5 points",
+   "version": "wm-nofade-v4"
+  },
+  {
+   "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV11DENMEM",
+   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV11DENMEM-MEM6TO10",
+   "lane": "nba_wm_nofade",
+   "side": "no",
+   "stake_usd": 1.0,
+   "team": "MEM",
+   "ticker": "KXNBAWINMARGIN-26NOV11DENMEM-MEM6TO10",
+   "tip": "2026-11-12T01:00:00+00:00",
+   "title": "Memphis wins by 6-10 points",
+   "version": "wm-nofade-v4"
+  },
+  {
+   "bucket": "11-20",
+   "event": "KXNBAWINMARGIN-26NOV11DENMEM",
+   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV11DENMEM-MEM11TO20",
+   "lane": "nba_wm_nofade",
+   "side": "no",
+   "stake_usd": 1.0,
+   "team": "MEM",
+   "ticker": "KXNBAWINMARGIN-26NOV11DENMEM-MEM11TO20",
+   "tip": "2026-11-12T01:00:00+00:00",
+   "title": "Memphis wins by 11-20 points",
+   "version": "wm-nofade-v4"
+  },
+  {
+   "bucket": "21+",
+   "event": "KXNBAWINMARGIN-26NOV11DENMEM",
+   "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV11DENMEM-MEM21PLUS",
+   "lane": "nba_wm_nofade",
+   "side": "no",
+   "stake_usd": 1.0,
+   "team": "MEM",
+   "ticker": "KXNBAWINMARGIN-26NOV11DENMEM-MEM21PLUS",
+   "tip": "2026-11-12T01:00:00+00:00",
+   "title": "Memphis wins by 21+ points",
+   "version": "wm-nofade-v4"
+  },
+  {
    "bucket": "26+",
    "event": "KXNBAWINMARGIN-26NOV11SASCHI",
    "id": "nba_wm_nofade:KXNBAWINMARGIN-26NOV11SASCHI-SAS26PLUS",
@@ -1164,6 +1268,6 @@
   "side": "no",
   "stake_usd": 1.0
  },
- "updated_at": "2026-11-11T00:01:03+00:00",
+ "updated_at": "2026-11-11T00:31:00+00:00",
  "version": "wm-nofade-v4"
 }
