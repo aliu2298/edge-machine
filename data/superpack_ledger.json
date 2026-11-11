@@ -156,6 +156,10 @@
    "at": "2026-11-10T18:02:29.808021+00:00",
    "pool": "entered"
   },
+  "[\"finance_nc\", \"finance_nc\", [\"KXINXU-26NOV11H1600-T7654.9999\", \"no\"]]": {
+   "at": "2026-11-11T18:04:22.767554+00:00",
+   "pool": "entered"
+  },
   "[\"nfl_tt_ledger.json\", \"nfl_tt_over_3545\", [\"nfl_tt_over_3545:KXNFLTEAMTOTAL-26NOV05JACBAL:BAL\", \"yes\"]]": {
    "at": "2026-11-06T00:37:05.998371+00:00",
    "pool": "entered"
@@ -2312,7 +2316,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-11T17:18:29.659986+00:00",
+ "last_run": "2026-11-11T18:09:29.721241+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -7356,6 +7360,29 @@
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXINXU-26NOV11H1600-T7654.9999",
+   "entered_at": "2026-11-11T18:04:22.767554+00:00",
+   "entities": [
+    "S&P 500"
+   ],
+   "id": "superpack:[\"finance_nc\", \"finance_nc\", [\"KXINXU-26NOV11H1600-T7654.9999\", \"no\"]]",
+   "lane": "finance_nc",
+   "logged": "2026-11-11T17:30:43.698260+00:00",
+   "matched": [
+    "S&P 500"
+   ],
+   "pid": "[\"finance_nc\", \"finance_nc\", [\"KXINXU-26NOV11H1600-T7654.9999\", \"no\"]]",
+   "price": 0.92,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "no",
+   "snapshot": null,
+   "sport": "Finance",
+   "src": "finance_nc",
    "status": "open"
   }
  ],
