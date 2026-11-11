@@ -98,9 +98,7 @@ STAMP = {
     # 2026-11-01: the boxing and UFC cheap-side lanes (fights_split.py), once an hour. GitHub's hourly cron ran them
     # 6 times in 24 hours and 11 fights were never seen; the VPS asks every hour instead.
     "fights": "data/fights_window/request.txt",
-    # 2026-11-08: the NHL goal lanes (nhl_goal_lanes.py) read each game once after the final horn. GitHub's hourly cron fired
-    # twice in a day, so the VPS asks every hour (a read of a game still in play adds nothing and the next hour finds it).
-    "nhl_goal": "data/nhl_goal_window/request.txt",
+    # 2026-11-08 to 2026-11-11: "nhl_goal" (the NHL goal lanes, hourly). Both lanes retired 2026-11-11; no request.
     # 2026-11-08: the soccer phase-4 WATCH lanes (soccer_p4_lanes.py) read each settled match once, after the fact, every hour.
     "soccer_p4": "data/soccer_p4_window/request.txt",
     # 2026-11-09: the 15-Minute Swing tracker (swing15.py) grades every settled 15-minute window once, every hour. GitHub's
@@ -372,13 +370,6 @@ def fights_windows(now):
                  start=h, end=h + dt.timedelta(hours=1), every=dt.timedelta(hours=1), last_ask=dt.timedelta(0))]
 
 
-def nhl_goal_windows(now):
-    """The NHL goal lanes read once an hour, every hour (nhl-goal.yml)."""
-    h = now.replace(minute=0, second=0, microsecond=0)
-    return [dict(lane="nhl_goal", label=f"NHL goal {h:%H}:00Z", series=(), close=h + dt.timedelta(hours=1),
-                 start=h, end=h + dt.timedelta(hours=1), every=dt.timedelta(hours=1), last_ask=dt.timedelta(0))]
-
-
 def swing15_windows(now):
     """The 15-Minute Swing tracker reads once an hour, every hour (swing15.yml)."""
     h = now.replace(minute=0, second=0, microsecond=0)
@@ -574,7 +565,6 @@ def windows(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, 
     out += soccer_team_windows(now, fixtures, ledger)
     out += culture_windows(now)
     out += fights_windows(now)
-    out += nhl_goal_windows(now)
     out += soccer_p4_windows(now)
     out += swing15_windows(now)
     out += earnings_news_windows(now)

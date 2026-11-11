@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """lane_windows: every ladder lane's window, measured to its own close, and the reads due."""
 import datetime as dt
+import os
 import sys
 
 import lane_windows as W
@@ -106,7 +107,6 @@ print("\nstamps: one file per workflow, a crypto and a commodity read in one pus
 lines = W.stamp_lines(at(2026, 10, 13, 17, 35), ledger={"quotes": []}, games=[], fixtures=[])
 lines.pop("data/culture_window/request.txt", None)      # the hourly culture read (2026-10-17), tested below
 lines.pop("data/fights_window/request.txt", None)       # the hourly fights read (2026-11-01), tested below
-lines.pop("data/nhl_goal_window/request.txt", None)     # the hourly NHL goal read (2026-11-08), tested below
 lines.pop("data/soccer_p4_window/request.txt", None)    # the hourly soccer p4 read (2026-11-08), tested below
 lines.pop("data/swing15_window/request.txt", None)      # the hourly 15-Minute Swing read (2026-11-09), tested below
 lines.pop("data/earnings_news_window/request.txt", None)  # the hourly Earnings & news read (2026-11-09), tested below
@@ -132,15 +132,13 @@ check("the VPS script may write that stamp and the workflow runs on it",
       ("data/fights_window/request.txt" in open("scripts/vps_window_requests.sh").read()
        and 'data/fights_window/**' in open(".github/workflows/fights.yml").read()), True)
 
-print("\nthe NHL goal lanes are asked for every hour (2026-11-08)")
-nl = [k for w, k in W.due(at(2026, 11, 8, 20, 41), {"quotes": []}, [], []) if w["lane"] == "nhl_goal"]
-check("NHL goal reads once every hour", nl, [1])
-check("the stamp goes to the NHL file, named for the hour",
-      W.stamp_lines(at(2026, 11, 8, 20, 41), {"quotes": []}, [], []).get("data/nhl_goal_window/request.txt"),
-      "nhl_goal 2026-11-08T21:00:00+00:00 read 1")
-check("the VPS script may write that stamp and the workflow runs on it",
-      ("data/nhl_goal_window/request.txt" in open("scripts/vps_window_requests.sh").read()
-       and 'data/nhl_goal_window/**' in open(".github/workflows/nhl-goal.yml").read()), True)
+print("\nthe NHL goal lanes are no longer asked for (retired 2026-11-11)")
+check("no NHL goal window", [w for w in W.windows(at(2026, 11, 11, 20, 41), {"quotes": []}, [], []) if w["lane"] == "nhl_goal"], [])
+check("no NHL stamp, the VPS script refuses the path, and the workflow is gone",
+      ("data/nhl_goal_window/request.txt" in W.stamp_lines(at(2026, 11, 11, 20, 41), {"quotes": []}, [], []),
+       "data/nhl_goal_window/request.txt)" in open("scripts/vps_window_requests.sh").read()
+       or "|data/nhl_goal_window/request.txt|" in open("scripts/vps_window_requests.sh").read(),
+       os.path.exists(".github/workflows/nhl-goal.yml")), (False, False, False))
 
 print("\nthe 15-Minute Swing tracker is asked for every hour (2026-11-09)")
 wl = [k for w, k in W.due(at(2026, 11, 9, 6, 41), {"quotes": []}, [], []) if w["lane"] == "swing15"]
