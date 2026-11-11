@@ -356,6 +356,10 @@
    "at": "2026-11-09T18:33:55.888731+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXCOPPERD-26NOV1117-T6.36\", \"a\"]]": {
+   "at": "2026-11-11T19:34:20.659167+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXGOLDD-26NOV0917-T4095\", \"a\"]]": {
    "at": "2026-11-09T18:48:54.290065+00:00",
    "pool": "entered"
@@ -2420,7 +2424,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-11T19:06:51.068525+00:00",
+ "last_run": "2026-11-11T19:34:20.659167+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -7578,6 +7582,29 @@
    "side": "b",
    "snapshot": null,
    "sport": "Crypto",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXCOPPERD-26NOV1117-T6.36",
+   "entered_at": "2026-11-11T19:34:20.659167+00:00",
+   "entities": [
+    "Copper"
+   ],
+   "id": "superpack:[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXCOPPERD-26NOV1117-T6.36\", \"a\"]]",
+   "lane": "commod_fav_band",
+   "logged": "2026-11-11T19:32:49+00:00",
+   "matched": [
+    "Copper"
+   ],
+   "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXCOPPERD-26NOV1117-T6.36\", \"a\"]]",
+   "price": 0.7,
+   "profit": null,
+   "scope": "commodities_fav",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Commodities",
    "src": "sandbox",
    "status": "open"
   }
