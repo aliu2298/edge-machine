@@ -200,7 +200,8 @@ GAS = dict(WTI, lane="gas_cheap_no", label="AAA gas · cheap NO (15-30c)", side=
 # hold +40%; strict 5c split +55% (z 1.7). A small, slow lane: about 3 entries a week.
 GAS_WEEK = dict(GAS, lane="gas_week_cheap_no", label="AAA gas weekly · cheap NO (15-30c, 10c spread)",
                 path=os.path.join(ROOT, "data", "gas_week_cheap_no_ledger.json"), series="KXAAAGASW",
-                spread=0.10, anchor="gas-week-cheap-no",
+                spread=0.10, anchor="gas-week-cheap-no", fill_gap_s=60,    # sells only on prints 60s+ after entry
+
                 rule=_COMMOD_RULE.format(series="KXAAAGASW (US gas prices, weekly)", side="NO",
                                          no_def=" (1 - the YES bid)",
                                          no_fill=" on the NO side (the YES traded low at or under 1 - the target)"
@@ -211,6 +212,17 @@ GAS_WEEK = dict(GAS, lane="gas_week_cheap_no", label="AAA gas weekly · cheap NO
 # WTI and must not inherit it; the gas lanes keep running.
 WTI["retired"] = dict(on="2026-11-04", at="13 entries on 4 settled events, 1 won; split −60.2%, hold −75.6%",
                       reason="no edge: the cheap WTI rungs lost both ways, split and held")
+# Retired by hand (2026-11-11, Olu): gas DAILY cheap NO. Set here, after GAS_WEEK is built from GAS, so the weekly lane
+# (still running) does not inherit it. Its fills are re-read with the 60-second rule too (fill_gap_s), so the final
+# record is the honest one: the page had shown split +4.2% on the 19 settled bets.
+GAS["fill_gap_s"] = 60
+GAS["retired"] = dict(on="2026-11-11", at="19 bets on 13 settled events, 5 won; hold −8.7%, split −20.5%",
+                      reason="No edge held or swung: 19 bets, hold −9%; losers fade to zero within hours, winners "
+                             "climb steadily, so 2x/3x sells only cut winners",
+                      note="The page had shown the split at +4.2%. That figure counted 2x/3x fills on the Nov 8 and "
+                           "Nov 11 events from opening-minute prints at or before the entry minute; the price never "
+                           "traded there again after the entry. Re-read so a sell counts only on a print at least 60 "
+                           "seconds after the entry: 12 legs moved (4 to held, the rest later), split −20.5%")
 COMMOD_LANES = (WTI, GAS, GAS_WEEK)
 LIVE_COMMOD = tuple(c for c in COMMOD_LANES if not c.get("retired"))
 GONE_COMMOD = tuple(c for c in COMMOD_LANES if c.get("retired"))
@@ -286,6 +298,75 @@ def fill_of(candles, entry_ts, target, side="yes", detail=False):
         if hi is not None and hi >= target - 1e-9:
             return (end, target, _num(c.get("volume_fp"))) if detail else (end, target)
     return None
+
+
+# Late fills (2026-11-11, Olu): the hourly candle that holds the entry minute also holds the prints BEFORE it, so a leg
+# could "fill" on an opening-minute print the price never came back to (gas daily, Nov 8 and Nov 11). A lane with
+# fill_gap_s counts a sell only on a print at least that many seconds after the entry: the straddling hour is re-read
+# in minute candles that start at or after entry + gap; later hours are read whole.
+FILL_GAP_S = 60
+
+
+def fill_late(hourly, entry_ts, target, side, minutes_of, gap=FILL_GAP_S):
+    """(end_ts, target) of the first print at or through the target at least `gap` seconds after the entry, or None.
+    minutes_of(lo, hi) -> that market's minute candles over (lo, hi]; called only for the hour that straddles."""
+    earliest = entry_ts + gap
+    for c in sorted(hourly, key=lambda c: c.get("end_period_ts") or 0):
+        end = c.get("end_period_ts")
+        if not end or end <= earliest:
+            continue
+        if end - 3600 < earliest:                         # this hour holds prints from before entry + gap
+            if fill_of([c], 0, target, side) is None:
+                continue
+            lo = earliest - earliest % 60
+            mins = [m for m in minutes_of(lo, end) if (m.get("end_period_ts") or 0) - 60 >= earliest]
+            f = fill_of(mins, 0, target, side)
+            if f:
+                return f
+            continue
+        f = fill_of([c], 0, target, side)
+        if f:
+            return f
+    return None
+
+
+def recheck_fills(state, cfg, fetch, now_ts):
+    """Re-read, once, every filled leg of a fill_gap_s lane whose fill hour straddles entry + gap (open AND settled
+    entries): the leg keeps a fill only on a later print, else it is held to settlement. Returns legs changed."""
+    gap, changed = cfg.get("fill_gap_s"), 0
+    if not gap:
+        return 0
+    for e in state["entries"]:
+        t0 = _ts(e["entry_at"])
+        todo = [l for l in e["legs"] if l.get("filled_at") and not l.get("late_checked")
+                and _ts(l["filled_at"]) - 3600 < t0 + gap]
+        for l in e["legs"]:
+            if l.get("filled_at") and l not in todo:
+                l["late_checked"] = True
+        if not todo:
+            continue
+        tick = e["event"]
+        hi = min(now_ts, _ts(e["settled"]) if e.get("settled") else now_ts)
+        hi -= hi % 60
+        hourly = [c for c in candles(tick, t0 - t0 % 3600, hi, fetch, series=cfg["series"]).get(e["id"]) or []
+                  if (c.get("end_period_ts") or 0) <= now_ts]
+        mins = lambda lo, h: candles(tick, lo, min(h, now_ts - now_ts % 60), fetch, minutes=1,
+                                     series=cfg["series"]).get(e["id"]) or []
+        for l in todo:
+            f = fill_late(hourly, t0, l["target"], e.get("side", "yes"), mins, gap)
+            was = l["filled_at"]
+            if f:
+                l["filled_at"], l["fill_px"] = _iso(f[0]), f[1]
+            else:
+                l.pop("filled_at", None), l.pop("fill_px", None)
+                if e.get("payout") is not None:
+                    l["settled_px"] = e["payout"]
+            l["late_checked"] = True
+            if l.get("filled_at") != was:
+                l["late_moved_from"] = was
+                changed += 1
+        grade(e)
+    return changed
 
 
 def book_size(book, price, side="yes"):
@@ -598,7 +679,15 @@ def run(state, now=None, fetch=D.get, cfg=STRICT, ask_rule=True):
             c = [x for x in (cs or {}).get(e["id"]) or [] if (x.get("end_period_ts") or 0) <= now_ts]
             for leg in e["legs"]:
                 if not leg.get("filled_at"):
-                    f = fill_of(c, _ts(e["entry_at"]), leg["target"], e.get("side", "yes"))
+                    if cfg.get("fill_gap_s"):
+                        t0 = _ts(e["entry_at"])
+                        f = fill_late(c, t0, leg["target"], e.get("side", "yes"),
+                                      lambda lo, h, e=e: candles(tick, lo, min(h, now_ts - now_ts % 60), fetch, minutes=1,
+                                                                 series=cfg["series"]).get(e["id"]) or [],
+                                      cfg["fill_gap_s"])
+                        leg["late_checked"] = True
+                    else:
+                        f = fill_of(c, _ts(e["entry_at"]), leg["target"], e.get("side", "yes"))
                     if f:
                         leg["filled_at"], leg["fill_px"] = _iso(f[0]), f[1]
                         obs["filled"] += 1
@@ -610,6 +699,10 @@ def run(state, now=None, fetch=D.get, cfg=STRICT, ask_rule=True):
                     if not leg.get("filled_at"):
                         leg["settled_px"] = pay
             grade(e)
+    try:
+        obs["fills_moved"] = recheck_fills(state, cfg, fetch, now_ts)
+    except Exception as x:                                      # noqa: BLE001  (re-read next hour)
+        obs["fills_moved"] = f"error: {str(x)[:80]}"
     errs = check_asks(state, now, fetch, cfg) if ask_rule else []
     obs.update(unverified=sum(check_status(e) == "unverified" for e in state["entries"]),
                checking=sum(check_status(e) == "checking" for e in state["entries"]))

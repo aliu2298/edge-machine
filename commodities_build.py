@@ -391,6 +391,8 @@ def _cheap_row(cfg, st, retired=False):
     gone = cfg.get("retired") or {}
     gone_line = (f'<p class="sp-def">Retired {e(gone.get("on", ""))} at {e(gone.get("at", ""))}: {e(gone.get("reason", ""))}. '
                  f'Its rows stay; any open entry still settles.</p>' if retired and gone else "")
+    if retired and gone.get("note"):
+        gone_line += f'<p class="sp-def">{e(gone["note"])}.</p>'
     early = " is-early" if (not retired and n < 10) else ""
     return (f'<details class="sp-rule{early}" data-source="{e(cfg["lane"])}" data-sport="commodities_cheap" '
             f'data-scope="clubs" data-stage="sandbox"{" data-early=\"1\"" if early else ""}>'
@@ -460,7 +462,8 @@ def retired_cheap(states, e):
     if not MS.GONE_COMMOD:
         return ""
     lines = "".join(f'<li data-lane="{e(c["lane"])}"><b>{e(c["label"])}</b>: retired {e(c["retired"]["on"])} at '
-                    f'{e(c["retired"]["at"])}: {e(c["retired"]["reason"])}. Its rows stay; any open entry still settles.</li>'
+                    f'{e(c["retired"]["at"])}: {e(c["retired"]["reason"])}. Its rows stay; any open entry still settles.'
+                    + (f' {e(c["retired"]["note"])}.' if c["retired"].get("note") else "") + '</li>'
                     for c in MS.GONE_COMMOD)
     return (f'<details class="fold sec" id="retired-cheap"><summary><h2>Retired</h2> <span class="mut sm">· '
             f'{len(MS.GONE_COMMOD)} cheap-side lane{"s" if len(MS.GONE_COMMOD) != 1 else ""} · kept, not deleted</span>'

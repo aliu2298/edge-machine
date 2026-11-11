@@ -29,6 +29,7 @@ jobs:
           python3 test_daily_research.py
           python3 test_finance_nc.py
           python3 test_mentions_split.py
+          python3 test_gas_daily_retired.py
       - name: Public market observations and paper settlement
         id: collect
         run: python3 daily_track.py
