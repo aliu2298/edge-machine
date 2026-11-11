@@ -224,7 +224,8 @@ for name, html in pages.items():
 trading = pages["trading.html"]
 ok(MT.RULES[KEPT]["label"] in trading, "a rule still on the board is on the trading page")
 logged, opened = _board_tiles(snapshot)
-ok(f'{logged:,} trades logged · {opened:,} still open' in trading,
+# With nothing open the line reads "all closed" (2026-11-11: the last open stock rows closed on the VPS that evening).
+ok(f'{logged:,} trades logged · ' + (f'{opened:,} still open' if opened else 'all closed') in trading,
    "the retired block's count line counts only the rules still on the board")
 ok("trades logged</span></div>" not in trading,
    "and the header tiles no longer count retired stock rules (2026-11-06: running lanes only)")

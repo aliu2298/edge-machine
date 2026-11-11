@@ -34,6 +34,10 @@ NOTES = {
             "6-1 (−9.3%, 7 bets) and NHL puck line NO after a goal 0-1 (1 bet). No edge in two full NHL studies (Oct 30, "
             "Nov 8): moneyline, totals and puck line priced fairly. Paused until something new comes up; the ledger and the "
             "research are kept."),
+    "nfl": ("Archived 2026-11-11 (Olu: END NFL): every NFL lane is retired. NFL team total over 35-45c 24–35 (+0.4%, 59 bets): "
+            "break-even past its decision point, the 2025 holdout (16/22) did not carry into 2026. NFL team total over main line +1 "
+            "8–18 (−26.2%, 26 bets). College football home underdog 4x: failed forward (13 games, −60.3%), with its blind "
+            "baseline. The ledgers and the research are kept."),
     "fights": ("Archived 2026-11-05 (Olu: if nothing is running, archive it): Boxing cheap dog is a baseline (blind, price band "
                "only) and UFC dog is retired; no filtered fights lane is registered. The tab returns when one logs a pick."),
 }
@@ -45,7 +49,7 @@ NOTES = {
 PINNED = {}
 # Tabs taken out of the nav by hand (2026-11-11, Olu: "END NHL for now"): archived on every check, whatever its adapter says
 # (an adapter error never brings it back), and its Archives entry keeps the retired lanes with their final records.
-RETIRED_TABS = {"nhl": "2026-11-11"}
+RETIRED_TABS = {"nhl": "2026-11-11", "nfl": "2026-11-11"}
 
 
 def _row_active(r):
@@ -222,6 +226,46 @@ LABEL = dict(nba="NBA", nfl="NFL", nhl="NHL", soccer="Soccer", tennis="Tennis", 
              econ_daily="Econ Daily", finance_daily="Finance Daily", culture="Culture", fights="Fights")
 
 
+def _nfl_kept():
+    """The NFL tab's own-ledger lanes (team totals, main line +1) and its college football chaos lanes, each with its final record."""
+    import sandbox_build as B
+    import sport_page as SP
+    out = []
+    try:
+        import nfl_tt as N
+        import nfl_tt_build as TB
+        tt = TB._state(None)
+        for lane in N.LANES:
+            r = TB.row_data(lane, tt)
+            out.append((N.NAMES[lane], "retired" if r.get("gone") else "registered", SP.record_compact(r["a"]), SP.roi_html(r),
+                        r.get("gone") or ""))
+        import nfl_tt_main1 as M1
+        import nfl_tt_main1_build as MB
+        for lane in M1.LANES:
+            r = MB.row_data(lane, None)
+            out.append((M1.NAMES[lane], "retired" if r.get("gone") else "registered", SP.record_compact(r["a"]), SP.roi_html(r),
+                        r.get("gone") or ""))
+    except Exception:                                           # noqa: BLE001
+        pass
+    try:
+        import chaos_build as CB
+        import chaos_lanes
+        import chaos_replay as C
+        have = CB.with_config(C.load()).get("lanes") or {}
+        for cfg in chaos_lanes.LANES:
+            if cfg["id"] not in CB.HOMES["nfl"] or cfg["id"] not in have:
+                continue
+            L = have[cfg["id"]]
+            r = CB.split_hold(L)
+            head = r["split"] if r["n_split"] else r["hold"]
+            out.append((cfg["label"], "retired" if cfg.get("retired") else "baseline",
+                        f'{r["won"]} won ({r["events"]} games)', "—" if head is None else B.pct(head, sign=True),
+                        CB.retired_line(cfg) if cfg.get("retired") else ""))
+    except Exception:                                           # noqa: BLE001
+        pass
+    return out
+
+
 def _esc(x):
     import html
     return html.escape("" if x is None else str(x))
@@ -255,6 +299,8 @@ def kept_rows(tab, d=None, st=None):
                 note = f'{N.RETIRED["on"]}: {N.RETIRED["reason"]}' if kind == "retired" else "the lane's baseline (every game)"
                 out.append((N.BY_LANE[key]["label"], kind, f'{s["won"]}–{s["n"] - s["won"]} ({s["n"]} bet{"" if s["n"] == 1 else "s"})',
                             "—" if s["roi"] is None else B.pct(s["roi"], sign=True), note))
+    if tab == "nfl":
+        out += _nfl_kept()
     if tab == "fights":
         import fights_split as FS
         import mentions_split as MS

@@ -59,7 +59,7 @@ if os.path.exists(nba_pace_build.SRC):
 for page, html in pages.items():
     first = re.search(r'<(?:section|details)[^>]*id="([^"]+)"', html[html.find("<main"):])
     check(f"{page}: the cheap-side section is the first section of the page (the NBA page opens on its Rules, 2026-11-05)",
-          first and first.group(1), "rules" if page == "nba" else "cheap-side")
+          first and first.group(1), "rules" if page == "nba" or not CB.has_live(page) else "cheap-side")
     for lane in CB.HOMES[page]:
         L = next(x for x in chaos_lanes.LANES if x["id"] == lane)
         if L.get("retired"):
@@ -76,14 +76,17 @@ for page, html in pages.items():
         elif lane in (C.load().get("lanes") or {}):
             check(f"{page}: {lane}'s card is visible without opening a fold",
                   folded(html, f'<details class="section-disclosure" data-lane="{lane}" open>'), False)
-check("nfl: the college football block names itself", "College football" in pages["nfl"], True)
+check("nfl (2026-11-11, both college football lanes retired): no cheap-side section, no college football header, both in Retired",
+      ('<section id="cheap-side">' in pages["nfl"], "<h3>College football</h3>" in pages["nfl"],
+       pages["nfl"].find('<li data-lane="cfb_home_dog_x4"') > pages["nfl"].find('<section id="retired"') > 0), (False, False, True))
 
 print("\nthe Sandbox index")
 idx = CB.section()
 check("an index: a row per lane, a link to each home, no lane cards", (
     all(f'data-lane="{x}"' in idx for x in ids if x in (C.load().get("lanes") or {}) and not
         next(l for l in chaos_lanes.LANES if l["id"] == x).get("baseline")),
-    all(f'href="./{p}.html#cheap-side"' in idx or (p == "nba" and 'href="./nba.html#wm-yes"' in idx) for p in CB.HOMES),
+    all(f'href="./{p}.html#cheap-side"' in idx or (p == "nba" and 'href="./nba.html#wm-yes"' in idx)
+        or (not CB.has_live(p) and f'href="./{p}.html#retired"' in idx) for p in CB.HOMES),
     "Split v hold" in idx), (True, True, False))
 check("challenger_dog_tp30 is marked retired there", "retired 2026-10-27" in idx, True)
 
@@ -116,11 +119,9 @@ check("NBA: the Rules table lists the two Production lanes first, then the two S
       (sorted(_ids[:2]), sorted(_ids[2:])), (["wm-no", "wm-yes"], ["wm-no-75-row", "wm-no-v5-row", "wm-yes-v3-paper-row", "wm-yes-v5-row"]))
 
 print("\nblind lanes demoted to baselines (2026-11-01, Olu: a lane needs a team or matchup filter)")
-for lid, at in (("cfb_dog_tp50", "33 settled events; split -0.5%, hold -15.9%"),):
-    cfg = next(x for x in chaos_lanes.LANES if x["id"] == lid)
-    check(f"{lid}: a baseline, not retired, dated with its record and the reason", (
-        cfg["baseline"]["on"], cfg["baseline"]["at"], "blind selection (price band only, no team filter)" in cfg["baseline"]["reason"],
-        "retired" in cfg), ("2026-11-01", at, True, False))
+cfg = next(x for x in chaos_lanes.LANES if x["id"] == "cfb_dog_tp50")
+check("cfb_dog_tp50: a baseline from 2026-11-01, retired 2026-11-11 with the lane it judged", (
+    cfg["retired"]["on"], cfg["retired"]["at"], "baseline" in cfg), ("2026-11-11", "162 settled games; split +4.2%, hold -7.7%", False))
 ml = next(x for x in chaos_lanes.LANES if x["id"] == "nba_ml_dog_tp50")
 check("nba_ml_dog_tp50: retired 2026-11-01 as a blind baseline with no filtered lane to judge, its record at that date", (
     ml["retired"]["on"], ml["retired"]["at"], "fair in 3 periods" in ml["retired"]["reason"], "baseline" in ml),
@@ -132,10 +133,10 @@ check("a baseline mark left on the ledger from before its retirement is dropped,
        "baseline" in C.lane_state(stale, ml, dt.datetime(2026, 11, 2, tzinfo=C.UTC))), (False, False))
 check("the win margin YES split is not demoted (its buckets came from tracker research)",
       next(x for x in chaos_lanes.LANES if x["id"] == "nba_winmargin_split").get("baseline"), None)
-cfb = next(x for x in chaos_lanes.LANES if x["id"] == "cfb_dog_tp50")
+cfb = next(x for x in chaos_lanes.LANES if x["id"] == "challenger_cheap_hold_base")
 seen_b = []
 _le, _re = C.list_events, C.replay_event
-C.list_events = lambda series, since, fetch, until=None: ["KXNCAAFGAME-26NOV01AAABBB", "KXNCAAFGAME-26NOV07CCCDDD"]
+C.list_events = lambda series, since, fetch, until=None: ["KXATPCHALLENGERMATCH-26NOV02AAABBB", "KXATPCHALLENGERMATCH-26NOV07CCCDDD"]
 C.replay_event = lambda ln, series, event, fetch, now=None: (seen_b.append(event), ([], "not settled with a clean result"))[1]
 try:
     st_b = C.empty()
@@ -143,16 +144,11 @@ try:
 finally:
     C.list_events, C.replay_event = _le, _re
 check("a baseline keeps replaying every new night (a live baseline, unlike a retired lane)", seen_b,
-      ["KXNCAAFGAME-26NOV01AAABBB", "KXNCAAFGAME-26NOV07CCCDDD"])
-check("the ledger carries the baseline mark", st_b["lanes"]["cfb_dog_tp50"]["baseline"]["on"], "2026-11-01")
+      ["KXATPCHALLENGERMATCH-26NOV02AAABBB", "KXATPCHALLENGERMATCH-26NOV07CCCDDD"])
+check("the ledger carries the baseline mark", st_b["lanes"]["challenger_cheap_hold_base"]["baseline"]["on"], "2026-11-02")
 check("a baseline has no review status", CB.status_of(dict(baseline=cfb["baseline"]), 40), "baseline, not a lane")
-nfl_cs = pages["nfl"][pages["nfl"].find('<section id="cheap-side">'):]
-nfl_cs = nfl_cs[:nfl_cs.find("</section>")]
-check("NFL: no lane summary row for it; the baseline block says a filtered lane must beat it; no decide-at status in it",
-      ('<tr data-lane="cfb_dog_tp50"' in nfl_cs, "Baseline · College football underdog (blind, price band only)" in nfl_cs,
-       "must beat" in nfl_cs, "decide at" in nfl_cs[nfl_cs.find("Baseline ·"):].lower()), (False, True, True, False))
 check("the Sandbox index lists the baselines apart, linking to each block, with no lane row",
-      ('<tr data-lane="cfb_dog_tp50"' in idx, 'href="./nfl.html#baseline-cfb_dog_tp50"' in idx), (False, True))
+      ('<tr data-lane="challenger_cheap_hold_base"' in idx, 'href="./tennis.html#baseline-challenger_cheap_hold_base"' in idx), (False, True))
 
 print("\nCulture, Commodities and Fights: every active cheap-side lane visible")
 import commodities_build

@@ -89,8 +89,8 @@ STAMP = {
     "soccer_team_rules": "data/soccer_team_rules_window/request.txt",
     # 2026-10-21: tennis_atp_low_over (tennis_totals.py), 45-15 min before each ATP start.
     "tennis_totals": "data/tennis_totals_window/request.txt",
-    # 2026-10-21: the NFL team-total lanes (nfl_tt.py), 75-45 min before each kickoff.
-    "nfl_tt": "data/nfl_tt_window/request.txt",
+    # 2026-10-21 to 2026-11-11: "nfl_tt" (the NFL team-total lanes, 75-45 min before each kickoff). Every NFL lane retired
+    # 2026-11-11 (Olu, "END NFL"); no request.
     # 2026-10-21: the NBA value lanes (nba_value.py), 90-60 min and 26-18 h before each tip.
     "nba_value": "data/nba_value_window/request.txt",
     # 2026-10-25: the chaos replay (chaos_replay.py), once a night after the games have settled.
@@ -569,7 +569,7 @@ def windows(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, 
     out += swing15_windows(now)
     out += earnings_news_windows(now)
     out += tennis_windows(now, tennis)
-    out += nfl_windows(now, nfl)
+    # nfl_windows (2026-10-21) stopped 2026-11-11: every NFL lane is retired.
     out += nba_value_windows(now, nba_value)
     out += chaos_windows(now)
     return sorted(out, key=lambda w: (w["start"], w["lane"]))

@@ -62,7 +62,10 @@ check("no ESPN FPI row in the live rules above the fold", 'data-source="espn_fpi
 print("\nNFL team total OVER 35-45c: kept to 50 settled")
 check("read at 50, with the note", (N.READ_AT, N.KEPT[N.LANE_BAND]),
       ({"nfl_tt_over_3545": 50}, "Kept to 50 by Olu 2026-11-02 (36 settled, +2.1% v blind baseline +1.4%)."))
-check("not retired; the main line stays retired from 2026-10-31", (N.LANE_BAND in N.RETIRED, N.RETIRED[N.LANE_MAIN]["on"]), (False, "2026-10-31"))
+check("kept to 50 then retired 2026-11-11 (END NFL); the main line stays retired from 2026-10-31",
+      (N.RETIRED[N.LANE_BAND]["on"], N.RETIRED[N.LANE_MAIN]["on"]), ("2026-11-11", "2026-10-31"))
+# The floor logic below is checked with the 2026-11-11 retirement lifted (the lane was live while it collected to 50).
+_band_retired = N.RETIRED.pop(N.LANE_BAND)
 
 
 def picks(n_won, n_lost, price=0.40):
@@ -85,6 +88,7 @@ row = NB.row_html(N.LANE_BAND, state_of(picks(16, 20)))
 check("its row: evidence out of 50 and the kept note in its details",
       (re.findall(r'data-l="Evidence">([^<]+)', row), "Kept to 50 by Olu 2026-11-02" in row), (["36/50"], True))
 check("any other lane keeps the page's floor", NB.floor(N.LANE_MAIN), NB.SP.EVIDENCE_FLOOR)
+N.RETIRED[N.LANE_BAND] = _band_retired
 
 print("\nthe UTR daily shortlist: retired (its only scope), its open bets still settle")
 utr = S.SOURCES["tennis_utr_shortlist_v1"]

@@ -277,7 +277,8 @@ for wf, derived in ((".github/workflows/soccer-rules.yml", "data/soccer_rules_pr
 print("\nevery workflow that saves records through git uses save_records.py (2026-11-02: the race was on more than the soccer pair)")
 import glob
 SAVES = ["arg-dip", "chaos", "culture", "daily-research", "feeds-heartbeat", "fights", "nba-rules", "nba-value", "nba-winmargin",
-         "nba-wm-nofade", "nfl-tt", "o35-cheap-no", "soccer-rules", "soccer-team-rules", "tennis-totals", "top5-dip"]
+         "nba-wm-nofade", "o35-cheap-no", "soccer-rules", "soccer-team-rules", "tennis-totals", "top5-dip"]
+check("nfl-tt.yml is gone (every NFL lane retired 2026-11-11)", os.path.exists(".github/workflows/nfl-tt.yml"), False)
 for name in SAVES:
     text = open(f".github/workflows/{name}.yml").read()
     check(f"{name}: saves through save_records.py, no hand-written rebase loop",

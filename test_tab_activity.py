@@ -40,8 +40,17 @@ check("Cricket is archived: Polymarket (international) has no bet on its current
 check("Cricket's Polymarket row is NOT retired by the rule (its scope keeps logging)",
       "cricket" in __import__("sandbox_sources").SOURCES["polymarket"]["sports"], True)
 check("Fights is archived: a baseline and a retired lane", (real["fights"]["archived"], real["fights"]["active"]), (True, []))
-check("NFL stays: team total over and the college football home underdog",
-      (real["nfl"]["archived"], {"nfl_tt_over_3545", "cfb_home_dog_x4"} <= set(real["nfl"]["active"])), (False, True))
+check("NFL is archived, taken out by hand (2026-11-11, Olu: END NFL): no active lane, dated from its retirement",
+      (real["nfl"]["archived"], real["nfl"]["active"], real["nfl"]["since"]), (True, [], "2026-11-11"))
+hf = A.archive_html({"tabs": {"nfl": {"archived": True, "since": "2026-11-11"}}})
+check("its Archives entry keeps every NFL lane and both college football lanes with their final records",
+      all(x in hf for x in ('id="archived-nfl"', "NFL team total · OVER 35-45c", "24–35", "+0.4%", "NFL team total · OVER main line +1",
+                            "8–18", "−26.2%", "College football home underdog", "College football underdog", "./nfl.html",
+                            "taken out of the top nav by hand")), True)
+import site_chrome as _SC
+_SC._ARCHIVED = None
+check("NFL leaves the nav on every other page", "nfl" in [k for k, _l, _h in _SC.shown_pages("nba")], False)
+check("no guarded phrase in the NFL entry", __import__("sandbox_audit").COPY_RE.search(hf), None)
 for tab in ("nba", "soccer", "tennis", "crypto", "commodities", "econ_daily", "finance_daily", "culture"):
     check(f"{tab} stays: it has an active lane", real[tab]["archived"], False)
 saved = A.ADAPTERS["soccer"]
