@@ -195001,7 +195001,18 @@
     "KXATPCHALLENGERMATCH-26NOV10TSICRE": 0,
     "KXATPCHALLENGERMATCH-26NOV10VIRPRI": 0,
     "KXATPCHALLENGERMATCH-26NOV10XILFOM": 0,
-    "KXATPCHALLENGERMATCH-26NOV11BERSEA": 1
+    "KXATPCHALLENGERMATCH-26NOV11AVEBOL": 1,
+    "KXATPCHALLENGERMATCH-26NOV11BERSEA": 1,
+    "KXATPCHALLENGERMATCH-26NOV11CLAVIV": 0,
+    "KXATPCHALLENGERMATCH-26NOV11COUMIK": 0,
+    "KXATPCHALLENGERMATCH-26NOV11DLFALC": 0,
+    "KXATPCHALLENGERMATCH-26NOV11DOUMOR": 0,
+    "KXATPCHALLENGERMATCH-26NOV11FELPER": 1,
+    "KXATPCHALLENGERMATCH-26NOV11GADALT": 0,
+    "KXATPCHALLENGERMATCH-26NOV11GEENAG": 1,
+    "KXATPCHALLENGERMATCH-26NOV11GILGIU": 0,
+    "KXATPCHALLENGERMATCH-26NOV11MAEMON": 0,
+    "KXATPCHALLENGERMATCH-26NOV11RODMAR": 1
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -198855,6 +198866,146 @@
      "stop": null,
      "target": null,
      "ticker": "KXATPCHALLENGERMATCH-26NOV11BERSEA-BER",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": false
+    },
+    {
+     "ask": {
+      "book": null,
+      "first_quotes": false,
+      "how": "print",
+      "last_trade": 0.24,
+      "printed": 1197.45,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "cost": 0.26312,
+     "entry": 0.25,
+     "entry_i": 651,
+     "entry_ts": 1794387780,
+     "event": "KXATPCHALLENGERMATCH-26NOV11RODMAR",
+     "exit": 1.0,
+     "exit_i": 867,
+     "exit_key": "hold",
+     "exit_ts": 1794400740,
+     "hours": 1,
+     "night": "2026-11-11",
+     "profit": 0.73687,
+     "reason": "settled",
+     "roi": 2.8005,
+     "side": "yes",
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1794391380,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26NOV11RODMAR-MAR",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": true
+    },
+    {
+     "ask": {
+      "book": null,
+      "first_quotes": false,
+      "how": "print",
+      "last_trade": 0.3,
+      "printed": 8316.58,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "cost": 0.3147,
+     "entry": 0.3,
+     "entry_i": 669,
+     "entry_ts": 1794385860,
+     "event": "KXATPCHALLENGERMATCH-26NOV11GEENAG",
+     "exit": 0.0,
+     "exit_i": 868,
+     "exit_key": "hold",
+     "exit_ts": 1794397800,
+     "hours": 1,
+     "night": "2026-11-11",
+     "profit": -0.3147,
+     "reason": "settled",
+     "roi": -1.0,
+     "side": "yes",
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1794389460,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26NOV11GEENAG-GEE",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": false
+    },
+    {
+     "ask": {
+      "book": null,
+      "first_quotes": false,
+      "last_trade": 0.3,
+      "printed": 0,
+      "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+      "source": "replayed",
+      "status": "unverified"
+     },
+     "cost": 0.3147,
+     "entry": 0.3,
+     "entry_i": 642,
+     "entry_ts": 1794394440,
+     "event": "KXATPCHALLENGERMATCH-26NOV11FELPER",
+     "exit": 0.0,
+     "exit_i": 848,
+     "exit_key": "hold",
+     "exit_ts": 1794406800,
+     "hours": 1,
+     "night": "2026-11-11",
+     "profit": -0.3147,
+     "reason": "settled",
+     "roi": -1.0,
+     "side": "yes",
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1794398040,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26NOV11FELPER-PER",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": false
+    },
+    {
+     "ask": {
+      "book": null,
+      "first_quotes": false,
+      "how": "print",
+      "last_trade": 0.22,
+      "printed": 2744.73,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "cost": 0.23201,
+     "entry": 0.22,
+     "entry_i": 759,
+     "entry_ts": 1794381660,
+     "event": "KXATPCHALLENGERMATCH-26NOV11AVEBOL",
+     "exit": 0.0,
+     "exit_i": 972,
+     "exit_key": "hold",
+     "exit_ts": 1794394440,
+     "hours": 1,
+     "night": "2026-11-11",
+     "profit": -0.23201,
+     "reason": "settled",
+     "roi": -1.0,
+     "side": "yes",
+     "spread": 0.02,
+     "start_how": "price path",
+     "start_ts": 1794385260,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26NOV11AVEBOL-AVE",
      "unreachable": false,
      "variant": "t1h_hold",
      "won": false
@@ -223547,7 +223698,18 @@
     "KXATPCHALLENGERMATCH-26NOV10TSICRE": 0,
     "KXATPCHALLENGERMATCH-26NOV10VIRPRI": 0,
     "KXATPCHALLENGERMATCH-26NOV10XILFOM": 0,
-    "KXATPCHALLENGERMATCH-26NOV11BERSEA": 0
+    "KXATPCHALLENGERMATCH-26NOV11AVEBOL": 0,
+    "KXATPCHALLENGERMATCH-26NOV11BERSEA": 0,
+    "KXATPCHALLENGERMATCH-26NOV11CLAVIV": 0,
+    "KXATPCHALLENGERMATCH-26NOV11COUMIK": 0,
+    "KXATPCHALLENGERMATCH-26NOV11DLFALC": 0,
+    "KXATPCHALLENGERMATCH-26NOV11DOUMOR": 0,
+    "KXATPCHALLENGERMATCH-26NOV11FELPER": 0,
+    "KXATPCHALLENGERMATCH-26NOV11GADALT": 0,
+    "KXATPCHALLENGERMATCH-26NOV11GEENAG": 0,
+    "KXATPCHALLENGERMATCH-26NOV11GILGIU": 0,
+    "KXATPCHALLENGERMATCH-26NOV11MAEMON": 0,
+    "KXATPCHALLENGERMATCH-26NOV11RODMAR": 0
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -372320,12 +372482,8 @@
    "watch": false
   }
  },
- "last_run": "2026-11-11T10:00:26.586674+00:00",
+ "last_run": "2026-11-11T17:13:36.796825+00:00",
  "runs": [
-  {
-   "at": "2026-10-31T15:22:43.596847+00:00",
-   "new": {}
-  },
   {
    "at": "2026-10-31T21:29:05.168615+00:00",
    "new": {
@@ -372654,6 +372812,13 @@
    "at": "2026-11-11T10:00:26.586674+00:00",
    "new": {
     "challenger_cheap_hold_base": 1,
+    "challenger_won_here_hold": 0
+   }
+  },
+  {
+   "at": "2026-11-11T17:13:36.796825+00:00",
+   "new": {
+    "challenger_cheap_hold_base": 4,
     "challenger_won_here_hold": 0
    }
   }
