@@ -66,6 +66,9 @@ RETIRED = {
     # Olu, 2026-11-08: C30 retired at its 15-day review — 33% won, +6.8bp gross, about +3bp after the spread,
     # t +0.37. Friday 2026-11-06 is its last day; from Monday 2026-11-09 it logs nothing. Its record stays.
     "C30": ("2026-11-06", "no edge after the spread"),
+    # Olu, 2026-11-11: C15 retired, and with it the lane — no profit after costs in forward paper trading, matching
+    # the 807-day backtest that found no edge. Wednesday 2026-11-11 is its last day; its record stays.
+    "C15": ("2026-11-11", "no profit after costs"),
 }
 # Read target per variant once past the first review (Olu, 2026-11-08: C15 keeps collecting to 30 days).
 READ_TARGET = {"C15": 30}
@@ -336,6 +339,8 @@ def live(day_path, now_fn=None, sleeper=time.sleep, get=None):
     state = load(day_path) if os.path.exists(day_path) else {}
     if state.get("day") != day.isoformat():
         state = {"day": day.isoformat(), "quotes": {}, "rows": []}
+    if not variants_on(day):                     # every variant retired (2026-11-11): nothing to read or log
+        return state
     sleep_until(at(day, (9, 20)), now_fn(), sleeper)
     cal = fetch_calendar(day, get)
     kind = session(day, cal)

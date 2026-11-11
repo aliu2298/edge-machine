@@ -11,6 +11,8 @@ import urllib.parse
 import nasdaq_orb as N
 import nasdaq_orb_build as NB
 import sandbox_audit
+_FULL = dict(N.RETIRED)                 # the checks up to the 2026-11-11 section read the lane before C15 retired
+N.RETIRED = {k: v for k, v in _FULL.items() if k != "C15"}
 
 FAILS = []
 UTC = dt.timezone.utc
@@ -249,5 +251,18 @@ check("the committed ledger holds no crossed quote",
       [r["id"] for r in _led["rows"] for a, b in (("bid_in", "ask_in"), ("bid_out", "ask_out"))
        if r.get(a) and r.get(b) and r[a] >= r[b]], [])
 
+print("\nC15 retired 2026-11-11 (Olu): the lane is retired")
+N.RETIRED = _FULL
+import datetime as _d2
+check("C15's last day is 2026-11-11; from 2026-11-12 nothing logs", (N.RETIRED["C15"], N.variants_on(_d2.date(2026, 11, 11)),
+      N.variants_on(_d2.date(2026, 11, 12))), (("2026-11-11", "no profit after costs"), ["C15"], []))
+calls2 = []
+out2 = N.live(os.path.join(tempfile.mkdtemp(), "d.json"), now_fn=lambda: dt.datetime(2026, 11, 12, 13, 5, tzinfo=UTC),
+              sleeper=lambda s: calls2.append(s), get=lambda u: calls2.append(u) or {})
+check("the live run on 2026-11-12 reads and logs nothing (no wait, no call)", (out2["rows"], calls2), ([], []))
+pg = NB.section(N.load())
+check("the section reads retired, says why, keeps every variant's record and the missing-costs caveat",
+      ("retired 2026-11-11" in pg, "No profit after costs in forward paper trading" in pg,
+       len(re.findall(r'data-source="nasdaq_orb_', pg)), "after-costs figures are missing on" in pg), (True, True, 4, True))
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

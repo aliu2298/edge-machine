@@ -505,5 +505,16 @@ import subprocess
 for f_ in ("scripts/vps_gold_orb.sh", "scripts/vps_invest.sh", "scripts/vps_nasdaq_orb.sh"):
     check(f"{f_} parses", subprocess.run(["bash", "-n", f_]).returncode, 0)
 
+print("\nthe lane retired 2026-11-11 (Olu)")
+import datetime as _d3
+logs = []
+r_ = G.run({"nights": []}, now_fn=lambda: _d3.datetime(2026, 11, 12, 0, 54, tzinfo=_d3.timezone.utc),
+           fetch=lambda p: (_ for _ in ()).throw(AssertionError("no fetch once retired")), sleep=lambda s: None, log=logs.append)
+check("from the night of 2026-11-11 the run logs nothing and fetches nothing", (r_, "retired" in logs[-1]), ([], True))
+pg = GB.section()
+check("the section reads retired with the reason, keeps both variants and says where costs are missing",
+      ("retired 2026-11-11" in pg, "No profit after costs in forward paper trading" in pg, pg.count('data-source="gold_orb_'),
+       "had no quote captured" in pg), (True, True, 2, True))
+
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

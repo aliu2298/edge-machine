@@ -430,6 +430,14 @@ REMOVED_RULES = frozenset({
 })
 
 
+# CLOSE-OUT (2026-11-11, Olu): the two rules retired 2026-11-03 still held rows inside their registered holds (a
+# 10-day and a 20-day time stop), so the retired block read "48 still open". Every row of theirs that is still open
+# after its own exit check closes at the CLOSE of CLOSE_OUT_DAY (a paper close-out at retirement, costs charged), so
+# the block reads as final. Their own exits still apply first.
+CLOSE_OUT_DAY = "2026-11-11"
+CLOSE_OUT_RULES = frozenset({"sw_rsi2_pullback", "etf_double7"})
+
+
 def rule_removed(name):
     """True when this trading rule is off the board. Its rows stay in the ledger."""
     return name in REMOVED_RULES
@@ -810,6 +818,17 @@ def grade(bars_by_symbol, d, rules=None):
             t.update(status="void", void_reason=f"unadjusted corporate action ({_day(gap)})")
             continue
         k = rule["exit"](after, dict(hist=bars[:idx + 1]))
+        if (k is None or k + 1 >= len(after)) and t.get("rule") in CLOSE_OUT_RULES:
+            co = next((b for b in after if _day(b) == CLOSE_OUT_DAY), None)
+            if co is not None:                        # the close-out at retirement (2026-11-11)
+                gross = (co["c"] - t["entry"]) / t["entry"]
+                bd = [b for day, b in sorted(bench.items()) if t["entry_day"] <= day <= CLOSE_OUT_DAY]
+                t.update(status="closed", exit=float(co["c"]), exit_day=CLOSE_OUT_DAY, exit_why="closed out at retirement",
+                         ret_gross=round(gross, 6), ret_net=round(gross - cost_of(rule), 6),
+                         bars_held=after.index(co) + 1,
+                         bench_ret=(round((bd[-1]["c"] - bd[0]["o"]) / bd[0]["o"], 6) if len(bd) > 1 else None))
+                closed += 1
+            continue
         if k is None or k + 1 >= len(after):
             continue                                  # still open, or no open to leave at yet
         exit_bar = after[k + 1]

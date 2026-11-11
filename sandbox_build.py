@@ -2416,16 +2416,19 @@ def invest_html():
 
 
 def _running_counts():
-    """(rules running, settled entries, open now) over the gold and Nasdaq breakouts. Never breaks the page."""
+    """(rules running, settled entries) over the gold and Nasdaq breakouts. Never breaks the page.
+    2026-11-11: both lanes retired, so they count nothing."""
     rules = settled = 0
     try:
         import gold_orb as G
+        if getattr(G, "LANE_RETIRED", None):
+            raise StopIteration
         state = G.load() if os.path.exists(G.PATH) else {"nights": []}
         for v in G.VARIANTS:
             rules += 1
             settled += G.summary([r for r in state.get("nights") or []
                                   if r.get("variant") == v and r.get("anchor") == "utc_0130"])["n"]
-    except Exception:                                           # noqa: BLE001
+    except (Exception, StopIteration):                          # noqa: BLE001
         pass
     try:
         import nasdaq_orb as N
@@ -2462,11 +2465,24 @@ def trading_page(now=None):
     trade_n = sum(r["trades"] for r in trade_rules)
     invest, inv_rules, inv_settled, inv_open = invest_html()
     run_rules, run_settled = _running_counts()
+    try:
+        _h, en_rules, en_settled, en_open = earnings_news_build.section_and_counts()
+    except Exception:                                           # noqa: BLE001
+        en_rules = en_settled = en_open = 0
     trade_note = (f'<p class="sm trade-source">Run by {esc(TRADE_RUNNER)}. The table is each '
                   f'rule\'s <b>paper record</b> since its registration, every signal at the bar\'s '
                   f'open; it is not the Alpaca account.</p>'
                   f'{trade_exec_html(fills, MT.exiting(md))}')
-    retired = f"""<section id="retired"><details class="fold sp-retired"><summary><h3>Retired stock rules</h3><span class="sm mut">· {len(trade_rules)} rules · {trade_n:,} trades logged · {trade_open:,} still open · records kept</span></summary>
+    try:
+        import invest_build
+        inv_retired = invest_build.retired_html()
+    except Exception:                                           # noqa: BLE001
+        inv_retired = ""
+    still = f"{trade_open:,} still open" if trade_open else "all closed"
+    retired = f"""<section id="retired"><details class="fold sp-retired"><summary><h3>Retired rules</h3><span class="sm mut">· Kalshi Invest big moves · gold and Nasdaq breakouts · {len(trade_rules)} stock rules · {trade_n:,} trades logged · {still} · records kept</span></summary>
+{inv_retired}
+{gold_orb_html()}
+{nasdaq_orb_build.safe_section()}
 {trade_note}
 <h3>Stock and ETF rules, retired</h3>
 <div class="tbl"><table>{TRADE_HEAD}{trading_rows(md, cost)}</table></div>
@@ -2484,23 +2500,21 @@ with its lean, <i>Promising</i> or <i>Behind</i>; under {MT.EARLY_N} a rule is o
 </details>
 </details></section>"""
     body = f"""<h1>Trading</h1>
-<p class="lede">Paper lanes: big moves on Kalshi Invest, the gold and Nasdaq breakouts. Paper only.</p>
+<p class="lede">Paper lanes: earnings and news calls on Kalshi Invest stocks, and next, a rebound-after-a-slide rule. Paper only. Retired lanes and their records are at the bottom.</p>
 <div class="tiles">
-<div class="tile"><b>{run_rules + inv_rules}</b><span>rules running</span></div>
-<div class="tile"><b>{inv_rules}</b><span>Invest rules</span></div>
-<div class="tile"><b>{run_settled + inv_settled:,}</b><span>settled entries, running rules</span></div>
-<div class="tile"><b>{inv_open:,}</b><span>Invest open now</span></div>
+<div class="tile"><b>{run_rules + inv_rules + en_rules}</b><span>rules running</span></div>
+<div class="tile"><b>{en_rules}</b><span>earnings and news rules</span></div>
+<div class="tile"><b>{run_settled + inv_settled + en_settled:,}</b><span>settled entries, running rules</span></div>
+<div class="tile"><b>{inv_open + en_open:,}</b><span>open now</span></div>
 </div>
 {invest}
 {earnings_news_build.safe_section()}
-{gold_orb_html()}
-{nasdaq_orb_build.safe_section()}
 {retired}
 <footer>Read-only static export · rebuilt by GitHub Actions · research, not betting advice.</footer>
 """
     return site_chrome.document(
         "Edge Machine · Trading",
-        "Paper trading lanes: Kalshi Invest big moves, gold and Nasdaq breakouts; retired stock rules kept at the bottom.",
+        "Paper trading lanes: earnings and news calls on Kalshi Invest stocks; retired lanes and stock rules kept at the bottom.",
         "trading",
         (("invest", "Invest"), (earnings_news_build.SECTION_ID, "Earnings & news"), ("gold-orb", "Gold breakout"),
          (nasdaq_orb_build.SECTION_ID, "Nasdaq breakout"), ("retired", "Retired")),
