@@ -2942,7 +2942,10 @@ _stale_lead = dict(id="stale-removed", pair="soccerpredictions|soccer",
                    bet={"kind": "match_result", "side": "home"}, home="Old", away="Tip")
 _stale = dict(_feed, leads=dict(_feed["leads"], stale=_stale_lead))
 _html_stale = PR.page(_pd, _pst, _stale, "<style></style>", now=_pnow)
-ok("Old to win" not in _html_stale and "SoccerPredictions.ai" not in _html_stale,
+import re as _re_sp
+# the Retired lanes fold (2026-11-11) lists SoccerPredictions.ai with its final live record: the removed lane's LEADS are what must not render
+_html_stale_live = _re_sp.sub(r'<details class="fold lanes"><summary><h3>Retired lanes</h3>.*?</details>(?=\s*<p class="sm mut">|\s*</section>)', "", _html_stale, flags=_re_sp.S)
+ok("Old to win" not in _html_stale and "SoccerPredictions.ai" not in _html_stale_live,
    "a removed-lane lead left in the feed file is not rendered")
 ok('href="./production.html">Production</a>' in open("streaks_build.py").read(), "every board links Production")
 

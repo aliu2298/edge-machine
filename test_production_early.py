@@ -378,11 +378,11 @@ d3 = {"quotes": [_settled(i, KEY, won=i != 1) for i in range(3)]
 page_now = NOW + timedelta(days=2)
 st_page = {"pairs": {KEY: dict(_new), "u35_low_scoring|soccer_u35_intl": dict(_old)}}
 html = PR.page(d3, st_page, {"leads": {}, "pairs": {}}, "", now=page_now)
-row = html.split("Bundesliga over 3.5, every match", 1)[1].split("</tr>", 1)[0]
+row = html.split("<td><b>Bundesliga over 3.5, every match</b>", 1)[1].split("</tr>", 1)[0]
 ok('<span class="sig w early">Early · 3 bets</span>' in row, "the Production pairs table badges the new pair")
 ok('class="mut">' in row.split("too early", 1)[0] and "too early" in row,
    "its since-Production ROI stays grey and marked too early, as before")
-old_row = html.split("Under 3.5 low-scoring rule", 1)[1].split("</tr>", 1)[0]
+old_row = html.split("<td><b>Under 3.5 low-scoring rule", 1)[1].split("</tr>", 1)[0]
 ok("Early" not in old_row, "a pair moved before the state existed shows no badge on three settled")
 ok("· 2 · 1 early" in html, "the Pairs fold counts how many are early")
 ok(f"moved on or after {MOVE}" in html and "<b>Early</b>" in html, "and the table's note says what the badge means")
@@ -516,7 +516,7 @@ eq(T.record_since(None), None, "no pair, no clock")
 _grp, a_after, *_ = SB.pair_status(d_o15, st_o15, "o15_form_l10", "soccer_o15")
 eq((a_after["n"], a_after["won"]), (4, 4), "after the move the Sandbox row still counts 4-0 on 4, not 24-6 on 30")
 page_o15 = PR.page(d_o15, st_o15, {"leads": {}, "pairs": {}}, "", now=NOW + timedelta(days=1))
-row_o15 = page_o15.split("Over 1.5 form rule", 1)[1].split("</tr>", 1)[0]
+row_o15 = page_o15.split("<td><b>Over 1.5 form rule", 1)[1].split("</tr>", 1)[0]
 ok('<td class="num">4<div class="sm mut">settled</div></td>' in row_o15,
    "and the Production pairs table's Sandbox Bets column says 4")
 ok('<td class="num">30<div class="sm mut">settled</div></td>' not in row_o15, "never 30")

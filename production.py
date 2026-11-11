@@ -37,6 +37,7 @@ import datetime, html, json, os, re, sys
 import fmt
 import live_caps as LC
 import production_live as PL
+import production_overview as PO
 import sandbox_sources as S
 import sandbox_track as T
 import site_chrome
@@ -66,6 +67,24 @@ def stake_note(key):
         return ""
     d = datetime.date.fromisoformat(str(at)[:10])
     return f'<div class="sm mut">stake raised {d:%b} {d.day}</div>'
+
+
+def _overview_note(key, raised_at, v3_since, v4_since, older_keys):
+    """The small note under a lane in its fold: a stake raise or a version change. Never a reset of the lane's record, and never an amount."""
+    import raised_stakes
+    day = lambda x: (lambda t: f"{t:%b} {t.day}")(datetime.date.fromisoformat(str(x)[:10]))
+    bits = []
+    at = raised_at or raised_stakes.since(key)
+    if at:
+        bits.append(f"Stake raised {day(at)}.")
+    spec = PL.OWN_PAIRS.get(key)
+    if spec and spec[1] == "v4" and v4_since:
+        bits.append(f"Version 4 from {day(v4_since)}.")
+    elif spec and spec[1] == "v3" and v3_since:
+        bits.append(f"Version 3 from {day(v3_since)}" + (f" to {day(v4_since)}." if v4_since else "."))
+    elif spec and spec[1] == "v2" and v3_since:
+        bits.append(f"First version, until {day(v3_since)}.")
+    return " ".join(bits)
 
 
 def fresh_view(key, pair):
@@ -1479,6 +1498,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
         import nba_wm_production
         older_keys = nba_wm_production.older_pairs((nba_wm or {}).get("v3"), (nba_wm or {}).get("v4"))
     live_gap_rows, paper_bets, raised_rows, no_order_rows = [], {}, [], []
+    overview_pairs = {}                  # the new top of the page (production_overview): each pair's name, paper record and notes
     own_items = {}
     cards = []
     n_early = 0
@@ -1584,6 +1604,8 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
                     if no_orders:
                         no_order_rows.append((name(key), PL.no_orders_reason(key, live_data["refused"], len(mine))))
             early = early_state(pair, live["n"])
+            overview_pairs[key] = dict(name=name(key), market=sport_of(key), paper=whole, clv=(clv if whole.get("clv") is not None else None),
+                                       rule=(S.SOURCES.get(source) or {}).get("note"), note=_overview_note(key, raised_at, v3_since, v4_since, older_keys))
             live_gap_rows.append((name(key), key, paper_since["n"], paper_since["roi_fee"] if paper_since["n"] else None, live_data))
             if raised_at:
                 old = _assess_since_kickoff(raw, key, pair_orig, late=late_set(blob), until=raised_at, tradeable=True)
@@ -1653,7 +1675,7 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
             + PL.details_fold(own_items.get(g, [])) + _bucket_priority_html(g, nba_wm) + f'{older_html}</details>')
     pairs_html = ("".join(sections) + PL.gap_section(live_gap_rows, paper_bets, {l.get('sandbox_quote') for l in leads if l.get('sandbox_quote')},
                                                                   _feed_from(leads), horizon=(now_dt - datetime.timedelta(days=KEEP_SETTLED_DAYS)).isoformat()) + PL.no_orders_fold(no_order_rows) + PL.lanes_table(live_blob) + PL.pulled_table(live_blob, name) + PL.raised_fold(raised_rows) +
-                  ('<p class="sm mut">Since Production is the follower\'s own fills, priced from the exchange\'s fills and fees and counted from the pair\'s Production date (or its stake raise), ROI per $1 staked after fees, '
+                  ('<p class="sm mut">Since Production is the follower\'s own fills, priced from the exchange\'s fills and fees and counted from the pair\'s Production date (or its stake raise), return per unit staked after fees, '
                    f'read {esc((live_blob or {}).get("generated") or "not yet")}. Paper is the Sandbox grade of the same bets, kept in the Sandbox record.</p>' if live_blob else "") +
                   '<p class="sm mut">Reaches the feed counts the pair\'s bets the feed could publish. A tip is unreachable when no Kalshi or Polymarket US market was listed for it, or its Kalshi market had no verified start time, so it stays in the Sandbox record and the feed cannot carry it.</p>'
                   if cards else
@@ -1740,18 +1762,25 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
     # `style` used to be the Sandbox page's inline stylesheet. The shared site.css
     # replaced it. The argument stays so existing callers do not break.
     del style
+    overview = PO.build(live_blob, overview_pairs, now_dt)
     body = f"""<h1>Production</h1>
-<p class="lede">The pairs moved here by hand, and the leads they publish.</p>
+<p class="lede">Every lane that places live bets, with its record counted from its first live bet. Live is what was actually bet; Paper is the same rule graded without betting. Percentages are the return per unit staked, after fees.</p>
 
+{PO.tiles_html(overview)}
+
+<section id="lanes">
+{PO.section_html(overview)}
+<p class="sm mut">A version change or a bigger stake is noted inside a lane, never a reset of its record. A flat result (exited within 2% of cost) is neither a win nor a loss.{f' Read {esc((live_blob or {}).get("generated") or "")}.' if live_blob else ""}</p>
+</section>
+
+<section id="pairs">
+<details class="fold sec"><summary><h2>Full table</h2> <span class="mut sm">· {len(pairs)}{f' · {n_early} early' if n_early else ''} · {len(groups)} sport{'s' if len(groups) != 1 else ''}</span></summary>
 <div class="tiles">
 <div class="tile"><b>{len(pairs)}</b><span>pairs in Production</span></div>
 <div class="tile"><b>{len(upcoming)}</b><span>leads still to come</span></div>
 <div class="tile"><b>{hits}/{len(landed)}</b><span>recent leads landed</span></div>
 <div class="tile"><b class="when">{esc(nxt)}</b><span>{'next lead (CT)' if upcoming else 'next lead · none logged yet'}</span></div>
 </div>
-
-<section id="pairs">
-<details class="fold sec" open><summary><h2>Pairs</h2> <span class="mut sm">· {len(pairs)}{f' · {n_early} early' if n_early else ''} · {len(groups)} sport{'s' if len(groups) != 1 else ''}</span></summary>
 <p class="sm mut">By sport, each sport's combined record since Production on its line. Each pair's Sandbox record on the US exchanges — the same numbers the Sandbox page shows —
 and its record since it entered Production. Under {EARLY_N} settled bets an ROI is grey: one win at 0.46 reads
 +117%, and means nothing yet. A pair moved on or after {EARLY_STATE_SINCE} carries an <b>Early</b> badge with its
@@ -1793,7 +1822,7 @@ on the same contests. Every lead a Production pair logs is published to
         "Edge Machine · Production",
         "The pairs moved into Production by hand, and their published leads.",
         "production",
-        (("pairs", "Pairs"), ("coming-up", "Coming up"), ("recent", "Recently settled"),
+        (("lanes", "Lanes"), ("pairs", "Full table"), ("coming-up", "Coming up"), ("recent", "Recently settled"),
          ("held-back", "Held back"), ("how", "How a pair gets here")),
         site_chrome.stamp(now_dt),
         body,
