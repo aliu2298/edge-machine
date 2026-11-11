@@ -64,6 +64,12 @@ RULES = {
     "follow_jump": dict(act="follow", dir="jump", win="1h", size=0.08, tp=0.08, sl=0.04, hold="1h", cleared=False),
 }
 RULES_REGISTERED = "2026-11-06"
+# 2026-11-11 (Olu): all four big-move rules retired; no new events from RULES_RETIRED_AT. They could not see a slide
+# over several hours or days (SpaceX -6.3% over hours, Nvidia -12% over two days triggered nothing) and they ignored
+# overnight trading. Their records stay (Fade a drop: 1 trade, SNDK +7.86%). The 1-minute collector keeps running:
+# the next rule, Rebound after a slide, reads it.
+RULES_RETIRED_AT = "2026-11-11T18:00:00+00:00"
+ACTIVE_RULES = ()
 HOLD_MIN = {"1h": 60, "1d": 390, "5d": 1950}
 LABELS = {"fade_drop": "Fade a drop · Up", "fade_jump": "Fade a jump · Down",
           "follow_drop": "Follow a drop · Down", "follow_jump": "Follow a jump · Up"}
@@ -392,7 +398,7 @@ def track(work, state_path=STATE, now=None, get=_get):
     since = now - KEEP_DAYS * 86400
     ticks = load_ticks(work, since)
     known = {e["id"] for e in s["events"]}
-    for rule in RULES:
+    for rule in ACTIVE_RULES:                                   # none since RULES_RETIRED_AT (2026-11-11)
         for ev in detect(ticks, rule, known):
             if ev["signal_ts"] >= s.get("live_from_ts", 0):
                 s["events"].append(ev)
@@ -424,7 +430,8 @@ def track(work, state_path=STATE, now=None, get=_get):
     rows_today = sum(1 for v in ticks.values() for r in v if r["ts"] > now - 86400)
     last = max((r["ts"] for v in ticks.values() for r in v), default=None)
     s["collector"] = dict(last_ts=last, markets=len(ticks), rows_24h=rows_today)
-    s["rules"] = {k: dict(v, registered=RULES_REGISTERED, side="Up" if side_of(k) > 0 else "Down") for k, v in RULES.items()}
+    s["rules"] = {k: dict(v, registered=RULES_REGISTERED, side="Up" if side_of(k) > 0 else "Down",
+                          retired=RULES_RETIRED_AT) for k, v in RULES.items()}
     s["last_run"] = dt.datetime.fromtimestamp(now, dt.timezone.utc).isoformat(timespec="seconds")
     save(s, state_path)
     return s

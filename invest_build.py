@@ -88,7 +88,9 @@ def _rule_row(k, s, summ, research):
     body += L.fold("Events", _events_table([e for e in s["events"] if e["rule"] == k]))
     win = "—" if sm["win"] is None else f'{sm["win"] * 100:.0f}%'
     t = "—" if sm["t"] is None else f'{sm["t"]:+.2f}'
-    if sm["n"] >= REVIEW_AT:
+    if k not in I.ACTIVE_RULES:
+        status = L.sig("retired Nov 11")                         # 2026-11-11 (Olu): all four retired, records kept
+    elif sm["n"] >= REVIEW_AT:
         status = L.sig("review due", "w")
     else:
         status = L.sig(f'{sm["n"]}/{REVIEW_AT} to review' + ("" if R.get("cleared") else " · observation"))
@@ -158,15 +160,38 @@ and is not charged. Reviewed at {REVIEW_AT}+ settled events per rule. Last run {
                   cls="fold trade-method")
 
 
+RETIRED_NOTE = ("The four big-move rules (fade or follow a drop or a jump) were retired on Nov 11: they only saw a "
+                "big move inside one hour or one day, in regular hours, so a slide over several hours or days, or one "
+                "overnight, never triggered them. Their records are in Retired at the bottom of this page. The "
+                "one-minute price collector keeps running for the next rule.")
+
+
 def section_and_counts(state=None, research=None):
+    """The live Invest section: the running rules (none since 2026-11-11), the collector's gap log and method.
+    -> (html, running rules, settled, open)."""
     s = I.load() if state is None else state
-    research = load_research() if research is None else research
     summ = I.summary(s)
-    rows = [_rule_row(k, s, summ, research) for k in I.RULES]
-    cleared = sum(1 for k in I.RULES if I.RULES[k].get("cleared"))
-    count = f"{len(I.RULES)} rules · paper · 1x"
-    html = L.section("invest", "Kalshi Invest · big moves (paper)", count,
-                     L.rules_list(rows, key="invest") + _research_fold(research) + _venue_fold(s) + _method_fold(s))
-    settled = sum(v["n"] for v in summ.values())
-    open_ = sum(v["open"] for v in summ.values())
-    return html, len(I.RULES), settled, open_
+    live = [k for k in I.RULES if k in I.ACTIVE_RULES]
+    rows = [_rule_row(k, s, summ, load_research() if research is None else research) for k in live]
+    body = ((L.rules_list(rows, key="invest") if rows else "")
+            + f'<p class="sm invest-retired-note">{esc(RETIRED_NOTE)}</p>' + _venue_fold(s) + _method_fold(s))
+    html = L.section("invest", "Kalshi Invest (paper)", f"{len(live)} rules running · paper · 1x", body)
+    return (html, len(live), sum(summ[k]["n"] for k in live), sum(summ[k]["open"] for k in live))
+
+
+def retired_html(state=None, research=None):
+    """The four retired big-move rules with their final records, for the page's Retired block. Never breaks it."""
+    try:
+        s = I.load() if state is None else state
+        research = load_research() if research is None else research
+        summ = I.summary(s)
+        gone = [k for k in I.RULES if k not in I.ACTIVE_RULES]
+        if not gone:
+            return ""
+        rows = [_rule_row(k, s, summ, research) for k in gone]
+        n = sum(summ[k]["n"] for k in gone)
+        return (f'<h3>Kalshi Invest big-move rules, retired Nov 11</h3>'
+                f'<p class="sm mut">{len(gone)} rules · {n} settled trade{"s" * (n != 1)} · records kept, no new events.</p>'
+                + L.rules_list(rows, key="invest-retired") + _research_fold(research))
+    except Exception:                                           # noqa: BLE001
+        return ""

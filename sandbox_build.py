@@ -2466,7 +2466,14 @@ def trading_page(now=None):
                   f'rule\'s <b>paper record</b> since its registration, every signal at the bar\'s '
                   f'open; it is not the Alpaca account.</p>'
                   f'{trade_exec_html(fills, MT.exiting(md))}')
-    retired = f"""<section id="retired"><details class="fold sp-retired"><summary><h3>Retired stock rules</h3><span class="sm mut">· {len(trade_rules)} rules · {trade_n:,} trades logged · {trade_open:,} still open · records kept</span></summary>
+    try:
+        import invest_build
+        inv_retired = invest_build.retired_html()
+    except Exception:                                           # noqa: BLE001
+        inv_retired = ""
+    still = f"{trade_open:,} still open" if trade_open else "all closed"
+    retired = f"""<section id="retired"><details class="fold sp-retired"><summary><h3>Retired rules</h3><span class="sm mut">· {len(trade_rules)} stock rules · {trade_n:,} trades logged · {still} · Kalshi Invest big-move rules · records kept</span></summary>
+{inv_retired}
 {trade_note}
 <h3>Stock and ETF rules, retired</h3>
 <div class="tbl"><table>{TRADE_HEAD}{trading_rows(md, cost)}</table></div>
@@ -2484,7 +2491,7 @@ with its lean, <i>Promising</i> or <i>Behind</i>; under {MT.EARLY_N} a rule is o
 </details>
 </details></section>"""
     body = f"""<h1>Trading</h1>
-<p class="lede">Paper lanes: big moves on Kalshi Invest, the gold and Nasdaq breakouts. Paper only.</p>
+<p class="lede">Paper lanes: Kalshi Invest, earnings and news, the gold and Nasdaq breakouts. Paper only.</p>
 <div class="tiles">
 <div class="tile"><b>{run_rules + inv_rules}</b><span>rules running</span></div>
 <div class="tile"><b>{inv_rules}</b><span>Invest rules</span></div>

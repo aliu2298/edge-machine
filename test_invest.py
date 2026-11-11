@@ -110,8 +110,15 @@ print("\nthe page section")
 st = {"events": [dict(filled, rule="fade_drop", status="settled", gross=0.01, net=0.0076, exit_why="time")],
       "flags": fl, "collector": dict(last_ts=ts(2026, 11, 10, 16, 0), markets=60), "last_run": "2026-11-10T21:00:00+00:00"}
 html, n_rules, settled, open_ = IB.section_and_counts(st, research={})
-check("four rows, one per action x direction", (n_rules, len(re.findall(r'class="sp-rule[ "]', html)), settled, open_), (4, 4, 1, 0))
+check("2026-11-11: all four rules retired; the live section has no rule rows, says why, keeps the collector folds",
+      (I.ACTIVE_RULES, n_rules, len(re.findall(r'class="sp-rule[ "]', html)), settled, open_, "were retired on Nov 11" in html,
+       "Kalshi-only gaps" in html), ((), 0, 0, 0, 0, True, True))
 check("its id, and paper/1x in the count line", ('id="invest"' in html, "paper · 1x" in html), (True, True))
+ret = IB.retired_html(st, research={})
+check("the four rules move to the Retired block with their records (Fade a drop: 1 settled), marked retired",
+      (len(re.findall(r'class="sp-rule[ "]', ret)), "1 settled trade" in ret, len(re.findall(r">retired Nov 11<", ret))), (4, True, 4))
+check("track() logs no new event once retired (detection runs over ACTIVE_RULES only)",
+      "for rule in ACTIVE_RULES:" in open(os.path.join(I.ROOT, "invest.py")).read(), True)
 check("no dollar amount and no Kalshi id in the copy", (re.search(r"\$\d", html), "trade_id" in html), (None, False))
 check("the copy passes the audit's guarded phrases", sandbox_audit.COPY_RE.findall(html), [])
 
