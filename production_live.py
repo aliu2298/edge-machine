@@ -146,33 +146,6 @@ def own_summary(rows, third="3x"):
                 hold_roi=(sum(o["w"] * o["hold_r"] for o in hold) / hw if hw else None), hold_n=len(hold), split=any(o.get("hold_r") is not None for o in done))
 
 
-def pair_live(key, since, live_blob, v3_since=None, v4_since=None):
-    """One Production pair's LIVE record since `since` (its Production date or stake raise), counted exactly as the Production page's
-    Since Production column counts it: an own-state lane by its trades (won / flat / lost after fees), any other pair by the follower's own
-    orders (won / lost). dict(won, flat, lost, n, roi, open) or None when there is no live file. A pair with no order is all zeros."""
-    if live_blob is None:
-        return None
-    own = own_rows(live_blob, key, v3_since, v4_since)
-    if own is not None:
-        s = own_summary(own)
-        w = sum(o["w"] for o in own if own_class(o) and o.get("w"))
-        return dict(won=s["won"], flat=s["flat"], lost=s["lost"], n=s["n"], roi=s["roi"], open=s["open"], w=w)
-    orders, _block = fill_window(live_blob, key, since)
-    orders = orders or []
-    rec = record(orders)
-    w = sum(o["w"] for o in orders if o["st"] in SETTLED and o.get("w") and o.get("r") is not None)
-    return dict(won=rec["won"], flat=0, lost=rec["lost"], n=rec["n"], roi=rec["roi"], open=rec["open"], w=w)
-
-
-def pool(lives):
-    """Several pairs' pair_live records as one: counts summed, ROI stake-weighted over every settled bet."""
-    lives = [x for x in lives if x]
-    w = sum(x["w"] for x in lives if x["roi"] is not None)
-    return dict(won=sum(x["won"] for x in lives), flat=sum(x["flat"] for x in lives), lost=sum(x["lost"] for x in lives),
-                n=sum(x["n"] for x in lives), open=sum(x["open"] for x in lives),
-                roi=(sum(x["w"] * x["roi"] for x in lives if x["roi"] is not None) / w if w else None), w=w)
-
-
 def wfl(summ):
     lost = summ["lost"] if "lost" in summ else summ["n"] - summ["won"] - summ.get("flat", 0)
     return f'{summ["won"]}–{summ.get("flat", 0)}–{lost}'
