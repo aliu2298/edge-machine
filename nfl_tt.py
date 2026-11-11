@@ -75,7 +75,12 @@ ALIAS = {"WSH": "WAS", "LAR": "LA", "JAX": "JAC"}
 # Retired by hand (2026-10-31, Olu): no new entry from the dated day on (Eastern). The ledger rows stay and open
 # bets still settle; the workflow and the other lane keep running.
 RETIRED = {LANE_MAIN: dict(on="2026-10-31", reason="No edge at 30 settled (won exactly what its prices implied): "
-                                                   "15 won v 15.1 priced, -3.5% after fees.")}
+                                                   "15 won v 15.1 priced, -3.5% after fees."),
+           # 2026-11-11 (Olu, "END NFL"): past its 50-bet decision at break-even. The NFL tab is archived (tab_activity.RETIRED_TABS),
+           # nfl-tt.yml and the VPS kickoff windows are removed; the ledger and the research are kept.
+           LANE_BAND: dict(on="2026-11-11", reason="No edge: break-even past its decision point (24-35, +0.4%, 24 won v 23.0 priced, "
+                                                   "59 bets); the 2025 holdout result (16/22) did not carry into 2026; overs lose "
+                                                   "together on low-scoring Sundays.")}
 # Kept past the 30-settled read to a decision at 50 (2026-11-02, Olu): below READ_AT a lane is still collecting,
 # whatever its lean, and its verdict counts to READ_AT. Paper; nothing else about the lane changes.
 READ_AT = {LANE_BAND: 50}
@@ -452,6 +457,9 @@ def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
     out = argv[argv.index("--out") + 1] if "--out" in argv else PATH
     now = dt.datetime.now(dt.timezone.utc)
+    if all(retired(x, now) for x in LANES) and "--board" not in argv:
+        print("nfl_tt: every lane retired (last 2026-11-11); nothing is read, the ledger is frozen")
+        return 0
     games = espn_games(now)
     if "--board" in argv:
         rows, n_ev = board(games, now)

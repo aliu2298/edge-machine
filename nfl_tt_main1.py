@@ -52,7 +52,8 @@ WINDOW_MIN = N.WINDOW_MIN
 FEE = N.FEE
 READ_AT = {LANE: 30}
 REVIEW_AT = 10
-RETIRED = {}
+# 2026-11-11 (Olu, "END NFL"): losing at 26 bets; the NFL tab is archived and nfl-tt.yml removed. The ledger is kept.
+RETIRED = {LANE: dict(on="2026-11-11", reason="Losing: -26% at 26 bets (8-18, 8 won v 10.4 priced).")}
 SKIP_NO_ABOVE = "no quoted rung above the main line"
 
 NAMES = {LANE: "NFL team total · OVER main line +1"}
@@ -197,6 +198,9 @@ def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
     out = argv[argv.index("--out") + 1] if "--out" in argv else PATH
     now = dt.datetime.now(dt.timezone.utc)
+    if all(retired(x, now) for x in LANES):
+        print("nfl_tt_main1: retired 2026-11-11; nothing is read, the ledger is frozen")
+        return 0
     state = load(out)
     try:
         games, espn_err = N.espn_games(now), None
