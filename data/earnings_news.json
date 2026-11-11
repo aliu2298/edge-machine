@@ -1128,9 +1128,25 @@
    "event": "KXWMT-26NOVUSCOMP",
    "read": null,
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-11T20:00:36Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 391517857.14285713,
+    "rungs": 6,
+    "width": 9610294.117647052
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-11T20:00:36Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": null,
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-11T19:00:37Z",
+ "last_run": "2026-11-11T20:01:12Z",
  "predictions": [
   {
    "call": {
@@ -1260,9 +1276,13 @@
    "random_side": 1,
    "reason": "Up into the 2026-11-24 report (not-supplied).",
    "report": "2026-11-24",
+   "report_now": "2026-11-19",
    "report_time": "not-supplied",
    "side": 1,
-   "sym": "BABA"
+   "status": "void",
+   "sym": "BABA",
+   "void_at": "2026-11-11T20:00:38Z",
+   "void_reason": "report date moved"
   },
   {
    "entry_due": "2026-11-16T21:00:00Z",
@@ -1427,6 +1447,7 @@
  "sentiment_days": [
   "2026-11-06",
   "2026-11-09",
-  "2026-11-10"
+  "2026-11-10",
+  "2026-11-11"
  ]
 }
