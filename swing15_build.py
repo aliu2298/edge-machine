@@ -305,6 +305,54 @@ def _cut_line(M):
     return f"{M.VERSION} from {_start(M.REMOVED_AT)}: negative markets removed after ~4h of results."
 
 
+def keep_block(state):
+    """The 15-Minute section's three rules (Olu, 2026-11-11): A and C here (sw15keep.py), B in the Lead Swap block. Each
+    row's fold: why these markets, the per-market split, and the same rule on every other market in the background."""
+    import sw15keep as K
+    rec = K.records(state)
+    cards = []
+    for key, R_ in K.RULES.items():
+        r = rec[key]
+        c = r["all"]
+        n = c["n"] if c else 0
+        chip = (f'<span class="sig w">Ready to decide ({K.DECIDE_AT} bets)</span>' if n >= K.DECIDE_AT else
+                '<span class="sig w">Review</span>' if n >= K.REVIEW_AT else f'<span class="sig n">Too early ({n}/{K.REVIEW_AT})</span>')
+        bg = [(m, x) for m, x in r["background"].items() if x]
+        bg.sort(key=lambda mx: (-mx[1]["mean_roi"], name(mx[0])))
+        bg_rows = [f'<tr><td>{mkt(m)}</td><td class="num">{x["n"]}</td><td class="num">{x["hits"]} v {x["fair"] * x["n"]:.1f}</td>'
+                   f'<td class="num">{pct(x["mean_roi"])}</td></tr>' for m, x in bg]
+        comp = ""
+        for ck, cv in K.COMPANION.items():
+            if cv["of"] == key:
+                cc = rec[ck]["all"]
+                comp = (f'<p class="sm">{esc(cv["label"])}: '
+                        + ("no bets yet" if not cc else f'{cc["hits"]}/{cc["n"]} {R_["won"].lower()}, {pct(cc["mean_roi"])} after fees')
+                        + f'. {esc(cv["why"])}</p>')
+        split = (f'<p class="sm sw15-why">{esc(R_["why"])}</p>'
+                 + (f'<p class="sm">S&amp;P 500 since the start: {c["hits"]}/{c["n"]} {esc(R_["won"].lower())} against '
+                    f'{c["fair"] * c["n"]:.1f} priced, {pct(c["mean_roi"])} after fees, z {_zd(c)}.</p>' if c else
+                    '<p class="sm mut">No S&amp;P 500 bets yet.</p>')
+                 + comp
+                 + '<details class="fold sw15-bg"><summary>The same rule on every other market (background, not counted)'
+                 + '</summary>' + (_table(("Market", "Bets", "Won v priced", "Return after fees"), bg_rows) if bg_rows else
+                                    '<p class="sm mut">No bets yet.</p>') + '</details>')
+        body = (f'<p class="sp-details-name"><b>{esc(R_["label"])}</b> · Kalshi 15-minute windows · paper · {esc(K.VERSION)}</p>'
+                + (f'<p class="sp-def">At minute 10, buy the side over 50c at its ask, filled only on a print at or through it in '
+                   f'the next minute; held to settlement; taker fee. S&amp;P 500 only.</p>' if key == "sp500_fav5" else
+                   f'<p class="sp-def">A resting buy at 15c on whichever side gets there in the first 5 minutes, filled only on '
+                   f'a print at or through it; a resting sell at twice the price, filled on prints; if it never fills, sell '
+                   f'at the bid with 1 minute left. S&amp;P 500 only.</p>'))
+        row = _row(key, R_["label"], c, {"all": n}, body, anchor=f"sw15-{key}", sport="sw15keep", status=chip,
+                   evidence=f"{min(n, K.DECIDE_AT)}/{K.DECIDE_AT}")
+        cards.append(_card(row, split))
+    intro = (f'<p class="scope sw15-intro">Paper · S&amp;P 500 only · fresh record from {esc(_start(K.FROM))} · review '
+             f'{K.REVIEW_AT}, decide {K.DECIDE_AT}</p>')
+    how = _how("The 15-Minute section was narrowed to three rules on Nov 11: these two on the S&P 500 and the Lead Swap "
+               "favourite below. Every other rule is retired; its record is in the archive. The same rules keep being "
+               "tracked on every other market in the background, so a market that comes back can be seen.")
+    return f'<h3 class="dm-title" id="sw15keep">The three rules</h3>' + intro + _list(cards) + how
+
+
 def lossreader_block(state, now=None):
     """Rule 1 v2 · Loss Reader (lossreader.py, sw15-lr1): one collapsed row; inside, the Now line, today's bets, the
     per-market split and the two comparison books; the rules and the backtest in the How-kept fold."""
@@ -367,7 +415,9 @@ def lossreader_block(state, now=None):
                "bet or not.", bt_line)
     row = _row("lossreader", LR.LABEL, c, {"all": n}, body, ctrl=every, anchor="sw15-lossreader", sport="lossreader",
                status=chip, evidence=f"{min(n, LR.DECIDE_BETS)}/{LR.DECIDE_BETS}")
-    intro = (f'<p class="scope sw15-intro">Paper · fresh record from {esc(_start(LR.FROM))} · review {LR.REVIEW_AT}, '
+    intro = (f'<p class="scope sw15-intro">Watch row · Solana · runs to {LR.REVIEW_AT} bets, then comes out unless it is '
+             f'clearly positive · fresh record from {esc(_start(LR.FROM))}</p>' if NARROWED else
+             f'<p class="scope sw15-intro">Paper · fresh record from {esc(_start(LR.FROM))} · review {LR.REVIEW_AT}, '
              f'decide {LR.DECIDE_BETS} bets or {LR.DECIDE_DAYS} trading days</p>')
     return f'<h3 class="dm-title" id="lossreader">{esc(LR.LABEL)}</h3>' + intro + _list([_card(row, split)]) + how
 
@@ -658,6 +708,8 @@ def leadswap_block(state):
     g = ls_groups(rt, pk, [r[0] for r in (b.get("past24h") or []) + (b.get("past2h") or [])])
     cards = []
     for strat, ctrl_key, _short in LS_TRADES:
+        if strat in getattr(L, "TRADES_RETIRED", {}):
+            continue                                             # retired 2026-11-11 (the swing trade): archive only
         label = L.STRATS[strat]
         c, ctrl = rt.get(strat), rt.get(ctrl_key)
         what = ("v1's S1 35c entry held to settlement" if "swing" in strat else "v1's S3 favourite at minute 10, held")
@@ -781,10 +833,48 @@ def _v1_block(state, allc, n_w):
             + _list(cards) + method + '</details>')
 
 
-def _archive(state, s1_final):
+def _archive(state, s1_final, v1=""):
     """Every retired and removed cell's final record, in one collapsed block, grouped by lane."""
     import swing15v2 as V
     parts = []
+
+    def narrowed():
+        """Round 2 (2026-11-11): every lane retired when the section was narrowed to three rules, its whole record."""
+        import sw15cuts as C
+        trs = []
+
+        def add(label, c):
+            if c:
+                trs.append(f'<tr><td>{esc(label)}</td><td class="num">{c["n"]}</td><td class="num">{c["hits"]}</td>'
+                           f'<td class="num">{pct(c["mean_roi"])}</td></tr>')
+            else:
+                trs.append(f'<tr><td>{esc(label)}</td><td class="num">0</td><td class="num">—</td><td class="num">—</td></tr>')
+        import s3v2 as S32
+        add(S32.LABEL, S32.records(state)["lane"]["all"])
+        for nm, _old in FLIP_EPS:
+            M = __import__(nm)
+            if C.retire_at(nm) == C.CUT2_AT:
+                add(M.LABEL, M.records(state)["lane"]["all"])
+        import steadyfav as SF
+        for rule, v in SF.records(state, retired2=True).items():
+            add("Steady Favourites · " + SF.LABELS[rule], v["all"])
+        add("Swing v3 · " + V.LABELS["swing15v2_s2"], (V.records(state, retired=True).get("swing15v2_s2") or {}).get("all"))
+        import leadswap as L
+        rt = (L.load().get("routing") or {})
+        for k in getattr(L, "TRADES_RETIRED", {}):
+            c = rt.get(k)
+            add("Lead Swap · " + L.STRATS[k], c and dict(n=c["n"], hits=c["hits"], mean_roi=c["mean_roi"]))
+        return (f'<details class="fold sw15-removed sw15-narrowed"><summary>Retired {esc(_start(C.CUT2_AT))} · narrowed to '
+                f'three rules · {len(trs)} lanes, final records</summary>'
+                + _table(("Lane", "Bets", "Won", "Return after fees"), trs) + '</details>')
+    try:
+        html_n = narrowed() if NARROWED else ""
+    except Exception:                                           # noqa: BLE001
+        html_n = ""
+    if html_n:
+        parts.append(f'<h4>Narrowed to three rules (Nov 11)</h4>{html_n}')
+    if v1:
+        parts.append(f'<h4>v1 baselines (background, every market)</h4>{v1}')
     def grp(title, fn):
         try:
             html = fn()
@@ -880,6 +970,9 @@ def _archive(state, s1_final):
             '</summary>' + "".join(parts) + '</details>')
 
 
+NARROWED = True     # 2026-11-11: the three-rule layout; the older lanes' own tests set False to check them as they were
+
+
 def section(state=None):
     state = W.load() if state is None else state
     allc = W.cells(state)
@@ -889,24 +982,43 @@ def section(state=None):
     blocks = []
     # The order after #378/#379 (Steady Favourites, the Lead Swap Board, Swing v3, The Flip Side v3, Hold to End v3),
     # with the newest lane, Rule 1 v2 · Loss Reader (2026-11-10), on top.
-    for fn in (lambda: lossreader_block(state), lambda: s3v2_block(state), lambda: steadyfav_block(state),
-               lambda: leadswap_block(state),
-               lambda: swing_v3_block(state),
-               lambda: flip_block(state)):         # Hold to End retired 2026-11-10: archive only
+    # 2026-11-11 (Olu): narrowed to three rules — A and C (S&P 500), the Lead Swap favourite — and the Loss Reader as a
+    # watch row. Rules 2-5 v2, Steady Favourites, Swing v3 and the Lead Swap swing are retired: archive only.
+    narrowed = (lambda: keep_block(state), lambda: leadswap_block(state), lambda: lossreader_block(state))
+    before = (lambda: lossreader_block(state), lambda: s3v2_block(state), lambda: steadyfav_block(state),
+              lambda: leadswap_block(state), lambda: swing_v3_block(state), lambda: flip_block(state))
+    for fn in (narrowed if NARROWED else before):
         try:
             blocks.append(fn())
         except Exception:                                       # noqa: BLE001  (one lane never breaks the section)
             pass
     # 2026-11-10 (Olu): no scoreboard, lane rows collapsed, one line per lane; v1 and the archive collapsed at the bottom.
     # Each lane in its own div: tables.js opens a #swing15 link's first direct-child <details>, which must not be a fold.
+    if not NARROWED:
+        return (f'<h2 class="dm-title">15-Minute</h2>' + "".join(f'<div class="sw15-lane">{b}</div>' for b in blocks)
+                + f'<div class="sw15-lane">{_v1_block(state, allc, n_w)}{_archive(state, s1_final)}</div>')
     return (f'<h2 class="dm-title">15-Minute</h2>' + "".join(f'<div class="sw15-lane">{b}</div>' for b in blocks)
-            + f'<div class="sw15-lane">{_v1_block(state, allc, n_w)}{_archive(state, s1_final)}</div>')
+            + f'<div class="sw15-lane">{_archive(state, s1_final, v1=_v1_block(state, allc, n_w))}</div>')
 
 
 def index_rows(state=None):
     state = W.load() if state is None else state
     allc = W.cells(state)
     out = []
+    import sw15cuts as _C
+    try:                                                        # the three rules (2026-11-11): A and C first
+        if not NARROWED:
+            raise StopIteration
+        import sw15keep as K
+        for k, r in K.records(state).items():
+            if k not in K.RULES:
+                continue
+            c = r["all"]
+            out.append(dict(lane=k, label=K.RULES[k]["label"], n=c["n"] if c else 0, roi=c["mean_roi"] if c else None,
+                            hit=c["hit_rate"] if c else None, fair=c["fair"] if c else None,
+                            status=f"{c['n'] if c else 0}/{K.DECIDE_AT} bets"))
+    except (Exception, StopIteration):                          # noqa: BLE001  (never breaks the index)
+        pass
     try:                                                        # Rule 1 v2 · Loss Reader (2026-11-10): first
         import lossreader as LR
         c = LR.ledger(state)["record"]
@@ -917,11 +1029,13 @@ def index_rows(state=None):
         pass
     try:                                                        # Rule 2 v2 · Every Positive Setting (2026-11-10)
         import s3v2 as S32
+        if _C.retire_at("s3v2"):
+            raise StopIteration
         c = S32.records(state)["lane"]["all"]
         out.append(dict(lane="s3v2", label=S32.LABEL, n=c["n"] if c else 0, roi=c["mean_roi"] if c else None,
                         hit=c["hit_rate"] if c else None, fair=c["fair"] if c else None,
                         status=f"{c['n'] if c else 0}/{S32.DECIDE_AT} bets"))
-    except Exception:                                           # noqa: BLE001  (never breaks the index)
+    except (Exception, StopIteration):                          # noqa: BLE001  (never breaks the index)
         pass
     for name, _old in FLIP_EPS:                                 # Rules 3-5 v2 · Every Positive Setting (2026-11-10)
         try:
@@ -936,16 +1050,17 @@ def index_rows(state=None):
             pass
     import steadyfav as S                                       # Steady Favourites (2026-11-09)
     import sw15cuts as C
-    for key, r in S.records(state).items():
-        if key in C.RETIRED:
-            continue                                            # retired 2026-11-10: archive only
+    for key, r in ({} if all(_C.retire_at(k) for k in S.RULES) else S.records(state)).items():
+        if C.retire_at(key):
+            continue                                            # retired 2026-11-10 / 11: archive only
         c = r["all"]
         out.append(dict(lane=key, label="Steady Favourites · " + S.LABELS[key], n=c["n"] if c else 0,
                         roi=c["mean_roi"] if c else None, hit=c["hit_rate"] if c else None,
                         fair=c["fair"] if c else None, status=f"{c['n'] if c else 0}/{W.DECIDE_AT}"))
     for key, label in W.STRATS.items():
-        if key == "swing15_s1":
-            continue                                             # retired 2026-11-09 22:00Z (graded underneath)
+        if key == "swing15_s1" or NARROWED:
+            continue                                             # S1 retired 2026-11-09; the v1 baselines are not rules
+                                                                 # since 2026-11-11 (graded underneath, in the archive)
         ck = HEADLINE_S1 if key == "swing15_s1" else (key,)
         c = allc.get(ck)
         per = _per_series(state, ck)
@@ -982,7 +1097,10 @@ def index_rows(state=None):
                         roi=c["mean_roi"] if c else None, hit=c["hit_rate"] if c else None,
                         fair=c["fair"] if c else None, status=f"{best}/{W.DECIDE_AT} in its best market"))
     rt = (L.load().get("routing") or {})                        # Lead Swap Board routing (2026-11-09)
+    gone = set(getattr(L, "TRADES_RETIRED", {}))
     for key, label in L.STRATS.items():
+        if key in gone or key.replace("_ctrl", "") in gone:
+            continue                                            # the swing trade (and its control) retired 2026-11-11
         c = rt.get(key)
         out.append(dict(lane=key, label="Lead Swap · " + label, n=c["n"] if c else 0,
                         roi=c["mean_roi"] if c else None, hit=c["hit_rate"] if c else None,

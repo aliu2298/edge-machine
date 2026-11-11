@@ -45,16 +45,17 @@ class FlipEPS:
         return tuple(m for m in self.MARKETS if m not in C.cut(self.NAME))
 
     def retired(self):
-        return self.NAME in C.RETIRED
+        return C.retire_at(self.NAME) is not None
 
     def records(self, state, start=None):
         """{"lane", "every", "cut"}: the filtered lane over the kept markets (sw15cuts, 2026-11-10; a retired lane
         counts only windows before the cut), the old flip on the same markets over the same windows, and the cut
         markets' final records (filtered, before the cut)."""
         cut_ts = W._ts(C.CUT_AT)
+        end_ts = W._ts(C.retire_at(self.NAME)) if self.retired() else None
         kept, gone = self.kept(), C.cut(self.NAME)
         live = (lambda w: self.allowed(w) and w["series"] in kept
-                and (not self.retired() or W._ts(w["open"]) < cut_ts))
+                and (end_ts is None or W._ts(w["open"]) < end_ts))
         out = {}
         for key, gate, mk in (("lane", live, kept), ("every", lambda w: True, self.MARKETS),
                               ("cut", lambda w: self.allowed(w) and w["series"] in gone and W._ts(w["open"]) < cut_ts, gone)):
@@ -73,7 +74,7 @@ class FlipEPS:
         rows = []
         for w in (state.get("windows") or {}).values():
             if self.in_record(w, start) and self.allowed(w) and w["series"] in self.kept() and (
-                    not self.retired() or W._ts(w["open"]) < W._ts(C.CUT_AT)):
+                    not self.retired() or W._ts(w["open"]) < W._ts(C.retire_at(self.NAME))):
                 f = self.flip_entry(w)
                 rows.append(dict(at=w["open"], market=w["series"], settings=self.settings(w), side=f["side"],
                                  price=f["price"], won=f["won"], roi=f["roi"]))

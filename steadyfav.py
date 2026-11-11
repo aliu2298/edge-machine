@@ -46,7 +46,7 @@ def in_sf(w, until=None):
     return t >= W._ts(FROM) and (not until or t < W._ts(until))
 
 
-def records(state, earlier=False, removed=False, cut=False):
+def records(state, earlier=False, removed=False, cut=False, retired2=False):
     """{rule: {"all": cell, "series": {market: cell or None}}, control: {"all": cell, "markets": n}}; cells are
     swing15.cells()' records. earlier=True: the same four markets on v1 BEFORE FROM (shown, never counted)."""
     # 2026-11-10 (Olu, sw15cuts): rule A retired at C.CUT_AT (its whole record, before the cut, is cut=True's); rule
@@ -57,16 +57,20 @@ def records(state, earlier=False, removed=False, cut=False):
             flt, mk = (lambda w: W._ts(w["open"]) < W._ts(FROM)), MARKETS
         elif removed:
             flt, mk = (lambda w: in_sf(w, REMOVED_AT)), REMOVED
+        elif retired2:                                         # round 2 (2026-11-11): B's kept markets, final
+            if rule not in C.RETIRED2:
+                continue
+            flt, mk = (lambda w: in_sf(w, C.CUT2_AT)), tuple(m for m in LIVE if m not in C.cut(rule))
         elif cut:
             flt = lambda w: in_sf(w, C.CUT_AT)
             mk = LIVE if rule in C.RETIRED else C.cut(rule)
-        elif rule in C.RETIRED:
+        elif C.retire_at(rule):
             flt, mk = (lambda w: in_sf(w, C.CUT_AT)), ()
         else:
             flt, mk = in_sf, tuple(m for m in LIVE if m not in C.cut(rule))
         out[rule] = dict(all=W.cells(state, lambda w, f=flt, k=mk: f(w) and w["series"] in k).get(key),
                          series={s: W.cells(state, lambda w, s=s, f=flt: f(w) and w["series"] == s).get(key) for s in mk})
-    if earlier or removed or cut:
+    if earlier or removed or cut or retired2:
         return out
     flt = in_sf
     others = lambda w: flt(w) and w["series"] not in MARKETS and w["series"] not in EXCLUDE

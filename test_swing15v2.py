@@ -8,6 +8,8 @@ import sandbox_audit
 import swing15 as W
 import swing15_build as WB
 import swing15v2 as V
+import sw15cuts as _C2, swing15_build as _WB2, leadswap as _L2
+_C2.RETIRED2, _WB2.NARROWED, _L2.TRADES_RETIRED = (), False, {}   # the lane as it ran before the 2026-11-11 narrowing; test_sw15keep.py checks the narrowed page
 
 FAILS = []
 
@@ -44,11 +46,11 @@ check("S3 keeps USDJPY, 2YRRATE, GOLD, ETH, BNB, BTC", V.CELLS_V3["swing15v2_s3"
       ("KXUSDJPY15M", "KX2YRRATE15M", "KXGOLD15M", "KXETH15M", "KXBNB15M", "KXBTC15M"))
 check("every kept market was registered, and removed = registered - kept",
       all(set(V.CELLS_V3[k]) <= set(V.CELLS_V2[k]) and set(V.REMOVED[k]) == set(V.CELLS_V2[k]) - set(V.CELLS_V3[k]) for k in V.CELLS), True)
-check("S1 retired 2026-11-09 22:00Z and S3 retired 2026-11-10 (Olu): only S2 lives on; the retired sets are the v3 keep lists",
-      (V.CELLS["swing15v2_s1"], V.CELLS["swing15v2_s3"], V.CELLS["swing15v2_s2"] == ("KXBTC15M",), V.RETIRED,
-       V.RETIRED_TIMES),
-      ((), (), True, {"swing15v2_s1": V.CELLS_V3["swing15v2_s1"], "swing15v2_s3": V.CELLS_V3["swing15v2_s3"]},
-       {"swing15v2_s1": "2026-11-09T22:00:00+00:00", "swing15v2_s3": V.RETIRED_S3_AT}))
+check("S1 retired 2026-11-09, S3 2026-11-10, S2 2026-11-11 (Olu): no v3 cell lives on; the retired sets are the keep lists",
+      (V.CELLS["swing15v2_s1"], V.CELLS["swing15v2_s3"], V.CELLS["swing15v2_s2"], V.RETIRED, V.RETIRED_TIMES),
+      ((), (), (), {"swing15v2_s1": V.CELLS_V3["swing15v2_s1"], "swing15v2_s3": V.CELLS_V3["swing15v2_s3"],
+                    "swing15v2_s2": ("KXBTC15M",)},
+       {"swing15v2_s1": "2026-11-09T22:00:00+00:00", "swing15v2_s3": V.RETIRED_S3_AT, "swing15v2_s2": _C2.CUT2_AT}))
 check("S3's cut is the Rule 2 v2 start, a window boundary", (V.RETIRED_S3_AT, W._ts(V.RETIRED_S3_AT) % 900),
       (__import__("s3v2").FROM, 0))
 check("the cut", V.REMOVED_AT, "2026-11-09T18:00:00+00:00")
@@ -86,7 +88,9 @@ check("S1 GOLD's final record runs past the 18:00 cut and stops at retirement (1
       (ret["swing15v2_s1"]["series"]["KXGOLD15M"]["n"], rec["swing15v2_s1"]["all"]), (3, None))
 check("since the 18:00 cut: the 18:15 window only",
       V.records(state, retired=True, start=V.REMOVED_AT)["swing15v2_s1"]["all"]["n"], 1)
-check("S2: GOLD is removed; BTC survives (Solana and WTI cut 2026-11-10)", (set(rec["swing15v2_s2"]["series"]), rec["swing15v2_s2"]["all"]["n"]),
+_r2 = V.records(state, retired=True)
+check("S2: GOLD is removed; BTC survived (Solana and WTI cut 2026-11-10) and is its final record (retired 2026-11-11)",
+      (set(_r2["swing15v2_s2"]["series"]), _r2["swing15v2_s2"]["all"]["n"]),
       ({"KXBTC15M"}, 1))
 check("S2's 2026-11-10 cut: Solana and WTI", V.CUT2, {"swing15v2_s2": ("KXSOL15M", "KXWTI15M")})
 gone = V.records(state, removed=True)
@@ -107,8 +111,8 @@ v3b = html.split('id="swing15v2"')[1].split('id="flipside_v2"')[0]
 check("one line under the header; the rest in the collapsed How-kept fold",
       ('<p class="scope sw15-intro">Paper · fresh record from Nov 9, 7:00 AM CT · review 10, decide 30</p>' in v3b,
        "Cells picked from one overnight session." in v3b.split("How the record is kept")[1]), (True, True))
-check("S1 and S3 are gone as v3 lanes (S2 stays); v1 keeps S2/S3", (re.findall(r'data-source="(swing15v2_s\d)"', html),
-      re.findall(r'data-source="(swing15_s\d)"', html)), (["swing15v2_s2"], ["swing15_s2", "swing15_s3"]))
+check("no v3 lane is live (S2 retired 2026-11-11 too); v1 keeps S2/S3", (re.findall(r'data-source="(swing15v2_s\d)"', html),
+      re.findall(r'data-source="(swing15_s\d)"', html)), ([], ["swing15_s2", "swing15_s3"]))
 v3 = html.split('id="sw15-archive"')[1].split("<h4>The Flip Side v3</h4>")[0]
 check("v3's Retired fold (in the archive): S1 final, since the cut, collapsed, above the Removed fold",
       (bool(re.search(r'<details class="fold sw15-removed"><summary>Retired Nov 9, 4:00 PM CT', v3)),
@@ -118,8 +122,8 @@ check("no Retired or Removed fold outside the archive", html.split('id="sw15-arc
 check("v1's Retired fold: S1's headline record and the whole grid", ("S1 Swing, final records" in html, "15c · 1.5x · else hold" in html.split("S1 Swing, final records")[1]),
       (True, True))
 check("no dollar sign, no guarded phrase", (re.search(r"\$\d", html), sandbox_audit.COPY_RE.findall(html + WB.index_html(state))), (None, []))
-check("the Sandbox index: v3 S2 after v1's, no v3 S1 or S3 rows", ([r["lane"] for r in WB.index_rows(state) if r["lane"].startswith("swing15v2")],
-      [r["lane"] for r in WB.index_rows(state) if r["lane"].endswith("_s1")]), (["swing15v2_s2"], []))
+check("the Sandbox index: no v3 rows (all retired)", ([r["lane"] for r in WB.index_rows(state) if r["lane"].startswith("swing15v2")],
+      [r["lane"] for r in WB.index_rows(state) if r["lane"].endswith("_s1")]), ([], []))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
