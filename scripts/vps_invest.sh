@@ -42,12 +42,21 @@ main() {
     [ -f data/invest_state.json ] && cp data/invest_state.json "$WORK/state.json"
   fi
   "$PY" invest.py track --work "$WORK" --state "$WORK/state.json" >/dev/null || { echo "$(stamp) track failed"; exit 1; }
+  # 2026-11-11: Rebound after a slide, two observation-only lanes on the same ticks (rebound.py). Never fatal.
+  if [ ! -f "$WORK/.publish-pending" ] && [ -f data/rebound_state.json ] && [ ! -f "$WORK/rebound_state.json" ]; then
+    cp data/rebound_state.json "$WORK/rebound_state.json"
+  fi
+  "$PY" rebound.py track --work "$WORK" --state "$WORK/rebound_state.json" >/dev/null || echo "$(stamp) rebound track failed"
   "$PY" -c 'import json,sys; json.load(open(sys.argv[1]))' "$WORK/state.json" || { echo "$(stamp) state is not valid JSON"; exit 1; }
 
   publish() {
     git pull -q --rebase origin main || { echo "$(stamp) pull failed before publishing"; return 1; }
     cp "$WORK/state.json" data/invest_state.json
     git add -- data/invest_state.json
+    if [ -f "$WORK/rebound_state.json" ] && "$PY" -c 'import json,sys; json.load(open(sys.argv[1]))' "$WORK/rebound_state.json"; then
+      cp "$WORK/rebound_state.json" data/rebound_state.json
+      git add -- data/rebound_state.json
+    fi
     if git diff --cached --quiet; then
       return 0
     fi

@@ -109,10 +109,11 @@ check("a closed market is not flagged", I.venue_flags({"K": [row(ts(2026, 11, 10
 print("\nthe page section")
 st = {"events": [dict(filled, rule="fade_drop", status="settled", gross=0.01, net=0.0076, exit_why="time")],
       "flags": fl, "collector": dict(last_ts=ts(2026, 11, 10, 16, 0), markets=60), "last_run": "2026-11-10T21:00:00+00:00"}
-html, n_rules, settled, open_ = IB.section_and_counts(st, research={})
-check("2026-11-11: all four rules retired; the live section has no rule rows, says why, keeps the collector folds",
-      (I.ACTIVE_RULES, n_rules, len(re.findall(r'class="sp-rule[ "]', html)), settled, open_, "were retired on Nov 11" in html,
-       "Kalshi-only gaps" in html), ((), 0, 0, 0, 0, True, True))
+html, n_rules, settled, open_ = IB.section_and_counts(st, research={}, rebound_state={"events": []})
+check("2026-11-11: all four rules retired; the live section carries only the two rebound observation lanes, says why "
+      "the old ones went, keeps the collector folds",
+      (I.ACTIVE_RULES, n_rules, re.findall(r'data-source="invest_([a-z0-9_]+)"', html), settled, open_,
+       "were retired on Nov 11" in html, "Kalshi-only gaps" in html), ((), 2, ["rb_5d", "rb_24h"], 0, 0, True, True))
 check("its id, and paper/1x in the count line", ('id="invest"' in html, "paper · 1x" in html), (True, True))
 ret = IB.retired_html(st, research={})
 check("the four rules move to the Retired block with their records (Fade a drop: 1 settled), marked retired",

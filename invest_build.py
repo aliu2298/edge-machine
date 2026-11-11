@@ -160,23 +160,92 @@ and is not charged. Reviewed at {REVIEW_AT}+ settled events per rule. Last run {
                   cls="fold trade-method")
 
 
+def _rb_events(evs):
+    if not evs:
+        return '<p class="sm mut">No events yet.</p>'
+    st_word = {"pending": "waiting for a fill", "open": "open", "no_fill": "no fill"}
+    rows = []
+    for e in sorted(evs, key=lambda e: e["signal_ts"], reverse=True)[:40]:
+        when = dt.datetime.fromtimestamp(e["signal_ts"], I.ET)
+        st = st_word.get(e["status"]) or "settled · " + {"target": "target hit", "stop": "stopped", "time": "time"}.get(
+            e.get("exit_why"), "")
+        rows.append(f'<tr><td>{esc(f"{when:%b} {when.day} {when:%H:%M} ET")}{" · in-sample" if e.get("backfill") else ""}</td>'
+                    f'<td>{esc(e["sym"])}</td><td class="num">{e["level_stock"]:.2f}</td><td class="num">{e["strength"]}</td>'
+                    f'<td>{esc(st)}</td><td class="num">{pct(e.get("net"))}</td></tr>')
+    return ('<div class="tbl"><table><thead><tr><th>Signal</th><th>Stock</th><th class="num">Support</th>'
+            '<th class="num">Methods agreeing</th><th>Status</th><th class="num">Net</th></tr></thead>'
+            f'<tbody>{"".join(rows)}</tbody></table></div>')
+
+
+def _rb_row(k, s_rb):
+    import rebound as RB
+    Ln = RB.LANES[k]
+    live = RB.summary(s_rb)[k]
+    allx = RB.summary(s_rb, include_backfill=True)[k]
+    slide = "10% or more below its 5-day high" if Ln["slide"] == "S5D" else "5% or more below its 24-hour high"
+    sup = "a strong support level (two or more ways of finding support agree on it, or it held before)" if Ln["strong"] \
+        else "any support level"
+    defin = (f'When a Kalshi Invest stock is {slide}, and its price comes within 0.75% of {sup} (a prior low, the prior '
+             f'day or week\'s low, the 50- or 200-day average, a gap fill or a round number), wait for selling to slow '
+             f'(the 15-minute RSI below 30, then turning up), then go Up at 1x. Stop 1% under the support; target halfway '
+             f'back to the slide\'s high; out after {"5 days" if Ln["slide"] == "S5D" else "1 day"}.')
+    bf = s_rb and [e for e in s_rb["events"] if e["lane"] == k and e.get("backfill") and e["status"] == "settled"]
+    pairs = [("Status", "observation only: it did not clear the research bar (see Research)"),
+             ("Research", esc(Ln["research"])),
+             ("In-sample (Nov 6 on, before the fresh record)",
+              f'{len(bf)} settled · {pct(sum(e["net"] for e in bf) / len(bf)) if bf else "—"} average net'),
+             ("Live", f'{live["n"]} settled · {live["open"]} open · {live["pending"]} waiting · {live["no_fill"]} no fill'),
+             ("Fills", "entry at the ask, counted only with a print at or through it; target only on a print through it; "
+                       "stop and time exits at the bid; 0.12% taker, 0.02% maker")]
+    body = f'<p class="sp-def">{esc(defin)}</p>' + L.params(pairs) + L.fold("Events", _rb_events(
+        [e for e in s_rb["events"] if e["lane"] == k]))
+    win = "—" if live["win"] is None else f'{live["win"] * 100:.0f}%'
+    t = "—" if live["t"] is None else f'{live["t"]:+.2f}'
+    status = L.sig(f'observation · {live["n"]}/{RB.REVIEW_AT} to review' if live["n"] < RB.REVIEW_AT else
+                   ("observation · review due" if live["n"] < RB.DECIDE_AT else "observation · decide"), "n")
+    return L.rule(f"invest_{k}", Ln["label"], "Kalshi Invest", str(live["n"]), win, pct(live["net"]), t, status, body,
+                  muted=True)
+
+
+def _rb_research_fold():
+    return L.fold("Rebound after a slide · how it was tested", '<p class="sm">Pre-registered before any result was read: '
+                  '56 versions (two slide sizes, seven ways to confirm the support is holding, all or strong supports, '
+                  'two targets) on 2023 to 2026 one-minute stock prices for the 58 Invest stocks, against the same slides '
+                  'bought with no support check, and against random entries. A version had to beat the no-support '
+                  'baseline in both halves of the history and in the last three months, after costs. None did: the best '
+                  'matched the baseline in research and lost in the last three months. The two rows above are the best '
+                  'of each slide length, run as observation only so they can be watched. The research read regular '
+                  'hours only; these lanes read Kalshi\'s price in every open minute, overnight included.</p>',
+                  cls="fold trade-method")
+
+
 RETIRED_NOTE = ("The four big-move rules (fade or follow a drop or a jump) were retired on Nov 11: they only saw a "
                 "big move inside one hour or one day, in regular hours, so a slide over several hours or days, or one "
                 "overnight, never triggered them. Their records are in Retired at the bottom of this page. The "
                 "one-minute price collector keeps running for the next rule.")
 
 
-def section_and_counts(state=None, research=None):
+def section_and_counts(state=None, research=None, rebound_state=None):
     """The live Invest section: the running rules (none since 2026-11-11), the collector's gap log and method.
     -> (html, running rules, settled, open)."""
     s = I.load() if state is None else state
     summ = I.summary(s)
     live = [k for k in I.RULES if k in I.ACTIVE_RULES]
     rows = [_rule_row(k, s, summ, load_research() if research is None else research) for k in live]
-    body = ((L.rules_list(rows, key="invest") if rows else "")
+    try:                                                        # Rebound after a slide (2026-11-11), observation only
+        import rebound as RB
+        s_rb = RB.load() if rebound_state is None else rebound_state
+        rows += [_rb_row(k, s_rb) for k in RB.LANES]
+        rb = RB.summary(s_rb)
+        n_rb, settled_rb, open_rb = len(RB.LANES), sum(v["n"] for v in rb.values()), sum(v["open"] for v in rb.values())
+    except Exception:                                           # noqa: BLE001  (never breaks the section)
+        n_rb = settled_rb = open_rb = 0
+    body = ((L.rules_list(rows, key="invest") if rows else "") + (_rb_research_fold() if n_rb else "")
             + f'<p class="sm invest-retired-note">{esc(RETIRED_NOTE)}</p>' + _venue_fold(s) + _method_fold(s))
-    html = L.section("invest", "Kalshi Invest (paper)", f"{len(live)} rules running · paper · 1x", body)
-    return (html, len(live), sum(summ[k]["n"] for k in live), sum(summ[k]["open"] for k in live))
+    html = L.section("invest", "Kalshi Invest (paper)",
+                     f"{len(live) + n_rb} lanes running ({n_rb} observation only) · paper · 1x", body)
+    return (html, len(live) + n_rb, sum(summ[k]["n"] for k in live) + settled_rb,
+            sum(summ[k]["open"] for k in live) + open_rb)
 
 
 def retired_html(state=None, research=None):
