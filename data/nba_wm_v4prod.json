@@ -84,6 +84,30 @@
    "tip": "2026-11-10T00:30:00+00:00",
    "why": "ceded to wm-yes-v4 (Bucket Priority bp-v1, 1-5)"
   },
+  "no:KXNBAWINMARGIN-26NOV10BOSPHI-BOS11TO20": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "11-20",
+   "bucket_priority": "bp-v2",
+   "ceded_to": "wm-yes-v4",
+   "event": "KXNBAWINMARGIN-26NOV10BOSPHI",
+   "key": "no:KXNBAWINMARGIN-26NOV10BOSPHI-BOS11TO20",
+   "lane": "nba_wm_nofade",
+   "ticker": "KXNBAWINMARGIN-26NOV10BOSPHI-BOS11TO20",
+   "tip": "2026-11-11T01:00:00+00:00",
+   "why": "ceded to wm-yes-v4 (Bucket Priority bp-v2, 11-20)"
+  },
+  "no:KXNBAWINMARGIN-26NOV10BOSPHI-PHI1TO5": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "1-5",
+   "bucket_priority": "bp-v2",
+   "ceded_to": "wm-yes-v4",
+   "event": "KXNBAWINMARGIN-26NOV10BOSPHI",
+   "key": "no:KXNBAWINMARGIN-26NOV10BOSPHI-PHI1TO5",
+   "lane": "nba_wm_nofade",
+   "ticker": "KXNBAWINMARGIN-26NOV10BOSPHI-PHI1TO5",
+   "tip": "2026-11-11T01:00:00+00:00",
+   "why": "ceded to wm-yes-v4 (Bucket Priority bp-v2, 1-5)"
+  },
   "yes:KXNBAWINMARGIN-26NOV09DENHOU-HOU6TO10": {
    "bot_version": "wm-yes-v4",
    "bucket": "6-10",
@@ -131,16 +155,40 @@
    "ticker": "KXNBAWINMARGIN-26NOV09LALATL-LAL6TO10",
    "tip": "2026-11-10T00:00:00+00:00",
    "why": "ceded to wm-nofade-v4 (Bucket Priority bp-v1, 6-10)"
+  },
+  "yes:KXNBAWINMARGIN-26NOV10BOSPHI-BOS6TO10": {
+   "bot_version": "wm-yes-v4",
+   "bucket": "6-10",
+   "bucket_priority": "bp-v2",
+   "ceded_to": "wm-nofade-v4",
+   "event": "KXNBAWINMARGIN-26NOV10BOSPHI",
+   "key": "yes:KXNBAWINMARGIN-26NOV10BOSPHI-BOS6TO10",
+   "lane": "nba_winmargin_live",
+   "ticker": "KXNBAWINMARGIN-26NOV10BOSPHI-BOS6TO10",
+   "tip": "2026-11-11T01:00:00+00:00",
+   "why": "ceded to wm-nofade-v4 (Bucket Priority bp-v2, 6-10)"
+  },
+  "yes:KXNBAWINMARGIN-26NOV10BOSPHI-PHI6TO10": {
+   "bot_version": "wm-yes-v4",
+   "bucket": "6-10",
+   "bucket_priority": "bp-v2",
+   "ceded_to": "wm-nofade-v4",
+   "event": "KXNBAWINMARGIN-26NOV10BOSPHI",
+   "key": "yes:KXNBAWINMARGIN-26NOV10BOSPHI-PHI6TO10",
+   "lane": "nba_winmargin_live",
+   "ticker": "KXNBAWINMARGIN-26NOV10BOSPHI-PHI6TO10",
+   "tip": "2026-11-11T01:00:00+00:00",
+   "why": "ceded to wm-nofade-v4 (Bucket Priority bp-v2, 6-10)"
   }
  },
  "error": null,
  "kept": {},
- "last_run": "2026-11-10T20:37:52.385688+00:00",
+ "last_run": "2026-11-11T00:55:33.336438+00:00",
  "observations": {
-  "at": "2026-11-10T20:37:52.385688+00:00",
+  "at": "2026-11-11T00:55:33.336438+00:00",
   "errors": [],
   "new": 0,
-  "waiting": 0
+  "waiting": 12
  },
  "rows": {
   "no:KXNBAWINMARGIN-26NOV08BKNDAL-BKN1TO5": {
