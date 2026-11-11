@@ -79,6 +79,16 @@ def swing15_html():
     return f'<section id="swing15" class="dm-group" data-sp-group="swing15">\n{inner}\n</section>'
 
 
+def econ_weekly_html():
+    """The Econ weekly block (jobless_build.py, 2026-11-11), at the end of the Econ section. Never breaks the page."""
+    try:
+        import jobless_build
+        return "\n" + jobless_build.section()
+    except Exception as exc:                                    # noqa: BLE001
+        return (f'\n<section id="econ-weekly"><h3>Econ weekly</h3>'
+                f'<p class="sm mut">This block could not be built ({esc(type(exc).__name__)}).</p></section>')
+
+
 def body_html(parts):
     links = " · ".join(f'<a href="#{g}">{esc(label)}</a>' for g, label, _f in GROUPS)
     out = [f'<h1>{TITLE}</h1>\n<p class="lede">Kalshi daily-close ladders, one section per group: {links}. '
@@ -102,6 +112,8 @@ def build(now=None, builders=None):
     for g, label, _f in GROUPS:
         try:
             parts[g] = scoped_body(builders[g](now), g)
+            if g == "econ":
+                parts[g] += econ_weekly_html()
         except Exception as exc:                                # noqa: BLE001  one group never takes the page down
             parts[g] = (f'<h2 class="dm-title">{esc(label)}</h2>'
                         f'<p class="sm mut">This section could not be built ({esc(type(exc).__name__)}).</p>')
