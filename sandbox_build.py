@@ -2486,7 +2486,7 @@ def trading_page(now=None):
 {nasdaq_orb_build.safe_section()}
 {trade_note}
 <h3>Stock and ETF rules, retired</h3>
-<div class="tbl"><table>{TRADE_HEAD}{trading_rows(md, cost)}</table></div>
+<div class="tbl"><table><thead>{TRADE_HEAD}</thead><tbody>{trading_rows(md, cost)}</tbody></table></div>
 {cost_note_html(cost)}
 <p class="sm mut">Twelve earlier rules (retired 2026-10-04 and 2026-10-20) are off the board; their trades stay in the ledger.</p>
 <details class="fold trade-method"><summary>How the record is kept</summary>

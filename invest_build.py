@@ -192,8 +192,9 @@ def _rb_row(k, s_rb):
     bf = s_rb and [e for e in s_rb["events"] if e["lane"] == k and e.get("backfill") and e["status"] == "settled"]
     pairs = [("Status", "observation only: it did not clear the research bar (see Research)"),
              ("Research", esc(Ln["research"])),
-             ("In-sample (Nov 6 on, before the fresh record)",
-              f'{len(bf)} settled · {pct(sum(e["net"] for e in bf) / len(bf)) if bf else "—"} average net'),
+             ("In-sample",
+              f'Nov 6 on, before the fresh record: {len(bf)} settled · '
+              f'{pct(sum(e["net"] for e in bf) / len(bf)) if bf else "—"} average net'),
              ("Live", f'{live["n"]} settled · {live["open"]} open · {live["pending"]} waiting · {live["no_fill"]} no fill'),
              ("Fills", "entry at the ask, counted only with a print at or through it; target only on a print through it; "
                        "stop and time exits at the bid; 0.12% taker, 0.02% maker")]
