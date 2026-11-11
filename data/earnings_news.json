@@ -1160,9 +1160,25 @@
    "event": "KXWMT-26NOVUSCOMP",
    "read": null,
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-11T22:00:30Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 391578947.3684211,
+    "rungs": 6,
+    "width": 9575000.0
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-11T22:00:30Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": null,
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-11T21:00:41Z",
+ "last_run": "2026-11-11T22:00:35Z",
  "predictions": [
   {
    "call": {
@@ -1224,7 +1240,9 @@
   },
   {
    "call": {
-    "status": "pending"
+    "entry": 6.6931,
+    "entry_ts": 1794430800,
+    "status": "open"
    },
    "entry_due": "2026-11-11T21:00:00Z",
    "exit_due": "2026-11-18T21:00:00Z",
@@ -1237,7 +1255,7 @@
    "report": "2026-11-18",
    "report_time": "after-hours",
    "side": 1,
-   "status": "pending",
+   "status": "open",
    "sym": "PANW"
   },
   {
@@ -1260,7 +1278,7 @@
   },
   {
    "call": {
-    "status": "pending"
+    "status": "no_fill"
    },
    "entry_due": "2026-11-11T21:00:00Z",
    "exit_due": "2026-11-18T21:00:00Z",
@@ -1273,7 +1291,7 @@
    "report": "2026-11-19",
    "report_time": "pre-market",
    "side": 1,
-   "status": "pending",
+   "status": "no_fill",
    "sym": "WMT"
   },
   {
@@ -1440,7 +1458,7 @@
   },
   {
    "call": {
-    "status": "pending"
+    "status": "no_fill"
    },
    "entry_due": "2026-11-11T21:00:00Z",
    "exit_due": "2026-11-18T21:00:00Z",
@@ -1453,7 +1471,7 @@
    "report": "2026-11-19",
    "report_time": "pre-market",
    "side": 1,
-   "status": "pending",
+   "status": "no_fill",
    "sym": "BABA"
   },
   {
