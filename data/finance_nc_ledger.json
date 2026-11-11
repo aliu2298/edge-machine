@@ -925,11 +925,14 @@
       "id": "KXINXU-26NOV10H1600-T7529.9999",
       "logged": "2026-11-10T17:30:46.144742+00:00",
       "name": "S&P 500 above/below",
+      "payout": 1.0,
       "price": 0.9,
+      "profit": 10.34,
       "series": "KXINXU",
+      "settled": "2026-11-11T01:17:35.435307+00:00",
       "side": "no",
       "size": 850.0,
-      "status": "open",
+      "status": "won",
       "title": "NO \u00b7 7,530 or above",
       "yes_bid": 0.1
     },
@@ -940,11 +943,14 @@
       "id": "KXINXU-26NOV10H1600-T7524.9999",
       "logged": "2026-11-10T18:00:48.809880+00:00",
       "name": "S&P 500 above/below",
+      "payout": 1.0,
       "price": 0.91,
+      "profit": 9.2,
       "series": "KXINXU",
+      "settled": "2026-11-11T01:17:35.435307+00:00",
       "side": "no",
       "size": 530.0,
-      "status": "open",
+      "status": "won",
       "title": "NO \u00b7 7,525 or above",
       "yes_bid": 0.09
     },
@@ -955,25 +961,29 @@
       "id": "KXINXU-26NOV10H1600-T7519.9999",
       "logged": "2026-11-10T18:30:46.015971+00:00",
       "name": "S&P 500 above/below",
+      "payout": 0.0,
       "price": 0.91,
+      "profit": -100.0,
       "series": "KXINXU",
+      "settled": "2026-11-11T01:17:35.435307+00:00",
       "side": "no",
       "size": 570.0,
-      "status": "open",
+      "status": "lost",
       "title": "NO \u00b7 7,520 or above",
       "yes_bid": 0.09
     }
   ],
   "error": null,
   "key": "finance_spx_nc_no",
-  "last_run": "2026-11-10T20:52:32.261103+00:00",
-  "last_success": "2026-11-10T20:52:32.261103+00:00",
+  "last_run": "2026-11-11T01:17:35.435307+00:00",
+  "last_success": "2026-11-11T01:17:35.435307+00:00",
   "observation": {
-    "at": "2026-11-10T20:52:32.261103+00:00",
+    "at": "2026-11-11T01:17:35.435307+00:00",
     "eligible": 0,
-    "listed": 90,
+    "listed": 420,
     "reasons": {
-      "Outside entry window": 90
+      "Not the 16:00 ET event": 360,
+      "Outside entry window": 60
     }
   },
   "picks": [
@@ -1218,11 +1228,14 @@
       "id": "KXINXU-26NOV10H1600-T7529.9999",
       "logged": "2026-11-10T17:30:46.144742+00:00",
       "name": "S&P 500 above/below",
+      "payout": 1.0,
       "price": 0.9,
+      "profit": 10.34,
       "series": "KXINXU",
+      "settled": "2026-11-11T01:17:35.435307+00:00",
       "side": "no",
       "size": 850.0,
-      "status": "open",
+      "status": "won",
       "title": "NO \u00b7 7,530 or above",
       "yes_bid": 0.1
     }
