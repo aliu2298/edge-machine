@@ -184,6 +184,9 @@ def main():
     # removed lane. Stripping it here keeps that check from counting twice.
     registered = S.SOURCES["tennis_fav_band_3h"]["note"]
     for name, html in sorted(pages.items()):
+        # the Production page's Retired lanes fold (2026-11-11) names every lane that ever bet, with its final live record: that is its job
+        import re as _re
+        html = _re.sub(r'<details class="fold lanes"><summary><h3>Retired lanes</h3>.*?</details>(?=\s*<p class="sm mut">|\s*</section>)', "", html, flags=_re.S)
         text = html_lib.unescape(html).replace(registered, "")
         hit = _full_hit(text)
         ok(hit is None, f"{name} has no removed lane" + (f" ({hit})" if hit else ""))

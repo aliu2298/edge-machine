@@ -3,6 +3,7 @@
 clock, the favourite band is back in the Sandbox on its whole record, and nothing mutates the
 saved ledgers."""
 import copy
+import re
 import datetime as dt
 import unittest
 import daily_track as D
@@ -136,7 +137,8 @@ class EconProduction(unittest.TestCase):
         self.assertEqual(len(dd['quotes']),1)
         h=P.page(d,st,blob,'',now=NOW,daily=state())
         self.assertIn('Near-certain · last hour · YES',h)
-        self.assertNotIn('Near-certain · 3h · NO',h)
+        # the Retired lanes fold (2026-11-11) lists every lane that ever bet, so look at the live lanes and the table only
+        self.assertNotIn('Near-certain · 3h · NO',re.sub(r'<details class="fold lanes"><summary><h3>Retired lanes</h3>.*?</details>(?=\s*<p class="sm mut">|\s*</section>)','',h,flags=re.S))
 
 
 class NearCertainCollector(unittest.TestCase):
