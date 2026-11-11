@@ -64,6 +64,14 @@ LOG_HOUR_ET = 15                  # F2b and F4 log at the first run at or after 
 REVIEW_AT, DECIDE_AT = 10, 30
 HORIZONS = ("1h", "1d", "5d")
 
+# 2026-11-11 (Olu; earnings_news_addendum_2026-11-11.md — the pinned families file is not edited): F3 news retired
+# (never ran), F2a recast as the comparison line (buy every reporting stock: the baseline), F1/F2b/F4 judged after the
+# Nov 12 - Dec 1 earnings run.
+ADDENDUM = "earnings_news_addendum_2026-11-11.md"
+RETIRED_FAMILIES = {"news": ("2026-11-11", "Never ran: there is no automated news reader, and a public headline read "
+                                           "late is not an edge.")}
+COMPARISON = ("runup",)
+JUDGE_AFTER = "2026-12-01"
 FAMILIES = {
     "kpi_drift":  "F1 · KPI ladder drift into the report",
     "runup":      "F2a · Drift into the report",
@@ -293,6 +301,25 @@ def pid(family, sym, key):
 def coin(prediction_id):
     """The random baseline's fixed side for one prediction: +1 or -1, from its id."""
     return 1 if hashlib.sha256(prediction_id.encode()).digest()[0] % 2 == 0 else -1
+
+
+def void_moved(state, now=None):
+    """A report date that moved (addendum 2026-11-11): each prediction for a stock whose calendar date is now different
+    from the report it was logged for, and which has not entered (no call graded yet), is marked void with the reason.
+    Never deleted. -> the ids voided."""
+    now = now or now_utc()
+    dates = {c["sym"]: c["date"] for c in state.get("calendar") or []}
+    out = []
+    for p in state["predictions"]:
+        if p.get("family") not in ("runup", "kpi_drift", "post_drift") or not p.get("report"):
+            continue
+        if p.get("status") not in (None, "pending") or p.get("call"):
+            continue
+        new = dates.get(p["sym"])
+        if new and new != p["report"]:
+            p.update(status="void", void_reason="report date moved", void_at=iso(now), report_now=new)
+            out.append(p["id"])
+    return out
 
 
 def add_prediction(state, p):
@@ -542,6 +569,8 @@ def log_rules(state, now=None, get=_get, perps=None):
 
 def log_news(state, sym, direction, horizon, conf, reason, url, published, now=None, perps=None, get=_get):
     """One F3 call, logged NOW. The entry is the first honest fill after this moment."""
+    if "news" in RETIRED_FAMILIES:
+        raise ValueError(f"F3 news calls are retired ({RETIRED_FAMILIES['news'][0]}): {RETIRED_FAMILIES['news'][1]}")
     now = now or now_utc()
     if horizon not in HORIZONS:
         raise ValueError(f"horizon must be one of {HORIZONS}")
@@ -570,7 +599,7 @@ def log_news(state, sym, direction, horizon, conf, reason, url, published, now=N
 def grade(state, now=None, get=_get):
     now = now or now_utc()
     for p in state["predictions"]:
-        if p.get("status") in ("no_call", "settled", "no_fill", "exit_no_fill") or not p.get("side"):
+        if p.get("status") in ("no_call", "settled", "no_fill", "exit_no_fill", "void") or not p.get("side"):
             continue
         if not p.get("entry_due") or parse(p["entry_due"]) > now:
             continue
@@ -615,7 +644,7 @@ def paired(rows, key):
 def summary(state):
     out = {}
     for fam, label in FAMILIES.items():
-        ps = [p for p in state["predictions"] if p["family"] == fam]
+        ps = [p for p in state["predictions"] if p["family"] == fam and p.get("status") != "void"]
         settled = [p for p in ps if p.get("status") == "settled"]
         nets = [p["net"] for p in settled]
         s = {"label": label, "logged": len([p for p in ps if p.get("side")]),
@@ -637,6 +666,8 @@ def summary(state):
             s["verdict"] = "review due"
         else:
             s["verdict"] = f"collecting {n}/{REVIEW_AT}"
+        s["role"] = "retired" if fam in RETIRED_FAMILIES else "comparison" if fam in COMPARISON else "running"
+        s["void"] = sum(1 for p in state["predictions"] if p["family"] == fam and p.get("status") == "void")
         out[fam] = s
     return out
 
@@ -674,6 +705,7 @@ def main(argv=None):
             print(f"calendar: {e}; the committed calendar is kept")
     if a.cmd == "run":
         snapshot_kpis(state)
+        print("voided (report date moved):", void_moved(state))
         print("logged:", log_rules(state))
     if a.cmd == "news":
         p = log_news(state, a.sym.upper(), a.dir, a.horizon, a.conf, a.reason, a.url, a.published)

@@ -129,7 +129,7 @@ def _pred_table(ps):
             '<th>Window</th><th>Result</th></tr></thead><tbody>' + "".join(rows) + '</tbody></table></div>')
 
 
-def _family_row(key, s, preds):
+def _family_row(key, s, preds, comp=None):
     vs = s["vs"]
     zs = [v["z"] for v in vs.values() if v["z"] is not None]
     params = [("Logged", f'{s["logged"]} calls · {s["no_call"]} no call · {s["open"]} waiting or open · '
@@ -139,11 +139,26 @@ def _family_row(key, s, preds):
               ("v SPY Up", f'{_pct(vs["spy"]["mean"])} a call · z {_z(vs["spy"]["z"])} · n {vs["spy"]["n"]}')]
     if key == "sentiment":
         params.append(("Fade (other side)", f'{_pct(s.get("fade_avg_net"))} avg net'))
+    if comp and s.get("role") == "running" and key in ("kpi_drift", "post_drift"):
+        params.append(("v buying every reporting stock", f'{_pct(comp.get("avg_net"))} avg net on {comp.get("settled", 0)} '
+                                                         f'settled (the comparison line)'))
+    if s.get("void"):
+        params.append(("Void", f'{s["void"]} (report date moved)'))
     dl = '<dl class="sp-params">' + "".join(f"<dt>{esc(k)}</dt><dd>{esc(v)}</dd>" for k, v in params) + "</dl>"
     body = f'<p class="sp-def">{esc(DEFS[key])}</p>{dl}{_pred_table(preds)}'
-    cells = [str(s["settled"]), _pct(s["win"], sign=False), _pct(s["avg_net"]), _z(min(zs) if zs else None),
-             _status(s)]
-    return _rule(key, s["label"], cells, body)
+    role = s.get("role", "running")
+    if role == "comparison":
+        status = _sig("comparison · no review", "n")
+        label = "Comparison · buy every reporting stock"
+    elif role == "retired":
+        status = _sig(f"retired {E.RETIRED_FAMILIES[key][0]}", "n")
+        label = s["label"]
+        body = f'<p class="sp-def">{esc(E.RETIRED_FAMILIES[key][1])}</p>' + body
+    else:
+        status = _sig(f'judged after {E.JUDGE_AFTER[5:].replace("-", "/")} · {s["settled"]} settled', "n")
+        label = s["label"]
+    cells = [str(s["settled"]), _pct(s["win"], sign=False), _pct(s["avg_net"]), _z(min(zs) if zs else None), status]
+    return _rule(key, label, cells, body)
 
 
 def _calendar_fold(state):
@@ -205,17 +220,39 @@ def section_and_counts(state=None, now=None):
     """-> (html, families, settled, open)."""
     state = E.load() if state is None else state
     summ = E.summary(state)
-    rows = [_family_row(k, summ[k], [p for p in state["predictions"] if p["family"] == k]) for k in E.FAMILIES]
+    comp = summ.get(E.COMPARISON[0]) if E.COMPARISON else None
+    running = [k for k in E.FAMILIES if summ[k].get("role") == "running"]
+    order = running + [k for k in E.FAMILIES if summ[k].get("role") == "comparison"]
+    rows = [_family_row(k, summ[k], [p for p in state["predictions"] if p["family"] == k], comp) for k in order]
     caveat = (f'<details class="fold"><summary>Read this first: a headline is not an edge</summary>'
               f'<p class="sm">{esc(CAVEAT)}</p></details>')
-    inner = (last_run_line(state, now) + caveat + f'<div class="sp-rules-list" data-list="earnings-news">{_head_line()}{"".join(rows)}</div>'
+    judged = (f'<p class="sm en-judged">Judged after the Nov 12 – Dec 1 earnings run. The comparison line buys every '
+              f'reporting stock with no selection: the baseline the others must beat. (Changes of 2026-11-11: '
+              f'{esc(E.ADDENDUM)}.)</p>')
+    inner = (last_run_line(state, now) + judged + caveat
+             + f'<div class="sp-rules-list" data-list="earnings-news">{_head_line()}{"".join(rows)}</div>'
              + _calendar_fold(state) + _method_fold())
-    count = f"{len(E.FAMILIES)} families · paper · 1x"
+    count = f"{len(running)} running · 1 comparison line · paper · 1x"
     html = (f'<section id="{SECTION_ID}"><div class="sp-section-head"><h2>{esc(TITLE)}</h2>'
             f'<span class="sm mut">{esc(count)}</span></div>{inner}</section>')
-    settled = sum(s["settled"] for s in summ.values())
-    open_ = sum(s["open"] for s in summ.values())
-    return html, len(E.FAMILIES), settled, open_
+    settled = sum(summ[k]["settled"] for k in running)
+    open_ = sum(summ[k]["open"] for k in running)
+    return html, len(running), settled, open_
+
+
+def retired_html(state=None):
+    """The retired families (F3 news) with their records, for the Trading page's Retired block. Never breaks it."""
+    try:
+        state = E.load() if state is None else state
+        summ = E.summary(state)
+        gone = [k for k in E.FAMILIES if summ[k].get("role") == "retired"]
+        if not gone:
+            return ""
+        rows = [_family_row(k, summ[k], [p for p in state["predictions"] if p["family"] == k]) for k in gone]
+        return ('<h3>Earnings and news calls, retired</h3>'
+                f'<div class="sp-rules-list" data-list="earnings-news-retired">{_head_line()}{"".join(rows)}</div>')
+    except Exception:                                           # noqa: BLE001
+        return ""
 
 
 def safe_section():
