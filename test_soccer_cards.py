@@ -300,8 +300,8 @@ rules = _section(html, "rules")
 ok('class="sp-rules-list" data-list="sandbox"' in rules, "the Sandbox rules are one list")
 head_line = re.search(r'<div class="sp-line sp-head-line[^"]*" aria-hidden="true">(.*?)</div>', rules.split('id="sandbox"', 1)[-1], re.S)
 eq(re.findall(r'<span class="sp-cell[^"]*">([^<]*)</span>', head_line.group(1)) if head_line else None,
-   ["Rule", "Market", "Scope", "Record", "ROI after fees", "Won v priced", "Evidence", "Verdict"],
-   "the columns are Rule · Market · Scope · Record · ROI after fees · Won v priced · Evidence · Verdict")
+   ["Rule", "Market", "Scope", "Record", "ROI after fees", "Verdict"],
+   "the columns are Rule · Market · Scope · Record · ROI after fees · Verdict (2026-11-11: won v priced and evidence moved into the fold)")
 srows = rule_rows(rules)
 eq(len(srows), len(rows), f"with nothing in Production, one row per soccer lane ({len(srows)} rows, {len(rows)} lanes)")
 ok("<h3>Goals</h3>" not in rules, "no per-market H3 groups")

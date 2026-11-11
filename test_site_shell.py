@@ -541,9 +541,8 @@ if tennis_build is not None and SB is not None:
     _check_sport_tab("Tennis", _ten, _fx, _fx_st)
     _check_sport_tab("Cricket", _cri, _fx, _fx_st)
     _check_sport_tab("Soccer", _soc, _fx, _fx_st)
-    ok("Kalshi status" in _soc, "soccer still shows the Kalshi pre-flight column")
-    ok("Kalshi status" not in _ten and "Kalshi status" not in _cri,
-       "tennis and cricket hide the Kalshi pre-flight column")
+    ok("Kalshi status" not in _soc and "Kalshi status" not in _ten and "Kalshi status" not in _cri,
+       "no sport page shows the hand-refreshed Kalshi pre-flight column (soccer dropped it 2026-11-11)")
     ok('id="listing"' in _ten and "435" in _ten and "267" in _ten,
        "tennis shows the Polymarket US listing counts")
     ok("Polymarket US listing: 10 taken · 11 listed · 9 priced · no record" in _cri,

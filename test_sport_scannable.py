@@ -154,10 +154,11 @@ crowded = soccer_build.build(d, promoted, NOW, own_lanes=False)   # the tracker 
 crowded_rows = sport_tab.family_rows(d, promoted, "Soccer")
 check(crowded, "soccer, all promoted", notes_for(crowded_rows))
 prod = [r for r in crowded_rows if r.get("prod")]
-shown = crowded.split('class="sp-rules-list sp-prod"', 1)[1].split('<details class="fold sp-more-rules">', 1)[0]
-ok(shown.count('<details class="sp-rule') == SP.PROD_VISIBLE,
-   f"the Production list shows {SP.PROD_VISIBLE} rows before the fold")
-ok(f"Show {len(prod) - SP.PROD_VISIBLE} more Production rules" in crowded, "and folds the rest behind Show N more")
+# 2026-11-11 (Olu): the Soccer page's Production list is one closed fold holding every row (soccer_build.LAYOUT fold_prod).
+fold_p = crowded.split('<details class="fold sp-prodfold" id="production">', 1)
+ok(len(fold_p) == 2 and fold_p[1].split('<section id="events"', 1)[0].split('class="fold sp-sandbox"', 1)[0].count('<details class="sp-rule') == len(prod),
+   "the Production list is one closed fold with every Production row in it")
+ok("more Production rules" not in crowded and f"· {len(prod)} rules ·" in fold_p[1][:400], "no Show N more; the fold counts the rules")
 
 print("\nthe words are still on the page, in their folds")
 html, rows = pages["tennis"]
