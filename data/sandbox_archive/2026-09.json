@@ -178530,6 +178530,57 @@
   "venue": "polymarket_us"
  },
  {
+  "bet": true,
+  "close_at": "2026-09-27T00:46:52+00:00",
+  "close_price": 0.5825,
+  "date": "2026-09-27",
+  "edge": null,
+  "id": "pm_combo2:pmcombo2:2026-09-27:2f833f6e3f",
+  "label": "2-leg tennis combo: Hiromi Abe + Kristiana Sidorova",
+  "legs": [
+   {
+    "market_id": "aec-itfwo-sakhos-hirabe-2026-09-27",
+    "name": "Hiromi Abe",
+    "pick": "b",
+    "start": "2026-09-27T01:00:00+00:00",
+    "venue": "polymarket_us"
+   },
+   {
+    "market_id": "aec-wta-krisid-meiguo-2026-09-26",
+    "name": "Kristiana Sidorova",
+    "pick": "a",
+    "start": "2026-09-27T04:10:00+00:00",
+    "venue": "polymarket_us"
+   }
+  ],
+  "liquidity": null,
+  "logged": "2026-09-26T16:47:54+00:00",
+  "market_id": "pmcombo2:2026-09-27:2f833f6e3f",
+  "pick": "a",
+  "pnl": 58.08,
+  "price": 0.6326,
+  "price_a": 0.6326,
+  "price_b": 0.3674,
+  "price_draw": null,
+  "prob_a": null,
+  "result": "a",
+  "settled": "2026-09-27T08:08:45+00:00",
+  "side_a": "All 2 win",
+  "side_b": "Any one loses",
+  "source": "pm_combo2",
+  "sport": "tennis_pmcombo",
+  "spread": null,
+  "stake": 100.0,
+  "start": "2026-09-27T01:00:00+00:00",
+  "start_source": null,
+  "status": "won",
+  "uncovered": null,
+  "untraded": false,
+  "url": "https://polymarket.us",
+  "venue": "combo",
+  "venue_start": null
+ },
+ {
   "bet": false,
   "compact": true,
   "id": "polymarket_us:aec-itfme-liadel-shotos-2026-09-27",
