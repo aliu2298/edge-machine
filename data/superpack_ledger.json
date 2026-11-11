@@ -590,6 +590,10 @@
    "at": "2026-11-11T08:03:50.212562+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"team1_form_l5\", [\"team1_form_l5:KXUEFANLTEAMTOTAL-26NOV13MDAKAZ-KAZ1\", \"a\"]]": {
+   "at": "2026-11-11T17:10:56.591506+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLALIGATEAMTOTAL-26NOV06SEVALA-SEV2\", \"a\"]]": {
    "at": "2026-11-05T21:49:22.360613+00:00",
    "pool": "entered"
@@ -608,6 +612,10 @@
   },
   "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXUECLTEAMTOTAL-26NOV05LINHAJ-HAJ2\", \"a\"]]": {
    "at": "2026-11-05T16:10:44.196456+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"team2_ranked_fade\", [\"team2_ranked_fade:KXUEFANLTEAMTOTAL-26NOV13MDAKAZ-MDA2\", \"b\"]]": {
+   "at": "2026-11-11T17:10:56.591506+00:00",
    "pool": "entered"
   },
   "[\"sandbox\", \"u35_low_o15\", [\"u35_low_o15:KXSUPERLIGTOTAL-26NOV07SAMKON-2\", \"a\"]]": {
@@ -2304,7 +2312,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-11T17:05:38.457969+00:00",
+ "last_run": "2026-11-11T17:10:56.591506+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -7303,6 +7311,52 @@
    "sport": "Commodities",
    "src": "contract",
    "status": "won"
+  },
+  {
+   "contract": "KXUEFANLTEAMTOTAL-26NOV13MDAKAZ-KAZ1",
+   "entered_at": "2026-11-11T17:10:56.591506+00:00",
+   "entities": [
+    "Kazakhstan"
+   ],
+   "id": "superpack:[\"sandbox\", \"team1_form_l5\", [\"team1_form_l5:KXUEFANLTEAMTOTAL-26NOV13MDAKAZ-KAZ1\", \"a\"]]",
+   "lane": "team1_form_l5",
+   "logged": "2026-11-11T17:09:39+00:00",
+   "matched": [
+    "Kazakhstan"
+   ],
+   "pid": "[\"sandbox\", \"team1_form_l5\", [\"team1_form_l5:KXUEFANLTEAMTOTAL-26NOV13MDAKAZ-KAZ1\", \"a\"]]",
+   "price": 0.69,
+   "profit": null,
+   "scope": "soccer_team1_intl",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUEFANLTEAMTOTAL-26NOV13MDAKAZ-MDA2",
+   "entered_at": "2026-11-11T17:10:56.591506+00:00",
+   "entities": [
+    "Moldova"
+   ],
+   "id": "superpack:[\"sandbox\", \"team2_ranked_fade\", [\"team2_ranked_fade:KXUEFANLTEAMTOTAL-26NOV13MDAKAZ-MDA2\", \"b\"]]",
+   "lane": "team2_ranked_fade",
+   "logged": "2026-11-11T17:09:39+00:00",
+   "matched": [
+    "Moldova"
+   ],
+   "pid": "[\"sandbox\", \"team2_ranked_fade\", [\"team2_ranked_fade:KXUEFANLTEAMTOTAL-26NOV13MDAKAZ-MDA2\", \"b\"]]",
+   "price": 0.74,
+   "profit": null,
+   "scope": "soccer_team2_intl",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
   }
  ],
  "registered": "2026-11-05",
