@@ -128,7 +128,8 @@ if playwright is not None:
         page.route("http://fixture.local/*.js", lambda route: route.fulfill(body="", content_type="application/javascript"))
         page.route("http://fixture.local/*.css", lambda route: route.fulfill(body="", content_type="text/css"))
         page.goto("http://fixture.local/soccer.html")
-        assert page.locator("#method > details").get_attribute("open") is not None
+        # 2026-11-11: the hand-refreshed pre-flight note is gone from Soccer, so a stale status no longer opens Method.
+        assert page.locator("#method > details").get_attribute("open") is None
         # Its inner folds (the own-ledger lanes' note, the registered lanes, 2026-11-05) stay closed.
         assert page.locator("#method details.section-disclosure").count() >= 1
         assert page.locator("#method details.section-disclosure[open]").count() == 0
