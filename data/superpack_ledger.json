@@ -2128,9 +2128,9 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV1017-T73749.99\", \"b\"]]",
    "price": 0.75,
-   "profit": null,
+   "profit": -1.0,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-11T00:09:33+00:00",
    "side": "b",
    "snapshot": {
     "as_of": "2026-11-10T18:32:58+00:00",
@@ -2199,12 +2199,12 @@
    },
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-11T00:05:00.553848+00:00",
+ "last_run": "2026-11-11T00:09:53.242202+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -6959,14 +6959,14 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV1017-T73749.99\", \"b\"]]",
    "price": 0.75,
-   "profit": null,
+   "profit": -1.0,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-11T00:09:33+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXETHD-26NOV1017-T2059.99",
@@ -6982,14 +6982,14 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXETHD-26NOV1017-T2059.99\", \"b\"]]",
    "price": 0.74,
-   "profit": null,
+   "profit": 0.3514,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-11T00:09:37+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXXRPD-26NOV1017-T1.0799",
@@ -7005,14 +7005,14 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXXRPD-26NOV1017-T1.0799\", \"b\"]]",
    "price": 0.75,
-   "profit": null,
+   "profit": 0.3333,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-11T00:09:37+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXNATGASD-26NOV1017-T3.425",
