@@ -3714,16 +3714,17 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:42.883824+00:00"
  },
  "lane": "album_cheap_rungs",
- "last_success": "2026-11-11T19:00:59.989883+00:00",
+ "last_success": "2026-11-11T20:01:05.515606+00:00",
  "observations": {
-  "at": "2026-11-11T19:00:59.989883+00:00",
+  "at": "2026-11-11T20:01:05.515606+00:00",
   "checking": 0,
   "entered": 0,
   "events": 21,
   "filled": 0,
-  "skipped": 0,
+  "fills_moved": 0,
+  "skipped": 1,
   "unverified": 70,
-  "waiting": 1
+  "waiting": 0
  },
  "skips": {
   "KXALBUMEQUIV-BLEACH26NOV05-10K": {
@@ -4000,6 +4001,11 @@
    "event": "KXALBUMEQUIV-FRE26NOV12",
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
    "word": "Above 60K"
+  },
+  "KXALBUMEQUIV-FRE26NOV12-63K": {
+   "event": "KXALBUMEQUIV-FRE26NOV12",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 inside 6h",
+   "word": "Above 63K"
   },
   "KXALBUMEQUIV-FRE26NOV12-65K": {
    "event": "KXALBUMEQUIV-FRE26NOV12",
