@@ -25,6 +25,11 @@
    "at": "2026-11-10T14:04:32.970074+00:00",
    "pool": "entered"
   },
+  "[\"contract\", \"gas_cheap_no_ledger.json\", [\"KXAAAGASD-26NOV11-3.9400\", \"no\"]]": {
+   "at": "2026-11-11T16:44:04.995311+00:00",
+   "entries": "entered",
+   "pool": "entered"
+  },
   "[\"contract\", \"gas_week_cheap_no_ledger.json\", [\"KXAAAGASW-26NOV09-4.0050\", \"no\"]]": {
    "at": "2026-11-09T17:08:56.156291+00:00",
    "pool": "entered"
@@ -2208,11 +2213,98 @@
    "sport": "Crypto",
    "src": "sandbox",
    "status": "lost"
+  },
+  {
+   "contract": "KXAAAGASD-26NOV11-3.9400",
+   "entered_at": "2026-11-11T16:44:04.995311+00:00",
+   "entities": [
+    "AAA gas"
+   ],
+   "id": "superpack:[\"contract\", \"gas_cheap_no_ledger.json\", [\"KXAAAGASD-26NOV11-3.9400\", \"no\"]]",
+   "lane": "gas_cheap_no_ledger.json",
+   "logged": "2026-11-10T13:41:00+00:00",
+   "matched": [
+    "AAA gas"
+   ],
+   "pid": "[\"contract\", \"gas_cheap_no_ledger.json\", [\"KXAAAGASD-26NOV11-3.9400\", \"no\"]]",
+   "price": null,
+   "profit": 1.3344,
+   "scope": null,
+   "settled": "2026-11-11T16:44:04.995311+00:00",
+   "side": "no",
+   "snapshot": {
+    "as_of": "2026-11-10T13:41:00+00:00",
+    "names": [
+     {
+      "bets": 6,
+      "name": "Villarreal",
+      "profit": 12.4468,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 14,
+      "name": "Real Madrid",
+      "profit": 10.8966,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Como",
+      "profit": 5.7566,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 59,
+      "name": "AAA gas",
+      "profit": 5.6392,
+      "sport": "Commodities"
+     },
+     {
+      "bets": 6,
+      "name": "Manchester United",
+      "profit": 5.403,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Charlotte FC",
+      "profit": 4.7894,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Napoli",
+      "profit": 4.7771,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Columbus Crew",
+      "profit": 4.7227,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 21,
+      "name": "Bitcoin",
+      "profit": 4.4274,
+      "sport": "Crypto"
+     },
+     {
+      "bets": 6,
+      "name": "Atl\u00e9tico Madrid",
+      "profit": 3.3373,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Commodities",
+   "src": "contract",
+   "status": "won"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-11T16:29:07.285185+00:00",
+ "last_run": "2026-11-11T16:44:04.995311+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -7188,6 +7280,29 @@
    "sport": "Soccer",
    "src": "sandbox",
    "status": "open"
+  },
+  {
+   "contract": "KXAAAGASD-26NOV11-3.9400",
+   "entered_at": "2026-11-11T16:44:04.995311+00:00",
+   "entities": [
+    "AAA gas"
+   ],
+   "id": "superpack:[\"contract\", \"gas_cheap_no_ledger.json\", [\"KXAAAGASD-26NOV11-3.9400\", \"no\"]]",
+   "lane": "gas_cheap_no_ledger.json",
+   "logged": "2026-11-10T13:41:00+00:00",
+   "matched": [
+    "AAA gas"
+   ],
+   "pid": "[\"contract\", \"gas_cheap_no_ledger.json\", [\"KXAAAGASD-26NOV11-3.9400\", \"no\"]]",
+   "price": null,
+   "profit": 1.3344,
+   "scope": null,
+   "settled": "2026-11-11T16:44:04.995311+00:00",
+   "side": "no",
+   "snapshot": null,
+   "sport": "Commodities",
+   "src": "contract",
+   "status": "won"
   }
  ],
  "registered": "2026-11-05",
@@ -7463,6 +7578,7 @@
   "[\"contract\", \"gas_cheap_no_ledger.json\", [\"KXAAAGASD-26NOV08-4.0150\", \"no\"]]": "2026-11-08T13:58:12.689210+00:00",
   "[\"contract\", \"gas_cheap_no_ledger.json\", [\"KXAAAGASD-26NOV09-4.0100\", \"no\"]]": "2026-11-09T17:08:56.156291+00:00",
   "[\"contract\", \"gas_cheap_no_ledger.json\", [\"KXAAAGASD-26NOV10-3.9750\", \"no\"]]": "2026-11-10T14:04:32.970074+00:00",
+  "[\"contract\", \"gas_cheap_no_ledger.json\", [\"KXAAAGASD-26NOV11-3.9400\", \"no\"]]": "2026-11-11T16:44:04.995311+00:00",
   "[\"contract\", \"gas_cheap_no_ledger.json\", [\"KXAAAGASD-26OCT27-4.2550\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"gas_cheap_no_ledger.json\", [\"KXAAAGASD-26OCT27-4.2600\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"gas_cheap_no_ledger.json\", [\"KXAAAGASD-26OCT27-4.2700\", \"no\"]]": "2026-11-05T03:09:04.962721+00:00",
