@@ -154,6 +154,10 @@ import soccer_cards
 _fresh = patch("sport_tab.preflight_report",
                return_value=({}, '<div class="note sm">Kalshi checked 1.0h ago.</div>'))
 _fresh.start()
+# The shared template's defaults are tested on the soccer fixture with soccer's own layout switched off; that layout (live over
+# paper, every list folded, compact rows, 2026-11-11) is tested in its own section at the end.
+_SOCCER_LAYOUT = soccer_build.LAYOUT
+soccer_build.LAYOUT = {}
 d, st = fixture()
 rows = sport_tab.family_rows(d, st, "Soccer")
 html = soccer_build.build(d, st, NOW, own_lanes=False)
@@ -306,12 +310,14 @@ count = lambda evs: sum(len(e["picks"]) for e in evs)
 eq((count(b_next), count(b_later), count(b_live), count(b_done)), (4, 2, 2, 32),
    "the fixture: four picks inside 24 hours, two later, two running, 32 settled in the window")
 eq([(k, re.sub(r"<[^>]+>", "", t).strip()) for k, _s, t in tabs],
-   [("next", f"Next 24h {count(b_next) + count(b_later)}"), ("live", f"In progress {count(b_live)}"), ("done", f"Completed · 14 days {count(b_done)}")],
-   "three tabs with their counts: the next 24 hours (with the Later fold), in progress, completed in 14 days")
-eq([s for _k, s, _t in tabs], ["true", "false", "false"], "the Next 24h tab starts selected")
+   [("next", f"Next 24h {count(b_next)}"), ("later", f"Later {count(b_later)}"), ("live", f"In progress {count(b_live)}"),
+    ("done", f"Completed · 14 days {count(b_done)}")],
+   "four tabs with their counts (2026-11-11): Next 24h counts only the next 24 hours, Later the rest, in progress, completed")
+eq([s for _k, s, _t in tabs], ["true", "false", "false", "false"], "the Next 24h tab starts selected")
 panels = re.findall(r'<section class="sp-panel" id="events-([a-z]+)"[^>]*?( hidden)?><h3 class="sp-panel-title">', events_html)
-eq(panels, [("next", ""), ("live", " hidden"), ("done", " hidden")], "the other panels start hidden; every panel keeps its own heading")
-nxt = re.search(r'id="events-next".*?(?=<section class="sp-panel" id="events-live")', events_html, re.S).group(0)
+eq(panels, [("next", ""), ("later", " hidden"), ("live", " hidden"), ("done", " hidden")],
+   "the other panels start hidden; every panel keeps its own heading")
+nxt = re.search(r'id="events-next".*?(?=<section class="sp-panel" id="events-later")', events_html, re.S).group(0)
 ok("Alpha vs Beta soon" in nxt and nxt.count("Alpha vs Beta soon") == 1, "one match is one row, spelt vs")
 alpha = re.search(r'<div class="sp-event"[^>]*>(?:(?!sp-event").)*?Alpha vs Beta soon.*?</div></div>', nxt, re.S).group(0)
 eq(alpha.count('<div class="sp-pick '), 2, "two rules on one match are two pick lines under it")
@@ -322,10 +328,9 @@ ok('<span class="sp-price">55¢</span>' in alpha and 'class="sp-state is-next">u
 ok('class="sp-pick is-watch"' in nxt and ">watching<" in nxt and "Watch Side vs Keeper" in nxt,
    "a fixture a rule is watching, with no stake, reads watching")
 ok('<h4 class="sp-day-head">Mon Oct 5<small>Today</small></h4>' in nxt, "a day head, today marked")
-later = re.search(r'<details class="fold later"><summary>Later<span class="sm mut"> · (\d+) picks past 24 hours</span></summary>(.*?)</details>', nxt, re.S)
-ok(later is not None and later.group(1) == "2" and "Nation vs Nation later" in later.group(2)
-   and "Cup Side vs Other" in nxt.split("<details", 1)[0] and "Nation vs Nation later" not in nxt.split("<details", 1)[0],
-   "picks past 24 hours sit in the Later fold, the ones inside it above")
+later_panel = re.search(r'id="events-later".*?(?=<section class="sp-panel" id="events-live")', events_html, re.S).group(0)
+ok("Nation vs Nation later" in later_panel and "Cup Side vs Other" in nxt and "Nation vs Nation later" not in nxt,
+   "picks past 24 hours sit on the Later tab, the ones inside 24 hours under Next 24h")
 live_panel = re.search(r'id="events-live".*?(?=<section class="sp-panel" id="events-done")', events_html, re.S).group(0)
 ok("Started vs Running" in live_panel and 'class="sp-state is-live">in play<' in live_panel, "a started open pick is in play")
 ok("Stuck vs Unsettled" in live_panel and 'class="sp-state is-late">unsettled · 30h<' in live_panel, "an overdue pick says its age")
@@ -370,7 +375,8 @@ ok(method.lstrip().startswith("<details><summary><b>Method</b><small>") and "<de
 ok("Prices are the Kalshi ask" in method and "Registered lanes" in method, "it carries the grading note and the registered lanes")
 with patch("sport_tab.preflight_report", return_value=({}, '<p class="note"><b class="neg">Status is old.</b></p>')):
     warn = soccer_build.build(d, st, NOW, own_lanes=False)
-ok('<details open><summary><b>Method · check needed</b>' in warn, "a pre-flight that needs attention opens the fold and says so")
+ok("Status is old" not in warn and "<details open><summary><b>Method" not in warn,
+   "the hand-refreshed pre-flight note is gone (2026-11-11): Method stays closed and never reads as an alarm")
 
 print("\nthe stylesheet and the script")
 css = open(os.path.join(ROOT, "public_site", "site.css"), encoding="utf-8").read()
@@ -462,6 +468,44 @@ if playwright is not None:
             page.close()
         browser.close()
 _fresh.stop()
+
+print("\nthe Soccer layout (2026-11-11): live over paper, tiles that agree with the rows, every list folded")
+import production_live as PL
+soccer_build.LAYOUT = _SOCCER_LAYOUT
+fake_live = {"pairs": {"o15_form_l10|soccer_o15": {"orders": [
+    dict(id="a", ko="2026-10-20T19:00", st="won", r=0.5, w=1.0, side="yes"),
+    dict(id="b", ko="2026-10-21T19:00", st="lost", r=-1.0, w=1.0, side="yes"),
+    dict(id="c", ko="2026-10-22T19:00", st="won", r=0.25, w=2.0, side="yes")]}}, "lanes": {}}
+with patch("production_live.load", return_value=fake_live):
+    lay = soccer_build.build(d, st, NOW, own_lanes=False)
+lmain = lay.split("<main", 1)[-1].split("</main>", 1)[0]
+ltiles = re.findall(r'<div class="tile">(.*?)</div>', lmain)
+key = "o15_form_l10|soccer_o15"
+since = production.entered_at(production.fresh_view(key, st["pairs"][key]))
+lv = PL.pair_live(key, since, fake_live)
+_np, _ns = sum(1 for r in rows if r.get("prod")), sum(1 for r in rows if not r.get("prod") and r.get("v") != "retired")
+eq(_text(ltiles[1]), f"{_np + _ns} rules · {_np} Production · {_ns} Sandbox", "the rules tile is the two lists' own counts")
+ok(f'<b>{lv["won"]}–{lv["lost"]}</b><span>Live · since Production · 1 rules</span>' in ltiles[2] + "</div>" or
+   f'{lv["won"]}–{lv["lost"]}' in ltiles[2], "the record tile is the LIVE record of the Production rows")
+paper = production._assess_since_kickoff(d, key, st["pairs"][key], tradeable=True)
+ok(f'Paper {paper["won"]}–{paper["n"] - paper["won"]}' in ltiles[3], "with the paper record of the same window under the ROI")
+ok(B.pct(lv["roi"], sign=True) in ltiles[3] and "Live ROI after fees" in ltiles[3], "the ROI tile is the live ROI, stake-weighted")
+lrules = _section(lmain, "rules")
+ok('<details class="fold sp-prodfold" id="production"><summary><h3>Production rules</h3>' in lrules, "the Production list is a closed fold")
+ok('id="sandbox" open' not in lrules, "and so is the Sandbox list")
+prow = rule_rows(lrules.split('data-list="production"', 1)[1].split('id="sandbox"', 1)[0])[0]
+ok(f'Live {lv["won"]}–{lv["lost"]}' in prow["cells"]["Live / Paper"] and "Paper " in prow["cells"]["Live / Paper"],
+   "a Production row reads Live over Paper, the same numbers as the tiles")
+eq(list(prow["cells"]), ["Market", "Scope", "Live / Paper", "ROI · live / paper", "Verdict"], "compact cells: no won v priced, no evidence")
+ok("Full paper record" in prow["body"] and "evidence" in prow["body"], "the full paper record and the evidence are in the fold")
+with patch("production_live.load", return_value={"pairs": {}, "lanes": {}}):
+    none_yet = soccer_build.build(d, st, NOW, own_lanes=False)
+ok("Live none yet" in none_yet, "a Production rule with no live fill says so")
+lev = _section(lmain, "events")
+ok('data-tab="later"' in lev and 'id="events-later"' in lev, "Later is its own events tab")
+eq(soccer_build.plain_name(dict(name="sr_a6")), "Premier League · Under 2.5 when a low-scoring, tight side meets an attacking one",
+   "a label rule's name is plain English; the code is in its fold")
+ok("pre-flight" not in lay.lower() and "Kalshi checked" not in lay, "the stale pre-flight note is gone from Method")
 
 if FAILS:
     print(f"\nFAILED {len(FAILS)}")

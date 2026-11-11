@@ -108,6 +108,11 @@ def spec(**kw):
         # folded list under the Sandbox with the record they stopped on and the dated reason.
         # They count in no tile and no Sandbox total.
         retired=(),
+        # live (2026-11-11, Soccer): a Production row's record and ROI cells show the follower's LIVE record (data/live_record.json,
+        # production_live.pair_live) over the row's since-Production window, with the paper record of the same window under it; the
+        # tiles pool exactly those cells. fold_prod: the Production list is a closed fold. compact: the row drops its "Won v priced"
+        # and "Evidence" cells (both stay in the fold; the verdict carries the evidence count) and the name may wrap.
+        live=False, fold_prod=False, compact=False,
     )
     out.update(kw)
     return out
@@ -309,7 +314,72 @@ def sandbox_record(rows):
     return production._group_record([r["a"] for r in live]), live
 
 
+def annotate_live(d, st, rows, late=None):
+    """Mark each Production row with its since-Production paper record (row["_paper"], counted as since_production counts it) and
+    its live record over the same window (row["_live"], production_live.pair_live; None when no live file is published)."""
+    import production_live as PL
+    if late is None:
+        late = production.late_set(production.load_feed())
+    blob = PL.load()
+    pairs = (st or {}).get("pairs") or {}
+    for row in rows:
+        if not row.get("prod"):
+            continue
+        key = row.get("pair") or f'{row["name"]}|{row["sport"]}'
+        pair = production.fresh_view(key, pairs.get(key) or {})
+        since = production.entered_at(pair)
+        if since is None:
+            continue
+        row["_paper"] = production._assess_since_kickoff(d, key, pair, late=late, tradeable=True)
+        row["_live"] = PL.pair_live(key, since, blob)
+    return rows
+
+
+def live_words(lv):
+    """'12–6', '12–1–6' with flats, or 'none yet'."""
+    if lv is None:
+        return "not published"
+    if not lv["n"]:
+        return "none yet"
+    return f'{lv["won"]}–{lv["flat"]}–{lv["lost"]}' if lv.get("flat") else f'{lv["won"]}–{lv["lost"]}'
+
+
+def _pct_html(x, n, early_n=None):
+    if x is None or not n:
+        return '<span class="mut">—</span>'
+    klass = "mut" if early_n and n < early_n else fmt.tone(x, ".1f", 100)
+    return f'<span class="{klass}">{B.pct(x, sign=True)}</span>'
+
+
+def live_tiles(sp, rows, open_n):
+    """Open picks · rules (the same counts as the lists) · the LIVE record of the Production rows · its ROI, the paper record of the
+    same window under it. Every figure is the sum of the rows' own cells."""
+    import production_live as PL
+    prod = [r for r in rows if r.get("prod")]
+    sand = [r for r in rows if not r.get("prod") and r.get("v") != "retired"]
+    live = PL.pool([r.get("_live") for r in prod])
+    paper = production._group_record([r["_paper"] for r in prod if r.get("_paper")])
+    pn = int(paper.get("n") or 0)
+    paper_line = (f'Paper {record_compact(paper)} · {B.pct(paper["roi_fee"], sign=True)}'
+                  if pn and paper.get("roi_fee") is not None else "Paper —")
+    rec = live_words(live) if live["n"] else "—"
+    if live["n"] and live["roi"] is not None:
+        roi_class = "mut" if live["n"] < production.EARLY_N else fmt.tone(live["roi"], ".1f", 100)
+        roi_text = B.pct(live["roi"], sign=True)
+    else:
+        roi_class, roi_text = "mut", "—"
+    return (
+        '<div class="tiles sp-tiles">'
+        f'<div class="tile"><b>{open_n}</b><span>open picks</span></div>'
+        f'<div class="tile"><b>{len(prod) + len(sand)}</b><span>rules · {len(prod)} Production · {len(sand)} Sandbox</span></div>'
+        f'<div class="tile"><b>{esc(rec)}</b><span>Live · since Production · {len(prod)} rules</span></div>'
+        f'<div class="tile"><b class="{roi_class}">{roi_text}</b><span>Live ROI after fees</span>'
+        f'<small class="mut tile-sub">{paper_line}</small></div></div>')
+
+
 def tiles_html(sp, d, st, rows, open_n):
+    if sp.get("live") and any(r.get("prod") for r in rows):
+        return live_tiles(sp, rows, open_n)
     # A retired rule (v "retired", 2026-10-24) is not active, whatever its record holds.
     active = sum(1 for r in rows if r.get("v") != "retired"
                  and (r["a"].get("n") or r["a"].get("n_price") or r.get("open")))
@@ -430,6 +500,11 @@ def rule_details(sp, d, row, now, ev_list=()):
         facts.append(f"frozen {esc(frozen)}")
     head = (f'<p class="sp-details-name"><b>{esc(sp["rule_name"](row))}</b>'
             f'{" · " + " · ".join(facts) if facts else ""}</p>')
+    if sp.get("compact"):
+        a = row["a"]
+        full = (f'Full paper record {record_compact(a)} · ROI {roi_html(row)} · won {esc(won_v_priced(a))} priced · '
+                f'evidence {esc(evidence(a, row.get("floor") or EVIDENCE_FLOOR))}')
+        head += f'<p class="sm mut sp-details-figures">{full}</p>'
     recent = sp["recent"](d, row, now) if sp["recent"] else ""
     recent_html = (f'<h4 class="sp-details-sub">Recent picks{f" · {open_n} open" if open_n else ""}</h4>{recent}'
                    if recent else "")
@@ -454,7 +529,19 @@ def rule_row(sp, d, row, now, scoped, ev_list=()):
                   if scoped else "")
     badges = row_badges(row)
     extra = _extra_cells(sp, row)
-    wide = " is-wide" if sp.get("extra_cols") else ""
+    wide = " is-wide" if sp.get("extra_cols") else (" is-compact" if sp.get("compact") else "")
+    record_cell, roi_cell = record_compact(a), roi_html(row)
+    rec_label, roi_label = sp.get("record_head") or "Record", "ROI after fees"
+    if sp.get("live") and row.get("prod"):
+        rec_label, roi_label = "Live / Paper", "ROI · live / paper"
+        lv, pp = row.get("_live"), row.get("_paper") or {}
+        record_cell = (f'<span class="lp"><b>Live {esc(live_words(lv))}</b>'
+                       f'<small class="mut">Paper {record_compact(pp) if pp.get("n") or pp.get("n_price") else "none yet"}</small></span>')
+        roi_cell = (f'<span class="lp"><b>{_pct_html((lv or {}).get("roi"), (lv or {}).get("n"))}</b>'
+                    f'<small class="mut">{_pct_html(pp.get("roi_fee"), pp.get("n"))}</small></span>')
+    figures = ("" if sp.get("compact") else
+               f'<span class="sp-cell num" data-l="Won v priced">{esc(won_v_priced(a))}</span>'
+               f'<span class="sp-cell num" data-l="Evidence">{esc(evidence(a, row.get("floor") or EVIDENCE_FLOOR))}</span>')
     return (
         f'<details class="sp-rule{" is-early" if early else ""}"{f" id=\"{esc(row["anchor"])}\"" if row.get("anchor") else ""} '
         f'data-source="{esc(row["name"])}" '
@@ -466,10 +553,9 @@ def rule_row(sp, d, row, now, scoped, ev_list=()):
         f'{f"<span class=\"sp-badges\">{badges}</span>" if badges else ""}'
         f'<span class="sr-only"> · Rule details</span></span>'
         f'<span class="sp-cell sp-c-market" data-l="Market">{esc(market) or "—"}</span>{scope_cell}'
-        f'<span class="sp-cell num" data-l="{esc(sp.get("record_head") or "Record")}">{record_compact(a)}</span>{extra["record"]}'
-        f'<span class="sp-cell num" data-l="ROI after fees">{roi_html(row)}</span>{extra["roi"]}'
-        f'<span class="sp-cell num" data-l="Won v priced">{esc(won_v_priced(a))}</span>'
-        f'<span class="sp-cell num" data-l="Evidence">{esc(evidence(a, row.get("floor") or EVIDENCE_FLOOR))}</span>'
+        f'<span class="sp-cell num" data-l="{esc(rec_label)}">{record_cell}</span>{extra["record"]}'
+        f'<span class="sp-cell num" data-l="{esc(roi_label)}">{roi_cell}</span>{extra["roi"]}'
+        f'{figures}'
         f'<span class="sp-cell sp-c-verdict" data-l="Verdict">{verdict_badge(row, row.get("floor") or EVIDENCE_FLOOR)}</span>'
         f'</summary>{rule_details(sp, d, row, now, ev_list)}</details>')
 
@@ -488,12 +574,13 @@ def list_head(scoped, first="Rule", sp=None):
     extra = {"record": "", "roi": ""}
     for after, head, _fn in sp.get("extra_cols") or ():
         extra[after] += f'<span class="sp-cell num">{esc(head)}</span>'
-    wide = " is-wide" if sp.get("extra_cols") else ""
+    wide = " is-wide" if sp.get("extra_cols") else (" is-compact" if sp.get("compact") else "")
+    figures = "" if sp.get("compact") else '<span class="sp-cell num">Won v priced</span><span class="sp-cell num">Evidence</span>'
     return (f'<div class="sp-line sp-head-line{" is-scoped" if scoped else ""}{wide}" aria-hidden="true">'
             f'<span class="sp-cell sp-c-name">{esc(first)}</span><span class="sp-cell sp-c-market">Market</span>{scope}'
             f'<span class="sp-cell num">{esc(sp.get("record_head") or "Record")}</span>{extra["record"]}'
             f'<span class="sp-cell num">ROI after fees</span>{extra["roi"]}'
-            f'<span class="sp-cell num">Won v priced</span><span class="sp-cell num">Evidence</span>'
+            f'{figures}'
             f'<span class="sp-cell sp-c-verdict">Verdict</span></div>')
 
 
@@ -534,7 +621,16 @@ def rules_html(sp, d, rows, now, ev_list):
     sand = place_after(sorted((r for r in rows if not r.get("prod")), key=sandbox_order), rows)
     scoped = sp["scoped"] and len(scopes_present(rows)) > 1
     family = esc(sp["family"] if sp["family"].isupper() else sp["family"].lower())   # "NBA", not "nba"
-    if prod:
+    if prod and sp.get("fold_prod"):
+        # One closed fold, every Production row inside (2026-11-11, Soccer): the record column is live over paper.
+        psp = dict(sp, record_head="Live / Paper") if sp.get("live") else sp
+        body_p = "".join(rule_row(sp, d, r, now, scoped, ev_list) for r in prod)
+        what = "live and paper since each moved or its stake was raised" if sp.get("live") else "since each moved"
+        prod_html = (f'<details class="fold sp-prodfold" id="production"><summary><h3>Production rules</h3>'
+                     f'<span class="sm mut">· {len(prod)} rule{"s" if len(prod) != 1 else ""} · {what}</span></summary>'
+                     f'<div class="sp-rules-list sp-prod" data-list="production">{list_head(scoped, "Production rule", psp)}{body_p}</div>'
+                     f'</details>')
+    elif prod:
         shown = "".join(rule_row(sp, d, r, now, scoped, ev_list) for r in prod[:PROD_VISIBLE])
         rest = prod[PROD_VISIBLE:]
         more = ""
@@ -561,7 +657,7 @@ def rules_html(sp, d, rows, now, ev_list):
         # (2026-10-21): with the Production list empty or a single row, a closed fold hid every
         # record on the page (Culture and Finance Daily read as blank). A longer Sandbox list stays
         # folded so the Events heading keeps its place on the first screen (tennis, cricket).
-        opened = " open" if (len(prod) <= SANDBOX_OPEN_MAX_PROD and len(sand) <= SANDBOX_OPEN_MAX_ROWS) else ""
+        opened = " open" if (len(prod) <= SANDBOX_OPEN_MAX_PROD and len(sand) <= SANDBOX_OPEN_MAX_ROWS and not sp.get("fold_prod")) else ""
         sand_html = (f'<details class="fold sp-sandbox" id="sandbox"{opened}><summary><h3>Sandbox rules</h3>'
                      f'<span class="sm mut">· {esc(count)} · by evidence</span></summary>'
                      f'<div class="sp-rules-list" data-list="sandbox">{list_head(scoped, sp=sp)}{body}</div></details>')
@@ -769,12 +865,15 @@ def coverage_reason(sp, d, rows, idle, now):
 
 def events_html(sp, d, rows, now, ev_list, idle):
     nxt, later, live, done = bucket(ev_list, now)
-    counts = dict(next=_count(nxt) + _count(later), live=_count(live), done=_count(done))
-    default = "next" if (nxt or later) else ("live" if live else ("done" if done else "next"))
+    # 2026-11-11: "Next 24h" counts only picks starting within 24 hours; the ones after that have their own "Later" tab (the tab once
+    # counted both while its panel said nothing started in the next 24 hours).
+    counts = dict(next=_count(nxt), later=_count(later), live=_count(live), done=_count(done))
+    default = "next" if nxt else ("later" if later else ("live" if live else ("done" if done else "next")))
     tabs = "".join(
         f'<button type="button" role="tab" data-tab="{key}" aria-selected="{"true" if key == default else "false"}" '
         f'aria-controls="events-{key}" id="tab-{key}">{label} <span class="sp-count">{counts[key]}</span></button>'
-        for key, label in (("next", f"Next {NEXT_H}h"), ("live", "In progress"), ("done", f"Completed · {DONE_DAYS} days")))
+        for key, label in (("next", f"Next {NEXT_H}h"), ("later", "Later"), ("live", "In progress"),
+                           ("done", f"Completed · {DONE_DAYS} days")) if key != "later" or later)
     # Next 24h.
     verb, noun = ("closes", "close") if sp.get("deadline") else ("starts", "start")
     if nxt:
@@ -785,9 +884,9 @@ def events_html(sp, d, rows, now, ev_list, idle):
         next_body = (f'<p class="sp-empty" data-empty="next">No pick {verb} in the next {NEXT_H} hours: '
                      f'{esc(why)}.</p>')
     if later:
-        n = _count(later)
-        next_body += (f'<details class="fold later"><summary>Later<span class="sm mut"> · {n} pick{"s" if n != 1 else ""} '
-                      f'past {NEXT_H} hours</span></summary>{_days_html(sp, later, now, "next")}</details>')
+        later_body = _days_html(sp, later, now, "later")
+    else:
+        later_body = f'<p class="sp-empty" data-empty="later">No pick starts after the next {NEXT_H} hours yet.</p>' 
     # In progress.
     if live:
         live_body = _days_html(sp, live, now, "live")
@@ -807,11 +906,14 @@ def events_html(sp, d, rows, now, ev_list, idle):
     panels = (
         f'<section class="sp-panel" id="events-next" role="tabpanel" aria-labelledby="tab-next" data-tab="next"'
         f'{"" if default == "next" else " hidden"}><h3 class="sp-panel-title">Next {NEXT_H}h</h3>{next_body}</section>'
+        + (f'<section class="sp-panel" id="events-later" role="tabpanel" aria-labelledby="tab-later" data-tab="later"'
+           f'{"" if default == "later" else " hidden"}><h3 class="sp-panel-title">Later · starting after the next {NEXT_H}h</h3>{later_body}</section>'
+           if later else "") +
         f'<section class="sp-panel" id="events-live" role="tabpanel" aria-labelledby="tab-live" data-tab="live"'
         f'{"" if default == "live" else " hidden"}><h3 class="sp-panel-title">In progress</h3>{live_body}</section>'
         f'<section class="sp-panel" id="events-done" role="tabpanel" aria-labelledby="tab-done" data-tab="done"'
         f'{"" if default == "done" else " hidden"}><h3 class="sp-panel-title">Completed · {DONE_DAYS} days</h3>{done_body}</section>')
-    total = counts["next"] + counts["live"] + counts["done"]
+    total = counts["next"] + counts["later"] + counts["live"] + counts["done"]
     return (f'<section id="events" class="sp-section" data-default-tab="{default}">'
             f'<div class="sp-section-head"><h2>Events</h2><span class="sm mut">{total} pick{"s" if total != 1 else ""}</span></div>'
             f'<div class="sp-tabs" role="tablist" aria-label="Events">{tabs}</div>{panels}</section>')
@@ -832,6 +934,8 @@ def body(sp, d, st, now, rows=None, idle=()):
     open_n = (sp["open_picks"](d, rows) if sp["open_picks"]
               else sum(1 for e in ev_list for p in e["picks"] if p["state"] == "open"))
     label, hint, inner, opened = sp["method"](d, rows, now) if sp["method"] else ("Method", "", "", False)
+    if sp.get("live"):
+        annotate_live(d, st, rows)
     return (
         f'<div class="sp-head"><p class="eyebrow">Rules under test</p><h1>{esc(sp["family"])}</h1>'
         f'<p class="scope">{esc(sp["scope"])} · All times Central</p></div>\n'

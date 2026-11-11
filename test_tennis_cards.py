@@ -278,9 +278,10 @@ combo3 = [b for c, s_, b in picks if s_ == "tennis_combo3"]
 ok(combo3 and ">3-leg combo<" in combo3[0] and '<span class="sp-legs">Ann · Bob · Cid</span>' in combo3[0],
    "a three-leg basket lists its legs on one muted line under the pick")
 ok('data-empty="next"' not in events, "the empty line is not printed when picks are open")
-later = re.search(r'<details class="fold later"><summary>Later<span class="sm mut"> · (\d+) picks past 24 hours</span>', nxt)
-ok(later is not None and later.group(1) == "2" and nxt.find("Iota vs Kappa later") > nxt.find("<details"),
-   "the picks past 24 hours (Iota, the Polymarket basket) sit in the Later fold")
+later_panel = events.split('id="events-later"', 1)[1].split('id="events-live"', 1)[0]
+later_n = re.search(r'data-tab="later"[^>]*>Later <span class="sp-count">(\d+)</span>', events)
+ok(later_n is not None and later_n.group(1) == "2" and "Iota vs Kappa later" in later_panel and "Iota vs Kappa later" not in events.split('id="events-later"', 1)[0],
+   "the picks past 24 hours (Iota, the Polymarket basket) sit on the Later tab, counted there and not under Next 24h (2026-11-11)")
 
 print("\nrules")
 rules = _section(main, "rules")

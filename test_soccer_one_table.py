@@ -91,8 +91,8 @@ for page in AB.PAGES:
     sm = A.summary(es, page["cfg"]["headline"])
     a = L.dip_row(page)["a"]
     check(f"{page['id']}: the headline buy's fills and ROI", (a["n"], a["roi_fee"]), (sm["fills"], sm["roi"]))
-check("an in-play exit has no priced-win count: a dash", re.search(
-    r'data-source="o35_cheap_no_wave".*?data-l="Won v priced">([^<]*)<', main, re.S).group(1), "—")
+check("an in-play exit has no priced-win count: a dash (in the row's fold since 2026-11-11)", re.search(
+    r'data-source="o35_cheap_no_wave".*?sp-details-figures">.*? won ([^ ]*) priced', main, re.S).group(1), "—")
 
 print("\nthe row's fold holds the words, collapsed")
 k = main.find('id="cheap-side"')

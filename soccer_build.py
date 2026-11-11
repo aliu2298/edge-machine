@@ -31,27 +31,94 @@ LEDE = "Open picks and the rules that fire them · kickoff times CT"
 SCOPE = "Match picks and the rules that fire them"
 
 
+# The page's layout (2026-11-11, Olu): the Production rows and tiles read Live (the follower's own fills) over Paper; every list
+# starts closed; rows drop the two evidence cells (in the fold) so names fit; a short empty state. A test of the shared template's
+# defaults sets this to {}.
+LAYOUT = dict(live=True, fold_prod=True, compact=True, empty_reason=lambda d_, rs, idle_, now_: "no qualifying price yet")
+
+
 def method(idle):
+    """Method, closed: how Live and Paper are counted, the labels in words, and two small folds (rules waiting for a first pick, the
+    last data reads). The old Kalshi pre-flight note is gone (2026-11-11): its file is only refreshed by hand, so it read as an alarm."""
     def _method(d, rows, now):
-        by_lane, pf_note = sport_tab.preflight_report(now=now)
-        attention = 'class="neg"' in pf_note or "could not be read" in pf_note
-        idle_html = sport_tab._idle_html(idle, by_lane, status=True, prefix=KEY)
+        idle_html = sport_tab._idle_html(idle, {}, status=False, prefix=KEY)
         inner = (
-            '<p class="sm">Prices are the Kalshi ask the tracker logged when a rule fired. '
-            'Results are read back from the venue\'s own settlement, and this page is rebuilt '
-            'from that ledger by GitHub Actions.</p>'
-            f'{pf_note}'
-            f'{_own_ledger_note()}'
-            f'<details class="section-disclosure"><summary><b>Registered lanes</b><span>{len(idle)}</span></summary>'
-            f'{idle_html}</details>')
-        label = "Method · check needed" if attention else "Method"
-        return label, f"{len(idle)} waiting for a market", inner, attention
+            '<p class="sm">Prices are the Kalshi ask logged when a rule fired; results are Kalshi\'s own settlement.</p>'
+            '<p class="sm"><b>Live</b> is the follower\'s own fills, settled by Kalshi, counted from the day each rule moved to '
+            'Production (or its stake was raised). <b>Paper</b> is the same rule\'s picks over the same days at the Kalshi price, '
+            'after fees. A rule\'s full paper record, the one its 30-bet verdict reads, is inside its row.</p>'
+            '<p class="sm"><b>Labels.</b> Each team\'s last 10 competitive matches against its league\'s average goals per team: '
+            '<i>attacking</i> scores at least the average, <i>low-scoring</i> less; <i>leaky</i> concedes at least the average, '
+            '<i>tight</i> less. The codes (O+/O−, D+/D−) are inside each rule.</p>'
+            f'<details class="section-disclosure"><summary><b>Registered lanes · waiting for a first pick</b><span>{len(idle)}</span></summary>'
+            f'{idle_html}</details>'
+            f'{_own_ledger_note()}')
+        return "Method", "how Live and Paper are counted", inner, False
     return _method
+
+
+# Plain-English names (2026-11-11, Olu: "plain-English rule names"): a team's label read as words. O+ / O- = scores at least / less
+# than its league's average, D+ / D- = concedes at least / less. The codes stay inside each rule's fold.
+_O = {"O+": "attacking", "O-": "low-scoring"}
+_D = {"D+": "leaky", "D-": "tight"}
+
+
+def label_words(part):
+    """'O+D-' -> 'attacking, tight'; 'O+' -> 'attacking'; 'D-' -> 'tight'."""
+    part = part.replace("−", "-")
+    if len(part) == 4:
+        return f"{_O[part[:2]]}, {_D[part[2:]]}"
+    return _O.get(part) or _D[part]
+
+
+def _a(words):
+    return ("an " if words[0] in "aeiou" else "a ") + words
+
+
+def test_words(test):
+    """A match test in words: 'two attacking, tight sides meet', 'a tight side meets an attacking one', 'either side is low-scoring'."""
+    if test[0] == "either":
+        return f"either side is {label_words(test[1])}"
+    _, x, y = test
+    if x == y:
+        return f"two {label_words(x)} sides meet"
+    return f"{_a(label_words(x))} side meets {_a(label_words(y))} one"
+
+
+def plain_name(row):
+    """The plain-English name of a label rule (sr_*), a team rule (st_*) or T1-M's readout; None for any other row."""
+    import soccer_rules as SR
+    import soccer_team_rules as TR
+    name = row.get("name") or ""
+    t1 = test_words(("pair", "O+D-", "O+D-"))
+    if name.startswith("sr_"):
+        r = SR.RULES.get(name[3:].upper())
+        if not r:
+            return None
+        where = "Every BTTS league" if r["league"] == SR.ALL else r["league"]
+        bet = (f'Both teams to score {"YES" if r["side"] == "yes" else "NO"}' if r.get("market") == "btts"
+               else f'{"Over" if r["side"] == "yes" else "Under"} {r["line"]}')
+        return f"{where} · {bet} when {test_words(r['test'])}"
+    if name == "t1m_sell15":
+        return f"Over 3.5 when {t1}, sold at 1.5x (readout)"
+    if name == "st_t1h":
+        return f"Home side scores 2+ when {t1}"
+    if name == "st_t1m":
+        return f"Over 3.5 when {t1}"
+    if name.startswith("st_"):
+        r = TR.RULES.get(name[3:].upper())
+        if not r:
+            return None
+        bet = f"scores {r['goals']}+" if r["side"] == "yes" else f"held under {r['goals']}"
+        if r["own"] == r["opp"]:
+            return f"Team {bet} when two {label_words(r['own'])} sides meet"
+        return f"{_a(label_words(r['own'])).capitalize()} side {bet} v {_a(label_words(r['opp']))} one"
+    return None
 
 
 def rule_name(row):
     own = row.get("own")
-    return own["label"] if own else soccer_cards._rule_name(row)
+    return plain_name(row) or (own["label"] if own else soccer_cards._rule_name(row))
 
 
 def market(d, row):
@@ -64,7 +131,8 @@ def definition(d, row):
     if not own:
         return SP.default_definition(d, row)
     note = (row.get("meta") or {}).get("note")
-    return own["details"] + (SP.definition_html(note) if note else "")
+    code = (f'<p class="sm mut">Code: {SP.esc(own["label"])}</p>' if plain_name(row) else "")
+    return code + own["details"] + (SP.definition_html(note) if note else "")
 
 
 def recent(d, row, now=None):
@@ -123,17 +191,8 @@ def _own_ledger_note():
         except Exception:                                       # noqa: BLE001
             bits.append(f"{title} could not be read")
     return (
-        '<details class="section-disclosure"><summary><b>Own-ledger lanes</b><span>labels · last reads</span></summary>'
-        '<p class="sm">The label rules, team scoring, the over 3.5 cheap NO, the goalless dips, the contenders and '
-        'Argentina &amp; Brasileirão over 1.5 keep their own ledgers. Each is one row in the tables above, counted as '
-        'its ledger counts it: a pick lane on every settled entry at the Kalshi price after the 7% fee; an in-play lane '
-        'on its headline exit (the cheap NO\'s 10c bid sold at 4x; a dip\'s headline buy). Their other exits, splits, '
-        'versions and research are inside each row.</p>'
-        '<p class="sm">Labels: each team\'s last 10 competitive matches against its league\'s mean goals per team (O+/O− '
-        'scores more/less, D+/D− concedes more/less). A total-goals pair reads either way round; a team-scoring rule '
-        'reads the contract\'s team v its opponent. 2+ is the over 1.5 rung, 3+ the over 2.5 rung. Contenders: the top 3 '
-        'of the open Kalshi champion market by mid at entry. Argentina and the Brasileirão are judged apart, never pooled.</p>'
-        f'<p class="sm mut">Last scan · {L.esc(" · ".join(bits))}.</p></details>')
+        '<details class="section-disclosure"><summary><b>Last data reads</b><span>rules with their own records</span></summary>'
+        f'<p class="sm mut">{L.esc(" · ".join(bits))}.</p></details>')
 
 
 def build(d=None, st=None, now=None, own_lanes=True):
@@ -158,7 +217,8 @@ def build(d=None, st=None, now=None, own_lanes=True):
         family=FAMILY, key=KEY, title=TITLE, description=DESCRIPTION, scope=SCOPE,
         venue="Kalshi", rows=rows, events=soccer_cards.events,
         rule_name=rule_name, market=market, definition=definition,
-        recent=recent, method=method(idle), retired=list(retired) + own_gone)
+        recent=recent, method=method(idle), retired=list(retired) + own_gone,
+        **LAYOUT)
     return SP.page(sp, d, st, now, rows=rows, idle=idle)
 
 
