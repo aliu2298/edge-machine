@@ -32,7 +32,7 @@ DESCRIPTION = ("Kalshi culture markets on paper: cheap side + resting take-profi
 CHEAP = (MS.STRICT, MS.WIDE, MS.MONTH, MS.MONTH_WIDE, MS.ALBUM, MS.ALBUM_NO)
 LIVE_CHEAP = tuple(c for c in CHEAP if not c.get("retired"))      # the album lanes
 GONE_CHEAP = tuple(c for c in CHEAP if c.get("retired"))          # the weekly and monthly mention lanes (2026-10-31)
-SECTIONS = (("standard", "Standard"), ("dip-hold", "Dip bid"), ("lanes", "Lanes"), ("models", "Model lanes"), ("archive", "Archive"))
+SECTIONS = (("lanes", "Lanes"), ("retired", "Retired"))
 # The old lanes, shown in the Archive only (2026-10-27).
 ARCHIVE = ("mentions_rate", "culture_endgame", "culture_fav_band")
 
@@ -101,7 +101,7 @@ def retired_cheap(states, esc):
     line = (f"retired {why['on']}; final record {rec}"
             + (f"; {open_n} open entr{'y' if open_n == 1 else 'ies'} still settling" if open_n else "")
             + "; books too thin to pass the spread + ask check")
-    return (f'<details class="fold sec" id="retired-cheap"><summary><h2>Retired</h2> <span class="mut sm">· '
+    return (f'<details class="fold sec" id="retired-cheap"><summary><h3>Mention lanes</h3> <span class="mut sm">· '
             f'{len(GONE_CHEAP)} cheap-side mention lanes · retired {esc(why["on"])} · kept, not deleted</span></summary>'
             f'<ul class="sm"><li><b>Cheap-side mention lanes</b> ({esc(names)}): {esc(line)}.</li></ul></details>')
 
@@ -152,7 +152,7 @@ def archive(state, now, esc):
         else:
             line = f"record {rec}; {open_n} open"
         out.append(f'<li><b>{esc(K.LANES[key])}</b> ({esc(key)}): {esc(line)}.</li>')
-    return (f'<details class="fold sec" id="archive"><summary><h2>Archive</h2> <span class="mut sm">· '
+    return (f'<details class="fold sec" id="archive"><summary><h3>Older lanes</h3> <span class="mut sm">· '
             f'{len(ARCHIVE)} old lanes · kept, not deleted</span></summary>'
             '<p class="sm mut">The lanes the Culture page led with before the cheap-side standard. Their ledger rows stay '
             'and their open picks still settle.</p>'
@@ -177,6 +177,97 @@ def _dip_hold(dip_state, e):
                 'its ledger is unchanged and the next run tries again.</p></section>')
 
 
+def _fold(title, hint, inner, ident=None):
+    return (f'<details class="fold sm"{f" id={chr(34)}{ident}{chr(34)}" if ident else ""}><summary><b>{title}</b>'
+            f'{f" <span class={chr(34)}mut{chr(34)}>{hint}</span>" if hint else ""}</summary>{inner}</details>')
+
+
+def _a(n, won, roi):
+    """A row's record in the page template's shape: n settled events, won of them up, ROI after fees (None: pending)."""
+    return dict(n=n, won=won, n_price=0, expected=None, roi_fee=roi, z=0.0, z_known=False, unit="event")
+
+
+def _row(name, label, anchor, a, floor, market, **extra):
+    return dict(name=name, sport="culture", meta=dict(label=label, kind="Rule"), a=a, prod=False, open=extra.pop("open", 0), since=None, v="early",
+                anchor=anchor, label=label, market=market, floor=floor, **extra)
+
+
+def _pct1(x):
+    return "—" if x is None else f"{x * 100:+.1f}%".replace("-", "−")
+
+
+def lane_rows(states, state, now, dip_state, e):
+    """(rows, details): one row per live lane, in page order, and each row's closed details. The header tiles read these rows."""
+    rows, details = [], {}
+    try:
+        import mentions_dip_hold as DH
+        import mentions_dip_hold_build as DB
+        ds = dip_state if dip_state is not None else DH.load()
+        h, c = DH.record(ds, DH.HEAD), DH.record(ds, 0.15)
+        rows.append(_row("mentions_dip_hold", "Trump mentions · 10c dip bid, hold", "dip-hold-row",
+                         _a(h["settled_events"], h["up"], h["roi"] if h["settled_events"] else None), 10, "Trump mentions",
+                         open=h["open"], comparison=f'15c bid {_pct1(c["roi"]) if c["settled_events"] else "pending"}',
+                         entries=h["entries"]))
+        details["mentions_dip_hold"] = DB.body(ds, e)
+    except Exception:                                           # noqa: BLE001
+        print("culture_build: the Dip bid card failed to build:", file=sys.stderr)
+        traceback.print_exc()
+        rows.append(_row("mentions_dip_hold", "Trump mentions · 10c dip bid, hold", "dip-hold-row", _a(0, 0, None), 10, "Trump mentions", comparison="could not be built", entries=0))
+        details["mentions_dip_hold"] = ('<p class="sm mut">This lane could not be built on this run; its ledger is unchanged and the next run tries again.</p>')
+    for cfg in LIVE_CHEAP:
+        st = states[cfg["lane"]]
+        es = MS.counted(st)
+        r, w = MS.record(es), MS.week_record(es)
+        hold = cfg.get("headline") == "hold"
+        roi = r["roi_held"] if hold else r["roi"]
+        done = r["settled_events"]
+        rows.append(_row(cfg["lane"], cfg["label"], cfg["anchor"] + "-row", _a(done, w["positive"], roi if done else None), MS.REVIEW_AT, "Album" if "Album" in cfg["label"] else "Mentions",
+                         open=r["entries"] - r["settled"],
+                         comparison=("split " if hold else "held ") + (_pct1(r["roi"] if hold else r["roi_held"]) if done else "pending"), entries=r["entries"]))
+        note = ('<p class="sm"><b>Album ladders tested too confident: both tails won more than priced.</b></p>' if cfg in (MS.ALBUM, MS.ALBUM_NO) else "")
+        details[cfg["lane"]] = note + _fold("Entries, rule and checks", "", MS.section(st, e, cfg), cfg["anchor"] + "-fold")
+    try:
+        lane = state["lanes"]["rt_model"]
+        if K.revived("rt_model", now):
+            new, old, _o = history_split("rt_model", lane["picks"])
+            fresh_open = sum(x["status"] == "open" for x in K.fresh("rt_model", lane["picks"]))
+            rows.append(_row("rt_model", K.LANES["rt_model"], "rt-model-row", _a(new[1], new[0], new[2]), MS.REVIEW_AT, "Rotten Tomatoes", open=fresh_open,
+                             comparison=f"before revival {_pct1(old[2])}", entries=new[1] + fresh_open))
+        else:
+            rows.append(_row("rt_model", K.LANES["rt_model"], "rt-model-row", _a(0, 0, None), MS.REVIEW_AT, "Rotten Tomatoes", comparison="retired, revived later", entries=0))
+        details["rt_model"] = _fold("Record, rule and last scan", "", model_lanes(state, now, e), "rt-model-card")
+    except Exception:                                           # noqa: BLE001
+        print("culture_build: the model lane row failed to build:", file=sys.stderr)
+        traceback.print_exc()
+    return rows, details
+
+
+def tiles(rows):
+    """The header tiles, summed from the lane rows so they cannot disagree with them."""
+    open_n = sum(r["open"] for r in rows)
+    entries = sum(r.get("entries", 0) for r in rows)
+    done = sum(r["a"]["n"] for r in rows)
+    return ('<div class="tiles sp-tiles">'
+            f'<div class="tile"><b>{len(rows)}</b><span>active lanes</span></div>'
+            f'<div class="tile"><b>{entries}</b><span>entries</span></div>'
+            f'<div class="tile"><b>{open_n}</b><span>open</span></div>'
+            f'<div class="tile"><b>{done}</b><span>settled events</span></div></div>')
+
+
+def lanes_section(rows, details):
+    """The Lanes list: one closed row per lane (name, market, record, result, comparison, stage), details inside."""
+    sp = SP.spec(family="Culture", key="culture", title=TITLE, scoped=False, rule_name=lambda r: r["label"], market=lambda d, r: r.get("market") or "",
+                 definition=lambda d, r: details.get(r["name"], ""), recent=None, record_head="Record (events)",
+                 extra_cols=(("record", "Entries", lambda r: str(r.get("entries", 0))), ("roi", "Comparison", lambda r: e_(r.get("comparison") or "—"))))
+    body_ = "".join(SP.rule_row(sp, {}, r, None, False) for r in rows)
+    return (f'<section id="lanes" class="sp-section"><div class="sp-section-head"><h2>Lanes</h2><span class="sm mut">{len(rows)} active · '
+            f'review at 10 events, decide at 30</span></div>'
+            f'<div class="sp-rules-list" data-list="sandbox">{SP.list_head(False, "Lane", sp)}{body_}</div></section>')
+
+
+e_ = C.esc
+
+
 def build(state=None, now=None, split_state=None, wide_state=None, month_state=None, month_wide_state=None,
           album_state=None, album_no_state=None, dip_state=None):
     state = state if state is not None else K.load()
@@ -185,28 +276,22 @@ def build(state=None, now=None, split_state=None, wide_state=None, month_state=N
     given = {MS.STRICT["lane"]: split_state, MS.WIDE["lane"]: wide_state, MS.MONTH["lane"]: month_state,
              MS.MONTH_WIDE["lane"]: month_wide_state, MS.ALBUM["lane"]: album_state, MS.ALBUM_NO["lane"]: album_no_state}
     states = {cfg["lane"]: given[cfg["lane"]] if given[cfg["lane"]] is not None else MS.load(cfg=cfg) for cfg in CHEAP}
-    S = lambda cfg: states[cfg["lane"]]
-    standard = (
-        '<section id="standard"><h1>Culture</h1>'
-        '<p class="lede"><b>Cheap side + resting take-profit.</b></p>'
-        '<ul class="sm">'
-        '<li>Buy cheap contracts at the event\'s open, at the real ask.</li>'
-        '<li>Rest a split sell: half at 2x, half at 3x.</li>'
-        '<li>A fill counts only on a traded print.</li>'
-        '<li>Every lane is shown next to the same entries held.</li></ul>'
-        '<p class="sm mut">Sandbox, paper only, each lane on a fresh record from its first entry: review at 10 settled '
-        'events, decide at 30. An event is one outcome: the words of one mention market, or the rungs of one '
-        'album ladder, move together, so they count once.</p></section>')
-    cards = ('<p class="sm" id="album-note"><b>Album ladders tested too confident: both tails won more than priced.</b></p>'
-             + MS.section(S(MS.ALBUM), e, MS.ALBUM) + MS.section(S(MS.ALBUM_NO), e, MS.ALBUM_NO))
-    body = (standard
-            + _dip_hold(dip_state, e)
-            + f'<section id="lanes"><h2>Cheap-side lanes</h2>{summary(states, e)}{cards}</section>'
-            + f'<section id="models"><h2>Model lanes</h2>{model_lanes(state, now, e)}</section>'
-            + retired_cheap(states, e)
-            + archive(state, now, e)
-            + '<p class="sm mut">Read hourly by GitHub Actions (culture.yml) from Kalshi public market data and '
-              'candles, Rotten Tomatoes and Roll Call Factbase. Paper entries at the ask with Kalshi\'s fees.</p>')
+    rows, details = lane_rows(states, state, now, dip_state, e)
+    gone = (f'<section id="retired" class="sp-section"><details class="fold sec" id="retired-all"><summary><h2>Retired</h2> <span class="mut sm">'
+            f'· {len(GONE_CHEAP)} mention lanes, {len(ARCHIVE)} older lanes · kept, not deleted</span></summary>'
+            f'{retired_cheap(states, e)}{archive(state, now, e)}</details></section>')
+    body = ('<section id="standard"><h1>Culture</h1>'
+            '<p class="lede"><b>Cheap side + resting take-profit.</b> Kalshi culture markets, paper only.</p>'
+            + _fold("How it works", "", '<ul class="sm"><li>Buy cheap contracts at the event\'s open, at the real ask.</li>'
+                    '<li>Rest a split sell: half at 2x, half at 3x.</li><li>A fill counts only on a traded print.</li>'
+                    '<li>Every lane is shown next to the same entries held.</li></ul>'
+                    '<p class="sm mut">Each lane starts a fresh record at its first entry: review at 10 settled events, decide at 30. '
+                    'An event is one outcome: the words of one mention market, or the rungs of one album ladder, move together, so they count once.</p>')
+            + tiles(rows) + '</section>'
+            + lanes_section(rows, details)
+            + gone
+            + _fold("Method", "where the data comes from", '<p class="sm mut">Read hourly by GitHub Actions (culture.yml) from Kalshi public market data and '
+                    'candles, Rotten Tomatoes and Roll Call Factbase. Paper entries at the ask with Kalshi\'s fees.</p>'))
     html = C.document(TITLE, DESCRIPTION, KEY, SECTIONS, C.stamp(now), body,
                       script_src="./site.js", scripts=("./tables.js",))
     return label_cells(html)

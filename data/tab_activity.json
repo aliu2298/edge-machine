@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-11T22:10Z",
+ "generated": "2026-11-11T22:54Z",
  "rule": "active = not retired, not a baseline, a bet or an open pick in its current record window",
  "tabs": {
   "commodities": {
@@ -72,14 +72,10 @@
    "since": null
   },
   "nfl": {
-   "active": [
-    "cfb_home_dog_x4",
-    "nfl_tt_main1",
-    "nfl_tt_over_3545"
-   ],
-   "archived": false,
+   "active": [],
+   "archived": true,
    "error": null,
-   "since": null
+   "since": "2026-11-11"
   },
   "nhl": {
    "active": [],

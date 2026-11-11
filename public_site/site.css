@@ -1824,6 +1824,7 @@ nav.sp-filter::before {
 /* A page whose rows carry two more figures (NBA, 2026-11-05: entries won after the record, live fills after the ROI). */
 .sp-line.is-wide { grid-template-columns: minmax(0, 1fr) 104px 70px 70px 70px 132px 64px 64px 176px; }
 .sp-line.is-wide .sp-cell[data-l="Live fills"] { white-space: normal; line-height: 1.25; }
+.sp-line.is-wide .sp-cell[data-l="Comparison"] { white-space: normal; line-height: 1.25; }
 /* Compact rows (Soccer, 2026-11-11): name, market, record, ROI, verdict; the name wraps instead of cutting off, and a Production
    row's record and ROI read live over paper on two lines. */
 .sp-line.is-compact { grid-template-columns: minmax(0, 1fr) 104px 112px 92px 190px; }

@@ -123,10 +123,11 @@ check("the next read fetches trades for the open word only, with min_ts (increme
 
 print("\nthe page card")
 html = culture_build.build(dip_state=st)
-check("on the Culture page, above the cheap-side lanes, with its pill", (html.find('id="dip-hold"') > 0, html.find('id="dip-hold"') < html.find('id="lanes"'),
-      'href="#dip-hold"' in html), (True, True, True))
-card = html[html.find('<section id="dip-hold"'):html.find('<section id="lanes"')]
-check("labelled, rule in one line, 10c headline then 15c comparison", ("Trump mentions · 10c dip bid, hold" in card, card.find("10c bid · hold") < card.find("15c bid · hold")), (True, True))
+check("on the Culture page, the first lane row, closed", (html.find('id="dip-hold-row"') > html.find('id="lanes"') > 0,
+      html.find('id="dip-hold-row"') < html.find('id="album-cheap-rungs-row"'), '<details class="sp-rule is-early" id="dip-hold-row"' in html), (True, True, True))
+card = html[html.find('id="dip-hold-row"'):html.find('id="album-cheap-rungs-row"')]
+check("labelled, rule in a closed fold, 10c headline then 15c comparison", ("Trump mentions · 10c dip bid, hold" in card, card.find("10c bid · hold") < card.find("15c bid · hold"),
+      '<details class="fold sm" id="dip-rule">' in card), (True, True, True))
 check("the research is a collapsed fold marked in-sample", ('id="dip-research"' in card, "<details class=\"fold sm\" id=\"dip-research\">" in card, "in-sample" in card), (True, True, True))
 check("this week's entries list both bids, with contracts at the fill", ("Contracts at 10c fill" in card, "Contracts at 15c fill" in card), (True, True))
 check("no inline style or SVG; public copy passes the guard", ("style=" in card, "<svg" in card, sandbox_audit.COPY_RE.search(card)), (False, False, None))
@@ -139,10 +140,10 @@ check("this week's table lists the latest week's words only, without a KeyError"
       (True, 3, False))
 check("the record still counts both weeks", (M.record(two, 0.10, NOW)["entries"], M.record(two, 0.10, NOW)["settled_events"]), (5, 1))
 page2 = culture_build.build(dip_state=two)
-check("the Culture page renders the card with its record", ('<section id="dip-hold">' in page2, 'class="dip-record"' in page2,
+check("the Culture page renders the card with its record", ('id="dip-hold-row"' in page2, 'class="dip-record"' in page2,
                                                              "could not be built" in page2), (True, True, False))
-_section = B.section
-B.section = lambda *a, **k: 1 / 0
+_section = B.body
+B.body = lambda *a, **k: 1 / 0
 try:
     import contextlib
     import io
@@ -150,12 +151,12 @@ try:
     with contextlib.redirect_stderr(err):
         broken = culture_build.build(dip_state=two)
 finally:
-    B.section = _section
-check("a card that fails keeps its section and says so, so the Dip bid link still lands",
-      ('<section id="dip-hold">' in broken, "could not be built on this run" in broken), (True, True))
+    B.body = _section
+check("a card that fails keeps its row and says so",
+      ('id="dip-hold-row"' in broken, "could not be built on this run" in broken), (True, True))
 check("and the failure is in the build log with its traceback",
       ("Dip bid card failed" in err.getvalue(), "ZeroDivisionError" in err.getvalue()), (True, True))
-check("the fallback copy passes the guard", sandbox_audit.COPY_RE.search(broken[broken.find('<section id="dip-hold">'):][:400]), None)
+check("the fallback copy passes the guard", sandbox_audit.COPY_RE.search(broken[broken.find('id="dip-hold-row"'):][:1500]), None)
 
 print("\n" + ("ALL PASS" if not FAILS else f"{len(FAILS)} FAILED"))
 sys.exit(1 if FAILS else 0)
