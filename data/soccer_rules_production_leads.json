@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-11T17:31:07+00:00",
+ "board_built_at": "2026-11-11T18:44:37+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sr_a2": false,
@@ -13,41 +13,6 @@
  "first_publish_min": 45,
  "late_publication_skipped": 1,
  "leads": {
-  "2026-11-04|AEK Athens|Real Madrid|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5": {
-   "away": "Real Madrid",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-11-04",
-   "edge_at_log": null,
-   "first_seen": "2026-11-04",
-   "headline": "Over 3.5 goals",
-   "home": "AEK Athens",
-   "id": "2026-11-04|AEK Athens|Real Madrid|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5",
-   "kickoff": "2026-11-04T17:45Z",
-   "lane": "production",
-   "league": "Champions League",
-   "match": "AEK Athens v Real Madrid",
-   "pair": "sr_a7|soccer_u35",
-   "price_at_log": 0.55,
-   "published_at": "2026-11-05T12:01:51+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXUCLTOTAL-26NOV04AEKRMA",
-    "market": "KXUCLTOTAL-26NOV04AEKRMA-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.55,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "sr_a7:KXUCLTOTAL-26NOV04AEKRMA-4",
-   "source": "sr_a7",
-   "sport": "soccer_u35",
-   "status": "hit"
-  },
   "2026-11-04|Borussia Dortmund|Real Betis|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5": {
    "away": "Real Betis",
    "bet": {
@@ -114,41 +79,6 @@
     "venue": "kalshi"
    },
    "sandbox_quote": "sr_a7:KXUCLTOTAL-26NOV04FCPNAP-4",
-   "source": "sr_a7",
-   "sport": "soccer_u35",
-   "status": "hit"
-  },
-  "2026-11-04|Fenerbahce|Liverpool|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5": {
-   "away": "Liverpool",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-11-04",
-   "edge_at_log": null,
-   "first_seen": "2026-11-04",
-   "headline": "Over 3.5 goals",
-   "home": "Fenerbahce",
-   "id": "2026-11-04|Fenerbahce|Liverpool|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5",
-   "kickoff": "2026-11-04T17:45Z",
-   "lane": "production",
-   "league": "Champions League",
-   "match": "Fenerbahce v Liverpool",
-   "pair": "sr_a7|soccer_u35",
-   "price_at_log": 0.53,
-   "published_at": "2026-11-05T12:01:51+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXUCLTOTAL-26NOV04FENLFC",
-    "market": "KXUCLTOTAL-26NOV04FENLFC-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.53,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "sr_a7:KXUCLTOTAL-26NOV04FENLFC-4",
    "source": "sr_a7",
    "sport": "soccer_u35",
    "status": "hit"
@@ -447,9 +377,9 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 6,
+    "leads": 4,
     "problem": null,
-    "routed": 6,
+    "routed": 4,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -530,5 +460,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-11T17:31:07+00:00"
+ "updated_at": "2026-11-11T18:44:37+00:00"
 }

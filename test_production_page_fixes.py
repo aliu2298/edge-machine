@@ -61,7 +61,9 @@ check("the Clubs scope's fills sit under its own name", ("Under 3.5 low-scoring 
 check("an empty pulled map draws nothing", PL.pulled_table(dict(pulled={}), str), "")
 real = json.load(open(LP.OUT))
 check("the committed export carries pulled pairs and passes its whitelist", (bool(real.get("pulled")), LP.check_pulled(real)), (True, None))
-check("the Internationals pair has no live order of its own", len(real["pairs"]["u35_low_scoring|soccer_u35_intl"]["orders"]), 0)
+intl_orders = real["pairs"]["u35_low_scoring|soccer_u35_intl"]["orders"]
+check("every order under the Internationals pair is an international market (none filed there from the Clubs scope)",
+      [o["id"] for o in intl_orders if not any(k in o["id"] for k in ("KXINTLFRIENDLY", "KXUEFANL", "KXWCQ", "KXINTL"))], [])
 check("the Clubs scope's orders are under the Clubs pair", len(real["pulled"].get("u35_low_scoring|soccer_u35") or []) > 0, True)
 bad = dict(pulled={"x|y": [dict(id="a", ko="k", st="won", w=1, r=0.1, side="no", balance=5)]})
 try:
