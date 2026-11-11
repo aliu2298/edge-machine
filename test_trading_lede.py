@@ -16,8 +16,10 @@ NOW = datetime.datetime(2026, 10, 4, 12, tzinfo=datetime.timezone.utc)
 OLD = "Stock and crypto rules under test"
 # 2026-11-06: every stock and ETF rule is retired; the page leads with the running paper lanes and keeps the
 # retired stock rules in one closed block at the bottom.
-LEDE = "Paper lanes: big moves on Kalshi Invest, the gold and Nasdaq breakouts. Paper only."
-META = "Paper trading lanes: Kalshi Invest big moves, gold and Nasdaq breakouts; retired stock rules kept at the bottom."
+# 2026-11-11: the big-move rules and the gold and Nasdaq breakouts are retired too; the lede names what is left.
+LEDE = ("Paper lanes: earnings and news calls on Kalshi Invest stocks, and next, a rebound-after-a-slide rule. Paper only. "
+        "Retired lanes and their records are at the bottom.")
+META = "Paper trading lanes: earnings and news calls on Kalshi Invest stocks; retired lanes and stock rules kept at the bottom."
 HEADING = "Stock and ETF rules, retired"
 
 
