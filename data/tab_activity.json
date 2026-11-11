@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-11T20:10Z",
+ "generated": "2026-11-11T20:20Z",
  "rule": "active = not retired, not a baseline, a bet or an open pick in its current record window",
  "tabs": {
   "commodities": {
@@ -82,13 +82,10 @@
    "since": null
   },
   "nhl": {
-   "active": [
-    "nhl_over_goal",
-    "nhl_pl_no_goal"
-   ],
-   "archived": false,
+   "active": [],
+   "archived": true,
    "error": null,
-   "since": null
+   "since": "2026-11-11"
   },
   "soccer": {
    "active": [
