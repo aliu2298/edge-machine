@@ -305,7 +305,7 @@ def _cut_line(M):
     return f"{M.VERSION} from {_start(M.REMOVED_AT)}: negative markets removed after ~4h of results."
 
 
-def keep_block(state):
+def keep_block(state, parts=False):
     """The 15-Minute section's three rules (Olu, 2026-11-11): A and C here (sw15keep.py), B in the Lead Swap block. Each
     row's fold: why these markets, the per-market split, and the same rule on every other market in the background."""
     import sw15keep as K
@@ -322,12 +322,6 @@ def keep_block(state):
         bg_rows = [f'<tr><td>{mkt(m)}</td><td class="num">{x["n"]}</td><td class="num">{x["hits"]} v {x["fair"] * x["n"]:.1f}</td>'
                    f'<td class="num">{pct(x["mean_roi"])}</td></tr>' for m, x in bg]
         comp = ""
-        for ck, cv in K.COMPANION.items():
-            if cv["of"] == key:
-                cc = rec[ck]["all"]
-                comp = (f'<p class="sm">{esc(cv["label"])}: '
-                        + ("no bets yet" if not cc else f'{cc["hits"]}/{cc["n"]} {R_["won"].lower()}, {pct(cc["mean_roi"])} after fees')
-                        + f'. {esc(cv["why"])}</p>')
         split = (f'<p class="sm sw15-why">{esc(R_["why"])}</p>'
                  + (f'<p class="sm">S&amp;P 500 since the start: {c["hits"]}/{c["n"]} {esc(R_["won"].lower())} against '
                     f'{c["fair"] * c["n"]:.1f} priced, {pct(c["mean_roi"])} after fees, z {_zd(c)}.</p>' if c else
@@ -345,6 +339,20 @@ def keep_block(state):
         row = _row(key, R_["label"], c, {"all": n}, body, anchor=f"sw15-{key}", sport="sw15keep", status=chip,
                    evidence=f"{min(n, K.DECIDE_AT)}/{K.DECIDE_AT}")
         cards.append(_card(row, split))
+        for ck, cv in K.COMPANION.items():                     # the companion row, right under its rule
+            if cv["of"] != key:
+                continue
+            cc = rec[ck]["all"]
+            nc = cc["n"] if cc else 0
+            cbody = (f'<p class="sp-def">The same as C at 25c instead of 15c, shown beside it. Not a rule of its own: it is '
+                     f'never reviewed or decided.</p>')
+            crow = _row(ck, cv["label"], cc, {"all": nc}, cbody, anchor=f"sw15-{ck}", sport="sw15keep",
+                        status='<span class="sig n">observation</span>', evidence=str(nc))
+            cards.append(_card(crow, f'<p class="sm sw15-why">{esc(cv["why"])}</p>'))
+    if parts:
+        return cards, ("A and C trade the S&P 500 only, each a fresh record from "
+                       f"{_start(K.FROM)}, reviewed at {K.REVIEW_AT} and decided at {K.DECIDE_AT}. The same rules keep "
+                       "being tracked on every other market in the background (inside each row), never counted.")
     intro = (f'<p class="scope sw15-intro">Paper · S&amp;P 500 only · fresh record from {esc(_start(K.FROM))} · review '
              f'{K.REVIEW_AT}, decide {K.DECIDE_AT}</p>')
     how = _how("The 15-Minute section was narrowed to three rules on Nov 11: these two on the S&P 500 and the Lead Swap "
@@ -353,7 +361,7 @@ def keep_block(state):
     return f'<h3 class="dm-title" id="sw15keep">The three rules</h3>' + intro + _list(cards) + how
 
 
-def lossreader_block(state, now=None):
+def lossreader_block(state, now=None, parts=False):
     """Rule 1 v2 · Loss Reader (lossreader.py, sw15-lr1): one collapsed row; inside, the Now line, today's bets, the
     per-market split and the two comparison books; the rules and the backtest in the How-kept fold."""
     import json as _json
@@ -413,12 +421,17 @@ def lossreader_block(state, now=None):
                "otherwise the market is Off. Two losing bets in a row turn a market Off for its next 4 windows. When "
                "more than one market fires, only the highest score is bet. Observed = every window where S2 filled, "
                "bet or not.", bt_line)
-    row = _row("lossreader", LR.LABEL, c, {"all": n}, body, ctrl=every, anchor="sw15-lossreader", sport="lossreader",
-               status=chip, evidence=f"{min(n, LR.DECIDE_BETS)}/{LR.DECIDE_BETS}")
+    if parts:                                                   # the narrowed section: a watch row to 30 bets
+        chip = f'<span class="sig n">watch · {n}/{LR.REVIEW_AT}</span>'
+    row = _row("lossreader", "Watch · Loss Reader (Solana)" if parts else LR.LABEL, c, {"all": n}, body, ctrl=every,
+               anchor="sw15-lossreader", sport="lossreader", status=chip,
+               evidence=f"{min(n, LR.REVIEW_AT)}/{LR.REVIEW_AT}" if parts else f"{min(n, LR.DECIDE_BETS)}/{LR.DECIDE_BETS}")
     intro = (f'<p class="scope sw15-intro">Watch row · Solana · runs to {LR.REVIEW_AT} bets, then comes out unless it is '
              f'clearly positive · fresh record from {esc(_start(LR.FROM))}</p>' if NARROWED else
              f'<p class="scope sw15-intro">Paper · fresh record from {esc(_start(LR.FROM))} · review {LR.REVIEW_AT}, '
              f'decide {LR.DECIDE_BETS} bets or {LR.DECIDE_DAYS} trading days</p>')
+    if parts:
+        return [_card(row, split)], ""
     return f'<h3 class="dm-title" id="lossreader">{esc(LR.LABEL)}</h3>' + intro + _list([_card(row, split)]) + how
 
 
@@ -696,7 +709,7 @@ def ls_groups_html(rt, picks, ranked=()):
         f'<h4>{esc(label)}</h4>' + _ls_trade_split(g, strat) for strat, _c, label in LS_TRADES)
 
 
-def leadswap_block(state):
+def leadswap_block(state, parts=False):
     """The Lead Swap Board (leadswap.py): the two trades (row + open per-market split, each against its control), then
     one collapsed fold with how the board ranks markets (picks, board, persistence, timing, hour of day)."""
     import leadswap as L
@@ -710,7 +723,7 @@ def leadswap_block(state):
     for strat, ctrl_key, _short in LS_TRADES:
         if strat in getattr(L, "TRADES_RETIRED", {}):
             continue                                             # retired 2026-11-11 (the swing trade): archive only
-        label = L.STRATS[strat]
+        label = "B · Lead Swap favourite" if parts and strat == "leadswap_fav" else L.STRATS[strat]
         c, ctrl = rt.get(strat), rt.get(ctrl_key)
         what = ("v1's S1 35c entry held to settlement" if "swing" in strat else "v1's S3 favourite at minute 10, held")
         clus = "" if not c else "; %d clusters, z %s" % (c["clusters"], _z(c["z"]))
@@ -788,6 +801,10 @@ def leadswap_block(state):
                + _table(("Group", "Windows", "Corr: past-2h swaps v the window"), corr) + '</details>')
     ranks = (f'<details class="fold sw15-ranks"><summary>How the board ranks markets</summary>'
              f'{board}{persist}{timing}{heat}</details>')
+    if parts:
+        return cards, ('<p class="sm">B · Lead Swap favourite: how often the lead (YES mid across 50c) swaps on every '
+                       '15-minute series; the favourite goes to the most stable markets, against its opposite. Picks are '
+                       'frozen at about :04 each hour.</p>' + f'<p class="sm mut" id="spotlag-status">{esc(spot)}</p>' + ranks)
     return (f'<h3 class="dm-title" id="leadswap">Lead Swap Board</h3>' + _intro(L.FROM) + _list(cards)
             + _how("How often the lead (YES mid across 50c) swaps on every 15-minute series; the swing trade goes to the "
                    "most swaps, the favourite to the most stable, each against its opposite. Picks are frozen at about "
@@ -966,8 +983,8 @@ def _archive(state, s1_final, v1=""):
     grp("Steady Favourites", sf)
     if not parts:
         return ""
-    return ('<details class="fold sw15-archive" id="sw15-archive"><summary><b>Retired &amp; removed · final records</b>'
-            '</summary>' + "".join(parts) + '</details>')
+    return ('<details class="fold sw15-archive" id="sw15-archive"><summary><b>'
+            + ("Retired · final records" if NARROWED else "Retired &amp; removed · final records") + '</b></summary>' + "".join(parts) + '</details>')
 
 
 NARROWED = True     # 2026-11-11: the three-rule layout; the older lanes' own tests set False to check them as they were
@@ -984,10 +1001,30 @@ def section(state=None):
     # with the newest lane, Rule 1 v2 · Loss Reader (2026-11-10), on top.
     # 2026-11-11 (Olu): narrowed to three rules — A and C (S&P 500), the Lead Swap favourite — and the Loss Reader as a
     # watch row. Rules 2-5 v2, Steady Favourites, Swing v3 and the Lead Swap swing are retired: archive only.
-    narrowed = (lambda: keep_block(state), lambda: leadswap_block(state), lambda: lossreader_block(state))
+    if NARROWED:
+        # 2026-11-11 (Olu): one small list of collapsible rows — A, C (with its 25c companion), B, then the Loss Reader
+        # watch row — one line above it, every explanation in one closed fold, everything retired in one closed block.
+        cards, notes = [], []
+        for fn in (lambda: keep_block(state, parts=True), lambda: leadswap_block(state, parts=True),
+                   lambda: lossreader_block(state, parts=True)):
+            try:
+                c_, n_ = fn()
+                cards += c_
+                if n_:
+                    notes.append(n_)
+            except Exception:                                   # noqa: BLE001  (one lane never breaks the section)
+                pass
+        import sw15keep as K
+        intro = (f'<p class="scope sw15-intro">Paper · three rules · fresh from {esc(_start(K.FROM))} · review '
+                 f'{K.REVIEW_AT}, decide {K.DECIDE_AT}</p>')
+        how = ('<details class="fold sw15-how"><summary>How the record is kept</summary>'
+               + "".join(n if n.startswith("<") else f'<p class="sm">{esc(n)}</p>' for n in notes)
+               + f'<p class="sm mut">{SORT_LINE}</p></details>')
+        return (f'<h2 class="dm-title">15-Minute</h2><div class="sw15-lane">{intro}{_list(cards)}{how}</div>'
+                + f'<div class="sw15-lane">{_archive(state, s1_final, v1=_v1_block(state, allc, n_w))}</div>')
     before = (lambda: lossreader_block(state), lambda: s3v2_block(state), lambda: steadyfav_block(state),
               lambda: leadswap_block(state), lambda: swing_v3_block(state), lambda: flip_block(state))
-    for fn in (narrowed if NARROWED else before):
+    for fn in before:
         try:
             blocks.append(fn())
         except Exception:                                       # noqa: BLE001  (one lane never breaks the section)

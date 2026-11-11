@@ -32,17 +32,17 @@ MARKET = "KXINX15M"
 PATH = os.path.join(W.ROOT, "data", "sw15keep_ledger.json")
 REVIEW_AT, DECIDE_AT = 30, 100
 RULES = {
-    "sp500_fav5": dict(key=("swing15_s3",), label="A · Favourite with 5 minutes left · S&P 500",
+    "sp500_fav5": dict(key=("swing15_s3",), label="A · S&P 500 favourite, 5 min left",
                        won="Won", why="Why only the S&P 500: forward +4.9% (60 bets); history +1.3% (36) and +11.8% (35, "
                                       "held out). 2-Year, USD/JPY and Silver looked good forward but lost in the history "
                                       "(−7.9% on 312, −2.1% on 843, −3.2% on 789)."),
-    "sp500_flip15": dict(key=("swing15_s1", "0.15", "2.0", "bid"), label="C · S&P 500 underdog at 15c · sell at 2x",
+    "sp500_flip15": dict(key=("swing15_s1", "0.15", "2.0", "bid"), label="C · S&P 500 underdog at 15c",
                          won="Sells filled", why="Why only the S&P 500: forward +66.5% (28 bets), up in both halves; "
                                                  "history +68% (candles) / +92% (trade prints, 12), up in both halves. "
                                                  "Every other market's underdog flip loses (−14% to −21% pooled)."),
 }
 COMPANION = {"sp500_flip25": dict(key=("swing15_s1", "0.25", "2.0", "bid"), of="sp500_flip15",
-                                  label="Companion · the same at 25c (observation, not a rule)",
+                                  label="C companion · at 25c (observation)",
                                   why="Forward +30.4% (45 bets); history +33% (28).")}
 
 

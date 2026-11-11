@@ -76,13 +76,20 @@ print("\nthe page")
 real = W.load()
 html = WB.section(real)
 live = html.split('id="sw15-archive"')[0]
-check("the live area: the three rules (A, C, the Lead Swap favourite) and the Loss Reader watch row, nothing else",
-      re.findall(r'data-source="([a-z0-9_]+)"', live), ["sp500_fav5", "sp500_flip15", "leadswap_fav", "lossreader"])
-check("each kept rule says why these markets, with the forward and history numbers",
-      (live.count('class="sm sw15-why"'), "forward +4.9% (60 bets)" in live, "forward +66.5% (28 bets)" in live), (2, True, True))
-check("the 25c companion is shown under C, not as a rule; the background folds are there",
-      ("Companion · the same at 25c (observation, not a rule)" in live, live.count('class="fold sw15-bg"')), (True, 2))
-check("the Loss Reader is a watch row to 30 bets", "Watch row · Solana · runs to 30 bets" in live, True)
+check("the live area: the three rules (A, C, the Lead Swap favourite), C's 25c companion and the Loss Reader watch row",
+      re.findall(r'data-source="([a-z0-9_]+)"', live), ["sp500_fav5", "sp500_flip15", "sp500_flip25", "leadswap_fav",
+                                                         "lossreader"])
+check("one list: A, C, its 25c companion right under it, B, the Loss Reader watch row",
+      re.findall(r'id="sw15-([a-z0-9_]+)"', live)[:5], ["sp500_fav5", "sp500_flip15", "sp500_flip25", "leadswap_fav", "lossreader"])
+check("short names", all(n in live for n in ("A · S&amp;P 500 favourite, 5 min left", "C · S&amp;P 500 underdog at 15c",
+      "C companion · at 25c (observation)", "B · Lead Swap favourite", "Watch · Loss Reader (Solana)")), True)
+check("the why lines sit inside the folds (closed by default), with the forward and history numbers",
+      (live.count('class="sm sw15-why"'), "forward +4.9% (60 bets)" in live, "forward +66.5% (28 bets)" in live,
+       "<details open" in live), (3, True, True, False))
+check("one section heading, no per-lane h3 blocks; one closed method fold", (live.count("<h3"), live.count("sw15-how")),
+      (0, 1))
+check("the Loss Reader is a watch row to 30 bets", "watch · " in live and "/30" in live, True)
+check("ONE retired block, closed", (html.count('id="sw15-archive"'), "<b>Retired · final records</b>" in html), (1, True))
 arc = html.split('id="sw15-archive"')[1]
 check("the archive: the seven lanes retired today with their records, and the v1 baselines",
       ("<h4>Narrowed to three rules (Nov 11)</h4>" in arc, arc.split("<h4>Narrowed to three rules (Nov 11)</h4>")[1]
