@@ -195000,7 +195000,8 @@
     "KXATPCHALLENGERMATCH-26NOV10TOMJAS": 0,
     "KXATPCHALLENGERMATCH-26NOV10TSICRE": 0,
     "KXATPCHALLENGERMATCH-26NOV10VIRPRI": 0,
-    "KXATPCHALLENGERMATCH-26NOV10XILFOM": 0
+    "KXATPCHALLENGERMATCH-26NOV10XILFOM": 0,
+    "KXATPCHALLENGERMATCH-26NOV11BERSEA": 1
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -198822,6 +198823,41 @@
      "unreachable": false,
      "variant": "t1h_hold",
      "won": true
+    },
+    {
+     "ask": {
+      "book": null,
+      "first_quotes": false,
+      "how": "print",
+      "last_trade": 0.26,
+      "printed": 920.98,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "cost": 0.27347,
+     "entry": 0.26,
+     "entry_i": 648,
+     "entry_ts": 1794380400,
+     "event": "KXATPCHALLENGERMATCH-26NOV11BERSEA",
+     "exit": 0.0,
+     "exit_i": 808,
+     "exit_key": "hold",
+     "exit_ts": 1794390000,
+     "hours": 1,
+     "night": "2026-11-11",
+     "profit": -0.27347,
+     "reason": "settled",
+     "roi": -1.0,
+     "side": "yes",
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1794384000,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26NOV11BERSEA-BER",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": false
     }
    ],
    "voided": {
@@ -223510,7 +223546,8 @@
     "KXATPCHALLENGERMATCH-26NOV10TOMJAS": 0,
     "KXATPCHALLENGERMATCH-26NOV10TSICRE": 0,
     "KXATPCHALLENGERMATCH-26NOV10VIRPRI": 0,
-    "KXATPCHALLENGERMATCH-26NOV10XILFOM": 0
+    "KXATPCHALLENGERMATCH-26NOV10XILFOM": 0,
+    "KXATPCHALLENGERMATCH-26NOV11BERSEA": 0
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -372283,12 +372320,8 @@
    "watch": false
   }
  },
- "last_run": "2026-11-11T09:30:25.888580+00:00",
+ "last_run": "2026-11-11T10:00:26.586674+00:00",
  "runs": [
-  {
-   "at": "2026-10-31T14:43:43.571255+00:00",
-   "new": {}
-  },
   {
    "at": "2026-10-31T15:22:43.596847+00:00",
    "new": {}
@@ -372614,6 +372647,13 @@
    "at": "2026-11-11T09:30:25.888580+00:00",
    "new": {
     "challenger_cheap_hold_base": 0,
+    "challenger_won_here_hold": 0
+   }
+  },
+  {
+   "at": "2026-11-11T10:00:26.586674+00:00",
+   "new": {
+    "challenger_cheap_hold_base": 1,
     "challenger_won_here_hold": 0
    }
   }
