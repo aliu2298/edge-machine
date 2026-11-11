@@ -18,8 +18,8 @@ OUT = os.path.join(ROOT, "public_site", "nhl.html")
 FAMILY = "NHL"
 KEY = "nhl"
 TITLE = "Edge Machine · NHL"
-DESCRIPTION = "Kalshi NHL lanes on paper: the puck line and the totals three minutes after a goal."
-SCOPE = "In-play paper lanes three minutes after a goal"
+DESCRIPTION = "Kalshi NHL lanes on paper, retired 2026-11-11: the puck line and the totals three minutes after a goal."
+SCOPE = "Retired in-play paper lanes, kept with their final records"
 HEADLINES = ("nhl_pl_no_goal", "nhl_over_goal")
 BASELINE = {"nhl_pl_no_goal": "nhl_pl_no_goal_all", "nhl_over_goal": "nhl_over_goal_all"}
 
@@ -136,8 +136,9 @@ def template_row(state, lane):
     cfg = N.BY_LANE[lane]
     s = N.summary(N.rows_for(state, lane))
     won = sum(1 for r in N.rows_for(state, lane) if r["taker"]["filled"] and r["taker"]["roi"] > 0)
+    gone = f'Retired {N.RETIRED["on"]}: {N.RETIRED["reason"]}' if N.RETIRED else None
     return L.row(lane, "nhl", cfg["label"], cfg["market"], L.inplay_record(s["n"], won, s["roi"], s["z"]), panel(state, lane),
-                 anchor=lane.replace("_", "-"), kind="In-play",
+                 anchor=lane.replace("_", "-"), kind="In-play", gone=gone,
                  note="Record: taker fills with 50+ contracts of depth, held to settlement, after fees.")
 
 
@@ -161,7 +162,9 @@ def events(state, rows, now):
 def build(state=None, d=None, st=None, now=None):
     now = SP.as_utc(now)
     state = state if state is not None else N.load()
-    rows = [template_row(state, lane) for lane in HEADLINES]
+    every = [template_row(state, lane) for lane in HEADLINES]
+    rows = [r for r in every if not r.get("gone")]               # 2026-11-11: both retired, kept in the Retired fold
+    gone = [r for r in every if r.get("gone")]
     last = state.get("last_run")
 
     def method(d_, rs, now_):
@@ -173,6 +176,8 @@ def build(state=None, d=None, st=None, now=None):
         return "Method and research", "how the lanes are read · the study's verdicts", inner, False
 
     def empty_reason(d_, rs, idle_, now_):
+        if N.RETIRED:
+            return f'both NHL lanes were retired {N.RETIRED["on"]}; nothing is read any more'
         return ("the NHL lanes read settled games after the final horn, so nothing is listed ahead"
                 + (f"; last read {fmt.when(last)}" if last else "; no read yet"))
 
@@ -180,7 +185,7 @@ def build(state=None, d=None, st=None, now=None):
                  events=lambda d_, rs, now_: events(state, rs, now_),
                  rule_name=lambda r: r["own"]["label"], market=lambda d_, r: r["own"]["market"],
                  definition=lambda d_, r: r["own"]["details"], recent=lambda d_, r, n_: "",
-                 method=method, empty_reason=empty_reason, scoped=False)
+                 method=method, empty_reason=empty_reason, scoped=False, retired=gone)
     return SP.page(sp, d, st, now, rows=rows)
 
 

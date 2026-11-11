@@ -125,7 +125,9 @@ def archived_tabs():
     if _ARCHIVED is None:
         try:
             import tab_activity
-            _ARCHIVED = frozenset(tab_activity.archived())
+            # A tab taken out by hand (tab_activity.RETIRED_TABS, NHL 2026-11-11) is out of the nav from the first build,
+            # before the tracker rewrites data/tab_activity.json.
+            _ARCHIVED = frozenset(tab_activity.archived()) | frozenset(tab_activity.RETIRED_TABS)
         except Exception:                                       # noqa: BLE001
             _ARCHIVED = frozenset()
     return _ARCHIVED

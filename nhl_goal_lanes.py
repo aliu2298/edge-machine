@@ -43,6 +43,11 @@ RECORD: fresh from REGISTERED: only games ESPN starts at or after it count; noth
 in-sample and is skipped with a reason). One row per entry, z clustered by game, ROI per entry after fees. Review at 10
 settled entries, decide at 30.
 
+RETIRED 2026-11-11 (Olu, "END NHL for now"): both lanes, final records nhl_over_goal 6-1 (-9.3%, 7 bets) and
+nhl_pl_no_goal 0-1 (1 bet). No edge in two full NHL studies (Oct 30, Nov 8). The hourly read is stopped (nhl-goal.yml
+removed, no window stamp), the record is frozen at games that started before RETIRED["at"], and the ledger and this
+module are kept so the work can be picked up later (soccer_p4_lanes and t1m_sell15 also reuse its helpers).
+
 Read after the fact: every settled KXNHLGAME event is read once, from its 1-minute candles, its puck-line and totals
 markets and their trade prints. Own ledger data/nhl_goal_lanes_ledger.json, hourly by .github/workflows/nhl-goal.yml.
 Paper only: no order is placed.
@@ -85,6 +90,9 @@ NEED = 2
 SKIP_AFTER_D = 3
 MAX_GAMES_PER_RUN = 40
 REVIEW_N, DECIDE_N, HEADLINE_GAMES = 10, 30, 60
+RETIRED = dict(on="2026-11-11", at="2026-11-11T19:10:00Z",
+               reason="No edge in two full NHL studies (Oct 30, Nov 8): moneyline, totals and puck line priced fairly. "
+                      "Paused until something new comes up.")
 
 LANES = (
     dict(lane="nhl_pl_no_goal", kind="pl", band=(0.65, 0.80), thin=True, baseline=False,
@@ -441,6 +449,8 @@ def rows_for(state, lane):
     lo, hi = cfg["band"]
     out = []
     for g in state.get("games") or []:
+        if RETIRED and g.get("ko") is not None and g["ko"] >= C._ts(RETIRED["at"]):
+            continue                                            # the record is frozen at retirement
         if cfg["thin"] is not None and bool(g.get("thin")) != cfg["thin"]:
             continue
         for e in g.get("entries") or []:
@@ -484,6 +494,9 @@ def read_of(n, games, lane):
 
 
 def main(argv=None):
+    if RETIRED:
+        print(f"nhl_goal_lanes: retired {RETIRED['on']}; nothing is read")
+        return 0
     state = run(load())
     save(state)
     parts = [f"{c['lane']} {summary(rows_for(state, c['lane']))['n']}" for c in LANES]

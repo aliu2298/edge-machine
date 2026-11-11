@@ -84,19 +84,32 @@ check("Cricket's entry: its one line why, its retired lanes and the registered r
        './cricket.html' in c), (True, True, True, True, True))
 f = h[h.find('id="archived-fights"'):]
 check("Fights' entry keeps the baseline and the retired UFC record", ("Boxing" in f and "baseline" in f, "UFC" in f and "retired" in f), (True, True))
-check("no archived tab: no section", A.archive_html({"tabs": {"nba": {"archived": False}}}), "")
-print("\nthe NHL pin (2026-11-08, Olu: pin it in the menu now)")
-saved = {k: A.ADAPTERS[k] for k in ("nhl", "cricket")}
-A.ADAPTERS["nhl"] = A.ADAPTERS["cricket"] = lambda d, st, now: []
+check("no archived tab but NHL (taken out by hand): only its section", ('id="archived-nhl"' in A.archive_html({"tabs": {"nba": {"archived": False}}}),
+      'id="archived-nba"' in A.archive_html({"tabs": {"nba": {"archived": False}}})), (True, False))
+print("\nthe NHL tab, taken out by hand (2026-11-11, Olu: END NHL for now)")
+saved = {k: A.ADAPTERS[k] for k in ("nhl",)}
+A.ADAPTERS["nhl"] = lambda d, st, now: ["a lane"]           # even an adapter that says active
 try:
-    pin = A.check()
+    out = A.check()
+    A.ADAPTERS["nhl"] = lambda d, st, now: 1 / 0             # or one that raises
+    out2 = A.check()
 finally:
     A.ADAPTERS.update(saved)
-check("a pinned tab with no active lane stays in the nav; an unpinned one is still archived",
-      (pin["nhl"]["archived"], pin["nhl"]["active"], pin["cricket"]["archived"]), (False, [], True))
-check("the pin is narrow: NHL only, dated", (sorted(A.PINNED), A.PINNED["nhl"][0]), (["nhl"], "2026-11-08"))
+check("NHL is archived whatever its adapter says, dated from its retirement",
+      (out["nhl"]["archived"], out["nhl"]["active"], out["nhl"]["since"], out2["nhl"]["archived"], out2["nhl"]["error"]),
+      (True, [], "2026-11-11", True, None))
+check("no tab is pinned any more", A.PINNED, {})
+hn = A.archive_html({"tabs": {"nhl": {"archived": True, "since": "2026-11-11"}}})
+check("its Archives entry keeps both retired lanes' final records, their baselines and the reason",
+      all(x in hn for x in ('id="archived-nhl"', "6–1 (7 bets)", "−9.3%", "0–1 (1 bet)", "No edge in two full NHL studies",
+                            "baseline", './nhl.html', "taken out of the top nav by hand")), True)
+import site_chrome
+site_chrome._ARCHIVED = None
+check("NHL leaves the nav on every other page from the first build, but its own page still names it",
+      ("nhl" in [k for k, _l, _h in site_chrome.shown_pages("nba")], "nhl" in [k for k, _l, _h in site_chrome.shown_pages("nhl")]),
+      (False, True))
 import sandbox_audit
-check("no guarded phrase in the entry", sandbox_audit.COPY_RE.search(h), None)
+check("no guarded phrase in the entries", (sandbox_audit.COPY_RE.search(h), sandbox_audit.COPY_RE.search(hn)), (None, None))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
