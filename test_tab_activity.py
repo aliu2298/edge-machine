@@ -40,8 +40,8 @@ check("Cricket is archived: Polymarket (international) has no bet on its current
 check("Cricket's Polymarket row is NOT retired by the rule (its scope keeps logging)",
       "cricket" in __import__("sandbox_sources").SOURCES["polymarket"]["sports"], True)
 check("Fights is archived: a baseline and a retired lane", (real["fights"]["archived"], real["fights"]["active"]), (True, []))
-check("NFL stays: team total over and the college football home underdog",
-      (real["nfl"]["archived"], {"nfl_tt_over_3545", "cfb_home_dog_x4"} <= set(real["nfl"]["active"])), (False, True))
+check("NFL stays: the team total over; the college football home underdog is retired (2026-11-11)",
+      (real["nfl"]["archived"], "nfl_tt_over_3545" in real["nfl"]["active"], "cfb_home_dog_x4" in real["nfl"]["active"]), (False, True, False))
 for tab in ("nba", "soccer", "tennis", "crypto", "commodities", "econ_daily", "finance_daily", "culture"):
     check(f"{tab} stays: it has an active lane", real[tab]["archived"], False)
 saved = A.ADAPTERS["soccer"]

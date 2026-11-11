@@ -94,11 +94,21 @@ def build(d=None, st=None, now=None, own_lanes=True):
         market=lambda d_, r: r["own"]["market"] if r.get("own") else CC.market(d_, r),
         definition=lambda d_, r: r["own"]["details"] if r.get("own") else SP.default_definition(d_, r),
         recent=lambda d_, r, n_: "" if r.get("own") else CC.recent_html(d_, r, n_),
-        method=method(idle_html), retired=retired, empty_reason=empty_reason,
+        method=method(idle_html), retired=retired, empty_reason=empty_reason, retired_extra=_chaos_retired(),
         lane_tiles=lambda: _lane_tiles())
-    # cfb_dog_tp50's home (2026-10-27): the cheap-side section near the top, before the rules.
+    # The college football cheap-side lanes' home (2026-10-27): a section near the top, before the rules. Both were retired
+    # 2026-11-11 (Olu), so the section is drawn only while a lane is live; their records sit in the Retired block.
     import chaos_build
-    return chaos_build.place(SP.page(sp, d, st, now, rows=rows, idle=idle), "nfl", before='<section id="rules"')
+    html = SP.page(sp, d, st, now, rows=rows, idle=idle)
+    return chaos_build.place(html, "nfl", before='<section id="rules"', retired=False) if chaos_build.has_live("nfl") else html
+
+
+def _chaos_retired():
+    try:
+        import chaos_build
+        return chaos_build.retired_list("nfl")
+    except Exception:                                           # noqa: BLE001
+        return ""
 
 
 def _lane_tiles():

@@ -197,9 +197,13 @@ LANES = [
     # 2026-11-02. In-sample Oct 25-31 (8 games): reached 2x / 3x / 4x 82% / 64% / 64%, sell-all-at-4x
     # +140.6% (z 2.07), hold +50.5%. Holdout Oct 10 / 17 / 24 (22 games, replayed through this engine):
     # 77% / 57% / 43%, 4x +63.7%, hold +81.1%; the blind holdout reached 63% / 43% / 36%.
+    # RETIRED 2026-11-11 (Olu): no new entries from that night on; its rows stay on the ledger as they are.
     dict(id="cfb_home_dog_x4", label="College football home underdog · 10-25c · sell 4x", series=["KXNCAAFGAME"],
          picker=cfb_home.home_dog_picker(cfb_board, 0.10, 0.25), entry_hours=(1, 24), headline=C.X4,
          exits=C.LANE_EXITS + C.SINGLES, since="2026-11-02", duration_min=210, start=espn_start("football/college-football"),
+         retired=dict(on="2026-11-11", at="13 settled games; sell all at 4x -60.3%, hold -79.2% (1h: 11 entries, 1 won; 24h: 8 entries, 0 won)",
+                      reason="failed forward: the home-underdog 4x pattern (found Oct 10-31) did not repeat; far below the blind college "
+                             "underdog baseline (162 games, split +4.2%, hold -7.7%)"),
          caution="Not evidence yet: the rule was found on Oct 25-31 (8 games: reached 2x / 3x / 4x 82% / 64% / 64%; sell all at 4x "
                  "+140.6%, z 2.07; hold +50.5%) and held on Oct 10 / 17 / 24 (22 games: 77% / 57% / 43%; sell all at 4x +63.7%; hold "
                  "+81.1%; the blind lane reached 63% / 43% / 36%; away underdogs were at or under fair). It must beat the blind "
@@ -207,13 +211,13 @@ LANES = [
          note="The home team (not a neutral site, from ESPN) priced 10-25c to win, bought 1h and 24h before kickoff, with the whole "
               "stake resting at 4x of the ask paid, filled only on a traded print, else held. Hold is the comparison; the split, 2x, "
               "3x and the standard targets are tracked on the same entries. A game ESPN cannot match is skipped with a note, never guessed."),
-    # BASELINE 2026-11-01 (Olu): no lane may select blind (every game, price band only). This one keeps replaying
-    # every new night as the baseline a filtered underdog lane must beat: no lane status, no promotion.
+    # BASELINE 2026-11-01 (Olu): no lane may select blind (every game, price band only). It replayed every night as the
+    # baseline cfb_home_dog_x4 had to beat. RETIRED 2026-11-11 with that lane (Olu): no other lane reads it.
     dict(id="cfb_dog_tp50", label="College football underdog · sell +50%", series=["KXNCAAFGAME"], picker=DOG,
          entry_hours=(1, 24), headline="tp50", since=FIRST_NIGHT, duration_min=210, start=espn_start("football/college-football"),
          exits=C.LANE_EXITS + C.SINGLES,
-         baseline=dict(on="2026-11-01", at="33 settled events; split -0.5%, hold -15.9%",
-                       reason="blind selection (price band only, no team filter): kept as the baseline for filtered underdog lanes (Olu, 2026-11-01)"),
+         retired=dict(on="2026-11-11", at="162 settled games; split +4.2%, hold -7.7%",
+                      reason="the blind baseline for cfb_home_dog_x4, retired with it: no other lane is judged against it"),
          note="A side priced 10-40c, bought 1h and 24h before kickoff, with a resting sell at +50%; the split, and "
               "single sells at 2x, 3x and 4x, are tracked on the same entries."),
     # RETIRED 2026-10-29 (Olu): no new entries from that night on; its rows stay on the ledger as they are.
