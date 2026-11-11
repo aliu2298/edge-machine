@@ -417,7 +417,7 @@ def _cheap_row(cfg, st, retired=False):
                 f'<span class="sr-only"> · Rule details</span></span>'
                 f'<span class="sp-cell sp-c-market" data-l="Market">Kalshi</span>'
                 f'<span class="sp-cell num" data-l="Record">{record}</span>'
-                f'<span class="sp-cell num" data-l="ROI after fees · held">{roi_cell}</span>'
+                f'<span class="sp-cell num" data-l="ROI after fees">{roi_cell} <span class="mut sm">held</span></span>'
                 f'<span class="sp-cell num" data-l="Won v priced">{e(wvp)}</span>'
                 f'<span class="sp-cell num" data-l="Evidence">{n}/{cfg["decide_weeks"]} wks</span>'
                 f'<span class="sp-cell sp-c-verdict" data-l="Verdict">{verdict}</span></summary>'

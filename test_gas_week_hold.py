@@ -45,8 +45,8 @@ i = h.find('data-source="gas_week_cheap_no"')
 row = h[i:h.find("</summary>", i)]
 card = html.unescape(h[i:h.find("</section>", i)])
 check("the row headlines hold, record in weeks, evidence out of 10 weeks",
-      ('data-l="ROI after fees · held"' in row, " wks</span>" in row, "/10 wks" in row, 'data-l="ROI after fees">' in row),
-      (True, True, True, False))
+      ('<span class="mut sm">held</span></span>' in row, " wks</span>" in row, "/10 wks" in row,
+       'data-l="ROI after fees">' in row), (True, True, True, True))
 check("the card: hold first, the weeks line, the split a secondary line, Olu's evidence in a closed fold",
       ("held (the record)" in card, "settled weeks" in card and "profit per week" in card,
        "Secondary, not the record: the 2x/3x split" in card, "51 bets, 17 won, +31%" in card,
