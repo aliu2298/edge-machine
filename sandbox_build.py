@@ -2515,7 +2515,7 @@ with its lean, <i>Promising</i> or <i>Behind</i>; under {MT.EARLY_N} a rule is o
 """
     return site_chrome.document(
         "Edge Machine · Trading",
-        "Paper trading lanes: Kalshi Invest big moves, gold and Nasdaq breakouts; retired stock rules kept at the bottom.",
+        "Paper trading lanes: earnings and news calls on Kalshi Invest stocks; retired lanes and stock rules kept at the bottom.",
         "trading",
         (("invest", "Invest"), (earnings_news_build.SECTION_ID, "Earnings & news"), ("gold-orb", "Gold breakout"),
          (nasdaq_orb_build.SECTION_ID, "Nasdaq breakout"), ("retired", "Retired")),
