@@ -8,21 +8,21 @@
   },
   "commodities": {
    "cmd_market": {
-    "offered": 150,
-    "picked": 150
+    "offered": 200,
+    "picked": 200
    },
-   "kalshi_venue": 150
+   "kalshi_venue": 200
   },
   "commodities_fav": {
    "commod_fav_band": {
-    "offered": 140,
+    "offered": 190,
     "picked": 0
    },
    "commod_nc_yes": {
-    "offered": 140,
+    "offered": 190,
     "picked": 0
    },
-   "kalshi_venue": 140
+   "kalshi_venue": 190
   },
   "cricket": {
    "kalshi_venue": 4,
@@ -44,7 +44,7 @@
    "kalshi_venue": 34
   },
   "finance": {
-   "kalshi_venue": 30
+   "kalshi_venue": 42
   },
   "mma": {
    "kalshi_venue": 12,
@@ -69,7 +69,7 @@
     "offered": 0,
     "picked": 0
    },
-   "kalshi_venue": 27,
+   "kalshi_venue": 53,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -354,8 +354,8 @@
   "tennis": {
    "kalshi_venue": 24,
    "polymarket_us": 40,
-   "polymarket_us_listed": 360,
-   "polymarket_us_priced": 208
+   "polymarket_us_listed": 357,
+   "polymarket_us_priced": 211
   },
   "tennis_combo": {
    "combo": 0,
@@ -367,48 +367,49 @@
   }
  },
  "feed_status": {
-  "pin_totals": "ok"
+  "pin_totals": "down: no paced credit left for this run",
+  "pinnacle": "down: HTTP 429 on /sports/soccer_uefa_europa_league/events"
  },
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-11T08:33:43+00:00",
-   "commodities": "2026-11-11T08:33:43+00:00",
-   "commodities_fav": "2026-11-11T08:33:43+00:00",
-   "cricket": "2026-11-11T08:33:43+00:00",
-   "crypto": "2026-11-11T08:33:43+00:00",
-   "crypto_fav": "2026-11-11T08:33:43+00:00",
-   "economics": "2026-11-11T08:33:43+00:00",
-   "finance": "2026-11-11T08:33:43+00:00",
-   "mma": "2026-11-11T08:33:43+00:00",
-   "nfl": "2026-11-11T08:33:43+00:00",
-   "nhl_pl": "2026-11-11T08:33:43+00:00",
-   "nhl_rest": "2026-11-11T08:33:43+00:00",
-   "soccer": "2026-11-11T08:33:43+00:00",
+   "boxing": "2026-11-11T09:03:15+00:00",
+   "commodities": "2026-11-11T09:03:15+00:00",
+   "commodities_fav": "2026-11-11T09:03:15+00:00",
+   "cricket": "2026-11-11T09:03:15+00:00",
+   "crypto": "2026-11-11T09:03:15+00:00",
+   "crypto_fav": "2026-11-11T09:03:15+00:00",
+   "economics": "2026-11-11T09:03:15+00:00",
+   "finance": "2026-11-11T09:03:15+00:00",
+   "mma": "2026-11-11T09:03:15+00:00",
+   "nfl": "2026-11-11T09:03:15+00:00",
+   "nhl_pl": "2026-11-11T09:03:15+00:00",
+   "nhl_rest": "2026-11-11T09:03:15+00:00",
+   "soccer": "2026-11-11T09:03:15+00:00",
    "soccer_btts": "2026-11-08T20:07:32+00:00",
-   "soccer_btts_cup": "2026-11-11T08:33:43+00:00",
-   "soccer_btts_intl": "2026-11-11T08:33:43+00:00",
+   "soccer_btts_cup": "2026-11-11T09:03:15+00:00",
+   "soccer_btts_intl": "2026-11-11T09:03:15+00:00",
    "soccer_corners": "2026-11-08T19:58:15+00:00",
    "soccer_ftts": "2026-10-19T18:33:38+00:00",
    "soccer_o15": "2026-11-08T20:07:32+00:00",
-   "soccer_o15_cup": "2026-11-11T08:33:43+00:00",
-   "soccer_o15_intl": "2026-11-11T08:33:43+00:00",
+   "soccer_o15_cup": "2026-11-11T09:03:15+00:00",
+   "soccer_o15_intl": "2026-11-11T09:03:15+00:00",
    "soccer_o25": "2026-11-08T20:07:32+00:00",
-   "soccer_o25_cup": "2026-11-11T08:33:43+00:00",
-   "soccer_o25_intl": "2026-11-11T08:33:43+00:00",
+   "soccer_o25_cup": "2026-11-11T09:03:15+00:00",
+   "soccer_o25_intl": "2026-11-11T09:03:15+00:00",
    "soccer_p05": "2026-11-08T20:07:32+00:00",
-   "soccer_p05_cup": "2026-11-11T08:33:43+00:00",
-   "soccer_p05_intl": "2026-11-11T08:33:43+00:00",
+   "soccer_p05_cup": "2026-11-11T09:03:15+00:00",
+   "soccer_p05_intl": "2026-11-11T09:03:15+00:00",
    "soccer_team1": "2026-11-08T19:58:15+00:00",
    "soccer_team1_cup": "2026-11-05T19:33:47+00:00",
-   "soccer_team1_intl": "2026-11-11T08:33:43+00:00",
+   "soccer_team1_intl": "2026-11-11T09:03:15+00:00",
    "soccer_team2": "2026-11-08T19:58:15+00:00",
    "soccer_team2_cup": "2026-11-05T19:33:47+00:00",
-   "soccer_team2_intl": "2026-11-11T08:33:43+00:00",
+   "soccer_team2_intl": "2026-11-11T09:03:15+00:00",
    "soccer_u35": "2026-11-08T20:07:32+00:00",
-   "soccer_u35_cup": "2026-11-11T08:33:43+00:00",
-   "soccer_u35_intl": "2026-11-11T08:33:43+00:00",
-   "tennis": "2026-11-11T08:33:43+00:00",
+   "soccer_u35_cup": "2026-11-11T09:03:15+00:00",
+   "soccer_u35_intl": "2026-11-11T09:03:15+00:00",
+   "tennis": "2026-11-11T09:03:15+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -528,142 +529,9 @@
    }
   },
   "odds_api": {
-   "allowance": 1,
-   "at": "2026-11-11T08:33:43+00:00",
-   "calls": 1,
+   "allowance": 0,
+   "at": "2026-11-11T09:03:15+00:00",
    "remaining": 308,
-   "totals_on": [
-    {
-     "empty": {
-      "no_event": 0,
-      "no_totals": 18,
-      "other_point": 6,
-      "points": [
-       3.25,
-       3.0
-      ],
-      "stale": 0
-     },
-     "key": "soccer_uefa_nations_league",
-     "listed": 24,
-     "rows": [
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV12ARMCYP-3"
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV12ALBFIN-3"
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV12ENGCRO-3",
-       "points": [
-        3.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV12ITAFRA-3",
-       "points": [
-        3.0
-       ]
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV12MNELAT-3"
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV12SMRBLR-3"
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV13MDAKAZ-3"
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV13ANDGIB-3"
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV13BULISL-3"
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV13LIEAZE-3"
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV13LUXEST-3"
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV13NEDGRE-3",
-       "points": [
-        3.0
-       ]
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV13SCOMKD-3"
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV13SLOSUI-3"
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV13SRBGER-3",
-       "points": [
-        3.25
-       ]
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV13SVKFRO-3"
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV14KOSISR-3"
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV14GEOHUN-3"
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV14NORWAL-3",
-       "points": [
-        3.25
-       ]
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV14AUTIRL-3"
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV14NIRUKR-3"
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV14PORDEN-3",
-       "points": [
-        3.0
-       ]
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV14ROUPOL-3"
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV14SWEBIH-3"
-      }
-     ]
-    }
-   ],
    "used": 192
   },
   "outages": [
@@ -683,7 +551,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 1569,
+  "runs": 1570,
   "tennis_shortlist": {
    "audit": [
     {
@@ -695,7 +563,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-11T08:34:44+00:00"
+  "updated": "2026-11-11T09:04:11+00:00"
  },
  "quotes": [
   {
@@ -381319,7 +381187,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-11T08:33:43+00:00",
+   "close_at": "2026-11-11T09:03:15+00:00",
    "close_price": 0.84,
    "date": "2026-11-13",
    "edge": null,
@@ -385190,7 +385058,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-11T08:33:43+00:00",
+   "close_at": "2026-11-11T09:03:15+00:00",
    "close_price": 0.71,
    "date": "2026-11-13",
    "edge": null,
@@ -385230,7 +385098,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-11T08:33:43+00:00",
+   "close_at": "2026-11-11T09:03:15+00:00",
    "close_price": 0.79,
    "date": "2026-11-12",
    "edge": null,
@@ -385954,7 +385822,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-11T08:33:43+00:00",
+   "close_at": "2026-11-11T09:03:15+00:00",
    "close_price": 0.92,
    "date": "2026-11-13",
    "edge": null,
@@ -385994,7 +385862,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-11T08:33:43+00:00",
+   "close_at": "2026-11-11T09:03:15+00:00",
    "close_price": 0.79,
    "date": "2026-11-13",
    "edge": null,
@@ -386034,7 +385902,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-11T08:33:43+00:00",
+   "close_at": "2026-11-11T09:03:15+00:00",
    "close_price": 0.84,
    "date": "2026-11-13",
    "edge": null,
@@ -386074,7 +385942,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-11T08:33:43+00:00",
+   "close_at": "2026-11-11T09:03:15+00:00",
    "close_price": 0.67,
    "date": "2026-11-13",
    "edge": null,
@@ -401396,7 +401264,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-11T08:33:43+00:00",
+   "close_at": "2026-11-11T09:03:15+00:00",
    "close_price": 0.8,
    "date": "2026-11-12",
    "edge": null,
@@ -403716,7 +403584,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-11T08:33:43+00:00",
+   "close_at": "2026-11-11T09:03:15+00:00",
    "close_price": 0.74,
    "date": "2026-11-14",
    "edge": null,
@@ -406083,7 +405951,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-11T08:33:43+00:00",
+   "close_at": "2026-11-11T09:03:15+00:00",
    "close_price": 0.79,
    "date": "2026-11-13",
    "edge": null,
@@ -414733,7 +414601,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-11T08:33:43+00:00",
+   "close_at": "2026-11-11T09:03:15+00:00",
    "close_price": 0.85,
    "date": "2026-11-14",
    "edge": null,
@@ -420722,7 +420590,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-11T08:33:43+00:00",
+   "close_at": "2026-11-11T09:03:15+00:00",
    "close_price": 0.77,
    "date": "2026-11-14",
    "edge": null,
@@ -421048,8 +420916,8 @@
    "price_b": 0.49,
    "price_draw": null,
    "prob_a": 0.515,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-11T09:03:53+00:00",
    "side_a": "Junlu Sun",
    "side_b": "Ru Xi Wu",
    "source": "polymarket_us",
@@ -421058,7 +420926,7 @@
    "stake": 0.0,
    "start": "2026-11-11T03:08:11+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfwo",
    "uncovered": null,
    "untraded": false,
@@ -421785,8 +421653,8 @@
    "price_b": 0.94,
    "price_draw": null,
    "prob_a": 0.065,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-11T09:03:53+00:00",
    "side_a": "Tsz Fu Wong",
    "side_b": "Pawit Sornlaksup",
    "source": "polymarket_us",
@@ -421795,7 +421663,7 @@
    "stake": 0.0,
    "start": "2026-11-11T04:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -422464,8 +422332,8 @@
    "price_b": 0.43,
    "price_draw": null,
    "prob_a": 0.575,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-11T09:03:54+00:00",
    "side_a": "Jayson Blando",
    "side_b": "Natsuki Yamamoto",
    "source": "polymarket_us",
@@ -422474,7 +422342,7 @@
    "stake": 0.0,
    "start": "2026-11-11T04:53:11+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -422600,8 +422468,8 @@
    "price_b": 0.77,
    "price_draw": null,
    "prob_a": 0.235,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-11T09:03:57+00:00",
    "side_a": "Yan Cheng CHEN",
    "side_b": "Tianhui Zhang",
    "source": "polymarket_us",
@@ -422610,7 +422478,7 @@
    "stake": 0.0,
    "start": "2026-11-11T05:52:11+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -422770,8 +422638,8 @@
    "price_b": 0.68,
    "price_draw": null,
    "prob_a": 0.325,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-11T09:03:59+00:00",
    "side_a": "Stepan Baum",
    "side_b": "Dmitry Popko",
    "source": "polymarket_us",
@@ -422780,7 +422648,7 @@
    "stake": 0.0,
    "start": "2026-11-11T06:30:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -423078,8 +422946,8 @@
    "price_b": 0.23,
    "price_draw": null,
    "prob_a": 0.775,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-11T09:04:02+00:00",
    "side_a": "Tobia Costanzo Baragiola Mordini",
    "side_b": "Stefan Ilie Bogdan Petre",
    "source": "polymarket_us",
@@ -423088,7 +422956,7 @@
    "stake": 0.0,
    "start": "2026-11-11T06:30:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -423146,8 +423014,8 @@
    "price_b": 0.77,
    "price_draw": null,
    "prob_a": 0.235,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-11T09:04:03+00:00",
    "side_a": "Cezar Stefan Bentzel",
    "side_b": "Mattia Nannelli",
    "source": "polymarket_us",
@@ -423156,7 +423024,7 @@
    "stake": 0.0,
    "start": "2026-11-11T06:30:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -423317,8 +423185,8 @@
    "price_b": 0.84,
    "price_draw": null,
    "prob_a": 0.165,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-11T09:04:07+00:00",
    "side_a": "Matyas Kozlovsky",
    "side_b": "Josip Simundza",
    "source": "polymarket_us",
@@ -423327,7 +423195,7 @@
    "stake": 0.0,
    "start": "2026-11-11T07:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -423418,8 +423286,8 @@
    "price_b": 0.83,
    "price_draw": null,
    "prob_a": 0.175,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-11T09:04:08+00:00",
    "side_a": "Richard Zusman",
    "side_b": "George Lazarov",
    "source": "polymarket_us",
@@ -423428,7 +423296,7 @@
    "stake": 0.0,
    "start": "2026-11-11T07:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -423452,8 +423320,8 @@
    "price_b": 0.72,
    "price_draw": null,
    "prob_a": 0.285,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-11T09:04:08+00:00",
    "side_a": "Angella Okutoyi",
    "side_b": "Jennifer Ruggeri",
    "source": "polymarket_us",
@@ -423462,7 +423330,7 @@
    "stake": 0.0,
    "start": "2026-11-11T07:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfwo",
    "uncovered": null,
    "untraded": false,
@@ -423486,8 +423354,8 @@
    "price_b": 0.05,
    "price_draw": null,
    "prob_a": 0.955,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-11T09:04:08+00:00",
    "side_a": "Ane Mintegi Del Olmo",
    "side_b": "Laura Svatikova",
    "source": "polymarket_us",
@@ -423496,7 +423364,7 @@
    "stake": 0.0,
    "start": "2026-11-11T07:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfwo",
    "uncovered": null,
    "untraded": false,
@@ -423520,8 +423388,8 @@
    "price_b": 0.88,
    "price_draw": null,
    "prob_a": 0.125,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-11T09:04:08+00:00",
    "side_a": "Vicky Van de Peer",
    "side_b": "Anastasija Cvetkovic",
    "source": "polymarket_us",
@@ -423530,7 +423398,7 @@
    "stake": 0.0,
    "start": "2026-11-11T07:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfwo",
    "uncovered": null,
    "untraded": false,
@@ -424967,7 +424835,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-11T08:33:43+00:00",
+   "close_at": "2026-11-11T09:03:15+00:00",
    "close_price": 0.8,
    "date": "2026-11-13",
    "edge": null,
@@ -426229,6 +426097,176 @@
    "uncovered": null,
    "untraded": false,
    "url": "https://polymarket.us/event/itfme-bozbar-andrrad-2026-11-11",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-11",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfme-wisabd-kriwyk-2026-11-11",
+   "label": "Wissam Abderrahman vs Kris van Wyk",
+   "liquidity": null,
+   "logged": "2026-11-11T09:03:14+00:00",
+   "market_id": "aec-itfme-wisabd-kriwyk-2026-11-11",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.7,
+   "price_b": 0.31,
+   "price_draw": null,
+   "prob_a": 0.695,
+   "result": null,
+   "settled": null,
+   "side_a": "Wissam Abderrahman",
+   "side_b": "Kris van Wyk",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-11T09:16:20+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfme",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfme-wisabd-kriwyk-2026-11-11",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-11",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfwo-abibho-martsan-2026-11-11",
+   "label": "Abigeyle Bhopal vs Marta Soriano Santiago",
+   "liquidity": null,
+   "logged": "2026-11-11T09:03:14+00:00",
+   "market_id": "aec-itfwo-abibho-martsan-2026-11-11",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.06,
+   "price_b": 0.95,
+   "price_draw": null,
+   "prob_a": 0.055,
+   "result": null,
+   "settled": null,
+   "side_a": "Abigeyle Bhopal",
+   "side_b": "Marta Soriano Santiago",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-11T09:16:20+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfwo",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfwo-abibho-martsan-2026-11-11",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-11",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfwo-neusen-helpel-2026-11-11",
+   "label": "Neus Torner Sensano vs Helene Pellicano",
+   "liquidity": null,
+   "logged": "2026-11-11T09:03:14+00:00",
+   "market_id": "aec-itfwo-neusen-helpel-2026-11-11",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.94,
+   "price_b": 0.07,
+   "price_draw": null,
+   "prob_a": 0.935,
+   "result": null,
+   "settled": null,
+   "side_a": "Neus Torner Sensano",
+   "side_b": "Helene Pellicano",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-11T09:37:13+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfwo",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfwo-neusen-helpel-2026-11-11",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-11",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfwo-alekian-isagal-2026-11-11",
+   "label": "Aleksandra Iankovskaia vs Isabel Adrover Gallego",
+   "liquidity": null,
+   "logged": "2026-11-11T09:03:14+00:00",
+   "market_id": "aec-itfwo-alekian-isagal-2026-11-11",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.19,
+   "price_b": 0.82,
+   "price_draw": null,
+   "prob_a": 0.185,
+   "result": null,
+   "settled": null,
+   "side_a": "Aleksandra Iankovskaia",
+   "side_b": "Isabel Adrover Gallego",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-11T09:38:14+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfwo",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfwo-alekian-isagal-2026-11-11",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-11",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfwo-lucpar-chifor-2026-11-11",
+   "label": "Lucia Ros Parres vs Chiara Fornasieri",
+   "liquidity": null,
+   "logged": "2026-11-11T09:03:14+00:00",
+   "market_id": "aec-itfwo-lucpar-chifor-2026-11-11",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.12,
+   "price_b": 0.89,
+   "price_draw": null,
+   "prob_a": 0.115,
+   "result": null,
+   "settled": null,
+   "side_a": "Lucia Ros Parres",
+   "side_b": "Chiara Fornasieri",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-11T09:38:14+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfwo",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfwo-lucpar-chifor-2026-11-11",
    "venue": "polymarket_us",
    "venue_start": null
   }
