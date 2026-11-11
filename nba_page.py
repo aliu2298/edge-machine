@@ -42,7 +42,7 @@ RULE_LINES = {
              "Exit: rest a sell for half at 2x and half at 3x, filled only by prints strictly through the target from the tip on; "
              "the rest is held to settlement. Production: traded live."),
     NO_ID: ("Entry: after the tip, rest a post-only NO bid at 75% of a bucket's pregame NO price (10-95c); a bucket already at "
-            "or under the bid at the tip is no entry.",
+            "or under the bid at the tip is no entry. From 2026-11-11 the 21+ rung is not entered at all.",
             "Exit: sell it back at the pregame price on a print strictly above it, else hold to settlement. Production: traded live."),
 }
 

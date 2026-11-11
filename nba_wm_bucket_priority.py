@@ -1,10 +1,10 @@
-"""NBA win margin BUCKET PRIORITY, bp-v2 (id wm_bucket_priority; table frozen 2026-11-09, Olu; tentative, in-sample; bp-v2 "kept" rule 2026-11-10).
+"""NBA win margin BUCKET PRIORITY, bp-v3 (id wm_bucket_priority; Olu 2026-11-11; tentative). bp-v1 (2026-11-09) gave 6-10 to NO, bp-v2 (2026-11-10) added "kept"; bp-v3 gives every bucket to YES.
 
 Two Production lanes trade the same Kalshi win margin contracts: the YES split (lane nba_winmargin_live, versions wm-yes-*) and the NO fade
 (lane nba_wm_nofade, versions wm-nofade-*). A collision is a contract on which both lanes' entry rules pass at the decision time. The
 executor lets one side take it and cedes the other, by this frozen table:
 
-    bucket 1-5    YES wins        bucket 6-10   NO wins        bucket 11-20   YES wins        21+ has no YES lane (unchanged)
+    bucket 1-5    YES wins        bucket 6-10   YES wins       bucket 11-20   YES wins        21+ has no YES lane; the NO fade skips 21PLUS (bp-v3)
 
 How a ceded row is known: the executor writes it to its decision snapshot (data/nba_wm_decisions.json) as a decision with
 outcome == "ceded", rule_ok true, `ceded_to` (the winning lane's version) and `why`. The records are read from THOSE decisions, never from
@@ -12,7 +12,7 @@ a date, so every night before the rule stays exactly as it was graded. nba_wm_v3
 decision out of the replay and files it under state["ceded"]; a ceded row is therefore never a win or a loss and is outside n, ROI, z and
 the halves of its lane. It is counted here and shown beside the table.
 
-bp-v2 (2026-11-10): in the 6-10 bucket YES cedes only if NO can trade the market right then (a NO plan and NO's own ask check). Otherwise YES KEEPS
+History, bp-v2 (2026-11-10): in the 6-10 bucket YES ceded only if NO could trade the market right then (a NO plan and NO's own ask check). Otherwise YES KEPT
 the market: the executor logs "kept", and YES trades it under its own rule, so a kept row IS graded as a normal YES entry. It is only counted
 (state["kept"], from decisions flagged kept / outcome "kept") so the review can see how often the NO side could not fill.
 
@@ -20,10 +20,10 @@ Review: once a band has 20 or more NO fills and 30 or more YES entries, the tabl
 """
 import html as _h
 
-PRIORITY = {"1-5": "yes", "6-10": "no", "11-20": "yes"}      # bucket label (the ledgers' "1-5") -> the side that keeps the contract
-BP_ID, BP_VERSION = "wm_bucket_priority", "bp-v2"
+PRIORITY = {"1-5": "yes", "6-10": "yes", "11-20": "yes"}      # bucket label (the ledgers' "1-5") -> the side that keeps the contract
+BP_ID, BP_VERSION = "wm_bucket_priority", "bp-v3"
 NAME = "Bucket Priority"
-FROZEN_ON = "2026-11-09"
+FROZEN_ON = "2026-11-11"
 STATUS = "tentative, in-sample"
 REVIEW_MIN_NO_FILLS, REVIEW_MIN_YES_ENTRIES = 20, 30
 YES_LANE, NO_LANE = "nba_winmargin_live", "nba_wm_nofade"
@@ -107,7 +107,8 @@ def note_html(*states):
     c = counts(*states)
     e = _h.escape
     return (f'<p class="sm bucket-priority-note"><b>{e(NAME)} {e(BP_VERSION)}.</b> When both lanes want the same contract, one steps aside: '
-            f'{e(table_text())} (21+ has no YES lane). {e(STATUS.capitalize())}, set {e(FROZEN_ON)}; it is read again once a band has '
+            f'{e(table_text())} (21+ has no YES lane, and the NO fade skips it). {e(STATUS.capitalize())}, set {e(FROZEN_ON)}; it is read again once a band has '
             f'{REVIEW_MIN_NO_FILLS}+ NO fills and {REVIEW_MIN_YES_ENTRIES}+ YES entries. '
             f'YES split: {c[YES_LANE]} ceded to the other lane, not graded. NO fade: {c[NO_LANE]} ceded to the other lane, not graded. '
-            f'6-10 kept by YES because NO could not fill ({e(BP_VERSION)}): {kept_count(*states)}, traded and graded as normal YES entries.</p>')
+            + (f' Under bp-v2 (2026-11-10), {kept_count(*states)} 6-10 markets were kept by YES because NO could not fill, traded and graded as normal YES entries.' if kept_count(*states) else '')
+            + '</p>')
