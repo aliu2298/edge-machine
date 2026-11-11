@@ -503,9 +503,10 @@ check("its rule text says 10c and that it is small and slow",
 gw_h = CB.build()
 gsec = gw_h[gw_h.find('<section id="rules"'):]
 gtx = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", gsec))
-check("the Commodities page: a row and its card after gas_cheap_no, with the small-and-slow note (in Method)",
+# 2026-11-11: gas daily is retired, so its card sits in the Retired fold below the weekly lane's.
+check("the Commodities page: a row and its card (gas daily retired, below it), with the small-and-slow note (in Method)",
       ("AAA gas weekly · cheap NO (15-30c, 10c spread)" in gtx,
-       gsec.find('id="gas-cheap-no"') < gsec.find('id="gas-week-cheap-no"'),
+       0 <= gsec.find('id="gas-week-cheap-no"') < gsec.find('id="gas-cheap-no"'),
        "about 3 entries a week, all on one weekly event, so 10 settled events takes about ten weeks. Review at 10, decide at 30." in gtx), (True, True, True))
 
 print("\nthe outcome unit is the Kalshi event, not the rung (2026-10-29)")

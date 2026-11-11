@@ -65,12 +65,12 @@ check("WTI dated with its record", (MS.WTI["retired"]["on"], MS.WTI["retired"]["
       ("2026-11-04", "13 entries on 4 settled events, 1 won; split −60.2%, hold −75.6%"))
 check("the Eastern date gate", (MS.retired(MS.WTI, dt.datetime(2026, 11, 4, 4, tzinfo=UTC)),
                                 MS.retired(MS.WTI, dt.datetime(2026, 11, 4, 5, tzinfo=UTC))), (False, True))
-check("gas daily and weekly carry no retirement, and are not retired", [(c["lane"], c.get("retired"), MS.retired(c, now))
-                                                                         for c in (MS.GAS, MS.GAS_WEEK)],
-      [("gas_cheap_no", None, False), ("gas_week_cheap_no", None, False)])
+check("gas daily and weekly were not retired with WTI (gas daily retired later, 2026-11-11)",
+      [(c["lane"], MS.retired(c, now)) for c in (MS.GAS, MS.GAS_WEEK)],
+      [("gas_cheap_no", False), ("gas_week_cheap_no", False)])
 check("WTI is built without WIDE's mentions retirement", "if k != \"retired\"" in inspect.getsource(MS), True)
 check("live and retired commodity lanes", ([c["lane"] for c in MS.LIVE_COMMOD], [c["lane"] for c in MS.GONE_COMMOD]),
-      (["gas_cheap_no", "gas_week_cheap_no"], ["wti_cheap_yes"]))
+      (["gas_week_cheap_no"], ["wti_cheap_yes", "gas_cheap_no"]))
 check("the album lanes are still live", [MS.ALBUM.get("retired"), MS.ALBUM_NO.get("retired")], [None, None])
 check("run() takes no new entry for a retired lane, fills and settlement go on",
       "pending = []                       # retired" in inspect.getsource(MS.run), True)
@@ -82,7 +82,8 @@ a, j = ch.find('<section id="rules"'), ch.find('<section id="retired"')
 cheap = ch[a:ch.find('<section id="method"')]
 check("one fold", (j > a > 0, ch.count('<section id="retired"')), (True, 1))
 check("WTI's card in the fold, not above it", ('id="wti-cheap-yes"' in ch[j:], 'id="wti-cheap-yes"' in ch[a:j]), (True, False))
-check("both gas cards live", ('id="gas-cheap-no"' in ch[a:j], 'id="gas-week-cheap-no"' in ch[a:j]), (True, True))
+check("the weekly gas card live; gas daily (retired 2026-11-11) in the fold",
+      ('id="gas-cheap-no"' in ch[j:], 'id="gas-week-cheap-no"' in ch[a:j]), (True, True))
 check("the fold names the record", "split −60.2%, hold −75.6%" in html.unescape(ch[j:]), True)
 
 print("\nnone is in Production")

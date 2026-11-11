@@ -113,7 +113,7 @@ rules = pages["nba"][pages["nba"].find('<section id="rules"'):pages["nba"].find(
 _ids = re.findall(r'<details class="sp-rule[^"]*" id="([^"]+)"', rules)
 check("NBA: the Rules table lists the two Production lanes first, then the two Sandbox paper lanes (2026-11-08, the version 3 comparison), each its own row "
       "(rows within each pair are ranked by sample size, so their order moves with the data)",
-      (sorted(_ids[:2]), sorted(_ids[2:])), (["wm-no", "wm-yes"], ["wm-no-75-row", "wm-yes-v3-paper-row"]))
+      (sorted(_ids[:2]), sorted(_ids[2:])), (["wm-no", "wm-yes"], ["wm-no-75-row", "wm-no-v5-row", "wm-yes-v3-paper-row", "wm-yes-v5-row"]))
 
 print("\nblind lanes demoted to baselines (2026-11-01, Olu: a lane needs a team or matchup filter)")
 for lid, at in (("cfb_dog_tp50", "33 settled events; split -0.5%, hold -15.9%"),):

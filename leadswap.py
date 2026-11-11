@@ -53,12 +53,18 @@ ROUNDS = (
         "leadswap_swing": ("KX2YRRATE15M", "KXGOLD15M", "KXBRENT15M", "KX10YRRATE15M"),
         "leadswap_fav": ("KXZEC15M", "KXGBPUSD15M", "KXGOLD15M", "KXCOPPER15M", "KXAUDUSD15M", "KXDOGE15M"),
     }),
+    dict(n=3, cut="2026-11-11T22:00:00+00:00", data="the Nov 9-11 forward windows (routing series)", markets={
+        "leadswap_fav": ("KXPALLADIUM15M", "KXUSDCAD15M"),
+    }),
 )
+# 2026-11-11 (Olu): the swing trade is retired at the round-3 cut; its record stays final in the archive. The
+# favourite trade runs on with round 3's exclusions. The controls are unchanged.
+TRADES_RETIRED = {"leadswap_swing": "2026-11-11T22:00:00+00:00"}
 EXCLUDED_AT = ROUNDS[0]["cut"]                 # round 1's cut (kept for older readers)
 EXCLUDED = {k: tuple(m for r in ROUNDS for m in r["markets"].get(k, ())) for k in ("leadswap_swing", "leadswap_fav")}
 CUT = {(k, m): r["cut"] for r in ROUNDS for k, ms in r["markets"].items() for m in ms}
 ROUND1_SHA256 = "23f753c50239a04a5f72edd23837a3ca2e4ffdd12e073cef371462fa176dff71"   # round 1 alone, as registered
-EXCLUDED_SHA256 = "59e940e4b20c695f9ad93085d651159cbf5dad34474fc875087cd93b825229a1"   # sha256 of excluded_fingerprint() (every round), set at registration
+EXCLUDED_SHA256 = "ea963eddefe3393349acdfc39f58119eecf25651e004fb414d2a7a87b76194dd"   # sha256 of excluded_fingerprint() (every round), set at registration
 PAST_H, DAY_H = 2, 24
 MIN_PAST, MIN_DAY = 4, 24
 TOP = 3
@@ -310,6 +316,8 @@ def routing(rows, picks, removed=False):
             continue
         for strat, side in (("leadswap_swing", "top"), ("leadswap_fav", "bottom"),
                             ("leadswap_swing_ctrl", "bottom"), ("leadswap_fav_ctrl", "top")):
+            if strat in TRADES_RETIRED and o >= W._ts(TRADES_RETIRED[strat]):
+                continue                                        # a retired trade enters nothing after its cut
             gone = s in EXCLUDED.get(strat, ())
             if removed and gone and o >= W._ts(CUT[(strat, s)]):
                 continue

@@ -8,6 +8,8 @@ import leadswap as L
 import sandbox_audit
 import swing15 as W
 import swing15_build as WB
+import sw15cuts as _C2, swing15_build as _WB2, leadswap as _L2
+_C2.RETIRED2, _WB2.NARROWED, _L2.TRADES_RETIRED = (), False, {}   # the lane as it ran before the 2026-11-11 narrowing; test_sw15keep.py checks the narrowed page
 
 FAILS = []
 
@@ -217,7 +219,7 @@ print("\nexclusions (2026-11-10, Olu): an excluded pick is skipped, never backfi
 import allowgate as _G
 check("the exclusion rounds are frozen (one fingerprint over every round; round 1's as registered) and each cut is a "
       "window boundary", (L.excluded_fingerprint() == L.EXCLUDED_SHA256, _G.fingerprint(L.ROUNDS[0]["markets"]) == L.ROUND1_SHA256,
-                          [W_._ts(r["cut"]) % 900 for r in L.ROUNDS]), (True, True, [0, 0]))
+                          all(W_._ts(r["cut"]) % 900 == 0 for r in L.ROUNDS)), (True, True, True))
 check("round 2 (2026-11-10, from the 17:09Z ledger): the lists as relayed, cut after round 1",
       (L.ROUNDS[1]["markets"], L.ROUNDS[1]["cut"] > L.ROUNDS[0]["cut"]),
       ({"leadswap_swing": ("KX2YRRATE15M", "KXGOLD15M", "KXBRENT15M", "KX10YRRATE15M"),
