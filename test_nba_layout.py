@@ -52,7 +52,7 @@ check("one Production row per lane, linked as #wm-yes and #wm-no",
       sorted(x for x in rule_rows if x[2] == "production"),      # ranked by sample size, so the pair's order moves with the data
       [("wm-no", "nba_wm_nofade", "production"), ("wm-yes", "nba_winmargin_live", "production")])
 check("two Sandbox rows (2026-11-08): the comparison, the version 3 YES rule and the 75% NO bid on paper",
-      sorted((x[1], x[2]) for x in rule_rows if x[2] == "sandbox"), [("nba_wm_nofade_75", "sandbox"), ("nba_wm_yes_v3", "sandbox")])
+      sorted((x[1], x[2]) for x in rule_rows if x[2] == "sandbox"), [("nba_wm_nofade_75", "sandbox"), ("nba_wm_nofade_v5", "sandbox"), ("nba_wm_yes_v3", "sandbox"), ("nba_wm_yes_v5", "sandbox")])
 check("columns: lane, market, record (games), entries won, ROI after fees, live fills, won v priced, evidence, verdict",
       [re.sub(r"<[^>]+>", "", c) for c in re.findall(r'<span class="sp-cell[^"]*">(.*?)</span>', r[r.find("sp-head-line"):r.find("</div>", r.find("sp-head-line"))])],
       ["Production rule", "Market", "Record (games)", "Entries won", "ROI after fees", "Live fills", "Won v priced", "Evidence", "Verdict"])

@@ -133,7 +133,8 @@ print("\nthe NBA page: v4 live, v3 older, the comparison on paper in the Sandbox
 nofade = N.load("/nonexistent")
 rows_ = NP.rows(CHAOS, nofade, s3, LIVE, None, s4, V4.load("/nonexistent", V4.RULE_V3))
 check("the Production rows read the v4 pairs; the Sandbox rows are the v3 YES and 75% NO paper", [(r["name"], r["prod"], r.get("pair")) for r in rows_],
-      [("nba_winmargin_live", True, f"{X.YES4_LANE}|nba_wm"), ("nba_wm_nofade", True, f"{X.NO4_LANE}|nba_wm"), ("nba_wm_yes_v3", False, None), ("nba_wm_nofade_75", False, None)])
+      [("nba_winmargin_live", True, f"{X.YES4_LANE}|nba_wm"), ("nba_wm_nofade", True, f"{X.NO4_LANE}|nba_wm"), ("nba_wm_yes_v3", False, None), ("nba_wm_nofade_75", False, None),
+       ("nba_wm_yes_v5", False, None), ("nba_wm_nofade_v5", False, None)])
 head, rules, _r = NP.rules_section(CHAOS, nofade, s3, LIVE, NOW, v4p=s4, v3p=V4.load("/nonexistent", V4.RULE_V3))
 check("the page has version 4's block, version 3 in Older versions, the switch note and the two comparison panels",
       ('id="wm-yes-v4"' in rules, 'id="wm-yes-v3"' in rules, 'id="wm-no-v4"' in rules, 'id="wm-no-v3"' in rules, "What changed." in rules, 'id="wm-yes-v3-paper"' in rules,
