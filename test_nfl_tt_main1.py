@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Offline checks for nfl_tt_main1 (nfl_tt_main1.py) and its NFL page row."""
 import datetime as dt
+import os
 import sys
 
 import nfl_tt as N
@@ -10,6 +11,9 @@ import sandbox_audit
 
 FAILS = []
 UTC = dt.timezone.utc
+# Retired 2026-11-11 (Olu, END NFL): the retirement is lifted for the entry and row logic, and restored for the page.
+_retired = dict(M.RETIRED)
+M.RETIRED.clear()
 KO = dt.datetime(2026, 11, 15, 18, 0, tzinfo=UTC)
 NOW = KO - dt.timedelta(minutes=60)
 
@@ -120,18 +124,21 @@ check("no dollar amount, no lane id in the visible copy", ("$" in html, M.LANE i
       (False, False))
 check("no guarded phrase", sandbox_audit.COPY_RE.search(html + open("nfl_tt_main1.py").read()
                                                        + open("nfl_tt_main1_build.py").read()), None)
+M.RETIRED.update(_retired)
+check("retired: no entry from 2026-11-11 on", (M.retired(M.LANE, NOW), M.run(M.empty(), [game()], NOW, fetch=fetch)), (True, []))
 import nfl_build
 built = nfl_build.build()
-rules = built[built.find('<section id="rules"'):built.find('<section id="events"')]
-check("the built NFL page has the row in its Rules section", f'data-source="{M.LANE}"' in rules, True)
+gone = built[built.find('<section id="retired"'):]
+check("the built NFL page has the row in its Retired fold, with its reason",
+      (f'data-source="{M.LANE}"' in gone, "Losing: -26% at 26 bets" in gone), (True, True))
 
 print("\nSandbox only")
 import sandbox_sources as S
 check("not a Sandbox-ledger source", M.LANE in S.SOURCES, False)
 check("not in the Production overrides", M.LANE in open("production.py").read(), False)
-check("the workflow runs it and saves its ledger",
-      all(x in open(".github/workflows/nfl-tt.yml").read() for x in ("python3 nfl_tt_main1.py", "data/nfl_tt_main1_ledger.json")),
-      True)
+check("retired 2026-11-11 (Olu, END NFL): the workflow is removed, the ledger kept, its final record in the reason",
+      (os.path.exists(".github/workflows/nfl-tt.yml"), os.path.exists(M.PATH), M.RETIRED[M.LANE]["on"], "-26%" in M.RETIRED[M.LANE]["reason"]),
+      (False, True, "2026-11-11", True))
 
 print()
 if FAILS:

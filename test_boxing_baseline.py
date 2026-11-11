@@ -68,8 +68,8 @@ print("\nthe Chaos baselines line lists it")
 check("the extra baseline link", CH._extra_baselines(), ['<a href="./fights.html#baseline-boxing_cheap_dog">Boxing cheap dog</a>'])
 idx = B.build()
 m = re.search(r'<p class="sm mut chaos-baselines">(.*?)</p>', idx, re.S)
-check("on the Sandbox page, beside the College football and Challenger baselines",
-      (bool(m) and "Boxing cheap dog" in m.group(1), bool(m) and "College football underdog" in m.group(1)), (True, True))
+check("on the Sandbox page, beside the Challenger baseline (the college football one retired 2026-11-11)",
+      (bool(m) and "Boxing cheap dog" in m.group(1), bool(m) and "Challenger 15-30c player" in m.group(1)), (True, True))
 check("not a row in the Chaos index", '<tr data-lane="boxing_cheap_dog"' in idx, False)
 
 check("no guarded phrase in the new copy", sandbox_audit.COPY_RE.search(str(g) + base + (m.group(1) if m else "")), None)

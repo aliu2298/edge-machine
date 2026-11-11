@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-11T20:07Z",
+ "generated": "2026-11-11T22:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -2749,9 +2749,9 @@
     {
      "id": "crypto_fav_band_below:KXBTCD-26NOV1117-T74749.99",
      "ko": "2026-11-11T22:05",
-     "r": null,
+     "r": 0.3992,
      "side": "no",
-     "st": "open",
+     "st": "won",
      "w": 11.59
     }
    ],
@@ -2762,7 +2762,7 @@
     "crypto_fav_band_below:KXETHD-26NOV0517-T2259.99": "outside the price band",
     "crypto_fav_band_below:KXETHD-26NOV1117-T2099.99": "already held by another lane",
     "crypto_fav_band_below:KXHYPED-26NOV0617-T78.9999": "published inside 30 min of kickoff",
-    "crypto_fav_band_below:KXHYPED-26NOV1117-T73.9999": "other",
+    "crypto_fav_band_below:KXHYPED-26NOV1117-T73.9999": "published inside 30 min of kickoff",
     "crypto_fav_band_below:KXSOLD-26NOV0517-T89.9999": "outside the entry window",
     "crypto_fav_band_below:KXSOLD-26NOV0617-T90.9999": "outside the entry window",
     "crypto_fav_band_below:KXXRPD-26NOV0517-T1.2399": "outside the entry window",

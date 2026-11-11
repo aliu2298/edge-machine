@@ -101,7 +101,12 @@ print("\nthe lane")
 check("series, hours, headline, record start", (lane["series"], lane["entry_hours"], lane["headline"], lane["since"]),
       (["KXNCAAFGAME"], (1, 24), "x4", "2026-11-02"))
 check("the exits: hold, the split, x2 x3 x4 and the standard targets", (set(C.LANE_EXITS + C.SINGLES) <= set(lane["exits"]), "x4" in lane["exits"]), (True, True))
-check("not a baseline and not retired", (lane.get("baseline"), lane.get("retired")), (None, None))
+check("retired 2026-11-11 (Olu), not a baseline, with its final record and reason",
+      (lane.get("baseline"), lane["retired"]["on"], "13 settled games" in lane["retired"]["at"], "-60.3%" in lane["retired"]["at"],
+       "failed forward" in lane["retired"]["reason"]), (None, "2026-11-11", True, True, True))
+base = next(x for x in chaos_lanes.LANES if x["id"] == "cfb_dog_tp50")
+check("its blind baseline retired with it (no other lane reads it), no longer a baseline",
+      (base.get("baseline"), base["retired"]["on"], "cfb_home_dog_x4" in base["retired"]["reason"]), (None, "2026-11-11", True))
 check("the research is on the card and marked not evidence", ("Not evidence" in lane["caution"], "+140.6%" in lane["caution"], "+63.7%" in lane["caution"],
       "25% reach 4x" in lane["caution"], "each Saturday" in lane["caution"]), (True,) * 5)
 check("the lane sits first on the nfl page, above the blind baseline", CB.HOMES["nfl"][:2], ("cfb_home_dog_x4", "cfb_dog_tp50"))
@@ -114,13 +119,18 @@ for ln in chaos_lanes.LANES:
     if ln["id"] in ("cfb_home_dog_x4", "cfb_dog_tp50"):
         C.lane_state(state, ln, dt.datetime(2026, 11, 8, 10, tzinfo=C.UTC))
 html = CB.sport_section("nfl", state)
-a, b = html.find('data-lane="cfb_home_dog_x4"'), html.find('id="baseline-cfb_dog_tp50"')
-check("the lane's card, then the baseline block directly after it", 0 < a < b, True)
-check("the card reads headline v hold and says review at 10, decide at 30", ("Sell-all-at-4x v hold" in html, "Review at 10 settled events, decide at 30" in html), (True, True))
-check("the baseline says a filtered lane must beat it", "must beat" in html[b:], True)
+check("both lanes sit in the collapsed Retired list, no live card and no baseline block",
+      ('<li data-lane="cfb_home_dog_x4"' in html, '<li data-lane="cfb_dog_tp50"' in html,
+       'data-lane="cfb_home_dog_x4" open' in html, 'id="baseline-cfb_dog_tp50"' in html), (True, True, False, False))
+check("the NFL page draws no cheap-side section while every lane on it is retired", CB.has_live("nfl"), False)
+gone = CB.retired_list("nfl")
+check("the NFL Retired block lists both, each with its final record", ('data-lane="cfb_home_dog_x4"' in gone, "-79.2%" in gone,
+      'data-lane="cfb_dog_tp50"' in gone, "+4.2%" in gone), (True, True, True, True))
 idx = CB.index(list(CB.with_config(state)["lanes"].values()))
-check("the Sandbox Chaos index lists the lane with a link to nfl.html and the headline column",
-      ('data-lane="cfb_home_dog_x4"' in idx, 'href="./nfl.html#cheap-side"' in idx, "Sell-all-at-4x ROI" in idx), (True, True, True))
+check("the Sandbox Chaos index (the archive) lists the lane as retired, linking to the NFL page's Retired block",
+      ('data-lane="cfb_home_dog_x4"' in idx, 'href="./nfl.html#retired"' in idx, "retired 2026-11-11" in idx), (True, True, True))
+check("and no longer lists the college football baseline", 'href="./nfl.html#baseline-cfb_dog_tp50"' in idx, False)
+html += gone
 import sandbox_audit
 check("public copy passes the guard", [m.group(0) for m in sandbox_audit.COPY_RE.finditer(html)], [])
 check("no dollar amounts in the card", "$" in html, False)

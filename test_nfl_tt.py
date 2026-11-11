@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Offline checks for nfl_tt_over_3545 / nfl_tt_over_main (nfl_tt.py) and their NFL page rows."""
 import datetime as dt
+import os
 import sys
 
 import lane_windows as W
@@ -113,18 +114,15 @@ check("lane_windows copies the window", (W.NFL_TO, W.NFL_FROM), N.WINDOW_MIN)
 wins = W.nfl_windows(NOW, [KO])
 check("one window per kickoff, K-75 to K-45", (wins[0]["start"], wins[0]["end"]),
       (KO - dt.timedelta(minutes=75), KO - dt.timedelta(minutes=45)))
-check("its stamp file", W.STAMP["nfl_tt"], "data/nfl_tt_window/request.txt")
-check("windows() with no kickoffs adds no NFL window (offline)",
-      [w for w in W.windows(NOW) if w["lane"] == "nfl_tt"], [])
-lines = W.stamp_lines(KO - dt.timedelta(minutes=70), ledger={}, games=[], fixtures=[], nfl=[KO])
-check("a read is asked for 70 min before", lines.get("data/nfl_tt_window/request.txt"), f"nfl_tt {KO.isoformat()} read 1")
-lines = W.stamp_lines(KO - dt.timedelta(minutes=58), ledger={}, games=[], fixtures=[], nfl=[KO])
-check("a second read at 58 min before", lines.get("data/nfl_tt_window/request.txt"), f"nfl_tt {KO.isoformat()} read 2")
-lines = W.stamp_lines(KO - dt.timedelta(minutes=50), ledger={}, games=[], fixtures=[], nfl=[KO])
-check("no ask inside the last 10 minutes of the window", "data/nfl_tt_window/request.txt" in lines, False)
-check("the VPS script accepts the stamp path",
-      "data/nfl_tt_window/request.txt" in open("scripts/vps_window_requests.sh").read(), True)
-check("the workflow listens on the stamp", "data/nfl_tt_window/**" in open(".github/workflows/nfl-tt.yml").read(), True)
+print("\nretired 2026-11-11 (Olu, END NFL): no window is asked for any more")
+check("no NFL stamp file, no NFL window even with a kickoff, the VPS script refuses the path, the workflow is gone",
+      ("nfl_tt" in W.STAMP, [w for w in W.windows(NOW, nfl=[KO]) if w["lane"] == "nfl_tt"],
+       W.stamp_lines(KO - dt.timedelta(minutes=70), ledger={}, games=[], fixtures=[], nfl=[KO]).get("data/nfl_tt_window/request.txt"),
+       "|data/nfl_tt_window/request.txt|" in open("scripts/vps_window_requests.sh").read(), os.path.exists(".github/workflows/nfl-tt.yml")),
+      (False, [], None, False, False))
+check("both lanes retired, the band lane with its final record", (N.retired(N.LANE_BAND, NOW.replace(year=2026, month=11, day=12)),
+      N.retired(N.LANE_MAIN, NOW.replace(year=2026, month=11, day=12)), "24-35, +0.4%" in N.RETIRED[N.LANE_BAND]["reason"],
+      N.RETIRED[N.LANE_BAND]["on"]), (True, True, True, "2026-11-11"))
 
 print("\nspread: two-sided, 5c or less")
 check("5c spread counts", N.quote(rung("X", "SF", 24.5, 0.40, 0.45)), (0.40, 0.45))
@@ -210,6 +208,8 @@ check("ESPN: deduped across day pages, codes and week key", [(x["id"], x["away"]
       [("77", "NE", "CHI", "2026-2-W07")])
 
 print("\nthe NFL page rows")
+# Every NFL lane retired 2026-11-11: the band lane's retirement is lifted here so the live-row layout is still tested.
+_band_retired = N.RETIRED.pop(N.LANE_BAND)
 s = N.empty()
 s["rules"][N.LANE_BAND]["picks"] = [dict(band["SF"], status="won", profit=120.0), dict(band["WSH"], status="open")]
 for lane in N.LANES:
@@ -256,9 +256,14 @@ late = N.picks_for(e_late, game(), dt.datetime(2026, 11, 1, 16, 0, tzinfo=dt.tim
 check("picks_for: before the retirement the main line enters; after it, nothing, while the 35-45c lane and the baseline carry on",
       (len(before[N.LANE_MAIN]) > 0, late[N.LANE_MAIN], len(late[N.LANE_BAND]) == len(before[N.LANE_BAND]),
        len(late[N.BASE]) == len(before[N.BASE])), (True, [], True, True))
+N.RETIRED[N.LANE_BAND] = _band_retired
 import nfl_build
 built = nfl_build.build()
-check("the built NFL page carries both rows (the main line in the Retired fold)", all(f'data-source="{x}"' in built for x in N.LANES) and 'data-source="nfl_tt_over_main"' in built[built.find('id="retired"'):], True)
+gone = built[built.find('id="retired"'):]
+check("the built NFL page carries both rows, both in the Retired fold since 2026-11-11 (the band lane with its date and reason)",
+      (all(f'data-source="{x}"' in gone for x in N.LANES), "Retired 2026-11-11 by Olu: No edge: break-even past its decision point" in gone,
+       built.find('<section id="rules"') < built.find('data-source="nfl_tt_over_3545"') and 'data-source="nfl_tt_over_3545"' not in
+       built[built.find('<section id="rules"'):built.find('id="retired"')]), (True, True, True))
 check("no guarded phrase in the lanes' copy",
       sandbox_audit.COPY_RE.search(NB.row_html(N.LANE_BAND, s) + NB.row_html(N.LANE_MAIN, s)
                                    + open("nfl_tt.py").read() + open("nfl_tt_build.py").read()), None)

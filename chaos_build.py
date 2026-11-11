@@ -273,7 +273,7 @@ HOMES = {
 }
 HOME_OF = {lane: page for page, lanes in HOMES.items() for lane in lanes}
 TENNIS = HOMES["tennis"]
-PAGE_LABEL = {"tennis": "Tennis", "nba": "NBA", "nfl": "NFL · College football"}
+PAGE_LABEL = {"tennis": "Tennis", "nba": "NBA", "nfl": "NFL"}
 # What the page's lanes do after the entry. Tennis holds since 2026-11-02 (its split lanes are retired).
 _EXIT_WORDS = {
     None: "<li>Rest a split sell: half at 2x, half at 3x.</li><li>A fill counts only on a traded print.</li>\n"
@@ -320,7 +320,28 @@ def home_href(lane_id):
     page = HOME_OF.get(lane_id)
     if page == "nba":
         return f"./nba.html#{NBA_ANCHORS.get(lane_id, 'retired')}"
+    if page and not has_live(page):                             # every lane retired: the section is gone, the records sit in Retired
+        return f"./{page}.html#retired"
     return f"./{page}.html#cheap-side" if page else None
+
+
+def has_live(page, state=None):
+    """True while the page has a chaos lane that is not retired (a baseline or in-sample row counts: it is still shown).
+    Read from the config, so a page drops its section the day its last lane is retired."""
+    import chaos_lanes
+    return any(not cfg.get("retired") for cfg in chaos_lanes.LANES if cfg["id"] in HOMES.get(page, ()))
+
+
+def retired_list(page):
+    """The page's retired chaos lanes as one plain list for the page's own Retired block: label, id, final record, reason."""
+    import chaos_lanes
+    gone = [cfg for cfg in chaos_lanes.LANES if cfg["id"] in HOMES.get(page, ()) and cfg.get("retired")]
+    if not gone:
+        return ""
+    items = "".join(f'<li data-lane="{esc(L["id"])}"><b>{esc(L.get("label") or L["id"])}</b> ({esc(L["id"])}): '
+                    f'{esc(retired_line(L))}</li>' for L in gone)
+    return (f'<div class="chaos-retired" id="cheap-side-retired"><p class="sm"><b>Cheap side + resting take-profit</b></p>'
+            f'<ul class="sm">{items}</ul></div>')
 
 
 def page_tiles(page, state=None):
@@ -369,8 +390,7 @@ def sport_section(page, state=None, retired=True):
         body += in_sample_block(sample)
     if gone and retired:                                        # the NBA page lists its retired lanes in its own bottom fold
         body += retired_block(gone)
-    block = ('<h3>College football</h3><p class="sm mut">The college football lane sits on the NFL page: '
-             'it is the same football markets, and the site has no college football page.</p>' if page == "nfl" else "")
+    block = ""
     return f"""<section id="cheap-side">
 <h2>Cheap side + resting take-profit</h2>
 <ul class="sm"><li>{esc(_BUY[page])}</li>

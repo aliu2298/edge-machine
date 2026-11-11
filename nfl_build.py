@@ -19,8 +19,8 @@ OUT = os.path.join(ROOT, "public_site", "nfl.html")
 FAMILY = "NFL"
 KEY = "nfl"
 TITLE = "Edge Machine · NFL"
-DESCRIPTION = "Every NFL rule under test, including the lane in Production."
-SCOPE = "Match-winner picks and the rules that fire them"
+DESCRIPTION = "NFL rules, all retired 2026-11-11 and kept with their final records."
+SCOPE = "Retired NFL and college football rules, kept with their final records"
 
 
 def method(idle_html=""):
@@ -30,7 +30,9 @@ def method(idle_html=""):
                  f'flat ${int(T.STAKE)} stake, and judged after fees against the price it paid.</p>'
                  '<p class="sm">ESPN FPI was paused on 2026-09-25 with every NFL lane and resumed by '
                  'the owner on 2026-10-16; its record counts from its 2026-09-21 reset. It was retired on '
-                 '2026-11-02 (Retired rules, below).</p>' + idle_html)
+                 '2026-11-02 (Retired rules, below).</p>'
+                 '<p class="sm">Every NFL and college football lane was retired on 2026-11-11, and the tab left the top nav. '
+                 'The final records are in Retired rules; the ledgers and the research are kept.</p>' + idle_html)
         return "Method", "venue note", inner, False
     return _method
 
@@ -62,7 +64,8 @@ def build(d=None, st=None, now=None, own_lanes=True):
             import nfl_tt_main1 as M1
             import nfl_tt_main1_build as MB
             for lane in M1.LANES:
-                rows.append(MB.template_row(lane, None, tt_state))
+                r = MB.template_row(lane, None, tt_state)
+                (retired if r.get("gone") else rows).append(r)
         except Exception as exc:                                # noqa: BLE001
             print(f"nfl_build: the main line +1 lane failed: {type(exc).__name__}: {exc}")
     tracker = lambda rs: [r for r in rs if not r.get("own")]    # noqa: E731
@@ -82,6 +85,8 @@ def build(d=None, st=None, now=None, own_lanes=True):
         return out
 
     def empty_reason(d_, rs, idle_, now_):
+        if not rs:                                              # 2026-11-11 (Olu, END NFL): every lane retired
+            return "every NFL and college football lane was retired 2026-11-11; nothing is read any more"
         if own(rs) and not any(r["a"].get("n") or r.get("open") for r in tracker(rs)):
             import nfl_tt_build as TB
             return TB.empty_reason(tt_state)
@@ -94,11 +99,21 @@ def build(d=None, st=None, now=None, own_lanes=True):
         market=lambda d_, r: r["own"]["market"] if r.get("own") else CC.market(d_, r),
         definition=lambda d_, r: r["own"]["details"] if r.get("own") else SP.default_definition(d_, r),
         recent=lambda d_, r, n_: "" if r.get("own") else CC.recent_html(d_, r, n_),
-        method=method(idle_html), retired=retired, empty_reason=empty_reason,
+        method=method(idle_html), retired=retired, empty_reason=empty_reason, retired_extra=_chaos_retired(),
         lane_tiles=lambda: _lane_tiles())
-    # cfb_dog_tp50's home (2026-10-27): the cheap-side section near the top, before the rules.
+    # The college football cheap-side lanes' home (2026-10-27): a section near the top, before the rules. Both were retired
+    # 2026-11-11 (Olu), so the section is drawn only while a lane is live; their records sit in the Retired block.
     import chaos_build
-    return chaos_build.place(SP.page(sp, d, st, now, rows=rows, idle=idle), "nfl", before='<section id="rules"')
+    html = SP.page(sp, d, st, now, rows=rows, idle=idle)
+    return chaos_build.place(html, "nfl", before='<section id="rules"', retired=False) if chaos_build.has_live("nfl") else html
+
+
+def _chaos_retired():
+    try:
+        import chaos_build
+        return chaos_build.retired_list("nfl")
+    except Exception:                                           # noqa: BLE001
+        return ""
 
 
 def _lane_tiles():

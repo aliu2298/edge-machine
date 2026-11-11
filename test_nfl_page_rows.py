@@ -44,18 +44,20 @@ check("open picks counts their open entries", int(tiles.get("open picks", 0)) >=
 
 print("\nthe rows")
 r = main[main.find('<section id="rules"'):main.find('<section id="events"')]
-check("team total over is a Sandbox row read at its own floor (50)",
-      re.search(r'data-source="nfl_tt_over_3545"[^>]*data-stage="sandbox".*?data-l="Evidence">([^<]*)<', r, re.S).group(1),
-      f'{a["n"]}/{N.READ_AT["nfl_tt_over_3545"]}')
 ret = main[main.find('<section id="retired"'):]
+check("every NFL lane retired 2026-11-11 (END NFL): no team-total or main line +1 row in the live Rules",
+      ('data-source="nfl_tt_over_3545"' in r, 'data-source="nfl_tt_main1"' in r), (False, False))
+check("both sit in the Retired fold with the 2026-11-11 reason",
+      ('data-source="nfl_tt_over_3545"' in ret, 'data-source="nfl_tt_main1"' in ret, "Retired 2026-11-11 by Olu" in ret), (True, True, True))
 check("the retired main-line lane is in the Retired fold, with its reason",
       ('data-source="nfl_tt_over_main"' in ret, "Retired 2026-10-31 by Olu" in ret), (True, True))
 check("ESPN FPI is in the Retired fold, not a live row", ('data-source="espn_fpi"' in ret, 'data-source="espn_fpi"' in r), (True, False))
 
 print("\nEvents")
 ev = main[main.find('<section id="events"'):main.find('<section id="retired"')]
-check("Events lists the team-total entries", 'data-source="nfl_tt_over_3545"' in ev, True)
-check("the empty state no longer says no read is stored", "no read is stored" in ev, False)
+check("Events lists no team-total entry (nothing live since 2026-11-11)", 'data-source="nfl_tt_over_3545"' in ev, False)
+check("the empty state says every lane is retired, not that no read is stored",
+      ("no read is stored" in ev, "retired 2026-11-11; nothing is read any more" in ev), (False, True))
 
 print("\nESPN FPI (NFL), retired 2026-11-02: nothing logged after its retirement landed")
 fpi = [q for q in T.bet_rows(T.load()) if q.get("source") == "espn_fpi" and q.get("sport") == "nfl"]

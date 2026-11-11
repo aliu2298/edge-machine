@@ -41,8 +41,15 @@ def row_data(lane=M.LANE, state=None):
     picks = _picks(state, lane)
     a = M.stats(picks)
     a["unit"] = "bet"
-    v = B.verdict(dict(a, n=a["n"] + a["n_price"]))
-    return dict(name=lane, sport="nfl_team_total", a=a, v=v, meta={"note": M.DEFINITION[lane]}, picks=picks)
+    gone = M.RETIRED.get(lane)
+    v = "retired" if gone else B.verdict(dict(a, n=a["n"] + a["n_price"]))
+    return dict(name=lane, sport="nfl_team_total", a=a, v=v, meta={"note": M.DEFINITION[lane]}, picks=picks,
+                **({"gone": gone_text(lane)} if gone else {}))
+
+
+def gone_text(lane=M.LANE):
+    r = M.RETIRED[lane]
+    return f"Retired {r['on']} by Olu: {r['reason']} No new entries from {r['on']}; its rows stay on file."
 
 
 def _entries(picks, limit=15):

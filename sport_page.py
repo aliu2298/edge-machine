@@ -113,6 +113,9 @@ def spec(**kw):
         # tiles pool exactly those cells. fold_prod: the Production list is a closed fold. compact: the row drops its "Won v priced"
         # and "Evidence" cells (both stay in the fold; the verdict carries the evidence count) and the name may wrap.
         live=False, fold_prod=False, compact=False,
+        # retired_extra: html listed under the retired rows (lanes kept outside the tracker, e.g. the NFL page's
+        # retired college football cheap-side lanes, 2026-11-11), each its final record and dated reason.
+        retired_extra="",
     )
     out.update(kw)
     return out
@@ -676,7 +679,8 @@ def retired_html(sp, d, now):
     """Rules retired by hand: their own folded section after Events (so the first screen keeps
     Rules and the Events heading), each row its final record and its dated reason."""
     gone = sorted(sp.get("retired") or (), key=lambda r: (-int(r["a"].get("n") or 0), sp_name(r)))
-    if not gone:
+    extra = sp.get("retired_extra") or ""
+    if not gone and not extra:
         return ""
     scoped = sp["scoped"] and len(scopes_present(gone)) > 1
     body = "".join(
@@ -684,10 +688,12 @@ def retired_html(sp, d, now):
         + f'<p class="sm mut sp-retired-why" data-source="{esc(r["name"])}" data-sport="{esc(r["sport"])}">'
           f'{esc(r.get("gone") or "")}</p>'
         for r in gone)
-    n = f'{len(gone)} rule{"s" if len(gone) != 1 else ""}'
+    n_all = len(gone) + extra.count("<li ")
+    n = f'{n_all} rule{"s" if n_all != 1 else ""}'
+    rules = f'<div class="sp-rules-list" data-list="retired">{list_head(scoped, sp=sp)}{body}</div>' if gone else ""
     return (f'<section id="retired" class="sp-section"><details class="fold sp-retired"><summary><h3>Retired rules</h3>'
             f'<span class="sm mut">· {esc(n)} · final records · no new entries</span></summary>'
-            f'<div class="sp-rules-list" data-list="retired">{list_head(scoped, sp=sp)}{body}</div></details></section>')
+            f'{rules}{extra}</details></section>')
 
 
 # ------------------------------------------------------------------ the events
