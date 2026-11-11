@@ -393,6 +393,37 @@ def _cheap_row(cfg, st, retired=False):
                  f'Its rows stay; any open entry still settles.</p>' if retired and gone else "")
     if retired and gone.get("note"):
         gone_line += f'<p class="sp-def">{e(gone["note"])}.</p>'
+    if cfg.get("headline") == "hold" and not retired:
+        # 2026-11-11 (Olu): hold to the end is the record, judged by weeks (one Kalshi event = one week = one cluster).
+        w = MS.week_record(es)
+        n = w["weeks"]
+        record = f'{w["positive"]}–{n - w["positive"]} wks' if n else '<span class="mut">—</span>'
+        roi = MS._headline(r["roi_held"], r)
+        roi_cell = (f'<span class="mut">{e(roi)}</span>' if roi in ("pending", "—") or n < cfg["review_weeks"]
+                    else f'<span class="{fmt.tone(r["roi_held"], ".1f", 100)}">{e(roi)}</span>')
+        verdict = SP.verdict_badge(dict(v="early", a={"n": n}) if n < cfg["review_weeks"] else
+                                   dict(v="promising" if (r["roi_held"] or 0) > 0 else "behind", a={"n": n}))
+        params = params.replace(
+            '<dt>Exit</dt><dd>Half resting at 2x, half at 3x, filled only on a traded print; else held to settlement</dd>',
+            '<dt>Exit</dt><dd>Held to settlement (the record); the 2x/3x split is a secondary line inside</dd>').replace(
+            '<dt>Record</dt><dd>Sandbox, paper, a fresh record from the first entry · review at 10 settled events, decide at 30</dd>',
+            f'<dt>Record</dt><dd>Sandbox, paper, hold to the end, judged by weeks · stage from {e(cfg["stage_from"])}, '
+            f'entries kept · review at {cfg["review_weeks"]} settled weeks, decide at {cfg["decide_weeks"]}+</dd>')
+        early = " is-early" if n < cfg["review_weeks"] else ""
+        return (f'<details class="sp-rule{early}" data-source="{e(cfg["lane"])}" data-sport="commodities_cheap" '
+                f'data-scope="clubs" data-stage="sandbox"{" data-early=\"1\"" if early else ""}>'
+                f'<summary class="sp-line"><span class="sp-cell sp-c-name"><span class="sp-chev" aria-hidden="true">›</span>'
+                f'<b class="sp-name" title="{e(cfg["label"])}">{e(cfg["label"])}</b>'
+                f'<span class="sr-only"> · Rule details</span></span>'
+                f'<span class="sp-cell sp-c-market" data-l="Market">Kalshi</span>'
+                f'<span class="sp-cell num" data-l="Record">{record}</span>'
+                f'<span class="sp-cell num" data-l="ROI after fees · held">{roi_cell}</span>'
+                f'<span class="sp-cell num" data-l="Won v priced">{e(wvp)}</span>'
+                f'<span class="sp-cell num" data-l="Evidence">{n}/{cfg["decide_weeks"]} wks</span>'
+                f'<span class="sp-cell sp-c-verdict" data-l="Verdict">{verdict}</span></summary>'
+                f'<div class="sp-details-body"><p class="sp-details-name"><b>{e(cfg["label"])}</b> · Kalshi · cheap side, '
+                f'held to settlement · {e(MS.week_status(cfg, es))}</p>{params}{MS.label_cells(MS.section(st, e, cfg))}'
+                f'</div></details>')
     early = " is-early" if (not retired and n < 10) else ""
     return (f'<details class="sp-rule{early}" data-source="{e(cfg["lane"])}" data-sport="commodities_cheap" '
             f'data-scope="clubs" data-stage="sandbox"{" data-early=\"1\"" if early else ""}>'

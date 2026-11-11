@@ -223,6 +223,14 @@ GAS["retired"] = dict(on="2026-11-11", at="19 bets on 13 settled events, 5 won; 
                            "Nov 11 events from opening-minute prints at or before the entry minute; the price never "
                            "traded there again after the entry. Re-read so a sell counts only on a print at least 60 "
                            "seconds after the entry: 12 legs moved (4 to held, the rest later), split −20.5%")
+# Hold to the end is the weekly lane's record (2026-11-11, Olu): entry band unchanged (NO ask 15-30c), judged by WEEKS
+# (one Kalshi event = one week = one cluster), review at 8 settled weeks, decide at 10+. A fresh stage label from
+# Nov 11; the entries since Oct 27 are kept. The 2x/3x split stays as a secondary line inside the fold.
+GAS_WEEK.update(headline="hold", judge="weeks", review_weeks=8, decide_weeks=10, stage_from="2026-11-11",
+                evidence=("Olu's replay of 10 settled weeks (Sep 7 to Nov 9), the same rule, held: 15-30c 51 bets, 17 won, "
+                          "+31%; positive weeks Sep 28, Oct 5, Oct 19, Nov 2, Nov 9; negative Sep 7, 14, 21, Oct 12, "
+                          "Oct 26. Below 15c not added: 1-5c 0/10 (−107%), 6-10c 3/37 (+6%), 11-14c 3/20 (+12%), "
+                          "with every win in the falling-gas weeks."))
 COMMOD_LANES = (WTI, GAS, GAS_WEEK)
 LIVE_COMMOD = tuple(c for c in COMMOD_LANES if not c.get("retired"))
 GONE_COMMOD = tuple(c for c in COMMOD_LANES if c.get("retired"))
@@ -748,6 +756,34 @@ def record(entries):
                 roi_2x=mean(two), n_2x=len(two))
 
 
+def week_record(entries):
+    """The hold record judged by WEEKS (settled events; the rungs of one week settle together, one cluster): weeks
+    settled, weeks positive, profit per week (sum of the week's held P/L per contract, after fees), the mean of each
+    week's mean held ROI, and t over weeks (that mean over its standard error; None under 3 weeks)."""
+    evs = sorted(settled_events(entries).items())
+    cost = lambda e: e["price"] + fee(e["price"], TAKER)
+    prof = [round(sum(e["payout"] - cost(e) for e in v), 4) for _, v in evs]
+    rois = [sum(e["roi_held"] for e in v) / len(v) for _, v in evs]
+    n = len(evs)
+    mean = sum(rois) / n if n else None
+    t = None
+    if n >= 3:
+        sd = (sum((x - mean) ** 2 for x in rois) / (n - 1)) ** 0.5
+        t = round(mean / (sd / n ** 0.5), 2) if sd > 0 else None
+    return dict(weeks=n, positive=sum(p > 0 for p in prof), profit_per_week=(sum(prof) / n if n else None),
+                roi_week=mean, t=t, by_week=[(k, p) for (k, _), p in zip(evs, prof)])
+
+
+def week_line(cfg, entries):
+    """One plain line: the weeks record and the stage."""
+    w = week_record(entries)
+    pw = "—" if w["profit_per_week"] is None else f'{w["profit_per_week"]:+.2f}'.replace("-", "\u2212")
+    return (f'{w["weeks"]} settled week{"s" if w["weeks"] != 1 else ""}, {w["positive"]} positive · profit per week '
+            f'{pw} per contract · mean week held {_pct(w["roi_week"])}' + (f' · t over weeks {w["t"]:+.2f}'.replace("-", "\u2212")
+                                                                       if w["t"] is not None else "")
+            + f' · review at {cfg["review_weeks"]} settled weeks, decide at {cfg["decide_weeks"]}+')
+
+
 def weeks(entries):
     return [(k, record(v)) for k, v in sorted(by_event(entries).items(), reverse=True)]
 
@@ -823,6 +859,13 @@ def section(state, esc, cfg=STRICT):
              ("settled events", f'{r["settled_events"]} of {r["events"]}'), ("won", r["won"]),
              ("ROI after fees · split", _headline(r["roi"], r)), ("ROI after fees · held", _headline(r["roi_held"], r)),
              ("split ROI per event", _headline(r["roi_event"], r)), ("legs filled 2x / 3x", f'{r["filled_2x"]} / {r["filled_3x"]}'))
+    hold = cfg.get("headline") == "hold"
+    if hold:                                                    # hold is the record; the split is a secondary line
+        w = week_record(es)
+        shown = (("ROI after fees · held (the record)", _headline(r["roi_held"], r)),
+                 ("settled weeks", f'{w["weeks"]} of {r["events"]}'), ("weeks positive", w["positive"]),
+                 ("profit per week", "—" if w["profit_per_week"] is None else f'{w["profit_per_week"]:+.2f}'),
+                 ("entries", r["entries"]), ("won", r["won"]))
     tiles = "".join(f'<div class="tile"><b>{esc(str(v))}</b><span>{esc(k)}</span></div>' for k, v in shown)
     wk = "".join(f'<tr><td>{esc(k)}</td><td class="num">{w["entries"]}</td><td class="num">{w["filled_2x"]}</td>'
                  f'<td class="num">{w["filled_3x"]}</td><td class="num">{w["resolved"]}</td>'
@@ -862,11 +905,19 @@ def section(state, esc, cfg=STRICT):
             + (f'<p class="sm"><b>Sandbox · paper · baseline (blind, price band only) · not a lane, so no review '
                f'status</b> ({r["entries"]} entries, {r["resolved"]} resolved). Registered {cfg["registered"]}, a '
                f'baseline from {esc(cfg["baseline"]["on"])}; {cfg["backfill"]}.</p>' if cfg.get("baseline") else
+               (f'<p class="sm"><b>Sandbox · paper · hold to the end · judged by weeks · stage from '
+             f'{esc(cfg["stage_from"])}</b> ({esc(week_status(cfg, es))}; {r["entries"]} entries since '
+             f'{esc(cfg["registered"])} kept). {esc(week_line(cfg, es))}.</p>' if hold else
                f'<p class="sm"><b>Sandbox · paper · fresh record from its first entry · review at {REVIEW_AT} settled events, '
                f'decide at {DECIDE_AT}</b> ({esc(status(r["settled_events"]))}; {r["entries"]} entries, {r["resolved"]} '
-               f'resolved). Registered {cfg["registered"]}; {cfg["backfill"]}.</p>')
+               f'resolved). Registered {cfg["registered"]}; {cfg["backfill"]}.</p>'))
             + f'<p class="sm">{esc(cfg["rule"])}</p>{voided_line(state, esc)}<div class="tiles">{tiles}</div>'
-            '<p class="sm mut">ROI is per contract after fees, the mean over resolved entries (equal stake per entry). '
+            + (f'<p class="sm mut">Secondary, not the record: the 2x/3x split {_headline(r["roi"], r)} '
+               f'(legs filled {r["filled_2x"]} / {r["filled_3x"]}, sells only on prints 60s or more after the entry).</p>'
+               f'<details class="fold"><summary>Why this lane, and why hold</summary><p class="sm">{esc(cfg["evidence"])} '
+               f'The forward record so far covers {week_record(es)["weeks"]} settled weeks, so its ROI is not a verdict.'
+               f'</p></details>' if hold else "")
+            + '<p class="sm mut">ROI is per contract after fees, the mean over resolved entries (equal stake per entry). '
             'Held: the same entries to settlement. 2x only: the same entries with one sell at 2x. Each Kalshi event '
             f'is one outcome: its {esc(cfg.get("item", "Word").lower())}s move '
             'together, so the review rule counts settled events, and the split ROI per event is the mean over settled '
@@ -943,6 +994,18 @@ def status(events):
     return f"{n} · review at 10, decide at 30"
 
 
+def es_of(st):
+    return counted(st)
+
+
+def week_status(cfg, entries):
+    """A weeks-judged lane's stage: early under review_weeks settled weeks, then review, decide at decide_weeks+."""
+    n = week_record(entries)["weeks"]
+    if n < cfg["review_weeks"]:
+        return f'early · {n}/{cfg["review_weeks"]} settled weeks to review'
+    return f'review · {n} settled weeks' if n < cfg["decide_weeks"] else f'decide · {n} settled weeks'
+
+
 def lane_status(cfg, events):
     """status() for a lane; a BASELINE (cfg["baseline"], 2026-11-04: blind, price band only) has no review status."""
     return "baseline, not a lane" if cfg.get("baseline") else status(events)
@@ -969,9 +1032,11 @@ def summary(cfgs, states, esc, pairs=()):
             f'<tr><td><a href="#{esc(cfg["anchor"])}">{esc(cfg["label"])}</a></td>'
             f'<td class="num">{r["entries"]}</td><td class="num">{bad}</td><td class="num">{r["settled"]}</td>'
             f'<td class="num">{r["settled_events"]}</td><td class="num">{r["won"]}</td>'
-            f'<td class="num">{_headline(r["roi"], r)}</td><td class="num">{_headline(r["roi_held"], r)}</td>'
-            f'<td class="num">{r["filled_2x"]} / {r["filled_3x"]}</td><td class="num">{_sp(avg_spread(st))}</td>'
-            f'<td>{esc(lane_status(cfg, r["settled_events"]))}</td></tr>')
+            + (f'<td class="num mut">{_headline(r["roi"], r)}</td><td class="num"><b>{_headline(r["roi_held"], r)}</b></td>'
+               if cfg.get("headline") == "hold" else
+               f'<td class="num">{_headline(r["roi"], r)}</td><td class="num">{_headline(r["roi_held"], r)}</td>')
+            + f'<td class="num">{r["filled_2x"]} / {r["filled_3x"]}</td><td class="num">{_sp(avg_spread(st))}</td>'
+            f'<td>{esc(lane_status(cfg, r["settled_events"]) if cfg.get("judge") != "weeks" else week_status(cfg, es_of(st)))}</td></tr>')
     spread_line = "".join(
         f'{w}, strict v wide average spread paid {_sp(avg_spread(states[a["lane"]]))} v '
         f'{_sp(avg_spread(states[b["lane"]]))}. '
