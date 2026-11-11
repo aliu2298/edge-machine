@@ -107,7 +107,12 @@ def _summary_row(variant, key, label, rows):
     return out
 
 
+RETIRED_REASON = "No profit after costs in forward paper trading, matching the earlier 750-800 session backtests that found no edge."
+
+
 def _status(s):
+    if getattr(G, "LANE_RETIRED", None):
+        return L.sig(f"retired {G.LANE_RETIRED}")
     if s["n"] >= G.READ_AT:
         return L.sig("review due", "w")
     return L.sig(f'{s["n"]}/{G.READ_AT} to review')
@@ -174,6 +179,21 @@ Four rows from 2026-10-29 (a crossed book at the entry or the exit poll) were mo
 <div class="note sm">Research, look-ahead-free: the 5-minute range made +0.9bp a trade (t +0.91)
 on 500 nights and −1.2bp on the 250-night holdout, before costs; this lane measures what the venue really pays.</div>""",
                     cls="fold trade-method")
-    return L.section("gold-orb", "Gold Asia-open breakout (paper)",
-                     "2 variants · paper",
-                     lanes + empty + full + method)
+    retired = getattr(G, "LANE_RETIRED", None)
+    note = ""
+    if retired:
+        prim = [r for r in rows if r.get("anchor") == "utc_0130" and r.get("status") == "settled"]
+        parts = []
+        for v in G.VARIANTS:
+            mine = [r for r in prim if r.get("variant") == v]
+            nocost = sum(1 for r in mine if r.get("net_bp") is None)
+            gross = [r["gross_bp"] for r in mine if r.get("gross_bp") is not None]
+            nets = [r["net_bp"] for r in mine if r.get("net_bp") is not None]
+            parts.append(f'{G.VARIANTS[v][2]}: {len(mine)} settled, {_num(sum(gross) / len(gross) if gross else None)}bp '
+                         f'before costs; {_num(sum(nets) / len(nets) if nets else None)}bp after costs on the {len(nets)} '
+                         f'with a quote ({nocost} had no quote captured, so no after-costs figure: not backfilled)')
+        note = (f'<p class="sm">Retired {esc(retired)}, with the 01:00 UTC shadow anchor. {esc(RETIRED_REASON)}</p>'
+                f'<p class="sm mut">Final records, 01:30 UTC anchor: {esc("; ".join(parts))}.</p>')
+    return L.section("gold-orb", "Gold Asia-open breakout (paper)" + (f" · retired {retired}" if retired else ""),
+                     "2 variants · retired · records kept" if retired else "2 variants · paper",
+                     note + lanes + empty + full + method)

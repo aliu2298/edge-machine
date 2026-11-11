@@ -555,10 +555,18 @@ def restore_night(state, night, product=BACKFILL_PRODUCT, log_values=None, fetch
 
 # ---------- the live run ----------
 
+# 2026-11-11 (Olu): the lane is retired (A and B, both anchors): no night from LANE_RETIRED on. No profit after
+# costs in forward paper trading, matching the earlier 750-night backtests that found no edge. The ledger stays.
+LANE_RETIRED = "2026-11-11"
+
+
 def run(state, now_fn=lambda: dt.datetime.now(UTC), fetch=get, sleep=time.sleep, path=None, log=print):
     """Watch tonight's two anchors until both are resolved. Writes `path` after each change."""
     start = now_fn()
     day = night_of(start)
+    if day.isoformat() >= LANE_RETIRED:
+        log(f"the gold breakout lane is retired ({LANE_RETIRED}); nothing to do")
+        return []
     if not is_night(day):
         log(f"{day} ({day:%a}) is not a Sun-Thu night; nothing to do")
         return []

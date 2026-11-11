@@ -109,6 +109,16 @@ the ask and sells at the bid from the quote taken at the start of the entry and 
 (this data plan refuses the SIP quote), and no commission. Days counts settled plus no-break days; t is on net
 when quotes exist, else gross. The backtest on 807 days, done the same way, was flat to negative; this lane
 watches it live.</div>""", cls="fold trade-method")
+    if not live:                                                # every variant retired (2026-11-11): the lane is retired
+        c = [r for r in state.get("rows") or [] if r["variant"] == "C15" and r["status"] == "settled"]
+        nocost = sum(1 for r in c if r.get("net_bp") is None)
+        note = (f'<p class="sm">Retired {esc(N.RETIRED["C15"][0])}, the last running variant. No profit after costs in '
+                f'forward paper trading, matching the earlier 750-800 session backtests that found no edge.</p>'
+                f'<p class="sm mut">C15 final: {len(c)} trades; after-costs figures are missing on {nocost} of {len(c)} '
+                f'(no quote captured), so its record is mostly before costs and nothing is backfilled.</p>')
+        return L.section(SECTION_ID, f"Nasdaq open breakout (paper) · retired {N.RETIRED['C15'][0]}",
+                         f"{len(gone)} variants · retired · records kept",
+                         note + L.rules_list(gone, first="Variant", key="nasdaq-retired") + empty + method)
     return L.section(SECTION_ID, "Nasdaq open breakout (paper)",
                      f"{len(live)} running · paper",
                      L.rules_list(live, first="Variant", key="nasdaq-orb") + empty + retired + method)
