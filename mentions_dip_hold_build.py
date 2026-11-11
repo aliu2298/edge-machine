@@ -36,7 +36,7 @@ def record_table(state, esc, now_ts=None):
 
 
 def week_table(state, esc, now_ts=None):
-    """Every word whose bid filled, 10c and 15c side by side, for the latest week."""
+    """The latest week's words with an entry, 10c and 15c side by side; the words with none sit in a closed "Show all" fold (2026-11-11)."""
     if not state.get("events"):
         return '<p class="sm mut">No week has been read yet.</p>'
     tick = max(state["events"])
@@ -44,22 +44,26 @@ def week_table(state, esc, now_ts=None):
     # The latest week's entries only: M.entries spans every week, and an earlier week's ticker is not in this
     # week's markets (2026-11-04: KXTRUMPSAY-26NOV02-AUTO raised KeyError and the whole card vanished).
     by = {bid: {e["ticker"]: e for e in M.entries(state, bid, now_ts) if e["event"] == tick} for bid in M.BIDS}
+    word = lambda t: mk[t].get("word") or t
+    filled = sorted({t for d in by.values() for t in d}, key=lambda t: word(t).lower())
     rows = ""
-    for t in sorted({t for d in by.values() for t in d}, key=lambda t: (mk[t].get("word") or t).lower()):
+    for t in filled:
         cells = ""
         for bid in M.BIDS:
             e = by[bid].get(t)
             cells += (f'<td>{_clock(e["fill_ts"])} · {e["fill_px"] * 100:.0f}c</td><td class="num">{e["contracts"]:g}</td>' if e
-                      else '<td class="mut">no entry</td><td class="num">—</td>')
+                      else '<td class="mut">—</td><td class="num">—</td>')
         res = M.payout(mk[t])
-        rows += (f'<tr><td><b>{esc(mk[t].get("word") or t)}</b></td>{cells}'
+        rows += (f'<tr><td><b>{esc(word(t))}</b></td>{cells}'
                  f'<td>{"said, settled yes" if res == 1 else "settled no" if res == 0 else "open"}</td></tr>')
     rows = rows or '<tr><td colspan="6" class="mut">No bid has filled yet.</td></tr>'
-    words = len(mk)
-    return (f'<p class="sm"><b>{esc(tick)}</b> · {words} word markets · {len(by[0.10])} filled at 10c, {len(by[0.15])} at 15c</p>'
+    none = sorted((word(t) for t in mk if t not in filled), key=str.lower)
+    rest = (f'<details class="fold sm" id="dip-week-all"><summary>Show all {len(mk)} words</summary>'
+            f'<p class="sm mut">No entry: {esc(", ".join(none))}.</p></details>' if none else "")
+    return (f'<p class="sm"><b>{esc(tick)}</b> · {len(mk)} word markets · {len(by[0.10])} filled at 10c, {len(by[0.15])} at 15c</p>'
             '<div class="tbl"><table class="dip-week"><thead><tr><th>Word</th><th>10c fill</th><th class="num">Contracts at 10c fill</th>'
             '<th>15c fill</th><th class="num">Contracts at 15c fill</th><th>Market</th></tr></thead><tbody>'
-            + rows + "</tbody></table></div>")
+            + rows + "</tbody></table></div>" + rest)
 
 
 def research_fold(esc):
@@ -75,16 +79,22 @@ def research_fold(esc):
             f'<th class="num">z (by week)</th><th class="num">Weeks up</th></tr></thead><tbody>{rows}</tbody></table></div></details>')
 
 
-def section(state, esc, now_ts=None):
+def body(state, esc, now_ts=None):
+    """The lane's details for its row on the Culture page: the record at both bids, then closed folds (rule, this week's entries,
+    research). Nothing long is open on load (2026-11-11)."""
     last = state.get("last_success")
-    return (f'<section id="dip-hold"><h2>{esc(M.LABEL)}</h2>'
-            '<p class="sm"><b>Rest a YES bid at 10c from the open and hold it to settlement. Only a word whose first trade is above the '
+    rule = ('<p class="sm"><b>Rest a YES bid at 10c from the open and hold it to settlement. Only a word whose first trade is above the '
             'bid counts; it fills on a print at or under the bid with 10+ contracts within an hour.</b></p>'
             '<p class="sm mut">Sandbox, paper only. Weekly KXTRUMPSAY, every word, one entry per word per week. Maker fee on the entry, '
             'none at settlement. A week is one outcome, counted once all its entries settle: review at 10 weeks, decide at 30. '
-            f'The record is fresh from the week of {esc(M.FIRST_EVENT)}.</p>'
-            f'{record_table(state, esc, now_ts)}'
-            f'<details class="fold sm" id="dip-week" open><summary><b>This week\'s entries</b> <span class="mut">10c and 15c side by side</span></summary>'
-            f'{week_table(state, esc, now_ts)}</details>'
-            f'{research_fold(esc)}'
-            f'<p class="sm mut">Last read {esc(last or "not yet")}{(" · " + esc(state["error"])) if state.get("error") else ""}.</p></section>')
+            f'The record is fresh from the week of {esc(M.FIRST_EVENT)}.</p>')
+    return (record_table(state, esc, now_ts)
+            + f'<details class="fold sm" id="dip-rule"><summary><b>Rule</b></summary>{rule}</details>'
+            + f'<details class="fold sm" id="dip-week"><summary><b>This week\'s entries</b> <span class="mut">words with an entry</span></summary>'
+              f'{week_table(state, esc, now_ts)}</details>'
+            + research_fold(esc)
+            + f'<p class="sm mut">Last read {esc(last or "not yet")}{(" · " + esc(state["error"])) if state.get("error") else ""}.</p>')
+
+
+def section(state, esc, now_ts=None):
+    return f'<section id="dip-hold"><h2>{esc(M.LABEL)}</h2>{body(state, esc, now_ts)}</section>'

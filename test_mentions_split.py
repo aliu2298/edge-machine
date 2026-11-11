@@ -413,13 +413,13 @@ check("settled NO: won, HOLD and SPLIT graded", (n0["payout"], n0["roi_held"] > 
       (1.0, True, True, 1))
 nh = KB.build(split_state=st, wide_state=ws, month_state=ms_, month_wide_state=ms_, album_state=als, album_no_state=ns)
 nt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", nh))
-check("the page: the summary has cheap YES and cheap NO as separate rows; the note, then each card",
+check("the page: cheap YES and cheap NO are separate lane rows; the note, then each card",
       ("Album ladders tested too confident: both tails won more than priced." in nt,
-       "Album · cheap YES 1 0 1 1" in nt, "Album · cheap NO 1 0 1 1" in nt,
-       nh.find('id="album-note"') < nh.find('id="album-cheap-rungs"') < nh.find('id="album-cheap-no"') < nh.find('id="archive"'),
+       "Album · cheap YES" in nt, "Album · cheap NO" in nt,
+       nh.find('id="album-cheap-rungs-row"') < nh.find('id="album-cheap-rungs"') < nh.find('id="album-cheap-no-row"') < nh.find('id="album-cheap-no"') < nh.find('id="archive"'),
        "NO ask paid" in nt), (True, True, True, True, True))
 check("no guarded public phrase on the album cards", sandbox_audit.COPY_RE.findall(
-      nh[nh.find('id="album-note"'):nh.find('id="archive"')]), [])
+      nh[nh.find('id="album-cheap-rungs-row"'):nh.find('id="archive"')]), [])
 
 print("\ncommodities (2026-10-27): wti_cheap_yes and gas_cheap_no on the same engine")
 WT, GS = M.WTI, M.GAS

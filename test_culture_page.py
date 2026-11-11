@@ -48,23 +48,29 @@ h = KB.build(ledger, NOW, split_state=weekly, wide_state=wide, month_state=empty
 t = text(h)
 
 print("the order, top to bottom")
-ids = ["standard", "lanes", "album-note", "album-cheap-rungs", "album-cheap-no", "models", "retired-cheap", "archive"]
+ids = ["standard", "lanes", "dip-hold-row", "album-cheap-rungs-row", "album-cheap-no-row", "rt-model-row", "retired", "retired-cheap", "archive"]
 pos = [h.find(f'id="{i}"') for i in ids]
-check("standard, summary and the album cards, model lanes, the Retired fold, archive",
+check("standard, the lane rows (dip bid, the album lanes, the model lane), one Retired block holding the mention lanes and the archive",
       (all(p > 0 for p in pos), pos == sorted(pos)), (True, True))
 check("the standard, in Olu's words",
       all(x in t for x in ("Cheap side + resting take-profit.", "Buy cheap contracts at the event's open, at the real ask.",
                            "Rest a split sell: half at 2x, half at 3x.", "A fill counts only on a traded print.",
                            "Every lane is shown next to the same entries held.")), True)
 
-print("\nthe summary table: one row per LIVE cheap-side lane (the album lanes)")
-summ = h[h.find('class="culture-summary"'):h.find("</table>", h.find('class="culture-summary"'))]
-rows = re.findall(r"<tr>(.*?)</tr>", summ.split("<tbody>", 1)[1], re.S)
-check("the page summary lists the two album lanes only", [re.sub(r"<[^>]+>", "", r.split("</td>")[0]).strip() for r in rows],
-      [_html.escape(c["label"], quote=False) for c in KB.LIVE_CHEAP])
-check("columns: entries, unverified asks, settled entries, settled events, won, split ROI, hold ROI, legs 2x / 3x, average spread paid, status",
-      [re.sub(r"<[^>]+>", "", x) for x in re.findall(r"<th[^>]*>(.*?)</th>", summ)],
-      ["Lane", "Entries", "Unverified asks", "Settled entries", "Settled events", "Won", "Split ROI", "Hold ROI", "Legs filled 2x / 3x", "Avg spread paid", "Status"])
+print("\nthe lanes: one closed row per LIVE lane (2026-11-11, Olu)")
+lanes_h = h[h.find('id="lanes"'):h.find('id="retired"')]
+names = [_html.unescape(x) for x in re.findall(r'<b class="sp-name"[^>]*>(.*?)</b>', lanes_h)]
+check("the rows, in order: the dip bid, the two album lanes, the model lane", names,
+      ["Trump mentions · 10c dip bid, hold"] + [c["label"] for c in KB.LIVE_CHEAP] + [K.LANES["rt_model"]])
+check("every row is closed on load, and no fold is open", ("<details open" in h, re.findall(r"<details[^>]* open[ >]", h)), (False, []))
+head_ = lanes_h[lanes_h.find("sp-head-line"):lanes_h.find("</div>", lanes_h.find("sp-head-line"))]
+check("the columns: lane, market, record, entries, ROI after fees, comparison, won v priced, evidence, verdict",
+      re.findall(r'<span class="sp-cell[^"]*">([^<]*)</span>', head_),
+      ["Lane", "Market", "Record (events)", "Entries", "ROI after fees", "Comparison", "Won v priced", "Evidence", "Verdict"])
+tl = re.findall(r'<div class="tile"><b>([^<]*)</b><span>([^<]+)</span>', h.split('id="lanes"')[0].split('id="standard"')[1])
+rowsum = lambda key: sum(int(x) for x in re.findall(rf'data-l="{key}">(\d+)', lanes_h))
+check("the header tiles agree with the rows: lanes and entries", (dict((k, v) for v, k in tl)["active lanes"], dict((k, v) for v, k in tl)["entries"]),
+      (str(len(names)), str(rowsum("Entries"))))
 check("status moves at 10 and 30", (KB.status(9), KB.status(10), KB.status(30)),
       ("9 settled events · review at 10, decide at 30", "10 settled events · review due (10 reached) · decide at 30",
        "30 settled events · decide now (30 reached)"))
@@ -101,34 +107,32 @@ norm = {i: tuple(x for x in v if x not in ("Week", "Event", "Word", "Rung", "YES
 check("and the same columns (units and side aside)", len(set(norm.values())), 1)
 
 print("\nmodel lanes and the archive")
-models = text(h[h.find('id="models"'):h.find('id="retired-cheap"')])
-check("rt_model under Model lanes, with its revival note", ("Rotten Tomatoes model" in models,
+models = text(h[h.find('id="rt-model-card"'):h.find('id="retired"')])
+check("rt_model is a row, with its revival note in its closed details", ("Rotten Tomatoes model" in models,
       "revived 2026-10-26 · fresh record · review at 10" in models), (True, True))
 arch_h = h[h.find('id="archive"'):]
 arch = text(arch_h)
 check("the Archive is collapsed and holds the three old lanes, one line each",
       ('<details class="fold sec" id="archive">' in h, arch.count("(mentions_rate)"), arch.count("(culture_endgame)"),
        arch.count("(culture_fav_band)")), (True, 1, 1, 1))
-above = h[:h.find('id="archive"')]
-# mentions_dip_hold (2026-11-01) is a live lane whose label starts "Trump mentions": its card is not the old mentions_rate lane.
-above = above[:above.find('<section id="dip-hold"')] + above[above.find('<section id="lanes"'):]
+above = h[:h.find('id="retired"')]
 outside = text(above)
 check("the old lanes are not shown anywhere above the Archive",
-      any(K.LANES[k] in outside for k in ("mentions_rate", "culture_endgame", "culture_fav_band")), False)
+      (any(K.LANES[k] in outside for k in ("culture_endgame", "culture_fav_band")), "(mentions_rate)" in outside), (False, False))
 check("no leftover blocks of the old template (verdict chips, Events, Production list, Observing)",
-      [x for x in ('data-verdict=', 'id="events"', 'data-list="production"', "Observing · paper", 'id="sandbox"')
+      [x for x in ('id="events"', 'data-list="production"', "Observing · paper", 'id="sandbox"')
        if x in h], [])
 check("the ledger was not touched", ledger["lanes"]["mentions_rate"]["picks"], [])
 
 print("\nthe document")
-check("Culture is the active page in the site nav; the in-page links name the four parts",
-      ('aria-current="page"' in h and "culture" in h, all(f'href="#{i}"' in h for i in ("standard", "dip-hold", "lanes", "models", "archive"))),
+check("Culture is the active page in the site nav; the in-page links name the two parts",
+      ('aria-current="page"' in h and "culture" in h, all(f'href="#{i}"' in h for i in ("lanes", "retired"))),
       (True, True))
 check("every table sits in a scroll wrapper and its cells carry phone labels",
       (h.count("<table") == h.count('<div class="tbl"><table'), 'data-l="Entries"' in h), (True, True))
 check("no guarded public phrase on the page", sandbox_audit.COPY_RE.findall(t), [])
 real = KB.build(now=NOW)
-check("the live ledgers build", ('id="lanes"' in real, 'id="archive"' in real), (True, True))
+check("the live ledgers build", ('id="lanes"' in real, 'id="retired"' in real), (True, True))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
