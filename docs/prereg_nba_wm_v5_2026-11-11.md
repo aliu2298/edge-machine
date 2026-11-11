@@ -1,6 +1,6 @@
 # NBA win margin v5 — paper candidates, pre-registered 2026-11-11
 
-Status: PAPER ONLY. Production keeps running version 4 + Bucket Priority bp-v3 (bot `f2b89e0`, edge #393). Nothing here touches the bot,
+Status: PAPER ONLY. Production keeps running version 4 + Bucket Priority bp-v3 (executor `f2b89e0`, edge #393). Nothing here touches the executor,
 the config or the live feeds. Frozen before the first night, on Olu's decision of 2026-11-11 (option b).
 
 Record starts fresh on the Nov 11 (ET) slate (`SINCE = 2026-11-11`). Review at 10 nights, decide at 30 entries.

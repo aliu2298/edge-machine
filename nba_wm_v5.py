@@ -1,6 +1,6 @@
 """NBA win margin VERSION 5, two Sandbox PAPER lanes (2026-11-11, Olu: "option (b), paper only").
 
-Production still runs version 4 + Bucket Priority bp-v3; nothing here places an order or touches the bot. The registered rules are in
+Production still runs version 4 + Bucket Priority bp-v3; nothing here places an order or touches the executor. The registered rules are in
 docs/prereg_nba_wm_v5_2026-11-11.md (frozen before the first night):
 
   YES v5 (lane nba_wm_yes_v5)    buckets 6-10 and 11-20 only; the v4 entry (10-20c ask, 5c spread, ask check, an hour before the tip), the
