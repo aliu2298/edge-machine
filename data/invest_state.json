@@ -1,6 +1,6 @@
 {
  "collector": {
-  "last_ts": 1794394802,
+  "last_ts": 1794398401,
   "markets": 60,
   "rows_24h": 86400
  },
@@ -5015,6 +5015,7 @@
    "gap": -0.01041,
    "gap_15m": -0.00987,
    "gap_5m": -0.00976,
+   "gap_60m": -0.00915,
    "rth": false,
    "spread_bp": 28.5,
    "sym": "AMGN",
@@ -5025,6 +5026,7 @@
    "gap": -0.01034,
    "gap_15m": 0.00019,
    "gap_5m": -0.01034,
+   "gap_60m": 0.00032,
    "rth": false,
    "spread_bp": 0.1,
    "sym": "HD",
@@ -5035,14 +5037,25 @@
    "gap": 0.01719,
    "gap_15m": 0.01852,
    "gap_5m": 0.01723,
+   "gap_60m": 0.01895,
    "rth": false,
    "spread_bp": 1.1,
    "sym": "US Tech 100",
    "ticker": "KXUSTECH100PERP",
    "ts": 1794393481
+  },
+  {
+   "gap": 0.01895,
+   "gap_15m": 0.01873,
+   "gap_5m": 0.01834,
+   "rth": false,
+   "spread_bp": 0.6,
+   "sym": "US Tech 100",
+   "ticker": "KXUSTECH100PERP",
+   "ts": 1794397081
   }
  ],
- "last_run": "2026-11-11T11:00:07+00:00",
+ "last_run": "2026-11-11T12:00:07+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
