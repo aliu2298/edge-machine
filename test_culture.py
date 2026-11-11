@@ -108,8 +108,8 @@ check("the win is paid after the fee", lane["picks"][0]["profit"], round(100 * (
 print("\nthe Culture tab")
 check("Culture is in the site navigation", any(k == "culture" for k, _l, _u in C.PAGES), True)
 empty = KB.build({"lanes": {k: {"picks": [], "observations": {}, "error": None} for k in K.LANES}}, now=NOW)
-check("an empty ledger still builds the page: the standard, the lanes, the model lanes, the archive",
-      all(f'id="{i}"' in empty for i in ("standard", "lanes", "models", "archive")), True)
+check("an empty ledger still builds the page: the standard, the lanes, the model lane row, the retired block with the archive",
+      all(f'id="{i}"' in empty for i in ("standard", "lanes", "rt-model-row", "retired", "archive")), True)
 
 print("\none market, one side, one lane (2026-10-20)")
 
@@ -465,7 +465,7 @@ new_rec, old_rec, old_open = KB.history_split("rt_model", rv["lanes"]["rt_model"
 check("history_split: revived 1/1; history 1/2 with one still open", (new_rec[:2], old_rec[:2], old_open), ((1, 1), (1, 2), 1))
 _rv = KB.build(rv, REV)
 _txt = lambda h: _re.sub(r"\s+", " ", _re.sub(r"<[^>]+>", " ", _html.unescape(h)))
-models = _txt(_rv[_rv.find('id="models"'):_rv.find('id="archive"')])
+models = _txt(_rv[_rv.find('id="rt-model-card"'):_rv.find('id="retired"')])
 rvh = _txt(_rv)
 check("the page: rt_model under Model lanes with the note, both records apart; not in the Archive",
       ("revived 2026-10-26 · fresh record · review at 10" in models, "Revived record: 1/1 won" in models,
