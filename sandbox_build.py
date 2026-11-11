@@ -2481,6 +2481,7 @@ def trading_page(now=None):
     still = f"{trade_open:,} still open" if trade_open else "all closed"
     retired = f"""<section id="retired"><details class="fold sp-retired"><summary><h3>Retired rules</h3><span class="sm mut">· Kalshi Invest big moves · gold and Nasdaq breakouts · {len(trade_rules)} stock rules · {trade_n:,} trades logged · {still} · records kept</span></summary>
 {inv_retired}
+{earnings_news_build.retired_html()}
 {gold_orb_html()}
 {nasdaq_orb_build.safe_section()}
 {trade_note}

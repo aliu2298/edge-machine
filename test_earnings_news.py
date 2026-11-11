@@ -153,7 +153,9 @@ k = [q for q in st["predictions"] if q["family"] == "kpi_drift"][0]
 check("KPI drift: +3 v threshold 2 is an Up call, entry now, exit at D's close",
       (got, k["side"], k["exit_due"]), (["kpi_drift:AAA:KXAAA-26NOVX"], 1, "2026-11-17T21:00:00Z"))
 
-print("\nnews calls")
+print("\nnews calls (the mechanics as registered; F3 retired 2026-11-11, checked below)")
+_RET = dict(E.RETIRED_FAMILIES)
+E.RETIRED_FAMILIES.pop("news", None)
 nst = {"calendar": [], "kpi_reads": [], "predictions": []}
 perps = [{"title": "NVDA", "ticker": "KXNVDAPERP"}]
 n0 = dt.datetime(2026, 11, 9, 15, 0, tzinfo=UTC)
@@ -169,6 +171,13 @@ for label, kw in (("a source older than 6 hours is refused", dict(published="202
     except ValueError:
         check(label, "refused", "refused")
 check("the random baseline's side is fixed by the id", (E.coin("x"), E.coin("x")) in ((1, 1), (-1, -1)), True)
+E.RETIRED_FAMILIES.update(_RET)
+try:
+    E.log_news(nst, "NVDA", "up", "1d", 0.6, "x", "u", "2026-11-09T13:00:00Z", now=n0, perps=perps)
+    check("F3 retired 2026-11-11: a news call is refused", "logged", "refused")
+except ValueError as e:
+    check("F3 retired 2026-11-11: a news call is refused, with the reason", ("refused", "no automated news reader" in str(e)),
+          ("refused", True))
 
 print("\nsummary and the section")
 sp = {"calendar": st["calendar"], "kpi_reads": [], "predictions": [
@@ -180,9 +189,31 @@ s = E.summary(sp)["sentiment"]
 check("12 settled is a review, not a decision", (s["settled"], s["verdict"]), (12, "review due"))
 check("the fade pays the costs again", round(s["fade_avg_net"], 6), round(-s["avg_net"] - 4 * E.TAKER, 6))
 h, n, settled, open_ = EB.section_and_counts(sp)
-check("one row per family", h.count('class="sp-rule"'), 5)
+check("the live section: F1, F2b, F4, then the comparison line; F3 is not in it (it is in the Retired block)",
+      re.findall(r'data-source="earnings_news_([a-z_]+)"', h), ["kpi_drift", "post_drift", "sentiment", "runup"])
+check("F2a reads as the comparison line with no review stage; the running ones are judged after Dec 1",
+      ("Comparison · buy every reporting stock" in h, "comparison · no review" in h, h.count("judged after 12/01"),
+       "Judged after the Nov 12 – Dec 1 earnings run." in h, E.ADDENDUM in h), (True, True, 3, True, True))
 check("the caveat fold leads", h.index("a headline is not an edge") < h.index('class="sp-rule"'), True)
-check("counts", (n, settled), (5, 12))
+check("counts: 3 running families (the comparison line is not counted)", (n, settled), (3, 12))
+rh = EB.retired_html(sp)
+check("the Retired block: F3 with 0 calls and the reason", ('data-source="earnings_news_news"' in rh, "retired 2026-11-11" in rh,
+      "no automated news reader" in rh), (True, True, True))
+
+print("\na report date that moves voids the old call (Alibaba, 2026-11-11)")
+vs = {"calendar": [{"sym": "BABA", "date": "2026-11-19"}], "predictions": [
+    {"id": "runup:BABA:2026-11-24", "family": "runup", "sym": "BABA", "report": "2026-11-24", "side": 1},
+    {"id": "runup:BABA:2026-11-19", "family": "runup", "sym": "BABA", "report": "2026-11-19", "side": 1},
+    {"id": "runup:XYZ:2026-11-01", "family": "runup", "sym": "XYZ", "report": "2026-11-01", "side": 1, "status": "open",
+     "call": {"status": "open"}}]}
+vs["calendar"].append({"sym": "XYZ", "date": "2026-11-05"})
+check("the stale Alibaba call is void with the reason; the current one stands; an entered call is never voided",
+      (E.void_moved(vs, now=dt.datetime(2026, 11, 11, 18, 0, tzinfo=UTC)),
+       [(p["id"], p.get("status"), p.get("void_reason")) for p in vs["predictions"]]),
+      (["runup:BABA:2026-11-24"], [("runup:BABA:2026-11-24", "void", "report date moved"), ("runup:BABA:2026-11-19", None, None),
+                                   ("runup:XYZ:2026-11-01", "open", None)]))
+check("void predictions are kept, never graded, and out of the counts",
+      (len(vs["predictions"]), E.summary(dict(vs, predictions=vs["predictions"]))["runup"]["void"]), (3, 1))
 check("no guarded public phrase", sandbox_audit.COPY_RE.findall(h + EB.CAVEAT + str(EB.DEFS)), [])
 check("no dollar amounts in the public copy", re.findall(r"\$\s?\d", h), [])
 check("no market ids in the public copy", re.findall(r"\bKX[A-Z0-9-]{3,}", h), [])
