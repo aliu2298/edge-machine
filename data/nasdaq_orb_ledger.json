@@ -1647,8 +1647,36 @@
    "status": "settled",
    "symbol": "QQQ",
    "variant": "C15"
+  },
+  {
+   "ask_in": 688.39,
+   "ask_out": 684.83,
+   "bar_feed": "sip",
+   "bid_in": 687.86,
+   "bid_out": 684.25,
+   "day": "2026-11-11",
+   "entry": 688.39,
+   "entry_min": "09:33",
+   "exit": 684.57,
+   "exit_min": "09:48",
+   "gross_bp": -55.49,
+   "hold": 15,
+   "id": "2026-11-11:C15",
+   "label": "premarket 5 \u00b7 9:25-9:30 range, 15-min hold",
+   "net_bp": -60.14,
+   "quote_feed": "iex",
+   "range_bars": 5,
+   "range_hi": 687.95,
+   "range_lo": 687.16,
+   "side": "long",
+   "signal_close": 688.44,
+   "signal_min": "09:32",
+   "spread_bp": 8.09,
+   "status": "settled",
+   "symbol": "QQQ",
+   "variant": "C15"
   }
  ],
- "updated": "2026-11-10T16:49:01+00:00",
+ "updated": "2026-11-11T16:49:01+00:00",
  "version": "nasdaq-orb-v1"
 }
