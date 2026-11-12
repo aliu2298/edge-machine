@@ -69,6 +69,54 @@ Two bets in 388 team-matches; both won. Backing every side to score twice return
 
 The replay made 16 picks and returned −2.2%. Over 1.5 on every international match returns −1.3%. The lane's own record is 10 wins in 13. The replay ranks within a calendar day, which is not exactly how the lane builds its pool, so its own record is the better guide; neither shows an edge.
 
+## Price
+
+Olu's question: do prices matter in these lanes? The bands were fixed before looking: under 70c, 70-80c, 80-90c, 90c and over. Entry three hours before kickoff.
+
+**1. Inside the rules, the win rate is about the same at every price, so the cheaper picks pay most.**
+
+| Under 3.5 low scoring (Nations League and friendlies) | Bets | Won | Price | Return |
+|---|---|---|---|---|
+| Under 70c | 6 | 83.3% | 58.5c | +41.1% |
+| 70-80c | 9 | 100% | 75.8c | +29.8% |
+| 80-90c | 20 | 90.0% | 83.2c | +7.0% |
+| 90c and over | 3 | 100% | 92.3c | +7.8% |
+
+- Under 80c: 14 wins in 15, +34%. At 80c and over: 21 in 23, +7%.
+- It shows in both periods (under 80c: 5 of 6, then 9 of 9), but the bands are too small to pass the keep rule. It is a watch, not a version 2.
+- Team 1 form is the same shape: 9 of 9 at 90c and over for +6%; 10 of 11 under 90c for about +22%.
+
+**2. The same rules do not work on club matches.**
+
+| Rule | Internationals | Clubs (the lane's own club bets) |
+|---|---|---|
+| Under 3.5 low scoring | 92.1% at 78.3c, +17.8% (38) | 71.8% at 71.6c, −0.3% (39) |
+| Team 1 form | 95.0% at 82.7c, +14.8% (20) | 79.4% at 83.4c, −6.6% (34) |
+
+**3. The market itself prices internationals differently from clubs at the same band.**
+
+| Under 3.5, every match | Internationals | Clubs |
+|---|---|---|
+| Under 70c | +4.0 points (169) | −3.2 points (725) |
+| 70-80c | +1.1 (146) | +0.1 (238) |
+| 80-90c | −5.2 (81) | +0.4 (29) |
+
+- A cheap international under wins more often than its price; a cheap club under wins less often. A dear international under is overpriced.
+- Side to score, every match: internationals are close to fair in every band. Clubs at 80-90c are 5.6 points overpriced on 446 (score −3.3).
+- None of the international gaps reaches a score of 2 on its own.
+
+**4. The price move before kickoff is a weak warning, not a rule.**
+
+Measured on the midpoint between the early read and three hours out.
+
+| Under 3.5, every match | Bets | Won | Price at 3h | Points |
+|---|---|---|---|---|
+| Price rose 2c or more | 33 | 75.8% | 76.9c | −1.2 |
+| Flat | 61 | 80.3% | 73.6c | +6.8 |
+| Price fell 2c or more | 65 | 56.9% | 62.1c | −5.2 |
+
+The rule's own picks: both picks whose price fell 2c or more lost; 9 of the other 10 won. Two bets is not evidence. On the side-to-score and over 1.5 markets the move separates nothing.
+
 ## Filters tried
 
 For each rule: friendlies against competitive matches, a strong favourite (0.60 or more) against a closer match, home favourite against away favourite, and early against late entry.
