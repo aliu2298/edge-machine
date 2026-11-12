@@ -108,9 +108,9 @@ def spec(**kw):
         # folded list under the Sandbox with the record they stopped on and the dated reason.
         # They count in no tile and no Sandbox total.
         retired=(),
-        # live (2026-11-11, Soccer): a Production row's record and ROI cells show the follower's LIVE record (data/live_record.json,
-        # production_live.pair_live) over the row's since-Production window, with the paper record of the same window under it; the
-        # tiles pool exactly those cells. fold_prod: the Production list is a closed fold. compact: the row drops its "Won v priced"
+        # live (2026-11-11, Soccer): a Production row's record and ROI cells show the follower's LIVE record from its first live bet
+        # (production_overview.lane_live, the Production page's own count; raises and versions are notes, never resets), with the row's
+        # full paper record under it; the tiles pool exactly those cells. fold_prod: the Production list is a closed fold. compact: the row drops its "Won v priced"
         # and "Evidence" cells (both stay in the fold; the verdict carries the evidence count) and the name may wrap.
         live=False, fold_prod=False, compact=False,
         # retired_extra: html listed under the retired rows (lanes kept outside the tracker, e.g. the NFL page's
@@ -318,23 +318,19 @@ def sandbox_record(rows):
 
 
 def annotate_live(d, st, rows, late=None):
-    """Mark each Production row with its since-Production paper record (row["_paper"], counted as since_production counts it) and
-    its live record over the same window (row["_live"], production_live.pair_live; None when no live file is published)."""
+    """Mark each Production row with its LIVE record from its first live bet (row["_live"], production_overview.lane_live: the Production
+    page's own count, never reset by a version change or a stake raise; None when no live file is published), its paper record (row["_paper"],
+    the row's own full record) and the raise / version note for its fold (row["_live_note"]). 2026-11-11, Olu."""
     import production_live as PL
-    if late is None:
-        late = production.late_set(production.load_feed())
+    import production_overview as PO
     blob = PL.load()
-    pairs = (st or {}).get("pairs") or {}
     for row in rows:
         if not row.get("prod"):
             continue
         key = row.get("pair") or f'{row["name"]}|{row["sport"]}'
-        pair = production.fresh_view(key, pairs.get(key) or {})
-        since = production.entered_at(pair)
-        if since is None:
-            continue
-        row["_paper"] = production._assess_since_kickoff(d, key, pair, late=late, tradeable=True)
-        row["_live"] = PL.pair_live(key, since, blob)
+        row["_paper"] = row["a"]
+        row["_live"] = PO.lane_live(key, blob) if blob is not None else None
+        row["_live_note"] = production._overview_note(key, None, None, None, ())
     return rows
 
 
@@ -357,10 +353,10 @@ def _pct_html(x, n, early_n=None):
 def live_tiles(sp, rows, open_n):
     """Open picks · rules (the same counts as the lists) · the LIVE record of the Production rows · its ROI, the paper record of the
     same window under it. Every figure is the sum of the rows' own cells."""
-    import production_live as PL
+    import production_overview as PO
     prod = [r for r in rows if r.get("prod")]
     sand = [r for r in rows if not r.get("prod") and r.get("v") != "retired"]
-    live = PL.pool([r.get("_live") for r in prod])
+    live = PO.combine([r["_live"] for r in prod if r.get("_live")])
     paper = production._group_record([r["_paper"] for r in prod if r.get("_paper")])
     pn = int(paper.get("n") or 0)
     paper_line = (f'Paper {record_compact(paper)} · {B.pct(paper["roi_fee"], sign=True)}'
@@ -375,7 +371,7 @@ def live_tiles(sp, rows, open_n):
         '<div class="tiles sp-tiles">'
         f'<div class="tile"><b>{open_n}</b><span>open picks</span></div>'
         f'<div class="tile"><b>{len(prod) + len(sand)}</b><span>rules · {len(prod)} Production · {len(sand)} Sandbox</span></div>'
-        f'<div class="tile"><b>{esc(rec)}</b><span>Live · since Production · {len(prod)} rules</span></div>'
+        f'<div class="tile"><b>{esc(rec)}</b><span>Live · from the first live bet · {len(prod)} rules</span></div>'
         f'<div class="tile"><b class="{roi_class}">{roi_text}</b><span>Live ROI after fees</span>'
         f'<small class="mut tile-sub">{paper_line}</small></div></div>')
 
@@ -508,6 +504,12 @@ def rule_details(sp, d, row, now, ev_list=()):
         full = (f'Full paper record {record_compact(a)} · ROI {roi_html(row)} · won {esc(won_v_priced(a))} priced · '
                 f'evidence {esc(evidence(a, row.get("floor") or EVIDENCE_FLOOR))}')
         head += f'<p class="sm mut sp-details-figures">{full}</p>'
+        if sp.get("live") and row.get("prod"):
+            lv = row.get("_live")
+            note = (row.get("_live_note") or "").strip()
+            head += (f'<p class="sm mut">Live counts every live bet since the first one'
+                     + (f' ({esc(live_words(lv))}, {B.pct(lv["roi"], sign=True)})' if lv and lv["n"] and lv.get("roi") is not None else "")
+                     + f'.{(" " + esc(note)) if note else ""}</p>')
     recent = sp["recent"](d, row, now) if sp["recent"] else ""
     recent_html = (f'<h4 class="sp-details-sub">Recent picks{f" · {open_n} open" if open_n else ""}</h4>{recent}'
                    if recent else "")
@@ -628,7 +630,7 @@ def rules_html(sp, d, rows, now, ev_list):
         # One closed fold, every Production row inside (2026-11-11, Soccer): the record column is live over paper.
         psp = dict(sp, record_head="Live / Paper") if sp.get("live") else sp
         body_p = "".join(rule_row(sp, d, r, now, scoped, ev_list) for r in prod)
-        what = "live and paper since each moved or its stake was raised" if sp.get("live") else "since each moved"
+        what = "live from each rule's first live bet · paper, its full record" if sp.get("live") else "since each moved"
         prod_html = (f'<details class="fold sp-prodfold" id="production"><summary><h3>Production rules</h3>'
                      f'<span class="sm mut">· {len(prod)} rule{"s" if len(prod) != 1 else ""} · {what}</span></summary>'
                      f'<div class="sp-rules-list sp-prod" data-list="production">{list_head(scoped, "Production rule", psp)}{body_p}</div>'

@@ -44,9 +44,9 @@ def method(idle):
         idle_html = sport_tab._idle_html(idle, {}, status=False, prefix=KEY)
         inner = (
             '<p class="sm">Prices are the Kalshi ask logged when a rule fired; results are Kalshi\'s own settlement.</p>'
-            '<p class="sm"><b>Live</b> is the follower\'s own fills, settled by Kalshi, counted from the day each rule moved to '
-            'Production (or its stake was raised). <b>Paper</b> is the same rule\'s picks over the same days at the Kalshi price, '
-            'after fees. A rule\'s full paper record, the one its 30-bet verdict reads, is inside its row.</p>'
+            '<p class="sm"><b>Live</b> is the follower\'s own fills, settled by Kalshi, from each rule\'s first live bet, as the '
+            'Production page counts them: a stake raise or a new version is a note inside the rule, never a restart. <b>Paper</b> is '
+            'the rule\'s full record at the Kalshi price after fees, the one its 30-bet verdict reads.</p>'
             '<p class="sm"><b>Labels.</b> Each team\'s last 10 competitive matches against its league\'s average goals per team: '
             '<i>attacking</i> scores at least the average, <i>low-scoring</i> less; <i>leaky</i> concedes at least the average, '
             '<i>tight</i> less. The codes (O+/O−, D+/D−) are inside each rule.</p>'

@@ -470,7 +470,7 @@ if playwright is not None:
 _fresh.stop()
 
 print("\nthe Soccer layout (2026-11-11): live over paper, tiles that agree with the rows, every list folded")
-import production_live as PL
+import production_overview as PO
 soccer_build.LAYOUT = _SOCCER_LAYOUT
 fake_live = {"pairs": {"o15_form_l10|soccer_o15": {"orders": [
     dict(id="a", ko="2026-10-20T19:00", st="won", r=0.5, w=1.0, side="yes"),
@@ -481,14 +481,14 @@ with patch("production_live.load", return_value=fake_live):
 lmain = lay.split("<main", 1)[-1].split("</main>", 1)[0]
 ltiles = re.findall(r'<div class="tile">(.*?)</div>', lmain)
 key = "o15_form_l10|soccer_o15"
-since = production.entered_at(production.fresh_view(key, st["pairs"][key]))
-lv = PL.pair_live(key, since, fake_live)
+lv = PO.lane_live(key, fake_live)      # from the first live bet, as the Production page counts it: no window, no reset
+eq((lv["won"], lv["lost"]), (2, 1), "every live order counts, whatever its date")
 _np, _ns = sum(1 for r in rows if r.get("prod")), sum(1 for r in rows if not r.get("prod") and r.get("v") != "retired")
 eq(_text(ltiles[1]), f"{_np + _ns} rules · {_np} Production · {_ns} Sandbox", "the rules tile is the two lists' own counts")
-ok(f'<b>{lv["won"]}–{lv["lost"]}</b><span>Live · since Production · 1 rules</span>' in ltiles[2] + "</div>" or
-   f'{lv["won"]}–{lv["lost"]}' in ltiles[2], "the record tile is the LIVE record of the Production rows")
-paper = production._assess_since_kickoff(d, key, st["pairs"][key], tradeable=True)
-ok(f'Paper {paper["won"]}–{paper["n"] - paper["won"]}' in ltiles[3], "with the paper record of the same window under the ROI")
+ok(f'{lv["won"]}–{lv["lost"]}' in ltiles[2] and "Live · from the first live bet" in ltiles[2],
+   "the record tile is the LIVE record of the Production rows, from their first live bet")
+paper = prod_row["a"]
+ok(f'Paper {paper["won"]}–{paper["n"] - paper["won"]}' in ltiles[3], "with the rows' full paper record under the ROI")
 ok(B.pct(lv["roi"], sign=True) in ltiles[3] and "Live ROI after fees" in ltiles[3], "the ROI tile is the live ROI, stake-weighted")
 lrules = _section(lmain, "rules")
 ok('<details class="fold sp-prodfold" id="production"><summary><h3>Production rules</h3>' in lrules, "the Production list is a closed fold")
@@ -498,6 +498,11 @@ ok(f'Live {lv["won"]}–{lv["lost"]}' in prow["cells"]["Live / Paper"] and "Pape
    "a Production row reads Live over Paper, the same numbers as the tiles")
 eq(list(prow["cells"]), ["Market", "Scope", "Live / Paper", "ROI · live / paper", "Verdict"], "compact cells: no won v priced, no evidence")
 ok("Full paper record" in prow["body"] and "evidence" in prow["body"], "the full paper record and the evidence are in the fold")
+ok("Live counts every live bet since the first one" in prow["body"], "the fold says the live record is never reset")
+with patch("production_live.load", return_value=fake_live), patch("raised_stakes.since", return_value="2026-10-21T00:00:00+00:00"):
+    raised = soccer_build.build(d, st, NOW, own_lanes=False)
+ok(f'Live {lv["won"]}–{lv["lost"]}' in raised and "Stake raised Oct 21." in raised,
+   "a stake raise is a note in the fold, not a restart of the live record")
 with patch("production_live.load", return_value={"pairs": {}, "lanes": {}}):
     none_yet = soccer_build.build(d, st, NOW, own_lanes=False)
 ok("Live none yet" in none_yet, "a Production rule with no live fill says so")

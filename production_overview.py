@@ -99,6 +99,17 @@ def tally(rows, own):
                 open=sum(1 for o in rows if o.get("st") == "open"))
 
 
+def lane_live(key, live_blob):
+    """One Production pair's LIVE record from its first live bet, exactly as build() counts it for the Production page: an own-state pair
+    (production_live.OWN_PAIRS) by every trade of its lane, any other pair by every order it placed. Versions and stake raises never reset it.
+    The Soccer page's rows and tiles read this, so the two pages agree (2026-11-11)."""
+    live_blob = live_blob or {}
+    spec = PL.OWN_PAIRS.get(key)
+    if spec:
+        return tally(list((live_blob.get("lanes") or {}).get(spec[0]) or []), True)
+    return tally(list(((live_blob.get("pairs") or {}).get(key) or {}).get("orders") or []), False)
+
+
 def combine(parts):
     """The combined record of several lanes: counts add, the return is stake-weighted across all their settled bets."""
     num = sum(p["num"] for p in parts)
