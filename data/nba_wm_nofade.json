@@ -23565,15 +23565,1385 @@
    "night": "2026-11-10",
    "tip": 1794358800,
    "version": "nofade-v2"
+  },
+  {
+   "buckets": [
+    {
+     "P": 0.95,
+     "ask": {
+      "last": null,
+      "printed": 0,
+      "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+      "source": "replayed",
+      "status": "unverified"
+     },
+     "bucket": "21+",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": null
+     },
+     "id": "KXNBAWINMARGIN-26NOV11WASIND-IND21PLUS",
+     "no_wins": true,
+     "spread": 0.04,
+     "team": "IND"
+    },
+    {
+     "P": 0.86,
+     "ask": {
+      "last": 0.81,
+      "printed": 5.0,
+      "reason": "5 contracts traded at or through the ask within 60 minutes (under 10)",
+      "source": "replayed",
+      "status": "unverified"
+     },
+     "bucket": "11-20",
+     "fills": {
+      "d65": {
+       "cost": 0.56431,
+       "fill_at": 1794448921,
+       "fill_print": 0.5,
+       "limit": 0.56,
+       "printed": 755.76,
+       "profit": -0.56431,
+       "reason": "settled",
+       "sold_at": null,
+       "won": false
+      },
+      "d75": {
+       "cost": 0.65398,
+       "fill_at": 1794448578,
+       "fill_print": 0.62,
+       "limit": 0.65,
+       "printed": 762.21,
+       "profit": -0.65398,
+       "reason": "settled",
+       "sold_at": null,
+       "won": false
+      },
+      "d85": {
+       "cost": 0.73345,
+       "fill_at": 1794448578,
+       "fill_print": 0.62,
+       "limit": 0.73,
+       "printed": 762.21,
+       "profit": -0.73345,
+       "reason": "settled",
+       "sold_at": null,
+       "won": false
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11WASIND-IND11TO20",
+     "no_wins": false,
+     "spread": 0.05,
+     "team": "IND"
+    },
+    {
+     "P": 0.91,
+     "ask": {
+      "last": 0.89,
+      "printed": 9.0,
+      "reason": "9 contracts traded at or through the ask within 60 minutes (under 10)",
+      "source": "replayed",
+      "status": "unverified"
+     },
+     "bucket": "11-20",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": null
+     },
+     "id": "KXNBAWINMARGIN-26NOV11WASIND-WAS11TO20",
+     "no_wins": true,
+     "spread": 0.02,
+     "team": "WAS"
+    },
+    {
+     "P": 0.92,
+     "ask": {
+      "how": "print",
+      "last": 0.88,
+      "printed": 23.69,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "6-10",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": null
+     },
+     "id": "KXNBAWINMARGIN-26NOV11WASIND-WAS6TO10",
+     "no_wins": true,
+     "spread": 0.04,
+     "team": "WAS"
+    },
+    {
+     "P": 0.91,
+     "ask": {
+      "last": 0.86,
+      "printed": 7.0,
+      "reason": "7 contracts traded at or through the ask within 60 minutes (under 10)",
+      "source": "replayed",
+      "status": "unverified"
+     },
+     "bucket": "1-5",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": null
+     },
+     "id": "KXNBAWINMARGIN-26NOV11WASIND-WAS1TO5",
+     "no_wins": true,
+     "spread": 0.05,
+     "team": "WAS"
+    },
+    {
+     "P": 0.89,
+     "ask": {
+      "how": "print",
+      "last": 0.84,
+      "printed": 11.55,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "1-5",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": null
+     },
+     "id": "KXNBAWINMARGIN-26NOV11WASIND-IND1TO5",
+     "no_wins": true,
+     "spread": 0.05,
+     "team": "IND"
+    }
+   ],
+   "event": "KXNBAWINMARGIN-26NOV11WASIND",
+   "insample": false,
+   "logged": "2026-11-12T04:22:56.237717+00:00",
+   "night": "2026-11-11",
+   "tip": 1794441600,
+   "version": "nofade-v2"
+  },
+  {
+   "buckets": [
+    {
+     "P": 0.9,
+     "ask": {
+      "how": "print",
+      "last": null,
+      "printed": 13.0,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "1-5",
+     "fills": {
+      "d65": {
+       "cost": 0.59423,
+       "fill_at": 1794453522,
+       "fill_print": 0.01,
+       "limit": 0.59,
+       "printed": 1501.48,
+       "profit": -0.59423,
+       "reason": "settled",
+       "sold_at": null,
+       "won": false
+      },
+      "d75": {
+       "cost": 0.68381,
+       "fill_at": 1794451889,
+       "fill_print": 0.63,
+       "limit": 0.68,
+       "printed": 1553.5,
+       "profit": 0.21462,
+       "reason": "sold",
+       "sold_at": 1794452392,
+       "won": true
+      },
+      "d85": {
+       "cost": 0.7731,
+       "fill_at": 1794450410,
+       "fill_print": 0.72,
+       "limit": 0.77,
+       "printed": 5786.45,
+       "profit": 0.12533,
+       "reason": "sold",
+       "sold_at": 1794452392,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11SASCHI-SAS1TO5",
+     "no_wins": false,
+     "spread": 0.01,
+     "team": "SAS"
+    },
+    {
+     "P": 0.74,
+     "ask": {
+      "how": "print",
+      "last": 0.71,
+      "printed": 116.68,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "16-25",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": null
+     },
+     "id": "KXNBAWINMARGIN-26NOV11SASCHI-SAS16TO25",
+     "no_wins": true,
+     "spread": 0.03,
+     "team": "SAS"
+    },
+    {
+     "P": 0.86,
+     "ask": {
+      "how": "print",
+      "last": 0.82,
+      "printed": 73.5,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "11-15",
+     "fills": {
+      "d65": {
+       "cost": 0.56431,
+       "fill_at": 1794453131,
+       "fill_print": 0.54,
+       "limit": 0.56,
+       "printed": 311.21,
+       "profit": 0.29358,
+       "reason": "sold",
+       "sold_at": 1794453403,
+       "won": true
+      },
+      "d75": {
+       "cost": 0.65398,
+       "fill_at": 1794452104,
+       "fill_print": 0.61,
+       "limit": 0.65,
+       "printed": 740.41,
+       "profit": 0.20391,
+       "reason": "sold",
+       "sold_at": 1794453403,
+       "won": true
+      },
+      "d85": {
+       "cost": 0.73345,
+       "fill_at": 1794451815,
+       "fill_print": 0.72,
+       "limit": 0.73,
+       "printed": 1873.02,
+       "profit": 0.12444,
+       "reason": "sold",
+       "sold_at": 1794453403,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11SASCHI-SAS11TO15",
+     "no_wins": true,
+     "spread": 0.04,
+     "team": "SAS"
+    },
+    {
+     "P": 0.87,
+     "ask": {
+      "last": null,
+      "printed": 6.73,
+      "reason": "6.73 contracts traded at or through the ask within 60 minutes (under 10)",
+      "source": "replayed",
+      "status": "unverified"
+     },
+     "bucket": "6-10",
+     "fills": {
+      "d65": {
+       "cost": 0.57429,
+       "fill_at": 1794452909,
+       "fill_print": 0.56,
+       "limit": 0.57,
+       "printed": 137.7,
+       "profit": 0.29373,
+       "reason": "sold",
+       "sold_at": 1794453517,
+       "won": true
+      },
+      "d75": {
+       "cost": 0.65398,
+       "fill_at": 1794451897,
+       "fill_print": 0.62,
+       "limit": 0.65,
+       "printed": 423.51,
+       "profit": 0.21404,
+       "reason": "sold",
+       "sold_at": 1794453517,
+       "won": true
+      },
+      "d85": {
+       "cost": 0.74337,
+       "fill_at": 1794447193,
+       "fill_print": 0.66,
+       "limit": 0.74,
+       "printed": 139.0,
+       "profit": 0.12465,
+       "reason": "sold",
+       "sold_at": 1794449233,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11SASCHI-SAS6TO10",
+     "no_wins": true,
+     "spread": 0.01,
+     "team": "SAS"
+    }
+   ],
+   "event": "KXNBAWINMARGIN-26NOV11SASCHI",
+   "insample": false,
+   "logged": "2026-11-12T04:22:56.237717+00:00",
+   "night": "2026-11-11",
+   "tip": 1794445200,
+   "version": "nofade-v2"
+  },
+  {
+   "buckets": [
+    {
+     "P": 0.87,
+     "ask": {
+      "how": "print",
+      "last": 0.84,
+      "printed": 1009.84,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "6-10",
+     "fills": {
+      "d65": {
+       "cost": 0.57429,
+       "fill_at": 1794454177,
+       "fill_print": 0.5,
+       "limit": 0.57,
+       "printed": 95.85,
+       "profit": 0.29373,
+       "reason": "sold",
+       "sold_at": 1794454383,
+       "won": true
+      },
+      "d75": {
+       "cost": 0.65398,
+       "fill_at": 1794454177,
+       "fill_print": 0.5,
+       "limit": 0.65,
+       "printed": 120.3,
+       "profit": 0.21404,
+       "reason": "sold",
+       "sold_at": 1794454383,
+       "won": true
+      },
+      "d85": {
+       "cost": 0.74337,
+       "fill_at": 1794446399,
+       "fill_print": 0.73,
+       "limit": 0.74,
+       "printed": 39.09,
+       "profit": 0.12465,
+       "reason": "sold",
+       "sold_at": 1794446466,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11LALMIL-LAL6TO10",
+     "no_wins": true,
+     "spread": 0.04,
+     "team": "LAL"
+    },
+    {
+     "P": 0.77,
+     "ask": {
+      "how": "print",
+      "last": 0.74,
+      "printed": 768.65,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "16-25",
+     "fills": {
+      "d65": {
+       "cost": 0.50438,
+       "fill_at": 1794452244,
+       "fill_print": 0.48,
+       "limit": 0.5,
+       "printed": 321.15,
+       "profit": 0.26253,
+       "reason": "sold",
+       "sold_at": 1794454080,
+       "won": true
+      },
+      "d75": {
+       "cost": 0.58426,
+       "fill_at": 1794451427,
+       "fill_print": 0.53,
+       "limit": 0.58,
+       "printed": 716.45,
+       "profit": 0.18264,
+       "reason": "sold",
+       "sold_at": 1794454080,
+       "won": true
+      },
+      "d85": {
+       "cost": 0.65398,
+       "fill_at": 1794448816,
+       "fill_print": 0.64,
+       "limit": 0.65,
+       "printed": 803.68,
+       "profit": 0.11292,
+       "reason": "sold",
+       "sold_at": 1794454080,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11LALMIL-LAL16TO25",
+     "no_wins": true,
+     "spread": 0.04,
+     "team": "LAL"
+    },
+    {
+     "P": 0.84,
+     "ask": {
+      "how": "print",
+      "last": 0.78,
+      "printed": 604.79,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "11-15",
+     "fills": {
+      "d65": {
+       "cost": 0.55433,
+       "fill_at": 1794454060,
+       "fill_print": 0.54,
+       "limit": 0.55,
+       "printed": 1050.96,
+       "profit": 0.28332,
+       "reason": "sold",
+       "sold_at": 1794454216,
+       "won": true
+      },
+      "d75": {
+       "cost": 0.63408,
+       "fill_at": 1794454060,
+       "fill_print": 0.54,
+       "limit": 0.63,
+       "printed": 1191.67,
+       "profit": 0.20357,
+       "reason": "sold",
+       "sold_at": 1794454216,
+       "won": true
+      },
+      "d85": {
+       "cost": 0.7136,
+       "fill_at": 1794450704,
+       "fill_print": 0.69,
+       "limit": 0.71,
+       "printed": 624.03,
+       "profit": 0.12404,
+       "reason": "sold",
+       "sold_at": 1794450839,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11LALMIL-LAL11TO15",
+     "no_wins": false,
+     "spread": 0.02,
+     "team": "LAL"
+    },
+    {
+     "P": 0.95,
+     "ask": {
+      "last": null,
+      "printed": 7.81,
+      "reason": "7.81 contracts traded at or through the ask within 60 minutes (under 10)",
+      "source": "replayed",
+      "status": "unverified"
+     },
+     "bucket": "1-5",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": null
+     },
+     "id": "KXNBAWINMARGIN-26NOV11LALMIL-MIL1TO5",
+     "no_wins": true,
+     "spread": 0.01,
+     "team": "MIL"
+    },
+    {
+     "P": 0.83,
+     "ask": {
+      "last": 0.82,
+      "printed": 0,
+      "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+      "source": "replayed",
+      "status": "unverified"
+     },
+     "bucket": "26+",
+     "fills": {
+      "d65": null,
+      "d75": {
+       "cost": 0.62412,
+       "fill_at": 1794451707,
+       "fill_print": 0.6,
+       "limit": 0.62,
+       "printed": 1095.71,
+       "profit": 0.20341,
+       "reason": "sold",
+       "sold_at": 1794453894,
+       "won": true
+      },
+      "d85": {
+       "cost": 0.7136,
+       "fill_at": 1794446425,
+       "fill_print": 0.69,
+       "limit": 0.71,
+       "printed": 306.91,
+       "profit": 0.11393,
+       "reason": "sold",
+       "sold_at": 1794447346,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11LALMIL-LAL26PLUS",
+     "no_wins": true,
+     "spread": 0.05,
+     "team": "LAL"
+    },
+    {
+     "P": 0.92,
+     "ask": {
+      "how": "print",
+      "last": 0.98,
+      "printed": 42.84,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "1-5",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": {
+       "cost": 0.783,
+       "fill_at": 1794447551,
+       "fill_print": 0.72,
+       "limit": 0.78,
+       "printed": 145.22,
+       "profit": 0.13571,
+       "reason": "sold",
+       "sold_at": 1794447793,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11LALMIL-LAL1TO5",
+     "no_wins": true,
+     "spread": 0.04,
+     "team": "LAL"
+    }
+   ],
+   "event": "KXNBAWINMARGIN-26NOV11LALMIL",
+   "insample": false,
+   "logged": "2026-11-12T04:22:56.237717+00:00",
+   "night": "2026-11-11",
+   "tip": 1794445200,
+   "version": "nofade-v2"
+  },
+  {
+   "buckets": [
+    {
+     "P": 0.89,
+     "ask": {
+      "how": "print",
+      "last": 0.87,
+      "printed": 37.75,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "6-10",
+     "fills": {
+      "d65": {
+       "cost": 0.58426,
+       "fill_at": 1794452875,
+       "fill_print": 0.55,
+       "limit": 0.58,
+       "printed": 259.12,
+       "profit": 0.30402,
+       "reason": "sold",
+       "sold_at": 1794453944,
+       "won": true
+      },
+      "d75": {
+       "cost": 0.67387,
+       "fill_at": 1794452875,
+       "fill_print": 0.55,
+       "limit": 0.67,
+       "printed": 271.35,
+       "profit": 0.21442,
+       "reason": "sold",
+       "sold_at": 1794453944,
+       "won": true
+      },
+      "d85": {
+       "cost": 0.76319,
+       "fill_at": 1794448010,
+       "fill_print": 0.75,
+       "limit": 0.76,
+       "printed": 33.82,
+       "profit": 0.12509,
+       "reason": "sold",
+       "sold_at": 1794453944,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11DENMEM-DEN6TO10",
+     "no_wins": true,
+     "spread": 0.05,
+     "team": "DEN"
+    },
+    {
+     "P": 0.85,
+     "ask": {
+      "how": "print",
+      "last": 0.85,
+      "printed": 396.36,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "1-5",
+     "fills": {
+      "d65": {
+       "cost": 0.55433,
+       "fill_at": 1794453548,
+       "fill_print": 0.54,
+       "limit": 0.55,
+       "printed": 2154.22,
+       "profit": -0.55433,
+       "reason": "settled",
+       "sold_at": null,
+       "won": false
+      },
+      "d75": {
+       "cost": 0.64403,
+       "fill_at": 1794453498,
+       "fill_print": 0.61,
+       "limit": 0.64,
+       "printed": 2330.49,
+       "profit": -0.64403,
+       "reason": "settled",
+       "sold_at": null,
+       "won": false
+      },
+      "d85": {
+       "cost": 0.72353,
+       "fill_at": 1794453173,
+       "fill_print": 0.7,
+       "limit": 0.72,
+       "printed": 2462.32,
+       "profit": -0.72353,
+       "reason": "settled",
+       "sold_at": null,
+       "won": false
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11DENMEM-DEN1TO5",
+     "no_wins": false,
+     "spread": 0.01,
+     "team": "DEN"
+    },
+    {
+     "P": 0.89,
+     "ask": {
+      "how": "print",
+      "last": null,
+      "printed": 100.91,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "1-5",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": null
+     },
+     "id": "KXNBAWINMARGIN-26NOV11DENMEM-MEM1TO5",
+     "no_wins": true,
+     "spread": 0.03,
+     "team": "MEM"
+    },
+    {
+     "P": 0.91,
+     "ask": {
+      "how": "print",
+      "last": null,
+      "printed": 94.57,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "6-10",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": null
+     },
+     "id": "KXNBAWINMARGIN-26NOV11DENMEM-MEM6TO10",
+     "no_wins": true,
+     "spread": 0.02,
+     "team": "MEM"
+    },
+    {
+     "P": 0.93,
+     "ask": {
+      "how": "print",
+      "last": null,
+      "printed": 68.81,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "21+",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": {
+       "cost": 0.7929,
+       "fill_at": 1794447290,
+       "fill_print": 0.78,
+       "limit": 0.79,
+       "printed": 110.0,
+       "profit": 0.13596,
+       "reason": "sold",
+       "sold_at": 1794451027,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11DENMEM-DEN21PLUS",
+     "no_wins": true,
+     "spread": 0.02,
+     "team": "DEN"
+    }
+   ],
+   "event": "KXNBAWINMARGIN-26NOV11DENMEM",
+   "insample": false,
+   "logged": "2026-11-12T04:22:56.237717+00:00",
+   "night": "2026-11-11",
+   "tip": 1794445200,
+   "version": "nofade-v2"
+  },
+  {
+   "buckets": [
+    {
+     "P": 0.92,
+     "ask": {
+      "how": "print",
+      "last": null,
+      "printed": 966.46,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "11-20",
+     "fills": {
+      "d65": null,
+      "d75": {
+       "cost": 0.69374,
+       "fill_at": 1794443559,
+       "fill_print": 0.68,
+       "limit": 0.69,
+       "printed": 37.19,
+       "profit": 0.22497,
+       "reason": "sold",
+       "sold_at": 1794449964,
+       "won": true
+      },
+      "d85": {
+       "cost": 0.783,
+       "fill_at": 1794443559,
+       "fill_print": 0.68,
+       "limit": 0.78,
+       "printed": 105.18,
+       "profit": 0.13571,
+       "reason": "sold",
+       "sold_at": 1794449964,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11CLENYK-CLE11TO20",
+     "no_wins": true,
+     "spread": 0.04,
+     "team": "CLE"
+    },
+    {
+     "P": 0.87,
+     "ask": {
+      "how": "print",
+      "last": 0.83,
+      "printed": 1079.57,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "6-10",
+     "fills": {
+      "d65": {
+       "cost": 0.57429,
+       "fill_at": 1794448925,
+       "fill_print": 0.23,
+       "limit": 0.57,
+       "printed": 173.84,
+       "profit": 0.29373,
+       "reason": "sold",
+       "sold_at": 1794449005,
+       "won": true
+      },
+      "d75": {
+       "cost": 0.65398,
+       "fill_at": 1794444950,
+       "fill_print": 0.62,
+       "limit": 0.65,
+       "printed": 26.94,
+       "profit": 0.21404,
+       "reason": "sold",
+       "sold_at": 1794446023,
+       "won": true
+      },
+      "d85": {
+       "cost": 0.74337,
+       "fill_at": 1794444950,
+       "fill_print": 0.62,
+       "limit": 0.74,
+       "printed": 1361.94,
+       "profit": 0.12465,
+       "reason": "sold",
+       "sold_at": 1794446023,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11CLENYK-NYK6TO10",
+     "no_wins": true,
+     "spread": 0.04,
+     "team": "NYK"
+    },
+    {
+     "P": 0.93,
+     "ask": {
+      "how": "print",
+      "last": null,
+      "printed": 984.66,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "6-10",
+     "fills": {
+      "d65": {
+       "cost": 0.6042,
+       "fill_at": 1794450774,
+       "fill_print": 0.5,
+       "limit": 0.6,
+       "printed": 327.9,
+       "profit": -0.6042,
+       "reason": "settled",
+       "sold_at": null,
+       "won": false
+      },
+      "d75": {
+       "cost": 0.70367,
+       "fill_at": 1794449391,
+       "fill_print": 0.67,
+       "limit": 0.7,
+       "printed": 578.62,
+       "profit": -0.70367,
+       "reason": "settled",
+       "sold_at": null,
+       "won": false
+      },
+      "d85": {
+       "cost": 0.7929,
+       "fill_at": 1794443530,
+       "fill_print": 0.7,
+       "limit": 0.79,
+       "printed": 53.29,
+       "profit": -0.7929,
+       "reason": "settled",
+       "sold_at": null,
+       "won": false
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11CLENYK-CLE6TO10",
+     "no_wins": false,
+     "spread": 0.04,
+     "team": "CLE"
+    },
+    {
+     "P": 0.87,
+     "ask": {
+      "how": "print",
+      "last": 0.83,
+      "printed": 1495.2,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "1-5",
+     "fills": {
+      "d65": null,
+      "d75": {
+       "cost": 0.65398,
+       "fill_at": 1794450188,
+       "fill_print": 0.63,
+       "limit": 0.65,
+       "printed": 98.43,
+       "profit": 0.21404,
+       "reason": "sold",
+       "sold_at": 1794450769,
+       "won": true
+      },
+      "d85": {
+       "cost": 0.74337,
+       "fill_at": 1794443148,
+       "fill_print": 0.7,
+       "limit": 0.74,
+       "printed": 195.56,
+       "profit": 0.12465,
+       "reason": "sold",
+       "sold_at": 1794449388,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11CLENYK-NYK1TO5",
+     "no_wins": true,
+     "spread": 0.04,
+     "team": "NYK"
+    },
+    {
+     "P": 0.91,
+     "ask": {
+      "last": null,
+      "printed": 0,
+      "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+      "source": "replayed",
+      "status": "unverified"
+     },
+     "bucket": "21+",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": null
+     },
+     "id": "KXNBAWINMARGIN-26NOV11CLENYK-NYK21PLUS",
+     "no_wins": true,
+     "spread": 0.02,
+     "team": "NYK"
+    },
+    {
+     "P": 0.92,
+     "ask": {
+      "how": "print",
+      "last": null,
+      "printed": 145.64,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "1-5",
+     "fills": {
+      "d65": {
+       "cost": 0.6042,
+       "fill_at": 1794450452,
+       "fill_print": 0.55,
+       "limit": 0.6,
+       "printed": 550.01,
+       "profit": 0.31451,
+       "reason": "sold",
+       "sold_at": 1794451163,
+       "won": true
+      },
+      "d75": {
+       "cost": 0.69374,
+       "fill_at": 1794448671,
+       "fill_print": 0.66,
+       "limit": 0.69,
+       "printed": 689.33,
+       "profit": 0.22497,
+       "reason": "sold",
+       "sold_at": 1794451163,
+       "won": true
+      },
+      "d85": {
+       "cost": 0.783,
+       "fill_at": 1794443159,
+       "fill_print": 0.77,
+       "limit": 0.78,
+       "printed": 408.83,
+       "profit": 0.13571,
+       "reason": "sold",
+       "sold_at": 1794451163,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11CLENYK-CLE1TO5",
+     "no_wins": true,
+     "spread": 0.04,
+     "team": "CLE"
+    },
+    {
+     "P": 0.83,
+     "ask": {
+      "how": "print",
+      "last": 0.79,
+      "printed": 217.58,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "11-20",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": {
+       "cost": 0.7136,
+       "fill_at": 1794443860,
+       "fill_print": 0.68,
+       "limit": 0.71,
+       "printed": 1386.5,
+       "profit": 0.11393,
+       "reason": "sold",
+       "sold_at": 1794443860,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11CLENYK-NYK11TO20",
+     "no_wins": true,
+     "spread": 0.04,
+     "team": "NYK"
+    }
+   ],
+   "event": "KXNBAWINMARGIN-26NOV11CLENYK",
+   "insample": false,
+   "logged": "2026-11-12T04:22:56.237717+00:00",
+   "night": "2026-11-11",
+   "tip": 1794441600,
+   "version": "nofade-v2"
+  },
+  {
+   "buckets": [
+    {
+     "P": 0.88,
+     "ask": {
+      "how": "print",
+      "last": 0.84,
+      "printed": 560.13,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "6-10",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": {
+       "cost": 0.75328,
+       "fill_at": 1794448327,
+       "fill_print": 0.72,
+       "limit": 0.75,
+       "printed": 72.57,
+       "profit": 0.12487,
+       "reason": "sold",
+       "sold_at": 1794448892,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11BOSTOR-BOS6TO10",
+     "no_wins": true,
+     "spread": 0.04,
+     "team": "BOS"
+    },
+    {
+     "P": 0.88,
+     "ask": {
+      "how": "print",
+      "last": 0.83,
+      "printed": 572.02,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "1-5",
+     "fills": {
+      "d65": {
+       "cost": 0.57429,
+       "fill_at": 1794450583,
+       "fill_print": 0.5,
+       "limit": 0.57,
+       "printed": 613.23,
+       "profit": -0.57429,
+       "reason": "settled",
+       "sold_at": null,
+       "won": false
+      },
+      "d75": {
+       "cost": 0.66393,
+       "fill_at": 1794449703,
+       "fill_print": 0.62,
+       "limit": 0.66,
+       "printed": 859.19,
+       "profit": -0.66393,
+       "reason": "settled",
+       "sold_at": null,
+       "won": false
+      },
+      "d85": {
+       "cost": 0.75328,
+       "fill_at": 1794446317,
+       "fill_print": 0.74,
+       "limit": 0.75,
+       "printed": 188.29,
+       "profit": -0.75328,
+       "reason": "settled",
+       "sold_at": null,
+       "won": false
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11BOSTOR-BOS1TO5",
+     "no_wins": false,
+     "spread": 0.05,
+     "team": "BOS"
+    },
+    {
+     "P": 0.81,
+     "ask": {
+      "how": "print",
+      "last": 0.76,
+      "printed": 298.1,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "11-20",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": null
+     },
+     "id": "KXNBAWINMARGIN-26NOV11BOSTOR-BOS11TO20",
+     "no_wins": true,
+     "spread": 0.05,
+     "team": "BOS"
+    }
+   ],
+   "event": "KXNBAWINMARGIN-26NOV11BOSTOR",
+   "insample": false,
+   "logged": "2026-11-12T04:22:56.237717+00:00",
+   "night": "2026-11-11",
+   "tip": 1794441600,
+   "version": "nofade-v2"
+  },
+  {
+   "buckets": [
+    {
+     "P": 0.86,
+     "ask": {
+      "last": null,
+      "printed": 0,
+      "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+      "source": "replayed",
+      "status": "unverified"
+     },
+     "bucket": "11-20",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": null
+     },
+     "id": "KXNBAWINMARGIN-26NOV11BKNNOP-NOP11TO20",
+     "no_wins": true,
+     "spread": 0.04,
+     "team": "NOP"
+    },
+    {
+     "P": 0.9,
+     "ask": {
+      "how": "print",
+      "last": null,
+      "printed": 37.0,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "1-5",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": null
+     },
+     "id": "KXNBAWINMARGIN-26NOV11BKNNOP-BKN1TO5",
+     "no_wins": true,
+     "spread": 0.04,
+     "team": "BKN"
+    },
+    {
+     "P": 0.95,
+     "ask": {
+      "how": "print",
+      "last": 0.95,
+      "printed": 30.0,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "21+",
+     "fills": {
+      "d65": {
+       "cost": 0.62412,
+       "fill_at": 1794451539,
+       "fill_print": 0.5,
+       "limit": 0.62,
+       "printed": 729.02,
+       "profit": -0.62412,
+       "reason": "settled",
+       "sold_at": null,
+       "won": false
+      },
+      "d75": {
+       "cost": 0.7136,
+       "fill_at": 1794451539,
+       "fill_print": 0.5,
+       "limit": 0.71,
+       "printed": 729.02,
+       "profit": -0.7136,
+       "reason": "settled",
+       "sold_at": null,
+       "won": false
+      },
+      "d85": {
+       "cost": 0.81269,
+       "fill_at": 1794451539,
+       "fill_print": 0.5,
+       "limit": 0.81,
+       "printed": 729.02,
+       "profit": -0.81269,
+       "reason": "settled",
+       "sold_at": null,
+       "won": false
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11BKNNOP-BKN21PLUS",
+     "no_wins": false,
+     "spread": 0.01,
+     "team": "BKN"
+    },
+    {
+     "P": 0.92,
+     "ask": {
+      "how": "print",
+      "last": 0.91,
+      "printed": 40.0,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "11-20",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": {
+       "cost": 0.783,
+       "fill_at": 1794449037,
+       "fill_print": 0.74,
+       "limit": 0.78,
+       "printed": 17.21,
+       "profit": 0.13571,
+       "reason": "sold",
+       "sold_at": 1794452869,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11BKNNOP-BKN11TO20",
+     "no_wins": true,
+     "spread": 0.01,
+     "team": "BKN"
+    },
+    {
+     "P": 0.9,
+     "ask": {
+      "how": "print",
+      "last": 0.88,
+      "printed": 38.0,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "6-10",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": {
+       "cost": 0.7731,
+       "fill_at": 1794447482,
+       "fill_print": 0.72,
+       "limit": 0.77,
+       "printed": 13.28,
+       "profit": 0.12533,
+       "reason": "sold",
+       "sold_at": 1794451944,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV11BKNNOP-BKN6TO10",
+     "no_wins": true,
+     "spread": 0.02,
+     "team": "BKN"
+    },
+    {
+     "P": 0.88,
+     "ask": {
+      "how": "print",
+      "last": null,
+      "printed": 84.59,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "1-5",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": null
+     },
+     "id": "KXNBAWINMARGIN-26NOV11BKNNOP-NOP1TO5",
+     "no_wins": true,
+     "spread": 0.05,
+     "team": "NOP"
+    },
+    {
+     "P": 0.92,
+     "ask": {
+      "last": null,
+      "printed": 0,
+      "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+      "source": "replayed",
+      "status": "unverified"
+     },
+     "bucket": "21+",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": null
+     },
+     "id": "KXNBAWINMARGIN-26NOV11BKNNOP-NOP21PLUS",
+     "no_wins": true,
+     "spread": 0.02,
+     "team": "NOP"
+    }
+   ],
+   "event": "KXNBAWINMARGIN-26NOV11BKNNOP",
+   "insample": false,
+   "logged": "2026-11-12T04:22:56.237717+00:00",
+   "night": "2026-11-11",
+   "tip": 1794445200,
+   "version": "nofade-v2"
   }
  ],
  "error": null,
  "lane": "nba_wm_nofade",
- "last_run": "2026-11-11T23:07:36.086990+00:00",
+ "last_run": "2026-11-12T04:22:56.237717+00:00",
  "observations": {
-  "at": "2026-11-11T23:07:36.086990+00:00",
+  "at": "2026-11-12T04:22:56.237717+00:00",
   "errors": [],
-  "new": 0,
+  "new": 7,
   "waiting": 0
  },
  "seen": {
@@ -23649,6 +25019,13 @@
   "KXNBAWINMARGIN-26NOV10MILNYK": "2026-11-11T06:49:37.118813+00:00",
   "KXNBAWINMARGIN-26NOV10OKCPOR": "2026-11-11T06:49:37.118813+00:00",
   "KXNBAWINMARGIN-26NOV10ORLSAC": "2026-11-11T06:49:37.118813+00:00",
+  "KXNBAWINMARGIN-26NOV11BKNNOP": "2026-11-12T04:22:56.237717+00:00",
+  "KXNBAWINMARGIN-26NOV11BOSTOR": "2026-11-12T04:22:56.237717+00:00",
+  "KXNBAWINMARGIN-26NOV11CLENYK": "2026-11-12T04:22:56.237717+00:00",
+  "KXNBAWINMARGIN-26NOV11DENMEM": "2026-11-12T04:22:56.237717+00:00",
+  "KXNBAWINMARGIN-26NOV11LALMIL": "2026-11-12T04:22:56.237717+00:00",
+  "KXNBAWINMARGIN-26NOV11SASCHI": "2026-11-12T04:22:56.237717+00:00",
+  "KXNBAWINMARGIN-26NOV11WASIND": "2026-11-12T04:22:56.237717+00:00",
   "KXNBAWINMARGIN-26OCT20BOSDET": "2026-10-30T19:46:54.954817+00:00",
   "KXNBAWINMARGIN-26OCT20OKCSAS": "2026-10-30T19:46:54.954817+00:00",
   "KXNBAWINMARGIN-26OCT20PHINYK": "2026-10-30T19:46:54.954817+00:00",
