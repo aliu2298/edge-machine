@@ -42,7 +42,7 @@
   },
   {
    "date": "2026-11-17",
-   "eps_forecast": "$3.86",
+   "eps_forecast": "$3.87",
    "fiscal_q": "Oct/2026",
    "kpi": [
     {
@@ -101,11 +101,11 @@
   },
   {
    "date": "2026-11-19",
-   "eps_forecast": "$1.31",
+   "eps_forecast": "$1.56",
    "fiscal_q": "Sep/2026",
    "kpi": [],
    "mentions": [],
-   "n_ests": "3",
+   "n_ests": "2",
    "name": "Alibaba Group Holding Limited",
    "perp": "KXBABAPERP",
    "sym": "BABA",
@@ -154,15 +154,17 @@
    "name": "Dell Technologies Inc.",
    "perp": "KXDELLPERP",
    "sym": "DELL",
-   "time": "not-supplied"
+   "time": "after-hours"
   },
   {
    "date": "2026-11-25",
    "eps_forecast": "$4.07",
    "fiscal_q": "Oct/2026",
    "kpi": [],
-   "mentions": [],
-   "n_ests": "1",
+   "mentions": [
+    "KXEARNINGSMENTIONDE-26NOV25"
+   ],
+   "n_ests": "N/A",
    "name": "Deere & Company",
    "perp": "KXDEPERP",
    "sym": "DE",
@@ -181,9 +183,21 @@
    "perp": "KXCRWDPERP",
    "sym": "CRWD",
    "time": "after-hours"
+  },
+  {
+   "date": "2026-12-02",
+   "eps_forecast": "$2.41",
+   "fiscal_q": "Oct/2026",
+   "kpi": [],
+   "mentions": [],
+   "n_ests": "13",
+   "name": "Salesforce, Inc.",
+   "perp": "KXCRMPERP",
+   "sym": "CRM",
+   "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-10T11:00:18Z",
+ "calendar_at": "2026-11-12T13:00:24Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -1448,9 +1462,25 @@
    "event": "KXWMT-26NOVUSCOMP",
    "read": null,
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-12T13:01:28Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 391517857.14285713,
+    "rungs": 6,
+    "width": 9645550.527903438
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-12T13:01:28Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": null,
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-12T12:00:33Z",
+ "last_run": "2026-11-12T13:01:32Z",
  "predictions": [
   {
    "call": {
@@ -1759,6 +1789,20 @@
    "report_time": "after-hours",
    "side": 1,
    "sym": "CRWD"
+  },
+  {
+   "entry_due": "2026-11-24T21:00:00Z",
+   "exit_due": "2026-12-02T21:00:00Z",
+   "family": "runup",
+   "id": "runup:CRM:2026-12-02",
+   "logged_at": "2026-11-12T13:01:30Z",
+   "perp": "KXCRMPERP",
+   "random_side": -1,
+   "reason": "Up into the 2026-12-02 report (after-hours).",
+   "report": "2026-12-02",
+   "report_time": "after-hours",
+   "side": 1,
+   "sym": "CRM"
   }
  ],
  "registered": "2026-11-07",
