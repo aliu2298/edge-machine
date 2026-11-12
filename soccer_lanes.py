@@ -461,7 +461,8 @@ def africa_rows(state=None):
               ("Fills and fees", "The ask counts unless trade prints refute it; a refuted entry is left out. Exchange taker fee"),
               ("Score", "A match day counts as one outcome"),
               ("Stage", "Observation only. A pre-registered forward check, never in Production"),
-              ("Pre-registration", AG.PREREG)]
+              # In words, not the file path: a long unbreakable path widened the page on a phone (test_site_layout).
+              ("Pre-registered", "Nov 12 2026, before the first match of the window was played")]
     note = "Observation lane: a pre-registered forward check on one lead. Paper, never in Production."
     rows = []
     for key, meta in AG.ROWS.items():

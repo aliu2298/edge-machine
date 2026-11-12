@@ -214,7 +214,9 @@ check("an observation lane: not a registered tracker source, no Production stage
 words = "".join(r["own"]["details"] + r["own"]["entries"] + r["own"]["label"] + r["meta"]["note"] for r in rows)
 check("the fold says how it is run and that it is observation only",
       all(x in words for x in ("hourly quote three hours before the ESPN kickoff", "never in Production", "Points: the share of bets won",
-                               "backfilled", AG.PREREG)), True)
+                               "backfilled", "before the first match of the window was played")), True)
+check("no long unbreakable word in the fold (a file path widened the page on a phone)",
+      max(len(w) for w in __import__("re").sub(r"<[^>]+>", " ", words).split()) <= 30, True)
 check("public copy: the rows' words pass the copy guard", bool(sandbox_audit.COPY_RE.search(words)), False)
 check("percentages only: no dollar amounts", "$" in words, False)
 import soccer_build
