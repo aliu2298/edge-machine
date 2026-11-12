@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-11-12T03:00:33.591623+00:00",
-   "last_success": "2026-11-12T03:00:33.591623+00:00",
+   "last_run": "2026-11-12T03:22:52.198477+00:00",
+   "last_success": "2026-11-12T03:22:52.198477+00:00",
    "observations": {
-    "at": "2026-11-12T03:00:33.591623+00:00",
+    "at": "2026-11-12T03:22:52.198477+00:00",
     "events": 959,
     "reasons": {},
     "retired": "2026-10-24"
@@ -548,10 +548,10 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-11-12T03:00:33.591623+00:00",
-   "last_success": "2026-11-12T03:00:33.591623+00:00",
+   "last_run": "2026-11-12T03:22:52.198477+00:00",
+   "last_success": "2026-11-12T03:22:52.198477+00:00",
    "observations": {
-    "at": "2026-11-12T03:00:33.591623+00:00",
+    "at": "2026-11-12T03:22:52.198477+00:00",
     "events": 959,
     "reasons": {},
     "retired": "2026-10-24"
@@ -905,10 +905,10 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-11-12T03:00:33.591623+00:00",
-   "last_success": "2026-11-12T03:00:33.591623+00:00",
+   "last_run": "2026-11-12T03:22:52.198477+00:00",
+   "last_success": "2026-11-12T03:22:52.198477+00:00",
    "observations": {
-    "at": "2026-11-12T03:00:33.591623+00:00",
+    "at": "2026-11-12T03:22:52.198477+00:00",
     "events": 959,
     "reasons": {},
     "retired": "2026-10-31"
@@ -2581,16 +2581,15 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-11-12T03:00:33.591623+00:00",
-   "last_success": "2026-11-12T03:00:33.591623+00:00",
+   "last_run": "2026-11-12T03:22:52.198477+00:00",
+   "last_success": "2026-11-12T03:22:52.198477+00:00",
    "observations": {
-    "at": "2026-11-12T03:00:33.591623+00:00",
+    "at": "2026-11-12T03:22:52.198477+00:00",
     "events": 959,
     "reasons": {
-     "collecting review pace (12h of snapshots)": 1,
-     "edge 5c+": 1,
+     "edge 5c+": 2,
      "under 20 reviews counted": 14,
-     "within 1 point of the line": 1
+     "within 1 point of the line": 2
     }
    },
    "picks": [
@@ -2854,6 +2853,26 @@
      "settled": "2026-11-09T17:00:31.609124+00:00",
      "side": "yes",
      "status": "won",
+     "strike": 45,
+     "strike_type": "greater",
+     "title": "Above 45"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-11-16T15:00:00Z",
+     "detail": "15/36 liked (42), ~87 more reviews \u00b7 P(above 45) 0.32 \u00b7 edge +0.19",
+     "edge": 0.1902,
+     "event": "KXRT-HOWT",
+     "id": "KXRT-HOWT-45",
+     "logged": "2026-11-12T03:22:52.198477+00:00",
+     "model": 0.3175,
+     "name": "How to Rob a Bank \u00b7 Rotten Tomatoes score",
+     "price": 0.12,
+     "revived": "2026-10-26",
+     "rt_url": "https://www.rottentomatoes.com/m/how_to_rob_a_bank_2026",
+     "series": "KXRT",
+     "side": "yes",
+     "status": "open",
      "strike": 45,
      "strike_type": "greater",
      "title": "Above 45"
