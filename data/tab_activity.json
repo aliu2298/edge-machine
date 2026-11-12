@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-12T18:34Z",
+ "generated": "2026-11-12T18:53Z",
  "rule": "active = not retired, not a baseline, a bet or an open pick in its current record window",
  "tabs": {
   "commodities": {
@@ -86,6 +86,10 @@
   },
   "soccer": {
    "active": [
+    "africa_goals_all",
+    "africa_goals_o15",
+    "africa_goals_t1",
+    "africa_goals_u35",
     "arg_goalless_dip",
     "btts_form_l10|soccer_btts_intl",
     "corners_fav_no|soccer_corners",
