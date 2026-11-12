@@ -70,11 +70,6 @@
    "lead_min": 12.9,
    "price": 0.39
   },
-  "commod_fav_band:KXWTI-26NOV0214-T96.49": {
-   "at": "2026-11-02T18:46:47+00:00",
-   "lead_min": 13.2,
-   "price": 0.33
-  },
   "commod_fav_band:KXWTI-26NOV0314-T94.99": {
    "at": "2026-11-03T18:51:28+00:00",
    "lead_min": 8.5,
@@ -169,11 +164,6 @@
    "at": "2026-11-05T21:15:27+00:00",
    "lead_min": 14.5,
    "price": 0.91
-  },
-  "commod_nc_no:KXWTI-26NOV0214-T96.99": {
-   "at": "2026-11-02T18:46:47+00:00",
-   "lead_min": 13.2,
-   "price": 0.9
   },
   "commod_nc_no:KXWTI-26NOV0314-T96.99": {
    "at": "2026-11-03T18:51:28+00:00",
@@ -290,11 +280,6 @@
    "lead_min": 12.9,
    "price": 0.99
   },
-  "commod_nc_yes:KXWTI-26NOV0214-T94.49": {
-   "at": "2026-11-02T18:46:47+00:00",
-   "lead_min": 13.2,
-   "price": 0.99
-  },
   "commod_nc_yes:KXWTI-26NOV0414-T87.49": {
    "at": "2026-11-04T18:55:30+00:00",
    "lead_min": 4.5,
@@ -316,8 +301,8 @@
    "price": 0.93
   },
   "commod_nc_yes:KXWTI-26NOV1214-T86.99": {
-   "at": "2026-11-12T18:34:49+00:00",
-   "lead_min": 25.2,
+   "at": "2026-11-12T18:49:51+00:00",
+   "lead_min": 10.1,
    "price": 0.98
   },
   "corners_fav_no:KXLALIGACORNERS-26NOV08RSORVC-12": {
@@ -575,6 +560,16 @@
    "lead_min": 7.0,
    "price": 0.59
   },
+  "o15_ranked:KXUEFANLTOTAL-26NOV12MNELAT-2": {
+   "at": "2026-11-12T18:49:51+00:00",
+   "lead_min": 55.1,
+   "price": 0.77
+  },
+  "o15_ranked:KXUEFANLTOTAL-26NOV12SMRBLR-2": {
+   "at": "2026-11-12T18:49:51+00:00",
+   "lead_min": 55.1,
+   "price": 0.82
+  },
   "oddspedia:KXT20MATCH-26NOV030145JBOBKI": {
    "at": "2026-11-03T06:34:17+00:00",
    "lead_min": 10.7,
@@ -630,6 +625,11 @@
    "lead_min": 0.0,
    "price": 0.72
   },
+  "team2_ranked_fade:KXUEFANLTEAMTOTAL-26NOV12MNELAT-MNE2": {
+   "at": "2026-11-12T18:49:51+00:00",
+   "lead_min": 55.1,
+   "price": 0.35
+  },
   "u35_low_o15:KXEREDIVISIETOTAL-26NOV06WILZWO-2": {
    "at": "2026-11-06T18:51:23+00:00",
    "lead_min": 8.6,
@@ -671,5 +671,5 @@
    "price": 0.77
   }
  },
- "updated": "2026-11-12T18:34:49+00:00"
+ "updated": "2026-11-12T18:49:51+00:00"
 }
