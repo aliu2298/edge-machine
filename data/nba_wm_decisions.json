@@ -7531,6 +7531,19 @@
    "yes_ask": 0.13,
    "yes_bid": 0.09
   },
+  "no:KXNBAWINMARGIN-26NOV11GSWHOU-GSW21PLUS": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "GSW21PLUS",
+   "decided_at": "2026-11-12T01:45:00+00:00",
+   "event": "KXNBAWINMARGIN-26NOV11GSWHOU",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV11",
+   "ticker": "KXNBAWINMARGIN-26NOV11GSWHOU-GSW21PLUS",
+   "tip": "2026-11-12T02:30:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "no:KXNBAWINMARGIN-26NOV11GSWHOU-GSW6TO10": {
    "P": 0.93,
    "bot_version": "wm-nofade-v4",
@@ -13400,6 +13413,6 @@
    "yes_bid": 0.08
   }
  },
- "updated_at": "2026-11-12T01:32:59+00:00",
+ "updated_at": "2026-11-12T01:45:00+00:00",
  "version": 1
 }
