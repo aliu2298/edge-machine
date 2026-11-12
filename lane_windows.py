@@ -602,7 +602,7 @@ def _close_token(close):
 # entry in EVERY one of them, so the Yes lane filling first never cuts off the No lanes' reads.
 WINDOW_LANES = {
     "crypto_fav_band": ("crypto_fav_band", "crypto_fav_band_below", "crypto_fav_band_60",
-                        "crypto_fav_band_below_60"),
+                        "crypto_fav_band_below_60", "crypto_fav_band_v2"),
     "commod_fav_band": ("commod_fav_band",),
     "commod_nc": S.COMMOD_NC_LANES,
 }
