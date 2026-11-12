@@ -48,14 +48,13 @@ h = KB.build(ledger, NOW, split_state=weekly, wide_state=wide, month_state=empty
 t = text(h)
 
 print("the order, top to bottom")
-ids = ["standard", "lanes", "dip-hold-row", "album-cheap-rungs-row", "album-cheap-no-row", "rt-model-row", "retired", "retired-cheap", "archive"]
+ids = ["standard", "lanes", "dip-hold-row", "rt-model-row", "retired", "retired-cheap", "retired-album", "archive"]
 pos = [h.find(f'id="{i}"') for i in ids]
-check("standard, the lane rows (dip bid, the album lanes, the model lane), one Retired block holding the mention lanes and the archive",
-      (all(p > 0 for p in pos), pos == sorted(pos)), (True, True))
-check("the standard, in Olu's words",
-      all(x in t for x in ("Cheap side + resting take-profit.", "Buy cheap contracts at the event's open, at the real ask.",
-                           "Rest a split sell: half at 2x, half at 3x.", "A fill counts only on a traded print.",
-                           "Every lane is shown next to the same entries held.")), True)
+check("standard, the 2 lane rows (dip bid, the model lane), one Retired block holding the mention lanes, the album lanes "
+      "(retired 2026-11-11) and the archive", (all(p > 0 for p in pos), pos == sorted(pos)), (True, True))
+check("no album lane row since 2026-11-11", ('id="album-cheap-rungs-row"' in h, 'id="album-cheap-no-row"' in h), (False, False))
+check("the header counts 2 active lanes", ("2 active lanes" in t, "Lanes 2 active" in t), (True, True))
+check("the standard, in few words", all(x in t for x in ("Kalshi culture markets, paper only.", "A fill counts only on a traded print.")), True)
 
 print("\nthe lanes: one closed row per LIVE lane (2026-11-11, Olu)")
 lanes_h = h[h.find('id="lanes"'):h.find('id="retired"')]
@@ -76,7 +75,7 @@ check("status moves at 10 and 30", (KB.status(9), KB.status(10), KB.status(30)),
        "30 settled events · decide now (30 reached)"))
 
 print("\nthe retired mention lanes: ONE line in the collapsed Retired fold (2026-11-06, Olu)")
-retired_h = h[h.find('id="retired-cheap"'):h.find('id="archive"')]
+retired_h = h[h.find('id="retired-cheap"'):h.find('id="retired-album"')]
 rt = text(retired_h)
 check("collapsed, one line, no cards, tables or tiles left",
       ('<details class="fold sec" id="retired-cheap">' in h, retired_h.count("<li>"), "<table" in retired_h,
@@ -85,7 +84,19 @@ check("the line: the four names, retired date, final record, reason",
       ("Weekly strict 5c, Weekly wide 10c, Monthly strict 5c, Monthly wide 10c" in rt, "retired 2026-10-31" in rt,
        "final record 3 valid entries since 2026-10-27, 1 won" in rt, "books too thin to pass the spread + ask check" in rt),
       (True, True, True, True))
-check("no lane id in the line", [c["lane"] for c in KB.GONE_CHEAP if c["lane"] in retired_h], [])
+check("no lane id in the line", [c["lane"] for c in KB.GONE_MENTIONS if c["lane"] in retired_h], [])
+
+print("\nthe retired album lanes (2026-11-11, Olu: books too thin to trade): one line each, entries only in a closed fold")
+album_h = h[h.find('id="retired-album"'):h.find('id="archive"')]
+at = text(album_h)
+check("a closed fold inside Retired, one line per lane with its date and final record",
+      ('<details class="fold sec" id="retired-album">' in h, album_h.count('<li data-lane="'),
+       "Album · cheap YES : retired 2026-11-11; final record 81 entries, 11 passed the ask check; 0 settled events" in at,
+       "Album · cheap NO : retired 2026-11-11; final record 30 entries, 9 passed the ask check; 0–3 on 3 settled events, −100%" in at,
+       "too thin to trade" in at), (True, 2, True, True, True))
+check("each lane's entries sit in a closed fold", (album_h.count('id="album-cheap-rungs-retired-fold"'), album_h.count('id="album-cheap-no-retired-fold"'),
+      re.findall(r"<details[^>]*\bopen\b", album_h)), (1, 1, []))
+check("public copy passes the guard", sandbox_audit.COPY_RE.search(album_h), None)
 none = KB.build(ledger, NOW, split_state=empty, wide_state=empty, month_state=empty, month_wide_state=empty,
                 album_state=empty, album_no_state=empty)
 check("with no valid entry: 0 valid entries since 2026-10-27, nothing open",

@@ -151,6 +151,13 @@ _MENTIONS_GONE = dict(on="2026-10-31", at="no valid entry since 2026-10-27",
                              "and the ask check (0 valid entries since 2026-10-27); retired 2026-10-31")
 for _cfg in (STRICT, WIDE, MONTH, MONTH_WIDE):
     _cfg["retired"] = dict(_MENTIONS_GONE)
+# Retired by hand (2026-11-11, Olu): both album lanes. The books are too thin to trade: most entries fail the ask check.
+# Set here, after ALBUM_NO is built from ALBUM, so each carries its own record. No new entry from the dated day on
+# (Eastern); the rows stay and open entries still fill and settle.
+_ALBUM_WHY = "the order books are too thin to trade: most entries fail the ask check"
+ALBUM["retired"] = dict(on="2026-11-11", at="81 entries, 11 passed the ask check; 0 settled events", reason=_ALBUM_WHY)
+ALBUM_NO["retired"] = dict(on="2026-11-11", at="30 entries, 9 passed the ask check; 0–3 on 3 settled events, −100%",
+                           reason=_ALBUM_WHY)
 LANES = (STRICT, WIDE, MONTH, MONTH_WIDE, ALBUM, ALBUM_NO)
 
 

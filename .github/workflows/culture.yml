@@ -32,7 +32,7 @@ jobs:
         run: python3 culture_track.py
       - name: Trump mentions feed (mentions_rate; Production 2026-10-20 to 2026-10-26, now graded leads only)
         run: python3 culture_production.py
-      - name: Cheap YES split lanes - Trump mentions weekly and monthly, album sales (Sandbox paper, 2026-10-27)
+      - name: Cheap-side lanes, all retired (mentions 2026-10-31, album sales 2026-11-11) - open entries still fill and settle
         run: python3 mentions_split.py
       - name: Trump mentions 10c dip bid, held to settlement (Sandbox paper, 2026-11-01)
         run: python3 mentions_dip_hold.py

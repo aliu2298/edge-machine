@@ -26,12 +26,14 @@ import sport_page as SP
 
 KEY = "culture"
 TITLE = "Edge Machine · Culture"
-DESCRIPTION = ("Kalshi culture markets on paper: cheap side + resting take-profit on Trump mentions and album "
-               "sales, beside the same entries held.")
+DESCRIPTION = ("Kalshi culture markets on paper: the Trump mentions dip bid and the Rotten Tomatoes model; the cheap-side "
+               "mention and album lanes are retired, kept with their records.")
 # The cheap-side lanes, in page order (weekly mentions strict, wide; monthly strict, wide; album YES, NO).
 CHEAP = (MS.STRICT, MS.WIDE, MS.MONTH, MS.MONTH_WIDE, MS.ALBUM, MS.ALBUM_NO)
-LIVE_CHEAP = tuple(c for c in CHEAP if not c.get("retired"))      # the album lanes
-GONE_CHEAP = tuple(c for c in CHEAP if c.get("retired"))          # the weekly and monthly mention lanes (2026-10-31)
+LIVE_CHEAP = tuple(c for c in CHEAP if not c.get("retired"))      # none since 2026-11-11 (the album lanes retired)
+GONE_CHEAP = tuple(c for c in CHEAP if c.get("retired"))
+GONE_MENTIONS = tuple(c for c in GONE_CHEAP if c not in (MS.ALBUM, MS.ALBUM_NO))   # the weekly and monthly mention lanes (2026-10-31)
+GONE_ALBUM = tuple(c for c in GONE_CHEAP if c in (MS.ALBUM, MS.ALBUM_NO))         # the album lanes (2026-11-11)
 SECTIONS = (("lanes", "Lanes"), ("retired", "Retired"))
 # The old lanes, shown in the Archive only (2026-10-27).
 ARCHIVE = ("mentions_rate", "culture_endgame", "culture_fav_band")
@@ -87,23 +89,42 @@ def retired_cheap(states, esc):
     """The retired weekly and monthly mention lanes as ONE line in a collapsed fold (2026-11-06, Olu), in the
     Archive's one-line style: names, retired date, final record, reason. Display only: their ledger rows stay and
     any open entry still fills and settles. The record counts valid entries only (unverified asks are left out)."""
-    why = GONE_CHEAP[0]["retired"]
-    valid = [e for c in GONE_CHEAP for e in MS.counted(states[c["lane"]])]
-    open_n = sum(not MS.done(e) for c in GONE_CHEAP for e in states[c["lane"]].get("entries") or [])
-    since = min(c["registered"] for c in GONE_CHEAP)
+    why = GONE_MENTIONS[0]["retired"]
+    valid = [e for c in GONE_MENTIONS for e in MS.counted(states[c["lane"]])]
+    open_n = sum(not MS.done(e) for c in GONE_MENTIONS for e in states[c["lane"]].get("entries") or [])
+    since = min(c["registered"] for c in GONE_MENTIONS)
     if valid:
         r = MS.record(valid)
         rec = (f"{r['entries']} valid entr{'y' if r['entries'] == 1 else 'ies'} since {since}, {r['won']} won, "
                f"split ROI {MS._headline(r['roi'], r)}, hold ROI {MS._headline(r['roi_held'], r)} after fees")
     else:
         rec = f"0 valid entries since {since}"
-    names = ", ".join(c["label"].replace("mentions · ", "").replace(" (", " ").rstrip(")") for c in GONE_CHEAP)
+    names = ", ".join(c["label"].replace("mentions · ", "").replace(" (", " ").rstrip(")") for c in GONE_MENTIONS)
     line = (f"retired {why['on']}; final record {rec}"
             + (f"; {open_n} open entr{'y' if open_n == 1 else 'ies'} still settling" if open_n else "")
             + "; books too thin to pass the spread + ask check")
     return (f'<details class="fold sec" id="retired-cheap"><summary><h3>Mention lanes</h3> <span class="mut sm">· '
-            f'{len(GONE_CHEAP)} cheap-side mention lanes · retired {esc(why["on"])} · kept, not deleted</span></summary>'
+            f'{len(GONE_MENTIONS)} cheap-side mention lanes · retired {esc(why["on"])} · kept, not deleted</span></summary>'
             f'<ul class="sm"><li><b>Cheap-side mention lanes</b> ({esc(names)}): {esc(line)}.</li></ul></details>')
+
+
+def retired_album(states, esc):
+    """The retired album lanes (2026-11-11, Olu), one line each with the final record; each lane's entries only when its
+    fold is opened. Display only: the ledger rows stay and open entries still fill and settle."""
+    if not GONE_ALBUM:
+        return ""
+    items = []
+    for cfg in GONE_ALBUM:
+        st = states[cfg["lane"]]
+        g = cfg["retired"]
+        open_n = sum(not MS.done(x) for x in st.get("entries") or [])
+        line = (f"retired {g['on']}; final record {g['at']}"
+                + (f"; {open_n} open entr{'y' if open_n == 1 else 'ies'} still settling" if open_n else "") + f"; {g['reason']}")
+        items.append(f'<li data-lane="{esc(cfg["lane"])}"><b>{esc(cfg["label"])}</b>: {esc(line)}.'
+                     + _fold("Entries", "", MS.section(st, esc, cfg), cfg["anchor"] + "-retired-fold") + '</li>')
+    return (f'<details class="fold sec" id="retired-album"><summary><h3>Album lanes</h3> <span class="mut sm">· '
+            f'{len(GONE_ALBUM)} cheap-side album lanes · retired {esc(GONE_ALBUM[0]["retired"]["on"])} · kept, not deleted</span></summary>'
+            f'<ul class="sm">{"".join(items)}</ul></details>')
 
 
 def model_lanes(state, now, esc):
@@ -278,15 +299,14 @@ def build(state=None, now=None, split_state=None, wide_state=None, month_state=N
     states = {cfg["lane"]: given[cfg["lane"]] if given[cfg["lane"]] is not None else MS.load(cfg=cfg) for cfg in CHEAP}
     rows, details = lane_rows(states, state, now, dip_state, e)
     gone = (f'<section id="retired" class="sp-section"><details class="fold sec" id="retired-all"><summary><h2>Retired</h2> <span class="mut sm">'
-            f'· {len(GONE_CHEAP)} mention lanes, {len(ARCHIVE)} older lanes · kept, not deleted</span></summary>'
-            f'{retired_cheap(states, e)}{archive(state, now, e)}</details></section>')
+            f'· {len(GONE_MENTIONS)} mention lanes, {len(GONE_ALBUM)} album lanes, {len(ARCHIVE)} older lanes · kept, not deleted</span></summary>'
+            f'{retired_cheap(states, e)}{retired_album(states, e)}{archive(state, now, e)}</details></section>')
     body = ('<section id="standard"><h1>Culture</h1>'
-            '<p class="lede"><b>Cheap side + resting take-profit.</b> Kalshi culture markets, paper only.</p>'
-            + _fold("How it works", "", '<ul class="sm"><li>Buy cheap contracts at the event\'s open, at the real ask.</li>'
-                    '<li>Rest a split sell: half at 2x, half at 3x.</li><li>A fill counts only on a traded print.</li>'
-                    '<li>Every lane is shown next to the same entries held.</li></ul>'
+            '<p class="lede">Kalshi culture markets, paper only.</p>'
+            + _fold("How it works", "", '<ul class="sm"><li>Each lane enters at the real price and is judged after Kalshi\'s fees.</li>'
+                    '<li>A fill counts only on a traded print.</li><li>Each row\'s rule sits in its fold.</li></ul>'
                     '<p class="sm mut">Each lane starts a fresh record at its first entry: review at 10 settled events, decide at 30. '
-                    'An event is one outcome: the words of one mention market, or the rungs of one album ladder, move together, so they count once.</p>')
+                    'An event is one outcome: the words of one mention market move together, so they count once.</p>')
             + tiles(rows) + '</section>'
             + lanes_section(rows, details)
             + gone
