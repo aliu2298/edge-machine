@@ -16,14 +16,14 @@ GROUPS = ("NBA", "Soccer", "Crypto · Econ · S&P")
 EARLY_N = 10                         # under this many settled bets a return is grey ("too early")
 # The own-state lanes the follower runs from its own state files, and the lane a Production pair's live bets are read from.
 OWN_RUNNING = ("nba_wm_yes", "nba_wm_nofade", "arg_dip")
-OWN_RETIRED = ("o35_cheap_no", "top5_dip")
+OWN_RETIRED = ("o35_cheap_no",)
 OWN_GROUP = {"nba_wm_yes": "NBA", "nba_wm_nofade": "NBA", "arg_dip": "Soccer", "o35_cheap_no": "Soccer", "top5_dip": "Soccer"}
 OWN_RULE = {
     "nba_wm_yes": "Backs the Yes side of an NBA win-margin bracket and sells in two parts on the way up.",
     "nba_wm_nofade": "Backs No on an NBA win-margin bracket the market overrates.",
     "arg_dip": "Buys over 0.5 goals in an Argentine league match that stays goalless, at a price below its pre-match level, and sells back.",
     "o35_cheap_no": "Backed No on a cheap over 3.5 goals line in soccer, selling into a spike.",
-    "top5_dip": "Bought over 1.5 goals in a top-five-league match that stayed goalless, below its pre-match price, and sold back.",
+    "top5_dip": "Buys over 1.5 goals in a top-five-league match that stays goalless, below its pre-match price, and sells back.",
 }
 
 
@@ -147,7 +147,17 @@ def build(live_blob, pairs, now=None):
             cur = lanes.get(lane)
             paper = meta.get("paper") or {}
             if cur is None:
-                add(lane, PL.LANE_NAMES.get(lane, meta["name"]), group_of(lane), list(own_rows.get(lane) or []), True,
+                rows = list(own_rows.get(lane) or [])
+                if lane in PL.OWN_FROM:           # a fresh record: the earlier run leaves the running lane and stays as a Retired line
+                    early = [o for o in rows if str(o.get("ko") or "")[:10] < PL.OWN_FROM[lane]]
+                    rows = [o for o in rows if str(o.get("ko") or "")[:10] >= PL.OWN_FROM[lane]]
+                    if early:
+                        sp = _span(early)
+                        history.append(dict(key=lane + "#first-run", name=PL.LANE_NAMES.get(lane, lane) + f" · earlier run ({_day(sp[0])} – {_day(sp[1])})",
+                                            group=group_of(lane), own=True, rows=early, live=tally(early, True), paper=None, notes=[],
+                                            rule=OWN_RULE.get(lane, ""), clv=None, market=None, since=sp[0], last=sp[1]))
+                    meta = dict(meta, note=f"Fresh live record from {_day(PL.OWN_FROM[lane])}. The earlier live run is under Retired lanes, as history.")
+                add(lane, PL.LANE_NAMES.get(lane, meta["name"]), group_of(lane), rows, True,
                     dict(n=paper.get("n") or 0, won=paper.get("won") or 0, roi=paper.get("roi_fee")), notes=[], rule=OWN_RULE.get(lane, ""),
                     clv=None)
             else:

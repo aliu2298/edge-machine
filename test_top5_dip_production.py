@@ -10,6 +10,8 @@ FAILS = []
 UTC = dt.timezone.utc
 _ENDED = X.ENDED_ON
 X.ENDED_ON = ""          # these checks are the running lane's machinery; the ended lane is checked at the bottom
+_MOVED = X.MOVED_ON
+X.MOVED_ON = "2026-11-05"   # the fixtures sit in its first run (2026-11-05 to 2026-11-08); the re-promotion (2026-11-12) is checked at the bottom
 
 
 def check(label, got, want):
@@ -120,12 +122,18 @@ check("an unknown outcome is refused", refused(lambda r: r.update(outcome="fille
 check("a price outside 0-1 is refused", refused(lambda r: r.update(P=44.0)), True)
 check("another lane is refused", refused(lambda r: r.update(lane="nba_winmargin_live")), True)
 
-print("back in the Sandbox (2026-11-08)")
-X.ENDED_ON = _ENDED
+print("the end switch (it was back in the Sandbox 2026-11-08 to 2026-11-12)")
+X.ENDED_ON = "2026-11-08"
 check("ended: the feed is valid, fresh and names no match, so the follower opens no new bid", (X.feed(NOW, fetch)["leads"], X.feed(NOW, fetch)["ended_on"]), ([], "2026-11-08"))
 check("ended: no Production pair, no page inputs", (X.pairs(), X.page_inputs({"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}, {}, now=NOW)),
       ({}, ({"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}})))
-X.ENDED_ON = ""
+X.ENDED_ON = _ENDED
+X.MOVED_ON = _MOVED
+print("back in Production (2026-11-12, Olu)")
+check("running: back in Production on a fresh record, the first run kept as history", (X.ENDED_ON, X.MOVED_ON, X.FIRST_RUN, X.PROMOTED[:10]),
+      ("", "2026-11-12", ("2026-11-05", "2026-11-08"), "2026-11-12"))
+check("running: one Production pair, by hand 2026-11-12, at the default stake", ({k: v["by_hand"] for k, v in X.pairs().items()}, X.STAKE_USD),
+      ({"top5_goalless_dip_live|soccer_o15": "2026-11-12"}, 1.0))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

@@ -50,13 +50,14 @@ check("a record graded under another rule set is refused", PG.verdict(rec(rules=
 
 print("a promotion without a record fails; with one it passes")
 CB = "commod_fav_band|commodities_fav"            # promoted 2026-11-12 with its own record and waiver
-blob = dict(lanes={CB: rec()})
+TD = "top5_goalless_dip_live"                     # back in Production 2026-11-12 with its own record and waiver
+blob = dict(lanes={CB: rec(), TD: rec()})
 new = dict(live, **{"new_rule|soccer_o25": "a new lane"})
 got = PG.verify(blob, new, feeds=[])
 check("a newly promoted lane with no record is refused", [k for k, _w in got], ["new_rule|soccer_o25"])
-check("... with a failing record too", [k for k, _w in PG.verify(dict(lanes={CB: rec(), "new_rule|soccer_o25": rec(roi=-0.2)}), new, feeds=[])],
+check("... with a failing record too", [k for k, _w in PG.verify(dict(lanes={CB: rec(), TD: rec(), "new_rule|soccer_o25": rec(roi=-0.2)}), new, feeds=[])],
       ["new_rule|soccer_o25"])
-check("... and passes with a passing one", PG.verify(dict(lanes={CB: rec(), "new_rule|soccer_o25": rec()}), new, feeds=[]), [])
+check("... and passes with a passing one", PG.verify(dict(lanes={CB: rec(), TD: rec(), "new_rule|soccer_o25": rec()}), new, feeds=[]), [])
 check("a grandfathered lane is not refused for its figure", PG.verify(dict(lanes={}), {k: live[k] for k in live if k in PG.GRANDFATHERED}, feeds=[]), [])
 check("an unknown Production feed is refused", [k for k, _w in PG.verify(blob, {}, feeds=["production_new_leads.json"])], ["production_new_leads.json"])
 check("a lane that has left Production needs nothing", PG.verify(blob, {}, feeds=[]), [])
