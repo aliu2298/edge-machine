@@ -208,7 +208,7 @@ css = open(os.path.join(ROOT, "public_site", "site.css"), encoding="utf-8").read
 ok(".sp-params {" in css and ".cr-params" not in css and ".tn-pick.cr-pick" not in css,
    "the crypto rules are the template's; the page-specific ones are retired")
 published = open(os.path.join(ROOT, "public_site", "daily_markets.html"), encoding="utf-8").read().split('data-sp-group="crypto"')[1]
-ok('class="sp-head"' in published and "crypto-hero" not in published,
+ok('data-sp-role="rules"' in published and 'class="sp-filters"' in published and "crypto-hero" not in published,
    "the Crypto section of public_site/daily_markets.html is the template page (2026-11-08)")
 ok("url=./daily_markets.html#crypto" in open(os.path.join(ROOT, "public_site", "crypto.html"), encoding="utf-8").read(),
    "and public_site/crypto.html forwards to it")
