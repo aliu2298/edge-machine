@@ -1,8 +1,8 @@
 {
  "collector": {
-  "last_ts": 1794441602,
+  "last_ts": 1794445202,
   "markets": 60,
-  "rows_24h": 85920
+  "rows_24h": 85860
  },
  "events": [
   {
@@ -5103,6 +5103,7 @@
    "gap": 0.01064,
    "gap_15m": 0.00506,
    "gap_5m": 0.00732,
+   "gap_60m": 0.00235,
    "rth": false,
    "spread_bp": 47.1,
    "sym": "TXN",
@@ -5113,14 +5114,49 @@
    "gap": -0.01001,
    "gap_15m": -0.0084,
    "gap_5m": -0.01026,
+   "gap_60m": -0.01004,
    "rth": false,
    "spread_bp": 1.1,
    "sym": "US Tech 100",
    "ticker": "KXUSTECH100PERP",
    "ts": 1794438721
+  },
+  {
+   "gap": -0.01387,
+   "rth": false,
+   "spread_bp": 347.5,
+   "sym": "AMAT",
+   "ticker": "KXAMATPERP",
+   "ts": 1794445202
+  },
+  {
+   "gap": 0.03867,
+   "rth": false,
+   "spread_bp": 1279.6,
+   "sym": "AMD",
+   "ticker": "KXAMDPERP",
+   "ts": 1794445202
+  },
+  {
+   "gap": 0.0336,
+   "rth": false,
+   "spread_bp": 783.5,
+   "sym": "INTC",
+   "ticker": "KXINTCPERP",
+   "ts": 1794445202
+  },
+  {
+   "gap": -0.01004,
+   "gap_15m": -0.00722,
+   "gap_5m": -0.00823,
+   "rth": false,
+   "spread_bp": 1.1,
+   "sym": "US Tech 100",
+   "ticker": "KXUSTECH100PERP",
+   "ts": 1794442322
   }
  ],
- "last_run": "2026-11-12T00:00:10+00:00",
+ "last_run": "2026-11-12T01:00:08+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
