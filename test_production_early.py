@@ -26,6 +26,9 @@ import crypto_build
 import production as PR
 import sandbox_build as SB
 import sandbox_sources as S
+import sport_rows_testlib as _SRT_ERE
+_ERE_CM = _SRT_ERE.running_again("ere_draw|soccer")
+_ERE_CM.__enter__()        # retired 2026-11-12 (test_retired_2026_11_12.py): this script replays the lane from before
 import sport_rows_testlib
 # crypto_fav_band and crypto_fav_band_60 retired 2026-11-03. This file tests the rule's machinery on fixtures from
 # before then, so both run again for this script only; test_retired_2026_11_03.py holds the retirement. The Turkey

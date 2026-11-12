@@ -207,6 +207,14 @@ TURKEY_O25_DOG_RETIRED_WHY = ("Retired 2026-11-04 by Olu: no edge at 8 settled �
                               "Turkey BTTS in heavy mismatches, on the same fixtures, retires with it." + RETIRED_TAIL_2026_11_04)
 TURKEY_BTTS_DOG_RETIRED_WHY = ("Retired 2026-11-04 by Olu: no edge at 8 settled — 3 won v 4.2 priced, −29.4% after fees. "
                                "Turkey over 2.5 in heavy mismatches, on the same fixtures, retires with it." + RETIRED_TAIL_2026_11_04)
+# 2026-11-12 (Olu): the Eredivisie draw band, version 1 (ere_draw), retired and replaced by version 2 (ere_draw_home, Sandbox paper, its own record from
+# 2026-11-12). Why: v1 placed its bets a median 4.5 days before kickoff, while its research was on prices at the close. Its final PAPER record, and
+# its earlier LIVE run (in Production 2026-10-11 to 2026-11-02; first kickoff Oct 16, last Nov 1) as history. No new entries; rows stay, open bets settle.
+RETIRED_TAIL_2026_11_12 = (" No new entries from 2026-11-12; its rows stay on file and its open bets still settle.")
+ERE_DRAW_RETIRED_WHY = ("Retired 2026-11-12 by Olu, replaced by Eredivisie draw band v2 (ere_draw_home): v1 placed its bets a median 4.5 days "
+                        "before kickoff, while its research was on prices at the close. Final paper record: 9 won v 6.9 priced on 29, "
+                        "+22.6% after fees, z +0.91. Earlier live run (in Production 2026-10-11 to 2026-11-02, history): 4 won, 13 lost "
+                        "on 17 settled, −4.3% after fees." + RETIRED_TAIL_2026_11_12)
 # Econ Daily near-certain 3h NO (Olu, 2026-11-06): paper since 2026-10-28, never traded live after that. No new entries from
 # 2026-11-06 (daily_track.NC_RETIRED); its rows stay on file and its open bets still settle. The S&P near-certain NO stays.
 ECON_NC_NO_RETIRED_WHY = ("Retired 2026-11-06 by Olu: no edge at 20 settled contracts on 16 market-days — 18 won v 18.1 priced, "
@@ -1282,7 +1290,7 @@ SOURCES = {
              "are judged apart. Read at 30 settled."),
     "ere_draw": dict(
         label="Eredivisie draw band (de-vigged 0.20-0.25)", kind="Rule", connected=True,
-        site="edge-machine", sports=["soccer"], baseline="draw_population",
+        site="edge-machine", sports=[], retired_sports={"soccer": ERE_DRAW_RETIRED_WHY}, baseline="draw_population",
         note="Pre-registered 2026-09-26, before it logged anything, with every number fixed "
              "in advance. Back the TIE on a Kalshi Eredivisie match when the board's own "
              "de-vigged draw probability — price_draw / (price_a + price_draw + price_b) — "
