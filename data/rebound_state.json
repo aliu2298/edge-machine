@@ -679,13 +679,16 @@
   {
    "backfill": false,
    "day": "2026-11-12",
+   "entry": 15.8282,
+   "entry_ts": 1794477722,
    "id": "rb_24h|KXMUPERP|2026-11-12",
    "lane": "rb_24h",
    "level": 15.674122,
    "level_stock": 782,
    "signal_ts": 1794475800,
    "slide_high": 825.64,
-   "status": "pending",
+   "spread_in": 8.3,
+   "status": "open",
    "stop": 15.51738,
    "strength": 2,
    "sym": "MU",
@@ -763,7 +766,7 @@
    "strong": true
   }
  },
- "last_run": "2026-11-12T10:00:20+00:00",
+ "last_run": "2026-11-12T11:00:15+00:00",
  "prereg_sha256": "17ecd1cd57183bacd45e8e1e6477c542b4ecaaa88a3e8b8a62fa395bbc45a581",
  "ratios": {
   "AAPL": 49.9677,
