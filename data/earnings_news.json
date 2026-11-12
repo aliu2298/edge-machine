@@ -1272,9 +1272,25 @@
    "event": "KXWMT-26NOVUSCOMP",
    "read": null,
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-12T03:21:21Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 391545454.54545456,
+    "rungs": 6,
+    "width": 9698708.751793385
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-12T03:21:21Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": null,
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-12T03:00:34Z",
+ "last_run": "2026-11-12T03:21:25Z",
  "predictions": [
   {
    "call": {
