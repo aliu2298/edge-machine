@@ -34,7 +34,7 @@ These are form rules: the matches are chosen from results, not from the price. S
 
 ## The replay
 
-Kalshi lists 526 settled international matches with a totals market since May 2026. 425 were matched to a result history: friendlies 161, UEFA Nations League 104, World Cup 90, Concacaf Nations League 70. The other 101 (mostly AFCON qualifiers) have no results on file and were left out.
+Kalshi lists 526 settled international matches with a totals market since May 2026. 425 were matched to a result history: friendlies 161, UEFA Nations League 104, World Cup 90, Concacaf Nations League 70. The other 101 had no results on file in the first pass; the 48 AFCON qualifiers among them were added afterwards (see African qualifiers below).
 
 Entry three hours before kickoff. Discovery is May to July; holdout is September to November.
 
@@ -116,6 +116,25 @@ Measured on the midpoint between the early read and three hours out.
 | Price fell 2c or more | 65 | 56.9% | 62.1c | −5.2 |
 
 The rule's own picks: both picks whose price fell 2c or more lost; 9 of the other 10 won. Two bets is not evidence. On the side-to-score and over 1.5 markets the move separates nothing.
+
+## African qualifiers
+
+Added after the first pass, which had no results for them. Results for AFCON and its qualifiers come from ESPN's public scoreboard. All 48 qualifier matches Kalshi has settled (Sep 24 to Oct 6) are now in the replay, with form recomputed including those games.
+
+**Live scope.** The live international lanes do not accept African qualifier markets. The tracker lists two Kalshi series for internationals: UEFA Nations League and international friendlies. This window Kalshi has 24 AFCON qualifiers open; the lanes will not bet them. An African team can still be bet in a friendly.
+
+**Verdict: keep them excluded, for every lane.**
+
+| Lane | The rule on African qualifiers | Every match, same set | Verdict |
+|---|---|---|---|
+| Under 3.5 low scoring | 9 wins in 15 at 81.9c, −28.5% | 70.8% at 77.7c, −7.9% (48) | Exclude. It loses here. |
+| Team 1 form | Never fired | 74.7% at 65.0c, +15.6% (91 sides) | Too few to tell. Default: exclude. |
+| Team 2+ form | Never fired | 38.0% at 39.8c, −3.8% (92 sides) | Too few to tell. Default: exclude. |
+| Over 1.5 ranked | 5 wins in 6 at 75.2c, +7.1% | 77.1% at 69.8c, +8.1% (48) | Too few to tell. Default: exclude. |
+
+- **Under 3.5 low scoring** fires on almost a third of African qualifiers, at a dear price, and lost 6 of 15. With the World Cup (2 of 4) and the Concacaf Nations League (4 of 8), the rule is 15 wins in 27 outside its own two competitions.
+- **By price band, under 3.5:** the rule's picks were 1 win in 3 at 70-80c and 8 in 12 at 80-90c. On every African match the 80-90c under won 75.9% on 29, 7.4 points less than its price.
+- **The market expects too few goals in these matches.** Unders are 6.9 points overpriced, overs are 7.3 points underpriced, and a side to score is 9.7 points underpriced (score 2.1). That is one international window, so it is a lead to watch on this window's 24 matches, not a rule.
 
 ## Filters tried
 
