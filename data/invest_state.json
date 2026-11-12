@@ -1,8 +1,8 @@
 {
  "collector": {
-  "last_ts": 1794484801,
+  "last_ts": 1794488402,
   "markets": 60,
-  "rows_24h": 85260
+  "rows_24h": 85200
  },
  "events": [
   {
@@ -25,17 +25,6 @@
   }
  ],
  "flags": [
-  {
-   "gap": 0.01082,
-   "gap_15m": 0.01039,
-   "gap_5m": 0.01137,
-   "gap_60m": 0.01529,
-   "rth": false,
-   "spread_bp": 19.7,
-   "sym": "CRM",
-   "ticker": "KXCRMPERP",
-   "ts": 1794190681
-  },
   {
    "gap": 0.01049,
    "gap_15m": 0.00791,
@@ -5488,15 +5477,25 @@
   },
   {
    "gap": 0.01721,
+   "gap_15m": -1e-05,
    "gap_5m": 0.00396,
+   "gap_60m": 0.00138,
    "rth": false,
    "spread_bp": 260.4,
    "sym": "AMAT",
    "ticker": "KXAMATPERP",
    "ts": 1794484441
+  },
+  {
+   "gap": -0.01002,
+   "rth": false,
+   "spread_bp": 0.3,
+   "sym": "US Tech 100",
+   "ticker": "KXUSTECH100PERP",
+   "ts": 1794488342
   }
  ],
- "last_run": "2026-11-12T12:00:08+00:00",
+ "last_run": "2026-11-12T13:00:07+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
