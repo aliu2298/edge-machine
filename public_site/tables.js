@@ -529,6 +529,9 @@
           var key = panel.getAttribute("data-tab");
           var tab = events.querySelector('.sp-tabs button[data-tab="' + key + '"] .sp-count');
           if (tab) tab.textContent = String(shown);
+          // Daily Markets folds the Completed list behind its own count line (2026-11-11): it follows the filter too.
+          var foldCount = panel.querySelector("details.dm-done > summary .sp-count");
+          if (foldCount) foldCount.textContent = String(shown);
           note(panel, shown, picks.length, "pick here");
         });
       }
