@@ -1,6 +1,6 @@
 {
  "collector": {
-  "last_ts": 1794517202,
+  "last_ts": 1794520801,
   "markets": 60,
   "rows_24h": 84600
  },
@@ -25,17 +25,6 @@
   }
  ],
  "flags": [
-  {
-   "gap": 0.01059,
-   "gap_15m": 0.01082,
-   "gap_5m": 0.01042,
-   "gap_60m": 0.00908,
-   "rth": false,
-   "spread_bp": 5.8,
-   "sym": "PLTR",
-   "ticker": "KXPLTRPERP",
-   "ts": 1794191401
-  },
   {
    "gap": 0.01163,
    "gap_15m": 0.01169,
@@ -5485,15 +5474,25 @@
   },
   {
    "gap": 0.0381,
+   "gap_15m": 0.00036,
    "gap_5m": -0.00027,
+   "gap_60m": 0.00028,
    "rth": true,
    "spread_bp": 741.9,
    "sym": "AVGO",
    "ticker": "KXAVGOPERP",
    "ts": 1794516901
+  },
+  {
+   "gap": 0.01929,
+   "rth": false,
+   "spread_bp": 451.8,
+   "sym": "TXN",
+   "ticker": "KXTXNPERP",
+   "ts": 1794520741
   }
  ],
- "last_run": "2026-11-12T21:00:08+00:00",
+ "last_run": "2026-11-12T22:00:07+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
