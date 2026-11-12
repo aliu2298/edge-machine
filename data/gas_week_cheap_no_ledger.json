@@ -490,6 +490,8 @@
      "target": 0.42
     },
     {
+     "fill_px": 0.63,
+     "filled_at": "2026-11-12T15:00:00+00:00",
      "late_checked": true,
      "multiple": 3.0,
      "share": 0.5,
@@ -498,11 +500,14 @@
    ],
    "logged": "2026-11-09T17:00:46.151988+00:00",
    "payout": null,
+   "pnl": 0.2992,
    "price": 0.21,
+   "roi": 1.3502,
+   "roi_2x": 0.876,
    "side": "no",
    "spread": 0.03,
    "spread_cost": 0.02,
-   "status": "open",
+   "status": "filled",
    "traded_to_entry": 1.9,
    "word": "Above 3.8000"
   },
@@ -614,13 +619,13 @@
   "KXAAAGASW-26NOV16": "2026-11-09T17:00:46.151988+00:00"
  },
  "lane": "gas_week_cheap_no",
- "last_success": "2026-11-12T12:51:00.892817+00:00",
+ "last_success": "2026-11-12T17:01:07.519760+00:00",
  "observations": {
-  "at": "2026-11-12T12:51:00.892817+00:00",
+  "at": "2026-11-12T17:01:07.519760+00:00",
   "checking": 0,
   "entered": 0,
   "events": 1,
-  "filled": 0,
+  "filled": 1,
   "fills_moved": 0,
   "skipped": 0,
   "unverified": 3,
