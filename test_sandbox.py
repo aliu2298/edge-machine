@@ -3421,10 +3421,10 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 # What the live board is actually set to, stated once so a change here is a deliberate edit
 # and not a surprise. These are judgement calls; the test only pins that they were made.
 eq(sorted(T.PAIR_OVERRIDES),
-   ["corners_ucl_fade|soccer_corners", "crypto_fav_band_below|crypto_fav", "ftts_no_70_80|soccer_ftts",
+   ["commod_fav_band|commodities_fav", "corners_ucl_fade|soccer_corners", "crypto_fav_band_below|crypto_fav", "ftts_no_70_80|soccer_ftts",
     "mls_fade_home|soccer_p05", "team1_form_l5|soccer_team1_intl",
     "team2_form_l10|soccer_team2_intl", "team2_ranked|soccer_team2", "u35_low_scoring|soccer_u35_cup", "u35_low_scoring|soccer_u35_intl"],
-   "the Production list is exactly the pairs moved there by hand, and nothing else (corners_ucl_fade out 2026-10-21; four soccer lanes out, crypto_fav_band swapped for three crypto angle lanes, 2026-10-20) "
+   "the Production list is exactly the pairs moved there by hand, and nothing else (the commodities favourite band back in 2026-11-12; corners_ucl_fade out 2026-10-21; four soccer lanes out, crypto_fav_band swapped for three crypto angle lanes, 2026-10-20) "
    "(team scores 1+ · Clubs out 2026-10-14; five moved in 2026-10-16; seven lanes back to the Sandbox 2026-10-27; "
    "ere_draw, liga_btts_even, team2_form_l10 Clubs and o15_ranked Internationals back 2026-11-02; the under's Cups scope and team 2+ form's Internationals scope moved in 2026-11-06; the commodities favourite band back 2026-11-08)")
 # pm_combo4 came OFF on 2026-10-03, not on its record: Polymarket US publishes no parlay

@@ -40,6 +40,11 @@ def plain(name):
     return n
 
 
+# A lane relaunched on a FRESH live record (Olu): pair key -> date its new record starts. The orders before it are the lane's earlier run: they
+# leave the running lane's record and stay on the page as a Retired line (history), so the all-lanes totals keep counting them.
+FRESH = {"commod_fav_band|commodities_fav": "2026-11-12"}
+
+
 def esc(x):
     return _h.escape(str(x), quote=True)
 
@@ -129,6 +134,7 @@ def build(live_blob, pairs, now=None):
     pulled = live_blob.get("pulled") or {}
     notes_by_lane = {}
     lanes = {}
+    history = []                                                  # earlier runs of lanes relaunched on a fresh record (FRESH)
 
     def add(key, name, group, rows, own, paper, **kw):
         lanes[key] = dict(key=key, name=name, group=group, own=own, rows=rows, live=tally(rows, own), paper=paper, **kw)
@@ -152,9 +158,19 @@ def build(live_blob, pairs, now=None):
             continue
         paper = meta.get("paper") or {}
         rows = list((lp.get(key) or {}).get("orders") or [])
+        notes = [meta["note"]] if meta.get("note") else []
+        if key in FRESH:
+            early = [o for o in rows if str(o.get("ko") or "") < FRESH[key]]
+            rows = [o for o in rows if str(o.get("ko") or "") >= FRESH[key]]
+            if early:
+                sp = _span(early)
+                history.append(dict(key=key + "#first-run", name=plain(meta["name"]) + f" · earlier run ({_day(sp[0])} – {_day(sp[1])})",
+                                    group=group_of(key), own=False, rows=early, live=tally(early, False), paper=None,
+                                    notes=[], rule="", clv=None, market=meta.get("market"), since=sp[0], last=sp[1]))
+            notes.append(f"Fresh live record from {_day(FRESH[key])}. The earlier live run is under Retired lanes, as history.")
         rule = _first_sentence(meta.get("rule")) or ""
         add(key, plain(meta["name"]), group_of(key), rows, False, dict(n=paper.get("n") or 0, won=paper.get("won") or 0, roi=paper.get("roi_fee")),
-            notes=[meta["note"]] if meta.get("note") else [], rule=rule, clv=meta.get("clv"), market=meta.get("market"))
+            notes=notes, rule=rule, clv=meta.get("clv"), market=meta.get("market"))
     # an own-state lane in the file with live rows but no Production pair on the page yet still counts as running
     for lane in OWN_RUNNING:
         if lane not in lanes:
@@ -168,6 +184,8 @@ def build(live_blob, pairs, now=None):
 
     retired = []
     for key, rows in sorted(pulled.items()):
+        if key in pairs:
+            continue                                              # back in Production: its orders are read from its own pair above
         rows = list(rows or [])
         src = key.split("|", 1)[0]
         retired.append(dict(key=key, name=plain(_pulled_name(key)), group=group_of(key), own=False, rows=rows, live=tally(rows, False), paper=None,
@@ -176,6 +194,7 @@ def build(live_blob, pairs, now=None):
         rows = list(own_rows.get(lane) or [])
         retired.append(dict(key=lane, name=PL.LANE_NAMES.get(lane, lane), group=OWN_GROUP[lane], own=True, rows=rows, live=tally(rows, True),
                             paper=None, notes=[], rule=OWN_RULE.get(lane, ""), clv=None, market=None, since=_span(rows)[0], last=_span(rows)[1]))
+    retired += history
     retired = [r for r in retired if r["live"]["n"] or r["rows"]]
     key = lambda l: (-(l["live"]["n"]), l["name"])
     running.sort(key=lambda l: (GROUPS.index(l["group"]) if l["group"] in GROUPS else 9, -(l["live"]["roi"] or -9), l["name"]))

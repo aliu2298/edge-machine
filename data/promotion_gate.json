@@ -107,7 +107,7 @@
    "waiver": null
   },
   "commod_fav_band|commodities_fav": {
-   "checked_at": "2026-11-12T06:43:19+00:00",
+   "checked_at": "2026-11-12T07:35:44+00:00",
    "checks": {
     "10+ outcomes": true,
     "30+ bets": true,
@@ -130,7 +130,7 @@
     "without_best": 0.0644
    },
    "honest_positive": true,
-   "label": null,
+   "label": "commodities favourite band, 3h to the close",
    "note_touch": {
     "n": 64,
     "roi": 0.0818
@@ -140,7 +140,12 @@
     "roi": 0.0952
    },
    "rules": "honest-v1",
-   "waiver": null
+   "waiver": {
+    "by": "Olu",
+    "on": "2026-11-12",
+    "waives": "evidence test (both halves up; score of 2 or better). Honest return is positive: +8.2% on 64 (second half \u22122.2%, score 1.18).",
+    "why": "$1 trial; earlier live run Oct 9\u2013Nov 8 was 21\u20134 +11.5%; stakes rise to $100 only once proven"
+   }
   },
   "corners_ucl_fade|soccer_corners": {
    "checked_at": "2026-11-12T06:43:19+00:00",

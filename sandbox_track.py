@@ -438,6 +438,11 @@ PAIR_OVERRIDES = {
     # 2026-11-08, as asked (Olu: "promote all four"): the Champions League corners fade back into Production on a fresh Production record,
     # its Sandbox paper (6 settled) still running. Re-listed with a date after its 2026-10-21 removal, which stands as the record it left on.
     "corners_ucl_fade|soccer_corners": dict(moved_on="2026-11-08", production_at=None),
+    # 2026-11-12, as asked (Olu): the commodities favourite band (3h to the close) back into Production for a $1 TRIAL, on a FRESH live record
+    # (the Production page counts it from the first bet after this date; its Oct 9 - Nov 8 live run, 21-4 +11.5%, stays on the page as history). Gate:
+    # honest +8.2% on 64 (the promotion gate); Olu's waiver of the evidence test is on the lane's gate record. Re-listed with a date after its
+    # 2026-11-08 removal, which stands as the record it left on.
+    "commod_fav_band|commodities_fav": dict(moved_on="2026-11-12", production_at=None),
     #   commod_fav_band|commodities_fav — OUT 2026-11-08, back to the Sandbox, as asked (Olu): live 4-2 at -13.2% since the stake raise. Whole record
     #   kept (PAIR_REMOVALS); it keeps collecting in the Sandbox, and its live fills stay on the Production page as history.
     # 2026-10-11, as asked: SIX more rules, EARLY like the rest, on their whole records at

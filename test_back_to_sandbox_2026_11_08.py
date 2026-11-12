@@ -18,11 +18,8 @@ def check(name, ok):
 
 
 K = "commod_fav_band|commodities_fav"
-check("commodities band: off the live list, record kept", K not in T.PAIR_OVERRIDES and T.PAIR_REMOVALS[K] == dict(removed_on="2026-11-08", keep_record=True))
-st = json.load(open("data/stages.json"))
-check("commodities band: the committed stage is the Sandbox, with the date it left", st["pairs"][K]["stage"] == "sandbox" and st["pairs"][K].get("demoted_at"))
-feed = json.load(open("data/production_leads.json"))
-check("commodities band: the Production feed names no lead or pair for it", not any(l.get("pair") == K for l in feed["leads"].values()) and K not in feed["pairs"])
+check("commodities band: its Nov 8 removal stands as the record it left on, and it is re-listed 2026-11-12 (later), so it is a new promotion",
+      T.PAIR_REMOVALS[K] == dict(removed_on="2026-11-08", keep_record=True) and T.PAIR_OVERRIDES[K]["moved_on"] == "2026-11-12")
 dip = TD.feed()          # what its workflow writes from now on (the committed file is restamped by the heartbeat and rewritten on the next run)
 check("top-5 dip: its feed is valid and names no match", dip["lane"] == TD.LANE and dip["leads"] == [] and dip["errors"] == [] and dip["ended_on"] == "2026-11-08")
 check("top-5 dip: no Production pair", TD.pairs() == {})
