@@ -709,6 +709,49 @@ def ls_groups_html(rt, picks, ranked=()):
         f'<h4>{esc(label)}</h4>' + _ls_trade_split(g, strat) for strat, _c, label in LS_TRADES)
 
 
+def lsb2_card(state):
+    """B · Lead Swap favourite v2 (leadswap_v2.py, lsb-v2): a fresh record on Bitcoin, WTI and NEAR, against its control. The fold says,
+    in plain words, why these three markets were chosen (in-sample, after the fact) so the old numbers are not read as evidence."""
+    import leadswap as L
+    import leadswap_v2 as V2
+    led = V2.load()
+    if led.get("routing") is None:
+        led = V2.update(state, L.load())
+    rt = led["routing"] or {}
+    c, ctrl = rt.get("leadswap_v2"), rt.get("leadswap_v2_ctrl")
+    n = c["n"] if c else 0
+    chip = (f'<span class="sig w">Ready to decide ({V2.DECIDE_AT} bets)</span>' if n >= V2.DECIDE_AT else
+            '<span class="sig w">Review</span>' if n >= V2.REVIEW_AT else f'<span class="sig n">Too early ({n}/{V2.REVIEW_AT})</span>')
+    ser, cser = (c or {}).get("series") or {}, (ctrl or {}).get("series") or {}
+
+    def per(m):
+        v, x = ser.get(m), cser.get(m)
+        ret = "—" if not v or not v[0] else pct(v[2] / v[0])
+        cc = "—" if not x or not x[0] else f"{x[1]}/{x[0]}, {pct(x[2] / x[0])}"
+        return (f'<tr><td>{mkt(m)}{_under10(v[0] if v else 0)}</td><td class="num">{v[0] if v else 0}</td>'
+                f'<td class="num">{v[1] if v else "—"}</td><td class="num">{ret}</td><td class="num mut">{cc}</td></tr>')
+    tbl = _table(("Market", "Bets", "Wins", "Return after fees", "Control (wins/bets, return)"), [per(m) for m in V2.MARKETS])
+    ins = _table(("Market", "Bets", "The rule", "Every window", "When swingy"),
+                 [f'<tr><td>{mkt(m)}</td><td class="num">{v[0]}</td><td class="num">{pct(v[1] / 100)}</td>'
+                  f'<td class="num">{pct(v[2] / 100)}</td><td class="num">{pct(v[3] / 100)}</td></tr>' for m, v in V2.IN_SAMPLE.items()])
+    why = ('<p class="sm sw15-why">Why these three, honestly: they were picked after the fact, from version 1\'s Nov 9-11 windows. Each had 20 or '
+           'more bets and beat its own every-window favourite bet by 11 to 18 points, and each did far worse when swingy. Picking markets '
+           'on a record makes that record look good, so the numbers below are not evidence for version 2; only the new record is. '
+           'Version 1, with the 16 markets cut after the fact counted back in, made −0.7% after fees.</p>' + ins)
+    split = (why + f'<p class="sm">Version 2 since {esc(_start(V2.FROM))}</p>' + tbl
+             + (f'<p class="sm">{c["hits"]}/{c["n"]} won against {c["fair"] * c["n"]:.1f} priced, {pct(c["mean_roi"])} after fees; '
+                f'{c["clusters"]} clusters, z {_z(c["z"])}.</p>' if c else '<p class="sm mut">No bets yet.</p>'))
+    body = (f'<p class="sp-details-name"><b>B · Lead Swap favourite v2</b> · Kalshi 15-minute windows · paper · {esc(V2.VERSION)}</p>'
+            f'<p class="sp-def">Version 1\'s S3 favourite at minute 10, held, on the bottom 3 series by lead swaps over the past 2 hours, picked '
+            f'at the top of each hour and frozen at about :04. Only Bitcoin, WTI Crude Oil and NEAR are traded when picked; a pick on any other '
+            f'market is skipped (no backfill). Control: the same three markets when they are in the top 3. Frozen: no further cuts or '
+            f'exclusion rounds; a change is a new version. Fresh record from {esc(_start(V2.FROM))}; review at {V2.REVIEW_AT} bets, decide at '
+            f'{V2.DECIDE_AT}. Market list fingerprint {esc(V2.fingerprint()[:12])}. Pre-registered in docs/prereg_leadswap_v2_{esc(V2.REGISTERED)}.md.</p>')
+    row = _row("leadswap_v2", "B · Lead Swap favourite v2 (Bitcoin, WTI, NEAR)", c, {"all": n}, body, ctrl=ctrl, anchor="sw15-leadswap_v2",
+               sport="leadswap", status=chip, evidence=f"{min(n, V2.DECIDE_AT)}/{V2.DECIDE_AT}")
+    return _card(row, split)
+
+
 def leadswap_block(state, parts=False):
     """The Lead Swap Board (leadswap.py): the two trades (row + open per-market split, each against its control), then
     one collapsed fold with how the board ranks markets (picks, board, persistence, timing, hour of day)."""
@@ -802,6 +845,7 @@ def leadswap_block(state, parts=False):
     ranks = (f'<details class="fold sw15-ranks"><summary>How the board ranks markets</summary>'
              f'{board}{persist}{timing}{heat}</details>')
     if parts:
+        cards = [lsb2_card(state)] + cards                      # B is lsb-v2 from 2026-11-12 (lsb-v1 is retired: archive)
         return cards, ('<p class="sm">B · Lead Swap favourite: how often the lead (YES mid across 50c) swaps on every '
                        '15-minute series; the favourite goes to the most stable markets, against its opposite. Picks are '
                        'frozen at about :04 each hour.</p>' + f'<p class="sm mut" id="spotlag-status">{esc(spot)}</p>' + ranks)
@@ -878,12 +922,52 @@ def _archive(state, s1_final, v1=""):
         add("Swing v3 · " + V.LABELS["swing15v2_s2"], (V.records(state, retired=True).get("swing15v2_s2") or {}).get("all"))
         import leadswap as L
         rt = (L.load().get("routing") or {})
-        for k in getattr(L, "TRADES_RETIRED", {}):
+        for k, at in getattr(L, "TRADES_RETIRED", {}).items():
+            if at != C.CUT2_AT:
+                continue                                        # round 3's (the v1 favourite and its control) are in the Nov 12 row
             c = rt.get(k)
             add("Lead Swap · " + L.STRATS[k], c and dict(n=c["n"], hits=c["hits"], mean_roi=c["mean_roi"]))
         return (f'<details class="fold sw15-removed sw15-narrowed"><summary>Retired {esc(_start(C.CUT2_AT))} · narrowed to '
                 f'three rules · {len(trs)} lanes, final records</summary>'
                 + _table(("Lane", "Bets", "Won", "Return after fees"), trs) + '</details>')
+    def round3():
+        """Round 3 (2026-11-12): the Loss Reader and the v1 Lead Swap favourite, each on one line with its FINAL record. lsb-v1's headline is
+        the FULL record, the 16 markets cut after the fact counted back in: the kept markets alone were flattered by cutting losers."""
+        import leadswap as L
+        import lossreader as LR
+        import sw15cuts as C
+        trs = []
+        led = LR.ledger(state)
+        c, every = led["record"], led["every"]
+        gone = [x for x in led["cut"].values() if x]
+        gn = sum(x["n"] for x in gone)
+        note = ""
+        if every:
+            note += f'Every-window S2 on the same markets: {pct(every["mean_roi"])} ({every["n"]} bets). '
+        if gn:
+            note += (f'Bitcoin and WTI, cut Nov 10: {gn} bets, {pct(sum(x["n"] * x["mean_roi"] for x in gone) / gn)}.')
+        if c:
+            trs.append(f'<tr><td>{esc(LR.LABEL)} (Solana)</td><td class="num">{c["n"]}</td><td class="num">{c["hits"]}</td>'
+                       f'<td class="num">{pct(c["mean_roi"])}</td><td>{c["hits"]} v {c["fair"] * c["n"]:.1f} priced. {esc(note)}</td></tr>')
+        lsb = L.load()
+        full = L.full_record(lsb.get("routing"), lsb.get("removed_routing"))
+        if full:
+            k, x = full["kept"], full["cut"]
+            nn = (f'The kept markets alone: {k["n"]} bets, {pct(k["mean_roi"])}; the 16 cut markets: {x["n"]} bets, {pct(x["mean_roi"])}. '
+                  f'The kept figure was flattered by cutting losers after the fact.') if k and x else ""
+            trs.append(f'<tr><td>Lead Swap favourite · {esc(L.VERSION)} (full record)</td><td class="num">{full["n"]}</td>'
+                       f'<td class="num">{full["hits"]}</td><td class="num">{pct(full["mean_roi"])}</td><td>{esc(nn)}</td></tr>')
+        if not trs:
+            return ""
+        return (f'<details class="fold sw15-removed sw15-round3"><summary>Retired {esc(_start(C.CUT3_AT))} · Loss Reader and the v1 Lead '
+                f'Swap favourite · {len(trs)} lanes, final records</summary>'
+                + _table(("Lane", "Bets", "Won", "Return after fees", "Note"), trs) + '</details>')
+    try:
+        r3 = round3() if NARROWED else ""
+    except Exception:                                           # noqa: BLE001
+        r3 = ""
+    if r3:
+        parts.append(f'<h4>Retired Nov 12</h4>{r3}')
     try:
         html_n = narrowed() if NARROWED else ""
     except Exception:                                           # noqa: BLE001
@@ -1005,8 +1089,7 @@ def section(state=None):
         # 2026-11-11 (Olu): one small list of collapsible rows — A, C (with its 25c companion), B, then the Loss Reader
         # watch row — one line above it, every explanation in one closed fold, everything retired in one closed block.
         cards, notes = [], []
-        for fn in (lambda: keep_block(state, parts=True), lambda: leadswap_block(state, parts=True),
-                   lambda: lossreader_block(state, parts=True)):
+        for fn in (lambda: keep_block(state, parts=True), lambda: leadswap_block(state, parts=True)):     # the Loss Reader retired 2026-11-12: archive
             try:
                 c_, n_ = fn()
                 cards += c_
@@ -1015,8 +1098,9 @@ def section(state=None):
             except Exception:                                   # noqa: BLE001  (one lane never breaks the section)
                 pass
         import sw15keep as K
-        intro = (f'<p class="scope sw15-intro">Paper · three rules · fresh from {esc(_start(K.FROM))} · review '
-                 f'{K.REVIEW_AT}, decide {K.DECIDE_AT}</p>')
+        import leadswap_v2 as V2
+        intro = (f'<p class="scope sw15-intro">Paper · three rules · A and C fresh from {esc(_start(K.FROM))}, B (version 2) fresh from '
+                 f'{esc(_start(V2.FROM))} · review {K.REVIEW_AT}, decide {K.DECIDE_AT}</p>')
         how = ('<details class="fold sw15-how"><summary>How the record is kept</summary>'
                + "".join(n if n.startswith("<") else f'<p class="sm">{esc(n)}</p>' for n in notes)
                + f'<p class="sm mut">{SORT_LINE}</p></details>')
@@ -1058,11 +1142,13 @@ def index_rows(state=None):
         pass
     try:                                                        # Rule 1 v2 · Loss Reader (2026-11-10): first
         import lossreader as LR
+        if _C.retire_at("lossreader"):
+            raise StopIteration                                 # retired 2026-11-12: archive only
         c = LR.ledger(state)["record"]
         out.append(dict(lane="lossreader", label=LR.LABEL, n=c["n"] if c else 0, roi=c["mean_roi"] if c else None,
                         hit=(c["hits"] / c["n"]) if c else None, fair=c["fair"] if c else None,
                         status=f"{c['n'] if c else 0}/{LR.DECIDE_BETS} bets"))
-    except Exception:                                           # noqa: BLE001  (never breaks the index)
+    except (Exception, StopIteration):                          # noqa: BLE001  (never breaks the index)
         pass
     try:                                                        # Rule 2 v2 · Every Positive Setting (2026-11-10)
         import s3v2 as S32
@@ -1142,6 +1228,20 @@ def index_rows(state=None):
         out.append(dict(lane=key, label="Lead Swap · " + label, n=c["n"] if c else 0,
                         roi=c["mean_roi"] if c else None, hit=c["hit_rate"] if c else None,
                         fair=c["fair"] if c else None, status=f"{c['n'] if c else 0}/{W.DECIDE_AT}"))
+    try:                                                        # Lead Swap favourite v2 (2026-11-12): a fresh record, and its control
+        if not NARROWED:
+            raise StopIteration
+        import leadswap_v2 as V2
+        v2 = V2.load()
+        if v2.get("routing") is None:
+            v2 = V2.update(state, L.load())
+        for key, _side in V2.TRADES:
+            c = (v2["routing"] or {}).get(key)
+            out.append(dict(lane=key, label="Lead Swap · " + V2.LABELS[key], n=c["n"] if c else 0,
+                            roi=c["mean_roi"] if c else None, hit=c["hit_rate"] if c else None,
+                            fair=c["fair"] if c else None, status=f"{c['n'] if c else 0}/{V2.DECIDE_AT}"))
+    except (Exception, StopIteration):                          # noqa: BLE001  (never breaks the index)
+        pass
     return out
 
 

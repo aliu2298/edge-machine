@@ -13,7 +13,7 @@ import swing15_build as WB
 import sw15cuts as _CUTS
 _CUTS.CUTS, _CUTS.RETIRED = {}, ()   # these tests check the rule itself; test_sw15cuts.py covers the Nov 10 cuts
 import sw15cuts as _C2, swing15_build as _WB2, leadswap as _L2
-_C2.RETIRED2, _WB2.NARROWED, _L2.TRADES_RETIRED = (), False, {}   # the lane as it ran before the 2026-11-11 narrowing; test_sw15keep.py checks the narrowed page
+_C2.RETIRED2, _C2.RETIRED3, _WB2.NARROWED, _L2.TRADES_RETIRED = (), (), False, {}   # the lane as it ran before the 2026-11-11 narrowing; test_sw15keep.py checks the narrowed page
 
 FAILS = []
 

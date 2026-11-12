@@ -59,7 +59,11 @@ ROUNDS = (
 )
 # 2026-11-11 (Olu): the swing trade is retired at the round-3 cut; its record stays final in the archive. The
 # favourite trade runs on with round 3's exclusions. The controls are unchanged.
-TRADES_RETIRED = {"leadswap_swing": "2026-11-11T22:00:00+00:00"}
+# 2026-11-12 (Olu): the favourite trade and its control close at sw15cuts round 3's cut: lsb-v1's records are final, and the
+# favourite goes on as lsb-v2 (leadswap_v2.py) on three markets with a fresh record. The picks keep being frozen every hour:
+# lsb-v2 reads them.
+TRADES_RETIRED = {"leadswap_swing": "2026-11-11T22:00:00+00:00", "leadswap_fav": "2026-11-12T11:00:00+00:00",
+                  "leadswap_fav_ctrl": "2026-11-12T11:00:00+00:00"}
 EXCLUDED_AT = ROUNDS[0]["cut"]                 # round 1's cut (kept for older readers)
 EXCLUDED = {k: tuple(m for r in ROUNDS for m in r["markets"].get(k, ())) for k in ("leadswap_swing", "leadswap_fav")}
 CUT = {(k, m): r["cut"] for r in ROUNDS for k, ms in r["markets"].items() for m in ms}
@@ -341,6 +345,20 @@ def routing(rows, picks, removed=False):
             c[1] += int(r[2])
             c[2] += r[4]
     return out
+
+
+def full_record(rt, removed, strat="leadswap_fav"):
+    """The FULL record of a trade whose lists were cut after the fact: the kept markets' routing plus the cut markets' rows (each
+    ended at its own cut), as {n, hits, mean_roi, fair, kept, cut}. The kept markets alone flattered it: losers were cut after
+    the fact. None when there is nothing."""
+    a, b = (rt or {}).get(strat), (removed or {}).get(strat)
+    parts = [x for x in (a, b) if x]
+    if not parts:
+        return None
+    n = sum(x["n"] for x in parts)
+    pick = lambda x: None if not x else dict(n=x["n"], hits=x["hits"], mean_roi=x["mean_roi"])
+    return dict(n=n, hits=sum(x["hits"] for x in parts), mean_roi=sum(x["n"] * x["mean_roi"] for x in parts) / n,
+                fair=sum(x["n"] * x["fair"] for x in parts) / n, kept=pick(a), cut=pick(b))
 
 
 def board(rows, now_ts):

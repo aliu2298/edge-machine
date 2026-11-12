@@ -37,9 +37,21 @@ def fingerprint2():
     return allowgate.fingerprint(dict(cut_at=CUT2_AT, retired=list(RETIRED2)))
 
 
+# ROUND 3 (Olu, 2026-11-12): the Loss Reader (sw15-lr1) is retired and the Lead Swap favourite moves to a new version (lsb-v2, three
+# markets, a fresh record; leadswap_v2.py). Both happen at CUT3_AT, one instant on a window boundary: nothing enters after it in
+# the Loss Reader or in lsb-v1, and lsb-v2's record starts at the first window opening at or after it. Frozen like the rounds above.
+CUT3_AT = "2026-11-12T11:00:00+00:00"
+RETIRED3 = ("lossreader",)
+ROUND3_SHA256 = "b2ee61df23f3221886ddab892cb27102503815f08fb8473bcb126020f6be6d62"   # sha256 of fingerprint3(), set at registration
+
+
+def fingerprint3():
+    return allowgate.fingerprint(dict(cut_at=CUT3_AT, retired=list(RETIRED3), leadswap="lsb-v1 closes, lsb-v2 opens"))
+
+
 def retire_at(lane):
-    """The cut time a retired lane stops entering at (round 1 or 2), or None for a live lane."""
-    return CUT_AT if lane in RETIRED else CUT2_AT if lane in RETIRED2 else None
+    """The cut time a retired lane stops entering at (round 1, 2 or 3), or None for a live lane."""
+    return CUT_AT if lane in RETIRED else CUT2_AT if lane in RETIRED2 else CUT3_AT if lane in RETIRED3 else None
 
 
 def fingerprint():
