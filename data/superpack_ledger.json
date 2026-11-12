@@ -607,6 +607,10 @@
    "mirror": "entered",
    "pool": "entered"
   },
+  "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXINTLFRIENDLYTOTAL-26NOV13COLCHI-2\", \"a\"]]": {
+   "at": "2026-11-12T09:00:03.051242+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXUEFANLTOTAL-26NOV12MNELAT-2\", \"a\"]]": {
    "at": "2026-11-09T19:56:29.643955+00:00",
    "pool": "entered"
@@ -2448,7 +2452,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-12T08:55:47.168971+00:00",
+ "last_run": "2026-11-12T09:00:03.051242+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -7768,6 +7772,31 @@
    "snapshot": null,
    "sport": "Culture",
    "src": "culture",
+   "status": "open"
+  },
+  {
+   "contract": "KXINTLFRIENDLYTOTAL-26NOV13COLCHI-2",
+   "entered_at": "2026-11-12T09:00:03.051242+00:00",
+   "entities": [
+    "Colombia",
+    "Chile"
+   ],
+   "id": "superpack:[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXINTLFRIENDLYTOTAL-26NOV13COLCHI-2\", \"a\"]]",
+   "lane": "o15_ranked",
+   "logged": "2026-11-12T08:59:33+00:00",
+   "matched": [
+    "Chile",
+    "Colombia"
+   ],
+   "pid": "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXINTLFRIENDLYTOTAL-26NOV13COLCHI-2\", \"a\"]]",
+   "price": 0.77,
+   "profit": null,
+   "scope": "soccer_o15_intl",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
    "status": "open"
   }
  ],
