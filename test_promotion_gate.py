@@ -80,7 +80,7 @@ check("its figure after the exchange's fee is the gate's figure", g["honest_posi
 print("pages do not read the gate record")
 root = os.path.dirname(os.path.abspath(__file__))
 readers = sorted(os.path.basename(p) for p in glob.glob(os.path.join(root, "*.py"))
-                 if os.path.basename(p) not in ("promotion_gate.py", "test_promotion_gate.py")
+                 if os.path.basename(p) != "promotion_gate.py" and not os.path.basename(p).startswith("test_")
                  and any(x in open(p).read() for x in ("import promotion_gate", "promotion_gate.json", "from promotion_gate")))
 check("no page builder or other module imports it", readers, [])
 

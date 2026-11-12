@@ -1315,6 +1315,25 @@ SOURCES = {
              "these matches drew in 2025/26. The twelve-league pooled check is still flat on "
              "the short window (+0.6pp, z +0.76), so it remains an Eredivisie fact and not a "
              "draw fact. Parameters unchanged — only the expectation is revised upward."),
+    "ere_draw_home": dict(
+        label="Eredivisie draw band v2 (home favourite, inside 24h)", kind="Rule", connected=True,
+        site="edge-machine", sports=["soccer"], baseline="draw_population",
+        note="Pre-registered 2026-11-12 (docs/prereg_ere_draw_v2_2026-11-12.md), a fresh record from "
+             "that day; ere_draw (v1) keeps its own record and is this rule's comparison. Back the "
+             "TIE on a Kalshi Eredivisie match on v1's own terms (de-vigged draw 0.20-0.25, ask 0.26 "
+             "or less) only when the HOME side is the favourite (its ask is above the away side's) "
+             "and kickoff is 24 hours away or less. Why the home favourite: on bookmaker closing "
+             "prices the band's edge has sat with the home favourite in each of the last five "
+             "seasons (2022/23 to 2026/27: +8.8pp over the price on 264 matches of 2021/22-2025/26 "
+             "against -0.8pp on 168 with the away side favoured), and on Kalshi's own prices it held "
+             "from one season to the next (2025/26: +15.8pp on 46; 2026/27, never looked at before "
+             "the rule was written: +18.9pp on 31, against -12.5pp on 19 away favourites). Why "
+             "inside 24h: the research is on prices at the close, and v1 logs its bets a median 4.5 "
+             "days out, where the same band on Kalshi is flat (+0.7pp on 50). Weak parts stated "
+             "now: in the eight seasons before 2021/22 the home favourite was no better than the "
+             "away one (+1.5pp against +4.0pp), so this is a recent pattern, not a law; it is one "
+             "of eight filters tried; and the Kalshi check is 77 bets. Judged against backing the "
+             "draw on every three-way match the Sandbox lists, and read beside v1."),
     "team2_form_l10": dict(
         label="Team scores 2+ form rule (7+/10 scored 2+, opponent 7+/10 conceded 2+)",
         kind="Rule", connected=True, site="edge-machine", sports=["soccer_team2_cup", "soccer_team2_intl"],
@@ -5877,6 +5896,60 @@ def fetch_ere_draw(sport, universe=None):
     if sport != "soccer":
         return []
     return ere_draw_picks(universe)
+
+
+# ---------------------------------------------------------------------------
+# The Eredivisie draw band, version 2 — pre-registered 2026-11-12
+# ---------------------------------------------------------------------------
+# v1's band and ask cap, unchanged, plus two terms (docs/prereg_ere_draw_v2_2026-11-12.md):
+#   the HOME side is the favourite (side a is the home side on a Kalshi three-way board, and its
+#   ask is above the away side's), and
+#   kickoff is ERE_DRAW_HOME_MAX_H hours away or less (the research prices are closing prices).
+# A fresh record under its own key; ere_draw is untouched and is the comparison.
+ERE_DRAW_HOME_MAX_H = 24.0
+
+
+def ere_draw_home_picks(universe=None, now=None):
+    """v1's Tie, kept only where the home side is the favourite and kickoff is inside the window."""
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    out = []
+    begin_examined("ere_draw_home", "soccer")
+    for r in (universe if universe is not None else (UNIVERSE or {})).get("soccer") or []:
+        if r.get("venue") != "kalshi":
+            continue
+        if not str(r.get("market_id") or "").startswith(ERE_DRAW_SERIES):
+            continue
+        note_examined("ere_draw_home", "soccer")
+        if r.get("untraded") or not (r.get("tradeable") or {}).get("draw", True):
+            continue
+        p = devig_draw(r)
+        if p is None or not (ERE_DRAW_BAND[0] <= p < ERE_DRAW_BAND[1]):
+            continue
+        if float(r["price_draw"]) > ERE_DRAW_MAX_ASK:
+            continue
+        if not float(r["price_a"]) > float(r["price_b"]):
+            continue                                    # the away side is the favourite, or neither is
+        try:
+            start = datetime.fromisoformat(str(r.get("start")).replace("Z", "+00:00"))
+        except ValueError:
+            continue                                    # no kickoff on the row: the window cannot be checked
+        if start.tzinfo is None:
+            start = start.replace(tzinfo=timezone.utc)
+        hours = (start - now).total_seconds() / 3600.0
+        if not 0 < hours <= ERE_DRAW_HOME_MAX_H:
+            continue
+        out.append(dict(market_id=r["market_id"], pick="draw",
+                        detail=f"home favourite {float(r['price_a']):.2f} v {float(r['price_b']):.2f}, {hours:.1f}h to kickoff"))
+    return out
+
+
+def fetch_ere_draw_home(sport, universe=None, now=None):
+    """ere_draw's band with the home side favoured, inside 24h. Eredivisie only."""
+    if sport != "soccer":
+        return []
+    return ere_draw_home_picks(universe, now)
 
 
 # ---------------------------------------------------------------------------
@@ -11394,6 +11467,7 @@ CHALLENGERS = {
     "bund_o35_fav": fetch_bund_o35_fav,
     "ere_o15": fetch_ere_o15,
     "ere_draw": fetch_ere_draw,
+    "ere_draw_home": fetch_ere_draw_home,
     "u35_low_scoring": fetch_u35_low_scoring,
     "u35_low_o15": fetch_u35_low_o15,
     "o25_congestion": fetch_o25_congestion,

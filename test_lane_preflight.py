@@ -170,16 +170,17 @@ def _one(results, lane, series, kind):
 
 def test_map_uses_lane_constants():
     _need()
-    print("\nmap is the six lanes' own constants (the Bundesliga pair retired 2026-10-24, the Turkey pair 2026-11-04)")
+    print("\nmap is the seven lanes' own constants (the Bundesliga pair retired 2026-10-24, the Turkey pair 2026-11-04)")
     by = {}
     for lane, series, kind in P.checks():
         by.setdefault(lane, []).append((series, kind))
     eq(list(by), [
-        "ere_draw", "ere_o15", "liga_btts_even",
+        "ere_draw", "ere_draw_home", "ere_o15", "liga_btts_even",
         "liga_u15_dog", "mls_away_band",
         "mls_fade_home",
-    ], "the six lanes, in matchday order, and no others (the Bundesliga and Turkey pairs are retired)")
+    ], "the seven lanes, in matchday order, and no others (the Bundesliga and Turkey pairs are retired)")
     eq(by["ere_draw"], [(S.ERE_DRAW_SERIES, "three_way")], "ere_draw reads ERE_DRAW_SERIES")
+    eq(by["ere_draw_home"], [(S.ERE_DRAW_SERIES, "three_way")], "ere_draw_home (v2, 2026-11-12) reads the same series")
     eq(by["ere_o15"], [(S.ERE_O15_TOTAL, "total"), (S.ERE_O15_GAME, "three_way")],
        "ere_o15 reads ERE_O15_TOTAL and ERE_O15_GAME")
     eq(by["liga_btts_even"], [(S.LIGA_BTTS, "btts"), (S.LIGA_GAME, "three_way")],
