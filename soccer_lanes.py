@@ -335,6 +335,8 @@ def sibling_row(key, state):
     tp = LC.split(pair, picks)[0] if prod else picks
     if prod:
         details = (params_html([("History", f"Production since {TRP.MOVED[key]} (moved by hand); paper keeps running in the Sandbox")]) + details)
+    if key == "T1M" and not prod:                # back in the Sandbox 2026-11-12 (Olu); the whole paper record stays here
+        details = (params_html([("History", f"Production {TRP.T1M_PULLED[0]} to {TRP.T1M_PULLED[1]}, back in the Sandbox (paper, whole record kept)")]) + details)
     if key == "T1M":                             # the 1.5x sell readout on the same entries (2026-11-08), observation only
         try:
             import t1m_sell15_build

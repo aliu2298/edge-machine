@@ -16,6 +16,11 @@ import soccer_build as SBLD
 import soccer_lanes as L
 import soccer_team_rules as TR
 import soccer_team_rules_production as TRP
+# T1-M went back to the Sandbox on 2026-11-12 (T1M_PULLED). Its machinery is checked below on its 2026-11-08 to 2026-11-12 Production era, listed again for this run.
+assert "T1M" not in TRP.PAIRS and TRP.T1M_PULLED == ("2026-11-08", "2026-11-12"), "T1-M is back in the Sandbox"
+TRP.PAIRS["T1M"] = ("st_t1m", "soccer_u35", "T1 matches · match over 3.5 goals")
+TRP.PROMOTED_AT["T1M"], TRP.MOVED["T1M"] = TRP.SIBLING_PROMOTED, TRP.SIBLING_MOVED_ON
+TRP.LABELS["st_t1m"] = TRP.PAIRS["T1M"][2]
 FAILS = []
 UTC = dt.timezone.utc
 NOW = dt.datetime(2026, 10, 18, 12, 0, tzinfo=UTC)

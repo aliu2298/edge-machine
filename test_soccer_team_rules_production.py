@@ -18,12 +18,17 @@ TP.T4_PROMOTED, TP.T4_MOVED_ON = "2026-11-05T02:50:00+00:00", "2026-11-04"
 TP.PAIRS["T4"] = ("st_t4", "soccer_team2", "O+D− v O−D+ · team 2+ goals")
 TP.PROMOTED_AT["T4"], TP.MOVED["T4"] = TP.T4_PROMOTED, TP.T4_MOVED_ON
 TP.LABELS["st_t4"] = TP.PAIRS["T4"][2]
+# T1-M went back to the Sandbox on 2026-11-12 (T1M_PULLED). Its machinery is checked below on its 2026-11-08 to 2026-11-12 Production era, listed again for this run.
+assert "T1M" not in TP.PAIRS and TP.T1M_PULLED == ("2026-11-08", "2026-11-12"), "T1-M is back in the Sandbox"
+TP.PAIRS["T1M"] = ("st_t1m", "soccer_u35", "T1 matches · match over 3.5 goals")
+TP.PROMOTED_AT["T1M"], TP.MOVED["T1M"] = TP.SIBLING_PROMOTED, TP.SIBLING_MOVED_ON
+TP.LABELS["st_t1m"] = TP.PAIRS["T1M"][2]
 # T1 went back to the Sandbox on 2026-10-28. The checks below replay its Production era
 # (2026-10-24 to 2026-10-28) by listing it again for this run; the real state is checked first.
 _NOW_PAIRS = sorted(TP.PAIRS)
 _NOW_MOVED = (TP.MOVED_ON, TP.PROMOTED)
 # T1's two siblings (T1-H, T1-M) are Production pairs since 2026-11-08 (checked on their own at the bottom); the era replays below keep them out.
-for _k in TP.SIBLING_PAIRS:
+for _k in (*TP.SIBLING_PAIRS, "T1M"):
     TP.PAIRS.pop(_k); TP.PROMOTED_AT.pop(_k); TP.MOVED.pop(_k)
 _REAL = (dict(TP.PROMOTED_AT), dict(TP.PAIRS))
 _REAL_MOVED = dict(TP.MOVED)

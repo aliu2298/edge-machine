@@ -50,9 +50,11 @@ T4_PULLED = ("2026-11-04", "2026-11-08")
 # (the team 2+ claim), T1-M the Yes of the match's over-3.5 contract (the league under-3.5 domain's YES twin, as A2 and A7 publish it).
 SIBLING_MOVED_ON = "2026-11-08"
 SIBLING_PROMOTED = "2026-11-08T12:00:00+00:00"
+# T1-M went back to the Sandbox 2026-11-12 (Olu: "return Over 3.5 when two attacking, tight sides meet to sandbox"): live 0-2, -17.6% after fees, below the honest-fill gate;
+# still logged by soccer_team_rules.py as paper on its whole record, its live bets stay on the Production page as history.
+T1M_PULLED = ("2026-11-08", "2026-11-12")
 SIBLING_PAIRS = {
     "T1H": ("st_t1h", "soccer_team2", "T1 matches · home team 2+ goals"),
-    "T1M": ("st_t1m", "soccer_u35", "T1 matches · match over 3.5 goals"),
 }
 PAIRS = {
     "T7": ("st_t7", "soccer_team3", "O+D+ v O+D+ · team 3+ goals · NO"),
