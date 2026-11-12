@@ -1,8 +1,8 @@
 {
  "collector": {
-  "last_ts": 1794492001,
+  "last_ts": 1794495602,
   "markets": 60,
-  "rows_24h": 85140
+  "rows_24h": 85080
  },
  "events": [
   {
@@ -25,50 +25,6 @@
   }
  ],
  "flags": [
-  {
-   "gap": 0.01118,
-   "gap_15m": 0.01024,
-   "gap_5m": 0.01019,
-   "gap_60m": 0.0104,
-   "rth": false,
-   "spread_bp": 47.8,
-   "sym": "MA",
-   "ticker": "KXMAPERP",
-   "ts": 1794191521
-  },
-  {
-   "gap": 0.01016,
-   "gap_15m": 0.0104,
-   "gap_5m": 0.01061,
-   "gap_60m": 0.01044,
-   "rth": false,
-   "spread_bp": 8.9,
-   "sym": "MSFT",
-   "ticker": "KXMSFTPERP",
-   "ts": 1794191941
-  },
-  {
-   "gap": 0.01104,
-   "gap_15m": 0.00381,
-   "gap_5m": 0.00901,
-   "gap_60m": -0.00116,
-   "rth": false,
-   "spread_bp": 8.8,
-   "sym": "MU",
-   "ticker": "KXMUPERP",
-   "ts": 1794191281
-  },
-  {
-   "gap": 0.02338,
-   "gap_15m": 0.0208,
-   "gap_5m": 0.02191,
-   "gap_60m": 0.02297,
-   "rth": false,
-   "spread_bp": 16.6,
-   "sym": "NEM",
-   "ticker": "KXNEMPERP",
-   "ts": 1794192481
-  },
   {
    "gap": -0.0398,
    "gap_15m": -0.04145,
@@ -5468,6 +5424,7 @@
    "gap": 0.01382,
    "gap_15m": -0.00057,
    "gap_5m": 0.00077,
+   "gap_60m": 0.00039,
    "rth": false,
    "spread_bp": 293.7,
    "sym": "AMAT",
@@ -5478,6 +5435,7 @@
    "gap": -0.02363,
    "gap_15m": 0.00049,
    "gap_5m": 0.00046,
+   "gap_60m": -0.00054,
    "rth": false,
    "spread_bp": 507.8,
    "sym": "INTC",
@@ -5486,14 +5444,54 @@
   },
   {
    "gap": -0.01263,
+   "gap_15m": -0.01359,
+   "gap_5m": -0.0124,
+   "gap_60m": -0.00071,
    "rth": false,
    "spread_bp": 0.9,
    "sym": "US Tech 100",
    "ticker": "KXUSTECH100PERP",
    "ts": 1794491942
+  },
+  {
+   "gap": 0.02566,
+   "gap_15m": 0.00041,
+   "gap_5m": -0.00032,
+   "rth": false,
+   "spread_bp": 511.8,
+   "sym": "AMAT",
+   "ticker": "KXAMATPERP",
+   "ts": 1794493681
+  },
+  {
+   "gap": 0.06188,
+   "gap_15m": -0.00038,
+   "gap_5m": 0.00019,
+   "rth": true,
+   "spread_bp": 1170.8,
+   "sym": "AMD",
+   "ticker": "KXAMDPERP",
+   "ts": 1794494282
+  },
+  {
+   "gap": -0.02476,
+   "gap_5m": -3e-05,
+   "rth": true,
+   "spread_bp": 526.2,
+   "sym": "CAT",
+   "ticker": "KXCATPERP",
+   "ts": 1794495001
+  },
+  {
+   "gap": 0.01049,
+   "rth": false,
+   "spread_bp": 20.5,
+   "sym": "CSCO",
+   "ticker": "KXCSCOPERP",
+   "ts": 1794191641
   }
  ],
- "last_run": "2026-11-12T14:00:08+00:00",
+ "last_run": "2026-11-12T15:00:08+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
