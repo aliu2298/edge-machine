@@ -1,8 +1,8 @@
 {
  "collector": {
-  "last_ts": 1794488402,
+  "last_ts": 1794492001,
   "markets": 60,
-  "rows_24h": 85200
+  "rows_24h": 85140
  },
  "events": [
   {
@@ -25,39 +25,6 @@
   }
  ],
  "flags": [
-  {
-   "gap": 0.01049,
-   "gap_15m": 0.00791,
-   "gap_5m": 0.00853,
-   "gap_60m": 0.00858,
-   "rth": false,
-   "spread_bp": 20.5,
-   "sym": "CSCO",
-   "ticker": "KXCSCOPERP",
-   "ts": 1794191641
-  },
-  {
-   "gap": 0.01032,
-   "gap_15m": 0.00917,
-   "gap_5m": 0.01025,
-   "gap_60m": 0.01077,
-   "rth": false,
-   "spread_bp": 4.3,
-   "sym": "GOOGL",
-   "ticker": "KXGOOGLPERP",
-   "ts": 1794192002
-  },
-  {
-   "gap": 0.01106,
-   "gap_15m": 0.0103,
-   "gap_5m": 0.00986,
-   "gap_60m": 0.01002,
-   "rth": false,
-   "spread_bp": 24.2,
-   "sym": "IBM",
-   "ticker": "KXIBMPERP",
-   "ts": 1794192182
-  },
   {
    "gap": 0.01118,
    "gap_15m": 0.01024,
@@ -5488,14 +5455,45 @@
   },
   {
    "gap": -0.01002,
+   "gap_15m": -0.01503,
+   "gap_5m": -0.01046,
+   "gap_60m": -0.01263,
    "rth": false,
    "spread_bp": 0.3,
    "sym": "US Tech 100",
    "ticker": "KXUSTECH100PERP",
    "ts": 1794488342
+  },
+  {
+   "gap": 0.01382,
+   "gap_15m": -0.00057,
+   "gap_5m": 0.00077,
+   "rth": false,
+   "spread_bp": 293.7,
+   "sym": "AMAT",
+   "ticker": "KXAMATPERP",
+   "ts": 1794488821
+  },
+  {
+   "gap": -0.02363,
+   "gap_15m": 0.00049,
+   "gap_5m": 0.00046,
+   "rth": false,
+   "spread_bp": 507.8,
+   "sym": "INTC",
+   "ticker": "KXINTCPERP",
+   "ts": 1794490201
+  },
+  {
+   "gap": -0.01263,
+   "rth": false,
+   "spread_bp": 0.9,
+   "sym": "US Tech 100",
+   "ticker": "KXUSTECH100PERP",
+   "ts": 1794491942
   }
  ],
- "last_run": "2026-11-12T13:00:07+00:00",
+ "last_run": "2026-11-12T14:00:08+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
