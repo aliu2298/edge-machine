@@ -16,17 +16,17 @@ The family:
 |---|---|---|
 | T1 | Sandbox paper since Oct 28 | **Keep as paper. Not a candidate to go live.** |
 | T1-H | Live since Nov 8, on one settled bet | **Recommend back to the Sandbox.** The home-only idea does not show in 13 seasons of bookmaker prices. |
-| T1-M | Live since Nov 8, on one settled bet | **Recommend back to the Sandbox.** Its premise does not show in 13 seasons of bookmaker prices. |
+| T1-M | Live since Nov 8, on one settled bet | **Recommend back to the Sandbox.** Its premise has no steady support in 13 seasons of bookmaker prices. |
 
 No version 2. Moving the two live siblings is Olu's decision.
 
 **Why, in one line each:**
 
-- The label adds nothing to a properly set price: across 13 seasons of Premier League and La Liga closing lines, T1 teams score 2+ exactly as often as the line says.
+- The label adds almost nothing to a properly set price: across 13 seasons in four of T1's five leagues, T1 teams scored 2+ within 2 points of what the closing line says, below it in the first eight seasons and above it in the last five.
 - T1's own record (+17.1% on 52) is well short of the bar, and all of it is the home side.
 - On Kalshi, T1 beat backing every other team by 7.8 points, on 54 bets, score 0.8. That is the one thing in its favour, and it is not yet evidence.
 
-**One part is not done.** The bookmaker test covers the Premier League (a T1 league) and La Liga (not one). Serie A, the Bundesliga and Ligue 1 need history files that are not downloaded yet; the Champions League is not in those files. Under the rule written in advance the verdict is the same without them.
+**Against the rule written in advance:** T1 needed to beat the line on the last five seasons with a score of 1 or more. It made +1.8 points, score 0.9, and +1.2 points once every team's own +0.6 is taken off. A narrow miss, so T1 stays paper.
 
 ## 1. Paper, honest fills and live
 
@@ -61,25 +61,32 @@ Whole record: score 1.1 over 12 match days. Without its best day it is +3.9%.
 
 Kalshi has listed team totals only since August 2026, so there is no earlier Kalshi price to test on. The question that can be tested is whether the label tells you anything a closing bookmaker line does not.
 
-For each league match, 2013/14 to 2026/27: the fair chance a team scores 2+ was worked out from the closing match odds and the over/under 2.5 line. Labels are from each team's last 10 league matches.
+For each league match, 2013/14 to 2026/27, in four of T1's five leagues (Premier League, Serie A, Bundesliga, Ligue 1): the fair chance a team scores 2+ was worked out from the closing match odds and the over/under 2.5 line. Labels are from each team's last 10 league matches. The Champions League is not in these files.
 
-| Premier League | Teams | Scored 2+ | Fair chance | Points |
+| Four T1 leagues | Teams | Scored 2+ | Fair chance | Points |
 |---|---|---|---|---|
-| Every team, 2013/14 to 2020/21 | 5,828 | 39.1% | 38.8% | +0.3 |
-| T1 teams, 2013/14 to 2020/21 | 562 | 41.6% | 41.2% | +0.4 |
-| Every team, 2021/22 to 2025/26 | 3,752 | 42.6% | 41.4% | +1.1 |
-| T1 teams, 2021/22 to 2025/26 | 368 | 44.6% | 43.1% | +1.4 |
+| Every team, 2013/14 to 2020/21 | 21,964 | 39.4% | 38.9% | +0.4 |
+| T1 teams, 2013/14 to 2020/21 | 1,984 | 40.0% | 41.3% | −1.3 |
+| Every team, 2021/22 to 2025/26 | 13,788 | 41.1% | 40.5% | +0.6 |
+| T1 teams, 2021/22 to 2025/26 | 1,324 | 43.9% | 42.1% | +1.8 |
+| Every team, 2026/27 so far | 726 | 46.1% | 43.4% | +2.7 |
+| T1 teams, 2026/27 so far | 68 | 52.9% | 45.7% | +7.2 |
 
-| La Liga (not a T1 league, as a second check) | Teams | Scored 2+ | Fair chance | Points |
-|---|---|---|---|---|
-| T1 teams, 2013/14 to 2020/21 | 416 | 39.7% | 41.4% | −1.8 |
-| T1 teams, 2021/22 to 2025/26 | 250 | 43.6% | 41.4% | +2.2 |
+| T1 teams, points | 2013/14 to 2020/21 | 2021/22 to 2025/26 |
+|---|---|---|
+| Premier League | +0.4 (562) | +1.4 (368) |
+| Serie A | −0.8 (582) | +2.1 (384) |
+| Bundesliga | −3.9 (414) | +4.1 (256) |
+| Ligue 1 | −1.9 (426) | +0.0 (316) |
+| La Liga (not a T1 league, an extra check) | −1.8 (416) | +2.2 (250) |
 
-- T1 teams are within a point of every team in the Premier League, in both periods. No score reaches 1.
-- **Home against away does not repeat.** Premier League T1 home teams: +1.0 then +1.6 points; away: −0.2 then +1.3. In La Liga the two flip between periods.
-- **T1-M's premise does not show.** T1 matches went over 3.5 at 32.3% against a fair 33.5%, then 33.7% against 34.7%. Both sides scoring 2+ happened at 13.7% against a fair 14.8%, then 17.5% against 16.2%.
+- **The fair chance is well calibrated.** Every team lands within a point of it in both periods.
+- **T1 teams: −1.3 points, then +1.8.** Neither reaches a score of 1 (−0.8 and +0.9). Every league went the same way: below the line early, at or above it late.
+- **Home against away does not repeat.** T1 home teams: −0.6 then +1.5 points. Away: −2.0 then +2.1.
+- **This season is a hot run, at any price.** In 2026/27 T1 home teams have scored 2+ in 23 of 34 against a fair 51.4%, on bookmaker lines too. So this autumn's T1 record is not a Kalshi price error, and nothing like it shows in the 13 seasons before.
+- **T1-M has no steady support.** T1 matches went over 3.5 at 31.1% against a fair 33.3% in the first eight seasons (−2.1 points, 992 matches), then 37.3% against 34.2% in the last five (+3.1 points, 662 matches, score 1.0). Opposite signs; together they come to zero.
 
-So if T1 makes money on Kalshi, it is because Kalshi's team-total price is off, not because the label knows something.
+So the label knows little or nothing that a closing line does not. If T1 makes money on Kalshi over time, it will be because Kalshi's team-total price is off.
 
 ## 4. T1 against backing every team, on Kalshi
 
@@ -122,7 +129,7 @@ No. Ten cells on T1's forward record: five leagues, home and away, three price b
 ## Limits
 
 - **Bookmaker labels use league matches only.** The lane's labels also count cups and Europe.
-- **One of T1's five leagues is tested.** See "One part is not done" above.
+- **Four of T1's five leagues are tested.** The Champions League, where T1 made 22 of its 52 bets, is not in the bookmaker files.
 - **Kickoff times** in the every-team comparison are Kalshi's; a few differ from ESPN's by an hour.
 - **The found window** (Aug 1 to Oct 17) could not be re-labelled exactly, so T1 is compared with the rest only from Oct 18.
 
