@@ -17,6 +17,9 @@ from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 
 import sandbox_sources as S
+import sport_rows_testlib as _SRT_ERE
+_ERE_CM = _SRT_ERE.running_again("ere_draw|soccer")
+_ERE_CM.__enter__()        # retired 2026-11-12 (test_retired_2026_11_12.py): this script replays the lane from before
 import sandbox_track as T
 
 # mls_away_band was retired and faded on 2026-10-16 (mls_away_band_fade). This file has long

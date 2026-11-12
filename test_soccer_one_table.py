@@ -66,7 +66,7 @@ check("the Production label and team rules are Production rows", {RP.PAIRS[k][0]
 check("the in-play lanes: the cheap NO (back in the Sandbox 2026-11-06) and the top-5 dip's live lane (back 2026-11-08) are Sandbox rows, with their ended live runs, both dips' paper lanes in the Sandbox",
       ("o35_cheap_no_wave" in prod, "top5_goalless_dip_live" in prod,
        {"arg_goalless_dip", "top5_goalless_dip", "o35_cheap_no_wave", "o35_cheap_no_v5", "o35_cheap_no_wave_live", "top5_dip_live_run"} <= srcs - prod), (False, False, True))
-check("the Eredivisie draw is a row", "ere_draw" in srcs, True)
+check("the Eredivisie draw v1 is retired (2026-11-12): a Retired row, no longer a live one", ("ere_draw" in srcs, "ere_draw" in in_retired), (False, True))
 check("contenders and Argentina & Brasileirao over 1.5 are in the Retired fold",
       {"co_o15", "co_o25", "co_o35", "sa_o15_arg", "sa_o15_bra"} <= set(in_retired), True)
 check("Turkey's two lanes are in the Retired fold", {"turkey_o25_dog", "turkey_btts_dog"} <= set(in_retired), True)

@@ -14,6 +14,9 @@ from datetime import datetime, timedelta, timezone
 
 import sandbox_build as BUILD
 import sandbox_sources as S
+import sport_rows_testlib as _SRT_ERE
+_ERE_CM = _SRT_ERE.running_again("ere_draw|soccer")
+_ERE_CM.__enter__()        # retired 2026-11-12 (test_retired_2026_11_12.py): this script replays the lane from before
 import sport_rows_testlib
 # Oddspedia's cricket row and cricket consensus retired 2026-11-03 (test_retired_2026_11_03_more.py); this test asks about
 # the machinery, so it puts them back on the run in-process.
