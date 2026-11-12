@@ -1,5 +1,13 @@
 {
  "caps": {
+  "commod_fav_band|commodities_fav": {
+   "band": [
+    0.7,
+    0.8
+   ],
+   "cap": 0.85,
+   "max_ask": 0.84
+  },
   "corners_ucl_fade|soccer_corners": {
    "band": null,
    "cap": 0.85,
@@ -144,5 +152,5 @@
    "raised_at": "2026-11-08T08:07:13+00:00"
   }
  },
- "generated": "2026-11-12T07:07Z"
+ "generated": "2026-11-12T08:07Z"
 }
