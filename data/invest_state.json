@@ -1,6 +1,6 @@
 {
  "collector": {
-  "last_ts": 1794481201,
+  "last_ts": 1794484801,
   "markets": 60,
   "rows_24h": 85260
  },
@@ -25,17 +25,6 @@
   }
  ],
  "flags": [
-  {
-   "gap": 0.01009,
-   "gap_15m": 0.0106,
-   "gap_5m": 0.01248,
-   "gap_60m": 0.00919,
-   "rth": false,
-   "spread_bp": 1.6,
-   "sym": "CAT",
-   "ticker": "KXCATPERP",
-   "ts": 1794191161
-  },
   {
    "gap": 0.01082,
    "gap_15m": 0.01039,
@@ -5325,6 +5314,7 @@
    "gap": 0.01577,
    "gap_15m": -0.00021,
    "gap_5m": 0.00051,
+   "gap_60m": -0.0002,
    "rth": false,
    "spread_bp": 826.7,
    "sym": "AMZN",
@@ -5335,6 +5325,7 @@
    "gap": 0.01623,
    "gap_15m": 0.00072,
    "gap_5m": 0.0007,
+   "gap_60m": -0.0003,
    "rth": false,
    "spread_bp": 1604.8,
    "sym": "AVGO",
@@ -5367,6 +5358,7 @@
    "gap": -0.07354,
    "gap_15m": 0.00451,
    "gap_5m": 0.00484,
+   "gap_60m": 0.00553,
    "rth": false,
    "spread_bp": 2161.9,
    "sym": "BKNG",
@@ -5377,6 +5369,7 @@
    "gap": 0.02283,
    "gap_15m": 0.00024,
    "gap_5m": 0.00045,
+   "gap_60m": -0.00016,
    "rth": false,
    "spread_bp": 870.4,
    "sym": "INTC",
@@ -5398,6 +5391,7 @@
    "gap": -0.10532,
    "gap_15m": -0.0009,
    "gap_5m": -0.0009,
+   "gap_60m": 0.00066,
    "rth": false,
    "spread_bp": 2338.6,
    "sym": "MA",
@@ -5408,6 +5402,7 @@
    "gap": 0.03512,
    "gap_15m": -0.00031,
    "gap_5m": -0.00027,
+   "gap_60m": -0.00039,
    "rth": false,
    "spread_bp": 771.3,
    "sym": "MSFT",
@@ -5473,6 +5468,7 @@
    "gap": -0.01645,
    "gap_15m": 0.00054,
    "gap_5m": 0.00054,
+   "gap_60m": 0.00064,
    "rth": false,
    "spread_bp": 3974.3,
    "sym": "VZ",
@@ -5489,9 +5485,18 @@
    "sym": "WMT",
    "ticker": "KXWMTPERP",
    "ts": 1794474061
+  },
+  {
+   "gap": 0.01721,
+   "gap_5m": 0.00396,
+   "rth": false,
+   "spread_bp": 260.4,
+   "sym": "AMAT",
+   "ticker": "KXAMATPERP",
+   "ts": 1794484441
   }
  ],
- "last_run": "2026-11-12T11:00:07+00:00",
+ "last_run": "2026-11-12T12:00:08+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
