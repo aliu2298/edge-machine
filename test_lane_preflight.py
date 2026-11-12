@@ -176,7 +176,7 @@ def test_map_uses_lane_constants():
         by.setdefault(lane, []).append((series, kind))
     eq(list(by), [
         "ere_draw", "ere_draw_home", "ere_o15", "liga_btts_even",
-        "liga_u15_dog", "mls_away_band",
+        "liga_u15_dog_24h", "mls_away_band",
         "mls_fade_home",
     ], "the seven lanes, in matchday order, and no others (the Bundesliga and Turkey pairs are retired)")
     eq(by["ere_draw"], [(S.ERE_DRAW_SERIES, "three_way")], "ere_draw reads ERE_DRAW_SERIES")
@@ -185,13 +185,13 @@ def test_map_uses_lane_constants():
        "ere_o15 reads ERE_O15_TOTAL and ERE_O15_GAME")
     eq(by["liga_btts_even"], [(S.LIGA_BTTS, "btts"), (S.LIGA_GAME, "three_way")],
        "liga_btts_even reads LIGA_BTTS and LIGA_GAME")
-    eq(by["liga_u15_dog"], [(S.LIGA_TOTAL, "total"), (S.LIGA_GAME, "three_way")],
-       "liga_u15_dog reads LIGA_TOTAL and LIGA_GAME")
+    eq(by["liga_u15_dog_24h"], [(S.LIGA_TOTAL, "total"), (S.LIGA_GAME, "three_way")],
+       "liga_u15_dog_24h (v2, 2026-11-12; v1 retired that day) reads LIGA_TOTAL and LIGA_GAME")
     eq(by["mls_away_band"], [(S.MLS_GAME, "three_way")], "mls_away_band reads MLS_GAME")
     eq(by["mls_fade_home"], [(S.MLS_GAME, "three_way"), (S.MLS_GAME, "p05")],
        "mls_fade_home reads MLS_GAME on the three-way board and the +0.5 board")
     eq(P.board_sport("ere_o15", "total"), "soccer_o15", "ere_o15's total is the over-1.5 board")
-    eq(P.board_sport("liga_u15_dog", "total"), "soccer_o15", "liga_u15_dog's total is the over-1.5 board")
+    eq(P.board_sport("liga_u15_dog_24h", "total"), "soccer_o15", "liga_u15_dog_24h's total is the over-1.5 board")
     eq(P.board_sport("liga_btts_even", "btts"), "soccer_btts", "liga_btts_even reads the BTTS board")
     eq(P.board_sport("mls_fade_home", "p05"), "soccer_p05", "mls_fade_home reads the +0.5 board")
     eq(P.board_sport("ere_draw", "three_way"), "soccer", "a three-way series is the soccer board")

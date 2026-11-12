@@ -215,6 +215,13 @@ ERE_DRAW_RETIRED_WHY = ("Retired 2026-11-12 by Olu, replaced by Eredivisie draw 
                         "before kickoff, while its research was on prices at the close. Final paper record: 9 won v 6.9 priced on 29, "
                         "+22.6% after fees, z +0.91. Earlier live run (in Production 2026-10-11 to 2026-11-02, history): 4 won, 13 lost "
                         "on 17 settled, −4.3% after fees." + RETIRED_TAIL_2026_11_12)
+# 2026-11-12 (Olu): La Liga under 1.5 in heavy mismatches, version 1 (liga_u15_dog), retired and replaced by version 2 (liga_u15_dog_24h, Sandbox paper,
+# its own record from 2026-11-12). The selection is unchanged; v2 only bets inside 24 hours of kickoff. Why: v1 logged its bets a median 4 days
+# before kickoff, where the under cost about 3c more than it did inside the last day. Never in Production. No new entries; rows stay.
+LIGA_U15_DOG_RETIRED_WHY = ("Retired 2026-11-12 by Olu, replaced by La Liga under 1.5 in heavy mismatches v2 (liga_u15_dog_24h): the same "
+                            "matches, bet inside 24 hours of kickoff. v1 placed its bets a median 4 days before kickoff, where the under "
+                            "cost about 3c more than it did inside the last day. Final paper record: 3 won v 1.2 priced on 9, +112.2% "
+                            "after fees. Never in Production." + RETIRED_TAIL_2026_11_12)
 # Econ Daily near-certain 3h NO (Olu, 2026-11-06): paper since 2026-10-28, never traded live after that. No new entries from
 # 2026-11-06 (daily_track.NC_RETIRED); its rows stay on file and its open bets still settle. The S&P near-certain NO stays.
 ECON_NC_NO_RETIRED_WHY = ("Retired 2026-11-06 by Olu: no edge at 20 settled contracts on 16 market-days — 18 won v 18.1 priced, "
@@ -1104,7 +1111,8 @@ SOURCES = {
              "direction as this lane. Parameters unchanged, expectation revised upward."),
     "liga_u15_dog": dict(
         label="La Liga under 1.5 in heavy mismatches (underdog 7.00+)", kind="Rule",
-        connected=True, site="edge-machine", sports=["soccer_o15"], baseline="population",
+        connected=True, site="edge-machine", sports=[], retired_sports={"soccer_o15": LIGA_U15_DOG_RETIRED_WHY},
+        baseline="population",
         note="Pre-registered 2026-09-26, before it logged anything, and the mirror of "
              "liga_btts_even. Back UNDER 1.5 GOALS — the No side of Kalshi's over-1.5 — on a "
              "La Liga match whose own three-way board prices the underdog under a de-vigged "
@@ -1137,6 +1145,25 @@ SOURCES = {
              "51 matches is thin evidence to overturn that. It costs nothing in the Sandbox "
              "and the forward record settles it. Read it against THIS paragraph, not the "
              "figures above: if the reversal is real, this lane should lose."),
+    "liga_u15_dog_24h": dict(
+        label="La Liga under 1.5 in heavy mismatches v2 (inside 24h)", kind="Rule",
+        connected=True, site="edge-machine", sports=["soccer_o15"], baseline="population",
+        note="Pre-registered 2026-11-12 (docs/prereg_liga_u15_dog_v2_2026-11-12.md), a fresh record "
+             "from that day; liga_u15_dog (v1) is retired and keeps its own record. The selection "
+             "is v1's, unchanged: back UNDER 1.5 GOALS — the No side of Kalshi's over-1.5 — on a "
+             "La Liga match whose own three-way board prices the underdog under a de-vigged 0.135, "
+             "with the No ask at 0.20 or less and the board holding no more than 6%. The one "
+             "change is WHEN: the bet is taken only when kickoff, as ESPN lists it, is 24 hours "
+             "away or less. Why: v1 logged its bets a median 4 days before kickoff. On the same "
+             "20 matches of Kalshi's own history the No ask was 15.4c four days out and 12.1c "
+             "three hours out, about a quarter of the stake. Replayed on Kalshi's history the "
+             "rule returned -24.8% on 18 bets at v1's entry time, +36.7% on 21 at 24 hours and "
+             "+6.1% on 21 at 3 hours. Weak parts stated now: three or four wins in about twenty "
+             "bets settle nothing, so the replay shows a better price, not an edge; v1's own case "
+             "against itself still stands (2025/26 ran against the thesis); a win about one bet "
+             "in five means long losing runs; and at about 2 bets a matchweek 30 bets is roughly "
+             "fifteen weeks. Judged against backing the under on every match of this market. "
+             "Review at 10 settled, read at 30."),
     "bund_o35": dict(
         label="Bundesliga over 3.5, every match", kind="Rule", connected=True,
         site="edge-machine", sports=[], baseline="population",
@@ -6647,24 +6674,64 @@ def fetch_liga_btts_even(sport, universe=None):
     return out
 
 
-def fetch_liga_u15_dog(sport, universe=None):
-    """Back UNDER 1.5 (No on Kalshi's over 1.5) in a La Liga heavy mismatch.
-
-    A 20% strike at about five to one. Expect long losing runs; at ~2 bets a matchweek the
-    30-bet floor is roughly fifteen weeks away.
-    """
-    if sport != "soccer_o15":
-        return []
-    uni = universe if universe is not None else (UNIVERSE or {})
-    board = liga_fav_dog(uni)
+def _liga_u15_dog_rows(universe, lane):
+    """[(row, de-vigged underdog)] for the over-1.5 rows the under-1.5 rule selects. One selection, both versions."""
+    board = liga_fav_dog(universe)
     out = []
-    for r in _liga_rows(sport, uni, LIGA_TOTAL, "b", lane="liga_u15_dog"):
+    for r in _liga_rows("soccer_o15", universe, LIGA_TOTAL, "b", lane=lane):
         pd_ = (board.get(_ere_code(r.get("market_id"))) or (None, None))[1]
         if pd_ is None or pd_ >= LIGA_U15_DOG_MAX:
             continue
         if float(r["price_b"]) > LIGA_U15_MAX_ASK:
             continue
-        out.append(dict(market_id=r["market_id"], pick="b"))
+        out.append((r, pd_))
+    return out
+
+
+def fetch_liga_u15_dog(sport, universe=None):
+    """Back UNDER 1.5 (No on Kalshi's over 1.5) in a La Liga heavy mismatch.
+
+    A 20% strike at about five to one. Expect long losing runs; at ~2 bets a matchweek the
+    30-bet floor is roughly fifteen weeks away. Version 1: retired 2026-11-12, replaced by
+    fetch_liga_u15_dog_24h, which is this selection inside 24 hours of kickoff.
+    """
+    if sport != "soccer_o15":
+        return []
+    uni = universe if universe is not None else (UNIVERSE or {})
+    return [dict(market_id=r["market_id"], pick="b") for r, _pd in _liga_u15_dog_rows(uni, "liga_u15_dog")]
+
+
+# La Liga under 1.5 in heavy mismatches, version 2 — pre-registered 2026-11-12
+# (docs/prereg_liga_u15_dog_v2_2026-11-12.md). v1's selection, untouched; the one change is that
+# the bet is taken only when kickoff is LIGA_U15_DOG_24H_MAX_H hours away or less, and only on a
+# kickoff ESPN lists (Kalshi's own start is an estimate and its ticker date can be a placeholder,
+# so a rule about timing cannot run on it).
+LIGA_U15_DOG_24H_MAX_H = 24.0
+
+
+def fetch_liga_u15_dog_24h(sport, universe=None, now=None):
+    """fetch_liga_u15_dog's selection, taken only inside 24 hours of an ESPN-listed kickoff."""
+    if sport != "soccer_o15":
+        return []
+    uni = universe if universe is not None else (UNIVERSE or {})
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    out = []
+    for r, pd_ in _liga_u15_dog_rows(uni, "liga_u15_dog_24h"):
+        if r.get("start_source") != "espn":
+            continue                                    # no kickoff from outside Kalshi: the window cannot be checked
+        try:
+            start = datetime.fromisoformat(str(r.get("start")).replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        if start.tzinfo is None:
+            start = start.replace(tzinfo=timezone.utc)
+        hours = (start - now).total_seconds() / 3600.0
+        if not 0 < hours <= LIGA_U15_DOG_24H_MAX_H:
+            continue
+        out.append(dict(market_id=r["market_id"], pick="b",
+                        detail=f"underdog {pd_:.3f}, {hours:.1f}h to kickoff"))
     return out
 
 
@@ -11489,6 +11556,7 @@ CHALLENGERS = {
     "turkey_o25_dog": fetch_turkey_o25_dog,
     "liga_btts_even": fetch_liga_btts_even,
     "liga_u15_dog": fetch_liga_u15_dog,
+    "liga_u15_dog_24h": fetch_liga_u15_dog_24h,
     "bund_o35": fetch_bund_o35,
     "bund_o35_fav": fetch_bund_o35_fav,
     "ere_o15": fetch_ere_o15,
