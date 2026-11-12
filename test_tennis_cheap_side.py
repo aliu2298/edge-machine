@@ -81,9 +81,17 @@ check("public copy passes the guard", sandbox_audit.COPY_RE.search(text), None)
 print("\nthe Tennis page")
 page = TB.build()
 check("the section sits near the top: after the page heading, before the rules",
-      0 < page.find("<h1") < page.find('id="cheap-side"') < page.find('<section id="rules"'), True)
+      0 < page.find("<h1") < page.find('id="cheap-side"') and '<section id="rules"' not in page, True)
 check("the Chaos section links back to it", 'href="./tennis.html#cheap-side"' in CB.section(state), True)
 check("tables are header-row tables (the Sandbox's phone labels apply)", "<thead>" in h, False)
+
+print("\nthe lean Tennis page (2026-11-11): a running lane is never contradicted")
+flat = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", page))
+check("no empty-section words while a lane runs", [w for w in ("no rule has a record", "No tennis rule is in", "no read is stored", "active rules") if w in flat], [])
+check("no Rules or Events section, one Retired block holding the retired lanes and rules",
+      ('id="events"' in page, page.count('id="retired"'), 'data-lane="challenger_cheap_split"' in page), (False, 1, True))
+check("a hold lane has no split line and no 0 / 0 legs", ("half at 2x" in page, "0 / 0" in page), (False, False))
+check("everything but the lane row is folded", all(page[m.start():m.start() + 40].find(" open") < 0 for m in re.finditer(r"<details", page)), True)
 
 print("\nthe spread is recorded on new trades")
 T0 = 1_800_000_000 - 1_800_000_000 % 60

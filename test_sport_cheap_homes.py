@@ -64,6 +64,15 @@ for page, html in pages.items():
         L = next(x for x in chaos_lanes.LANES if x["id"] == lane)
         if L.get("retired"):
             check(f"{page}: {lane} (retired) is in the collapsed Retired block", folded(html, f'<li data-lane="{lane}"'), True)
+        elif page == "tennis" and lane in (C.load().get("lanes") or {}):
+            # 2026-11-11: the tennis page is one row per live lane (its baseline's result beside it); the rule, voids,
+            # skips and trades sit in closed folds, and the baseline's own fold keeps its anchor.
+            if L.get("baseline"):
+                check(f"{page}: {lane} (baseline) is a closed fold with its anchor, not under Retired",
+                      (folded(html, f'id="baseline-{lane}"'), f'<li data-lane="{lane}"' in html), (False, False))
+            else:
+                check(f"{page}: {lane} is one table row, its record visible without opening a fold",
+                      (f'<tr data-lane="{lane}"' in html, folded(html, f'<tr data-lane="{lane}"')), (True, False))
         elif L.get("baseline") and lane in (C.load().get("lanes") or {}):
             check(f"{page}: {lane} (baseline) is its own open Baseline block, not under Retired",
                   (folded(html, f'id="baseline-{lane}" open>'), f'<li data-lane="{lane}"' in html), (False, False))

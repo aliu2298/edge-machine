@@ -400,6 +400,78 @@ def sport_section(page, state=None, retired=True):
 </section>"""
 
 
+# Plain words for a lane's row on a compact page (2026-11-11, Olu: very few words). A lane not listed reads its label.
+LANE_WORDS = {"challenger_won_here_hold": "Challenger underdog who has won here"}
+
+
+def _fold(title, hint, inner):
+    return (f'<details class="section-disclosure"><summary><b>{esc(title)}</b><span>{esc(hint)}</span></summary>'
+            f'{inner}</details>')
+
+
+def _lane_name(L):
+    return LANE_WORDS.get(L["id"]) or (L.get("label") or L["id"]).split(" · ")[0]
+
+
+def compact_section(page, state=None, retired_inside=False):
+    """A sport page's live hold lanes as ONE clean row each (2026-11-11): name in plain words, settled, won, held
+    result, its blind baseline's result beside it, and the stage. Rule text, voids, skips, method and trades sit
+    in closed folds. A hold-only lane has no split, so there is no split column and no "0 / 0 legs". The retired
+    lanes come back as the second value (an <ul>), for the page's one Retired block."""
+    if state is None:
+        state = C.load() if os.path.exists(C.PATH) else C.empty()
+    have = with_config(state).get("lanes") or {}
+    every = [have[k] for k in HOMES[page] if k in have]
+    lanes = [L for L in every if not L.get("retired") and not L.get("insample") and not L.get("baseline")]
+    bases = [L for L in every if L.get("baseline") and not L.get("retired")]
+    gone = [L for L in every if L.get("retired")]
+    ul = "".join(f'<li data-lane="{esc(L["id"])}"><b>{esc(L.get("label") or L["id"])}</b>: {esc(retired_line(L))}</li>'
+                 for L in gone)
+    ul = f'<ul class="sm">{ul}</ul>' if ul else ""
+    if not lanes:
+        return "", ul, len(gone)
+    rows, folds = [], []
+    for i, L in enumerate(lanes):
+        r = split_hold(L)
+        b = bases[i] if i < len(bases) else None
+        br = split_hold(b) if b else None
+        base_cell = (f'{_pct(br["hold"], sign=True)} <small class="mut">{br["events"]} events</small>' if br else "—")
+        stage = f'{r["events"]}/{C.PROMOTE_N} · decide at {C.PROMOTE_N}'
+        rows.append(f'<tr data-lane="{esc(L["id"])}"><td><b>{esc(_lane_name(L))}</b></td>'
+                    f'<td class="num">{r["events"]}</td><td class="num">{r["won"]}</td>'
+                    f'<td class="num">{_pct(r["hold"], sign=True)}</td><td class="num">{base_cell}</td>'
+                    f'<td>{esc(stage)}</td></tr>')
+        hours = ", ".join(f"{h}h" for h in L.get("entry_hours") or C.ENTRY_HOURS)
+        rule = (f'<p class="sm">{esc(L.get("note") or "")} Bought {esc(hours)} before the start. '
+                f'Series {esc(", ".join(L.get("series") or []))}. Review at {C.REVIEW_N} settled events, decide at '
+                f'{C.PROMOTE_N}: one match is one outcome, however many entries it holds.</p>'
+                + (f'<p class="sm mut">{esc(L["caution"])}</p>' if L.get("caution") else ""))
+        folds.append(_fold(f"Rule · {_lane_name(L)}", "what it buys", rule))
+        notes = voided_line(L) + _checking_line(L) + basis_line(L)
+        if notes:
+            folds.append(_fold("Voids and skips", "the ask check", notes))
+        folds.append(_fold("Trades", "latest 30 entries · H held to settlement", trade_list(L)))
+        if b:
+            g = b.get("baseline") or {}
+            inner = (f'<p class="sm">{esc(g.get("who") or "")} A filtered lane on these markets must beat this record.</p>'
+                     + voided_line(b) + trade_list(b))
+            folds.append(_fold(f"Baseline · {baseline_name(b)} (blind, price band only)",
+                               f'{br["events"]} settled events · not a lane', inner)
+                         .replace('<details class="section-disclosure">', f'<details class="section-disclosure baseline" data-lane="{esc(b["id"])}" id="baseline-{esc(b["id"])}">', 1))
+    method = _fold("Method", "paper · replayed nightly",
+                   f'<p class="sm">Bought about an hour before the match at the ask, held to settlement, no sells. '
+                   f'Sandbox, paper only, replayed nightly from Kalshi\'s 1-minute candles. Every lane sits next to its '
+                   f'blind baseline: the same entry on every player in the band. Also listed in the '
+                   f'<a href="./sandbox.html#chaos">Sandbox\'s Chaos index</a>.</p>')
+    head = ('<tr><th>Lane</th><th class="num">Settled</th><th class="num">Won</th><th class="num">Held</th>'
+            '<th class="num">Baseline</th><th>Stage</th></tr>')
+    sec = (f'<section id="cheap-side" class="sp-section"><div class="sp-section-head"><h2>Lanes</h2>'
+           f'<span class="sm mut">paper · held to settlement</span></div>'
+           f'<div class="tbl"><table class="chaos-compact">{head}{"".join(rows)}</table></div>'
+           f'{"".join(folds)}{method}</section>')
+    return sec, ul, len(gone)
+
+
 def in_sample_block(lanes):
     """In-sample backfills, apart from the lane they back-test: the rule was chosen on this data."""
     return ('<div class="in-sample" id="cheap-side-insample"><h3>In-sample backfill</h3>'

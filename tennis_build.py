@@ -43,7 +43,53 @@ def build(d=None, st=None, now=None):
         method=tennis_cards.method(idle_html),
         # Retired by hand (2026-10-24): their own fold, final record and reason.
         retired=sport_tab.retired_rows(d, st, FAMILY), lane_tiles=(lambda: _lane_tiles()) if real else None)
+    live = [r for r in rows if not r.get("gone") and r.get("v") != "retired"]
+    if real and not live:
+        lean = _lean(sp, d, st, now, rows)
+        if lean:
+            return lean
     return _cheap_side(_atp_totals(SP.page(sp, d, st, now, rows=rows, idle=idle)))
+
+
+def _lean(sp, d, st, now, rows):
+    """The page when no rule is under test in the Sandbox or Production (2026-11-11, Olu: very few words, everything
+    collapsible): the live cheap-side lanes as one row each, then ONE closed Retired block holding the retired lanes
+    and the retired rules, then the method. No empty Rules or Events sections, so the page never says "no rule"
+    while a lane runs. Returns "" when there is no live lane (the full page then stands)."""
+    import re
+    import chaos_build
+    import sandbox_build as B
+    import site_chrome as C
+    sec, ul, n_lanes = chaos_build.compact_section(KEY)
+    if not sec:
+        return ""
+    now = SP.as_utc(now)
+    ret = SP.retired_html(sp, d, now)
+    m = re.match(r'<section[^>]*><details[^>]*><summary>.*?</summary>(.*)</details></section>\s*$', ret, re.S)
+    inner_rules = m.group(1) if m else ret
+    n_rules = len(sp.get("retired") or ())
+    n = n_lanes + n_rules
+    retired = (f'<section id="retired" class="sp-section"><details class="fold sp-retired"><summary><h3>Retired</h3>'
+               f'<span class="sm mut">· {n_lanes} lane{"s" if n_lanes != 1 else ""} + {n_rules} rules · final records</span>'
+               f'</summary>{ul}{inner_rules}</details></section>') if n else ""
+    label, hint, inner, opened = sp["method"](d, rows, now)
+    ev_list = sp["events"](d, rows, now)
+    open_n = sum(1 for e in ev_list for p in e["picks"] if p["state"] == "open")
+    t = chaos_build.page_tiles(KEY)
+    rec = t["record"] or {}
+    roi = (f'<b>{rec["roi_fee"] * 100:+.1f}%</b>' if rec.get("roi_fee") is not None else '<b class="mut">—</b>')
+    tiles = ('<div class="tiles sp-tiles">'
+             f'<div class="tile"><b>{open_n}</b><span>open picks</span></div>'
+             f'<div class="tile"><b>{t["active"]}</b><span>active lane{"" if t["active"] == 1 else "s"}</span></div>'
+             f'<div class="tile"><b>{rec.get("won", 0)} of {rec.get("n", 0)}</b><span>won · held, paper</span></div>'
+             f'<div class="tile">{roi}<span>held ROI after fees · paper</span></div></div>')
+    body = (f'<div class="sp-head"><p class="eyebrow">Rules under test</p><h1>Tennis</h1>'
+            f'<p class="scope">Challenger cheap side · paper · All times Central</p></div>\n'
+            f'{tiles}\n{B.label_cells(sec)}\n{retired}\n{SP.method_html(label, hint, inner, opened)}\n<footer>{SP.FOOT}</footer>\n')
+    toc = (("cheap-side", "Lanes"),) + ((("retired", "Retired"),) if n else ()) + (("method", "Method"),)
+    html = C.document(sp["title"], sp["description"], sp["key"], toc, C.stamp(now), body,
+                      script_src="./site.js", scripts=("./tables.js",), sports=True)
+    return B.label_cells(html)
 
 
 def _lane_tiles():
