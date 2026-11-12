@@ -195020,6 +195020,7 @@
     "KXATPCHALLENGERMATCH-26NOV11GADALT": 0,
     "KXATPCHALLENGERMATCH-26NOV11GEENAG": 1,
     "KXATPCHALLENGERMATCH-26NOV11GILGIU": 0,
+    "KXATPCHALLENGERMATCH-26NOV11HEWSAN": 0,
     "KXATPCHALLENGERMATCH-26NOV11KOUFOR": 1,
     "KXATPCHALLENGERMATCH-26NOV11LANMCC": 0,
     "KXATPCHALLENGERMATCH-26NOV11MAEMON": 0,
@@ -195036,7 +195037,18 @@
     "KXATPCHALLENGERMATCH-26NOV11SAIMIS": 0,
     "KXATPCHALLENGERMATCH-26NOV11SAKSAM": 1,
     "KXATPCHALLENGERMATCH-26NOV11SCHDAN": 0,
-    "KXATPCHALLENGERMATCH-26NOV11SWEHOO": 0
+    "KXATPCHALLENGERMATCH-26NOV11SWEHOO": 0,
+    "KXATPCHALLENGERMATCH-26NOV12ANDBRA": 0,
+    "KXATPCHALLENGERMATCH-26NOV12BARZHE": 1,
+    "KXATPCHALLENGERMATCH-26NOV12BLAGIU": 0,
+    "KXATPCHALLENGERMATCH-26NOV12CARXIL": 0,
+    "KXATPCHALLENGERMATCH-26NOV12CREHEN": 0,
+    "KXATPCHALLENGERMATCH-26NOV12ECHPET": 0,
+    "KXATPCHALLENGERMATCH-26NOV12FELMAL": 1,
+    "KXATPCHALLENGERMATCH-26NOV12MARMAR2": 0,
+    "KXATPCHALLENGERMATCH-26NOV12MOEOUA": 1,
+    "KXATPCHALLENGERMATCH-26NOV12RIBCAN": 0,
+    "KXATPCHALLENGERMATCH-26NOV12SVRVIR": 0
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -199313,6 +199325,111 @@
      "unreachable": false,
      "variant": "t1h_hold",
      "won": true
+    },
+    {
+     "ask": {
+      "book": null,
+      "first_quotes": false,
+      "how": "print",
+      "last_trade": 0.27,
+      "printed": 56.71,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "cost": 0.2838,
+     "entry": 0.27,
+     "entry_i": 645,
+     "entry_ts": 1794481020,
+     "event": "KXATPCHALLENGERMATCH-26NOV12MOEOUA",
+     "exit": 0.0,
+     "exit_i": 888,
+     "exit_key": "hold",
+     "exit_ts": 1794495600,
+     "hours": 1,
+     "night": "2026-11-12",
+     "profit": -0.2838,
+     "reason": "settled",
+     "roi": -1.0,
+     "side": "yes",
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1794484620,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26NOV12MOEOUA-OUA",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": false
+    },
+    {
+     "ask": {
+      "book": null,
+      "first_quotes": false,
+      "how": "print",
+      "last_trade": 0.22,
+      "printed": 30.17,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "cost": 0.23201,
+     "entry": 0.22,
+     "entry_i": 690,
+     "entry_ts": 1794487860,
+     "event": "KXATPCHALLENGERMATCH-26NOV12FELMAL",
+     "exit": 0.0,
+     "exit_i": 943,
+     "exit_key": "hold",
+     "exit_ts": 1794503040,
+     "hours": 1,
+     "night": "2026-11-12",
+     "profit": -0.23201,
+     "reason": "settled",
+     "roi": -1.0,
+     "side": "yes",
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1794491460,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26NOV12FELMAL-MAL",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": false
+    },
+    {
+     "ask": {
+      "book": null,
+      "first_quotes": false,
+      "how": "print",
+      "last_trade": 0.29,
+      "printed": 2642.34,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "cost": 0.30441,
+     "entry": 0.29,
+     "entry_i": 642,
+     "entry_ts": 1794495240,
+     "event": "KXATPCHALLENGERMATCH-26NOV12BARZHE",
+     "exit": 0.0,
+     "exit_i": 797,
+     "exit_key": "hold",
+     "exit_ts": 1794504540,
+     "hours": 1,
+     "night": "2026-11-12",
+     "profit": -0.30441,
+     "reason": "settled",
+     "roi": -1.0,
+     "side": "yes",
+     "spread": 0.02,
+     "start_how": "price path",
+     "start_ts": 1794498840,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26NOV12BARZHE-BAR",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": false
     }
    ],
    "voided": {
@@ -224016,6 +224133,7 @@
     "KXATPCHALLENGERMATCH-26NOV11GADALT": 0,
     "KXATPCHALLENGERMATCH-26NOV11GEENAG": 0,
     "KXATPCHALLENGERMATCH-26NOV11GILGIU": 0,
+    "KXATPCHALLENGERMATCH-26NOV11HEWSAN": 0,
     "KXATPCHALLENGERMATCH-26NOV11KOUFOR": 0,
     "KXATPCHALLENGERMATCH-26NOV11LANMCC": 0,
     "KXATPCHALLENGERMATCH-26NOV11MAEMON": 0,
@@ -224032,7 +224150,18 @@
     "KXATPCHALLENGERMATCH-26NOV11SAIMIS": 0,
     "KXATPCHALLENGERMATCH-26NOV11SAKSAM": 0,
     "KXATPCHALLENGERMATCH-26NOV11SCHDAN": 0,
-    "KXATPCHALLENGERMATCH-26NOV11SWEHOO": 0
+    "KXATPCHALLENGERMATCH-26NOV11SWEHOO": 0,
+    "KXATPCHALLENGERMATCH-26NOV12ANDBRA": 0,
+    "KXATPCHALLENGERMATCH-26NOV12BARZHE": 0,
+    "KXATPCHALLENGERMATCH-26NOV12BLAGIU": 0,
+    "KXATPCHALLENGERMATCH-26NOV12CARXIL": 0,
+    "KXATPCHALLENGERMATCH-26NOV12CREHEN": 0,
+    "KXATPCHALLENGERMATCH-26NOV12ECHPET": 0,
+    "KXATPCHALLENGERMATCH-26NOV12FELMAL": 0,
+    "KXATPCHALLENGERMATCH-26NOV12MARMAR2": 0,
+    "KXATPCHALLENGERMATCH-26NOV12MOEOUA": 0,
+    "KXATPCHALLENGERMATCH-26NOV12RIBCAN": 0,
+    "KXATPCHALLENGERMATCH-26NOV12SVRVIR": 0
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -375620,12 +375749,8 @@
    "watch": false
   }
  },
- "last_run": "2026-11-12T10:00:29.249182+00:00",
+ "last_run": "2026-11-12T17:37:54.572388+00:00",
  "runs": [
-  {
-   "at": "2026-11-01T04:48:41.878145+00:00",
-   "new": {}
-  },
   {
    "at": "2026-11-01T09:00:15.979485+00:00",
    "new": {
@@ -375955,6 +376080,13 @@
   {
    "at": "2026-11-12T10:00:29.249182+00:00",
    "new": {}
+  },
+  {
+   "at": "2026-11-12T17:37:54.572388+00:00",
+   "new": {
+    "challenger_cheap_hold_base": 3,
+    "challenger_won_here_hold": 0
+   }
   }
  ],
  "version": "chaos-v2"
