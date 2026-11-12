@@ -187,7 +187,7 @@ ev = CB.events(d, CB.page_rows(d, {"pairs": {}}), RUN_1)
 eq(len([e for e in ev if "KXBTCD" in str(e)]), 1, "one Bitcoin event that day, holding every lane's pick")
 
 print("\nthe VPS reads serve all four lanes")
-eq(W.WINDOW_LANES["crypto_fav_band"], ("crypto_fav_band",) + NEW, "the crypto window names the four lanes")
+eq(W.WINDOW_LANES["crypto_fav_band"], ("crypto_fav_band",) + NEW + ("crypto_fav_band_v2",), "the crypto window names the four lanes and the Yes twin's v2 (2026-11-12)")
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

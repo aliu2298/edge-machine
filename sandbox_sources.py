@@ -1486,6 +1486,18 @@ SOURCES = {
              "outcomes, about six weeks. A rung also needs a two-sided quote, a spread of "
              "3c or less and 25 contracts on the ask: HYPE quoted one price on fourteen "
              "consecutive strikes, which is a stale book, not a signal."),
+    "crypto_fav_band_v2": dict(
+        label="Crypto favourite band v2 (Yes 0.70-0.80, 3 hours to the close)", kind="Rule",
+        connected=True, site="edge-machine", sports=["crypto_fav"],
+        baseline="favourite_population", favourite_side="a", one_per_coin_close=True,
+        note="PRE-REGISTERED 2026-11-12 (docs/prereg_crypto_fav_band_v2_2026-11-12.md), before it logged anything, on a FRESH record, Sandbox "
+             "paper only. The same rule as crypto_fav_band, unchanged: back the YES on a Kalshi coin-directional rung priced 0.70-0.80 "
+             "inclusive (a rung BELOW the coin's price), entered 2-3.5 hours before the 17:00 ET close, one bet per coin per close, the "
+             "LOWEST-priced rung in band, the same five coins, the same liquidity floor. Why it is back: the Crypto lanes review of "
+             "2026-11-12 replayed it on Kalshi's daily ladders since June 1 at +11.1% after fees on 134 bets (+11.1% on 63 in a window nobody "
+             "had looked at, +13.5% on 59, then -0.7% on 12), the same as the live No lane, and crypto_fav_band was retired 2026-11-03 "
+             "on a record read in its weakest stretch. A replay is a reason to test, not a result: this record starts at zero and is the "
+             "only one that counts. crypto_fav_band's own record (retired 2026-11-03) stays as its own line. Read at 30 settled, decide at 100."),
     "crypto_fav_band_below": dict(
         label="Crypto favourite band, below (No 0.70-0.80 on the rung above the price, 3 hours to the close)",
         kind="Rule", connected=True, site="edge-machine", sports=["crypto_fav"],
@@ -9143,6 +9155,11 @@ def _crypto_band_picks(name, sport, universe, now, side, band, hi_inclusive):
             for r in sorted(best.values(), key=lambda x: x["market_id"])]
 
 
+def fetch_crypto_fav_band_v2(sport, universe=None, now=None):
+    """crypto_fav_band's rule, unchanged, on a fresh record (2026-11-12): the cheapest Yes priced 0.70-0.80 (both ends inclusive) per coin."""
+    return _crypto_band_picks("crypto_fav_band_v2", sport, universe, now, "a", CRYPTO_FAV_BAND, True)
+
+
 def fetch_crypto_fav_band_below(sport, universe=None, now=None):
     """The cheapest No priced 0.70-0.80 (both ends inclusive) per coin."""
     return _crypto_band_picks("crypto_fav_band_below", sport, universe, now, "b", CRYPTO_FAV_BAND, True)
@@ -11453,6 +11470,7 @@ CHALLENGERS = {
     "btts_form_l10_fade": fetch_btts_form_l10_fade,
     "mls_away_band_fade": fetch_mls_away_band_fade,
     "crypto_fav_band": fetch_crypto_fav_band,
+    "crypto_fav_band_v2": fetch_crypto_fav_band_v2,
     "crypto_fav_band_below": fetch_crypto_fav_band_below,
     "crypto_fav_band_60": fetch_crypto_fav_band_60,
     "crypto_fav_band_below_60": fetch_crypto_fav_band_below_60,

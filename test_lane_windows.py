@@ -98,7 +98,7 @@ check("all five entered: no read is asked for",
       [k for w, k in W.due(t, allc, [], []) if w["lane"] == "crypto_fav_band"], [])
 check("all five entered in the Yes lane only: the No and 0.60-0.70 lanes still get read 2",
       [k for w, k in W.due(t, yes_only, [], []) if w["lane"] == "crypto_fav_band"], [2])
-check("the crypto window serves four sibling lanes", len(LANES4), 4)
+check("the crypto window serves four sibling lanes and the Yes twin's v2 (2026-11-12)", len(LANES4), 5)
 check("an entry on another day's close does not count",
       [k for w, k in W.due(t, {"quotes": [dict(q, market_id=q["market_id"].replace("1317", "1217"))
                                            for q in allc["quotes"]]}, [], []) if w["lane"] == "crypto_fav_band"], [2])
