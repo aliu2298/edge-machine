@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-12T03:07Z",
+ "generated": "2026-11-12T04:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -398,7 +398,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.9
+    "w": 0.92
    },
    {
     "g": 0.3284,
@@ -410,7 +410,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.06
+    "w": 1.08
    },
    {
     "g": 0.2715,
@@ -422,7 +422,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.03
+    "w": 1.05
    },
    {
     "g": 0.3286,
@@ -434,7 +434,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.11
+    "w": 1.13
    },
    {
     "g": -1.0,
@@ -446,7 +446,7 @@
     "side": "no",
     "src": "fills",
     "st": "lost",
-    "w": 1.13
+    "w": 1.15
    },
    {
     "g": 0.3855,
@@ -458,7 +458,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.1
+    "w": 1.11
    },
    {
     "g": 0.3333,
@@ -470,7 +470,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 1.02
    },
    {
     "g": 0.3231,
@@ -482,7 +482,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.03
+    "w": 1.05
    },
    {
     "g": 0.3382,
@@ -494,7 +494,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.08
+    "w": 1.1
    },
    {
     "g": 0.3286,
@@ -506,7 +506,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.11
+    "w": 1.13
    },
    {
     "g": 0.3333,
@@ -518,7 +518,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 1.02
    },
    {
     "g": 0.4516,
@@ -530,7 +530,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.98
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -542,7 +542,7 @@
     "side": "no",
     "src": "fills",
     "st": "lost",
-    "w": 1.11
+    "w": 1.13
    },
    {
     "g": 0.3333,
@@ -554,7 +554,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 1.02
    },
    {
     "g": 0.3333,
@@ -566,7 +566,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.05
+    "w": 1.06
    },
    {
     "g": 0.3333,
@@ -578,7 +578,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.05
+    "w": 1.06
    },
    {
     "g": -1.0,
@@ -590,7 +590,7 @@
     "side": "no",
     "src": "fills",
     "st": "lost",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": 0.3385,
@@ -602,7 +602,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.03
+    "w": 1.05
    },
    {
     "g": 0.3387,
@@ -614,7 +614,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.98
+    "w": 1.0
    },
    {
     "g": 0.3333,
@@ -626,7 +626,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 1.02
    },
    {
     "g": 0.3333,
@@ -638,7 +638,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.05
+    "w": 1.06
    },
    {
     "g": 0.3393,
@@ -650,7 +650,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.89
+    "w": 0.9
    },
    {
     "g": 0.3385,
@@ -662,7 +662,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.03
+    "w": 1.05
    },
    {
     "g": 0.3387,
@@ -674,7 +674,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.98
+    "w": 1.0
    },
    {
     "g": 0.3385,
@@ -686,7 +686,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.03
+    "w": 1.05
    },
    {
     "g": 0.3333,
@@ -698,7 +698,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.05
+    "w": 1.06
    },
    {
     "g": -1.0,
@@ -710,7 +710,7 @@
     "side": "no",
     "src": "fills",
     "st": "lost",
-    "w": 1.02
+    "w": 1.03
    },
    {
     "g": 0.3385,
@@ -722,7 +722,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.03
+    "w": 1.05
    },
    {
     "g": 0.3448,
@@ -734,7 +734,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.92
+    "w": 0.94
    },
    {
     "g": 0.3385,
@@ -746,7 +746,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.03
+    "w": 1.05
    },
    {
     "g": 0.3385,
@@ -758,7 +758,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.03
+    "w": 1.05
    },
    {
     "g": 0.5439,
@@ -770,7 +770,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.9
+    "w": 0.92
    },
    {
     "g": 0.5333,
@@ -782,7 +782,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.97
    },
    {
     "g": 0.5357,
@@ -794,7 +794,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.89
+    "w": 0.9
    },
    {
     "g": -1.0,
@@ -806,7 +806,7 @@
     "side": "no",
     "src": "fills",
     "st": "lost",
-    "w": 0.9
+    "w": 0.92
    },
    {
     "g": -1.0,
@@ -818,7 +818,7 @@
     "side": "no",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.97
    },
    {
     "g": -1.0,
@@ -830,7 +830,7 @@
     "side": "no",
     "src": "fills",
     "st": "lost",
-    "w": 0.89
+    "w": 0.9
    },
    {
     "g": -1.0,
@@ -842,7 +842,7 @@
     "side": "no",
     "src": "fills",
     "st": "lost",
-    "w": 0.86
+    "w": 0.87
    },
    {
     "g": 0.5306,
@@ -854,7 +854,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 1.56
+    "w": 1.58
    },
    {
     "g": 0.549,
@@ -866,7 +866,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.81
+    "w": 0.82
    },
    {
     "g": -1.0,
@@ -878,7 +878,7 @@
     "side": "no",
     "src": "fills",
     "st": "lost",
-    "w": 0.97
+    "w": 0.98
    },
    {
     "g": 0.5357,
@@ -890,7 +890,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.89
+    "w": 0.9
    },
    {
     "g": 0.5472,
@@ -902,7 +902,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.84
+    "w": 0.85
    },
    {
     "g": 0.5357,
@@ -914,7 +914,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.89
+    "w": 0.9
    },
    {
     "g": 0.5333,
@@ -926,7 +926,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.97
    },
    {
     "g": 0.5273,
@@ -938,7 +938,7 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.87
+    "w": 0.89
    },
    {
     "g": -1.0,
@@ -950,7 +950,7 @@
     "side": "no",
     "src": "fills",
     "st": "lost",
-    "w": 0.89
+    "w": 0.9
    },
    {
     "g": 0.5333,
@@ -962,19 +962,79 @@
     "side": "no",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.97
    },
    {
-    "g": null,
+    "g": 0.5345,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV11DENMEM-DEN6TO10",
+    "ko": "2026-11-12T01:00",
+    "legs": "sold",
+    "r": 0.5345,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 0.94
+   },
+   {
+    "g": 0.5273,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV11LALMIL-LAL11TO15",
+    "ko": "2026-11-12T01:00",
+    "legs": "sold",
+    "r": 0.5273,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 0.89
+   },
+   {
+    "g": 0.54,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV11LALMIL-LAL16TO25",
     "ko": "2026-11-12T01:00",
-    "legs": "",
-    "r": null,
+    "legs": "sold",
+    "r": 0.54,
     "side": "no",
     "src": "fills",
-    "st": "open",
-    "w": 1.59
+    "st": "won",
+    "w": 1.61
+   },
+   {
+    "g": 0.537,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV11LALMIL-LAL26PLUS",
+    "ko": "2026-11-12T01:00",
+    "legs": "sold",
+    "r": 0.537,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 0.87
+   },
+   {
+    "g": 0.5263,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV11LALMIL-LAL6TO10",
+    "ko": "2026-11-12T01:00",
+    "legs": "sold",
+    "r": 0.5263,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 0.92
+   },
+   {
+    "g": 0.5357,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV11SASCHI-SAS11TO15",
+    "ko": "2026-11-12T01:00",
+    "legs": "sold",
+    "r": 0.5357,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 0.9
    }
   ],
   "nba_wm_yes": [
@@ -2323,75 +2383,75 @@
     "w": 1.0
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": -1.0,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV11BKNNOP-BKN1TO5",
     "ko": "2026-11-12T01:00",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 1.02
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": 0.0,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV11BKNNOP-BKN6TO10",
     "ko": "2026-11-12T01:00",
     "legs": "2x",
-    "r": null,
+    "r": -0.0581,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "flat",
     "w": 1.0
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": -1.0,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV11BKNNOP-NOP1TO5",
     "ko": "2026-11-12T01:00",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 0.88
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": 1.25,
+    "hold_r": 4.8997,
     "id": "KXNBAWINMARGIN-26NOV11DENMEM-DEN1TO5",
     "ko": "2026-11-12T01:00",
-    "legs": "",
-    "r": null,
+    "legs": "2x+2.5x",
+    "r": 1.1239,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "won",
     "w": 1.0
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": -1.0,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV11DENMEM-MEM1TO5",
     "ko": "2026-11-12T01:00",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 1.02
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": -1.0,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV11DENMEM-MEM6TO10",
     "ko": "2026-11-12T01:00",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 1.03
    },
    {
@@ -2423,7 +2483,7 @@
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV11ORLUTA-ORL6TO10",
     "ko": "2026-11-12T02:00",
-    "legs": "",
+    "legs": "2x",
     "r": null,
     "side": "yes",
     "src": "fills",
@@ -2443,15 +2503,15 @@
     "w": 1.03
    },
    {
-    "g": null,
+    "g": 1.303,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV11ORLUTA-UTA1TO5",
     "ko": "2026-11-12T02:00",
-    "legs": "2x",
-    "r": null,
+    "legs": "2x+2.5x",
+    "r": 1.1671,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "won",
     "w": 1.03
    },
    {
@@ -2495,7 +2555,7 @@
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV11OKCPOR-OKC6TO10",
     "ko": "2026-11-12T03:00",
-    "legs": "",
+    "legs": "2x",
     "r": null,
     "side": "yes",
     "src": "fills",
