@@ -96,6 +96,7 @@ def checks():
     """
     return (
         ("ere_draw", S.ERE_DRAW_SERIES, "three_way"),
+        ("ere_draw_home", S.ERE_DRAW_SERIES, "three_way"),
         ("ere_o15", S.ERE_O15_TOTAL, "total"),
         ("ere_o15", S.ERE_O15_GAME, "three_way"),
         # bund_o35 and bund_o35_fav retired 2026-10-24: nothing reads their series now.
