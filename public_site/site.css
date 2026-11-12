@@ -2142,3 +2142,25 @@ details.lane[open] > summary { background: var(--card); }
   .tiles.tiles3 .tile span { font-size: 12px; }
 }
 .tiles.tiles3 > .tile:last-child:nth-child(odd) { grid-column: auto; }
+
+/* Daily Markets (2026-11-11): one tile per section, then one closed fold per section. */
+.tiles.tiles5 { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+.tiles.tiles5 a.tile { color: inherit; text-decoration: none; display: block; }
+.tiles.tiles5 a.tile:hover { border-color: var(--acc); }
+.tiles.tiles5 .tile b { font-size: 26px; }
+.tiles.tiles5 .tile span.sub { display: block; margin-top: 2px; }
+.tiles.tiles5 > .tile:last-child:nth-child(odd) { grid-column: auto; }
+@media (max-width: 900px) { .tiles.tiles5 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) {
+  .tiles.tiles5 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tiles.tiles5 > .tile:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .tiles.tiles5 .tile { padding: 12px 12px; }
+  .tiles.tiles5 .tile b { font-size: 22px; }
+}
+details.dm-sec { margin-top: 12px; }
+details.dm-sec > summary { flex-wrap: wrap; }
+details.dm-sec > summary .sm { overflow-wrap: anywhere; }
+details.dm-sec .dm-line { margin: 4px 0 10px; }
+details.dm-done { margin: 4px 0 8px; }
+details.dm-weekly { margin: 12px 0 0; }
+details.dm-done > summary .sp-count { background: none; padding: 0; margin: 0; border: 0; font: inherit; color: inherit; min-width: 0; }

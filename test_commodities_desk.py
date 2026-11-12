@@ -194,8 +194,9 @@ published = os.path.join(ROOT, "public_site", "commodities.html")
 ok(os.path.exists(published) and 'url=./daily_markets.html#commodities' in open(published, encoding="utf-8").read(),
    "public_site/commodities.html forwards to its section on Daily Markets (2026-11-08)")
 merged = open(os.path.join(ROOT, "public_site", "daily_markets.html"), encoding="utf-8").read()
-ok('data-sp-group="commodities"' in merged and 'class="sp-head"' in merged.split('data-sp-group="commodities"')[1],
-   "and that section is built on the template")
+ok('data-sp-group="commodities"' in merged and 'data-sp-role="rules"' in merged.split('data-sp-group="commodities"')[1]
+   and 'class="sp-filters"' in merged.split('data-sp-group="commodities"')[1],
+   "and that section is built on the template (its rules, filters and events; the title block moved into the fold's line 2026-11-11)")
 sitemap = open(os.path.join(ROOT, "public_site", "sitemap.txt"), encoding="utf-8").read()
 ok("edge-machine/daily_markets.html" in sitemap, "the sitemap lists the Daily Markets page")
 
