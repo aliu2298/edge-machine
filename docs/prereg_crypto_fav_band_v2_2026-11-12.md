@@ -1,6 +1,6 @@
 # Crypto favourite band v2 (`crypto_fav_band_v2`) — pre-registered 2026-11-12
 
-Status: SANDBOX PAPER ONLY. Not in Production, no feed, no bot change, no stake. Frozen before the first entry. Olu's decision of 2026-11-12.
+Status: SANDBOX PAPER ONLY. Not in Production, no feed, no follower change, no stake. Frozen before the first entry. Olu's decision of 2026-11-12.
 
 ## What it is
 The Yes twin of the live crypto lane, **the same rule as `crypto_fav_band`, unchanged**, on a **fresh record**:
