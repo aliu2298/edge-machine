@@ -143,8 +143,8 @@
    "waiver": {
     "by": "Olu",
     "on": "2026-11-12",
-    "waives": "evidence test (both halves up; score of 2 or better). Honest return is positive: +8.2% on 64 (second half \u22122.2%, score 1.18).",
-    "why": "$1 trial; earlier live run Oct 9\u2013Nov 8 was 21\u20134 +11.5%; stakes rise to $100 only once proven"
+    "waives": "evidence test (both halves up; score of 2 or better). Honest return is positive: +8.2% on 64 (second half −2.2%, score 1.18).",
+    "why": "$1 trial; earlier live run Oct 9–Nov 8 was 21–4 +11.5%; stakes rise to $100 only once proven"
    }
   },
   "corners_ucl_fade|soccer_corners": {
@@ -612,7 +612,7 @@
     "without_best": null
    },
    "honest_positive": true,
-   "label": "Bundesliga O+D\u2212 v O+D\u2212 \u00b7 over 3.5",
+   "label": "Bundesliga O+D− v O+D− · over 3.5",
    "note_touch": {
     "n": 4,
     "roi": 0.2872
@@ -645,7 +645,7 @@
     "without_best": null
    },
    "honest_positive": true,
-   "label": "La Liga O\u2212D\u2212 v O\u2212D+ \u00b7 under 3.5",
+   "label": "La Liga O−D− v O−D+ · under 3.5",
    "note_touch": {
     "n": 2,
     "roi": 0.2707
@@ -681,7 +681,7 @@
     "without_best": 0.6223
    },
    "honest_positive": true,
-   "label": "EPL O\u2212D\u2212 v an O+ opponent \u00b7 under 2.5",
+   "label": "EPL O−D− v an O+ opponent · under 2.5",
    "note_touch": {
     "n": 10,
     "roi": 0.7532
@@ -717,7 +717,7 @@
     "without_best": 0.1846
    },
    "honest_positive": true,
-   "label": "UCL either team O+D\u2212 \u00b7 over 3.5",
+   "label": "UCL either team O+D− · over 3.5",
    "note_touch": {
     "n": 17,
     "roi": 0.3092
@@ -750,7 +750,7 @@
     "without_best": null
    },
    "honest_positive": false,
-   "label": "Serie A O+D\u2212 v O+D+ \u00b7 over 2.5",
+   "label": "Serie A O+D− v O+D+ · over 2.5",
    "note_touch": {
     "n": 4,
     "roi": -0.1689
@@ -783,7 +783,7 @@
     "without_best": null
    },
    "honest_positive": true,
-   "label": "Serie A O\u2212D\u2212 v O+D\u2212 \u00b7 over 2.5",
+   "label": "Serie A O−D− v O+D− · over 2.5",
    "note_touch": {
     "n": 6,
     "roi": 0.6077
@@ -816,7 +816,7 @@
     "without_best": null
    },
    "honest_positive": true,
-   "label": "T1 matches \u00b7 home team 2+ goals",
+   "label": "T1 matches · home team 2+ goals",
    "note_touch": {
     "n": 2,
     "roi": 0.4751
@@ -849,7 +849,7 @@
     "without_best": null
    },
    "honest_positive": false,
-   "label": "T1 matches \u00b7 match over 3.5 goals",
+   "label": "T1 matches · match over 3.5 goals",
    "note_touch": {
     "n": 2,
     "roi": -0.1763
@@ -921,7 +921,7 @@
     "without_best": 0.1269
    },
    "honest_positive": true,
-   "label": "O+D+ v O+D+ \u00b7 team 3+ goals \u00b7 NO",
+   "label": "O+D+ v O+D+ · team 3+ goals · NO",
    "note_touch": {
     "n": 12,
     "roi": 0.1767
@@ -1069,7 +1069,53 @@
     "roi": 0.0633
    },
    "rules": "honest-v1",
-   "waiver": null
+   "waiver": {
+    "by": "Olu",
+    "on": "2026-11-12",
+    "waives": "evidence test (own record: 10+ outcomes, score of 2 or better). Honest return is positive: +7.7% on 32 (both halves up, score 0.48). Olu accepts the replay as the evidence: 566 honest fills, +16.0%, score 4.2, both halves up (docs/top5_dip_review_2026-11-12.md).",
+    "why": "back in Production at the default stake on a fresh live record; same rule, engine, held-fill rule and 55% bid; review at 100 honest fills from Nov 20"
+   }
+  },
+  "top5_goalless_dip_live": {
+   "checked_at": "2026-11-12T18:49:40+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": true,
+    "both halves up": true,
+    "t of 2+": false,
+    "up without its best outcome": true
+   },
+   "evidence": false,
+   "exit": "sell",
+   "honest": {
+    "confirmed": 32,
+    "halves": [
+     0.1352,
+     0.0581
+    ],
+    "n": 32,
+    "outcomes": 7,
+    "roi": 0.0773,
+    "t": 0.48,
+    "without_best": 0.0014
+   },
+   "honest_positive": true,
+   "label": "Top-5 goalless dip (live)",
+   "note_touch": {
+    "n": 32,
+    "roi": 0.0773
+   },
+   "page": {
+    "n": 32,
+    "roi": 0.0633
+   },
+   "rules": "honest-v1",
+   "waiver": {
+    "by": "Olu",
+    "on": "2026-11-12",
+    "waives": "evidence test (own record: 10+ outcomes, score of 2 or better). Honest return is positive: +7.7% on 32 (both halves up, score 0.48). Olu accepts the replay as the evidence: 566 honest fills, +16.0%, score 4.2, both halves up (docs/top5_dip_review_2026-11-12.md).",
+    "why": "back in Production at the default stake on a fresh live record; same rule, engine, held-fill rule and 55% bid; review at 100 honest fills from Nov 20"
+   }
   },
   "u35_low_scoring|soccer_u35_cup": {
    "checked_at": "2026-11-12T06:43:20+00:00",

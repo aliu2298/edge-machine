@@ -29,6 +29,8 @@ OWN_PAIRS = {
     "o35_cheap_no_wave|soccer_u35": ("o35_cheap_no", None), "top5_goalless_dip_live|soccer_o15": ("top5_dip", None),
     "arg_goalless_dip_live|soccer_o05": ("arg_dip", None),
 }
+# Own-state lanes relaunched on a FRESH live record (Olu): lane -> the date the new record starts. The rows before it are the earlier run.
+OWN_FROM = {"top5_dip": "2026-11-12"}
 SLATE_RE = re.compile(r"-(\d{2})([A-Z]{3})(\d{2})[A-Z]{6}-")
 MONTHS = {m: i + 1 for i, m in enumerate("JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC".split())}
 
@@ -111,6 +113,8 @@ def own_rows(live_blob, key, v3_since=None, v4_since=None):
         return [r for r in rows if v3_since and slate(r) >= v3_since and not (v4_since and slate(r) >= v4_since)]
     if ver == "v2":
         return [r for r in rows if not v3_since or slate(r) < v3_since]
+    if lane in OWN_FROM:                 # relaunched on a fresh record: the earlier run is history (production_overview.build)
+        return [r for r in rows if str(r.get("ko") or "")[:10] >= OWN_FROM[lane]]
     return list(rows)
 
 
@@ -366,7 +370,7 @@ def gap_section(rows, paper_by_pair, in_feed=None, feed_from=None, horizon=None)
 
 # Non-soccer pairs whose live fills stay listed after the pair went back to the Sandbox (2026-11-08: the commodities favourite band).
 HISTORY_SPORTS = ("commodities_fav",)
-ENDED_LANES = {"o35_cheap_no": "Nov 6", "top5_dip": "Nov 8"}      # own-state lanes back in the Sandbox: their live fills stay as history
+ENDED_LANES = {"o35_cheap_no": "Nov 6"}      # own-state lanes back in the Sandbox: their live fills stay as history
 
 
 def pulled_table(live_blob, name):
@@ -423,14 +427,22 @@ def lanes_table(live_blob):
     for lane, rows in live_blob["lanes"].items():
         if not rows or not current_schema(rows):
             continue
-        rec = own_summary(rows)
-        roi = "—" if rec["roi"] is None else f'{rec["roi"] * 100:+.1f}%'
-        name = LANE_NAMES.get(lane, lane) + (f" · back in the Sandbox {ENDED_LANES[lane]}" if lane in ENDED_LANES else "")
-        body += (f'<tr><td>{esc(name)}</td><td class="num"><b>{wfl(rec)}</b></td><td class="num">{roi}</td></tr>')
-        notes.append(f"<li><b>{esc(name)}</b> · {esc(own_detail(rec))}</li>")
+        parts = [(LANE_NAMES.get(lane, lane) + (f" · back in the Sandbox {ENDED_LANES[lane]}" if lane in ENDED_LANES else ""), rows)]
+        if lane in OWN_FROM:               # a fresh record from OWN_FROM: the earlier run is its own line
+            early = [r for r in rows if str(r.get("ko") or "")[:10] < OWN_FROM[lane]]
+            parts = [(LANE_NAMES.get(lane, lane) + " · earlier run", early),
+                     (LANE_NAMES.get(lane, lane) + f" · from {dt.date.fromisoformat(OWN_FROM[lane]):%b} {dt.date.fromisoformat(OWN_FROM[lane]).day}",
+                      [r for r in rows if str(r.get("ko") or "")[:10] >= OWN_FROM[lane]])]
+        for name, part in parts:
+            if not part:
+                continue
+            rec = own_summary(part)
+            roi = "—" if rec["roi"] is None else f'{rec["roi"] * 100:+.1f}%'
+            body += (f'<tr><td>{esc(name)}</td><td class="num"><b>{wfl(rec)}</b></td><td class="num">{roi}</td></tr>')
+            notes.append(f"<li><b>{esc(name)}</b> · {esc(own_detail(rec))}</li>")
     if not body:
         return ""
-    return ('<details class="fold"><summary>Own-state lanes, live fills (NBA win margin; over 3.5 cheap NO and the top-5 dip stay as history)</summary>'
+    return ('<details class="fold"><summary>Own-state lanes, live fills (NBA win margin, the top-5 dip; over 3.5 cheap NO stays as history)</summary>'
             '<div class="tbl"><table><thead><tr><th>Lane</th><th class="num">Live W–F–L</th><th class="num">ROI</th></tr></thead>'
             f'<tbody>{body}</tbody></table></div><p class="sm mut">{esc(FLAT_NOTE)}.</p><ul class="sm">{"".join(notes)}</ul>'
             f'<p class="sm mut">{esc(live_blob.get("lane_note") or "")}</p></details>')

@@ -590,10 +590,16 @@ def top5_live_row(live_ledger, now):
         ("Leagues", "Premier League, La Liga, Serie A, Bundesliga, Ligue 1, Champions League"),
         ("Record", f"Production from {TP.MOVED_ON}, fresh: the paper record that follows the follower's own decisions. "
                    "The research record is the Sandbox row Top-5 goalless dip."),
+        ("History", f"First Production run {TP.FIRST_RUN[0]} to {TP.FIRST_RUN[1]} (12 live fills, -9.4%), back in the Sandbox, and back in Production {TP.MOVED_ON} "
+                    "(Olu) on the replay evidence: same rule, no change to the engine, the held-fill rule or the 55% bid."),
+        ("Review", "Pre-registered: read once at 100 honest fills counted from Nov 20 2026. Retire if the honest return on those fills is zero or below. "
+                   "Keep if above zero (a score of 2 is not required at 100). Also record the share of fills where the price did not fall a further 5c "
+                   "within ten minutes: under 15% means the source of the profit has gone and the lane is reviewed again. "
+                   "No league or price band is dropped or added before that read."),
     ])
     if TP.ENDED_ON:                          # back in the Sandbox: its own closed row, the live run as history
         details = params_html([
-            ("Run", f"Traded live on Kalshi from {TP.MOVED_ON} to {TP.ENDED_ON} in a small fixed size; the feed names no match since {TP.ENDED_ON}, "
+            ("Run", f"Traded live on Kalshi from {TP.FIRST_RUN[0]} to {TP.ENDED_ON} in a small fixed size; the feed names no match since {TP.ENDED_ON}, "
                     "so no new bid is opened. A position already held settles on its own."),
             ("Record", "The paper record that followed the follower's own decisions during the run, per counted fill; the research record is the Sandbox row Top-5 goalless dip, which keeps running."),
         ])

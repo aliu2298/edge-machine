@@ -8,6 +8,8 @@ import tempfile
 import arg_dip as A
 import chaos_replay as C
 import top5_dip_live as L
+import top5_dip_production as _TD
+_TD.MOVED_ON = "2026-11-05"      # the fixtures sit in the first run; the lane was re-promoted 2026-11-12 on a fresh record
 
 L.PATH = os.path.join(tempfile.mkdtemp(), "top5_dip_live_test.json")   # hermetic: never the real ledger, which now holds real entries on the same dates
 FAILS = []

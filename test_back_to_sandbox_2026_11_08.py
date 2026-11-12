@@ -20,9 +20,8 @@ def check(name, ok):
 K = "commod_fav_band|commodities_fav"
 check("commodities band: its Nov 8 removal stands as the record it left on, and it is re-listed 2026-11-12 (later), so it is a new promotion",
       T.PAIR_REMOVALS[K] == dict(removed_on="2026-11-08", keep_record=True) and T.PAIR_OVERRIDES[K]["moved_on"] == "2026-11-12")
-dip = TD.feed()          # what its workflow writes from now on (the committed file is restamped by the heartbeat and rewritten on the next run)
-check("top-5 dip: its feed is valid and names no match", dip["lane"] == TD.LANE and dip["leads"] == [] and dip["errors"] == [] and dip["ended_on"] == "2026-11-08")
-check("top-5 dip: no Production pair", TD.pairs() == {})
+check("top-5 dip: back in the Sandbox 2026-11-08 and back in Production 2026-11-12 (test_top5_dip_production.py), its first run kept as history",
+      TD.ENDED_ON == "" and TD.FIRST_RUN == ("2026-11-05", "2026-11-08") and TD.MOVED_ON == "2026-11-12")
 
 blob = dict(generated="x", pairs={}, pulled={K: [dict(id="q1", ko="2026-11-02T18:00", side="yes", st="won", w=1.0, r=0.3),
                                                     dict(id="q2", ko="2026-11-03T18:00", side="yes", st="lost", w=1.0, r=-1.0)]},
@@ -31,7 +30,8 @@ blob = dict(generated="x", pairs={}, pulled={K: [dict(id="q1", ko="2026-11-02T18
 html = PL.pulled_table(blob, lambda p: "Commodities favourite band")
 check("commodities band: its live fills stay listed as history", "Commodities favourite band" in html and "1–1" in html)
 lanes = PL.lanes_table(blob)
-check("the two ended own-state lanes say when they went back", "back in the Sandbox Nov 8" in lanes and "back in the Sandbox Nov 6" in lanes)
+check("the cheap NO says when it went back; the top-5 dip's first run is its own earlier-run line, its fresh record from Nov 12",
+      "back in the Sandbox Nov 6" in lanes and "Top-5 goalless dip · earlier run" in lanes and "Top-5 goalless dip · from Nov 12" not in lanes)
 check("public copy: no dollar amount", "$" not in html and "$" not in lanes)
 
 raise SystemExit(1 if fails else print("PASS back to the Sandbox 2026-11-08") or 0)

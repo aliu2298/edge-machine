@@ -26,8 +26,9 @@ PATH = os.path.join(ROOT, "data", "production_top5_dip_leads.json")
 NAME = "Top-5 goalless dip (live)"
 LANE = L.LANE
 VERSION = L.VERSION
-MOVED_ON = "2026-11-05"
-ENDED_ON = "2026-11-08"          # Olu: back to the Sandbox. The feed lists no match, so the follower opens no new bid; what it holds is managed on its own
+FIRST_RUN = ("2026-11-05", "2026-11-08")   # its first Production run (12 live fills, -9.4%): back in the Sandbox 2026-11-08, stays on the page as history
+MOVED_ON = "2026-11-12"          # Olu: back in Production, live at the default stake, on a FRESH record (the Production record counts matchdays from here)
+ENDED_ON = ""                    # empty = running. Set to a date to end it: the feed then lists no match, so the follower opens no new bid; what it holds settles on its own
 FRACTION = L.HEADLINE
 STAKE_USD = 1.0
 LOOKAHEAD_H = 30
@@ -75,7 +76,7 @@ def feed(now=None, fetch=D.get):
 # A pair on the public Production page like the other own-ledger lanes: its record is the paper lane that follows the executor
 # (top5_dip_live), counted from the first matchday a decision snapshot exists; its upcoming list is the feed's own leads. Read-only.
 SPORT = "soccer_o15"       # the Yes of the league over 1.5 contract: the feed already names this claim (FEED_BETS)
-PROMOTED = "2026-11-05T00:00:00+00:00"
+PROMOTED = "2026-11-12T00:00:00+00:00"
 HEALTHY_HOURS = 3
 
 

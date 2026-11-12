@@ -63,9 +63,9 @@ for key in TR.RULES:
     where = "retired" if key in TR.RETIRED else "rules"
     check(f"team rule {key}: one row, in {where}", (src in in_retired) if where == "retired" else (src in srcs), True)
 check("the Production label and team rules are Production rows", {RP.PAIRS[k][0] for k in RP.PAIRS} | {TRP.PAIRS[k][0] for k in TRP.PAIRS} <= prod, True)
-check("the in-play lanes: the cheap NO (back in the Sandbox 2026-11-06) and the top-5 dip's live lane (back 2026-11-08) are Sandbox rows, with their ended live runs, both dips' paper lanes in the Sandbox",
+check("the in-play lanes: the cheap NO (back in the Sandbox 2026-11-06) is a Sandbox row with its ended live run; the top-5 dip's live lane is a Production row again (2026-11-12); both dips' paper lanes are in the Sandbox",
       ("o35_cheap_no_wave" in prod, "top5_goalless_dip_live" in prod,
-       {"arg_goalless_dip", "top5_goalless_dip", "o35_cheap_no_wave", "o35_cheap_no_v5", "o35_cheap_no_wave_live", "top5_dip_live_run"} <= srcs - prod), (False, False, True))
+       {"arg_goalless_dip", "top5_goalless_dip", "o35_cheap_no_wave", "o35_cheap_no_v5", "o35_cheap_no_wave_live"} <= srcs - prod), (False, True, True))
 check("the Eredivisie draw v1 is retired (2026-11-12): a Retired row, no longer a live one", ("ere_draw" in srcs, "ere_draw" in in_retired), (False, True))
 check("La Liga under 1.5 v1 is retired (2026-11-12): a Retired row, no longer a live one", ("liga_u15_dog" in srcs, "liga_u15_dog" in in_retired), (False, True))
 check("contenders and Argentina & Brasileirao over 1.5 are in the Retired fold",
