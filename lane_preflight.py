@@ -102,8 +102,9 @@ def checks():
         # bund_o35 and bund_o35_fav retired 2026-10-24: nothing reads their series now.
         ("liga_btts_even", S.LIGA_BTTS, "btts"),
         ("liga_btts_even", S.LIGA_GAME, "three_way"),
-        ("liga_u15_dog", S.LIGA_TOTAL, "total"),
-        ("liga_u15_dog", S.LIGA_GAME, "three_way"),
+        # liga_u15_dog (v1) retired 2026-11-12: version 2 reads the same two series.
+        ("liga_u15_dog_24h", S.LIGA_TOTAL, "total"),
+        ("liga_u15_dog_24h", S.LIGA_GAME, "three_way"),
         # turkey_o25_dog and turkey_btts_dog retired 2026-11-04: nothing reads their series now.
         ("mls_away_band", S.MLS_GAME, "three_way"),
         ("mls_fade_home", S.MLS_GAME, "three_way"),
