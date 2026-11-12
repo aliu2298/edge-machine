@@ -124,8 +124,8 @@ check("the next read fetches trades for the open word only, with min_ts (increme
 print("\nthe page card")
 html = culture_build.build(dip_state=st)
 check("on the Culture page, the first lane row, closed", (html.find('id="dip-hold-row"') > html.find('id="lanes"') > 0,
-      html.find('id="dip-hold-row"') < html.find('id="album-cheap-rungs-row"'), '<details class="sp-rule is-early" id="dip-hold-row"' in html), (True, True, True))
-card = html[html.find('id="dip-hold-row"'):html.find('id="album-cheap-rungs-row"')]
+      html.find('id="dip-hold-row"') < html.find('id="rt-model-row"'), '<details class="sp-rule is-early" id="dip-hold-row"' in html), (True, True, True))
+card = html[html.find('id="dip-hold-row"'):html.find('id="rt-model-row"')]
 check("labelled, rule in a closed fold, 10c headline then 15c comparison", ("Trump mentions · 10c dip bid, hold" in card, card.find("10c bid · hold") < card.find("15c bid · hold"),
       '<details class="fold sm" id="dip-rule">' in card), (True, True, True))
 check("the research is a collapsed fold marked in-sample", ('id="dip-research"' in card, "<details class=\"fold sm\" id=\"dip-research\">" in card, "in-sample" in card), (True, True, True))

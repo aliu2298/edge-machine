@@ -413,13 +413,12 @@ check("settled NO: won, HOLD and SPLIT graded", (n0["payout"], n0["roi_held"] > 
       (1.0, True, True, 1))
 nh = KB.build(split_state=st, wide_state=ws, month_state=ms_, month_wide_state=ms_, album_state=als, album_no_state=ns)
 nt = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", nh))
-check("the page: cheap YES and cheap NO are separate lane rows; the note, then each card",
-      ("Album ladders tested too confident: both tails won more than priced." in nt,
-       "Album · cheap YES" in nt, "Album · cheap NO" in nt,
-       nh.find('id="album-cheap-rungs-row"') < nh.find('id="album-cheap-rungs"') < nh.find('id="album-cheap-no-row"') < nh.find('id="album-cheap-no"') < nh.find('id="archive"'),
-       "NO ask paid" in nt), (True, True, True, True, True))
+check("the page (both album lanes retired 2026-11-11): each in the Retired block with its card in a closed fold, no lane row",
+      ("Album · cheap YES" in nt, "Album · cheap NO" in nt, 'id="album-cheap-rungs-row"' in nh,
+       nh.find('id="retired-album"') < nh.find('id="album-cheap-rungs"') < nh.find('id="album-cheap-no"') < nh.find('id="archive"'),
+       "NO ask paid" in nt), (True, True, False, True, True))
 check("no guarded public phrase on the album cards", sandbox_audit.COPY_RE.findall(
-      nh[nh.find('id="album-cheap-rungs-row"'):nh.find('id="archive"')]), [])
+      nh[nh.find('id="retired-album"'):nh.find('id="archive"')]), [])
 
 print("\ncommodities (2026-10-27): wti_cheap_yes and gas_cheap_no on the same engine")
 WT, GS = M.WTI, M.GAS
@@ -673,14 +672,16 @@ check("with no entry failing, no voided line is shown", M.voided_line(dict(voide
 check("public copy passes the guard", sandbox_audit.COPY_RE.search(vtxt + vsum), None)
 
 print("\nretired 2026-10-31: the weekly and monthly mention lanes take no new entry; the album lanes are untouched")
-check("the four mention lanes carry the dated retirement, the album lanes do not (they are copies of the wide config)",
-      ([bool(c.get("retired")) for c in (M.STRICT, M.WIDE, M.MONTH, M.MONTH_WIDE)], [bool(c.get("retired")) for c in (M.ALBUM, M.ALBUM_NO)]),
-      ([True] * 4, [False] * 2))
+check("the four mention lanes carry the 2026-10-31 retirement; the album lanes their own of 2026-11-11, not the mentions'",
+      ([c["retired"]["on"] for c in (M.STRICT, M.WIDE, M.MONTH, M.MONTH_WIDE)], [c["retired"]["on"] for c in (M.ALBUM, M.ALBUM_NO)],
+       M.ALBUM["retired"]["at"] != M.ALBUM_NO["retired"]["at"]),
+      (["2026-10-31"] * 4, ["2026-11-11"] * 2, True))
 check("its record and reason are the ones Olu gave",
       (M.STRICT["retired"]["on"], "0 valid entries since 2026-10-27" in M.STRICT["retired"]["reason"]), ("2026-10-31", True))
-check("Eastern date gate: 03:00Z on Oct 31 is not yet retired, 05:00Z is; the album lane never is",
+check("Eastern date gate: 03:00Z on Oct 31 is not yet retired, 05:00Z is; the album lane is from Nov 11 (Eastern) only",
       (M.retired(M.STRICT, dt.datetime(2026, 10, 31, 3, 0, tzinfo=UTC)), M.retired(M.STRICT, dt.datetime(2026, 10, 31, 5, 0, tzinfo=UTC)),
-       M.retired(M.ALBUM, dt.datetime(2026, 12, 1, tzinfo=UTC))), (False, True, False))
+       M.retired(M.ALBUM, dt.datetime(2026, 11, 11, 4, 0, tzinfo=UTC)), M.retired(M.ALBUM, dt.datetime(2026, 11, 11, 6, 0, tzinfo=UTC))),
+      (False, True, False, True))
 gone_state = M.load("/nonexistent/ledger.json")
 late = dt.datetime(2026, 11, 1, 12, 0, tzinfo=UTC)
 M.run(gone_state, late, fake, ask_rule=False)

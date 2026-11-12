@@ -71,7 +71,8 @@ check("gas daily and weekly were not retired with WTI (gas daily retired later, 
 check("WTI is built without WIDE's mentions retirement", "if k != \"retired\"" in inspect.getsource(MS), True)
 check("live and retired commodity lanes", ([c["lane"] for c in MS.LIVE_COMMOD], [c["lane"] for c in MS.GONE_COMMOD]),
       (["gas_week_cheap_no"], ["wti_cheap_yes", "gas_cheap_no"]))
-check("the album lanes are still live", [MS.ALBUM.get("retired"), MS.ALBUM_NO.get("retired")], [None, None])
+check("the album lanes were live then; retired 2026-11-11 with their own records (test_mentions_split, test_culture_page)",
+      [MS.ALBUM["retired"]["on"], MS.ALBUM_NO["retired"]["on"]], ["2026-11-11", "2026-11-11"])
 check("run() takes no new entry for a retired lane, fills and settlement go on",
       "pending = []                       # retired" in inspect.getsource(MS.run), True)
 
