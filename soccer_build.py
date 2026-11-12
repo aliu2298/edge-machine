@@ -139,6 +139,8 @@ def recent(d, row, now=None):
     """The tracker's recent picks (an own-ledger lane's quotes are in the page's ledger too), then an own-ledger
     rule's every entry, in a closed fold."""
     own = row.get("own")
+    if own and own.get("entries_only"):        # a lane with no quotes in the page's ledger (africa_goals): its own entries alone
+        return own.get("entries") or ""
     return soccer_cards.recent_html(d, row, now) + (own.get("entries") or "" if own else "")
 
 
@@ -182,7 +184,8 @@ def _own_ledger_note():
     import soccer_lanes as L
     bits = []
     for title, mod in (("Label rules", "soccer_rules"), ("Team scoring rules", "soccer_team_rules"),
-                       ("Title contenders' overs", "contender_overs"), ("Argentina & Brasileirão over 1.5", "sa_o15")):
+                       ("Title contenders' overs", "contender_overs"), ("Argentina & Brasileirão over 1.5", "sa_o15"),
+                       ("African qualifiers goals check", "africa_goals")):
         try:
             m = __import__(mod)
             st = m.load() if os.path.exists(m.PATH) else {}

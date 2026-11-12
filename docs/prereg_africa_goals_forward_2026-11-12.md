@@ -39,3 +39,11 @@ The four international form rules on the same matches. The verdict to keep Afric
 ## How it will be run
 
 `~/edge-research/intl_2026-11-12/window_read.sh`, once the matches have settled.
+
+## Note, Nov 12 2026: now also a paper lane
+
+Added the same day, at Olu's request. The read is now also shown on the Soccer page as a Sandbox paper lane (`africa_goals`), so it can be watched as it settles. Nothing above is changed: the same matches, markets, entry, fills and fees, and the same three conditions, judged on this window when it settles.
+
+- The lane logs each bet from the hourly quote three hours before kickoff. The first matches of Nov 12 had kicked off before the lane existed; their bets were filled in from that same hourly quote and are marked as backfilled in the ledger.
+- It is an observation lane: paper only, never in Production.
+- After this window it keeps running on later African windows, on its own record.
