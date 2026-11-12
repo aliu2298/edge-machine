@@ -93,45 +93,71 @@ None of these clears once the 17 live records are corrected together. The NBA NO
 | BTTS form fade | +18.0% (11) | −30.8% (16) |
 | **All, weighted by live bets** | **+31.3%** | **−7.0% (158)** |
 
-## Proposed promotion gate
+## The promotion gate (adopted Nov 12)
 
-The aim is fewer lanes, more bets on each, and no promotion on luck. Retiring stays as it is: any time, at 10 bets or more.
+Olu's decision: the honest figure is a gate only. Pages do not change, and no honest or "if touches fill" figure is shown on them.
 
-**Step 1: Sandbox to a live trial at the smallest stake.** All of:
+**The rule.** A lane may move from the Sandbox to Production only if, on its own entries graded by the fill simulator's strict rules:
 
-- The rule and its baseline were written down before the record began. One headline variant per idea.
-- If it rests an order or sells early, the record is the fill simulator's strict figure.
-- 30 or more settled bets, on 10 or more separate outcomes.
-- Up in both halves, and still up with its best outcome removed.
-- Beats its baseline.
-- Score of 2 or better.
+1. Its return after fees is positive. Nothing waives this.
+2. It passes the evidence test: 30 or more settled bets on 10 or more separate outcomes, up in both halves, still up without its best outcome, and a score of 2 or better. Olu can waive this test for a named lane; the waiver (who, when, why) is written into that lane's record.
 
-A lane that passes is on trial, not proven. Most lanes that pass step 1 will still be luck (finding 5).
+**How it is enforced.** `test_promotion_gate.py` runs on every pull request. It lists every lane the code puts in Production and fails if one has no passing record in `data/promotion_gate.json`. A promotion is a code change, so it cannot merge without its record. A new Production feed the gate does not know also fails the test.
 
-**Step 2: trial to proven. Needed before any stake rise.** All of:
+**How a lane is graded.**
 
-- A fresh record from the day it went live. 100 or more live bets on 20 or more outcomes.
-- Live score of 2 or better on that record alone, and up in both halves.
-- Live return inside the simulator's range (strict to touch), so the fills are understood.
-- Clears the Sandbox-wide check (`fdr_check.py`) on its whole record.
+- A lane that rests an order or sells early: the simulator's strict rules, from trade prints.
+- A buy-and-hold lane: every bet at its logged price and the exchange's real fee, less any bet whose price the trade prints refute. The record also counts how many bets the prints confirmed.
 
-**During the trial.** Read at 20, 50 and 100 live bets only. Pull it if it is down at 50, or below −20% at 20.
+**To promote a lane:**
 
-**Budget.** A lane that cannot reach 100 bets in three months is pooled with its sister lanes or dropped.
+```bash
+python3 promotion_gate.py check "source|scope"
+```
 
-### Where today's lanes stand on step 1
+That writes the lane's honest figure to the record. The "if touches fill" figure is kept there as a note only; the gate never reads it.
 
-No active lane passes. The nearest:
+**Lanes already live** are not pulled by the gate. Two of them fail rule 1 today, and both are for Olu to decide:
 
-| Lane | What is missing |
-|---|---|
-| Crypto below band (41 bets) | Score 1.80, needs 2 |
-| Team-total rule T1 (52 bets) | Score 1.08 |
-| NBA win margin NO fade (117 bets) | 9 outcomes, needs 10; score 1.53 on paper (2.37 live) |
-| Commodities favourite band (68 bets) | Newer half is down; score 1.42 |
-| MLS fade home (28 bets) | 2 bets short; score 1.26 |
-| Team 2+ ranked (27 bets) | 3 bets short; score 1.03 |
-| Soccer rule A6 (10 bets) | 20 bets and 4 outcomes short |
+| Live lane | Honest return | Bets |
+|---|---|---|
+| Soccer rule C3 (Serie A over 2.5) | −16.9% | 4 |
+| T1-M (T1 matches, over 3.5) | −17.6% | 2 |
+
+Every other live lane has a positive honest return. None of the 23 passes the evidence test yet:
+
+| Live lane | Page | Honest | Bets (confirmed) | Outcomes | Score |
+|---|---|---|---|---|---|
+| Soccer rule A6 | +75.3% | +75.3% | 10 (9) | 6 | 2.18 |
+| Under 3.5 low scoring, internationals | +27.2% | +27.2% | 17 (10) | 7 | 1.89 |
+| Crypto below band | +15.8% | +15.5% | 40 (29) | 24 | 1.73 |
+| Soccer rule C4 | +60.8% | +60.8% | 6 (6) | 5 | 1.54 |
+| NBA win margin NO fade | +5.7% | +8.2% | 117 | 9 | 1.53 |
+| MLS fade home | +20.6% | +20.6% | 28 (24) | 12 | 1.26 |
+| Team 1 form, internationals | +19.7% | +19.7% | 7 (5) | 4 | 1.18 |
+| Team-total rule T7 | +17.7% | +17.7% | 12 (1) | 5 | 1.15 |
+| Soccer rule A7 | +30.9% | +30.9% | 17 (17) | 4 | 1.08 |
+| S&P 500 near-certain NO | +7.5% | +7.5% | 15 (15) | 15 | 1.06 |
+| Argentina goalless dip | +52.5% | +53.7% | 2 | 2 | 1.04 |
+| Team 2+ ranked | +20.4% | +20.4% | 27 (22) | 18 | 1.03 |
+| Under 3.5 low scoring, cups | +48.8% | +48.8% | 2 (0) | 2 | 0.99 |
+| T1-H | +47.5% | +47.5% | 2 (1) | 2 | 0.97 |
+| UCL corners fade | +28.3% | +28.3% | 6 (3) | 4 | 0.94 |
+| First team to score NO 70-80 | +16.3% | +16.3% | 8 (1) | 4 | 0.80 |
+| NBA win margin YES split | +11.8% | +8.2% | 124 | 8 | 0.79 |
+| Soccer rule A3 | +27.1% | +27.1% | 2 (1) | 2 | 0.74 |
+| Soccer rule A2 | +28.7% | +28.7% | 4 (4) | 4 | 0.67 |
+| Economic daily, near-certain YES | +4.4% | +4.4% | 9 (9) | 8 | 0.63 |
+| Team 2+ form, internationals | +21.8% | +21.8% | 1 (1) | 1 | 0.47 |
+| T1-M | −17.6% | −17.6% | 2 (2) | 2 | −0.21 |
+| Soccer rule C3 | −16.9% | −16.9% | 4 (4) | 4 | −0.35 |
+
+Sandbox lanes graded so far: commodities favourite band +8.2% honest on 64 (newer half down), Eredivisie draw +22.6% on 29, T1 +17.1% on 52, top-5 dip +7.7% on 32. Each has a positive return and fails the evidence test, so each would need a waiver to go live.
+
+### Still proposed, not adopted
+
+- **Proven status before a stake rise:** a fresh live record of 100 or more bets on 20 or more outcomes, a live score of 2 or better, live return inside the simulator's range, and clearing the Sandbox-wide check.
+- **Trial reads** at 20, 50 and 100 live bets only; pull the lane if it is down at 50.
 
 ## How the check works
 
@@ -147,7 +173,8 @@ No active lane passes. The nearest:
 
 ## Tools
 
-`fdr_check.py` (the check, families, shrinkage, power, step 1 of the gate), `test_fdr_check.py`.
+`fdr_check.py` (the check, families, shrinkage, power, the evidence test), `test_fdr_check.py`.
+`promotion_gate.py` (the gate and its record), `test_promotion_gate.py` (the enforcement).
 
 ```bash
 python3 fdr_check.py --regrade regrade.json

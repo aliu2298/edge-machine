@@ -221,6 +221,63 @@ def nofade_bot_lane(tape, result=None):
     return out
 
 
+# ---------------------------------------------------------------- buy-and-hold lanes (the tracker, the rule ledgers, the dailies)
+def hold_lane(bets, tape):
+    """A buy-and-hold lane: each bet is a taker buy at the logged ask, held to settlement, at the exchange's fee. The lane logged a
+    live quote, so the ask counts unless the prints between that minute and the start (`until`) refute it (fillsim.QUOTED): it sat
+    under half the last trade, or every trade in the window was more than 5c above it. Each row says whether prints or a book read
+    CONFIRMED the ask (`confirmed`).
+
+    bets: dict(key, ticker, side, price, ts, until, payout, cluster, page[, book_size])."""
+    import dataclasses
+    out = []
+    for b in bets:
+        rules = dataclasses.replace(F.QUOTED, name=RULES[0].name, queue_ahead=RULES[0].queue_ahead,
+                                    entry_window_s=int(max(3600, (b.get("until") or b["ts"]) - b["ts"])))
+        sim = F.trade(tape(b["ticker"]), b["side"], dict(kind="taker", ts=b["ts"], price=b["price"], book_size=b.get("book_size")), [],
+                      payout=b["payout"], rules=rules)
+        out.append(dict(row(b["key"], b["cluster"], b["page"], sim, b["page"]), confirmed=sim["entry"].get("status") == "verified"))
+    return out
+
+
+def tracker_bets(source, scope):
+    """The Sandbox ledger's settled Kalshi bets of one rule and scope. A binary market's pick a is its YES and b its NO; a draw on a
+    three-way match is the YES of its TIE market. Anything else (another venue, a team side of a three-way match) cannot be read
+    against Kalshi prints and is left out."""
+    import sandbox_track as T
+    out = []
+    for q in load("sandbox_ledger")["quotes"]:
+        if q.get("source") != source or q.get("sport") != scope or not q.get("bet") or q.get("status") not in ("won", "lost"):
+            continue
+        mid, venue, pick = str(q.get("market_id") or ""), q.get("venue"), q.get("pick")
+        if venue == "kalshi_binary" and mid.startswith("KX") and pick in ("a", "b"):
+            ticker, side = mid, "yes" if pick == "a" else "no"
+        elif venue == "kalshi" and mid.startswith("KX") and pick == "draw":
+            ticker, side = mid + "-TIE", "yes"
+        else:
+            continue
+        start = ts(q["start"]) if q.get("start") else None
+        out.append(dict(key=q["id"], ticker=ticker, side=side, price=float(q["price"]), ts=ts(q["logged"]), until=start,
+                        payout=1.0 if q["status"] == "won" else 0.0, cluster=str(q.get("start") or q.get("date"))[:10],
+                        page=T.pnl_after_fee(q) / T.STAKE))
+    return out
+
+
+def pick_bets(picks, fee_taker=True):
+    """A rule or daily ledger's settled picks (ticker or id, side, price, logged, start or close, payout[, size])."""
+    out = []
+    for p in picks:
+        if p.get("payout") not in (0, 0.0, 1, 1.0) or not isinstance(p.get("price"), (int, float)):
+            continue
+        ticker = p.get("ticker") or p.get("id")
+        end = p.get("start") or p.get("close")
+        cost = p["price"] + F.fee(p["price"])
+        out.append(dict(key=p.get("id") or ticker, ticker=ticker, side=p.get("side", "yes"), price=float(p["price"]), ts=ts(p["logged"]),
+                        until=ts(end.replace("Z", ":00Z") if end and len(end) == 17 else end) if end else None, payout=float(p["payout"]),
+                        cluster=str(end or p["logged"])[:10], page=p["payout"] / cost - 1, book_size=p.get("size")))
+    return out
+
+
 def _dip_cfgs():
     import arg_dip as A
     import top5_dip as T5

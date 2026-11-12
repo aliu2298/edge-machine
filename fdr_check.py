@@ -343,13 +343,13 @@ def typical_sd(recs):
     return sds[len(sds) // 2] if sds else None
 
 
-# ---------------------------------------------------------------- the proposed promotion gate
-GATE = dict(bets=30, outcomes=10, t=2.0)                # step 1, Sandbox -> probation (the report states step 2)
+# ---------------------------------------------------------------- the evidence test of the promotion gate
+GATE = dict(bets=30, outcomes=10, t=2.0)                # promotion_gate.py enforces it (with rule 1: the honest return is positive)
 
 
 def gate(s):
-    """A lane's record against step 1 of the proposed gate: {check: passed}. The pre-registration and baseline checks are not
-    machine-readable and are left to the review."""
+    """A lane's record against the promotion gate's evidence test: {check: passed}. The pre-registration and baseline checks are
+    not machine-readable and are left to the review."""
     if not s["n"]:
         return {}
     ok = s["tested"]
@@ -423,7 +423,7 @@ def report(out):
             continue
         L.append(f"{r['key'][:44]:44} {str(r['stage'] or 'retired')[:10]:10} {r['basis']:6} {r['n']:>5} {r['clusters']:>4} {_pc(r['roi']):>8} {r['t']:>+6.2f} "
                  f"{r['p']:>7.4f} {r['q']:>6.3f} {r['adj_p']:>6.3f}  {_pc(r['halves'][0])} / {_pc(r['halves'][1])} / {_pc(r['without_best'])}")
-    L += ["", "Step 1 of the proposed gate, active lanes (x = fails):"]
+    L += ["", "The promotion gate's evidence test, active lanes (x = fails):"]
     for r in sorted((r for r in out["records"] if r["stage"] and r["n"] >= MIN_BETS), key=lambda r: (-sum(r["gate"].values()), -(r["t"] or 0))):
         fails = [k for k, v in r["gate"].items() if not v]
         L.append(f"  {r['key'][:40]:40} {r['stage']:10} {r['n']:>4} bets  {_pc(r['roi']):>8}  " + ("PASSES" if not fails else "x " + "; ".join(fails)))

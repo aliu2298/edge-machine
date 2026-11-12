@@ -72,6 +72,15 @@ check("prints with no taker side count (an old tape)", F.taker_buy([P(0, 0.10, 5
 check("an order larger than 10 needs its own size", F.taker_buy(ok10, 100, 0.08, "yes", qty=20, rules=R)["ok"], False)
 check("a live book that covers the order verifies alone", F.taker_buy([], 100, 0.08, qty=5, rules=R, book_size=12)["how"], "book")
 check("a NO ask reads the NO side", F.taker_buy([no(0, 0.2, 1, "no"), no(60, 0.15, 12, "no")], 30, 0.15, "no", rules=R)["ok"], True)
+Q = F.QUOTED
+check("a quoted lane: an ask the prints cannot confirm still counts", (F.taker_buy([P(0, 0.10, 5)], 100, 0.08, rules=Q)["status"],
+                                                                         F.taker_buy([P(0, 0.10, 5)], 100, 0.08, rules=Q)["ok"]), ("unconfirmed", True))
+check("... and a confirmed one says so", F.taker_buy(ok10, 100, 0.08, "yes", rules=Q)["status"], "verified")
+check("... but trades all more than 5c above it refute it", (F.taker_buy([P(0, 0.10, 5), P(600, 0.14, 9, "yes"), P(700, 0.20, 9, "no")], 100, 0.08, rules=Q)["status"],
+                                                               F.taker_buy([P(0, 0.10, 5), P(600, 0.14, 9, "yes")], 100, 0.08, rules=Q)["ok"]), ("refuted", False))
+check("... one trade within 5c keeps it", F.taker_buy([P(0, 0.10, 5), P(600, 0.13, 1, "no"), P(700, 0.20, 9, "no")], 100, 0.08, rules=Q)["ok"], True)
+check("... and half the last trade still refuses it", F.taker_buy([P(0, 0.30, 5)], 100, 0.08, rules=Q)["ok"], False)
+check("honest-v1 itself never counts an unconfirmed ask", F.taker_buy([P(0, 0.10, 5)], 100, 0.08)["ok"], False)
 check("taker sell = taker buy of the other side", F.taker_sell([P(0, 0.5, 1), P(60, 0.40, 12, "no")], 30, 0.40, "yes", rules=R)["ok"], True)
 
 print("resting buy: through, offer, queue")
