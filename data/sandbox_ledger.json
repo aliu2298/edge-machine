@@ -4,14 +4,14 @@
    "kalshi_venue": 13,
    "polymarket_us": 19,
    "polymarket_us_listed": 19,
-   "polymarket_us_priced": 2
+   "polymarket_us_priced": 1
   },
   "commodities": {
    "cmd_market": {
-    "offered": 355,
-    "picked": 355
+    "offered": 350,
+    "picked": 350
    },
-   "kalshi_venue": 355
+   "kalshi_venue": 350
   },
   "commodities_fav": {
    "commod_fav_band": {
@@ -41,10 +41,10 @@
    "kalshi_venue": 525
   },
   "economics": {
-   "kalshi_venue": 30
+   "kalshi_venue": 35
   },
   "finance": {
-   "kalshi_venue": 30
+   "kalshi_venue": 45
   },
   "mma": {
    "kalshi_venue": 12,
@@ -69,7 +69,7 @@
     "offered": 0,
     "picked": 0
    },
-   "kalshi_venue": 43,
+   "kalshi_venue": 41,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -218,7 +218,7 @@
    "kalshi_venue": 50,
    "pin_totals": {
     "offered": 50,
-    "picked": 3
+    "picked": 0
    }
   },
   "soccer_p05": {
@@ -354,8 +354,8 @@
   "tennis": {
    "kalshi_venue": 20,
    "polymarket_us": 40,
-   "polymarket_us_listed": 352,
-   "polymarket_us_priced": 187
+   "polymarket_us_listed": 365,
+   "polymarket_us_priced": 189
   },
   "tennis_combo": {
    "combo": 0,
@@ -363,52 +363,52 @@
   },
   "tennis_pmcombo": {
    "combo": 0,
-   "legs": 0
+   "legs": 1
   }
  },
  "feed_status": {
-  "pin_totals": "ok"
+  "pin_totals": "down: no paced credit left for this run"
  },
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-12T05:22:52+00:00",
-   "commodities": "2026-11-12T05:22:52+00:00",
-   "commodities_fav": "2026-11-12T05:22:52+00:00",
-   "cricket": "2026-11-12T05:22:52+00:00",
-   "crypto": "2026-11-12T05:22:52+00:00",
-   "crypto_fav": "2026-11-12T05:22:52+00:00",
-   "economics": "2026-11-12T05:22:52+00:00",
-   "finance": "2026-11-12T05:22:52+00:00",
-   "mma": "2026-11-12T05:22:52+00:00",
-   "nfl": "2026-11-12T05:22:52+00:00",
-   "nhl_pl": "2026-11-12T05:22:52+00:00",
-   "nhl_rest": "2026-11-12T05:22:52+00:00",
-   "soccer": "2026-11-12T05:22:52+00:00",
+   "boxing": "2026-11-12T06:03:26+00:00",
+   "commodities": "2026-11-12T06:03:26+00:00",
+   "commodities_fav": "2026-11-12T06:03:26+00:00",
+   "cricket": "2026-11-12T06:03:26+00:00",
+   "crypto": "2026-11-12T06:03:26+00:00",
+   "crypto_fav": "2026-11-12T06:03:26+00:00",
+   "economics": "2026-11-12T06:03:26+00:00",
+   "finance": "2026-11-12T06:03:26+00:00",
+   "mma": "2026-11-12T06:03:26+00:00",
+   "nfl": "2026-11-12T06:03:26+00:00",
+   "nhl_pl": "2026-11-12T06:03:26+00:00",
+   "nhl_rest": "2026-11-12T06:03:26+00:00",
+   "soccer": "2026-11-12T06:03:26+00:00",
    "soccer_btts": "2026-11-08T20:07:32+00:00",
-   "soccer_btts_cup": "2026-11-12T05:22:52+00:00",
-   "soccer_btts_intl": "2026-11-12T05:22:52+00:00",
+   "soccer_btts_cup": "2026-11-12T06:03:26+00:00",
+   "soccer_btts_intl": "2026-11-12T06:03:26+00:00",
    "soccer_corners": "2026-11-08T19:58:15+00:00",
    "soccer_ftts": "2026-10-19T18:33:38+00:00",
    "soccer_o15": "2026-11-08T20:07:32+00:00",
-   "soccer_o15_cup": "2026-11-12T05:22:52+00:00",
-   "soccer_o15_intl": "2026-11-12T05:22:52+00:00",
+   "soccer_o15_cup": "2026-11-12T06:03:26+00:00",
+   "soccer_o15_intl": "2026-11-12T06:03:26+00:00",
    "soccer_o25": "2026-11-08T20:07:32+00:00",
-   "soccer_o25_cup": "2026-11-12T05:22:52+00:00",
-   "soccer_o25_intl": "2026-11-12T05:22:52+00:00",
+   "soccer_o25_cup": "2026-11-12T06:03:26+00:00",
+   "soccer_o25_intl": "2026-11-12T06:03:26+00:00",
    "soccer_p05": "2026-11-08T20:07:32+00:00",
-   "soccer_p05_cup": "2026-11-12T05:22:52+00:00",
-   "soccer_p05_intl": "2026-11-12T05:22:52+00:00",
+   "soccer_p05_cup": "2026-11-12T06:03:26+00:00",
+   "soccer_p05_intl": "2026-11-12T06:03:26+00:00",
    "soccer_team1": "2026-11-08T19:58:15+00:00",
    "soccer_team1_cup": "2026-11-11T19:32:50+00:00",
-   "soccer_team1_intl": "2026-11-12T05:22:52+00:00",
+   "soccer_team1_intl": "2026-11-12T06:03:26+00:00",
    "soccer_team2": "2026-11-08T19:58:15+00:00",
    "soccer_team2_cup": "2026-11-11T19:32:50+00:00",
-   "soccer_team2_intl": "2026-11-12T05:22:52+00:00",
+   "soccer_team2_intl": "2026-11-12T06:03:26+00:00",
    "soccer_u35": "2026-11-08T20:07:32+00:00",
-   "soccer_u35_cup": "2026-11-12T05:22:52+00:00",
-   "soccer_u35_intl": "2026-11-12T05:22:52+00:00",
-   "tennis": "2026-11-12T05:22:52+00:00",
+   "soccer_u35_cup": "2026-11-12T06:03:26+00:00",
+   "soccer_u35_intl": "2026-11-12T06:03:26+00:00",
+   "tennis": "2026-11-12T06:03:26+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -528,177 +528,9 @@
    }
   },
   "odds_api": {
-   "allowance": 1,
-   "at": "2026-11-12T05:22:52+00:00",
-   "calls": 1,
+   "allowance": 0,
+   "at": "2026-11-12T06:03:26+00:00",
    "remaining": 296,
-   "totals_on": [
-    {
-     "empty": {
-      "no_event": 0,
-      "no_totals": 3,
-      "other_point": 19,
-      "points": [
-       2.0,
-       3.25,
-       2.75,
-       1.75,
-       2.25,
-       3.0
-      ],
-      "stale": 0
-     },
-     "key": "soccer_uefa_nations_league",
-     "listed": 25,
-     "rows": [
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV12ARMCYP-3"
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV12ALBFIN-3",
-       "points": [
-        2.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV12ENGCRO-3",
-       "points": [
-        3.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV12ITAFRA-3",
-       "points": [
-        2.75
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV12SMRBLR-3",
-       "points": [
-        2.75
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV13MDAKAZ-3",
-       "points": [
-        2.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV13ANDGIB-3",
-       "points": [
-        1.75
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV13BULISL-3",
-       "points": [
-        2.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV13LIEAZE-3",
-       "points": [
-        2.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV13LUXEST-3",
-       "points": [
-        2.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV13NEDGRE-3",
-       "points": [
-        3.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV13SCOMKD-3",
-       "points": [
-        2.75
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV13SLOSUI-3",
-       "points": [
-        2.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV13SRBGER-3",
-       "points": [
-        3.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV14GEOHUN-3",
-       "points": [
-        2.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV14NORWAL-3",
-       "points": [
-        3.25
-       ]
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV14AUTIRL-3"
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV14NIRUKR-3",
-       "points": [
-        2.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV14PORDEN-3",
-       "points": [
-        3.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV14ROUPOL-3",
-       "points": [
-        2.75
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV14SWEBIH-3",
-       "points": [
-        3.0
-       ]
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV15BELITA-3"
-      }
-     ]
-    }
-   ],
    "used": 204
   },
   "outages": [
@@ -718,7 +550,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 1640,
+  "runs": 1641,
   "tennis_shortlist": {
    "audit": [
     {
@@ -730,7 +562,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-12T05:23:26+00:00"
+  "updated": "2026-11-12T06:04:06+00:00"
  },
  "quotes": [
   {
@@ -353100,7 +352932,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-12T05:22:52+00:00",
+   "close_at": "2026-11-12T06:03:26+00:00",
    "close_price": 0.83,
    "date": "2026-11-13",
    "edge": null,
@@ -356971,7 +356803,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-12T05:22:52+00:00",
+   "close_at": "2026-11-12T06:03:26+00:00",
    "close_price": 0.71,
    "date": "2026-11-13",
    "edge": null,
@@ -357011,7 +356843,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-12T05:22:52+00:00",
+   "close_at": "2026-11-12T06:03:26+00:00",
    "close_price": 0.78,
    "date": "2026-11-12",
    "edge": null,
@@ -357735,7 +357567,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-12T05:22:52+00:00",
+   "close_at": "2026-11-12T06:03:26+00:00",
    "close_price": 0.88,
    "date": "2026-11-13",
    "edge": null,
@@ -357775,7 +357607,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-12T05:22:52+00:00",
+   "close_at": "2026-11-12T06:03:26+00:00",
    "close_price": 0.8,
    "date": "2026-11-13",
    "edge": null,
@@ -357815,7 +357647,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-12T05:22:52+00:00",
+   "close_at": "2026-11-12T06:03:26+00:00",
    "close_price": 0.83,
    "date": "2026-11-13",
    "edge": null,
@@ -357855,7 +357687,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-12T05:22:52+00:00",
+   "close_at": "2026-11-12T06:03:26+00:00",
    "close_price": 0.69,
    "date": "2026-11-13",
    "edge": null,
@@ -373177,7 +373009,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-12T05:22:52+00:00",
+   "close_at": "2026-11-12T06:03:26+00:00",
    "close_price": 0.8,
    "date": "2026-11-12",
    "edge": null,
@@ -375497,7 +375329,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-12T05:22:52+00:00",
+   "close_at": "2026-11-12T06:03:26+00:00",
    "close_price": 0.74,
    "date": "2026-11-14",
    "edge": null,
@@ -377864,7 +377696,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-12T05:22:52+00:00",
+   "close_at": "2026-11-12T06:03:26+00:00",
    "close_price": 0.78,
    "date": "2026-11-13",
    "edge": null,
@@ -386514,7 +386346,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-12T05:22:52+00:00",
+   "close_at": "2026-11-12T06:03:26+00:00",
    "close_price": 0.84,
    "date": "2026-11-14",
    "edge": null,
@@ -392503,7 +392335,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-12T05:22:52+00:00",
+   "close_at": "2026-11-12T06:03:26+00:00",
    "close_price": 0.77,
    "date": "2026-11-14",
    "edge": null,
@@ -396748,7 +396580,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-12T05:22:52+00:00",
+   "close_at": "2026-11-12T06:03:26+00:00",
    "close_price": 0.8,
    "date": "2026-11-13",
    "edge": null,
@@ -411052,7 +410884,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-12T05:22:52+00:00",
+   "close_at": "2026-11-12T06:03:26+00:00",
    "close_price": 0.68,
    "date": "2026-11-13",
    "edge": null,
@@ -411174,7 +411006,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-12T05:22:52+00:00",
+   "close_at": "2026-11-12T06:03:26+00:00",
    "close_price": 0.73,
    "date": "2026-11-13",
    "edge": null,
@@ -417429,7 +417261,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-12T05:22:52+00:00",
+   "close_at": "2026-11-12T06:03:26+00:00",
    "close_price": 0.31,
    "date": "2026-11-13",
    "edge": null,
@@ -419144,7 +418976,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-12T05:22:52+00:00",
+   "close_at": "2026-11-12T06:03:26+00:00",
    "close_price": 0.44,
    "date": "2026-11-13",
    "edge": null,
@@ -422107,7 +421939,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-12T05:22:52+00:00",
+   "close_at": "2026-11-12T06:03:26+00:00",
    "close_price": 0.66,
    "date": "2026-11-13",
    "edge": null,
@@ -422647,8 +422479,8 @@
    "price_b": 0.48,
    "price_draw": null,
    "prob_a": 0.525,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-12T06:03:53+00:00",
    "side_a": "Tin Chen",
    "side_b": "Ammar Faleh Alhogbani",
    "source": "polymarket_us",
@@ -422657,7 +422489,7 @@
    "stake": 0.0,
    "start": "2026-11-12T03:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -422817,8 +422649,8 @@
    "price_b": 0.44,
    "price_draw": null,
    "prob_a": 0.565,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-12T06:03:53+00:00",
    "side_a": "Isaro P / Shimizu Y",
    "side_b": "Banthia S / Chandrasekar A",
    "source": "polymarket_us",
@@ -422827,7 +422659,7 @@
    "stake": 0.0,
    "start": "2026-11-12T03:10:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "atpdb",
    "uncovered": null,
    "untraded": false,
@@ -423126,8 +422958,8 @@
    "price_b": 0.27,
    "price_draw": null,
    "prob_a": 0.735,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-12T06:04:00+00:00",
    "side_a": "Rigele Te",
    "side_b": "Linang Xiao",
    "source": "polymarket_us",
@@ -423136,7 +422968,7 @@
    "stake": 0.0,
    "start": "2026-11-12T04:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -423227,8 +423059,8 @@
    "price_b": 0.07,
    "price_draw": null,
    "prob_a": 0.935,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-12T06:04:02+00:00",
    "side_a": "Zhao Zhao",
    "side_b": "Dingzheng Nima",
    "source": "polymarket_us",
@@ -423237,7 +423069,7 @@
    "stake": 0.0,
    "start": "2026-11-12T04:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -423281,7 +423113,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-12T05:22:52+00:00",
+   "close_at": "2026-11-12T06:03:26+00:00",
    "close_price": 0.35,
    "date": "2026-11-12",
    "edge": null,
@@ -423372,8 +423204,8 @@
    "price_b": 0.83,
    "price_draw": null,
    "prob_a": 0.175,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-12T06:04:05+00:00",
    "side_a": "Ru Xi Wu",
    "side_b": "Valeria Savinykh",
    "source": "polymarket_us",
@@ -423382,7 +423214,7 @@
    "stake": 0.0,
    "start": "2026-11-12T04:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfwo",
    "uncovered": null,
    "untraded": false,
@@ -423406,8 +423238,8 @@
    "price_b": 0.14,
    "price_draw": null,
    "prob_a": 0.865,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-12T06:04:05+00:00",
    "side_a": "Jiaqi Wang",
    "side_b": "Anna Yang",
    "source": "polymarket_us",
@@ -423416,7 +423248,7 @@
    "stake": 0.0,
    "start": "2026-11-12T04:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfwo",
    "uncovered": null,
    "untraded": false,
@@ -425686,6 +425518,380 @@
    "uncovered": null,
    "untraded": false,
    "url": "https://polymarket.us/event/atpdb-falcksuarez-puttersweeny-2026-11-11",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-13",
+   "edge": -0.025,
+   "espn_away": "Orl\u00e9ans",
+   "espn_home": "Dijon FCO",
+   "event": "KXCOUPEDEFRANCEBTTS-26NOV13DIJUSO",
+   "id": "btts_market:KXCOUPEDEFRANCEBTTS-26NOV13DIJUSO-BTTS",
+   "kalshi_title": "Both Teams To Score",
+   "label": "Dijon FCO v Orl\u00e9ans: both teams to score",
+   "league": "Coupe de France",
+   "liquidity": null,
+   "logged": "2026-11-12T06:03:26+00:00",
+   "market_id": "KXCOUPEDEFRANCEBTTS-26NOV13DIJUSO-BTTS",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.58,
+   "price_b": 0.47,
+   "price_draw": null,
+   "prob_a": 0.555,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "btts_market",
+   "sport": "soccer_btts_cup",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-13T19:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcoupedefrancebtts",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-13",
+   "edge": -0.03,
+   "espn_away": "Orl\u00e9ans",
+   "espn_home": "Dijon FCO",
+   "event": "KXCOUPEDEFRANCETOTAL-26NOV13DIJUSO",
+   "id": "goals_market:KXCOUPEDEFRANCETOTAL-26NOV13DIJUSO-2",
+   "kalshi_title": "Over 1.5 goals scored",
+   "label": "Dijon FCO v Orl\u00e9ans: over 1.5 goals",
+   "league": "Coupe de France",
+   "liquidity": null,
+   "logged": "2026-11-12T06:03:26+00:00",
+   "market_id": "KXCOUPEDEFRANCETOTAL-26NOV13DIJUSO-2",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.83,
+   "price_b": 0.23,
+   "price_draw": null,
+   "prob_a": 0.8,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_o15_cup",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-13T19:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcoupedefrancetotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-13",
+   "edge": -0.015,
+   "espn_away": "Orl\u00e9ans",
+   "espn_home": "Dijon FCO",
+   "event": "KXCOUPEDEFRANCETOTAL-26NOV13DIJUSO",
+   "id": "goals_market:KXCOUPEDEFRANCETOTAL-26NOV13DIJUSO-3",
+   "kalshi_title": "Over 2.5 goals scored",
+   "label": "Dijon FCO v Orl\u00e9ans: over 2.5 goals",
+   "league": "Coupe de France",
+   "liquidity": null,
+   "logged": "2026-11-12T06:03:26+00:00",
+   "market_id": "KXCOUPEDEFRANCETOTAL-26NOV13DIJUSO-3",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.6,
+   "price_b": 0.43,
+   "price_draw": null,
+   "prob_a": 0.585,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_o25_cup",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-13T19:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcoupedefrancetotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-13",
+   "edge": -0.02,
+   "espn_away": "Orl\u00e9ans",
+   "espn_home": "Dijon FCO",
+   "event": "KXCOUPEDEFRANCETOTAL-26NOV13DIJUSO",
+   "id": "goals_market:KXCOUPEDEFRANCETOTAL-26NOV13DIJUSO-4",
+   "kalshi_title": "Over 3.5 goals scored",
+   "label": "Dijon FCO v Orl\u00e9ans: over 3.5 goals",
+   "league": "Coupe de France",
+   "liquidity": null,
+   "logged": "2026-11-12T06:03:26+00:00",
+   "market_id": "KXCOUPEDEFRANCETOTAL-26NOV13DIJUSO-4",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.38,
+   "price_b": 0.66,
+   "price_draw": null,
+   "prob_a": 0.36,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_u35_cup",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-13T19:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcoupedefrancetotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-13",
+   "edge": -0.015,
+   "espn_away": "Orl\u00e9ans",
+   "espn_home": "Dijon FCO",
+   "event": "KXCOUPEDEFRANCEGAME-26NOV14DIJUSO",
+   "id": "goals_market:KXCOUPEDEFRANCEGAME-26NOV14DIJUSO-DIJ",
+   "kalshi_title": "Dijon",
+   "label": "Dijon FCO v Orl\u00e9ans: Dijon FCO to win (No = Orl\u00e9ans +0.5)",
+   "league": "Coupe de France",
+   "liquidity": null,
+   "logged": "2026-11-12T06:03:26+00:00",
+   "market_id": "KXCOUPEDEFRANCEGAME-26NOV14DIJUSO-DIJ",
+   "opponent": "Dijon FCO",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.64,
+   "price_b": 0.39,
+   "price_draw": null,
+   "prob_a": 0.625,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_p05_cup",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-13T19:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "Orl\u00e9ans",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcoupedefrancegame",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-13",
+   "edge": -0.015,
+   "espn_away": "Orl\u00e9ans",
+   "espn_home": "Dijon FCO",
+   "event": "KXCOUPEDEFRANCEGAME-26NOV14DIJUSO",
+   "id": "goals_market:KXCOUPEDEFRANCEGAME-26NOV14DIJUSO-USO",
+   "kalshi_title": "Orleans",
+   "label": "Dijon FCO v Orl\u00e9ans: Orl\u00e9ans to win (No = Dijon FCO +0.5)",
+   "league": "Coupe de France",
+   "liquidity": null,
+   "logged": "2026-11-12T06:03:26+00:00",
+   "market_id": "KXCOUPEDEFRANCEGAME-26NOV14DIJUSO-USO",
+   "opponent": "Orl\u00e9ans",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.17,
+   "price_b": 0.86,
+   "price_draw": null,
+   "prob_a": 0.155,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_p05_cup",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-13T19:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "Dijon FCO",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcoupedefrancegame",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-14",
+   "edge": -0.025,
+   "espn_away": "AS Nancy Lorraine",
+   "espn_home": "Stade B\u00e9thunois",
+   "event": "KXCOUPEDEFRANCEGAME-26NOV14BETASN",
+   "id": "goals_market:KXCOUPEDEFRANCEGAME-26NOV14BETASN-BET",
+   "kalshi_title": "Bethunois",
+   "label": "Stade B\u00e9thunois v AS Nancy Lorraine: Stade B\u00e9thunois to win (No = AS Nancy Lorraine +0.5)",
+   "league": "Coupe de France",
+   "liquidity": null,
+   "logged": "2026-11-12T06:03:26+00:00",
+   "market_id": "KXCOUPEDEFRANCEGAME-26NOV14BETASN-BET",
+   "opponent": "Stade B\u00e9thunois",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.09,
+   "price_b": 0.96,
+   "price_draw": null,
+   "prob_a": 0.065,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_p05_cup",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-14T17:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "AS Nancy Lorraine",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxcoupedefrancegame",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-12",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-atpdb-corneawehnel-ganchemaes-2026-11-12",
+   "label": "Cornea V V / Wehnelt K vs Ganchev A / Maes S",
+   "liquidity": null,
+   "logged": "2026-11-12T06:03:26+00:00",
+   "market_id": "aec-atpdb-corneawehnel-ganchemaes-2026-11-12",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.88,
+   "price_b": 0.13,
+   "price_draw": null,
+   "prob_a": 0.875,
+   "result": null,
+   "settled": null,
+   "side_a": "Cornea V V / Wehnelt K",
+   "side_b": "Ganchev A / Maes S",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-12T08:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "atpdb",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/atpdb-corneawehnel-ganchemaes-2026-11-12",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-12",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-utr-kisbot-cantob-2026-11-09",
+   "label": "Kisantal, Botond vs Cank, Tobias",
+   "liquidity": null,
+   "logged": "2026-11-12T06:03:26+00:00",
+   "market_id": "aec-utr-kisbot-cantob-2026-11-09",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.72,
+   "price_b": 0.29,
+   "price_draw": null,
+   "prob_a": 0.715,
+   "result": null,
+   "settled": null,
+   "side_a": "Kisantal, Botond",
+   "side_b": "Cank, Tobias",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-12T08:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "utr",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/utr-kisbot-cantob-2026-11-09",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-12",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-utr-decas-vrtjak-2026-11-09",
+   "label": "De Ruiter, Cas vs Vrtilka, Jakub",
+   "liquidity": null,
+   "logged": "2026-11-12T06:03:26+00:00",
+   "market_id": "aec-utr-decas-vrtjak-2026-11-09",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.45,
+   "price_b": 0.56,
+   "price_draw": null,
+   "prob_a": 0.445,
+   "result": null,
+   "settled": null,
+   "side_a": "De Ruiter, Cas",
+   "side_b": "Vrtilka, Jakub",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-12T08:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "utr",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/utr-decas-vrtjak-2026-11-09",
    "venue": "polymarket_us",
    "venue_start": null
   }
