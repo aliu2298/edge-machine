@@ -66,3 +66,7 @@ Generated pages are rebuilt by Actions; normally commit source/data changes, not
 This repository **does not place bets and holds no exchange credentials**. Secrets are kept out of git. The tracker uses flat $100 paper stakes, rejects ungradable results instead of inventing losses, and keeps the research record append-only/idempotent.
 
 **Research only — not betting advice.**
+
+## Promotion gate
+
+No lane moves from the Sandbox to Production without a passing record in `data/promotion_gate.json` (`promotion_gate.py`, enforced by `test_promotion_gate.py` on every pull request). Before promoting a lane, run `python3 promotion_gate.py check "source|scope"` and commit the record with the promotion. The rule: the lane's honest return after fees (fillsim, strict rules) is positive on its own entries, and it passes the evidence test or carries Olu's recorded waiver. Pages do not read the record. See `docs/false_discovery_report_2026-11-12.md`.

@@ -77,9 +77,15 @@ class Rules:
     cross_lookback_s: int = 5400       # with no quote, the last print this recent says where the price stood when the order went up
     offer_fills: bool = False          # the "offer" case above; off = every print at the limit waits in the queue
     taker_side_entry: bool = True      # a taker entry counts only prints where the taker bought its side
+    unconfirmed_ok: bool = False       # a taker entry the prints can neither confirm nor refute still counts (QUOTED, below)
+    entry_drift: float = 0.05          # ... unless every print in the window sat more than this above the ask (the price had moved)
 
 
 HONEST = Rules()
+# Buy-and-hold lanes that log a live two-sided quote (the tracker, the rule ledgers, the dailies). Their logged ask is taken as real
+# unless the prints REFUTE it: on 101 tracker bets that really filled live, the 10-contract print test confirmed only 86, because
+# nobody takes the 90c side of a favourite; and on 366 live bets the price paid was within 0.3c of the price logged.
+QUOTED = dataclasses.replace(HONEST, unconfirmed_ok=True)
 # The upper bracket: every print at the order's price fills it, as if it stood first in the queue. Live fills sit between the two.
 TOUCH = dataclasses.replace(HONEST, name="touch", queue_ahead=0.0)
 
@@ -157,8 +163,10 @@ def stake_qty(price, stake=1.0):
 def taker_buy(prints, ts, ask, side="yes", qty=1.0, rules=HONEST, book_size=None):
     """Was `ask` on `side` at time `ts` a price an order for `qty` could really have paid?
 
-    -> dict(ok, status verified | unverified, how, reason, printed, need, last_trade). `book_size`: contracts offered at or under
-    the ask in a book read AT the entry (a live lane), which verifies on its own when it covers the order."""
+    -> dict(ok, status verified | unverified | unconfirmed | refuted, how, reason, printed, need, last_trade). `book_size`: contracts
+    offered at or under the ask in a book read AT the entry (a live lane), which verifies on its own when it covers the order.
+    Under a rule set with unconfirmed_ok (QUOTED), an ask the prints do not confirm still counts ("unconfirmed") unless they refute
+    it: it sat under half the last trade, or every trade in the window was more than entry_drift above it."""
     need = max(rules.entry_min_n, qty)
     i = _from(prints, ts)
     last = px_of(prints[i - 1], side) if i > 0 else None
@@ -180,7 +188,13 @@ def taker_buy(prints, ts, ask, side="yes", qty=1.0, rules=HONEST, book_size=None
     if printed >= need - EPS:
         return dict(out, ok=True, status="verified", how="print")
     mins = rules.entry_window_s // 60
-    return dict(out, reason=f"{printed:g} contracts bought at or under the ask within {mins} minutes (under {need:g})")
+    why = f"{printed:g} contracts bought at or under the ask within {mins} minutes (under {need:g})"
+    if not rules.unconfirmed_ok:
+        return dict(out, reason=why)
+    seen = [px_of(p, side) for p in prints[i:] if ts < p[0] <= ts + rules.entry_window_s]
+    if seen and min(seen) > ask + rules.entry_drift + EPS:
+        return dict(out, status="refuted", reason=f"every trade in the window was above {ask + rules.entry_drift:.2f}: the price had moved")
+    return dict(out, ok=True, status="unconfirmed", how="quote", note=why)
 
 
 def taker_sell(prints, ts, bid, side="yes", qty=1.0, rules=HONEST):

@@ -1,0 +1,1150 @@
+{
+ "built": "2026-11-12",
+ "lanes": {
+  "arg_goalless_dip_live": {
+   "checked_at": "2026-11-12T05:53:17+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "sell",
+   "honest": {
+    "confirmed": 2,
+    "halves": null,
+    "n": 2,
+    "outcomes": 2,
+    "roi": 0.5373,
+    "t": 1.04,
+    "without_best": null
+   },
+   "honest_positive": true,
+   "label": "Argentina goalless dip (live)",
+   "note_touch": {
+    "n": 2,
+    "roi": 0.5373
+   },
+   "page": {
+    "n": 2,
+    "roi": 0.5249
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "boxing_cheap_dog": {
+   "checked_at": "2026-11-12T05:53:17+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": true,
+    "t of 2+": false,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "sell",
+   "honest": {
+    "confirmed": 16,
+    "halves": [
+     0.1449,
+     0.4082
+    ],
+    "n": 16,
+    "outcomes": 4,
+    "roi": 0.293,
+    "t": 1.0,
+    "without_best": -0.0054
+   },
+   "honest_positive": true,
+   "label": null,
+   "note_touch": {
+    "n": 16,
+    "roi": 0.293
+   },
+   "page": {
+    "n": 17,
+    "roi": 0.3377
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "challenger_won_here_hold": {
+   "checked_at": "2026-11-12T05:53:17+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": true,
+    "t of 2+": false,
+    "up without its best outcome": true
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 23,
+    "halves": [
+     0.4998,
+     0.5761
+    ],
+    "n": 23,
+    "outcomes": 6,
+    "roi": 0.5462,
+    "t": 1.18,
+    "without_best": 0.4687
+   },
+   "honest_positive": true,
+   "label": null,
+   "note_touch": {
+    "n": 23,
+    "roi": 0.5462
+   },
+   "page": {
+    "n": 23,
+    "roi": 0.5467
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "commod_fav_band|commodities_fav": {
+   "checked_at": "2026-11-12T05:53:17+00:00",
+   "checks": {
+    "10+ outcomes": true,
+    "30+ bets": true,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": true
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 50,
+    "halves": [
+     0.1851,
+     -0.0216
+    ],
+    "n": 64,
+    "outcomes": 22,
+    "roi": 0.0818,
+    "t": 1.18,
+    "without_best": 0.0644
+   },
+   "honest_positive": true,
+   "label": null,
+   "note_touch": {
+    "n": 64,
+    "roi": 0.0818
+   },
+   "page": {
+    "n": 68,
+    "roi": 0.0952
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "corners_ucl_fade|soccer_corners": {
+   "checked_at": "2026-11-12T05:53:17+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 3,
+    "halves": null,
+    "n": 6,
+    "outcomes": 4,
+    "roi": 0.2827,
+    "t": 0.94,
+    "without_best": null
+   },
+   "honest_positive": true,
+   "label": "tracker rule",
+   "note_touch": {
+    "n": 6,
+    "roi": 0.2827
+   },
+   "page": {
+    "n": 6,
+    "roi": 0.2828
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "crypto_fav_band_below|crypto_fav": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": true,
+    "30+ bets": true,
+    "both halves up": true,
+    "t of 2+": false,
+    "up without its best outcome": true
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 29,
+    "halves": [
+     0.1543,
+     0.155
+    ],
+    "n": 40,
+    "outcomes": 24,
+    "roi": 0.1547,
+    "t": 1.73,
+    "without_best": 0.1295
+   },
+   "honest_positive": true,
+   "label": "tracker rule",
+   "note_touch": {
+    "n": 40,
+    "roi": 0.1547
+   },
+   "page": {
+    "n": 41,
+    "roi": 0.1585
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "econ_nc_yes|econ_daily": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 9,
+    "halves": null,
+    "n": 9,
+    "outcomes": 8,
+    "roi": 0.0436,
+    "t": 0.63,
+    "without_best": null
+   },
+   "honest_positive": true,
+   "label": "economic daily, near-certain",
+   "note_touch": {
+    "n": 9,
+    "roi": 0.0436
+   },
+   "page": {
+    "n": 9,
+    "roi": 0.0436
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "ere_draw|soccer": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": true,
+    "30+ bets": false,
+    "both halves up": true,
+    "t of 2+": false,
+    "up without its best outcome": true
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 23,
+    "halves": [
+     0.1009,
+     0.3027
+    ],
+    "n": 29,
+    "outcomes": 13,
+    "roi": 0.2261,
+    "t": 0.65,
+    "without_best": 0.0628
+   },
+   "honest_positive": true,
+   "label": null,
+   "note_touch": {
+    "n": 29,
+    "roi": 0.2261
+   },
+   "page": {
+    "n": 29,
+    "roi": 0.2264
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "finance_spx_nc_no|finance_daily": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": true,
+    "30+ bets": false,
+    "both halves up": true,
+    "t of 2+": false,
+    "up without its best outcome": true
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 15,
+    "halves": [
+     0.0738,
+     0.0752
+    ],
+    "n": 15,
+    "outcomes": 15,
+    "roi": 0.0746,
+    "t": 1.06,
+    "without_best": 0.0725
+   },
+   "honest_positive": true,
+   "label": "S&P 500 near-certain NO",
+   "note_touch": {
+    "n": 15,
+    "roi": 0.0746
+   },
+   "page": {
+    "n": 15,
+    "roi": 0.0746
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "ftts_no_70_80|soccer_ftts": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 1,
+    "halves": null,
+    "n": 8,
+    "outcomes": 4,
+    "roi": 0.1626,
+    "t": 0.8,
+    "without_best": null
+   },
+   "honest_positive": true,
+   "label": "tracker rule",
+   "note_touch": {
+    "n": 8,
+    "roi": 0.1626
+   },
+   "page": {
+    "n": 8,
+    "roi": 0.1626
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "gas_week_cheap_no": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": false,
+    "t of 2+": true,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 3,
+    "halves": null,
+    "n": 3,
+    "outcomes": 2,
+    "roi": 2.3284,
+    "t": 2.64,
+    "without_best": null
+   },
+   "honest_positive": true,
+   "label": null,
+   "note_touch": {
+    "n": 3,
+    "roi": 2.3284
+   },
+   "page": {
+    "n": 6,
+    "roi": 1.4535
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "mentions_dip_hold": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": true,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 41,
+    "halves": null,
+    "n": 41,
+    "outcomes": 2,
+    "roi": -0.0244,
+    "t": -0.05,
+    "without_best": null
+   },
+   "honest_positive": false,
+   "label": null,
+   "note_touch": {
+    "n": 43,
+    "roi": 0.3953
+   },
+   "page": {
+    "n": 41,
+    "roi": -0.0395
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "mls_fade_home|soccer_p05": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": true,
+    "30+ bets": false,
+    "both halves up": true,
+    "t of 2+": false,
+    "up without its best outcome": true
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 24,
+    "halves": [
+     0.2642,
+     0.129
+    ],
+    "n": 28,
+    "outcomes": 12,
+    "roi": 0.2063,
+    "t": 1.26,
+    "without_best": 0.1186
+   },
+   "honest_positive": true,
+   "label": "tracker rule",
+   "note_touch": {
+    "n": 28,
+    "roi": 0.2063
+   },
+   "page": {
+    "n": 28,
+    "roi": 0.2064
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "nba_winmargin_live": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": true,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": true
+   },
+   "evidence": false,
+   "exit": "sell",
+   "honest": {
+    "confirmed": 124,
+    "halves": [
+     0.2691,
+     -0.1781
+    ],
+    "n": 124,
+    "outcomes": 8,
+    "roi": 0.0815,
+    "t": 0.79,
+    "without_best": 0.0137
+   },
+   "honest_positive": true,
+   "label": "NBA win margin YES split",
+   "note_touch": {
+    "n": 124,
+    "roi": 0.146
+   },
+   "page": {
+    "n": 129,
+    "roi": 0.1183
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "nba_wm_nofade": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": true,
+    "both halves up": true,
+    "t of 2+": false,
+    "up without its best outcome": true
+   },
+   "evidence": false,
+   "exit": "sell",
+   "honest": {
+    "confirmed": 117,
+    "halves": [
+     0.1334,
+     0.0126
+    ],
+    "n": 117,
+    "outcomes": 9,
+    "roi": 0.0818,
+    "t": 1.53,
+    "without_best": 0.0603
+   },
+   "honest_positive": true,
+   "label": "NBA win margin NO fade",
+   "note_touch": {
+    "n": 118,
+    "roi": 0.1066
+   },
+   "page": {
+    "n": 105,
+    "roi": 0.0574
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "o35_cheap_no_v5": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "sell",
+   "honest": {
+    "confirmed": 15,
+    "halves": [
+     0.958,
+     -0.288
+    ],
+    "n": 15,
+    "outcomes": 3,
+    "roi": 0.0443,
+    "t": 0.1,
+    "without_best": -0.288
+   },
+   "honest_positive": true,
+   "label": null,
+   "note_touch": {
+    "n": 15,
+    "roi": 0.0443
+   },
+   "page": {
+    "n": 15,
+    "roi": 0.0391
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "sr_a2|soccer_u35": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 4,
+    "halves": null,
+    "n": 4,
+    "outcomes": 4,
+    "roi": 0.2872,
+    "t": 0.67,
+    "without_best": null
+   },
+   "honest_positive": true,
+   "label": "Bundesliga O+D\u2212 v O+D\u2212 \u00b7 over 3.5",
+   "note_touch": {
+    "n": 4,
+    "roi": 0.2872
+   },
+   "page": {
+    "n": 4,
+    "roi": 0.2872
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "sr_a3|soccer_u35": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 1,
+    "halves": null,
+    "n": 2,
+    "outcomes": 2,
+    "roi": 0.2707,
+    "t": 0.74,
+    "without_best": null
+   },
+   "honest_positive": true,
+   "label": "La Liga O\u2212D\u2212 v O\u2212D+ \u00b7 under 3.5",
+   "note_touch": {
+    "n": 2,
+    "roi": 0.2707
+   },
+   "page": {
+    "n": 2,
+    "roi": 0.2707
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "sr_a6|soccer_o25": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": true,
+    "t of 2+": true,
+    "up without its best outcome": true
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 9,
+    "halves": [
+     1.1173,
+     0.3891
+    ],
+    "n": 10,
+    "outcomes": 6,
+    "roi": 0.7532,
+    "t": 2.18,
+    "without_best": 0.6223
+   },
+   "honest_positive": true,
+   "label": "EPL O\u2212D\u2212 v an O+ opponent \u00b7 under 2.5",
+   "note_touch": {
+    "n": 10,
+    "roi": 0.7532
+   },
+   "page": {
+    "n": 10,
+    "roi": 0.7532
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "sr_a7|soccer_u35": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": true,
+    "t of 2+": false,
+    "up without its best outcome": true
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 17,
+    "halves": [
+     0.2763,
+     0.3322
+    ],
+    "n": 17,
+    "outcomes": 4,
+    "roi": 0.3092,
+    "t": 1.08,
+    "without_best": 0.1846
+   },
+   "honest_positive": true,
+   "label": "UCL either team O+D\u2212 \u00b7 over 3.5",
+   "note_touch": {
+    "n": 17,
+    "roi": 0.3092
+   },
+   "page": {
+    "n": 17,
+    "roi": 0.3092
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "sr_c3|soccer_o25": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 4,
+    "halves": null,
+    "n": 4,
+    "outcomes": 4,
+    "roi": -0.1689,
+    "t": -0.35,
+    "without_best": null
+   },
+   "honest_positive": false,
+   "label": "Serie A O+D\u2212 v O+D+ \u00b7 over 2.5",
+   "note_touch": {
+    "n": 4,
+    "roi": -0.1689
+   },
+   "page": {
+    "n": 4,
+    "roi": -0.1689
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "sr_c4|soccer_o25": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 6,
+    "halves": null,
+    "n": 6,
+    "outcomes": 5,
+    "roi": 0.6077,
+    "t": 1.54,
+    "without_best": null
+   },
+   "honest_positive": true,
+   "label": "Serie A O\u2212D\u2212 v O+D\u2212 \u00b7 over 2.5",
+   "note_touch": {
+    "n": 6,
+    "roi": 0.6077
+   },
+   "page": {
+    "n": 6,
+    "roi": 0.6077
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "st_t1h|soccer_team2": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 1,
+    "halves": null,
+    "n": 2,
+    "outcomes": 2,
+    "roi": 0.4751,
+    "t": 0.97,
+    "without_best": null
+   },
+   "honest_positive": true,
+   "label": "T1 matches \u00b7 home team 2+ goals",
+   "note_touch": {
+    "n": 2,
+    "roi": 0.4751
+   },
+   "page": {
+    "n": 2,
+    "roi": 0.4752
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "st_t1m|soccer_u35": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 2,
+    "halves": null,
+    "n": 2,
+    "outcomes": 2,
+    "roi": -0.1763,
+    "t": -0.21,
+    "without_best": null
+   },
+   "honest_positive": false,
+   "label": "T1 matches \u00b7 match over 3.5 goals",
+   "note_touch": {
+    "n": 2,
+    "roi": -0.1763
+   },
+   "page": {
+    "n": 2,
+    "roi": -0.1763
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "st_t1|soccer_team2": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": true,
+    "30+ bets": true,
+    "both halves up": true,
+    "t of 2+": false,
+    "up without its best outcome": true
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 40,
+    "halves": [
+     0.0989,
+     0.232
+    ],
+    "n": 52,
+    "outcomes": 12,
+    "roi": 0.1706,
+    "t": 1.08,
+    "without_best": 0.0386
+   },
+   "honest_positive": true,
+   "label": null,
+   "note_touch": {
+    "n": 52,
+    "roi": 0.1706
+   },
+   "page": {
+    "n": 52,
+    "roi": 0.1706
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "st_t7|soccer_team3": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": true,
+    "t of 2+": false,
+    "up without its best outcome": true
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 1,
+    "halves": [
+     0.3571,
+     0.0865
+    ],
+    "n": 12,
+    "outcomes": 5,
+    "roi": 0.1767,
+    "t": 1.15,
+    "without_best": 0.1269
+   },
+   "honest_positive": true,
+   "label": "O+D+ v O+D+ \u00b7 team 3+ goals \u00b7 NO",
+   "note_touch": {
+    "n": 12,
+    "roi": 0.1767
+   },
+   "page": {
+    "n": 12,
+    "roi": 0.1767
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "team1_form_l5|soccer_team1_intl": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 5,
+    "halves": null,
+    "n": 7,
+    "outcomes": 4,
+    "roi": 0.1973,
+    "t": 1.18,
+    "without_best": null
+   },
+   "honest_positive": true,
+   "label": "tracker rule",
+   "note_touch": {
+    "n": 7,
+    "roi": 0.1973
+   },
+   "page": {
+    "n": 7,
+    "roi": 0.1974
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "team2_form_l10|soccer_team2_intl": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 1,
+    "halves": null,
+    "n": 1,
+    "outcomes": 1,
+    "roi": 0.2183,
+    "t": 0.47,
+    "without_best": null
+   },
+   "honest_positive": true,
+   "label": "tracker rule",
+   "note_touch": {
+    "n": 1,
+    "roi": 0.2183
+   },
+   "page": {
+    "n": 1,
+    "roi": 0.2184
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "team2_ranked|soccer_team2": {
+   "checked_at": "2026-11-12T05:53:18+00:00",
+   "checks": {
+    "10+ outcomes": true,
+    "30+ bets": false,
+    "both halves up": true,
+    "t of 2+": false,
+    "up without its best outcome": true
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 22,
+    "halves": [
+     0.3004,
+     0.1266
+    ],
+    "n": 27,
+    "outcomes": 18,
+    "roi": 0.2038,
+    "t": 1.03,
+    "without_best": 0.139
+   },
+   "honest_positive": true,
+   "label": "tracker rule",
+   "note_touch": {
+    "n": 27,
+    "roi": 0.2038
+   },
+   "page": {
+    "n": 27,
+    "roi": 0.2039
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "top5_dip": {
+   "checked_at": "2026-11-12T05:53:19+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": true,
+    "both halves up": true,
+    "t of 2+": false,
+    "up without its best outcome": true
+   },
+   "evidence": false,
+   "exit": "sell",
+   "honest": {
+    "confirmed": 32,
+    "halves": [
+     0.1352,
+     0.0581
+    ],
+    "n": 32,
+    "outcomes": 7,
+    "roi": 0.0773,
+    "t": 0.48,
+    "without_best": 0.0014
+   },
+   "honest_positive": true,
+   "label": null,
+   "note_touch": {
+    "n": 32,
+    "roi": 0.0773
+   },
+   "page": {
+    "n": 32,
+    "roi": 0.0633
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "u35_low_scoring|soccer_u35_cup": {
+   "checked_at": "2026-11-12T05:53:19+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 0,
+    "halves": null,
+    "n": 2,
+    "outcomes": 2,
+    "roi": 0.488,
+    "t": 0.99,
+    "without_best": null
+   },
+   "honest_positive": true,
+   "label": "tracker rule",
+   "note_touch": {
+    "n": 2,
+    "roi": 0.488
+   },
+   "page": {
+    "n": 2,
+    "roi": 0.4881
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "u35_low_scoring|soccer_u35_intl": {
+   "checked_at": "2026-11-12T05:53:19+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": true,
+    "t of 2+": false,
+    "up without its best outcome": true
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 10,
+    "halves": [
+     0.3588,
+     0.2359
+    ],
+    "n": 17,
+    "outcomes": 7,
+    "roi": 0.2721,
+    "t": 1.89,
+    "without_best": 0.2821
+   },
+   "honest_positive": true,
+   "label": "tracker rule",
+   "note_touch": {
+    "n": 17,
+    "roi": 0.2721
+   },
+   "page": {
+    "n": 17,
+    "roi": 0.2722
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  },
+  "wti_cheap_yes": {
+   "checked_at": "2026-11-12T05:53:19+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "sell",
+   "honest": {
+    "confirmed": 13,
+    "halves": [
+     0.1089,
+     -0.8111
+    ],
+    "n": 13,
+    "outcomes": 4,
+    "roi": -0.5988,
+    "t": -1.84,
+    "without_best": -0.764
+   },
+   "honest_positive": false,
+   "label": null,
+   "note_touch": {
+    "n": 13,
+    "roi": -0.5988
+   },
+   "page": {
+    "n": 13,
+    "roi": -0.602
+   },
+   "rules": "honest-v1",
+   "waiver": null
+  }
+ },
+ "rules": "honest-v1",
+ "updated": "2026-11-12T05:53:19+00:00"
+}
