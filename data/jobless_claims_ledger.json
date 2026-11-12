@@ -1,8 +1,35 @@
 {
  "error": null,
- "events": {},
+ "events": {
+  "KXJOBLESSCLAIMS-26NOV12": {
+   "close": "2026-11-12T13:29:00+00:00",
+   "done": false,
+   "entries": [
+    {
+     "ask_check": {
+      "book": null,
+      "first_quotes": false,
+      "last_trade": null,
+      "printed": 0,
+      "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+      "source": "replayed",
+      "status": "unverified"
+     },
+     "at": "2026-11-12T10:29:00+00:00",
+     "event": "KXJOBLESSCLAIMS-26NOV12",
+     "price": 0.84,
+     "side": "yes",
+     "strike": 180000.0,
+     "ticker": "KXJOBLESSCLAIMS-26NOV12-180000",
+     "ts": 1794479340
+    }
+   ],
+   "frozen": true,
+   "note": null
+  }
+ },
  "lane": "jobless_no_70_85",
- "last_run": null,
+ "last_run": "2026-11-12T12:30:44.594462+00:00",
  "registered": "2026-11-11",
  "since": "2026-11-12",
  "version": "jobless-v1"
