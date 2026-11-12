@@ -66,6 +66,22 @@ stats = D.group_stats('<div class="tiles sp-tiles"><div class="tile"><b>0</b><sp
 check("the group's own four tiles are read, not a later block's", (stats["wl"], stats["roi"], stats["rules"], D.win_pct(7, 2), D.sum_line(stats)),
       ("7–2", "+13.7%", "2", "78%", "78% won · 7–2 · +13.7% return"))
 
+print("\none basis for every tile (2026-11-11): the running rules added up as their rows count them")
+row = lambda stage, rec, roi: (f'<details class="sp-rule" data-stage="{stage}"><summary class="sp-line"><span class="sp-cell num" data-l="Record">{rec}</span>'
+                              f'<span class="sp-cell num" data-l="ROI after fees"><span class="mut">{roi}</span></span><span class="sp-cell">x</span></summary></details>')
+sec = ('<section id="z-rules"><div class="sp-rules-list">' + row("production", "9–0", "+4.4%") + row("sandbox", "18–5", "+3.8%")
+       + row("sandbox", "2–0 wks", "+145.3% held") + '</div></section><section id="z-events"></section>')
+rs = D.rules_stats(sec, "z")
+check("Production and Sandbox rows are added; a weekly row (another unit) is left out", (rs["wl"], rs["rules"]), ("27–5", "2"))
+check("the return is the average per bet", rs["roi"], f"{(9 * 4.4 + 23 * 3.8) / 32:+.1f}%")
+check("a section with no row says so", D.rules_stats('<section id="z-rules"></section>', "z"), None)
+for g in ("crypto", "commodities", "econ", "finance"):
+    a = main.index(f'<section id="{g}-rules"')
+    got = D.rules_stats(main[a:], g)
+    tile = [t for t in tiles if t[0] == g][0]
+    check(f"{g}: the tile is its rule rows added up ({got['wl'] if got else '—'})", tile[3].startswith(got["wl"]) if got else tile[3] == "no settled bets yet", True)
+check("the page says what a tile counts, in a few words", "adds up the section" in main and "Production and Sandbox" in main, True)
+
 print("\nold URLs and anchors")
 for g, label, old in D.GROUPS:
     page = D.redirect_page(g, label, old)
