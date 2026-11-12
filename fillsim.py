@@ -40,15 +40,17 @@ WHAT IT DOES NOT MODEL: other traders reacting to our order, the true queue at a
 CALIBRATION (fillsim_calibrate.py, 2026-11-12, on the follower's own posted bids and sell legs; picked on half the tickers, checked
 on the other half).
   resting buys   190 posted bids, 96 live fills. "Only a print strictly through the bid fills" calls 98.9% right on half A and
-                 98.0% on half B. Counting touches adds two fills, and both are the follower's OWN fill showing on the tape (the
-                 only contracts that traded at that price). The one touch that was not ours (ATHRSO, Nov 1: 13.7 contracts
-                 traded at exactly 10c) did not fill live.
+                 97.0% on half B. Counting touches adds two fills the tape shows, and both are the follower's OWN fill (the only
+                 contracts that traded at that price), so they prove nothing. The one touch that was not ours (ATHRSO, Nov 1:
+                 13.7 contracts traded at exactly 10c) did not fill live.
   resting sells  224 YES-split legs resting from the tip, 120 sold live. Strictly-through calls 97.3% right on both halves. Seven
-                 legs only touched their target: six sold live (an order resting since before the game is early in the queue),
-                 one did not. Strictly-through therefore misses about 1 live fill in 30 on orders that rest early: the simulator
-                 errs toward fewer fills.
+                 legs only touched their target: six sold live, one did not. Half A alone would pick "a touch fills" (100%), but
+                 those six matches are again our own prints. So in a thin book an early order often does fill on a touch, and
+                 strictly-through misses about 1 live sell in 20 there: the simulator errs toward fewer fills. TOUCH (below) is
+                 the other bracket; live results have landed between the two.
   the wait       116 sells posted after a live fill, 80 sold. No wait: 95.8% right, with 3 false sells on the over 3.5 lane
-                 (prints seconds after the fill). 30, 60 and 120 seconds: 97.5%, one false sell. 60 seconds is kept.
+                 (prints seconds after the fill). 5 to 120 seconds tie on half A (98.1%); 30 to 120 seconds leave one false sell
+                 (KASBES, a known executor fault). 60 seconds, the lanes' existing rule, sits inside that band and is kept.
 So honest-v1 is: queue_ahead = infinite (a touch never fills), offer_fills off (no live case decided it), latency 60 s. The queue
 and offer cases stay in the code for a lane that can show its own queue (a saved book).
 """

@@ -65,7 +65,8 @@ def split_lane(ledger, tape):
         snap = e.get("book") or {}
         live_book = (e.get("ask_check") or {}).get("source") == "live" and (e.get("ask_check") or {}).get("how") == "book"
         sim = F.trade(tape(e["id"]), e.get("side", "yes"),
-                      dict(kind="taker", ts=ts(e["entry_at"]), price=e["price"], book_size=snap.get("at_or_under") if live_book else None),
+                      dict(kind="taker", ts=ts(e["entry_at"]), price=e["price"],
+                           book_size=snap.get("at_or_under", e.get("book_size")) if live_book else None),
                       [dict(target=l["target"], share=l["share"]) for l in e["legs"]], payout=e["payout"], rules=RULES[0])
         out.append(row(e["id"], e["event"], e["roi"], sim, e.get("roi_held")))
     return out
@@ -244,9 +245,9 @@ def lanes():
         "wti_cheap_yes": ("WTI cheap YES split", "sell", None, lambda tp: split_lane("wti_cheap_yes_ledger", tp), False),
         "gas_week_cheap_no": ("AAA gas weekly cheap NO", "hold", None, lambda tp: split_lane("gas_week_cheap_no_ledger", tp), False),
         "boxing_cheap_dog": ("Boxing cheap underdog split", "sell", None, lambda tp: split_lane("boxing_cheap_dog_ledger", tp), False),
-        "ufc_dog": ("UFC underdog split", "sell", None, lambda tp: split_lane("ufc_dog_ledger", tp), False),
-        "cfb_dog_tp50": ("College football underdog, +50% sell", "sell", None, lambda tp: chaos_lane("cfb_dog_tp50", tp), False),
-        "cfb_home_dog_x4": ("College football home underdog, legs", "sell", None, lambda tp: chaos_lane("cfb_home_dog_x4", tp), False),
+        "ufc_dog": ("UFC underdog split (retired Nov 3)", "sell", None, lambda tp: split_lane("ufc_dog_ledger", tp), True),
+        "cfb_dog_tp50": ("College football underdog, +50% sell (retired Nov 11)", "sell", None, lambda tp: chaos_lane("cfb_dog_tp50", tp), True),
+        "cfb_home_dog_x4": ("College football home underdog, sell at 4x (retired Nov 11)", "sell", None, lambda tp: chaos_lane("cfb_home_dog_x4", tp), True),
         "challenger_cheap_hold_base": ("Challenger cheap side, hold (baseline)", "hold", None, lambda tp: chaos_lane("challenger_cheap_hold_base", tp), False),
         "challenger_won_here_hold": ("Challenger won-here, hold", "hold", None, lambda tp: chaos_lane("challenger_won_here_hold", tp), False),
         "gas_cheap_no": ("AAA gas daily cheap NO (retired Nov 11)", "sell", None, lambda tp: split_lane("gas_cheap_no_ledger", tp), True),
