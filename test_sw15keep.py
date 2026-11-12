@@ -76,26 +76,25 @@ print("\nthe page")
 real = W.load()
 html = WB.section(real)
 live = html.split('id="sw15-archive"')[0]
-check("the live area: the three rules (A, C, the Lead Swap favourite), C's 25c companion and the Loss Reader watch row",
-      re.findall(r'data-source="([a-z0-9_]+)"', live), ["sp500_fav5", "sp500_flip15", "sp500_flip25", "leadswap_fav",
-                                                         "lossreader"])
-check("one list: A, C, its 25c companion right under it, B, the Loss Reader watch row",
-      re.findall(r'id="sw15-([a-z0-9_]+)"', live)[:5], ["sp500_fav5", "sp500_flip15", "sp500_flip25", "leadswap_fav", "lossreader"])
+check("the live area: the three rules (A, C, the Lead Swap favourite v2) and C's 25c companion; the Loss Reader retired 2026-11-12",
+      re.findall(r'data-source="([a-z0-9_]+)"', live), ["sp500_fav5", "sp500_flip15", "sp500_flip25", "leadswap_v2"])
+check("one list: A, C, its 25c companion right under it, B (version 2)",
+      re.findall(r'id="sw15-([a-z0-9_]+)"', live)[:4], ["sp500_fav5", "sp500_flip15", "sp500_flip25", "leadswap_v2"])
 check("short names", all(n in live for n in ("A · S&amp;P 500 favourite, 5 min left", "C · S&amp;P 500 underdog at 15c",
-      "C companion · at 25c (observation)", "B · Lead Swap favourite", "Watch · Loss Reader (Solana)")), True)
+      "C companion · at 25c (observation)", "B · Lead Swap favourite v2 (Bitcoin, WTI, NEAR)")), True)
 check("the why lines sit inside the folds (closed by default), with the forward and history numbers",
       (live.count('class="sm sw15-why"'), "forward +4.9% (60 bets)" in live, "forward +66.5% (28 bets)" in live,
-       "<details open" in live), (3, True, True, False))
+       "<details open" in live), (4, True, True, False))
 check("one section heading, no per-lane h3 blocks; one closed method fold", (live.count("<h3"), live.count("sw15-how")),
       (0, 1))
-check("the Loss Reader is a watch row to 30 bets", "watch · " in live and "/30" in live, True)
+check("the Loss Reader is no longer in the live area, and B (version 2) reads Too early until 30 bets", ("Loss Reader" in live, "Too early (" in live), (False, True))
 check("ONE retired block, closed", (html.count('id="sw15-archive"'), "<b>Retired · final records</b>" in html), (1, True))
 arc = html.split('id="sw15-archive"')[1]
 check("the archive: the seven lanes retired today with their records, and the v1 baselines",
       ("<h4>Narrowed to three rules (Nov 11)</h4>" in arc, arc.split("<h4>Narrowed to three rules (Nov 11)</h4>")[1]
        .split("</details>")[0].count("<tr>") - 1, "<h4>v1 baselines (background, every market)</h4>" in arc), (True, 7, True))
-check("the Sandbox index lists the three rules and the watch row only (and the favourite's control)",
-      [x["lane"] for x in WB.index_rows(real)], ["sp500_fav5", "sp500_flip15", "lossreader", "leadswap_fav", "leadswap_fav_ctrl"])
+check("the Sandbox index lists the three rules (B is version 2) and the favourite's control",
+      [x["lane"] for x in WB.index_rows(real)], ["sp500_fav5", "sp500_flip15", "leadswap_v2", "leadswap_v2_ctrl"])
 check("plain copy: no dollar amount, no guarded phrase, no inline style", (re.search(r"\$\d", html),
       sandbox_audit.COPY_RE.findall(html), "style=" in html), (None, [], False))
 

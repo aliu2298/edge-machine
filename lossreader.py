@@ -197,6 +197,9 @@ def from_shards(state):
 def ledger(state, now=None):
     now = now or dt.datetime.now(dt.timezone.utc)
     windows = from_shards(state)
+    stop = C.retire_at("lossreader")
+    if stop:                       # retired 2026-11-12 (sw15cuts round 3): nothing from the cut on, so the record and both comparison books are final
+        windows = [w for w in windows if w["t"] < int(W._ts(stop))]
     bets, st = replay(windows)
     start = int(W._ts(FROM))
     kept = [m for m in MARKETS if m not in C.cut("lossreader")]
@@ -211,7 +214,7 @@ def ledger(state, now=None):
                 updated=now.isoformat(timespec="seconds"), now=now_line(st, nxt), now_for=nxt,
                 record=stats(mine), per_market=per, every=stats(every), fixed2=stats(fixed),
                 no_fills=sum(1 for b in mine if b["status"] == "no_fill"), days=days, kept=kept,
-                cut={m: stats([b for b in gone if b["m"] == m]) for m in C.cut("lossreader")}, cut_at=C.CUT_AT,
+                cut={m: stats([b for b in gone if b["m"] == m]) for m in C.cut("lossreader")}, cut_at=C.CUT_AT, retired_at=stop,
                 bets=[dict(b, at=dt.datetime.fromtimestamp(b["t"], dt.timezone.utc).isoformat()) for b in mine][-200:])
 
 
