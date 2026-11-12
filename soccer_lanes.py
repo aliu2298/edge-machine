@@ -402,6 +402,92 @@ def sa_rows(state=None):
     return live, gone_rows
 
 
+# ------------------------------------------------------------------ the African qualifiers goals check (africa_goals.py)
+def _pct(x, digits=1):
+    return "—" if x is None else f"{x * 100:+.{digits}f}%".replace("-", "−")
+
+
+def _africa_windows(picks):
+    """[(label, picks)] by international window: match days more than 10 days apart start a new one."""
+    import datetime as dt
+    days = sorted({str(p.get("start") or "")[:10] for p in picks if p.get("start")})
+    groups = []
+    for d in days:
+        day = dt.date.fromisoformat(d)
+        if groups and (day - groups[-1][-1]).days <= 10:
+            groups[-1].append(day)
+        else:
+            groups.append([day])
+    out = []
+    for g in groups:
+        label = f"{g[0]:%b} {g[0].day}" + (f" to {g[-1]:%b} {g[-1].day}" if g[-1] != g[0] else "") + f" {g[-1].year}"
+        keys = {x.isoformat() for x in g}
+        out.append((label, [p for p in picks if str(p.get("start") or "")[:10] in keys]))
+    return out
+
+
+def _africa_window_table(picks):
+    import africa_goals as AG
+    heads = ("Settled", "Match days", "Won", "Price paid", "Points", "Return after fees")
+    body = ""
+    for label, ps in _africa_windows(picks):
+        a = AG.record(ps)
+        n = a["n"]
+        cells = (n, a["days"], f"{a['won'] / n * 100:.1f}%" if n else "—", f"{a['price'] * 100:.1f}c" if n else "—",
+                 f"{a['excess'] * 100:+.1f}".replace("-", "−") if n else "—", _pct(a["roi_fee"]) if n else "—")
+        body += (f'<tr><td data-l="Window">{esc(label)}</td>'
+                 + "".join(f'<td class="num" data-l="{h}">{esc(c)}</td>' for h, c in zip(heads, cells)) + "</tr>")
+    if not body:
+        return ""
+    return ('<div class="tbl"><table><thead><tr><th>Window</th>' + "".join(f'<th class="num">{h}</th>' for h in heads)
+            + f'</tr></thead><tbody>{body}</tbody></table></div>'
+            '<p class="sm mut">Points: the share of bets won minus the price paid.</p>')
+
+
+def africa_rows(state=None):
+    """The African qualifiers goals check: one row per bet type and the combined row, pinned near the top of the Sandbox
+    list. An observation lane (a pre-registered forward check): never in Production, so every row is a Sandbox row."""
+    import africa_goals as AG
+    state = state if state is not None else AG.load()
+
+    def result(p):
+        res = {"open": "open", "won": "won", "lost": "lost", "no_result": "no result", "no_fill": "no fill"}.get(p.get("status"), "")
+        return res + (f" · {_pct(p['profit'] / 100)}" if p.get("profit") is not None else "")
+
+    cols = [KICK, MATCH, ("Bet", lambda p: (f"{p['team']} to score" if p.get("team") else AG.ROWS[p["rule"]]["label"])),
+            PRICE, ("Entry", lambda p: "backfilled" if p.get("backfilled") else "logged before kickoff"), ("Result", result)]
+    shared = [("Matches", "Every AFCON qualifier Kalshi lists. No selection"),
+              ("Entry", "The ask on the hourly quote three hours before the ESPN kickoff. A bet logged after its kickoff is marked backfilled"),
+              ("Fills and fees", "The ask counts unless trade prints refute it; a refuted entry is left out. Exchange taker fee"),
+              ("Score", "A match day counts as one outcome"),
+              ("Stage", "Observation only. A pre-registered forward check, never in Production"),
+              ("Pre-registration", AG.PREREG)]
+    note = "Observation lane: a pre-registered forward check on one lead. Paper, never in Production."
+    rows = []
+    for key, meta in AG.ROWS.items():
+        picks = AG.picks_of(state, key)
+        details = (params_html([("Bet", f"{meta['label']}, at the ask, held to settlement"),
+                                ("The lead", f"September window: {meta['lead']}"),
+                                ("Holds if", f"On the Nov 12 to 17 window it {meta['held']}")] + shared)
+                   + _africa_window_table(picks))
+        r = row(f"africa_goals_{key.lower()}", meta["sport"], f"African qualifiers · {meta['label']} · every match", meta["market"],
+                AG.record(picks), details, open_n=sum(p.get("status") == "open" for p in picks),
+                entries=entries_table(picks, cols), kind="Observation", note=note, anchor=f"africa-goals-{key.lower()}")
+        r["pin"], r["after"] = True, "africa_goals_all"      # the three bet types sit right under the combined row
+        rows.append(r)
+    every = AG.picks_of(state)
+    details = (params_html([("Bet", "The three bets below, pooled: NO on over 3.5, YES on over 1.5, YES on each side to score"),
+                            ("Holds if", "All three conditions hold on the Nov 12 to 17 window. If one fails the lead is dropped")] + shared)
+               + _africa_window_table(every))
+    r = row("africa_goals_all", "soccer_goals_intl", "African qualifiers · all three goal bets", "Goals", AG.record(every), details,
+            open_n=sum(p.get("status") == "open" for p in every), entries=entries_table(every, cols), kind="Observation",
+            note=note, anchor="africa-goals")
+    r["pin"] = True
+    for x in [r] + rows:            # the fold lists the lane's own entries; it has no tracker picks to show above them
+        x["own"]["entries_only"] = True
+    return [r] + rows
+
+
 # ------------------------------------------------------------------ the in-play lanes
 def o35_row(state=None):
     import chaos_replay as CR
@@ -564,6 +650,10 @@ def rows_and_inputs(d, st, now):
         d, st, blob = TRP.page_inputs(d, st, blob, TR.load(), now=now)
     except Exception as exc:                                    # noqa: BLE001
         print(f"soccer_lanes: soccer_team_rules_production failed: {type(exc).__name__}: {exc}")
+    try:
+        live += africa_rows()
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"soccer_lanes: the African qualifiers goals check failed: {type(exc).__name__}: {exc}")
     try:
         import o35_production as OP
         live.append(o35_row())
