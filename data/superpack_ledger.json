@@ -628,6 +628,10 @@
    "at": "2026-11-12T18:34:28.396087+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXSOLD-26NOV1217-T80.9999\", \"a\"]]": {
+   "at": "2026-11-12T19:03:56.391030+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"ere_o15\", [\"ere_o15:KXEREDIVISIETOTAL-26NOV06WILZWO-2\", \"a\"]]": {
    "at": "2026-11-06T08:57:55.916333+00:00",
    "pool": "entered"
@@ -2688,7 +2692,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-12T18:53:18.099627+00:00",
+ "last_run": "2026-11-12T19:03:56.391030+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -8387,6 +8391,29 @@
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXSOLD-26NOV1217-T80.9999",
+   "entered_at": "2026-11-12T19:03:56.391030+00:00",
+   "entities": [
+    "Solana"
+   ],
+   "id": "superpack:[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXSOLD-26NOV1217-T80.9999\", \"a\"]]",
+   "lane": "crypto_fav_band_v2",
+   "logged": "2026-11-12T19:03:08+00:00",
+   "matched": [
+    "Solana"
+   ],
+   "pid": "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXSOLD-26NOV1217-T80.9999\", \"a\"]]",
+   "price": 0.71,
+   "profit": null,
+   "scope": "crypto_fav",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Crypto",
    "src": "sandbox",
    "status": "open"
   }
