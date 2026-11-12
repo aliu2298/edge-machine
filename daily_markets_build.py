@@ -111,6 +111,33 @@ def group_stats(body):
     return out
 
 
+def rules_stats(body, group):
+    """The section's running rules added up AS THEIR ROWS COUNT THEM (Production and Sandbox lists together): W–L summed, the return
+    weighted by bets. A row in another unit (a weekly rule, '2–0 wks') is left out. None when the section has no such row."""
+    a = body.find(f'<section id="{group}-rules"')
+    if a < 0:
+        return None
+    sec = body[a:_close(body, a)]
+    won = lost = rows = 0
+    num = den = 0.0
+    for m in re.finditer(r'<details class="sp-rule[^"]*".*?</summary>', sec, re.S):
+        cells = {k: _text(v) for k, v in re.findall(r'data-l="([^"]+)">(.*?)</span>(?=<span class="sp-cell|</summary>)', m.group(0), re.S)}
+        rec = WL_RE.match(cells.get("Record", ""))
+        if not rec:
+            continue
+        w, l = int(rec.group(1)), int(rec.group(2))
+        won += w
+        lost += l
+        rows += 1
+        r = re.match(r"^([+−-]?\d+(?:\.\d+)?)%", cells.get("ROI after fees", ""))
+        if r and w + l:
+            num += (w + l) * float(r.group(1).replace("−", "-"))
+            den += w + l
+    if not won + lost:
+        return None
+    return dict(won=won, lost=lost, wl=f"{won}–{lost}", rules=str(rows), roi=(f"{num / den:+.1f}%".replace("-", "−") if den else None))
+
+
 def win_pct(won, lost):
     return f"{100 * won / (won + lost):.0f}%" if won is not None and (won + lost) else None
 
@@ -257,10 +284,16 @@ def body_html(parts):
     shells = []
     for g, label, _f in GROUPS:
         stats = group_stats(parts[g])
+        # One basis for every tile (2026-11-11): the running rules added up as their rows below count them, Production and Sandbox
+        # together. The builders' own tiles mix bases (since Production for Crypto, Econ and Finance; the Sandbox record for Commodities).
+        rs = rules_stats(parts[g], g)
+        if rs:
+            stats.update(won=rs["won"], lost=rs["lost"], wl=rs["wl"], roi=rs["roi"], rules=rs["rules"], label="together")
         entries.append((g, label, stats))
         shells.append(f'<section id="{g}" class="dm-group" data-sp-group="{g}">\n{section_shell(g, label, parts[g], stats)}\n</section>')
     out = [f'<h1>{TITLE}</h1>\n<p class="lede">Kalshi daily-close ladders, one closed section per group: {links}. '
-           f'Win % and return are each section\'s own record. Paper unless a row says Production.</p>',
+           f'Each tile adds up the section\'s running rules, Production and Sandbox, as their rows below count them (a market-day or an event is one bet); '
+           f'the return is the average per bet after fees. Paper unless a row says Production.</p>',
            summary_tiles(entries), sw] + shells
     out.append(f"<footer>{esc(_foot())}</footer>")
     return "\n".join(out) + "\n"
