@@ -2436,7 +2436,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-11T23:16:05.586336+00:00",
+ "last_run": "2026-11-12T00:04:40.235205+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -7519,14 +7519,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXSILVERD-26NOV1117-T51.75\", \"a\"]]",
    "price": 0.79,
-   "profit": null,
+   "profit": -1.0,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-12T00:04:16+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXBTCD-26NOV1117-T74749.99",
@@ -7611,14 +7611,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXCOPPERD-26NOV1117-T6.36\", \"a\"]]",
    "price": 0.7,
-   "profit": null,
+   "profit": -1.0,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-12T00:04:24+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXUEFANLTEAMTOTAL-26NOV13SCOMKD-SCO2",
@@ -7680,14 +7680,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXSILVERD-26NOV1117-T51.50\", \"a\"]]",
    "price": 0.97,
-   "profit": null,
+   "profit": 0.0309,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-12T00:04:38+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   }
  ],
  "registered": "2026-11-05",
