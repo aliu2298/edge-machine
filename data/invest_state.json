@@ -1,8 +1,8 @@
 {
  "collector": {
-  "last_ts": 1794495602,
+  "last_ts": 1794499202,
   "markets": 60,
-  "rows_24h": 85080
+  "rows_24h": 84900
  },
  "events": [
   {
@@ -25,17 +25,6 @@
   }
  ],
  "flags": [
-  {
-   "gap": -0.0398,
-   "gap_15m": -0.04145,
-   "gap_5m": -0.03925,
-   "gap_60m": -0.04581,
-   "rth": false,
-   "spread_bp": 4.4,
-   "sym": "NVDA",
-   "ticker": "KXNVDAPERP",
-   "ts": 1794190022
-  },
   {
    "gap": 0.01128,
    "gap_15m": 0.01343,
@@ -5457,6 +5446,7 @@
    "gap": 0.02566,
    "gap_15m": 0.00041,
    "gap_5m": -0.00032,
+   "gap_60m": -0.00063,
    "rth": false,
    "spread_bp": 511.8,
    "sym": "AMAT",
@@ -5467,6 +5457,7 @@
    "gap": 0.06188,
    "gap_15m": -0.00038,
    "gap_5m": 0.00019,
+   "gap_60m": 0.00021,
    "rth": true,
    "spread_bp": 1170.8,
    "sym": "AMD",
@@ -5475,7 +5466,9 @@
   },
   {
    "gap": -0.02476,
+   "gap_15m": 0.0005,
    "gap_5m": -3e-05,
+   "gap_60m": 0.00024,
    "rth": true,
    "spread_bp": 526.2,
    "sym": "CAT",
@@ -5489,9 +5482,19 @@
    "sym": "CSCO",
    "ticker": "KXCSCOPERP",
    "ts": 1794191641
+  },
+  {
+   "gap": -0.01032,
+   "gap_15m": -0.00076,
+   "gap_5m": 3e-05,
+   "rth": true,
+   "spread_bp": 218.5,
+   "sym": "TXN",
+   "ticker": "KXTXNPERP",
+   "ts": 1794495661
   }
  ],
- "last_run": "2026-11-12T15:00:08+00:00",
+ "last_run": "2026-11-12T16:00:08+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",

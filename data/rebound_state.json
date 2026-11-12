@@ -812,6 +812,42 @@
    "target": 6.682932,
    "ticker": "KXPANWPERP",
    "touch_ts": 1794492001
+  },
+  {
+   "backfill": false,
+   "day": "2026-11-12",
+   "id": "rb_5d|KXNEMPERP|2026-11-12",
+   "lane": "rb_5d",
+   "level": 2.2656,
+   "level_stock": 113.28,
+   "note": "no print at or through the ask in 5 minutes",
+   "signal_ts": 1794498300,
+   "slide_high": 127.28,
+   "status": "no_fill",
+   "stop": 2.242944,
+   "strength": 3,
+   "sym": "NEM",
+   "target": 2.4056,
+   "ticker": "KXNEMPERP",
+   "touch_ts": 1794496922
+  },
+  {
+   "backfill": false,
+   "day": "2026-11-12",
+   "id": "rb_24h|KXNEMPERP|2026-11-12",
+   "lane": "rb_24h",
+   "level": 2.2656,
+   "level_stock": 113.28,
+   "note": "no print at or through the ask in 5 minutes",
+   "signal_ts": 1794498300,
+   "slide_high": 119.91,
+   "status": "no_fill",
+   "stop": 2.242944,
+   "strength": 3,
+   "sym": "NEM",
+   "target": 2.3319,
+   "ticker": "KXNEMPERP",
+   "touch_ts": 1794496861
   }
  ],
  "from": "2026-11-12T00:00:00+00:00",
@@ -829,7 +865,7 @@
    "strong": true
   }
  },
- "last_run": "2026-11-12T15:00:15+00:00",
+ "last_run": "2026-11-12T16:00:16+00:00",
  "prereg_sha256": "17ecd1cd57183bacd45e8e1e6477c542b4ecaaa88a3e8b8a62fa395bbc45a581",
  "ratios": {
   "AAPL": 49.9677,
