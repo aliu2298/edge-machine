@@ -272,7 +272,14 @@ def definition(d, row):
     """The entry parameters first, then the registered definition."""
     dl = "".join(f"<dt>{esc(k)}</dt><dd>{esc(v)}</dd>" for k, v in params(row.get("name") or SOURCE))
     import sport_page as SP
-    return f'<dl class="sp-params">{dl}</dl>' + SP.definition_html(row["meta"].get("note"))
+    out = f'<dl class="sp-params">{dl}</dl>' + SP.definition_html(row["meta"].get("note"))
+    if row.get("name") == "crypto_fav_band_below":                  # two display-only watch splits (crypto_watch.py, 2026-11-13, Olu)
+        try:
+            import crypto_watch as W
+            out += W.block(d)
+        except Exception:                                           # noqa: BLE001  (a watch never breaks the page)
+            pass
+    return out
 
 
 def recent_html(d, row, now):
