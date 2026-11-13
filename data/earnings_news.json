@@ -195,7 +195,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-13T19:00:32Z",
+ "calendar_at": "2026-11-13T20:00:27Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -2108,9 +2108,29 @@
     "width": 0.7166666666666668
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-13T20:01:25Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 392049180.3278689,
+    "rungs": 6,
+    "width": 9590909.090909064
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-13T20:01:25Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.671111111111111,
+    "rungs": 15,
+    "width": 0.7166666666666668
+   },
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-13T19:01:35Z",
+ "last_run": "2026-11-13T20:02:01Z",
  "predictions": [
   {
    "call": {
@@ -2453,6 +2473,44 @@
    "side": -1,
    "status": "open",
    "sym": "QQQ"
+  },
+  {
+   "call": {
+    "status": "pending"
+   },
+   "entry_due": "2026-11-13T20:01:27Z",
+   "exit_due": "2026-11-20T21:00:00Z",
+   "family": "post_drift",
+   "id": "post_drift:AMAT:2026-11-12",
+   "logged_at": "2026-11-13T20:01:27Z",
+   "perp": "KXAMATPERP",
+   "random_side": -1,
+   "reaction": -0.03384,
+   "reason": "Reaction since the last close before the report: -3.4%.",
+   "report": "2026-11-12",
+   "report_time": "after-hours",
+   "side": -1,
+   "status": "pending",
+   "sym": "AMAT"
+  },
+  {
+   "call": {
+    "status": "pending"
+   },
+   "entry_due": "2026-11-13T20:01:27Z",
+   "exit_due": "2026-11-20T21:00:00Z",
+   "family": "post_drift",
+   "id": "post_drift:CSCO:2026-11-12",
+   "logged_at": "2026-11-13T20:01:27Z",
+   "perp": "KXCSCOPERP",
+   "random_side": -1,
+   "reaction": -0.06262,
+   "reason": "Reaction since the last close before the report: -6.3%.",
+   "report": "2026-11-12",
+   "report_time": "after-hours",
+   "side": -1,
+   "status": "pending",
+   "sym": "CSCO"
   }
  ],
  "registered": "2026-11-07",
@@ -2461,6 +2519,7 @@
   "2026-11-09",
   "2026-11-10",
   "2026-11-11",
-  "2026-11-12"
+  "2026-11-12",
+  "2026-11-13"
  ]
 }
