@@ -456,7 +456,7 @@ def africa_rows(state=None):
         res = {"open": "open", "won": "won", "lost": "lost", "no_result": "no result", "no_fill": "no fill"}.get(p.get("status"), "")
         return res + (f" · {_pct(p['profit'] / 100)}" if p.get("profit") is not None else "")
 
-    cols = [KICK, MATCH, ("Bet", lambda p: (f"{p['team']} to score" if p.get("team") else AG.ROWS[p["rule"]]["label"])),
+    cols = [KICK, MATCH, ("Bet", lambda p: (f"{p['team']} to score" if p.get("team") else AG.ALL_ROWS[p["rule"]]["label"])),
             PRICE, ("Entry", lambda p: "backfilled" if p.get("backfilled") else "logged before kickoff"), ("Result", result)]
     shared = [("Matches", "Every AFCON qualifier Kalshi lists. No selection"),
               ("Entry", "The ask on the hourly quote three hours before the ESPN kickoff. A bet logged after its kickoff is marked backfilled"),
@@ -486,6 +486,25 @@ def africa_rows(state=None):
             open_n=sum(p.get("status") == "open" for p in every), entries=entries_table(every, cols), kind="Observation",
             note=note, anchor="africa-goals")
     r["pin"] = True
+    # The BTTS row, added Nov 13 2026 after the window opened (africa_goals.BTTS). Its own row, apart from the pooled one: it counts only
+    # kickoffs after 18:30 UTC Nov 13, and the window's earlier matches are shown here, flagged, and left out of every figure.
+    bt = AG.picks_of(state, "BTTS")
+    inc = AG.counted(bt)
+    bcols = cols[:4] + [("Counts", lambda p: "counts" if p.get("counted", True) else "shown, not counted (kicked off before 18:30 UTC Nov 13)")] + cols[4:]
+    bshared = [x for x in shared if x[0] != "Pre-registered"] + [
+        ("Pre-registered", "Addendum of Nov 13 2026, written before 18:30 UTC. The three rows' rules are unchanged"),
+        ("Counts", "Only matches that kick off after 18:30 UTC on Nov 13 2026. Earlier matches of the window are shown and flagged, never counted"),
+        ("Not tracked", "First-half both teams to score")]
+    bdet = (params_html([("Bet", f"{AG.BTTS['label']}, at the ask, held to settlement"), ("Added", AG.BTTS_LABEL),
+                         ("The lead", f"September window: {AG.BTTS['lead']}. The same lean seen through another market, not new evidence"),
+                         ("Holds if", "On the counted matches it wins more often than its price, by 3 points or more. Under 10 counted matches it is too few to say, "
+                                      "and is read again on the next African window")] + bshared)
+            + _africa_window_table(inc))
+    rb = row("africa_goals_btts", AG.BTTS["sport"], f"African qualifiers · {AG.BTTS['label']} · every match · {AG.BTTS_LABEL}", AG.BTTS["market"],
+             AG.record(bt), bdet, open_n=sum(p.get("status") == "open" for p in inc), entries=entries_table(bt, bcols), kind="Observation",
+             note=note, anchor="africa-goals-btts")
+    rb["pin"], rb["after"] = True, "africa_goals_all"
+    rows.append(rb)
     for x in [r] + rows:            # the fold lists the lane's own entries; it has no tracker picks to show above them
         x["own"]["entries_only"] = True
     return [r] + rows

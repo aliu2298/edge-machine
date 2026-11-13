@@ -65,6 +65,16 @@ ROWS = {
     "T1": dict(label="YES on each side to score", market="Team 1+", series=TEAM, side="yes", line=0.5, sport="soccer_team1_intl",
                lead="9.7 points underpriced on 91 sides", held="wins more often than its price, by 3 points or more"),
 }
+# A fourth row, added Nov 13 2026 after the window opened (docs/africa_btts_2026-11-13.md and the dated addendum in the pre-registration):
+# YES on both teams to score, at the same hourly quote. Only kickoffs after COUNT_AFTER count; the window's earlier matches are logged
+# from the same quote, flagged `counted: False`, shown and never in the record. Kept apart from ROWS: the three pre-registered rows
+# and the pooled row do not change.
+BTTS_SERIES = "KXAFCONBTTS"
+COUNT_AFTER = "2026-11-13T18:30:00+00:00"
+BTTS_LABEL = "added Nov 13 2026, after the window opened"
+BTTS = dict(label="YES on both teams to score", market="Both teams to score", series=BTTS_SERIES, side="yes", line=None, sport="soccer_btts_intl",
+            lead="54.2% won at 38.9c, 15.2 points underpriced on 48 matches", held="wins more often than its price, by 3 points or more")
+ALL_ROWS = {**ROWS, "BTTS": BTTS}
 # Kalshi name -> ESPN name, normalised, where the two share no exact form.
 ALIASES = {"congo republic": "congo", "republic of congo": "congo", "congo brazzaville": "congo",
            "dr congo": "congo dr", "democratic republic of congo": "congo dr", "cote d ivoire": "ivory coast",
@@ -77,7 +87,7 @@ def load(path=PATH):
     if os.path.exists(path):
         with open(path) as f:
             return json.load(f)
-    return {"version": "africa-goals-v1", "rules": {k: {"picks": []} for k in ROWS}, "skips": {}, "runs": []}
+    return {"version": "africa-goals-v1", "rules": {k: {"picks": []} for k in ALL_ROWS}, "skips": {}, "runs": []}
 
 
 # ---------- names and fixtures ----------
@@ -163,8 +173,8 @@ def series_events(fetch):
     return list(out.values()), errs
 
 
-def team_markets(suffix, fetch):
-    for path in (f"markets?event_ticker={TEAM}-{suffix}&limit=100", f"historical/markets?event_ticker={TEAM}-{suffix}&limit=100"):
+def team_markets(suffix, fetch, series=TEAM):
+    for path in (f"markets?event_ticker={series}-{suffix}&limit=100", f"historical/markets?event_ticker={series}-{suffix}&limit=100"):
         try:
             ms = fetch(path).get("markets") or []
             if ms:
@@ -214,6 +224,13 @@ def wanted(ev, fetch):
         hit = TEAM_RE.match(str(m.get("yes_sub_title") or ""))
         if hit:
             out.append(("T1", TEAM, m, hit.group(1).strip()))
+    # The BTTS row's single market. A BTTS event Kalshi has not listed (or a read that fails) never takes the other rows down.
+    try:
+        for m in team_markets(ev["event_ticker"].split("-", 1)[1], fetch, BTTS_SERIES):
+            if str(m.get("ticker", "")).endswith("-BTTS"):
+                out.append(("BTTS", BTTS_SERIES, m, None))
+    except Exception:                                           # noqa: BLE001
+        pass
     return out
 
 
@@ -225,16 +242,28 @@ def pick_for(key, series, m, team, f, ev, now, fetch):
     if not q:
         return None, "no two-sided hourly quote at the entry"
     b, a, end = q
-    side = ROWS[key]["side"]
+    side = ALL_ROWS[key]["side"]
     price = round(a if side == "yes" else 1 - b, 4)
     if not PRICE_MIN <= price <= PRICE_MAX:
         return None, f"price {price:.2f} outside 2c to 98c"
     return dict(id=f"{key}:{m['ticker']}", rule=key, league=LEAGUE, event=ev["event_ticker"], match=f"{f['home']} v {f['away']}",
-                start=f["kickoff"], ticker=m["ticker"], series=series, line=ROWS[key]["line"], side=side, team=team,
+                start=f["kickoff"], ticker=m["ticker"], series=series, line=ALL_ROWS[key]["line"], side=side, team=team,
                 price=price, bid=b, ask=a, entry_at=dt.datetime.fromtimestamp(t, UTC).isoformat(),
                 quote_end=dt.datetime.fromtimestamp(end, UTC).isoformat(),
                 title=m.get("title") or m.get("yes_sub_title"), logged=now.isoformat(), backfilled=now > k,
-                how="hourly quote 3h before kickoff" + (", logged after kickoff" if now > k else ""), status="open"), None
+                how="hourly quote 3h before kickoff" + (", logged after kickoff" if now > k else ""), status="open",
+                **({"counted": counts(f["kickoff"])} if key == "BTTS" else {})), None
+
+
+def counts(kickoff):
+    """A BTTS bet counts only when the match kicks off after 18:30 UTC on Nov 13 2026."""
+    k, c = D.instant(kickoff), D.instant(COUNT_AFTER)
+    return bool(k and c and k > c)
+
+
+def counted(picks):
+    """The picks that are in a record: every pick, except a BTTS pick flagged `counted: False`."""
+    return [p for p in picks if p.get("counted", True)]
 
 
 def due(f, now):
@@ -286,7 +315,7 @@ def settle(state, now, fetch, tape=_tape):
 
 def run(state, fixtures, now=None, fetch=D.get, tape=_tape):
     now = now or dt.datetime.now(UTC)
-    for k in ROWS:
+    for k in ALL_ROWS:
         state["rules"].setdefault(k, {"picks": []})
     skips = state.setdefault("skips", {})
     seen = {p["id"] for lane in state["rules"].values() for p in lane["picks"]}
@@ -344,7 +373,7 @@ def record(picks):
     n won + lost, n_price the no-result settles, roi_fee the mean return after fees, expected the summed price, excess the
     share won minus the mean price, z that excess over the wider of the per-bet and the per-match-day error. Open and
     no-fill bets are not in it."""
-    done = [p for p in picks if p.get("status") in ("won", "lost", "no_result")]
+    done = [p for p in counted(picks) if p.get("status") in ("won", "lost", "no_result")]
     binary = [p for p in done if p["status"] in ("won", "lost")]
     n = len(binary)
     won = sum(p["status"] == "won" for p in binary)

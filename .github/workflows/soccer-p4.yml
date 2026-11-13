@@ -26,7 +26,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Tests
-        run: python3 test_soccer_p4_lanes.py && python3 test_t1m_sell15.py && python3 test_africa_goals.py
+        run: python3 test_soccer_p4_lanes.py && python3 test_t1m_sell15.py && python3 test_africa_goals.py && python3 test_africa_btts.py
       - name: Mid NO Mismatch, Late Over Calm, Late Under Leaky (Sandbox paper since 2026-11-09)
         # Fetches the ESPN fixtures (data/streaks_raw.json, not committed) for the labels, only when a match has a row.
         run: python3 soccer_p4_lanes.py

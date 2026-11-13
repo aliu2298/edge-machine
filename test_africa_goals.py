@@ -197,17 +197,17 @@ check("an empty record reads as empty", (AG.record([])["n"], AG.record([])["roi_
 
 print("\nthe Soccer page rows")
 rows = L.africa_rows(state)
-check("the combined row, then one row per bet type, all Sandbox",
+check("the combined row, one row per bet type, then the BTTS row added Nov 13, all Sandbox",
       [(r["name"], r["prod"]) for r in rows],
-      [("africa_goals_all", False), ("africa_goals_u35", False), ("africa_goals_o15", False), ("africa_goals_t1", False)])
+      [("africa_goals_all", False), ("africa_goals_u35", False), ("africa_goals_o15", False), ("africa_goals_t1", False), ("africa_goals_btts", False)])
 check("every row is in the Internationals scope", {SP.scope_key(r) for r in rows}, {"intl"})
 check("pinned, and the bet types sit under the combined row",
-      ([r.get("pin") for r in rows], [r.get("after") for r in rows]), ([True] * 4, [None] + ["africa_goals_all"] * 3))
+      ([r.get("pin") for r in rows], [r.get("after") for r in rows]), ([True] * 5, [None] + ["africa_goals_all"] * 4))
 other = dict(rows[0], name="other", pin=False, after=None, a=dict(rows[0]["a"], n=40, roi_fee=0.1))
 order = [r["name"] for r in SP.place_after(sorted(rows + [other], key=SP.sandbox_order), rows + [other])]
 check("they lead the Sandbox list above a row with more evidence", order,
-      ["africa_goals_all", "africa_goals_u35", "africa_goals_o15", "africa_goals_t1", "other"])
-check("the combined row pools the three records", rows[0]["a"]["n"], sum(r["a"]["n"] for r in rows[1:]))
+      ["africa_goals_all", "africa_goals_u35", "africa_goals_o15", "africa_goals_t1", "africa_goals_btts", "other"])
+check("the combined row pools the three records, not the BTTS row", rows[0]["a"]["n"], sum(r["a"]["n"] for r in rows[1:4]))
 check("an observation lane: not a registered tracker source, no Production stage, no entry window on the server",
       (any(k.startswith("africa_goals") for k in S.SOURCES), any("africa_goals" in k for k in (T.load_stages().get("pairs") or {})),
        any("africa" in k for k in W.STAMP)), (False, False, False))
