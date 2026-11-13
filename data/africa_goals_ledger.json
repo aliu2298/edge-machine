@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-13T22:00:29.645878+00:00",
+ "last_run": "2026-11-13T23:00:27.931601+00:00",
  "rules": {
   "BTTS": {
    "picks": [
@@ -2226,19 +2226,23 @@
      "bid": 0.27,
      "entry_at": "2026-11-13T17:00:00+00:00",
      "event": "KXAFCONTOTAL-26NOV13MARNIG",
+     "fill": "verified",
      "how": "hourly quote 3h before kickoff",
      "id": "T1:KXAFCONTEAMTOTAL-26NOV13MARNIG-NIG1",
      "league": "AFCON Qualifying",
      "line": 0.5,
      "logged": "2026-11-13T18:00:33.344528+00:00",
      "match": "Morocco v Niger",
+     "payout": 1.0,
      "price": 0.29,
+     "profit": 228.41,
      "quote_end": "2026-11-13T17:00:00+00:00",
      "rule": "T1",
      "series": "KXAFCONTEAMTOTAL",
+     "settled": "2026-11-13T23:00:27.931601+00:00",
      "side": "yes",
      "start": "2026-11-13T20:00:00+00:00",
-     "status": "open",
+     "status": "won",
      "team": "Niger",
      "ticker": "KXAFCONTEAMTOTAL-26NOV13MARNIG-NIG1",
      "title": "Will Niger score over 0.5 goals?"
@@ -3140,6 +3144,15 @@
    "matched": 24,
    "new": 0,
    "settled": 4,
+   "skipped": 0
+  },
+  {
+   "at": "2026-11-13T23:00:27.931601+00:00",
+   "due": 21,
+   "events": 24,
+   "matched": 24,
+   "new": 0,
+   "settled": 1,
    "skipped": 0
   }
  ],
