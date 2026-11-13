@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-12T18:46:11.823495+00:00",
+ "last_run": "2026-11-13T15:31:23.297948+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -398,11 +398,14 @@
      "line": 3.5,
      "logged": "2026-11-12T15:31:12.747994+00:00",
      "match": "Armenia v Cyprus",
+     "payout": 1.0,
      "price": 0.8,
+     "profit": 23.27,
      "rule": "A5",
+     "settled": "2026-11-13T15:31:23.297948+00:00",
      "side": "no",
      "start": "2026-11-12T17:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUEFANLTOTAL-26NOV12ARMCYP-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Armenia O-D+ v Cyprus O+D+ \u00b7 Under 3.5 NO 0.80"
@@ -421,11 +424,14 @@
      "line": 3.5,
      "logged": "2026-11-12T18:16:16.210766+00:00",
      "match": "Montenegro v Latvia",
+     "payout": 1.0,
      "price": 0.71,
+     "profit": 38.04,
      "rule": "A5",
+     "settled": "2026-11-13T15:31:23.297948+00:00",
      "side": "no",
      "start": "2026-11-12T19:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUEFANLTOTAL-26NOV12MNELAT-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Montenegro O+D+ v Latvia O-D+ \u00b7 Under 3.5 NO 0.71"
@@ -444,11 +450,14 @@
      "line": 3.5,
      "logged": "2026-11-12T18:16:16.210766+00:00",
      "match": "San Marino v Belarus",
+     "payout": 1.0,
      "price": 0.66,
+     "profit": 47.99,
      "rule": "A5",
+     "settled": "2026-11-13T15:31:23.297948+00:00",
      "side": "no",
      "start": "2026-11-12T19:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUEFANLTOTAL-26NOV12SMRBLR-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "San Marino O-D+ v Belarus O+D- \u00b7 Under 3.5 NO 0.66"
@@ -467,14 +476,40 @@
      "line": 3.5,
      "logged": "2026-11-12T18:46:11.823495+00:00",
      "match": "Albania v Finland",
+     "payout": 1.0,
      "price": 0.85,
+     "profit": 16.42,
      "rule": "A5",
+     "settled": "2026-11-13T15:31:23.297948+00:00",
      "side": "no",
      "start": "2026-11-12T19:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUEFANLTOTAL-26NOV12ALBFIN-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Albania O-D- v Finland O+D+ \u00b7 Under 3.5 NO 0.85"
+    },
+    {
+     "ask": 0.2,
+     "bid": 0.19,
+     "event": "KXUEFANLTOTAL-26NOV13MDAKAZ",
+     "group": "A",
+     "id": "A5:KXUEFANLTOTAL-26NOV13MDAKAZ",
+     "labels": {
+      "away": "O-D+",
+      "home": "O-D+"
+     },
+     "league": "UEFA Nations League",
+     "line": 3.5,
+     "logged": "2026-11-13T15:31:23.297948+00:00",
+     "match": "Moldova v Kazakhstan",
+     "price": 0.81,
+     "rule": "A5",
+     "side": "no",
+     "start": "2026-11-13T17:00Z",
+     "status": "open",
+     "ticker": "KXUEFANLTOTAL-26NOV13MDAKAZ-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Moldova O-D+ v Kazakhstan O-D+ \u00b7 Under 3.5 NO 0.81"
     }
    ]
   },
@@ -2567,7 +2602,31 @@
    ]
   },
   "C8": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.41,
+     "bid": 0.4,
+     "event": "KXUEFANLTOTAL-26NOV13MDAKAZ",
+     "group": "C",
+     "id": "C8:KXUEFANLTOTAL-26NOV13MDAKAZ",
+     "labels": {
+      "away": "O-D+",
+      "home": "O-D+"
+     },
+     "league": "UEFA Nations League",
+     "line": 2.5,
+     "logged": "2026-11-13T15:31:23.297948+00:00",
+     "match": "Moldova v Kazakhstan",
+     "price": 0.6,
+     "rule": "C8",
+     "side": "no",
+     "start": "2026-11-13T17:00Z",
+     "status": "open",
+     "ticker": "KXUEFANLTOTAL-26NOV13MDAKAZ-3",
+     "title": "Will over 2.5 goals be scored?",
+     "why": "Moldova O-D+ v Kazakhstan O-D+ \u00b7 Under 2.5 NO 0.60"
+    }
+   ]
   },
   "D1": {
    "picks": [
@@ -4638,14 +4697,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-07T15:31:39.051500+00:00",
-   "candidates": 0,
-   "due": 3,
-   "labelled": 3,
-   "matched": 0,
-   "new": 0
-  },
-  {
    "at": "2026-11-07T15:46:23.902322+00:00",
    "candidates": 0,
    "due": 1,
@@ -5044,6 +5095,14 @@
    "labelled": 6,
    "matched": 4,
    "new": 1
+  },
+  {
+   "at": "2026-11-13T15:31:23.297948+00:00",
+   "candidates": 1,
+   "due": 1,
+   "labelled": 1,
+   "matched": 1,
+   "new": 2
   }
  ],
  "version": "soccer-rules-v1"
