@@ -35,7 +35,34 @@ By period, bids up 10 seconds after the open:
 
 - The lane's own record (8 of 11 sold, +35.6%) uses "a print at the price fills". Under honest fills the same days are 8 bets: +21% with the bids up at the open, −2.5% from 5 seconds on.
 - The median fill comes about two minutes after the open; 15% to 19% come in the first 10 seconds.
-- A market cannot take orders before it opens, so "at the open" is not reachable. How fast a live order path can do it is not known to this study.
+- "At the open" turns out to be reachable in practice: see "Order delay" below.
+
+### Order delay: what a live order path can do
+
+**Can a bid rest before the window opens? Almost certainly not.**
+
+- The markets are listed well ahead: Monday's 25 S&P windows were created the Friday before, with the status "initialized". So the ticker is known in advance.
+- Their public order books are empty until they open, on the S&P and on the crypto 15-minute markets. If orders could rest early, market makers would be there.
+- In 161 S&P windows no trade printed before the open, and none in the first second. The first print came 2.0 seconds after the open at the earliest, 6.7 seconds at the median.
+- This cannot be proven from public data; only a rejected or accepted order would settle it. But nothing trades in the first 2 seconds, so an order that lands 1 to 2 seconds after the open is in time for everything. In the table above, "at the open" and "2 seconds after" give the same result.
+
+**How fast the live path is today** (measured by Production Moves, read-only):
+
+| Path | Open to both orders resting | Row to read |
+|---|---|---|
+| Today's fastest loop (45-second tick) | about 25 seconds at the median, 55 to 60 at worst | between the 20- and 60-second rows |
+| A clock-aligned loop: orders prepared before each quarter hour, sent 1 to 2 seconds after the open | 1 to 3 seconds looks possible; the signed order request itself has not been timed | the "at the open" row |
+
+At today's speed:
+
+| Both bids up | 15c, sell 2x | 25c, sell 2x |
+|---|---|---|
+| 20 seconds after the open | +33.3% on 31 | +18.4% on 94 |
+| 30 seconds after | +29.7% on 29 | +13.8% on 91 |
+| 60 seconds after | +29.7% on 29 | +18.6% on 89 |
+| Same delays, since Nov 11 only | −2.5% to −1.2% on 8 | +14% to +21% on 28 |
+
+So at about 25 seconds the 15c row is worth roughly +30% on the whole record and nothing on the last two days; the 25c row roughly +15% to +20%, and it held on the last two days. A clock-aligned loop is what the rule needs to reach the upper rows.
 
 ## 2. The page note against its background table
 
@@ -101,7 +128,7 @@ Found on Nov 5 to Nov 11 22:00 UTC:
 ## Limits
 
 - **Nine days of one market.** 161 windows, seven trading days. Every period has now been looked at; only the forward record can confirm.
-- **Order delay is the whole question for live.** The paper record assumes the bids are already there.
+- **Order delay is the whole question for live.** The paper record assumes the bids are already there. Today's loop is about 25 seconds late; whether orders can rest before the open could not be tested without placing one.
 - **Others can do this.** One more bidder at 11c takes the fill. The fall in deep sweeps may already be that.
 - **The other markets were tested on minute candles**, not prints; the candle method matched the tracker's print-based entries on 3,518 of 3,525.
 
@@ -115,7 +142,7 @@ For whoever builds. Sandbox paper only. Rule C version 1 keeps its record; versi
 - **Fees:** none on a resting fill; the taker fee on a sale at the bid.
 - **Scope:** the S&P 500 only. The other 26 markets stay background rows.
 - **Also log:** seconds from the open to the fill, contracts printed through the level, and the day's count of windows with a print through 10c/90c.
-- **Before anything live:** the measured time from a window opening to both orders resting. If it is over 10 seconds, the 15c and 10c rows should be read at the 30-second comparison row.
+- **Before anything live:** a clock-aligned loop (both orders prepared before the quarter hour, sent 1 to 2 seconds after the open) and its measured time to both orders resting. On today's loop (about 25 seconds) the 15c and 10c rows should be read at the 30-second comparison row.
 
 ### Pre-registration text for the forward check
 
