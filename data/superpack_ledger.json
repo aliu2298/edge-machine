@@ -818,6 +818,10 @@
    "at": "2026-11-10T20:04:23.897092+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXUEFANLTOTAL-26NOV16GRESRB-4\", \"b\"]]": {
+   "at": "2026-11-13T22:04:23.655810+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXUEFANLTOTAL-26NOV16MKDSLO-4\", \"b\"]]": {
    "at": "2026-11-13T11:40:36.004281+00:00",
    "pool": "entered"
@@ -2872,7 +2876,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-13T21:10:26.298706+00:00",
+ "last_run": "2026-11-13T22:04:23.655810+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -7199,14 +7203,14 @@
    ],
    "pid": "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXUEFANLTOTAL-26NOV13LIEAZE-2\", \"a\"]]",
    "price": 0.7,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_o15_intl",
-   "settled": null,
+   "settled": "2026-11-13T22:03:46+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXUEFANLTOTAL-26NOV13ANDGIB-4",
@@ -7224,14 +7228,14 @@
    ],
    "pid": "[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXUEFANLTOTAL-26NOV13ANDGIB-4\", \"b\"]]",
    "price": 0.9,
-   "profit": null,
+   "profit": 0.1111,
    "scope": "soccer_u35_intl",
-   "settled": null,
+   "settled": "2026-11-13T22:03:47+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXUEFANLTOTAL-26NOV13LIEAZE-4",
@@ -7249,14 +7253,14 @@
    ],
    "pid": "[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXUEFANLTOTAL-26NOV13LIEAZE-4\", \"b\"]]",
    "price": 0.79,
-   "profit": null,
+   "profit": 0.2658,
    "scope": "soccer_u35_intl",
-   "settled": null,
+   "settled": "2026-11-13T22:03:47+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXUEFANLTOTAL-26NOV13LUXEST-4",
@@ -7274,14 +7278,14 @@
    ],
    "pid": "[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXUEFANLTOTAL-26NOV13LUXEST-4\", \"b\"]]",
    "price": 0.84,
-   "profit": null,
+   "profit": 0.1905,
    "scope": "soccer_u35_intl",
-   "settled": null,
+   "settled": "2026-11-13T22:03:47+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXUEFANLTOTAL-26NOV13SCOMKD-4",
@@ -7299,14 +7303,14 @@
    ],
    "pid": "[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXUEFANLTOTAL-26NOV13SCOMKD-4\", \"b\"]]",
    "price": 0.67,
-   "profit": null,
+   "profit": 0.4925,
    "scope": "soccer_u35_intl",
-   "settled": null,
+   "settled": "2026-11-13T22:03:47+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXGOLDD-26NOV0917-T4125",
@@ -7840,14 +7844,14 @@
    ],
    "pid": "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXUEFANLTOTAL-26NOV13SCOMKD-2\", \"a\"]]",
    "price": 0.8,
-   "profit": null,
+   "profit": 0.25,
    "scope": "soccer_o15_intl",
-   "settled": null,
+   "settled": "2026-11-13T22:03:48+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXAAAGASD-26NOV11-3.9400",
@@ -8070,14 +8074,14 @@
    ],
    "pid": "[\"sandbox\", \"team2_ranked_fade\", [\"team2_ranked_fade:KXUEFANLTEAMTOTAL-26NOV13SCOMKD-SCO2\", \"b\"]]",
    "price": 0.35,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_team2_intl",
-   "settled": null,
+   "settled": "2026-11-13T22:03:48+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXUEFANLTEAMTOTAL-26NOV13LIEAZE-AZE2",
@@ -8093,14 +8097,14 @@
    ],
    "pid": "[\"sandbox\", \"team2_ranked_fade\", [\"team2_ranked_fade:KXUEFANLTEAMTOTAL-26NOV13LIEAZE-AZE2\", \"b\"]]",
    "price": 0.45,
-   "profit": null,
+   "profit": 1.2222,
    "scope": "soccer_team2_intl",
-   "settled": null,
+   "settled": "2026-11-13T22:03:49+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXSILVERD-26NOV1117-T51.50",
@@ -8139,14 +8143,14 @@
    ],
    "pid": "[\"sandbox\", \"team2_ranked_fade\", [\"team2_ranked_fade:KXUEFANLTEAMTOTAL-26NOV13LUXEST-LUX2\", \"b\"]]",
    "price": 0.67,
-   "profit": null,
+   "profit": 0.4925,
    "scope": "soccer_team2_intl",
-   "settled": null,
+   "settled": "2026-11-13T22:03:49+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXUEFANLTEAMTOTAL-26NOV12MNELAT-MNE2",
@@ -8730,14 +8734,14 @@
    ],
    "pid": "[\"sandbox\", \"team2_ranked_fade\", [\"team2_ranked_fade:KXUEFANLTEAMTOTAL-26NOV13SLOSUI-SUI2\", \"b\"]]",
    "price": 0.57,
-   "profit": null,
+   "profit": 0.7544,
    "scope": "soccer_team2_intl",
-   "settled": null,
+   "settled": "2026-11-13T22:03:55+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXUEFANLTOTAL-26NOV16MKDSLO-4",
@@ -9068,6 +9072,31 @@
    "scope": "soccer_team1_intl",
    "settled": null,
    "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUEFANLTOTAL-26NOV16GRESRB-4",
+   "entered_at": "2026-11-13T22:04:23.655810+00:00",
+   "entities": [
+    "Greece",
+    "Serbia"
+   ],
+   "id": "superpack:[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXUEFANLTOTAL-26NOV16GRESRB-4\", \"b\"]]",
+   "lane": "u35_low_scoring",
+   "logged": "2026-11-13T22:03:45+00:00",
+   "matched": [
+    "Greece",
+    "Serbia"
+   ],
+   "pid": "[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXUEFANLTOTAL-26NOV16GRESRB-4\", \"b\"]]",
+   "price": 0.67,
+   "profit": null,
+   "scope": "soccer_u35_intl",
+   "settled": null,
+   "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
