@@ -8369,6 +8369,19 @@
    "yes_ask": 0.12,
    "yes_bid": 0.09
   },
+  "no:KXNBAWINMARGIN-26NOV12CHAPHX-CHA21PLUS": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "CHA21PLUS",
+   "decided_at": "2026-11-13T01:15:50+00:00",
+   "event": "KXNBAWINMARGIN-26NOV12CHAPHX",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV12",
+   "ticker": "KXNBAWINMARGIN-26NOV12CHAPHX-CHA21PLUS",
+   "tip": "2026-11-13T02:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "no:KXNBAWINMARGIN-26NOV12CHAPHX-CHA6TO10": {
    "P": 0.93,
    "bot_version": "wm-nofade-v4",
@@ -14673,6 +14686,6 @@
    "yes_bid": 0.06
   }
  },
- "updated_at": "2026-11-13T01:02:42+00:00",
+ "updated_at": "2026-11-13T01:15:50+00:00",
  "version": 1
 }
