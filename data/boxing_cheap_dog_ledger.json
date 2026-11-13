@@ -1048,9 +1048,11 @@
    "ask_check": {
     "book": 0,
     "first_quotes": false,
+    "how": "print",
     "last_trade": 0.1,
+    "printed": 2225.32,
     "source": "live",
-    "status": "checking"
+    "status": "verified"
    },
    "bid": 0.09,
    "book": {
@@ -1075,6 +1077,9 @@
    "last_trade_at": null,
    "legs": [
     {
+     "fill_px": 0.2,
+     "fill_volume": 1291.88,
+     "filled_at": "2026-11-13T02:53:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.2
@@ -1142,6 +1147,7 @@
   "KXBOXING-26NOV12DUVALWRZESI": "2026-11-13T01:57:39.863554+00:00",
   "KXBOXING-26NOV12NICKENQUARTE": "2026-11-13T00:00:38.142571+00:00",
   "KXBOXING-26NOV12OROBIOCEDENO": "2026-11-13T01:57:39.863554+00:00",
+  "KXBOXING-26NOV12SANFORGOMEZ": "2026-11-13T03:00:36.212329+00:00",
   "KXBOXING-26OCT23ULDEDACAPARE": "2026-10-27T04:45:21.662265+00:00",
   "KXBOXING-26OCT31CALVARMBILLI": "2026-10-31T20:06:27.383501+00:00",
   "KXBOXING-26OCT31DELGADBIYARS": "2026-11-01T01:57:46.281274+00:00",
@@ -1152,16 +1158,16 @@
   "KXBOXING-26OCT31TSUTSUROJAS": "2026-10-31T20:06:27.383501+00:00"
  },
  "lane": "boxing_cheap_dog",
- "last_success": "2026-11-13T02:00:32.811716+00:00",
+ "last_success": "2026-11-13T03:00:36.212329+00:00",
  "observations": {
-  "at": "2026-11-13T02:00:32.811716+00:00",
+  "at": "2026-11-13T03:00:36.212329+00:00",
   "entered": 0,
-  "events": 4,
-  "filled": 0,
+  "events": 5,
+  "filled": 1,
   "no_start": 0,
-  "skipped": 0,
+  "skipped": 2,
   "unverified": 0,
-  "waiting": 26
+  "waiting": 25
  },
  "skips": {
   "KXBOXING-26NOV06AOKUSOKHAHRA-AOKUSO": {
@@ -1577,6 +1583,18 @@
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
    "start": "2026-11-13T02:40:00+00:00",
    "word": "Jhon Orobio"
+  },
+  "KXBOXING-26NOV12SANFORGOMEZ-GOMEZ": {
+   "event": "KXBOXING-26NOV12SANFORGOMEZ",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-13T02:45:00+00:00",
+   "word": "Gabriel Jimenez Gomez"
+  },
+  "KXBOXING-26NOV12SANFORGOMEZ-SANFOR": {
+   "event": "KXBOXING-26NOV12SANFORGOMEZ",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-13T02:45:00+00:00",
+   "word": "Wyatt Sanford"
   },
   "KXBOXING-26OCT23ULDEDACAPARE-CAPARE": {
    "event": "KXBOXING-26OCT23ULDEDACAPARE",
