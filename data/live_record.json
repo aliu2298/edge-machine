@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-13T19:07Z",
+ "generated": "2026-11-13T20:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -3416,8 +3416,7 @@
    "refused": {
     "commod_fav_band:KXBRENTD-26NOV1217-T93": "outside the entry window",
     "commod_fav_band:KXGOLDD-26NOV1217-T3872": "outside the price band",
-    "commod_fav_band:KXWTI-26NOV1214-T85.99": "outside the entry window",
-    "commod_fav_band:KXWTI-26NOV1314-T88.49": "outside the price band"
+    "commod_fav_band:KXWTI-26NOV1214-T85.99": "outside the entry window"
    }
   },
   "corners_ucl_fade|soccer_corners": {
@@ -3588,6 +3587,14 @@
      "side": "no",
      "st": "unfilled",
      "w": null
+    },
+    {
+     "id": "crypto_fav_band_below:KXETHD-26NOV1317-T1959.99",
+     "ko": "2026-11-13T22:05",
+     "r": null,
+     "side": "no",
+     "st": "open",
+     "w": 12.0
     }
    ],
    "refused": {
