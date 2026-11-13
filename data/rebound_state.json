@@ -927,6 +927,24 @@
    "target": 2.413288,
    "ticker": "KXNEMPERP",
    "touch_ts": 1794560761
+  },
+  {
+   "backfill": false,
+   "day": "2026-11-13",
+   "id": "rb_5d|KXBABAPERP|2026-11-13",
+   "lane": "rb_5d",
+   "level": 1.870578,
+   "level_stock": 93.42,
+   "note": "no print at or through the ask in 5 minutes",
+   "signal_ts": 1794569400,
+   "slide_high": 107.49,
+   "status": "no_fill",
+   "stop": 1.851872,
+   "strength": 3,
+   "sym": "BABA",
+   "target": 2.011442,
+   "ticker": "KXBABAPERP",
+   "touch_ts": 1794569341
   }
  ],
  "from": "2026-11-12T00:00:00+00:00",
@@ -944,7 +962,7 @@
    "strong": true
   }
  },
- "last_run": "2026-11-13T11:00:16+00:00",
+ "last_run": "2026-11-13T12:00:16+00:00",
  "prereg_sha256": "17ecd1cd57183bacd45e8e1e6477c542b4ecaaa88a3e8b8a62fa395bbc45a581",
  "ratios": {
   "AAPL": 50.0113,
