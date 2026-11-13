@@ -82,7 +82,7 @@ Book depth was not recorded. At the moments strategy B would have bought, 275 to
 ## Recommendation
 
 - **Do not build a spot-lag lane.**
-- **Treat any research priced off the public quote request with care wherever seconds matter.** In moving markets it is about 16 seconds behind. Entries and exits should be checked against trade prints, as the fill simulator does. Hourly and minute candles are not affected in the same way: their quotes are stamped by the exchange.
+- **Treat any research priced off the public quote request with care wherever seconds matter.** In moving markets it is about 16 seconds behind. Entries and exits should be checked against trade prints, as the fill simulator does. Candles should not be affected in the same way, since the exchange builds them per period, but that was not tested here.
 - The recorder does not need extending for this question. It can stop on schedule.
 
 ## Files
