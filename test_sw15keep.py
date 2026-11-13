@@ -76,25 +76,23 @@ print("\nthe page")
 real = W.load()
 html = WB.section(real)
 live = html.split('id="sw15-archive"')[0]
-check("the live area: rule C and its 25c companion only; A and B retired 2026-11-13, the Loss Reader 2026-11-12",
-      re.findall(r'data-source="([a-z0-9_]+)"', live), ["sp500_flip15", "sp500_flip25"])
-check("one list: C, its 25c companion right under it",
-      re.findall(r'id="sw15-([a-z0-9_]+)"', live)[:2], ["sp500_flip15", "sp500_flip25"])
-check("short names", all(n in live for n in ("C · S&amp;P 500 underdog at 15c", "C companion · at 25c (observation)")), True)
-check("A and B are not in the live area, and the intro says one rule",
-      ("S&amp;P 500 favourite, 5 min left" in live, "Lead Swap favourite v2" in live, "one rule" in live), (False, False, True))
-check("the why lines sit inside the folds (closed by default), with the forward and history numbers",
-      (live.count('class="sm sw15-why"'), "forward +66.5% (28 bets)" in live, "<details open" in live), (2, True, False))
+check("the live area: rule C version 2's three rows only; A, B and C version 1 are retired (2026-11-13), the Loss Reader 2026-11-12",
+      re.findall(r'data-source="([a-z0-9_]+)"', live), ["sw15c2_10", "sw15c2_15", "sw15c2_25"])
+check("one list: the three C v2 rows", re.findall(r'id="sw15-([a-z0-9_]+)"', live)[:3], ["c2_10", "c2_15", "c2_25"])
+check("short names", all(n in live for n in ("C v2 · S&amp;P 500 opening sweep, 10c sell 3x", "C v2 · S&amp;P 500 opening sweep, 15c sell 2x",
+      "C v2 · S&amp;P 500 opening sweep, 25c sell 2x")), True)
+check("A, B and C version 1 are not in the live area, and the intro says one rule",
+      ("S&amp;P 500 favourite, 5 min left" in live, "Lead Swap favourite v2" in live, "S&amp;P 500 underdog at 15c" in live, "one rule" in live), (False, False, False, True))
 check("one section heading, no per-lane h3 blocks; one closed method fold", (live.count("<h3"), live.count("sw15-how")),
       (0, 1))
-check("the Loss Reader is no longer in the live area, and C reads Too early until 30 bets", ("Loss Reader" in live, "Too early (" in live), (False, True))
+check("the Loss Reader is no longer in the live area, and C v2 reads Too early until its bets", ("Loss Reader" in live, "Too early (" in live), (False, True))
 check("ONE retired block, closed", (html.count('id="sw15-archive"'), "<b>Retired · final records</b>" in html), (1, True))
 arc = html.split('id="sw15-archive"')[1]
 check("the archive: the seven lanes retired today with their records, and the v1 baselines",
       ("<h4>Narrowed to three rules (Nov 11)</h4>" in arc, arc.split("<h4>Narrowed to three rules (Nov 11)</h4>")[1]
        .split("</details>")[0].count("<tr>") - 1, "<h4>v1 baselines (background, every market)</h4>" in arc), (True, 7, True))
-check("the Sandbox index lists rule C only (A and B, with B's control, retired 2026-11-13)",
-      [x["lane"] for x in WB.index_rows(real)], ["sp500_flip15"])
+check("the Sandbox index lists rule C version 2's three rows (A, B and C version 1 retired 2026-11-13)",
+      [x["lane"] for x in WB.index_rows(real)], ["sw15c2_10", "sw15c2_15", "sw15c2_25"])
 print("\nround 4: A and B retired 2026-11-13 by Olu")
 check("round 4 is frozen (fingerprint) and its cut is a window boundary after round 3",
       (C.fingerprint4() == C.ROUND4_SHA256, W._ts(C.CUT4_AT) % 900, C.CUT4_AT > C.CUT3_AT, C.RETIRED4), (True, 0, True, ("sp500_fav5", "leadswap_v2", "leadswap_v2_ctrl")))
@@ -104,7 +102,16 @@ ws4 = [win("KXINX15M", iso(cut4 - dt.timedelta(minutes=15)), fav(1.0)), win("KXI
 s4 = dict(W.empty(), windows={w["ticker"]: w for w in ws4})
 r4 = K.records(s4)
 check("A counts the window before the cut and none from it: its record is final", (r4["sp500_fav5"]["all"]["n"], r4["sp500_fav5"]["all"]["hits"]), (1, 1))
-check("rule C's cell has no stop: it keeps counting after the cut", C.retire_at("sp500_flip15") is None and C.retire_at("sp500_flip25") is None, True)
+check("rule C version 1 and its companion stop at round 5's cut (C v2's first window)", (C.retire_at("sp500_flip15"), C.retire_at("sp500_flip25")), (C.CUT5_AT, C.CUT5_AT))
+check("round 5 is frozen (fingerprint) and its cut is a window boundary", (C.fingerprint5() == C.ROUND5_SHA256, W._ts(C.CUT5_AT) % 900, C.RETIRED5), (True, 0, ("sp500_flip15", "sp500_flip25")))
+cut5 = dt.datetime.fromisoformat(C.CUT5_AT)
+w5 = [win("KXINX15M", iso(cut5 - dt.timedelta(minutes=15)), fav(1.0)), win("KXINX15M", iso(cut5), fav(0.0))]
+for w in w5:
+    w["s1"] = {"0.15": dict(exits={"2.0": dict(filled=True, fill_ts=0, roi_bid=0.5, roi_hold=0.5)}, bid14=0.2)}
+check("C v1's S&P 500 background reads stop at the cut", K.in_record(w5[0], None, C.CUT5_AT) and not K.in_record(w5[1], None, C.CUT5_AT), True)
+arc5 = html.split('id="sw15-archive"')[1]
+check("the Retired block holds C version 1 and its companion with the dated line 'Retired 2026-11-13, replaced by C v2.'",
+      ("Retired 2026-11-13, replaced by C v2." in arc5, "C · S&amp;P 500 underdog at 15c" in arc5, "C companion · at 25c (observation)" in arc5), (True, True, True))
 import leadswap_v2 as V2
 o4 = int(W._ts(C.CUT4_AT))
 mk4 = lambda s, o: (s, "Crypto", o, o + 900, {}, dict(series=s, open=dt.datetime.fromtimestamp(o, dt.timezone.utc).isoformat(), group="Crypto", fee_multiplier=1.0,

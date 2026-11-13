@@ -34,7 +34,7 @@ check("one instant, on a window boundary: v2's FROM, the cut, v1's favourite ret
       (True, 0, True, True))
 check("the swing trade's earlier retirement is unchanged", L.TRADES_RETIRED["leadswap_swing"], C.CUT2_AT)
 check("review at 30, decide at 100", (V2.REVIEW_AT, V2.DECIDE_AT), (30, 100))
-check("the loss reader retires at round 3's cut; rule A at round 4's; rule C has none", (C.retire_at("lossreader"), C.retire_at("sp500_fav5"), C.retire_at("sp500_flip15")), (C.CUT3_AT, C.CUT4_AT, None))
+check("the loss reader retires at round 3's cut; rule A at round 4's; rule C version 1 at round 5's", (C.retire_at("lossreader"), C.retire_at("sp500_fav5"), C.retire_at("sp500_flip15")), (C.CUT3_AT, C.CUT4_AT, C.CUT5_AT))
 
 print("\nrouting: three markets only, no backfill, a fresh record, a control")
 F0 = W._ts(V2.FROM)
