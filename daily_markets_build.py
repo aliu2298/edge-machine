@@ -300,7 +300,7 @@ def body_html(parts):
     sw = swing15_html()
     wx = weather_html()
     entries = [("swing15", "15-Minute", getattr(swing15_html, "stats", dict(won=None, lost=0, wl="", roi=None))),
-               ("weather", "Weather", getattr(weather_html, "stats", dict(won=None, lost=0, wl="", roi=None)))]
+               ("temps", "Weather", getattr(weather_html, "stats", dict(won=None, lost=0, wl="", roi=None)))]
     shells = []
     for g, label, _f in GROUPS:
         stats = group_stats(parts[g])
