@@ -2888,7 +2888,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-13T23:09:17.090884+00:00",
+ "last_run": "2026-11-13T23:33:00.616595+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -8819,14 +8819,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXWTI-26NOV1314-T88.49\", \"a\"]]",
    "price": 0.72,
-   "profit": null,
+   "profit": 0.3889,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-13T23:32:48+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXINXU-26NOV13H1600-T7579.9999",
@@ -8865,14 +8865,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXWTI-26NOV1314-T87.99\", \"a\"]]",
    "price": 0.95,
-   "profit": null,
+   "profit": 0.0526,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-13T23:32:57+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXUEFANLTOTAL-26NOV13BULISL-4",
