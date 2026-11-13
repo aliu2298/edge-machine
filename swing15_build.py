@@ -353,9 +353,7 @@ def keep_block(state, parts=False):
                         status='<span class="sig n">observation</span>', evidence=str(nc))
             cards.append(_card(crow, f'<p class="sm sw15-why">{esc(cv["why"])}</p>'))
     if parts:
-        return cards, ("C trades the S&P 500 underdog only, a fresh record from "
-                       f"{_start(K.FROM)}, reviewed at {K.REVIEW_AT} and decided at {K.DECIDE_AT}. The same rule keeps "
-                       "being tracked on every other market in the background (inside its row), never counted.")
+        return cards, ("Rules A, B and C version 1 were retired on Nov 13 with their records kept (see Retired). The S&P 500 rows above are rule C version 2.")
     intro = (f'<p class="scope sw15-intro">Paper · S&amp;P 500 only · fresh record from {esc(_start(K.FROM))} · review '
              f'{K.REVIEW_AT}, decide {K.DECIDE_AT}</p>')
     how = _how("The 15-Minute section was narrowed to three rules on Nov 11: these two on the S&P 500 and the Lead Swap "
@@ -755,6 +753,52 @@ def lsb2_card(state):
     return _card(row, split)
 
 
+def c2_block(state, parts=True):
+    """Rule C version 2, "S&P 500 opening sweep" (sw15c2.py, 2026-11-13): three rows, each against its 2-second and 30-second comparison rows
+    (honest-v1 fills on trade prints, both bids resting `delay` seconds after the open). One closed row per level, the comparison inside it."""
+    import sw15c2 as C2
+    led = C2.load()
+    rec = C2.records(led)
+    cards = []
+    for lv, c in C2.LEVELS.items():
+        r = rec[lv]
+        h, c30 = r["headline"], r["compare"][30]
+        n = h["n"]
+        status = ('<span class="sig w">Closed · the opening has gone</span>' if r["closed_on"] else
+                  '<span class="sig w">Read due</span>' if r["read"].startswith("read now") else
+                  f'<span class="sig n">Too early ({n}/{r["read_at"]})</span>')
+        trs = []
+        for d in (C2.HEADLINE,) + C2.COMPARE:
+            x = h if d == C2.HEADLINE else r["compare"][d]
+            trs.append(f'<tr><td>{"Bids up " + str(d) + " s after the open" + (" (headline)" if d == C2.HEADLINE else " (comparison)")}</td>'
+                       f'<td class="num">{x["n"]}</td><td class="num">{x["sold"]}</td><td class="num">{pct(x["roi"]) if x["n"] else "—"}</td>'
+                       f'<td class="num">{_z(x["t"]) if x["n"] else "—"}</td><td class="num">{"—" if x["fill_s"] is None else f"{x["fill_s"]:g} s"}</td></tr>')
+        tbl = _table(("Row", "Bets", "Sold at the target", "Return after fees", "Score", "Median fill"), trs)
+        sd = rec["sweep_days"]
+        sweeps = ", ".join(f"{d[5:]}: {k}" for d, k in sorted(sd.items())[-6:]) or "none yet"
+        body = (f'<p class="sp-details-name"><b>{esc(C2.LABELS[lv])}</b> · Kalshi 15-minute windows · paper · {esc(C2.VERSION)}</p>'
+                f'<p class="sp-def">On every S&amp;P 500 window two resting bids, one on Yes and one on No, at {int(c["level"] * 100)}c, up {C2.HEADLINE} seconds after the open and '
+                f'cancelled 5 minutes after it if unfilled; the first to fill is the bet. A resting sell at {c["mult"]:g}x from 60 seconds after the fill; if it has not sold with 1 minute left, '
+                f'sell at the bid (taker fee). Fills by the fill simulator\'s honest rule on trade prints: a buy only on a print strictly through the level, a sell only strictly '
+                f'through the target; no fee on a resting fill. One window is one bet; the score counts a clock hour as one outcome. Fresh record from {esc(_start(C2.FROM))}. '
+                f'Pre-registered in docs/prereg_sw15_c2_{esc(C2.REGISTERED)}.md.</p>'
+                f'<p class="sm">{esc(r["read"])}. Keep needs a return above zero, a score of 1.5 or more, and the 30-second row above zero. A level is closed as '
+                f'"the opening has gone" if it gets fewer than one bet a trading day over any ten trading days.</p>{tbl}'
+                f'<p class="sm mut">Windows with a print through 10c or 90c in the first 5 minutes, by day: {esc(sweeps)}.</p>')
+        row = (f'<details class="sp-rule{"" if n >= 10 else " is-early"}" id="sw15-c2_{lv}" data-source="sw15c2_{lv}" data-sport="sw15c2" data-scope="clubs" data-stage="sandbox">'
+               f'<summary class="sp-line"><span class="sp-cell sp-c-name"><span class="sp-chev" aria-hidden="true">›</span><b class="sp-name" title="{esc(C2.LABELS[lv])}">{esc(C2.LABELS[lv])}</b>'
+               f'<span class="sr-only"> · Rule details</span></span>'
+               f'<span class="sp-cell sp-c-market" data-l="vs control"><span class="mut" title="Bids up 30 seconds after the open">{pct(c30["roi"]) if c30["n"] else "—"}</span></span>'
+               f'<span class="sp-cell num" data-l="Record">{h["sold"]}–{n - h["sold"]}</span>'
+               f'<span class="sp-cell num" data-l="Return after fees"><span class="{"mut" if n < 10 else "pos" if (h["roi"] or 0) > 0 else "neg"}">{pct(h["roi"]) if n else "—"}</span></span>'
+               f'<span class="sp-cell num" data-l="Won v priced">sold {h["sold"]} of {n}</span>'
+               f'<span class="sp-cell num" data-l="Evidence">{min(n, r["read_at"])}/{r["read_at"]}</span>'
+               f'<span class="sp-cell sp-c-verdict" data-l="Status">{status}</span></summary><div class="sp-details-body">{body}</div></details>')
+        cards.append(row)
+    return cards, ("C v2 replaces rule C version 1 (retired Nov 13). Each row's figure is the headline fill (bids up 5 seconds after the open); the figure beside it, under 'vs control', is the "
+                   "30-second comparison row. The 2-second row is inside each fold. The S&P 500 15-minute market opens only in US cash hours.")
+
+
 def leadswap_block(state, parts=False):
     """The Lead Swap Board (leadswap.py): the two trades (row + open per-market split, each against its control), then
     one collapsed fold with how the board ranks markets (picks, board, persistence, timing, hour of day)."""
@@ -988,10 +1032,23 @@ def _archive(state, s1_final, v1=""):
                            f'<td class="num">{pct(c["mean_roi"])}</td><td>{c["hits"]} v {c["fair"] * c["n"]:.1f} priced. {esc(note)}</td></tr>')
         if not trs:
             return ""
-        return (f'<details class="fold sw15-removed sw15-round4"><summary>Retired {esc(_start(C.CUT4_AT))} · rules A and B · {len(trs)} rows, '
-                f'final records</summary><p class="sm">Retired 2026-11-13 by Olu. No entries from {esc(_start(C.CUT4_AT))} on; the rows and their '
-                f'records stay.</p>'
-                + _table(("Rule", "Bets", "Won", "Return after fees", "Note"), trs) + '</details>')
+        out = (f'<details class="fold sw15-removed sw15-round4"><summary>Retired {esc(_start(C.CUT4_AT))} · rules A and B · {len(trs)} rows, '
+               f'final records</summary><p class="sm">Retired 2026-11-13 by Olu. No entries from {esc(_start(C.CUT4_AT))} on; the rows and their '
+               f'records stay.</p>'
+               + _table(("Rule", "Bets", "Won", "Return after fees", "Note"), trs) + '</details>')
+        # Round 5 (the same day): rule C version 1 and its 25c companion, replaced by C v2.
+        k5 = K.records(state)
+        t5 = []
+        for key, label in (("sp500_flip15", K.RULES["sp500_flip15"]["label"]), ("sp500_flip25", K.COMPANION["sp500_flip25"]["label"])):
+            x = k5[key]["all"]
+            if x:
+                t5.append(f'<tr><td>{esc(label)}</td><td class="num">{x["n"]}</td><td class="num">{x["hits"]}</td>'
+                          f'<td class="num">{pct(x["mean_roi"])}</td><td>{x["hits"]} v {x["fair"] * x["n"]:.1f} priced. S&amp;P 500 only.</td></tr>')
+        if t5:
+            out += (f'<details class="fold sw15-removed sw15-round5"><summary>Retired {esc(_start(C.CUT5_AT))} · rule C version 1 · {len(t5)} rows, final records</summary>'
+                    f'<p class="sm">Retired 2026-11-13, replaced by C v2. No entries from {esc(_start(C.CUT5_AT))} on; the rows and their records stay.</p>'
+                    + _table(("Rule", "Bets", "Won", "Return after fees", "Note"), t5) + '</details>')
+        return out
     try:
         r4 = round4() if NARROWED else ""
     except Exception:                                           # noqa: BLE001
@@ -1125,7 +1182,7 @@ def section(state=None):
         # 2026-11-11 (Olu): one small list of collapsible rows — A, C (with its 25c companion), B, then the Loss Reader
         # watch row — one line above it, every explanation in one closed fold, everything retired in one closed block.
         cards, notes = [], []
-        for fn in (lambda: keep_block(state, parts=True), lambda: leadswap_block(state, parts=True)):     # the Loss Reader retired 2026-11-12: archive
+        for fn in (lambda: c2_block(state), lambda: keep_block(state, parts=True), lambda: leadswap_block(state, parts=True)):     # the Loss Reader retired 2026-11-12: archive
             try:
                 c_, n_ = fn()
                 cards += c_
@@ -1135,8 +1192,9 @@ def section(state=None):
                 pass
         import sw15keep as K
         import leadswap_v2 as V2
-        intro = (f'<p class="scope sw15-intro">Paper · one rule · C (S&amp;P 500 underdog at 15c, with its 25c companion) fresh from '
-                 f'{esc(_start(K.FROM))} · review {K.REVIEW_AT}, decide {K.DECIDE_AT} · A and B retired Nov 13</p>')
+        import sw15c2 as C2
+        intro = (f'<p class="scope sw15-intro">Paper · one rule · C v2, the S&amp;P 500 opening sweep (10c, 15c, 25c), fresh from '
+                 f'{esc(_start(C2.FROM))} · read once per level (40, 80, 150 bets) · A, B and C v1 retired Nov 13</p>')
         how = ('<details class="fold sw15-how"><summary>How the record is kept</summary>'
                + "".join(n if n.startswith("<") else f'<p class="sm">{esc(n)}</p>' for n in notes)
                + f'<p class="sm mut">{SORT_LINE}</p></details>')
@@ -1174,6 +1232,16 @@ def index_rows(state=None):
             out.append(dict(lane=k, label=K.RULES[k]["label"], n=c["n"] if c else 0, roi=c["mean_roi"] if c else None,
                             hit=c["hit_rate"] if c else None, fair=c["fair"] if c else None,
                             status=f"{c['n'] if c else 0}/{K.DECIDE_AT} bets"))
+    except (Exception, StopIteration):                          # noqa: BLE001  (never breaks the index)
+        pass
+    try:                                                        # rule C version 2 (2026-11-13): the three S&P 500 opening-sweep rows
+        if not NARROWED:
+            raise StopIteration
+        import sw15c2 as C2
+        r2 = C2.records(C2.load())
+        for lv in C2.LEVELS:
+            h = r2[lv]["headline"]
+            out.append(dict(lane=f"sw15c2_{lv}", label=C2.LABELS[lv], n=h["n"], roi=h["roi"], hit=None, fair=None, status=r2[lv]["read"]))
     except (Exception, StopIteration):                          # noqa: BLE001  (never breaks the index)
         pass
     try:                                                        # Rule 1 v2 · Loss Reader (2026-11-10): first

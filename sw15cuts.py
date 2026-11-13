@@ -61,10 +61,21 @@ def fingerprint4():
     return allowgate.fingerprint(dict(cut_at=CUT4_AT, retired=list(RETIRED4)))
 
 
+# ROUND 5 (Olu, 2026-11-13: "build C v2"): rule C version 1 (sp500_flip15, the S&P 500 underdog at 15c, and its 25c companion sp500_flip25) is
+# replaced by C v2 (sw15c2.py, a fresh record). Both stop at CUT5_AT = C v2's first window: no window opening at or after it counts for them.
+CUT5_AT = "2026-11-14T00:00:00+00:00"
+RETIRED5 = ("sp500_flip15", "sp500_flip25")
+ROUND5_SHA256 = "7659c03b7e7c0d13048f323291b2ae5b394fa7a6d66ed58f8eb90069d9961dd6"   # sha256 of fingerprint5(), set at registration
+
+
+def fingerprint5():
+    return allowgate.fingerprint(dict(cut_at=CUT5_AT, retired=list(RETIRED5)))
+
+
 def retire_at(lane):
-    """The cut time a retired lane stops entering at (round 1, 2, 3 or 4), or None for a live lane."""
+    """The cut time a retired lane stops entering at (round 1 to 5), or None for a live lane."""
     return (CUT_AT if lane in RETIRED else CUT2_AT if lane in RETIRED2 else CUT3_AT if lane in RETIRED3
-            else CUT4_AT if lane in RETIRED4 else None)
+            else CUT4_AT if lane in RETIRED4 else CUT5_AT if lane in RETIRED5 else None)
 
 
 def fingerprint():
