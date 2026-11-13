@@ -2704,7 +2704,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-12T23:37:03.983163+00:00",
+ "last_run": "2026-11-13T00:04:53.147047+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -8280,14 +8280,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXGOLDD-26NOV1217-T3872\", \"a\"]]",
    "price": 0.78,
-   "profit": null,
+   "profit": 0.2821,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-13T00:04:36+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXBTCD-26NOV1217-T72249.99",
@@ -8397,14 +8397,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXBRENTD-26NOV1217-T93\", \"a\"]]",
    "price": 0.73,
-   "profit": null,
+   "profit": 0.3699,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-13T00:04:40+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXSOLD-26NOV1217-T80.9999",
@@ -8466,14 +8466,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXBRENTD-26NOV1217-T93.50\", \"a\"]]",
    "price": 0.97,
-   "profit": null,
+   "profit": 0.0309,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-13T00:04:49+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXSILVERD-26NOV1217-T49.75",
@@ -8489,14 +8489,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXSILVERD-26NOV1217-T49.75\", \"a\"]]",
    "price": 0.98,
-   "profit": null,
+   "profit": 0.0204,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-13T00:04:49+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   }
  ],
  "registered": "2026-11-05",
