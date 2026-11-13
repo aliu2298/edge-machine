@@ -1,10 +1,10 @@
 {
  "error": null,
- "last_run": "2026-11-13T10:04:47.775829+00:00",
+ "last_run": "2026-11-13T18:08:19.138102+00:00",
  "observations": {
-  "at": "2026-11-13T10:04:47.775829+00:00",
-  "new": 8,
-  "skipped": 14
+  "at": "2026-11-13T18:08:19.138102+00:00",
+  "new": 3,
+  "skipped": 15
  },
  "rows": {
   "KXNBAWINMARGIN-26NOV08BKNDAL-DAL1TO5": {
@@ -1330,6 +1330,69 @@
    "version": "wm-yes-v3-paper",
    "won": false
   },
+  "KXNBAWINMARGIN-26NOV12CHAPHX-CHA1TO5": {
+   "ask": 0.12,
+   "bucket": "1-5",
+   "cost": 0.12739,
+   "event": "KXNBAWINMARGIN-26NOV12CHAPHX",
+   "filled_2x": true,
+   "filled_3x": false,
+   "hold_roi": -1.0,
+   "key": "KXNBAWINMARGIN-26NOV12CHAPHX-CHA1TO5",
+   "lane": "nba_wm_yes_v3",
+   "logged": "2026-11-13T18:08:19.138102+00:00",
+   "night": "2026-11-12",
+   "profit": -0.00899,
+   "reason": "split",
+   "roi": -0.0706,
+   "team": "CHA",
+   "team_share": 0.3207,
+   "tip": 1794535200,
+   "version": "wm-yes-v3-paper",
+   "won": false
+  },
+  "KXNBAWINMARGIN-26NOV12CHAPHX-PHX1TO5": {
+   "ask": 0.13,
+   "bucket": "1-5",
+   "cost": 0.13792,
+   "event": "KXNBAWINMARGIN-26NOV12CHAPHX",
+   "filled_2x": true,
+   "filled_3x": true,
+   "hold_roi": 6.2507,
+   "key": "KXNBAWINMARGIN-26NOV12CHAPHX-PHX1TO5",
+   "lane": "nba_wm_yes_v3",
+   "logged": "2026-11-13T18:08:19.138102+00:00",
+   "night": "2026-11-12",
+   "profit": 0.18332,
+   "reason": "split",
+   "roi": 1.3292,
+   "team": "PHX",
+   "team_share": 0.6793,
+   "tip": 1794535200,
+   "version": "wm-yes-v3-paper",
+   "won": true
+  },
+  "KXNBAWINMARGIN-26NOV12CHAPHX-PHX6TO10": {
+   "ask": 0.16,
+   "bucket": "6-10",
+   "cost": 0.16941,
+   "event": "KXNBAWINMARGIN-26NOV12CHAPHX",
+   "filled_2x": true,
+   "filled_3x": true,
+   "hold_roi": -1.0,
+   "key": "KXNBAWINMARGIN-26NOV12CHAPHX-PHX6TO10",
+   "lane": "nba_wm_yes_v3",
+   "logged": "2026-11-13T18:08:19.138102+00:00",
+   "night": "2026-11-12",
+   "profit": 0.2265,
+   "reason": "split",
+   "roi": 1.337,
+   "team": "PHX",
+   "team_share": 0.6793,
+   "tip": 1794535200,
+   "version": "wm-yes-v3-paper",
+   "won": true
+  },
   "KXNBAWINMARGIN-26NOV12DALMIN-DAL1TO5": {
    "ask": 0.13,
    "bucket": "1-5",
@@ -1513,6 +1576,7 @@
   "KXNBAWINMARGIN-26NOV11OKCPOR-POR1TO5": "unverified ask",
   "KXNBAWINMARGIN-26NOV11WASIND-IND1TO5": "unverified ask",
   "KXNBAWINMARGIN-26NOV11WASIND-WAS1TO5": "unverified ask",
+  "KXNBAWINMARGIN-26NOV12CHAPHX-CHA6TO10": "unverified ask",
   "KXNBAWINMARGIN-26NOV12DETWAS-DET1TO5": "unverified ask",
   "KXNBAWINMARGIN-26NOV12DETWAS-WAS1TO5": "unverified ask"
  },

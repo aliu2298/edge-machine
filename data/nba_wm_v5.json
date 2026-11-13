@@ -1,10 +1,10 @@
 {
  "error": null,
- "last_run": "2026-11-13T10:04:47.902535+00:00",
+ "last_run": "2026-11-13T18:08:19.233813+00:00",
  "observations": {
-  "at": "2026-11-13T10:04:47.902535+00:00",
+  "at": "2026-11-13T18:08:19.233813+00:00",
   "new": 2,
-  "skipped": 9
+  "skipped": 10
  },
  "rows": {
   "KXNBAWINMARGIN-26NOV11BKNNOP-BKN6TO10": {
@@ -259,6 +259,48 @@
    "version": "wm-yes-v5-paper",
    "won": false
   },
+  "KXNBAWINMARGIN-26NOV12CHAPHX-CHA11TO20": {
+   "ask": 0.1,
+   "bucket": "11-20",
+   "cost": 0.1063,
+   "event": "KXNBAWINMARGIN-26NOV12CHAPHX",
+   "filled_25x": false,
+   "filled_2x": false,
+   "hold_roi": -1.0,
+   "key": "KXNBAWINMARGIN-26NOV12CHAPHX-CHA11TO20",
+   "lane": "nba_wm_yes_v5",
+   "logged": "2026-11-13T18:08:19.233813+00:00",
+   "night": "2026-11-12",
+   "profit": -0.1063,
+   "reason": "split",
+   "roi": -1.0,
+   "team": "CHA",
+   "team_share": 0.3207,
+   "tip": 1794535200,
+   "version": "wm-yes-v5-paper",
+   "won": false
+  },
+  "KXNBAWINMARGIN-26NOV12CHAPHX-PHX6TO10": {
+   "ask": 0.16,
+   "bucket": "6-10",
+   "cost": 0.16941,
+   "event": "KXNBAWINMARGIN-26NOV12CHAPHX",
+   "filled_25x": true,
+   "filled_2x": true,
+   "hold_roi": -1.0,
+   "key": "KXNBAWINMARGIN-26NOV12CHAPHX-PHX6TO10",
+   "lane": "nba_wm_yes_v5",
+   "logged": "2026-11-13T18:08:19.233813+00:00",
+   "night": "2026-11-12",
+   "profit": 0.18659,
+   "reason": "split",
+   "roi": 1.1014,
+   "team": "PHX",
+   "team_share": 0.6793,
+   "tip": 1794535200,
+   "version": "wm-yes-v5-paper",
+   "won": true
+  },
   "KXNBAWINMARGIN-26NOV12DALMIN-DAL6TO10": {
    "ask": 0.11,
    "bucket": "6-10",
@@ -311,6 +353,7 @@
   "KXNBAWINMARGIN-26NOV11SASCHI-SAS6TO10": "favourite share 0.91 (0.70 or more)",
   "KXNBAWINMARGIN-26NOV11WASIND-IND11TO20": "unverified ask",
   "KXNBAWINMARGIN-26NOV11WASIND-WAS11TO20": "unverified ask",
+  "KXNBAWINMARGIN-26NOV12CHAPHX-CHA6TO10": "unverified ask",
   "KXNBAWINMARGIN-26NOV12DETWAS-DET6TO10": "favourite share 0.80 (0.70 or more)",
   "KXNBAWINMARGIN-26NOV12TORPHI-PHI6TO10": "favourite share 0.74 (0.70 or more)"
  },
