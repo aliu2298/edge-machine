@@ -34,7 +34,7 @@ check("one instant, on a window boundary: v2's FROM, the cut, v1's favourite ret
       (True, 0, True, True))
 check("the swing trade's earlier retirement is unchanged", L.TRADES_RETIRED["leadswap_swing"], C.CUT2_AT)
 check("review at 30, decide at 100", (V2.REVIEW_AT, V2.DECIDE_AT), (30, 100))
-check("the loss reader retires at the cut; a kept rule has none", (C.retire_at("lossreader"), C.retire_at("sp500_fav5")), (C.CUT3_AT, None))
+check("the loss reader retires at round 3's cut; rule A at round 4's; rule C has none", (C.retire_at("lossreader"), C.retire_at("sp500_fav5"), C.retire_at("sp500_flip15")), (C.CUT3_AT, C.CUT4_AT, None))
 
 print("\nrouting: three markets only, no backfill, a fresh record, a control")
 F0 = W._ts(V2.FROM)
@@ -80,9 +80,8 @@ check("the record and the comparison books are frozen at the cut too", (led["rec
 print("\nthe page")
 html = WB.section(W.load())
 live = html.split('id="sw15-archive"')[0]
-check("B is the version-2 row, Too early until 30, with the honest why", ("sw15-leadswap_v2" in live, "B · Lead Swap favourite v2 (Bitcoin, WTI, NEAR)" in live,
-      "Why these three, honestly" in live, "not evidence for version 2" in live, "Too early (" in live), (True, True, True, True, True))
-check("the in-sample table is there with the three markets' numbers", all(x in live for x in ("+7.1%", "+10.1%", "+14.5%", "−10.5%", "−14.6%", "−9.4%")), True)
+check("B (version 2) was retired 2026-11-13 (round 4): no row in the live area, its record is in the Retired block",
+      ("sw15-leadswap_v2" in live, "Lead Swap favourite v2" in html.split('id="sw15-archive"')[1], "Retired 2026-11-13 by Olu" in html), (False, True, True))
 check("the Loss Reader and lsb-v1's favourite are out of the live area", ("Loss Reader" in live, 'id="sw15-leadswap_fav"' in live), (False, False))
 arc = html.split('id="sw15-archive"')[1]
 check("the Retired Nov 12 block holds both, each on one line with a final record", ("<h4>Retired Nov 12</h4>" in arc, "Loss Reader" in arc.split("<h4>Retired Nov 12</h4>")[1][:1800],

@@ -46,8 +46,8 @@ COMPANION = {"sp500_flip25": dict(key=("swing15_s1", "0.25", "2.0", "bid"), of="
                                   why="Forward +30.4% (45 bets); history +33% (28).")}
 
 
-def in_record(w, start=None):
-    return W._ts(w["open"]) >= W._ts(start or FROM)
+def in_record(w, start=None, stop=None):
+    return W._ts(start or FROM) <= W._ts(w["open"]) and (stop is None or W._ts(w["open"]) < W._ts(stop))
 
 
 def records(state, start=None):
@@ -55,8 +55,9 @@ def records(state, start=None):
     out = {}
     markets = sorted({w["series"] for w in (state.get("windows") or {}).values()} - {MARKET, "KXCRYPTOLEAD15M"})
     for k, r in list(RULES.items()) + list(COMPANION.items()):
-        out[k] = dict(all=W.cells(state, lambda w: in_record(w, start) and w["series"] == MARKET).get(r["key"]),
-                      background={m: W.cells(state, lambda w, m=m: in_record(w, start) and w["series"] == m).get(r["key"])
+        stop = C.retire_at(k)          # rule A retired 2026-11-13 (sw15cuts round 4): nothing from the cut on, so its record is final
+        out[k] = dict(all=W.cells(state, lambda w: in_record(w, start, stop) and w["series"] == MARKET).get(r["key"]),
+                      background={m: W.cells(state, lambda w, m=m: in_record(w, start, stop) and w["series"] == m).get(r["key"])
                                   for m in markets})
     return out
 
