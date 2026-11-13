@@ -2,17 +2,20 @@
 
 Research only. No lane, page or Production change. Every test, split and pass mark was written down before its result was read.
 
+Updated Nov 13 2026 with all 21 low-temperature cities (section 5): a second rule passes.
+
 Part 1 uses Kalshi data only. Part 2 (forecast against price, station readings against the brackets, settlement mechanics) needs outside weather data that is not downloaded yet.
 
 "Return" is per bet after fees at the quoted price. "Score" is the return over its error, with a city-day counted as one outcome; 2 or more is the bar on the found period and 1.5 on the unseen one.
 
 ## Verdict
 
-**One strategy passes. It is small.** Prices alone do not give more: these markets are priced to within their costs.
+**Two strategies pass. Both are small, and they are one idea:** the evening before, the market under-prices the day's range. Highs land warmer than the favourite more often than cooler; lows land cooler more often than warmer. Prices alone do not give more: these markets are priced to within their costs.
 
 | Rank | Strategy | Found period | Unseen period | Bets a week | Status |
 |---|---|---|---|---|---|
-| 1 | **Cold lean**: NO on the bracket two cooler than the favourite, the evening before | +2.3% on 2,865, score 4.6 | **+1.3% on 2,016, score 2.5** | about 105 | Passes. Build spec below. |
+| 1 | **Cold lean, daily highs**: NO on the bracket two cooler than the favourite, the evening before | +2.3% on 2,865, score 4.6 | **+1.3% on 2,016, score 2.5** | about 105 | Passes. Build spec below. |
+| 2 | **Warm lean, daily lows**: NO on the bracket two warmer than the favourite, the evening before | +1.9% on 1,146, score 2.2 | **+2.1% on 1,021, score 3.0** | about 53 | Passes. Very thin books. Build spec below. |
 | not ranked | Rain on the day: NO where rain is in play | +9.0% on 429, score 2.6 | +2.8% on 218, score 0.5 | about 36 | Fails. Looks like a summer pattern. Re-test May to Sep 2027. |
 | not ranked | Hourly temperature markets | nothing passes | not opened | | The profit there is the spread. It needs a live sensor feed and constant quoting, which we cannot trade. |
 | not ranked | Ladder sums (all six YES under 100c) | 0.2% of hourly snapshots, about 1.5c wide | not opened | | Too rare and too thin. |
@@ -38,7 +41,7 @@ Part 1 uses Kalshi data only. Part 2 (forecast against price, station readings a
 | Daily highs | Hourly bid and ask, 21 cities | 6,439 city-days | Nov 2025 to Jun 2026 | Jul to Nov 11 2026 |
 | Daily rain | Hourly bid and ask, up to 35 cities | 2,725 city-days | Aug to Sep 2026 | Oct to Nov 11 2026 |
 | Hourly temperature | One-minute bid and ask, 4 cities | 6,045 city-hours | first 60% of days | last 40%, not opened |
-| Daily lows | Hourly bid and ask | 5 of 21 cities so far | Dec 2025 to Jun 2026 | not opened |
+| Daily lows | Hourly bid and ask, 21 cities | 5,317 city-days | Dec 13 2025 to Jun 2026 | Jul to Nov 11 2026 |
 
 ## 1. Daily highs: what does not work
 
@@ -78,7 +81,7 @@ It showed in every month of the found period and in 17 of 21 cities. The bracket
 - If every bet got the worst bid of the following hour instead of the quote: +0.4%.
 - One evening's order books (15 cities): 17 to 847 contracts at the price, median 146.
 
-**What it is worth.** A bet costs about 95c to win 5c, wins 96% and loses everything 4% of the time. +1.3% a bet, about 105 bets a week. It is fading: +2.3% then +1.3%. Olu has said expensive contracts are low value; this is one of those, and it is the only thing here that passed.
+**What it is worth.** A bet costs about 95c to win 5c, wins 96% and loses everything 4% of the time. +1.3% a bet, about 105 bets a week. It is fading: +2.3% then +1.3%. Olu has said expensive contracts are low value; this is one of those, and so is the lows rule in section 5. They are the only things here that passed.
 
 ## 3. Daily rain
 
@@ -114,11 +117,35 @@ Each market lives one hour and settles on the reading at the top of the next hou
 
 A bracket is two degrees wide, so a reading that can be off by two or more cannot rule brackets in or out.
 
-## 5. Daily lows (first look, 5 cities)
+## 5. Daily lows
 
-- Spreads are much wider: the six asks add up to 119c to 153c. No cell is positive for a buyer.
-- The low is not settled by morning. At 10pm the favourite is priced 88c and wins 91%; a new low before midnight is a real risk and is priced about right.
-- The remaining cities are still downloading. Nothing here points to a rule without station data.
+**The map (found period, 20 cities).** Costs are much higher than on highs: the six asks add up to 117c to 145c. Buying at the quote: 137 cells, none passes. Resting orders: 126 cells, none passes. The low is not settled by morning: at 10pm on the day the favourite is priced 87c and wins 90%.
+
+**The mirror of the cold lean.** If the market under-prices the day's range, lows should land cooler than the evening-before favourite more often than warmer. They do.
+
+| Where the low landed against the evening-before favourite | Found period | Unseen period |
+|---|---|---|
+| Cooler | 28.6% | 28.4% |
+| Same bracket | 45.7% | 51.7% |
+| Warmer | 25.7% | 19.9% |
+
+**Rule, written down before the unseen period was read.** At 10:00 pm ET the day before, buy NO at the quote on the bracket two warmer than the favourite. All low series. Hold to settlement.
+
+| | Bets | Won | Paid | Return | Score |
+|---|---|---|---|---|---|
+| Found period | 1,146 | 93.6% | 92.0c | +1.9% | 2.2 |
+| Unseen period, read once | 1,021 | 97.2% | 95.4c | **+2.1%** | 3.0 |
+
+- **The found period was weak**: one cell, 4 of 7 months up. It was tested because it is the one mirrored prediction of the cold lean, not picked from the map.
+- **The unseen period is cleaner**: every month up (Jul +2.9%, Aug +2.7%, Sep +1.8%, Oct +0.4%, Nov +3.7%). October was the weakest month here too.
+- **It is the warm side, not the price.** NO on the bracket two cooler, same time: −0.4% then −2.1%.
+
+**Fills and depth. This is the weak point.**
+
+- No contract traded in the bracket in the following hour on 59% of nights.
+- Trade prints, a random 250 of the unseen bets: 33 confirmed, 1 refuted, 216 too thin to say.
+- If every bet got the worst bid of the following hour instead of the quote: +0.8%.
+- One evening's order books (13 ladders): 3 to 95 contracts at the price, median 19. This is a one-contract lane.
 
 ## What part 2 needs
 
@@ -127,7 +154,7 @@ The edges people report in weather markets are information edges, and none of th
 1. **Forecast against price.** The latest public model run before the entry time, turned into a chance per bracket.
 2. **The station's reading so far against the brackets.** Brackets already ruled out; the high already in. Needs the official station's own readings, which section 4 shows the hourly markets do not give.
 3. **Settlement mechanics.** How the settled figure relates to the official climate report, rounding, and the standard-time day.
-4. **Why the market leans cold**, which would sharpen the one rule that passed.
+4. **Why the market under-prices the range**, which would sharpen the two rules that passed. One guess to test: forecasts are hourly values, and a day's true high and low sit beyond the hourly ones.
 
 The data is public (Iowa Environmental Mesonet and NOAA station reports and readings; Open-Meteo archived forecast runs), about 130 MB. It needs Olu's own go-ahead in the research session.
 
@@ -137,7 +164,8 @@ The data is public (Iowa Environmental Mesonet and NOAA station reports and read
 - **Fills are quoted, not proven.** Two in three cold-lean bets had too little trading in the following hour to confirm the price either way.
 - **Depth is one evening's snapshot.**
 - **Rain has only 103 days of history**, all of it August to November.
-- **Lows are partial.**
+- **Lows are thin.** Most quotes on the warm-lean bracket could not be checked against a trade, and the depth is a few contracts.
+- **Four unseen periods have been read in this study**: cold lean (pass), its resting version (fail), day-of rain (fail), warm lean on lows (pass).
 
 ## Build spec: cold lean, version 1
 
@@ -161,6 +189,28 @@ For whoever builds. A new Sandbox paper lane; nothing else changes.
 > - A score of 2 is not expected before about 1,000 bets and is not required earlier.
 > - No city is dropped or added, and the read time is not moved, before that read.
 
+## Build spec: warm lean on lows, version 1
+
+For whoever builds. A second row of the same Sandbox paper lane, or its own lane; nothing else changes.
+
+- **Rule:** at 10:00 pm ET the day before, on each city's next-day low ladder with all six brackets quoted, the favourite is the bracket with the highest mid price. Take the bracket two warmer. Buy NO at 1 minus the YES bid, taker fee, hold to settlement.
+- **Skip** when there is no bracket two warmer, the YES bid is 0, or fewer than six brackets are quoted.
+- **Scope:** the 21 daily-low series: KXLOWTNYC, KXLOWTCHI, KXLOWTMIA, KXLOWTAUS, KXLOWTDEN, KXLOWTLAX, KXLOWTPHIL, KXLOWTATL, KXLOWTBOS, KXLOWTDAL, KXLOWTDC, KXLOWTHOU, KXLOWTLV, KXLOWTMIN, KXLOWTNOLA, KXLOWTOKC, KXLOWTPHX, KXLOWTSAN, KXLOWTSATX, KXLOWTSEA, KXLOWTSFO.
+- **Entry timing:** one read at 10:00 pm ET, from the live book. Log the YES bid, the contracts at that bid, and the favourite's bracket. The logged depth matters more here than on highs.
+- **Control row, same time, same page:** NO on the bracket two cooler. It should lose.
+- **Record:** a city-day is one outcome. Paper only.
+- **The one change from version 1:** none; this is version 1.
+- **Retire or keep:** by the text below.
+
+### Pre-registration text for the forward check
+
+> Warm lean on lows, version 1, Sandbox paper. Read once at 500 settled bets (about ten weeks).
+> - Keep if the return after fees is above zero and above the control row's (NO on the bracket two cooler).
+> - Retire if it is zero or below, or not above the control.
+> - Stop early and review if the return is below −3% at 150 settled bets.
+> - Also report the share of entries with fewer than 10 contracts at the bid. It does not decide keep or retire; it says how much could be traded.
+> - No city is dropped or added, and the read time is not moved, before that read.
+
 ## Files
 
-Research folder: `~/edge-research/climate_2026-11-12/`. `PREREGISTERED.md` holds the tests as written in advance, `RULES.md` the rules and the time each was written, and the scripts are `f1.py` (price map), `f2.py` (ladder sums), `f3.py` (price path), `f9_rest.py` and `f9_carry.py` (resting orders, yesterday's miss), `c_hold.py`, `c1_fill.py`, `c1_tape.py` (the cold lean), `f7.py` (rain), `f8.py` (hourly), `f5k.py` (hourly readings against the daily high).
+Research folder: `~/edge-research/climate_2026-11-12/`. `PREREGISTERED.md` holds the tests as written in advance, `RULES.md` the rules and the time each was written, and the scripts are `f1.py` (price map), `f2.py` (ladder sums), `f3.py` (price path), `f9_rest.py` and `f9_carry.py` (resting orders, yesterday's miss), `c_hold.py`, `c1_fill.py`, `c1_tape.py` (the cold lean), `l_hold.py`, `l1_fill.py`, `l1_tape.py`, `l1_depth.py` (the warm lean on lows), `f7.py` (rain), `f8.py` (hourly), `f5k.py` (hourly readings against the daily high).
