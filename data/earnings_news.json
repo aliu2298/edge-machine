@@ -195,7 +195,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-13T20:00:27Z",
+ "calendar_at": "2026-11-13T21:00:35Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -2128,9 +2128,29 @@
     "width": 0.7166666666666668
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-13T21:01:35Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 392049180.3278689,
+    "rungs": 6,
+    "width": 9656976.744186044
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-13T21:01:35Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.671111111111111,
+    "rungs": 15,
+    "width": 0.7166666666666668
+   },
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-13T20:02:01Z",
+ "last_run": "2026-11-13T21:01:43Z",
  "predictions": [
   {
    "call": {
@@ -2455,28 +2475,61 @@
    "sym": "CRM"
   },
   {
+   "baselines": {
+    "random": {
+     "entry": 13.7434,
+     "entry_ts": 1794514320,
+     "exit": 13.593,
+     "exit_ts": 1794600360,
+     "net": 0.008543,
+     "status": "settled"
+    },
+    "spy": {
+     "entry": 15.1481,
+     "entry_ts": 1794513720,
+     "exit": 15.0656,
+     "exit_ts": 1794600060,
+     "net": -0.007846,
+     "status": "settled"
+    },
+    "up": {
+     "entry": 13.7439,
+     "entry_ts": 1794513720,
+     "exit": 13.5866,
+     "exit_ts": 1794600060,
+     "net": -0.013845,
+     "status": "settled"
+    }
+   },
    "call": {
     "entry": 13.7434,
     "entry_ts": 1794514320,
-    "status": "open"
+    "exit": 13.593,
+    "exit_ts": 1794600360,
+    "net": 0.008543,
+    "status": "settled"
    },
    "crowd_up": 0.31,
    "day": "2026-11-12",
    "entry_due": "2026-11-12T20:01:31Z",
    "exit_due": "2026-11-13T20:01:00Z",
    "family": "sentiment",
+   "graded_at": "2026-11-13T21:01:36Z",
    "id": "sentiment:QQQ:2026-11-12",
    "logged_at": "2026-11-12T20:01:31Z",
+   "net": 0.008543,
    "perp": "KXQQQPERP",
    "random_side": -1,
    "reason": "Kalshi traders 31% Up on 24h taker volume.",
    "side": -1,
-   "status": "open",
+   "status": "settled",
    "sym": "QQQ"
   },
   {
    "call": {
-    "status": "pending"
+    "entry": 7.3829,
+    "entry_ts": 1794600720,
+    "status": "open"
    },
    "entry_due": "2026-11-13T20:01:27Z",
    "exit_due": "2026-11-20T21:00:00Z",
@@ -2490,12 +2543,14 @@
    "report": "2026-11-12",
    "report_time": "after-hours",
    "side": -1,
-   "status": "pending",
+   "status": "open",
    "sym": "AMAT"
   },
   {
    "call": {
-    "status": "pending"
+    "entry": 1.9142,
+    "entry_ts": 1794600720,
+    "status": "open"
    },
    "entry_due": "2026-11-13T20:01:27Z",
    "exit_due": "2026-11-20T21:00:00Z",
@@ -2509,7 +2564,7 @@
    "report": "2026-11-12",
    "report_time": "after-hours",
    "side": -1,
-   "status": "pending",
+   "status": "open",
    "sym": "CSCO"
   }
  ],
