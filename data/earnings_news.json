@@ -5,9 +5,7 @@
    "eps_forecast": "$4.06",
    "fiscal_q": "Oct/2026",
    "kpi": [],
-   "mentions": [
-    "KXEARNINGSMENTIONAMAT-26NOV12"
-   ],
+   "mentions": [],
    "n_ests": "10",
    "name": "Applied Materials, Inc.",
    "perp": "KXAMATPERP",
@@ -197,7 +195,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-13T02:00:23Z",
+ "calendar_at": "2026-11-13T03:00:23Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -1730,9 +1728,29 @@
     "width": 0.6781818181818182
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-13T03:01:33Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 391964285.71428573,
+    "rungs": 6,
+    "width": 9903943.377148628
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-13T03:01:33Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.6717948717948716,
+    "rungs": 15,
+    "width": 0.6781818181818182
+   },
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-13T02:01:25Z",
+ "last_run": "2026-11-13T03:01:38Z",
  "predictions": [
   {
    "call": {
