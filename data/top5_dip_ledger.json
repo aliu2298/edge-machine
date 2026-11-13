@@ -17043,9 +17043,9 @@
   ]
  },
  "lane": "top5_goalless_dip",
- "last_run": "2026-11-13T18:10:07.853251+00:00",
+ "last_run": "2026-11-13T23:57:34.014796+00:00",
  "observations": {
-  "at": "2026-11-13T18:10:07.853251+00:00",
+  "at": "2026-11-13T23:57:34.014796+00:00",
   "errors": [],
   "new": 0,
   "skipped": 0,
@@ -17073,6 +17073,22 @@
   "KXLIGUE1TOTAL-26OCT31OLANG": "no pregame quote an hour before kickoff",
   "KXSERIEATOTAL-26NOV08FIOJUV": "pregame ask unverified: 7.83 contracts traded at or through the ask within 60 minutes (under 10)"
  },
- "upcoming": [],
+ "upcoming": [
+  {
+   "event": "KXBUNDESLIGATOTAL-26NOV20BMUKOE",
+   "kickoff": 1795203000,
+   "title": "Bayern Munich vs FC K\u00f6ln: Total Goals"
+  },
+  {
+   "event": "KXLIGUE1TOTAL-26NOV20ESTHAC",
+   "kickoff": 1795203900,
+   "title": "Troyes vs Le Havre: Total Goals"
+  },
+  {
+   "event": "KXLALIGATOTAL-26NOV20ATHESP",
+   "kickoff": 1795204800,
+   "title": "Bilbao vs Espanyol: Total Goals"
+  }
+ ],
  "version": "top5dip-v1"
 }
