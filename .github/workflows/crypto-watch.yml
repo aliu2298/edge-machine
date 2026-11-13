@@ -1,0 +1,37 @@
+name: Crypto watch splits
+# crypto_watch.py (2026-11-13): reads each Crypto "below" bet's rung quiet range from Kalshi's hourly candles, once, into
+# data/crypto_watch_ledger.json for the Daily Markets page's two display-only watch splits. Public data only; nothing is placed.
+on:
+  schedule:
+    - cron: '50 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: crypto-watch
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Tests
+        run: python3 test_crypto_watch.py
+      - name: Read the rungs' quiet ranges
+        run: python3 crypto_watch.py
+      - name: Save records
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+          python3 save_records.py --message "Crypto watch splits" \
+            --add data/crypto_watch_ledger.json \
+            --regenerate "python3 crypto_watch.py" \
+            --after "gh workflow run sandbox-tracker.yml --ref main"
