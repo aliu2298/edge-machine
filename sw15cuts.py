@@ -49,9 +49,22 @@ def fingerprint3():
     return allowgate.fingerprint(dict(cut_at=CUT3_AT, retired=list(RETIRED3), leadswap="lsb-v1 closes, lsb-v2 opens"))
 
 
+# ROUND 4 (Olu, 2026-11-13: "retire A and B"): rule A (S&P 500 favourite, 5 minutes left, sw15-keep3) and rule B (the Lead Swap favourite v2,
+# lsb-v2, and its control row) stop entering at CUT4_AT, one instant on a window boundary: no window opening at or after it is counted.
+# Both final records go to the Retired block, rows kept. Rule C (S&P 500 underdog at 15c) and its 25c companion run on unchanged.
+CUT4_AT = "2026-11-13T23:00:00+00:00"
+RETIRED4 = ("sp500_fav5", "leadswap_v2", "leadswap_v2_ctrl")
+ROUND4_SHA256 = "75c7ad5cc051dfa076b7875a1e18f4c9ac8f469292a7c2e358800d257efb655b"   # sha256 of fingerprint4(), set at registration
+
+
+def fingerprint4():
+    return allowgate.fingerprint(dict(cut_at=CUT4_AT, retired=list(RETIRED4)))
+
+
 def retire_at(lane):
-    """The cut time a retired lane stops entering at (round 1, 2 or 3), or None for a live lane."""
-    return CUT_AT if lane in RETIRED else CUT2_AT if lane in RETIRED2 else CUT3_AT if lane in RETIRED3 else None
+    """The cut time a retired lane stops entering at (round 1, 2, 3 or 4), or None for a live lane."""
+    return (CUT_AT if lane in RETIRED else CUT2_AT if lane in RETIRED2 else CUT3_AT if lane in RETIRED3
+            else CUT4_AT if lane in RETIRED4 else None)
 
 
 def fingerprint():

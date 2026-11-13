@@ -309,9 +309,12 @@ def keep_block(state, parts=False):
     """The 15-Minute section's three rules (Olu, 2026-11-11): A and C here (sw15keep.py), B in the Lead Swap block. Each
     row's fold: why these markets, the per-market split, and the same rule on every other market in the background."""
     import sw15keep as K
+    import sw15cuts as SC4
     rec = K.records(state)
     cards = []
     for key, R_ in K.RULES.items():
+        if SC4.retire_at(key):
+            continue                                            # rule A retired 2026-11-13 (round 4): the Retired block
         r = rec[key]
         c = r["all"]
         n = c["n"] if c else 0
@@ -350,9 +353,9 @@ def keep_block(state, parts=False):
                         status='<span class="sig n">observation</span>', evidence=str(nc))
             cards.append(_card(crow, f'<p class="sm sw15-why">{esc(cv["why"])}</p>'))
     if parts:
-        return cards, ("A and C trade the S&P 500 only, each a fresh record from "
-                       f"{_start(K.FROM)}, reviewed at {K.REVIEW_AT} and decided at {K.DECIDE_AT}. The same rules keep "
-                       "being tracked on every other market in the background (inside each row), never counted.")
+        return cards, ("C trades the S&P 500 underdog only, a fresh record from "
+                       f"{_start(K.FROM)}, reviewed at {K.REVIEW_AT} and decided at {K.DECIDE_AT}. The same rule keeps "
+                       "being tracked on every other market in the background (inside its row), never counted.")
     intro = (f'<p class="scope sw15-intro">Paper · S&amp;P 500 only · fresh record from {esc(_start(K.FROM))} · review '
              f'{K.REVIEW_AT}, decide {K.DECIDE_AT}</p>')
     how = _how("The 15-Minute section was narrowed to three rules on Nov 11: these two on the S&P 500 and the Lead Swap "
@@ -845,10 +848,9 @@ def leadswap_block(state, parts=False):
     ranks = (f'<details class="fold sw15-ranks"><summary>How the board ranks markets</summary>'
              f'{board}{persist}{timing}{heat}</details>')
     if parts:
-        cards = [lsb2_card(state)] + cards                      # B is lsb-v2 from 2026-11-12 (lsb-v1 is retired: archive)
-        return cards, ('<p class="sm">B · Lead Swap favourite: how often the lead (YES mid across 50c) swaps on every '
-                       '15-minute series; the favourite goes to the most stable markets, against its opposite. Picks are '
-                       'frozen at about :04 each hour.</p>' + f'<p class="sm mut" id="spotlag-status">{esc(spot)}</p>' + ranks)
+        # B (lsb-v2) retired 2026-11-13 (sw15cuts round 4): its row and final record are in the Retired block, no card here.
+        return cards, ('<p class="sm">The Lead Swap Board still ranks every 15-minute series by how often the lead (YES mid across 50c) '
+                       'swaps, with picks frozen at about :04 each hour. Rule B, the favourite traded on it, was retired on Nov 13 2026.</p>' + f'<p class="sm mut" id="spotlag-status">{esc(spot)}</p>' + ranks)
     return (f'<h3 class="dm-title" id="leadswap">Lead Swap Board</h3>' + _intro(L.FROM) + _list(cards)
             + _how("How often the lead (YES mid across 50c) swaps on every 15-minute series; the swing trade goes to the "
                    "most swaps, the favourite to the most stable, each against its opposite. Picks are frozen at about "
@@ -962,6 +964,40 @@ def _archive(state, s1_final, v1=""):
         return (f'<details class="fold sw15-removed sw15-round3"><summary>Retired {esc(_start(C.CUT3_AT))} · Loss Reader and the v1 Lead '
                 f'Swap favourite · {len(trs)} lanes, final records</summary>'
                 + _table(("Lane", "Bets", "Won", "Return after fees", "Note"), trs) + '</details>')
+    def round4():
+        """Round 4 (2026-11-13, Olu): rule A (S&P 500 favourite, 5 minutes left) and rule B (the Lead Swap favourite v2, with its control row), each
+        on one line with its FINAL record, the windows before the cut. Retired 2026-11-13 by Olu."""
+        import leadswap as L
+        import leadswap_v2 as V2
+        import sw15cuts as C
+        import sw15keep as K
+        trs = []
+        a = K.records(state)["sp500_fav5"]["all"]
+        if a:
+            trs.append(f'<tr><td>{esc(K.RULES["sp500_fav5"]["label"])}</td><td class="num">{a["n"]}</td><td class="num">{a["hits"]}</td>'
+                       f'<td class="num">{pct(a["mean_roi"])}</td><td>{a["hits"]} v {a["fair"] * a["n"]:.1f} priced. S&amp;P 500 only.</td></tr>')
+        led = V2.load()
+        if led.get("routing") is None:
+            led = V2.update(state, L.load())
+        rt = led.get("routing") or {}
+        for key, note in (("leadswap_v2", "Bitcoin, WTI, NEAR. Lost to its own control."),
+                          ("leadswap_v2_ctrl", "The same three markets when swappy.")):
+            c = rt.get(key)
+            if c:
+                trs.append(f'<tr><td>{esc(V2.LABELS[key])}</td><td class="num">{c["n"]}</td><td class="num">{c["hits"]}</td>'
+                           f'<td class="num">{pct(c["mean_roi"])}</td><td>{c["hits"]} v {c["fair"] * c["n"]:.1f} priced. {esc(note)}</td></tr>')
+        if not trs:
+            return ""
+        return (f'<details class="fold sw15-removed sw15-round4"><summary>Retired {esc(_start(C.CUT4_AT))} · rules A and B · {len(trs)} rows, '
+                f'final records</summary><p class="sm">Retired 2026-11-13 by Olu. No entries from {esc(_start(C.CUT4_AT))} on; the rows and their '
+                f'records stay.</p>'
+                + _table(("Rule", "Bets", "Won", "Return after fees", "Note"), trs) + '</details>')
+    try:
+        r4 = round4() if NARROWED else ""
+    except Exception:                                           # noqa: BLE001
+        r4 = ""
+    if r4:
+        parts.append(f'<h4>Retired Nov 13</h4>{r4}')
     try:
         r3 = round3() if NARROWED else ""
     except Exception:                                           # noqa: BLE001
@@ -1099,8 +1135,8 @@ def section(state=None):
                 pass
         import sw15keep as K
         import leadswap_v2 as V2
-        intro = (f'<p class="scope sw15-intro">Paper · three rules · A and C fresh from {esc(_start(K.FROM))}, B (version 2) fresh from '
-                 f'{esc(_start(V2.FROM))} · review {K.REVIEW_AT}, decide {K.DECIDE_AT}</p>')
+        intro = (f'<p class="scope sw15-intro">Paper · one rule · C (S&amp;P 500 underdog at 15c, with its 25c companion) fresh from '
+                 f'{esc(_start(K.FROM))} · review {K.REVIEW_AT}, decide {K.DECIDE_AT} · A and B retired Nov 13</p>')
         how = ('<details class="fold sw15-how"><summary>How the record is kept</summary>'
                + "".join(n if n.startswith("<") else f'<p class="sm">{esc(n)}</p>' for n in notes)
                + f'<p class="sm mut">{SORT_LINE}</p></details>')
@@ -1132,8 +1168,8 @@ def index_rows(state=None):
             raise StopIteration
         import sw15keep as K
         for k, r in K.records(state).items():
-            if k not in K.RULES:
-                continue
+            if k not in K.RULES or _C.retire_at(k):
+                continue                                        # rule A retired 2026-11-13: archive only
             c = r["all"]
             out.append(dict(lane=k, label=K.RULES[k]["label"], n=c["n"] if c else 0, roi=c["mean_roi"] if c else None,
                             hit=c["hit_rate"] if c else None, fair=c["fair"] if c else None,
@@ -1236,6 +1272,8 @@ def index_rows(state=None):
         if v2.get("routing") is None:
             v2 = V2.update(state, L.load())
         for key, _side in V2.TRADES:
+            if _C.retire_at(key):
+                continue                                        # rule B and its control retired 2026-11-13: archive only
             c = (v2["routing"] or {}).get(key)
             out.append(dict(lane=key, label="Lead Swap · " + V2.LABELS[key], n=c["n"] if c else 0,
                             roi=c["mean_roi"] if c else None, hit=c["hit_rate"] if c else None,

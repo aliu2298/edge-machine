@@ -26,6 +26,7 @@ import os
 import sys
 
 import leadswap as L
+import sw15cuts as C
 import swing15 as W
 
 VERSION = "lsb-v2"
@@ -51,8 +52,8 @@ def routing(rows, picks):
     The cell is leadswap.routing()'s (n, hits, hit_rate, fair, mean_roi, z, clusters, before_freeze, series)."""
     found = {k: [] for k, _side in TRADES}
     for s, _g, o, _c, _m, w in rows:
-        if o < W._ts(FROM) or s not in MARKETS:
-            continue
+        if o < W._ts(FROM) or s not in MARKETS or o >= W._ts(C.CUT4_AT):
+            continue                                            # retired 2026-11-13 (sw15cuts round 4): nothing from the cut on
         hk = dt.datetime.fromtimestamp(o - o % 3600, dt.timezone.utc).isoformat()
         p = picks.get(hk)
         if not p:

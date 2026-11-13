@@ -299,8 +299,8 @@ def body_html(parts):
     links = " · ".join(f'<a href="#{g}">{esc(label)}</a>' for g, label, _f in GROUPS)
     sw = swing15_html()
     wx = weather_html()
-    entries = [("swing15", "15-Minute", getattr(swing15_html, "stats", dict(won=None, lost=0, wl="", roi=None))),
-               ("temps", "Weather", getattr(weather_html, "stats", dict(won=None, lost=0, wl="", roi=None)))]
+    entries = [("temps", "Weather", getattr(weather_html, "stats", dict(won=None, lost=0, wl="", roi=None))),
+               ("swing15", "15-Minute", getattr(swing15_html, "stats", dict(won=None, lost=0, wl="", roi=None)))]
     shells = []
     for g, label, _f in GROUPS:
         stats = group_stats(parts[g])
@@ -314,7 +314,7 @@ def body_html(parts):
     out = [f'<h1>{TITLE}</h1>\n<p class="lede">Kalshi daily-close ladders, one closed section per group: {links}. '
            f'Each tile adds up the section\'s running rules, Production and Sandbox, as their rows below count them (a market-day or an event is one bet); '
            f'the return is the average per bet after fees. Paper unless a row says Production.</p>',
-           summary_tiles(entries), sw, wx] + shells
+           summary_tiles(entries), wx, sw] + shells
     out.append(f"<footer>{esc(_foot())}</footer>")
     return "\n".join(out) + "\n"
 
@@ -340,7 +340,7 @@ def build(now=None, builders=None):
     html = C.document(
         f"{C.SITE_NAME} · {TITLE}",
         "Kalshi daily-close ladder lanes in one tab: crypto, commodities, econ and finance, each rule's record per market-day.",
-        KEY, (("swing15", "15-Minute"), ("temps", "Weather")) + tuple((g, label) for g, label, _f in GROUPS), C.stamp(now), body_html(parts),
+        KEY, (("temps", "Weather"), ("swing15", "15-Minute")) + tuple((g, label) for g, label, _f in GROUPS), C.stamp(now), body_html(parts),
         script_src="./site.js", scripts=("./tables.js",), sports=True)
     return B.label_cells(html)
 
