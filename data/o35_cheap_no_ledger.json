@@ -17670,17 +17670,547 @@
     "10": null
    },
    "version": "o35-v4"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1794604624,
+     "fill_print": 0.06,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1794604624,
+       "filled": true,
+       "target": 0.2,
+       "thin": false,
+       "volume": 1672.51
+      },
+      "3": {
+       "at": 1794604624,
+       "filled": true,
+       "target": 0.3,
+       "thin": false,
+       "volume": 595.88
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "10e": null
+   },
+   "crossed": null,
+   "event": "KXUEFANLTOTAL-26NOV13SVKFRO",
+   "form_rule": false,
+   "honest": {
+    "10": {
+     "dead": false,
+     "fill_at": 1794604624,
+     "fill_print": 0.06,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1794604697,
+       "filled": true,
+       "target": 0.2,
+       "thin": false,
+       "volume": 313.0
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "id": "KXUEFANLTOTAL-26NOV13SVKFRO-4",
+   "kickoff": 1794599100,
+   "league": "UEFA Nations League",
+   "logged": "2026-11-13T22:52:26.208794+00:00",
+   "night": "2026-11-13",
+   "prints": 636,
+   "result": "yes",
+   "series": "KXUEFANLTOTAL",
+   "v5": {
+    "10": {
+     "dead": false,
+     "fill_at": 1794604624,
+     "fill_print": 0.06,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1794604697,
+       "filled": true,
+       "target": 0.2,
+       "thin": false,
+       "volume": 313.0
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "version": "o35-v4"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1794603465,
+     "fill_print": 0.08,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.2,
+       "thin": true,
+       "volume": 9.28
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    },
+    "10e": null
+   },
+   "crossed": null,
+   "event": "KXUEFANLTOTAL-26NOV13SRBGER",
+   "form_rule": false,
+   "honest": {
+    "10": {
+     "dead": false,
+     "fill_at": 1794603465,
+     "fill_print": 0.08,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.2,
+       "thin": true,
+       "volume": 9.28
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "id": "KXUEFANLTOTAL-26NOV13SRBGER-4",
+   "kickoff": 1794599100,
+   "league": "UEFA Nations League",
+   "logged": "2026-11-13T22:52:26.208794+00:00",
+   "night": "2026-11-13",
+   "prints": 1008,
+   "result": "yes",
+   "series": "KXUEFANLTOTAL",
+   "v5": {
+    "10": {
+     "dead": false,
+     "fill_at": 1794603465,
+     "fill_print": 0.08,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.2,
+       "thin": true,
+       "volume": 9.28
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "version": "o35-v4"
+  },
+  {
+   "bids": {
+    "10": null,
+    "10e": null
+   },
+   "crossed": null,
+   "event": "KXUEFANLTOTAL-26NOV13SLOSUI",
+   "form_rule": false,
+   "honest": {
+    "10": null
+   },
+   "id": "KXUEFANLTOTAL-26NOV13SLOSUI-4",
+   "kickoff": 1794599100,
+   "league": "UEFA Nations League",
+   "logged": "2026-11-13T22:52:26.208794+00:00",
+   "night": "2026-11-13",
+   "prints": 166,
+   "result": "no",
+   "series": "KXUEFANLTOTAL",
+   "v5": {
+    "10": null
+   },
+   "version": "o35-v4"
+  },
+  {
+   "bids": {
+    "10": null,
+    "10e": null
+   },
+   "crossed": null,
+   "event": "KXUEFANLTOTAL-26NOV13SCOMKD",
+   "form_rule": false,
+   "honest": {
+    "10": null
+   },
+   "id": "KXUEFANLTOTAL-26NOV13SCOMKD-4",
+   "kickoff": 1794599100,
+   "league": "UEFA Nations League",
+   "logged": "2026-11-13T22:52:26.208794+00:00",
+   "night": "2026-11-13",
+   "prints": 955,
+   "result": "no",
+   "series": "KXUEFANLTOTAL",
+   "v5": {
+    "10": null
+   },
+   "version": "o35-v4"
+  },
+  {
+   "bids": {
+    "10": null,
+    "10e": {
+     "dead": false,
+     "fill_at": 1794600319,
+     "fill_print": 0.06,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.2,
+       "thin": false,
+       "volume": 0
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "crossed": 0.01,
+   "event": "KXUEFANLTOTAL-26NOV13NEDGRE",
+   "form_rule": false,
+   "honest": {
+    "10": null
+   },
+   "id": "KXUEFANLTOTAL-26NOV13NEDGRE-4",
+   "kickoff": 1794599100,
+   "league": "UEFA Nations League",
+   "logged": "2026-11-13T22:52:26.208794+00:00",
+   "night": "2026-11-13",
+   "prints": 706,
+   "result": "yes",
+   "series": "KXUEFANLTOTAL",
+   "v5": {
+    "10": null
+   },
+   "version": "o35-v4"
+  },
+  {
+   "bids": {
+    "10": null,
+    "10e": null
+   },
+   "crossed": null,
+   "event": "KXUEFANLTOTAL-26NOV13MDAKAZ",
+   "form_rule": false,
+   "honest": {
+    "10": null
+   },
+   "id": "KXUEFANLTOTAL-26NOV13MDAKAZ-4",
+   "kickoff": 1794589200,
+   "league": "UEFA Nations League",
+   "logged": "2026-11-13T22:52:26.208794+00:00",
+   "night": "2026-11-13",
+   "prints": 2124,
+   "result": "no",
+   "series": "KXUEFANLTOTAL",
+   "v5": {
+    "10": null
+   },
+   "version": "o35-v4"
+  },
+  {
+   "bids": {
+    "10": null,
+    "10e": null
+   },
+   "crossed": null,
+   "event": "KXUEFANLTOTAL-26NOV13LUXEST",
+   "form_rule": false,
+   "honest": {
+    "10": null
+   },
+   "id": "KXUEFANLTOTAL-26NOV13LUXEST-4",
+   "kickoff": 1794599100,
+   "league": "UEFA Nations League",
+   "logged": "2026-11-13T22:52:26.208794+00:00",
+   "night": "2026-11-13",
+   "prints": 118,
+   "result": "no",
+   "series": "KXUEFANLTOTAL",
+   "v5": {
+    "10": null
+   },
+   "version": "o35-v4"
+  },
+  {
+   "bids": {
+    "10": null,
+    "10e": null
+   },
+   "crossed": null,
+   "event": "KXUEFANLTOTAL-26NOV13LIEAZE",
+   "form_rule": false,
+   "honest": {
+    "10": null
+   },
+   "id": "KXUEFANLTOTAL-26NOV13LIEAZE-4",
+   "kickoff": 1794599100,
+   "league": "UEFA Nations League",
+   "logged": "2026-11-13T22:52:26.208794+00:00",
+   "night": "2026-11-13",
+   "prints": 134,
+   "result": "no",
+   "series": "KXUEFANLTOTAL",
+   "v5": {
+    "10": null
+   },
+   "version": "o35-v4"
+  },
+  {
+   "bids": {
+    "10": {
+     "dead": false,
+     "fill_at": 1794604530,
+     "fill_print": 0.05,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": 1794604530,
+       "filled": true,
+       "target": 0.2,
+       "thin": false,
+       "volume": 135.14
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": true,
+       "volume": 45.0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": true,
+       "volume": 10.0
+      }
+     }
+    },
+    "10e": null
+   },
+   "crossed": null,
+   "event": "KXUEFANLTOTAL-26NOV13BULISL",
+   "form_rule": false,
+   "honest": {
+    "10": {
+     "dead": false,
+     "fill_at": 1794604530,
+     "fill_print": 0.05,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.2,
+       "thin": false,
+       "volume": 0
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "id": "KXUEFANLTOTAL-26NOV13BULISL-4",
+   "kickoff": 1794599100,
+   "league": "UEFA Nations League",
+   "logged": "2026-11-13T22:52:26.208794+00:00",
+   "night": "2026-11-13",
+   "prints": 235,
+   "result": "yes",
+   "series": "KXUEFANLTOTAL",
+   "v5": {
+    "10": {
+     "dead": false,
+     "fill_at": 1794604530,
+     "fill_print": 0.05,
+     "limit": 0.1,
+     "payout": 0.0,
+     "sells": {
+      "2": {
+       "at": null,
+       "filled": false,
+       "target": 0.2,
+       "thin": false,
+       "volume": 0
+      },
+      "3": {
+       "at": null,
+       "filled": false,
+       "target": 0.3,
+       "thin": false,
+       "volume": 0
+      },
+      "4": {
+       "at": null,
+       "filled": false,
+       "target": 0.4,
+       "thin": false,
+       "volume": 0
+      }
+     }
+    }
+   },
+   "version": "o35-v4"
+  },
+  {
+   "bids": {
+    "10": null,
+    "10e": null
+   },
+   "crossed": null,
+   "event": "KXUEFANLTOTAL-26NOV13ANDGIB",
+   "form_rule": false,
+   "honest": {
+    "10": null
+   },
+   "id": "KXUEFANLTOTAL-26NOV13ANDGIB-4",
+   "kickoff": 1794599100,
+   "league": "UEFA Nations League",
+   "logged": "2026-11-13T22:52:26.208794+00:00",
+   "night": "2026-11-13",
+   "prints": 121,
+   "result": "no",
+   "series": "KXUEFANLTOTAL",
+   "v5": {
+    "10": null
+   },
+   "version": "o35-v4"
   }
  ],
  "error": null,
  "lane": "o35_cheap_no_wave",
- "last_run": "2026-11-13T17:23:08.559271+00:00",
+ "last_run": "2026-11-13T22:52:26.208794+00:00",
  "observations": {
-  "at": "2026-11-13T17:23:08.559271+00:00",
+  "at": "2026-11-13T22:52:26.208794+00:00",
   "backfill_left": 0,
   "backfilled": 0,
   "errors": [],
-  "new": 0,
+  "new": 10,
   "waiting": 3
  },
  "seen": {
@@ -17875,7 +18405,17 @@
   "KXUEFANLTOTAL-26NOV12ITAFRA": "2026-11-13T01:28:28.059349+00:00",
   "KXUEFANLTOTAL-26NOV12MNELAT": "2026-11-13T01:28:28.059349+00:00",
   "KXUEFANLTOTAL-26NOV12SMRBLR": "2026-11-13T01:28:28.059349+00:00",
-  "KXUEFANLTOTAL-26NOV12TURBEL": "2026-11-12T20:27:27.158229+00:00"
+  "KXUEFANLTOTAL-26NOV12TURBEL": "2026-11-12T20:27:27.158229+00:00",
+  "KXUEFANLTOTAL-26NOV13ANDGIB": "2026-11-13T22:52:26.208794+00:00",
+  "KXUEFANLTOTAL-26NOV13BULISL": "2026-11-13T22:52:26.208794+00:00",
+  "KXUEFANLTOTAL-26NOV13LIEAZE": "2026-11-13T22:52:26.208794+00:00",
+  "KXUEFANLTOTAL-26NOV13LUXEST": "2026-11-13T22:52:26.208794+00:00",
+  "KXUEFANLTOTAL-26NOV13MDAKAZ": "2026-11-13T22:52:26.208794+00:00",
+  "KXUEFANLTOTAL-26NOV13NEDGRE": "2026-11-13T22:52:26.208794+00:00",
+  "KXUEFANLTOTAL-26NOV13SCOMKD": "2026-11-13T22:52:26.208794+00:00",
+  "KXUEFANLTOTAL-26NOV13SLOSUI": "2026-11-13T22:52:26.208794+00:00",
+  "KXUEFANLTOTAL-26NOV13SRBGER": "2026-11-13T22:52:26.208794+00:00",
+  "KXUEFANLTOTAL-26NOV13SVKFRO": "2026-11-13T22:52:26.208794+00:00"
  },
  "seen_v3": {
   "KXBUNDESLIGATOTAL-26NOV01SGEHSV": "2026-11-01T19:12:14.443711+00:00",
