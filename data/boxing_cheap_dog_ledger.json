@@ -936,18 +936,24 @@
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.18
     }
    ],
    "logged": "2026-11-12T23:00:34.860260+00:00",
    "minutes_to_start": 59.0,
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.0049,
    "price": 0.06,
+   "roi": -0.0762,
+   "roi_2x": 0.8476,
+   "roi_held": -1.0,
+   "settled": "2026-11-13T04:00:33.086308+00:00",
    "side": "yes",
    "spread": 0.04,
    "spread_cost": null,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Eduardo Mancilla"
   },
@@ -971,23 +977,30 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.06
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.09
     }
    ],
    "logged": "2026-11-13T00:00:38.142571+00:00",
    "minutes_to_start": 59.0,
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.032,
    "price": 0.03,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-11-13T04:00:33.086308+00:00",
    "side": "yes",
    "spread": 0.01,
    "spread_cost": 0.0,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 156.06,
    "word": "Philip Quartey"
   },
@@ -1024,23 +1037,30 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.22
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.33
     }
    ],
    "logged": "2026-11-13T01:57:39.863554+00:00",
    "minutes_to_start": 59.0,
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.1169,
    "price": 0.11,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-11-13T04:00:33.086308+00:00",
    "side": "yes",
    "spread": 0.05,
    "spread_cost": null,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Damian Wrzesinski"
   },
@@ -1158,14 +1178,14 @@
   "KXBOXING-26OCT31TSUTSUROJAS": "2026-10-31T20:06:27.383501+00:00"
  },
  "lane": "boxing_cheap_dog",
- "last_success": "2026-11-13T03:00:36.212329+00:00",
+ "last_success": "2026-11-13T04:00:33.086308+00:00",
  "observations": {
-  "at": "2026-11-13T03:00:36.212329+00:00",
+  "at": "2026-11-13T04:00:33.086308+00:00",
   "entered": 0,
-  "events": 5,
-  "filled": 1,
+  "events": 4,
+  "filled": 0,
   "no_start": 0,
-  "skipped": 2,
+  "skipped": 0,
   "unverified": 0,
   "waiting": 25
  },
