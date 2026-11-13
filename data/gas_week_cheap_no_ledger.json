@@ -610,6 +610,46 @@
    "status": "open",
    "traded_to_entry": 100.0,
    "word": "Above 3.7800"
+  },
+  {
+   "ask_check": {
+    "book": null,
+    "first_quotes": true,
+    "how": "print",
+    "last_trade": 0.06,
+    "printed": 18.37,
+    "source": "replayed",
+    "status": "verified"
+   },
+   "bid": 0.17,
+   "entry_at": "2026-11-12T22:16:00+00:00",
+   "event": "KXAAAGASW-26NOV16",
+   "id": "KXAAAGASW-26NOV16-3.7900",
+   "last_trade": 0.06,
+   "last_trade_at": "2026-11-12T22:16:00+00:00",
+   "legs": [
+    {
+     "late_checked": true,
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.38
+    },
+    {
+     "late_checked": true,
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.57
+    }
+   ],
+   "logged": "2026-11-13T01:30:54.991831+00:00",
+   "payout": null,
+   "price": 0.19,
+   "side": "no",
+   "spread": 0.02,
+   "spread_cost": 0.13,
+   "status": "open",
+   "traded_to_entry": 100.0,
+   "word": "Above 3.7900"
   }
  ],
  "error": null,
@@ -619,17 +659,17 @@
   "KXAAAGASW-26NOV16": "2026-11-09T17:00:46.151988+00:00"
  },
  "lane": "gas_week_cheap_no",
- "last_success": "2026-11-12T20:53:31.218044+00:00",
+ "last_success": "2026-11-13T01:30:54.991831+00:00",
  "observations": {
-  "at": "2026-11-12T20:53:31.218044+00:00",
+  "at": "2026-11-13T01:30:54.991831+00:00",
   "checking": 0,
-  "entered": 0,
+  "entered": 1,
   "events": 1,
   "filled": 0,
   "fills_moved": 0,
   "skipped": 0,
   "unverified": 3,
-  "waiting": 0
+  "waiting": 2
  },
  "skips": {
   "KXAAAGASW-26NOV02-4.1000": {
