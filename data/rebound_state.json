@@ -873,6 +873,42 @@
    "target": 2.538739,
    "ticker": "KXORCLPERP",
    "touch_ts": 1794493681
+  },
+  {
+   "backfill": false,
+   "day": "2026-11-13",
+   "id": "rb_24h|KXBABAPERP|2026-11-13",
+   "lane": "rb_24h",
+   "level": 1.841945,
+   "level_stock": 91.99,
+   "note": "no print at or through the ask in 5 minutes",
+   "signal_ts": 1794562200,
+   "slide_high": 97.37,
+   "status": "no_fill",
+   "stop": 1.823525,
+   "strength": 1,
+   "sym": "BABA",
+   "target": 1.895772,
+   "ticker": "KXBABAPERP",
+   "touch_ts": 1794560461
+  },
+  {
+   "backfill": false,
+   "day": "2026-11-13",
+   "id": "rb_24h|KXCSCOPERP|2026-11-13",
+   "lane": "rb_24h",
+   "level": 1.998796,
+   "level_stock": 98.96,
+   "note": "no print at or through the ask in 5 minutes",
+   "signal_ts": 1794562200,
+   "slide_high": 109.09,
+   "status": "no_fill",
+   "stop": 1.978808,
+   "strength": 3,
+   "sym": "CSCO",
+   "target": 2.101098,
+   "ticker": "KXCSCOPERP",
+   "touch_ts": 1794560642
   }
  ],
  "from": "2026-11-12T00:00:00+00:00",
@@ -890,7 +926,7 @@
    "strong": true
   }
  },
- "last_run": "2026-11-13T09:00:18+00:00",
+ "last_run": "2026-11-13T10:00:17+00:00",
  "prereg_sha256": "17ecd1cd57183bacd45e8e1e6477c542b4ecaaa88a3e8b8a62fa395bbc45a581",
  "ratios": {
   "AAPL": 50.0113,
