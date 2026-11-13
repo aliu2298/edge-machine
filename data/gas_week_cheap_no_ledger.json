@@ -659,17 +659,17 @@
   "KXAAAGASW-26NOV16": "2026-11-09T17:00:46.151988+00:00"
  },
  "lane": "gas_week_cheap_no",
- "last_success": "2026-11-13T04:00:53.349530+00:00",
+ "last_success": "2026-11-13T04:16:00.238609+00:00",
  "observations": {
-  "at": "2026-11-13T04:00:53.349530+00:00",
+  "at": "2026-11-13T04:16:00.238609+00:00",
   "checking": 0,
   "entered": 0,
   "events": 1,
   "filled": 0,
   "fills_moved": 0,
-  "skipped": 0,
+  "skipped": 2,
   "unverified": 3,
-  "waiting": 2
+  "waiting": 0
  },
  "skips": {
   "KXAAAGASW-26NOV02-4.1000": {
@@ -891,6 +891,16 @@
    "event": "KXAAAGASW-26NOV16",
    "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
    "word": "Above 3.7600"
+  },
+  "KXAAAGASW-26NOV16-3.7700": {
+   "event": "KXAAAGASW-26NOV16",
+   "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 3.7700"
+  },
+  "KXAAAGASW-26NOV16-3.8100": {
+   "event": "KXAAAGASW-26NOV16",
+   "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 3.8100"
   },
   "KXAAAGASW-26NOV16-3.8400": {
    "event": "KXAAAGASW-26NOV16",
