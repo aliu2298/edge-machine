@@ -1235,12 +1235,14 @@ def index_rows(state=None):
     except (Exception, StopIteration):                          # noqa: BLE001  (never breaks the index)
         pass
     try:                                                        # rule C version 2 (2026-11-13): the three S&P 500 opening-sweep rows
+        if not NARROWED:
+            raise StopIteration
         import sw15c2 as C2
         r2 = C2.records(C2.load())
         for lv in C2.LEVELS:
             h = r2[lv]["headline"]
             out.append(dict(lane=f"sw15c2_{lv}", label=C2.LABELS[lv], n=h["n"], roi=h["roi"], hit=None, fair=None, status=r2[lv]["read"]))
-    except Exception:                                           # noqa: BLE001  (never breaks the index)
+    except (Exception, StopIteration):                          # noqa: BLE001  (never breaks the index)
         pass
     try:                                                        # Rule 1 v2 · Loss Reader (2026-11-10): first
         import lossreader as LR
