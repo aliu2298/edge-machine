@@ -1,8 +1,8 @@
 {
  "collector": {
-  "last_ts": 1794531601,
+  "last_ts": 1794535202,
   "markets": 60,
-  "rows_24h": 84480
+  "rows_24h": 84540
  },
  "events": [
   {
@@ -25,28 +25,6 @@
   }
  ],
  "flags": [
-  {
-   "gap": 0.01769,
-   "gap_15m": 0.01721,
-   "gap_5m": 0.01769,
-   "gap_60m": 0.01598,
-   "rth": false,
-   "spread_bp": 19.3,
-   "sym": "ADBE",
-   "ticker": "KXADBEPERP",
-   "ts": 1794197941
-  },
-  {
-   "gap": 0.01474,
-   "gap_15m": 0.01864,
-   "gap_5m": 0.01456,
-   "gap_60m": 0.00975,
-   "rth": false,
-   "spread_bp": 10.1,
-   "sym": "AMD",
-   "ticker": "KXAMDPERP",
-   "ts": 1794197702
-  },
   {
    "gap": 0.01031,
    "gap_15m": 0.00947,
@@ -5490,9 +5468,27 @@
    "sym": "SBUX",
    "ticker": "KXSBUXPERP",
    "ts": 1794526681
+  },
+  {
+   "gap": 0.01,
+   "gap_15m": 0.01064,
+   "gap_5m": 0.01266,
+   "rth": false,
+   "spread_bp": 40.5,
+   "sym": "NEM",
+   "ticker": "KXNEMPERP",
+   "ts": 1794532981
+  },
+  {
+   "gap": 0.01065,
+   "rth": false,
+   "spread_bp": 15.1,
+   "sym": "PANW",
+   "ticker": "KXPANWPERP",
+   "ts": 1794535081
   }
  ],
- "last_run": "2026-11-13T01:01:10+00:00",
+ "last_run": "2026-11-13T02:00:08+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
