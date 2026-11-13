@@ -2712,7 +2712,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-13T01:32:00.553158+00:00",
+ "last_run": "2026-11-13T02:01:23.152492+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -8146,14 +8146,14 @@
    ],
    "pid": "[\"finance_nc\", \"finance_nc\", [\"KXINXU-26NOV12H1600-T7664.9999\", \"no\"]]",
    "price": 0.93,
-   "profit": null,
+   "profit": 0.07,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-13T01:30:54.142542+00:00",
    "side": "no",
    "snapshot": null,
    "sport": "Finance",
    "src": "finance_nc",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXUEFANLTEAMTOTAL-26NOV14NORWAL-NOR1",
