@@ -1,0 +1,40 @@
+name: Weather paper lanes
+# climate_lanes.py (2026-11-13): the cold lean on daily highs (version 2) and the warm lean on daily lows, Sandbox paper.
+# One read a night at 10:00 pm Eastern, which is 02:00Z in daylight time and 03:00Z in standard time, so the cron covers
+# both hours every 10 minutes and the script only acts between 22:00 and 22:50 Eastern (it logs how late it started).
+# Every other run only grades the days that have settled. Public data only; nothing is placed.
+on:
+  schedule:
+    - cron: '0,10,20,30,40 2,3 * * *'
+    - cron: '41 14 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: climate-lanes
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Tests
+        run: python3 test_climate_lanes.py
+      - name: Read tomorrow's ladders (10 pm ET window) and grade settled days
+        run: python3 climate_lanes.py
+      - name: Save records
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+          python3 save_records.py --message "Weather paper lanes" \
+            --add data/climate_lanes_ledger.json \
+            --regenerate "python3 climate_lanes.py" \
+            --after "gh workflow run sandbox-tracker.yml --ref main"

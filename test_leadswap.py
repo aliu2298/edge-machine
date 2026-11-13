@@ -213,7 +213,7 @@ check("every Retired/Removed fold sits in the one archive", html.split('id="sw15
 check("no empty summary line anywhere in the section",
       [m for m in re.findall(r"<summary[^>]*>(.*?)</summary>", html, re.S) if not re.sub(r"<[^>]+>", "", m).strip()], [])
 import daily_markets_build as DMB
-check("the sub-nav says 15-Minute", '(("swing15", "15-Minute"),)' in open(DMB.__file__).read(), True)
+check("the sub-nav says 15-Minute", '("swing15", "15-Minute")' in open(DMB.__file__).read(), True)
 
 print("\nexclusions (2026-11-10, Olu): an excluded pick is skipped, never backfilled")
 import allowgate as _G
