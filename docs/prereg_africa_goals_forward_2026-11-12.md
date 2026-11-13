@@ -47,3 +47,30 @@ Added the same day, at Olu's request. The read is now also shown on the Soccer p
 - The lane logs each bet from the hourly quote three hours before kickoff. The first matches of Nov 12 had kicked off before the lane existed; their bets were filled in from that same hourly quote and are marked as backfilled in the ledger.
 - It is an observation lane: paper only, never in Production.
 - After this window it keeps running on later African windows, on its own record.
+
+## Addendum, Nov 13 2026: a BTTS row, added after the window opened
+
+Written and committed on Nov 13 2026 before 18:30 UTC, at Olu's request. **Nothing above is changed**: the three bets, their entry and the three "held" conditions stand as written on Nov 12.
+
+**Why a fourth row.** On the September window, YES on both teams to score, every match, at the ask three hours before kickoff: won 54.2% at 38.9c, 15.2 points underpriced (48 matches). It is the same lean seen through another market, not new evidence. Detail: `africa_btts_2026-11-13.md`.
+
+**What was already known when this was written.**
+
+- The window opened on Nov 12. Its Nov 12 matches are finished, and the earlier Nov 13 matches had been played or had kicked off. Their scores are public.
+- No November BTTS price or result had been read for this study when this was written. Only the September matches were pulled.
+- Because the scores were knowable, those matches are shown and flagged, and **do not count**.
+
+**The row.**
+
+- **Bet:** YES on `KXAFCONBTTS`, every AFCON qualifier, at the ask on the hourly quote three hours before kickoff (ESPN fixture time). Same fills, fees and clusters as the rows above.
+- **Counted matches:** those that kick off after 18:30 UTC on Nov 13 2026. Six are listed today: Mali v Rwanda, Egypt v Malawi, Morocco v Niger (Nov 13); Uganda v Botswana, Angola v South Sudan, Algeria v Togo (Nov 14). Any more that list in the window are included.
+
+**What counts as "held" for this row.**
+
+1. The lead itself holds, by the three conditions above. If the lead is dropped, this row is dropped with it.
+2. BTTS YES wins more often than its price, by 3 points or more, on the counted matches.
+3. With fewer than 10 counted matches the row is "too few to say" whatever it shows, and is read again on the next African window together with this one.
+
+First-half BTTS (`KXAFCON1HBTTS`) is not tracked: on September it was 1.5 points overpriced on the YES side, with a wide book.
+
+**How it will be run.** `~/edge-research/intl_2026-11-12/window_btts.sh`, after `window_read.sh`.
