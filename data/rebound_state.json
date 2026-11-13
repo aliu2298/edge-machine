@@ -945,6 +945,23 @@
    "target": 2.011442,
    "ticker": "KXBABAPERP",
    "touch_ts": 1794569341
+  },
+  {
+   "backfill": false,
+   "day": "2026-11-13",
+   "id": "rb_24h|KXPANWPERP|2026-11-13",
+   "lane": "rb_24h",
+   "level": 6.415893,
+   "level_stock": 320.12,
+   "signal_ts": 1794582000,
+   "slide_high": 336.29,
+   "status": "pending",
+   "stop": 6.351734,
+   "strength": 3,
+   "sym": "PANW",
+   "target": 6.577946,
+   "ticker": "KXPANWPERP",
+   "touch_ts": 1794581102
   }
  ],
  "from": "2026-11-12T00:00:00+00:00",
@@ -962,7 +979,7 @@
    "strong": true
   }
  },
- "last_run": "2026-11-13T14:00:16+00:00",
+ "last_run": "2026-11-13T15:00:17+00:00",
  "prereg_sha256": "17ecd1cd57183bacd45e8e1e6477c542b4ecaaa88a3e8b8a62fa395bbc45a581",
  "ratios": {
   "AAPL": 50.0113,
