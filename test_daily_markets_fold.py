@@ -26,15 +26,15 @@ main = html[html.index("<main"):]
 
 print("the summary tiles")
 tiles = re.findall(r'<a class="tile" href="#(\w+)"><b>(.*?)</b><span>(.*?)</span><span class="sub sm">(.*?)</span></a>', main)
-check("one tile per section, in page order", [t[0] for t in tiles], ["swing15", "crypto", "commodities", "econ", "finance"])
+check("one tile per section, in page order", [t[0] for t in tiles], ["swing15", "weather", "crypto", "commodities", "econ", "finance"])
 check("each tile is a win % (or a dash before a first settled bet)", all(re.fullmatch(r"\d+%|—", t[1]) for t in tiles), True)
 check("each tile's sub-line is a W–L and a return, in percentages", all(re.search(r"\d+–\d+ · [+−-]?\d+(\.\d+)?% return|no settled bets yet", t[3]) for t in tiles), True)
-check("the tile names are the section names", [t[2] for t in tiles], ["15-Minute", "Crypto", "Commodities", "Econ", "Finance (S&amp;P)"])
+check("the tile names are the section names", [t[2] for t in tiles], ["15-Minute", "Weather", "Crypto", "Commodities", "Econ", "Finance (S&amp;P)"])
 
 print("\nevery section is a closed fold with its record on the line")
 secs = re.findall(r'<section id="(\w+)" class="dm-group" data-sp-group="\1">\s*<details class="fold sec dm-sec"( open)?><summary><h2 class="dm-title">(.*?)</h2><span class="mut sm">· (.*?)</span></summary>', main)
-check("five sections, each keeping its id and data-sp-group", [s[0] for s in secs], ["swing15", "crypto", "commodities", "econ", "finance"])
-check("none starts open", [s[1] for s in secs], [""] * 5)
+check("six sections, each keeping its id and data-sp-group", [s[0] for s in secs], ["swing15", "weather", "crypto", "commodities", "econ", "finance"])
+check("none starts open", [s[1] for s in secs], [""] * 6)
 check("the closed line carries the win % and the return (or says no settled bets)", all(("% won" in s[3] and "return" in s[3]) or "no settled bets" in s[3] for s in secs), True)
 check("the tile numbers are the sections' own numbers", all(t[1] in s[3] or t[1] == "—" for t, s in zip(tiles, secs)), True)
 

@@ -2392,6 +2392,12 @@ def chaos_html():
         html += swing15_build.index_html()
     except Exception:                                           # noqa: BLE001
         pass
+    # The Weather lanes (climate_lanes, 2026-11-13): their index rows; the section is on the Daily Markets tab.
+    try:
+        import climate_lanes_build
+        html += climate_lanes_build.index_html()
+    except Exception:                                           # noqa: BLE001
+        pass
     return html
 
 
