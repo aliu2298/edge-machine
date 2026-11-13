@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-13T18:07Z",
+ "generated": "2026-11-13T19:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -4158,9 +4158,9 @@
     {
      "id": "team1_form_l5:KXUEFANLTEAMTOTAL-26NOV13MDAKAZ-KAZ1",
      "ko": "2026-11-13T17:00",
-     "r": null,
+     "r": 0.3805,
      "side": "yes",
-     "st": "open",
+     "st": "won",
      "w": 12.36
     }
    ],
@@ -4382,9 +4382,9 @@
     {
      "id": "u35_low_scoring:KXUEFANLTOTAL-26NOV13MDAKAZ-4",
      "ko": "2026-11-13T17:00",
-     "r": null,
+     "r": 0.1908,
      "side": "no",
-     "st": "open",
+     "st": "won",
      "w": 0.97
     },
     {
