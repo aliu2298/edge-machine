@@ -726,6 +726,10 @@
    "at": "2026-11-12T17:41:54.915369+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"team1_form_l5\", [\"team1_form_l5:KXUEFANLTEAMTOTAL-26NOV15FRATUR-FRA1\", \"a\"]]": {
+   "at": "2026-11-13T21:04:57.594270+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLALIGATEAMTOTAL-26NOV06SEVALA-SEV2\", \"a\"]]": {
    "at": "2026-11-05T21:49:22.360613+00:00",
    "pool": "entered"
@@ -2868,7 +2872,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-13T20:04:28.707437+00:00",
+ "last_run": "2026-11-13T21:04:57.594270+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -9041,6 +9045,29 @@
    "scope": "soccer_u35_intl",
    "settled": null,
    "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUEFANLTEAMTOTAL-26NOV15FRATUR-FRA1",
+   "entered_at": "2026-11-13T21:04:57.594270+00:00",
+   "entities": [
+    "France"
+   ],
+   "id": "superpack:[\"sandbox\", \"team1_form_l5\", [\"team1_form_l5:KXUEFANLTEAMTOTAL-26NOV15FRATUR-FRA1\", \"a\"]]",
+   "lane": "team1_form_l5",
+   "logged": "2026-11-13T21:04:16+00:00",
+   "matched": [
+    "France"
+   ],
+   "pid": "[\"sandbox\", \"team1_form_l5\", [\"team1_form_l5:KXUEFANLTEAMTOTAL-26NOV15FRATUR-FRA1\", \"a\"]]",
+   "price": 0.95,
+   "profit": null,
+   "scope": "soccer_team1_intl",
+   "settled": null,
+   "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
