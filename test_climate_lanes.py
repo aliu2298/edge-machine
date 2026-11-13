@@ -290,7 +290,7 @@ check("each row is a collapsed fold with its record, control figure and read", h
 check("no dollar amount anywhere in the section", "$" not in html, True)
 check("an empty section says the first read is at 10:00 pm Eastern", "first read is at 10:00 pm" in B.section(L.empty()), True)
 idx = B.index_html(state)
-check("the Sandbox index rows link to the Daily Markets section", 'href="./daily_markets.html#weather"' in idx, True)
+check("the Sandbox index rows link to the Daily Markets section", 'href="./daily_markets.html#temps"' in idx, True)
 check("... without the words the weather-removal check forbids", not re.search(r"\bclimate\b|KXHIGH|city-day", idx, re.I), True)
 copy = [m for m in (sandbox_audit.COPY_RE.findall(html + idx) if hasattr(sandbox_audit, "COPY_RE") else [])]
 check("none of the guarded public phrases", copy, [])

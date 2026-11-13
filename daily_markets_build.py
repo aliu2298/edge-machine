@@ -282,7 +282,7 @@ def weather_html():
     shell = (f'<details class="fold sec dm-sec"><summary><h2 class="dm-title">Weather</h2>'
              f'<span class="mut sm">· paper · {esc(sum_line(stats))}</span></summary>\n{rest.strip()}\n</details>')
     weather_html.stats = stats
-    return f'<section id="weather" class="dm-group" data-sp-group="weather">\n{shell}\n</section>'
+    return f'<section id="temps" class="dm-group" data-sp-group="temps">\n{shell}\n</section>'
 
 
 def econ_weekly_html():
@@ -340,7 +340,7 @@ def build(now=None, builders=None):
     html = C.document(
         f"{C.SITE_NAME} · {TITLE}",
         "Kalshi daily-close ladder lanes in one tab: crypto, commodities, econ and finance, each rule's record per market-day.",
-        KEY, (("swing15", "15-Minute"), ("weather", "Weather")) + tuple((g, label) for g, label, _f in GROUPS), C.stamp(now), body_html(parts),
+        KEY, (("swing15", "15-Minute"), ("temps", "Weather")) + tuple((g, label) for g, label, _f in GROUPS), C.stamp(now), body_html(parts),
         script_src="./site.js", scripts=("./tables.js",), sports=True)
     return B.label_cells(html)
 

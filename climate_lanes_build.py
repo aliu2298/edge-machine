@@ -7,7 +7,7 @@ import html as _h
 
 import climate_lanes as L
 
-ANCHOR = "weather"
+ANCHOR = "temps"
 
 
 def esc(x):
@@ -113,7 +113,7 @@ def _row(lane, rec, state):
     body = (f'<p class="sm">{esc(rec["read"])}</p>{record_table(rec, lane)}{thin}{entries_table(state, lane)}'
             f'<details class="fold sw15-rule"><summary>Rule details</summary>{_params(RULES[lane])}'
             f'<p class="sm mut">Pre-registered: {esc(L.LANES[lane]["prereg"])}</p></details>')
-    return (f'<details class="sp-rule{"" if s["n"] >= 10 else " is-early"}" id="wx-{lane}" data-source="climate_{lane}" data-sport="weather" '
+    return (f'<details class="sp-rule{"" if s["n"] >= 10 else " is-early"}" id="wx-{lane}" data-source="climate_{lane}" data-sport="temps" '
             f'data-scope="cities" data-stage="sandbox"><summary class="sp-line"><span class="sp-cell sp-c-name"><span class="sp-chev" aria-hidden="true">›</span>'
             f'<b class="sp-name" title="{esc(rec["label"])}">{esc(rec["label"])}</b><span class="sr-only"> · Rule details</span></span>'
             f'<span class="sp-cell sp-c-market" data-l="vs control"><span class="mut">{pct(c["roi"])}</span></span>'
@@ -172,9 +172,9 @@ def index_html(state=None):
     except Exception:                                           # noqa: BLE001
         return ""
     rows = "".join(
-        f'<tr data-lane="climate_{esc(r["lane"])}"><td><b>{esc(r["label"])}</b></td><td><a href="./daily_markets.html#{ANCHOR}">Daily Markets</a></td>'
+        f'<tr data-lane="temp_{esc(r["lane"])}"><td><b>{esc(r["label"])}</b></td><td><a href="./daily_markets.html#{ANCHOR}">Daily Markets</a></td>'
         f'<td class="num">{r["main"]["n"]}</td><td class="num">{pct(r["main"]["roi"])}</td><td class="num">{pct(r["control"]["roi"])}</td>'
         f'<td>{esc(r["read"])}</td></tr>' for r in recs)
-    return ('<section id="weather-index"><h2>Weather</h2><p class="shell-kicker">Kalshi daily high and low ladders · two pre-registered lean lanes · '
+    return ('<section id="temps-index"><h2>Daily highs and lows</h2><p class="shell-kicker">Kalshi daily temperature ladders · two pre-registered lean lanes · '
             'paper · not in Production</p><div class="tbl"><table><tr><th>Lane</th><th>Page</th><th class="num">Settled</th>'
             '<th class="num">Return after fees</th><th class="num">Control</th><th>Read</th></tr>' + rows + '</table></div></section>')
