@@ -56,7 +56,7 @@ Written and committed on Nov 13 2026 before 18:30 UTC, at Olu's request. **Nothi
 
 **What was already known when this was written.**
 
-- The window opened on Nov 12. Its Nov 12 matches are finished and three of the Nov 13 matches had kicked off. Their scores are public.
+- The window opened on Nov 12. Its Nov 12 matches are finished, and the earlier Nov 13 matches had been played or had kicked off. Their scores are public.
 - No November BTTS price or result had been read for this study when this was written. Only the September matches were pulled.
 - Because the scores were knowable, those matches are shown and flagged, and **do not count**.
 
