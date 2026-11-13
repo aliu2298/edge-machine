@@ -44,7 +44,7 @@ By period, bids up 10 seconds after the open:
 - The markets are listed well ahead: Monday's 25 S&P windows were created the Friday before, with the status "initialized". So the ticker is known in advance.
 - Their public order books are empty until they open, on the S&P and on the crypto 15-minute markets. If orders could rest early, market makers would be there.
 - In 161 S&P windows no trade printed before the open, and none in the first second. The first print came 2.0 seconds after the open at the earliest, 6.7 seconds at the median.
-- This cannot be proven from public data; only a rejected or accepted order would settle it. But nothing trades in the first 2 seconds, so an order that lands 1 to 2 seconds after the open is in time for everything. In the table above, "at the open" and "2 seconds after" give the same result.
+- This cannot be proven from public data; only a rejected or accepted order would settle it. But no trade prints in the first 2 seconds, so an order that lands 1 to 2 seconds after the open is in time for everything. In the table above, "at the open" and "2 seconds after" give the same result.
 
 **How fast the live path is today** (measured by Production Moves, read-only):
 
