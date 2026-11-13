@@ -67750,12 +67750,12 @@
     "KXTRUMPSAY-26NOV16-BIBI": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "07268b7e-70a1-9ce3-a7ad-e2f96d240f5a"
+      "07268b91-4de9-9497-a530-96cc9656c3b8"
      ],
      "first_px": 0.6,
      "first_ts": 1794233116,
-     "last_ts": 1794610167,
-     "n_prints": 770,
+     "last_ts": 1794610790,
+     "n_prints": 771,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -68863,11 +68863,11 @@
     "KXTRUMPSAY-26NOV16-DIES": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "0726888a-5149-9256-0971-542f378818bb"
+      "07268b62-6259-8485-6b2d-60e8d956b5cb"
      ],
      "first_px": 0.45,
      "first_ts": 1794233713,
-     "last_ts": 1794610045,
+     "last_ts": 1794610445,
      "lows": [
       [
        1794443745,
@@ -68875,7 +68875,7 @@
        7.93
       ]
      ],
-     "n_prints": 1032,
+     "n_prints": 1033,
      "open_ts": 1794231000,
      "result": "",
      "status": "active",
@@ -79421,13 +79421,13 @@
   }
  },
  "lane": "mentions_dip_hold",
- "last_success": "2026-11-13T22:53:40.547882+00:00",
+ "last_success": "2026-11-13T23:01:28.848958+00:00",
  "observations": {
-  "at": "2026-11-13T22:53:40.547882+00:00",
+  "at": "2026-11-13T23:01:28.848958+00:00",
   "errors": [],
   "events": 1,
   "markets": 31,
-  "prints": 63
+  "prints": 2
  },
  "since": "2026-10-26T04:00:00+00:00"
 }
