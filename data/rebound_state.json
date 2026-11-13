@@ -909,6 +909,24 @@
    "target": 2.101098,
    "ticker": "KXCSCOPERP",
    "touch_ts": 1794560642
+  },
+  {
+   "backfill": false,
+   "day": "2026-11-13",
+   "id": "rb_5d|KXNEMPERP|2026-11-13",
+   "lane": "rb_5d",
+   "level": 2.272841,
+   "level_stock": 113.28,
+   "note": "no print at or through the ask in 5 minutes",
+   "signal_ts": 1794566700,
+   "slide_high": 127.28,
+   "status": "no_fill",
+   "stop": 2.250112,
+   "strength": 3,
+   "sym": "NEM",
+   "target": 2.413288,
+   "ticker": "KXNEMPERP",
+   "touch_ts": 1794560761
   }
  ],
  "from": "2026-11-12T00:00:00+00:00",
@@ -926,7 +944,7 @@
    "strong": true
   }
  },
- "last_run": "2026-11-13T10:00:17+00:00",
+ "last_run": "2026-11-13T11:00:16+00:00",
  "prereg_sha256": "17ecd1cd57183bacd45e8e1e6477c542b4ecaaa88a3e8b8a62fa395bbc45a581",
  "ratios": {
   "AAPL": 50.0113,
