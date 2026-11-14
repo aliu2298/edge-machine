@@ -4,7 +4,7 @@
    "kalshi_venue": 6,
    "polymarket_us": 18,
    "polymarket_us_listed": 18,
-   "polymarket_us_priced": 8
+   "polymarket_us_priced": 9
   },
   "commodities": {
    "cmd_market": {
@@ -45,10 +45,10 @@
    "kalshi_venue": 275
   },
   "economics": {
-   "kalshi_venue": 34
+   "kalshi_venue": 38
   },
   "finance": {
-   "kalshi_venue": 30
+   "kalshi_venue": 47
   },
   "mma": {
    "kalshi_venue": 8,
@@ -73,7 +73,7 @@
     "offered": 0,
     "picked": 0
    },
-   "kalshi_venue": 35,
+   "kalshi_venue": 23,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -91,17 +91,17 @@
   },
   "soccer_btts_cup": {
    "btts_market": {
-    "offered": 8,
-    "picked": 8
+    "offered": 4,
+    "picked": 4
    },
-   "kalshi_venue": 8
+   "kalshi_venue": 4
   },
   "soccer_btts_intl": {
    "btts_market": {
-    "offered": 43,
-    "picked": 43
+    "offered": 41,
+    "picked": 41
    },
-   "kalshi_venue": 43
+   "kalshi_venue": 41
   },
   "soccer_corners": {
    "corners_fav_no": {
@@ -176,19 +176,19 @@
   },
   "soccer_o15_cup": {
    "goals_market": {
-    "offered": 8,
-    "picked": 8
+    "offered": 4,
+    "picked": 4
    },
-   "kalshi_venue": 8
+   "kalshi_venue": 4
   },
   "soccer_o15_intl": {
    "goals_market": {
-    "offered": 43,
-    "picked": 43
+    "offered": 41,
+    "picked": 41
    },
-   "kalshi_venue": 43,
+   "kalshi_venue": 41,
    "o15_ranked": {
-    "offered": 43,
+    "offered": 41,
     "picked": 2
    }
   },
@@ -205,24 +205,24 @@
   },
   "soccer_o25_cup": {
    "goals_market": {
-    "offered": 8,
-    "picked": 8
+    "offered": 4,
+    "picked": 4
    },
-   "kalshi_venue": 8,
+   "kalshi_venue": 4,
    "pin_totals": {
-    "offered": 8,
+    "offered": 4,
     "picked": 0
    }
   },
   "soccer_o25_intl": {
    "goals_market": {
-    "offered": 43,
-    "picked": 43
+    "offered": 41,
+    "picked": 41
    },
-   "kalshi_venue": 43,
+   "kalshi_venue": 41,
    "pin_totals": {
-    "offered": 43,
-    "picked": 2
+    "offered": 41,
+    "picked": 0
    }
   },
   "soccer_p05": {
@@ -238,17 +238,17 @@
   },
   "soccer_p05_cup": {
    "goals_market": {
-    "offered": 16,
-    "picked": 16
+    "offered": 8,
+    "picked": 8
    },
-   "kalshi_venue": 16
+   "kalshi_venue": 8
   },
   "soccer_p05_intl": {
    "goals_market": {
-    "offered": 94,
-    "picked": 94
+    "offered": 90,
+    "picked": 90
    },
-   "kalshi_venue": 94
+   "kalshi_venue": 90
   },
   "soccer_team1": {
    "goals_market": {
@@ -270,13 +270,13 @@
   },
   "soccer_team1_intl": {
    "goals_market": {
-    "offered": 34,
-    "picked": 34
+    "offered": 30,
+    "picked": 30
    },
-   "kalshi_venue": 34,
+   "kalshi_venue": 30,
    "team1_form_l5": {
-    "offered": 34,
-    "picked": 4
+    "offered": 30,
+    "picked": 3
    }
   },
   "soccer_team2": {
@@ -307,16 +307,16 @@
   },
   "soccer_team2_intl": {
    "goals_market": {
-    "offered": 34,
-    "picked": 34
+    "offered": 30,
+    "picked": 30
    },
-   "kalshi_venue": 34,
+   "kalshi_venue": 30,
    "team2_form_l10": {
-    "offered": 34,
+    "offered": 30,
     "picked": 0
    },
    "team2_ranked_fade": {
-    "offered": 34,
+    "offered": 30,
     "picked": 2
    }
   },
@@ -335,31 +335,31 @@
   },
   "soccer_u35_cup": {
    "goals_market": {
-    "offered": 8,
-    "picked": 8
+    "offered": 4,
+    "picked": 4
    },
-   "kalshi_venue": 8,
+   "kalshi_venue": 4,
    "u35_low_scoring": {
-    "offered": 8,
+    "offered": 4,
     "picked": 0
    }
   },
   "soccer_u35_intl": {
    "goals_market": {
-    "offered": 43,
-    "picked": 43
+    "offered": 41,
+    "picked": 41
    },
-   "kalshi_venue": 43,
+   "kalshi_venue": 41,
    "u35_low_scoring": {
-    "offered": 43,
+    "offered": 41,
     "picked": 8
    }
   },
   "tennis": {
    "kalshi_venue": 20,
    "polymarket_us": 40,
-   "polymarket_us_listed": 315,
-   "polymarket_us_priced": 51
+   "polymarket_us_listed": 362,
+   "polymarket_us_priced": 64
   },
   "tennis_combo": {
    "combo": 0,
@@ -371,48 +371,48 @@
   }
  },
  "feed_status": {
-  "pin_totals": "ok"
+  "pin_totals": "down: no paced credit left for this run"
  },
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-14T16:48:43+00:00",
-   "commodities": "2026-11-14T16:48:43+00:00",
-   "commodities_fav": "2026-11-14T16:48:43+00:00",
-   "cricket": "2026-11-14T16:48:43+00:00",
-   "crypto": "2026-11-14T16:48:43+00:00",
-   "crypto_fav": "2026-11-14T16:48:43+00:00",
-   "economics": "2026-11-14T16:48:43+00:00",
-   "finance": "2026-11-14T16:48:43+00:00",
-   "mma": "2026-11-14T16:48:43+00:00",
-   "nfl": "2026-11-14T16:48:43+00:00",
-   "nhl_pl": "2026-11-14T16:48:43+00:00",
-   "nhl_rest": "2026-11-14T16:48:43+00:00",
-   "soccer": "2026-11-14T16:48:43+00:00",
+   "boxing": "2026-11-14T17:02:19+00:00",
+   "commodities": "2026-11-14T17:02:19+00:00",
+   "commodities_fav": "2026-11-14T17:02:19+00:00",
+   "cricket": "2026-11-14T17:02:19+00:00",
+   "crypto": "2026-11-14T17:02:19+00:00",
+   "crypto_fav": "2026-11-14T17:02:19+00:00",
+   "economics": "2026-11-14T17:02:19+00:00",
+   "finance": "2026-11-14T17:02:19+00:00",
+   "mma": "2026-11-14T17:02:19+00:00",
+   "nfl": "2026-11-14T17:02:19+00:00",
+   "nhl_pl": "2026-11-14T17:02:19+00:00",
+   "nhl_rest": "2026-11-14T17:02:19+00:00",
+   "soccer": "2026-11-14T17:02:19+00:00",
    "soccer_btts": "2026-11-08T20:07:32+00:00",
-   "soccer_btts_cup": "2026-11-14T16:48:43+00:00",
-   "soccer_btts_intl": "2026-11-14T16:48:43+00:00",
+   "soccer_btts_cup": "2026-11-14T17:02:19+00:00",
+   "soccer_btts_intl": "2026-11-14T17:02:19+00:00",
    "soccer_corners": "2026-11-08T19:58:15+00:00",
    "soccer_ftts": "2026-10-19T18:33:38+00:00",
    "soccer_o15": "2026-11-08T20:07:32+00:00",
-   "soccer_o15_cup": "2026-11-14T16:48:43+00:00",
-   "soccer_o15_intl": "2026-11-14T16:48:43+00:00",
+   "soccer_o15_cup": "2026-11-14T17:02:19+00:00",
+   "soccer_o15_intl": "2026-11-14T17:02:19+00:00",
    "soccer_o25": "2026-11-08T20:07:32+00:00",
-   "soccer_o25_cup": "2026-11-14T16:48:43+00:00",
-   "soccer_o25_intl": "2026-11-14T16:48:43+00:00",
+   "soccer_o25_cup": "2026-11-14T17:02:19+00:00",
+   "soccer_o25_intl": "2026-11-14T17:02:19+00:00",
    "soccer_p05": "2026-11-08T20:07:32+00:00",
-   "soccer_p05_cup": "2026-11-14T16:48:43+00:00",
-   "soccer_p05_intl": "2026-11-14T16:48:43+00:00",
+   "soccer_p05_cup": "2026-11-14T17:02:19+00:00",
+   "soccer_p05_intl": "2026-11-14T17:02:19+00:00",
    "soccer_team1": "2026-11-08T19:58:15+00:00",
    "soccer_team1_cup": "2026-11-11T19:32:50+00:00",
-   "soccer_team1_intl": "2026-11-14T16:48:43+00:00",
+   "soccer_team1_intl": "2026-11-14T17:02:19+00:00",
    "soccer_team2": "2026-11-08T19:58:15+00:00",
    "soccer_team2_cup": "2026-11-11T19:32:50+00:00",
-   "soccer_team2_intl": "2026-11-14T16:48:43+00:00",
+   "soccer_team2_intl": "2026-11-14T17:02:19+00:00",
    "soccer_u35": "2026-11-08T20:07:32+00:00",
-   "soccer_u35_cup": "2026-11-14T16:48:43+00:00",
-   "soccer_u35_intl": "2026-11-14T16:48:43+00:00",
-   "tennis": "2026-11-14T16:48:43+00:00",
+   "soccer_u35_cup": "2026-11-14T17:02:19+00:00",
+   "soccer_u35_intl": "2026-11-14T17:02:19+00:00",
+   "tennis": "2026-11-14T17:02:19+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -532,196 +532,9 @@
    }
   },
   "odds_api": {
-   "allowance": 1,
-   "at": "2026-11-14T16:48:43+00:00",
-   "calls": 1,
+   "allowance": 0,
+   "at": "2026-11-14T17:02:19+00:00",
    "remaining": 262,
-   "totals_on": [
-    {
-     "empty": {
-      "no_event": 0,
-      "no_totals": 2,
-      "other_point": 22,
-      "points": [
-       2.25,
-       3.5,
-       1.75,
-       3.0,
-       2.75,
-       4.0,
-       2.0,
-       3.25
-      ],
-      "stale": 0
-     },
-     "key": "soccer_uefa_nations_league",
-     "listed": 26,
-     "rows": [
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV14GEOHUN-3",
-       "points": [
-        2.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV14NORWAL-3",
-       "points": [
-        3.5
-       ]
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV14AUTIRL-3"
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV14NIRUKR-3",
-       "points": [
-        1.75
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV14PORDEN-3",
-       "points": [
-        3.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV14ROUPOL-3",
-       "points": [
-        2.75
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV14SWEBIH-3",
-       "points": [
-        2.75
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV15LATARM-3",
-       "points": [
-        2.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV15BLRALB-3",
-       "points": [
-        2.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV15FINSMR-3",
-       "points": [
-        4.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV15BELITA-3",
-       "points": [
-        2.75
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV15ESPENG-3",
-       "points": [
-        3.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV16FROMDA-3",
-       "points": [
-        2.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV16ESTBUL-3",
-       "points": [
-        2.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV16ISLLUX-3",
-       "points": [
-        2.75
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV16LTULIE-3",
-       "points": [
-        2.75
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV16GERNED-3",
-       "points": [
-        3.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV16GIBMLT-3",
-       "points": [
-        2.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV16GRESRB-3",
-       "points": [
-        2.75
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV16MKDSLO-3",
-       "points": [
-        2.25
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV16SUISCO-3",
-       "points": [
-        2.25
-       ]
-      },
-      {
-       "empty": "no_totals",
-       "market_id": "KXUEFANLTOTAL-26NOV17BIHROU-3"
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV17DENNOR-3",
-       "points": [
-        3.0
-       ]
-      },
-      {
-       "empty": "other_point",
-       "market_id": "KXUEFANLTOTAL-26NOV17WALPOR-3",
-       "points": [
-        3.0
-       ]
-      }
-     ]
-    }
-   ],
    "used": 238
   },
   "outages": [
@@ -741,7 +554,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 1832,
+  "runs": 1833,
   "tennis_shortlist": {
    "audit": [
     {
@@ -753,7 +566,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-14T16:49:05+00:00"
+  "updated": "2026-11-14T17:02:50+00:00"
  },
  "quotes": [
   {
@@ -147639,42 +147452,6 @@
    "venue_start": null
   },
   {
-   "bet": true,
-   "close_at": "2026-09-29T15:59:09+00:00",
-   "close_price": 0.8,
-   "date": "2026-09-29",
-   "edge": null,
-   "id": "tennis_fav_band_3h:aec-atp-edabut-micgee-2026-09-29",
-   "label": "Edas Butvilas vs Michael Geerts",
-   "liquidity": null,
-   "logged": "2026-09-29T15:48:21+00:00",
-   "market_id": "aec-atp-edabut-micgee-2026-09-29",
-   "pick": "a",
-   "pnl": 25.0,
-   "price": 0.8,
-   "price_a": 0.8,
-   "price_b": 0.21,
-   "price_draw": null,
-   "prob_a": null,
-   "result": "a",
-   "settled": "2026-09-30T16:54:22+00:00",
-   "side_a": "Edas Butvilas",
-   "side_b": "Michael Geerts",
-   "source": "tennis_fav_band_3h",
-   "sport": "tennis",
-   "spread": 0.01,
-   "stake": 100.0,
-   "start": "2026-09-29T16:00:00+00:00",
-   "start_source": null,
-   "status": "won",
-   "tier": "atp",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://polymarket.us/event/atp-edabut-micgee-2026-09-29",
-   "venue": "polymarket_us",
-   "venue_start": null
-  },
-  {
    "bet": false,
    "date": "2026-09-29",
    "edge": -0.01,
@@ -149818,57 +149595,6 @@
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/combos",
-   "venue": "combo",
-   "venue_start": null
-  },
-  {
-   "bet": true,
-   "close_at": "2026-09-29T15:59:09+00:00",
-   "close_price": 0.6454,
-   "date": "2026-09-29",
-   "edge": null,
-   "id": "pm_combo2:pmcombo2:2026-09-29:cdd69b3db3",
-   "label": "2-leg tennis combo: Edas Butvilas + Giovannini - Giovannin",
-   "legs": [
-    {
-     "market_id": "aec-atp-edabut-micgee-2026-09-29",
-     "name": "Edas Butvilas",
-     "pick": "a",
-     "start": "2026-09-29T16:00:00+00:00",
-     "venue": "polymarket_us"
-    },
-    {
-     "market_id": "aec-itfme-rubferborlui-filgioumbgio-2026-09-29",
-     "name": "Giovannini - Giovannini",
-     "pick": "b",
-     "start": "2026-09-29T16:46:45+00:00",
-     "venue": "polymarket_us"
-    }
-   ],
-   "liquidity": null,
-   "logged": "2026-09-29T15:48:22+00:00",
-   "market_id": "pmcombo2:2026-09-29:cdd69b3db3",
-   "pick": "a",
-   "pnl": 52.16,
-   "price": 0.6572,
-   "price_a": 0.6572,
-   "price_b": 0.3428,
-   "price_draw": null,
-   "prob_a": null,
-   "result": "a",
-   "settled": "2026-09-30T16:54:22+00:00",
-   "side_a": "All 2 win",
-   "side_b": "Any one loses",
-   "source": "pm_combo2",
-   "sport": "tennis_pmcombo",
-   "spread": null,
-   "stake": 100.0,
-   "start": "2026-09-29T16:00:00+00:00",
-   "start_source": null,
-   "status": "won",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://polymarket.us",
    "venue": "combo",
    "venue_start": null
   },
@@ -254960,40 +254686,6 @@
   },
   {
    "bet": false,
-   "date": "2026-11-06",
-   "edge": -0.005,
-   "id": "polymarket_us:aec-itfwo-valstr-cadbra-2026-11-06",
-   "label": "Valeriya Strakhova vs Cadence Brace",
-   "liquidity": null,
-   "logged": "2026-11-06T15:03:53+00:00",
-   "market_id": "aec-itfwo-valstr-cadbra-2026-11-06",
-   "pick": null,
-   "pnl": 0.0,
-   "price": null,
-   "price_a": 0.27,
-   "price_b": 0.74,
-   "price_draw": null,
-   "prob_a": 0.265,
-   "result": "b",
-   "settled": "2026-11-07T16:58:33+00:00",
-   "side_a": "Valeriya Strakhova",
-   "side_b": "Cadence Brace",
-   "source": "polymarket_us",
-   "sport": "tennis",
-   "spread": 0.01,
-   "stake": 0.0,
-   "start": "2026-11-06T17:30:00+00:00",
-   "start_source": null,
-   "status": "graded",
-   "tier": "itfwo",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://polymarket.us/event/itfwo-valstr-cadbra-2026-11-06",
-   "venue": "polymarket_us",
-   "venue_start": null
-  },
-  {
-   "bet": false,
    "date": "2026-11-08",
    "edge": -0.015,
    "id": "polymarket_us:aec-boxing-abrper-yanfig-2026-11-07",
@@ -258678,41 +258370,6 @@
   },
   {
    "bet": false,
-   "date": "2026-11-07",
-   "edge": -0.005,
-   "id": "polymarket_us:aec-atp-jacfea-artnag-2026-11-07",
-   "label": "Jacob Fearnley vs Arthur Nagel",
-   "liquidity": null,
-   "logged": "2026-11-07T09:22:17+00:00",
-   "market_id": "aec-atp-jacfea-artnag-2026-11-07",
-   "pick": null,
-   "pnl": 0.0,
-   "price": null,
-   "price_a": 0.91,
-   "price_b": 0.1,
-   "price_draw": null,
-   "prob_a": 0.905,
-   "result": "a",
-   "settled": "2026-11-07T16:58:34+00:00",
-   "side_a": "Jacob Fearnley",
-   "side_b": "Arthur Nagel",
-   "source": "polymarket_us",
-   "sport": "tennis",
-   "spread": 0.01,
-   "stake": 0.0,
-   "start": "2026-11-07T13:30:00+00:00",
-   "start_source": null,
-   "status": "graded",
-   "tier": "atp",
-   "tour": "atp",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://polymarket.us/event/atp-jacfea-artnag-2026-11-07",
-   "venue": "polymarket_us",
-   "venue_start": null
-  },
-  {
-   "bet": false,
    "date": "2026-11-08",
    "edge": -0.025,
    "id": "polymarket_us:aec-boxing-brisim-shepat-2026-11-08",
@@ -258744,39 +258401,6 @@
    "url": "https://polymarket.us/event/boxing-brisim-shepat-2026-11-08",
    "venue": "polymarket_us",
    "venue_start": "2026-11-09T00:00:00+00:00"
-  },
-  {
-   "bet": false,
-   "date": "2026-11-07",
-   "edge": -0.005,
-   "id": "polymarket_us:aec-atp-adrman-jansim-2026-11-07",
-   "label": "Adrian Mannarino vs Jan Simonsson",
-   "liquidity": null,
-   "logged": "2026-11-07T10:03:55+00:00",
-   "market_id": "aec-atp-adrman-jansim-2026-11-07",
-   "pick": null,
-   "pnl": 0.0,
-   "price": null,
-   "price_a": 0.96,
-   "price_b": 0.05,
-   "price_draw": null,
-   "prob_a": 0.955,
-   "result": "a",
-   "settled": "2026-11-07T16:58:34+00:00",
-   "side_a": "Adrian Mannarino",
-   "side_b": "Jan Simonsson",
-   "source": "polymarket_us",
-   "sport": "tennis",
-   "spread": 0.01,
-   "stake": 0.0,
-   "start": "2026-11-07T13:50:00+00:00",
-   "start_source": null,
-   "status": "graded",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://polymarket.us/event/atp-adrman-jansim-2026-11-07",
-   "venue": "polymarket_us",
-   "venue_start": null
   },
   {
    "bet": false,
@@ -331480,7 +331104,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-14T16:48:43+00:00",
+   "close_at": "2026-11-14T17:02:19+00:00",
    "close_price": 0.86,
    "date": "2026-11-14",
    "edge": null,
@@ -379850,7 +379474,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-14T16:48:43+00:00",
+   "close_at": "2026-11-14T16:56:15+00:00",
    "close_price": 0.95,
    "date": "2026-11-14",
    "edge": null,
@@ -394576,8 +394200,8 @@
    "price_b": 0.86,
    "price_draw": null,
    "prob_a": 0.145,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:24+00:00",
    "side_a": "Alias, Jules",
    "side_b": "Dominguez Alonso, Jose",
    "source": "polymarket_us",
@@ -394586,7 +394210,7 @@
    "stake": 0.0,
    "start": "2026-11-13T14:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "utr",
    "uncovered": null,
    "untraded": false,
@@ -394900,7 +394524,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-14T16:48:43+00:00",
+   "close_at": "2026-11-14T17:02:19+00:00",
    "close_price": 0.81,
    "date": "2026-11-16",
    "edge": null,
@@ -395741,8 +395365,8 @@
    "price_b": 0.81,
    "price_draw": null,
    "prob_a": 0.29,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-14T17:02:24+00:00",
    "side_a": "Small decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -395751,7 +395375,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdmd",
@@ -395774,8 +395398,8 @@
    "price_b": 0.36,
    "price_draw": null,
    "prob_a": 0.74,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:24+00:00",
    "side_a": "Large decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -395784,7 +395408,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdmd",
@@ -395873,8 +395497,8 @@
    "price_b": 0.97,
    "price_draw": null,
    "prob_a": 0.13,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:25+00:00",
    "side_a": "Large increase",
    "side_b": "No",
    "source": "cmd_market",
@@ -395883,7 +395507,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdmi",
@@ -395906,8 +395530,8 @@
    "price_b": 0.21,
    "price_draw": null,
    "prob_a": 0.89,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-14T17:02:25+00:00",
    "side_a": "Large decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -395916,7 +395540,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdmi",
@@ -395939,8 +395563,8 @@
    "price_b": 0.94,
    "price_draw": null,
    "prob_a": 0.16,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:25+00:00",
    "side_a": "Small decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -395949,7 +395573,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdma",
@@ -395972,8 +395596,8 @@
    "price_b": 0.17,
    "price_draw": null,
    "prob_a": 0.93,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-14T17:02:25+00:00",
    "side_a": "Large decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -395982,7 +395606,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdma",
@@ -396105,8 +395729,8 @@
    "price_b": 0.14,
    "price_draw": null,
    "prob_a": 0.96,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-14T17:02:25+00:00",
    "side_a": "Large decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -396115,7 +395739,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdky",
@@ -396138,8 +395762,8 @@
    "price_b": 0.16,
    "price_draw": null,
    "prob_a": 0.94,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-14T17:02:25+00:00",
    "side_a": "Large decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -396148,7 +395772,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdia",
@@ -396171,8 +395795,8 @@
    "price_b": 0.98,
    "price_draw": null,
    "prob_a": 0.12,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:25+00:00",
    "side_a": "Small decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -396181,7 +395805,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdla",
@@ -396204,8 +395828,8 @@
    "price_b": 0.15,
    "price_draw": null,
    "prob_a": 0.95,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-14T17:02:25+00:00",
    "side_a": "Large decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -396214,7 +395838,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdla",
@@ -396237,8 +395861,8 @@
    "price_b": 0.11,
    "price_draw": null,
    "prob_a": 0.99,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-14T17:02:26+00:00",
    "side_a": "Large decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -396247,7 +395871,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdaz",
@@ -396336,8 +395960,8 @@
    "price_b": 0.75,
    "price_draw": null,
    "prob_a": 0.35,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:26+00:00",
    "side_a": "Small increase",
    "side_b": "No",
    "source": "cmd_market",
@@ -396346,7 +395970,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdhi",
@@ -396369,8 +395993,8 @@
    "price_b": 0.88,
    "price_draw": null,
    "prob_a": 0.22,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-14T17:02:26+00:00",
    "side_a": "Small decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -396379,7 +396003,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdhi",
@@ -396402,8 +396026,8 @@
    "price_b": 0.68,
    "price_draw": null,
    "prob_a": 0.42,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:26+00:00",
    "side_a": "Minimal change",
    "side_b": "No",
    "source": "cmd_market",
@@ -396412,7 +396036,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdhi",
@@ -396435,8 +396059,8 @@
    "price_b": 0.92,
    "price_draw": null,
    "prob_a": 0.18,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:26+00:00",
    "side_a": "Large increase",
    "side_b": "No",
    "source": "cmd_market",
@@ -396445,7 +396069,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdhi",
@@ -396473,8 +396097,8 @@
    "price_b": 0.58,
    "price_draw": null,
    "prob_a": 0.435,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:26+00:00",
    "side_a": "Yes",
    "side_b": "No",
    "source": "btts_market",
@@ -396483,7 +396107,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": "espn",
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxintlfriendlybtts",
@@ -397071,8 +396695,8 @@
    "price_b": 0.99,
    "price_draw": null,
    "prob_a": 0.03,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:27+00:00",
    "side_a": "Small decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -397081,7 +396705,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdia",
@@ -397236,8 +396860,8 @@
    "price_b": 0.76,
    "price_draw": null,
    "prob_a": 0.28,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:27+00:00",
    "side_a": "Small decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -397246,7 +396870,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdnj",
@@ -397269,8 +396893,8 @@
    "price_b": 0.99,
    "price_draw": null,
    "prob_a": 0.03,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:27+00:00",
    "side_a": "Minimal change",
    "side_b": "No",
    "source": "cmd_market",
@@ -397279,7 +396903,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdnj",
@@ -397302,8 +396926,8 @@
    "price_b": 0.3,
    "price_draw": null,
    "prob_a": 0.73,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-14T17:02:27+00:00",
    "side_a": "Large decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -397312,7 +396936,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdnj",
@@ -397335,8 +396959,8 @@
    "price_b": 0.92,
    "price_draw": null,
    "prob_a": 0.1,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:27+00:00",
    "side_a": "Small decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -397345,7 +396969,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdks",
@@ -397368,8 +396992,8 @@
    "price_b": 0.11,
    "price_draw": null,
    "prob_a": 0.91,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-14T17:02:27+00:00",
    "side_a": "Large decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -397378,7 +397002,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdks",
@@ -397401,8 +397025,8 @@
    "price_b": 0.85,
    "price_draw": null,
    "prob_a": 0.19,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:27+00:00",
    "side_a": "Large decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -397411,7 +397035,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdhi",
@@ -397467,8 +397091,8 @@
    "price_b": 0.95,
    "price_draw": null,
    "prob_a": 0.07,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:28+00:00",
    "side_a": "Small increase",
    "side_b": "No",
    "source": "cmd_market",
@@ -397477,7 +397101,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdde",
@@ -397500,8 +397124,8 @@
    "price_b": 0.67,
    "price_draw": null,
    "prob_a": 0.37,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-14T17:02:28+00:00",
    "side_a": "Small decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -397510,7 +397134,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdde",
@@ -397533,8 +397157,8 @@
    "price_b": 0.82,
    "price_draw": null,
    "prob_a": 0.22,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:28+00:00",
    "side_a": "Minimal change",
    "side_b": "No",
    "source": "cmd_market",
@@ -397543,7 +397167,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdde",
@@ -397566,8 +397190,8 @@
    "price_b": 0.65,
    "price_draw": null,
    "prob_a": 0.39,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:28+00:00",
    "side_a": "Large decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -397576,7 +397200,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdde",
@@ -397599,8 +397223,8 @@
    "price_b": 0.92,
    "price_draw": null,
    "prob_a": 0.1,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:28+00:00",
    "side_a": "Minimal change",
    "side_b": "No",
    "source": "cmd_market",
@@ -397609,7 +397233,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdmd",
@@ -397731,8 +397355,8 @@
    "price_b": 0.99,
    "price_draw": null,
    "prob_a": 0.03,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:28+00:00",
    "side_a": "Small decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -397741,7 +397365,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdco",
@@ -397764,8 +397388,8 @@
    "price_b": 0.02,
    "price_draw": null,
    "prob_a": 0.99,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-14T17:02:29+00:00",
    "side_a": "Large decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -397774,7 +397398,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdco",
@@ -399021,8 +398645,8 @@
    "price_b": 0.02,
    "price_draw": null,
    "prob_a": 0.99,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-14T17:02:29+00:00",
    "side_a": "Large decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -399031,7 +398655,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdin",
@@ -399054,8 +398678,8 @@
    "price_b": 0.98,
    "price_draw": null,
    "prob_a": 0.03,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:29+00:00",
    "side_a": "Small decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -399064,7 +398688,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdfl",
@@ -399087,8 +398711,8 @@
    "price_b": 0.99,
    "price_draw": null,
    "prob_a": 0.03,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:29+00:00",
    "side_a": "Minimal change",
    "side_b": "No",
    "source": "cmd_market",
@@ -399097,7 +398721,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdfl",
@@ -399120,8 +398744,8 @@
    "price_b": 0.07,
    "price_draw": null,
    "prob_a": 0.95,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-14T17:02:29+00:00",
    "side_a": "Large decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -399130,7 +398754,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdfl",
@@ -399153,8 +398777,8 @@
    "price_b": 0.99,
    "price_draw": null,
    "prob_a": 0.03,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:29+00:00",
    "side_a": "Small decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -399163,7 +398787,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdaz",
@@ -399186,8 +398810,8 @@
    "price_b": 0.93,
    "price_draw": null,
    "prob_a": 0.11,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:30+00:00",
    "side_a": "Small decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -399196,7 +398820,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdca",
@@ -399219,8 +398843,8 @@
    "price_b": 0.13,
    "price_draw": null,
    "prob_a": 0.91,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-14T17:02:30+00:00",
    "side_a": "Large decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -399229,7 +398853,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdca",
@@ -399609,8 +399233,8 @@
    "price_b": 0.02,
    "price_draw": null,
    "prob_a": 0.99,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-14T17:02:30+00:00",
    "side_a": "Large decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -399619,7 +399243,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdga",
@@ -402291,8 +401915,8 @@
    "price_b": 0.55,
    "price_draw": null,
    "prob_a": 0.455,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:31+00:00",
    "side_a": "Trainauskas, Justas",
    "side_b": "Admiraal, Amadatus",
    "source": "polymarket_us",
@@ -402301,7 +401925,7 @@
    "stake": 0.0,
    "start": "2026-11-13T19:30:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "utr",
    "uncovered": null,
    "untraded": false,
@@ -403298,8 +402922,8 @@
    "price_b": 0.99,
    "price_draw": null,
    "prob_a": 0.02,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:34+00:00",
    "side_a": "Large increase",
    "side_b": "No",
    "source": "cmd_market",
@@ -403308,7 +402932,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdin",
@@ -403364,8 +402988,8 @@
    "price_b": 0.99,
    "price_draw": null,
    "prob_a": 0.02,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:34+00:00",
    "side_a": "Large increase",
    "side_b": "No",
    "source": "cmd_market",
@@ -403374,7 +402998,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdfl",
@@ -403991,8 +403615,8 @@
    "price_b": 0.99,
    "price_draw": null,
    "prob_a": 0.02,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:38+00:00",
    "side_a": "Large increase",
    "side_b": "No",
    "source": "cmd_market",
@@ -404001,7 +403625,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdco",
@@ -405364,8 +404988,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-14T16:48:43+00:00",
-   "close_price": 0.73,
+   "close_at": "2026-11-14T17:02:19+00:00",
+   "close_price": 0.74,
    "date": "2026-11-14",
    "edge": null,
    "espn_away": "Ukraine",
@@ -405636,7 +405260,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-14T16:15:15+00:00",
+   "close_at": "2026-11-14T17:02:19+00:00",
    "close_price": 0.8,
    "date": "2026-11-17",
    "edge": null,
@@ -407170,7 +406794,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-14T16:48:43+00:00",
+   "close_at": "2026-11-14T17:02:19+00:00",
    "close_price": 0.95,
    "date": "2026-11-15",
    "edge": null,
@@ -407788,8 +407412,8 @@
    "price_b": 0.99,
    "price_draw": null,
    "prob_a": 0.02,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:38+00:00",
    "side_a": "Small decrease",
    "side_b": "No",
    "source": "cmd_market",
@@ -407798,7 +407422,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdga",
@@ -408027,7 +407651,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-14T16:48:43+00:00",
+   "close_at": "2026-11-14T17:02:19+00:00",
    "close_price": 0.67,
    "date": "2026-11-16",
    "edge": null,
@@ -409067,8 +408691,8 @@
    "price_b": 0.99,
    "price_draw": null,
    "prob_a": 0.02,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:38+00:00",
    "side_a": "Small increase",
    "side_b": "No",
    "source": "cmd_market",
@@ -409077,7 +408701,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdmd",
@@ -409419,7 +409043,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-14T16:48:43+00:00",
+   "close_at": "2026-11-14T17:02:19+00:00",
    "close_price": 0.81,
    "date": "2026-11-15",
    "edge": null,
@@ -410699,7 +410323,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-14T16:48:43+00:00",
+   "close_at": "2026-11-14T17:02:19+00:00",
    "close_price": 0.71,
    "date": "2026-11-16",
    "edge": null,
@@ -411087,8 +410711,8 @@
    "price_b": 0.99,
    "price_draw": null,
    "prob_a": 0.02,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:38+00:00",
    "side_a": "Large increase",
    "side_b": "No",
    "source": "cmd_market",
@@ -411097,7 +410721,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdga",
@@ -412189,8 +411813,8 @@
    "price_b": 0.35,
    "price_draw": null,
    "prob_a": 0.66,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-14T17:02:40+00:00",
    "side_a": "Cannon Kingsley",
    "side_b": "Oskar Brostrom Poulsen",
    "source": "polymarket_us",
@@ -412199,7 +411823,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -412223,8 +411847,8 @@
    "price_b": 0.12,
    "price_draw": null,
    "prob_a": 0.885,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-14T17:02:40+00:00",
    "side_a": "Maximilian Marterer",
    "side_b": "Theodore Dean",
    "source": "polymarket_us",
@@ -412233,7 +411857,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -412445,8 +412069,8 @@
    "price_b": 0.28,
    "price_draw": null,
    "prob_a": 0.725,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-14T17:02:43+00:00",
    "side_a": "Jans J / Vliegen J",
    "side_b": "Andrade A / Ingildsen J",
    "source": "polymarket_us",
@@ -412455,7 +412079,7 @@
    "stake": 0.0,
    "start": "2026-11-14T15:00:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "atpdb",
    "uncovered": null,
    "untraded": false,
@@ -414227,7 +413851,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-14T16:48:43+00:00",
+   "close_at": "2026-11-14T17:02:19+00:00",
    "close_price": 0.7,
    "date": "2026-11-16",
    "edge": null,
@@ -414437,7 +414061,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-14T16:48:43+00:00",
+   "close_at": "2026-11-14T17:02:19+00:00",
    "close_price": 0.76,
    "date": "2026-11-16",
    "edge": null,
@@ -414963,8 +414587,8 @@
    "price_b": 0.46,
    "price_draw": null,
    "prob_a": 0.56,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-14T17:02:47+00:00",
    "side_a": "Marcel Zielinski",
    "side_b": "Carles Cordoba",
    "source": "polymarket_us",
@@ -414973,7 +414597,7 @@
    "stake": 0.0,
    "start": "2026-11-14T14:30:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -416765,7 +416389,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-14T16:48:43+00:00",
+   "close_at": "2026-11-14T17:02:19+00:00",
    "close_price": 0.8,
    "date": "2026-11-16",
    "edge": null,
@@ -419426,7 +419050,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-14T16:48:43+00:00",
+   "close_at": "2026-11-14T17:02:19+00:00",
    "close_price": 0.78,
    "date": "2026-11-15",
    "edge": null,
@@ -420135,7 +419759,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-14T16:48:43+00:00",
+   "close_at": "2026-11-14T17:02:19+00:00",
    "close_price": 0.8,
    "date": "2026-11-16",
    "edge": null,
@@ -420177,7 +419801,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-14T16:48:43+00:00",
+   "close_at": "2026-11-14T17:02:19+00:00",
    "close_price": 0.84,
    "date": "2026-11-16",
    "edge": null,
@@ -420518,7 +420142,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-14T16:48:43+00:00",
+   "close_at": "2026-11-14T17:02:19+00:00",
    "close_price": 0.58,
    "date": "2026-11-16",
    "edge": null,
@@ -421210,6 +420834,176 @@
    "url": "https://polymarket.us/event/atp-dimsak-toyish-2026-11-14",
    "venue": "polymarket_us",
    "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-14",
+   "edge": -0.01,
+   "id": "polymarket_us:aec-itfwo-naibai-ashsim-2026-11-14",
+   "label": "Naiktha Bains vs Ashleigh Simes",
+   "liquidity": null,
+   "logged": "2026-11-14T17:02:19+00:00",
+   "market_id": "aec-itfwo-naibai-ashsim-2026-11-14",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.92,
+   "price_b": 0.1,
+   "price_draw": null,
+   "prob_a": 0.91,
+   "result": null,
+   "settled": null,
+   "side_a": "Naiktha Bains",
+   "side_b": "Ashleigh Simes",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.02,
+   "stake": 0.0,
+   "start": "2026-11-14T23:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfwo",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfwo-naibai-ashsim-2026-11-14",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-14",
+   "edge": -0.02,
+   "id": "polymarket_us:aec-atp-jaskub-stevuj-2026-11-14",
+   "label": "Jason Kubler vs Stefan Vujic",
+   "liquidity": null,
+   "logged": "2026-11-14T17:02:19+00:00",
+   "market_id": "aec-atp-jaskub-stevuj-2026-11-14",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.82,
+   "price_b": 0.22,
+   "price_draw": null,
+   "prob_a": 0.8,
+   "result": null,
+   "settled": null,
+   "side_a": "Jason Kubler",
+   "side_b": "Stefan Vujic",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.04,
+   "stake": 0.0,
+   "start": "2026-11-14T23:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "atpch",
+   "tour": "atpch",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/atp-jaskub-stevuj-2026-11-14",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-15",
+   "edge": -0.025,
+   "id": "polymarket_us:aec-atp-maxzhu-takkum-2026-11-14",
+   "label": "Maxim Zhukov vs Takuya Kumasaka",
+   "liquidity": null,
+   "logged": "2026-11-14T17:02:19+00:00",
+   "market_id": "aec-atp-maxzhu-takkum-2026-11-14",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.39,
+   "price_b": 0.66,
+   "price_draw": null,
+   "prob_a": 0.365,
+   "result": null,
+   "settled": null,
+   "side_a": "Maxim Zhukov",
+   "side_b": "Takuya Kumasaka",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.05,
+   "stake": 0.0,
+   "start": "2026-11-15T02:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "atpch",
+   "tour": "atpch",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/atp-maxzhu-takkum-2026-11-14",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-15",
+   "edge": -0.025,
+   "id": "polymarket_us:aec-boxing-antola-yubmar-2026-11-14",
+   "label": "Anthony Olascuaga vs Yuberjen Martinez",
+   "liquidity": null,
+   "logged": "2026-11-14T17:02:19+00:00",
+   "market_id": "aec-boxing-antola-yubmar-2026-11-14",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.84,
+   "price_b": 0.21,
+   "price_draw": null,
+   "prob_a": 0.815,
+   "result": null,
+   "settled": null,
+   "side_a": "Anthony Olascuaga",
+   "side_b": "Yuberjen Martinez",
+   "source": "polymarket_us",
+   "sport": "boxing",
+   "spread": 0.05,
+   "stake": 0.0,
+   "start": "2026-11-15T02:20:00+00:00",
+   "start_source": "pinnacle",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/boxing-antola-yubmar-2026-11-14",
+   "venue": "polymarket_us",
+   "venue_start": "2026-11-15T02:00:00+00:00"
+  },
+  {
+   "bet": false,
+   "date": "2026-11-15",
+   "edge": 0.0,
+   "id": "cmd_market:KXAAAGASCDSD-26NOV15-SD",
+   "label": "Will gas prices show a small decrease?",
+   "liquidity": null,
+   "logged": "2026-11-14T17:02:19+00:00",
+   "market_id": "KXAAAGASCDSD-26NOV15-SD",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.02,
+   "price_b": 0.99,
+   "price_draw": null,
+   "prob_a": 0.02,
+   "result": null,
+   "settled": null,
+   "side_a": "Small decrease",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-15T15:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxaaagascdsd",
+   "venue": "kalshi_binary",
+   "venue_start": null
   }
  ],
  "retired": {
@@ -421454,14 +421248,14 @@
    "won": 0
   },
   "pm_combo2": {
-   "bets": 35,
+   "bets": 36,
    "brier_n": 0,
    "brier_sum": 0.0,
-   "pnl": 451.9999999999999,
-   "quotes": 35,
-   "settled": 34,
-   "staked": 3500.0,
-   "won": 24
+   "pnl": 504.15999999999985,
+   "quotes": 36,
+   "settled": 35,
+   "staked": 3600.0,
+   "won": 25
   },
   "pm_combo3": {
    "bets": 6,
@@ -421495,10 +421289,10 @@
   },
   "polymarket_us": {
    "bets": 0,
-   "brier_n": 15597,
-   "brier_sum": 2965.2897655999436,
+   "brier_n": 15600,
+   "brier_sum": 2965.371040599943,
    "pnl": 0.0,
-   "quotes": 16000,
+   "quotes": 16003,
    "settled": 0,
    "staked": 0.0,
    "won": 0
@@ -421584,14 +421378,14 @@
    "won": 0
   },
   "tennis_fav_band_3h": {
-   "bets": 62,
+   "bets": 63,
    "brier_n": 0,
    "brier_sum": 0.0,
-   "pnl": 288.99,
-   "quotes": 62,
-   "settled": 61,
-   "staked": 6200.0,
-   "won": 50
+   "pnl": 313.99,
+   "quotes": 63,
+   "settled": 62,
+   "staked": 6300.0,
+   "won": 51
   },
   "tennis_utr_shortlist_pool_v1": {
    "bets": 0,
