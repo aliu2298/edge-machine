@@ -2332,6 +2332,7 @@ A positive ROI under {MIN_N} settled bets is not a finding.</div></details>
         ("summary", "What it says"),
         ("by-sport", "By sport"),
         ("chaos", "Chaos"),
+        ("paper-watches", "Paper watches"),
         ("reference", "Reference"),
     )
     return site_chrome.document(
@@ -2396,6 +2397,12 @@ def chaos_html():
     try:
         import climate_lanes_build
         html += climate_lanes_build.index_html()
+    except Exception:                                           # noqa: BLE001
+        pass
+    # The paper watches (bs_bid, ko_bid, nl_dump, mentions_dump; 2026-11-14): one index row each, linking to the card on its sport page.
+    try:
+        import watch_index
+        html += watch_index.index_html()
     except Exception:                                           # noqa: BLE001
         pass
     return html
