@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-14T13:01:18.088099+00:00",
+ "last_run": "2026-11-14T15:31:15.344746+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -640,6 +640,29 @@
      "ticker": "KXUEFANLTOTAL-26NOV14KOSISR-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Kosovo O+D- v Israel O-D+ \u00b7 Under 3.5 NO 0.73"
+    },
+    {
+     "ask": 0.2,
+     "bid": 0.19,
+     "event": "KXUEFANLTOTAL-26NOV14GEOHUN",
+     "group": "A",
+     "id": "A5:KXUEFANLTOTAL-26NOV14GEOHUN",
+     "labels": {
+      "away": "O-D-",
+      "home": "O-D-"
+     },
+     "league": "UEFA Nations League",
+     "line": 3.5,
+     "logged": "2026-11-14T15:31:15.344746+00:00",
+     "match": "Georgia v Hungary",
+     "price": 0.81,
+     "rule": "A5",
+     "side": "no",
+     "start": "2026-11-14T17:00Z",
+     "status": "open",
+     "ticker": "KXUEFANLTOTAL-26NOV14GEOHUN-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Georgia O-D- v Hungary O-D- \u00b7 Under 3.5 NO 0.81"
     }
    ]
   },
@@ -4830,14 +4853,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-07T17:01:50.140638+00:00",
-   "candidates": 1,
-   "due": 7,
-   "labelled": 7,
-   "matched": 1,
-   "new": 0
-  },
-  {
    "at": "2026-11-07T17:16:36.239008+00:00",
    "candidates": 1,
    "due": 4,
@@ -5236,6 +5251,14 @@
    "labelled": 1,
    "matched": 1,
    "new": 0
+  },
+  {
+   "at": "2026-11-14T15:31:15.344746+00:00",
+   "candidates": 1,
+   "due": 2,
+   "labelled": 2,
+   "matched": 1,
+   "new": 1
   }
  ],
  "version": "soccer-rules-v1"
