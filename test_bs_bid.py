@@ -30,7 +30,9 @@ check("no milestone, no start", B.start_of("X-1", lambda p: {"milestones": []}),
 check("a failed call, no start", B.start_of("X-1", lambda p: None), None)
 check("fights cut 12 hours before the start, NFL 3", (START - B.cutoff_of(START, "ufc"), START - B.cutoff_of(START, "boxing"), START - B.cutoff_of(START, "nfl")), (12 * 3600, 12 * 3600, 3 * 3600))
 check("no start, no cutoff", B.cutoff_of(None, "ufc"), None)
-check("three rows by series; maker fee on NFL only", ({g: B.RULES[c["maker"]].maker_rate for g, c in B.GROUPS.items()}, B.GROUP_OF["KXBOXING"]), ({"ufc": 0.0, "boxing": 0.0, "nfl": 0.0175}, "boxing"))
+check("four rows by series; maker fee on NFL only", ({g: B.RULES[c["maker"]].maker_rate for g, c in B.GROUPS.items()}, B.GROUP_OF["KXBOXING"], B.GROUP_OF["KXT20MATCH"], B.GROUP_OF["KXWTESTMATCH"]),
+      ({"ufc": 0.0, "boxing": 0.0, "nfl": 0.0175, "cricket": 0.0}, "boxing", "cricket", "cricket"))
+check("cricket cuts 12 hours before the start", START - B.cutoff_of(START, "cricket"), 12 * 3600)
 
 print("\nthe replay on a made-up dump")
 T0 = B.FROM_TS + 3600
@@ -74,8 +76,20 @@ check("50 fills but the first-fill row negative: not there yet", B.read_text(hea
 check("100 fills, positive, t 2+, first fills positive: keep", B.read_text(head(120, 0.1, 2.5), head(40, 0.05, 1)), "read at 100: keep (positive, score 2 or more, first fills positive)")
 check("100 fills, t under 2: retire", B.read_text(head(120, 0.1, 1.9), head(40, 0.05, 1)), "read at 100: retire (under the bar at 100 fills)")
 rec = B.records(st)
-check("three rows, kept apart", (sorted(rec), rec["ufc"]["games"], rec["nfl"]["games"], rec["boxing"]["games"]), (["boxing", "nfl", "ufc"], 1, 1, 0))
+check("four rows, kept apart", (sorted(rec), rec["ufc"]["games"], rec["nfl"]["games"], rec["boxing"]["games"]), (["boxing", "cricket", "nfl", "ufc"], 1, 1, 0))
 check("one fill an event in the first-fill column of the dump test", rec["ufc"]["first"]["n"] <= rec["ufc"]["headline"]["n"], True)
+
+print("\ncricket's own read: 30 and 60 fills, positive at both, above +5% at 60")
+mkrow = lambda i, roi: (roi, f"E{i}", dict(day=f"2026-11-{14 + i // 20:02d}", fill=i, ticker=f"t{i}", back=True, sold=True))
+def cr(rois):
+    rows = [mkrow(i, r) for i, r in enumerate(rois)]
+    return B.read_text(N.stat(rows), N.stat(rows[:1]), "cricket", rows)
+check("under 30 fills: too early", cr([0.1] * 10).startswith("too early (10 of 30"), True)
+check("30 fills positive: on track", cr([0.1] * 40), "read at 30: on track (positive); read again at 60")
+check("30 fills negative: not positive", cr([-0.1] * 40).startswith("read at 30: not positive"), True)
+check("60 fills, positive at 30 and 60, above +5%: keep", cr([0.1] * 60), "read at 60: keep (positive at both reads, above +5% at 60)")
+check("60 fills, positive at 30 but only +3% at 60: retire", cr([0.1] * 30 + [-0.04] * 30).startswith("read at 60: retire"), True)
+check("60 fills, negative at 30 though +8% at 60: retire", cr([-0.1] * 30 + [0.3] * 30).startswith("read at 60: retire"), True)
 
 print("\nthe page sections")
 
@@ -88,7 +102,7 @@ real = D.get
 D.get = _no_call
 try:
     fights = BB.section(["ufc", "boxing"], B.empty())
-    nfl = BB.section(["nfl"], st, anchor="bs-bid-nfl")
+    nfl = BB.section(["nfl"], st, anchor="bs-bid-nfl") + BB.section(["cricket"], st, anchor="bs-bid-cricket")
     page = fights_build.build()
 finally:
     D.get = real

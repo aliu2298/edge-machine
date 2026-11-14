@@ -39,7 +39,13 @@ def build(d=None, st=None, now=None):
         definition=cricket_cards.definition,
         recent=cricket_cards.recent_html, method=cricket_cards.method(idle_html),
         retired=sport_tab.retired_rows(d, st, FAMILY))
-    return SP.page(sp, d, st, now, rows=rows, idle=idle)
+    html = SP.page(sp, d, st, now, rows=rows, idle=idle)
+    try:                                                        # 2026-11-14: the before-start bid paper watch (bs_bid.py), a lead not a pass
+        import bs_bid_build
+        html = bs_bid_build.place(html, bs_bid_build.section(["cricket"], anchor="bs-bid-cricket"), '<section id="events"')
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"cricket_build: the before-start bid section failed: {type(exc).__name__}: {exc}")
+    return html
 
 
 def main():

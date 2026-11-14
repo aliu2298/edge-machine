@@ -10,7 +10,7 @@ NOTE = "Paper watch of one research lead: observation only, never in Production.
 SHARED = [
     ("Rule", "From the first trade until the cutoff, every minute a bid rests 15c under the last trade, on both sides of the market. It fills only when a trade prints "
              "strictly through it, and is sold when the price is back within 5c of where it was before the drop; what is not sold rides to the result"),
-    ("Start", "Kalshi's own schedule for the event, not the market's expected expiry. Fights: bids stop 12 hours before it. NFL: 3 hours before it"),
+    ("Start", "Kalshi's own schedule for the event, not the market's expected expiry. Fights and cricket: bids stop 12 hours before it. NFL: 3 hours before it"),
     ("Why before the start", "With nothing on, no news arrives, so a drop is nearly always a sweep and the price drifts back. A wide, thin book lets a bid inside the gap get hit and a sell get lifted"),
     ("Skips", "No bid when nothing traded in the last 10 minutes, when the price is over 95c, or when the bid would sit under 5c"),
     ("Order delay", "The headline column puts each order up 25 seconds after the minute starts, the speed of today's order path. The 2-second column is the comparison"),
@@ -21,10 +21,19 @@ SHARED = [
 LEAD = {
     "ufc": "Before-start study (Nov 14): fights, +16.8% on 36 bets on the found dates and +17.4% on 160 bets (t 4.3) on the later dates, mostly boxing on the later dates. It passed its written test",
     "boxing": "Before-start study (Nov 14): fights, +16.8% on 36 bets on the found dates and +17.4% on 160 bets (t 4.3) on the later dates, mostly boxing on the later dates. It passed its written test",
+    "cricket": "Before-start study of eight thin markets (Nov 14): cricket went forward on a sample and did not repeat (+20.2% on 29 bets, then +1.6% on 42), but with fills kept 3 hours or more before the actual start it reads +15.3% on 59 bets (t 2.1), and bids 12 hours or more before the listed start +16.8% then +14.6%. A lead from a row written down but not tested, not a pass. Team sheets and the toss are news before the start, so a price that does not come back is news",
     "nfl": "Before-start study (Nov 14): about +14.7% on 47 bets over both halves; it fell just short on the found dates (+15.4% on 19 bets, t 1.4). A watch, not a pass",
 }
 FEES = {False: "No fee on a resting fill (Kalshi lists no maker fee on this series); the taker fee on a sale that crosses",
         True: "Kalshi charges a maker fee on this series: every resting fill, buy and sell, pays it; the taker fee on a sale that crosses"}
+
+
+READ = {
+    "fights": "At 50 and at 100 fills a row. Keep needs a positive return after fees, a score of 2 or more clustered by card day, and the row still positive counting only the first fill of each fight. Retire if under that at 100 fills. No retuning of depth, clock or exit before then",
+    "nfl": "At 50 and at 100 fills. Keep needs a positive return after fees, a score of 2 or more clustered by game day, and the first-fill-only row still positive. Retire if under that at 100 fills",
+    "cricket": "At 30 and at 60 fills. Kept if the return after fees is positive at both reads and above +5% at 60; retired otherwise",
+}
+READ.update(ufc=READ["fights"], boxing=READ["fights"])
 
 
 def _pct(x):
@@ -79,10 +88,9 @@ def section(groups, state=None, anchor="bs-bid", title="Before-start bid · pape
         rowsh += (f'<h3 id="{anchor}-{g}">{e(cfg["label"])} · {e(cfg["watch"])}</h3>'
                   f'<p class="sm">{e(r["read"][0].upper() + r["read"][1:])}. {e(_days(state, g))}.</p>'
                   f'<p class="sm mut">{e(LEAD[g])}. {e(FEES[cfg["maker"]])}.</p>' + _table(r) + _entries(state, g))
+    reads = "".join(f"<li><b>Read, {e(B.GROUPS[g]['label'])}</b> {e(READ[g])}</li>" for g in groups)
     return (f'<section id="{anchor}"><h2>{e(title)}</h2><p class="sm mut">{e(NOTE)}</p>{rowsh}'
-            f'<details class="fold"><summary>The rule and the pre-registered read</summary><ul class="sm">{shared}'
-            f'<li><b>Read</b> At 50 and at 100 fills a row. Keep needs a positive return after fees, a score of 2 or more clustered by card day (game day), and the row still '
-            f'positive counting only the first fill of each event. Retire if under that at 100 fills. No retuning of depth, clock or exit before then</li></ul></details></section>')
+            f'<details class="fold"><summary>The rule and the pre-registered read</summary><ul class="sm">{shared}{reads}</ul></details></section>')
 
 
 def place(html, sec, before):
