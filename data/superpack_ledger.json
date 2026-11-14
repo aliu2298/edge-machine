@@ -2896,7 +2896,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-14T02:04:42.879528+00:00",
+ "last_run": "2026-11-14T02:10:49.711630+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -8234,14 +8234,14 @@
    ],
    "pid": "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXINTLFRIENDLYTOTAL-26NOV13COLCHI-2\", \"a\"]]",
    "price": 0.77,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_o15_intl",
-   "settled": null,
+   "settled": "2026-11-14T02:10:19+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXUEFANLTOTAL-26NOV12ARMCYP-4",
@@ -8307,14 +8307,14 @@
    ],
    "pid": "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXINTLFRIENDLYTOTAL-26NOV13ECUCRI-2\", \"a\"]]",
    "price": 0.79,
-   "profit": null,
+   "profit": 0.2658,
    "scope": "soccer_o15_intl",
-   "settled": null,
+   "settled": "2026-11-14T02:10:21+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXINXU-26NOV12H1600-T7664.9999",
