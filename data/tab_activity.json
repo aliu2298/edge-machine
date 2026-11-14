@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-14T17:22Z",
+ "generated": "2026-11-14T17:27Z",
  "rule": "active = not retired, not a baseline, a bet or an open pick in its current record window",
  "tabs": {
   "commodities": {
@@ -101,6 +101,9 @@
     "ftts_no_70_80|soccer_ftts",
     "liga_btts_even|soccer_btts",
     "mls_fade_home|soccer_p05",
+    "nl_dump_d15",
+    "nl_dump_d20",
+    "nl_dump_h20",
     "o15_ranked|soccer_o15_intl",
     "o35_cheap_no_v5",
     "o35_cheap_no_wave",
