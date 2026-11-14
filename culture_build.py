@@ -34,7 +34,7 @@ LIVE_CHEAP = tuple(c for c in CHEAP if not c.get("retired"))      # none since 2
 GONE_CHEAP = tuple(c for c in CHEAP if c.get("retired"))
 GONE_MENTIONS = tuple(c for c in GONE_CHEAP if c not in (MS.ALBUM, MS.ALBUM_NO))   # the weekly and monthly mention lanes (2026-10-31)
 GONE_ALBUM = tuple(c for c in GONE_CHEAP if c in (MS.ALBUM, MS.ALBUM_NO))         # the album lanes (2026-11-11)
-SECTIONS = (("lanes", "Lanes"), ("retired", "Retired"))
+SECTIONS = (("lanes", "Lanes"), ("dump-bid", "Dump bid"), ("retired", "Retired"))
 # The old lanes, shown in the Archive only (2026-10-27).
 ARCHIVE = ("mentions_rate", "culture_endgame", "culture_fav_band")
 
@@ -289,6 +289,18 @@ def lanes_section(rows, details):
 e_ = C.esc
 
 
+def _dump_bid():
+    """The mentions dump bid paper watch (2026-11-14). Never breaks the page: a failure is printed, and the page keeps the section with a note."""
+    try:
+        import mentions_dump_build as DBB
+        return DBB.section()
+    except Exception:                                           # noqa: BLE001
+        print("culture_build: the Dump bid section failed to build:", file=sys.stderr)
+        traceback.print_exc()
+        return ('<section id="dump-bid"><h2>Mentions dump bid · paper watch</h2><p class="sm mut">This section could not be built on this run; '
+                'its ledger is unchanged and the next run tries again.</p></section>')
+
+
 def build(state=None, now=None, split_state=None, wide_state=None, month_state=None, month_wide_state=None,
           album_state=None, album_no_state=None, dip_state=None):
     state = state if state is not None else K.load()
@@ -309,6 +321,7 @@ def build(state=None, now=None, split_state=None, wide_state=None, month_state=N
                     'An event is one outcome: the words of one mention market move together, so they count once.</p>')
             + tiles(rows) + '</section>'
             + lanes_section(rows, details)
+            + _dump_bid()
             + gone
             + _fold("Method", "where the data comes from", '<p class="sm mut">Read hourly by GitHub Actions (culture.yml) from Kalshi public market data and '
                     'candles, Rotten Tomatoes and Roll Call Factbase. Paper entries at the ask with Kalshi\'s fees.</p>'))

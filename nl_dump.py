@@ -125,7 +125,8 @@ def replay(prints, result, rows=None, rules=F.HONEST, since=None, until=None):
                 d, ex = cfg["depth"], cfg["ex"]
                 lo = last - cfg["last_h"] * 3600 if cfg.get("last_h") else -math.inf
                 cand = [(t0, r, round(r - d, 4), b, e) for t0, r, w, b, e in base
-                        if t0 >= lo and (since is None or t0 >= since) and (until is None or t0 < until) and round(r - d, 4) >= 0.05 - EPS and w < round(r - d, 4) - EPS]
+                        if t0 >= lo and (since is None or t0 >= since) and (until is None or t0 < until) and round(r - d, 4) >= 0.05 - EPS and w < round(r - d, 4) - EPS
+                        and (cfg.get("max_l") is None or round(r - d, 4) <= cfg["max_l"] + EPS)]
                 free = -math.inf
                 for t0, r, l, b, e in cand:
                     if t0 < free:
