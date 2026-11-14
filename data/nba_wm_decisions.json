@@ -16802,8 +16802,25 @@
    "ticker": "KXNBAWINMARGIN-26NOV13UTAHOU-UTA6TO10",
    "tip": "2026-11-14T01:30:00+00:00",
    "why": "no tight read inside the entry window"
+  },
+  "yes:KXNBAWINMARGIN-26NOV14DENNOP-DEN6TO10": {
+   "bot_version": "wm-yes-v4",
+   "bucket": "DEN6TO10",
+   "decided_at": "2026-11-14T23:00:02+00:00",
+   "event": "KXNBAWINMARGIN-26NOV14DENNOP",
+   "fav_share": 0.8743,
+   "lane": "nba_winmargin_live",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV14",
+   "spread": 0.02,
+   "ticker": "KXNBAWINMARGIN-26NOV14DENNOP-DEN6TO10",
+   "tip": "2026-11-15T00:00:00+00:00",
+   "why": "favourite share 0.87 (0.70 or more)",
+   "yes_ask": 0.17,
+   "yes_bid": 0.15
   }
  },
- "updated_at": "2026-11-14T03:30:12+00:00",
+ "updated_at": "2026-11-14T23:00:02+00:00",
  "version": 1
 }
