@@ -86,7 +86,8 @@ def section(groups, state=None, anchor="bs-bid", title="Before-start bid · pape
     for g in groups:
         cfg, r = B.GROUPS[g], rec[g]
         rowsh += (f'<h3 id="{anchor}-{g}">{e(cfg["label"])} · {e(cfg["watch"])}</h3>'
-                  f'<p class="sm">{e(r["read"][0].upper() + r["read"][1:])}. {e(_days(state, g))}.</p>'
+                  f'<p class="sm">{e(r["games"])} {e(cfg["unit"])}{"" if r["games"] == 1 else "s"} watched, {e(r["headline"]["n"])} fill{"" if r["headline"]["n"] == 1 else "s"} so far. '
+                  f'{e(r["read"][0].upper() + r["read"][1:])}. {e(_days(state, g))}.</p>'
                   f'<p class="sm mut">{e(LEAD[g])}. {e(FEES[cfg["maker"]])}.</p>' + _table(r) + _entries(state, g))
     reads = "".join(f"<li><b>Read, {e(B.GROUPS[g]['label'])}</b> {e(READ[g])}</li>" for g in groups)
     return (f'<section id="{anchor}"><h2>{e(title)}</h2><p class="sm mut">{e(NOTE)}</p>{rowsh}'
