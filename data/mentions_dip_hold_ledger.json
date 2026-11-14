@@ -67646,7 +67646,7 @@
      "n_prints": 251,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Antifa"
     },
     "KXTRUMPSAY-26NOV16-AUTO": {
@@ -67757,7 +67757,7 @@
      "n_prints": 107,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Autopen / Auto Pen"
     },
     "KXTRUMPSAY-26NOV16-BIBI": {
@@ -67772,7 +67772,7 @@
      "n_prints": 793,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Bibi / Netanyahu"
     },
     "KXTRUMPSAY-26NOV16-BLOC": {
@@ -67791,17 +67791,18 @@
      "word": "Blockade"
     },
     "KXTRUMPSAY-26NOV16-CANA": {
-     "close_ts": 1794841200,
+     "close_ts": 1794614783,
      "edge_ids": [
       "07268902-5529-b53e-d3ad-706e74e5ec6a"
      ],
+     "final": true,
      "first_px": 0.88,
      "first_ts": 1794233700,
      "last_ts": 1794605079,
      "n_prints": 284,
      "open_ts": 1794231000,
-     "result": "",
-     "status": "active",
+     "result": "yes",
+     "status": "finalized",
      "word": "Canada / Canadian"
     },
     "KXTRUMPSAY-26NOV16-CEAS": {
@@ -68078,24 +68079,18 @@
      "n_prints": 758,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Ceasefire"
     },
     "KXTRUMPSAY-26NOV16-CRYP": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "07268bc8-e119-adc8-a36a-cbf891a9cd67",
-      "07268bca-7849-a54f-823b-9e0a0980a477",
-      "07268bcf-eb19-a8af-9f5d-f35fb92c26db",
-      "07268bcf-ef31-a1d8-8e9c-63af33de9940",
-      "07268bcf-ef31-a4e6-b307-dfccabb812ce",
-      "07268bcf-ef31-aab2-bf10-fc8feb66797e",
-      "07268bcf-ef31-ad17-9c96-c2f9933a7a60",
-      "07268bcf-ef31-ad7f-bd15-fa073efe43ed"
+      "07268a35-85e9-bc94-699b-0d5bb05eed06",
+      "07268a3e-c3e9-b331-65e5-ea010a249027"
      ],
      "first_px": 0.34,
      "first_ts": 1794233653,
-     "last_ts": 1794612448,
+     "last_ts": 1794614725,
      "lows": [
       [
        1794262257,
@@ -68886,12 +68881,22 @@
        1794612448,
        0.06,
        99.0
+      ],
+      [
+       1794614725,
+       0.06,
+       16.0
+      ],
+      [
+       1794614725,
+       0.05,
+       20.3
       ]
      ],
-     "n_prints": 571,
+     "n_prints": 573,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Crypto / Bitcoin"
     },
     "KXTRUMPSAY-26NOV16-CUBA": {
@@ -68937,17 +68942,17 @@
      "n_prints": 149,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Cybersecurity / Cyber Security"
     },
     "KXTRUMPSAY-26NOV16-DIES": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "07268a3b-b7f9-b6c9-3233-e1c1fa0e2f67"
+      "07268ae1-0609-85b0-4afb-ef1f98cafca3"
      ],
      "first_px": 0.45,
      "first_ts": 1794233713,
-     "last_ts": 1794614372,
+     "last_ts": 1794614774,
      "lows": [
       [
        1794443745,
@@ -68955,17 +68960,18 @@
        7.93
       ]
      ],
-     "n_prints": 1042,
+     "n_prints": 1047,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Diesel"
     },
     "KXTRUMPSAY-26NOV16-DIVI": {
-     "close_ts": 1794841200,
+     "close_ts": 1794614782,
      "edge_ids": [
       "07268bd3-15b1-84f4-ef65-2898252b1902"
      ],
+     "final": true,
      "first_px": 0.4,
      "first_ts": 1794237242,
      "last_ts": 1794599634,
@@ -68998,8 +69004,8 @@
      ],
      "n_prints": 226,
      "open_ts": 1794231000,
-     "result": "",
-     "status": "active",
+     "result": "yes",
+     "status": "finalized",
      "word": "Dividend / Stimulus"
     },
     "KXTRUMPSAY-26NOV16-EPST": {
@@ -69721,7 +69727,7 @@
      "n_prints": 322,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Epstein"
     },
     "KXTRUMPSAY-26NOV16-ETHA": {
@@ -70194,7 +70200,7 @@
      "n_prints": 144,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Ethanol"
     },
     "KXTRUMPSAY-26NOV16-FILI": {
@@ -70434,7 +70440,7 @@
      "n_prints": 90,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Finland / Finnish"
     },
     "KXTRUMPSAY-26NOV16-GDP": {
@@ -70526,7 +70532,7 @@
      "n_prints": 148,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "GDP"
     },
     "KXTRUMPSAY-26NOV16-GOLD": {
@@ -71169,7 +71175,7 @@
      "n_prints": 155,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Houthi"
     },
     "KXTRUMPSAY-26NOV16-ILHA": {
@@ -71186,7 +71192,7 @@
      "n_prints": 301,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Ilhan / Omar"
     },
     "KXTRUMPSAY-26NOV16-MAKE": {
@@ -72197,14 +72203,15 @@
      "n_prints": 199,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Make Iran Great Again"
     },
     "KXTRUMPSAY-26NOV16-MARI": {
-     "close_ts": 1794841200,
+     "close_ts": 1794614784,
      "edge_ids": [
       "07268ede-46f1-8446-fe40-56876e36220e"
      ],
+     "final": true,
      "first_px": 0.04,
      "first_ts": 1794243027,
      "last_ts": 1794612352,
@@ -72712,18 +72719,18 @@
      ],
      "n_prints": 237,
      "open_ts": 1794231000,
-     "result": "",
-     "status": "active",
+     "result": "yes",
+     "status": "finalized",
      "word": "Marijuana / Weed / Cannabis"
     },
     "KXTRUMPSAY-26NOV16-MELA": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "07268a3f-3411-9e21-9f96-736f327f6d2d"
+      "07268a27-e9d1-8203-1ac0-ab08ed064c07"
      ],
      "first_px": 0.53,
      "first_ts": 1794233529,
-     "last_ts": 1794614377,
+     "last_ts": 1794614661,
      "lows": [
       [
        1794445099,
@@ -72741,10 +72748,10 @@
        0.58
       ]
      ],
-     "n_prints": 577,
+     "n_prints": 578,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Melania"
     },
     "KXTRUMPSAY-26NOV16-MOON": {
@@ -72871,7 +72878,7 @@
      "n_prints": 297,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Moon"
     },
     "KXTRUMPSAY-26NOV16-MORT": {
@@ -73278,7 +73285,7 @@
      "n_prints": 158,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Mortgage"
     },
     "KXTRUMPSAY-26NOV16-NOBE": {
@@ -73624,17 +73631,17 @@
      "n_prints": 152,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Nobel"
     },
     "KXTRUMPSAY-26NOV16-PEAC": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "07268fa5-ad09-a92f-446a-028e39ffd3a3"
+      "072689f4-2489-a937-dc8c-816c5641d703"
      ],
      "first_px": 0.23,
      "first_ts": 1794233833,
-     "last_ts": 1794604999,
+     "last_ts": 1794614707,
      "lows": [
       [
        1794237779,
@@ -75130,12 +75137,17 @@
        1794604999,
        0.03,
        93.32
+      ],
+      [
+       1794614707,
+       0.03,
+       156.06
       ]
      ],
-     "n_prints": 351,
+     "n_prints": 352,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Peace in the Middle East"
     },
     "KXTRUMPSAY-26NOV16-PRED": {
@@ -75881,7 +75893,7 @@
      "n_prints": 154,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Prediction Market / Predictive Market"
     },
     "KXTRUMPSAY-26NOV16-QUAN": {
@@ -76245,7 +76257,7 @@
      "n_prints": 97,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Quantum"
     },
     "KXTRUMPSAY-26NOV16-RANK": {
@@ -76411,7 +76423,7 @@
      "n_prints": 173,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Ranked Choice / Ranked-Choice"
     },
     "KXTRUMPSAY-26NOV16-REFI": {
@@ -76718,7 +76730,7 @@
      "n_prints": 278,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Refinery"
     },
     "KXTRUMPSAY-26NOV16-RIGG": {
@@ -76739,11 +76751,16 @@
     "KXTRUMPSAY-26NOV16-ROBO": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "07268bdc-ca01-af74-f76b-61245e1caa57"
+      "07268a25-3641-b490-6d30-739487fde2d8",
+      "07268a25-3641-bcdf-4fe1-09613d4b7ecc",
+      "07268a25-d1a9-b981-62cc-27ce6a1dc881",
+      "07268a25-d581-ba78-7f51-fe24315b2321",
+      "07268b12-ae01-bc9b-6281-a69688ced42a",
+      "07268b12-be61-b1a0-78ee-2187034fac30"
      ],
      "first_px": 0.28,
      "first_ts": 1794233083,
-     "last_ts": 1794612377,
+     "last_ts": 1794614635,
      "lows": [
       [
        1794409757,
@@ -76869,12 +76886,37 @@
        1794612377,
        0.08,
        15.85
+      ],
+      [
+       1794614635,
+       0.13,
+       6.0
+      ],
+      [
+       1794614635,
+       0.14,
+       7.0
+      ],
+      [
+       1794614635,
+       0.09,
+       1.0
+      ],
+      [
+       1794614635,
+       0.12,
+       11.38
+      ],
+      [
+       1794614635,
+       0.14,
+       3.0
       ]
      ],
-     "n_prints": 142,
+     "n_prints": 148,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Robot / Robotic / Robotics"
     },
     "KXTRUMPSAY-26NOV16-SOLE": {
@@ -77429,7 +77471,7 @@
      "n_prints": 304,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Third Term"
     },
     "KXTRUMPSAY-26NOV16-TOMA": {
@@ -77450,11 +77492,11 @@
     "KXTRUMPSAY-26NOV16-UFO": {
      "close_ts": 1794841200,
      "edge_ids": [
-      "07269341-c3a9-8dce-8c25-47aa136c2911"
+      "072692ed-8de9-849e-e4b8-db3ab74278e9"
      ],
      "first_px": 0.29,
      "first_ts": 1794236834,
-     "last_ts": 1794609202,
+     "last_ts": 1794614776,
      "lows": [
       [
        1794238169,
@@ -78260,12 +78302,42 @@
        1794609202,
        0.05,
        93.76
+      ],
+      [
+       1794614731,
+       0.05,
+       39.94
+      ],
+      [
+       1794614731,
+       0.04,
+       8.0
+      ],
+      [
+       1794614731,
+       0.04,
+       2.0
+      ],
+      [
+       1794614731,
+       0.04,
+       45.0
+      ],
+      [
+       1794614731,
+       0.04,
+       12.0
+      ],
+      [
+       1794614776,
+       0.05,
+       47.14
       ]
      ],
-     "n_prints": 356,
+     "n_prints": 362,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "UFO / UAP"
     },
     "KXTRUMPSAY-26NOV16-URAN": {
@@ -79285,7 +79357,7 @@
      "n_prints": 320,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Uranium"
     },
     "KXTRUMPSAY-26NOV16-VIVE": {
@@ -79699,20 +79771,20 @@
      "n_prints": 332,
      "open_ts": 1794231000,
      "result": "",
-     "status": "active",
+     "status": "inactive",
      "word": "Zohran / Mamdani"
     }
    }
   }
  },
  "lane": "mentions_dip_hold",
- "last_success": "2026-11-14T00:01:03.896309+00:00",
+ "last_success": "2026-11-14T01:02:51.371515+00:00",
  "observations": {
-  "at": "2026-11-14T00:01:03.896309+00:00",
+  "at": "2026-11-14T01:02:51.371515+00:00",
   "errors": [],
   "events": 1,
   "markets": 31,
-  "prints": 107
+  "prints": 21
  },
  "since": "2026-10-26T04:00:00+00:00"
 }
