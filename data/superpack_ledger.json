@@ -714,6 +714,10 @@
    "at": "2026-11-12T17:04:23.100747+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXINTLFRIENDLYTOTAL-26NOV13TAHCOK-2\", \"a\"]]": {
+   "at": "2026-11-14T07:04:33.715619+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXINTLFRIENDLYTOTAL-26NOV14CHNMAS-2\", \"a\"]]": {
    "at": "2026-11-14T00:04:37.674032+00:00",
    "pool": "entered"
@@ -2900,7 +2904,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-14T06:54:03.141014+00:00",
+ "last_run": "2026-11-14T07:04:33.715619+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -9242,6 +9246,31 @@
    ],
    "pid": "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXUEFANLTOTAL-26NOV16MKDSLO-2\", \"a\"]]",
    "price": 0.69,
+   "profit": null,
+   "scope": "soccer_o15_intl",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXINTLFRIENDLYTOTAL-26NOV13TAHCOK-2",
+   "entered_at": "2026-11-14T07:04:33.715619+00:00",
+   "entities": [
+    "Tahiti",
+    "Cook Islands"
+   ],
+   "id": "superpack:[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXINTLFRIENDLYTOTAL-26NOV13TAHCOK-2\", \"a\"]]",
+   "lane": "o15_ranked",
+   "logged": "2026-11-14T07:04:04+00:00",
+   "matched": [
+    "Cook Islands",
+    "Tahiti"
+   ],
+   "pid": "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXINTLFRIENDLYTOTAL-26NOV13TAHCOK-2\", \"a\"]]",
+   "price": 0.67,
    "profit": null,
    "scope": "soccer_o15_intl",
    "settled": null,
