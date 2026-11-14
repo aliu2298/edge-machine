@@ -2,7 +2,7 @@
 
 Research only. No lane, page or Production change. The periods, the tests and the rules were written down before the results they apply to were read.
 
-Data: every settled Kalshi ATP Challenger match, Jan 12 to Nov 13 2026 (10,818 matches with one-minute prices), and every WTA Challenger match (2,384). Kalshi lists no ITF matches.
+Data: every settled Kalshi ATP Challenger match, Jan 12 to Nov 13 2026 (10,818 matches with one-minute prices), and every WTA Challenger match (2,384). ITF matches were not studied (correction, Nov 13: Kalshi does list them, as `KXITFMATCH` and `KXITFWMATCH`; the listing request failed and was misread as none).
 
 - **Found** on Jan 12 to Jun 30 (5,847 matches).
 - **Unseen**: Jul 1 to Oct 26 (4,316 matches), read once, with the rules written first.
