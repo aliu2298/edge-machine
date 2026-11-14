@@ -15,7 +15,7 @@ No strategy is tested here. A one-minute candle shows that a low printed, not ho
 - **Came back:** of all one-minute drops this deep, whatever happened next, the share where the price two minutes later was back within 5c. The dump definition only counts the ones that came back; a resting bid is filled by all of them. So this is the number that matters.
 - **Bid marked 2 minutes later:** a bid resting at the trigger level (15c, or 30%, under the price before), valued at the price two minutes later. In cents a contract, before fees and before any question of fills.
 
-**3. National-team soccer stands out.** Half or more of its deep drops come back, against about 30% almost everywhere else.
+**3. National-team soccer stands out.** Between 44% and 59% of its deep drops come back, against about 30% almost everywhere else.
 
 | Group | Series | Came back (median) | Bid marked 2 min later (median) |
 |---|---|---|---|
@@ -25,7 +25,7 @@ No strategy is tested here. A one-minute candle shows that a low printed, not ho
 | Hourly markets | 8 | 31% | +0.7c |
 | 15-minute markets | 28 | 30% | +1.3c |
 
-**4. In game-winner markets the drops are single big sweeps.** They snap back inside the same minute 65% to 86% of the time, in a minute that trades 15 to 1,800 times the market's usual minute. They are not at the open (0% to 1%). In 15-minute markets the "dump" minute is an ordinary minute (1.0 times the usual volume) and snaps back inside the minute 27% to 46% of the time. The S&P 500 is the highest of that family at 55%.
+**4. In game-winner markets the drops are single big sweeps.** They snap back inside the same minute 65% to 86% of the time, in a minute that trades 8 to 1,800 times the market's usual minute. They are not at the open (0% to 1%). In 15-minute markets the "dump" minute is an ordinary minute (1.0 times the usual volume) and snaps back inside the minute 27% to 46% of the time. The S&P 500 is the highest of that family at 55%.
 
 **5. New markets do not dump more.** See the last section.
 
@@ -103,7 +103,7 @@ Two things to decide with the pick:
 
 Every 15-minute series, 40 random markets from its first 7 days and 40 from its latest 7. Events per 100 markets, depth, and the share at the open.
 
-- **No series dumped more when it was new.** 20 of 27 show more events now than in their first week. BTC went from 78 to 270 per 100 markets, ETH from 15 to 282: their first-week markets barely traded.
+- **No series dumped more when it was new.** 22 of 27 show more events now than in their first week. BTC went from 78 to 270 per 100 markets, ETH from 15 to 282: their first-week markets barely traded.
 - The S&P 500, the newest, is the same in both (212 and 200).
 - So "new market" is not a signal a candle screen can see. What makes the S&P different shows only in the prints.
 
