@@ -742,6 +742,10 @@
    "at": "2026-11-14T00:04:37.674032+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXUEFANLTOTAL-26NOV16KAZSVK-2\", \"a\"]]": {
+   "at": "2026-11-14T12:04:16.700081+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXUEFANLTOTAL-26NOV16MKDSLO-2\", \"a\"]]": {
    "at": "2026-11-14T05:04:44.902908+00:00",
    "pool": "entered"
@@ -2908,7 +2912,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-14T11:49:35.092767+00:00",
+ "last_run": "2026-11-14T12:04:16.700081+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -9304,6 +9308,31 @@
    "scope": "soccer_u35_intl",
    "settled": null,
    "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUEFANLTOTAL-26NOV16KAZSVK-2",
+   "entered_at": "2026-11-14T12:04:16.700081+00:00",
+   "entities": [
+    "Kazakhstan",
+    "Slovakia"
+   ],
+   "id": "superpack:[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXUEFANLTOTAL-26NOV16KAZSVK-2\", \"a\"]]",
+   "lane": "o15_ranked",
+   "logged": "2026-11-14T12:03:45+00:00",
+   "matched": [
+    "Kazakhstan",
+    "Slovakia"
+   ],
+   "pid": "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXUEFANLTOTAL-26NOV16KAZSVK-2\", \"a\"]]",
+   "price": 0.77,
+   "profit": null,
+   "scope": "soccer_o15_intl",
+   "settled": null,
+   "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
