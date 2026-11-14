@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-14T15:31:15.344746+00:00",
+ "last_run": "2026-11-14T16:01:19.535916+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -632,11 +632,14 @@
      "line": 3.5,
      "logged": "2026-11-14T12:31:14.104886+00:00",
      "match": "Kosovo v Israel",
+     "payout": 1.0,
      "price": 0.73,
+     "profit": 34.45,
      "rule": "A5",
+     "settled": "2026-11-14T16:01:19.535916+00:00",
      "side": "no",
      "start": "2026-11-14T14:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUEFANLTOTAL-26NOV14KOSISR-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Kosovo O+D- v Israel O-D+ \u00b7 Under 3.5 NO 0.73"
@@ -4853,14 +4856,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-07T17:16:36.239008+00:00",
-   "candidates": 1,
-   "due": 4,
-   "labelled": 4,
-   "matched": 1,
-   "new": 0
-  },
-  {
    "at": "2026-11-07T18:16:45.356490+00:00",
    "candidates": 0,
    "due": 1,
@@ -5259,6 +5254,14 @@
    "labelled": 2,
    "matched": 1,
    "new": 1
+  },
+  {
+   "at": "2026-11-14T16:01:19.535916+00:00",
+   "candidates": 1,
+   "due": 2,
+   "labelled": 2,
+   "matched": 1,
+   "new": 0
   }
  ],
  "version": "soccer-rules-v1"
