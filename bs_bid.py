@@ -53,8 +53,13 @@ GROUPS = {
     "ufc": dict(label="UFC", series="KXUFCFIGHT", hours=12, maker=False, unit="fight", market="Fight winner", watch="a pass in the study (fights)"),
     "boxing": dict(label="Boxing", series="KXBOXING", hours=12, maker=False, unit="fight", market="Fight winner", watch="a pass in the study (fights)"),
     "nfl": dict(label="NFL", series="KXNFLGAME", hours=3, maker=True, unit="game", market="Game winner", watch="a watch, not a pass: a near miss in the study"),
+    # 2026-11-14 (docs PR 457, before-start study of eight thin markets): cricket is a LEAD, not a pass. Own reads: 30 and 60 fills, kept if the return
+    # after fees is positive at both reads and above +5% at 60 (the study's pre-registration text); no t or first-fill condition.
+    "cricket": dict(label="Cricket", series=("KXT20MATCH", "KXODIMATCH", "KXTESTMATCH", "KXWT20MATCH", "KXWODIMATCH", "KXWTESTMATCH",
+                                             "KXCRICKETT20IMATCH", "KXCRICKETODIMATCH", "KXCRICKETTESTMATCH"),
+                    hours=12, maker=False, unit="match", market="Match winner", watch="a lead, not a pass", read_at=(30, 60), keep_roi=0.05),
 }
-GROUP_OF = {c["series"]: g for g, c in GROUPS.items()}
+GROUP_OF = {s: g for g, c in GROUPS.items() for s in ((c["series"],) if isinstance(c["series"], str) else c["series"])}
 RULES = {False: F.HONEST, True: dataclasses.replace(F.HONEST, maker_rate=0.0175)}
 MAX_PER_RUN = 150
 
@@ -167,9 +172,21 @@ def first_fills(rows):
     return sorted(best.values(), key=lambda r: (r[2]["day"], r[2]["ticker"]))
 
 
-def read_text(head, first):
+def read_text(head, first, group=None, rows=None):
     """Read at 50 and at 100 fills. Keep = positive after fees, score 2 or more clustered by card day (game day), and the first-fill-only row still positive.
-    Retire = under that at 100."""
+    Retire = under that at 100. Cricket (a lead, not a pass) is read at 30 and 60 fills: kept if the return is positive at both reads and above +5% at 60."""
+    cfg = GROUPS.get(group) or {}
+    if cfg.get("read_at"):
+        a, b = cfg["read_at"]
+        n = head["n"]
+        if n < a:
+            return f"too early ({n} of {a} fills; read at {a} and at {b})"
+        ordered = sorted(rows or [], key=lambda r: (r[2]["day"], r[2]["fill"], r[2]["ticker"]))
+        roi_a, roi_b = N.stat(ordered[:a])["roi"] or 0, N.stat(ordered[:b])["roi"] or 0
+        if n < b:
+            return f"read at {a}: " + ("on track (positive); read again at 60" if roi_a > 0 else "not positive; read again at 60")
+        ok = roi_a > 0 and roi_b > cfg["keep_roi"]
+        return f"read at {b}: " + ("keep (positive at both reads, above +5% at 60)" if ok else "retire (under the bar at 60 fills)")
     n = head["n"]
     if n < READ_AT[0]:
         return f"too early ({n} of {READ_AT[0]} fills; read at {READ_AT[0]} and at {READ_AT[1]})"
@@ -184,7 +201,7 @@ def records(state):
     for g in GROUPS:
         rows = bets(state, g, HEADLINE)
         head, cmp, first = N.stat(rows), N.stat(bets(state, g, COMPARE)), N.stat(first_fills(rows))
-        out[g] = dict(headline=head, compare=cmp, first=first, read=read_text(head, first),
+        out[g] = dict(headline=head, compare=cmp, first=first, read=read_text(head, first, g, rows),
                       games=len({v["event"] for v in state["markets"].values() if v["group"] == g}))
     return out
 

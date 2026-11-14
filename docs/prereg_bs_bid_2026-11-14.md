@@ -32,3 +32,17 @@ row still positive; retire = under that at 100. No retuning before then.
 
 ## Where it shows
 Fights page (UFC, boxing) and NFL page, each a section labelled as a paper watch, percentages only.
+
+## Row 4: cricket, "a lead, not a pass" (added Nov 14, from docs PR 457)
+The same engine and ledger. Cricket match-winner series: KXT20MATCH, KXODIMATCH, KXTESTMATCH, KXWT20MATCH, KXWODIMATCH, KXWTESTMATCH,
+KXCRICKETT20IMATCH, KXCRICKETODIMATCH, KXCRICKETTESTMATCH (no maker fee, fee_type quadratic). Bids stop 12 hours before the start in Kalshi's
+schedule (listed cricket starts are unreliable). Fills, sell, fees and the 25 s / 2 s / first-fill columns as above. Counts bids from Nov 14 2026
+12:00 UTC on matches from Nov 14. Not on the list: the league series (IPL, CPL, Hundred, PSL).
+
+> "Paper bids 15c under the last trade, both sides, from listing until 12 hours before the start in Kalshi's schedule; fills only on prints
+> strictly through; sold back within 5c of the price before the drop, the rest held. Read at 30 and 60 fills. Kept if the return after fees is
+> positive at both reads and above +5% at 60; retired otherwise."
+
+The read is that text, verbatim: at 30 and 60 fills, the return of the first 30 and of the first 60 fills (by match day, then fill time) in the
+25 s headline column. The coordinator's note asked for the fights rule (50/100, t of 2, first-fill-only); the verbatim text of #457 is used
+instead, and the first-fill column is shown for information only. Where it shows: a section on the Cricket page, after the Rules.
