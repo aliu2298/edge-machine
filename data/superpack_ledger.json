@@ -2820,9 +2820,9 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXBTCD-26NOV1317-T68499.99\", \"a\"]]",
    "price": 0.79,
-   "profit": null,
+   "profit": -1.0,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-14T00:32:45+00:00",
    "side": "a",
    "snapshot": {
     "as_of": "2026-11-13T18:31:46+00:00",
@@ -2891,12 +2891,12 @@
    },
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-14T00:04:37.674032+00:00",
+ "last_run": "2026-11-14T00:32:48.658190+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -8946,14 +8946,14 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXBTCD-26NOV1317-T68499.99\", \"a\"]]",
    "price": 0.79,
-   "profit": null,
+   "profit": -1.0,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-14T00:32:45+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXHYPED-26NOV1317-T71.9999",
@@ -8969,14 +8969,14 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXHYPED-26NOV1317-T71.9999\", \"a\"]]",
    "price": 0.79,
-   "profit": null,
+   "profit": 0.2658,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-14T00:32:45+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXETHD-26NOV1317-T1959.99",
@@ -8992,14 +8992,14 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXETHD-26NOV1317-T1959.99\", \"b\"]]",
    "price": 0.8,
-   "profit": null,
+   "profit": 0.25,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-14T00:32:45+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXUEFANLTEAMTOTAL-26NOV14NIRUKR-NIR2",
