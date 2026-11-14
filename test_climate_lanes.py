@@ -295,6 +295,22 @@ check("... without the words the weather-removal check forbids", not re.search(r
 copy = [m for m in (sandbox_audit.COPY_RE.findall(html + idx) if hasattr(sandbox_audit, "COPY_RE") else [])]
 check("none of the guarded public phrases", copy, [])
 
+print("\nthe VPS stamp (2026-11-14: GitHub's cron fired nothing on night one)")
+import lane_windows as LW
+UTC = dt.timezone.utc
+et = lambda y, mo, d, h, mi: dt.datetime(y, mo, d, h, mi, tzinfo=LW.ET).astimezone(UTC)   # noqa: E731
+w = [x for x in LW.windows(et(2026, 11, 14, 21, 0)) if x["lane"] == "climate"]
+check("one window, 22:00 to 22:50 Eastern, four reads 15 minutes apart", (len(w), w[0]["start"], w[0]["end"], w[0]["reads"], w[0]["every"]),
+      (1, et(2026, 11, 14, 22, 0), et(2026, 11, 14, 22, 50), 4, dt.timedelta(minutes=15)))
+check("the window is 03:00Z in standard time and 02:00Z in daylight time", (w[0]["start"].hour, [x for x in LW.windows(et(2026, 7, 14, 21, 0)) if x["lane"] == "climate"][0]["start"].hour), (3, 2))
+asks = lambda *t: [k for ww, k in LW.due(et(2026, 11, 14, *t)) if ww["lane"] == "climate"]   # noqa: E731
+check("asked at 22:00, 22:15, 22:30 and 22:45, reads 1 to 4", [asks(22, m) for m in (0, 15, 30, 45)], [[1], [2], [3], [4]])
+check("not asked before 22:00 or after 22:50", (asks(21, 45), asks(22, 55), asks(23, 15)), ([], [], []))
+check("the stamp goes to the weather window's own file", LW.stamp_lines(et(2026, 11, 14, 22, 15)).get("data/climate_window/request.txt"), f"climate {et(2026, 11, 14, 23, 0).isoformat()} read 2")
+vps = open("scripts/vps_window_requests.sh").read()
+flow = open(".github/workflows/climate-lanes.yml").read()
+check("the VPS script allows the stamp path and the workflow runs on it", ("|data/climate_window/request.txt|" in vps, 'data/climate_window/**' in flow, "workflow_dispatch" in flow), (True, True, True))
+
 print()
 if FAILS:
     print(f"{len(FAILS)} FAILED")

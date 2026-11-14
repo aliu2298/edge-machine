@@ -112,6 +112,9 @@ STAMP = {
     # once the window (3h to 1h before the 8:29 ET close) has ended, so the reads only have to happen: hourly from 07:30 to
     # 11:30 ET on Wednesdays (a holiday-week release) and Thursdays.
     "jobless": "data/jobless_window/request.txt",
+    # 2026-11-14: the weather lanes (climate_lanes.py) read once a night in the 22:00-22:50 ET window. GitHub's cron never fired
+    # a single run on their first night (Nov 13), so the VPS asks four times (22:00, 22:15, 22:30, 22:45 ET).
+    "climate": "data/climate_window/request.txt",
 }
 # nfl_tt.WINDOW_MIN (45, 75), copied; test_nfl_tt.py checks the two agree.
 NFL_FROM, NFL_TO = 75, 45                # minutes before the ESPN kickoff
@@ -399,6 +402,15 @@ def jobless_windows(now):
                  end=at(11, 30), every=dt.timedelta(hours=1), reads=4, last_ask=dt.timedelta(0))]
 
 
+def climate_windows(now):
+    """The weather lanes read in the 22:00-22:50 ET window, every 15 minutes (four reads), Eastern time so a DST change needs nothing
+    (climate-lanes.yml). The engine skips a city it already holds for the night, so a repeat read adds nothing; the lag is logged."""
+    day = now.astimezone(ET).date()
+    at = lambda h, m: dt.datetime(day.year, day.month, day.day, h, m, tzinfo=ET).astimezone(dt.timezone.utc)  # noqa: E731
+    return [dict(lane="climate", label=f"Weather lanes {day:%a %b %d}", series=(), close=at(23, 0), start=at(22, 0),
+                 end=at(22, 50), every=dt.timedelta(minutes=15), reads=4, last_ask=dt.timedelta(0))]
+
+
 def soccer_p4_windows(now):
     """The soccer phase-4 WATCH lanes read once an hour, every hour (soccer-p4.yml)."""
     h = now.replace(minute=0, second=0, microsecond=0)
@@ -584,6 +596,7 @@ def windows(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, 
     out += swing15_windows(now)
     out += earnings_news_windows(now)
     out += jobless_windows(now)
+    out += climate_windows(now)
     out += tennis_windows(now, tennis)
     # nfl_windows (2026-10-21) stopped 2026-11-11: every NFL lane is retired.
     out += nba_value_windows(now, nba_value)
