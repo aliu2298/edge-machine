@@ -746,6 +746,10 @@
    "at": "2026-11-14T12:04:16.700081+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXUEFANLTOTAL-26NOV16LTULIE-2\", \"a\"]]": {
+   "at": "2026-11-14T14:03:52.809823+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXUEFANLTOTAL-26NOV16MKDSLO-2\", \"a\"]]": {
    "at": "2026-11-14T05:04:44.902908+00:00",
    "pool": "entered"
@@ -2916,7 +2920,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-14T13:10:05.003346+00:00",
+ "last_run": "2026-11-14T14:03:52.809823+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -9208,14 +9212,14 @@
    ],
    "pid": "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXINTLFRIENDLYTOTAL-26NOV14CHNMAS-2\", \"a\"]]",
    "price": 0.8,
-   "profit": null,
+   "profit": 0.25,
    "scope": "soccer_o15_intl",
-   "settled": null,
+   "settled": "2026-11-14T14:03:47+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXUEFANLTOTAL-26NOV15CROCZE-2",
@@ -9333,6 +9337,31 @@
    ],
    "pid": "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXUEFANLTOTAL-26NOV16KAZSVK-2\", \"a\"]]",
    "price": 0.77,
+   "profit": null,
+   "scope": "soccer_o15_intl",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUEFANLTOTAL-26NOV16LTULIE-2",
+   "entered_at": "2026-11-14T14:03:52.809823+00:00",
+   "entities": [
+    "Lithuania",
+    "Liechtenstein"
+   ],
+   "id": "superpack:[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXUEFANLTOTAL-26NOV16LTULIE-2\", \"a\"]]",
+   "lane": "o15_ranked",
+   "logged": "2026-11-14T14:03:26+00:00",
+   "matched": [
+    "Liechtenstein",
+    "Lithuania"
+   ],
+   "pid": "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXUEFANLTOTAL-26NOV16LTULIE-2\", \"a\"]]",
+   "price": 0.8,
    "profit": null,
    "scope": "soccer_o15_intl",
    "settled": null,
