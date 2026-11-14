@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-14T00:30:26.514478+00:00",
+ "last_run": "2026-11-14T01:01:58.499902+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -5096,16 +5096,33 @@
      "ticker": "KXNBATEAMTOTAL-26NOV13NYKIND-IND109",
      "title": "Indiana over 108.5 points",
      "why": "IND O-D- v NY O+D- \u00b7 both D\u2212 \u00b7 110+ NO 0.60"
+    },
+    {
+     "game": "401909302",
+     "id": "R7:KXNBATEAMTOTAL-26NOV13GSWSAS-SAS115",
+     "labels": {
+      "away": "O+D-",
+      "away_h1": "O-D-",
+      "home": "O+D-",
+      "home_h1": "O+D-"
+     },
+     "logged": "2026-11-14T01:01:58.499902+00:00",
+     "match": "GS @ SA",
+     "price": 0.47,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-11-14T02:30Z",
+     "status": "open",
+     "strike": 114.5,
+     "team": "SA",
+     "ticker": "KXNBATEAMTOTAL-26NOV13GSWSAS-SAS115",
+     "title": "San Antonio over 114.5 points",
+     "why": "SA O+D- v GS O+D- \u00b7 both D\u2212 \u00b7 115+ NO 0.47"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-09T22:30:18.387312+00:00",
-   "due": 3,
-   "new": 4
-  },
   {
    "at": "2026-11-09T23:00:21.415966+00:00",
    "due": 4,
@@ -5355,6 +5372,11 @@
    "at": "2026-11-14T00:30:26.514478+00:00",
    "due": 4,
    "new": 0
+  },
+  {
+   "at": "2026-11-14T01:01:58.499902+00:00",
+   "due": 2,
+   "new": 1
   }
  ],
  "version": "nba-rules-v1"
