@@ -17,11 +17,21 @@ KEY = "fights"
 TITLE = "Edge Machine · Fights"
 DESCRIPTION = ("Kalshi boxing and UFC winner markets on paper: the cheap side about an hour before the fight, "
                "with a resting take-profit, beside the same entries held.")
-SECTIONS = (("standard", "Standard"), ("lanes", "Lanes"))
+SECTIONS = (("standard", "Standard"), ("bs-bid", "Before-start bid"), ("lanes", "Lanes"))
 
 
 def load_states():
     return {cfg["lane"]: FS.load(cfg) for cfg in FS.LANES}
+
+
+def _before_start():
+    """The before-start bid paper watch (bs_bid.py, 2026-11-14), UFC and boxing: near the top, beside the lanes. Never breaks the page."""
+    try:
+        import bs_bid_build
+        return bs_bid_build.section(["ufc", "boxing"])
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"fights_build: the before-start bid section failed: {type(exc).__name__}: {exc}")
+        return ""
 
 
 def build(states=None, now=None):
@@ -45,6 +55,7 @@ def build(states=None, now=None):
     lanes = (MS.summary(FS.LIVE, states, e) + cards if FS.LIVE else
              '<p class="sm mut">No filtered fights lane yet. A filtered boxing lane must beat the baseline below.</p>')
     body = (standard
+            + _before_start()
             + f'<section id="lanes"><h2>Fight lanes</h2>{lanes}{"".join(baseline_block(c, states, e) for c in FS.BASES)}</section>'
             + retired_fold(states, e)
             + '<p class="sm mut">Read hourly by GitHub Actions (fights.yml) from Kalshi public market data, minute '

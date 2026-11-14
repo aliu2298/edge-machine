@@ -105,6 +105,11 @@ def build(d=None, st=None, now=None, own_lanes=True):
     # 2026-11-11 (Olu), so the section is drawn only while a lane is live; their records sit in the Retired block.
     import chaos_build
     html = SP.page(sp, d, st, now, rows=rows, idle=idle)
+    try:                                                        # 2026-11-14: the before-start bid paper watch (bs_bid.py), a watch not a pass
+        import bs_bid_build
+        html = bs_bid_build.place(html, bs_bid_build.section(["nfl"], anchor="bs-bid-nfl"), '<section id="events"')
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"nfl_build: the before-start bid section failed: {type(exc).__name__}: {exc}")
     return chaos_build.place(html, "nfl", before='<section id="rules"', retired=False) if chaos_build.has_live("nfl") else html
 
 
