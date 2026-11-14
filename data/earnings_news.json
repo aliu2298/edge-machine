@@ -162,7 +162,7 @@
    "mentions": [
     "KXEARNINGSMENTIONDE-26NOV25"
    ],
-   "n_ests": "N/A",
+   "n_ests": "1",
    "name": "Deere & Company",
    "perp": "KXDEPERP",
    "sym": "DE",
@@ -195,7 +195,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-14T01:02:00Z",
+ "calendar_at": "2026-11-14T02:00:22Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -2248,9 +2248,29 @@
     "width": 0.7000000000000002
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-14T02:01:25Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 392096774.1935484,
+    "rungs": 6,
+    "width": 9634146.341463387
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-14T02:01:25Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.6695652173913045,
+    "rungs": 15,
+    "width": 0.7000000000000002
+   },
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-14T01:02:54Z",
+ "last_run": "2026-11-14T02:01:29Z",
  "predictions": [
   {
    "call": {
