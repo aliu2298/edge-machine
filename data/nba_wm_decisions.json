@@ -10213,6 +10213,19 @@
    "yes_ask": 0.14,
    "yes_bid": 0.09
   },
+  "no:KXNBAWINMARGIN-26NOV14DALCLE-CLE21PLUS": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "CLE21PLUS",
+   "decided_at": "2026-11-14T23:45:35+00:00",
+   "event": "KXNBAWINMARGIN-26NOV14DALCLE",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV14",
+   "ticker": "KXNBAWINMARGIN-26NOV14DALCLE-CLE21PLUS",
+   "tip": "2026-11-15T00:30:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "no:KXNBAWINMARGIN-26NOV14DALCLE-CLE6TO10": {
    "bot_version": "wm-nofade-v4",
    "bucket": "CLE6TO10",
@@ -10228,6 +10241,19 @@
    "why": "NO price 0.96 outside 10-95c",
    "yes_ask": 0.09,
    "yes_bid": 0.04
+  },
+  "no:KXNBAWINMARGIN-26NOV14DALCLE-DAL11TO20": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "DAL11TO20",
+   "decided_at": "2026-11-14T23:45:35+00:00",
+   "event": "KXNBAWINMARGIN-26NOV14DALCLE",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV14",
+   "ticker": "KXNBAWINMARGIN-26NOV14DALCLE-DAL11TO20",
+   "tip": "2026-11-15T00:30:00+00:00",
+   "why": "no tight read inside the entry window"
   },
   "no:KXNBAWINMARGIN-26NOV14DALCLE-DAL1TO5": {
    "P": 0.83,
@@ -17097,6 +17123,19 @@
    "yes_ask": 0.09,
    "yes_bid": 0.04
   },
+  "yes:KXNBAWINMARGIN-26NOV14DALCLE-DAL11TO20": {
+   "bot_version": "wm-yes-v4",
+   "bucket": "DAL11TO20",
+   "decided_at": "2026-11-14T23:45:35+00:00",
+   "event": "KXNBAWINMARGIN-26NOV14DALCLE",
+   "lane": "nba_winmargin_live",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV14",
+   "ticker": "KXNBAWINMARGIN-26NOV14DALCLE-DAL11TO20",
+   "tip": "2026-11-15T00:30:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "yes:KXNBAWINMARGIN-26NOV14DALCLE-DAL1TO5": {
    "bot_version": "wm-yes-v4",
    "bucket": "DAL1TO5",
@@ -17196,6 +17235,6 @@
    "yes_bid": 0.06
   }
  },
- "updated_at": "2026-11-14T23:30:21+00:00",
+ "updated_at": "2026-11-14T23:45:35+00:00",
  "version": 1
 }
