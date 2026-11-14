@@ -850,6 +850,10 @@
    "at": "2026-11-13T22:04:23.655810+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXUEFANLTOTAL-26NOV16LTULIE-4\", \"b\"]]": {
+   "at": "2026-11-14T11:49:35.092767+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXUEFANLTOTAL-26NOV16MKDSLO-4\", \"b\"]]": {
    "at": "2026-11-13T11:40:36.004281+00:00",
    "pool": "entered"
@@ -2904,7 +2908,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-14T11:04:49.888242+00:00",
+ "last_run": "2026-11-14T11:49:35.092767+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -9275,6 +9279,31 @@
    "scope": "soccer_o15_intl",
    "settled": null,
    "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUEFANLTOTAL-26NOV16LTULIE-4",
+   "entered_at": "2026-11-14T11:49:35.092767+00:00",
+   "entities": [
+    "Lithuania",
+    "Liechtenstein"
+   ],
+   "id": "superpack:[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXUEFANLTOTAL-26NOV16LTULIE-4\", \"b\"]]",
+   "lane": "u35_low_scoring",
+   "logged": "2026-11-14T11:49:05+00:00",
+   "matched": [
+    "Liechtenstein",
+    "Lithuania"
+   ],
+   "pid": "[\"sandbox\", \"u35_low_scoring\", [\"u35_low_scoring:KXUEFANLTOTAL-26NOV16LTULIE-4\", \"b\"]]",
+   "price": 0.7,
+   "profit": null,
+   "scope": "soccer_u35_intl",
+   "settled": null,
+   "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",

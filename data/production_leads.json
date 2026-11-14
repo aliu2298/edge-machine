@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-14T11:04:49+00:00",
+ "board_built_at": "2026-11-14T11:49:34+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -899,7 +899,7 @@
    "kickoff": "2026-11-14T14:00Z",
    "lane": "production",
    "last_seen": "2026-11-14",
-   "last_seen_at": "2026-11-14T11:04:49+00:00",
+   "last_seen_at": "2026-11-14T11:49:34+00:00",
    "league": "UEFA Nations League",
    "match": "Kosovo v Israel",
    "pair": "u35_low_scoring|soccer_u35_intl",
@@ -936,7 +936,7 @@
    "kickoff": "2026-11-14T19:45Z",
    "lane": "production",
    "last_seen": "2026-11-14",
-   "last_seen_at": "2026-11-14T11:04:49+00:00",
+   "last_seen_at": "2026-11-14T11:49:34+00:00",
    "league": "UEFA Nations League",
    "match": "Northern Ireland v Ukraine",
    "pair": "u35_low_scoring|soccer_u35_intl",
@@ -974,7 +974,7 @@
    "kickoff": "2026-11-14T17:00Z",
    "lane": "production",
    "last_seen": "2026-11-14",
-   "last_seen_at": "2026-11-14T11:04:49+00:00",
+   "last_seen_at": "2026-11-14T11:49:34+00:00",
    "league": "UEFA Nations League",
    "match": "Norway v Wales",
    "pair": "team1_form_l5|soccer_team1_intl",
@@ -1047,7 +1047,7 @@
    "kickoff": "2026-11-15T19:45Z",
    "lane": "production",
    "last_seen": "2026-11-14",
-   "last_seen_at": "2026-11-14T11:04:49+00:00",
+   "last_seen_at": "2026-11-14T11:49:34+00:00",
    "league": "UEFA Nations League",
    "match": "France v T\u00fcrkiye",
    "pair": "team1_form_l5|soccer_team1_intl",
@@ -1084,7 +1084,7 @@
    "kickoff": "2026-11-16T19:45Z",
    "lane": "production",
    "last_seen": "2026-11-14",
-   "last_seen_at": "2026-11-14T11:04:49+00:00",
+   "last_seen_at": "2026-11-14T11:49:34+00:00",
    "league": "UEFA Nations League",
    "match": "Greece v Serbia",
    "pair": "u35_low_scoring|soccer_u35_intl",
@@ -1106,6 +1106,43 @@
    "sport": "soccer_u35_intl",
    "status": "pending"
   },
+  "2026-11-16|Lithuania|Liechtenstein|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
+   "away": "Liechtenstein",
+   "bet": {
+    "kind": "total_lte",
+    "n": 3
+   },
+   "date": "2026-11-16",
+   "edge_at_log": null,
+   "first_seen": "2026-11-14",
+   "headline": "Under 3.5 goals",
+   "home": "Lithuania",
+   "id": "2026-11-16|Lithuania|Liechtenstein|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
+   "kickoff": "2026-11-16T17:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-14",
+   "last_seen_at": "2026-11-14T11:49:34+00:00",
+   "league": "UEFA Nations League",
+   "match": "Lithuania v Liechtenstein",
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "price_at_log": 0.7,
+   "published_at": "2026-11-14T11:49:34+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 3190,
+   "route": {
+    "claim": "Under 3.5 goals",
+    "event": "KXUEFANLTOTAL-26NOV16LTULIE",
+    "market": "KXUEFANLTOTAL-26NOV16LTULIE-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "no",
+    "price_at_log": 0.7,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "u35_low_scoring:KXUEFANLTOTAL-26NOV16LTULIE-4",
+   "source": "u35_low_scoring",
+   "sport": "soccer_u35_intl",
+   "status": "pending"
+  },
   "2026-11-16|North Macedonia|Slovenia|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
    "away": "Slovenia",
    "bet": {
@@ -1121,7 +1158,7 @@
    "kickoff": "2026-11-16T19:45Z",
    "lane": "production",
    "last_seen": "2026-11-14",
-   "last_seen_at": "2026-11-14T11:04:49+00:00",
+   "last_seen_at": "2026-11-14T11:49:34+00:00",
    "league": "UEFA Nations League",
    "match": "North Macedonia v Slovenia",
    "pair": "u35_low_scoring|soccer_u35_intl",
@@ -1158,7 +1195,7 @@
    "kickoff": "2026-11-17T19:45Z",
    "lane": "production",
    "last_seen": "2026-11-14",
-   "last_seen_at": "2026-11-14T11:04:49+00:00",
+   "last_seen_at": "2026-11-14T11:49:34+00:00",
    "league": "UEFA Nations League",
    "match": "Bosnia-Herzegovina v Romania",
    "pair": "u35_low_scoring|soccer_u35_intl",
@@ -1195,7 +1232,7 @@
    "kickoff": "2026-11-17T19:45Z",
    "lane": "production",
    "last_seen": "2026-11-14",
-   "last_seen_at": "2026-11-14T11:04:49+00:00",
+   "last_seen_at": "2026-11-14T11:49:34+00:00",
    "league": "UEFA Nations League",
    "match": "Ukraine v Georgia",
    "pair": "u35_low_scoring|soccer_u35_intl",
@@ -1451,9 +1488,9 @@
    "ready_at": "2026-10-04T07:03:02+00:00",
    "route": "moved by hand on 2026-10-04",
    "routing": {
-    "leads": 13,
+    "leads": 14,
     "problem": null,
-    "routed": 13,
+    "routed": 14,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1465,7 +1502,7 @@
    "sandbox_roi_fee": 0.2363,
    "timing": {
     "late": [],
-    "timed": 6,
+    "timed": 7,
     "under_target": 0
    }
   }
@@ -1484,5 +1521,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-14T11:04:49+00:00"
+ "updated_at": "2026-11-14T11:49:34+00:00"
 }
