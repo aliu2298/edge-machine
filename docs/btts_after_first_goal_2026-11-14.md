@@ -48,8 +48,8 @@ There is no spike that comes back and no slow catch-up. By the time of the goal:
 
 - **No cell cleared the bar on the found dates** (not one of about 120 had a positive return with t of 2), so nothing went forward and
   there was no later-dates read to test. The later dates were then opened as description.
-- **Who scored, when, and the pre-match price do not open a gap.** Splits by favourite or underdog scorer and by goal time all sit within
-  about one standard error of fair on the two halves together.
+- **Who scored, when, and the pre-match price do not open a gap.** Splits by favourite or underdog scorer and by goal time: none is
+  more than 1.3 standard errors from fair on the two halves together.
 - **First-half BTTS** is a thin market: the gap between bid and ask is a median 15c one minute after a goal (2c in the full-game market).
   Its YES looks a few points dear after a goal (31c to 33c against 28% that came in), but a buyer of NO pays that whole gap, and ends at zero.
 
