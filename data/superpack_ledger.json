@@ -722,6 +722,10 @@
    "at": "2026-11-14T00:04:37.674032+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXINTLFRIENDLYTOTAL-26NOV15SURESW-2\", \"a\"]]": {
+   "at": "2026-11-14T14:38:15.186929+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXUEFANLTOTAL-26NOV12MNELAT-2\", \"a\"]]": {
    "at": "2026-11-09T19:56:29.643955+00:00",
    "pool": "entered"
@@ -2920,7 +2924,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-14T14:32:51.952056+00:00",
+ "last_run": "2026-11-14T14:38:15.186929+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -9362,6 +9366,31 @@
    ],
    "pid": "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXUEFANLTOTAL-26NOV16LTULIE-2\", \"a\"]]",
    "price": 0.8,
+   "profit": null,
+   "scope": "soccer_o15_intl",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXINTLFRIENDLYTOTAL-26NOV15SURESW-2",
+   "entered_at": "2026-11-14T14:38:15.186929+00:00",
+   "entities": [
+    "Suriname",
+    "Eswatini"
+   ],
+   "id": "superpack:[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXINTLFRIENDLYTOTAL-26NOV15SURESW-2\", \"a\"]]",
+   "lane": "o15_ranked",
+   "logged": "2026-11-14T14:37:51+00:00",
+   "matched": [
+    "Eswatini",
+    "Suriname"
+   ],
+   "pid": "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXINTLFRIENDLYTOTAL-26NOV15SURESW-2\", \"a\"]]",
+   "price": 0.78,
    "profit": null,
    "scope": "soccer_o15_intl",
    "settled": null,
