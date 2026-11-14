@@ -18200,17 +18200,41 @@
     "10": null
    },
    "version": "o35-v4"
+  },
+  {
+   "bids": {
+    "10": null,
+    "10e": null
+   },
+   "crossed": null,
+   "event": "KXUEFANLTOTAL-26NOV14KOSISR",
+   "form_rule": false,
+   "honest": {
+    "10": null
+   },
+   "id": "KXUEFANLTOTAL-26NOV14KOSISR-4",
+   "kickoff": 1794664800,
+   "league": "UEFA Nations League",
+   "logged": "2026-11-14T17:18:31.131331+00:00",
+   "night": "2026-11-14",
+   "prints": 308,
+   "result": "no",
+   "series": "KXUEFANLTOTAL",
+   "v5": {
+    "10": null
+   },
+   "version": "o35-v4"
   }
  ],
  "error": null,
  "lane": "o35_cheap_no_wave",
- "last_run": "2026-11-14T10:56:01.630406+00:00",
+ "last_run": "2026-11-14T17:18:31.131331+00:00",
  "observations": {
-  "at": "2026-11-14T10:56:01.630406+00:00",
+  "at": "2026-11-14T17:18:31.131331+00:00",
   "backfill_left": 0,
   "backfilled": 0,
   "errors": [],
-  "new": 0,
+  "new": 1,
   "waiting": 3
  },
  "seen": {
@@ -18415,7 +18439,8 @@
   "KXUEFANLTOTAL-26NOV13SCOMKD": "2026-11-13T22:52:26.208794+00:00",
   "KXUEFANLTOTAL-26NOV13SLOSUI": "2026-11-13T22:52:26.208794+00:00",
   "KXUEFANLTOTAL-26NOV13SRBGER": "2026-11-13T22:52:26.208794+00:00",
-  "KXUEFANLTOTAL-26NOV13SVKFRO": "2026-11-13T22:52:26.208794+00:00"
+  "KXUEFANLTOTAL-26NOV13SVKFRO": "2026-11-13T22:52:26.208794+00:00",
+  "KXUEFANLTOTAL-26NOV14KOSISR": "2026-11-14T17:18:31.131331+00:00"
  },
  "seen_v3": {
   "KXBUNDESLIGATOTAL-26NOV01SGEHSV": "2026-11-01T19:12:14.443711+00:00",
