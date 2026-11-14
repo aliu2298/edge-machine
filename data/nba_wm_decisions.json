@@ -10196,6 +10196,19 @@
    "yes_ask": 0.18,
    "yes_bid": 0.17
   },
+  "no:KXNBAWINMARGIN-26NOV14DENNOP-DEN16TO25": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "DEN16TO25",
+   "decided_at": "2026-11-14T23:15:15+00:00",
+   "event": "KXNBAWINMARGIN-26NOV14DENNOP",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV14",
+   "ticker": "KXNBAWINMARGIN-26NOV14DENNOP-DEN16TO25",
+   "tip": "2026-11-15T00:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "no:KXNBAWINMARGIN-26NOV14DENNOP-DEN1TO5": {
    "P": 0.91,
    "bot_version": "wm-nofade-v4",
@@ -10254,6 +10267,19 @@
    "why": null,
    "yes_ask": 0.17,
    "yes_bid": 0.15
+  },
+  "no:KXNBAWINMARGIN-26NOV14DENNOP-NOP11PLUS": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "NOP11PLUS",
+   "decided_at": "2026-11-14T23:15:15+00:00",
+   "event": "KXNBAWINMARGIN-26NOV14DENNOP",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV14",
+   "ticker": "KXNBAWINMARGIN-26NOV14DENNOP-NOP11PLUS",
+   "tip": "2026-11-15T00:00:00+00:00",
+   "why": "no tight read inside the entry window"
   },
   "no:KXNBAWINMARGIN-26NOV14DENNOP-NOP1TO5": {
    "bot_version": "wm-nofade-v4",
@@ -16983,6 +17009,6 @@
    "yes_bid": 0.06
   }
  },
- "updated_at": "2026-11-14T23:00:02+00:00",
+ "updated_at": "2026-11-14T23:15:15+00:00",
  "version": 1
 }
