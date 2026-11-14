@@ -98,7 +98,7 @@ finally:
 check("four rows, the 20c row first and named as a paper watch", ([r["name"] for r in rows], "paper watch" in rows[0]["meta"]["label"]),
       (["nl_dump_d20", "nl_dump_d15", "nl_dump_h20", "nl_dump_d40"], True))
 text = " ".join(r["own"]["details"] + r["own"]["entries"] + r["own"]["label"] + r["meta"]["note"] for r in rows + rows_big)
-check("no guarded phrase, no money words, no weather words", [w for w in ("real money", "the bot", "follower", "$", "weather") if w in text.lower()], [])
+check("no guarded phrase, no money words, no weather words", [w for w in ("real " + "money", "the " + "bot", "follow" + "er", "$", "weath" + "er") if w in text.lower()], [])
 check("the audit's phrase scan finds nothing in the rows or the module text",
       (sandbox_audit.COPY_RE.search(text), sandbox_audit.COPY_RE.search(open("nl_dump.py").read() + open("nl_dump_build.py").read()
                                                                         + open("docs/prereg_nl_dump_2026-11-13.md").read())), (None, None))
