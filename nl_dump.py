@@ -86,9 +86,11 @@ def sell(ts, px, n, fill_ts, target, qty):
     return sold, crossed, None
 
 
-def replay(prints, result):
-    """Every bet of every row and delay on one market's trades: {cell key: [bet dict]}."""
-    out = {cell_key(k, d): [] for k in ROWS for d in DELAYS}
+def replay(prints, result, rows=None, rules=F.HONEST, since=None, until=None):
+    """Every bet of every row and delay on one market's trades: {cell key: [bet dict]}. `rows` defaults to ROWS; `since` / `until` (unix seconds) keep
+    only bids whose minute T is at or after / before them (the before-kickoff watch, ko_bid.py); `rules` are the fee rules."""
+    rows = ROWS if rows is None else rows
+    out = {cell_key(k, d): [] for k in rows for d in DELAYS}
     ts = [p[0] for p in prints]
     yes = [p[1] for p in prints]
     n = [p[2] for p in prints]
@@ -119,11 +121,11 @@ def replay(prints, result):
                     continue
                 b, e = first[c], first[c + 1]
                 base.append((t0, r, min(px[b:e]), b, e))
-            for key, cfg in ROWS.items():
+            for key, cfg in rows.items():
                 d, ex = cfg["depth"], cfg["ex"]
                 lo = last - cfg["last_h"] * 3600 if cfg.get("last_h") else -math.inf
                 cand = [(t0, r, round(r - d, 4), b, e) for t0, r, w, b, e in base
-                        if t0 >= lo and round(r - d, 4) >= 0.05 - EPS and w < round(r - d, 4) - EPS]
+                        if t0 >= lo and (since is None or t0 >= since) and (until is None or t0 < until) and round(r - d, 4) >= 0.05 - EPS and w < round(r - d, 4) - EPS]
                 free = -math.inf
                 for t0, r, l, b, e in cand:
                     if t0 < free:
@@ -145,7 +147,7 @@ def replay(prints, result):
                         sold, taker, done = sell(ts, px, n, fill_ts, target, got)
                         if sold > EPS:
                             sells = [(target, sold, taker)]
-                    s = F.settle(l, got, sells, payout, entry_taker=False, rules=F.HONEST)
+                    s = F.settle(l, got, sells, payout, entry_taker=False, rules=rules)
                     j, j2 = bisect.bisect_right(ts, fill_ts), bisect.bisect_right(ts, fill_ts + 120)
                     out[cell_key(key, delay)].append(dict(
                         side=side, T=int(t0), R=r, L=l, fill=int(fill_ts), qty=round(got, 2), part=got < want - EPS, through=round(thr, 1),
@@ -188,11 +190,11 @@ def match_of(title):
     return re.sub(r":?\s*Total Goals\s*$", "", str(title or "")).replace(" vs ", " v ").strip()
 
 
-def settled_events(get=D.get, max_pages=8):
+def settled_events(get=D.get, max_pages=8, series=None):
     """Every settled event of the series with its markets: [event dict]."""
     out, cur = [], None
     for _ in range(max_pages):
-        d = get(f"events?series_ticker={SERIES}&status=settled&limit=200&with_nested_markets=true" + (f"&cursor={cur}" if cur else "")) or {}
+        d = get(f"events?series_ticker={series or SERIES}&status=settled&limit=200&with_nested_markets=true" + (f"&cursor={cur}" if cur else "")) or {}
         out += d.get("events") or []
         cur = d.get("cursor")
         if not cur:

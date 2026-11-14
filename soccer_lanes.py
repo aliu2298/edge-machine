@@ -688,6 +688,11 @@ def rows_and_inputs(d, st, now):
     except Exception as exc:                                    # noqa: BLE001
         print(f"soccer_lanes: the Nations League dump bid failed: {type(exc).__name__}: {exc}")
     try:
+        import ko_bid_build
+        live += ko_bid_build.rows()
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"soccer_lanes: the before-kickoff dump bid failed: {type(exc).__name__}: {exc}")
+    try:
         import o35_production as OP
         live.append(o35_row())
         live.append(o35_v5_row())

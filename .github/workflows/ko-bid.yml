@@ -1,0 +1,39 @@
+name: Before-kickoff dump bid
+# ko_bid.py (2026-11-14): replays each settled soccer game-winner market once, from Kalshi's public trade prints, under the fixed before-kickoff
+# bid of docs/prereg_ko_bid_2026-11-14.md. A Sandbox PAPER watch. No orders, no VPS, no live loop. The replay is after the fact, so a late or
+# missed run only delays rows: the next run reads every settled market that is not yet in the ledger.
+on:
+  schedule:
+    - cron: '17 * * * *'
+    - cron: '42 3,9,15,21 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: ko-bid
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Tests
+        run: python3 test_ko_bid.py
+      - name: Replay the settled games
+        run: python3 ko_bid.py
+      - name: Save records
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+          python3 save_records.py --message "Before-kickoff dump bid paper watch" \
+            --add data/ko_bid_ledger.json \
+            --regenerate "python3 ko_bid.py" \
+            --after "gh workflow run sandbox-tracker.yml --ref main"
