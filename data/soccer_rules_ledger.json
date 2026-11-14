@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-13T18:46:11.934461+00:00",
+ "last_run": "2026-11-14T12:31:14.104886+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -502,11 +502,14 @@
      "line": 3.5,
      "logged": "2026-11-13T15:31:23.297948+00:00",
      "match": "Moldova v Kazakhstan",
+     "payout": 1.0,
      "price": 0.81,
+     "profit": 21.84,
      "rule": "A5",
+     "settled": "2026-11-14T12:31:14.104886+00:00",
      "side": "no",
      "start": "2026-11-13T17:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUEFANLTOTAL-26NOV13MDAKAZ-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Moldova O-D+ v Kazakhstan O-D+ \u00b7 Under 3.5 NO 0.81"
@@ -525,11 +528,14 @@
      "line": 3.5,
      "logged": "2026-11-13T18:16:15.279887+00:00",
      "match": "Bulgaria v Iceland",
+     "payout": 0.0,
      "price": 0.76,
+     "profit": -100.0,
      "rule": "A5",
+     "settled": "2026-11-14T12:31:14.104886+00:00",
      "side": "no",
      "start": "2026-11-13T19:45Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXUEFANLTOTAL-26NOV13BULISL-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Bulgaria O+D+ v Iceland O-D+ \u00b7 Under 3.5 NO 0.76"
@@ -548,11 +554,14 @@
      "line": 3.5,
      "logged": "2026-11-13T18:16:15.279887+00:00",
      "match": "Liechtenstein v Azerbaijan",
+     "payout": 1.0,
      "price": 0.81,
+     "profit": 21.84,
      "rule": "A5",
+     "settled": "2026-11-14T12:31:14.104886+00:00",
      "side": "no",
      "start": "2026-11-13T19:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUEFANLTOTAL-26NOV13LIEAZE-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Liechtenstein O-D+ v Azerbaijan O+D- \u00b7 Under 3.5 NO 0.81"
@@ -571,11 +580,14 @@
      "line": 3.5,
      "logged": "2026-11-13T18:16:15.279887+00:00",
      "match": "Luxembourg v Estonia",
+     "payout": 1.0,
      "price": 0.83,
+     "profit": 19.07,
      "rule": "A5",
+     "settled": "2026-11-14T12:31:14.104886+00:00",
      "side": "no",
      "start": "2026-11-13T19:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUEFANLTOTAL-26NOV13LUXEST-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Luxembourg O-D- v Estonia O-D+ \u00b7 Under 3.5 NO 0.83"
@@ -594,14 +606,40 @@
      "line": 3.5,
      "logged": "2026-11-13T18:16:15.279887+00:00",
      "match": "Slovenia v Switzerland",
+     "payout": 1.0,
      "price": 0.84,
+     "profit": 17.73,
      "rule": "A5",
+     "settled": "2026-11-14T12:31:14.104886+00:00",
      "side": "no",
      "start": "2026-11-13T19:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUEFANLTOTAL-26NOV13SLOSUI-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Slovenia O-D- v Switzerland O+D- \u00b7 Under 3.5 NO 0.84"
+    },
+    {
+     "ask": 0.28,
+     "bid": 0.27,
+     "event": "KXUEFANLTOTAL-26NOV14KOSISR",
+     "group": "A",
+     "id": "A5:KXUEFANLTOTAL-26NOV14KOSISR",
+     "labels": {
+      "away": "O-D+",
+      "home": "O+D-"
+     },
+     "league": "UEFA Nations League",
+     "line": 3.5,
+     "logged": "2026-11-14T12:31:14.104886+00:00",
+     "match": "Kosovo v Israel",
+     "price": 0.73,
+     "rule": "A5",
+     "side": "no",
+     "start": "2026-11-14T14:00Z",
+     "status": "open",
+     "ticker": "KXUEFANLTOTAL-26NOV14KOSISR-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Kosovo O+D- v Israel O-D+ \u00b7 Under 3.5 NO 0.73"
     }
    ]
   },
@@ -2709,11 +2747,14 @@
      "line": 2.5,
      "logged": "2026-11-13T15:31:23.297948+00:00",
      "match": "Moldova v Kazakhstan",
+     "payout": 0.0,
      "price": 0.6,
+     "profit": -100.0,
      "rule": "C8",
+     "settled": "2026-11-14T12:31:14.104886+00:00",
      "side": "no",
      "start": "2026-11-13T17:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXUEFANLTOTAL-26NOV13MDAKAZ-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Moldova O-D+ v Kazakhstan O-D+ \u00b7 Under 2.5 NO 0.60"
@@ -4789,14 +4830,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-07T16:31:17.357849+00:00",
-   "candidates": 1,
-   "due": 8,
-   "labelled": 8,
-   "matched": 1,
-   "new": 0
-  },
-  {
    "at": "2026-11-07T16:46:44.592965+00:00",
    "candidates": 1,
    "due": 7,
@@ -5195,6 +5228,14 @@
    "labelled": 9,
    "matched": 8,
    "new": 0
+  },
+  {
+   "at": "2026-11-14T12:31:14.104886+00:00",
+   "candidates": 1,
+   "due": 1,
+   "labelled": 1,
+   "matched": 1,
+   "new": 1
   }
  ],
  "version": "soccer-rules-v1"
