@@ -714,6 +714,10 @@
    "at": "2026-11-12T17:04:23.100747+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXINTLFRIENDLYTOTAL-26NOV14CHNMAS-2\", \"a\"]]": {
+   "at": "2026-11-14T00:04:37.674032+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXUEFANLTOTAL-26NOV12MNELAT-2\", \"a\"]]": {
    "at": "2026-11-09T19:56:29.643955+00:00",
    "pool": "entered"
@@ -728,6 +732,10 @@
   },
   "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXUEFANLTOTAL-26NOV13SCOMKD-2\", \"a\"]]": {
    "at": "2026-11-11T08:03:50.212562+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXUEFANLTOTAL-26NOV15CROCZE-2\", \"a\"]]": {
+   "at": "2026-11-14T00:04:37.674032+00:00",
    "pool": "entered"
   },
   "[\"sandbox\", \"team1_form_l5\", [\"team1_form_l5:KXUEFANLTEAMTOTAL-26NOV13MDAKAZ-KAZ1\", \"a\"]]": {
@@ -2888,7 +2896,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-13T23:59:35.930883+00:00",
+ "last_run": "2026-11-14T00:04:37.674032+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -9163,6 +9171,56 @@
    "sport": "Soccer",
    "src": "contract",
    "status": "won"
+  },
+  {
+   "contract": "KXINTLFRIENDLYTOTAL-26NOV14CHNMAS-2",
+   "entered_at": "2026-11-14T00:04:37.674032+00:00",
+   "entities": [
+    "China",
+    "Malaysia"
+   ],
+   "id": "superpack:[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXINTLFRIENDLYTOTAL-26NOV14CHNMAS-2\", \"a\"]]",
+   "lane": "o15_ranked",
+   "logged": "2026-11-14T00:04:15+00:00",
+   "matched": [
+    "China",
+    "Malaysia"
+   ],
+   "pid": "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXINTLFRIENDLYTOTAL-26NOV14CHNMAS-2\", \"a\"]]",
+   "price": 0.8,
+   "profit": null,
+   "scope": "soccer_o15_intl",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUEFANLTOTAL-26NOV15CROCZE-2",
+   "entered_at": "2026-11-14T00:04:37.674032+00:00",
+   "entities": [
+    "Croatia",
+    "Czechia"
+   ],
+   "id": "superpack:[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXUEFANLTOTAL-26NOV15CROCZE-2\", \"a\"]]",
+   "lane": "o15_ranked",
+   "logged": "2026-11-14T00:04:15+00:00",
+   "matched": [
+    "Croatia",
+    "Czechia"
+   ],
+   "pid": "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXUEFANLTOTAL-26NOV15CROCZE-2\", \"a\"]]",
+   "price": 0.8,
+   "profit": null,
+   "scope": "soccer_o15_intl",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
   }
  ],
  "registered": "2026-11-05",
