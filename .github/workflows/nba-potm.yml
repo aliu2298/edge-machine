@@ -1,0 +1,37 @@
+name: NBA Player of the Month snapshot
+# nba_potm.py (2026-11-14, docs PR 459): once a day, both open Kalshi KXNBAPOTM events (East and West) are read, and the price of every player appended
+# to data/nba_potm.json; the winner of each window is recorded when it settles. DATA ONLY: no lane, no page, no VPS. Idempotent: one snapshot a UTC day
+# (the second cron is a retry that does nothing when the first ran), so a missed run only leaves a gap in the path.
+on:
+  schedule:
+    - cron: '13 14 * * *'
+    - cron: '41 22 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: nba-potm
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Tests
+        run: python3 test_nba_potm.py
+      - name: Snapshot
+        run: python3 nba_potm.py
+      - name: Save records
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+          python3 save_records.py --message "NBA Player of the Month snapshot" \
+            --add data/nba_potm.json \
+            --regenerate "python3 nba_potm.py"
