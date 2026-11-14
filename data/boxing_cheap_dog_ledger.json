@@ -1174,9 +1174,12 @@
   "KXBOXING-26NOV12NICKENQUARTE": "2026-11-13T00:00:38.142571+00:00",
   "KXBOXING-26NOV12OROBIOCEDENO": "2026-11-13T01:57:39.863554+00:00",
   "KXBOXING-26NOV12SANFORGOMEZ": "2026-11-13T03:00:36.212329+00:00",
+  "KXBOXING-26NOV14ALGHEMARKSB": "2026-11-14T21:00:39.118452+00:00",
+  "KXBOXING-26NOV14BARRETGWYNNE": "2026-11-14T21:00:39.118452+00:00",
   "KXBOXING-26NOV14MOLLOYSUPPAN": "2026-11-14T19:16:55.133593+00:00",
   "KXBOXING-26NOV14OSADOLPODLAS": "2026-11-14T19:00:36.818106+00:00",
   "KXBOXING-26NOV14TOWARDCORRIE": "2026-11-14T20:00:32.301707+00:00",
+  "KXBOXING-26NOV14WELLANDILLIN": "2026-11-14T21:00:39.118452+00:00",
   "KXBOXING-26OCT23ULDEDACAPARE": "2026-10-27T04:45:21.662265+00:00",
   "KXBOXING-26OCT31CALVARMBILLI": "2026-10-31T20:06:27.383501+00:00",
   "KXBOXING-26OCT31DELGADBIYARS": "2026-11-01T01:57:46.281274+00:00",
@@ -1187,16 +1190,16 @@
   "KXBOXING-26OCT31TSUTSUROJAS": "2026-10-31T20:06:27.383501+00:00"
  },
  "lane": "boxing_cheap_dog",
- "last_success": "2026-11-14T20:00:32.301707+00:00",
+ "last_success": "2026-11-14T21:00:39.118452+00:00",
  "observations": {
-  "at": "2026-11-14T20:00:32.301707+00:00",
+  "at": "2026-11-14T21:00:39.118452+00:00",
   "entered": 0,
-  "events": 1,
+  "events": 3,
   "filled": 0,
   "no_start": 0,
-  "skipped": 2,
+  "skipped": 6,
   "unverified": 0,
-  "waiting": 22
+  "waiting": 19
  },
  "skips": {
   "KXBOXING-26NOV06AOKUSOKHAHRA-AOKUSO": {
@@ -1625,6 +1628,30 @@
    "start": "2026-11-13T02:45:00+00:00",
    "word": "Wyatt Sanford"
   },
+  "KXBOXING-26NOV14ALGHEMARKSB-ALGHE": {
+   "event": "KXBOXING-26NOV14ALGHEMARKSB",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-14T21:20:00+00:00",
+   "word": "Yaser Al-Ghena"
+  },
+  "KXBOXING-26NOV14ALGHEMARKSB-MARKSB": {
+   "event": "KXBOXING-26NOV14ALGHEMARKSB",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-14T21:20:00+00:00",
+   "word": "Ben Marksby"
+  },
+  "KXBOXING-26NOV14BARRETGWYNNE-BARRET": {
+   "event": "KXBOXING-26NOV14BARRETGWYNNE",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-14T21:40:00+00:00",
+   "word": "Zelfa Barrett"
+  },
+  "KXBOXING-26NOV14BARRETGWYNNE-GWYNNE": {
+   "event": "KXBOXING-26NOV14BARRETGWYNNE",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-14T21:40:00+00:00",
+   "word": "Gavin Gwynne"
+  },
   "KXBOXING-26NOV14MOLLOYSUPPAN-MOLLOY": {
    "event": "KXBOXING-26NOV14MOLLOYSUPPAN",
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
@@ -1660,6 +1687,18 @@
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
    "start": "2026-11-14T20:40:00+00:00",
    "word": "Dan Toward"
+  },
+  "KXBOXING-26NOV14WELLANDILLIN-DILLIN": {
+   "event": "KXBOXING-26NOV14WELLANDILLIN",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-14T21:00:00+00:00",
+   "word": "Jack Dillingham"
+  },
+  "KXBOXING-26NOV14WELLANDILLIN-WELLAN": {
+   "event": "KXBOXING-26NOV14WELLANDILLIN",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-14T21:00:00+00:00",
+   "word": "Tom Welland"
   },
   "KXBOXING-26OCT23ULDEDACAPARE-CAPARE": {
    "event": "KXBOXING-26OCT23ULDEDACAPARE",
