@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-14T18:16:15.763949+00:00",
+ "last_run": "2026-11-14T18:46:08.725898+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -689,6 +689,29 @@
      "ticker": "KXUEFANLTOTAL-26NOV14SWEBIH-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Sweden O+D+ v Bosnia-Herzegovina O-D- \u00b7 Under 3.5 NO 0.66"
+    },
+    {
+     "ask": 0.16,
+     "bid": 0.15,
+     "event": "KXUEFANLTOTAL-26NOV14NIRUKR",
+     "group": "A",
+     "id": "A5:KXUEFANLTOTAL-26NOV14NIRUKR",
+     "labels": {
+      "away": "O-D+",
+      "home": "O-D-"
+     },
+     "league": "UEFA Nations League",
+     "line": 3.5,
+     "logged": "2026-11-14T18:46:08.725898+00:00",
+     "match": "Northern Ireland v Ukraine",
+     "price": 0.85,
+     "rule": "A5",
+     "side": "no",
+     "start": "2026-11-14T19:45Z",
+     "status": "open",
+     "ticker": "KXUEFANLTOTAL-26NOV14NIRUKR-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Northern Ireland O-D- v Ukraine O-D+ \u00b7 Under 3.5 NO 0.85"
     }
    ]
   },
@@ -4879,14 +4902,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-07T18:31:50.617589+00:00",
-   "candidates": 1,
-   "due": 4,
-   "labelled": 4,
-   "matched": 1,
-   "new": 1
-  },
-  {
    "at": "2026-11-07T18:46:29.663898+00:00",
    "candidates": 1,
    "due": 5,
@@ -5280,6 +5295,14 @@
   },
   {
    "at": "2026-11-14T18:16:15.763949+00:00",
+   "candidates": 2,
+   "due": 5,
+   "labelled": 5,
+   "matched": 2,
+   "new": 1
+  },
+  {
+   "at": "2026-11-14T18:46:08.725898+00:00",
    "candidates": 2,
    "due": 5,
    "labelled": 5,
