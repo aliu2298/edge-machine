@@ -20,22 +20,29 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.1
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.15
     }
    ],
    "logged": "2026-10-27T03:09:50.419359+00:00",
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.0533,
    "price": 0.05,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-11-15T23:00:58.518532+00:00",
    "side": "no",
    "spread": 0.05,
    "spread_cost": null,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Above 20K"
   },
@@ -58,22 +65,29 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.08
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.12
     }
    ],
    "logged": "2026-10-27T03:09:50.419359+00:00",
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.0427,
    "price": 0.04,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-11-15T23:00:58.518532+00:00",
    "side": "no",
    "spread": 0.04,
    "spread_cost": null,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Above 40K"
   },
@@ -110,15 +124,17 @@
     }
    ],
    "logged": "2026-10-27T03:09:50.419359+00:00",
-   "payout": null,
+   "payout": 0.0,
    "pnl": 0.0979,
    "price": 0.07,
    "roi": 1.3136,
    "roi_2x": 0.8495,
+   "roi_held": -1.0,
+   "settled": "2026-11-15T23:00:58.518532+00:00",
    "side": "no",
    "spread": 0.04,
    "spread_cost": null,
-   "status": "filled",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Above 60K"
   },
@@ -155,15 +171,17 @@
     }
    ],
    "logged": "2026-10-27T03:09:50.419359+00:00",
-   "payout": null,
+   "payout": 1.0,
    "pnl": 0.1977,
    "price": 0.14,
    "roi": 1.3318,
    "roi_2x": 0.8627,
+   "roi_held": 5.7373,
+   "settled": "2026-11-15T23:00:58.518532+00:00",
    "side": "no",
    "spread": 0.08,
    "spread_cost": null,
-   "status": "filled",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Above 80K"
   },
@@ -878,22 +896,29 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 1.0,
      "share": 0.5,
      "target": 0.3
     },
     {
      "multiple": 3.0,
+     "settled_px": 1.0,
      "share": 0.5,
      "target": 0.45
     }
    ],
    "logged": "2026-11-06T21:01:07.696679+00:00",
-   "payout": null,
+   "payout": 1.0,
+   "pnl": 0.8411,
    "price": 0.15,
+   "roi": 5.2923,
+   "roi_2x": 5.2923,
+   "roi_held": 5.2923,
+   "settled": "2026-11-15T23:00:58.518532+00:00",
    "side": "no",
    "spread": 0.07,
    "spread_cost": null,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Above 70K"
   },
@@ -930,22 +955,29 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.08
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.12
     }
    ],
    "logged": "2026-11-09T22:00:54.772042+00:00",
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.0427,
    "price": 0.04,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-11-15T23:00:58.518532+00:00",
    "side": "no",
    "spread": 0.01,
    "spread_cost": 0.03,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 55.0,
    "word": "Above 30K"
   },
@@ -982,22 +1014,29 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.24
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.36
     }
    ],
    "logged": "2026-11-09T22:00:54.772042+00:00",
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.1274,
    "price": 0.12,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-11-15T23:00:58.518532+00:00",
    "side": "no",
    "spread": 0.09,
    "spread_cost": null,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Above 35K"
   },
@@ -1034,22 +1073,29 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.12
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.18
     }
    ],
    "logged": "2026-11-09T22:00:54.772042+00:00",
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.0639,
    "price": 0.06,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-11-15T23:00:58.518532+00:00",
    "side": "no",
    "spread": 0.05,
    "spread_cost": 0.04,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 50.0,
    "word": "Above 55K"
   },
@@ -1138,22 +1184,29 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.08
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.12
     }
    ],
    "logged": "2026-11-09T23:01:10.523447+00:00",
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.0427,
    "price": 0.04,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-11-15T23:00:58.518532+00:00",
    "side": "no",
    "spread": 0.04,
    "spread_cost": 0.02,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 50.0,
    "word": "Above 45K"
   },
@@ -1190,22 +1243,29 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.1
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.15
     }
    ],
    "logged": "2026-11-09T23:01:10.523447+00:00",
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.0533,
    "price": 0.05,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-11-15T23:00:58.518532+00:00",
    "side": "no",
    "spread": 0.04,
    "spread_cost": 0.02,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 6.0,
    "word": "Above 50K"
   },
@@ -1493,9 +1553,9 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:50.419359+00:00"
  },
  "lane": "album_cheap_no",
- "last_success": "2026-11-15T22:00:57.445392+00:00",
+ "last_success": "2026-11-15T23:00:58.518532+00:00",
  "observations": {
-  "at": "2026-11-15T22:00:57.445392+00:00",
+  "at": "2026-11-15T23:00:58.518532+00:00",
   "checking": 0,
   "entered": 0,
   "events": 21,
