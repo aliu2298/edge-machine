@@ -50,11 +50,6 @@
    "lead_min": 12.9,
    "price": 0.39
   },
-  "commod_fav_band:KXWTI-26NOV0514-T89.49": {
-   "at": "2026-11-05T18:45:07+00:00",
-   "lead_min": 14.9,
-   "price": 0.95
-  },
   "commod_fav_band:KXWTI-26NOV0914-T87.49": {
    "at": "2026-11-09T18:56:03+00:00",
    "lead_min": 3.9,
@@ -94,11 +89,6 @@
    "at": "2026-11-05T21:15:27+00:00",
    "lead_min": 14.5,
    "price": 0.91
-  },
-  "commod_nc_no:KXWTI-26NOV0514-T91.49": {
-   "at": "2026-11-05T18:45:07+00:00",
-   "lead_min": 14.9,
-   "price": 0.98
   },
   "commod_nc_no:KXWTI-26NOV0614-T90.49": {
    "at": "2026-11-06T18:51:23+00:00",
@@ -490,6 +480,11 @@
    "lead_min": 6.5,
    "price": 0.83
   },
+  "o15_ranked:KXUEFANLTOTAL-26NOV15CROCZE-2": {
+   "at": "2026-11-15T18:59:38+00:00",
+   "lead_min": 45.4,
+   "price": 0.81
+  },
   "p05_unbeaten:KXUECLGAME-26NOV05GETBRI-GET": {
    "at": "2026-11-05T19:45:15+00:00",
    "lead_min": 14.7,
@@ -504,6 +499,11 @@
    "at": "2026-11-14T16:56:15+00:00",
    "lead_min": 3.7,
    "price": 0.95
+  },
+  "team1_form_l5:KXUEFANLTEAMTOTAL-26NOV15FRATUR-FRA1": {
+   "at": "2026-11-15T18:59:38+00:00",
+   "lead_min": 45.4,
+   "price": 0.97
   },
   "team2_ranked:KXLALIGATEAMTOTAL-26NOV06SEVALA-SEV2": {
    "at": "2026-11-06T19:52:10+00:00",
@@ -656,5 +656,5 @@
    "price": 0.85
   }
  },
- "updated": "2026-11-15T17:59:33+00:00"
+ "updated": "2026-11-15T18:59:38+00:00"
 }
