@@ -21,7 +21,7 @@ SHARED = [
     ("Order delay", "The headline column puts each order up 25 seconds after the minute starts. The 2-second column is the comparison"),
     ("Rows", "20c under at all prices is the tested rule and the headline, shown for each group. The others: 15c under; 20c under with bids of 50c or less; the "
              "headline row on events that already have 20 fills; and a control that holds the first fill of each side of an item to the result"),
-    ("Counts", "Only events that opened after Nov 15 2026, 12:00 UTC. Pre-registered Nov 15 2026, before the first bid it counts"),
+    ("Counts", "Only events that opened after Nov 15 2026, 05:30 UTC. Pre-registered Nov 15 2026, before the first bid it counts"),
 ]
 
 

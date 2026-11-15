@@ -37,7 +37,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 PATH = os.path.join(ROOT, "data", "attendance_dump_ledger.json")
 VERSION = "attendance-dump-v1"
 REGISTERED = "2026-11-15"
-START_TS = int(dt.datetime(2026, 11, 15, 12, 0, tzinfo=dt.timezone.utc).timestamp())   # only events that open after this (the merge) count
+START_TS = int(dt.datetime(2026, 11, 15, 5, 30, tzinfo=dt.timezone.utc).timestamp())   # only events that open after this (the merge) count
 START_DAY = "2026-11-15"
 PREREG = ("Attendance and performers dump bid. Paper. Kalshi events on who attends, who performs, setlists and features; each minute a bid 20c under the last "
           "trade on both sides of every item, until that item is confirmed; honest fills, order 25 seconds late; sold 15c above the bid, otherwise held. Read at "
