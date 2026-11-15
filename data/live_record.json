@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-15T04:07Z",
+ "generated": "2026-11-15T05:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -4066,9 +4066,7 @@
      "w": 0.99
     }
    ],
-   "refused": {
-    "econ_nc_yes:KXDIESELD-26NOV08-T6.190": "other"
-   }
+   "refused": {}
   },
   "finance_spx_nc_no|finance_daily": {
    "entered": "2026-11-08T06:00:00+00:00",
