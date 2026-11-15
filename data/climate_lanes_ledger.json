@@ -1,9 +1,3433 @@
 {
  "error": null,
- "last_run": null,
- "nights": {},
- "rows": [],
- "since": null,
- "skips": {},
+ "last_run": "2026-11-15T03:00:27.236330+00:00",
+ "nights": {
+  "2026-11-15": {
+   "errors": [],
+   "first_run": "2026-11-15T03:00:27.236330+00:00",
+   "lag_min": 0.5,
+   "rows": 55
+  }
+ },
+ "rows": [
+  {
+   "bracket": "63\u00b0 to 64\u00b0",
+   "city": "Austin",
+   "cost": 0.9814,
+   "day": "2026-11-15",
+   "depth_bid": 374.0,
+   "event": "KXHIGHAUS-26NOV15",
+   "favourite": "KXHIGHAUS-26NOV15-T61",
+   "favourite_bracket": "60\u00b0 or below",
+   "favourite_mid": 0.835,
+   "fee": 0.0014,
+   "id": "c1v2|control|KXHIGHAUS-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.98,
+   "quotes": [
+    [
+     "T61",
+     0.83,
+     0.84
+    ],
+    [
+     "B61.5",
+     0.09,
+     0.14
+    ],
+    [
+     "B63.5",
+     0.02,
+     0.03
+    ],
+    [
+     "B65.5",
+     0.01,
+     0.02
+    ],
+    [
+     "B67.5",
+     0.0,
+     0.01
+    ],
+    [
+     "T68",
+     0.0,
+     0.01
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "control",
+   "series": "KXHIGHAUS",
+   "station": "AUS",
+   "status": "open",
+   "ticker": "KXHIGHAUS-26NOV15-B63.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.03,
+   "yes_bid": 0.02
+  },
+  {
+   "bracket": "62\u00b0 or above",
+   "city": "Denver",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 323.62,
+   "event": "KXHIGHDEN-26NOV15",
+   "favourite": "KXHIGHDEN-26NOV15-B58.5",
+   "favourite_bracket": "58\u00b0 to 59\u00b0",
+   "favourite_mid": 0.465,
+   "fee": 0.0007,
+   "id": "c1v2|control|KXHIGHDEN-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T54",
+     0.02,
+     0.03
+    ],
+    [
+     "B54.5",
+     0.08,
+     0.09
+    ],
+    [
+     "B56.5",
+     0.35,
+     0.36
+    ],
+    [
+     "B58.5",
+     0.46,
+     0.47
+    ],
+    [
+     "B60.5",
+     0.11,
+     0.13
+    ],
+    [
+     "T61",
+     0.01,
+     0.02
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "control",
+   "series": "KXHIGHDEN",
+   "station": "DEN",
+   "status": "open",
+   "ticker": "KXHIGHDEN-26NOV15-T61",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.02,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "82\u00b0 to 83\u00b0",
+   "city": "Miami",
+   "cost": 0.9814,
+   "day": "2026-11-15",
+   "depth_bid": 175.72,
+   "event": "KXHIGHMIA-26NOV15",
+   "favourite": "KXHIGHMIA-26NOV15-B78.5",
+   "favourite_bracket": "78\u00b0 to 79\u00b0",
+   "favourite_mid": 0.505,
+   "fee": 0.0014,
+   "id": "c1v2|control|KXHIGHMIA-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.98,
+   "quotes": [
+    [
+     "T76",
+     0.0,
+     0.01
+    ],
+    [
+     "B76.5",
+     0.03,
+     0.04
+    ],
+    [
+     "B78.5",
+     0.5,
+     0.51
+    ],
+    [
+     "B80.5",
+     0.46,
+     0.47
+    ],
+    [
+     "B82.5",
+     0.02,
+     0.03
+    ],
+    [
+     "T83",
+     0.0,
+     0.01
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "control",
+   "series": "KXHIGHMIA",
+   "station": "MIA",
+   "status": "open",
+   "ticker": "KXHIGHMIA-26NOV15-B82.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.03,
+   "yes_bid": 0.02
+  },
+  {
+   "bracket": "53\u00b0 to 54\u00b0",
+   "city": "New York",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 175.61,
+   "event": "KXHIGHNY-26NOV15",
+   "favourite": "KXHIGHNY-26NOV15-B49.5",
+   "favourite_bracket": "49\u00b0 to 50\u00b0",
+   "favourite_mid": 0.555,
+   "fee": 0.0007,
+   "id": "c1v2|control|KXHIGHNY-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T49",
+     0.12,
+     0.13
+    ],
+    [
+     "B49.5",
+     0.55,
+     0.56
+    ],
+    [
+     "B51.5",
+     0.31,
+     0.32
+    ],
+    [
+     "B53.5",
+     0.01,
+     0.02
+    ],
+    [
+     "B55.5",
+     0.0,
+     0.01
+    ],
+    [
+     "T56",
+     0.0,
+     0.01
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "control",
+   "series": "KXHIGHNY",
+   "station": "NYC",
+   "status": "open",
+   "ticker": "KXHIGHNY-26NOV15-B53.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.02,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "55\u00b0 to 56\u00b0",
+   "city": "Philadelphia",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 82.86,
+   "event": "KXHIGHPHIL-26NOV15",
+   "favourite": "KXHIGHPHIL-26NOV15-B51.5",
+   "favourite_bracket": "51\u00b0 to 52\u00b0",
+   "favourite_mid": 0.77,
+   "fee": 0.0007,
+   "id": "c1v2|control|KXHIGHPHIL-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T49",
+     0.0,
+     0.02
+    ],
+    [
+     "B49.5",
+     0.05,
+     0.06
+    ],
+    [
+     "B51.5",
+     0.75,
+     0.79
+    ],
+    [
+     "B53.5",
+     0.15,
+     0.18
+    ],
+    [
+     "B55.5",
+     0.01,
+     0.02
+    ],
+    [
+     "T56",
+     0.0,
+     0.01
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "control",
+   "series": "KXHIGHPHIL",
+   "station": "PHL",
+   "status": "open",
+   "ticker": "KXHIGHPHIL-26NOV15-B55.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.02,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "60\u00b0 to 61\u00b0",
+   "city": "Atlanta",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 525.28,
+   "event": "KXHIGHTATL-26NOV15",
+   "favourite": "KXHIGHTATL-26NOV15-B56.5",
+   "favourite_bracket": "56\u00b0 to 57\u00b0",
+   "favourite_mid": 0.735,
+   "fee": 0.0007,
+   "id": "c1v2|control|KXHIGHTATL-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T54",
+     0.01,
+     0.02
+    ],
+    [
+     "B54.5",
+     0.02,
+     0.03
+    ],
+    [
+     "B56.5",
+     0.73,
+     0.74
+    ],
+    [
+     "B58.5",
+     0.23,
+     0.24
+    ],
+    [
+     "B60.5",
+     0.01,
+     0.02
+    ],
+    [
+     "T61",
+     0.0,
+     0.01
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "control",
+   "series": "KXHIGHTATL",
+   "station": "ATL",
+   "status": "open",
+   "ticker": "KXHIGHTATL-26NOV15-B60.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.02,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "53\u00b0 or above",
+   "city": "Boston",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 100.0,
+   "event": "KXHIGHTBOS-26NOV15",
+   "favourite": "KXHIGHTBOS-26NOV15-B49.5",
+   "favourite_bracket": "49\u00b0 to 50\u00b0",
+   "favourite_mid": 0.725,
+   "fee": 0.0007,
+   "id": "c1v2|control|KXHIGHTBOS-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T45",
+     0.0,
+     0.01
+    ],
+    [
+     "B45.5",
+     0.01,
+     0.02
+    ],
+    [
+     "B47.5",
+     0.05,
+     0.07
+    ],
+    [
+     "B49.5",
+     0.72,
+     0.73
+    ],
+    [
+     "B51.5",
+     0.21,
+     0.22
+    ],
+    [
+     "T52",
+     0.01,
+     0.02
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "control",
+   "series": "KXHIGHTBOS",
+   "station": "BOS",
+   "status": "open",
+   "ticker": "KXHIGHTBOS-26NOV15-T52",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.02,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "54\u00b0 to 55\u00b0",
+   "city": "Dallas",
+   "cost": 0.9534,
+   "day": "2026-11-15",
+   "depth_bid": 57.0,
+   "event": "KXHIGHTDAL-26NOV15",
+   "favourite": "KXHIGHTDAL-26NOV15-B50.5",
+   "favourite_bracket": "50\u00b0 to 51\u00b0",
+   "favourite_mid": 0.455,
+   "fee": 0.0034,
+   "id": "c1v2|control|KXHIGHTDAL-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.95,
+   "quotes": [
+    [
+     "T50",
+     0.1,
+     0.14
+    ],
+    [
+     "B50.5",
+     0.45,
+     0.46
+    ],
+    [
+     "B52.5",
+     0.37,
+     0.4
+    ],
+    [
+     "B54.5",
+     0.05,
+     0.06
+    ],
+    [
+     "B56.5",
+     0.01,
+     0.02
+    ],
+    [
+     "T57",
+     0.0,
+     0.01
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "control",
+   "series": "KXHIGHTDAL",
+   "station": "DFW",
+   "status": "open",
+   "ticker": "KXHIGHTDAL-26NOV15-B54.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.06,
+   "yes_bid": 0.05
+  },
+  {
+   "bracket": "56\u00b0 to 57\u00b0",
+   "city": "Washington",
+   "cost": 0.9814,
+   "day": "2026-11-15",
+   "depth_bid": 272.0,
+   "event": "KXHIGHTDC-26NOV15",
+   "favourite": "KXHIGHTDC-26NOV15-B52.5",
+   "favourite_bracket": "52\u00b0 to 53\u00b0",
+   "favourite_mid": 0.665,
+   "fee": 0.0014,
+   "id": "c1v2|control|KXHIGHTDC-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.98,
+   "quotes": [
+    [
+     "T52",
+     0.05,
+     0.07
+    ],
+    [
+     "B52.5",
+     0.65,
+     0.68
+    ],
+    [
+     "B54.5",
+     0.24,
+     0.28
+    ],
+    [
+     "B56.5",
+     0.02,
+     0.04
+    ],
+    [
+     "B58.5",
+     0.01,
+     0.02
+    ],
+    [
+     "T59",
+     0.0,
+     0.01
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "control",
+   "series": "KXHIGHTDC",
+   "station": "DCA",
+   "status": "open",
+   "ticker": "KXHIGHTDC-26NOV15-B56.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.04,
+   "yes_bid": 0.02
+  },
+  {
+   "bracket": "67\u00b0 to 68\u00b0",
+   "city": "Houston",
+   "cost": 0.859,
+   "day": "2026-11-15",
+   "depth_bid": 1.0,
+   "event": "KXHIGHTHOU-26NOV15",
+   "favourite": "KXHIGHTHOU-26NOV15-T65",
+   "favourite_bracket": "64\u00b0 or below",
+   "favourite_mid": 0.425,
+   "fee": 0.009,
+   "id": "c1v2|control|KXHIGHTHOU-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.85,
+   "quotes": [
+    [
+     "T65",
+     0.4,
+     0.45
+    ],
+    [
+     "B65.5",
+     0.26,
+     0.29
+    ],
+    [
+     "B67.5",
+     0.15,
+     0.18
+    ],
+    [
+     "B69.5",
+     0.07,
+     0.08
+    ],
+    [
+     "B71.5",
+     0.02,
+     0.03
+    ],
+    [
+     "T72",
+     0.01,
+     0.02
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "control",
+   "series": "KXHIGHTHOU",
+   "station": "HOU",
+   "status": "open",
+   "ticker": "KXHIGHTHOU-26NOV15-B67.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.18,
+   "yes_bid": 0.15
+  },
+  {
+   "bracket": "72\u00b0 to 73\u00b0",
+   "city": "Las Vegas",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 17.99,
+   "event": "KXHIGHTLV-26NOV15",
+   "favourite": "KXHIGHTLV-26NOV15-B68.5",
+   "favourite_bracket": "68\u00b0 to 69\u00b0",
+   "favourite_mid": 0.55,
+   "fee": 0.0007,
+   "id": "c1v2|control|KXHIGHTLV-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T66",
+     0.01,
+     0.02
+    ],
+    [
+     "B66.5",
+     0.42,
+     0.43
+    ],
+    [
+     "B68.5",
+     0.54,
+     0.56
+    ],
+    [
+     "B70.5",
+     0.04,
+     0.05
+    ],
+    [
+     "B72.5",
+     0.01,
+     0.02
+    ],
+    [
+     "T73",
+     0.0,
+     0.01
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "control",
+   "series": "KXHIGHTLV",
+   "station": "LAS",
+   "status": "open",
+   "ticker": "KXHIGHTLV-26NOV15-B72.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.02,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "66\u00b0 to 67\u00b0",
+   "city": "New Orleans",
+   "cost": 0.9252,
+   "day": "2026-11-15",
+   "depth_bid": 26.0,
+   "event": "KXHIGHTNOLA-26NOV15",
+   "favourite": "KXHIGHTNOLA-26NOV15-T64",
+   "favourite_bracket": "63\u00b0 or below",
+   "favourite_mid": 0.565,
+   "fee": 0.0052,
+   "id": "c1v2|control|KXHIGHTNOLA-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.92,
+   "quotes": [
+    [
+     "T64",
+     0.56,
+     0.57
+    ],
+    [
+     "B64.5",
+     0.26,
+     0.27
+    ],
+    [
+     "B66.5",
+     0.08,
+     0.15
+    ],
+    [
+     "B68.5",
+     0.01,
+     0.02
+    ],
+    [
+     "B70.5",
+     0.01,
+     0.02
+    ],
+    [
+     "T71",
+     0.0,
+     0.01
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "control",
+   "series": "KXHIGHTNOLA",
+   "station": "MSY",
+   "status": "open",
+   "ticker": "KXHIGHTNOLA-26NOV15-B66.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.15,
+   "yes_bid": 0.08
+  },
+  {
+   "bracket": "48\u00b0 to 49\u00b0",
+   "city": "Oklahoma City",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 255.96,
+   "event": "KXHIGHTOKC-26NOV15",
+   "favourite": "KXHIGHTOKC-26NOV15-B44.5",
+   "favourite_bracket": "44\u00b0 to 45\u00b0",
+   "favourite_mid": 0.44,
+   "fee": 0.0007,
+   "id": "c1v2|control|KXHIGHTOKC-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T44",
+     0.37,
+     0.38
+    ],
+    [
+     "B44.5",
+     0.43,
+     0.45
+    ],
+    [
+     "B46.5",
+     0.19,
+     0.21
+    ],
+    [
+     "B48.5",
+     0.01,
+     0.02
+    ],
+    [
+     "B50.5",
+     0.0,
+     0.01
+    ],
+    [
+     "T51",
+     0.0,
+     0.01
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "control",
+   "series": "KXHIGHTOKC",
+   "station": "OKC",
+   "status": "open",
+   "ticker": "KXHIGHTOKC-26NOV15-B48.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.02,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "79\u00b0 to 80\u00b0",
+   "city": "Phoenix",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 266.0,
+   "event": "KXHIGHTPHX-26NOV15",
+   "favourite": "KXHIGHTPHX-26NOV15-B75.5",
+   "favourite_bracket": "75\u00b0 to 76\u00b0",
+   "favourite_mid": 0.75,
+   "fee": 0.0007,
+   "id": "c1v2|control|KXHIGHTPHX-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T75",
+     0.03,
+     0.04
+    ],
+    [
+     "B75.5",
+     0.74,
+     0.76
+    ],
+    [
+     "B77.5",
+     0.2,
+     0.22
+    ],
+    [
+     "B79.5",
+     0.01,
+     0.02
+    ],
+    [
+     "B81.5",
+     0.01,
+     0.02
+    ],
+    [
+     "T82",
+     0.0,
+     0.01
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "control",
+   "series": "KXHIGHTPHX",
+   "station": "PHX",
+   "status": "open",
+   "ticker": "KXHIGHTPHX-26NOV15-B79.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.02,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "76\u00b0 to 77\u00b0",
+   "city": "San Diego",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 118.0,
+   "event": "KXHIGHTSAN-26NOV15",
+   "favourite": "KXHIGHTSAN-26NOV15-B72.5",
+   "favourite_bracket": "72\u00b0 to 73\u00b0",
+   "favourite_mid": 0.54,
+   "fee": 0.0007,
+   "id": "c1v2|control|KXHIGHTSAN-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T70",
+     0.01,
+     0.02
+    ],
+    [
+     "B70.5",
+     0.03,
+     0.04
+    ],
+    [
+     "B72.5",
+     0.52,
+     0.56
+    ],
+    [
+     "B74.5",
+     0.38,
+     0.44
+    ],
+    [
+     "B76.5",
+     0.01,
+     0.02
+    ],
+    [
+     "T77",
+     0.0,
+     0.01
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "control",
+   "series": "KXHIGHTSAN",
+   "station": "SAN",
+   "status": "open",
+   "ticker": "KXHIGHTSAN-26NOV15-B76.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.02,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "69\u00b0 to 70\u00b0",
+   "city": "San Antonio",
+   "cost": 0.9534,
+   "day": "2026-11-15",
+   "depth_bid": 30.0,
+   "event": "KXHIGHTSATX-26NOV15",
+   "favourite": "KXHIGHTSATX-26NOV15-T67",
+   "favourite_bracket": "66\u00b0 or below",
+   "favourite_mid": 0.865,
+   "fee": 0.0034,
+   "id": "c1v2|control|KXHIGHTSATX-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.95,
+   "quotes": [
+    [
+     "T67",
+     0.86,
+     0.87
+    ],
+    [
+     "B67.5",
+     0.06,
+     0.08
+    ],
+    [
+     "B69.5",
+     0.05,
+     0.06
+    ],
+    [
+     "B71.5",
+     0.01,
+     0.02
+    ],
+    [
+     "B73.5",
+     0.01,
+     0.02
+    ],
+    [
+     "T74",
+     0.0,
+     0.01
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "control",
+   "series": "KXHIGHTSATX",
+   "station": "SAT",
+   "status": "open",
+   "ticker": "KXHIGHTSATX-26NOV15-B69.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.06,
+   "yes_bid": 0.05
+  },
+  {
+   "bracket": "60\u00b0 or above",
+   "city": "Seattle",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 120.0,
+   "event": "KXHIGHTSEA-26NOV15",
+   "favourite": "KXHIGHTSEA-26NOV15-B56.5",
+   "favourite_bracket": "56\u00b0 to 57\u00b0",
+   "favourite_mid": 0.635,
+   "fee": 0.0007,
+   "id": "c1v2|control|KXHIGHTSEA-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T52",
+     0.0,
+     0.02
+    ],
+    [
+     "B52.5",
+     0.02,
+     0.03
+    ],
+    [
+     "B54.5",
+     0.23,
+     0.24
+    ],
+    [
+     "B56.5",
+     0.63,
+     0.64
+    ],
+    [
+     "B58.5",
+     0.09,
+     0.1
+    ],
+    [
+     "T59",
+     0.01,
+     0.02
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "control",
+   "series": "KXHIGHTSEA",
+   "station": "SEA",
+   "status": "open",
+   "ticker": "KXHIGHTSEA-26NOV15-T59",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.02,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "68\u00b0 or above",
+   "city": "San Francisco",
+   "cost": 0.9814,
+   "day": "2026-11-15",
+   "depth_bid": 61.0,
+   "event": "KXHIGHTSFO-26NOV15",
+   "favourite": "KXHIGHTSFO-26NOV15-B64.5",
+   "favourite_bracket": "64\u00b0 to 65\u00b0",
+   "favourite_mid": 0.575,
+   "fee": 0.0014,
+   "id": "c1v2|control|KXHIGHTSFO-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.98,
+   "quotes": [
+    [
+     "T60",
+     0.01,
+     0.02
+    ],
+    [
+     "B60.5",
+     0.04,
+     0.05
+    ],
+    [
+     "B62.5",
+     0.26,
+     0.29
+    ],
+    [
+     "B64.5",
+     0.57,
+     0.58
+    ],
+    [
+     "B66.5",
+     0.09,
+     0.1
+    ],
+    [
+     "T67",
+     0.02,
+     0.03
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "control",
+   "series": "KXHIGHTSFO",
+   "station": "SFO",
+   "status": "open",
+   "ticker": "KXHIGHTSFO-26NOV15-T67",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.03,
+   "yes_bid": 0.02
+  },
+  {
+   "bracket": "47\u00b0 or below",
+   "city": "Chicago",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 3.41,
+   "event": "KXHIGHCHI-26NOV15",
+   "favourite": "KXHIGHCHI-26NOV15-B50.5",
+   "favourite_bracket": "50\u00b0 to 51\u00b0",
+   "favourite_mid": 0.675,
+   "fee": 0.0007,
+   "forecast": {
+    "run": "2026-11-15T00:00Z",
+    "shift": 0.21,
+    "tmp": 48.0,
+    "txn": 51.0,
+    "txn_run": "2026-11-15T00:00Z",
+    "value": 51.0
+   },
+   "forecast_above": false,
+   "id": "c1v2|main|KXHIGHCHI-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T48",
+     0.01,
+     0.02
+    ],
+    [
+     "B48.5",
+     0.13,
+     0.14
+    ],
+    [
+     "B50.5",
+     0.67,
+     0.68
+    ],
+    [
+     "B52.5",
+     0.17,
+     0.18
+    ],
+    [
+     "B54.5",
+     0.0,
+     0.01
+    ],
+    [
+     "T55",
+     0.0,
+     0.01
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "main",
+   "series": "KXHIGHCHI",
+   "station": "MDW",
+   "status": "open",
+   "ticker": "KXHIGHCHI-26NOV15-T48",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.02,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "54\u00b0 to 55\u00b0",
+   "city": "Denver",
+   "cost": 0.9252,
+   "day": "2026-11-15",
+   "depth_bid": 614.75,
+   "event": "KXHIGHDEN-26NOV15",
+   "favourite": "KXHIGHDEN-26NOV15-B58.5",
+   "favourite_bracket": "58\u00b0 to 59\u00b0",
+   "favourite_mid": 0.465,
+   "fee": 0.0052,
+   "forecast": {
+    "run": "2026-11-15T00:00Z",
+    "shift": 0.19,
+    "tmp": 57.0,
+    "txn": 58.0,
+    "txn_run": "2026-11-15T00:00Z",
+    "value": 58.0
+   },
+   "forecast_above": false,
+   "id": "c1v2|main|KXHIGHDEN-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.92,
+   "quotes": [
+    [
+     "T54",
+     0.02,
+     0.03
+    ],
+    [
+     "B54.5",
+     0.08,
+     0.09
+    ],
+    [
+     "B56.5",
+     0.35,
+     0.36
+    ],
+    [
+     "B58.5",
+     0.46,
+     0.47
+    ],
+    [
+     "B60.5",
+     0.11,
+     0.13
+    ],
+    [
+     "T61",
+     0.01,
+     0.02
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "main",
+   "series": "KXHIGHDEN",
+   "station": "DEN",
+   "status": "open",
+   "ticker": "KXHIGHDEN-26NOV15-B54.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.09,
+   "yes_bid": 0.08
+  },
+  {
+   "bracket": "69\u00b0 to 70\u00b0",
+   "city": "Los Angeles",
+   "cost": 0.9252,
+   "day": "2026-11-15",
+   "depth_bid": 450.6,
+   "event": "KXHIGHLAX-26NOV15",
+   "favourite": "KXHIGHLAX-26NOV15-B73.5",
+   "favourite_bracket": "73\u00b0 to 74\u00b0",
+   "favourite_mid": 0.515,
+   "fee": 0.0052,
+   "forecast": {
+    "run": "2026-11-15T00:00Z",
+    "shift": 0.11,
+    "tmp": 70.0,
+    "txn": 72.0,
+    "txn_run": "2026-11-15T00:00Z",
+    "value": 72.0
+   },
+   "forecast_above": false,
+   "id": "c1v2|main|KXHIGHLAX-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.92,
+   "quotes": [
+    [
+     "T69",
+     0.0,
+     0.01
+    ],
+    [
+     "B69.5",
+     0.08,
+     0.1
+    ],
+    [
+     "B71.5",
+     0.33,
+     0.34
+    ],
+    [
+     "B73.5",
+     0.51,
+     0.52
+    ],
+    [
+     "B75.5",
+     0.04,
+     0.05
+    ],
+    [
+     "T76",
+     0.0,
+     0.01
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "main",
+   "series": "KXHIGHLAX",
+   "station": "LAX",
+   "status": "open",
+   "ticker": "KXHIGHLAX-26NOV15-B69.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.1,
+   "yes_bid": 0.08
+  },
+  {
+   "bracket": "45\u00b0 to 46\u00b0",
+   "city": "Boston",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 168.0,
+   "event": "KXHIGHTBOS-26NOV15",
+   "favourite": "KXHIGHTBOS-26NOV15-B49.5",
+   "favourite_bracket": "49\u00b0 to 50\u00b0",
+   "favourite_mid": 0.725,
+   "fee": 0.0007,
+   "forecast": {
+    "run": "2026-11-15T00:00Z",
+    "shift": 0.3,
+    "tmp": 49.0,
+    "txn": 49.0,
+    "txn_run": "2026-11-15T00:00Z",
+    "value": 49.0
+   },
+   "forecast_above": false,
+   "id": "c1v2|main|KXHIGHTBOS-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T45",
+     0.0,
+     0.01
+    ],
+    [
+     "B45.5",
+     0.01,
+     0.02
+    ],
+    [
+     "B47.5",
+     0.05,
+     0.07
+    ],
+    [
+     "B49.5",
+     0.72,
+     0.73
+    ],
+    [
+     "B51.5",
+     0.21,
+     0.22
+    ],
+    [
+     "T52",
+     0.01,
+     0.02
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "main",
+   "series": "KXHIGHTBOS",
+   "station": "BOS",
+   "status": "open",
+   "ticker": "KXHIGHTBOS-26NOV15-B45.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.02,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "65\u00b0 or below",
+   "city": "Las Vegas",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 42.8,
+   "event": "KXHIGHTLV-26NOV15",
+   "favourite": "KXHIGHTLV-26NOV15-B68.5",
+   "favourite_bracket": "68\u00b0 to 69\u00b0",
+   "favourite_mid": 0.55,
+   "fee": 0.0007,
+   "forecast": {
+    "run": "2026-11-15T00:00Z",
+    "shift": -0.08,
+    "tmp": 66.0,
+    "txn": 68.0,
+    "txn_run": "2026-11-15T00:00Z",
+    "value": 68.0
+   },
+   "forecast_above": false,
+   "id": "c1v2|main|KXHIGHTLV-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T66",
+     0.01,
+     0.02
+    ],
+    [
+     "B66.5",
+     0.42,
+     0.43
+    ],
+    [
+     "B68.5",
+     0.54,
+     0.56
+    ],
+    [
+     "B70.5",
+     0.04,
+     0.05
+    ],
+    [
+     "B72.5",
+     0.01,
+     0.02
+    ],
+    [
+     "T73",
+     0.0,
+     0.01
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "main",
+   "series": "KXHIGHTLV",
+   "station": "LAS",
+   "status": "open",
+   "ticker": "KXHIGHTLV-26NOV15-T66",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.02,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "46\u00b0 to 47\u00b0",
+   "city": "Minneapolis",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 775.0,
+   "event": "KXHIGHTMIN-26NOV15",
+   "favourite": "KXHIGHTMIN-26NOV15-B50.5",
+   "favourite_bracket": "50\u00b0 to 51\u00b0",
+   "favourite_mid": 0.615,
+   "fee": 0.0007,
+   "forecast": {
+    "run": "2026-11-15T00:00Z",
+    "shift": -0.22,
+    "tmp": 48.0,
+    "txn": 50.0,
+    "txn_run": "2026-11-15T00:00Z",
+    "value": 50.0
+   },
+   "forecast_above": false,
+   "id": "c1v2|main|KXHIGHTMIN-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T46",
+     0.01,
+     0.02
+    ],
+    [
+     "B46.5",
+     0.01,
+     0.02
+    ],
+    [
+     "B48.5",
+     0.31,
+     0.32
+    ],
+    [
+     "B50.5",
+     0.61,
+     0.62
+    ],
+    [
+     "B52.5",
+     0.09,
+     0.11
+    ],
+    [
+     "T53",
+     0.0,
+     0.01
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "main",
+   "series": "KXHIGHTMIN",
+   "station": "MSP",
+   "status": "open",
+   "ticker": "KXHIGHTMIN-26NOV15-B46.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.02,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "69\u00b0 or below",
+   "city": "San Diego",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 39.72,
+   "event": "KXHIGHTSAN-26NOV15",
+   "favourite": "KXHIGHTSAN-26NOV15-B72.5",
+   "favourite_bracket": "72\u00b0 to 73\u00b0",
+   "favourite_mid": 0.54,
+   "fee": 0.0007,
+   "forecast": {
+    "run": "2026-11-15T00:00Z",
+    "shift": 0.0,
+    "tmp": 72.0,
+    "txn": 72.0,
+    "txn_run": "2026-11-15T00:00Z",
+    "value": 72.0
+   },
+   "forecast_above": false,
+   "id": "c1v2|main|KXHIGHTSAN-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T70",
+     0.01,
+     0.02
+    ],
+    [
+     "B70.5",
+     0.03,
+     0.04
+    ],
+    [
+     "B72.5",
+     0.52,
+     0.56
+    ],
+    [
+     "B74.5",
+     0.38,
+     0.44
+    ],
+    [
+     "B76.5",
+     0.01,
+     0.02
+    ],
+    [
+     "T77",
+     0.0,
+     0.01
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "main",
+   "series": "KXHIGHTSAN",
+   "station": "SAN",
+   "status": "open",
+   "ticker": "KXHIGHTSAN-26NOV15-T70",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.02,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "52\u00b0 to 53\u00b0",
+   "city": "Seattle",
+   "cost": 0.9814,
+   "day": "2026-11-15",
+   "depth_bid": 37.0,
+   "event": "KXHIGHTSEA-26NOV15",
+   "favourite": "KXHIGHTSEA-26NOV15-B56.5",
+   "favourite_bracket": "56\u00b0 to 57\u00b0",
+   "favourite_mid": 0.635,
+   "fee": 0.0014,
+   "forecast": {
+    "run": "2026-11-15T00:00Z",
+    "shift": 0.0,
+    "tmp": 53.0,
+    "txn": 55.0,
+    "txn_run": "2026-11-15T00:00Z",
+    "value": 55.0
+   },
+   "forecast_above": false,
+   "id": "c1v2|main|KXHIGHTSEA-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.98,
+   "quotes": [
+    [
+     "T52",
+     0.0,
+     0.02
+    ],
+    [
+     "B52.5",
+     0.02,
+     0.03
+    ],
+    [
+     "B54.5",
+     0.23,
+     0.24
+    ],
+    [
+     "B56.5",
+     0.63,
+     0.64
+    ],
+    [
+     "B58.5",
+     0.09,
+     0.1
+    ],
+    [
+     "T59",
+     0.01,
+     0.02
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "main",
+   "series": "KXHIGHTSEA",
+   "station": "SEA",
+   "status": "open",
+   "ticker": "KXHIGHTSEA-26NOV15-B52.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.03,
+   "yes_bid": 0.02
+  },
+  {
+   "bracket": "60\u00b0 to 61\u00b0",
+   "city": "San Francisco",
+   "cost": 0.9627,
+   "day": "2026-11-15",
+   "depth_bid": 2.0,
+   "event": "KXHIGHTSFO-26NOV15",
+   "favourite": "KXHIGHTSFO-26NOV15-B64.5",
+   "favourite_bracket": "64\u00b0 to 65\u00b0",
+   "favourite_mid": 0.575,
+   "fee": 0.0027,
+   "forecast": {
+    "run": "2026-11-15T00:00Z",
+    "shift": 0.0,
+    "tmp": 62.0,
+    "txn": 64.0,
+    "txn_run": "2026-11-15T00:00Z",
+    "value": 64.0
+   },
+   "forecast_above": false,
+   "id": "c1v2|main|KXHIGHTSFO-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.96,
+   "quotes": [
+    [
+     "T60",
+     0.01,
+     0.02
+    ],
+    [
+     "B60.5",
+     0.04,
+     0.05
+    ],
+    [
+     "B62.5",
+     0.26,
+     0.29
+    ],
+    [
+     "B64.5",
+     0.57,
+     0.58
+    ],
+    [
+     "B66.5",
+     0.09,
+     0.1
+    ],
+    [
+     "T67",
+     0.02,
+     0.03
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "main",
+   "series": "KXHIGHTSFO",
+   "station": "SFO",
+   "status": "open",
+   "ticker": "KXHIGHTSFO-26NOV15-B60.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.05,
+   "yes_bid": 0.04
+  },
+  {
+   "bracket": "53\u00b0 or below",
+   "city": "Atlanta",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 10.0,
+   "event": "KXHIGHTATL-26NOV15",
+   "favourite": "KXHIGHTATL-26NOV15-B56.5",
+   "favourite_bracket": "56\u00b0 to 57\u00b0",
+   "favourite_mid": 0.735,
+   "fee": 0.0007,
+   "forecast": {
+    "run": "2026-11-15T00:00Z",
+    "shift": 0.02,
+    "tmp": 58.0,
+    "txn": 58.0,
+    "txn_run": "2026-11-15T00:00Z",
+    "value": 58.0
+   },
+   "forecast_above": true,
+   "id": "c1v2|skipped|KXHIGHTATL-26NOV15",
+   "lag_min": 0.5,
+   "lane": "c1v2",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T54",
+     0.01,
+     0.02
+    ],
+    [
+     "B54.5",
+     0.02,
+     0.03
+    ],
+    [
+     "B56.5",
+     0.73,
+     0.74
+    ],
+    [
+     "B58.5",
+     0.23,
+     0.24
+    ],
+    [
+     "B60.5",
+     0.01,
+     0.02
+    ],
+    [
+     "T61",
+     0.0,
+     0.01
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "skipped",
+   "series": "KXHIGHTATL",
+   "station": "ATL",
+   "status": "open",
+   "ticker": "KXHIGHTATL-26NOV15-T54",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.02,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "29\u00b0 to 30\u00b0",
+   "city": "Atlanta",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 190.0,
+   "event": "KXLOWTATL-26NOV15",
+   "favourite": "KXLOWTATL-26NOV15-B33.5",
+   "favourite_bracket": "33\u00b0 to 34\u00b0",
+   "favourite_mid": 0.62,
+   "fee": 0.0007,
+   "id": "l1|control|KXLOWTATL-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T27",
+     0.0,
+     0.01
+    ],
+    [
+     "B27.5",
+     0.01,
+     0.03
+    ],
+    [
+     "B29.5",
+     0.01,
+     0.03
+    ],
+    [
+     "B31.5",
+     0.1,
+     0.18
+    ],
+    [
+     "B33.5",
+     0.56,
+     0.68
+    ],
+    [
+     "T34",
+     0.16,
+     0.21
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "control",
+   "series": "KXLOWTATL",
+   "station": "ATL",
+   "status": "open",
+   "ticker": "KXLOWTATL-26NOV15-B29.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.03,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "46\u00b0 or below",
+   "city": "Austin",
+   "cost": 0.8969,
+   "day": "2026-11-15",
+   "depth_bid": 1.0,
+   "event": "KXLOWTAUS-26NOV15",
+   "favourite": "KXLOWTAUS-26NOV15-B49.5",
+   "favourite_bracket": "49\u00b0 to 50\u00b0",
+   "favourite_mid": 0.52,
+   "fee": 0.0069,
+   "id": "l1|control|KXLOWTAUS-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.89,
+   "quotes": [
+    [
+     "T47",
+     0.11,
+     0.12
+    ],
+    [
+     "B47.5",
+     0.19,
+     0.23
+    ],
+    [
+     "B49.5",
+     0.51,
+     0.53
+    ],
+    [
+     "B51.5",
+     0.16,
+     0.17
+    ],
+    [
+     "B53.5",
+     0.02,
+     0.05
+    ],
+    [
+     "T54",
+     0.01,
+     0.02
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "control",
+   "series": "KXLOWTAUS",
+   "station": "AUS",
+   "status": "open",
+   "ticker": "KXLOWTAUS-26NOV15-T47",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.12,
+   "yes_bid": 0.11
+  },
+  {
+   "bracket": "32\u00b0 to 33\u00b0",
+   "city": "Boston",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 159.73,
+   "event": "KXLOWTBOS-26NOV15",
+   "favourite": "KXLOWTBOS-26NOV15-B36.5",
+   "favourite_bracket": "36\u00b0 to 37\u00b0",
+   "favourite_mid": 0.495,
+   "fee": 0.0007,
+   "id": "l1|control|KXLOWTBOS-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T30",
+     0.0,
+     0.01
+    ],
+    [
+     "B30.5",
+     0.0,
+     0.01
+    ],
+    [
+     "B32.5",
+     0.01,
+     0.02
+    ],
+    [
+     "B34.5",
+     0.03,
+     0.07
+    ],
+    [
+     "B36.5",
+     0.49,
+     0.5
+    ],
+    [
+     "T37",
+     0.34,
+     0.38
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "control",
+   "series": "KXLOWTBOS",
+   "station": "BOS",
+   "status": "open",
+   "ticker": "KXLOWTBOS-26NOV15-B32.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.02,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "28\u00b0 to 29\u00b0",
+   "city": "Chicago",
+   "cost": 0.9814,
+   "day": "2026-11-15",
+   "depth_bid": 490.0,
+   "event": "KXLOWTCHI-26NOV15",
+   "favourite": "KXLOWTCHI-26NOV15-B32.5",
+   "favourite_bracket": "32\u00b0 to 33\u00b0",
+   "favourite_mid": 0.43,
+   "fee": 0.0014,
+   "id": "l1|control|KXLOWTCHI-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.98,
+   "quotes": [
+    [
+     "T26",
+     0.0,
+     0.01
+    ],
+    [
+     "B26.5",
+     0.0,
+     0.01
+    ],
+    [
+     "B28.5",
+     0.02,
+     0.04
+    ],
+    [
+     "B30.5",
+     0.28,
+     0.36
+    ],
+    [
+     "B32.5",
+     0.42,
+     0.44
+    ],
+    [
+     "T33",
+     0.12,
+     0.14
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "control",
+   "series": "KXLOWTCHI",
+   "station": "MDW",
+   "status": "open",
+   "ticker": "KXLOWTCHI-26NOV15-B28.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.04,
+   "yes_bid": 0.02
+  },
+  {
+   "bracket": "39\u00b0 to 40\u00b0",
+   "city": "Dallas",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 70.0,
+   "event": "KXLOWTDAL-26NOV15",
+   "favourite": "KXLOWTDAL-26NOV15-B43.5",
+   "favourite_bracket": "43\u00b0 to 44\u00b0",
+   "favourite_mid": 0.565,
+   "fee": 0.0007,
+   "id": "l1|control|KXLOWTDAL-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T39",
+     0.0,
+     0.01
+    ],
+    [
+     "B39.5",
+     0.01,
+     0.05
+    ],
+    [
+     "B41.5",
+     0.09,
+     0.2
+    ],
+    [
+     "B43.5",
+     0.52,
+     0.61
+    ],
+    [
+     "B45.5",
+     0.23,
+     0.27
+    ],
+    [
+     "T46",
+     0.01,
+     0.03
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "control",
+   "series": "KXLOWTDAL",
+   "station": "DFW",
+   "status": "open",
+   "ticker": "KXLOWTDAL-26NOV15-B39.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.05,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "39\u00b0 to 40\u00b0",
+   "city": "Washington",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 216.0,
+   "event": "KXLOWTDC-26NOV15",
+   "favourite": "KXLOWTDC-26NOV15-T42",
+   "favourite_bracket": "43\u00b0 or above",
+   "favourite_mid": 0.51,
+   "fee": 0.0007,
+   "id": "l1|control|KXLOWTDC-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T35",
+     0.0,
+     0.02
+    ],
+    [
+     "B35.5",
+     0.01,
+     0.03
+    ],
+    [
+     "B37.5",
+     0.01,
+     0.05
+    ],
+    [
+     "B39.5",
+     0.01,
+     0.09
+    ],
+    [
+     "B41.5",
+     0.39,
+     0.5
+    ],
+    [
+     "T42",
+     0.5,
+     0.52
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "control",
+   "series": "KXLOWTDC",
+   "station": "DCA",
+   "status": "open",
+   "ticker": "KXLOWTDC-26NOV15-B39.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.09,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "31\u00b0 to 32\u00b0",
+   "city": "Denver",
+   "cost": 0.9252,
+   "day": "2026-11-15",
+   "depth_bid": 20.0,
+   "event": "KXLOWTDEN-26NOV15",
+   "favourite": "KXLOWTDEN-26NOV15-B35.5",
+   "favourite_bracket": "35\u00b0 to 36\u00b0",
+   "favourite_mid": 0.265,
+   "fee": 0.0052,
+   "id": "l1|control|KXLOWTDEN-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.92,
+   "quotes": [
+    [
+     "T29",
+     0.01,
+     0.04
+    ],
+    [
+     "B29.5",
+     0.01,
+     0.05
+    ],
+    [
+     "B31.5",
+     0.08,
+     0.15
+    ],
+    [
+     "B33.5",
+     0.25,
+     0.27
+    ],
+    [
+     "B35.5",
+     0.25,
+     0.28
+    ],
+    [
+     "T36",
+     0.22,
+     0.28
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "control",
+   "series": "KXLOWTDEN",
+   "station": "DEN",
+   "status": "open",
+   "ticker": "KXLOWTDEN-26NOV15-B31.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.15,
+   "yes_bid": 0.08
+  },
+  {
+   "bracket": "54\u00b0 to 55\u00b0",
+   "city": "Los Angeles",
+   "cost": 0.9627,
+   "day": "2026-11-15",
+   "depth_bid": 25.0,
+   "event": "KXLOWTLAX-26NOV15",
+   "favourite": "KXLOWTLAX-26NOV15-T57",
+   "favourite_bracket": "58\u00b0 or above",
+   "favourite_mid": 0.605,
+   "fee": 0.0027,
+   "id": "l1|control|KXLOWTLAX-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.96,
+   "quotes": [
+    [
+     "T50",
+     0.0,
+     0.01
+    ],
+    [
+     "B50.5",
+     0.0,
+     0.02
+    ],
+    [
+     "B52.5",
+     0.01,
+     0.02
+    ],
+    [
+     "B54.5",
+     0.04,
+     0.08
+    ],
+    [
+     "B56.5",
+     0.32,
+     0.35
+    ],
+    [
+     "T57",
+     0.55,
+     0.66
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "control",
+   "series": "KXLOWTLAX",
+   "station": "LAX",
+   "status": "open",
+   "ticker": "KXLOWTLAX-26NOV15-B54.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.08,
+   "yes_bid": 0.04
+  },
+  {
+   "bracket": "46\u00b0 to 47\u00b0",
+   "city": "Las Vegas",
+   "cost": 0.9814,
+   "day": "2026-11-15",
+   "depth_bid": 35.0,
+   "event": "KXLOWTLV-26NOV15",
+   "favourite": "KXLOWTLV-26NOV15-B50.5",
+   "favourite_bracket": "50\u00b0 to 51\u00b0",
+   "favourite_mid": 0.53,
+   "fee": 0.0014,
+   "id": "l1|control|KXLOWTLV-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.98,
+   "quotes": [
+    [
+     "T44",
+     0.0,
+     0.03
+    ],
+    [
+     "B44.5",
+     0.01,
+     0.02
+    ],
+    [
+     "B46.5",
+     0.02,
+     0.06
+    ],
+    [
+     "B48.5",
+     0.17,
+     0.34
+    ],
+    [
+     "B50.5",
+     0.5,
+     0.56
+    ],
+    [
+     "T51",
+     0.09,
+     0.27
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "control",
+   "series": "KXLOWTLV",
+   "station": "LAS",
+   "status": "open",
+   "ticker": "KXLOWTLV-26NOV15-B46.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.06,
+   "yes_bid": 0.02
+  },
+  {
+   "bracket": "57\u00b0 to 58\u00b0",
+   "city": "Miami",
+   "cost": 0.9814,
+   "day": "2026-11-15",
+   "depth_bid": 79.01,
+   "event": "KXLOWTMIA-26NOV15",
+   "favourite": "KXLOWTMIA-26NOV15-B61.5",
+   "favourite_bracket": "61\u00b0 to 62\u00b0",
+   "favourite_mid": 0.51,
+   "fee": 0.0014,
+   "id": "l1|control|KXLOWTMIA-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.98,
+   "quotes": [
+    [
+     "T55",
+     0.01,
+     0.04
+    ],
+    [
+     "B55.5",
+     0.01,
+     0.02
+    ],
+    [
+     "B57.5",
+     0.02,
+     0.07
+    ],
+    [
+     "B59.5",
+     0.17,
+     0.25
+    ],
+    [
+     "B61.5",
+     0.5,
+     0.52
+    ],
+    [
+     "T62",
+     0.1,
+     0.36
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "control",
+   "series": "KXLOWTMIA",
+   "station": "MIA",
+   "status": "open",
+   "ticker": "KXLOWTMIA-26NOV15-B57.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.07,
+   "yes_bid": 0.02
+  },
+  {
+   "bracket": "23\u00b0 to 24\u00b0",
+   "city": "Minneapolis",
+   "cost": 0.9814,
+   "day": "2026-11-15",
+   "depth_bid": 19.0,
+   "event": "KXLOWTMIN-26NOV15",
+   "favourite": "KXLOWTMIN-26NOV15-T26",
+   "favourite_bracket": "27\u00b0 or above",
+   "favourite_mid": 0.685,
+   "fee": 0.0014,
+   "id": "l1|control|KXLOWTMIN-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.98,
+   "quotes": [
+    [
+     "T19",
+     0.01,
+     0.02
+    ],
+    [
+     "B19.5",
+     0.0,
+     0.01
+    ],
+    [
+     "B21.5",
+     0.02,
+     0.07
+    ],
+    [
+     "B23.5",
+     0.02,
+     0.05
+    ],
+    [
+     "B25.5",
+     0.16,
+     0.3
+    ],
+    [
+     "T26",
+     0.54,
+     0.83
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "control",
+   "series": "KXLOWTMIN",
+   "station": "MSP",
+   "status": "open",
+   "ticker": "KXLOWTMIN-26NOV15-B23.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.05,
+   "yes_bid": 0.02
+  },
+  {
+   "bracket": "47\u00b0 to 48\u00b0",
+   "city": "New Orleans",
+   "cost": 0.9814,
+   "day": "2026-11-15",
+   "depth_bid": 26.0,
+   "event": "KXLOWTNOLA-26NOV15",
+   "favourite": "KXLOWTNOLA-26NOV15-B51.5",
+   "favourite_bracket": "51\u00b0 to 52\u00b0",
+   "favourite_mid": 0.435,
+   "fee": 0.0014,
+   "id": "l1|control|KXLOWTNOLA-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.98,
+   "quotes": [
+    [
+     "T45",
+     0.01,
+     0.02
+    ],
+    [
+     "B45.5",
+     0.01,
+     0.03
+    ],
+    [
+     "B47.5",
+     0.02,
+     0.11
+    ],
+    [
+     "B49.5",
+     0.25,
+     0.31
+    ],
+    [
+     "B51.5",
+     0.4,
+     0.47
+    ],
+    [
+     "T52",
+     0.2,
+     0.29
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "control",
+   "series": "KXLOWTNOLA",
+   "station": "MSY",
+   "status": "open",
+   "ticker": "KXLOWTNOLA-26NOV15-B47.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.11,
+   "yes_bid": 0.02
+  },
+  {
+   "bracket": "37\u00b0 to 38\u00b0",
+   "city": "New York",
+   "cost": 0.944,
+   "day": "2026-11-15",
+   "depth_bid": 25.0,
+   "event": "KXLOWTNYC-26NOV15",
+   "favourite": "KXLOWTNYC-26NOV15-B41.5",
+   "favourite_bracket": "41\u00b0 to 42\u00b0",
+   "favourite_mid": 0.505,
+   "fee": 0.004,
+   "id": "l1|control|KXLOWTNYC-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.94,
+   "quotes": [
+    [
+     "T37",
+     0.0,
+     0.01
+    ],
+    [
+     "B37.5",
+     0.06,
+     0.1
+    ],
+    [
+     "B39.5",
+     0.44,
+     0.46
+    ],
+    [
+     "B41.5",
+     0.5,
+     0.51
+    ],
+    [
+     "B43.5",
+     0.01,
+     0.02
+    ],
+    [
+     "T44",
+     0.0,
+     0.01
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "control",
+   "series": "KXLOWTNYC",
+   "station": "NYC",
+   "status": "open",
+   "ticker": "KXLOWTNYC-26NOV15-B37.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.1,
+   "yes_bid": 0.06
+  },
+  {
+   "bracket": "35\u00b0 to 36\u00b0",
+   "city": "Oklahoma City",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 105.0,
+   "event": "KXLOWTOKC-26NOV15",
+   "favourite": "KXLOWTOKC-26NOV15-B39.5",
+   "favourite_bracket": "39\u00b0 to 40\u00b0",
+   "favourite_mid": 0.535,
+   "fee": 0.0007,
+   "id": "l1|control|KXLOWTOKC-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T35",
+     0.0,
+     0.08
+    ],
+    [
+     "B35.5",
+     0.01,
+     0.04
+    ],
+    [
+     "B37.5",
+     0.16,
+     0.24
+    ],
+    [
+     "B39.5",
+     0.5,
+     0.57
+    ],
+    [
+     "B41.5",
+     0.1,
+     0.14
+    ],
+    [
+     "T42",
+     0.01,
+     0.02
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "control",
+   "series": "KXLOWTOKC",
+   "station": "OKC",
+   "status": "open",
+   "ticker": "KXLOWTOKC-26NOV15-B35.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.04,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "35\u00b0 to 36\u00b0",
+   "city": "Philadelphia",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 67.0,
+   "event": "KXLOWTPHIL-26NOV15",
+   "favourite": "KXLOWTPHIL-26NOV15-T38",
+   "favourite_bracket": "39\u00b0 or above",
+   "favourite_mid": 0.9,
+   "fee": 0.0007,
+   "id": "l1|control|KXLOWTPHIL-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T31",
+     0.0,
+     0.01
+    ],
+    [
+     "B31.5",
+     0.0,
+     0.01
+    ],
+    [
+     "B33.5",
+     0.0,
+     0.01
+    ],
+    [
+     "B35.5",
+     0.01,
+     0.03
+    ],
+    [
+     "B37.5",
+     0.05,
+     0.08
+    ],
+    [
+     "T38",
+     0.87,
+     0.93
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "control",
+   "series": "KXLOWTPHIL",
+   "station": "PHL",
+   "status": "open",
+   "ticker": "KXLOWTPHIL-26NOV15-B35.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.03,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "54\u00b0 to 55\u00b0",
+   "city": "Phoenix",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 180.72,
+   "event": "KXLOWTPHX-26NOV15",
+   "favourite": "KXLOWTPHX-26NOV15-T57",
+   "favourite_bracket": "58\u00b0 or above",
+   "favourite_mid": 0.715,
+   "fee": 0.0007,
+   "id": "l1|control|KXLOWTPHX-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T50",
+     0.0,
+     0.02
+    ],
+    [
+     "B50.5",
+     0.0,
+     0.06
+    ],
+    [
+     "B52.5",
+     0.01,
+     0.03
+    ],
+    [
+     "B54.5",
+     0.01,
+     0.07
+    ],
+    [
+     "B56.5",
+     0.16,
+     0.22
+    ],
+    [
+     "T57",
+     0.64,
+     0.79
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "control",
+   "series": "KXLOWTPHX",
+   "station": "PHX",
+   "status": "open",
+   "ticker": "KXLOWTPHX-26NOV15-B54.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.07,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "55\u00b0 to 56\u00b0",
+   "city": "San Diego",
+   "cost": 0.9814,
+   "day": "2026-11-15",
+   "depth_bid": 25.0,
+   "event": "KXLOWTSAN-26NOV15",
+   "favourite": "KXLOWTSAN-26NOV15-T58",
+   "favourite_bracket": "59\u00b0 or above",
+   "favourite_mid": 0.66,
+   "fee": 0.0014,
+   "id": "l1|control|KXLOWTSAN-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.98,
+   "quotes": [
+    [
+     "T51",
+     0.01,
+     0.05
+    ],
+    [
+     "B51.5",
+     0.01,
+     0.04
+    ],
+    [
+     "B53.5",
+     0.01,
+     0.04
+    ],
+    [
+     "B55.5",
+     0.02,
+     0.15
+    ],
+    [
+     "B57.5",
+     0.24,
+     0.36
+    ],
+    [
+     "T58",
+     0.53,
+     0.79
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "control",
+   "series": "KXLOWTSAN",
+   "station": "SAN",
+   "status": "open",
+   "ticker": "KXLOWTSAN-26NOV15-B55.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.15,
+   "yes_bid": 0.02
+  },
+  {
+   "bracket": "49\u00b0 or below",
+   "city": "San Antonio",
+   "cost": 0.878,
+   "day": "2026-11-15",
+   "depth_bid": 8.0,
+   "event": "KXLOWTSATX-26NOV15",
+   "favourite": "KXLOWTSATX-26NOV15-B52.5",
+   "favourite_bracket": "52\u00b0 to 53\u00b0",
+   "favourite_mid": 0.405,
+   "fee": 0.008,
+   "id": "l1|control|KXLOWTSATX-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.87,
+   "quotes": [
+    [
+     "T50",
+     0.13,
+     0.26
+    ],
+    [
+     "B50.5",
+     0.27,
+     0.4
+    ],
+    [
+     "B52.5",
+     0.35,
+     0.46
+    ],
+    [
+     "B54.5",
+     0.06,
+     0.1
+    ],
+    [
+     "B56.5",
+     0.01,
+     0.06
+    ],
+    [
+     "T57",
+     0.0,
+     0.03
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "control",
+   "series": "KXLOWTSATX",
+   "station": "SAT",
+   "status": "open",
+   "ticker": "KXLOWTSATX-26NOV15-T50",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.26,
+   "yes_bid": 0.13
+  },
+  {
+   "bracket": "41\u00b0 to 42\u00b0",
+   "city": "Seattle",
+   "cost": 0.9814,
+   "day": "2026-11-15",
+   "depth_bid": 10.0,
+   "event": "KXLOWTSEA-26NOV15",
+   "favourite": "KXLOWTSEA-26NOV15-B45.5",
+   "favourite_bracket": "45\u00b0 to 46\u00b0",
+   "favourite_mid": 0.525,
+   "fee": 0.0014,
+   "id": "l1|control|KXLOWTSEA-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.98,
+   "quotes": [
+    [
+     "T41",
+     0.01,
+     0.02
+    ],
+    [
+     "B41.5",
+     0.02,
+     0.09
+    ],
+    [
+     "B43.5",
+     0.3,
+     0.34
+    ],
+    [
+     "B45.5",
+     0.5,
+     0.55
+    ],
+    [
+     "B47.5",
+     0.08,
+     0.15
+    ],
+    [
+     "T48",
+     0.01,
+     0.02
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "control",
+   "series": "KXLOWTSEA",
+   "station": "SEA",
+   "status": "open",
+   "ticker": "KXLOWTSEA-26NOV15-B41.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.09,
+   "yes_bid": 0.02
+  },
+  {
+   "bracket": "50\u00b0 to 51\u00b0",
+   "city": "San Francisco",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 59.72,
+   "event": "KXLOWTSFO-26NOV15",
+   "favourite": "KXLOWTSFO-26NOV15-B54.5",
+   "favourite_bracket": "54\u00b0 to 55\u00b0",
+   "favourite_mid": 0.575,
+   "fee": 0.0007,
+   "id": "l1|control|KXLOWTSFO-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T50",
+     0.0,
+     0.02
+    ],
+    [
+     "B50.5",
+     0.01,
+     0.04
+    ],
+    [
+     "B52.5",
+     0.14,
+     0.16
+    ],
+    [
+     "B54.5",
+     0.52,
+     0.63
+    ],
+    [
+     "B56.5",
+     0.2,
+     0.25
+    ],
+    [
+     "T57",
+     0.01,
+     0.03
+    ]
+   ],
+   "rel": -2,
+   "roi": null,
+   "role": "control",
+   "series": "KXLOWTSFO",
+   "station": "SFO",
+   "status": "open",
+   "ticker": "KXLOWTSFO-26NOV15-B50.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.04,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "53\u00b0 to 54\u00b0",
+   "city": "Austin",
+   "cost": 0.9814,
+   "day": "2026-11-15",
+   "depth_bid": 35.0,
+   "event": "KXLOWTAUS-26NOV15",
+   "favourite": "KXLOWTAUS-26NOV15-B49.5",
+   "favourite_bracket": "49\u00b0 to 50\u00b0",
+   "favourite_mid": 0.52,
+   "fee": 0.0014,
+   "id": "l1|main|KXLOWTAUS-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.98,
+   "quotes": [
+    [
+     "T47",
+     0.11,
+     0.12
+    ],
+    [
+     "B47.5",
+     0.19,
+     0.23
+    ],
+    [
+     "B49.5",
+     0.51,
+     0.53
+    ],
+    [
+     "B51.5",
+     0.16,
+     0.17
+    ],
+    [
+     "B53.5",
+     0.02,
+     0.05
+    ],
+    [
+     "T54",
+     0.01,
+     0.02
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "main",
+   "series": "KXLOWTAUS",
+   "station": "AUS",
+   "status": "open",
+   "ticker": "KXLOWTAUS-26NOV15-B53.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.05,
+   "yes_bid": 0.02
+  },
+  {
+   "bracket": "47\u00b0 or above",
+   "city": "Dallas",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 95.0,
+   "event": "KXLOWTDAL-26NOV15",
+   "favourite": "KXLOWTDAL-26NOV15-B43.5",
+   "favourite_bracket": "43\u00b0 to 44\u00b0",
+   "favourite_mid": 0.565,
+   "fee": 0.0007,
+   "id": "l1|main|KXLOWTDAL-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T39",
+     0.0,
+     0.01
+    ],
+    [
+     "B39.5",
+     0.01,
+     0.05
+    ],
+    [
+     "B41.5",
+     0.09,
+     0.2
+    ],
+    [
+     "B43.5",
+     0.52,
+     0.61
+    ],
+    [
+     "B45.5",
+     0.23,
+     0.27
+    ],
+    [
+     "T46",
+     0.01,
+     0.03
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "main",
+   "series": "KXLOWTDAL",
+   "station": "DFW",
+   "status": "open",
+   "ticker": "KXLOWTDAL-26NOV15-T46",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.03,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "54\u00b0 to 55\u00b0",
+   "city": "Houston",
+   "cost": 0.9627,
+   "day": "2026-11-15",
+   "depth_bid": 10.0,
+   "event": "KXLOWTHOU-26NOV15",
+   "favourite": "KXLOWTHOU-26NOV15-B50.5",
+   "favourite_bracket": "50\u00b0 to 51\u00b0",
+   "favourite_mid": 0.425,
+   "fee": 0.0027,
+   "id": "l1|main|KXLOWTHOU-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.96,
+   "quotes": [
+    [
+     "T50",
+     0.01,
+     0.02
+    ],
+    [
+     "B50.5",
+     0.35,
+     0.5
+    ],
+    [
+     "B52.5",
+     0.33,
+     0.5
+    ],
+    [
+     "B54.5",
+     0.04,
+     0.13
+    ],
+    [
+     "B56.5",
+     0.01,
+     0.06
+    ],
+    [
+     "T57",
+     0.01,
+     0.02
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "main",
+   "series": "KXLOWTHOU",
+   "station": "HOU",
+   "status": "open",
+   "ticker": "KXLOWTHOU-26NOV15-B54.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.13,
+   "yes_bid": 0.04
+  },
+  {
+   "bracket": "43\u00b0 or above",
+   "city": "Oklahoma City",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 54.86,
+   "event": "KXLOWTOKC-26NOV15",
+   "favourite": "KXLOWTOKC-26NOV15-B39.5",
+   "favourite_bracket": "39\u00b0 to 40\u00b0",
+   "favourite_mid": 0.535,
+   "fee": 0.0007,
+   "id": "l1|main|KXLOWTOKC-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T35",
+     0.0,
+     0.08
+    ],
+    [
+     "B35.5",
+     0.01,
+     0.04
+    ],
+    [
+     "B37.5",
+     0.16,
+     0.24
+    ],
+    [
+     "B39.5",
+     0.5,
+     0.57
+    ],
+    [
+     "B41.5",
+     0.1,
+     0.14
+    ],
+    [
+     "T42",
+     0.01,
+     0.02
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "main",
+   "series": "KXLOWTOKC",
+   "station": "OKC",
+   "status": "open",
+   "ticker": "KXLOWTOKC-26NOV15-T42",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.02,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "56\u00b0 to 57\u00b0",
+   "city": "San Antonio",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 99.0,
+   "event": "KXLOWTSATX-26NOV15",
+   "favourite": "KXLOWTSATX-26NOV15-B52.5",
+   "favourite_bracket": "52\u00b0 to 53\u00b0",
+   "favourite_mid": 0.405,
+   "fee": 0.0007,
+   "id": "l1|main|KXLOWTSATX-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T50",
+     0.13,
+     0.26
+    ],
+    [
+     "B50.5",
+     0.27,
+     0.4
+    ],
+    [
+     "B52.5",
+     0.35,
+     0.46
+    ],
+    [
+     "B54.5",
+     0.06,
+     0.1
+    ],
+    [
+     "B56.5",
+     0.01,
+     0.06
+    ],
+    [
+     "T57",
+     0.0,
+     0.03
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "main",
+   "series": "KXLOWTSATX",
+   "station": "SAT",
+   "status": "open",
+   "ticker": "KXLOWTSATX-26NOV15-B56.5",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.06,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "49\u00b0 or above",
+   "city": "Seattle",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 24.86,
+   "event": "KXLOWTSEA-26NOV15",
+   "favourite": "KXLOWTSEA-26NOV15-B45.5",
+   "favourite_bracket": "45\u00b0 to 46\u00b0",
+   "favourite_mid": 0.525,
+   "fee": 0.0007,
+   "id": "l1|main|KXLOWTSEA-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T41",
+     0.01,
+     0.02
+    ],
+    [
+     "B41.5",
+     0.02,
+     0.09
+    ],
+    [
+     "B43.5",
+     0.3,
+     0.34
+    ],
+    [
+     "B45.5",
+     0.5,
+     0.55
+    ],
+    [
+     "B47.5",
+     0.08,
+     0.15
+    ],
+    [
+     "T48",
+     0.01,
+     0.02
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "main",
+   "series": "KXLOWTSEA",
+   "station": "SEA",
+   "status": "open",
+   "ticker": "KXLOWTSEA-26NOV15-T48",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.02,
+   "yes_bid": 0.01
+  },
+  {
+   "bracket": "58\u00b0 or above",
+   "city": "San Francisco",
+   "cost": 0.9907,
+   "day": "2026-11-15",
+   "depth_bid": 106.0,
+   "event": "KXLOWTSFO-26NOV15",
+   "favourite": "KXLOWTSFO-26NOV15-B54.5",
+   "favourite_bracket": "54\u00b0 to 55\u00b0",
+   "favourite_mid": 0.575,
+   "fee": 0.0007,
+   "id": "l1|main|KXLOWTSFO-26NOV15",
+   "lag_min": 0.5,
+   "lane": "l1",
+   "logged": "2026-11-15T03:00:27.236330+00:00",
+   "price": 0.99,
+   "quotes": [
+    [
+     "T50",
+     0.0,
+     0.02
+    ],
+    [
+     "B50.5",
+     0.01,
+     0.04
+    ],
+    [
+     "B52.5",
+     0.14,
+     0.16
+    ],
+    [
+     "B54.5",
+     0.52,
+     0.63
+    ],
+    [
+     "B56.5",
+     0.2,
+     0.25
+    ],
+    [
+     "T57",
+     0.01,
+     0.03
+    ]
+   ],
+   "rel": 2,
+   "roi": null,
+   "role": "main",
+   "series": "KXLOWTSFO",
+   "station": "SFO",
+   "status": "open",
+   "ticker": "KXLOWTSFO-26NOV15-T57",
+   "version": "climate-v1",
+   "won": null,
+   "yes_ask": 0.03,
+   "yes_bid": 0.01
+  }
+ ],
+ "since": "2026-11-15",
+ "skips": {
+  "c1v2|KXHIGHAUS-26NOV15": "no bracket two away, or its YES bid is 0",
+  "c1v2|KXHIGHMIA-26NOV15": "no bracket two away, or its YES bid is 0",
+  "c1v2|KXHIGHNY-26NOV15": "no bracket two away, or its YES bid is 0",
+  "c1v2|KXHIGHPHIL-26NOV15": "no bracket two away, or its YES bid is 0",
+  "c1v2|KXHIGHTDAL-26NOV15": "no bracket two away, or its YES bid is 0",
+  "c1v2|KXHIGHTDC-26NOV15": "no bracket two away, or its YES bid is 0",
+  "c1v2|KXHIGHTHOU-26NOV15": "no bracket two away, or its YES bid is 0",
+  "c1v2|KXHIGHTNOLA-26NOV15": "no bracket two away, or its YES bid is 0",
+  "c1v2|KXHIGHTOKC-26NOV15": "no bracket two away, or its YES bid is 0",
+  "c1v2|KXHIGHTPHX-26NOV15": "no bracket two away, or its YES bid is 0",
+  "c1v2|KXHIGHTSATX-26NOV15": "no bracket two away, or its YES bid is 0",
+  "l1|KXLOWTATL-26NOV15": "no bracket two away, or its YES bid is 0",
+  "l1|KXLOWTBOS-26NOV15": "no bracket two away, or its YES bid is 0",
+  "l1|KXLOWTCHI-26NOV15": "no bracket two away, or its YES bid is 0",
+  "l1|KXLOWTDC-26NOV15": "no bracket two away, or its YES bid is 0",
+  "l1|KXLOWTDEN-26NOV15": "no bracket two away, or its YES bid is 0",
+  "l1|KXLOWTLAX-26NOV15": "no bracket two away, or its YES bid is 0",
+  "l1|KXLOWTLV-26NOV15": "no bracket two away, or its YES bid is 0",
+  "l1|KXLOWTMIA-26NOV15": "no bracket two away, or its YES bid is 0",
+  "l1|KXLOWTMIN-26NOV15": "no bracket two away, or its YES bid is 0",
+  "l1|KXLOWTNOLA-26NOV15": "no bracket two away, or its YES bid is 0",
+  "l1|KXLOWTNYC-26NOV15": "no bracket two away, or its YES bid is 0",
+  "l1|KXLOWTPHIL-26NOV15": "no bracket two away, or its YES bid is 0",
+  "l1|KXLOWTPHX-26NOV15": "no bracket two away, or its YES bid is 0",
+  "l1|KXLOWTSAN-26NOV15": "no bracket two away, or its YES bid is 0"
+ },
  "version": "climate-v1"
 }
