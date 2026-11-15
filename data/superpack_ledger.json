@@ -639,6 +639,10 @@
    "at": "2026-11-14T18:33:52.551356+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV1517-T64999.99\", \"b\"]]": {
+   "at": "2026-11-15T19:04:07.258218+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXETHD-26NOV0517-T2259.99\", \"b\"]]": {
    "at": "2026-11-05T19:09:22.391845+00:00",
    "pool": "entered"
@@ -3028,7 +3032,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-15T18:34:13.554908+00:00",
+ "last_run": "2026-11-15T19:04:07.258218+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -9495,14 +9499,14 @@
    ],
    "pid": "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXINTLFRIENDLYTOTAL-26NOV15SURESW-2\", \"a\"]]",
    "price": 0.78,
-   "profit": null,
+   "profit": 0.2821,
    "scope": "soccer_o15_intl",
-   "settled": null,
+   "settled": "2026-11-15T19:03:22+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXUEFANLTEAMTOTAL-26NOV16FROMDA-FRO1",
@@ -10073,6 +10077,29 @@
    "scope": "crypto_fav",
    "settled": null,
    "side": "a",
+   "snapshot": null,
+   "sport": "Crypto",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXBTCD-26NOV1517-T64999.99",
+   "entered_at": "2026-11-15T19:04:07.258218+00:00",
+   "entities": [
+    "Bitcoin"
+   ],
+   "id": "superpack:[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV1517-T64999.99\", \"b\"]]",
+   "lane": "crypto_fav_band_below",
+   "logged": "2026-11-15T19:03:18+00:00",
+   "matched": [
+    "Bitcoin"
+   ],
+   "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV1517-T64999.99\", \"b\"]]",
+   "price": 0.73,
+   "profit": null,
+   "scope": "crypto_fav",
+   "settled": null,
+   "side": "b",
    "snapshot": null,
    "sport": "Crypto",
    "src": "sandbox",
