@@ -1211,23 +1211,30 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.28
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.42
     }
    ],
    "logged": "2026-11-15T02:00:30.368924+00:00",
    "minutes_to_start": 58.0,
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.1484,
    "price": 0.14,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-11-15T04:00:30.782784+00:00",
    "side": "yes",
    "spread": 0.05,
    "spread_cost": 0.04,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 28.06,
    "word": "Alexander Flores"
   },
@@ -1363,9 +1370,9 @@
   "KXBOXING-26OCT31TSUTSUROJAS": "2026-10-31T20:06:27.383501+00:00"
  },
  "lane": "boxing_cheap_dog",
- "last_success": "2026-11-15T03:00:34.463126+00:00",
+ "last_success": "2026-11-15T04:00:30.782784+00:00",
  "observations": {
-  "at": "2026-11-15T03:00:34.463126+00:00",
+  "at": "2026-11-15T04:00:30.782784+00:00",
   "entered": 0,
   "events": 2,
   "filled": 0,
