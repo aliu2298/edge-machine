@@ -10,6 +10,7 @@ import html as _html
 
 import bs_bid as B
 import ko_bid as K
+import attendance_dump as AD
 import mentions_dump as MD
 import nl_dump as N
 
@@ -69,6 +70,14 @@ def rows():
         r = rec[MD.HEAD_ROW]
         out.append(_row("mentions_dump_m20", "Mentions · dump bid · paper watch", "./culture.html#dump-bid", "Culture", rec["events"], r["headline"]["n"],
                         r["headline"]["roi"], r["read"]))
+    except Exception:                                           # noqa: BLE001
+        pass
+    try:
+        st = AD.load()
+        rec = AD.records(st)
+        r = rec[AD.HEAD_ROW]
+        out.append(_row("attendance_dump_m20", "Attendance and performers · dump bid · paper watch", "./culture.html#attendance-dump", "Culture", rec["events"],
+                        r["headline"]["n"], r["headline"]["roi"], r["read"]))
     except Exception:                                           # noqa: BLE001
         pass
     return out
