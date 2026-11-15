@@ -4,6 +4,8 @@ Research only. The mentions dump bid (#464) failed in company ladders (#467), an
 (#470), because the rungs of a ladder move together. Olu: "Option 2: start with who attends / guests / performers / setlists."
 These markets have the same shape as mentions: many separate yes/no items in one event.
 
+**Update Nov 15: the confirm test has been run and passes. See `attendance_confirm_2026-11-15.md`, which also holds the build spec.**
+
 **Short answer: yes, on the screen. Both groups pass the gate and reach the screen mark, clearly. This is a screen on one sample,
 so the next step is a confirm test on events not yet read, not a build.**
 
