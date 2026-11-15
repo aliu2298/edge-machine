@@ -139,6 +139,10 @@
    "at": "2026-11-14T21:44:49.489810+00:00",
    "pool": "entered"
   },
+  "[\"contract\", \"o35_cheap_no\", [\"KXUEFANLTOTAL-26NOV14PORDEN-4\", \"no\"]]": {
+   "at": "2026-11-15T01:28:49.006869+00:00",
+   "pool": "entered"
+  },
   "[\"contract\", \"o35_cheap_no\", [\"KXUEFANLTOTAL-26NOV14SWEBIH-4\", \"no\"]]": {
    "at": "2026-11-14T21:44:49.489810+00:00",
    "pool": "duplicate"
@@ -2988,7 +2992,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-15T01:23:32.056643+00:00",
+ "last_run": "2026-11-15T01:28:49.006869+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -9791,6 +9795,31 @@
    "sport": "Soccer",
    "src": "sandbox",
    "status": "open"
+  },
+  {
+   "contract": "KXUEFANLTOTAL-26NOV14PORDEN-4",
+   "entered_at": "2026-11-15T01:28:49.006869+00:00",
+   "entities": [
+    "Portugal",
+    "Denmark"
+   ],
+   "id": "superpack:[\"contract\", \"o35_cheap_no\", [\"KXUEFANLTOTAL-26NOV14PORDEN-4\", \"no\"]]",
+   "lane": "o35_cheap_no",
+   "logged": "2026-11-14T21:19:27+00:00",
+   "matched": [
+    "Denmark",
+    "Portugal"
+   ],
+   "pid": "[\"contract\", \"o35_cheap_no\", [\"KXUEFANLTOTAL-26NOV14PORDEN-4\", \"no\"]]",
+   "price": null,
+   "profit": -0.0293,
+   "scope": null,
+   "settled": "2026-11-15T01:28:49.006869+00:00",
+   "side": "no",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "contract",
+   "status": "lost"
   }
  ],
  "registered": "2026-11-05",
@@ -10209,6 +10238,7 @@
   "[\"contract\", \"o35_cheap_no\", [\"KXUEFANLTOTAL-26NOV13SRBGER-4\", \"no\"]]": "2026-11-13T22:56:38.829819+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXUEFANLTOTAL-26NOV13SVKFRO-4\", \"no\"]]": "2026-11-13T22:56:38.829819+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXUEFANLTOTAL-26NOV14NORWAL-4\", \"no\"]]": "2026-11-14T21:44:49.489810+00:00",
+  "[\"contract\", \"o35_cheap_no\", [\"KXUEFANLTOTAL-26NOV14PORDEN-4\", \"no\"]]": "2026-11-15T01:28:49.006869+00:00",
   "[\"contract\", \"o35_cheap_no\", [\"KXUEFANLTOTAL-26NOV14SWEBIH-4\", \"no\"]]": "2026-11-14T21:44:49.489810+00:00",
   "[\"contract\", \"ufc_dog_ledger.json\", [\"KXUFCFIGHT-26OCT31BROSMI-BRO\", \"yes\"]]": "2026-11-05T03:09:04.962721+00:00",
   "[\"contract\", \"ufc_dog_ledger.json\", [\"KXUFCFIGHT-26OCT31DEOROD-DEO\", \"yes\"]]": "2026-11-05T03:09:04.962721+00:00",
