@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-15T20:07Z",
+ "generated": "2026-11-15T21:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -1313,15 +1313,15 @@
     "w": 1.0
    },
    {
-    "g": null,
+    "g": -1.0,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV15INDPHI-PHI6TO10",
     "ko": "2026-11-15T18:00",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "no",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 0.9
    }
   ],
@@ -1852,7 +1852,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": -1.0,
@@ -1864,7 +1864,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.99
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -1876,7 +1876,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.03
+    "w": 1.05
    },
    {
     "g": 1.5,
@@ -1888,7 +1888,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": 1.5714,
@@ -1900,7 +1900,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.96
    },
    {
     "g": 0.0,
@@ -1912,7 +1912,7 @@
     "side": "yes",
     "src": "fills",
     "st": "flat",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": 1.5556,
@@ -1924,7 +1924,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.03
+    "w": 1.05
    },
    {
     "g": -1.0,
@@ -1936,7 +1936,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": -1.0,
@@ -1948,7 +1948,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.04
+    "w": 1.05
    },
    {
     "g": 1.5,
@@ -1960,7 +1960,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 1.01
    },
    {
     "g": -0.2,
@@ -1972,7 +1972,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": -0.2,
@@ -1984,7 +1984,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.88
+    "w": 0.9
    },
    {
     "g": 1.5,
@@ -1996,7 +1996,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 1.01
    },
    {
     "g": -0.2,
@@ -2008,7 +2008,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.88
+    "w": 0.9
    },
    {
     "g": -1.0,
@@ -2020,7 +2020,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.96
    },
    {
     "g": 1.6,
@@ -2032,7 +2032,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.99
+    "w": 1.0
    },
    {
     "g": 1.5,
@@ -2044,7 +2044,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 1.01
    },
    {
     "g": -0.1429,
@@ -2056,7 +2056,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.02
+    "w": 1.04
    },
    {
     "g": 1.5,
@@ -2068,7 +2068,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 1.02
    },
    {
     "g": -0.1429,
@@ -2080,7 +2080,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.02
+    "w": 1.04
    },
    {
     "g": -1.0,
@@ -2092,7 +2092,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.0
+    "w": 1.01
    },
    {
     "g": 1.6,
@@ -2104,7 +2104,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.99
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -2116,7 +2116,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.0
+    "w": 1.02
    },
    {
     "g": 1.6,
@@ -2128,7 +2128,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.88
+    "w": 0.9
    },
    {
     "g": 1.5,
@@ -2140,7 +2140,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 1.01
    },
    {
     "g": -0.1429,
@@ -2152,7 +2152,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.02
+    "w": 1.04
    },
    {
     "g": -1.0,
@@ -2164,7 +2164,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.99
+    "w": 1.0
    },
    {
     "g": -0.2,
@@ -2176,7 +2176,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": -0.1429,
@@ -2188,7 +2188,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.96
    },
    {
     "g": -1.0,
@@ -2200,7 +2200,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.96
    },
    {
     "g": 1.3077,
@@ -2212,7 +2212,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.96
    },
    {
     "g": 1.25,
@@ -2224,7 +2224,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 1.02
    },
    {
     "g": -1.0,
@@ -2236,7 +2236,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.0
+    "w": 1.01
    },
    {
     "g": 0.3375,
@@ -2248,7 +2248,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 1.01
    },
    {
     "g": -1.0,
@@ -2260,7 +2260,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.0
+    "w": 1.01
    },
    {
     "g": 1.3077,
@@ -2272,7 +2272,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.96
    },
    {
     "g": -0.2,
@@ -2284,7 +2284,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": 1.2667,
@@ -2296,7 +2296,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": -1.0,
@@ -2308,7 +2308,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": -1.0,
@@ -2320,7 +2320,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.0
+    "w": 1.01
    },
    {
     "g": 1.3176,
@@ -2332,7 +2332,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.88
+    "w": 0.9
    },
    {
     "g": 1.3077,
@@ -2344,7 +2344,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.96
    },
    {
     "g": -1.0,
@@ -2356,7 +2356,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.02
+    "w": 1.04
    },
    {
     "g": 1.2842,
@@ -2368,7 +2368,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.99
+    "w": 1.0
    },
    {
     "g": 0.0,
@@ -2380,7 +2380,7 @@
     "side": "yes",
     "src": "fills",
     "st": "flat",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": 1.25,
@@ -2392,7 +2392,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 1.01
    },
    {
     "g": -1.0,
@@ -2404,7 +2404,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": -1.0,
@@ -2416,7 +2416,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.02
+    "w": 1.04
    },
    {
     "g": -1.0,
@@ -2428,7 +2428,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.04
+    "w": 1.05
    },
    {
     "g": 1.2857,
@@ -2440,7 +2440,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.02
+    "w": 1.04
    },
    {
     "g": 1.2842,
@@ -2452,7 +2452,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.99
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -2464,7 +2464,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": -1.0,
@@ -2476,7 +2476,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.0
+    "w": 1.01
    },
    {
     "g": 1.2667,
@@ -2488,7 +2488,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": -1.0,
@@ -2500,7 +2500,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.05
+    "w": 1.06
    },
    {
     "g": -1.0,
@@ -2512,7 +2512,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.02
+    "w": 1.04
    },
    {
     "g": -1.0,
@@ -2524,7 +2524,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.88
+    "w": 0.9
    },
    {
     "g": -1.0,
@@ -2536,7 +2536,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.0
+    "w": 1.01
    },
    {
     "g": 1.3077,
@@ -2548,7 +2548,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.96
    },
    {
     "g": 1.25,
@@ -2560,7 +2560,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 1.02
    },
    {
     "g": 1.25,
@@ -2572,7 +2572,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 1.02
    },
    {
     "g": 1.303,
@@ -2584,7 +2584,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.03
+    "w": 1.05
    },
    {
     "g": -0.2,
@@ -2596,7 +2596,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.88
+    "w": 0.9
    },
    {
     "g": 1.3176,
@@ -2608,7 +2608,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.88
+    "w": 0.9
    },
    {
     "g": 1.2842,
@@ -2620,7 +2620,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.99
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -2632,7 +2632,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.0
+    "w": 1.01
    },
    {
     "g": -1.0,
@@ -2644,7 +2644,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.03
+    "w": 1.05
    },
    {
     "g": -1.0,
@@ -2656,7 +2656,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.02
+    "w": 1.04
    },
    {
     "g": -1.0,
@@ -2668,7 +2668,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.0
+    "w": 1.02
    },
    {
     "g": -1.0,
@@ -2680,7 +2680,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.02
+    "w": 1.04
    },
    {
     "g": 0.0,
@@ -2692,7 +2692,7 @@
     "side": "yes",
     "src": "fills",
     "st": "flat",
-    "w": 1.0
+    "w": 1.02
    },
    {
     "g": -1.0,
@@ -2704,7 +2704,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.88
+    "w": 0.9
    },
    {
     "g": 1.25,
@@ -2716,7 +2716,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 1.01
    },
    {
     "g": -1.0,
@@ -2728,7 +2728,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.02
+    "w": 1.04
    },
    {
     "g": -1.0,
@@ -2740,7 +2740,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.03
+    "w": 1.05
    },
    {
     "g": 1.3,
@@ -2752,7 +2752,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.04
+    "w": 1.05
    },
    {
     "g": -1.0,
@@ -2764,7 +2764,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": -0.2,
@@ -2776,7 +2776,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": 1.303,
@@ -2788,7 +2788,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.03
+    "w": 1.05
    },
    {
     "g": 1.303,
@@ -2800,7 +2800,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.03
+    "w": 1.05
    },
    {
     "g": -0.24,
@@ -2812,7 +2812,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.0
+    "w": 1.02
    },
    {
     "g": -1.0,
@@ -2824,7 +2824,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.96
    },
    {
     "g": -1.0,
@@ -2836,7 +2836,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.03
+    "w": 1.05
    },
    {
     "g": 0.0,
@@ -2848,7 +2848,7 @@
     "side": "yes",
     "src": "fills",
     "st": "flat",
-    "w": 1.0
+    "w": 1.02
    },
    {
     "g": 1.2667,
@@ -2860,7 +2860,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": 1.2857,
@@ -2872,7 +2872,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.02
+    "w": 1.04
    },
    {
     "g": -1.0,
@@ -2884,7 +2884,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.96
    },
    {
     "g": -1.0,
@@ -2896,7 +2896,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.03
+    "w": 1.05
    },
    {
     "g": 0.4138,
@@ -2908,7 +2908,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": -1.0,
@@ -2920,7 +2920,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.04
+    "w": 1.05
    },
    {
     "g": -1.0,
@@ -2932,7 +2932,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.05
+    "w": 1.06
    },
    {
     "g": 0.0,
@@ -2944,7 +2944,7 @@
     "side": "yes",
     "src": "fills",
     "st": "flat",
-    "w": 1.0
+    "w": 1.02
    },
    {
     "g": 1.303,
@@ -2956,7 +2956,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.03
+    "w": 1.05
    },
    {
     "g": 1.3077,
@@ -2968,7 +2968,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.96
    },
    {
     "g": 1.25,
@@ -2980,7 +2980,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 1.01
    },
    {
     "g": -1.0,
@@ -2992,7 +2992,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.0
+    "w": 1.01
    },
    {
     "g": 1.3,
@@ -3004,7 +3004,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": 1.2667,
@@ -3016,7 +3016,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": 1.2842,
@@ -3028,7 +3028,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.99
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -3040,7 +3040,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.88
+    "w": 0.9
    },
    {
     "g": -1.0,
@@ -3052,7 +3052,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": -1.0,
@@ -3064,7 +3064,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.0
+    "w": 1.02
    },
    {
     "g": -1.0,
@@ -3076,7 +3076,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.0
+    "w": 1.02
    },
    {
     "g": -1.0,
@@ -3088,7 +3088,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.03
+    "w": 1.05
    },
    {
     "g": -1.0,
@@ -3100,7 +3100,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": -1.0,
@@ -3112,7 +3112,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.96
    },
    {
     "g": 1.3,
@@ -3124,7 +3124,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": -1.0,
@@ -3136,7 +3136,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.99
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -3148,7 +3148,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.04
+    "w": 1.05
    },
    {
     "g": -1.0,
@@ -3160,7 +3160,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.88
+    "w": 0.9
    },
    {
     "g": -1.0,
@@ -3172,7 +3172,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.94
+    "w": 0.95
    },
    {
     "g": 0.0,
@@ -3184,7 +3184,7 @@
     "side": "yes",
     "src": "fills",
     "st": "flat",
-    "w": 1.0
+    "w": 1.02
    },
    {
     "g": -0.1429,
@@ -3196,7 +3196,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.96
    },
    {
     "g": null,
@@ -3208,7 +3208,67 @@
     "side": "yes",
     "src": "fills",
     "st": "open",
-    "w": 0.88
+    "w": 0.9
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV15CHALAC-CHA11TO20",
+    "ko": "2026-11-15T21:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.01
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV15CHALAC-CHA1TO5",
+    "ko": "2026-11-15T21:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.95
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV15CHALAC-CHA6TO10",
+    "ko": "2026-11-15T21:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.95
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV15CHALAC-LAC1TO5",
+    "ko": "2026-11-15T21:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.95
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV15CHALAC-LAC6TO10",
+    "ko": "2026-11-15T21:30",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.95
    }
   ],
   "o35_cheap_no": [
@@ -4619,10 +4679,19 @@
      "side": "yes",
      "st": "open",
      "w": 1.01
+    },
+    {
+     "id": "team1_form_l5:KXUEFANLTEAMTOTAL-26NOV17DENNOR-DEN1",
+     "ko": "2026-11-17T19:45",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 1.0
     }
    ],
    "refused": {
-    "team1_form_l5:KXUEFANLTEAMTOTAL-26NOV14NORWAL-NOR1": "price above the cap"
+    "team1_form_l5:KXUEFANLTEAMTOTAL-26NOV14NORWAL-NOR1": "price above the cap",
+    "team1_form_l5:KXUEFANLTEAMTOTAL-26NOV17WALPOR-POR1": "price above the cap"
    }
   },
   "team2_form_l10|soccer_team2_intl": {
