@@ -10491,21 +10491,19 @@
    "P": 0.91,
    "bot_version": "wm-nofade-v4",
    "bucket": "CLE1TO5",
-   "decided_at": "2026-11-14T23:30:21+00:00",
-   "depth": 31.73,
+   "decided_at": "2026-11-15T00:30:11+00:00",
    "event": "KXNBAWINMARGIN-26NOV14DALCLE",
    "lane": "nba_wm_nofade",
    "limit": 0.59,
-   "outcome": "plan",
+   "night_cap": 30,
+   "night_count": 3,
+   "outcome": "bid_posted",
    "qty": 1.0,
    "rule_ok": true,
    "slate": "26NOV14",
-   "spread": 0.05,
    "ticker": "KXNBAWINMARGIN-26NOV14DALCLE-CLE1TO5",
    "tip": "2026-11-15T00:30:00+00:00",
-   "why": null,
-   "yes_ask": 0.14,
-   "yes_bid": 0.09
+   "why": null
   },
   "no:KXNBAWINMARGIN-26NOV14DALCLE-CLE21PLUS": {
    "bot_version": "wm-nofade-v4",
@@ -18001,6 +17999,6 @@
    "yes_bid": 0.11
   }
  },
- "updated_at": "2026-11-15T00:15:32+00:00",
+ "updated_at": "2026-11-15T00:30:11+00:00",
  "version": 1
 }
