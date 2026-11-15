@@ -1177,6 +1177,59 @@
    "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Seydi Coupe"
+  },
+  {
+   "ask_check": {
+    "book": 815.8,
+    "first_quotes": false,
+    "how": "book",
+    "last_trade": 0.1,
+    "source": "live",
+    "status": "verified"
+   },
+   "bid": 0.09,
+   "book": {
+    "ask_depth": 40979.35,
+    "ask_levels": 43,
+    "ask_size": 14.0,
+    "at": "2026-11-15T02:00:30.368924+00:00",
+    "at_or_under": 815.8,
+    "best_ask": 0.07,
+    "best_bid": 0.04,
+    "bid_depth": 63.2,
+    "bid_levels": 3,
+    "bid_size": 1.99
+   },
+   "book_at": "2026-11-15T02:00:30.368924+00:00",
+   "book_size": 815.8,
+   "entry_at": "2026-11-15T01:42:00+00:00",
+   "event": "KXBOXING-26NOV14ADELEYFLORES",
+   "fight_start": "2026-11-15T02:40:00+00:00",
+   "id": "KXBOXING-26NOV14ADELEYFLORES-FLORES",
+   "last_trade": 0.1,
+   "last_trade_at": "2026-11-15T01:41:00+00:00",
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.28
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.42
+    }
+   ],
+   "logged": "2026-11-15T02:00:30.368924+00:00",
+   "minutes_to_start": 58.0,
+   "payout": null,
+   "price": 0.14,
+   "side": "yes",
+   "spread": 0.05,
+   "spread_cost": 0.04,
+   "status": "open",
+   "traded_to_entry": 28.06,
+   "word": "Alexander Flores"
   }
  ],
  "error": null,
@@ -1225,17 +1278,23 @@
   "KXBOXING-26NOV12NICKENQUARTE": "2026-11-13T00:00:38.142571+00:00",
   "KXBOXING-26NOV12OROBIOCEDENO": "2026-11-13T01:57:39.863554+00:00",
   "KXBOXING-26NOV12SANFORGOMEZ": "2026-11-13T03:00:36.212329+00:00",
+  "KXBOXING-26NOV14ADAMESG": "2026-11-15T02:00:30.368924+00:00",
+  "KXBOXING-26NOV14ADELEYFLORES": "2026-11-15T02:00:30.368924+00:00",
   "KXBOXING-26NOV14ALGHEMARKSB": "2026-11-14T21:00:39.118452+00:00",
   "KXBOXING-26NOV14BARRETGWYNNE": "2026-11-14T21:00:39.118452+00:00",
   "KXBOXING-26NOV14BOYMATINUSAH": "2026-11-15T00:00:36.593565+00:00",
   "KXBOXING-26NOV14BUTAEVCASTRO": "2026-11-15T01:00:39.997834+00:00",
   "KXBOXING-26NOV14CASTELKUCHME": "2026-11-15T01:00:39.997834+00:00",
+  "KXBOXING-26NOV14DEVAKALE": "2026-11-15T02:00:30.368924+00:00",
   "KXBOXING-26NOV14ESPIONTORRES": "2026-11-15T01:00:39.997834+00:00",
   "KXBOXING-26NOV14JRMAY": "2026-11-15T01:00:39.997834+00:00",
   "KXBOXING-26NOV14MOLLOYSUPPAN": "2026-11-14T19:16:55.133593+00:00",
+  "KXBOXING-26NOV14MOLONESANTIB": "2026-11-15T02:00:30.368924+00:00",
+  "KXBOXING-26NOV14MOSESLERMA": "2026-11-15T02:00:30.368924+00:00",
   "KXBOXING-26NOV14OSADOLPODLAS": "2026-11-14T19:00:36.818106+00:00",
   "KXBOXING-26NOV14RILEYCOUPE": "2026-11-14T22:00:39.258285+00:00",
   "KXBOXING-26NOV14SHEEHYROMERO": "2026-11-15T01:00:39.997834+00:00",
+  "KXBOXING-26NOV14SURACEBEDNAR": "2026-11-15T02:00:30.368924+00:00",
   "KXBOXING-26NOV14TOWARDCORRIE": "2026-11-14T20:00:32.301707+00:00",
   "KXBOXING-26NOV14WELLANDILLIN": "2026-11-14T21:00:39.118452+00:00",
   "KXBOXING-26NOV14ZOKIROCOLANT": "2026-11-15T01:00:39.997834+00:00",
@@ -1249,16 +1308,16 @@
   "KXBOXING-26OCT31TSUTSUROJAS": "2026-10-31T20:06:27.383501+00:00"
  },
  "lane": "boxing_cheap_dog",
- "last_success": "2026-11-15T01:00:39.997834+00:00",
+ "last_success": "2026-11-15T02:00:30.368924+00:00",
  "observations": {
-  "at": "2026-11-15T01:00:39.997834+00:00",
-  "entered": 0,
-  "events": 7,
+  "at": "2026-11-15T02:00:30.368924+00:00",
+  "entered": 1,
+  "events": 8,
   "filled": 0,
   "no_start": 0,
-  "skipped": 8,
+  "skipped": 11,
   "unverified": 0,
-  "waiting": 15
+  "waiting": 9
  },
  "skips": {
   "KXBOXING-26NOV06AOKUSOKHAHRA-AOKUSO": {
@@ -1687,6 +1746,12 @@
    "start": "2026-11-13T02:45:00+00:00",
    "word": "Wyatt Sanford"
   },
+  "KXBOXING-26NOV14ADELEYFLORES-ADELEY": {
+   "event": "KXBOXING-26NOV14ADELEYFLORES",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-15T02:40:00+00:00",
+   "word": "David Adeleye"
+  },
   "KXBOXING-26NOV14ALGHEMARKSB-ALGHE": {
    "event": "KXBOXING-26NOV14ALGHEMARKSB",
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
@@ -1723,6 +1788,18 @@
    "start": "2026-11-15T00:30:00+00:00",
    "word": "Moro Kanla Inusah"
   },
+  "KXBOXING-26NOV14BUTAEVCASTRO-BUTAEV": {
+   "event": "KXBOXING-26NOV14BUTAEVCASTRO",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-15T01:10:00+00:00",
+   "word": "Radzhab Butaev"
+  },
+  "KXBOXING-26NOV14BUTAEVCASTRO-CASTRO": {
+   "event": "KXBOXING-26NOV14BUTAEVCASTRO",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-15T01:10:00+00:00",
+   "word": "Alexander Castro"
+  },
   "KXBOXING-26NOV14CASTELKUCHME-CASTEL": {
    "event": "KXBOXING-26NOV14CASTELKUCHME",
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
@@ -1734,6 +1811,18 @@
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
    "start": "2026-11-15T00:50:00+00:00",
    "word": "Darial Kuchmenov"
+  },
+  "KXBOXING-26NOV14DEVAKALE-AKALE": {
+   "event": "KXBOXING-26NOV14DEVAKALE",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-15T02:00:00+00:00",
+   "word": "Sona Akale"
+  },
+  "KXBOXING-26NOV14DEVAKALE-DEV": {
+   "event": "KXBOXING-26NOV14DEVAKALE",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-15T02:00:00+00:00",
+   "word": "Nishant Dev"
   },
   "KXBOXING-26NOV14ESPIONTORRES-ESPION": {
    "event": "KXBOXING-26NOV14ESPIONTORRES",
@@ -1771,6 +1860,30 @@
    "start": "2026-11-14T20:00:00+00:00",
    "word": "Steve Suppan"
   },
+  "KXBOXING-26NOV14MOLONESANTIB-MOLONE": {
+   "event": "KXBOXING-26NOV14MOLONESANTIB",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-15T02:10:00+00:00",
+   "word": "Jason Moloney"
+  },
+  "KXBOXING-26NOV14MOLONESANTIB-SANTIB": {
+   "event": "KXBOXING-26NOV14MOLONESANTIB",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-15T02:10:00+00:00",
+   "word": "Jose Teran Santibanez"
+  },
+  "KXBOXING-26NOV14MOSESLERMA-LERMA": {
+   "event": "KXBOXING-26NOV14MOSESLERMA",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-15T02:20:00+00:00",
+   "word": "Manuel Lerma"
+  },
+  "KXBOXING-26NOV14MOSESLERMA-MOSES": {
+   "event": "KXBOXING-26NOV14MOSESLERMA",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-15T02:20:00+00:00",
+   "word": "Zaquin Moses"
+  },
   "KXBOXING-26NOV14OSADOLPODLAS-OSADOL": {
    "event": "KXBOXING-26NOV14OSADOLPODLAS",
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
@@ -1788,6 +1901,18 @@
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
    "start": "2026-11-14T22:00:00+00:00",
    "word": "Viddal Riley"
+  },
+  "KXBOXING-26NOV14SHEEHYROMERO-ROMERO": {
+   "event": "KXBOXING-26NOV14SHEEHYROMERO",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-15T01:00:00+00:00",
+   "word": "Jose Matias Romero"
+  },
+  "KXBOXING-26NOV14SHEEHYROMERO-SHEEHY": {
+   "event": "KXBOXING-26NOV14SHEEHYROMERO",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-15T01:00:00+00:00",
+   "word": "Charlie Sheehy"
   },
   "KXBOXING-26NOV14TOWARDCORRIE-CORRIE": {
    "event": "KXBOXING-26NOV14TOWARDCORRIE",
