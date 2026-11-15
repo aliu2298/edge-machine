@@ -1,0 +1,39 @@
+name: Attendance dump bid
+# attendance_dump.py (2026-11-15, docs PR 472): sweeps the 54 attendance and performer series for markets settled since the last sweep, then replays each event
+# once, after every item has settled, from public trade prints under the fixed rule of docs/attendance_confirm_2026-11-15.md. A Sandbox PAPER watch. No orders, no VPS, no live loop.
+# The replay is after the fact, so a late or missed run only delays rows: the next run sweeps from a safe margin and reads every event not yet in the ledger.
+# Request load: one listing for each of 54 series, then a few pulls an event. Every six hours at minute 37, off the minutes the other watches use.
+on:
+  schedule:
+    - cron: '37 2,8,14,20 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: attendance-dump
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Tests
+        run: python3 test_attendance_dump.py
+      - name: Replay the settled events
+        run: python3 attendance_dump.py
+      - name: Save records
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+          python3 save_records.py --message "Attendance dump bid paper watch" \
+            --add data/attendance_dump_ledger.json \
+            --regenerate "python3 attendance_dump.py" \
+            --after "gh workflow run sandbox-tracker.yml --ref main"
