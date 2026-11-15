@@ -10933,6 +10933,22 @@
    "yes_ask": 0.03,
    "yes_bid": 0.01
   },
+  "no:KXNBAWINMARGIN-26NOV15INDPHI-IND6TO10": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "IND6TO10",
+   "decided_at": "2026-11-15T17:11:57+00:00",
+   "event": "KXNBAWINMARGIN-26NOV15INDPHI",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV15",
+   "spread": 0.05,
+   "ticker": "KXNBAWINMARGIN-26NOV15INDPHI-IND6TO10",
+   "tip": "2026-11-15T18:00:00+00:00",
+   "why": "NO price 0.97 outside 10-95c",
+   "yes_ask": 0.08,
+   "yes_bid": 0.03
+  },
   "no:KXNBAWINMARGIN-26NOV15INDPHI-PHI11TO20": {
    "P": 0.77,
    "bot_version": "wm-nofade-v4",
@@ -18149,6 +18165,22 @@
    "yes_ask": 0.12,
    "yes_bid": 0.1
   },
+  "yes:KXNBAWINMARGIN-26NOV15INDPHI-IND6TO10": {
+   "bot_version": "wm-yes-v4",
+   "bucket": "IND6TO10",
+   "decided_at": "2026-11-15T17:11:57+00:00",
+   "event": "KXNBAWINMARGIN-26NOV15INDPHI",
+   "lane": "nba_winmargin_live",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV15",
+   "spread": 0.05,
+   "ticker": "KXNBAWINMARGIN-26NOV15INDPHI-IND6TO10",
+   "tip": "2026-11-15T18:00:00+00:00",
+   "why": "ask 0.08 outside 10-20c",
+   "yes_ask": 0.08,
+   "yes_bid": 0.03
+  },
   "yes:KXNBAWINMARGIN-26NOV15INDPHI-PHI11TO20": {
    "bot_version": "wm-yes-v4",
    "bucket": "PHI11TO20",
@@ -18200,6 +18232,6 @@
    "yes_bid": 0.17
   }
  },
- "updated_at": "2026-11-15T17:00:32+00:00",
+ "updated_at": "2026-11-15T17:11:57+00:00",
  "version": 1
 }
