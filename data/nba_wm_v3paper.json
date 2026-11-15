@@ -1,10 +1,10 @@
 {
  "error": null,
- "last_run": "2026-11-15T03:09:18.434315+00:00",
+ "last_run": "2026-11-15T11:33:42.672749+00:00",
  "observations": {
-  "at": "2026-11-15T03:09:18.434315+00:00",
-  "new": 0,
-  "skipped": 34
+  "at": "2026-11-15T11:33:42.672749+00:00",
+  "new": 1,
+  "skipped": 43
  },
  "rows": {
   "KXNBAWINMARGIN-26NOV08BKNDAL-DAL1TO5": {
@@ -1791,6 +1791,27 @@
    "tip": 1794625200,
    "version": "wm-yes-v3-paper",
    "won": false
+  },
+  "KXNBAWINMARGIN-26NOV14DETMIA-DET6TO10": {
+   "ask": 0.18,
+   "bucket": "6-10",
+   "cost": 0.19033,
+   "event": "KXNBAWINMARGIN-26NOV14DETMIA",
+   "filled_2x": false,
+   "filled_3x": false,
+   "hold_roi": -1.0,
+   "key": "KXNBAWINMARGIN-26NOV14DETMIA-DET6TO10",
+   "lane": "nba_wm_yes_v3",
+   "logged": "2026-11-15T11:33:42.672749+00:00",
+   "night": "2026-11-14",
+   "profit": -0.19033,
+   "reason": "split",
+   "roi": -1.0,
+   "team": "DET",
+   "team_share": 0.6218,
+   "tip": 1794704400,
+   "version": "wm-yes-v3-paper",
+   "won": false
   }
  },
  "since": "2026-11-08",
@@ -1827,8 +1848,17 @@
   "KXNBAWINMARGIN-26NOV13PORSAC-SAC1TO5": "unverified ask",
   "KXNBAWINMARGIN-26NOV13UTAHOU-HOU1TO5": "unverified ask",
   "KXNBAWINMARGIN-26NOV13UTAHOU-HOU6TO10": "unverified ask",
+  "KXNBAWINMARGIN-26NOV14BKNMEM-BKN1TO5": "unverified ask",
+  "KXNBAWINMARGIN-26NOV14BKNMEM-BKN6TO10": "unverified ask",
+  "KXNBAWINMARGIN-26NOV14BKNMEM-MEM1TO5": "unverified ask",
+  "KXNBAWINMARGIN-26NOV14BKNMEM-MEM6TO10": "unverified ask",
+  "KXNBAWINMARGIN-26NOV14CHIMIN-MIN6TO10": "unverified ask",
+  "KXNBAWINMARGIN-26NOV14DALCLE-CLE1TO5": "unverified ask",
   "KXNBAWINMARGIN-26NOV14DENNOP-DEN1TO5": "unverified ask",
-  "KXNBAWINMARGIN-26NOV14DENNOP-DEN6TO10": "unverified ask"
+  "KXNBAWINMARGIN-26NOV14DENNOP-DEN6TO10": "unverified ask",
+  "KXNBAWINMARGIN-26NOV14DETMIA-DET1TO5": "unverified ask",
+  "KXNBAWINMARGIN-26NOV14DETMIA-MIA1TO5": "unverified ask",
+  "KXNBAWINMARGIN-26NOV14DETMIA-MIA6TO10": "unverified ask"
  },
  "version": "wm-yes-v3-paper"
 }
