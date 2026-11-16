@@ -1051,6 +1051,15 @@
    "at": "2026-11-15T12:43:27.920680+00:00",
    "pool": "entered"
   },
+  "[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV16FROMDA\", \"no\"]]": {
+   "at": "2026-11-16T13:56:13.806918+00:00",
+   "mirror": "entered",
+   "pool": "entered"
+  },
+  "[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV16KAZSVK\", \"no\"]]": {
+   "at": "2026-11-16T13:56:13.806918+00:00",
+   "pool": "entered"
+  },
   "[\"soccer_rules_ledger.json\", \"A6\", [\"A6:KXEPLTOTAL-26NOV06EVECOV\", \"no\"]]": {
    "at": "2026-11-06T18:39:06.373180+00:00",
    "pool": "entered"
@@ -3140,7 +3149,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-16T13:19:40.008582+00:00",
+ "last_run": "2026-11-16T13:56:13.806918+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -3927,6 +3936,94 @@
    "sport": "Commodities",
    "src": "contract",
    "status": "won"
+  },
+  {
+   "contract": "KXUEFANLTOTAL-26NOV16FROMDA-4",
+   "entered_at": "2026-11-16T13:56:13.806918+00:00",
+   "entities": [
+    "Faroe Islands",
+    "Moldova"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV16FROMDA\", \"no\"]]",
+   "lane": "A5",
+   "logged": "2026-11-16T13:31:07.814779+00:00",
+   "matched": [
+    "Moldova"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV16FROMDA\", \"no\"]]",
+   "price": 0.79,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "no",
+   "snapshot": {
+    "as_of": "2026-11-16T13:31:07.814779+00:00",
+    "names": [
+     {
+      "bets": 9,
+      "name": "Brighton & Hove Albion",
+      "profit": -5.5938,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "PSV Eindhoven",
+      "profit": -4.6111,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Feyenoord Rotterdam",
+      "profit": -4.0676,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Real Betis",
+      "profit": -3.6728,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "SC Freiburg",
+      "profit": -3.1733,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "St. Louis CITY SC",
+      "profit": -2.6584,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 10,
+      "name": "Sevilla",
+      "profit": -1.6029,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Montenegro",
+      "profit": -1.3502,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "HYPE",
+      "profit": -1.1363,
+      "sport": "Crypto"
+     },
+     {
+      "bets": 6,
+      "name": "Moldova",
+      "profit": -1.1345,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
   }
  ],
  "pool": [
@@ -10330,6 +10427,56 @@
    "snapshot": null,
    "sport": "Commodities",
    "src": "daily",
+   "status": "open"
+  },
+  {
+   "contract": "KXUEFANLTOTAL-26NOV16FROMDA-4",
+   "entered_at": "2026-11-16T13:56:13.806918+00:00",
+   "entities": [
+    "Faroe Islands",
+    "Moldova"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV16FROMDA\", \"no\"]]",
+   "lane": "A5",
+   "logged": "2026-11-16T13:31:07.814779+00:00",
+   "matched": [
+    "Faroe Islands",
+    "Moldova"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV16FROMDA\", \"no\"]]",
+   "price": 0.79,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "no",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXUEFANLTOTAL-26NOV16KAZSVK-4",
+   "entered_at": "2026-11-16T13:56:13.806918+00:00",
+   "entities": [
+    "Kazakhstan",
+    "Slovakia"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV16KAZSVK\", \"no\"]]",
+   "lane": "A5",
+   "logged": "2026-11-16T13:31:07.814779+00:00",
+   "matched": [
+    "Kazakhstan",
+    "Slovakia"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV16KAZSVK\", \"no\"]]",
+   "price": 0.73,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "no",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
    "status": "open"
   }
  ],
