@@ -40,7 +40,7 @@
   },
   {
    "date": "2026-11-17",
-   "eps_forecast": "$3.86",
+   "eps_forecast": "$3.87",
    "fiscal_q": "Oct/2026",
    "kpi": [
     {
@@ -65,7 +65,7 @@
    "mentions": [
     "KXEARNINGSMENTIONNVDA-26NOV18"
    ],
-   "n_ests": "14",
+   "n_ests": "13",
    "name": "NVIDIA Corporation",
    "perp": "KXNVDAPERP",
    "sym": "NVDA",
@@ -195,7 +195,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-16T15:00:34Z",
+ "calendar_at": "2026-11-16T16:00:28Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -3688,9 +3688,29 @@
     "width": 0.7346153846153847
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-16T16:01:36Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 391928571.4285714,
+    "rungs": 6,
+    "width": 8710317.460317433
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-16T16:01:36Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.7106382978723405,
+    "rungs": 15,
+    "width": 0.7346153846153847
+   },
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-16T15:01:39Z",
+ "last_run": "2026-11-16T16:01:39Z",
  "predictions": [
   {
    "call": {
