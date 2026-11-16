@@ -4,6 +4,8 @@ Research only. The dump bid pays in mentions (#464) and in who attends / who per
 yes/no items. Olu asked for more families of that shape, ideally one that trades in the autumn, when attendance runs at about 5
 fills a week. Four were looked at: reality TV, charts and rankings, award nominations, politics lists.
 
+**Update, later on Nov 16: the reality TV confirm test was run and failed (-4.2% on 526 fills). See `items_confirm_2026-11-16.md`.**
+
 **Short answer: nothing as strong as mentions or attendance. Reality TV passes, weakly, on one cell and goes to a confirm test.
 Charts are a near miss and stay a lead. Politics lists and award nominations are a no.**
 
