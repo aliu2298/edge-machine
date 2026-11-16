@@ -176,12 +176,25 @@ def feed(state, now=None, previous=None, heartbeat=False):
 
 
 def page_inputs(d, st, blob, state, now=None):
-    """Augment page inputs in memory; the original ledger, stage and feed objects are untouched."""
+    """Augment page inputs in memory; the original ledger, stage and feed objects are untouched.
+
+    The African qualifier legs (africa_goals_production, 2026-11-16) ride on the same call: every page that reads the team rules reads them."""
+    d, st, blob = _africa_inputs(d, st, blob, now)
     current = feed(state, now=now)
     return (dict(d, quotes=list(d.get("quotes") or []) + quotes(state)),
             dict(st, pairs={**(st.get("pairs") or {}), **pairs()}),
             dict(blob, leads={**(blob.get("leads") or {}), **current["leads"]},
                  pairs={**(blob.get("pairs") or {}), **current["pairs"]}))
+
+
+def _africa_inputs(d, st, blob, now):
+    try:
+        import africa_goals as AG
+        import africa_goals_production as AFP
+        return AFP.page_inputs(d, st, blob, AG.load(), now=now)
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"soccer_team_rules_production: the African qualifier legs failed: {type(exc).__name__}: {exc}")
+        return d, st, blob
 
 
 def main(argv=None):

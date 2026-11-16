@@ -56,12 +56,12 @@ GRANDFATHERED = frozenset({
 KNOWN_FEEDS = frozenset({
     "production_leads.json", "soccer_rules_production_leads.json", "soccer_team_rules_production_leads.json", "econ_production_leads.json",
     "culture_production_leads.json", "nba_value_production_leads.json", "production_nba_wm_leads.json",
-    "production_nba_wm_nofade_leads.json", "production_o35_leads.json", "production_top5_dip_leads.json", "production_arg_dip_leads.json",
+    "production_nba_wm_nofade_leads.json", "production_o35_leads.json", "production_top5_dip_leads.json", "production_arg_dip_leads.json", "africa_goals_production_leads.json",
 })
 KNOWN_MODULES = frozenset({
     "production.py", "production_live.py", "production_overview.py", "soccer_rules_production.py", "soccer_team_rules_production.py",
     "daily_production.py", "culture_production.py", "nba_value_production.py", "nba_wm_production.py", "o35_production.py",
-    "top5_dip_production.py", "arg_dip_production.py", "live_record_publish.py",
+    "top5_dip_production.py", "arg_dip_production.py", "live_record_publish.py", "africa_goals_production.py",
 })
 # Own-engine Production lanes -> the fillsim_regrade lane that grades their own entries.
 OWN = {"nba_winmargin_live": "nba_winmargin_live", "nba_wm_nofade": "nba_wm_nofade", "o35_cheap_no_wave": "o35_cheap_no_v4",
@@ -75,6 +75,7 @@ def _ended(module, today):
 
 def production_lanes(today=None):
     """{lane key: label} for every lane the CODE puts in Production today."""
+    import africa_goals_production as AFP
     import arg_dip_production as AP
     import culture_production as CP
     import daily_production as DP
@@ -91,7 +92,7 @@ def production_lanes(today=None):
         gone = T.PAIR_REMOVALS.get(key)
         if o.get("moved_on") and not (gone and gone.get("removed_on", "") >= o["moved_on"]):
             out[key] = "tracker rule"
-    for registry in (SRP.PAIRS, STRP.PAIRS):
+    for registry in (SRP.PAIRS, STRP.PAIRS, AFP.PAIRS):
         for _rule, (pair, sport, label) in registry.items():
             out[f"{pair}|{sport}"] = label
     for pair in DP.NC_PAIRS.values():
@@ -128,6 +129,10 @@ def grader(key):
     if name in lanes:
         return lanes[name][3], lanes[name][1]
     src, _, scope = key.partition("|")
+    if src.startswith("afq_") and scope:                  # the African qualifier legs: a subset of africa_goals' own picks (2026-11-16)
+        import africa_goals_production as AFP
+        pick = (lambda s: AFP.dog_picks(s)) if src == "afq_dog_score" else (lambda s: AFP.btts_picks(s))
+        return (lambda tp: G.hold_lane(G.pick_bets([dict(p, logged=p.get("entry_at") or p["logged"]) for p in pick(G.load("africa_goals_ledger"))]), tp)), "hold"
     if src.startswith(("sr_", "st_")) and scope:
         ledger = "soccer_rules_ledger" if src.startswith("sr_") else "soccer_team_rules_ledger"
         rule = src.split("_", 1)[1].upper()

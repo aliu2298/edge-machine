@@ -26,15 +26,17 @@ jobs:
         with:
           python-version: '3.12'
       - name: Tests
-        run: python3 test_soccer_p4_lanes.py && python3 test_t1m_sell15.py && python3 test_africa_goals.py && python3 test_africa_btts.py
+        run: python3 test_soccer_p4_lanes.py && python3 test_t1m_sell15.py && python3 test_africa_goals.py && python3 test_africa_btts.py && python3 test_africa_legs.py && python3 test_save_records.py
       - name: Mid NO Mismatch, Late Over Calm, Late Under Leaky (Sandbox paper since 2026-11-09)
         # Fetches the ESPN fixtures (data/streaks_raw.json, not committed) for the labels, only when a match has a row.
         run: python3 soccer_p4_lanes.py
       - name: T1-M 1.5x sell readout (observation only, same hourly read; reads T1-M's ledger, never writes it)
         run: python3 t1m_sell15.py
       - name: African qualifiers goals check (observation only, same hourly read; entry = the hourly quote 3h before kickoff)
-        # Reads ESPN's AFCON qualifier fixtures and Kalshi's public quotes. Paper only: never in Production, no feed.
+        # Reads ESPN's AFCON qualifier fixtures and Kalshi's public quotes. Paper observation lane; two of its legs are Production pairs since 2026-11-16 (africa_goals_production).
         run: python3 africa_goals.py
+      - name: African qualifier legs Production feed (2026-11-16; right after the read, so an entry 3h before kickoff is published while there is time to act on it)
+        run: python3 africa_goals_production.py
       - name: Save records
         env:
           GH_TOKEN: ${{ github.token }}
@@ -44,4 +46,5 @@ jobs:
           git config user.email "77032228+aliu2298@users.noreply.github.com"
           python3 save_records.py --message "Soccer phase-4 lanes paper observations" \
             --add data/soccer_p4_lanes_ledger.json data/t1m_sell15_ledger.json data/africa_goals_ledger.json \
+            --derived data/africa_goals_production_leads.json "python3 africa_goals_production.py" \
             --after "gh workflow run sandbox-tracker.yml --ref main"

@@ -1,6 +1,85 @@
 {
  "built": "2026-11-12",
  "lanes": {
+  "afq_btts|soccer_btts_intl": {
+   "checked_at": "2026-11-16T12:02:59+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 6,
+    "halves": null,
+    "n": 6,
+    "outcomes": 2,
+    "roi": 0.49,
+    "t": 0.72,
+    "without_best": null
+   },
+   "honest_positive": true,
+   "label": "African qualifiers · both teams to score",
+   "note_touch": {
+    "n": 6,
+    "roi": 0.49
+   },
+   "page": {
+    "n": 6,
+    "roi": 0.49
+   },
+   "rules": "honest-v1",
+   "waiver": {
+    "by": "Olu",
+    "on": "2026-11-16",
+    "waives": "evidence test (30+ bets, 10+ outcomes, both halves up, score of 2 or better). Honest return is positive: +49.0% on 6 (6 confirmed, 2 outcomes, score 0.72). Buy-and-hold at the ask, so the honest figure is the page figure.",
+    "why": "trial in Production at the default small stake on a fresh live record (Olu, Nov 16, relayed by the Edge Machine Coordinator); these are POST-HOC splits of the Nov 12-14 window, chosen after seeing it, so the paper record counts toward nothing here and the live record starts at the first live bet"
+   }
+  },
+  "afq_dog_score|soccer_team1_intl": {
+   "checked_at": "2026-11-16T12:03:01+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": true,
+    "t of 2+": true,
+    "up without its best outcome": true
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 9,
+    "halves": [
+     0.6863,
+     0.5534
+    ],
+    "n": 21,
+    "outcomes": 3,
+    "roi": 0.5977,
+    "t": 2.27,
+    "without_best": 0.3814
+   },
+   "honest_positive": true,
+   "label": "African qualifiers · underdog to score",
+   "note_touch": {
+    "n": 21,
+    "roi": 0.5977
+   },
+   "page": {
+    "n": 21,
+    "roi": 0.5976
+   },
+   "rules": "honest-v1",
+   "waiver": {
+    "by": "Olu",
+    "on": "2026-11-16",
+    "waives": "evidence test (30+ bets, 10+ outcomes, both halves up, score of 2 or better). Honest return is positive: +59.8% on 21 (9 confirmed, 3 outcomes, score 2.27). Buy-and-hold at the ask, so the honest figure is the page figure.",
+    "why": "trial in Production at the default small stake on a fresh live record (Olu, Nov 16, relayed by the Edge Machine Coordinator); these are POST-HOC splits of the Nov 12-14 window, chosen after seeing it, so the paper record counts toward nothing here and the live record starts at the first live bet"
+   }
+  },
   "arg_goalless_dip_live": {
    "checked_at": "2026-11-12T06:43:18+00:00",
    "checks": {

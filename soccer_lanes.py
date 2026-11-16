@@ -405,6 +405,8 @@ def sa_rows(state=None):
 
 
 # ------------------------------------------------------------------ the African qualifiers goals check (africa_goals.py)
+# 2026-11-16 (Olu): the every-match rows are split into legs. Their records stay on the page.
+AFRICA_RETIRED = "Retired Nov 16 by Olu: split into Production legs / v2."
 def _pct(x, digits=1):
     return "—" if x is None else f"{x * 100:+.{digits}f}%".replace("-", "−")
 
@@ -477,6 +479,7 @@ def africa_rows(state=None):
                 AG.record(picks), details, open_n=sum(p.get("status") == "open" for p in picks),
                 entries=entries_table(picks, cols), kind="Observation", note=note, anchor=f"africa-goals-{key.lower()}")
         r["pin"], r["after"] = True, "africa_goals_all"      # the three bet types sit right under the combined row
+        r["gone"], r["v"], r["scope"] = AFRICA_RETIRED, "retired", "intl"
         rows.append(r)
     every = AG.picks_of(state)
     details = (params_html([("Bet", "The three bets below, pooled: NO on over 3.5, YES on over 1.5, YES on each side to score"),
@@ -486,6 +489,7 @@ def africa_rows(state=None):
             open_n=sum(p.get("status") == "open" for p in every), entries=entries_table(every, cols), kind="Observation",
             note=note, anchor="africa-goals")
     r["pin"] = True
+    r["gone"], r["v"], r["scope"] = AFRICA_RETIRED, "retired", "intl"
     # The BTTS row, added Nov 13 2026 after the window opened (africa_goals.BTTS). Its own row, apart from the pooled one: it counts only
     # kickoffs after 18:30 UTC Nov 13, and the window's earlier matches are shown here, flagged, and left out of every figure.
     bt = AG.picks_of(state, "BTTS")
@@ -500,14 +504,65 @@ def africa_rows(state=None):
                          ("Holds if", "On the counted matches it wins more often than its price, by 3 points or more. Under 10 counted matches it is too few to say, "
                                       "and is read again on the next African window")] + bshared)
             + _africa_window_table(inc))
-    rb = row("africa_goals_btts", AG.BTTS["sport"], f"African qualifiers · {AG.BTTS['label']} · every match · {AG.BTTS_LABEL}", AG.BTTS["market"],
-             AG.record(bt), bdet, open_n=sum(p.get("status") == "open" for p in inc), entries=entries_table(bt, bcols), kind="Observation",
-             note=note, anchor="africa-goals-btts")
-    rb["pin"], rb["after"] = True, "africa_goals_all"
+    import africa_goals_production as AFP
+    src, sport, name = AFP.PAIRS["BTTS"]
+    bdet = (params_html([("History", "Added Nov 13 2026 as an every-match observation row; a Production leg from Nov 16 2026 (Olu), a trial on a fresh live record. "
+                                     "The paper record below is the lane's whole record and counts toward nothing here")]) + bdet)
+    rb = row(src, sport, f"{name} · every match", AG.BTTS["market"], AG.record(bt), bdet, prod=True, pair=f"{src}|{sport}",
+             open_n=sum(p.get("status") == "open" for p in inc), entries=entries_table(bt, bcols), kind="Rule",
+             note="A Production trial. Post-hoc split of the Nov 12 to 14 window; nothing here is proof.", anchor="africa-goals-btts")
+    rb["pin"], rb["scope"] = True, "intl"
     rows.append(rb)
+    rows += africa_leg_rows(state, cols)
     for x in [r] + rows:            # the fold lists the lane's own entries; it has no tracker picks to show above them
         x["own"]["entries_only"] = True
     return [r] + rows
+
+
+def africa_leg_rows(state, cols):
+    """The legs split out of the every-match rows (2026-11-16, Olu): the Production underdog leg, the Sandbox legs and the two control rows.
+    Subsets of the ledger's own entries (africa_goals.leg_picks), judged the same way. Percentages only."""
+    import africa_goals as AG
+    import africa_goals_production as AFP
+    src, sport, name = AFP.PAIRS["DOG"]
+    both = "Observation rows split from the every-match rows; the entry and the price are unchanged"
+    pre = ("Pre-registered", "Nov 16 2026, before any new match: post hoc, found on the Nov 12 to 14 window after it was seen")
+    spec = [
+        ("DOG", src, sport, name, "Team 1+", True, f"{src}|{sport}", "Rule",
+         [("Bet", "YES on the underdog to score: the side whose to-score YES ask is under 60c, at the ask, held to settlement"),
+          ("Evidence", "Post hoc, on the Nov 12 to 14 window: 14 of 21 at an average price of 39c. September: each side to score was 9.7 points underpriced on 91 sides"),
+          ("Stage", "Production trial from Nov 16 2026 (Olu), a fresh live record from the first live bet. The evidence test was waived"), pre]),
+        ("U35_80", "afq_u35_80", "soccer_u35_intl", "African qualifiers · NO on over 3.5 when the NO ask is 80c or more", "Under 3.5", False, None, "Rule",
+         [("Bet", "NO on over 3.5 goals only when the NO ask is 80c or more, at the ask, held to settlement"),
+          ("Evidence", "Post hoc, on the Nov 12 to 14 window: 7 of 7. In the September window the same filter went 22 of 29 at 83c, about 10% under break-even"),
+          ("Stage", "Sandbox paper, not in Production: the two windows disagree"), pre]),
+        ("O15_V2", "afq_o15_v2", "soccer_o15_intl", "African qualifiers · YES on over 1.5 when the favourite's to-score ask is 90c or more", "Over 1.5", False, None, "Rule",
+         [("Bet", "YES on over 1.5 goals only when the favourite's to-score YES ask is 90c or more (a clear mismatch), at the ask, held to settlement"),
+          ("In sample", "The same rule on the Nov 12 to 14 matches: see the second line below. Shown, never counted"),
+          ("Record", "Fresh: only matches that kick off on or after Nov 16 2026 count. The every-match over 1.5 row was +3.7%"), pre]),
+        ("CTRL_FAV", "afq_ctrl_fav", "soccer_team1_intl", "African qualifiers · control: the favourite to score at 85c or more", "Team 1+", False, None, "Baseline",
+         [("Bet", "YES on the favourite to score when its ask is 85c or more. A baseline for the underdog leg, not a lane"),
+          ("Evidence", "Nov 12 to 14: 14 of 15, about break-even at that price"), pre]),
+        ("CTRL_U35", "afq_ctrl_u35", "soccer_u35_intl", "African qualifiers · control: NO on over 3.5 when the NO ask is under 80c", "Under 3.5", False, None, "Baseline",
+         [("Bet", "NO on over 3.5 goals when the NO ask is under 80c. The other side of the 80c split; a baseline, not a lane"), pre]),
+    ]
+    out = []
+    for leg, name_id, sp, label, market, prod, pair, kind, params in spec:
+        picks = AG.leg_picks(state, leg)
+        extra = ""
+        if leg == "O15_V2":
+            ins = AG.in_sample_picks(state)
+            a = AG.record(ins)
+            extra = (f'<p class="sm mut">In sample, Nov 12 to 14 (not counted): {a["won"]} of {a["n"]} won, {_pct(a["roi_fee"])} after fees.</p>'
+                     + _africa_window_table(ins))
+            picks = [p for p in ins if str(p.get("start") or "") >= AG.V2_FROM[:10]]
+        details = params_html([("Rule", both)] + params + [("Matches", "Every AFCON qualifier Kalshi lists"),
+                                                           ("Entry", "The ask on the hourly quote three hours before the ESPN kickoff")]) + _africa_window_table(picks) + extra
+        r = row(name_id, sp, label, market, AG.record(picks), details, prod=prod, pair=pair, open_n=sum(p.get("status") == "open" for p in picks),
+                entries=entries_table(picks, cols), kind=kind, note=both + ".", anchor=f"africa-{leg.lower().replace('_', '-')}")
+        r["pin"], r["scope"] = True, "intl"
+        out.append(r)
+    return out
 
 
 # ------------------------------------------------------------------ the in-play lanes
