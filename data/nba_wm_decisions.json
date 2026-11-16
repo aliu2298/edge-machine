@@ -10992,6 +10992,19 @@
    "yes_ask": 0.11,
    "yes_bid": 0.08
   },
+  "no:KXNBAWINMARGIN-26NOV15ATLMIL-MIL21PLUS": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "MIL21PLUS",
+   "decided_at": "2026-11-16T00:15:09+00:00",
+   "event": "KXNBAWINMARGIN-26NOV15ATLMIL",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV15",
+   "ticker": "KXNBAWINMARGIN-26NOV15ATLMIL-MIL21PLUS",
+   "tip": "2026-11-16T01:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "no:KXNBAWINMARGIN-26NOV15ATLMIL-MIL6TO10": {
    "P": 0.93,
    "bot_version": "wm-nofade-v4",
@@ -19903,6 +19916,6 @@
    "why": "no tight read inside the entry window"
   }
  },
- "updated_at": "2026-11-16T00:06:35+00:00",
+ "updated_at": "2026-11-16T00:15:09+00:00",
  "version": 1
 }
