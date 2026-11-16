@@ -89,6 +89,7 @@ import urllib.parse
 from zoneinfo import ZoneInfo
 
 import daily_track as D
+import settle_only
 import nba_ladder_track as T
 import nba_value_model as M
 
@@ -314,6 +315,8 @@ def in_window(lane, g, now):
 
 
 def due(lane, games, now):
+    if settle_only.on():
+        return []                                # a settle-only pass adds no entries
     return [g for g in games.values() if not g.get("completed") and in_window(lane, g, now)
             and (T.night(g) or "") >= FIRST_NIGHT]
 

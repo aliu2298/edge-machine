@@ -72,6 +72,7 @@ import re
 import urllib.parse
 
 import daily_track as D
+import settle_only
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 PATH = os.path.join(ROOT, "data", "soccer_rules_ledger.json")
@@ -412,6 +413,8 @@ def picks_for(f, labs, ev, now, market=None):
 
 def due(fixtures, now):
     """Unplayed fixtures in the rules' leagues kicking off 20-90 minutes from now."""
+    if settle_only.on():
+        return []                                # a settle-only pass adds no entries
     out = []
     for f in fixtures:
         if f.get("played") or not any(f.get("league") in s for s in MARKETS.values()):

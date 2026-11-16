@@ -41,6 +41,7 @@ import re
 import unicodedata
 
 import daily_track as D
+import settle_only
 import soccer_rules as SR
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -166,6 +167,8 @@ def pick_for(f, ev, now):
 
 
 def due(fixtures, now):
+    if settle_only.on():
+        return []                                # a settle-only pass adds no entries
     out = []
     for f in fixtures:
         if f.get("played") or f.get("league") not in LEAGUES or retired(LEAGUES[f["league"]][0], now):

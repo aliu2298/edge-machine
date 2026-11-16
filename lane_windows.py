@@ -115,6 +115,14 @@ STAMP = {
     # 2026-11-14: the weather lanes (climate_lanes.py) read once a night in the 22:00-22:50 ET window. GitHub's cron never fired
     # a single run on their first night (Nov 13), so the VPS asks four times (22:00, 22:15, 22:30, 22:45 ET).
     "climate": "data/climate_window/request.txt",
+    # 2026-11-16: SETTLE-ONLY passes. These ledgers settle inside the same workflow that enters, and the entry reads follow the
+    # kickoffs, so over the international break nothing ran and the Nov 8 picks sat "unsettled" for 186 hours. One read an hour while a
+    # started pick is still open (settle_windows), outside the lane's own entry window; the workflow adds no entries (settle_only.py).
+    "soccer_rules_settle": "data/soccer_rules_settle_window/request.txt",
+    "soccer_team_rules_settle": "data/soccer_team_rules_settle_window/request.txt",
+    "nba_rules_settle": "data/nba_rules_settle_window/request.txt",
+    "nba_value_settle": "data/nba_value_settle_window/request.txt",
+    "climate_settle": "data/climate_settle_window/request.txt",
 }
 # nfl_tt.WINDOW_MIN (45, 75), copied; test_nfl_tt.py checks the two agree.
 NFL_FROM, NFL_TO = 75, 45                # minutes before the ESPN kickoff
@@ -411,6 +419,51 @@ def climate_windows(now):
                  end=at(22, 50), every=dt.timedelta(minutes=15), reads=4, last_ask=dt.timedelta(0))]
 
 
+# lane -> (ledger files that hold its picks, entry lanes whose own run settles anyway). A settle read is asked only while a STARTED
+# pick is open in one of the ledgers and none of the entry windows is open (an entry run settles too).
+SETTLE_LANES = {
+    "soccer_rules_settle": (("soccer_rules_ledger.json", "contender_overs_ledger.json", "sa_o15_ledger.json"), ("soccer_rules",)),
+    "soccer_team_rules_settle": (("soccer_team_rules_ledger.json",), ("soccer_team_rules",)),
+    "nba_rules_settle": (("nba_rules_ledger.json",), ("nba_rules",)),
+    "nba_value_settle": (("nba_value_ledger.json",), ("nba_value",)),
+    "climate_settle": (("climate_lanes_ledger.json",), ("climate",)),
+}
+
+
+def _open_started(path, now):
+    """True when the ledger holds a pick (or weather row) that is open and has started, or whose start is unknown."""
+    try:
+        with open(path) as f:
+            d = json.load(f)
+    except (OSError, ValueError):
+        return False
+    if "rows" in d and "rules" not in d:                      # the weather ledger: a row settles once its day has ended
+        today = now.astimezone(ET).date().isoformat()
+        return any(r.get("status") == "open" and str(r.get("day") or "") < today for r in d.get("rows") or [])
+    for lane in (d.get("rules") or {}).values():
+        for p in lane.get("picks") or []:
+            if p.get("status") != "open":
+                continue
+            t = _when(p["start"]) if p.get("start") else None
+            if t is None or t <= now:
+                return True
+    return False
+
+
+def settle_open(now, root=None):
+    """{lane: True} for every settle lane with a started open pick. Only main() calls this (it reads the ledgers)."""
+    base = os.path.join(root or ROOT, "data")
+    return {lane: any(_open_started(os.path.join(base, f), now) for f in files) for lane, (files, _) in SETTLE_LANES.items()}
+
+
+def settle_windows(now, settle=None):
+    """One read this hour for every settle lane whose ledger holds a started open pick. `settle` None (tests, the plain listing) means none."""
+    h = now.replace(minute=0, second=0, microsecond=0)
+    return [dict(lane=lane, label=f"{lane.replace('_', ' ')} {h:%H}:00Z", series=(), close=h + dt.timedelta(hours=1), start=h,
+                 end=h + dt.timedelta(hours=1), every=dt.timedelta(hours=1), last_ask=dt.timedelta(0))
+            for lane, on in sorted((settle or {}).items()) if on]
+
+
 def soccer_p4_windows(now):
     """The soccer phase-4 WATCH lanes read once an hour, every hour (soccer-p4.yml)."""
     h = now.replace(minute=0, second=0, microsecond=0)
@@ -551,7 +604,7 @@ def ftts_day_full(day, ledger=None):
     return all(v >= S.FTTS_NO_PICKS for v in n.values())
 
 
-def windows(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, nba_value=None):
+def windows(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, nba_value=None, settle=None):
     """Every lane's windows whose close is within a day of `now`, soonest start first. UTC."""
     if now.tzinfo is None:
         now = now.replace(tzinfo=dt.timezone.utc)
@@ -601,6 +654,9 @@ def windows(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, 
     # nfl_windows (2026-10-21) stopped 2026-11-11: every NFL lane is retired.
     out += nba_value_windows(now, nba_value)
     out += chaos_windows(now)
+    # A settle read is redundant while one of the lane's entry windows is open: that run settles too.
+    in_entry = {w["lane"] for w in out if w["start"] <= now <= w["end"]}
+    out += [w for w in settle_windows(now, settle) if not (set(SETTLE_LANES[w["lane"]][1]) & in_entry)]
     return sorted(out, key=lambda w: (w["start"], w["lane"]))
 
 
@@ -644,10 +700,10 @@ def entered_series(lane, close, ledger=None):
     return set.intersection(*got.values())
 
 
-def due(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, nba_value=None):
+def due(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, nba_value=None, settle=None):
     """[(window, read number)] for every read to ask for at `now`."""
     out = []
-    for w in windows(now, ledger, games, fixtures, tennis, nfl, nba_value):
+    for w in windows(now, ledger, games, fixtures, tennis, nfl, nba_value, settle):
         if not (w["start"] <= now <= w["end"] - w.get("last_ask", LAST_ASK)):
             continue
         k = int((now - w["start"]) / w.get("every", READ_EVERY))
@@ -661,10 +717,10 @@ def due(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, nba_
     return out
 
 
-def stamp_lines(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, nba_value=None):
+def stamp_lines(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, nba_value=None, settle=None):
     """{stamp file: stamp text} for the reads due now. One file can serve several windows."""
     lines = {}
-    for w, k in due(now, ledger, games, fixtures, tennis, nfl, nba_value):
+    for w, k in due(now, ledger, games, fixtures, tennis, nfl, nba_value, settle):
         text = f"{w['lane']}{' 24h' if w.get('early') else ''} {w['close'].isoformat()} read {k}"
         path = STAMP[w["lane"]]
         lines[path] = "\n".join(sorted(set((lines.get(path) or "").splitlines()) | {text})).strip()
@@ -676,7 +732,7 @@ def main(argv=None):
     now = dt.datetime.now(dt.timezone.utc)
     if "--due" in argv:
         for path, text in sorted(stamp_lines(now, tennis=tennis_starts(now), nfl=nfl_kickoffs(now),
-                                                       nba_value=nba_value_tips(now)).items()):
+                                                       nba_value=nba_value_tips(now), settle=settle_open(now)).items()):
             print(f"{path}\t{text.replace(chr(10), ' | ')}")
         return 0
     for w in windows(now):

@@ -34,6 +34,7 @@ import os
 import urllib.parse
 
 import daily_track as D
+import settle_only
 
 # Rules retired by hand: no new entry from the dated day on (Eastern), the ledger rows stay and
 # keep settling, and the NBA page shows the rule as Retired with this reason. R1 keeps standing
@@ -209,6 +210,8 @@ def half_picks(g, ms, now):
 
 def due(games, now):
     """Scheduled, labelled games tipping off 20-90 minutes from now."""
+    if settle_only.on():
+        return []                                # a settle-only pass adds no entries
     out = []
     for g in games:
         if g.get("completed") or g.get("skipped"):

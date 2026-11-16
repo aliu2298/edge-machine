@@ -30,6 +30,10 @@
 #   data/earnings_news_window/**                       -> earnings-news.yml (2026-11-09)
 #   data/jobless_window/**                             -> jobless-claims.yml (2026-11-11)
 #   data/climate_window/**                             -> climate-lanes.yml (2026-11-14)
+#   data/{soccer_rules,soccer_team_rules,nba_rules,nba_value,climate}_settle_window/**
+#                                                      -> the same five workflows, SETTLE-ONLY (2026-11-16): one read an hour while a
+#                                                         started pick is still open, outside the lane's entry windows; the workflow
+#                                                         sets EDGE_SETTLE_ONLY=1 and adds no entries (settle_only.py)
 #
 # The stamp names the close and the read number, so git is the once-per-read guard: the
 # second 15-minute run inside a read finds nothing to commit, and every later run is a free
@@ -61,7 +65,7 @@ stamp() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 
 allowed_path() {
   case "$1" in
-    data/crypto_window/request.txt|data/commodities_window/request.txt|data/daily_window/request.txt|data/ftts_window/request.txt|data/nba_window/request.txt|data/culture_window/request.txt|data/soccer_rules_window/request.txt|data/soccer_team_rules_window/request.txt|data/tennis_totals_window/request.txt|data/nba_value_window/request.txt|data/chaos_window/request.txt|data/fights_window/request.txt|data/soccer_p4_window/request.txt|data/swing15_window/request.txt|data/earnings_news_window/request.txt|data/climate_window/request.txt|data/jobless_window/request.txt) return 0 ;;
+    data/crypto_window/request.txt|data/commodities_window/request.txt|data/daily_window/request.txt|data/ftts_window/request.txt|data/nba_window/request.txt|data/culture_window/request.txt|data/soccer_rules_window/request.txt|data/soccer_team_rules_window/request.txt|data/tennis_totals_window/request.txt|data/nba_value_window/request.txt|data/chaos_window/request.txt|data/fights_window/request.txt|data/soccer_p4_window/request.txt|data/swing15_window/request.txt|data/earnings_news_window/request.txt|data/climate_window/request.txt|data/soccer_rules_settle_window/request.txt|data/soccer_team_rules_settle_window/request.txt|data/nba_rules_settle_window/request.txt|data/nba_value_settle_window/request.txt|data/climate_settle_window/request.txt|data/jobless_window/request.txt) return 0 ;;
   esac
   return 1
 }

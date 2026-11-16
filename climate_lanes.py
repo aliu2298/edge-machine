@@ -28,6 +28,7 @@ import urllib.request
 from zoneinfo import ZoneInfo
 
 import daily_track as D
+import settle_only
 import fillsim
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -376,7 +377,7 @@ def run(state, now=None, fetch=D.get, text_fetch=get_text, force=False):
     """The 10 pm ET read for tomorrow's ladders, then grade whatever has settled."""
     now = now or dt.datetime.now(UTC)
     errors = []
-    if force or in_window(now):
+    if (force or in_window(now)) and not settle_only.on():     # a settle-only pass adds no rows
         night = target_day(now).isoformat()
         info = state["nights"].setdefault(night, dict(first_run=now.astimezone(UTC).isoformat(), lag_min=lag_min(now), rows=0, errors=[]))
         shifts, cache = load_shifts(), {}

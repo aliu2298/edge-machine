@@ -10,6 +10,7 @@ on:
     branches: [main]
     paths:
       - "data/nba_window/**"
+      - "data/nba_rules_settle_window/**"
 permissions:
   contents: write
 concurrency:
@@ -21,9 +22,21 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 2
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: '3.12'
+      - name: Settle-only mode (2026-11-16)
+        # The VPS asks once an hour while a started pick is still open, with a stamp of its own (lane_windows.settle_windows).
+        # A run that ONLY that stamp started settles and adds no entries (settle_only.py); a manual run or an entry stamp does both.
+        run: |
+          changed="$(git diff --name-only HEAD~1 HEAD 2>/dev/null || true)"
+          if [ "${{ github.event_name }}" = "push" ] && printf '%s\n' "$changed" | grep -q '^data/nba_rules_settle_window/' \
+             && ! printf '%s\n' "$changed" | grep -q '^data/nba_window/'; then
+            echo "EDGE_SETTLE_ONLY=1" >> "$GITHUB_ENV"
+            echo "settle-only pass"
+          fi
       - name: Tests
         run: python3 test_nba_rules.py
       - name: Enter due games and settle
