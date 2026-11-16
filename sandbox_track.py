@@ -3516,6 +3516,8 @@ FEED_BETS = {"soccer_o05": {"kind": "total_gte", "n": 1},          # 2026-11-08:
              # 2026-10-08, with liga_btts_even|soccer_btts: both teams to score, the Yes on
              # Kalshi's KX<league>BTTS contract. League scope only; no cup or intl twin.
              "soccer_btts": {"kind": "btts"},
+             # 2026-11-16, with afq_btts|soccer_btts_intl: both teams to score in the African qualifiers, the Yes on KXAFCONBTTS.
+             "soccer_btts_intl": {"kind": "btts"},
              # 2026-10-11, with turkey_o25_dog|soccer_o25: over 2.5, the Yes on KX<league>TOTAL-3.
              "soccer_o25": {"kind": "total_gte", "n": 3},
              # 2026-10-11, with corners_under|soccer_corners: the NO on a Kalshi corners rung,

@@ -5008,7 +5008,7 @@ BTTS_SPORTS = ("soccer_btts", "soccer_btts_cup", "soccer_btts_intl")
 # by sa_o15's exact matcher before they were logged.
 # 2026-11-06, with u35_low_scoring|soccer_u35_cup: the Cups scope's competitions (CUP_FRAGS) too. Its first two bets were an EFL Cup and a DFB
 # Pokal tie, which no feed league named, so a Cups lead would never have been published. Only a pair put in Production by hand publishes.
-FEED_EXTRA_LEAGUES = {"Liga Profesional"} | set(CUP_FRAGS.values())
+FEED_EXTRA_LEAGUES = {"Liga Profesional", "AFCON Qualifying"} | set(CUP_FRAGS.values())
 # Display names for Production pairs that run on their own ledgers, not in SOURCES (Econ Daily,
 # Trump mentions, the soccer label rules): a page or a lead names them by these.
 OWN_LEDGER_LABELS = {
@@ -5032,6 +5032,8 @@ OWN_LEDGER_LABELS = {
     "top5_goalless_dip_live": "Top-5 goalless dip (live)",
     "arg_goalless_dip_live": "Argentina goalless dip (live)",
     "st_t1h": "T1 matches · home team 2+ goals",
+    "afq_dog_score": "African qualifiers · underdog to score",
+    "afq_btts": "African qualifiers · both teams to score",
     "st_t1m": "T1 matches · match over 3.5 goals",
     "nba_winmargin_live": "Win margin YES split (v2)",
     "nba_wm_nofade": "Win margin NO fade (v2)",

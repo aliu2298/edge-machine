@@ -367,6 +367,52 @@ def picks_of(state, key=None):
     return [p for k in ([key] if key else list(ROWS)) for p in (rules.get(k) or {}).get("picks") or []]
 
 
+def picks_of_rule(state, key):
+    """One row's picks by its key, BTTS included (picks_of reads the three pre-registered rows when no key is given)."""
+    return list(((state.get("rules") or {}).get(key) or {}).get("picks") or [])
+
+
+# ---------- the legs (2026-11-16): subsets of the same entries, never new entries ----------
+# Olu, Nov 16: the every-match rows are split. Each leg is a FILTER on picks already logged, by the price the entry paid, so no entry, price or
+# result changes and the pre-registered rows' records stay as they were. The window of Nov 12-14 is where the splits were found (post hoc).
+DOG_BELOW = 0.60            # afq_dog_score: the side whose to-score YES ask is under this (Production)
+U35_NO_FROM = 0.80          # afq_u35_80: the NO ask is this or more (Sandbox paper; a Production candidate Olu is still deciding)
+FAV_FROM = 0.90             # afq_o15_v2: the favourite's to-score ask is this or more (Sandbox paper, fresh from V2_FROM)
+CTRL_FAV_FROM = 0.85        # control: the favourite to score at this ask or more (a baseline, not a lane)
+V2_FROM = "2026-11-16T00:00:00+00:00"      # afq_o15_v2 counts matches that kick off on or after this
+LEGS = ("DOG", "BTTS", "U35_80", "O15_V2", "CTRL_FAV", "CTRL_U35")
+
+
+def favourite_ask(state, event):
+    """The higher of the two to-score YES asks of one match (its favourite), or None when the match has no to-score entry."""
+    asks = [float(p["price"]) for p in picks_of_rule(state, "T1") if p.get("event") == event and p.get("price") is not None]
+    return max(asks) if asks else None
+
+
+def leg_picks(state, leg):
+    """The picks one leg counts, from the ledger's own rows. afq_o15_v2 counts only matches from V2_FROM; `in_sample_picks` is the same rule on
+    the earlier matches (shown, never counted)."""
+    t1, u35, o15 = (picks_of_rule(state, k) for k in ("T1", "U35", "O15"))
+    if leg == "DOG":
+        return [p for p in t1 if float(p["price"]) < DOG_BELOW]
+    if leg == "BTTS":
+        return counted(picks_of_rule(state, "BTTS"))
+    if leg == "U35_80":
+        return [p for p in u35 if float(p["price"]) >= U35_NO_FROM]
+    if leg == "O15_V2":
+        return [p for p in in_sample_picks(state) if str(p.get("start") or "") >= V2_FROM[:10]]
+    if leg == "CTRL_FAV":
+        return [p for p in t1 if float(p["price"]) >= CTRL_FAV_FROM and float(p["price"]) == favourite_ask(state, p.get("event"))]
+    if leg == "CTRL_U35":
+        return [p for p in u35 if float(p["price"]) < U35_NO_FROM]
+    raise KeyError(leg)
+
+
+def in_sample_picks(state):
+    """O15 picks on matches whose favourite's to-score ask is FAV_FROM or more: the rule afq_o15_v2 is built from, on every logged match."""
+    return [p for p in picks_of_rule(state, "O15") if (favourite_ask(state, p.get("event")) or 0) >= FAV_FROM]
+
+
 def record(picks):
     """A row's record in the page template's shape, a match day counted as one outcome.
 
