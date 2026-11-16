@@ -61,9 +61,9 @@
    "price": 0.85
   },
   "commod_fav_band:KXWTI-26NOV1614-T85.99": {
-   "at": "2026-11-16T18:32:39+00:00",
-   "lead_min": 27.3,
-   "price": 0.24
+   "at": "2026-11-16T18:47:43+00:00",
+   "lead_min": 12.3,
+   "price": 0.12
   },
   "commod_nc_no:KXWTI-26NOV0614-T90.49": {
    "at": "2026-11-06T18:51:23+00:00",
@@ -136,9 +136,9 @@
    "price": 0.98
   },
   "commod_nc_yes:KXWTI-26NOV1614-T84.99": {
-   "at": "2026-11-16T18:32:39+00:00",
-   "lead_min": 27.3,
-   "price": 0.98
+   "at": "2026-11-16T18:47:43+00:00",
+   "lead_min": 12.3,
+   "price": 0.94
   },
   "corners_fav_no:KXLALIGACORNERS-26NOV08RSORVC-12": {
    "at": "2026-11-08T15:14:33+00:00",
@@ -425,6 +425,11 @@
    "lead_min": 0.2,
    "price": 0.81
   },
+  "o15_ranked:KXUEFANLTOTAL-26NOV16GRESRB-2": {
+   "at": "2026-11-16T18:47:43+00:00",
+   "lead_min": 57.3,
+   "price": 0.82
+  },
   "o15_ranked:KXUEFANLTOTAL-26NOV16KAZSVK-2": {
    "at": "2026-11-16T14:47:08+00:00",
    "lead_min": 12.9,
@@ -434,6 +439,11 @@
    "at": "2026-11-16T16:47:24+00:00",
    "lead_min": 12.6,
    "price": 0.74
+  },
+  "o15_ranked:KXUEFANLTOTAL-26NOV16MKDSLO-2": {
+   "at": "2026-11-16T18:47:43+00:00",
+   "lead_min": 57.3,
+   "price": 0.68
   },
   "team1_form_l5:KXUEFANLTEAMTOTAL-26NOV13MDAKAZ-KAZ1": {
    "at": "2026-11-13T16:53:08+00:00",
@@ -535,6 +545,11 @@
    "lead_min": 12.6,
    "price": 0.29
   },
+  "team2_ranked_fade:KXUEFANLTEAMTOTAL-26NOV16MKDSLO-SLO2": {
+   "at": "2026-11-16T18:47:43+00:00",
+   "lead_min": 57.3,
+   "price": 0.51
+  },
   "u35_low_o15:KXEREDIVISIETOTAL-26NOV06WILZWO-2": {
    "at": "2026-11-06T18:51:23+00:00",
    "lead_min": 8.6,
@@ -625,11 +640,21 @@
    "lead_min": 3.3,
    "price": 0.85
   },
+  "u35_low_scoring:KXUEFANLTOTAL-26NOV16GRESRB-4": {
+   "at": "2026-11-16T18:47:43+00:00",
+   "lead_min": 57.3,
+   "price": 0.65
+  },
   "u35_low_scoring:KXUEFANLTOTAL-26NOV16LTULIE-4": {
    "at": "2026-11-16T16:47:24+00:00",
    "lead_min": 12.6,
    "price": 0.75
+  },
+  "u35_low_scoring:KXUEFANLTOTAL-26NOV16MKDSLO-4": {
+   "at": "2026-11-16T18:47:43+00:00",
+   "lead_min": 57.3,
+   "price": 0.8
   }
  },
- "updated": "2026-11-16T18:32:39+00:00"
+ "updated": "2026-11-16T18:47:43+00:00"
 }
