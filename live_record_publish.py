@@ -71,6 +71,9 @@ class Refused(Exception):
     pass
 
 
+WINDOW = "outside the entry window"
+
+
 def category(reason):
     for rx, name in REASONS:
         if re.search(rx, reason or "", re.I):
@@ -100,7 +103,7 @@ def feed_index():
 
 
 def refusals(path, leads):
-    """{quote id: category} for the last refusal of each lead, from the follower's ledger."""
+    """{quote id: category} for the last refusal of each lead, from the follower's ledger. A window refusal never replaces an earlier real reason."""
     last = {}
     try:
         with open(path) as f:
@@ -110,7 +113,12 @@ def refusals(path, leads):
                 except ValueError:
                     continue
                 if d.get("kind") in ("veto", "filtered") and d.get("id") in leads:
-                    last[d["id"]] = category(d.get("reason"))
+                    c = category(d.get("reason"))
+                    # A lead re-offered after its window shut gets a window veto that would overwrite the real reason (price, spread, thin
+                    # ask) it was refused for inside the window: keep the earlier reason (2026-11-16, commodities favourites).
+                    if c == WINDOW and last.get(d["id"], WINDOW) != WINDOW:
+                        continue
+                    last[d["id"]] = c
     except OSError:
         pass
     return {leads[i][1]: c for i, c in last.items() if leads[i][1]}
