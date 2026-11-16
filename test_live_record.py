@@ -182,6 +182,21 @@ check("the raised pairs are the follower's own seven in Production (the commodit
       sorted(["mls_fade_home|soccer_p05", "crypto_fav_band_below|crypto_fav", "team2_ranked|soccer_team2", "sr_a7|soccer_u35", "sr_a6|soccer_o25",
               "team1_form_l5|soccer_team1_intl", "u35_low_scoring|soccer_u35_intl"]))
 
+print("\na window refusal after the real reason does not replace it (Brent / WTI Nov 12)")
+_led = os.path.join(tempfile.mkdtemp(), "ledger.jsonl")
+_rows = [dict(kind="veto", id="a", reason="wide spread: 0.07 between 0.73 bid and 0.8 ask"), dict(kind="veto", id="a", reason="effective 0.859 above max_price 0.85"),
+         dict(kind="veto", id="a", reason="outside the entry window: shut 20:00Z for the 22:00Z close"), dict(kind="veto", id="a", reason="outside the entry window: now 21:10Z"),
+         dict(kind="veto", id="b", reason="outside the entry window: shut early"), dict(kind="veto", id="c", reason="price out of band"),
+         dict(kind="late_unordered", id="c", reason="reached its last 30 minutes; decided earlier: outside the entry window"),
+         dict(kind="veto", id="d", reason="thin ask: 12 contracts at 0.84 (need 25)"), dict(kind="veto", id="d", reason="outside the entry window"),
+         dict(kind="veto", id="d", reason="price out of band")]
+with open(_led, "w") as f:
+    f.write("".join(json.dumps(r) + "\n" for r in _rows))
+_got = X.refusals(_led, {i: ("p|s", "q" + i) for i in "abcd"})
+check("the real reason stays after later window vetoes", _got["qa"], "price above the cap")
+check("a lead refused only for the window still says so", _got["qb"], "outside the entry window")
+check("the last real reason still wins over an earlier one", (_got["qc"], _got["qd"]), ("outside the price band", "outside the price band"))
+
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
 
