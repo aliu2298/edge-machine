@@ -195,7 +195,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-16T05:00:26Z",
+ "calendar_at": "2026-11-16T06:00:27Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -3468,9 +3468,29 @@
     "width": 0.681900452488688
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-16T06:01:25Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 391865671.64179105,
+    "rungs": 6,
+    "width": 8830409.356725156
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-16T06:01:25Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.7,
+    "rungs": 15,
+    "width": 0.681900452488688
+   },
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-16T05:01:37Z",
+ "last_run": "2026-11-16T06:01:27Z",
  "predictions": [
   {
    "call": {
@@ -3886,6 +3906,22 @@
    "side": -1,
    "status": "open",
    "sym": "CSCO"
+  },
+  {
+   "family": "kpi_drift",
+   "id": "kpi_drift:HD:KXHD-26NOVTXN",
+   "kpi_event": "KXHD-26NOVTXN",
+   "kpi_from": "2026-11-07T03:49:31Z",
+   "kpi_to": "2026-11-16T06:01:25Z",
+   "logged_at": "2026-11-16T06:01:27Z",
+   "perp": "KXHDPERP",
+   "random_side": 1,
+   "reason": "Home Depot customer transactions in Q3: ladder median 3.91019e+08 \u2192 3.91866e+08 (move +847153, threshold \u00b12.58333e+06).",
+   "report": "2026-11-17",
+   "report_time": "pre-market",
+   "side": 0,
+   "status": "no_call",
+   "sym": "HD"
   }
  ],
  "registered": "2026-11-07",
