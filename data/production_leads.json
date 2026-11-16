@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-16T23:09:38+00:00",
+ "board_built_at": "2026-11-16T23:33:53+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -1060,6 +1060,41 @@
    "sport": "soccer_u35_intl",
    "status": "hit"
   },
+  "2026-11-16|KXWTI-26NOV1614-T85.99|Above $85.99 at the close \u00b7 Commodities favourite band": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-11-16",
+   "edge_at_log": null,
+   "first_seen": "2026-11-16",
+   "headline": "Above $85.99 at the close",
+   "home": null,
+   "id": "2026-11-16|KXWTI-26NOV1614-T85.99|Above $85.99 at the close \u00b7 Commodities favourite band",
+   "kickoff": "2026-11-16T19:30Z",
+   "lane": "production",
+   "league": "Commodities \u00b7 Favourite band",
+   "match": "WTI crude close on Nov 16, 2026",
+   "pair": "commod_fav_band|commodities_fav",
+   "price_at_log": 0.72,
+   "published_at": "2026-11-16T23:33:53+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Above $85.99 at the close",
+    "event": "KXWTI-26NOV1614",
+    "market": "KXWTI-26NOV1614-T85.99",
+    "outcome": "Above $85.99",
+    "outcome_side": "yes",
+    "price_at_log": 0.72,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "commod_fav_band:KXWTI-26NOV1614-T85.99",
+   "source": "commod_fav_band",
+   "sport": "commodities_fav",
+   "status": "miss"
+  },
   "2026-11-16|Kazakhstan|Slovakia|Slovakia to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Slovakia",
    "bet": {
@@ -1181,7 +1216,7 @@
    "kickoff": "2026-11-17T19:45Z",
    "lane": "production",
    "last_seen": "2026-11-16",
-   "last_seen_at": "2026-11-16T23:09:38+00:00",
+   "last_seen_at": "2026-11-16T23:33:53+00:00",
    "league": "UEFA Nations League",
    "match": "Bosnia-Herzegovina v Romania",
    "pair": "u35_low_scoring|soccer_u35_intl",
@@ -1219,7 +1254,7 @@
    "kickoff": "2026-11-17T19:45Z",
    "lane": "production",
    "last_seen": "2026-11-16",
-   "last_seen_at": "2026-11-16T23:09:38+00:00",
+   "last_seen_at": "2026-11-16T23:33:53+00:00",
    "league": "UEFA Nations League",
    "match": "Denmark v Norway",
    "pair": "team1_form_l5|soccer_team1_intl",
@@ -1256,7 +1291,7 @@
    "kickoff": "2026-11-17T19:45Z",
    "lane": "production",
    "last_seen": "2026-11-16",
-   "last_seen_at": "2026-11-16T23:09:38+00:00",
+   "last_seen_at": "2026-11-16T23:33:53+00:00",
    "league": "UEFA Nations League",
    "match": "Ukraine v Georgia",
    "pair": "u35_low_scoring|soccer_u35_intl",
@@ -1294,7 +1329,7 @@
    "kickoff": "2026-11-17T19:45Z",
    "lane": "production",
    "last_seen": "2026-11-16",
-   "last_seen_at": "2026-11-16T23:09:38+00:00",
+   "last_seen_at": "2026-11-16T23:33:53+00:00",
    "league": "UEFA Nations League",
    "match": "Wales v Portugal",
    "pair": "team1_form_l5|soccer_team1_intl",
@@ -1325,18 +1360,18 @@
    "ready_at": "2026-11-12T07:59:06+00:00",
    "route": "moved by hand on 2026-11-12",
    "routing": {
-    "leads": 4,
+    "leads": 5,
     "problem": null,
-    "routed": 4,
+    "routed": 5,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": 0.1517,
-   "sandbox_n": 2,
-   "sandbox_roi": 0.3474,
-   "sandbox_roi_fee": 0.3235,
+   "sandbox_clv": -0.1122,
+   "sandbox_n": 3,
+   "sandbox_roi": -0.1017,
+   "sandbox_roi_fee": -0.1176,
    "timing": {
     "late": [],
     "timed": 0,
@@ -1573,5 +1608,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-16T23:09:38+00:00"
+ "updated_at": "2026-11-16T23:33:53+00:00"
 }
