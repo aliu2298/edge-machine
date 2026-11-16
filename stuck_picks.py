@@ -68,6 +68,8 @@ def scan(data, now, hours):
     stuck, no_start, total = [], 0, 0
     for r in walk(data):
         total += 1
+        if r.get("bet") is False:       # an observation quote the tracker logged, never a pick: it grades when its venue settles (gas: Kalshi closes, then settles days later)
+            continue
         t = start_of(r)
         if t is None:
             no_start += 1

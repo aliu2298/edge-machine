@@ -56,6 +56,8 @@ def _pages():
 
 
 def _counts(html):
+    # The daily-health card quotes whatever the health check found (2026-11-16: "climate-lanes failed"): that is a report on the workflows, not a lane on the page.
+    html = re.sub(r'<div class="health-card" id="daily-health">.*?</div>', "", html, flags=re.S)
     low = html.lower()
     return {
         "covers": low.count("covers"),

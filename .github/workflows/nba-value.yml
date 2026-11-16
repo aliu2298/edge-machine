@@ -40,6 +40,8 @@ jobs:
             echo "settle-only pass"
           fi
       - name: Tests
+        env:
+          EDGE_SETTLE_ONLY: ""     # the tests exercise entries: never in settle-only mode
         run: python3 test_nba_value.py && python3 test_nba_value_production.py
       - name: Track, enter due games and settle (nba_tt_value_*, nba_1q_value_*, own ledgers)
         run: python3 nba_value.py
