@@ -3679,22 +3679,29 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.14
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.21
     }
    ],
    "logged": "2026-11-10T00:01:02.452370+00:00",
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.0746,
    "price": 0.07,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-11-16T06:01:00.068844+00:00",
    "side": "yes",
    "spread": 0.01,
    "spread_cost": null,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Above 12K"
   },
@@ -3731,22 +3738,29 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.1
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.15
     }
    ],
    "logged": "2026-11-10T00:01:02.452370+00:00",
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.0533,
    "price": 0.05,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-11-16T06:01:00.068844+00:00",
    "side": "yes",
    "spread": 0.04,
    "spread_cost": null,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Above 15K"
   },
@@ -3828,9 +3842,9 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:42.883824+00:00"
  },
  "lane": "album_cheap_rungs",
- "last_success": "2026-11-16T05:00:58.411605+00:00",
+ "last_success": "2026-11-16T06:01:00.068844+00:00",
  "observations": {
-  "at": "2026-11-16T05:00:58.411605+00:00",
+  "at": "2026-11-16T06:01:00.068844+00:00",
   "checking": 0,
   "entered": 0,
   "events": 21,
