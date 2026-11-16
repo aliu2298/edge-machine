@@ -53,6 +53,7 @@ import os
 import re
 
 import daily_track as D
+import settle_only
 import soccer_rules as SR
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -288,6 +289,8 @@ def t1m_pick(f, labs, ev, now):
 
 def due(fixtures, now):
     """Unplayed fixtures in the team rules' leagues kicking off 20-90 minutes from now."""
+    if settle_only.on():
+        return []                                # a settle-only pass adds no entries
     out = []
     for f in fixtures:
         if f.get("played") or f.get("league") not in SERIES:
