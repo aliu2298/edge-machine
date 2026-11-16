@@ -45,7 +45,7 @@ for pair, kind, side in ((CUP, "total_lte", "no"), (INTL, "team_gte", "yes")):
 
 print("\nthe notes and public copy")
 check("the registry notes carry the move", ("Cups scope: in Production from 2026-11-06" in S.SOURCES["u35_low_scoring"]["note"],
-                                           "Internationals scope: in Production from 2026-11-06" in S.SOURCES["team2_form_l10"]["note"]), (True, True))
+                                           "Internationals scope: in Production 2026-11-06 to 2026-11-16" in S.SOURCES["team2_form_l10"]["note"]), (True, True))   # back in the Sandbox 2026-11-16
 check("neither note trips the copy guard", (bool(sandbox_audit.COPY_RE.search(S.SOURCES["u35_low_scoring"]["note"])),
                                             bool(sandbox_audit.COPY_RE.search(S.SOURCES["team2_form_l10"]["note"]))), (False, False))
 

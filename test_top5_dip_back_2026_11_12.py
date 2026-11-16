@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""2026-11-12 (Olu: "return it back to production ... top 5 goalless dip"): the dip is a Production lane again, live at the default stake, on a FRESH
-live record; its first run (2026-11-05 to 2026-11-08) stays as a Retired line. Offline."""
+"""2026-11-12 (Olu: "return it back to production ... top 5 goalless dip"): the dip was a Production lane again, live at the default stake, on a FRESH
+live record; its first run (2026-11-05 to 2026-11-08) stays as a Retired line. 2026-11-16 (Olu): out of Production again (12 fills, -9.2%; the Sandbox research row
+z 0.05, newer half +0.3%); the 2026-11-12 record is a second history line and the 100-fill read continues on paper. Offline."""
 import json
 
 import production_live as PL
@@ -18,8 +19,8 @@ def check(name, ok):
         fails.append(name)
 
 
-check("the lane is running: no end date, moved 2026-11-12, first run kept", TD.ENDED_ON == "" and TD.MOVED_ON == "2026-11-12" and TD.FIRST_RUN == ("2026-11-05", "2026-11-08"))
-check("one Production pair, at the default stake", list(TD.pairs()) == ["top5_goalless_dip_live|soccer_o15"] and TD.STAKE_USD == 1.0)
+check("the lane has ended 2026-11-16: moved 2026-11-12, first run kept", TD.ENDED_ON == "2026-11-16" and TD.MOVED_ON == "2026-11-12" and TD.FIRST_RUN == ("2026-11-05", "2026-11-08"))
+check("no Production pair", TD.pairs() == {})
 gate = json.load(open("data/promotion_gate.json"))["lanes"]
 for k in ("top5_dip", "top5_goalless_dip_live"):
     w = gate[k]["waiver"]
@@ -33,12 +34,21 @@ check("production_live reads only the fresh rows for the pair", [r["id"] for r i
 pairs = {"top5_goalless_dip_live|soccer_o15": dict(name="Top-5 goalless dip (live)", market="Over 1.5", paper=dict(n=0, won=0, roi_fee=None), note="", clv=None, rule="")}
 m = PO.build(blob, pairs)
 run = [l for l in m["running"] if l["key"] == "top5_dip"]
-check("overview: the running lane counts only the fresh bet", len(run) == 1 and run[0]["live"]["n"] == 1)
+check("overview: when the lane's pair is still passed in, only the fresh bet counts as running (the real build passes none once it has ended)", len(run) == 1 and run[0]["live"]["n"] == 1)
+m_ended = PO.build(blob, {})
+check("overview: with the pair gone, nothing runs; the Nov 12 record and the first run are two Retired lines that add up to all three bets",
+      not [l for l in m_ended["running"] if l["key"] == "top5_dip"]
+      and sorted(r["live"]["n"] for r in m_ended["retired"] if r["key"].startswith("top5_dip")) == [1, 2] and m_ended["tiles"]["everything"]["n"] == 3)
 hist = [r for r in m["retired"] if r["key"] == "top5_dip#first-run"]
 check("overview: the first run (2 bets) is a Retired line named as the earlier run", len(hist) == 1 and hist[0]["live"]["n"] == 2 and "earlier run" in hist[0]["name"])
 check("overview: the all-lanes total still counts all three", m["tiles"]["everything"]["n"] == 3)
 lanes = PL.lanes_table(blob)
-check("the own-state table has the earlier run and the fresh record as two lines", "Top-5 goalless dip · earlier run" in lanes and "Top-5 goalless dip · from Nov 12" in lanes)
+check("the own-state table has the earlier run and the Nov 12 record as two lines, the second saying it went back Nov 16",
+      "Top-5 goalless dip · earlier run" in lanes and "Top-5 goalless dip · from Nov 12 · back in the Sandbox Nov 16" in lanes)
+import top5_dip_production as _X
+html = SL.top5_live_row({}, None)
+check("the closed row carries Olu's history line, percentages only", "Out of Production Nov 16 (Olu): Sandbox research row z 0.05, newer half +0.3%; the 100-fill read continues on paper."
+      in html["own"]["details"] and "$" not in html["own"]["details"])
 check("public copy: no dollar amount", "$" not in lanes)
 print(f"\n{'ALL PASS' if not fails else str(len(fails)) + ' FAILED'}")
 raise SystemExit(1 if fails else 0)

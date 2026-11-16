@@ -570,6 +570,9 @@ PAIR_REMOVALS = {
     # override is left for it (#176). Its live fills stay on the Production page (production_live.pulled_table); the follower is not told to
     # do anything: a pair outside the feed gets no new order, and what it holds settles on its own.
     "commod_fav_band|commodities_fav": dict(removed_on="2026-11-08", keep_record=True),
+    # 2026-11-16, as asked (Olu): team 2+ form, Internationals scope, back to the Sandbox on its whole record (0 live bets since Nov 6, 1 paper pick). Paper and still
+    # collecting. Its listing above stays as the record it left on; the follower refuses the pair by name.
+    "team2_form_l10|soccer_team2_intl": dict(removed_on="2026-11-16", keep_record=True),
 }
 
 

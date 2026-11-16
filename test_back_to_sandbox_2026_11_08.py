@@ -20,8 +20,8 @@ def check(name, ok):
 K = "commod_fav_band|commodities_fav"
 check("commodities band: its Nov 8 removal stands as the record it left on, and it is re-listed 2026-11-12 (later), so it is a new promotion",
       T.PAIR_REMOVALS[K] == dict(removed_on="2026-11-08", keep_record=True) and T.PAIR_OVERRIDES[K]["moved_on"] == "2026-11-12")
-check("top-5 dip: back in the Sandbox 2026-11-08 and back in Production 2026-11-12 (test_top5_dip_production.py), its first run kept as history",
-      TD.ENDED_ON == "" and TD.FIRST_RUN == ("2026-11-05", "2026-11-08") and TD.MOVED_ON == "2026-11-12")
+check("top-5 dip: back in the Sandbox 2026-11-08, back in Production 2026-11-12, out again 2026-11-16 (test_top5_dip_production.py), its first run kept as history",
+      TD.ENDED_ON == "2026-11-16" and TD.FIRST_RUN == ("2026-11-05", "2026-11-08") and TD.MOVED_ON == "2026-11-12")
 
 blob = dict(generated="x", pairs={}, pulled={K: [dict(id="q1", ko="2026-11-02T18:00", side="yes", st="won", w=1.0, r=0.3),
                                                     dict(id="q2", ko="2026-11-03T18:00", side="yes", st="lost", w=1.0, r=-1.0)]},

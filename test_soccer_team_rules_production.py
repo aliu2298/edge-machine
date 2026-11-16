@@ -84,7 +84,7 @@ state = {"last_run": (NOW - dt.timedelta(minutes=10)).isoformat(), "error": None
                           "Newcastle", "Premier League", 0.45)]}}}
 
 print("T5 and T7 since 2026-10-28; T1 (out 2026-10-28) replayed for the checks below")
-check("T7 is the one pair, listed 2026-10-28; T5 went back to the Sandbox 2026-11-02", (_NOW_PAIRS, _NOW_MOVED[0], TP.T5_PULLED[1]), (["T1H", "T1M", "T4", "T7"], "2026-10-28", "2026-11-02"))
+check("T7 is the one pair, listed 2026-10-28; T5 went back to the Sandbox 2026-11-02", (_NOW_PAIRS, _NOW_MOVED[0], TP.T5_PULLED[1]), (["T1", "T1H", "T1M", "T4", "T7"], "2026-10-28", "2026-11-02"))   # T1 is real again from 2026-11-16 (TP.T1_BACK_ON)
 print("only T1, on the existing team 2+ claim")
 qs = TP.quotes(state)
 check("T1, T5 and T7, their own leagues only", sorted(q["market_id"] for q in qs),
@@ -121,7 +121,7 @@ t4s = {"rules": {"T4": {"picks": [
     "last_run": NOW.isoformat()}
 check("T4 publishes its three leagues only", [q["market_id"] for q in TP.quotes(t4s)], ["KXEPLTEAMTOTAL-26NOV08ARSCHE-ARS2"])
 check("its feed lists st_t4|soccer_team2 on the 3-97c band", (sorted(TP.feed(t4s, now=NOW)["pairs"]), TP.feed(t4s, now=NOW)["bands"]["st_t4|soccer_team2"]),
-      (["st_t4|soccer_team2", "st_t7|soccer_team3"], [0.03, 0.97]))
+      (["st_t1|soccer_team2", "st_t4|soccer_team2", "st_t7|soccer_team3"], [0.03, 0.97]))
 TP.PAIRS, TP.PROMOTED_AT, TP.MOVED = _REPLAY
 
 print("\nthe leads: the exact contract, team and side")

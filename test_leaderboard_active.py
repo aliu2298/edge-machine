@@ -68,7 +68,8 @@ mk = lambda **kw: dict(dict(uid=("x", "a"), lane="?", sport="Soccer", entities=[
                             won=True, kind="team", src=None, scope=None), **kw)
 cases = [
     ("a Production pair", mk(src="sandbox", lane="team2_ranked", scope="soccer_team2"), "Production"),
-    ("its Sandbox twin", mk(src="sandbox", lane="team2_ranked", scope="soccer_team2_cup"), "Sandbox"),
+    ("its Cups scope: retired 2026-11-16, so no active lane", mk(src="sandbox", lane="team2_ranked", scope="soccer_team2_cup"), None),
+    ("a Sandbox lane", mk(src="sandbox", lane="team2_form_l10", scope="soccer_team2_cup"), "Sandbox"),
     ("a retired scope (team +0.5 unbeaten, tagged RETIRED in the stamp table)", mk(src="sandbox", lane="p05_unbeaten", scope="soccer_p05_cup"), None),
     ("a retired source (Turkey over 2.5)", mk(src="sandbox", lane="turkey_o25_dog", scope="soccer_o25"), None),
     ("a tipster source", mk(src="sandbox", lane="olbg", scope="boxing"), None),

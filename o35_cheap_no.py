@@ -94,6 +94,9 @@ BID_AFTER_MIN = 60             # v3: the bid counts from this long AFTER kickoff
 SELL_DELAY_S = 60              # honest: a sell counts only on prints this long after the fill (order latency)
 CANCEL_MIN = 100               # v5: the bid is cancelled this long after kickoff (match minute 80 on the wall clock, about)
 SINCE_V5 = "2026-11-06"
+# 2026-11-16 (Olu): the lane is retired (original -17.6% on 52, v5 -32.2% on 23, the live run -33.0% on 21). No game from this night on is read;
+# the rows stay and the games before it still settle into them.
+RETIRED_ON = "2026-11-16"
 V5_LABEL = "Over 3.5 cheap NO · v5 · 10c bid cancelled at minute 80 · sell at 4× (3× tracked)"
 EARLY = "e"                    # bids key suffix of the comparison: first-half fills of the old bid
 CAP = 0.98
@@ -336,6 +339,9 @@ def run(state, now=None, fetch=D.get, forms=None):
                 night = night_of(kickoff)
                 if night < state["since"]:
                     state["seen"][event] = "before the lane's first night"
+                    continue
+                if night >= RETIRED_ON:
+                    state["seen"][event] = "after the lane was retired"
                     continue
                 prints = prints_of(fetch_trades(m["ticker"], kickoff - BID_LEAD_MIN * 60, fetch))
             except Exception as e:                              # noqa: BLE001

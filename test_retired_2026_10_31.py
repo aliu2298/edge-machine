@@ -50,7 +50,7 @@ f = dict(league="Premier League", home="A", away="B", kickoff="2026-11-01T15:00:
 import re
 import inspect
 check("picks_for skips a retired rule before building any entry", "if retired(rule, now):" in inspect.getsource(TR.picks_for), True)
-check("the Production team-rule pairs are T7 and T1-H from 2026-11-08 (T4 2026-11-04 to 2026-11-08, T5 and T1-M 2026-11-08 to 2026-11-12 went back to the Sandbox)", sorted(TRP.PAIRS), ["T1H", "T7"])
+check("the Production team-rule pairs are T7 and T1-H from 2026-11-08 (T4 2026-11-04 to 2026-11-08, T5 and T1-M 2026-11-08 to 2026-11-12 went back to the Sandbox); T1 itself is back from 2026-11-16", sorted(TRP.PAIRS), ["T1", "T1H", "T7"])
 
 print("\ncontender overs: the over 3.5 variant only")
 check("O35 retired on 2026-10-31; O15 and O25 are not yet then", (CO.retired("O35", AFTER), CO.retired("O15", AFTER), CO.retired("O25", AFTER),
@@ -83,9 +83,9 @@ check("Clubs moved from sports to retired_sports with a dated record; Cups and I
        "25 won v 25.8 priced" in src["retired_sports"]["soccer_u35"]), (["soccer_u35_cup", "soccer_u35_intl"], ["soccer_u35"], True, True))
 check("the Internationals pair is still in Production and the Clubs pair never was",
       ("u35_low_scoring|soccer_u35_intl" in T.PAIR_OVERRIDES, "u35_low_scoring|soccer_u35" in T.PAIR_OVERRIDES), (True, False))
-check("u35_low_o15 still runs on its own sport and selects through the shared predicate",
-      (S.SOURCES["u35_low_o15"]["sports"], "u35_low_selected" in inspect.getsource(S.fetch_u35_low_o15), S.SOURCES["u35_low_o15"].get("retired_sports")),
-      (["soccer_o15"], True, None))
+check("u35_low_o15 selects through the shared predicate; it was retired 2026-11-16 (Olu), so it runs on no sport now",
+      (S.SOURCES["u35_low_o15"]["sports"], "u35_low_selected" in inspect.getsource(S.fetch_u35_low_o15), sorted(S.SOURCES["u35_low_o15"].get("retired_sports") or {})),
+      ([], True, ["soccer_o15"]))
 rows = [dict(market_id="KXEPLTOTAL-26NOV01-1", price_a=0.80, mid_a=0.78, tradeable={"a": True}, espn_home="H", espn_away="A", league="Premier League")]
 S._rule_rows, _old = (lambda sport, universe: [(r, dt.datetime(2026, 11, 1, tzinfo=UTC)) for r in rows]), S._rule_rows
 S.u35_low_selected, _sel = (lambda r, ko, fx: True), S.u35_low_selected
@@ -98,7 +98,7 @@ check("fetch_u35_low_o15 still selects a low-scoring match (retiring the Clubs u
 
 print("\nProduction soccer feeds still publish the Production rules")
 check("rules feed pairs A6, A7, C3, C4; team feed T7", (sorted(SRP.PAIRS), sorted(TRP.PAIRS)),
-      (sorted(SRP.PAIRS), ["T1H", "T7"]))
+      (sorted(SRP.PAIRS), ["T1", "T1H", "T7"]))
 check("none of the retired rules is a Production pair",
       sorted((set(SRP.PAIRS) | set(TRP.PAIRS)) & {"D1", "C5", "C6", "C7", "T6", "T8", "O35"}), [])
 check("no guarded phrase in the retirement copy",
