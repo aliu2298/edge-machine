@@ -195,7 +195,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-16T20:00:27Z",
+ "calendar_at": "2026-11-16T21:00:26Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -3808,9 +3808,29 @@
     "width": 0.728365384615385
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-16T21:01:28Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 391024096.38554215,
+    "rungs": 6,
+    "width": 6832754.747804761
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-16T21:01:28Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.7106382978723405,
+    "rungs": 15,
+    "width": 0.7300699300699303
+   },
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-16T20:02:09Z",
+ "last_run": "2026-11-16T21:01:31Z",
  "predictions": [
   {
    "call": {
@@ -3927,6 +3947,9 @@
    "sym": "WMT"
   },
   {
+   "call": {
+    "status": "pending"
+   },
    "entry_due": "2026-11-16T21:00:00Z",
    "exit_due": "2026-11-23T21:00:00Z",
    "family": "runup",
@@ -3938,6 +3961,7 @@
    "report": "2026-11-24",
    "report_time": "pre-market",
    "side": 1,
+   "status": "pending",
    "sym": "ADI"
   },
   {
@@ -3959,6 +3983,9 @@
    "void_reason": "report date moved"
   },
   {
+   "call": {
+    "status": "pending"
+   },
    "entry_due": "2026-11-16T21:00:00Z",
    "exit_due": "2026-11-23T21:00:00Z",
    "family": "runup",
@@ -3970,6 +3997,7 @@
    "report": "2026-11-24",
    "report_time": "not-supplied",
    "side": 1,
+   "status": "pending",
    "sym": "DELL"
   },
   {
