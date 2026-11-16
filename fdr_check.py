@@ -208,7 +208,7 @@ FAMILIES = (                                        # (family, test on src, lane
     ("Commodity and economic ladders", lambda s, l, c, tip: (s == "sandbox" and (c or "").startswith("commod")) or s in ("daily", "finance_nc")),
     ("Soccer form and price rules (tracker)", lambda s, l, c, tip: s == "sandbox" and (c or "").startswith("soccer")),
     ("Tennis, fights and US sports bands (tracker)", lambda s, l, c, tip: s == "sandbox"),
-    ("Soccer total-goals label rules", lambda s, l, c, tip: s in ("soccer_rules_ledger.json", "contender_overs_ledger.json", "sa_o15_ledger.json")),
+    ("Soccer total-goals label rules", lambda s, l, c, tip: s in ("soccer_rules_ledger.json", "contender_overs_ledger.json", "sa_o15_ledger.json", "btts_sa_ledger.json")),
     ("Soccer team-total label rules", lambda s, l, c, tip: s == "soccer_team_rules_ledger.json"),
     ("NBA label and value rules", lambda s, l, c, tip: s in ("nba_rules_ledger.json", "nba_value_ledger.json")),
     ("NFL team totals", lambda s, l, c, tip: s in ("nfl_tt_ledger.json", "nfl_tt_main1_ledger.json")),
