@@ -1350,6 +1350,24 @@
    "target": 18.334605,
    "ticker": "KXSNDKPERP",
    "touch_ts": 1794819721
+  },
+  {
+   "backfill": false,
+   "day": "2026-11-16",
+   "id": "rb_5d|KXINTCPERP|2026-11-16",
+   "lane": "rb_5d",
+   "level": 1.149115,
+   "level_stock": 58.01,
+   "note": "no print at or through the ask in 5 minutes",
+   "signal_ts": 1794828600,
+   "slide_high": 64.06,
+   "status": "no_fill",
+   "stop": 1.137624,
+   "strength": 2,
+   "sym": "INTC",
+   "target": 1.208988,
+   "ticker": "KXINTCPERP",
+   "touch_ts": 1794828541
   }
  ],
  "from": "2026-11-12T00:00:00+00:00",
@@ -1367,7 +1385,7 @@
    "strong": true
   }
  },
- "last_run": "2026-11-16T11:00:19+00:00",
+ "last_run": "2026-11-16T12:01:05+00:00",
  "prereg_sha256": "17ecd1cd57183bacd45e8e1e6477c542b4ecaaa88a3e8b8a62fa395bbc45a581",
  "ratios": {
   "AAPL": 50.121,
