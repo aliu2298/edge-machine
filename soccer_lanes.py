@@ -247,7 +247,7 @@ def team_rows(state=None):
             history.append(f"Production since {TRP.MOVED[key]} (moved by hand)")
         gone = TR.RETIRED.get(key)
         if gone:
-            history.append(f"Retired {gone['on']}: {gone['reason']}. Its entries stay and settle")
+            history.append((gone.get("line") or f"Retired {gone['on']}: {gone['reason']}.") + " Its entries stay and settle")
         details = params_html([("Leagues", leagues), ("Group", f"{meta['group']} · {TR.GROUPS[meta['group']]}"),
                                ("Rule", meta["label"]), ("Research", meta.get("evidence")),
                                ("Record", "Paper at the Kalshi price, 7% fee, Kalshi's own settlement"),
@@ -262,7 +262,7 @@ def team_rows(state=None):
         r = row(src, sport, f"{key} · {leagues} · {meta['label']}", market, pick_record(tp), details,
                 prod=key in TRP.PAIRS, pair=pair,
                 open_n=sum(p.get("status") == "open" for p in tp),
-                gone=(f"Retired {gone['on']}: {gone['reason']}." if gone else None),
+                gone=((gone.get("line") or f"Retired {gone['on']}: {gone['reason']}.") if gone else None),
                 entries=entries_table(picks, cols),
                 legs_html=legs_table(pick_record(tp), pick_record(picks)) if len(tp) != len(picks) else "")
         (gone_rows if gone else live).append(r)
@@ -520,7 +520,7 @@ def o35_row(state=None):
     entries = [e for e in state.get("entries") or [] if e.get("version") == O.VERSION]
     s = CR.stats([r for r in O.trade_rows(entries, field="honest") if r["variant"] == OB.HEAD])
     return row(OP.LANE, OP.SPORT, f"{O.LABEL}", "Under 3.5 · in-play",
-               inplay_record(s["n"], s["won"], s["roi"], s["z"]), OB.panel(state), prod=False, pair=None,
+               inplay_record(s["n"], s["won"], s["roi"], s["z"]), OB.panel(state), prod=False, pair=None, gone=O35_RETIRED["original"],
                anchor="cheap-side", kind="In-play",
                note=f"Record: v4 re-scored under the honesty rules, headline exit (bid {round(O.HEADLINE * 100)}c, sell at {O.HEAD_MULT:g}x).")
 
@@ -534,10 +534,14 @@ def o35_v5_row(state=None):
     es = [e for e in state.get("entries") or [] if e.get("night", "") >= O.SINCE_V5 and "v5" in e]
     s = CR.stats([r for r in O.trade_rows(es, field="v5") if r["variant"] == OB.HEAD])
     return row("o35_cheap_no_v5", OP.SPORT, O.V5_LABEL, "Under 3.5 · in-play",
-               inplay_record(s["n"], s["won"], s["roi"], s["z"]), OB.v5_panel(state), prod=False, pair=None,
+               inplay_record(s["n"], s["won"], s["roi"], s["z"]), OB.v5_panel(state), prod=False, pair=None, gone=O35_RETIRED["v5"],
                anchor="o35-v5", kind="In-play", note="Record: the 10c bid cancelled at minute 80, sell at 4x, honest rules, fresh from 2026-11-06.")
 
 
+# 2026-11-16 (Olu): the over 3.5 cheap NO is retired, all three rows (o35_cheap_no.RETIRED_ON stops new games; the rows and their records stay).
+O35_RETIRED = {"original": "Retired Nov 16 by Olu: 52 bets, -17.6% after fees",
+               "v5": "Retired Nov 16 by Olu: 23 bets, -32.2% after fees",
+               "live": "Retired Nov 16 by Olu: 21 fills, -33.0% after fees"}
 # The live run of o35, 2026-11-01 to 2026-11-06, kept as its own row (Olu, Nov 6: back to the Sandbox until it works properly).
 O35_LIVE = dict(fills=21, sold=4, roi=-0.33, ended="2026-11-06")
 
@@ -553,7 +557,7 @@ def o35_live_row():
                            "The paper lane is being re-scored under queue and latency rules before it returns."),
     ])
     return row("o35_cheap_no_wave_live", OP.SPORT, "Over 3.5 cheap NO · live run (ended)", "Under 3.5 · in-play", a, details,
-               prod=False, pair=None, kind="In-play", note="The follower's own fills, closed.")
+               prod=False, pair=None, kind="In-play", note="The follower's own fills, closed.", gone=O35_RETIRED["live"])
 
 
 def ere_draw_maker_row(state=None):
@@ -621,6 +625,7 @@ def top5_live_row(live_ledger, now):
             ("Run", f"Traded live on Kalshi from {TP.FIRST_RUN[0]} to {TP.ENDED_ON} in a small fixed size; the feed names no match since {TP.ENDED_ON}, "
                     "so no new bid is opened. A position already held settles on its own."),
             ("Record", "The paper record that followed the follower's own decisions during the run, per counted fill; the research record is the Sandbox row Top-5 goalless dip, which keeps running."),
+            ("History", "Out of Production Nov 16 (Olu): Sandbox research row z 0.05, newer half +0.3%; the 100-fill read continues on paper."),
         ])
         return row("top5_dip_live_run", TP.SPORT, "Top-5 goalless dip · live run (ended)", "Over 1.5 · in-play", a, details,
                    prod=False, pair=None, kind="In-play", note="The follower's own decisions, closed.")
@@ -742,4 +747,7 @@ def rows_and_inputs(d, st, now):
         d, st, blob = AP.page_inputs(d, st, blob, ledger, now=now)
     except Exception as exc:                                    # noqa: BLE001
         print(f"soccer_lanes: the Argentina dip in Production failed: {type(exc).__name__}: {exc}")
+    # A row built already retired (the Nations League watch, the over 3.5 cheap NO, 2026-11-16) goes to the Retired fold.
+    gone += [r for r in live if r.get("gone")]
+    live = [r for r in live if not r.get("gone")]
     return live, gone, d, st

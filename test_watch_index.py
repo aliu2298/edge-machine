@@ -20,8 +20,8 @@ def check(label, got, want):
 
 
 rs = {r["lane"]: r for r in W.rows()}
-check("a row for each of the four before-start groups, the kickoff groups, NL dump and mentions",
-      sorted(rs), sorted(["bs_bid_ufc", "bs_bid_boxing", "bs_bid_nfl", "bs_bid_cricket", "ko_bid_national", "ko_bid_club", "nl_dump_d20", "mentions_dump_m20", "attendance_dump_m20"]))
+check("a row for each of the four before-start groups, the kickoff groups and mentions (the Nations League watch was retired 2026-11-16)",
+      sorted(rs), sorted(["bs_bid_ufc", "bs_bid_boxing", "bs_bid_nfl", "bs_bid_cricket", "ko_bid_national", "ko_bid_club", "mentions_dump_m20", "attendance_dump_m20"]))
 check("NFL links to its own page's card", rs["bs_bid_nfl"]["href"], "./nfl.html#bs-bid-nfl")
 check("cricket links to its own page's card", rs["bs_bid_cricket"]["href"], "./cricket.html#bs-bid-cricket")
 check("wording: no event settled", W._status(0, 0, "x"), "Waiting for the first event to settle")
@@ -33,7 +33,7 @@ check("a watch with no fill shows no return", W._row("a", "A", "./a.html", "A", 
 html = W.index_html()
 check("the section is the Paper watches index", 'id="paper-watches"' in html and "Paper watches" in html, True)
 check("percentages only: no dollar sign", "$" in html, False)
-check("every row is labelled a paper watch", html.count("paper watch</b>"), 9)
+check("every row is labelled a paper watch", html.count("paper watch</b>"), 8)
 
 # a ledger with events but no fill reads "N events seen, 0 fills yet" on the NFL row
 st = B.empty()

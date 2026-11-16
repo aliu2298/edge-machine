@@ -4976,7 +4976,7 @@ ok(T.PAIR_REMOVALS["corners_team_fade|soccer_corners"]["keep_record"]
 
 
 print("\nSoccer by-competition counts match the card window and the card's units")
-# A live over-1.5 lane (u35_low_o15; o15_form_l10 was retired 2026-10-24) keeps the stage clock the card already reads. Corners has no
+# A live over-1.5 lane (ere_o15; o15_form_l10 was retired 2026-10-24, u35_low_o15 2026-11-16) keeps the stage clock the card already reads. Corners has no
 # clock; its card n is matches (day_units), and the panel used to count rungs.
 _O15_SINCE = "2026-09-21T01:44:02+00:00"
 _PRE = "2026-09-14T02:51:18+00:00"
@@ -5001,13 +5001,13 @@ def _panel_bet(i, source, sport, logged, league, status="won", pnl=None, market_
 
 _panel_q = []
 for _i in range(4):
-    _panel_q.append(_panel_bet(_i, "u35_low_o15", "soccer_o15", _POST, "MLS"))
+    _panel_q.append(_panel_bet(_i, "ere_o15", "soccer_o15", _POST, "MLS"))
 for _i in range(2):
-    _panel_q.append(_panel_bet(10 + _i, "u35_low_o15", "soccer_o15", _PRE, "MLS"))
+    _panel_q.append(_panel_bet(10 + _i, "ere_o15", "soccer_o15", _PRE, "MLS"))
 for _i in range(4):
-    _panel_q.append(_panel_bet(20 + _i, "u35_low_o15", "soccer_o15", _PRE, "GhostPreLeague"))
+    _panel_q.append(_panel_bet(20 + _i, "ere_o15", "soccer_o15", _PRE, "GhostPreLeague"))
 _panel_q.append(_panel_bet(
-    90, "u35_low_o15", "soccer_o15", _PRE, "PriceGhost", status="settled", pnl=40.0,
+    90, "ere_o15", "soccer_o15", _PRE, "PriceGhost", status="settled", pnl=40.0,
     result="price", settle_px=0.8))
 # 8 matches, 11 rungs. Match 0's three rungs average a win; match 1's two average a loss
 # (the mean P/L is zero). The other six are one winning rung each.
@@ -5022,13 +5022,13 @@ for _code, _pnls in _corner_specs:
             market_id=f"KXEPLCORNERS-{_code}-{_rung_i}"))
         _rung_i += 1
 _panel_d = {"quotes": _panel_q}
-_panel_st = {"pairs": {"u35_low_o15|soccer_o15": {"since": _O15_SINCE}}, "events": []}
+_panel_st = {"pairs": {"ere_o15|soccer_o15": {"since": _O15_SINCE}}, "events": []}
 _panel_rows = SB.pair_list(_panel_d, _panel_st)
-_panel_o15 = next(r for r in _panel_rows if r["name"] == "u35_low_o15" and r["sport"] == "soccer_o15")
+_panel_o15 = next(r for r in _panel_rows if r["name"] == "ere_o15" and r["sport"] == "soccer_o15")
 _panel_cu = next(r for r in _panel_rows if r["name"] == "corners_total_under" and r["sport"] == "soccer_corners")
 eq(_panel_o15.get("since"), _O15_SINCE, "the lane row carries the stage clock the card already uses")
 eq(_panel_o15["a"]["n"], 4, "the over-1.5 card counts only the four bets logged after the reset")
-_o15_parts = T.league_split(_panel_d, "u35_low_o15", "soccer_o15", venues=T.TRADEABLE_VENUES,
+_o15_parts = T.league_split(_panel_d, "ere_o15", "soccer_o15", venues=T.TRADEABLE_VENUES,
                             since=_panel_o15["since"])
 eq(sum(sp["n"] for sp in _o15_parts), _panel_o15["a"]["n"],
    "the competition split's settled total is the card's post-reset n")

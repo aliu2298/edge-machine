@@ -9,6 +9,11 @@ import soccer_lanes as L
 
 ANCHOR = "nl-dump"
 SPORT = "soccer_nl_dump"
+# 2026-11-16 (Olu): all four rows retired. The workflow is gone, so nothing new is replayed; the rows stay with their final record.
+RETIRED = {"D20": "Retired Nov 16 by Olu: 90 fills, -9.3% after fees",
+           "D15": "Retired Nov 16 by Olu: 151 fills, -7.9% after fees",
+           "H20": "Retired Nov 16 by Olu: 57 fills, -23.9% after fees",
+           "D40": "Retired Nov 16 by Olu: 19 fills, -31.7% after fees"}
 NOTE = "Paper watch of one research lead: observation only, never in Production. Replayed once after each game settles."
 SHARED = [
     ("Games", "Every UEFA Nations League game Kalshi lists a total-goals market for, every rung of the game. No selection"),
@@ -68,7 +73,9 @@ def rows(state=None):
         details = (L.params_html([("Row", cfg["label"]), ("Record", f"{_games(state)}. {r['read']}")] + SHARED) + _table(r))
         a = L.inplay_record(s["n"], s["won"], s["roi"], s["t"])
         row = L.row(f"nl_dump_{key.lower()}", SPORT, label, "Total goals", a, details, open_n=0,
-                    entries=L.entries_table(picks, cols), kind="Observation", note=NOTE, anchor=f"{ANCHOR}-{key.lower()}")
+                    entries=L.entries_table(picks, cols), kind="Observation", note=NOTE, anchor=f"{ANCHOR}-{key.lower()}",
+                    gone=RETIRED.get(key))
+        row["scope"] = "intl"                  # national teams: the Scope column says Internationals, not Clubs
         row["pin"] = True
         if key != "D20":
             row["after"] = "nl_dump_d20"

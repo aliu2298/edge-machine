@@ -130,10 +130,9 @@ check("ended: no Production pair, no page inputs", (X.pairs(), X.page_inputs({"q
 X.ENDED_ON = _ENDED
 X.MOVED_ON = _MOVED
 print("back in Production (2026-11-12, Olu)")
-check("running: back in Production on a fresh record, the first run kept as history", (X.ENDED_ON, X.MOVED_ON, X.FIRST_RUN, X.PROMOTED[:10]),
-      ("", "2026-11-12", ("2026-11-05", "2026-11-08"), "2026-11-12"))
-check("running: one Production pair, by hand 2026-11-12, at the default stake", ({k: v["by_hand"] for k, v in X.pairs().items()}, X.STAKE_USD),
-      ({"top5_goalless_dip_live|soccer_o15": "2026-11-12"}, 1.0))
+check("out of Production again 2026-11-16 (Olu), the 2026-11-12 record and the first run kept as history", (X.ENDED_ON, X.MOVED_ON, X.FIRST_RUN, X.PROMOTED[:10]),
+      ("2026-11-16", "2026-11-12", ("2026-11-05", "2026-11-08"), "2026-11-12"))
+check("ended: no Production pair, the stake setting stays", (X.pairs(), X.STAKE_USD), ({}, 1.0))
 
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

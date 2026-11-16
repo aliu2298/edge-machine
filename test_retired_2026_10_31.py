@@ -83,9 +83,9 @@ check("Clubs moved from sports to retired_sports with a dated record; Cups and I
        "25 won v 25.8 priced" in src["retired_sports"]["soccer_u35"]), (["soccer_u35_cup", "soccer_u35_intl"], ["soccer_u35"], True, True))
 check("the Internationals pair is still in Production and the Clubs pair never was",
       ("u35_low_scoring|soccer_u35_intl" in T.PAIR_OVERRIDES, "u35_low_scoring|soccer_u35" in T.PAIR_OVERRIDES), (True, False))
-check("u35_low_o15 still runs on its own sport and selects through the shared predicate",
-      (S.SOURCES["u35_low_o15"]["sports"], "u35_low_selected" in inspect.getsource(S.fetch_u35_low_o15), S.SOURCES["u35_low_o15"].get("retired_sports")),
-      (["soccer_o15"], True, None))
+check("u35_low_o15 selects through the shared predicate; it was retired 2026-11-16 (Olu), so it runs on no sport now",
+      (S.SOURCES["u35_low_o15"]["sports"], "u35_low_selected" in inspect.getsource(S.fetch_u35_low_o15), sorted(S.SOURCES["u35_low_o15"].get("retired_sports") or {})),
+      ([], True, ["soccer_o15"]))
 rows = [dict(market_id="KXEPLTOTAL-26NOV01-1", price_a=0.80, mid_a=0.78, tradeable={"a": True}, espn_home="H", espn_away="A", league="Premier League")]
 S._rule_rows, _old = (lambda sport, universe: [(r, dt.datetime(2026, 11, 1, tzinfo=UTC)) for r in rows]), S._rule_rows
 S.u35_low_selected, _sel = (lambda r, ko, fx: True), S.u35_low_selected

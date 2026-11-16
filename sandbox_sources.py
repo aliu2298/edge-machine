@@ -222,6 +222,10 @@ LIGA_U15_DOG_RETIRED_WHY = ("Retired 2026-11-12 by Olu, replaced by La Liga unde
                             "matches, bet inside 24 hours of kickoff. v1 placed its bets a median 4 days before kickoff, where the under "
                             "cost about 3c more than it did inside the last day. Final paper record: 3 won v 1.2 priced on 9, +112.2% "
                             "after fees. Never in Production." + RETIRED_TAIL_2026_11_12)
+# 2026-11-16 (Olu): four Sandbox rules retired. No new entries; their rows stay on file and their open bets still settle.
+RETIRED_TAIL_2026_11_16 = (" No new entries from 2026-11-16; its rows stay on file and its open bets still settle.")
+U35_LOW_O15_RETIRED_WHY = "Retired Nov 16 by Olu: 23 settled, −6.6% after fees." + RETIRED_TAIL_2026_11_16
+TEAM2_RANKED_CUP_RETIRED_WHY = ("Retired Nov 16 by Olu: Cups scope, 10 settled, −13.6% after fees. The Clubs scope is untouched." + RETIRED_TAIL_2026_11_16)
 # Econ Daily near-certain 3h NO (Olu, 2026-11-06): paper since 2026-10-28, never traded live after that. No new entries from
 # 2026-11-06 (daily_track.NC_RETIRED); its rows stay on file and its open bets still settle. The S&P near-certain NO stays.
 ECON_NC_NO_RETIRED_WHY = ("Retired 2026-11-06 by Olu: no edge at 20 settled contracts on 16 market-days — 18 won v 18.1 priced, "
@@ -699,8 +703,9 @@ SOURCES = {
              "The same rule selects the Leads board's over-1.5 cards since 2026-09-14."),
     "team2_ranked": dict(
         label="Favourite to score 2+, ranked by margin (top 2, 5pp+)", kind="Rule", connected=True,
-        site="edge-machine", sports=["soccer_team2", "soccer_team2_cup"],
+        site="edge-machine", sports=["soccer_team2"],
         retired_sports={
+            "soccer_team2_cup": TEAM2_RANKED_CUP_RETIRED_WHY,
             "soccer_team2_intl": "Retired 2026-10-11 by Olu and FADED: 8 won, 17 lost on 25 "
                                  "settled, -42.6% after fees, while the other side of the same "
                                  "bets made +19.0% after fees per contract (+20.3% at $100 a "
@@ -921,7 +926,7 @@ SOURCES = {
              "Judged against backing the under on every Kalshi match."),
     "u35_low_o15": dict(
         label="Low-scoring picks → over 1.5 (clubs)", kind="Rule", connected=True,
-        site="edge-machine", sports=["soccer_o15"], baseline="population",
+        site="edge-machine", sports=[], retired_sports={"soccer_o15": U35_LOW_O15_RETIRED_WHY}, baseline="population",
         note="Pre-registered 2026-10-18 by Olu, before it logged anything. The SAME matches "
              "u35_low_scoring selects (both teams scored 1 or fewer in 7+ of their last 10 games in "
              "this competition, 10+ games each, ESPN results strictly before kickoff), backed the "
@@ -1926,7 +1931,7 @@ BACK_IN_SANDBOX = {
 for _name, _text in BACK_IN_SANDBOX.items():
     SOURCES[_name]["note"] = SOURCES[_name]["note"].replace("Measured in the Sandbox; not in Production.", "Measured in the Sandbox.") + " " + _text
 # 2026-11-06 (Olu, knowing both are tiny samples): one scope of each rule is in Production by hand, at the default stake.
-SOURCES["team2_form_l10"]["note"] += " Internationals scope: in Production from 2026-11-06 (Olu); Cups stays in the Sandbox."
+SOURCES["team2_form_l10"]["note"] += " Internationals scope: in Production 2026-11-06 to 2026-11-16 (Olu), back in the Sandbox with its whole record (paper); Cups stays in the Sandbox."
 SOURCES["u35_low_scoring"]["note"] += " Cups scope: in Production from 2026-11-06 (Olu), as its Internationals scope has been since 2026-10-04; Clubs stays retired."
 
 

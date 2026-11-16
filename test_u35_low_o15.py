@@ -91,7 +91,8 @@ check("the pick is the 'Over 1.5 goals scored' contract at its 0.71 ask",
       [("KXLALIGATOTAL-26OCT25TIGBLU-9", "a", 0.71)])
 
 print("\nclubs only: internationals and cups are never entered")
-check("registered on soccer_o15 alone", S.SOURCES["u35_low_o15"]["sports"], ["soccer_o15"])
+check("was registered on soccer_o15 alone; retired 2026-11-16 (Olu), so it is a retired sport and no live one",
+      (S.SOURCES["u35_low_o15"]["sports"], sorted(S.SOURCES["u35_low_o15"].get("retired_sports") or {})), ([], ["soccer_o15"]))
 for sp in ("soccer_o15_intl", "soccer_o15_cup"):
     check(f"{sp} returns nothing even with a qualifying row",
           S.fetch_u35_low_o15(sp, {sp: [row("m", "Tight FC", "Blunt FC", sport=sp)]}, fx), [])

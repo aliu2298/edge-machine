@@ -140,6 +140,8 @@ def pick(row, q, text, state, price=None, legs="", href=None, status=None, settl
 
 # ------------------------------------------------------------------ words
 def scope_key(row):
+    if row.get("scope") in SCOPE_WORDS:        # a row that names its own scope (the Nations League watch is Internationals)
+        return row["scope"]
     return SCOPE_KEYS.get(B._scope(row.get("sport") or ""), "clubs")
 
 

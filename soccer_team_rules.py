@@ -202,6 +202,10 @@ RETIRED = {
     "T6": dict(on="2026-10-31", reason="10 won, 5 lost at about 82c, −23.0% after fees on 15 bets; retired by Olu"),
     "T8": dict(on="2026-10-31", reason="3 won, 8 lost, −51.6% after fees on 11 bets; retired by Olu"),
     "T2": dict(on="2026-11-01", reason="4 won of 10, −21.8% after fees at the 10-bet review; research was +29%"),
+    # 2026-11-16 (Olu). T5 was read at 22 settled; its 23rd, a Nov 8 match left unsettled by the idle break, settled afterwards (a win), so the ledger now says 13-10, -0.3%.
+    "T3": dict(on="2026-11-16", reason="6 won, 19 lost on 25, −24.7% after fees", line="Retired Nov 16 by Olu: 6 won, 19 lost on 25, −24.7% after fees."),
+    "T5": dict(on="2026-11-16", reason="13 won, 10 lost on 23, −0.3% after fees (−5.7% on the first 22)",
+               line="Retired Nov 16 by Olu at 22 settled, −5.7% after fees; its 23rd then settled a win: 13 won, 10 lost, −0.3%."),
 }
 
 

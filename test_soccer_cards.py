@@ -86,7 +86,7 @@ def _settled(source, sport, n=4, won=3, price=0.60):
 def _fixture():
     """Several markets, open picks across three days, and one stored fixture with no stake."""
     quotes = []
-    quotes += _settled("u35_low_o15", "soccer_o15", n=6, won=4)
+    quotes += _settled("ere_o15", "soccer_o15", n=6, won=4)
     quotes += _settled("o15_ranked", "soccer_o15_intl", n=4, won=1, price=0.70)
     quotes += _settled("team2_form_l10", "soccer_team2_cup", n=3, won=2)
     quotes += _settled("liga_btts_even", "soccer_btts", n=5, won=2, price=0.48)
@@ -99,7 +99,7 @@ def _fixture():
         (30, "Iota v Kappa fifth and later"),
     ]
     for i, (hours, label) in enumerate(soon):
-        quotes.append(_quote(100 + i, "u35_low_o15", "soccer_o15", "open", hours, label))
+        quotes.append(_quote(100 + i, "ere_o15", "soccer_o15", "open", hours, label))
     quotes.append(_quote(
         200, "o15_ranked", "soccer_o15_intl", "open", 20, "Lambda v Mu ranked"))
     quotes.append(_quote(
@@ -229,13 +229,13 @@ ok('class="sp-pick is-watch"' in page_events and ">watching<" in page_events,
    "an unstaked fixture reads 'watching' in the pick column")
 ok(_absent("Far Side v Later", html), "an unstaked fixture past 48 hours is not on the page")
 alpha = _event(page_events, "Alpha vs Beta soonest")
-ok('<span class="sp-pick-rule">Low-scoring picks → over 1.5</span>' in alpha, "the rule name is printed, muted, after the price")
+ok('<span class="sp-pick-rule">Eredivisie over 1.5, underdog priced 3.21-4.00</span>' in alpha, "the rule name is printed, muted, after the price")
 ok('<span class="sp-price">55¢</span>' in alpha, "the price is the stored ask in cents")
 ok(page_events.count("<article") == 0, "no boxes per fixture")
 ok('class="sp-day-head"' in page_events, "day heads carry the sticky class")
 
 print("\nevents: the pick in words")
-over = _quote(900, "u35_low_o15", "soccer_o15", "open", 30, "City v United: over 1.5 goals")
+over = _quote(900, "ere_o15", "soccer_o15", "open", 30, "City v United: over 1.5 goals")
 over.update(pick="a", url="https://kalshi.com/markets/over")
 eq(C.pick_text(over), "Over 1.5", "a Yes on an over market is 'Over 1.5'")
 eq(C.pick_text(dict(over, pick="b")), "Under 1.5", "a No on an over market is 'Under 1.5'")
@@ -257,7 +257,7 @@ winner = _quote(906, "mls_away_band", "soccer", "open", 30, "Saint Louis vs Los 
 winner.update(side_a="Saint Louis", side_b="Los Angeles G", pick="b")
 eq(C.pick_text(winner), "Los Angeles G to win", "a match-winner pick names the side")
 eq(C.pick_text(dict(winner, pick="draw")), "Draw", "a draw pick is 'Draw'")
-odd = _quote(907, "u35_low_o15", "soccer_o15", "open", 30, "Ajax v PSV: something new")
+odd = _quote(907, "ere_o15", "soccer_o15", "open", 30, "Ajax v PSV: something new")
 eq(C.pick_text(odd), "No: something new", "an unrecognised title keeps the venue's words with the side")
 ok("Under 3.5 · No" not in html and " · Yes" not in page_events, "no rule · market · side triple on a row")
 
@@ -276,9 +276,9 @@ eq(sorted(p["href"] for p in merged["picks"]), sorted([S.market_url(over), S.mar
 ok(next(r for r in recs if r["label"] == "City vs United" and r is not merged)["sub"] == "Other League",
    "the competition is the row's sub-line")
 
-past = _quote(910, "u35_low_o15", "soccer_o15", "open", -30, "Past match")
-today_pick = _quote(911, "u35_low_o15", "soccer_o15", "open", 1, "Today match")
-later_pick = _quote(913, "u35_low_o15", "soccer_o15", "open", 72, "Later match")
+past = _quote(910, "ere_o15", "soccer_o15", "open", -30, "Past match")
+today_pick = _quote(911, "ere_o15", "soccer_o15", "open", 1, "Today match")
+later_pick = _quote(913, "ere_o15", "soccer_o15", "open", 72, "Later match")
 unknown = dict(over, id="unknown", label="Unknown match", start="unreadable")
 bucket_data = {"quotes": [past, today_pick, later_pick, unknown]}
 bucket_rows = _rows(bucket_data, {"pairs": {}})

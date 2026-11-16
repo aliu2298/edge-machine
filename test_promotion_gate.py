@@ -50,7 +50,7 @@ check("a record graded under another rule set is refused", PG.verdict(rec(rules=
 
 print("a promotion without a record fails; with one it passes")
 CB = "commod_fav_band|commodities_fav"            # promoted 2026-11-12 with its own record and waiver
-TD = "top5_goalless_dip_live"                     # back in Production 2026-11-12 with its own record and waiver
+TD = "top5_goalless_dip_live"                     # was back in Production 2026-11-12 with its own record and waiver; out again 2026-11-16
 blob = dict(lanes={CB: rec(), TD: rec()})
 new = dict(live, **{"new_rule|soccer_o25": "a new lane"})
 got = PG.verify(blob, new, feeds=[])

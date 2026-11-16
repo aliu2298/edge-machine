@@ -16,7 +16,7 @@ GROUPS = ("NBA", "Soccer", "Crypto · Econ · S&P")
 EARLY_N = 10                         # under this many settled bets a return is grey ("too early")
 # The own-state lanes the follower runs from its own state files, and the lane a Production pair's live bets are read from.
 OWN_RUNNING = ("nba_wm_yes", "nba_wm_nofade", "arg_dip")
-OWN_RETIRED = ("o35_cheap_no",)
+OWN_RETIRED = ("o35_cheap_no", "top5_dip")
 OWN_GROUP = {"nba_wm_yes": "NBA", "nba_wm_nofade": "NBA", "arg_dip": "Soccer", "o35_cheap_no": "Soccer", "top5_dip": "Soccer"}
 OWN_RULE = {
     "nba_wm_yes": "Backs the Yes side of an NBA win-margin bracket and sells in two parts on the way up.",
@@ -201,8 +201,20 @@ def build(live_blob, pairs, now=None):
         retired.append(dict(key=key, name=plain(_pulled_name(key)), group=group_of(key), own=False, rows=rows, live=tally(rows, False), paper=None,
                             notes=[], rule="", clv=None, market=_pulled_market(key), since=_span(rows)[0], last=_span(rows)[1]))
     for lane in OWN_RETIRED:
+        if lane in lanes:
+            continue                                              # still running (its pair is passed in): the running line is its record
         rows = list(own_rows.get(lane) or [])
-        retired.append(dict(key=lane, name=PL.LANE_NAMES.get(lane, lane), group=OWN_GROUP[lane], own=True, rows=rows, live=tally(rows, True),
+        name = PL.LANE_NAMES.get(lane, lane)
+        if lane in PL.OWN_FROM:                                   # a lane that ran twice and has ended: its first run is its own line, the second keeps the name
+            early = [o for o in rows if str(o.get("ko") or "")[:10] < PL.OWN_FROM[lane]]
+            rows = [o for o in rows if str(o.get("ko") or "")[:10] >= PL.OWN_FROM[lane]]
+            if early:
+                sp = _span(early)
+                history.append(dict(key=lane + "#first-run", name=name + f" · earlier run ({_day(sp[0])} – {_day(sp[1])})", group=OWN_GROUP[lane], own=True,
+                                    rows=early, live=tally(early, True), paper=None, notes=[], rule=OWN_RULE.get(lane, ""), clv=None, market=None,
+                                    since=sp[0], last=sp[1]))
+            name += f" · from {_day(PL.OWN_FROM[lane])}"
+        retired.append(dict(key=lane, name=name, group=OWN_GROUP[lane], own=True, rows=rows, live=tally(rows, True),
                             paper=None, notes=[], rule=OWN_RULE.get(lane, ""), clv=None, market=None, since=_span(rows)[0], last=_span(rows)[1]))
     retired += history
     retired = [r for r in retired if r["live"]["n"] or r["rows"]]

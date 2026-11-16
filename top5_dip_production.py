@@ -28,7 +28,7 @@ LANE = L.LANE
 VERSION = L.VERSION
 FIRST_RUN = ("2026-11-05", "2026-11-08")   # its first Production run (12 live fills, -9.4%): back in the Sandbox 2026-11-08, stays on the page as history
 MOVED_ON = "2026-11-12"          # Olu: back in Production, live at the default stake, on a FRESH record (the Production record counts matchdays from here)
-ENDED_ON = ""                    # empty = running. Set to a date to end it: the feed then lists no match, so the follower opens no new bid; what it holds settles on its own
+ENDED_ON = "2026-11-16"          # Olu, Nov 16: out of Production again. Empty = running. Set to a date to end it: the feed then lists no match, so the follower opens no new bid; what it holds settles on its own
 FRACTION = L.HEADLINE
 STAKE_USD = 1.0
 LOOKAHEAD_H = 30

@@ -370,7 +370,7 @@ def gap_section(rows, paper_by_pair, in_feed=None, feed_from=None, horizon=None)
 
 # Non-soccer pairs whose live fills stay listed after the pair went back to the Sandbox (2026-11-08: the commodities favourite band).
 HISTORY_SPORTS = ("commodities_fav",)
-ENDED_LANES = {"o35_cheap_no": "Nov 6"}      # own-state lanes back in the Sandbox: their live fills stay as history
+ENDED_LANES = {"o35_cheap_no": "Nov 6", "top5_dip": "Nov 16"}      # own-state lanes back in the Sandbox: their live fills stay as history
 
 
 def pulled_table(live_blob, name):
@@ -431,7 +431,8 @@ def lanes_table(live_blob):
         if lane in OWN_FROM:               # a fresh record from OWN_FROM: the earlier run is its own line
             early = [r for r in rows if str(r.get("ko") or "")[:10] < OWN_FROM[lane]]
             parts = [(LANE_NAMES.get(lane, lane) + " · earlier run", early),
-                     (LANE_NAMES.get(lane, lane) + f" · from {dt.date.fromisoformat(OWN_FROM[lane]):%b} {dt.date.fromisoformat(OWN_FROM[lane]).day}",
+                     (LANE_NAMES.get(lane, lane) + f" · from {dt.date.fromisoformat(OWN_FROM[lane]):%b} {dt.date.fromisoformat(OWN_FROM[lane]).day}"
+                      + (f" · back in the Sandbox {ENDED_LANES[lane]}" if lane in ENDED_LANES else ""),
                       [r for r in rows if str(r.get("ko") or "")[:10] >= OWN_FROM[lane]])]
         for name, part in parts:
             if not part:

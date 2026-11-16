@@ -12,7 +12,6 @@ import bs_bid as B
 import ko_bid as K
 import attendance_dump as AD
 import mentions_dump as MD
-import nl_dump as N
 
 
 def esc(x):
@@ -54,14 +53,6 @@ def rows():
             r = rec[g]
             out.append(_row(f"ko_bid_{g}", f"{cfg['label']} · before-kickoff bid · paper watch", f"./soccer.html#ko-bid-{g}", "Soccer", r["games"],
                             r["headline"]["n"], r["headline"]["roi"], r["read"]))
-    except Exception:                                           # noqa: BLE001
-        pass
-    try:
-        st = N.load()
-        rec = N.records(st)
-        r = rec["D20"]
-        out.append(_row("nl_dump_d20", "Nations League total goals · dump bid · paper watch", "./soccer.html#nl-dump-d20", "Soccer", rec["games"], r["headline"]["n"],
-                        r["headline"]["roi"], r["read"]))
     except Exception:                                           # noqa: BLE001
         pass
     try:
