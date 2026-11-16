@@ -560,7 +560,7 @@ ASSET_BY_SERIES = {"KXGOLDD": "Gold", "KXSILVERD": "Silver", "KXBRENTD": "Brent"
 # "code" a team code (NBA codes are named), "pair" a "AAA @ BBB" game.
 RULE_LEDGERS = (
     ("soccer_rules_ledger.json", "Soccer", "match"), ("soccer_team_rules_ledger.json", "Soccer", "team"),
-    ("sa_o15_ledger.json", "Soccer", "match"), ("contender_overs_ledger.json", "Soccer", "match"),
+    ("sa_o15_ledger.json", "Soccer", "match"), ("btts_sa_ledger.json", "Soccer", "match"), ("contender_overs_ledger.json", "Soccer", "match"),
     ("nfl_tt_ledger.json", "Football", "code"), ("nfl_tt_main1_ledger.json", "Football", "code"),
     ("tennis_totals_ledger.json", "Tennis", "match"),
     ("nba_rules_ledger.json", "NBA", "code"), ("nba_value_ledger.json", "NBA", "code"),
@@ -870,6 +870,7 @@ def lane_stages(now=None, st=None):
     import nfl_tt_main1 as NT1
     import o35_production as OP
     import production as P
+    import btts_sa as BSA
     import sa_o15 as SA
     import sandbox_build as B
     import sandbox_sources as S
@@ -884,7 +885,7 @@ def lane_stages(now=None, st=None):
     prod_pairs = set(P.production_pairs(st))
     rule_engines = {
         "soccer_rules_ledger.json": (SR, set(SRP.PAIRS)), "soccer_team_rules_ledger.json": (STR, set(STRP.PAIRS)),
-        "sa_o15_ledger.json": (SA, set()), "contender_overs_ledger.json": (CO, set()), "nfl_tt_ledger.json": (NT, set()),
+        "sa_o15_ledger.json": (SA, set()), "btts_sa_ledger.json": (BSA, set()), "contender_overs_ledger.json": (CO, set()), "nfl_tt_ledger.json": (NT, set()),
         "nfl_tt_main1_ledger.json": (NT1, set()),
         "nba_rules_ledger.json": (NR, set()), "nba_value_ledger.json": (NV, set()),
     }

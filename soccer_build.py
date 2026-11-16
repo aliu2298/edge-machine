@@ -184,7 +184,7 @@ def _own_ledger_note():
     import soccer_lanes as L
     bits = []
     for title, mod in (("Label rules", "soccer_rules"), ("Team scoring rules", "soccer_team_rules"),
-                       ("Title contenders' overs", "contender_overs"), ("Argentina & Brasileirão over 1.5", "sa_o15"),
+                       ("Title contenders' overs", "contender_overs"), ("Argentina & Brasileirão over 1.5", "sa_o15"), ("Brazil and Argentina BTTS YES", "btts_sa"),
                        ("African qualifiers goals check", "africa_goals")):
         try:
             m = __import__(mod)
