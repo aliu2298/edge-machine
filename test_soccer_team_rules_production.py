@@ -149,6 +149,7 @@ stale = dict(state, last_run=(NOW - dt.timedelta(hours=5)).isoformat())
 check("a stale read publishes no lead", TP.feed(stale, now=NOW)["leads"], {})
 check("a failed read neither", TP.feed(dict(state, error="boom"), now=NOW)["leads"], {})
 
+import africa_goals_production as AFP
 print("\nthe pages")
 html = P.page({"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}, "", now=NOW, soccer_team_rules=state)
 check("the Production page lists T1 by name", all(n in html for n in TP.LABELS.values()), True)
@@ -156,8 +157,8 @@ check("the display name is the registered one", all(S.OWN_LEDGER_LABELS[k] == v 
 m0 = CC.model({"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}, NOW)
 m1 = CC.model({"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}, NOW, soccer_team_rules=state)
 check("the Control Center counts it once and names it", (m1["tiles"]["pairs"] - m0["tiles"]["pairs"],
-                                                          [n for n in m1["prod_outside"] if n in TP.LABELS.values()]),
-      (3, list(TP.LABELS.values())))
+                                                          sorted(n for n in m1["prod_outside"] if n in list(TP.LABELS.values()) + list(AFP.LABELS.values()))),
+      (3 + 2, sorted(list(TP.LABELS.values()) + list(AFP.LABELS.values()))))   # + the two African qualifier legs, 2026-11-16
 sec = TB.section(state)
 check("the Soccer page says T1 was in Production 2026-10-24 to 2026-10-28 and is back in the Sandbox",
       (sec.count("Production 2026-10-24 to 2026-10-28, back in the Sandbox") >= 1,

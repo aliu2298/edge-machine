@@ -526,7 +526,7 @@ def africa_leg_rows(state, cols):
     import africa_goals_production as AFP
     src, sport, name = AFP.PAIRS["DOG"]
     both = "Observation rows split from the every-match rows; the entry and the price are unchanged"
-    pre = ("Pre-registered", "Nov 16 2026 (docs/prereg_africa_legs_2026-11-16.md): post hoc, found on the Nov 12 to 14 window after it was seen")
+    pre = ("Pre-registered", "Nov 16 2026, before any new match: post hoc, found on the Nov 12 to 14 window after it was seen")
     spec = [
         ("DOG", src, sport, name, "Team 1+", True, f"{src}|{sport}", "Rule",
          [("Bet", "YES on the underdog to score: the side whose to-score YES ask is under 60c, at the ask, held to settlement"),

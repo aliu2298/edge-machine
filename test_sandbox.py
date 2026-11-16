@@ -4868,7 +4868,7 @@ ok(T.placeable(_intl_q("bund_o35", "soccer_u35", "KXBUNDESLIGATOTAL-26OCT02X-4",
 ok("soccer_team1_cup" not in T.FEED_BETS and "soccer_o15_cup" not in T.FEED_BETS
    and "soccer_u35_cup" in T.FEED_BETS and "soccer_team2_intl" in T.FEED_BETS and "soccer_team2_cup" not in T.FEED_BETS
    and "soccer_btts_cup" not in T.FEED_BETS
-   and "soccer_btts_intl" not in T.FEED_BETS and "soccer_team1_other" not in T.FEED_BETS,
+   and "soccer_btts_intl" in T.FEED_BETS and "soccer_team1_other" not in T.FEED_BETS,       # btts_intl: afq_btts, 2026-11-16
    "the feed names one cup suffix (the under, 2026-11-06), the team 2+ internationals twin, and no unknown one")
 
 _verified = _intl_q("team1_form_l5", "soccer_team1_intl", "KXUEFANLTEAMTOTAL-26OCT02KAZMDA-KAZ1")
