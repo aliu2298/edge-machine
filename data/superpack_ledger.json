@@ -746,12 +746,20 @@
    "at": "2026-11-15T18:34:13.554908+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXBTCD-26NOV1617-T64499.99\", \"a\"]]": {
+   "at": "2026-11-16T18:34:21.679233+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXETHD-26NOV1217-T2009.99\", \"a\"]]": {
    "at": "2026-11-12T18:34:28.396087+00:00",
    "pool": "entered"
   },
   "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXETHD-26NOV1417-T1819.99\", \"a\"]]": {
    "at": "2026-11-14T19:02:51.929519+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXETHD-26NOV1617-T1799.99\", \"a\"]]": {
+   "at": "2026-11-16T18:34:21.679233+00:00",
    "pool": "entered"
   },
   "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXHYPED-26NOV1317-T71.9999\", \"a\"]]": {
@@ -1096,6 +1104,10 @@
    "mirror": "entered",
    "pool": "entered"
   },
+  "[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV16GIBMLT\", \"no\"]]": {
+   "at": "2026-11-16T18:34:21.679233+00:00",
+   "pool": "entered"
+  },
   "[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV16ISLLUX\", \"no\"]]": {
    "at": "2026-11-16T16:03:53.288702+00:00",
    "pool": "entered"
@@ -1106,6 +1118,10 @@
   },
   "[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV16LTULIE\", \"no\"]]": {
    "at": "2026-11-16T16:03:53.288702+00:00",
+   "pool": "opposite"
+  },
+  "[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV16MKDSLO\", \"no\"]]": {
+   "at": "2026-11-16T18:34:21.679233+00:00",
    "pool": "opposite"
   },
   "[\"soccer_rules_ledger.json\", \"A6\", [\"A6:KXEPLTOTAL-26NOV06EVECOV\", \"no\"]]": {
@@ -1179,6 +1195,10 @@
   },
   "[\"soccer_rules_ledger.json\", \"C8\", [\"C8:KXUEFANLTOTAL-26NOV15LATARM\", \"no\"]]": {
    "at": "2026-11-15T12:43:27.920680+00:00",
+   "pool": "entered"
+  },
+  "[\"soccer_rules_ledger.json\", \"C8\", [\"C8:KXUEFANLTOTAL-26NOV16GRESRB\", \"no\"]]": {
+   "at": "2026-11-16T18:34:21.679233+00:00",
    "pool": "entered"
   },
   "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXBUNDESLIGATEAMTOTAL-26NOV07RBLFCA:away\", \"yes\"]]": {
@@ -3545,7 +3565,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-16T18:19:30.872227+00:00",
+ "last_run": "2026-11-16T18:34:21.679233+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -4348,9 +4368,9 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV16FROMDA\", \"no\"]]",
    "price": 0.79,
-   "profit": null,
+   "profit": 0.2475,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-16T18:16:28.330517+00:00",
    "side": "no",
    "snapshot": {
     "as_of": "2026-11-16T13:31:07.814779+00:00",
@@ -4419,7 +4439,7 @@
    },
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "won"
   }
  ],
  "pool": [
@@ -10841,14 +10861,14 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV16FROMDA\", \"no\"]]",
    "price": 0.79,
-   "profit": null,
+   "profit": 0.2475,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-16T18:16:28.330517+00:00",
    "side": "no",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXUEFANLTOTAL-26NOV16KAZSVK-4",
@@ -10866,14 +10886,14 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV16KAZSVK\", \"no\"]]",
    "price": 0.73,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-16T18:16:28.330517+00:00",
    "side": "no",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXUEFANLTOTAL-26NOV16ESTBUL-4",
@@ -11108,6 +11128,102 @@
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUEFANLTOTAL-26NOV16GIBMLT-4",
+   "entered_at": "2026-11-16T18:34:21.679233+00:00",
+   "entities": [
+    "Gibraltar",
+    "Malta"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV16GIBMLT\", \"no\"]]",
+   "lane": "A5",
+   "logged": "2026-11-16T18:16:28.330517+00:00",
+   "matched": [
+    "Gibraltar",
+    "Malta"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV16GIBMLT\", \"no\"]]",
+   "price": 0.85,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "no",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXUEFANLTOTAL-26NOV16GRESRB-3",
+   "entered_at": "2026-11-16T18:34:21.679233+00:00",
+   "entities": [
+    "Greece",
+    "Serbia"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"C8\", [\"C8:KXUEFANLTOTAL-26NOV16GRESRB\", \"no\"]]",
+   "lane": "C8",
+   "logged": "2026-11-16T18:16:28.330517+00:00",
+   "matched": [
+    "Greece",
+    "Serbia"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"C8\", [\"C8:KXUEFANLTOTAL-26NOV16GRESRB\", \"no\"]]",
+   "price": 0.4,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "no",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXBTCD-26NOV1617-T64499.99",
+   "entered_at": "2026-11-16T18:34:21.679233+00:00",
+   "entities": [
+    "Bitcoin"
+   ],
+   "id": "superpack:[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXBTCD-26NOV1617-T64499.99\", \"a\"]]",
+   "lane": "crypto_fav_band_v2",
+   "logged": "2026-11-16T18:33:34+00:00",
+   "matched": [
+    "Bitcoin"
+   ],
+   "pid": "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXBTCD-26NOV1617-T64499.99\", \"a\"]]",
+   "price": 0.71,
+   "profit": null,
+   "scope": "crypto_fav",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Crypto",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXETHD-26NOV1617-T1799.99",
+   "entered_at": "2026-11-16T18:34:21.679233+00:00",
+   "entities": [
+    "Ethereum"
+   ],
+   "id": "superpack:[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXETHD-26NOV1617-T1799.99\", \"a\"]]",
+   "lane": "crypto_fav_band_v2",
+   "logged": "2026-11-16T18:33:34+00:00",
+   "matched": [
+    "Ethereum"
+   ],
+   "pid": "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXETHD-26NOV1617-T1799.99\", \"a\"]]",
+   "price": 0.78,
+   "profit": null,
+   "scope": "crypto_fav",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Crypto",
    "src": "sandbox",
    "status": "open"
   }
@@ -11636,6 +11752,15 @@
    "list": "pool",
    "logged": "2026-11-16T15:31:26.455583+00:00",
    "pid": "[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV16LTULIE\", \"no\"]]",
+   "side": "no",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-16T18:34:21.679233+00:00",
+   "contract": "KXUEFANLTOTAL-26NOV16MKDSLO-4",
+   "list": "pool",
+   "logged": "2026-11-16T18:16:28.330517+00:00",
+   "pid": "[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV16MKDSLO\", \"no\"]]",
    "side": "no",
    "why": "active lanes are on both sides of this contract"
   }
