@@ -1,6 +1,6 @@
 # Pre-registration: Brazil and Argentina BTTS YES (paper), Nov 16 2026
 
-Olu approved a paper row on Nov 16 2026. Paper only: no bot pair, not in Production. Spec and evidence:
+Olu approved a paper row on Nov 16 2026. Paper only: no live pairing, not in Production. Spec and evidence:
 `docs/btts_brazil_argentina_2026-11-16.md` (a lead from a reference row, not a tested rule).
 
 > Brazil and Argentina BTTS YES. Paper. Every Serie A and Primera match, YES at the ask 20 to 90 minutes before kickoff, spread 5c or less, after fees. Scored by match day. Read at 50 and 100 bets. Held if it is positive with a clustered z of 2 or more at 100 bets. Retired if it is negative at 100.

@@ -1,6 +1,6 @@
 """Brazil and Argentina BTTS YES (2026-11-16): a Sandbox PAPER lane, `btts_sa`.
 
-Paper only: not in Production, no bot pair. Its own fresh record (data/btts_sa_ledger.json).
+Paper only: not in Production, no live pairing. Its own fresh record (data/btts_sa_ledger.json).
 Olu approved the row Nov 16 2026 (spec docs/btts_brazil_argentina_2026-11-16.md, pre-registration
 docs/prereg_btts_bra_arg_2026-11-16.md).
 
