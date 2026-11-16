@@ -195,7 +195,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-16T21:00:26Z",
+ "calendar_at": "2026-11-16T22:00:26Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -3828,9 +3828,29 @@
     "width": 0.7300699300699303
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-16T22:01:30Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 391000000.0,
+    "rungs": 6,
+    "width": 6646094.503375113
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-16T22:01:30Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.7244444444444444,
+    "rungs": 15,
+    "width": 0.8375000000000004
+   },
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-16T21:01:31Z",
+ "last_run": "2026-11-16T22:01:35Z",
  "predictions": [
   {
    "call": {
@@ -3851,23 +3871,54 @@
    "sym": "DIS"
   },
   {
+   "baselines": {
+    "random": {
+     "entry": 7.0669,
+     "entry_ts": 1794258000,
+     "exit": 6.9586,
+     "exit_ts": 1794862800,
+     "net": 0.012925,
+     "status": "settled"
+    },
+    "spy": {
+     "entry": 15.0541,
+     "entry_ts": 1794258000,
+     "exit": 14.7991,
+     "exit_ts": 1794862800,
+     "net": -0.019339,
+     "status": "settled"
+    },
+    "up": {
+     "entry": 7.0693,
+     "entry_ts": 1794258000,
+     "exit": 6.9416,
+     "exit_ts": 1794862800,
+     "net": -0.020464,
+     "status": "settled"
+    }
+   },
    "call": {
     "entry": 7.0693,
     "entry_ts": 1794258000,
-    "status": "open"
+    "exit": 6.9416,
+    "exit_ts": 1794862800,
+    "net": -0.020464,
+    "status": "settled"
    },
    "entry_due": "2026-11-09T21:00:00Z",
    "exit_due": "2026-11-16T21:00:00Z",
    "family": "runup",
+   "graded_at": "2026-11-16T22:01:31Z",
    "id": "runup:HD:2026-11-17",
    "logged_at": "2026-11-07T03:49:33Z",
+   "net": -0.020464,
    "perp": "KXHDPERP",
    "random_side": -1,
    "reason": "Up into the 2026-11-17 report (pre-market).",
    "report": "2026-11-17",
    "report_time": "pre-market",
    "side": 1,
-   "status": "open",
+   "status": "settled",
    "sym": "HD"
   },
   {
