@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-16T16:00:34.738294+00:00",
+ "last_run": "2026-11-16T17:00:34.451567+00:00",
  "rules": {
   "BTTS": {
    "picks": [
@@ -3231,15 +3231,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-14T21:00:28.283514+00:00",
-   "due": 24,
-   "events": 24,
-   "matched": 24,
-   "new": 0,
-   "settled": 0,
-   "skipped": 0
-  },
-  {
    "at": "2026-11-14T22:00:31.436300+00:00",
    "due": 24,
    "events": 24,
@@ -3688,9 +3679,38 @@
    "new": 0,
    "settled": 0,
    "skipped": 0
+  },
+  {
+   "at": "2026-11-16T17:00:34.451567+00:00",
+   "due": 26,
+   "events": 44,
+   "matched": 44,
+   "new": 0,
+   "settled": 0,
+   "skipped": 6
   }
  ],
  "skips": {
+  "BTTS:KXAFCONBTTS-26NOV16CAFBEN-BTTS": {
+   "at": "2026-11-16T17:00:34.451567+00:00",
+   "match": "Central African Republic v Benin",
+   "why": "no two-sided hourly quote at the entry"
+  },
+  "BTTS:KXAFCONBTTS-26NOV16ERIGUI-BTTS": {
+   "at": "2026-11-16T17:00:34.451567+00:00",
+   "match": "Eritrea v Guinea",
+   "why": "no two-sided hourly quote at the entry"
+  },
+  "O15:KXAFCONTOTAL-26NOV16CAFBEN-2": {
+   "at": "2026-11-16T17:00:34.451567+00:00",
+   "match": "Central African Republic v Benin",
+   "why": "no two-sided hourly quote at the entry"
+  },
+  "O15:KXAFCONTOTAL-26NOV16ERIGUI-2": {
+   "at": "2026-11-16T17:00:34.451567+00:00",
+   "match": "Eritrea v Guinea",
+   "why": "no two-sided hourly quote at the entry"
+  },
   "T1:KXAFCONTEAMTOTAL-26NOV12GHASOM-GHA1": {
    "at": "2026-11-12T17:50:48.889836+00:00",
    "match": "Ghana v Somalia",
@@ -3699,6 +3719,16 @@
   "T1:KXAFCONTEAMTOTAL-26NOV13COMCOG-COG1": {
    "at": "2026-11-13T11:00:27.125015+00:00",
    "match": "Comoros v Congo",
+   "why": "no two-sided hourly quote at the entry"
+  },
+  "U35:KXAFCONTOTAL-26NOV16CAFBEN-4": {
+   "at": "2026-11-16T17:00:34.451567+00:00",
+   "match": "Central African Republic v Benin",
+   "why": "no two-sided hourly quote at the entry"
+  },
+  "U35:KXAFCONTOTAL-26NOV16ERIGUI-4": {
+   "at": "2026-11-16T17:00:34.451567+00:00",
+   "match": "Eritrea v Guinea",
    "why": "no two-sided hourly quote at the entry"
   }
  },
