@@ -601,7 +601,8 @@ eq(_got_record, _want_record,
    "the settled-on-record count leaves weather out")
 ok("city-day" not in _section(_fx_page, "recently-settled"),
    "weather is hidden, so the headline does not count city-day repeats")
-ok("National Weather Service" not in _fx_page and "KXHIGH" not in _fx_page,
+_fx_body = __import__("re").sub(r'<div class="health-card" id="daily-health">.*?</div>', "", _fx_page, flags=__import__("re").S)   # the health card quotes failing tickers by name
+ok("National Weather Service" not in _fx_body and "KXHIGH" not in _fx_body,
    "the fixture's weather rows are not rendered")
 
 

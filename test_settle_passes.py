@@ -117,6 +117,13 @@ lines, n = SP.report(root=d2, now=now2)
 check("report: one line per ledger with the ticker and the last_run age", (n, [l for l in lines if l.startswith("x_ledger")][0].count("OLD"),
       "last_run 1.0h ago" in [l for l in lines if l.startswith("x_ledger")][0]), (1, 1, True))
 
+# 2026-11-16: the Tests step ran with EDGE_SETTLE_ONLY=1 (set by the step before it) and the entry tests died; every settle-only workflow's Tests step must clear it.
+import glob
+for wf in ("soccer-rules", "soccer-team-rules", "nba-rules", "nba-value", "climate-lanes"):
+    txt = open(f".github/workflows/{wf}.yml").read()
+    i = txt.index("- name: Tests")
+    check(f"{wf}: the Tests step clears EDGE_SETTLE_ONLY", 'EDGE_SETTLE_ONLY: ""' in txt[i:i + 300], True)
+
 print()
 if FAILS:
     print(f"{len(FAILS)} FAILED")
