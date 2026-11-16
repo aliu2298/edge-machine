@@ -601,6 +601,11 @@
    "at": "2026-11-13T18:17:36.971115+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXWTI-26NOV1614-T84.99\", \"a\"]]": {
+   "at": "2026-11-16T18:19:30.872227+00:00",
+   "entries": "entered",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXLALIGACORNERS-26NOV08RSORVC-12\", \"b\"]]": {
    "at": "2026-11-08T13:58:12.689210+00:00",
    "pool": "entered"
@@ -3449,11 +3454,98 @@
    "sport": "Commodities",
    "src": "contract",
    "status": "lost"
+  },
+  {
+   "contract": "KXWTI-26NOV1614-T84.99",
+   "entered_at": "2026-11-16T18:19:30.872227+00:00",
+   "entities": [
+    "WTI"
+   ],
+   "id": "superpack:[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXWTI-26NOV1614-T84.99\", \"a\"]]",
+   "lane": "commod_nc_yes",
+   "logged": "2026-11-16T18:18:46+00:00",
+   "matched": [
+    "WTI"
+   ],
+   "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXWTI-26NOV1614-T84.99\", \"a\"]]",
+   "price": 0.98,
+   "profit": null,
+   "scope": "commodities_fav",
+   "settled": null,
+   "side": "a",
+   "snapshot": {
+    "as_of": "2026-11-16T18:18:46+00:00",
+    "names": [
+     {
+      "bets": 47,
+      "name": "AAA gas",
+      "profit": 5.9189,
+      "sport": "Commodities"
+     },
+     {
+      "bets": 6,
+      "name": "Manchester United",
+      "profit": 5.403,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Napoli",
+      "profit": 4.7771,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Columbus Crew",
+      "profit": 4.221,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 8,
+      "name": "Real Madrid",
+      "profit": 3.6136,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 16,
+      "name": "Natural gas",
+      "profit": 3.3379,
+      "sport": "Commodities"
+     },
+     {
+      "bets": 7,
+      "name": "Nottingham Forest",
+      "profit": 3.2002,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 24,
+      "name": "Brent",
+      "profit": 3.1457,
+      "sport": "Commodities"
+     },
+     {
+      "bets": 6,
+      "name": "AFC Bournemouth",
+      "profit": 2.7752,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 39,
+      "name": "WTI",
+      "profit": 2.7419,
+      "sport": "Commodities"
+     }
+    ]
+   },
+   "sport": "Commodities",
+   "src": "sandbox",
+   "status": "open"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-16T18:11:13.840980+00:00",
+ "last_run": "2026-11-16T18:19:30.872227+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -10994,6 +11086,29 @@
    "snapshot": null,
    "sport": "Finance",
    "src": "finance_nc",
+   "status": "open"
+  },
+  {
+   "contract": "KXWTI-26NOV1614-T84.99",
+   "entered_at": "2026-11-16T18:19:30.872227+00:00",
+   "entities": [
+    "WTI"
+   ],
+   "id": "superpack:[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXWTI-26NOV1614-T84.99\", \"a\"]]",
+   "lane": "commod_nc_yes",
+   "logged": "2026-11-16T18:18:46+00:00",
+   "matched": [
+    "WTI"
+   ],
+   "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXWTI-26NOV1614-T84.99\", \"a\"]]",
+   "price": 0.98,
+   "profit": null,
+   "scope": "commodities_fav",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Commodities",
+   "src": "sandbox",
    "status": "open"
   }
  ],
