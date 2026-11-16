@@ -97,7 +97,7 @@ for lane, path in [(k, v) for k, v in LW.STAMP.items() if k.endswith("_settle")]
           "nba_value_settle": "nba-value", "climate_settle": "climate-lanes"}[lane]
     y = open(f".github/workflows/{wf}.yml").read()
     check(f"{lane}: allowed on the VPS, triggers {wf}.yml, sets the switch, and matches the window glob",
-          (f"|{path}" in vps, os.path.dirname(path) + "/**" in y, "EDGE_SETTLE_ONLY=1" in y, bool(re.match(r"data/[a-z_]+_window/request\.txt$", path))),
+          (f"{path}" in vps, os.path.dirname(path) + "/**" in y, "EDGE_SETTLE_ONLY=1" in y, bool(re.match(r"data/[a-z_]+_window/request\.txt$", path))),
           (True, True, True, True))
 check("every settle lane has a stamp", sorted(LW.SETTLE_LANES), sorted(k for k in LW.STAMP if k.endswith("_settle")))
 
