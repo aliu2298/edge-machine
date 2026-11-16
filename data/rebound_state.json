@@ -1454,9 +1454,10 @@
    "lane": "rb_24h",
    "level": 1.114846,
    "level_stock": 56.28,
+   "note": "no print at or through the ask in 5 minutes",
    "signal_ts": 1794844800,
    "slide_high": 59.22,
-   "status": "pending",
+   "status": "no_fill",
    "stop": 1.103697,
    "strength": 2,
    "sym": "INTC",
@@ -1471,9 +1472,10 @@
    "lane": "rb_24h",
    "level": 6.274845,
    "level_stock": 310,
+   "note": "no print at or through the ask in 5 minutes",
    "signal_ts": 1794844800,
    "slide_high": 325.08,
-   "status": "pending",
+   "status": "no_fill",
    "stop": 6.212096,
    "strength": 3,
    "sym": "PANW",
@@ -1497,7 +1499,7 @@
    "strong": true
   }
  },
- "last_run": "2026-11-16T16:00:20+00:00",
+ "last_run": "2026-11-16T17:00:21+00:00",
  "prereg_sha256": "17ecd1cd57183bacd45e8e1e6477c542b4ecaaa88a3e8b8a62fa395bbc45a581",
  "ratios": {
   "AAPL": 50.121,
