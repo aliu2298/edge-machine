@@ -170,8 +170,7 @@ html = SBLD.build()
 rules = html[html.find('<section id="rules"'):html.find('<section id="events"')]
 order = [x for x in re.findall(r'data-source="([^"]+)"', rules)]
 i = order.index("st_t1")
-check("T1 and T1-H are Production rows (T1 came back 2026-11-16, listed first, T1-H right under it); T1-M is back in the Sandbox, still on the page",
-      (order[i + 1], "st_t1m" in order), ("st_t1h", True))
+check("T1-H and T1-M are Production rows now (the Production rules are listed first), T1 stays paper", (order.index("st_t1h") < i, order.index("st_t1m") < i), (True, True))
 check("one row each", (order.count("st_t1h"), order.count("st_t1m")), (1, 1))
 check("no new section or heading", (html.count('<section id="'), "T1-H</h" in html), (SBLD.build().count('<section id="'), False))
 live, _gone, _q = L.team_rows(st)

@@ -32,8 +32,8 @@ def section(state=None):
                                     else f" · Production {TRP.T5_PULLED[0]} to {TRP.T5_PULLED[1]}, back in the Sandbox" if key == "T5"
                                     else f" · Production {TRP.T4_PULLED[0]} to {TRP.T4_PULLED[1]}, back in the Sandbox" if key == "T4"
                                     else f" · Production since {TRP.MOVED[key]}" if key in TRP.PAIRS else "")
-            if key == "T1":                    # re-read at 50 settled (Olu, 2026-11-01), then back in Production 2026-11-16
-                label += f" · Re-read at 50 settled (Olu, 2026-11-01) · Back in Production {TRP.T1_BACK_ON} (Olu)"
+            if key == "T1":                    # kept in the Sandbox, unchanged (Olu, 2026-11-01)
+                label += " · Re-read at 50 settled (Olu, 2026-11-01)"
             gone = TR.RETIRED.get(key)
             if gone:                           # retired by hand: no new entries, rows kept
                 label += f" · Retired {gone['on']}: {gone['reason']}. Its entries stay and settle"

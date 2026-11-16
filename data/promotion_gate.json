@@ -862,7 +862,7 @@
    "waiver": null
   },
   "st_t1|soccer_team2": {
-   "checked_at": "2026-11-16T11:42:49+00:00",
+   "checked_at": "2026-11-12T06:43:20+00:00",
    "checks": {
     "10+ outcomes": true,
     "30+ bets": true,
@@ -873,34 +873,29 @@
    "evidence": false,
    "exit": "hold",
    "honest": {
-    "confirmed": 42,
+    "confirmed": 40,
     "halves": [
      0.0989,
-     0.2076
+     0.232
     ],
-    "n": 54,
+    "n": 52,
     "outcomes": 12,
-    "roi": 0.1593,
-    "t": 1.03,
-    "without_best": 0.0311
+    "roi": 0.1706,
+    "t": 1.08,
+    "without_best": 0.0386
    },
    "honest_positive": true,
-   "label": "O+D− v O+D− · team 2+ goals",
+   "label": null,
    "note_touch": {
-    "n": 54,
-    "roi": 0.1593
+    "n": 52,
+    "roi": 0.1706
    },
    "page": {
-    "n": 54,
-    "roi": 0.1593
+    "n": 52,
+    "roi": 0.1706
    },
    "rules": "honest-v1",
-   "waiver": {
-    "by": "Olu",
-    "on": "2026-11-16",
-    "waives": "evidence test (score of 2 or better). Honest return is positive: +15.9% on 54 (42 confirmed, 12 outcomes, both halves up, score 1.03). Buy-and-hold, so the honest figure equals the page figure.",
-    "why": "trial back in Production at the default small stake on a fresh live record (Olu, Nov 16: \"Yes on all 5\", relayed by the Edge Machine Coordinator); its home-side twin T1-H is already live and the follower's one-lane rule keeps the two from taking the same contract twice"
-   }
+   "waiver": null
   },
   "st_t7|soccer_team3": {
    "checked_at": "2026-11-12T06:43:20+00:00",

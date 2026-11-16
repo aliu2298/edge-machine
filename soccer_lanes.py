@@ -239,7 +239,6 @@ def team_rows(state=None):
         if key == "T1":
             history.append(f"Production {TRP.T1_MOVED_ON} to {TRP.PULLED_ON}, back in the Sandbox")
             history.append("Re-read at 50 settled (Olu, 2026-11-01)")
-            history.append(f"Back in Production {TRP.T1_BACK_ON} (Olu), a trial on a fresh live record")
         elif key == "T5":
             history.append(f"Production {TRP.T5_PULLED[0]} to {TRP.T5_PULLED[1]}, back in the Sandbox")
         elif key == "T4":

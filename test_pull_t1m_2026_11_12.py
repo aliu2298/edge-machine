@@ -15,7 +15,7 @@ def check(name, ok):
         fails.append(name)
 
 
-check("T1-M is not a Production pair; T1, T1-H and T7 are", sorted(TRP.PAIRS) == ["T1", "T1H", "T7"])   # T1 itself came back 2026-11-16
+check("T1-M is not a Production pair; T1-H and T7 still are", sorted(TRP.PAIRS) == ["T1H", "T7"])
 check("no pair for st_t1m is published", not any(k.startswith("st_t1m|") for k in TRP.pairs()))
 check("the other T-family pairs are unchanged", {"st_t1h|soccer_team2", "st_t7|soccer_team3"} <= set(TRP.pairs()))
 check("the pull is dated", TRP.T1M_PULLED == ("2026-11-08", "2026-11-12"))

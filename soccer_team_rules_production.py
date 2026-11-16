@@ -48,11 +48,6 @@ T4_PULLED = ("2026-11-04", "2026-11-08")
 # T1's two paper siblings moved to Production 2026-11-08 (Olu: "promote all four"), $1, on 1 settled bet each. They are read from the same ledger
 # (their own rule keys T1H / T1M, soccer_team_rules.SIBLINGS) and published like any rule: T1-H is the Yes of the home team's over-1.5 contract
 # (the team 2+ claim), T1-M the Yes of the match's over-3.5 contract (the league under-3.5 domain's YES twin, as A2 and A7 publish it).
-# T1 itself came BACK to Production 2026-11-16 (Olu: "Yes on all 5"), a $1 trial: honest-v1 +15.9% on 54 (42 confirmed), both halves up, score 1.03; the evidence test is
-# waived on the lane's gate record. Its ledger and record are unchanged; the Production record is the follower's fresh live record from its first live bet.
-# Its home-side twin T1-H bets the same home contract: the follower's one-lane rule (engine.ONE_LANE_PAIRS lists both) lets the first one take it, never both.
-T1_BACK_ON = "2026-11-16"
-T1_PROMOTED = "2026-11-16T18:00:00+00:00"
 SIBLING_MOVED_ON = "2026-11-08"
 SIBLING_PROMOTED = "2026-11-08T12:00:00+00:00"
 # T1-M went back to the Sandbox 2026-11-12 (Olu: "return Over 3.5 when two attacking, tight sides meet to sandbox"): live 0-2, -17.6% after fees, below the honest-fill gate;
@@ -62,12 +57,11 @@ SIBLING_PAIRS = {
     "T1H": ("st_t1h", "soccer_team2", "T1 matches · home team 2+ goals"),
 }
 PAIRS = {
-    "T1": ("st_t1", "soccer_team2", "O+D− v O+D− · team 2+ goals"),
     "T7": ("st_t7", "soccer_team3", "O+D+ v O+D+ · team 3+ goals · NO"),
     **SIBLING_PAIRS,
 }
-PROMOTED_AT = {"T1": T1_PROMOTED, "T7": PROMOTED, **{k: SIBLING_PROMOTED for k in SIBLING_PAIRS}}
-MOVED = {"T1": T1_BACK_ON, "T7": MOVED_ON, **{k: SIBLING_MOVED_ON for k in SIBLING_PAIRS}}
+PROMOTED_AT = {"T7": PROMOTED, **{k: SIBLING_PROMOTED for k in SIBLING_PAIRS}}
+MOVED = {"T7": MOVED_ON, **{k: SIBLING_MOVED_ON for k in SIBLING_PAIRS}}
 LABELS = {src: name for src, _sport, name in PAIRS.values()}
 BAND = (TR.PRICE_LO, TR.PRICE_HI)
 TITLE_RE = re.compile(r"^Will (.+?) score over (\d+(?:\.\d+)?) goals\??$", re.I)
