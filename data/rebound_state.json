@@ -1368,6 +1368,44 @@
    "target": 1.208988,
    "ticker": "KXINTCPERP",
    "touch_ts": 1794828541
+  },
+  {
+   "backfill": false,
+   "day": "2026-11-16",
+   "entry": 3.1624,
+   "entry_ts": 1794833161,
+   "id": "rb_5d|KXNVDAPERP|2026-11-16",
+   "lane": "rb_5d",
+   "level": 3.144652,
+   "level_stock": 158.39,
+   "signal_ts": 1794833100,
+   "slide_high": 177.54,
+   "spread_in": 4.4,
+   "status": "open",
+   "stop": 3.113205,
+   "strength": 3,
+   "sym": "NVDA",
+   "target": 3.334752,
+   "ticker": "KXNVDAPERP",
+   "touch_ts": 1794832322
+  },
+  {
+   "backfill": false,
+   "day": "2026-11-16",
+   "id": "rb_24h|KXSNDKPERP|2026-11-16",
+   "lane": "rb_24h",
+   "level": 16.45361,
+   "level_stock": 835.06,
+   "note": "no print at or through the ask in 5 minutes",
+   "signal_ts": 1794833100,
+   "slide_high": 878.35,
+   "status": "no_fill",
+   "stop": 16.289074,
+   "strength": 2,
+   "sym": "SNDK",
+   "target": 16.880105,
+   "ticker": "KXSNDKPERP",
+   "touch_ts": 1794832142
   }
  ],
  "from": "2026-11-12T00:00:00+00:00",
@@ -1385,7 +1423,7 @@
    "strong": true
   }
  },
- "last_run": "2026-11-16T12:01:05+00:00",
+ "last_run": "2026-11-16T13:00:21+00:00",
  "prereg_sha256": "17ecd1cd57183bacd45e8e1e6477c542b4ecaaa88a3e8b8a62fa395bbc45a581",
  "ratios": {
   "AAPL": 50.121,
