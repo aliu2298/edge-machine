@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-16T14:01:25.524748+00:00",
+ "last_run": "2026-11-16T15:31:26.455583+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -845,6 +845,75 @@
      "ticker": "KXUEFANLTOTAL-26NOV16KAZSVK-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Kazakhstan O-D+ v Slovakia O+D+ \u00b7 Under 3.5 NO 0.73"
+    },
+    {
+     "ask": 0.19,
+     "bid": 0.18,
+     "event": "KXUEFANLTOTAL-26NOV16ESTBUL",
+     "group": "A",
+     "id": "A5:KXUEFANLTOTAL-26NOV16ESTBUL",
+     "labels": {
+      "away": "O+D+",
+      "home": "O-D-"
+     },
+     "league": "UEFA Nations League",
+     "line": 3.5,
+     "logged": "2026-11-16T15:31:26.455583+00:00",
+     "match": "Estonia v Bulgaria",
+     "price": 0.82,
+     "rule": "A5",
+     "side": "no",
+     "start": "2026-11-16T17:00Z",
+     "status": "open",
+     "ticker": "KXUEFANLTOTAL-26NOV16ESTBUL-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Estonia O-D- v Bulgaria O+D+ \u00b7 Under 3.5 NO 0.82"
+    },
+    {
+     "ask": 0.33,
+     "bid": 0.32,
+     "event": "KXUEFANLTOTAL-26NOV16ISLLUX",
+     "group": "A",
+     "id": "A5:KXUEFANLTOTAL-26NOV16ISLLUX",
+     "labels": {
+      "away": "O-D-",
+      "home": "O+D-"
+     },
+     "league": "UEFA Nations League",
+     "line": 3.5,
+     "logged": "2026-11-16T15:31:26.455583+00:00",
+     "match": "Iceland v Luxembourg",
+     "price": 0.68,
+     "rule": "A5",
+     "side": "no",
+     "start": "2026-11-16T17:00Z",
+     "status": "open",
+     "ticker": "KXUEFANLTOTAL-26NOV16ISLLUX-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Iceland O+D- v Luxembourg O-D- \u00b7 Under 3.5 NO 0.68"
+    },
+    {
+     "ask": 0.27,
+     "bid": 0.26,
+     "event": "KXUEFANLTOTAL-26NOV16LTULIE",
+     "group": "A",
+     "id": "A5:KXUEFANLTOTAL-26NOV16LTULIE",
+     "labels": {
+      "away": "O-D+",
+      "home": "O-D-"
+     },
+     "league": "UEFA Nations League",
+     "line": 3.5,
+     "logged": "2026-11-16T15:31:26.455583+00:00",
+     "match": "Lithuania v Liechtenstein",
+     "price": 0.74,
+     "rule": "A5",
+     "side": "no",
+     "start": "2026-11-16T17:00Z",
+     "status": "open",
+     "ticker": "KXUEFANLTOTAL-26NOV16LTULIE-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Lithuania O-D- v Liechtenstein O-D+ \u00b7 Under 3.5 NO 0.74"
     }
    ]
   },
@@ -5087,14 +5156,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-08T09:31:03.221751+00:00",
-   "candidates": 0,
-   "due": 1,
-   "labelled": 1,
-   "matched": 0,
-   "new": 0
-  },
-  {
    "at": "2026-11-08T09:46:13.252678+00:00",
    "candidates": 1,
    "due": 2,
@@ -5493,6 +5554,14 @@
    "labelled": 2,
    "matched": 2,
    "new": 0
+  },
+  {
+   "at": "2026-11-16T15:31:26.455583+00:00",
+   "candidates": 3,
+   "due": 3,
+   "labelled": 3,
+   "matched": 3,
+   "new": 3
   }
  ],
  "version": "soccer-rules-v1"
