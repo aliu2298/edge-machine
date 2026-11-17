@@ -195,7 +195,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-17T00:00:28Z",
+ "calendar_at": "2026-11-17T01:00:35Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -3888,9 +3888,29 @@
     "width": 0.8375000000000004
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-17T01:01:28Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 391130952.38095236,
+    "rungs": 6,
+    "width": 6386554.621848762
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-17T01:01:28Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.7244444444444444,
+    "rungs": 15,
+    "width": 0.8375000000000004
+   },
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-17T00:01:35Z",
+ "last_run": "2026-11-17T01:01:32Z",
  "predictions": [
   {
    "call": {
