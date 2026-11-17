@@ -195203,7 +195203,9 @@
     "KXATPCHALLENGERMATCH-26NOV15WELSTE": 0,
     "KXATPCHALLENGERMATCH-26NOV15ZAMCOR": 0,
     "KXATPCHALLENGERMATCH-26NOV15ZHUPAL": 0,
+    "KXATPCHALLENGERMATCH-26NOV16AVESIK": 1,
     "KXATPCHALLENGERMATCH-26NOV16BANROH": 1,
+    "KXATPCHALLENGERMATCH-26NOV16BARMIY": 0,
     "KXATPCHALLENGERMATCH-26NOV16BASHOU": 1,
     "KXATPCHALLENGERMATCH-26NOV16BECELL": 0,
     "KXATPCHALLENGERMATCH-26NOV16BIGKRA": 1,
@@ -202310,6 +202312,41 @@
      "stop": null,
      "target": null,
      "ticker": "KXATPCHALLENGERMATCH-26NOV16BIGKRA-KRA",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": false
+    },
+    {
+     "ask": {
+      "book": null,
+      "first_quotes": false,
+      "how": "print",
+      "last_trade": 0.24,
+      "printed": 290.26,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "cost": 0.2424,
+     "entry": 0.23,
+     "entry_i": 851,
+     "entry_ts": 1794889320,
+     "event": "KXATPCHALLENGERMATCH-26NOV16AVESIK",
+     "exit": 0.0,
+     "exit_i": 989,
+     "exit_key": "hold",
+     "exit_ts": 1794897600,
+     "hours": 1,
+     "night": "2026-11-17",
+     "profit": -0.2424,
+     "reason": "settled",
+     "roi": -1.0,
+     "side": "yes",
+     "spread": 0.02,
+     "start_how": "price path",
+     "start_ts": 1794892920,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26NOV16AVESIK-SIK",
      "unreachable": false,
      "variant": "t1h_hold",
      "won": false
@@ -227199,7 +227236,9 @@
     "KXATPCHALLENGERMATCH-26NOV15WELSTE": 0,
     "KXATPCHALLENGERMATCH-26NOV15ZAMCOR": 0,
     "KXATPCHALLENGERMATCH-26NOV15ZHUPAL": 0,
+    "KXATPCHALLENGERMATCH-26NOV16AVESIK": 0,
     "KXATPCHALLENGERMATCH-26NOV16BANROH": 1,
+    "KXATPCHALLENGERMATCH-26NOV16BARMIY": 0,
     "KXATPCHALLENGERMATCH-26NOV16BASHOU": 0,
     "KXATPCHALLENGERMATCH-26NOV16BECELL": 0,
     "KXATPCHALLENGERMATCH-26NOV16BIGKRA": 0,
@@ -388005,15 +388044,8 @@
    "watch": false
   }
  },
- "last_run": "2026-11-17T09:00:34.091793+00:00",
+ "last_run": "2026-11-17T09:30:41.288808+00:00",
  "runs": [
-  {
-   "at": "2026-11-04T17:19:56.101213+00:00",
-   "new": {
-    "challenger_cheap_hold_base": 4,
-    "challenger_won_here_hold": 2
-   }
-  },
   {
    "at": "2026-11-05T09:00:19.343793+00:00",
    "new": {
@@ -388351,6 +388383,13 @@
     "challenger_cheap_hold_base": 16,
     "challenger_won_here_hold": 2,
     "nba_winmargin_live": 50
+   }
+  },
+  {
+   "at": "2026-11-17T09:30:41.288808+00:00",
+   "new": {
+    "challenger_cheap_hold_base": 1,
+    "challenger_won_here_hold": 0
    }
   }
  ],
