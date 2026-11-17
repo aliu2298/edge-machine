@@ -188,7 +188,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-17T19:00:32Z",
+ "calendar_at": "2026-11-17T20:00:10Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -4251,9 +4251,19 @@
     "width": 0.9517482517482518
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-17T20:01:10Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.775,
+    "rungs": 15,
+    "width": 0.9517482517482518
+   },
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-17T19:01:34Z",
+ "last_run": "2026-11-17T20:01:57Z",
  "predictions": [
   {
    "call": {
@@ -4724,6 +4734,39 @@
    "side": 0,
    "status": "no_call",
    "sym": "HD"
+  },
+  {
+   "family": "post_drift",
+   "id": "post_drift:DIS:2026-11-17",
+   "logged_at": "2026-11-17T20:01:11Z",
+   "perp": "KXDISPERP",
+   "random_side": -1,
+   "reaction": -0.00927,
+   "reason": "Reaction since the last close before the report: -0.9%.",
+   "report": "2026-11-17",
+   "report_time": "pre-market",
+   "side": 0,
+   "status": "no_call",
+   "sym": "DIS"
+  },
+  {
+   "call": {
+    "status": "pending"
+   },
+   "entry_due": "2026-11-17T20:01:11Z",
+   "exit_due": "2026-11-24T21:00:00Z",
+   "family": "post_drift",
+   "id": "post_drift:HD:2026-11-17",
+   "logged_at": "2026-11-17T20:01:11Z",
+   "perp": "KXHDPERP",
+   "random_side": -1,
+   "reaction": -0.02562,
+   "reason": "Reaction since the last close before the report: -2.6%.",
+   "report": "2026-11-17",
+   "report_time": "pre-market",
+   "side": -1,
+   "status": "pending",
+   "sym": "HD"
   }
  ],
  "registered": "2026-11-07",
@@ -4734,6 +4777,7 @@
   "2026-11-11",
   "2026-11-12",
   "2026-11-13",
-  "2026-11-16"
+  "2026-11-16",
+  "2026-11-17"
  ]
 }
