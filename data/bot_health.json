@@ -6,8 +6,8 @@
   "rule": "LOW under the threshold set on the server"
  },
  "engine": {
-  "beat_age_s": 459,
-  "cycle": 118,
+  "beat_age_s": 393,
+  "cycle": 124,
   "last_error": null,
   "mode": "LIVE",
   "service_active": true,
@@ -22,7 +22,7 @@
  "feeds": {
   "production": {
    "actionable": 4,
-   "age_min": 17,
+   "age_min": 15,
    "leads": 42,
    "problems": 0,
    "status": "HTTP 200"
@@ -30,34 +30,34 @@
   "production_africa_goals": {
    "actionable": 11,
    "age_min": 22,
-   "leads": 11,
+   "leads": 14,
    "problems": 0,
    "status": "HTTP 304 (cached)"
   },
   "production_econ": {
    "actionable": 0,
-   "age_min": 27,
+   "age_min": 22,
    "leads": 6,
    "problems": 0,
    "status": "HTTP 304 (cached)"
   },
   "production_nba_value": {
    "actionable": 0,
-   "age_min": 27,
+   "age_min": 22,
    "leads": 0,
    "problems": 0,
    "status": "HTTP 304 (cached)"
   },
   "production_soccer_rules": {
    "actionable": 0,
-   "age_min": 27,
+   "age_min": 22,
    "leads": 0,
    "problems": 0,
    "status": "HTTP 304 (cached)"
   },
   "production_soccer_team_rules": {
    "actionable": 0,
-   "age_min": 27,
+   "age_min": 22,
    "leads": 0,
    "problems": 0,
    "status": "HTTP 304 (cached)"
@@ -74,10 +74,10 @@
   "today": "up",
   "yesterday": "down"
  },
- "published_at": "2026-11-17T14:23:03+00:00",
+ "published_at": "2026-11-17T15:23:02+00:00",
  "schema": 1,
  "server": {
-  "backup_age_h": 7.9,
+  "backup_age_h": 8.9,
   "disk_pct": 32,
   "jobs": {
    "bot-backup": {
