@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-17T00:05:22+00:00",
+ "board_built_at": "2026-11-17T00:11:40+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -1060,6 +1060,41 @@
    "sport": "soccer_u35_intl",
    "status": "hit"
   },
+  "2026-11-16|KXBTCD-26NOV1617-T65249.99|Below $65,250 at the close \u00b7 Crypto favourite band, below": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-11-16",
+   "edge_at_log": null,
+   "first_seen": "2026-11-16",
+   "headline": "Below $65,250 at the close",
+   "home": null,
+   "id": "2026-11-16|KXBTCD-26NOV1617-T65249.99|Below $65,250 at the close \u00b7 Crypto favourite band, below",
+   "kickoff": "2026-11-16T22:05Z",
+   "lane": "production",
+   "league": "Crypto \u00b7 Favourite band",
+   "match": "Bitcoin price on Nov 16, 2026",
+   "pair": "crypto_fav_band_below|crypto_fav",
+   "price_at_log": 0.75,
+   "published_at": "2026-11-17T00:11:40+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Below $65,250 at the close",
+    "event": "KXBTCD-26NOV1617",
+    "market": "KXBTCD-26NOV1617-T65249.99",
+    "outcome": "$65,250 or above",
+    "outcome_side": "no",
+    "price_at_log": 0.75,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "crypto_fav_band_below:KXBTCD-26NOV1617-T65249.99",
+   "source": "crypto_fav_band_below",
+   "sport": "crypto_fav",
+   "status": "miss"
+  },
   "2026-11-16|KXGOLDD-26NOV1617-T3847|Above $3847 at the close \u00b7 Commodities favourite band": {
    "away": null,
    "bet": {
@@ -1094,6 +1129,41 @@
    "source": "commod_fav_band",
    "sport": "commodities_fav",
    "status": "hit"
+  },
+  "2026-11-16|KXHYPED-26NOV1617-T67.9999|Below $68 at the close \u00b7 Crypto favourite band, below": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-11-16",
+   "edge_at_log": null,
+   "first_seen": "2026-11-16",
+   "headline": "Below $68 at the close",
+   "home": null,
+   "id": "2026-11-16|KXHYPED-26NOV1617-T67.9999|Below $68 at the close \u00b7 Crypto favourite band, below",
+   "kickoff": "2026-11-16T22:05Z",
+   "lane": "production",
+   "league": "Crypto \u00b7 Favourite band",
+   "match": "HYPE price on Nov 16, 2026",
+   "pair": "crypto_fav_band_below|crypto_fav",
+   "price_at_log": 0.77,
+   "published_at": "2026-11-17T00:11:40+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Below $68 at the close",
+    "event": "KXHYPED-26NOV1617",
+    "market": "KXHYPED-26NOV1617-T67.9999",
+    "outcome": "$68 or above",
+    "outcome_side": "no",
+    "price_at_log": 0.77,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "crypto_fav_band_below:KXHYPED-26NOV1617-T67.9999",
+   "source": "crypto_fav_band_below",
+   "sport": "crypto_fav",
+   "status": "miss"
   },
   "2026-11-16|KXNATGASD-26NOV1617-T3.500|Above $3.500 at the close \u00b7 Commodities favourite band": {
    "away": null,
@@ -1164,6 +1234,41 @@
    "source": "commod_fav_band",
    "sport": "commodities_fav",
    "status": "miss"
+  },
+  "2026-11-16|KXXRPD-26NOV1617-T0.9599|Below $0.95991 at the close \u00b7 Crypto favourite band, below": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-11-16",
+   "edge_at_log": null,
+   "first_seen": "2026-11-16",
+   "headline": "Below $0.95991 at the close",
+   "home": null,
+   "id": "2026-11-16|KXXRPD-26NOV1617-T0.9599|Below $0.95991 at the close \u00b7 Crypto favourite band, below",
+   "kickoff": "2026-11-16T22:05Z",
+   "lane": "production",
+   "league": "Crypto \u00b7 Favourite band",
+   "match": "Ripple price at Nov 16, 2026 at 5pm EST",
+   "pair": "crypto_fav_band_below|crypto_fav",
+   "price_at_log": 0.73,
+   "published_at": "2026-11-17T00:11:40+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Below $0.95991 at the close",
+    "event": "KXXRPD-26NOV1617",
+    "market": "KXXRPD-26NOV1617-T0.9599",
+    "outcome": "$0.95991 or above",
+    "outcome_side": "no",
+    "price_at_log": 0.73,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "crypto_fav_band_below:KXXRPD-26NOV1617-T0.9599",
+   "source": "crypto_fav_band_below",
+   "sport": "crypto_fav",
+   "status": "hit"
   },
   "2026-11-16|Kazakhstan|Slovakia|Slovakia to score 1+ \u00b7 Team scores 1+ form rule": {
    "away": "Slovakia",
@@ -1286,7 +1391,7 @@
    "kickoff": "2026-11-17T19:45Z",
    "lane": "production",
    "last_seen": "2026-11-17",
-   "last_seen_at": "2026-11-17T00:05:22+00:00",
+   "last_seen_at": "2026-11-17T00:11:40+00:00",
    "league": "UEFA Nations League",
    "match": "Bosnia-Herzegovina v Romania",
    "pair": "u35_low_scoring|soccer_u35_intl",
@@ -1324,7 +1429,7 @@
    "kickoff": "2026-11-17T19:45Z",
    "lane": "production",
    "last_seen": "2026-11-17",
-   "last_seen_at": "2026-11-17T00:05:22+00:00",
+   "last_seen_at": "2026-11-17T00:11:40+00:00",
    "league": "UEFA Nations League",
    "match": "Denmark v Norway",
    "pair": "team1_form_l5|soccer_team1_intl",
@@ -1361,7 +1466,7 @@
    "kickoff": "2026-11-17T19:45Z",
    "lane": "production",
    "last_seen": "2026-11-17",
-   "last_seen_at": "2026-11-17T00:05:22+00:00",
+   "last_seen_at": "2026-11-17T00:11:40+00:00",
    "league": "UEFA Nations League",
    "match": "Ukraine v Georgia",
    "pair": "u35_low_scoring|soccer_u35_intl",
@@ -1399,7 +1504,7 @@
    "kickoff": "2026-11-17T19:45Z",
    "lane": "production",
    "last_seen": "2026-11-17",
-   "last_seen_at": "2026-11-17T00:05:22+00:00",
+   "last_seen_at": "2026-11-17T00:11:40+00:00",
    "league": "UEFA Nations League",
    "match": "Wales v Portugal",
    "pair": "team1_form_l5|soccer_team1_intl",
@@ -1480,18 +1585,18 @@
    "ready_at": "2026-10-21T00:47:16+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 10,
+    "leads": 13,
     "problem": null,
-    "routed": 10,
+    "routed": 13,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": 0.0531,
-   "sandbox_n": 25,
-   "sandbox_roi": 0.1679,
-   "sandbox_roi_fee": 0.1472,
+   "sandbox_clv": 0.0511,
+   "sandbox_n": 26,
+   "sandbox_roi": 0.1406,
+   "sandbox_roi_fee": 0.1203,
    "timing": {
     "late": [],
     "timed": 0,
@@ -1678,5 +1783,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-17T00:05:22+00:00"
+ "updated_at": "2026-11-17T00:11:40+00:00"
 }
