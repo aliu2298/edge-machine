@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-17T11:05Z",
+ "generated": "2026-11-17T11:11Z",
  "rule": "active = not retired, not a baseline, a bet or an open pick in its current record window",
  "tabs": {
   "commodities": {
@@ -88,6 +88,7 @@
    "active": [
     "afq_btts",
     "afq_dog_score",
+    "afq_o15_v2",
     "afq_u35_80",
     "arg_goalless_dip",
     "btts_form_l10|soccer_btts_intl",
