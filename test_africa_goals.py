@@ -197,10 +197,10 @@ check("an empty record reads as empty", (AG.record([])["n"], AG.record([])["roi_
 
 print("\nthe Soccer page rows")
 rows = L.africa_rows(state)
-check("the combined row and the three bet-type rows (retired 2026-11-16), then the legs: BTTS and the underdog in Production, the rest Sandbox",
+check("the combined row and the three bet-type rows (retired 2026-11-16), then the legs, all Sandbox since 2026-11-17 (BTTS and the underdog left Production)",
       [(r["name"], r["prod"]) for r in rows],
-      [("africa_goals_all", False), ("africa_goals_u35", False), ("africa_goals_o15", False), ("africa_goals_t1", False), ("afq_btts", True),
-       ("afq_dog_score", True), ("afq_u35_80", False), ("afq_o15_v2", False), ("afq_ctrl_fav", False), ("afq_ctrl_u35", False)])
+      [("africa_goals_all", False), ("africa_goals_u35", False), ("africa_goals_o15", False), ("africa_goals_t1", False), ("afq_btts", False),
+       ("afq_dog_score", False), ("afq_u35_80", False), ("afq_o15_v2", False), ("afq_ctrl_fav", False), ("afq_ctrl_u35", False)])
 check("every row is in the Internationals scope", {SP.scope_key(r) for r in rows}, {"intl"})
 check("pinned, and the bet types sit under the combined row",
       ([r.get("pin") for r in rows], [r.get("after") for r in rows][:4]), ([True] * 10, [None] + ["africa_goals_all"] * 3))

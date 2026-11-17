@@ -107,8 +107,8 @@ check("a failed BTTS read leaves the three rows logging", (len(AG.picks_of(st3, 
 print("\nthe Soccer page row")
 rows = L.africa_rows(state)
 r = {x["name"]: x for x in rows}["afq_btts"]
-check("the afq_btts Production leg since 2026-11-16 (it was a Sandbox observation row), pinned, in the Internationals scope",
-      (r["prod"], r.get("pin"), r.get("scope"), r["meta"]["kind"]), (True, True, "intl", "Rule"))
+check("afq_btts: a Production leg 2026-11-16 to 2026-11-17, a Sandbox row again since, pinned, in the Internationals scope",
+      (r["prod"], r.get("pin"), r.get("scope"), r["meta"]["kind"]), (False, True, "intl", "Rule"))
 words = r["own"]["details"] + r["own"]["entries"] + r["own"]["label"] + r["meta"]["note"]
 check("the label and fold say it was added after the window opened and what counts",
       all(x in words for x in ("added Nov 13 2026, after the window opened", "after 18:30 UTC on Nov 13 2026", "shown, not counted", "First-half both teams to score")), True)

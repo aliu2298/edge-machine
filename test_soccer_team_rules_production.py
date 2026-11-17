@@ -158,7 +158,7 @@ m0 = CC.model({"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}, NOW)
 m1 = CC.model({"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}, NOW, soccer_team_rules=state)
 check("the Control Center counts it once and names it", (m1["tiles"]["pairs"] - m0["tiles"]["pairs"],
                                                           sorted(n for n in m1["prod_outside"] if n in list(TP.LABELS.values()) + list(AFP.LABELS.values()))),
-      (3 + 2, sorted(list(TP.LABELS.values()) + list(AFP.LABELS.values()))))   # + the two African qualifier legs, 2026-11-16
+      (3, sorted(TP.LABELS.values())))   # the two African qualifier legs (2026-11-16) went back to the Sandbox 2026-11-17: not counted
 sec = TB.section(state)
 check("the Soccer page says T1 was in Production 2026-10-24 to 2026-10-28 and is back in the Sandbox",
       (sec.count("Production 2026-10-24 to 2026-10-28, back in the Sandbox") >= 1,
