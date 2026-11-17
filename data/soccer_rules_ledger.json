@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-16T18:46:25.417736+00:00",
+ "last_run": "2026-11-17T22:01:48.298590+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -866,11 +866,14 @@
      "line": 3.5,
      "logged": "2026-11-16T15:31:26.455583+00:00",
      "match": "Estonia v Bulgaria",
+     "payout": 1.0,
      "price": 0.82,
+     "profit": 20.43,
      "rule": "A5",
+     "settled": "2026-11-16T21:01:36.306543+00:00",
      "side": "no",
      "start": "2026-11-16T17:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUEFANLTOTAL-26NOV16ESTBUL-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Estonia O-D- v Bulgaria O+D+ \u00b7 Under 3.5 NO 0.82"
@@ -889,11 +892,14 @@
      "line": 3.5,
      "logged": "2026-11-16T15:31:26.455583+00:00",
      "match": "Iceland v Luxembourg",
+     "payout": 1.0,
      "price": 0.68,
+     "profit": 43.84,
      "rule": "A5",
+     "settled": "2026-11-16T21:01:36.306543+00:00",
      "side": "no",
      "start": "2026-11-16T17:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUEFANLTOTAL-26NOV16ISLLUX-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Iceland O+D- v Luxembourg O-D- \u00b7 Under 3.5 NO 0.68"
@@ -912,11 +918,14 @@
      "line": 3.5,
      "logged": "2026-11-16T15:31:26.455583+00:00",
      "match": "Lithuania v Liechtenstein",
+     "payout": 1.0,
      "price": 0.74,
+     "profit": 32.72,
      "rule": "A5",
+     "settled": "2026-11-16T21:01:36.306543+00:00",
      "side": "no",
      "start": "2026-11-16T17:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUEFANLTOTAL-26NOV16LTULIE-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Lithuania O-D- v Liechtenstein O-D+ \u00b7 Under 3.5 NO 0.74"
@@ -935,11 +944,14 @@
      "line": 3.5,
      "logged": "2026-11-16T18:16:28.330517+00:00",
      "match": "Gibraltar v Malta",
+     "payout": 1.0,
      "price": 0.85,
+     "profit": 16.42,
      "rule": "A5",
+     "settled": "2026-11-16T22:01:12.274447+00:00",
      "side": "no",
      "start": "2026-11-16T19:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUEFANLTOTAL-26NOV16GIBMLT-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Gibraltar O-D- v Malta O-D- \u00b7 Under 3.5 NO 0.85"
@@ -958,11 +970,14 @@
      "line": 3.5,
      "logged": "2026-11-16T18:16:28.330517+00:00",
      "match": "North Macedonia v Slovenia",
+     "payout": 1.0,
      "price": 0.8,
+     "profit": 23.27,
      "rule": "A5",
+     "settled": "2026-11-16T22:01:12.274447+00:00",
      "side": "no",
      "start": "2026-11-16T19:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUEFANLTOTAL-26NOV16MKDSLO-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "North Macedonia O-D+ v Slovenia O-D- \u00b7 Under 3.5 NO 0.80"
@@ -981,14 +996,95 @@
      "line": 3.5,
      "logged": "2026-11-16T18:46:25.417736+00:00",
      "match": "Greece v Serbia",
+     "payout": 1.0,
      "price": 0.65,
+     "profit": 50.17,
      "rule": "A5",
+     "settled": "2026-11-16T22:01:12.274447+00:00",
      "side": "no",
      "start": "2026-11-16T19:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUEFANLTOTAL-26NOV16GRESRB-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Greece O-D+ v Serbia O-D+ \u00b7 Under 3.5 NO 0.65"
+    },
+    {
+     "ask": 0.18,
+     "bid": 0.17,
+     "event": "KXUEFANLTOTAL-26NOV17HUNNIR",
+     "group": "A",
+     "id": "A5:KXUEFANLTOTAL-26NOV17HUNNIR",
+     "labels": {
+      "away": "O-D-",
+      "home": "O-D-"
+     },
+     "league": "UEFA Nations League",
+     "line": 3.5,
+     "logged": "2026-11-17T18:16:30.841485+00:00",
+     "match": "Hungary v Northern Ireland",
+     "payout": 1.0,
+     "price": 0.83,
+     "profit": 19.07,
+     "rule": "A5",
+     "settled": "2026-11-17T22:01:48.298590+00:00",
+     "side": "no",
+     "start": "2026-11-17T19:45Z",
+     "status": "won",
+     "ticker": "KXUEFANLTOTAL-26NOV17HUNNIR-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Hungary O-D- v Northern Ireland O-D- \u00b7 Under 3.5 NO 0.83"
+    },
+    {
+     "ask": 0.19,
+     "bid": 0.18,
+     "event": "KXUEFANLTOTAL-26NOV17IRLKOS",
+     "group": "A",
+     "id": "A5:KXUEFANLTOTAL-26NOV17IRLKOS",
+     "labels": {
+      "away": "O-D-",
+      "home": "O+D-"
+     },
+     "league": "UEFA Nations League",
+     "line": 3.5,
+     "logged": "2026-11-17T18:16:30.841485+00:00",
+     "match": "Republic of Ireland v Kosovo",
+     "payout": 1.0,
+     "price": 0.82,
+     "profit": 20.43,
+     "rule": "A5",
+     "settled": "2026-11-17T22:01:48.298590+00:00",
+     "side": "no",
+     "start": "2026-11-17T19:45Z",
+     "status": "won",
+     "ticker": "KXUEFANLTOTAL-26NOV17IRLKOS-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Republic of Ireland O+D- v Kosovo O-D- \u00b7 Under 3.5 NO 0.82"
+    },
+    {
+     "ask": 0.17,
+     "bid": 0.16,
+     "event": "KXUEFANLTOTAL-26NOV17UKRGEO",
+     "group": "A",
+     "id": "A5:KXUEFANLTOTAL-26NOV17UKRGEO",
+     "labels": {
+      "away": "O-D-",
+      "home": "O-D-"
+     },
+     "league": "UEFA Nations League",
+     "line": 3.5,
+     "logged": "2026-11-17T18:16:30.841485+00:00",
+     "match": "Ukraine v Georgia",
+     "payout": 1.0,
+     "price": 0.84,
+     "profit": 17.73,
+     "rule": "A5",
+     "settled": "2026-11-17T22:01:48.298590+00:00",
+     "side": "no",
+     "start": "2026-11-17T19:45Z",
+     "status": "won",
+     "ticker": "KXUEFANLTOTAL-26NOV17UKRGEO-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Ukraine O-D- v Georgia O-D- \u00b7 Under 3.5 NO 0.84"
     }
    ]
   },
@@ -3174,11 +3270,14 @@
      "line": 2.5,
      "logged": "2026-11-16T18:16:28.330517+00:00",
      "match": "Greece v Serbia",
+     "payout": 1.0,
      "price": 0.4,
+     "profit": 139.92,
      "rule": "C8",
+     "settled": "2026-11-16T22:01:12.274447+00:00",
      "side": "no",
      "start": "2026-11-16T19:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUEFANLTOTAL-26NOV16GRESRB-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Greece O-D+ v Serbia O-D+ \u00b7 Under 2.5 NO 0.40"
@@ -5254,70 +5353,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-08T10:31:10.425595+00:00",
-   "candidates": 2,
-   "due": 2,
-   "labelled": 2,
-   "matched": 2,
-   "new": 0
-  },
-  {
-   "at": "2026-11-08T10:46:12.460420+00:00",
-   "candidates": 2,
-   "due": 2,
-   "labelled": 2,
-   "matched": 2,
-   "new": 1
-  },
-  {
-   "at": "2026-11-08T11:31:04.040648+00:00",
-   "candidates": 0,
-   "due": 2,
-   "labelled": 2,
-   "matched": 0,
-   "new": 0
-  },
-  {
-   "at": "2026-11-08T12:01:55.879574+00:00",
-   "candidates": 1,
-   "due": 3,
-   "labelled": 3,
-   "matched": 1,
-   "new": 1
-  },
-  {
-   "at": "2026-11-08T12:31:09.695608+00:00",
-   "candidates": 3,
-   "due": 10,
-   "labelled": 10,
-   "matched": 3,
-   "new": 2
-  },
-  {
-   "at": "2026-11-08T13:01:03.730469+00:00",
-   "candidates": 3,
-   "due": 9,
-   "labelled": 9,
-   "matched": 3,
-   "new": 0
-  },
-  {
-   "at": "2026-11-08T13:31:16.542086+00:00",
-   "candidates": 2,
-   "due": 9,
-   "labelled": 9,
-   "matched": 2,
-   "new": 0
-  },
-  {
-   "at": "2026-11-08T13:45:57.976068+00:00",
-   "candidates": 0,
-   "due": 3,
-   "labelled": 3,
-   "matched": 0,
-   "new": 0
-  },
-  {
    "at": "2026-11-08T14:01:04.131529+00:00",
    "candidates": 0,
    "due": 6,
@@ -5660,6 +5695,70 @@
    "labelled": 5,
    "matched": 3,
    "new": 1
+  },
+  {
+   "at": "2026-11-16T21:01:36.306543+00:00",
+   "candidates": 0,
+   "due": 0,
+   "labelled": 0,
+   "matched": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-16T22:01:12.274447+00:00",
+   "candidates": 0,
+   "due": 0,
+   "labelled": 0,
+   "matched": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-17T18:16:30.841485+00:00",
+   "candidates": 4,
+   "due": 8,
+   "labelled": 8,
+   "matched": 4,
+   "new": 3
+  },
+  {
+   "at": "2026-11-17T18:46:50.566508+00:00",
+   "candidates": 4,
+   "due": 8,
+   "labelled": 8,
+   "matched": 4,
+   "new": 0
+  },
+  {
+   "at": "2026-11-17T19:46:35.440226+00:00",
+   "candidates": 0,
+   "due": 0,
+   "labelled": 0,
+   "matched": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-17T20:01:29.544526+00:00",
+   "candidates": 0,
+   "due": 0,
+   "labelled": 0,
+   "matched": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-17T21:01:31.583165+00:00",
+   "candidates": 0,
+   "due": 0,
+   "labelled": 0,
+   "matched": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-17T22:01:48.298590+00:00",
+   "candidates": 0,
+   "due": 0,
+   "labelled": 0,
+   "matched": 0,
+   "new": 0
   }
  ],
  "version": "soccer-rules-v1"

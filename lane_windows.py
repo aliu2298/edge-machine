@@ -170,6 +170,9 @@ SOCCER_TEAM_SERIES = {
 # test_sa_o15.py checks the two agree. The tracker logs no quotes for these series, so on the VPS
 # their kickoffs come from the schedule sa_o15.py writes into its own ledger on every run.
 SOCCER_SA_SERIES = {"Liga Profesional": "KXARGPREMDIVTOTAL", "Brasileirão": "KXBRASILEIROTOTAL"}
+# btts_sa.LEAGUES (Brazil and Argentina BTTS YES, 2026-11-16), copied for the same reason; test_btts_sa.py checks the two agree.
+# Its kickoffs come from the schedule btts_sa.py writes into its own ledger on every run (the tracker logs no quotes for these series).
+SOCCER_BTTS_SA_SERIES = {"Liga Profesional": "KXARGPREMDIVBTTS", "Brasileirão": "KXBRASILEIROBTTS"}
 # The Eastern day sa_o15's last row retired (sa_o15.RETIRED, 2026-11-03), copied; test_sa_o15.py checks the two agree.
 SOCCER_SA_RETIRED_ON = "2026-11-03"
 CT = ZoneInfo("America/Chicago")
@@ -354,11 +357,37 @@ def sa_kickoffs(now, fixtures=None):
     return sorted(out)
 
 
+def _btts_schedule():
+    try:
+        with open(os.path.join(ROOT, "data", "btts_sa_ledger.json")) as f:
+            return json.load(f).get("schedule") or []
+    except (OSError, ValueError):
+        return []
+
+
+def btts_kickoffs(now, fixtures=None):
+    """Kickoffs within the next day in Argentina and the Brasileirao for the BTTS YES paper row (btts_sa, 2026-11-16).
+
+    From the fixtures passed in (tests) or, live, the ESPN cache plus btts_sa's own schedule."""
+    starts = []
+    if fixtures is None:
+        fixtures = _fixtures_cache()
+        starts += _btts_schedule()
+    starts += [f.get("kickoff") for f in fixtures if not f.get("played") and f.get("league") in SOCCER_BTTS_SA_SERIES]
+    out = set()
+    for v in starts:
+        t = _when(v) if v else None
+        if t and now - dt.timedelta(hours=2) <= t <= now + dt.timedelta(days=1):
+            out.add(t)
+    return sorted(out)
+
+
 def soccer_windows(now, fixtures=None, ledger=None):
     """One soccer label-rules window per kickoff: 90 to 20 minutes before, read every 30 minutes.
 
-    The same stamp serves sa_o15's Argentine and Brazilian matches (soccer-rules.yml runs it)."""
-    kicks = sorted(set(soccer_kickoffs(now, fixtures, ledger)) | set(sa_kickoffs(now, fixtures)))
+    The same stamp serves sa_o15's and btts_sa's Argentine and Brazilian matches (soccer-rules.yml runs them)."""
+    kicks = sorted(set(soccer_kickoffs(now, fixtures, ledger)) | set(sa_kickoffs(now, fixtures))
+                   | set(btts_kickoffs(now, fixtures)))
     return [dict(lane="soccer_rules", label=f"Soccer rules {t:%H:%M}Z kickoff", series=(), close=t,
                  start=t - dt.timedelta(minutes=SOCCER_FROM), end=t - dt.timedelta(minutes=SOCCER_TO),
                  every=READ_EVERY) for t in kicks]
@@ -422,7 +451,7 @@ def climate_windows(now):
 # lane -> (ledger files that hold its picks, entry lanes whose own run settles anyway). A settle read is asked only while a STARTED
 # pick is open in one of the ledgers and none of the entry windows is open (an entry run settles too).
 SETTLE_LANES = {
-    "soccer_rules_settle": (("soccer_rules_ledger.json", "contender_overs_ledger.json", "sa_o15_ledger.json"), ("soccer_rules",)),
+    "soccer_rules_settle": (("soccer_rules_ledger.json", "contender_overs_ledger.json", "sa_o15_ledger.json", "btts_sa_ledger.json"), ("soccer_rules",)),
     "soccer_team_rules_settle": (("soccer_team_rules_ledger.json",), ("soccer_team_rules",)),
     "nba_rules_settle": (("nba_rules_ledger.json",), ("nba_rules",)),
     "nba_value_settle": (("nba_value_ledger.json",), ("nba_value",)),

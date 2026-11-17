@@ -36,6 +36,8 @@ jobs:
             echo "settle-only pass"
           fi
       - name: Tests
+        env:
+          EDGE_SETTLE_ONLY: ""     # the tests exercise entries: never in settle-only mode
         run: python3 test_soccer_team_rules.py && python3 test_soccer_t1_siblings.py && python3 test_soccer_team_rules_production.py && python3 test_save_records.py
       - name: Enter due matches and settle
         # Fetches the ESPN fixtures (data/streaks_raw.json, not committed) for the labels.

@@ -404,6 +404,38 @@ def sa_rows(state=None):
     return live, gone_rows
 
 
+def btts_sa_rows(state=None):
+    """Brazil and Argentina BTTS YES (btts_sa.py, 2026-11-16): both leagues, each league, and the BTTS NO control. Percentages only."""
+    import btts_sa as BS
+    state = state if state is not None else (BS.load() if os.path.exists(BS.PATH) else {"rules": {}})
+    allp = [p for lane in (state.get("rules") or {}).values() for p in lane.get("picks") or []]
+    pct = ("Result", lambda p: _res_pct(p))
+    live = []
+    for key, label, keep in BS.ROWS:
+        picks = [p for p in allp if keep(p)]
+        control = key == "no"
+        details = params_html([
+            ("Leagues", "Brazil Serie A and Argentina Primera" if key in ("all", "no") else label),
+            ("Rule", ("BTTS NO at the ask" if control else "BTTS YES at the ask") + ", every match, no selection, 20 to 90 minutes "
+                     "before kickoff, spread 5c or less, after fees"),
+            ("Pre-registered", BS.PREREG),
+            ("Research", "The control: the opposite side on the same matches" if control else
+             f"A lead, not a tested rule: {BS.EVIDENCE}"),
+            ("Record", "Paper at the Kalshi price, 7% fee. A fresh record from the first entry"),
+        ])
+        live.append(row(f"btts_sa_{key}", "soccer_btts", f"{label} · BTTS {'NO' if control else 'YES'} · every match",
+                        "BTTS", pick_record(picks), details, open_n=sum(p.get("status") == "open" for p in picks),
+                        entries=entries_table(picks, [KICK, MATCH, PRICE, pct])))
+        if key != "all":
+            live[-1]["after"] = "btts_sa_all"          # the league rows and the control sit right under the combined row
+    return live, []
+
+
+def _res_pct(p):
+    res = {"open": "open", "won": "won", "lost": "lost", "no_result": "no result"}.get(p.get("status"), p.get("status"))
+    return res + (f" · {float(p['profit']):+.0f}%" if p.get("profit") is not None else "")
+
+
 # ------------------------------------------------------------------ the African qualifiers goals check (africa_goals.py)
 # 2026-11-16 (Olu): the every-match rows are split into legs. Their records stay on the page.
 AFRICA_RETIRED = "Retired Nov 16 by Olu: split into Production legs / v2."
@@ -718,7 +750,7 @@ def rows_and_inputs(d, st, now):
             live, gone, extra = live + lv, gone + gn, extra + qs
         except Exception as exc:                                # noqa: BLE001
             print(f"soccer_lanes: {fn.__name__} failed: {type(exc).__name__}: {exc}")
-    for fn in (contender_rows, sa_rows):
+    for fn in (contender_rows, sa_rows, btts_sa_rows):
         try:
             lv, gn = fn()
             live, gone = live + lv, gone + gn
