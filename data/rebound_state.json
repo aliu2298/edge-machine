@@ -2070,6 +2070,24 @@
    "target": 6.19701,
    "ticker": "KXPANWPERP",
    "touch_ts": 1794934321
+  },
+  {
+   "backfill": false,
+   "day": "2026-11-17",
+   "id": "rb_5d|KXCRMPERP|2026-11-17",
+   "lane": "rb_5d",
+   "level": 3.954994,
+   "level_stock": 198.0,
+   "note": "no print at or through the ask in 5 minutes",
+   "signal_ts": 1794940200,
+   "slide_high": 220,
+   "status": "no_fill",
+   "stop": 3.915444,
+   "strength": 3,
+   "sym": "CRM",
+   "target": 4.174732,
+   "ticker": "KXCRMPERP",
+   "touch_ts": 1794939961
   }
  ],
  "from": "2026-11-12T00:00:00+00:00",
@@ -2087,7 +2105,7 @@
    "strong": true
   }
  },
- "last_run": "2026-11-17T18:00:22+00:00",
+ "last_run": "2026-11-17T19:00:23+00:00",
  "prereg_sha256": "17ecd1cd57183bacd45e8e1e6477c542b4ecaaa88a3e8b8a62fa395bbc45a581",
  "ratios": {
   "AAPL": 50.0369,
