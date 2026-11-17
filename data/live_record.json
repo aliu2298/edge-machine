@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-17T20:07Z",
+ "generated": "2026-11-17T21:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -4183,41 +4183,41 @@
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17BOTUGA-BTTS",
      "ko": "2026-11-17T19:00",
-     "r": null,
+     "r": 1.1397,
      "side": "yes",
-     "st": "open",
+     "st": "won",
      "w": 1.02
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17COGCOM-BTTS",
      "ko": "2026-11-17T19:00",
-     "r": null,
+     "r": -1.0,
      "side": "yes",
-     "st": "open",
+     "st": "lost",
      "w": 1.04
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17LBRCPV-BTTS",
      "ko": "2026-11-17T19:00",
-     "r": null,
+     "r": -1.0,
      "side": "yes",
-     "st": "open",
+     "st": "lost",
      "w": 1.07
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17MRTBUR-BTTS",
      "ko": "2026-11-17T19:00",
-     "r": null,
+     "r": 1.187,
      "side": "yes",
-     "st": "open",
+     "st": "won",
      "w": 1.0
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17RWAMLI-BTTS",
      "ko": "2026-11-17T19:00",
-     "r": null,
+     "r": -1.0,
      "side": "yes",
-     "st": "open",
+     "st": "lost",
      "w": 1.0
     },
     {
@@ -4309,25 +4309,25 @@
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17COGCOM-COM1",
      "ko": "2026-11-17T19:00",
-     "r": null,
+     "r": 0.6213,
      "side": "yes",
-     "st": "open",
+     "st": "won",
      "w": 0.87
     },
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17LBRCPV-LBR1",
      "ko": "2026-11-17T19:00",
-     "r": null,
+     "r": 0.703,
      "side": "yes",
-     "st": "open",
+     "st": "won",
      "w": 0.83
     },
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17RWAMLI-RWA1",
      "ko": "2026-11-17T19:00",
-     "r": null,
+     "r": -1.0,
      "side": "yes",
-     "st": "open",
+     "st": "lost",
      "w": 0.8
     },
     {
@@ -5399,16 +5399,15 @@
     {
      "id": "team1_form_l5:KXUEFANLTEAMTOTAL-26NOV17DENNOR-DEN1",
      "ko": "2026-11-17T19:45",
-     "r": null,
+     "r": 0.1773,
      "side": "yes",
-     "st": "open",
+     "st": "won",
      "w": 1.0
     }
    ],
    "refused": {
     "team1_form_l5:KXUEFANLTEAMTOTAL-26NOV14NORWAL-NOR1": "price above the cap",
-    "team1_form_l5:KXUEFANLTEAMTOTAL-26NOV15FRATUR-FRA1": "price above the cap",
-    "team1_form_l5:KXUEFANLTEAMTOTAL-26NOV17WALPOR-POR1": "price above the cap"
+    "team1_form_l5:KXUEFANLTEAMTOTAL-26NOV15FRATUR-FRA1": "price above the cap"
    }
   },
   "team2_form_l10|soccer_team2_intl": {
