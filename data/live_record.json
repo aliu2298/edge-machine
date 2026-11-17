@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-17T15:07Z",
+ "generated": "2026-11-17T16:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -4127,9 +4127,9 @@
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17TANNGR-BTTS",
      "ko": "2026-11-17T13:00",
-     "r": null,
+     "r": -1.0,
      "side": "yes",
-     "st": "open",
+     "st": "lost",
      "w": 0.98
     },
     {
@@ -4213,9 +4213,9 @@
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17TANNGR-TAN1",
      "ko": "2026-11-17T13:00",
-     "r": null,
+     "r": -1.0,
      "side": "yes",
-     "st": "open",
+     "st": "lost",
      "w": 1.28
     },
     {
