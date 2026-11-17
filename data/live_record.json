@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-17T18:07Z",
+ "generated": "2026-11-17T19:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -4090,7 +4090,7 @@
      "r": 1.2361,
      "side": "yes",
      "st": "won",
-     "w": 1.0
+     "w": 0.98
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17ETHMOZ-BTTS",
@@ -4098,7 +4098,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 1.09
+     "w": 1.07
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17LESGAB-BTTS",
@@ -4106,7 +4106,7 @@
      "r": 1.5221,
      "side": "yes",
      "st": "won",
-     "w": 0.89
+     "w": 0.87
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17MAWEGY-BTTS",
@@ -4114,7 +4114,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 0.77
+     "w": 0.76
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17SSDANG-BTTS",
@@ -4122,7 +4122,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 0.75
+     "w": 0.73
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17TANNGR-BTTS",
@@ -4130,7 +4130,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 0.91
+     "w": 0.89
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17GAMCIV-BTTS",
@@ -4138,7 +4138,7 @@
      "r": 1.1397,
      "side": "yes",
      "st": "won",
-     "w": 1.05
+     "w": 1.02
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17GBSMAD-BTTS",
@@ -4146,7 +4146,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 0.93
+     "w": 0.91
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17KENRSA-BTTS",
@@ -4154,7 +4154,7 @@
      "r": 1.2361,
      "side": "yes",
      "st": "won",
-     "w": 1.0
+     "w": 0.98
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17LBATUN-BTTS",
@@ -4162,7 +4162,7 @@
      "r": 1.0947,
      "side": "yes",
      "st": "won",
-     "w": 1.07
+     "w": 1.04
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17SLECOD-BTTS",
@@ -4170,7 +4170,7 @@
      "r": 1.5883,
      "side": "yes",
      "st": "won",
-     "w": 0.86
+     "w": 0.84
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17TOGDZA-BTTS",
@@ -4178,7 +4178,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 0.93
+     "w": 0.91
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17BOTUGA-BTTS",
@@ -4186,7 +4186,7 @@
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 1.05
+     "w": 1.02
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17COGCOM-BTTS",
@@ -4194,7 +4194,7 @@
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 1.07
+     "w": 1.04
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17LBRCPV-BTTS",
@@ -4202,7 +4202,7 @@
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 1.09
+     "w": 1.07
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17MRTBUR-BTTS",
@@ -4210,7 +4210,7 @@
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 1.02
+     "w": 1.0
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17RWAMLI-BTTS",
@@ -4218,7 +4218,15 @@
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 1.02
+     "w": 1.0
+    },
+    {
+     "id": "afq_btts:KXAFCONBTTS-26NOV17NIGMAR-BTTS",
+     "ko": "2026-11-17T20:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 1.03
     }
    ],
    "refused": {}
@@ -4232,7 +4240,7 @@
      "r": 1.0947,
      "side": "yes",
      "st": "won",
-     "w": 1.3
+     "w": 1.34
     },
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17MAWEGY-MAW1",
@@ -4240,7 +4248,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 1.0
+     "w": 1.03
     },
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17SSDANG-SSD1",
@@ -4248,7 +4256,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 1.0
+     "w": 1.03
     },
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17TANNGR-TAN1",
@@ -4256,7 +4264,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 1.28
+     "w": 1.31
     },
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17GAMCIV-GAM1",
@@ -4264,7 +4272,7 @@
      "r": 0.8605,
      "side": "yes",
      "st": "won",
-     "w": 0.73
+     "w": 0.76
     },
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17GBSMAD-MAD1",
@@ -4272,7 +4280,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 1.36
+     "w": 1.4
     },
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17KENRSA-KEN1",
@@ -4280,7 +4288,7 @@
      "r": 0.794,
      "side": "yes",
      "st": "won",
-     "w": 0.76
+     "w": 0.78
     },
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17SLECOD-SLE1",
@@ -4288,7 +4296,7 @@
      "r": 1.2878,
      "side": "yes",
      "st": "won",
-     "w": 1.19
+     "w": 1.23
     },
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17TOGDZA-TOG1",
@@ -4296,7 +4304,7 @@
      "r": 0.8957,
      "side": "yes",
      "st": "won",
-     "w": 0.72
+     "w": 0.74
     },
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17COGCOM-COM1",
@@ -4304,7 +4312,7 @@
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 0.84
+     "w": 0.87
     },
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17LBRCPV-LBR1",
@@ -4312,7 +4320,7 @@
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 0.8
+     "w": 0.83
     },
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17RWAMLI-RWA1",
@@ -4320,7 +4328,15 @@
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 0.78
+     "w": 0.8
+    },
+    {
+     "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17NIGMAR-NIG1",
+     "ko": "2026-11-17T20:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 1.0
     }
    ],
    "refused": {}
@@ -4559,6 +4575,14 @@
      "side": "yes",
      "st": "won",
      "w": 0.98
+    },
+    {
+     "id": "commod_fav_band:KXGOLDD-26NOV1717-T3854",
+     "ko": "2026-11-17T22:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 0.93
     }
    ],
    "refused": {
@@ -4689,7 +4713,7 @@
      "r": 0.3273,
      "side": "no",
      "st": "won",
-     "w": 1.06
+     "w": 1.05
     },
     {
      "id": "crypto_fav_band_below:KXETHD-26NOV0617-T2239.99",
@@ -4705,7 +4729,7 @@
      "r": 0.3273,
      "side": "no",
      "st": "won",
-     "w": 1.06
+     "w": 1.05
     },
     {
      "id": "crypto_fav_band_below:KXBTCD-26NOV0917-T74749.99",
@@ -4762,6 +4786,14 @@
      "side": "no",
      "st": "lost",
      "w": 1.01
+    },
+    {
+     "id": "crypto_fav_band_below:KXBTCD-26NOV1717-T64249.99",
+     "ko": "2026-11-17T22:05",
+     "r": null,
+     "side": "no",
+     "st": "open",
+     "w": 1.04
     }
    ],
    "refused": {
@@ -4771,6 +4803,7 @@
     "crypto_fav_band_below:KXETHD-26NOV1117-T2099.99": "already held by another lane",
     "crypto_fav_band_below:KXHYPED-26NOV1117-T73.9999": "published inside 30 min of kickoff",
     "crypto_fav_band_below:KXHYPED-26NOV1617-T67.9999": "published inside 30 min of kickoff",
+    "crypto_fav_band_below:KXHYPED-26NOV1717-T68.9999": "other",
     "crypto_fav_band_below:KXXRPD-26NOV1017-T1.0799": "price above the cap",
     "crypto_fav_band_below:KXXRPD-26NOV1617-T0.9599": "wide spread"
    }
