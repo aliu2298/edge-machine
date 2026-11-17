@@ -79,7 +79,7 @@
    "mentions": [
     "KXEARNINGSMENTIONPANW-26NOV18"
    ],
-   "n_ests": "15",
+   "n_ests": "16",
    "name": "Palo Alto Networks, Inc.",
    "perp": "KXPANWPERP",
    "sym": "PANW",
@@ -195,7 +195,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-17T11:09:01Z",
+ "calendar_at": "2026-11-17T12:00:27Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -4148,9 +4148,29 @@
     "width": 0.8204545454545458
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-17T12:01:28Z",
+   "event": "KXHD-26NOVTXN",
+   "read": {
+    "median": 392526041.6666667,
+    "rungs": 6,
+    "width": 2604166.6666666865
+   },
+   "sym": "HD"
+  },
+  {
+   "at": "2026-11-17T12:01:28Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.7191489361702126,
+    "rungs": 15,
+    "width": 0.8169354838709681
+   },
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-17T11:10:03Z",
+ "last_run": "2026-11-17T12:01:31Z",
  "predictions": [
   {
    "call": {
