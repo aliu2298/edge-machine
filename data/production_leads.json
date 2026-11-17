@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-17T21:12:50+00:00",
+ "board_built_at": "2026-11-17T21:55:56+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -1376,6 +1376,77 @@
    "sport": "soccer_u35_intl",
    "status": "hit"
   },
+  "2026-11-17|Bosnia-Herzegovina|Romania|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
+   "away": "Romania",
+   "bet": {
+    "kind": "total_lte",
+    "n": 3
+   },
+   "date": "2026-11-17",
+   "edge_at_log": null,
+   "first_seen": "2026-11-13",
+   "headline": "Under 3.5 goals",
+   "home": "Bosnia-Herzegovina",
+   "id": "2026-11-17|Bosnia-Herzegovina|Romania|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
+   "kickoff": "2026-11-17T19:45Z",
+   "lane": "production",
+   "league": "UEFA Nations League",
+   "match": "Bosnia-Herzegovina v Romania",
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "price_at_log": 0.79,
+   "published_at": "2026-11-17T21:55:56+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Under 3.5 goals",
+    "event": "KXUEFANLTOTAL-26NOV17BIHROU",
+    "market": "KXUEFANLTOTAL-26NOV17BIHROU-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "no",
+    "price_at_log": 0.79,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "u35_low_scoring:KXUEFANLTOTAL-26NOV17BIHROU-4",
+   "source": "u35_low_scoring",
+   "sport": "soccer_u35_intl",
+   "status": "hit"
+  },
+  "2026-11-17|Denmark|Norway|Denmark to score 1+ \u00b7 Team scores 1+ form rule": {
+   "away": "Norway",
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "team": "Denmark"
+   },
+   "date": "2026-11-17",
+   "edge_at_log": null,
+   "first_seen": "2026-11-15",
+   "headline": "Denmark to score 1+",
+   "home": "Denmark",
+   "id": "2026-11-17|Denmark|Norway|Denmark to score 1+ \u00b7 Team scores 1+ form rule",
+   "kickoff": "2026-11-17T19:45Z",
+   "lane": "production",
+   "league": "UEFA Nations League",
+   "match": "Denmark v Norway",
+   "pair": "team1_form_l5|soccer_team1_intl",
+   "price_at_log": 0.84,
+   "published_at": "2026-11-17T21:55:56+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Denmark to score 1+",
+    "event": "KXUEFANLTEAMTOTAL-26NOV17DENNOR",
+    "market": "KXUEFANLTEAMTOTAL-26NOV17DENNOR-DEN1",
+    "outcome": "Denmark over 0.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.84,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "team1_form_l5:KXUEFANLTEAMTOTAL-26NOV17DENNOR-DEN1",
+   "source": "team1_form_l5",
+   "sport": "soccer_team1_intl",
+   "status": "hit"
+  },
   "2026-11-17|KXBTCD-26NOV1717-T64249.99|Below $64,250 at the close \u00b7 Crypto favourite band, below": {
    "away": null,
    "bet": {
@@ -1391,7 +1462,7 @@
    "kickoff": "2026-11-17T22:05Z",
    "lane": "production",
    "last_seen": "2026-11-17",
-   "last_seen_at": "2026-11-17T21:12:50+00:00",
+   "last_seen_at": "2026-11-17T21:55:56+00:00",
    "league": "Crypto \u00b7 Favourite band",
    "match": "Bitcoin price on Nov 17, 2026",
    "pair": "crypto_fav_band_below|crypto_fav",
@@ -1428,7 +1499,7 @@
    "kickoff": "2026-11-17T22:00Z",
    "lane": "production",
    "last_seen": "2026-11-17",
-   "last_seen_at": "2026-11-17T21:12:50+00:00",
+   "last_seen_at": "2026-11-17T21:55:56+00:00",
    "league": "Commodities \u00b7 Favourite band",
    "match": "Gold close on Nov 17, 2026",
    "pair": "commod_fav_band|commodities_fav",
@@ -1465,7 +1536,7 @@
    "kickoff": "2026-11-17T22:05Z",
    "lane": "production",
    "last_seen": "2026-11-17",
-   "last_seen_at": "2026-11-17T21:12:50+00:00",
+   "last_seen_at": "2026-11-17T21:55:56+00:00",
    "league": "Crypto \u00b7 Favourite band",
    "match": "HYPE price on Nov 17, 2026",
    "pair": "crypto_fav_band_below|crypto_fav",
@@ -1486,6 +1557,77 @@
    "source": "crypto_fav_band_below",
    "sport": "crypto_fav",
    "status": "pending"
+  },
+  "2026-11-17|Ukraine|Georgia|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
+   "away": "Georgia",
+   "bet": {
+    "kind": "total_lte",
+    "n": 3
+   },
+   "date": "2026-11-17",
+   "edge_at_log": null,
+   "first_seen": "2026-11-13",
+   "headline": "Under 3.5 goals",
+   "home": "Ukraine",
+   "id": "2026-11-17|Ukraine|Georgia|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule",
+   "kickoff": "2026-11-17T19:45Z",
+   "lane": "production",
+   "league": "UEFA Nations League",
+   "match": "Ukraine v Georgia",
+   "pair": "u35_low_scoring|soccer_u35_intl",
+   "price_at_log": 0.8,
+   "published_at": "2026-11-17T21:55:56+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Under 3.5 goals",
+    "event": "KXUEFANLTOTAL-26NOV17UKRGEO",
+    "market": "KXUEFANLTOTAL-26NOV17UKRGEO-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "no",
+    "price_at_log": 0.8,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "u35_low_scoring:KXUEFANLTOTAL-26NOV17UKRGEO-4",
+   "source": "u35_low_scoring",
+   "sport": "soccer_u35_intl",
+   "status": "hit"
+  },
+  "2026-11-17|Wales|Portugal|Portugal to score 1+ \u00b7 Team scores 1+ form rule": {
+   "away": "Portugal",
+   "bet": {
+    "kind": "team_gte",
+    "n": 1,
+    "team": "Portugal"
+   },
+   "date": "2026-11-17",
+   "edge_at_log": null,
+   "first_seen": "2026-11-15",
+   "headline": "Portugal to score 1+",
+   "home": "Wales",
+   "id": "2026-11-17|Wales|Portugal|Portugal to score 1+ \u00b7 Team scores 1+ form rule",
+   "kickoff": "2026-11-17T19:45Z",
+   "lane": "production",
+   "league": "UEFA Nations League",
+   "match": "Wales v Portugal",
+   "pair": "team1_form_l5|soccer_team1_intl",
+   "price_at_log": 0.93,
+   "published_at": "2026-11-17T21:55:56+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Portugal to score 1+",
+    "event": "KXUEFANLTEAMTOTAL-26NOV17WALPOR",
+    "market": "KXUEFANLTEAMTOTAL-26NOV17WALPOR-POR1",
+    "outcome": "Portugal over 0.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.93,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "team1_form_l5:KXUEFANLTEAMTOTAL-26NOV17WALPOR-POR1",
+   "source": "team1_form_l5",
+   "sport": "soccer_team1_intl",
+   "status": "hit"
   }
  },
  "pairs": {
@@ -1621,18 +1763,18 @@
    "ready_at": "2026-10-01T16:20:16+00:00",
    "route": "moved by hand on 2026-10-01",
    "routing": {
-    "leads": 5,
+    "leads": 7,
     "problem": null,
-    "routed": 5,
+    "routed": 7,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": -0.018,
-   "sandbox_n": 10,
-   "sandbox_roi": 0.1869,
-   "sandbox_roi_fee": 0.1741,
+   "sandbox_clv": -0.015,
+   "sandbox_n": 12,
+   "sandbox_roi": 0.1779,
+   "sandbox_roi_fee": 0.1656,
    "timing": {
     "late": [],
     "timed": 0,
@@ -1721,18 +1863,18 @@
    "ready_at": "2026-10-04T07:03:02+00:00",
    "route": "moved by hand on 2026-10-04",
    "routing": {
-    "leads": 13,
+    "leads": 15,
     "problem": null,
-    "routed": 13,
+    "routed": 15,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": 0.0019,
-   "sandbox_n": 21,
-   "sandbox_roi": 0.2151,
-   "sandbox_roi_fee": 0.1938,
+   "sandbox_clv": -0.003,
+   "sandbox_n": 23,
+   "sandbox_roi": 0.2188,
+   "sandbox_roi_fee": 0.1979,
    "timing": {
     "late": [],
     "timed": 0,
@@ -1744,5 +1886,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-17T21:12:50+00:00"
+ "updated_at": "2026-11-17T21:55:56+00:00"
 }
