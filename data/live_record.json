@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-17T13:07Z",
+ "generated": "2026-11-17T14:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -4090,7 +4090,7 @@
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 1.1
+     "w": 1.07
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17ETHMOZ-BTTS",
@@ -4098,7 +4098,7 @@
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 1.2
+     "w": 1.17
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17LESGAB-BTTS",
@@ -4106,7 +4106,7 @@
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 0.97
+     "w": 0.95
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17MAWEGY-BTTS",
@@ -4114,7 +4114,7 @@
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 0.85
+     "w": 0.83
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17SSDANG-BTTS",
@@ -4122,11 +4122,59 @@
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 0.82
+     "w": 0.8
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17TANNGR-BTTS",
      "ko": "2026-11-17T13:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 0.98
+    },
+    {
+     "id": "afq_btts:KXAFCONBTTS-26NOV17GAMCIV-BTTS",
+     "ko": "2026-11-17T16:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 1.12
+    },
+    {
+     "id": "afq_btts:KXAFCONBTTS-26NOV17GBSMAD-BTTS",
+     "ko": "2026-11-17T16:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 1.0
+    },
+    {
+     "id": "afq_btts:KXAFCONBTTS-26NOV17KENRSA-BTTS",
+     "ko": "2026-11-17T16:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 1.07
+    },
+    {
+     "id": "afq_btts:KXAFCONBTTS-26NOV17LBATUN-BTTS",
+     "ko": "2026-11-17T16:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 1.15
+    },
+    {
+     "id": "afq_btts:KXAFCONBTTS-26NOV17SLECOD-BTTS",
+     "ko": "2026-11-17T16:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 0.93
+    },
+    {
+     "id": "afq_btts:KXAFCONBTTS-26NOV17TOGDZA-BTTS",
+     "ko": "2026-11-17T16:00",
      "r": null,
      "side": "yes",
      "st": "open",
@@ -4144,7 +4192,7 @@
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 1.02
+     "w": 1.3
     },
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17MAWEGY-MAW1",
@@ -4152,7 +4200,7 @@
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 0.78
+     "w": 1.0
     },
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17SSDANG-SSD1",
@@ -4160,7 +4208,7 @@
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 0.78
+     "w": 1.0
     },
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17TANNGR-TAN1",
@@ -4168,7 +4216,47 @@
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 1.0
+     "w": 1.28
+    },
+    {
+     "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17GAMCIV-GAM1",
+     "ko": "2026-11-17T16:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 0.73
+    },
+    {
+     "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17GBSMAD-MAD1",
+     "ko": "2026-11-17T16:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 1.36
+    },
+    {
+     "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17KENRSA-KEN1",
+     "ko": "2026-11-17T16:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 0.76
+    },
+    {
+     "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17SLECOD-SLE1",
+     "ko": "2026-11-17T16:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 1.19
+    },
+    {
+     "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17TOGDZA-TOG1",
+     "ko": "2026-11-17T16:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 0.72
     }
    ],
    "refused": {}
