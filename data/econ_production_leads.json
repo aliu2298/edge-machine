@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-17T01:01:26+00:00",
+ "board_built_at": "2026-11-17T01:30:50+00:00",
  "collector_error": null,
  "collector_healthy": true,
  "corners_selections": {},
@@ -215,6 +215,41 @@
    "source": "econ_nc_yes",
    "sport": "econ_daily",
    "status": "hit"
+  },
+  "2026-11-16|KXINXU-26NOV16H1600-T7494.9999|Below 7,495 at the close \u00b7 finance_spx_nc_no": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-11-16",
+   "edge_at_log": null,
+   "first_seen": "2026-11-16",
+   "headline": "Below 7,495 at the close",
+   "home": null,
+   "id": "2026-11-16|KXINXU-26NOV16H1600-T7494.9999|Below 7,495 at the close \u00b7 finance_spx_nc_no",
+   "kickoff": "2026-11-16T21:00Z",
+   "lane": "production",
+   "league": null,
+   "match": "S&P 500 above/below",
+   "pair": "finance_spx_nc_no|finance_daily",
+   "price_at_log": 0.92,
+   "published_at": "2026-11-17T01:30:50+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Below 7,495 at the close",
+    "event": "KXINXU-26NOV16H1600",
+    "market": "KXINXU-26NOV16H1600-T7494.9999",
+    "outcome": "7,495 or above",
+    "outcome_side": "no",
+    "price_at_log": 0.92,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "finance_spx_nc_no:KXINXU-26NOV16H1600-T7494.9999",
+   "source": "finance_spx_nc_no",
+   "sport": "finance_daily",
+   "status": "hit"
   }
  },
  "pairs": {
@@ -250,18 +285,18 @@
    "ready_at": "2026-11-08T06:00:00+00:00",
    "route": "moved by hand on 2026-11-08",
    "routing": {
-    "leads": 4,
+    "leads": 5,
     "problem": null,
-    "routed": 4,
+    "routed": 5,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 5,
-   "sandbox_roi": 0.0967,
-   "sandbox_roi_fee": 0.0899,
+   "sandbox_n": 6,
+   "sandbox_roi": 0.0951,
+   "sandbox_roi_fee": 0.0884,
    "timing": {
     "late": [],
     "timed": 0,
@@ -273,5 +308,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-17T01:01:26+00:00"
+ "updated_at": "2026-11-17T01:30:50+00:00"
 }
