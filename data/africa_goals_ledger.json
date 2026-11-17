@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-17T19:00:37.765148+00:00",
+ "last_run": "2026-11-17T20:00:35.974187+00:00",
  "rules": {
   "BTTS": {
    "picks": [
@@ -4308,19 +4308,23 @@
      "bid": 0.66,
      "entry_at": "2026-11-17T16:00:00+00:00",
      "event": "KXAFCONTOTAL-26NOV17MRTBUR",
+     "fill": "unconfirmed",
      "how": "hourly quote 3h before kickoff",
      "id": "T1:KXAFCONTEAMTOTAL-26NOV17MRTBUR-BUR1",
      "league": "AFCON Qualifying",
      "line": 0.5,
      "logged": "2026-11-17T17:00:40.592810+00:00",
      "match": "Mauritania v Burkina Faso",
+     "payout": 1.0,
      "price": 0.68,
+     "profit": 43.82,
      "quote_end": "2026-11-17T16:00:00+00:00",
      "rule": "T1",
      "series": "KXAFCONTEAMTOTAL",
+     "settled": "2026-11-17T20:00:35.974187+00:00",
      "side": "yes",
      "start": "2026-11-17T19:00:00+00:00",
-     "status": "open",
+     "status": "won",
      "team": "Burkina Faso",
      "ticker": "KXAFCONTEAMTOTAL-26NOV17MRTBUR-BUR1",
      "title": "Will Burkina Faso score over 0.5 goals?"
@@ -5559,15 +5563,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-15T23:00:29.471188+00:00",
-   "due": 24,
-   "events": 24,
-   "matched": 24,
-   "new": 0,
-   "settled": 0,
-   "skipped": 0
-  },
-  {
    "at": "2026-11-15T23:13:39.695165+00:00",
    "due": 24,
    "events": 24,
@@ -6015,6 +6010,15 @@
    "matched": 44,
    "new": 0,
    "settled": 15,
+   "skipped": 0
+  },
+  {
+   "at": "2026-11-17T20:00:35.974187+00:00",
+   "due": 44,
+   "events": 44,
+   "matched": 44,
+   "new": 0,
+   "settled": 1,
    "skipped": 0
   }
  ],
