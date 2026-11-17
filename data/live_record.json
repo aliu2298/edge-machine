@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-17T16:07Z",
+ "generated": "2026-11-17T17:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -4253,9 +4253,9 @@
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17TOGDZA-TOG1",
      "ko": "2026-11-17T16:00",
-     "r": null,
+     "r": 0.8957,
      "side": "yes",
-     "st": "open",
+     "st": "won",
      "w": 0.72
     }
    ],
@@ -4502,7 +4502,8 @@
     "commod_fav_band:KXGOLDD-26NOV1217-T3872": "outside the price band",
     "commod_fav_band:KXNATGASD-26NOV1617-T3.500": "wide spread",
     "commod_fav_band:KXWTI-26NOV1214-T85.99": "outside the price band",
-    "commod_fav_band:KXWTI-26NOV1314-T88.49": "outside the price band"
+    "commod_fav_band:KXWTI-26NOV1314-T88.49": "outside the price band",
+    "commod_fav_band:KXWTI-26NOV1714-T84.99": "outside the price band"
    }
   },
   "corners_ucl_fade|soccer_corners": {
