@@ -42,12 +42,7 @@
    "date": "2026-11-17",
    "eps_forecast": "$3.86",
    "fiscal_q": "Oct/2026",
-   "kpi": [
-    {
-     "event": "KXHD-26NOVTXN",
-     "title": "Home Depot customer transactions in Q3"
-    }
-   ],
+   "kpi": [],
    "mentions": [
     "KXEARNINGSMENTIONHD-26NOV17"
    ],
@@ -195,7 +190,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-17T14:00:34Z",
+ "calendar_at": "2026-11-17T15:00:46Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -4208,9 +4203,19 @@
     "width": 0.861904761904762
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-17T15:01:53Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.76,
+    "rungs": 15,
+    "width": 0.861904761904762
+   },
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-17T14:01:36Z",
+ "last_run": "2026-11-17T15:01:57Z",
  "predictions": [
   {
    "call": {
