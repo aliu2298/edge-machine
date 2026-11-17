@@ -43,9 +43,7 @@
    "eps_forecast": "$3.86",
    "fiscal_q": "Oct/2026",
    "kpi": [],
-   "mentions": [
-    "KXEARNINGSMENTIONHD-26NOV17"
-   ],
+   "mentions": [],
    "n_ests": "11",
    "name": "Home Depot, Inc. (The)",
    "perp": "KXHDPERP",
@@ -190,7 +188,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-17T18:00:27Z",
+ "calendar_at": "2026-11-17T19:00:32Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -4243,9 +4241,19 @@
     "width": 0.861904761904762
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-17T19:01:32Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.775,
+    "rungs": 15,
+    "width": 0.9517482517482518
+   },
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-17T18:01:31Z",
+ "last_run": "2026-11-17T19:01:34Z",
  "predictions": [
   {
    "call": {
