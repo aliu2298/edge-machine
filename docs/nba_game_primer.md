@@ -52,7 +52,7 @@ is 1 to 9 behind at half is still the better team, so it tends to win what is le
 Which teams "own" the third quarter? None, reliably. A team's third-quarter record in its first 41 games says almost nothing about
 its last 41 (+0.19), and nothing at all once overall strength is taken out (-0.09). **Myth as a team trait.**
 
-## 2. Rotations and benches (timing needs play-by-play)
+## 2. Rotations and benches (the timing is in section 10)
 
 Coaches play starters about 31 minutes each and bring bench units in late in the first quarter and early in the second, then again
 late in the third. Those bench minutes are where a deep team gains and a thin one bleeds.
