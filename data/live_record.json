@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-17T17:07Z",
+ "generated": "2026-11-17T18:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -4090,7 +4090,7 @@
      "r": 1.2361,
      "side": "yes",
      "st": "won",
-     "w": 1.07
+     "w": 1.0
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17ETHMOZ-BTTS",
@@ -4098,7 +4098,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 1.17
+     "w": 1.09
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17LESGAB-BTTS",
@@ -4106,7 +4106,7 @@
      "r": 1.5221,
      "side": "yes",
      "st": "won",
-     "w": 0.95
+     "w": 0.89
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17MAWEGY-BTTS",
@@ -4114,7 +4114,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 0.83
+     "w": 0.77
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17SSDANG-BTTS",
@@ -4122,7 +4122,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 0.8
+     "w": 0.75
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17TANNGR-BTTS",
@@ -4130,55 +4130,95 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 0.98
+     "w": 0.91
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17GAMCIV-BTTS",
      "ko": "2026-11-17T16:00",
-     "r": null,
+     "r": 1.1397,
      "side": "yes",
-     "st": "open",
-     "w": 1.12
+     "st": "won",
+     "w": 1.05
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17GBSMAD-BTTS",
      "ko": "2026-11-17T16:00",
-     "r": null,
+     "r": -1.0,
      "side": "yes",
-     "st": "open",
-     "w": 1.0
+     "st": "lost",
+     "w": 0.93
     },
     {
      "id": "afq_btts:KXAFCONBTTS-26NOV17KENRSA-BTTS",
      "ko": "2026-11-17T16:00",
+     "r": 1.2361,
+     "side": "yes",
+     "st": "won",
+     "w": 1.0
+    },
+    {
+     "id": "afq_btts:KXAFCONBTTS-26NOV17LBATUN-BTTS",
+     "ko": "2026-11-17T16:00",
+     "r": 1.0947,
+     "side": "yes",
+     "st": "won",
+     "w": 1.07
+    },
+    {
+     "id": "afq_btts:KXAFCONBTTS-26NOV17SLECOD-BTTS",
+     "ko": "2026-11-17T16:00",
+     "r": 1.5883,
+     "side": "yes",
+     "st": "won",
+     "w": 0.86
+    },
+    {
+     "id": "afq_btts:KXAFCONBTTS-26NOV17TOGDZA-BTTS",
+     "ko": "2026-11-17T16:00",
+     "r": -1.0,
+     "side": "yes",
+     "st": "lost",
+     "w": 0.93
+    },
+    {
+     "id": "afq_btts:KXAFCONBTTS-26NOV17BOTUGA-BTTS",
+     "ko": "2026-11-17T19:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 1.05
+    },
+    {
+     "id": "afq_btts:KXAFCONBTTS-26NOV17COGCOM-BTTS",
+     "ko": "2026-11-17T19:00",
      "r": null,
      "side": "yes",
      "st": "open",
      "w": 1.07
     },
     {
-     "id": "afq_btts:KXAFCONBTTS-26NOV17LBATUN-BTTS",
-     "ko": "2026-11-17T16:00",
+     "id": "afq_btts:KXAFCONBTTS-26NOV17LBRCPV-BTTS",
+     "ko": "2026-11-17T19:00",
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 1.15
+     "w": 1.09
     },
     {
-     "id": "afq_btts:KXAFCONBTTS-26NOV17SLECOD-BTTS",
-     "ko": "2026-11-17T16:00",
+     "id": "afq_btts:KXAFCONBTTS-26NOV17MRTBUR-BTTS",
+     "ko": "2026-11-17T19:00",
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 0.93
+     "w": 1.02
     },
     {
-     "id": "afq_btts:KXAFCONBTTS-26NOV17TOGDZA-BTTS",
-     "ko": "2026-11-17T16:00",
+     "id": "afq_btts:KXAFCONBTTS-26NOV17RWAMLI-BTTS",
+     "ko": "2026-11-17T19:00",
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 1.0
+     "w": 1.02
     }
    ],
    "refused": {}
@@ -4221,33 +4261,33 @@
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17GAMCIV-GAM1",
      "ko": "2026-11-17T16:00",
-     "r": null,
+     "r": 0.8605,
      "side": "yes",
-     "st": "open",
+     "st": "won",
      "w": 0.73
     },
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17GBSMAD-MAD1",
      "ko": "2026-11-17T16:00",
-     "r": null,
+     "r": -1.0,
      "side": "yes",
-     "st": "open",
+     "st": "lost",
      "w": 1.36
     },
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17KENRSA-KEN1",
      "ko": "2026-11-17T16:00",
-     "r": null,
+     "r": 0.794,
      "side": "yes",
-     "st": "open",
+     "st": "won",
      "w": 0.76
     },
     {
      "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17SLECOD-SLE1",
      "ko": "2026-11-17T16:00",
-     "r": null,
+     "r": 1.2878,
      "side": "yes",
-     "st": "open",
+     "st": "won",
      "w": 1.19
     },
     {
@@ -4257,6 +4297,30 @@
      "side": "yes",
      "st": "won",
      "w": 0.72
+    },
+    {
+     "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17COGCOM-COM1",
+     "ko": "2026-11-17T19:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 0.84
+    },
+    {
+     "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17LBRCPV-LBR1",
+     "ko": "2026-11-17T19:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 0.8
+    },
+    {
+     "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17RWAMLI-RWA1",
+     "ko": "2026-11-17T19:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 0.78
     }
    ],
    "refused": {}
