@@ -4024,7 +4024,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-17T22:06:31.405869+00:00",
+ "last_run": "2026-11-17T22:14:39.491517+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -12268,14 +12268,14 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV17HUNNIR\", \"no\"]]",
    "price": 0.83,
-   "profit": null,
+   "profit": 0.1907,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-17T22:01:48.298590+00:00",
    "side": "no",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXUEFANLTOTAL-26NOV17IRLKOS-4",
@@ -12293,14 +12293,14 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV17IRLKOS\", \"no\"]]",
    "price": 0.82,
-   "profit": null,
+   "profit": 0.2043,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-17T22:01:48.298590+00:00",
    "side": "no",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXGOLDD-26NOV1717-T3854",
