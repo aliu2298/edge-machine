@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-17T10:07Z",
+ "generated": "2026-11-17T11:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -4083,12 +4083,94 @@
  "pairs": {
   "afq_btts|soccer_btts_intl": {
    "entered": "2026-11-16T18:00:00+00:00",
-   "orders": [],
+   "orders": [
+    {
+     "id": "afq_btts:KXAFCONBTTS-26NOV17BDIZAM-BTTS",
+     "ko": "2026-11-17T13:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 1.1
+    },
+    {
+     "id": "afq_btts:KXAFCONBTTS-26NOV17ETHMOZ-BTTS",
+     "ko": "2026-11-17T13:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 1.2
+    },
+    {
+     "id": "afq_btts:KXAFCONBTTS-26NOV17LESGAB-BTTS",
+     "ko": "2026-11-17T13:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 0.97
+    },
+    {
+     "id": "afq_btts:KXAFCONBTTS-26NOV17MAWEGY-BTTS",
+     "ko": "2026-11-17T13:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 0.85
+    },
+    {
+     "id": "afq_btts:KXAFCONBTTS-26NOV17SSDANG-BTTS",
+     "ko": "2026-11-17T13:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 0.82
+    },
+    {
+     "id": "afq_btts:KXAFCONBTTS-26NOV17TANNGR-BTTS",
+     "ko": "2026-11-17T13:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 1.0
+    }
+   ],
    "refused": {}
   },
   "afq_dog_score|soccer_team1_intl": {
    "entered": "2026-11-16T18:00:00+00:00",
-   "orders": [],
+   "orders": [
+    {
+     "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17LESGAB-LES1",
+     "ko": "2026-11-17T13:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 1.02
+    },
+    {
+     "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17MAWEGY-MAW1",
+     "ko": "2026-11-17T13:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 0.78
+    },
+    {
+     "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17SSDANG-SSD1",
+     "ko": "2026-11-17T13:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 0.78
+    },
+    {
+     "id": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17TANNGR-TAN1",
+     "ko": "2026-11-17T13:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 1.0
+    }
+   ],
    "refused": {}
   },
   "commod_fav_band|commodities_fav": {
