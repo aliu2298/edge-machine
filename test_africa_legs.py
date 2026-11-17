@@ -50,7 +50,11 @@ check("control: the favourite to score at 85c or more, the favourite only", sort
 check("no entry is added or changed: the pooled rules' counts stand", {k: len(v["picks"]) for k, v in state["rules"].items()}, {"T1": 5, "U35": 2, "O15": 3, "BTTS": 2})
 
 print("\nthe Production feed: two pairs, the follower's bands, no third leg")
-check("two pairs, the underdog and both teams to score; afq_u35_80 is not one", sorted(AFP.pairs()), ["afq_btts|soccer_btts_intl", "afq_dog_score|soccer_team1_intl"])
+check("no Production pair since 2026-11-17 (Olu: back in the Sandbox); the feed still names the two legs, which the live book grades its held positions off",
+      (AFP.ENDED_ON, AFP.pairs(), sorted(AFP._feed_pairs())), ("2026-11-17", {}, ["afq_btts|soccer_btts_intl", "afq_dog_score|soccer_team1_intl"]))
+check("the Production page inputs add the quotes to the Sandbox side and nothing to the stage or the feed read",
+      (len(AFP.page_inputs({"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}, state, now=NOW)[0]["quotes"]) > 0,
+       AFP.page_inputs({"quotes": []}, {"pairs": {}}, {"leads": {}, "pairs": {}}, state, now=NOW)[1:]), (True, ({"pairs": {}}, {"leads": {}, "pairs": {}})))
 f = AFP.feed(state, now=NOW)
 leads = {l["route"]["market"] if l.get("route") else l["id"]: l for l in f["leads"].values()}
 check("the bands: underdog 2c to 60c, BTTS the lane's own 2c to 98c", f["bands"], {"afq_dog_score|soccer_team1_intl": [0.02, 0.6], "afq_btts|soccer_btts_intl": [0.02, 0.98]})
@@ -72,8 +76,10 @@ check("every row is an Internationals row", {r["scope"] for r in rows}, {"intl"}
 check("the four every-match rows are retired with Olu's reason", sorted((n for n, r in by.items() if r.get("gone")), key=str),
       sorted(["africa_goals_all", "africa_goals_u35", "africa_goals_o15", "africa_goals_t1"]))
 check("... and say so", {r["gone"] for r in rows if r.get("gone")}, {"Retired Nov 16 by Olu: split into Production legs / v2."})
-check("the two Production legs are Production rows, the rest Sandbox", {n: bool(by[n]["prod"]) for n in ("afq_dog_score", "afq_btts", "afq_u35_80", "afq_o15_v2", "afq_ctrl_fav", "afq_ctrl_u35")},
-      {"afq_dog_score": True, "afq_btts": True, "afq_u35_80": False, "afq_o15_v2": False, "afq_ctrl_fav": False, "afq_ctrl_u35": False})
+check("no African row is a Production row since 2026-11-17: all six are Sandbox", {n: bool(by[n]["prod"]) for n in ("afq_dog_score", "afq_btts", "afq_u35_80", "afq_o15_v2", "afq_ctrl_fav", "afq_ctrl_u35")},
+      {"afq_dog_score": False, "afq_btts": False, "afq_u35_80": False, "afq_o15_v2": False, "afq_ctrl_fav": False, "afq_ctrl_u35": False})
+check("the two legs say they were Production Nov 16 to Nov 17 and the record continues",
+      all("Nov 16 to Nov 17 2026" in by[n]["own"]["details"] and "no reset" in by[n]["own"]["details"] for n in ("afq_dog_score", "afq_btts")), True)
 check("the controls are baselines", (by["afq_ctrl_fav"]["meta"]["kind"], by["afq_ctrl_u35"]["meta"]["kind"]), ("Baseline", "Baseline"))
 text = " ".join(r["own"]["details"] + r["own"]["entries"] + r["own"]["label"] + r["meta"]["note"] for r in rows)
 check("no dollar amount on the page", "$" in text, False)

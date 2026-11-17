@@ -28,6 +28,7 @@ import soccer_team_rules_production as TRP
 ROOT = os.path.dirname(os.path.abspath(__file__))
 PATH = os.path.join(ROOT, "data", "africa_goals_production_leads.json")
 MOVED_ON = "2026-11-16"
+ENDED_ON = "2026-11-17"                 # Olu: both legs back to the Sandbox until they have real team/matchup filters (blind selections today)
 PROMOTED = "2026-11-16T18:00:00+00:00"
 HEALTHY_HOURS = SRP.HEALTHY_HOURS
 DOG_BELOW = 0.60                        # the underdog: the to-score YES ask is under this
@@ -41,9 +42,15 @@ PAIRS = {
 LABELS = {src: name for src, _s, name in PAIRS.values()}
 
 
-def pairs():
+def _feed_pairs():
+    """The two legs as the feed still publishes them: the live book GRADES positions it already holds off this file (2026-11-17), though it refuses new ones."""
     return {f"{src}|{sport}": dict(stage="production", ready_at=PROMOTED, promoted_at=PROMOTED, by_hand=MOVED_ON)
             for src, sport, _n in PAIRS.values()}
+
+
+def pairs():
+    """No Production pair since 2026-11-17: the legs are Sandbox paper rows again, their record carried on."""
+    return {} if ENDED_ON else _feed_pairs()
 
 
 def dog_picks(state):
@@ -102,7 +109,7 @@ def feed(state, now=None, previous=None, heartbeat=False):
     ok = {src: healthy for src, _s, _n in PAIRS.values()}
     rows = [r for r in rows if r["status"] != "open" or ok.get(r["source"])]
     built = now if heartbeat else (D.instant(state.get("last_run")) or now)
-    blob = P.build_feed({"quotes": rows}, {"pairs": pairs()}, now=built, previous=previous)
+    blob = P.build_feed({"quotes": rows}, {"pairs": _feed_pairs()}, now=built, previous=previous)
     blob["collector_healthy"] = ok
     blob["collector_error"] = state.get("error")
     blob["bands"] = {f"{src}|{sport}": list(BAND[leg]) for leg, (src, sport, _n) in PAIRS.items()}
@@ -111,6 +118,8 @@ def feed(state, now=None, previous=None, heartbeat=False):
 
 def page_inputs(d, st, blob, state, now=None):
     """Augment page inputs in memory; the ledger, stage and feed objects are untouched."""
+    if ENDED_ON:                        # Sandbox paper: the quotes stay on the Sandbox side; nothing joins the Production stage or feed read
+        return dict(d, quotes=list(d.get("quotes") or []) + quotes(state)), st, blob
     current = feed(state, now=now)
     return (dict(d, quotes=list(d.get("quotes") or []) + quotes(state)),
             dict(st, pairs={**(st.get("pairs") or {}), **pairs()}),

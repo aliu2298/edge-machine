@@ -92,7 +92,7 @@ def production_lanes(today=None):
         gone = T.PAIR_REMOVALS.get(key)
         if o.get("moved_on") and not (gone and gone.get("removed_on", "") >= o["moved_on"]):
             out[key] = "tracker rule"
-    for registry in (SRP.PAIRS, STRP.PAIRS, AFP.PAIRS):
+    for registry in (SRP.PAIRS, STRP.PAIRS) + (() if _ended(AFP, today) else (AFP.PAIRS,)):
         for _rule, (pair, sport, label) in registry.items():
             out[f"{pair}|{sport}"] = label
     for pair in DP.NC_PAIRS.values():

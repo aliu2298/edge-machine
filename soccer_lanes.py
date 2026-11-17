@@ -538,11 +538,11 @@ def africa_rows(state=None):
             + _africa_window_table(inc))
     import africa_goals_production as AFP
     src, sport, name = AFP.PAIRS["BTTS"]
-    bdet = (params_html([("History", "Added Nov 13 2026 as an every-match observation row; a Production leg from Nov 16 2026 (Olu), a trial on a fresh live record. "
-                                     "The paper record below is the lane's whole record and counts toward nothing here")]) + bdet)
-    rb = row(src, sport, f"{name} · every match", AG.BTTS["market"], AG.record(bt), bdet, prod=True, pair=f"{src}|{sport}",
+    bdet = (params_html([("History", "Added Nov 13 2026 as an every-match observation row; a Production leg Nov 16 to Nov 17 2026 (Olu); back in the Sandbox Nov 17 until it "
+                                     "has real team and matchup filters, since it is a blind selection. The record continues, with no reset")]) + bdet)
+    rb = row(src, sport, f"{name} · every match", AG.BTTS["market"], AG.record(bt), bdet,
              open_n=sum(p.get("status") == "open" for p in inc), entries=entries_table(bt, bcols), kind="Rule",
-             note="A Production trial. Post-hoc split of the Nov 12 to 14 window; nothing here is proof.", anchor="africa-goals-btts")
+             note="Sandbox paper. Post-hoc split of the Nov 12 to 14 window; nothing here is proof.", anchor="africa-goals-btts")
     rb["pin"], rb["scope"] = True, "intl"
     rows.append(rb)
     rows += africa_leg_rows(state, cols)
@@ -552,7 +552,7 @@ def africa_rows(state=None):
 
 
 def africa_leg_rows(state, cols):
-    """The legs split out of the every-match rows (2026-11-16, Olu): the Production underdog leg, the Sandbox legs and the two control rows.
+    """The legs split out of the every-match rows (2026-11-16, Olu): the underdog leg (Sandbox again since 2026-11-17), the Sandbox legs and the two control rows.
     Subsets of the ledger's own entries (africa_goals.leg_picks), judged the same way. Percentages only."""
     import africa_goals as AG
     import africa_goals_production as AFP
@@ -560,10 +560,11 @@ def africa_leg_rows(state, cols):
     both = "Observation rows split from the every-match rows; the entry and the price are unchanged"
     pre = ("Pre-registered", "Nov 16 2026, before any new match: post hoc, found on the Nov 12 to 14 window after it was seen")
     spec = [
-        ("DOG", src, sport, name, "Team 1+", True, f"{src}|{sport}", "Rule",
+        ("DOG", src, sport, name, "Team 1+", False, None, "Rule",
          [("Bet", "YES on the underdog to score: the side whose to-score YES ask is under 60c, at the ask, held to settlement"),
           ("Evidence", "Post hoc, on the Nov 12 to 14 window: 14 of 21 at an average price of 39c. September: each side to score was 9.7 points underpriced on 91 sides"),
-          ("Stage", "Production trial from Nov 16 2026 (Olu), a fresh live record from the first live bet. The evidence test was waived"), pre]),
+          ("Stage", "A Production leg Nov 16 to Nov 17 2026 (Olu); back in the Sandbox Nov 17 until it has real team and matchup filters, since it is a blind "
+                    "selection. The record continues, with no reset"), pre]),
         ("U35_80", "afq_u35_80", "soccer_u35_intl", "African qualifiers · NO on over 3.5 when the NO ask is 80c or more", "Under 3.5", False, None, "Rule",
          [("Bet", "NO on over 3.5 goals only when the NO ask is 80c or more, at the ask, held to settlement"),
           ("Evidence", "Post hoc, on the Nov 12 to 14 window: 7 of 7. In the September window the same filter went 22 of 29 at 83c, about 10% under break-even"),
