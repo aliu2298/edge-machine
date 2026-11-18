@@ -1,6 +1,6 @@
 {
  "collector": {
-  "last_ts": 1794996001,
+  "last_ts": 1794999601,
   "markets": 61,
   "rows_24h": 81984
  },
@@ -25,28 +25,6 @@
   }
  ],
  "flags": [
-  {
-   "gap": 0.09179,
-   "gap_15m": -0.00085,
-   "gap_5m": -0.00036,
-   "gap_60m": 0.0,
-   "rth": false,
-   "spread_bp": 1753.1,
-   "sym": "WMT",
-   "ticker": "KXWMTPERP",
-   "ts": 1794576602
-  },
-  {
-   "gap": 0.01004,
-   "gap_15m": -0.00327,
-   "gap_5m": 0.0016,
-   "gap_60m": -0.00562,
-   "rth": false,
-   "spread_bp": 27.7,
-   "sym": "QCOM",
-   "ticker": "KXQCOMPERP",
-   "ts": 1794604141
-  },
   {
    "gap": -0.03965,
    "gap_15m": 0.00959,
@@ -5304,6 +5282,7 @@
    "gap": -0.01088,
    "gap_15m": -0.01077,
    "gap_5m": -0.01079,
+   "gap_60m": -0.01056,
    "rth": false,
    "spread_bp": 3.3,
    "sym": "COP",
@@ -5314,6 +5293,7 @@
    "gap": -0.01453,
    "gap_15m": -0.01663,
    "gap_5m": -0.0161,
+   "gap_60m": -0.00026,
    "rth": false,
    "spread_bp": 5.4,
    "sym": "CVX",
@@ -5324,14 +5304,35 @@
    "gap": 0.01023,
    "gap_15m": 0.01032,
    "gap_5m": 0.01001,
+   "gap_60m": 0.01143,
    "rth": false,
    "spread_bp": 1.2,
    "sym": "US Tech 100",
    "ticker": "KXUSTECH100PERP",
    "ts": 1794992701
+  },
+  {
+   "gap": -0.01056,
+   "gap_15m": -0.01122,
+   "gap_5m": -0.01068,
+   "rth": false,
+   "spread_bp": 9.8,
+   "sym": "COP",
+   "ticker": "KXCOPPERP",
+   "ts": 1794996302
+  },
+  {
+   "gap": 0.01143,
+   "gap_15m": 0.01066,
+   "gap_5m": 0.01147,
+   "rth": false,
+   "spread_bp": 0.3,
+   "sym": "US Tech 100",
+   "ticker": "KXUSTECH100PERP",
+   "ts": 1794996302
   }
  ],
- "last_run": "2026-11-18T10:00:09+00:00",
+ "last_run": "2026-11-18T11:00:08+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
