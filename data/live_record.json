@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-18T16:07Z",
+ "generated": "2026-11-18T17:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -4506,7 +4506,7 @@
      "r": 0.2473,
      "side": null,
      "st": "won",
-     "w": 1.02
+     "w": 1.04
     },
     {
      "id": "commod_fav_band:KXWTI-26OCT1314-T93.49",
@@ -4514,7 +4514,7 @@
      "r": 0.3992,
      "side": "yes",
      "st": "won",
-     "w": 0.91
+     "w": 0.92
     },
     {
      "id": "commod_fav_band:KXGOLDD-26OCT1317-T4154",
@@ -4522,7 +4522,7 @@
      "r": 0.362,
      "side": "yes",
      "st": "won",
-     "w": 0.94
+     "w": 0.95
     },
     {
      "id": "commod_fav_band:KXWTI-26OCT1414-T94.99",
@@ -4538,7 +4538,7 @@
      "r": 0.2625,
      "side": "yes",
      "st": "won",
-     "w": 1.01
+     "w": 1.02
     },
     {
      "id": "commod_fav_band:KXNATGASD-26OCT1917-T3.320",
@@ -4546,7 +4546,7 @@
      "r": 0.2625,
      "side": "yes",
      "st": "won",
-     "w": 1.01
+     "w": 1.02
     },
     {
      "id": "commod_fav_band:KXWTI-26OCT2014-T95.49",
@@ -4554,7 +4554,7 @@
      "r": 0.294,
      "side": "yes",
      "st": "won",
-     "w": 0.99
+     "w": 1.0
     },
     {
      "id": "commod_fav_band:KXSILVERD-26OCT2017-T57.75",
@@ -4562,7 +4562,7 @@
      "r": 0.2327,
      "side": "yes",
      "st": "won",
-     "w": 1.04
+     "w": 1.05
     },
     {
      "id": "commod_fav_band:KXBRENTD-26OCT2117-T104.50",
@@ -4570,7 +4570,7 @@
      "r": 0.3444,
      "side": "yes",
      "st": "won",
-     "w": 0.95
+     "w": 0.96
     },
     {
      "id": "commod_fav_band:KXWTI-26OCT2214-T97.99",
@@ -4578,7 +4578,7 @@
      "r": 0.2473,
      "side": "yes",
      "st": "won",
-     "w": 1.02
+     "w": 1.04
     },
     {
      "id": "commod_fav_band:KXSILVERD-26OCT2217-T54.75",
@@ -4586,7 +4586,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 0.93
+     "w": 0.94
     },
     {
      "id": "commod_fav_band:KXGOLDD-26OCT2617-T4014",
@@ -4594,7 +4594,7 @@
      "r": 0.2781,
      "side": "yes",
      "st": "won",
-     "w": 1.0
+     "w": 1.01
     },
     {
      "id": "commod_fav_band:KXWTI-26OCT2714-T99.49",
@@ -4602,7 +4602,7 @@
      "r": 0.362,
      "side": "yes",
      "st": "won",
-     "w": 0.94
+     "w": 0.95
     },
     {
      "id": "commod_fav_band:KXSILVERD-26OCT2717-T54.25",
@@ -4610,7 +4610,7 @@
      "r": 0.2781,
      "side": "yes",
      "st": "won",
-     "w": 1.0
+     "w": 1.01
     },
     {
      "id": "commod_fav_band:KXWTI-26OCT2814-T102.99",
@@ -4618,7 +4618,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 0.94
+     "w": 0.95
     },
     {
      "id": "commod_fav_band:KXSILVERD-26OCT2817-T53.25",
@@ -4626,7 +4626,7 @@
      "r": 0.3803,
      "side": "yes",
      "st": "won",
-     "w": 0.93
+     "w": 0.94
     },
     {
      "id": "commod_fav_band:KXWTI-26OCT2914-T99.49",
@@ -4634,7 +4634,7 @@
      "r": 0.2625,
      "side": "yes",
      "st": "won",
-     "w": 1.01
+     "w": 1.02
     },
     {
      "id": "commod_fav_band:KXSILVERD-26OCT2917-T52",
@@ -4642,7 +4642,7 @@
      "r": 0.294,
      "side": "yes",
      "st": "won",
-     "w": 0.99
+     "w": 1.0
     },
     {
      "id": "commod_fav_band:KXWTI-26OCT3014-T103.49",
@@ -4650,7 +4650,7 @@
      "r": 0.3803,
      "side": "yes",
      "st": "won",
-     "w": 0.93
+     "w": 0.94
     },
     {
      "id": "commod_fav_band:KXWTI-26NOV0214-T96.49",
@@ -4658,7 +4658,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 11.88
+     "w": 12.02
     },
     {
      "id": "commod_fav_band:KXGOLDD-26NOV0217-T3944",
@@ -4674,7 +4674,7 @@
      "r": 0.294,
      "side": "yes",
      "st": "won",
-     "w": 11.85
+     "w": 12.0
     },
     {
      "id": "commod_fav_band:KXSILVERD-26NOV0317-T49.50",
@@ -4682,7 +4682,7 @@
      "r": 0.3272,
      "side": "yes",
      "st": "won",
-     "w": 12.52
+     "w": 12.67
     },
     {
      "id": "commod_fav_band:KXBRENTD-26NOV0417-T94.00",
@@ -4690,7 +4690,7 @@
      "r": 0.2475,
      "side": "yes",
      "st": "won",
-     "w": 12.29
+     "w": 12.45
     },
     {
      "id": "commod_fav_band:KXBRENTD-26NOV0517-T97.50",
@@ -4698,7 +4698,7 @@
      "r": 0.3444,
      "side": "yes",
      "st": "won",
-     "w": 12.36
+     "w": 12.51
     },
     {
      "id": "commod_fav_band:KXSILVERD-26NOV0517-T52.25",
@@ -4706,7 +4706,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 12.68
+     "w": 12.84
     },
     {
      "id": "commod_fav_band:KXWTI-26NOV1314-T88.49",
@@ -4722,7 +4722,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 0.99
+     "w": 1.0
     },
     {
      "id": "commod_fav_band:KXGOLDD-26NOV1617-T3847",
@@ -4730,7 +4730,7 @@
      "r": 0.3103,
      "side": "yes",
      "st": "won",
-     "w": 0.98
+     "w": 0.99
     },
     {
      "id": "commod_fav_band:KXGOLDD-26NOV1717-T3854",
@@ -4738,7 +4738,15 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 0.93
+     "w": 0.94
+    },
+    {
+     "id": "commod_fav_band:KXWTI-26NOV1814-T82.49",
+     "ko": "2026-11-18T19:30",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 0.95
     }
    ],
    "refused": {
