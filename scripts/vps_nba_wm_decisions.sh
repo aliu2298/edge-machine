@@ -22,9 +22,12 @@ git pull -q --rebase origin main || { echo "$(stamp) pull failed"; exit 0; }
 "$PY" top5_dip_publish.py || echo "$(stamp) top-5 dip publish refused or failed"
 # the Argentina dip executor's snapshots ride it too (2026-11-08), the same way
 "$PY" arg_dip_publish.py || echo "$(stamp) Argentina dip publish refused or failed"
+# the S&P 500 opening sweep executor's snapshots (2026-11-17), the same way
+"$PY" sp_sweep_publish.py || echo "$(stamp) S&P sweep publish refused or failed"
 git add data/nba_wm_decisions.json 2>/dev/null
 git add data/top5_dip_decisions.json 2>/dev/null   # a missing file must not stop the NBA add above
 git add data/arg_dip_decisions.json 2>/dev/null
+git add data/sp_sweep_decisions.json 2>/dev/null
 if ! git diff --cached --quiet; then
   git commit -q -m "NBA win margin decision snapshots via vps ($(date -u +%Y-%m-%d\ %H:%MZ))"
 fi

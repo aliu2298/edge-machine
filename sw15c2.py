@@ -24,6 +24,7 @@ import fdr_check as FD
 import fillsim as F
 import fillsim_tape as TP
 import swing15 as W
+import sw15cuts as C
 
 VERSION = "sw15-c2"
 REGISTERED = "2026-11-13"
@@ -38,6 +39,15 @@ EARLY_DAYS = 10
 KEEP_SCORE = 1.5
 MAX_PER_RUN = 60
 LABELS = {"10": "C v2 · S&P 500 opening sweep, 10c sell 3x", "15": "C v2 · S&P 500 opening sweep, 15c sell 2x", "25": "C v2 · S&P 500 opening sweep, 25c sell 2x"}
+
+
+def live_levels():
+    """The levels still entering: 10c only since round 6 (2026-11-17); 15c and 25c keep their final records."""
+    return [lv for lv in LEVELS if not C.retire_at(f"sw15c2_{lv}")]
+
+
+def retired_levels():
+    return [lv for lv in LEVELS if C.retire_at(f"sw15c2_{lv}")]
 
 
 def cell_key(lv, delay):
@@ -159,9 +169,12 @@ def closed_on(state, lv):
 def cell_rows(state, lv, delay):
     """[(roi, hour, window)] for one cell, windows up to the level's close (a closed level takes no later bets)."""
     stop = closed_on(state, lv)
+    cut = C.retire_at(f"sw15c2_{lv}")             # round 6 (2026-11-17): 15c and 25c count nothing from the cut on, so their records are final
     out = []
     for tk, v in sorted(state["windows"].items(), key=lambda kv: kv[1]["open"]):
         if stop and v["day"] > stop:
+            continue
+        if cut and W._ts(v["open"]) >= W._ts(cut):
             continue
         x = v["cells"].get(cell_key(lv, delay))
         if x:
