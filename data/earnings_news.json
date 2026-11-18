@@ -224,7 +224,7 @@
    "time": "not-supplied"
   }
  ],
- "calendar_at": "2026-11-18T05:00:32Z",
+ "calendar_at": "2026-11-18T06:00:25Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -4407,9 +4407,19 @@
     "width": 0.45699300699300727
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-18T06:01:26Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.752,
+    "rungs": 15,
+    "width": 0.45641025641025657
+   },
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-18T05:01:28Z",
+ "last_run": "2026-11-18T06:01:28Z",
  "predictions": [
   {
    "call": {
@@ -4992,6 +5002,22 @@
    "report_time": "not-supplied",
    "side": 1,
    "sym": "ORCL"
+  },
+  {
+   "family": "kpi_drift",
+   "id": "kpi_drift:WMT:KXWMT-26NOVUSCOMP",
+   "kpi_event": "KXWMT-26NOVUSCOMP",
+   "kpi_from": "2026-11-10T18:00:30Z",
+   "kpi_to": "2026-11-18T06:01:26Z",
+   "logged_at": "2026-11-18T06:01:26Z",
+   "perp": "KXWMTPERP",
+   "random_side": -1,
+   "reason": "Walmart US comparable sales growth (ex-fuel) in Q3: ladder median 2.9 \u2192 2.752 (move -0.148, threshold \u00b10.55).",
+   "report": "2026-11-19",
+   "report_time": "pre-market",
+   "side": 0,
+   "status": "no_call",
+   "sym": "WMT"
   }
  ],
  "registered": "2026-11-07",
