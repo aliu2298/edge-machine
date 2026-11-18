@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-18T22:31:53.648735+00:00",
+ "last_run": "2026-11-18T23:01:56.090289+00:00",
  "rules": {
   "NO": {
    "picks": [
@@ -71,6 +71,40 @@
      "status": "open",
      "ticker": "KXBRASILEIROBTTS-26NOV18FLACAP-BTTS",
      "why": "Brazil BTTS NO 0.56"
+    },
+    {
+     "ask": 0.48,
+     "bid": 0.47,
+     "event": "KXBRASILEIROBTTS-26NOV18CORBOT",
+     "id": "NO:KXBRASILEIROBTTS-26NOV18CORBOT",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-18T23:01:56.090289+00:00",
+     "match": "Corinthians v Botafogo",
+     "price": 0.48,
+     "rule": "NO",
+     "side": "no",
+     "start": "2026-11-19T00:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV18CORBOT-BTTS",
+     "why": "Brazil BTTS NO 0.48"
+    },
+    {
+     "ask": 0.38,
+     "bid": 0.37,
+     "event": "KXBRASILEIROBTTS-26NOV18GPABAH",
+     "id": "NO:KXBRASILEIROBTTS-26NOV18GPABAH",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-18T23:01:56.090289+00:00",
+     "match": "Gr\u00eamio v Bahia",
+     "price": 0.38,
+     "rule": "NO",
+     "side": "no",
+     "start": "2026-11-19T00:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV18GPABAH-BTTS",
+     "why": "Brazil BTTS NO 0.38"
     }
    ]
   },
@@ -143,6 +177,40 @@
      "status": "open",
      "ticker": "KXBRASILEIROBTTS-26NOV18FLACAP-BTTS",
      "why": "Brazil BTTS YES 0.45"
+    },
+    {
+     "ask": 0.53,
+     "bid": 0.52,
+     "event": "KXBRASILEIROBTTS-26NOV18CORBOT",
+     "id": "YES:KXBRASILEIROBTTS-26NOV18CORBOT",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-18T23:01:56.090289+00:00",
+     "match": "Corinthians v Botafogo",
+     "price": 0.53,
+     "rule": "YES",
+     "side": "yes",
+     "start": "2026-11-19T00:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV18CORBOT-BTTS",
+     "why": "Brazil BTTS YES 0.53"
+    },
+    {
+     "ask": 0.63,
+     "bid": 0.62,
+     "event": "KXBRASILEIROBTTS-26NOV18GPABAH",
+     "id": "YES:KXBRASILEIROBTTS-26NOV18GPABAH",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-18T23:01:56.090289+00:00",
+     "match": "Gr\u00eamio v Bahia",
+     "price": 0.63,
+     "rule": "YES",
+     "side": "yes",
+     "start": "2026-11-19T00:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV18GPABAH-BTTS",
+     "why": "Brazil BTTS YES 0.63"
     }
    ]
   }
@@ -231,10 +299,16 @@
    "matched": 3,
    "new": 0,
    "quoted": 3
+  },
+  {
+   "at": "2026-11-18T23:01:56.090289+00:00",
+   "due": 4,
+   "matched": 4,
+   "new": 4,
+   "quoted": 4
   }
  ],
  "schedule": [
-  "2026-11-18T22:30:00+00:00",
   "2026-11-18T23:00:00+00:00",
   "2026-11-18T23:30:00+00:00",
   "2026-11-19T00:30:00+00:00",
