@@ -676,6 +676,7 @@ def build(blob=None, now=None):
 </div>
 {head_html}
 {rules_html}
+{_spotter_section()}
 {_research_section()}
 <section id="games" class="sp-section">
 <div class="sp-section-head"><h2>Games</h2><span class="sm mut">{n_up} next 24h · {len(graded)} graded</span></div>
@@ -708,7 +709,7 @@ def build(blob=None, now=None):
         "Edge Machine · NBA",
         "NBA win margin lanes on Kalshi, their records and the games they trade. Research, not betting advice.",
         "nba",
-        (("rules", "Rules"), ("research", "Research"), ("games", "Games"), ("retired", "Retired"), ("method", "Method")),
+        (("rules", "Rules"), ("spotter", "Spotter"), ("research", "Research"), ("games", "Games"), ("retired", "Retired"), ("method", "Method")),
         C.stamp(clock),
         body,
         script_src="./site.js",
@@ -727,6 +728,15 @@ def _how_read():
         return nba_layout.how_read()
     except Exception:                                           # noqa: BLE001
         return ""
+
+
+def _spotter_section():
+    """NBA Spotter (Sandbox), paper: the frozen player-prop model's two boards (nba_spotter_build.py). Never breaks the board."""
+    try:
+        import nba_spotter_build
+        return nba_spotter_build.section(now=datetime.datetime.now(datetime.timezone.utc))
+    except Exception as exc:                                    # noqa: BLE001
+        return f'<section id="spotter" class="sp-section"><p class="sm mut">NBA Spotter unavailable ({esc(type(exc).__name__)}).</p></section>'
 
 
 def _research_section():
