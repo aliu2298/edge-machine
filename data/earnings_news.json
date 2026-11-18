@@ -201,7 +201,7 @@
   },
   {
    "date": "2026-12-09",
-   "eps_forecast": "$3.47",
+   "eps_forecast": "$3.45",
    "fiscal_q": "Oct/2026",
    "kpi": [],
    "mentions": [],
@@ -224,7 +224,7 @@
    "time": "not-supplied"
   }
  ],
- "calendar_at": "2026-11-18T12:00:27Z",
+ "calendar_at": "2026-11-18T13:00:30Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -4487,9 +4487,19 @@
     "width": 0.4580296896086371
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-18T13:01:30Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.753846153846154,
+    "rungs": 15,
+    "width": 0.5198717948717948
+   },
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-18T12:01:30Z",
+ "last_run": "2026-11-18T13:01:32Z",
  "predictions": [
   {
    "call": {
