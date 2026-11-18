@@ -224,7 +224,7 @@
    "time": "not-supplied"
   }
  ],
- "calendar_at": "2026-11-18T20:00:31Z",
+ "calendar_at": "2026-11-18T21:00:33Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -4577,9 +4577,19 @@
     "width": 0.40095693779904273
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-18T21:01:39Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.734375,
+    "rungs": 15,
+    "width": 0.40257309941520436
+   },
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-18T20:02:24Z",
+ "last_run": "2026-11-18T21:01:42Z",
  "predictions": [
   {
    "call": {
@@ -5181,7 +5191,9 @@
   },
   {
    "call": {
-    "status": "pending"
+    "entry": 3.0053,
+    "entry_ts": 1795032120,
+    "status": "open"
    },
    "entry_due": "2026-11-18T20:01:30Z",
    "exit_due": "2026-11-25T21:00:00Z",
@@ -5195,12 +5207,14 @@
    "report": "2026-11-17",
    "report_time": "after-hours",
    "side": -1,
-   "status": "pending",
+   "status": "open",
    "sym": "NVDA"
   },
   {
    "call": {
-    "status": "pending"
+    "entry": 27.711,
+    "entry_ts": 1795032420,
+    "status": "open"
    },
    "crowd_up": 0.712,
    "day": "2026-11-18",
@@ -5213,7 +5227,7 @@
    "random_side": -1,
    "reason": "Kalshi traders 71% Up on 24h taker volume.",
    "side": 1,
-   "status": "pending",
+   "status": "open",
    "sym": "LLY"
   }
  ],
