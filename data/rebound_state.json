@@ -2853,6 +2853,26 @@
    "target": 6.9868,
    "ticker": "KXDELLPERP",
    "touch_ts": 1795022581
+  },
+  {
+   "backfill": false,
+   "day": "2026-11-18",
+   "entry": 6.9919,
+   "entry_ts": 1795033082,
+   "id": "rb_24h|KXUNHPERP|2026-11-18",
+   "lane": "rb_24h",
+   "level": 7.002335,
+   "level_stock": 350,
+   "signal_ts": 1795032900,
+   "slide_high": 389.97,
+   "spread_in": 4.1,
+   "status": "open",
+   "stop": 6.932312,
+   "strength": 0,
+   "sym": "UNH",
+   "target": 7.402168,
+   "ticker": "KXUNHPERP",
+   "touch_ts": 1795032301
   }
  ],
  "from": "2026-11-12T00:00:00+00:00",
@@ -2870,7 +2890,7 @@
    "strong": true
   }
  },
- "last_run": "2026-11-18T20:00:26+00:00",
+ "last_run": "2026-11-18T21:00:27+00:00",
  "prereg_sha256": "17ecd1cd57183bacd45e8e1e6477c542b4ecaaa88a3e8b8a62fa395bbc45a581",
  "ratios": {
   "AAPL": 50.2729,
