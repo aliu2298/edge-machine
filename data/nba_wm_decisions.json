@@ -13403,21 +13403,19 @@
    "P": 0.74,
    "bot_version": "wm-nofade-v4",
    "bucket": "SAS11TO20",
-   "decided_at": "2026-11-18T00:00:35+00:00",
-   "depth": 51.0,
+   "decided_at": "2026-11-18T01:00:31+00:00",
    "event": "KXNBAWINMARGIN-26NOV17DETSAS",
    "lane": "nba_wm_nofade",
    "limit": 0.48,
-   "outcome": "plan",
+   "night_cap": 30,
+   "night_count": 3,
+   "outcome": "bid_posted",
    "qty": 2.0,
    "rule_ok": true,
    "slate": "26NOV17",
-   "spread": 0.02,
    "ticker": "KXNBAWINMARGIN-26NOV17DETSAS-SAS11TO20",
    "tip": "2026-11-18T01:00:00+00:00",
-   "why": null,
-   "yes_ask": 0.28,
-   "yes_bid": 0.26
+   "why": null
   },
   "no:KXNBAWINMARGIN-26NOV17DETSAS-SAS1TO5": {
    "P": 0.89,
@@ -13458,21 +13456,19 @@
    "P": 0.81,
    "bot_version": "wm-nofade-v4",
    "bucket": "SAS6TO10",
-   "decided_at": "2026-11-18T00:00:35+00:00",
-   "depth": 212.85,
+   "decided_at": "2026-11-18T01:00:31+00:00",
    "event": "KXNBAWINMARGIN-26NOV17DETSAS",
    "lane": "nba_wm_nofade",
    "limit": 0.53,
-   "outcome": "plan",
+   "night_cap": 30,
+   "night_count": 2,
+   "outcome": "bid_posted",
    "qty": 1.0,
    "rule_ok": true,
    "slate": "26NOV17",
-   "spread": 0.02,
    "ticker": "KXNBAWINMARGIN-26NOV17DETSAS-SAS6TO10",
    "tip": "2026-11-18T01:00:00+00:00",
-   "why": null,
-   "yes_ask": 0.21,
-   "yes_bid": 0.19
+   "why": null
   },
   "no:KXNBAWINMARGIN-26NOV17NYKTOR-NYK11TO20": {
    "P": 0.84,
@@ -22949,6 +22945,6 @@
    "yes_bid": 0.08
   }
  },
- "updated_at": "2026-11-18T00:30:42+00:00",
+ "updated_at": "2026-11-18T01:00:31+00:00",
  "version": 1
 }
