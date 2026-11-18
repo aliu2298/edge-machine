@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-18T19:11:43+00:00",
+ "board_built_at": "2026-11-18T19:19:25+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -1568,7 +1568,7 @@
    "kickoff": "2026-11-18T22:00Z",
    "lane": "production",
    "last_seen": "2026-11-18",
-   "last_seen_at": "2026-11-18T19:11:43+00:00",
+   "last_seen_at": "2026-11-18T19:19:25+00:00",
    "league": "Commodities \u00b7 Favourite band",
    "match": "Brent crude close on Nov 18, 2026",
    "pair": "commod_fav_band|commodities_fav",
@@ -1605,7 +1605,7 @@
    "kickoff": "2026-11-18T22:05Z",
    "lane": "production",
    "last_seen": "2026-11-18",
-   "last_seen_at": "2026-11-18T19:11:43+00:00",
+   "last_seen_at": "2026-11-18T19:19:25+00:00",
    "league": "Crypto \u00b7 Favourite band",
    "match": "Bitcoin price on Nov 18, 2026",
    "pair": "crypto_fav_band_below|crypto_fav",
@@ -1642,7 +1642,7 @@
    "kickoff": "2026-11-18T22:00Z",
    "lane": "production",
    "last_seen": "2026-11-18",
-   "last_seen_at": "2026-11-18T19:11:43+00:00",
+   "last_seen_at": "2026-11-18T19:19:25+00:00",
    "league": "Commodities \u00b7 Favourite band",
    "match": "Gold close on Nov 18, 2026",
    "pair": "commod_fav_band|commodities_fav",
@@ -1679,7 +1679,7 @@
    "kickoff": "2026-11-18T22:05Z",
    "lane": "production",
    "last_seen": "2026-11-18",
-   "last_seen_at": "2026-11-18T19:11:43+00:00",
+   "last_seen_at": "2026-11-18T19:19:25+00:00",
    "league": "Crypto \u00b7 Favourite band",
    "match": "HYPE price on Nov 18, 2026",
    "pair": "crypto_fav_band_below|crypto_fav",
@@ -1716,7 +1716,7 @@
    "kickoff": "2026-11-18T19:30Z",
    "lane": "production",
    "last_seen": "2026-11-18",
-   "last_seen_at": "2026-11-18T19:11:43+00:00",
+   "last_seen_at": "2026-11-18T19:19:25+00:00",
    "league": "Commodities \u00b7 Favourite band",
    "match": "WTI crude close on Nov 18, 2026",
    "pair": "commod_fav_band|commodities_fav",
@@ -1736,6 +1736,43 @@
    "sandbox_quote": "commod_fav_band:KXWTI-26NOV1814-T82.49",
    "source": "commod_fav_band",
    "sport": "commodities_fav",
+   "status": "pending"
+  },
+  "2026-11-18|KXXRPD-26NOV1817-T0.9799|Below $0.97991 at the close \u00b7 Crypto favourite band, below": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-11-18",
+   "edge_at_log": null,
+   "first_seen": "2026-11-18",
+   "headline": "Below $0.97991 at the close",
+   "home": null,
+   "id": "2026-11-18|KXXRPD-26NOV1817-T0.9799|Below $0.97991 at the close \u00b7 Crypto favourite band, below",
+   "kickoff": "2026-11-18T22:05Z",
+   "lane": "production",
+   "last_seen": "2026-11-18",
+   "last_seen_at": "2026-11-18T19:19:25+00:00",
+   "league": "Crypto \u00b7 Favourite band",
+   "match": "Ripple price at Nov 18, 2026 at 5pm EST",
+   "pair": "crypto_fav_band_below|crypto_fav",
+   "price_at_log": 0.74,
+   "published_at": "2026-11-18T19:19:25+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 165,
+   "route": {
+    "claim": "Below $0.97991 at the close",
+    "event": "KXXRPD-26NOV1817",
+    "market": "KXXRPD-26NOV1817-T0.9799",
+    "outcome": "$0.97991 or above",
+    "outcome_side": "no",
+    "price_at_log": 0.74,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "crypto_fav_band_below:KXXRPD-26NOV1817-T0.9799",
+   "source": "crypto_fav_band_below",
+   "sport": "crypto_fav",
    "status": "pending"
   }
  },
@@ -1797,9 +1834,9 @@
    "ready_at": "2026-10-21T00:47:16+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 14,
+    "leads": 15,
     "problem": null,
-    "routed": 14,
+    "routed": 15,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1811,7 +1848,7 @@
    "sandbox_roi_fee": 0.1034,
    "timing": {
     "late": [],
-    "timed": 2,
+    "timed": 3,
     "under_target": 0
    }
   },
@@ -1995,5 +2032,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-18T19:11:43+00:00"
+ "updated_at": "2026-11-18T19:19:25+00:00"
 }
