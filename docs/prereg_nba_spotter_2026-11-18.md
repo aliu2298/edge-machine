@@ -24,7 +24,8 @@ Universe: every Kalshi player prop (KXNBAPTS, KXNBA3PT, KXNBAREB, KXNBAAST, KXNB
 - **spotter_spike**: asks of 49c or less, ranked by the spike model's chance minus 50% (the fair ceiling at a 2x sale); up to 8 a night, one a player-stat. A paper resting sell at
   2x the ask (rounded to the cent). Held to settlement if it never sells.
 - One deviation from the research's whole-night ranking: games are read as they come up to tip, so a pick is final when its game is read. Each game may take at most 4 per board
-  (the first game of a night cannot take all 8). Picks are never replaced later.
+  (the first game of a night cannot take all 8). Games read in the SAME run are ranked together (largest gap first), so a catch-up run is not decided by tip order. Picks are never replaced later.
+  First night (Nov 18): a manual first run read six games at once before this joint ranking existed, so its 8 hold and 8 spike picks came from the first two games by tip order; they stand as entered and are graded like any other pick (disclosed here, not hidden).
 - **Blind controls** (spotter_hold_blind, spotter_spike_blind): for each pick, one rung drawn at random (seed fixed by the pick) from the same game's priced rungs within 3c of the
   pick's ask (the nearest price if none), never one of the board's players, 49c or less for the spike control; same exit. Price mix matches by construction.
 

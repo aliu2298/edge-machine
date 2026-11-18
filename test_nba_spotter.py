@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Offline checks for the NBA Spotter (nba_spotter.py): the frozen model reproduces Fable's board, entry, caps, blind controls, the sale rule, settlement, the page."""
+import collections
 import copy
 import datetime as dt
 import json
@@ -99,6 +100,23 @@ check("a blind row for every pick, never the pick's own player-stat, within 3c o
        all(abs(b["price"] - 0.42) <= S.BLIND_BAND + 1e-9 for b in bh), all(b["game_id"] == b["game_id"] for b in bh)), (8, 8, True, True, True))
 check("the highest edges are taken first", [p["rung"] for p in hp if p["game_id"] == "g0"], [0, 1, 2, 3])
 check("the same player is not entered twice in a night", len({(p["pid"], p["stat"]) for p in hp}), len(hp))
+
+# games read in the same run are ranked together, not in tip order
+st5 = S.empty()
+def fake_rows(prefix, top):
+    return [dict(rung=i, bid=0.40, ask=0.42, tk=f"{prefix}-{i}", name=f"{prefix}{i}", pid=f"{prefix}{i}", stat="pts", team="AAA", p_hold=0.6, edge=top - i / 1000, why_hold="w",
+                 outs=[], p_spike=0.6, spike_edge=top - i / 1000, why_spike="w") for i in range(12)]
+S.read_game = lambda W_, g_, m_, o_: (fake_rows(g_["id"], 0.30 if g_["id"] == "late" else 0.10), {})
+try:
+    ga = dict(id="early", tip=t0 + dt.timedelta(hours=1), home="H", away="A")
+    gb = dict(id="late", tip=t0 + dt.timedelta(hours=2), home="H2", away="A2")
+    S.look_many(st5, W, [ga, gb], {}, set(), t0)
+finally:
+    S.read_game = orig
+hp5 = st5["rules"]["spotter_hold"]["picks"]
+check("two games in one run: the later game's better edges are not shut out by tip order (4 + 4)",
+      (sorted(collections.Counter(p["game_id"] for p in hp5).items()), len(hp5)), ([("early", 4), ("late", 4)], 8))
+check("the batch size is logged", st5["looks"]["early"]["batch"], 2)
 
 print("\nthe sale and the settlement")
 tkt = 1_800_000_000.0

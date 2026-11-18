@@ -522,33 +522,54 @@ def draw_blind(board, rows, pick, excluded):
 
 
 def look(state, W, g, markets, out_pids, now):
-    """Enter this game's picks for both boards (and their blind rows). Returns the new pick ids."""
-    night = night_of(g["tip"])
-    rows, skip = read_game(W, g, markets, out_pids)
-    nt = state.setdefault("nights", {}).setdefault(night, {b: {"n": 0, "players": []} for b in BOARDS})
-    new = []
+    """Enter one game's picks (look_many for a single game)."""
+    return look_many(state, W, [g], markets, out_pids, now)
+
+
+def look_many(state, W, games, markets, out_pids, now):
+    """Enter the picks of every game read in this run. The games read TOGETHER are ranked together (largest edge first, one a player-stat a
+    night, 4 a game, 8 a night per board), so a catch-up run is not decided by tip order. Returns the new pick ids."""
+    read = {}
+    for g in games:
+        rows, skip = read_game(W, g, markets, out_pids)
+        read[g["id"]] = (g, rows, skip)
     spec = {"spotter_hold": ("edge", lambda r: r["edge"] >= EDGE_MIN - EPS, "p_hold", "why_hold"),
             "spotter_spike": ("spike_edge", lambda r: "p_spike" in r, "p_spike", "why_spike")}
-    for board in BOARDS:
-        key, flt, pk, wk = spec[board]
-        used = {tuple(x) for x in nt[board]["players"]}
-        room = min(GAME_CAP, NIGHT_CAP - nt[board]["n"])
-        chosen = _rank(rows, key, flt, set(used), max(0, room))
-        for r in chosen:
-            nt[board]["players"].append([r["pid"], r["stat"]])
-            nt[board]["n"] += 1
-            p = _pick(board, g, night, r, now, r[pk], r[wk], dict(edge=round(r[key], 4)))
-            b = draw_blind(board, rows, r, {(c["pid"], c["stat"]) for c in chosen} | used)
-            new.append(p)
-            state["rules"][board]["picks"].append(p)
-            if b:
-                bp = _pick(BLIND[board], g, night, b, now, None, "drawn at random from this game's rungs at about the pick's price", dict(matches=p["id"]))
-                state["rules"][BLIND[board]]["picks"].append(bp)
-                new.append(bp)
-    state["looks"][g["id"]] = dict(at=now.isoformat(), game=f"{g['away']} @ {g['home']}", night=night, usable=len(rows), skipped=dict(skip),
-                                   out=len(out_pids), spread=g.get("spread"),
-                                   entered={b: sum(1 for p in new if p["rule"] == b) for b in BOARDS})
-    return [p["id"] for p in new]
+    new, entered = [], {gid: {b: 0 for b in BOARDS} for gid in read}
+    nights = sorted({night_of(g["tip"]) for g, _r, _s in read.values()})
+    for night in nights:
+        nt = state.setdefault("nights", {}).setdefault(night, {b: {"n": 0, "players": []} for b in BOARDS})
+        here = [v for v in read.values() if night_of(v[0]["tip"]) == night]
+        for board in BOARDS:
+            key, flt, pk, wk = spec[board]
+            used = {tuple(x) for x in nt[board]["players"]}
+            cands = sorted(((r, g, rows) for g, rows, _s in here for r in rows if flt(r)), key=lambda c: (-c[0][key], c[0]["tk"]))
+            per = collections.Counter()
+            taken, chosen = set(used), []
+            for r, g, rows in cands:
+                if nt[board]["n"] >= NIGHT_CAP:
+                    break
+                if per[g["id"]] >= GAME_CAP or (r["pid"], r["stat"]) in taken:
+                    continue
+                per[g["id"]] += 1
+                taken.add((r["pid"], r["stat"]))
+                nt[board]["players"].append([r["pid"], r["stat"]])
+                nt[board]["n"] += 1
+                entered[g["id"]][board] += 1
+                p = _pick(board, g, night, r, now, r[pk], r[wk], dict(edge=round(r[key], 4)))
+                state["rules"][board]["picks"].append(p)
+                new.append(p["id"])
+                chosen.append((p, g, rows, r))
+            for p, g, rows, r in chosen:                      # blind rungs after the board is set: never one of the board's players
+                b = draw_blind(board, rows, r, taken)
+                if b:
+                    bp = _pick(BLIND[board], g, night, b, now, None, "drawn at random from this game's rungs at about the pick's price", dict(matches=p["id"]))
+                    state["rules"][BLIND[board]]["picks"].append(bp)
+                    new.append(bp["id"])
+    for gid, (g, rows, skip) in read.items():
+        state["looks"][gid] = dict(at=now.isoformat(), game=f"{g['away']} @ {g['home']}", night=night_of(g["tip"]), usable=len(rows), skipped=dict(skip),
+                                   out=len(out_pids), spread=g.get("spread"), entered=entered[gid], batch=len(read))
+    return new
 
 
 # ---------------------------------------------------------------- settle
@@ -689,8 +710,7 @@ def run(state, W, games_doc, now=None, get=espn_get, fetch=D.get):
                     out_pids.add(next(iter(c)))
             tags = {day_tag(g["tip"].astimezone(ET).date()) for g in todo}
             markets = kalshi_markets(tags, fetch)
-            for g in todo:
-                new += look(state, W, g, markets, out_pids, now)
+            new += look_many(state, W, todo, markets, out_pids, now)
         except Exception as e:                                       # noqa: BLE001
             errs.append(f"entries: {str(e)[:100]}")
     errs += settle(state, now, fetch)
