@@ -1,6 +1,6 @@
 # NBA Spotter (Sandbox, paper): pre-registration, 2026-11-18
 
-Requested by Olu via the Edge Machine Coordinator, 2026-11-18 ("come up with a way to track this in sandbox"). Paper only: no orders, no bot flag.
+Requested by Olu via the Edge Machine Coordinator, 2026-11-18 ("come up with a way to track this in sandbox"). Paper only: no orders and no live switch.
 Source: Fable's spotter research (nba_stars_2026-11-18: SPOTTER.md, sp_data.py, sp_fit.py, tonight_board.py). Code: `nba_spotter.py`, page `nba_spotter_build.py`,
 workflow `.github/workflows/nba-spotter.yml`, ledger `data/nba_spotter_ledger.json`, frozen files `data/spotter/`.
 
