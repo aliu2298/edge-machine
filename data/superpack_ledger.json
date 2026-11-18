@@ -1,5 +1,13 @@
 {
  "decided": {
+  "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXBRASILEIROBTTS-26NOV18CFCSAN\", \"no\"]]": {
+   "at": "2026-11-18T21:13:42.916929+00:00",
+   "pool": "opposite"
+  },
+  "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV18CFCSAN\", \"yes\"]]": {
+   "at": "2026-11-18T21:13:42.916929+00:00",
+   "pool": "opposite"
+  },
   "[\"contract\", \"album_cheap_no_ledger.json\", [\"KXALBUMEQUIV-EVE26NOV05-17K\", \"no\"]]": {
    "at": "2026-11-08T19:08:03.210014+00:00",
    "pool": "entered"
@@ -4169,7 +4177,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-18T21:05:54.890191+00:00",
+ "last_run": "2026-11-18T21:13:42.916929+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -13621,6 +13629,24 @@
    "logged": "2026-11-17T18:16:30.841485+00:00",
    "pid": "[\"soccer_rules_ledger.json\", \"A5\", [\"A5:KXUEFANLTOTAL-26NOV17UKRGEO\", \"no\"]]",
    "side": "no",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-18T21:13:42.916929+00:00",
+   "contract": "KXBRASILEIROBTTS-26NOV18CFCSAN-BTTS",
+   "list": "pool",
+   "logged": "2026-11-18T21:02:01.974349+00:00",
+   "pid": "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXBRASILEIROBTTS-26NOV18CFCSAN\", \"no\"]]",
+   "side": "no",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-18T21:13:42.916929+00:00",
+   "contract": "KXBRASILEIROBTTS-26NOV18CFCSAN-BTTS",
+   "list": "pool",
+   "logged": "2026-11-18T21:02:01.974349+00:00",
+   "pid": "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV18CFCSAN\", \"yes\"]]",
+   "side": "yes",
    "why": "active lanes are on both sides of this contract"
   }
  ],
