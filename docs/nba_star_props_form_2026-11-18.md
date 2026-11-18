@@ -53,6 +53,62 @@ His 40+ ask went from 19-24c in October to 30-45c in November, and 40+ landed 7 
 about 50c, landing 10 of 12. He was cheap in October and the price has been catching up. Over this window he is 9th of 165
 players at +17 points a bet; with no edge at all the luckiest of 165 would show about +23. One player cannot be told from luck.
 
+## The screen: who beats the pre-tip price?
+Asked for after the rule test: which players beat or spike over their pre-tip prices often, and under what conditions.
+All 27 nights from Oct 20 to Nov 16, contracts at 5c to 60c, one number a player-game. Descriptive, not a rule test.
+
+![Leaderboard](nba_star_props/STARS_leaderboard.png)
+
+- **The number of beaters is what luck gives.** Points: 22 players at +10 points a bet or better; shuffling players across
+  the same games gives 22 (16 to 28). Threes: 26 against 20 (15 to 26). The spread between players equals the luck spread.
+- **Spike leaders are the same story.** Points: 9 players at +15 over fair against 11 by luck. Threes: 5 against 3.
+
+![Persistence](nba_star_props/STARS_persist.png)
+
+- **Beaters do not keep beating.** To Nov 6 against Nov 7 to 16: correlation -0.10 (points, 148 players) and -0.09 (threes,
+  129). The top 20 to Nov 6 averaged +22, then -2 (points); +21, then -6 (threes).
+
+![Spike examples](nba_star_props/STARS_spikes.png)
+
+### Conditions
+Every player pooled (points; threes read the same way). Excess is landed minus the ask, in points a bet.
+
+| Condition (known before the game) | Player-games | Excess | Spike against fair |
+|---|---|---|---|
+| Home | 1,258 | -1.7 | -6.4 |
+| Away | 1,228 | -1.8 | -6.1 |
+| Second night of a back-to-back | 412 | -0.4 | -2.8 |
+| Opponent leaky (worst third) | 550 | -3.8 | -9.5 |
+| Opponent stingy (best third) | 546 | -2.9 | -9.5 |
+| A top-2 scorer on his team is out | 1,535 | -1.4 | -5.8 |
+| Team favoured by 8+ | 433 | -1.7 | -5.9 |
+| Team an underdog by 8+ | 365 | -2.2 | -7.8 |
+| Top scorer of his game in 3+ of last 5 | 67 | -1.8 | -2.0 |
+| Minutes up 4+ on last season | 121 | +2.7 (t 0.9) | -5.8 |
+| Scoring up 3+ on last season | 138 | -1.4 | -8.9 |
+
+No condition is above zero by more than noise.
+
+The top 10 point beaters (Davion Mitchell, Brook Lopez, Daniss Jenkins, Luka, Klay Thompson, Saddiq Bey, Tre Jones, Scottie
+Barnes, Duncan Robinson, Ajay Mitchell), 113 games:
+
+| Condition | Their games | Their excess |
+|---|---|---|
+| Home / away | 55 / 58 | +28 / +15 |
+| Back-to-back / rested | 19 / 94 | +17 / +22 |
+| Leaky / stingy opponent | 19 / 19 | +11 / +25 |
+| Top-2 teammate out / in | 93 / 20 | +19 / +31 |
+| Favoured by 5+ / close / underdog by 5+ | 38 / 59 / 16 | +21 / +20 / +28 |
+| Played 32+ minutes / under 28 | 49 / 48 | +29 / +12 |
+
+- Their beats are spread across every condition; none of the splits is large for its count.
+- What most of them share is a bigger role than last season (Davion Mitchell 16.7 points a game against 9.3, Luka 39.0
+  against 33.5, Barnes 24.2 against 18.1, Ajay Mitchell 20.1 against 13.6). But across every player, "scoring up on last
+  season" seen before the game does not beat the price: once the rise is visible, the price has it.
+- By team (its players' contracts): best Detroit +6.5, worst Milwaukee -8.4; the size expected from 30 teams.
+
+Not pulled: rebounds, assists and points+rebounds+assists (about 630 requests each), team totals (about 250 to 420 a series).
+
 ## Also found
 - Kalshi listed no star points or threes contracts before Nov 18 2025. This October is the only season opening it has priced,
   so an early-season catch-up cannot be checked on an earlier season.
