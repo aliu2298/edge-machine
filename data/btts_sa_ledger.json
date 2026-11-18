@@ -1,12 +1,48 @@
 {
  "error": null,
- "last_run": "2026-11-17T22:01:48.973742+00:00",
+ "last_run": "2026-11-18T21:02:01.974349+00:00",
  "rules": {
   "NO": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.4,
+     "bid": 0.39,
+     "event": "KXBRASILEIROBTTS-26NOV18CFCSAN",
+     "id": "NO:KXBRASILEIROBTTS-26NOV18CFCSAN",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-18T21:02:01.974349+00:00",
+     "match": "Coritiba v Santos",
+     "price": 0.4,
+     "rule": "NO",
+     "side": "no",
+     "start": "2026-11-18T22:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV18CFCSAN-BTTS",
+     "why": "Brazil BTTS NO 0.40"
+    }
+   ]
   },
   "YES": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.61,
+     "bid": 0.6,
+     "event": "KXBRASILEIROBTTS-26NOV18CFCSAN",
+     "id": "YES:KXBRASILEIROBTTS-26NOV18CFCSAN",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-18T21:02:01.974349+00:00",
+     "match": "Coritiba v Santos",
+     "price": 0.61,
+     "rule": "YES",
+     "side": "yes",
+     "start": "2026-11-18T22:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV18CFCSAN-BTTS",
+     "why": "Brazil BTTS YES 0.61"
+    }
+   ]
   }
  },
  "runs": [
@@ -65,6 +101,13 @@
    "matched": 0,
    "new": 0,
    "quoted": 0
+  },
+  {
+   "at": "2026-11-18T21:02:01.974349+00:00",
+   "due": 1,
+   "matched": 1,
+   "new": 2,
+   "quoted": 1
   }
  ],
  "schedule": [
