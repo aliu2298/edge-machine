@@ -26817,6 +26817,57 @@
   "venue": "polymarket_us"
  },
  {
+  "bet": true,
+  "close_at": "2026-10-04T01:54:16+00:00",
+  "close_price": 0.6126,
+  "date": "2026-10-04",
+  "edge": null,
+  "id": "pm_combo2:pmcombo2:2026-10-04:b472d2eb55",
+  "label": "2-leg tennis combo: Ajeet Rai + Dabrowski G / Stefani ",
+  "legs": [
+   {
+    "market_id": "aec-atp-ajerai-grilom-2026-10-03",
+    "name": "Ajeet Rai",
+    "pick": "a",
+    "start": "2026-10-04T02:00:00+00:00",
+    "venue": "polymarket_us"
+   },
+   {
+    "market_id": "aec-wtadb-tangxu-dabrowstefan-2026-10-03",
+    "name": "Dabrowski G / Stefani L",
+    "pick": "b",
+    "start": "2026-10-04T03:00:00+00:00",
+    "venue": "polymarket_us"
+   }
+  ],
+  "liquidity": null,
+  "logged": "2026-10-03T17:58:43+00:00",
+  "market_id": "pmcombo2:2026-10-04:b472d2eb55",
+  "pick": "a",
+  "pnl": -100.0,
+  "price": 0.6408,
+  "price_a": 0.6408,
+  "price_b": 0.3592,
+  "price_draw": null,
+  "prob_a": null,
+  "result": "b",
+  "settled": "2026-10-04T05:58:51+00:00",
+  "side_a": "All 2 win",
+  "side_b": "Any one loses",
+  "source": "pm_combo2",
+  "sport": "tennis_pmcombo",
+  "spread": null,
+  "stake": 100.0,
+  "start": "2026-10-04T02:00:00+00:00",
+  "start_source": null,
+  "status": "lost",
+  "uncovered": null,
+  "untraded": false,
+  "url": "https://polymarket.us",
+  "venue": "combo",
+  "venue_start": null
+ },
+ {
   "bet": false,
   "compact": true,
   "id": "polymarket_us:aec-atp-ajerai-grilom-2026-10-03",
