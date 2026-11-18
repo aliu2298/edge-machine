@@ -213,12 +213,13 @@
   "KXINX15M-26NOV181330-30": {
    "bot_version": "spsweep-live-v1",
    "day": "2026-11-18",
-   "decided_at": "2026-11-18T18:15:00+00:00",
+   "decided_at": "2026-11-18T18:30:20+00:00",
    "lane": "sp_sweep_10c",
    "limit": 0.1,
    "open": "2026-11-18T18:15:00+00:00",
-   "outcome": "entered",
+   "outcome": "no_fill",
    "rest_s": 1.14,
+   "result": "yes",
    "rule_ok": true,
    "target": 0.3,
    "ticker": "KXINX15M-26NOV181330-30",
@@ -227,18 +228,23 @@
   "KXINX15M-26NOV181345-45": {
    "bot_version": "spsweep-live-v1",
    "day": "2026-11-18",
-   "decided_at": "2026-11-18T18:30:01+00:00",
+   "decided_at": "2026-11-18T18:32:39+00:00",
+   "fill_price": 0.1,
+   "fill_s": 159.2,
+   "fill_side": "no",
    "lane": "sp_sweep_10c",
    "limit": 0.1,
    "open": "2026-11-18T18:30:00+00:00",
    "outcome": "entered",
+   "qty": 0.11,
    "rest_s": 1.88,
    "rule_ok": true,
+   "sold": 0,
    "target": 0.3,
    "ticker": "KXINX15M-26NOV181345-45",
    "why": null
   }
  },
- "updated_at": "2026-11-18T18:30:01+00:00",
+ "updated_at": "2026-11-18T18:32:39+00:00",
  "version": 1
 }
