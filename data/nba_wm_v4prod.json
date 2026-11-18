@@ -1189,12 +1189,12 @@
    "tip": "2026-11-11T04:00:00+00:00"
   }
  },
- "last_run": "2026-11-18T03:54:34.240546+00:00",
+ "last_run": "2026-11-18T13:29:58.452900+00:00",
  "observations": {
-  "at": "2026-11-18T03:54:34.240546+00:00",
+  "at": "2026-11-18T13:29:58.452900+00:00",
   "errors": [],
-  "new": 14,
-  "waiting": 6
+  "new": 6,
+  "waiting": 0
  },
  "rows": {
   "no:KXNBAWINMARGIN-26NOV08BKNDAL-BKN1TO5": {
@@ -4319,6 +4319,43 @@
    "tip": 1794880800,
    "version": "wm-nofade-v4"
   },
+  "no:KXNBAWINMARGIN-26NOV17CHALAL-LAL11TO20": {
+   "decided_at": "2026-11-18T04:00:28+00:00",
+   "event": "KXNBAWINMARGIN-26NOV17CHALAL",
+   "key": "no:KXNBAWINMARGIN-26NOV17CHALAL-LAL11TO20",
+   "lane": "nba_wm_nofade",
+   "night": "2026-11-17",
+   "no_entry": true,
+   "outcome": "bid_posted",
+   "reason": "no fill",
+   "result": "no",
+   "ticker": "KXNBAWINMARGIN-26NOV17CHALAL-LAL11TO20",
+   "tip": 1794974400,
+   "version": "wm-nofade-v4"
+  },
+  "no:KXNBAWINMARGIN-26NOV17CHALAL-LAL6TO10": {
+   "P": 0.81,
+   "cost": 0.53436,
+   "decided_at": "2026-11-18T04:00:28+00:00",
+   "event": "KXNBAWINMARGIN-26NOV17CHALAL",
+   "fill_at": 1794982937,
+   "fill_print": 0.25,
+   "key": "no:KXNBAWINMARGIN-26NOV17CHALAL-LAL6TO10",
+   "lane": "nba_wm_nofade",
+   "limit": 0.53,
+   "night": "2026-11-17",
+   "outcome": "bid_posted",
+   "printed": 95.35,
+   "profit": 0.27295,
+   "reason": "sold",
+   "result": "no",
+   "roi": 0.5107979639194552,
+   "sold_at": 1794982937,
+   "ticker": "KXNBAWINMARGIN-26NOV17CHALAL-LAL6TO10",
+   "tip": 1794974400,
+   "version": "wm-nofade-v4",
+   "won": true
+  },
   "no:KXNBAWINMARGIN-26NOV17DETSAS-SAS11TO20": {
    "decided_at": "2026-11-18T01:00:31+00:00",
    "event": "KXNBAWINMARGIN-26NOV17DETSAS",
@@ -4369,6 +4406,62 @@
    "tip": 1794961800,
    "version": "wm-nofade-v4",
    "won": true
+  },
+  "no:KXNBAWINMARGIN-26NOV17UTALAC-LAC11TO20": {
+   "decided_at": "2026-11-18T03:30:17+00:00",
+   "event": "KXNBAWINMARGIN-26NOV17UTALAC",
+   "key": "no:KXNBAWINMARGIN-26NOV17UTALAC-LAC11TO20",
+   "lane": "nba_wm_nofade",
+   "night": "2026-11-17",
+   "no_entry": true,
+   "outcome": "bid_posted",
+   "reason": "no fill",
+   "result": "no",
+   "ticker": "KXNBAWINMARGIN-26NOV17UTALAC-LAC11TO20",
+   "tip": 1794972600,
+   "version": "wm-nofade-v4"
+  },
+  "no:KXNBAWINMARGIN-26NOV17UTALAC-LAC1TO5": {
+   "decided_at": "2026-11-18T03:30:17+00:00",
+   "event": "KXNBAWINMARGIN-26NOV17UTALAC",
+   "key": "no:KXNBAWINMARGIN-26NOV17UTALAC-LAC1TO5",
+   "lane": "nba_wm_nofade",
+   "night": "2026-11-17",
+   "no_entry": true,
+   "outcome": "bid_posted",
+   "reason": "no fill",
+   "result": "no",
+   "ticker": "KXNBAWINMARGIN-26NOV17UTALAC-LAC1TO5",
+   "tip": 1794972600,
+   "version": "wm-nofade-v4"
+  },
+  "no:KXNBAWINMARGIN-26NOV17UTALAC-LAC6TO10": {
+   "decided_at": "2026-11-18T03:30:17+00:00",
+   "event": "KXNBAWINMARGIN-26NOV17UTALAC",
+   "key": "no:KXNBAWINMARGIN-26NOV17UTALAC-LAC6TO10",
+   "lane": "nba_wm_nofade",
+   "night": "2026-11-17",
+   "no_entry": true,
+   "outcome": "bid_posted",
+   "reason": "no fill",
+   "result": "no",
+   "ticker": "KXNBAWINMARGIN-26NOV17UTALAC-LAC6TO10",
+   "tip": 1794972600,
+   "version": "wm-nofade-v4"
+  },
+  "no:KXNBAWINMARGIN-26NOV17UTALAC-UTA6TO10": {
+   "decided_at": "2026-11-18T03:30:17+00:00",
+   "event": "KXNBAWINMARGIN-26NOV17UTALAC",
+   "key": "no:KXNBAWINMARGIN-26NOV17UTALAC-UTA6TO10",
+   "lane": "nba_wm_nofade",
+   "night": "2026-11-17",
+   "no_entry": true,
+   "outcome": "bid_posted",
+   "reason": "no fill",
+   "result": "no",
+   "ticker": "KXNBAWINMARGIN-26NOV17UTALAC-UTA6TO10",
+   "tip": 1794972600,
+   "version": "wm-nofade-v4"
   },
   "yes:KXNBAWINMARGIN-26NOV08LALDET-DET1TO5": {
    "ask": 0.13,
