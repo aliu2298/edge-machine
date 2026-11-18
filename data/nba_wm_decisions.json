@@ -13499,21 +13499,19 @@
    "P": 0.85,
    "bot_version": "wm-nofade-v4",
    "bucket": "NYK1TO5",
-   "decided_at": "2026-11-17T23:30:06+00:00",
-   "depth": 258.74,
+   "decided_at": "2026-11-18T00:30:42+00:00",
    "event": "KXNBAWINMARGIN-26NOV17NYKTOR",
    "lane": "nba_wm_nofade",
    "limit": 0.55,
-   "outcome": "plan",
+   "night_cap": 30,
+   "night_count": 1,
+   "outcome": "bid_posted",
    "qty": 1.0,
    "rule_ok": true,
    "slate": "26NOV17",
-   "spread": 0.01,
    "ticker": "KXNBAWINMARGIN-26NOV17NYKTOR-NYK1TO5",
    "tip": "2026-11-18T00:30:00+00:00",
-   "why": null,
-   "yes_ask": 0.16,
-   "yes_bid": 0.15
+   "why": null
   },
   "no:KXNBAWINMARGIN-26NOV17NYKTOR-NYK21PLUS": {
    "bot_version": "wm-nofade-v4",
@@ -22951,6 +22949,6 @@
    "yes_bid": 0.08
   }
  },
- "updated_at": "2026-11-18T00:00:35+00:00",
+ "updated_at": "2026-11-18T00:30:42+00:00",
  "version": 1
 }
