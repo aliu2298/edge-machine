@@ -1,8 +1,8 @@
 {
  "collector": {
-  "last_ts": 1795028401,
+  "last_ts": 1795032001,
   "markets": 97,
-  "rows_24h": 93645
+  "rows_24h": 95564
  },
  "events": [
   {
@@ -25,28 +25,6 @@
   }
  ],
  "flags": [
-  {
-   "gap": -0.02955,
-   "gap_15m": 0.00208,
-   "gap_5m": 0.00277,
-   "gap_60m": 0.00213,
-   "rth": false,
-   "spread_bp": 666.3,
-   "sym": "TXN",
-   "ticker": "KXTXNPERP",
-   "ts": 1794783721
-  },
-  {
-   "gap": 0.01763,
-   "gap_15m": 0.01758,
-   "gap_5m": 0.01763,
-   "gap_60m": 0.01224,
-   "rth": false,
-   "spread_bp": 346.6,
-   "sym": "VZ",
-   "ticker": "KXVZPERP",
-   "ts": 1794785821
-  },
   {
    "gap": 0.08519,
    "gap_15m": 0.00254,
@@ -5295,6 +5273,7 @@
    "gap": 0.01583,
    "gap_15m": -0.00535,
    "gap_5m": -0.00521,
+   "gap_60m": -0.00434,
    "rth": true,
    "spread_bp": 323.5,
    "sym": "CAT",
@@ -5305,14 +5284,33 @@
    "gap": -0.0104,
    "gap_15m": -0.00234,
    "gap_5m": -0.00199,
+   "gap_60m": -0.00248,
    "rth": true,
    "spread_bp": 0.2,
    "sym": "PANW",
    "ticker": "KXPANWPERP",
    "ts": 1795027261
+  },
+  {
+   "gap": -0.01039,
+   "gap_15m": -0.00441,
+   "gap_5m": -0.00564,
+   "rth": true,
+   "spread_bp": 0.4,
+   "sym": "DIS",
+   "ticker": "KXDISPERP",
+   "ts": 1795029241
+  },
+  {
+   "gap": 0.01015,
+   "rth": false,
+   "spread_bp": 10.2,
+   "sym": "SPY",
+   "ticker": "KXSPYPERP",
+   "ts": 1794786542
   }
  ],
- "last_run": "2026-11-18T19:00:11+00:00",
+ "last_run": "2026-11-18T20:00:09+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
