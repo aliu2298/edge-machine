@@ -1,0 +1,357 @@
+{
+"note": "Fable research board for 2026-11-18 (tonight_board.json), inputs trimmed to the contracts below; test_nba_spotter.py checks the frozen model reproduces these chances",
+"slate": [
+{
+"id": "401910007",
+"date": "2026-11-19T00:00Z",
+"status": "STATUS_SCHEDULED",
+"home": "CLE",
+"away": "MEM",
+"spread": -5.5,
+"details": "CLE -5.5",
+"overUnder": 235.5
+},
+{
+"id": "401910008",
+"date": "2026-11-19T00:00Z",
+"status": "STATUS_SCHEDULED",
+"home": "IND",
+"away": "HOU",
+"spread": 7.5,
+"details": "HOU -7.5",
+"overUnder": 224.5
+},
+{
+"id": "401910009",
+"date": "2026-11-19T00:00Z",
+"status": "STATUS_SCHEDULED",
+"home": "MIA",
+"away": "MIL",
+"spread": -12.5,
+"details": "MIA -12.5",
+"overUnder": 236.5
+},
+{
+"id": "401910010",
+"date": "2026-11-19T00:00Z",
+"status": "STATUS_SCHEDULED",
+"home": "ORL",
+"away": "PHI",
+"spread": 1.5,
+"details": "PHI -1.5",
+"overUnder": 222.5
+},
+{
+"id": "401910011",
+"date": "2026-11-19T00:30Z",
+"status": "STATUS_SCHEDULED",
+"home": "BKN",
+"away": "CHI",
+"spread": -2.5,
+"details": "BKN -2.5",
+"overUnder": 238.5
+},
+{
+"id": "401910012",
+"date": "2026-11-19T00:30Z",
+"status": "STATUS_SCHEDULED",
+"home": "TOR",
+"away": "WSH",
+"spread": -6.5,
+"details": "TOR -6.5",
+"overUnder": 226.5
+},
+{
+"id": "401910013",
+"date": "2026-11-19T01:00Z",
+"status": "STATUS_SCHEDULED",
+"home": "NO",
+"away": "DET",
+"spread": 7.5,
+"details": "DET -7.5",
+"overUnder": 229.5
+},
+{
+"id": "401910014",
+"date": "2026-11-19T01:00Z",
+"status": "STATUS_SCHEDULED",
+"home": "OKC",
+"away": "ATL",
+"spread": -6.5,
+"details": "OKC -6.5",
+"overUnder": 228.5
+},
+{
+"id": "401910016",
+"date": "2026-11-19T01:00Z",
+"status": "STATUS_SCHEDULED",
+"home": "DAL",
+"away": "GS",
+"spread": -5.5,
+"details": "DAL -5.5",
+"overUnder": 222.5
+},
+{
+"id": "401910015",
+"date": "2026-11-19T02:30Z",
+"status": "STATUS_SCHEDULED",
+"home": "DEN",
+"away": "BOS",
+"spread": 2.5,
+"details": "BOS -2.5",
+"overUnder": 221.5
+},
+{
+"id": "401910017",
+"date": "2026-11-19T03:00Z",
+"status": "STATUS_SCHEDULED",
+"home": "LAL",
+"away": "UTAH",
+"spread": -11.5,
+"details": "LAL -11.5",
+"overUnder": 232.5
+},
+{
+"id": "401910018",
+"date": "2026-11-19T03:00Z",
+"status": "STATUS_SCHEDULED",
+"home": "SAC",
+"away": "PHX",
+"spread": 6.5,
+"details": "PHX -6.5",
+"overUnder": 228.5
+}
+],
+"out_names": [
+"Jock Landale",
+"Kingston Flemings",
+"Asa Newell",
+"CJ McCollum",
+"Mouhamed Gueye",
+"Henri Veesaar",
+"Grayson Allen",
+"Kon Knueppel",
+"Dennis Schroder",
+"Tobe Awaka",
+"Caleb Wilson",
+"Nae'Qwan Tomlin",
+"Sam Merrill",
+"Evan Mobley",
+"Sergio de Larrea",
+"Dereck Lively II",
+"Tarik Biberovic",
+"Julian Strawther",
+"Isaiah Joe",
+"Duncan Robinson",
+"Taurean Prince",
+"Ronald Holland II",
+"Jalen Duren",
+"Stephen Curry",
+"Brandon Williams",
+"Kristaps Porzingis",
+"Moses Moody",
+"Jimmy Butler III",
+"Clint Capela",
+"Tyrese Haliburton",
+"Johnny Furphy",
+"Ben Sheppard",
+"Yanic Konan Niederhauser",
+"Brandon Ingram",
+"Bradley Beal",
+"Jordan Miller",
+"Walker Kessler",
+"Austin Reaves",
+"GG Jackson",
+"Isaiah Stewart",
+"Ty Jerome",
+"Scotty Pippen Jr.",
+"Richie Saunders",
+"Ousmane Dieng",
+"Zyon Pullin",
+"Jonathan Kuminga",
+"Jaylen Clark",
+"Anthony Edwards",
+"Donte DiVincenzo",
+"Bennedict Mathurin",
+"Bryce McGowens",
+"Trendon Watford",
+"Trey Murphy III",
+"Dejounte Murray",
+"Thomas Sorber",
+"Jaylin Williams",
+"Cason Wallace",
+"Chet Holmgren",
+"Jalen Williams",
+"Izaiyah Nelson",
+"Jonathan Isaac",
+"Noah Penda",
+"Paolo Banchero",
+"Dominick Barlow",
+"Jaylen Brown",
+"Adem Bona",
+"Ariel Hukporti",
+"Mark Williams",
+"Deni Avdija",
+"Chris Youngblood",
+"Vit Krejci",
+"Ja Morant",
+"Shaedon Sharpe",
+"Maxime Raynaud",
+"Ben Simmons",
+"Tobias Harris",
+"Jayden Quaintance",
+"Kawhi Leonard",
+"Nate Bittle",
+"Jaxson Hayes",
+"Lauri Markkanen",
+"Jusuf Nurkic",
+"Jaren Jackson Jr.",
+"Tristan Vukcevic",
+"Reece Beekman",
+"Justin Champagnie",
+"Jamir Watkins"
+],
+"markets": {
+"KXNBAPTS": [
+{
+"ticker": "KXNBAPTS-26NOV18MILMIA-MIAKTHOMPSON11-15",
+"event_ticker": "KXNBAPTS-26NOV18MILMIA",
+"title": "Klay Thompson: 15+ points",
+"yes_bid_dollars": "0.4400",
+"yes_ask_dollars": "0.4800"
+}
+],
+"KXNBA3PT": [
+{
+"ticker": "KXNBA3PT-26NOV18CHIBKN-CHIIOKORO35-2",
+"event_ticker": "KXNBA3PT-26NOV18CHIBKN",
+"title": "Isaac Okoro: 2+ threes",
+"yes_bid_dollars": "0.3300",
+"yes_ask_dollars": "0.3700"
+},
+{
+"ticker": "KXNBA3PT-26NOV18CHIBKN-CHIMBUZELIS14-3",
+"event_ticker": "KXNBA3PT-26NOV18CHIBKN",
+"title": "Matas Buzelis: 3+ threes",
+"yes_bid_dollars": "0.3800",
+"yes_ask_dollars": "0.4200"
+},
+{
+"ticker": "KXNBA3PT-26NOV18CHIBKN-CHIJGIDDEY3-2",
+"event_ticker": "KXNBA3PT-26NOV18CHIBKN",
+"title": "Josh Giddey: 2+ threes",
+"yes_bid_dollars": "0.4200",
+"yes_ask_dollars": "0.4500"
+},
+{
+"ticker": "KXNBA3PT-26NOV18CHIBKN-CHINPOWELL24-3",
+"event_ticker": "KXNBA3PT-26NOV18CHIBKN",
+"title": "Norman Powell: 3+ threes",
+"yes_bid_dollars": "0.5000",
+"yes_ask_dollars": "0.5400"
+},
+{
+"ticker": "KXNBA3PT-26NOV18CHIBKN-BKNNTRAORE10-2",
+"event_ticker": "KXNBA3PT-26NOV18CHIBKN",
+"title": "Nolan Traore: 2+ threes",
+"yes_bid_dollars": "0.4500",
+"yes_ask_dollars": "0.4800"
+},
+{
+"ticker": "KXNBA3PT-26NOV18HOUIND-INDKOUBRE10-2",
+"event_ticker": "KXNBA3PT-26NOV18HOUIND",
+"title": "Kelly Oubre Jr.: 2+ threes",
+"yes_bid_dollars": "0.3800",
+"yes_ask_dollars": "0.4100"
+},
+{
+"ticker": "KXNBA3PT-26NOV18BOSDEN-BOSPPRITCHARD11-3",
+"event_ticker": "KXNBA3PT-26NOV18BOSDEN",
+"title": "Payton Pritchard: 3+ threes",
+"yes_bid_dollars": "0.4300",
+"yes_ask_dollars": "0.4400"
+}
+],
+"KXNBAREB": [
+{
+"ticker": "KXNBAREB-26NOV18BOSDEN-BOSJTATUM0-8",
+"event_ticker": "KXNBAREB-26NOV18BOSDEN",
+"title": "Jayson Tatum: 8+ rebounds",
+"yes_bid_dollars": "0.4200",
+"yes_ask_dollars": "0.4700"
+}
+],
+"KXNBAAST": [
+{
+"ticker": "KXNBAAST-26NOV18BOSDEN-DENNJOKIC15-10",
+"event_ticker": "KXNBAAST-26NOV18BOSDEN",
+"title": "Nikola Joki\u0107: 10+ assists",
+"yes_bid_dollars": "0.4400",
+"yes_ask_dollars": "0.4700"
+}
+],
+"KXNBAPRA": []
+},
+"expect": {
+"KXNBA3PT-26NOV18HOUIND-INDKOUBRE10-2": {
+"p_hold": 0.45339,
+"why_hold": "a top scorer on his team is out",
+"p_spike": 0.505769,
+"why_spike": "minutes down on last season"
+},
+"KXNBA3PT-26NOV18CHIBKN-CHIIOKORO35-2": {
+"p_hold": 0.412324,
+"why_hold": "a top scorer on his team is out",
+"p_spike": 0.481141,
+"why_spike": "his projection is below the price"
+},
+"KXNBA3PT-26NOV18CHIBKN-CHINPOWELL24-3": {
+"p_hold": 0.578795,
+"why_hold": "a top scorer on his team is out",
+"p_spike": null,
+"why_spike": null
+},
+"KXNBA3PT-26NOV18CHIBKN-CHIJGIDDEY3-2": {
+"p_hold": 0.486936,
+"why_hold": "a top scorer on his team is out",
+"p_spike": 0.493676,
+"why_spike": "a top scorer on his team is out"
+},
+"KXNBAPTS-26NOV18MILMIA-MIAKTHOMPSON11-15": {
+"p_hold": 0.40537,
+"why_hold": "shots up on last season",
+"p_spike": 0.544373,
+"why_spike": "a hot run the price has followed up"
+},
+"KXNBA3PT-26NOV18CHIBKN-CHIMBUZELIS14-3": {
+"p_hold": 0.449579,
+"why_hold": "a top scorer on his team is out",
+"p_spike": 0.529282,
+"why_spike": "a top scorer on his team is out"
+},
+"KXNBAAST-26NOV18BOSDEN-DENNJOKIC15-10": {
+"p_hold": 0.408643,
+"why_hold": "started his last game",
+"p_spike": 0.510335,
+"why_spike": "a steady player in this stat"
+},
+"KXNBAREB-26NOV18BOSDEN-BOSJTATUM0-8": {
+"p_hold": 0.435882,
+"why_hold": "no last season to anchor the price",
+"p_spike": 0.509246,
+"why_spike": "his projection is below the price"
+},
+"KXNBA3PT-26NOV18BOSDEN-BOSPPRITCHARD11-3": {
+"p_hold": 0.385889,
+"why_hold": "minutes down on last season",
+"p_spike": 0.498694,
+"why_spike": "minutes down on last season"
+},
+"KXNBA3PT-26NOV18CHIBKN-BKNNTRAORE10-2": {
+"p_hold": 0.475527,
+"why_hold": "shots up on last season",
+"p_spike": 0.498441,
+"why_spike": "foul trouble"
+}
+}
+}

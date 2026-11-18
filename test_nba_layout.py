@@ -35,10 +35,10 @@ page = NB.build(json.load(open(NB.SRC)))
 main = page[page.find("<main"):]
 ids = re.findall(r'<section id="([^"]+)"', main)
 print("order")
-check("rules, research (tracker, ladder), games (next 24h, results, teams), retired, method",
-      ids, ["rules", "research", "tracker", "ladder", "games", "matchups", "graded", "teams", "retired", "method"])
-check("the jump pills: Rules, Research, Games, Retired, Method",
-      re.findall(r'href="#([^"]+)"', re.findall(r'<nav class="toc".*?</nav>', page, re.S)[0]), ["rules", "research", "games", "retired", "method"])
+check("rules, spotter, research (tracker, ladder), games (next 24h, results, teams), retired, method",
+      ids, ["rules", "spotter", "research", "tracker", "ladder", "games", "matchups", "graded", "teams", "retired", "method"])
+check("the jump pills: Rules, Spotter, Research, Games, Retired, Method",
+      re.findall(r'href="#([^"]+)"', re.findall(r'<nav class="toc".*?</nav>', page, re.S)[0]), ["rules", "spotter", "research", "games", "retired", "method"])
 check("five tiles: open bets, active lanes, since-Production record and ROI, live record",
       [re.sub(r"<[^>]+>", "", t) for t in re.findall(r'<div class="tile"><b[^>]*>.*?</b><span>(.*?)</span>', main)][:5],
       ["open bets · live", "active lanes", "since Production · entries", "ROI after fees · since Production",
@@ -46,7 +46,7 @@ check("five tiles: open bets, active lanes, since-Production record and ROI, liv
 check("a stage filter (no scope chips)", ('data-filter="stage"' in main, 'data-filter="scope"' in main), (True, False))
 
 print("\nthe Rules table")
-r = main[main.find('<section id="rules"'):main.find('<section id="research"')]
+r = main[main.find('<section id="rules"'):main.find('<section id="spotter"')]
 rule_rows = re.findall(r'<details class="sp-rule[^"]*" id="([^"]+)" data-source="([^"]+)"[^>]*data-stage="(\w+)"', r)
 check("one Production row per lane, linked as #wm-yes and #wm-no",
       sorted(x for x in rule_rows if x[2] == "production"),      # ranked by sample size, so the pair's order moves with the data

@@ -1,0 +1,42 @@
+name: NBA Spotter (Sandbox paper)
+on:
+  schedule:
+    # Hourly: box scores of the finished games, settle, and a catch-up read for any game still 80-35 minutes from tip.
+    - cron: '41 * * * *'
+  workflow_dispatch:
+  # The entry read is about an hour before each tip. The VPS already asks for one at each NBA tip
+  # (scripts/vps_window_requests.sh, lane_windows.nba_value_windows: reads at about K-90 and K-75), so this workflow listens to the
+  # same stamp; no crontab or allow-list change. The read is taken once per game, 80-35 minutes before the tip.
+  push:
+    branches: [main]
+    paths:
+      - "data/nba_value_window/**"
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: nba-spotter
+  cancel-in-progress: false
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Tests
+        run: python3 test_nba_spotter.py
+      - name: Spotter (paper only, no orders)
+        run: python3 nba_spotter.py
+      - name: Save records
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+          python3 save_records.py --message "NBA Spotter paper observations" \
+            --add data/nba_spotter_ledger.json data/spotter/games.json \
+            --after "gh workflow run sandbox-tracker.yml --ref main"
