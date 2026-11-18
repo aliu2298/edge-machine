@@ -224,7 +224,7 @@
    "time": "not-supplied"
   }
  ],
- "calendar_at": "2026-11-18T16:00:33Z",
+ "calendar_at": "2026-11-18T17:00:34Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -4527,9 +4527,19 @@
     "width": 0.49545454545454515
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-18T17:01:30Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.750877192982456,
+    "rungs": 15,
+    "width": 0.42652173913043434
+   },
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-18T16:01:39Z",
+ "last_run": "2026-11-18T17:01:32Z",
  "predictions": [
   {
    "call": {
