@@ -13892,6 +13892,19 @@
    "yes_ask": 0.13,
    "yes_bid": 0.11
   },
+  "no:KXNBAWINMARGIN-26NOV17UTALAC-UTA21PLUS": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "UTA21PLUS",
+   "decided_at": "2026-11-18T02:45:17+00:00",
+   "event": "KXNBAWINMARGIN-26NOV17UTALAC",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV17",
+   "ticker": "KXNBAWINMARGIN-26NOV17UTALAC-UTA21PLUS",
+   "tip": "2026-11-18T03:30:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "no:KXNBAWINMARGIN-26NOV17UTALAC-UTA6TO10": {
    "P": 0.92,
    "bot_version": "wm-nofade-v4",
@@ -23176,6 +23189,6 @@
    "yes_bid": 0.08
   }
  },
- "updated_at": "2026-11-18T02:30:26+00:00",
+ "updated_at": "2026-11-18T02:45:17+00:00",
  "version": 1
 }
