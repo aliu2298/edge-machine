@@ -84,8 +84,8 @@ def section(state=None, now=None):
     last = state.get("last_run")
     err = f" · {esc(state['error'])}" if state.get("error") else ""
     return f"""<section id="spotter" class="sp-section">
-<div class="sp-section-head"><h2>NBA Spotter (Sandbox)</h2><span class="sm mut">paper only · player props on Kalshi · {len(looks)} game{"s" if len(looks) != 1 else ""} read</span></div>
-<p class="sm">A frozen model scores every priced player rung about an hour before tip and enters two boards a night, up to 8 each. Hold: the model's chance is 5+ points above the ask, held to the end. Spike: rungs at 49c or less ranked by the spike model, with a paper sell at 2x. Each board has a blind control: a random rung in the same game at about the same price with the same exit.</p>
+<div class="sp-section-head"><h2>NBA Spotter (Sandbox)</h2><span class="sm mut">paper · {len(looks)} read</span></div>
+<p class="sm">Paper only, on Kalshi player props. A frozen model scores every priced player rung about an hour before tip and enters two boards a night, up to 8 each. Hold: the model's chance is 5+ points above the ask, held to the end. Spike: rungs at 49c or less ranked by the spike model, with a paper sell at 2x. Each board has a blind control: a random rung in the same game at about the same price with the same exit.</p>
 {records_html(state)}
 {picks_html(state, now)}
 <details class="section-disclosure"><summary><b>Rules and pre-registration</b><span>registered {esc(S.REGISTERED)}</span></summary>
