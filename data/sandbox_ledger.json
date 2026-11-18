@@ -16,7 +16,7 @@
   "commodities_fav": {
    "commod_fav_band": {
     "offered": 510,
-    "picked": 2
+    "picked": 1
    },
    "commod_nc_yes": {
     "offered": 510,
@@ -36,7 +36,7 @@
   "crypto_fav": {
    "crypto_fav_band_below": {
     "offered": 525,
-    "picked": 0
+    "picked": 1
    },
    "crypto_fav_band_v2": {
     "offered": 525,
@@ -45,7 +45,7 @@
    "kalshi_venue": 525
   },
   "economics": {
-   "kalshi_venue": 32
+   "kalshi_venue": 36
   },
   "finance": {
    "kalshi_venue": 30
@@ -73,7 +73,7 @@
     "offered": 9,
     "picked": 0
    },
-   "kalshi_venue": 217,
+   "kalshi_venue": 254,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -124,18 +124,18 @@
   },
   "soccer_ftts": {
    "ftts_lineup_lag": {
-    "offered": 4,
+    "offered": 6,
     "picked": 0
    },
    "ftts_market": {
-    "offered": 4,
-    "picked": 4
+    "offered": 6,
+    "picked": 6
    },
    "ftts_no_70_80": {
-    "offered": 4,
+    "offered": 6,
     "picked": 0
    },
-   "kalshi_venue": 4
+   "kalshi_venue": 6
   },
   "soccer_o05": {
    "kalshi_venue": 0,
@@ -350,8 +350,8 @@
   "tennis": {
    "kalshi_venue": 13,
    "polymarket_us": 40,
-   "polymarket_us_listed": 315,
-   "polymarket_us_priced": 141
+   "polymarket_us_listed": 304,
+   "polymarket_us_priced": 135
   },
   "tennis_combo": {
    "combo": 0,
@@ -363,48 +363,49 @@
   }
  },
  "feed_status": {
-  "pin_totals": "down: no paced credit left for this run"
+  "pin_totals": "down: no paced credit left for this run",
+  "pinnacle": "down: HTTP 429 on /sports/soccer_spl/events"
  },
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-18T19:34:35+00:00",
-   "commodities": "2026-11-18T19:34:35+00:00",
-   "commodities_fav": "2026-11-18T19:34:35+00:00",
-   "cricket": "2026-11-18T19:34:35+00:00",
-   "crypto": "2026-11-18T19:34:35+00:00",
-   "crypto_fav": "2026-11-18T19:34:35+00:00",
-   "economics": "2026-11-18T19:34:35+00:00",
-   "finance": "2026-11-18T19:34:35+00:00",
-   "mma": "2026-11-18T19:34:35+00:00",
-   "nfl": "2026-11-18T19:34:35+00:00",
-   "nhl_pl": "2026-11-18T19:34:35+00:00",
-   "nhl_rest": "2026-11-18T19:34:35+00:00",
-   "soccer": "2026-11-18T19:34:35+00:00",
-   "soccer_btts": "2026-11-18T19:34:35+00:00",
+   "boxing": "2026-11-18T19:42:17+00:00",
+   "commodities": "2026-11-18T19:42:17+00:00",
+   "commodities_fav": "2026-11-18T19:42:17+00:00",
+   "cricket": "2026-11-18T19:42:17+00:00",
+   "crypto": "2026-11-18T19:42:17+00:00",
+   "crypto_fav": "2026-11-18T19:42:17+00:00",
+   "economics": "2026-11-18T19:42:17+00:00",
+   "finance": "2026-11-18T19:42:17+00:00",
+   "mma": "2026-11-18T19:42:17+00:00",
+   "nfl": "2026-11-18T19:42:17+00:00",
+   "nhl_pl": "2026-11-18T19:42:17+00:00",
+   "nhl_rest": "2026-11-18T19:42:17+00:00",
+   "soccer": "2026-11-18T19:42:17+00:00",
+   "soccer_btts": "2026-11-18T19:42:17+00:00",
    "soccer_btts_cup": "2026-11-18T18:33:25+00:00",
    "soccer_btts_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_corners": "2026-11-18T19:34:35+00:00",
-   "soccer_ftts": "2026-11-18T19:34:35+00:00",
-   "soccer_o15": "2026-11-18T19:34:35+00:00",
+   "soccer_corners": "2026-11-18T19:42:17+00:00",
+   "soccer_ftts": "2026-11-18T19:42:17+00:00",
+   "soccer_o15": "2026-11-18T19:42:17+00:00",
    "soccer_o15_cup": "2026-11-18T18:33:25+00:00",
    "soccer_o15_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_o25": "2026-11-18T19:34:35+00:00",
+   "soccer_o25": "2026-11-18T19:42:17+00:00",
    "soccer_o25_cup": "2026-11-18T18:33:25+00:00",
    "soccer_o25_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_p05": "2026-11-18T19:34:35+00:00",
-   "soccer_p05_cup": "2026-11-18T19:34:35+00:00",
+   "soccer_p05": "2026-11-18T19:42:17+00:00",
+   "soccer_p05_cup": "2026-11-18T19:42:17+00:00",
    "soccer_p05_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_team1": "2026-11-18T19:34:35+00:00",
+   "soccer_team1": "2026-11-18T19:42:17+00:00",
    "soccer_team1_cup": "2026-11-11T19:32:50+00:00",
    "soccer_team1_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_team2": "2026-11-18T19:34:35+00:00",
+   "soccer_team2": "2026-11-18T19:42:17+00:00",
    "soccer_team2_cup": "2026-11-11T19:32:50+00:00",
    "soccer_team2_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_u35": "2026-11-18T19:34:35+00:00",
+   "soccer_u35": "2026-11-18T19:42:17+00:00",
    "soccer_u35_cup": "2026-11-18T18:33:25+00:00",
    "soccer_u35_intl": "2026-11-17T23:27:07+00:00",
-   "tennis": "2026-11-18T19:34:35+00:00",
+   "tennis": "2026-11-18T19:42:17+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -525,7 +526,7 @@
   },
   "odds_api": {
    "allowance": 0,
-   "at": "2026-11-18T19:34:35+00:00",
+   "at": "2026-11-18T19:42:17+00:00",
    "remaining": 206,
    "used": 294
   },
@@ -546,7 +547,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 2174,
+  "runs": 2175,
   "tennis_shortlist": {
    "audit": [
     {
@@ -558,7 +559,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-18T19:36:03+00:00"
+  "updated": "2026-11-18T19:43:40+00:00"
  },
  "quotes": [
   {
@@ -390101,7 +390102,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-18T19:34:35+00:00",
+   "close_at": "2026-11-18T19:42:17+00:00",
    "close_price": 0.52,
    "date": "2026-11-21",
    "edge": null,
@@ -431853,8 +431854,8 @@
    "price_b": 0.64,
    "price_draw": null,
    "prob_a": 0.365,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-18T19:43:19+00:00",
    "side_a": "Tanapatt Nirundorn",
    "side_b": "Ronald Hohmann",
    "source": "polymarket_us",
@@ -431863,7 +431864,7 @@
    "stake": 0.0,
    "start": "2026-11-18T17:08:24+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -432261,8 +432262,8 @@
    "price_b": 0.91,
    "price_draw": null,
    "prob_a": 0.095,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-18T19:43:32+00:00",
    "side_a": "Mejia N / Urrea A",
    "side_b": "Lammons N / Smith J-P",
    "source": "polymarket_us",
@@ -432271,7 +432272,7 @@
    "stake": 0.0,
    "start": "2026-11-18T17:20:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "atpdb",
    "uncovered": null,
    "untraded": false,
@@ -433988,7 +433989,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-18T19:34:35+00:00",
+   "close_at": "2026-11-18T19:42:17+00:00",
    "close_price": 0.51,
    "date": "2026-11-22",
    "edge": null,
@@ -436360,8 +436361,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-18T19:34:35+00:00",
-   "close_price": 0.49,
+   "close_at": "2026-11-18T19:42:17+00:00",
+   "close_price": 0.46,
    "date": "2026-11-18",
    "edge": null,
    "id": "crypto_fav_band_v2:KXBTCD-26NOV1817-T62749.99",
@@ -436395,8 +436396,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-18T19:34:35+00:00",
-   "close_price": 0.94,
+   "close_at": "2026-11-18T19:42:17+00:00",
+   "close_price": 0.95,
    "date": "2026-11-18",
    "edge": null,
    "id": "crypto_fav_band_below:KXBTCD-26NOV1817-T63499.99",
@@ -436430,8 +436431,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-18T19:34:35+00:00",
-   "close_price": 0.85,
+   "close_at": "2026-11-18T19:42:17+00:00",
+   "close_price": 0.88,
    "date": "2026-11-18",
    "edge": null,
    "id": "crypto_fav_band_below:KXHYPED-26NOV1817-T67.9999",
@@ -436468,8 +436469,8 @@
    "ask_size": 251.33,
    "bet": true,
    "bid": 0.72,
-   "close_at": "2026-11-18T19:34:35+00:00",
-   "close_price": 0.92,
+   "close_at": "2026-11-18T19:42:17+00:00",
+   "close_price": 0.96,
    "date": "2026-11-18",
    "edge": null,
    "id": "commod_fav_band:KXBRENTD-26NOV1817-T88",
@@ -436880,8 +436881,8 @@
    "ask_size": 540.0,
    "bet": true,
    "bid": 0.77,
-   "close_at": "2026-11-18T19:34:35+00:00",
-   "close_price": 0.43,
+   "close_at": "2026-11-18T19:42:17+00:00",
+   "close_price": 0.37,
    "date": "2026-11-18",
    "edge": null,
    "id": "commod_fav_band:KXGOLDD-26NOV1817-T3726",
@@ -437188,8 +437189,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-18T19:34:35+00:00",
-   "close_price": 0.82,
+   "close_at": "2026-11-18T19:42:17+00:00",
+   "close_price": 0.88,
    "date": "2026-11-18",
    "edge": null,
    "id": "crypto_fav_band_below:KXXRPD-26NOV1817-T0.9799",
@@ -437527,6 +437528,142 @@
    "untraded": false,
    "url": "https://kalshi.com/markets/kxsilverd",
    "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-18",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfme-guirho-pedsan-2026-11-18",
+   "label": "Guilherme Rhod vs Pedro Andre De Almeida Santos",
+   "liquidity": null,
+   "logged": "2026-11-18T19:42:16+00:00",
+   "market_id": "aec-itfme-guirho-pedsan-2026-11-18",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.05,
+   "price_b": 0.96,
+   "price_draw": null,
+   "prob_a": 0.045,
+   "result": null,
+   "settled": null,
+   "side_a": "Guilherme Rhod",
+   "side_b": "Pedro Andre De Almeida Santos",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-18T21:30:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfme",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfme-guirho-pedsan-2026-11-18",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-18",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-utr-nezdam-cornic-2026-11-18",
+   "label": "Nezar, Damien vs Cortes Campos, Nicolas",
+   "liquidity": null,
+   "logged": "2026-11-18T19:42:16+00:00",
+   "market_id": "aec-utr-nezdam-cornic-2026-11-18",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.68,
+   "price_b": 0.33,
+   "price_draw": null,
+   "prob_a": 0.675,
+   "result": null,
+   "settled": null,
+   "side_a": "Nezar, Damien",
+   "side_b": "Cortes Campos, Nicolas",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-18T21:30:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "utr",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/utr-nezdam-cornic-2026-11-18",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-18",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-wta-arigee-lausam-2026-11-18",
+   "label": "Ariana Geerlings vs Laura Samson",
+   "liquidity": null,
+   "logged": "2026-11-18T19:42:16+00:00",
+   "market_id": "aec-wta-arigee-lausam-2026-11-18",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.52,
+   "price_b": 0.49,
+   "price_draw": null,
+   "prob_a": 0.515,
+   "result": null,
+   "settled": null,
+   "side_a": "Ariana Geerlings",
+   "side_b": "Laura Samson",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-18T22:10:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "wta",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/wta-arigee-lausam-2026-11-18",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-18",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfme-murdel-ivabil-2026-11-18",
+   "label": "Murkel Dellien vs Ivan Biletic",
+   "liquidity": null,
+   "logged": "2026-11-18T19:42:16+00:00",
+   "market_id": "aec-itfme-murdel-ivabil-2026-11-18",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.88,
+   "price_b": 0.13,
+   "price_draw": null,
+   "prob_a": 0.875,
+   "result": null,
+   "settled": null,
+   "side_a": "Murkel Dellien",
+   "side_b": "Ivan Biletic",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-18T22:17:13+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfme",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfme-murdel-ivabil-2026-11-18",
+   "venue": "polymarket_us",
    "venue_start": null
   }
  ],
