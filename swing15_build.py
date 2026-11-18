@@ -9,6 +9,7 @@ read in Central, as the page header does. Layout only: no rule, record or pick d
 """
 import datetime as _dt
 import html as _h
+import os
 import re
 from zoneinfo import ZoneInfo
 
@@ -753,6 +754,51 @@ def lsb2_card(state):
     return _card(row, split)
 
 
+def live_trial_html(C2, led, path=None):
+    """The 10c row's live trial (the live executor, Production from 2026-11-17): the executor's own decision rows against the paper row, same windows.
+    Percentages, cents and seconds only; the return is before the exit fee."""
+    import json as _json
+    import statistics as _st
+    path = path or os.path.join(C2.W.ROOT, "data", "sp_sweep_decisions.json")
+    try:
+        with open(path) as f:
+            dec = (_json.load(f) or {}).get("decisions") or {}
+    except (OSError, ValueError):
+        dec = {}
+    rows = [d for d in dec.values() if d.get("outcome") in ("entered", "no_fill")]
+    intro = ('<p class="sp-def"><b>Live trial</b> (Production, a small fixed stake, 10 contracts a side): the same rule with real orders, bids resting within about 5 seconds of '
+             'the open, one clock-aligned loop in the live executor. Review at 10 live fills, decide at 30. The live figures are before the exit fee.</p>')
+    if not rows:
+        return intro + '<p class="sm mut">No live window yet.</p>'
+    key = C2.cell_key("10", C2.HEADLINE)
+    fills = [d for d in rows if d.get("fill_side")]
+    settled = [d for d in fills if d.get("result")]
+
+    def roi(d):
+        q, px = d.get("qty") or 0.0, d.get("fill_price") or 0.0
+        if not q or not px:
+            return None
+        sold = d.get("sold") or 0.0
+        pay = sold * (d.get("sold_price") or 0.0) + max(0.0, q - sold) * (1.0 if d.get("result") == d["fill_side"] else 0.0)
+        return pay / (q * px) - 1.0
+    med = lambda xs: (round(_st.median(xs), 2) if xs else None)       # noqa: E731
+    lr = [roi(d) for d in settled if roi(d) is not None]
+    pw = [led["windows"].get(d["ticker"]) for d in rows]
+    pw = [w for w in pw if w]
+    pf = [w["cells"].get(key) for w in pw if w["cells"].get(key)]
+    pr = [x["roi"] for x in pf]
+    both = sum(1 for d in rows if d.get("fill_side") and (led["windows"].get(d["ticker"]) or {"cells": {}})["cells"].get(key))
+    f = lambda x, u="": "—" if x is None else f"{x:g}{u}"              # noqa: E731
+    trs = [f'<tr><td>Live</td><td class="num">{len(rows)}</td><td class="num">{len(fills)}</td><td class="num">{f(med([d["fill_s"] for d in fills if d.get("fill_s") is not None]), " s")}</td>'
+           f'<td class="num">{f(None if not fills else round(100 * med([d["fill_price"] for d in fills if d.get("fill_price")]), 1), "c")}</td>'
+           f'<td class="num">{pct(sum(lr) / len(lr)) if lr else "—"}</td></tr>',
+           f'<tr><td>Paper, the same windows</td><td class="num">{len(pw)}</td><td class="num">{len(pf)}</td><td class="num">{f(med([x["fill_s"] for x in pf]), " s")}</td>'
+           f'<td class="num">10c</td><td class="num">{pct(sum(pr) / len(pr)) if pr else "—"}</td></tr>']
+    rest = med([d["rest_s"] for d in rows if d.get("rest_s") is not None])
+    return (intro + _table(("Row", "Windows", "Fills", "Median fill", "Fill price", "Return"), trs)
+            + f'<p class="sm mut">{len(settled)} of {len(fills)} live fills settled. Windows with a fill on both: {both}. Median time from the open to both bids resting: {f(rest, " s")}.</p>')
+
+
 def c2_block(state, parts=True):
     """Rule C version 2, "S&P 500 opening sweep" (sw15c2.py, 2026-11-13): three rows, each against its 2-second and 30-second comparison rows
     (honest-v1 fills on trade prints, both bids resting `delay` seconds after the open). One closed row per level, the comparison inside it."""
@@ -760,7 +806,8 @@ def c2_block(state, parts=True):
     led = C2.load()
     rec = C2.records(led)
     cards = []
-    for lv, c in C2.LEVELS.items():
+    for lv in C2.live_levels():
+        c = C2.LEVELS[lv]
         r = rec[lv]
         h, c30 = r["headline"], r["compare"][30]
         n = h["n"]
@@ -784,7 +831,8 @@ def c2_block(state, parts=True):
                 f'Pre-registered in docs/prereg_sw15_c2_{esc(C2.REGISTERED)}.md.</p>'
                 f'<p class="sm">{esc(r["read"])}. Keep needs a return above zero, a score of 1.5 or more, and the 30-second row above zero. A level is closed as '
                 f'"the opening has gone" if it gets fewer than one bet a trading day over any ten trading days.</p>{tbl}'
-                f'<p class="sm mut">Windows with a print through 10c or 90c in the first 5 minutes, by day: {esc(sweeps)}.</p>')
+                f'<p class="sm mut">Windows with a print through 10c or 90c in the first 5 minutes, by day: {esc(sweeps)}.</p>'
+                + (live_trial_html(C2, led) if lv == "10" else ""))
         row = (f'<details class="sp-rule{"" if n >= 10 else " is-early"}" id="sw15-c2_{lv}" data-source="sw15c2_{lv}" data-sport="sw15c2" data-scope="clubs" data-stage="sandbox">'
                f'<summary class="sp-line"><span class="sp-cell sp-c-name"><span class="sp-chev" aria-hidden="true">›</span><b class="sp-name" title="{esc(C2.LABELS[lv])}">{esc(C2.LABELS[lv])}</b>'
                f'<span class="sr-only"> · Rule details</span></span>'
@@ -1049,6 +1097,31 @@ def _archive(state, s1_final, v1=""):
                     f'<p class="sm">Retired 2026-11-13, replaced by C v2. No entries from {esc(_start(C.CUT5_AT))} on; the rows and their records stay.</p>'
                     + _table(("Rule", "Bets", "Won", "Return after fees", "Note"), t5) + '</details>')
         return out
+    def round6():
+        """C v2's 15c and 25c rows (Olu, 2026-11-17): the final records, with the same comparison rows the live rows carry."""
+        import sw15c2 as C2
+        import sw15cuts as C
+        rec = C2.records(C2.load())
+        trs = []
+        for lv in C2.retired_levels():
+            r = rec[lv]
+            for d in (C2.HEADLINE,) + C2.COMPARE:
+                x = r["headline"] if d == C2.HEADLINE else r["compare"][d]
+                if x["n"]:
+                    trs.append(f'<tr><td>{esc(C2.LABELS[lv])} · bids up {d} s after the open{" (headline)" if d == C2.HEADLINE else ""}</td><td class="num">{x["n"]}</td>'
+                               f'<td class="num">{x["sold"]}</td><td class="num">{pct(x["roi"])}</td><td class="num">{_z(x["t"])}</td></tr>')
+        if not trs:
+            return ""
+        return (f'<details class="fold sw15-removed sw15-round6"><summary>Retired {esc(_start(C.CUT6_AT))} · C v2 15c and 25c rows · {len(C2.retired_levels())} rows, final records</summary>'
+                f'<p class="sm">Retired 2026-11-17 by Olu (the 25c row was down about 40% on 35 bets, score about −2.6). No entries counted from {esc(_start(C.CUT6_AT))} on; '
+                f'the rows and their records stay. The 10c row runs on.</p>'
+                + _table(("Row", "Bets", "Sold at the target", "Return after fees", "Score"), trs) + '</details>')
+    try:
+        r6 = round6() if NARROWED else ""
+    except Exception:                                           # noqa: BLE001
+        r6 = ""
+    if r6:
+        parts.append(f'<h4>Retired Nov 18</h4>{r6}')
     try:
         r4 = round4() if NARROWED else ""
     except Exception:                                           # noqa: BLE001
@@ -1193,8 +1266,8 @@ def section(state=None):
         import sw15keep as K
         import leadswap_v2 as V2
         import sw15c2 as C2
-        intro = (f'<p class="scope sw15-intro">Paper · one rule · C v2, the S&amp;P 500 opening sweep (10c, 15c, 25c), fresh from '
-                 f'{esc(_start(C2.FROM))} · read once per level (40, 80, 150 bets) · A, B and C v1 retired Nov 13</p>')
+        intro = (f'<p class="scope sw15-intro">Paper · one rule · C v2, the S&amp;P 500 opening sweep (10c row), fresh from '
+                 f'{esc(_start(C2.FROM))} · read once, at 40 bets · A, B and C v1 retired Nov 13; the 15c and 25c rows retired Nov 18</p>')
         how = ('<details class="fold sw15-how"><summary>How the record is kept</summary>'
                + "".join(n if n.startswith("<") else f'<p class="sm">{esc(n)}</p>' for n in notes)
                + f'<p class="sm mut">{SORT_LINE}</p></details>')
@@ -1239,7 +1312,7 @@ def index_rows(state=None):
             raise StopIteration
         import sw15c2 as C2
         r2 = C2.records(C2.load())
-        for lv in C2.LEVELS:
+        for lv in C2.live_levels():
             h = r2[lv]["headline"]
             out.append(dict(lane=f"sw15c2_{lv}", label=C2.LABELS[lv], n=h["n"], roi=h["roi"], hit=None, fair=None, status=r2[lv]["read"]))
     except (Exception, StopIteration):                          # noqa: BLE001  (never breaks the index)

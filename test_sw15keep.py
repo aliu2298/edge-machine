@@ -76,11 +76,10 @@ print("\nthe page")
 real = W.load()
 html = WB.section(real)
 live = html.split('id="sw15-archive"')[0]
-check("the live area: rule C version 2's three rows only; A, B and C version 1 are retired (2026-11-13), the Loss Reader 2026-11-12",
-      re.findall(r'data-source="([a-z0-9_]+)"', live), ["sw15c2_10", "sw15c2_15", "sw15c2_25"])
-check("one list: the three C v2 rows", re.findall(r'id="sw15-([a-z0-9_]+)"', live)[:3], ["c2_10", "c2_15", "c2_25"])
-check("short names", all(n in live for n in ("C v2 · S&amp;P 500 opening sweep, 10c sell 3x", "C v2 · S&amp;P 500 opening sweep, 15c sell 2x",
-      "C v2 · S&amp;P 500 opening sweep, 25c sell 2x")), True)
+check("the live area: C v2's 10c row only; A, B and C version 1 are retired (2026-11-13), the Loss Reader 2026-11-12, the 15c and 25c rows 2026-11-17",
+      re.findall(r'data-source="([a-z0-9_]+)"', live), ["sw15c2_10"])
+check("one list: the 10c row", re.findall(r'id="sw15-([a-z0-9_]+)"', live)[:3], ["c2_10"])
+check("short name; the 15c and 25c rows are not in the live area", ("C v2 · S&amp;P 500 opening sweep, 10c sell 3x" in live, "15c sell 2x" in live, "25c sell 2x" in live), (True, False, False))
 check("A, B and C version 1 are not in the live area, and the intro says one rule",
       ("S&amp;P 500 favourite, 5 min left" in live, "Lead Swap favourite v2" in live, "S&amp;P 500 underdog at 15c" in live, "one rule" in live), (False, False, False, True))
 check("one section heading, no per-lane h3 blocks; one closed method fold", (live.count("<h3"), live.count("sw15-how")),
@@ -91,8 +90,10 @@ arc = html.split('id="sw15-archive"')[1]
 check("the archive: the seven lanes retired today with their records, and the v1 baselines",
       ("<h4>Narrowed to three rules (Nov 11)</h4>" in arc, arc.split("<h4>Narrowed to three rules (Nov 11)</h4>")[1]
        .split("</details>")[0].count("<tr>") - 1, "<h4>v1 baselines (background, every market)</h4>" in arc), (True, 7, True))
-check("the Sandbox index lists rule C version 2's three rows (A, B and C version 1 retired 2026-11-13)",
-      [x["lane"] for x in WB.index_rows(real)], ["sw15c2_10", "sw15c2_15", "sw15c2_25"])
+check("the Sandbox index lists rule C version 2's 10c row only (A, B and C version 1 retired 2026-11-13, 15c and 25c 2026-11-17)",
+      [x["lane"] for x in WB.index_rows(real)], ["sw15c2_10"])
+check("the 15c and 25c rows sit in the Retired block, 'Retired Nov 18', final records", ("<h4>Retired Nov 18</h4>" in arc, "sw15-round6" in arc, "25c sell 2x" in arc.split("sw15-round6")[1].split("</details>")[0]),
+      (True, True, True))
 print("\nround 4: A and B retired 2026-11-13 by Olu")
 check("round 4 is frozen (fingerprint) and its cut is a window boundary after round 3",
       (C.fingerprint4() == C.ROUND4_SHA256, W._ts(C.CUT4_AT) % 900, C.CUT4_AT > C.CUT3_AT, C.RETIRED4), (True, 0, True, ("sp500_fav5", "leadswap_v2", "leadswap_v2_ctrl")))

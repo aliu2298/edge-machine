@@ -8,7 +8,11 @@ import sys
 
 import fillsim as F
 import sw15c2 as C
+import sw15cuts as SC
 import swing15 as W
+
+ROUND6 = SC.RETIRED6
+SC.RETIRED6 = ()          # the rule tests below run on Nov 16+ windows; round 6 (the 15c and 25c cut) has its own section at the end
 
 FAILS = []
 
@@ -93,6 +97,22 @@ check("the score clusters by clock hour: 30 bets in 10 hours", C.records(st)["25
 print("\nthe workflow")
 yml = open(".github/workflows/swing15.yml").read()
 check("the hourly 15-Minute run tests it, reads it and saves its ledger", ("test_sw15c2.py" in yml, "python3 sw15c2.py" in yml, "data/sw15c2_ledger.json" in yml), (True, True, True))
+
+print("\nround 6: the 15c and 25c rows retired 2026-11-17 by Olu")
+SC.RETIRED6 = ROUND6
+check("frozen (fingerprint), a window boundary before the cash open, after round 5", (SC.fingerprint6() == SC.ROUND6_SHA256, W._ts(SC.CUT6_AT) % 900, SC.CUT6_AT > SC.CUT5_AT,
+      SC.CUT6_AT < "2026-11-18T14:30:00+00:00", SC.RETIRED6), (True, 0, True, True, ("sw15c2_15", "sw15c2_25")))
+check("15c and 25c retire at the cut; 10c runs on", (SC.retire_at("sw15c2_15"), SC.retire_at("sw15c2_25"), SC.retire_at("sw15c2_10"), C.live_levels(), C.retired_levels()),
+      (SC.CUT6_AT, SC.CUT6_AT, None, ["10"], ["15", "25"]))
+cut = dt.datetime.fromisoformat(SC.CUT6_AT)
+iso = lambda d: d.strftime("%Y-%m-%dT%H:%M:%SZ")   # noqa: E731
+st = C.empty()
+for i, t in enumerate((cut - dt.timedelta(minutes=15), cut, cut + dt.timedelta(minutes=15))):
+    cells = {C.cell_key(lv, d): dict(side="yes", fill_s=5.0, roi=0.5, sold=True, qty=10.0, through=3.0) for lv in C.LEVELS for d in C.DELAYS}
+    st["windows"][f"W{i}"] = dict(open=iso(t), day="2026-11-18", hour=iso(t)[:13], result="yes", prints=3, sweep=False, cells=cells)
+r = C.records(st)
+check("15c and 25c count the window before the cut and none from it (final); 10c counts all three",
+      (r["15"]["headline"]["n"], r["25"]["headline"]["n"], r["10"]["headline"]["n"]), (1, 1, 3))
 
 print()
 if FAILS:

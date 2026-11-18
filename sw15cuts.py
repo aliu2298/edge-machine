@@ -72,10 +72,22 @@ def fingerprint5():
     return allowgate.fingerprint(dict(cut_at=CUT5_AT, retired=list(RETIRED5)))
 
 
+# ROUND 6 (Olu, 2026-11-17: "retire the 15c and 25c cells"): C v2's 15c and 25c rows (sw15c2.py) stop entering at CUT6_AT, one instant on a window boundary
+# before the Wednesday cash open: no window opening at or after it counts for them. Their final records go to the Retired block, rows kept. The 10c row runs
+# on as paper beside its live trial (the live executor). (Rules A and B and rule C version 1 were already retired in rounds 4 and 5, 2026-11-13.)
+CUT6_AT = "2026-11-18T13:00:00+00:00"
+RETIRED6 = ("sw15c2_15", "sw15c2_25")
+ROUND6_SHA256 = "06e9f84986d015cb42361b8d9ebba2af75bfc25859caad1e70605829e0127cef"   # sha256 of fingerprint6(), set at registration
+
+
+def fingerprint6():
+    return allowgate.fingerprint(dict(cut_at=CUT6_AT, retired=list(RETIRED6)))
+
+
 def retire_at(lane):
-    """The cut time a retired lane stops entering at (round 1 to 5), or None for a live lane."""
+    """The cut time a retired lane stops entering at (round 1 to 6), or None for a live lane."""
     return (CUT_AT if lane in RETIRED else CUT2_AT if lane in RETIRED2 else CUT3_AT if lane in RETIRED3
-            else CUT4_AT if lane in RETIRED4 else CUT5_AT if lane in RETIRED5 else None)
+            else CUT4_AT if lane in RETIRED4 else CUT5_AT if lane in RETIRED5 else CUT6_AT if lane in RETIRED6 else None)
 
 
 def fingerprint():
