@@ -113,7 +113,7 @@
    "mentions": [
     "KXEARNINGSMENTIONWMT-26NOV19"
    ],
-   "n_ests": "12",
+   "n_ests": "13",
    "name": "Walmart Inc.",
    "perp": "KXWMTPERP",
    "sym": "WMT",
@@ -153,7 +153,7 @@
    "mentions": [
     "KXEARNINGSMENTIONDE-26NOV25"
    ],
-   "n_ests": "1",
+   "n_ests": "N/A",
    "name": "Deere & Company",
    "perp": "KXDEPERP",
    "sym": "DE",
@@ -224,7 +224,7 @@
    "time": "not-supplied"
   }
  ],
- "calendar_at": "2026-11-18T13:00:30Z",
+ "calendar_at": "2026-11-18T14:00:31Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -4497,9 +4497,19 @@
     "width": 0.5198717948717948
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-18T14:01:27Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.753846153846154,
+    "rungs": 15,
+    "width": 0.4748717948717949
+   },
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-18T13:01:32Z",
+ "last_run": "2026-11-18T14:01:30Z",
  "predictions": [
   {
    "call": {
@@ -4643,7 +4653,7 @@
   },
   {
    "call": {
-    "status": "pending"
+    "status": "no_fill"
    },
    "entry_due": "2026-11-10T21:00:00Z",
    "exit_due": "2026-11-17T21:00:00Z",
@@ -4656,7 +4666,7 @@
    "report": "2026-11-18",
    "report_time": "pre-market",
    "side": 1,
-   "status": "pending",
+   "status": "no_fill",
    "sym": "TJX"
   },
   {
@@ -4679,7 +4689,7 @@
   },
   {
    "call": {
-    "status": "pending"
+    "status": "no_fill"
    },
    "entry_due": "2026-11-16T21:00:00Z",
    "exit_due": "2026-11-23T21:00:00Z",
@@ -4692,7 +4702,7 @@
    "report": "2026-11-24",
    "report_time": "pre-market",
    "side": 1,
-   "status": "pending",
+   "status": "no_fill",
    "sym": "ADI"
   },
   {
@@ -4715,7 +4725,7 @@
   },
   {
    "call": {
-    "status": "pending"
+    "status": "no_fill"
    },
    "entry_due": "2026-11-16T21:00:00Z",
    "exit_due": "2026-11-23T21:00:00Z",
@@ -4728,12 +4738,12 @@
    "report": "2026-11-24",
    "report_time": "not-supplied",
    "side": 1,
-   "status": "pending",
+   "status": "no_fill",
    "sym": "DELL"
   },
   {
    "call": {
-    "status": "pending"
+    "status": "no_fill"
    },
    "entry_due": "2026-11-17T21:00:00Z",
    "exit_due": "2026-11-24T21:00:00Z",
@@ -4746,7 +4756,7 @@
    "report": "2026-11-25",
    "report_time": "pre-market",
    "side": 1,
-   "status": "pending",
+   "status": "no_fill",
    "sym": "DE"
   },
   {
