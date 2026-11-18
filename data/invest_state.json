@@ -1,6 +1,6 @@
 {
  "collector": {
-  "last_ts": 1794960002,
+  "last_ts": 1794963601,
   "markets": 61,
   "rows_24h": 81984
  },
@@ -25,14 +25,6 @@
   }
  ],
  "flags": [
-  {
-   "gap": -0.02603,
-   "rth": false,
-   "spread_bp": 490.9,
-   "sym": "TXN",
-   "ticker": "KXTXNPERP",
-   "ts": 1794474002
-  },
   {
    "gap": -0.09553,
    "gap_15m": -0.09553,
@@ -5208,6 +5200,7 @@
    "gap": -0.01748,
    "gap_15m": 0.0006,
    "gap_5m": -0.00037,
+   "gap_60m": 0.00041,
    "rth": false,
    "spread_bp": 248.1,
    "sym": "ADBE",
@@ -5250,6 +5243,7 @@
    "gap": -0.02101,
    "gap_15m": -0.01796,
    "gap_5m": -0.01424,
+   "gap_60m": 0.00071,
    "rth": false,
    "spread_bp": 159.4,
    "sym": "CAT",
@@ -5308,6 +5302,7 @@
    "gap": 0.01442,
    "gap_15m": 0.00034,
    "gap_5m": 0.00034,
+   "gap_60m": 0.00067,
    "rth": false,
    "spread_bp": 291.0,
    "sym": "NVDA",
@@ -5318,6 +5313,7 @@
    "gap": 0.01276,
    "gap_15m": 0.0041,
    "gap_5m": 0.0132,
+   "gap_60m": 0.00352,
    "rth": false,
    "spread_bp": 184.4,
    "sym": "PLD",
@@ -5328,6 +5324,7 @@
    "gap": 0.01013,
    "gap_15m": 0.00781,
    "gap_5m": 0.00885,
+   "gap_60m": 0.00741,
    "rth": false,
    "spread_bp": 0.9,
    "sym": "US500",
@@ -5338,14 +5335,25 @@
    "gap": 0.01487,
    "gap_15m": 0.01374,
    "gap_5m": 0.01321,
+   "gap_60m": 0.01362,
    "rth": false,
    "spread_bp": 0.9,
    "sym": "US Tech 100",
    "ticker": "KXUSTECH100PERP",
    "ts": 1794959041
+  },
+  {
+   "gap": 0.01362,
+   "gap_15m": 0.01392,
+   "gap_5m": 0.01374,
+   "rth": false,
+   "spread_bp": 0.9,
+   "sym": "US Tech 100",
+   "ticker": "KXUSTECH100PERP",
+   "ts": 1794962641
   }
  ],
- "last_run": "2026-11-18T00:00:11+00:00",
+ "last_run": "2026-11-18T01:00:08+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
