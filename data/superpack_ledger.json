@@ -4,6 +4,10 @@
    "at": "2026-11-18T21:13:42.916929+00:00",
    "pool": "opposite"
   },
+  "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXBRASILEIROBTTS-26NOV18CORBOT\", \"no\"]]": {
+   "at": "2026-11-18T23:14:42.579829+00:00",
+   "pool": "opposite"
+  },
   "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXBRASILEIROBTTS-26NOV18CRCHA\", \"no\"]]": {
    "at": "2026-11-18T21:41:56.131190+00:00",
    "pool": "opposite"
@@ -16,8 +20,16 @@
    "at": "2026-11-18T22:17:48.752839+00:00",
    "pool": "opposite"
   },
+  "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXBRASILEIROBTTS-26NOV18GPABAH\", \"no\"]]": {
+   "at": "2026-11-18T23:14:42.579829+00:00",
+   "pool": "opposite"
+  },
   "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV18CFCSAN\", \"yes\"]]": {
    "at": "2026-11-18T21:13:42.916929+00:00",
+   "pool": "opposite"
+  },
+  "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV18CORBOT\", \"yes\"]]": {
+   "at": "2026-11-18T23:14:42.579829+00:00",
    "pool": "opposite"
   },
   "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV18CRCHA\", \"yes\"]]": {
@@ -30,6 +42,10 @@
   },
   "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV18FLACAP\", \"yes\"]]": {
    "at": "2026-11-18T22:17:48.752839+00:00",
+   "pool": "opposite"
+  },
+  "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV18GPABAH\", \"yes\"]]": {
+   "at": "2026-11-18T23:14:42.579829+00:00",
    "pool": "opposite"
   },
   "[\"contract\", \"album_cheap_no_ledger.json\", [\"KXALBUMEQUIV-EVE26NOV05-17K\", \"no\"]]": {
@@ -4201,7 +4217,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-18T23:06:41.096391+00:00",
+ "last_run": "2026-11-18T23:14:42.579829+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -13724,6 +13740,42 @@
    "list": "pool",
    "logged": "2026-11-18T22:01:53.077183+00:00",
    "pid": "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV18FLACAP\", \"yes\"]]",
+   "side": "yes",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-18T23:14:42.579829+00:00",
+   "contract": "KXBRASILEIROBTTS-26NOV18CORBOT-BTTS",
+   "list": "pool",
+   "logged": "2026-11-18T23:01:56.090289+00:00",
+   "pid": "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXBRASILEIROBTTS-26NOV18CORBOT\", \"no\"]]",
+   "side": "no",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-18T23:14:42.579829+00:00",
+   "contract": "KXBRASILEIROBTTS-26NOV18CORBOT-BTTS",
+   "list": "pool",
+   "logged": "2026-11-18T23:01:56.090289+00:00",
+   "pid": "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV18CORBOT\", \"yes\"]]",
+   "side": "yes",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-18T23:14:42.579829+00:00",
+   "contract": "KXBRASILEIROBTTS-26NOV18GPABAH-BTTS",
+   "list": "pool",
+   "logged": "2026-11-18T23:01:56.090289+00:00",
+   "pid": "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXBRASILEIROBTTS-26NOV18GPABAH\", \"no\"]]",
+   "side": "no",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-18T23:14:42.579829+00:00",
+   "contract": "KXBRASILEIROBTTS-26NOV18GPABAH-BTTS",
+   "list": "pool",
+   "logged": "2026-11-18T23:01:56.090289+00:00",
+   "pid": "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV18GPABAH\", \"yes\"]]",
    "side": "yes",
    "why": "active lanes are on both sides of this contract"
   }
