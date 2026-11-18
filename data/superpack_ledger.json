@@ -476,6 +476,10 @@
    "entries": "entered",
    "pool": "entered"
   },
+  "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXGOLDD-26NOV1817-T3726\", \"a\"]]": {
+   "at": "2026-11-18T19:05:13.719032+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXNATGASD-26NOV0917-T3.280\", \"a\"]]": {
    "at": "2026-11-09T19:05:56.281986+00:00",
    "pool": "entered"
@@ -4057,7 +4061,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-18T18:34:38.863044+00:00",
+ "last_run": "2026-11-18T19:05:13.719032+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -12812,6 +12816,29 @@
    "side": "a",
    "snapshot": null,
    "sport": "Crypto",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXGOLDD-26NOV1817-T3726",
+   "entered_at": "2026-11-18T19:05:13.719032+00:00",
+   "entities": [
+    "Gold"
+   ],
+   "id": "superpack:[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXGOLDD-26NOV1817-T3726\", \"a\"]]",
+   "lane": "commod_fav_band",
+   "logged": "2026-11-18T19:04:01+00:00",
+   "matched": [
+    "Gold"
+   ],
+   "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXGOLDD-26NOV1817-T3726\", \"a\"]]",
+   "price": 0.78,
+   "profit": null,
+   "scope": "commodities_fav",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Commodities",
    "src": "sandbox",
    "status": "open"
   }
