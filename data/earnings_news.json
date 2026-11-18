@@ -184,9 +184,47 @@
    "perp": "KXCRMPERP",
    "sym": "CRM",
    "time": "after-hours"
+  },
+  {
+   "date": "2026-12-09",
+   "eps_forecast": "$5.11",
+   "fiscal_q": "Nov/2026",
+   "kpi": [],
+   "mentions": [
+    "KXEARNINGSMENTIONADBE-26DEC09"
+   ],
+   "n_ests": "12",
+   "name": "Adobe Inc.",
+   "perp": "KXADBEPERP",
+   "sym": "ADBE",
+   "time": "after-hours"
+  },
+  {
+   "date": "2026-12-09",
+   "eps_forecast": "$3.47",
+   "fiscal_q": "Oct/2026",
+   "kpi": [],
+   "mentions": [],
+   "n_ests": "10",
+   "name": "Broadcom Inc.",
+   "perp": "KXAVGOPERP",
+   "sym": "AVGO",
+   "time": "after-hours"
+  },
+  {
+   "date": "2026-12-09",
+   "eps_forecast": "$1.56",
+   "fiscal_q": "Nov/2026",
+   "kpi": [],
+   "mentions": [],
+   "n_ests": "10",
+   "name": "Oracle Corporation",
+   "perp": "KXORCLPERP",
+   "sym": "ORCL",
+   "time": "not-supplied"
   }
  ],
- "calendar_at": "2026-11-18T04:00:29Z",
+ "calendar_at": "2026-11-18T05:00:32Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -4359,9 +4397,19 @@
     "width": 0.45699300699300727
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-18T05:01:26Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.7688888888888887,
+    "rungs": 15,
+    "width": 0.45699300699300727
+   },
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-18T04:01:30Z",
+ "last_run": "2026-11-18T05:01:28Z",
  "predictions": [
   {
    "call": {
@@ -4902,6 +4950,48 @@
    "side": -1,
    "status": "open",
    "sym": "HD"
+  },
+  {
+   "entry_due": "2026-12-02T21:00:00Z",
+   "exit_due": "2026-12-09T21:00:00Z",
+   "family": "runup",
+   "id": "runup:ADBE:2026-12-09",
+   "logged_at": "2026-11-18T05:01:27Z",
+   "perp": "KXADBEPERP",
+   "random_side": -1,
+   "reason": "Up into the 2026-12-09 report (after-hours).",
+   "report": "2026-12-09",
+   "report_time": "after-hours",
+   "side": 1,
+   "sym": "ADBE"
+  },
+  {
+   "entry_due": "2026-12-02T21:00:00Z",
+   "exit_due": "2026-12-09T21:00:00Z",
+   "family": "runup",
+   "id": "runup:AVGO:2026-12-09",
+   "logged_at": "2026-11-18T05:01:27Z",
+   "perp": "KXAVGOPERP",
+   "random_side": -1,
+   "reason": "Up into the 2026-12-09 report (after-hours).",
+   "report": "2026-12-09",
+   "report_time": "after-hours",
+   "side": 1,
+   "sym": "AVGO"
+  },
+  {
+   "entry_due": "2026-12-01T21:00:00Z",
+   "exit_due": "2026-12-08T21:00:00Z",
+   "family": "runup",
+   "id": "runup:ORCL:2026-12-09",
+   "logged_at": "2026-11-18T05:01:27Z",
+   "perp": "KXORCLPERP",
+   "random_side": 1,
+   "reason": "Up into the 2026-12-09 report (not-supplied).",
+   "report": "2026-12-09",
+   "report_time": "not-supplied",
+   "side": 1,
+   "sym": "ORCL"
   }
  ],
  "registered": "2026-11-07",
