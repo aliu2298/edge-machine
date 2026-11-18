@@ -224,7 +224,7 @@
    "time": "not-supplied"
   }
  ],
- "calendar_at": "2026-11-18T19:35:02Z",
+ "calendar_at": "2026-11-18T20:00:31Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -4567,9 +4567,19 @@
     "width": 0.36376470588235277
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-18T20:01:29Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.732307692307692,
+    "rungs": 15,
+    "width": 0.40095693779904273
+   },
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-18T19:36:07Z",
+ "last_run": "2026-11-18T20:02:24Z",
  "predictions": [
   {
    "call": {
@@ -5168,6 +5178,43 @@
    "side": 0,
    "status": "no_call",
    "sym": "WMT"
+  },
+  {
+   "call": {
+    "status": "pending"
+   },
+   "entry_due": "2026-11-18T20:01:30Z",
+   "exit_due": "2026-11-25T21:00:00Z",
+   "family": "post_drift",
+   "id": "post_drift:NVDA:2026-11-17",
+   "logged_at": "2026-11-18T20:01:30Z",
+   "perp": "KXNVDAPERP",
+   "random_side": -1,
+   "reaction": -0.03709,
+   "reason": "Reaction since the last close before the report: -3.7%.",
+   "report": "2026-11-17",
+   "report_time": "after-hours",
+   "side": -1,
+   "status": "pending",
+   "sym": "NVDA"
+  },
+  {
+   "call": {
+    "status": "pending"
+   },
+   "crowd_up": 0.712,
+   "day": "2026-11-18",
+   "entry_due": "2026-11-18T20:01:30Z",
+   "exit_due": "2026-11-19T20:01:00Z",
+   "family": "sentiment",
+   "id": "sentiment:LLY:2026-11-18",
+   "logged_at": "2026-11-18T20:01:30Z",
+   "perp": "KXLLYPERP",
+   "random_side": -1,
+   "reason": "Kalshi traders 71% Up on 24h taker volume.",
+   "side": 1,
+   "status": "pending",
+   "sym": "LLY"
   }
  ],
  "registered": "2026-11-07",
@@ -5179,6 +5226,7 @@
   "2026-11-12",
   "2026-11-13",
   "2026-11-16",
-  "2026-11-17"
+  "2026-11-17",
+  "2026-11-18"
  ]
 }
