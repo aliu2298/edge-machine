@@ -1,6 +1,6 @@
 {
  "collector": {
-  "last_ts": 1794956401,
+  "last_ts": 1794960002,
   "markets": 61,
   "rows_24h": 81984
  },
@@ -25,173 +25,6 @@
   }
  ],
  "flags": [
-  {
-   "gap": -0.01078,
-   "rth": false,
-   "spread_bp": 39.4,
-   "sym": "AAPL",
-   "ticker": "KXAAPLPERP",
-   "ts": 1794185281
-  },
-  {
-   "gap": -0.01699,
-   "gap_15m": -0.00185,
-   "gap_5m": 0.00079,
-   "gap_60m": -0.00817,
-   "rth": false,
-   "spread_bp": 285.6,
-   "sym": "AMAT",
-   "ticker": "KXAMATPERP",
-   "ts": 1794474002
-  },
-  {
-   "gap": 0.02978,
-   "gap_15m": 0.02978,
-   "gap_5m": 0.02978,
-   "gap_60m": 0.03578,
-   "rth": false,
-   "spread_bp": 1463.3,
-   "sym": "AMD",
-   "ticker": "KXAMDPERP",
-   "ts": 1794472921
-  },
-  {
-   "gap": 0.01959,
-   "gap_15m": 0.01821,
-   "gap_5m": 0.01695,
-   "gap_60m": 0.01577,
-   "rth": false,
-   "spread_bp": 826.7,
-   "sym": "AMZN",
-   "ticker": "KXAMZNPERP",
-   "ts": 1794474002
-  },
-  {
-   "gap": 0.02592,
-   "gap_15m": 0.02432,
-   "gap_5m": 0.02927,
-   "gap_60m": 0.01623,
-   "rth": false,
-   "spread_bp": 1604.8,
-   "sym": "AVGO",
-   "ticker": "KXAVGOPERP",
-   "ts": 1794474002
-  },
-  {
-   "gap": -0.05541,
-   "gap_15m": -0.05541,
-   "gap_5m": -0.05541,
-   "gap_60m": -0.03542,
-   "rth": false,
-   "spread_bp": 17.8,
-   "sym": "BABA",
-   "ticker": "KXBABAPERP",
-   "ts": 1794472441
-  },
-  {
-   "gap": -0.07354,
-   "gap_15m": -0.07354,
-   "gap_5m": -0.07354,
-   "gap_60m": -0.07354,
-   "rth": false,
-   "spread_bp": 2161.9,
-   "sym": "BKNG",
-   "ticker": "KXBKNGPERP",
-   "ts": 1794474002
-  },
-  {
-   "gap": -0.095,
-   "rth": false,
-   "spread_bp": 2071.6,
-   "sym": "CAT",
-   "ticker": "KXCATPERP",
-   "ts": 1794474002
-  },
-  {
-   "gap": 0.02937,
-   "gap_15m": 0.03344,
-   "gap_5m": 0.03652,
-   "gap_60m": 0.02283,
-   "rth": false,
-   "spread_bp": 870.4,
-   "sym": "INTC",
-   "ticker": "KXINTCPERP",
-   "ts": 1794474002
-  },
-  {
-   "gap": 0.04833,
-   "gap_15m": 0.04833,
-   "gap_5m": 0.04833,
-   "gap_60m": 0.04833,
-   "rth": false,
-   "spread_bp": 2355.9,
-   "sym": "LMT",
-   "ticker": "KXLMTPERP",
-   "ts": 1794471901
-  },
-  {
-   "gap": 0.03512,
-   "gap_15m": 0.03254,
-   "gap_5m": 0.0326,
-   "gap_60m": 0.03512,
-   "rth": false,
-   "spread_bp": 771.3,
-   "sym": "MSFT",
-   "ticker": "KXMSFTPERP",
-   "ts": 1794474002
-  },
-  {
-   "gap": -0.0844,
-   "gap_15m": -0.0844,
-   "gap_5m": -0.0844,
-   "gap_60m": -0.08667,
-   "rth": false,
-   "spread_bp": 2209.4,
-   "sym": "NFLX",
-   "ticker": "KXNFLXPERP",
-   "ts": 1794470641
-  },
-  {
-   "gap": 0.01305,
-   "gap_15m": 0.01305,
-   "gap_5m": 0.01305,
-   "gap_60m": -0.00745,
-   "rth": false,
-   "spread_bp": 106.0,
-   "sym": "NVDA",
-   "ticker": "KXNVDAPERP",
-   "ts": 1794471482
-  },
-  {
-   "gap": -0.0585,
-   "rth": false,
-   "spread_bp": 1255.5,
-   "sym": "ORCL",
-   "ticker": "KXORCLPERP",
-   "ts": 1794474002
-  },
-  {
-   "gap": 0.01012,
-   "gap_15m": 0.01012,
-   "gap_5m": 0.01012,
-   "gap_60m": 0.01057,
-   "rth": false,
-   "spread_bp": 289.4,
-   "sym": "QQQ",
-   "ticker": "KXQQQPERP",
-   "ts": 1794470461
-  },
-  {
-   "gap": -0.01235,
-   "gap_15m": -0.01235,
-   "gap_5m": -0.01235,
-   "gap_60m": -0.00106,
-   "rth": false,
-   "spread_bp": 53.2,
-   "sym": "SNDK",
-   "ticker": "KXSNDKPERP",
-   "ts": 1794471121
-  },
   {
    "gap": -0.02603,
    "rth": false,
@@ -5219,6 +5052,9 @@
   },
   {
    "gap": 0.01408,
+   "gap_15m": -0.00206,
+   "gap_5m": -0.00021,
+   "gap_60m": -0.00062,
    "rth": false,
    "spread_bp": 313.8,
    "sym": "AMAT",
@@ -5227,6 +5063,9 @@
   },
   {
    "gap": 0.01756,
+   "gap_15m": 0.00091,
+   "gap_5m": -6e-05,
+   "gap_60m": 0.0004,
    "rth": false,
    "spread_bp": 443.9,
    "sym": "BABA",
@@ -5235,6 +5074,9 @@
   },
   {
    "gap": 0.01608,
+   "gap_15m": 0.0004,
+   "gap_5m": 0.00025,
+   "gap_60m": -0.00035,
    "rth": false,
    "spread_bp": 310.5,
    "sym": "BAC",
@@ -5243,6 +5085,9 @@
   },
   {
    "gap": 0.01018,
+   "gap_15m": -0.00112,
+   "gap_5m": -0.00136,
+   "gap_60m": -8e-05,
    "rth": false,
    "spread_bp": 374.0,
    "sym": "CSCO",
@@ -5251,6 +5096,9 @@
   },
   {
    "gap": 0.01436,
+   "gap_15m": -9e-05,
+   "gap_5m": -0.00075,
+   "gap_60m": -0.00044,
    "rth": false,
    "spread_bp": 302.4,
    "sym": "INTC",
@@ -5259,6 +5107,9 @@
   },
   {
    "gap": 0.01439,
+   "gap_15m": 0.00047,
+   "gap_5m": 0.00116,
+   "gap_60m": -5e-05,
    "rth": false,
    "spread_bp": 343.1,
    "sym": "JPM",
@@ -5267,6 +5118,9 @@
   },
   {
    "gap": -0.01558,
+   "gap_15m": -0.00039,
+   "gap_5m": 0.00012,
+   "gap_60m": 2e-05,
    "rth": false,
    "spread_bp": 294.4,
    "sym": "META",
@@ -5275,6 +5129,9 @@
   },
   {
    "gap": 0.01205,
+   "gap_15m": 5e-05,
+   "gap_5m": 0.00019,
+   "gap_60m": 0.001,
    "rth": false,
    "spread_bp": 240.5,
    "sym": "MU",
@@ -5283,6 +5140,9 @@
   },
   {
    "gap": 0.01286,
+   "gap_15m": -0.00072,
+   "gap_5m": 0.0003,
+   "gap_60m": 0.00075,
    "rth": false,
    "spread_bp": 331.5,
    "sym": "SBUX",
@@ -5291,6 +5151,9 @@
   },
   {
    "gap": -0.02094,
+   "gap_15m": -0.00022,
+   "gap_5m": 0.0002,
+   "gap_60m": 0.00142,
    "rth": false,
    "spread_bp": 184.0,
    "sym": "SNDK",
@@ -5299,6 +5162,9 @@
   },
   {
    "gap": 0.01433,
+   "gap_15m": -0.00064,
+   "gap_5m": -0.00037,
+   "gap_60m": -0.00044,
    "rth": false,
    "spread_bp": 304.7,
    "sym": "SPCX",
@@ -5307,6 +5173,9 @@
   },
   {
    "gap": 0.01686,
+   "gap_15m": 0.00143,
+   "gap_5m": 0.00063,
+   "gap_60m": 0.00028,
    "rth": false,
    "spread_bp": 289.4,
    "sym": "UNH",
@@ -5317,6 +5186,7 @@
    "gap": 0.01073,
    "gap_15m": 0.01211,
    "gap_5m": 0.01112,
+   "gap_60m": 0.01487,
    "rth": false,
    "spread_bp": 1.2,
    "sym": "US Tech 100",
@@ -5325,14 +5195,157 @@
   },
   {
    "gap": 0.01541,
+   "gap_15m": 0.00016,
+   "gap_5m": -0.00087,
+   "gap_60m": 6e-05,
    "rth": false,
    "spread_bp": 287.2,
    "sym": "WMT",
    "ticker": "KXWMTPERP",
    "ts": 1794956401
+  },
+  {
+   "gap": -0.01748,
+   "gap_15m": 0.0006,
+   "gap_5m": -0.00037,
+   "rth": false,
+   "spread_bp": 248.1,
+   "sym": "ADBE",
+   "ticker": "KXADBEPERP",
+   "ts": 1794956521
+  },
+  {
+   "gap": -0.01416,
+   "rth": false,
+   "spread_bp": 125.1,
+   "sym": "BRK.B",
+   "ticker": "KXBRKBPERP",
+   "ts": 1794184621
+  },
+  {
+   "gap": 0.05863,
+   "rth": false,
+   "spread_bp": 1141.5,
+   "sym": "BRK.B",
+   "ticker": "KXBRKBPERP",
+   "ts": 1794317402
+  },
+  {
+   "gap": 0.07968,
+   "rth": false,
+   "spread_bp": 1945.3,
+   "sym": "BRK.B",
+   "ticker": "KXBRKBPERP",
+   "ts": 1794351662
+  },
+  {
+   "gap": 0.07757,
+   "rth": false,
+   "spread_bp": 1733.0,
+   "sym": "BRK.B",
+   "ticker": "KXBRKBPERP",
+   "ts": 1794470402
+  },
+  {
+   "gap": -0.02101,
+   "gap_15m": -0.01796,
+   "gap_5m": -0.01424,
+   "rth": false,
+   "spread_bp": 159.4,
+   "sym": "CAT",
+   "ticker": "KXCATPERP",
+   "ts": 1794956521
+  },
+  {
+   "gap": 0.01022,
+   "rth": false,
+   "spread_bp": 16.9,
+   "sym": "MRK",
+   "ticker": "KXMRKPERP",
+   "ts": 1794187621
+  },
+  {
+   "gap": 0.01012,
+   "rth": false,
+   "spread_bp": 25.0,
+   "sym": "MRK",
+   "ticker": "KXMRKPERP",
+   "ts": 1794202861
+  },
+  {
+   "gap": 0.01102,
+   "rth": false,
+   "spread_bp": 20.6,
+   "sym": "MRK",
+   "ticker": "KXMRKPERP",
+   "ts": 1794206461
+  },
+  {
+   "gap": 0.01004,
+   "rth": false,
+   "spread_bp": 7.8,
+   "sym": "MRK",
+   "ticker": "KXMRKPERP",
+   "ts": 1794210721
+  },
+  {
+   "gap": 0.01445,
+   "rth": false,
+   "spread_bp": 17.5,
+   "sym": "MRK",
+   "ticker": "KXMRKPERP",
+   "ts": 1794214322
+  },
+  {
+   "gap": 0.10045,
+   "rth": false,
+   "spread_bp": 1998.9,
+   "sym": "MRK",
+   "ticker": "KXMRKPERP",
+   "ts": 1794470402
+  },
+  {
+   "gap": 0.01442,
+   "gap_15m": 0.00034,
+   "gap_5m": 0.00034,
+   "rth": false,
+   "spread_bp": 291.0,
+   "sym": "NVDA",
+   "ticker": "KXNVDAPERP",
+   "ts": 1794956581
+  },
+  {
+   "gap": 0.01276,
+   "gap_15m": 0.0041,
+   "gap_5m": 0.0132,
+   "rth": false,
+   "spread_bp": 184.4,
+   "sym": "PLD",
+   "ticker": "KXPLDPERP",
+   "ts": 1794957422
+  },
+  {
+   "gap": 0.01013,
+   "gap_15m": 0.00781,
+   "gap_5m": 0.00885,
+   "rth": false,
+   "spread_bp": 0.9,
+   "sym": "US500",
+   "ticker": "KXUS500PERP",
+   "ts": 1794957061
+  },
+  {
+   "gap": 0.01487,
+   "gap_15m": 0.01374,
+   "gap_5m": 0.01321,
+   "rth": false,
+   "spread_bp": 0.9,
+   "sym": "US Tech 100",
+   "ticker": "KXUSTECH100PERP",
+   "ts": 1794959041
   }
  ],
- "last_run": "2026-11-17T23:00:16+00:00",
+ "last_run": "2026-11-18T00:00:11+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
