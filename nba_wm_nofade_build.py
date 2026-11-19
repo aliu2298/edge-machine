@@ -6,6 +6,7 @@ import html as _h
 
 import chaos_replay as CR
 import nba_wm_nofade as N
+import nba_wm_nofade_1h as H
 
 
 def esc(x):
@@ -143,3 +144,39 @@ def index_row(state=None, v3=None):
     return (f'<tr data-lane="{N.LANE}"><td><b>{esc(N.LABEL)}</b></td><td><a href="./nba.html#wm-no">NBA</a></td>'
             f'<td class="num">{entries}</td><td class="num">{s["n"]}</td><td class="num">{"—" if won is None else won}</td>'
             f'<td class="num">{pct(s["roi"])}</td><td class="num">—</td><td>{esc(status(s["n"]))}</td></tr>')
+
+
+def _hrow(name, st, strong=False, note=""):
+    b = f"<b>{esc(name)}</b>" if strong else esc(name)
+    return (f'<tr><td>{b}</td><td class="num">{st["fills"]}</td><td class="num">{st["sold"]}</td><td class="num">{pct(st["roi_fill"])}</td>'
+            f'<td class="num">{st["games"]}</td><td class="num">{pct(st["roi_game"])}</td><td class="num">{zfmt(st["z"])}</td>'
+            f'<td class="num">{st["nights"]}</td><td>{esc(note)}</td></tr>')
+
+
+def first_hour_block(state=None, tracker=None):
+    """The 'NO fade, first hour only' fold (Sandbox paper): the record per fill and per game, its comparisons, the YES watch line."""
+    state = state if state is not None else N.load()
+    b = H.board(state)
+    rows = (_hrow("NO fade, first hour · 75% bid", b["head"], True, H.read_text(b))
+            + _hrow("Same, strict sells (a print above the target only)", b["head_strict"])
+            + _hrow("Side row · first hour · 65% bid", b["side"])
+            + _hrow("Same nights, 65% bid all game (the version 4 bid)", b["all65"])
+            + _hrow("Same nights, 75% bid all game", b["all75"])
+            + _hrow("Blind row (a random bucket of the same game at about the same price, bought and held)", b["blind"]))
+    table = ('<div class="tbl"><table class="nofade-1h"><tr><th>Row</th><th class="num">Fills</th><th class="num">Sold back</th>'
+             '<th class="num">Per fill, after fees</th><th class="num">Games</th><th class="num">Per game</th><th class="num">z (by night)</th>'
+             '<th class="num">Nights</th><th>Read</th></tr>' + rows + "</table></div>")
+    w = H.watch(tracker or {})
+    last = w["nights"][-1] if w["nights"] else None
+    week = "—" if w["week"] is None else f'{w["week"] * 100:.0f}%'
+    flag = ('<p class="sm"><b>Flag:</b> the share is above 30% for a full week; the YES split is worth another look.</p>' if w["flag"] else "")
+    watch = (f'<p class="sm"><b>YES watch</b> · the share of 10-20c buckets that doubled in the first hour after the tip: last 7 nights {week} '
+             f'(latest night {"—" if not last else f"{last[2] * 100:.0f}% of {last[1]}"}); by this measure it was 44% on Oct 20-31 and 11% on Nov 8-18. A full week above 30% is the flag.</p>{flag}')
+    return (f'<details class="section-disclosure" id="nofade-1h" data-lane="{H.LANE}"><summary><b>{esc(H.LABEL)} (Sandbox paper)</b>'
+            f'<span>{b["head"]["fills"]} fills · {b["games"]} games read · fresh record since {esc(H.FROM_NIGHT)}</span></summary>'
+            '<p class="sm">A resting NO buy at 75% of the pregame NO price, live from the tip to 60 minutes after it, then cancelled; sold back at the pregame price '
+            f'on a print, else held to settlement. Every bucket with a pregame NO price of 10-95c, a YES spread of 5c or less and a real ask. Maker fees in and out. '
+            f'A sell also counts at the touch when {N.TOUCH_FILL}+ contracts trade at the target, as live sells do; the strict row shows the other way. '
+            f'Read once at {H.READ_AT} fills; retire at or under zero, or if fills stay under one a night for {H.NIGHTS_TO_JUDGE} nights. Paper only; the live lanes are untouched.</p>'
+            f'{table}<p class="sm mut">The 75% level was picked after looking: +24% on 49 fills Nov 1-18, only +8% on 11 since Nov 8. This is its own forward record.</p>'
+            f'{watch}</details>')
