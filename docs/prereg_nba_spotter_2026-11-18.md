@@ -36,3 +36,15 @@ the entry; the fee is charged on both legs (stricter than a resting fill). Unsol
 ## The read
 Once, at 200 graded picks per board (about 3 to 4 weeks). Keep only if: return after fees above zero, t 2 or better by night (nights are the clusters), AND 2 or more points
 a contract over the board's blind control. Anything else: not kept. No early read, no mid-way retune, no changes to the rules above.
+
+## Addendum, 2026-11-18 (evening): the fade board
+
+Registered BEFORE any fade pick is entered. Paper only. Same ledger, workflow, read time (80 to 35 minutes before tip, about K-75) and hourly settle as the other two boards.
+
+- **Pick:** buy NO on a player-prop rung (points, threes, rebounds, assists, points+rebounds+assists) where the frozen model's chance is 5 or more points BELOW the YES ask (model chance <= YES ask - 0.05). Entry is the real NO ask at read time. Skip if there is no NO ask or it is above 90c. The same screens as the other boards apply (YES ask 5c to 60c, spread 5c or less, injury Out list).
+- **Rank and caps:** by gap (YES ask minus model chance), largest first. 4 a game, 8 a night, one rung per player-stat a night, games read in the same run ranked together, picks never replaced.
+- **Grade:** NO wins if the rung misses. Fee on entry, held to settlement, no sell leg. A scalar settlement is no result and is left out.
+- **Blind control (spotter_fade_blind):** same count, one random rung per pick from the same game's NO-side rungs within 3c of the pick's NO price (NO ask 90c or less), never one of the board's own player-stats; seeded by the pick, same method as the other blinds.
+- **Start:** the first fade night is Nov 19 2026 (ET), the first board night after the merge. No backfill: nothing before it is entered.
+- **Read:** once, at 200 graded picks. Keep only if the return is above zero after fees, t is 2 or better by night, and it beats its blind control by 2 or more points a contract.
+- **Context:** in the offline screen the overpriced side had 48 player-stats at t of -2 or worse against 9 positive, but the worst fifth reverted to about zero after Nov 6. This is a genuine forward test, not a known edge.
