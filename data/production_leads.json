@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-19T00:06:22+00:00",
+ "board_built_at": "2026-11-19T00:13:46+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -1483,6 +1483,41 @@
    "sport": "commodities_fav",
    "status": "hit"
   },
+  "2026-11-18|KXBTCD-26NOV1817-T63499.99|Below $63,500 at the close \u00b7 Crypto favourite band, below": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-11-18",
+   "edge_at_log": null,
+   "first_seen": "2026-11-18",
+   "headline": "Below $63,500 at the close",
+   "home": null,
+   "id": "2026-11-18|KXBTCD-26NOV1817-T63499.99|Below $63,500 at the close \u00b7 Crypto favourite band, below",
+   "kickoff": "2026-11-18T22:05Z",
+   "lane": "production",
+   "league": "Crypto \u00b7 Favourite band",
+   "match": "Bitcoin price on Nov 18, 2026",
+   "pair": "crypto_fav_band_below|crypto_fav",
+   "price_at_log": 0.74,
+   "published_at": "2026-11-19T00:13:46+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Below $63,500 at the close",
+    "event": "KXBTCD-26NOV1817",
+    "market": "KXBTCD-26NOV1817-T63499.99",
+    "outcome": "$63,500 or above",
+    "outcome_side": "no",
+    "price_at_log": 0.74,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "crypto_fav_band_below:KXBTCD-26NOV1817-T63499.99",
+   "source": "crypto_fav_band_below",
+   "sport": "crypto_fav",
+   "status": "hit"
+  },
   "2026-11-18|KXGOLDD-26NOV1817-T3726|Above $3726 at the close \u00b7 Commodities favourite band": {
    "away": null,
    "bet": {
@@ -1517,6 +1552,41 @@
    "source": "commod_fav_band",
    "sport": "commodities_fav",
    "status": "miss"
+  },
+  "2026-11-18|KXHYPED-26NOV1817-T67.9999|Below $68 at the close \u00b7 Crypto favourite band, below": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-11-18",
+   "edge_at_log": null,
+   "first_seen": "2026-11-18",
+   "headline": "Below $68 at the close",
+   "home": null,
+   "id": "2026-11-18|KXHYPED-26NOV1817-T67.9999|Below $68 at the close \u00b7 Crypto favourite band, below",
+   "kickoff": "2026-11-18T22:05Z",
+   "lane": "production",
+   "league": "Crypto \u00b7 Favourite band",
+   "match": "HYPE price on Nov 18, 2026",
+   "pair": "crypto_fav_band_below|crypto_fav",
+   "price_at_log": 0.76,
+   "published_at": "2026-11-19T00:13:46+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Below $68 at the close",
+    "event": "KXHYPED-26NOV1817",
+    "market": "KXHYPED-26NOV1817-T67.9999",
+    "outcome": "$68 or above",
+    "outcome_side": "no",
+    "price_at_log": 0.76,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "crypto_fav_band_below:KXHYPED-26NOV1817-T67.9999",
+   "source": "crypto_fav_band_below",
+   "sport": "crypto_fav",
+   "status": "hit"
   },
   "2026-11-18|KXWTI-26NOV1814-T82.49|Above $82.49 at the close \u00b7 Commodities favourite band": {
    "away": null,
@@ -1553,6 +1623,41 @@
    "sport": "commodities_fav",
    "status": "miss"
   },
+  "2026-11-18|KXXRPD-26NOV1817-T0.9799|Below $0.97991 at the close \u00b7 Crypto favourite band, below": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-11-18",
+   "edge_at_log": null,
+   "first_seen": "2026-11-18",
+   "headline": "Below $0.97991 at the close",
+   "home": null,
+   "id": "2026-11-18|KXXRPD-26NOV1817-T0.9799|Below $0.97991 at the close \u00b7 Crypto favourite band, below",
+   "kickoff": "2026-11-18T22:05Z",
+   "lane": "production",
+   "league": "Crypto \u00b7 Favourite band",
+   "match": "Ripple price at Nov 18, 2026 at 5pm EST",
+   "pair": "crypto_fav_band_below|crypto_fav",
+   "price_at_log": 0.74,
+   "published_at": "2026-11-19T00:13:46+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Below $0.97991 at the close",
+    "event": "KXXRPD-26NOV1817",
+    "market": "KXXRPD-26NOV1817-T0.9799",
+    "outcome": "$0.97991 or above",
+    "outcome_side": "no",
+    "price_at_log": 0.74,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "crypto_fav_band_below:KXXRPD-26NOV1817-T0.9799",
+   "source": "crypto_fav_band_below",
+   "sport": "crypto_fav",
+   "status": "hit"
+  },
   "2026-11-20|Athletic Club|Espanyol|Athletic Club to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
    "away": "Espanyol",
    "bet": {
@@ -1569,7 +1674,7 @@
    "kickoff": "2026-11-20T20:00Z",
    "lane": "production",
    "last_seen": "2026-11-19",
-   "last_seen_at": "2026-11-19T00:06:22+00:00",
+   "last_seen_at": "2026-11-19T00:13:46+00:00",
    "league": "La Liga",
    "match": "Athletic Club v Espanyol",
    "pair": "team2_ranked|soccer_team2",
@@ -1650,18 +1755,18 @@
    "ready_at": "2026-10-21T00:47:16+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 9,
+    "leads": 12,
     "problem": null,
-    "routed": 9,
+    "routed": 12,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": 0.0547,
-   "sandbox_n": 27,
-   "sandbox_roi": 0.1234,
-   "sandbox_roi_fee": 0.1034,
+   "sandbox_clv": 0.0604,
+   "sandbox_n": 28,
+   "sandbox_roi": 0.1311,
+   "sandbox_roi_fee": 0.111,
    "timing": {
     "late": [],
     "timed": 0,
@@ -1848,5 +1953,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-19T00:06:22+00:00"
+ "updated_at": "2026-11-19T00:13:46+00:00"
 }
