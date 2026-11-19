@@ -4237,9 +4237,9 @@
    ],
    "pid": "[\"daily\", \"econ_nc_yes\", [\"KXAAAGASD-26NOV19-3.7200\", \"yes\"]]",
    "price": 0.97,
-   "profit": null,
+   "profit": 0.0288,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-19T13:22:32.794555+00:00",
    "side": "yes",
    "snapshot": {
     "as_of": "2026-11-19T03:45:49.450645+00:00",
@@ -4308,12 +4308,12 @@
    },
    "sport": "Commodities",
    "src": "daily",
-   "status": "open"
+   "status": "won"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-19T13:14:35.738809+00:00",
+ "last_run": "2026-11-19T13:37:25.741999+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -13225,14 +13225,14 @@
    ],
    "pid": "[\"daily\", \"econ_nc_yes\", [\"KXAAAGASD-26NOV19-3.7200\", \"yes\"]]",
    "price": 0.97,
-   "profit": null,
+   "profit": 0.0288,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-19T13:22:32.794555+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Commodities",
    "src": "daily",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXMLSGAME-26NOV19ORLCIN-ORL",
