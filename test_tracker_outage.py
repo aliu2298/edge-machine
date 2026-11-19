@@ -128,8 +128,17 @@ def main():
     eq(_tiles(page), _tiles(without), "headline tiles are unchanged")
     print("  tiles " + " | ".join(f"{n} {label}" for n, label in _tiles(page)))
 
+    # The ledger no longer keeps a settled bet from that week, and a week page only exists
+    # for a week that has one. Give a copy one settled bet inside the window.
+    probe_d = copy.deepcopy(d)
+    _shown = SB.hide_refused_tours(SB.hide_removed(probe_d))
+    _recent, _older = SB.partition_settled(_shown, LATER, copy.deepcopy(st))
+    probe = copy.deepcopy(_older[0])
+    probe["id"] = "outage-week-probe"
+    probe["settled"] = "2026-09-29T12:00:00Z"
+    probe_d["quotes"].append(probe)
     _sandbox, _index, weeks = SB.render_pages(
-        now=LATER, d=copy.deepcopy(d), st=copy.deepcopy(st))
+        now=LATER, d=probe_d, st=copy.deepcopy(st))
     week = weeks.get("2026-W40", "")
     ok(NOTE in week, "once those days are archived, that week page shows the note")
     later = _page(d, st, LATER)
