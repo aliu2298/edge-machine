@@ -1,6 +1,6 @@
 {
  "collector": {
-  "last_ts": 1795107601,
+  "last_ts": 1795111202,
   "markets": 97,
   "rows_24h": 129398
  },
@@ -25,14 +25,6 @@
   }
  ],
  "flags": [
-  {
-   "gap": 0.01424,
-   "rth": false,
-   "spread_bp": 47.6,
-   "sym": "MA",
-   "ticker": "KXMAPERP",
-   "ts": 1794206881
-  },
   {
    "gap": 0.01331,
    "rth": false,
@@ -5151,9 +5143,19 @@
    "sym": "TJX",
    "ticker": "KXTJXPERP",
    "ts": 1795098601
+  },
+  {
+   "gap": -0.01346,
+   "gap_15m": 0.00038,
+   "gap_5m": 0.00131,
+   "rth": true,
+   "spread_bp": 321.7,
+   "sym": "ARM",
+   "ticker": "KXARMPERP",
+   "ts": 1795108322
   }
  ],
- "last_run": "2026-11-19T17:00:10+00:00",
+ "last_run": "2026-11-19T18:00:10+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
