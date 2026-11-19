@@ -260,7 +260,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-19T19:00:43Z",
+ "calendar_at": "2026-11-19T20:00:31Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -4955,9 +4955,19 @@
     "width": 685714.2857142985
    },
    "sym": "COST"
+  },
+  {
+   "at": "2026-11-19T20:01:39Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151354838.70967743,
+    "rungs": 10,
+    "width": 685714.2857142985
+   },
+   "sym": "COST"
   }
  ],
- "last_run": "2026-11-19T19:01:50Z",
+ "last_run": "2026-11-19T20:02:29Z",
  "predictions": [
   {
    "call": {
@@ -5656,6 +5666,53 @@
    "report_time": "after-hours",
    "side": 1,
    "sym": "MRVL"
+  },
+  {
+   "call": {
+    "status": "pending"
+   },
+   "entry_due": "2026-11-19T20:01:40Z",
+   "exit_due": "2026-11-27T21:00:00Z",
+   "family": "post_drift",
+   "id": "post_drift:PANW:2026-11-18",
+   "logged_at": "2026-11-19T20:01:40Z",
+   "perp": "KXPANWPERP",
+   "random_side": -1,
+   "reaction": 0.06182,
+   "reason": "Reaction since the last close before the report: +6.2%.",
+   "report": "2026-11-18",
+   "report_time": "after-hours",
+   "side": 1,
+   "status": "pending",
+   "sym": "PANW"
+  },
+  {
+   "family": "post_drift",
+   "id": "post_drift:BABA:2026-11-19",
+   "logged_at": "2026-11-19T20:01:40Z",
+   "perp": "KXBABAPERP",
+   "random_side": -1,
+   "reaction": -0.00266,
+   "reason": "Reaction since the last close before the report: -0.3%.",
+   "report": "2026-11-19",
+   "report_time": "pre-market",
+   "side": 0,
+   "status": "no_call",
+   "sym": "BABA"
+  },
+  {
+   "family": "post_drift",
+   "id": "post_drift:WMT:2026-11-19",
+   "logged_at": "2026-11-19T20:01:40Z",
+   "perp": "KXWMTPERP",
+   "random_side": 1,
+   "reaction": -0.01153,
+   "reason": "Reaction since the last close before the report: -1.2%.",
+   "report": "2026-11-19",
+   "report_time": "pre-market",
+   "side": 0,
+   "status": "no_call",
+   "sym": "WMT"
   }
  ],
  "registered": "2026-11-07",
@@ -5668,6 +5725,7 @@
   "2026-11-13",
   "2026-11-16",
   "2026-11-17",
-  "2026-11-18"
+  "2026-11-18",
+  "2026-11-19"
  ]
 }
