@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-19T18:35:28+00:00",
+ "board_built_at": "2026-11-19T18:45:01+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -1673,7 +1673,7 @@
    "kickoff": "2026-11-19T22:00Z",
    "lane": "production",
    "last_seen": "2026-11-19",
-   "last_seen_at": "2026-11-19T18:35:28+00:00",
+   "last_seen_at": "2026-11-19T18:45:01+00:00",
    "league": "Commodities \u00b7 Favourite band",
    "match": "Brent crude close on Nov 19, 2026",
    "pair": "commod_fav_band|commodities_fav",
@@ -1695,6 +1695,43 @@
    "sport": "commodities_fav",
    "status": "pending"
   },
+  "2026-11-19|KXBTCD-26NOV1917-T63499.99|Below $63,500 at the close \u00b7 Crypto favourite band, below": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-11-19",
+   "edge_at_log": null,
+   "first_seen": "2026-11-19",
+   "headline": "Below $63,500 at the close",
+   "home": null,
+   "id": "2026-11-19|KXBTCD-26NOV1917-T63499.99|Below $63,500 at the close \u00b7 Crypto favourite band, below",
+   "kickoff": "2026-11-19T22:05Z",
+   "lane": "production",
+   "last_seen": "2026-11-19",
+   "last_seen_at": "2026-11-19T18:45:01+00:00",
+   "league": "Crypto \u00b7 Favourite band",
+   "match": "Bitcoin price on Nov 19, 2026",
+   "pair": "crypto_fav_band_below|crypto_fav",
+   "price_at_log": 0.78,
+   "published_at": "2026-11-19T18:45:01+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 199,
+   "route": {
+    "claim": "Below $63,500 at the close",
+    "event": "KXBTCD-26NOV1917",
+    "market": "KXBTCD-26NOV1917-T63499.99",
+    "outcome": "$63,500 or above",
+    "outcome_side": "no",
+    "price_at_log": 0.78,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "crypto_fav_band_below:KXBTCD-26NOV1917-T63499.99",
+   "source": "crypto_fav_band_below",
+   "sport": "crypto_fav",
+   "status": "pending"
+  },
   "2026-11-19|KXETHD-26NOV1917-T1799.99|Below $1,800 at the close \u00b7 Crypto favourite band, below": {
    "away": null,
    "bet": {
@@ -1710,7 +1747,7 @@
    "kickoff": "2026-11-19T22:05Z",
    "lane": "production",
    "last_seen": "2026-11-19",
-   "last_seen_at": "2026-11-19T18:35:28+00:00",
+   "last_seen_at": "2026-11-19T18:45:01+00:00",
    "league": "Crypto \u00b7 Favourite band",
    "match": "Ethereum price at Nov 19, 2026 at 5pm EST",
    "pair": "crypto_fav_band_below|crypto_fav",
@@ -1747,7 +1784,7 @@
    "kickoff": "2026-11-19T22:00Z",
    "lane": "production",
    "last_seen": "2026-11-19",
-   "last_seen_at": "2026-11-19T18:35:28+00:00",
+   "last_seen_at": "2026-11-19T18:45:01+00:00",
    "league": "Commodities \u00b7 Favourite band",
    "match": "Gold close on Nov 19, 2026",
    "pair": "commod_fav_band|commodities_fav",
@@ -1784,7 +1821,7 @@
    "kickoff": "2026-11-19T19:30Z",
    "lane": "production",
    "last_seen": "2026-11-19",
-   "last_seen_at": "2026-11-19T18:35:28+00:00",
+   "last_seen_at": "2026-11-19T18:45:01+00:00",
    "league": "Commodities \u00b7 Favourite band",
    "match": "WTI crude close on Nov 19, 2026",
    "pair": "commod_fav_band|commodities_fav",
@@ -1822,7 +1859,7 @@
    "kickoff": "2026-11-20T20:00Z",
    "lane": "production",
    "last_seen": "2026-11-19",
-   "last_seen_at": "2026-11-19T18:35:28+00:00",
+   "last_seen_at": "2026-11-19T18:45:01+00:00",
    "league": "La Liga",
    "match": "Athletic Club v Espanyol",
    "pair": "team2_ranked|soccer_team2",
@@ -1859,7 +1896,7 @@
    "kickoff": "2026-11-20T00:30Z",
    "lane": "production",
    "last_seen": "2026-11-19",
-   "last_seen_at": "2026-11-19T18:35:28+00:00",
+   "last_seen_at": "2026-11-19T18:45:01+00:00",
    "league": "MLS",
    "match": "Orlando City SC v FC Cincinnati",
    "pair": "mls_fade_home|soccer_p05",
@@ -1940,9 +1977,9 @@
    "ready_at": "2026-10-21T00:47:16+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 13,
+    "leads": 14,
     "problem": null,
-    "routed": 13,
+    "routed": 14,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1954,7 +1991,7 @@
    "sandbox_roi_fee": 0.111,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 2,
     "under_target": 0
    }
   },
@@ -2138,5 +2175,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-19T18:35:28+00:00"
+ "updated_at": "2026-11-19T18:45:01+00:00"
 }
