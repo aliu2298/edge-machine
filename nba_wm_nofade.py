@@ -58,6 +58,7 @@ P_RANGE = (0.10, 0.95)
 MAX_SPREAD = 0.05
 MIN_LIMIT = 0.03
 MIN_FILL = 10
+TOUCH_FILL = 10
 FILL_WINDOW_MIN = 60
 CHECK_MIN, CHECK_WINDOW_MIN, LAST_FLOOR = 10, 60, 0.5
 MAX_EVENTS_PER_RUN = 40
@@ -119,8 +120,22 @@ def dip_trade(prints, tip, P, d, no_wins, strict=False, no_at_tip=None):
     sold = next((p for p in live[i + 1:] if (p[1] > P + EPS if strict else p[1] >= P - EPS)), None)
     pay = (P - fee(P)) if sold else (1.0 if no_wins else 0.0)
     cost = limit + fee(limit)
+    # The touch rule (2026-11-19, from the first-half lane): a resting sell at P also fills when TOUCH_FILL or more contracts trade AT P
+    # after the entry, as live sells do. Recorded beside the strict figures; the strict ones stay the ledger's profit.
+    touched, acc = None, 0.0
+    for p in live[i + 1:]:
+        if (p[1] > P + EPS if strict else p[1] >= P - EPS):
+            touched = p
+            break
+        if abs(p[1] - P) <= EPS:
+            acc += p[2]
+            if acc >= TOUCH_FILL - EPS:
+                touched = p
+                break
+    pay_t = (P - fee(P)) if touched else (1.0 if no_wins else 0.0)
     return dict(limit=limit, fill_at=t0, fill_print=live[i][1], printed=vol, sold_at=sold[0] if sold else None,
-                cost=round(cost, 5), profit=round(pay - cost, 5), won=pay > cost, reason="sold" if sold else "settled")
+                cost=round(cost, 5), profit=round(pay - cost, 5), won=pay > cost, reason="sold" if sold else "settled",
+                sold_touch_at=touched[0] if touched else None, profit_touch=round(pay_t - cost, 5))
 
 
 def evaluate(markets, entry, trades_of, tip, now_iso, strict=False, at_tip=None):
