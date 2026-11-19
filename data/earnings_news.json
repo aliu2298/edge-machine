@@ -124,7 +124,9 @@
    "eps_forecast": "$3.89",
    "fiscal_q": "Oct/2026",
    "kpi": [],
-   "mentions": [],
+   "mentions": [
+    "KXEARNINGSMENTIONADI-26NOV24"
+   ],
    "n_ests": "10",
    "name": "Analog Devices, Inc.",
    "perp": "KXADIPERP",
@@ -153,7 +155,7 @@
    "mentions": [
     "KXEARNINGSMENTIONDE-26NOV25"
    ],
-   "n_ests": "N/A",
+   "n_ests": "1",
    "name": "Deere & Company",
    "perp": "KXDEPERP",
    "sym": "DE",
@@ -224,7 +226,7 @@
    "time": "not-supplied"
   }
  ],
- "calendar_at": "2026-11-18T23:00:31Z",
+ "calendar_at": "2026-11-19T01:29:00Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -4607,9 +4609,39 @@
     "width": 0.3277195085406053
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-19T00:01:36Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.7555555555555555,
+    "rungs": 15,
+    "width": 0.32210884353741465
+   },
+   "sym": "WMT"
+  },
+  {
+   "at": "2026-11-19T01:01:24Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.7555555555555555,
+    "rungs": 15,
+    "width": 0.32210884353741465
+   },
+   "sym": "WMT"
+  },
+  {
+   "at": "2026-11-19T01:30:00Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.7534246575342465,
+    "rungs": 15,
+    "width": 0.3182555213866367
+   },
+   "sym": "WMT"
   }
  ],
- "last_run": "2026-11-18T23:01:27Z",
+ "last_run": "2026-11-19T01:30:03Z",
  "predictions": [
   {
    "call": {
