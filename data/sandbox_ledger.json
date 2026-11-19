@@ -25,7 +25,7 @@
    "kalshi_venue": 280
   },
   "cricket": {
-   "kalshi_venue": 6,
+   "kalshi_venue": 9,
    "polymarket_us": 24,
    "polymarket_us_listed": 24,
    "polymarket_us_priced": 0
@@ -48,7 +48,7 @@
    "kalshi_venue": 33
   },
   "finance": {
-   "kalshi_venue": 31
+   "kalshi_venue": 32
   },
   "mma": {
    "kalshi_venue": 0,
@@ -73,7 +73,7 @@
     "offered": 9,
     "picked": 0
    },
-   "kalshi_venue": 284,
+   "kalshi_venue": 270,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -350,8 +350,8 @@
   "tennis": {
    "kalshi_venue": 5,
    "polymarket_us": 40,
-   "polymarket_us_listed": 330,
-   "polymarket_us_priced": 178
+   "polymarket_us_listed": 327,
+   "polymarket_us_priced": 179
   },
   "tennis_combo": {
    "combo": 0,
@@ -364,48 +364,48 @@
  },
  "feed_status": {
   "pin_totals": "down: no paced credit left for this run",
-  "pinnacle": "down: HTTP 429 on /sports/soccer_germany_bundesliga/events"
+  "pinnacle": "down: HTTP 429 on /sports/soccer_uefa_champs_league_women/events"
  },
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-19T01:04:07+00:00",
-   "commodities": "2026-11-19T01:04:07+00:00",
-   "commodities_fav": "2026-11-19T01:04:07+00:00",
-   "cricket": "2026-11-19T01:04:07+00:00",
-   "crypto": "2026-11-19T01:04:07+00:00",
-   "crypto_fav": "2026-11-19T01:04:07+00:00",
-   "economics": "2026-11-19T01:04:07+00:00",
-   "finance": "2026-11-19T01:04:07+00:00",
-   "mma": "2026-11-19T01:04:07+00:00",
-   "nfl": "2026-11-19T01:04:07+00:00",
-   "nhl_pl": "2026-11-19T01:04:07+00:00",
-   "nhl_rest": "2026-11-19T01:04:07+00:00",
-   "soccer": "2026-11-19T01:04:07+00:00",
-   "soccer_btts": "2026-11-19T01:04:07+00:00",
-   "soccer_btts_cup": "2026-11-19T01:04:07+00:00",
+   "boxing": "2026-11-19T01:16:14+00:00",
+   "commodities": "2026-11-19T01:16:14+00:00",
+   "commodities_fav": "2026-11-19T01:16:14+00:00",
+   "cricket": "2026-11-19T01:16:14+00:00",
+   "crypto": "2026-11-19T01:16:14+00:00",
+   "crypto_fav": "2026-11-19T01:16:14+00:00",
+   "economics": "2026-11-19T01:16:14+00:00",
+   "finance": "2026-11-19T01:16:14+00:00",
+   "mma": "2026-11-19T01:16:14+00:00",
+   "nfl": "2026-11-19T01:16:14+00:00",
+   "nhl_pl": "2026-11-19T01:16:14+00:00",
+   "nhl_rest": "2026-11-19T01:16:14+00:00",
+   "soccer": "2026-11-19T01:16:14+00:00",
+   "soccer_btts": "2026-11-19T01:16:14+00:00",
+   "soccer_btts_cup": "2026-11-19T01:16:14+00:00",
    "soccer_btts_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_corners": "2026-11-19T01:04:07+00:00",
-   "soccer_ftts": "2026-11-19T01:04:07+00:00",
-   "soccer_o15": "2026-11-19T01:04:07+00:00",
-   "soccer_o15_cup": "2026-11-19T01:04:07+00:00",
+   "soccer_corners": "2026-11-19T01:16:14+00:00",
+   "soccer_ftts": "2026-11-19T01:16:14+00:00",
+   "soccer_o15": "2026-11-19T01:16:14+00:00",
+   "soccer_o15_cup": "2026-11-19T01:16:14+00:00",
    "soccer_o15_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_o25": "2026-11-19T01:04:07+00:00",
-   "soccer_o25_cup": "2026-11-19T01:04:07+00:00",
+   "soccer_o25": "2026-11-19T01:16:14+00:00",
+   "soccer_o25_cup": "2026-11-19T01:16:14+00:00",
    "soccer_o25_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_p05": "2026-11-19T01:04:07+00:00",
-   "soccer_p05_cup": "2026-11-19T01:04:07+00:00",
+   "soccer_p05": "2026-11-19T01:16:14+00:00",
+   "soccer_p05_cup": "2026-11-19T01:16:14+00:00",
    "soccer_p05_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_team1": "2026-11-19T01:04:07+00:00",
+   "soccer_team1": "2026-11-19T01:16:14+00:00",
    "soccer_team1_cup": "2026-11-11T19:32:50+00:00",
    "soccer_team1_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_team2": "2026-11-19T01:04:07+00:00",
+   "soccer_team2": "2026-11-19T01:16:14+00:00",
    "soccer_team2_cup": "2026-11-11T19:32:50+00:00",
    "soccer_team2_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_u35": "2026-11-19T01:04:07+00:00",
-   "soccer_u35_cup": "2026-11-19T01:04:07+00:00",
+   "soccer_u35": "2026-11-19T01:16:14+00:00",
+   "soccer_u35_cup": "2026-11-19T01:16:14+00:00",
    "soccer_u35_intl": "2026-11-17T23:27:07+00:00",
-   "tennis": "2026-11-19T01:04:07+00:00",
+   "tennis": "2026-11-19T01:16:14+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -526,7 +526,7 @@
   },
   "odds_api": {
    "allowance": 0,
-   "at": "2026-11-19T01:04:07+00:00",
+   "at": "2026-11-19T01:16:14+00:00",
    "remaining": 203,
    "used": 297
   },
@@ -547,7 +547,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 2197,
+  "runs": 2198,
   "tennis_shortlist": {
    "audit": [
     {
@@ -559,7 +559,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-19T01:05:45+00:00"
+  "updated": "2026-11-19T01:17:48+00:00"
  },
  "quotes": [
   {
@@ -382069,7 +382069,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-19T01:04:07+00:00",
+   "close_at": "2026-11-19T01:16:14+00:00",
    "close_price": 0.51,
    "date": "2026-11-21",
    "edge": null,
@@ -425956,7 +425956,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-19T01:04:07+00:00",
+   "close_at": "2026-11-19T01:16:14+00:00",
    "close_price": 0.51,
    "date": "2026-11-22",
    "edge": null,
@@ -431470,7 +431470,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-19T01:04:07+00:00",
+   "close_at": "2026-11-19T01:16:14+00:00",
    "close_price": 0.61,
    "date": "2026-11-20",
    "edge": null,
@@ -432092,7 +432092,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-19T01:04:07+00:00",
+   "close_at": "2026-11-19T01:16:14+00:00",
    "close_price": 0.82,
    "date": "2026-11-21",
    "edge": null,
@@ -435681,6 +435681,108 @@
    "untraded": false,
    "url": "https://kalshi.com/markets/kxnatgasd",
    "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-19",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfme-daisum-manplu-2026-11-19",
+   "label": "Daisuke Sumizawa vs Manuel Plunger",
+   "liquidity": null,
+   "logged": "2026-11-19T01:16:14+00:00",
+   "market_id": "aec-itfme-daisum-manplu-2026-11-19",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.19,
+   "price_b": 0.82,
+   "price_draw": null,
+   "prob_a": 0.185,
+   "result": null,
+   "settled": null,
+   "side_a": "Daisuke Sumizawa",
+   "side_b": "Manuel Plunger",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-19T04:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfme",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfme-daisum-manplu-2026-11-19",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-19",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfme-barsoy-sanshi-2026-11-19",
+   "label": "Baran Soyler vs Sanhui Shin",
+   "liquidity": null,
+   "logged": "2026-11-19T01:16:14+00:00",
+   "market_id": "aec-itfme-barsoy-sanshi-2026-11-19",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.1,
+   "price_b": 0.91,
+   "price_draw": null,
+   "prob_a": 0.095,
+   "result": null,
+   "settled": null,
+   "side_a": "Baran Soyler",
+   "side_b": "Sanhui Shin",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-19T04:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfme",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfme-barsoy-sanshi-2026-11-19",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-19",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfme-jamher-marmal-2026-11-19",
+   "label": "James Van Herzeele vs Markus Malaszszak",
+   "liquidity": null,
+   "logged": "2026-11-19T01:16:14+00:00",
+   "market_id": "aec-itfme-jamher-marmal-2026-11-19",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.41,
+   "price_b": 0.6,
+   "price_draw": null,
+   "prob_a": 0.405,
+   "result": null,
+   "settled": null,
+   "side_a": "James Van Herzeele",
+   "side_b": "Markus Malaszszak",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-19T04:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfme",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfme-jamher-marmal-2026-11-19",
+   "venue": "polymarket_us",
    "venue_start": null
   }
  ],
