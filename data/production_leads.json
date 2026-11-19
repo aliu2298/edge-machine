@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-19T11:19:15+00:00",
+ "board_built_at": "2026-11-19T12:06:07+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -1674,7 +1674,7 @@
    "kickoff": "2026-11-20T20:00Z",
    "lane": "production",
    "last_seen": "2026-11-19",
-   "last_seen_at": "2026-11-19T11:19:15+00:00",
+   "last_seen_at": "2026-11-19T12:06:07+00:00",
    "league": "La Liga",
    "match": "Athletic Club v Espanyol",
    "pair": "team2_ranked|soccer_team2",
@@ -1694,6 +1694,43 @@
    "sandbox_quote": "team2_ranked:KXLALIGATEAMTOTAL-26NOV20ATHESP-ATH2",
    "source": "team2_ranked",
    "sport": "soccer_team2",
+   "status": "pending"
+  },
+  "2026-11-20|Orlando City SC|FC Cincinnati|FC Cincinnati +0.5 (Orlando City SC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
+   "away": "FC Cincinnati",
+   "bet": {
+    "kind": "win_no",
+    "team": "Orlando City SC"
+   },
+   "date": "2026-11-20",
+   "edge_at_log": null,
+   "first_seen": "2026-11-19",
+   "headline": "FC Cincinnati +0.5 (Orlando City SC not to win)",
+   "home": "Orlando City SC",
+   "id": "2026-11-20|Orlando City SC|FC Cincinnati|FC Cincinnati +0.5 (Orlando City SC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45",
+   "kickoff": "2026-11-20T00:30Z",
+   "lane": "production",
+   "last_seen": "2026-11-19",
+   "last_seen_at": "2026-11-19T12:06:07+00:00",
+   "league": "MLS",
+   "match": "Orlando City SC v FC Cincinnati",
+   "pair": "mls_fade_home|soccer_p05",
+   "price_at_log": 0.61,
+   "published_at": "2026-11-19T12:06:07+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 743,
+   "route": {
+    "claim": "FC Cincinnati +0.5 (Orlando City SC not to win)",
+    "event": "KXMLSGAME-26NOV19ORLCIN",
+    "market": "KXMLSGAME-26NOV19ORLCIN-ORL",
+    "outcome": "Orlando",
+    "outcome_side": "no",
+    "price_at_log": 0.61,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "mls_fade_home:KXMLSGAME-26NOV19ORLCIN-ORL",
+   "source": "mls_fade_home",
+   "sport": "soccer_p05",
    "status": "pending"
   }
  },
@@ -1805,9 +1842,9 @@
    "ready_at": "2026-10-16T17:17:38+00:00",
    "route": "moved by hand on 2026-10-16",
    "routing": {
-    "leads": 0,
+    "leads": 1,
     "problem": null,
-    "routed": 0,
+    "routed": 1,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1819,7 +1856,7 @@
    "sandbox_roi_fee": 0.1378,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -1953,5 +1990,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-19T11:19:15+00:00"
+ "updated_at": "2026-11-19T12:06:07+00:00"
 }

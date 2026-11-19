@@ -993,6 +993,10 @@
    "mirror": "entered",
    "pool": "entered"
   },
+  "[\"sandbox\", \"mls_fade_home\", [\"mls_fade_home:KXMLSGAME-26NOV19ORLCIN-ORL\", \"b\"]]": {
+   "at": "2026-11-19T12:06:07.662047+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXINTLFRIENDLYTOTAL-26NOV13COLCHI-2\", \"a\"]]": {
    "at": "2026-11-12T09:00:03.051242+00:00",
    "pool": "entered"
@@ -4309,7 +4313,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-19T11:19:15.338835+00:00",
+ "last_run": "2026-11-19T12:06:07.662047+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -13228,6 +13232,29 @@
    "snapshot": null,
    "sport": "Commodities",
    "src": "daily",
+   "status": "open"
+  },
+  {
+   "contract": "KXMLSGAME-26NOV19ORLCIN-ORL",
+   "entered_at": "2026-11-19T12:06:07.662047+00:00",
+   "entities": [
+    "FC Cincinnati"
+   ],
+   "id": "superpack:[\"sandbox\", \"mls_fade_home\", [\"mls_fade_home:KXMLSGAME-26NOV19ORLCIN-ORL\", \"b\"]]",
+   "lane": "mls_fade_home",
+   "logged": "2026-11-19T12:04:21+00:00",
+   "matched": [
+    "FC Cincinnati"
+   ],
+   "pid": "[\"sandbox\", \"mls_fade_home\", [\"mls_fade_home:KXMLSGAME-26NOV19ORLCIN-ORL\", \"b\"]]",
+   "price": 0.61,
+   "profit": null,
+   "scope": "soccer_p05",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
    "status": "open"
   }
  ],
