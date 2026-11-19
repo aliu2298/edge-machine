@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-19T22:31:29.649968+00:00",
+ "last_run": "2026-11-19T23:02:00.298036+00:00",
  "rules": {
   "NO": {
    "picks": [
@@ -157,6 +157,23 @@
      "status": "open",
      "ticker": "KXBRASILEIROBTTS-26NOV19VITRBB-BTTS",
      "why": "Brazil BTTS NO 0.43"
+    },
+    {
+     "ask": 0.49,
+     "bid": 0.48,
+     "event": "KXBRASILEIROBTTS-26NOV19SPAFLU",
+     "id": "NO:KXBRASILEIROBTTS-26NOV19SPAFLU",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-19T23:02:00.298036+00:00",
+     "match": "S\u00e3o Paulo v Fluminense",
+     "price": 0.49,
+     "rule": "NO",
+     "side": "no",
+     "start": "2026-11-20T00:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV19SPAFLU-BTTS",
+     "why": "Brazil BTTS NO 0.49"
     }
    ]
   },
@@ -315,6 +332,23 @@
      "status": "open",
      "ticker": "KXBRASILEIROBTTS-26NOV19VITRBB-BTTS",
      "why": "Brazil BTTS YES 0.58"
+    },
+    {
+     "ask": 0.52,
+     "bid": 0.51,
+     "event": "KXBRASILEIROBTTS-26NOV19SPAFLU",
+     "id": "YES:KXBRASILEIROBTTS-26NOV19SPAFLU",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-19T23:02:00.298036+00:00",
+     "match": "S\u00e3o Paulo v Fluminense",
+     "price": 0.52,
+     "rule": "YES",
+     "side": "yes",
+     "start": "2026-11-20T00:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV19SPAFLU-BTTS",
+     "why": "Brazil BTTS YES 0.52"
     }
    ]
   }
@@ -466,10 +500,16 @@
    "matched": 0,
    "new": 0,
    "quoted": 0
+  },
+  {
+   "at": "2026-11-19T23:02:00.298036+00:00",
+   "due": 1,
+   "matched": 1,
+   "new": 2,
+   "quoted": 1
   }
  ],
  "schedule": [
-  "2026-11-19T22:30:00+00:00",
   "2026-11-20T00:30:00+00:00",
   "2026-11-20T23:00:00+00:00",
   "2026-11-21T18:00:00+00:00",
