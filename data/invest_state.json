@@ -1,8 +1,8 @@
 {
  "collector": {
-  "last_ts": 1795122002,
+  "last_ts": 1795125601,
   "markets": 97,
-  "rows_24h": 129301
+  "rows_24h": 129342
  },
  "events": [
   {
@@ -25,25 +25,6 @@
   }
  ],
  "flags": [
-  {
-   "gap": -0.01103,
-   "gap_15m": -0.01509,
-   "gap_5m": -0.01279,
-   "gap_60m": -0.0113,
-   "rth": false,
-   "spread_bp": 9.7,
-   "sym": "TXN",
-   "ticker": "KXTXNPERP",
-   "ts": 1794969481
-  },
-  {
-   "gap": -0.08221,
-   "rth": false,
-   "spread_bp": 2326.6,
-   "sym": "V",
-   "ticker": "KXVPERP",
-   "ts": 1794181921
-  },
   {
    "gap": -0.07274,
    "rth": false,
@@ -5163,9 +5144,29 @@
    "sym": "SKHY",
    "ticker": "KXSKHYPERP",
    "ts": 1795112281
+  },
+  {
+   "gap": 0.01099,
+   "gap_15m": 0.00819,
+   "gap_5m": 0.00926,
+   "rth": false,
+   "spread_bp": 9.3,
+   "sym": "TJX",
+   "ticker": "KXTJXPERP",
+   "ts": 1795122902
+  },
+  {
+   "gap": 0.01064,
+   "gap_15m": 0.00313,
+   "gap_5m": 0.01064,
+   "rth": false,
+   "spread_bp": 19.6,
+   "sym": "TMO",
+   "ticker": "KXTMOPERP",
+   "ts": 1795122721
   }
  ],
- "last_run": "2026-11-19T21:00:09+00:00",
+ "last_run": "2026-11-19T22:00:07+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
