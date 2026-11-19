@@ -589,6 +589,10 @@
    "at": "2026-11-18T16:05:50.590100+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXWTI-26NOV1914-T82.99\", \"a\"]]": {
+   "at": "2026-11-19T16:36:02.015279+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"commod_nc_no\", [\"commod_nc_no:KXBRENTD-26NOV0517-T99.50\", \"b\"]]": {
    "at": "2026-11-05T20:48:54.733146+00:00",
    "pool": "entered"
@@ -4313,7 +4317,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-19T16:12:24.788290+00:00",
+ "last_run": "2026-11-19T16:36:02.015279+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -13254,6 +13258,29 @@
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXWTI-26NOV1914-T82.99",
+   "entered_at": "2026-11-19T16:36:02.015279+00:00",
+   "entities": [
+    "WTI"
+   ],
+   "id": "superpack:[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXWTI-26NOV1914-T82.99\", \"a\"]]",
+   "lane": "commod_fav_band",
+   "logged": "2026-11-19T16:35:03+00:00",
+   "matched": [
+    "WTI"
+   ],
+   "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXWTI-26NOV1914-T82.99\", \"a\"]]",
+   "price": 0.74,
+   "profit": null,
+   "scope": "commodities_fav",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Commodities",
    "src": "sandbox",
    "status": "open"
   }
