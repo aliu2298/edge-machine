@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-19T03:01:41.095555+00:00",
+ "last_run": "2026-11-19T21:01:35.325791+00:00",
  "rules": {
   "NO": {
    "picks": [
@@ -123,6 +123,40 @@
      "status": "won",
      "ticker": "KXBRASILEIROBTTS-26NOV18GPABAH-BTTS",
      "why": "Brazil BTTS NO 0.38"
+    },
+    {
+     "ask": 0.49,
+     "bid": 0.47,
+     "event": "KXBRASILEIROBTTS-26NOV19VDGINT",
+     "id": "NO:KXBRASILEIROBTTS-26NOV19VDGINT",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-19T21:01:35.325791+00:00",
+     "match": "Vasco da Gama v Internacional",
+     "price": 0.49,
+     "rule": "NO",
+     "side": "no",
+     "start": "2026-11-19T22:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV19VDGINT-BTTS",
+     "why": "Brazil BTTS NO 0.49"
+    },
+    {
+     "ask": 0.43,
+     "bid": 0.42,
+     "event": "KXBRASILEIROBTTS-26NOV19VITRBB",
+     "id": "NO:KXBRASILEIROBTTS-26NOV19VITRBB",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-19T21:01:35.325791+00:00",
+     "match": "Vit\u00f3ria v Red Bull Bragantino",
+     "price": 0.43,
+     "rule": "NO",
+     "side": "no",
+     "start": "2026-11-19T22:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV19VITRBB-BTTS",
+     "why": "Brazil BTTS NO 0.43"
     }
    ]
   },
@@ -247,6 +281,40 @@
      "status": "lost",
      "ticker": "KXBRASILEIROBTTS-26NOV18GPABAH-BTTS",
      "why": "Brazil BTTS YES 0.63"
+    },
+    {
+     "ask": 0.53,
+     "bid": 0.51,
+     "event": "KXBRASILEIROBTTS-26NOV19VDGINT",
+     "id": "YES:KXBRASILEIROBTTS-26NOV19VDGINT",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-19T21:01:35.325791+00:00",
+     "match": "Vasco da Gama v Internacional",
+     "price": 0.53,
+     "rule": "YES",
+     "side": "yes",
+     "start": "2026-11-19T22:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV19VDGINT-BTTS",
+     "why": "Brazil BTTS YES 0.53"
+    },
+    {
+     "ask": 0.58,
+     "bid": 0.57,
+     "event": "KXBRASILEIROBTTS-26NOV19VITRBB",
+     "id": "YES:KXBRASILEIROBTTS-26NOV19VITRBB",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-19T21:01:35.325791+00:00",
+     "match": "Vit\u00f3ria v Red Bull Bragantino",
+     "price": 0.58,
+     "rule": "YES",
+     "side": "yes",
+     "start": "2026-11-19T22:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV19VITRBB-BTTS",
+     "why": "Brazil BTTS YES 0.58"
     }
    ]
   }
@@ -377,6 +445,13 @@
    "matched": 0,
    "new": 0,
    "quoted": 0
+  },
+  {
+   "at": "2026-11-19T21:01:35.325791+00:00",
+   "due": 2,
+   "matched": 2,
+   "new": 4,
+   "quoted": 2
   }
  ],
  "schedule": [
