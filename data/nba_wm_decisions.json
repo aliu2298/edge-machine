@@ -14248,6 +14248,19 @@
    "yes_ask": 0.07,
    "yes_bid": 0.04
   },
+  "no:KXNBAWINMARGIN-26NOV18UTALAL-UTA6TO10": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "UTA6TO10",
+   "decided_at": "2026-11-19T02:15:00+00:00",
+   "event": "KXNBAWINMARGIN-26NOV18UTALAL",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV18",
+   "ticker": "KXNBAWINMARGIN-26NOV18UTALAL-UTA6TO10",
+   "tip": "2026-11-19T03:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "no:KXNBAWINMARGIN-26NOV18WASTOR-TOR11TO20": {
    "P": 0.84,
    "bot_version": "wm-nofade-v4",
@@ -24087,6 +24100,19 @@
    "yes_ask": 0.07,
    "yes_bid": 0.04
   },
+  "yes:KXNBAWINMARGIN-26NOV18UTALAL-UTA6TO10": {
+   "bot_version": "wm-yes-v4",
+   "bucket": "UTA6TO10",
+   "decided_at": "2026-11-19T02:15:00+00:00",
+   "event": "KXNBAWINMARGIN-26NOV18UTALAL",
+   "lane": "nba_winmargin_live",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV18",
+   "ticker": "KXNBAWINMARGIN-26NOV18UTALAL-UTA6TO10",
+   "tip": "2026-11-19T03:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "yes:KXNBAWINMARGIN-26NOV18WASTOR-TOR11TO20": {
    "bot_version": "wm-yes-v4",
    "bucket": "TOR11TO20",
@@ -24205,6 +24231,6 @@
    "yes_bid": 0.08
   }
  },
- "updated_at": "2026-11-19T02:05:36+00:00",
+ "updated_at": "2026-11-19T02:15:00+00:00",
  "version": 1
 }
