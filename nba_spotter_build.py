@@ -34,7 +34,7 @@ def records_html(state):
         a, b = S.stats(_picks(state, board)), S.stats(_picks(state, S.BLIND[board]))
         ex, tx, k = S.versus_blind(state, board)
         hit = "—" if not a["n"] else _pct(a["won"] / a["n"])
-        sold = "" if board == "spotter_hold" or not a["n"] else f" · sold at 2x {a['sold']}/{a['n']}"
+        sold = "" if board != "spotter_spike" or not a["n"] else f" · sold at 2x {a['sold']}/{a['n']}"
         rows.append(
             f'<tr data-source="{esc(board)}"><td><b>{esc(S.NAMES[board])}</b><br><span class="sm mut">{esc(board)}</span></td>'
             f'<td class="num">{a["n"]}</td><td class="num">{hit}</td><td class="num">{"—" if a["price"] is None else f"{a['price'] * 100:.0f}c"}</td>'
@@ -56,7 +56,8 @@ def _row(p, now):
     if p.get("outs"):
         why += f" ({', '.join(p['outs'])} out)"
     tgt = f" → sell {p['target'] * 100:.0f}c" if p.get("target") else ""
-    return (f'<tr><td>{esc(tip)}</td><td>{esc(p["game"])}</td><td><b>{esc(p["player"])}</b> {esc(p["rung"])}+ {esc(p["unit"])}</td>'
+    no = "NO on " if p.get("side") == "no" else ""
+    return (f'<tr><td>{esc(tip)}</td><td>{esc(p["game"])}</td><td>{no}<b>{esc(p["player"])}</b> {esc(p["rung"])}+ {esc(p["unit"])}</td>'
             f'<td class="num">{p["price"] * 100:.0f}c{esc(tgt)}</td><td class="num">{model}</td><td>{esc(why)}</td>'
             f'<td>{esc(S.NAMES[p["rule"]])}</td><td>{esc(res)}</td></tr>')
 
@@ -85,7 +86,7 @@ def section(state=None, now=None):
     err = f" · {esc(state['error'])}" if state.get("error") else ""
     return f"""<section id="spotter" class="sp-section">
 <div class="sp-section-head"><h2>NBA Spotter (Sandbox)</h2><span class="sm mut">paper · {len(looks)} read</span></div>
-<p class="sm">Paper only, on Kalshi player props. A frozen model scores every priced player rung about an hour before tip and enters two boards a night, up to 8 each. Hold: the model's chance is 5+ points above the ask, held to the end. Spike: rungs at 49c or less ranked by the spike model, with a paper sell at 2x. Each board has a blind control: a random rung in the same game at about the same price with the same exit.</p>
+<p class="sm">Paper only, on Kalshi player props. A frozen model scores every priced player rung about an hour before tip and enters three boards a night, up to 8 each. Hold: the model's chance is 5+ points above the ask, held to the end. Spike: rungs at 49c or less ranked by the spike model, with a paper sell at 2x. Fade (from Nov 19): buy NO where the model's chance is 5+ points below the YES ask, at the real NO ask of 90c or less, held to the end. Each board has a blind control: a random rung in the same game at about the same price with the same exit (the fade's on the NO side).</p>
 {records_html(state)}
 {picks_html(state, now)}
 <details class="section-disclosure"><summary><b>Rules and pre-registration</b><span>registered {esc(S.REGISTERED)}</span></summary>

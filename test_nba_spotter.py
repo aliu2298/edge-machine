@@ -118,6 +118,42 @@ check("two games in one run: the later game's better edges are not shut out by t
       (sorted(collections.Counter(p["game_id"] for p in hp5).items()), len(hp5)), ([("early", 4), ("late", 4)], 8))
 check("the batch size is logged", st5["looks"]["early"]["batch"], 2)
 
+# the fade board: buy NO where the model is 5+ points below the YES ask, real NO ask <= 90c, from the first board night
+print("\nthe fade board")
+tkf = 1_800_000_000.0
+def fade_rows(prefix, top, n=12, no_ask=0.60):
+    return [dict(rung=i, bid=0.40, ask=0.42, no_ask=no_ask, tk=f"{prefix}-{i}", name=f"{prefix}{i}", pid=f"{prefix}{i}", stat="pts", team="AAA", p_hold=0.42 - top + i / 1000,
+                 edge=-top, why_hold="w", outs=[], gap=top - i / 1000, p_fade=0.58 + top - i / 1000, why_fade="a cold run") for i in range(n)]
+st6 = S.empty()
+S.read_game = lambda W_, g_, m_, o_: (fade_rows(g_["id"], 0.20 if g_["id"] == "late" else 0.10) + [dict(fade_rows("x", 0.30, 1)[0], no_ask=0.93, tk="x-hi", pid="xhi"), dict(fade_rows("y", 0.30, 1)[0], no_ask=None, tk="y-none", pid="ynone"),
+                                                                                                    dict(fade_rows("z", 0.04, 1)[0], tk="z-small", pid="zsmall", gap=0.04)], {})
+try:
+    tip = dt.datetime(2026, 11, 20, 0, 30, tzinfo=UTC)
+    ga, gb = dict(id="early", tip=tip, home="H", away="A"), dict(id="late", tip=tip + dt.timedelta(hours=1), home="H2", away="A2")
+    S.look_many(st6, W, [ga, gb], {}, set(), tip - dt.timedelta(minutes=60))
+    old = dict(id="old", tip=dt.datetime(2026, 11, 18, 23, 30, tzinfo=UTC), home="H3", away="A3")
+    S.look_many(st6, W, [old], {}, set(), old["tip"] - dt.timedelta(minutes=60))
+finally:
+    S.read_game = orig
+fp = st6["rules"]["spotter_fade"]["picks"]
+check("fade: 4 + 4 across two games read together, best gaps first", (sorted(collections.Counter(p["game_id"] for p in fp).items()), len(fp)), ([("early", 4), ("late", 4)], 8))
+check("fade: priced at the NO ask, side no, never a NO ask above 90c, a missing NO ask or a gap under 5 points",
+      (all(p["price"] == 0.60 and p["side"] == "no" and p["yes_ask"] == 0.42 for p in fp), any(p["ticker"] in ("x-hi", "y-none", "z-small") for p in fp)), (True, False))
+check("fade: nothing entered for a night before the start night (no backfill)", [p for p in fp if p["game_id"] == "old"], [])
+fb = st6["rules"]["spotter_fade_blind"]["picks"]
+check("fade blind: one per pick, NO side, never the board's own player-stat", (len(fb), all(b["price"] <= 0.90 and b["side"] == "no" for b in fb), not ({b["pid"] for b in fb} & {p["pid"] for p in fp})), (8, True, True))
+r = dict(rule="spotter_fade", price=0.60, side="no", entered=dt.datetime.fromtimestamp(tkf, UTC).isoformat(), status="open")
+S.settle_row(r, 1.0)
+check("fade: NO wins when the rung misses (NO payout 1), fees on entry", (r["status"], round(r["profit"], 4)), ("won", round(1 - 0.60 - S.fee(0.60), 4)))
+r = dict(rule="spotter_fade", price=0.60, side="no", entered=dt.datetime.fromtimestamp(tkf, UTC).isoformat(), status="open")
+S.settle_row(r, 0.0)
+check("fade: loses the cost when the rung hits", (r["status"], round(r["profit"], 4)), ("lost", round(-(0.60 + S.fee(0.60)), 4)))
+sv = S.empty()
+sv["rules"]["spotter_fade"]["picks"].append(dict(id="v", rule="spotter_fade", side="no", price=0.6, ticker="T", start="2026-11-20T00:00:00+00:00", status="open", night="2026-11-19"))
+S.settle(sv, dt.datetime(2026, 11, 21, tzinfo=UTC), lambda path, **_: {"market": {"status": "settled", "result": "scalar", "settlement_value_dollars": "0.5"}})
+check("a scalar settlement is void and leaves the record", (sv["rules"]["spotter_fade"]["picks"][0]["status"], S.stats(sv["rules"]["spotter_fade"]["picks"])["n"]), ("void", 0))
+
+
 print("\nthe sale and the settlement")
 tkt = 1_800_000_000.0
 pr = [(tkt + 10, 0.95, 5.0, "yes"), (tkt + 30, 0.84, 5.0, "yes"), (tkt + 40, 0.85, 3.0, "yes"), (tkt + 60, 0.86, 3.0, "no")]

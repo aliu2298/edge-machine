@@ -37,10 +37,14 @@ PATH = os.path.join(ROOT, "data", "nba_spotter_ledger.json")
 VERSION = "nba-spotter-v1"
 REGISTERED = "2026-11-18"
 ET = ZoneInfo("America/New_York")
-BOARDS = ("spotter_hold", "spotter_spike")
-BLIND = {"spotter_hold": "spotter_hold_blind", "spotter_spike": "spotter_spike_blind"}
+BOARDS = ("spotter_hold", "spotter_spike", "spotter_fade")
+BLIND = {"spotter_hold": "spotter_hold_blind", "spotter_spike": "spotter_spike_blind", "spotter_fade": "spotter_fade_blind"}
+FADE_FROM = "2026-11-19"                   # the fade board starts with the first board night after it merged; no backfill
+FADE_MIN_GAP = 0.05                        # fade: YES ask minus the model chance
+FADE_MAX_NO_ASK = 0.90
 NAMES = {"spotter_hold": "NBA Spotter, hold", "spotter_spike": "NBA Spotter, spike (sell at 2x)",
-         "spotter_hold_blind": "Blind control, hold", "spotter_spike_blind": "Blind control, spike (sell at 2x)"}
+         "spotter_hold_blind": "Blind control, hold", "spotter_spike_blind": "Blind control, spike (sell at 2x)",
+         "spotter_fade": "NBA Spotter, fade (buy NO)", "spotter_fade_blind": "Blind control, fade (buy NO)"}
 SERIES = {"KXNBAPTS": "pts", "KXNBA3PT": "m3", "KXNBAREB": "reb", "KXNBAAST": "ast", "KXNBAPRA": "pra"}
 UNIT = {"pts": "points", "m3": "threes", "reb": "rebounds", "ast": "assists", "pra": "points+rebounds+assists"}
 STATS = ("pts", "m3", "reb", "ast", "pra")
@@ -214,7 +218,9 @@ class World:
         z = {k: (x[k] - Mx["mu"][k]) / Mx["sd"][k] for k in Mx["keys"]}
         c = {k: Mx["b"][i + 1] * z[k] for i, k in enumerate(Mx["keys"])}
         why = max((k for k in c if k in NICE), key=lambda k: c[k])
-        return 1 / (1 + math.exp(-(off + Mx["b"][0] + sum(c.values())))), NICE[why][0 if z[why] >= 0 else 1]
+        low = min((k for k in c if k in NICE), key=lambda k: c[k])
+        return (1 / (1 + math.exp(-(off + Mx["b"][0] + sum(c.values())))), NICE[why][0 if z[why] >= 0 else 1],
+                NICE[low][0 if z[low] >= 0 else 1])
 
     def score(self, pid, k, rungs, team, game, out_pids):
         """[dict(p_hold, p_spike?, why_*)] per rung for one player-stat in one game, or (None, reason). `rungs` = [dict(rung, bid, ask)]."""
@@ -255,10 +261,11 @@ class World:
             mid = (r["bid"] + r["ask"]) / 2
             x = dict(F_, d_blend=cb - mid, d_season=cs - mid, cold=(cs - c5) if c5 is not None else 0.0, price=mid,
                      **{"is_" + s: 1.0 if k == s else 0.0 for s in ("m3", "reb", "ast", "pra")})
-            ph, why = self.predict("hold", x, logit(mid))
+            ph, why, why_low = self.predict("hold", x, logit(mid))
             row = dict(r, p_hold=ph, edge=ph - r["ask"], why_hold=why, outs=outs, games=n, level=Lb)
+            row.update(gap=r["ask"] - ph, p_fade=1 - ph, why_fade=why_low)
             if r["ask"] <= SPIKE_MAX_ASK + EPS:
-                ps, w2 = self.predict("spike", x, 0.0)
+                ps, w2, _low = self.predict("spike", x, 0.0)
                 row.update(p_spike=ps, spike_edge=ps - r["ask"] / round(2 * r["ask"], 2), why_spike=w2)
             out.append(row)
         return out, None
@@ -462,7 +469,8 @@ def read_game(W, g, markets, out_pids):
             except ValueError:
                 skip["odd ticker"] += 1
                 continue
-            byp[(next(iter(c)), k)].append(dict(rung=rung, bid=bid, ask=ask, tk=m["ticker"], name=(m.get("title") or "").split(":")[0]))
+            na = D.number(m.get("no_ask_dollars"))
+            byp[(next(iter(c)), k)].append(dict(rung=rung, bid=bid, ask=ask, no_ask=na, tk=m["ticker"], name=(m.get("title") or "").split(":")[0]))
     rows = []
     for (pid, k), rs in byp.items():
         if pid in out_pids:
@@ -495,12 +503,15 @@ def _rank(rows, key, flt, taken, cap):
 
 def _pick(board, g, night, r, now, p, why, extra=None):
     pid = f"{board}:{r['tk']}"
+    fade = board.startswith("spotter_fade")
     row = dict(id=pid, rule=board, night=night, game=f"{g['away']} @ {g['home']}", game_id=g["id"], start=g["tip"].isoformat(), ticker=r["tk"],
-               player=r["name"], pid=r["pid"], stat=r["stat"], unit=UNIT[r["stat"]], rung=r["rung"], team=r["team"], bid=r["bid"], price=r["ask"],
+               player=r["name"], pid=r["pid"], stat=r["stat"], unit=UNIT[r["stat"]], rung=r["rung"], team=r["team"], bid=r["bid"], price=r["no_ask"] if fade else r["ask"],
                p=None if p is None else round(p, 4), why=why, entered=now.isoformat(), lead_min=round((g["tip"] - now).total_seconds() / 60, 1),
                status="open")
     if board in ("spotter_spike", "spotter_spike_blind"):
         row["target"] = round(2 * r["ask"], 2)
+    if fade:
+        row.update(side="no", yes_ask=r["ask"])
     if r.get("outs"):
         row["outs"] = r["outs"]
     row.update(extra or {})
@@ -509,14 +520,16 @@ def _pick(board, g, night, r, now, p, why, extra=None):
 
 def draw_blind(board, rows, pick, excluded):
     """One rung from the same game's priced rungs at about the pick's price, drawn by a seed fixed by the pick, never one of the board's own players."""
-    spike = board == "spotter_spike"
-    pool = [r for r in rows if (r["pid"], r["stat"]) not in excluded and (not spike or r["ask"] <= SPIKE_MAX_ASK + EPS)]
+    spike, fade = board == "spotter_spike", board == "spotter_fade"
+    px = "no_ask" if fade else "ask"                    # the fade is priced on the NO side
+    pool = [r for r in rows if (r["pid"], r["stat"]) not in excluded and (not spike or r["ask"] <= SPIKE_MAX_ASK + EPS)
+            and (not fade or (r.get("no_ask") is not None and r["no_ask"] <= FADE_MAX_NO_ASK + EPS))]
     if not pool:
         return None
-    near = [r for r in pool if abs(r["ask"] - pick["ask"]) <= BLIND_BAND + EPS]
+    near = [r for r in pool if abs(r[px] - pick[px]) <= BLIND_BAND + EPS]
     if not near:
-        best = min(abs(r["ask"] - pick["ask"]) for r in pool)
-        near = [r for r in pool if abs(r["ask"] - pick["ask"]) <= best + EPS]
+        best = min(abs(r[px] - pick[px]) for r in pool)
+        near = [r for r in pool if abs(r[px] - pick[px]) <= best + EPS]
     seed = int(hashlib.sha256(f"{board}:{pick['tk']}".encode()).hexdigest()[:12], 16)
     return random.Random(seed).choice(sorted(near, key=lambda r: r["tk"]))
 
@@ -534,13 +547,19 @@ def look_many(state, W, games, markets, out_pids, now):
         rows, skip = read_game(W, g, markets, out_pids)
         read[g["id"]] = (g, rows, skip)
     spec = {"spotter_hold": ("edge", lambda r: r["edge"] >= EDGE_MIN - EPS, "p_hold", "why_hold"),
-            "spotter_spike": ("spike_edge", lambda r: "p_spike" in r, "p_spike", "why_spike")}
+            "spotter_spike": ("spike_edge", lambda r: "p_spike" in r, "p_spike", "why_spike"),
+            "spotter_fade": ("gap", lambda r: r.get("no_ask") is not None and r["no_ask"] <= FADE_MAX_NO_ASK + EPS and r["gap"] >= FADE_MIN_GAP - EPS,
+                             "p_fade", "why_fade")}
     new, entered = [], {gid: {b: 0 for b in BOARDS} for gid in read}
     nights = sorted({night_of(g["tip"]) for g, _r, _s in read.values()})
     for night in nights:
-        nt = state.setdefault("nights", {}).setdefault(night, {b: {"n": 0, "players": []} for b in BOARDS})
+        nt = state.setdefault("nights", {}).setdefault(night, {})
+        for b in BOARDS:
+            nt.setdefault(b, {"n": 0, "players": []})
         here = [v for v in read.values() if night_of(v[0]["tip"]) == night]
         for board in BOARDS:
+            if board == "spotter_fade" and night < FADE_FROM:
+                continue
             key, flt, pk, wk = spec[board]
             used = {tuple(x) for x in nt[board]["players"]}
             cands = sorted(((r, g, rows) for g, rows, _s in here for r in rows if flt(r)), key=lambda c: (-c[0][key], c[0]["tk"]))
@@ -556,14 +575,14 @@ def look_many(state, W, games, markets, out_pids, now):
                 nt[board]["players"].append([r["pid"], r["stat"]])
                 nt[board]["n"] += 1
                 entered[g["id"]][board] += 1
-                p = _pick(board, g, night, r, now, r[pk], r[wk], dict(edge=round(r[key], 4)))
+                p = _pick(board, g, night, r, now, r[pk], r[wk], dict(edge=round(r[key], 4)))   # the fade's edge is the gap, YES ask less the model chance
                 state["rules"][board]["picks"].append(p)
                 new.append(p["id"])
                 chosen.append((p, g, rows, r))
             for p, g, rows, r in chosen:                      # blind rungs after the board is set: never one of the board's players
                 b = draw_blind(board, rows, r, taken)
                 if b:
-                    bp = _pick(BLIND[board], g, night, b, now, None, "drawn at random from this game's rungs at about the pick's price", dict(matches=p["id"]))
+                    bp = _pick(BLIND[board], g, night, b, now, None, "drawn at random from this game's rungs at about the pick's price" + (", NO side" if board == "spotter_fade" else ""), dict(matches=p["id"]))
                     state["rules"][BLIND[board]]["picks"].append(bp)
                     new.append(bp["id"])
     for gid, (g, rows, skip) in read.items():
@@ -621,8 +640,11 @@ def settle(state, now, fetch=D.get):
                 px = D.payout(mk)
                 if px is None:
                     continue
+                if 0 < px < 1:                                           # a scalar settlement is no result: left out of every record
+                    row.update(status="void", payout=px, settled=now.isoformat())
+                    continue
                 prints = prints_of(row["ticker"], fetch) if row["rule"].startswith("spotter_spike") else None
-                settle_row(row, float(px), prints)
+                settle_row(row, 1.0 - float(px) if row.get("side") == "no" else float(px), prints)
                 row["settled"] = now.isoformat()
             except Exception as e:                                   # noqa: BLE001
                 errs.append(row["id"] + ": " + str(e)[:80])
