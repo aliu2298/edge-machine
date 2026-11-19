@@ -224,9 +224,28 @@
    "perp": "KXORCLPERP",
    "sym": "ORCL",
    "time": "not-supplied"
+  },
+  {
+   "date": "2026-12-10",
+   "eps_forecast": "$4.89",
+   "fiscal_q": "Nov/2026",
+   "kpi": [
+    {
+     "event": "KXCOST-26DECCARDS",
+     "title": "Costco total cardholders in Q1"
+    }
+   ],
+   "mentions": [
+    "KXEARNINGSMENTIONCOST-26DEC10"
+   ],
+   "n_ests": "11",
+   "name": "Costco Wholesale Corporation",
+   "perp": "KXCOSTPERP",
+   "sym": "COST",
+   "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-19T04:00:26Z",
+ "calendar_at": "2026-11-19T05:00:30Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -4669,9 +4688,29 @@
     "width": 0.3921951219512194
    },
    "sym": "WMT"
+  },
+  {
+   "at": "2026-11-19T05:01:32Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.719402985074627,
+    "rungs": 15,
+    "width": 0.3921951219512194
+   },
+   "sym": "WMT"
+  },
+  {
+   "at": "2026-11-19T05:01:32Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 678571.4285714328
+   },
+   "sym": "COST"
   }
  ],
- "last_run": "2026-11-19T04:01:29Z",
+ "last_run": "2026-11-19T05:01:34Z",
  "predictions": [
   {
    "call": {
@@ -5342,6 +5381,20 @@
    "side": 1,
    "status": "open",
    "sym": "LLY"
+  },
+  {
+   "entry_due": "2026-12-03T21:00:00Z",
+   "exit_due": "2026-12-10T21:00:00Z",
+   "family": "runup",
+   "id": "runup:COST:2026-12-10",
+   "logged_at": "2026-11-19T05:01:33Z",
+   "perp": "KXCOSTPERP",
+   "random_side": -1,
+   "reason": "Up into the 2026-12-10 report (after-hours).",
+   "report": "2026-12-10",
+   "report_time": "after-hours",
+   "side": 1,
+   "sym": "COST"
   }
  ],
  "registered": "2026-11-07",
