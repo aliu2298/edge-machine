@@ -740,6 +740,10 @@
    "at": "2026-11-18T18:21:54.833518+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXWTI-26NOV1914-T82.49\", \"a\"]]": {
+   "at": "2026-11-19T18:21:26.168804+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXLALIGACORNERS-26NOV08RSORVC-12\", \"b\"]]": {
    "at": "2026-11-08T13:58:12.689210+00:00",
    "pool": "entered"
@@ -4321,7 +4325,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-19T18:14:45.014478+00:00",
+ "last_run": "2026-11-19T18:21:26.168804+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -13309,6 +13313,29 @@
    "snapshot": null,
    "sport": "Finance",
    "src": "finance_nc",
+   "status": "open"
+  },
+  {
+   "contract": "KXWTI-26NOV1914-T82.49",
+   "entered_at": "2026-11-19T18:21:26.168804+00:00",
+   "entities": [
+    "WTI"
+   ],
+   "id": "superpack:[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXWTI-26NOV1914-T82.49\", \"a\"]]",
+   "lane": "commod_nc_yes",
+   "logged": "2026-11-19T18:20:30+00:00",
+   "matched": [
+    "WTI"
+   ],
+   "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXWTI-26NOV1914-T82.49\", \"a\"]]",
+   "price": 0.91,
+   "profit": null,
+   "scope": "commodities_fav",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Commodities",
+   "src": "sandbox",
    "status": "open"
   }
  ],
