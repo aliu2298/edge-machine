@@ -738,7 +738,7 @@
   "KXINX15M-26NOV191530-30": {
    "bot_version": "spsweep-live-v1",
    "day": "2026-11-19",
-   "decided_at": "2026-11-19T20:18:56+00:00",
+   "decided_at": "2026-11-19T20:30:35+00:00",
    "fill_price": 0.1,
    "fill_s": 235.5,
    "fill_side": "no",
@@ -748,8 +748,10 @@
    "outcome": "entered",
    "qty": 10.0,
    "rest_s": 0.84,
+   "result": "yes",
    "rule_ok": true,
-   "sold": 0,
+   "sold": 10.0,
+   "sold_price": 0.3,
    "target": 0.3,
    "ticker": "KXINX15M-26NOV191530-30",
    "why": null
@@ -769,6 +771,6 @@
    "why": null
   }
  },
- "updated_at": "2026-11-19T20:30:00+00:00",
+ "updated_at": "2026-11-19T20:30:35+00:00",
  "version": 1
 }
