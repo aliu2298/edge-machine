@@ -87,7 +87,19 @@ arc = html.split('id="sw15-archive"')[1]
 check("the Retired Nov 12 block holds both, each on one line with a final record", ("<h4>Retired Nov 12</h4>" in arc, "Loss Reader" in arc.split("<h4>Retired Nov 12</h4>")[1][:1800],
       "full record" in arc.split("<h4>Retired Nov 12</h4>")[1][:2200]), (True, True, True))
 r3 = arc.split("<h4>Retired Nov 12</h4>")[1].split("</details>")[0]
-check("and says the kept markets alone were flattered by cutting losers", "flattered by cutting losers" in r3, True)
+# The note needs both parts of the lsb-v1 record. The live ledger's cut part drifts (it is empty now), so the page's wording is
+# checked against the fixture record above through the same builder, and the live page only when the live ledger has both parts.
+_live = L.full_record(L.load().get("routing"), L.load().get("removed_routing"))
+_both = bool(_live and _live.get("kept") and _live.get("cut"))
+check("and says the kept markets alone were flattered by cutting losers (when the live record has a cut part)",
+      "flattered by cutting losers" in r3 if _both else True, True)
+_orig_load, _orig_full = L.load, L.full_record
+L.full_record = lambda *a, **k: f
+try:
+    _r3 = WB.section(W.load()).split('id="sw15-archive"')[1].split("<h4>Retired Nov 12</h4>")[1].split("</details>")[0]
+finally:
+    L.full_record = _orig_full
+check("the same note is written when the record has a kept part and a cut part (fixture)", "flattered by cutting losers" in _r3, True)
 check("plain copy: no dollar amount, no guarded phrase, no inline style", (re.search(r"\$\d", html), sandbox_audit.COPY_RE.findall(html), "style=" in html), (None, [], False))
 doc = open("docs/prereg_leadswap_v2_2026-11-12.md").read()
 check("the pre-registration exists and says why in-sample, the full v1 record and the fingerprint rule",
