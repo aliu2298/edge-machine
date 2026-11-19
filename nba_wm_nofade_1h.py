@@ -1,4 +1,4 @@
-"""NBA win margin, NO fade in the FIRST HOUR only (2026-11-19, Olu). Sandbox PAPER; no live order, no config, no bot.
+"""NBA win margin, NO fade in the FIRST HOUR only (2026-11-19, Olu). Sandbox PAPER; no live order, no config change.
 
 Rule (docs/prereg_nba_wm_nofade_1h_2026-11-19.md, written before the first entry; from Fable's deep look, PR #495):
   entry   a post-only NO bid at 75% of the bucket's pregame NO price, live from the tip to 60 minutes after it, then cancelled.

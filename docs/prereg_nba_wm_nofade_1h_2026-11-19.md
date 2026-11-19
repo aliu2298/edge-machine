@@ -1,6 +1,6 @@
 # NBA win margin, NO fade in the first hour only: pre-registration (Nov 19 2026)
 
-Written BEFORE the first entry. Sandbox PAPER only: no live order, no bot flag, no VPS or config change. The two live win-margin lanes are untouched
+Written BEFORE the first entry. Sandbox PAPER only: no live order, no live-trading switch, no VPS or config change. The two live win-margin lanes are untouched
 and stay live until a replacement exists (Olu).
 
 Source: the deep look at the two win-margin lanes (docs/nba_win_margin_deep_look_2026-11-19.md, "filtered version worth a paper row").
