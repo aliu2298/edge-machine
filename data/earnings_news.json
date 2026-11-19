@@ -104,12 +104,7 @@
    "date": "2026-11-19",
    "eps_forecast": "$0.64",
    "fiscal_q": "Oct/2026",
-   "kpi": [
-    {
-     "event": "KXWMT-26NOVUSCOMP",
-     "title": "Walmart US comparable sales growth (ex-fuel) in Q3"
-    }
-   ],
+   "kpi": [],
    "mentions": [
     "KXEARNINGSMENTIONWMT-26NOV19"
    ],
@@ -206,7 +201,9 @@
    "eps_forecast": "$3.45",
    "fiscal_q": "Oct/2026",
    "kpi": [],
-   "mentions": [],
+   "mentions": [
+    "KXEARNINGSMENTIONAVGO-26DEC09"
+   ],
    "n_ests": "10",
    "name": "Broadcom Inc.",
    "perp": "KXAVGOPERP",
@@ -218,7 +215,9 @@
    "eps_forecast": "$1.56",
    "fiscal_q": "Nov/2026",
    "kpi": [],
-   "mentions": [],
+   "mentions": [
+    "KXEARNINGSMENTIONORCL-26DEC10"
+   ],
    "n_ests": "10",
    "name": "Oracle Corporation",
    "perp": "KXORCLPERP",
@@ -245,7 +244,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-19T14:00:27Z",
+ "calendar_at": "2026-11-19T15:00:39Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -4880,9 +4879,19 @@
     "width": 685714.2857142985
    },
    "sym": "COST"
+  },
+  {
+   "at": "2026-11-19T15:01:40Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151354838.70967743,
+    "rungs": 10,
+    "width": 685714.2857142985
+   },
+   "sym": "COST"
   }
  ],
- "last_run": "2026-11-19T14:01:29Z",
+ "last_run": "2026-11-19T15:01:45Z",
  "predictions": [
   {
    "call": {
