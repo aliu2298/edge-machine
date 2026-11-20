@@ -249,6 +249,10 @@
    "at": "2026-11-12T18:09:00.819050+00:00",
    "pool": "entered"
   },
+  "[\"culture\", \"rt_model\", [\"KXRT-FUR-82\", \"yes\"]]": {
+   "at": "2026-11-20T07:11:40.022465+00:00",
+   "pool": "entered"
+  },
   "[\"culture\", \"rt_model\", [\"KXRT-HOWT-45\", \"yes\"]]": {
    "at": "2026-11-12T03:59:45.941094+00:00",
    "pool": "entered"
@@ -4674,7 +4678,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-20T07:04:28.101619+00:00",
+ "last_run": "2026-11-20T07:11:40.022465+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -14094,6 +14098,29 @@
    "snapshot": null,
    "sport": "Commodities",
    "src": "daily",
+   "status": "open"
+  },
+  {
+   "contract": "KXRT-FUR-82",
+   "entered_at": "2026-11-20T07:11:40.022465+00:00",
+   "entities": [
+    "The Further Mis-Adventures of Cliff Booth"
+   ],
+   "id": "superpack:[\"culture\", \"rt_model\", [\"KXRT-FUR-82\", \"yes\"]]",
+   "lane": "rt_model",
+   "logged": "2026-11-20T07:00:44.691221+00:00",
+   "matched": [
+    "The Further Mis-Adventures of Cliff Booth"
+   ],
+   "pid": "[\"culture\", \"rt_model\", [\"KXRT-FUR-82\", \"yes\"]]",
+   "price": 0.37,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Culture",
+   "src": "culture",
    "status": "open"
   }
  ],
