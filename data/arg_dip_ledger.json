@@ -6517,9 +6517,9 @@
   ]
  },
  "lane": "arg_goalless_dip",
- "last_run": "2026-11-19T02:50:34.625661+00:00",
+ "last_run": "2026-11-20T02:39:31.337976+00:00",
  "observations": {
-  "at": "2026-11-19T02:50:34.625661+00:00",
+  "at": "2026-11-20T02:39:31.337976+00:00",
   "errors": [],
   "new": 0,
   "skipped": 0,
@@ -6535,6 +6535,12 @@
   "KXARGPREMDIVTOTAL-26OCT31RIECAT": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)",
   "KXARGPREMDIVTOTAL-26OCT31VELSLA": "pregame ask unverified: 9.09 contracts traded at or through the ask within 60 minutes (under 10)"
  },
- "upcoming": [],
+ "upcoming": [
+  {
+   "event": "KXARGPREMDIVTOTAL-26NOV20VELCAB",
+   "kickoff": 1795215600,
+   "title": "Velez Sarsfield vs Belgrano de Cordoba: Regulation Time Total Goals"
+  }
+ ],
  "version": "argdip-v1"
 }
