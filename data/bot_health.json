@@ -6,8 +6,8 @@
   "rule": "LOW under the threshold set on the server"
  },
  "engine": {
-  "beat_age_s": 132,
-  "cycle": 400,
+  "beat_age_s": 286,
+  "cycle": 6,
   "last_error": null,
   "mode": "LIVE",
   "service_active": true,
@@ -21,36 +21,43 @@
  },
  "feeds": {
   "production": {
-   "actionable": 5,
-   "age_min": 10,
-   "leads": 47,
+   "actionable": 3,
+   "age_min": 13,
+   "leads": 46,
    "problems": 0,
    "status": "HTTP 200"
+  },
+  "production_challenger": {
+   "actionable": 0,
+   "age_min": 20,
+   "leads": 0,
+   "problems": 0,
+   "status": "HTTP 304 (cached)"
   },
   "production_econ": {
    "actionable": 0,
-   "age_min": 9,
+   "age_min": 20,
    "leads": 5,
    "problems": 0,
-   "status": "HTTP 200"
+   "status": "HTTP 304 (cached)"
   },
   "production_nba_value": {
    "actionable": 0,
-   "age_min": 22,
+   "age_min": 20,
    "leads": 0,
    "problems": 0,
    "status": "HTTP 304 (cached)"
   },
   "production_soccer_rules": {
    "actionable": 0,
-   "age_min": 21,
+   "age_min": 22,
    "leads": 0,
    "problems": 0,
    "status": "HTTP 304 (cached)"
   },
   "production_soccer_team_rules": {
    "actionable": 0,
-   "age_min": 22,
+   "age_min": 20,
    "leads": 0,
    "problems": 0,
    "status": "HTTP 304 (cached)"
@@ -67,10 +74,10 @@
   "today": "up",
   "yesterday": "down"
  },
- "published_at": "2026-11-20T21:23:02+00:00",
+ "published_at": "2026-11-20T22:23:02+00:00",
  "schema": 1,
  "server": {
-  "backup_age_h": 14.9,
+  "backup_age_h": 15.9,
   "disk_pct": 33,
   "jobs": {
    "bot-backup": {
@@ -86,6 +93,6 @@
     "timer": "active"
    }
   },
-  "mem_free_mb": 582
+  "mem_free_mb": 586
  }
 }
