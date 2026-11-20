@@ -4358,6 +4358,40 @@
    "target": 2.035866,
    "ticker": "KXNEMPERP",
    "touch_ts": 1795154341
+  },
+  {
+   "backfill": false,
+   "day": "2026-11-20",
+   "id": "rb_5d|KXCRMPERP|2026-11-20",
+   "lane": "rb_5d",
+   "level": 3.625707,
+   "level_stock": 182.51,
+   "signal_ts": 1795161600,
+   "slide_high": 219.2,
+   "status": "pending",
+   "stop": 3.58945,
+   "strength": 2,
+   "sym": "CRM",
+   "target": 3.990145,
+   "ticker": "KXCRMPERP",
+   "touch_ts": 1795158721
+  },
+  {
+   "backfill": false,
+   "day": "2026-11-20",
+   "id": "rb_24h|KXCRMPERP|2026-11-20",
+   "lane": "rb_24h",
+   "level": 3.625707,
+   "level_stock": 182.51,
+   "signal_ts": 1795161600,
+   "slide_high": 196.65,
+   "status": "pending",
+   "stop": 3.58945,
+   "strength": 2,
+   "sym": "CRM",
+   "target": 3.766154,
+   "ticker": "KXCRMPERP",
+   "touch_ts": 1795158721
   }
  ],
  "from": "2026-11-12T00:00:00+00:00",
@@ -4375,7 +4409,7 @@
    "strong": true
   }
  },
- "last_run": "2026-11-20T07:00:27+00:00",
+ "last_run": "2026-11-20T08:00:28+00:00",
  "prereg_sha256": "17ecd1cd57183bacd45e8e1e6477c542b4ecaaa88a3e8b8a62fa395bbc45a581",
  "ratios": {
   "AAPL": 49.9328,
