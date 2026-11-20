@@ -1,8 +1,8 @@
 {
  "collector": {
-  "last_ts": 1795132802,
+  "last_ts": 1795136401,
   "markets": 97,
-  "rows_24h": 129134
+  "rows_24h": 128982
  },
  "events": [
   {
@@ -25,36 +25,6 @@
   }
  ],
  "flags": [
-  {
-   "gap": -0.09553,
-   "rth": false,
-   "spread_bp": 2228.2,
-   "sym": "V",
-   "ticker": "KXVPERP",
-   "ts": 1794471361
-  },
-  {
-   "gap": -0.02408,
-   "gap_15m": -0.02729,
-   "gap_5m": -0.02414,
-   "gap_60m": -0.02633,
-   "rth": false,
-   "spread_bp": 3.7,
-   "sym": "AMAT",
-   "ticker": "KXAMATPERP",
-   "ts": 1794971162
-  },
-  {
-   "gap": -0.02387,
-   "gap_15m": -0.02511,
-   "gap_5m": -0.0222,
-   "gap_60m": -0.02422,
-   "rth": false,
-   "spread_bp": 7.8,
-   "sym": "AMD",
-   "ticker": "KXAMDPERP",
-   "ts": 1794971461
-  },
   {
    "gap": -0.01567,
    "gap_15m": -0.0154,
@@ -5179,9 +5149,37 @@
    "sym": "PLD",
    "ticker": "KXPLDPERP",
    "ts": 1795129201
+  },
+  {
+   "gap": 0.01065,
+   "gap_15m": -0.00242,
+   "gap_5m": 0.01051,
+   "rth": false,
+   "spread_bp": 18.8,
+   "sym": "AMAT",
+   "ticker": "KXAMATPERP",
+   "ts": 1795133101
+  },
+  {
+   "gap": 0.013,
+   "rth": false,
+   "spread_bp": 71.7,
+   "sym": "ANET",
+   "ticker": "KXANETPERP",
+   "ts": 1795136401
+  },
+  {
+   "gap": -0.01157,
+   "gap_15m": 0.00043,
+   "gap_5m": -0.00915,
+   "rth": false,
+   "spread_bp": 31.0,
+   "sym": "KLAC",
+   "ticker": "KXKLACPERP",
+   "ts": 1795135261
   }
  ],
- "last_run": "2026-11-20T00:00:09+00:00",
+ "last_run": "2026-11-20T01:00:07+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
