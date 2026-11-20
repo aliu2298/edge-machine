@@ -260,7 +260,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-20T21:00:42Z",
+ "calendar_at": "2026-11-20T22:00:36Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -5245,9 +5245,19 @@
     "width": 678571.4285714328
    },
    "sym": "COST"
+  },
+  {
+   "at": "2026-11-20T22:01:33Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 678571.4285714328
+   },
+   "sym": "COST"
   }
  ],
- "last_run": "2026-11-20T21:01:40Z",
+ "last_run": "2026-11-20T22:01:43Z",
  "predictions": [
   {
    "call": {
@@ -5728,16 +5738,47 @@
    "sym": "QQQ"
   },
   {
+   "baselines": {
+    "random": {
+     "entry": 7.3829,
+     "entry_ts": 1794600720,
+     "exit": 6.0661,
+     "exit_ts": 1795208400,
+     "net": 0.175958,
+     "status": "settled"
+    },
+    "spy": {
+     "entry": 15.0723,
+     "entry_ts": 1794600420,
+     "exit": 13.8163,
+     "exit_ts": 1795208400,
+     "net": -0.085732,
+     "status": "settled"
+    },
+    "up": {
+     "entry": 7.3745,
+     "entry_ts": 1794600120,
+     "exit": 6.0983,
+     "exit_ts": 1795208700,
+     "net": -0.175456,
+     "status": "settled"
+    }
+   },
    "call": {
     "entry": 7.3829,
     "entry_ts": 1794600720,
-    "status": "open"
+    "exit": 6.0661,
+    "exit_ts": 1795208400,
+    "net": 0.175958,
+    "status": "settled"
    },
    "entry_due": "2026-11-13T20:01:27Z",
    "exit_due": "2026-11-20T21:00:00Z",
    "family": "post_drift",
+   "graded_at": "2026-11-20T22:01:34Z",
    "id": "post_drift:AMAT:2026-11-12",
    "logged_at": "2026-11-13T20:01:27Z",
+   "net": 0.175958,
    "perp": "KXAMATPERP",
    "random_side": -1,
    "reaction": -0.03384,
@@ -5745,20 +5786,51 @@
    "report": "2026-11-12",
    "report_time": "after-hours",
    "side": -1,
-   "status": "open",
+   "status": "settled",
    "sym": "AMAT"
   },
   {
+   "baselines": {
+    "random": {
+     "entry": 1.9142,
+     "entry_ts": 1794600720,
+     "exit": 1.8191,
+     "exit_ts": 1795208700,
+     "net": 0.047281,
+     "status": "settled"
+    },
+    "spy": {
+     "entry": 15.0723,
+     "entry_ts": 1794600420,
+     "exit": 13.8163,
+     "exit_ts": 1795208400,
+     "net": -0.085732,
+     "status": "settled"
+    },
+    "up": {
+     "entry": 1.9134,
+     "entry_ts": 1794600420,
+     "exit": 1.8294,
+     "exit_ts": 1795209300,
+     "net": -0.046301,
+     "status": "settled"
+    }
+   },
    "call": {
     "entry": 1.9142,
     "entry_ts": 1794600720,
-    "status": "open"
+    "exit": 1.8191,
+    "exit_ts": 1795208700,
+    "net": 0.047281,
+    "status": "settled"
    },
    "entry_due": "2026-11-13T20:01:27Z",
    "exit_due": "2026-11-20T21:00:00Z",
    "family": "post_drift",
+   "graded_at": "2026-11-20T22:01:34Z",
    "id": "post_drift:CSCO:2026-11-12",
    "logged_at": "2026-11-13T20:01:27Z",
+   "net": 0.047281,
    "perp": "KXCSCOPERP",
    "random_side": -1,
    "reaction": -0.06262,
@@ -5766,7 +5838,7 @@
    "report": "2026-11-12",
    "report_time": "after-hours",
    "side": -1,
-   "status": "open",
+   "status": "settled",
    "sym": "CSCO"
   },
   {
