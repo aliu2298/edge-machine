@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-19T23:02:00.298036+00:00",
+ "last_run": "2026-11-20T02:46:51.486616+00:00",
  "rules": {
   "NO": {
    "picks": [
@@ -133,11 +133,14 @@
      "league_key": "BRA",
      "logged": "2026-11-19T21:01:35.325791+00:00",
      "match": "Vasco da Gama v Internacional",
+     "payout": 0.0,
      "price": 0.49,
+     "profit": -100.0,
      "rule": "NO",
+     "settled": "2026-11-20T00:16:50.549224+00:00",
      "side": "no",
      "start": "2026-11-19T22:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXBRASILEIROBTTS-26NOV19VDGINT-BTTS",
      "why": "Brazil BTTS NO 0.49"
     },
@@ -150,11 +153,14 @@
      "league_key": "BRA",
      "logged": "2026-11-19T21:01:35.325791+00:00",
      "match": "Vit\u00f3ria v Red Bull Bragantino",
+     "payout": 0.0,
      "price": 0.43,
+     "profit": -100.0,
      "rule": "NO",
+     "settled": "2026-11-20T01:01:41.754696+00:00",
      "side": "no",
      "start": "2026-11-19T22:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXBRASILEIROBTTS-26NOV19VITRBB-BTTS",
      "why": "Brazil BTTS NO 0.43"
     },
@@ -167,11 +173,14 @@
      "league_key": "BRA",
      "logged": "2026-11-19T23:02:00.298036+00:00",
      "match": "S\u00e3o Paulo v Fluminense",
+     "payout": 1.0,
      "price": 0.49,
+     "profit": 97.05,
      "rule": "NO",
+     "settled": "2026-11-20T02:46:51.486616+00:00",
      "side": "no",
      "start": "2026-11-20T00:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXBRASILEIROBTTS-26NOV19SPAFLU-BTTS",
      "why": "Brazil BTTS NO 0.49"
     }
@@ -308,11 +317,14 @@
      "league_key": "BRA",
      "logged": "2026-11-19T21:01:35.325791+00:00",
      "match": "Vasco da Gama v Internacional",
+     "payout": 1.0,
      "price": 0.53,
+     "profit": 82.67,
      "rule": "YES",
+     "settled": "2026-11-20T00:16:50.549224+00:00",
      "side": "yes",
      "start": "2026-11-19T22:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXBRASILEIROBTTS-26NOV19VDGINT-BTTS",
      "why": "Brazil BTTS YES 0.53"
     },
@@ -325,11 +337,14 @@
      "league_key": "BRA",
      "logged": "2026-11-19T21:01:35.325791+00:00",
      "match": "Vit\u00f3ria v Red Bull Bragantino",
+     "payout": 1.0,
      "price": 0.58,
+     "profit": 67.49,
      "rule": "YES",
+     "settled": "2026-11-20T01:01:41.754696+00:00",
      "side": "yes",
      "start": "2026-11-19T22:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXBRASILEIROBTTS-26NOV19VITRBB-BTTS",
      "why": "Brazil BTTS YES 0.58"
     },
@@ -342,11 +357,14 @@
      "league_key": "BRA",
      "logged": "2026-11-19T23:02:00.298036+00:00",
      "match": "S\u00e3o Paulo v Fluminense",
+     "payout": 0.0,
      "price": 0.52,
+     "profit": -100.0,
      "rule": "YES",
+     "settled": "2026-11-20T02:46:51.486616+00:00",
      "side": "yes",
      "start": "2026-11-20T00:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXBRASILEIROBTTS-26NOV19SPAFLU-BTTS",
      "why": "Brazil BTTS YES 0.52"
     }
@@ -507,10 +525,51 @@
    "matched": 1,
    "new": 2,
    "quoted": 1
+  },
+  {
+   "at": "2026-11-19T23:31:27.495332+00:00",
+   "due": 1,
+   "matched": 1,
+   "new": 0,
+   "quoted": 1
+  },
+  {
+   "at": "2026-11-20T00:16:50.549224+00:00",
+   "due": 0,
+   "matched": 0,
+   "new": 0,
+   "quoted": 0
+  },
+  {
+   "at": "2026-11-20T01:01:41.754696+00:00",
+   "due": 0,
+   "matched": 0,
+   "new": 0,
+   "quoted": 0
+  },
+  {
+   "at": "2026-11-20T01:31:43.083522+00:00",
+   "due": 0,
+   "matched": 0,
+   "new": 0,
+   "quoted": 0
+  },
+  {
+   "at": "2026-11-20T02:01:30.600866+00:00",
+   "due": 0,
+   "matched": 0,
+   "new": 0,
+   "quoted": 0
+  },
+  {
+   "at": "2026-11-20T02:46:51.486616+00:00",
+   "due": 0,
+   "matched": 0,
+   "new": 0,
+   "quoted": 0
   }
  ],
  "schedule": [
-  "2026-11-20T00:30:00+00:00",
   "2026-11-20T23:00:00+00:00",
   "2026-11-21T18:00:00+00:00",
   "2026-11-21T19:30:00+00:00",

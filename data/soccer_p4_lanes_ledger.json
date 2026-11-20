@@ -1,7 +1,121 @@
 {
  "error": null,
- "last_run": "2026-11-19T23:00:29.090908+00:00",
- "matches": [],
+ "last_run": "2026-11-20T06:00:33.500508+00:00",
+ "matches": [
+  {
+   "day": "2026-11-19",
+   "entries": [
+    {
+     "ask": 0.61,
+     "bid": 0.6,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.61,
+      "filled": false,
+      "roi": null
+     },
+     "mom": "pre",
+     "name": "Orlando",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.63,
+      "depth": 159.94,
+      "filled": true,
+      "roi": 0.5873
+     },
+     "team": "home",
+     "ticker": "KXMLSGAME-26NOV19ORLCIN-ORL",
+     "ts": 1795131000,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.63,
+     "bid": 0.62,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.63,
+      "filled": false,
+      "roi": null
+     },
+     "mom": "pre",
+     "name": "Cincinnati",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.65,
+      "depth": 552.36,
+      "filled": true,
+      "roi": -1.0
+     },
+     "team": "away",
+     "ticker": "KXMLSGAME-26NOV19ORLCIN-CIN",
+     "ts": 1795131000,
+     "v2": true,
+     "won": false
+    }
+   ],
+   "espn_id": "401933535",
+   "event": "KXMLSGAME-26NOV19ORLCIN",
+   "goals": 4,
+   "ht": 1795138203,
+   "ko": 1795134600,
+   "labels": {
+    "away": "O-D-",
+    "home": "O+D+"
+   },
+   "league": "MLS",
+   "logged": "2026-11-20T03:00:35.419678+00:00",
+   "timed": 4,
+   "title": "Orlando City SC v FC Cincinnati",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-19",
+   "entries": [
+    {
+     "ask": 0.53,
+     "bid": 0.52,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.53,
+      "filled": false,
+      "roi": null
+     },
+     "mom": "pre",
+     "name": "Seattle",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.55,
+      "depth": 160.25,
+      "filled": true,
+      "roi": 0.8182
+     },
+     "team": "home",
+     "ticker": "KXMLSGAME-26NOV19SEARSL-SEA",
+     "ts": 1795140000,
+     "v2": true,
+     "won": true
+    }
+   ],
+   "espn_id": "401933555",
+   "event": "KXMLSGAME-26NOV19SEARSL",
+   "goals": 2,
+   "ht": 1795147794,
+   "ko": 1795143600,
+   "labels": {
+    "away": "O-D-",
+    "home": "O-D-"
+   },
+   "league": "MLS",
+   "logged": "2026-11-20T06:00:33.500508+00:00",
+   "timed": 1,
+   "title": "Seattle Sounders FC v Real Salt Lake",
+   "version": "soccerp4-v1"
+  }
+ ],
  "registered": "2026-11-09T00:00:00Z",
  "since": "2026-11-08",
  "skips": {

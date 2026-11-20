@@ -24,6 +24,10 @@
    "at": "2026-11-18T23:14:42.579829+00:00",
    "pool": "opposite"
   },
+  "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXBRASILEIROBTTS-26NOV19SPAFLU\", \"no\"]]": {
+   "at": "2026-11-19T23:14:06.787713+00:00",
+   "pool": "opposite"
+  },
   "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXBRASILEIROBTTS-26NOV19VDGINT\", \"no\"]]": {
    "at": "2026-11-19T21:13:28.870814+00:00",
    "pool": "opposite"
@@ -54,6 +58,10 @@
   },
   "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV18GPABAH\", \"yes\"]]": {
    "at": "2026-11-18T23:14:42.579829+00:00",
+   "pool": "opposite"
+  },
+  "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV19SPAFLU\", \"yes\"]]": {
+   "at": "2026-11-19T23:14:06.787713+00:00",
    "pool": "opposite"
   },
   "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV19VDGINT\", \"yes\"]]": {
@@ -282,6 +290,10 @@
   },
   "[\"daily\", \"econ_nc_yes\", [\"KXDIESELD-26NOV10-T6.155\", \"yes\"]]": {
    "at": "2026-11-10T04:10:48.069599+00:00",
+   "pool": "entered"
+  },
+  "[\"daily\", \"econ_nc_yes\", [\"KXDIESELD-26NOV20-T5.895\", \"yes\"]]": {
+   "at": "2026-11-20T04:11:39.004704+00:00",
    "pool": "entered"
   },
   "[\"finance_nc\", \"finance_nc\", [\"KXINXU-26NOV05H1600-T7499.9999\", \"no\"]]": {
@@ -1076,6 +1088,10 @@
    "at": "2026-11-19T12:06:07.662047+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"mls_fade_home\", [\"mls_fade_home:KXMLSGAME-26NOV23STLLAFC-STL\", \"b\"]]": {
+   "at": "2026-11-20T01:11:47.734888+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXINTLFRIENDLYTOTAL-26NOV13COLCHI-2\", \"a\"]]": {
    "at": "2026-11-12T09:00:03.051242+00:00",
    "pool": "entered"
@@ -1190,6 +1206,11 @@
   },
   "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXSERIEATEAMTOTAL-26NOV07PARBFC-BFC2\", \"a\"]]": {
    "at": "2026-11-05T18:05:03.605874+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXSERIEATEAMTOTAL-26NOV21NAPTOR-NAP2\", \"a\"]]": {
+   "at": "2026-11-20T03:34:56.789799+00:00",
+   "entries": "entered",
    "pool": "entered"
   },
   "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXUECLTEAMTOTAL-26NOV05LINHAJ-HAJ2\", \"a\"]]": {
@@ -4403,9 +4424,9 @@
    ],
    "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXBRENTD-26NOV1917-T89.50\", \"a\"]]",
    "price": 0.78,
-   "profit": null,
+   "profit": 0.2821,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-20T00:05:53+00:00",
    "side": "a",
    "snapshot": {
     "as_of": "2026-11-19T18:34:31+00:00",
@@ -4474,7 +4495,7 @@
    },
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXBRENTD-26NOV1917-T88.50",
@@ -4490,9 +4511,9 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXBRENTD-26NOV1917-T88.50\", \"a\"]]",
    "price": 0.98,
-   "profit": null,
+   "profit": 0.0204,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-20T00:05:59+00:00",
    "side": "a",
    "snapshot": {
     "as_of": "2026-11-19T20:48:55+00:00",
@@ -4561,12 +4582,99 @@
    },
    "sport": "Commodities",
    "src": "sandbox",
+   "status": "won"
+  },
+  {
+   "contract": "KXSERIEATEAMTOTAL-26NOV21NAPTOR-NAP2",
+   "entered_at": "2026-11-20T03:34:56.789799+00:00",
+   "entities": [
+    "Napoli"
+   ],
+   "id": "superpack:[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXSERIEATEAMTOTAL-26NOV21NAPTOR-NAP2\", \"a\"]]",
+   "lane": "team2_ranked",
+   "logged": "2026-11-20T03:33:57+00:00",
+   "matched": [
+    "Napoli"
+   ],
+   "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXSERIEATEAMTOTAL-26NOV21NAPTOR-NAP2\", \"a\"]]",
+   "price": 0.62,
+   "profit": null,
+   "scope": "soccer_team2",
+   "settled": null,
+   "side": "a",
+   "snapshot": {
+    "as_of": "2026-11-20T03:33:57+00:00",
+    "names": [
+     {
+      "bets": 48,
+      "name": "AAA gas",
+      "profit": 5.9477,
+      "sport": "Commodities"
+     },
+     {
+      "bets": 6,
+      "name": "Manchester United",
+      "profit": 5.403,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Napoli",
+      "profit": 4.7771,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Columbus Crew",
+      "profit": 4.221,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 8,
+      "name": "Real Madrid",
+      "profit": 3.6136,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Nottingham Forest",
+      "profit": 3.2002,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 29,
+      "name": "Brent",
+      "profit": 2.8019,
+      "sport": "Commodities"
+     },
+     {
+      "bets": 6,
+      "name": "AFC Bournemouth",
+      "profit": 2.7752,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Lazio",
+      "profit": 2.5658,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Bayern Munich",
+      "profit": 2.4607,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Soccer",
+   "src": "sandbox",
    "status": "open"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-19T22:51:50.678130+00:00",
+ "last_run": "2026-11-20T06:34:19.794489+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -5804,9 +5912,9 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXHYPED-26NOV1917-T68.9999\", \"a\"]]",
    "price": 0.79,
-   "profit": null,
+   "profit": -1.0,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-20T00:14:13+00:00",
    "side": "a",
    "snapshot": {
     "as_of": "2026-11-19T18:34:31+00:00",
@@ -5875,7 +5983,7 @@
    },
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   }
  ],
  "pool": [
@@ -13588,14 +13696,14 @@
    ],
    "pid": "[\"sandbox\", \"mls_fade_home\", [\"mls_fade_home:KXMLSGAME-26NOV19ORLCIN-ORL\", \"b\"]]",
    "price": 0.61,
-   "profit": null,
+   "profit": 0.6393,
    "scope": "soccer_p05",
-   "settled": null,
+   "settled": "2026-11-20T02:46:28+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXWTI-26NOV1914-T82.99",
@@ -13611,14 +13719,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXWTI-26NOV1914-T82.99\", \"a\"]]",
    "price": 0.74,
-   "profit": null,
+   "profit": -1.0,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-19T23:35:01+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXINXU-26NOV19H1600-T7399.9999",
@@ -13634,14 +13742,14 @@
    ],
    "pid": "[\"finance_nc\", \"finance_nc\", [\"KXINXU-26NOV19H1600-T7399.9999\", \"no\"]]",
    "price": 0.98,
-   "profit": null,
+   "profit": 0.019,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-20T01:31:16.351848+00:00",
    "side": "no",
    "snapshot": null,
    "sport": "Finance",
    "src": "finance_nc",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXWTI-26NOV1914-T82.49",
@@ -13657,14 +13765,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXWTI-26NOV1914-T82.49\", \"a\"]]",
    "price": 0.91,
-   "profit": null,
+   "profit": -1.0,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-19T23:35:10+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXBRENTD-26NOV1917-T89.50",
@@ -13680,14 +13788,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXBRENTD-26NOV1917-T89.50\", \"a\"]]",
    "price": 0.78,
-   "profit": null,
+   "profit": 0.2821,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-20T00:05:53+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXGOLDD-26NOV1917-T3672",
@@ -13703,14 +13811,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_fav_band\", [\"commod_fav_band:KXGOLDD-26NOV1917-T3672\", \"a\"]]",
    "price": 0.8,
-   "profit": null,
+   "profit": -1.0,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-20T00:05:53+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXETHD-26NOV1917-T1799.99",
@@ -13726,14 +13834,14 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXETHD-26NOV1917-T1799.99\", \"b\"]]",
    "price": 0.73,
-   "profit": null,
+   "profit": 0.3699,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-20T00:14:14+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXBTCD-26NOV1917-T62749.99",
@@ -13749,14 +13857,14 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXBTCD-26NOV1917-T62749.99\", \"a\"]]",
    "price": 0.78,
-   "profit": null,
+   "profit": -1.0,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-20T00:14:13+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXHYPED-26NOV1917-T68.9999",
@@ -13772,14 +13880,14 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXHYPED-26NOV1917-T68.9999\", \"a\"]]",
    "price": 0.79,
-   "profit": null,
+   "profit": -1.0,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-20T00:14:13+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXBTCD-26NOV1917-T63499.99",
@@ -13795,14 +13903,14 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV1917-T63499.99\", \"b\"]]",
    "price": 0.78,
-   "profit": null,
+   "profit": 0.2821,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-20T00:14:14+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXSOLD-26NOV1917-T73.9999",
@@ -13818,14 +13926,14 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXSOLD-26NOV1917-T73.9999\", \"a\"]]",
    "price": 0.72,
-   "profit": null,
+   "profit": -1.0,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-20T00:14:14+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXETHD-26NOV1917-T1759.99",
@@ -13841,14 +13949,14 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXETHD-26NOV1917-T1759.99\", \"a\"]]",
    "price": 0.78,
-   "profit": null,
+   "profit": -1.0,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-20T00:14:17+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXBRENTD-26NOV1917-T88.50",
@@ -13864,14 +13972,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXBRENTD-26NOV1917-T88.50\", \"a\"]]",
    "price": 0.98,
-   "profit": null,
+   "profit": 0.0204,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-20T00:05:59+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXGOLDD-26NOV1917-T3652",
@@ -13887,14 +13995,14 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXGOLDD-26NOV1917-T3652\", \"a\"]]",
    "price": 0.93,
-   "profit": null,
+   "profit": -1.0,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-20T00:05:59+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXSILVERD-26NOV1917-T43.75",
@@ -13910,13 +14018,82 @@
    ],
    "pid": "[\"sandbox\", \"commod_nc_yes\", [\"commod_nc_yes:KXSILVERD-26NOV1917-T43.75\", \"a\"]]",
    "price": 0.93,
-   "profit": null,
+   "profit": -1.0,
    "scope": "commodities_fav",
-   "settled": null,
+   "settled": "2026-11-20T00:05:59+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Commodities",
    "src": "sandbox",
+   "status": "lost"
+  },
+  {
+   "contract": "KXMLSGAME-26NOV23STLLAFC-STL",
+   "entered_at": "2026-11-20T01:11:47.734888+00:00",
+   "entities": [
+    "LAFC"
+   ],
+   "id": "superpack:[\"sandbox\", \"mls_fade_home\", [\"mls_fade_home:KXMLSGAME-26NOV23STLLAFC-STL\", \"b\"]]",
+   "lane": "mls_fade_home",
+   "logged": "2026-11-20T01:10:44+00:00",
+   "matched": [
+    "LAFC"
+   ],
+   "pid": "[\"sandbox\", \"mls_fade_home\", [\"mls_fade_home:KXMLSGAME-26NOV23STLLAFC-STL\", \"b\"]]",
+   "price": 0.59,
+   "profit": null,
+   "scope": "soccer_p05",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXSERIEATEAMTOTAL-26NOV21NAPTOR-NAP2",
+   "entered_at": "2026-11-20T03:34:56.789799+00:00",
+   "entities": [
+    "Napoli"
+   ],
+   "id": "superpack:[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXSERIEATEAMTOTAL-26NOV21NAPTOR-NAP2\", \"a\"]]",
+   "lane": "team2_ranked",
+   "logged": "2026-11-20T03:33:57+00:00",
+   "matched": [
+    "Napoli"
+   ],
+   "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXSERIEATEAMTOTAL-26NOV21NAPTOR-NAP2\", \"a\"]]",
+   "price": 0.62,
+   "profit": null,
+   "scope": "soccer_team2",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXDIESELD-26NOV20-T5.895",
+   "entered_at": "2026-11-20T04:11:39.004704+00:00",
+   "entities": [
+    "Diesel"
+   ],
+   "id": "superpack:[\"daily\", \"econ_nc_yes\", [\"KXDIESELD-26NOV20-T5.895\", \"yes\"]]",
+   "lane": "econ_nc_yes",
+   "logged": "2026-11-20T04:00:45.508067+00:00",
+   "matched": [
+    "Diesel"
+   ],
+   "pid": "[\"daily\", \"econ_nc_yes\", [\"KXDIESELD-26NOV20-T5.895\", \"yes\"]]",
+   "price": 0.92,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Commodities",
+   "src": "daily",
    "status": "open"
   }
  ],
@@ -14625,6 +14802,24 @@
    "list": "pool",
    "logged": "2026-11-19T21:01:35.325791+00:00",
    "pid": "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV19VITRBB\", \"yes\"]]",
+   "side": "yes",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-19T23:14:06.787713+00:00",
+   "contract": "KXBRASILEIROBTTS-26NOV19SPAFLU-BTTS",
+   "list": "pool",
+   "logged": "2026-11-19T23:02:00.298036+00:00",
+   "pid": "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXBRASILEIROBTTS-26NOV19SPAFLU\", \"no\"]]",
+   "side": "no",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-19T23:14:06.787713+00:00",
+   "contract": "KXBRASILEIROBTTS-26NOV19SPAFLU-BTTS",
+   "list": "pool",
+   "logged": "2026-11-19T23:02:00.298036+00:00",
+   "pid": "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV19SPAFLU\", \"yes\"]]",
    "side": "yes",
    "why": "active lanes are on both sides of this contract"
   }
