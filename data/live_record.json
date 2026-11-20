@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-20T19:07Z",
+ "generated": "2026-11-20T20:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -5358,7 +5358,6 @@
     "commod_fav_band:KXBRENTD-26NOV1917-T89.50": "outside the price band",
     "commod_fav_band:KXGOLDD-26NOV1817-T3726": "outside the price band",
     "commod_fav_band:KXNATGASD-26NOV1617-T3.500": "wide spread",
-    "commod_fav_band:KXWTI-26NOV1314-T88.49": "outside the price band",
     "commod_fav_band:KXWTI-26NOV1714-T84.99": "outside the price band",
     "commod_fav_band:KXWTI-26NOV1914-T82.99": "outside the price band"
    }
@@ -5601,6 +5600,7 @@
     "crypto_fav_band_below:KXBTCD-26NOV1517-T64999.99": "outside the price band",
     "crypto_fav_band_below:KXBTCD-26NOV1917-T63499.99": "thin book",
     "crypto_fav_band_below:KXETHD-26NOV1917-T1799.99": "outside the price band",
+    "crypto_fav_band_below:KXETHD-26NOV2017-T1619.99": "outside the price band",
     "crypto_fav_band_below:KXHYPED-26NOV1617-T67.9999": "published inside 30 min of kickoff",
     "crypto_fav_band_below:KXHYPED-26NOV1717-T68.9999": "published inside 30 min of kickoff",
     "crypto_fav_band_below:KXHYPED-26NOV1817-T67.9999": "published inside 30 min of kickoff",
