@@ -142,7 +142,7 @@ print("\nthe status file")
 d2 = {"quotes": [test, t20, _bet("oddspedia:settled", 60, status="won", market_id="k2")],
       "meta": {"updated": NOW.isoformat()},
       "coverage": {"cricket": {"oddspedia": {"offered": 21, "picked": 0}}},
-      "feed_status": {"oddspedia": "ok", "pin_totals": "down: page unreachable"}}
+      "feed_status": {"oddspedia": "ok", "btts_market": "down: page unreachable"}}
 s = T.build_status(d2, now=NOW)
 eq(sorted(s), ["broken_feeds", "lanes", "ledger_updated", "overdue_open", "written"], "the top-level keys")
 eq(s["written"], NOW.isoformat(), "written is the build clock")
@@ -157,15 +157,15 @@ ok(all(k.count("|") == 1 for k in s["lanes"]) and all(S.SOURCES[v["source"]]["co
 ok(any(v["read"] == "paused" and v["paused"] for v in s["lanes"].values()), "a paused lane says so")
 eq([(x["id"], x["overdue_after_h"]) for x in s["overdue_open"]], [("oddspedia:aec-t20icr-x-y-2026-10-10", 24)],
    "overdue_open lists the T20 and not the Test, with the hours it was allowed")
-eq([x["source"] for x in s["broken_feeds"]], ["pin_totals"], "broken_feeds is broken_feeds(d)")
+eq([x["source"] for x in s["broken_feeds"]], ["btts_market"], "broken_feeds is broken_feeds(d)")
 # A live (unpaused) lane of the down source; ESPN FPI was the example until its NFL scope retired on 2026-11-02.
-olbg = next(v for k, v in s["lanes"].items() if k.startswith("pin_totals|") and not v["paused"])
+olbg = next(v for k, v in s["lanes"].items() if k.startswith("btts_market|") and not v["paused"])
 eq((olbg["read"], olbg["last_read"]), ("down: page unreachable", None), "a source down this run has no last_read to carry")
 empty = dict(d2, coverage={"cricket": {"oddspedia": {"offered": 0, "picked": 0}}})
 quiet = T.build_status(empty, now=NOW)["lanes"]["oddspedia|cricket"]
 eq((quiet["read"], quiet["last_read"]), ("ok", None),
    "a feed that answered with nothing on offer for this sport is not a read of this lane")
-_down = next(k for k, v in s["lanes"].items() if k.startswith("pin_totals|") and not v["paused"])
+_down = next(k for k, v in s["lanes"].items() if k.startswith("btts_market|") and not v["paused"])
 previous = {"lanes": {_down: {"last_read": "2026-10-10T08:00:00+00:00"}}}
 s2 = T.build_status(d2, now=NOW, previous=previous)
 olbg2 = s2["lanes"][_down]

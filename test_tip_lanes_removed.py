@@ -245,7 +245,7 @@ def main():
            f"{name} is off the board")
     ok(S.lane_paused("tennis_fav_band_3h", "tennis")
        and not S.lane_paused("pin_totals", "soccer_o25"),
-       "the old tennis band is paused; pin totals may still log")
+       "the old tennis band is paused; pin totals is retired, not paused")
     ok(S.lane_paused("mma_fav_band", "mma") and S.lane_paused("olbg", "boxing")
        and S.lane_paused("mlb_fade_streak", "mlb") and S.lane_paused("nhl_rest_edge", "nhl_rest"),
        "the five removed lanes log nothing new")
@@ -294,8 +294,8 @@ def main():
     eq(removed_calls, [], "no removed source or sport-scoped lane is fetched")
     ok(("espn_fpi", "nfl") not in calls and ("espn_fpi", "mlb") not in calls,
        "ESPN FPI is fetched on neither sport: NFL retired 2026-11-02, MLB removed")
-    ok(("tennis_fav_band_3h", "tennis") not in calls and ("pin_totals", "soccer_o25") in calls,
-       "the paused tennis band is not fetched; pin totals remains active")
+    ok(("tennis_fav_band_3h", "tennis") not in calls and ("pin_totals", "soccer_o25") not in calls,
+       "the paused tennis band is not fetched; pin totals is retired (2026-11-20) and not fetched either")
     ok(not any(q.get("source") in FULL or (q.get("source"), q.get("sport")) in S.REMOVED_LANES
                for q in logged["quotes"]),
        "the run logs no removed-lane quote")
