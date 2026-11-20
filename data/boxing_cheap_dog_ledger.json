@@ -1348,6 +1348,191 @@
    "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Hemi Ahio"
+  },
+  {
+   "ask_check": {
+    "book": null,
+    "first_quotes": false,
+    "last_trade": 0.14,
+    "source": "replayed",
+    "status": "checking"
+   },
+   "bid": 0.05,
+   "entry_at": "2026-11-20T20:13:00+00:00",
+   "event": "KXBOXING-26NOV20ANDERSBUCIUC",
+   "fight_start": "2026-11-20T21:00:00+00:00",
+   "id": "KXBOXING-26NOV20ANDERSBUCIUC-BUCIUC",
+   "last_trade": 0.14,
+   "last_trade_at": "2026-11-20T20:03:00+00:00",
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.2
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.3
+    }
+   ],
+   "logged": "2026-11-20T21:00:42.183298+00:00",
+   "minutes_to_start": 47.0,
+   "payout": null,
+   "price": 0.1,
+   "side": "yes",
+   "spread": 0.05,
+   "spread_cost": -0.04,
+   "status": "open",
+   "traded_to_entry": 355.63,
+   "word": "Daniel Buciuc"
+  },
+  {
+   "ask_check": {
+    "book": 0,
+    "first_quotes": false,
+    "last_trade": 0.06,
+    "source": "live",
+    "status": "checking"
+   },
+   "bid": 0.05,
+   "book": {
+    "ask_depth": 0,
+    "ask_levels": 0,
+    "ask_size": null,
+    "at": "2026-11-20T21:00:42.183298+00:00",
+    "at_or_under": 0,
+    "best_ask": null,
+    "best_bid": 0.99,
+    "bid_depth": 68731.85,
+    "bid_levels": 30,
+    "bid_size": 38043.64
+   },
+   "book_at": "2026-11-20T21:00:42.183298+00:00",
+   "book_size": 0,
+   "entry_at": "2026-11-20T20:27:00+00:00",
+   "event": "KXBOXING-26NOV20GILHEAPALMET",
+   "fight_start": "2026-11-20T21:20:00+00:00",
+   "id": "KXBOXING-26NOV20GILHEAPALMET-PALMET",
+   "last_trade": 0.06,
+   "last_trade_at": "2026-11-20T20:27:00+00:00",
+   "legs": [
+    {
+     "fill_px": 0.12,
+     "fill_volume": 1126.0,
+     "filled_at": "2026-11-20T20:30:00+00:00",
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.12
+    },
+    {
+     "fill_px": 0.18,
+     "fill_volume": 1126.0,
+     "filled_at": "2026-11-20T20:30:00+00:00",
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.18
+    }
+   ],
+   "logged": "2026-11-20T21:00:42.183298+00:00",
+   "minutes_to_start": 53.0,
+   "payout": null,
+   "pnl": 0.0838,
+   "price": 0.06,
+   "roi": 1.311,
+   "roi_2x": 0.8476,
+   "side": "yes",
+   "spread": 0.01,
+   "spread_cost": 0.0,
+   "status": "filled",
+   "traded_to_entry": 149.57,
+   "word": "Alberto Ignacio Palmetta"
+  },
+  {
+   "ask_check": {
+    "book": null,
+    "first_quotes": false,
+    "last_trade": 0.06,
+    "source": "replayed",
+    "status": "checking"
+   },
+   "bid": 0.06,
+   "entry_at": "2026-11-20T20:07:00+00:00",
+   "event": "KXBOXING-26NOV20IRIARTGALEAN",
+   "fight_start": "2026-11-20T21:00:00+00:00",
+   "id": "KXBOXING-26NOV20IRIARTGALEAN-GALEAN",
+   "last_trade": null,
+   "last_trade_at": null,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.22
+    },
+    {
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.33
+    }
+   ],
+   "logged": "2026-11-20T21:00:42.183298+00:00",
+   "minutes_to_start": 53.0,
+   "payout": null,
+   "price": 0.11,
+   "side": "yes",
+   "spread": 0.05,
+   "spread_cost": null,
+   "status": "open",
+   "traded_to_entry": 0.0,
+   "word": "Darvin Galeano"
+  },
+  {
+   "ask_check": {
+    "book": null,
+    "first_quotes": false,
+    "last_trade": 0.11,
+    "reason": "ask 0.05 under half the last trade 0.11",
+    "source": "replayed",
+    "status": "unverified"
+   },
+   "bid": 0.0,
+   "entry_at": "2026-11-20T20:15:00+00:00",
+   "event": "KXBOXING-26NOV20ZAMORAGARCIA",
+   "fight_start": "2026-11-20T21:00:00+00:00",
+   "id": "KXBOXING-26NOV20ZAMORAGARCIA-GARCIA",
+   "last_trade": 0.11,
+   "last_trade_at": "2026-11-20T20:12:00+00:00",
+   "legs": [
+    {
+     "fill_px": 0.1,
+     "fill_volume": 64.15,
+     "filled_at": "2026-11-20T20:49:00+00:00",
+     "multiple": 2.0,
+     "share": 0.5,
+     "target": 0.1
+    },
+    {
+     "fill_px": 0.15,
+     "fill_volume": 64.15,
+     "filled_at": "2026-11-20T20:49:00+00:00",
+     "multiple": 3.0,
+     "share": 0.5,
+     "target": 0.15
+    }
+   ],
+   "logged": "2026-11-20T21:00:42.183298+00:00",
+   "minutes_to_start": 45.0,
+   "payout": null,
+   "pnl": 0.0698,
+   "price": 0.05,
+   "roi": 1.3084,
+   "roi_2x": 0.8458,
+   "side": "yes",
+   "spread": 0.05,
+   "spread_cost": -0.06,
+   "status": "filled",
+   "traded_to_entry": 100.83,
+   "word": "Ruben Garcia"
   }
  ],
  "error": null,
@@ -1419,6 +1604,11 @@
   "KXBOXING-26NOV14WELLANDILLIN": "2026-11-14T21:00:39.118452+00:00",
   "KXBOXING-26NOV14ZOKIROCOLANT": "2026-11-15T01:00:39.997834+00:00",
   "KXBOXING-26NOV18TEREMOAHIO": "2026-11-18T10:00:44.735185+00:00",
+  "KXBOXING-26NOV20ANDERSBUCIUC": "2026-11-20T21:00:42.183298+00:00",
+  "KXBOXING-26NOV20EDWARDMCGREG": "2026-11-20T21:00:42.183298+00:00",
+  "KXBOXING-26NOV20GILHEAPALMET": "2026-11-20T21:00:42.183298+00:00",
+  "KXBOXING-26NOV20IRIARTGALEAN": "2026-11-20T21:00:42.183298+00:00",
+  "KXBOXING-26NOV20ZAMORAGARCIA": "2026-11-20T21:00:42.183298+00:00",
   "KXBOXING-26OCT23ULDEDACAPARE": "2026-10-27T04:45:21.662265+00:00",
   "KXBOXING-26OCT31CALVARMBILLI": "2026-10-31T20:06:27.383501+00:00",
   "KXBOXING-26OCT31DELGADBIYARS": "2026-11-01T01:57:46.281274+00:00",
@@ -1429,16 +1619,16 @@
   "KXBOXING-26OCT31TSUTSUROJAS": "2026-10-31T20:06:27.383501+00:00"
  },
  "lane": "boxing_cheap_dog",
- "last_success": "2026-11-20T20:00:42.532070+00:00",
+ "last_success": "2026-11-20T21:00:42.183298+00:00",
  "observations": {
-  "at": "2026-11-20T20:00:42.532070+00:00",
-  "entered": 0,
-  "events": 0,
-  "filled": 0,
+  "at": "2026-11-20T21:00:42.183298+00:00",
+  "entered": 4,
+  "events": 5,
+  "filled": 4,
   "no_start": 0,
-  "skipped": 0,
-  "unverified": 0,
-  "waiting": 27
+  "skipped": 6,
+  "unverified": 1,
+  "waiting": 22
  },
  "skips": {
   "KXBOXING-26NOV06AOKUSOKHAHRA-AOKUSO": {
@@ -2118,6 +2308,42 @@
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
    "start": "2026-11-18T10:00:00+00:00",
    "word": "Teremoana Teremoana"
+  },
+  "KXBOXING-26NOV20ANDERSBUCIUC-ANDERS": {
+   "event": "KXBOXING-26NOV20ANDERSBUCIUC",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-20T21:00:00+00:00",
+   "word": "Amir Anderson"
+  },
+  "KXBOXING-26NOV20EDWARDMCGREG-EDWARD": {
+   "event": "KXBOXING-26NOV20EDWARDMCGREG",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-20T21:40:00+00:00",
+   "word": "Rhys Edwards"
+  },
+  "KXBOXING-26NOV20EDWARDMCGREG-MCGREG": {
+   "event": "KXBOXING-26NOV20EDWARDMCGREG",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-20T21:40:00+00:00",
+   "word": "Lee Mcgregor"
+  },
+  "KXBOXING-26NOV20GILHEAPALMET-GILHEA": {
+   "event": "KXBOXING-26NOV20GILHEAPALMET",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-20T21:20:00+00:00",
+   "word": "Willy Gilheaney"
+  },
+  "KXBOXING-26NOV20IRIARTGALEAN-IRIART": {
+   "event": "KXBOXING-26NOV20IRIARTGALEAN",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-20T21:00:00+00:00",
+   "word": "Joel Iriarte"
+  },
+  "KXBOXING-26NOV20ZAMORAGARCIA-ZAMORA": {
+   "event": "KXBOXING-26NOV20ZAMORAGARCIA",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-20T21:00:00+00:00",
+   "word": "Demler Zamora"
   },
   "KXBOXING-26OCT23ULDEDACAPARE-CAPARE": {
    "event": "KXBOXING-26OCT23ULDEDACAPARE",
