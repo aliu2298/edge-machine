@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-20T21:31:31.113060+00:00",
+ "last_run": "2026-11-20T22:01:30.552097+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -2622,11 +2622,14 @@
      "line": 2.5,
      "logged": "2026-11-20T18:31:39.085193+00:00",
      "match": "Athletic Club v Espanyol",
+     "payout": 0.0,
      "price": 0.58,
+     "profit": -100.0,
      "rule": "C2",
+     "settled": "2026-11-20T22:01:30.552097+00:00",
      "side": "yes",
      "start": "2026-11-20T20:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXLALIGATOTAL-26NOV20ATHESP-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Athletic Club O+D- v Espanyol O-D- \u00b7 Over 2.5 YES 0.58"
@@ -5376,14 +5379,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-15T13:01:04.576896+00:00",
-   "candidates": 1,
-   "due": 2,
-   "labelled": 2,
-   "matched": 1,
-   "new": 0
-  },
-  {
    "at": "2026-11-15T15:31:08.661914+00:00",
    "candidates": 2,
    "due": 2,
@@ -5777,6 +5772,14 @@
   },
   {
    "at": "2026-11-20T21:31:31.113060+00:00",
+   "candidates": 0,
+   "due": 0,
+   "labelled": 0,
+   "matched": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-20T22:01:30.552097+00:00",
    "candidates": 0,
    "due": 0,
    "labelled": 0,
