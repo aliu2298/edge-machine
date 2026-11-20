@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-20T17:07Z",
+ "generated": "2026-11-20T18:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -5679,7 +5679,7 @@
      "r": 0.1269,
      "side": "no",
      "st": "won",
-     "w": 0.96
+     "w": 0.95
     },
     {
      "id": "finance_spx_nc_no:KXINXU-26NOV11H1600-T7654.9999",
@@ -5687,7 +5687,7 @@
      "r": 0.1034,
      "side": "no",
      "st": "won",
-     "w": 0.98
+     "w": 0.97
     },
     {
      "id": "finance_spx_nc_no:KXINXU-26NOV12H1600-T7664.9999",
@@ -5695,7 +5695,7 @@
      "r": 0.07,
      "side": "no",
      "st": "won",
-     "w": 1.01
+     "w": 1.0
     },
     {
      "id": "finance_spx_nc_no:KXINXU-26NOV16H1600-T7494.9999",
@@ -5703,7 +5703,7 @@
      "r": 0.0808,
      "side": "no",
      "st": "won",
-     "w": 1.0
+     "w": 0.99
     },
     {
      "id": "finance_spx_nc_no:KXINXU-26NOV19H1600-T7399.9999",
@@ -5711,7 +5711,15 @@
      "r": 0.019,
      "side": "no",
      "st": "won",
-     "w": 1.06
+     "w": 1.05
+    },
+    {
+     "id": "finance_spx_nc_no:KXINXU-26NOV20H1600-T7159.9999",
+     "ko": "2026-11-20T21:00",
+     "r": null,
+     "side": "no",
+     "st": "open",
+     "w": 1.05
     }
    ],
    "refused": {
