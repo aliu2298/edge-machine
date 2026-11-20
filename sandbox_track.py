@@ -3492,7 +3492,10 @@ NBA_TT_SPORTS = ("nba_tt",)
 NBA_WM_SPORTS = ("nba_wm",)
 # start_source values that mean a real start time, not the venue's estimate.
 # kalshi_milestone is cricket and MMA only, each after its own checker agrees.
-VERIFIED_STARTS = ("tennisexplorer", "espn", "mlb", "kalshi_milestone")
+# kalshi_challenger (2026-11-20): the scheduled start Kalshi publishes on a Challenger match (occurrence_datetime). Only the live
+# Challenger lane (challenger_production) writes it; it buys inside the last hour and the follower's own window and price band stand
+# between a start that has already passed and an order.
+VERIFIED_STARTS = ("tennisexplorer", "espn", "mlb", "kalshi_milestone", "kalshi_challenger")
 
 # Each sport is named here. A _cup twin and every other suffix are absent on purpose:
 # membership is this dict, not a stripped suffix.

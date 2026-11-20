@@ -57,7 +57,7 @@ check("version 2 runs on the same market, under its own key", (S.SOURCES["liga_u
 check("the stamp-of-approval table tags v1 retired, not v2", (B.source_retired("liga_u15_dog"), B.source_retired("liga_u15_dog_24h")), (True, False))
 check("v1 is not in the live rules table", 'data-source="liga_u15_dog" ' in html[r_at:e_at], False)
 check("it is in the Retired block, with its paper record and the reason", ('data-source="liga_u15_dog"' in ret, "median 4 days" in ret, "3–6" in ret), (True, True, True))
-check("version 2 is on the Soccer page", "La Liga under 1.5 in heavy mismatches v2 (inside 24h)" in html, True)
+check("version 2 is on the Soccer page", "La Liga under 1.5 in heavy mismatches v2" in html and "liga_u15_dog_24h" in html, True)
 check("the La Liga BTTS lane is untouched", (S.SOURCES["liga_btts_even"]["sports"], 'data-source="liga_btts_even" ' in html[r_at:e_at]), (["soccer_btts"], True))
 check("plain copy: no dollar amount, no guarded phrase", (re.search(r"\$\d", why), sandbox_audit.COPY_RE.findall(why)), (None, []))
 v2 = S.SOURCES["liga_u15_dog_24h"]

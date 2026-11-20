@@ -1393,7 +1393,7 @@ def _bucket_priority_html(group, nba_wm):
     return nba_wm_bucket_priority.note_html(v3, v4)
 
 
-def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=None, nba_value=None, soccer_team_rules=None, o35=None, nba_wm=None, top5_dip=None, arg_dip=None):
+def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=None, nba_value=None, soccer_team_rules=None, o35=None, nba_wm=None, top5_dip=None, arg_dip=None, challenger=None):
     """public_site/production.html — shares the Sandbox stylesheet.
 
     Organised as the questions a visitor actually asks, in order: what is in Production and on
@@ -1448,6 +1448,10 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
         # The Argentina goalless dip, live since 2026-11-08 (arg_dip_production): the paper record that follows the executor is its record.
         import arg_dip_production
         d, st, blob = arg_dip_production.page_inputs(d, st, blob, arg_dip, now=now_dt)
+    if challenger is not None:
+        # The Challenger underdog who has won here, live since 2026-11-20 (challenger_production): its own ledger is its paper record.
+        import challenger_production
+        d, st, blob = challenger_production.page_inputs(d, st, blob, challenger, now=now_dt)
     # Headlines and the lead list use the page copy. The record on each card
     # is assessed on the unfiltered ledger, the same one the tracker reads,
     # so a hidden row cannot move a kept pair's numbers.

@@ -247,6 +247,7 @@ def inputs(runs=False, opener=None):
                 o35=_read_json(os.path.join(ROOT, 'data', 'o35_cheap_no_ledger.json')),
                 top5_dip=_read_json(os.path.join(ROOT, 'data', 'top5_dip_live.json')),
                 arg_dip=_read_json(os.path.join(ROOT, 'data', 'arg_dip_live.json')),
+                challenger=_read_json(os.path.join(ROOT, 'data', 'challenger_production_ledger.json')),
                 nba_wm=dict(chaos=_read_json(os.path.join(ROOT, 'data', 'chaos_ledger.json')),
                             nofade=_read_json(os.path.join(ROOT, 'data', 'nba_wm_nofade.json')),
                             v3=_read_json(os.path.join(ROOT, 'data', 'nba_wm_v3.json')),
@@ -556,7 +557,7 @@ def _age_text(hours):
 
 
 def running_inputs(d, st, blob, now, daily=None, culture=None, soccer_rules=None, nba_value=None,
-                   soccer_team_rules=None, o35=None, nba_wm=None, top5_dip=None, arg_dip=None):
+                   soccer_team_rules=None, o35=None, nba_wm=None, top5_dip=None, arg_dip=None, challenger=None):
     """(d, st, blob) with every own-feed Production lane merged in, as the Running list reads them.
 
     Econ Daily, Trump mentions, the soccer rules, the NBA value lanes and T1 publish from their
@@ -594,11 +595,14 @@ def running_inputs(d, st, blob, now, daily=None, culture=None, soccer_rules=None
     if arg_dip is not None:
         import arg_dip_production
         d, st, blob = arg_dip_production.page_inputs(d, st, blob, arg_dip, now=now)
+    if challenger is not None:
+        import challenger_production
+        d, st, blob = challenger_production.page_inputs(d, st, blob, challenger, now=now)
     return d, st, blob
 
 
 def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, status=None, daily=None, culture=None,
-          soccer_rules=None, nba_value=None, soccer_team_rules=None, o35=None, nba_wm=None, top5_dip=None, arg_dip=None):
+          soccer_rules=None, nba_value=None, soccer_team_rules=None, o35=None, nba_wm=None, top5_dip=None, arg_dip=None, challenger=None):
     """The Control Center as data. Pure: everything it reads is an argument.
 
     `status` is data/status.json as read (inputs()); it is used only when it
@@ -647,7 +651,7 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
                 status=status_word, items=daily_items))
     live_d, live_st, live_blob = running_inputs(d, st, blob, now, daily=daily, culture=culture,
                                                 soccer_rules=soccer_rules, nba_value=nba_value,
-                                                soccer_team_rules=soccer_team_rules, o35=o35, nba_wm=nba_wm, top5_dip=top5_dip, arg_dip=arg_dip)
+                                                soccer_team_rules=soccer_team_rules, o35=o35, nba_wm=nba_wm, top5_dip=top5_dip, arg_dip=arg_dip, challenger=challenger)
     if daily is not None:
         import daily_production  # the pairs tile counts its lanes
     sr_names = []
@@ -674,6 +678,9 @@ def model(d, st, blob, now, nba=None, market=None, closes=None, runs=None, statu
     if arg_dip is not None:
         import arg_dip_production
         sr_names.append(arg_dip_production.NAME)
+    if challenger is not None:
+        import challenger_production
+        sr_names.append(challenger_production.NAME)
     if nba_wm is not None:
         import nba_wm_production
         sr_names += [nba_wm_production.YES_NAME, nba_wm_production.NO_NAME]
@@ -861,7 +868,7 @@ def _attention_html(items):
 
 
 def page(now, d=None, st=None, blob=None, nba=None, market=None, closes=None, runs=None, extra=None,
-         status=None, daily=None, culture=None, soccer_rules=None, nba_value=None, soccer_team_rules=None, o35=None, nba_wm=None, top5_dip=None, arg_dip=None):
+         status=None, daily=None, culture=None, soccer_rules=None, nba_value=None, soccer_team_rules=None, o35=None, nba_wm=None, top5_dip=None, arg_dip=None, challenger=None):
     """public_site/index.html. `extra` is the dict `inputs()` returns, for the tracker build."""
     when = shell_build._now(now)
     d, st, blob = shell_build._load(d, st, blob)
@@ -880,8 +887,9 @@ def page(now, d=None, st=None, blob=None, nba=None, market=None, closes=None, ru
         nba_wm = extra.get("nba_wm") if nba_wm is None else nba_wm
         top5_dip = extra.get("top5_dip") if top5_dip is None else top5_dip
         arg_dip = extra.get("arg_dip") if arg_dip is None else arg_dip
+        challenger = extra.get("challenger") if challenger is None else challenger
     m = model(d, st, blob, when, nba=nba, market=market, closes=closes, runs=runs, status=status, daily=daily,
-              culture=culture, soccer_rules=soccer_rules, nba_value=nba_value, soccer_team_rules=soccer_team_rules, o35=o35, nba_wm=nba_wm, top5_dip=top5_dip, arg_dip=arg_dip)
+              culture=culture, soccer_rules=soccer_rules, nba_value=nba_value, soccer_team_rules=soccer_team_rules, o35=o35, nba_wm=nba_wm, top5_dip=top5_dip, arg_dip=arg_dip, challenger=challenger)
     tiles = m["tiles"]
     n_won, n_settled = tiles["landed"]
     healthy, total = tiles["healthy"]
