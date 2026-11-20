@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-11-20T06:00:35.708646+00:00",
-   "last_success": "2026-11-20T06:00:35.708646+00:00",
+   "last_run": "2026-11-20T07:00:44.691221+00:00",
+   "last_success": "2026-11-20T07:00:44.691221+00:00",
    "observations": {
-    "at": "2026-11-20T06:00:35.708646+00:00",
+    "at": "2026-11-20T07:00:44.691221+00:00",
     "events": 966,
     "reasons": {},
     "retired": "2026-10-24"
@@ -548,10 +548,10 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-11-20T06:00:35.708646+00:00",
-   "last_success": "2026-11-20T06:00:35.708646+00:00",
+   "last_run": "2026-11-20T07:00:44.691221+00:00",
+   "last_success": "2026-11-20T07:00:44.691221+00:00",
    "observations": {
-    "at": "2026-11-20T06:00:35.708646+00:00",
+    "at": "2026-11-20T07:00:44.691221+00:00",
     "events": 966,
     "reasons": {},
     "retired": "2026-10-24"
@@ -905,10 +905,10 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-11-20T06:00:35.708646+00:00",
-   "last_success": "2026-11-20T06:00:35.708646+00:00",
+   "last_run": "2026-11-20T07:00:44.691221+00:00",
+   "last_success": "2026-11-20T07:00:44.691221+00:00",
    "observations": {
-    "at": "2026-11-20T06:00:35.708646+00:00",
+    "at": "2026-11-20T07:00:44.691221+00:00",
     "events": 966,
     "reasons": {},
     "retired": "2026-10-31"
@@ -2581,13 +2581,13 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-11-20T06:00:35.708646+00:00",
-   "last_success": "2026-11-20T06:00:35.708646+00:00",
+   "last_run": "2026-11-20T07:00:44.691221+00:00",
+   "last_success": "2026-11-20T07:00:44.691221+00:00",
    "observations": {
-    "at": "2026-11-20T06:00:35.708646+00:00",
+    "at": "2026-11-20T07:00:44.691221+00:00",
     "events": 966,
     "reasons": {
-     "edge 5c+": 2,
+     "edge 5c+": 3,
      "under 20 reviews counted": 11,
      "within 1 point of the line": 2
     }
@@ -2922,6 +2922,26 @@
      "strike": 70,
      "strike_type": "greater",
      "title": "Above 70"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-11-30T15:00:00Z",
+     "detail": "65/77 liked (84), ~241 more reviews \u00b7 P(above 82) 0.65 \u00b7 edge +0.27",
+     "edge": 0.2661,
+     "event": "KXRT-FUR",
+     "id": "KXRT-FUR-82",
+     "logged": "2026-11-20T07:00:44.691221+00:00",
+     "model": 0.6524,
+     "name": "The Further Mis-Adventures of Cliff Booth \u00b7 Rotten Tomatoes score",
+     "price": 0.37,
+     "revived": "2026-10-26",
+     "rt_url": "https://www.rottentomatoes.com/m/the_further_mis-adventures_of_cliff_booth",
+     "series": "KXRT",
+     "side": "yes",
+     "status": "open",
+     "strike": 82,
+     "strike_type": "greater",
+     "title": "Above 82"
     }
    ]
   }
