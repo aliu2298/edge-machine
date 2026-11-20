@@ -251,7 +251,17 @@ OVERFLOW = r"""
 () => {
   document.querySelectorAll("details").forEach((d) => { d.open = true; });
   const root = document.documentElement;
-  return { scrollWidth: root.scrollWidth, clientWidth: root.clientWidth };
+  const wide = [];
+  if (root.scrollWidth > root.clientWidth + 1) {
+    document.querySelectorAll("body *").forEach((e) => {
+      if (e.closest("nav, header")) return;
+      const r = e.getBoundingClientRect();
+      if (r.width > 0 && r.right > root.clientWidth + 1)
+        wide.push(Math.round(r.right) + " " + e.tagName + "." + String(e.className).slice(0, 30) +
+                  " < " + (e.parentElement ? e.parentElement.tagName + "." + String(e.parentElement.className).slice(0, 30) : ""));
+    });
+  }
+  return { scrollWidth: root.scrollWidth, clientWidth: root.clientWidth, wide: wide.slice(0, 6) };
 }
 """
 
@@ -437,7 +447,7 @@ def browser_checks():
                     got = page.evaluate(OVERFLOW)
                     ok(got["scrollWidth"] <= got["clientWidth"] + 1,
                        f"{path} at {width}px: page scrollWidth {got['scrollWidth']} "
-                       f"<= viewport {got['clientWidth']}")
+                       f"<= viewport {got['clientWidth']} {got['wide']}")
                 page.goto(f"{base}/fixture/layout.html", wait_until="load")
                 page.wait_for_timeout(40)
                 got = page.evaluate(OVERFLOW)

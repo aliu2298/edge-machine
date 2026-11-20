@@ -104,12 +104,7 @@
    "date": "2026-11-19",
    "eps_forecast": "$0.64",
    "fiscal_q": "Oct/2026",
-   "kpi": [
-    {
-     "event": "KXWMT-26NOVUSCOMP",
-     "title": "Walmart US comparable sales growth (ex-fuel) in Q3"
-    }
-   ],
+   "kpi": [],
    "mentions": [
     "KXEARNINGSMENTIONWMT-26NOV19"
    ],
@@ -135,7 +130,7 @@
   },
   {
    "date": "2026-11-24",
-   "eps_forecast": "$6.41",
+   "eps_forecast": "$6.48",
    "fiscal_q": "Oct/2026",
    "kpi": [],
    "mentions": [
@@ -176,11 +171,27 @@
    "time": "after-hours"
   },
   {
+   "date": "2026-12-01",
+   "eps_forecast": "$0.79",
+   "fiscal_q": "Oct/2026",
+   "kpi": [],
+   "mentions": [
+    "KXEARNINGSMENTIONMRVL-26DEC01"
+   ],
+   "n_ests": "12",
+   "name": "Marvell Technology, Inc.",
+   "perp": "KXMRVLPERP",
+   "sym": "MRVL",
+   "time": "after-hours"
+  },
+  {
    "date": "2026-12-02",
    "eps_forecast": "$2.41",
    "fiscal_q": "Oct/2026",
    "kpi": [],
-   "mentions": [],
+   "mentions": [
+    "KXEARNINGSMENTIONCRM-26DEC02"
+   ],
    "n_ests": "13",
    "name": "Salesforce, Inc.",
    "perp": "KXCRMPERP",
@@ -206,7 +217,9 @@
    "eps_forecast": "$3.45",
    "fiscal_q": "Oct/2026",
    "kpi": [],
-   "mentions": [],
+   "mentions": [
+    "KXEARNINGSMENTIONAVGO-26DEC09"
+   ],
    "n_ests": "10",
    "name": "Broadcom Inc.",
    "perp": "KXAVGOPERP",
@@ -218,7 +231,9 @@
    "eps_forecast": "$1.56",
    "fiscal_q": "Nov/2026",
    "kpi": [],
-   "mentions": [],
+   "mentions": [
+    "KXEARNINGSMENTIONORCL-26DEC10"
+   ],
    "n_ests": "10",
    "name": "Oracle Corporation",
    "perp": "KXORCLPERP",
@@ -245,7 +260,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-19T06:00:27Z",
+ "calendar_at": "2026-11-20T06:00:26Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -4728,9 +4743,341 @@
     "width": 678571.4285714328
    },
    "sym": "COST"
+  },
+  {
+   "at": "2026-11-19T07:01:26Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.715151515151515,
+    "rungs": 15,
+    "width": 0.4046783625730992
+   },
+   "sym": "WMT"
+  },
+  {
+   "at": "2026-11-19T07:01:26Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 678571.4285714328
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-19T08:01:31Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.7176470588235295,
+    "rungs": 15,
+    "width": 0.39271255060728727
+   },
+   "sym": "WMT"
+  },
+  {
+   "at": "2026-11-19T08:01:31Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151350000.0,
+    "rungs": 10,
+    "width": 678021.9780219793
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-19T09:01:24Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": null,
+   "sym": "WMT"
+  },
+  {
+   "at": "2026-11-19T09:01:24Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": null,
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-19T09:30:31Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": null,
+   "sym": "WMT"
+  },
+  {
+   "at": "2026-11-19T09:30:31Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": null,
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-19T10:01:28Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": null,
+   "sym": "WMT"
+  },
+  {
+   "at": "2026-11-19T10:01:28Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151354838.70967743,
+    "rungs": 10,
+    "width": 685714.2857142985
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-19T11:01:27Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": null,
+   "sym": "WMT"
+  },
+  {
+   "at": "2026-11-19T11:01:27Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151354838.70967743,
+    "rungs": 10,
+    "width": 685714.2857142985
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-19T12:01:29Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": null,
+   "sym": "WMT"
+  },
+  {
+   "at": "2026-11-19T12:01:29Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151354838.70967743,
+    "rungs": 10,
+    "width": 685714.2857142985
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-19T13:01:26Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.8351648351648353,
+    "rungs": 12,
+    "width": 0.4395604395604398
+   },
+   "sym": "WMT"
+  },
+  {
+   "at": "2026-11-19T13:01:26Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151354838.70967743,
+    "rungs": 10,
+    "width": 685714.2857142985
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-19T14:01:23Z",
+   "event": "KXWMT-26NOVUSCOMP",
+   "read": {
+    "median": 2.8351648351648353,
+    "rungs": 12,
+    "width": 0.4395604395604398
+   },
+   "sym": "WMT"
+  },
+  {
+   "at": "2026-11-19T14:01:23Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151354838.70967743,
+    "rungs": 10,
+    "width": 685714.2857142985
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-19T15:01:40Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151354838.70967743,
+    "rungs": 10,
+    "width": 685714.2857142985
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-19T16:01:31Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151354838.70967743,
+    "rungs": 10,
+    "width": 685714.2857142985
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-19T17:01:34Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151354838.70967743,
+    "rungs": 10,
+    "width": 685714.2857142985
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-19T18:01:36Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151354838.70967743,
+    "rungs": 10,
+    "width": 685714.2857142985
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-19T18:40:41Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151354838.70967743,
+    "rungs": 10,
+    "width": 685714.2857142985
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-19T19:01:46Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151354838.70967743,
+    "rungs": 10,
+    "width": 685714.2857142985
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-19T20:01:39Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151354838.70967743,
+    "rungs": 10,
+    "width": 685714.2857142985
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-19T21:01:26Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 678571.4285714328
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-19T22:01:27Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 678571.4285714328
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-19T23:01:41Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 678571.4285714328
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-20T00:01:29Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 678571.4285714328
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-20T00:56:36Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 678571.4285714328
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-20T01:01:25Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 678571.4285714328
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-20T02:01:26Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 678571.4285714328
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-20T03:01:21Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 678571.4285714328
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-20T04:01:25Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 678571.4285714328
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-20T05:01:18Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 678571.4285714328
+   },
+   "sym": "COST"
+  },
+  {
+   "at": "2026-11-20T06:01:24Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 678571.4285714328
+   },
+   "sym": "COST"
   }
  ],
- "last_run": "2026-11-19T06:01:29Z",
+ "last_run": "2026-11-20T06:01:26Z",
  "predictions": [
   {
    "call": {
@@ -5386,7 +5733,7 @@
    "call": {
     "entry": 27.711,
     "entry_ts": 1795032420,
-    "status": "open"
+    "status": "exit_no_fill"
    },
    "crowd_up": 0.712,
    "day": "2026-11-18",
@@ -5399,7 +5746,7 @@
    "random_side": -1,
    "reason": "Kalshi traders 71% Up on 24h taker volume.",
    "side": 1,
-   "status": "open",
+   "status": "exit_no_fill",
    "sym": "LLY"
   },
   {
@@ -5415,6 +5762,69 @@
    "report_time": "after-hours",
    "side": 1,
    "sym": "COST"
+  },
+  {
+   "entry_due": "2026-11-23T21:00:00Z",
+   "exit_due": "2026-12-01T21:00:00Z",
+   "family": "runup",
+   "id": "runup:MRVL:2026-12-01",
+   "logged_at": "2026-11-19T16:01:31Z",
+   "perp": "KXMRVLPERP",
+   "random_side": 1,
+   "reason": "Up into the 2026-12-01 report (after-hours).",
+   "report": "2026-12-01",
+   "report_time": "after-hours",
+   "side": 1,
+   "sym": "MRVL"
+  },
+  {
+   "call": {
+    "entry": 7.1186,
+    "entry_ts": 1795119120,
+    "status": "open"
+   },
+   "entry_due": "2026-11-19T20:01:40Z",
+   "exit_due": "2026-11-27T21:00:00Z",
+   "family": "post_drift",
+   "id": "post_drift:PANW:2026-11-18",
+   "logged_at": "2026-11-19T20:01:40Z",
+   "perp": "KXPANWPERP",
+   "random_side": -1,
+   "reaction": 0.06182,
+   "reason": "Reaction since the last close before the report: +6.2%.",
+   "report": "2026-11-18",
+   "report_time": "after-hours",
+   "side": 1,
+   "status": "open",
+   "sym": "PANW"
+  },
+  {
+   "family": "post_drift",
+   "id": "post_drift:BABA:2026-11-19",
+   "logged_at": "2026-11-19T20:01:40Z",
+   "perp": "KXBABAPERP",
+   "random_side": -1,
+   "reaction": -0.00266,
+   "reason": "Reaction since the last close before the report: -0.3%.",
+   "report": "2026-11-19",
+   "report_time": "pre-market",
+   "side": 0,
+   "status": "no_call",
+   "sym": "BABA"
+  },
+  {
+   "family": "post_drift",
+   "id": "post_drift:WMT:2026-11-19",
+   "logged_at": "2026-11-19T20:01:40Z",
+   "perp": "KXWMTPERP",
+   "random_side": 1,
+   "reaction": -0.01153,
+   "reason": "Reaction since the last close before the report: -1.2%.",
+   "report": "2026-11-19",
+   "report_time": "pre-market",
+   "side": 0,
+   "status": "no_call",
+   "sym": "WMT"
   }
  ],
  "registered": "2026-11-07",
@@ -5427,6 +5837,7 @@
   "2026-11-13",
   "2026-11-16",
   "2026-11-17",
-  "2026-11-18"
+  "2026-11-18",
+  "2026-11-19"
  ]
 }

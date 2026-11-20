@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-19T06:07Z",
+ "generated": "2026-11-20T06:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -1587,6 +1587,78 @@
     "src": "fills",
     "st": "lost",
     "w": 1.02
+   },
+   {
+    "g": -1.0,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV19LACSAS-SAS11TO15",
+    "ko": "2026-11-20T01:00",
+    "legs": "",
+    "r": -1.0,
+    "side": "no",
+    "src": "fills",
+    "st": "lost",
+    "w": 0.93
+   },
+   {
+    "g": 0.5455,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV19LACSAS-SAS6TO10",
+    "ko": "2026-11-20T01:00",
+    "legs": "sold",
+    "r": 0.5455,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 0.93
+   },
+   {
+    "g": -1.0,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV19NYKMIN-NYK1TO5",
+    "ko": "2026-11-20T01:00",
+    "legs": "",
+    "r": -1.0,
+    "side": "no",
+    "src": "fills",
+    "st": "lost",
+    "w": 0.97
+   },
+   {
+    "g": 0.5345,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV19NYKMIN-NYK6TO10",
+    "ko": "2026-11-20T01:00",
+    "legs": "sold",
+    "r": 0.5345,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 0.98
+   },
+   {
+    "g": 0.5333,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV19PORMIL-POR1TO5",
+    "ko": "2026-11-20T01:00",
+    "legs": "sold",
+    "r": 0.5333,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 1.02
+   },
+   {
+    "g": -1.0,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV19PORMIL-POR6TO10",
+    "ko": "2026-11-20T01:00",
+    "legs": "",
+    "r": -1.0,
+    "side": "no",
+    "src": "fills",
+    "st": "lost",
+    "w": 0.93
    }
   ],
   "nba_wm_yes": [
@@ -2116,7 +2188,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -1.0,
@@ -2128,7 +2200,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.0
+    "w": 0.99
    },
    {
     "g": -1.0,
@@ -2140,7 +2212,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.05
+    "w": 1.03
    },
    {
     "g": 1.5,
@@ -2152,7 +2224,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": 1.5714,
@@ -2164,7 +2236,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.96
+    "w": 0.95
    },
    {
     "g": 0.0,
@@ -2176,7 +2248,7 @@
     "side": "yes",
     "src": "fills",
     "st": "flat",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": 1.5556,
@@ -2188,7 +2260,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.05
+    "w": 1.03
    },
    {
     "g": -1.0,
@@ -2200,7 +2272,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -1.0,
@@ -2212,7 +2284,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.05
+    "w": 1.04
    },
    {
     "g": 1.5,
@@ -2224,7 +2296,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": -0.2,
@@ -2236,7 +2308,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -0.2,
@@ -2248,7 +2320,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.9
+    "w": 0.88
    },
    {
     "g": 1.5,
@@ -2260,7 +2332,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": -0.2,
@@ -2272,7 +2344,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.9
+    "w": 0.88
    },
    {
     "g": -1.0,
@@ -2284,7 +2356,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.96
+    "w": 0.95
    },
    {
     "g": 1.6,
@@ -2296,7 +2368,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 0.99
    },
    {
     "g": 1.5,
@@ -2308,7 +2380,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": -0.1429,
@@ -2320,7 +2392,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.04
+    "w": 1.02
    },
    {
     "g": 1.5,
@@ -2332,7 +2404,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.02
+    "w": 1.0
    },
    {
     "g": -0.1429,
@@ -2344,7 +2416,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.04
+    "w": 1.02
    },
    {
     "g": -1.0,
@@ -2356,7 +2428,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": 1.6,
@@ -2368,7 +2440,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 0.99
    },
    {
     "g": -1.0,
@@ -2380,7 +2452,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.02
+    "w": 1.0
    },
    {
     "g": 1.6,
@@ -2392,7 +2464,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.9
+    "w": 0.88
    },
    {
     "g": 1.5,
@@ -2404,7 +2476,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": -0.1429,
@@ -2416,7 +2488,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.04
+    "w": 1.02
    },
    {
     "g": -1.0,
@@ -2428,7 +2500,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.0
+    "w": 0.99
    },
    {
     "g": -0.2,
@@ -2440,7 +2512,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -0.1429,
@@ -2452,7 +2524,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.96
+    "w": 0.95
    },
    {
     "g": -1.0,
@@ -2464,7 +2536,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.96
+    "w": 0.95
    },
    {
     "g": 1.3077,
@@ -2476,7 +2548,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.96
+    "w": 0.95
    },
    {
     "g": 1.25,
@@ -2488,7 +2560,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.02
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -2500,7 +2572,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": 0.3375,
@@ -2512,7 +2584,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -2524,7 +2596,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": 1.3077,
@@ -2536,7 +2608,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.96
+    "w": 0.95
    },
    {
     "g": -0.2,
@@ -2548,7 +2620,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": 1.2667,
@@ -2560,7 +2632,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -1.0,
@@ -2572,7 +2644,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -1.0,
@@ -2584,7 +2656,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": 1.3176,
@@ -2596,7 +2668,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.9
+    "w": 0.88
    },
    {
     "g": 1.3077,
@@ -2608,7 +2680,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.96
+    "w": 0.95
    },
    {
     "g": -1.0,
@@ -2620,7 +2692,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.04
+    "w": 1.02
    },
    {
     "g": 1.2842,
@@ -2632,7 +2704,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 0.99
    },
    {
     "g": 0.0,
@@ -2644,7 +2716,7 @@
     "side": "yes",
     "src": "fills",
     "st": "flat",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": 1.25,
@@ -2656,7 +2728,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -2668,7 +2740,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -1.0,
@@ -2680,7 +2752,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.04
+    "w": 1.02
    },
    {
     "g": -1.0,
@@ -2692,7 +2764,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.05
+    "w": 1.04
    },
    {
     "g": 1.2857,
@@ -2704,7 +2776,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.04
+    "w": 1.02
    },
    {
     "g": 1.2842,
@@ -2716,7 +2788,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 0.99
    },
    {
     "g": -1.0,
@@ -2728,7 +2800,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -1.0,
@@ -2740,7 +2812,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": 1.2667,
@@ -2752,7 +2824,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -1.0,
@@ -2764,7 +2836,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.06
+    "w": 1.05
    },
    {
     "g": -1.0,
@@ -2776,7 +2848,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.04
+    "w": 1.02
    },
    {
     "g": -1.0,
@@ -2788,7 +2860,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.9
+    "w": 0.88
    },
    {
     "g": -1.0,
@@ -2800,7 +2872,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": 1.3077,
@@ -2812,7 +2884,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.96
+    "w": 0.95
    },
    {
     "g": 1.25,
@@ -2824,7 +2896,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.02
+    "w": 1.0
    },
    {
     "g": 1.25,
@@ -2836,7 +2908,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.02
+    "w": 1.0
    },
    {
     "g": 1.303,
@@ -2848,7 +2920,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.05
+    "w": 1.03
    },
    {
     "g": -0.2,
@@ -2860,7 +2932,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.9
+    "w": 0.88
    },
    {
     "g": 1.3176,
@@ -2872,7 +2944,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.9
+    "w": 0.88
    },
    {
     "g": 1.2842,
@@ -2884,7 +2956,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 0.99
    },
    {
     "g": -1.0,
@@ -2896,7 +2968,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -2908,7 +2980,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.05
+    "w": 1.03
    },
    {
     "g": -1.0,
@@ -2920,7 +2992,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.04
+    "w": 1.02
    },
    {
     "g": -1.0,
@@ -2932,7 +3004,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.02
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -2944,7 +3016,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.04
+    "w": 1.02
    },
    {
     "g": 0.0,
@@ -2956,7 +3028,7 @@
     "side": "yes",
     "src": "fills",
     "st": "flat",
-    "w": 1.02
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -2968,7 +3040,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.9
+    "w": 0.88
    },
    {
     "g": 1.25,
@@ -2980,7 +3052,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -2992,7 +3064,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.04
+    "w": 1.02
    },
    {
     "g": -1.0,
@@ -3004,7 +3076,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.05
+    "w": 1.03
    },
    {
     "g": 1.3,
@@ -3016,7 +3088,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.05
+    "w": 1.04
    },
    {
     "g": -1.0,
@@ -3028,7 +3100,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -0.2,
@@ -3040,7 +3112,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": 1.303,
@@ -3052,7 +3124,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.05
+    "w": 1.03
    },
    {
     "g": 1.303,
@@ -3064,7 +3136,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.05
+    "w": 1.03
    },
    {
     "g": -0.24,
@@ -3076,7 +3148,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.02
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -3088,7 +3160,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.96
+    "w": 0.95
    },
    {
     "g": -1.0,
@@ -3100,7 +3172,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.05
+    "w": 1.03
    },
    {
     "g": 0.0,
@@ -3112,7 +3184,7 @@
     "side": "yes",
     "src": "fills",
     "st": "flat",
-    "w": 1.02
+    "w": 1.0
    },
    {
     "g": 1.2667,
@@ -3124,7 +3196,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": 1.2857,
@@ -3136,7 +3208,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.04
+    "w": 1.02
    },
    {
     "g": -1.0,
@@ -3148,7 +3220,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.96
+    "w": 0.95
    },
    {
     "g": -1.0,
@@ -3160,7 +3232,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.05
+    "w": 1.03
    },
    {
     "g": 0.4138,
@@ -3172,7 +3244,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -1.0,
@@ -3184,7 +3256,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.05
+    "w": 1.04
    },
    {
     "g": -1.0,
@@ -3196,7 +3268,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.06
+    "w": 1.05
    },
    {
     "g": 0.0,
@@ -3208,7 +3280,7 @@
     "side": "yes",
     "src": "fills",
     "st": "flat",
-    "w": 1.02
+    "w": 1.0
    },
    {
     "g": 1.303,
@@ -3220,7 +3292,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.05
+    "w": 1.03
    },
    {
     "g": 1.3077,
@@ -3232,7 +3304,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.96
+    "w": 0.95
    },
    {
     "g": 1.25,
@@ -3244,7 +3316,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -3256,7 +3328,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": 1.3,
@@ -3268,7 +3340,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": 1.2667,
@@ -3280,7 +3352,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": 1.2842,
@@ -3292,7 +3364,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 0.99
    },
    {
     "g": -1.0,
@@ -3304,7 +3376,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.9
+    "w": 0.88
    },
    {
     "g": -1.0,
@@ -3316,7 +3388,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -1.0,
@@ -3328,7 +3400,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.02
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -3340,7 +3412,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.02
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -3352,7 +3424,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.05
+    "w": 1.03
    },
    {
     "g": -1.0,
@@ -3364,7 +3436,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -1.0,
@@ -3376,7 +3448,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.96
+    "w": 0.95
    },
    {
     "g": 1.3,
@@ -3388,7 +3460,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -1.0,
@@ -3400,7 +3472,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.0
+    "w": 0.99
    },
    {
     "g": -1.0,
@@ -3412,7 +3484,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.05
+    "w": 1.04
    },
    {
     "g": -1.0,
@@ -3424,7 +3496,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.9
+    "w": 0.88
    },
    {
     "g": -1.0,
@@ -3436,7 +3508,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": 0.0,
@@ -3448,7 +3520,7 @@
     "side": "yes",
     "src": "fills",
     "st": "flat",
-    "w": 1.02
+    "w": 1.0
    },
    {
     "g": -0.1429,
@@ -3460,7 +3532,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.96
+    "w": 0.95
    },
    {
     "g": -0.2,
@@ -3472,7 +3544,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.9
+    "w": 0.88
    },
    {
     "g": 0.0,
@@ -3484,7 +3556,7 @@
     "side": "yes",
     "src": "fills",
     "st": "flat",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -3496,7 +3568,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -1.0,
@@ -3508,7 +3580,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": 0.0,
@@ -3520,7 +3592,7 @@
     "side": "yes",
     "src": "fills",
     "st": "flat",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": 1.2667,
@@ -3532,7 +3604,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": 1.2842,
@@ -3544,7 +3616,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 0.99
    },
    {
     "g": 1.25,
@@ -3556,7 +3628,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.02
+    "w": 1.0
    },
    {
     "g": 1.2857,
@@ -3568,7 +3640,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.04
+    "w": 1.02
    },
    {
     "g": 1.3077,
@@ -3580,7 +3652,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.96
+    "w": 0.95
    },
    {
     "g": 1.2842,
@@ -3592,7 +3664,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.0
+    "w": 0.99
    },
    {
     "g": -1.0,
@@ -3604,7 +3676,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.04
+    "w": 1.02
    },
    {
     "g": 0.0,
@@ -3616,7 +3688,7 @@
     "side": "yes",
     "src": "fills",
     "st": "flat",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": -0.1111,
@@ -3628,7 +3700,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.05
+    "w": 1.03
    },
    {
     "g": -1.0,
@@ -3640,7 +3712,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -1.0,
@@ -3652,7 +3724,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.04
+    "w": 1.02
    },
    {
     "g": -1.0,
@@ -3664,7 +3736,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.0
+    "w": 0.99
    },
    {
     "g": -1.0,
@@ -3676,7 +3748,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -1.0,
@@ -3688,7 +3760,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": 1.2667,
@@ -3700,7 +3772,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -1.0,
@@ -3712,7 +3784,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -0.1429,
@@ -3724,7 +3796,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.04
+    "w": 1.02
    },
    {
     "g": -1.0,
@@ -3736,7 +3808,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.05
+    "w": 1.04
    },
    {
     "g": 0.0,
@@ -3748,7 +3820,7 @@
     "side": "yes",
     "src": "fills",
     "st": "flat",
-    "w": 1.06
+    "w": 1.05
    },
    {
     "g": 1.3176,
@@ -3760,7 +3832,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.9
+    "w": 0.88
    },
    {
     "g": -0.5767,
@@ -3772,7 +3844,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": 1.2667,
@@ -3784,7 +3856,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -1.0,
@@ -3796,7 +3868,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.04
+    "w": 1.02
    },
    {
     "g": -1.0,
@@ -3808,7 +3880,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": -0.1429,
@@ -3820,7 +3892,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.04
+    "w": 1.02
    },
    {
     "g": -1.0,
@@ -3832,7 +3904,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.05
+    "w": 1.04
    },
    {
     "g": 1.25,
@@ -3844,7 +3916,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -3856,7 +3928,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.02
+    "w": 1.0
    },
    {
     "g": 1.2667,
@@ -3868,7 +3940,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -1.0,
@@ -3880,7 +3952,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.04
+    "w": 1.02
    },
    {
     "g": -1.0,
@@ -3892,7 +3964,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": 1.3176,
@@ -3904,7 +3976,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.9
+    "w": 0.88
    },
    {
     "g": -1.0,
@@ -3916,7 +3988,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.9
+    "w": 0.88
    },
    {
     "g": -1.0,
@@ -3928,7 +4000,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.96
+    "w": 0.95
    },
    {
     "g": 1.2667,
@@ -3940,7 +4012,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": 1.25,
@@ -3952,7 +4024,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.02
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -3964,7 +4036,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.05
+    "w": 1.04
    },
    {
     "g": 1.25,
@@ -3976,7 +4048,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -3988,7 +4060,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": 1.303,
@@ -4000,7 +4072,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.05
+    "w": 1.03
    },
    {
     "g": 1.3077,
@@ -4012,7 +4084,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.96
+    "w": 0.95
    },
    {
     "g": -0.1111,
@@ -4024,7 +4096,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.05
+    "w": 1.03
    },
    {
     "g": 1.2667,
@@ -4036,7 +4108,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -0.1646,
@@ -4048,7 +4120,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.9
+    "w": 0.88
    },
    {
     "g": -0.1429,
@@ -4060,7 +4132,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.96
+    "w": 0.95
    },
    {
     "g": -1.0,
@@ -4072,7 +4144,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.04
+    "w": 1.02
    },
    {
     "g": 1.25,
@@ -4084,7 +4156,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": 1.3176,
@@ -4096,7 +4168,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.9
+    "w": 0.88
    },
    {
     "g": -1.0,
@@ -4108,7 +4180,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.9
+    "w": 0.88
    },
    {
     "g": -1.0,
@@ -4120,7 +4192,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": -1.0,
@@ -4132,7 +4204,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.96
+    "w": 0.95
    },
    {
     "g": -1.0,
@@ -4144,7 +4216,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.9
+    "w": 0.88
    },
    {
     "g": 1.303,
@@ -4156,7 +4228,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.05
+    "w": 1.03
    },
    {
     "g": 1.2857,
@@ -4168,7 +4240,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.04
+    "w": 1.02
    },
    {
     "g": 1.303,
@@ -4180,7 +4252,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.05
+    "w": 1.03
    },
    {
     "g": -1.0,
@@ -4192,7 +4264,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -4204,7 +4276,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.96
+    "w": 0.95
    },
    {
     "g": -1.0,
@@ -4216,7 +4288,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.06
+    "w": 1.05
    },
    {
     "g": -0.2,
@@ -4228,7 +4300,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 1.0
+    "w": 0.99
    },
    {
     "g": 1.25,
@@ -4240,7 +4312,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.01
+    "w": 1.0
    },
    {
     "g": -1.0,
@@ -4252,7 +4324,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.9
+    "w": 0.88
    },
    {
     "g": -1.0,
@@ -4264,7 +4336,7 @@
     "side": "yes",
     "src": "fills",
     "st": "lost",
-    "w": 0.96
+    "w": 0.95
    },
    {
     "g": 1.2667,
@@ -4276,7 +4348,7 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 0.95
+    "w": 0.94
    },
    {
     "g": 1.2857,
@@ -4288,7 +4360,55 @@
     "side": "yes",
     "src": "fills",
     "st": "won",
-    "w": 1.04
+    "w": 1.02
+   },
+   {
+    "g": -1.0,
+    "hold_r": -1.0,
+    "id": "KXNBAWINMARGIN-26NOV19NYKMIN-MIN11TO20",
+    "ko": "2026-11-20T01:00",
+    "legs": "",
+    "r": -1.0,
+    "side": "yes",
+    "src": "fills",
+    "st": "lost",
+    "w": 1.02
+   },
+   {
+    "g": -1.0,
+    "hold_r": -1.0,
+    "id": "KXNBAWINMARGIN-26NOV19NYKMIN-MIN1TO5",
+    "ko": "2026-11-20T01:00",
+    "legs": "",
+    "r": -1.0,
+    "side": "yes",
+    "src": "fills",
+    "st": "lost",
+    "w": 1.02
+   },
+   {
+    "g": -1.0,
+    "hold_r": -1.0,
+    "id": "KXNBAWINMARGIN-26NOV19NYKMIN-MIN6TO10",
+    "ko": "2026-11-20T01:00",
+    "legs": "",
+    "r": -1.0,
+    "side": "yes",
+    "src": "fills",
+    "st": "lost",
+    "w": 1.02
+   },
+   {
+    "g": 1.25,
+    "hold_r": -1.0,
+    "id": "KXNBAWINMARGIN-26NOV19NYKMIN-NYK11TO20",
+    "ko": "2026-11-20T01:00",
+    "legs": "2x+2.5x",
+    "r": 1.1239,
+    "side": "yes",
+    "src": "fills",
+    "st": "won",
+    "w": 1.0
    }
   ],
   "o35_cheap_no": [
@@ -5215,17 +5335,24 @@
      "side": "yes",
      "st": "lost",
      "w": 0.95
+    },
+    {
+     "id": "commod_fav_band:KXGOLDD-26NOV1917-T3672",
+     "ko": "2026-11-19T22:00",
+     "r": -1.0,
+     "side": "yes",
+     "st": "lost",
+     "w": 0.96
     }
    ],
    "refused": {
-    "commod_fav_band:KXBRENTD-26NOV1217-T93": "price above the cap",
     "commod_fav_band:KXBRENTD-26NOV1817-T88": "price above the cap",
-    "commod_fav_band:KXGOLDD-26NOV1217-T3872": "outside the price band",
+    "commod_fav_band:KXBRENTD-26NOV1917-T89.50": "outside the price band",
     "commod_fav_band:KXGOLDD-26NOV1817-T3726": "outside the price band",
     "commod_fav_band:KXNATGASD-26NOV1617-T3.500": "wide spread",
-    "commod_fav_band:KXWTI-26NOV1214-T85.99": "outside the price band",
     "commod_fav_band:KXWTI-26NOV1314-T88.49": "outside the price band",
-    "commod_fav_band:KXWTI-26NOV1714-T84.99": "outside the price band"
+    "commod_fav_band:KXWTI-26NOV1714-T84.99": "outside the price band",
+    "commod_fav_band:KXWTI-26NOV1914-T82.99": "outside the price band"
    }
   },
   "corners_ucl_fade|soccer_corners": {
@@ -5444,14 +5571,24 @@
      "side": "no",
      "st": "won",
      "w": 1.02
+    },
+    {
+     "id": "crypto_fav_band_below:KXSOLD-26NOV1917-T73.9999",
+     "ko": "2026-11-19T22:05",
+     "r": null,
+     "side": "no",
+     "st": "unfilled",
+     "w": null
     }
    ],
    "refused": {
-    "crypto_fav_band_below:KXBTCD-26NOV1217-T72249.99": "price above the cap",
     "crypto_fav_band_below:KXBTCD-26NOV1517-T64999.99": "outside the price band",
+    "crypto_fav_band_below:KXBTCD-26NOV1917-T63499.99": "thin book",
+    "crypto_fav_band_below:KXETHD-26NOV1917-T1799.99": "outside the price band",
     "crypto_fav_band_below:KXHYPED-26NOV1617-T67.9999": "published inside 30 min of kickoff",
     "crypto_fav_band_below:KXHYPED-26NOV1717-T68.9999": "published inside 30 min of kickoff",
     "crypto_fav_band_below:KXHYPED-26NOV1817-T67.9999": "published inside 30 min of kickoff",
+    "crypto_fav_band_below:KXSOLD-26NOV1917-T73.9999": "no seller at the price",
     "crypto_fav_band_below:KXXRPD-26NOV1617-T0.9599": "wide spread"
    }
   },
@@ -5509,10 +5646,18 @@
     {
      "id": "econ_nc_yes:KXAAAGASD-26NOV19-3.7200",
      "ko": "2026-11-19T04:59",
+     "r": 0.0287,
+     "side": "yes",
+     "st": "won",
+     "w": 1.0
+    },
+    {
+     "id": "econ_nc_yes:KXDIESELD-26NOV20-T5.895",
+     "ko": "2026-11-20T04:59",
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 1.0
+     "w": 0.95
     }
    ],
    "refused": {}
@@ -5551,6 +5696,14 @@
      "side": "no",
      "st": "won",
      "w": 1.0
+    },
+    {
+     "id": "finance_spx_nc_no:KXINXU-26NOV19H1600-T7399.9999",
+     "ko": "2026-11-19T21:00",
+     "r": 0.019,
+     "side": "no",
+     "st": "won",
+     "w": 1.06
     }
    ],
    "refused": {
@@ -5725,6 +5878,14 @@
      "side": "no",
      "st": "won",
      "w": 16.53
+    },
+    {
+     "id": "mls_fade_home:KXMLSGAME-26NOV19ORLCIN-ORL",
+     "ko": "2026-11-20T00:30",
+     "r": 0.5959,
+     "side": "no",
+     "st": "won",
+     "w": 15.74
     }
    ],
    "refused": {}
@@ -6267,7 +6428,9 @@
      "w": 12.69
     }
    ],
-   "refused": {}
+   "refused": {
+    "team2_ranked:KXSERIEATEAMTOTAL-26NOV21NAPTOR-NAP2": "thin book"
+   }
   },
   "u35_low_scoring|soccer_u35_cup": {
    "entered": "2026-11-06T21:10:55+00:00",

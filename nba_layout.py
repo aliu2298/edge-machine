@@ -177,6 +177,16 @@ def _nofade_record(nofade, v3, since):
               f'{NB.variant_rows(nofade, False, dips=(N.HEAD,), phase="v2")}</details>')
 
 
+def _first_hour_block(nofade):
+    """The first-hour NO fade fold (Sandbox paper). Never breaks the card."""
+    try:
+        import json
+        tracker = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "nba_winmargin_tracker.json")))
+        return NB.first_hour_block(nofade, tracker)
+    except Exception:                                           # noqa: BLE001
+        return ""
+
+
 def nofade_card(chaos, nofade, v3=None):
     head = N.vkey(N.HEAD)
     since = (v3 or {}).get("since")
@@ -201,6 +211,7 @@ def nofade_card(chaos, nofade, v3=None):
             f'<p class="sm"><b>Next to the YES split</b></p>{NB.side_by_side(nofade, chaos)}'
             f'<details class="section-disclosure"><summary><b>Other exits / variants</b><span>85% and 65% of pregame</span></summary>'
             f'{NB.variant_rows(nofade, False, dips=tuple(d for d in N.DIPS if d != N.HEAD), phase="v2")}</details>'
+            f'{_first_hour_block(nofade)}'
             f'{insample}{v1}'
             f'<details class="section-disclosure"><summary><b>Trades</b><span>latest 30 games with a fill · the headline row</span></summary>{NB.trade_list(nofade)}</details>'
             f'<p class="sm mut">Last read {esc(last or "not yet")}{(" · " + esc(nofade["error"])) if nofade.get("error") else ""}.</p>'

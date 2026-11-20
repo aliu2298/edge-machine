@@ -1875,7 +1875,7 @@ details.sp-rule > summary:focus-visible { outline: 2px solid var(--acc); outline
 details.sp-rule[open] > summary .sp-chev { transform: rotate(90deg); }
 details.sp-rule.is-early > summary .sp-cell, details.sp-rule.is-early > summary .sig { color: var(--dim); }
 details.sp-rule.is-early > summary .sig { border-color: var(--line); background: transparent; }
-.sp-details-body { padding: 4px 14px 14px 32px; background: var(--raised); display: grid; gap: 8px; }
+.sp-details-body { padding: 4px 14px 14px 32px; background: var(--raised); display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
 .sp-details-name { margin: 6px 0 0; font-size: 14px; }
 .sp-details-sub { margin: 4px 0 0; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--mut); }
 details.fold.sp-more-rules { border-top: 1px solid var(--line); }
@@ -2083,6 +2083,8 @@ details.fold.later > summary .sm { font-weight: 500; }
   .sp-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .sp-tiles > .tile:last-child:nth-child(odd) { grid-column: auto; }
   .sp-details-body { padding-left: 14px; }
+  /* A long status pill (a retired lane's reason) wraps instead of widening the page. */
+  .st, .sig { white-space: normal; max-width: 100%; border-radius: 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
   details.sp-more > summary::before, details.sp-changes > summary::before, .sp-method > details > summary::before, .sp-chev { transition: none; }
