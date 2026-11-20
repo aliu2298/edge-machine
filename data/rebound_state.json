@@ -5394,9 +5394,10 @@
    "lane": "rb_5d",
    "level": 3.523064,
    "level_stock": 177.36,
+   "note": "no print at or through the ask in 5 minutes",
    "signal_ts": 1795186800,
    "slide_high": 200.42,
-   "status": "pending",
+   "status": "no_fill",
    "stop": 3.487834,
    "strength": 5,
    "sym": "ANET",
@@ -5407,13 +5408,16 @@
   {
    "backfill": false,
    "day": "2026-11-20",
+   "entry": 4.6698,
+   "entry_ts": 1795186802,
    "id": "rb_5d|KXCRWDPERP|2026-11-20",
    "lane": "rb_5d",
    "level": 4.589123,
    "level_stock": 230.85,
    "signal_ts": 1795186800,
    "slide_high": 256.73,
-   "status": "pending",
+   "spread_in": 18.4,
+   "status": "open",
    "stop": 4.543232,
    "strength": 3,
    "sym": "CRWD",
@@ -5437,7 +5441,7 @@
    "strong": true
   }
  },
- "last_run": "2026-11-20T15:00:34+00:00",
+ "last_run": "2026-11-20T16:00:33+00:00",
  "prereg_sha256": "17ecd1cd57183bacd45e8e1e6477c542b4ecaaa88a3e8b8a62fa395bbc45a581",
  "ratios": {
   "AAPL": 49.9328,
