@@ -476,6 +476,10 @@ tbody tr:hover td { background: var(--raised); }
 .st.lost, .st.miss, .sig.x { color: var(--neg); border-color: var(--neg-bd); background: var(--neg-bg); }
 .st.void, .st.price, .sig.n { color: var(--mut); border-color: var(--line); background: var(--raised); }
 .sig.w { color: var(--warn); border-color: var(--warn-bd); background: var(--warn-bg); }
+/* A long status pill (a retired lane's reason) wraps on a phone instead of widening the page. */
+@media (max-width: 760px) {
+  .st, .sig { white-space: normal; max-width: 100%; border-radius: 12px; }
+}
 ul.ins { padding-left: 18px; display: grid; gap: 8px; color: var(--fg); font-size: 15px; line-height: 1.55; }
 details.sport {
   background: var(--card);
