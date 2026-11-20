@@ -246,6 +246,12 @@ try:
     check("a NO bet whose bracket resolved yes loses the stake", (lost["won"], lost["roi"]), (False, -1.0))
     check("a day not yet over is not graded", L.run(L.run(L.empty(), EST, fetch=fetcher(books), text_fetch=text_fetch), EST + dt.timedelta(hours=3), fetch=fetcher(g_books), text_fetch=text_fetch)["rows"][0]["status"], "open")
     check("a result not yet posted leaves the row open", L.run(L.run(L.empty(), EST, fetch=fetcher(books), text_fetch=text_fetch), EST + dt.timedelta(days=2), fetch=fetcher(books), text_fetch=text_fetch)["rows"][0]["status"], "open")
+    _w = L.run(L.run(L.empty(), EST, fetch=fetcher(books), text_fetch=text_fetch), EST + dt.timedelta(days=4), fetch=fetcher(books), text_fetch=text_fetch)
+    check("a row the venue has not finalized records what the venue shows, and is listed once its day is 2+ days old",
+          (bool(_w["rows"][0].get("venue_status")), len(L.awaiting_venue(_w, EST + dt.timedelta(days=4))), len(L.awaiting_venue(_w, EST + dt.timedelta(hours=3)))),
+          (True, len(_w["rows"]), 0))
+    import stuck_picks as SP
+    check("stuck_picks names the venue status next to a stuck row", any("[venue " in t for t, _h in SP.scan(_w, EST + dt.timedelta(days=4), 12.0)[0]), True)
 finally:
     L.LANES.clear()
     L.LANES.update(saved)

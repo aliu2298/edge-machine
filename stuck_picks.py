@@ -74,7 +74,7 @@ def scan(data, now, hours):
         if t is None:
             no_start += 1
         elif now - t > dt.timedelta(hours=hours):
-            stuck.append((label(r), (now - t).total_seconds() / 3600))
+            stuck.append((label(r) + (f" [venue {r['venue_status']}]" if r.get("venue_status") else ""), (now - t).total_seconds() / 3600))
     return sorted(stuck, key=lambda x: -x[1]), no_start, total
 
 
