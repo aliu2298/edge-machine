@@ -1,8 +1,8 @@
 {
  "collector": {
-  "last_ts": 1795143602,
+  "last_ts": 1795147201,
   "markets": 97,
-  "rows_24h": 128872
+  "rows_24h": 128817
  },
  "events": [
   {
@@ -25,325 +25,6 @@
   }
  ],
  "flags": [
-  {
-   "gap": -0.01899,
-   "gap_15m": -0.01841,
-   "gap_5m": -0.01853,
-   "gap_60m": -0.01634,
-   "rth": false,
-   "spread_bp": 6.4,
-   "sym": "ORCL",
-   "ticker": "KXORCLPERP",
-   "ts": 1794976681
-  },
-  {
-   "gap": -0.01005,
-   "gap_15m": -0.01165,
-   "gap_5m": -0.01002,
-   "gap_60m": -0.00904,
-   "rth": false,
-   "spread_bp": 6.0,
-   "sym": "PLTR",
-   "ticker": "KXPLTRPERP",
-   "ts": 1794975961
-  },
-  {
-   "gap": -0.01332,
-   "gap_15m": -0.01795,
-   "gap_5m": -0.01331,
-   "gap_60m": -0.01524,
-   "rth": false,
-   "spread_bp": 10.7,
-   "sym": "QCOM",
-   "ticker": "KXQCOMPERP",
-   "ts": 1794975902
-  },
-  {
-   "gap": -0.03233,
-   "gap_15m": -0.0269,
-   "gap_5m": -0.02801,
-   "gap_60m": -0.03789,
-   "rth": false,
-   "spread_bp": 8.3,
-   "sym": "SNDK",
-   "ticker": "KXSNDKPERP",
-   "ts": 1794974942
-  },
-  {
-   "gap": -0.01064,
-   "gap_15m": -0.01142,
-   "gap_5m": -0.01189,
-   "gap_60m": -0.009,
-   "rth": false,
-   "spread_bp": 4.9,
-   "sym": "SPCX",
-   "ticker": "KXSPCXPERP",
-   "ts": 1794976981
-  },
-  {
-   "gap": -0.01205,
-   "gap_15m": -0.01416,
-   "gap_5m": -0.01132,
-   "gap_60m": -0.00909,
-   "rth": false,
-   "spread_bp": 12.1,
-   "sym": "TXN",
-   "ticker": "KXTXNPERP",
-   "ts": 1794977221
-  },
-  {
-   "gap": -0.02804,
-   "gap_15m": -0.01961,
-   "gap_5m": -0.02434,
-   "gap_60m": -0.02283,
-   "rth": false,
-   "spread_bp": 10.5,
-   "sym": "AMAT",
-   "ticker": "KXAMATPERP",
-   "ts": 1794978422
-  },
-  {
-   "gap": -0.02572,
-   "gap_15m": -0.019,
-   "gap_5m": -0.02007,
-   "gap_60m": -0.02249,
-   "rth": false,
-   "spread_bp": 9.3,
-   "sym": "AMD",
-   "ticker": "KXAMDPERP",
-   "ts": 1794978661
-  },
-  {
-   "gap": -0.0149,
-   "gap_15m": -0.01683,
-   "gap_5m": -0.01619,
-   "gap_60m": -0.01553,
-   "rth": false,
-   "spread_bp": 5.3,
-   "sym": "AVGO",
-   "ticker": "KXAVGOPERP",
-   "ts": 1794979202
-  },
-  {
-   "gap": -0.01604,
-   "gap_15m": -0.0174,
-   "gap_5m": -0.01828,
-   "gap_60m": -0.02001,
-   "rth": false,
-   "spread_bp": 9.8,
-   "sym": "BABA",
-   "ticker": "KXBABAPERP",
-   "ts": 1794979981
-  },
-  {
-   "gap": -0.01233,
-   "gap_15m": -0.01139,
-   "gap_5m": -0.01228,
-   "gap_60m": -0.01128,
-   "rth": false,
-   "spread_bp": 19.6,
-   "sym": "CAT",
-   "ticker": "KXCATPERP",
-   "ts": 1794979561
-  },
-  {
-   "gap": -0.01001,
-   "gap_15m": -0.01142,
-   "gap_5m": -0.01163,
-   "gap_60m": -0.01061,
-   "rth": false,
-   "spread_bp": 16.8,
-   "sym": "CVX",
-   "ticker": "KXCVXPERP",
-   "ts": 1794978361
-  },
-  {
-   "gap": -0.01452,
-   "gap_15m": -0.01443,
-   "gap_5m": -0.0147,
-   "gap_60m": -0.01412,
-   "rth": false,
-   "spread_bp": 2.7,
-   "sym": "INTC",
-   "ticker": "KXINTCPERP",
-   "ts": 1794979441
-  },
-  {
-   "gap": -0.03011,
-   "gap_15m": -0.02235,
-   "gap_5m": -0.02595,
-   "gap_60m": -0.02079,
-   "rth": false,
-   "spread_bp": 3.6,
-   "sym": "MU",
-   "ticker": "KXMUPERP",
-   "ts": 1794978602
-  },
-  {
-   "gap": -0.01964,
-   "gap_15m": -0.01606,
-   "gap_5m": -0.01667,
-   "gap_60m": -0.01706,
-   "rth": false,
-   "spread_bp": 18.5,
-   "sym": "NEM",
-   "ticker": "KXNEMPERP",
-   "ts": 1794978602
-  },
-  {
-   "gap": -0.03601,
-   "gap_15m": -0.03245,
-   "gap_5m": -0.03297,
-   "gap_60m": -0.03181,
-   "rth": false,
-   "spread_bp": 0.3,
-   "sym": "NVDA",
-   "ticker": "KXNVDAPERP",
-   "ts": 1794978661
-  },
-  {
-   "gap": -0.01634,
-   "gap_15m": -0.01486,
-   "gap_5m": -0.01517,
-   "gap_60m": -0.01624,
-   "rth": false,
-   "spread_bp": 8.5,
-   "sym": "ORCL",
-   "ticker": "KXORCLPERP",
-   "ts": 1794980281
-  },
-  {
-   "gap": -0.01087,
-   "gap_15m": -0.0091,
-   "gap_5m": -0.01105,
-   "gap_60m": -0.00769,
-   "rth": false,
-   "spread_bp": 17.5,
-   "sym": "PANW",
-   "ticker": "KXPANWPERP",
-   "ts": 1794978121
-  },
-  {
-   "gap": -0.01005,
-   "gap_15m": -0.01096,
-   "gap_5m": -0.01125,
-   "gap_60m": -0.01105,
-   "rth": false,
-   "spread_bp": 5.4,
-   "sym": "PLTR",
-   "ticker": "KXPLTRPERP",
-   "ts": 1794981602
-  },
-  {
-   "gap": -0.01524,
-   "gap_15m": -0.01401,
-   "gap_5m": -0.01419,
-   "gap_60m": -0.01495,
-   "rth": false,
-   "spread_bp": 9.8,
-   "sym": "QCOM",
-   "ticker": "KXQCOMPERP",
-   "ts": 1794979561
-  },
-  {
-   "gap": -0.01057,
-   "gap_15m": -0.0078,
-   "gap_5m": -0.01067,
-   "gap_60m": -0.00986,
-   "rth": false,
-   "spread_bp": 1.8,
-   "sym": "QQQ",
-   "ticker": "KXQQQPERP",
-   "ts": 1794978121
-  },
-  {
-   "gap": -0.03789,
-   "gap_15m": -0.02744,
-   "gap_5m": -0.03238,
-   "gap_60m": -0.02945,
-   "rth": false,
-   "spread_bp": 8.1,
-   "sym": "SNDK",
-   "ticker": "KXSNDKPERP",
-   "ts": 1794978602
-  },
-  {
-   "gap": -0.01005,
-   "gap_15m": -0.01117,
-   "gap_5m": -0.00972,
-   "gap_60m": -0.00992,
-   "rth": false,
-   "spread_bp": 11.4,
-   "sym": "TXN",
-   "ticker": "KXTXNPERP",
-   "ts": 1794980881
-  },
-  {
-   "gap": -0.02283,
-   "gap_15m": -0.02169,
-   "gap_5m": -0.02313,
-   "gap_60m": -0.01945,
-   "rth": false,
-   "spread_bp": 8.6,
-   "sym": "AMAT",
-   "ticker": "KXAMATPERP",
-   "ts": 1794982081
-  },
-  {
-   "gap": -0.02249,
-   "gap_15m": -0.02112,
-   "gap_5m": -0.02327,
-   "gap_60m": -0.01581,
-   "rth": false,
-   "spread_bp": 9.6,
-   "sym": "AMD",
-   "ticker": "KXAMDPERP",
-   "ts": 1794982262
-  },
-  {
-   "gap": -0.01553,
-   "gap_15m": -0.01354,
-   "gap_5m": -0.01526,
-   "gap_60m": -0.01122,
-   "rth": false,
-   "spread_bp": 4.2,
-   "sym": "AVGO",
-   "ticker": "KXAVGOPERP",
-   "ts": 1794982862
-  },
-  {
-   "gap": -0.02001,
-   "gap_15m": -0.01913,
-   "gap_5m": -0.01868,
-   "gap_60m": -0.01351,
-   "rth": false,
-   "spread_bp": 20.3,
-   "sym": "BABA",
-   "ticker": "KXBABAPERP",
-   "ts": 1794983581
-  },
-  {
-   "gap": -0.01128,
-   "gap_15m": -0.01078,
-   "gap_5m": -0.01117,
-   "gap_60m": -0.00579,
-   "rth": false,
-   "spread_bp": 19.4,
-   "sym": "CAT",
-   "ticker": "KXCATPERP",
-   "ts": 1794983161
-  },
-  {
-   "gap": -0.01061,
-   "gap_15m": -0.01062,
-   "gap_5m": -0.01062,
-   "gap_60m": -0.01381,
-   "rth": false,
-   "spread_bp": 6.1,
-   "sym": "CVX",
-   "ticker": "KXCVXPERP",
-   "ts": 1794981961
-  },
   {
    "gap": -0.01412,
    "gap_15m": -0.0147,
@@ -5067,6 +4748,7 @@
    "gap": 0.01201,
    "gap_15m": 0.01259,
    "gap_5m": 0.00876,
+   "gap_60m": 0.02279,
    "rth": false,
    "spread_bp": 10.1,
    "sym": "BABA",
@@ -5075,7 +4757,9 @@
   },
   {
    "gap": -0.01323,
+   "gap_15m": -0.01218,
    "gap_5m": -0.00646,
+   "gap_60m": 0.00389,
    "rth": false,
    "spread_bp": 2.8,
    "sym": "INTC",
@@ -5086,6 +4770,7 @@
    "gap": 0.01056,
    "gap_15m": 0.00684,
    "gap_5m": 0.00995,
+   "gap_60m": 0.00373,
    "rth": false,
    "spread_bp": 13.3,
    "sym": "LLY",
@@ -5096,6 +4781,7 @@
    "gap": -0.01052,
    "gap_15m": -0.00979,
    "gap_5m": -0.00581,
+   "gap_60m": -0.01065,
    "rth": false,
    "spread_bp": 5.8,
    "sym": "MU",
@@ -5106,6 +4792,7 @@
    "gap": -0.02057,
    "gap_15m": -0.01981,
    "gap_5m": -0.02037,
+   "gap_60m": -0.02373,
    "rth": false,
    "spread_bp": 19.2,
    "sym": "NEM",
@@ -5116,6 +4803,7 @@
    "gap": -0.01007,
    "gap_15m": -0.00869,
    "gap_5m": -0.00601,
+   "gap_60m": -0.00496,
    "rth": false,
    "spread_bp": 3.8,
    "sym": "NVDA",
@@ -5126,6 +4814,7 @@
    "gap": 0.01005,
    "gap_15m": 0.00648,
    "gap_5m": 0.00942,
+   "gap_60m": 0.00522,
    "rth": false,
    "spread_bp": 18.9,
    "sym": "ANET",
@@ -5134,7 +4823,9 @@
   },
   {
    "gap": -0.01431,
+   "gap_15m": -0.01772,
    "gap_5m": -0.01,
+   "gap_60m": -0.00883,
    "rth": false,
    "spread_bp": 10.1,
    "sym": "DELL",
@@ -5145,14 +4836,288 @@
    "gap": 0.01317,
    "gap_15m": 0.00678,
    "gap_5m": 0.0069,
+   "gap_60m": 0.00829,
    "rth": false,
    "spread_bp": 104.6,
    "sym": "GILD",
    "ticker": "KXGILDPERP",
    "ts": 1795141561
+  },
+  {
+   "gap": 0.0111,
+   "gap_15m": 0.00117,
+   "gap_5m": 0.00299,
+   "rth": false,
+   "spread_bp": 95.6,
+   "sym": "AMAT",
+   "ticker": "KXAMATPERP",
+   "ts": 1795146241
+  },
+  {
+   "gap": 0.01385,
+   "gap_5m": 0.01468,
+   "rth": false,
+   "spread_bp": 67.9,
+   "sym": "AMD",
+   "ticker": "KXAMDPERP",
+   "ts": 1795146302
+  },
+  {
+   "gap": 0.02279,
+   "gap_15m": 0.02993,
+   "gap_5m": 0.02526,
+   "rth": false,
+   "spread_bp": 4.1,
+   "sym": "BABA",
+   "ticker": "KXBABAPERP",
+   "ts": 1795145761
+  },
+  {
+   "gap": -0.01536,
+   "gap_15m": -0.01033,
+   "gap_5m": -0.01612,
+   "rth": false,
+   "spread_bp": 358.6,
+   "sym": "COP",
+   "ticker": "KXCOPPERP",
+   "ts": 1795146241
+  },
+  {
+   "gap": 0.01053,
+   "rth": false,
+   "spread_bp": 135.3,
+   "sym": "LLY",
+   "ticker": "KXLLYPERP",
+   "ts": 1795146961
+  },
+  {
+   "gap": -0.01065,
+   "gap_15m": -0.00466,
+   "gap_5m": -0.00579,
+   "rth": false,
+   "spread_bp": 5.2,
+   "sym": "MU",
+   "ticker": "KXMUPERP",
+   "ts": 1795144142
+  },
+  {
+   "gap": -0.02373,
+   "gap_15m": -0.01559,
+   "gap_5m": -0.02149,
+   "rth": false,
+   "spread_bp": 19.3,
+   "sym": "NEM",
+   "ticker": "KXNEMPERP",
+   "ts": 1795145881
+  },
+  {
+   "gap": -0.01084,
+   "gap_15m": -0.00259,
+   "gap_5m": -0.00259,
+   "rth": false,
+   "spread_bp": 322.2,
+   "sym": "PG",
+   "ticker": "KXPGPERP",
+   "ts": 1795146241
+  },
+  {
+   "gap": -0.02098,
+   "gap_15m": -0.02094,
+   "gap_5m": -0.00621,
+   "rth": false,
+   "spread_bp": 311.2,
+   "sym": "PLD",
+   "ticker": "KXPLDPERP",
+   "ts": 1795146241
+  },
+  {
+   "gap": 0.01331,
+   "gap_15m": 0.00233,
+   "gap_5m": 0.00413,
+   "rth": false,
+   "spread_bp": 190.7,
+   "sym": "ABT",
+   "ticker": "KXABTPERP",
+   "ts": 1795146241
+  },
+  {
+   "gap": 0.01121,
+   "gap_5m": 0.00497,
+   "rth": false,
+   "spread_bp": 143.6,
+   "sym": "ADI",
+   "ticker": "KXADIPERP",
+   "ts": 1795146661
+  },
+  {
+   "gap": 0.01504,
+   "gap_15m": 0.00822,
+   "gap_5m": 0.00926,
+   "rth": false,
+   "spread_bp": 119.3,
+   "sym": "ANET",
+   "ticker": "KXANETPERP",
+   "ts": 1795146241
+  },
+  {
+   "gap": 0.01466,
+   "gap_5m": 0.0136,
+   "rth": false,
+   "spread_bp": 71.9,
+   "sym": "ASML",
+   "ticker": "KXASMLPERP",
+   "ts": 1795146302
+  },
+  {
+   "gap": -0.01433,
+   "gap_15m": -0.00219,
+   "gap_5m": -0.00141,
+   "rth": false,
+   "spread_bp": 143.9,
+   "sym": "BLK",
+   "ticker": "KXBLKPERP",
+   "ts": 1795144441
+  },
+  {
+   "gap": 0.01007,
+   "gap_5m": 0.01009,
+   "rth": false,
+   "spread_bp": 395.3,
+   "sym": "C",
+   "ticker": "KXCPERP",
+   "ts": 1795146841
+  },
+  {
+   "gap": -0.01094,
+   "rth": false,
+   "spread_bp": 171.2,
+   "sym": "DELL",
+   "ticker": "KXDELLPERP",
+   "ts": 1795146902
+  },
+  {
+   "gap": 0.01237,
+   "gap_5m": 0.01235,
+   "rth": false,
+   "spread_bp": 191.1,
+   "sym": "GILD",
+   "ticker": "KXGILDPERP",
+   "ts": 1795146661
+  },
+  {
+   "gap": 0.01157,
+   "gap_5m": 0.00633,
+   "rth": false,
+   "spread_bp": 71.9,
+   "sym": "GS",
+   "ticker": "KXGSPERP",
+   "ts": 1795146542
+  },
+  {
+   "gap": 0.01082,
+   "gap_15m": 0.0156,
+   "gap_5m": 0.01595,
+   "rth": false,
+   "spread_bp": 7.5,
+   "sym": "KLAC",
+   "ticker": "KXKLACPERP",
+   "ts": 1795146182
+  },
+  {
+   "gap": 0.01212,
+   "gap_15m": -0.003,
+   "gap_5m": -0.00276,
+   "rth": false,
+   "spread_bp": 143.7,
+   "sym": "LIN",
+   "ticker": "KXLINPERP",
+   "ts": 1795146241
+  },
+  {
+   "gap": 0.01061,
+   "rth": false,
+   "spread_bp": 229.7,
+   "sym": "LRCX",
+   "ticker": "KXLRCXPERP",
+   "ts": 1795147081
+  },
+  {
+   "gap": -0.01309,
+   "gap_15m": -0.00673,
+   "gap_5m": -0.00673,
+   "rth": false,
+   "spread_bp": 143.5,
+   "sym": "PM",
+   "ticker": "KXPMPERP",
+   "ts": 1795146182
+  },
+  {
+   "gap": -0.01418,
+   "gap_15m": 0.00072,
+   "gap_5m": 0.00095,
+   "rth": false,
+   "spread_bp": 119.3,
+   "sym": "RTX",
+   "ticker": "KXRTXPERP",
+   "ts": 1795146241
+  },
+  {
+   "gap": -0.01091,
+   "gap_15m": 0.00016,
+   "gap_5m": 0.00011,
+   "rth": false,
+   "spread_bp": 119.7,
+   "sym": "SCHW",
+   "ticker": "KXSCHWPERP",
+   "ts": 1795144381
+  },
+  {
+   "gap": 0.01275,
+   "rth": false,
+   "spread_bp": 465.1,
+   "sym": "SHOP",
+   "ticker": "KXSHOPPERP",
+   "ts": 1795147201
+  },
+  {
+   "gap": 0.01273,
+   "gap_5m": 0.0045,
+   "rth": false,
+   "spread_bp": 71.0,
+   "sym": "SKHY",
+   "ticker": "KXSKHYPERP",
+   "ts": 1795146601
+  },
+  {
+   "gap": 0.01474,
+   "gap_5m": 0.00797,
+   "rth": false,
+   "spread_bp": 143.8,
+   "sym": "TMO",
+   "ticker": "KXTMOPERP",
+   "ts": 1795146601
+  },
+  {
+   "gap": -0.01002,
+   "gap_15m": -0.00413,
+   "gap_5m": -0.01187,
+   "rth": false,
+   "spread_bp": 6.7,
+   "sym": "TSM",
+   "ticker": "KXTSMPERP",
+   "ts": 1795143841
+  },
+  {
+   "gap": 0.01077,
+   "gap_5m": 0.00346,
+   "rth": false,
+   "spread_bp": 335.6,
+   "sym": "UNP",
+   "ticker": "KXUNPPERP",
+   "ts": 1795146422
   }
  ],
- "last_run": "2026-11-20T03:00:08+00:00",
+ "last_run": "2026-11-20T04:00:07+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
