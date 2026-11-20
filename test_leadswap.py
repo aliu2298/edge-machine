@@ -126,9 +126,11 @@ check("names: the map, then the KX/15M fallback", (WB.name("KXAUDUSD15M"), WB.na
 check("market cells show the name with the ticker in a hover title",
       WB.mkt("KXBTC15M"), '<span title="KXBTC15M">Bitcoin</span>')
 check("no raw series ticker as visible text in the section", re.findall(r">(KX[A-Z0-9]+15M)<", html), [])
+# A control figure shows only while that rule has settled data to compare against, so the count follows the live record: one or two.
+_ctl = html.split('id="leadswap"')[1].count('title="Control: ')
 check("two routing rows; the controls are a muted vs-control figure, not rows",
-      (re.findall(r'data-source="(leadswap_[a-z_]+)"', html), html.split('id="leadswap"')[1].count('title="Control: ')),
-      (["leadswap_swing", "leadswap_fav"], 2))
+      (re.findall(r'data-source="(leadswap_[a-z_]+)"', html), _ctl in (1, 2)),
+      (["leadswap_swing", "leadswap_fav"], True))
 check("the research folds sit under one collapsed 'How the board ranks markets'",
       all(html.index('class="fold sw15-ranks"') < html.index(x) for x in ("Board · last 2 hours", "Persistence:",
                                                                           "When in the window", "by hour of day (CT)")), True)
