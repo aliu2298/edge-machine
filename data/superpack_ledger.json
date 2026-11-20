@@ -1043,6 +1043,10 @@
    "at": "2026-11-19T19:05:16.980540+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXETHD-26NOV2017-T1579.99\", \"a\"]]": {
+   "at": "2026-11-20T19:11:10.865542+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXHYPED-26NOV1317-T71.9999\", \"a\"]]": {
    "at": "2026-11-13T18:32:28.302627+00:00",
    "pool": "entered"
@@ -4716,7 +4720,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-20T19:04:36.900497+00:00",
+ "last_run": "2026-11-20T19:11:10.865542+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -14537,6 +14541,29 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXBTCD-26NOV2017-T57499.99\", \"a\"]]",
    "price": 0.74,
+   "profit": null,
+   "scope": "crypto_fav",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Crypto",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXETHD-26NOV2017-T1579.99",
+   "entered_at": "2026-11-20T19:11:10.865542+00:00",
+   "entities": [
+    "Ethereum"
+   ],
+   "id": "superpack:[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXETHD-26NOV2017-T1579.99\", \"a\"]]",
+   "lane": "crypto_fav_band_v2",
+   "logged": "2026-11-20T19:10:25+00:00",
+   "matched": [
+    "Ethereum"
+   ],
+   "pid": "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXETHD-26NOV2017-T1579.99\", \"a\"]]",
+   "price": 0.79,
    "profit": null,
    "scope": "crypto_fav",
    "settled": null,
