@@ -185,6 +185,46 @@
    "rules": "honest-v1",
    "waiver": null
   },
+  "challenger_won_here|tennis": {
+   "checked_at": "2026-11-20T20:13:52+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": true,
+    "both halves up": true,
+    "t of 2+": false,
+    "up without its best outcome": true
+   },
+   "evidence": true,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 32,
+    "halves": [
+     0.3498,
+     0.3237
+    ],
+    "n": 32,
+    "outcomes": 9,
+    "roi": 0.3318,
+    "t": 0.91,
+    "without_best": 0.1752
+   },
+   "honest_positive": true,
+   "label": "Challenger underdog who has won here (live)",
+   "note_touch": {
+    "n": 32,
+    "roi": 0.3318
+   },
+   "page": {
+    "n": 32,
+    "roi": 0.3322
+   },
+   "rules": "honest-v1",
+   "waiver": {
+    "by": "Olu",
+    "on": "2026-11-20",
+    "why": "Moved to Production by hand after the tournament source was rebuilt from Kalshi's rules text (replay: 476 of 476 events matched, every paper pick reproduced). Evidence test waived (9 outcomes, t 0.91); the honest return is positive (+33.2% on 32). Live read: review at 10 live settled bets, decide at 30."
+   }
+  },
   "commod_fav_band|commodities_fav": {
    "checked_at": "2026-11-12T07:35:44+00:00",
    "checks": {
