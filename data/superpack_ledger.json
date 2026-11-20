@@ -1208,6 +1208,10 @@
    "at": "2026-11-18T20:50:33.510226+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLALIGATEAMTOTAL-26NOV21RVCVCF-RVC2\", \"a\"]]": {
+   "at": "2026-11-20T15:41:47.094127+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLIGUE1TEAMTOTAL-26NOV08HACFCL-FCL2\", \"a\"]]": {
    "at": "2026-11-08T15:36:09.421486+00:00",
    "pool": "entered"
@@ -4682,7 +4686,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-20T15:11:17.436623+00:00",
+ "last_run": "2026-11-20T15:41:47.094127+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -14145,6 +14149,29 @@
    "scope": "soccer_ftts",
    "settled": null,
    "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXLALIGATEAMTOTAL-26NOV21RVCVCF-RVC2",
+   "entered_at": "2026-11-20T15:41:47.094127+00:00",
+   "entities": [
+    "Rayo Vallecano"
+   ],
+   "id": "superpack:[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLALIGATEAMTOTAL-26NOV21RVCVCF-RVC2\", \"a\"]]",
+   "lane": "team2_ranked",
+   "logged": "2026-11-20T15:41:09+00:00",
+   "matched": [
+    "Rayo Vallecano"
+   ],
+   "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLALIGATEAMTOTAL-26NOV21RVCVCF-RVC2\", \"a\"]]",
+   "price": 0.47,
+   "profit": null,
+   "scope": "soccer_team2",
+   "settled": null,
+   "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
