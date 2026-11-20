@@ -1084,6 +1084,10 @@
    "at": "2026-11-19T12:06:07.662047+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"mls_fade_home\", [\"mls_fade_home:KXMLSGAME-26NOV23STLLAFC-STL\", \"b\"]]": {
+   "at": "2026-11-20T01:11:47.734888+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXINTLFRIENDLYTOTAL-26NOV13COLCHI-2\", \"a\"]]": {
    "at": "2026-11-12T09:00:03.051242+00:00",
    "pool": "entered"
@@ -4574,7 +4578,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-20T01:01:43.121318+00:00",
+ "last_run": "2026-11-20T01:11:47.734888+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -13926,6 +13930,29 @@
    "sport": "Commodities",
    "src": "sandbox",
    "status": "lost"
+  },
+  {
+   "contract": "KXMLSGAME-26NOV23STLLAFC-STL",
+   "entered_at": "2026-11-20T01:11:47.734888+00:00",
+   "entities": [
+    "LAFC"
+   ],
+   "id": "superpack:[\"sandbox\", \"mls_fade_home\", [\"mls_fade_home:KXMLSGAME-26NOV23STLLAFC-STL\", \"b\"]]",
+   "lane": "mls_fade_home",
+   "logged": "2026-11-20T01:10:44+00:00",
+   "matched": [
+    "LAFC"
+   ],
+   "pid": "[\"sandbox\", \"mls_fade_home\", [\"mls_fade_home:KXMLSGAME-26NOV23STLLAFC-STL\", \"b\"]]",
+   "price": 0.59,
+   "profit": null,
+   "scope": "soccer_p05",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
   }
  ],
  "registered": "2026-11-05",
