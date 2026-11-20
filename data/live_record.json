@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-20T09:07Z",
+ "generated": "2026-11-20T10:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -6426,11 +6426,17 @@
      "side": "yes",
      "st": "open",
      "w": 12.69
+    },
+    {
+     "id": "team2_ranked:KXSERIEATEAMTOTAL-26NOV21NAPTOR-NAP2",
+     "ko": "2026-11-21T19:45",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 12.89
     }
    ],
-   "refused": {
-    "team2_ranked:KXSERIEATEAMTOTAL-26NOV21NAPTOR-NAP2": "thin book"
-   }
+   "refused": {}
   },
   "u35_low_scoring|soccer_u35_cup": {
    "entered": "2026-11-06T21:10:55+00:00",
