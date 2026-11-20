@@ -4290,6 +4290,58 @@
    "target": 3.790887,
    "ticker": "KXCRMPERP",
    "touch_ts": 1795121042
+  },
+  {
+   "backfill": false,
+   "day": "2026-11-20",
+   "id": "rb_24h|KXANETPERP|2026-11-20",
+   "lane": "rb_24h",
+   "level": 3.730642,
+   "level_stock": 187.81,
+   "note": "no print at or through the ask in 5 minutes",
+   "signal_ts": 1795151700,
+   "slide_high": 202.73,
+   "status": "no_fill",
+   "stop": 3.693336,
+   "strength": 4,
+   "sym": "ANET",
+   "target": 3.878821,
+   "ticker": "KXANETPERP",
+   "touch_ts": 1795150802
+  },
+  {
+   "backfill": false,
+   "day": "2026-11-20",
+   "id": "rb_5d|KXNEMPERP|2026-11-20",
+   "lane": "rb_5d",
+   "level": 1.979932,
+   "level_stock": 99.86,
+   "signal_ts": 1795154400,
+   "slide_high": 114.47,
+   "status": "pending",
+   "stop": 1.960133,
+   "strength": 3,
+   "sym": "NEM",
+   "target": 2.124712,
+   "ticker": "KXNEMPERP",
+   "touch_ts": 1795154341
+  },
+  {
+   "backfill": false,
+   "day": "2026-11-20",
+   "id": "rb_24h|KXNEMPERP|2026-11-20",
+   "lane": "rb_24h",
+   "level": 1.979932,
+   "level_stock": 99.86,
+   "signal_ts": 1795154400,
+   "slide_high": 105.51,
+   "status": "pending",
+   "stop": 1.960133,
+   "strength": 3,
+   "sym": "NEM",
+   "target": 2.035866,
+   "ticker": "KXNEMPERP",
+   "touch_ts": 1795154341
   }
  ],
  "from": "2026-11-12T00:00:00+00:00",
@@ -4307,7 +4359,7 @@
    "strong": true
   }
  },
- "last_run": "2026-11-20T05:00:28+00:00",
+ "last_run": "2026-11-20T06:00:28+00:00",
  "prereg_sha256": "17ecd1cd57183bacd45e8e1e6477c542b4ecaaa88a3e8b8a62fa395bbc45a581",
  "ratios": {
   "AAPL": 49.9328,
