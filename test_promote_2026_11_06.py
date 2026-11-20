@@ -32,7 +32,7 @@ check("every cup competition is a feed league now", set(S.CUP_FRAGS.values()) <=
 
 print("\nthe leads their own recorded bets make")
 d = T.load()
-built = dt.datetime.now(dt.timezone.utc)
+built = dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat()   # an ISO string, as production.build passes it
 for pair, kind, side in ((CUP, "total_lte", "no"), (INTL, "team_gte", "yes")):
     src, sport = pair.split("|")
     qs = [q for q in T.bet_rows(d) if q.get("source") == src and q.get("sport") == sport]
