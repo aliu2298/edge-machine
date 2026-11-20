@@ -1121,6 +1121,11 @@
    "at": "2026-11-18T18:06:21.233600+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"liga_u15_dog_24h\", [\"liga_u15_dog_24h:KXLALIGATOTAL-26NOV21RMARCC-2\", \"b\"]]": {
+   "at": "2026-11-20T20:04:49.025284+00:00",
+   "entries": "entered",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"mls_fade_home\", [\"mls_fade_home:KXMLSGAME-26NOV07HOUSTL-HOU\", \"b\"]]": {
    "at": "2026-11-07T23:11:18.227740+00:00",
    "mirror": "entered",
@@ -4720,11 +4725,99 @@
    "sport": "Soccer",
    "src": "sandbox",
    "status": "open"
+  },
+  {
+   "contract": "KXLALIGATOTAL-26NOV21RMARCC-2",
+   "entered_at": "2026-11-20T20:04:49.025284+00:00",
+   "entities": [
+    "Real Madrid",
+    "Celta Vigo"
+   ],
+   "id": "superpack:[\"sandbox\", \"liga_u15_dog_24h\", [\"liga_u15_dog_24h:KXLALIGATOTAL-26NOV21RMARCC-2\", \"b\"]]",
+   "lane": "liga_u15_dog_24h",
+   "logged": "2026-11-20T20:04:09+00:00",
+   "matched": [
+    "Real Madrid"
+   ],
+   "pid": "[\"sandbox\", \"liga_u15_dog_24h\", [\"liga_u15_dog_24h:KXLALIGATOTAL-26NOV21RMARCC-2\", \"b\"]]",
+   "price": 0.12,
+   "profit": null,
+   "scope": "soccer_o15",
+   "settled": null,
+   "side": "b",
+   "snapshot": {
+    "as_of": "2026-11-20T20:04:09+00:00",
+    "names": [
+     {
+      "bets": 48,
+      "name": "AAA gas",
+      "profit": 5.9477,
+      "sport": "Commodities"
+     },
+     {
+      "bets": 6,
+      "name": "Manchester United",
+      "profit": 5.403,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Napoli",
+      "profit": 4.7771,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Columbus Crew",
+      "profit": 4.221,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 8,
+      "name": "Real Madrid",
+      "profit": 3.6136,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Nottingham Forest",
+      "profit": 3.2002,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 29,
+      "name": "Brent",
+      "profit": 2.8019,
+      "sport": "Commodities"
+     },
+     {
+      "bets": 6,
+      "name": "AFC Bournemouth",
+      "profit": 2.7752,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Lazio",
+      "profit": 2.5658,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Bayern Munich",
+      "profit": 2.4607,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-20T19:34:47.176694+00:00",
+ "last_run": "2026-11-20T20:04:49.025284+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -14597,6 +14690,31 @@
    "side": "b",
    "snapshot": null,
    "sport": "Crypto",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXLALIGATOTAL-26NOV21RMARCC-2",
+   "entered_at": "2026-11-20T20:04:49.025284+00:00",
+   "entities": [
+    "Real Madrid",
+    "Celta Vigo"
+   ],
+   "id": "superpack:[\"sandbox\", \"liga_u15_dog_24h\", [\"liga_u15_dog_24h:KXLALIGATOTAL-26NOV21RMARCC-2\", \"b\"]]",
+   "lane": "liga_u15_dog_24h",
+   "logged": "2026-11-20T20:04:09+00:00",
+   "matched": [
+    "Celta Vigo",
+    "Real Madrid"
+   ],
+   "pid": "[\"sandbox\", \"liga_u15_dog_24h\", [\"liga_u15_dog_24h:KXLALIGATOTAL-26NOV21RMARCC-2\", \"b\"]]",
+   "price": 0.12,
+   "profit": null,
+   "scope": "soccer_o15",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
    "src": "sandbox",
    "status": "open"
   }
