@@ -4829,7 +4829,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-20T21:37:27.429116+00:00",
+ "last_run": "2026-11-20T22:01:32.121046+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -13954,14 +13954,14 @@
    ],
    "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLALIGATEAMTOTAL-26NOV20ATHESP-ATH2\", \"a\"]]",
    "price": 0.62,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_team2",
-   "settled": null,
+   "settled": "2026-11-20T22:01:02+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXEREDIVISIETOTAL-26NOV21TELZWO-2",
@@ -14462,14 +14462,14 @@
    ],
    "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXLALIGAFTTS-26NOV20ATHESP-ESP\", \"b\"]]",
    "price": 0.74,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_ftts",
-   "settled": null,
+   "settled": "2026-11-20T22:01:13+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXLALIGATEAMTOTAL-26NOV21RVCVCF-RVC2",
@@ -14510,14 +14510,14 @@
    ],
    "pid": "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXLALIGACORNERS-26NOV20ATHESP-10\", \"b\"]]",
    "price": 0.44,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_corners",
-   "settled": null,
+   "settled": "2026-11-20T22:01:15+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXWTI-26NOV2014-T81.49",
