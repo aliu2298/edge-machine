@@ -1122,18 +1122,33 @@
   "KXINX15M-26NOV201515-15": {
    "bot_version": "spsweep-live-v1",
    "day": "2026-11-20",
-   "decided_at": "2026-11-20T20:00:00+00:00",
+   "decided_at": "2026-11-20T20:15:37+00:00",
    "lane": "sp_sweep_10c",
    "limit": 0.1,
    "open": "2026-11-20T20:00:00+00:00",
-   "outcome": "entered",
+   "outcome": "no_fill",
    "rest_s": 0.98,
+   "result": "no",
    "rule_ok": true,
    "target": 0.3,
    "ticker": "KXINX15M-26NOV201515-15",
    "why": null
+  },
+  "KXINX15M-26NOV201530-30": {
+   "bot_version": "spsweep-live-v1",
+   "day": "2026-11-20",
+   "decided_at": "2026-11-20T20:15:00+00:00",
+   "lane": "sp_sweep_10c",
+   "limit": 0.1,
+   "open": "2026-11-20T20:15:00+00:00",
+   "outcome": "entered",
+   "rest_s": 0.65,
+   "rule_ok": true,
+   "target": 0.3,
+   "ticker": "KXINX15M-26NOV201530-30",
+   "why": null
   }
  },
- "updated_at": "2026-11-20T20:00:21+00:00",
+ "updated_at": "2026-11-20T20:15:37+00:00",
  "version": 1
 }
