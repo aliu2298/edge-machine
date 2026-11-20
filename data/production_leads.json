@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-20T03:19:24+00:00",
+ "board_built_at": "2026-11-20T03:34:56+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -1744,7 +1744,7 @@
    "kickoff": "2026-11-20T20:00Z",
    "lane": "production",
    "last_seen": "2026-11-20",
-   "last_seen_at": "2026-11-20T03:19:24+00:00",
+   "last_seen_at": "2026-11-20T03:34:56+00:00",
    "league": "La Liga",
    "match": "Athletic Club v Espanyol",
    "pair": "team2_ranked|soccer_team2",
@@ -1801,6 +1801,44 @@
    "sport": "soccer_p05",
    "status": "hit"
   },
+  "2026-11-21|Napoli|Torino|Napoli to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
+   "away": "Torino",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "Napoli"
+   },
+   "date": "2026-11-21",
+   "edge_at_log": null,
+   "first_seen": "2026-11-20",
+   "headline": "Napoli to score 2+",
+   "home": "Napoli",
+   "id": "2026-11-21|Napoli|Torino|Napoli to score 2+ \u00b7 Favourite to score 2+, ranked by margin",
+   "kickoff": "2026-11-21T19:45Z",
+   "lane": "production",
+   "last_seen": "2026-11-20",
+   "last_seen_at": "2026-11-20T03:34:56+00:00",
+   "league": "Serie A",
+   "match": "Napoli v Torino",
+   "pair": "team2_ranked|soccer_team2",
+   "price_at_log": 0.62,
+   "published_at": "2026-11-20T03:34:56+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 2410,
+   "route": {
+    "claim": "Napoli to score 2+",
+    "event": "KXSERIEATEAMTOTAL-26NOV21NAPTOR",
+    "market": "KXSERIEATEAMTOTAL-26NOV21NAPTOR-NAP2",
+    "outcome": "Napoli over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.62,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "team2_ranked:KXSERIEATEAMTOTAL-26NOV21NAPTOR-NAP2",
+   "source": "team2_ranked",
+   "sport": "soccer_team2",
+   "status": "pending"
+  },
   "2026-11-24|St. Louis CITY SC|LAFC|LAFC +0.5 (St. Louis CITY SC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
    "away": "LAFC",
    "bet": {
@@ -1816,7 +1854,7 @@
    "kickoff": "2026-11-24T01:00Z",
    "lane": "production",
    "last_seen": "2026-11-20",
-   "last_seen_at": "2026-11-20T03:19:24+00:00",
+   "last_seen_at": "2026-11-20T03:34:56+00:00",
    "league": "MLS",
    "match": "St. Louis CITY SC v LAFC",
    "pair": "mls_fade_home|soccer_p05",
@@ -2022,9 +2060,9 @@
    "ready_at": "2026-10-11T19:34:45+00:00",
    "route": "moved by hand on 2026-10-11",
    "routing": {
-    "leads": 1,
+    "leads": 2,
     "problem": null,
-    "routed": 1,
+    "routed": 2,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -2036,7 +2074,7 @@
    "sandbox_roi_fee": 0.1713,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 2,
     "under_target": 0
    }
   },
@@ -2095,5 +2133,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-20T03:19:24+00:00"
+ "updated_at": "2026-11-20T03:34:56+00:00"
 }
