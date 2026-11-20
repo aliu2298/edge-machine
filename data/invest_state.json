@@ -1,8 +1,8 @@
 {
  "collector": {
-  "last_ts": 1795204801,
+  "last_ts": 1795208402,
   "markets": 97,
-  "rows_24h": 126892
+  "rows_24h": 126795
  },
  "events": [
   {
@@ -25,28 +25,6 @@
   }
  ],
  "flags": [
-  {
-   "gap": -0.03247,
-   "gap_15m": -0.0318,
-   "gap_5m": -0.03587,
-   "gap_60m": -0.03725,
-   "rth": false,
-   "spread_bp": 6.1,
-   "sym": "BABA",
-   "ticker": "KXBABAPERP",
-   "ts": 1795054382
-  },
-  {
-   "gap": -0.01029,
-   "gap_15m": -0.01252,
-   "gap_5m": -0.01306,
-   "gap_60m": -0.01377,
-   "rth": false,
-   "spread_bp": 2.7,
-   "sym": "INTC",
-   "ticker": "KXINTCPERP",
-   "ts": 1795055522
-  },
   {
    "gap": -0.01044,
    "gap_15m": -0.01388,
@@ -5165,9 +5143,26 @@
    "sym": "WELL",
    "ticker": "KXWELLPERP",
    "ts": 1795184941
+  },
+  {
+   "gap": -0.0138,
+   "rth": true,
+   "spread_bp": 284.2,
+   "sym": "BAC",
+   "ticker": "KXBACPERP",
+   "ts": 1795208341
+  },
+  {
+   "gap": -0.01116,
+   "gap_5m": -0.00157,
+   "rth": true,
+   "spread_bp": 188.5,
+   "sym": "US500",
+   "ticker": "KXUS500PERP",
+   "ts": 1795207802
   }
  ],
- "last_run": "2026-11-20T20:00:09+00:00",
+ "last_run": "2026-11-20T21:00:09+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
