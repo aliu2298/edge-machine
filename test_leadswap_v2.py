@@ -84,13 +84,15 @@ check("B (version 2) was retired 2026-11-13 (round 4): no row in the live area, 
       ("sw15-leadswap_v2" in live, "Lead Swap favourite v2" in html.split('id="sw15-archive"')[1], "Retired 2026-11-13 by Olu" in html), (False, True, True))
 check("the Loss Reader and lsb-v1's favourite are out of the live area", ("Loss Reader" in live, 'id="sw15-leadswap_fav"' in live), (False, False))
 arc = html.split('id="sw15-archive"')[1]
-check("the Retired Nov 12 block holds both, each on one line with a final record", ("<h4>Retired Nov 12</h4>" in arc, "Loss Reader" in arc.split("<h4>Retired Nov 12</h4>")[1][:1800],
-      "full record" in arc.split("<h4>Retired Nov 12</h4>")[1][:2200]), (True, True, True))
-r3 = arc.split("<h4>Retired Nov 12</h4>")[1].split("</details>")[0]
-# The note needs both parts of the lsb-v1 record. The live ledger's cut part drifts (it is empty now), so the page's wording is
-# checked against the fixture record above through the same builder, and the live page only when the live ledger has both parts.
+# The block is read up to the next heading, not a fixed character window: a long live record pushed "full record" past 2200 characters.
+_r12 = arc.split("<h4>Retired Nov 12</h4>")[1].split("<h4>")[0] if "<h4>Retired Nov 12</h4>" in arc else ""
+# The "full record" wording needs both parts of the lsb-v1 record. The live ledger's cut part drifts (it can be empty), so the wording is
+# checked on the live page only when the live ledger has both parts, and against the fixture record below otherwise.
 _live = L.full_record(L.load().get("routing"), L.load().get("removed_routing"))
 _both = bool(_live and _live.get("kept") and _live.get("cut"))
+check("the Retired Nov 12 block holds both, each on one line with a final record", ("<h4>Retired Nov 12</h4>" in arc, "Loss Reader" in _r12,
+      ("full record" in _r12) if _both else True), (True, True, True))
+r3 = arc.split("<h4>Retired Nov 12</h4>")[1].split("</details>")[0]
 check("and says the kept markets alone were flattered by cutting losers (when the live record has a cut part)",
       "flattered by cutting losers" in r3 if _both else True, True)
 _orig_load, _orig_full = L.load, L.full_record
