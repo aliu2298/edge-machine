@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-20T03:07Z",
+ "generated": "2026-11-20T04:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -1587,6 +1587,78 @@
     "src": "fills",
     "st": "lost",
     "w": 1.02
+   },
+   {
+    "g": -1.0,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV19LACSAS-SAS11TO15",
+    "ko": "2026-11-20T01:00",
+    "legs": "",
+    "r": -1.0,
+    "side": "no",
+    "src": "fills",
+    "st": "lost",
+    "w": 0.93
+   },
+   {
+    "g": 0.5455,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV19LACSAS-SAS6TO10",
+    "ko": "2026-11-20T01:00",
+    "legs": "sold",
+    "r": 0.5455,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 0.93
+   },
+   {
+    "g": -1.0,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV19NYKMIN-NYK1TO5",
+    "ko": "2026-11-20T01:00",
+    "legs": "",
+    "r": -1.0,
+    "side": "no",
+    "src": "fills",
+    "st": "lost",
+    "w": 0.97
+   },
+   {
+    "g": 0.5345,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV19NYKMIN-NYK6TO10",
+    "ko": "2026-11-20T01:00",
+    "legs": "sold",
+    "r": 0.5345,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 0.98
+   },
+   {
+    "g": 0.5333,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV19PORMIL-POR1TO5",
+    "ko": "2026-11-20T01:00",
+    "legs": "sold",
+    "r": 0.5333,
+    "side": "no",
+    "src": "fills",
+    "st": "won",
+    "w": 1.02
+   },
+   {
+    "g": -1.0,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV19PORMIL-POR6TO10",
+    "ko": "2026-11-20T01:00",
+    "legs": "",
+    "r": -1.0,
+    "side": "no",
+    "src": "fills",
+    "st": "lost",
+    "w": 0.93
    }
   ],
   "nba_wm_yes": [
@@ -4291,44 +4363,44 @@
     "w": 1.02
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": -1.0,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV19NYKMIN-MIN11TO20",
     "ko": "2026-11-20T01:00",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 1.02
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": -1.0,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV19NYKMIN-MIN1TO5",
     "ko": "2026-11-20T01:00",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 1.02
    },
    {
-    "g": null,
-    "hold_r": null,
+    "g": -1.0,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV19NYKMIN-MIN6TO10",
     "ko": "2026-11-20T01:00",
     "legs": "",
-    "r": null,
+    "r": -1.0,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "lost",
     "w": 1.02
    },
    {
     "g": 1.25,
-    "hold_r": null,
+    "hold_r": -1.0,
     "id": "KXNBAWINMARGIN-26NOV19NYKMIN-NYK11TO20",
     "ko": "2026-11-20T01:00",
     "legs": "2x+2.5x",
@@ -5578,6 +5650,14 @@
      "side": "yes",
      "st": "won",
      "w": 1.0
+    },
+    {
+     "id": "econ_nc_yes:KXDIESELD-26NOV20-T5.895",
+     "ko": "2026-11-20T04:59",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 0.95
     }
    ],
    "refused": {}
@@ -6348,7 +6428,9 @@
      "w": 12.69
     }
    ],
-   "refused": {}
+   "refused": {
+    "team2_ranked:KXSERIEATEAMTOTAL-26NOV21NAPTOR-NAP2": "thin book"
+   }
   },
   "u35_low_scoring|soccer_u35_cup": {
    "entered": "2026-11-06T21:10:55+00:00",
