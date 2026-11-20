@@ -1,5 +1,37 @@
 {
- "entries": [],
+ "entries": [
+  {
+   "ask": 0.24,
+   "bid": 0.23,
+   "check": "verified",
+   "cost": 0.25277,
+   "entry_ts": 1795131000,
+   "event": "KXMLSGAME-26NOV19ORLCIN",
+   "hold": -1.0,
+   "id": "KXMLSGAME-26NOV19ORLCIN-TIE",
+   "kickoff": 1795134600,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "sold_ts": null,
+     "target": 0.48
+    },
+    {
+     "multiple": 3.0,
+     "sold_ts": null,
+     "target": 0.72
+    }
+   ],
+   "logged": "2026-11-20T03:37:40.368658+00:00",
+   "matchday": "2026-11-19",
+   "prints": 2074,
+   "quote_ts": 1795131060,
+   "roi": -1.0,
+   "title": "Tie is the result",
+   "version": "mlstie-v1",
+   "won": false
+  }
+ ],
  "error": null,
  "insample": {
   "built": "2026-11-07T19:46:14.927733+00:00",
@@ -7452,7 +7484,7 @@
   ]
  },
  "lane": "mls_tie_split",
- "last_run": "2026-11-19T03:44:05.886684+00:00",
+ "last_run": "2026-11-20T03:37:40.368658+00:00",
  "since": "2026-11-08",
  "skips": {},
  "version": "mlstie-v1"

@@ -23,7 +23,9 @@ def check(label, got, want):
 
 
 FX = json.load(open(os.path.join(S.DATA, "regression.json")))
-W = S.World()
+# the games as seeded on Nov 18: the live games.json grows with every run, and the regression board is that day's
+REG_GAMES = json.load(open(os.path.join(S.DATA, "games_regression.json")))["games"]
+W = S.World(games=copy.deepcopy(REG_GAMES))
 OUT = set()
 for nm in FX["out_names"]:
     c = W.NAME.get(S.norm(nm), set())
