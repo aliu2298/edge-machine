@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-19T23:58:42+00:00",
+ "board_built_at": "2026-11-20T00:06:02+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -1518,6 +1518,76 @@
    "sport": "crypto_fav",
    "status": "hit"
   },
+  "2026-11-19|KXBRENTD-26NOV1917-T89.50|Above $89.50 at the close \u00b7 Commodities favourite band": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-11-19",
+   "edge_at_log": null,
+   "first_seen": "2026-11-19",
+   "headline": "Above $89.50 at the close",
+   "home": null,
+   "id": "2026-11-19|KXBRENTD-26NOV1917-T89.50|Above $89.50 at the close \u00b7 Commodities favourite band",
+   "kickoff": "2026-11-19T22:00Z",
+   "lane": "production",
+   "league": "Commodities \u00b7 Favourite band",
+   "match": "Brent crude close on Nov 19, 2026",
+   "pair": "commod_fav_band|commodities_fav",
+   "price_at_log": 0.78,
+   "published_at": "2026-11-20T00:06:02+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Above $89.50 at the close",
+    "event": "KXBRENTD-26NOV1917",
+    "market": "KXBRENTD-26NOV1917-T89.50",
+    "outcome": "Above $89.50",
+    "outcome_side": "yes",
+    "price_at_log": 0.78,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "commod_fav_band:KXBRENTD-26NOV1917-T89.50",
+   "source": "commod_fav_band",
+   "sport": "commodities_fav",
+   "status": "hit"
+  },
+  "2026-11-19|KXGOLDD-26NOV1917-T3672|Above $3672 at the close \u00b7 Commodities favourite band": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-11-19",
+   "edge_at_log": null,
+   "first_seen": "2026-11-19",
+   "headline": "Above $3672 at the close",
+   "home": null,
+   "id": "2026-11-19|KXGOLDD-26NOV1917-T3672|Above $3672 at the close \u00b7 Commodities favourite band",
+   "kickoff": "2026-11-19T22:00Z",
+   "lane": "production",
+   "league": "Commodities \u00b7 Favourite band",
+   "match": "Gold close on Nov 19, 2026",
+   "pair": "commod_fav_band|commodities_fav",
+   "price_at_log": 0.8,
+   "published_at": "2026-11-20T00:06:02+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Above $3672 at the close",
+    "event": "KXGOLDD-26NOV1917",
+    "market": "KXGOLDD-26NOV1917-T3672",
+    "outcome": "Above $3672",
+    "outcome_side": "yes",
+    "price_at_log": 0.8,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "commod_fav_band:KXGOLDD-26NOV1917-T3672",
+   "source": "commod_fav_band",
+   "sport": "commodities_fav",
+   "status": "miss"
+  },
   "2026-11-19|KXWTI-26NOV1914-T82.99|Above $82.99 at the close \u00b7 Commodities favourite band": {
    "away": null,
    "bet": {
@@ -1568,8 +1638,8 @@
    "id": "2026-11-20|Athletic Club|Espanyol|Athletic Club to score 2+ \u00b7 Favourite to score 2+, ranked by margin",
    "kickoff": "2026-11-20T20:00Z",
    "lane": "production",
-   "last_seen": "2026-11-19",
-   "last_seen_at": "2026-11-19T23:58:42+00:00",
+   "last_seen": "2026-11-20",
+   "last_seen_at": "2026-11-20T00:06:02+00:00",
    "league": "La Liga",
    "match": "Athletic Club v Espanyol",
    "pair": "team2_ranked|soccer_team2",
@@ -1605,8 +1675,8 @@
    "id": "2026-11-20|Orlando City SC|FC Cincinnati|FC Cincinnati +0.5 (Orlando City SC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45",
    "kickoff": "2026-11-20T00:30Z",
    "lane": "production",
-   "last_seen": "2026-11-19",
-   "last_seen_at": "2026-11-19T23:58:42+00:00",
+   "last_seen": "2026-11-20",
+   "last_seen_at": "2026-11-20T00:06:02+00:00",
    "league": "MLS",
    "match": "Orlando City SC v FC Cincinnati",
    "pair": "mls_fade_home|soccer_p05",
@@ -1637,18 +1707,18 @@
    "ready_at": "2026-11-12T07:59:06+00:00",
    "route": "moved by hand on 2026-11-12",
    "routing": {
-    "leads": 10,
+    "leads": 12,
     "problem": null,
-    "routed": 10,
+    "routed": 12,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": -0.2181,
+   "sandbox_clv": -0.2236,
    "sandbox_n": 6,
-   "sandbox_roi": -0.4037,
-   "sandbox_roi_fee": -0.4141,
+   "sandbox_roi": -0.3325,
+   "sandbox_roi_fee": -0.344,
    "timing": {
     "late": [],
     "timed": 0,
@@ -1885,5 +1955,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-19T23:58:42+00:00"
+ "updated_at": "2026-11-20T00:06:02+00:00"
 }
