@@ -354,7 +354,9 @@ eq(_pra(detail, "away"), ("Coming soon", "Coming soon"),
    "with no teams record the PRA and period slots are Coming soon, not No recent game")
 eq(_pra(detail, "home"), ("Coming soon", "Coming soon"), "the home side is also Coming soon")
 ok("No recent game" not in HTML, "absent keys are not described as no recent game")
-ok("Should Not Show" not in HTML and "Stephen Curry" not in HTML,
+# the Spotter board elsewhere on the page can name Curry, so read the game cards only
+_cards = detail + skip_detail
+ok("Should Not Show" not in HTML and "Stephen Curry" not in _cards,
    "a PRA hung on the game row is not read")
 
 HOSTILE_PLAYER = "<img src=x onerror=alert(1)>"
