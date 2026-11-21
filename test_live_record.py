@@ -178,9 +178,14 @@ check("the committed export passes the whitelist and carries no dollar sign", "$
 import production as P
 import raised_stakes as RS
 check("a raised stake shows its date under the pair, with no amount", ("stake raised Nov 6" in P.stake_note("sr_a7|soccer_u35"), "$" in P.stake_note("sr_a7|soccer_u35"), P.stake_note("sr_c1|soccer_u35")), (True, False, ""))
-check("the raised pairs are the follower's own seven in Production (the commodities band went back to the Sandbox 2026-11-08; sr_a6, Team 1+ and Under 3.5 Internationals raised the same day)", sorted(RS.pairs()),
-      sorted(["mls_fade_home|soccer_p05", "crypto_fav_band_below|crypto_fav", "team2_ranked|soccer_team2", "sr_a7|soccer_u35", "sr_a6|soccer_o25",
-              "team1_form_l5|soccer_team1_intl", "u35_low_scoring|soccer_u35_intl"]))
+_seven = {"mls_fade_home|soccer_p05", "crypto_fav_band_below|crypto_fav", "team2_ranked|soccer_team2", "sr_a7|soccer_u35", "sr_a6|soccer_o25",
+          "team1_form_l5|soccer_team1_intl", "u35_low_scoring|soccer_u35_intl"}
+# The follower's raised list grows as Olu raises lanes (st_t7|soccer_team3 and st_t1h|soccer_team2 on 2026-11-20, nine in all), so the test does
+# not pin the count: the original seven stay raised (the commodities band went back to the Sandbox 2026-11-08), and a pair added since is
+# one of the two named here or a Production pair the follower holds.
+_got = set(RS.pairs())
+check("the raised pairs keep the follower's original seven", _seven <= _got, True)
+check("and the only pairs raised since are the two soccer rules of 2026-11-20", _got - _seven <= {"st_t7|soccer_team3", "st_t1h|soccer_team2"}, True)
 
 print("\na window refusal after the real reason does not replace it (Brent / WTI Nov 12)")
 _led = os.path.join(tempfile.mkdtemp(), "ledger.jsonl")

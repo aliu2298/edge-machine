@@ -562,6 +562,31 @@
    "result": "yes",
    "title": "Will over 0.5 goals be scored?",
    "version": "argdip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null,
+    "75": null
+   },
+   "event": "KXARGPREMDIVTOTAL-26NOV20VELCAB",
+   "id": "KXARGPREMDIVTOTAL-26NOV20VELCAB-1",
+   "kickoff": 1795215600,
+   "logged": "2026-11-21T00:58:18.400835+00:00",
+   "matchday": "2026-11-20",
+   "p": 0.91,
+   "p_at": 1795212060,
+   "p_bid": 0.9,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.9,
+    "printed": 8938.28,
+    "status": "verified"
+   },
+   "prints": 96,
+   "result": "yes",
+   "title": "Will over 0.5 goals be scored?",
+   "version": "argdip-v1"
   }
  ],
  "error": null,
@@ -6517,11 +6542,11 @@
   ]
  },
  "lane": "arg_goalless_dip",
- "last_run": "2026-11-20T18:51:56.735832+00:00",
+ "last_run": "2026-11-21T00:58:18.400835+00:00",
  "observations": {
-  "at": "2026-11-20T18:51:56.735832+00:00",
+  "at": "2026-11-21T00:58:18.400835+00:00",
   "errors": [],
-  "new": 0,
+  "new": 1,
   "skipped": 0,
   "waiting": 0
  },
@@ -6537,14 +6562,14 @@
  },
  "upcoming": [
   {
-   "event": "KXARGPREMDIVTOTAL-26NOV20VELCAB",
-   "kickoff": 1795215600,
-   "title": "Velez Sarsfield vs Belgrano de Cordoba: Regulation Time Total Goals"
-  },
-  {
    "event": "KXARGPREMDIVTOTAL-26NOV21DYJBAR",
    "kickoff": 1795284000,
    "title": "Defensa y Justicia vs Barracas: Regulation Time Total Goals"
+  },
+  {
+   "event": "KXARGPREMDIVTOTAL-26NOV21ARGCAI",
+   "kickoff": 1795291200,
+   "title": "Argentinos Juniors vs Independiente Avellaneda: Regulation Time Total Goals"
   }
  ],
  "version": "argdip-v1"

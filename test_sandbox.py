@@ -5561,13 +5561,13 @@ eq(S.pinnacle_total_prob(dict(bookmakers=[dict(key="draftkings", markets=[])]), 
 _half = _pin_ev()
 _half["bookmakers"][0]["markets"][0]["outcomes"] = [dict(name="Over", price=1.9, point=2.5)]
 eq(S.pinnacle_total_prob(_half, 2.5), None, "one side of a two-way market cannot be de-vigged")
-ok(S.PIN_TOTALS_POINT == 2.5 and S.SOURCES["pin_totals"]["sports"] == ["soccer_o25", "soccer_o25_cup", "soccer_o25_intl"],
-   "the lane is wired to the over-2.5 market only")
+ok(S.PIN_TOTALS_POINT == 2.5 and list(S.SOURCES["pin_totals"]["retired_sports"]) == ["soccer_o25", "soccer_o25_cup", "soccer_o25_intl"],
+   "the lane was wired to the over-2.5 market only")
+# Retired 2026-11-20 (Olu): no live scope, so the run never fetches it and it buys no Odds API credit.
+ok(S.SOURCES["pin_totals"]["sports"] == [] and "pin_totals" not in S.REMOVED_SOURCES
+   and all("Retired 2026-11-20 by Olu" in w and "0 of 57" in w for w in S.SOURCES["pin_totals"]["retired_sports"].values()),
+   "pin_totals is retired on every scope, with its reason, and still registered")
 _pin_note = S.SOURCES["pin_totals"]["note"]
-ok("at most half its paced credits" not in _pin_note,
-   "the lane note no longer says every run takes at most half the paced credits")
-ok("fully paused" in _pin_note and "whole paced allowance" in _pin_note,
-   "the note says a fully paused match-winner lane leaves this lane the whole allowance")
 ok("half" in _pin_note and "one league key" in _pin_note,
    "the half-split and the one-key cap are still stated")
 ok("soccer_o25" in S.SOURCES["goals_market"]["sports"],
@@ -7155,7 +7155,7 @@ for _name, _sport in (
         ("team1_form_l5", "soccer_team1"), ("u35_low_scoring", "soccer_u35"),
         ("corners_under", "soccer_corners"), ("p05_unbeaten", "soccer_p05"),
         ("o15_ranked", "soccer_o15"),
-        ("pin_totals", "soccer_o25"), ("btts_market", "soccer_btts"),
+        ("btts_market", "soccer_btts"),
         ("oddspedia", "cricket"), ("cmd_market", "commodities")):
     ok(not S.lane_paused(_name, _sport), f"{_name}/{_sport} is not paused")
 ok(S.lane_paused("nws_fade", "climate") and S.source_fully_paused("nws_fade"),

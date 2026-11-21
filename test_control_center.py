@@ -237,14 +237,14 @@ eq(m["tiles"]["healthy"], (4, 7), "four other lanes read now are healthy")
 fresh = _q(8, "oddspedia", "cricket", "open", hours=-6)
 eq(_model(_ledger([fresh], lane_reads=read_now))["attention"], [], "a bet 6h past its start is not yet overdue")
 
-# A feed that could not be read: pin_totals logged nothing on every sport it covers (the bare
+# A feed that could not be read: btts_market logged nothing on every sport it covers (the bare
 # count shape; an offered-row dict with 0 offered is an empty board, not a dead feed).
-cov_dark = {sp: {"kalshi_venue": 5, "pin_totals": 0} for sp in S.SOURCES["pin_totals"]["sports"]}
+cov_dark = {sp: {"kalshi_venue": 5, "btts_market": 0} for sp in S.SOURCES["btts_market"]["sports"]}
 feeds = SB.dark_feeds(_ledger([], coverage=cov_dark))
-eq([f[0] for f in feeds], ["pin_totals"], "dark_feeds names the feed with nothing offered on every sport")
+eq([f[0] for f in feeds], ["btts_market"], "dark_feeds names the feed with nothing offered on every sport")
 m = _model(_ledger([], coverage=cov_dark, lane_reads=read_now))
 eq([i["kind"] for i in m["attention"]], ["feed"], "one item: the feed")
-ok("Pinnacle" in m["attention"][0]["text"] and "could not be read" in m["attention"][0]["text"], "it names the feed")
+ok(S.SOURCES["btts_market"]["label"] in m["attention"][0]["text"] and "could not be read" in m["attention"][0]["text"], "it names the feed")
 eq((m["attention"][0]["area"], m["attention"][0]["href"]), ("soccer", "./sandbox.html"), "filed under soccer, linking the Sandbox")
 down = _model(_ledger([], coverage={}, feed_status={"oddspedia": "down: 403"}, lane_reads=read_now))
 ok(any(i["kind"] == "feed" and "403" in i["text"] and i["area"] == "cricket" for i in down["attention"]),

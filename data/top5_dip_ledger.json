@@ -2989,6 +2989,76 @@
    "result": "yes",
    "title": "Will over 1.5 goals be scored?",
    "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": {
+     "counted": true,
+     "fill_at": 1795209145,
+     "fill_print": 0.43,
+     "fill_volume": 231122.31,
+     "held": true,
+     "limit": 0.43,
+     "payout": 0.0,
+     "sold": false,
+     "sold_at": null
+    },
+    "65": {
+     "counted": true,
+     "fill_at": 1795207693,
+     "fill_print": 0.51,
+     "fill_volume": 167180.63,
+     "held": true,
+     "limit": 0.51,
+     "payout": 0.0,
+     "sold": false,
+     "sold_at": null
+    }
+   },
+   "event": "KXLALIGATOTAL-26NOV20ATHESP",
+   "id": "KXLALIGATOTAL-26NOV20ATHESP-2",
+   "kickoff": 1795204800,
+   "league": "La Liga",
+   "logged": "2026-11-21T00:22:26.156525+00:00",
+   "matchday": "2026-11-20",
+   "p": 0.79,
+   "p_at": 1795201260,
+   "p_bid": 0.78,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.79,
+    "printed": 589.58,
+    "status": "verified"
+   },
+   "prints": 3771,
+   "result": "no",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXLIGUE1TOTAL-26NOV20ESTHAC",
+   "id": "KXLIGUE1TOTAL-26NOV20ESTHAC-2",
+   "kickoff": 1795203900,
+   "league": "Ligue 1",
+   "logged": "2026-11-21T00:22:26.156525+00:00",
+   "matchday": "2026-11-20",
+   "p": 0.76,
+   "p_at": 1795200360,
+   "p_bid": 0.75,
+   "p_check": {
+    "how": "print",
+    "last_trade": null,
+    "printed": 1253.93,
+    "status": "verified"
+   },
+   "prints": 65,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
   }
  ],
  "error": null,
@@ -17043,12 +17113,12 @@
   ]
  },
  "lane": "top5_goalless_dip",
- "last_run": "2026-11-20T18:03:53.637105+00:00",
+ "last_run": "2026-11-21T00:22:26.156525+00:00",
  "observations": {
-  "at": "2026-11-20T18:03:53.637105+00:00",
+  "at": "2026-11-21T00:22:26.156525+00:00",
   "errors": [],
-  "new": 0,
-  "skipped": 0,
+  "new": 2,
+  "skipped": 1,
   "waiting": 0
  },
  "seen": {},
@@ -17059,6 +17129,7 @@
   "KXBUNDESLIGATOTAL-26NOV07PADSGE": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)",
   "KXBUNDESLIGATOTAL-26NOV08KOELEV": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)",
   "KXBUNDESLIGATOTAL-26NOV08TSGSCH": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)",
+  "KXBUNDESLIGATOTAL-26NOV20BMUKOE": "pregame ask 0.96 outside 10-95c",
   "KXBUNDESLIGATOTAL-26OCT31BMGPAD": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)",
   "KXBUNDESLIGATOTAL-26OCT31FCASCF": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)",
   "KXLALIGATOTAL-26NOV01ELCVCF": "pregame ask unverified: 4.64 contracts traded at or through the ask within 60 minutes (under 10)",
@@ -17074,21 +17145,6 @@
   "KXSERIEATOTAL-26NOV08FIOJUV": "pregame ask unverified: 7.83 contracts traded at or through the ask within 60 minutes (under 10)"
  },
  "upcoming": [
-  {
-   "event": "KXBUNDESLIGATOTAL-26NOV20BMUKOE",
-   "kickoff": 1795203000,
-   "title": "Bayern Munich vs FC K\u00f6ln: Total Goals"
-  },
-  {
-   "event": "KXLIGUE1TOTAL-26NOV20ESTHAC",
-   "kickoff": 1795203900,
-   "title": "Troyes vs Le Havre: Total Goals"
-  },
-  {
-   "event": "KXLALIGATOTAL-26NOV20ATHESP",
-   "kickoff": 1795204800,
-   "title": "Bilbao vs Espanyol: Total Goals"
-  },
   {
    "event": "KXEPLTOTAL-26NOV21MCIFUL",
    "kickoff": 1795264200,
@@ -17123,6 +17179,21 @@
    "event": "KXBUNDESLIGATOTAL-26NOV21SGETSG",
    "kickoff": 1795271400,
    "title": "Frankfurt vs Hoffenheim: Total Goals"
+  },
+  {
+   "event": "KXBUNDESLIGATOTAL-26NOV21SVESCF",
+   "kickoff": 1795271400,
+   "title": "Elversberg vs Freiburg: Total Goals"
+  },
+  {
+   "event": "KXBUNDESLIGATOTAL-26NOV21UNIRBL",
+   "kickoff": 1795271400,
+   "title": "Union Berlin vs Leipzig: Total Goals"
+  },
+  {
+   "event": "KXEPLTOTAL-26NOV21AVLSUN",
+   "kickoff": 1795273200,
+   "title": "Aston Villa vs Sunderland: Total Goals"
   }
  ],
  "version": "top5dip-v1"
