@@ -1,10 +1,20 @@
 {
+ "error": null,
+ "last_run": "2026-11-21T09:31:57.616441+00:00",
  "registered": "2026-11-21",
  "rules": {
   "FU": {
    "picks": []
   }
  },
- "runs": [],
+ "runs": [
+  {
+   "at": "2026-11-21T09:31:57.616441+00:00",
+   "due": 1,
+   "matched": 0,
+   "new": 0,
+   "selected": 0
+  }
+ ],
  "version": "flipped-unders-v1"
 }
