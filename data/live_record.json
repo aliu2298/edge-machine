@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-21T16:07Z",
+ "generated": "2026-11-21T17:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -5838,9 +5838,9 @@
     {
      "id": "ftts_no_70_80:KXLIGUE1FTTS-26NOV21NICPSG-NIC",
      "ko": "2026-11-21T16:15",
-     "r": null,
+     "r": -1.0,
      "side": "no",
-     "st": "open",
+     "st": "lost",
      "w": 0.96
     },
     {
@@ -6117,9 +6117,9 @@
     {
      "id": "sr_a6:KXEPLTOTAL-26NOV21TOTIPS-3",
      "ko": "2026-11-21T15:00",
-     "r": null,
+     "r": 1.5227,
      "side": "no",
-     "st": "open",
+     "st": "won",
      "w": 11.08
     }
    ],
@@ -6376,7 +6376,6 @@
     }
    ],
    "refused": {
-    "team1_form_l5:KXUEFANLTEAMTOTAL-26NOV14NORWAL-NOR1": "price above the cap",
     "team1_form_l5:KXUEFANLTEAMTOTAL-26NOV15FRATUR-FRA1": "price above the cap",
     "team1_form_l5:KXUEFANLTEAMTOTAL-26NOV17WALPOR-POR1": "price above the cap"
    }
@@ -6584,9 +6583,9 @@
     {
      "id": "team2_ranked:KXEPLTEAMTOTAL-26NOV21BOUNFO-BOU2",
      "ko": "2026-11-21T15:00",
-     "r": null,
+     "r": 1.0515,
      "side": "yes",
-     "st": "open",
+     "st": "won",
      "w": 12.29
     },
     {
@@ -6612,6 +6611,14 @@
      "side": "yes",
      "st": "open",
      "w": 12.23
+    },
+    {
+     "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV22GETATM-ATM2",
+     "ko": "2026-11-22T20:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 12.16
     }
    ],
    "refused": {}
