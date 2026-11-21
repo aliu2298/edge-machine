@@ -17,8 +17,8 @@ def check(why, got, want):
         FAILS.append(why)
 
 
-def leg(t, side="yes", ask=0.8):
-    return dict(ticker=t, label=t, side=side, ask=ask, bid=ask - 0.02)
+def leg(t, side="yes", ask=0.8, market="1Q"):
+    return dict(ticker=t, label=t, side=side, ask=ask, bid=ask - 0.02, market=market)
 
 
 picks = [
@@ -57,12 +57,25 @@ finally:
 check("a part-value leg counts at its settled value", (part["picks"][0]["result"], part["picks"][0]["value"]), ("no_result", 0.4))
 check("an empty file is an empty record", HP.record(dict(picks=[]))["n"], 0)
 
+three = dict(id="x", kind="combo", legs=[leg("T1"), leg("T2"), leg("T3")], combo_price=0.4, payout_multiple=2.5, counted=True, result="open")
+check("a 3-leg combo is never counted, even if marked counted", HP.is_counted(three), False)
+check("a 3-leg test is left out of every stat", HP.record(dict(picks=picks + [three]))["n"], 3)
+check("market is read from the field or the ticker", (HP.market_of(dict(market="pra")), HP.market_of(dict(ticker="KXNBA1HTOTAL-X")), HP.market_of(dict(ticker="KXNBA1QTOTAL-X")), HP.market_of(dict(ticker="Z"))), ("PRA", "1H", "1Q", None))
+mk = dict(picks=[dict(id="m1", kind="combo", counted=True, result="won", combo_price=0.5, legs=[dict(ticker="A", market="1Q", value=1.0), dict(ticker="B", market="PRA", value=1.0)]),
+                 dict(id="m2", kind="combo", counted=True, result="lost", combo_price=0.5, legs=[dict(ticker="C", market="1H", value=1.0), dict(ticker="D", market="PRA", value=0.0)]),
+                 dict(id="m3", kind="combo", counted=True, result="open", combo_price=0.5, legs=[dict(ticker="E", market="1Q"), dict(ticker="F", market="1H")])])
+bm = HP.record(mk)["by_market"]
+check("split by leg: 1Q 2 legs 1 won 1 open", (bm["1Q"]["legs"], bm["1Q"]["won"], bm["1Q"]["open"]), (2, 1, 1))
+check("split by leg: 1H 2 legs 1 won 1 open", (bm["1H"]["legs"], bm["1H"]["won"], bm["1H"]["open"]), (2, 1, 1))
+check("split by leg: PRA 2 legs 1 won 1 lost, hit rate 50%", (bm["PRA"]["legs"], bm["PRA"]["won"], bm["PRA"]["lost"], bm["PRA"]["rate"]), (2, 1, 1, 0.5))
+
 print("\nthe page")
 html = B.hand_section(st)
 check("the section names the log, the counts, and that context picks are not counted", all(x in html for x in ("Hand picks · learning log", "3 of 10", "context picks are shown but not counted")), True)
 check("each leg's result and price at placement", ("T2 · No at 70c · won" in html, "T3 · Yes at 80c · lost" in html), (True, True))
 check("percentages and multiples only: no dollar sign", "$" in html, False)
 check("no guarded phrase, no name", (sandbox_audit.COPY_RE.findall(html), "Olu" in html, "real money" in html), ([], False, False))
+check("the market split is on the page", ("By market, leg by leg" in html, "Player PRA" in html), (True, True))
 check("the section is on the Combo page", 'id="hand"' in B.build(CL.empty()), True)
 check("the empty list reads as nothing logged yet", "No hand picks logged yet" in B.hand_section(dict(picks=[])), True)
 check("the workflow settles it and adds its file", all(x in open(".github/workflows/sandbox-tracker.yml").read() for x in ("python3 hand_picks.py", "data/hand_picks.json")), True)

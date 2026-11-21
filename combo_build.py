@@ -136,6 +136,10 @@ def hand_section(picks_state=None):
         ("Return per pick", pct(rec["return"])),
     ]
     head = "".join(f"<tr><td>{k}</td><td>{v}</td></tr>" for k, v in lines)
+    msplit = "".join(f'<tr><td>{esc(m["name"])}</td><td class="num">{m["legs"]}</td><td class="num">{m["won"]}</td><td class="num">{m["lost"]}</td>'
+                     f'<td class="num">{m["open"]}</td><td class="num">{pct(m["rate"], sign=False)}</td></tr>' for m in rec["by_market"].values())
+    split_table = ('<h3>By market, leg by leg</h3><div class="tbl"><table><thead><tr><th>Market</th><th>Legs</th><th>Won</th><th>Lost</th><th>Open</th>'
+                   f'<th>Leg hit rate</th></tr></thead><tbody>{msplit}</tbody></table></div>')
     rows = []
     for p in sorted(st["picks"], key=lambda p: p.get("placed_at") or "", reverse=True):
         legs = "<br>".join(
@@ -144,14 +148,14 @@ def hand_section(picks_state=None):
         res = {"won": "Landed", "lost": "Missed", "no_result": "Part value"}.get(p.get("result"), "Open")
         mult = f'{p["payout_multiple"]:.2f}x' if p.get("payout_multiple") is not None else "—"
         rows.append(f'<tr><td>{esc(str(p.get("placed_at", ""))[:10])}</td><td>{esc(p.get("kind", ""))}</td><td>{legs}</td>'
-                    f'<td class="num">{mult}</td><td>{res}</td><td>{"Counted" if p.get("counted") else "Context, not counted"}</td></tr>')
+                    f'<td class="num">{mult}</td><td>{res}</td><td>{"Counted" if HP.is_counted(p) else "Context, not counted"}</td></tr>')
     table = ('<div class="tbl"><table><thead><tr><th>Placed</th><th>Kind</th><th>Legs</th><th>Pays</th><th>Result</th><th>Counted</th></tr></thead>'
              f'<tbody>{"".join(rows)}</tbody></table></div>') if rows else "<p>No hand picks logged yet.</p>"
     return ('<section id="hand"><h2>Hand picks · learning log</h2>'
-            '<p class="sm">Picks placed by hand, kept here while the rule behind them is worked out. Settled leg by leg from the market results; a combo '
+            '<p class="sm">Two-leg combos placed by hand in NBA 1Q totals, 1H totals and player PRA, kept here while the rule behind them is worked out. Settled leg by leg from the market results; a combo '
             'lands only if every leg wins, and a void leg counts at its settled value. '
             f'The {rec["context"]} context picks are shown but not counted; the record is the picks marked Counted. Prices are as placed.</p>'
-            f'<div class="tbl"><table><thead><tr><th>Line</th><th>Value</th></tr></thead><tbody>{head}</tbody></table></div>{table}</section>')
+            f'<div class="tbl"><table><thead><tr><th>Line</th><th>Value</th></tr></thead><tbody>{head}</tbody></table></div>{split_table}{table}</section>')
 
 
 def _leg_result(leg):
