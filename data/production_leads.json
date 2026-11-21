@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-21T16:10:58+00:00",
+ "board_built_at": "2026-11-21T16:27:41+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -1149,7 +1149,7 @@
    "kickoff": "2026-11-21T19:45Z",
    "lane": "production",
    "last_seen": "2026-11-21",
-   "last_seen_at": "2026-11-21T16:10:58+00:00",
+   "last_seen_at": "2026-11-21T16:27:41+00:00",
    "league": "Ligue 1",
    "match": "Lille v Lyon",
    "pair": "team2_ranked|soccer_team2",
@@ -1186,7 +1186,7 @@
    "kickoff": "2026-11-21T19:45Z",
    "lane": "production",
    "last_seen": "2026-11-21",
-   "last_seen_at": "2026-11-21T16:10:58+00:00",
+   "last_seen_at": "2026-11-21T16:27:41+00:00",
    "league": "Ligue 1",
    "match": "Monaco v Auxerre",
    "pair": "ftts_no_70_80|soccer_ftts",
@@ -1224,7 +1224,7 @@
    "kickoff": "2026-11-21T19:45Z",
    "lane": "production",
    "last_seen": "2026-11-21",
-   "last_seen_at": "2026-11-21T16:10:58+00:00",
+   "last_seen_at": "2026-11-21T16:27:41+00:00",
    "league": "Serie A",
    "match": "Napoli v Torino",
    "pair": "team2_ranked|soccer_team2",
@@ -1261,7 +1261,7 @@
    "kickoff": "2026-11-21T19:45Z",
    "lane": "production",
    "last_seen": "2026-11-21",
-   "last_seen_at": "2026-11-21T16:10:58+00:00",
+   "last_seen_at": "2026-11-21T16:27:41+00:00",
    "league": "Serie A",
    "match": "Napoli v Torino",
    "pair": "ftts_no_70_80|soccer_ftts",
@@ -1298,7 +1298,7 @@
    "kickoff": "2026-11-21T17:30Z",
    "lane": "production",
    "last_seen": "2026-11-21",
-   "last_seen_at": "2026-11-21T16:10:58+00:00",
+   "last_seen_at": "2026-11-21T16:27:41+00:00",
    "league": "Premier League",
    "match": "Newcastle v Arsenal",
    "pair": "ftts_no_70_80|soccer_ftts",
@@ -1320,43 +1320,6 @@
    "sport": "soccer_ftts",
    "status": "pending"
   },
-  "2026-11-21|Nice|PSG|Nice not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge": {
-   "away": "PSG",
-   "bet": {
-    "kind": "ftts_no",
-    "team": "Nice"
-   },
-   "date": "2026-11-21",
-   "edge_at_log": null,
-   "first_seen": "2026-11-21",
-   "headline": "Nice not to score first",
-   "home": "Nice",
-   "id": "2026-11-21|Nice|PSG|Nice not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge",
-   "kickoff": "2026-11-21T16:15Z",
-   "lane": "production",
-   "last_seen": "2026-11-21",
-   "last_seen_at": "2026-11-21T16:10:58+00:00",
-   "league": "Ligue 1",
-   "match": "Nice v PSG",
-   "pair": "ftts_no_70_80|soccer_ftts",
-   "price_at_log": 0.71,
-   "published_at": "2026-11-21T15:03:32+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 71,
-   "route": {
-    "claim": "Nice not to score first",
-    "event": "KXLIGUE1FTTS-26NOV21NICPSG",
-    "market": "KXLIGUE1FTTS-26NOV21NICPSG-NIC",
-    "outcome": "OGC Nice",
-    "outcome_side": "no",
-    "price_at_log": 0.71,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "ftts_no_70_80:KXLIGUE1FTTS-26NOV21NICPSG-NIC",
-   "source": "ftts_no_70_80",
-   "sport": "soccer_ftts",
-   "status": "pending"
-  },
   "2026-11-21|Vit\u00f3ria de Guimaraes|Braga|Under 3.5 goals \u00b7 Under 3.5 low-scoring rule": {
    "away": "Braga",
    "bet": {
@@ -1372,7 +1335,7 @@
    "kickoff": "2026-11-21T20:30Z",
    "lane": "production",
    "last_seen": "2026-11-21",
-   "last_seen_at": "2026-11-21T16:10:58+00:00",
+   "last_seen_at": "2026-11-21T16:27:41+00:00",
    "league": "Ta\u00e7a de Portugal",
    "match": "Vit\u00f3ria de Guimaraes v Braga",
    "pair": "u35_low_scoring|soccer_u35_cup",
@@ -1410,7 +1373,7 @@
    "kickoff": "2026-11-22T20:00Z",
    "lane": "production",
    "last_seen": "2026-11-21",
-   "last_seen_at": "2026-11-21T16:10:58+00:00",
+   "last_seen_at": "2026-11-21T16:27:41+00:00",
    "league": "La Liga",
    "match": "Getafe v Atl\u00e9tico Madrid",
    "pair": "team2_ranked|soccer_team2",
@@ -1447,7 +1410,7 @@
    "kickoff": "2026-11-24T01:00Z",
    "lane": "production",
    "last_seen": "2026-11-21",
-   "last_seen_at": "2026-11-21T16:10:58+00:00",
+   "last_seen_at": "2026-11-21T16:27:41+00:00",
    "league": "MLS",
    "match": "St. Louis CITY SC v LAFC",
    "pair": "mls_fade_home|soccer_p05",
@@ -1484,7 +1447,7 @@
    "kickoff": "2026-11-25T03:00Z",
    "lane": "production",
    "last_seen": "2026-11-21",
-   "last_seen_at": "2026-11-21T16:10:58+00:00",
+   "last_seen_at": "2026-11-21T16:27:41+00:00",
    "league": "MLS",
    "match": "San Jose Earthquakes v Houston Dynamo FC",
    "pair": "mls_fade_home|soccer_p05",
@@ -1565,9 +1528,9 @@
    "ready_at": "2026-10-16T17:17:38+00:00",
    "route": "moved by hand on 2026-10-16",
    "routing": {
-    "leads": 5,
+    "leads": 4,
     "problem": null,
-    "routed": 5,
+    "routed": 4,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1579,7 +1542,7 @@
    "sandbox_roi_fee": -0.1035,
    "timing": {
     "late": [],
-    "timed": 4,
+    "timed": 3,
     "under_target": 0
    }
   },
@@ -1738,5 +1701,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-21T16:10:58+00:00"
+ "updated_at": "2026-11-21T16:27:41+00:00"
 }
