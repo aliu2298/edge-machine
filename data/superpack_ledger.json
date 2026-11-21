@@ -5256,7 +5256,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-21T20:04:18.116982+00:00",
+ "last_run": "2026-11-21T20:11:00.036755+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -6844,9 +6844,9 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"C2\", [\"C2:KXLALIGATOTAL-26NOV21SEVRBB\", \"yes\"]]",
    "price": 0.52,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-21T20:01:24.439275+00:00",
    "side": "yes",
    "snapshot": {
     "as_of": "2026-11-21T16:01:54.043483+00:00",
@@ -6915,7 +6915,7 @@
    },
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXHYPED-26NOV2117-T60.9999",
@@ -15939,14 +15939,14 @@
    ],
    "pid": "[\"soccer_team_rules_ledger.json\", \"T4\", [\"T4:KXEPLTEAMTOTAL-26NOV21NEWARS:away\", \"yes\"]]",
    "price": 0.57,
-   "profit": null,
+   "profit": 0.7031,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-21T20:02:09.903334+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_team_rules_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXLALIGATOTAL-26NOV21SEVRBB-3",
@@ -15964,14 +15964,14 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"C2\", [\"C2:KXLALIGATOTAL-26NOV21SEVRBB\", \"yes\"]]",
    "price": 0.52,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-21T20:01:24.439275+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXMLSTEAMTOTAL-26NOV21NEPHI-PHI2",
