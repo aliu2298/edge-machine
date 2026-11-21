@@ -31,10 +31,10 @@ for key in ["index"] + [k for k, _l, _h in C.PAGES]:
     nav = C.nav(key)
     labels = re.findall(r"<a [^>]*>([^<]+)</a>", nav) + re.findall(r'class="nav-more"[^>]*>([^<]+)<', nav)
     check(f"{key}: no label twice (links and the Markets button)", sorted({x for x in labels if labels.count(x) > 1}), [])
-lb_nav = C.nav("leaderboard")
-check("on the Leaderboard page the button reads Markets, highlighted, and Leaderboard is named once and current",
-      (re.findall(r'class="nav-more"[^>]*>([^<]+)<', lb_nav), "nav-group is-current" in lb_nav, len(re.findall(r">Leaderboard<", lb_nav)),
-       bool(re.search(r'href="\./leaderboard\.html" aria-current="page">Leaderboard<', lb_nav))), (["Markets"], True, 1, True))
+lb_nav = C.nav("combo")   # 2026-11-21: Combo took the Leaderboard's menu slot
+check("on the Combo page the button reads Markets, highlighted, and Combo is named once and current",
+      (re.findall(r'class="nav-more"[^>]*>([^<]+)<', lb_nav), "nav-group is-current" in lb_nav, len(re.findall(r">Combo<", lb_nav)),
+       bool(re.search(r'href="\./combo\.html" aria-current="page">Combo<', lb_nav))), (["Markets"], True, 1, True))
 check("on a page outside the menu the button is not highlighted", "nav-group is-current" in C.nav("sandbox"), False)
 check("Method is still the last pill", re.findall(r"<a [^>]*>([^<]+)</a>", lb_nav)[-1], "Method")
 

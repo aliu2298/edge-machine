@@ -150,6 +150,12 @@ jobs:
         run: |
           python3 superpack.py || echo "::warning::superpack did not run; its ledger is unchanged"
 
+      # Combo (2026-11-21, Olu): one paper crypto No + S&P No combo a weekday, both read in the minute after the crypto lane logs
+      # its pick. Never fatal: a failure leaves its ledger as it was.
+      - name: Combo
+        run: |
+          python3 combo_lane.py || echo "::warning::combo did not run; its ledger is unchanged"
+
       # Corners favourite-side NO v2 (2026-11-06, Olu): the maker bid on each of the rule's entries, read from
       # Kalshi's trade prints once kickoff has passed. Never fatal: a failure leaves its ledger as it was.
       - name: Corners favourite-side NO maker bids
@@ -227,6 +233,10 @@ jobs:
           if [ -f data/superpack_ledger.json ]; then
             git add data/superpack_ledger.json
           fi
+          # The combo ledger (2026-11-21); added only when present.
+          if [ -f data/combo_ledger.json ]; then
+            git add data/combo_ledger.json
+          fi
           # The corners favourite-side NO maker ledger (2026-11-06); added only when present.
           if [ -f data/corners_fav_no_maker.json ]; then
             git add data/corners_fav_no_maker.json
@@ -290,6 +300,9 @@ jobs:
             fi
             if [ -f public_site/leaderboard.html ]; then
               git add public_site/leaderboard.html
+            fi
+            if [ -f public_site/combo.html ]; then
+              git add public_site/combo.html
             fi
             # The NBA board is rebuilt on the tracker clock as well as by its own job.
             if [ -f public_site/nba.html ]; then

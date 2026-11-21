@@ -278,7 +278,7 @@ def superpack_index_row(state=None):
     import superpack as SPK
     state = state if state is not None else SPK.load()
     r = SPK.record(state["entries"])
-    return (f'<tr data-lane="{SPK.LANE}"><td><b>{esc(SPK.LABEL)}</b></td><td><a href="./leaderboard.html#superpack">Leaderboard</a></td>'
+    return (f'<tr data-lane="{SPK.LANE}"><td><b>{esc(SPK.LABEL)}</b></td><td><a href="./archive/leaderboard.html#superpack">Leaderboard</a></td>'
             f'<td class="num">{r["entries"]}</td><td class="num">{r["settled"]}</td><td class="num">{r["won"]}</td>'
             f'<td class="num">{pct(r["roi"], True) if r["settled"] else "—"}</td><td class="num">—</td><td>{esc(SPK.status(r["settled"]))}</td></tr>')
 
@@ -342,16 +342,53 @@ def build(bets=None, contracts=None, skipped=None, unmapped=None, now=None, bet_
           'gold, Bitcoin); Trump for mentions; the index for finance markets; the title for Rotten Tomatoes. '
           f'Not counted: {left}.</p></section>'
         + f'<section id="detail">{spike_fold(b, skipped, unmapped)}</section>')
-    html = C.document(TITLE, DESCRIPTION, KEY, SECTIONS, C.stamp(now), body,
-                      script_src="./site.js", scripts=("./tables.js",))
+    # Archived 2026-11-21 (Olu: "convert the leadership page to combo"): the page lives under Archives, its data and ledgers are untouched.
+    html = C.document(TITLE, DESCRIPTION, "sandbox", SECTIONS, C.stamp(now), body,
+                      script_src="./site.js", scripts=("./tables.js",), prefix="../", crumb=[("Archives", "../archive/index.html"), ("Leaderboard", None)])
     import sandbox_build
     return sandbox_build.label_cells(html)
 
 
+def redirect_page():
+    """leaderboard.html after the move: forwards to the archived page. Same CSP as every page; no script."""
+    target = "./archive/leaderboard.html"
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{esc(C.title_for("Leaderboard"))} · archived</title>
+<meta http-equiv="refresh" content="0; url={esc(target)}">
+<link rel="canonical" href="{esc(C.SITE_URL + 'archive/leaderboard.html')}">
+<meta name="robots" content="noindex">
+{C.CSP}
+{C.REFERRER}
+{C.COLOR_SCHEME}
+<link rel="stylesheet" href="./site.css">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<main id="content" class="wrap">
+<h1>Leaderboard archived</h1>
+<p class="lede">The Leaderboard moved to <a href="{esc(target)}">Archives</a>, and the Combo page took its place in the menu. This page (leaderboard.html) forwards there.</p>
+</main>
+</body>
+</html>
+"""
+
+
+def write_pages(now=None):
+    """The archived page, and the old URL as a forwarding stub."""
+    root = os.path.join(L.ROOT, "public_site")
+    os.makedirs(os.path.join(root, "archive"), exist_ok=True)
+    with open(os.path.join(root, "archive", "leaderboard.html"), "w") as f:
+        f.write(build(now=now))
+    with open(os.path.join(root, "leaderboard.html"), "w") as f:
+        f.write(redirect_page())
+
+
 def main():
-    out = os.path.join(L.ROOT, "public_site", "leaderboard.html")
-    with open(out, "w") as f:
-        f.write(build())
+    write_pages()
     return 0
 
 
