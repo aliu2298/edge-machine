@@ -455,10 +455,20 @@
    "lead_min": 14.5,
    "price": 0.77
   },
+  "ftts_no_70_80:KXLIGUE1FTTS-26NOV21ASMAUX-AUX": {
+   "at": "2026-11-21T18:49:04+00:00",
+   "lead_min": 55.9,
+   "price": 0.76
+  },
   "ftts_no_70_80:KXLIGUE1FTTS-26NOV21NICPSG-NIC": {
    "at": "2026-11-21T16:03:40+00:00",
    "lead_min": 11.3,
    "price": 0.71
+  },
+  "ftts_no_70_80:KXSERIEAFTTS-26NOV21NAPTOR-TOR": {
+   "at": "2026-11-21T18:49:04+00:00",
+   "lead_min": 55.9,
+   "price": 0.74
   },
   "liga_btts_even:KXLALIGABTTS-26NOV21RVCVCF-BTTS": {
    "at": "2026-11-21T15:03:31+00:00",
@@ -600,6 +610,16 @@
    "lead_min": 11.5,
    "price": 0.47
   },
+  "team2_ranked:KXLIGUE1TEAMTOTAL-26NOV21LILOL-LIL2": {
+   "at": "2026-11-21T18:49:04+00:00",
+   "lead_min": 55.9,
+   "price": 0.38
+  },
+  "team2_ranked:KXSERIEATEAMTOTAL-26NOV21NAPTOR-NAP2": {
+   "at": "2026-11-21T18:49:04+00:00",
+   "lead_min": 55.9,
+   "price": 0.61
+  },
   "team2_ranked_fade:KXUEFANLTEAMTOTAL-26NOV12MNELAT-MNE2": {
    "at": "2026-11-12T19:34:58+00:00",
    "lead_min": 10.0,
@@ -736,5 +756,5 @@
    "price": 0.8
   }
  },
- "updated": "2026-11-21T17:33:52+00:00"
+ "updated": "2026-11-21T18:49:04+00:00"
 }
