@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-21T18:16:51.097749+00:00",
+ "last_run": "2026-11-21T18:31:43.744608+00:00",
  "rules": {
   "NO": {
    "picks": [
@@ -237,6 +237,23 @@
      "status": "open",
      "ticker": "KXBRASILEIROBTTS-26NOV21PALFLA-BTTS",
      "why": "Brazil BTTS NO 0.43"
+    },
+    {
+     "ask": 0.57,
+     "bid": 0.56,
+     "event": "KXARGPREMDIVBTTS-26NOV21ARGCAI",
+     "id": "NO:KXARGPREMDIVBTTS-26NOV21ARGCAI",
+     "league": "Liga Profesional",
+     "league_key": "ARG",
+     "logged": "2026-11-21T18:31:43.744608+00:00",
+     "match": "Argentinos Juniors v Independiente",
+     "price": 0.57,
+     "rule": "NO",
+     "side": "no",
+     "start": "2026-11-21T20:00Z",
+     "status": "open",
+     "ticker": "KXARGPREMDIVBTTS-26NOV21ARGCAI-BTTS",
+     "why": "Argentina BTTS NO 0.57"
     }
    ]
   },
@@ -475,18 +492,28 @@
      "status": "open",
      "ticker": "KXBRASILEIROBTTS-26NOV21PALFLA-BTTS",
      "why": "Brazil BTTS YES 0.58"
+    },
+    {
+     "ask": 0.44,
+     "bid": 0.43,
+     "event": "KXARGPREMDIVBTTS-26NOV21ARGCAI",
+     "id": "YES:KXARGPREMDIVBTTS-26NOV21ARGCAI",
+     "league": "Liga Profesional",
+     "league_key": "ARG",
+     "logged": "2026-11-21T18:31:43.744608+00:00",
+     "match": "Argentinos Juniors v Independiente",
+     "price": 0.44,
+     "rule": "YES",
+     "side": "yes",
+     "start": "2026-11-21T20:00Z",
+     "status": "open",
+     "ticker": "KXARGPREMDIVBTTS-26NOV21ARGCAI-BTTS",
+     "why": "Argentina BTTS YES 0.44"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-18T22:31:53.648735+00:00",
-   "due": 3,
-   "matched": 3,
-   "new": 0,
-   "quoted": 3
-  },
   {
    "at": "2026-11-18T23:01:56.090289+00:00",
    "due": 4,
@@ -836,6 +863,13 @@
    "matched": 1,
    "new": 0,
    "quoted": 1
+  },
+  {
+   "at": "2026-11-21T18:31:43.744608+00:00",
+   "due": 2,
+   "matched": 2,
+   "new": 2,
+   "quoted": 2
   }
  ],
  "schedule": [
