@@ -8,7 +8,8 @@ Olu's question was not "is there an edge in combos". It was: take the lanes that
 
 | Combo | Days | Lands | Pays | Return a combo | Note |
 |---|---|---|---|---|---|
-| Crypto NO with S&P NO | 19 | 89% | 1.38x | +23% | Later half +5%. The one pair with a real count. |
+| Crypto NO with S&P NO, each leg at its own entry time | 19 | 89% | 1.38x | +23% | Not buyable as scored: the legs were priced an hour or more apart. |
+| The same pair, both legs at one moment | 8 or 9 | 78% to 100% | 1.30x to 1.36x | +5% to +30% | See "Timing". Too few days to call. |
 | Best 2 legs of the day | 29 | 83% | 1.44x | +20% | Both halves above zero. |
 | Best 3 legs of the day | 20 | 70% | 2.03x | +45% | Later half is 7 days. |
 | Best 4 legs of the day | 17 | 59% | 2.49x | +48% | Lost 4 in a row once. |
@@ -19,7 +20,7 @@ Olu's question was not "is there an edge in combos". It was: take the lanes that
 **Answer.**
 - **It works by arithmetic, and Kalshi charges little for it.** A high-priced combo sells at about the product of the leg asks, plus a fee of 1% to 3%.
 - **So a combo is exactly as safe as its legs.** Two legs that each beat their price make a combo that lands often and pays more. One leg that does not beat its price drags the whole combo under.
-- **One pair is worth a paper row: crypto NO with S&P NO.** Keep it to two legs.
+- **One pair is worth a paper row: crypto NO with S&P NO.** Keep it to two legs. Its 19-day figure overstates it, because the two legs were priced at different times (see "Timing"). The paper row must pick both legs at the same minute.
 - **Three and four legs are where it breaks.** When lanes are chosen before their later results are known, win rates slip and every extra leg multiplies the slip.
 
 ![picture](combos/COMBO_HIT.png)
@@ -105,7 +106,7 @@ What the 2-leg combos were made of:
 | Argentina over 1.5 with crypto NO | 2 | 1 | -12.0% |
 | S&P NO with under 3.5 internationals | 2 | 1 | -38.7% |
 
-**The one pair with a real count: crypto NO with S&P NO, every day both had a pick.**
+**The one pair with a real count: crypto NO with S&P NO, every day both had a pick.** Each leg here is at its own entry time, an hour or more apart; the "Timing" section re-scores it at one moment.
 
 | | Days | Lands | Pays | Return a combo | Break-even markup |
 |---|---|---|---|---|---|
@@ -169,16 +170,54 @@ How often each leg must win for the combo to break even, at the measured price:
 - **With hindsight the numbers flatter.** The fair test is the row to believe for anything beyond the two lanes that have held.
 - **A combo is still a bigger bet.** The first study stands: for the same swings it earns what the singles earn. What this adds is that for high-priced legs Kalshi's price does not take much of it away.
 
+## Timing (added Nov 21)
+
+Olu asked: "What about the timing". A combo is bought at one moment, and the two lanes pick at different times.
+
+**1. How the 19 days were priced.** Each leg at its own entry time, not the same minute. S&P NO was logged at 12:30 ET (13:00 on two days). Crypto NO was logged between 13:33 and 14:34 ET. The gap was 63 to 122 minutes.
+
+**2. Re-scored at one entry minute** (rules written before the prices were read; the same two contracts; S&P NO must be 90c to 98c and crypto NO 70c to 80c at that minute):
+
+| Entry rule | Days with a combo | Landed | Pays | Return a combo |
+|---|---|---|---|---|
+| As first scored: each leg at its own time | 19 of 19 | 17 (89%) | 1.38x | +23.1% |
+| Both legs at 14:00 ET, both in band | 3 of 19 | 3 | 1.29x | +28.9% |
+| First minute both in band, 13:45 to 14:15 ET | 9 of 19 | 7 (78%) | 1.36x | +4.9% |
+| At the crypto leg's entry minute, S&P re-priced and in band | 8 of 19 | 8 (100%) | 1.30x | +30.4% |
+| Both legs at 14:00 ET, any price (not a rule) | 13 of 19 | 11 (85%) | 1.39x | +15.5% |
+
+- **Most days do not survive.** By the time the crypto leg is picked, the S&P contract picked at 12:30 has usually left its band.
+- **At 14:00 ET:** 10 days had a leg out of band and 6 had no S&P quote in the 5 minutes before.
+- **At the crypto leg's entry minute:** on 7 of the 11 lost days the S&P contract had already risen to 99c or 100c, so there was nothing left to win. On 2 it had fallen to 74c and 80c. On 2 there was no quote.
+- **The 13:45 to 14:15 window's later half is -9.1% on 6 days.** The crypto-entry rule is +29.2% and +31.6% on 4 days each. Nine days cannot settle it.
+
+**3. Does waiting change the price?** Yes, a lot. On the 13 days with both quotes at 14:00 ET:
+
+| Leg | Middle change from its own entry to 14:00 ET | Range | Up, down, flat |
+|---|---|---|---|
+| Crypto NO | +2c | -14c to +13c | 8, 5, 0 |
+| S&P NO | +3c | -19c to +10c | 8, 3, 2 |
+| The pair's cost | +4.8% | | |
+
+- **Prices move more in that hour than the whole edge.** A leg that was 75c is 63c or 88c an hour later.
+- **So the +23% on 19 days is not a price anyone could have bought.** The honest same-minute record is 8 or 9 days, somewhere between +5% and +30%.
+
+**Limit.** This test keeps the contracts the lanes picked. A real same-minute rule would look at the whole S&P ladder and take whichever rung is in band at that minute, so it would find more days than 8 or 9. Testing that on past days needs the S&P ladder's minute prices for each day (a further pull, not done). A forward paper row tests it for free.
+
 ## Build spec (for the build session, if Olu wants it)
 
-- **Rule:** one paper combo a day, two legs: the day's crypto NO pick (highest-priced coin) with the S&P NO pick. No combo on a day without both.
-- **Scope:** those two lanes only. No third leg. No commodity, economics or 95c-and-up legs.
-- **Entry timing:** when the later of the two picks is logged (both are taken about 3.5 hours before their close), both legs priced at their asks in that same minute.
-- **Paper price:** 0.994 x 1.03 x the product of the two asks, plus the fee 0.07 x price x (1 - price). If a real quote is ever logged by hand, record it beside the paper price.
-- **The one change from today:** none to the lanes. This is an extra row beside them.
-- **Retire or keep:** read at 30 settled combos. Keep only if the return is above zero and the break-even markup is above the paper price on those 30. Retire at once if the two legs' own singles go under zero.
-- **Page:** each day's pair, its paper price and payout, landed or not; the same two legs as singles; lines for lands, payout, return a combo, longest losing run. Percentages only.
-- **Pre-registration text:** "Crypto NO with S&P NO, one two-leg paper combo a day when both lanes pick. Priced at 0.994 x 1.03 x the product of the leg asks in the same minute, plus the taker fee. Found on 19 days to Nov 19 2026 (17 landed, +23.1%, later half +5.1%); that record is the one the idea came from, so the row starts at zero. Read at 30 settled combos against the same legs as singles."
+Changed on Nov 21 after the timing check: both legs are picked fresh at one minute.
+
+- **Rule:** one paper combo a trading day, two legs, both chosen at the same minute: the minute the crypto NO lane logs its pick (about 13:35 ET, 3.5 hours before the crypto close).
+- **Crypto leg:** that pick (the highest-priced coin if there are several).
+- **S&P leg:** run the S&P NO lane's own rule AT THAT MINUTE, not at 12:30: the cheapest 16:00 ET rung with a NO ask of 90c to 98c, a spread of 3c or less and 25 or more contracts. At 13:35 ET the S&P close is about 2 hours 25 minutes away, inside that lane's own 2 to 3.5 hour window.
+- **No combo** on a day when either rule has no pick at that minute. Weekdays only (S&P does not trade at weekends).
+- **Scope:** those two lanes only. No third leg. No commodity, economics or 95c-and-up extra legs.
+- **Paper price:** 0.994 x 1.03 x the product of the two NO asks at that minute, plus the fee 0.07 x price x (1 - price). If a real quote is ever logged by hand, record it beside the paper price.
+- **The one change from today:** none to either lane. This is an extra row beside them. The S&P leg in the combo can be a different rung from the lane's own 12:30 pick.
+- **Retire or keep:** read at 30 settled combos. Keep only if the return is above zero and the break-even markup is above the paper price on those 30. Retire at once if either lane's own singles go under zero.
+- **Page:** each day's pair with the minute it was priced, both asks, the paper price and payout, landed or not; the same two legs as singles; lines for lands, payout, return a combo, longest losing run, and days with no combo. Percentages only.
+- **Pre-registration text:** "Crypto NO with S&P NO, one two-leg paper combo a trading day. Both legs are chosen at the minute the crypto NO lane logs its pick: the crypto pick, and the cheapest S&P 16:00 ET rung with a NO ask of 90c to 98c, a spread of 3c or less and 25 or more contracts at that minute. Priced at 0.994 x 1.03 x the product of the two NO asks, plus the taker fee. The idea came from 19 days to Nov 19 2026 on which the two legs were priced at different times (17 landed, +23.1%); at one moment only 8 or 9 of those days could be formed (+5% to +30%). None of that counts: the row starts at zero. Read at 30 settled combos against the same legs as singles."
 
 ## The plan as written before the read
 
@@ -195,5 +234,6 @@ Changes from the plan:
 - Crypto with S&P is shown at the measured link (1.03) instead of unlinked, because the tape had such combos after all. The unlinked figures are given beside it.
 - "Current" is judged by the date a lane's last bet settled. That lets in the mentions lane, which has taken no new picks since Oct 30.
 - Price requests used for step 2a: 432 more, 1,187 in all against the 2,000 approved. No new list requests.
+- The timing check (Nov 21) was planned separately before its prices were read (PREREGISTERED_timing.md) and used 19 more price requests.
 
-Files: `~/edge-research/combo_hit_2026-11-20/` (PREREGISTERED.md, scan.py, hit.py, pics.py, results.md) and `~/edge-research/combo_2026-11-20/` (tape_pull2.py, tape_score2.py, tape_results2.md).
+Files: `~/edge-research/combo_hit_2026-11-20/` (PREREGISTERED.md, PREREGISTERED_timing.md, scan.py, hit.py, timing_pull.py, timing_score.py, pics.py, results.md, timing_results.md) and `~/edge-research/combo_2026-11-20/` (tape_pull2.py, tape_score2.py, tape_results2.md).
