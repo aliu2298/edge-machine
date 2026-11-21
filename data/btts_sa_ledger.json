@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-21T00:01:55.505401+00:00",
+ "last_run": "2026-11-21T01:01:30.638150+00:00",
  "rules": {
   "NO": {
    "picks": [
@@ -193,11 +193,14 @@
      "league_key": "ARG",
      "logged": "2026-11-20T21:31:31.455097+00:00",
      "match": "V\u00e9lez Sarsfield v Belgrano (C\u00f3rdoba)",
+     "payout": 0.0,
      "price": 0.5,
+     "profit": -100.0,
      "rule": "NO",
+     "settled": "2026-11-21T01:01:30.638150+00:00",
      "side": "no",
      "start": "2026-11-20T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXARGPREMDIVBTTS-26NOV20VELCAB-BTTS",
      "why": "Argentina BTTS NO 0.50"
     }
@@ -394,11 +397,14 @@
      "league_key": "ARG",
      "logged": "2026-11-20T21:31:31.455097+00:00",
      "match": "V\u00e9lez Sarsfield v Belgrano (C\u00f3rdoba)",
+     "payout": 1.0,
      "price": 0.51,
+     "profit": 89.58,
      "rule": "YES",
+     "settled": "2026-11-21T01:01:30.638150+00:00",
      "side": "yes",
      "start": "2026-11-20T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXARGPREMDIVBTTS-26NOV20VELCAB-BTTS",
      "why": "Argentina BTTS YES 0.51"
     }
@@ -695,6 +701,13 @@
   },
   {
    "at": "2026-11-21T00:01:55.505401+00:00",
+   "due": 0,
+   "matched": 0,
+   "new": 0,
+   "quoted": 0
+  },
+  {
+   "at": "2026-11-21T01:01:30.638150+00:00",
    "due": 0,
    "matched": 0,
    "new": 0,
