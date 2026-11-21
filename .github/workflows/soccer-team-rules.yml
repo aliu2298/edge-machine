@@ -47,8 +47,7 @@ jobs:
         # while there is time to act on it (production.FIRST_PUBLISH_MIN).
         run: python3 soccer_team_rules_production.py
       - name: Shadows on T1 (shadows.py team; paper; reads the ledger above)
-        continue-on-error: true       # a shadow can never hold up T1 or its Production feed
-        run: python3 shadows.py team
+        run: python3 shadows.py team || echo "shadows failed; T1 and its Production feed are not held up"
       - name: Save records
         # The Feeds heartbeat restamps data/soccer_team_rules_production_leads.json too, so it can push between
         # this run's checkout and its push. save_records.py rebases the ledger (only this workflow writes it)
