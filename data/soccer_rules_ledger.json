@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-21T19:31:26.301670+00:00",
+ "last_run": "2026-11-21T20:01:24.439275+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -2726,11 +2726,14 @@
      "line": 2.5,
      "logged": "2026-11-21T16:01:54.043483+00:00",
      "match": "Sevilla v Real Betis",
+     "payout": 0.0,
      "price": 0.52,
+     "profit": -100.0,
      "rule": "C2",
+     "settled": "2026-11-21T20:01:24.439275+00:00",
      "side": "yes",
      "start": "2026-11-21T17:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXLALIGATOTAL-26NOV21SEVRBB-3",
      "title": "Will over 2.5 goals be scored?",
      "why": "Sevilla O-D- v Real Betis O+D- \u00b7 Over 2.5 YES 0.52"
@@ -5480,14 +5483,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-19T02:01:45.053645+00:00",
-   "candidates": 0,
-   "due": 0,
-   "labelled": 0,
-   "matched": 0,
-   "new": 0
-  },
-  {
    "at": "2026-11-19T03:01:40.787308+00:00",
    "candidates": 0,
    "due": 0,
@@ -5884,6 +5879,14 @@
    "candidates": 0,
    "due": 5,
    "labelled": 5,
+   "matched": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-21T20:01:24.439275+00:00",
+   "candidates": 0,
+   "due": 1,
+   "labelled": 1,
    "matched": 0,
    "new": 0
   }
