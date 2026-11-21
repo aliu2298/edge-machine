@@ -38,7 +38,7 @@ jobs:
       - name: Tests
         env:
           EDGE_SETTLE_ONLY: ""     # the tests exercise entries: never in settle-only mode
-        run: python3 test_soccer_team_rules.py && python3 test_soccer_t1_siblings.py && python3 test_soccer_team_rules_production.py && python3 test_save_records.py
+        run: python3 test_soccer_team_rules.py && python3 test_soccer_t1_siblings.py && python3 test_soccer_team_rules_production.py && python3 test_shadows.py && python3 test_save_records.py
       - name: Enter due matches and settle
         # Fetches the ESPN fixtures (data/streaks_raw.json, not committed) for the labels.
         run: python3 soccer_team_rules.py
@@ -46,6 +46,8 @@ jobs:
         # Right after the read above, so an entry 90-20 minutes before kickoff is published
         # while there is time to act on it (production.FIRST_PUBLISH_MIN).
         run: python3 soccer_team_rules_production.py
+      - name: Shadows on T1 (shadows.py team; paper; reads the ledger above)
+        run: python3 shadows.py team || echo "shadows failed; T1 and its Production feed are not held up"
       - name: Save records
         # The Feeds heartbeat restamps data/soccer_team_rules_production_leads.json too, so it can push between
         # this run's checkout and its push. save_records.py rebases the ledger (only this workflow writes it)
@@ -55,5 +57,5 @@ jobs:
           git config user.name "aliu2298"
           git config user.email "77032228+aliu2298@users.noreply.github.com"
           python3 save_records.py --message "Soccer team scoring rules paper observations" \
-            --add data/soccer_team_rules_ledger.json \
+            --add data/soccer_team_rules_ledger.json data/shadows_team_ledger.json \
             --derived data/soccer_team_rules_production_leads.json "python3 soccer_team_rules_production.py"
