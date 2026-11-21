@@ -410,13 +410,26 @@ def grade(state, now, fetch):
             errors.append(f"grade {event}: {str(exc)[:60]}")
             continue
         res = {m["ticker"]: m.get("result") for m in ms}
+        status = {m["ticker"]: m.get("status") for m in ms}
         for r in rows:
             if res.get(r["ticker"]) in ("yes", "no"):
                 won = res[r["ticker"]] == "no"
                 r["status"], r["won"] = "settled", won
                 r["roi"] = round((1.0 / r["cost"] - 1.0) if won else -1.0, 4)
                 r["settled_logged"] = now.astimezone(UTC).isoformat()
+                r.pop("venue_status", None)
+            else:
+                # Still open: say what the VENUE shows, so "the settler skipped it" and "Kalshi has not finalized it" read differently.
+                # (2026-11-20: three San Diego rows sat 3 days at status closed, result blank; the settler was fine.)
+                r["venue_status"] = status.get(r["ticker"]) or "missing"
     return errors
+
+
+def awaiting_venue(state, now, days=2):
+    """Open rows whose day ended more than `days` ago and whose venue market still has no result: [(ticker, venue_status)].
+    These are waiting on Kalshi, not on the settler. They stay open and out of the record; nothing is guessed."""
+    cut = (now.astimezone(UTC).date() - dt.timedelta(days=days)).isoformat()
+    return [(r["ticker"], r.get("venue_status") or "unknown") for r in state["rows"] if r["status"] == "open" and r["day"] <= cut]
 
 
 # ------------------------------------------------------------------ the record
@@ -476,6 +489,9 @@ def main(argv=None):
     for lane in LANES:
         r = lane_record(state, lane)
         print(f"{lane}: {r['main']['n']} settled, {r['main']['open']} open, control {r['control']['n']}; {r['read']}")
+    waiting = awaiting_venue(state, dt.datetime.now(UTC))
+    if waiting:
+        print(f"awaiting the venue (day over 2+ days ago, no result at Kalshi): {', '.join(f'{t} [{v}]' for t, v in waiting)}")
     print(f"error: {state['error']}")
     return 0
 

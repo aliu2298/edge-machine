@@ -1666,12 +1666,23 @@
   "KXBOXING-26NOV14WELLANDILLIN": "2026-11-14T21:00:39.118452+00:00",
   "KXBOXING-26NOV14ZOKIROCOLANT": "2026-11-15T01:00:39.997834+00:00",
   "KXBOXING-26NOV18TEREMOAHIO": "2026-11-18T10:00:44.735185+00:00",
+  "KXBOXING-26NOV20ABDULLANGULO": "2026-11-21T00:00:49.926937+00:00",
+  "KXBOXING-26NOV20ALLENJEFFER": "2026-11-21T00:00:49.926937+00:00",
   "KXBOXING-26NOV20ANDERSBUCIUC": "2026-11-20T21:00:42.183298+00:00",
+  "KXBOXING-26NOV20BOSSIAJADE": "2026-11-21T00:00:49.926937+00:00",
+  "KXBOXING-26NOV20BUTTERCAMPBE": "2026-11-21T00:00:49.926937+00:00",
+  "KXBOXING-26NOV20EASTBUNEWSON": "2026-11-21T00:00:49.926937+00:00",
   "KXBOXING-26NOV20EDWARDMCGREG": "2026-11-20T21:00:42.183298+00:00",
   "KXBOXING-26NOV20GILHEAPALMET": "2026-11-20T21:00:42.183298+00:00",
   "KXBOXING-26NOV20IRIARTGALEAN": "2026-11-20T21:00:42.183298+00:00",
+  "KXBOXING-26NOV20JOHNSOCALABR": "2026-11-21T00:00:49.926937+00:00",
+  "KXBOXING-26NOV20PARKSBULLAR": "2026-11-21T00:00:49.926937+00:00",
   "KXBOXING-26NOV20PRICEKOTASK": "2026-11-20T21:19:03.349597+00:00",
+  "KXBOXING-26NOV20RAWFLY": "2026-11-21T00:00:49.926937+00:00",
   "KXBOXING-26NOV20SANCHEMORALE": "2026-11-20T23:00:36.563378+00:00",
+  "KXBOXING-26NOV20SWARTZDUREN": "2026-11-21T00:00:49.926937+00:00",
+  "KXBOXING-26NOV20WOODSWILLIA": "2026-11-21T00:00:49.926937+00:00",
+  "KXBOXING-26NOV20WORKMASTROYE": "2026-11-21T00:00:49.926937+00:00",
   "KXBOXING-26NOV20ZAMORAGARCIA": "2026-11-20T21:00:42.183298+00:00",
   "KXBOXING-26OCT23ULDEDACAPARE": "2026-10-27T04:45:21.662265+00:00",
   "KXBOXING-26OCT31CALVARMBILLI": "2026-10-31T20:06:27.383501+00:00",
@@ -1683,16 +1694,16 @@
   "KXBOXING-26OCT31TSUTSUROJAS": "2026-10-31T20:06:27.383501+00:00"
  },
  "lane": "boxing_cheap_dog",
- "last_success": "2026-11-20T23:00:36.563378+00:00",
+ "last_success": "2026-11-21T00:00:49.926937+00:00",
  "observations": {
-  "at": "2026-11-20T23:00:36.563378+00:00",
+  "at": "2026-11-21T00:00:49.926937+00:00",
   "entered": 0,
-  "events": 6,
+  "events": 15,
   "filled": 0,
   "no_start": 0,
-  "skipped": 2,
+  "skipped": 22,
   "unverified": 1,
-  "waiting": 20
+  "waiting": 9
  },
  "skips": {
   "KXBOXING-26NOV06AOKUSOKHAHRA-AOKUSO": {
@@ -2373,11 +2384,71 @@
    "start": "2026-11-18T10:00:00+00:00",
    "word": "Teremoana Teremoana"
   },
+  "KXBOXING-26NOV20ABDULLANGULO-ABDULL": {
+   "event": "KXBOXING-26NOV20ABDULLANGULO",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:05:00+00:00",
+   "word": "Ruslan Abdullaev"
+  },
+  "KXBOXING-26NOV20ABDULLANGULO-ANGULO": {
+   "event": "KXBOXING-26NOV20ABDULLANGULO",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:05:00+00:00",
+   "word": "Juan Meza Angulo"
+  },
+  "KXBOXING-26NOV20ALLENJEFFER-ALLEN": {
+   "event": "KXBOXING-26NOV20ALLENJEFFER",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:30:00+00:00",
+   "word": "Adam Allen"
+  },
+  "KXBOXING-26NOV20ALLENJEFFER-JEFFER": {
+   "event": "KXBOXING-26NOV20ALLENJEFFER",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:30:00+00:00",
+   "word": "Rell Jefferson"
+  },
   "KXBOXING-26NOV20ANDERSBUCIUC-ANDERS": {
    "event": "KXBOXING-26NOV20ANDERSBUCIUC",
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
    "start": "2026-11-20T21:00:00+00:00",
    "word": "Amir Anderson"
+  },
+  "KXBOXING-26NOV20BOSSIAJADE-BOSSIA": {
+   "event": "KXBOXING-26NOV20BOSSIAJADE",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:30:00+00:00",
+   "word": "BossiA"
+  },
+  "KXBOXING-26NOV20BOSSIAJADE-JADE": {
+   "event": "KXBOXING-26NOV20BOSSIAJADE",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:30:00+00:00",
+   "word": "Marissa Jade"
+  },
+  "KXBOXING-26NOV20BUTTERCAMPBE-BUTTER": {
+   "event": "KXBOXING-26NOV20BUTTERCAMPBE",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:30:00+00:00",
+   "word": "Junior Butterbean"
+  },
+  "KXBOXING-26NOV20BUTTERCAMPBE-CAMPBE": {
+   "event": "KXBOXING-26NOV20BUTTERCAMPBE",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:30:00+00:00",
+   "word": "Jamie Campbell"
+  },
+  "KXBOXING-26NOV20EASTBUNEWSON-EASTBU": {
+   "event": "KXBOXING-26NOV20EASTBUNEWSON",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:30:00+00:00",
+   "word": "Jordan Eastburn"
+  },
+  "KXBOXING-26NOV20EASTBUNEWSON-NEWSON": {
+   "event": "KXBOXING-26NOV20EASTBUNEWSON",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:30:00+00:00",
+   "word": "Traquan Newson"
   },
   "KXBOXING-26NOV20EDWARDMCGREG-EDWARD": {
    "event": "KXBOXING-26NOV20EDWARDMCGREG",
@@ -2403,11 +2474,47 @@
    "start": "2026-11-20T21:00:00+00:00",
    "word": "Joel Iriarte"
   },
+  "KXBOXING-26NOV20JOHNSOCALABR-CALABR": {
+   "event": "KXBOXING-26NOV20JOHNSOCALABR",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:30:00+00:00",
+   "word": "Dave Calabro"
+  },
+  "KXBOXING-26NOV20JOHNSOCALABR-JOHNSO": {
+   "event": "KXBOXING-26NOV20JOHNSOCALABR",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:30:00+00:00",
+   "word": "Von Johnson"
+  },
+  "KXBOXING-26NOV20PARKSBULLAR-BULLAR": {
+   "event": "KXBOXING-26NOV20PARKSBULLAR",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:30:00+00:00",
+   "word": "Shaka Bullard"
+  },
+  "KXBOXING-26NOV20PARKSBULLAR-PARKS": {
+   "event": "KXBOXING-26NOV20PARKSBULLAR",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:30:00+00:00",
+   "word": "Shareef Parks"
+  },
   "KXBOXING-26NOV20PRICEKOTASK-PRICE": {
    "event": "KXBOXING-26NOV20PRICEKOTASK",
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
    "start": "2026-11-20T22:00:00+00:00",
    "word": "Lauren Price"
+  },
+  "KXBOXING-26NOV20RAWFLY-FLY": {
+   "event": "KXBOXING-26NOV20RAWFLY",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:30:00+00:00",
+   "word": "Tsunami Fly"
+  },
+  "KXBOXING-26NOV20RAWFLY-RAW": {
+   "event": "KXBOXING-26NOV20RAWFLY",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:30:00+00:00",
+   "word": "Hengo Raw"
   },
   "KXBOXING-26NOV20SANCHEMORALE-MORALE": {
    "event": "KXBOXING-26NOV20SANCHEMORALE",
@@ -2420,6 +2527,42 @@
    "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
    "start": "2026-11-20T23:00:00+00:00",
    "word": "Leonardo Sanchez"
+  },
+  "KXBOXING-26NOV20SWARTZDUREN-DUREN": {
+   "event": "KXBOXING-26NOV20SWARTZDUREN",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:30:00+00:00",
+   "word": "Craig Duren"
+  },
+  "KXBOXING-26NOV20SWARTZDUREN-SWARTZ": {
+   "event": "KXBOXING-26NOV20SWARTZDUREN",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:30:00+00:00",
+   "word": "Deejay Swartz"
+  },
+  "KXBOXING-26NOV20WOODSWILLIA-WILLIA": {
+   "event": "KXBOXING-26NOV20WOODSWILLIA",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:30:00+00:00",
+   "word": "Takwon Williamston"
+  },
+  "KXBOXING-26NOV20WOODSWILLIA-WOODS": {
+   "event": "KXBOXING-26NOV20WOODSWILLIA",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:30:00+00:00",
+   "word": "Tyrone Woods"
+  },
+  "KXBOXING-26NOV20WORKMASTROYE-STROYE": {
+   "event": "KXBOXING-26NOV20WORKMASTROYE",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:30:00+00:00",
+   "word": "Justin Stroyek"
+  },
+  "KXBOXING-26NOV20WORKMASTROYE-WORKMA": {
+   "event": "KXBOXING-26NOV20WORKMASTROYE",
+   "reason": "no quote with a 5c spread and a YES ask of 0.03-0.15 in the hour-before window",
+   "start": "2026-11-21T00:30:00+00:00",
+   "word": "Zion Workman"
   },
   "KXBOXING-26NOV20ZAMORAGARCIA-ZAMORA": {
    "event": "KXBOXING-26NOV20ZAMORAGARCIA",
