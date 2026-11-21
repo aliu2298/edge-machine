@@ -4,6 +4,10 @@
    "at": "2026-11-20T21:37:27.429116+00:00",
    "pool": "opposite"
   },
+  "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXARGPREMDIVBTTS-26NOV21ARGCAI\", \"no\"]]": {
+   "at": "2026-11-21T18:39:50.981457+00:00",
+   "pool": "opposite"
+  },
   "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXARGPREMDIVBTTS-26NOV21DYJBAR\", \"no\"]]": {
    "at": "2026-11-21T16:40:02.584787+00:00",
    "pool": "opposite"
@@ -50,6 +54,10 @@
   },
   "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXARGPREMDIVBTTS-26NOV20VELCAB\", \"yes\"]]": {
    "at": "2026-11-20T21:37:27.429116+00:00",
+   "pool": "opposite"
+  },
+  "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXARGPREMDIVBTTS-26NOV21ARGCAI\", \"yes\"]]": {
+   "at": "2026-11-21T18:39:50.981457+00:00",
    "pool": "opposite"
   },
   "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXARGPREMDIVBTTS-26NOV21DYJBAR\", \"yes\"]]": {
@@ -5231,7 +5239,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-21T18:33:41.709726+00:00",
+ "last_run": "2026-11-21T18:39:50.981457+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -15618,14 +15626,14 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"B6\", [\"B6:KXLIGUE1TOTAL-26NOV21NICPSG\", \"yes\"]]",
    "price": 0.72,
-   "profit": null,
+   "profit": 0.3622,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-21T18:31:42.833450+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXLIGUE1TEAMTOTAL-26NOV21NICPSG-PSG2",
@@ -15641,14 +15649,14 @@
    ],
    "pid": "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXLIGUE1TEAMTOTAL-26NOV21NICPSG:away\", \"yes\"]]",
    "price": 0.73,
-   "profit": null,
+   "profit": 0.3445,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-21T18:31:43.792165+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_team_rules_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXLIGUE1TEAMTOTAL-26NOV21NICPSG-NIC2",
@@ -15664,14 +15672,14 @@
    ],
    "pid": "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXLIGUE1TEAMTOTAL-26NOV21NICPSG:home\", \"yes\"]]",
    "price": 0.33,
-   "profit": null,
+   "profit": 1.8945,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-21T18:31:43.792165+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_team_rules_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXEPLFTTS-26NOV21NEWARS-NEW",
@@ -16778,6 +16786,24 @@
    "list": "pool",
    "logged": "2026-11-21T18:01:49.766569+00:00",
    "pid": "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV21PALFLA\", \"yes\"]]",
+   "side": "yes",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-21T18:39:50.981457+00:00",
+   "contract": "KXARGPREMDIVBTTS-26NOV21ARGCAI-BTTS",
+   "list": "pool",
+   "logged": "2026-11-21T18:31:43.744608+00:00",
+   "pid": "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXARGPREMDIVBTTS-26NOV21ARGCAI\", \"no\"]]",
+   "side": "no",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-21T18:39:50.981457+00:00",
+   "contract": "KXARGPREMDIVBTTS-26NOV21ARGCAI-BTTS",
+   "list": "pool",
+   "logged": "2026-11-21T18:31:43.744608+00:00",
+   "pid": "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXARGPREMDIVBTTS-26NOV21ARGCAI\", \"yes\"]]",
    "side": "yes",
    "why": "active lanes are on both sides of this contract"
   }
