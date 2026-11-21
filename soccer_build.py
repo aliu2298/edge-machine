@@ -215,6 +215,7 @@ def build(d=None, st=None, now=None, own_lanes=True):
     retired = sport_tab.retired_rows(d, st, FAMILY)
     # own_lanes=False: the tracker's rows alone (a test that hands in its own ledger reads that ledger only).
     own_live, own_gone, d, st = (soccer_lanes.rows_and_inputs(d, st, now) if own_lanes else ([], [], d, st))
+    own_live = sorted(own_live, key=lambda r: not r.get("top"))      # Flipped Unders (2026-11-21) sits first of the Sandbox rules
     rows = [_raised(_tradeable(r, d, st)) for r in rows + own_live]
     sp = SP.spec(
         family=FAMILY, key=KEY, title=TITLE, description=DESCRIPTION, scope=SCOPE,

@@ -451,7 +451,7 @@ def climate_windows(now):
 # lane -> (ledger files that hold its picks, entry lanes whose own run settles anyway). A settle read is asked only while a STARTED
 # pick is open in one of the ledgers and none of the entry windows is open (an entry run settles too).
 SETTLE_LANES = {
-    "soccer_rules_settle": (("soccer_rules_ledger.json", "contender_overs_ledger.json", "sa_o15_ledger.json", "btts_sa_ledger.json"), ("soccer_rules",)),
+    "soccer_rules_settle": (("soccer_rules_ledger.json", "contender_overs_ledger.json", "sa_o15_ledger.json", "btts_sa_ledger.json", "flipped_unders_ledger.json"), ("soccer_rules",)),
     "soccer_team_rules_settle": (("soccer_team_rules_ledger.json",), ("soccer_team_rules",)),
     "nba_rules_settle": (("nba_rules_ledger.json",), ("nba_rules",)),
     "nba_value_settle": (("nba_value_ledger.json",), ("nba_value",)),
