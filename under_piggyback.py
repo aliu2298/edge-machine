@@ -39,8 +39,8 @@ LANES = {
                         in_sample=dict(entries=33, won=6, lost=27, price="about 14c", ret="about +27%", note="held; 67% touched 2x in play", sold=22, shadow_ret="about +18%")),
     "quiet_first_half": dict(name="Quiet First Half", suffix="1HBTTS", side="no",
                              words="First-half BTTS NO at the NO ask",
-                             in_sample=dict(entries=41, won=40, lost=1, price="81c to 87c", ret="A5 +10%, A6 +22%, C8 +17%", note="A5 26-1, A6 10-0, C8 4-0",
-                                       u15=dict(entries=36, won=31, lost=5, price="68c", ret="+24% (EPL 10/10 +56%, Nations League 21/26 +13%)"))),
+                             in_sample=dict(entries=41, won=40, lost=1, price="81c to 87c", ret="+10% to +22%", note="A5 26-1 +10%, A6 10-0 +22%, C8 4-0 +17%; the first-half under 1.5 shadow 31-5 at 68c, +24% (EPL 10/10 +56%, Nations League 21/26 +13%)",
+                                       u15=dict(entries=36, won=31, lost=5, price="68c", ret="+24%"))),
 }
 
 
