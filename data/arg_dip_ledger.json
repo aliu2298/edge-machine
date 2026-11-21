@@ -587,6 +587,56 @@
    "result": "yes",
    "title": "Will over 0.5 goals be scored?",
    "version": "argdip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null,
+    "75": null
+   },
+   "event": "KXARGPREMDIVTOTAL-26NOV21ARGCAI",
+   "id": "KXARGPREMDIVTOTAL-26NOV21ARGCAI-1",
+   "kickoff": 1795291200,
+   "logged": "2026-11-21T22:27:29.959587+00:00",
+   "matchday": "2026-11-21",
+   "p": 0.87,
+   "p_at": 1795287660,
+   "p_bid": 0.86,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.86,
+    "printed": 358.33,
+    "status": "verified"
+   },
+   "prints": 17,
+   "result": "yes",
+   "title": "Will over 0.5 goals be scored?",
+   "version": "argdip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null,
+    "75": null
+   },
+   "event": "KXARGPREMDIVTOTAL-26NOV21DYJBAR",
+   "id": "KXARGPREMDIVTOTAL-26NOV21DYJBAR-1",
+   "kickoff": 1795284000,
+   "logged": "2026-11-21T22:27:29.959587+00:00",
+   "matchday": "2026-11-21",
+   "p": 0.91,
+   "p_at": 1795280460,
+   "p_bid": 0.89,
+   "p_check": {
+    "how": "print",
+    "last_trade": null,
+    "printed": 825.21,
+    "status": "verified"
+   },
+   "prints": 40,
+   "result": "yes",
+   "title": "Will over 0.5 goals be scored?",
+   "version": "argdip-v1"
   }
  ],
  "error": null,
@@ -6542,11 +6592,11 @@
   ]
  },
  "lane": "arg_goalless_dip",
- "last_run": "2026-11-21T16:58:20.131875+00:00",
+ "last_run": "2026-11-21T22:27:29.959587+00:00",
  "observations": {
-  "at": "2026-11-21T16:58:20.131875+00:00",
+  "at": "2026-11-21T22:27:29.959587+00:00",
   "errors": [],
-  "new": 0,
+  "new": 2,
   "skipped": 0,
   "waiting": 0
  },
@@ -6562,14 +6612,14 @@
  },
  "upcoming": [
   {
-   "event": "KXARGPREMDIVTOTAL-26NOV21DYJBAR",
-   "kickoff": 1795284000,
-   "title": "Defensa y Justicia vs Barracas: Regulation Time Total Goals"
+   "event": "KXARGPREMDIVTOTAL-26NOV22CARCGEM",
+   "kickoff": 1795374000,
+   "title": "Rosario vs Mendoza: Regulation Time Total Goals"
   },
   {
-   "event": "KXARGPREMDIVTOTAL-26NOV21ARGCAI",
-   "kickoff": 1795291200,
-   "title": "Argentinos Juniors vs Independiente Avellaneda: Regulation Time Total Goals"
+   "event": "KXARGPREMDIVTOTAL-26NOV22RIVLAN",
+   "kickoff": 1795384800,
+   "title": "River Plate vs Lanus: Regulation Time Total Goals"
   }
  ],
  "version": "argdip-v1"
