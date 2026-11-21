@@ -8,21 +8,21 @@
   },
   "commodities": {
    "cmd_market": {
-    "offered": 400,
-    "picked": 400
+    "offered": 385,
+    "picked": 385
    },
-   "kalshi_venue": 400
+   "kalshi_venue": 385
   },
   "commodities_fav": {
    "commod_fav_band": {
-    "offered": 300,
+    "offered": 210,
     "picked": 0
    },
    "commod_nc_yes": {
-    "offered": 300,
+    "offered": 210,
     "picked": 0
    },
-   "kalshi_venue": 300
+   "kalshi_venue": 210
   },
   "cricket": {
    "kalshi_venue": 12,
@@ -48,7 +48,7 @@
    "kalshi_venue": 34
   },
   "finance": {
-   "kalshi_venue": 32
+   "kalshi_venue": 31
   },
   "mma": {
    "kalshi_venue": 0,
@@ -73,17 +73,17 @@
     "offered": 9,
     "picked": 1
    },
-   "kalshi_venue": 267,
+   "kalshi_venue": 215,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
   },
   "soccer_btts": {
    "btts_market": {
-    "offered": 79,
-    "picked": 79
+    "offered": 78,
+    "picked": 78
    },
-   "kalshi_venue": 79,
+   "kalshi_venue": 78,
    "liga_btts_even": {
     "offered": 9,
     "picked": 2
@@ -105,22 +105,22 @@
   },
   "soccer_corners": {
    "corners_fav_no": {
-    "offered": 133,
-    "picked": 2
+    "offered": 126,
+    "picked": 1
    },
    "corners_market": {
-    "offered": 133,
-    "picked": 133
+    "offered": 126,
+    "picked": 126
    },
    "corners_total_under": {
-    "offered": 133,
+    "offered": 126,
     "picked": 2
    },
    "corners_ucl_fade": {
-    "offered": 133,
+    "offered": 126,
     "picked": 0
    },
-   "kalshi_venue": 133
+   "kalshi_venue": 126
   },
   "soccer_ftts": {
    "ftts_lineup_lag": {
@@ -161,10 +161,10 @@
     "picked": 0
    },
    "goals_market": {
-    "offered": 79,
-    "picked": 79
+    "offered": 78,
+    "picked": 78
    },
-   "kalshi_venue": 79,
+   "kalshi_venue": 78,
    "liga_u15_dog_24h": {
     "offered": 9,
     "picked": 1
@@ -190,10 +190,10 @@
   },
   "soccer_o25": {
    "goals_market": {
-    "offered": 79,
-    "picked": 79
+    "offered": 78,
+    "picked": 78
    },
-   "kalshi_venue": 79
+   "kalshi_venue": 78
   },
   "soccer_o25_cup": {
    "goals_market": {
@@ -211,10 +211,10 @@
   },
   "soccer_p05": {
    "goals_market": {
-    "offered": 170,
-    "picked": 170
+    "offered": 168,
+    "picked": 168
    },
-   "kalshi_venue": 170,
+   "kalshi_venue": 168,
    "mls_fade_home": {
     "offered": 14,
     "picked": 0
@@ -236,10 +236,10 @@
   },
   "soccer_team1": {
    "goals_market": {
-    "offered": 94,
-    "picked": 94
+    "offered": 92,
+    "picked": 92
    },
-   "kalshi_venue": 94
+   "kalshi_venue": 92
   },
   "soccer_team1_cup": {
    "goals_market": {
@@ -265,12 +265,12 @@
   },
   "soccer_team2": {
    "goals_market": {
-    "offered": 94,
-    "picked": 94
+    "offered": 92,
+    "picked": 92
    },
-   "kalshi_venue": 94,
+   "kalshi_venue": 92,
    "team2_ranked": {
-    "offered": 94,
+    "offered": 92,
     "picked": 1
    }
   },
@@ -308,10 +308,10 @@
   },
   "soccer_u35": {
    "goals_market": {
-    "offered": 79,
-    "picked": 79
+    "offered": 78,
+    "picked": 78
    },
-   "kalshi_venue": 79
+   "kalshi_venue": 78
   },
   "soccer_u35_cup": {
    "goals_market": {
@@ -338,8 +338,8 @@
   "tennis": {
    "kalshi_venue": 15,
    "polymarket_us": 40,
-   "polymarket_us_listed": 247,
-   "polymarket_us_priced": 87
+   "polymarket_us_listed": 248,
+   "polymarket_us_priced": 88
   },
   "tennis_combo": {
    "combo": 0,
@@ -354,43 +354,43 @@
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-21T12:18:43+00:00",
-   "commodities": "2026-11-21T12:18:43+00:00",
-   "commodities_fav": "2026-11-21T12:18:43+00:00",
-   "cricket": "2026-11-21T12:18:43+00:00",
-   "crypto": "2026-11-21T12:18:43+00:00",
-   "crypto_fav": "2026-11-21T12:18:43+00:00",
-   "economics": "2026-11-21T12:18:43+00:00",
-   "finance": "2026-11-21T12:18:43+00:00",
-   "mma": "2026-11-21T12:18:43+00:00",
-   "nfl": "2026-11-21T12:18:43+00:00",
-   "nhl_pl": "2026-11-21T12:18:43+00:00",
-   "nhl_rest": "2026-11-21T12:18:43+00:00",
-   "soccer": "2026-11-21T12:18:43+00:00",
-   "soccer_btts": "2026-11-21T12:18:43+00:00",
-   "soccer_btts_cup": "2026-11-21T12:18:43+00:00",
+   "boxing": "2026-11-21T12:33:33+00:00",
+   "commodities": "2026-11-21T12:33:33+00:00",
+   "commodities_fav": "2026-11-21T12:33:33+00:00",
+   "cricket": "2026-11-21T12:33:33+00:00",
+   "crypto": "2026-11-21T12:33:33+00:00",
+   "crypto_fav": "2026-11-21T12:33:33+00:00",
+   "economics": "2026-11-21T12:33:33+00:00",
+   "finance": "2026-11-21T12:33:33+00:00",
+   "mma": "2026-11-21T12:33:33+00:00",
+   "nfl": "2026-11-21T12:33:33+00:00",
+   "nhl_pl": "2026-11-21T12:33:33+00:00",
+   "nhl_rest": "2026-11-21T12:33:33+00:00",
+   "soccer": "2026-11-21T12:33:33+00:00",
+   "soccer_btts": "2026-11-21T12:33:33+00:00",
+   "soccer_btts_cup": "2026-11-21T12:33:33+00:00",
    "soccer_btts_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_corners": "2026-11-21T12:18:43+00:00",
-   "soccer_ftts": "2026-11-21T12:18:43+00:00",
-   "soccer_o15": "2026-11-21T12:18:43+00:00",
-   "soccer_o15_cup": "2026-11-21T12:18:43+00:00",
+   "soccer_corners": "2026-11-21T12:33:33+00:00",
+   "soccer_ftts": "2026-11-21T12:33:33+00:00",
+   "soccer_o15": "2026-11-21T12:33:33+00:00",
+   "soccer_o15_cup": "2026-11-21T12:33:33+00:00",
    "soccer_o15_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_o25": "2026-11-21T12:18:43+00:00",
-   "soccer_o25_cup": "2026-11-21T12:18:43+00:00",
+   "soccer_o25": "2026-11-21T12:33:33+00:00",
+   "soccer_o25_cup": "2026-11-21T12:33:33+00:00",
    "soccer_o25_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_p05": "2026-11-21T12:18:43+00:00",
-   "soccer_p05_cup": "2026-11-21T12:18:43+00:00",
+   "soccer_p05": "2026-11-21T12:33:33+00:00",
+   "soccer_p05_cup": "2026-11-21T12:33:33+00:00",
    "soccer_p05_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_team1": "2026-11-21T12:18:43+00:00",
+   "soccer_team1": "2026-11-21T12:33:33+00:00",
    "soccer_team1_cup": "2026-11-11T19:32:50+00:00",
    "soccer_team1_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_team2": "2026-11-21T12:18:43+00:00",
+   "soccer_team2": "2026-11-21T12:33:33+00:00",
    "soccer_team2_cup": "2026-11-11T19:32:50+00:00",
    "soccer_team2_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_u35": "2026-11-21T12:18:43+00:00",
-   "soccer_u35_cup": "2026-11-21T12:18:43+00:00",
+   "soccer_u35": "2026-11-21T12:33:33+00:00",
+   "soccer_u35_cup": "2026-11-21T12:33:33+00:00",
    "soccer_u35_intl": "2026-11-17T23:27:07+00:00",
-   "tennis": "2026-11-21T12:18:43+00:00",
+   "tennis": "2026-11-21T12:33:33+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -508,51 +508,51 @@
      "start": "2026-11-08T14:00:00+00:00"
     },
     "kalshi:26NOV21ALADEP": {
-     "at": "2026-11-21T12:18:42.615331+00:00",
+     "at": "2026-11-21T12:33:32.364127+00:00",
      "label": "Alav\u00e9s v Deportivo",
      "league": "La Liga",
      "reason": "no clear favourite: 0.44 de-vigged, under 0.55",
      "start": "2026-11-21T13:00:00+00:00"
     },
     "kalshi:26NOV21AVLSUN": {
-     "at": "2026-11-21T12:18:42.615331+00:00",
+     "at": "2026-11-21T12:33:32.364127+00:00",
      "label": "Aston Villa v Sunderland",
      "league": "Premier League",
      "reason": "no clear favourite: 0.54 de-vigged, under 0.55",
      "start": "2026-11-21T15:00:00+00:00"
     },
     "kalshi:26NOV21BOUNFO": {
-     "at": "2026-11-21T12:18:42.615331+00:00",
+     "at": "2026-11-21T12:33:32.364127+00:00",
      "label": "AFC Bournemouth v Nottingham Forest",
      "league": "Premier League",
      "reason": "no clear favourite: 0.50 de-vigged, under 0.55",
      "start": "2026-11-21T15:00:00+00:00"
     },
     "kalshi:26NOV21CFCLEE": {
-     "at": "2026-11-21T12:18:42.615331+00:00",
+     "at": "2026-11-21T12:33:32.364127+00:00",
      "label": "Chelsea v Leeds United",
      "league": "Premier League",
      "reason": "no clear favourite: 0.47 de-vigged, under 0.55",
      "start": "2026-11-21T15:00:00+00:00"
     },
     "kalshi:26NOV21COVCRY": {
-     "at": "2026-11-21T12:18:42.615331+00:00",
+     "at": "2026-11-21T12:33:32.364127+00:00",
      "label": "Coventry City v Crystal Palace",
      "league": "Premier League",
      "reason": "no clear favourite: 0.38 de-vigged, under 0.55",
      "start": "2026-11-21T15:00:00+00:00"
     },
     "kalshi:26NOV21RVCVCF": {
-     "at": "2026-11-21T12:18:42.615331+00:00",
+     "at": "2026-11-21T12:33:32.364127+00:00",
      "label": "Rayo Vallecano v Valencia",
      "league": "La Liga",
-     "reason": "no clear favourite: 0.50 de-vigged, under 0.55",
+     "reason": "no clear favourite: 0.49 de-vigged, under 0.55",
      "start": "2026-11-21T15:15:00+00:00"
     }
    }
   },
   "odds_api": {
-   "at": "2026-11-21T12:18:43+00:00",
+   "at": "2026-11-21T12:33:33+00:00",
    "remaining": 175,
    "used": 325
   },
@@ -573,7 +573,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 2442,
+  "runs": 2443,
   "tennis_shortlist": {
    "audit": [
     {
@@ -585,7 +585,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-21T12:18:55+00:00"
+  "updated": "2026-11-21T12:33:44+00:00"
  },
  "quotes": [
   {
@@ -333202,7 +333202,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-21T12:18:43+00:00",
+   "close_at": "2026-11-21T12:33:33+00:00",
    "close_price": 0.52,
    "date": "2026-11-21",
    "edge": null,
@@ -377098,7 +377098,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-21T12:18:43+00:00",
+   "close_at": "2026-11-21T12:33:33+00:00",
    "close_price": 0.51,
    "date": "2026-11-22",
    "edge": null,
@@ -383234,7 +383234,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-21T12:18:43+00:00",
+   "close_at": "2026-11-21T12:33:33+00:00",
    "close_price": 0.84,
    "date": "2026-11-21",
    "edge": null,
@@ -413674,7 +413674,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-21T12:18:43+00:00",
+   "close_at": "2026-11-21T12:33:33+00:00",
    "close_price": 0.6,
    "date": "2026-11-24",
    "edge": null,
@@ -414834,7 +414834,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-21T12:18:43+00:00",
+   "close_at": "2026-11-21T12:33:33+00:00",
    "close_price": 0.61,
    "date": "2026-11-21",
    "edge": null,
@@ -429264,8 +429264,8 @@
    "price_b": 0.43,
    "price_draw": null,
    "prob_a": 0.585,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-21T12:33:35+00:00",
    "side_a": "Yes",
    "side_b": "No",
    "source": "btts_market",
@@ -429274,7 +429274,7 @@
    "stake": 0.0,
    "start": "2026-11-21T10:30:00+00:00",
    "start_source": "espn",
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxsuperligbtts",
@@ -429340,8 +429340,8 @@
    "price_b": 0.23,
    "price_draw": null,
    "prob_a": 0.78,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-21T12:33:35+00:00",
    "side_a": "Yes",
    "side_b": "No",
    "source": "goals_market",
@@ -429350,7 +429350,7 @@
    "stake": 0.0,
    "start": "2026-11-21T10:30:00+00:00",
    "start_source": "espn",
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxsuperligtotal",
@@ -429416,8 +429416,8 @@
    "price_b": 0.47,
    "price_draw": null,
    "prob_a": 0.54,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-21T12:33:35+00:00",
    "side_a": "Yes",
    "side_b": "No",
    "source": "goals_market",
@@ -429426,7 +429426,7 @@
    "stake": 0.0,
    "start": "2026-11-21T10:30:00+00:00",
    "start_source": "espn",
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxsuperligtotal",
@@ -429492,8 +429492,8 @@
    "price_b": 0.69,
    "price_draw": null,
    "prob_a": 0.32,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-21T12:33:35+00:00",
    "side_a": "Yes",
    "side_b": "No",
    "source": "goals_market",
@@ -429502,7 +429502,7 @@
    "stake": 0.0,
    "start": "2026-11-21T10:30:00+00:00",
    "start_source": "espn",
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxsuperligtotal",
@@ -436399,7 +436399,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-21T12:18:43+00:00",
+   "close_at": "2026-11-21T12:33:33+00:00",
    "close_price": 0.47,
    "date": "2026-11-21",
    "edge": null,
@@ -437446,8 +437446,8 @@
    "price_b": 0.63,
    "price_draw": null,
    "prob_a": 0.375,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-21T12:33:41+00:00",
    "side_a": "Wiger Nordas, Baltazar",
    "side_b": "Ion, Nicola",
    "source": "polymarket_us",
@@ -437456,7 +437456,7 @@
    "stake": 0.0,
    "start": "2026-11-20T17:20:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "utr",
    "uncovered": null,
    "untraded": false,
@@ -439624,7 +439624,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-21T12:18:43+00:00",
+   "close_at": "2026-11-21T12:33:33+00:00",
    "close_price": 0.23,
    "date": "2026-11-21",
    "edge": null,
@@ -443220,7 +443220,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-21T12:18:43+00:00",
+   "close_at": "2026-11-21T12:33:33+00:00",
    "close_price": 0.12,
    "date": "2026-11-21",
    "edge": null,
@@ -446270,7 +446270,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-21T12:18:43+00:00",
+   "close_at": "2026-11-21T12:33:33+00:00",
    "close_price": 0.78,
    "date": "2026-11-21",
    "edge": null,
@@ -448764,8 +448764,8 @@
    "price_b": 0.31,
    "price_draw": null,
    "prob_a": 0.695,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-21T12:33:42+00:00",
    "side_a": "Hatton, Peter",
    "side_b": "Capacci, Christian",
    "source": "polymarket_us",
@@ -448774,7 +448774,7 @@
    "stake": 0.0,
    "start": "2026-11-21T10:30:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "utr",
    "uncovered": null,
    "untraded": false,
@@ -448832,8 +448832,8 @@
    "price_b": 0.15,
    "price_draw": null,
    "prob_a": 0.855,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-21T12:33:43+00:00",
    "side_a": "van der Merwe, Marc",
    "side_b": "Tacanho, Gabriel",
    "source": "polymarket_us",
@@ -448842,7 +448842,7 @@
    "stake": 0.0,
    "start": "2026-11-21T10:30:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "utr",
    "uncovered": null,
    "untraded": false,
@@ -449237,7 +449237,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-21T12:18:43+00:00",
+   "close_at": "2026-11-21T12:33:33+00:00",
    "close_price": 0.47,
    "date": "2026-11-21",
    "edge": null,
@@ -449279,7 +449279,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-21T12:18:43+00:00",
+   "close_at": "2026-11-21T12:33:33+00:00",
    "close_price": 0.55,
    "date": "2026-11-25",
    "edge": null,
@@ -449976,7 +449976,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-21T12:18:43+00:00",
+   "close_at": "2026-11-21T12:33:33+00:00",
    "close_price": 0.4,
    "date": "2026-11-21",
    "edge": null,
@@ -450018,7 +450018,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-21T12:18:43+00:00",
+   "close_at": "2026-11-21T12:33:33+00:00",
    "close_price": 0.15,
    "date": "2026-11-21",
    "edge": null,
@@ -450058,7 +450058,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-21T12:18:43+00:00",
+   "close_at": "2026-11-21T12:33:33+00:00",
    "close_price": 0.42,
    "date": "2026-11-21",
    "edge": null,
@@ -450969,6 +450969,86 @@
    "untraded": false,
    "url": "https://polymarket.us/event/itfme-wilman-jacsec-2026-11-21",
    "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-22",
+   "edge": -0.035,
+   "espn_away": "Portimonense",
+   "espn_home": "Estrela",
+   "event": "KXTACAPORTGAME-26NOV22ESAPOR",
+   "id": "goals_market:KXTACAPORTGAME-26NOV22ESAPOR-POR",
+   "kalshi_title": "Reg Time: Portimonense SAD",
+   "label": "Estrela v Portimonense: Portimonense to win (No = Estrela +0.5)",
+   "league": "Ta\u00e7a de Portugal",
+   "liquidity": null,
+   "logged": "2026-11-21T12:33:32+00:00",
+   "market_id": "KXTACAPORTGAME-26NOV22ESAPOR-POR",
+   "opponent": "Portimonense",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.16,
+   "price_b": 0.91,
+   "price_draw": null,
+   "prob_a": 0.125,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_p05_cup",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-22T18:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "Estrela",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxtacaportgame",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-23",
+   "edge": -0.045,
+   "espn_away": "Al-Gharafa",
+   "espn_home": "Al-Quwa Al-Jawiya",
+   "event": "KXAFCCLGAME-26NOV23QUWALG",
+   "id": "goals_market:KXAFCCLGAME-26NOV23QUWALG-QUW",
+   "kalshi_title": "Al Quwa Al Jawiya",
+   "label": "Al-Quwa Al-Jawiya v Al-Gharafa: Al-Quwa Al-Jawiya to win (No = Al-Gharafa +0.5)",
+   "league": "AFC Champions League",
+   "liquidity": null,
+   "logged": "2026-11-21T12:33:32+00:00",
+   "market_id": "KXAFCCLGAME-26NOV23QUWALG-QUW",
+   "opponent": "Al-Quwa Al-Jawiya",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.43,
+   "price_b": 0.66,
+   "price_draw": null,
+   "prob_a": 0.385,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_p05_cup",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-23T18:15:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "Al-Gharafa",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxafcclgame",
+   "venue": "kalshi_binary",
    "venue_start": null
   }
  ],
