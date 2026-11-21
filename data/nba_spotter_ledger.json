@@ -1,7 +1,7 @@
 {
  "box_through": "2026-11-21",
  "error": null,
- "last_run": "2026-11-21T23:30:26.705031+00:00",
+ "last_run": "2026-11-21T23:45:24.525957+00:00",
  "looks": {
   "401909305": {
    "at": "2026-11-20T22:45:25.302540+00:00",
@@ -484,6 +484,62 @@
    },
    "spread": 1.5,
    "usable": 172
+  },
+  "401910025": {
+   "at": "2026-11-21T23:45:24.525957+00:00",
+   "batch": 3,
+   "entered": {
+    "spotter_fade": 0,
+    "spotter_hold": 0,
+    "spotter_spike": 0
+   },
+   "game": "LAC @ DAL",
+   "night": "2026-11-21",
+   "out": 64,
+   "skipped": {
+    "no quote": 6,
+    "outside 5-60c": 78,
+    "wide": 4
+   },
+   "spread": -4.5,
+   "usable": 149
+  },
+  "401910026": {
+   "at": "2026-11-21T23:45:24.525957+00:00",
+   "batch": 3,
+   "entered": {
+    "spotter_fade": 0,
+    "spotter_hold": 4,
+    "spotter_spike": 0
+   },
+   "game": "MEM @ MIN",
+   "night": "2026-11-21",
+   "out": 64,
+   "skipped": {
+    "no quote": 3,
+    "outside 5-60c": 90,
+    "wide": 12
+   },
+   "spread": -5.5,
+   "usable": 182
+  },
+  "401910027": {
+   "at": "2026-11-21T23:45:24.525957+00:00",
+   "batch": 3,
+   "entered": {
+    "spotter_fade": 0,
+    "spotter_hold": 0,
+    "spotter_spike": 0
+   },
+   "game": "NO @ SA",
+   "night": "2026-11-21",
+   "out": 64,
+   "skipped": {
+    "outside 5-60c": 78,
+    "wide": 2
+   },
+   "spread": -18.5,
+   "usable": 136
   }
  },
  "nights": {
@@ -828,7 +884,7 @@
     ]
    },
    "spotter_hold": {
-    "n": 4,
+    "n": 8,
     "players": [
      [
       "3934672",
@@ -845,6 +901,22 @@
      [
       "3062679",
       "m3"
+     ],
+     [
+      "4065733",
+      "m3"
+     ],
+     [
+      "4065733",
+      "pts"
+     ],
+     [
+      "4684806",
+      "m3"
+     ],
+     [
+      "4065733",
+      "reb"
      ]
     ]
    },
@@ -3206,6 +3278,110 @@
      "ticker": "KXNBA3PT-26NOV21PORNYK-NYKJHART3-2",
      "unit": "threes",
      "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.47,
+     "edge": 0.1267,
+     "entered": "2026-11-21T23:45:24.525957+00:00",
+     "game": "MEM @ MIN",
+     "game_id": "401910026",
+     "id": "spotter_hold:KXNBA3PT-26NOV21MEMMIN-MEMTJEROME2-3",
+     "lead_min": 74.6,
+     "night": "2026-11-21",
+     "outs": [
+      "Cameron Boozer"
+     ],
+     "p": 0.6067,
+     "pid": "4065733",
+     "player": "Ty Jerome",
+     "price": 0.48,
+     "rule": "spotter_hold",
+     "rung": 3,
+     "start": "2026-11-22T01:00:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "MEM",
+     "ticker": "KXNBA3PT-26NOV21MEMMIN-MEMTJEROME2-3",
+     "unit": "threes",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.39,
+     "edge": 0.119,
+     "entered": "2026-11-21T23:45:24.525957+00:00",
+     "game": "MEM @ MIN",
+     "game_id": "401910026",
+     "id": "spotter_hold:KXNBAPTS-26NOV21MEMMIN-MEMTJEROME2-25",
+     "lead_min": 74.6,
+     "night": "2026-11-21",
+     "outs": [
+      "Cameron Boozer"
+     ],
+     "p": 0.519,
+     "pid": "4065733",
+     "player": "Ty Jerome",
+     "price": 0.4,
+     "rule": "spotter_hold",
+     "rung": 25,
+     "start": "2026-11-22T01:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "team": "MEM",
+     "ticker": "KXNBAPTS-26NOV21MEMMIN-MEMTJEROME2-25",
+     "unit": "points",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.34,
+     "edge": 0.1168,
+     "entered": "2026-11-21T23:45:24.525957+00:00",
+     "game": "MEM @ MIN",
+     "game_id": "401910026",
+     "id": "spotter_hold:KXNBA3PT-26NOV21MEMMIN-MEMTHENDRICKS22-2",
+     "lead_min": 74.6,
+     "night": "2026-11-21",
+     "outs": [
+      "Cameron Boozer"
+     ],
+     "p": 0.4668,
+     "pid": "4684806",
+     "player": "Taylor Hendricks",
+     "price": 0.35,
+     "rule": "spotter_hold",
+     "rung": 2,
+     "start": "2026-11-22T01:00:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "MEM",
+     "ticker": "KXNBA3PT-26NOV21MEMMIN-MEMTHENDRICKS22-2",
+     "unit": "threes",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.39,
+     "edge": 0.1137,
+     "entered": "2026-11-21T23:45:24.525957+00:00",
+     "game": "MEM @ MIN",
+     "game_id": "401910026",
+     "id": "spotter_hold:KXNBAREB-26NOV21MEMMIN-MEMTJEROME2-4",
+     "lead_min": 74.6,
+     "night": "2026-11-21",
+     "outs": [
+      "Cameron Boozer"
+     ],
+     "p": 0.5137,
+     "pid": "4065733",
+     "player": "Ty Jerome",
+     "price": 0.4,
+     "rule": "spotter_hold",
+     "rung": 4,
+     "start": "2026-11-22T01:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "MEM",
+     "ticker": "KXNBAREB-26NOV21MEMMIN-MEMTJEROME2-4",
+     "unit": "rebounds",
+     "why": "a top scorer on his team is out"
     }
    ]
   },
@@ -4048,6 +4224,110 @@
      "team": "POR",
      "ticker": "KXNBAPRA-26NOV21PORNYK-PORJHOLIDAY5-20",
      "unit": "points+rebounds+assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.44,
+     "entered": "2026-11-21T23:45:24.525957+00:00",
+     "game": "MEM @ MIN",
+     "game_id": "401910026",
+     "id": "spotter_hold_blind:KXNBAPTS-26NOV21MEMMIN-MEMISTEWART28-10",
+     "lead_min": 74.6,
+     "matches": "spotter_hold:KXNBA3PT-26NOV21MEMMIN-MEMTJEROME2-3",
+     "night": "2026-11-21",
+     "outs": [
+      "Cameron Boozer"
+     ],
+     "p": null,
+     "pid": "4432810",
+     "player": "Isaiah Stewart",
+     "price": 0.45,
+     "rule": "spotter_hold_blind",
+     "rung": 10,
+     "start": "2026-11-22T01:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "team": "MEM",
+     "ticker": "KXNBAPTS-26NOV21MEMMIN-MEMISTEWART28-10",
+     "unit": "points",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.42,
+     "entered": "2026-11-21T23:45:24.525957+00:00",
+     "game": "MEM @ MIN",
+     "game_id": "401910026",
+     "id": "spotter_hold_blind:KXNBAREB-26NOV21MEMMIN-MEMJWELLS0-4",
+     "lead_min": 74.6,
+     "matches": "spotter_hold:KXNBAPTS-26NOV21MEMMIN-MEMTJEROME2-25",
+     "night": "2026-11-21",
+     "outs": [
+      "Cameron Boozer"
+     ],
+     "p": null,
+     "pid": "5112087",
+     "player": "Jaylen Wells",
+     "price": 0.43,
+     "rule": "spotter_hold_blind",
+     "rung": 4,
+     "start": "2026-11-22T01:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "MEM",
+     "ticker": "KXNBAREB-26NOV21MEMMIN-MEMJWELLS0-4",
+     "unit": "rebounds",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.29,
+     "entered": "2026-11-21T23:45:24.525957+00:00",
+     "game": "MEM @ MIN",
+     "game_id": "401910026",
+     "id": "spotter_hold_blind:KXNBAREB-26NOV21MEMMIN-MINJBERINGER19-8",
+     "lead_min": 74.6,
+     "matches": "spotter_hold:KXNBA3PT-26NOV21MEMMIN-MEMTHENDRICKS22-2",
+     "night": "2026-11-21",
+     "outs": [
+      "Anthony Edwards"
+     ],
+     "p": null,
+     "pid": "5279133",
+     "player": "Joan Beringer",
+     "price": 0.32,
+     "rule": "spotter_hold_blind",
+     "rung": 8,
+     "start": "2026-11-22T01:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "MIN",
+     "ticker": "KXNBAREB-26NOV21MEMMIN-MINJBERINGER19-8",
+     "unit": "rebounds",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.38,
+     "entered": "2026-11-21T23:45:24.525957+00:00",
+     "game": "MEM @ MIN",
+     "game_id": "401910026",
+     "id": "spotter_hold_blind:KXNBAREB-26NOV21MEMMIN-MEMTHENDRICKS22-6",
+     "lead_min": 74.6,
+     "matches": "spotter_hold:KXNBAREB-26NOV21MEMMIN-MEMTJEROME2-4",
+     "night": "2026-11-21",
+     "outs": [
+      "Cameron Boozer"
+     ],
+     "p": null,
+     "pid": "4684806",
+     "player": "Taylor Hendricks",
+     "price": 0.39,
+     "rule": "spotter_hold_blind",
+     "rung": 6,
+     "start": "2026-11-22T01:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "MEM",
+     "ticker": "KXNBAREB-26NOV21MEMMIN-MEMTHENDRICKS22-6",
+     "unit": "rebounds",
      "why": "drawn at random from this game's rungs at about the pick's price"
     }
    ]
@@ -6101,12 +6381,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-20T07:30:31.423574+00:00",
-   "box": 0,
-   "due": 0,
-   "new": 0
-  },
-  {
    "at": "2026-11-20T08:00:29.342053+00:00",
    "box": 0,
    "due": 0,
@@ -6405,6 +6679,12 @@
    "box": 0,
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-21T23:45:24.525957+00:00",
+   "box": 0,
+   "due": 3,
+   "new": 8
   }
  ],
  "schedule": [
