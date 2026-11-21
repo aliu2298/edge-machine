@@ -234,6 +234,12 @@ ECON_NC_NO_RETIRED_WHY = ("Retired 2026-11-06 by Olu: no edge at 20 settled cont
 COMMOD_NC_NO_RETIRED_WHY = ("Retired 2026-11-08 by Olu: behind its prices at 13 market-days — 12–1, 12 won v 12.2 priced, "
                             "−2.6% after fees. Never in Production. No new entries from 2026-11-08; its rows stay on file and "
                             "its open bets still settle.")
+# Pinnacle's goal total v Kalshi's (Olu, 2026-11-20): pre-registered 2026-09-22, it never made a pick (0 of 30 on every scope), and the
+# same test on the match winner found 0 of 57 quotes at 3pp. It was also the only thing still spending paced Odds API credit, and its
+# "no paced credit left for this run" skips kept the Soccer card on Attention. No new entries, no paid call; its note and (empty) record stay.
+PIN_TOTALS_RETIRED_WHY = ("Retired 2026-11-20 by Olu: no pick in 0 of 30 on every scope since it was pre-registered on 2026-09-22 (Clubs, Cups, "
+                          "Internationals); the match-winner version found 0 of 57 quotes at 3pp. It makes no more paid Odds API calls. "
+                          "No new entries from 2026-11-20; its rows stay on file and its open bets still settle.")
 # The Turkey pair retired together: tests that replay them from before then re-enable them in-process.
 TURKEY_RETIRED_ON_2026_11_04 = ("turkey_o25_dog|soccer_o25", "turkey_btts_dog|soccer_btts")
 
@@ -1901,7 +1907,8 @@ SOURCES = {
              "tennis only at the big tournaments — not ITF or Challenger."),
     "pin_totals": dict(
         label="Pinnacle's goal total v Kalshi's", kind="Sportsbook", connected=True,
-        site="pinnacle.com", sports=["soccer_o25", "soccer_o25_cup", "soccer_o25_intl"],
+        site="pinnacle.com", sports=[],
+        retired_sports={sp: PIN_TOTALS_RETIRED_WHY for sp in ("soccer_o25", "soccer_o25_cup", "soccer_o25_intl")},
         note="Pre-registered 2026-09-22, before it logged anything. No forecast and no form: "
              "Pinnacle's own over-2.5 price, de-vigged against its under, backed where it beats "
              "the Kalshi ask by 3pp — the standing edge every price source here is held to. "
