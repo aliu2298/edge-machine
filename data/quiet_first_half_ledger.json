@@ -1,10 +1,52 @@
 {
+ "error": null,
+ "last_run": "2026-11-21T13:46:31.283169+00:00",
  "registered": "2026-11-21",
  "rules": {
   "PB": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.22,
+     "bid": 0.21,
+     "event": "KXEPLTOTAL-26NOV21TOTIPS",
+     "id": "quiet_first_half:KXEPLTOTAL-26NOV21TOTIPS",
+     "labels": {
+      "away": "O+D+",
+      "home": "O-D-"
+     },
+     "league": "Premier League",
+     "logged": "2026-11-21T13:46:31.283169+00:00",
+     "match": "Tottenham Hotspur v Ipswich Town",
+     "price": 0.79,
+     "rule": "PB",
+     "side": "no",
+     "sources": [
+      "A6"
+     ],
+     "start": "2026-11-21T15:00Z",
+     "status": "open",
+     "ticker": "KXEPL1HBTTS-26NOV21TOTIPS-BTTS",
+     "title": "Both teams score in the 1st Half?",
+     "u15": {
+      "ask": 0.42,
+      "bid": 0.41,
+      "price": 0.59,
+      "quote": true,
+      "side": "no",
+      "ticker": "KXEPL1HTOTAL-26NOV21TOTIPS-2"
+     },
+     "why": "A6 pick it \u00b7 1H BTTS NO 0.79"
+    }
+   ]
   }
  },
- "runs": [],
+ "runs": [
+  {
+   "at": "2026-11-21T13:46:31.283169+00:00",
+   "due": 5,
+   "new": 1,
+   "selected": 1
+  }
+ ],
  "version": "quiet_first_half-v1"
 }

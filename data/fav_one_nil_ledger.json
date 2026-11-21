@@ -1,10 +1,54 @@
 {
+ "error": null,
+ "last_run": "2026-11-21T13:46:31.283169+00:00",
  "registered": "2026-11-21",
  "rules": {
   "PB": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.09,
+     "ask_0_0": 0.05,
+     "ask_dog_1_0": 0.03,
+     "bid": 0.08,
+     "dog": "IPS",
+     "dog_price": 0.155,
+     "event": "KXEPLTOTAL-26NOV21TOTIPS",
+     "fav": "TOT",
+     "fav_price": 0.645,
+     "id": "fav_one_nil:KXEPLTOTAL-26NOV21TOTIPS",
+     "labels": {
+      "away": "O+D+",
+      "home": "O-D-"
+     },
+     "league": "Premier League",
+     "logged": "2026-11-21T13:46:31.283169+00:00",
+     "match": "Tottenham Hotspur v Ipswich Town",
+     "price": 0.09,
+     "rule": "PB",
+     "shadow": {
+      "sold": false,
+      "target": 0.18
+     },
+     "side": "yes",
+     "sources": [
+      "A6"
+     ],
+     "start": "2026-11-21T15:00Z",
+     "status": "open",
+     "ticker": "KXEPLSCORE-26NOV21TOTIPS-TOT1IPS0",
+     "title": "Final score Tottenham Hotspur wins 1-0?",
+     "why": "A6 pick it \u00b7 TOT 0.65 v IPS 0.15 \u00b7 fav 1-0 YES 0.09"
+    }
+   ]
   }
  },
- "runs": [],
+ "runs": [
+  {
+   "at": "2026-11-21T13:46:31.283169+00:00",
+   "due": 5,
+   "new": 1,
+   "selected": 1
+  }
+ ],
  "version": "fav_one_nil-v1"
 }
