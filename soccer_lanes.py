@@ -467,6 +467,43 @@ def flipped_rows(state=None):
     return [r]
 
 
+def piggyback_rows(states=None):
+    """Favourite 1-0 and Quiet First Half (under_piggyback.py, 2026-11-21): paper lanes on A5/A6/C8's selections. Percentages only."""
+    import under_piggyback as UP
+    import flipped_unders as FU
+    p1 = lambda x: "—" if x is None else f"{x * 100:.1f}%"
+    pr = lambda x: "—" if x is None else f"{x * 100:+.1f}%".replace("-", "−")
+    heads = ("Source rule", "Entries", "Won-lost", "Hit rate", "Average price paid", "Break-even after fees", "Return after fees")
+    out = []
+    for key, meta in UP.LANES.items():
+        st = (states or {}).get(key) or (UP.load(key) if os.path.exists(UP.path(key)) else {"rules": {"PB": {"picks": []}}})
+        picks = (st.get("rules", {}).get("PB") or {}).get("picks") or []
+        body = ""
+        for k, r in UP.by_source(picks).items():
+            cells = (k, r["entries"], f'{r["won"]}-{r["lost"]}', p1(r["hit"]), p1(r["avg_price"]), p1(r["break_even"]), pr(r["ret"]))
+            body += "<tr>" + "".join(f'<td class="num" data-l="{h}">{esc(c)}</td>' for h, c in zip(heads, cells)) + "</tr>"
+        ins = meta["in_sample"]
+        cells = ("In-sample, not counted", ins["entries"], f'{ins["won"]}-{ins["lost"]}', p1(ins["won"] / ins["entries"]), ins["price"], "—", ins["ret"])
+        body += '<tr class="mut">' + "".join(f'<td class="num" data-l="{h}">{esc(c)}</td>' for h, c in zip(heads, cells)) + "</tr>"
+        table = ('<div class="tbl"><table><thead><tr>' + "".join(f"<th>{h}</th>" for h in heads) + f"</tr></thead><tbody>{body}</tbody></table></div>")
+        details = params_html([
+            ("Leagues", "UEFA Nations League and Premier League"),
+            ("Rule", "When under rule A5 (Nations League u3.5), A6 (Premier League u2.5) or C8 (Nations League u2.5) would pick a match (its label "
+                     "filter and its own under price band on the NO side at entry), log once, 20 to 90 minutes before kickoff, with the source rules listed. "
+                     + meta["words"] + ", held to settlement."
+                     + (" The favourite is the higher-priced team on the game market; no entry if the two are within 2c; the spread must be 3c or less."
+                        if key == "fav_one_nil" else " Spread 3c or less; no entry when the match has no first-half BTTS market.")),
+            ("Research", f'A hindsight sample from the proved under rules, not counted: {ins["note"]}.'),
+            ("Record", "Paper at the Kalshi price, 7% fee, Kalshi's own settlement, fresh from 2026-11-21. Review at 10 settled, decide at 30."),
+        ]) + table
+        cols = [KICK, MATCH, ("Source rules", lambda p: ", ".join(p.get("sources") or [])), ("Side", lambda p: str(p.get("side") or "").upper()), PRICE,
+                ("Result", lambda p: _res_pct(p))]
+        out.append(row(key, "soccer_o25", f"{meta['name']} · A5 A6 C8 selections", "Correct score" if key == "fav_one_nil" else "1H BTTS",
+                       pick_record(picks), details, open_n=sum(p.get("status") == "open" for p in picks), entries=entries_table(picks, cols)))
+        out[-1]["top"] = True
+    return out
+
+
 def _res_pct(p):
     res = {"open": "open", "won": "won", "lost": "lost", "no_result": "no result"}.get(p.get("status"), p.get("status"))
     return res + (f" · {float(p['profit']):+.0f}%" if p.get("profit") is not None else "")
@@ -787,7 +824,7 @@ def rows_and_inputs(d, st, now):
             live, gone, extra = live + lv, gone + gn, extra + qs
         except Exception as exc:                                # noqa: BLE001
             print(f"soccer_lanes: {fn.__name__} failed: {type(exc).__name__}: {exc}")
-    for fn in (contender_rows, sa_rows, btts_sa_rows, lambda: (flipped_rows(), [])):
+    for fn in (contender_rows, sa_rows, btts_sa_rows, lambda: (flipped_rows() + piggyback_rows(), [])):
         try:
             lv, gn = fn()
             live, gone = live + lv, gone + gn
