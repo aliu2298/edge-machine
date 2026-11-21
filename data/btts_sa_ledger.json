@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-21T18:46:30.437843+00:00",
+ "last_run": "2026-11-21T19:01:31.057252+00:00",
  "rules": {
   "NO": {
    "picks": [
@@ -254,6 +254,23 @@
      "status": "open",
      "ticker": "KXARGPREMDIVBTTS-26NOV21ARGCAI-BTTS",
      "why": "Argentina BTTS NO 0.57"
+    },
+    {
+     "ask": 0.45,
+     "bid": 0.44,
+     "event": "KXBRASILEIROBTTS-26NOV21BAHCFC",
+     "id": "NO:KXBRASILEIROBTTS-26NOV21BAHCFC",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-21T19:01:31.057252+00:00",
+     "match": "Bahia v Coritiba",
+     "price": 0.45,
+     "rule": "NO",
+     "side": "no",
+     "start": "2026-11-21T20:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV21BAHCFC-BTTS",
+     "why": "Brazil BTTS NO 0.45"
     }
    ]
   },
@@ -509,18 +526,28 @@
      "status": "open",
      "ticker": "KXARGPREMDIVBTTS-26NOV21ARGCAI-BTTS",
      "why": "Argentina BTTS YES 0.44"
+    },
+    {
+     "ask": 0.56,
+     "bid": 0.55,
+     "event": "KXBRASILEIROBTTS-26NOV21BAHCFC",
+     "id": "YES:KXBRASILEIROBTTS-26NOV21BAHCFC",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-21T19:01:31.057252+00:00",
+     "match": "Bahia v Coritiba",
+     "price": 0.56,
+     "rule": "YES",
+     "side": "yes",
+     "start": "2026-11-21T20:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV21BAHCFC-BTTS",
+     "why": "Brazil BTTS YES 0.56"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-18T23:31:27.325745+00:00",
-   "due": 2,
-   "matched": 2,
-   "new": 0,
-   "quoted": 2
-  },
   {
    "at": "2026-11-19T00:16:32.591467+00:00",
    "due": 0,
@@ -870,6 +897,13 @@
    "matched": 2,
    "new": 0,
    "quoted": 2
+  },
+  {
+   "at": "2026-11-21T19:01:31.057252+00:00",
+   "due": 3,
+   "matched": 3,
+   "new": 2,
+   "quoted": 3
   }
  ],
  "schedule": [
