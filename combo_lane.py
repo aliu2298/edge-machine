@@ -186,17 +186,39 @@ def record(state):
         longest = max(longest, cur)
     out["run"] = longest
     # The most the combo could cost, as a multiple of the product of the leg asks plus the fee, before its return reaches zero.
-    out["break_even"] = (out["landed"] / n) / (sum(r["crypto"]["ask"] * r["sp"]["ask"] for r in done) / n) if out["landed"] else 0.0
+    out["break_even"] = break_even_markup(done)
     return out
 
 
-def verdict(rec):
-    """The pre-registered read: at READ_AT settled combos, retire if the return is at or below the same legs as singles."""
+def break_even_markup(done):
+    """The markup on the product of the two No asks at which the combo's return over `done` is zero, fee included (bisection).
+    The paper price uses MARKUP; the combo holds up only while this is above it."""
+    landed = sum(r["status"] == "won" for r in done)
+    if not done or not landed:
+        return 0.0
+    prods = [r["crypto"]["ask"] * r["sp"]["ask"] for r in done]
+    pay = sum(r.get("value", 1.0 if r["status"] == "won" else 0.0) for r in done) / len(done)             # the mean settled value (a part-value leg counts)
+    cost = lambda m: sum(m * x + fee(m * x) for x in prods) / len(prods)    # noqa: E731
+    lo, hi = 0.0, 1.0 / max(prods)                              # price stays at or below 1 up to hi
+    if cost(hi) <= pay:
+        return hi
+    for _ in range(60):
+        mid = (lo + hi) / 2
+        lo, hi = (mid, hi) if cost(mid) < pay else (lo, mid)
+    return round((lo + hi) / 2, 4)
+
+
+def verdict(rec, lanes=None):
+    """The pre-registered read (Build spec): at READ_AT settled combos keep only if the return is above zero AND the break-even markup is
+    above the paper markup; retire at once if either lane's own singles (`lanes` = [return or None, ...]) are under zero."""
+    under = [x for x in (lanes or []) if x is not None and x < 0]
+    if under:
+        return "retire at once: a lane's own singles are under zero"
     if rec["n"] < READ_AT:
         return f"too early ({rec['n']} of {READ_AT} settled combos; read once at {READ_AT})"
-    if rec["mean_roi"] <= rec["single_both"]:
-        return "retire: the combo's return is at or below the same legs as singles"
-    return "keep: the combo's return is above the same legs as singles"
+    if rec["mean_roi"] > 0 and rec["break_even"] > MARKUP:
+        return "keep: the return is above zero and the break-even markup is above the paper markup"
+    return "retire: the return is not above zero, or the break-even markup is not above the paper markup"
 
 
 def _sandbox_quotes():
