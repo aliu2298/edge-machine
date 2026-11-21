@@ -1,9 +1,37 @@
 {
- "btts": {},
+ "btts": {
+  "T1:KXLIGUE1TEAMTOTAL-26NOV21NICPSG": {
+   "event": "KXLIGUE1TEAMTOTAL-26NOV21NICPSG",
+   "kind": "2h",
+   "lane": "T1",
+   "match": "Nice v Paris Saint-Germain",
+   "quote": false,
+   "recorded": "2026-11-21T14:46:45.836605+00:00",
+   "start": "2026-11-21T16:15Z",
+   "status": "open"
+  }
+ },
  "error": null,
  "group": "team",
- "ht": {},
- "last_run": "2026-11-21T14:31:39.368084+00:00",
+ "ht": {
+  "T1:KXLIGUE1TEAMTOTAL-26NOV21NICPSG:away": {
+   "lane": "T1",
+   "match": "Nice v Paris Saint-Germain",
+   "pick": "T1:KXLIGUE1TEAMTOTAL-26NOV21NICPSG:away",
+   "price": 0.73,
+   "start": "2026-11-21T16:15Z",
+   "status": "pending"
+  },
+  "T1:KXLIGUE1TEAMTOTAL-26NOV21NICPSG:home": {
+   "lane": "T1",
+   "match": "Nice v Paris Saint-Germain",
+   "pick": "T1:KXLIGUE1TEAMTOTAL-26NOV21NICPSG:home",
+   "price": 0.33,
+   "start": "2026-11-21T16:15Z",
+   "status": "pending"
+  }
+ },
+ "last_run": "2026-11-21T14:46:45.836605+00:00",
  "registered": "2026-11-21",
  "runs": [
   {
@@ -60,6 +88,11 @@
    "at": "2026-11-21T14:31:39.368084+00:00",
    "btts": 0,
    "ht": 0
+  },
+  {
+   "at": "2026-11-21T14:46:45.836605+00:00",
+   "btts": 1,
+   "ht": 2
   }
  ],
  "version": "shadows-v1"
