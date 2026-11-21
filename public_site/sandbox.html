@@ -27,7 +27,7 @@
 <div class="topbar">
 <a class="brand" href="./index.html">Edge Machine</a>
 <nav class="main" aria-label="Pages"><a href="./sandbox.html" aria-current="page">Archives</a><a href="./production.html">Production</a><a href="./trading.html">Trading</a><span class="nav-group"><button type="button" class="nav-more" aria-expanded="false" aria-controls="nav-markets">Markets<span class="nav-caret" aria-hidden="true"></span></button><span class="nav-menu" id="nav-markets"><a href="./nba.html">NBA</a><a href="./soccer.html">Soccer</a><a href="./tennis.html">Tennis</a><a href="./daily_markets.html">Daily Markets</a><a href="./culture.html">Culture</a><a href="./leaderboard.html">Leaderboard</a></span></span><a href="./sandbox.html#method">Method</a></nav>
-<p class="stamp"><time datetime="2026-11-20T23:49:10Z">Updated Nov 20, 5:49 PM CT</time><span class="sr-only">updated 2026-11-20 23:49 UTC</span></p>
+<p class="stamp"><time datetime="2026-11-21T00:01:38Z">Updated Nov 20, 6:01 PM CT</time><span class="sr-only">updated 2026-11-21 00:01 UTC</span></p>
 </div>
 <div class="subbar">
 <nav class="toc" aria-label="On this page"><a href="#running">Running</a><a href="#recently-settled">Recently settled</a><a href="#archive">Archive</a><a href="#summary">What it says</a><a href="#by-sport">By sport</a><a href="#chaos">Chaos</a><a href="#paper-watches">Paper watches</a><a href="#reference">Reference</a></nav>
@@ -37,7 +37,7 @@
 <main id="content" class="wrap">
 <h1>Sandbox</h1>
 <p class="lede">Which rules and tipsters are making money, and which are failing. Every one is backed at real prices and settled on real results. Paper only.</p>
-<div class="health-card" id="daily-health"><b>Daily health</b> · <b class="neg">1 red, 1 amber</b> · <span class="mut">checked 2026-11-20 08:40 CT · <a href="https://github.com/aliu2298/edge-machine/blob/main/reports/daily/2026-11-20-am.md">full report</a></span><ul class="sm"><li class="red"><b>red</b> · Stuck picks · 25 picks open more than 12 h after start, all in climate_lanes (KXHIGHTSAN-26NOV17-B66.5, KXLOWTSAN-26NOV17-B52.5, KXLOWTSAN-26NOV17-T59 about 63 h past start; 22 more from the 19 Nov markets about 15 h); its settler ran 0.6 h ago so they are not settling; every other ledger has none stuck. Old sandbox quotes: 0 open over 72 h, 0 over 14 days, flat</li><li class="amber"><b>amber</b> · Sandbox audit · clean, 1 warning: 44 of 100 sampled bets no longer answer at the venue</li></ul></div>
+<div class="health-card" id="daily-health"><b>Daily health</b> · <b class="neg">2 red, 2 amber</b> · <span class="mut">checked 2026-11-20 17:26 CT · <a href="https://github.com/aliu2298/edge-machine/blob/main/reports/daily/2026-11-20-pm.md">full report</a></span><ul class="sm"><li class="red"><b>red</b> · Stuck picks · 3 picks open more than 12 h after start, all in climate_lanes (KXHIGHTSAN-26NOV17-B66.5, KXLOWTSAN-26NOV17-B52.5, KXLOWTSAN-26NOV17-T59, about 72 h past start), down from 25 this morning; Kalshi has not finalized those markets, PR #503 now labels them as waiting on the venue; every other ledger has none stuck. Old sandbox quotes: 0 open over 72 h, 0 over 14 days, flat</li><li class="red"><b>red</b> · Repo checks · test_audit.py passed, but the full PR test suite failed on main at test_promote_2026_11_06.py (TypeError: datetime object is not subscriptable), turning every PR&#x27;s CI red; fixed by PR #505, merged on green CI</li><li class="amber"><b>amber</b> · GitHub workflows · feeds-heartbeat failed at 23:01Z and culture at 18:01Z, each followed by successes (transient, no code fault); all other active workflows succeeded on their latest run and are within cadence; nba-odds-probe is dispatch-only, ignored</li><li class="amber"><b>amber</b> · Sandbox audit · clean, 1 warning: 41 of 100 sampled bets no longer answer at the venue</li></ul></div>
 <div class="tiles">
 <div class="tile"><b>10</b><span>in Production</span></div>
 <div class="tile"><b class="pos">3</b><span>working (30+ bets)</span></div>
@@ -1214,12 +1214,12 @@ still profitable without its biggest win, and profitable in both halves. Fixed 2
 <td class="num" data-l="Contests">41</td><td class="num" data-l="Won v priced">14 v 9.7</td>
 <td class="num" data-l="ROI"><span class="pos">+43.7%</span></td>
 <td class="num pos" data-l="P/L">+$1,792</td></tr><tr><td data-l="Sport">Tennis</td><td data-l="Blind strategy"><b>Back the favourite</b></td>
-<td class="num" data-l="Contests">2445</td><td class="num" data-l="Won v priced">1796 v 1794.5</td>
-<td class="num" data-l="ROI"><span class="pos">+0.1%</span></td>
-<td class="num pos" data-l="P/L">+$339</td></tr><tr><td data-l="Sport">Tennis</td><td data-l="Blind strategy"><b>Back the underdog</b></td>
-<td class="num" data-l="Contests">2540</td><td class="num" data-l="Won v priced">652 v 685.8</td>
-<td class="num" data-l="ROI"><span class="neg">−5.5%</span></td>
-<td class="num neg" data-l="P/L">−$13,921</td></tr><tr><td data-l="Sport">NFL</td><td data-l="Blind strategy"><b>Back the favourite</b></td>
+<td class="num" data-l="Contests">2446</td><td class="num" data-l="Won v priced">1798 v 1795.4</td>
+<td class="num" data-l="ROI"><span class="pos">+0.2%</span></td>
+<td class="num pos" data-l="P/L">+$518</td></tr><tr><td data-l="Sport">Tennis</td><td data-l="Blind strategy"><b>Back the underdog</b></td>
+<td class="num" data-l="Contests">2541</td><td class="num" data-l="Won v priced">651 v 686.0</td>
+<td class="num" data-l="ROI"><span class="neg">−5.6%</span></td>
+<td class="num neg" data-l="P/L">−$14,243</td></tr><tr><td data-l="Sport">NFL</td><td data-l="Blind strategy"><b>Back the favourite</b></td>
 <td class="num" data-l="Contests">61</td><td class="num" data-l="Won v priced">42 v 40.3</td>
 <td class="num" data-l="ROI"><span class="pos">+4.3%</span></td>
 <td class="num pos" data-l="P/L">+$265</td></tr><tr><td data-l="Sport">NFL</td><td data-l="Blind strategy"><b>Back the underdog</b></td>
