@@ -2034,6 +2034,24 @@
    "pair": "commod_fav_band|commodities_fav",
    "reason": "moved by hand \u2014 ready from this run",
    "to": "ready"
+  },
+  {
+   "at": "2026-11-21T04:04:42+00:00",
+   "evidence": {
+    "base_roi": 0.0417,
+    "clv": -0.074,
+    "clv_n": 21,
+    "n": 30,
+    "own_roi": 0.0342,
+    "roi": 0.0342,
+    "roi_fee": 0.0165,
+    "span_days": 43.0417,
+    "weeks": 6,
+    "z": 0.3252
+   },
+   "pair": "commod_fav_band|commodities_fav",
+   "reason": "not beating every blind rule (+3.4% v +4.2% back the favourite on every match)",
+   "to": "sandbox"
   }
  ],
  "pairs": {
@@ -2048,24 +2066,9 @@
    "stage": "sandbox"
   },
   "commod_fav_band|commodities_fav": {
-   "by_hand": "2026-11-12",
-   "entry": {
-    "base_roi": 0.1192,
-    "clv": -0.0337,
-    "clv_n": 14,
-    "n": 23,
-    "own_roi": 0.1153,
-    "roi": 0.1153,
-    "roi_fee": 0.0963,
-    "span_days": 34.1458,
-    "weeks": 4,
-    "z": 0.9627
-   },
-   "entry_since": null,
-   "promoted_at": "2026-11-12T07:59:06+00:00",
-   "ready_at": "2026-11-12T07:59:06+00:00",
-   "ready_since": "2026-11-12T07:59:06+00:00",
-   "stage": "production"
+   "demoted_at": "2026-11-21T04:04:42+00:00",
+   "since": "2026-11-21T04:04:42+00:00",
+   "stage": "sandbox"
   },
   "corners_team_fade|soccer_corners": {
    "demoted_at": "2026-10-20T16:42:42+00:00",
@@ -2432,5 +2435,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-11-21T02:52:07+00:00"
+ "updated": "2026-11-21T06:33:53+00:00"
 }
