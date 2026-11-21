@@ -1135,8 +1135,24 @@
    "at": "2026-11-18T21:05:54.890191+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXEPLFTTS-26NOV21NEWARS-NEW\", \"b\"]]": {
+   "at": "2026-11-21T15:03:33.195711+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXLALIGAFTTS-26NOV20ATHESP-ESP\", \"b\"]]": {
    "at": "2026-11-20T15:04:13.370208+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXLIGUE1FTTS-26NOV21ASMAUX-AUX\", \"b\"]]": {
+   "at": "2026-11-21T15:03:33.195711+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXLIGUE1FTTS-26NOV21NICPSG-NIC\", \"b\"]]": {
+   "at": "2026-11-21T15:03:33.195711+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXSERIEAFTTS-26NOV21NAPTOR-TOR\", \"b\"]]": {
+   "at": "2026-11-21T15:03:33.195711+00:00",
    "pool": "entered"
   },
   "[\"sandbox\", \"liga_btts_even\", [\"liga_btts_even:KXLALIGABTTS-26NOV07OSAATH-BTTS\", \"a\"]]": {
@@ -1595,6 +1611,10 @@
    "mirror": "entered",
    "pool": "entered"
   },
+  "[\"soccer_rules_ledger.json\", \"B6\", [\"B6:KXLIGUE1TOTAL-26NOV21NICPSG\", \"yes\"]]": {
+   "at": "2026-11-21T15:03:33.195711+00:00",
+   "pool": "entered"
+  },
   "[\"soccer_rules_ledger.json\", \"C1\", [\"C1:KXMLSTOTAL-26NOV07CHICLB\", \"yes\"]]": {
    "at": "2026-11-07T19:42:52.555291+00:00",
    "entries": "entered",
@@ -1658,6 +1678,14 @@
    "mirror": "entered",
    "pool": "entered"
   },
+  "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXLIGUE1TEAMTOTAL-26NOV21NICPSG:away\", \"yes\"]]": {
+   "at": "2026-11-21T15:03:33.195711+00:00",
+   "pool": "entered"
+  },
+  "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXLIGUE1TEAMTOTAL-26NOV21NICPSG:home\", \"yes\"]]": {
+   "at": "2026-11-21T15:03:33.195711+00:00",
+   "pool": "entered"
+  },
   "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXSERIEATEAMTOTAL-26NOV08INTCOM:away\", \"yes\"]]": {
    "at": "2026-11-08T15:36:09.421486+00:00",
    "entries": "entered",
@@ -1674,6 +1702,10 @@
   "[\"soccer_team_rules_ledger.json\", \"T1H\", [\"T1H:KXEPLTEAMTOTAL-26NOV08BRIBRE:home\", \"yes\"]]": {
    "at": "2026-11-08T13:04:49.084515+00:00",
    "mirror": "duplicate",
+   "pool": "duplicate"
+  },
+  "[\"soccer_team_rules_ledger.json\", \"T1H\", [\"T1H:KXLIGUE1TEAMTOTAL-26NOV21NICPSG:home\", \"yes\"]]": {
+   "at": "2026-11-21T15:03:33.195711+00:00",
    "pool": "duplicate"
   },
   "[\"soccer_team_rules_ledger.json\", \"T1H\", [\"T1H:KXSERIEATEAMTOTAL-26NOV08INTCOM:home\", \"yes\"]]": {
@@ -5057,7 +5089,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-21T14:48:26.601519+00:00",
+ "last_run": "2026-11-21T15:03:33.195711+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -15338,6 +15370,169 @@
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXLIGUE1TOTAL-26NOV21NICPSG-3",
+   "entered_at": "2026-11-21T15:03:33.195711+00:00",
+   "entities": [
+    "Nice",
+    "Paris Saint-Germain"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"B6\", [\"B6:KXLIGUE1TOTAL-26NOV21NICPSG\", \"yes\"]]",
+   "lane": "B6",
+   "logged": "2026-11-21T14:46:40.022335+00:00",
+   "matched": [
+    "Nice",
+    "Paris Saint-Germain"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"B6\", [\"B6:KXLIGUE1TOTAL-26NOV21NICPSG\", \"yes\"]]",
+   "price": 0.72,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXLIGUE1TEAMTOTAL-26NOV21NICPSG-PSG2",
+   "entered_at": "2026-11-21T15:03:33.195711+00:00",
+   "entities": [
+    "Paris Saint-Germain"
+   ],
+   "id": "superpack:[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXLIGUE1TEAMTOTAL-26NOV21NICPSG:away\", \"yes\"]]",
+   "lane": "T1",
+   "logged": "2026-11-21T14:46:44.817472+00:00",
+   "matched": [
+    "Paris Saint-Germain"
+   ],
+   "pid": "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXLIGUE1TEAMTOTAL-26NOV21NICPSG:away\", \"yes\"]]",
+   "price": 0.73,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_team_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXLIGUE1TEAMTOTAL-26NOV21NICPSG-NIC2",
+   "entered_at": "2026-11-21T15:03:33.195711+00:00",
+   "entities": [
+    "Nice"
+   ],
+   "id": "superpack:[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXLIGUE1TEAMTOTAL-26NOV21NICPSG:home\", \"yes\"]]",
+   "lane": "T1",
+   "logged": "2026-11-21T14:46:44.817472+00:00",
+   "matched": [
+    "Nice"
+   ],
+   "pid": "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXLIGUE1TEAMTOTAL-26NOV21NICPSG:home\", \"yes\"]]",
+   "price": 0.33,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_team_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXEPLFTTS-26NOV21NEWARS-NEW",
+   "entered_at": "2026-11-21T15:03:33.195711+00:00",
+   "entities": [
+    "Newcastle"
+   ],
+   "id": "superpack:[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXEPLFTTS-26NOV21NEWARS-NEW\", \"b\"]]",
+   "lane": "ftts_no_70_80",
+   "logged": "2026-11-21T15:03:17+00:00",
+   "matched": [
+    "Newcastle"
+   ],
+   "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXEPLFTTS-26NOV21NEWARS-NEW\", \"b\"]]",
+   "price": 0.74,
+   "profit": null,
+   "scope": "soccer_ftts",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXLIGUE1FTTS-26NOV21ASMAUX-AUX",
+   "entered_at": "2026-11-21T15:03:33.195711+00:00",
+   "entities": [
+    "Auxerre"
+   ],
+   "id": "superpack:[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXLIGUE1FTTS-26NOV21ASMAUX-AUX\", \"b\"]]",
+   "lane": "ftts_no_70_80",
+   "logged": "2026-11-21T15:03:17+00:00",
+   "matched": [
+    "Auxerre"
+   ],
+   "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXLIGUE1FTTS-26NOV21ASMAUX-AUX\", \"b\"]]",
+   "price": 0.76,
+   "profit": null,
+   "scope": "soccer_ftts",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXLIGUE1FTTS-26NOV21NICPSG-NIC",
+   "entered_at": "2026-11-21T15:03:33.195711+00:00",
+   "entities": [
+    "Nice"
+   ],
+   "id": "superpack:[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXLIGUE1FTTS-26NOV21NICPSG-NIC\", \"b\"]]",
+   "lane": "ftts_no_70_80",
+   "logged": "2026-11-21T15:03:17+00:00",
+   "matched": [
+    "Nice"
+   ],
+   "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXLIGUE1FTTS-26NOV21NICPSG-NIC\", \"b\"]]",
+   "price": 0.71,
+   "profit": null,
+   "scope": "soccer_ftts",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXSERIEAFTTS-26NOV21NAPTOR-TOR",
+   "entered_at": "2026-11-21T15:03:33.195711+00:00",
+   "entities": [
+    "Torino"
+   ],
+   "id": "superpack:[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXSERIEAFTTS-26NOV21NAPTOR-TOR\", \"b\"]]",
+   "lane": "ftts_no_70_80",
+   "logged": "2026-11-21T15:03:17+00:00",
+   "matched": [
+    "Torino"
+   ],
+   "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXSERIEAFTTS-26NOV21NAPTOR-TOR\", \"b\"]]",
+   "price": 0.74,
+   "profit": null,
+   "scope": "soccer_ftts",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
    "status": "open"
   }
  ],
