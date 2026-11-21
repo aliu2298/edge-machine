@@ -1,7 +1,7 @@
 {
  "box_through": "2026-11-20",
  "error": null,
- "last_run": "2026-11-21T01:45:28.987025+00:00",
+ "last_run": "2026-11-21T02:00:32.210010+00:00",
  "looks": {
   "401909305": {
    "at": "2026-11-20T22:45:25.302540+00:00",
@@ -1083,21 +1083,27 @@
      "bid": 0.57,
      "edge": 0.0539,
      "entered": "2026-11-20T22:45:25.302540+00:00",
+     "fee_in": 0.0172,
      "game": "CHA @ ATL",
      "game_id": "401909305",
      "id": "spotter_fade:KXNBAPRA-26NOV20CHAATL-CHAMDIABATE14-20",
      "lead_min": 74.6,
      "night": "2026-11-20",
      "p": 0.4539,
+     "payout": 0.0,
      "pid": "4433249",
      "player": "Moussa Diabat\u00e9",
      "price": 0.43,
+     "profit": -0.4472,
+     "ret": -1.0,
      "rule": "spotter_fade",
      "rung": 20,
+     "settled": "2026-11-21T02:00:32.210010+00:00",
      "side": "no",
+     "sold": false,
      "start": "2026-11-21T00:00:00+00:00",
      "stat": "pra",
-     "status": "open",
+     "status": "lost",
      "team": "CHA",
      "ticker": "KXNBAPRA-26NOV20CHAATL-CHAMDIABATE14-20",
      "unit": "points+rebounds+assists",
@@ -4547,12 +4553,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-19T01:30:34.871433+00:00",
-   "box": 0,
-   "due": 0,
-   "new": 0
-  },
-  {
    "at": "2026-11-19T01:45:28.167470+00:00",
    "box": 0,
    "due": 2,
@@ -4850,6 +4850,12 @@
    "at": "2026-11-21T01:45:28.987025+00:00",
    "box": 0,
    "due": 2,
+   "new": 0
+  },
+  {
+   "at": "2026-11-21T02:00:32.210010+00:00",
+   "box": 0,
+   "due": 0,
    "new": 0
   }
  ],
