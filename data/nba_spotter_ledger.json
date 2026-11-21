@@ -1,7 +1,7 @@
 {
  "box_through": "2026-11-21",
  "error": null,
- "last_run": "2026-11-21T16:30:29.220213+00:00",
+ "last_run": "2026-11-21T16:45:26.645245+00:00",
  "looks": {
   "401909305": {
    "at": "2026-11-20T22:45:25.302540+00:00",
@@ -446,6 +446,25 @@
    },
    "spread": -15.5,
    "usable": 170
+  },
+  "401910023": {
+   "at": "2026-11-21T16:45:26.645245+00:00",
+   "batch": 1,
+   "entered": {
+    "spotter_fade": 4,
+    "spotter_hold": 0,
+    "spotter_spike": 4
+   },
+   "game": "MIL @ PHI",
+   "night": "2026-11-21",
+   "out": 53,
+   "skipped": {
+    "no quote": 3,
+    "outside 5-60c": 80,
+    "wide": 5
+   },
+   "spread": -11.5,
+   "usable": 156
   }
  },
  "nights": {
@@ -746,6 +765,54 @@
      ],
      [
       "4066320",
+      "pts"
+     ]
+    ]
+   }
+  },
+  "2026-11-21": {
+   "spotter_fade": {
+    "n": 4,
+    "players": [
+     [
+      "4432848",
+      "pra"
+     ],
+     [
+      "4591725",
+      "ast"
+     ],
+     [
+      "4432848",
+      "ast"
+     ],
+     [
+      "3133628",
+      "pra"
+     ]
+    ]
+   },
+   "spotter_hold": {
+    "n": 0,
+    "players": []
+   },
+   "spotter_spike": {
+    "n": 4,
+    "players": [
+     [
+      "4351851",
+      "pts"
+     ],
+     [
+      "5164559",
+      "pts"
+     ],
+     [
+      "3133628",
+      "pts"
+     ],
+     [
+      "1966",
       "pts"
      ]
     ]
@@ -1251,6 +1318,106 @@
      "unit": "points+rebounds+assists",
      "why": "fewer shots than last season",
      "yes_ask": 0.51
+    },
+    {
+     "bid": 0.54,
+     "edge": 0.0859,
+     "entered": "2026-11-21T16:45:26.645245+00:00",
+     "game": "MIL @ PHI",
+     "game_id": "401910023",
+     "id": "spotter_fade:KXNBAPRA-26NOV21MILPHI-MILJJAQUEZ24-20",
+     "lead_min": 74.6,
+     "night": "2026-11-21",
+     "p": 0.5359,
+     "pid": "4432848",
+     "player": "Jaime Jaquez Jr.",
+     "price": 0.46,
+     "rule": "spotter_fade",
+     "rung": 20,
+     "side": "no",
+     "start": "2026-11-21T18:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "MIL",
+     "ticker": "KXNBAPRA-26NOV21MILPHI-MILJJAQUEZ24-20",
+     "unit": "points+rebounds+assists",
+     "why": "came off the bench last game",
+     "yes_ask": 0.55
+    },
+    {
+     "bid": 0.48,
+     "edge": 0.0722,
+     "entered": "2026-11-21T16:45:26.645245+00:00",
+     "game": "MIL @ PHI",
+     "game_id": "401910023",
+     "id": "spotter_fade:KXNBAAST-26NOV21MILPHI-MILRROLLINS13-4",
+     "lead_min": 74.6,
+     "night": "2026-11-21",
+     "p": 0.5522,
+     "pid": "4591725",
+     "player": "Ryan Rollins",
+     "price": 0.52,
+     "rule": "spotter_fade",
+     "rung": 4,
+     "side": "no",
+     "start": "2026-11-21T18:00:00+00:00",
+     "stat": "ast",
+     "status": "open",
+     "team": "MIL",
+     "ticker": "KXNBAAST-26NOV21MILPHI-MILRROLLINS13-4",
+     "unit": "assists",
+     "why": "fewer shots than last season",
+     "yes_ask": 0.52
+    },
+    {
+     "bid": 0.39,
+     "edge": 0.0696,
+     "entered": "2026-11-21T16:45:26.645245+00:00",
+     "game": "MIL @ PHI",
+     "game_id": "401910023",
+     "id": "spotter_fade:KXNBAAST-26NOV21MILPHI-MILJJAQUEZ24-4",
+     "lead_min": 74.6,
+     "night": "2026-11-21",
+     "p": 0.6696,
+     "pid": "4432848",
+     "player": "Jaime Jaquez Jr.",
+     "price": 0.61,
+     "rule": "spotter_fade",
+     "rung": 4,
+     "side": "no",
+     "start": "2026-11-21T18:00:00+00:00",
+     "stat": "ast",
+     "status": "open",
+     "team": "MIL",
+     "ticker": "KXNBAAST-26NOV21MILPHI-MILJJAQUEZ24-4",
+     "unit": "assists",
+     "why": "came off the bench last game",
+     "yes_ask": 0.4
+    },
+    {
+     "bid": 0.3,
+     "edge": 0.0687,
+     "entered": "2026-11-21T16:45:26.645245+00:00",
+     "game": "MIL @ PHI",
+     "game_id": "401910023",
+     "id": "spotter_fade:KXNBAPRA-26NOV21MILPHI-MILMTURNER3-20",
+     "lead_min": 74.6,
+     "night": "2026-11-21",
+     "p": 0.7387,
+     "pid": "3133628",
+     "player": "Myles Turner",
+     "price": 0.7,
+     "rule": "spotter_fade",
+     "rung": 20,
+     "side": "no",
+     "start": "2026-11-21T18:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "MIL",
+     "ticker": "KXNBAPRA-26NOV21MILPHI-MILMTURNER3-20",
+     "unit": "points+rebounds+assists",
+     "why": "team at full strength",
+     "yes_ask": 0.33
     }
    ]
   },
@@ -1754,6 +1921,112 @@
      "unit": "threes",
      "why": "drawn at random from this game's rungs at about the pick's price, NO side",
      "yes_ask": 0.48
+    },
+    {
+     "bid": 0.56,
+     "entered": "2026-11-21T16:45:26.645245+00:00",
+     "game": "MIL @ PHI",
+     "game_id": "401910023",
+     "id": "spotter_fade_blind:KXNBAAST-26NOV21MILPHI-PHIJEMBIID21-4",
+     "lead_min": 74.6,
+     "matches": "spotter_fade:KXNBAPRA-26NOV21MILPHI-MILJJAQUEZ24-20",
+     "night": "2026-11-21",
+     "outs": [
+      "Jaylen Brown"
+     ],
+     "p": null,
+     "pid": "3059318",
+     "player": "Joel Embiid",
+     "price": 0.44,
+     "rule": "spotter_fade_blind",
+     "rung": 4,
+     "side": "no",
+     "start": "2026-11-21T18:00:00+00:00",
+     "stat": "ast",
+     "status": "open",
+     "team": "PHI",
+     "ticker": "KXNBAAST-26NOV21MILPHI-PHIJEMBIID21-4",
+     "unit": "assists",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.58
+    },
+    {
+     "bid": 0.51,
+     "entered": "2026-11-21T16:45:26.645245+00:00",
+     "game": "MIL @ PHI",
+     "game_id": "401910023",
+     "id": "spotter_fade_blind:KXNBAPRA-26NOV21MILPHI-MILBBURRIES0-20",
+     "lead_min": 74.6,
+     "matches": "spotter_fade:KXNBAAST-26NOV21MILPHI-MILRROLLINS13-4",
+     "night": "2026-11-21",
+     "p": null,
+     "pid": "5082206",
+     "player": "Brayden Burries",
+     "price": 0.49,
+     "rule": "spotter_fade_blind",
+     "rung": 20,
+     "side": "no",
+     "start": "2026-11-21T18:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "MIL",
+     "ticker": "KXNBAPRA-26NOV21MILPHI-MILBBURRIES0-20",
+     "unit": "points+rebounds+assists",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.53
+    },
+    {
+     "bid": 0.36,
+     "entered": "2026-11-21T16:45:26.645245+00:00",
+     "game": "MIL @ PHI",
+     "game_id": "401910023",
+     "id": "spotter_fade_blind:KXNBAREB-26NOV21MILPHI-PHIJEMBIID21-10",
+     "lead_min": 74.6,
+     "matches": "spotter_fade:KXNBAAST-26NOV21MILPHI-MILJJAQUEZ24-4",
+     "night": "2026-11-21",
+     "outs": [
+      "Jaylen Brown"
+     ],
+     "p": null,
+     "pid": "3059318",
+     "player": "Joel Embiid",
+     "price": 0.64,
+     "rule": "spotter_fade_blind",
+     "rung": 10,
+     "side": "no",
+     "start": "2026-11-21T18:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "PHI",
+     "ticker": "KXNBAREB-26NOV21MILPHI-PHIJEMBIID21-10",
+     "unit": "rebounds",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.37
+    },
+    {
+     "bid": 0.33,
+     "entered": "2026-11-21T16:45:26.645245+00:00",
+     "game": "MIL @ PHI",
+     "game_id": "401910023",
+     "id": "spotter_fade_blind:KXNBA3PT-26NOV21MILPHI-MILKJAKUCIONIS25-2",
+     "lead_min": 74.6,
+     "matches": "spotter_fade:KXNBAPRA-26NOV21MILPHI-MILMTURNER3-20",
+     "night": "2026-11-21",
+     "p": null,
+     "pid": "5214640",
+     "player": "Kasparas Jaku\u010dionis",
+     "price": 0.67,
+     "rule": "spotter_fade_blind",
+     "rung": 2,
+     "side": "no",
+     "start": "2026-11-21T18:00:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "MIL",
+     "ticker": "KXNBA3PT-26NOV21MILPHI-MILKJAKUCIONIS25-2",
+     "unit": "threes",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.34
     }
    ]
   },
@@ -4054,6 +4327,108 @@
      "ticker": "KXNBAPTS-26NOV20ORLBKN-ORLDBANE3-20",
      "unit": "points",
      "why": "a steady player in this stat"
+    },
+    {
+     "bid": 0.39,
+     "edge": 0.0594,
+     "entered": "2026-11-21T16:45:26.645245+00:00",
+     "game": "MIL @ PHI",
+     "game_id": "401910023",
+     "id": "spotter_spike:KXNBAPTS-26NOV21MILPHI-PHIASIMONS5-15",
+     "lead_min": 74.6,
+     "night": "2026-11-21",
+     "outs": [
+      "Jaylen Brown"
+     ],
+     "p": 0.5594,
+     "pid": "4351851",
+     "player": "Anfernee Simons",
+     "price": 0.4,
+     "rule": "spotter_spike",
+     "rung": 15,
+     "start": "2026-11-21T18:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.8,
+     "team": "PHI",
+     "ticker": "KXNBAPTS-26NOV21MILPHI-PHIASIMONS5-15",
+     "unit": "points",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.41,
+     "edge": 0.0537,
+     "entered": "2026-11-21T16:45:26.645245+00:00",
+     "game": "MIL @ PHI",
+     "game_id": "401910023",
+     "id": "spotter_spike:KXNBAPTS-26NOV21MILPHI-MILNAMENT15-10",
+     "lead_min": 74.6,
+     "night": "2026-11-21",
+     "p": 0.5537,
+     "pid": "5164559",
+     "player": "Nate Ament",
+     "price": 0.42,
+     "rule": "spotter_spike",
+     "rung": 10,
+     "start": "2026-11-21T18:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.84,
+     "team": "MIL",
+     "ticker": "KXNBAPTS-26NOV21MILPHI-MILNAMENT15-10",
+     "unit": "points",
+     "why": "foul trouble"
+    },
+    {
+     "bid": 0.47,
+     "edge": 0.0272,
+     "entered": "2026-11-21T16:45:26.645245+00:00",
+     "game": "MIL @ PHI",
+     "game_id": "401910023",
+     "id": "spotter_spike:KXNBAPTS-26NOV21MILPHI-MILMTURNER3-10",
+     "lead_min": 74.6,
+     "night": "2026-11-21",
+     "p": 0.5272,
+     "pid": "3133628",
+     "player": "Myles Turner",
+     "price": 0.48,
+     "rule": "spotter_spike",
+     "rung": 10,
+     "start": "2026-11-21T18:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.96,
+     "team": "MIL",
+     "ticker": "KXNBAPTS-26NOV21MILPHI-MILMTURNER3-10",
+     "unit": "points",
+     "why": "foul trouble"
+    },
+    {
+     "bid": 0.38,
+     "edge": 0.0272,
+     "entered": "2026-11-21T16:45:26.645245+00:00",
+     "game": "MIL @ PHI",
+     "game_id": "401910023",
+     "id": "spotter_spike:KXNBAPTS-26NOV21MILPHI-PHILJAMES23-20",
+     "lead_min": 74.6,
+     "night": "2026-11-21",
+     "outs": [
+      "Jaylen Brown"
+     ],
+     "p": 0.5272,
+     "pid": "1966",
+     "player": "LeBron James",
+     "price": 0.39,
+     "rule": "spotter_spike",
+     "rung": 20,
+     "start": "2026-11-21T18:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.78,
+     "team": "PHI",
+     "ticker": "KXNBAPTS-26NOV21MILPHI-PHILJAMES23-20",
+     "unit": "points",
+     "why": "a top scorer on his team is out"
     }
    ]
   },
@@ -4849,17 +5224,110 @@
      "ticker": "KXNBAAST-26NOV20ORLBKN-ORLWCARTER34-2",
      "unit": "assists",
      "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.37,
+     "entered": "2026-11-21T16:45:26.645245+00:00",
+     "game": "MIL @ PHI",
+     "game_id": "401910023",
+     "id": "spotter_spike_blind:KXNBAPRA-26NOV21MILPHI-PHIASIMONS5-20",
+     "lead_min": 74.6,
+     "matches": "spotter_spike:KXNBAPTS-26NOV21MILPHI-PHIASIMONS5-15",
+     "night": "2026-11-21",
+     "outs": [
+      "Jaylen Brown"
+     ],
+     "p": null,
+     "pid": "4351851",
+     "player": "Anfernee Simons",
+     "price": 0.38,
+     "rule": "spotter_spike_blind",
+     "rung": 20,
+     "start": "2026-11-21T18:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "target": 0.76,
+     "team": "PHI",
+     "ticker": "KXNBAPRA-26NOV21MILPHI-PHIASIMONS5-20",
+     "unit": "points+rebounds+assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.36,
+     "entered": "2026-11-21T16:45:26.645245+00:00",
+     "game": "MIL @ PHI",
+     "game_id": "401910023",
+     "id": "spotter_spike_blind:KXNBA3PT-26NOV21MILPHI-MILNAMENT15-2",
+     "lead_min": 74.6,
+     "matches": "spotter_spike:KXNBAPTS-26NOV21MILPHI-MILNAMENT15-10",
+     "night": "2026-11-21",
+     "p": null,
+     "pid": "5164559",
+     "player": "Nate Ament",
+     "price": 0.39,
+     "rule": "spotter_spike_blind",
+     "rung": 2,
+     "start": "2026-11-21T18:00:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "target": 0.78,
+     "team": "MIL",
+     "ticker": "KXNBA3PT-26NOV21MILPHI-MILNAMENT15-2",
+     "unit": "threes",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.44,
+     "entered": "2026-11-21T16:45:26.645245+00:00",
+     "game": "MIL @ PHI",
+     "game_id": "401910023",
+     "id": "spotter_spike_blind:KXNBAPRA-26NOV21MILPHI-MILKKUZMA18-20",
+     "lead_min": 74.6,
+     "matches": "spotter_spike:KXNBAPTS-26NOV21MILPHI-MILMTURNER3-10",
+     "night": "2026-11-21",
+     "p": null,
+     "pid": "3134907",
+     "player": "Kyle Kuzma",
+     "price": 0.45,
+     "rule": "spotter_spike_blind",
+     "rung": 20,
+     "start": "2026-11-21T18:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "target": 0.9,
+     "team": "MIL",
+     "ticker": "KXNBAPRA-26NOV21MILPHI-MILKKUZMA18-20",
+     "unit": "points+rebounds+assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.34,
+     "entered": "2026-11-21T16:45:26.645245+00:00",
+     "game": "MIL @ PHI",
+     "game_id": "401910023",
+     "id": "spotter_spike_blind:KXNBAPTS-26NOV21MILPHI-MILKJAKUCIONIS25-10",
+     "lead_min": 74.6,
+     "matches": "spotter_spike:KXNBAPTS-26NOV21MILPHI-PHILJAMES23-20",
+     "night": "2026-11-21",
+     "p": null,
+     "pid": "5214640",
+     "player": "Kasparas Jaku\u010dionis",
+     "price": 0.36,
+     "rule": "spotter_spike_blind",
+     "rung": 10,
+     "start": "2026-11-21T18:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.72,
+     "team": "MIL",
+     "ticker": "KXNBAPTS-26NOV21MILPHI-MILKJAKUCIONIS25-10",
+     "unit": "points",
+     "why": "drawn at random from this game's rungs at about the pick's price"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-20T02:00:28.576490+00:00",
-   "box": 0,
-   "due": 0,
-   "new": 0
-  },
   {
    "at": "2026-11-20T02:30:28.911111+00:00",
    "box": 0,
@@ -5159,6 +5627,12 @@
    "box": 0,
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-21T16:45:26.645245+00:00",
+   "box": 0,
+   "due": 1,
+   "new": 16
   }
  ],
  "schedule": [
