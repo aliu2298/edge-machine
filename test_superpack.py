@@ -125,7 +125,7 @@ check("it carries the rule, both baselines, the weakness and the persistence not
 check("paper only, and it says so", "not in Production and in no feed" in card, True)
 check("the nav pill for it", 'href="#superpack"' in html, True)
 idx = B.build()
-check("a row in the Sandbox's lane index, linking to its card", ('<tr data-lane="superpack"' in idx, "./leaderboard.html#superpack" in idx), (True, True))
+check("a row in the Sandbox's lane index, linking to its card", ('<tr data-lane="superpack"' in idx, "./archive/leaderboard.html#superpack" in idx), (True, True))
 k = idx.find("Stamp of approval")
 check("a row in the stamp-of-approval table", __import__("html").escape(SP.LABEL) in idx[k:idx.find("</table>", k)], True)
 check("not a Production pair, not a registry source the tracker would fetch", ("superpack" in {p_.split("|")[0] for p_ in P.production_pairs(T.load_stages())},

@@ -2688,9 +2688,18 @@ def main():
     # The Leaderboard (2026-10-30): named teams, players and assets ranked on the ledgers above (leaderboard.py).
     try:
         import leaderboard_build
-        leaderboard_out = os.path.join(os.path.dirname(OUT), "leaderboard.html")
+        leaderboard_out = os.path.join(os.path.dirname(OUT), "archive", "leaderboard.html")
         _write(leaderboard_out, leaderboard_build.build(now=now))
+        _write(os.path.join(os.path.dirname(OUT), "leaderboard.html"), leaderboard_build.redirect_page())
         print(f"wrote {leaderboard_out}")
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"::warning::leaderboard page not rebuilt ({type(exc).__name__}: {exc})")
+    # The Combo page (2026-11-21, Olu): one paper crypto No + S&P No combo a day (combo_lane.py), in the Leaderboard's menu slot.
+    try:
+        import combo_build
+        combo_out = os.path.join(os.path.dirname(OUT), "combo.html")
+        _write(combo_out, combo_build.build(now=now))
+        print(f"wrote {combo_out}")
     except Exception as exc:                                    # noqa: BLE001
         print(f"::warning::leaderboard page not rebuilt ({type(exc).__name__}: {exc})")
     # The NBA board reads a file its own job writes four times a day. Rebuilt

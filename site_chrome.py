@@ -28,7 +28,7 @@ PAGES = (
     ("daily_markets", "Daily Markets", "./daily_markets.html"),
     ("culture", "Culture", "./culture.html"),
     ("fights", "Fights", "./fights.html"),
-    ("leaderboard", "Leaderboard", "./leaderboard.html"),
+    ("combo", "Combo", "./combo.html"),
     ("method", "Method", "./sandbox.html#method"),
 )
 SPORT_KEYS = ("nba", "nfl", "nhl", "soccer", "tennis", "cricket", "crypto", "commodities")
@@ -51,7 +51,7 @@ PAGE_FILES = {
     "daily_markets": "daily_markets.html",
     "culture": "culture.html",
     "fights": "fights.html",
-    "leaderboard": "leaderboard.html",
+    "combo": "combo.html",
 }
 
 # Fixed-width segmented control. The label is the current choice (aria-pressed),
@@ -109,7 +109,7 @@ def title_for(page):
 # The market pages sit in one "Markets" menu from 641px up (2026-10-16): thirteen pills had
 # wrapped onto two rows at 1280px and four on a tablet. Every link stays in nav.main in the same
 # order, so the phone's single swipe row (site.css, max-width 640px) still shows each one inline.
-MARKET_GROUP = ("nba", "nfl", "nhl", "soccer", "tennis", "cricket", "daily_markets", "culture", "fights", "leaderboard")
+MARKET_GROUP = ("nba", "nfl", "nhl", "soccer", "tennis", "cricket", "daily_markets", "culture", "fights", "combo")
 # The four groups merged into Daily Markets (2026-11-08). Their builders still pass their own key; the nav marks
 # Daily Markets for them, and Daily Markets leaves the nav only when all four are archived.
 MERGED = {"crypto": "daily_markets", "commodities": "daily_markets",
@@ -166,7 +166,7 @@ def nav(active, prefix="./"):
             group.append(link)
             if len(group) == len(in_group):
                 # The button always reads "Markets" (2026-11-04). It used to take the current page's name, so every
-                # page in the menu showed its label twice, button and link ("Leaderboard" on leaderboard.html, #254).
+                # page in the menu showed its label twice, button and link ("Leaderboard" on leaderboard.html, #254; now Combo).
                 # The current page is still marked: the button is highlighted and the page's own link is current.
                 here = any(k == active for k in in_group)
                 parts.append(

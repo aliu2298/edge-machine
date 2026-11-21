@@ -300,9 +300,10 @@ check("10+ weeks with the top quarter always ahead is proven", (pl["tested"], pl
 print("page")
 b = L.board(cs)
 html = LB.build(bets, cs, {"unverified ask": 3}, {"x": 1})
-check("Leaderboard is in the Markets menu, once", len(re.findall(r'<a href="\./leaderboard\.html"', html)), 1)
-check("the page marks itself current", 'aria-current="page">Leaderboard' in html, True)
-check("registered with its file name", site_chrome.PAGE_FILES["leaderboard"], "leaderboard.html")
+# 2026-11-21 (Olu): the Leaderboard moved to Archives; Combo took its menu slot. The page is built under archive/ with its crumb.
+check("the archived page keeps its crumb and is not in the Markets menu", ('aria-current="page">Leaderboard' in html, '<a href="../leaderboard.html"' in html), (True, False))
+check("Combo took the menu slot, with its file name", (site_chrome.PAGE_FILES["combo"], "leaderboard" in site_chrome.PAGE_FILES), ("combo.html", False))
+check("the old URL forwards to the archive", "archive/leaderboard.html" in LB.redirect_page() and 'http-equiv="refresh"' in LB.redirect_page(), True)
 check("no inline style, SVG or inline script", (len(re.findall(r"\sstyle=", html)), len(re.findall("<svg", html)),
                                                  len(re.findall(r"<script(?![^>]*\ssrc=)", html))), (0, 0, 0))
 text = re.sub(r"<[^>]+>", " ", html)
