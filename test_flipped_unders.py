@@ -60,12 +60,18 @@ def fake(path):
 st = FU.load("/nonexistent/fu.json")
 new = FU.run(st, fx, NOW, fake)
 ps = st["rules"]["FU"]["picks"]
-check("Saudi enters over 2.5 YES at the ask; Scotland's 3.5 is skipped for a 9c spread", [(p["sources"], p["line"], p["side"], p["price"]) for p in ps], [(["C5"], 2.5, "yes", 0.6)])
+check("Saudi under NO is 1 - 0.58 = 42c, inside C5's 50c band: enters over 2.5 YES at the ask; Scotland's 3.5 has a 9c spread, no entry", [(p["sources"], p["line"], p["side"], p["price"]) for p in ps], [(["C5"], 2.5, "yes", 0.6)])
 FU.run(st, fx, NOW + dt.timedelta(minutes=30), fake)
 check("a second read adds nothing: one frozen entry a match", len(st["rules"]["FU"]["picks"]), 1)
 p = st["rules"]["FU"]["picks"][0]
 check("settled on Kalshi's result, profit per $100 after the fee", (p["status"], p["profit"]), ("won", round(100 * (1 / (0.6 + FU.fee(0.6)) - 1), 2)))
 check("two source rules on one match are logged once with both", FU.picks_for(fixture("Al Hilal", "Al Nassr", "Saudi Pro League"), ("O-D+", "O-D+"), events["KXSAUDIPLTOTAL"][0], ["C5", "C7"], NOW)[0]["sources"], ["C5", "C7"])
+
+pricey = total("KXSAUDIPLTOTAL", "Al Hilal", "Al Nassr", {2.5: (0.40, 0.42)})
+check("the under's NO side must sit in the rule's band: NO 60c is above C5's 50c cap, so no entry", FU.picks_for(fixture("Al Hilal", "Al Nassr", "Saudi Pro League"), ("O-D+", "O-D+"), pricey, ["C5"], NOW), [])
+sc = total("KXSCOTTISHPREMTOTAL", "Celtic", "Hearts", {3.5: (0.30, 0.32)})
+check("B4's 60-75c band: NO 70c enters; the entry is the over's YES ask", [(p["sources"], p["price"], p["under_no"]) for p in FU.picks_for(fixture("Celtic", "Hearts", "Scottish Premiership"), ("O-D-", "O+D+"), sc, ["B4"], NOW)], [(["B4"], 0.32, 0.7)])
+check("two rules whose band the under is inside are both listed", FU.picks_for(fixture("Al Hilal", "Al Nassr", "Saudi Pro League"), ("O-D+", "O-D+"), events["KXSAUDIPLTOTAL"][0], ["C5", "C7"], NOW)[0]["sources"], ["C5", "C7"])
 
 print("\nthe record, per source rule")
 rec = FU.record(ps)

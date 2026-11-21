@@ -452,8 +452,8 @@ def flipped_rows(state=None):
     details = params_html([
         ("Leagues", "Saudi Pro League, Ligue 1, Turkish Super Lig, Scottish Premiership"),
         ("Rule", "When label rule C5 (Saudi u2.5), C6 (Ligue 1 u2.5), C7 (Super Lig u2.5) or B4 (Scottish u3.5) selects a match by its label "
-                 "filter, 20 to 90 minutes before kickoff, take the opposite side: YES on the over at that rule's line, at the YES ask, held "
-                 "to settlement. One entry a match; two source rules on one match are logged once with both listed. A retired source rule keeps "
+                 "filter and its own under price band (checked on the under's NO side at entry), 20 to 90 minutes before kickoff, take the opposite "
+                 "side: YES on the over at that rule's line, at the YES ask, held to settlement. One entry a match; two source rules on one match are logged once with both listed. A retired source rule keeps "
                  "its selector running for this lane only."),
         ("Research", "On the four under rules' past picks the unders went 1-14 and the overs 14-1, about +80% after fees. A hindsight sample "
                      "from rules kept because they failed: it is not counted."),

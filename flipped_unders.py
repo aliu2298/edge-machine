@@ -4,8 +4,9 @@ Olu (Nov 21): whenever soccer rule C5 (Saudi Pro League u2.5), C6 (Ligue 1 u2.5)
 selects a match by its label filter, at the same entry time (20 to 90 minutes before kickoff, soccer_rules.WINDOW_MIN), take the OPPOSITE
 side: YES on the over at that rule's line, at the YES ask, held to settlement. Own fresh record from 2026-11-21 (data/flipped_unders_ledger.json).
 
-Selection is the rule's LABEL FILTER (league + the two teams' labels). The rule's own price band belongs to the under it entered and is not
-applied: the entry is the over's YES ask, spread 5c or less. A source rule that is retired keeps its selector running for this lane only (its own
+Selection is exactly what the rule would have picked (Olu via the Coordinator, Nov 21): the label filter (league + the two teams' labels) AND the
+rule's own price band, checked on the under's NO side at entry (NO price = 1 - the line's YES bid, spread 5c or less), as soccer_rules.picks_for does.
+The entry is then the over: YES at the YES ask, the same line. A source rule that is retired keeps its selector running for this lane only (its own
 ledger and record are untouched). One entry per match: if two source rules select the same match it is logged once with both in `sources`.
 
 Why: on the four under rules' past picks the unders went 1-14 and the overs 14-1, about +80% after fees (C5 3-0, C6 5-0, C7 2-0, B4 4-1, Oct 18
@@ -57,27 +58,31 @@ def due(fixtures, now):
     return [f for f in SR.due(fixtures, now) if f.get("league") in leagues]
 
 
+def selects(rule, m):
+    """True when `rule` would pick this match at entry: the line is quoted (spread 5c or less) and the under's NO price is inside the rule's band."""
+    q = SR.quote(m) if m else None
+    if not q:
+        return False
+    r = SR.RULES[rule]
+    px = round(1 - q[0], 4)                                     # the under's NO side, as soccer_rules.picks_for prices it
+    return r["lo"] - 1e-9 <= px <= r["hi"] + 1e-9
+
+
 def picks_for(f, labs, ev, srcs, now):
-    """One entry for the match, or []: YES on the over at the first source rule's line, at the ask."""
-    out, seen = [], set()
-    for k in srcs:
-        line = SR.RULES[k]["line"]
-        if line in seen:
-            continue
-        seen.add(line)
-        m = SR.market_at(ev, line)
-        q = SR.quote(m) if m else None
-        if not q:
-            continue
-        b, a = q
-        both = [s for s in srcs if SR.RULES[s]["line"] == line]
-        out.append(dict(id=f"FU:{ev['event_ticker']}:{line}", rule="FU", sources=both, league=f["league"], event=ev["event_ticker"],
-                        match=f"{f['home']} v {f['away']}", start=f["kickoff"], ticker=m["ticker"], line=line, side="yes",
-                        price=round(a, 4), bid=b, ask=a, title=m.get("title") or m.get("yes_sub_title"), logged=now.isoformat(),
-                        status="open", labels=dict(home=labs[0], away=labs[1]),
-                        why=f"{', '.join(both)} select {f['home']} {labs[0]} v {f['away']} {labs[1]} · flipped: over {line} YES {a:.2f}"))
-        break                                    # one entry per match
-    return out
+    """One entry for the match, or []: YES on the over at the first selecting rule's line, at the ask. `srcs` are the label-selected rules;
+    those whose price band the under misses at entry are dropped, so the entry follows exactly the matches the rules would have picked."""
+    chosen = [k for k in srcs if selects(k, SR.market_at(ev, SR.RULES[k]["line"]))]
+    if not chosen:
+        return []
+    line = SR.RULES[chosen[0]]["line"]
+    m = SR.market_at(ev, line)
+    b, a = SR.quote(m)
+    both = [k for k in chosen if SR.RULES[k]["line"] == line]
+    return [dict(id=f"FU:{ev['event_ticker']}:{line}", rule="FU", sources=both, league=f["league"], event=ev["event_ticker"],
+                 match=f"{f['home']} v {f['away']}", start=f["kickoff"], ticker=m["ticker"], line=line, side="yes",
+                 price=round(a, 4), bid=b, ask=a, under_no=round(1 - b, 4), title=m.get("title") or m.get("yes_sub_title"),
+                 logged=now.isoformat(), status="open", labels=dict(home=labs[0], away=labs[1]),
+                 why=f"{', '.join(both)} would pick {f['home']} {labs[0]} v {f['away']} {labs[1]} (under NO {1 - b:.2f}) · flipped: over {line} YES {a:.2f}")]
 
 
 def run(state, fixtures, now=None, fetch=D.get):
