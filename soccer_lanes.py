@@ -98,6 +98,46 @@ def pick_quote(src, sport, p, market_text, title=None):
         start_source="espn", url="", rule=p.get("rule"))
 
 
+# ------------------------------------------------------------------ shadows (shadows.py, 2026-11-21)
+def shadow_html(lane, states=None, picks=None):
+    """The "Shadows (paper, not counted)" fold of a source lane's row: the BTTS YES shadow and the half-time check, beside the headline.
+    Never raises: a ledger that cannot be read leaves the row as it was."""
+    try:
+        import shadows as SH
+        meta = SH.LANES[lane]
+        st = (states or {}).get(meta["group"]) or SH.load(meta["group"])
+        picks = picks if picks is not None else SH.source_picks(lane)
+        p1 = lambda x: "—" if x is None else f"{x * 100:.1f}%"                         # noqa: E731
+        pr = lambda x: "—" if x is None else f"{x * 100:+.1f}%".replace("-", "−")     # noqa: E731
+        b = SH.btts_stats(st, lane)
+        h = SH.ht_stats(st, lane, picks)
+        name = "2H BTTS YES" if meta["kind"] == "2h" else "BTTS YES"
+        bt = "".join(f'<td class="num" data-l="{k}">{esc(v)}</td>' for k, v in zip(
+            ("Shadow", "Matches priced", "No quote", "Won-lost", "Average YES price", "Return after fees"),
+            (name + " (shadow)", b["matches"] - b["no_quote"], b["no_quote"], f'{b["won"]}-{b["lost"]}', p1(b["avg_price"]), pr(b["ret"]))))
+        ins = meta["in_sample"]["btts"]
+        bt = f"<tr>{bt}</tr>" + ('<tr class="mut"><td data-l="Shadow">In-sample, not counted</td><td colspan="5" data-l="Record">' + esc(ins or "no figure") + "</td></tr>")
+        btts_tbl = ('<div class="tbl"><table><thead><tr><th>Shadow</th><th>Matches priced</th><th>No quote</th><th>Won-lost</th><th>Average YES price</th>'
+                    f'<th>Return after fees</th></tr></thead><tbody>{bt}</tbody></table></div>')
+        ht = "".join(f'<td class="num" data-l="{k}">{esc(v)}</td>' for k, v in zip(
+            ("Shadow", "Checked", "Sold-held-no bid", "Average price paid", "Shadow return after fees", "Hold return, same entries"),
+            ("Half-time check (shadow)", h["checked"], f'{h["sold"]}-{h["held"]}-{h["no_bid"]}', p1(h["avg_price"]), pr(h["ret"]), pr(h["hold_ret"]))))
+        ins = meta["in_sample"]["ht"]
+        ht = f"<tr>{ht}</tr>" + ('<tr class="mut"><td data-l="Shadow">In-sample, not counted</td><td colspan="5" data-l="Record">' + esc(ins or "no figure") + "</td></tr>")
+        ht_tbl = ('<div class="tbl"><table><thead><tr><th>Shadow</th><th>Checked</th><th>Sold-held-no bid</th><th>Average price paid</th>'
+                  f'<th>Shadow return after fees</th><th>Hold return, same entries</th></tr></thead><tbody>{ht}</tbody></table></div>')
+        words = ("At the entry minute the YES ask on the match's " + ("second-half" if meta["kind"] == "2h" else "full-game") + " BTTS market (spread 3c or less, "
+                 "else no quote), held to settlement; one a match. Half-time check: at half-time, "
+                 + ("if the backed team has not scored, sell at its team-total YES bid, else hold"
+                    if meta["ht"] == "team" else "if 0-0, sell at the over's YES bid, else hold")
+                 + "; no bid counts as hold. Half-time is read from ESPN's match events and Kalshi's one-minute bid. Shadows never change the headline record.")
+        return ('<details class="section-disclosure"><summary><b>Shadows (paper, not counted)</b><span>2 columns beside the headline</span></summary>'
+                f'<p class="sm">{esc(words)}</p>{btts_tbl}{ht_tbl}</details>')
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"soccer_lanes: shadows {lane} failed: {type(exc).__name__}: {exc}")
+        return ""
+
+
 # ------------------------------------------------------------------ the row
 def legs_table(tradeable, every, headline="Legs the follower can take (headline)", all_label="All paper legs, incl. above the live price cap"):
     """The two records of a Production pair whose paper legs are not all tradeable (2026-11-06), one header-row table in the fold:
@@ -195,7 +235,7 @@ def label_rows(state=None):
                                 ("Rule", meta["label"]), ("Research", meta.get("evidence")),
                                 ("Record", "Paper at the Kalshi price, 7% fee, Kalshi's own settlement"),
                                 ("History", " · ".join(history))])
-                   + (SB.BTTS_NOTE if btts else ""))
+                   + (SB.BTTS_NOTE if btts else "") + (shadow_html(key) if key == "A7" else ""))
         labels = ("Labels", lambda p: f'{(p.get("labels") or {}).get("home") or ""} v {(p.get("labels") or {}).get("away") or ""}')
         side = ("Side", lambda p: str(p.get("side") or "").upper())
         contract = ("Contract", lambda p: p.get("title") or "")
@@ -251,7 +291,7 @@ def team_rows(state=None):
         details = params_html([("Leagues", leagues), ("Group", f"{meta['group']} · {TR.GROUPS[meta['group']]}"),
                                ("Rule", meta["label"]), ("Research", meta.get("evidence")),
                                ("Record", "Paper at the Kalshi price, 7% fee, Kalshi's own settlement"),
-                               ("History", " · ".join(history))])
+                               ("History", " · ".join(history))]) + (shadow_html(key) if key == "T1" else "")
         team = ("Team", lambda p: p.get("team") or "")
         labels = ("Labels", lambda p: f'{(p.get("labels") or {}).get("own") or ""} v {(p.get("labels") or {}).get("opp") or ""}')
         pair = f"{src}|{sport}" if key in TRP.PAIRS else None
@@ -395,7 +435,7 @@ def sa_rows(state=None):
             hist.append(f"Retired {gone['on']}: {gone['reason']}. Its entries stay and settle")
         details = params_html([("League", meta["league"]), ("Rule", "Every league match · over 1.5 goals · YES at the ask, no selection"),
                                ("Research", meta["evidence"]), ("Record", "Paper at the Kalshi price, 7% fee; the two leagues are judged apart"),
-                               ("History", " · ".join(hist))])
+                               ("History", " · ".join(hist))]) + shadow_html(key)
         r = row(f"sa_o15_{key.lower()}", "soccer_o15", f"{meta['league']} over 1.5 · every match", "Over 1.5", pick_record(picks),
                 details, open_n=sum(p.get("status") == "open" for p in picks),
                 gone=(f"Retired {gone['on']}: {gone['reason']}." if gone else None),
