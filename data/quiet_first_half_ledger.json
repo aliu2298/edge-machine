@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-21T16:01:55.133062+00:00",
+ "last_run": "2026-11-21T16:16:56.532715+00:00",
  "registered": "2026-11-21",
  "rules": {
   "PB": {
@@ -17,14 +17,17 @@
      "league": "Premier League",
      "logged": "2026-11-21T13:46:31.283169+00:00",
      "match": "Tottenham Hotspur v Ipswich Town",
+     "payout": 1.0,
      "price": 0.79,
+     "profit": 24.75,
      "rule": "PB",
+     "settled": "2026-11-21T16:16:56.532715+00:00",
      "side": "no",
      "sources": [
       "A6"
      ],
      "start": "2026-11-21T15:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXEPL1HBTTS-26NOV21TOTIPS-BTTS",
      "title": "Both teams score in the 1st Half?",
      "u15": {
@@ -89,6 +92,12 @@
   },
   {
    "at": "2026-11-21T16:01:55.133062+00:00",
+   "due": 1,
+   "new": 0,
+   "selected": 0
+  },
+  {
+   "at": "2026-11-21T16:16:56.532715+00:00",
    "due": 1,
    "new": 0,
    "selected": 0
