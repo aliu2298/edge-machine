@@ -1481,23 +1481,30 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.22
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.33
     }
    ],
    "logged": "2026-11-20T21:00:42.183298+00:00",
    "minutes_to_start": 53.0,
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.1169,
    "price": 0.11,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-11-21T05:00:41.091769+00:00",
    "side": "yes",
    "spread": 0.05,
    "spread_cost": null,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Darvin Galeano"
   },
@@ -1809,12 +1816,12 @@
   "KXBOXING-26OCT31TSUTSUROJAS": "2026-10-31T20:06:27.383501+00:00"
  },
  "lane": "boxing_cheap_dog",
- "last_success": "2026-11-21T04:00:34.681714+00:00",
+ "last_success": "2026-11-21T05:00:41.091769+00:00",
  "observations": {
-  "at": "2026-11-21T04:00:34.681714+00:00",
+  "at": "2026-11-21T05:00:41.091769+00:00",
   "entered": 0,
   "events": 4,
-  "filled": 1,
+  "filled": 0,
   "no_start": 0,
   "skipped": 0,
   "unverified": 1,
