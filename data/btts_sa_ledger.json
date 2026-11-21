@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-21T17:31:27.425368+00:00",
+ "last_run": "2026-11-21T18:01:49.766569+00:00",
  "rules": {
   "NO": {
    "picks": [
@@ -220,6 +220,23 @@
      "status": "open",
      "ticker": "KXARGPREMDIVBTTS-26NOV21DYJBAR-BTTS",
      "why": "Argentina BTTS NO 0.53"
+    },
+    {
+     "ask": 0.43,
+     "bid": 0.42,
+     "event": "KXBRASILEIROBTTS-26NOV21PALFLA",
+     "id": "NO:KXBRASILEIROBTTS-26NOV21PALFLA",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-21T18:01:49.766569+00:00",
+     "match": "Palmeiras v Flamengo",
+     "price": 0.43,
+     "rule": "NO",
+     "side": "no",
+     "start": "2026-11-21T19:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV21PALFLA-BTTS",
+     "why": "Brazil BTTS NO 0.43"
     }
    ]
   },
@@ -441,18 +458,28 @@
      "status": "open",
      "ticker": "KXARGPREMDIVBTTS-26NOV21DYJBAR-BTTS",
      "why": "Argentina BTTS YES 0.48"
+    },
+    {
+     "ask": 0.58,
+     "bid": 0.57,
+     "event": "KXBRASILEIROBTTS-26NOV21PALFLA",
+     "id": "YES:KXBRASILEIROBTTS-26NOV21PALFLA",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-21T18:01:49.766569+00:00",
+     "match": "Palmeiras v Flamengo",
+     "price": 0.58,
+     "rule": "YES",
+     "side": "yes",
+     "start": "2026-11-21T19:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV21PALFLA-BTTS",
+     "why": "Brazil BTTS YES 0.58"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-18T21:31:34.260739+00:00",
-   "due": 2,
-   "matched": 2,
-   "new": 2,
-   "quoted": 2
-  },
   {
    "at": "2026-11-18T22:01:53.077183+00:00",
    "due": 4,
@@ -801,6 +828,13 @@
    "due": 1,
    "matched": 1,
    "new": 0,
+   "quoted": 1
+  },
+  {
+   "at": "2026-11-21T18:01:49.766569+00:00",
+   "due": 1,
+   "matched": 1,
+   "new": 2,
    "quoted": 1
   }
  ],
