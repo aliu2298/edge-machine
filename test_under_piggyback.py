@@ -38,7 +38,10 @@ score = dict(event_ticker=f"KXEPLSCORE-{TAG}", title="Manchester City vs Fulham 
              markets=[mk(f"KXEPLSCORE-{TAG}-MCI1FUL0", "Final score Manchester City wins 1-0?", 0.07, 0.08), mk(f"KXEPLSCORE-{TAG}-MCI0FUL0", "Draw 0-0", 0.02, 0.03),
                       mk(f"KXEPLSCORE-{TAG}-MCI0FUL1", "Fulham wins 1-0", 0.02, 0.03)])
 btts = dict(event_ticker=f"KXEPL1HBTTS-{TAG}", title="Manchester City vs Fulham: First Half BTTS", markets=[mk(f"KXEPL1HBTTS-{TAG}-BTTS", "1H BTTS", 0.23, 0.25)])
-events = {"KXEPLTOTAL": [total], "KXEPLGAME": [game], "KXEPLSCORE": [score], "KXEPL1HBTTS": [btts]}
+h1 = dict(event_ticker=f"KXEPL1HTOTAL-{TAG}", title="Manchester City vs Fulham: First Half Total",
+          markets=[mk(f"KXEPL1HTOTAL-{TAG}-1", "Over 0.5 1H goals scored", 0.79, 0.80), mk(f"KXEPL1HTOTAL-{TAG}-2", "Over 1.5 1H goals scored", 0.31, 0.33),
+                   mk(f"KXEPL1HTOTAL-{TAG}-3", "Over 2.5 1H goals scored", 0.09, 0.11)])
+events = {"KXEPLTOTAL": [total], "KXEPLGAME": [game], "KXEPLSCORE": [score], "KXEPL1HBTTS": [btts], "KXEPL1HTOTAL": [h1]}
 
 
 def fake(path):
@@ -78,6 +81,15 @@ wide = dict(score, markets=[mk(f"KXEPLSCORE-{TAG}-MCI1FUL0", "x", 0.04, 0.08)])
 check("a 1-0 spread over 3c: no entry", UP.pick_fav(fx[0], ("O-D-", "O+D+"), total, ["A6"], game, wide, NOW), None)
 check("no 1H BTTS market for the match: no entry", UP.pick_quiet(fx[0], ("O-D-", "O+D+"), total, ["A6"], None, NOW), None)
 check("a 1H BTTS spread over 3c: no entry", UP.pick_quiet(fx[0], ("O-D-", "O+D+"), total, ["A6"], dict(btts, markets=[mk(f"KXEPL1HBTTS-{TAG}-BTTS", "x", 0.20, 0.25)]), NOW), None)
+
+print("\nthe 1st-half under 1.5 shadow")
+u = q1[0]["u15"]
+check("NO ask on the 1H total over 1.5 at the same minute: 1 - the 31c bid = 69c (line from the title)", (u["quote"], u["ticker"][-2:], u["side"], u["price"]), (True, "-2", "no", 0.69))
+check("graded held from Kalshi's settlement: over 1.5 settled NO, the under won", (u["status"], u["profit"]), ("won", round(100 * (1 / (0.69 + UP.FU.fee(0.69)) - 1), 2)))
+check("a spread over 3c or no market is marked no quote", (UP.u15_shadow(dict(h1, markets=[mk("X-2", "Over 1.5 1H goals scored", 0.20, 0.30)])), UP.u15_shadow(None)), ({"quote": False}, {"quote": False}))
+rec = UP.u15_record([q1[0], dict(q1[0], u15=dict(quote=False))])
+check("shadow record: priced entries, no-quote count, won-lost, average price, return", (rec["entries"], rec["no_quote"], rec["won"], rec["lost"], rec["avg_price"], rec["ret"] is not None), (1, 1, 1, 0, 0.69, True))
+check("the headline quiet_first_half record stays 1H BTTS NO", (q1[0]["ticker"][-4:], q1[0]["side"]), ("BTTS", "no"))
 
 print("\nthe 2x shadow (trade prints, not bid highs)")
 KO_TS = int(KO.timestamp())

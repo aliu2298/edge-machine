@@ -14,10 +14,13 @@ In-sample (hindsight, never counted): fav 1-0 6 of 33 at about 14c, about +27% a
 A6 10-0 +22%, C8 4-0 +17%).
 fav_one_nil also carries a "sell at 2x" SHADOW (shadow_update): sold when a TRADE print reaches 2x the ask, shown beside the hold record.
 In-sample for it: hold +27%, 2x +18%, 22 of 33 sold.
+quiet_first_half also carries a 1st-half UNDER 1.5 SHADOW (u15_shadow): at the same minute the NO ask on the league's 1H total over 1.5
+(prefix + 1HTOTAL), spread 3c or less, held to settlement. In-sample for it: 31 of 36 at 68c, +24% (EPL 10/10 +56%, Nations League 21/26 +13%).
 """
 import datetime as dt
 import json
 import os
+import re
 import urllib.parse
 
 import daily_track as D
@@ -36,7 +39,8 @@ LANES = {
                         in_sample=dict(entries=33, won=6, lost=27, price="about 14c", ret="about +27%", note="held; 67% touched 2x in play", sold=22, shadow_ret="about +18%")),
     "quiet_first_half": dict(name="Quiet First Half", suffix="1HBTTS", side="no",
                              words="First-half BTTS NO at the NO ask",
-                             in_sample=dict(entries=41, won=40, lost=1, price="81c to 87c", ret="A5 +10%, A6 +22%, C8 +17%", note="A5 26-1, A6 10-0, C8 4-0")),
+                             in_sample=dict(entries=41, won=40, lost=1, price="81c to 87c", ret="A5 +10%, A6 +22%, C8 +17%", note="A5 26-1, A6 10-0, C8 4-0",
+                                       u15=dict(entries=36, won=31, lost=5, price="68c", ret="+24% (EPL 10/10 +56%, Nations League 21/26 +13%)"))),
 }
 
 
@@ -129,7 +133,43 @@ def pick_fav(f, labs, total_ev, srcs, game_ev, score_ev, now):
     return p
 
 
-def pick_quiet(f, labs, total_ev, srcs, btts_ev, now):
+def u15_shadow(h_ev):
+    """The 1st-half UNDER 1.5 shadow (Olu, Nov 21) at the quiet_first_half minute: NO ask on the league's 1H total over 1.5 = 1 - the YES bid,
+    spread 3c or less, else "no quote". The line is read from the market's title, never the ticker suffix."""
+    m = next((x for x in (h_ev or {}).get("markets") or [] if re.search(r"over\s+1\.5\b", str(x.get("title") or ""), re.I)), None)
+    q = _quote(m)
+    if not q or not q[0] > 0:
+        return dict(quote=False)
+    return dict(quote=True, ticker=m["ticker"], side="no", price=round(1 - q[0], 4), bid=q[0], ask=q[1])
+
+
+def settle_u15(p, now, fetch=D.get):
+    """Grade the shadow from Kalshi's settlement, held: it wins when the over 1.5 market settles NO. Profit per $100 after the taker fee."""
+    sh = p.get("u15")
+    if not sh or not sh.get("quote") or sh.get("status") in ("won", "lost", "no_result"):
+        return
+    m = fetch("markets/" + urllib.parse.quote(sh["ticker"], safe="")).get("market", {})
+    if m.get("ticker") != sh["ticker"]:
+        raise ValueError("settlement ticker mismatch")
+    px = D.payout(m)
+    if px is None:
+        return
+    pay = 1 - px
+    sh.update(payout=pay, profit=round(100 * (pay / (sh["price"] + FU.fee(sh["price"])) - 1), 2),
+              status="won" if pay == 1 else "lost" if pay == 0 else "no_result", settled=now.isoformat())
+
+
+def u15_record(picks):
+    """Entries priced, won-lost, average NO price and return after fees of the shadow over `picks`."""
+    rows = [p["u15"] for p in picks if (p.get("u15") or {}).get("quote")]
+    done = [r for r in rows if r.get("status") in ("won", "lost", "no_result")]
+    return dict(entries=len(rows), no_quote=sum(1 for p in picks if p.get("u15") is not None and not p["u15"].get("quote")),
+                won=sum(r["status"] == "won" for r in done), lost=sum(r["status"] == "lost" for r in done),
+                avg_price=(sum(r["price"] for r in rows) / len(rows)) if rows else None,
+                ret=(sum(r["profit"] for r in done) / (100 * len(done))) if done else None)
+
+
+def pick_quiet(f, labs, total_ev, srcs, btts_ev, now, h_ev=None):
     m = next((x for x in (btts_ev or {}).get("markets") or [] if str(x.get("ticker") or "").endswith("-BTTS")), None)
     q = _quote(m)
     if not q or not q[0] > 0:
@@ -138,7 +178,7 @@ def pick_quiet(f, labs, total_ev, srcs, btts_ev, now):
     no_ask = round(1 - b, 4)
     p = base_pick("quiet_first_half", f, labs, total_ev, srcs, now)
     p.update(ticker=m["ticker"], side="no", price=no_ask, bid=b, ask=a, title=m.get("title") or m.get("yes_sub_title"),
-             why=f"{', '.join(srcs)} pick it · 1H BTTS NO {no_ask:.2f}")
+             why=f"{', '.join(srcs)} pick it · 1H BTTS NO {no_ask:.2f}", u15=u15_shadow(h_ev))
     return p
 
 
@@ -183,7 +223,8 @@ def run(states, fixtures, now=None, fetch=D.get):
                 if key == "fav_one_nil":
                     p = pick_fav(f, labs, total_ev, srcs, SR.find_event(f, events(pre + "GAME")), SR.find_event(f, events(pre + "SCORE")), now)
                 else:
-                    p = pick_quiet(f, labs, total_ev, srcs, SR.find_event(f, events(pre + "1HBTTS")), now)
+                    p = pick_quiet(f, labs, total_ev, srcs, SR.find_event(f, events(pre + "1HBTTS")), now,
+                                   SR.find_event(f, events(pre + "1HTOTAL")))
                 if p:
                     states[key]["rules"]["PB"]["picks"].append(p)
                     seen[key].add(p["event"])
@@ -192,6 +233,12 @@ def run(states, fixtures, now=None, fetch=D.get):
             errs.append(f"{f['home']} v {f['away']}: {str(e)[:80]}")
     for key, st in states.items():
         e2 = errs + SR.settle(st, now, fetch)
+        if key == "quiet_first_half":
+            for p in st["rules"]["PB"]["picks"]:
+                try:
+                    settle_u15(p, now, fetch)
+                except Exception as e:                          # noqa: BLE001
+                    e2.append(f"u15 {p['id']}: {str(e)[:60]}")
         if key == "fav_one_nil":
             for p in st["rules"]["PB"]["picks"]:
                 try:

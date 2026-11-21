@@ -476,7 +476,8 @@ def piggyback_rows(states=None):
     base_heads = ("Source rule", "Entries", "Won-lost", "Hit rate", "Average price paid", "Break-even after fees", "Return after fees")
     out = []
     for key, meta in UP.LANES.items():
-        heads = base_heads + (("Sold at 2x (shadow)", "2x return after fees (shadow)") if key == "fav_one_nil" else ())
+        heads = base_heads + (("Sold at 2x (shadow)", "2x return after fees (shadow)") if key == "fav_one_nil" else
+                                  ("1H under 1.5 (shadow) won-lost", "1H under 1.5 average price", "1H under 1.5 return after fees") if key == "quiet_first_half" else ())
         st = (states or {}).get(key) or (UP.load(key) if os.path.exists(UP.path(key)) else {"rules": {"PB": {"picks": []}}})
         picks = (st.get("rules", {}).get("PB") or {}).get("picks") or []
         body = ""
@@ -485,11 +486,17 @@ def piggyback_rows(states=None):
             if key == "fav_one_nil":
                 n_s, sold, sret = UP.shadow_record([p for p in picks if k in (p.get("sources") or [])])
                 cells += (f"{sold} of {n_s}" if n_s else "—", pr(sret))
+            if key == "quiet_first_half":
+                u = UP.u15_record([p for p in picks if k in (p.get("sources") or [])])
+                cells += (f'{u["won"]}-{u["lost"]}' + (f' ({u["no_quote"]} no quote)' if u["no_quote"] else ""), p1(u["avg_price"]), pr(u["ret"]))
             body += "<tr>" + "".join(f'<td class="num" data-l="{h}">{esc(c)}</td>' for h, c in zip(heads, cells)) + "</tr>"
         ins = meta["in_sample"]
         cells = ("In-sample, not counted", ins["entries"], f'{ins["won"]}-{ins["lost"]}', p1(ins["won"] / ins["entries"]), ins["price"], "—", ins["ret"])
         if key == "fav_one_nil":
             cells += (f'{ins["sold"]} of {ins["entries"]}', ins["shadow_ret"])
+        if key == "quiet_first_half":
+            u = ins["u15"]
+            cells += (f'{u["won"]}-{u["lost"]}', u["price"], u["ret"])
         body += '<tr class="mut">' + "".join(f'<td class="num" data-l="{h}">{esc(c)}</td>' for h, c in zip(heads, cells)) + "</tr>"
         table = ('<div class="tbl"><table><thead><tr>' + "".join(f"<th>{h}</th>" for h in heads) + f"</tr></thead><tbody>{body}</tbody></table></div>")
         details = params_html([
@@ -501,7 +508,9 @@ def piggyback_rows(states=None):
                         if key == "fav_one_nil" else " Spread 3c or less; no entry when the match has no first-half BTTS market.")),
             ("Research", f'A hindsight sample from the proved under rules, not counted: {ins["note"]}.'),
             ("Record", "Paper at the Kalshi price, 7% fee, Kalshi's own settlement, fresh from 2026-11-21. Review at 10 settled, decide at 30."),
-            ] + ([("Shadow", "A sell at 2x the entry ask (capped at 99c) shown beside the hold record, never the headline: sold when a trade print after "
+            ] + ([("Shadow", "First-half under 1.5 at the same minute: the NO ask on the 1H total over 1.5 (spread 3c or less, else no quote), "
+                             "held to settlement, shown beside the BTTS NO record, never the headline.")] if key == "quiet_first_half" else [])
+              + ([("Shadow", "A sell at 2x the entry ask (capped at 99c) shown beside the hold record, never the headline: sold when a trade print after "
                              "kickoff reaches it, else the settled result; taker fee on both legs.")] if key == "fav_one_nil" else [])) + table
         cols = [KICK, MATCH, ("Source rules", lambda p: ", ".join(p.get("sources") or [])), ("Side", lambda p: str(p.get("side") or "").upper()), PRICE,
                 ("Result", lambda p: _res_pct(p))]
