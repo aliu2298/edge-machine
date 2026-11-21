@@ -56,6 +56,8 @@ jobs:
         # Right after the reads above, so an entry 90-20 minutes before kickoff is published
         # while there is time to act on it (production.FIRST_PUBLISH_MIN).
         run: python3 soccer_rules_production.py
+      - name: Shadows on A7, Argentina and Brasileirão (shadows.py soccer; paper; reads the ledgers above)
+        run: python3 shadows.py soccer || echo "shadows failed; the lane and its Production feed are not held up"
       - name: Save records
         # The Feeds heartbeat restamps data/soccer_rules_production_leads.json too, so it can push between
         # this run's checkout and its push. save_records.py rebases the ledgers (only this workflow writes
