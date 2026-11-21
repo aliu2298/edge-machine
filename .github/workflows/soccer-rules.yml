@@ -48,6 +48,8 @@ jobs:
         run: python3 sa_o15.py
       - name: Brazil and Argentina BTTS YES (btts_sa.py, same window, own ledger and kickoff schedule; paper)
         run: python3 btts_sa.py
+      - name: Flipped Unders (flipped_unders.py, same window, own ledger; paper)
+        run: python3 flipped_unders.py
       - name: Soccer rules Production feed (A7, A6, D3, Argentina over 1.5; 2026-10-21)
         # Right after the reads above, so an entry 90-20 minutes before kickoff is published
         # while there is time to act on it (production.FIRST_PUBLISH_MIN).

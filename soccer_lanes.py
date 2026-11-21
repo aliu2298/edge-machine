@@ -471,6 +471,42 @@ def btts_sa_rows(state=None):
     return live, []
 
 
+def flipped_rows(state=None):
+    """Flipped Unders (flipped_unders.py, 2026-11-21): the over side of C5/C6/C7/B4's selections, paper. Percentages only."""
+    import flipped_unders as FU
+    state = state if state is not None else (FU.load() if os.path.exists(FU.PATH) else {"rules": {"FU": {"picks": []}}})
+    picks = (state.get("rules", {}).get("FU") or {}).get("picks") or []
+    p1 = lambda x: "—" if x is None else f"{x * 100:.1f}%"
+    pr = lambda x: "—" if x is None else f"{x * 100:+.1f}%".replace("-", "−")
+    heads = ("Source rule", "Entries", "Won-lost", "Hit rate", "Average YES price", "Break-even after fees", "Return after fees")
+    body = ""
+    for k, r in FU.by_source(picks).items():
+        cells = (k, r["entries"], f'{r["won"]}-{r["lost"]}', p1(r["hit"]), p1(r["avg_price"]), p1(r["break_even"]), pr(r["ret"]))
+        body += "<tr>" + "".join(f'<td class="num" data-l="{h}">{esc(c)}</td>' for h, c in zip(heads, cells)) + "</tr>"
+    ins = FU.IN_SAMPLE
+    w = sum(v[0] for v in ins["by_rule"].values())
+    l = sum(v[1] for v in ins["by_rule"].values())
+    cells = (f'In-sample, not counted ({ins["window"]})', w + l, f"{w}-{l}", p1(w / (w + l)), "—", "—", ins["return"])
+    body += '<tr class="mut">' + "".join(f'<td class="num" data-l="{h}">{esc(c)}</td>' for h, c in zip(heads, cells)) + "</tr>"
+    table = ('<div class="tbl"><table><thead><tr>' + "".join(f"<th>{h}</th>" for h in heads) + f"</tr></thead><tbody>{body}</tbody></table></div>")
+    details = params_html([
+        ("Leagues", "Saudi Pro League, Ligue 1, Turkish Super Lig, Scottish Premiership"),
+        ("Rule", "When label rule C5 (Saudi u2.5), C6 (Ligue 1 u2.5), C7 (Super Lig u2.5) or B4 (Scottish u3.5) selects a match by its label "
+                 "filter and its own under price band (checked on the under's NO side at entry), 20 to 90 minutes before kickoff, take the opposite "
+                 "side: YES on the over at that rule's line, at the YES ask, held to settlement. One entry a match; two source rules on one match are logged once with both listed. A retired source rule keeps "
+                 "its selector running for this lane only."),
+        ("Research", "On the four under rules' past picks the unders went 1-14 and the overs 14-1, about +80% after fees. A hindsight sample "
+                     "from rules kept because they failed: it is not counted."),
+        ("Record", "Paper at the Kalshi price, 7% fee, fresh from 2026-11-21. Review at 10 settled, decide at 30."),
+    ]) + table
+    r = row("flipped_unders", "soccer_o25", "Flipped Unders · C5 C6 C7 B4 selections · over YES", "Over 2.5 / 3.5", pick_record(picks), details,
+            open_n=sum(p.get("status") == "open" for p in picks),
+            entries=entries_table(picks, [KICK, MATCH, ("Source rules", lambda p: ", ".join(p.get("sources") or [])), ("Line", lambda p: f'Over {p["line"]:g}'),
+                                          PRICE, ("Result", lambda p: _res_pct(p))]))
+    r["top"] = True
+    return [r]
+
+
 def _res_pct(p):
     res = {"open": "open", "won": "won", "lost": "lost", "no_result": "no result"}.get(p.get("status"), p.get("status"))
     return res + (f" · {float(p['profit']):+.0f}%" if p.get("profit") is not None else "")
@@ -791,7 +827,7 @@ def rows_and_inputs(d, st, now):
             live, gone, extra = live + lv, gone + gn, extra + qs
         except Exception as exc:                                # noqa: BLE001
             print(f"soccer_lanes: {fn.__name__} failed: {type(exc).__name__}: {exc}")
-    for fn in (contender_rows, sa_rows, btts_sa_rows):
+    for fn in (contender_rows, sa_rows, btts_sa_rows, lambda: (flipped_rows(), [])):
         try:
             lv, gn = fn()
             live, gone = live + lv, gone + gn

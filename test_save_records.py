@@ -265,6 +265,31 @@ with tempfile.TemporaryDirectory() as root:
     check("(without staging them all again the second builder run leaves the first feed unstaged)",
           sh("git diff --name-only", b).stdout.split(), ["data/f1.json"]) if False else None
 
+print("\na builder that also rewrites an --add record leaves nothing unstaged (Feeds heartbeat, 2026-11-21 07:01Z)")
+LEDGER_BUILDER = '''import json, os
+at = os.environ.get("BUILD_AT", "x")
+led = json.load(open("data/rec.json")); led["checked"] = at
+json.dump(led, open("data/rec.json", "w"))
+json.dump({"updated_at": at}, open("data/f1.json", "w"))
+'''
+with tempfile.TemporaryDirectory() as root:
+    remote, a, b = setup(root)
+    for c in (a, b):
+        with open(os.path.join(c, "lb.py"), "w") as f:
+            f.write(LEDGER_BUILDER)
+    write(b, "data/rec.json", {"checked": "09:00"})
+    sh("python3 lb.py", b, {"BUILD_AT": "10:00"})
+    sh("git add data/rec.json data/f1.json && git commit -q -m base2 && git push -q origin HEAD:main", b)
+    sh("git pull -q origin main", a)
+    sh("python3 lb.py && git add data/rec.json data/f1.json && git commit -q -m other && git push -q origin HEAD:main", a,
+       {"BUILD_AT": "10:30"})
+    write(b, "data/one.json", {"x": 1})
+    sh("git add data/one.json && git commit -q -m mine && git fetch -q", b)
+    derived = [("data/f1.json", "python3 lb.py")]
+    ok = S.integrate(derived, b, quiet, ["data/rec.json", "data/one.json"])
+    check("integrate succeeds and leaves no --add record modified-but-unstaged",
+          (ok, sh("git diff --name-only", b).stdout.strip()), (True, ""))
+
 print("\nthe workflows use it")
 for wf, derived in ((".github/workflows/soccer-rules.yml", "data/soccer_rules_production_leads.json"),
                     (".github/workflows/soccer-team-rules.yml", "data/soccer_team_rules_production_leads.json")):
