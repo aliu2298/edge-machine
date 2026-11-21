@@ -842,8 +842,17 @@
    "entries": "entered",
    "pool": "entered"
   },
+  "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV21BOUNFO-7\", \"b\"]]": {
+   "at": "2026-11-21T11:04:10.569624+00:00",
+   "entries": "entered",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV21MCIFUL-10\", \"b\"]]": {
    "at": "2026-11-21T08:51:26.434342+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV21TOTIPS-10\", \"b\"]]": {
+   "at": "2026-11-21T11:04:10.569624+00:00",
    "pool": "entered"
   },
   "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXLALIGACORNERS-26NOV06SEVALA-8\", \"b\"]]": {
@@ -1274,6 +1283,10 @@
   },
   "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLIGUE1TEAMTOTAL-26NOV08HACFCL-FCL2\", \"a\"]]": {
    "at": "2026-11-08T15:36:09.421486+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLIGUE1TEAMTOTAL-26NOV21LILOL-LIL2\", \"a\"]]": {
+   "at": "2026-11-21T11:04:10.569624+00:00",
    "pool": "entered"
   },
   "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXSERIEATEAMTOTAL-26NOV07PARBFC-BFC2\", \"a\"]]": {
@@ -4925,11 +4938,100 @@
    "sport": "Soccer",
    "src": "sandbox",
    "status": "open"
+  },
+  {
+   "contract": "KXEPLCORNERS-26NOV21BOUNFO-7",
+   "entered_at": "2026-11-21T11:04:10.569624+00:00",
+   "entities": [
+    "AFC Bournemouth",
+    "Nottingham Forest"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV21BOUNFO-7\", \"b\"]]",
+   "lane": "corners_total_under",
+   "logged": "2026-11-21T11:03:44+00:00",
+   "matched": [
+    "AFC Bournemouth",
+    "Nottingham Forest"
+   ],
+   "pid": "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV21BOUNFO-7\", \"b\"]]",
+   "price": 0.15,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": {
+    "as_of": "2026-11-21T11:03:44+00:00",
+    "names": [
+     {
+      "bets": 48,
+      "name": "AAA gas",
+      "profit": 5.9477,
+      "sport": "Commodities"
+     },
+     {
+      "bets": 6,
+      "name": "Manchester United",
+      "profit": 5.403,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Napoli",
+      "profit": 4.7771,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Columbus Crew",
+      "profit": 4.221,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 8,
+      "name": "Real Madrid",
+      "profit": 3.6136,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Nottingham Forest",
+      "profit": 3.2002,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 29,
+      "name": "Brent",
+      "profit": 2.8019,
+      "sport": "Commodities"
+     },
+     {
+      "bets": 6,
+      "name": "AFC Bournemouth",
+      "profit": 2.7752,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Lazio",
+      "profit": 2.5658,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Bayern Munich",
+      "profit": 2.4607,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-21T10:17:47.065891+00:00",
+ "last_run": "2026-11-21T11:04:10.569624+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -14917,6 +15019,79 @@
    ],
    "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXEPLTEAMTOTAL-26NOV21BOUNFO-BOU2\", \"a\"]]",
    "price": 0.47,
+   "profit": null,
+   "scope": "soccer_team2",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXEPLCORNERS-26NOV21BOUNFO-7",
+   "entered_at": "2026-11-21T11:04:10.569624+00:00",
+   "entities": [
+    "AFC Bournemouth",
+    "Nottingham Forest"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV21BOUNFO-7\", \"b\"]]",
+   "lane": "corners_total_under",
+   "logged": "2026-11-21T11:03:44+00:00",
+   "matched": [
+    "AFC Bournemouth",
+    "Nottingham Forest"
+   ],
+   "pid": "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV21BOUNFO-7\", \"b\"]]",
+   "price": 0.15,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXEPLCORNERS-26NOV21TOTIPS-10",
+   "entered_at": "2026-11-21T11:04:10.569624+00:00",
+   "entities": [
+    "Tottenham Hotspur",
+    "Ipswich Town"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV21TOTIPS-10\", \"b\"]]",
+   "lane": "corners_total_under",
+   "logged": "2026-11-21T11:03:44+00:00",
+   "matched": [
+    "Ipswich Town",
+    "Tottenham Hotspur"
+   ],
+   "pid": "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV21TOTIPS-10\", \"b\"]]",
+   "price": 0.42,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXLIGUE1TEAMTOTAL-26NOV21LILOL-LIL2",
+   "entered_at": "2026-11-21T11:04:10.569624+00:00",
+   "entities": [
+    "Lille"
+   ],
+   "id": "superpack:[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLIGUE1TEAMTOTAL-26NOV21LILOL-LIL2\", \"a\"]]",
+   "lane": "team2_ranked",
+   "logged": "2026-11-21T11:03:44+00:00",
+   "matched": [
+    "Lille"
+   ],
+   "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLIGUE1TEAMTOTAL-26NOV21LILOL-LIL2\", \"a\"]]",
+   "price": 0.39,
    "profit": null,
    "scope": "soccer_team2",
    "settled": null,
