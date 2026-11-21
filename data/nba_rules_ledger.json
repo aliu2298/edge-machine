@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-21T18:28:07.912043+00:00",
+ "last_run": "2026-11-21T23:00:27.617875+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -2440,6 +2440,50 @@
      "ticker": "KXNBATEAMTOTAL-26NOV19NYKMIN-NYK103",
      "title": "New York over 102.5 points",
      "why": "NY O-D- v MIN O-D- \u00b7 cheapest NO 0.32 at 102.5"
+    },
+    {
+     "game": "401910024",
+     "id": "R4:KXNBATEAMTOTAL-26NOV21PORNYK-NYK101",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O-D-",
+      "home": "O-D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-11-21T23:00:27.617875+00:00",
+     "match": "POR @ NY",
+     "price": 0.3,
+     "rule": "R4",
+     "side": "no",
+     "start": "2026-11-22T00:30Z",
+     "status": "open",
+     "strike": 100.5,
+     "team": "NY",
+     "ticker": "KXNBATEAMTOTAL-26NOV21PORNYK-NYK101",
+     "title": "New York over 100.5 points",
+     "why": "NY O-D- v POR O-D- \u00b7 cheapest NO 0.30 at 100.5"
+    },
+    {
+     "game": "401910024",
+     "id": "R4:KXNBATEAMTOTAL-26NOV21PORNYK-POR100",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O-D-",
+      "home": "O-D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-11-21T23:00:27.617875+00:00",
+     "match": "POR @ NY",
+     "price": 0.27,
+     "rule": "R4",
+     "side": "no",
+     "start": "2026-11-22T00:30Z",
+     "status": "open",
+     "strike": 99.5,
+     "team": "POR",
+     "ticker": "KXNBATEAMTOTAL-26NOV21PORNYK-POR100",
+     "title": "Portland over 99.5 points",
+     "why": "POR O-D- v NY O-D- \u00b7 cheapest NO 0.27 at 99.5"
     }
    ]
   },
@@ -5602,16 +5646,33 @@
      "ticker": "KXNBATEAMTOTAL-26NOV20PHXUTA-PHX115",
      "title": "Phoenix over 114.5 points",
      "why": "PHX O+D- v UTAH O-D- \u00b7 both D\u2212 \u00b7 115+ NO 0.48"
+    },
+    {
+     "game": "401910024",
+     "id": "R7:KXNBATEAMTOTAL-26NOV21PORNYK-POR110",
+     "labels": {
+      "away": "O-D-",
+      "away_h1": "O-D-",
+      "home": "O-D-",
+      "home_h1": "O-D-"
+     },
+     "logged": "2026-11-21T23:00:27.617875+00:00",
+     "match": "POR @ NY",
+     "price": 0.6,
+     "rule": "R7",
+     "side": "no",
+     "start": "2026-11-22T00:30Z",
+     "status": "open",
+     "strike": 109.5,
+     "team": "POR",
+     "ticker": "KXNBATEAMTOTAL-26NOV21PORNYK-POR110",
+     "title": "Portland over 109.5 points",
+     "why": "POR O-D- v NY O-D- \u00b7 both D\u2212 \u00b7 110+ NO 0.60"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-18T00:45:23.785127+00:00",
-   "due": 0,
-   "new": 0
-  },
   {
    "at": "2026-11-18T01:00:23.949853+00:00",
    "due": 0,
@@ -5861,6 +5922,11 @@
    "at": "2026-11-21T18:28:07.912043+00:00",
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-21T23:00:27.617875+00:00",
+   "due": 1,
+   "new": 3
   }
  ],
  "version": "nba-rules-v1"
