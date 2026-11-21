@@ -155931,5 +155931,39 @@
   "start": "2026-11-14T12:00:00+00:00",
   "status": "graded",
   "venue": "polymarket_us"
+ },
+ {
+  "bet": false,
+  "compact": true,
+  "id": "goals_market:KXINTLFRIENDLYGAME-26NOV14CHNMAS-CHN",
+  "logged": "2026-11-11T18:19:39+00:00",
+  "market_id": "KXINTLFRIENDLYGAME-26NOV14CHNMAS-CHN",
+  "price_a": 0.61,
+  "price_b": 0.48,
+  "price_draw": null,
+  "result": "a",
+  "settled": "2026-11-14T14:09:00+00:00",
+  "source": "goals_market",
+  "sport": "soccer_p05_intl",
+  "start": "2026-11-14T12:00:00+00:00",
+  "status": "graded",
+  "venue": "kalshi_binary"
+ },
+ {
+  "bet": false,
+  "compact": true,
+  "id": "goals_market:KXINTLFRIENDLYGAME-26NOV14CHNMAS-MAS",
+  "logged": "2026-11-12T00:39:34+00:00",
+  "market_id": "KXINTLFRIENDLYGAME-26NOV14CHNMAS-MAS",
+  "price_a": 0.29,
+  "price_b": 0.81,
+  "price_draw": null,
+  "result": "b",
+  "settled": "2026-11-14T14:09:00+00:00",
+  "source": "goals_market",
+  "sport": "soccer_p05_intl",
+  "start": "2026-11-14T12:00:00+00:00",
+  "status": "graded",
+  "venue": "kalshi_binary"
  }
 ]
