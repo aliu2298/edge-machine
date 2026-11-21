@@ -74,10 +74,14 @@ def rebuild(derived, cwd=None, every=()):
             git("add", path, cwd=cwd)
 
 
-def integrate(derived, cwd=None, log=print):
-    """Rebase onto origin/main, rebuilding the derived files. False on a genuine (non-derived) conflict."""
+def integrate(derived, cwd=None, log=print, add=()):
+    """Rebase onto origin/main, rebuilding the derived files. False on a genuine (non-derived) conflict.
+
+    A builder may also rewrite a record it reads (challenger_production.py updates challenger_production_ledger.json, an --add
+    file of the Feeds heartbeat), so the --add records are staged again after a rebuild as well (2026-11-21); otherwise the
+    next attempt's rebase fails with "cannot rebase: You have unstaged changes"."""
     names = {p for p, _ in derived}
-    every = [p for p, _ in derived]
+    every = [p for p, _ in derived] + [p for p in add if p not in names]
     r = git("rebase", "origin/main", check=False, cwd=cwd)
     while r.returncode != 0:
         conflicted = set(git("diff", "--name-only", "--diff-filter=U", cwd=cwd).stdout.split())
@@ -139,7 +143,7 @@ def save(message, add, derived, cwd=None, log=print, remote="origin", branch="ma
             return landed(attempt)
         SLEEP(random.uniform(*BACKOFF_S))
         git("fetch", remote, branch, cwd=cwd)
-        if not integrate(derived, cwd, log):
+        if not integrate(derived, cwd, log, add):
             if not regenerate:
                 return 1
             if not regenerate_on_main(message, add, derived, regenerate, cwd, log):
