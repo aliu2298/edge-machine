@@ -79,6 +79,36 @@ check("a 1-0 spread over 3c: no entry", UP.pick_fav(fx[0], ("O-D-", "O+D+"), tot
 check("no 1H BTTS market for the match: no entry", UP.pick_quiet(fx[0], ("O-D-", "O+D+"), total, ["A6"], None, NOW), None)
 check("a 1H BTTS spread over 3c: no entry", UP.pick_quiet(fx[0], ("O-D-", "O+D+"), total, ["A6"], dict(btts, markets=[mk(f"KXEPL1HBTTS-{TAG}-BTTS", "x", 0.20, 0.25)]), NOW), None)
 
+print("\nthe 2x shadow (trade prints, not bid highs)")
+KO_TS = int(KO.timestamp())
+trades = []
+
+
+def fake2(path):
+    if path.startswith("markets/trades?"):
+        return {"trades": trades}
+    return fake(path)
+
+
+p0 = dict(f1[0], status="open")
+p0.pop("shadow", None)
+later = KO + dt.timedelta(minutes=30)
+trades[:] = [dict(created_time=(KO + dt.timedelta(minutes=10)).strftime("%Y-%m-%dT%H:%M:%SZ"), yes_price_dollars="0.12")]
+UP.shadow_update(p0, later, fake2)
+check("a print under 2x (16c) does not sell; bid highs are never read", (p0["shadow"]["target"], p0["shadow"]["sold"]), (0.16, False))
+trades.append(dict(created_time=(KO + dt.timedelta(minutes=20)).strftime("%Y-%m-%dT%H:%M:%SZ"), yes_price_dollars="0.17"))
+trades.append(dict(created_time=(KO - dt.timedelta(minutes=20)).strftime("%Y-%m-%dT%H:%M:%SZ"), yes_price_dollars="0.90"))
+UP.shadow_update(p0, later, fake2)
+exp = round(100 * ((0.16 - UP.FU.fee(0.16)) / (0.08 + UP.FU.fee(0.08)) - 1), 2)
+check("a trade print at or above 2x after kickoff sells; one before kickoff is ignored", (p0["shadow"]["sold"], p0["shadow"]["profit"]), (True, exp))
+p1 = dict(f1[0], status="lost", profit=-100.0)
+p1.pop("shadow", None)
+trades[:] = []
+UP.shadow_update(p1, later, fake2)
+check("never reached 2x: the settled hold result", (p1["shadow"]["sold"], p1["shadow"]["profit"], p1["shadow"].get("final")), (False, -100.0, True))
+check("the target is capped at 99c", UP.shadow_update.__defaults__ is not None and min(UP.SELL_MULT * 0.6, UP.SELL_CAP), 0.99)
+check("shadow record: entries, sold, mean return", UP.shadow_record([p0, p1]), (2, 1, (exp - 100.0) / 200))
+
 print("\nthe Soccer rows")
 import soccer_lanes
 rows = soccer_lanes.piggyback_rows(states)

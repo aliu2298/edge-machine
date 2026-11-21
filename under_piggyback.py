@@ -12,13 +12,17 @@ quiet_first_half  Kalshi first-half BTTS (prefix + 1HBTTS): buy NO at the NO ask
              1H BTTS market.
 In-sample (hindsight, never counted): fav 1-0 6 of 33 at about 14c, about +27% after fees held; quiet first half 40-1 at 81-87c (A5 26-1 +10%,
 A6 10-0 +22%, C8 4-0 +17%).
+fav_one_nil also carries a "sell at 2x" SHADOW (shadow_update): sold when a TRADE print reaches 2x the ask, shown beside the hold record.
+In-sample for it: hold +27%, 2x +18%, 22 of 33 sold.
 """
 import datetime as dt
 import json
 import os
+import urllib.parse
 
 import daily_track as D
 import flipped_unders as FU
+import o35_cheap_no as O35
 import settle_only
 import soccer_rules as SR
 
@@ -29,7 +33,7 @@ PREFIX = {lg: SR.SERIES[lg][:-len("TOTAL")] for lg in ("UEFA Nations League", "P
 LANES = {
     "fav_one_nil": dict(name="Favourite 1-0", suffix="SCORE", side="yes",
                         words="The favourite wins 1-0 (correct score), YES at the ask",
-                        in_sample=dict(entries=33, won=6, lost=27, price="about 14c", ret="about +27%", note="held; 67% touched 2x in play")),
+                        in_sample=dict(entries=33, won=6, lost=27, price="about 14c", ret="about +27%", note="held; 67% touched 2x in play", sold=22, shadow_ret="about +18%")),
     "quiet_first_half": dict(name="Quiet First Half", suffix="1HBTTS", side="no",
                              words="First-half BTTS NO at the NO ask",
                              in_sample=dict(entries=41, won=40, lost=1, price="81c to 87c", ret="A5 +10%, A6 +22%, C8 +17%", note="A5 26-1, A6 10-0, C8 4-0")),
@@ -188,10 +192,48 @@ def run(states, fixtures, now=None, fetch=D.get):
             errs.append(f"{f['home']} v {f['away']}: {str(e)[:80]}")
     for key, st in states.items():
         e2 = errs + SR.settle(st, now, fetch)
+        if key == "fav_one_nil":
+            for p in st["rules"]["PB"]["picks"]:
+                try:
+                    shadow_update(p, now, fetch)
+                except Exception as e:                          # noqa: BLE001
+                    e2.append(f"shadow {p['id']}: {str(e)[:60]}")
         st["last_run"] = now.isoformat()
         st["error"] = "; ".join(e2)[:1000] or None
         st["runs"] = (st.get("runs") or [])[-50:] + [dict(at=now.isoformat(), new=len(log[key]), **stats)]
     return log
+
+
+SELL_MULT = 2.0
+SELL_CAP = 0.99
+
+
+def shadow_update(p, now, fetch=D.get):
+    """The "sell at 2x" SHADOW beside fav_one_nil's hold record (Coordinator, Nov 21). A pick is sold, on paper, when any TRADE print on its
+    correct-score market at or after kickoff reaches 2x the entry ask (capped at 99c): trade prints, never bid highs (the resting-sell rule).
+    Sold: return = (target - fee) over (ask + fee), both legs at the taker fee (conservative). Unsold: the settled hold result. The headline stays HOLD."""
+    sh = p.setdefault("shadow", dict(target=round(min(SELL_MULT * float(p["price"]), SELL_CAP), 4), sold=False))
+    start = D.instant(p.get("start"))
+    if sh.get("final") or sh["sold"] or not start or start > now:
+        return
+    since = max(int(start.timestamp()), int(sh.get("checked_ts") or 0))
+    rows = O35.fetch_trades(urllib.parse.quote(p["ticker"], safe=""), since, fetch)
+    hit = [(O35._ts(t.get("created_time")), D.number(t.get("yes_price_dollars"))) for t in rows]
+    hit = sorted((ts, px) for ts, px in hit if ts is not None and px is not None and ts >= start.timestamp() and px >= sh["target"] - 1e-9)
+    if hit:
+        sh.update(sold=True, sold_at=dt.datetime.fromtimestamp(hit[0][0], dt.timezone.utc).isoformat(), sold_px=hit[0][1])
+        cost = float(p["price"]) + FU.fee(float(p["price"]))
+        sh["profit"] = round(100 * ((sh["target"] - FU.fee(sh["target"])) / cost - 1), 2)
+    elif p.get("status") in ("won", "lost", "no_result"):
+        sh.update(final=True, profit=p.get("profit"))               # never reached 2x on a trade: the hold result
+    sh["checked_ts"] = int(now.timestamp())
+
+
+def shadow_record(picks):
+    """(entries with a shadow result, sold at 2x, mean shadow return) for the picks that are sold or settled."""
+    done = [p for p in picks if (p.get("shadow") or {}).get("profit") is not None]
+    sold = sum(bool(p["shadow"].get("sold")) for p in done)
+    return len(done), sold, (sum(p["shadow"]["profit"] for p in done) / (100 * len(done))) if done else None
 
 
 def by_source(picks):

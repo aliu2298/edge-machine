@@ -473,17 +473,23 @@ def piggyback_rows(states=None):
     import flipped_unders as FU
     p1 = lambda x: "—" if x is None else f"{x * 100:.1f}%"
     pr = lambda x: "—" if x is None else f"{x * 100:+.1f}%".replace("-", "−")
-    heads = ("Source rule", "Entries", "Won-lost", "Hit rate", "Average price paid", "Break-even after fees", "Return after fees")
+    base_heads = ("Source rule", "Entries", "Won-lost", "Hit rate", "Average price paid", "Break-even after fees", "Return after fees")
     out = []
     for key, meta in UP.LANES.items():
+        heads = base_heads + (("Sold at 2x (shadow)", "2x return after fees (shadow)") if key == "fav_one_nil" else ())
         st = (states or {}).get(key) or (UP.load(key) if os.path.exists(UP.path(key)) else {"rules": {"PB": {"picks": []}}})
         picks = (st.get("rules", {}).get("PB") or {}).get("picks") or []
         body = ""
         for k, r in UP.by_source(picks).items():
             cells = (k, r["entries"], f'{r["won"]}-{r["lost"]}', p1(r["hit"]), p1(r["avg_price"]), p1(r["break_even"]), pr(r["ret"]))
+            if key == "fav_one_nil":
+                n_s, sold, sret = UP.shadow_record([p for p in picks if k in (p.get("sources") or [])])
+                cells += (f"{sold} of {n_s}" if n_s else "—", pr(sret))
             body += "<tr>" + "".join(f'<td class="num" data-l="{h}">{esc(c)}</td>' for h, c in zip(heads, cells)) + "</tr>"
         ins = meta["in_sample"]
         cells = ("In-sample, not counted", ins["entries"], f'{ins["won"]}-{ins["lost"]}', p1(ins["won"] / ins["entries"]), ins["price"], "—", ins["ret"])
+        if key == "fav_one_nil":
+            cells += (f'{ins["sold"]} of {ins["entries"]}', ins["shadow_ret"])
         body += '<tr class="mut">' + "".join(f'<td class="num" data-l="{h}">{esc(c)}</td>' for h, c in zip(heads, cells)) + "</tr>"
         table = ('<div class="tbl"><table><thead><tr>' + "".join(f"<th>{h}</th>" for h in heads) + f"</tr></thead><tbody>{body}</tbody></table></div>")
         details = params_html([
@@ -495,9 +501,12 @@ def piggyback_rows(states=None):
                         if key == "fav_one_nil" else " Spread 3c or less; no entry when the match has no first-half BTTS market.")),
             ("Research", f'A hindsight sample from the proved under rules, not counted: {ins["note"]}.'),
             ("Record", "Paper at the Kalshi price, 7% fee, Kalshi's own settlement, fresh from 2026-11-21. Review at 10 settled, decide at 30."),
-        ]) + table
+            ] + ([("Shadow", "A sell at 2x the entry ask (capped at 99c) shown beside the hold record, never the headline: sold when a trade print after "
+                             "kickoff reaches it, else the settled result; taker fee on both legs.")] if key == "fav_one_nil" else [])) + table
         cols = [KICK, MATCH, ("Source rules", lambda p: ", ".join(p.get("sources") or [])), ("Side", lambda p: str(p.get("side") or "").upper()), PRICE,
                 ("Result", lambda p: _res_pct(p))]
+        if key == "fav_one_nil":
+            cols.append(("2x shadow", lambda p: ("sold at 2x" if (p.get("shadow") or {}).get("sold") else "not sold") if p.get("shadow") else ""))
         out.append(row(key, "soccer_o25", f"{meta['name']} · A5 A6 C8 selections", "Correct score" if key == "fav_one_nil" else "1H BTTS",
                        pick_record(picks), details, open_n=sum(p.get("status") == "open" for p in picks), entries=entries_table(picks, cols)))
         out[-1]["top"] = True
