@@ -5203,7 +5203,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-21T17:10:03.222606+00:00",
+ "last_run": "2026-11-21T17:32:11.827100+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -13923,14 +13923,14 @@
    ],
    "pid": "[\"sandbox\", \"liga_btts_even\", [\"liga_btts_even:KXLALIGABTTS-26NOV21RVCVCF-BTTS\", \"a\"]]",
    "price": 0.52,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_btts",
-   "settled": null,
+   "settled": "2026-11-21T17:31:41+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXWTI-26NOV1714-T84.99",
@@ -15035,14 +15035,14 @@
    ],
    "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLALIGATEAMTOTAL-26NOV21RVCVCF-RVC2\", \"a\"]]",
    "price": 0.47,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_team2",
-   "settled": null,
+   "settled": "2026-11-21T17:31:46+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXLALIGACORNERS-26NOV20ATHESP-10",
@@ -15540,14 +15540,14 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"A6\", [\"A6:KXEPLTOTAL-26NOV21TOTIPS\", \"no\"]]",
    "price": 0.38,
-   "profit": null,
+   "profit": 1.5221,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-21T17:16:26.490283+00:00",
    "side": "no",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXSCOTTISHPREMTOTAL-26NOV21FALJOH-4",
