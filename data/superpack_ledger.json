@@ -1560,6 +1560,10 @@
    "at": "2026-11-07T14:03:40.378413+00:00",
    "pool": "entered"
   },
+  "[\"soccer_rules_ledger.json\", \"A6\", [\"A6:KXEPLTOTAL-26NOV21TOTIPS\", \"no\"]]": {
+   "at": "2026-11-21T14:04:29.233121+00:00",
+   "pool": "entered"
+  },
   "[\"soccer_rules_ledger.json\", \"B1\", [\"B1:KXMLSTOTAL-26NOV07ATXPOR\", \"no\"]]": {
    "at": "2026-11-07T23:04:03.124924+00:00",
    "pool": "entered"
@@ -1580,6 +1584,10 @@
   },
   "[\"soccer_rules_ledger.json\", \"B4\", [\"B4:KXSCOTTISHPREMTOTAL-26NOV07ABEHIB\", \"no\"]]": {
    "at": "2026-11-07T16:43:15.762503+00:00",
+   "pool": "entered"
+  },
+  "[\"soccer_rules_ledger.json\", \"B4\", [\"B4:KXSCOTTISHPREMTOTAL-26NOV21FALJOH\", \"no\"]]": {
+   "at": "2026-11-21T14:04:29.233121+00:00",
    "pool": "entered"
   },
   "[\"soccer_rules_ledger.json\", \"B5\", [\"B5:KXEPLTOTAL-26NOV08BRIBRE\", \"yes\"]]": {
@@ -5049,7 +5057,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-21T13:48:55.444126+00:00",
+ "last_run": "2026-11-21T14:04:29.233121+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -15280,6 +15288,56 @@
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXEPLTOTAL-26NOV21TOTIPS-3",
+   "entered_at": "2026-11-21T14:04:29.233121+00:00",
+   "entities": [
+    "Tottenham Hotspur",
+    "Ipswich Town"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"A6\", [\"A6:KXEPLTOTAL-26NOV21TOTIPS\", \"no\"]]",
+   "lane": "A6",
+   "logged": "2026-11-21T13:46:30.084250+00:00",
+   "matched": [
+    "Ipswich Town",
+    "Tottenham Hotspur"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"A6\", [\"A6:KXEPLTOTAL-26NOV21TOTIPS\", \"no\"]]",
+   "price": 0.38,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "no",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXSCOTTISHPREMTOTAL-26NOV21FALJOH-4",
+   "entered_at": "2026-11-21T14:04:29.233121+00:00",
+   "entities": [
+    "Falkirk",
+    "St Johnstone"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"B4\", [\"B4:KXSCOTTISHPREMTOTAL-26NOV21FALJOH\", \"no\"]]",
+   "lane": "B4",
+   "logged": "2026-11-21T13:46:30.084250+00:00",
+   "matched": [
+    "Falkirk",
+    "St Johnstone"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"B4\", [\"B4:KXSCOTTISHPREMTOTAL-26NOV21FALJOH\", \"no\"]]",
+   "price": 0.71,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "no",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
    "status": "open"
   }
  ],
