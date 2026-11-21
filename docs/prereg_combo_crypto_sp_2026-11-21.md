@@ -21,4 +21,4 @@ The idea came from 19 days to Nov 19 2026 on which the two legs were priced at d
 ## Read
 - Read once at **30 settled combos**, against the same two legs as singles.
 - Keep only if the combo's return is above zero and its break-even markup is above the paper price on those 30. **Retire** if the combo is at or below the singles, and at once if either lane's own singles go under zero.
-- Percentages only on the page. Sandbox paper: no bot, no VPS, no live order.
+- Percentages only on the page. Sandbox paper only: no live order.
