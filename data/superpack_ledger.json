@@ -820,6 +820,10 @@
    "mirror": "entered",
    "pool": "entered"
   },
+  "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXEPLCORNERS-26NOV21NEWARS-12\", \"b\"]]": {
+   "at": "2026-11-21T13:35:20.193189+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXLALIGACORNERS-26NOV08RSORVC-12\", \"b\"]]": {
    "at": "2026-11-08T13:58:12.689210+00:00",
    "pool": "entered"
@@ -870,6 +874,11 @@
   },
   "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXLALIGACORNERS-26NOV20ATHESP-10\", \"b\"]]": {
    "at": "2026-11-20T16:04:48.684381+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXLALIGACORNERS-26NOV21SEVRBB-9\", \"b\"]]": {
+   "at": "2026-11-21T13:35:20.193189+00:00",
+   "mirror": "entered",
    "pool": "entered"
   },
   "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV0517-T76499.99\", \"b\"]]": {
@@ -5035,7 +5044,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-21T13:10:10.500847+00:00",
+ "last_run": "2026-11-21T13:35:20.193189+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -6519,6 +6528,94 @@
    "sport": "Commodities",
    "src": "sandbox",
    "status": "won"
+  },
+  {
+   "contract": "KXLALIGACORNERS-26NOV21SEVRBB-9",
+   "entered_at": "2026-11-21T13:35:20.193189+00:00",
+   "entities": [
+    "Sevilla",
+    "Real Betis"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXLALIGACORNERS-26NOV21SEVRBB-9\", \"b\"]]",
+   "lane": "corners_total_under",
+   "logged": "2026-11-21T13:34:54+00:00",
+   "matched": [
+    "Real Betis"
+   ],
+   "pid": "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXLALIGACORNERS-26NOV21SEVRBB-9\", \"b\"]]",
+   "price": 0.44,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": {
+    "as_of": "2026-11-21T13:34:54+00:00",
+    "names": [
+     {
+      "bets": 9,
+      "name": "Brighton & Hove Albion",
+      "profit": -5.5938,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Espanyol",
+      "profit": -5.0,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "PSV Eindhoven",
+      "profit": -4.6111,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Feyenoord Rotterdam",
+      "profit": -4.0676,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Real Betis",
+      "profit": -3.6728,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "SC Freiburg",
+      "profit": -3.1733,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Athletic Club",
+      "profit": -3.0392,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "St. Louis CITY SC",
+      "profit": -2.6584,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 10,
+      "name": "HYPE",
+      "profit": -2.187,
+      "sport": "Crypto"
+     },
+     {
+      "bets": 48,
+      "name": "WTI",
+      "profit": -1.7952,
+      "sport": "Commodities"
+     }
+    ]
+   },
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
   }
  ],
  "pool": [
@@ -15123,6 +15220,56 @@
    "price": 0.06,
    "profit": null,
    "scope": "soccer_o15",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXEPLCORNERS-26NOV21NEWARS-12",
+   "entered_at": "2026-11-21T13:35:20.193189+00:00",
+   "entities": [
+    "Newcastle United",
+    "Arsenal"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXEPLCORNERS-26NOV21NEWARS-12\", \"b\"]]",
+   "lane": "corners_fav_no",
+   "logged": "2026-11-21T13:34:54+00:00",
+   "matched": [
+    "Arsenal",
+    "Newcastle United"
+   ],
+   "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXEPLCORNERS-26NOV21NEWARS-12\", \"b\"]]",
+   "price": 0.71,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXLALIGACORNERS-26NOV21SEVRBB-9",
+   "entered_at": "2026-11-21T13:35:20.193189+00:00",
+   "entities": [
+    "Sevilla",
+    "Real Betis"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXLALIGACORNERS-26NOV21SEVRBB-9\", \"b\"]]",
+   "lane": "corners_total_under",
+   "logged": "2026-11-21T13:34:54+00:00",
+   "matched": [
+    "Real Betis",
+    "Sevilla"
+   ],
+   "pid": "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXLALIGACORNERS-26NOV21SEVRBB-9\", \"b\"]]",
+   "price": 0.44,
+   "profit": null,
+   "scope": "soccer_corners",
    "settled": null,
    "side": "b",
    "snapshot": null,
