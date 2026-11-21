@@ -155,6 +155,7 @@ jobs:
       - name: Combo
         run: |
           python3 combo_lane.py || echo "::warning::combo did not run; its ledger is unchanged"
+          python3 hand_picks.py || echo "::warning::hand picks did not settle; the file is unchanged"
 
       # Corners favourite-side NO v2 (2026-11-06, Olu): the maker bid on each of the rule's entries, read from
       # Kalshi's trade prints once kickoff has passed. Never fatal: a failure leaves its ledger as it was.
@@ -232,6 +233,10 @@ jobs:
           # Superpack's ledger (2026-11-05), written after the lanes log; added only when present.
           if [ -f data/superpack_ledger.json ]; then
             git add data/superpack_ledger.json
+          fi
+          # The hand picks log (2026-11-21), settled by hand_picks.py; added only when present.
+          if [ -f data/hand_picks.json ]; then
+            git add data/hand_picks.json
           fi
           # The combo ledger (2026-11-21); added only when present.
           if [ -f data/combo_ledger.json ]; then
