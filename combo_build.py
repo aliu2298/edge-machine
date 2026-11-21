@@ -8,13 +8,14 @@ import html as _h
 import os
 
 import combo_lane as CL
+import hand_picks as HP
 import daily_track as D
 import site_chrome as C
 
 KEY = "combo"
 TITLE = "Edge Machine · Combo"
 DESCRIPTION = ("One paper two-leg combo a trading day, crypto No with S&P No, both read at the same minute, against the same two legs as singles.")
-SECTIONS = (("today", "Today"), ("record", "Record"), ("days", "Days"), ("prereg", "Pre-registration"))
+SECTIONS = (("today", "Today"), ("record", "Record"), ("days", "Days"), ("hand", "Hand picks"), ("prereg", "Pre-registration"))
 PREREG_DOC = "docs/prereg_combo_crypto_sp_2026-11-21.md"
 TEXT = ("Crypto No with S&P No, one two-leg paper combo a trading day. Both legs are chosen at the minute the crypto No lane logs its pick: "
         "the crypto pick, and the cheapest S&P 16:00 ET rung with a No ask of 90c to 98c, a spread of 3c or less and 25 or more contracts at "
@@ -123,6 +124,41 @@ def days_section(state):
     return f'<section id="days"><h2>Days</h2>{table}</section>'
 
 
+def hand_section(picks_state=None):
+    """Hand picks · learning log: counted picks make the record, context picks are listed and not counted. Percentages and multiples only."""
+    st = picks_state if picks_state is not None else HP.load()
+    rec = HP.record(st)
+    lines = [
+        ("Picks so far", f'{rec["n"]} of {rec["target"]}'),
+        ("Landed / lost / open", f'{rec["landed"]} / {rec["lost"]} / {rec["open"]}'),
+        ("Land rate", pct(rec["land_rate"], sign=False)),
+        ("Average payout multiple", f'{rec["avg_multiple"]:.2f}x' if rec["avg_multiple"] else "—"),
+        ("Return per pick", pct(rec["return"])),
+    ]
+    head = "".join(f"<tr><td>{k}</td><td>{v}</td></tr>" for k, v in lines)
+    rows = []
+    for p in sorted(st["picks"], key=lambda p: p.get("placed_at") or "", reverse=True):
+        legs = "<br>".join(
+            f'{esc(l.get("label") or l["ticker"])} · {esc(str(l.get("side", "")).capitalize())} at {cents(l["ask"]) if l.get("ask") is not None else "—"}'
+            f' · {_leg_result(l)}' for l in p.get("legs") or [])
+        res = {"won": "Landed", "lost": "Missed", "no_result": "Part value"}.get(p.get("result"), "Open")
+        mult = f'{p["payout_multiple"]:.2f}x' if p.get("payout_multiple") is not None else "—"
+        rows.append(f'<tr><td>{esc(str(p.get("placed_at", ""))[:10])}</td><td>{esc(p.get("kind", ""))}</td><td>{legs}</td>'
+                    f'<td class="num">{mult}</td><td>{res}</td><td>{"Counted" if p.get("counted") else "Context, not counted"}</td></tr>')
+    table = ('<div class="tbl"><table><thead><tr><th>Placed</th><th>Kind</th><th>Legs</th><th>Pays</th><th>Result</th><th>Counted</th></tr></thead>'
+             f'<tbody>{"".join(rows)}</tbody></table></div>') if rows else "<p>No hand picks logged yet.</p>"
+    return ('<section id="hand"><h2>Hand picks · learning log</h2>'
+            '<p class="sm">Picks placed by hand, kept here while the rule behind them is worked out. Settled leg by leg from the market results; a combo '
+            'lands only if every leg wins, and a void leg counts at its settled value. '
+            f'The {rec["context"]} context picks are shown but not counted; the record is the picks marked Counted. Prices are as placed.</p>'
+            f'<div class="tbl"><table><thead><tr><th>Line</th><th>Value</th></tr></thead><tbody>{head}</tbody></table></div>{table}</section>')
+
+
+def _leg_result(leg):
+    v = leg.get("value")
+    return "open" if v is None else "won" if v == 1 else "lost" if v == 0 else f"part value {v:.2f}"
+
+
 def prereg_section():
     return (f'<section id="prereg"><h2>Pre-registration</h2><p>{esc(TEXT)}</p><p class="sm">{esc(NOTE)}</p>'
             f'<p class="sm mut">Written before the first entry, in {esc(PREREG_DOC)} in the repository.</p></section>')
@@ -133,7 +169,7 @@ def build(state=None, now=None):
     state = state if state is not None else CL.load()
     body = ('<section id="lede"><h1>Combo</h1><p class="lede">One paper two-leg combo a trading day: the crypto No lane\'s pick with the S&amp;P No rung, '
             'both read at the same minute. It pays only if both win.</p></section>'
-            + today_section(state, now) + record_section(state) + days_section(state) + prereg_section())
+            + today_section(state, now) + record_section(state) + days_section(state) + hand_section() + prereg_section())
     html = C.document(TITLE, DESCRIPTION, KEY, SECTIONS, C.stamp(now), body, script_src="./site.js", scripts=("./tables.js",))
     import sandbox_build
     return sandbox_build.label_cells(html)
