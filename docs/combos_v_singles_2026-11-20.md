@@ -1,12 +1,13 @@
 # Combos v singles: should any lane be placed as a Kalshi combo?
 
-Nov 20 2026. Research only, from records already on disk plus Kalshi's public combo list. The plan was written before any combo result was read (it is copied at the end).
+Nov 20 2026. Research only. Two sources: the lanes' paper records already on disk, and Kalshi's public combo trade tape (pulled with Olu's OK). The plan was written before any combo result was read (it is copied at the end).
 
-**Answer so far: no combo lane today.**
-At the price of the legs, a combo is the same bet with bigger swings. None of the four pairing rules beat its own singles in both halves of the record. Threes are clearly worse than singles.
-What could still change this is the price. If Kalshi sells pairs of our markets well under the legs' asks, a combo is a cheaper way to buy the same picks. That needs Kalshi's own combo trade tape, which is a pull and is not done yet.
+**Answer: no combo lane. Keep single bets.**
+- A combo is a bigger bet on the same picks. It adds no edge.
+- Kalshi does not sell combos under the legs. Soccer combos trade at the product of the leg asks, and then the fee is added: about 6% over.
+- At that real price, pairs earn less than their own singles for the same swings (0.43 against 0.54). Threes are far worse (0.17).
 
-![picture](combos/COMBO_first.png)
+![picture](combos/COMBO.png)
 
 ## Primer: how a Kalshi combo works
 
@@ -15,12 +16,12 @@ What could still change this is the price. If Kalshi sells pairs of our markets 
 - **No way back.** Once filled, a combo cannot be cancelled. Kalshi's help page does not say it can be sold early.
 - **Fee.** The combo series carries the usual taker fee formula on the combo's own price, and makers pay a fee too. By default the amount typed in covers price plus fee.
 - **A void or part-value leg does not refund the combo.** The leg settles by its own market's rules at a value between 0 and 1, and the combo's payout is multiplied by it. Kalshi's example: one leg at 0.70 with two legs at 1.00 pays 0.70.
+- **A combo can end early.** It settles as soon as one leg loses.
 - **Protected picks** (NBA and NFL player lines): if the player is out by half-time without reaching the line, the leg settles at its fair price, not zero. In the one real quote we have, protection cut the payout by about 5% (1.61x to 1.53x).
 - **One leg an event.** Two rungs of the same ladder cannot share a combo. Different markets of the same game can.
-- **What can go in.** Kalshi's list held 237 series on Nov 20. It reopens daily and only shows series with open games in the window (this one runs to Dec 1). So a series missing today may only be out of season.
-- **In today:** match winner, total goals, both-to-score, corners and first-half markets in the big soccer leagues, the Champions League and MLS; crypto daily (BTC, ETH, SOL, XRP, DOGE); the S&P and Nasdaq close; all 15-minute markets; NBA and NFL lines and player lines.
-- **Not in today:** weather, NBA win margin, soccer team totals, first team to score, commodity dailies, the African Cup. Also not listed today: Nations League, friendlies, the Saudi, Scottish and Portuguese leagues, two domestic cups, and the HYPE coin. Those make up 32 of the under-3.5 lane's 46 paper legs and 6 of the crypto lane's 56.
-- **The tape is public.** Each combo is its own market, listed with its legs, its result and its trades (price, size, time). So the real price can be measured.
+- **What can go in.** Kalshi's list held 237 series on Nov 20. It reopens daily and only shows series with open games in the window. A series missing today may only be out of season.
+- **Checked on the tape:** Nations League, friendlies, the Scottish and Portuguese leagues, the African Cup (winner, goals, both-to-score) and Champions League team totals were all used as combo legs on days they had games. Not seen as legs in about 35,000 listed combos: the Saudi league, the HYPE coin, NBA win margin, first team to score.
+- **The tape is public.** Each combo is its own market, listed with its legs, its result and its trades (price, size, time).
 
 Two label fixes for the record: rule A7 is YES on over 3.5 goals in the Champions League, and rule A6 is under 2.5 goals in the Premier League.
 
@@ -37,8 +38,34 @@ Two unlinked legs. Singles put half a unit on each and pay the taker fee. The co
 
 - **A combo is a bigger bet on the same edge.** The return roughly doubles and the swings more than double.
 - **It adds no edge.** Legs with no edge make a combo with no edge.
-- **Price is everything.** Each 5% off the combo price adds about 6 points of return. Seven real NBA quotes from the app came in at 0.84 to 1.01 of the leg asks, middle 0.90.
-- **Why a quote can sit under the asks.** In a wide market the ask is above the fair price. A maker quoting near fair then looks cheap against the asks. NBA first-quarter lines are 4c to 5c wide. Our markets are 1c to 2c wide, so the saving there is likely small. This is a reasoned guess until the tape is read.
+- **Price is everything.** Each 5% off the combo price adds about 6 points of return. So the question is what K really is.
+
+## Part a. What Kalshi really charges
+
+425 traded combos with 2 to 4 legs from different games, created before the first leg started. 196 could be scored: bought before any leg started, by a buyer of the YES side, with a bid and ask for every leg at most 10 minutes old. Each combo's first trade is set against its legs' bid and ask just before.
+
+Middle value, with the 25th to 75th range in brackets. K adds the taker fee to the trade price.
+
+| Group | Combos | Days | Middle leg spread | Price / product of leg asks | Price / product of leg mids | With fee (K) |
+|---|---|---|---|---|---|---|
+| Soccer | 105 | 8 | 1.0c | 1.007 (0.998 to 1.012) | 1.039 (1.029 to 1.052) | 1.065 (1.054 to 1.077) |
+| Soccer, 2 legs | 26 | 5 | 1.0c | 1.008 (0.998 to 1.010) | 1.029 (1.027 to 1.036) | 1.059 (1.052 to 1.067) |
+| Soccer, 3 legs | 35 | 5 | 1.0c | 1.007 (0.994 to 1.013) | 1.037 (1.027 to 1.050) | 1.067 (1.054 to 1.077) |
+| Soccer, 4 legs | 44 | 7 | 1.0c | 1.007 (1.000 to 1.014) | 1.051 (1.038 to 1.062) | 1.071 (1.060 to 1.080) |
+| NBA game lines | 50 | 2 | 2.4c | 0.970 (0.949 to 0.994) | 1.038 (1.030 to 1.058) | 1.027 (1.003 to 1.047) |
+| NBA, legs 2c wide or less | 23 | 2 | 1.5c | 0.994 (0.974 to 0.999) | 1.035 (1.026 to 1.047) | 1.046 (1.032 to 1.063) |
+| NBA, legs over 2c wide | 27 | 2 | 2.7c | 0.954 (0.939 to 0.970) | 1.046 (1.030 to 1.079) | 1.008 (0.981 to 1.022) |
+| Crypto and index, same direction | 31 | 6 | 3.5c | 1.751 (1.309 to 2.301) | 1.831 (1.364 to 2.973) | 1.818 (1.333 to 2.402) |
+| Crypto and index, mixed directions | 8 | 5 | 2.6c | 0.384 (0.296 to 1.010) | 0.406 (0.302 to 1.031) | 0.409 (0.315 to 1.047) |
+
+- **Soccer: no discount at all.** Combos trade at the product of the leg asks, almost to the decimal. No soccer combo in the sample came in at a K of 0.95 or less.
+- **Every sport pays about 4% over the mid prices.** About 3% for two legs, 4% for three, 5% for four. Then the fee.
+- **NBA only looks cheap.** Its legs are wide, so the asks sit well above the mid. A quote near the mid then shows as 3% to 5% under the asks. With the fee an NBA combo costs about what the leg asks multiply to.
+- **The seven app quotes** (0.84 to 1.01, fee included) sit lower than the NBA tape. The likely reason is wider legs on first-quarter and player lines. That cannot be checked without the leg books at those moments.
+- **Crypto and index pairs are priced as one bet.** When both legs point the same way, the pair costs what the cheaper leg alone costs (pair price over the cheaper leg's ask: middle 1.00, range 0.95 to 1.02, 26 pairs). Makers price the link. No extra payout for the second leg.
+- **Not on the tape:** a crypto leg with an index leg (none in the sample), and too few all-goals-line soccer combos to read alone. With quotes up to 3 hours old there are 11 soccer combos holding a goals line (price over asks 1.000) and 12 holding a NO leg (0.999): the same as the rest.
+- **Check:** with leg quotes up to 3 hours old, 288 combos score and the middles do not move (soccer 1.007, NBA 0.973).
+- **Fee:** the standard taker formula is assumed for combos (the series says so; the exact rule for quoted trades is not published). Without any fee, soccer is still at 1.007.
 
 ## Part b. Each lane as single bets
 
@@ -60,7 +87,9 @@ Paper record, after the taker fee. Score = return divided by its day-to-day erro
 
 ## Part c. The same picks as singles and as combos
 
-One unit a day, split equally by leg, so both sides put the same money on the same picks. Combo price = the product of the leg asks, fees included (K = 1.00).
+One unit a day, split equally by leg, so both sides put the same money on the same picks.
+
+**First at the product of the leg asks, fees included (K = 1.00), as planned:**
 
 | Rule | Days | Combos (won) | Singles a day | Combos a day | Singles at the same swings | Return for each unit of swing: singles v combos | Found half | Later half |
 |---|---|---|---|---|---|---|---|---|
@@ -70,12 +99,24 @@ One unit a day, split equally by leg, so both sides put the same money on the sa
 | S&P with crypto | 19 | 19 (16) | +9.5% | +22.2% | +21.2% | 0.39 v 0.41 | 7.95 v 7.10 | -0.10 v -0.08 |
 
 - **Combos show a bigger return because they are a bigger bet.** Raise the singles' stake until the swings match and they earn the same.
-- **Pairs are level with singles.** Ahead in one half, behind in the other. In day resamples the pairs came out ahead 50% (inside a lane) and 54% (across lanes) of the time: a coin flip.
-- **Threes are worse.** Ahead in only 8% of resamples. Losing days go from 25% to 40% and the deepest drop doubles (1.0 to 2.1 daily units).
-- **S&P with crypto:** level. The combo's deepest drop was 2.0 daily units against 0.9 for the two singles.
-- **Break-even price:** pairs match their singles at K = 1.01 to 1.02. Under that the combo is the better buy; at K = 0.90 the pairs' figure is 0.64 against 0.54.
+- **Pairs are level with singles at that price.** Ahead in one half, behind in the other; ahead in 50% and 54% of day resamples.
+- **Threes are worse.** Ahead in 8% of resamples. Losing days go from 25% to 40%.
+- **Break-even:** pairs match their singles at K = 1.01 to 1.02.
 
-Pairs inside each lane, return for each unit of swing (singles v combos): crypto 0.35 v 0.32; MLS 0.38 v 0.48; under 3.5 0.02 v 0.28; A7 1.24 v 0.44; A6 0.79 v 0.73; other rules 1.18 v 0.25. The under-3.5 lane is the only one ahead in both halves, and it is the lane with no edge of its own. Its losses happened to fall in the same combos.
+**Then at the price the tape shows** (1.007 times the product of the leg asks, plus the fee; a same-day crypto pair at the cheaper leg's ask, plus the fee):
+
+| Rule | Days | Singles a day | Combos a day | Return for each unit of swing: singles v combos | Found half | Later half | Combo ahead (resamples) |
+|---|---|---|---|---|---|---|---|
+| Pairs inside a lane | 40 | +16.8% | +20.8% | 0.54 v 0.43 | 0.48 v 0.50 | 0.60 v 0.34 | 14% |
+| Threes inside a lane | 40 | +16.8% | +11.5% | 0.54 v 0.17 | 0.48 v 0.31 | 0.60 v -0.04 | 0% |
+| Pairs across lanes | 40 | +16.8% | +29.0% | 0.54 v 0.47 | 0.48 v 0.57 | 0.60 v 0.39 | 25% |
+| S&P with crypto | 19 | +9.5% | +18.8% | 0.39 v 0.35 | 7.95 v 6.99 | -0.10 v -0.12 | 0% |
+| Pairs inside crypto | 32 | +13.6% | +7.0% | 0.35 v 0.13 | 0.38 v 0.15 | 0.30 v 0.12 | 2% |
+| Pairs inside MLS | 10 | +21.3% | +39.2% | 0.38 v 0.46 | 1.21 v 0.84 | 0.13 v 0.31 | 64% |
+
+- **At the real price every rule is behind its singles** over the whole record. None is ahead in both halves.
+- **Crypto pairs are the worst case.** The second leg adds risk and no payout.
+- **S&P with crypto** is scored here as if the two legs were unlinked. The tape has no such pair, and makers price links, so the real figure is likely lower.
 
 **Limit.** The replay takes each leg at its own logged price. A real combo is bought at one moment. MLS and under-3.5 legs are logged about 80 hours before kick-off, so their pairs would be re-priced.
 
@@ -90,39 +131,42 @@ Pairs inside each lane, return for each unit of swing (singles v combos): crypto
 | Soccer, same kick-off time | 41 | 19 | 3 (7%) | 7% | 0% to 15% |
 | S&P with crypto, same day | 19 | 16 | 0 | 1% | 0% to 5% |
 
-- **No sign that legs lose together.** Every count sits inside its shuffle band.
-- **This is thin.** S&P with crypto on a bad day cannot be tested: the S&P leg has not lost. On the 3 days crypto lost, S&P won.
-- **How often a lane has two legs on a day:** crypto 15 of 32 days, MLS 6 of 10, under 3.5 12 of 19, the Champions League 4 of 4, S&P never (one pick a day).
+- **No sign in our own results that legs lose together.** Every count sits inside its shuffle band.
+- **This is thin.** S&P with crypto on a bad day cannot be tested: the S&P leg has not lost.
+- **The makers do see a link** between coins and between indexes, and charge for it in full (part a).
+- **How often a lane has two legs on a day:** crypto 15 of 32 days, MLS 6 of 10, under 3.5 12 of 19, the Champions League 4 of 4, S&P never.
 
 ## Verdict by the written rule
 
 | Lane or rule | Result | Why |
 |---|---|---|
-| Crypto daily | Wait | Score 1.96 on 56 bets, just under the bar. Its pairs need K at 0.95 or less to match its singles. |
-| S&P close | No combo lane | No loss yet, so no proof. The pair with crypto is level with its singles and behind in the found half. |
-| MLS fade the home side | Wait | Score 1.84 on 29 bets. |
+| Crypto daily | No combo lane | Its pairs are priced as one bet (0.13 against 0.35 as singles). The lane's own score is 1.96 on 56 bets: keep reading it as singles. |
+| S&P close | No combo lane | No loss yet, so no proof. With crypto it is behind its singles at the real price. |
+| MLS fade the home side | No combo lane now | Score 1.84 on 29 bets. Pairs ahead in one half only, on 10 days. Soccer combos carry no discount. |
 | Under 3.5, low scorers | No combo lane | No edge of its own (0.56 on 46 bets). |
 | A7, A6, other soccer rules | No combo lane | Their pairs lose to their singles. Counts are tiny. |
 | Threes, any lane | No | Clearly worse than singles. |
 
-## Still open: the price Kalshi really charges
+Rule 3 (Kalshi sells it at the price needed) fails for every group: pairs need 1.01 or less, soccer costs 1.06, crypto pairs far more.
 
-- Known: seven NBA quotes at 0.84 to 1.01 of the leg asks.
-- Not known: the price for pairs of our markets (soccer goals, crypto daily, the S&P close), where spreads are tight.
-- How to learn it: Kalshi's settled combo markets and their trades, set against each leg's bid and ask in the same minute. About 40 list requests and up to 2,000 price requests. Waiting on Olu's OK.
-- What would change the verdict: a measured price at or under 0.95 for pairs of our markets. Then the pairing rules are scored again at that price, by the same written rule.
+## How sure
+
+- **The price finding is firm for soccer.** 105 combos on 8 days in a tight range, and 156 with older quotes say the same.
+- **NBA rests on two nights.** Good enough to explain the app quotes, not a fine measure.
+- **Crypto and index rests on 39 combos,** none of them our exact pair (a crypto leg with an S&P leg).
+- **The paper records are short** (40 days). That limits what can be said about any lane, as singles or combos.
 
 ## Build spec
 
-Nothing to build now.
+Nothing to build.
 
 - **Rule:** none. Lanes stay as single bets.
 - **Scope, entry timing:** unchanged.
 - **The one change:** none.
 - **Retire or keep:** this question does not judge any lane. Each lane's own read point stands.
-- **If the price check passes later,** the paper row would be: pairs across lanes, two legs, formed once a day from that day's live picks; priced on paper at the product of the two leg asks in the same minute times the measured K (K = 1.00 until measured, never a guessed discount); read at 40 settled combos; judged against the same legs as singles at the same swings.
-- **What a combo page would show:** each day's pairs with their legs, the paper price and the result; beside each pair the same two legs as singles; and three record lines: combos' return a day, singles' return a day, and singles at the same swings. Percentages only.
-- **The leaderboard page:** this result gives no reason to swap it for a combo page yet.
+- **Pre-registration text:** none needed.
+- **The leaderboard page:** this result gives no reason to swap it for a combo page.
+- **If combos are still wanted for other reasons** (say, by hand, for fun), the honest paper price is 1.007 times the product of the leg asks in the same minute, plus the fee, and a same-direction crypto or index pair at the cheaper leg's ask. A page would show each day's pairs and legs, that price, the result, and beside it the same legs as singles at the same swings. Percentages only.
 
 ## The plan as written before the read
 
@@ -132,8 +176,14 @@ Nothing to build now.
 - Combo price: K times the product of the leg asks, fees included. Primary K = 1.00; support 0.95, 0.90, 1.05; break-even K reported.
 - A pairing goes to paper only if (1) its legs' singles are above zero in both halves with a score of 2 or more, (2) the combo beats its own singles for the same swings in both halves and in 90% of day resamples, (3) the tape shows Kalshi sells it at that price.
 - A bigger plain return is not enough: two wins multiplied always show one.
+- The tape: settled combos with 2 to 4 legs from different games, bought before the first leg started; each combo's trade against its legs' bid and ask in the same minute; by market type and number of legs.
 - Expectation written beforehand: level with singles or a little under at the price of the legs; any gain must come from the price; most lanes too young; no combo lane today.
 
-One change from the plan: the taker fee is rounded up to a hundredth of a cent (what the exchange charges), not to the cent.
+Changes from the plan:
+- The taker fee is rounded up to a hundredth of a cent (what the exchange charges), not to the cent.
+- The combo list holds over a thousand combos every quarter hour, so it could not be read newest first. Pages were taken by settle-time window for each market type: soccer on Nov 4 and Nov 7; crypto and index at the two daily closes on nine trading days, Nov 9 to Nov 19; NBA on seven evening windows, Nov 12 to Nov 14.
+- The sample took every qualifying combo instead of 120 a type (soccer 225, NBA game lines 146, crypto and index 51). NBA player lines gave only 2 and are not read.
+- The sampled combos' own results are not reported: choosing pages by settle time picks up too many early losers. Prices at the time of purchase are not affected.
+- Requests used: 40 list and 755 price, against 40 and up to 2,000 planned.
 
-Files: `~/edge-research/combo_2026-11-20/` (PREREGISTERED.md, legs.py, score.py, pics.py, results.md).
+Files: `~/edge-research/combo_2026-11-20/` (PREREGISTERED.md, legs.py, score.py, tape_list.py, tape_win.py, tape_pull.py, tape_score.py, pics.py, results.md, tape_results.md).
