@@ -1637,23 +1637,30 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.2
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.3
     }
    ],
    "logged": "2026-11-21T02:00:47.480381+00:00",
    "minutes_to_start": 55.0,
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.1063,
    "price": 0.1,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-11-21T07:00:39.219671+00:00",
    "side": "yes",
    "spread": 0.05,
    "spread_cost": 0.01,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 6.12,
    "word": "Jasmina Zapotoczna"
   },
@@ -1822,11 +1829,11 @@
   "KXBOXING-26OCT31TSUTSUROJAS": "2026-10-31T20:06:27.383501+00:00"
  },
  "lane": "boxing_cheap_dog",
- "last_success": "2026-11-21T06:00:41.586690+00:00",
+ "last_success": "2026-11-21T08:00:39.367614+00:00",
  "observations": {
-  "at": "2026-11-21T06:00:41.586690+00:00",
+  "at": "2026-11-21T08:00:39.367614+00:00",
   "entered": 0,
-  "events": 3,
+  "events": 1,
   "filled": 0,
   "no_start": 0,
   "skipped": 0,
