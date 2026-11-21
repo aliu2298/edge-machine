@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-21T19:04Z",
+ "generated": "2026-11-21T19:11Z",
  "rule": "active = not retired, not a baseline, a bet or an open pick in its current record window",
  "tabs": {
   "commodities": {
@@ -135,6 +135,7 @@
     "st_t1m",
     "st_t4",
     "st_t7",
+    "t1m_sell15",
     "team1_form_l5|soccer_team1_cup",
     "team1_form_l5|soccer_team1_intl",
     "team2_form_l10|soccer_team2_intl",
