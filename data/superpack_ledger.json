@@ -4829,7 +4829,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-21T00:01:27.590773+00:00",
+ "last_run": "2026-11-21T00:08:16.986115+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -14602,14 +14602,14 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXBTCD-26NOV2017-T59499.99\", \"b\"]]",
    "price": 0.74,
-   "profit": null,
+   "profit": 0.3514,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-21T00:08:12+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXLALIGATOTAL-26NOV20ATHESP-3",
@@ -14650,14 +14650,14 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXBTCD-26NOV2017-T57499.99\", \"a\"]]",
    "price": 0.74,
-   "profit": null,
+   "profit": 0.3514,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-21T00:08:13+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXETHD-26NOV2017-T1579.99",
@@ -14673,14 +14673,14 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_v2\", [\"crypto_fav_band_v2:KXETHD-26NOV2017-T1579.99\", \"a\"]]",
    "price": 0.79,
-   "profit": null,
+   "profit": 0.2658,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-21T00:08:14+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXETHD-26NOV2017-T1619.99",
@@ -14696,14 +14696,14 @@
    ],
    "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXETHD-26NOV2017-T1619.99\", \"b\"]]",
    "price": 0.8,
-   "profit": null,
+   "profit": 0.25,
    "scope": "crypto_fav",
-   "settled": null,
+   "settled": "2026-11-21T00:08:14+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Crypto",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXLALIGATOTAL-26NOV21RMARCC-2",
