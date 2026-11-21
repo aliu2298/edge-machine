@@ -1,7 +1,7 @@
 {
  "box_through": "2026-11-21",
  "error": null,
- "last_run": "2026-11-21T19:46:13.054325+00:00",
+ "last_run": "2026-11-21T20:30:27.933691+00:00",
  "looks": {
   "401909305": {
    "at": "2026-11-20T22:45:25.302540+00:00",
@@ -1925,6 +1925,7 @@
     {
      "bid": 0.56,
      "entered": "2026-11-21T16:45:26.645245+00:00",
+     "fee_in": 0.0173,
      "game": "MIL @ PHI",
      "game_id": "401910023",
      "id": "spotter_fade_blind:KXNBAAST-26NOV21MILPHI-PHIJEMBIID21-4",
@@ -1935,15 +1936,20 @@
       "Jaylen Brown"
      ],
      "p": null,
+     "payout": 0.0,
      "pid": "3059318",
      "player": "Joel Embiid",
      "price": 0.44,
+     "profit": -0.4573,
+     "ret": -1.0,
      "rule": "spotter_fade_blind",
      "rung": 4,
+     "settled": "2026-11-21T20:30:27.933691+00:00",
      "side": "no",
+     "sold": false,
      "start": "2026-11-21T18:00:00+00:00",
      "stat": "ast",
-     "status": "open",
+     "status": "lost",
      "team": "PHI",
      "ticker": "KXNBAAST-26NOV21MILPHI-PHIJEMBIID21-4",
      "unit": "assists",
@@ -1953,6 +1959,7 @@
     {
      "bid": 0.51,
      "entered": "2026-11-21T16:45:26.645245+00:00",
+     "fee_in": 0.0175,
      "game": "MIL @ PHI",
      "game_id": "401910023",
      "id": "spotter_fade_blind:KXNBAPRA-26NOV21MILPHI-MILBBURRIES0-20",
@@ -1960,15 +1967,20 @@
      "matches": "spotter_fade:KXNBAAST-26NOV21MILPHI-MILRROLLINS13-4",
      "night": "2026-11-21",
      "p": null,
+     "payout": 0.0,
      "pid": "5082206",
      "player": "Brayden Burries",
      "price": 0.49,
+     "profit": -0.5075,
+     "ret": -1.0,
      "rule": "spotter_fade_blind",
      "rung": 20,
+     "settled": "2026-11-21T20:30:27.933691+00:00",
      "side": "no",
+     "sold": false,
      "start": "2026-11-21T18:00:00+00:00",
      "stat": "pra",
-     "status": "open",
+     "status": "lost",
      "team": "MIL",
      "ticker": "KXNBAPRA-26NOV21MILPHI-MILBBURRIES0-20",
      "unit": "points+rebounds+assists",
@@ -1978,6 +1990,7 @@
     {
      "bid": 0.36,
      "entered": "2026-11-21T16:45:26.645245+00:00",
+     "fee_in": 0.0162,
      "game": "MIL @ PHI",
      "game_id": "401910023",
      "id": "spotter_fade_blind:KXNBAREB-26NOV21MILPHI-PHIJEMBIID21-10",
@@ -1988,15 +2001,20 @@
       "Jaylen Brown"
      ],
      "p": null,
+     "payout": 0.0,
      "pid": "3059318",
      "player": "Joel Embiid",
      "price": 0.64,
+     "profit": -0.6562,
+     "ret": -1.0,
      "rule": "spotter_fade_blind",
      "rung": 10,
+     "settled": "2026-11-21T20:30:27.933691+00:00",
      "side": "no",
+     "sold": false,
      "start": "2026-11-21T18:00:00+00:00",
      "stat": "reb",
-     "status": "open",
+     "status": "lost",
      "team": "PHI",
      "ticker": "KXNBAREB-26NOV21MILPHI-PHIJEMBIID21-10",
      "unit": "rebounds",
@@ -5329,12 +5347,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-20T03:43:18.989001+00:00",
-   "box": 0,
-   "due": 0,
-   "new": 0
-  },
-  {
    "at": "2026-11-20T04:00:27.708388+00:00",
    "box": 0,
    "due": 0,
@@ -5630,6 +5642,12 @@
   },
   {
    "at": "2026-11-21T19:46:13.054325+00:00",
+   "box": 0,
+   "due": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-21T20:30:27.933691+00:00",
    "box": 0,
    "due": 0,
    "new": 0
