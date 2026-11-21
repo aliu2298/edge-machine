@@ -1697,6 +1697,11 @@
    "at": "2026-11-07T11:43:13.735039+00:00",
    "pool": "entered"
   },
+  "[\"soccer_team_rules_ledger.json\", \"T4\", [\"T4:KXEPLTEAMTOTAL-26NOV21BOUNFO:home\", \"yes\"]]": {
+   "at": "2026-11-21T13:41:53.332841+00:00",
+   "entries": "opposite",
+   "pool": "opposite"
+  },
   "[\"soccer_team_rules_ledger.json\", \"T5\", [\"T5:KXSERIEATEAMTOTAL-26NOV08FIOJUV:away\", \"yes\"]]": {
    "at": "2026-11-08T18:53:01.349320+00:00",
    "pool": "entered"
@@ -5044,7 +5049,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-21T13:35:20.193189+00:00",
+ "last_run": "2026-11-21T13:41:53.332841+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -16025,6 +16030,24 @@
    "list": "pool",
    "logged": "2026-11-20T21:31:31.455097+00:00",
    "pid": "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXARGPREMDIVBTTS-26NOV20VELCAB\", \"yes\"]]",
+   "side": "yes",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-21T13:41:53.332841+00:00",
+   "contract": "KXEPLTEAMTOTAL-26NOV21BOUNFO-BOU2",
+   "list": "entries",
+   "logged": "2026-11-21T13:31:40.974453+00:00",
+   "pid": "[\"soccer_team_rules_ledger.json\", \"T4\", [\"T4:KXEPLTEAMTOTAL-26NOV21BOUNFO:home\", \"yes\"]]",
+   "side": "yes",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-21T13:41:53.332841+00:00",
+   "contract": "KXEPLTEAMTOTAL-26NOV21BOUNFO-BOU2",
+   "list": "pool",
+   "logged": "2026-11-21T13:31:40.974453+00:00",
+   "pid": "[\"soccer_team_rules_ledger.json\", \"T4\", [\"T4:KXEPLTEAMTOTAL-26NOV21BOUNFO:home\", \"yes\"]]",
    "side": "yes",
    "why": "active lanes are on both sides of this contract"
   }
