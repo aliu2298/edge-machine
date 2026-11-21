@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-21T16:00:33.154612+00:00",
+ "last_run": "2026-11-21T17:00:33.161859+00:00",
  "matches": [
   {
    "day": "2026-11-19",
@@ -345,6 +345,365 @@
    "logged": "2026-11-21T16:00:33.154612+00:00",
    "timed": 3,
    "title": "Lazio v Lecce",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-21",
+   "entries": [
+    {
+     "ask": 0.42,
+     "bid": 0.41,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.415,
+      "filled": false,
+      "roi": null
+     },
+     "mom": "pre",
+     "name": "Dortmund",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.44,
+      "depth": 2130.0,
+      "filled": true,
+      "roi": -1.0
+     },
+     "team": "away",
+     "ticker": "KXBUNDESLIGAGAME-26NOV21BMGBVB-BVB",
+     "ts": 1795267800,
+     "v2": true,
+     "won": false
+    },
+    {
+     "ask": 0.51,
+     "bid": 0.5,
+     "kind": "TOTAL",
+     "maker": {
+      "cost": 0.505,
+      "filled": true,
+      "roi": 0.9802
+     },
+     "mom": "m75",
+     "name": "Over 0.5 goals scored",
+     "score": "0-0",
+     "side": "yes",
+     "strike": 0.5,
+     "taker": {
+      "cost": 0.53,
+      "depth": 8682.96,
+      "filled": true,
+      "roi": 0.8868
+     },
+     "team": null,
+     "ticker": "KXBUNDESLIGATOTAL-26NOV21BMGBVB-1",
+     "ts": 1795277141,
+     "v2": true,
+     "won": true
+    },
+    {
+     "ask": 0.86,
+     "bid": 0.85,
+     "kind": "TOTAL",
+     "maker": {
+      "cost": 0.86,
+      "filled": true,
+      "roi": 0.1628
+     },
+     "mom": "m75",
+     "name": "Over 1.5 goals scored",
+     "score": "0-0",
+     "side": "no",
+     "strike": 1.5,
+     "taker": {
+      "cost": 0.87,
+      "depth": 11595.04,
+      "filled": true,
+      "roi": 0.1494
+     },
+     "team": null,
+     "ticker": "KXBUNDESLIGATOTAL-26NOV21BMGBVB-2",
+     "ts": 1795277141,
+     "v2": true,
+     "won": true
+    }
+   ],
+   "espn_id": "401884731",
+   "event": "KXBUNDESLIGAGAME-26NOV21BMGBVB",
+   "goals": 1,
+   "ht": 1795274441,
+   "ko": 1795271400,
+   "labels": {
+    "away": "O-D-",
+    "home": "O-D+"
+   },
+   "league": "BUNDESLIGA",
+   "logged": "2026-11-21T17:00:33.161859+00:00",
+   "timed": 1,
+   "title": "Borussia M\u00f6nchengladbach v Borussia Dortmund",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-21",
+   "entries": [],
+   "espn_id": "401884735",
+   "event": "KXBUNDESLIGAGAME-26NOV21LEVPAD",
+   "goals": 4,
+   "ht": 1795274441,
+   "ko": 1795271400,
+   "labels": {
+    "away": null,
+    "home": null
+   },
+   "league": "BUNDESLIGA",
+   "logged": "2026-11-21T17:00:33.161859+00:00",
+   "timed": 4,
+   "title": "Bayer Leverkusen v SC Paderborn 07",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-21",
+   "entries": [
+    {
+     "ask": 0.61,
+     "bid": 0.6,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.61,
+      "filled": false,
+      "roi": null
+     },
+     "mom": "pre",
+     "name": "Frankfurt",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.63,
+      "depth": 20.38,
+      "filled": false,
+      "roi": -1.0
+     },
+     "team": "home",
+     "ticker": "KXBUNDESLIGAGAME-26NOV21SGETSG-SGE",
+     "ts": 1795267800,
+     "v2": true,
+     "won": false
+    },
+    {
+     "ask": 0.63,
+     "bid": 0.62,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.63,
+      "filled": false,
+      "roi": null
+     },
+     "mom": "pre",
+     "name": "Hoffenheim",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.65,
+      "depth": 0,
+      "filled": false,
+      "roi": 0.5385
+     },
+     "team": "away",
+     "ticker": "KXBUNDESLIGAGAME-26NOV21SGETSG-TSG",
+     "ts": 1795267800,
+     "v2": true,
+     "won": true
+    }
+   ],
+   "espn_id": "401884734",
+   "event": "KXBUNDESLIGAGAME-26NOV21SGETSG",
+   "goals": 1,
+   "ht": 1795274442,
+   "ko": 1795271400,
+   "labels": {
+    "away": "O-D-",
+    "home": "O+D+"
+   },
+   "league": "BUNDESLIGA",
+   "logged": "2026-11-21T17:00:33.161859+00:00",
+   "timed": 1,
+   "title": "Eintracht Frankfurt v TSG Hoffenheim",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-21",
+   "entries": [
+    {
+     "ask": 0.53,
+     "bid": 0.52,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.53,
+      "filled": false,
+      "roi": null
+     },
+     "mom": "pre",
+     "name": "Freiburg",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.55,
+      "depth": 234.17,
+      "filled": true,
+      "roi": -1.0
+     },
+     "team": "away",
+     "ticker": "KXBUNDESLIGAGAME-26NOV21SVESCF-SCF",
+     "ts": 1795267800,
+     "v2": true,
+     "won": false
+    }
+   ],
+   "espn_id": "401884728",
+   "event": "KXBUNDESLIGAGAME-26NOV21SVESCF",
+   "goals": 1,
+   "ht": 1795274443,
+   "ko": 1795271400,
+   "labels": {
+    "away": "O-D-",
+    "home": "O-D+"
+   },
+   "league": "BUNDESLIGA",
+   "logged": "2026-11-21T17:00:33.161859+00:00",
+   "timed": 1,
+   "title": "SV Elversberg v SC Freiburg",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-21",
+   "entries": [
+    {
+     "ask": 0.36,
+     "bid": 0.35,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.355,
+      "filled": false,
+      "roi": null
+     },
+     "mom": "pre",
+     "name": "Leipzig",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.38,
+      "depth": 750.5,
+      "filled": true,
+      "roi": -1.0
+     },
+     "team": "away",
+     "ticker": "KXBUNDESLIGAGAME-26NOV21UNIRBL-RBL",
+     "ts": 1795267800,
+     "v2": true,
+     "won": false
+    }
+   ],
+   "espn_id": "401884732",
+   "event": "KXBUNDESLIGAGAME-26NOV21UNIRBL",
+   "goals": 6,
+   "ht": 1795274443,
+   "ko": 1795271400,
+   "labels": {
+    "away": "O+D+",
+    "home": "O-D+"
+   },
+   "league": "BUNDESLIGA",
+   "logged": "2026-11-21T17:00:33.161859+00:00",
+   "timed": 6,
+   "title": "1. FC Union Berlin v RB Leipzig",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-21",
+   "entries": [
+    {
+     "ask": 0.46,
+     "bid": 0.45,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.455,
+      "filled": false,
+      "roi": null
+     },
+     "mom": "pre",
+     "name": "Aston Villa",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.48,
+      "depth": 5576.28,
+      "filled": true,
+      "roi": 1.0833
+     },
+     "team": "home",
+     "ticker": "KXEPLGAME-26NOV21AVLSUN-AVL",
+     "ts": 1795269600,
+     "v2": true,
+     "won": true
+    }
+   ],
+   "espn_id": "401878756",
+   "event": "KXEPLGAME-26NOV21AVLSUN",
+   "goals": 0,
+   "ht": 1795276797,
+   "ko": 1795273200,
+   "labels": {
+    "away": "O-D+",
+    "home": "O+D+"
+   },
+   "league": "EPL",
+   "logged": "2026-11-21T17:00:33.161859+00:00",
+   "timed": 0,
+   "title": "Aston Villa v Sunderland",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-21",
+   "entries": [
+    {
+     "ask": 0.51,
+     "bid": 0.5,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.505,
+      "filled": false,
+      "roi": null
+     },
+     "mom": "pre",
+     "name": "Bournemouth",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.53,
+      "depth": 465.11,
+      "filled": true,
+      "roi": -1.0
+     },
+     "team": "home",
+     "ticker": "KXEPLGAME-26NOV21BOUNFO-BOU",
+     "ts": 1795269600,
+     "v2": true,
+     "won": false
+    }
+   ],
+   "espn_id": "401879238",
+   "event": "KXEPLGAME-26NOV21BOUNFO",
+   "goals": 2,
+   "ht": 1795276796,
+   "ko": 1795273200,
+   "labels": {
+    "away": "O-D+",
+    "home": "O+D-"
+   },
+   "league": "EPL",
+   "logged": "2026-11-21T17:00:33.161859+00:00",
+   "timed": 2,
+   "title": "AFC Bournemouth v Nottingham Forest",
    "version": "soccerp4-v1"
   }
  ],
