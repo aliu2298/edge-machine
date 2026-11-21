@@ -46,20 +46,6 @@
   },
   {
    "bid": 0.1,
-   "event": "KXBUNDESLIGATOTAL-26NOV21SVESCF",
-   "id": "o35_cheap_no_wave:KXBUNDESLIGATOTAL-26NOV21SVESCF-4",
-   "kickoff": "2026-11-21T14:30:00+00:00",
-   "lane": "o35_cheap_no_wave",
-   "league": "Bundesliga",
-   "sell": 0.4,
-   "side": "no",
-   "stake_usd": 1.0,
-   "ticker": "KXBUNDESLIGATOTAL-26NOV21SVESCF-4",
-   "title": "Elversberg vs Freiburg: Total Goals",
-   "version": "o35-v4"
-  },
-  {
-   "bid": 0.1,
    "event": "KXBUNDESLIGATOTAL-26NOV21UNIRBL",
    "id": "o35_cheap_no_wave:KXBUNDESLIGATOTAL-26NOV21UNIRBL-4",
    "kickoff": "2026-11-21T14:30:00+00:00",
@@ -732,6 +718,20 @@
   },
   {
    "bid": 0.1,
+   "event": "KXSUPERLIGTOTAL-26NOV22TRAEYU",
+   "id": "o35_cheap_no_wave:KXSUPERLIGTOTAL-26NOV22TRAEYU-4",
+   "kickoff": "2026-11-22T16:00:00+00:00",
+   "lane": "o35_cheap_no_wave",
+   "league": "Turkish Super Lig",
+   "sell": 0.4,
+   "side": "no",
+   "stake_usd": 1.0,
+   "ticker": "KXSUPERLIGTOTAL-26NOV22TRAEYU-4",
+   "title": "Trabzonspor vs Eyupspor: Total Goals",
+   "version": "o35-v4"
+  },
+  {
+   "bid": 0.1,
    "event": "KXLIGUE1TOTAL-26NOV22FCLREN",
    "id": "o35_cheap_no_wave:KXLIGUE1TOTAL-26NOV22FCLREN-4",
    "kickoff": "2026-11-22T16:15:00+00:00",
@@ -880,6 +880,6 @@
   "side": "no",
   "stake_usd": 1.0
  },
- "updated_at": "2026-11-21T16:02:09+00:00",
+ "updated_at": "2026-11-21T16:23:34+00:00",
  "version": "o35-v4"
 }
