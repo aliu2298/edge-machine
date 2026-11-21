@@ -1789,11 +1789,11 @@
    "tip": "2026-11-11T04:00:00+00:00"
   }
  },
- "last_run": "2026-11-21T15:39:37.526216+00:00",
+ "last_run": "2026-11-21T21:14:20.972069+00:00",
  "observations": {
-  "at": "2026-11-21T15:39:37.526216+00:00",
+  "at": "2026-11-21T21:14:20.972069+00:00",
   "errors": [],
-  "new": 0,
+  "new": 3,
   "waiting": 0
  },
  "rows": {
@@ -6049,6 +6049,59 @@
    "result": "no",
    "ticker": "KXNBAWINMARGIN-26NOV20TORDET-TOR6TO10",
    "tip": 1795221000,
+   "version": "wm-nofade-v4"
+  },
+  "no:KXNBAWINMARGIN-26NOV21MILPHI-PHI11TO15": {
+   "decided_at": "2026-11-21T18:00:27+00:00",
+   "event": "KXNBAWINMARGIN-26NOV21MILPHI",
+   "key": "no:KXNBAWINMARGIN-26NOV21MILPHI-PHI11TO15",
+   "lane": "nba_wm_nofade",
+   "night": "2026-11-21",
+   "no_entry": true,
+   "outcome": "bid_posted",
+   "reason": "no fill",
+   "result": "no",
+   "ticker": "KXNBAWINMARGIN-26NOV21MILPHI-PHI11TO15",
+   "tip": 1795284000,
+   "version": "wm-nofade-v4"
+  },
+  "no:KXNBAWINMARGIN-26NOV21MILPHI-PHI1TO5": {
+   "P": 0.86,
+   "cost": 0.56431,
+   "decided_at": "2026-11-21T18:00:27+00:00",
+   "event": "KXNBAWINMARGIN-26NOV21MILPHI",
+   "fill_at": 1795292804,
+   "fill_print": 0.51,
+   "key": "no:KXNBAWINMARGIN-26NOV21MILPHI-PHI1TO5",
+   "lane": "nba_wm_nofade",
+   "limit": 0.56,
+   "night": "2026-11-21",
+   "outcome": "bid_posted",
+   "printed": 3710.9,
+   "profit": -0.56431,
+   "profit_touch": -0.56431,
+   "reason": "settled",
+   "result": "yes",
+   "roi": -1.0,
+   "sold_at": null,
+   "sold_touch_at": null,
+   "ticker": "KXNBAWINMARGIN-26NOV21MILPHI-PHI1TO5",
+   "tip": 1795284000,
+   "version": "wm-nofade-v4",
+   "won": false
+  },
+  "no:KXNBAWINMARGIN-26NOV21MILPHI-PHI26PLUS": {
+   "decided_at": "2026-11-21T18:00:27+00:00",
+   "event": "KXNBAWINMARGIN-26NOV21MILPHI",
+   "key": "no:KXNBAWINMARGIN-26NOV21MILPHI-PHI26PLUS",
+   "lane": "nba_wm_nofade",
+   "night": "2026-11-21",
+   "no_entry": true,
+   "outcome": "bid_posted",
+   "reason": "no fill",
+   "result": "no",
+   "ticker": "KXNBAWINMARGIN-26NOV21MILPHI-PHI26PLUS",
+   "tip": 1795284000,
    "version": "wm-nofade-v4"
   },
   "yes:KXNBAWINMARGIN-26NOV08LALDET-DET1TO5": {

@@ -38849,15 +38849,241 @@
    "night": "2026-11-20",
    "tip": 1795219200,
    "version": "nofade-v2"
+  },
+  {
+   "buckets": [
+    {
+     "P": 0.94,
+     "ask": {
+      "last": 0.93,
+      "printed": 0,
+      "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+      "source": "replayed",
+      "status": "unverified"
+     },
+     "bucket": "6-10",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": null
+     },
+     "id": "KXNBAWINMARGIN-26NOV21MILPHI-MIL6TO10",
+     "no_wins": true,
+     "spread": 0.03,
+     "team": "MIL"
+    },
+    {
+     "P": 0.94,
+     "ask": {
+      "last": 0.92,
+      "printed": 0,
+      "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+      "source": "replayed",
+      "status": "unverified"
+     },
+     "bucket": "1-5",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": {
+       "cost": 0.8028,
+       "fill_at": 1795293241,
+       "fill_print": 0.75,
+       "limit": 0.8,
+       "printed": 72.19,
+       "profit": 0.13621,
+       "profit_touch": 0.13621,
+       "reason": "sold",
+       "sold_at": 1795293264,
+       "sold_touch_at": 1795293264,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV21MILPHI-MIL1TO5",
+     "no_wins": true,
+     "spread": 0.03,
+     "team": "MIL"
+    },
+    {
+     "P": 0.86,
+     "ask": {
+      "last": 0.86,
+      "printed": 0,
+      "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+      "source": "replayed",
+      "status": "unverified"
+     },
+     "bucket": "1-5",
+     "fills": {
+      "d65": {
+       "cost": 0.56431,
+       "fill_at": 1795292804,
+       "fill_print": 0.51,
+       "limit": 0.56,
+       "printed": 3710.9,
+       "profit": -0.56431,
+       "profit_touch": -0.56431,
+       "reason": "settled",
+       "sold_at": null,
+       "sold_touch_at": null,
+       "won": false
+      },
+      "d75": {
+       "cost": 0.65398,
+       "fill_at": 1795291601,
+       "fill_print": 0.64,
+       "limit": 0.65,
+       "printed": 4022.43,
+       "profit": -0.65398,
+       "profit_touch": -0.65398,
+       "reason": "settled",
+       "sold_at": null,
+       "sold_touch_at": null,
+       "won": false
+      },
+      "d85": {
+       "cost": 0.73345,
+       "fill_at": 1795289713,
+       "fill_print": 0.66,
+       "limit": 0.73,
+       "printed": 3493.02,
+       "profit": 0.12444,
+       "profit_touch": 0.12444,
+       "reason": "sold",
+       "sold_at": 1795290175,
+       "sold_touch_at": 1795290175,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV21MILPHI-PHI1TO5",
+     "no_wins": false,
+     "spread": 0.01,
+     "team": "PHI"
+    },
+    {
+     "P": 0.86,
+     "ask": {
+      "how": "print",
+      "last": 0.83,
+      "printed": 301.02,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "6-10",
+     "fills": {
+      "d65": {
+       "cost": 0.56431,
+       "fill_at": 1795291804,
+       "fill_print": 0.53,
+       "limit": 0.56,
+       "printed": 941.6,
+       "profit": 0.29358,
+       "profit_touch": 0.29358,
+       "reason": "sold",
+       "sold_at": 1795292830,
+       "sold_touch_at": 1795292830,
+       "won": true
+      },
+      "d75": {
+       "cost": 0.65398,
+       "fill_at": 1795291144,
+       "fill_print": 0.63,
+       "limit": 0.65,
+       "printed": 2374.64,
+       "profit": 0.20391,
+       "profit_touch": 0.20391,
+       "reason": "sold",
+       "sold_at": 1795292830,
+       "sold_touch_at": 1795292830,
+       "won": true
+      },
+      "d85": {
+       "cost": 0.73345,
+       "fill_at": 1795289824,
+       "fill_print": 0.7,
+       "limit": 0.73,
+       "printed": 3253.07,
+       "profit": 0.12444,
+       "profit_touch": 0.12444,
+       "reason": "sold",
+       "sold_at": 1795292830,
+       "sold_touch_at": 1795292830,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV21MILPHI-PHI6TO10",
+     "no_wins": true,
+     "spread": 0.03,
+     "team": "PHI"
+    },
+    {
+     "P": 0.86,
+     "ask": {
+      "how": "print",
+      "last": 0.84,
+      "printed": 613.64,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "11-15",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": {
+       "cost": 0.73345,
+       "fill_at": 1795290354,
+       "fill_print": 0.72,
+       "limit": 0.73,
+       "printed": 137.95,
+       "profit": 0.12444,
+       "profit_touch": 0.12444,
+       "reason": "sold",
+       "sold_at": 1795291350,
+       "sold_touch_at": 1795291350,
+       "won": true
+      }
+     },
+     "id": "KXNBAWINMARGIN-26NOV21MILPHI-PHI11TO15",
+     "no_wins": true,
+     "spread": 0.02,
+     "team": "PHI"
+    },
+    {
+     "P": 0.89,
+     "ask": {
+      "how": "print",
+      "last": 0.87,
+      "printed": 58.88,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "bucket": "26+",
+     "fills": {
+      "d65": null,
+      "d75": null,
+      "d85": null
+     },
+     "id": "KXNBAWINMARGIN-26NOV21MILPHI-PHI26PLUS",
+     "no_wins": true,
+     "spread": 0.02,
+     "team": "PHI"
+    }
+   ],
+   "event": "KXNBAWINMARGIN-26NOV21MILPHI",
+   "insample": false,
+   "logged": "2026-11-21T21:14:19.239926+00:00",
+   "night": "2026-11-21",
+   "tip": 1795284000,
+   "version": "nofade-v2"
   }
  ],
  "error": null,
  "lane": "nba_wm_nofade",
- "last_run": "2026-11-21T15:39:37.093210+00:00",
+ "last_run": "2026-11-21T21:14:19.239926+00:00",
  "observations": {
-  "at": "2026-11-21T15:39:37.093210+00:00",
+  "at": "2026-11-21T21:14:19.239926+00:00",
   "errors": [],
-  "new": 0,
+  "new": 1,
   "waiting": 0
  },
  "seen": {
@@ -39008,6 +39234,7 @@
   "KXNBAWINMARGIN-26NOV20SACLAL": "2026-11-21T07:45:19.153676+00:00",
   "KXNBAWINMARGIN-26NOV20TORDET": "2026-11-21T07:45:19.153676+00:00",
   "KXNBAWINMARGIN-26NOV20WASCHI": "2026-11-21T07:45:19.153676+00:00",
+  "KXNBAWINMARGIN-26NOV21MILPHI": "2026-11-21T21:14:19.239926+00:00",
   "KXNBAWINMARGIN-26OCT20BOSDET": "2026-10-30T19:46:54.954817+00:00",
   "KXNBAWINMARGIN-26OCT20OKCSAS": "2026-10-30T19:46:54.954817+00:00",
   "KXNBAWINMARGIN-26OCT20PHINYK": "2026-10-30T19:46:54.954817+00:00",
