@@ -1683,6 +1683,9 @@
    "last_trade_at": null,
    "legs": [
     {
+     "fill_px": 0.1,
+     "fill_volume": 395.1,
+     "filled_at": "2026-11-21T03:56:00+00:00",
      "multiple": 2.0,
      "share": 0.5,
      "target": 0.1
@@ -1806,12 +1809,12 @@
   "KXBOXING-26OCT31TSUTSUROJAS": "2026-10-31T20:06:27.383501+00:00"
  },
  "lane": "boxing_cheap_dog",
- "last_success": "2026-11-21T03:00:43.403212+00:00",
+ "last_success": "2026-11-21T04:00:34.681714+00:00",
  "observations": {
-  "at": "2026-11-21T03:00:43.403212+00:00",
+  "at": "2026-11-21T04:00:34.681714+00:00",
   "entered": 0,
   "events": 4,
-  "filled": 0,
+  "filled": 1,
   "no_start": 0,
   "skipped": 0,
   "unverified": 1,
