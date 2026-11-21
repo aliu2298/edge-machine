@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-21T16:46:51.401380+00:00",
+ "last_run": "2026-11-21T17:01:54.700458+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -2239,11 +2239,14 @@
      "line": 3.5,
      "logged": "2026-11-21T13:46:30.084250+00:00",
      "match": "Falkirk v St Johnstone",
+     "payout": 1.0,
      "price": 0.71,
+     "profit": 38.04,
      "rule": "B4",
+     "settled": "2026-11-21T17:01:54.700458+00:00",
      "side": "no",
      "start": "2026-11-21T15:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXSCOTTISHPREMTOTAL-26NOV21FALJOH-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Falkirk O+D- v St Johnstone O-D- \u00b7 Under 3.5 NO 0.71"
@@ -5471,14 +5474,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-17T21:01:31.583165+00:00",
-   "candidates": 0,
-   "due": 0,
-   "labelled": 0,
-   "matched": 0,
-   "new": 0
-  },
-  {
    "at": "2026-11-17T22:01:48.298590+00:00",
    "candidates": 0,
    "due": 0,
@@ -5872,6 +5867,14 @@
   },
   {
    "at": "2026-11-21T16:46:51.401380+00:00",
+   "candidates": 1,
+   "due": 6,
+   "labelled": 6,
+   "matched": 1,
+   "new": 0
+  },
+  {
+   "at": "2026-11-21T17:01:54.700458+00:00",
    "candidates": 1,
    "due": 6,
    "labelled": 6,
