@@ -45,10 +45,10 @@
    "kalshi_venue": 275
   },
   "economics": {
-   "kalshi_venue": 36
+   "kalshi_venue": 38
   },
   "finance": {
-   "kalshi_venue": 30
+   "kalshi_venue": 46
   },
   "mma": {
    "kalshi_venue": 0,
@@ -63,30 +63,30 @@
    "polymarket_us_priced": 13
   },
   "nhl_pl": {
-   "kalshi_venue": 13
+   "kalshi_venue": 12
   },
   "nhl_rest": {
-   "kalshi_venue": 27
+   "kalshi_venue": 26
   },
   "soccer": {
    "ere_draw_home": {
     "offered": 0,
     "picked": 0
    },
-   "kalshi_venue": 91,
+   "kalshi_venue": 131,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
   },
   "soccer_btts": {
    "btts_market": {
-    "offered": 30,
-    "picked": 30
+    "offered": 29,
+    "picked": 29
    },
-   "kalshi_venue": 30,
+   "kalshi_venue": 29,
    "liga_btts_even": {
-    "offered": 3,
-    "picked": 1
+    "offered": 2,
+    "picked": 0
    }
   },
   "soccer_btts_cup": {
@@ -105,22 +105,22 @@
   },
   "soccer_corners": {
    "corners_fav_no": {
-    "offered": 28,
+    "offered": 21,
     "picked": 1
    },
    "corners_market": {
-    "offered": 28,
-    "picked": 28
+    "offered": 21,
+    "picked": 21
    },
    "corners_total_under": {
-    "offered": 28,
+    "offered": 21,
     "picked": 0
    },
    "corners_ucl_fade": {
-    "offered": 28,
+    "offered": 21,
     "picked": 0
    },
-   "kalshi_venue": 28
+   "kalshi_venue": 21
   },
   "soccer_ftts": {
    "ftts_lineup_lag": {
@@ -161,12 +161,12 @@
     "picked": 0
    },
    "goals_market": {
-    "offered": 30,
-    "picked": 30
+    "offered": 29,
+    "picked": 29
    },
-   "kalshi_venue": 30,
+   "kalshi_venue": 29,
    "liga_u15_dog_24h": {
-    "offered": 3,
+    "offered": 2,
     "picked": 0
    }
   },
@@ -190,10 +190,10 @@
   },
   "soccer_o25": {
    "goals_market": {
-    "offered": 30,
-    "picked": 30
+    "offered": 29,
+    "picked": 29
    },
-   "kalshi_venue": 30
+   "kalshi_venue": 29
   },
   "soccer_o25_cup": {
    "goals_market": {
@@ -236,10 +236,10 @@
   },
   "soccer_team1": {
    "goals_market": {
-    "offered": 20,
-    "picked": 20
+    "offered": 18,
+    "picked": 18
    },
-   "kalshi_venue": 20
+   "kalshi_venue": 18
   },
   "soccer_team1_cup": {
    "goals_market": {
@@ -265,13 +265,13 @@
   },
   "soccer_team2": {
    "goals_market": {
-    "offered": 20,
-    "picked": 20
+    "offered": 18,
+    "picked": 18
    },
-   "kalshi_venue": 20,
+   "kalshi_venue": 18,
    "team2_ranked": {
-    "offered": 20,
-    "picked": 2
+    "offered": 18,
+    "picked": 1
    }
   },
   "soccer_team2_cup": {
@@ -308,10 +308,10 @@
   },
   "soccer_u35": {
    "goals_market": {
-    "offered": 30,
-    "picked": 30
+    "offered": 29,
+    "picked": 29
    },
-   "kalshi_venue": 30
+   "kalshi_venue": 29
   },
   "soccer_u35_cup": {
    "goals_market": {
@@ -336,61 +336,61 @@
    }
   },
   "tennis": {
-   "kalshi_venue": 30,
+   "kalshi_venue": 27,
    "polymarket_us": 40,
-   "polymarket_us_listed": 428,
-   "polymarket_us_priced": 149
+   "polymarket_us_listed": 437,
+   "polymarket_us_priced": 161
   },
   "tennis_combo": {
    "combo": 0,
    "legs": 0
   },
   "tennis_pmcombo": {
-   "combo": 2,
-   "legs": 3
+   "combo": 1,
+   "legs": 2
   }
  },
  "feed_status": {},
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-22T17:30:27+00:00",
-   "commodities": "2026-11-22T17:30:27+00:00",
-   "commodities_fav": "2026-11-22T17:30:27+00:00",
-   "cricket": "2026-11-22T17:30:27+00:00",
-   "crypto": "2026-11-22T17:30:27+00:00",
-   "crypto_fav": "2026-11-22T17:30:27+00:00",
-   "economics": "2026-11-22T17:30:27+00:00",
-   "finance": "2026-11-22T17:30:27+00:00",
+   "boxing": "2026-11-22T17:36:35+00:00",
+   "commodities": "2026-11-22T17:36:35+00:00",
+   "commodities_fav": "2026-11-22T17:36:35+00:00",
+   "cricket": "2026-11-22T17:36:35+00:00",
+   "crypto": "2026-11-22T17:36:35+00:00",
+   "crypto_fav": "2026-11-22T17:36:35+00:00",
+   "economics": "2026-11-22T17:36:35+00:00",
+   "finance": "2026-11-22T17:36:35+00:00",
    "mma": "2026-11-21T20:10:14+00:00",
-   "nfl": "2026-11-22T17:30:27+00:00",
-   "nhl_pl": "2026-11-22T17:30:27+00:00",
-   "nhl_rest": "2026-11-22T17:30:27+00:00",
-   "soccer": "2026-11-22T17:30:27+00:00",
-   "soccer_btts": "2026-11-22T17:30:27+00:00",
-   "soccer_btts_cup": "2026-11-22T17:30:27+00:00",
+   "nfl": "2026-11-22T17:36:35+00:00",
+   "nhl_pl": "2026-11-22T17:36:35+00:00",
+   "nhl_rest": "2026-11-22T17:36:35+00:00",
+   "soccer": "2026-11-22T17:36:35+00:00",
+   "soccer_btts": "2026-11-22T17:36:35+00:00",
+   "soccer_btts_cup": "2026-11-22T17:36:35+00:00",
    "soccer_btts_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_corners": "2026-11-22T17:30:27+00:00",
-   "soccer_ftts": "2026-11-22T17:30:27+00:00",
-   "soccer_o15": "2026-11-22T17:30:27+00:00",
-   "soccer_o15_cup": "2026-11-22T17:30:27+00:00",
+   "soccer_corners": "2026-11-22T17:36:35+00:00",
+   "soccer_ftts": "2026-11-22T17:36:35+00:00",
+   "soccer_o15": "2026-11-22T17:36:35+00:00",
+   "soccer_o15_cup": "2026-11-22T17:36:35+00:00",
    "soccer_o15_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_o25": "2026-11-22T17:30:27+00:00",
-   "soccer_o25_cup": "2026-11-22T17:30:27+00:00",
+   "soccer_o25": "2026-11-22T17:36:35+00:00",
+   "soccer_o25_cup": "2026-11-22T17:36:35+00:00",
    "soccer_o25_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_p05": "2026-11-22T17:30:27+00:00",
-   "soccer_p05_cup": "2026-11-22T17:30:27+00:00",
+   "soccer_p05": "2026-11-22T17:36:35+00:00",
+   "soccer_p05_cup": "2026-11-22T17:36:35+00:00",
    "soccer_p05_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_team1": "2026-11-22T17:30:27+00:00",
-   "soccer_team1_cup": "2026-11-22T17:30:27+00:00",
+   "soccer_team1": "2026-11-22T17:36:35+00:00",
+   "soccer_team1_cup": "2026-11-22T17:36:35+00:00",
    "soccer_team1_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_team2": "2026-11-22T17:30:27+00:00",
-   "soccer_team2_cup": "2026-11-22T17:30:27+00:00",
+   "soccer_team2": "2026-11-22T17:36:35+00:00",
+   "soccer_team2_cup": "2026-11-22T17:36:35+00:00",
    "soccer_team2_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_u35": "2026-11-22T17:30:27+00:00",
-   "soccer_u35_cup": "2026-11-22T17:30:27+00:00",
+   "soccer_u35": "2026-11-22T17:36:35+00:00",
+   "soccer_u35_cup": "2026-11-22T17:36:35+00:00",
    "soccer_u35_intl": "2026-11-17T23:27:07+00:00",
-   "tennis": "2026-11-22T17:30:27+00:00",
+   "tennis": "2026-11-22T17:36:35+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -587,7 +587,7 @@
    }
   },
   "odds_api": {
-   "at": "2026-11-22T17:30:27+00:00",
+   "at": "2026-11-22T17:36:35+00:00",
    "remaining": 175,
    "used": 325
   },
@@ -608,7 +608,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 2581,
+  "runs": 2582,
   "tennis_shortlist": {
    "audit": [
     {
@@ -620,7 +620,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-22T17:30:59+00:00"
+  "updated": "2026-11-22T17:37:08+00:00"
  },
  "quotes": [
   {
@@ -385760,7 +385760,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-22T17:30:27+00:00",
+   "close_at": "2026-11-22T17:36:35+00:00",
    "close_price": 0.6,
    "date": "2026-11-24",
    "edge": null,
@@ -421368,7 +421368,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-22T17:30:27+00:00",
+   "close_at": "2026-11-22T17:36:35+00:00",
    "close_price": 0.55,
    "date": "2026-11-25",
    "edge": null,
@@ -433867,7 +433867,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-22T17:30:27+00:00",
+   "close_at": "2026-11-22T17:36:35+00:00",
    "close_price": 0.52,
    "date": "2026-11-22",
    "edge": null,
@@ -459183,7 +459183,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-22T17:30:27+00:00",
+   "close_at": "2026-11-22T17:36:35+00:00",
    "close_price": 0.78,
    "date": "2026-11-22",
    "edge": null,
@@ -459225,7 +459225,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-22T17:30:27+00:00",
+   "close_at": "2026-11-22T17:36:35+00:00",
    "close_price": 0.7,
    "date": "2026-11-22",
    "edge": null,
@@ -459267,7 +459267,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-22T17:30:27+00:00",
+   "close_at": "2026-11-22T17:36:35+00:00",
    "close_price": 0.75,
    "date": "2026-11-22",
    "edge": null,
@@ -459309,7 +459309,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-22T17:30:27+00:00",
+   "close_at": "2026-11-22T17:36:35+00:00",
    "close_price": 0.71,
    "date": "2026-11-22",
    "edge": null,
@@ -460494,7 +460494,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-22T17:30:27+00:00",
+   "close_at": "2026-11-22T17:36:35+00:00",
    "close_price": 0.69,
    "date": "2026-11-22",
    "edge": null,
@@ -462950,6 +462950,124 @@
    "untraded": false,
    "url": "https://polymarket.us/event/atp-enzlim-sanfue-2026-11-22",
    "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-24",
+   "edge": -0.05,
+   "espn_away": "Vissel Kobe",
+   "espn_home": "Cong An Ha Noi",
+   "event": "KXAFCCLTOTAL-26NOV24CONVIK",
+   "id": "goals_market:KXAFCCLTOTAL-26NOV24CONVIK-2",
+   "kalshi_title": "Over 1.5 goals scored",
+   "label": "Cong An Ha Noi v Vissel Kobe: over 1.5 goals",
+   "league": "AFC Champions League",
+   "liquidity": null,
+   "logged": "2026-11-22T17:36:35+00:00",
+   "market_id": "KXAFCCLTOTAL-26NOV24CONVIK-2",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.8,
+   "price_b": 0.3,
+   "price_draw": null,
+   "prob_a": 0.75,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_o15_cup",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-24T12:15:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxafccltotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-26",
+   "edge": -0.025,
+   "espn_away": "Al Diriyah",
+   "espn_home": "Al Faisaly",
+   "event": "KXSAUDIPLGAME-26NOV26FAIDIR",
+   "id": "goals_market:KXSAUDIPLGAME-26NOV26FAIDIR-FAI",
+   "kalshi_title": "Al-Faisaly",
+   "label": "Al Faisaly v Al Diriyah: Al Faisaly to win (No = Al Diriyah +0.5)",
+   "league": "Saudi Pro League",
+   "liquidity": null,
+   "logged": "2026-11-22T17:36:35+00:00",
+   "market_id": "KXSAUDIPLGAME-26NOV26FAIDIR-FAI",
+   "opponent": "Al Faisaly",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.27,
+   "price_b": 0.78,
+   "price_draw": null,
+   "prob_a": 0.245,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_p05",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-26T17:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "Al Diriyah",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxsaudiplgame",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-26",
+   "edge": -0.035,
+   "espn_away": "Al Diriyah",
+   "espn_home": "Al Faisaly",
+   "event": "KXSAUDIPLGAME-26NOV26FAIDIR",
+   "id": "goals_market:KXSAUDIPLGAME-26NOV26FAIDIR-DIR",
+   "kalshi_title": "Diriyah Club",
+   "label": "Al Faisaly v Al Diriyah: Al Diriyah to win (No = Al Faisaly +0.5)",
+   "league": "Saudi Pro League",
+   "liquidity": null,
+   "logged": "2026-11-22T17:36:35+00:00",
+   "market_id": "KXSAUDIPLGAME-26NOV26FAIDIR-DIR",
+   "opponent": "Al Diriyah",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.52,
+   "price_b": 0.55,
+   "price_draw": null,
+   "prob_a": 0.485,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_p05",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-26T17:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "Al Faisaly",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxsaudiplgame",
+   "venue": "kalshi_binary",
    "venue_start": null
   }
  ],
