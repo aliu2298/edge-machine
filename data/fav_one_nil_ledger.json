@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-22T16:01:41.431770+00:00",
+ "last_run": "2026-11-22T16:31:42.344670+00:00",
  "registered": "2026-11-21",
  "rules": {
   "PB": {
@@ -63,8 +63,11 @@
      "league": "Premier League",
      "logged": "2026-11-22T12:31:55.589419+00:00",
      "match": "Hull City v Brighton & Hove Albion",
+     "payout": 0.0,
      "price": 0.12,
+     "profit": -100.0,
      "rule": "PB",
+     "settled": "2026-11-22T16:31:42.344670+00:00",
      "shadow": {
       "checked_ts": 1795359700,
       "profit": 78.37,
@@ -78,7 +81,7 @@
       "A6"
      ],
      "start": "2026-11-22T14:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXEPLSCORE-26NOV22HULBRI-HUL0BRI1",
      "title": "Final score Brighton & Hove Albion wins 1-0?",
      "why": "A6 pick it \u00b7 BRI 0.65 v HUL 0.14 \u00b7 fav 1-0 YES 0.12"
@@ -87,12 +90,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-11-21T14:46:41.608004+00:00",
-   "due": 0,
-   "new": 0,
-   "selected": 0
-  },
   {
    "at": "2026-11-21T15:01:59.294506+00:00",
    "due": 0,
@@ -390,6 +387,12 @@
   {
    "at": "2026-11-22T16:01:41.431770+00:00",
    "due": 1,
+   "new": 0,
+   "selected": 0
+  },
+  {
+   "at": "2026-11-22T16:31:42.344670+00:00",
+   "due": 0,
    "new": 0,
    "selected": 0
   }
