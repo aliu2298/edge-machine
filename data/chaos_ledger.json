@@ -195459,7 +195459,10 @@
     "KXATPCHALLENGERMATCH-26NOV21STEOC": 0,
     "KXATPCHALLENGERMATCH-26NOV21SUAVUJ": 1,
     "KXATPCHALLENGERMATCH-26NOV21SUEHOE": 0,
-    "KXATPCHALLENGERMATCH-26NOV21TRODRA": 0
+    "KXATPCHALLENGERMATCH-26NOV21TRODRA": 0,
+    "KXATPCHALLENGERMATCH-26NOV22ARNEL": 0,
+    "KXATPCHALLENGERMATCH-26NOV22JIAPIE": 1,
+    "KXATPCHALLENGERMATCH-26NOV22KIRBEL": 1
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -204528,6 +204531,76 @@
      "stop": null,
      "target": null,
      "ticker": "KXATPCHALLENGERMATCH-26NOV21BROWAT-BRO",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": false
+    },
+    {
+     "ask": {
+      "book": null,
+      "first_quotes": false,
+      "how": "print",
+      "last_trade": 0.16,
+      "printed": 40.32,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "cost": 0.16941,
+     "entry": 0.16,
+     "entry_i": 637,
+     "entry_ts": 1795330080,
+     "event": "KXATPCHALLENGERMATCH-26NOV22KIRBEL",
+     "exit": 0.0,
+     "exit_i": 779,
+     "exit_key": "hold",
+     "exit_ts": 1795338600,
+     "hours": 1,
+     "night": "2026-11-22",
+     "profit": -0.16941,
+     "reason": "settled",
+     "roi": -1.0,
+     "side": "yes",
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1795333680,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26NOV22KIRBEL-KIR",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": false
+    },
+    {
+     "ask": {
+      "book": null,
+      "first_quotes": false,
+      "last_trade": null,
+      "printed": 0,
+      "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+      "source": "replayed",
+      "status": "unverified"
+     },
+     "cost": 0.2838,
+     "entry": 0.27,
+     "entry_i": 645,
+     "entry_ts": 1795330560,
+     "event": "KXATPCHALLENGERMATCH-26NOV22JIAPIE",
+     "exit": 0.0,
+     "exit_i": 794,
+     "exit_key": "hold",
+     "exit_ts": 1795339500,
+     "hours": 1,
+     "night": "2026-11-22",
+     "profit": -0.2838,
+     "reason": "settled",
+     "roi": -1.0,
+     "side": "yes",
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1795334160,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26NOV22JIAPIE-JIA",
      "unreachable": false,
      "variant": "t1h_hold",
      "won": false
@@ -229673,7 +229746,10 @@
     "KXATPCHALLENGERMATCH-26NOV21STEOC": 0,
     "KXATPCHALLENGERMATCH-26NOV21SUAVUJ": 0,
     "KXATPCHALLENGERMATCH-26NOV21SUEHOE": 0,
-    "KXATPCHALLENGERMATCH-26NOV21TRODRA": 0
+    "KXATPCHALLENGERMATCH-26NOV21TRODRA": 0,
+    "KXATPCHALLENGERMATCH-26NOV22ARNEL": 0,
+    "KXATPCHALLENGERMATCH-26NOV22JIAPIE": 0,
+    "KXATPCHALLENGERMATCH-26NOV22KIRBEL": 0
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -399922,15 +399998,8 @@
    "watch": false
   }
  },
- "last_run": "2026-11-22T09:00:42.769715+00:00",
+ "last_run": "2026-11-22T09:30:40.566717+00:00",
  "runs": [
-  {
-   "at": "2026-11-09T10:00:21.297938+00:00",
-   "new": {
-    "challenger_cheap_hold_base": 1,
-    "challenger_won_here_hold": 0
-   }
-  },
   {
    "at": "2026-11-09T19:52:35.933428+00:00",
    "new": {
@@ -400249,6 +400318,13 @@
     "challenger_cheap_hold_base": 10,
     "challenger_won_here_hold": 0,
     "nba_winmargin_live": 34
+   }
+  },
+  {
+   "at": "2026-11-22T09:30:40.566717+00:00",
+   "new": {
+    "challenger_cheap_hold_base": 2,
+    "challenger_won_here_hold": 0
    }
   }
  ],
