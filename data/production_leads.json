@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-22T14:49:22+00:00",
+ "board_built_at": "2026-11-22T15:04:21+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -1451,6 +1451,117 @@
    "sport": "soccer_u35_cup",
    "status": "hit"
   },
+  "2026-11-22|Atalanta|Inter|Atalanta not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge": {
+   "away": "Inter",
+   "bet": {
+    "kind": "ftts_no",
+    "team": "Atalanta"
+   },
+   "date": "2026-11-22",
+   "edge_at_log": null,
+   "first_seen": "2026-11-22",
+   "headline": "Atalanta not to score first",
+   "home": "Atalanta",
+   "id": "2026-11-22|Atalanta|Inter|Atalanta not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge",
+   "kickoff": "2026-11-22T19:45Z",
+   "lane": "production",
+   "last_seen": "2026-11-22",
+   "last_seen_at": "2026-11-22T15:04:21+00:00",
+   "league": "Serie A",
+   "match": "Atalanta v Inter",
+   "pair": "ftts_no_70_80|soccer_ftts",
+   "price_at_log": 0.7,
+   "published_at": "2026-11-22T15:04:21+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 280,
+   "route": {
+    "claim": "Atalanta not to score first",
+    "event": "KXSERIEAFTTS-26NOV22ATAINT",
+    "market": "KXSERIEAFTTS-26NOV22ATAINT-ATA",
+    "outcome": "Atalanta BC",
+    "outcome_side": "no",
+    "price_at_log": 0.7,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "ftts_no_70_80:KXSERIEAFTTS-26NOV22ATAINT-ATA",
+   "source": "ftts_no_70_80",
+   "sport": "soccer_ftts",
+   "status": "pending"
+  },
+  "2026-11-22|Bremen|Hamburg|Hamburg not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge": {
+   "away": "Hamburg",
+   "bet": {
+    "kind": "ftts_no",
+    "team": "Hamburg"
+   },
+   "date": "2026-11-22",
+   "edge_at_log": null,
+   "first_seen": "2026-11-22",
+   "headline": "Hamburg not to score first",
+   "home": "Bremen",
+   "id": "2026-11-22|Bremen|Hamburg|Hamburg not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge",
+   "kickoff": "2026-11-22T16:30Z",
+   "lane": "production",
+   "last_seen": "2026-11-22",
+   "last_seen_at": "2026-11-22T15:04:21+00:00",
+   "league": "Bundesliga",
+   "match": "Bremen v Hamburg",
+   "pair": "ftts_no_70_80|soccer_ftts",
+   "price_at_log": 0.7,
+   "published_at": "2026-11-22T15:04:21+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 85,
+   "route": {
+    "claim": "Hamburg not to score first",
+    "event": "KXBUNDESLIGAFTTS-26NOV22SVWHSV",
+    "market": "KXBUNDESLIGAFTTS-26NOV22SVWHSV-HSV",
+    "outcome": "Hamburger SV",
+    "outcome_side": "no",
+    "price_at_log": 0.7,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "ftts_no_70_80:KXBUNDESLIGAFTTS-26NOV22SVWHSV-HSV",
+   "source": "ftts_no_70_80",
+   "sport": "soccer_ftts",
+   "status": "pending"
+  },
+  "2026-11-22|Getafe|Atletico|Getafe not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge": {
+   "away": "Atletico",
+   "bet": {
+    "kind": "ftts_no",
+    "team": "Getafe"
+   },
+   "date": "2026-11-22",
+   "edge_at_log": null,
+   "first_seen": "2026-11-22",
+   "headline": "Getafe not to score first",
+   "home": "Getafe",
+   "id": "2026-11-22|Getafe|Atletico|Getafe not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge",
+   "kickoff": "2026-11-22T20:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-22",
+   "last_seen_at": "2026-11-22T15:04:21+00:00",
+   "league": "La Liga",
+   "match": "Getafe v Atletico",
+   "pair": "ftts_no_70_80|soccer_ftts",
+   "price_at_log": 0.77,
+   "published_at": "2026-11-22T15:04:21+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 295,
+   "route": {
+    "claim": "Getafe not to score first",
+    "event": "KXLALIGAFTTS-26NOV22GETATM",
+    "market": "KXLALIGAFTTS-26NOV22GETATM-GET",
+    "outcome": "Getafe CF",
+    "outcome_side": "no",
+    "price_at_log": 0.77,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "ftts_no_70_80:KXLALIGAFTTS-26NOV22GETATM-GET",
+   "source": "ftts_no_70_80",
+   "sport": "soccer_ftts",
+   "status": "pending"
+  },
   "2026-11-22|Getafe|Atl\u00e9tico Madrid|Atl\u00e9tico Madrid to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
    "away": "Atl\u00e9tico Madrid",
    "bet": {
@@ -1467,7 +1578,7 @@
    "kickoff": "2026-11-22T20:00Z",
    "lane": "production",
    "last_seen": "2026-11-22",
-   "last_seen_at": "2026-11-22T14:49:22+00:00",
+   "last_seen_at": "2026-11-22T15:04:21+00:00",
    "league": "La Liga",
    "match": "Getafe v Atl\u00e9tico Madrid",
    "pair": "team2_ranked|soccer_team2",
@@ -1489,6 +1600,118 @@
    "sport": "soccer_team2",
    "status": "pending"
   },
+  "2026-11-22|Lorient|Stade Rennais|Stade Rennais to score 2+ \u00b7 Favourite to score 2+, ranked by margin": {
+   "away": "Stade Rennais",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "Stade Rennais"
+   },
+   "date": "2026-11-22",
+   "edge_at_log": null,
+   "first_seen": "2026-11-22",
+   "headline": "Stade Rennais to score 2+",
+   "home": "Lorient",
+   "id": "2026-11-22|Lorient|Stade Rennais|Stade Rennais to score 2+ \u00b7 Favourite to score 2+, ranked by margin",
+   "kickoff": "2026-11-22T16:15Z",
+   "lane": "production",
+   "last_seen": "2026-11-22",
+   "last_seen_at": "2026-11-22T15:04:21+00:00",
+   "league": "Ligue 1",
+   "match": "Lorient v Stade Rennais",
+   "pair": "team2_ranked|soccer_team2",
+   "price_at_log": 0.39,
+   "published_at": "2026-11-22T15:04:21+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 70,
+   "route": {
+    "claim": "Stade Rennais to score 2+",
+    "event": "KXLIGUE1TEAMTOTAL-26NOV22FCLREN",
+    "market": "KXLIGUE1TEAMTOTAL-26NOV22FCLREN-REN2",
+    "outcome": "Stade Rennais over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.39,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "team2_ranked:KXLIGUE1TEAMTOTAL-26NOV22FCLREN-REN2",
+   "source": "team2_ranked",
+   "sport": "soccer_team2",
+   "status": "pending"
+  },
+  "2026-11-22|Marseille|Le Mans|Le Mans not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge": {
+   "away": "Le Mans",
+   "bet": {
+    "kind": "ftts_no",
+    "team": "Le Mans"
+   },
+   "date": "2026-11-22",
+   "edge_at_log": null,
+   "first_seen": "2026-11-22",
+   "headline": "Le Mans not to score first",
+   "home": "Marseille",
+   "id": "2026-11-22|Marseille|Le Mans|Le Mans not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge",
+   "kickoff": "2026-11-22T19:45Z",
+   "lane": "production",
+   "last_seen": "2026-11-22",
+   "last_seen_at": "2026-11-22T15:04:21+00:00",
+   "league": "Ligue 1",
+   "match": "Marseille v Le Mans",
+   "pair": "ftts_no_70_80|soccer_ftts",
+   "price_at_log": 0.74,
+   "published_at": "2026-11-22T15:04:21+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 280,
+   "route": {
+    "claim": "Le Mans not to score first",
+    "event": "KXLIGUE1FTTS-26NOV22OLMMAN",
+    "market": "KXLIGUE1FTTS-26NOV22OLMMAN-MAN",
+    "outcome": "Le Mans FC",
+    "outcome_side": "no",
+    "price_at_log": 0.74,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "ftts_no_70_80:KXLIGUE1FTTS-26NOV22OLMMAN-MAN",
+   "source": "ftts_no_70_80",
+   "sport": "soccer_ftts",
+   "status": "pending"
+  },
+  "2026-11-22|Nashville|Cincinnati|Cincinnati not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge": {
+   "away": "Cincinnati",
+   "bet": {
+    "kind": "ftts_no",
+    "team": "Cincinnati"
+   },
+   "date": "2026-11-22",
+   "edge_at_log": null,
+   "first_seen": "2026-11-22",
+   "headline": "Cincinnati not to score first",
+   "home": "Nashville",
+   "id": "2026-11-22|Nashville|Cincinnati|Cincinnati not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge",
+   "kickoff": "2026-11-22T21:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-22",
+   "last_seen_at": "2026-11-22T15:04:21+00:00",
+   "league": "MLS",
+   "match": "Nashville v Cincinnati",
+   "pair": "ftts_no_70_80|soccer_ftts",
+   "price_at_log": 0.72,
+   "published_at": "2026-11-22T15:04:21+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 355,
+   "route": {
+    "claim": "Cincinnati not to score first",
+    "event": "KXMLSFTTS-26NOV22NSHCIN",
+    "market": "KXMLSFTTS-26NOV22NSHCIN-CIN",
+    "outcome": "FC Cincinnati",
+    "outcome_side": "no",
+    "price_at_log": 0.72,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "ftts_no_70_80:KXMLSFTTS-26NOV22NSHCIN-CIN",
+   "source": "ftts_no_70_80",
+   "sport": "soccer_ftts",
+   "status": "pending"
+  },
   "2026-11-24|St. Louis CITY SC|LAFC|LAFC +0.5 (St. Louis CITY SC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
    "away": "LAFC",
    "bet": {
@@ -1504,7 +1727,7 @@
    "kickoff": "2026-11-24T01:00Z",
    "lane": "production",
    "last_seen": "2026-11-22",
-   "last_seen_at": "2026-11-22T14:49:22+00:00",
+   "last_seen_at": "2026-11-22T15:04:21+00:00",
    "league": "MLS",
    "match": "St. Louis CITY SC v LAFC",
    "pair": "mls_fade_home|soccer_p05",
@@ -1541,7 +1764,7 @@
    "kickoff": "2026-11-25T03:00Z",
    "lane": "production",
    "last_seen": "2026-11-22",
-   "last_seen_at": "2026-11-22T14:49:22+00:00",
+   "last_seen_at": "2026-11-22T15:04:21+00:00",
    "league": "MLS",
    "match": "San Jose Earthquakes v Houston Dynamo FC",
    "pair": "mls_fade_home|soccer_p05",
@@ -1622,9 +1845,9 @@
    "ready_at": "2026-10-16T17:17:38+00:00",
    "route": "moved by hand on 2026-10-16",
    "routing": {
-    "leads": 5,
+    "leads": 10,
     "problem": null,
-    "routed": 5,
+    "routed": 10,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1636,7 +1859,7 @@
    "sandbox_roi_fee": -0.2366,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 5,
     "under_target": 0
    }
   },
@@ -1722,9 +1945,9 @@
    "ready_at": "2026-10-11T19:34:45+00:00",
    "route": "moved by hand on 2026-10-11",
    "routing": {
-    "leads": 6,
+    "leads": 7,
     "problem": null,
-    "routed": 6,
+    "routed": 7,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1736,7 +1959,7 @@
    "sandbox_roi_fee": 0.0486,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 2,
     "under_target": 0
    }
   },
@@ -1805,5 +2028,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-22T14:49:22+00:00"
+ "updated_at": "2026-11-22T15:04:21+00:00"
 }

@@ -1223,12 +1223,20 @@
    "at": "2026-11-18T21:05:54.890191+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXBUNDESLIGAFTTS-26NOV22SVWHSV-HSV\", \"b\"]]": {
+   "at": "2026-11-22T15:04:21.859972+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXEPLFTTS-26NOV21NEWARS-NEW\", \"b\"]]": {
    "at": "2026-11-21T15:03:33.195711+00:00",
    "pool": "entered"
   },
   "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXLALIGAFTTS-26NOV20ATHESP-ESP\", \"b\"]]": {
    "at": "2026-11-20T15:04:13.370208+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXLALIGAFTTS-26NOV22GETATM-GET\", \"b\"]]": {
+   "at": "2026-11-22T15:04:21.859972+00:00",
    "pool": "entered"
   },
   "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXLIGUE1FTTS-26NOV21ASMAUX-AUX\", \"b\"]]": {
@@ -1239,8 +1247,20 @@
    "at": "2026-11-21T15:03:33.195711+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXLIGUE1FTTS-26NOV22OLMMAN-MAN\", \"b\"]]": {
+   "at": "2026-11-22T15:04:21.859972+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXMLSFTTS-26NOV22NSHCIN-CIN\", \"b\"]]": {
+   "at": "2026-11-22T15:04:21.859972+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXSERIEAFTTS-26NOV21NAPTOR-TOR\", \"b\"]]": {
    "at": "2026-11-21T15:03:33.195711+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXSERIEAFTTS-26NOV22ATAINT-ATA\", \"b\"]]": {
+   "at": "2026-11-22T15:04:21.859972+00:00",
    "pool": "entered"
   },
   "[\"sandbox\", \"liga_btts_even\", [\"liga_btts_even:KXLALIGABTTS-26NOV07OSAATH-BTTS\", \"a\"]]": {
@@ -1413,6 +1433,10 @@
   },
   "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLIGUE1TEAMTOTAL-26NOV21LILOL-LIL2\", \"a\"]]": {
    "at": "2026-11-21T11:04:10.569624+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLIGUE1TEAMTOTAL-26NOV22FCLREN-REN2\", \"a\"]]": {
+   "at": "2026-11-22T15:04:21.859972+00:00",
    "pool": "entered"
   },
   "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXSERIEATEAMTOTAL-26NOV07PARBFC-BFC2\", \"a\"]]": {
@@ -5392,7 +5416,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-22T14:49:22.358209+00:00",
+ "last_run": "2026-11-22T15:04:21.859972+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -16004,14 +16028,14 @@
    ],
    "pid": "[\"sandbox\", \"liga_u15_dog_24h\", [\"liga_u15_dog_24h:KXLALIGATOTAL-26NOV22BARVIL-2\", \"b\"]]",
    "price": 0.06,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_o15",
-   "settled": null,
+   "settled": "2026-11-22T15:03:50+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXEPLCORNERS-26NOV21NEWARS-12",
@@ -16746,6 +16770,144 @@
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_team_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXBUNDESLIGAFTTS-26NOV22SVWHSV-HSV",
+   "entered_at": "2026-11-22T15:04:21.859972+00:00",
+   "entities": [
+    "Hamburg"
+   ],
+   "id": "superpack:[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXBUNDESLIGAFTTS-26NOV22SVWHSV-HSV\", \"b\"]]",
+   "lane": "ftts_no_70_80",
+   "logged": "2026-11-22T15:03:45+00:00",
+   "matched": [
+    "Hamburg"
+   ],
+   "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXBUNDESLIGAFTTS-26NOV22SVWHSV-HSV\", \"b\"]]",
+   "price": 0.7,
+   "profit": null,
+   "scope": "soccer_ftts",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXLALIGAFTTS-26NOV22GETATM-GET",
+   "entered_at": "2026-11-22T15:04:21.859972+00:00",
+   "entities": [
+    "Getafe"
+   ],
+   "id": "superpack:[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXLALIGAFTTS-26NOV22GETATM-GET\", \"b\"]]",
+   "lane": "ftts_no_70_80",
+   "logged": "2026-11-22T15:03:45+00:00",
+   "matched": [
+    "Getafe"
+   ],
+   "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXLALIGAFTTS-26NOV22GETATM-GET\", \"b\"]]",
+   "price": 0.77,
+   "profit": null,
+   "scope": "soccer_ftts",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXLIGUE1FTTS-26NOV22OLMMAN-MAN",
+   "entered_at": "2026-11-22T15:04:21.859972+00:00",
+   "entities": [
+    "Le Mans"
+   ],
+   "id": "superpack:[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXLIGUE1FTTS-26NOV22OLMMAN-MAN\", \"b\"]]",
+   "lane": "ftts_no_70_80",
+   "logged": "2026-11-22T15:03:45+00:00",
+   "matched": [
+    "Le Mans"
+   ],
+   "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXLIGUE1FTTS-26NOV22OLMMAN-MAN\", \"b\"]]",
+   "price": 0.74,
+   "profit": null,
+   "scope": "soccer_ftts",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXMLSFTTS-26NOV22NSHCIN-CIN",
+   "entered_at": "2026-11-22T15:04:21.859972+00:00",
+   "entities": [
+    "Cincinnati"
+   ],
+   "id": "superpack:[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXMLSFTTS-26NOV22NSHCIN-CIN\", \"b\"]]",
+   "lane": "ftts_no_70_80",
+   "logged": "2026-11-22T15:03:45+00:00",
+   "matched": [
+    "Cincinnati"
+   ],
+   "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXMLSFTTS-26NOV22NSHCIN-CIN\", \"b\"]]",
+   "price": 0.72,
+   "profit": null,
+   "scope": "soccer_ftts",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXSERIEAFTTS-26NOV22ATAINT-ATA",
+   "entered_at": "2026-11-22T15:04:21.859972+00:00",
+   "entities": [
+    "Atalanta"
+   ],
+   "id": "superpack:[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXSERIEAFTTS-26NOV22ATAINT-ATA\", \"b\"]]",
+   "lane": "ftts_no_70_80",
+   "logged": "2026-11-22T15:03:45+00:00",
+   "matched": [
+    "Atalanta"
+   ],
+   "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXSERIEAFTTS-26NOV22ATAINT-ATA\", \"b\"]]",
+   "price": 0.7,
+   "profit": null,
+   "scope": "soccer_ftts",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXLIGUE1TEAMTOTAL-26NOV22FCLREN-REN2",
+   "entered_at": "2026-11-22T15:04:21.859972+00:00",
+   "entities": [
+    "Stade Rennais"
+   ],
+   "id": "superpack:[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLIGUE1TEAMTOTAL-26NOV22FCLREN-REN2\", \"a\"]]",
+   "lane": "team2_ranked",
+   "logged": "2026-11-22T15:03:45+00:00",
+   "matched": [
+    "Stade Rennais"
+   ],
+   "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLIGUE1TEAMTOTAL-26NOV22FCLREN-REN2\", \"a\"]]",
+   "price": 0.39,
+   "profit": null,
+   "scope": "soccer_team2",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
    "status": "open"
   }
  ],
