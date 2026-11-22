@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-22T02:45:32.397448+00:00",
+ "last_run": "2026-11-22T03:00:27.512308+00:00",
  "rules": {
   "R1": {
    "picks": [
@@ -2452,11 +2452,14 @@
      },
      "logged": "2026-11-21T23:00:27.617875+00:00",
      "match": "POR @ NY",
+     "payout": 1.0,
      "price": 0.3,
+     "profit": 217.76,
      "rule": "R4",
+     "settled": "2026-11-22T03:00:27.512308+00:00",
      "side": "no",
      "start": "2026-11-22T00:30Z",
-     "status": "open",
+     "status": "won",
      "strike": 100.5,
      "team": "NY",
      "ticker": "KXNBATEAMTOTAL-26NOV21PORNYK-NYK101",
@@ -2474,11 +2477,14 @@
      },
      "logged": "2026-11-21T23:00:27.617875+00:00",
      "match": "POR @ NY",
+     "payout": 1.0,
      "price": 0.27,
+     "profit": 252.36,
      "rule": "R4",
+     "settled": "2026-11-22T03:00:27.512308+00:00",
      "side": "no",
      "start": "2026-11-22T00:30Z",
-     "status": "open",
+     "status": "won",
      "strike": 99.5,
      "team": "POR",
      "ticker": "KXNBATEAMTOTAL-26NOV21PORNYK-POR100",
@@ -5658,11 +5664,14 @@
      },
      "logged": "2026-11-21T23:00:27.617875+00:00",
      "match": "POR @ NY",
+     "payout": 1.0,
      "price": 0.6,
+     "profit": 62.13,
      "rule": "R7",
+     "settled": "2026-11-22T03:00:27.512308+00:00",
      "side": "no",
      "start": "2026-11-22T00:30Z",
-     "status": "open",
+     "status": "won",
      "strike": 109.5,
      "team": "POR",
      "ticker": "KXNBATEAMTOTAL-26NOV21PORNYK-POR110",
@@ -5695,11 +5704,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-11-18T22:30:28.230091+00:00",
-   "due": 4,
-   "new": 0
-  },
   {
    "at": "2026-11-18T23:00:37.181072+00:00",
    "due": 6,
@@ -5947,6 +5951,11 @@
   },
   {
    "at": "2026-11-22T02:45:32.397448+00:00",
+   "due": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-22T03:00:27.512308+00:00",
    "due": 0,
    "new": 0
   }
