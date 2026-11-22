@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-22T20:04Z",
+ "generated": "2026-11-22T20:10Z",
  "rule": "active = not retired, not a baseline, a bet or an open pick in its current record window",
  "tabs": {
   "commodities": {
@@ -109,6 +109,7 @@
     "mls_tie_split",
     "o15_ranked|soccer_o15_intl",
     "p4_late_over",
+    "p4_late_under",
     "p4_mid_no",
     "quiet_first_half",
     "sr_a1",
