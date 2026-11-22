@@ -5448,7 +5448,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-22T18:11:40.179308+00:00",
+ "last_run": "2026-11-22T18:30:29.922039+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -16933,14 +16933,14 @@
    ],
    "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLIGUE1TEAMTOTAL-26NOV22FCLREN-REN2\", \"a\"]]",
    "price": 0.39,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_team2",
-   "settled": null,
+   "settled": "2026-11-22T18:30:18+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXSERIEATEAMTOTAL-26NOV22ACMFRO-FRO2",
