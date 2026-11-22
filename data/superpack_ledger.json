@@ -5428,7 +5428,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-22T15:43:09.445161+00:00",
+ "last_run": "2026-11-22T15:52:39.821619+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -16631,14 +16631,14 @@
    ],
    "pid": "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXLALIGACORNERS-26NOV22BARVIL-11\", \"b\"]]",
    "price": 0.45,
-   "profit": null,
+   "profit": 1.2222,
    "scope": "soccer_corners",
-   "settled": null,
+   "settled": "2026-11-22T15:51:59+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXEPLCORNERS-26NOV22HULBRI-12",
