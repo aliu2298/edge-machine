@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-22T21:01:40.809679+00:00",
+ "last_run": "2026-11-22T21:31:32.005690+00:00",
  "rules": {
   "NO": {
    "picks": [
@@ -333,11 +333,14 @@
      "league_key": "ARG",
      "logged": "2026-11-22T17:31:27.977408+00:00",
      "match": "Rosario Central v Gimnasia (Mendoza)",
+     "payout": 0.0,
      "price": 0.55,
+     "profit": -100.0,
      "rule": "NO",
+     "settled": "2026-11-22T21:31:32.005690+00:00",
      "side": "no",
      "start": "2026-11-22T19:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXARGPREMDIVBTTS-26NOV22CARCGEM-BTTS",
      "why": "Argentina BTTS NO 0.55"
     },
@@ -725,11 +728,14 @@
      "league_key": "ARG",
      "logged": "2026-11-22T17:31:27.977408+00:00",
      "match": "Rosario Central v Gimnasia (Mendoza)",
+     "payout": 1.0,
      "price": 0.46,
+     "profit": 109.47,
      "rule": "YES",
+     "settled": "2026-11-22T21:31:32.005690+00:00",
      "side": "yes",
      "start": "2026-11-22T19:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXARGPREMDIVBTTS-26NOV22CARCGEM-BTTS",
      "why": "Argentina BTTS YES 0.46"
     },
@@ -788,13 +794,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-11-21T18:16:51.097749+00:00",
-   "due": 1,
-   "matched": 1,
-   "new": 0,
-   "quoted": 1
-  },
   {
    "at": "2026-11-21T18:31:43.744608+00:00",
    "due": 2,
@@ -1144,6 +1143,13 @@
    "matched": 3,
    "new": 2,
    "quoted": 3
+  },
+  {
+   "at": "2026-11-22T21:31:32.005690+00:00",
+   "due": 2,
+   "matched": 2,
+   "new": 0,
+   "quoted": 2
   }
  ],
  "schedule": [
