@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-22T08:07Z",
+ "generated": "2026-11-22T09:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -6595,7 +6595,7 @@
      "r": 1.8944,
      "side": "yes",
      "st": "won",
-     "w": 0.87
+     "w": 0.85
     },
     {
      "id": "team2_ranked:KXUELTEAMTOTAL-26OCT15TORSUN-SUN2",
@@ -6603,7 +6603,7 @@
      "r": 0.3992,
      "side": "yes",
      "st": "won",
-     "w": 0.9
+     "w": 0.88
     },
     {
      "id": "team2_ranked:KXLALIGATEAMTOTAL-26OCT17VCFATH-ATH2",
@@ -6611,7 +6611,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 1.03
+     "w": 1.0
     },
     {
      "id": "team2_ranked:KXSERIEATEAMTOTAL-26OCT18UDILEC-UDI2",
@@ -6619,7 +6619,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 1.23
+     "w": 1.2
     },
     {
      "id": "team2_ranked:KXLALIGATEAMTOTAL-26OCT18RCCALA-RCC2",
@@ -6627,7 +6627,7 @@
      "r": 1.4588,
      "side": "yes",
      "st": "won",
-     "w": 1.03
+     "w": 1.0
     },
     {
      "id": "team2_ranked:KXSERIEATEAMTOTAL-26OCT19PARTOR-TOR2",
@@ -6635,7 +6635,7 @@
      "r": 1.5221,
      "side": "yes",
      "st": "won",
-     "w": 1.0
+     "w": 0.97
     },
     {
      "id": "team2_ranked:KXUELTEAMTOTAL-26OCT22FTCTOR-FTC2",
@@ -6643,7 +6643,7 @@
      "r": 0.3803,
      "side": "yes",
      "st": "won",
-     "w": 0.91
+     "w": 0.89
     },
     {
      "id": "team2_ranked:KXUELTEAMTOTAL-26OCT22OLYSPA-OLY2",
@@ -6651,7 +6651,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 0.8
+     "w": 0.78
     },
     {
      "id": "team2_ranked:KXLALIGATEAMTOTAL-26OCT23ALAMCF-ALA2",
@@ -6659,7 +6659,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 0.68
+     "w": 0.66
     },
     {
      "id": "team2_ranked:KXSERIEATEAMTOTAL-26OCT24LAZPAR-LAZ2",
@@ -6667,7 +6667,7 @@
      "r": 0.5239,
      "side": "yes",
      "st": "won",
-     "w": 0.83
+     "w": 0.81
     },
     {
      "id": "team2_ranked:KXEPLTEAMTOTAL-26OCT25SUNLEE-LEE2",
@@ -6675,7 +6675,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 0.92
+     "w": 0.9
     },
     {
      "id": "team2_ranked:KXSERIEATEAMTOTAL-26OCT25LECJUV-JUV2",
@@ -6683,7 +6683,7 @@
      "r": 0.5711,
      "side": "yes",
      "st": "won",
-     "w": 0.8
+     "w": 0.78
     },
     {
      "id": "team2_ranked:KXLALIGATEAMTOTAL-26OCT26SEVOSA-SEV2",
@@ -6691,7 +6691,7 @@
      "r": 1.0947,
      "side": "yes",
      "st": "won",
-     "w": 1.2
+     "w": 1.17
     },
     {
      "id": "team2_ranked:KXSERIEATEAMTOTAL-26OCT28PARUDI-PAR2",
@@ -6699,7 +6699,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 0.95
+     "w": 0.92
     },
     {
      "id": "team2_ranked:KXSERIEATEAMTOTAL-26OCT28PARUDI-UDI2",
@@ -6707,7 +6707,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 0.95
+     "w": 0.92
     },
     {
      "id": "team2_ranked:KXSERIEATEAMTOTAL-26OCT28GENJUV-JUV2",
@@ -6715,7 +6715,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 0.67
+     "w": 0.65
     },
     {
      "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV01GETSEV-SEV2",
@@ -6723,7 +6723,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 1.23
+     "w": 1.2
     },
     {
      "id": "team2_ranked:KXSERIEATEAMTOTAL-26NOV01LAZCAG-LAZ2",
@@ -6731,7 +6731,7 @@
      "r": 0.5711,
      "side": "yes",
      "st": "won",
-     "w": 0.8
+     "w": 0.78
     },
     {
      "id": "team2_ranked:KXSERIEATEAMTOTAL-26NOV01LECGEN-GEN2",
@@ -6739,7 +6739,7 @@
      "r": 1.6585,
      "side": "yes",
      "st": "won",
-     "w": 0.95
+     "w": 0.92
     },
     {
      "id": "team2_ranked:KXUCLTEAMTOTAL-26NOV04SLAARS-ARS2",
@@ -6747,7 +6747,7 @@
      "r": 0.3992,
      "side": "yes",
      "st": "won",
-     "w": 0.9
+     "w": 0.88
     },
     {
      "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV06SEVALA-SEV2",
@@ -6755,7 +6755,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 1.18
+     "w": 1.15
     },
     {
      "id": "team2_ranked:KXSERIEATEAMTOTAL-26NOV07PARBFC-BFC2",
@@ -6763,7 +6763,7 @@
      "r": 1.0515,
      "side": "yes",
      "st": "won",
-     "w": 1.23
+     "w": 1.2
     },
     {
      "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV08VILGET-VIL2",
@@ -6771,7 +6771,7 @@
      "r": 0.5711,
      "side": "yes",
      "st": "won",
-     "w": 12.04
+     "w": 11.74
     },
     {
      "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV20ATHESP-ATH2",
@@ -6779,7 +6779,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 12.04
+     "w": 11.74
     },
     {
      "id": "team2_ranked:KXEPLTEAMTOTAL-26NOV21BOUNFO-BOU2",
@@ -6787,7 +6787,7 @@
      "r": 1.0515,
      "side": "yes",
      "st": "won",
-     "w": 12.29
+     "w": 11.99
     },
     {
      "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV21RVCVCF-RVC2",
@@ -6795,7 +6795,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 12.29
+     "w": 11.99
     },
     {
      "id": "team2_ranked:KXLIGUE1TEAMTOTAL-26NOV21LILOL-LIL2",
@@ -6803,7 +6803,7 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 12.31
+     "w": 12.0
     },
     {
      "id": "team2_ranked:KXSERIEATEAMTOTAL-26NOV21NAPTOR-NAP2",
@@ -6811,7 +6811,15 @@
      "r": -1.0,
      "side": "yes",
      "st": "lost",
-     "w": 12.23
+     "w": 11.92
+    },
+    {
+     "id": "team2_ranked:KXEPLTEAMTOTAL-26NOV22HULBRI-BRI2",
+     "ko": "2026-11-22T14:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 11.74
     },
     {
      "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV22GETATM-ATM2",
@@ -6819,7 +6827,7 @@
      "r": null,
      "side": "yes",
      "st": "open",
-     "w": 12.16
+     "w": 11.86
     }
    ],
    "refused": {}
