@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-22T11:07:28+00:00",
+ "board_built_at": "2026-11-22T11:32:09+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -28,8 +28,6 @@
    "id": "2026-11-22|Luka Mikrut|Amaury Raynel|Luka Mikrut to win \u00b7 Challenger underdog who has won here",
    "kickoff": "2026-11-22T13:00Z",
    "lane": "production",
-   "last_seen": "2026-11-22",
-   "last_seen_at": "2026-11-22T11:07:28+00:00",
    "league": "Tennis",
    "match": "Luka Mikrut v Amaury Raynel",
    "pair": "challenger_won_here|tennis",
@@ -49,7 +47,7 @@
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV22MIKRAY-MIK",
    "source": "challenger_won_here",
    "sport": "tennis",
-   "status": "pending"
+   "status": "miss"
   }
  },
  "pairs": {
@@ -69,9 +67,9 @@
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 0,
-   "sandbox_roi": null,
-   "sandbox_roi_fee": null,
+   "sandbox_n": 1,
+   "sandbox_roi": -1.0,
+   "sandbox_roi_fee": -1.0,
    "timing": {
     "late": [],
     "timed": 1,
@@ -83,5 +81,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-22T11:07:28+00:00"
+ "updated_at": "2026-11-22T11:32:09+00:00"
 }
