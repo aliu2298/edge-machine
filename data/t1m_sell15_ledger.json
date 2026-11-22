@@ -18,6 +18,25 @@
    "touched": true,
    "version": "t1m-sell15-v1",
    "won": true
+  },
+  {
+   "day": "2026-11-22",
+   "entry": 0.47,
+   "entry_ts": 1795361523,
+   "hold": 1.0408,
+   "id": "T1M:KXSERIEATOTAL-26NOV22ACMFRO",
+   "ko": 1795366800,
+   "league": "Serie A",
+   "logged": "2026-11-22T20:01:57.608304+00:00",
+   "match": "AC Milan v Frosinone",
+   "sell": 0.3878,
+   "sell_maker": 0.4082,
+   "sweeps": 12,
+   "target": 0.7,
+   "ticker": "KXSERIEATOTAL-26NOV22ACMFRO-4",
+   "touched": true,
+   "version": "t1m-sell15-v1",
+   "won": true
   }
  ],
  "error": null,
@@ -472,7 +491,7 @@
    "KXLIGUE1TOTAL-26OCT26PSGOL": "no settled over 3.5 market"
   }
  },
- "last_run": "2026-11-22T19:01:59.303813+00:00",
+ "last_run": "2026-11-22T20:01:57.608304+00:00",
  "registered": "2026-11-09T00:00:00Z",
  "skips": {
   "T1M:KXBUNDESLIGATOTAL-26NOV07RBLFCA": "kicked off before the readout was registered (in the backfill, not the record)",
