@@ -234,6 +234,9 @@ ECON_NC_NO_RETIRED_WHY = ("Retired 2026-11-06 by Olu: no edge at 20 settled cont
 COMMOD_NC_NO_RETIRED_WHY = ("Retired 2026-11-08 by Olu: behind its prices at 13 market-days — 12–1, 12 won v 12.2 priced, "
                             "−2.6% after fees. Never in Production. No new entries from 2026-11-08; its rows stay on file and "
                             "its open bets still settle.")
+CORNERS_TOTAL_UNDER_RETIRED_WHY = ("Retired 2026-11-22 by Olu: no edge at 30 settled matches — 11–19, 11 won v 11.4 priced, −15.7% after fees. It was in "
+                                   "Production 2026-10-15 to 2026-10-27, paper after that. No new entries from 2026-11-22; its rows stay on file and its "
+                                   "open bets still settle.")
 # Pinnacle's goal total v Kalshi's (Olu, 2026-11-20): pre-registered 2026-09-22, it never made a pick (0 of 30 on every scope), and the
 # same test on the match winner found 0 of 57 quotes at 3pp. It was also the only thing still spending paced Odds API credit, and its
 # "no paced credit left for this run" skips kept the Soccer card on Attention. No new entries, no paid call; its note and (empty) record stay.
@@ -1418,7 +1421,8 @@ SOURCES = {
              "highest model edge after fees, lower No ask then ticker on ties; first logged selection stays locked."),
     "corners_total_under": dict(
         label="Corners total under (No, one rung a match, 5 a day, no Champions League)", kind="Rule",
-        connected=True, site="edge-machine", sports=["soccer_corners"], baseline="population",
+        connected=True, site="edge-machine", sports=[], baseline="population",
+        retired_sports={"soccer_corners": CORNERS_TOTAL_UNDER_RETIRED_WHY},
         one_per_corners_fixture=True, day_cap=5,
         note="REGISTERED 2026-10-15 by Olu, before it logged anything; a fresh record split from "
              "corners_under. MATCH-TOTAL corner rungs only ('N+ corners'), every league the corners "
