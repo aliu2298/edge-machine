@@ -6592,11 +6592,11 @@
   ]
  },
  "lane": "arg_goalless_dip",
- "last_run": "2026-11-21T22:27:29.959587+00:00",
+ "last_run": "2026-11-22T02:41:28.834742+00:00",
  "observations": {
-  "at": "2026-11-21T22:27:29.959587+00:00",
+  "at": "2026-11-22T02:41:28.834742+00:00",
   "errors": [],
-  "new": 2,
+  "new": 0,
   "skipped": 0,
   "waiting": 0
  },
@@ -6620,6 +6620,11 @@
    "event": "KXARGPREMDIVTOTAL-26NOV22RIVLAN",
    "kickoff": 1795384800,
    "title": "River Plate vs Lanus: Regulation Time Total Goals"
+  },
+  {
+   "event": "KXARGPREMDIVTOTAL-26NOV22IACCHUR",
+   "kickoff": 1795395600,
+   "title": "Instituto Cordoba vs Huracan: Regulation Time Total Goals"
   }
  ],
  "version": "argdip-v1"
