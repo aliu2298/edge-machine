@@ -45,6 +45,9 @@ print("\nthe refusals read as public categories")
 check("categories", [X.category(t) for t in ("effective 0.9 above max_price 0.85", "price moved: ask 0.5 is +4c over", "too close to kickoff when first read",
                                               "thin book: $3", "something new")],
       ["price above the cap", "price moved from the logged price", "published inside 30 min of kickoff", "thin book", "other"])
+check("a Finance/Econ gate refusal is a public category, not 'other'",
+      X.category("Econ Daily price, spread or depth gate failed (No ask 0.89, bid 0.88, 855.0 at the ask; band 0.90-0.98)"),
+      "price outside the band at the follower's read")
 
 print("\nthe whitelist refuses anything that is not public")
 good = dict(generated="x", pairs={"p|s": dict(entered="2026-11-01", orders=[dict(id="p:KX-1", ko="2026-11-03T20:00", side="yes", st="won", w=1.0, r=0.5)], refused={})}, lanes={})
@@ -185,7 +188,7 @@ _seven = {"mls_fade_home|soccer_p05", "crypto_fav_band_below|crypto_fav", "team2
 # one of the two named here or a Production pair the follower holds.
 _got = set(RS.pairs())
 check("the raised pairs keep the follower's original seven", _seven <= _got, True)
-check("and the only pairs raised since are the two soccer rules of 2026-11-20", _got - _seven <= {"st_t7|soccer_team3", "st_t1h|soccer_team2"}, True)
+check("and the only pairs raised since are the two soccer rules of 2026-11-20 and the S&P near-certain NO of 2026-11-22", _got - _seven <= {"st_t7|soccer_team3", "st_t1h|soccer_team2", "finance_spx_nc_no|finance_daily"}, True)
 
 print("\na window refusal after the real reason does not replace it (Brent / WTI Nov 12)")
 _led = os.path.join(tempfile.mkdtemp(), "ledger.jsonl")

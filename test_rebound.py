@@ -94,11 +94,15 @@ st = dict(events=[dict(ev[0], status="settled", net=0.02, exit_why="target", bac
                   dict(ev[0], id="x", status="settled", net=-0.01, exit_why="stop", backfill=False)], ratios={})
 check("the fresh record leaves out the in-sample backfill", (R.summary(st)["rb_24h"]["n"], R.summary(st, True)["rb_24h"]["n"]), (1, 2))
 html, n, settled, open_ = IB.section_and_counts(state={"events": [], "flags": [], "collector": {}}, research={}, rebound_state=st)
-check("two observation rows in the Invest section, counted as running lanes, labelled observation only",
-      (n, len(re.findall(r'data-source="invest_rb_', html)), "observation" in html, "did not clear the research bar" in html),
-      (2, 2, True, True))
-check("in-sample rows are marked so; the how-it-was-tested fold says none cleared",
-      ("in-sample" in html, "None did" in html), (True, True))
+check("retired 2026-11-22: the live section carries no rebound row and counts none as running",
+      (n, len(re.findall(r'data-source="invest_rb_', html)), "rebound-after-a-slide rules that followed on Nov 22" in html), (0, 0, True))
+ret = IB.retired_html(state={"events": [], "flags": [], "collector": {}}, research={}, rebound_state=st)
+check("both rebound lanes are in the Retired block with their records, marked retired, in-sample marked, the how-it-was-tested fold says none cleared",
+      (len(re.findall(r'data-source="invest_rb_', ret)), len(re.findall(r">retired Nov 22<", ret)), "in-sample" in ret, "None did" in ret, "retired Nov 22" in ret),
+      (2, 2, True, True, True))
+check("no new event after RETIRED_AT, and the lanes' final figures are in the module",
+      (R.RETIRED_AT, "rb_5d 53 settled, -2.06% average net" in open(os.path.join(I.ROOT, "rebound.py")).read()), ("2026-11-22T18:00:00+00:00", True))
+html = html + ret
 check("plain copy: no dollar sign, no guarded phrase, no market id", (re.search(r"\$\d", html), sandbox_audit.COPY_RE.findall(html),
       re.findall(r"\bKX[A-Z0-9]{3,}", html)), (None, [], []))
 check("the VPS run calls it after invest.py and publishes its state",

@@ -190,7 +190,7 @@ def _rb_row(k, s_rb):
              f'(the 15-minute RSI below 30, then turning up), then go Up at 1x. Stop 1% under the support; target halfway '
              f'back to the slide\'s high; out after {"5 days" if Ln["slide"] == "S5D" else "1 day"}.')
     bf = s_rb and [e for e in s_rb["events"] if e["lane"] == k and e.get("backfill") and e["status"] == "settled"]
-    pairs = [("Status", "observation only: it did not clear the research bar (see Research)"),
+    pairs = [("Status", "retired Nov 22: observation only, and it did not clear the research bar (see Research); no new events, open ones settle"),
              ("Research", esc(Ln["research"])),
              ("In-sample",
               f'Nov 6 on, before the fresh record: {len(bf)} settled · '
@@ -202,8 +202,7 @@ def _rb_row(k, s_rb):
         [e for e in s_rb["events"] if e["lane"] == k]))
     win = "—" if live["win"] is None else f'{live["win"] * 100:.0f}%'
     t = "—" if live["t"] is None else f'{live["t"]:+.2f}'
-    status = L.sig(f'observation · {live["n"]}/{RB.REVIEW_AT} to review' if live["n"] < RB.REVIEW_AT else
-                   ("observation · review due" if live["n"] < RB.DECIDE_AT else "observation · decide"), "n")
+    status = L.sig("retired Nov 22")                             # 2026-11-22 (Olu): both rebound lanes retired, records kept
     return L.rule(f"invest_{k}", Ln["label"], "Kalshi Invest", str(live["n"]), win, pct(live["net"]), t, status, body,
                   muted=True)
 
@@ -220,10 +219,9 @@ def _rb_research_fold():
                   cls="fold trade-method")
 
 
-RETIRED_NOTE = ("The four big-move rules (fade or follow a drop or a jump) were retired on Nov 11: they only saw a "
-                "big move inside one hour or one day, in regular hours, so a slide over several hours or days, or one "
-                "overnight, never triggered them. Their records are in Retired at the bottom of this page. The "
-                "one-minute price collector keeps running for the next rule.")
+RETIRED_NOTE = ("The four big-move rules were retired on Nov 11 (they missed slides over hours or days and overnight), and the two "
+                "rebound-after-a-slide rules that followed on Nov 22, after neither cleared the research bar. Their records are in "
+                "Retired at the bottom of this page. The one-minute price collector keeps running.")
 
 
 def section_and_counts(state=None, research=None, rebound_state=None):
@@ -236,9 +234,8 @@ def section_and_counts(state=None, research=None, rebound_state=None):
     try:                                                        # Rebound after a slide (2026-11-11), observation only
         import rebound as RB
         s_rb = RB.load() if rebound_state is None else rebound_state
-        rows += [_rb_row(k, s_rb) for k in RB.LANES]
-        rb = RB.summary(s_rb)
-        n_rb, settled_rb, open_rb = len(RB.LANES), sum(v["n"] for v in rb.values()), sum(v["open"] for v in rb.values())
+        n_rb = settled_rb = open_rb = 0                         # retired 2026-11-22: the two lanes are in the Retired block
+        RB.summary(s_rb)
     except Exception:                                           # noqa: BLE001  (never breaks the section)
         n_rb = settled_rb = open_rb = 0
     body = ((L.rules_list(rows, key="invest") if rows else "") + (_rb_research_fold() if n_rb else "")
@@ -249,7 +246,7 @@ def section_and_counts(state=None, research=None, rebound_state=None):
             sum(summ[k]["open"] for k in live) + open_rb)
 
 
-def retired_html(state=None, research=None):
+def retired_html(state=None, research=None, rebound_state=None):
     """The four retired big-move rules with their final records, for the page's Retired block. Never breaks it."""
     try:
         s = I.load() if state is None else state
@@ -260,8 +257,16 @@ def retired_html(state=None, research=None):
             return ""
         rows = [_rule_row(k, s, summ, research) for k in gone]
         n = sum(summ[k]["n"] for k in gone)
-        return (f'<h3>Kalshi Invest big-move rules, retired Nov 11</h3>'
-                f'<p class="sm mut">{len(gone)} rules · {n} settled trade{"s" * (n != 1)} · records kept, no new events.</p>'
-                + L.rules_list(rows, key="invest-retired") + _research_fold(research))
+        out = (f'<h3>Kalshi Invest big-move rules, retired Nov 11</h3>'
+               f'<p class="sm mut">{len(gone)} rules · {n} settled trade{"s" * (n != 1)} · records kept, no new events.</p>'
+               + L.rules_list(rows, key="invest-retired") + _research_fold(research))
+        import rebound as RB                                    # the two rebound lanes, retired Nov 22 (Olu)
+        s_rb = RB.load() if rebound_state is None else rebound_state
+        rb = RB.summary(s_rb)
+        n_rb = sum(v["n"] for v in rb.values())
+        out += (f'<h3>Kalshi Invest rebound rules, retired Nov 22</h3>'
+                f'<p class="sm mut">{len(RB.LANES)} rules · {n_rb} settled trade{"s" * (n_rb != 1)} · records kept, no new events, open ones settle.</p>'
+                + L.rules_list([_rb_row(k, s_rb) for k in RB.LANES], key="invest-retired-rb") + _rb_research_fold())
+        return out
     except Exception:                                           # noqa: BLE001
         return ""
