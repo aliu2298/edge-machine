@@ -195462,7 +195462,8 @@
     "KXATPCHALLENGERMATCH-26NOV21TRODRA": 0,
     "KXATPCHALLENGERMATCH-26NOV22ARNEL": 0,
     "KXATPCHALLENGERMATCH-26NOV22JIAPIE": 1,
-    "KXATPCHALLENGERMATCH-26NOV22KIRBEL": 1
+    "KXATPCHALLENGERMATCH-26NOV22KIRBEL": 1,
+    "KXATPCHALLENGERMATCH-26NOV22LOPDIM": 0
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -229749,7 +229750,8 @@
     "KXATPCHALLENGERMATCH-26NOV21TRODRA": 0,
     "KXATPCHALLENGERMATCH-26NOV22ARNEL": 0,
     "KXATPCHALLENGERMATCH-26NOV22JIAPIE": 0,
-    "KXATPCHALLENGERMATCH-26NOV22KIRBEL": 0
+    "KXATPCHALLENGERMATCH-26NOV22KIRBEL": 0,
+    "KXATPCHALLENGERMATCH-26NOV22LOPDIM": 0
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -399998,15 +400000,8 @@
    "watch": false
   }
  },
- "last_run": "2026-11-22T09:30:40.566717+00:00",
+ "last_run": "2026-11-22T10:00:38.847570+00:00",
  "runs": [
-  {
-   "at": "2026-11-09T19:52:35.933428+00:00",
-   "new": {
-    "challenger_cheap_hold_base": 9,
-    "challenger_won_here_hold": 2
-   }
-  },
   {
    "at": "2026-11-10T09:00:23.048079+00:00",
    "new": {
@@ -400324,6 +400319,13 @@
    "at": "2026-11-22T09:30:40.566717+00:00",
    "new": {
     "challenger_cheap_hold_base": 2,
+    "challenger_won_here_hold": 0
+   }
+  },
+  {
+   "at": "2026-11-22T10:00:38.847570+00:00",
+   "new": {
+    "challenger_cheap_hold_base": 0,
     "challenger_won_here_hold": 0
    }
   }
