@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-22T12:07Z",
+ "generated": "2026-11-22T13:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -6257,7 +6257,7 @@
      "r": 1.0947,
      "side": "no",
      "st": "won",
-     "w": 1.07
+     "w": 1.02
     },
     {
      "id": "sr_a6:KXEPLTOTAL-26OCT24CFCTOT-3",
@@ -6265,7 +6265,7 @@
      "r": 1.4588,
      "side": "no",
      "st": "won",
-     "w": 0.91
+     "w": 0.87
     },
     {
      "id": "sr_a6:KXEPLTOTAL-26OCT25HULBRE-3",
@@ -6273,7 +6273,7 @@
      "r": 1.2361,
      "side": "no",
      "st": "won",
-     "w": 1.0
+     "w": 0.96
     },
     {
      "id": "sr_a6:KXEPLTOTAL-26OCT31BRENFO-3",
@@ -6281,7 +6281,7 @@
      "r": 1.2361,
      "side": "no",
      "st": "won",
-     "w": 1.0
+     "w": 0.96
     },
     {
      "id": "sr_a6:KXEPLTOTAL-26OCT31HULIPS-3",
@@ -6289,7 +6289,7 @@
      "r": -1.0,
      "side": "no",
      "st": "lost",
-     "w": 0.58
+     "w": 0.55
     },
     {
      "id": "sr_a6:KXEPLTOTAL-26OCT31AVLFUL-3",
@@ -6297,7 +6297,7 @@
      "r": 1.0517,
      "side": "no",
      "st": "won",
-     "w": 1.09
+     "w": 1.04
     },
     {
      "id": "sr_a6:KXEPLTOTAL-26NOV06EVECOV-3",
@@ -6305,7 +6305,7 @@
      "r": -1.0,
      "side": "no",
      "st": "lost",
-     "w": 1.04
+     "w": 1.0
     },
     {
      "id": "sr_a6:KXEPLTOTAL-26NOV07ARSHUL-3",
@@ -6313,7 +6313,7 @@
      "r": 1.6589,
      "side": "no",
      "st": "won",
-     "w": 0.84
+     "w": 0.8
     },
     {
      "id": "sr_a6:KXEPLTOTAL-26NOV21TOTIPS-3",
@@ -6321,7 +6321,15 @@
      "r": 1.5227,
      "side": "no",
      "st": "won",
-     "w": 11.08
+     "w": 10.6
+    },
+    {
+     "id": "sr_a6:KXEPLTOTAL-26NOV22HULBRI-3",
+     "ko": "2026-11-22T14:00",
+     "r": null,
+     "side": "no",
+     "st": "open",
+     "w": 10.43
     }
    ],
    "refused": {}
@@ -6520,6 +6528,14 @@
      "side": "no",
      "st": "won",
      "w": 0.96
+    },
+    {
+     "id": "st_t7:KXBUNDESLIGATEAMTOTAL-26NOV22FCAM05-FCA3",
+     "ko": "2026-11-22T14:30",
+     "r": null,
+     "side": "no",
+     "st": "open",
+     "w": 12.87
     }
    ],
    "refused": {}
