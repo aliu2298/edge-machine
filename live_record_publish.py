@@ -29,6 +29,9 @@ SRC_DIR = os.path.expanduser(os.environ.get("LIVE_RECORD_DIR") or (os.path.dirna
 REASONS = (
     (r"above max_price", "price above the cap"),
     (r"price moved", "price moved from the logged price"),
+    # Econ Daily and Finance Daily (2026-11-22): the follower re-reads the book and its price, spread and depth gate failed, in practice an ask
+    # that slipped out of the lane's band after the paper pick was logged (S&P near-certain NO, Nov 10 and Nov 13: No ask 0.89 v band 0.90-0.98).
+    (r"Econ Daily price, spread or depth gate", "price outside the band at the follower's read"),
     (r"too close to kickoff", "published inside 30 min of kickoff"),
     (r"thin (book|ask)", "thin book"),
     (r"no edge", "no edge at today's price"),
