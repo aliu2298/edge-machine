@@ -2052,6 +2052,78 @@
    "pair": "commod_fav_band|commodities_fav",
    "reason": "not beating every blind rule (+3.4% v +4.2% back the favourite on every match)",
    "to": "sandbox"
+  },
+  {
+   "at": "2026-11-22T19:19:22+00:00",
+   "evidence": {
+    "base_roi": 0.0101,
+    "clv": 0.0023,
+    "clv_n": 35,
+    "n": 36,
+    "own_roi": 0.0992,
+    "roi": 0.0992,
+    "roi_fee": 0.0809,
+    "span_days": 53.8854,
+    "weeks": 7,
+    "z": 1.0644
+   },
+   "pair": "o15_ranked|soccer_o15_intl",
+   "reason": "moved to Production by hand on 2026-11-22",
+   "to": "production"
+  },
+  {
+   "at": "2026-11-22T19:19:22+00:00",
+   "evidence": {
+    "base_roi": 0.0101,
+    "clv": 0.0023,
+    "clv_n": 35,
+    "n": 36,
+    "own_roi": 0.0992,
+    "roi": 0.0992,
+    "roi_fee": 0.0809,
+    "span_days": 53.8854,
+    "weeks": 7,
+    "z": 1.0644
+   },
+   "pair": "o15_ranked|soccer_o15_intl",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
+  },
+  {
+   "at": "2026-11-22T19:19:22+00:00",
+   "evidence": {
+    "base_roi": -0.014,
+    "clv": 0.0033,
+    "clv_n": 3,
+    "n": 3,
+    "own_roi": 0.2346,
+    "roi": 0.2346,
+    "roi_fee": 0.2184,
+    "span_days": 15.0417,
+    "weeks": 2,
+    "z": 0.8389
+   },
+   "pair": "ere_o15|soccer_o15",
+   "reason": "moved to Production by hand on 2026-11-22",
+   "to": "production"
+  },
+  {
+   "at": "2026-11-22T19:19:22+00:00",
+   "evidence": {
+    "base_roi": -0.014,
+    "clv": 0.0033,
+    "clv_n": 3,
+    "n": 3,
+    "own_roi": 0.2346,
+    "roi": 0.2346,
+    "roi_fee": 0.2184,
+    "span_days": 15.0417,
+    "weeks": 2,
+    "z": 0.8389
+   },
+   "pair": "ere_o15|soccer_o15",
+   "reason": "moved by hand \u2014 ready from this run",
+   "to": "ready"
   }
  ],
  "pairs": {
@@ -2150,6 +2222,26 @@
    "since": null,
    "stage": "sandbox"
   },
+  "ere_o15|soccer_o15": {
+   "by_hand": "2026-11-22",
+   "entry": {
+    "base_roi": -0.014,
+    "clv": 0.0033,
+    "clv_n": 3,
+    "n": 3,
+    "own_roi": 0.2346,
+    "roi": 0.2346,
+    "roi_fee": 0.2184,
+    "span_days": 15.0417,
+    "weeks": 2,
+    "z": 0.8389
+   },
+   "entry_since": null,
+   "promoted_at": "2026-11-22T19:19:22+00:00",
+   "ready_at": "2026-11-22T19:19:22+00:00",
+   "ready_since": "2026-11-22T19:19:22+00:00",
+   "stage": "production"
+  },
   "espn_fpi|mlb": {
    "demoted_at": "2026-09-21T01:06:15+00:00",
    "since": "2026-09-21T01:06:15+00:00",
@@ -2221,9 +2313,24 @@
    "stage": "sandbox"
   },
   "o15_ranked|soccer_o15_intl": {
-   "demoted_at": "2026-11-02T12:00:00+00:00",
-   "since": null,
-   "stage": "sandbox"
+   "by_hand": "2026-11-22",
+   "entry": {
+    "base_roi": 0.0101,
+    "clv": 0.0023,
+    "clv_n": 35,
+    "n": 36,
+    "own_roi": 0.0992,
+    "roi": 0.0992,
+    "roi_fee": 0.0809,
+    "span_days": 53.8854,
+    "weeks": 7,
+    "z": 1.0644
+   },
+   "entry_since": null,
+   "promoted_at": "2026-11-22T19:19:22+00:00",
+   "ready_at": "2026-11-22T19:19:22+00:00",
+   "ready_since": "2026-11-22T19:19:22+00:00",
+   "stage": "production"
   },
   "o25_congestion|soccer_o25": {
    "demoted_at": "2026-10-19T02:23:41+00:00",
@@ -2435,5 +2542,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-11-22T19:11:36+00:00"
+ "updated": "2026-11-22T19:19:22+00:00"
 }
