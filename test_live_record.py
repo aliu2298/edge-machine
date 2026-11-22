@@ -188,7 +188,7 @@ _seven = {"mls_fade_home|soccer_p05", "crypto_fav_band_below|crypto_fav", "team2
 # one of the two named here or a Production pair the follower holds.
 _got = set(RS.pairs())
 check("the raised pairs keep the follower's original seven", _seven <= _got, True)
-check("and the only pairs raised since are the two soccer rules of 2026-11-20", _got - _seven <= {"st_t7|soccer_team3", "st_t1h|soccer_team2"}, True)
+check("and the only pairs raised since are the two soccer rules of 2026-11-20 and the S&P near-certain NO of 2026-11-22", _got - _seven <= {"st_t7|soccer_team3", "st_t1h|soccer_team2", "finance_spx_nc_no|finance_daily"}, True)
 
 print("\na window refusal after the real reason does not replace it (Brent / WTI Nov 12)")
 _led = os.path.join(tempfile.mkdtemp(), "ledger.jsonl")
