@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-22T17:00:30.173948+00:00",
+ "last_run": "2026-11-22T17:27:04.604820+00:00",
  "matches": [
   {
    "day": "2026-11-19",
@@ -2026,6 +2026,50 @@
    "logged": "2026-11-22T17:00:30.173948+00:00",
    "timed": 3,
    "title": "FC Augsburg v Mainz",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-22",
+   "entries": [
+    {
+     "ask": 0.54,
+     "bid": 0.53,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.54,
+      "filled": true,
+      "roi": 0.8519
+     },
+     "mom": "pre",
+     "name": "Real Sociedad",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.56,
+      "depth": 683.91,
+      "filled": true,
+      "roi": 0.7857
+     },
+     "team": "away",
+     "ticker": "KXLALIGAGAME-26NOV22SANRSO-RSO",
+     "ts": 1795356900,
+     "v2": true,
+     "won": true
+    }
+   ],
+   "espn_id": "401882800",
+   "event": "KXLALIGAGAME-26NOV22SANRSO",
+   "goals": 5,
+   "ht": 1795363824,
+   "ko": 1795360500,
+   "labels": {
+    "away": "O+D-",
+    "home": "O-D+"
+   },
+   "league": "LALIGA",
+   "logged": "2026-11-22T17:27:04.604820+00:00",
+   "timed": 4,
+   "title": "Racing Santander v Real Sociedad",
    "version": "soccerp4-v1"
   }
  ],
