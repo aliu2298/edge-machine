@@ -5432,7 +5432,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-22T16:04:07.816516+00:00",
+ "last_run": "2026-11-22T16:11:29.123557+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -7282,9 +7282,9 @@
    ],
    "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXEPLCORNERS-26NOV22HULBRI-12\", \"b\"]]",
    "price": 0.67,
-   "profit": null,
+   "profit": 0.4925,
    "scope": "soccer_corners",
-   "settled": null,
+   "settled": "2026-11-22T16:11:05+00:00",
    "side": "b",
    "snapshot": {
     "as_of": "2026-11-22T10:04:21+00:00",
@@ -7353,7 +7353,7 @@
    },
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXEPLTOTAL-26NOV22HULBRI-3",
@@ -16660,14 +16660,14 @@
    ],
    "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXEPLCORNERS-26NOV22HULBRI-12\", \"b\"]]",
    "price": 0.67,
-   "profit": null,
+   "profit": 0.4925,
    "scope": "soccer_corners",
-   "settled": null,
+   "settled": "2026-11-22T16:11:05+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXEPLCORNERS-26NOV22LFCMUN-12",
