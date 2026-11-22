@@ -53,6 +53,10 @@ LANES = {
 }
 TOL, FAIL, WINDOW = 0.0075, 0.995, 120
 REVIEW_AT, DECIDE_AT = 10, 30
+# 2026-11-22 (Olu: "Retire the rebound rule"): both lanes retired; no new events from RETIRED_AT, open ones still settle. Final records at retirement:
+# rb_5d 53 settled, -2.06% average net; rb_24h 75 settled, -1.31%. Both failed the research bar. The 1-minute collector keeps running.
+RETIRED_AT = "2026-11-22T18:00:00+00:00"
+RETIRED_TS = int(dt.datetime.fromisoformat(RETIRED_AT).timestamp())
 METHODS = ("PD", "PH", "PDL", "PWL", "MA50", "MA200", "GAP")
 
 
@@ -360,6 +364,8 @@ def track(work, state_path=STATE, now=None, get=I._get, bars=None):
             ratio = s.get("ratios", {}).get(sym, 50.0)
         s.setdefault("ratios", {})[sym] = round(ratio, 4)
         for lane in LANES:
+            if now >= RETIRED_TS:                                # retired 2026-11-22: no new events, open ones settle below
+                break
             s["events"] += signals(ticker, rows, d, hourly.get(sym) or [], ratio, lane, known, now)
     cache = {}
 
