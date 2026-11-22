@@ -873,6 +873,11 @@
    "mirror": "entered",
    "pool": "entered"
   },
+  "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXEPLCORNERS-26NOV22LFCMUN-12\", \"b\"]]": {
+   "at": "2026-11-22T12:35:11.025652+00:00",
+   "entries": "entered",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXLALIGACORNERS-26NOV08RSORVC-12\", \"b\"]]": {
    "at": "2026-11-08T13:58:12.689210+00:00",
    "pool": "entered"
@@ -5278,11 +5283,99 @@
    "sport": "Soccer",
    "src": "sandbox",
    "status": "lost"
+  },
+  {
+   "contract": "KXEPLCORNERS-26NOV22LFCMUN-12",
+   "entered_at": "2026-11-22T12:35:11.025652+00:00",
+   "entities": [
+    "Liverpool",
+    "Manchester United"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXEPLCORNERS-26NOV22LFCMUN-12\", \"b\"]]",
+   "lane": "corners_fav_no",
+   "logged": "2026-11-22T12:33:46+00:00",
+   "matched": [
+    "Manchester United"
+   ],
+   "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXEPLCORNERS-26NOV22LFCMUN-12\", \"b\"]]",
+   "price": 0.68,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": {
+    "as_of": "2026-11-22T12:33:46+00:00",
+    "names": [
+     {
+      "bets": 48,
+      "name": "AAA gas",
+      "profit": 5.9477,
+      "sport": "Commodities"
+     },
+     {
+      "bets": 6,
+      "name": "Manchester United",
+      "profit": 5.403,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Columbus Crew",
+      "profit": 4.221,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 9,
+      "name": "AFC Bournemouth",
+      "profit": 3.9544,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 8,
+      "name": "Napoli",
+      "profit": 3.7771,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 29,
+      "name": "Brent",
+      "profit": 2.8019,
+      "sport": "Commodities"
+     },
+     {
+      "bets": 6,
+      "name": "Lazio",
+      "profit": 2.5658,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 8,
+      "name": "XRP",
+      "profit": 2.5474,
+      "sport": "Crypto"
+     },
+     {
+      "bets": 6,
+      "name": "Bayern Munich",
+      "profit": 2.4607,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 18,
+      "name": "Natural gas",
+      "profit": 2.449,
+      "sport": "Commodities"
+     }
+    ]
+   },
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-22T12:11:28.977442+00:00",
+ "last_run": "2026-11-22T12:35:11.025652+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -16422,6 +16515,31 @@
    ],
    "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXEPLCORNERS-26NOV22HULBRI-12\", \"b\"]]",
    "price": 0.67,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXEPLCORNERS-26NOV22LFCMUN-12",
+   "entered_at": "2026-11-22T12:35:11.025652+00:00",
+   "entities": [
+    "Liverpool",
+    "Manchester United"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXEPLCORNERS-26NOV22LFCMUN-12\", \"b\"]]",
+   "lane": "corners_fav_no",
+   "logged": "2026-11-22T12:33:46+00:00",
+   "matched": [
+    "Liverpool",
+    "Manchester United"
+   ],
+   "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXEPLCORNERS-26NOV22LFCMUN-12\", \"b\"]]",
+   "price": 0.68,
    "profit": null,
    "scope": "soccer_corners",
    "settled": null,
