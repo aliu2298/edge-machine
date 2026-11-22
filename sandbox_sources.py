@@ -234,6 +234,8 @@ ECON_NC_NO_RETIRED_WHY = ("Retired 2026-11-06 by Olu: no edge at 20 settled cont
 COMMOD_NC_NO_RETIRED_WHY = ("Retired 2026-11-08 by Olu: behind its prices at 13 market-days — 12–1, 12 won v 12.2 priced, "
                             "−2.6% after fees. Never in Production. No new entries from 2026-11-08; its rows stay on file and "
                             "its open bets still settle.")
+COMMOD_NC_YES_RETIRED_WHY = ("Retired 2026-11-22 by Olu: behind its prices at 23 of 30 market-days — 20–3, −1.2% after fees. Never in "
+                             "Production. No new entries from 2026-11-22; its rows stay on file and its open bets still settle.")
 # Pinnacle's goal total v Kalshi's (Olu, 2026-11-20): pre-registered 2026-09-22, it never made a pick (0 of 30 on every scope), and the
 # same test on the match winner found 0 of 57 quotes at 3pp. It was also the only thing still spending paced Odds API credit, and its
 # "no paced credit left for this run" skips kept the Soccer card on Attention. No new entries, no paid call; its note and (empty) record stay.
@@ -1753,7 +1755,8 @@ SOURCES = {
              "question."),
     "commod_nc_yes": dict(
         label="Commodities near-certain, Yes (Yes 0.90-0.98, the last hour to the close)",
-        kind="Rule", connected=True, site="edge-machine", sports=["commodities_fav"],
+        kind="Rule", connected=True, site="edge-machine", sports=[],
+        retired_sports={"commodities_fav": COMMOD_NC_YES_RETIRED_WHY},
         baseline="favourite_population",
         # Judged against the YES favourites this sport logged inside ITS band only, so the
         # 70-80c lane's contests and the No lane's never enter its blind rule.
