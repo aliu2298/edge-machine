@@ -13577,19 +13577,17 @@
    "P": 0.84,
    "bot_version": "wm-nofade-v4",
    "bucket": "BOS11TO15",
-   "decided_at": "2026-11-22T03:00:35+00:00",
+   "decided_at": "2026-11-22T05:41:16+00:00",
    "event": "KXNBAWINMARGIN-26NOV21BOSSAC",
    "lane": "nba_wm_nofade",
    "limit": 0.55,
-   "night_cap": 30,
-   "night_count": 3,
-   "outcome": "bid_posted",
+   "outcome": "bid_late",
    "qty": 1.0,
    "rule_ok": true,
    "slate": "26NOV21",
    "ticker": "KXNBAWINMARGIN-26NOV21BOSSAC-BOS11TO15",
    "tip": "2026-11-22T03:00:00+00:00",
-   "why": null
+   "why": "the bid was not posted within 5 minutes of the tip"
   },
   "no:KXNBAWINMARGIN-26NOV21BOSSAC-BOS16TO25": {
    "P": 0.8,
@@ -13633,19 +13631,17 @@
    "P": 0.87,
    "bot_version": "wm-nofade-v4",
    "bucket": "BOS26PLUS",
-   "decided_at": "2026-11-22T03:00:35+00:00",
+   "decided_at": "2026-11-22T05:41:16+00:00",
    "event": "KXNBAWINMARGIN-26NOV21BOSSAC",
    "lane": "nba_wm_nofade",
    "limit": 0.57,
-   "night_cap": 30,
-   "night_count": 2,
-   "outcome": "bid_posted",
+   "outcome": "bid_late",
    "qty": 1.0,
    "rule_ok": true,
    "slate": "26NOV21",
    "ticker": "KXNBAWINMARGIN-26NOV21BOSSAC-BOS26PLUS",
    "tip": "2026-11-22T03:00:00+00:00",
-   "why": null
+   "why": "the bid was not posted within 5 minutes of the tip"
   },
   "no:KXNBAWINMARGIN-26NOV21BOSSAC-BOS6TO10": {
    "P": 0.85,
@@ -24719,6 +24715,6 @@
    "yes_bid": 0.14
   }
  },
- "updated_at": "2026-11-22T03:00:35+00:00",
+ "updated_at": "2026-11-22T05:41:16+00:00",
  "version": 1
 }
