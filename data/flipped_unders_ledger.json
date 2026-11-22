@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-22T14:16:50.436697+00:00",
+ "last_run": "2026-11-22T14:31:37.827853+00:00",
  "registered": "2026-11-21",
  "rules": {
   "FU": {
@@ -59,6 +59,32 @@
      "title": "Will over 2.5 goals be scored?",
      "under_no": 0.5,
      "why": "C7 would pick Kasimpasa O+D- v Alanyaspor O-D+ (under NO 0.50) \u00b7 flipped: over 2.5 YES 0.51"
+    },
+    {
+     "ask": 0.75,
+     "bid": 0.73,
+     "event": "KXSUPERLIGTOTAL-26NOV22TRAEYU",
+     "id": "FU:KXSUPERLIGTOTAL-26NOV22TRAEYU:2.5",
+     "labels": {
+      "away": "O-D+",
+      "home": "O+D-"
+     },
+     "league": "Turkish Super Lig",
+     "line": 2.5,
+     "logged": "2026-11-22T14:31:37.827853+00:00",
+     "match": "Trabzonspor v Eyupspor",
+     "price": 0.75,
+     "rule": "FU",
+     "side": "yes",
+     "sources": [
+      "C7"
+     ],
+     "start": "2026-11-22T16:00Z",
+     "status": "open",
+     "ticker": "KXSUPERLIGTOTAL-26NOV22TRAEYU-3",
+     "title": "Will over 2.5 goals be scored?",
+     "under_no": 0.27,
+     "why": "C7 would pick Trabzonspor O+D- v Eyupspor O-D+ (under NO 0.27) \u00b7 flipped: over 2.5 YES 0.75"
     }
    ]
   }
@@ -392,6 +418,13 @@
    "matched": 0,
    "new": 0,
    "selected": 0
+  },
+  {
+   "at": "2026-11-22T14:31:37.827853+00:00",
+   "due": 1,
+   "matched": 1,
+   "new": 1,
+   "selected": 1
   }
  ],
  "version": "flipped-unders-v1"
