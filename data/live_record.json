@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-22T15:07Z",
+ "generated": "2026-11-22T16:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -5939,9 +5939,9 @@
     {
      "id": "econ_nc_yes:KXDIESELD-26NOV22-T5.840",
      "ko": "2026-11-22T04:59",
-     "r": null,
+     "r": 0.019,
      "side": "yes",
-     "st": "open",
+     "st": "won",
      "w": 1.01
     }
    ],
@@ -6059,6 +6059,46 @@
      "side": "no",
      "st": "won",
      "w": 1.0
+    },
+    {
+     "id": "ftts_no_70_80:KXBUNDESLIGAFTTS-26NOV22SVWHSV-HSV",
+     "ko": "2026-11-22T16:30",
+     "r": null,
+     "side": "no",
+     "st": "open",
+     "w": 0.96
+    },
+    {
+     "id": "ftts_no_70_80:KXLIGUE1FTTS-26NOV22OLMMAN-MAN",
+     "ko": "2026-11-22T19:45",
+     "r": null,
+     "side": "no",
+     "st": "open",
+     "w": 1.0
+    },
+    {
+     "id": "ftts_no_70_80:KXSERIEAFTTS-26NOV22ATAINT-ATA",
+     "ko": "2026-11-22T19:45",
+     "r": null,
+     "side": "no",
+     "st": "open",
+     "w": 0.95
+    },
+    {
+     "id": "ftts_no_70_80:KXLALIGAFTTS-26NOV22GETATM-GET",
+     "ko": "2026-11-22T20:00",
+     "r": null,
+     "side": "no",
+     "st": "open",
+     "w": 1.04
+    },
+    {
+     "id": "ftts_no_70_80:KXMLSFTTS-26NOV22NSHCIN-CIN",
+     "ko": "2026-11-22T21:00",
+     "r": null,
+     "side": "no",
+     "st": "open",
+     "w": 0.97
     }
    ],
    "refused": {}
@@ -6326,9 +6366,9 @@
     {
      "id": "sr_a6:KXEPLTOTAL-26NOV22HULBRI-3",
      "ko": "2026-11-22T14:00",
-     "r": null,
+     "r": 1.0517,
      "side": "no",
-     "st": "open",
+     "st": "won",
      "w": 10.43
     }
    ],
@@ -6473,7 +6513,7 @@
      "r": 0.703,
      "side": "yes",
      "st": "won",
-     "w": 1.0
+     "w": 0.06
     },
     {
      "id": "st_t1h:KXSERIEATEAMTOTAL-26NOV08INTCOM-INT2",
@@ -6481,7 +6521,7 @@
      "r": 0.7322,
      "side": "yes",
      "st": "won",
-     "w": 0.98
+     "w": 0.06
     },
     {
      "id": "st_t1h:KXLIGUE1TEAMTOTAL-26NOV21NICPSG-NIC2",
@@ -6489,7 +6529,15 @@
      "r": 1.8945,
      "side": "yes",
      "st": "won",
-     "w": 16.47
+     "w": 1.01
+    },
+    {
+     "id": "st_t1h:KXSERIEATEAMTOTAL-26NOV22ACMFRO-ACM2",
+     "ko": "2026-11-22T17:00",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 1.0
     }
    ],
    "refused": {}
@@ -6836,6 +6884,14 @@
      "side": "yes",
      "st": "open",
      "w": 11.74
+    },
+    {
+     "id": "team2_ranked:KXLIGUE1TEAMTOTAL-26NOV22FCLREN-REN2",
+     "ko": "2026-11-22T16:15",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 12.0
     },
     {
      "id": "team2_ranked:KXLALIGATEAMTOTAL-26NOV22GETATM-ATM2",
