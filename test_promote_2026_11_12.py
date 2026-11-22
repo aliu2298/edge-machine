@@ -24,10 +24,10 @@ def check(why, got, want):
 
 
 KEY = "commod_fav_band|commodities_fav"
-o, gone = T.PAIR_OVERRIDES[KEY], T.PAIR_REMOVALS[KEY]
-check("re-listed with a date after its Nov 8 removal, which stands as the record it left on", (o["moved_on"], gone["removed_on"], o["moved_on"] > gone["removed_on"]),
-      ("2026-11-12", "2026-11-08", True))
-check("the gate sees it as a promotion", KEY in G.production_lanes(today="2026-11-12"), True)
+gone = T.PAIR_REMOVALS[KEY]
+check("2026-11-22 (Olu): pulled from Production and retired; the 2026-11-12 listing is gone and its gate record stays as history", (KEY in T.PAIR_OVERRIDES, gone["removed_on"]),
+      (False, "2026-11-22"))
+check("the gate no longer sees it as a Production lane", KEY in G.production_lanes(today="2026-11-22"), False)
 rec = G.load()["lanes"][KEY]
 ok, why = G.verdict(rec)
 check("the gate passes it: honest return positive, evidence test waived", (ok, why, rec["honest_positive"], rec["evidence"]), (True, [], True, False))
