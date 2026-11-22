@@ -140,11 +140,6 @@
    "lead_min": 2.2,
    "price": 0.03
   },
-  "commod_nc_yes:KXWTI-26NOV1214-T86.99": {
-   "at": "2026-11-12T18:49:51+00:00",
-   "lead_min": 10.1,
-   "price": 0.98
-  },
   "commod_nc_yes:KXWTI-26NOV1314-T87.99": {
    "at": "2026-11-13T18:53:25+00:00",
    "lead_min": 6.6,
@@ -500,10 +495,20 @@
    "lead_min": 11.3,
    "price": 0.71
   },
+  "ftts_no_70_80:KXLIGUE1FTTS-26NOV22OLMMAN-MAN": {
+   "at": "2026-11-22T18:53:47+00:00",
+   "lead_min": 51.2,
+   "price": 0.75
+  },
   "ftts_no_70_80:KXSERIEAFTTS-26NOV21NAPTOR-TOR": {
    "at": "2026-11-21T19:34:37+00:00",
    "lead_min": 10.4,
    "price": 0.72
+  },
+  "ftts_no_70_80:KXSERIEAFTTS-26NOV22ATAINT-ATA": {
+   "at": "2026-11-22T18:53:47+00:00",
+   "lead_min": 51.2,
+   "price": 0.69
   },
   "liga_btts_even:KXLALIGABTTS-26NOV21RVCVCF-BTTS": {
    "at": "2026-11-21T15:03:31+00:00",
@@ -826,5 +831,5 @@
    "price": 0.8
   }
  },
- "updated": "2026-11-22T18:08:20+00:00"
+ "updated": "2026-11-22T18:53:47+00:00"
 }
