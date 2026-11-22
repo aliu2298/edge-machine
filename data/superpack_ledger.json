@@ -16,6 +16,10 @@
    "at": "2026-11-22T17:37:09.951862+00:00",
    "pool": "opposite"
   },
+  "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXARGPREMDIVBTTS-26NOV22IACCHUR\", \"no\"]]": {
+   "at": "2026-11-22T23:40:52.806127+00:00",
+   "pool": "opposite"
+  },
   "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXARGPREMDIVBTTS-26NOV22RIVLAN\", \"no\"]]": {
    "at": "2026-11-22T20:53:33.577599+00:00",
    "pool": "opposite"
@@ -94,6 +98,10 @@
   },
   "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXARGPREMDIVBTTS-26NOV22CARCGEM\", \"yes\"]]": {
    "at": "2026-11-22T17:37:09.951862+00:00",
+   "pool": "opposite"
+  },
+  "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXARGPREMDIVBTTS-26NOV22IACCHUR\", \"yes\"]]": {
+   "at": "2026-11-22T23:40:52.806127+00:00",
    "pool": "opposite"
   },
   "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXARGPREMDIVBTTS-26NOV22RIVLAN\", \"yes\"]]": {
@@ -5508,7 +5516,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-22T23:34:09.138127+00:00",
+ "last_run": "2026-11-22T23:40:52.806127+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -18215,6 +18223,24 @@
    "list": "pool",
    "logged": "2026-11-22T21:01:40.809679+00:00",
    "pid": "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV22RBBVDG\", \"yes\"]]",
+   "side": "yes",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-22T23:40:52.806127+00:00",
+   "contract": "KXARGPREMDIVBTTS-26NOV22IACCHUR-BTTS",
+   "list": "pool",
+   "logged": "2026-11-22T23:31:36.843671+00:00",
+   "pid": "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXARGPREMDIVBTTS-26NOV22IACCHUR\", \"no\"]]",
+   "side": "no",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-22T23:40:52.806127+00:00",
+   "contract": "KXARGPREMDIVBTTS-26NOV22IACCHUR-BTTS",
+   "list": "pool",
+   "logged": "2026-11-22T23:31:36.843671+00:00",
+   "pid": "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXARGPREMDIVBTTS-26NOV22IACCHUR\", \"yes\"]]",
    "side": "yes",
    "why": "active lanes are on both sides of this contract"
   }
