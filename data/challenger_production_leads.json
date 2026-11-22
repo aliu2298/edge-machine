@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-22T23:17:04+00:00",
+ "board_built_at": "2026-11-22T23:31:06+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -48,6 +48,80 @@
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "miss"
+  },
+  "2026-11-23|Ethan Cook|Evan Zhu|Ethan Cook to win \u00b7 Challenger underdog who has won here": {
+   "away": "Evan Zhu",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-23",
+   "edge_at_log": null,
+   "first_seen": "2026-11-22",
+   "headline": "Ethan Cook to win",
+   "home": "Ethan Cook",
+   "id": "2026-11-23|Ethan Cook|Evan Zhu|Ethan Cook to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-23T02:30Z",
+   "lane": "production",
+   "last_seen": "2026-11-22",
+   "last_seen_at": "2026-11-22T23:31:06+00:00",
+   "league": "Tennis",
+   "match": "Ethan Cook v Evan Zhu",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.19,
+   "published_at": "2026-11-22T23:31:06+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 178,
+   "route": {
+    "claim": "Ethan Cook to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV22ZHUCOO",
+    "market": "KXATPCHALLENGERMATCH-26NOV22ZHUCOO-COO",
+    "outcome": "Ethan Cook",
+    "outcome_side": "yes",
+    "price_at_log": 0.19,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV22ZHUCOO-COO",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
+  },
+  "2026-11-23|Reece Falck|Jason Kubler|Reece Falck to win \u00b7 Challenger underdog who has won here": {
+   "away": "Jason Kubler",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-23",
+   "edge_at_log": null,
+   "first_seen": "2026-11-22",
+   "headline": "Reece Falck to win",
+   "home": "Reece Falck",
+   "id": "2026-11-23|Reece Falck|Jason Kubler|Reece Falck to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-23T02:30Z",
+   "lane": "production",
+   "last_seen": "2026-11-22",
+   "last_seen_at": "2026-11-22T23:31:06+00:00",
+   "league": "Tennis",
+   "match": "Reece Falck v Jason Kubler",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.07,
+   "published_at": "2026-11-22T23:31:06+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 178,
+   "route": {
+    "claim": "Reece Falck to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV22KUBFAL",
+    "market": "KXATPCHALLENGERMATCH-26NOV22KUBFAL-FAL",
+    "outcome": "Reece Falck",
+    "outcome_side": "yes",
+    "price_at_log": 0.07,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV22KUBFAL-FAL",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -58,9 +132,9 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 1,
+    "leads": 3,
     "problem": null,
-    "routed": 1,
+    "routed": 3,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -72,7 +146,7 @@
    "sandbox_roi_fee": -1.0,
    "timing": {
     "late": [],
-    "timed": 1,
+    "timed": 3,
     "under_target": 0
    }
   }
@@ -81,5 +155,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-22T23:17:04+00:00"
+ "updated_at": "2026-11-22T23:31:06+00:00"
 }
