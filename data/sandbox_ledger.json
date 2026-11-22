@@ -15,14 +15,14 @@
   },
   "commodities_fav": {
    "commod_fav_band": {
-    "offered": 300,
+    "offered": 260,
     "picked": 0
    },
    "commod_nc_yes": {
-    "offered": 300,
+    "offered": 260,
     "picked": 0
    },
-   "kalshi_venue": 300
+   "kalshi_venue": 260
   },
   "cricket": {
    "kalshi_venue": 8,
@@ -48,7 +48,7 @@
    "kalshi_venue": 30
   },
   "finance": {
-   "kalshi_venue": 15
+   "kalshi_venue": 45
   },
   "mma": {
    "kalshi_venue": 0,
@@ -73,7 +73,7 @@
     "offered": 4,
     "picked": 1
    },
-   "kalshi_venue": 168,
+   "kalshi_venue": 186,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -124,18 +124,18 @@
   },
   "soccer_ftts": {
    "ftts_lineup_lag": {
-    "offered": 38,
+    "offered": 42,
     "picked": 0
    },
    "ftts_market": {
-    "offered": 38,
-    "picked": 38
+    "offered": 42,
+    "picked": 42
    },
    "ftts_no_70_80": {
-    "offered": 38,
+    "offered": 42,
     "picked": 0
    },
-   "kalshi_venue": 38
+   "kalshi_venue": 42
   },
   "soccer_o05": {
    "kalshi_venue": 0,
@@ -217,7 +217,7 @@
    "kalshi_venue": 102,
    "mls_fade_home": {
     "offered": 8,
-    "picked": 0
+    "picked": 1
    }
   },
   "soccer_p05_cup": {
@@ -338,8 +338,8 @@
   "tennis": {
    "kalshi_venue": 34,
    "polymarket_us": 40,
-   "polymarket_us_listed": 379,
-   "polymarket_us_priced": 143
+   "polymarket_us_listed": 382,
+   "polymarket_us_priced": 144
   },
   "tennis_combo": {
    "combo": 0,
@@ -355,42 +355,42 @@
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
    "boxing": "2026-11-21T23:49:04+00:00",
-   "commodities": "2026-11-22T00:10:10+00:00",
-   "commodities_fav": "2026-11-22T00:10:10+00:00",
-   "cricket": "2026-11-22T00:10:10+00:00",
-   "crypto": "2026-11-22T00:10:10+00:00",
-   "crypto_fav": "2026-11-22T00:10:10+00:00",
-   "economics": "2026-11-22T00:10:10+00:00",
-   "finance": "2026-11-22T00:10:10+00:00",
+   "commodities": "2026-11-22T00:19:42+00:00",
+   "commodities_fav": "2026-11-22T00:19:42+00:00",
+   "cricket": "2026-11-22T00:19:42+00:00",
+   "crypto": "2026-11-22T00:19:42+00:00",
+   "crypto_fav": "2026-11-22T00:19:42+00:00",
+   "economics": "2026-11-22T00:19:42+00:00",
+   "finance": "2026-11-22T00:19:42+00:00",
    "mma": "2026-11-21T20:10:14+00:00",
-   "nfl": "2026-11-22T00:10:10+00:00",
-   "nhl_pl": "2026-11-22T00:10:10+00:00",
-   "nhl_rest": "2026-11-22T00:10:10+00:00",
-   "soccer": "2026-11-22T00:10:10+00:00",
-   "soccer_btts": "2026-11-22T00:10:10+00:00",
-   "soccer_btts_cup": "2026-11-22T00:10:10+00:00",
+   "nfl": "2026-11-22T00:19:42+00:00",
+   "nhl_pl": "2026-11-22T00:19:42+00:00",
+   "nhl_rest": "2026-11-22T00:19:42+00:00",
+   "soccer": "2026-11-22T00:19:42+00:00",
+   "soccer_btts": "2026-11-22T00:19:42+00:00",
+   "soccer_btts_cup": "2026-11-22T00:19:42+00:00",
    "soccer_btts_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_corners": "2026-11-22T00:10:10+00:00",
-   "soccer_ftts": "2026-11-22T00:10:10+00:00",
-   "soccer_o15": "2026-11-22T00:10:10+00:00",
-   "soccer_o15_cup": "2026-11-22T00:10:10+00:00",
+   "soccer_corners": "2026-11-22T00:19:42+00:00",
+   "soccer_ftts": "2026-11-22T00:19:42+00:00",
+   "soccer_o15": "2026-11-22T00:19:42+00:00",
+   "soccer_o15_cup": "2026-11-22T00:19:42+00:00",
    "soccer_o15_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_o25": "2026-11-22T00:10:10+00:00",
-   "soccer_o25_cup": "2026-11-22T00:10:10+00:00",
+   "soccer_o25": "2026-11-22T00:19:42+00:00",
+   "soccer_o25_cup": "2026-11-22T00:19:42+00:00",
    "soccer_o25_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_p05": "2026-11-22T00:10:10+00:00",
-   "soccer_p05_cup": "2026-11-22T00:10:10+00:00",
+   "soccer_p05": "2026-11-22T00:19:42+00:00",
+   "soccer_p05_cup": "2026-11-22T00:19:42+00:00",
    "soccer_p05_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_team1": "2026-11-22T00:10:10+00:00",
-   "soccer_team1_cup": "2026-11-22T00:10:10+00:00",
+   "soccer_team1": "2026-11-22T00:19:42+00:00",
+   "soccer_team1_cup": "2026-11-22T00:19:42+00:00",
    "soccer_team1_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_team2": "2026-11-22T00:10:10+00:00",
-   "soccer_team2_cup": "2026-11-22T00:10:10+00:00",
+   "soccer_team2": "2026-11-22T00:19:42+00:00",
+   "soccer_team2_cup": "2026-11-22T00:19:42+00:00",
    "soccer_team2_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_u35": "2026-11-22T00:10:10+00:00",
-   "soccer_u35_cup": "2026-11-22T00:10:10+00:00",
+   "soccer_u35": "2026-11-22T00:19:42+00:00",
+   "soccer_u35_cup": "2026-11-22T00:19:42+00:00",
    "soccer_u35_intl": "2026-11-17T23:27:07+00:00",
-   "tennis": "2026-11-22T00:10:10+00:00",
+   "tennis": "2026-11-22T00:19:42+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -559,7 +559,7 @@
    }
   },
   "odds_api": {
-   "at": "2026-11-22T00:10:10+00:00",
+   "at": "2026-11-22T00:19:42+00:00",
    "remaining": 175,
    "used": 325
   },
@@ -580,7 +580,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 2505,
+  "runs": 2506,
   "tennis_shortlist": {
    "audit": [
     {
@@ -592,7 +592,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-22T00:10:27+00:00"
+  "updated": "2026-11-22T00:20:00+00:00"
  },
  "quotes": [
   {
@@ -169484,42 +169484,6 @@
    "untraded": false,
    "url": "https://kalshi.com/markets/kxligaportugalgame",
    "venue": "kalshi_binary",
-   "venue_start": null
-  },
-  {
-   "bet": true,
-   "close_at": "2026-10-07T20:08:02+00:00",
-   "close_price": 0.82,
-   "date": "2026-10-07",
-   "edge": null,
-   "id": "tennis_fav_band_3h:aec-utr-dindin-marvin-2026-10-06",
-   "label": "Dinev, Dinko vs Marysko, Vincent",
-   "liquidity": null,
-   "logged": "2026-10-07T19:59:54+00:00",
-   "market_id": "aec-utr-dindin-marvin-2026-10-06",
-   "pick": "b",
-   "pnl": 23.46,
-   "price": 0.81,
-   "price_a": 0.23,
-   "price_b": 0.81,
-   "price_draw": null,
-   "prob_a": null,
-   "result": "b",
-   "settled": "2026-10-08T00:13:21+00:00",
-   "side_a": "Dinev, Dinko",
-   "side_b": "Marysko, Vincent",
-   "source": "tennis_fav_band_3h",
-   "sport": "tennis",
-   "spread": 0.04,
-   "stake": 100.0,
-   "start": "2026-10-07T20:15:00+00:00",
-   "start_source": null,
-   "status": "won",
-   "tier": "utr",
-   "uncovered": null,
-   "untraded": false,
-   "url": "https://polymarket.us/event/utr-dindin-marvin-2026-10-06",
-   "venue": "polymarket_us",
    "venue_start": null
   },
   {
@@ -366844,7 +366808,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-22T00:10:10+00:00",
+   "close_at": "2026-11-22T00:19:42+00:00",
    "close_price": 0.51,
    "date": "2026-11-22",
    "edge": null,
@@ -403420,7 +403384,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-22T00:10:10+00:00",
+   "close_at": "2026-11-22T00:19:42+00:00",
    "close_price": 0.6,
    "date": "2026-11-24",
    "edge": null,
@@ -439028,7 +438992,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-22T00:10:10+00:00",
+   "close_at": "2026-11-22T00:19:42+00:00",
    "close_price": 0.55,
    "date": "2026-11-25",
    "edge": null,
@@ -440803,7 +440767,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-22T00:10:10+00:00",
+   "close_at": "2026-11-22T00:19:42+00:00",
    "close_price": 0.06,
    "date": "2026-11-22",
    "edge": null,
@@ -451481,7 +451445,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-22T00:10:10+00:00",
+   "close_at": "2026-11-22T00:19:42+00:00",
    "close_price": 0.23,
    "date": "2026-11-22",
    "edge": null,
@@ -451526,7 +451490,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-22T00:10:10+00:00",
+   "close_at": "2026-11-22T00:19:42+00:00",
    "close_price": 0.54,
    "date": "2026-11-22",
    "edge": null,
@@ -460132,6 +460096,196 @@
    "url": "https://polymarket.us/event/itfwo-angcui-amyste-2026-11-22",
    "venue": "polymarket_us",
    "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-23",
+   "edge": -0.015,
+   "espn_away": "Al Hilal",
+   "espn_home": "Neftchi Fergana",
+   "event": "KXAFCCLBTTS-26NOV23NEFHIL",
+   "id": "btts_market:KXAFCCLBTTS-26NOV23NEFHIL-BTTS",
+   "kalshi_title": "Both Teams To Score",
+   "label": "Neftchi Fergana v Al Hilal: both teams to score",
+   "league": "AFC Champions League",
+   "liquidity": null,
+   "logged": "2026-11-22T00:19:42+00:00",
+   "market_id": "KXAFCCLBTTS-26NOV23NEFHIL-BTTS",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.55,
+   "price_b": 0.48,
+   "price_draw": null,
+   "prob_a": 0.535,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "btts_market",
+   "sport": "soccer_btts_cup",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-23T13:45:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxafcclbtts",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-24",
+   "edge": -0.02,
+   "espn_away": "Aberdeen",
+   "espn_home": "Rangers",
+   "event": "KXSCOTTISHPREMTOTAL-26NOV24RFCABE",
+   "id": "goals_market:KXSCOTTISHPREMTOTAL-26NOV24RFCABE-2",
+   "kalshi_title": "Over 1.5 goals scored",
+   "label": "Rangers v Aberdeen: over 1.5 goals",
+   "league": "Scottish Premiership",
+   "liquidity": null,
+   "logged": "2026-11-22T00:19:42+00:00",
+   "market_id": "KXSCOTTISHPREMTOTAL-26NOV24RFCABE-2",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.87,
+   "price_b": 0.17,
+   "price_draw": null,
+   "prob_a": 0.85,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_o15",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-24T20:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxscottishpremtotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-23",
+   "edge": -0.015,
+   "espn_away": "Al Hilal",
+   "espn_home": "Neftchi Fergana",
+   "event": "KXAFCCLTOTAL-26NOV23NEFHIL",
+   "id": "goals_market:KXAFCCLTOTAL-26NOV23NEFHIL-2",
+   "kalshi_title": "Over 1.5 goals scored",
+   "label": "Neftchi Fergana v Al Hilal: over 1.5 goals",
+   "league": "AFC Champions League",
+   "liquidity": null,
+   "logged": "2026-11-22T00:19:42+00:00",
+   "market_id": "KXAFCCLTOTAL-26NOV23NEFHIL-2",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.83,
+   "price_b": 0.2,
+   "price_draw": null,
+   "prob_a": 0.815,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_o15_cup",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-23T13:45:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxafccltotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-23",
+   "edge": -0.01,
+   "espn_away": "Al Hilal",
+   "espn_home": "Neftchi Fergana",
+   "event": "KXAFCCLTOTAL-26NOV23NEFHIL",
+   "id": "goals_market:KXAFCCLTOTAL-26NOV23NEFHIL-3",
+   "kalshi_title": "Over 2.5 goals scored",
+   "label": "Neftchi Fergana v Al Hilal: over 2.5 goals",
+   "league": "AFC Champions League",
+   "liquidity": null,
+   "logged": "2026-11-22T00:19:42+00:00",
+   "market_id": "KXAFCCLTOTAL-26NOV23NEFHIL-3",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.62,
+   "price_b": 0.4,
+   "price_draw": null,
+   "prob_a": 0.61,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_o25_cup",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-23T13:45:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxafccltotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-23",
+   "edge": -0.015,
+   "espn_away": "Al Hilal",
+   "espn_home": "Neftchi Fergana",
+   "event": "KXAFCCLTOTAL-26NOV23NEFHIL",
+   "id": "goals_market:KXAFCCLTOTAL-26NOV23NEFHIL-4",
+   "kalshi_title": "Over 3.5 goals scored",
+   "label": "Neftchi Fergana v Al Hilal: over 3.5 goals",
+   "league": "AFC Champions League",
+   "liquidity": null,
+   "logged": "2026-11-22T00:19:42+00:00",
+   "market_id": "KXAFCCLTOTAL-26NOV23NEFHIL-4",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.4,
+   "price_b": 0.63,
+   "price_draw": null,
+   "prob_a": 0.385,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_u35_cup",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-23T13:45:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxafccltotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
   }
  ],
  "retired": {
@@ -460516,14 +460670,14 @@
    "won": 0
   },
   "tennis_fav_band_3h": {
-   "bets": 136,
+   "bets": 137,
    "brier_n": 0,
    "brier_sum": 0.0,
-   "pnl": 9.43999999999993,
-   "quotes": 136,
-   "settled": 133,
-   "staked": 13600.0,
-   "won": 104
+   "pnl": 32.899999999999935,
+   "quotes": 137,
+   "settled": 134,
+   "staked": 13700.0,
+   "won": 105
   },
   "tennis_utr_shortlist_pool_v1": {
    "bets": 0,
