@@ -1368,6 +1368,11 @@
    "entries": "entered",
    "pool": "entered"
   },
+  "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXEPLTEAMTOTAL-26NOV22HULBRI-BRI2\", \"a\"]]": {
+   "at": "2026-11-22T08:27:19.169349+00:00",
+   "mirror": "entered",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXLALIGATEAMTOTAL-26NOV06SEVALA-SEV2\", \"a\"]]": {
    "at": "2026-11-05T21:49:22.360613+00:00",
    "pool": "entered"
@@ -5268,7 +5273,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-22T08:19:36.572870+00:00",
+ "last_run": "2026-11-22T08:27:19.169349+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -7015,6 +7020,93 @@
    "sport": "Crypto",
    "src": "sandbox",
    "status": "won"
+  },
+  {
+   "contract": "KXEPLTEAMTOTAL-26NOV22HULBRI-BRI2",
+   "entered_at": "2026-11-22T08:27:19.169349+00:00",
+   "entities": [
+    "Brighton & Hove Albion"
+   ],
+   "id": "superpack:[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXEPLTEAMTOTAL-26NOV22HULBRI-BRI2\", \"a\"]]",
+   "lane": "team2_ranked",
+   "logged": "2026-11-22T08:26:24+00:00",
+   "matched": [
+    "Brighton & Hove Albion"
+   ],
+   "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXEPLTEAMTOTAL-26NOV22HULBRI-BRI2\", \"a\"]]",
+   "price": 0.62,
+   "profit": null,
+   "scope": "soccer_team2",
+   "settled": null,
+   "side": "a",
+   "snapshot": {
+    "as_of": "2026-11-22T08:26:24+00:00",
+    "names": [
+     {
+      "bets": 7,
+      "name": "Real Betis",
+      "profit": -5.6728,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 9,
+      "name": "Brighton & Hove Albion",
+      "profit": -5.5938,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Espanyol",
+      "profit": -5.0,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "PSV Eindhoven",
+      "profit": -4.6111,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Feyenoord Rotterdam",
+      "profit": -4.0676,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Rayo Vallecano",
+      "profit": -3.6491,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 12,
+      "name": "Sevilla",
+      "profit": -3.6029,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "SC Freiburg",
+      "profit": -3.1733,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Athletic Club",
+      "profit": -3.0392,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "St. Louis CITY SC",
+      "profit": -2.6584,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
   }
  ],
  "pool": [
@@ -16167,6 +16259,29 @@
    "snapshot": null,
    "sport": "Commodities",
    "src": "daily",
+   "status": "open"
+  },
+  {
+   "contract": "KXEPLTEAMTOTAL-26NOV22HULBRI-BRI2",
+   "entered_at": "2026-11-22T08:27:19.169349+00:00",
+   "entities": [
+    "Brighton & Hove Albion"
+   ],
+   "id": "superpack:[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXEPLTEAMTOTAL-26NOV22HULBRI-BRI2\", \"a\"]]",
+   "lane": "team2_ranked",
+   "logged": "2026-11-22T08:26:24+00:00",
+   "matched": [
+    "Brighton & Hove Albion"
+   ],
+   "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXEPLTEAMTOTAL-26NOV22HULBRI-BRI2\", \"a\"]]",
+   "price": 0.62,
+   "profit": null,
+   "scope": "soccer_team2",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
    "status": "open"
   }
  ],
