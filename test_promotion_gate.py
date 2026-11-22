@@ -53,6 +53,7 @@ CB = "commod_fav_band|commodities_fav"            # promoted 2026-11-12 with its
 TD = "top5_goalless_dip_live"                     # was back in Production 2026-11-12 with its own record and waiver; out again 2026-11-16
 AF = ("afq_dog_score|soccer_team1_intl", "afq_btts|soccer_btts_intl",   # African qualifier legs, 2026-11-16, each with its own record and waiver
       "challenger_won_here|tennis",                                      # the Challenger underdog who has won here, 2026-11-20, record and waiver
+      "o15_ranked|soccer_o15_intl", "ere_o15|soccer_o15",                # the Internationals over 1.5 and the Eredivisie over 1.5, 2026-11-22, each with its record and waiver
       "gas_week_cheap_no|gas_week")                                      # AAA gas weekly cheap NO, 2026-11-22, record and waiver
 blob = dict(lanes={CB: rec(), TD: rec(), **{k: rec() for k in AF}})
 new = dict(live, **{"new_rule|soccer_o25": "a new lane"})

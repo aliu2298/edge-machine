@@ -84,15 +84,15 @@ T.evaluate_stages({"quotes": []}, _rm, now=datetime(2026, 10, 18, 6, tzinfo=time
 check("a kept-record removal returns to the Sandbox on its old clock (None = whole record), demoted_at set",
       {k: _rm["pairs"][_KR].get(k) for k in ("stage", "since", "demoted_at")},
       dict(stage="sandbox", since=None, demoted_at="2026-10-18T06:00:00+00:00"))
-_rm2 = {"pairs": {"ere_o15|soccer_o15": dict(stage="production", promoted_at="2026-10-01T00:00:00+00:00")}, "events": []}
+_rm2 = {"pairs": {"ere_draw_home|soccer": dict(stage="production", promoted_at="2026-10-01T00:00:00+00:00")}, "events": []}
 T.evaluate_stages({"quotes": []}, _rm2, now=datetime(2026, 10, 18, 6, tzinfo=timezone.utc), verbose=False)
 check("an ordinary removal still restarts the clock at the removal",
-      _rm2["pairs"].get("ere_o15|soccer_o15", {}).get("since"), "2026-10-18T06:00:00+00:00")
+      _rm2["pairs"].get("ere_draw_home|soccer", {}).get("since"), "2026-10-18T06:00:00+00:00")
 print("\na same-day listing cannot undo the net's demotion (the 2026-10-18 flip-flop)")
 check("o25_congestion|soccer_o25 is off the list and goes back keeping its record",
       ("o25_congestion|soccer_o25" in T.PAIR_OVERRIDES, T.PAIR_REMOVALS["o25_congestion|soccer_o25"]["keep_record"]),
       (False, True))
-_FF = "ere_o15|soccer_o15"          # any live registered pair (pm_combo4 retired 2026-10-24); the override is put in for this check only
+_FF = "ere_draw_home|soccer"          # any live registered pair (pm_combo4 retired 2026-10-24); the override is put in for this check only
 _saved = dict(T.PAIR_OVERRIDES)
 T.PAIR_OVERRIDES[_FF] = dict(moved_on="2026-10-18", production_at=None)
 _ff = {"pairs": {_FF: dict(stage="sandbox", since="2026-10-18T22:32:01+00:00", demoted_at="2026-10-18T22:32:01+00:00")},
