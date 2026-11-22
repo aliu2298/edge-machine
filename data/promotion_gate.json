@@ -533,6 +533,43 @@
    "rules": "honest-v1",
    "waiver": null
   },
+  "gas_week_cheap_no|gas_week": {
+   "checked_at": "2026-11-22T17:54:23+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 6,
+    "halves": null,
+    "n": 6,
+    "outcomes": 3,
+    "roi": 1.2307,
+    "t": 1.74,
+    "without_best": null
+   },
+   "honest_positive": true,
+   "label": "AAA gas weekly cheap NO (live)",
+   "note_touch": {
+    "n": 6,
+    "roi": 1.2307
+   },
+   "page": {
+    "n": 10,
+    "roi": 0.8121
+   },
+   "rules": "honest-v1",
+   "waiver": {
+    "by": "Olu",
+    "on": "2026-11-22",
+    "why": "Moved to Production by hand ('yes, move gas weekly to Production at $1', Nov 22). Same entry rule, not retuned: NO ask 15-30c, spread 10c or less, first quote inside 6h of the rung's open, ask check verified, held to settlement. Evidence test waived (honest return +123.1% on 6, 3 outcomes, score 1.74); the honest return is positive. Fresh live record from 2026-11-22: review at 8 settled weeks, decide at 10+."
+   }
+  },
   "mentions_dip_hold": {
    "checked_at": "2026-11-12T06:43:19+00:00",
    "checks": {
