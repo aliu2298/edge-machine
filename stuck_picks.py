@@ -31,8 +31,16 @@ def _when(v):
     return t if t.tzinfo else t.replace(tzinfo=dt.timezone.utc)
 
 
+# A perpetual (Kalshi Invest *PERP, rebound.py) has no start: an open position closes on its stop, its target or a time stop counted
+# in REGULAR-HOURS minutes (at most 5 sessions), so one entered on a Friday evening is rightly open all weekend. It counts as stuck
+# only once its entry is older than the longest time stop could take in calendar days (5 sessions + a weekend + a holiday).
+PERP_MAX_DAYS = 9
+
+
 def start_of(row):
     """The row's start as an aware datetime, or None. A bare `day` counts as the end of that UTC day."""
+    if str(row.get("ticker") or "").endswith("PERP") and isinstance(row.get("entry_ts"), (int, float)):
+        return dt.datetime.fromtimestamp(row["entry_ts"], dt.timezone.utc) + dt.timedelta(days=PERP_MAX_DAYS)
     for k in START_KEYS:
         t = _when(row[k]) if row.get(k) else None
         if t:
@@ -69,6 +77,8 @@ def scan(data, now, hours):
     for r in walk(data):
         total += 1
         if r.get("bet") is False:       # an observation quote the tracker logged, never a pick: it grades when its venue settles (gas: Kalshi closes, then settles days later)
+            continue
+        if r.get("quote") is False:     # a "no quote" shadow record (shadows.py): no market was priced, so there is nothing to settle
             continue
         t = start_of(r)
         if t is None:

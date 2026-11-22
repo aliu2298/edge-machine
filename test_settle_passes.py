@@ -110,6 +110,13 @@ stuck, no_start, total = SP.scan(data, now2, 12.0)
 check("open 12h past the start is stuck; recent, no-start and settled picks are not", ([t for t, h in stuck], no_start, total), (["OLD"], 1, 3))
 check("the age of last_run", round(SP.age(data, now2), 2), 1.0)
 check("a bare day counts as the end of that day", SP.start_of(dict(day="2026-11-15")), at(2026, 11, 16, 0, 0))
+# 2026-11-22: a "no quote" shadow record and a perp entered on a Friday evening (time stop in regular-hours minutes) were reported stuck.
+fri = at(2026, 11, 20, 21, 18).timestamp()
+perps = {"events": [dict(status="open", ticker="KXBAPERP", day="2026-11-20", entry_ts=int(fri)),
+                    dict(status="open", ticker="KXOLDPERP", day="2026-11-01", entry_ts=int(fri) - 20 * 86400)],
+         "btts": {"T1:X": dict(status="open", event="X", start="2026-11-21T16:15Z", quote=False)}}
+check("a perp held over the weekend and a no-quote shadow are not stuck; a perp past any time stop is",
+      [t for t, h in SP.scan(perps, at(2026, 11, 22, 8, 30), 12.0)[0]], ["KXOLDPERP"])
 d2 = tempfile.mkdtemp()
 os.makedirs(os.path.join(d2, "data"))
 json.dump(data, open(os.path.join(d2, "data", "x_ledger.json"), "w"))
