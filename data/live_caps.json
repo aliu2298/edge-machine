@@ -43,6 +43,11 @@
    "cap": 0.99,
    "max_ask": 0.98
   },
+  "ere_o15|soccer_o15": {
+   "band": null,
+   "cap": 0.85,
+   "max_ask": 0.84
+  },
   "finance_spx_nc_no|finance_daily": {
    "band": [
     0.9,
@@ -67,6 +72,11 @@
    "cap": 0.85,
    "max_ask": 0.84,
    "raised_at": "2026-11-02T00:00:00+00:00"
+  },
+  "o15_ranked|soccer_o15_intl": {
+   "band": null,
+   "cap": 0.85,
+   "max_ask": 0.84
   },
   "sr_a2|soccer_u35": {
    "band": [
@@ -165,5 +175,5 @@
    "raised_at": "2026-11-08T08:07:13+00:00"
   }
  },
- "generated": "2026-11-22T19:07Z"
+ "generated": "2026-11-22T20:07Z"
 }

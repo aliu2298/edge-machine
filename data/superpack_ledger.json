@@ -68,6 +68,10 @@
    "at": "2026-11-22T17:37:09.951862+00:00",
    "pool": "opposite"
   },
+  "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXBRASILEIROBTTS-26NOV22FLUMIR\", \"no\"]]": {
+   "at": "2026-11-22T20:10:19.581894+00:00",
+   "pool": "opposite"
+  },
   "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXARGPREMDIVBTTS-26NOV20VELCAB\", \"yes\"]]": {
    "at": "2026-11-20T21:37:27.429116+00:00",
    "pool": "opposite"
@@ -134,6 +138,10 @@
   },
   "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV22CAPCR\", \"yes\"]]": {
    "at": "2026-11-22T17:37:09.951862+00:00",
+   "pool": "opposite"
+  },
+  "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV22FLUMIR\", \"yes\"]]": {
+   "at": "2026-11-22T20:10:19.581894+00:00",
    "pool": "opposite"
   },
   "[\"contract\", \"album_cheap_no_ledger.json\", [\"KXALBUMEQUIV-EVE26NOV05-17K\", \"no\"]]": {
@@ -5476,7 +5484,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-22T19:34:49.945838+00:00",
+ "last_run": "2026-11-22T20:10:19.581894+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -18082,6 +18090,24 @@
    "list": "pool",
    "logged": "2026-11-22T18:31:46.213564+00:00",
    "pid": "[\"soccer_team_rules_ledger.json\", \"T4\", [\"T4:KXLALIGATEAMTOTAL-26NOV22GETATM:away\", \"yes\"]]",
+   "side": "yes",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-22T20:10:19.581894+00:00",
+   "contract": "KXBRASILEIROBTTS-26NOV22FLUMIR-BTTS",
+   "list": "pool",
+   "logged": "2026-11-22T20:01:29.234761+00:00",
+   "pid": "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXBRASILEIROBTTS-26NOV22FLUMIR\", \"no\"]]",
+   "side": "no",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-22T20:10:19.581894+00:00",
+   "contract": "KXBRASILEIROBTTS-26NOV22FLUMIR-BTTS",
+   "list": "pool",
+   "logged": "2026-11-22T20:01:29.234761+00:00",
+   "pid": "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV22FLUMIR\", \"yes\"]]",
    "side": "yes",
    "why": "active lanes are on both sides of this contract"
   }
