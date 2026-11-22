@@ -9,6 +9,16 @@
    "recorded": "2026-11-21T14:46:45.836605+00:00",
    "start": "2026-11-21T16:15Z",
    "status": "open"
+  },
+  "T1:KXSERIEATEAMTOTAL-26NOV22ACMFRO": {
+   "event": "KXSERIEATEAMTOTAL-26NOV22ACMFRO",
+   "kind": "2h",
+   "lane": "T1",
+   "match": "AC Milan v Frosinone",
+   "quote": false,
+   "recorded": "2026-11-22T15:32:04.649504+00:00",
+   "start": "2026-11-22T17:00Z",
+   "status": "open"
   }
  },
  "error": null,
@@ -41,9 +51,25 @@
    "settled": true,
    "start": "2026-11-21T16:15Z",
    "status": "done"
+  },
+  "T1:KXSERIEATEAMTOTAL-26NOV22ACMFRO:away": {
+   "lane": "T1",
+   "match": "AC Milan v Frosinone",
+   "pick": "T1:KXSERIEATEAMTOTAL-26NOV22ACMFRO:away",
+   "price": 0.37,
+   "start": "2026-11-22T17:00Z",
+   "status": "pending"
+  },
+  "T1:KXSERIEATEAMTOTAL-26NOV22ACMFRO:home": {
+   "lane": "T1",
+   "match": "AC Milan v Frosinone",
+   "pick": "T1:KXSERIEATEAMTOTAL-26NOV22ACMFRO:home",
+   "price": 0.67,
+   "start": "2026-11-22T17:00Z",
+   "status": "pending"
   }
  },
- "last_run": "2026-11-22T15:16:41.918089+00:00",
+ "last_run": "2026-11-22T15:32:04.649504+00:00",
  "registered": "2026-11-21",
  "runs": [
   {
@@ -265,6 +291,11 @@
    "at": "2026-11-22T15:16:41.918089+00:00",
    "btts": 1,
    "ht": 2
+  },
+  {
+   "at": "2026-11-22T15:32:04.649504+00:00",
+   "btts": 2,
+   "ht": 4
   }
  ],
  "version": "shadows-v1"
