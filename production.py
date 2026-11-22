@@ -197,6 +197,9 @@ def start_verified(q):
         # A mentions contract's "start" is its close, a term of the contract; it can only come
         # EARLIER (Kalshi closes it the moment the word is said), never later.
         return _kickoff(q) is not None
+    if q.get("sport") in T.GASW_SPORTS:
+        # The weekly gas lane's "start" is the end of its offer (entry + 6h), set by gas_week_production: verified whenever it parses.
+        return _kickoff(q) is not None
     if q.get("sport") in T.LADDER_SPORTS:
         # A daily-close ladder has no kickoff to confirm: its "start" is the close the
         # contract is written on, published by Kalshi as a term of the contract (the
@@ -442,6 +445,13 @@ def lead_from_quote(q, pair_key, built, kalshi=None):
         # is over 0.50 while this is under 0.20 (the news guard, culture_track.NEWS_GUARD).
         if isinstance(q.get("p_said"), (int, float)):
             bet["p_said"] = round(float(q["p_said"]), 4)
+    elif q["sport"] in T.GASW_SPORTS:
+        # One rung of the weekly AAA gas ladder, the No of "Above X". `kickoff` is the end of the offer (entry + 6h): the follower
+        # stops acting on a lead in its last 30 minutes, so a rung is bought in the hours after the rule's entry or not at all.
+        home = away = None
+        contest = q.get("label") or str(q["market_id"])
+        headline = f"{q['side_a']}: No"
+        bet = {"kind": "gasw_no"}
     elif q["sport"] in T.LADDER_SPORTS:
         # One rung of a daily-close ladder. No two sides to name: the contest is the
         # coin's close ("Bitcoin price on Oct 7, 2026") and the claim is the rung the
@@ -506,6 +516,10 @@ def lead_from_quote(q, pair_key, built, kalshi=None):
     if q.get("prob_a") is not None and q.get("edge") is not None and q.get("price_draw") is None:
         pa = float(q["prob_a"])
         lead["model_prob"] = round(pa if q["pick"] == "a" else 1.0 - pa, 4)
+    if q["sport"] in T.GASW_SPORTS:
+        lead["match"], lead["league"] = contest, "AAA gas weekly"
+        if q.get("closes"):
+            lead["closes"] = q["closes"]
     if route:
         lead["route"] = route
     if unroutable:
@@ -1393,7 +1407,7 @@ def _bucket_priority_html(group, nba_wm):
     return nba_wm_bucket_priority.note_html(v3, v4)
 
 
-def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=None, nba_value=None, soccer_team_rules=None, o35=None, nba_wm=None, top5_dip=None, arg_dip=None, challenger=None):
+def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=None, nba_value=None, soccer_team_rules=None, o35=None, nba_wm=None, top5_dip=None, arg_dip=None, challenger=None, gasweek=None):
     """public_site/production.html — shares the Sandbox stylesheet.
 
     Organised as the questions a visitor actually asks, in order: what is in Production and on
@@ -1452,6 +1466,10 @@ def page(d, st, blob, style, now=None, daily=None, culture=None, soccer_rules=No
         # The Challenger underdog who has won here, live since 2026-11-20 (challenger_production): its own ledger is its paper record.
         import challenger_production
         d, st, blob = challenger_production.page_inputs(d, st, blob, challenger, now=now_dt)
+    if gasweek is not None:
+        # AAA gas weekly cheap NO, live since 2026-11-22 (gas_week_production): its own ledger is its paper record.
+        import gas_week_production
+        d, st, blob = gas_week_production.page_inputs(d, st, blob, gasweek, now=now_dt)
     # Headlines and the lead list use the page copy. The record on each card
     # is assessed on the unfiltered ledger, the same one the tracker reads,
     # so a hidden row cannot move a kept pair's numbers.

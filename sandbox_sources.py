@@ -5042,6 +5042,7 @@ OWN_LEDGER_LABELS = {
     "top5_goalless_dip_live": "Top-5 goalless dip (live)",
     "arg_goalless_dip_live": "Argentina goalless dip (live)",
     "challenger_won_here": "Challenger underdog who has won here (live)",
+    "gas_week_cheap_no": "AAA gas weekly cheap NO (live)",
     "st_t1h": "T1 matches · home team 2+ goals",
     "afq_dog_score": "African qualifiers · underdog to score",
     "afq_btts": "African qualifiers · both teams to score",

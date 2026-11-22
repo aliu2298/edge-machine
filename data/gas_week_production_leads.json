@@ -1,0 +1,49 @@
+{
+ "bands": {
+  "gas_week_cheap_no|gas_week": [
+   0.15,
+   0.3
+  ]
+ },
+ "board_built_at": "2026-11-22T17:57:11+00:00",
+ "collector_error": null,
+ "collector_healthy": {
+  "gas_week_cheap_no": true
+ },
+ "corners_selections": {},
+ "first_publish_min": 45,
+ "late_publication_skipped": 0,
+ "leads": {},
+ "pairs": {
+  "gas_week_cheap_no|gas_week": {
+   "by_hand": "2026-11-22",
+   "entered_at": "2026-11-22T21:00:00+00:00",
+   "promoted_at": "2026-11-22T21:00:00+00:00",
+   "ready_at": "2026-11-22T21:00:00+00:00",
+   "route": "moved by hand on 2026-11-22",
+   "routing": {
+    "leads": 0,
+    "problem": null,
+    "routed": 0,
+    "unlisted": 0,
+    "unrouted": 0,
+    "unverified": 0,
+    "why": []
+   },
+   "sandbox_clv": null,
+   "sandbox_n": 0,
+   "sandbox_roi": null,
+   "sandbox_roi_fee": null,
+   "timing": {
+    "late": [],
+    "timed": 0,
+    "under_target": 0
+   }
+  }
+ },
+ "publication_withheld": {},
+ "stage": "production",
+ "unlisted_skipped": 0,
+ "unverified_kickoff_skipped": 0,
+ "updated_at": "2026-11-22T17:57:11+00:00"
+}
