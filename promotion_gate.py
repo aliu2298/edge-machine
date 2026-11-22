@@ -56,17 +56,18 @@ GRANDFATHERED = frozenset({
 KNOWN_FEEDS = frozenset({
     "production_leads.json", "soccer_rules_production_leads.json", "soccer_team_rules_production_leads.json", "econ_production_leads.json",
     "culture_production_leads.json", "nba_value_production_leads.json", "production_nba_wm_leads.json",
-    "production_nba_wm_nofade_leads.json", "production_o35_leads.json", "production_top5_dip_leads.json", "production_arg_dip_leads.json", "africa_goals_production_leads.json", "challenger_production_leads.json",
+    "production_nba_wm_nofade_leads.json", "production_o35_leads.json", "production_top5_dip_leads.json", "production_arg_dip_leads.json", "africa_goals_production_leads.json", "challenger_production_leads.json", "gas_week_production_leads.json",
 })
 KNOWN_MODULES = frozenset({
     "production.py", "production_live.py", "production_overview.py", "soccer_rules_production.py", "soccer_team_rules_production.py",
     "daily_production.py", "culture_production.py", "nba_value_production.py", "nba_wm_production.py", "o35_production.py",
-    "top5_dip_production.py", "arg_dip_production.py", "live_record_publish.py", "africa_goals_production.py", "challenger_production.py",
+    "top5_dip_production.py", "arg_dip_production.py", "live_record_publish.py", "africa_goals_production.py", "challenger_production.py", "gas_week_production.py",
 })
 # Own-engine Production lanes -> the fillsim_regrade lane that grades their own entries.
 OWN = {"nba_winmargin_live": "nba_winmargin_live", "nba_wm_nofade": "nba_wm_nofade", "o35_cheap_no_wave": "o35_cheap_no_v4",
        "top5_goalless_dip_live": "top5_dip", "arg_goalless_dip_live": "arg_dip",
-       "challenger_won_here|tennis": "challenger_won_here_hold"}
+       "challenger_won_here|tennis": "challenger_won_here_hold",
+       "gas_week_cheap_no|gas_week": "gas_week_cheap_no"}
 
 
 def _ended(module, today):
@@ -111,6 +112,8 @@ def production_lanes(today=None):
         out[AP.LANE] = AP.NAME
     import challenger_production as CHP
     out[CHP.PAIR] = CHP.NAME
+    import gas_week_production as GWP
+    out[GWP.PAIR] = GWP.NAME
     out["nba_winmargin_live"] = "NBA win margin YES split"
     out["nba_wm_nofade"] = "NBA win margin NO fade"
     return out

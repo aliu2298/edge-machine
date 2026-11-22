@@ -21,7 +21,8 @@ import datetime as dt
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, "data", "live_record.json")
 FEEDS = ("production_leads", "soccer_rules_production_leads", "soccer_team_rules_production_leads", "econ_production_leads",
-         "culture_production_leads", "nba_value_production_leads", "africa_goals_production_leads", "challenger_production_leads")
+         "culture_production_leads", "nba_value_production_leads", "africa_goals_production_leads", "challenger_production_leads",
+         "gas_week_production_leads")
 _FOUND = sorted(glob.glob(os.path.expanduser("~/poly*/orders_placed.json")))
 SRC_DIR = os.path.expanduser(os.environ.get("LIVE_RECORD_DIR") or (os.path.dirname(_FOUND[0]) if _FOUND else "~/polymarket-src_dir"))
 
