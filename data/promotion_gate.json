@@ -431,6 +431,44 @@
    "rules": "honest-v1",
    "waiver": null
   },
+  "ere_o15|soccer_o15": {
+   "checked_at": "2026-11-22T18:07:54+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 2,
+    "halves": null,
+    "n": 3,
+    "outcomes": 3,
+    "roi": 0.2183,
+    "t": 0.81,
+    "without_best": null
+   },
+   "honest_positive": true,
+   "label": null,
+   "note_touch": {
+    "n": 3,
+    "roi": 0.2183
+   },
+   "page": {
+    "n": 3,
+    "roi": 0.2184
+   },
+   "rules": "honest-v1",
+   "waiver": {
+    "by": "Olu",
+    "on": "2026-11-22",
+    "waives": "evidence test (30+ bets on 10+ outcomes, both halves up, score of 2 or better). Honest return is positive: +21.8% on 3 settled (score 0.81).",
+    "why": "Typed in the Production Moves session on 2026-11-22: 'yes, promote Eredivisie over 1.5 underdog 3.21-4.00 to Production at $1 (gate waived)'. $1 trial on a fresh live record; the research case (3,904 matches, z +3.13, held out +5.7pp) is on the lane's registration, its Sandbox record is 3 bets."
+   }
+  },
   "finance_spx_nc_no|finance_daily": {
    "checked_at": "2026-11-12T06:43:19+00:00",
    "checks": {
@@ -673,6 +711,47 @@
    },
    "rules": "honest-v1",
    "waiver": null
+  },
+  "o15_ranked|soccer_o15_intl": {
+   "checked_at": "2026-11-22T18:07:59+00:00",
+   "checks": {
+    "10+ outcomes": false,
+    "30+ bets": false,
+    "both halves up": false,
+    "t of 2+": false,
+    "up without its best outcome": false
+   },
+   "evidence": false,
+   "exit": "hold",
+   "honest": {
+    "confirmed": 16,
+    "halves": [
+     -0.1109,
+     0.1888
+    ],
+    "n": 17,
+    "outcomes": 6,
+    "roi": 0.0654,
+    "t": 0.5,
+    "without_best": -0.0271
+   },
+   "honest_positive": true,
+   "label": null,
+   "note_touch": {
+    "n": 17,
+    "roi": 0.0654
+   },
+   "page": {
+    "n": 17,
+    "roi": 0.0654
+   },
+   "rules": "honest-v1",
+   "waiver": {
+    "by": "Olu",
+    "on": "2026-11-22",
+    "waives": "evidence test (30+ bets on 10+ outcomes, both halves up, score of 2 or better). Honest return is positive: +6.5% on 17 settled (score 0.5).",
+    "why": "Typed in the Production Moves session on 2026-11-22: 'yes, promote internationals over 1.5 to Production at $1', after being told the Sandbox ledger shows 14-3 on 17 bets and not the 30-6 on 36 first quoted. $1, ready for the March window; fresh live record; its earlier live run Oct 1-Nov 2 was 5-2 on 7."
+   }
   },
   "o35_cheap_no_v5": {
    "checked_at": "2026-11-12T06:43:20+00:00",

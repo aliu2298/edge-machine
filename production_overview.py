@@ -42,7 +42,7 @@ def plain(name):
 
 # A lane relaunched on a FRESH live record (Olu): pair key -> date its new record starts. The orders before it are the lane's earlier run: they
 # leave the running lane's record and stay on the page as a Retired line (history), so the all-lanes totals keep counting them.
-FRESH = {"commod_fav_band|commodities_fav": "2026-11-12"}
+FRESH = {"commod_fav_band|commodities_fav": "2026-11-12", "o15_ranked|soccer_o15_intl": "2026-11-22"}
 
 
 def esc(x):
