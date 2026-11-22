@@ -348,6 +348,10 @@
    "at": "2026-11-20T04:11:39.004704+00:00",
    "pool": "entered"
   },
+  "[\"daily\", \"econ_nc_yes\", [\"KXDIESELD-26NOV22-T5.840\", \"yes\"]]": {
+   "at": "2026-11-22T04:04:49.416735+00:00",
+   "pool": "entered"
+  },
   "[\"finance_nc\", \"finance_nc\", [\"KXINXU-26NOV05H1600-T7499.9999\", \"no\"]]": {
    "at": "2026-11-05T18:05:03.605874+00:00",
    "pool": "entered"
@@ -5264,7 +5268,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-22T03:35:26.994193+00:00",
+ "last_run": "2026-11-22T04:04:49.416735+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -16141,6 +16145,29 @@
    "sport": "Crypto",
    "src": "sandbox",
    "status": "won"
+  },
+  {
+   "contract": "KXDIESELD-26NOV22-T5.840",
+   "entered_at": "2026-11-22T04:04:49.416735+00:00",
+   "entities": [
+    "Diesel"
+   ],
+   "id": "superpack:[\"daily\", \"econ_nc_yes\", [\"KXDIESELD-26NOV22-T5.840\", \"yes\"]]",
+   "lane": "econ_nc_yes",
+   "logged": "2026-11-22T03:45:50.898254+00:00",
+   "matched": [
+    "Diesel"
+   ],
+   "pid": "[\"daily\", \"econ_nc_yes\", [\"KXDIESELD-26NOV22-T5.840\", \"yes\"]]",
+   "price": 0.98,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Commodities",
+   "src": "daily",
+   "status": "open"
   }
  ],
  "registered": "2026-11-05",
