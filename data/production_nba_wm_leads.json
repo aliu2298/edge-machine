@@ -212,6 +212,84 @@
   },
   {
    "bucket": "11-20",
+   "event": "KXNBAWINMARGIN-26NOV22DALUTA",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV22DALUTA-DAL11TO20",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "DAL",
+   "ticker": "KXNBAWINMARGIN-26NOV22DALUTA-DAL11TO20",
+   "tip": "2026-11-23T00:00:00+00:00",
+   "title": "Dallas wins by 11-20 points",
+   "version": "wm-yes-v4"
+  },
+  {
+   "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV22DALUTA",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV22DALUTA-DAL6TO10",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "DAL",
+   "ticker": "KXNBAWINMARGIN-26NOV22DALUTA-DAL6TO10",
+   "tip": "2026-11-23T00:00:00+00:00",
+   "title": "Dallas wins by 6-10 points",
+   "version": "wm-yes-v4"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV22DALUTA",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV22DALUTA-DAL1TO5",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "DAL",
+   "ticker": "KXNBAWINMARGIN-26NOV22DALUTA-DAL1TO5",
+   "tip": "2026-11-23T00:00:00+00:00",
+   "title": "Dallas wins by 1-5 points",
+   "version": "wm-yes-v4"
+  },
+  {
+   "bucket": "1-5",
+   "event": "KXNBAWINMARGIN-26NOV22DALUTA",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV22DALUTA-UTA1TO5",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "UTA",
+   "ticker": "KXNBAWINMARGIN-26NOV22DALUTA-UTA1TO5",
+   "tip": "2026-11-23T00:00:00+00:00",
+   "title": "Utah wins by 1-5 points",
+   "version": "wm-yes-v4"
+  },
+  {
+   "bucket": "6-10",
+   "event": "KXNBAWINMARGIN-26NOV22DALUTA",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV22DALUTA-UTA6TO10",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "UTA",
+   "ticker": "KXNBAWINMARGIN-26NOV22DALUTA-UTA6TO10",
+   "tip": "2026-11-23T00:00:00+00:00",
+   "title": "Utah wins by 6-10 points",
+   "version": "wm-yes-v4"
+  },
+  {
+   "bucket": "11-20",
+   "event": "KXNBAWINMARGIN-26NOV22DALUTA",
+   "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV22DALUTA-UTA11TO20",
+   "lane": "nba_winmargin_live",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "team": "UTA",
+   "ticker": "KXNBAWINMARGIN-26NOV22DALUTA-UTA11TO20",
+   "tip": "2026-11-23T00:00:00+00:00",
+   "title": "Utah wins by 11-20 points",
+   "version": "wm-yes-v4"
+  },
+  {
+   "bucket": "11-20",
    "event": "KXNBAWINMARGIN-26NOV22DENCHI",
    "id": "nba_winmargin_live:KXNBAWINMARGIN-26NOV22DENCHI-DEN11TO20",
    "lane": "nba_winmargin_live",
@@ -527,6 +605,6 @@
   "side": "yes",
   "stake_usd": 1.0
  },
- "updated_at": "2026-11-22T04:01:35+00:00",
+ "updated_at": "2026-11-22T04:31:31+00:00",
  "version": "wm-yes-v4"
 }
