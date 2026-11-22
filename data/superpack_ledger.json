@@ -1424,6 +1424,10 @@
    "entries": "entered",
    "pool": "entered"
   },
+  "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXSERIEATEAMTOTAL-26NOV22BFCUDI-BFC2\", \"a\"]]": {
+   "at": "2026-11-22T13:34:14.779944+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXUECLTEAMTOTAL-26NOV05LINHAJ-HAJ2\", \"a\"]]": {
    "at": "2026-11-05T16:10:44.196456+00:00",
    "pool": "entered"
@@ -1875,6 +1879,10 @@
   },
   "[\"soccer_team_rules_ledger.json\", \"T5\", [\"T5:KXUELTEAMTOTAL-26NOV05RSOOL:away\", \"yes\"]]": {
    "at": "2026-11-05T17:04:52.386341+00:00",
+   "pool": "entered"
+  },
+  "[\"soccer_team_rules_ledger.json\", \"T7\", [\"T7:KXBUNDESLIGATEAMTOTAL-26NOV22FCAM05:home\", \"no\"]]": {
+   "at": "2026-11-22T13:34:14.779944+00:00",
    "pool": "entered"
   },
   "[\"soccer_team_rules_ledger.json\", \"T7\", [\"T7:KXLALIGATEAMTOTAL-26NOV08RSORVC:away\", \"no\"]]": {
@@ -5380,7 +5388,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-22T13:06:28.009444+00:00",
+ "last_run": "2026-11-22T13:34:14.779944+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -16665,6 +16673,52 @@
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXBUNDESLIGATEAMTOTAL-26NOV22FCAM05-FCA3",
+   "entered_at": "2026-11-22T13:34:14.779944+00:00",
+   "entities": [
+    "FC Augsburg"
+   ],
+   "id": "superpack:[\"soccer_team_rules_ledger.json\", \"T7\", [\"T7:KXBUNDESLIGATEAMTOTAL-26NOV22FCAM05:home\", \"no\"]]",
+   "lane": "T7",
+   "logged": "2026-11-22T13:02:10.748358+00:00",
+   "matched": [
+    "FC Augsburg"
+   ],
+   "pid": "[\"soccer_team_rules_ledger.json\", \"T7\", [\"T7:KXBUNDESLIGATEAMTOTAL-26NOV22FCAM05:home\", \"no\"]]",
+   "price": 0.78,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "no",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_team_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXSERIEATEAMTOTAL-26NOV22BFCUDI-BFC2",
+   "entered_at": "2026-11-22T13:34:14.779944+00:00",
+   "entities": [
+    "Bologna"
+   ],
+   "id": "superpack:[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXSERIEATEAMTOTAL-26NOV22BFCUDI-BFC2\", \"a\"]]",
+   "lane": "team2_ranked",
+   "logged": "2026-11-22T13:32:52+00:00",
+   "matched": [
+    "Bologna"
+   ],
+   "pid": "[\"sandbox\", \"team2_ranked\", [\"team2_ranked:KXSERIEATEAMTOTAL-26NOV22BFCUDI-BFC2\", \"a\"]]",
+   "price": 0.51,
+   "profit": null,
+   "scope": "soccer_team2",
+   "settled": null,
+   "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
    "status": "open"
   }
  ],
