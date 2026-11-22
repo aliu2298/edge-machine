@@ -11,6 +11,9 @@ from pathlib import Path
 from urllib.parse import urlparse
 from unittest.mock import patch
 
+import sandbox_sources as _S
+import sport_rows_testlib
+_KEEP_CD = sport_rows_testlib.running_again("commod_fav_band|commodities_fav"); _KEEP_CD.__enter__()   # retired 2026-11-22: this file tests the page machinery
 import commodities_build as C
 import fmt
 import sandbox_build as B

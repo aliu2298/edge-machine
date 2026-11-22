@@ -3427,7 +3427,7 @@ T.PAIR_OVERRIDES.clear(); T.PAIR_OVERRIDES.update(_live_ov)
 # What the live board is actually set to, stated once so a change here is a deliberate edit
 # and not a surprise. These are judgement calls; the test only pins that they were made.
 eq(sorted(T.PAIR_OVERRIDES),
-   ["commod_fav_band|commodities_fav", "corners_ucl_fade|soccer_corners", "crypto_fav_band_below|crypto_fav", "ere_o15|soccer_o15", "ftts_no_70_80|soccer_ftts",
+   ["corners_ucl_fade|soccer_corners", "crypto_fav_band_below|crypto_fav", "ere_o15|soccer_o15", "ftts_no_70_80|soccer_ftts",
     "mls_fade_home|soccer_p05", "o15_ranked|soccer_o15_intl", "team1_form_l5|soccer_team1_intl",
     "team2_form_l10|soccer_team2_intl", "team2_ranked|soccer_team2", "u35_low_scoring|soccer_u35_cup", "u35_low_scoring|soccer_u35_intl"],
    "the Production list is exactly the pairs moved there by hand, and nothing else (the commodities favourite band back in 2026-11-12; the Internationals over 1.5 and the Eredivisie over 1.5 in 2026-11-22; corners_ucl_fade out 2026-10-21; four soccer lanes out, crypto_fav_band swapped for three crypto angle lanes, 2026-10-20) "

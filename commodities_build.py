@@ -9,6 +9,7 @@ trading day.
 No live venue call is made here; the page is rebuilt by
 the tracker, and a Kalshi hiccup must not turn into a failed publish.
 """
+import re
 import datetime
 import os
 
@@ -451,6 +452,17 @@ def _cheap_row(cfg, st, retired=False):
 def _insert_rows(html, list_key, rows_html):
     """Put rows at the top of a Rules list (data-list=...), right after its header line."""
     at = html.find(f'data-list="{list_key}">')
+    if at < 0 and rows_html:
+        # 2026-11-22: with every commodity rule retired the page prints "No commodities rule is in the Sandbox." and no list. The live
+        # cheap-side rows still need one: the placeholder becomes a real Sandbox list, with the header line the page's other lists use.
+        m = re.search(r'<p class="sp-empty" data-empty="%s">[^<]*</p>' % list_key, html)
+        hdr = re.search(r'data-list="[a-z]+">(<div class="sp-line sp-head-line".*?</div>)', html, re.S)
+        if m and hdr:
+            n = rows_html.count('<details class="sp-rule')
+            box = (f'<details class="fold sp-sandbox" id="{list_key}" open><summary><h3>Sandbox rules</h3>'
+                   f'<span class="sm mut">· {n} rule{"s" if n != 1 else ""} · by evidence</span></summary>'
+                   f'<div class="sp-rules-list" data-list="{list_key}">{hdr.group(1)}{rows_html}</div></details>')
+            return html[:m.start()] + box + html[m.end():], True
     if at < 0 or not rows_html:
         return html, False
     head_end = html.find("</div>", at) + len("</div>")       # the header line holds spans only
@@ -467,11 +479,15 @@ def with_cheap_rows(html, states=None):
     out, ok_live = _insert_rows(html, "sandbox", live)
     out, ok_gone = _insert_rows(out, "retired", gone)
     if not (ok_live and (ok_gone or not gone)):
+        # 2026-11-22: with every commodity rule retired the page has no Sandbox list for the live cheap-side rows, but it still has its Retired
+        # fold: the old section then carries only the live lanes, and the retired ones stay in the fold where they were put.
+        if ok_gone:
+            return out.replace('<section id="events"', cheap_side(states, with_retired=False) + '<section id="events"', 1)
         return html.replace('<section id="events"', cheap_side(states) + '<section id="events"', 1)
     return out
 
 
-def cheap_side(states=None):
+def cheap_side(states=None, with_retired=True):
     """The Commodities page's "Cheap side + resting take-profit" section (2026-10-27): the Culture
     page's summary table and lane cards for wti_cheap_yes and gas_cheap_no (mentions_split engine)."""
     import mentions_split as MS
@@ -490,7 +506,7 @@ def cheap_side(states=None):
                          'decide at 30.</b></p>')
                         if cfg is MS.GAS_WEEK else "") + MS.section(states[cfg["lane"]], e, cfg)
                        for cfg in MS.LIVE_COMMOD)
-             + retired_cheap(states, e) + '</section>')
+             + (retired_cheap(states, e) if with_retired else "") + '</section>')
     return MS.label_cells(inner)
 
 
