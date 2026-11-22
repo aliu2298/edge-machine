@@ -1,5 +1,51 @@
 {
  "error": null,
- "last_run": "2026-11-22T09:47:37+00:00",
- "quotes": {}
+ "last_run": "2026-11-22T10:01:50+00:00",
+ "quotes": {
+  "challenger_won_here:KXATPCHALLENGERMATCH-26NOV22MIKRAY-MIK": {
+   "bet": true,
+   "date": "2026-11-22",
+   "edge": null,
+   "event": "KXATPCHALLENGERMATCH-26NOV22MIKRAY",
+   "id": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV22MIKRAY-MIK",
+   "kalshi_title": "Luka Mikrut wins",
+   "label": "Luka Mikrut v Amaury Raynel",
+   "league": "Tennis",
+   "logged": "2026-11-22T10:01:41+00:00",
+   "market_id": "KXATPCHALLENGERMATCH-26NOV22MIKRAY",
+   "opponent": "Amaury Raynel",
+   "pick": "a",
+   "pnl": 0.0,
+   "price": 0.94,
+   "price_a": 0.94,
+   "price_b": null,
+   "price_draw": null,
+   "prob_a": null,
+   "result": null,
+   "rule": "won_here",
+   "settle_px": null,
+   "settled": null,
+   "side_a": "Luka Mikrut",
+   "side_b": "Amaury Raynel",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "stake": 100.0,
+   "start": "2026-11-22T13:00:00+00:00",
+   "start_source": "kalshi_challenger",
+   "status": "open",
+   "team": "Luka Mikrut",
+   "tickers": {
+    "a": "KXATPCHALLENGERMATCH-26NOV22MIKRAY-MIK",
+    "b": "KXATPCHALLENGERMATCH-26NOV22MIKRAY-RAY"
+   },
+   "titles": {
+    "a": "Luka Mikrut",
+    "b": "Amaury Raynel"
+   },
+   "tournament": "ATP Challenger Monastir",
+   "untraded": false,
+   "url": "",
+   "venue": "kalshi"
+  }
+ }
 }
