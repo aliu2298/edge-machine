@@ -1,7 +1,7 @@
 {
  "box_through": "2026-11-22",
  "error": null,
- "last_run": "2026-11-22T15:39:17.407077+00:00",
+ "last_run": "2026-11-22T19:15:25.306396+00:00",
  "looks": {
   "401909305": {
    "at": "2026-11-20T22:45:25.302540+00:00",
@@ -559,6 +559,24 @@
    },
    "spread": 12.5,
    "usable": 129
+  },
+  "401910029": {
+   "at": "2026-11-22T19:15:25.306396+00:00",
+   "batch": 1,
+   "entered": {
+    "spotter_fade": 1,
+    "spotter_hold": 4,
+    "spotter_spike": 4
+   },
+   "game": "DET @ ATL",
+   "night": "2026-11-22",
+   "out": 51,
+   "skipped": {
+    "no quote": 4,
+    "outside 5-60c": 74
+   },
+   "spread": 1.5,
+   "usable": 146
   }
  },
  "nights": {
@@ -973,6 +991,59 @@
      [
       "4683021",
       "pts"
+     ]
+    ]
+   }
+  },
+  "2026-11-22": {
+   "spotter_fade": {
+    "n": 1,
+    "players": [
+     [
+      "4278562",
+      "pra"
+     ]
+    ]
+   },
+   "spotter_hold": {
+    "n": 4,
+    "players": [
+     [
+      "4432166",
+      "m3"
+     ],
+     [
+      "3908845",
+      "m3"
+     ],
+     [
+      "4395702",
+      "m3"
+     ],
+     [
+      "4278039",
+      "m3"
+     ]
+    ]
+   },
+   "spotter_spike": {
+    "n": 4,
+    "players": [
+     [
+      "4395702",
+      "pts"
+     ],
+     [
+      "4066372",
+      "pts"
+     ],
+     [
+      "4432166",
+      "pts"
+     ],
+     [
+      "4278039",
+      "reb"
      ]
     ]
    }
@@ -1725,6 +1796,34 @@
      "unit": "threes",
      "why": "came off the bench last game",
      "yes_ask": 0.44
+    },
+    {
+     "bid": 0.54,
+     "edge": 0.0563,
+     "entered": "2026-11-22T19:15:25.306396+00:00",
+     "game": "DET @ ATL",
+     "game_id": "401910029",
+     "id": "spotter_fade:KXNBAPRA-26NOV22DETATL-DETPREED7-20",
+     "lead_min": 74.6,
+     "night": "2026-11-22",
+     "outs": [
+      "Duncan Robinson"
+     ],
+     "p": 0.5063,
+     "pid": "4278562",
+     "player": "Paul Reed",
+     "price": 0.46,
+     "rule": "spotter_fade",
+     "rung": 20,
+     "side": "no",
+     "start": "2026-11-22T20:30:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "DET",
+     "ticker": "KXNBAPRA-26NOV22DETATL-DETPREED7-20",
+     "unit": "points+rebounds+assists",
+     "why": "minutes up on last season",
+     "yes_ask": 0.55
     }
    ]
   },
@@ -2485,6 +2584,34 @@
      "unit": "threes",
      "why": "drawn at random from this game's rungs at about the pick's price, NO side",
      "yes_ask": 0.42
+    },
+    {
+     "bid": 0.57,
+     "entered": "2026-11-22T19:15:25.306396+00:00",
+     "game": "DET @ ATL",
+     "game_id": "401910029",
+     "id": "spotter_fade_blind:KXNBAREB-26NOV22DETATL-DETDJENKINS24-4",
+     "lead_min": 74.6,
+     "matches": "spotter_fade:KXNBAPRA-26NOV22DETATL-DETPREED7-20",
+     "night": "2026-11-22",
+     "outs": [
+      "Duncan Robinson"
+     ],
+     "p": null,
+     "pid": "5107199",
+     "player": "Daniss Jenkins",
+     "price": 0.43,
+     "rule": "spotter_fade_blind",
+     "rung": 4,
+     "side": "no",
+     "start": "2026-11-22T20:30:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "DET",
+     "ticker": "KXNBAREB-26NOV22DETATL-DETDJENKINS24-4",
+     "unit": "rebounds",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.58
     }
    ]
   },
@@ -3497,6 +3624,107 @@
      "ticker": "KXNBAREB-26NOV21MEMMIN-MEMTJEROME2-4",
      "unit": "rebounds",
      "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.36,
+     "edge": 0.0743,
+     "entered": "2026-11-22T19:15:25.306396+00:00",
+     "game": "DET @ ATL",
+     "game_id": "401910029",
+     "id": "spotter_hold:KXNBA3PT-26NOV22DETATL-DETCCUNNINGHAM2-3",
+     "lead_min": 74.6,
+     "night": "2026-11-22",
+     "outs": [
+      "Duncan Robinson"
+     ],
+     "p": 0.4443,
+     "pid": "4432166",
+     "player": "Cade Cunningham",
+     "price": 0.37,
+     "rule": "spotter_hold",
+     "rung": 3,
+     "start": "2026-11-22T20:30:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "DET",
+     "ticker": "KXNBA3PT-26NOV22DETATL-DETCCUNNINGHAM2-3",
+     "unit": "threes",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.32,
+     "edge": 0.0704,
+     "entered": "2026-11-22T19:15:25.306396+00:00",
+     "game": "DET @ ATL",
+     "game_id": "401910029",
+     "id": "spotter_hold:KXNBA3PT-26NOV22DETATL-DETJCOLLINS20-2",
+     "lead_min": 74.6,
+     "night": "2026-11-22",
+     "outs": [
+      "Duncan Robinson"
+     ],
+     "p": 0.4004,
+     "pid": "3908845",
+     "player": "John Collins",
+     "price": 0.33,
+     "rule": "spotter_hold",
+     "rung": 2,
+     "start": "2026-11-22T20:30:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "DET",
+     "ticker": "KXNBA3PT-26NOV22DETATL-DETJCOLLINS20-2",
+     "unit": "threes",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.33,
+     "edge": 0.0603,
+     "entered": "2026-11-22T19:15:25.306396+00:00",
+     "game": "DET @ ATL",
+     "game_id": "401910029",
+     "id": "spotter_hold:KXNBA3PT-26NOV22DETATL-DETIJOESF-3",
+     "lead_min": 74.6,
+     "night": "2026-11-22",
+     "outs": [
+      "Duncan Robinson"
+     ],
+     "p": 0.4003,
+     "pid": "4395702",
+     "player": "Isaiah Joe",
+     "price": 0.34,
+     "rule": "spotter_hold",
+     "rung": 3,
+     "start": "2026-11-22T20:30:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "DET",
+     "ticker": "KXNBA3PT-26NOV22DETATL-DETIJOESF-3",
+     "unit": "threes",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.39,
+     "edge": 0.0575,
+     "entered": "2026-11-22T19:15:25.306396+00:00",
+     "game": "DET @ ATL",
+     "game_id": "401910029",
+     "id": "spotter_hold:KXNBA3PT-26NOV22DETATL-ATLNALEXANDERWALKER7-4",
+     "lead_min": 74.6,
+     "night": "2026-11-22",
+     "p": 0.4575,
+     "pid": "4278039",
+     "player": "Nickeil Alexander-Walker",
+     "price": 0.4,
+     "rule": "spotter_hold",
+     "rung": 4,
+     "start": "2026-11-22T20:30:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "ATL",
+     "ticker": "KXNBA3PT-26NOV22DETATL-ATLNALEXANDERWALKER7-4",
+     "unit": "threes",
+     "why": "shots up on last season"
     }
    ]
   },
@@ -4491,6 +4719,101 @@
      "team": "MEM",
      "ticker": "KXNBAREB-26NOV21MEMMIN-MEMTHENDRICKS22-6",
      "unit": "rebounds",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.39,
+     "entered": "2026-11-22T19:15:25.306396+00:00",
+     "game": "DET @ ATL",
+     "game_id": "401910029",
+     "id": "spotter_hold_blind:KXNBA3PT-26NOV22DETATL-ATLAWIGGINS2-3",
+     "lead_min": 74.6,
+     "matches": "spotter_hold:KXNBA3PT-26NOV22DETATL-DETCCUNNINGHAM2-3",
+     "night": "2026-11-22",
+     "p": null,
+     "pid": "4397183",
+     "player": "Aaron Wiggins",
+     "price": 0.4,
+     "rule": "spotter_hold_blind",
+     "rung": 3,
+     "start": "2026-11-22T20:30:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "ATL",
+     "ticker": "KXNBA3PT-26NOV22DETATL-ATLAWIGGINS2-3",
+     "unit": "threes",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.35,
+     "entered": "2026-11-22T19:15:25.306396+00:00",
+     "game": "DET @ ATL",
+     "game_id": "401910029",
+     "id": "spotter_hold_blind:KXNBA3PT-26NOV22DETATL-DETKHUERTERSF-3",
+     "lead_min": 74.6,
+     "matches": "spotter_hold:KXNBA3PT-26NOV22DETATL-DETJCOLLINS20-2",
+     "night": "2026-11-22",
+     "outs": [
+      "Duncan Robinson"
+     ],
+     "p": null,
+     "pid": "4066372",
+     "player": "Kevin Huerter",
+     "price": 0.36,
+     "rule": "spotter_hold_blind",
+     "rung": 3,
+     "start": "2026-11-22T20:30:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "DET",
+     "ticker": "KXNBA3PT-26NOV22DETATL-DETKHUERTERSF-3",
+     "unit": "threes",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.33,
+     "entered": "2026-11-22T19:15:25.306396+00:00",
+     "game": "DET @ ATL",
+     "game_id": "401910029",
+     "id": "spotter_hold_blind:KXNBA3PT-26NOV22DETATL-ATLDDANIELS5-1",
+     "lead_min": 74.6,
+     "matches": "spotter_hold:KXNBA3PT-26NOV22DETATL-DETIJOESF-3",
+     "night": "2026-11-22",
+     "p": null,
+     "pid": "4869342",
+     "player": "Dyson Daniels",
+     "price": 0.34,
+     "rule": "spotter_hold_blind",
+     "rung": 1,
+     "start": "2026-11-22T20:30:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "ATL",
+     "ticker": "KXNBA3PT-26NOV22DETATL-ATLDDANIELS5-1",
+     "unit": "threes",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.37,
+     "entered": "2026-11-22T19:15:25.306396+00:00",
+     "game": "DET @ ATL",
+     "game_id": "401910029",
+     "id": "spotter_hold_blind:KXNBAAST-26NOV22DETATL-ATLJJOHNSON1-8",
+     "lead_min": 74.6,
+     "matches": "spotter_hold:KXNBA3PT-26NOV22DETATL-ATLNALEXANDERWALKER7-4",
+     "night": "2026-11-22",
+     "p": null,
+     "pid": "4701230",
+     "player": "Jalen Johnson",
+     "price": 0.38,
+     "rule": "spotter_hold_blind",
+     "rung": 8,
+     "start": "2026-11-22T20:30:00+00:00",
+     "stat": "ast",
+     "status": "open",
+     "team": "ATL",
+     "ticker": "KXNBAAST-26NOV22DETATL-ATLJJOHNSON1-8",
+     "unit": "assists",
      "why": "drawn at random from this game's rungs at about the pick's price"
     }
    ]
@@ -5540,6 +5863,111 @@
      "ticker": "KXNBAPTS-26NOV21PORNYK-PORDAVDIJA8-25",
      "unit": "points",
      "why": "a steady player in this stat"
+    },
+    {
+     "bid": 0.47,
+     "edge": 0.0653,
+     "entered": "2026-11-22T19:15:25.306396+00:00",
+     "game": "DET @ ATL",
+     "game_id": "401910029",
+     "id": "spotter_spike:KXNBAPTS-26NOV22DETATL-DETIJOESF-10",
+     "lead_min": 74.6,
+     "night": "2026-11-22",
+     "outs": [
+      "Duncan Robinson"
+     ],
+     "p": 0.5653,
+     "pid": "4395702",
+     "player": "Isaiah Joe",
+     "price": 0.48,
+     "rule": "spotter_spike",
+     "rung": 10,
+     "start": "2026-11-22T20:30:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.96,
+     "team": "DET",
+     "ticker": "KXNBAPTS-26NOV22DETATL-DETIJOESF-10",
+     "unit": "points",
+     "why": "minutes down on last season"
+    },
+    {
+     "bid": 0.43,
+     "edge": 0.0514,
+     "entered": "2026-11-22T19:15:25.306396+00:00",
+     "game": "DET @ ATL",
+     "game_id": "401910029",
+     "id": "spotter_spike:KXNBAPTS-26NOV22DETATL-DETKHUERTERSF-15",
+     "lead_min": 74.6,
+     "night": "2026-11-22",
+     "outs": [
+      "Duncan Robinson"
+     ],
+     "p": 0.5514,
+     "pid": "4066372",
+     "player": "Kevin Huerter",
+     "price": 0.44,
+     "rule": "spotter_spike",
+     "rung": 15,
+     "start": "2026-11-22T20:30:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.88,
+     "team": "DET",
+     "ticker": "KXNBAPTS-26NOV22DETATL-DETKHUERTERSF-15",
+     "unit": "points",
+     "why": "his projection is below the price"
+    },
+    {
+     "bid": 0.31,
+     "edge": 0.048,
+     "entered": "2026-11-22T19:15:25.306396+00:00",
+     "game": "DET @ ATL",
+     "game_id": "401910029",
+     "id": "spotter_spike:KXNBAPTS-26NOV22DETATL-DETCCUNNINGHAM2-30",
+     "lead_min": 74.6,
+     "night": "2026-11-22",
+     "outs": [
+      "Duncan Robinson"
+     ],
+     "p": 0.548,
+     "pid": "4432166",
+     "player": "Cade Cunningham",
+     "price": 0.32,
+     "rule": "spotter_spike",
+     "rung": 30,
+     "start": "2026-11-22T20:30:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.64,
+     "team": "DET",
+     "ticker": "KXNBAPTS-26NOV22DETATL-DETCCUNNINGHAM2-30",
+     "unit": "points",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.48,
+     "edge": 0.0333,
+     "entered": "2026-11-22T19:15:25.306396+00:00",
+     "game": "DET @ ATL",
+     "game_id": "401910029",
+     "id": "spotter_spike:KXNBAREB-26NOV22DETATL-ATLNALEXANDERWALKER7-4",
+     "lead_min": 74.6,
+     "night": "2026-11-22",
+     "p": 0.5333,
+     "pid": "4278039",
+     "player": "Nickeil Alexander-Walker",
+     "price": 0.49,
+     "rule": "spotter_spike",
+     "rung": 4,
+     "start": "2026-11-22T20:30:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "target": 0.98,
+     "team": "ATL",
+     "ticker": "KXNBAREB-26NOV22DETATL-ATLNALEXANDERWALKER7-4",
+     "unit": "rebounds",
+     "why": "a hot run the price has followed up"
     }
    ]
   },
@@ -6590,23 +7018,110 @@
      "ticker": "KXNBAPRA-26NOV21PORNYK-PORDLILLARD0-30",
      "unit": "points+rebounds+assists",
      "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.45,
+     "entered": "2026-11-22T19:15:25.306396+00:00",
+     "game": "DET @ ATL",
+     "game_id": "401910029",
+     "id": "spotter_spike_blind:KXNBAREB-26NOV22DETATL-ATLJJOHNSON1-10",
+     "lead_min": 74.6,
+     "matches": "spotter_spike:KXNBAPTS-26NOV22DETATL-DETIJOESF-10",
+     "night": "2026-11-22",
+     "p": null,
+     "pid": "4701230",
+     "player": "Jalen Johnson",
+     "price": 0.46,
+     "rule": "spotter_spike_blind",
+     "rung": 10,
+     "start": "2026-11-22T20:30:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "target": 0.92,
+     "team": "ATL",
+     "ticker": "KXNBAREB-26NOV22DETATL-ATLJJOHNSON1-10",
+     "unit": "rebounds",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.42,
+     "entered": "2026-11-22T19:15:25.306396+00:00",
+     "game": "DET @ ATL",
+     "game_id": "401910029",
+     "id": "spotter_spike_blind:KXNBAPRA-26NOV22DETATL-DETATHOMPSON9-25",
+     "lead_min": 74.6,
+     "matches": "spotter_spike:KXNBAPTS-26NOV22DETATL-DETKHUERTERSF-15",
+     "night": "2026-11-22",
+     "outs": [
+      "Duncan Robinson"
+     ],
+     "p": null,
+     "pid": "4684742",
+     "player": "Ausar Thompson",
+     "price": 0.45,
+     "rule": "spotter_spike_blind",
+     "rung": 25,
+     "start": "2026-11-22T20:30:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "target": 0.9,
+     "team": "DET",
+     "ticker": "KXNBAPRA-26NOV22DETATL-DETATHOMPSON9-25",
+     "unit": "points+rebounds+assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.33,
+     "entered": "2026-11-22T19:15:25.306396+00:00",
+     "game": "DET @ ATL",
+     "game_id": "401910029",
+     "id": "spotter_spike_blind:KXNBA3PT-26NOV22DETATL-ATLDDANIELS5-1",
+     "lead_min": 74.6,
+     "matches": "spotter_spike:KXNBAPTS-26NOV22DETATL-DETCCUNNINGHAM2-30",
+     "night": "2026-11-22",
+     "p": null,
+     "pid": "4869342",
+     "player": "Dyson Daniels",
+     "price": 0.34,
+     "rule": "spotter_spike_blind",
+     "rung": 1,
+     "start": "2026-11-22T20:30:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "target": 0.68,
+     "team": "ATL",
+     "ticker": "KXNBA3PT-26NOV22DETATL-ATLDDANIELS5-1",
+     "unit": "threes",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.45,
+     "entered": "2026-11-22T19:15:25.306396+00:00",
+     "game": "DET @ ATL",
+     "game_id": "401910029",
+     "id": "spotter_spike_blind:KXNBAREB-26NOV22DETATL-ATLJJOHNSON1-10",
+     "lead_min": 74.6,
+     "matches": "spotter_spike:KXNBAREB-26NOV22DETATL-ATLNALEXANDERWALKER7-4",
+     "night": "2026-11-22",
+     "p": null,
+     "pid": "4701230",
+     "player": "Jalen Johnson",
+     "price": 0.46,
+     "rule": "spotter_spike_blind",
+     "rung": 10,
+     "start": "2026-11-22T20:30:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "target": 0.92,
+     "team": "ATL",
+     "ticker": "KXNBAREB-26NOV22DETATL-ATLJJOHNSON1-10",
+     "unit": "rebounds",
+     "why": "drawn at random from this game's rungs at about the pick's price"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-21T01:00:29.569743+00:00",
-   "box": 0,
-   "due": 0,
-   "new": 0
-  },
-  {
-   "at": "2026-11-21T01:15:32.692958+00:00",
-   "box": 0,
-   "due": 1,
-   "new": 0
-  },
   {
    "at": "2026-11-21T01:30:25.925618+00:00",
    "box": 0,
@@ -6900,6 +7415,18 @@
    "box": 0,
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-22T19:00:30.347733+00:00",
+   "box": 0,
+   "due": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-22T19:15:25.306396+00:00",
+   "box": 0,
+   "due": 1,
+   "new": 18
   }
  ],
  "schedule": [
