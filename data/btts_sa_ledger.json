@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-22T20:31:42.190710+00:00",
+ "last_run": "2026-11-22T21:01:40.809679+00:00",
  "rules": {
   "NO": {
    "picks": [
@@ -313,11 +313,14 @@
      "league_key": "BRA",
      "logged": "2026-11-22T17:31:27.977408+00:00",
      "match": "Athletico-PR v Remo",
+     "payout": 0.0,
      "price": 0.48,
+     "profit": -100.0,
      "rule": "NO",
+     "settled": "2026-11-22T21:01:40.809679+00:00",
      "side": "no",
      "start": "2026-11-22T19:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXBRASILEIROBTTS-26NOV22CAPCR-BTTS",
      "why": "Brazil BTTS NO 0.48"
     },
@@ -371,6 +374,23 @@
      "status": "open",
      "ticker": "KXARGPREMDIVBTTS-26NOV22RIVLAN-BTTS",
      "why": "Argentina BTTS NO 0.56"
+    },
+    {
+     "ask": 0.38,
+     "bid": 0.37,
+     "event": "KXBRASILEIROBTTS-26NOV22RBBVDG",
+     "id": "NO:KXBRASILEIROBTTS-26NOV22RBBVDG",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-22T21:01:40.809679+00:00",
+     "match": "Red Bull Bragantino v Vasco da Gama",
+     "price": 0.38,
+     "rule": "NO",
+     "side": "no",
+     "start": "2026-11-22T22:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV22RBBVDG-BTTS",
+     "why": "Brazil BTTS NO 0.38"
     }
    ]
   },
@@ -685,11 +705,14 @@
      "league_key": "BRA",
      "logged": "2026-11-22T17:31:27.977408+00:00",
      "match": "Athletico-PR v Remo",
+     "payout": 1.0,
      "price": 0.53,
+     "profit": 82.67,
      "rule": "YES",
+     "settled": "2026-11-22T21:01:40.809679+00:00",
      "side": "yes",
      "start": "2026-11-22T19:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXBRASILEIROBTTS-26NOV22CAPCR-BTTS",
      "why": "Brazil BTTS YES 0.53"
     },
@@ -743,18 +766,28 @@
      "status": "open",
      "ticker": "KXARGPREMDIVBTTS-26NOV22RIVLAN-BTTS",
      "why": "Argentina BTTS YES 0.45"
+    },
+    {
+     "ask": 0.63,
+     "bid": 0.62,
+     "event": "KXBRASILEIROBTTS-26NOV22RBBVDG",
+     "id": "YES:KXBRASILEIROBTTS-26NOV22RBBVDG",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-22T21:01:40.809679+00:00",
+     "match": "Red Bull Bragantino v Vasco da Gama",
+     "price": 0.63,
+     "rule": "YES",
+     "side": "yes",
+     "start": "2026-11-22T22:30Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV22RBBVDG-BTTS",
+     "why": "Brazil BTTS YES 0.63"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-21T18:01:49.766569+00:00",
-   "due": 1,
-   "matched": 1,
-   "new": 2,
-   "quoted": 1
-  },
   {
    "at": "2026-11-21T18:16:51.097749+00:00",
    "due": 1,
@@ -1104,6 +1137,13 @@
    "matched": 2,
    "new": 2,
    "quoted": 2
+  },
+  {
+   "at": "2026-11-22T21:01:40.809679+00:00",
+   "due": 3,
+   "matched": 3,
+   "new": 2,
+   "quoted": 3
   }
  ],
  "schedule": [
