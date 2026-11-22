@@ -234,6 +234,9 @@ ECON_NC_NO_RETIRED_WHY = ("Retired 2026-11-06 by Olu: no edge at 20 settled cont
 COMMOD_NC_NO_RETIRED_WHY = ("Retired 2026-11-08 by Olu: behind its prices at 13 market-days — 12–1, 12 won v 12.2 priced, "
                             "−2.6% after fees. Never in Production. No new entries from 2026-11-08; its rows stay on file and "
                             "its open bets still settle.")
+CORNERS_TOTAL_UNDER_RETIRED_WHY = ("Retired 2026-11-22 by Olu: no edge at 30 settled matches — 11–19, 11 won v 11.4 priced, −15.7% after fees. It was in "
+                                   "Production 2026-10-15 to 2026-10-27, paper after that. No new entries from 2026-11-22; its rows stay on file and its "
+                                   "open bets still settle.")
 COMMOD_FAV_BAND_RETIRED_WHY = ("Retired 2026-11-22 by Olu, and pulled from Production (a trial since 2026-11-12). Its fresh live record counted nothing: "
                                "in the 8 trading days from 2026-11-12 the follower placed no order, because every paper pick failed its own gates by the "
                                "time it read the book (the ask had left the 70-80c band at 81-84c, 85c with the fee, a 7c spread, 12 of 25 contracts, "
@@ -1428,7 +1431,8 @@ SOURCES = {
              "highest model edge after fees, lower No ask then ticker on ties; first logged selection stays locked."),
     "corners_total_under": dict(
         label="Corners total under (No, one rung a match, 5 a day, no Champions League)", kind="Rule",
-        connected=True, site="edge-machine", sports=["soccer_corners"], baseline="population",
+        connected=True, site="edge-machine", sports=[], baseline="population",
+        retired_sports={"soccer_corners": CORNERS_TOTAL_UNDER_RETIRED_WHY},
         one_per_corners_fixture=True, day_cap=5,
         note="REGISTERED 2026-10-15 by Olu, before it logged anything; a fresh record split from "
              "corners_under. MATCH-TOTAL corner rungs only ('N+ corners'), every league the corners "

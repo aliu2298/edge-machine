@@ -18,6 +18,9 @@ import corners_fav_no as C
 import corners_fav_no_build as CB
 import sandbox_audit
 import sandbox_sources as S
+import sport_rows_testlib as _SRT_CTU
+_KEEP_CTU = _SRT_CTU.running_again("corners_total_under|soccer_corners")   # retired 2026-11-22 (Olu): replayed here, test_retired_2026_11_22 holds the retirement
+_KEEP_CTU.__enter__()
 import sandbox_track as T
 
 FAILS = []

@@ -17,6 +17,9 @@ from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 
 import sandbox_sources as S
+import sport_rows_testlib as _SRT_CTU
+_KEEP_CTU = _SRT_CTU.running_again("corners_total_under|soccer_corners")   # retired 2026-11-22 (Olu): replayed here, test_retired_2026_11_22 holds the retirement
+_KEEP_CTU.__enter__()
 import sport_rows_testlib as _SRT_ERE
 _ERE_CM = _SRT_ERE.running_again("ere_draw|soccer", "liga_u15_dog|soccer_o15")
 _ERE_CM.__enter__()        # both retired 2026-11-12 (test_retired_2026_11_12.py): this script replays the lanes from before
