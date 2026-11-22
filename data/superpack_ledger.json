@@ -5476,7 +5476,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-22T19:25:30.797457+00:00",
+ "last_run": "2026-11-22T19:34:49.945838+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -14897,14 +14897,14 @@
    ],
    "pid": "[\"sandbox\", \"liga_btts_even\", [\"liga_btts_even:KXLALIGABTTS-26NOV22OSAMCF-BTTS\", \"a\"]]",
    "price": 0.52,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_btts",
-   "settled": null,
+   "settled": "2026-11-22T19:34:08+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXWTI-26NOV1814-T80.49",
