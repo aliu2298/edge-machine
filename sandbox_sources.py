@@ -234,6 +234,9 @@ ECON_NC_NO_RETIRED_WHY = ("Retired 2026-11-06 by Olu: no edge at 20 settled cont
 COMMOD_NC_NO_RETIRED_WHY = ("Retired 2026-11-08 by Olu: behind its prices at 13 market-days — 12–1, 12 won v 12.2 priced, "
                             "−2.6% after fees. Never in Production. No new entries from 2026-11-08; its rows stay on file and "
                             "its open bets still settle.")
+CRYPTO_FAV_BAND_V2_RETIRED_WHY = ("Retired 2026-11-22 by Olu: no edge at 10 market-days — 6–4, 6 won v 7.5 priced, −16.8% after fees. It is the rule retired "
+                                  "2026-11-03 (15–8, −7.8%) run again, and the two Sandbox records together are 21–12 v about 24.7 priced. Never in "
+                                  "Production. No new entries from 2026-11-22; its rows stay on file and its open bets still settle.")
 # Pinnacle's goal total v Kalshi's (Olu, 2026-11-20): pre-registered 2026-09-22, it never made a pick (0 of 30 on every scope), and the
 # same test on the match winner found 0 of 57 quotes at 3pp. It was also the only thing still spending paced Odds API credit, and its
 # "no paced credit left for this run" skips kept the Soccer card on Attention. No new entries, no paid call; its note and (empty) record stay.
@@ -1526,7 +1529,8 @@ SOURCES = {
              "consecutive strikes, which is a stale book, not a signal."),
     "crypto_fav_band_v2": dict(
         label="Crypto favourite band v2 (Yes 0.70-0.80, 3 hours to the close)", kind="Rule",
-        connected=True, site="edge-machine", sports=["crypto_fav"],
+        connected=True, site="edge-machine", sports=[],
+        retired_sports={"crypto_fav": CRYPTO_FAV_BAND_V2_RETIRED_WHY},
         baseline="favourite_population", favourite_side="a", one_per_coin_close=True,
         note="PRE-REGISTERED 2026-11-12 (docs/prereg_crypto_fav_band_v2_2026-11-12.md), before it logged anything, on a FRESH record, Sandbox "
              "paper only. The same rule as crypto_fav_band, unchanged: back the YES on a Kalshi coin-directional rung priced 0.70-0.80 "
