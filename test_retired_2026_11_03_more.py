@@ -90,7 +90,7 @@ cb = CB.build()
 k, cfold = fold_of(cb)
 check("in the fold, not above it", ('data-source="crypto_fav_band_below_60"' in cfold, 'data-source="crypto_fav_band_below_60"' in cb[:k]),
       (True, False))
-check("the live coin lanes (the Yes twin's v2 joined 2026-11-12)", CB.live_lanes(), ("crypto_fav_band_below", "crypto_fav_band_v2"))
+check("the live coin lanes (the Yes twin's v2 joined 2026-11-12 and was retired 2026-11-22)", CB.live_lanes(), ("crypto_fav_band_below",))
 check("the crypto window waits only on the lanes still logging (a retired sibling never enters)",
       "S.SOURCES[n].get(\"sports\")" in inspect.getsource(W.entered_series), True)
 led = {"quotes": [dict(source=n, bet=True, market_id="KXBTCD-26NOV0317-T70000") for n in ("crypto_fav_band_below", "crypto_fav_band_v2")]}

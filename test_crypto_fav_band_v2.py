@@ -31,9 +31,14 @@ def rung(series, strike, price, size=200, start=None):
                 market={"yes_bid_dollars": price - 0.01, "yes_ask_dollars": price, "yes_ask_size_fp": size})
 
 
-print("registered: a live Sandbox paper lane, the old source still retired")
+print("registered: retired 2026-11-22 (Olu); the machinery below replays it in-process")
 m = S.SOURCES["crypto_fav_band_v2"]
-check("v2 logs crypto_fav and is not retired", (m["sports"], "retired_sports" in m), (["crypto_fav"], False))
+check("v2 is retired 2026-11-22 with its record in the reason", (m["sports"], m["retired_sports"]), ([], {"crypto_fav": S.CRYPTO_FAV_BAND_V2_RETIRED_WHY}))
+check("the reason names the date, the record and the rule it re-ran", all(x in S.CRYPTO_FAV_BAND_V2_RETIRED_WHY for x in ("Retired 2026-11-22 by Olu", "6–4", "−16.8%", "21–12", "15–8")), True)
+_REPLAY_V2 = sport_rows_testlib.running_again("crypto_fav_band_v2|crypto_fav")
+_REPLAY_V2.__enter__()          # the whole file replays v2 as registered
+m = S.SOURCES["crypto_fav_band_v2"]
+check("v2 logs crypto_fav and is not retired", (m["sports"], "retired_sports" in m and bool(m["retired_sports"])), (["crypto_fav"], False))
 check("the old source stays retired, with its own reason (its record is untouched)", (S.SOURCES["crypto_fav_band"]["sports"], list(S.SOURCES["crypto_fav_band"]["retired_sports"])),
       ([], ["crypto_fav"]))
 check("v2 has a fetcher in the run", "crypto_fav_band_v2" in S.FETCHERS if hasattr(S, "FETCHERS") else callable(S.fetch_crypto_fav_band_v2), True)

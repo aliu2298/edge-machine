@@ -444,6 +444,12 @@ PAIR_OVERRIDES = {
     # 2026-11-08 removal, which stands as the record it left on.
     # 2026-11-22, as asked (Olu: "pull commod_fav_band from Production and retire it"): OUT again, and retired (no new Sandbox entries). Its
     # 2026-11-12 listing is removed below (PAIR_REMOVALS), the record it ran on stays on the page.
+    # 2026-11-22, as asked (Olu, typed in the Production Moves session): two promotions, $1 each, fresh live records from the first bet after this date.
+    #   o15_ranked|soccer_o15_intl — the Internationals over 1.5 (the day's top 2 mismatches under 0.80), back in for the March window. Its Oct 1 - Nov 2
+    #   Production run (7 live bets, 5-2) stays as history; re-listed with a date after its 2026-11-02 removal, which stands as the record it left on.
+    #   ere_o15|soccer_o15 — Eredivisie over 1.5, underdog priced 3.21-4.00 (3 paper bets). Gate waived by Olu. Both gate records carry the waiver.
+    "o15_ranked|soccer_o15_intl": dict(moved_on="2026-11-22", production_at=None),
+    "ere_o15|soccer_o15": dict(moved_on="2026-11-22", production_at=None),
     #   commod_fav_band|commodities_fav — OUT 2026-11-08, back to the Sandbox, as asked (Olu): live 4-2 at -13.2% since the stake raise. Whole record
     #   kept (PAIR_REMOVALS); it keeps collecting in the Sandbox, and its live fills stay on the Production page as history.
     # 2026-10-11, as asked: SIX more rules, EARLY like the rest, on their whole records at
