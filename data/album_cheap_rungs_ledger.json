@@ -906,15 +906,17 @@
     }
    ],
    "logged": "2026-10-27T03:09:42.883824+00:00",
-   "payout": null,
+   "payout": 0.0,
    "pnl": 0.1405,
    "price": 0.1,
    "roi": 1.3214,
    "roi_2x": 0.8551,
+   "roi_held": -1.0,
+   "settled": "2026-11-22T22:01:11.061625+00:00",
    "side": "yes",
    "spread": 0.04,
    "spread_cost": null,
-   "status": "filled",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Above 70K"
   },
@@ -951,15 +953,17 @@
     }
    ],
    "logged": "2026-10-27T03:09:42.883824+00:00",
-   "payout": null,
+   "payout": 0.0,
    "pnl": 0.0838,
    "price": 0.06,
    "roi": 1.311,
    "roi_2x": 0.8476,
+   "roi_held": -1.0,
+   "settled": "2026-11-22T22:01:11.061625+00:00",
    "side": "yes",
    "spread": 0.04,
    "spread_cost": null,
-   "status": "filled",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Above 80K"
   },
@@ -996,15 +1000,17 @@
     }
    ],
    "logged": "2026-10-27T03:09:42.883824+00:00",
-   "payout": null,
+   "payout": 0.0,
    "pnl": 0.0557,
    "price": 0.04,
    "roi": 1.3058,
    "roi_2x": 0.8439,
+   "roi_held": -1.0,
+   "settled": "2026-11-22T22:01:11.061625+00:00",
    "side": "yes",
    "spread": 0.03,
    "spread_cost": null,
-   "status": "filled",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Above 90K"
   },
@@ -1041,15 +1047,17 @@
     }
    ],
    "logged": "2026-10-27T03:09:42.883824+00:00",
-   "payout": null,
+   "payout": 0.0,
    "pnl": 0.0557,
    "price": 0.04,
    "roi": 1.3058,
    "roi_2x": 0.8439,
+   "roi_held": -1.0,
+   "settled": "2026-11-22T22:01:11.061625+00:00",
    "side": "yes",
    "spread": 0.03,
    "spread_cost": null,
-   "status": "filled",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Above 100K"
   },
@@ -1072,22 +1080,29 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.08
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.12
     }
    ],
    "logged": "2026-10-27T03:09:42.883824+00:00",
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.0427,
    "price": 0.04,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-11-22T22:01:11.061625+00:00",
    "side": "yes",
    "spread": 0.03,
    "spread_cost": 0.03,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 25.0,
    "word": "Above 125K"
   },
@@ -3804,22 +3819,29 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.22
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.33
     }
    ],
    "logged": "2026-11-10T22:00:53.120639+00:00",
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.1169,
    "price": 0.11,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-11-22T22:01:11.061625+00:00",
    "side": "yes",
    "spread": 0.04,
    "spread_cost": null,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 0.0,
    "word": "Above 400K"
   }
@@ -3851,9 +3873,9 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:42.883824+00:00"
  },
  "lane": "album_cheap_rungs",
- "last_success": "2026-11-22T21:01:04.770610+00:00",
+ "last_success": "2026-11-22T22:01:11.061625+00:00",
  "observations": {
-  "at": "2026-11-22T21:01:04.770610+00:00",
+  "at": "2026-11-22T22:01:11.061625+00:00",
   "checking": 0,
   "entered": 0,
   "events": 23,

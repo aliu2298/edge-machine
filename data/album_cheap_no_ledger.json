@@ -1308,22 +1308,29 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.3
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.45
     }
    ],
    "logged": "2026-11-10T22:00:55.277706+00:00",
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.1589,
    "price": 0.15,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-11-22T22:01:12.046602+00:00",
    "side": "no",
    "spread": 0.08,
    "spread_cost": 0.04,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 1.0,
    "word": "Above 20K"
   },
@@ -1360,22 +1367,29 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.16
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.24
     }
    ],
    "logged": "2026-11-10T22:00:55.277706+00:00",
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.0852,
    "price": 0.08,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-11-22T22:01:12.046602+00:00",
    "side": "no",
    "spread": 0.08,
    "spread_cost": 0.05,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 2.0,
    "word": "Above 40K"
   },
@@ -1412,22 +1426,29 @@
    "legs": [
     {
      "multiple": 2.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.28
     },
     {
      "multiple": 3.0,
+     "settled_px": 0.0,
      "share": 0.5,
      "target": 0.42
     }
    ],
    "logged": "2026-11-10T22:00:55.277706+00:00",
-   "payout": null,
+   "payout": 0.0,
+   "pnl": -0.1484,
    "price": 0.14,
+   "roi": -1.0,
+   "roi_2x": -1.0,
+   "roi_held": -1.0,
+   "settled": "2026-11-22T22:01:12.046602+00:00",
    "side": "no",
    "spread": 0.08,
    "spread_cost": 0.08,
-   "status": "open",
+   "status": "settled",
    "traded_to_entry": 2.0,
    "word": "Above 60K"
   },
@@ -1562,9 +1583,9 @@
   "KXALBUMEQUIV-WAT26OCT29": "2026-10-27T03:09:50.419359+00:00"
  },
  "lane": "album_cheap_no",
- "last_success": "2026-11-22T21:01:05.469310+00:00",
+ "last_success": "2026-11-22T22:01:12.046602+00:00",
  "observations": {
-  "at": "2026-11-22T21:01:05.469310+00:00",
+  "at": "2026-11-22T22:01:12.046602+00:00",
   "checking": 0,
   "entered": 0,
   "events": 23,
