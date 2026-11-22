@@ -1,7 +1,7 @@
 {
- "board_built_at": "2026-11-22T21:31:15+00:00",
+ "board_built_at": "2026-11-22T21:52:31+00:00",
  "collector_error": null,
- "collector_healthy": false,
+ "collector_healthy": true,
  "corners_selections": {},
  "first_publish_min": 45,
  "late_publication_skipped": 0,
@@ -215,6 +215,41 @@
    "source": "finance_spx_nc_no",
    "sport": "finance_daily",
    "status": "hit"
+  },
+  "2026-11-22|KXDIESELD-26NOV22-T5.840|Above $5.840 at the close \u00b7 Near-certain \u00b7 last hour \u00b7 YES": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "yes"
+   },
+   "date": "2026-11-22",
+   "edge_at_log": null,
+   "first_seen": "2026-11-22",
+   "headline": "Above $5.840 at the close",
+   "home": null,
+   "id": "2026-11-22|KXDIESELD-26NOV22-T5.840|Above $5.840 at the close \u00b7 Near-certain \u00b7 last hour \u00b7 YES",
+   "kickoff": "2026-11-22T04:59Z",
+   "lane": "production",
+   "league": "Econ Daily",
+   "match": "Diesel price (daily)",
+   "pair": "econ_nc_yes|econ_daily",
+   "price_at_log": 0.98,
+   "published_at": "2026-11-22T21:52:31+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Above $5.840 at the close",
+    "event": "KXDIESELD-26NOV22",
+    "market": "KXDIESELD-26NOV22-T5.840",
+    "outcome": "Above $5.840",
+    "outcome_side": "yes",
+    "price_at_log": 0.98,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "econ_nc_yes:KXDIESELD-26NOV22-T5.840",
+   "source": "econ_nc_yes",
+   "sport": "econ_daily",
+   "status": "hit"
   }
  },
  "pairs": {
@@ -225,18 +260,18 @@
    "ready_at": "2026-10-20T05:00:00+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 3,
+    "leads": 4,
     "problem": null,
-    "routed": 3,
+    "routed": 4,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 12,
-   "sandbox_roi": 0.0476,
-   "sandbox_roi_fee": 0.0443,
+   "sandbox_n": 13,
+   "sandbox_roi": 0.0455,
+   "sandbox_roi_fee": 0.0423,
    "timing": {
     "late": [],
     "timed": 0,
@@ -273,5 +308,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-22T21:31:15+00:00"
+ "updated_at": "2026-11-22T21:52:31+00:00"
 }
