@@ -21,6 +21,8 @@ import sport_rows_testlib
 # before then, so both run again for this script only; test_retired_2026_11_03.py holds the retirement.
 _REPLAY = sport_rows_testlib.running_again(*S.CRYPTO_RETIRED_ON_2026_11_03)   # kept: a dropped handle restores
 _REPLAY.__enter__()
+_REPLAY2 = sport_rows_testlib.running_again("commod_fav_band|commodities_fav")   # retired 2026-11-22 (Olu): replayed here, test_retired_2026_11_22 holds the retirement
+_REPLAY2.__enter__()
 import sandbox_track as T
 
 FAILS = []

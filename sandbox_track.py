@@ -442,7 +442,8 @@ PAIR_OVERRIDES = {
     # (the Production page counts it from the first bet after this date; its Oct 9 - Nov 8 live run, 21-4 +11.5%, stays on the page as history). Gate:
     # honest +8.2% on 64 (the promotion gate); Olu's waiver of the evidence test is on the lane's gate record. Re-listed with a date after its
     # 2026-11-08 removal, which stands as the record it left on.
-    "commod_fav_band|commodities_fav": dict(moved_on="2026-11-12", production_at=None),
+    # 2026-11-22, as asked (Olu: "pull commod_fav_band from Production and retire it"): OUT again, and retired (no new Sandbox entries). Its
+    # 2026-11-12 listing is removed below (PAIR_REMOVALS), the record it ran on stays on the page.
     # 2026-11-22, as asked (Olu, typed in the Production Moves session): two promotions, $1 each, fresh live records from the first bet after this date.
     #   o15_ranked|soccer_o15_intl — the Internationals over 1.5 (the day's top 2 mismatches under 0.80), back in for the March window. Its Oct 1 - Nov 2
     #   Production run (7 live bets, 5-2) stays as history; re-listed with a date after its 2026-11-02 removal, which stands as the record it left on.
@@ -575,7 +576,8 @@ PAIR_REMOVALS = {
     # 2026-11-08, as asked (Olu): the commodities favourite band back to the Sandbox on its whole record, paper and still collecting. No
     # override is left for it (#176). Its live fills stay on the Production page (production_live.pulled_table); the follower is not told to
     # do anything: a pair outside the feed gets no new order, and what it holds settles on its own.
-    "commod_fav_band|commodities_fav": dict(removed_on="2026-11-08", keep_record=True),
+    "commod_fav_band|commodities_fav": dict(removed_on="2026-11-22", keep_record=True),
+    # (The 2026-11-08 removal above was replaced by this one: the pair was relisted 2026-11-12 and is removed again, for good.)
     # 2026-11-16, as asked (Olu): team 2+ form, Internationals scope, back to the Sandbox on its whole record (0 live bets since Nov 6, 1 paper pick). Paper and still
     # collecting. Its listing above stays as the record it left on; the follower refuses the pair by name.
     "team2_form_l10|soccer_team2_intl": dict(removed_on="2026-11-16", keep_record=True),

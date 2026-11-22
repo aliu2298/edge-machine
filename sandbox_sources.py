@@ -234,6 +234,11 @@ ECON_NC_NO_RETIRED_WHY = ("Retired 2026-11-06 by Olu: no edge at 20 settled cont
 COMMOD_NC_NO_RETIRED_WHY = ("Retired 2026-11-08 by Olu: behind its prices at 13 market-days — 12–1, 12 won v 12.2 priced, "
                             "−2.6% after fees. Never in Production. No new entries from 2026-11-08; its rows stay on file and "
                             "its open bets still settle.")
+COMMOD_FAV_BAND_RETIRED_WHY = ("Retired 2026-11-22 by Olu, and pulled from Production (a trial since 2026-11-12). Its fresh live record counted nothing: "
+                               "in the 8 trading days from 2026-11-12 the follower placed no order, because every paper pick failed its own gates by the "
+                               "time it read the book (the ask had left the 70-80c band at 81-84c, 85c with the fee, a 7c spread, 12 of 25 contracts, "
+                               "the window shut, one no-fill). Its paper record: 65 won, 19 lost over 84 bets on 30 market-days; its October live run "
+                               "stays on the page as history. No new entries from 2026-11-22; its rows stay on file and its open bets still settle.")
 CRYPTO_FAV_BAND_V2_RETIRED_WHY = ("Retired 2026-11-22 by Olu: no edge at 10 market-days — 6–4, 6 won v 7.5 priced, −16.8% after fees. It is the rule retired "
                                   "2026-11-03 (15–8, −7.8%) run again, and the two Sandbox records together are 21–12 v about 24.7 priced. Never in "
                                   "Production. No new entries from 2026-11-22; its rows stay on file and its open bets still settle.")
@@ -1673,7 +1678,8 @@ SOURCES = {
              "outcomes."),
     "commod_fav_band": dict(
         label="Commodities favourite band (Yes 0.70-0.80, 3 hours to the close)", kind="Rule",
-        connected=True, site="edge-machine", sports=["commodities_fav"],
+        connected=True, site="edge-machine", sports=[],
+        retired_sports={"commodities_fav": COMMOD_FAV_BAND_RETIRED_WHY},
         changes=[
             (
                 'AMENDMENT 2026-10-24 (Olu): at most ONE entry per close across KXGOLDD and KXSILVERD '

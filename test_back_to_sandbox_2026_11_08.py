@@ -18,8 +18,8 @@ def check(name, ok):
 
 
 K = "commod_fav_band|commodities_fav"
-check("commodities band: its Nov 8 removal stands as the record it left on, and it is re-listed 2026-11-12 (later), so it is a new promotion",
-      T.PAIR_REMOVALS[K] == dict(removed_on="2026-11-08", keep_record=True) and T.PAIR_OVERRIDES[K]["moved_on"] == "2026-11-12")
+check("commodities band: out 2026-11-08, re-listed 2026-11-12, then pulled and retired 2026-11-22 (Olu): the last removal stands and nothing lists it",
+      T.PAIR_REMOVALS[K] == dict(removed_on="2026-11-22", keep_record=True) and K not in T.PAIR_OVERRIDES)
 check("top-5 dip: back in the Sandbox 2026-11-08, back in Production 2026-11-12, out again 2026-11-16 (test_top5_dip_production.py), its first run kept as history",
       TD.ENDED_ON == "2026-11-16" and TD.FIRST_RUN == ("2026-11-05", "2026-11-08") and TD.MOVED_ON == "2026-11-12")
 
