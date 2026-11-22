@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-22T12:01:28+00:00",
+ "board_built_at": "2026-11-22T12:31:54+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sr_a2": true,
@@ -47,6 +47,43 @@
    "source": "sr_a6",
    "sport": "soccer_o25",
    "status": "hit"
+  },
+  "2026-11-22|Hull City|Brighton & Hove Albion|Under 2.5 goals \u00b7 EPL O\u2212D\u2212 v an O+ opponent \u00b7 under 2.5": {
+   "away": "Brighton & Hove Albion",
+   "bet": {
+    "kind": "total_lte",
+    "n": 2
+   },
+   "date": "2026-11-22",
+   "edge_at_log": null,
+   "first_seen": "2026-11-22",
+   "headline": "Under 2.5 goals",
+   "home": "Hull City",
+   "id": "2026-11-22|Hull City|Brighton & Hove Albion|Under 2.5 goals \u00b7 EPL O\u2212D\u2212 v an O+ opponent \u00b7 under 2.5",
+   "kickoff": "2026-11-22T14:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-22",
+   "last_seen_at": "2026-11-22T12:31:54+00:00",
+   "league": "Premier League",
+   "match": "Hull City v Brighton & Hove Albion",
+   "pair": "sr_a6|soccer_o25",
+   "price_at_log": 0.47,
+   "published_at": "2026-11-22T12:31:54+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 88,
+   "route": {
+    "claim": "Under 2.5 goals",
+    "event": "KXEPLTOTAL-26NOV22HULBRI",
+    "market": "KXEPLTOTAL-26NOV22HULBRI-3",
+    "outcome": "Over 2.5 goals scored",
+    "outcome_side": "no",
+    "price_at_log": 0.47,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_a6:KXEPLTOTAL-26NOV22HULBRI-3",
+   "source": "sr_a6",
+   "sport": "soccer_o25",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -107,9 +144,9 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 1,
+    "leads": 2,
     "problem": null,
-    "routed": 1,
+    "routed": 2,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -121,7 +158,7 @@
    "sandbox_roi_fee": 0.8065,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -205,5 +242,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-22T12:01:28+00:00"
+ "updated_at": "2026-11-22T12:31:54+00:00"
 }

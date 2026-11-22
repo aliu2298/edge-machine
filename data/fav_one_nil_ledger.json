@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-22T12:01:29.151414+00:00",
+ "last_run": "2026-11-22T12:31:55.589419+00:00",
  "registered": "2026-11-21",
  "rules": {
   "PB": {
@@ -44,6 +44,40 @@
      "ticker": "KXEPLSCORE-26NOV21TOTIPS-TOT1IPS0",
      "title": "Final score Tottenham Hotspur wins 1-0?",
      "why": "A6 pick it \u00b7 TOT 0.65 v IPS 0.15 \u00b7 fav 1-0 YES 0.09"
+    },
+    {
+     "ask": 0.12,
+     "ask_0_0": 0.06,
+     "ask_dog_1_0": 0.05,
+     "bid": 0.11,
+     "dog": "HUL",
+     "dog_price": 0.135,
+     "event": "KXEPLTOTAL-26NOV22HULBRI",
+     "fav": "BRI",
+     "fav_price": 0.645,
+     "id": "fav_one_nil:KXEPLTOTAL-26NOV22HULBRI",
+     "labels": {
+      "away": "O+D-",
+      "home": "O-D-"
+     },
+     "league": "Premier League",
+     "logged": "2026-11-22T12:31:55.589419+00:00",
+     "match": "Hull City v Brighton & Hove Albion",
+     "price": 0.12,
+     "rule": "PB",
+     "shadow": {
+      "sold": false,
+      "target": 0.24
+     },
+     "side": "yes",
+     "sources": [
+      "A6"
+     ],
+     "start": "2026-11-22T14:00Z",
+     "status": "open",
+     "ticker": "KXEPLSCORE-26NOV22HULBRI-HUL0BRI1",
+     "title": "Final score Brighton & Hove Albion wins 1-0?",
+     "why": "A6 pick it \u00b7 BRI 0.65 v HUL 0.14 \u00b7 fav 1-0 YES 0.12"
     }
    ]
   }
@@ -288,6 +322,12 @@
    "due": 0,
    "new": 0,
    "selected": 0
+  },
+  {
+   "at": "2026-11-22T12:31:55.589419+00:00",
+   "due": 1,
+   "new": 1,
+   "selected": 1
   }
  ],
  "version": "fav_one_nil-v1"
