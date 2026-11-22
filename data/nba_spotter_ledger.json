@@ -1,7 +1,7 @@
 {
  "box_through": "2026-11-22",
  "error": null,
- "last_run": "2026-11-22T21:30:31.704336+00:00",
+ "last_run": "2026-11-22T21:45:25.475733+00:00",
  "looks": {
   "401909305": {
    "at": "2026-11-20T22:45:25.302540+00:00",
@@ -577,6 +577,25 @@
    },
    "spread": 1.5,
    "usable": 146
+  },
+  "401910030": {
+   "at": "2026-11-22T21:45:25.475733+00:00",
+   "batch": 1,
+   "entered": {
+    "spotter_fade": 4,
+    "spotter_hold": 0,
+    "spotter_spike": 4
+   },
+   "game": "OKC @ MIA",
+   "night": "2026-11-22",
+   "out": 54,
+   "skipped": {
+    "no quote": 7,
+    "outside 5-60c": 75,
+    "wide": 5
+   },
+   "spread": null,
+   "usable": 142
   }
  },
  "nights": {
@@ -997,10 +1016,26 @@
   },
   "2026-11-22": {
    "spotter_fade": {
-    "n": 1,
+    "n": 5,
     "players": [
      [
       "4278562",
+      "pra"
+     ],
+     [
+      "3059319",
+      "pra"
+     ],
+     [
+      "3064482",
+      "pra"
+     ],
+     [
+      "4066261",
+      "pra"
+     ],
+     [
+      "4683778",
       "pra"
      ]
     ]
@@ -1027,7 +1062,7 @@
     ]
    },
    "spotter_spike": {
-    "n": 4,
+    "n": 8,
     "players": [
      [
       "4395702",
@@ -1044,6 +1079,22 @@
      [
       "4278039",
       "reb"
+     ],
+     [
+      "4278073",
+      "pts"
+     ],
+     [
+      "5174983",
+      "pts"
+     ],
+     [
+      "4683778",
+      "pts"
+     ],
+     [
+      "4900671",
+      "pts"
      ]
     ]
    }
@@ -1824,6 +1875,106 @@
      "unit": "points+rebounds+assists",
      "why": "minutes up on last season",
      "yes_ask": 0.55
+    },
+    {
+     "bid": 0.41,
+     "edge": 0.0977,
+     "entered": "2026-11-22T21:45:25.475733+00:00",
+     "game": "OKC @ MIA",
+     "game_id": "401910030",
+     "id": "spotter_fade:KXNBAPRA-26NOV22OKCMIA-MIAAWIGGINS22-15",
+     "lead_min": 74.6,
+     "night": "2026-11-22",
+     "p": 0.6477,
+     "pid": "3059319",
+     "player": "Andrew Wiggins",
+     "price": 0.59,
+     "rule": "spotter_fade",
+     "rung": 15,
+     "side": "no",
+     "start": "2026-11-22T23:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "MIA",
+     "ticker": "KXNBAPRA-26NOV22OKCMIA-MIAAWIGGINS22-15",
+     "unit": "points+rebounds+assists",
+     "why": "fewer shots than last season",
+     "yes_ask": 0.45
+    },
+    {
+     "bid": 0.48,
+     "edge": 0.0769,
+     "entered": "2026-11-22T21:45:25.475733+00:00",
+     "game": "OKC @ MIA",
+     "game_id": "401910030",
+     "id": "spotter_fade:KXNBAPRA-26NOV22OKCMIA-MIABPORTIS95-15",
+     "lead_min": 74.6,
+     "night": "2026-11-22",
+     "p": 0.5869,
+     "pid": "3064482",
+     "player": "Bobby Portis",
+     "price": 0.52,
+     "rule": "spotter_fade",
+     "rung": 15,
+     "side": "no",
+     "start": "2026-11-22T23:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "MIA",
+     "ticker": "KXNBAPRA-26NOV22OKCMIA-MIABPORTIS95-15",
+     "unit": "points+rebounds+assists",
+     "why": "fewer shots than last season",
+     "yes_ask": 0.49
+    },
+    {
+     "bid": 0.39,
+     "edge": 0.0732,
+     "entered": "2026-11-22T21:45:25.475733+00:00",
+     "game": "OKC @ MIA",
+     "game_id": "401910030",
+     "id": "spotter_fade:KXNBAPRA-26NOV22OKCMIA-MIABADEBAYO13-35",
+     "lead_min": 74.6,
+     "night": "2026-11-22",
+     "p": 0.6632,
+     "pid": "4066261",
+     "player": "Bam Adebayo",
+     "price": 0.61,
+     "rule": "spotter_fade",
+     "rung": 35,
+     "side": "no",
+     "start": "2026-11-22T23:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "MIA",
+     "ticker": "KXNBAPRA-26NOV22OKCMIA-MIABADEBAYO13-35",
+     "unit": "points+rebounds+assists",
+     "why": "fewer shots than last season",
+     "yes_ask": 0.41
+    },
+    {
+     "bid": 0.55,
+     "edge": 0.0725,
+     "entered": "2026-11-22T21:45:25.475733+00:00",
+     "game": "OKC @ MIA",
+     "game_id": "401910030",
+     "id": "spotter_fade:KXNBAPRA-26NOV22OKCMIA-OKCJMCCAIN3-25",
+     "lead_min": 74.6,
+     "night": "2026-11-22",
+     "p": 0.5025,
+     "pid": "4683778",
+     "player": "Jared McCain",
+     "price": 0.45,
+     "rule": "spotter_fade",
+     "rung": 25,
+     "side": "no",
+     "start": "2026-11-22T23:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "OKC",
+     "ticker": "KXNBAPRA-26NOV22OKCMIA-OKCJMCCAIN3-25",
+     "unit": "points+rebounds+assists",
+     "why": "minutes up on last season",
+     "yes_ask": 0.57
     }
    ]
   },
@@ -2610,6 +2761,106 @@
      "team": "DET",
      "ticker": "KXNBAREB-26NOV22DETATL-DETDJENKINS24-4",
      "unit": "rebounds",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.58
+    },
+    {
+     "bid": 0.41,
+     "entered": "2026-11-22T21:45:25.475733+00:00",
+     "game": "OKC @ MIA",
+     "game_id": "401910030",
+     "id": "spotter_fade_blind:KXNBA3PT-26NOV22OKCMIA-MIABPORTIS95-2",
+     "lead_min": 74.6,
+     "matches": "spotter_fade:KXNBAPRA-26NOV22OKCMIA-MIAAWIGGINS22-15",
+     "night": "2026-11-22",
+     "p": null,
+     "pid": "3064482",
+     "player": "Bobby Portis",
+     "price": 0.59,
+     "rule": "spotter_fade_blind",
+     "rung": 2,
+     "side": "no",
+     "start": "2026-11-22T23:00:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "MIA",
+     "ticker": "KXNBA3PT-26NOV22OKCMIA-MIABPORTIS95-2",
+     "unit": "threes",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.42
+    },
+    {
+     "bid": 0.49,
+     "entered": "2026-11-22T21:45:25.475733+00:00",
+     "game": "OKC @ MIA",
+     "game_id": "401910030",
+     "id": "spotter_fade_blind:KXNBAPTS-26NOV22OKCMIA-MIAKTHOMPSON11-15",
+     "lead_min": 74.6,
+     "matches": "spotter_fade:KXNBAPRA-26NOV22OKCMIA-MIABPORTIS95-15",
+     "night": "2026-11-22",
+     "p": null,
+     "pid": "6475",
+     "player": "Klay Thompson",
+     "price": 0.51,
+     "rule": "spotter_fade_blind",
+     "rung": 15,
+     "side": "no",
+     "start": "2026-11-22T23:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "team": "MIA",
+     "ticker": "KXNBAPTS-26NOV22OKCMIA-MIAKTHOMPSON11-15",
+     "unit": "points",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.5
+    },
+    {
+     "bid": 0.37,
+     "entered": "2026-11-22T21:45:25.475733+00:00",
+     "game": "OKC @ MIA",
+     "game_id": "401910030",
+     "id": "spotter_fade_blind:KXNBAPTS-26NOV22OKCMIA-MIAGANTETOKOUNMPO7-30",
+     "lead_min": 74.6,
+     "matches": "spotter_fade:KXNBAPRA-26NOV22OKCMIA-MIABADEBAYO13-35",
+     "night": "2026-11-22",
+     "p": null,
+     "pid": "3032977",
+     "player": "Giannis Antetokounmpo",
+     "price": 0.63,
+     "rule": "spotter_fade_blind",
+     "rung": 30,
+     "side": "no",
+     "start": "2026-11-22T23:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "team": "MIA",
+     "ticker": "KXNBAPTS-26NOV22OKCMIA-MIAGANTETOKOUNMPO7-30",
+     "unit": "points",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.39
+    },
+    {
+     "bid": 0.57,
+     "entered": "2026-11-22T21:45:25.475733+00:00",
+     "game": "OKC @ MIA",
+     "game_id": "401910030",
+     "id": "spotter_fade_blind:KXNBAAST-26NOV22OKCMIA-MIADMITCHELL2-8",
+     "lead_min": 74.6,
+     "matches": "spotter_fade:KXNBAPRA-26NOV22OKCMIA-OKCJMCCAIN3-25",
+     "night": "2026-11-22",
+     "p": null,
+     "pid": "4278053",
+     "player": "Davion Mitchell",
+     "price": 0.43,
+     "rule": "spotter_fade_blind",
+     "rung": 8,
+     "side": "no",
+     "start": "2026-11-22T23:00:00+00:00",
+     "stat": "ast",
+     "status": "open",
+     "team": "MIA",
+     "ticker": "KXNBAAST-26NOV22OKCMIA-MIADMITCHELL2-8",
+     "unit": "assists",
      "why": "drawn at random from this game's rungs at about the pick's price, NO side",
      "yes_ask": 0.58
     }
@@ -5968,6 +6219,102 @@
      "ticker": "KXNBAREB-26NOV22DETATL-ATLNALEXANDERWALKER7-4",
      "unit": "rebounds",
      "why": "a hot run the price has followed up"
+    },
+    {
+     "bid": 0.39,
+     "edge": 0.075,
+     "entered": "2026-11-22T21:45:25.475733+00:00",
+     "game": "OKC @ MIA",
+     "game_id": "401910030",
+     "id": "spotter_spike:KXNBAPTS-26NOV22OKCMIA-OKCSGILGEOUSALEXANDER2-35",
+     "lead_min": 74.6,
+     "night": "2026-11-22",
+     "p": 0.575,
+     "pid": "4278073",
+     "player": "Shai Gilgeous-Alexander",
+     "price": 0.41,
+     "rule": "spotter_spike",
+     "rung": 35,
+     "start": "2026-11-22T23:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.82,
+     "team": "OKC",
+     "ticker": "KXNBAPTS-26NOV22OKCMIA-OKCSGILGEOUSALEXANDER2-35",
+     "unit": "points",
+     "why": "a steady player in this stat"
+    },
+    {
+     "bid": 0.36,
+     "edge": 0.0546,
+     "entered": "2026-11-22T21:45:25.475733+00:00",
+     "game": "OKC @ MIA",
+     "game_id": "401910030",
+     "id": "spotter_spike:KXNBAPTS-26NOV22OKCMIA-OKCAMARA15-15",
+     "lead_min": 74.6,
+     "night": "2026-11-22",
+     "p": 0.5546,
+     "pid": "5174983",
+     "player": "Aday Mara",
+     "price": 0.37,
+     "rule": "spotter_spike",
+     "rung": 15,
+     "start": "2026-11-22T23:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.74,
+     "team": "OKC",
+     "ticker": "KXNBAPTS-26NOV22OKCMIA-OKCAMARA15-15",
+     "unit": "points",
+     "why": "his projection is below the price"
+    },
+    {
+     "bid": 0.48,
+     "edge": 0.0485,
+     "entered": "2026-11-22T21:45:25.475733+00:00",
+     "game": "OKC @ MIA",
+     "game_id": "401910030",
+     "id": "spotter_spike:KXNBAPTS-26NOV22OKCMIA-OKCJMCCAIN3-20",
+     "lead_min": 74.6,
+     "night": "2026-11-22",
+     "p": 0.5485,
+     "pid": "4683778",
+     "player": "Jared McCain",
+     "price": 0.49,
+     "rule": "spotter_spike",
+     "rung": 20,
+     "start": "2026-11-22T23:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.98,
+     "team": "OKC",
+     "ticker": "KXNBAPTS-26NOV22OKCMIA-OKCJMCCAIN3-20",
+     "unit": "points",
+     "why": "his projection is below the price"
+    },
+    {
+     "bid": 0.41,
+     "edge": 0.0472,
+     "entered": "2026-11-22T21:45:25.475733+00:00",
+     "game": "OKC @ MIA",
+     "game_id": "401910030",
+     "id": "spotter_spike:KXNBAPTS-26NOV22OKCMIA-OKCAMITCHELL25-25",
+     "lead_min": 74.6,
+     "night": "2026-11-22",
+     "p": 0.5472,
+     "pid": "4900671",
+     "player": "Ajay Mitchell",
+     "price": 0.44,
+     "rule": "spotter_spike",
+     "rung": 25,
+     "start": "2026-11-22T23:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.88,
+     "team": "OKC",
+     "ticker": "KXNBAPTS-26NOV22OKCMIA-OKCAMITCHELL25-25",
+     "unit": "points",
+     "why": "his projection is below the price"
     }
    ]
   },
@@ -7117,17 +7464,107 @@
      "ticker": "KXNBAREB-26NOV22DETATL-ATLJJOHNSON1-10",
      "unit": "rebounds",
      "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.37,
+     "entered": "2026-11-22T21:45:25.475733+00:00",
+     "game": "OKC @ MIA",
+     "game_id": "401910030",
+     "id": "spotter_spike_blind:KXNBAPTS-26NOV22OKCMIA-MIAGANTETOKOUNMPO7-30",
+     "lead_min": 74.6,
+     "matches": "spotter_spike:KXNBAPTS-26NOV22OKCMIA-OKCSGILGEOUSALEXANDER2-35",
+     "night": "2026-11-22",
+     "p": null,
+     "pid": "3032977",
+     "player": "Giannis Antetokounmpo",
+     "price": 0.39,
+     "rule": "spotter_spike_blind",
+     "rung": 30,
+     "start": "2026-11-22T23:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.78,
+     "team": "MIA",
+     "ticker": "KXNBAPTS-26NOV22OKCMIA-MIAGANTETOKOUNMPO7-30",
+     "unit": "points",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.33,
+     "entered": "2026-11-22T21:45:25.475733+00:00",
+     "game": "OKC @ MIA",
+     "game_id": "401910030",
+     "id": "spotter_spike_blind:KXNBAPRA-26NOV22OKCMIA-OKCAMITCHELL25-35",
+     "lead_min": 74.6,
+     "matches": "spotter_spike:KXNBAPTS-26NOV22OKCMIA-OKCAMARA15-15",
+     "night": "2026-11-22",
+     "p": null,
+     "pid": "4900671",
+     "player": "Ajay Mitchell",
+     "price": 0.34,
+     "rule": "spotter_spike_blind",
+     "rung": 35,
+     "start": "2026-11-22T23:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "target": 0.68,
+     "team": "OKC",
+     "ticker": "KXNBAPRA-26NOV22OKCMIA-OKCAMITCHELL25-35",
+     "unit": "points+rebounds+assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.45,
+     "entered": "2026-11-22T21:45:25.475733+00:00",
+     "game": "OKC @ MIA",
+     "game_id": "401910030",
+     "id": "spotter_spike_blind:KXNBA3PT-26NOV22OKCMIA-MIAGANTETOKOUNMPO7-1",
+     "lead_min": 74.6,
+     "matches": "spotter_spike:KXNBAPTS-26NOV22OKCMIA-OKCJMCCAIN3-20",
+     "night": "2026-11-22",
+     "p": null,
+     "pid": "3032977",
+     "player": "Giannis Antetokounmpo",
+     "price": 0.46,
+     "rule": "spotter_spike_blind",
+     "rung": 1,
+     "start": "2026-11-22T23:00:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "target": 0.92,
+     "team": "MIA",
+     "ticker": "KXNBA3PT-26NOV22OKCMIA-MIAGANTETOKOUNMPO7-1",
+     "unit": "threes",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.41,
+     "entered": "2026-11-22T21:45:25.475733+00:00",
+     "game": "OKC @ MIA",
+     "game_id": "401910030",
+     "id": "spotter_spike_blind:KXNBAPRA-26NOV22OKCMIA-MIAAWIGGINS22-15",
+     "lead_min": 74.6,
+     "matches": "spotter_spike:KXNBAPTS-26NOV22OKCMIA-OKCAMITCHELL25-25",
+     "night": "2026-11-22",
+     "p": null,
+     "pid": "3059319",
+     "player": "Andrew Wiggins",
+     "price": 0.45,
+     "rule": "spotter_spike_blind",
+     "rung": 15,
+     "start": "2026-11-22T23:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "target": 0.9,
+     "team": "MIA",
+     "ticker": "KXNBAPRA-26NOV22OKCMIA-MIAAWIGGINS22-15",
+     "unit": "points+rebounds+assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-21T02:00:32.210010+00:00",
-   "box": 0,
-   "due": 0,
-   "new": 0
-  },
   {
    "at": "2026-11-21T02:30:29.134773+00:00",
    "box": 1,
@@ -7427,6 +7864,12 @@
    "box": 0,
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-22T21:45:25.475733+00:00",
+   "box": 0,
+   "due": 1,
+   "new": 16
   }
  ],
  "schedule": [
