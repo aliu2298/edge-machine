@@ -3577,6 +3577,9 @@ FEED_YES_TWIN = {"soccer_u35": {"kind": "total_gte", "n": 4},
 # with a per-series close (WTI 14:30 ET, the rest 17:00 ET) and a per-series calendar.
 # finance_daily since 2026-11-08: D3, the S&P near-certain NO (daily_production.FIN_PAIR), a KXINXU rung.
 LADDER_SPORTS = ("crypto_fav", "commodities_fav", "econ_daily", "finance_daily")
+# AAA gas weekly cheap NO in Production (2026-11-22, Olu): one rung of the weekly KXAAAGASW ladder, the NO of "Above X". Not a daily-close
+# ladder (it is entered any time in the week and its rungs are not nested with a coin's), so it has its own sport and its own bet kind.
+GASW_SPORTS = ("gas_week",)
 
 
 _CORNERS_STRIKE = re.compile(r"-(?:[A-Z]+)?(\d+)$")
@@ -3648,6 +3651,9 @@ def placeable(q):
                 and (bet["kind"] != "win_no" or bool(q.get("opponent")))
                 and (bet["kind"] != "ftts_no" or bool(q.get("team")))
                 and (bet["kind"] != "corners_lte" or corners_strike(q.get("market_id")) is not None))
+    if q.get("sport") in GASW_SPORTS:
+        # One rung of the weekly AAA gas ladder, the No of "Above X" (gas_week_production). The contract is named by its ticker.
+        return (q.get("pick") == "b" and q.get("venue") == "kalshi_binary" and bool(q.get("market_id")) and bool(q.get("side_a")))
     if q.get("sport") in LADDER_SPORTS:
         # One rung of a Kalshi daily-close ladder: the Yes on the contract the quote names,
         # whose side_a is the rung ("$82,750 or above"). The close is in the contract. The No of

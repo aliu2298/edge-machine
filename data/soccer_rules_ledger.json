@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-22T17:31:27.739872+00:00",
+ "last_run": "2026-11-22T18:31:52.229722+00:00",
  "rules": {
   "A1": {
    "picks": [
@@ -1959,6 +1959,29 @@
      "ticker": "KXLALIGATOTAL-26NOV07VCFRMA-4",
      "title": "Will over 3.5 goals be scored?",
      "why": "Valencia O-D+ v Real Madrid O+D- \u00b7 Over 3.5 YES 0.45"
+    },
+    {
+     "ask": 0.22,
+     "bid": 0.21,
+     "event": "KXLALIGATOTAL-26NOV22GETATM",
+     "group": "B",
+     "id": "B2:KXLALIGATOTAL-26NOV22GETATM",
+     "labels": {
+      "away": "O+D-",
+      "home": "O-D+"
+     },
+     "league": "La Liga",
+     "line": 3.5,
+     "logged": "2026-11-22T18:31:52.229722+00:00",
+     "match": "Getafe v Atl\u00e9tico Madrid",
+     "price": 0.22,
+     "rule": "B2",
+     "side": "yes",
+     "start": "2026-11-22T20:00Z",
+     "status": "open",
+     "ticker": "KXLALIGATOTAL-26NOV22GETATM-4",
+     "title": "Will over 3.5 goals be scored?",
+     "why": "Getafe O-D+ v Atl\u00e9tico Madrid O+D- \u00b7 Over 3.5 YES 0.22"
     }
    ]
   },
@@ -5509,30 +5532,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-21T15:31:29.477324+00:00",
-   "candidates": 1,
-   "due": 3,
-   "labelled": 3,
-   "matched": 1,
-   "new": 0
-  },
-  {
-   "at": "2026-11-21T15:46:27.615635+00:00",
-   "candidates": 1,
-   "due": 2,
-   "labelled": 2,
-   "matched": 1,
-   "new": 0
-  },
-  {
-   "at": "2026-11-21T16:01:54.043483+00:00",
-   "candidates": 1,
-   "due": 4,
-   "labelled": 4,
-   "matched": 1,
-   "new": 1
-  },
-  {
    "at": "2026-11-21T16:16:55.048178+00:00",
    "candidates": 1,
    "due": 7,
@@ -5915,6 +5914,30 @@
    "labelled": 0,
    "matched": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-22T18:01:41.500633+00:00",
+   "candidates": 0,
+   "due": 0,
+   "labelled": 0,
+   "matched": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-22T18:16:38.109271+00:00",
+   "candidates": 1,
+   "due": 2,
+   "labelled": 2,
+   "matched": 1,
+   "new": 0
+  },
+  {
+   "at": "2026-11-22T18:31:52.229722+00:00",
+   "candidates": 2,
+   "due": 3,
+   "labelled": 3,
+   "matched": 2,
+   "new": 1
   }
  ],
  "version": "soccer-rules-v1"

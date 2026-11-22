@@ -90,6 +90,13 @@ ok("Retired 2026-11-08 by Olu" in S.COMMOD_NC_NO_RETIRED_WHY and "12–1" in S.C
    "and the reason carries the date and the record it stopped on")
 S.SOURCES["commod_nc_no"] = dict(S.SOURCES["commod_nc_no"], sports=["commodities_fav"])
 S.SOURCES["commod_nc_no"].pop("retired_sports", None)
+# 2026-11-22 (Olu): commod_nc_yes retired the same way; replayed in-process below.
+eq((S.SOURCES["commod_nc_yes"]["sports"], S.SOURCES["commod_nc_yes"]["retired_sports"]),
+   ([], {"commodities_fav": S.COMMOD_NC_YES_RETIRED_WHY}), "commod_nc_yes: retired 2026-11-22, off the run")
+ok("Retired 2026-11-22 by Olu" in S.COMMOD_NC_YES_RETIRED_WHY and "20–3" in S.COMMOD_NC_YES_RETIRED_WHY,
+   "and the reason carries the date and the record it stopped on")
+S.SOURCES["commod_nc_yes"] = dict(S.SOURCES["commod_nc_yes"], sports=["commodities_fav"])
+S.SOURCES["commod_nc_yes"].pop("retired_sports", None)
 for name, side in (("commod_nc_yes", "a"), ("commod_nc_no", "b")):
     m = S.SOURCES[name]
     eq(m["sports"], ["commodities_fav"], f"{name}: the commodity lane's own sport")

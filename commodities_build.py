@@ -410,10 +410,18 @@ def _cheap_row(cfg, st, retired=False):
             f'<dt>Record</dt><dd>Sandbox, paper, hold to the end, judged by weeks · stage from {e(cfg["stage_from"])}, '
             f'entries kept · review at {cfg["review_weeks"]} settled weeks, decide at {cfg["decide_weeks"]}+</dd>')
         early = " is-early" if n < cfg["review_weeks"] else ""
+        # In Production since 2026-11-22 (gas_week_production): the same rule, $1 a bet, on a fresh live record that is read on the Production page.
+        live = cfg.get("lane") == "gas_week_cheap_no"
+        badges = '<span class="sp-badges"><span class="badge stage">Production</span></span>' if live else ""
+        if live:
+            params = params.replace(
+                '<dt>Liquidity</dt>',
+                '<dt>Production</dt><dd>Live at the standard trial stake since 2026-11-22, the same entries held to settlement, a fresh live record '
+                '(the Production page) · the Sandbox paper record here keeps running as the control</dd><dt>Liquidity</dt>')
         return (f'<details class="sp-rule{early}" data-source="{e(cfg["lane"])}" data-sport="commodities_cheap" '
                 f'data-scope="clubs" data-stage="sandbox"{" data-early=\"1\"" if early else ""}>'
                 f'<summary class="sp-line"><span class="sp-cell sp-c-name"><span class="sp-chev" aria-hidden="true">›</span>'
-                f'<b class="sp-name" title="{e(cfg["label"])}">{e(cfg["label"])}</b>'
+                f'<b class="sp-name" title="{e(cfg["label"])}">{e(cfg["label"])}</b>{badges}'
                 f'<span class="sr-only"> · Rule details</span></span>'
                 f'<span class="sp-cell sp-c-market" data-l="Market">Kalshi</span>'
                 f'<span class="sp-cell num" data-l="Record">{record}</span>'

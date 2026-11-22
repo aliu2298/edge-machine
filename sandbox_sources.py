@@ -239,6 +239,8 @@ COMMOD_FAV_BAND_RETIRED_WHY = ("Retired 2026-11-22 by Olu, and pulled from Produ
                                "time it read the book (the ask had left the 70-80c band at 81-84c, 85c with the fee, a 7c spread, 12 of 25 contracts, "
                                "the window shut, one no-fill). Its paper record: 65 won, 19 lost over 84 bets on 30 market-days; its October live run "
                                "stays on the page as history. No new entries from 2026-11-22; its rows stay on file and its open bets still settle.")
+COMMOD_NC_YES_RETIRED_WHY = ("Retired 2026-11-22 by Olu: behind its prices at 23 of 30 market-days — 20–3, −1.2% after fees. Never in "
+                             "Production. No new entries from 2026-11-22; its rows stay on file and its open bets still settle.")
 # Pinnacle's goal total v Kalshi's (Olu, 2026-11-20): pre-registered 2026-09-22, it never made a pick (0 of 30 on every scope), and the
 # same test on the match winner found 0 of 57 quotes at 3pp. It was also the only thing still spending paced Odds API credit, and its
 # "no paced credit left for this run" skips kept the Soccer card on Attention. No new entries, no paid call; its note and (empty) record stay.
@@ -1759,7 +1761,8 @@ SOURCES = {
              "question."),
     "commod_nc_yes": dict(
         label="Commodities near-certain, Yes (Yes 0.90-0.98, the last hour to the close)",
-        kind="Rule", connected=True, site="edge-machine", sports=["commodities_fav"],
+        kind="Rule", connected=True, site="edge-machine", sports=[],
+        retired_sports={"commodities_fav": COMMOD_NC_YES_RETIRED_WHY},
         baseline="favourite_population",
         # Judged against the YES favourites this sport logged inside ITS band only, so the
         # 70-80c lane's contests and the No lane's never enter its blind rule.
@@ -5045,6 +5048,7 @@ OWN_LEDGER_LABELS = {
     "top5_goalless_dip_live": "Top-5 goalless dip (live)",
     "arg_goalless_dip_live": "Argentina goalless dip (live)",
     "challenger_won_here": "Challenger underdog who has won here (live)",
+    "gas_week_cheap_no": "AAA gas weekly cheap NO (live)",
     "st_t1h": "T1 matches · home team 2+ goals",
     "afq_dog_score": "African qualifiers · underdog to score",
     "afq_btts": "African qualifiers · both teams to score",
