@@ -24,6 +24,10 @@
    "at": "2026-11-22T20:53:33.577599+00:00",
    "pool": "opposite"
   },
+  "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXARGPREMDIVBTTS-26NOV23GLPNOB\", \"no\"]]": {
+   "at": "2026-11-23T18:48:32.833597+00:00",
+   "pool": "opposite"
+  },
   "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXBRASILEIROBTTS-26NOV18CFCSAN\", \"no\"]]": {
    "at": "2026-11-18T21:13:42.916929+00:00",
    "pool": "opposite"
@@ -106,6 +110,10 @@
   },
   "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXARGPREMDIVBTTS-26NOV22RIVLAN\", \"yes\"]]": {
    "at": "2026-11-22T20:53:33.577599+00:00",
+   "pool": "opposite"
+  },
+  "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXARGPREMDIVBTTS-26NOV23GLPNOB\", \"yes\"]]": {
+   "at": "2026-11-23T18:48:32.833597+00:00",
    "pool": "opposite"
   },
   "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV18CFCSAN\", \"yes\"]]": {
@@ -1176,6 +1184,10 @@
    "at": "2026-11-21T19:11:13.475342+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXSOLD-26NOV2317-T73.9999\", \"b\"]]": {
+   "at": "2026-11-23T18:48:32.833597+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXXRPD-26NOV0517-T1.2399\", \"b\"]]": {
    "at": "2026-11-05T18:35:00.864249+00:00",
    "pool": "entered"
@@ -1814,6 +1826,10 @@
   "[\"soccer_rules_ledger.json\", \"A6\", [\"A6:KXEPLTOTAL-26NOV22HULBRI\", \"no\"]]": {
    "at": "2026-11-22T12:59:14.728310+00:00",
    "mirror": "entered",
+   "pool": "entered"
+  },
+  "[\"soccer_rules_ledger.json\", \"A6\", [\"A6:KXEPLTOTAL-26NOV23BREEVE\", \"no\"]]": {
+   "at": "2026-11-23T18:48:32.833597+00:00",
    "pool": "entered"
   },
   "[\"soccer_rules_ledger.json\", \"B1\", [\"B1:KXMLSTOTAL-26NOV07ATXPOR\", \"no\"]]": {
@@ -6072,7 +6088,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-23T18:34:20.910788+00:00",
+ "last_run": "2026-11-23T18:48:32.833597+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -17983,6 +17999,54 @@
    "sport": "Crypto",
    "src": "sandbox",
    "status": "open"
+  },
+  {
+   "contract": "KXEPLTOTAL-26NOV23BREEVE-3",
+   "entered_at": "2026-11-23T18:48:32.833597+00:00",
+   "entities": [
+    "Brentford",
+    "Everton"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"A6\", [\"A6:KXEPLTOTAL-26NOV23BREEVE\", \"no\"]]",
+   "lane": "A6",
+   "logged": "2026-11-23T18:31:48.524574+00:00",
+   "matched": [
+    "Brentford",
+    "Everton"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"A6\", [\"A6:KXEPLTOTAL-26NOV23BREEVE\", \"no\"]]",
+   "price": 0.49,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "no",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXSOLD-26NOV2317-T73.9999",
+   "entered_at": "2026-11-23T18:48:32.833597+00:00",
+   "entities": [
+    "Solana"
+   ],
+   "id": "superpack:[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXSOLD-26NOV2317-T73.9999\", \"b\"]]",
+   "lane": "crypto_fav_band_below",
+   "logged": "2026-11-23T18:48:15+00:00",
+   "matched": [
+    "Solana"
+   ],
+   "pid": "[\"sandbox\", \"crypto_fav_band_below\", [\"crypto_fav_band_below:KXSOLD-26NOV2317-T73.9999\", \"b\"]]",
+   "price": 0.73,
+   "profit": null,
+   "scope": "crypto_fav",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Crypto",
+   "src": "sandbox",
+   "status": "open"
   }
  ],
  "registered": "2026-11-05",
@@ -18962,6 +19026,24 @@
    "list": "pool",
    "logged": "2026-11-22T23:31:36.843671+00:00",
    "pid": "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXARGPREMDIVBTTS-26NOV22IACCHUR\", \"yes\"]]",
+   "side": "yes",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-23T18:48:32.833597+00:00",
+   "contract": "KXARGPREMDIVBTTS-26NOV23GLPNOB-BTTS",
+   "list": "pool",
+   "logged": "2026-11-23T18:31:49.083708+00:00",
+   "pid": "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXARGPREMDIVBTTS-26NOV23GLPNOB\", \"no\"]]",
+   "side": "no",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-23T18:48:32.833597+00:00",
+   "contract": "KXARGPREMDIVBTTS-26NOV23GLPNOB-BTTS",
+   "list": "pool",
+   "logged": "2026-11-23T18:31:49.083708+00:00",
+   "pid": "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXARGPREMDIVBTTS-26NOV23GLPNOB\", \"yes\"]]",
    "side": "yes",
    "why": "active lanes are on both sides of this contract"
   }
