@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-23T21:07:28+00:00",
+ "board_built_at": "2026-11-23T21:32:38+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -118,43 +118,6 @@
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "miss"
-  },
-  "2026-11-23|Elijah Strode|Juan Miguel Bolivar Idarraga|Elijah Strode to win \u00b7 Challenger underdog who has won here": {
-   "away": "Juan Miguel Bolivar Idarraga",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-11-23",
-   "edge_at_log": null,
-   "first_seen": "2026-11-23",
-   "headline": "Elijah Strode to win",
-   "home": "Elijah Strode",
-   "id": "2026-11-23|Elijah Strode|Juan Miguel Bolivar Idarraga|Elijah Strode to win \u00b7 Challenger underdog who has won here",
-   "kickoff": "2026-11-23T21:10Z",
-   "lane": "production",
-   "last_seen": "2026-11-23",
-   "last_seen_at": "2026-11-23T21:07:28+00:00",
-   "league": "Tennis",
-   "match": "Elijah Strode v Juan Miguel Bolivar Idarraga",
-   "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.61,
-   "published_at": "2026-11-23T18:17:11+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 172,
-   "route": {
-    "claim": "Elijah Strode to win",
-    "event": "KXATPCHALLENGERMATCH-26NOV23STRBOL",
-    "market": "KXATPCHALLENGERMATCH-26NOV23STRBOL-STR",
-    "outcome": "Elijah Strode",
-    "outcome_side": "yes",
-    "price_at_log": 0.61,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23STRBOL-STR",
-   "source": "challenger_won_here",
-   "sport": "tennis",
-   "status": "pending"
   },
   "2026-11-23|Ethan Cook|Evan Zhu|Ethan Cook to win \u00b7 Challenger underdog who has won here": {
    "away": "Evan Zhu",
@@ -340,9 +303,9 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 9,
+    "leads": 8,
     "problem": null,
-    "routed": 9,
+    "routed": 8,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -354,7 +317,7 @@
    "sandbox_roi_fee": -0.7385,
    "timing": {
     "late": [],
-    "timed": 8,
+    "timed": 7,
     "under_target": 0
    }
   }
@@ -363,5 +326,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-23T21:07:28+00:00"
+ "updated_at": "2026-11-23T21:32:38+00:00"
 }
