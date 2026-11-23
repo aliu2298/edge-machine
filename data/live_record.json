@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-23T18:07Z",
+ "generated": "2026-11-23T19:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -5785,8 +5785,10 @@
    "entered": "2026-11-21T00:00:00+00:00",
    "orders": [],
    "refused": {
+    "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23NEFPER-PER": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23OVCMAL-OVC": "price above the cap",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23POLWEI-WEI": "outside the price band",
+    "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23SHIFRA-FRA": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23VIVSAH-VIV": "price above the cap"
    }
   },
@@ -6054,10 +6056,19 @@
      "side": "no",
      "st": "won",
      "w": 1.02
+    },
+    {
+     "id": "crypto_fav_band_below:KXSOLD-26NOV2317-T73.9999",
+     "ko": "2026-11-23T22:05",
+     "r": null,
+     "side": "no",
+     "st": "open",
+     "w": 0.98
     }
    ],
    "refused": {
     "crypto_fav_band_below:KXBTCD-26NOV1917-T63499.99": "thin book",
+    "crypto_fav_band_below:KXBTCD-26NOV2317-T61999.99": "outside the price band",
     "crypto_fav_band_below:KXETHD-26NOV1917-T1799.99": "outside the price band",
     "crypto_fav_band_below:KXETHD-26NOV2017-T1619.99": "outside the price band",
     "crypto_fav_band_below:KXETHD-26NOV2217-T1719.99": "outside the price band",
@@ -6661,6 +6672,14 @@
      "side": "no",
      "st": "won",
      "w": 10.43
+    },
+    {
+     "id": "sr_a6:KXEPLTOTAL-26NOV23BREEVE-3",
+     "ko": "2026-11-23T20:00",
+     "r": null,
+     "side": "no",
+     "st": "open",
+     "w": 10.32
     }
    ],
    "refused": {}
