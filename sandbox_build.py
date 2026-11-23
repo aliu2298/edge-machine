@@ -2405,6 +2405,12 @@ def chaos_html():
         html += soccer_lanes.shadows_index_html()
     except Exception:                                           # noqa: BLE001
         pass
+    # NBA quarter lines (nba_qlines, 2026-11-23): one index row a lane, linking to its fold on the NBA page.
+    try:
+        import nba_qlines_build
+        html += nba_qlines_build.index_html()
+    except Exception:                                           # noqa: BLE001
+        pass
     # The paper watches (bs_bid, ko_bid, nl_dump, mentions_dump; 2026-11-14): one index row each, linking to the card on its sport page.
     try:
         import watch_index

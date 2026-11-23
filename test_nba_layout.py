@@ -36,16 +36,16 @@ main = page[page.find("<main"):]
 ids = re.findall(r'<section id="([^"]+)"', main)
 print("order")
 check("rules, spotter, research (tracker, ladder), games (next 24h, results, teams), retired, method",
-      ids, ["rules", "spotter", "research", "tracker", "ladder", "games", "matchups", "graded", "teams", "retired", "method"])
+      ids, ["rules", "spotter", "qlines", "research", "tracker", "ladder", "games", "matchups", "graded", "teams", "retired", "method"])
 check("the jump pills: Rules, Spotter, Research, Games, Retired, Method",
-      re.findall(r'href="#([^"]+)"', re.findall(r'<nav class="toc".*?</nav>', page, re.S)[0]), ["rules", "spotter", "research", "games", "retired", "method"])
+      re.findall(r'href="#([^"]+)"', re.findall(r'<nav class="toc".*?</nav>', page, re.S)[0]), ["rules", "spotter", "qlines", "research", "games", "retired", "method"])
 check("five tiles: open bets, active lanes, since-Production record and ROI, live record",
       [re.sub(r"<[^>]+>", "", t) for t in re.findall(r'<div class="tile"><b[^>]*>.*?</b><span>(.*?)</span>', main)][:5],
       ["open bets · live", "active lanes", "since Production · entries", "ROI after fees · since Production",
        [x for x in re.findall(r'<div class="tile"><b[^>]*>.*?</b><span>(.*?)</span>', main)][4]])
 check("a stage filter (no scope chips)", ('data-filter="stage"' in main, 'data-filter="scope"' in main), (True, False))
 
-sp = main[main.find('<section id="spotter"'):main.find('<section id="research"')]
+sp = main[main.find('<section id="spotter"'):main.find('<section id="qlines"')]
 check("the Spotter is one collapsed fold (2026-11-22): closed by default, its summary line names the three boards against their blind controls",
       (sp.count("<details"), "<details class=\"fold nba-spotter\" id=\"spotter-fold\">" in sp, " open" in sp[:sp.find("</summary>")],
        re.sub(r"<[^>]+>", "", sp[sp.find("<summary>"):sp.find("</summary>")]).count(" v blind ")),
