@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-23T21:32:38+00:00",
+ "last_run": "2026-11-23T22:01:50+00:00",
  "quotes": {
   "challenger_won_here:KXATPCHALLENGERMATCH-26NOV22KUBFAL-FAL": {
    "bet": true,
@@ -375,16 +375,16 @@
    "market_id": "KXATPCHALLENGERMATCH-26NOV23STRBOL",
    "opponent": "Juan Miguel Bolivar Idarraga",
    "pick": "a",
-   "pnl": 0.0,
+   "pnl": -100.0,
    "price": 0.61,
    "price_a": 0.61,
    "price_b": null,
    "price_draw": null,
    "prob_a": null,
-   "result": null,
+   "result": "b",
    "rule": "won_here",
-   "settle_px": null,
-   "settled": null,
+   "settle_px": 0.0,
+   "settled": "2026-11-23T21:52:14.110553Z",
    "side_a": "Elijah Strode",
    "side_b": "Juan Miguel Bolivar Idarraga",
    "source": "challenger_won_here",
@@ -392,7 +392,7 @@
    "stake": 100.0,
    "start": "2026-11-23T21:10:00+00:00",
    "start_source": "kalshi_challenger",
-   "status": "open",
+   "status": "lost",
    "team": "Elijah Strode",
    "tickers": {
     "a": "KXATPCHALLENGERMATCH-26NOV23STRBOL-STR",

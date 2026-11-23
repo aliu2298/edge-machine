@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-23T21:32:38+00:00",
+ "board_built_at": "2026-11-23T22:01:50+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -115,6 +115,41 @@
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23NEFPER-PER",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "miss"
+  },
+  "2026-11-23|Elijah Strode|Juan Miguel Bolivar Idarraga|Elijah Strode to win \u00b7 Challenger underdog who has won here": {
+   "away": "Juan Miguel Bolivar Idarraga",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-23",
+   "edge_at_log": null,
+   "first_seen": "2026-11-23",
+   "headline": "Elijah Strode to win",
+   "home": "Elijah Strode",
+   "id": "2026-11-23|Elijah Strode|Juan Miguel Bolivar Idarraga|Elijah Strode to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-23T21:10Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Elijah Strode v Juan Miguel Bolivar Idarraga",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.61,
+   "published_at": "2026-11-23T22:01:50+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Elijah Strode to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV23STRBOL",
+    "market": "KXATPCHALLENGERMATCH-26NOV23STRBOL-STR",
+    "outcome": "Elijah Strode",
+    "outcome_side": "yes",
+    "price_at_log": 0.61,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23STRBOL-STR",
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "miss"
@@ -303,18 +338,18 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 8,
+    "leads": 9,
     "problem": null,
-    "routed": 8,
+    "routed": 9,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 8,
-   "sandbox_roi": -0.7376,
-   "sandbox_roi_fee": -0.7385,
+   "sandbox_n": 9,
+   "sandbox_roi": -0.7668,
+   "sandbox_roi_fee": -0.7676,
    "timing": {
     "late": [],
     "timed": 7,
@@ -326,5 +361,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-23T21:32:38+00:00"
+ "updated_at": "2026-11-23T22:01:50+00:00"
 }
