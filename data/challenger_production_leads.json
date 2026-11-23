@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-23T20:02:37+00:00",
+ "board_built_at": "2026-11-23T20:34:25+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -134,11 +134,11 @@
    "kickoff": "2026-11-23T21:10Z",
    "lane": "production",
    "last_seen": "2026-11-23",
-   "last_seen_at": "2026-11-23T20:02:37+00:00",
+   "last_seen_at": "2026-11-23T20:34:25+00:00",
    "league": "Tennis",
    "match": "Elijah Strode v Juan Miguel Bolivar Idarraga",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.83,
+   "price_at_log": 0.71,
    "published_at": "2026-11-23T18:17:11+00:00",
    "published_late": false,
    "published_min_before_kickoff": 172,
@@ -148,7 +148,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV23STRBOL-STR",
     "outcome": "Elijah Strode",
     "outcome_side": "yes",
-    "price_at_log": 0.83,
+    "price_at_log": 0.71,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23STRBOL-STR",
@@ -190,43 +190,6 @@
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "miss"
-  },
-  "2026-11-23|Jeffrey Fradkin|Ofek Shimanov|Jeffrey Fradkin to win \u00b7 Challenger underdog who has won here": {
-   "away": "Ofek Shimanov",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-11-23",
-   "edge_at_log": null,
-   "first_seen": "2026-11-23",
-   "headline": "Jeffrey Fradkin to win",
-   "home": "Jeffrey Fradkin",
-   "id": "2026-11-23|Jeffrey Fradkin|Ofek Shimanov|Jeffrey Fradkin to win \u00b7 Challenger underdog who has won here",
-   "kickoff": "2026-11-23T20:10Z",
-   "lane": "production",
-   "last_seen": "2026-11-23",
-   "last_seen_at": "2026-11-23T20:02:37+00:00",
-   "league": "Tennis",
-   "match": "Jeffrey Fradkin v Ofek Shimanov",
-   "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.36,
-   "published_at": "2026-11-23T17:31:52+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 158,
-   "route": {
-    "claim": "Jeffrey Fradkin to win",
-    "event": "KXATPCHALLENGERMATCH-26NOV23SHIFRA",
-    "market": "KXATPCHALLENGERMATCH-26NOV23SHIFRA-FRA",
-    "outcome": "Jeffrey Fradkin",
-    "outcome_side": "yes",
-    "price_at_log": 0.36,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23SHIFRA-FRA",
-   "source": "challenger_won_here",
-   "sport": "tennis",
-   "status": "pending"
   },
   "2026-11-23|Oleksandr Ovcharenko|Karol Malirz|Oleksandr Ovcharenko to win \u00b7 Challenger underdog who has won here": {
    "away": "Karol Malirz",
@@ -342,9 +305,9 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 9,
+    "leads": 8,
     "problem": null,
-    "routed": 9,
+    "routed": 8,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -356,7 +319,7 @@
    "sandbox_roi_fee": -0.7011,
    "timing": {
     "late": [],
-    "timed": 9,
+    "timed": 8,
     "under_target": 0
    }
   }
@@ -365,5 +328,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-23T20:02:37+00:00"
+ "updated_at": "2026-11-23T20:34:25+00:00"
 }
