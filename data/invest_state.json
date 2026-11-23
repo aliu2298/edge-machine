@@ -1,8 +1,8 @@
 {
  "collector": {
-  "last_ts": 1795464001,
+  "last_ts": 1795467602,
   "markets": 106,
-  "rows_24h": 139510
+  "rows_24h": 140090
  },
  "events": [
   {
@@ -25,17 +25,6 @@
   }
  ],
  "flags": [
-  {
-   "gap": 0.02255,
-   "gap_15m": 0.02136,
-   "gap_5m": 0.02223,
-   "gap_60m": 0.0219,
-   "rth": false,
-   "spread_bp": 1.1,
-   "sym": "US500",
-   "ticker": "KXUS500PERP",
-   "ts": 1795414081
-  },
   {
    "gap": 0.03371,
    "gap_15m": 0.03258,
@@ -4914,9 +4903,17 @@
    "sym": "GILD",
    "ticker": "KXGILDPERP",
    "ts": 1795167122
+  },
+  {
+   "gap": 0.01059,
+   "rth": true,
+   "spread_bp": 210.3,
+   "sym": "WMT",
+   "ticker": "KXWMTPERP",
+   "ts": 1795467481
   }
  ],
- "last_run": "2026-11-23T20:00:09+00:00",
+ "last_run": "2026-11-23T21:00:09+00:00",
  "rules": {
   "fade_drop": {
    "act": "fade",
