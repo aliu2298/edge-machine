@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-23T01:07:21+00:00",
+ "last_run": "2026-11-23T01:17:07+00:00",
  "quotes": {
   "challenger_won_here:KXATPCHALLENGERMATCH-26NOV22KUBFAL-FAL": {
    "bet": true,
@@ -15,16 +15,16 @@
    "market_id": "KXATPCHALLENGERMATCH-26NOV22KUBFAL",
    "opponent": "Jason Kubler",
    "pick": "a",
-   "pnl": 0.0,
+   "pnl": -100.0,
    "price": 0.01,
    "price_a": 0.01,
    "price_b": null,
    "price_draw": null,
    "prob_a": null,
-   "result": null,
+   "result": "b",
    "rule": "won_here",
-   "settle_px": null,
-   "settled": null,
+   "settle_px": 0.0,
+   "settled": "2026-11-23T01:07:14.303756Z",
    "side_a": "Reece Falck",
    "side_b": "Jason Kubler",
    "source": "challenger_won_here",
@@ -32,7 +32,7 @@
    "stake": 100.0,
    "start": "2026-11-23T02:30:00+00:00",
    "start_source": "kalshi_challenger",
-   "status": "open",
+   "status": "lost",
    "team": "Reece Falck",
    "tickers": {
     "a": "KXATPCHALLENGERMATCH-26NOV22KUBFAL-FAL",
