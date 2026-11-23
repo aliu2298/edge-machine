@@ -9,6 +9,7 @@ import sys
 import nba_qlines as Q
 import nba_qlines_build as B
 import sandbox_audit
+import sandbox_build
 
 FAILS = []
 UTC = dt.timezone.utc
@@ -170,6 +171,15 @@ check("six collapsed folds, none open", (html.count('class="fold nba-qline"'), "
 check("the sections in order", [s for s in ("1q", "2q", "3q", "4q", "1h", "2h") if f'id="qlines-{s}"' in html], ["1q", "2q", "3q", "4q", "1h", "2h"])
 check("the lane record sits beside its blind control", "Blind control" in html and "Qualifying now" in html, True)
 check("the 3Q table lists the qualifying teams with hits/games", "10/10" in html and "AAA" in html, True)
+check("header: entries and the tracker's last day, not games read", ("0 entries" in html or "1 entry" in html or "entries" in html, "games read" in html, "tracker through" in html), (True, False, True))
+check("the tables carry no thead (sandbox_build.label_cells names their cells for the phone cards)", "<thead" in html, False)
+labelled = sandbox_build.label_cells(html)
+check("after labelling: the record cells carry their column names", all(f'data-l="{c}"' in labelled for c in ("Won-lost", "Return after fees", "Blind control", "Open", "Read")), True)
+check("the open team table lists only teams at 85%+ (a 40% team is in All teams only)", ('<td><b>CCC</b></td>' in B.teams_table(doc["games"], "3Q", "over"), '<td><b>CCC</b></td>' in B.teams_table(doc["games"], "3Q", "over", True)), (False, True))
+check("team codes follow Kalshi's (ESPN NY, SA, GS, NO, UTAH, WSH)", [B.code(x) for x in ("NY", "SA", "GS", "NO", "UTAH", "WSH", "MIL")], ["NYK", "SAS", "GSW", "NOP", "UTA", "WAS", "MIL"])
+check("every one of the 30 teams maps to a code the leaderboard uses", sorted(B.code(t) for t in {x for g in live for x in (g["home"], g["away"])}) == sorted(
+      "ATL BKN BOS CHA CHI CLE DAL DEN DET GSW HOU IND LAC LAL MEM MIA MIL MIN NOP NYK OKC ORL PHI PHX POR SAS SAC TOR UTA WAS".split()) if len(live) >= 200 else True, True)
+check("a game name is shown with Kalshi codes", B.game_name("NY @ GS"), "NYK @ GSW")
 check("n of 10 shows", "of 10 settled" in html, True)
 idx = B.index_html(st)
 check("the Sandbox index links each section", all(f"./nba.html#qlines-{s}" in idx for s in ("1q", "2q", "3q", "4q", "1h", "2h")), True)
