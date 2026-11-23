@@ -33,10 +33,10 @@
    "kalshi_venue": 275
   },
   "economics": {
-   "kalshi_venue": 30
+   "kalshi_venue": 33
   },
   "finance": {
-   "kalshi_venue": 46
+   "kalshi_venue": 45
   },
   "mma": {
    "kalshi_venue": 0,
@@ -61,7 +61,7 @@
     "offered": 1,
     "picked": 0
    },
-   "kalshi_venue": 76,
+   "kalshi_venue": 100,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -108,18 +108,18 @@
   },
   "soccer_ftts": {
    "ftts_lineup_lag": {
-    "offered": 24,
+    "offered": 26,
     "picked": 0
    },
    "ftts_market": {
-    "offered": 24,
-    "picked": 24
+    "offered": 26,
+    "picked": 26
    },
    "ftts_no_70_80": {
-    "offered": 24,
+    "offered": 26,
     "picked": 0
    },
-   "kalshi_venue": 24
+   "kalshi_venue": 26
   },
   "soccer_o05": {
    "kalshi_venue": 0,
@@ -201,7 +201,7 @@
    "kalshi_venue": 88,
    "mls_fade_home": {
     "offered": 6,
-    "picked": 0
+    "picked": 1
    }
   },
   "soccer_p05_cup": {
@@ -322,8 +322,8 @@
   "tennis": {
    "kalshi_venue": 20,
    "polymarket_us": 40,
-   "polymarket_us_listed": 457,
-   "polymarket_us_priced": 154
+   "polymarket_us_listed": 456,
+   "polymarket_us_priced": 153
   },
   "tennis_combo": {
    "combo": 0,
@@ -338,43 +338,43 @@
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-23T00:33:48+00:00",
-   "commodities": "2026-11-23T00:33:48+00:00",
-   "commodities_fav": "2026-11-23T00:33:48+00:00",
-   "cricket": "2026-11-23T00:33:48+00:00",
-   "crypto": "2026-11-23T00:33:48+00:00",
-   "crypto_fav": "2026-11-23T00:33:48+00:00",
-   "economics": "2026-11-23T00:33:48+00:00",
-   "finance": "2026-11-23T00:33:48+00:00",
+   "boxing": "2026-11-23T00:39:11+00:00",
+   "commodities": "2026-11-23T00:39:11+00:00",
+   "commodities_fav": "2026-11-23T00:39:11+00:00",
+   "cricket": "2026-11-23T00:39:11+00:00",
+   "crypto": "2026-11-23T00:39:11+00:00",
+   "crypto_fav": "2026-11-23T00:39:11+00:00",
+   "economics": "2026-11-23T00:39:11+00:00",
+   "finance": "2026-11-23T00:39:11+00:00",
    "mma": "2026-11-21T20:10:14+00:00",
-   "nfl": "2026-11-23T00:33:48+00:00",
-   "nhl_pl": "2026-11-23T00:33:48+00:00",
-   "nhl_rest": "2026-11-23T00:33:48+00:00",
-   "soccer": "2026-11-23T00:33:48+00:00",
-   "soccer_btts": "2026-11-23T00:33:48+00:00",
-   "soccer_btts_cup": "2026-11-23T00:33:48+00:00",
+   "nfl": "2026-11-23T00:39:11+00:00",
+   "nhl_pl": "2026-11-23T00:39:11+00:00",
+   "nhl_rest": "2026-11-23T00:39:11+00:00",
+   "soccer": "2026-11-23T00:39:11+00:00",
+   "soccer_btts": "2026-11-23T00:39:11+00:00",
+   "soccer_btts_cup": "2026-11-23T00:39:11+00:00",
    "soccer_btts_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_corners": "2026-11-23T00:33:48+00:00",
-   "soccer_ftts": "2026-11-23T00:33:48+00:00",
-   "soccer_o15": "2026-11-23T00:33:48+00:00",
-   "soccer_o15_cup": "2026-11-23T00:33:48+00:00",
+   "soccer_corners": "2026-11-23T00:39:11+00:00",
+   "soccer_ftts": "2026-11-23T00:39:11+00:00",
+   "soccer_o15": "2026-11-23T00:39:11+00:00",
+   "soccer_o15_cup": "2026-11-23T00:39:11+00:00",
    "soccer_o15_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_o25": "2026-11-23T00:33:48+00:00",
-   "soccer_o25_cup": "2026-11-23T00:33:48+00:00",
+   "soccer_o25": "2026-11-23T00:39:11+00:00",
+   "soccer_o25_cup": "2026-11-23T00:39:11+00:00",
    "soccer_o25_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_p05": "2026-11-23T00:33:48+00:00",
-   "soccer_p05_cup": "2026-11-23T00:33:48+00:00",
+   "soccer_p05": "2026-11-23T00:39:11+00:00",
+   "soccer_p05_cup": "2026-11-23T00:39:11+00:00",
    "soccer_p05_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_team1": "2026-11-23T00:33:48+00:00",
-   "soccer_team1_cup": "2026-11-23T00:33:48+00:00",
+   "soccer_team1": "2026-11-23T00:39:11+00:00",
+   "soccer_team1_cup": "2026-11-23T00:39:11+00:00",
    "soccer_team1_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_team2": "2026-11-23T00:33:48+00:00",
-   "soccer_team2_cup": "2026-11-23T00:33:48+00:00",
+   "soccer_team2": "2026-11-23T00:39:11+00:00",
+   "soccer_team2_cup": "2026-11-23T00:39:11+00:00",
    "soccer_team2_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_u35": "2026-11-23T00:33:48+00:00",
-   "soccer_u35_cup": "2026-11-23T00:33:48+00:00",
+   "soccer_u35": "2026-11-23T00:39:11+00:00",
+   "soccer_u35_cup": "2026-11-23T00:39:11+00:00",
    "soccer_u35_intl": "2026-11-17T23:27:07+00:00",
-   "tennis": "2026-11-23T00:33:48+00:00",
+   "tennis": "2026-11-23T00:39:11+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -571,7 +571,7 @@
    }
   },
   "odds_api": {
-   "at": "2026-11-23T00:33:48+00:00",
+   "at": "2026-11-23T00:39:11+00:00",
    "remaining": 175,
    "used": 325
   },
@@ -592,7 +592,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 2620,
+  "runs": 2621,
   "tennis_shortlist": {
    "audit": [
     {
@@ -604,7 +604,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-23T00:34:09+00:00"
+  "updated": "2026-11-23T00:39:30+00:00"
  },
  "quotes": [
   {
@@ -377219,7 +377219,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-23T00:33:48+00:00",
+   "close_at": "2026-11-23T00:39:11+00:00",
    "close_price": 0.6,
    "date": "2026-11-24",
    "edge": null,
@@ -412827,7 +412827,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-23T00:33:48+00:00",
+   "close_at": "2026-11-23T00:39:11+00:00",
    "close_price": 0.55,
    "date": "2026-11-25",
    "edge": null,
@@ -468136,6 +468136,74 @@
    "untraded": false,
    "url": "https://kalshi.com/markets/kxucltcorners",
    "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-23",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfwo-saitha-aahan-2026-11-23",
+   "label": "Saily Prashantkumar Thakkar vs Aahan Aahan",
+   "liquidity": null,
+   "logged": "2026-11-23T00:39:11+00:00",
+   "market_id": "aec-itfwo-saitha-aahan-2026-11-23",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.6,
+   "price_b": 0.41,
+   "price_draw": null,
+   "prob_a": 0.595,
+   "result": null,
+   "settled": null,
+   "side_a": "Saily Prashantkumar Thakkar",
+   "side_b": "Aahan Aahan",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-23T06:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfwo",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfwo-saitha-aahan-2026-11-23",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-23",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfwo-sohsad-rescha-2026-11-23",
+   "label": "Soha Sadiq vs Reshma V S S Challarapu",
+   "liquidity": null,
+   "logged": "2026-11-23T00:39:11+00:00",
+   "market_id": "aec-itfwo-sohsad-rescha-2026-11-23",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.93,
+   "price_b": 0.08,
+   "price_draw": null,
+   "prob_a": 0.925,
+   "result": null,
+   "settled": null,
+   "side_a": "Soha Sadiq",
+   "side_b": "Reshma V S S Challarapu",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-23T06:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfwo",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfwo-sohsad-rescha-2026-11-23",
+   "venue": "polymarket_us",
    "venue_start": null
   }
  ],
