@@ -14589,6 +14589,22 @@
    "yes_ask": 0.11,
    "yes_bid": 0.09
   },
+  "no:KXNBAWINMARGIN-26NOV23BKNMIN-BKN11PLUS": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "BKN11PLUS",
+   "decided_at": "2026-11-23T23:42:42+00:00",
+   "event": "KXNBAWINMARGIN-26NOV23BKNMIN",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV23",
+   "spread": 0.02,
+   "ticker": "KXNBAWINMARGIN-26NOV23BKNMIN-BKN11PLUS",
+   "tip": "2026-11-24T00:30:00+00:00",
+   "why": "NO price 0.96 outside 10-95c",
+   "yes_ask": 0.06,
+   "yes_bid": 0.04
+  },
   "no:KXNBAWINMARGIN-26NOV23BKNMIN-BKN1TO5": {
    "bot_version": "wm-nofade-v4",
    "bucket": "BKN1TO5",
@@ -15056,6 +15072,19 @@
    "why": "ceded to wm-yes-v4 (Bucket Priority bp-v3, 1-5)",
    "yes_ask": 0.13,
    "yes_bid": 0.11
+  },
+  "no:KXNBAWINMARGIN-26NOV23OKCIND-IND21PLUS": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "IND21PLUS",
+   "decided_at": "2026-11-23T23:45:11+00:00",
+   "event": "KXNBAWINMARGIN-26NOV23OKCIND",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV23",
+   "ticker": "KXNBAWINMARGIN-26NOV23OKCIND-IND21PLUS",
+   "tip": "2026-11-24T00:30:00+00:00",
+   "why": "no tight read inside the entry window"
   },
   "no:KXNBAWINMARGIN-26NOV23OKCIND-IND6TO10": {
    "P": 0.92,
@@ -26222,6 +26251,6 @@
    "yes_bid": 0.08
   }
  },
- "updated_at": "2026-11-23T23:36:05+00:00",
+ "updated_at": "2026-11-23T23:45:11+00:00",
  "version": 1
 }
