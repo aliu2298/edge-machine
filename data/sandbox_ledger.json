@@ -33,10 +33,10 @@
    "kalshi_venue": 275
   },
   "economics": {
-   "kalshi_venue": 33
+   "kalshi_venue": 30
   },
   "finance": {
-   "kalshi_venue": 30
+   "kalshi_venue": 46
   },
   "mma": {
    "kalshi_venue": 0,
@@ -61,7 +61,7 @@
     "offered": 1,
     "picked": 0
    },
-   "kalshi_venue": 61,
+   "kalshi_venue": 76,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -108,18 +108,18 @@
   },
   "soccer_ftts": {
    "ftts_lineup_lag": {
-    "offered": 8,
+    "offered": 24,
     "picked": 0
    },
    "ftts_market": {
-    "offered": 8,
-    "picked": 8
+    "offered": 24,
+    "picked": 24
    },
    "ftts_no_70_80": {
-    "offered": 8,
+    "offered": 24,
     "picked": 0
    },
-   "kalshi_venue": 8
+   "kalshi_venue": 24
   },
   "soccer_o05": {
    "kalshi_venue": 0,
@@ -201,7 +201,7 @@
    "kalshi_venue": 88,
    "mls_fade_home": {
     "offered": 6,
-    "picked": 1
+    "picked": 0
    }
   },
   "soccer_p05_cup": {
@@ -322,8 +322,8 @@
   "tennis": {
    "kalshi_venue": 20,
    "polymarket_us": 40,
-   "polymarket_us_listed": 456,
-   "polymarket_us_priced": 153
+   "polymarket_us_listed": 457,
+   "polymarket_us_priced": 154
   },
   "tennis_combo": {
    "combo": 0,
@@ -338,43 +338,43 @@
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-23T00:25:10+00:00",
-   "commodities": "2026-11-23T00:25:10+00:00",
-   "commodities_fav": "2026-11-23T00:25:10+00:00",
-   "cricket": "2026-11-23T00:25:10+00:00",
-   "crypto": "2026-11-23T00:25:10+00:00",
-   "crypto_fav": "2026-11-23T00:25:10+00:00",
-   "economics": "2026-11-23T00:25:10+00:00",
-   "finance": "2026-11-23T00:25:10+00:00",
+   "boxing": "2026-11-23T00:33:48+00:00",
+   "commodities": "2026-11-23T00:33:48+00:00",
+   "commodities_fav": "2026-11-23T00:33:48+00:00",
+   "cricket": "2026-11-23T00:33:48+00:00",
+   "crypto": "2026-11-23T00:33:48+00:00",
+   "crypto_fav": "2026-11-23T00:33:48+00:00",
+   "economics": "2026-11-23T00:33:48+00:00",
+   "finance": "2026-11-23T00:33:48+00:00",
    "mma": "2026-11-21T20:10:14+00:00",
-   "nfl": "2026-11-23T00:25:10+00:00",
-   "nhl_pl": "2026-11-23T00:25:10+00:00",
-   "nhl_rest": "2026-11-23T00:25:10+00:00",
-   "soccer": "2026-11-23T00:25:10+00:00",
-   "soccer_btts": "2026-11-23T00:25:10+00:00",
-   "soccer_btts_cup": "2026-11-23T00:25:10+00:00",
+   "nfl": "2026-11-23T00:33:48+00:00",
+   "nhl_pl": "2026-11-23T00:33:48+00:00",
+   "nhl_rest": "2026-11-23T00:33:48+00:00",
+   "soccer": "2026-11-23T00:33:48+00:00",
+   "soccer_btts": "2026-11-23T00:33:48+00:00",
+   "soccer_btts_cup": "2026-11-23T00:33:48+00:00",
    "soccer_btts_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_corners": "2026-11-23T00:25:10+00:00",
-   "soccer_ftts": "2026-11-23T00:25:10+00:00",
-   "soccer_o15": "2026-11-23T00:25:10+00:00",
-   "soccer_o15_cup": "2026-11-23T00:25:10+00:00",
+   "soccer_corners": "2026-11-23T00:33:48+00:00",
+   "soccer_ftts": "2026-11-23T00:33:48+00:00",
+   "soccer_o15": "2026-11-23T00:33:48+00:00",
+   "soccer_o15_cup": "2026-11-23T00:33:48+00:00",
    "soccer_o15_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_o25": "2026-11-23T00:25:10+00:00",
-   "soccer_o25_cup": "2026-11-23T00:25:10+00:00",
+   "soccer_o25": "2026-11-23T00:33:48+00:00",
+   "soccer_o25_cup": "2026-11-23T00:33:48+00:00",
    "soccer_o25_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_p05": "2026-11-23T00:25:10+00:00",
-   "soccer_p05_cup": "2026-11-23T00:25:10+00:00",
+   "soccer_p05": "2026-11-23T00:33:48+00:00",
+   "soccer_p05_cup": "2026-11-23T00:33:48+00:00",
    "soccer_p05_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_team1": "2026-11-23T00:25:10+00:00",
-   "soccer_team1_cup": "2026-11-23T00:25:10+00:00",
+   "soccer_team1": "2026-11-23T00:33:48+00:00",
+   "soccer_team1_cup": "2026-11-23T00:33:48+00:00",
    "soccer_team1_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_team2": "2026-11-23T00:25:10+00:00",
-   "soccer_team2_cup": "2026-11-23T00:25:10+00:00",
+   "soccer_team2": "2026-11-23T00:33:48+00:00",
+   "soccer_team2_cup": "2026-11-23T00:33:48+00:00",
    "soccer_team2_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_u35": "2026-11-23T00:25:10+00:00",
-   "soccer_u35_cup": "2026-11-23T00:25:10+00:00",
+   "soccer_u35": "2026-11-23T00:33:48+00:00",
+   "soccer_u35_cup": "2026-11-23T00:33:48+00:00",
    "soccer_u35_intl": "2026-11-17T23:27:07+00:00",
-   "tennis": "2026-11-23T00:25:10+00:00",
+   "tennis": "2026-11-23T00:33:48+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -571,7 +571,7 @@
    }
   },
   "odds_api": {
-   "at": "2026-11-23T00:25:10+00:00",
+   "at": "2026-11-23T00:33:48+00:00",
    "remaining": 175,
    "used": 325
   },
@@ -592,7 +592,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 2619,
+  "runs": 2620,
   "tennis_shortlist": {
    "audit": [
     {
@@ -604,7 +604,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-23T00:25:33+00:00"
+  "updated": "2026-11-23T00:34:09+00:00"
  },
  "quotes": [
   {
@@ -377219,7 +377219,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-23T00:25:10+00:00",
+   "close_at": "2026-11-23T00:33:48+00:00",
    "close_price": 0.6,
    "date": "2026-11-24",
    "edge": null,
@@ -412827,7 +412827,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-23T00:25:10+00:00",
+   "close_at": "2026-11-23T00:33:48+00:00",
    "close_price": 0.55,
    "date": "2026-11-25",
    "edge": null,
@@ -458760,8 +458760,8 @@
    "price_b": 0.3,
    "price_draw": null,
    "prob_a": 0.705,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-23T00:34:06+00:00",
    "side_a": "Agustin Eduardo Cuellar Lorberg",
    "side_b": "Felipe De Dios",
    "source": "polymarket_us",
@@ -458770,7 +458770,7 @@
    "stake": 0.0,
    "start": "2026-11-22T20:30:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfme",
    "uncovered": null,
    "untraded": false,
@@ -468095,6 +468095,46 @@
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxaaagascdct",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-24",
+   "edge": -0.05,
+   "espn_away": "Real Betis",
+   "espn_home": "Slovan Bratislava",
+   "event": "KXUCLTCORNERS-26NOV24SLORBB",
+   "id": "corners_market:KXUCLTCORNERS-26NOV24SLORBB-RBB7",
+   "kalshi_title": "Real Betis: 7+",
+   "label": "Slovan Bratislava v Real Betis: Real Betis 7+ corners",
+   "league": "Champions League",
+   "liquidity": null,
+   "logged": "2026-11-23T00:33:48+00:00",
+   "market_id": "KXUCLTCORNERS-26NOV24SLORBB-RBB7",
+   "opponent": "Slovan Bratislava",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.48,
+   "price_b": 0.62,
+   "price_draw": null,
+   "prob_a": 0.43,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "corners_market",
+   "sport": "soccer_corners",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-24T20:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "Real Betis",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxucltcorners",
    "venue": "kalshi_binary",
    "venue_start": null
   }
