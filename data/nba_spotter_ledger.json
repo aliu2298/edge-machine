@@ -1,7 +1,7 @@
 {
  "box_through": "2026-11-22",
  "error": null,
- "last_run": "2026-11-23T01:57:56.746254+00:00",
+ "last_run": "2026-11-23T02:00:28.913259+00:00",
  "looks": {
   "401909305": {
    "at": "2026-11-20T22:45:25.302540+00:00",
@@ -3117,6 +3117,7 @@
     {
      "bid": 0.58,
      "entered": "2026-11-22T22:45:24.673148+00:00",
+     "fee_in": 0.0171,
      "game": "DEN @ CHI",
      "game_id": "401910032",
      "id": "spotter_fade_blind:KXNBAREB-26NOV22DENCHI-CHIJGIDDEY3-6",
@@ -3128,15 +3129,20 @@
       "Caleb Wilson"
      ],
      "p": null,
+     "payout": 0.0,
      "pid": "4871145",
      "player": "Josh Giddey",
      "price": 0.42,
+     "profit": -0.4371,
+     "ret": -1.0,
      "rule": "spotter_fade_blind",
      "rung": 6,
+     "settled": "2026-11-23T02:00:28.913259+00:00",
      "side": "no",
+     "sold": false,
      "start": "2026-11-23T00:00:00+00:00",
      "stat": "reb",
-     "status": "open",
+     "status": "lost",
      "team": "CHI",
      "ticker": "KXNBAREB-26NOV22DENCHI-CHIJGIDDEY3-6",
      "unit": "rebounds",
@@ -8186,14 +8192,16 @@
      "matches": "spotter_spike:KXNBAPTS-26NOV22OKCMIA-OKCJMCCAIN3-20",
      "night": "2026-11-22",
      "p": null,
+     "payout": 0.49,
      "pid": "3032977",
      "player": "Giannis Antetokounmpo",
      "price": 0.46,
      "rule": "spotter_spike_blind",
      "rung": 1,
+     "settled": "2026-11-23T02:00:28.913259+00:00",
      "start": "2026-11-22T23:00:00+00:00",
      "stat": "m3",
-     "status": "open",
+     "status": "void",
      "target": 0.92,
      "team": "MIA",
      "ticker": "KXNBA3PT-26NOV22OKCMIA-MIAGANTETOKOUNMPO7-1",
@@ -8234,12 +8242,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-11-21T11:44:09.541466+00:00",
-   "box": 0,
-   "due": 0,
-   "new": 0
-  },
   {
    "at": "2026-11-21T16:30:29.220213+00:00",
    "box": 0,
@@ -8536,6 +8538,12 @@
   },
   {
    "at": "2026-11-23T01:57:56.746254+00:00",
+   "box": 0,
+   "due": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-23T02:00:28.913259+00:00",
    "box": 0,
    "due": 0,
    "new": 0
