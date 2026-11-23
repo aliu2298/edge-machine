@@ -476,6 +476,74 @@ def _cells(heads, cells):
     return "".join(f'<td{"" if i == 0 else " class=" + chr(34) + "num" + chr(34)} data-l="{h}">{esc(c)}</td>' for i, (h, c) in enumerate(zip(heads, cells)))
 
 
+SHADOW_TITLES = {"T1": "T1 · team 1+ form", "A7": "A7 · UCL over 3.5", "ARG": "Argentina over 1.5", "BRA": "Brasileirao over 1.5"}
+
+
+def shadow_rows(states=None):
+    """One row per shadow x source lane (shadows.py, 2026-11-21): [(kind, lane, label, stats, in_sample)]. kind is "btts" or "ht". Never raises."""
+    out = []
+    try:
+        import shadows as SH
+        for lane, meta in SH.LANES.items():
+            st = (states or {}).get(meta["group"]) or SH.load(meta["group"])
+            picks = SH.source_picks(lane)
+            name = "2H BTTS YES" if meta["kind"] == "2h" else "BTTS YES"
+            out.append(("btts", lane, f'{SHADOW_TITLES.get(lane, lane)} · {name}', SH.btts_stats(st, lane), meta["in_sample"]["btts"]))
+            out.append(("ht", lane, f'{SHADOW_TITLES.get(lane, lane)} · half-time check', SH.ht_stats(st, lane, picks), meta["in_sample"]["ht"]))
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"soccer_lanes: shadow rows failed: {type(exc).__name__}: {exc}")
+    return out
+
+
+def shadows_summary(rows=None):
+    """(priced or checked, no quote or no bid) over every shadow, for the Sandbox index line."""
+    rows = shadow_rows() if rows is None else rows
+    n = sum((r[3]["matches"] - r[3]["no_quote"]) if r[0] == "btts" else r[3]["checked"] for r in rows)
+    nq = sum(r[3]["no_quote"] if r[0] == "btts" else r[3]["no_bid"] for r in rows)
+    return n, nq
+
+
+def shadows_section(states=None):
+    """The Soccer page's own "Shadows" block, near the top (2026-11-22, Olu: they were only inside each source lane's card): one row per
+    shadow x source lane with what was checked, no quote, won-lost or sold-held, the return and the in-sample figure. Paper, not counted."""
+    rows = shadow_rows(states)
+    if not rows:
+        return ""
+    p1 = lambda x: "—" if x is None else f"{x * 100:.1f}%"                         # noqa: E731
+    pr = lambda x: "—" if x is None else f"{x * 100:+.1f}%".replace("-", "−")     # noqa: E731
+    bh = ("Shadow", "Priced", "No quote", "Won-lost", "Avg YES price", "Return")
+    hh = ("Shadow", "Checked", "Sold-held-none", "Avg price", "Return", "Hold return")
+    bb = hb = ""
+    ins_row = lambda ins: ('<tr class="mut"><td colspan="6" data-l="In-sample, not counted">In-sample, not counted: ' + esc(ins or "no figure") + "</td></tr>")  # noqa: E731
+    for kind, lane, label, x, ins in rows:
+        if kind == "btts":
+            cells = (label, x["matches"] - x["no_quote"], x["no_quote"], f'{x["won"]}-{x["lost"]}', p1(x["avg_price"]), pr(x["ret"]))
+            bb += f'<tr data-shadow="{esc(lane)}-btts">' + _cells(bh, cells) + "</tr>" + ins_row(ins)
+        else:
+            cells = (label, x["checked"], f'{x["sold"]}-{x["held"]}-{x["no_bid"]}', p1(x["avg_price"]), pr(x["ret"]), pr(x["hold_ret"]))
+            hb += f'<tr data-shadow="{esc(lane)}-ht">' + _cells(hh, cells) + "</tr>" + ins_row(ins)
+    tbl = lambda heads, body: ('<div class="tbl"><table><thead><tr>' + "".join(f"<th>{h}</th>" for h in heads) + f"</tr></thead><tbody>{body}</tbody></table></div>")  # noqa: E731
+    n, nq = shadows_summary(rows)
+    words = ("Paper, not counted, beside each source lane's headline record, which never changes. BTTS YES: at the entry minute, the YES ask on the match's "
+             "second-half (T1, A7) or full-game (Argentina, Brasileirao) both-teams-to-score market, spread 3c or less else no quote, held to settlement. "
+             "Half-time check (columns: sold-held-none is sold, held, no bid; return is the shadow's, hold return the same entries held): at half-time, sell if the backed team has not scored (T1, at its team-total YES bid) or the match is 0-0 (A7, Argentina, Brasileirao, at "
+             "the over's YES bid), else hold; no bid counts as hold. Each lane's own card keeps the same figures.")
+    return ('<section id="shadows" class="sp-section"><details class="fold" open><summary><h3>Shadows</h3>'
+            f'<span class="sm mut">· {len(rows)} rows · {n} checked or priced · {nq} no quote or no bid · paper, not counted</span></summary>'
+            f'<p class="sm">{esc(words)}</p>{tbl(bh, bb)}{tbl(hh, hb)}</details></section>')
+
+
+def shadows_index_html():
+    """The Sandbox page's index line for the Soccer page's Shadows block."""
+    rows = shadow_rows()
+    if not rows:
+        return ""
+    n, nq = shadows_summary(rows)
+    return ('<section id="shadows-index"><h2>Shadows</h2><p class="sm">Half-time checks and second-half or full-game BTTS shadows on T1, A7, Argentina and '
+            f'Brasileirao over 1.5 · {len(rows)} rows · {n} checked or priced so far, {nq} with no quote or no bid · paper, not counted · '
+            '<a href="./soccer.html#shadows">Open the Shadows block on the Soccer page</a></p></section>')
+
+
 def flipped_rows(state=None):
     """Flipped Unders (flipped_unders.py, 2026-11-21): the over side of C5/C6/C7/B4's selections, paper. Percentages only."""
     import flipped_unders as FU

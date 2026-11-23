@@ -2399,6 +2399,12 @@ def chaos_html():
         html += climate_lanes_build.index_html()
     except Exception:                                           # noqa: BLE001
         pass
+    # The Soccer shadows (2026-11-22): one index line linking to the Shadows block on the Soccer page.
+    try:
+        import soccer_lanes
+        html += soccer_lanes.shadows_index_html()
+    except Exception:                                           # noqa: BLE001
+        pass
     # The paper watches (bs_bid, ko_bid, nl_dump, mentions_dump; 2026-11-14): one index row each, linking to the card on its sport page.
     try:
         import watch_index

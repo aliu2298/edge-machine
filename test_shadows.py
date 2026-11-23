@@ -134,5 +134,24 @@ check("BRA has no in-sample figure", "no figure" in soccer_lanes.shadow_html("BR
 check("no guarded phrase", sandbox_audit.COPY_RE.findall(html + open("shadows.py").read()), [])
 check("the three source rows carry the fold (A7, T1, ARG/BRA)", all("shadow_html(" in open("soccer_lanes.py").read() for _ in range(1)), True)
 
+print("\nthe Shadows block (2026-11-22, Olu: they were only inside each source lane's card)")
+_real_picks = SH.source_picks
+SH.source_picks = lambda lane, root=None: t1_done if lane == "T1" else []
+try:
+    rows8 = soccer_lanes.shadow_rows({"team": st, "soccer": dict(btts={}, ht={}, runs=[])})
+    block = soccer_lanes.shadows_section({"team": st, "soccer": dict(btts={}, ht={}, runs=[])})
+    idx = soccer_lanes.shadows_index_html()
+finally:
+    SH.source_picks = _real_picks
+check("one row per shadow x source lane: T1, A7, ARG, BRA, each BTTS and half-time", [(k, l) for k, l, _n, _x, _i in rows8],
+      [(k, l) for l in ("T1", "A7", "ARG", "BRA") for k in ("btts", "ht")])
+check("the block is its own section with id shadows, and carries every row", ('id="shadows"' in block, block.count("data-shadow=")), (True, 8))
+check("T1's half-time row reads checked, sold-held-no bid and both returns", all(x in block for x in ("T1 · team 1+ form · half-time check", "1-1-0")), True)
+check("the in-sample figure sits beside the row", all(x in block for x in ("14-13 at 43c, +17%", "no figure")), True)
+check("percentages only, no guarded phrase", ("$" in block, sandbox_audit.COPY_RE.findall(block + idx)), (False, []))
+check("the Sandbox index line links to the block", 'href="./soccer.html#shadows"' in idx and 'id="shadows-index"' in idx, True)
+import soccer_build
+check("the Soccer page puts the block ahead of the Rules", 0 < soccer_build.build().find('id="shadows"') < soccer_build.build().find('<section id="rules"'), True)
+
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
