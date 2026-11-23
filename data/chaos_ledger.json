@@ -195529,7 +195529,8 @@
     "KXATPCHALLENGERMATCH-26NOV22VIRSAM": 0,
     "KXATPCHALLENGERMATCH-26NOV22VOEOVE": 0,
     "KXATPCHALLENGERMATCH-26NOV22WEIGUR": 0,
-    "KXATPCHALLENGERMATCH-26NOV22ZHUCOO": 1
+    "KXATPCHALLENGERMATCH-26NOV22ZHUCOO": 1,
+    "KXATPCHALLENGERMATCH-26NOV23FUNBEL": 1
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -205158,6 +205159,41 @@
      "stop": null,
      "target": null,
      "ticker": "KXATPCHALLENGERMATCH-26NOV22CHUICH-ICH",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": false
+    },
+    {
+     "ask": {
+      "book": null,
+      "first_quotes": false,
+      "how": "print",
+      "last_trade": 0.27,
+      "printed": 959.82,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "cost": 0.2838,
+     "entry": 0.27,
+     "entry_i": 636,
+     "entry_ts": 1795416420,
+     "event": "KXATPCHALLENGERMATCH-26NOV23FUNBEL",
+     "exit": 0.0,
+     "exit_i": 769,
+     "exit_key": "hold",
+     "exit_ts": 1795424400,
+     "hours": 1,
+     "night": "2026-11-23",
+     "profit": -0.2838,
+     "reason": "settled",
+     "roi": -1.0,
+     "side": "yes",
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1795420020,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26NOV23FUNBEL-FUN",
      "unreachable": false,
      "variant": "t1h_hold",
      "won": false
@@ -230373,7 +230409,8 @@
     "KXATPCHALLENGERMATCH-26NOV22VIRSAM": 0,
     "KXATPCHALLENGERMATCH-26NOV22VOEOVE": 0,
     "KXATPCHALLENGERMATCH-26NOV22WEIGUR": 0,
-    "KXATPCHALLENGERMATCH-26NOV22ZHUCOO": 0
+    "KXATPCHALLENGERMATCH-26NOV22ZHUCOO": 0,
+    "KXATPCHALLENGERMATCH-26NOV23FUNBEL": 0
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -402584,15 +402621,8 @@
    "watch": false
   }
  },
- "last_run": "2026-11-23T09:00:43.108772+00:00",
+ "last_run": "2026-11-23T09:30:39.139302+00:00",
  "runs": [
-  {
-   "at": "2026-11-10T10:00:22.787318+00:00",
-   "new": {
-    "challenger_cheap_hold_base": 1,
-    "challenger_won_here_hold": 0
-   }
-  },
   {
    "at": "2026-11-10T17:06:36.495450+00:00",
    "new": {
@@ -402911,6 +402941,13 @@
     "challenger_cheap_hold_base": 9,
     "challenger_won_here_hold": 0,
     "nba_winmargin_live": 46
+   }
+  },
+  {
+   "at": "2026-11-23T09:30:39.139302+00:00",
+   "new": {
+    "challenger_cheap_hold_base": 1,
+    "challenger_won_here_hold": 0
    }
   }
  ],
