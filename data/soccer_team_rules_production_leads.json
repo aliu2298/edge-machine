@@ -9,7 +9,7 @@
    0.97
   ]
  },
- "board_built_at": "2026-11-23T02:01:21+00:00",
+ "board_built_at": "2026-11-23T02:02:09+00:00",
  "collector_error": null,
  "collector_healthy": {
   "st_t1h": true,
@@ -91,6 +91,78 @@
    "sport": "soccer_team2",
    "status": "hit"
   },
+  "2026-11-22|Chicago Fire FC|Charlotte FC|Charlotte FC to score under 2.5 \u00b7 O+D+ v O+D+ \u00b7 team 3+ goals \u00b7 NO": {
+   "away": "Charlotte FC",
+   "bet": {
+    "kind": "team_lte",
+    "n": 2,
+    "team": "Charlotte FC"
+   },
+   "date": "2026-11-22",
+   "edge_at_log": null,
+   "first_seen": "2026-11-22",
+   "headline": "Charlotte FC to score under 2.5",
+   "home": "Chicago Fire FC",
+   "id": "2026-11-22|Chicago Fire FC|Charlotte FC|Charlotte FC to score under 2.5 \u00b7 O+D+ v O+D+ \u00b7 team 3+ goals \u00b7 NO",
+   "kickoff": "2026-11-22T23:30Z",
+   "lane": "production",
+   "league": "MLS",
+   "match": "Chicago Fire FC v Charlotte FC",
+   "pair": "st_t7|soccer_team3",
+   "price_at_log": 0.87,
+   "published_at": "2026-11-23T02:02:09+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Charlotte FC to score under 2.5",
+    "event": "KXMLSTEAMTOTAL-26NOV22CHICLT",
+    "market": "KXMLSTEAMTOTAL-26NOV22CHICLT-CLT3",
+    "outcome": "Charlotte over 2.5 goals",
+    "outcome_side": "no",
+    "price_at_log": 0.87,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "st_t7:KXMLSTEAMTOTAL-26NOV22CHICLT-CLT3",
+   "source": "st_t7",
+   "sport": "soccer_team3",
+   "status": "hit"
+  },
+  "2026-11-22|Chicago Fire FC|Charlotte FC|Chicago Fire FC to score under 2.5 \u00b7 O+D+ v O+D+ \u00b7 team 3+ goals \u00b7 NO": {
+   "away": "Charlotte FC",
+   "bet": {
+    "kind": "team_lte",
+    "n": 2,
+    "team": "Chicago Fire FC"
+   },
+   "date": "2026-11-22",
+   "edge_at_log": null,
+   "first_seen": "2026-11-22",
+   "headline": "Chicago Fire FC to score under 2.5",
+   "home": "Chicago Fire FC",
+   "id": "2026-11-22|Chicago Fire FC|Charlotte FC|Chicago Fire FC to score under 2.5 \u00b7 O+D+ v O+D+ \u00b7 team 3+ goals \u00b7 NO",
+   "kickoff": "2026-11-22T23:30Z",
+   "lane": "production",
+   "league": "MLS",
+   "match": "Chicago Fire FC v Charlotte FC",
+   "pair": "st_t7|soccer_team3",
+   "price_at_log": 0.62,
+   "published_at": "2026-11-23T02:02:09+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Chicago Fire FC to score under 2.5",
+    "event": "KXMLSTEAMTOTAL-26NOV22CHICLT",
+    "market": "KXMLSTEAMTOTAL-26NOV22CHICLT-CHI3",
+    "outcome": "Chicago Fire over 2.5 goals",
+    "outcome_side": "no",
+    "price_at_log": 0.62,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "st_t7:KXMLSTEAMTOTAL-26NOV22CHICLT-CHI3",
+   "source": "st_t7",
+   "sport": "soccer_team3",
+   "status": "hit"
+  },
   "2026-11-22|FC Augsburg|Mainz|FC Augsburg to score under 2.5 \u00b7 O+D+ v O+D+ \u00b7 team 3+ goals \u00b7 NO": {
    "away": "Mainz",
    "bet": {
@@ -161,18 +233,18 @@
    "ready_at": "2026-10-29T00:59:00+00:00",
    "route": "moved by hand on 2026-10-28",
    "routing": {
-    "leads": 1,
+    "leads": 3,
     "problem": null,
-    "routed": 1,
+    "routed": 3,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 7,
-   "sandbox_roi": 0.0842,
-   "sandbox_roi_fee": 0.0842,
+   "sandbox_n": 9,
+   "sandbox_roi": 0.1444,
+   "sandbox_roi_fee": 0.1444,
    "timing": {
     "late": [],
     "timed": 0,
@@ -184,5 +256,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-23T02:01:21+00:00"
+ "updated_at": "2026-11-23T02:02:09+00:00"
 }
