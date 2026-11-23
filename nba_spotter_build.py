@@ -78,6 +78,16 @@ def picks_html(state, now):
             f'<details class="section-disclosure"><summary><b>Graded picks</b><span>latest 30</span></summary>{HEAD.format(body)}</details>')
 
 
+def summary_line(state):
+    """One line for the collapsed section: each board's return after fees against its blind control, and how far the 200-pick read is."""
+    parts = []
+    for board in S.BOARDS:
+        a, b = S.stats(_picks(state, board)), S.stats(_picks(state, S.BLIND[board]))
+        name = S.NAMES[board].replace("NBA Spotter, ", "").split(" (")[0]
+        parts.append(f"{name} {_pct(a['ret'], True, 1)} v blind {_pct(b['ret'], True, 1)} ({a['n']} graded)")
+    return " · ".join(parts)
+
+
 def section(state=None, now=None):
     state = state if state is not None else S.load()
     now = now or dt.datetime.now(dt.timezone.utc)
@@ -85,7 +95,7 @@ def section(state=None, now=None):
     last = state.get("last_run")
     err = f" · {esc(state['error'])}" if state.get("error") else ""
     return f"""<section id="spotter" class="sp-section">
-<div class="sp-section-head"><h2>NBA Spotter (Sandbox)</h2><span class="sm mut">paper · {len(looks)} read</span></div>
+<details class="fold nba-spotter" id="spotter-fold"><summary><h3>NBA Spotter (Sandbox)</h3><span class="sm mut">· paper · {len(looks)} read · {esc(summary_line(state))} · read once at {S.READ_AT} graded picks a board</span></summary>
 <p class="sm">Paper only, on Kalshi player props. A frozen model scores every priced player rung about an hour before tip and enters three boards a night, up to 8 each. Hold: the model's chance is 5+ points above the ask, held to the end. Spike: rungs at 49c or less ranked by the spike model, with a paper sell at 2x. Fade (from Nov 19): buy NO where the model's chance is 5+ points below the YES ask, at the real NO ask of 90c or less, held to the end. Each board has a blind control: a random rung in the same game at about the same price with the same exit (the fade's on the NO side).</p>
 {records_html(state)}
 {picks_html(state, now)}
@@ -93,4 +103,5 @@ def section(state=None, now=None):
 <p class="sm">Model: fitted once on Oct 20 to Nov 6 2026 and frozen, no refit. Inputs known at entry only: the ask, the injury report's Out list, box scores to date, last season, the spread. Rungs 5c to 60c, spread 5c or less, one rung a player-stat a night, 4 a game at most so the first game does not take every slot. The sell fills only on a later trade print strictly above the target, 25 seconds after the entry at the earliest; fees on both legs; unsold means held to the end.</p>
 <p class="sm">Read once, at {S.READ_AT} graded picks a board. Keep only if the return is above zero after fees, t is 2 or better by night, and the board beats its blind control by 2 or more points a contract. Offline, on Nov 7 to 16, neither board reached t 2 (hold +3% with t 0.7, spike +9% with t 0.7); this is the forward test.</p></details>
 <p class="sm mut">Last read {esc(fmt.when(last) if last else "not yet")}{err}.</p>
+</details>
 </section>"""

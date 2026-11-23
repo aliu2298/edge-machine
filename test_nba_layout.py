@@ -45,6 +45,13 @@ check("five tiles: open bets, active lanes, since-Production record and ROI, liv
        [x for x in re.findall(r'<div class="tile"><b[^>]*>.*?</b><span>(.*?)</span>', main)][4]])
 check("a stage filter (no scope chips)", ('data-filter="stage"' in main, 'data-filter="scope"' in main), (True, False))
 
+sp = main[main.find('<section id="spotter"'):main.find('<section id="research"')]
+check("the Spotter is one collapsed fold (2026-11-22): closed by default, its summary line names the three boards against their blind controls",
+      (sp.count("<details"), "<details class=\"fold nba-spotter\" id=\"spotter-fold\">" in sp, " open" in sp[:sp.find("</summary>")],
+       re.sub(r"<[^>]+>", "", sp[sp.find("<summary>"):sp.find("</summary>")]).count(" v blind ")),
+      (sp.count("<details"), True, False, 3))
+check("the Spotter's records table, open picks and graded picks all sit inside the fold", sp.find("<details") < sp.find("<table") and sp.rfind("</details>") > sp.rfind("</table>"), True)
+
 print("\nthe Rules table")
 r = main[main.find('<section id="rules"'):main.find('<section id="spotter"')]
 rule_rows = re.findall(r'<details class="sp-rule[^"]*" id="([^"]+)" data-source="([^"]+)"[^>]*data-stage="(\w+)"', r)
