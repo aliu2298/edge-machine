@@ -1,30 +1,6 @@
 {
  "calendar": [
   {
-   "date": "2026-11-12",
-   "eps_forecast": "$4.06",
-   "fiscal_q": "Oct/2026",
-   "kpi": [],
-   "mentions": [],
-   "n_ests": "10",
-   "name": "Applied Materials, Inc.",
-   "perp": "KXAMATPERP",
-   "sym": "AMAT",
-   "time": "after-hours"
-  },
-  {
-   "date": "2026-11-12",
-   "eps_forecast": "$1.15",
-   "fiscal_q": "Oct/2026",
-   "kpi": [],
-   "mentions": [],
-   "n_ests": "8",
-   "name": "Cisco Systems, Inc.",
-   "perp": "KXCSCOPERP",
-   "sym": "CSCO",
-   "time": "after-hours"
-  },
-  {
    "date": "2026-11-17",
    "eps_forecast": "$1.67",
    "fiscal_q": "Sep/2026",
@@ -227,20 +203,6 @@
    "time": "after-hours"
   },
   {
-   "date": "2026-12-09",
-   "eps_forecast": "$1.56",
-   "fiscal_q": "Nov/2026",
-   "kpi": [],
-   "mentions": [
-    "KXEARNINGSMENTIONORCL-26DEC10"
-   ],
-   "n_ests": "10",
-   "name": "Oracle Corporation",
-   "perp": "KXORCLPERP",
-   "sym": "ORCL",
-   "time": "not-supplied"
-  },
-  {
    "date": "2026-12-10",
    "eps_forecast": "$4.89",
    "fiscal_q": "Nov/2026",
@@ -258,9 +220,23 @@
    "perp": "KXCOSTPERP",
    "sym": "COST",
    "time": "after-hours"
+  },
+  {
+   "date": "2026-12-14",
+   "eps_forecast": "$1.56",
+   "fiscal_q": "Nov/2026",
+   "kpi": [],
+   "mentions": [
+    "KXEARNINGSMENTIONORCL-26DEC10"
+   ],
+   "n_ests": "10",
+   "name": "Oracle Corporation",
+   "perp": "KXORCLPERP",
+   "sym": "ORCL",
+   "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-23T04:02:04Z",
+ "calendar_at": "2026-11-23T05:00:28Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -5885,9 +5861,19 @@
     "width": 678571.4285714328
    },
    "sym": "COST"
+  },
+  {
+   "at": "2026-11-23T05:01:23Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 678571.4285714328
+   },
+   "sym": "COST"
   }
  ],
- "last_run": "2026-11-23T04:03:00Z",
+ "last_run": "2026-11-23T05:01:25Z",
  "predictions": [
   {
    "call": {
@@ -6560,9 +6546,13 @@
    "random_side": 1,
    "reason": "Up into the 2026-12-09 report (not-supplied).",
    "report": "2026-12-09",
+   "report_now": "2026-12-14",
    "report_time": "not-supplied",
    "side": 1,
-   "sym": "ORCL"
+   "status": "void",
+   "sym": "ORCL",
+   "void_at": "2026-11-23T05:01:24Z",
+   "void_reason": "report date moved"
   },
   {
    "family": "kpi_drift",
@@ -6697,6 +6687,20 @@
    "side": 0,
    "status": "no_call",
    "sym": "WMT"
+  },
+  {
+   "entry_due": "2026-12-07T21:00:00Z",
+   "exit_due": "2026-12-14T21:00:00Z",
+   "family": "runup",
+   "id": "runup:ORCL:2026-12-14",
+   "logged_at": "2026-11-23T05:01:24Z",
+   "perp": "KXORCLPERP",
+   "random_side": -1,
+   "reason": "Up into the 2026-12-14 report (after-hours).",
+   "report": "2026-12-14",
+   "report_time": "after-hours",
+   "side": 1,
+   "sym": "ORCL"
   }
  ],
  "registered": "2026-11-07",
