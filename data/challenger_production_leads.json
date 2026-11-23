@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-23T00:16:12+00:00",
+ "board_built_at": "2026-11-23T00:31:17+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -64,7 +64,7 @@
    "kickoff": "2026-11-23T02:30Z",
    "lane": "production",
    "last_seen": "2026-11-23",
-   "last_seen_at": "2026-11-23T00:16:12+00:00",
+   "last_seen_at": "2026-11-23T00:31:17+00:00",
    "league": "Tennis",
    "match": "Ethan Cook v Evan Zhu",
    "pair": "challenger_won_here|tennis",
@@ -101,11 +101,11 @@
    "kickoff": "2026-11-23T02:30Z",
    "lane": "production",
    "last_seen": "2026-11-23",
-   "last_seen_at": "2026-11-23T00:16:12+00:00",
+   "last_seen_at": "2026-11-23T00:31:17+00:00",
    "league": "Tennis",
    "match": "Reece Falck v Jason Kubler",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.2,
+   "price_at_log": 0.04,
    "published_at": "2026-11-22T23:31:06+00:00",
    "published_late": false,
    "published_min_before_kickoff": 178,
@@ -115,7 +115,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV22KUBFAL-FAL",
     "outcome": "Reece Falck",
     "outcome_side": "yes",
-    "price_at_log": 0.2,
+    "price_at_log": 0.04,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV22KUBFAL-FAL",
@@ -155,5 +155,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-23T00:16:12+00:00"
+ "updated_at": "2026-11-23T00:31:17+00:00"
 }
