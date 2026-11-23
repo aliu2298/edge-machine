@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-23T23:16:17+00:00",
+ "last_run": "2026-11-23T23:31:14+00:00",
  "quotes": {
   "challenger_won_here:KXATPCHALLENGERMATCH-26NOV22KUBFAL-FAL": {
    "bet": true,
@@ -131,6 +131,51 @@
    "titles": {
     "a": "Ethan Cook",
     "b": "Evan Zhu"
+   },
+   "tournament": "ATP Challenger Playford City",
+   "untraded": false,
+   "url": "",
+   "venue": "kalshi"
+  },
+  "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23DELDEL2-DEL": {
+   "bet": true,
+   "date": "2026-11-24",
+   "edge": null,
+   "event": "KXATPCHALLENGERMATCH-26NOV23DELDEL2",
+   "id": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23DELDEL2-DEL",
+   "kalshi_title": "Jesse Delaney wins",
+   "label": "Jesse Delaney v Matthew Dellavedova",
+   "league": "Tennis",
+   "logged": "2026-11-23T23:31:14+00:00",
+   "market_id": "KXATPCHALLENGERMATCH-26NOV23DELDEL2",
+   "opponent": "Matthew Dellavedova",
+   "pick": "a",
+   "pnl": 0.0,
+   "price": 0.1,
+   "price_a": 0.1,
+   "price_b": null,
+   "price_draw": null,
+   "prob_a": null,
+   "result": null,
+   "rule": "won_here",
+   "settle_px": null,
+   "settled": null,
+   "side_a": "Jesse Delaney",
+   "side_b": "Matthew Dellavedova",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "stake": 100.0,
+   "start": "2026-11-24T02:30:00+00:00",
+   "start_source": "kalshi_challenger",
+   "status": "open",
+   "team": "Jesse Delaney",
+   "tickers": {
+    "a": "KXATPCHALLENGERMATCH-26NOV23DELDEL2-DEL",
+    "b": "KXATPCHALLENGERMATCH-26NOV23DELDEL2-DEL2"
+   },
+   "titles": {
+    "a": "Jesse Delaney",
+    "b": "Matthew Dellavedova"
    },
    "tournament": "ATP Challenger Playford City",
    "untraded": false,
@@ -268,6 +313,51 @@
     "b": "Karol Malirz"
    },
    "tournament": "ATP Challenger Hersonissos",
+   "untraded": false,
+   "url": "",
+   "venue": "kalshi"
+  },
+  "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23PHADON-DON": {
+   "bet": true,
+   "date": "2026-11-24",
+   "edge": null,
+   "event": "KXATPCHALLENGERMATCH-26NOV23PHADON",
+   "id": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23PHADON-DON",
+   "kalshi_title": "Chen Dong wins",
+   "label": "Chen Dong v Derek Pham",
+   "league": "Tennis",
+   "logged": "2026-11-23T23:31:14+00:00",
+   "market_id": "KXATPCHALLENGERMATCH-26NOV23PHADON",
+   "opponent": "Derek Pham",
+   "pick": "a",
+   "pnl": 0.0,
+   "price": 0.35,
+   "price_a": 0.35,
+   "price_b": null,
+   "price_draw": null,
+   "prob_a": null,
+   "result": null,
+   "rule": "won_here",
+   "settle_px": null,
+   "settled": null,
+   "side_a": "Chen Dong",
+   "side_b": "Derek Pham",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "stake": 100.0,
+   "start": "2026-11-24T02:30:00+00:00",
+   "start_source": "kalshi_challenger",
+   "status": "open",
+   "team": "Chen Dong",
+   "tickers": {
+    "a": "KXATPCHALLENGERMATCH-26NOV23PHADON-DON",
+    "b": "KXATPCHALLENGERMATCH-26NOV23PHADON-PHA"
+   },
+   "titles": {
+    "a": "Chen Dong",
+    "b": "Derek Pham"
+   },
+   "tournament": "ATP Challenger Playford City",
    "untraded": false,
    "url": "",
    "venue": "kalshi"
