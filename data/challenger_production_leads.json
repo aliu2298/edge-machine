@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-23T15:41:59+00:00",
+ "board_built_at": "2026-11-23T16:01:55+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -48,6 +48,43 @@
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "miss"
+  },
+  "2026-11-23|Ben Weintraub|Karl Poling|Ben Weintraub to win \u00b7 Challenger underdog who has won here": {
+   "away": "Karl Poling",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-23",
+   "edge_at_log": null,
+   "first_seen": "2026-11-23",
+   "headline": "Ben Weintraub to win",
+   "home": "Ben Weintraub",
+   "id": "2026-11-23|Ben Weintraub|Karl Poling|Ben Weintraub to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-23T19:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-23",
+   "last_seen_at": "2026-11-23T16:01:55+00:00",
+   "league": "Tennis",
+   "match": "Ben Weintraub v Karl Poling",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.2,
+   "published_at": "2026-11-23T16:01:55+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 178,
+   "route": {
+    "claim": "Ben Weintraub to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV23POLWEI",
+    "market": "KXATPCHALLENGERMATCH-26NOV23POLWEI-WEI",
+    "outcome": "Ben Weintraub",
+    "outcome_side": "yes",
+    "price_at_log": 0.2,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23POLWEI-WEI",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
   },
   "2026-11-23|Ethan Cook|Evan Zhu|Ethan Cook to win \u00b7 Challenger underdog who has won here": {
    "away": "Evan Zhu",
@@ -99,7 +136,7 @@
    "kickoff": "2026-11-23T16:45Z",
    "lane": "production",
    "last_seen": "2026-11-23",
-   "last_seen_at": "2026-11-23T15:41:59+00:00",
+   "last_seen_at": "2026-11-23T16:01:55+00:00",
    "league": "Tennis",
    "match": "Gabriel Ghetu v Ioannis Kountourakis",
    "pair": "challenger_won_here|tennis",
@@ -171,11 +208,11 @@
    "kickoff": "2026-11-23T17:20Z",
    "lane": "production",
    "last_seen": "2026-11-23",
-   "last_seen_at": "2026-11-23T15:41:59+00:00",
+   "last_seen_at": "2026-11-23T16:01:55+00:00",
    "league": "Tennis",
    "match": "Pedro Vives Marcos v Toufik Sahtali",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.96,
+   "price_at_log": 1.0,
    "published_at": "2026-11-23T15:01:48+00:00",
    "published_late": false,
    "published_min_before_kickoff": 138,
@@ -185,7 +222,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV23VIVSAH-VIV",
     "outcome": "Pedro Vives Marcos",
     "outcome_side": "yes",
-    "price_at_log": 0.96,
+    "price_at_log": 1.0,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23VIVSAH-VIV",
@@ -237,9 +274,9 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 6,
+    "leads": 7,
     "problem": null,
-    "routed": 6,
+    "routed": 7,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -251,7 +288,7 @@
    "sandbox_roi_fee": -0.727,
    "timing": {
     "late": [],
-    "timed": 6,
+    "timed": 7,
     "under_target": 0
    }
   }
@@ -260,5 +297,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-23T15:41:59+00:00"
+ "updated_at": "2026-11-23T16:01:55+00:00"
 }

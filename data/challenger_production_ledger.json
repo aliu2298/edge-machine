@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-23T15:41:59+00:00",
+ "last_run": "2026-11-23T16:01:55+00:00",
  "quotes": {
   "challenger_won_here:KXATPCHALLENGERMATCH-26NOV22KUBFAL-FAL": {
    "bet": true,
@@ -227,6 +227,51 @@
    "url": "",
    "venue": "kalshi"
   },
+  "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23POLWEI-WEI": {
+   "bet": true,
+   "date": "2026-11-23",
+   "edge": null,
+   "event": "KXATPCHALLENGERMATCH-26NOV23POLWEI",
+   "id": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23POLWEI-WEI",
+   "kalshi_title": "Ben Weintraub wins",
+   "label": "Ben Weintraub v Karl Poling",
+   "league": "Tennis",
+   "logged": "2026-11-23T16:01:45+00:00",
+   "market_id": "KXATPCHALLENGERMATCH-26NOV23POLWEI",
+   "opponent": "Karl Poling",
+   "pick": "a",
+   "pnl": 0.0,
+   "price": 0.2,
+   "price_a": 0.2,
+   "price_b": null,
+   "price_draw": null,
+   "prob_a": null,
+   "result": null,
+   "rule": "won_here",
+   "settle_px": null,
+   "settled": null,
+   "side_a": "Ben Weintraub",
+   "side_b": "Karl Poling",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "stake": 100.0,
+   "start": "2026-11-23T19:00:00+00:00",
+   "start_source": "kalshi_challenger",
+   "status": "open",
+   "team": "Ben Weintraub",
+   "tickers": {
+    "a": "KXATPCHALLENGERMATCH-26NOV23POLWEI-WEI",
+    "b": "KXATPCHALLENGERMATCH-26NOV23POLWEI-POL"
+   },
+   "titles": {
+    "a": "Ben Weintraub",
+    "b": "Karl Poling"
+   },
+   "tournament": "ATP Challenger San Salvador",
+   "untraded": false,
+   "url": "",
+   "venue": "kalshi"
+  },
   "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23VIVSAH-VIV": {
    "bet": true,
    "date": "2026-11-23",
@@ -241,8 +286,8 @@
    "opponent": "Toufik Sahtali",
    "pick": "a",
    "pnl": 0.0,
-   "price": 0.96,
-   "price_a": 0.96,
+   "price": 1.0,
+   "price_a": 1.0,
    "price_b": null,
    "price_draw": null,
    "prob_a": null,
