@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-23T13:44:46+00:00",
+ "board_built_at": "2026-11-23T14:02:05+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -83,6 +83,43 @@
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "miss"
+  },
+  "2026-11-23|Gabriel Ghetu|Ioannis Kountourakis|Gabriel Ghetu to win \u00b7 Challenger underdog who has won here": {
+   "away": "Ioannis Kountourakis",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-23",
+   "edge_at_log": null,
+   "first_seen": "2026-11-23",
+   "headline": "Gabriel Ghetu to win",
+   "home": "Gabriel Ghetu",
+   "id": "2026-11-23|Gabriel Ghetu|Ioannis Kountourakis|Gabriel Ghetu to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-23T16:45Z",
+   "lane": "production",
+   "last_seen": "2026-11-23",
+   "last_seen_at": "2026-11-23T14:02:05+00:00",
+   "league": "Tennis",
+   "match": "Gabriel Ghetu v Ioannis Kountourakis",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.88,
+   "published_at": "2026-11-23T14:02:05+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 162,
+   "route": {
+    "claim": "Gabriel Ghetu to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV23GHEKOU",
+    "market": "KXATPCHALLENGERMATCH-26NOV23GHEKOU-GHE",
+    "outcome": "Gabriel Ghetu",
+    "outcome_side": "yes",
+    "price_at_log": 0.88,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23GHEKOU-GHE",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
   },
   "2026-11-23|Oleksandr Ovcharenko|Karol Malirz|Oleksandr Ovcharenko to win \u00b7 Challenger underdog who has won here": {
    "away": "Karol Malirz",
@@ -163,9 +200,9 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 4,
+    "leads": 5,
     "problem": null,
-    "routed": 4,
+    "routed": 5,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -177,7 +214,7 @@
    "sandbox_roi_fee": -0.727,
    "timing": {
     "late": [],
-    "timed": 4,
+    "timed": 5,
     "under_target": 0
    }
   }
@@ -186,5 +223,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-23T13:44:46+00:00"
+ "updated_at": "2026-11-23T14:02:05+00:00"
 }
