@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-23T19:37:30+00:00",
+ "board_built_at": "2026-11-23T20:01:46+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -134,11 +134,11 @@
    "kickoff": "2026-11-23T21:10Z",
    "lane": "production",
    "last_seen": "2026-11-23",
-   "last_seen_at": "2026-11-23T19:37:30+00:00",
+   "last_seen_at": "2026-11-23T20:01:46+00:00",
    "league": "Tennis",
    "match": "Elijah Strode v Juan Miguel Bolivar Idarraga",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.58,
+   "price_at_log": 0.82,
    "published_at": "2026-11-23T18:17:11+00:00",
    "published_late": false,
    "published_min_before_kickoff": 172,
@@ -148,7 +148,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV23STRBOL-STR",
     "outcome": "Elijah Strode",
     "outcome_side": "yes",
-    "price_at_log": 0.58,
+    "price_at_log": 0.82,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23STRBOL-STR",
@@ -206,11 +206,11 @@
    "kickoff": "2026-11-23T20:10Z",
    "lane": "production",
    "last_seen": "2026-11-23",
-   "last_seen_at": "2026-11-23T19:37:30+00:00",
+   "last_seen_at": "2026-11-23T20:01:46+00:00",
    "league": "Tennis",
    "match": "Jeffrey Fradkin v Ofek Shimanov",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.49,
+   "price_at_log": 0.32,
    "published_at": "2026-11-23T17:31:52+00:00",
    "published_late": false,
    "published_min_before_kickoff": 158,
@@ -220,7 +220,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV23SHIFRA-FRA",
     "outcome": "Jeffrey Fradkin",
     "outcome_side": "yes",
-    "price_at_log": 0.49,
+    "price_at_log": 0.32,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23SHIFRA-FRA",
@@ -365,5 +365,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-23T19:37:30+00:00"
+ "updated_at": "2026-11-23T20:01:46+00:00"
 }
