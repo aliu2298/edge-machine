@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-23T16:07Z",
+ "generated": "2026-11-23T17:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -5785,8 +5785,8 @@
    "entered": "2026-11-21T00:00:00+00:00",
    "orders": [],
    "refused": {
-    "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23GHEKOU-GHE": "outside the price band",
-    "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23OVCMAL-OVC": "price above the cap"
+    "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23OVCMAL-OVC": "price above the cap",
+    "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23VIVSAH-VIV": "price above the cap"
    }
   },
   "corners_ucl_fade|soccer_corners": {
@@ -6309,7 +6309,16 @@
   },
   "gas_week_cheap_no|gas_week": {
    "entered": "2026-11-22T21:00:00+00:00",
-   "orders": [],
+   "orders": [
+    {
+     "id": "gas_week_cheap_no:KXAAAGASW-26NOV30-3.4800",
+     "ko": "2026-11-23T21:01",
+     "r": null,
+     "side": "no",
+     "st": "open",
+     "w": 1.0
+    }
+   ],
    "refused": {}
   },
   "mls_fade_home|soccer_p05": {
