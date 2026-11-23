@@ -236,7 +236,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-23T19:00:32Z",
+ "calendar_at": "2026-11-23T20:00:29Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -6021,9 +6021,19 @@
     "width": 678571.4285714328
    },
    "sym": "COST"
+  },
+  {
+   "at": "2026-11-23T20:01:30Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151351515.15151516,
+    "rungs": 10,
+    "width": 678571.4285714328
+   },
+   "sym": "COST"
   }
  ],
- "last_run": "2026-11-23T19:01:28Z",
+ "last_run": "2026-11-23T20:02:15Z",
  "predictions": [
   {
    "call": {
@@ -6851,6 +6861,60 @@
    "report_time": "after-hours",
    "side": 1,
    "sym": "ORCL"
+  },
+  {
+   "call": {
+    "status": "pending"
+   },
+   "crowd_up": 0.689,
+   "day": "2026-11-23",
+   "entry_due": "2026-11-23T20:01:31Z",
+   "exit_due": "2026-11-24T20:01:00Z",
+   "family": "sentiment",
+   "id": "sentiment:ACN:2026-11-23",
+   "logged_at": "2026-11-23T20:01:31Z",
+   "perp": "KXACNPERP",
+   "random_side": -1,
+   "reason": "Kalshi traders 69% Up on 24h taker volume.",
+   "side": 1,
+   "status": "pending",
+   "sym": "ACN"
+  },
+  {
+   "call": {
+    "status": "pending"
+   },
+   "crowd_up": 0.246,
+   "day": "2026-11-23",
+   "entry_due": "2026-11-23T20:01:31Z",
+   "exit_due": "2026-11-24T20:01:00Z",
+   "family": "sentiment",
+   "id": "sentiment:TMO:2026-11-23",
+   "logged_at": "2026-11-23T20:01:31Z",
+   "perp": "KXTMOPERP",
+   "random_side": 1,
+   "reason": "Kalshi traders 25% Up on 24h taker volume.",
+   "side": -1,
+   "status": "pending",
+   "sym": "TMO"
+  },
+  {
+   "call": {
+    "status": "pending"
+   },
+   "crowd_up": 0.22,
+   "day": "2026-11-23",
+   "entry_due": "2026-11-23T20:01:31Z",
+   "exit_due": "2026-11-24T20:01:00Z",
+   "family": "sentiment",
+   "id": "sentiment:UBER:2026-11-23",
+   "logged_at": "2026-11-23T20:01:31Z",
+   "perp": "KXUBERPERP",
+   "random_side": -1,
+   "reason": "Kalshi traders 22% Up on 24h taker volume.",
+   "side": -1,
+   "status": "pending",
+   "sym": "UBER"
   }
  ],
  "registered": "2026-11-07",
@@ -6865,6 +6929,7 @@
   "2026-11-17",
   "2026-11-18",
   "2026-11-19",
-  "2026-11-20"
+  "2026-11-20",
+  "2026-11-23"
  ]
 }
