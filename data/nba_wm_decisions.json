@@ -14067,6 +14067,22 @@
    "yes_ask": 0.11,
    "yes_bid": 0.1
   },
+  "no:KXNBAWINMARGIN-26NOV22BOSGSW-GSW21PLUS": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "GSW21PLUS",
+   "decided_at": "2026-11-23T00:43:22+00:00",
+   "event": "KXNBAWINMARGIN-26NOV22BOSGSW",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV22",
+   "spread": 0.01,
+   "ticker": "KXNBAWINMARGIN-26NOV22BOSGSW-GSW21PLUS",
+   "tip": "2026-11-23T01:30:00+00:00",
+   "why": "the NO fade does not enter 21+ (bp-v3)",
+   "yes_ask": 0.02,
+   "yes_bid": 0.01
+  },
   "no:KXNBAWINMARGIN-26NOV22BOSGSW-GSW6TO10": {
    "bot_version": "wm-nofade-v4",
    "bucket": "GSW6TO10",
@@ -25614,6 +25630,6 @@
    "yes_bid": 0.09
   }
  },
- "updated_at": "2026-11-23T00:30:07+00:00",
+ "updated_at": "2026-11-23T00:43:22+00:00",
  "version": 1
 }
