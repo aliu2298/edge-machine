@@ -95,8 +95,27 @@
    "rule_ok": true,
    "ticker": "KXARGPREMDIVTOTAL-26NOV22RIVLAN-1",
    "why": null
+  },
+  "KXARGPREMDIVTOTAL-26NOV23GLPNOB-1": {
+   "P": 0.9,
+   "bot_version": "argdip-live-v1",
+   "decided_at": "2026-11-23T19:00:00+00:00",
+   "event": "KXARGPREMDIVTOTAL-26NOV23GLPNOB",
+   "kickoff": "2026-11-23T20:00:00+00:00",
+   "lane": "arg_goalless_dip_live",
+   "league": "Argentina",
+   "limit": 0.59,
+   "matchday": "26NOV23",
+   "outcome": "planned",
+   "qty": 1.0,
+   "rule_ok": true,
+   "spread": 0.01,
+   "ticker": "KXARGPREMDIVTOTAL-26NOV23GLPNOB-1",
+   "why": null,
+   "yes_ask": 0.9,
+   "yes_bid": 0.89
   }
  },
- "updated_at": "2026-11-23T01:00:24+00:00",
+ "updated_at": "2026-11-23T19:00:00+00:00",
  "version": 1
 }
