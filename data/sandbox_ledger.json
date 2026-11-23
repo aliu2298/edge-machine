@@ -20,7 +20,7 @@
    "kalshi_venue": 11,
    "polymarket_us": 21,
    "polymarket_us_listed": 21,
-   "polymarket_us_priced": 2
+   "polymarket_us_priced": 3
   },
   "crypto": {
    "kalshi_venue": 80
@@ -61,7 +61,7 @@
     "offered": 1,
     "picked": 0
    },
-   "kalshi_venue": 136,
+   "kalshi_venue": 118,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
@@ -108,18 +108,18 @@
   },
   "soccer_ftts": {
    "ftts_lineup_lag": {
-    "offered": 24,
+    "offered": 28,
     "picked": 0
    },
    "ftts_market": {
-    "offered": 24,
-    "picked": 24
+    "offered": 28,
+    "picked": 28
    },
    "ftts_no_70_80": {
-    "offered": 24,
+    "offered": 28,
     "picked": 0
    },
-   "kalshi_venue": 24
+   "kalshi_venue": 28
   },
   "soccer_o05": {
    "kalshi_venue": 0,
@@ -201,7 +201,7 @@
    "kalshi_venue": 86,
    "mls_fade_home": {
     "offered": 4,
-    "picked": 0
+    "picked": 1
    }
   },
   "soccer_p05_cup": {
@@ -320,10 +320,10 @@
    }
   },
   "tennis": {
-   "kalshi_venue": 37,
+   "kalshi_venue": 35,
    "polymarket_us": 40,
-   "polymarket_us_listed": 455,
-   "polymarket_us_priced": 319
+   "polymarket_us_listed": 454,
+   "polymarket_us_priced": 321
   },
   "tennis_combo": {
    "combo": 0,
@@ -338,43 +338,43 @@
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-23T07:05:08+00:00",
-   "commodities": "2026-11-23T07:05:08+00:00",
-   "commodities_fav": "2026-11-23T07:05:08+00:00",
-   "cricket": "2026-11-23T07:05:08+00:00",
-   "crypto": "2026-11-23T07:05:08+00:00",
-   "crypto_fav": "2026-11-23T07:05:08+00:00",
-   "economics": "2026-11-23T07:05:08+00:00",
-   "finance": "2026-11-23T07:05:08+00:00",
+   "boxing": "2026-11-23T07:11:07+00:00",
+   "commodities": "2026-11-23T07:11:07+00:00",
+   "commodities_fav": "2026-11-23T07:11:07+00:00",
+   "cricket": "2026-11-23T07:11:07+00:00",
+   "crypto": "2026-11-23T07:11:07+00:00",
+   "crypto_fav": "2026-11-23T07:11:07+00:00",
+   "economics": "2026-11-23T07:11:07+00:00",
+   "finance": "2026-11-23T07:11:07+00:00",
    "mma": "2026-11-21T20:10:14+00:00",
-   "nfl": "2026-11-23T07:05:08+00:00",
-   "nhl_pl": "2026-11-23T07:05:08+00:00",
-   "nhl_rest": "2026-11-23T07:05:08+00:00",
-   "soccer": "2026-11-23T07:05:08+00:00",
-   "soccer_btts": "2026-11-23T07:05:08+00:00",
-   "soccer_btts_cup": "2026-11-23T07:05:08+00:00",
+   "nfl": "2026-11-23T07:11:07+00:00",
+   "nhl_pl": "2026-11-23T07:11:07+00:00",
+   "nhl_rest": "2026-11-23T07:11:07+00:00",
+   "soccer": "2026-11-23T07:11:07+00:00",
+   "soccer_btts": "2026-11-23T07:11:07+00:00",
+   "soccer_btts_cup": "2026-11-23T07:11:07+00:00",
    "soccer_btts_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_corners": "2026-11-23T07:05:08+00:00",
-   "soccer_ftts": "2026-11-23T07:05:08+00:00",
-   "soccer_o15": "2026-11-23T07:05:08+00:00",
-   "soccer_o15_cup": "2026-11-23T07:05:08+00:00",
+   "soccer_corners": "2026-11-23T07:11:07+00:00",
+   "soccer_ftts": "2026-11-23T07:11:07+00:00",
+   "soccer_o15": "2026-11-23T07:11:07+00:00",
+   "soccer_o15_cup": "2026-11-23T07:11:07+00:00",
    "soccer_o15_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_o25": "2026-11-23T07:05:08+00:00",
-   "soccer_o25_cup": "2026-11-23T07:05:08+00:00",
+   "soccer_o25": "2026-11-23T07:11:07+00:00",
+   "soccer_o25_cup": "2026-11-23T07:11:07+00:00",
    "soccer_o25_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_p05": "2026-11-23T07:05:08+00:00",
-   "soccer_p05_cup": "2026-11-23T07:05:08+00:00",
+   "soccer_p05": "2026-11-23T07:11:07+00:00",
+   "soccer_p05_cup": "2026-11-23T07:11:07+00:00",
    "soccer_p05_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_team1": "2026-11-23T07:05:08+00:00",
-   "soccer_team1_cup": "2026-11-23T07:05:08+00:00",
+   "soccer_team1": "2026-11-23T07:11:07+00:00",
+   "soccer_team1_cup": "2026-11-23T07:11:07+00:00",
    "soccer_team1_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_team2": "2026-11-23T07:05:08+00:00",
-   "soccer_team2_cup": "2026-11-23T07:05:08+00:00",
+   "soccer_team2": "2026-11-23T07:11:07+00:00",
+   "soccer_team2_cup": "2026-11-23T07:11:07+00:00",
    "soccer_team2_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_u35": "2026-11-23T07:05:08+00:00",
-   "soccer_u35_cup": "2026-11-23T07:05:08+00:00",
+   "soccer_u35": "2026-11-23T07:11:07+00:00",
+   "soccer_u35_cup": "2026-11-23T07:11:07+00:00",
    "soccer_u35_intl": "2026-11-17T23:27:07+00:00",
-   "tennis": "2026-11-23T07:05:08+00:00",
+   "tennis": "2026-11-23T07:11:07+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -571,7 +571,7 @@
    }
   },
   "odds_api": {
-   "at": "2026-11-23T07:05:08+00:00",
+   "at": "2026-11-23T07:11:07+00:00",
    "remaining": 175,
    "used": 325
   },
@@ -592,7 +592,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 2645,
+  "runs": 2646,
   "tennis_shortlist": {
    "audit": [
     {
@@ -604,7 +604,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-23T07:05:38+00:00"
+  "updated": "2026-11-23T07:11:37+00:00"
  },
  "quotes": [
   {
@@ -374790,7 +374790,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-23T07:05:08+00:00",
+   "close_at": "2026-11-23T07:11:07+00:00",
    "close_price": 0.6,
    "date": "2026-11-24",
    "edge": null,
@@ -410398,7 +410398,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-23T07:05:08+00:00",
+   "close_at": "2026-11-23T07:11:07+00:00",
    "close_price": 0.55,
    "date": "2026-11-25",
    "edge": null,
@@ -469044,6 +469044,106 @@
    "untraded": false,
    "url": "https://kalshi.com/markets/kxnatgasd",
    "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-23",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-utr-cekkuz-fonori-2026-11-23",
+   "label": "Cekirge, Kuzey vs Font, Oriol",
+   "liquidity": null,
+   "logged": "2026-11-23T07:11:07+00:00",
+   "market_id": "aec-utr-cekkuz-fonori-2026-11-23",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.79,
+   "price_b": 0.22,
+   "price_draw": null,
+   "prob_a": 0.785,
+   "result": null,
+   "settled": null,
+   "side_a": "Cekirge, Kuzey",
+   "side_b": "Font, Oriol",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-23T08:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "utr",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/utr-cekkuz-fonori-2026-11-23",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-23",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-atp-gilbai-rarpie-2026-11-23",
+   "label": "Gilles Arnaud Bailly vs Rares Teodor Pieleanu",
+   "liquidity": null,
+   "logged": "2026-11-23T07:11:07+00:00",
+   "market_id": "aec-atp-gilbai-rarpie-2026-11-23",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.9,
+   "price_b": 0.11,
+   "price_draw": null,
+   "prob_a": 0.895,
+   "result": null,
+   "settled": null,
+   "side_a": "Gilles Arnaud Bailly",
+   "side_b": "Rares Teodor Pieleanu",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-23T08:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/atp-gilbai-rarpie-2026-11-23",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-23",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-atp-imamor-anamaz-2026-11-23",
+   "label": "Imanol Lopez Morillo vs Anas Mazdrashki",
+   "liquidity": null,
+   "logged": "2026-11-23T07:11:07+00:00",
+   "market_id": "aec-atp-imamor-anamaz-2026-11-23",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.54,
+   "price_b": 0.47,
+   "price_draw": null,
+   "prob_a": 0.535,
+   "result": null,
+   "settled": null,
+   "side_a": "Imanol Lopez Morillo",
+   "side_b": "Anas Mazdrashki",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-23T08:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/atp-imamor-anamaz-2026-11-23",
+   "venue": "polymarket_us",
    "venue_start": null
   }
  ],
