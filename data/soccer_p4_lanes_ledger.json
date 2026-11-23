@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-22T23:00:30.259379+00:00",
+ "last_run": "2026-11-23T00:00:34.485936+00:00",
  "matches": [
   {
    "day": "2026-11-19",
@@ -2518,6 +2518,50 @@
    "logged": "2026-11-22T22:00:37.664340+00:00",
    "timed": 3,
    "title": "Getafe v Atl\u00e9tico Madrid",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-22",
+   "entries": [
+    {
+     "ask": 0.36,
+     "bid": 0.35,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.355,
+      "filled": false,
+      "roi": null
+     },
+     "mom": "pre",
+     "name": "Nashville",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.38,
+      "depth": 1267.02,
+      "filled": true,
+      "roi": 1.6316
+     },
+     "team": "home",
+     "ticker": "KXMLSGAME-26NOV22NSHCIN-NSH",
+     "ts": 1795377600,
+     "v2": true,
+     "won": true
+    }
+   ],
+   "espn_id": "401933731",
+   "event": "KXMLSGAME-26NOV22NSHCIN",
+   "goals": 1,
+   "ht": 1795385689,
+   "ko": 1795381200,
+   "labels": {
+    "away": "O-D-",
+    "home": "O+D-"
+   },
+   "league": "MLS",
+   "logged": "2026-11-23T00:00:34.485936+00:00",
+   "timed": 0,
+   "title": "Nashville SC v FC Cincinnati",
    "version": "soccerp4-v1"
   }
  ],
