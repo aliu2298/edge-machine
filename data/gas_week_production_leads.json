@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-23T16:36:59+00:00",
+ "board_built_at": "2026-11-23T17:02:04+00:00",
  "collector_error": null,
  "collector_healthy": {
   "gas_week_cheap_no": true
@@ -13,7 +13,45 @@
  "corners_selections": {},
  "first_publish_min": 45,
  "late_publication_skipped": 0,
- "leads": {},
+ "leads": {
+  "2026-11-23|KXAAAGASW-26NOV30-3.4800|Above 3.4800: No \u00b7 AAA gas weekly cheap NO": {
+   "away": null,
+   "bet": {
+    "kind": "gasw_no"
+   },
+   "closes": "2026-11-30T04:59:00Z",
+   "date": "2026-11-23",
+   "edge_at_log": null,
+   "first_seen": "2026-11-23",
+   "headline": "Above 3.4800: No",
+   "home": null,
+   "id": "2026-11-23|KXAAAGASW-26NOV30-3.4800|Above 3.4800: No \u00b7 AAA gas weekly cheap NO",
+   "kickoff": "2026-11-23T21:01Z",
+   "lane": "production",
+   "last_seen": "2026-11-23",
+   "last_seen_at": "2026-11-23T17:02:04+00:00",
+   "league": "AAA gas weekly",
+   "match": "AAA gas, week to 26NOV30",
+   "pair": "gas_week_cheap_no|gas_week",
+   "price_at_log": 0.2,
+   "published_at": "2026-11-23T17:02:04+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 238,
+   "route": {
+    "claim": "Above 3.4800: No",
+    "event": "KXAAAGASW-26NOV30",
+    "market": "KXAAAGASW-26NOV30-3.4800",
+    "outcome": "Above 3.4800",
+    "outcome_side": "no",
+    "price_at_log": 0.2,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "gas_week_cheap_no:KXAAAGASW-26NOV30-3.4800",
+   "source": "gas_week_cheap_no",
+   "sport": "gas_week",
+   "status": "pending"
+  }
+ },
  "pairs": {
   "gas_week_cheap_no|gas_week": {
    "by_hand": "2026-11-22",
@@ -22,9 +60,9 @@
    "ready_at": "2026-11-22T21:00:00+00:00",
    "route": "moved by hand on 2026-11-22",
    "routing": {
-    "leads": 0,
+    "leads": 1,
     "problem": null,
-    "routed": 0,
+    "routed": 1,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -36,7 +74,7 @@
    "sandbox_roi_fee": null,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   }
@@ -45,5 +83,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-23T16:36:59+00:00"
+ "updated_at": "2026-11-23T17:02:04+00:00"
 }

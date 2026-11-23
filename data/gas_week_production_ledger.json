@@ -1,5 +1,43 @@
 {
  "error": null,
- "last_run": "2026-11-23T16:36:59+00:00",
- "quotes": {}
+ "last_run": "2026-11-23T17:02:04+00:00",
+ "quotes": {
+  "gas_week_cheap_no:KXAAAGASW-26NOV30-3.4800": {
+   "ask_check": "print",
+   "bet": true,
+   "closes": "2026-11-30T04:59:00Z",
+   "date": "2026-11-23",
+   "edge": null,
+   "entry_at": "2026-11-23T14:48:00+00:00",
+   "event": "KXAAAGASW-26NOV30",
+   "id": "gas_week_cheap_no:KXAAAGASW-26NOV30-3.4800",
+   "kalshi_title": "Above 3.4800",
+   "label": "AAA gas, week to 26NOV30",
+   "league": "AAA gas weekly",
+   "logged": "2026-11-23T17:01:19+00:00",
+   "market_id": "KXAAAGASW-26NOV30-3.4800",
+   "pick": "b",
+   "pnl": 0.0,
+   "price": 0.2,
+   "price_a": 0.8,
+   "price_b": 0.2,
+   "price_draw": null,
+   "prob_a": null,
+   "result": null,
+   "settle_px": null,
+   "settled": null,
+   "side_a": "Above 3.4800",
+   "side_b": "No",
+   "source": "gas_week_cheap_no",
+   "sport": "gas_week",
+   "spread": 0.04,
+   "stake": 100.0,
+   "start": "2026-11-23T21:01:19+00:00",
+   "start_source": "gas_week_offer",
+   "status": "open",
+   "untraded": false,
+   "url": "",
+   "venue": "kalshi_binary"
+  }
+ }
 }
