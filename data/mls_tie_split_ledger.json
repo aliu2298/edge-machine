@@ -154,6 +154,99 @@
    "title": "Tie is the result",
    "version": "mlstie-v1",
    "won": false
+  },
+  {
+   "ask": 0.2,
+   "bid": 0.19,
+   "check": "verified",
+   "cost": 0.2112,
+   "entry_ts": 1795377600,
+   "event": "KXMLSGAME-26NOV22NSHCIN",
+   "hold": -1.0,
+   "id": "KXMLSGAME-26NOV22NSHCIN-TIE",
+   "kickoff": 1795381200,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "sold_ts": 1795388240,
+     "target": 0.4
+    },
+    {
+     "multiple": 3.0,
+     "sold_ts": null,
+     "target": 0.6
+    }
+   ],
+   "logged": "2026-11-23T03:52:18.577278+00:00",
+   "matchday": "2026-11-22",
+   "prints": 7068,
+   "quote_ts": 1795377420,
+   "roi": -0.063,
+   "title": "Tie is the result",
+   "version": "mlstie-v1",
+   "won": false
+  },
+  {
+   "ask": 0.21,
+   "bid": 0.2,
+   "check": "verified",
+   "cost": 0.22161,
+   "entry_ts": 1795386600,
+   "event": "KXMLSGAME-26NOV22CHICLT",
+   "hold": -1.0,
+   "id": "KXMLSGAME-26NOV22CHICLT-TIE",
+   "kickoff": 1795390200,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "sold_ts": 1795395913,
+     "target": 0.42
+    },
+    {
+     "multiple": 3.0,
+     "sold_ts": 1795396831,
+     "target": 0.63
+    }
+   ],
+   "logged": "2026-11-23T03:52:18.577278+00:00",
+   "matchday": "2026-11-22",
+   "prints": 13731,
+   "quote_ts": 1795386660,
+   "roi": 1.3502,
+   "title": "Tie is the result",
+   "version": "mlstie-v1",
+   "won": false
+  },
+  {
+   "ask": 0.19,
+   "bid": 0.18,
+   "check": "verified",
+   "cost": 0.20077,
+   "entry_ts": 1795393800,
+   "event": "KXMLSGAME-26NOV22VANRSL",
+   "hold": -1.0,
+   "id": "KXMLSGAME-26NOV22VANRSL-TIE",
+   "kickoff": 1795397400,
+   "legs": [
+    {
+     "multiple": 2.0,
+     "sold_ts": null,
+     "target": 0.38
+    },
+    {
+     "multiple": 3.0,
+     "sold_ts": null,
+     "target": 0.57
+    }
+   ],
+   "logged": "2026-11-23T03:52:18.577278+00:00",
+   "matchday": "2026-11-22",
+   "prints": 2567,
+   "quote_ts": 1795393860,
+   "roi": -1.0,
+   "title": "Tie is the result",
+   "version": "mlstie-v1",
+   "won": false
   }
  ],
  "error": null,
@@ -7608,7 +7701,7 @@
   ]
  },
  "lane": "mls_tie_split",
- "last_run": "2026-11-22T22:39:09.547767+00:00",
+ "last_run": "2026-11-23T03:52:18.577278+00:00",
  "since": "2026-11-08",
  "skips": {},
  "version": "mlstie-v1"
