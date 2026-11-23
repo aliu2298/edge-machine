@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-23T17:02:35+00:00",
+ "board_built_at": "2026-11-23T17:07:40+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -64,11 +64,11 @@
    "kickoff": "2026-11-23T19:00Z",
    "lane": "production",
    "last_seen": "2026-11-23",
-   "last_seen_at": "2026-11-23T17:02:35+00:00",
+   "last_seen_at": "2026-11-23T17:07:40+00:00",
    "league": "Tennis",
    "match": "Ben Weintraub v Karl Poling",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.07,
+   "price_at_log": 0.06,
    "published_at": "2026-11-23T16:01:55+00:00",
    "published_late": false,
    "published_min_before_kickoff": 178,
@@ -78,7 +78,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV23POLWEI-WEI",
     "outcome": "Ben Weintraub",
     "outcome_side": "yes",
-    "price_at_log": 0.07,
+    "price_at_log": 0.06,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23POLWEI-WEI",
@@ -258,5 +258,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-23T17:02:35+00:00"
+ "updated_at": "2026-11-23T17:07:40+00:00"
 }
