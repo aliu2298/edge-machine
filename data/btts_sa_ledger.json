@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-23T22:01:35.346096+00:00",
+ "last_run": "2026-11-23T22:31:43.316241+00:00",
  "rules": {
   "NO": {
    "picks": [
@@ -477,6 +477,23 @@
      "status": "open",
      "ticker": "KXBRASILEIROBTTS-26NOV23BOTSPA-BTTS",
      "why": "Brazil BTTS NO 0.46"
+    },
+    {
+     "ask": 0.4,
+     "bid": 0.39,
+     "event": "KXBRASILEIROBTTS-26NOV23SANGPA",
+     "id": "NO:KXBRASILEIROBTTS-26NOV23SANGPA",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-23T22:31:43.316241+00:00",
+     "match": "Santos v Gr\u00eamio",
+     "price": 0.4,
+     "rule": "NO",
+     "side": "no",
+     "start": "2026-11-24T00:00Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV23SANGPA-BTTS",
+     "why": "Brazil BTTS NO 0.40"
     }
    ]
   },
@@ -955,18 +972,28 @@
      "status": "open",
      "ticker": "KXBRASILEIROBTTS-26NOV23BOTSPA-BTTS",
      "why": "Brazil BTTS YES 0.56"
+    },
+    {
+     "ask": 0.61,
+     "bid": 0.6,
+     "event": "KXBRASILEIROBTTS-26NOV23SANGPA",
+     "id": "YES:KXBRASILEIROBTTS-26NOV23SANGPA",
+     "league": "Brasileir\u00e3o",
+     "league_key": "BRA",
+     "logged": "2026-11-23T22:31:43.316241+00:00",
+     "match": "Santos v Gr\u00eamio",
+     "price": 0.61,
+     "rule": "YES",
+     "side": "yes",
+     "start": "2026-11-24T00:00Z",
+     "status": "open",
+     "ticker": "KXBRASILEIROBTTS-26NOV23SANGPA-BTTS",
+     "why": "Brazil BTTS YES 0.61"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-22T10:31:29.140308+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "quoted": 0
-  },
   {
    "at": "2026-11-22T10:46:36.426400+00:00",
    "due": 0,
@@ -1315,6 +1342,13 @@
    "due": 2,
    "matched": 2,
    "new": 0,
+   "quoted": 2
+  },
+  {
+   "at": "2026-11-23T22:31:43.316241+00:00",
+   "due": 2,
+   "matched": 2,
+   "new": 2,
    "quoted": 2
   }
  ],
