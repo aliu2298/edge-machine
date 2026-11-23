@@ -1806,6 +1806,12 @@ nav.sp-filter::before {
 .sp-section-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; margin: 0 0 8px; }   /* the count drops under the heading on a phone when it no longer fits */
 .sp-section-head h2 { margin: 0; }
 .sp-section-head > span { white-space: nowrap; }
+/* NBA quarter lines (2026-11-23): six folds that sit compactly; a long summary wraps under its heading without a blank band beneath. */
+details.nba-qline > summary { flex-wrap: wrap; gap: 0 8px; margin: 4px 0; }
+details.nba-qline > summary h3 { margin: 0; font-size: 15px; }
+details.nba-qline > summary > span { flex: 1 1 100%; font-size: 13px; line-height: 1.35; }
+details.nba-qline[open] > summary { margin-bottom: 8px; }
+@media (min-width: 801px) { details.nba-qline > summary > span { flex: 1 1 0; min-width: 0; } }
 /* Production rule cards. */
 /* The rules: one row per rule, each the summary of a closed "Rule details" fold.
    Every row is its own grid on the same tracks, so the header, the shown rows and

@@ -7,6 +7,18 @@ import os
 
 import fmt
 import nba_qlines as Q
+import nba_spotter as S
+
+E2K = {v: k for k, v in S.K2E.items()}        # ESPN's NY, SA, GS, NO, UTAH, WSH -> Kalshi's NYK, SAS, GSW, NOP, UTA, WAS, as the rest of the site writes them
+NEAR = 0.85                                    # the open table lists teams at this rate or better (qualifying ones included)
+
+
+def code(t):
+    return E2K.get(t, t)
+
+
+def game_name(text):
+    return " @ ".join(code(x) for x in str(text).split(" @ "))
 
 
 def esc(x):
@@ -33,36 +45,36 @@ def record_row(state, sec, d):
 
 
 def record_table(state, sec):
-    return ('<div class="tbl"><table><thead><tr><th>Lane</th><th class="num">Won-lost</th><th class="num">Return after fees</th>'
-            '<th class="num">Blind control</th><th class="num">Open</th><th>Read</th></tr></thead><tbody>'
-            + "".join(record_row(state, sec, d) for d in Q.DIRS) + "</tbody></table></div>")
+    return ('<div class="tbl"><table class="qline-record"><tr><th>Lane</th><th class="num">Won-lost</th><th class="num">Return after fees</th>'
+            '<th class="num">Blind control</th><th class="num">Open</th><th>Read</th></tr>'
+            + "".join(record_row(state, sec, d) for d in Q.DIRS) + "</table></div>")
 
 
 def teams_table(games, sec, d, full=False):
     rows = Q.team_rows(games, sec, d)
     items = sorted(rows.items(), key=lambda kv: (-(kv[1]["rate"] or 0), -kv[1]["n"], kv[0]))
     if not full:
-        items = [kv for kv in items if kv[1]["qualifies"] or ((kv[1]["rate"] or 0) >= 0.8 and kv[1]["n"] >= Q.MIN_GAMES - 3)]
-    body = "".join(f'<tr data-team="{esc(t)}"><td><b>{esc(t)}</b></td><td class="num">{v["hits"]}/{v["n"]}</td><td class="num">{_pct(v["rate"], d=0)}</td>'
+        items = [kv for kv in items if kv[1]["qualifies"] or ((kv[1]["rate"] or 0) >= NEAR - Q.EPS and kv[1]["n"] >= Q.MIN_GAMES // 2)]
+    body = "".join(f'<tr data-team="{esc(t)}"><td><b>{esc(code(t))}</b></td><td class="num">{v["hits"]}/{v["n"]}</td><td class="num">{_pct(v["rate"], d=0)}</td>'
                    f'<td>{"yes" if v["qualifies"] else "no"}</td><td>{esc(v["since"] or "—")}</td></tr>' for t, v in items)
     if not body:
-        body = '<tr><td colspan="5" class="mut">No team is near the bar yet.</td></tr>'
-    return ('<div class="tbl"><table><thead><tr><th>Team</th><th class="num">Hits/games</th><th class="num">Rate</th><th>Qualifies</th><th>Qualified since</th></tr></thead>'
-            f'<tbody>{body}</tbody></table></div>')
+        body = '<tr><td colspan="5" class="mut">No team is at 85% yet.</td></tr>'
+    return ('<div class="tbl"><table class="qline-teams"><tr><th>Team</th><th class="num">Hits/games</th><th class="num">Rate</th><th>Qualifies</th><th>Qualified since</th></tr>'
+            f'{body}</table></div>')
 
 
 def _row(p):
     res = {"open": "open", "won": "won", "lost": "lost", "void": "void"}.get(p["status"], p["status"])
     if p.get("ret") is not None:
         res += f" · {_pct(p['ret'], True)}"
-    who = "/".join(p.get("qualifying") or []) or "blind"
+    who = "/".join(code(t) for t in p.get("qualifying") or []) or "blind"
     off = "" if not p.get("offset") else f" (line {p['line']}, rung {p['rung']})"
-    return (f'<tr><td>{esc(fmt.when(p["start"]))}</td><td>{esc(p["game"])}</td><td>{esc(p["direction"])} {p["rung"]}{esc(off)}</td>'
+    return (f'<tr><td>{esc(fmt.when(p["start"]))}</td><td>{esc(game_name(p["game"]))}</td><td>{esc(p["direction"])} {p["rung"]}{esc(off)}</td>'
             f'<td class="num">{p["price"] * 100:.0f}c</td><td>{esc(who)}</td><td>{esc(res)}</td></tr>')
 
 
-HEAD = ('<div class="tbl"><table><thead><tr><th>Tip</th><th>Game</th><th>Bet</th><th class="num">Price</th><th>Qualifying</th><th>Result</th></tr></thead>'
-        '<tbody>{}</tbody></table></div>')
+HEAD = ('<div class="tbl"><table class="qline-picks"><tr><th>Tip</th><th>Game</th><th>Bet</th><th class="num">Price</th><th>Qualifying</th><th>Result</th></tr>'
+        '{}</table></div>')
 
 
 def picks_html(state, sec):
@@ -92,13 +104,13 @@ def qualifying_now(games, sec):
 
 def section_html(state, games, sec):
     q = qualifying_now(games, sec)
-    head = " · ".join(f"{d}: {', '.join(q[d]) or 'none'}" for d in Q.DIRS)
+    head = " · ".join(f"{d}: {', '.join(code(t) for t in q[d]) or 'none'}" for d in Q.DIRS)
     body = ""
     for d in Q.DIRS:
-        body += (f'<h4 class="sm">Teams · {esc(d)} {Q.LINES[sec][d]} · {Q.THRESHOLD * 100:.0f}% or better over {Q.MIN_GAMES}+ games</h4>{teams_table(games, sec, d)}'
-                 f'<details class="section-disclosure"><summary><b>All teams, {esc(d)} {Q.LINES[sec][d]}</b><span>every team</span></summary>{teams_table(games, sec, d, True)}</details>')
+        body += (f'<h4 class="sm">Teams at {NEAR * 100:.0f}%+ · {esc(d)} {Q.LINES[sec][d]} · qualify at {Q.THRESHOLD * 100:.0f}% over {Q.MIN_GAMES}+ games</h4>{teams_table(games, sec, d)}'
+                 f'<details class="section-disclosure"><summary><b>All teams · {esc(d)} {Q.LINES[sec][d]}</b><span>every team, {len(Q.team_rows(games, sec, d))} in all</span></summary>{teams_table(games, sec, d, True)}</details>')
     return (f'<details class="fold nba-qline" id="qlines-{esc(sec.lower())}"><summary><h3>{esc(sec)} · {esc(Q.NAMES[sec])}</h3>'
-            f'<span class="sm mut">· {esc(summary_line(state, sec))}</span></summary>'
+            f'<span class="sm mut">{esc(summary_line(state, sec))}</span></summary>'
             f'<p class="sm">Qualifying now (games before tonight) · {esc(head)}</p>'
             f'{record_table(state, sec)}{picks_html(state, sec)}{body}</details>')
 
@@ -109,8 +121,10 @@ def section(state=None, games_doc=None, now=None):
     last = state.get("last_run")
     err = f" · {esc(state['error'])}" if state.get("error") else ""
     sections = "".join(section_html(state, games, sec) for sec in Q.SECTIONS)
+    entries = sum(len(_picks(state, Q.lane(sec, d))) for sec in Q.SECTIONS for d in Q.DIRS)
+    through = max((g["day"] for g in games), default=None) or "not yet"
     return f"""<section id="qlines" class="sp-section">
-<div class="sp-section-head"><h2>NBA quarter lines (Sandbox)</h2><span class="sm mut">paper · {len(state.get("looks") or {})} games read · {len(games)} played</span></div>
+<div class="sp-section-head"><h2>NBA quarter lines (Sandbox)</h2><span class="sm mut">paper · {entries} entr{"y" if entries == 1 else "ies"} · tracker through {esc(through)}</span></div>
 <p class="sm">Paper only, on Kalshi's game-total lines for each quarter and half. A team qualifies on a line when its season hit rate on games before tonight is {Q.THRESHOLD * 100:.0f}% or better over {Q.MIN_GAMES}+ games; a game with a qualifying team is one entry. Over: the YES ask. Under: the NO price. The ask is read 15 to 40 minutes before the tip (spread 5c or less), held to settlement. If the line itself is not listed, the nearest rung 1 to 3 points harder is used. Each lane has a blind control: the same line bet in every game that night. Read at {Q.REVIEW_AT[0]} settled, then {Q.REVIEW_AT[1]}, against the control.</p>
 {sections}
 <p class="sm mut">Last read {esc(fmt.when(last) if last else "not yet")}{err}. Registered {esc(Q.REGISTERED)}.</p>
@@ -130,5 +144,5 @@ def index_html(state=None):
                      f'<td>{esc(Q.status_text(a["n"]))}</td></tr>')
     return ('<section id="qlines-index"><h2>NBA quarter lines</h2><p class="shell-kicker">Quarter and half game-total lines · teams at 90% or better over 10+ games · '
             'each lane is on the NBA page beside its blind control · paper · not in Production</p>'
-            '<div class="tbl"><table class="shadow-index"><tr><th>Lane</th><th>Page</th><th class="num">Won-lost</th><th class="num">Return after fees</th>'
+            '<div class="tbl"><table class="shadow-index qline-index"><tr><th>Lane</th><th>Page</th><th class="num">Won-lost</th><th class="num">Return after fees</th>'
             '<th class="num">Blind control</th><th>Status</th></tr>' + body + '</table></div></section>')
