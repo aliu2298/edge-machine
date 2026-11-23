@@ -476,6 +476,131 @@ def _cells(heads, cells):
     return "".join(f'<td{"" if i == 0 else " class=" + chr(34) + "num" + chr(34)} data-l="{h}">{esc(c)}</td>' for i, (h, c) in enumerate(zip(heads, cells)))
 
 
+# ------------------------------------------------------------------ the shadows as lane cards (2026-11-22, Olu: "I want to see them like I see the other ones")
+# Four Sandbox cards: T1 2H BTTS YES, T1 half-time sell, A7 2H BTTS YES, A7 half-time sell. Paper. The Argentina and Brasileirao shadows are held back
+# (their source rows were retired Nov 3 and cannot fire). A card never changes its source lane's record.
+SHADOW_CARDS = (
+    ("T1", "btts", "shadow_t1_2h_btts", "T1 2H BTTS YES (shadow)", "soccer_btts", "2H BTTS YES"),
+    ("T1", "ht", "shadow_t1_ht_sell", "T1 half-time sell (shadow)", "soccer_team1", "Half-time sell"),
+    ("A7", "btts", "shadow_a7_2h_btts", "A7 2H BTTS YES (shadow)", "soccer_btts", "2H BTTS YES"),
+    ("A7", "ht", "shadow_a7_ht_sell", "A7 half-time sell (shadow)", "soccer_u35", "Half-time sell"),
+)
+SHADOW_SOURCE = {"T1": "T1 (team 1+ form, the home or away team to score)", "A7": "A7 (Champions League over 3.5 goals)"}
+
+
+def _shadow_picks(st, lane, kind):
+    """The shadow's entries as pick-shaped dicts: status won / lost / no_result / open / no_quote / pending / unavailable, profit in percent of a $100 stake."""
+    out = []
+    if kind == "btts":
+        for r in st["btts"].values():
+            if r["lane"] != lane:
+                continue
+            if not r.get("quote"):
+                out.append(dict(id=r["event"], match=r["match"], start=r["start"], price=None, status="no_quote", profit=None, detail="no quote"))
+            else:
+                out.append(dict(id=r["event"], match=r["match"], start=r["start"], price=r["price"], status=r["status"], profit=r.get("profit"),
+                                detail="held to settlement"))
+        return out
+    for r in st["ht"].values():
+        if r["lane"] != lane:
+            continue
+        if r["status"] == "pending":
+            out.append(dict(id=r["pick"], match=r["match"], start=r["start"], price=r["price"], status="pending", profit=None, detail="half-time not read yet"))
+        elif r["status"] == "unavailable":
+            out.append(dict(id=r["pick"], match=r["match"], start=r["start"], price=r["price"], status="unavailable", profit=None, detail="no half-time data"))
+        else:
+            act = r.get("action")
+            detail = (f'sold at {float(r["bid"]) * 100:.0f}c at half-time ({r.get("score")})' if act == "sell"
+                      else f'no bid at half-time ({r.get("score")}): held' if act == "no_bid" else f'held ({r.get("score")})')
+            prof = r.get("profit")
+            status = ("won" if prof > 0 else "lost") if prof is not None else "open"
+            out.append(dict(id=r["pick"], match=r["match"], start=r["start"], price=r["price"], status=status, profit=prof, detail=detail))
+    return out
+
+
+def shadow_cards(states=None):
+    """[dict(name, sport, label, market, lane, kind, picks, a, hold, in_sample)] for the four cards. Never raises: an unreadable ledger gives none."""
+    out = []
+    try:
+        import shadows as SH
+        for lane, kind, name, label, sport, market in SHADOW_CARDS:
+            meta = SH.LANES[lane]
+            st = (states or {}).get(meta["group"]) or SH.load(meta["group"])
+            picks = _shadow_picks(st, lane, kind)
+            hold = None
+            if kind == "ht":
+                hold = SH.ht_stats(st, lane, SH.source_picks(lane))["hold_ret"]
+            out.append(dict(name=name, sport=sport, label=label, market=market, lane=lane, kind=kind, picks=picks, a=pick_record(picks), hold=hold,
+                            in_sample=meta["in_sample"]["btts" if kind == "btts" else "ht"], no_quote=sum(p["status"] == "no_quote" for p in picks)))
+    except Exception as exc:                                    # noqa: BLE001
+        print(f"soccer_lanes: shadow cards failed: {type(exc).__name__}: {exc}")
+    return out
+
+
+def _shadow_entries(c):
+    picks = c["picks"]
+    price = ("Price", lambda p: "no quote" if p["status"] == "no_quote" else (f'{float(p["price"]) * 100:.0f}c' if p.get("price") is not None else ""))
+    res = ("Result", lambda p: {"no_quote": "no quote", "pending": "waiting", "unavailable": "no half-time data"}.get(p["status"], _res_pct(p)))
+    cols = [KICK, MATCH, price, ("What happened", lambda p: p.get("detail") or ""), res]
+    newest = sorted(picks, key=lambda p: p.get("start") or "", reverse=True)[:5]
+    if newest:
+        recent = ('<div class="sp-recent"><ul class="sm">' + "".join(
+            f'<li>{esc(fmt.when(p["start"]) if p.get("start") else "")} · {esc(p["match"])} · {esc(price[1](p))} · {esc(res[1](p))}</li>' for p in newest)
+            + "</ul></div>")
+    else:
+        recent = '<p class="sm mut">No pick yet.</p>'
+    return recent + entries_table(picks, cols)
+
+
+def shadow_rows(states=None):
+    """The four shadow cards as Sandbox rows of the Soccer page (the template's own row shape)."""
+    import shadows as SH
+    p1 = lambda x: "—" if x is None else f"{x * 100:.1f}%"                         # noqa: E731
+    out = []
+    for c in shadow_cards(states):
+        lane, kind = c["lane"], c["kind"]
+        meta = SH.LANES[lane]
+        words = (("At the entry minute, the YES ask on the match's " + ("second-half" if meta["kind"] == "2h" else "full-game") + " both-teams-to-score market "
+                  "(spread 3c or less, else no quote), held to settlement; one a match.") if kind == "btts" else
+                 ("At half-time, " + ("if the backed team has not scored, sell at its team-total YES bid, else hold" if meta["ht"] == "team"
+                                      else "if the match is 0-0, sell at the over's YES bid, else hold") + "; no bid counts as hold. Half-time is read from ESPN's match "
+                  "events and Kalshi's one-minute bid. Counted as the sell (or the held result) against the source entry's price."))
+        params = [("Source lane", SHADOW_SOURCE[lane]),
+                  ("Shadow", words),
+                  ("Record", "Paper, 7% fee, Kalshi's own settlement, fresh from 2026-11-21. It does not change the source lane's record or its Production status. "
+                             "Review at 10 settled, decide at 30."),
+                  ("In-sample, not counted", c["in_sample"] or "no figure")]
+        if kind == "ht":
+            params.append(("Same entries held", f'{("—" if c["hold"] is None else f"{c["hold"] * 100:+.1f}%".replace("-", "−"))} (the source lane\'s own result on the entries checked)'))
+        else:
+            params.append(("No quote", f'{c["no_quote"]} match{"es" if c["no_quote"] != 1 else ""} had no tradable quote at the entry minute and are shown as no quote'))
+        r = row(c["name"], c["sport"], c["label"], c["market"], c["a"], params_html(params),
+                open_n=sum(p["status"] in ("open", "pending") for p in c["picks"]), anchor=c["name"], entries=_shadow_entries(c),
+                note=f'A shadow of {lane}: it does not change {lane}\'s record.')
+        r["own"]["entries_only"] = True
+        out.append(r)
+    return out
+
+
+def shadows_index_html():
+    """The Sandbox page's index of the shadow cards: one row each, linking to its card on the Soccer page."""
+    cs = shadow_cards()
+    if not cs:
+        return ""
+    pr = lambda x: "—" if x is None else f"{x * 100:+.1f}%".replace("-", "−")     # noqa: E731
+    body = ""
+    for c in cs:
+        a = c["a"]
+        seen = len(c["picks"])
+        status = f'{a["n"]} of 30 settled · paper, not counted'
+        body += (f'<tr data-lane="{esc(c["name"])}"><td><b>{esc(c["label"])}</b></td><td><a href="./soccer.html#{esc(c["name"])}">Soccer</a></td>'
+                 f'<td class="num">{seen}</td><td class="num">{a["won"]}-{a["n"] - a["won"]}</td><td class="num">{esc(pr(a["roi_fee"]))}</td><td>{esc(status)}</td></tr>')
+    return ('<section id="shadows-index"><h2>Shadows</h2><p class="shell-kicker">Half-time sells and second-half BTTS on T1 and A7 · each card is on the Soccer page '
+            'with its entries · never changes its source lane\'s record · paper · not in Production</p>'
+            '<div class="tbl"><table class="shadow-index"><tr><th>Shadow</th><th>Page</th><th class="num">Entries</th><th class="num">Won-lost</th>'
+            '<th class="num">Return after fees</th><th>Status</th></tr>' + body + '</table></div></section>')
+
+
 def flipped_rows(state=None):
     """Flipped Unders (flipped_unders.py, 2026-11-21): the over side of C5/C6/C7/B4's selections, paper. Percentages only."""
     import flipped_unders as FU
@@ -888,7 +1013,7 @@ def rows_and_inputs(d, st, now):
             live, gone, extra = live + lv, gone + gn, extra + qs
         except Exception as exc:                                # noqa: BLE001
             print(f"soccer_lanes: {fn.__name__} failed: {type(exc).__name__}: {exc}")
-    for fn in (contender_rows, sa_rows, btts_sa_rows, lambda: (flipped_rows() + piggyback_rows(), [])):
+    for fn in (contender_rows, sa_rows, btts_sa_rows, lambda: (flipped_rows() + piggyback_rows() + shadow_rows(), [])):
         try:
             lv, gn = fn()
             live, gone = live + lv, gone + gn

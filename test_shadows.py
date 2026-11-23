@@ -134,5 +134,38 @@ check("BRA has no in-sample figure", "no figure" in soccer_lanes.shadow_html("BR
 check("no guarded phrase", sandbox_audit.COPY_RE.findall(html + open("shadows.py").read()), [])
 check("the three source rows carry the fold (A7, T1, ARG/BRA)", all("shadow_html(" in open("soccer_lanes.py").read() for _ in range(1)), True)
 
+print("\nthe four shadow cards (2026-11-22, Olu: 'I want to see them like I see the other ones')")
+_real_picks = SH.source_picks
+SH.source_picks = lambda lane, root=None: t1_done if lane == "T1" else []
+try:
+    states = {"team": st, "soccer": dict(btts={}, ht={}, runs=[])}
+    cards = soccer_lanes.shadow_cards(states)
+    rws = soccer_lanes.shadow_rows(states)
+    idx = soccer_lanes.shadows_index_html()
+finally:
+    SH.source_picks = _real_picks
+check("four cards: T1 2H BTTS YES, T1 half-time sell, A7 2H BTTS YES, A7 half-time sell (Argentina and Brasileirao held back)",
+      [c["name"] for c in cards], ["shadow_t1_2h_btts", "shadow_t1_ht_sell", "shadow_a7_2h_btts", "shadow_a7_ht_sell"])
+t1b, t1h = cards[0], cards[1]
+check("T1 BTTS: the priced match and its won result are in the record, with the no-quote rows counted apart",
+      (t1b["a"]["n"], t1b["a"]["won"], t1b["no_quote"], len(t1b["picks"])), (1, 1, 0, 1))
+check("T1 half-time: the sell (22c bid) and the held row are both entries; the record is over both", (len(t1h["picks"]), t1h["a"]["n"]), (2, 2))
+check("each card is a row of the template with its anchor, its record and an Entries fold",
+      all(r["anchor"] == c["name"] and r["a"] == c["a"] and ("Entries" in r["own"]["entries"] or "No entry yet" in r["own"]["entries"]) and r["own"]["entries_only"] for r, c in zip(rws, cards)), True)
+check("the card names its source lane, carries the in-sample figure, and says it does not change the source lane's record",
+      ("T1 (team 1+ form" in rws[0]["own"]["details"], "14-13 at 43c, +17%" in rws[0]["own"]["details"],
+       "does not change the source lane" in rws[0]["own"]["details"], "does not change T1" in rws[0]["meta"]["note"]), (True, True, True, True))
+check("Recent picks and the entries show 'no quote' for a match with no quote",
+      "no quote" in soccer_lanes.shadow_rows({"team": dict(btts={"k": dict(lane="T1", event="E", match="A v B", start="2026-11-22T17:00Z", quote=False, status="open")},
+                                                         ht={}, runs=[]), "soccer": dict(btts={}, ht={}, runs=[])})[0]["own"]["entries"], True)
+check("the card sits in the Sandbox rules of the Soccer page (not in Production)", all(not r["prod"] for r in rws), True)
+check("percentages only, no guarded phrase", ("$" in idx, sandbox_audit.COPY_RE.findall(idx + "".join(r["own"]["details"] + r["own"]["entries"] for r in rws))), (False, []))
+check("the Sandbox index has one row a card, each linking to its card on the Soccer page",
+      (idx.count("data-lane="), all(f'href="./soccer.html#{c["name"]}"' in idx for c in cards)), (4, True))
+import soccer_build
+page = soccer_build.build()
+check("on the live Soccer page every card is an id'd row in the Sandbox rules, after the Rules heading",
+      all(f'id="{c["name"]}"' in page for c in cards) and page.find('id="shadow_t1_2h_btts"') > page.find('<section id="rules"'), True)
+
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)
