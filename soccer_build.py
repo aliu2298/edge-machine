@@ -223,10 +223,7 @@ def build(d=None, st=None, now=None, own_lanes=True):
         rule_name=rule_name, market=market, definition=definition,
         recent=recent, method=method(idle), retired=list(retired) + own_gone,
         **LAYOUT)
-    page = SP.page(sp, d, st, now, rows=rows, idle=idle)
-    # The Shadows block (2026-11-22, Olu): one row per shadow x source lane, near the top, ahead of the Rules.
-    block = soccer_lanes.shadows_section() if own_lanes else ""
-    return page.replace('<section id="rules"', block + '<section id="rules"', 1) if block else page
+    return SP.page(sp, d, st, now, rows=rows, idle=idle)
 
 
 def main():
