@@ -1,7 +1,7 @@
 {
  "box_through": "2026-11-23",
  "error": null,
- "last_run": "2026-11-23T23:00:31.249651+00:00",
+ "last_run": "2026-11-23T23:15:24.804185+00:00",
  "looks": {
   "401909305": {
    "at": "2026-11-20T22:45:25.302540+00:00",
@@ -724,6 +724,62 @@
    },
    "spread": -2.5,
    "usable": 160
+  },
+  "401910038": {
+   "at": "2026-11-23T23:15:24.804185+00:00",
+   "batch": 3,
+   "entered": {
+    "spotter_fade": 0,
+    "spotter_hold": 4,
+    "spotter_spike": 0
+   },
+   "game": "OKC @ IND",
+   "night": "2026-11-23",
+   "out": 57,
+   "skipped": {
+    "no quote": 1,
+    "outside 5-60c": 50,
+    "wide": 4
+   },
+   "spread": 4.5,
+   "usable": 111
+  },
+  "401910039": {
+   "at": "2026-11-23T23:15:24.804185+00:00",
+   "batch": 3,
+   "entered": {
+    "spotter_fade": 3,
+    "spotter_hold": 0,
+    "spotter_spike": 0
+   },
+   "game": "MIL @ TOR",
+   "night": "2026-11-23",
+   "out": 57,
+   "skipped": {
+    "no quote": 8,
+    "outside 5-60c": 76,
+    "wide": 30
+   },
+   "spread": -10.5,
+   "usable": 162
+  },
+  "401910040": {
+   "at": "2026-11-23T23:15:24.804185+00:00",
+   "batch": 3,
+   "entered": {
+    "spotter_fade": 0,
+    "spotter_hold": 0,
+    "spotter_spike": 0
+   },
+   "game": "BKN @ MIN",
+   "night": "2026-11-23",
+   "out": 57,
+   "skipped": {
+    "outside 5-60c": 83,
+    "wide": 1
+   },
+   "spread": -10.5,
+   "usable": 155
   }
  },
  "nights": {
@@ -1257,7 +1313,7 @@
   },
   "2026-11-23": {
    "spotter_fade": {
-    "n": 5,
+    "n": 8,
     "players": [
      [
       "3995",
@@ -1278,11 +1334,23 @@
      [
       "4576060",
       "pts"
+     ],
+     [
+      "5082206",
+      "pra"
+     ],
+     [
+      "3133628",
+      "pra"
+     ],
+     [
+      "5105623",
+      "ast"
      ]
     ]
    },
    "spotter_hold": {
-    "n": 4,
+    "n": 8,
     "players": [
      [
       "4600663",
@@ -1299,6 +1367,22 @@
      [
       "4065733",
       "m3"
+     ],
+     [
+      "4017837",
+      "reb"
+     ],
+     [
+      "3133603",
+      "m3"
+     ],
+     [
+      "4278073",
+      "m3"
+     ],
+     [
+      "3133603",
+      "reb"
      ]
     ]
    },
@@ -2464,6 +2548,81 @@
      "unit": "points",
      "why": "came off the bench last game",
      "yes_ask": 0.5
+    },
+    {
+     "bid": 0.47,
+     "edge": 0.0894,
+     "entered": "2026-11-23T23:15:24.804185+00:00",
+     "game": "MIL @ TOR",
+     "game_id": "401910039",
+     "id": "spotter_fade:KXNBAPRA-26NOV23MILTOR-MILBBURRIES0-20",
+     "lead_min": 74.6,
+     "night": "2026-11-23",
+     "p": 0.5994,
+     "pid": "5082206",
+     "player": "Brayden Burries",
+     "price": 0.53,
+     "rule": "spotter_fade",
+     "rung": 20,
+     "side": "no",
+     "start": "2026-11-24T00:30:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "MIL",
+     "ticker": "KXNBAPRA-26NOV23MILTOR-MILBBURRIES0-20",
+     "unit": "points+rebounds+assists",
+     "why": "came off the bench last game",
+     "yes_ask": 0.49
+    },
+    {
+     "bid": 0.53,
+     "edge": 0.0788,
+     "entered": "2026-11-23T23:15:24.804185+00:00",
+     "game": "MIL @ TOR",
+     "game_id": "401910039",
+     "id": "spotter_fade:KXNBAPRA-26NOV23MILTOR-MILMTURNER3-15",
+     "lead_min": 74.6,
+     "night": "2026-11-23",
+     "p": 0.5288,
+     "pid": "3133628",
+     "player": "Myles Turner",
+     "price": 0.47,
+     "rule": "spotter_fade",
+     "rung": 15,
+     "side": "no",
+     "start": "2026-11-24T00:30:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "MIL",
+     "ticker": "KXNBAPRA-26NOV23MILTOR-MILMTURNER3-15",
+     "unit": "points+rebounds+assists",
+     "why": "team at full strength",
+     "yes_ask": 0.55
+    },
+    {
+     "bid": 0.29,
+     "edge": 0.0746,
+     "entered": "2026-11-23T23:15:24.804185+00:00",
+     "game": "MIL @ TOR",
+     "game_id": "401910039",
+     "id": "spotter_fade:KXNBAAST-26NOV23MILTOR-MILKWARE9-2",
+     "lead_min": 74.6,
+     "night": "2026-11-23",
+     "p": 0.7446,
+     "pid": "5105623",
+     "player": "Kel'el Ware",
+     "price": 0.71,
+     "rule": "spotter_fade",
+     "rung": 2,
+     "side": "no",
+     "start": "2026-11-24T00:30:00+00:00",
+     "stat": "ast",
+     "status": "open",
+     "team": "MIL",
+     "ticker": "KXNBAAST-26NOV23MILTOR-MILKWARE9-2",
+     "unit": "assists",
+     "why": "came off the bench last game",
+     "yes_ask": 0.33
     }
    ]
   },
@@ -3600,6 +3759,87 @@
      "unit": "rebounds",
      "why": "drawn at random from this game's rungs at about the pick's price, NO side",
      "yes_ask": 0.49
+    },
+    {
+     "bid": 0.48,
+     "entered": "2026-11-23T23:15:24.804185+00:00",
+     "game": "MIL @ TOR",
+     "game_id": "401910039",
+     "id": "spotter_fade_blind:KXNBAPRA-26NOV23MILTOR-MILRROLLINS13-20",
+     "lead_min": 74.6,
+     "matches": "spotter_fade:KXNBAPRA-26NOV23MILTOR-MILBBURRIES0-20",
+     "night": "2026-11-23",
+     "p": null,
+     "pid": "4591725",
+     "player": "Ryan Rollins",
+     "price": 0.52,
+     "rule": "spotter_fade_blind",
+     "rung": 20,
+     "side": "no",
+     "start": "2026-11-24T00:30:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "MIL",
+     "ticker": "KXNBAPRA-26NOV23MILTOR-MILRROLLINS13-20",
+     "unit": "points+rebounds+assists",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.49
+    },
+    {
+     "bid": 0.52,
+     "entered": "2026-11-23T23:15:24.804185+00:00",
+     "game": "MIL @ TOR",
+     "game_id": "401910039",
+     "id": "spotter_fade_blind:KXNBAPRA-26NOV23MILTOR-TORCMURRAYBOYLES30-20",
+     "lead_min": 74.6,
+     "matches": "spotter_fade:KXNBAPRA-26NOV23MILTOR-MILMTURNER3-15",
+     "night": "2026-11-23",
+     "outs": [
+      "RJ Barrett"
+     ],
+     "p": null,
+     "pid": "5093267",
+     "player": "Collin Murray-Boyles",
+     "price": 0.48,
+     "rule": "spotter_fade_blind",
+     "rung": 20,
+     "side": "no",
+     "start": "2026-11-24T00:30:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "TOR",
+     "ticker": "KXNBAPRA-26NOV23MILTOR-TORCMURRAYBOYLES30-20",
+     "unit": "points+rebounds+assists",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.53
+    },
+    {
+     "bid": 0.3,
+     "entered": "2026-11-23T23:15:24.804185+00:00",
+     "game": "MIL @ TOR",
+     "game_id": "401910039",
+     "id": "spotter_fade_blind:KXNBAREB-26NOV23MILTOR-TORJBATTLE77-4",
+     "lead_min": 74.6,
+     "matches": "spotter_fade:KXNBAAST-26NOV23MILTOR-MILKWARE9-2",
+     "night": "2026-11-23",
+     "outs": [
+      "RJ Barrett"
+     ],
+     "p": null,
+     "pid": "4431893",
+     "player": "Jamison Battle",
+     "price": 0.7,
+     "rule": "spotter_fade_blind",
+     "rung": 4,
+     "side": "no",
+     "start": "2026-11-24T00:30:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "TOR",
+     "ticker": "KXNBAREB-26NOV23MILTOR-TORJBATTLE77-4",
+     "unit": "rebounds",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.35
     }
    ]
   },
@@ -4967,6 +5207,107 @@
      "ticker": "KXNBA3PT-26NOV23MEMCHA-MEMTJEROME2-3",
      "unit": "threes",
      "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.44,
+     "edge": 0.0804,
+     "entered": "2026-11-23T23:15:24.804185+00:00",
+     "game": "OKC @ IND",
+     "game_id": "401910038",
+     "id": "spotter_hold:KXNBAREB-26NOV23OKCIND-INDIZUBAC40-10",
+     "lead_min": 74.6,
+     "night": "2026-11-23",
+     "outs": [
+      "Tyrese Haliburton"
+     ],
+     "p": 0.5404,
+     "pid": "4017837",
+     "player": "Ivica Zubac",
+     "price": 0.46,
+     "rule": "spotter_hold",
+     "rung": 10,
+     "start": "2026-11-24T00:30:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "IND",
+     "ticker": "KXNBAREB-26NOV23OKCIND-INDIZUBAC40-10",
+     "unit": "rebounds",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.44,
+     "edge": 0.0786,
+     "entered": "2026-11-23T23:15:24.804185+00:00",
+     "game": "OKC @ IND",
+     "game_id": "401910038",
+     "id": "spotter_hold:KXNBA3PT-26NOV23OKCIND-INDKOUBRE10-2",
+     "lead_min": 74.6,
+     "night": "2026-11-23",
+     "outs": [
+      "Tyrese Haliburton"
+     ],
+     "p": 0.5286,
+     "pid": "3133603",
+     "player": "Kelly Oubre Jr.",
+     "price": 0.45,
+     "rule": "spotter_hold",
+     "rung": 2,
+     "start": "2026-11-24T00:30:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "IND",
+     "ticker": "KXNBA3PT-26NOV23OKCIND-INDKOUBRE10-2",
+     "unit": "threes",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.33,
+     "edge": 0.0734,
+     "entered": "2026-11-23T23:15:24.804185+00:00",
+     "game": "OKC @ IND",
+     "game_id": "401910038",
+     "id": "spotter_hold:KXNBA3PT-26NOV23OKCIND-OKCSGILGEOUSALEXANDER2-3",
+     "lead_min": 74.6,
+     "night": "2026-11-23",
+     "p": 0.4234,
+     "pid": "4278073",
+     "player": "Shai Gilgeous-Alexander",
+     "price": 0.35,
+     "rule": "spotter_hold",
+     "rung": 3,
+     "start": "2026-11-24T00:30:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "OKC",
+     "ticker": "KXNBA3PT-26NOV23OKCIND-OKCSGILGEOUSALEXANDER2-3",
+     "unit": "threes",
+     "why": "shots up on last season"
+    },
+    {
+     "bid": 0.25,
+     "edge": 0.0728,
+     "entered": "2026-11-23T23:15:24.804185+00:00",
+     "game": "OKC @ IND",
+     "game_id": "401910038",
+     "id": "spotter_hold:KXNBAREB-26NOV23OKCIND-INDKOUBRE10-6",
+     "lead_min": 74.6,
+     "night": "2026-11-23",
+     "outs": [
+      "Tyrese Haliburton"
+     ],
+     "p": 0.3428,
+     "pid": "3133603",
+     "player": "Kelly Oubre Jr.",
+     "price": 0.27,
+     "rule": "spotter_hold",
+     "rung": 6,
+     "start": "2026-11-24T00:30:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "IND",
+     "ticker": "KXNBAREB-26NOV23OKCIND-INDKOUBRE10-6",
+     "unit": "rebounds",
+     "why": "a top scorer on his team is out"
     }
    ]
   },
@@ -6310,6 +6651,101 @@
      "team": "MEM",
      "ticker": "KXNBAPRA-26NOV23MEMCHA-MEMCSPENCER24-20",
      "unit": "points+rebounds+assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.46,
+     "entered": "2026-11-23T23:15:24.804185+00:00",
+     "game": "OKC @ IND",
+     "game_id": "401910038",
+     "id": "spotter_hold_blind:KXNBAPTS-26NOV23OKCIND-OKCIHARTENSTEIN55-10",
+     "lead_min": 74.6,
+     "matches": "spotter_hold:KXNBAREB-26NOV23OKCIND-INDIZUBAC40-10",
+     "night": "2026-11-23",
+     "p": null,
+     "pid": "4222252",
+     "player": "Isaiah Hartenstein",
+     "price": 0.47,
+     "rule": "spotter_hold_blind",
+     "rung": 10,
+     "start": "2026-11-24T00:30:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "team": "OKC",
+     "ticker": "KXNBAPTS-26NOV23OKCIND-OKCIHARTENSTEIN55-10",
+     "unit": "points",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.46,
+     "entered": "2026-11-23T23:15:24.804185+00:00",
+     "game": "OKC @ IND",
+     "game_id": "401910038",
+     "id": "spotter_hold_blind:KXNBAPTS-26NOV23OKCIND-OKCBSTIRTZ14-10",
+     "lead_min": 74.6,
+     "matches": "spotter_hold:KXNBA3PT-26NOV23OKCIND-INDKOUBRE10-2",
+     "night": "2026-11-23",
+     "p": null,
+     "pid": "5241364",
+     "player": "Bennett Stirtz",
+     "price": 0.47,
+     "rule": "spotter_hold_blind",
+     "rung": 10,
+     "start": "2026-11-24T00:30:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "team": "OKC",
+     "ticker": "KXNBAPTS-26NOV23OKCIND-OKCBSTIRTZ14-10",
+     "unit": "points",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.36,
+     "entered": "2026-11-23T23:15:24.804185+00:00",
+     "game": "OKC @ IND",
+     "game_id": "401910038",
+     "id": "spotter_hold_blind:KXNBAPTS-26NOV23OKCIND-OKCAMITCHELL25-20",
+     "lead_min": 74.6,
+     "matches": "spotter_hold:KXNBA3PT-26NOV23OKCIND-OKCSGILGEOUSALEXANDER2-3",
+     "night": "2026-11-23",
+     "p": null,
+     "pid": "4900671",
+     "player": "Ajay Mitchell",
+     "price": 0.37,
+     "rule": "spotter_hold_blind",
+     "rung": 20,
+     "start": "2026-11-24T00:30:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "team": "OKC",
+     "ticker": "KXNBAPTS-26NOV23OKCIND-OKCAMITCHELL25-20",
+     "unit": "points",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.25,
+     "entered": "2026-11-23T23:15:24.804185+00:00",
+     "game": "OKC @ IND",
+     "game_id": "401910038",
+     "id": "spotter_hold_blind:KXNBAREB-26NOV23OKCIND-INDANEMBHARD2-4",
+     "lead_min": 74.6,
+     "matches": "spotter_hold:KXNBAREB-26NOV23OKCIND-INDKOUBRE10-6",
+     "night": "2026-11-23",
+     "outs": [
+      "Tyrese Haliburton"
+     ],
+     "p": null,
+     "pid": "4395712",
+     "player": "Andrew Nembhard",
+     "price": 0.28,
+     "rule": "spotter_hold_blind",
+     "rung": 4,
+     "start": "2026-11-24T00:30:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "IND",
+     "ticker": "KXNBAREB-26NOV23OKCIND-INDANEMBHARD2-4",
+     "unit": "rebounds",
      "why": "drawn at random from this game's rungs at about the pick's price"
     }
    ]
@@ -9300,12 +9736,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-22T01:30:28.904519+00:00",
-   "box": 0,
-   "due": 0,
-   "new": 0
-  },
-  {
    "at": "2026-11-22T01:45:25.827553+00:00",
    "box": 0,
    "due": 1,
@@ -9604,6 +10034,12 @@
    "box": 0,
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-23T23:15:24.804185+00:00",
+   "box": 0,
+   "due": 3,
+   "new": 14
   }
  ],
  "schedule": [
