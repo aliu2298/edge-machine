@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-23T17:07:40+00:00",
+ "board_built_at": "2026-11-23T17:31:52+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -64,11 +64,11 @@
    "kickoff": "2026-11-23T19:00Z",
    "lane": "production",
    "last_seen": "2026-11-23",
-   "last_seen_at": "2026-11-23T17:07:40+00:00",
+   "last_seen_at": "2026-11-23T17:31:52+00:00",
    "league": "Tennis",
    "match": "Ben Weintraub v Karl Poling",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.06,
+   "price_at_log": 0.32,
    "published_at": "2026-11-23T16:01:55+00:00",
    "published_late": false,
    "published_min_before_kickoff": 178,
@@ -78,10 +78,47 @@
     "market": "KXATPCHALLENGERMATCH-26NOV23POLWEI-WEI",
     "outcome": "Ben Weintraub",
     "outcome_side": "yes",
-    "price_at_log": 0.06,
+    "price_at_log": 0.32,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23POLWEI-WEI",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
+  },
+  "2026-11-23|Brandon Perez|Axel Nefve|Brandon Perez to win \u00b7 Challenger underdog who has won here": {
+   "away": "Axel Nefve",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-23",
+   "edge_at_log": null,
+   "first_seen": "2026-11-23",
+   "headline": "Brandon Perez to win",
+   "home": "Brandon Perez",
+   "id": "2026-11-23|Brandon Perez|Axel Nefve|Brandon Perez to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-23T20:10Z",
+   "lane": "production",
+   "last_seen": "2026-11-23",
+   "last_seen_at": "2026-11-23T17:31:52+00:00",
+   "league": "Tennis",
+   "match": "Brandon Perez v Axel Nefve",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.18,
+   "published_at": "2026-11-23T17:31:52+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 158,
+   "route": {
+    "claim": "Brandon Perez to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV23NEFPER",
+    "market": "KXATPCHALLENGERMATCH-26NOV23NEFPER-PER",
+    "outcome": "Brandon Perez",
+    "outcome_side": "yes",
+    "price_at_log": 0.18,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23NEFPER-PER",
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "pending"
@@ -120,6 +157,43 @@
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "miss"
+  },
+  "2026-11-23|Jeffrey Fradkin|Ofek Shimanov|Jeffrey Fradkin to win \u00b7 Challenger underdog who has won here": {
+   "away": "Ofek Shimanov",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-23",
+   "edge_at_log": null,
+   "first_seen": "2026-11-23",
+   "headline": "Jeffrey Fradkin to win",
+   "home": "Jeffrey Fradkin",
+   "id": "2026-11-23|Jeffrey Fradkin|Ofek Shimanov|Jeffrey Fradkin to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-23T20:10Z",
+   "lane": "production",
+   "last_seen": "2026-11-23",
+   "last_seen_at": "2026-11-23T17:31:52+00:00",
+   "league": "Tennis",
+   "match": "Jeffrey Fradkin v Ofek Shimanov",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.18,
+   "published_at": "2026-11-23T17:31:52+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 158,
+   "route": {
+    "claim": "Jeffrey Fradkin to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV23SHIFRA",
+    "market": "KXATPCHALLENGERMATCH-26NOV23SHIFRA-FRA",
+    "outcome": "Jeffrey Fradkin",
+    "outcome_side": "yes",
+    "price_at_log": 0.18,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23SHIFRA-FRA",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
   },
   "2026-11-23|Oleksandr Ovcharenko|Karol Malirz|Oleksandr Ovcharenko to win \u00b7 Challenger underdog who has won here": {
    "away": "Karol Malirz",
@@ -235,9 +309,9 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 6,
+    "leads": 8,
     "problem": null,
-    "routed": 6,
+    "routed": 8,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -249,7 +323,7 @@
    "sandbox_roi_fee": -0.5816,
    "timing": {
     "late": [],
-    "timed": 6,
+    "timed": 8,
     "under_target": 0
    }
   }
@@ -258,5 +332,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-23T17:07:40+00:00"
+ "updated_at": "2026-11-23T17:31:52+00:00"
 }
