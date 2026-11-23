@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-23T23:02:02.601645+00:00",
+ "last_run": "2026-11-23T23:32:02.822148+00:00",
  "rules": {
   "NO": {
    "picks": [
@@ -453,11 +453,14 @@
      "league_key": "BRA",
      "logged": "2026-11-23T21:01:38.758916+00:00",
      "match": "Internacional v Vit\u00f3ria",
+     "payout": 0.0,
      "price": 0.53,
+     "profit": -100.0,
      "rule": "NO",
+     "settled": "2026-11-23T23:32:02.822148+00:00",
      "side": "no",
      "start": "2026-11-23T22:30Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXBRASILEIROBTTS-26NOV23INTVIT-BTTS",
      "why": "Brazil BTTS NO 0.53"
     },
@@ -948,11 +951,14 @@
      "league_key": "BRA",
      "logged": "2026-11-23T21:01:38.758916+00:00",
      "match": "Internacional v Vit\u00f3ria",
+     "payout": 1.0,
      "price": 0.48,
+     "profit": 101.02,
      "rule": "YES",
+     "settled": "2026-11-23T23:32:02.822148+00:00",
      "side": "yes",
      "start": "2026-11-23T22:30Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXBRASILEIROBTTS-26NOV23INTVIT-BTTS",
      "why": "Brazil BTTS YES 0.48"
     },
@@ -994,13 +1000,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-11-22T11:31:40.911012+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "quoted": 0
-  },
   {
    "at": "2026-11-22T12:01:28.764409+00:00",
    "due": 0,
@@ -1350,10 +1349,16 @@
    "matched": 1,
    "new": 0,
    "quoted": 1
+  },
+  {
+   "at": "2026-11-23T23:32:02.822148+00:00",
+   "due": 1,
+   "matched": 1,
+   "new": 0,
+   "quoted": 1
   }
  ],
  "schedule": [
-  "2026-11-23T23:00:00+00:00",
   "2026-11-24T00:00:00+00:00",
   "2026-11-24T21:00:00+00:00",
   "2026-11-25T23:00:00+00:00",
