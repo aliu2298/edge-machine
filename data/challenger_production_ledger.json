@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-23T14:02:05+00:00",
+ "last_run": "2026-11-23T15:01:48+00:00",
  "quotes": {
   "challenger_won_here:KXATPCHALLENGERMATCH-26NOV22KUBFAL-FAL": {
    "bet": true,
@@ -151,8 +151,8 @@
    "opponent": "Ioannis Kountourakis",
    "pick": "a",
    "pnl": 0.0,
-   "price": 0.88,
-   "price_a": 0.88,
+   "price": 0.82,
+   "price_a": 0.82,
    "price_b": null,
    "price_draw": null,
    "prob_a": null,
@@ -223,6 +223,51 @@
     "b": "Karol Malirz"
    },
    "tournament": "ATP Challenger Hersonissos",
+   "untraded": false,
+   "url": "",
+   "venue": "kalshi"
+  },
+  "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23VIVSAH-VIV": {
+   "bet": true,
+   "date": "2026-11-23",
+   "edge": null,
+   "event": "KXATPCHALLENGERMATCH-26NOV23VIVSAH",
+   "id": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23VIVSAH-VIV",
+   "kalshi_title": "Pedro Vives Marcos wins",
+   "label": "Pedro Vives Marcos v Toufik Sahtali",
+   "league": "Tennis",
+   "logged": "2026-11-23T15:01:21+00:00",
+   "market_id": "KXATPCHALLENGERMATCH-26NOV23VIVSAH",
+   "opponent": "Toufik Sahtali",
+   "pick": "a",
+   "pnl": 0.0,
+   "price": 0.86,
+   "price_a": 0.86,
+   "price_b": null,
+   "price_draw": null,
+   "prob_a": null,
+   "result": null,
+   "rule": "won_here",
+   "settle_px": null,
+   "settled": null,
+   "side_a": "Pedro Vives Marcos",
+   "side_b": "Toufik Sahtali",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "stake": 100.0,
+   "start": "2026-11-23T17:20:00+00:00",
+   "start_source": "kalshi_challenger",
+   "status": "open",
+   "team": "Pedro Vives Marcos",
+   "tickers": {
+    "a": "KXATPCHALLENGERMATCH-26NOV23VIVSAH-VIV",
+    "b": "KXATPCHALLENGERMATCH-26NOV23VIVSAH-SAH"
+   },
+   "titles": {
+    "a": "Pedro Vives Marcos",
+    "b": "Toufik Sahtali"
+   },
+   "tournament": "ATP Challenger Monastir",
    "untraded": false,
    "url": "",
    "venue": "kalshi"
