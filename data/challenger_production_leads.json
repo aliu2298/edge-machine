@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-23T18:37:38+00:00",
+ "board_built_at": "2026-11-23T18:47:49+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -63,8 +63,6 @@
    "id": "2026-11-23|Ben Weintraub|Karl Poling|Ben Weintraub to win \u00b7 Challenger underdog who has won here",
    "kickoff": "2026-11-23T19:00Z",
    "lane": "production",
-   "last_seen": "2026-11-23",
-   "last_seen_at": "2026-11-23T18:37:38+00:00",
    "league": "Tennis",
    "match": "Ben Weintraub v Karl Poling",
    "pair": "challenger_won_here|tennis",
@@ -84,7 +82,7 @@
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23POLWEI-WEI",
    "source": "challenger_won_here",
    "sport": "tennis",
-   "status": "pending"
+   "status": "miss"
   },
   "2026-11-23|Brandon Perez|Axel Nefve|Brandon Perez to win \u00b7 Challenger underdog who has won here": {
    "away": "Axel Nefve",
@@ -101,7 +99,7 @@
    "kickoff": "2026-11-23T20:10Z",
    "lane": "production",
    "last_seen": "2026-11-23",
-   "last_seen_at": "2026-11-23T18:37:38+00:00",
+   "last_seen_at": "2026-11-23T18:47:49+00:00",
    "league": "Tennis",
    "match": "Brandon Perez v Axel Nefve",
    "pair": "challenger_won_here|tennis",
@@ -138,7 +136,7 @@
    "kickoff": "2026-11-23T21:10Z",
    "lane": "production",
    "last_seen": "2026-11-23",
-   "last_seen_at": "2026-11-23T18:37:38+00:00",
+   "last_seen_at": "2026-11-23T18:47:49+00:00",
    "league": "Tennis",
    "match": "Elijah Strode v Juan Miguel Bolivar Idarraga",
    "pair": "challenger_won_here|tennis",
@@ -210,7 +208,7 @@
    "kickoff": "2026-11-23T20:10Z",
    "lane": "production",
    "last_seen": "2026-11-23",
-   "last_seen_at": "2026-11-23T18:37:38+00:00",
+   "last_seen_at": "2026-11-23T18:47:49+00:00",
    "league": "Tennis",
    "match": "Jeffrey Fradkin v Ofek Shimanov",
    "pair": "challenger_won_here|tennis",
@@ -355,9 +353,9 @@
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 5,
-   "sandbox_roi": -0.5802,
-   "sandbox_roi_fee": -0.5816,
+   "sandbox_n": 6,
+   "sandbox_roi": -0.6502,
+   "sandbox_roi_fee": -0.6513,
    "timing": {
     "late": [],
     "timed": 9,
@@ -369,5 +367,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-23T18:37:38+00:00"
+ "updated_at": "2026-11-23T18:47:49+00:00"
 }
