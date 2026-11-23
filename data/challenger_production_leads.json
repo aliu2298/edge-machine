@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-23T00:32:48+00:00",
+ "board_built_at": "2026-11-23T00:33:48+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -63,8 +63,6 @@
    "id": "2026-11-23|Ethan Cook|Evan Zhu|Ethan Cook to win \u00b7 Challenger underdog who has won here",
    "kickoff": "2026-11-23T02:30Z",
    "lane": "production",
-   "last_seen": "2026-11-23",
-   "last_seen_at": "2026-11-23T00:32:48+00:00",
    "league": "Tennis",
    "match": "Ethan Cook v Evan Zhu",
    "pair": "challenger_won_here|tennis",
@@ -84,7 +82,7 @@
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV22ZHUCOO-COO",
    "source": "challenger_won_here",
    "sport": "tennis",
-   "status": "pending"
+   "status": "miss"
   },
   "2026-11-23|Reece Falck|Jason Kubler|Reece Falck to win \u00b7 Challenger underdog who has won here": {
    "away": "Jason Kubler",
@@ -101,7 +99,7 @@
    "kickoff": "2026-11-23T02:30Z",
    "lane": "production",
    "last_seen": "2026-11-23",
-   "last_seen_at": "2026-11-23T00:32:48+00:00",
+   "last_seen_at": "2026-11-23T00:33:48+00:00",
    "league": "Tennis",
    "match": "Reece Falck v Jason Kubler",
    "pair": "challenger_won_here|tennis",
@@ -141,7 +139,7 @@
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 1,
+   "sandbox_n": 2,
    "sandbox_roi": -1.0,
    "sandbox_roi_fee": -1.0,
    "timing": {
@@ -155,5 +153,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-23T00:32:48+00:00"
+ "updated_at": "2026-11-23T00:33:48+00:00"
 }
