@@ -447,9 +447,9 @@ ok(nba_tab is not None and 'aria-current="page"' in nba_tab.group(0)
    and main_nav.count('aria-current="page"') == 1 and HTML.count('<nav class="main"') == 1,
    "only the NBA pill is current")
 ok('<script src="./sports.js"></script>' in HTML, "the NBA page still loads sports.js")
-ok('<nav class="toc" aria-label="On this page"><a href="#rules">Rules</a><a href="#spotter">Spotter</a><a href="#research">Research</a><a href="#games">Games</a><a href="#retired">Retired</a><a href="#method">Method</a></nav>' in HTML
+ok('<nav class="toc" aria-label="On this page"><a href="#rules">Rules</a><a href="#spotter">Spotter</a><a href="#qlines">Quarter lines</a><a href="#research">Research</a><a href="#games">Games</a><a href="#retired">Retired</a><a href="#method">Method</a></nav>' in HTML
    and "nba-local-nav" not in HTML,
-   "the Rules / Spotter / Research / Games / Retired / Method jump pills are the shared sub-nav, not a local pill bar (2026-11-05)")
+   "the Rules / Spotter / Quarter lines / Research / Games / Retired / Method jump pills are the shared sub-nav, not a local pill bar (2026-11-05)")
 head = HTML.split('<div class="tiles', 1)[0]
 games = HTML[HTML.find('<section id="games"'):HTML.find('<section id="matchups">')]
 ok("<h1>NBA</h1>" in head and '<p class="eyebrow">Rules under test</p>' in head

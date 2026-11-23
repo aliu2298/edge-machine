@@ -677,6 +677,7 @@ def build(blob=None, now=None):
 {head_html}
 {rules_html}
 {_spotter_section()}
+{_qlines_section()}
 {_research_section()}
 <section id="games" class="sp-section">
 <div class="sp-section-head"><h2>Games</h2><span class="sm mut">{n_up} next 24h · {len(graded)} graded</span></div>
@@ -709,7 +710,7 @@ def build(blob=None, now=None):
         "Edge Machine · NBA",
         "NBA win margin lanes on Kalshi, their records and the games they trade. Research, not betting advice.",
         "nba",
-        (("rules", "Rules"), ("spotter", "Spotter"), ("research", "Research"), ("games", "Games"), ("retired", "Retired"), ("method", "Method")),
+        (("rules", "Rules"), ("spotter", "Spotter"), ("qlines", "Quarter lines"), ("research", "Research"), ("games", "Games"), ("retired", "Retired"), ("method", "Method")),
         C.stamp(clock),
         body,
         script_src="./site.js",
@@ -737,6 +738,15 @@ def _spotter_section():
         return nba_spotter_build.section(now=datetime.datetime.now(datetime.timezone.utc))
     except Exception as exc:                                    # noqa: BLE001
         return f'<section id="spotter" class="sp-section"><p class="sm mut">NBA Spotter unavailable ({esc(type(exc).__name__)}).</p></section>'
+
+
+def _qlines_section():
+    """NBA quarter lines (Sandbox), paper: six collapsed sections of game-total lines (nba_qlines_build.py). Never breaks the board."""
+    try:
+        import nba_qlines_build
+        return nba_qlines_build.section()
+    except Exception as exc:                                    # noqa: BLE001
+        return f'<section id="qlines" class="sp-section"><p class="sm mut">NBA quarter lines unavailable ({esc(type(exc).__name__)}).</p></section>'
 
 
 def _research_section():
