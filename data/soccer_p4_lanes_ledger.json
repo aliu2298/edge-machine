@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-23T01:00:37.705808+00:00",
+ "last_run": "2026-11-23T02:00:32.163130+00:00",
  "matches": [
   {
    "day": "2026-11-19",
@@ -2562,6 +2562,50 @@
    "logged": "2026-11-23T00:00:34.485936+00:00",
    "timed": 0,
    "title": "Nashville SC v FC Cincinnati",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-22",
+   "entries": [
+    {
+     "ask": 0.4,
+     "bid": 0.39,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.395,
+      "filled": true,
+      "roi": 1.5316
+     },
+     "mom": "pre",
+     "name": "Chicago Fire",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.42,
+      "depth": 827.24,
+      "filled": true,
+      "roi": 1.381
+     },
+     "team": "home",
+     "ticker": "KXMLSGAME-26NOV22CHICLT-CHI",
+     "ts": 1795386600,
+     "v2": true,
+     "won": true
+    }
+   ],
+   "espn_id": "401933730",
+   "event": "KXMLSGAME-26NOV22CHICLT",
+   "goals": 3,
+   "ht": 1795393785,
+   "ko": 1795390200,
+   "labels": {
+    "away": "O+D+",
+    "home": "O+D+"
+   },
+   "league": "MLS",
+   "logged": "2026-11-23T02:00:32.163130+00:00",
+   "timed": 3,
+   "title": "Chicago Fire FC v Charlotte FC",
    "version": "soccerp4-v1"
   }
  ],
