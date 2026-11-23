@@ -107,16 +107,34 @@
    "result": "yes",
    "title": "Will over 0.5 goals be scored?",
    "version": "argdip-live-v1"
+  },
+  {
+   "bot_limit": 0.57,
+   "buys": {
+    "65": null
+   },
+   "event": "KXARGPREMDIVTOTAL-26NOV22IACCHUR",
+   "id": "KXARGPREMDIVTOTAL-26NOV22IACCHUR-1",
+   "kickoff": 1795395600,
+   "league": "Argentina",
+   "logged": "2026-11-23T08:18:41.083797+00:00",
+   "matchday": "26NOV22",
+   "outcome": "entered",
+   "p": 0.88,
+   "prints": 19,
+   "result": "yes",
+   "title": "Will over 0.5 goals be scored?",
+   "version": "argdip-live-v1"
   }
  ],
  "error": null,
  "lane": "arg_goalless_dip_live",
- "last_run": "2026-11-22T23:53:18.829830+00:00",
+ "last_run": "2026-11-23T08:18:41.083797+00:00",
  "no_entry": {},
  "observations": {
-  "at": "2026-11-22T23:53:18.829830+00:00",
+  "at": "2026-11-23T08:18:41.083797+00:00",
   "errors": [],
-  "new": 2,
+  "new": 1,
   "provisional": 0,
   "waiting": 0
  },
