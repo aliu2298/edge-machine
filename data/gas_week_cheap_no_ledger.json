@@ -1026,17 +1026,17 @@
   "KXAAAGASW-26NOV30": "2026-11-23T17:01:19.963473+00:00"
  },
  "lane": "gas_week_cheap_no",
- "last_success": "2026-11-23T18:31:09.662727+00:00",
+ "last_success": "2026-11-24T00:59:28.839836+00:00",
  "observations": {
-  "at": "2026-11-23T18:31:09.662727+00:00",
+  "at": "2026-11-24T00:59:28.839836+00:00",
   "checking": 0,
   "entered": 0,
   "events": 1,
   "filled": 0,
   "fills_moved": 0,
-  "skipped": 0,
+  "skipped": 19,
   "unverified": 5,
-  "waiting": 19
+  "waiting": 0
  },
  "skips": {
   "KXAAAGASW-26NOV02-4.1000": {
@@ -1468,6 +1468,101 @@
    "event": "KXAAAGASW-26NOV23",
    "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
    "word": "Above 3.9400"
+  },
+  "KXAAAGASW-26NOV30-3.4000": {
+   "event": "KXAAAGASW-26NOV30",
+   "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 3.4000"
+  },
+  "KXAAAGASW-26NOV30-3.4200": {
+   "event": "KXAAAGASW-26NOV30",
+   "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 3.4200"
+  },
+  "KXAAAGASW-26NOV30-3.4400": {
+   "event": "KXAAAGASW-26NOV30",
+   "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 3.4400"
+  },
+  "KXAAAGASW-26NOV30-3.4600": {
+   "event": "KXAAAGASW-26NOV30",
+   "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 3.4600"
+  },
+  "KXAAAGASW-26NOV30-3.5200": {
+   "event": "KXAAAGASW-26NOV30",
+   "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 3.5200"
+  },
+  "KXAAAGASW-26NOV30-3.5400": {
+   "event": "KXAAAGASW-26NOV30",
+   "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 3.5400"
+  },
+  "KXAAAGASW-26NOV30-3.5600": {
+   "event": "KXAAAGASW-26NOV30",
+   "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 3.5600"
+  },
+  "KXAAAGASW-26NOV30-3.5800": {
+   "event": "KXAAAGASW-26NOV30",
+   "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 3.5800"
+  },
+  "KXAAAGASW-26NOV30-3.6000": {
+   "event": "KXAAAGASW-26NOV30",
+   "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 3.6000"
+  },
+  "KXAAAGASW-26NOV30-3.6200": {
+   "event": "KXAAAGASW-26NOV30",
+   "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 3.6200"
+  },
+  "KXAAAGASW-26NOV30-3.6400": {
+   "event": "KXAAAGASW-26NOV30",
+   "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 3.6400"
+  },
+  "KXAAAGASW-26NOV30-3.6600": {
+   "event": "KXAAAGASW-26NOV30",
+   "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 3.6600"
+  },
+  "KXAAAGASW-26NOV30-3.6800": {
+   "event": "KXAAAGASW-26NOV30",
+   "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 3.6800"
+  },
+  "KXAAAGASW-26NOV30-3.7000": {
+   "event": "KXAAAGASW-26NOV30",
+   "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 3.7000"
+  },
+  "KXAAAGASW-26NOV30-3.7200": {
+   "event": "KXAAAGASW-26NOV30",
+   "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 3.7200"
+  },
+  "KXAAAGASW-26NOV30-3.7400": {
+   "event": "KXAAAGASW-26NOV30",
+   "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 3.7400"
+  },
+  "KXAAAGASW-26NOV30-3.7600": {
+   "event": "KXAAAGASW-26NOV30",
+   "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 3.7600"
+  },
+  "KXAAAGASW-26NOV30-3.7800": {
+   "event": "KXAAAGASW-26NOV30",
+   "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 3.7800"
+  },
+  "KXAAAGASW-26NOV30-3.8000": {
+   "event": "KXAAAGASW-26NOV30",
+   "reason": "no quote with a 10c spread and a NO ask of 0.15-0.30 inside 6h",
+   "word": "Above 3.8000"
   }
  },
  "voided": {
