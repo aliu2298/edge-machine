@@ -6604,9 +6604,9 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV24MCINAP\", \"yes\"]]",
    "price": 0.52,
-   "profit": null,
+   "profit": 0.8606,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-24T22:02:05.008286+00:00",
    "side": "yes",
    "snapshot": {
     "as_of": "2026-11-24T19:01:42.543495+00:00",
@@ -6675,12 +6675,12 @@
    },
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "won"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-24T22:04:24.158571+00:00",
+ "last_run": "2026-11-24T22:11:33.937439+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -8882,9 +8882,9 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV24FEYFCP\", \"yes\"]]",
    "price": 0.34,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-24T22:02:05.008286+00:00",
    "side": "yes",
    "snapshot": {
     "as_of": "2026-11-24T18:32:05.682345+00:00",
@@ -8953,7 +8953,7 @@
    },
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXUCLTEAMTOTAL-26NOV24FEYFCP-FEY2",
@@ -9056,9 +9056,9 @@
    ],
    "pid": "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXUCLTEAMTOTAL-26NOV24RMAPSV:away\", \"yes\"]]",
    "price": 0.27,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-24T22:01:49.506197+00:00",
    "side": "yes",
    "snapshot": {
     "as_of": "2026-11-24T18:32:15.935679+00:00",
@@ -9127,7 +9127,7 @@
    },
    "sport": "Soccer",
    "src": "soccer_team_rules_ledger.json",
-   "status": "open"
+   "status": "lost"
   }
  ],
  "pool": [
@@ -19522,14 +19522,14 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV24COMAEK\", \"yes\"]]",
    "price": 0.53,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-24T22:02:05.008286+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXUCLTOTAL-26NOV24FEYFCP-4",
@@ -19547,14 +19547,14 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV24FEYFCP\", \"yes\"]]",
    "price": 0.34,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-24T22:02:05.008286+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXUCLTEAMTOTAL-26NOV24FEYFCP-FCP2",
@@ -19616,14 +19616,14 @@
    ],
    "pid": "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXUCLTEAMTOTAL-26NOV24RMAPSV:away\", \"yes\"]]",
    "price": 0.27,
-   "profit": null,
+   "profit": -1.0,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-24T22:01:49.506197+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_team_rules_ledger.json",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXUCLTEAMTOTAL-26NOV24RMAPSV-RMA2",
@@ -19639,14 +19639,14 @@
    ],
    "pid": "[\"soccer_team_rules_ledger.json\", \"T1\", [\"T1:KXUCLTEAMTOTAL-26NOV24RMAPSV:home\", \"yes\"]]",
    "price": 0.9,
-   "profit": null,
+   "profit": 0.1034,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-24T22:01:49.506197+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_team_rules_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXUCLTOTAL-26NOV24MCINAP-4",
@@ -19664,14 +19664,14 @@
    ],
    "pid": "[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV24MCINAP\", \"yes\"]]",
    "price": 0.52,
-   "profit": null,
+   "profit": 0.8606,
    "scope": null,
-   "settled": null,
+   "settled": "2026-11-24T22:02:05.008286+00:00",
    "side": "yes",
    "snapshot": null,
    "sport": "Soccer",
    "src": "soccer_rules_ledger.json",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXSOLD-26NOV2417-T69.9999",
