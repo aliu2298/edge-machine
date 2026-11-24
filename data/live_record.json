@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-24T20:07Z",
+ "generated": "2026-11-24T21:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -6133,11 +6133,12 @@
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24COPMAR-MAR": "price above the cap",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24DEDSHE-SHE": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24DJUIAN-IAN": "outside the price band",
+    "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24FUEVAL-FUE": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24GUNOBR-GUN": "outside the price band",
-    "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24HUESTO-HUE": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MASMAZ-MAZ": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MIYMAU-MAU": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MONHEN-HEN": "price above the cap",
+    "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24NEFRUB-NEF": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24OVCTSI-OVC": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24PIECAR-PIE": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24ROTARN-ARN": "price above the cap",
@@ -6700,9 +6701,9 @@
     {
      "id": "ftts_no_70_80:KXUCLFTTS-26NOV24ARSBVB-BVB",
      "ko": "2026-11-24T20:00",
-     "r": null,
+     "r": 0.294,
      "side": "no",
-     "st": "open",
+     "st": "won",
      "w": 1.03
     },
     {
@@ -6716,17 +6717,17 @@
     {
      "id": "ftts_no_70_80:KXUCLFTTS-26NOV24RBLRCL-RCL",
      "ko": "2026-11-24T20:00",
-     "r": null,
+     "r": 0.294,
      "side": "no",
-     "st": "open",
+     "st": "won",
      "w": 1.03
     },
     {
      "id": "ftts_no_70_80:KXUCLFTTS-26NOV24SLORBB-SLO",
      "ko": "2026-11-24T20:00",
-     "r": null,
+     "r": 0.2473,
      "side": "no",
-     "st": "open",
+     "st": "won",
      "w": 1.06
     }
    ],
@@ -7411,9 +7412,7 @@
      "w": 1.0
     }
    ],
-   "refused": {
-    "team1_form_l5:KXUEFANLTEAMTOTAL-26NOV17WALPOR-POR1": "price above the cap"
-   }
+   "refused": {}
   },
   "team2_form_l10|soccer_team2_intl": {
    "entered": "2026-11-06T21:10:55+00:00",
