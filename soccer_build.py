@@ -223,7 +223,16 @@ def build(d=None, st=None, now=None, own_lanes=True):
         rule_name=rule_name, market=market, definition=definition,
         recent=recent, method=method(idle), retired=list(retired) + own_gone,
         **LAYOUT)
-    return SP.page(sp, d, st, now, rows=rows, idle=idle)
+    page = SP.page(sp, d, st, now, rows=rows, idle=idle)
+    if own_lanes:
+        try:                                                     # Club 82 (2026-11-23): one collapsed block near the top, ahead of the Rules; never breaks the page
+            import club82_build
+            block = club82_build.section()
+            if block:
+                page = page.replace('<section id="rules"', block + '<section id="rules"', 1)
+        except Exception:                                        # noqa: BLE001
+            pass
+    return page
 
 
 def main():
