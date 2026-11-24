@@ -19,6 +19,26 @@
    "recorded": "2026-11-22T15:32:04.649504+00:00",
    "start": "2026-11-22T17:00Z",
    "status": "open"
+  },
+  "T1:KXUCLTEAMTOTAL-26NOV24FEYFCP": {
+   "event": "KXUCLTEAMTOTAL-26NOV24FEYFCP",
+   "kind": "2h",
+   "lane": "T1",
+   "match": "Feyenoord Rotterdam v FC Porto",
+   "quote": false,
+   "recorded": "2026-11-24T18:32:17.323500+00:00",
+   "start": "2026-11-24T20:00Z",
+   "status": "open"
+  },
+  "T1:KXUCLTEAMTOTAL-26NOV24RMAPSV": {
+   "event": "KXUCLTEAMTOTAL-26NOV24RMAPSV",
+   "kind": "2h",
+   "lane": "T1",
+   "match": "Real Madrid v PSV Eindhoven",
+   "quote": false,
+   "recorded": "2026-11-24T18:32:17.323500+00:00",
+   "start": "2026-11-24T20:00Z",
+   "status": "open"
   }
  },
  "error": null,
@@ -79,16 +99,43 @@
    "settled": true,
    "start": "2026-11-22T17:00Z",
    "status": "done"
+  },
+  "T1:KXUCLTEAMTOTAL-26NOV24FEYFCP:away": {
+   "lane": "T1",
+   "match": "Feyenoord Rotterdam v FC Porto",
+   "pick": "T1:KXUCLTEAMTOTAL-26NOV24FEYFCP:away",
+   "price": 0.5,
+   "start": "2026-11-24T20:00Z",
+   "status": "pending"
+  },
+  "T1:KXUCLTEAMTOTAL-26NOV24FEYFCP:home": {
+   "lane": "T1",
+   "match": "Feyenoord Rotterdam v FC Porto",
+   "pick": "T1:KXUCLTEAMTOTAL-26NOV24FEYFCP:home",
+   "price": 0.36,
+   "start": "2026-11-24T20:00Z",
+   "status": "pending"
+  },
+  "T1:KXUCLTEAMTOTAL-26NOV24RMAPSV:away": {
+   "lane": "T1",
+   "match": "Real Madrid v PSV Eindhoven",
+   "pick": "T1:KXUCLTEAMTOTAL-26NOV24RMAPSV:away",
+   "price": 0.27,
+   "start": "2026-11-24T20:00Z",
+   "status": "pending"
+  },
+  "T1:KXUCLTEAMTOTAL-26NOV24RMAPSV:home": {
+   "lane": "T1",
+   "match": "Real Madrid v PSV Eindhoven",
+   "pick": "T1:KXUCLTEAMTOTAL-26NOV24RMAPSV:home",
+   "price": 0.9,
+   "start": "2026-11-24T20:00Z",
+   "status": "pending"
   }
  },
- "last_run": "2026-11-24T16:47:04.826543+00:00",
+ "last_run": "2026-11-24T18:32:17.323500+00:00",
  "registered": "2026-11-21",
  "runs": [
-  {
-   "at": "2026-11-21T19:17:09.791730+00:00",
-   "btts": 1,
-   "ht": 2
-  },
   {
    "at": "2026-11-21T19:31:58.894329+00:00",
    "btts": 1,
@@ -338,6 +385,11 @@
    "at": "2026-11-24T16:47:04.826543+00:00",
    "btts": 2,
    "ht": 4
+  },
+  {
+   "at": "2026-11-24T18:32:17.323500+00:00",
+   "btts": 4,
+   "ht": 8
   }
  ],
  "version": "shadows-v1"
