@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T01:46:16+00:00",
+ "board_built_at": "2026-11-24T02:01:28+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -414,11 +414,11 @@
    "kickoff": "2026-11-24T04:00Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T01:46:16+00:00",
+   "last_seen_at": "2026-11-24T02:01:28+00:00",
    "league": "Tennis",
    "match": "S D Prajwal Dev v Naoya Honda",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.07,
+   "price_at_log": 0.08,
    "published_at": "2026-11-24T01:00:38+00:00",
    "published_late": false,
    "published_min_before_kickoff": 179,
@@ -428,7 +428,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV23HONDEV-DEV",
     "outcome": "S D Prajwal Dev",
     "outcome_side": "yes",
-    "price_at_log": 0.07,
+    "price_at_log": 0.08,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23HONDEV-DEV",
@@ -451,11 +451,11 @@
    "kickoff": "2026-11-24T03:40Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T01:46:16+00:00",
+   "last_seen_at": "2026-11-24T02:01:28+00:00",
    "league": "Tennis",
    "match": "Stefan Vujic v Tristan Schoolkate",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.07,
+   "price_at_log": 0.23,
    "published_at": "2026-11-24T00:47:05+00:00",
    "published_late": false,
    "published_min_before_kickoff": 172,
@@ -465,7 +465,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV23VUJSCH-VUJ",
     "outcome": "Stefan Vujic",
     "outcome_side": "yes",
-    "price_at_log": 0.07,
+    "price_at_log": 0.23,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23VUJSCH-VUJ",
@@ -488,11 +488,11 @@
    "kickoff": "2026-11-24T04:00Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T01:46:16+00:00",
+   "last_seen_at": "2026-11-24T02:01:28+00:00",
    "league": "Tennis",
    "match": "Takuya Kumasaka v David Jorda Sanchis",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.7,
+   "price_at_log": 0.85,
    "published_at": "2026-11-24T01:00:38+00:00",
    "published_late": false,
    "published_min_before_kickoff": 179,
@@ -502,10 +502,47 @@
     "market": "KXATPCHALLENGERMATCH-26NOV23KUMJOR-KUM",
     "outcome": "Takuya Kumasaka",
     "outcome_side": "yes",
-    "price_at_log": 0.7,
+    "price_at_log": 0.85,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23KUMJOR-KUM",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
+  },
+  "2026-11-24|Zane Stevens|Hayden Jones|Zane Stevens to win \u00b7 Challenger underdog who has won here": {
+   "away": "Hayden Jones",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Zane Stevens to win",
+   "home": "Zane Stevens",
+   "id": "2026-11-24|Zane Stevens|Hayden Jones|Zane Stevens to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T04:50Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T02:01:28+00:00",
+   "league": "Tennis",
+   "match": "Zane Stevens v Hayden Jones",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.42,
+   "published_at": "2026-11-24T02:01:28+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 168,
+   "route": {
+    "claim": "Zane Stevens to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV23STEJON",
+    "market": "KXATPCHALLENGERMATCH-26NOV23STEJON-STE",
+    "outcome": "Zane Stevens",
+    "outcome_side": "yes",
+    "price_at_log": 0.42,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23STEJON-STE",
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "pending"
@@ -519,9 +556,9 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 14,
+    "leads": 15,
     "problem": null,
-    "routed": 14,
+    "routed": 15,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -533,7 +570,7 @@
    "sandbox_roi_fee": -0.8098,
    "timing": {
     "late": [],
-    "timed": 12,
+    "timed": 13,
     "under_target": 0
    }
   }
@@ -542,5 +579,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T01:46:16+00:00"
+ "updated_at": "2026-11-24T02:01:28+00:00"
 }
