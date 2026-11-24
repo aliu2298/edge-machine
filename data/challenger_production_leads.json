@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T06:02:03+00:00",
+ "board_built_at": "2026-11-24T07:01:25+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -574,43 +574,6 @@
    "sport": "tennis",
    "status": "miss"
   },
-  "2026-11-24|Yusuke Takahashi|Constantin Bittoun Kouzmine|Yusuke Takahashi to win \u00b7 Challenger underdog who has won here": {
-   "away": "Constantin Bittoun Kouzmine",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-11-24",
-   "edge_at_log": null,
-   "first_seen": "2026-11-24",
-   "headline": "Yusuke Takahashi to win",
-   "home": "Yusuke Takahashi",
-   "id": "2026-11-24|Yusuke Takahashi|Constantin Bittoun Kouzmine|Yusuke Takahashi to win \u00b7 Challenger underdog who has won here",
-   "kickoff": "2026-11-24T06:20Z",
-   "lane": "production",
-   "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T06:02:03+00:00",
-   "league": "Tennis",
-   "match": "Yusuke Takahashi v Constantin Bittoun Kouzmine",
-   "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.62,
-   "published_at": "2026-11-24T03:31:39+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 168,
-   "route": {
-    "claim": "Yusuke Takahashi to win",
-    "event": "KXATPCHALLENGERMATCH-26NOV23BITTAK",
-    "market": "KXATPCHALLENGERMATCH-26NOV23BITTAK-TAK",
-    "outcome": "Yusuke Takahashi",
-    "outcome_side": "yes",
-    "price_at_log": 0.62,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23BITTAK-TAK",
-   "source": "challenger_won_here",
-   "sport": "tennis",
-   "status": "pending"
-  },
   "2026-11-24|Zane Stevens|Hayden Jones|Zane Stevens to win \u00b7 Challenger underdog who has won here": {
    "away": "Hayden Jones",
    "bet": {
@@ -655,9 +618,9 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 18,
+    "leads": 17,
     "problem": null,
-    "routed": 18,
+    "routed": 17,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -669,7 +632,7 @@
    "sandbox_roi_fee": -0.8769,
    "timing": {
     "late": [],
-    "timed": 16,
+    "timed": 15,
     "under_target": 0
    }
   }
@@ -678,5 +641,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T06:02:03+00:00"
+ "updated_at": "2026-11-24T07:01:25+00:00"
 }
