@@ -29,6 +29,16 @@
    "recorded": "2026-11-24T16:16:41.753887+00:00",
    "start": "2026-11-24T17:45Z",
    "status": "open"
+  },
+  "A7:KXUCLTOTAL-26NOV24MCINAP": {
+   "event": "KXUCLTOTAL-26NOV24MCINAP",
+   "kind": "2h",
+   "lane": "A7",
+   "match": "Manchester City v Napoli",
+   "quote": false,
+   "recorded": "2026-11-24T19:01:43.752059+00:00",
+   "start": "2026-11-24T20:00Z",
+   "status": "open"
   }
  },
  "error": null,
@@ -57,16 +67,19 @@
    "price": 0.42,
    "start": "2026-11-24T17:45Z",
    "status": "pending"
+  },
+  "A7:KXUCLTOTAL-26NOV24MCINAP": {
+   "lane": "A7",
+   "match": "Manchester City v Napoli",
+   "pick": "A7:KXUCLTOTAL-26NOV24MCINAP",
+   "price": 0.52,
+   "start": "2026-11-24T20:00Z",
+   "status": "pending"
   }
  },
- "last_run": "2026-11-24T18:46:41.313330+00:00",
+ "last_run": "2026-11-24T19:01:43.752059+00:00",
  "registered": "2026-11-21",
  "runs": [
-  {
-   "at": "2026-11-22T15:46:26.905960+00:00",
-   "btts": 0,
-   "ht": 0
-  },
   {
    "at": "2026-11-22T16:01:41.822697+00:00",
    "btts": 0,
@@ -316,6 +329,11 @@
    "at": "2026-11-24T18:46:41.313330+00:00",
    "btts": 3,
    "ht": 3
+  },
+  {
+   "at": "2026-11-24T19:01:43.752059+00:00",
+   "btts": 4,
+   "ht": 4
   }
  ],
  "version": "shadows-v1"

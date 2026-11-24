@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-24T18:46:40+00:00",
+ "board_built_at": "2026-11-24T19:01:43+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sr_a2": true,
@@ -133,7 +133,7 @@
    "kickoff": "2026-11-24T20:00Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T18:46:40+00:00",
+   "last_seen_at": "2026-11-24T19:01:43+00:00",
    "league": "Champions League",
    "match": "Como v AEK Athens",
    "pair": "sr_a7|soccer_u35",
@@ -170,7 +170,7 @@
    "kickoff": "2026-11-24T20:00Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T18:46:40+00:00",
+   "last_seen_at": "2026-11-24T19:01:43+00:00",
    "league": "Champions League",
    "match": "Feyenoord Rotterdam v FC Porto",
    "pair": "sr_a7|soccer_u35",
@@ -188,6 +188,43 @@
     "venue": "kalshi"
    },
    "sandbox_quote": "sr_a7:KXUCLTOTAL-26NOV24FEYFCP-4",
+   "source": "sr_a7",
+   "sport": "soccer_u35",
+   "status": "pending"
+  },
+  "2026-11-24|Manchester City|Napoli|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5": {
+   "away": "Napoli",
+   "bet": {
+    "kind": "total_gte",
+    "n": 4
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Over 3.5 goals",
+   "home": "Manchester City",
+   "id": "2026-11-24|Manchester City|Napoli|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5",
+   "kickoff": "2026-11-24T20:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T19:01:43+00:00",
+   "league": "Champions League",
+   "match": "Manchester City v Napoli",
+   "pair": "sr_a7|soccer_u35",
+   "price_at_log": 0.52,
+   "published_at": "2026-11-24T19:01:43+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 58,
+   "route": {
+    "claim": "Over 3.5 goals",
+    "event": "KXUCLTOTAL-26NOV24MCINAP",
+    "market": "KXUCLTOTAL-26NOV24MCINAP-4",
+    "outcome": "Over 3.5 goals scored",
+    "outcome_side": "yes",
+    "price_at_log": 0.52,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "sr_a7:KXUCLTOTAL-26NOV24MCINAP-4",
    "source": "sr_a7",
    "sport": "soccer_u35",
    "status": "pending"
@@ -276,9 +313,9 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 2,
+    "leads": 3,
     "problem": null,
-    "routed": 2,
+    "routed": 3,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -290,8 +327,8 @@
    "sandbox_roi_fee": 0.3323,
    "timing": {
     "late": [],
-    "timed": 2,
-    "under_target": 0
+    "timed": 3,
+    "under_target": 1
    }
   },
   "sr_c3|soccer_o25": {
@@ -349,5 +386,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T18:46:40+00:00"
+ "updated_at": "2026-11-24T19:01:43+00:00"
 }
