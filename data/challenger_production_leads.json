@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T08:01:25+00:00",
+ "board_built_at": "2026-11-24T08:01:54+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -344,11 +344,11 @@
    "kickoff": "2026-11-24T11:00Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T08:01:25+00:00",
+   "last_seen_at": "2026-11-24T08:01:54+00:00",
    "league": "Tennis",
    "match": "Anton Chekhov v Vadym Ursu",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.2,
+   "price_at_log": 0.19,
    "published_at": "2026-11-24T08:01:25+00:00",
    "published_late": false,
    "published_min_before_kickoff": 178,
@@ -358,7 +358,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV24URSCHE-CHE",
     "outcome": "Anton Chekhov",
     "outcome_side": "yes",
-    "price_at_log": 0.2,
+    "price_at_log": 0.19,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24URSCHE-CHE",
@@ -713,5 +713,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T08:01:25+00:00"
+ "updated_at": "2026-11-24T08:01:54+00:00"
 }
