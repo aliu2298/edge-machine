@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T21:08:41+00:00",
+ "board_built_at": "2026-11-24T21:20:39+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -434,43 +434,6 @@
    "sport": "tennis",
    "status": "miss"
   },
-  "2026-11-24|Axel Nefve|Alan Fernando Rubio Fierros|Axel Nefve to win \u00b7 Challenger underdog who has won here": {
-   "away": "Alan Fernando Rubio Fierros",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-11-24",
-   "edge_at_log": null,
-   "first_seen": "2026-11-24",
-   "headline": "Axel Nefve to win",
-   "home": "Axel Nefve",
-   "id": "2026-11-24|Axel Nefve|Alan Fernando Rubio Fierros|Axel Nefve to win \u00b7 Challenger underdog who has won here",
-   "kickoff": "2026-11-24T21:20Z",
-   "lane": "production",
-   "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T21:08:41+00:00",
-   "league": "Tennis",
-   "match": "Axel Nefve v Alan Fernando Rubio Fierros",
-   "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.4,
-   "published_at": "2026-11-24T18:24:00+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 176,
-   "route": {
-    "claim": "Axel Nefve to win",
-    "event": "KXATPCHALLENGERMATCH-26NOV24NEFRUB",
-    "market": "KXATPCHALLENGERMATCH-26NOV24NEFRUB-NEF",
-    "outcome": "Axel Nefve",
-    "outcome_side": "yes",
-    "price_at_log": 0.4,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24NEFRUB-NEF",
-   "source": "challenger_won_here",
-   "sport": "tennis",
-   "status": "pending"
-  },
   "2026-11-24|Benjamin Pietri|Roberto Carballes Baena|Benjamin Pietri to win \u00b7 Challenger underdog who has won here": {
    "away": "Roberto Carballes Baena",
    "bet": {
@@ -750,43 +713,6 @@
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "miss"
-  },
-  "2026-11-24|Juan Carlos Fuentes Vasquez|Amit Vales|Juan Carlos Fuentes Vasquez to win \u00b7 Challenger underdog who has won here": {
-   "away": "Amit Vales",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-11-24",
-   "edge_at_log": null,
-   "first_seen": "2026-11-24",
-   "headline": "Juan Carlos Fuentes Vasquez to win",
-   "home": "Juan Carlos Fuentes Vasquez",
-   "id": "2026-11-24|Juan Carlos Fuentes Vasquez|Amit Vales|Juan Carlos Fuentes Vasquez to win \u00b7 Challenger underdog who has won here",
-   "kickoff": "2026-11-24T21:20Z",
-   "lane": "production",
-   "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T21:08:41+00:00",
-   "league": "Tennis",
-   "match": "Juan Carlos Fuentes Vasquez v Amit Vales",
-   "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.24,
-   "published_at": "2026-11-24T18:24:00+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 176,
-   "route": {
-    "claim": "Juan Carlos Fuentes Vasquez to win",
-    "event": "KXATPCHALLENGERMATCH-26NOV24FUEVAL",
-    "market": "KXATPCHALLENGERMATCH-26NOV24FUEVAL-FUE",
-    "outcome": "Juan Carlos Fuentes Vasquez",
-    "outcome_side": "yes",
-    "price_at_log": 0.24,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24FUEVAL-FUE",
-   "source": "challenger_won_here",
-   "sport": "tennis",
-   "status": "pending"
   },
   "2026-11-24|Juan Miguel Bolivar Idarraga|Luciano Emanuel Ambrogi|Juan Miguel Bolivar Idarraga to win \u00b7 Challenger underdog who has won here": {
    "away": "Luciano Emanuel Ambrogi",
@@ -1427,9 +1353,9 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 40,
+    "leads": 38,
     "problem": null,
-    "routed": 40,
+    "routed": 38,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1441,7 +1367,7 @@
    "sandbox_roi_fee": -0.4495,
    "timing": {
     "late": [],
-    "timed": 28,
+    "timed": 26,
     "under_target": 0
    }
   }
@@ -1450,5 +1376,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T21:08:41+00:00"
+ "updated_at": "2026-11-24T21:20:39+00:00"
 }
