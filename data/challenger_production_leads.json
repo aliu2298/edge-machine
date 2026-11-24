@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T04:16:42+00:00",
+ "board_built_at": "2026-11-24T04:31:41+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -379,7 +379,7 @@
    "kickoff": "2026-11-24T06:00Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T04:16:42+00:00",
+   "last_seen_at": "2026-11-24T04:31:41+00:00",
    "league": "Tennis",
    "match": "Evan Zhu v Omar Jasika",
    "pair": "challenger_won_here|tennis",
@@ -450,8 +450,6 @@
    "id": "2026-11-24|Ryuki Matsuda|Kaichi Uchida|Ryuki Matsuda to win \u00b7 Challenger underdog who has won here",
    "kickoff": "2026-11-24T05:35Z",
    "lane": "production",
-   "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T04:16:42+00:00",
    "league": "Tennis",
    "match": "Ryuki Matsuda v Kaichi Uchida",
    "pair": "challenger_won_here|tennis",
@@ -471,7 +469,7 @@
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23MATUCH-MAT",
    "source": "challenger_won_here",
    "sport": "tennis",
-   "status": "pending"
+   "status": "miss"
   },
   "2026-11-24|S D Prajwal Dev|Naoya Honda|S D Prajwal Dev to win \u00b7 Challenger underdog who has won here": {
    "away": "Naoya Honda",
@@ -558,11 +556,11 @@
    "kickoff": "2026-11-24T06:20Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T04:16:42+00:00",
+   "last_seen_at": "2026-11-24T04:31:41+00:00",
    "league": "Tennis",
    "match": "Taisei Ichikawa v Yuta Shimizu",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.17,
+   "price_at_log": 0.21,
    "published_at": "2026-11-24T03:31:39+00:00",
    "published_late": false,
    "published_min_before_kickoff": 168,
@@ -572,7 +570,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV23SHIICH-ICH",
     "outcome": "Taisei Ichikawa",
     "outcome_side": "yes",
-    "price_at_log": 0.17,
+    "price_at_log": 0.21,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23SHIICH-ICH",
@@ -630,7 +628,7 @@
    "kickoff": "2026-11-24T06:20Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T04:16:42+00:00",
+   "last_seen_at": "2026-11-24T04:31:41+00:00",
    "league": "Tennis",
    "match": "Yusuke Takahashi v Constantin Bittoun Kouzmine",
    "pair": "challenger_won_here|tennis",
@@ -705,9 +703,9 @@
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 15,
-   "sandbox_roi": -0.8601,
-   "sandbox_roi_fee": -0.8605,
+   "sandbox_n": 16,
+   "sandbox_roi": -0.8688,
+   "sandbox_roi_fee": -0.8692,
    "timing": {
     "late": [],
     "timed": 17,
@@ -719,5 +717,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T04:16:42+00:00"
+ "updated_at": "2026-11-24T04:31:41+00:00"
 }
