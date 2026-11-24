@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T22:31:26+00:00",
+ "board_built_at": "2026-11-24T22:46:26+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -433,6 +433,41 @@
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "miss"
+  },
+  "2026-11-24|Axel Nefve|Alan Fernando Rubio Fierros|Axel Nefve to win \u00b7 Challenger underdog who has won here": {
+   "away": "Alan Fernando Rubio Fierros",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Axel Nefve to win",
+   "home": "Axel Nefve",
+   "id": "2026-11-24|Axel Nefve|Alan Fernando Rubio Fierros|Axel Nefve to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T21:20Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Axel Nefve v Alan Fernando Rubio Fierros",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.4,
+   "published_at": "2026-11-24T22:46:26+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Axel Nefve to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24NEFRUB",
+    "market": "KXATPCHALLENGERMATCH-26NOV24NEFRUB-NEF",
+    "outcome": "Axel Nefve",
+    "outcome_side": "yes",
+    "price_at_log": 0.4,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24NEFRUB-NEF",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "hit"
   },
   "2026-11-24|Benjamin Pietri|Roberto Carballes Baena|Benjamin Pietri to win \u00b7 Challenger underdog who has won here": {
    "away": "Roberto Carballes Baena",
@@ -1388,18 +1423,18 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 39,
+    "leads": 40,
     "problem": null,
-    "routed": 39,
+    "routed": 40,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 39,
-   "sandbox_roi": -0.4471,
-   "sandbox_roi_fee": -0.4636,
+   "sandbox_n": 40,
+   "sandbox_roi": -0.3985,
+   "sandbox_roi_fee": -0.4171,
    "timing": {
     "late": [],
     "timed": 26,
@@ -1411,5 +1446,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T22:31:26+00:00"
+ "updated_at": "2026-11-24T22:46:26+00:00"
 }
