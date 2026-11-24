@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T18:17:40+00:00",
+ "board_built_at": "2026-11-24T18:24:00+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -434,6 +434,43 @@
    "sport": "tennis",
    "status": "miss"
   },
+  "2026-11-24|Axel Nefve|Alan Fernando Rubio Fierros|Axel Nefve to win \u00b7 Challenger underdog who has won here": {
+   "away": "Alan Fernando Rubio Fierros",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Axel Nefve to win",
+   "home": "Axel Nefve",
+   "id": "2026-11-24|Axel Nefve|Alan Fernando Rubio Fierros|Axel Nefve to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T21:20Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T18:24:00+00:00",
+   "league": "Tennis",
+   "match": "Axel Nefve v Alan Fernando Rubio Fierros",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.46,
+   "published_at": "2026-11-24T18:24:00+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 176,
+   "route": {
+    "claim": "Axel Nefve to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24NEFRUB",
+    "market": "KXATPCHALLENGERMATCH-26NOV24NEFRUB-NEF",
+    "outcome": "Axel Nefve",
+    "outcome_side": "yes",
+    "price_at_log": 0.46,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24NEFRUB-NEF",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
+  },
   "2026-11-24|Benjamin Pietri|Roberto Carballes Baena|Benjamin Pietri to win \u00b7 Challenger underdog who has won here": {
    "away": "Roberto Carballes Baena",
    "bet": {
@@ -519,11 +556,11 @@
    "kickoff": "2026-11-24T20:40Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T18:17:40+00:00",
+   "last_seen_at": "2026-11-24T18:24:00+00:00",
    "league": "Tennis",
    "match": "Connor Huertas Del Pino v Leonardo Storck Franca",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.5,
+   "price_at_log": 0.49,
    "published_at": "2026-11-24T17:47:26+00:00",
    "published_late": false,
    "published_min_before_kickoff": 172,
@@ -533,7 +570,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV24HUESTO-HUE",
     "outcome": "Connor Huertas Del Pino",
     "outcome_side": "yes",
-    "price_at_log": 0.5,
+    "price_at_log": 0.49,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24HUESTO-HUE",
@@ -751,6 +788,43 @@
    "sport": "tennis",
    "status": "miss"
   },
+  "2026-11-24|Juan Carlos Fuentes Vasquez|Amit Vales|Juan Carlos Fuentes Vasquez to win \u00b7 Challenger underdog who has won here": {
+   "away": "Amit Vales",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Juan Carlos Fuentes Vasquez to win",
+   "home": "Juan Carlos Fuentes Vasquez",
+   "id": "2026-11-24|Juan Carlos Fuentes Vasquez|Amit Vales|Juan Carlos Fuentes Vasquez to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T21:20Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T18:24:00+00:00",
+   "league": "Tennis",
+   "match": "Juan Carlos Fuentes Vasquez v Amit Vales",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.12,
+   "published_at": "2026-11-24T18:24:00+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 176,
+   "route": {
+    "claim": "Juan Carlos Fuentes Vasquez to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24FUEVAL",
+    "market": "KXATPCHALLENGERMATCH-26NOV24FUEVAL-FUE",
+    "outcome": "Juan Carlos Fuentes Vasquez",
+    "outcome_side": "yes",
+    "price_at_log": 0.12,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24FUEVAL-FUE",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
+  },
   "2026-11-24|Juan Miguel Bolivar Idarraga|Luciano Emanuel Ambrogi|Juan Miguel Bolivar Idarraga to win \u00b7 Challenger underdog who has won here": {
    "away": "Luciano Emanuel Ambrogi",
    "bet": {
@@ -766,7 +840,7 @@
    "kickoff": "2026-11-24T20:10Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T18:17:40+00:00",
+   "last_seen_at": "2026-11-24T18:24:00+00:00",
    "league": "Tennis",
    "match": "Juan Miguel Bolivar Idarraga v Luciano Emanuel Ambrogi",
    "pair": "challenger_won_here|tennis",
@@ -908,11 +982,11 @@
    "kickoff": "2026-11-24T18:30Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T18:17:40+00:00",
+   "last_seen_at": "2026-11-24T18:24:00+00:00",
    "league": "Tennis",
    "match": "Niklas Schell v Filippo Romano",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.18,
+   "price_at_log": 0.12,
    "published_at": "2026-11-24T16:02:03+00:00",
    "published_late": false,
    "published_min_before_kickoff": 147,
@@ -922,7 +996,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV24SCHROM-SCH",
     "outcome": "Niklas Schell",
     "outcome_side": "yes",
-    "price_at_log": 0.18,
+    "price_at_log": 0.12,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24SCHROM-SCH",
@@ -1015,11 +1089,11 @@
    "kickoff": "2026-11-24T18:40Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T18:17:40+00:00",
+   "last_seen_at": "2026-11-24T18:24:00+00:00",
    "league": "Tennis",
    "match": "Oscar Jose Gutierrez v Igor Marcondes",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.14,
+   "price_at_log": 0.13,
    "published_at": "2026-11-24T16:02:03+00:00",
    "published_late": false,
    "published_min_before_kickoff": 157,
@@ -1029,7 +1103,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV24MARGUT-GUT",
     "outcome": "Oscar Jose Gutierrez",
     "outcome_side": "yes",
-    "price_at_log": 0.14,
+    "price_at_log": 0.13,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MARGUT-GUT",
@@ -1157,7 +1231,7 @@
    "kickoff": "2026-11-24T19:50Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T18:17:40+00:00",
+   "last_seen_at": "2026-11-24T18:24:00+00:00",
    "league": "Tennis",
    "match": "Ryo Tabata v Felipe Meligeni Alves",
    "pair": "challenger_won_here|tennis",
@@ -1264,11 +1338,11 @@
    "kickoff": "2026-11-24T18:40Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T18:17:40+00:00",
+   "last_seen_at": "2026-11-24T18:24:00+00:00",
    "league": "Tennis",
    "match": "Santiago De la Fuente v Juan Manuel La Serna",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.11,
+   "price_at_log": 0.14,
    "published_at": "2026-11-24T16:02:03+00:00",
    "published_late": false,
    "published_min_before_kickoff": 157,
@@ -1278,7 +1352,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV24LADLF-DLF",
     "outcome": "Santiago De la Fuente",
     "outcome_side": "yes",
-    "price_at_log": 0.11,
+    "price_at_log": 0.14,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24LADLF-DLF",
@@ -1390,43 +1464,6 @@
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "miss"
-  },
-  "2026-11-24|Thiago Cigarran|Paulo Andre Saraiva Dos Santos|Thiago Cigarran to win \u00b7 Challenger underdog who has won here": {
-   "away": "Paulo Andre Saraiva Dos Santos",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-11-24",
-   "edge_at_log": null,
-   "first_seen": "2026-11-24",
-   "headline": "Thiago Cigarran to win",
-   "home": "Thiago Cigarran",
-   "id": "2026-11-24|Thiago Cigarran|Paulo Andre Saraiva Dos Santos|Thiago Cigarran to win \u00b7 Challenger underdog who has won here",
-   "kickoff": "2026-11-24T18:20Z",
-   "lane": "production",
-   "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T18:17:40+00:00",
-   "league": "Tennis",
-   "match": "Thiago Cigarran v Paulo Andre Saraiva Dos Santos",
-   "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.47,
-   "published_at": "2026-11-24T16:02:03+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 137,
-   "route": {
-    "claim": "Thiago Cigarran to win",
-    "event": "KXATPCHALLENGERMATCH-26NOV24SARCIG",
-    "market": "KXATPCHALLENGERMATCH-26NOV24SARCIG-CIG",
-    "outcome": "Thiago Cigarran",
-    "outcome_side": "yes",
-    "price_at_log": 0.47,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24SARCIG-CIG",
-   "source": "challenger_won_here",
-   "sport": "tennis",
-   "status": "pending"
   },
   "2026-11-24|Wojciech Marek|Kimmer Coppejans|Wojciech Marek to win \u00b7 Challenger underdog who has won here": {
    "away": "Kimmer Coppejans",
@@ -1542,9 +1579,9 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 43,
+    "leads": 44,
     "problem": null,
-    "routed": 43,
+    "routed": 44,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1556,7 +1593,7 @@
    "sandbox_roi_fee": -0.4189,
    "timing": {
     "late": [],
-    "timed": 33,
+    "timed": 34,
     "under_target": 0
    }
   }
@@ -1565,5 +1602,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T18:17:40+00:00"
+ "updated_at": "2026-11-24T18:24:00+00:00"
 }
