@@ -100,6 +100,10 @@
    "at": "2026-11-23T22:40:16.085696+00:00",
    "pool": "opposite"
   },
+  "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXBRASILEIROBTTS-26NOV24CHAPAL\", \"no\"]]": {
+   "at": "2026-11-24T19:40:12.920347+00:00",
+   "pool": "opposite"
+  },
   "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXARGPREMDIVBTTS-26NOV20VELCAB\", \"yes\"]]": {
    "at": "2026-11-20T21:37:27.429116+00:00",
    "pool": "opposite"
@@ -198,6 +202,10 @@
   },
   "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV23SANGPA\", \"yes\"]]": {
    "at": "2026-11-23T22:40:16.085696+00:00",
+   "pool": "opposite"
+  },
+  "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV24CHAPAL\", \"yes\"]]": {
+   "at": "2026-11-24T19:40:12.920347+00:00",
    "pool": "opposite"
   },
   "[\"contract\", \"album_cheap_no_ledger.json\", [\"KXALBUMEQUIV-EVE26NOV05-17K\", \"no\"]]": {
@@ -6672,7 +6680,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-24T19:33:01.224264+00:00",
+ "last_run": "2026-11-24T19:40:12.920347+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -20738,6 +20746,24 @@
    "list": "pool",
    "logged": "2026-11-23T22:31:43.316241+00:00",
    "pid": "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV23SANGPA\", \"yes\"]]",
+   "side": "yes",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-24T19:40:12.920347+00:00",
+   "contract": "KXBRASILEIROBTTS-26NOV24CHAPAL-BTTS",
+   "list": "pool",
+   "logged": "2026-11-24T19:32:01.232734+00:00",
+   "pid": "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXBRASILEIROBTTS-26NOV24CHAPAL\", \"no\"]]",
+   "side": "no",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-24T19:40:12.920347+00:00",
+   "contract": "KXBRASILEIROBTTS-26NOV24CHAPAL-BTTS",
+   "list": "pool",
+   "logged": "2026-11-24T19:32:01.232734+00:00",
+   "pid": "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV24CHAPAL\", \"yes\"]]",
    "side": "yes",
    "why": "active lanes are on both sides of this contract"
   }
