@@ -6,8 +6,8 @@
   "rule": "LOW under the threshold set on the server"
  },
  "engine": {
-  "beat_age_s": 567,
-  "cycle": 218,
+  "beat_age_s": 532,
+  "cycle": 224,
   "last_error": null,
   "mode": "LIVE",
   "service_active": true,
@@ -30,7 +30,7 @@
   "production_challenger": {
    "actionable": 0,
    "age_min": 21,
-   "leads": 17,
+   "leads": 19,
    "problems": 0,
    "status": "HTTP 304 (cached)"
   },
@@ -81,10 +81,10 @@
   "today": "down",
   "yesterday": "down"
  },
- "published_at": "2026-11-24T07:23:02+00:00",
+ "published_at": "2026-11-24T08:23:02+00:00",
  "schema": 1,
  "server": {
-  "backup_age_h": 0.9,
+  "backup_age_h": 1.9,
   "disk_pct": 34,
   "jobs": {
    "bot-backup": {
@@ -100,6 +100,6 @@
     "timer": "active"
    }
   },
-  "mem_free_mb": 574
+  "mem_free_mb": 582
  }
 }
