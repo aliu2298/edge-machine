@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T00:37:08+00:00",
+ "board_built_at": "2026-11-24T00:47:05+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -344,11 +344,11 @@
    "kickoff": "2026-11-24T02:30Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T00:37:08+00:00",
+   "last_seen_at": "2026-11-24T00:47:05+00:00",
    "league": "Tennis",
    "match": "Chen Dong v Derek Pham",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.32,
+   "price_at_log": 0.39,
    "published_at": "2026-11-23T23:31:14+00:00",
    "published_late": false,
    "published_min_before_kickoff": 178,
@@ -358,7 +358,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV23PHADON-DON",
     "outcome": "Chen Dong",
     "outcome_side": "yes",
-    "price_at_log": 0.32,
+    "price_at_log": 0.39,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23PHADON-DON",
@@ -381,11 +381,11 @@
    "kickoff": "2026-11-24T02:30Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T00:37:08+00:00",
+   "last_seen_at": "2026-11-24T00:47:05+00:00",
    "league": "Tennis",
    "match": "Jesse Delaney v Matthew Dellavedova",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.03,
+   "price_at_log": 0.01,
    "published_at": "2026-11-23T23:31:14+00:00",
    "published_late": false,
    "published_min_before_kickoff": 178,
@@ -395,10 +395,47 @@
     "market": "KXATPCHALLENGERMATCH-26NOV23DELDEL2-DEL",
     "outcome": "Jesse Delaney",
     "outcome_side": "yes",
-    "price_at_log": 0.03,
+    "price_at_log": 0.01,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23DELDEL2-DEL",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
+  },
+  "2026-11-24|Stefan Vujic|Tristan Schoolkate|Stefan Vujic to win \u00b7 Challenger underdog who has won here": {
+   "away": "Tristan Schoolkate",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Stefan Vujic to win",
+   "home": "Stefan Vujic",
+   "id": "2026-11-24|Stefan Vujic|Tristan Schoolkate|Stefan Vujic to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T03:40Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T00:47:05+00:00",
+   "league": "Tennis",
+   "match": "Stefan Vujic v Tristan Schoolkate",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.09,
+   "published_at": "2026-11-24T00:47:05+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 172,
+   "route": {
+    "claim": "Stefan Vujic to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV23VUJSCH",
+    "market": "KXATPCHALLENGERMATCH-26NOV23VUJSCH-VUJ",
+    "outcome": "Stefan Vujic",
+    "outcome_side": "yes",
+    "price_at_log": 0.09,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23VUJSCH-VUJ",
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "pending"
@@ -412,9 +449,9 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 11,
+    "leads": 12,
     "problem": null,
-    "routed": 11,
+    "routed": 12,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -426,7 +463,7 @@
    "sandbox_roi_fee": -0.7676,
    "timing": {
     "late": [],
-    "timed": 9,
+    "timed": 10,
     "under_target": 0
    }
   }
@@ -435,5 +472,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T00:37:08+00:00"
+ "updated_at": "2026-11-24T00:47:05+00:00"
 }
