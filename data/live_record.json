@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-24T22:07Z",
+ "generated": "2026-11-24T23:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -5369,6 +5369,66 @@
     "src": "fills",
     "st": "won",
     "w": 0.95
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV24DETORL-DET11TO20",
+    "ko": "2026-11-25T00:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.9
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV24DETORL-DET1TO5",
+    "ko": "2026-11-25T00:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.9
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV24DETORL-DET6TO10",
+    "ko": "2026-11-25T00:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.95
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV24DETORL-ORL1TO5",
+    "ko": "2026-11-25T00:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.95
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV24DETORL-ORL6TO10",
+    "ko": "2026-11-25T00:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.04
    }
   ],
   "o35_cheap_no": [
@@ -6133,10 +6193,12 @@
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24COPMAR-MAR": "price above the cap",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24DEDSHE-SHE": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24DJUIAN-IAN": "outside the price band",
+    "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24FUEVAL-FUE": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24GUNOBR-GUN": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MASMAZ-MAZ": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MIYMAU-MAU": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MONHEN-HEN": "price above the cap",
+    "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24NEFRUB-NEF": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24OVCTSI-OVC": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24PIECAR-PIE": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24ROTARN-ARN": "price above the cap",
@@ -6438,16 +6500,13 @@
    "refused": {
     "crypto_fav_band_below:KXBTCD-26NOV1917-T63499.99": "thin book",
     "crypto_fav_band_below:KXBTCD-26NOV2317-T61999.99": "outside the price band",
-    "crypto_fav_band_below:KXBTCD-26NOV2417-T60499.99": "outside the price band",
     "crypto_fav_band_below:KXETHD-26NOV1917-T1799.99": "outside the price band",
     "crypto_fav_band_below:KXETHD-26NOV2017-T1619.99": "outside the price band",
     "crypto_fav_band_below:KXETHD-26NOV2217-T1719.99": "outside the price band",
-    "crypto_fav_band_below:KXHYPED-26NOV1717-T68.9999": "published inside 30 min of kickoff",
     "crypto_fav_band_below:KXHYPED-26NOV1817-T67.9999": "published inside 30 min of kickoff",
     "crypto_fav_band_below:KXHYPED-26NOV2317-T65.9999": "wide spread",
     "crypto_fav_band_below:KXSOLD-26NOV1917-T73.9999": "no seller at the price",
-    "crypto_fav_band_below:KXSOLD-26NOV2117-T70.9999": "already held by another lane",
-    "crypto_fav_band_below:KXSOLD-26NOV2417-T69.9999": "outside the price band"
+    "crypto_fav_band_below:KXSOLD-26NOV2117-T70.9999": "already held by another lane"
    }
   },
   "econ_nc_yes|econ_daily": {

@@ -37,6 +37,44 @@
    "touched": true,
    "version": "t1m-sell15-v1",
    "won": true
+  },
+  {
+   "day": "2026-11-24",
+   "entry": 0.34,
+   "entry_ts": 1795545135,
+   "hold": -1.0,
+   "id": "T1M:KXUCLTOTAL-26NOV24FEYFCP",
+   "ko": 1795550400,
+   "league": "Champions League",
+   "logged": "2026-11-24T23:00:35.242041+00:00",
+   "match": "Feyenoord Rotterdam v FC Porto",
+   "sell": 0.3611,
+   "sell_maker": 0.3889,
+   "sweeps": 9,
+   "target": 0.51,
+   "ticker": "KXUCLTOTAL-26NOV24FEYFCP-4",
+   "touched": true,
+   "version": "t1m-sell15-v1",
+   "won": false
+  },
+  {
+   "day": "2026-11-24",
+   "entry": 0.69,
+   "entry_ts": 1795545135,
+   "hold": 0.4085,
+   "id": "T1M:KXUCLTOTAL-26NOV24RMAPSV",
+   "ko": 1795550400,
+   "league": "Champions League",
+   "logged": "2026-11-24T23:00:35.242041+00:00",
+   "match": "Real Madrid v PSV Eindhoven",
+   "sell": null,
+   "sell_maker": null,
+   "sweeps": 8,
+   "target": null,
+   "ticker": "KXUCLTOTAL-26NOV24RMAPSV-4",
+   "touched": null,
+   "version": "t1m-sell15-v1",
+   "won": true
   }
  ],
  "error": null,
@@ -491,7 +529,7 @@
    "KXLIGUE1TOTAL-26OCT26PSGOL": "no settled over 3.5 market"
   }
  },
- "last_run": "2026-11-24T22:01:42.544183+00:00",
+ "last_run": "2026-11-24T23:00:35.242041+00:00",
  "registered": "2026-11-09T00:00:00Z",
  "skips": {
   "T1M:KXBUNDESLIGATOTAL-26NOV07RBLFCA": "kicked off before the readout was registered (in the backfill, not the record)",
