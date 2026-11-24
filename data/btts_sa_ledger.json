@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-24T00:46:36.729093+00:00",
+ "last_run": "2026-11-24T01:02:13.195537+00:00",
  "rules": {
   "NO": {
    "picks": [
@@ -473,11 +473,14 @@
      "league_key": "BRA",
      "logged": "2026-11-23T21:31:52.778105+00:00",
      "match": "Botafogo v S\u00e3o Paulo",
+     "payout": 0.0,
      "price": 0.46,
+     "profit": -100.0,
      "rule": "NO",
+     "settled": "2026-11-24T01:02:13.195537+00:00",
      "side": "no",
      "start": "2026-11-23T23:00Z",
-     "status": "open",
+     "status": "lost",
      "ticker": "KXBRASILEIROBTTS-26NOV23BOTSPA-BTTS",
      "why": "Brazil BTTS NO 0.46"
     },
@@ -971,11 +974,14 @@
      "league_key": "BRA",
      "logged": "2026-11-23T21:31:52.778105+00:00",
      "match": "Botafogo v S\u00e3o Paulo",
+     "payout": 1.0,
      "price": 0.56,
+     "profit": 73.24,
      "rule": "YES",
+     "settled": "2026-11-24T01:02:13.195537+00:00",
      "side": "yes",
      "start": "2026-11-23T23:00Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXBRASILEIROBTTS-26NOV23BOTSPA-BTTS",
      "why": "Brazil BTTS YES 0.56"
     },
@@ -1000,13 +1006,6 @@
   }
  },
  "runs": [
-  {
-   "at": "2026-11-22T13:01:53.885012+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "quoted": 0
-  },
   {
    "at": "2026-11-22T13:31:52.717117+00:00",
    "due": 0,
@@ -1352,6 +1351,13 @@
   },
   {
    "at": "2026-11-24T00:46:36.729093+00:00",
+   "due": 0,
+   "matched": 0,
+   "new": 0,
+   "quoted": 0
+  },
+  {
+   "at": "2026-11-24T01:02:13.195537+00:00",
    "due": 0,
    "matched": 0,
    "new": 0,
