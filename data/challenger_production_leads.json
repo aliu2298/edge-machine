@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T19:32:38+00:00",
+ "board_built_at": "2026-11-24T19:35:57+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -449,7 +449,7 @@
    "kickoff": "2026-11-24T21:20Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T19:32:38+00:00",
+   "last_seen_at": "2026-11-24T19:35:57+00:00",
    "league": "Tennis",
    "match": "Axel Nefve v Alan Fernando Rubio Fierros",
    "pair": "challenger_won_here|tennis",
@@ -556,7 +556,7 @@
    "kickoff": "2026-11-24T20:40Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T19:32:38+00:00",
+   "last_seen_at": "2026-11-24T19:35:57+00:00",
    "league": "Tennis",
    "match": "Connor Huertas Del Pino v Leonardo Storck Franca",
    "pair": "challenger_won_here|tennis",
@@ -803,7 +803,7 @@
    "kickoff": "2026-11-24T21:20Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T19:32:38+00:00",
+   "last_seen_at": "2026-11-24T19:35:57+00:00",
    "league": "Tennis",
    "match": "Juan Carlos Fuentes Vasquez v Amit Vales",
    "pair": "challenger_won_here|tennis",
@@ -840,11 +840,11 @@
    "kickoff": "2026-11-24T20:10Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T19:32:38+00:00",
+   "last_seen_at": "2026-11-24T19:35:57+00:00",
    "league": "Tennis",
    "match": "Juan Miguel Bolivar Idarraga v Luciano Emanuel Ambrogi",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.2,
+   "price_at_log": 0.28,
    "published_at": "2026-11-24T17:23:37+00:00",
    "published_late": false,
    "published_min_before_kickoff": 166,
@@ -854,7 +854,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV24BOLAMB-BOL",
     "outcome": "Juan Miguel Bolivar Idarraga",
     "outcome_side": "yes",
-    "price_at_log": 0.2,
+    "price_at_log": 0.28,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24BOLAMB-BOL",
@@ -1192,11 +1192,11 @@
    "kickoff": "2026-11-24T19:50Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T19:32:38+00:00",
+   "last_seen_at": "2026-11-24T19:35:57+00:00",
    "league": "Tennis",
    "match": "Ryo Tabata v Felipe Meligeni Alves",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.21,
+   "price_at_log": 0.22,
    "published_at": "2026-11-24T16:52:33+00:00",
    "published_late": false,
    "published_min_before_kickoff": 177,
@@ -1206,7 +1206,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV24TABMEL-TAB",
     "outcome": "Ryo Tabata",
     "outcome_side": "yes",
-    "price_at_log": 0.21,
+    "price_at_log": 0.22,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24TABMEL-TAB",
@@ -1526,5 +1526,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T19:32:38+00:00"
+ "updated_at": "2026-11-24T19:35:57+00:00"
 }
