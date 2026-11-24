@@ -1669,8 +1669,22 @@
    "target": 0.3,
    "ticker": "KXINX15M-26NOV241130-30",
    "why": null
+  },
+  "KXINX15M-26NOV241145-45": {
+   "bot_version": "spsweep-live-v1",
+   "day": "2026-11-24",
+   "decided_at": "2026-11-24T16:30:00+00:00",
+   "lane": "sp_sweep_10c",
+   "limit": 0.1,
+   "open": "2026-11-24T16:30:00+00:00",
+   "outcome": "entered",
+   "rest_s": 1.09,
+   "rule_ok": true,
+   "target": 0.3,
+   "ticker": "KXINX15M-26NOV241145-45",
+   "why": null
   }
  },
- "updated_at": "2026-11-24T16:15:22+00:00",
+ "updated_at": "2026-11-24T16:30:00+00:00",
  "version": 1
 }
