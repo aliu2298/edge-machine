@@ -125,8 +125,8 @@ STAMP = {
     "climate_settle": "data/climate_settle_window/request.txt",
     # 2026-11-24: Club 82 (club82.py) and Club 90 (nba_qlines.py). Their reads must land 30-60 and 15-40 minutes before a start, and the
     # shared cron/stamps did not reliably do that (Club 90 took no entry on its first slate). Each has its own window per start and a settle read.
-    "club82": "data/club82_window/request.txt",
-    "club82_settle": "data/club82_settle_window/request.txt",
+    "club82": "data/club_eighty_two_window/request.txt",
+    "club82_settle": "data/club_eighty_two_settle_window/request.txt",
     "nba_qlines": "data/nba_qlines_window/request.txt",
     "nba_qlines_settle": "data/nba_qlines_settle_window/request.txt",
 }
@@ -419,7 +419,7 @@ def _schedule_times(now, values, ahead=dt.timedelta(days=1)):
     return out
 
 
-def club82_windows(now, fixtures=None, ledger=None, schedule=None):
+def club_eighty_two_windows(now, fixtures=None, ledger=None, schedule=None):
     """One Club 82 window per kickoff in its six competitions: from the tracker's quotes (or the fixtures handed in) and from the schedule the
     lane's own ledger carries. `schedule` None (tests, the plain listing) adds none."""
     kicks = set(soccer_kickoffs(now, fixtures, ledger, CLUB82_SERIES)) | _schedule_times(now, schedule)
@@ -729,7 +729,7 @@ def windows(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, 
     # nfl_windows (2026-10-21) stopped 2026-11-11: every NFL lane is retired.
     out += nba_value_windows(now, nba_value)
     out += chaos_windows(now)
-    out += club82_windows(now, fixtures, ledger, (schedules or {}).get("club82"))
+    out += club_eighty_two_windows(now, fixtures, ledger, (schedules or {}).get("club82"))
     out += nba_qlines_windows(now, games, (schedules or {}).get("nba_qlines"))
     # A settle read is redundant while one of the lane's entry windows is open: that run settles too.
     in_entry = {w["lane"] for w in out if w["start"] <= now <= w["end"]}

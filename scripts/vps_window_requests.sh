@@ -30,7 +30,7 @@
 #   data/earnings_news_window/**                       -> earnings-news.yml (2026-11-09)
 #   data/jobless_window/**                             -> jobless-claims.yml (2026-11-11)
 #   data/climate_window/**                             -> climate-lanes.yml (2026-11-14)
-#   data/club82_window/**, data/club82_settle_window/**   -> club82.yml (2026-11-24)
+#   data/club_eighty_two_window/**, data/club_eighty_two_settle_window/**   -> club82.yml (2026-11-24)
 #   data/nba_qlines_window/**, data/nba_qlines_settle_window/** -> nba-qlines.yml (2026-11-24)
 #   data/{soccer_rules,soccer_team_rules,nba_rules,nba_value,climate}_settle_window/**
 #                                                      -> the same five workflows, SETTLE-ONLY (2026-11-16): one read an hour while a
@@ -67,7 +67,7 @@ stamp() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 
 allowed_path() {
   case "$1" in
-    data/crypto_window/request.txt|data/commodities_window/request.txt|data/daily_window/request.txt|data/ftts_window/request.txt|data/nba_window/request.txt|data/culture_window/request.txt|data/soccer_rules_window/request.txt|data/soccer_team_rules_window/request.txt|data/tennis_totals_window/request.txt|data/nba_value_window/request.txt|data/chaos_window/request.txt|data/fights_window/request.txt|data/soccer_p4_window/request.txt|data/swing15_window/request.txt|data/earnings_news_window/request.txt|data/climate_window/request.txt|data/soccer_rules_settle_window/request.txt|data/soccer_team_rules_settle_window/request.txt|data/nba_rules_settle_window/request.txt|data/nba_value_settle_window/request.txt|data/climate_settle_window/request.txt|data/club82_window/request.txt|data/club82_settle_window/request.txt|data/nba_qlines_window/request.txt|data/nba_qlines_settle_window/request.txt|data/jobless_window/request.txt) return 0 ;;
+    data/crypto_window/request.txt|data/commodities_window/request.txt|data/daily_window/request.txt|data/ftts_window/request.txt|data/nba_window/request.txt|data/culture_window/request.txt|data/soccer_rules_window/request.txt|data/soccer_team_rules_window/request.txt|data/tennis_totals_window/request.txt|data/nba_value_window/request.txt|data/chaos_window/request.txt|data/fights_window/request.txt|data/soccer_p4_window/request.txt|data/swing15_window/request.txt|data/earnings_news_window/request.txt|data/climate_window/request.txt|data/soccer_rules_settle_window/request.txt|data/soccer_team_rules_settle_window/request.txt|data/nba_rules_settle_window/request.txt|data/nba_value_settle_window/request.txt|data/climate_settle_window/request.txt|data/club_eighty_two_window/request.txt|data/club_eighty_two_settle_window/request.txt|data/nba_qlines_window/request.txt|data/nba_qlines_settle_window/request.txt|data/jobless_window/request.txt) return 0 ;;
   esac
   return 1
 }

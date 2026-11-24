@@ -2,14 +2,14 @@ name: Club 82 (Sandbox paper)
 on:
   workflow_dispatch:
   schedule:
-    # Backup only: the VPS asks for each read (scripts/vps_window_requests.sh, lane_windows.club82_windows: a stamp 58-40 minutes before each
+    # Backup only: the VPS asks for each read (scripts/vps_window_requests.sh, lane_windows.club_eighty_two_windows: a stamp 58-40 minutes before each
     # kickoff, so the run starts at a lead of 30-58) and for an hourly settle read while a started pick is open.
     - cron: '17 * * * *'
   push:
     branches: [main]
     paths:
-      - "data/club82_window/**"
-      - "data/club82_settle_window/**"
+      - "data/club_eighty_two_window/**"
+      - "data/club_eighty_two_settle_window/**"
 permissions:
   contents: write
   actions: write
@@ -31,8 +31,8 @@ jobs:
         # The settle stamp alone settles and adds no entries (settle_only.py); a manual run or an entry stamp does both.
         run: |
           changed="$(git diff --name-only HEAD~1 HEAD 2>/dev/null || true)"
-          if [ "${{ github.event_name }}" = "push" ] && printf '%s\n' "$changed" | grep -q '^data/club82_settle_window/' \
-             && ! printf '%s\n' "$changed" | grep -q '^data/club82_window/'; then
+          if [ "${{ github.event_name }}" = "push" ] && printf '%s\n' "$changed" | grep -q '^data/club_eighty_two_settle_window/' \
+             && ! printf '%s\n' "$changed" | grep -q '^data/club_eighty_two_window/'; then
             echo "EDGE_SETTLE_ONLY=1" >> "$GITHUB_ENV"
             echo "settle-only pass"
           fi
