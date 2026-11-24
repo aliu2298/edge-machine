@@ -4284,6 +4284,101 @@
    "result": "yes",
    "title": "Will over 1.5 goals be scored?",
    "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXEPLTOTAL-26NOV23BREEVE",
+   "id": "KXEPLTOTAL-26NOV23BREEVE-2",
+   "kickoff": 1795464000,
+   "league": "EPL",
+   "logged": "2026-11-24T01:17:44.122374+00:00",
+   "matchday": "2026-11-23",
+   "p": 0.77,
+   "p_at": 1795460460,
+   "p_bid": 0.76,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.77,
+    "printed": 6381.67,
+    "status": "verified"
+   },
+   "prints": 370,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": {
+     "counted": true,
+     "fill_at": 1795467994,
+     "fill_print": 0.44,
+     "fill_volume": 78288.41,
+     "held": true,
+     "limit": 0.44,
+     "payout": 1.0,
+     "sold": true,
+     "sold_at": 1795469312
+    },
+    "65": {
+     "counted": true,
+     "fill_at": 1795466678,
+     "fill_print": 0.52,
+     "fill_volume": 117357.03,
+     "held": true,
+     "limit": 0.52,
+     "payout": 1.0,
+     "sold": true,
+     "sold_at": 1795469312
+    }
+   },
+   "event": "KXLALIGATOTAL-26NOV23LEVELC",
+   "id": "KXLALIGATOTAL-26NOV23LEVELC-2",
+   "kickoff": 1795464000,
+   "league": "La Liga",
+   "logged": "2026-11-24T01:17:44.122374+00:00",
+   "matchday": "2026-11-23",
+   "p": 0.8,
+   "p_at": 1795460460,
+   "p_bid": 0.79,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.81,
+    "printed": 775.43,
+    "status": "verified"
+   },
+   "prints": 1747,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXSERIEATOTAL-26NOV23MONFIO",
+   "id": "KXSERIEATOTAL-26NOV23MONFIO-2",
+   "kickoff": 1795463100,
+   "league": "Serie A",
+   "logged": "2026-11-24T01:17:44.122374+00:00",
+   "matchday": "2026-11-23",
+   "p": 0.82,
+   "p_at": 1795459560,
+   "p_bid": 0.81,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.82,
+    "printed": 6586.08,
+    "status": "verified"
+   },
+   "prints": 490,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
   }
  ],
  "error": null,
@@ -18338,11 +18433,11 @@
   ]
  },
  "lane": "top5_goalless_dip",
- "last_run": "2026-11-23T13:44:30.416027+00:00",
+ "last_run": "2026-11-24T01:17:44.122374+00:00",
  "observations": {
-  "at": "2026-11-23T13:44:30.416027+00:00",
+  "at": "2026-11-24T01:17:44.122374+00:00",
   "errors": [],
-  "new": 0,
+  "new": 3,
   "skipped": 0,
   "waiting": 0
  },
@@ -18375,21 +18470,6 @@
   "KXSERIEATOTAL-26NOV08FIOJUV": "pregame ask unverified: 7.83 contracts traded at or through the ask within 60 minutes (under 10)"
  },
  "upcoming": [
-  {
-   "event": "KXSERIEATOTAL-26NOV23MONFIO",
-   "kickoff": 1795463100,
-   "title": "Monza vs Fiorentina: Total Goals"
-  },
-  {
-   "event": "KXEPLTOTAL-26NOV23BREEVE",
-   "kickoff": 1795464000,
-   "title": "Brentford vs Everton: Total Goals"
-  },
-  {
-   "event": "KXLALIGATOTAL-26NOV23LEVELC",
-   "kickoff": 1795464000,
-   "title": "Levante vs Elche: Total Goals"
-  },
   {
    "event": "KXUCLTOTAL-26NOV24BOGASK",
    "kickoff": 1795542300,
@@ -18424,6 +18504,21 @@
    "event": "KXUCLTOTAL-26NOV24RBLRCL",
    "kickoff": 1795550400,
    "title": "Leipzig vs Lens: Total Goals"
+  },
+  {
+   "event": "KXUCLTOTAL-26NOV24RMAPSV",
+   "kickoff": 1795550400,
+   "title": "Real Madrid vs Eindhoven: Total Goals"
+  },
+  {
+   "event": "KXUCLTOTAL-26NOV24SLORBB",
+   "kickoff": 1795550400,
+   "title": "Slovan Bratislava vs Real Betis: Total Goals"
+  },
+  {
+   "event": "KXUCLTOTAL-26NOV25SBHBAR",
+   "kickoff": 1795628700,
+   "title": "Sabah Masazir vs Barcelona: Total Goals"
   }
  ],
  "version": "top5dip-v1"
