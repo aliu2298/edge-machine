@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-24T17:07Z",
+ "generated": "2026-11-24T18:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -6087,6 +6087,22 @@
      "side": "yes",
      "st": "unfilled",
      "w": null
+    },
+    {
+     "id": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24SCHROM-SCH",
+     "ko": "2026-11-24T18:30",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 1.16
+    },
+    {
+     "id": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MARGUT-GUT",
+     "ko": "2026-11-24T18:40",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 0.96
     }
    ],
    "refused": {
@@ -6104,16 +6120,19 @@
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23STRBOL-STR": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23VIVSAH-VIV": "price above the cap",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23VUJSCH-VUJ": "outside the price band",
+    "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24ANDSHI-SHI": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24COPMAR-MAR": "price above the cap",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24DEDSHE-SHE": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24DJUIAN-IAN": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24GUNOBR-GUN": "outside the price band",
+    "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24LADLF-DLF": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MASMAZ-MAZ": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MIYMAU-MAU": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MONHEN-HEN": "price above the cap",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24OVCTSI-OVC": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24PIECAR-PIE": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24ROTARN-ARN": "price above the cap",
+    "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24SARCIG-CIG": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24SCAABD-SCA": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24SMIBAR-SMI": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24URSCHE-CHE": "outside the price band"
@@ -6547,6 +6566,14 @@
      "side": "no",
      "st": "won",
      "w": 1.05
+    },
+    {
+     "id": "finance_spx_nc_no:KXINXU-26NOV24H1600-T7274.9999",
+     "ko": "2026-11-24T21:00",
+     "r": null,
+     "side": "no",
+     "st": "open",
+     "w": 10.09
     }
    ],
    "refused": {
