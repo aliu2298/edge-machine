@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-24T21:35:43.936507+00:00",
+ "last_run": "2026-11-24T22:00:32.459053+00:00",
  "matches": [
   {
    "day": "2026-11-19",
@@ -2862,6 +2862,184 @@
    "logged": "2026-11-24T20:00:36.474123+00:00",
    "timed": 1,
    "title": "Galatasaray v Aston Villa",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-24",
+   "entries": [],
+   "espn_id": "401915295",
+   "event": "KXUCLGAME-26NOV24ARSBVB",
+   "goals": 2,
+   "ht": 1795553369,
+   "ko": 1795550400,
+   "labels": {
+    "away": null,
+    "home": null
+   },
+   "league": "UCL",
+   "logged": "2026-11-24T22:00:32.459053+00:00",
+   "timed": 1,
+   "title": "Arsenal v Borussia Dortmund",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-24",
+   "entries": [],
+   "espn_id": "401915296",
+   "event": "KXUCLGAME-26NOV24COMAEK",
+   "goals": 1,
+   "ht": 1795553369,
+   "ko": 1795550400,
+   "labels": {
+    "away": null,
+    "home": null
+   },
+   "league": "UCL",
+   "logged": "2026-11-24T22:00:32.459053+00:00",
+   "timed": 1,
+   "title": "Como v AEK Athens",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-24",
+   "entries": [
+    {
+     "ask": 0.54,
+     "bid": 0.53,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.54,
+      "filled": false,
+      "roi": null
+     },
+     "mom": "pre",
+     "name": "Porto",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.56,
+      "depth": 6815.49,
+      "filled": true,
+      "roi": -1.0
+     },
+     "team": "away",
+     "ticker": "KXUCLGAME-26NOV24FEYFCP-FCP",
+     "ts": 1795546800,
+     "v2": true,
+     "won": false
+    },
+    {
+     "ask": 0.83,
+     "bid": 0.82,
+     "kind": "TOTAL",
+     "maker": {
+      "cost": 0.83,
+      "filled": true,
+      "roi": 0.2048
+     },
+     "mom": "m75",
+     "name": "Over 2.5 goals scored",
+     "score": "0-1",
+     "side": "no",
+     "strike": 2.5,
+     "taker": {
+      "cost": 0.84,
+      "depth": 1024.96,
+      "filled": true,
+      "roi": 0.1905
+     },
+     "team": null,
+     "ticker": "KXUCLTOTAL-26NOV24FEYFCP-3",
+     "ts": 1795556070,
+     "v2": true,
+     "won": true
+    }
+   ],
+   "espn_id": "401915294",
+   "event": "KXUCLGAME-26NOV24FEYFCP",
+   "goals": 1,
+   "ht": 1795553370,
+   "ko": 1795550400,
+   "labels": {
+    "away": "O+D-",
+    "home": "O+D-"
+   },
+   "league": "UCL",
+   "logged": "2026-11-24T22:00:32.459053+00:00",
+   "timed": 1,
+   "title": "Feyenoord Rotterdam v FC Porto",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-24",
+   "entries": [],
+   "espn_id": "401915379",
+   "event": "KXUCLGAME-26NOV24MCINAP",
+   "goals": 4,
+   "ht": 1795553371,
+   "ko": 1795550400,
+   "labels": {
+    "away": null,
+    "home": null
+   },
+   "league": "UCL",
+   "logged": "2026-11-24T22:00:32.459053+00:00",
+   "timed": 4,
+   "title": "Manchester City v Napoli",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-24",
+   "entries": [],
+   "espn_id": "401915299",
+   "event": "KXUCLGAME-26NOV24RBLRCL",
+   "goals": 4,
+   "ht": 1795553371,
+   "ko": 1795550400,
+   "labels": {
+    "away": null,
+    "home": null
+   },
+   "league": "UCL",
+   "logged": "2026-11-24T22:00:32.459053+00:00",
+   "timed": 3,
+   "title": "RB Leipzig v Lens",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-24",
+   "entries": [],
+   "espn_id": "401915298",
+   "event": "KXUCLGAME-26NOV24RMAPSV",
+   "goals": 6,
+   "ht": 1795553372,
+   "ko": 1795550400,
+   "labels": {
+    "away": null,
+    "home": null
+   },
+   "league": "UCL",
+   "logged": "2026-11-24T22:00:32.459053+00:00",
+   "timed": 5,
+   "title": "Real Madrid v PSV Eindhoven",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-24",
+   "entries": [],
+   "espn_id": "401915297",
+   "event": "KXUCLGAME-26NOV24SLORBB",
+   "goals": 2,
+   "ht": 1795553373,
+   "ko": 1795550400,
+   "labels": {
+    "away": null,
+    "home": null
+   },
+   "league": "UCL",
+   "logged": "2026-11-24T22:00:32.459053+00:00",
+   "timed": 2,
+   "title": "Slovan Bratislava v Real Betis",
    "version": "soccerp4-v1"
   }
  ],
