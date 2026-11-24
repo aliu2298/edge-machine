@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T01:02:01+00:00",
+ "board_built_at": "2026-11-24T01:02:42+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -344,11 +344,11 @@
    "kickoff": "2026-11-24T02:30Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T01:02:01+00:00",
+   "last_seen_at": "2026-11-24T01:02:42+00:00",
    "league": "Tennis",
    "match": "Chen Dong v Derek Pham",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.2,
+   "price_at_log": 0.12,
    "published_at": "2026-11-23T23:31:14+00:00",
    "published_late": false,
    "published_min_before_kickoff": 178,
@@ -358,7 +358,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV23PHADON-DON",
     "outcome": "Chen Dong",
     "outcome_side": "yes",
-    "price_at_log": 0.2,
+    "price_at_log": 0.12,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23PHADON-DON",
@@ -380,8 +380,6 @@
    "id": "2026-11-24|Jesse Delaney|Matthew Dellavedova|Jesse Delaney to win \u00b7 Challenger underdog who has won here",
    "kickoff": "2026-11-24T02:30Z",
    "lane": "production",
-   "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T01:02:01+00:00",
    "league": "Tennis",
    "match": "Jesse Delaney v Matthew Dellavedova",
    "pair": "challenger_won_here|tennis",
@@ -401,7 +399,7 @@
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23DELDEL2-DEL",
    "source": "challenger_won_here",
    "sport": "tennis",
-   "status": "pending"
+   "status": "miss"
   },
   "2026-11-24|S D Prajwal Dev|Naoya Honda|S D Prajwal Dev to win \u00b7 Challenger underdog who has won here": {
    "away": "Naoya Honda",
@@ -418,7 +416,7 @@
    "kickoff": "2026-11-24T04:00Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T01:02:01+00:00",
+   "last_seen_at": "2026-11-24T01:02:42+00:00",
    "league": "Tennis",
    "match": "S D Prajwal Dev v Naoya Honda",
    "pair": "challenger_won_here|tennis",
@@ -455,7 +453,7 @@
    "kickoff": "2026-11-24T03:40Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T01:02:01+00:00",
+   "last_seen_at": "2026-11-24T01:02:42+00:00",
    "league": "Tennis",
    "match": "Stefan Vujic v Tristan Schoolkate",
    "pair": "challenger_won_here|tennis",
@@ -492,7 +490,7 @@
    "kickoff": "2026-11-24T04:00Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T01:02:01+00:00",
+   "last_seen_at": "2026-11-24T01:02:42+00:00",
    "league": "Tennis",
    "match": "Takuya Kumasaka v David Jorda Sanchis",
    "pair": "challenger_won_here|tennis",
@@ -532,9 +530,9 @@
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 9,
-   "sandbox_roi": -0.7668,
-   "sandbox_roi_fee": -0.7676,
+   "sandbox_n": 10,
+   "sandbox_roi": -0.7901,
+   "sandbox_roi_fee": -0.7908,
    "timing": {
     "late": [],
     "timed": 12,
@@ -546,5 +544,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T01:02:01+00:00"
+ "updated_at": "2026-11-24T01:02:42+00:00"
 }
