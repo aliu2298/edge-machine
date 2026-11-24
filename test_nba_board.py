@@ -453,7 +453,7 @@ ok('<nav class="toc" aria-label="On this page"><a href="#rules">Rules</a><a href
 head = HTML.split('<div class="tiles', 1)[0]
 games = HTML[HTML.find('<section id="games"'):HTML.find('<section id="matchups">')]
 ok("<h1>NBA</h1>" in head and '<p class="eyebrow">Rules under test</p>' in head
-   and '<p class="scope">Win margin lanes on Kalshi · All times Central</p>' in head
+   and '<p class="scope">Win margin and quarter-line lanes on Kalshi · All times Central</p>' in head
    and "Pace data as of Oct 1, 1:00 PM CT" in games and "Open a matchup" not in HTML,
    "the header is the eyebrow, the title and one scope line; the freshness line heads Games (2026-11-05)")
 ok(fmt.display_updated(NOW) in HTML and "CT" in fmt.display_updated(NOW),

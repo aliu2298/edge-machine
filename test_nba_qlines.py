@@ -246,5 +246,27 @@ check("the page marks backfilled rows and keeps the count visible", ("· backfil
 check("a ledger with no backfill shows no marker", ("backfilled" in B.section(Q.empty(), {"games": []})), False)
 check("the backfill copy passes the public guard", [m.group(0) for m in sandbox_audit.COPY_RE.finditer(page)], [])
 
+# ---- copy fixes (2026-11-24): the overall line, the live-reads sentence, last live read / last settle
+print("\ncopy")
+ov = B.section(stb, bdoc)
+a24 = Q.stats([p for s in Q.SECTIONS for d in Q.DIRS for p in stb["rules"][Q.lane(s, d)]["picks"]])
+b24 = Q.stats([p for s in Q.SECTIONS for d in Q.DIRS for p in stb["rules"][Q.lane(s, d, True)]["picks"]])
+check("an overall line under the header: lane won-lost, return v blind return and its won-lost",
+      f'<b>All sections:</b> {a24["won"]}-{a24["n"] - a24["won"]} · {B._pct(a24["ret"], True)} v blind {B._pct(b24["ret"], True)} ({b24["won"]}-{b24["n"] - b24["won"]})</p>' in ov, True)
+check("the overall return is profit over price plus fee across the settled rows",
+      round(a24["ret"], 6), round(sum(p["profit"] for ln in stb["rules"].values() for p in ln["picks"] if p["rule"].count("blind") == 0 and p.get("profit") is not None)
+                                   / sum(Q.cost(p["price"]) for ln in stb["rules"].values() for p in ln["picks"] if p["rule"].count("blind") == 0 and p.get("profit") is not None), 6))
+check("no live reads yet: the sentence about live reads is hidden", "were live reads" in ov, False)
+mixed = Q.empty()
+mixed["rules"]["qlines_3Q_over"]["picks"] = [dict(lane_rows[0], backfilled=True), dict(lane_rows[0], id="live1", backfilled=False)]
+check("once live reads exist it says how many", "1 were live reads." in B.section(mixed, bdoc) and "1 of 2 entries backfilled" in B.section(mixed, bdoc), True)
+check("labelled 'Last live read' and 'Last settle'; none yet on an empty ledger", ("Last live read none yet · Last settle none yet" in B.section(Q.empty(), {"games": []}), "Last read" in B.section(Q.empty(), {"games": []})), (True, False))
+NOWC = dt.datetime(2026, 11, 25, 3, 0, tzinfo=UTC)
+sr = Q.empty()
+Q.run(sr, {"games": []}, NOWC, get=lambda u: {"events": []}, fetch=lambda p: {"markets": [], "cursor": ""})
+check("a run with no game due settles but is not a live read", (sr.get("last_settle"), sr.get("last_live_read")), (NOWC.isoformat(), None))
+check("the backfill is not a live read either", "last_live_read" in stb, False)
+check("a read in the window stamps the last live read", "last_live_read" in (lambda s: (Q.run(s, bdoc, BTIP - dt.timedelta(minutes=30), get=lambda u: {"events": [dict(id="900", date=BTIP.strftime("%Y-%m-%dT%H:%MZ"), season={"type": 2}, competitions=[dict(status={"type": {"name": "STATUS_SCHEDULED"}}, competitors=[dict(homeAway="home", team={"abbreviation": "AAA"}), dict(homeAway="away", team={"abbreviation": "BBB"})])])]} if "scoreboard" in u else {}, fetch=bfetch), s)[1])(Q.empty()), True)
+
 print("\nALL PASS" if not FAILS else f"\n{len(FAILS)} FAILED: {FAILS}")
 sys.exit(1 if FAILS else 0)
