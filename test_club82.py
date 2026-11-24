@@ -160,7 +160,7 @@ check("status text reads n of 10, then 30", (C.status_text(2), C.status_text(10)
 # ---- the page
 print("\npage")
 html = B.section(st8, fixtures)
-check("one collapsed fold, two lanes", (html.count('id="club82-fold"'), " open" in html.replace("section-disclosure", ""), html.count('class="club82-teams"')), (1, False, 4))
+check("one collapsed fold, two lanes", (html.count('id="club82-fold"'), " open" in html.replace("section-disclosure", ""), html.count('class="club82-teams"')), (1, False, 1))
 check("header: entries and the tracker through date", ("1 entry · tracker through" in html), True)
 check("each lane: teams at 82%+ now, the 75-81% watch fold, recent picks", all(x in html for x in ("Teams at 82%+ now", "Watch · 75-81%", "Recent picks", "Skipped reads")), True)
 check("the cells are named for their columns (the sport page's own label pass runs before the block goes in)", all(f'data-l="{c}"' in html for c in ("Won-lost", "Return after fees", "Every-game control", "Open", "Read", "Hits/games")), True)

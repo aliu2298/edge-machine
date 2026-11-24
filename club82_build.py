@@ -48,10 +48,14 @@ def teams_table(rows, kind, watch=False):
     rows.sort(key=lambda v: (-v["rate"], -v["n"], v["name"]))
     body = "".join(f'<tr data-team="{esc(v["name"])}"><td><b>{esc(v["name"])}</b></td><td class="num">{v["hits"]}/{v["n"]}</td><td class="num">{_pct(v["rate"], d=0)}</td>'
                    f'<td>{esc(v["since"] or "—")}</td></tr>' for v in rows)
-    if not body:
-        body = f'<tr><td colspan="4" class="mut">{"No team in the 75-81% band." if watch else "No team is at 82% yet."}</td></tr>'
+    if not body:                  # an empty-state sentence, not a one-cell table row: a spanning cell blows the phone cards out past the viewport
+        return f'<p class="sm mut">{"No team in the 75-81% band." if watch else "No team is at 82% yet."}</p>', 0
     return ('<div class="tbl"><table class="club82-teams"><tr><th>Team</th><th class="num">Hits/games</th><th class="num">Rate</th>'
             f'<th>{"Rate band since" if watch else "Qualified since"}</th></tr>{body}</table></div>'), len(rows)
+
+
+def picks_table(rows, empty):
+    return HEAD.format(rows) if rows else f'<p class="sm mut">{esc(empty)}</p>'
 
 
 def _row(p):
@@ -71,24 +75,24 @@ HEAD = ('<div class="tbl"><table class="club82-picks"><tr><th>Kickoff</th><th>Ma
 def lane_html(state, fixtures, k):
     picks = sorted(_picks(state, C.lane(k)), key=lambda p: (p["start"], p["id"]), reverse=True)
     ctl = sorted(_picks(state, C.lane(k, True)), key=lambda p: (p["start"], p["id"]), reverse=True)
-    recent = "".join(_row(p) for p in picks[:5]) or '<tr><td colspan="6" class="mut">No entries yet. A match enters when a team clears the bar before kickoff.</td></tr>'
-    allrows = "".join(_row(p) for p in picks) or '<tr><td colspan="6" class="mut">No entries yet.</td></tr>'
-    ctlrows = "".join(_row(p) for p in ctl[:60]) or '<tr><td colspan="6" class="mut">No control rows yet.</td></tr>'
+    recent = picks_table("".join(_row(p) for p in picks[:5]), "No entries yet. A match enters when a team clears the bar before kickoff.")
+    allrows = picks_table("".join(_row(p) for p in picks), "No entries yet.")
+    ctlrows = picks_table("".join(_row(p) for p in ctl[:60]), "No control rows yet.")
     skips = [s for s in (state.get("skips") or {}).values() if s["kind"] == k]
     skips.sort(key=lambda s: s["start"], reverse=True)
     skip_rows = "".join(f'<tr><td>{esc(fmt.when(s["start"]))}</td><td>{esc(s["match"])}</td><td>{esc(s.get("team") or "match")}</td><td>{esc(s["reason"])}</td>'
-                        f'<td>{"yes" if s["qualifying"] else "no"}</td></tr>' for s in skips[:60]) or '<tr><td colspan="5" class="mut">None logged.</td></tr>'
+                        f'<td>{"yes" if s["qualifying"] else "no"}</td></tr>' for s in skips[:60])
     rows = tracker_rows(state, fixtures, k)
     now_t, n_now = teams_table(rows, k)
     watch_t, n_watch = teams_table(rows, k, watch=True)
     return (f'<h4 class="sm">{esc(C.NAMES[k])} · hit = {esc(C.HITS[k])}</h4>'
             f'<h4 class="sm">Teams at 82%+ now · {n_now}</h4>{now_t}'
             f'<details class="section-disclosure"><summary><b>Watch · 75-81%</b><span>{n_watch} team{"s" if n_watch != 1 else ""} under the bar</span></summary>{watch_t}</details>'
-            f'<h4 class="sm">Recent picks</h4>{HEAD.format(recent)}'
-            f'<details class="section-disclosure"><summary><b>All entries</b><span>{len(picks)}</span></summary>{HEAD.format(allrows)}</details>'
-            f'<details class="section-disclosure"><summary><b>Control rows</b><span>latest 60 of {len(ctl)}</span></summary>{HEAD.format(ctlrows)}</details>'
+            f'<h4 class="sm">Recent picks</h4>{recent}'
+            f'<details class="section-disclosure"><summary><b>All entries</b><span>{len(picks)}</span></summary>{allrows}</details>'
+            f'<details class="section-disclosure"><summary><b>Control rows</b><span>latest 60 of {len(ctl)}</span></summary>{ctlrows}</details>'
             f'<details class="section-disclosure"><summary><b>Skipped reads</b><span>{len(skips)} logged · no market, no quote or a wide spread</span></summary>'
-            f'<div class="tbl"><table class="club82-skips"><tr><th>Kickoff</th><th>Match</th><th>Team</th><th>Why</th><th>Qualifying</th></tr>{skip_rows}</table></div></details>')
+            + (f'<div class="tbl"><table class="club82-skips"><tr><th>Kickoff</th><th>Match</th><th>Team</th><th>Why</th><th>Qualifying</th></tr>{skip_rows}</table></div>' if skip_rows else '<p class="sm mut">None logged.</p>') + '</details>')
 
 
 def summary_line(state):
