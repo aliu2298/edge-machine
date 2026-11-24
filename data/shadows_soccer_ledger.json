@@ -1,5 +1,25 @@
 {
  "btts": {
+  "A7:KXUCLTOTAL-26NOV24COMAEK": {
+   "event": "KXUCLTOTAL-26NOV24COMAEK",
+   "kind": "2h",
+   "lane": "A7",
+   "match": "Como v AEK Athens",
+   "quote": false,
+   "recorded": "2026-11-24T18:32:06.979642+00:00",
+   "start": "2026-11-24T20:00Z",
+   "status": "open"
+  },
+  "A7:KXUCLTOTAL-26NOV24FEYFCP": {
+   "event": "KXUCLTOTAL-26NOV24FEYFCP",
+   "kind": "2h",
+   "lane": "A7",
+   "match": "Feyenoord Rotterdam v FC Porto",
+   "quote": false,
+   "recorded": "2026-11-24T18:32:06.979642+00:00",
+   "start": "2026-11-24T20:00Z",
+   "status": "open"
+  },
   "A7:KXUCLTOTAL-26NOV24GALAVL": {
    "event": "KXUCLTOTAL-26NOV24GALAVL",
    "kind": "2h",
@@ -14,6 +34,22 @@
  "error": null,
  "group": "soccer",
  "ht": {
+  "A7:KXUCLTOTAL-26NOV24COMAEK": {
+   "lane": "A7",
+   "match": "Como v AEK Athens",
+   "pick": "A7:KXUCLTOTAL-26NOV24COMAEK",
+   "price": 0.53,
+   "start": "2026-11-24T20:00Z",
+   "status": "pending"
+  },
+  "A7:KXUCLTOTAL-26NOV24FEYFCP": {
+   "lane": "A7",
+   "match": "Feyenoord Rotterdam v FC Porto",
+   "pick": "A7:KXUCLTOTAL-26NOV24FEYFCP",
+   "price": 0.34,
+   "start": "2026-11-24T20:00Z",
+   "status": "pending"
+  },
   "A7:KXUCLTOTAL-26NOV24GALAVL": {
    "lane": "A7",
    "match": "Galatasaray v Aston Villa",
@@ -23,14 +59,9 @@
    "status": "pending"
   }
  },
- "last_run": "2026-11-24T18:17:00.117674+00:00",
+ "last_run": "2026-11-24T18:32:06.979642+00:00",
  "registered": "2026-11-21",
  "runs": [
-  {
-   "at": "2026-11-22T15:16:30.438042+00:00",
-   "btts": 0,
-   "ht": 0
-  },
   {
    "at": "2026-11-22T15:31:40.867855+00:00",
    "btts": 0,
@@ -280,6 +311,11 @@
    "at": "2026-11-24T18:17:00.117674+00:00",
    "btts": 1,
    "ht": 1
+  },
+  {
+   "at": "2026-11-24T18:32:06.979642+00:00",
+   "btts": 3,
+   "ht": 3
   }
  ],
  "version": "shadows-v1"
