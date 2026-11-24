@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-24T00:07Z",
+ "generated": "2026-11-24T01:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -6309,11 +6309,13 @@
    ],
    "refused": {
     "crypto_fav_band_below:KXBTCD-26NOV1917-T63499.99": "thin book",
+    "crypto_fav_band_below:KXBTCD-26NOV2317-T61999.99": "outside the price band",
     "crypto_fav_band_below:KXETHD-26NOV1917-T1799.99": "outside the price band",
     "crypto_fav_band_below:KXETHD-26NOV2017-T1619.99": "outside the price band",
     "crypto_fav_band_below:KXETHD-26NOV2217-T1719.99": "outside the price band",
     "crypto_fav_band_below:KXHYPED-26NOV1717-T68.9999": "published inside 30 min of kickoff",
     "crypto_fav_band_below:KXHYPED-26NOV1817-T67.9999": "published inside 30 min of kickoff",
+    "crypto_fav_band_below:KXHYPED-26NOV2317-T65.9999": "wide spread",
     "crypto_fav_band_below:KXSOLD-26NOV1917-T73.9999": "no seller at the price",
     "crypto_fav_band_below:KXSOLD-26NOV2117-T70.9999": "already held by another lane"
    }
@@ -6453,7 +6455,9 @@
      "w": 1.05
     }
    ],
-   "refused": {}
+   "refused": {
+    "finance_spx_nc_no:KXINXU-26NOV23H1600-T7299.9999": "price outside the band at the follower's read"
+   }
   },
   "ftts_no_70_80|soccer_ftts": {
    "entered": "2026-10-16T17:17:38+00:00",
