@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T18:38:32+00:00",
+ "board_built_at": "2026-11-24T18:47:11+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -449,7 +449,7 @@
    "kickoff": "2026-11-24T21:20Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T18:38:32+00:00",
+   "last_seen_at": "2026-11-24T18:47:11+00:00",
    "league": "Tennis",
    "match": "Axel Nefve v Alan Fernando Rubio Fierros",
    "pair": "challenger_won_here|tennis",
@@ -556,7 +556,7 @@
    "kickoff": "2026-11-24T20:40Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T18:38:32+00:00",
+   "last_seen_at": "2026-11-24T18:47:11+00:00",
    "league": "Tennis",
    "match": "Connor Huertas Del Pino v Leonardo Storck Franca",
    "pair": "challenger_won_here|tennis",
@@ -803,7 +803,7 @@
    "kickoff": "2026-11-24T21:20Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T18:38:32+00:00",
+   "last_seen_at": "2026-11-24T18:47:11+00:00",
    "league": "Tennis",
    "match": "Juan Carlos Fuentes Vasquez v Amit Vales",
    "pair": "challenger_won_here|tennis",
@@ -840,11 +840,11 @@
    "kickoff": "2026-11-24T20:10Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T18:38:32+00:00",
+   "last_seen_at": "2026-11-24T18:47:11+00:00",
    "league": "Tennis",
    "match": "Juan Miguel Bolivar Idarraga v Luciano Emanuel Ambrogi",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.13,
+   "price_at_log": 0.16,
    "published_at": "2026-11-24T17:23:37+00:00",
    "published_late": false,
    "published_min_before_kickoff": 166,
@@ -854,7 +854,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV24BOLAMB-BOL",
     "outcome": "Juan Miguel Bolivar Idarraga",
     "outcome_side": "yes",
-    "price_at_log": 0.13,
+    "price_at_log": 0.16,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24BOLAMB-BOL",
@@ -1037,43 +1037,6 @@
    "sport": "tennis",
    "status": "hit"
   },
-  "2026-11-24|Oscar Jose Gutierrez|Igor Marcondes|Oscar Jose Gutierrez to win \u00b7 Challenger underdog who has won here": {
-   "away": "Igor Marcondes",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-11-24",
-   "edge_at_log": null,
-   "first_seen": "2026-11-24",
-   "headline": "Oscar Jose Gutierrez to win",
-   "home": "Oscar Jose Gutierrez",
-   "id": "2026-11-24|Oscar Jose Gutierrez|Igor Marcondes|Oscar Jose Gutierrez to win \u00b7 Challenger underdog who has won here",
-   "kickoff": "2026-11-24T18:40Z",
-   "lane": "production",
-   "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T18:38:32+00:00",
-   "league": "Tennis",
-   "match": "Oscar Jose Gutierrez v Igor Marcondes",
-   "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.09,
-   "published_at": "2026-11-24T16:02:03+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 157,
-   "route": {
-    "claim": "Oscar Jose Gutierrez to win",
-    "event": "KXATPCHALLENGERMATCH-26NOV24MARGUT",
-    "market": "KXATPCHALLENGERMATCH-26NOV24MARGUT-GUT",
-    "outcome": "Oscar Jose Gutierrez",
-    "outcome_side": "yes",
-    "price_at_log": 0.09,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MARGUT-GUT",
-   "source": "challenger_won_here",
-   "sport": "tennis",
-   "status": "pending"
-  },
   "2026-11-24|Philip Henning|Johannus Monday|Philip Henning to win \u00b7 Challenger underdog who has won here": {
    "away": "Johannus Monday",
    "bet": {
@@ -1194,11 +1157,11 @@
    "kickoff": "2026-11-24T19:50Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T18:38:32+00:00",
+   "last_seen_at": "2026-11-24T18:47:11+00:00",
    "league": "Tennis",
    "match": "Ryo Tabata v Felipe Meligeni Alves",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.22,
+   "price_at_log": 0.21,
    "published_at": "2026-11-24T16:52:33+00:00",
    "published_late": false,
    "published_min_before_kickoff": 177,
@@ -1208,7 +1171,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV24TABMEL-TAB",
     "outcome": "Ryo Tabata",
     "outcome_side": "yes",
-    "price_at_log": 0.22,
+    "price_at_log": 0.21,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24TABMEL-TAB",
@@ -1285,43 +1248,6 @@
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "miss"
-  },
-  "2026-11-24|Santiago De la Fuente|Juan Manuel La Serna|Santiago De la Fuente to win \u00b7 Challenger underdog who has won here": {
-   "away": "Juan Manuel La Serna",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-11-24",
-   "edge_at_log": null,
-   "first_seen": "2026-11-24",
-   "headline": "Santiago De la Fuente to win",
-   "home": "Santiago De la Fuente",
-   "id": "2026-11-24|Santiago De la Fuente|Juan Manuel La Serna|Santiago De la Fuente to win \u00b7 Challenger underdog who has won here",
-   "kickoff": "2026-11-24T18:40Z",
-   "lane": "production",
-   "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T18:38:32+00:00",
-   "league": "Tennis",
-   "match": "Santiago De la Fuente v Juan Manuel La Serna",
-   "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.12,
-   "published_at": "2026-11-24T16:02:03+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 157,
-   "route": {
-    "claim": "Santiago De la Fuente to win",
-    "event": "KXATPCHALLENGERMATCH-26NOV24LADLF",
-    "market": "KXATPCHALLENGERMATCH-26NOV24LADLF-DLF",
-    "outcome": "Santiago De la Fuente",
-    "outcome_side": "yes",
-    "price_at_log": 0.12,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24LADLF-DLF",
-   "source": "challenger_won_here",
-   "sport": "tennis",
-   "status": "pending"
   },
   "2026-11-24|Stefan Vujic|Tristan Schoolkate|Stefan Vujic to win \u00b7 Challenger underdog who has won here": {
    "away": "Tristan Schoolkate",
@@ -1542,9 +1468,9 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 43,
+    "leads": 41,
     "problem": null,
-    "routed": 43,
+    "routed": 41,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1556,7 +1482,7 @@
    "sandbox_roi_fee": -0.4189,
    "timing": {
     "late": [],
-    "timed": 33,
+    "timed": 31,
     "under_target": 0
    }
   }
@@ -1565,5 +1491,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T18:38:32+00:00"
+ "updated_at": "2026-11-24T18:47:11+00:00"
 }
