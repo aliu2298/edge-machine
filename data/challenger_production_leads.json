@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T20:51:33+00:00",
+ "board_built_at": "2026-11-24T20:52:14+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -449,7 +449,7 @@
    "kickoff": "2026-11-24T21:20Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T20:51:33+00:00",
+   "last_seen_at": "2026-11-24T20:52:14+00:00",
    "league": "Tennis",
    "match": "Axel Nefve v Alan Fernando Rubio Fierros",
    "pair": "challenger_won_here|tennis",
@@ -766,7 +766,7 @@
    "kickoff": "2026-11-24T21:20Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T20:51:33+00:00",
+   "last_seen_at": "2026-11-24T20:52:14+00:00",
    "league": "Tennis",
    "match": "Juan Carlos Fuentes Vasquez v Amit Vales",
    "pair": "challenger_won_here|tennis",
@@ -787,6 +787,41 @@
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "pending"
+  },
+  "2026-11-24|Juan Miguel Bolivar Idarraga|Luciano Emanuel Ambrogi|Juan Miguel Bolivar Idarraga to win \u00b7 Challenger underdog who has won here": {
+   "away": "Luciano Emanuel Ambrogi",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Juan Miguel Bolivar Idarraga to win",
+   "home": "Juan Miguel Bolivar Idarraga",
+   "id": "2026-11-24|Juan Miguel Bolivar Idarraga|Luciano Emanuel Ambrogi|Juan Miguel Bolivar Idarraga to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T20:10Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Juan Miguel Bolivar Idarraga v Luciano Emanuel Ambrogi",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.04,
+   "published_at": "2026-11-24T20:52:14+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Juan Miguel Bolivar Idarraga to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24BOLAMB",
+    "market": "KXATPCHALLENGERMATCH-26NOV24BOLAMB-BOL",
+    "outcome": "Juan Miguel Bolivar Idarraga",
+    "outcome_side": "yes",
+    "price_at_log": 0.04,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24BOLAMB-BOL",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "miss"
   },
   "2026-11-24|Leo Raquillet|Yaroslav Demin|Leo Raquillet to win \u00b7 Challenger underdog who has won here": {
    "away": "Yaroslav Demin",
@@ -1392,18 +1427,18 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 39,
+    "leads": 40,
     "problem": null,
-    "routed": 39,
+    "routed": 40,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 37,
-   "sandbox_roi": -0.4173,
-   "sandbox_roi_fee": -0.4346,
+   "sandbox_n": 38,
+   "sandbox_roi": -0.4326,
+   "sandbox_roi_fee": -0.4495,
    "timing": {
     "late": [],
     "timed": 28,
@@ -1415,5 +1450,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T20:51:33+00:00"
+ "updated_at": "2026-11-24T20:52:14+00:00"
 }
