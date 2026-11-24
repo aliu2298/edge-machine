@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T19:03:05+00:00",
+ "board_built_at": "2026-11-24T19:07:36+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -449,7 +449,7 @@
    "kickoff": "2026-11-24T21:20Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T19:03:05+00:00",
+   "last_seen_at": "2026-11-24T19:07:36+00:00",
    "league": "Tennis",
    "match": "Axel Nefve v Alan Fernando Rubio Fierros",
    "pair": "challenger_won_here|tennis",
@@ -556,7 +556,7 @@
    "kickoff": "2026-11-24T20:40Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T19:03:05+00:00",
+   "last_seen_at": "2026-11-24T19:07:36+00:00",
    "league": "Tennis",
    "match": "Connor Huertas Del Pino v Leonardo Storck Franca",
    "pair": "challenger_won_here|tennis",
@@ -803,7 +803,7 @@
    "kickoff": "2026-11-24T21:20Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T19:03:05+00:00",
+   "last_seen_at": "2026-11-24T19:07:36+00:00",
    "league": "Tennis",
    "match": "Juan Carlos Fuentes Vasquez v Amit Vales",
    "pair": "challenger_won_here|tennis",
@@ -840,11 +840,11 @@
    "kickoff": "2026-11-24T20:10Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T19:03:05+00:00",
+   "last_seen_at": "2026-11-24T19:07:36+00:00",
    "league": "Tennis",
    "match": "Juan Miguel Bolivar Idarraga v Luciano Emanuel Ambrogi",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.42,
+   "price_at_log": 0.34,
    "published_at": "2026-11-24T17:23:37+00:00",
    "published_late": false,
    "published_min_before_kickoff": 166,
@@ -854,7 +854,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV24BOLAMB-BOL",
     "outcome": "Juan Miguel Bolivar Idarraga",
     "outcome_side": "yes",
-    "price_at_log": 0.42,
+    "price_at_log": 0.34,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24BOLAMB-BOL",
@@ -966,6 +966,41 @@
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "hit"
+  },
+  "2026-11-24|Niklas Schell|Filippo Romano|Niklas Schell to win \u00b7 Challenger underdog who has won here": {
+   "away": "Filippo Romano",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Niklas Schell to win",
+   "home": "Niklas Schell",
+   "id": "2026-11-24|Niklas Schell|Filippo Romano|Niklas Schell to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T18:30Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Niklas Schell v Filippo Romano",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.12,
+   "published_at": "2026-11-24T19:07:36+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Niklas Schell to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24SCHROM",
+    "market": "KXATPCHALLENGERMATCH-26NOV24SCHROM-SCH",
+    "outcome": "Niklas Schell",
+    "outcome_side": "yes",
+    "price_at_log": 0.12,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24SCHROM-SCH",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "miss"
   },
   "2026-11-24|Ofek Shimanov|Lucas Andrade Da Silva|Ofek Shimanov to win \u00b7 Challenger underdog who has won here": {
    "away": "Lucas Andrade Da Silva",
@@ -1157,7 +1192,7 @@
    "kickoff": "2026-11-24T19:50Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T19:03:05+00:00",
+   "last_seen_at": "2026-11-24T19:07:36+00:00",
    "league": "Tennis",
    "match": "Ryo Tabata v Felipe Meligeni Alves",
    "pair": "challenger_won_here|tennis",
@@ -1468,18 +1503,18 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 41,
+    "leads": 42,
     "problem": null,
-    "routed": 41,
+    "routed": 42,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 36,
-   "sandbox_roi": -0.4011,
-   "sandbox_roi_fee": -0.4189,
+   "sandbox_n": 37,
+   "sandbox_roi": -0.4173,
+   "sandbox_roi_fee": -0.4346,
    "timing": {
     "late": [],
     "timed": 31,
@@ -1491,5 +1526,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T19:03:05+00:00"
+ "updated_at": "2026-11-24T19:07:36+00:00"
 }
