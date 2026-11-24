@@ -1,16 +1,31 @@
 {
- "btts": {},
+ "btts": {
+  "A7:KXUCLTOTAL-26NOV24GALAVL": {
+   "event": "KXUCLTOTAL-26NOV24GALAVL",
+   "kind": "2h",
+   "lane": "A7",
+   "match": "Galatasaray v Aston Villa",
+   "quote": false,
+   "recorded": "2026-11-24T16:16:41.753887+00:00",
+   "start": "2026-11-24T17:45Z",
+   "status": "open"
+  }
+ },
  "error": null,
  "group": "soccer",
- "ht": {},
- "last_run": "2026-11-24T03:01:48.128995+00:00",
+ "ht": {
+  "A7:KXUCLTOTAL-26NOV24GALAVL": {
+   "lane": "A7",
+   "match": "Galatasaray v Aston Villa",
+   "pick": "A7:KXUCLTOTAL-26NOV24GALAVL",
+   "price": 0.42,
+   "start": "2026-11-24T17:45Z",
+   "status": "pending"
+  }
+ },
+ "last_run": "2026-11-24T16:16:41.753887+00:00",
  "registered": "2026-11-21",
  "runs": [
-  {
-   "at": "2026-11-22T14:01:51.465164+00:00",
-   "btts": 0,
-   "ht": 0
-  },
   {
    "at": "2026-11-22T14:16:51.251775+00:00",
    "btts": 0,
@@ -260,6 +275,11 @@
    "at": "2026-11-24T03:01:48.128995+00:00",
    "btts": 0,
    "ht": 0
+  },
+  {
+   "at": "2026-11-24T16:16:41.753887+00:00",
+   "btts": 1,
+   "ht": 1
   }
  ],
  "version": "shadows-v1"
