@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-24T11:07Z",
+ "generated": "2026-11-24T12:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -6055,6 +6055,22 @@
      "side": "yes",
      "st": "lost",
      "w": 1.0
+    },
+    {
+     "id": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24KACJON-JON",
+     "ko": "2026-11-24T13:20",
+     "r": null,
+     "side": "yes",
+     "st": "open",
+     "w": 0.9
+    },
+    {
+     "id": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24PIECAR-PIE",
+     "ko": "2026-11-24T13:20",
+     "r": null,
+     "side": "yes",
+     "st": "unfilled",
+     "w": null
     }
    ],
    "refused": {
@@ -6074,7 +6090,10 @@
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23VUJSCH-VUJ": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24DEDSHE-SHE": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MASMAZ-MAZ": "outside the price band",
+    "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MIYMAU-MAU": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MONHEN-HEN": "price above the cap",
+    "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24PIECAR-PIE": "no seller at the price",
+    "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24ROTARN-ARN": "price above the cap",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24URSCHE-CHE": "outside the price band"
    }
   },
