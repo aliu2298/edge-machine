@@ -9,7 +9,7 @@
    0.6
   ]
  },
- "board_built_at": "2026-11-24T19:32:36+00:00",
+ "board_built_at": "2026-11-24T20:01:37+00:00",
  "collector_error": null,
  "collector_healthy": {
   "afq_btts": true,
@@ -18,78 +18,7 @@
  "corners_selections": {},
  "first_publish_min": 45,
  "late_publication_skipped": 0,
- "leads": {
-  "2026-11-17|Niger|Morocco|Both teams to score \u00b7 African qualifiers \u00b7 both teams to score": {
-   "away": "Morocco",
-   "bet": {
-    "kind": "btts"
-   },
-   "date": "2026-11-17",
-   "edge_at_log": null,
-   "first_seen": "2026-11-17",
-   "headline": "Both teams to score",
-   "home": "Niger",
-   "id": "2026-11-17|Niger|Morocco|Both teams to score \u00b7 African qualifiers \u00b7 both teams to score",
-   "kickoff": "2026-11-17T20:00Z",
-   "lane": "production",
-   "league": "AFCON Qualifying",
-   "match": "Niger v Morocco",
-   "pair": "afq_btts|soccer_btts_intl",
-   "price_at_log": 0.3,
-   "published_at": "2026-11-17T22:42:14+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Both teams to score",
-    "event": "KXAFCONTOTAL-26NOV17NIGMAR",
-    "market": "KXAFCONBTTS-26NOV17NIGMAR-BTTS",
-    "outcome": "Both teams to score",
-    "outcome_side": "yes",
-    "price_at_log": 0.3,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "afq_btts:KXAFCONBTTS-26NOV17NIGMAR-BTTS",
-   "source": "afq_btts",
-   "sport": "soccer_btts_intl",
-   "status": "miss"
-  },
-  "2026-11-17|Niger|Morocco|Niger to score 1+ \u00b7 African qualifiers \u00b7 underdog to score": {
-   "away": "Morocco",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "Niger"
-   },
-   "date": "2026-11-17",
-   "edge_at_log": null,
-   "first_seen": "2026-11-17",
-   "headline": "Niger to score 1+",
-   "home": "Niger",
-   "id": "2026-11-17|Niger|Morocco|Niger to score 1+ \u00b7 African qualifiers \u00b7 underdog to score",
-   "kickoff": "2026-11-17T20:00Z",
-   "lane": "production",
-   "league": "AFCON Qualifying",
-   "match": "Niger v Morocco",
-   "pair": "afq_dog_score|soccer_team1_intl",
-   "price_at_log": 0.32,
-   "published_at": "2026-11-17T22:42:14+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Niger to score 1+",
-    "event": "KXAFCONTOTAL-26NOV17NIGMAR",
-    "market": "KXAFCONTEAMTOTAL-26NOV17NIGMAR-NIG1",
-    "outcome": "Niger over 0.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.32,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17NIGMAR-NIG1",
-   "source": "afq_dog_score",
-   "sport": "soccer_team1_intl",
-   "status": "miss"
-  }
- },
+ "leads": {},
  "pairs": {
   "afq_btts|soccer_btts_intl": {
    "by_hand": "2026-11-16",
@@ -98,9 +27,9 @@
    "ready_at": "2026-11-16T18:00:00+00:00",
    "route": "moved by hand on 2026-11-16",
    "routing": {
-    "leads": 1,
+    "leads": 0,
     "problem": null,
-    "routed": 1,
+    "routed": 0,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -123,9 +52,9 @@
    "ready_at": "2026-11-16T18:00:00+00:00",
    "route": "moved by hand on 2026-11-16",
    "routing": {
-    "leads": 1,
+    "leads": 0,
     "problem": null,
-    "routed": 1,
+    "routed": 0,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -146,5 +75,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T19:32:36+00:00"
+ "updated_at": "2026-11-24T20:01:37+00:00"
 }

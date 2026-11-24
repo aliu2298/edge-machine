@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-24T19:00:36.298367+00:00",
+ "last_run": "2026-11-24T20:00:36.474123+00:00",
  "matches": [
   {
    "day": "2026-11-19",
@@ -2800,6 +2800,68 @@
    "logged": "2026-11-24T04:00:34.655039+00:00",
    "timed": 4,
    "title": "St. Louis CITY SC v LAFC",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-24",
+   "entries": [],
+   "espn_id": "401915380",
+   "event": "KXUCLGAME-26NOV24BOGASK",
+   "goals": 1,
+   "ht": 1795545591,
+   "ko": 1795542300,
+   "labels": {
+    "away": null,
+    "home": null
+   },
+   "league": "UCL",
+   "logged": "2026-11-24T20:00:36.474123+00:00",
+   "timed": 1,
+   "title": "Bodo/Glimt v LASK Linz",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-24",
+   "entries": [
+    {
+     "ask": 0.54,
+     "bid": 0.53,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.54,
+      "filled": false,
+      "roi": null
+     },
+     "mom": "pre",
+     "name": "Aston Villa",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.56,
+      "depth": 14717.34,
+      "filled": true,
+      "roi": 0.7857
+     },
+     "team": "away",
+     "ticker": "KXUCLGAME-26NOV24GALAVL-AVL",
+     "ts": 1795538700,
+     "v2": true,
+     "won": true
+    }
+   ],
+   "espn_id": "401915300",
+   "event": "KXUCLGAME-26NOV24GALAVL",
+   "goals": 1,
+   "ht": 1795545592,
+   "ko": 1795542300,
+   "labels": {
+    "away": "O-D-",
+    "home": "O+D-"
+   },
+   "league": "UCL",
+   "logged": "2026-11-24T20:00:36.474123+00:00",
+   "timed": 1,
+   "title": "Galatasaray v Aston Villa",
    "version": "soccerp4-v1"
   }
  ],
