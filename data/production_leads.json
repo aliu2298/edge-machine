@@ -1,6 +1,7 @@
 {
- "board_built_at": "2026-11-24T15:54:22+00:00",
+ "board_built_at": "2026-11-24T16:04:46+00:00",
  "corners_selections": {
+  "kalshi:26NOV24RMAPSV": "2026-11-24|Real Madrid|PSV Eindhoven|10+ corners \u00b7 Corners total fade, Champions League",
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT13ARSLIL": "2026-10-13|Arsenal|Lille|Under 10 corners \u00b7 Corners under form rule",
@@ -1571,7 +1572,7 @@
    "kickoff": "2026-11-24T20:00Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T15:54:22+00:00",
+   "last_seen_at": "2026-11-24T16:04:46+00:00",
    "league": "Champions League",
    "match": "Arsenal v Dortmund",
    "pair": "ftts_no_70_80|soccer_ftts",
@@ -1608,7 +1609,7 @@
    "kickoff": "2026-11-24T20:00Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T15:54:22+00:00",
+   "last_seen_at": "2026-11-24T16:04:46+00:00",
    "league": "Champions League",
    "match": "Leipzig v Lens",
    "pair": "ftts_no_70_80|soccer_ftts",
@@ -1645,7 +1646,7 @@
    "kickoff": "2026-11-24T20:00Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T15:54:22+00:00",
+   "last_seen_at": "2026-11-24T16:04:46+00:00",
    "league": "Champions League",
    "match": "Manchester City v Napoli",
    "pair": "ftts_no_70_80|soccer_ftts",
@@ -1667,6 +1668,43 @@
    "sport": "soccer_ftts",
    "status": "pending"
   },
+  "2026-11-24|Real Madrid|PSV Eindhoven|10+ corners \u00b7 Corners total fade, Champions League": {
+   "away": "PSV Eindhoven",
+   "bet": {
+    "kind": "corners_gte",
+    "n": 10
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "10+ corners",
+   "home": "Real Madrid",
+   "id": "2026-11-24|Real Madrid|PSV Eindhoven|10+ corners \u00b7 Corners total fade, Champions League",
+   "kickoff": "2026-11-24T20:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T16:04:46+00:00",
+   "league": "Champions League",
+   "match": "Real Madrid v PSV Eindhoven",
+   "pair": "corners_ucl_fade|soccer_corners",
+   "price_at_log": 0.61,
+   "published_at": "2026-11-24T16:04:46+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 235,
+   "route": {
+    "claim": "10+ corners",
+    "event": "KXUCLCORNERS-26NOV24RMAPSV",
+    "market": "KXUCLCORNERS-26NOV24RMAPSV-10",
+    "outcome": "10+ corners",
+    "outcome_side": "yes",
+    "price_at_log": 0.61,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "corners_ucl_fade:KXUCLCORNERS-26NOV24RMAPSV-10",
+   "source": "corners_ucl_fade",
+   "sport": "soccer_corners",
+   "status": "pending"
+  },
   "2026-11-24|Slovan Bratislava|Real Betis|Slovan Bratislava not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge": {
    "away": "Real Betis",
    "bet": {
@@ -1682,7 +1720,7 @@
    "kickoff": "2026-11-24T20:00Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T15:54:22+00:00",
+   "last_seen_at": "2026-11-24T16:04:46+00:00",
    "league": "Champions League",
    "match": "Slovan Bratislava v Real Betis",
    "pair": "ftts_no_70_80|soccer_ftts",
@@ -1754,7 +1792,7 @@
    "kickoff": "2026-11-25T03:00Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T15:54:22+00:00",
+   "last_seen_at": "2026-11-24T16:04:46+00:00",
    "league": "MLS",
    "match": "San Jose Earthquakes v Houston Dynamo FC",
    "pair": "mls_fade_home|soccer_p05",
@@ -1785,9 +1823,9 @@
    "ready_at": "2026-11-08T08:37:32+00:00",
    "route": "moved by hand on 2026-11-08",
    "routing": {
-    "leads": 0,
+    "leads": 1,
     "problem": null,
-    "routed": 0,
+    "routed": 1,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1799,7 +1837,7 @@
    "sandbox_roi_fee": null,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 1,
     "under_target": 0
    }
   },
@@ -2068,5 +2106,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 1,
- "updated_at": "2026-11-24T15:54:22+00:00"
+ "updated_at": "2026-11-24T16:04:46+00:00"
 }
