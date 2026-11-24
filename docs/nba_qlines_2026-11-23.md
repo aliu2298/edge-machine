@@ -1,4 +1,4 @@
-# NBA quarter lines (nba_qlines, Sandbox, paper): pre-registration, 2026-11-23
+# Club 90: NBA quarter and half lines (nba_qlines, Sandbox, paper): pre-registration, 2026-11-23
 
 Requested by Olu via the Edge Machine Coordinator, 2026-11-23 ("Assign that to session"); half lines added the same day. Paper only: no orders, no live switch, nothing to Production without Olu.
 Code: `nba_qlines.py`, page `nba_qlines_build.py` (a block on the NBA page, indexed on the Sandbox page), workflow `.github/workflows/nba-qlines.yml`,

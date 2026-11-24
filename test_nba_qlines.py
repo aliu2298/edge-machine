@@ -186,7 +186,8 @@ check("the Sandbox index links each section", all(f"./nba.html#qlines-{s}" in id
 bad = [m.group(0) for m in sandbox_audit.COPY_RE.finditer(html + idx)]
 check("public copy passes the guard", bad, [])
 check("no inline style or SVG", ("style=" in html or "<svg" in html), False)
-check("an empty ledger still renders", "<h2>NBA quarter lines (Sandbox)</h2>" in B.section(Q.empty(), {"games": []}), True)
+check("display names: each fold and index row is Club 90 · <section>, lane ids unchanged", (all(f"<h3>Club 90 · {x}</h3>" in html for x in Q.SECTIONS), "Club 90 · 3Q over 53.5" in B.index_html(st), "nba_qlines" in B.index_html(st) or "qlines_3Q_over" in B.index_html(st)), (True, True, True))
+check("an empty ledger still renders", "<h2>Club 90 · quarter &amp; half lines</h2>" in B.section(Q.empty(), {"games": []}), True)
 
 print("\nALL PASS" if not FAILS else f"\n{len(FAILS)} FAILED: {FAILS}")
 sys.exit(1 if FAILS else 0)
