@@ -662,6 +662,31 @@
    "result": "yes",
    "title": "Will over 0.5 goals be scored?",
    "version": "argdip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null,
+    "75": null
+   },
+   "event": "KXARGPREMDIVTOTAL-26NOV23GLPNOB",
+   "id": "KXARGPREMDIVTOTAL-26NOV23GLPNOB-1",
+   "kickoff": 1795464000,
+   "logged": "2026-11-24T05:00:39.561821+00:00",
+   "matchday": "2026-11-23",
+   "p": 0.9,
+   "p_at": 1795460460,
+   "p_bid": 0.89,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.89,
+    "printed": 911.39,
+    "status": "verified"
+   },
+   "prints": 43,
+   "result": "yes",
+   "title": "Will over 0.5 goals be scored?",
+   "version": "argdip-v1"
   }
  ],
  "error": null,
@@ -6617,11 +6642,11 @@
   ]
  },
  "lane": "arg_goalless_dip",
- "last_run": "2026-11-23T20:36:52.834744+00:00",
+ "last_run": "2026-11-24T05:00:39.561821+00:00",
  "observations": {
-  "at": "2026-11-23T20:36:52.834744+00:00",
+  "at": "2026-11-24T05:00:39.561821+00:00",
   "errors": [],
-  "new": 0,
+  "new": 1,
   "skipped": 0,
   "waiting": 0
  },
@@ -6637,12 +6662,6 @@
   "KXARGPREMDIVTOTAL-26OCT31RIECAT": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)",
   "KXARGPREMDIVTOTAL-26OCT31VELSLA": "pregame ask unverified: 9.09 contracts traded at or through the ask within 60 minutes (under 10)"
  },
- "upcoming": [
-  {
-   "event": "KXARGPREMDIVTOTAL-26NOV23GLPNOB",
-   "kickoff": 1795464000,
-   "title": "Gimnasia La Plata vs Newell's Old Boys: Regulation Time Total Goals"
-  }
- ],
+ "upcoming": [],
  "version": "argdip-v1"
 }
