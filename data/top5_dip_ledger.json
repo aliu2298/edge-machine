@@ -4379,6 +4379,121 @@
    "result": "yes",
    "title": "Will over 1.5 goals be scored?",
    "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": {
+     "counted": true,
+     "fill_at": 1795546422,
+     "fill_print": 0.51,
+     "fill_volume": 80275.56,
+     "held": true,
+     "limit": 0.51,
+     "payout": 0.0,
+     "sold": false,
+     "sold_at": null
+    },
+    "65": {
+     "counted": true,
+     "fill_at": 1795545869,
+     "fill_print": 0.6,
+     "fill_volume": 86946.41,
+     "held": true,
+     "limit": 0.6,
+     "payout": 0.0,
+     "sold": false,
+     "sold_at": null
+    }
+   },
+   "event": "KXUCLTOTAL-26NOV24BOGASK",
+   "id": "KXUCLTOTAL-26NOV24BOGASK-2",
+   "kickoff": 1795542300,
+   "league": "UCL",
+   "logged": "2026-11-24T21:35:42.648251+00:00",
+   "matchday": "2026-11-24",
+   "p": 0.93,
+   "p_at": 1795538700,
+   "p_bid": 0.92,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.93,
+    "printed": 1131.51,
+    "status": "verified"
+   },
+   "prints": 862,
+   "result": "no",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": {
+     "counted": true,
+     "fill_at": 1795546267,
+     "fill_print": 0.46,
+     "fill_volume": 220104.4,
+     "held": true,
+     "limit": 0.46,
+     "payout": 0.0,
+     "sold": false,
+     "sold_at": null
+    },
+    "65": {
+     "counted": true,
+     "fill_at": 1795544899,
+     "fill_print": 0.55,
+     "fill_volume": 253037.27,
+     "held": true,
+     "limit": 0.55,
+     "payout": 0.0,
+     "sold": false,
+     "sold_at": null
+    }
+   },
+   "event": "KXUCLTOTAL-26NOV24GALAVL",
+   "id": "KXUCLTOTAL-26NOV24GALAVL-2",
+   "kickoff": 1795542300,
+   "league": "UCL",
+   "logged": "2026-11-24T21:35:42.648251+00:00",
+   "matchday": "2026-11-24",
+   "p": 0.84,
+   "p_at": 1795538760,
+   "p_bid": 0.83,
+   "p_check": {
+    "how": "print",
+    "last_trade": 0.85,
+    "printed": 7248.4,
+    "status": "verified"
+   },
+   "prints": 2697,
+   "result": "no",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
+  },
+  {
+   "buys": {
+    "55": null,
+    "65": null
+   },
+   "event": "KXUCLTOTAL-26NOV24RMAPSV",
+   "id": "KXUCLTOTAL-26NOV24RMAPSV-2",
+   "kickoff": 1795550400,
+   "league": "UCL",
+   "logged": "2026-11-24T21:35:42.648251+00:00",
+   "matchday": "2026-11-24",
+   "p": 0.95,
+   "p_at": 1795546860,
+   "p_bid": 0.94,
+   "p_check": {
+    "how": "print",
+    "last_trade": null,
+    "printed": 4657.97,
+    "status": "verified"
+   },
+   "prints": 215,
+   "result": "yes",
+   "title": "Will over 1.5 goals be scored?",
+   "version": "top5dip-v1"
   }
  ],
  "error": null,
@@ -18433,13 +18548,13 @@
   ]
  },
  "lane": "top5_goalless_dip",
- "last_run": "2026-11-24T11:42:01.989891+00:00",
+ "last_run": "2026-11-24T21:35:42.648251+00:00",
  "observations": {
-  "at": "2026-11-24T11:42:01.989891+00:00",
+  "at": "2026-11-24T21:35:42.648251+00:00",
   "errors": [],
-  "new": 0,
-  "skipped": 0,
-  "waiting": 0
+  "new": 3,
+  "skipped": 1,
+  "waiting": 3
  },
  "seen": {},
  "since": "2026-10-31",
@@ -18467,19 +18582,10 @@
   "KXLIGUE1TOTAL-26OCT31FCLSTB": "no pregame quote an hour before kickoff",
   "KXLIGUE1TOTAL-26OCT31NICREN": "market closed before its listed kickoff (match moved)",
   "KXLIGUE1TOTAL-26OCT31OLANG": "no pregame quote an hour before kickoff",
-  "KXSERIEATOTAL-26NOV08FIOJUV": "pregame ask unverified: 7.83 contracts traded at or through the ask within 60 minutes (under 10)"
+  "KXSERIEATOTAL-26NOV08FIOJUV": "pregame ask unverified: 7.83 contracts traded at or through the ask within 60 minutes (under 10)",
+  "KXUCLTOTAL-26NOV24RBLRCL": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)"
  },
  "upcoming": [
-  {
-   "event": "KXUCLTOTAL-26NOV24BOGASK",
-   "kickoff": 1795542300,
-   "title": "Bodoe/Glimt vs LASK: Total Goals"
-  },
-  {
-   "event": "KXUCLTOTAL-26NOV24GALAVL",
-   "kickoff": 1795542300,
-   "title": "Galatasaray vs Aston Villa: Total Goals"
-  },
   {
    "event": "KXUCLTOTAL-26NOV24ARSBVB",
    "kickoff": 1795550400,
@@ -18519,6 +18625,16 @@
    "event": "KXUCLTOTAL-26NOV25SBHBAR",
    "kickoff": 1795628700,
    "title": "Sabah Masazir vs Barcelona: Total Goals"
+  },
+  {
+   "event": "KXUCLTOTAL-26NOV25SLAVIL",
+   "kickoff": 1795628700,
+   "title": "Slavia Prague vs Villarreal: Total Goals"
+  },
+  {
+   "event": "KXUCLTOTAL-26NOV25ATMVIK",
+   "kickoff": 1795636800,
+   "title": "Atletico vs Viking: Total Goals"
   }
  ],
  "version": "top5dip-v1"
