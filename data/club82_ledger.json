@@ -1,11 +1,41 @@
 {
  "error": null,
  "games_through": "2026-11-23",
- "last_run": "2026-11-24T19:00:38.980663+00:00",
+ "last_run": "2026-11-24T19:15:34.861012+00:00",
  "registered": "2026-11-23",
  "rules": {
   "club82_tt15": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.9,
+     "bid": 0.89,
+     "event": "KXUCLTEAMTOTAL-26NOV24RMAPSV",
+     "id": "club82_tt15:KXUCLTEAMTOTAL-26NOV24RMAPSV:home",
+     "kind": "tt15",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "Real Madrid v PSV Eindhoven",
+     "matches": "club82_tt15_blind:KXUCLTEAMTOTAL-26NOV24RMAPSV:home",
+     "opponent": "PSV Eindhoven",
+     "price": 0.9,
+     "qualifying_teams": [
+      "Real Madrid"
+     ],
+     "rates": {
+      "away": "0/4",
+      "home": "14/17"
+     },
+     "rule": "club82_tt15",
+     "side": "yes",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "team": "Real Madrid",
+     "team_side": "home",
+     "ticker": "KXUCLTEAMTOTAL-26NOV24RMAPSV-RMA2"
+    }
+   ]
   },
   "club82_tt15_blind": {
    "picks": [
@@ -112,11 +142,402 @@
      "team": "Aston Villa",
      "team_side": "away",
      "ticker": "KXUCLTEAMTOTAL-26NOV24GALAVL-AVL2"
+    },
+    {
+     "ask": 0.63,
+     "bid": 0.62,
+     "event": "KXUCLTEAMTOTAL-26NOV24ARSBVB",
+     "id": "club82_tt15_blind:KXUCLTEAMTOTAL-26NOV24ARSBVB:home",
+     "kind": "tt15",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "Arsenal v Borussia Dortmund",
+     "opponent": "Borussia Dortmund",
+     "price": 0.63,
+     "qualifying": false,
+     "rates": {
+      "away": "9/14",
+      "home": "9/15"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "team": "Arsenal",
+     "team_side": "home",
+     "ticker": "KXUCLTEAMTOTAL-26NOV24ARSBVB-ARS2"
+    },
+    {
+     "ask": 0.22,
+     "bid": 0.21,
+     "event": "KXUCLTEAMTOTAL-26NOV24ARSBVB",
+     "id": "club82_tt15_blind:KXUCLTEAMTOTAL-26NOV24ARSBVB:away",
+     "kind": "tt15",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "Arsenal v Borussia Dortmund",
+     "opponent": "Arsenal",
+     "price": 0.22,
+     "qualifying": false,
+     "rates": {
+      "away": "9/14",
+      "home": "9/15"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "team": "Borussia Dortmund",
+     "team_side": "away",
+     "ticker": "KXUCLTEAMTOTAL-26NOV24ARSBVB-BVB2"
+    },
+    {
+     "ask": 0.78,
+     "bid": 0.77,
+     "event": "KXUCLTEAMTOTAL-26NOV24COMAEK",
+     "id": "club82_tt15_blind:KXUCLTEAMTOTAL-26NOV24COMAEK:home",
+     "kind": "tt15",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "Como v AEK Athens",
+     "opponent": "AEK Athens",
+     "price": 0.78,
+     "qualifying": false,
+     "rates": {
+      "away": "1/4",
+      "home": "11/16"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "team": "Como",
+     "team_side": "home",
+     "ticker": "KXUCLTEAMTOTAL-26NOV24COMAEK-COM2"
+    },
+    {
+     "ask": 0.23,
+     "bid": 0.22,
+     "event": "KXUCLTEAMTOTAL-26NOV24COMAEK",
+     "id": "club82_tt15_blind:KXUCLTEAMTOTAL-26NOV24COMAEK:away",
+     "kind": "tt15",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "Como v AEK Athens",
+     "opponent": "Como",
+     "price": 0.23,
+     "qualifying": false,
+     "rates": {
+      "away": "1/4",
+      "home": "11/16"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "team": "AEK Athens",
+     "team_side": "away",
+     "ticker": "KXUCLTEAMTOTAL-26NOV24COMAEK-AEK2"
+    },
+    {
+     "ask": 0.36,
+     "bid": 0.35,
+     "event": "KXUCLTEAMTOTAL-26NOV24FEYFCP",
+     "id": "club82_tt15_blind:KXUCLTEAMTOTAL-26NOV24FEYFCP:home",
+     "kind": "tt15",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "Feyenoord Rotterdam v FC Porto",
+     "opponent": "FC Porto",
+     "price": 0.36,
+     "qualifying": false,
+     "rates": {
+      "away": "2/4",
+      "home": "1/4"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "team": "Feyenoord Rotterdam",
+     "team_side": "home",
+     "ticker": "KXUCLTEAMTOTAL-26NOV24FEYFCP-FEY2"
+    },
+    {
+     "ask": 0.5,
+     "bid": 0.49,
+     "event": "KXUCLTEAMTOTAL-26NOV24FEYFCP",
+     "id": "club82_tt15_blind:KXUCLTEAMTOTAL-26NOV24FEYFCP:away",
+     "kind": "tt15",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "Feyenoord Rotterdam v FC Porto",
+     "opponent": "Feyenoord Rotterdam",
+     "price": 0.5,
+     "qualifying": false,
+     "rates": {
+      "away": "2/4",
+      "home": "1/4"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "team": "FC Porto",
+     "team_side": "away",
+     "ticker": "KXUCLTEAMTOTAL-26NOV24FEYFCP-FCP2"
+    },
+    {
+     "ask": 0.79,
+     "bid": 0.78,
+     "event": "KXUCLTEAMTOTAL-26NOV24MCINAP",
+     "id": "club82_tt15_blind:KXUCLTEAMTOTAL-26NOV24MCINAP:home",
+     "kind": "tt15",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "Manchester City v Napoli",
+     "opponent": "Napoli",
+     "price": 0.79,
+     "qualifying": false,
+     "rates": {
+      "away": "6/16",
+      "home": "9/15"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "team": "Manchester City",
+     "team_side": "home",
+     "ticker": "KXUCLTEAMTOTAL-26NOV24MCINAP-MCI2"
+    },
+    {
+     "ask": 0.25,
+     "bid": 0.24,
+     "event": "KXUCLTEAMTOTAL-26NOV24MCINAP",
+     "id": "club82_tt15_blind:KXUCLTEAMTOTAL-26NOV24MCINAP:away",
+     "kind": "tt15",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "Manchester City v Napoli",
+     "opponent": "Manchester City",
+     "price": 0.25,
+     "qualifying": false,
+     "rates": {
+      "away": "6/16",
+      "home": "9/15"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "team": "Napoli",
+     "team_side": "away",
+     "ticker": "KXUCLTEAMTOTAL-26NOV24MCINAP-NAP2"
+    },
+    {
+     "ask": 0.79,
+     "bid": 0.77,
+     "event": "KXUCLTEAMTOTAL-26NOV24RBLRCL",
+     "id": "club82_tt15_blind:KXUCLTEAMTOTAL-26NOV24RBLRCL:home",
+     "kind": "tt15",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "RB Leipzig v Lens",
+     "opponent": "Lens",
+     "price": 0.79,
+     "qualifying": false,
+     "rates": {
+      "away": "6/15",
+      "home": "8/14"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "team": "RB Leipzig",
+     "team_side": "home",
+     "ticker": "KXUCLTEAMTOTAL-26NOV24RBLRCL-RBL2"
+    },
+    {
+     "ask": 0.33,
+     "bid": 0.32,
+     "event": "KXUCLTEAMTOTAL-26NOV24RBLRCL",
+     "id": "club82_tt15_blind:KXUCLTEAMTOTAL-26NOV24RBLRCL:away",
+     "kind": "tt15",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "RB Leipzig v Lens",
+     "opponent": "RB Leipzig",
+     "price": 0.33,
+     "qualifying": false,
+     "rates": {
+      "away": "6/15",
+      "home": "8/14"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "team": "Lens",
+     "team_side": "away",
+     "ticker": "KXUCLTEAMTOTAL-26NOV24RBLRCL-RCL2"
+    },
+    {
+     "ask": 0.9,
+     "bid": 0.89,
+     "event": "KXUCLTEAMTOTAL-26NOV24RMAPSV",
+     "id": "club82_tt15_blind:KXUCLTEAMTOTAL-26NOV24RMAPSV:home",
+     "kind": "tt15",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "Real Madrid v PSV Eindhoven",
+     "opponent": "PSV Eindhoven",
+     "price": 0.9,
+     "qualifying": true,
+     "rates": {
+      "away": "0/4",
+      "home": "14/17"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "team": "Real Madrid",
+     "team_side": "home",
+     "ticker": "KXUCLTEAMTOTAL-26NOV24RMAPSV-RMA2"
+    },
+    {
+     "ask": 0.27,
+     "bid": 0.25,
+     "event": "KXUCLTEAMTOTAL-26NOV24RMAPSV",
+     "id": "club82_tt15_blind:KXUCLTEAMTOTAL-26NOV24RMAPSV:away",
+     "kind": "tt15",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "Real Madrid v PSV Eindhoven",
+     "opponent": "Real Madrid",
+     "price": 0.27,
+     "qualifying": false,
+     "rates": {
+      "away": "0/4",
+      "home": "14/17"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "team": "PSV Eindhoven",
+     "team_side": "away",
+     "ticker": "KXUCLTEAMTOTAL-26NOV24RMAPSV-PSV2"
+    },
+    {
+     "ask": 0.24,
+     "bid": 0.23,
+     "event": "KXUCLTEAMTOTAL-26NOV24SLORBB",
+     "id": "club82_tt15_blind:KXUCLTEAMTOTAL-26NOV24SLORBB:home",
+     "kind": "tt15",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "Slovan Bratislava v Real Betis",
+     "opponent": "Real Betis",
+     "price": 0.24,
+     "qualifying": false,
+     "rates": {
+      "away": "8/17",
+      "home": "0/4"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "team": "Slovan Bratislava",
+     "team_side": "home",
+     "ticker": "KXUCLTEAMTOTAL-26NOV24SLORBB-SLO2"
+    },
+    {
+     "ask": 0.79,
+     "bid": 0.77,
+     "event": "KXUCLTEAMTOTAL-26NOV24SLORBB",
+     "id": "club82_tt15_blind:KXUCLTEAMTOTAL-26NOV24SLORBB:away",
+     "kind": "tt15",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 1.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "Slovan Bratislava v Real Betis",
+     "opponent": "Slovan Bratislava",
+     "price": 0.79,
+     "qualifying": false,
+     "rates": {
+      "away": "8/17",
+      "home": "0/4"
+     },
+     "rule": "club82_tt15_blind",
+     "side": "yes",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "team": "Real Betis",
+     "team_side": "away",
+     "ticker": "KXUCLTEAMTOTAL-26NOV24SLORBB-RBB2"
     }
    ]
   },
   "club82_u35": {
-   "picks": []
+   "picks": [
+    {
+     "ask": 0.33,
+     "bid": 0.32,
+     "event": "KXUCLTOTAL-26NOV24ARSBVB",
+     "id": "club82_u35:KXUCLTOTAL-26NOV24ARSBVB",
+     "kind": "u35",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 3.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "Arsenal v Borussia Dortmund",
+     "matches": "club82_u35_blind:KXUCLTOTAL-26NOV24ARSBVB",
+     "price": 0.68,
+     "qualifying_teams": [
+      "Arsenal"
+     ],
+     "rates": {
+      "away": "10/14",
+      "home": "13/15"
+     },
+     "rule": "club82_u35",
+     "side": "no",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "ticker": "KXUCLTOTAL-26NOV24ARSBVB-4"
+    }
+   ]
   },
   "club82_u35_blind": {
    "picks": [
@@ -165,6 +586,167 @@
      "start": "2026-11-24T17:45Z",
      "status": "open",
      "ticker": "KXUCLTOTAL-26NOV24GALAVL-4"
+    },
+    {
+     "ask": 0.33,
+     "bid": 0.32,
+     "event": "KXUCLTOTAL-26NOV24ARSBVB",
+     "id": "club82_u35_blind:KXUCLTOTAL-26NOV24ARSBVB",
+     "kind": "u35",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 3.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "Arsenal v Borussia Dortmund",
+     "price": 0.68,
+     "qualifying": true,
+     "rates": {
+      "away": "10/14",
+      "home": "13/15"
+     },
+     "rule": "club82_u35_blind",
+     "side": "no",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "ticker": "KXUCLTOTAL-26NOV24ARSBVB-4"
+    },
+    {
+     "ask": 0.49,
+     "bid": 0.48,
+     "event": "KXUCLTOTAL-26NOV24COMAEK",
+     "id": "club82_u35_blind:KXUCLTOTAL-26NOV24COMAEK",
+     "kind": "u35",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 3.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "Como v AEK Athens",
+     "price": 0.52,
+     "qualifying": false,
+     "rates": {
+      "away": "1/4",
+      "home": "9/16"
+     },
+     "rule": "club82_u35_blind",
+     "side": "no",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "ticker": "KXUCLTOTAL-26NOV24COMAEK-4"
+    },
+    {
+     "ask": 0.34,
+     "bid": 0.33,
+     "event": "KXUCLTOTAL-26NOV24FEYFCP",
+     "id": "club82_u35_blind:KXUCLTOTAL-26NOV24FEYFCP",
+     "kind": "u35",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 3.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "Feyenoord Rotterdam v FC Porto",
+     "price": 0.67,
+     "qualifying": false,
+     "rates": {
+      "away": "2/4",
+      "home": "2/4"
+     },
+     "rule": "club82_u35_blind",
+     "side": "no",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "ticker": "KXUCLTOTAL-26NOV24FEYFCP-4"
+    },
+    {
+     "ask": 0.52,
+     "bid": 0.51,
+     "event": "KXUCLTOTAL-26NOV24MCINAP",
+     "id": "club82_u35_blind:KXUCLTOTAL-26NOV24MCINAP",
+     "kind": "u35",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 3.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "Manchester City v Napoli",
+     "price": 0.49,
+     "qualifying": false,
+     "rates": {
+      "away": "10/16",
+      "home": "8/15"
+     },
+     "rule": "club82_u35_blind",
+     "side": "no",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "ticker": "KXUCLTOTAL-26NOV24MCINAP-4"
+    },
+    {
+     "ask": 0.56,
+     "bid": 0.55,
+     "event": "KXUCLTOTAL-26NOV24RBLRCL",
+     "id": "club82_u35_blind:KXUCLTOTAL-26NOV24RBLRCL",
+     "kind": "u35",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 3.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "RB Leipzig v Lens",
+     "price": 0.45,
+     "qualifying": false,
+     "rates": {
+      "away": "10/15",
+      "home": "4/14"
+     },
+     "rule": "club82_u35_blind",
+     "side": "no",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "ticker": "KXUCLTOTAL-26NOV24RBLRCL-4"
+    },
+    {
+     "ask": 0.69,
+     "bid": 0.68,
+     "event": "KXUCLTOTAL-26NOV24RMAPSV",
+     "id": "club82_u35_blind:KXUCLTOTAL-26NOV24RMAPSV",
+     "kind": "u35",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 3.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "Real Madrid v PSV Eindhoven",
+     "price": 0.32,
+     "qualifying": false,
+     "rates": {
+      "away": "4/4",
+      "home": "9/17"
+     },
+     "rule": "club82_u35_blind",
+     "side": "no",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "ticker": "KXUCLTOTAL-26NOV24RMAPSV-4"
+    },
+    {
+     "ask": 0.5,
+     "bid": 0.49,
+     "event": "KXUCLTOTAL-26NOV24SLORBB",
+     "id": "club82_u35_blind:KXUCLTOTAL-26NOV24SLORBB",
+     "kind": "u35",
+     "lead_min": 44.4,
+     "league": "Champions League",
+     "line": 3.5,
+     "logged": "2026-11-24T19:15:34.861012+00:00",
+     "match": "Slovan Bratislava v Real Betis",
+     "price": 0.51,
+     "qualifying": false,
+     "rates": {
+      "away": "12/17",
+      "home": "1/4"
+     },
+     "rule": "club82_u35_blind",
+     "side": "no",
+     "start": "2026-11-24T20:00Z",
+     "status": "open",
+     "ticker": "KXUCLTOTAL-26NOV24SLORBB-4"
     }
    ]
   }
@@ -194,6 +776,11 @@
    "at": "2026-11-24T19:00:38.980663+00:00",
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-24T19:15:34.861012+00:00",
+   "due": 7,
+   "new": 23
   }
  ],
  "schedule": [
