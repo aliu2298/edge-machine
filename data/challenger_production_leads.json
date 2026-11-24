@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T14:02:01+00:00",
+ "board_built_at": "2026-11-24T15:02:00+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -609,6 +609,41 @@
    "sport": "tennis",
    "status": "hit"
   },
+  "2026-11-24|Jannik Maute|Kenta Miyoshi (b. 2004)|Jannik Maute to win \u00b7 Challenger underdog who has won here": {
+   "away": "Kenta Miyoshi (b. 2004)",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Jannik Maute to win",
+   "home": "Jannik Maute",
+   "id": "2026-11-24|Jannik Maute|Kenta Miyoshi (b. 2004)|Jannik Maute to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T13:20Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Jannik Maute v Kenta Miyoshi (b. 2004)",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.33,
+   "published_at": "2026-11-24T15:02:00+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Jannik Maute to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24MIYMAU",
+    "market": "KXATPCHALLENGERMATCH-26NOV24MIYMAU-MAU",
+    "outcome": "Jannik Maute",
+    "outcome_side": "yes",
+    "price_at_log": 0.33,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MIYMAU-MAU",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "hit"
+  },
   "2026-11-24|Jesse Delaney|Matthew Dellavedova|Jesse Delaney to win \u00b7 Challenger underdog who has won here": {
    "away": "Matthew Dellavedova",
    "bet": {
@@ -679,8 +714,8 @@
    "sport": "tennis",
    "status": "miss"
   },
-  "2026-11-24|Leo Raquillet|Yaroslav Demin|Leo Raquillet to win \u00b7 Challenger underdog who has won here": {
-   "away": "Yaroslav Demin",
+  "2026-11-24|Mathieu Scaglia|Wissam Abderrahman|Mathieu Scaglia to win \u00b7 Challenger underdog who has won here": {
+   "away": "Wissam Abderrahman",
    "bet": {
     "kind": "match_result",
     "side": "home"
@@ -688,30 +723,30 @@
    "date": "2026-11-24",
    "edge_at_log": null,
    "first_seen": "2026-11-24",
-   "headline": "Leo Raquillet to win",
-   "home": "Leo Raquillet",
-   "id": "2026-11-24|Leo Raquillet|Yaroslav Demin|Leo Raquillet to win \u00b7 Challenger underdog who has won here",
-   "kickoff": "2026-11-24T14:30Z",
+   "headline": "Mathieu Scaglia to win",
+   "home": "Mathieu Scaglia",
+   "id": "2026-11-24|Mathieu Scaglia|Wissam Abderrahman|Mathieu Scaglia to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T17:20Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T14:02:01+00:00",
+   "last_seen_at": "2026-11-24T15:02:00+00:00",
    "league": "Tennis",
-   "match": "Leo Raquillet v Yaroslav Demin",
+   "match": "Mathieu Scaglia v Wissam Abderrahman",
    "pair": "challenger_won_here|tennis",
    "price_at_log": 0.24,
-   "published_at": "2026-11-24T11:41:38+00:00",
+   "published_at": "2026-11-24T15:02:00+00:00",
    "published_late": false,
-   "published_min_before_kickoff": 168,
+   "published_min_before_kickoff": 138,
    "route": {
-    "claim": "Leo Raquillet to win",
-    "event": "KXATPCHALLENGERMATCH-26NOV24RAQDEM",
-    "market": "KXATPCHALLENGERMATCH-26NOV24RAQDEM-RAQ",
-    "outcome": "Leo Raquillet",
+    "claim": "Mathieu Scaglia to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24SCAABD",
+    "market": "KXATPCHALLENGERMATCH-26NOV24SCAABD-SCA",
+    "outcome": "Mathieu Scaglia",
     "outcome_side": "yes",
     "price_at_log": 0.24,
     "venue": "kalshi"
    },
-   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24RAQDEM-RAQ",
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24SCAABD-SCA",
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "pending"
@@ -751,43 +786,6 @@
    "sport": "tennis",
    "status": "hit"
   },
-  "2026-11-24|Oleksandr Ovcharenko|Pavlos Tsitsipas|Oleksandr Ovcharenko to win \u00b7 Challenger underdog who has won here": {
-   "away": "Pavlos Tsitsipas",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-11-24",
-   "edge_at_log": null,
-   "first_seen": "2026-11-24",
-   "headline": "Oleksandr Ovcharenko to win",
-   "home": "Oleksandr Ovcharenko",
-   "id": "2026-11-24|Oleksandr Ovcharenko|Pavlos Tsitsipas|Oleksandr Ovcharenko to win \u00b7 Challenger underdog who has won here",
-   "kickoff": "2026-11-24T15:00Z",
-   "lane": "production",
-   "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T14:02:01+00:00",
-   "league": "Tennis",
-   "match": "Oleksandr Ovcharenko v Pavlos Tsitsipas",
-   "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.79,
-   "published_at": "2026-11-24T12:01:55+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 178,
-   "route": {
-    "claim": "Oleksandr Ovcharenko to win",
-    "event": "KXATPCHALLENGERMATCH-26NOV24OVCTSI",
-    "market": "KXATPCHALLENGERMATCH-26NOV24OVCTSI-OVC",
-    "outcome": "Oleksandr Ovcharenko",
-    "outcome_side": "yes",
-    "price_at_log": 0.79,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24OVCTSI-OVC",
-   "source": "challenger_won_here",
-   "sport": "tennis",
-   "status": "pending"
-  },
   "2026-11-24|Philip Henning|Johannus Monday|Philip Henning to win \u00b7 Challenger underdog who has won here": {
    "away": "Johannus Monday",
    "bet": {
@@ -822,43 +820,6 @@
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "hit"
-  },
-  "2026-11-24|Robert Guna|Dusan Obradovic|Robert Guna to win \u00b7 Challenger underdog who has won here": {
-   "away": "Dusan Obradovic",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-11-24",
-   "edge_at_log": null,
-   "first_seen": "2026-11-24",
-   "headline": "Robert Guna to win",
-   "home": "Robert Guna",
-   "id": "2026-11-24|Robert Guna|Dusan Obradovic|Robert Guna to win \u00b7 Challenger underdog who has won here",
-   "kickoff": "2026-11-24T14:30Z",
-   "lane": "production",
-   "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T14:02:01+00:00",
-   "league": "Tennis",
-   "match": "Robert Guna v Dusan Obradovic",
-   "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.38,
-   "published_at": "2026-11-24T11:41:38+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 168,
-   "route": {
-    "claim": "Robert Guna to win",
-    "event": "KXATPCHALLENGERMATCH-26NOV24GUNOBR",
-    "market": "KXATPCHALLENGERMATCH-26NOV24GUNOBR-GUN",
-    "outcome": "Robert Guna",
-    "outcome_side": "yes",
-    "price_at_log": 0.38,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24GUNOBR-GUN",
-   "source": "challenger_won_here",
-   "sport": "tennis",
-   "status": "pending"
   },
   "2026-11-24|Ryuki Matsuda|Kaichi Uchida|Ryuki Matsuda to win \u00b7 Challenger underdog who has won here": {
    "away": "Kaichi Uchida",
@@ -1085,7 +1046,7 @@
    "kickoff": "2026-11-24T16:10Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T14:02:01+00:00",
+   "last_seen_at": "2026-11-24T15:02:00+00:00",
    "league": "Tennis",
    "match": "Yassine Smiej v Petr Bar Biryukov",
    "pair": "challenger_won_here|tennis",
@@ -1151,21 +1112,21 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 32,
+    "leads": 31,
     "problem": null,
-    "routed": 32,
+    "routed": 31,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 28,
-   "sandbox_roi": -0.5341,
-   "sandbox_roi_fee": -0.5462,
+   "sandbox_n": 29,
+   "sandbox_roi": -0.4456,
+   "sandbox_roi_fee": -0.462,
    "timing": {
     "late": [],
-    "timed": 27,
+    "timed": 25,
     "under_target": 0
    }
   }
@@ -1174,5 +1135,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T14:02:01+00:00"
+ "updated_at": "2026-11-24T15:02:00+00:00"
 }
