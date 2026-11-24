@@ -1,0 +1,55 @@
+name: Club 82 (Sandbox paper)
+on:
+  workflow_dispatch:
+  schedule:
+    # Backup only: the VPS asks for each read (scripts/vps_window_requests.sh, lane_windows.club_eighty_two_windows: a stamp 58-40 minutes before each
+    # kickoff, so the run starts at a lead of 30-58) and for an hourly settle read while a started pick is open.
+    - cron: '17 * * * *'
+  push:
+    branches: [main]
+    paths:
+      - "data/club_eighty_two_window/**"
+      - "data/club_eighty_two_settle_window/**"
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: club82
+  cancel-in-progress: false
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Settle-only mode
+        # The settle stamp alone settles and adds no entries (settle_only.py); a manual run or an entry stamp does both.
+        run: |
+          changed="$(git diff --name-only HEAD~1 HEAD 2>/dev/null || true)"
+          if [ "${{ github.event_name }}" = "push" ] && printf '%s\n' "$changed" | grep -q '^data/club_eighty_two_settle_window/' \
+             && ! printf '%s\n' "$changed" | grep -q '^data/club_eighty_two_window/'; then
+            echo "EDGE_SETTLE_ONLY=1" >> "$GITHUB_ENV"
+            echo "settle-only pass"
+          fi
+      - name: Tests
+        env:
+          EDGE_SETTLE_ONLY: ""
+        run: python3 test_club82.py
+      - name: Club 82 (paper only, no orders)
+        # Fetches the ESPN fixtures (data/streaks_raw.json, not committed) for the qualifier.
+        run: python3 club82.py
+      - name: Save records
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "aliu2298"
+          git config user.email "77032228+aliu2298@users.noreply.github.com"
+          python3 save_records.py --message "Club 82 paper observations" \
+            --add data/club82_ledger.json \
+            --after "gh workflow run sandbox-tracker.yml --ref main"

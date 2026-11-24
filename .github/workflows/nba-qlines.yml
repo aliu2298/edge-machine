@@ -6,6 +6,13 @@ on:
     - cron: '3,13,23,33,43,53 15-23,0-4 * * *'
     - cron: '27 9 * * *'
   workflow_dispatch:
+  # The VPS asks for each read (scripts/vps_window_requests.sh, lane_windows.nba_qlines_windows: a stamp 40-22 minutes before each tip, so the run starts
+  # at a lead of 15-40) and for an hourly settle read while a started pick is open. The GitHub cron above stays as a backup: it missed every window on Nov 23.
+  push:
+    branches: [main]
+    paths:
+      - "data/nba_qlines_window/**"
+      - "data/nba_qlines_settle_window/**"
 permissions:
   contents: write
   actions: write
@@ -18,10 +25,23 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 2
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: '3.12'
+      - name: Settle-only mode
+        # The settle stamp alone settles and adds no entries (settle_only.py); a manual run, the cron or an entry stamp does both.
+        run: |
+          changed="$(git diff --name-only HEAD~1 HEAD 2>/dev/null || true)"
+          if [ "${{ github.event_name }}" = "push" ] && printf '%s\n' "$changed" | grep -q '^data/nba_qlines_settle_window/' \
+             && ! printf '%s\n' "$changed" | grep -q '^data/nba_qlines_window/'; then
+            echo "EDGE_SETTLE_ONLY=1" >> "$GITHUB_ENV"
+            echo "settle-only pass"
+          fi
       - name: Tests
+        env:
+          EDGE_SETTLE_ONLY: ""
         run: python3 test_nba_qlines.py
       - name: NBA quarter lines (paper only, no orders)
         run: python3 nba_qlines.py

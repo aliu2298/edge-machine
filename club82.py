@@ -241,6 +241,8 @@ def run(state, fixtures, now=None, fetch=D.get):
         except Exception as e:                                       # noqa: BLE001
             errs.append(f"{f['home']} v {f['away']}: {str(e)[:80]}")
     errs += settle(state, now, fetch)
+    state["schedule"] = sorted({f["kickoff"] for f in fixtures if f.get("league") in LEAGUES and not f.get("played") and f.get("kickoff")
+                                and now - dt.timedelta(hours=2) <= (D.instant(f["kickoff"]) or now - dt.timedelta(days=9)) <= now + dt.timedelta(hours=27)})
     state["last_run"] = now.isoformat()
     state["games_through"] = max((f["kickoff"][:10] for f in season_games(fixtures)), default=None)
     state["tracker"] = {k: list(team_rows(fixtures, k).values()) for k in KINDS}      # the page reads these (the fixtures file is not committed)

@@ -214,5 +214,39 @@ check("on the VPS the team-total quotes stand in (by market id), tracked series 
       [t.isoformat() for t in W.soccer_kickoffs(at(2026, 10, 23, 12, 0), None, tled, W.SOCCER_TEAM_SERIES)],
       ["2026-10-23T19:00:00+00:00"])
 
+print("\nClub 82 and Club 90 (2026-11-24)")
+ucl = [dict(kickoff="2026-11-24T17:45Z", league="Champions League", played=False), dict(kickoff="2026-11-24T20:00Z", league="MLS", played=False)]
+w82 = [w for w in W.windows(at(2026, 11, 24, 15, 0), {"quotes": []}, [], ucl) if w["lane"] == "club82"]
+check("Club 82: one window for the UCL kickoff (MLS is not in its competitions), 58 to 40 minutes before",
+      [(w["start"], w["end"]) for w in w82], [(at(2026, 11, 24, 16, 47), at(2026, 11, 24, 17, 5))])
+for now, want in ((at(2026, 11, 24, 16, 45), []), (at(2026, 11, 24, 16, 50), ["club82 2026-11-24T17:45:00+00:00 read 1"]),
+                  (at(2026, 11, 24, 17, 2), ["club82 2026-11-24T17:45:00+00:00 read 2"]), (at(2026, 11, 24, 17, 10), [])):
+    check(f"Club 82 asks for its read at {now:%H:%M}Z", sorted(t for t in W.stamp_lines(now, {"quotes": []}, [], ucl).get("data/club_eighty_two_window/request.txt", "").split("\n") if t), want)
+led = {"quotes": [dict(source="goals_market", market_id="KXLALIGATOTAL-26NOV24ATMGET-3", start="2026-11-24T20:00:00+00:00"),
+                  dict(source="goals_market", market_id="KXMLSTOTAL-26NOV24AAABBB-3", start="2026-11-24T21:00:00+00:00")]}
+check("on the VPS the tracker's quotes give Club 82 its kickoffs (La Liga yes, MLS no)",
+      [w["close"].isoformat() for w in W.windows(at(2026, 11, 24, 15, 0), led, [], None) if w["lane"] == "club82"], ["2026-11-24T20:00:00+00:00"])
+check("and the lane's own schedule adds its kickoffs",
+      [w["close"].isoformat() for w in W.windows(at(2026, 11, 24, 15, 0), {"quotes": []}, [], [], schedules={"club82": ["2026-11-24T19:00:00+00:00"]}) if w["lane"] == "club82"],
+      ["2026-11-24T19:00:00+00:00"])
+check("Club 82 stamps go to their own file", W.STAMP["club82"], "data/club_eighty_two_window/request.txt")
+tip = "2026-11-25T00:00:00+00:00"
+wq = [w for w in W.windows(at(2026, 11, 24, 20, 0), {"quotes": []}, [], [], schedules={"nba_qlines": [tip]}) if w["lane"] == "nba_qlines"]
+check("Club 90: one window per tip, 40 to 22 minutes before", [(w["start"], w["end"]) for w in wq], [(at(2026, 11, 24, 23, 20), at(2026, 11, 24, 23, 38))])
+check("Club 90 asks inside it (a 15-minute run at 23:30Z) and not outside",
+      (sorted(W.stamp_lines(at(2026, 11, 24, 23, 30), {"quotes": []}, [], [], schedules={"nba_qlines": [tip]}).get("data/nba_qlines_window/request.txt", "").split("\n")),
+       W.stamp_lines(at(2026, 11, 24, 23, 45), {"quotes": []}, [], [], schedules={"nba_qlines": [tip]}).get("data/nba_qlines_window/request.txt")),
+      (["nba_qlines 2026-11-25T00:00:00+00:00 read 2"], None))
+check("Club 90 with no schedule and no games asks for nothing", [w for w in W.windows(at(2026, 11, 24, 20, 0), {"quotes": []}, [], []) if w["lane"] == "nba_qlines"], [])
+check("settle lanes: Club 82 and Club 90 read the ledgers they write",
+      (W.SETTLE_LANES["club82_settle"], W.SETTLE_LANES["nba_qlines_settle"]),
+      ((("club82_ledger.json",), ("club82",)), (("nba_qlines_ledger.json",), ("nba_qlines",))))
+sw = W.settle_windows(at(2026, 11, 24, 21, 30), {"club82_settle": True, "nba_qlines_settle": True})
+check("an hourly settle read each while a started pick is open", sorted(w["lane"] for w in sw), ["club82_settle", "nba_qlines_settle"])
+check("the settle stamps go to their own files", (W.STAMP["club82_settle"], W.STAMP["nba_qlines_settle"]),
+      ("data/club_eighty_two_settle_window/request.txt", "data/nba_qlines_settle_window/request.txt"))
+vps = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "scripts", "vps_window_requests.sh")).read()
+check("every new stamp path is on the VPS script's allow-list", all(p in vps for p in (W.STAMP["club82"], W.STAMP["club82_settle"], W.STAMP["nba_qlines"], W.STAMP["nba_qlines_settle"])), True)
+
 print(f"\n{'ALL PASS' if not FAILS else str(len(FAILS)) + ' FAILED'}")
 sys.exit(1 if FAILS else 0)

@@ -123,6 +123,12 @@ STAMP = {
     "nba_rules_settle": "data/nba_rules_settle_window/request.txt",
     "nba_value_settle": "data/nba_value_settle_window/request.txt",
     "climate_settle": "data/climate_settle_window/request.txt",
+    # 2026-11-24: Club 82 (club82.py) and Club 90 (nba_qlines.py). Their reads must land 30-60 and 15-40 minutes before a start, and the
+    # shared cron/stamps did not reliably do that (Club 90 took no entry on its first slate). Each has its own window per start and a settle read.
+    "club82": "data/club_eighty_two_window/request.txt",
+    "club82_settle": "data/club_eighty_two_settle_window/request.txt",
+    "nba_qlines": "data/nba_qlines_window/request.txt",
+    "nba_qlines_settle": "data/nba_qlines_settle_window/request.txt",
 }
 # nfl_tt.WINDOW_MIN (45, 75), copied; test_nfl_tt.py checks the two agree.
 NFL_FROM, NFL_TO = 75, 45                # minutes before the ESPN kickoff
@@ -393,6 +399,44 @@ def soccer_windows(now, fixtures=None, ledger=None):
                  every=READ_EVERY) for t in kicks]
 
 
+# Club 82 (club82.py, 2026-11-24): its entry read is 30-60 minutes before kickoff. A stamp is asked for at the VPS's 15-minute runs, and the workflow
+# starts a few minutes later, so the stamp window is 58-40 minutes before: any 15-minute run inside it starts the workflow at a lead of 30-58.
+CLUB82_LEAGUES = ("Premier League", "La Liga", "Serie A", "Bundesliga", "Ligue 1", "Champions League")
+CLUB82_SERIES = {k: SOCCER_SERIES[k] for k in CLUB82_LEAGUES}
+CLUB82_FROM, CLUB82_TO = 58, 40
+CLUB82_EVERY = dt.timedelta(minutes=9)
+# Club 90 (nba_qlines.py, 2026-11-24): its read is 15-40 minutes before a tip: stamps 40-22 minutes before, so the run starts at a lead of 15-40.
+QLINES_FROM, QLINES_TO = 40, 22
+QLINES_EVERY = dt.timedelta(minutes=9)
+
+
+def _schedule_times(now, values, ahead=dt.timedelta(days=1)):
+    out = set()
+    for v in values or ():
+        t = _when(v) if v else None
+        if t and now - dt.timedelta(hours=2) <= t <= now + ahead:
+            out.add(t)
+    return out
+
+
+def club_eighty_two_windows(now, fixtures=None, ledger=None, schedule=None):
+    """One Club 82 window per kickoff in its six competitions: from the tracker's quotes (or the fixtures handed in) and from the schedule the
+    lane's own ledger carries. `schedule` None (tests, the plain listing) adds none."""
+    kicks = set(soccer_kickoffs(now, fixtures, ledger, CLUB82_SERIES)) | _schedule_times(now, schedule)
+    return [dict(lane="club82", label=f"Club 82 {t:%H:%M}Z kickoff", series=(), close=t,
+                 start=t - dt.timedelta(minutes=CLUB82_FROM), end=t - dt.timedelta(minutes=CLUB82_TO),
+                 every=CLUB82_EVERY, last_ask=dt.timedelta(0), reads=2) for t in sorted(kicks)]
+
+
+def nba_qlines_windows(now, games=None, schedule=None):
+    """One Club 90 window per NBA tip: the pace file's games (`games`) and the lane's own schedule. Both None (tests, the plain listing) means none."""
+    tips = set(nba_tips(now, games)) if games is not None else set()
+    tips |= _schedule_times(now, schedule)
+    return [dict(lane="nba_qlines", label=f"Club 90 {t:%H:%M}Z tip", series=(), close=t,
+                 start=t - dt.timedelta(minutes=QLINES_FROM), end=t - dt.timedelta(minutes=QLINES_TO),
+                 every=QLINES_EVERY, last_ask=dt.timedelta(0), reads=2) for t in sorted(tips)]
+
+
 def soccer_team_windows(now, fixtures=None, ledger=None):
     """One team-scoring rules window per kickoff in the team rules' leagues, same timing."""
     return [dict(lane="soccer_team_rules", label=f"Team rules {t:%H:%M}Z kickoff", series=(), close=t,
@@ -456,6 +500,8 @@ SETTLE_LANES = {
     "nba_rules_settle": (("nba_rules_ledger.json",), ("nba_rules",)),
     "nba_value_settle": (("nba_value_ledger.json",), ("nba_value",)),
     "climate_settle": (("climate_lanes_ledger.json",), ("climate",)),
+    "club82_settle": (("club82_ledger.json",), ("club82",)),
+    "nba_qlines_settle": (("nba_qlines_ledger.json",), ("nba_qlines",)),
 }
 
 
@@ -633,7 +679,7 @@ def ftts_day_full(day, ledger=None):
     return all(v >= S.FTTS_NO_PICKS for v in n.values())
 
 
-def windows(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, nba_value=None, settle=None):
+def windows(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, nba_value=None, settle=None, schedules=None):
     """Every lane's windows whose close is within a day of `now`, soonest start first. UTC."""
     if now.tzinfo is None:
         now = now.replace(tzinfo=dt.timezone.utc)
@@ -683,6 +729,8 @@ def windows(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, 
     # nfl_windows (2026-10-21) stopped 2026-11-11: every NFL lane is retired.
     out += nba_value_windows(now, nba_value)
     out += chaos_windows(now)
+    out += club_eighty_two_windows(now, fixtures, ledger, (schedules or {}).get("club82"))
+    out += nba_qlines_windows(now, games, (schedules or {}).get("nba_qlines"))
     # A settle read is redundant while one of the lane's entry windows is open: that run settles too.
     in_entry = {w["lane"] for w in out if w["start"] <= now <= w["end"]}
     out += [w for w in settle_windows(now, settle) if not (set(SETTLE_LANES[w["lane"]][1]) & in_entry)]
@@ -729,10 +777,10 @@ def entered_series(lane, close, ledger=None):
     return set.intersection(*got.values())
 
 
-def due(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, nba_value=None, settle=None):
+def due(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, nba_value=None, settle=None, schedules=None):
     """[(window, read number)] for every read to ask for at `now`."""
     out = []
-    for w in windows(now, ledger, games, fixtures, tennis, nfl, nba_value, settle):
+    for w in windows(now, ledger, games, fixtures, tennis, nfl, nba_value, settle, schedules):
         if not (w["start"] <= now <= w["end"] - w.get("last_ask", LAST_ASK)):
             continue
         k = int((now - w["start"]) / w.get("every", READ_EVERY))
@@ -746,21 +794,33 @@ def due(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, nba_
     return out
 
 
-def stamp_lines(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, nba_value=None, settle=None):
+def stamp_lines(now, ledger=None, games=None, fixtures=None, tennis=None, nfl=None, nba_value=None, settle=None, schedules=None):
     """{stamp file: stamp text} for the reads due now. One file can serve several windows."""
     lines = {}
-    for w, k in due(now, ledger, games, fixtures, tennis, nfl, nba_value, settle):
+    for w, k in due(now, ledger, games, fixtures, tennis, nfl, nba_value, settle, schedules):
         text = f"{w['lane']}{' 24h' if w.get('early') else ''} {w['close'].isoformat()} read {k}"
         path = STAMP[w["lane"]]
         lines[path] = "\n".join(sorted(set((lines.get(path) or "").splitlines()) | {text})).strip()
     return lines
 
 
+def own_schedules(now):
+    """The kickoffs and tips the new lanes carry in their own ledgers, plus the NBA pace file's games (Club 90). Only main() reads the files."""
+    def sched(name):
+        try:
+            with open(os.path.join(ROOT, "data", name)) as f:
+                return json.load(f).get("schedule") or []
+        except (OSError, ValueError):
+            return []
+    pace = [t.isoformat() for t in nba_tips(now)]
+    return {"club82": sched("club82_ledger.json"), "nba_qlines": sched("nba_qlines_ledger.json") + pace}
+
+
 def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
     now = dt.datetime.now(dt.timezone.utc)
     if "--due" in argv:
-        for path, text in sorted(stamp_lines(now, tennis=tennis_starts(now), nfl=nfl_kickoffs(now),
+        for path, text in sorted(stamp_lines(now, tennis=tennis_starts(now), nfl=nfl_kickoffs(now), schedules=own_schedules(now),
                                                        nba_value=nba_value_tips(now), settle=settle_open(now)).items()):
             print(f"{path}\t{text.replace(chr(10), ' | ')}")
         return 0
