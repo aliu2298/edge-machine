@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T15:08:13+00:00",
+ "board_built_at": "2026-11-24T16:02:03+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -729,11 +729,11 @@
    "kickoff": "2026-11-24T17:20Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T15:08:13+00:00",
+   "last_seen_at": "2026-11-24T16:02:03+00:00",
    "league": "Tennis",
    "match": "Mathieu Scaglia v Wissam Abderrahman",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.24,
+   "price_at_log": 0.37,
    "published_at": "2026-11-24T15:02:00+00:00",
    "published_late": false,
    "published_min_before_kickoff": 138,
@@ -743,7 +743,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV24SCAABD-SCA",
     "outcome": "Mathieu Scaglia",
     "outcome_side": "yes",
-    "price_at_log": 0.24,
+    "price_at_log": 0.37,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24SCAABD-SCA",
@@ -786,6 +786,80 @@
    "sport": "tennis",
    "status": "hit"
   },
+  "2026-11-24|Niklas Schell|Filippo Romano|Niklas Schell to win \u00b7 Challenger underdog who has won here": {
+   "away": "Filippo Romano",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Niklas Schell to win",
+   "home": "Niklas Schell",
+   "id": "2026-11-24|Niklas Schell|Filippo Romano|Niklas Schell to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T18:30Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T16:02:03+00:00",
+   "league": "Tennis",
+   "match": "Niklas Schell v Filippo Romano",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.15,
+   "published_at": "2026-11-24T16:02:03+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 147,
+   "route": {
+    "claim": "Niklas Schell to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24SCHROM",
+    "market": "KXATPCHALLENGERMATCH-26NOV24SCHROM-SCH",
+    "outcome": "Niklas Schell",
+    "outcome_side": "yes",
+    "price_at_log": 0.15,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24SCHROM-SCH",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
+  },
+  "2026-11-24|Ofek Shimanov|Lucas Andrade Da Silva|Ofek Shimanov to win \u00b7 Challenger underdog who has won here": {
+   "away": "Lucas Andrade Da Silva",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Ofek Shimanov to win",
+   "home": "Ofek Shimanov",
+   "id": "2026-11-24|Ofek Shimanov|Lucas Andrade Da Silva|Ofek Shimanov to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T19:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T16:02:03+00:00",
+   "league": "Tennis",
+   "match": "Ofek Shimanov v Lucas Andrade Da Silva",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.3,
+   "published_at": "2026-11-24T16:02:03+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 177,
+   "route": {
+    "claim": "Ofek Shimanov to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24ANDSHI",
+    "market": "KXATPCHALLENGERMATCH-26NOV24ANDSHI-SHI",
+    "outcome": "Ofek Shimanov",
+    "outcome_side": "yes",
+    "price_at_log": 0.3,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24ANDSHI-SHI",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
+  },
   "2026-11-24|Oleksandr Ovcharenko|Pavlos Tsitsipas|Oleksandr Ovcharenko to win \u00b7 Challenger underdog who has won here": {
    "away": "Pavlos Tsitsipas",
    "bet": {
@@ -821,6 +895,43 @@
    "sport": "tennis",
    "status": "hit"
   },
+  "2026-11-24|Oscar Jose Gutierrez|Igor Marcondes|Oscar Jose Gutierrez to win \u00b7 Challenger underdog who has won here": {
+   "away": "Igor Marcondes",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Oscar Jose Gutierrez to win",
+   "home": "Oscar Jose Gutierrez",
+   "id": "2026-11-24|Oscar Jose Gutierrez|Igor Marcondes|Oscar Jose Gutierrez to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T18:40Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T16:02:03+00:00",
+   "league": "Tennis",
+   "match": "Oscar Jose Gutierrez v Igor Marcondes",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.25,
+   "published_at": "2026-11-24T16:02:03+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 157,
+   "route": {
+    "claim": "Oscar Jose Gutierrez to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24MARGUT",
+    "market": "KXATPCHALLENGERMATCH-26NOV24MARGUT-GUT",
+    "outcome": "Oscar Jose Gutierrez",
+    "outcome_side": "yes",
+    "price_at_log": 0.25,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MARGUT-GUT",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
+  },
   "2026-11-24|Philip Henning|Johannus Monday|Philip Henning to win \u00b7 Challenger underdog who has won here": {
    "away": "Johannus Monday",
    "bet": {
@@ -852,6 +963,78 @@
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MONHEN-HEN",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "hit"
+  },
+  "2026-11-24|Rafael Botran Neutze|Theodore Dean|Rafael Botran Neutze to win \u00b7 Challenger underdog who has won here": {
+   "away": "Theodore Dean",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Rafael Botran Neutze to win",
+   "home": "Rafael Botran Neutze",
+   "id": "2026-11-24|Rafael Botran Neutze|Theodore Dean|Rafael Botran Neutze to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T19:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T16:02:03+00:00",
+   "league": "Tennis",
+   "match": "Rafael Botran Neutze v Theodore Dean",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.24,
+   "published_at": "2026-11-24T16:02:03+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 177,
+   "route": {
+    "claim": "Rafael Botran Neutze to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24BOTDEA",
+    "market": "KXATPCHALLENGERMATCH-26NOV24BOTDEA-BOT",
+    "outcome": "Rafael Botran Neutze",
+    "outcome_side": "yes",
+    "price_at_log": 0.24,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24BOTDEA-BOT",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
+  },
+  "2026-11-24|Robert Guna|Dusan Obradovic|Robert Guna to win \u00b7 Challenger underdog who has won here": {
+   "away": "Dusan Obradovic",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Robert Guna to win",
+   "home": "Robert Guna",
+   "id": "2026-11-24|Robert Guna|Dusan Obradovic|Robert Guna to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T14:30Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Robert Guna v Dusan Obradovic",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.38,
+   "published_at": "2026-11-24T16:02:03+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Robert Guna to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24GUNOBR",
+    "market": "KXATPCHALLENGERMATCH-26NOV24GUNOBR-GUN",
+    "outcome": "Robert Guna",
+    "outcome_side": "yes",
+    "price_at_log": 0.38,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24GUNOBR-GUN",
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "hit"
@@ -925,6 +1108,43 @@
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "miss"
+  },
+  "2026-11-24|Santiago De la Fuente|Juan Manuel La Serna|Santiago De la Fuente to win \u00b7 Challenger underdog who has won here": {
+   "away": "Juan Manuel La Serna",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Santiago De la Fuente to win",
+   "home": "Santiago De la Fuente",
+   "id": "2026-11-24|Santiago De la Fuente|Juan Manuel La Serna|Santiago De la Fuente to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T18:40Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T16:02:03+00:00",
+   "league": "Tennis",
+   "match": "Santiago De la Fuente v Juan Manuel La Serna",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.17,
+   "published_at": "2026-11-24T16:02:03+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 157,
+   "route": {
+    "claim": "Santiago De la Fuente to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24LADLF",
+    "market": "KXATPCHALLENGERMATCH-26NOV24LADLF-DLF",
+    "outcome": "Santiago De la Fuente",
+    "outcome_side": "yes",
+    "price_at_log": 0.17,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24LADLF-DLF",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
   },
   "2026-11-24|Stefan Vujic|Tristan Schoolkate|Stefan Vujic to win \u00b7 Challenger underdog who has won here": {
    "away": "Tristan Schoolkate",
@@ -1030,6 +1250,43 @@
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "miss"
+  },
+  "2026-11-24|Thiago Cigarran|Paulo Andre Saraiva Dos Santos|Thiago Cigarran to win \u00b7 Challenger underdog who has won here": {
+   "away": "Paulo Andre Saraiva Dos Santos",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Thiago Cigarran to win",
+   "home": "Thiago Cigarran",
+   "id": "2026-11-24|Thiago Cigarran|Paulo Andre Saraiva Dos Santos|Thiago Cigarran to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T18:20Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T16:02:03+00:00",
+   "league": "Tennis",
+   "match": "Thiago Cigarran v Paulo Andre Saraiva Dos Santos",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.48,
+   "published_at": "2026-11-24T16:02:03+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 137,
+   "route": {
+    "claim": "Thiago Cigarran to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24SARCIG",
+    "market": "KXATPCHALLENGERMATCH-26NOV24SARCIG-CIG",
+    "outcome": "Thiago Cigarran",
+    "outcome_side": "yes",
+    "price_at_log": 0.48,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24SARCIG-CIG",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
   },
   "2026-11-24|Wojciech Marek|Kimmer Coppejans|Wojciech Marek to win \u00b7 Challenger underdog who has won here": {
    "away": "Kimmer Coppejans",
@@ -1145,21 +1402,21 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 32,
+    "leads": 39,
     "problem": null,
-    "routed": 32,
+    "routed": 39,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 31,
-   "sandbox_roi": -0.4406,
-   "sandbox_roi_fee": -0.4565,
+   "sandbox_n": 32,
+   "sandbox_roi": -0.3758,
+   "sandbox_roi_fee": -0.3946,
    "timing": {
     "late": [],
-    "timed": 25,
+    "timed": 31,
     "under_target": 0
    }
   }
@@ -1168,5 +1425,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T15:08:13+00:00"
+ "updated_at": "2026-11-24T16:02:03+00:00"
 }
