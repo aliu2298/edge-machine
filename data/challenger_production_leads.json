@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T01:16:26+00:00",
+ "board_built_at": "2026-11-24T01:31:34+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -344,7 +344,7 @@
    "kickoff": "2026-11-24T02:30Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T01:16:26+00:00",
+   "last_seen_at": "2026-11-24T01:31:34+00:00",
    "league": "Tennis",
    "match": "Chen Dong v Derek Pham",
    "pair": "challenger_won_here|tennis",
@@ -416,11 +416,11 @@
    "kickoff": "2026-11-24T04:00Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T01:16:26+00:00",
+   "last_seen_at": "2026-11-24T01:31:34+00:00",
    "league": "Tennis",
    "match": "S D Prajwal Dev v Naoya Honda",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.32,
+   "price_at_log": 0.13,
    "published_at": "2026-11-24T01:00:38+00:00",
    "published_late": false,
    "published_min_before_kickoff": 179,
@@ -430,7 +430,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV23HONDEV-DEV",
     "outcome": "S D Prajwal Dev",
     "outcome_side": "yes",
-    "price_at_log": 0.32,
+    "price_at_log": 0.13,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23HONDEV-DEV",
@@ -453,11 +453,11 @@
    "kickoff": "2026-11-24T03:40Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T01:16:26+00:00",
+   "last_seen_at": "2026-11-24T01:31:34+00:00",
    "league": "Tennis",
    "match": "Stefan Vujic v Tristan Schoolkate",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.04,
+   "price_at_log": 0.05,
    "published_at": "2026-11-24T00:47:05+00:00",
    "published_late": false,
    "published_min_before_kickoff": 172,
@@ -467,7 +467,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV23VUJSCH-VUJ",
     "outcome": "Stefan Vujic",
     "outcome_side": "yes",
-    "price_at_log": 0.04,
+    "price_at_log": 0.05,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23VUJSCH-VUJ",
@@ -490,11 +490,11 @@
    "kickoff": "2026-11-24T04:00Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T01:16:26+00:00",
+   "last_seen_at": "2026-11-24T01:31:34+00:00",
    "league": "Tennis",
    "match": "Takuya Kumasaka v David Jorda Sanchis",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.53,
+   "price_at_log": 0.56,
    "published_at": "2026-11-24T01:00:38+00:00",
    "published_late": false,
    "published_min_before_kickoff": 179,
@@ -504,7 +504,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV23KUMJOR-KUM",
     "outcome": "Takuya Kumasaka",
     "outcome_side": "yes",
-    "price_at_log": 0.53,
+    "price_at_log": 0.56,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23KUMJOR-KUM",
@@ -544,5 +544,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T01:16:26+00:00"
+ "updated_at": "2026-11-24T01:31:34+00:00"
 }
