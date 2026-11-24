@@ -45,3 +45,9 @@ The page shows each lane beside its control.
 ## Reading
 Olu reads each section at 10 settled entries (a lane's over or under, separately), then at 30, against its control and after fees. The page shows n of 10, then n of 30.
 Paper only; the lane never trades and never changes another lane's record.
+
+## Note, 2026-11-24: the first slate was backfilled from candles
+The Nov 23 slate (10 games, tips 00:00Z-03:00Z Nov 24) took no live read: the GitHub cron missed every 15-40 minute window. This file was committed before those tips, so Olu asked for that one night to be recorded afterwards.
+`python3 nba_qlines.py --backfill-2026-11-23` (a one-off; the date is hard-coded and any other date is refused) runs the lane's own code for each Nov 23 game: `team_rows` before the night for the qualifiers, `pick_rung` with the same
+spread limit and harder-direction offsets, the blind controls, `look_many`. The only difference is the price: the YES bid and ask closes of Kalshi's 1-minute candles at tip-30 (the last candle at or before it), instead of a live quote. A game or rung with no candle quote, or a spread over 5 cents,
+is skipped with its reason, as a live read would. Every row carries `backfilled: true` and `source: "candles@tip-30"`, and the page marks those rows and keeps the count ("N of M entries backfilled"). Games already read live are never overwritten. From Nov 24 on, entries are live reads.

@@ -6,6 +6,11 @@ on:
     - cron: '3,13,23,33,43,53 15-23,0-4 * * *'
     - cron: '27 9 * * *'
   workflow_dispatch:
+    inputs:
+      backfill_2026_11_23:
+        description: "One-off: record the first slate (Nov 23) from Kalshi 1-minute candles at tip-30 (nba_qlines.py --backfill-2026-11-23). Leave off for a normal run."
+        type: boolean
+        default: false
   # The VPS asks for each read (scripts/vps_window_requests.sh, lane_windows.nba_qlines_windows: a stamp 40-22 minutes before each tip, so the run starts
   # at a lead of 15-40) and for an hourly settle read while a started pick is open. The GitHub cron above stays as a backup: it missed every window on Nov 23.
   push:
@@ -44,7 +49,11 @@ jobs:
           EDGE_SETTLE_ONLY: ""
         run: python3 test_nba_qlines.py
       - name: NBA quarter lines (paper only, no orders)
+        if: ${{ github.event.inputs.backfill_2026_11_23 != 'true' }}
         run: python3 nba_qlines.py
+      - name: First-slate backfill, Nov 23 only (paper; one-off, workflow_dispatch with the input on)
+        if: ${{ github.event.inputs.backfill_2026_11_23 == 'true' }}
+        run: python3 nba_qlines.py --backfill-2026-11-23
       - name: Save records
         env:
           GH_TOKEN: ${{ github.token }}
