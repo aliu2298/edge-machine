@@ -94,7 +94,8 @@ print("\nthe stamps, the VPS allow-list and the workflows")
 vps = open("scripts/vps_window_requests.sh").read()
 for lane, path in [(k, v) for k, v in LW.STAMP.items() if k.endswith("_settle")]:
     wf = {"soccer_rules_settle": "soccer-rules", "soccer_team_rules_settle": "soccer-team-rules", "nba_rules_settle": "nba-rules",
-          "nba_value_settle": "nba-value", "climate_settle": "climate-lanes"}[lane]
+          "nba_value_settle": "nba-value", "climate_settle": "climate-lanes", "club82_settle": "club82",
+          "nba_qlines_settle": "nba-qlines"}[lane]
     y = open(f".github/workflows/{wf}.yml").read()
     check(f"{lane}: allowed on the VPS, triggers {wf}.yml, sets the switch, and matches the window glob",
           (f"{path}" in vps, os.path.dirname(path) + "/**" in y, "EDGE_SETTLE_ONLY=1" in y, bool(re.match(r"data/[a-z_]+_window/request\.txt$", path))),
