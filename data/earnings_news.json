@@ -234,7 +234,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-24T20:00:31Z",
+ "calendar_at": "2026-11-24T21:00:30Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -6289,9 +6289,19 @@
     "width": 678571.4285714328
    },
    "sym": "COST"
+  },
+  {
+   "at": "2026-11-24T21:01:28Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151351515.15151516,
+    "rungs": 10,
+    "width": 678571.4285714328
+   },
+   "sym": "COST"
   }
  ],
- "last_run": "2026-11-24T20:02:27Z",
+ "last_run": "2026-11-24T21:01:35Z",
  "predictions": [
   {
    "call": {
@@ -6713,6 +6723,9 @@
    "sym": "CRWD"
   },
   {
+   "call": {
+    "status": "pending"
+   },
    "entry_due": "2026-11-24T21:00:00Z",
    "exit_due": "2026-12-02T21:00:00Z",
    "family": "runup",
@@ -6724,6 +6737,7 @@
    "report": "2026-12-02",
    "report_time": "after-hours",
    "side": 1,
+   "status": "pending",
    "sym": "CRM"
   },
   {
@@ -7169,28 +7183,61 @@
    "sym": "TMO"
   },
   {
+   "baselines": {
+    "random": {
+     "entry": 1.2857,
+     "entry_ts": 1795465020,
+     "exit": 1.2958,
+     "exit_ts": 1795550460,
+     "net": -0.010256,
+     "status": "settled"
+    },
+    "spy": {
+     "entry": 14.47,
+     "entry_ts": 1795464120,
+     "exit": 14.3229,
+     "exit_ts": 1795550460,
+     "net": -0.012566,
+     "status": "settled"
+    },
+    "up": {
+     "entry": 1.2917,
+     "entry_ts": 1795464120,
+     "exit": 1.2954,
+     "exit_ts": 1795550460,
+     "net": 0.000464,
+     "status": "settled"
+    }
+   },
    "call": {
     "entry": 1.2857,
     "entry_ts": 1795465020,
-    "status": "open"
+    "exit": 1.2958,
+    "exit_ts": 1795550460,
+    "net": -0.010256,
+    "status": "settled"
    },
    "crowd_up": 0.22,
    "day": "2026-11-23",
    "entry_due": "2026-11-23T20:01:31Z",
    "exit_due": "2026-11-24T20:01:00Z",
    "family": "sentiment",
+   "graded_at": "2026-11-24T21:01:29Z",
    "id": "sentiment:UBER:2026-11-23",
    "logged_at": "2026-11-23T20:01:31Z",
+   "net": -0.010256,
    "perp": "KXUBERPERP",
    "random_side": -1,
    "reason": "Kalshi traders 22% Up on 24h taker volume.",
    "side": -1,
-   "status": "open",
+   "status": "settled",
    "sym": "UBER"
   },
   {
    "call": {
-    "status": "pending"
+    "entry": 6.3335,
+    "entry_ts": 1795551720,
+    "status": "open"
    },
    "entry_due": "2026-11-24T20:01:30Z",
    "exit_due": "2026-12-02T21:00:00Z",
@@ -7204,12 +7251,12 @@
    "report": "2026-11-24",
    "report_time": "pre-market",
    "side": -1,
-   "status": "pending",
+   "status": "open",
    "sym": "ADI"
   },
   {
    "call": {
-    "status": "pending"
+    "status": "no_fill"
    },
    "crowd_up": 0.673,
    "day": "2026-11-24",
@@ -7222,12 +7269,14 @@
    "random_side": -1,
    "reason": "Kalshi traders 67% Up on 24h taker volume.",
    "side": 1,
-   "status": "pending",
+   "status": "no_fill",
    "sym": "BLK"
   },
   {
    "call": {
-    "status": "pending"
+    "entry": 4.6826,
+    "entry_ts": 1795551420,
+    "status": "open"
    },
    "crowd_up": 0.264,
    "day": "2026-11-24",
@@ -7240,12 +7289,12 @@
    "random_side": 1,
    "reason": "Kalshi traders 26% Up on 24h taker volume.",
    "side": -1,
-   "status": "pending",
+   "status": "open",
    "sym": "IBM"
   },
   {
    "call": {
-    "status": "pending"
+    "status": "no_fill"
    },
    "crowd_up": 0.336,
    "day": "2026-11-24",
@@ -7258,12 +7307,12 @@
    "random_side": -1,
    "reason": "Kalshi traders 34% Up on 24h taker volume.",
    "side": -1,
-   "status": "pending",
+   "status": "no_fill",
    "sym": "MAR"
   },
   {
    "call": {
-    "status": "pending"
+    "status": "no_fill"
    },
    "crowd_up": 0.803,
    "day": "2026-11-24",
@@ -7276,7 +7325,7 @@
    "random_side": -1,
    "reason": "Kalshi traders 80% Up on 24h taker volume.",
    "side": 1,
-   "status": "pending",
+   "status": "no_fill",
    "sym": "UNH"
   }
  ],
