@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T05:02:07+00:00",
+ "board_built_at": "2026-11-24T06:01:27+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -364,43 +364,6 @@
    "sport": "tennis",
    "status": "miss"
   },
-  "2026-11-24|Evan Zhu|Omar Jasika|Evan Zhu to win \u00b7 Challenger underdog who has won here": {
-   "away": "Omar Jasika",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-11-24",
-   "edge_at_log": null,
-   "first_seen": "2026-11-24",
-   "headline": "Evan Zhu to win",
-   "home": "Evan Zhu",
-   "id": "2026-11-24|Evan Zhu|Omar Jasika|Evan Zhu to win \u00b7 Challenger underdog who has won here",
-   "kickoff": "2026-11-24T06:00Z",
-   "lane": "production",
-   "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T05:02:07+00:00",
-   "league": "Tennis",
-   "match": "Evan Zhu v Omar Jasika",
-   "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.29,
-   "published_at": "2026-11-24T03:01:12+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 178,
-   "route": {
-    "claim": "Evan Zhu to win",
-    "event": "KXATPCHALLENGERMATCH-26NOV23JASZHU",
-    "market": "KXATPCHALLENGERMATCH-26NOV23JASZHU-ZHU",
-    "outcome": "Evan Zhu",
-    "outcome_side": "yes",
-    "price_at_log": 0.29,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23JASZHU-ZHU",
-   "source": "challenger_won_here",
-   "sport": "tennis",
-   "status": "pending"
-  },
   "2026-11-24|Jesse Delaney|Matthew Dellavedova|Jesse Delaney to win \u00b7 Challenger underdog who has won here": {
    "away": "Matthew Dellavedova",
    "bet": {
@@ -555,8 +518,6 @@
    "id": "2026-11-24|Taisei Ichikawa|Yuta Shimizu|Taisei Ichikawa to win \u00b7 Challenger underdog who has won here",
    "kickoff": "2026-11-24T06:20Z",
    "lane": "production",
-   "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T05:02:07+00:00",
    "league": "Tennis",
    "match": "Taisei Ichikawa v Yuta Shimizu",
    "pair": "challenger_won_here|tennis",
@@ -576,7 +537,7 @@
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23SHIICH-ICH",
    "source": "challenger_won_here",
    "sport": "tennis",
-   "status": "pending"
+   "status": "miss"
   },
   "2026-11-24|Takuya Kumasaka|David Jorda Sanchis|Takuya Kumasaka to win \u00b7 Challenger underdog who has won here": {
    "away": "David Jorda Sanchis",
@@ -628,11 +589,11 @@
    "kickoff": "2026-11-24T06:20Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T05:02:07+00:00",
+   "last_seen_at": "2026-11-24T06:01:27+00:00",
    "league": "Tennis",
    "match": "Yusuke Takahashi v Constantin Bittoun Kouzmine",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.64,
+   "price_at_log": 0.65,
    "published_at": "2026-11-24T03:31:39+00:00",
    "published_late": false,
    "published_min_before_kickoff": 168,
@@ -642,7 +603,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV23BITTAK-TAK",
     "outcome": "Yusuke Takahashi",
     "outcome_side": "yes",
-    "price_at_log": 0.64,
+    "price_at_log": 0.65,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23BITTAK-TAK",
@@ -694,21 +655,21 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 19,
+    "leads": 18,
     "problem": null,
-    "routed": 19,
+    "routed": 18,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 16,
-   "sandbox_roi": -0.8688,
-   "sandbox_roi_fee": -0.8692,
+   "sandbox_n": 17,
+   "sandbox_roi": -0.8765,
+   "sandbox_roi_fee": -0.8769,
    "timing": {
     "late": [],
-    "timed": 17,
+    "timed": 16,
     "under_target": 0
    }
   }
@@ -717,5 +678,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T05:02:07+00:00"
+ "updated_at": "2026-11-24T06:01:27+00:00"
 }
