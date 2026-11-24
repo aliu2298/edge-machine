@@ -9,7 +9,7 @@
    0.6
   ]
  },
- "board_built_at": "2026-11-24T18:47:09+00:00",
+ "board_built_at": "2026-11-24T19:00:39+00:00",
  "collector_error": null,
  "collector_healthy": {
   "afq_btts": true,
@@ -19,214 +19,6 @@
  "first_publish_min": 45,
  "late_publication_skipped": 0,
  "leads": {
-  "2026-11-17|Botswana|Uganda|Both teams to score \u00b7 African qualifiers \u00b7 both teams to score": {
-   "away": "Uganda",
-   "bet": {
-    "kind": "btts"
-   },
-   "date": "2026-11-17",
-   "edge_at_log": null,
-   "first_seen": "2026-11-17",
-   "headline": "Both teams to score",
-   "home": "Botswana",
-   "id": "2026-11-17|Botswana|Uganda|Both teams to score \u00b7 African qualifiers \u00b7 both teams to score",
-   "kickoff": "2026-11-17T19:00Z",
-   "lane": "production",
-   "league": "AFCON Qualifying",
-   "match": "Botswana v Uganda",
-   "pair": "afq_btts|soccer_btts_intl",
-   "price_at_log": 0.44,
-   "published_at": "2026-11-17T22:00:36+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Both teams to score",
-    "event": "KXAFCONTOTAL-26NOV17BOTUGA",
-    "market": "KXAFCONBTTS-26NOV17BOTUGA-BTTS",
-    "outcome": "Both teams to score",
-    "outcome_side": "yes",
-    "price_at_log": 0.44,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "afq_btts:KXAFCONBTTS-26NOV17BOTUGA-BTTS",
-   "source": "afq_btts",
-   "sport": "soccer_btts_intl",
-   "status": "hit"
-  },
-  "2026-11-17|Congo|Comoros|Both teams to score \u00b7 African qualifiers \u00b7 both teams to score": {
-   "away": "Comoros",
-   "bet": {
-    "kind": "btts"
-   },
-   "date": "2026-11-17",
-   "edge_at_log": null,
-   "first_seen": "2026-11-17",
-   "headline": "Both teams to score",
-   "home": "Congo",
-   "id": "2026-11-17|Congo|Comoros|Both teams to score \u00b7 African qualifiers \u00b7 both teams to score",
-   "kickoff": "2026-11-17T19:00Z",
-   "lane": "production",
-   "league": "AFCON Qualifying",
-   "match": "Congo v Comoros",
-   "pair": "afq_btts|soccer_btts_intl",
-   "price_at_log": 0.45,
-   "published_at": "2026-11-17T22:00:36+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Both teams to score",
-    "event": "KXAFCONTOTAL-26NOV17COGCOM",
-    "market": "KXAFCONBTTS-26NOV17COGCOM-BTTS",
-    "outcome": "Both teams to score",
-    "outcome_side": "yes",
-    "price_at_log": 0.45,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "afq_btts:KXAFCONBTTS-26NOV17COGCOM-BTTS",
-   "source": "afq_btts",
-   "sport": "soccer_btts_intl",
-   "status": "miss"
-  },
-  "2026-11-17|Congo|Comoros|Comoros to score 1+ \u00b7 African qualifiers \u00b7 underdog to score": {
-   "away": "Comoros",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "Comoros"
-   },
-   "date": "2026-11-17",
-   "edge_at_log": null,
-   "first_seen": "2026-11-17",
-   "headline": "Comoros to score 1+",
-   "home": "Congo",
-   "id": "2026-11-17|Congo|Comoros|Comoros to score 1+ \u00b7 African qualifiers \u00b7 underdog to score",
-   "kickoff": "2026-11-17T19:00Z",
-   "lane": "production",
-   "league": "AFCON Qualifying",
-   "match": "Congo v Comoros",
-   "pair": "afq_dog_score|soccer_team1_intl",
-   "price_at_log": 0.58,
-   "published_at": "2026-11-17T22:00:36+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Comoros to score 1+",
-    "event": "KXAFCONTOTAL-26NOV17COGCOM",
-    "market": "KXAFCONTEAMTOTAL-26NOV17COGCOM-COM1",
-    "outcome": "Comoros over 0.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.58,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17COGCOM-COM1",
-   "source": "afq_dog_score",
-   "sport": "soccer_team1_intl",
-   "status": "hit"
-  },
-  "2026-11-17|Liberia|Cape Verde|Both teams to score \u00b7 African qualifiers \u00b7 both teams to score": {
-   "away": "Cape Verde",
-   "bet": {
-    "kind": "btts"
-   },
-   "date": "2026-11-17",
-   "edge_at_log": null,
-   "first_seen": "2026-11-17",
-   "headline": "Both teams to score",
-   "home": "Liberia",
-   "id": "2026-11-17|Liberia|Cape Verde|Both teams to score \u00b7 African qualifiers \u00b7 both teams to score",
-   "kickoff": "2026-11-17T19:00Z",
-   "lane": "production",
-   "league": "AFCON Qualifying",
-   "match": "Liberia v Cape Verde",
-   "pair": "afq_btts|soccer_btts_intl",
-   "price_at_log": 0.47,
-   "published_at": "2026-11-17T21:00:36+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Both teams to score",
-    "event": "KXAFCONTOTAL-26NOV17LBRCPV",
-    "market": "KXAFCONBTTS-26NOV17LBRCPV-BTTS",
-    "outcome": "Both teams to score",
-    "outcome_side": "yes",
-    "price_at_log": 0.47,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "afq_btts:KXAFCONBTTS-26NOV17LBRCPV-BTTS",
-   "source": "afq_btts",
-   "sport": "soccer_btts_intl",
-   "status": "miss"
-  },
-  "2026-11-17|Liberia|Cape Verde|Liberia to score 1+ \u00b7 African qualifiers \u00b7 underdog to score": {
-   "away": "Cape Verde",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "Liberia"
-   },
-   "date": "2026-11-17",
-   "edge_at_log": null,
-   "first_seen": "2026-11-17",
-   "headline": "Liberia to score 1+",
-   "home": "Liberia",
-   "id": "2026-11-17|Liberia|Cape Verde|Liberia to score 1+ \u00b7 African qualifiers \u00b7 underdog to score",
-   "kickoff": "2026-11-17T19:00Z",
-   "lane": "production",
-   "league": "AFCON Qualifying",
-   "match": "Liberia v Cape Verde",
-   "pair": "afq_dog_score|soccer_team1_intl",
-   "price_at_log": 0.57,
-   "published_at": "2026-11-17T21:00:36+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Liberia to score 1+",
-    "event": "KXAFCONTOTAL-26NOV17LBRCPV",
-    "market": "KXAFCONTEAMTOTAL-26NOV17LBRCPV-LBR1",
-    "outcome": "Liberia over 0.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.57,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17LBRCPV-LBR1",
-   "source": "afq_dog_score",
-   "sport": "soccer_team1_intl",
-   "status": "hit"
-  },
-  "2026-11-17|Mauritania|Burkina Faso|Both teams to score \u00b7 African qualifiers \u00b7 both teams to score": {
-   "away": "Burkina Faso",
-   "bet": {
-    "kind": "btts"
-   },
-   "date": "2026-11-17",
-   "edge_at_log": null,
-   "first_seen": "2026-11-17",
-   "headline": "Both teams to score",
-   "home": "Mauritania",
-   "id": "2026-11-17|Mauritania|Burkina Faso|Both teams to score \u00b7 African qualifiers \u00b7 both teams to score",
-   "kickoff": "2026-11-17T19:00Z",
-   "lane": "production",
-   "league": "AFCON Qualifying",
-   "match": "Mauritania v Burkina Faso",
-   "pair": "afq_btts|soccer_btts_intl",
-   "price_at_log": 0.44,
-   "published_at": "2026-11-17T22:00:36+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Both teams to score",
-    "event": "KXAFCONTOTAL-26NOV17MRTBUR",
-    "market": "KXAFCONBTTS-26NOV17MRTBUR-BTTS",
-    "outcome": "Both teams to score",
-    "outcome_side": "yes",
-    "price_at_log": 0.44,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "afq_btts:KXAFCONBTTS-26NOV17MRTBUR-BTTS",
-   "source": "afq_btts",
-   "sport": "soccer_btts_intl",
-   "status": "hit"
-  },
   "2026-11-17|Niger|Morocco|Both teams to score \u00b7 African qualifiers \u00b7 both teams to score": {
    "away": "Morocco",
    "bet": {
@@ -296,76 +88,6 @@
    "source": "afq_dog_score",
    "sport": "soccer_team1_intl",
    "status": "miss"
-  },
-  "2026-11-17|Rwanda|Mali|Both teams to score \u00b7 African qualifiers \u00b7 both teams to score": {
-   "away": "Mali",
-   "bet": {
-    "kind": "btts"
-   },
-   "date": "2026-11-17",
-   "edge_at_log": null,
-   "first_seen": "2026-11-17",
-   "headline": "Both teams to score",
-   "home": "Rwanda",
-   "id": "2026-11-17|Rwanda|Mali|Both teams to score \u00b7 African qualifiers \u00b7 both teams to score",
-   "kickoff": "2026-11-17T19:00Z",
-   "lane": "production",
-   "league": "AFCON Qualifying",
-   "match": "Rwanda v Mali",
-   "pair": "afq_btts|soccer_btts_intl",
-   "price_at_log": 0.44,
-   "published_at": "2026-11-17T22:00:36+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Both teams to score",
-    "event": "KXAFCONTOTAL-26NOV17RWAMLI",
-    "market": "KXAFCONBTTS-26NOV17RWAMLI-BTTS",
-    "outcome": "Both teams to score",
-    "outcome_side": "yes",
-    "price_at_log": 0.44,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "afq_btts:KXAFCONBTTS-26NOV17RWAMLI-BTTS",
-   "source": "afq_btts",
-   "sport": "soccer_btts_intl",
-   "status": "miss"
-  },
-  "2026-11-17|Rwanda|Mali|Rwanda to score 1+ \u00b7 African qualifiers \u00b7 underdog to score": {
-   "away": "Mali",
-   "bet": {
-    "kind": "team_gte",
-    "n": 1,
-    "team": "Rwanda"
-   },
-   "date": "2026-11-17",
-   "edge_at_log": null,
-   "first_seen": "2026-11-17",
-   "headline": "Rwanda to score 1+",
-   "home": "Rwanda",
-   "id": "2026-11-17|Rwanda|Mali|Rwanda to score 1+ \u00b7 African qualifiers \u00b7 underdog to score",
-   "kickoff": "2026-11-17T19:00Z",
-   "lane": "production",
-   "league": "AFCON Qualifying",
-   "match": "Rwanda v Mali",
-   "pair": "afq_dog_score|soccer_team1_intl",
-   "price_at_log": 0.55,
-   "published_at": "2026-11-17T22:00:36+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": null,
-   "route": {
-    "claim": "Rwanda to score 1+",
-    "event": "KXAFCONTOTAL-26NOV17RWAMLI",
-    "market": "KXAFCONTEAMTOTAL-26NOV17RWAMLI-RWA1",
-    "outcome": "Rwanda over 0.5 goals",
-    "outcome_side": "yes",
-    "price_at_log": 0.55,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "afq_dog_score:KXAFCONTEAMTOTAL-26NOV17RWAMLI-RWA1",
-   "source": "afq_dog_score",
-   "sport": "soccer_team1_intl",
-   "status": "miss"
   }
  },
  "pairs": {
@@ -376,9 +98,9 @@
    "ready_at": "2026-11-16T18:00:00+00:00",
    "route": "moved by hand on 2026-11-16",
    "routing": {
-    "leads": 6,
+    "leads": 1,
     "problem": null,
-    "routed": 6,
+    "routed": 1,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -401,9 +123,9 @@
    "ready_at": "2026-11-16T18:00:00+00:00",
    "route": "moved by hand on 2026-11-16",
    "routing": {
-    "leads": 4,
+    "leads": 1,
     "problem": null,
-    "routed": 4,
+    "routed": 1,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -424,5 +146,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T18:47:09+00:00"
+ "updated_at": "2026-11-24T19:00:39+00:00"
 }
