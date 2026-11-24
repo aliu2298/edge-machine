@@ -95,9 +95,7 @@
    "eps_forecast": "$3.89",
    "fiscal_q": "Oct/2026",
    "kpi": [],
-   "mentions": [
-    "KXEARNINGSMENTIONADI-26NOV24"
-   ],
+   "mentions": [],
    "n_ests": "10",
    "name": "Analog Devices, Inc.",
    "perp": "KXADIPERP",
@@ -236,7 +234,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-24T16:00:38Z",
+ "calendar_at": "2026-11-24T17:00:39Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -6251,9 +6249,19 @@
     "width": 678571.4285714328
    },
    "sym": "COST"
+  },
+  {
+   "at": "2026-11-24T17:01:34Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151351515.15151516,
+    "rungs": 10,
+    "width": 678571.4285714328
+   },
+   "sym": "COST"
   }
  ],
- "last_run": "2026-11-24T16:01:31Z",
+ "last_run": "2026-11-24T17:01:37Z",
  "predictions": [
   {
    "call": {
