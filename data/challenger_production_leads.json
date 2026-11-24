@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T03:02:05+00:00",
+ "board_built_at": "2026-11-24T03:02:34+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -379,7 +379,7 @@
    "kickoff": "2026-11-24T06:00Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T03:02:05+00:00",
+   "last_seen_at": "2026-11-24T03:02:34+00:00",
    "league": "Tennis",
    "match": "Evan Zhu v Omar Jasika",
    "pair": "challenger_won_here|tennis",
@@ -451,7 +451,7 @@
    "kickoff": "2026-11-24T05:35Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T03:02:05+00:00",
+   "last_seen_at": "2026-11-24T03:02:34+00:00",
    "league": "Tennis",
    "match": "Ryuki Matsuda v Kaichi Uchida",
    "pair": "challenger_won_here|tennis",
@@ -558,11 +558,11 @@
    "kickoff": "2026-11-24T04:00Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T03:02:05+00:00",
+   "last_seen_at": "2026-11-24T03:02:34+00:00",
    "league": "Tennis",
    "match": "Takuya Kumasaka v David Jorda Sanchis",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.56,
+   "price_at_log": 0.57,
    "published_at": "2026-11-24T01:00:38+00:00",
    "published_late": false,
    "published_min_before_kickoff": 179,
@@ -572,7 +572,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV23KUMJOR-KUM",
     "outcome": "Takuya Kumasaka",
     "outcome_side": "yes",
-    "price_at_log": 0.56,
+    "price_at_log": 0.57,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23KUMJOR-KUM",
@@ -595,11 +595,11 @@
    "kickoff": "2026-11-24T04:50Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T03:02:05+00:00",
+   "last_seen_at": "2026-11-24T03:02:34+00:00",
    "league": "Tennis",
    "match": "Zane Stevens v Hayden Jones",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.39,
+   "price_at_log": 0.38,
    "published_at": "2026-11-24T02:01:28+00:00",
    "published_late": false,
    "published_min_before_kickoff": 168,
@@ -609,7 +609,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV23STEJON-STE",
     "outcome": "Zane Stevens",
     "outcome_side": "yes",
-    "price_at_log": 0.39,
+    "price_at_log": 0.38,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23STEJON-STE",
@@ -649,5 +649,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T03:02:05+00:00"
+ "updated_at": "2026-11-24T03:02:34+00:00"
 }
