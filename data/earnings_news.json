@@ -234,7 +234,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-24T19:00:31Z",
+ "calendar_at": "2026-11-24T20:00:31Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -6279,9 +6279,19 @@
     "width": 678571.4285714328
    },
    "sym": "COST"
+  },
+  {
+   "at": "2026-11-24T20:01:30Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151351515.15151516,
+    "rungs": 10,
+    "width": 678571.4285714328
+   },
+   "sym": "COST"
   }
  ],
- "last_run": "2026-11-24T19:01:36Z",
+ "last_run": "2026-11-24T20:02:27Z",
  "predictions": [
   {
    "call": {
@@ -7177,6 +7187,97 @@
    "side": -1,
    "status": "open",
    "sym": "UBER"
+  },
+  {
+   "call": {
+    "status": "pending"
+   },
+   "entry_due": "2026-11-24T20:01:30Z",
+   "exit_due": "2026-12-02T21:00:00Z",
+   "family": "post_drift",
+   "id": "post_drift:ADI:2026-11-24",
+   "logged_at": "2026-11-24T20:01:30Z",
+   "perp": "KXADIPERP",
+   "random_side": -1,
+   "reaction": -0.17046,
+   "reason": "Reaction since the last close before the report: -17.0%.",
+   "report": "2026-11-24",
+   "report_time": "pre-market",
+   "side": -1,
+   "status": "pending",
+   "sym": "ADI"
+  },
+  {
+   "call": {
+    "status": "pending"
+   },
+   "crowd_up": 0.673,
+   "day": "2026-11-24",
+   "entry_due": "2026-11-24T20:01:30Z",
+   "exit_due": "2026-11-25T20:01:00Z",
+   "family": "sentiment",
+   "id": "sentiment:BLK:2026-11-24",
+   "logged_at": "2026-11-24T20:01:30Z",
+   "perp": "KXBLKPERP",
+   "random_side": -1,
+   "reason": "Kalshi traders 67% Up on 24h taker volume.",
+   "side": 1,
+   "status": "pending",
+   "sym": "BLK"
+  },
+  {
+   "call": {
+    "status": "pending"
+   },
+   "crowd_up": 0.264,
+   "day": "2026-11-24",
+   "entry_due": "2026-11-24T20:01:30Z",
+   "exit_due": "2026-11-25T20:01:00Z",
+   "family": "sentiment",
+   "id": "sentiment:IBM:2026-11-24",
+   "logged_at": "2026-11-24T20:01:30Z",
+   "perp": "KXIBMPERP",
+   "random_side": 1,
+   "reason": "Kalshi traders 26% Up on 24h taker volume.",
+   "side": -1,
+   "status": "pending",
+   "sym": "IBM"
+  },
+  {
+   "call": {
+    "status": "pending"
+   },
+   "crowd_up": 0.336,
+   "day": "2026-11-24",
+   "entry_due": "2026-11-24T20:01:30Z",
+   "exit_due": "2026-11-25T20:01:00Z",
+   "family": "sentiment",
+   "id": "sentiment:MAR:2026-11-24",
+   "logged_at": "2026-11-24T20:01:30Z",
+   "perp": "KXMARPERP",
+   "random_side": -1,
+   "reason": "Kalshi traders 34% Up on 24h taker volume.",
+   "side": -1,
+   "status": "pending",
+   "sym": "MAR"
+  },
+  {
+   "call": {
+    "status": "pending"
+   },
+   "crowd_up": 0.803,
+   "day": "2026-11-24",
+   "entry_due": "2026-11-24T20:01:30Z",
+   "exit_due": "2026-11-25T20:01:00Z",
+   "family": "sentiment",
+   "id": "sentiment:UNH:2026-11-24",
+   "logged_at": "2026-11-24T20:01:30Z",
+   "perp": "KXUNHPERP",
+   "random_side": -1,
+   "reason": "Kalshi traders 80% Up on 24h taker volume.",
+   "side": 1,
+   "status": "pending",
+   "sym": "UNH"
   }
  ],
  "registered": "2026-11-07",
@@ -7192,6 +7293,7 @@
   "2026-11-18",
   "2026-11-19",
   "2026-11-20",
-  "2026-11-23"
+  "2026-11-23",
+  "2026-11-24"
  ]
 }
