@@ -1,7 +1,7 @@
 {
  "box_through": "2026-11-24",
  "error": null,
- "last_run": "2026-11-24T22:30:32.810950+00:00",
+ "last_run": "2026-11-24T22:45:35.810219+00:00",
  "looks": {
   "401909305": {
    "at": "2026-11-20T22:45:25.302540+00:00",
@@ -170,6 +170,25 @@
    },
    "spread": -14.5,
    "usable": 149
+  },
+  "401909314": {
+   "at": "2026-11-24T22:45:35.810219+00:00",
+   "batch": 1,
+   "entered": {
+    "spotter_fade": 4,
+    "spotter_hold": 3,
+    "spotter_spike": 4
+   },
+   "game": "DET @ ORL",
+   "night": "2026-11-24",
+   "out": 49,
+   "skipped": {
+    "no quote": 7,
+    "outside 5-60c": 76,
+    "wide": 2
+   },
+   "spread": 2.5,
+   "usable": 152
   },
   "401910007": {
    "at": "2026-11-18T23:12:11.631686+00:00",
@@ -1520,6 +1539,67 @@
      ]
     ]
    }
+  },
+  "2026-11-24": {
+   "spotter_fade": {
+    "n": 4,
+    "players": [
+     [
+      "4702382",
+      "pra"
+     ],
+     [
+      "4432165",
+      "pra"
+     ],
+     [
+      "6478",
+      "pts"
+     ],
+     [
+      "4702382",
+      "reb"
+     ]
+    ]
+   },
+   "spotter_hold": {
+    "n": 3,
+    "players": [
+     [
+      "3908845",
+      "reb"
+     ],
+     [
+      "4432166",
+      "reb"
+     ],
+     [
+      "4684742",
+      "reb"
+     ]
+    ]
+   },
+   "spotter_spike": {
+    "n": 4,
+    "players": [
+     [
+      "3908845",
+      "reb"
+     ],
+     [
+      "4566434",
+      "pts"
+     ],
+     [
+      "4066320",
+      "pts"
+     ],
+     [
+      "4712849",
+      "pts"
+     ]
+    ]
+   }
   }
  },
  "registered": "2026-11-18",
@@ -2768,6 +2848,106 @@
      "unit": "assists",
      "why": "came off the bench last game",
      "yes_ask": 0.33
+    },
+    {
+     "bid": 0.53,
+     "edge": 0.0788,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_fade:KXNBAPRA-26NOV24DETORL-ORLTDASILVA23-15",
+     "lead_min": 74.4,
+     "night": "2026-11-24",
+     "p": 0.5388,
+     "pid": "4702382",
+     "player": "Tristan da Silva",
+     "price": 0.47,
+     "rule": "spotter_fade",
+     "rung": 15,
+     "side": "no",
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "ORL",
+     "ticker": "KXNBAPRA-26NOV24DETORL-ORLTDASILVA23-15",
+     "unit": "points+rebounds+assists",
+     "why": "minutes up on last season",
+     "yes_ask": 0.54
+    },
+    {
+     "bid": 0.47,
+     "edge": 0.0739,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_fade:KXNBAPRA-26NOV24DETORL-ORLJSUGGS4-20",
+     "lead_min": 74.4,
+     "night": "2026-11-24",
+     "p": 0.5939,
+     "pid": "4432165",
+     "player": "Jalen Suggs",
+     "price": 0.53,
+     "rule": "spotter_fade",
+     "rung": 20,
+     "side": "no",
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "ORL",
+     "ticker": "KXNBAPRA-26NOV24DETORL-ORLJSUGGS4-20",
+     "unit": "points+rebounds+assists",
+     "why": "fewer shots than last season",
+     "yes_ask": 0.48
+    },
+    {
+     "bid": 0.51,
+     "edge": 0.0677,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_fade:KXNBAPTS-26NOV24DETORL-ORLNVUCEVIC9-5",
+     "lead_min": 74.4,
+     "night": "2026-11-24",
+     "p": 0.5277,
+     "pid": "6478",
+     "player": "Nikola Vu\u010devi\u0107",
+     "price": 0.49,
+     "rule": "spotter_fade",
+     "rung": 5,
+     "side": "no",
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "team": "ORL",
+     "ticker": "KXNBAPTS-26NOV24DETORL-ORLNVUCEVIC9-5",
+     "unit": "points",
+     "why": "fewer shots than last season",
+     "yes_ask": 0.54
+    },
+    {
+     "bid": 0.49,
+     "edge": 0.0672,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_fade:KXNBAREB-26NOV24DETORL-ORLTDASILVA23-4",
+     "lead_min": 74.4,
+     "night": "2026-11-24",
+     "p": 0.5672,
+     "pid": "4702382",
+     "player": "Tristan da Silva",
+     "price": 0.51,
+     "rule": "spotter_fade",
+     "rung": 4,
+     "side": "no",
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "ORL",
+     "ticker": "KXNBAREB-26NOV24DETORL-ORLTDASILVA23-4",
+     "unit": "rebounds",
+     "why": "minutes up on last season",
+     "yes_ask": 0.5
     }
    ]
   },
@@ -4025,6 +4205,112 @@
      "unit": "rebounds",
      "why": "drawn at random from this game's rungs at about the pick's price, NO side",
      "yes_ask": 0.35
+    },
+    {
+     "bid": 0.52,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_fade_blind:KXNBAPTS-26NOV24DETORL-DETPREED7-10",
+     "lead_min": 74.4,
+     "matches": "spotter_fade:KXNBAPRA-26NOV24DETORL-ORLTDASILVA23-15",
+     "night": "2026-11-24",
+     "outs": [
+      "Duncan Robinson"
+     ],
+     "p": null,
+     "pid": "4278562",
+     "player": "Paul Reed",
+     "price": 0.48,
+     "rule": "spotter_fade_blind",
+     "rung": 10,
+     "side": "no",
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "team": "DET",
+     "ticker": "KXNBAPTS-26NOV24DETORL-DETPREED7-10",
+     "unit": "points",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.53
+    },
+    {
+     "bid": 0.44,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_fade_blind:KXNBAPRA-26NOV24DETORL-DETCCUNNINGHAM2-40",
+     "lead_min": 74.4,
+     "matches": "spotter_fade:KXNBAPRA-26NOV24DETORL-ORLJSUGGS4-20",
+     "night": "2026-11-24",
+     "outs": [
+      "Duncan Robinson"
+     ],
+     "p": null,
+     "pid": "4432166",
+     "player": "Cade Cunningham",
+     "price": 0.56,
+     "rule": "spotter_fade_blind",
+     "rung": 40,
+     "side": "no",
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "DET",
+     "ticker": "KXNBAPRA-26NOV24DETORL-DETCCUNNINGHAM2-40",
+     "unit": "points+rebounds+assists",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.45
+    },
+    {
+     "bid": 0.49,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_fade_blind:KXNBAAST-26NOV24DETORL-ORLJSUGGS4-4",
+     "lead_min": 74.4,
+     "matches": "spotter_fade:KXNBAPTS-26NOV24DETORL-ORLNVUCEVIC9-5",
+     "night": "2026-11-24",
+     "p": null,
+     "pid": "4432165",
+     "player": "Jalen Suggs",
+     "price": 0.51,
+     "rule": "spotter_fade_blind",
+     "rung": 4,
+     "side": "no",
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "ast",
+     "status": "open",
+     "team": "ORL",
+     "ticker": "KXNBAAST-26NOV24DETORL-ORLJSUGGS4-4",
+     "unit": "assists",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.5
+    },
+    {
+     "bid": 0.52,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_fade_blind:KXNBA3PT-26NOV24DETORL-ORLJSUGGS4-2",
+     "lead_min": 74.4,
+     "matches": "spotter_fade:KXNBAREB-26NOV24DETORL-ORLTDASILVA23-4",
+     "night": "2026-11-24",
+     "p": null,
+     "pid": "4432165",
+     "player": "Jalen Suggs",
+     "price": 0.48,
+     "rule": "spotter_fade_blind",
+     "rung": 2,
+     "side": "no",
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "ORL",
+     "ticker": "KXNBA3PT-26NOV24DETORL-ORLJSUGGS4-2",
+     "unit": "threes",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.54
     }
    ]
   },
@@ -5541,6 +5827,84 @@
      "ticker": "KXNBAREB-26NOV23OKCIND-INDKOUBRE10-6",
      "unit": "rebounds",
      "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.47,
+     "edge": 0.0661,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_hold:KXNBAREB-26NOV24DETORL-DETJCOLLINS20-6",
+     "lead_min": 74.4,
+     "night": "2026-11-24",
+     "outs": [
+      "Duncan Robinson"
+     ],
+     "p": 0.5461,
+     "pid": "3908845",
+     "player": "John Collins",
+     "price": 0.48,
+     "rule": "spotter_hold",
+     "rung": 6,
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "DET",
+     "ticker": "KXNBAREB-26NOV24DETORL-DETJCOLLINS20-6",
+     "unit": "rebounds",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.42,
+     "edge": 0.0589,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_hold:KXNBAREB-26NOV24DETORL-DETCCUNNINGHAM2-6",
+     "lead_min": 74.4,
+     "night": "2026-11-24",
+     "outs": [
+      "Duncan Robinson"
+     ],
+     "p": 0.4889,
+     "pid": "4432166",
+     "player": "Cade Cunningham",
+     "price": 0.43,
+     "rule": "spotter_hold",
+     "rung": 6,
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "DET",
+     "ticker": "KXNBAREB-26NOV24DETORL-DETCCUNNINGHAM2-6",
+     "unit": "rebounds",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.53,
+     "edge": 0.0546,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_hold:KXNBAREB-26NOV24DETORL-DETATHOMPSON9-8",
+     "lead_min": 74.4,
+     "night": "2026-11-24",
+     "outs": [
+      "Duncan Robinson"
+     ],
+     "p": 0.5946,
+     "pid": "4684742",
+     "player": "Ausar Thompson",
+     "price": 0.54,
+     "rule": "spotter_hold",
+     "rung": 8,
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "DET",
+     "ticker": "KXNBAREB-26NOV24DETORL-DETATHOMPSON9-8",
+     "unit": "rebounds",
+     "why": "a top scorer on his team is out"
     }
    ]
   },
@@ -7027,6 +7391,81 @@
      "team": "IND",
      "ticker": "KXNBAREB-26NOV23OKCIND-INDANEMBHARD2-4",
      "unit": "rebounds",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.47,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_hold_blind:KXNBAPTS-26NOV24DETORL-ORLABLACK0-15",
+     "lead_min": 74.4,
+     "matches": "spotter_hold:KXNBAREB-26NOV24DETORL-DETJCOLLINS20-6",
+     "night": "2026-11-24",
+     "p": null,
+     "pid": "4712849",
+     "player": "Anthony Black",
+     "price": 0.48,
+     "rule": "spotter_hold_blind",
+     "rung": 15,
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "team": "ORL",
+     "ticker": "KXNBAPTS-26NOV24DETORL-ORLABLACK0-15",
+     "unit": "points",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.44,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_hold_blind:KXNBAPRA-26NOV24DETORL-DETATHOMPSON9-25",
+     "lead_min": 74.4,
+     "matches": "spotter_hold:KXNBAREB-26NOV24DETORL-DETCCUNNINGHAM2-6",
+     "night": "2026-11-24",
+     "outs": [
+      "Duncan Robinson"
+     ],
+     "p": null,
+     "pid": "4684742",
+     "player": "Ausar Thompson",
+     "price": 0.45,
+     "rule": "spotter_hold_blind",
+     "rung": 25,
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "DET",
+     "ticker": "KXNBAPRA-26NOV24DETORL-DETATHOMPSON9-25",
+     "unit": "points+rebounds+assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.56,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_hold_blind:KXNBAAST-26NOV24DETORL-DETCCUNNINGHAM2-8",
+     "lead_min": 74.4,
+     "matches": "spotter_hold:KXNBAREB-26NOV24DETORL-DETATHOMPSON9-8",
+     "night": "2026-11-24",
+     "outs": [
+      "Duncan Robinson"
+     ],
+     "p": null,
+     "pid": "4432166",
+     "player": "Cade Cunningham",
+     "price": 0.57,
+     "rule": "spotter_hold_blind",
+     "rung": 8,
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "ast",
+     "status": "open",
+     "team": "DET",
+     "ticker": "KXNBAAST-26NOV24DETORL-DETCCUNNINGHAM2-8",
+     "unit": "assists",
      "why": "drawn at random from this game's rungs at about the pick's price"
     }
    ]
@@ -8578,6 +9017,105 @@
      "ticker": "KXNBAPTS-26NOV23PORPHI-PHIVEDGECOMBE77-15",
      "unit": "points",
      "why": "a hot run the price has followed up"
+    },
+    {
+     "bid": 0.47,
+     "edge": 0.0516,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_spike:KXNBAREB-26NOV24DETORL-DETJCOLLINS20-6",
+     "lead_min": 74.4,
+     "night": "2026-11-24",
+     "outs": [
+      "Duncan Robinson"
+     ],
+     "p": 0.5516,
+     "pid": "3908845",
+     "player": "John Collins",
+     "price": 0.48,
+     "rule": "spotter_spike",
+     "rung": 6,
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "target": 0.96,
+     "team": "DET",
+     "ticker": "KXNBAREB-26NOV24DETORL-DETJCOLLINS20-6",
+     "unit": "rebounds",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.42,
+     "edge": 0.0492,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_spike:KXNBAPTS-26NOV24DETORL-ORLFWAGNER22-25",
+     "lead_min": 74.4,
+     "night": "2026-11-24",
+     "p": 0.5492,
+     "pid": "4566434",
+     "player": "Franz Wagner",
+     "price": 0.44,
+     "rule": "spotter_spike",
+     "rung": 25,
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.88,
+     "team": "ORL",
+     "ticker": "KXNBAPTS-26NOV24DETORL-ORLFWAGNER22-25",
+     "unit": "points",
+     "why": "shots up on last season"
+    },
+    {
+     "bid": 0.38,
+     "edge": 0.0316,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_spike:KXNBAPTS-26NOV24DETORL-ORLDBANE3-20",
+     "lead_min": 74.4,
+     "night": "2026-11-24",
+     "p": 0.5316,
+     "pid": "4066320",
+     "player": "Desmond Bane",
+     "price": 0.39,
+     "rule": "spotter_spike",
+     "rung": 20,
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.78,
+     "team": "ORL",
+     "ticker": "KXNBAPTS-26NOV24DETORL-ORLDBANE3-20",
+     "unit": "points",
+     "why": "a steady player in this stat"
+    },
+    {
+     "bid": 0.47,
+     "edge": 0.0313,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_spike:KXNBAPTS-26NOV24DETORL-ORLABLACK0-15",
+     "lead_min": 74.4,
+     "night": "2026-11-24",
+     "p": 0.5313,
+     "pid": "4712849",
+     "player": "Anthony Black",
+     "price": 0.48,
+     "rule": "spotter_spike",
+     "rung": 15,
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.96,
+     "team": "ORL",
+     "ticker": "KXNBAPTS-26NOV24DETORL-ORLABLACK0-15",
+     "unit": "points",
+     "why": "his season average is above the price"
     }
    ]
   },
@@ -10117,17 +10655,113 @@
      "ticker": "KXNBAREB-26NOV23PORPHI-PHILJAMES23-8",
      "unit": "rebounds",
      "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.45,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_spike_blind:KXNBAAST-26NOV24DETORL-ORLWCARTER34-2",
+     "lead_min": 74.4,
+     "matches": "spotter_spike:KXNBAREB-26NOV24DETORL-DETJCOLLINS20-6",
+     "night": "2026-11-24",
+     "p": null,
+     "pid": "4277847",
+     "player": "Wendell Carter Jr.",
+     "price": 0.46,
+     "rule": "spotter_spike_blind",
+     "rung": 2,
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "ast",
+     "status": "open",
+     "target": 0.92,
+     "team": "ORL",
+     "ticker": "KXNBAAST-26NOV24DETORL-ORLWCARTER34-2",
+     "unit": "assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.44,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_spike_blind:KXNBAREB-26NOV24DETORL-DETKHUERTERSF-4",
+     "lead_min": 74.4,
+     "matches": "spotter_spike:KXNBAPTS-26NOV24DETORL-ORLFWAGNER22-25",
+     "night": "2026-11-24",
+     "outs": [
+      "Duncan Robinson"
+     ],
+     "p": null,
+     "pid": "4066372",
+     "player": "Kevin Huerter",
+     "price": 0.45,
+     "rule": "spotter_spike_blind",
+     "rung": 4,
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "target": 0.9,
+     "team": "DET",
+     "ticker": "KXNBAREB-26NOV24DETORL-DETKHUERTERSF-4",
+     "unit": "rebounds",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.37,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_spike_blind:KXNBAPRA-26NOV24DETORL-DETKHUERTERSF-20",
+     "lead_min": 74.4,
+     "matches": "spotter_spike:KXNBAPTS-26NOV24DETORL-ORLDBANE3-20",
+     "night": "2026-11-24",
+     "outs": [
+      "Duncan Robinson"
+     ],
+     "p": null,
+     "pid": "4066372",
+     "player": "Kevin Huerter",
+     "price": 0.4,
+     "rule": "spotter_spike_blind",
+     "rung": 20,
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "target": 0.8,
+     "team": "DET",
+     "ticker": "KXNBAPRA-26NOV24DETORL-DETKHUERTERSF-20",
+     "unit": "points+rebounds+assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.45,
+     "entered": "2026-11-24T22:45:35.810219+00:00",
+     "game": "DET @ ORL",
+     "game_id": "401909314",
+     "id": "spotter_spike_blind:KXNBAAST-26NOV24DETORL-ORLWCARTER34-2",
+     "lead_min": 74.4,
+     "matches": "spotter_spike:KXNBAPTS-26NOV24DETORL-ORLABLACK0-15",
+     "night": "2026-11-24",
+     "p": null,
+     "pid": "4277847",
+     "player": "Wendell Carter Jr.",
+     "price": 0.46,
+     "rule": "spotter_spike_blind",
+     "rung": 2,
+     "start": "2026-11-25T00:00:00+00:00",
+     "stat": "ast",
+     "status": "open",
+     "target": 0.92,
+     "team": "ORL",
+     "ticker": "KXNBAAST-26NOV24DETORL-ORLWCARTER34-2",
+     "unit": "assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-22T22:45:24.673148+00:00",
-   "box": 0,
-   "due": 3,
-   "new": 14
-  },
   {
    "at": "2026-11-22T23:00:25.556424+00:00",
    "box": 1,
@@ -10427,6 +11061,12 @@
    "box": 0,
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-24T22:45:35.810219+00:00",
+   "box": 0,
+   "due": 1,
+   "new": 22
   }
  ],
  "schedule": [
