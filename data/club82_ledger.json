@@ -1,7 +1,7 @@
 {
  "error": null,
  "games_through": "2026-11-24",
- "last_run": "2026-11-24T22:00:28.904595+00:00",
+ "last_run": "2026-11-24T23:00:38.312910+00:00",
  "registered": "2026-11-23",
  "rules": {
   "club82_tt15": {
@@ -286,16 +286,19 @@
      "logged": "2026-11-24T19:15:34.861012+00:00",
      "match": "Feyenoord Rotterdam v FC Porto",
      "opponent": "FC Porto",
+     "payout": 0.0,
      "price": 0.36,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "2/4",
       "home": "1/4"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-24T23:00:38.312910+00:00",
      "side": "yes",
      "start": "2026-11-24T20:00Z",
-     "status": "open",
+     "status": "lost",
      "team": "Feyenoord Rotterdam",
      "team_side": "home",
      "ticker": "KXUCLTEAMTOTAL-26NOV24FEYFCP-FEY2"
@@ -312,16 +315,19 @@
      "logged": "2026-11-24T19:15:34.861012+00:00",
      "match": "Feyenoord Rotterdam v FC Porto",
      "opponent": "Feyenoord Rotterdam",
+     "payout": 0.0,
      "price": 0.5,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "2/4",
       "home": "1/4"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-24T23:00:38.312910+00:00",
      "side": "yes",
      "start": "2026-11-24T20:00Z",
-     "status": "open",
+     "status": "lost",
      "team": "FC Porto",
      "team_side": "away",
      "ticker": "KXUCLTEAMTOTAL-26NOV24FEYFCP-FCP2"
@@ -875,6 +881,11 @@
   },
   {
    "at": "2026-11-24T22:00:28.904595+00:00",
+   "due": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-24T23:00:38.312910+00:00",
    "due": 0,
    "new": 0
   }
