@@ -2,10 +2,10 @@
  "lanes": {
   "culture_endgame": {
    "error": null,
-   "last_run": "2026-11-24T09:00:48.310284+00:00",
-   "last_success": "2026-11-24T09:00:48.310284+00:00",
+   "last_run": "2026-11-24T10:00:47.309339+00:00",
+   "last_success": "2026-11-24T10:00:47.309339+00:00",
    "observations": {
-    "at": "2026-11-24T09:00:48.310284+00:00",
+    "at": "2026-11-24T10:00:47.309339+00:00",
     "events": 929,
     "reasons": {},
     "retired": "2026-10-24"
@@ -548,10 +548,10 @@
   },
   "culture_fav_band": {
    "error": null,
-   "last_run": "2026-11-24T09:00:48.310284+00:00",
-   "last_success": "2026-11-24T09:00:48.310284+00:00",
+   "last_run": "2026-11-24T10:00:47.309339+00:00",
+   "last_success": "2026-11-24T10:00:47.309339+00:00",
    "observations": {
-    "at": "2026-11-24T09:00:48.310284+00:00",
+    "at": "2026-11-24T10:00:47.309339+00:00",
     "events": 929,
     "reasons": {},
     "retired": "2026-10-24"
@@ -905,10 +905,10 @@
   },
   "mentions_rate": {
    "error": null,
-   "last_run": "2026-11-24T09:00:48.310284+00:00",
-   "last_success": "2026-11-24T09:00:48.310284+00:00",
+   "last_run": "2026-11-24T10:00:47.309339+00:00",
+   "last_success": "2026-11-24T10:00:47.309339+00:00",
    "observations": {
-    "at": "2026-11-24T09:00:48.310284+00:00",
+    "at": "2026-11-24T10:00:47.309339+00:00",
     "events": 929,
     "reasons": {},
     "retired": "2026-10-31"
@@ -2581,14 +2581,13 @@
   },
   "rt_model": {
    "error": null,
-   "last_run": "2026-11-24T09:00:48.310284+00:00",
-   "last_success": "2026-11-24T09:00:48.310284+00:00",
+   "last_run": "2026-11-24T10:00:47.309339+00:00",
+   "last_success": "2026-11-24T10:00:47.309339+00:00",
    "observations": {
-    "at": "2026-11-24T09:00:48.310284+00:00",
+    "at": "2026-11-24T10:00:47.309339+00:00",
     "events": 929,
     "reasons": {
-     "edge 5c+": 2,
-     "edge under 5c": 1,
+     "edge 5c+": 3,
      "under 20 reviews counted": 9,
      "within 1 point of the line": 1
     }
@@ -2969,6 +2968,26 @@
      "strike": 30,
      "strike_type": "greater",
      "title": "Above 30"
+    },
+    {
+     "category": "Entertainment",
+     "close": "2026-11-28T15:00:00Z",
+     "detail": "26/36 liked (72), ~53 more reviews \u00b7 P(above 65) 0.84 \u00b7 edge +0.07",
+     "edge": 0.0707,
+     "event": "KXRTTV-BLA",
+     "id": "KXRTTV-BLA-65",
+     "logged": "2026-11-24T10:00:47.309339+00:00",
+     "model": 0.8442,
+     "name": "Blade Runner 2099\u00b7 Rotten Tomatoes score",
+     "price": 0.08,
+     "revived": "2026-10-26",
+     "rt_url": "https://www.rottentomatoes.com/tv/blade_runner_2099",
+     "series": "KXRTTV",
+     "side": "no",
+     "status": "open",
+     "strike": 65,
+     "strike_type": "greater",
+     "title": "Above 65"
     }
    ]
   }
