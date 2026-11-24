@@ -493,9 +493,11 @@ def run(state, games_doc, now=None, get=S.espn_get, fetch=D.get):
         try:
             tags = {S.day_tag(g["tip"].astimezone(ET).date()) for g in todo}
             new += look_many(state, games_doc, todo, kalshi_markets(tags, fetch), now)
+            state["last_live_read"] = now.isoformat()           # live reads only: a backfill or a settle pass never moves it
         except Exception as e:                                       # noqa: BLE001
             errs.append(f"entries: {str(e)[:100]}")
     errs += settle(state, now, fetch)
+    state["last_settle"] = now.isoformat()
     state["last_run"] = now.isoformat()
     state["games_through"] = max((g["day"] for g in games_doc["games"]), default=None)
     state["error"] = "; ".join(errs)[:1000] or None
@@ -512,6 +514,7 @@ def main(argv=None):
         refresh_games(games_doc, now)
         new = backfill_slate(state, games_doc, now)
         errs = settle(state, now)
+        state["last_settle"] = now.isoformat()
         state["error"] = "; ".join(errs)[:1000] or None
         save(state)
         save_games(games_doc)

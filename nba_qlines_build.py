@@ -97,12 +97,23 @@ def backfill_counts(state, sec=None):
     return sum(1 for p in rows if p.get("backfilled")), len(rows)
 
 
+def overall(state, blind=False):
+    """Won, settled and return after fees over every section and direction, the lane's rows or the controls'."""
+    return Q.stats([p for s in Q.SECTIONS for d in Q.DIRS for p in _picks(state, Q.lane(s, d, blind))])
+
+
+def overall_line(state):
+    a, b = overall(state), overall(state, True)
+    return (f'<p class="sm" id="qlines-overall"><b>All sections:</b> {_won_lost(a)} · {_pct(a["ret"], True)} v blind {_pct(b["ret"], True)} ({_won_lost(b)})</p>')
+
+
 def backfill_note(state, sec=None):
     nb, n = backfill_counts(state, sec)
     if not nb:
         return ""
+    live = f"{n - nb} were live reads. " if n - nb else ""
     return (f'<p class="sm mut">{nb} of {n} entries backfilled: the first slate ({esc(Q.BACKFILL_DAY)}) took no live read, so it was recorded afterwards from 1-minute quotes '
-            f'at 30 minutes before each tip, through the same rules. The other {n - nb} were live reads. Backfilled rows carry a marker.</p>')
+            f'at 30 minutes before each tip, through the same rules. {live}Backfilled rows carry a marker.</p>')
 
 
 def summary_line(state, sec):
@@ -133,7 +144,7 @@ def section_html(state, games, sec):
 def section(state=None, games_doc=None, now=None):
     state = state if state is not None else Q.load()
     games = (games_doc if games_doc is not None else Q.load_games())["games"]
-    last = state.get("last_run")
+    last, settled = state.get("last_live_read"), state.get("last_settle")
     err = f" · {esc(state['error'])}" if state.get("error") else ""
     sections = "".join(section_html(state, games, sec) for sec in Q.SECTIONS)
     nb, entries = backfill_counts(state)
@@ -143,8 +154,8 @@ def section(state=None, games_doc=None, now=None):
     return f"""<section id="qlines" class="sp-section">
 <div class="sp-section-head"><h2>Club 90 · quarter &amp; half lines</h2><span class="sm mut">paper · {entries} entr{"y" if entries == 1 else "ies"}{backfilled} · tracker through {esc(through)}</span></div>
 <p class="sm">Paper only, on Kalshi's game-total lines for each quarter and half. A team qualifies on a line when its season hit rate on games before tonight is {Q.THRESHOLD * 100:.0f}% or better over {Q.MIN_GAMES}+ games; a game with a qualifying team is one entry. Over: the YES ask. Under: the NO price. The ask is read 15 to 40 minutes before the tip (spread 5c or less), held to settlement. If the line itself is not listed, the nearest rung 1 to 3 points harder is used. Each lane has a blind control: the same line bet in every game that night. Read at {Q.REVIEW_AT[0]} settled, then {Q.REVIEW_AT[1]}, against the control.</p>
-{backfill_note(state)}{sections}
-<p class="sm mut">Last read {esc(fmt.when(last) if last else "not yet")}{err}. Registered {esc(Q.REGISTERED)}.</p>
+{overall_line(state)}{backfill_note(state)}{sections}
+<p class="sm mut">Last live read {esc(fmt.when(last) if last else "none yet")} · Last settle {esc(fmt.when(settled) if settled else "none yet")}{err}. Registered {esc(Q.REGISTERED)}.</p>
 </section>"""
 
 

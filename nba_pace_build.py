@@ -672,7 +672,7 @@ def build(blob=None, now=None):
     body = f"""<div class="sp-head nba-head">
 <p class="eyebrow">Rules under test</p>
 <h1>NBA</h1>
-<p class="scope">Win margin lanes on Kalshi · All times Central</p>
+<p class="scope">Win margin and quarter-line lanes on Kalshi · All times Central</p>
 </div>
 {head_html}
 {rules_html}
