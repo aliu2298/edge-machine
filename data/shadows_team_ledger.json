@@ -101,46 +101,63 @@
    "status": "done"
   },
   "T1:KXUCLTEAMTOTAL-26NOV24FEYFCP:away": {
+   "action": "hold",
+   "ht_ts": 1795553276,
    "lane": "T1",
    "match": "Feyenoord Rotterdam v FC Porto",
    "pick": "T1:KXUCLTEAMTOTAL-26NOV24FEYFCP:away",
    "price": 0.5,
+   "score": "0-1",
+   "scoreless": false,
    "start": "2026-11-24T20:00Z",
-   "status": "pending"
+   "status": "done"
   },
   "T1:KXUCLTEAMTOTAL-26NOV24FEYFCP:home": {
+   "action": "sell",
+   "bid": 0.19,
+   "ht_ts": 1795553276,
    "lane": "T1",
    "match": "Feyenoord Rotterdam v FC Porto",
    "pick": "T1:KXUCLTEAMTOTAL-26NOV24FEYFCP:home",
    "price": 0.36,
+   "profit": -52.35,
+   "score": "0-1",
+   "scoreless": true,
    "start": "2026-11-24T20:00Z",
-   "status": "pending"
+   "status": "done"
   },
   "T1:KXUCLTEAMTOTAL-26NOV24RMAPSV:away": {
+   "action": "hold",
+   "ht_ts": 1795553297,
    "lane": "T1",
    "match": "Real Madrid v PSV Eindhoven",
    "pick": "T1:KXUCLTEAMTOTAL-26NOV24RMAPSV:away",
    "price": 0.27,
+   "profit": -100.0,
+   "score": "0-1",
+   "scoreless": false,
+   "settled": true,
    "start": "2026-11-24T20:00Z",
-   "status": "pending"
+   "status": "done"
   },
   "T1:KXUCLTEAMTOTAL-26NOV24RMAPSV:home": {
+   "action": "sell",
+   "bid": 0.66,
+   "ht_ts": 1795553297,
    "lane": "T1",
    "match": "Real Madrid v PSV Eindhoven",
    "pick": "T1:KXUCLTEAMTOTAL-26NOV24RMAPSV:home",
    "price": 0.9,
+   "profit": -28.91,
+   "score": "0-1",
+   "scoreless": true,
    "start": "2026-11-24T20:00Z",
-   "status": "pending"
+   "status": "done"
   }
  },
- "last_run": "2026-11-24T21:01:54.640540+00:00",
+ "last_run": "2026-11-24T22:01:50.616972+00:00",
  "registered": "2026-11-21",
  "runs": [
-  {
-   "at": "2026-11-21T21:02:09.025771+00:00",
-   "btts": 1,
-   "ht": 2
-  },
   {
    "at": "2026-11-21T21:32:07.140942+00:00",
    "btts": 1,
@@ -388,6 +405,11 @@
   },
   {
    "at": "2026-11-24T21:01:54.640540+00:00",
+   "btts": 4,
+   "ht": 8
+  },
+  {
+   "at": "2026-11-24T22:01:50.616972+00:00",
    "btts": 4,
    "ht": 8
   }

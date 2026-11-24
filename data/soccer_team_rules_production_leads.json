@@ -9,7 +9,7 @@
    0.97
   ]
  },
- "board_built_at": "2026-11-24T22:01:45+00:00",
+ "board_built_at": "2026-11-24T22:01:49+00:00",
  "collector_error": null,
  "collector_healthy": {
   "st_t1h": true,
@@ -198,6 +198,42 @@
    "source": "st_t7",
    "sport": "soccer_team3",
    "status": "miss"
+  },
+  "2026-11-24|Real Madrid|PSV Eindhoven|Real Madrid to score 2+ \u00b7 T1 matches \u00b7 home team 2+ goals": {
+   "away": "PSV Eindhoven",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "Real Madrid"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Real Madrid to score 2+",
+   "home": "Real Madrid",
+   "id": "2026-11-24|Real Madrid|PSV Eindhoven|Real Madrid to score 2+ \u00b7 T1 matches \u00b7 home team 2+ goals",
+   "kickoff": "2026-11-24T20:00Z",
+   "lane": "production",
+   "league": "Champions League",
+   "match": "Real Madrid v PSV Eindhoven",
+   "pair": "st_t1h|soccer_team2",
+   "price_at_log": 0.9,
+   "published_at": "2026-11-24T22:01:49+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Real Madrid to score 2+",
+    "event": "KXUCLTEAMTOTAL-26NOV24RMAPSV",
+    "market": "KXUCLTEAMTOTAL-26NOV24RMAPSV-RMA2",
+    "outcome": "Real Madrid over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.9,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "st_t1h:KXUCLTEAMTOTAL-26NOV24RMAPSV-RMA2",
+   "source": "st_t1h",
+   "sport": "soccer_team2",
+   "status": "hit"
   }
  },
  "pairs": {
@@ -208,18 +244,18 @@
    "ready_at": "2026-11-08T12:00:00+00:00",
    "route": "moved by hand on 2026-11-08",
    "routing": {
-    "leads": 2,
+    "leads": 3,
     "problem": null,
-    "routed": 2,
+    "routed": 3,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 4,
-   "sandbox_roi": 0.9472,
-   "sandbox_roi_fee": 0.9472,
+   "sandbox_n": 5,
+   "sandbox_roi": 0.7784,
+   "sandbox_roi_fee": 0.7784,
    "timing": {
     "late": [],
     "timed": 0,
@@ -256,5 +292,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T22:01:45+00:00"
+ "updated_at": "2026-11-24T22:01:49+00:00"
 }
