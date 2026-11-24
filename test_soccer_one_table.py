@@ -38,8 +38,8 @@ html = soccer_build.build()
 main = html[html.find("<main"):html.find("</main>")]
 
 print("the layout: Econ Daily's")
-check("sections in order: rules, events, retired, method", re.findall(r'<section id="([^"]+)"', main),
-      ["rules", "events", "retired", "method"])
+check("sections in order: Club 82 (one collapsed block, 2026-11-23), rules, events, retired, method", re.findall(r'<section id="([^"]+)"', main),
+      ["club82", "rules", "events", "retired", "method"])
 check("no stand-alone lane section is left", [x for x in ("cheap-side", "arg-dip", "top5-dip", "label-rules", "team-rules",
                                                          "contender-overs", "sa-o15") if f'<section id="{x}"' in html], [])
 check("four tiles, the filters, a Production list and a closed Sandbox fold",

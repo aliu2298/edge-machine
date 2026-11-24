@@ -18,6 +18,7 @@ import shadows
 import soccer_rules
 import soccer_team_rules
 import under_piggyback
+import club82
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 FAILS = []
@@ -38,7 +39,7 @@ WRITES = {
         "soccer_rules.py": [soccer_rules.PATH], "contender_overs.py": [contender_overs.PATH], "sa_o15.py": [sa_o15.PATH],
         "btts_sa.py": [btts_sa.PATH], "flipped_unders.py": [flipped_unders.PATH],
         "under_piggyback.py": [under_piggyback.path(k) for k in under_piggyback.LANES],
-        "shadows.py": [shadows.GROUPS["soccer"]],
+        "shadows.py": [shadows.GROUPS["soccer"]], "club82.py": [club82.PATH],
         "soccer_rules_production.py": [],                  # the derived feed: staged by --derived
     },
     "soccer-team-rules.yml": {

@@ -2411,6 +2411,12 @@ def chaos_html():
         html += nba_qlines_build.index_html()
     except Exception:                                           # noqa: BLE001
         pass
+    # Club 82 (club82, 2026-11-23): one index row a lane, linking to the block on the Soccer page.
+    try:
+        import club82_build
+        html += club82_build.index_html()
+    except Exception:                                           # noqa: BLE001
+        pass
     # The paper watches (bs_bid, ko_bid, nl_dump, mentions_dump; 2026-11-14): one index row each, linking to the card on its sport page.
     try:
         import watch_index
