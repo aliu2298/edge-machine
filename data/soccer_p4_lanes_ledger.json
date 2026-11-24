@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-24T03:00:33.964813+00:00",
+ "last_run": "2026-11-24T04:00:34.655039+00:00",
  "matches": [
   {
    "day": "2026-11-19",
@@ -2756,6 +2756,50 @@
    "logged": "2026-11-23T22:00:34.413781+00:00",
    "timed": 1,
    "title": "Levante v Elche",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-23",
+   "entries": [
+    {
+     "ask": 0.64,
+     "bid": 0.63,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.64,
+      "filled": false,
+      "roi": null
+     },
+     "mom": "pre",
+     "name": "Saint Louis",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.66,
+      "depth": 3109.82,
+      "filled": true,
+      "roi": -1.0
+     },
+     "team": "home",
+     "ticker": "KXMLSGAME-26NOV23STLLAFC-STL",
+     "ts": 1795479300,
+     "v2": true,
+     "won": false
+    }
+   ],
+   "espn_id": "401933728",
+   "event": "KXMLSGAME-26NOV23STLLAFC",
+   "goals": 5,
+   "ht": 1795486787,
+   "ko": 1795482900,
+   "labels": {
+    "away": "O-D-",
+    "home": "O+D-"
+   },
+   "league": "MLS",
+   "logged": "2026-11-24T04:00:34.655039+00:00",
+   "timed": 4,
+   "title": "St. Louis CITY SC v LAFC",
    "version": "soccerp4-v1"
   }
  ],
