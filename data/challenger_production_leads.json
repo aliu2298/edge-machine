@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T13:01:41+00:00",
+ "board_built_at": "2026-11-24T14:02:01+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -364,6 +364,41 @@
    "sport": "tennis",
    "status": "miss"
   },
+  "2026-11-24|Anas Mazdrashki|Nikita Mashtakov|Anas Mazdrashki to win \u00b7 Challenger underdog who has won here": {
+   "away": "Nikita Mashtakov",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Anas Mazdrashki to win",
+   "home": "Anas Mazdrashki",
+   "id": "2026-11-24|Anas Mazdrashki|Nikita Mashtakov|Anas Mazdrashki to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T12:10Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Anas Mazdrashki v Nikita Mashtakov",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.66,
+   "published_at": "2026-11-24T14:02:01+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Anas Mazdrashki to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24MASMAZ",
+    "market": "KXATPCHALLENGERMATCH-26NOV24MASMAZ-MAZ",
+    "outcome": "Anas Mazdrashki",
+    "outcome_side": "yes",
+    "price_at_log": 0.66,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MASMAZ-MAZ",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "hit"
+  },
   "2026-11-24|Anton Chekhov|Vadym Ursu|Anton Chekhov to win \u00b7 Challenger underdog who has won here": {
    "away": "Vadym Ursu",
    "bet": {
@@ -413,8 +448,6 @@
    "id": "2026-11-24|Benjamin Pietri|Roberto Carballes Baena|Benjamin Pietri to win \u00b7 Challenger underdog who has won here",
    "kickoff": "2026-11-24T13:20Z",
    "lane": "production",
-   "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T13:01:41+00:00",
    "league": "Tennis",
    "match": "Benjamin Pietri v Roberto Carballes Baena",
    "pair": "challenger_won_here|tennis",
@@ -434,7 +467,7 @@
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24PIECAR-PIE",
    "source": "challenger_won_here",
    "sport": "tennis",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-11-24|Chen Dong|Derek Pham|Chen Dong to win \u00b7 Challenger underdog who has won here": {
    "away": "Derek Pham",
@@ -520,8 +553,6 @@
    "id": "2026-11-24|Federico Iannaccone|Branko Djuric|Federico Iannaccone to win \u00b7 Challenger underdog who has won here",
    "kickoff": "2026-11-24T15:00Z",
    "lane": "production",
-   "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T13:01:41+00:00",
    "league": "Tennis",
    "match": "Federico Iannaccone v Branko Djuric",
    "pair": "challenger_won_here|tennis",
@@ -541,7 +572,7 @@
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24DJUIAN-IAN",
    "source": "challenger_won_here",
    "sport": "tennis",
-   "status": "pending"
+   "status": "miss"
   },
   "2026-11-24|Gilles Arnaud Bailly|Mees Rottgering|Gilles Arnaud Bailly to win \u00b7 Challenger underdog who has won here": {
    "away": "Mees Rottgering",
@@ -577,43 +608,6 @@
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "hit"
-  },
-  "2026-11-24|Jannik Maute|Kenta Miyoshi (b. 2004)|Jannik Maute to win \u00b7 Challenger underdog who has won here": {
-   "away": "Kenta Miyoshi (b. 2004)",
-   "bet": {
-    "kind": "match_result",
-    "side": "home"
-   },
-   "date": "2026-11-24",
-   "edge_at_log": null,
-   "first_seen": "2026-11-24",
-   "headline": "Jannik Maute to win",
-   "home": "Jannik Maute",
-   "id": "2026-11-24|Jannik Maute|Kenta Miyoshi (b. 2004)|Jannik Maute to win \u00b7 Challenger underdog who has won here",
-   "kickoff": "2026-11-24T13:20Z",
-   "lane": "production",
-   "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T13:01:41+00:00",
-   "league": "Tennis",
-   "match": "Jannik Maute v Kenta Miyoshi (b. 2004)",
-   "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.33,
-   "published_at": "2026-11-24T10:23:33+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 176,
-   "route": {
-    "claim": "Jannik Maute to win",
-    "event": "KXATPCHALLENGERMATCH-26NOV24MIYMAU",
-    "market": "KXATPCHALLENGERMATCH-26NOV24MIYMAU-MAU",
-    "outcome": "Jannik Maute",
-    "outcome_side": "yes",
-    "price_at_log": 0.33,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MIYMAU-MAU",
-   "source": "challenger_won_here",
-   "sport": "tennis",
-   "status": "pending"
   },
   "2026-11-24|Jesse Delaney|Matthew Dellavedova|Jesse Delaney to win \u00b7 Challenger underdog who has won here": {
    "away": "Matthew Dellavedova",
@@ -700,7 +694,7 @@
    "kickoff": "2026-11-24T14:30Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T13:01:41+00:00",
+   "last_seen_at": "2026-11-24T14:02:01+00:00",
    "league": "Tennis",
    "match": "Leo Raquillet v Yaroslav Demin",
    "pair": "challenger_won_here|tennis",
@@ -736,8 +730,6 @@
    "id": "2026-11-24|Miles Jones|Alibek Kachmazov|Miles Jones to win \u00b7 Challenger underdog who has won here",
    "kickoff": "2026-11-24T13:20Z",
    "lane": "production",
-   "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T13:01:41+00:00",
    "league": "Tennis",
    "match": "Miles Jones v Alibek Kachmazov",
    "pair": "challenger_won_here|tennis",
@@ -757,7 +749,7 @@
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24KACJON-JON",
    "source": "challenger_won_here",
    "sport": "tennis",
-   "status": "pending"
+   "status": "hit"
   },
   "2026-11-24|Oleksandr Ovcharenko|Pavlos Tsitsipas|Oleksandr Ovcharenko to win \u00b7 Challenger underdog who has won here": {
    "away": "Pavlos Tsitsipas",
@@ -774,7 +766,7 @@
    "kickoff": "2026-11-24T15:00Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T13:01:41+00:00",
+   "last_seen_at": "2026-11-24T14:02:01+00:00",
    "league": "Tennis",
    "match": "Oleksandr Ovcharenko v Pavlos Tsitsipas",
    "pair": "challenger_won_here|tennis",
@@ -846,11 +838,11 @@
    "kickoff": "2026-11-24T14:30Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T13:01:41+00:00",
+   "last_seen_at": "2026-11-24T14:02:01+00:00",
    "league": "Tennis",
    "match": "Robert Guna v Dusan Obradovic",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.6,
+   "price_at_log": 0.38,
    "published_at": "2026-11-24T11:41:38+00:00",
    "published_late": false,
    "published_min_before_kickoff": 168,
@@ -860,7 +852,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV24GUNOBR-GUN",
     "outcome": "Robert Guna",
     "outcome_side": "yes",
-    "price_at_log": 0.6,
+    "price_at_log": 0.38,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24GUNOBR-GUN",
@@ -1057,8 +1049,6 @@
    "id": "2026-11-24|Wojciech Marek|Kimmer Coppejans|Wojciech Marek to win \u00b7 Challenger underdog who has won here",
    "kickoff": "2026-11-24T15:00Z",
    "lane": "production",
-   "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T13:01:41+00:00",
    "league": "Tennis",
    "match": "Wojciech Marek v Kimmer Coppejans",
    "pair": "challenger_won_here|tennis",
@@ -1076,6 +1066,43 @@
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24COPMAR-MAR",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "miss"
+  },
+  "2026-11-24|Yassine Smiej|Petr Bar Biryukov|Yassine Smiej to win \u00b7 Challenger underdog who has won here": {
+   "away": "Petr Bar Biryukov",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Yassine Smiej to win",
+   "home": "Yassine Smiej",
+   "id": "2026-11-24|Yassine Smiej|Petr Bar Biryukov|Yassine Smiej to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T16:10Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T14:02:01+00:00",
+   "league": "Tennis",
+   "match": "Yassine Smiej v Petr Bar Biryukov",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.09,
+   "published_at": "2026-11-24T14:02:01+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 127,
+   "route": {
+    "claim": "Yassine Smiej to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24SMIBAR",
+    "market": "KXATPCHALLENGERMATCH-26NOV24SMIBAR-SMI",
+    "outcome": "Yassine Smiej",
+    "outcome_side": "yes",
+    "price_at_log": 0.09,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24SMIBAR-SMI",
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "pending"
@@ -1124,18 +1151,18 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 31,
+    "leads": 32,
     "problem": null,
-    "routed": 31,
+    "routed": 32,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 23,
-   "sandbox_roi": -0.767,
-   "sandbox_roi_fee": -0.7681,
+   "sandbox_n": 28,
+   "sandbox_roi": -0.5341,
+   "sandbox_roi_fee": -0.5462,
    "timing": {
     "late": [],
     "timed": 27,
@@ -1147,5 +1174,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T13:01:41+00:00"
+ "updated_at": "2026-11-24T14:02:01+00:00"
 }
