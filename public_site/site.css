@@ -1806,6 +1806,7 @@ nav.sp-filter::before {
 .sp-section-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; margin: 0 0 8px; }   /* the count drops under the heading on a phone when it no longer fits */
 .sp-section-head h2 { margin: 0; }
 .sp-section-head > span { white-space: nowrap; }
+#qlines .sp-section-head > span, #club82 .sp-section-head > span { white-space: normal; }   /* the Club 90 / Club 82 header counts can run past a phone's width */
 /* NBA quarter lines (2026-11-23): six folds that sit compactly; a long summary wraps under its heading without a blank band beneath. */
 details.nba-qline > summary { flex-wrap: wrap; gap: 0 8px; margin: 4px 0; }
 details.nba-qline > summary h3 { margin: 0; font-size: 15px; }
