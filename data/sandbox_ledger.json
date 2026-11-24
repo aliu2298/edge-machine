@@ -20,7 +20,7 @@
    "kalshi_venue": 9,
    "polymarket_us": 18,
    "polymarket_us_listed": 18,
-   "polymarket_us_priced": 2
+   "polymarket_us_priced": 1
   },
   "crypto": {
    "kalshi_venue": 80
@@ -28,15 +28,15 @@
   "crypto_fav": {
    "crypto_fav_band_below": {
     "offered": 525,
-    "picked": 2
+    "picked": 0
    },
    "kalshi_venue": 525
   },
   "economics": {
-   "kalshi_venue": 38
+   "kalshi_venue": 36
   },
   "finance": {
-   "kalshi_venue": 45
+   "kalshi_venue": 30
   },
   "mma": {
    "kalshi_venue": 0,
@@ -61,17 +61,17 @@
     "offered": 4,
     "picked": 0
    },
-   "kalshi_venue": 202,
+   "kalshi_venue": 164,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
   },
   "soccer_btts": {
    "btts_market": {
-    "offered": 61,
-    "picked": 61
+    "offered": 62,
+    "picked": 62
    },
-   "kalshi_venue": 61,
+   "kalshi_venue": 62,
    "liga_btts_even": {
     "offered": 4,
     "picked": 1
@@ -94,7 +94,7 @@
   "soccer_corners": {
    "corners_fav_no": {
     "offered": 161,
-    "picked": 5
+    "picked": 0
    },
    "corners_market": {
     "offered": 161,
@@ -108,18 +108,18 @@
   },
   "soccer_ftts": {
    "ftts_lineup_lag": {
-    "offered": 32,
+    "offered": 2,
     "picked": 0
    },
    "ftts_market": {
-    "offered": 32,
-    "picked": 32
+    "offered": 2,
+    "picked": 2
    },
    "ftts_no_70_80": {
-    "offered": 32,
+    "offered": 2,
     "picked": 0
    },
-   "kalshi_venue": 32
+   "kalshi_venue": 2
   },
   "soccer_o05": {
    "kalshi_venue": 0,
@@ -145,10 +145,10 @@
     "picked": 0
    },
    "goals_market": {
-    "offered": 61,
-    "picked": 61
+    "offered": 62,
+    "picked": 62
    },
-   "kalshi_venue": 61,
+   "kalshi_venue": 62,
    "liga_u15_dog_24h": {
     "offered": 4,
     "picked": 0
@@ -174,10 +174,10 @@
   },
   "soccer_o25": {
    "goals_market": {
-    "offered": 61,
-    "picked": 61
+    "offered": 62,
+    "picked": 62
    },
-   "kalshi_venue": 61
+   "kalshi_venue": 62
   },
   "soccer_o25_cup": {
    "goals_market": {
@@ -195,12 +195,12 @@
   },
   "soccer_p05": {
    "goals_market": {
-    "offered": 152,
-    "picked": 152
+    "offered": 154,
+    "picked": 154
    },
-   "kalshi_venue": 152,
+   "kalshi_venue": 154,
    "mls_fade_home": {
-    "offered": 8,
+    "offered": 10,
     "picked": 0
    }
   },
@@ -292,10 +292,10 @@
   },
   "soccer_u35": {
    "goals_market": {
-    "offered": 61,
-    "picked": 61
+    "offered": 62,
+    "picked": 62
    },
-   "kalshi_venue": 61
+   "kalshi_venue": 62
   },
   "soccer_u35_cup": {
    "goals_market": {
@@ -322,8 +322,8 @@
   "tennis": {
    "kalshi_venue": 8,
    "polymarket_us": 40,
-   "polymarket_us_listed": 404,
-   "polymarket_us_priced": 134
+   "polymarket_us_listed": 403,
+   "polymarket_us_priced": 130
   },
   "tennis_combo": {
    "combo": 0,
@@ -338,43 +338,43 @@
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-24T19:21:00+00:00",
-   "commodities": "2026-11-24T19:21:00+00:00",
-   "commodities_fav": "2026-11-24T19:21:00+00:00",
-   "cricket": "2026-11-24T19:21:00+00:00",
-   "crypto": "2026-11-24T19:21:00+00:00",
-   "crypto_fav": "2026-11-24T19:21:00+00:00",
-   "economics": "2026-11-24T19:21:00+00:00",
-   "finance": "2026-11-24T19:21:00+00:00",
+   "boxing": "2026-11-24T19:32:07+00:00",
+   "commodities": "2026-11-24T19:32:07+00:00",
+   "commodities_fav": "2026-11-24T19:32:07+00:00",
+   "cricket": "2026-11-24T19:32:07+00:00",
+   "crypto": "2026-11-24T19:32:07+00:00",
+   "crypto_fav": "2026-11-24T19:32:07+00:00",
+   "economics": "2026-11-24T19:32:07+00:00",
+   "finance": "2026-11-24T19:32:07+00:00",
    "mma": "2026-11-21T20:10:14+00:00",
-   "nfl": "2026-11-24T19:21:00+00:00",
-   "nhl_pl": "2026-11-24T19:21:00+00:00",
-   "nhl_rest": "2026-11-24T19:21:00+00:00",
-   "soccer": "2026-11-24T19:21:00+00:00",
-   "soccer_btts": "2026-11-24T19:21:00+00:00",
-   "soccer_btts_cup": "2026-11-24T19:21:00+00:00",
+   "nfl": "2026-11-24T19:32:07+00:00",
+   "nhl_pl": "2026-11-24T19:32:07+00:00",
+   "nhl_rest": "2026-11-24T19:32:07+00:00",
+   "soccer": "2026-11-24T19:32:07+00:00",
+   "soccer_btts": "2026-11-24T19:32:07+00:00",
+   "soccer_btts_cup": "2026-11-24T19:32:07+00:00",
    "soccer_btts_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_corners": "2026-11-24T19:21:00+00:00",
-   "soccer_ftts": "2026-11-24T19:21:00+00:00",
-   "soccer_o15": "2026-11-24T19:21:00+00:00",
-   "soccer_o15_cup": "2026-11-24T19:21:00+00:00",
+   "soccer_corners": "2026-11-24T19:32:07+00:00",
+   "soccer_ftts": "2026-11-24T19:32:07+00:00",
+   "soccer_o15": "2026-11-24T19:32:07+00:00",
+   "soccer_o15_cup": "2026-11-24T19:32:07+00:00",
    "soccer_o15_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_o25": "2026-11-24T19:21:00+00:00",
-   "soccer_o25_cup": "2026-11-24T19:21:00+00:00",
+   "soccer_o25": "2026-11-24T19:32:07+00:00",
+   "soccer_o25_cup": "2026-11-24T19:32:07+00:00",
    "soccer_o25_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_p05": "2026-11-24T19:21:00+00:00",
-   "soccer_p05_cup": "2026-11-24T19:21:00+00:00",
+   "soccer_p05": "2026-11-24T19:32:07+00:00",
+   "soccer_p05_cup": "2026-11-24T19:32:07+00:00",
    "soccer_p05_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_team1": "2026-11-24T19:21:00+00:00",
-   "soccer_team1_cup": "2026-11-24T19:21:00+00:00",
+   "soccer_team1": "2026-11-24T19:32:07+00:00",
+   "soccer_team1_cup": "2026-11-24T19:32:07+00:00",
    "soccer_team1_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_team2": "2026-11-24T19:21:00+00:00",
-   "soccer_team2_cup": "2026-11-24T19:21:00+00:00",
+   "soccer_team2": "2026-11-24T19:32:07+00:00",
+   "soccer_team2_cup": "2026-11-24T19:32:07+00:00",
    "soccer_team2_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_u35": "2026-11-24T19:21:00+00:00",
-   "soccer_u35_cup": "2026-11-24T19:21:00+00:00",
+   "soccer_u35": "2026-11-24T19:32:07+00:00",
+   "soccer_u35_cup": "2026-11-24T19:32:07+00:00",
    "soccer_u35_intl": "2026-11-17T23:27:07+00:00",
-   "tennis": "2026-11-24T19:21:00+00:00",
+   "tennis": "2026-11-24T19:32:07+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -583,24 +583,24 @@
      "start": "2026-11-23T20:00:00+00:00"
     },
     "kalshi:26NOV24ARSBVB": {
-     "at": "2026-11-24T19:20:59.964719+00:00",
+     "at": "2026-11-24T19:32:06.807731+00:00",
      "label": "Arsenal v Borussia Dortmund",
      "league": "Champions League",
-     "reason": "no rung with a No ask of 0.60 or more and a No book 5c or tighter",
+     "reason": "no Kalshi 1X2 board for the match",
      "start": "2026-11-24T20:00:00+00:00"
     },
     "kalshi:26NOV24COMAEK": {
-     "at": "2026-11-24T18:19:46.182054+00:00",
+     "at": "2026-11-24T19:32:06.807731+00:00",
      "label": "Como v AEK Athens",
      "league": "Champions League",
      "reason": "no Kalshi 1X2 board for the match",
      "start": "2026-11-24T20:00:00+00:00"
     },
     "kalshi:26NOV24FEYFCP": {
-     "at": "2026-11-24T19:20:59.964719+00:00",
+     "at": "2026-11-24T19:32:06.807731+00:00",
      "label": "Feyenoord Rotterdam v FC Porto",
      "league": "Champions League",
-     "reason": "no clear favourite: 0.46 de-vigged, under 0.55",
+     "reason": "no Kalshi 1X2 board for the match",
      "start": "2026-11-24T20:00:00+00:00"
     },
     "kalshi:26NOV24GALAVL": {
@@ -611,28 +611,28 @@
      "start": "2026-11-24T17:45:00+00:00"
     },
     "kalshi:26NOV24MCINAP": {
-     "at": "2026-11-24T18:19:46.182054+00:00",
+     "at": "2026-11-24T19:32:06.807731+00:00",
      "label": "Manchester City v Napoli",
      "league": "Champions League",
      "reason": "no Kalshi 1X2 board for the match",
      "start": "2026-11-24T20:00:00+00:00"
     },
     "kalshi:26NOV24RBLRCL": {
-     "at": "2026-11-24T18:19:46.182054+00:00",
+     "at": "2026-11-24T19:32:06.807731+00:00",
      "label": "RB Leipzig v Lens",
      "league": "Champions League",
      "reason": "no Kalshi 1X2 board for the match",
      "start": "2026-11-24T20:00:00+00:00"
     },
     "kalshi:26NOV24RMAPSV": {
-     "at": "2026-11-24T18:19:46.182054+00:00",
+     "at": "2026-11-24T19:32:06.807731+00:00",
      "label": "Real Madrid v PSV Eindhoven",
      "league": "Champions League",
      "reason": "no Kalshi 1X2 board for the match",
      "start": "2026-11-24T20:00:00+00:00"
     },
     "kalshi:26NOV24SLORBB": {
-     "at": "2026-11-24T18:19:46.182054+00:00",
+     "at": "2026-11-24T19:32:06.807731+00:00",
      "label": "Slovan Bratislava v Real Betis",
      "league": "Champions League",
      "reason": "no Kalshi 1X2 board for the match",
@@ -641,7 +641,7 @@
    }
   },
   "odds_api": {
-   "at": "2026-11-24T19:21:00+00:00",
+   "at": "2026-11-24T19:32:07+00:00",
    "remaining": 175,
    "used": 325
   },
@@ -662,7 +662,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 2783,
+  "runs": 2784,
   "tennis_shortlist": {
    "audit": [
     {
@@ -674,7 +674,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-24T19:21:45+00:00"
+  "updated": "2026-11-24T19:32:56+00:00"
  },
  "quotes": [
   {
@@ -353685,7 +353685,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-24T19:21:00+00:00",
+   "close_at": "2026-11-24T19:32:07+00:00",
    "close_price": 0.49,
    "date": "2026-11-25",
    "edge": null,
@@ -452363,8 +452363,8 @@
    "price_b": 0.8,
    "price_draw": null,
    "prob_a": 0.205,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-24T19:32:24+00:00",
    "side_a": "Doldan, Zoe",
    "side_b": "Gobbi Monllau, Ana Victoria",
    "source": "polymarket_us",
@@ -452373,7 +452373,7 @@
    "stake": 0.0,
    "start": "2026-11-24T14:10:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "utr",
    "uncovered": null,
    "untraded": false,
@@ -460514,8 +460514,8 @@
    "price_b": 0.6,
    "price_draw": null,
    "prob_a": 0.405,
-   "result": null,
-   "settled": null,
+   "result": "a",
+   "settled": "2026-11-24T19:32:41+00:00",
    "side_a": "Samuel Heredia",
    "side_b": "Yannick Alexandrescou",
    "source": "polymarket_us",
@@ -460524,7 +460524,7 @@
    "stake": 0.0,
    "start": "2026-11-24T17:10:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "uncovered": null,
    "untraded": false,
    "url": "https://polymarket.us/event/atp-samher-yanale-2026-11-23",
@@ -461616,7 +461616,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-24T19:21:00+00:00",
+   "close_at": "2026-11-24T19:32:07+00:00",
    "close_price": 0.53,
    "date": "2026-11-28",
    "edge": null,
@@ -462598,7 +462598,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-24T19:21:00+00:00",
+   "close_at": "2026-11-24T19:32:07+00:00",
    "close_price": 0.61,
    "date": "2026-11-24",
    "edge": null,
@@ -467619,8 +467619,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-24T19:21:00+00:00",
-   "close_price": 0.67,
+   "close_at": "2026-11-24T19:32:07+00:00",
+   "close_price": 0.65,
    "date": "2026-11-24",
    "edge": null,
    "espn_away": "AEK Athens",
@@ -467659,8 +467659,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-24T19:21:00+00:00",
-   "close_price": 0.63,
+   "close_at": "2026-11-24T19:32:07+00:00",
+   "close_price": 0.62,
    "date": "2026-11-24",
    "edge": null,
    "espn_away": "Napoli",
@@ -467699,8 +467699,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-24T19:21:00+00:00",
-   "close_price": 0.71,
+   "close_at": "2026-11-24T19:32:07+00:00",
+   "close_price": 0.68,
    "date": "2026-11-24",
    "edge": null,
    "espn_away": "Lens",
@@ -467739,7 +467739,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-24T19:21:00+00:00",
+   "close_at": "2026-11-24T19:32:07+00:00",
    "close_price": 0.6,
    "date": "2026-11-24",
    "edge": null,
@@ -474072,8 +474072,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-24T19:21:00+00:00",
-   "close_price": 0.87,
+   "close_at": "2026-11-24T19:32:07+00:00",
+   "close_price": 0.91,
    "date": "2026-11-24",
    "edge": null,
    "id": "crypto_fav_band_below:KXBTCD-26NOV2417-T60499.99",
@@ -474107,8 +474107,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-24T19:21:00+00:00",
-   "close_price": 0.87,
+   "close_at": "2026-11-24T19:32:07+00:00",
+   "close_price": 0.89,
    "date": "2026-11-24",
    "edge": null,
    "id": "crypto_fav_band_below:KXETHD-26NOV2417-T1699.99",
@@ -474538,8 +474538,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-24T19:21:00+00:00",
-   "close_price": 0.79,
+   "close_at": "2026-11-24T19:32:07+00:00",
+   "close_price": 0.84,
    "date": "2026-11-24",
    "edge": null,
    "id": "crypto_fav_band_below:KXSOLD-26NOV2417-T69.9999",
@@ -474569,6 +474569,158 @@
    "untraded": false,
    "url": "https://kalshi.com/markets/kxsold",
    "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-27",
+   "edge": -0.01,
+   "espn_away": "Willem II",
+   "espn_home": "FC Groningen",
+   "event": "KXEREDIVISIEBTTS-26NOV27GROWIL",
+   "id": "btts_market:KXEREDIVISIEBTTS-26NOV27GROWIL-BTTS",
+   "kalshi_title": "Both Teams To Score",
+   "label": "FC Groningen v Willem II: both teams to score",
+   "league": "Eredivisie",
+   "liquidity": null,
+   "logged": "2026-11-24T19:32:06+00:00",
+   "market_id": "KXEREDIVISIEBTTS-26NOV27GROWIL-BTTS",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.58,
+   "price_b": 0.44,
+   "price_draw": null,
+   "prob_a": 0.57,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "btts_market",
+   "sport": "soccer_btts",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-27T19:00:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxeredivisiebtts",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": -0.035,
+   "espn_away": "San Jose Earthquakes",
+   "espn_home": "Houston Dynamo FC",
+   "event": "KXMLSGAME-26NOV28HOUSJ",
+   "id": "goals_market:KXMLSGAME-26NOV28HOUSJ-HOU",
+   "kalshi_title": "Houston",
+   "label": "Houston Dynamo FC v San Jose Earthquakes: Houston Dynamo FC to win (No = San Jose Earthquakes +0.5)",
+   "league": "MLS",
+   "liquidity": null,
+   "logged": "2026-11-24T19:32:06+00:00",
+   "market_id": "KXMLSGAME-26NOV28HOUSJ-HOU",
+   "opponent": "Houston Dynamo FC",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.55,
+   "price_b": 0.52,
+   "price_draw": null,
+   "prob_a": 0.515,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_p05",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-28T19:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "San Jose Earthquakes",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxmlsgame",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-28",
+   "edge": -0.02,
+   "espn_away": "San Jose Earthquakes",
+   "espn_home": "Houston Dynamo FC",
+   "event": "KXMLSGAME-26NOV28HOUSJ",
+   "id": "goals_market:KXMLSGAME-26NOV28HOUSJ-SJ",
+   "kalshi_title": "San Jose",
+   "label": "Houston Dynamo FC v San Jose Earthquakes: San Jose Earthquakes to win (No = Houston Dynamo FC +0.5)",
+   "league": "MLS",
+   "liquidity": null,
+   "logged": "2026-11-24T19:32:06+00:00",
+   "market_id": "KXMLSGAME-26NOV28HOUSJ-SJ",
+   "opponent": "San Jose Earthquakes",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.26,
+   "price_b": 0.78,
+   "price_draw": null,
+   "prob_a": 0.24,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_p05",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-28T19:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "Houston Dynamo FC",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxmlsgame",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-25",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-utr-nanlea-dunkat-2026-11-23",
+   "label": "Nannapaneni, Leana vs Dunne, Katy",
+   "liquidity": null,
+   "logged": "2026-11-24T19:32:06+00:00",
+   "market_id": "aec-utr-nanlea-dunkat-2026-11-23",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.07,
+   "price_b": 0.94,
+   "price_draw": null,
+   "prob_a": 0.065,
+   "result": null,
+   "settled": null,
+   "side_a": "Nannapaneni, Leana",
+   "side_b": "Dunne, Katy",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-25T00:10:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "utr",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/utr-nanlea-dunkat-2026-11-23",
+   "venue": "polymarket_us",
    "venue_start": null
   }
  ],
