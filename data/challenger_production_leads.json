@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T07:01:51+00:00",
+ "board_built_at": "2026-11-24T08:01:25+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -329,6 +329,43 @@
    "sport": "tennis",
    "status": "miss"
   },
+  "2026-11-24|Anton Chekhov|Vadym Ursu|Anton Chekhov to win \u00b7 Challenger underdog who has won here": {
+   "away": "Vadym Ursu",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Anton Chekhov to win",
+   "home": "Anton Chekhov",
+   "id": "2026-11-24|Anton Chekhov|Vadym Ursu|Anton Chekhov to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T11:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T08:01:25+00:00",
+   "league": "Tennis",
+   "match": "Anton Chekhov v Vadym Ursu",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.2,
+   "published_at": "2026-11-24T08:01:25+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 178,
+   "route": {
+    "claim": "Anton Chekhov to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24URSCHE",
+    "market": "KXATPCHALLENGERMATCH-26NOV24URSCHE-CHE",
+    "outcome": "Anton Chekhov",
+    "outcome_side": "yes",
+    "price_at_log": 0.2,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24URSCHE-CHE",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
+  },
   "2026-11-24|Chen Dong|Derek Pham|Chen Dong to win \u00b7 Challenger underdog who has won here": {
    "away": "Derek Pham",
    "bet": {
@@ -360,6 +397,41 @@
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23PHADON-DON",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "miss"
+  },
+  "2026-11-24|Evan Zhu|Omar Jasika|Evan Zhu to win \u00b7 Challenger underdog who has won here": {
+   "away": "Omar Jasika",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Evan Zhu to win",
+   "home": "Evan Zhu",
+   "id": "2026-11-24|Evan Zhu|Omar Jasika|Evan Zhu to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T06:00Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Evan Zhu v Omar Jasika",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.29,
+   "published_at": "2026-11-24T08:01:25+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Evan Zhu to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV23JASZHU",
+    "market": "KXATPCHALLENGERMATCH-26NOV23JASZHU-ZHU",
+    "outcome": "Evan Zhu",
+    "outcome_side": "yes",
+    "price_at_log": 0.29,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23JASZHU-ZHU",
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "miss"
@@ -618,21 +690,21 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 17,
+    "leads": 19,
     "problem": null,
-    "routed": 17,
+    "routed": 19,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 17,
-   "sandbox_roi": -0.8765,
-   "sandbox_roi_fee": -0.8769,
+   "sandbox_n": 18,
+   "sandbox_roi": -0.8834,
+   "sandbox_roi_fee": -0.8838,
    "timing": {
     "late": [],
-    "timed": 15,
+    "timed": 16,
     "under_target": 0
    }
   }
@@ -641,5 +713,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T07:01:51+00:00"
+ "updated_at": "2026-11-24T08:01:25+00:00"
 }
