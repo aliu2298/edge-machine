@@ -1417,6 +1417,27 @@
    "at": "2026-11-22T15:04:21.859972+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV24ARSBVB-BVB\", \"b\"]]": {
+   "at": "2026-11-24T15:05:08.681513+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV24BOGASK-ASK\", \"b\"]]": {
+   "at": "2026-11-24T15:05:08.681513+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV24MCINAP-NAP\", \"b\"]]": {
+   "at": "2026-11-24T15:05:08.681513+00:00",
+   "entries": "entered",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV24RBLRCL-RCL\", \"b\"]]": {
+   "at": "2026-11-24T15:05:08.681513+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV24SLORBB-SLO\", \"b\"]]": {
+   "at": "2026-11-24T15:05:08.681513+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"liga_btts_even\", [\"liga_btts_even:KXLALIGABTTS-26NOV07OSAATH-BTTS\", \"a\"]]": {
    "at": "2026-11-05T22:26:17.115908+00:00",
    "pool": "entered"
@@ -6120,11 +6141,98 @@
    "sport": "Crypto",
    "src": "sandbox",
    "status": "won"
+  },
+  {
+   "contract": "KXUCLFTTS-26NOV24MCINAP-NAP",
+   "entered_at": "2026-11-24T15:05:08.681513+00:00",
+   "entities": [
+    "Napoli"
+   ],
+   "id": "superpack:[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV24MCINAP-NAP\", \"b\"]]",
+   "lane": "ftts_no_70_80",
+   "logged": "2026-11-24T15:04:18+00:00",
+   "matched": [
+    "Napoli"
+   ],
+   "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV24MCINAP-NAP\", \"b\"]]",
+   "price": 0.78,
+   "profit": null,
+   "scope": "soccer_ftts",
+   "settled": null,
+   "side": "b",
+   "snapshot": {
+    "as_of": "2026-11-24T15:04:18+00:00",
+    "names": [
+     {
+      "bets": 53,
+      "name": "AAA gas",
+      "profit": 6.9187,
+      "sport": "Commodities"
+     },
+     {
+      "bets": 6,
+      "name": "AC Milan",
+      "profit": 5.4689,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Hull City",
+      "profit": 4.8685,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 34,
+      "name": "Bitcoin",
+      "profit": 4.8462,
+      "sport": "Crypto"
+     },
+     {
+      "bets": 5,
+      "name": "Charlotte FC",
+      "profit": 4.5293,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Columbus Crew",
+      "profit": 4.221,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 8,
+      "name": "Napoli",
+      "profit": 3.7771,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 10,
+      "name": "Ethereum",
+      "profit": 3.3289,
+      "sport": "Crypto"
+     },
+     {
+      "bets": 5,
+      "name": "AFC Bournemouth",
+      "profit": 3.1006,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 10,
+      "name": "Arsenal",
+      "profit": 3.0442,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-24T14:22:42.891749+00:00",
+ "last_run": "2026-11-24T15:05:08.681513+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -18151,6 +18259,121 @@
    "snapshot": null,
    "sport": "Culture",
    "src": "culture",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLFTTS-26NOV24ARSBVB-BVB",
+   "entered_at": "2026-11-24T15:05:08.681513+00:00",
+   "entities": [
+    "Dortmund"
+   ],
+   "id": "superpack:[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV24ARSBVB-BVB\", \"b\"]]",
+   "lane": "ftts_no_70_80",
+   "logged": "2026-11-24T15:04:18+00:00",
+   "matched": [
+    "Dortmund"
+   ],
+   "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV24ARSBVB-BVB\", \"b\"]]",
+   "price": 0.76,
+   "profit": null,
+   "scope": "soccer_ftts",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLFTTS-26NOV24BOGASK-ASK",
+   "entered_at": "2026-11-24T15:05:08.681513+00:00",
+   "entities": [
+    "LASK"
+   ],
+   "id": "superpack:[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV24BOGASK-ASK\", \"b\"]]",
+   "lane": "ftts_no_70_80",
+   "logged": "2026-11-24T15:04:18+00:00",
+   "matched": [
+    "LASK"
+   ],
+   "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV24BOGASK-ASK\", \"b\"]]",
+   "price": 0.73,
+   "profit": null,
+   "scope": "soccer_ftts",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLFTTS-26NOV24MCINAP-NAP",
+   "entered_at": "2026-11-24T15:05:08.681513+00:00",
+   "entities": [
+    "Napoli"
+   ],
+   "id": "superpack:[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV24MCINAP-NAP\", \"b\"]]",
+   "lane": "ftts_no_70_80",
+   "logged": "2026-11-24T15:04:18+00:00",
+   "matched": [
+    "Napoli"
+   ],
+   "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV24MCINAP-NAP\", \"b\"]]",
+   "price": 0.78,
+   "profit": null,
+   "scope": "soccer_ftts",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLFTTS-26NOV24RBLRCL-RCL",
+   "entered_at": "2026-11-24T15:05:08.681513+00:00",
+   "entities": [
+    "Lens"
+   ],
+   "id": "superpack:[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV24RBLRCL-RCL\", \"b\"]]",
+   "lane": "ftts_no_70_80",
+   "logged": "2026-11-24T15:04:18+00:00",
+   "matched": [
+    "Lens"
+   ],
+   "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV24RBLRCL-RCL\", \"b\"]]",
+   "price": 0.76,
+   "profit": null,
+   "scope": "soccer_ftts",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLFTTS-26NOV24SLORBB-SLO",
+   "entered_at": "2026-11-24T15:05:08.681513+00:00",
+   "entities": [
+    "Slovan Bratislava"
+   ],
+   "id": "superpack:[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV24SLORBB-SLO\", \"b\"]]",
+   "lane": "ftts_no_70_80",
+   "logged": "2026-11-24T15:04:18+00:00",
+   "matched": [
+    "Slovan Bratislava"
+   ],
+   "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV24SLORBB-SLO\", \"b\"]]",
+   "price": 0.79,
+   "profit": null,
+   "scope": "soccer_ftts",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
    "status": "open"
   }
  ],

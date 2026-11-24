@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-24T14:22:42+00:00",
+ "board_built_at": "2026-11-24T15:05:08+00:00",
  "corners_selections": {
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
   "kalshi:26OCT12LEVSEV": "2026-10-12|Levante|Sevilla|Under 10 corners \u00b7 Corners under form rule",
@@ -1556,6 +1556,154 @@
    "sport": "crypto_fav",
    "status": "hit"
   },
+  "2026-11-24|Arsenal|Dortmund|Dortmund not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge": {
+   "away": "Dortmund",
+   "bet": {
+    "kind": "ftts_no",
+    "team": "Dortmund"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Dortmund not to score first",
+   "home": "Arsenal",
+   "id": "2026-11-24|Arsenal|Dortmund|Dortmund not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge",
+   "kickoff": "2026-11-24T20:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T15:05:08+00:00",
+   "league": "Champions League",
+   "match": "Arsenal v Dortmund",
+   "pair": "ftts_no_70_80|soccer_ftts",
+   "price_at_log": 0.76,
+   "published_at": "2026-11-24T15:05:08+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 294,
+   "route": {
+    "claim": "Dortmund not to score first",
+    "event": "KXUCLFTTS-26NOV24ARSBVB",
+    "market": "KXUCLFTTS-26NOV24ARSBVB-BVB",
+    "outcome": "Borussia Dortmund",
+    "outcome_side": "no",
+    "price_at_log": 0.76,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "ftts_no_70_80:KXUCLFTTS-26NOV24ARSBVB-BVB",
+   "source": "ftts_no_70_80",
+   "sport": "soccer_ftts",
+   "status": "pending"
+  },
+  "2026-11-24|Leipzig|Lens|Lens not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge": {
+   "away": "Lens",
+   "bet": {
+    "kind": "ftts_no",
+    "team": "Lens"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Lens not to score first",
+   "home": "Leipzig",
+   "id": "2026-11-24|Leipzig|Lens|Lens not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge",
+   "kickoff": "2026-11-24T20:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T15:05:08+00:00",
+   "league": "Champions League",
+   "match": "Leipzig v Lens",
+   "pair": "ftts_no_70_80|soccer_ftts",
+   "price_at_log": 0.76,
+   "published_at": "2026-11-24T15:05:08+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 294,
+   "route": {
+    "claim": "Lens not to score first",
+    "event": "KXUCLFTTS-26NOV24RBLRCL",
+    "market": "KXUCLFTTS-26NOV24RBLRCL-RCL",
+    "outcome": "Racing Club De Lens",
+    "outcome_side": "no",
+    "price_at_log": 0.76,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "ftts_no_70_80:KXUCLFTTS-26NOV24RBLRCL-RCL",
+   "source": "ftts_no_70_80",
+   "sport": "soccer_ftts",
+   "status": "pending"
+  },
+  "2026-11-24|Manchester City|Napoli|Napoli not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge": {
+   "away": "Napoli",
+   "bet": {
+    "kind": "ftts_no",
+    "team": "Napoli"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Napoli not to score first",
+   "home": "Manchester City",
+   "id": "2026-11-24|Manchester City|Napoli|Napoli not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge",
+   "kickoff": "2026-11-24T20:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T15:05:08+00:00",
+   "league": "Champions League",
+   "match": "Manchester City v Napoli",
+   "pair": "ftts_no_70_80|soccer_ftts",
+   "price_at_log": 0.78,
+   "published_at": "2026-11-24T15:05:08+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 294,
+   "route": {
+    "claim": "Napoli not to score first",
+    "event": "KXUCLFTTS-26NOV24MCINAP",
+    "market": "KXUCLFTTS-26NOV24MCINAP-NAP",
+    "outcome": "SSC Napoli",
+    "outcome_side": "no",
+    "price_at_log": 0.78,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "ftts_no_70_80:KXUCLFTTS-26NOV24MCINAP-NAP",
+   "source": "ftts_no_70_80",
+   "sport": "soccer_ftts",
+   "status": "pending"
+  },
+  "2026-11-24|Slovan Bratislava|Real Betis|Slovan Bratislava not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge": {
+   "away": "Real Betis",
+   "bet": {
+    "kind": "ftts_no",
+    "team": "Slovan Bratislava"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Slovan Bratislava not to score first",
+   "home": "Slovan Bratislava",
+   "id": "2026-11-24|Slovan Bratislava|Real Betis|Slovan Bratislava not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge",
+   "kickoff": "2026-11-24T20:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T15:05:08+00:00",
+   "league": "Champions League",
+   "match": "Slovan Bratislava v Real Betis",
+   "pair": "ftts_no_70_80|soccer_ftts",
+   "price_at_log": 0.79,
+   "published_at": "2026-11-24T15:05:08+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 294,
+   "route": {
+    "claim": "Slovan Bratislava not to score first",
+    "event": "KXUCLFTTS-26NOV24SLORBB",
+    "market": "KXUCLFTTS-26NOV24SLORBB-SLO",
+    "outcome": "SK Slovan Bratislava",
+    "outcome_side": "no",
+    "price_at_log": 0.79,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "ftts_no_70_80:KXUCLFTTS-26NOV24SLORBB-SLO",
+   "source": "ftts_no_70_80",
+   "sport": "soccer_ftts",
+   "status": "pending"
+  },
   "2026-11-24|St. Louis CITY SC|LAFC|LAFC +0.5 (St. Louis CITY SC not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
    "away": "LAFC",
    "bet": {
@@ -1606,7 +1754,7 @@
    "kickoff": "2026-11-25T03:00Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T14:22:42+00:00",
+   "last_seen_at": "2026-11-24T15:05:08+00:00",
    "league": "MLS",
    "match": "San Jose Earthquakes v Houston Dynamo FC",
    "pair": "mls_fade_home|soccer_p05",
@@ -1712,12 +1860,12 @@
    "ready_at": "2026-10-16T17:17:38+00:00",
    "route": "moved by hand on 2026-10-16",
    "routing": {
-    "leads": 10,
+    "leads": 14,
     "problem": null,
-    "routed": 10,
+    "routed": 14,
     "unlisted": 0,
     "unrouted": 0,
-    "unverified": 0,
+    "unverified": 1,
     "why": []
    },
    "sandbox_clv": -0.0025,
@@ -1726,7 +1874,7 @@
    "sandbox_roi_fee": -0.1044,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 4,
     "under_target": 0
    }
   },
@@ -1919,6 +2067,6 @@
  },
  "stage": "production",
  "unlisted_skipped": 0,
- "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T14:22:42+00:00"
+ "unverified_kickoff_skipped": 1,
+ "updated_at": "2026-11-24T15:05:08+00:00"
 }
