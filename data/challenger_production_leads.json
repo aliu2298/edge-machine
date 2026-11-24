@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T02:31:52+00:00",
+ "board_built_at": "2026-11-24T03:01:12+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -364,6 +364,43 @@
    "sport": "tennis",
    "status": "miss"
   },
+  "2026-11-24|Evan Zhu|Omar Jasika|Evan Zhu to win \u00b7 Challenger underdog who has won here": {
+   "away": "Omar Jasika",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Evan Zhu to win",
+   "home": "Evan Zhu",
+   "id": "2026-11-24|Evan Zhu|Omar Jasika|Evan Zhu to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T06:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T03:01:12+00:00",
+   "league": "Tennis",
+   "match": "Evan Zhu v Omar Jasika",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.29,
+   "published_at": "2026-11-24T03:01:12+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 178,
+   "route": {
+    "claim": "Evan Zhu to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV23JASZHU",
+    "market": "KXATPCHALLENGERMATCH-26NOV23JASZHU-ZHU",
+    "outcome": "Evan Zhu",
+    "outcome_side": "yes",
+    "price_at_log": 0.29,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23JASZHU-ZHU",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
+  },
   "2026-11-24|Jesse Delaney|Matthew Dellavedova|Jesse Delaney to win \u00b7 Challenger underdog who has won here": {
    "away": "Matthew Dellavedova",
    "bet": {
@@ -399,6 +436,43 @@
    "sport": "tennis",
    "status": "miss"
   },
+  "2026-11-24|Ryuki Matsuda|Kaichi Uchida|Ryuki Matsuda to win \u00b7 Challenger underdog who has won here": {
+   "away": "Kaichi Uchida",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Ryuki Matsuda to win",
+   "home": "Ryuki Matsuda",
+   "id": "2026-11-24|Ryuki Matsuda|Kaichi Uchida|Ryuki Matsuda to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T05:35Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T03:01:12+00:00",
+   "league": "Tennis",
+   "match": "Ryuki Matsuda v Kaichi Uchida",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.62,
+   "published_at": "2026-11-24T03:01:12+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 153,
+   "route": {
+    "claim": "Ryuki Matsuda to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV23MATUCH",
+    "market": "KXATPCHALLENGERMATCH-26NOV23MATUCH-MAT",
+    "outcome": "Ryuki Matsuda",
+    "outcome_side": "yes",
+    "price_at_log": 0.62,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23MATUCH-MAT",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
+  },
   "2026-11-24|S D Prajwal Dev|Naoya Honda|S D Prajwal Dev to win \u00b7 Challenger underdog who has won here": {
    "away": "Naoya Honda",
    "bet": {
@@ -413,8 +487,6 @@
    "id": "2026-11-24|S D Prajwal Dev|Naoya Honda|S D Prajwal Dev to win \u00b7 Challenger underdog who has won here",
    "kickoff": "2026-11-24T04:00Z",
    "lane": "production",
-   "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T02:31:52+00:00",
    "league": "Tennis",
    "match": "S D Prajwal Dev v Naoya Honda",
    "pair": "challenger_won_here|tennis",
@@ -434,7 +506,7 @@
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23HONDEV-DEV",
    "source": "challenger_won_here",
    "sport": "tennis",
-   "status": "pending"
+   "status": "miss"
   },
   "2026-11-24|Stefan Vujic|Tristan Schoolkate|Stefan Vujic to win \u00b7 Challenger underdog who has won here": {
    "away": "Tristan Schoolkate",
@@ -450,8 +522,6 @@
    "id": "2026-11-24|Stefan Vujic|Tristan Schoolkate|Stefan Vujic to win \u00b7 Challenger underdog who has won here",
    "kickoff": "2026-11-24T03:40Z",
    "lane": "production",
-   "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T02:31:52+00:00",
    "league": "Tennis",
    "match": "Stefan Vujic v Tristan Schoolkate",
    "pair": "challenger_won_here|tennis",
@@ -471,7 +541,7 @@
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23VUJSCH-VUJ",
    "source": "challenger_won_here",
    "sport": "tennis",
-   "status": "pending"
+   "status": "miss"
   },
   "2026-11-24|Takuya Kumasaka|David Jorda Sanchis|Takuya Kumasaka to win \u00b7 Challenger underdog who has won here": {
    "away": "David Jorda Sanchis",
@@ -488,11 +558,11 @@
    "kickoff": "2026-11-24T04:00Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T02:31:52+00:00",
+   "last_seen_at": "2026-11-24T03:01:12+00:00",
    "league": "Tennis",
    "match": "Takuya Kumasaka v David Jorda Sanchis",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.77,
+   "price_at_log": 0.54,
    "published_at": "2026-11-24T01:00:38+00:00",
    "published_late": false,
    "published_min_before_kickoff": 179,
@@ -502,7 +572,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV23KUMJOR-KUM",
     "outcome": "Takuya Kumasaka",
     "outcome_side": "yes",
-    "price_at_log": 0.77,
+    "price_at_log": 0.54,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23KUMJOR-KUM",
@@ -525,11 +595,11 @@
    "kickoff": "2026-11-24T04:50Z",
    "lane": "production",
    "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T02:31:52+00:00",
+   "last_seen_at": "2026-11-24T03:01:12+00:00",
    "league": "Tennis",
    "match": "Zane Stevens v Hayden Jones",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.42,
+   "price_at_log": 0.41,
    "published_at": "2026-11-24T02:01:28+00:00",
    "published_late": false,
    "published_min_before_kickoff": 168,
@@ -539,7 +609,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV23STEJON-STE",
     "outcome": "Zane Stevens",
     "outcome_side": "yes",
-    "price_at_log": 0.42,
+    "price_at_log": 0.41,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23STEJON-STE",
@@ -556,21 +626,21 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 15,
+    "leads": 17,
     "problem": null,
-    "routed": 15,
+    "routed": 17,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 11,
-   "sandbox_roi": -0.8092,
-   "sandbox_roi_fee": -0.8098,
+   "sandbox_n": 13,
+   "sandbox_roi": -0.8385,
+   "sandbox_roi_fee": -0.8391,
    "timing": {
     "late": [],
-    "timed": 13,
+    "timed": 15,
     "under_target": 0
    }
   }
@@ -579,5 +649,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T02:31:52+00:00"
+ "updated_at": "2026-11-24T03:01:12+00:00"
 }
