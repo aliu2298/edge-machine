@@ -195561,6 +195561,7 @@
     "KXATPCHALLENGERMATCH-26NOV23DURFLO": 1,
     "KXATPCHALLENGERMATCH-26NOV23FUNBEL": 1,
     "KXATPCHALLENGERMATCH-26NOV23GHEJON": 0,
+    "KXATPCHALLENGERMATCH-26NOV23GHEKOU": 1,
     "KXATPCHALLENGERMATCH-26NOV23GUTLEI": 0,
     "KXATPCHALLENGERMATCH-26NOV23HAMMAR": 0,
     "KXATPCHALLENGERMATCH-26NOV23HEMSCH": 0,
@@ -195602,7 +195603,10 @@
     "KXATPCHALLENGERMATCH-26NOV23VIVSAH": 1,
     "KXATPCHALLENGERMATCH-26NOV23VUJSCH": 0,
     "KXATPCHALLENGERMATCH-26NOV23WINTUL": 0,
-    "KXATPCHALLENGERMATCH-26NOV23ZANDLF": 0
+    "KXATPCHALLENGERMATCH-26NOV23ZANDLF": 0,
+    "KXATPCHALLENGERMATCH-26NOV24DURERE": 0,
+    "KXATPCHALLENGERMATCH-26NOV24MARPAP": 0,
+    "KXATPCHALLENGERMATCH-26NOV24URSCHE": 1
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -205966,6 +205970,76 @@
      "stop": null,
      "target": null,
      "ticker": "KXATPCHALLENGERMATCH-26NOV23BARPER-PER",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": false
+    },
+    {
+     "ask": {
+      "book": null,
+      "first_quotes": false,
+      "how": "print",
+      "last_trade": 0.19,
+      "printed": 69.59,
+      "source": "replayed",
+      "status": "verified"
+     },
+     "cost": 0.20077,
+     "entry": 0.19,
+     "entry_i": 645,
+     "entry_ts": 1795503420,
+     "event": "KXATPCHALLENGERMATCH-26NOV24URSCHE",
+     "exit": 0.0,
+     "exit_i": 823,
+     "exit_key": "hold",
+     "exit_ts": 1795514100,
+     "hours": 1,
+     "night": "2026-11-24",
+     "profit": -0.20077,
+     "reason": "settled",
+     "roi": -1.0,
+     "side": "yes",
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1795507020,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26NOV24URSCHE-CHE",
+     "unreachable": false,
+     "variant": "t1h_hold",
+     "won": false
+    },
+    {
+     "ask": {
+      "book": null,
+      "first_quotes": false,
+      "last_trade": 0.24,
+      "printed": 0,
+      "reason": "0 contracts traded at or through the ask within 60 minutes (under 10)",
+      "source": "replayed",
+      "status": "unverified"
+     },
+     "cost": 0.25277,
+     "entry": 0.24,
+     "entry_i": 1066,
+     "entry_ts": 1795503420,
+     "event": "KXATPCHALLENGERMATCH-26NOV23GHEKOU",
+     "exit": 0.0,
+     "exit_i": 1244,
+     "exit_key": "hold",
+     "exit_ts": 1795514100,
+     "hours": 1,
+     "night": "2026-11-24",
+     "profit": -0.25277,
+     "reason": "settled",
+     "roi": -1.0,
+     "side": "yes",
+     "spread": 0.01,
+     "start_how": "price path",
+     "start_ts": 1795507020,
+     "stop": null,
+     "target": null,
+     "ticker": "KXATPCHALLENGERMATCH-26NOV23GHEKOU-KOU",
      "unreachable": false,
      "variant": "t1h_hold",
      "won": false
@@ -231213,6 +231287,7 @@
     "KXATPCHALLENGERMATCH-26NOV23DURFLO": 0,
     "KXATPCHALLENGERMATCH-26NOV23FUNBEL": 0,
     "KXATPCHALLENGERMATCH-26NOV23GHEJON": 0,
+    "KXATPCHALLENGERMATCH-26NOV23GHEKOU": 0,
     "KXATPCHALLENGERMATCH-26NOV23GUTLEI": 0,
     "KXATPCHALLENGERMATCH-26NOV23HAMMAR": 0,
     "KXATPCHALLENGERMATCH-26NOV23HEMSCH": 0,
@@ -231254,7 +231329,10 @@
     "KXATPCHALLENGERMATCH-26NOV23VIVSAH": 0,
     "KXATPCHALLENGERMATCH-26NOV23VUJSCH": 0,
     "KXATPCHALLENGERMATCH-26NOV23WINTUL": 0,
-    "KXATPCHALLENGERMATCH-26NOV23ZANDLF": 0
+    "KXATPCHALLENGERMATCH-26NOV23ZANDLF": 0,
+    "KXATPCHALLENGERMATCH-26NOV24DURERE": 0,
+    "KXATPCHALLENGERMATCH-26NOV24MARPAP": 0,
+    "KXATPCHALLENGERMATCH-26NOV24URSCHE": 0
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -405975,15 +406053,8 @@
    "watch": false
   }
  },
- "last_run": "2026-11-24T09:30:43.765423+00:00",
+ "last_run": "2026-11-24T10:00:51.984778+00:00",
  "runs": [
-  {
-   "at": "2026-11-11T17:13:36.796825+00:00",
-   "new": {
-    "challenger_cheap_hold_base": 4,
-    "challenger_won_here_hold": 0
-   }
-  },
   {
    "at": "2026-11-12T09:00:27.949424+00:00",
    "new": {
@@ -406298,6 +406369,13 @@
   {
    "at": "2026-11-24T09:30:43.765423+00:00",
    "new": {}
+  },
+  {
+   "at": "2026-11-24T10:00:51.984778+00:00",
+   "new": {
+    "challenger_cheap_hold_base": 2,
+    "challenger_won_here_hold": 0
+   }
   }
  ],
  "version": "chaos-v2"
