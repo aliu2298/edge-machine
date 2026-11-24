@@ -1007,6 +1007,24 @@
    "at": "2026-11-22T16:04:07.816516+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV24COMAEK-11\", \"b\"]]": {
+   "at": "2026-11-24T16:30:19.957317+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV24MCINAP-11\", \"b\"]]": {
+   "at": "2026-11-24T16:30:19.957317+00:00",
+   "entries": "entered",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV24RBLRCL-12\", \"b\"]]": {
+   "at": "2026-11-24T16:30:19.957317+00:00",
+   "pool": "entered"
+  },
+  "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV24SLORBB-11\", \"b\"]]": {
+   "at": "2026-11-24T16:30:19.957317+00:00",
+   "mirror": "entered",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"corners_total_under\", [\"corners_total_under:KXEPLCORNERS-26NOV07NFOMCI-7\", \"b\"]]": {
    "at": "2026-11-07T14:03:40.378413+00:00",
    "pool": "entered"
@@ -1896,6 +1914,10 @@
   },
   "[\"soccer_rules_ledger.json\", \"A6\", [\"A6:KXEPLTOTAL-26NOV23BREEVE\", \"no\"]]": {
    "at": "2026-11-23T18:48:32.833597+00:00",
+   "pool": "entered"
+  },
+  "[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV24GALAVL\", \"yes\"]]": {
+   "at": "2026-11-24T16:30:19.957317+00:00",
    "pool": "entered"
   },
   "[\"soccer_rules_ledger.json\", \"B1\", [\"B1:KXMLSTOTAL-26NOV07ATXPOR\", \"no\"]]": {
@@ -6237,11 +6259,99 @@
    "sport": "Soccer",
    "src": "sandbox",
    "status": "open"
+  },
+  {
+   "contract": "KXUCLCORNERS-26NOV24MCINAP-11",
+   "entered_at": "2026-11-24T16:30:19.957317+00:00",
+   "entities": [
+    "Manchester City",
+    "Napoli"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV24MCINAP-11\", \"b\"]]",
+   "lane": "corners_fav_no",
+   "logged": "2026-11-24T16:29:34+00:00",
+   "matched": [
+    "Napoli"
+   ],
+   "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV24MCINAP-11\", \"b\"]]",
+   "price": 0.62,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": {
+    "as_of": "2026-11-24T16:29:34+00:00",
+    "names": [
+     {
+      "bets": 53,
+      "name": "AAA gas",
+      "profit": 6.9187,
+      "sport": "Commodities"
+     },
+     {
+      "bets": 6,
+      "name": "AC Milan",
+      "profit": 5.4689,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Hull City",
+      "profit": 4.8685,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 34,
+      "name": "Bitcoin",
+      "profit": 4.8462,
+      "sport": "Crypto"
+     },
+     {
+      "bets": 5,
+      "name": "Charlotte FC",
+      "profit": 4.5293,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Columbus Crew",
+      "profit": 4.221,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 8,
+      "name": "Napoli",
+      "profit": 3.7771,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 10,
+      "name": "Ethereum",
+      "profit": 3.3289,
+      "sport": "Crypto"
+     },
+     {
+      "bets": 5,
+      "name": "AFC Bournemouth",
+      "profit": 3.1006,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 10,
+      "name": "Arsenal",
+      "profit": 3.0442,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
   }
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-24T16:11:18.664465+00:00",
+ "last_run": "2026-11-24T16:30:19.957317+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -8273,6 +8383,94 @@
    "side": "a",
    "snapshot": {
     "as_of": "2026-11-24T16:04:09+00:00",
+    "names": [
+     {
+      "bets": 6,
+      "name": "Real Betis",
+      "profit": -4.6728,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "PSV Eindhoven",
+      "profit": -4.6111,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Feyenoord Rotterdam",
+      "profit": -4.0676,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "Rayo Vallecano",
+      "profit": -3.6491,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "SC Freiburg",
+      "profit": -3.1733,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 10,
+      "name": "Brighton & Hove Albion",
+      "profit": -3.0498,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 6,
+      "name": "St. Louis CITY SC",
+      "profit": -2.6584,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 7,
+      "name": "Liverpool",
+      "profit": -2.0834,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 8,
+      "name": "Sevilla",
+      "profit": -1.8251,
+      "sport": "Soccer"
+     },
+     {
+      "bets": 5,
+      "name": "Moldova",
+      "profit": -1.3576,
+      "sport": "Soccer"
+     }
+    ]
+   },
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLCORNERS-26NOV24SLORBB-11",
+   "entered_at": "2026-11-24T16:30:19.957317+00:00",
+   "entities": [
+    "Slovan Bratislava",
+    "Real Betis"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV24SLORBB-11\", \"b\"]]",
+   "lane": "corners_fav_no",
+   "logged": "2026-11-24T16:29:34+00:00",
+   "matched": [
+    "Real Betis"
+   ],
+   "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV24SLORBB-11\", \"b\"]]",
+   "price": 0.61,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": {
+    "as_of": "2026-11-24T16:29:34+00:00",
     "names": [
      {
       "bets": 6,
@@ -18518,6 +18716,131 @@
    "scope": "soccer_corners",
    "settled": null,
    "side": "a",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLTOTAL-26NOV24GALAVL-4",
+   "entered_at": "2026-11-24T16:30:19.957317+00:00",
+   "entities": [
+    "Galatasaray",
+    "Aston Villa"
+   ],
+   "id": "superpack:[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV24GALAVL\", \"yes\"]]",
+   "lane": "A7",
+   "logged": "2026-11-24T16:16:40.814551+00:00",
+   "matched": [
+    "Aston Villa",
+    "Galatasaray"
+   ],
+   "pid": "[\"soccer_rules_ledger.json\", \"A7\", [\"A7:KXUCLTOTAL-26NOV24GALAVL\", \"yes\"]]",
+   "price": 0.42,
+   "profit": null,
+   "scope": null,
+   "settled": null,
+   "side": "yes",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "soccer_rules_ledger.json",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLCORNERS-26NOV24COMAEK-11",
+   "entered_at": "2026-11-24T16:30:19.957317+00:00",
+   "entities": [
+    "Como",
+    "AEK Athens"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV24COMAEK-11\", \"b\"]]",
+   "lane": "corners_fav_no",
+   "logged": "2026-11-24T16:29:34+00:00",
+   "matched": [
+    "AEK Athens",
+    "Como"
+   ],
+   "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV24COMAEK-11\", \"b\"]]",
+   "price": 0.66,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLCORNERS-26NOV24MCINAP-11",
+   "entered_at": "2026-11-24T16:30:19.957317+00:00",
+   "entities": [
+    "Manchester City",
+    "Napoli"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV24MCINAP-11\", \"b\"]]",
+   "lane": "corners_fav_no",
+   "logged": "2026-11-24T16:29:34+00:00",
+   "matched": [
+    "Manchester City",
+    "Napoli"
+   ],
+   "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV24MCINAP-11\", \"b\"]]",
+   "price": 0.62,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLCORNERS-26NOV24RBLRCL-12",
+   "entered_at": "2026-11-24T16:30:19.957317+00:00",
+   "entities": [
+    "RB Leipzig",
+    "Lens"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV24RBLRCL-12\", \"b\"]]",
+   "lane": "corners_fav_no",
+   "logged": "2026-11-24T16:29:34+00:00",
+   "matched": [
+    "Lens",
+    "RB Leipzig"
+   ],
+   "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV24RBLRCL-12\", \"b\"]]",
+   "price": 0.69,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXUCLCORNERS-26NOV24SLORBB-11",
+   "entered_at": "2026-11-24T16:30:19.957317+00:00",
+   "entities": [
+    "Slovan Bratislava",
+    "Real Betis"
+   ],
+   "id": "superpack:[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV24SLORBB-11\", \"b\"]]",
+   "lane": "corners_fav_no",
+   "logged": "2026-11-24T16:29:34+00:00",
+   "matched": [
+    "Real Betis",
+    "Slovan Bratislava"
+   ],
+   "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV24SLORBB-11\", \"b\"]]",
+   "price": 0.61,
+   "profit": null,
+   "scope": "soccer_corners",
+   "settled": null,
+   "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
