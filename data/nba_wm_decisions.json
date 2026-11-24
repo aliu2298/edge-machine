@@ -14432,6 +14432,19 @@
    "yes_ask": 0.18,
    "yes_bid": 0.16
   },
+  "no:KXNBAWINMARGIN-26NOV23LACHOU-LAC11PLUS": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "LAC11PLUS",
+   "decided_at": "2026-11-24T00:45:32+00:00",
+   "event": "KXNBAWINMARGIN-26NOV23LACHOU",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV23",
+   "ticker": "KXNBAWINMARGIN-26NOV23LACHOU-LAC11PLUS",
+   "tip": "2026-11-24T01:30:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "no:KXNBAWINMARGIN-26NOV23LACHOU-LAC1TO5": {
    "P": 0.94,
    "bot_version": "wm-nofade-v4",
@@ -14451,6 +14464,19 @@
    "why": null,
    "yes_ask": 0.07,
    "yes_bid": 0.06
+  },
+  "no:KXNBAWINMARGIN-26NOV23LACHOU-LAC6TO10": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "LAC6TO10",
+   "decided_at": "2026-11-24T00:45:32+00:00",
+   "event": "KXNBAWINMARGIN-26NOV23LACHOU",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV23",
+   "ticker": "KXNBAWINMARGIN-26NOV23LACHOU-LAC6TO10",
+   "tip": "2026-11-24T01:30:00+00:00",
+   "why": "no tight read inside the entry window"
   },
   "no:KXNBAWINMARGIN-26NOV23MEMCHA-CHA11TO20": {
    "P": 0.91,
@@ -25414,6 +25440,19 @@
    "yes_ask": 0.07,
    "yes_bid": 0.06
   },
+  "yes:KXNBAWINMARGIN-26NOV23LACHOU-LAC6TO10": {
+   "bot_version": "wm-yes-v4",
+   "bucket": "LAC6TO10",
+   "decided_at": "2026-11-24T00:45:32+00:00",
+   "event": "KXNBAWINMARGIN-26NOV23LACHOU",
+   "lane": "nba_winmargin_live",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV23",
+   "ticker": "KXNBAWINMARGIN-26NOV23LACHOU-LAC6TO10",
+   "tip": "2026-11-24T01:30:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "yes:KXNBAWINMARGIN-26NOV23MEMCHA-CHA11TO20": {
    "bot_version": "wm-yes-v4",
    "bucket": "CHA11TO20",
@@ -25990,6 +26029,6 @@
    "yes_bid": 0.08
   }
  },
- "updated_at": "2026-11-24T00:30:43+00:00",
+ "updated_at": "2026-11-24T00:45:32+00:00",
  "version": 1
 }
