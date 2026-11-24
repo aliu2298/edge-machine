@@ -710,7 +710,7 @@ def build(blob=None, now=None):
         "Edge Machine · NBA",
         "NBA win margin lanes on Kalshi, their records and the games they trade. Research, not betting advice.",
         "nba",
-        (("rules", "Rules"), ("spotter", "Spotter"), ("qlines", "Quarter lines"), ("research", "Research"), ("games", "Games"), ("retired", "Retired"), ("method", "Method")),
+        (("rules", "Rules"), ("spotter", "Spotter"), ("qlines", "Club 90"), ("research", "Research"), ("games", "Games"), ("retired", "Retired"), ("method", "Method")),
         C.stamp(clock),
         body,
         script_src="./site.js",
@@ -741,12 +741,12 @@ def _spotter_section():
 
 
 def _qlines_section():
-    """NBA quarter lines (Sandbox), paper: six collapsed sections of game-total lines (nba_qlines_build.py). Never breaks the board."""
+    """Club 90 (NBA quarter and half lines, Sandbox), paper: six collapsed sections of game-total lines (nba_qlines_build.py). Never breaks the board."""
     try:
         import nba_qlines_build
         return nba_qlines_build.section()
     except Exception as exc:                                    # noqa: BLE001
-        return f'<section id="qlines" class="sp-section"><p class="sm mut">NBA quarter lines unavailable ({esc(type(exc).__name__)}).</p></section>'
+        return f'<section id="qlines" class="sp-section"><p class="sm mut">Club 90 unavailable ({esc(type(exc).__name__)}).</p></section>'
 
 
 def _research_section():

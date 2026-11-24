@@ -1,4 +1,4 @@
-"""The NBA page's "NBA quarter lines (Sandbox)" block (nba_qlines.py), paper only, percentages and cents. Six collapsed sections (1Q 2Q 3Q 4Q 1H 2H),
+"""The NBA page's "Club 90 · quarter & half lines" block (nba_qlines.py), paper only, percentages and cents. Six collapsed sections (1Q 2Q 3Q 4Q 1H 2H),
 each with the live qualifying-teams table, the lane's record beside its blind control, recent picks and a collapsed entries table. Never breaks the page:
 nba_pace_build wraps the call."""
 import datetime as dt
@@ -109,7 +109,7 @@ def section_html(state, games, sec):
     for d in Q.DIRS:
         body += (f'<h4 class="sm">Teams at {NEAR * 100:.0f}%+ · {esc(d)} {Q.LINES[sec][d]} · qualify at {Q.THRESHOLD * 100:.0f}% over {Q.MIN_GAMES}+ games</h4>{teams_table(games, sec, d)}'
                  f'<details class="section-disclosure"><summary><b>All teams · {esc(d)} {Q.LINES[sec][d]}</b><span>every team, {len(Q.team_rows(games, sec, d))} in all</span></summary>{teams_table(games, sec, d, True)}</details>')
-    return (f'<details class="fold nba-qline" id="qlines-{esc(sec.lower())}"><summary><h3>{esc(sec)} · {esc(Q.NAMES[sec])}</h3>'
+    return (f'<details class="fold nba-qline" id="qlines-{esc(sec.lower())}"><summary><h3>Club 90 · {esc(sec)}</h3>'
             f'<span class="sm mut">{esc(summary_line(state, sec))}</span></summary>'
             f'<p class="sm">Qualifying now (games before tonight) · {esc(head)}</p>'
             f'{record_table(state, sec)}{picks_html(state, sec)}{body}</details>')
@@ -124,7 +124,7 @@ def section(state=None, games_doc=None, now=None):
     entries = sum(len(_picks(state, Q.lane(sec, d))) for sec in Q.SECTIONS for d in Q.DIRS)
     through = max((g["day"] for g in games), default=None) or "not yet"
     return f"""<section id="qlines" class="sp-section">
-<div class="sp-section-head"><h2>NBA quarter lines (Sandbox)</h2><span class="sm mut">paper · {entries} entr{"y" if entries == 1 else "ies"} · tracker through {esc(through)}</span></div>
+<div class="sp-section-head"><h2>Club 90 · quarter &amp; half lines</h2><span class="sm mut">paper · {entries} entr{"y" if entries == 1 else "ies"} · tracker through {esc(through)}</span></div>
 <p class="sm">Paper only, on Kalshi's game-total lines for each quarter and half. A team qualifies on a line when its season hit rate on games before tonight is {Q.THRESHOLD * 100:.0f}% or better over {Q.MIN_GAMES}+ games; a game with a qualifying team is one entry. Over: the YES ask. Under: the NO price. The ask is read 15 to 40 minutes before the tip (spread 5c or less), held to settlement. If the line itself is not listed, the nearest rung 1 to 3 points harder is used. Each lane has a blind control: the same line bet in every game that night. Read at {Q.REVIEW_AT[0]} settled, then {Q.REVIEW_AT[1]}, against the control.</p>
 {sections}
 <p class="sm mut">Last read {esc(fmt.when(last) if last else "not yet")}{err}. Registered {esc(Q.REGISTERED)}.</p>
@@ -138,11 +138,11 @@ def index_html(state=None):
     for sec in Q.SECTIONS:
         for d in Q.DIRS:
             a, b = Q.stats(_picks(state, Q.lane(sec, d))), Q.stats(_picks(state, Q.lane(sec, d, True)))
-            body += (f'<tr data-lane="{esc(Q.lane(sec, d))}"><td><b>{esc(Q.NAMES[sec])} {esc(d)} {Q.LINES[sec][d]}</b></td>'
+            body += (f'<tr data-lane="{esc(Q.lane(sec, d))}"><td><b>Club 90 · {esc(sec)} {esc(d)} {Q.LINES[sec][d]}</b></td>'
                      f'<td><a href="./nba.html#qlines-{esc(sec.lower())}">NBA</a></td><td class="num">{_won_lost(a)}</td>'
                      f'<td class="num">{_pct(a["ret"], True)}</td><td class="num">{_won_lost(b)} · {_pct(b["ret"], True)}</td>'
                      f'<td>{esc(Q.status_text(a["n"]))}</td></tr>')
-    return ('<section id="qlines-index"><h2>NBA quarter lines</h2><p class="shell-kicker">Quarter and half game-total lines · teams at 90% or better over 10+ games · '
+    return ('<section id="qlines-index"><h2>Club 90 · quarter &amp; half lines</h2><p class="shell-kicker">Quarter and half game-total lines · teams at 90% or better over 10+ games · '
             'each lane is on the NBA page beside its blind control · paper · not in Production</p>'
             '<div class="tbl"><table class="shadow-index qline-index"><tr><th>Lane</th><th>Page</th><th class="num">Won-lost</th><th class="num">Return after fees</th>'
             '<th class="num">Blind control</th><th>Status</th></tr>' + body + '</table></div></section>')
