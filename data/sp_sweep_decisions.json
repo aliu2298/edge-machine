@@ -1935,7 +1935,8 @@
   "KXINX15M-26NOV241600-00": {
    "bot_version": "spsweep-live-v1",
    "day": "2026-11-24",
-   "decided_at": "2026-11-24T20:49:53+00:00",
+   "decided_at": "2026-11-24T21:00:36+00:00",
+   "exit": "settle",
    "fill_price": 0.1,
    "fill_s": 292.5,
    "fill_side": "no",
@@ -1943,8 +1944,9 @@
    "limit": 0.1,
    "open": "2026-11-24T20:45:00+00:00",
    "outcome": "entered",
-   "qty": 1.44,
+   "qty": 10.0,
    "rest_s": 1.77,
+   "result": "yes",
    "rule_ok": true,
    "sold": 0,
    "target": 0.3,
@@ -1952,6 +1954,6 @@
    "why": null
   }
  },
- "updated_at": "2026-11-24T20:49:53+00:00",
+ "updated_at": "2026-11-24T21:00:36+00:00",
  "version": 1
 }
