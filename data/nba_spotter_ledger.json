@@ -1,7 +1,7 @@
 {
  "box_through": "2026-11-24",
  "error": null,
- "last_run": "2026-11-24T23:30:29.027494+00:00",
+ "last_run": "2026-11-24T23:45:29.161399+00:00",
  "looks": {
   "401909305": {
    "at": "2026-11-20T22:45:25.302540+00:00",
@@ -189,6 +189,25 @@
    },
    "spread": 2.5,
    "usable": 152
+  },
+  "401909315": {
+   "at": "2026-11-24T23:45:29.161399+00:00",
+   "batch": 1,
+   "entered": {
+    "spotter_fade": 4,
+    "spotter_hold": 0,
+    "spotter_spike": 4
+   },
+   "game": "BOS @ WSH",
+   "night": "2026-11-24",
+   "out": 51,
+   "skipped": {
+    "no quote": 6,
+    "outside 5-60c": 76,
+    "wide": 1
+   },
+   "spread": 10.5,
+   "usable": 155
   },
   "401910007": {
    "at": "2026-11-18T23:12:11.631686+00:00",
@@ -1542,7 +1561,7 @@
   },
   "2026-11-24": {
    "spotter_fade": {
-    "n": 4,
+    "n": 8,
     "players": [
      [
       "4702382",
@@ -1558,6 +1577,22 @@
      ],
      [
       "4702382",
+      "reb"
+     ],
+     [
+      "5104155",
+      "m3"
+     ],
+     [
+      "4066354",
+      "pra"
+     ],
+     [
+      "5104155",
+      "ast"
+     ],
+     [
+      "5104155",
       "reb"
      ]
     ]
@@ -1580,7 +1615,7 @@
     ]
    },
    "spotter_spike": {
-    "n": 4,
+    "n": 8,
     "players": [
      [
       "3908845",
@@ -1597,6 +1632,22 @@
      [
       "4712849",
       "pts"
+     ],
+     [
+      "4251",
+      "pts"
+     ],
+     [
+      "4251",
+      "reb"
+     ],
+     [
+      "4397424",
+      "reb"
+     ],
+     [
+      "5175647",
+      "reb"
      ]
     ]
    }
@@ -2947,6 +2998,106 @@
      "ticker": "KXNBAREB-26NOV24DETORL-ORLTDASILVA23-4",
      "unit": "rebounds",
      "why": "minutes up on last season",
+     "yes_ask": 0.5
+    },
+    {
+     "bid": 0.56,
+     "edge": 0.1029,
+     "entered": "2026-11-24T23:45:29.161399+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "spotter_fade:KXNBA3PT-26NOV24BOSWAS-WASBCOULIBALY0-1",
+     "lead_min": 74.5,
+     "night": "2026-11-24",
+     "p": 0.5329,
+     "pid": "5104155",
+     "player": "Bilal Coulibaly",
+     "price": 0.44,
+     "rule": "spotter_fade",
+     "rung": 1,
+     "side": "no",
+     "start": "2026-11-25T01:00:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "WSH",
+     "ticker": "KXNBA3PT-26NOV24BOSWAS-WASBCOULIBALY0-1",
+     "unit": "threes",
+     "why": "fewer shots than last season",
+     "yes_ask": 0.57
+    },
+    {
+     "bid": 0.55,
+     "edge": 0.1005,
+     "entered": "2026-11-24T23:45:29.161399+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "spotter_fade:KXNBAPRA-26NOV24BOSWAS-BOSPPRITCHARD11-20",
+     "lead_min": 74.5,
+     "night": "2026-11-24",
+     "p": 0.5305,
+     "pid": "4066354",
+     "player": "Payton Pritchard",
+     "price": 0.45,
+     "rule": "spotter_fade",
+     "rung": 20,
+     "side": "no",
+     "start": "2026-11-25T01:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "BOS",
+     "ticker": "KXNBAPRA-26NOV24BOSWAS-BOSPPRITCHARD11-20",
+     "unit": "points+rebounds+assists",
+     "why": "came off the bench last game",
+     "yes_ask": 0.57
+    },
+    {
+     "bid": 0.37,
+     "edge": 0.0977,
+     "entered": "2026-11-24T23:45:29.161399+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "spotter_fade:KXNBAAST-26NOV24BOSWAS-WASBCOULIBALY0-2",
+     "lead_min": 74.5,
+     "night": "2026-11-24",
+     "p": 0.7177,
+     "pid": "5104155",
+     "player": "Bilal Coulibaly",
+     "price": 0.63,
+     "rule": "spotter_fade",
+     "rung": 2,
+     "side": "no",
+     "start": "2026-11-25T01:00:00+00:00",
+     "stat": "ast",
+     "status": "open",
+     "team": "WSH",
+     "ticker": "KXNBAAST-26NOV24BOSWAS-WASBCOULIBALY0-2",
+     "unit": "assists",
+     "why": "fewer shots than last season",
+     "yes_ask": 0.38
+    },
+    {
+     "bid": 0.49,
+     "edge": 0.0918,
+     "entered": "2026-11-24T23:45:29.161399+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "spotter_fade:KXNBAREB-26NOV24BOSWAS-WASBCOULIBALY0-4",
+     "lead_min": 74.5,
+     "night": "2026-11-24",
+     "p": 0.5918,
+     "pid": "5104155",
+     "player": "Bilal Coulibaly",
+     "price": 0.51,
+     "rule": "spotter_fade",
+     "rung": 4,
+     "side": "no",
+     "start": "2026-11-25T01:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "WSH",
+     "ticker": "KXNBAREB-26NOV24BOSWAS-WASBCOULIBALY0-4",
+     "unit": "rebounds",
+     "why": "fewer shots than last season",
      "yes_ask": 0.5
     }
    ]
@@ -4311,6 +4462,106 @@
      "unit": "threes",
      "why": "drawn at random from this game's rungs at about the pick's price, NO side",
      "yes_ask": 0.54
+    },
+    {
+     "bid": 0.53,
+     "entered": "2026-11-24T23:45:29.161399+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "spotter_fade_blind:KXNBAPRA-26NOV24BOSWAS-WASADYBANTSA4-25",
+     "lead_min": 74.5,
+     "matches": "spotter_fade:KXNBA3PT-26NOV24BOSWAS-WASBCOULIBALY0-1",
+     "night": "2026-11-24",
+     "p": null,
+     "pid": "5142718",
+     "player": "AJ Dybantsa",
+     "price": 0.47,
+     "rule": "spotter_fade_blind",
+     "rung": 25,
+     "side": "no",
+     "start": "2026-11-25T01:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "WSH",
+     "ticker": "KXNBAPRA-26NOV24BOSWAS-WASADYBANTSA4-25",
+     "unit": "points+rebounds+assists",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.54
+    },
+    {
+     "bid": 0.55,
+     "entered": "2026-11-24T23:45:29.161399+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "spotter_fade_blind:KXNBAREB-26NOV24BOSWAS-WASASARR20-6",
+     "lead_min": 74.5,
+     "matches": "spotter_fade:KXNBAPRA-26NOV24BOSWAS-BOSPPRITCHARD11-20",
+     "night": "2026-11-24",
+     "p": null,
+     "pid": "5160992",
+     "player": "Alex Sarr",
+     "price": 0.45,
+     "rule": "spotter_fade_blind",
+     "rung": 6,
+     "side": "no",
+     "start": "2026-11-25T01:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "WSH",
+     "ticker": "KXNBAREB-26NOV24BOSWAS-WASASARR20-6",
+     "unit": "rebounds",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.56
+    },
+    {
+     "bid": 0.35,
+     "entered": "2026-11-24T23:45:29.161399+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "spotter_fade_blind:KXNBA3PT-26NOV24BOSWAS-WASADYBANTSA4-2",
+     "lead_min": 74.5,
+     "matches": "spotter_fade:KXNBAAST-26NOV24BOSWAS-WASBCOULIBALY0-2",
+     "night": "2026-11-24",
+     "p": null,
+     "pid": "5142718",
+     "player": "AJ Dybantsa",
+     "price": 0.65,
+     "rule": "spotter_fade_blind",
+     "rung": 2,
+     "side": "no",
+     "start": "2026-11-25T01:00:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "WSH",
+     "ticker": "KXNBA3PT-26NOV24BOSWAS-WASADYBANTSA4-2",
+     "unit": "threes",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.36
+    },
+    {
+     "bid": 0.49,
+     "entered": "2026-11-24T23:45:29.161399+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "spotter_fade_blind:KXNBAAST-26NOV24BOSWAS-BOSPGEORGE13-4",
+     "lead_min": 74.5,
+     "matches": "spotter_fade:KXNBAREB-26NOV24BOSWAS-WASBCOULIBALY0-4",
+     "night": "2026-11-24",
+     "p": null,
+     "pid": "4251",
+     "player": "Paul George",
+     "price": 0.51,
+     "rule": "spotter_fade_blind",
+     "rung": 4,
+     "side": "no",
+     "start": "2026-11-25T01:00:00+00:00",
+     "stat": "ast",
+     "status": "open",
+     "team": "BOS",
+     "ticker": "KXNBAAST-26NOV24BOSWAS-BOSPGEORGE13-4",
+     "unit": "assists",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.5
     }
    ]
   },
@@ -9116,6 +9367,102 @@
      "ticker": "KXNBAPTS-26NOV24DETORL-ORLABLACK0-15",
      "unit": "points",
      "why": "his season average is above the price"
+    },
+    {
+     "bid": 0.45,
+     "edge": 0.0739,
+     "entered": "2026-11-24T23:45:29.161399+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "spotter_spike:KXNBAPTS-26NOV24BOSWAS-BOSPGEORGE13-20",
+     "lead_min": 74.5,
+     "night": "2026-11-24",
+     "p": 0.5739,
+     "pid": "4251",
+     "player": "Paul George",
+     "price": 0.47,
+     "rule": "spotter_spike",
+     "rung": 20,
+     "start": "2026-11-25T01:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.94,
+     "team": "BOS",
+     "ticker": "KXNBAPTS-26NOV24BOSWAS-BOSPGEORGE13-20",
+     "unit": "points",
+     "why": "shots up on last season"
+    },
+    {
+     "bid": 0.45,
+     "edge": 0.0428,
+     "entered": "2026-11-24T23:45:29.161399+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "spotter_spike:KXNBAREB-26NOV24BOSWAS-BOSPGEORGE13-6",
+     "lead_min": 74.5,
+     "night": "2026-11-24",
+     "p": 0.5428,
+     "pid": "4251",
+     "player": "Paul George",
+     "price": 0.46,
+     "rule": "spotter_spike",
+     "rung": 6,
+     "start": "2026-11-25T01:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "target": 0.92,
+     "team": "BOS",
+     "ticker": "KXNBAREB-26NOV24BOSWAS-BOSPGEORGE13-6",
+     "unit": "rebounds",
+     "why": "a steady player in this stat"
+    },
+    {
+     "bid": 0.4,
+     "edge": 0.0422,
+     "entered": "2026-11-24T23:45:29.161399+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "spotter_spike:KXNBAREB-26NOV24BOSWAS-BOSNQUETA88-10",
+     "lead_min": 74.5,
+     "night": "2026-11-24",
+     "p": 0.5422,
+     "pid": "4397424",
+     "player": "Neemias Queta",
+     "price": 0.42,
+     "rule": "spotter_spike",
+     "rung": 10,
+     "start": "2026-11-25T01:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "target": 0.84,
+     "team": "BOS",
+     "ticker": "KXNBAREB-26NOV24BOSWAS-BOSNQUETA88-10",
+     "unit": "rebounds",
+     "why": "his projection is below the price"
+    },
+    {
+     "bid": 0.47,
+     "edge": 0.0298,
+     "entered": "2026-11-24T23:45:29.161399+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "spotter_spike:KXNBAREB-26NOV24BOSWAS-BOSHGONZALEZ28-4",
+     "lead_min": 74.5,
+     "night": "2026-11-24",
+     "p": 0.5298,
+     "pid": "5175647",
+     "player": "Hugo Gonz\u00e1lez",
+     "price": 0.48,
+     "rule": "spotter_spike",
+     "rung": 4,
+     "start": "2026-11-25T01:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "target": 0.96,
+     "team": "BOS",
+     "ticker": "KXNBAREB-26NOV24BOSWAS-BOSHGONZALEZ28-4",
+     "unit": "rebounds",
+     "why": "his projection is below the price"
     }
    ]
   },
@@ -10757,17 +11104,107 @@
      "ticker": "KXNBAAST-26NOV24DETORL-ORLWCARTER34-2",
      "unit": "assists",
      "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.47,
+     "entered": "2026-11-24T23:45:29.161399+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "spotter_spike_blind:KXNBAPTS-26NOV24BOSWAS-WASTYOUNG3-15",
+     "lead_min": 74.5,
+     "matches": "spotter_spike:KXNBAPTS-26NOV24BOSWAS-BOSPGEORGE13-20",
+     "night": "2026-11-24",
+     "p": null,
+     "pid": "4277905",
+     "player": "Trae Young",
+     "price": 0.49,
+     "rule": "spotter_spike_blind",
+     "rung": 15,
+     "start": "2026-11-25T01:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.98,
+     "team": "WSH",
+     "ticker": "KXNBAPTS-26NOV24BOSWAS-WASTYOUNG3-15",
+     "unit": "points",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.44,
+     "entered": "2026-11-24T23:45:29.161399+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "spotter_spike_blind:KXNBAAST-26NOV24BOSWAS-WASASARR20-2",
+     "lead_min": 74.5,
+     "matches": "spotter_spike:KXNBAREB-26NOV24BOSWAS-BOSPGEORGE13-6",
+     "night": "2026-11-24",
+     "p": null,
+     "pid": "5160992",
+     "player": "Alex Sarr",
+     "price": 0.45,
+     "rule": "spotter_spike_blind",
+     "rung": 2,
+     "start": "2026-11-25T01:00:00+00:00",
+     "stat": "ast",
+     "status": "open",
+     "target": 0.9,
+     "team": "WSH",
+     "ticker": "KXNBAAST-26NOV24BOSWAS-WASASARR20-2",
+     "unit": "assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.42,
+     "entered": "2026-11-24T23:45:29.161399+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "spotter_spike_blind:KXNBAPRA-26NOV24BOSWAS-BOSPGEORGE13-30",
+     "lead_min": 74.5,
+     "matches": "spotter_spike:KXNBAREB-26NOV24BOSWAS-BOSNQUETA88-10",
+     "night": "2026-11-24",
+     "p": null,
+     "pid": "4251",
+     "player": "Paul George",
+     "price": 0.44,
+     "rule": "spotter_spike_blind",
+     "rung": 30,
+     "start": "2026-11-25T01:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "target": 0.88,
+     "team": "BOS",
+     "ticker": "KXNBAPRA-26NOV24BOSWAS-BOSPGEORGE13-30",
+     "unit": "points+rebounds+assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.47,
+     "entered": "2026-11-24T23:45:29.161399+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "spotter_spike_blind:KXNBAPTS-26NOV24BOSWAS-WASTYOUNG3-15",
+     "lead_min": 74.5,
+     "matches": "spotter_spike:KXNBAREB-26NOV24BOSWAS-BOSHGONZALEZ28-4",
+     "night": "2026-11-24",
+     "p": null,
+     "pid": "4277905",
+     "player": "Trae Young",
+     "price": 0.49,
+     "rule": "spotter_spike_blind",
+     "rung": 15,
+     "start": "2026-11-25T01:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.98,
+     "team": "WSH",
+     "ticker": "KXNBAPTS-26NOV24BOSWAS-WASTYOUNG3-15",
+     "unit": "points",
+     "why": "drawn at random from this game's rungs at about the pick's price"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-22T23:45:25.825454+00:00",
-   "box": 0,
-   "due": 1,
-   "new": 0
-  },
   {
    "at": "2026-11-23T00:00:29.084945+00:00",
    "box": 0,
@@ -11067,6 +11504,12 @@
    "box": 0,
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-24T23:45:29.161399+00:00",
+   "box": 0,
+   "due": 1,
+   "new": 16
   }
  ],
  "schedule": [
