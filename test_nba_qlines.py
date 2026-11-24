@@ -189,5 +189,62 @@ check("no inline style or SVG", ("style=" in html or "<svg" in html), False)
 check("display names: each fold and index row is Club 90 · <section>, lane ids unchanged", (all(f"<h3>Club 90 · {x}</h3>" in html for x in Q.SECTIONS), "Club 90 · 3Q over 53.5" in B.index_html(st), "nba_qlines" in B.index_html(st) or "qlines_3Q_over" in B.index_html(st)), (True, True, True))
 check("an empty ledger still renders", "<h2>Club 90 · quarter &amp; half lines</h2>" in B.section(Q.empty(), {"games": []}), True)
 
+# ---- the one-off backfill of the first slate (2026-11-23)
+print("\nbackfill")
+BTIP = dt.datetime(2026, 11, 24, 0, 30, tzinfo=UTC)                          # a Nov 23 (ET) tip
+bg = lambda i, h, a, day="2026-11-23": dict(id=str(i), t=BTIP.timestamp(), day=day, home=h, away=a, ls={h: [35] * 4, a: [35] * 4})   # noqa: E731
+past = [game(i, ds[i], "AAA", f"Q{i}", 35, 35) for i in range(10)]
+for g in past:
+    g["ls"] = {"AAA": [35, 35, 35, 35], g["away"]: [35, 35, 35, 35]}
+bdoc = {"games": past + [bg(900, "AAA", "BBB"), bg(901, "XXX", "YYY", day="2026-11-22")]}
+ev = "KXNBA3QTOTAL-26NOV23BBBAAA"
+settled = {"markets": [dict(ticker=ev + "-54", event_ticker=ev, floor_strike=54.5, status="finalized", result="yes"),
+                       dict(ticker=ev + "-56", event_ticker=ev, floor_strike=56.5, status="finalized", result="yes"),
+                       dict(ticker=ev + "-65", event_ticker=ev, floor_strike=64.5, status="finalized", result="no")], "cursor": ""}
+tgt = int((BTIP - dt.timedelta(minutes=30)).timestamp())
+cand = lambda end, b, a: {"end_period_ts": end, "yes_bid": {"close_dollars": str(b)}, "yes_ask": {"close_dollars": str(a)}}   # noqa: E731
+
+
+def bfetch(path):
+    if "status=settled" in path:
+        return settled if "KXNBA3QTOTAL" in path else {"markets": [], "cursor": ""}
+    if "/candlesticks" in path and "KXNBA3QTOTAL" in path:
+        return {"market_tickers": [ev + "-54", ev + "-56", ev + "-65"],
+                "market_candlesticks": [[cand(tgt - 3600, 0.50, 0.52), cand(tgt - 60, 0.60, 0.62), cand(tgt + 600, 0.10, 0.90)], [cand(tgt - 60, 0.20, 0.40)],
+                                        [cand(tgt - 60, 0.30, 0.45)]]}
+    return {"market_tickers": [], "market_candlesticks": []}
+
+
+stb = Q.empty()
+new = Q.backfill_slate(stb, bdoc, BTIP + dt.timedelta(hours=6), fetch=bfetch)
+lane_rows = stb["rules"]["qlines_3Q_over"]["picks"]
+snap = dict(lane_rows[0])
+check("the candle quote at tip-30 is the price: the last candle at or before it (not the later wide one)", [(p["rung"], p["price"], p["offset"]) for p in lane_rows], [(54.5, 0.62, 1)])
+check("a rung whose candle spread is wider than 5c is the live 'wide' skip", (len(stb["rules"]["qlines_3Q_under"]["picks"]), stb["looks"]["900"]["skipped"].get("3Q under: wide")), (0, 1))
+check("every row is tagged backfilled with the source, entered at tip-30", all(p.get("backfilled") is True and p["source"] == "candles@tip-30" and p["lead_min"] == 30.0
+      for ln in stb["rules"].values() for p in ln["picks"]), True)
+check("only Nov 23 games are read (the Nov 22 game is not)", sorted(stb["looks"]), ["900"])
+check("the qualifier is the lane's own: AAA at 10/10 before the night, so a lane row and a control row", (len(lane_rows), len(stb["rules"]["qlines_3Q_over_blind"]["picks"])), (1, 1))
+check("it settles normally from Kalshi's result", Q.settle(stb, BTIP + dt.timedelta(hours=6), lambda p: {"market": dict(status="finalized", result="yes")}) == []
+      and lane_rows[0]["status"], "won")
+check("a second pass adds nothing (a game already read is left alone)", Q.backfill_slate(stb, bdoc, BTIP, fetch=bfetch), [])
+live = Q.empty()
+g_live = dict(id="900", tip=BTIP, home="AAA", away="BBB")
+mk_live = {s: [] for s in Q.SECTIONS}
+mk_live["3Q"] = [dict(ticker=ev + "-54", event_ticker=ev, floor_strike=54.5, yes_bid_dollars="0.60", yes_ask_dollars="0.62")]
+Q.look_many(live, bdoc, [g_live], mk_live, BTIP - dt.timedelta(minutes=30))
+lr = live["rules"]["qlines_3Q_over"]["picks"][0]
+check("the backfill reuses look_many: the same row a live read at tip-30 writes, but for the tag", {k: v for k, v in snap.items() if k not in ("backfilled", "source")}, lr)
+try:
+    Q.backfill_slate(Q.empty(), bdoc, BTIP, day="2026-11-24", fetch=bfetch)
+    refused = False
+except ValueError:
+    refused = True
+check("the date is hard-coded: any other day is refused", refused, True)
+page = B.section(stb, bdoc)
+check("the page marks backfilled rows and keeps the count visible", ("· backfilled</span>" in page, "(1 backfilled)" in page, "1 of 1 entries backfilled" in page), (True, True, True))
+check("a ledger with no backfill shows no marker", ("backfilled" in B.section(Q.empty(), {"games": []})), False)
+check("the backfill copy passes the public guard", [m.group(0) for m in sandbox_audit.COPY_RE.finditer(page)], [])
+
 print("\nALL PASS" if not FAILS else f"\n{len(FAILS)} FAILED: {FAILS}")
 sys.exit(1 if FAILS else 0)

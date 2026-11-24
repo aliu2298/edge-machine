@@ -276,8 +276,10 @@ def _row(sec, d, blind, g, night, rung, now, extra):
                 status="open", **extra)
 
 
-def look_many(state, games_doc, due_games, markets, now):
-    """Enter the lane and blind rows of every game read in this run. Returns the new row ids."""
+def look_many(state, games_doc, due_games, markets, now, tag=None):
+    """Enter the lane and blind rows of every game read in this run. Returns the new row ids. `tag` (the one-off Nov 23 backfill's
+    backfilled / source fields) is merged into every row and look this call writes."""
+    tag = tag or {}
     new = []
     for g in due_games:
         night = night_of(g["tip"])
@@ -294,18 +296,18 @@ def look_many(state, games_doc, due_games, markets, now):
                 rows = team_rows(games_doc["games"], sec, d, before=night)
                 qual = [t for t in (g["home"], g["away"]) if (rows.get(t) or {}).get("qualifies")]
                 info = {t: f"{rows[t]['hits']}/{rows[t]['n']}" for t in (g["home"], g["away"]) if t in rows}
-                blind = _row(sec, d, True, g, night, rung, now, dict(teams=info))
+                blind = _row(sec, d, True, g, night, rung, now, dict(teams=info, **tag))
                 state["rules"][lane(sec, d, True)]["picks"].append(blind)
                 new.append(blind["id"])
                 entered[f"{sec} {d} blind"] += 1
                 if qual:
-                    pk = _row(sec, d, False, g, night, rung, now, dict(qualifying=qual, teams=info, matches=blind["id"]))
+                    pk = _row(sec, d, False, g, night, rung, now, dict(qualifying=qual, teams=info, matches=blind["id"], **tag))
                     state["rules"][lane(sec, d)]["picks"].append(pk)
                     new.append(pk["id"])
                     entered[f"{sec} {d}"] += 1
         if seen or now >= g["tip"] - dt.timedelta(minutes=WINDOW_MIN[0] + 1):
             state["looks"][g["id"]] = dict(at=now.isoformat(), game=f"{g['away']} @ {g['home']}", night=night, priced=seen, skipped=dict(skips),
-                                           entered=dict(entered), lead_min=round((g["tip"] - now).total_seconds() / 60, 1))
+                                           entered=dict(entered), lead_min=round((g["tip"] - now).total_seconds() / 60, 1), **tag)
     return new
 
 
@@ -366,6 +368,94 @@ def status_text(n):
     return f"{n} settled · second read ({REVIEW_AT[1]}) due"
 
 
+# ---------------------------------------------------------------- the one-off backfill of the first slate (2026-11-23)
+# Club 90 was pre-registered before the Nov 23 tips but its first slate took no live read (the GitHub cron missed every window). That one night is
+# recorded from Kalshi's 1-minute candles at tip-30, through the lane's OWN code path (team_rows before the night, pick_rung, MAX_SPREAD, the
+# offsets, the blind controls, look_many). Every row says so: backfilled true, source "candles@tip-30". There is no general switch: the date is fixed.
+BACKFILL_DAY = "2026-11-23"
+BACKFILL_SOURCE = "candles@tip-30"
+BACKFILL_LEAD_MIN = 30
+BACKFILL_LOOKBACK_H = 6
+
+
+def candle_quote(candles, at_ts):
+    """(bid, ask) from the last 1-minute candle ending at or before at_ts (+1 minute) with a two-sided closing quote, else None. A candle is written
+    when the quote or a trade changes, so the last one at or before the moment is the quote standing then."""
+    best = None
+    for c in sorted(candles or [], key=lambda c: c.get("end_period_ts") or 0):
+        end = c.get("end_period_ts")
+        if not end or end > at_ts + 60:
+            continue
+        px = lambda k: D.number(((c.get(k) or {}).get("close_dollars", (c.get(k) or {}).get("close")))) if isinstance(c.get(k), dict) else None   # noqa: E731
+        b, a = px("yes_bid"), px("yes_ask")
+        if b is not None and a is not None:
+            best = (b, a)
+    return best
+
+
+def settled_markets(day_tags, fetch=D.get):
+    """{section: [market]}: the settled markets of each section's series for events dated in day_tags."""
+    out = {}
+    for sec, cfg in LINES.items():
+        v, cur = [], None
+        for _ in range(6):
+            r = fetch(f"markets?series_ticker={cfg['series']}&status=settled&limit=1000" + (f"&cursor={urllib.parse.quote(cur, safe='')}" if cur else ""))
+            v += r.get("markets") or []
+            cur = r.get("cursor")
+            if not cur or not r.get("markets"):
+                break
+        out[sec] = [m for m in v if m["event_ticker"].split("-")[1][:7] in day_tags]
+    return out
+
+
+def candle_markets(markets, g, target, fetch=D.get):
+    """The game's markets with their YES bid and ask set to the candle quote at `target` (a datetime); a market with no candle quote gets none, so
+    pick_rung logs it exactly as a live read with no quote would."""
+    ts = int(target.timestamp())
+    out = {}
+    for sec, ms in markets.items():
+        mine = [m for m in ms if event_teams(m) == (g["away"], g["home"])]
+        by_event = {}
+        for m in mine:
+            by_event.setdefault(m["event_ticker"], []).append(m)
+        out[sec] = []
+        for ev, group in by_event.items():
+            try:
+                d = fetch(f"series/{LINES[sec]['series']}/events/{ev}/candlesticks?start_ts={ts - BACKFILL_LOOKBACK_H * 3600}&end_ts={ts + 60}&period_interval=1")
+                cs = dict(zip(d.get("market_tickers") or [], d.get("market_candlesticks") or []))
+            except Exception:                                       # noqa: BLE001
+                cs = {}
+            for m in group:
+                q = candle_quote(cs.get(m["ticker"]), ts)
+                out[sec].append(dict(m, yes_bid_dollars=None if q is None else q[0], yes_ask_dollars=None if q is None else q[1]))
+    return out
+
+
+def backfill_slate(state, games_doc, now=None, day=BACKFILL_DAY, fetch=D.get):
+    """The one-off: record the games of BACKFILL_DAY (and only that day) at tip-30 from candles, then settle normally. Games already read live are left
+    alone. Returns the new row ids. Any other `day` is refused."""
+    if day != BACKFILL_DAY:
+        raise ValueError(f"the backfill is for {BACKFILL_DAY} only")
+    now = now or dt.datetime.now(dt.timezone.utc)
+    games = [g for g in games_doc["games"] if g["day"] == BACKFILL_DAY]
+    if not games:
+        return []
+    tag = dict(backfilled=True, source=BACKFILL_SOURCE)
+    tips = {g["id"]: dt.datetime.fromtimestamp(g["t"], dt.timezone.utc) for g in games}
+    tags = {S.day_tag(dt.date.fromisoformat(BACKFILL_DAY))}
+    markets = settled_markets(tags, fetch)
+    new = []
+    for g in sorted(games, key=lambda g: (g["t"], g["id"])):
+        if g["id"] in state["looks"]:
+            continue
+        tip = tips[g["id"]]
+        target = tip - dt.timedelta(minutes=BACKFILL_LEAD_MIN)
+        game = dict(id=g["id"], tip=tip, home=g["home"], away=g["away"])
+        new += look_many(state, games_doc, [game], candle_markets(markets, game, target, fetch), target, tag=tag)
+    state["backfill"] = dict(day=BACKFILL_DAY, source=BACKFILL_SOURCE, at=now.isoformat(), games=len(games), rows=len(new))
+    return new
+
+
 # ---------------------------------------------------------------- run
 def slate(now, get=S.espn_get):
     """Games not yet started with the tip inside the next day: [dict(id, tip, home, away)]."""
@@ -414,9 +504,19 @@ def run(state, games_doc, now=None, get=S.espn_get, fetch=D.get):
 
 
 def main(argv=None):
+    argv = sys.argv[1:] if argv is None else argv
     now = dt.datetime.now(dt.timezone.utc)
     games_doc = load_games()
     state = load()
+    if "--backfill-2026-11-23" in argv:                 # the one-off (no other date exists)
+        refresh_games(games_doc, now)
+        new = backfill_slate(state, games_doc, now)
+        errs = settle(state, now)
+        state["error"] = "; ".join(errs)[:1000] or None
+        save(state)
+        save_games(games_doc)
+        print("nba_qlines backfill", state["backfill"], "new", len(new), "errors", errs)
+        return 0
     new, errs = run(state, games_doc, now)
     save(state)
     save_games(games_doc)

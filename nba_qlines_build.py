@@ -69,7 +69,8 @@ def _row(p):
         res += f" · {_pct(p['ret'], True)}"
     who = "/".join(code(t) for t in p.get("qualifying") or []) or "blind"
     off = "" if not p.get("offset") else f" (line {p['line']}, rung {p['rung']})"
-    return (f'<tr><td>{esc(fmt.when(p["start"]))}</td><td>{esc(game_name(p["game"]))}</td><td>{esc(p["direction"])} {p["rung"]}{esc(off)}</td>'
+    mark = ' <span class="sm mut">· backfilled</span>' if p.get("backfilled") else ""
+    return (f'<tr><td>{esc(fmt.when(p["start"]))}</td><td>{esc(game_name(p["game"]))}</td><td>{esc(p["direction"])} {p["rung"]}{esc(off)}{mark}</td>'
             f'<td class="num">{p["price"] * 100:.0f}c</td><td>{esc(who)}</td><td>{esc(res)}</td></tr>')
 
 
@@ -88,6 +89,20 @@ def picks_html(state, sec):
     return (f'<h4 class="sm">Recent picks</h4>{HEAD.format(recent)}'
             f'<details class="section-disclosure"><summary><b>All entries</b><span>{len(lane_picks)} in this section</span></summary>{HEAD.format(allrows)}</details>'
             f'<details class="section-disclosure"><summary><b>Blind control rows</b><span>latest 60 of {len(blind)}</span></summary>{HEAD.format(blindrows)}</details>')
+
+
+def backfill_counts(state, sec=None):
+    """(backfilled, all) lane entries (never the controls), for one section or every one."""
+    rows = [p for s in ([sec] if sec else Q.SECTIONS) for d in Q.DIRS for p in _picks(state, Q.lane(s, d))]
+    return sum(1 for p in rows if p.get("backfilled")), len(rows)
+
+
+def backfill_note(state, sec=None):
+    nb, n = backfill_counts(state, sec)
+    if not nb:
+        return ""
+    return (f'<p class="sm mut">{nb} of {n} entries backfilled: the first slate ({esc(Q.BACKFILL_DAY)}) took no live read, so it was recorded afterwards from 1-minute quotes '
+            f'at 30 minutes before each tip, through the same rules. The other {n - nb} were live reads. Backfilled rows carry a marker.</p>')
 
 
 def summary_line(state, sec):
@@ -112,7 +127,7 @@ def section_html(state, games, sec):
     return (f'<details class="fold nba-qline" id="qlines-{esc(sec.lower())}"><summary><h3>Club 90 · {esc(sec)}</h3>'
             f'<span class="sm mut">{esc(summary_line(state, sec))}</span></summary>'
             f'<p class="sm">Qualifying now (games before tonight) · {esc(head)}</p>'
-            f'{record_table(state, sec)}{picks_html(state, sec)}{body}</details>')
+            f'{backfill_note(state, sec)}{record_table(state, sec)}{picks_html(state, sec)}{body}</details>')
 
 
 def section(state=None, games_doc=None, now=None):
@@ -121,12 +136,14 @@ def section(state=None, games_doc=None, now=None):
     last = state.get("last_run")
     err = f" · {esc(state['error'])}" if state.get("error") else ""
     sections = "".join(section_html(state, games, sec) for sec in Q.SECTIONS)
+    nb, entries = backfill_counts(state)
+    backfilled = f" ({nb} backfilled)" if nb else ""
     entries = sum(len(_picks(state, Q.lane(sec, d))) for sec in Q.SECTIONS for d in Q.DIRS)
     through = max((g["day"] for g in games), default=None) or "not yet"
     return f"""<section id="qlines" class="sp-section">
-<div class="sp-section-head"><h2>Club 90 · quarter &amp; half lines</h2><span class="sm mut">paper · {entries} entr{"y" if entries == 1 else "ies"} · tracker through {esc(through)}</span></div>
+<div class="sp-section-head"><h2>Club 90 · quarter &amp; half lines</h2><span class="sm mut">paper · {entries} entr{"y" if entries == 1 else "ies"}{backfilled} · tracker through {esc(through)}</span></div>
 <p class="sm">Paper only, on Kalshi's game-total lines for each quarter and half. A team qualifies on a line when its season hit rate on games before tonight is {Q.THRESHOLD * 100:.0f}% or better over {Q.MIN_GAMES}+ games; a game with a qualifying team is one entry. Over: the YES ask. Under: the NO price. The ask is read 15 to 40 minutes before the tip (spread 5c or less), held to settlement. If the line itself is not listed, the nearest rung 1 to 3 points harder is used. Each lane has a blind control: the same line bet in every game that night. Read at {Q.REVIEW_AT[0]} settled, then {Q.REVIEW_AT[1]}, against the control.</p>
-{sections}
+{backfill_note(state)}{sections}
 <p class="sm mut">Last read {esc(fmt.when(last) if last else "not yet")}{err}. Registered {esc(Q.REGISTERED)}.</p>
 </section>"""
 
