@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-24T09:01:47+00:00",
+ "board_built_at": "2026-11-24T10:01:58+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -189,6 +189,41 @@
    "sport": "tennis",
    "status": "miss"
   },
+  "2026-11-23|Gabriel Ghetu|Ioannis Kountourakis|Gabriel Ghetu to win \u00b7 Challenger underdog who has won here": {
+   "away": "Ioannis Kountourakis",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-23",
+   "edge_at_log": null,
+   "first_seen": "2026-11-23",
+   "headline": "Gabriel Ghetu to win",
+   "home": "Gabriel Ghetu",
+   "id": "2026-11-23|Gabriel Ghetu|Ioannis Kountourakis|Gabriel Ghetu to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-23T16:45Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Gabriel Ghetu v Ioannis Kountourakis",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.82,
+   "published_at": "2026-11-24T10:01:58+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Gabriel Ghetu to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV23GHEKOU",
+    "market": "KXATPCHALLENGERMATCH-26NOV23GHEKOU-GHE",
+    "outcome": "Gabriel Ghetu",
+    "outcome_side": "yes",
+    "price_at_log": 0.82,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23GHEKOU-GHE",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "hit"
+  },
   "2026-11-23|Jeffrey Fradkin|Ofek Shimanov|Jeffrey Fradkin to win \u00b7 Challenger underdog who has won here": {
    "away": "Ofek Shimanov",
    "bet": {
@@ -329,6 +364,43 @@
    "sport": "tennis",
    "status": "miss"
   },
+  "2026-11-24|Anas Mazdrashki|Nikita Mashtakov|Anas Mazdrashki to win \u00b7 Challenger underdog who has won here": {
+   "away": "Nikita Mashtakov",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Anas Mazdrashki to win",
+   "home": "Anas Mazdrashki",
+   "id": "2026-11-24|Anas Mazdrashki|Nikita Mashtakov|Anas Mazdrashki to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T12:10Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T10:01:58+00:00",
+   "league": "Tennis",
+   "match": "Anas Mazdrashki v Nikita Mashtakov",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.43,
+   "published_at": "2026-11-24T10:01:58+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 128,
+   "route": {
+    "claim": "Anas Mazdrashki to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24MASMAZ",
+    "market": "KXATPCHALLENGERMATCH-26NOV24MASMAZ-MAZ",
+    "outcome": "Anas Mazdrashki",
+    "outcome_side": "yes",
+    "price_at_log": 0.43,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MASMAZ-MAZ",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
+  },
   "2026-11-24|Anton Chekhov|Vadym Ursu|Anton Chekhov to win \u00b7 Challenger underdog who has won here": {
    "away": "Vadym Ursu",
    "bet": {
@@ -343,8 +415,6 @@
    "id": "2026-11-24|Anton Chekhov|Vadym Ursu|Anton Chekhov to win \u00b7 Challenger underdog who has won here",
    "kickoff": "2026-11-24T11:00Z",
    "lane": "production",
-   "last_seen": "2026-11-24",
-   "last_seen_at": "2026-11-24T09:01:47+00:00",
    "league": "Tennis",
    "match": "Anton Chekhov v Vadym Ursu",
    "pair": "challenger_won_here|tennis",
@@ -364,7 +434,7 @@
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24URSCHE-CHE",
    "source": "challenger_won_here",
    "sport": "tennis",
-   "status": "pending"
+   "status": "miss"
   },
   "2026-11-24|Chen Dong|Derek Pham|Chen Dong to win \u00b7 Challenger underdog who has won here": {
    "away": "Derek Pham",
@@ -470,6 +540,80 @@
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "miss"
+  },
+  "2026-11-24|Joshua Sheehy|Diego Dedura|Joshua Sheehy to win \u00b7 Challenger underdog who has won here": {
+   "away": "Diego Dedura",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Joshua Sheehy to win",
+   "home": "Joshua Sheehy",
+   "id": "2026-11-24|Joshua Sheehy|Diego Dedura|Joshua Sheehy to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T12:10Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T10:01:58+00:00",
+   "league": "Tennis",
+   "match": "Joshua Sheehy v Diego Dedura",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.13,
+   "published_at": "2026-11-24T10:01:58+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 128,
+   "route": {
+    "claim": "Joshua Sheehy to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24DEDSHE",
+    "market": "KXATPCHALLENGERMATCH-26NOV24DEDSHE-SHE",
+    "outcome": "Joshua Sheehy",
+    "outcome_side": "yes",
+    "price_at_log": 0.13,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24DEDSHE-SHE",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
+  },
+  "2026-11-24|Philip Henning|Johannus Monday|Philip Henning to win \u00b7 Challenger underdog who has won here": {
+   "away": "Johannus Monday",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Philip Henning to win",
+   "home": "Philip Henning",
+   "id": "2026-11-24|Philip Henning|Johannus Monday|Philip Henning to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T12:10Z",
+   "lane": "production",
+   "last_seen": "2026-11-24",
+   "last_seen_at": "2026-11-24T10:01:58+00:00",
+   "league": "Tennis",
+   "match": "Philip Henning v Johannus Monday",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.62,
+   "published_at": "2026-11-24T10:01:58+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 128,
+   "route": {
+    "claim": "Philip Henning to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24MONHEN",
+    "market": "KXATPCHALLENGERMATCH-26NOV24MONHEN-HEN",
+    "outcome": "Philip Henning",
+    "outcome_side": "yes",
+    "price_at_log": 0.62,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MONHEN-HEN",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
   },
   "2026-11-24|Ryuki Matsuda|Kaichi Uchida|Ryuki Matsuda to win \u00b7 Challenger underdog who has won here": {
    "away": "Kaichi Uchida",
@@ -690,21 +834,21 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 19,
+    "leads": 23,
     "problem": null,
-    "routed": 19,
+    "routed": 23,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 18,
-   "sandbox_roi": -0.8834,
-   "sandbox_roi_fee": -0.8838,
+   "sandbox_n": 20,
+   "sandbox_roi": -0.8341,
+   "sandbox_roi_fee": -0.8352,
    "timing": {
     "late": [],
-    "timed": 16,
+    "timed": 19,
     "under_target": 0
    }
   }
@@ -713,5 +857,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-24T09:01:47+00:00"
+ "updated_at": "2026-11-24T10:01:58+00:00"
 }
