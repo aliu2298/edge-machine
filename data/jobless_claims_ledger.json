@@ -85,7 +85,7 @@
   },
   "KXJOBLESSCLAIMS-26NOV25": {
    "close": "2026-11-25T13:29:00+00:00",
-   "done": false,
+   "done": true,
    "entries": [
     {
      "ask_check": {
@@ -99,11 +99,15 @@
      },
      "at": "2026-11-25T11:22:00+00:00",
      "event": "KXJOBLESSCLAIMS-26NOV25",
+     "payout": 1.0,
      "price": 0.77,
+     "result": "no",
+     "roi": 0.2781,
      "side": "no",
      "strike": 205000.0,
      "ticker": "KXJOBLESSCLAIMS-26NOV25-205000",
-     "ts": 1795605720
+     "ts": 1795605720,
+     "won": true
     }
    ],
    "frozen": true,
@@ -111,7 +115,7 @@
   }
  },
  "lane": "jobless_no_70_85",
- "last_run": "2026-11-25T13:33:04.879687+00:00",
+ "last_run": "2026-11-25T14:33:01.870009+00:00",
  "registered": "2026-11-11",
  "since": "2026-11-12",
  "version": "jobless-v1"
