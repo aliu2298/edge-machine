@@ -14606,6 +14606,19 @@
    "yes_ask": 0.13,
    "yes_bid": 0.09
   },
+  "no:KXNBAWINMARGIN-26NOV25CHICHA-CHI21PLUS": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "CHI21PLUS",
+   "decided_at": "2026-11-25T23:15:10+00:00",
+   "event": "KXNBAWINMARGIN-26NOV25CHICHA",
+   "lane": "nba_wm_nofade",
+   "outcome": "skip",
+   "rule_ok": false,
+   "slate": "26NOV25",
+   "ticker": "KXNBAWINMARGIN-26NOV25CHICHA-CHI21PLUS",
+   "tip": "2026-11-26T00:00:00+00:00",
+   "why": "no tight read inside the entry window"
+  },
   "no:KXNBAWINMARGIN-26NOV25CHICHA-CHI6TO10": {
    "P": 0.92,
    "bot_version": "wm-nofade-v4",
@@ -25253,6 +25266,6 @@
    "yes_bid": 0.1
   }
  },
- "updated_at": "2026-11-25T23:00:45+00:00",
+ "updated_at": "2026-11-25T23:15:10+00:00",
  "version": 1
 }
