@@ -118,6 +118,11 @@ perps = {"events": [dict(status="open", ticker="KXBAPERP", day="2026-11-20", ent
          "btts": {"T1:X": dict(status="open", event="X", start="2026-11-21T16:15Z", quote=False)}}
 check("a perp held over the weekend and a no-quote shadow are not stuck; a perp past any time stop is",
       [t for t, h in SP.scan(perps, at(2026, 11, 22, 8, 30), 12.0)[0]], ["KXOLDPERP"])
+# 2026-11-25: a weekly gas pick (start = the offer time, closes Nov 30) was reported stuck 36h after its offer.
+gas = {"quotes": {"g": dict(status="open", market_id="KXAAAGASW-26NOV30-3.4800", start="2026-11-23T21:01:19+00:00", closes="2026-11-30T04:59:00Z")}}
+check("a pick whose market has not closed is not stuck; 12h after the close it is",
+      ([t for t, h in SP.scan(gas, at(2026, 11, 25, 8, 30), 12.0)[0]], [t for t, h in SP.scan(gas, at(2026, 11, 30, 17, 30), 12.0)[0]]),
+      ([], ["KXAAAGASW-26NOV30-3.4800"]))
 d2 = tempfile.mkdtemp()
 os.makedirs(os.path.join(d2, "data"))
 json.dump(data, open(os.path.join(d2, "data", "x_ledger.json"), "w"))
