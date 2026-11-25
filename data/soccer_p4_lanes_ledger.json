@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-25T05:00:33.822235+00:00",
+ "last_run": "2026-11-25T06:00:33.446524+00:00",
  "matches": [
   {
    "day": "2026-11-19",
@@ -3040,6 +3040,50 @@
    "logged": "2026-11-24T22:00:32.459053+00:00",
    "timed": 2,
    "title": "Slovan Bratislava v Real Betis",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-24",
+   "entries": [
+    {
+     "ask": 0.5,
+     "bid": 0.49,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.495,
+      "filled": false,
+      "roi": null
+     },
+     "mom": "pre",
+     "name": "San Jose",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.52,
+      "depth": 5769.46,
+      "filled": true,
+      "roi": -1.0
+     },
+     "team": "home",
+     "ticker": "KXMLSGAME-26NOV24SJHOU-SJ",
+     "ts": 1795572000,
+     "v2": true,
+     "won": false
+    }
+   ],
+   "espn_id": "401933738",
+   "event": "KXMLSGAME-26NOV24SJHOU",
+   "goals": 3,
+   "ht": null,
+   "ko": 1795575600,
+   "labels": {
+    "away": "O-D-",
+    "home": "O-D-"
+   },
+   "league": "MLS",
+   "logged": "2026-11-25T06:00:33.446524+00:00",
+   "timed": 1,
+   "title": "San Jose Earthquakes v Houston Dynamo FC",
    "version": "soccerp4-v1"
   }
  ],
