@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-25T13:02:00+00:00",
+ "board_built_at": "2026-11-25T14:01:59+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -1204,6 +1204,41 @@
    "sport": "tennis",
    "status": "miss"
   },
+  "2026-11-24|Santiago De la Fuente|Juan Manuel La Serna|Santiago De la Fuente to win \u00b7 Challenger underdog who has won here": {
+   "away": "Juan Manuel La Serna",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Santiago De la Fuente to win",
+   "home": "Santiago De la Fuente",
+   "id": "2026-11-24|Santiago De la Fuente|Juan Manuel La Serna|Santiago De la Fuente to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T18:40Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Santiago De la Fuente v Juan Manuel La Serna",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.12,
+   "published_at": "2026-11-25T14:01:59+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Santiago De la Fuente to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24LADLF",
+    "market": "KXATPCHALLENGERMATCH-26NOV24LADLF-DLF",
+    "outcome": "Santiago De la Fuente",
+    "outcome_side": "yes",
+    "price_at_log": 0.12,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24LADLF-DLF",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "miss"
+  },
   "2026-11-24|Stefan Vujic|Tristan Schoolkate|Stefan Vujic to win \u00b7 Challenger underdog who has won here": {
    "away": "Tristan Schoolkate",
    "bet": {
@@ -1458,18 +1493,18 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 41,
+    "leads": 42,
     "problem": null,
-    "routed": 41,
+    "routed": 42,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 41,
-   "sandbox_roi": -0.3738,
-   "sandbox_roi_fee": -0.393,
+   "sandbox_n": 42,
+   "sandbox_roi": -0.3887,
+   "sandbox_roi_fee": -0.4074,
    "timing": {
     "late": [],
     "timed": 26,
@@ -1481,5 +1516,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-25T13:02:00+00:00"
+ "updated_at": "2026-11-25T14:01:59+00:00"
 }
