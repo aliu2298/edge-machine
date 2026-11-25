@@ -1,7 +1,21 @@
 {
  "errors": [],
  "lane": "arg_goalless_dip_live",
- "leads": [],
+ "leads": [
+  {
+   "event": "KXARGPREMDIVTOTAL-26NOV25BOCIRM",
+   "fraction": 0.65,
+   "id": "arg_goalless_dip_live:KXARGPREMDIVTOTAL-26NOV25BOCIRM-1",
+   "kickoff": "2026-11-26T00:00:00+00:00",
+   "lane": "arg_goalless_dip_live",
+   "league": "Argentina",
+   "side": "yes",
+   "stake_usd": 1.0,
+   "ticker": "KXARGPREMDIVTOTAL-26NOV25BOCIRM-1",
+   "title": "Boca Juniors vs Rivadavia: Regulation Time Total Goals",
+   "version": "argdip-live-v1"
+  }
+ ],
  "moved_on": "2026-11-08",
  "name": "Argentina goalless dip (live)",
  "rule": {
@@ -14,6 +28,6 @@
   "stake_usd": 1.0,
   "strike": 0.5
  },
- "updated_at": "2026-11-25T00:01:48+00:00",
+ "updated_at": "2026-11-25T00:31:25+00:00",
  "version": "argdip-live-v1"
 }
