@@ -97,6 +97,13 @@ def backfill_counts(state, sec=None):
     return sum(1 for p in rows if p.get("backfilled")), len(rows)
 
 
+def last_live_read(state):
+    """The newest live read: the latest `at` among the ledger's looks that are not backfilled (a look with only controls or skips counts, a lane entry is not
+    needed), else the stored last_live_read stamp, else None."""
+    ats = [l["at"] for l in (state.get("looks") or {}).values() if not l.get("backfilled") and l.get("at")]
+    return max(ats) if ats else state.get("last_live_read")
+
+
 def overall(state, blind=False):
     """Won, settled and return after fees over every section and direction, the lane's rows or the controls'."""
     return Q.stats([p for s in Q.SECTIONS for d in Q.DIRS for p in _picks(state, Q.lane(s, d, blind))])
@@ -144,7 +151,7 @@ def section_html(state, games, sec):
 def section(state=None, games_doc=None, now=None):
     state = state if state is not None else Q.load()
     games = (games_doc if games_doc is not None else Q.load_games())["games"]
-    last, settled = state.get("last_live_read"), state.get("last_settle")
+    last, settled = last_live_read(state), state.get("last_settle")
     err = f" · {esc(state['error'])}" if state.get("error") else ""
     sections = "".join(section_html(state, games, sec) for sec in Q.SECTIONS)
     nb, entries = backfill_counts(state)
