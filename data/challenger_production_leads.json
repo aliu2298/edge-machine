@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-25T15:07:55+00:00",
+ "board_built_at": "2026-11-25T15:36:36+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -1029,6 +1029,41 @@
    "sport": "tennis",
    "status": "hit"
   },
+  "2026-11-24|Oscar Jose Gutierrez|Igor Marcondes|Oscar Jose Gutierrez to win \u00b7 Challenger underdog who has won here": {
+   "away": "Igor Marcondes",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Oscar Jose Gutierrez to win",
+   "home": "Oscar Jose Gutierrez",
+   "id": "2026-11-24|Oscar Jose Gutierrez|Igor Marcondes|Oscar Jose Gutierrez to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T18:40Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Oscar Jose Gutierrez v Igor Marcondes",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.09,
+   "published_at": "2026-11-25T15:36:36+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Oscar Jose Gutierrez to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24MARGUT",
+    "market": "KXATPCHALLENGERMATCH-26NOV24MARGUT-GUT",
+    "outcome": "Oscar Jose Gutierrez",
+    "outcome_side": "yes",
+    "price_at_log": 0.09,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24MARGUT-GUT",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "miss"
+  },
   "2026-11-24|Philip Henning|Johannus Monday|Philip Henning to win \u00b7 Challenger underdog who has won here": {
    "away": "Johannus Monday",
    "bet": {
@@ -1493,18 +1528,18 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 42,
+    "leads": 43,
     "problem": null,
-    "routed": 42,
+    "routed": 43,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 42,
-   "sandbox_roi": -0.3887,
-   "sandbox_roi_fee": -0.4074,
+   "sandbox_n": 43,
+   "sandbox_roi": -0.4029,
+   "sandbox_roi_fee": -0.4212,
    "timing": {
     "late": [],
     "timed": 26,
@@ -1516,5 +1551,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-25T15:07:55+00:00"
+ "updated_at": "2026-11-25T15:36:36+00:00"
 }
