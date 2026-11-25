@@ -1,7 +1,7 @@
 {
  "error": null,
  "games_through": "2026-11-25",
- "last_run": "2026-11-25T22:00:27.891237+00:00",
+ "last_run": "2026-11-25T23:00:33.646125+00:00",
  "registered": "2026-11-23",
  "rules": {
   "club82_tt15": {
@@ -115,7 +115,9 @@
      "match": "Paris Saint-Germain v AS Roma",
      "matches": "club82_tt15_blind:KXUCLTEAMTOTAL-26NOV25PSGROM:away",
      "opponent": "Paris Saint-Germain",
+     "payout": 1.0,
      "price": 0.33,
+     "profit": 189.45,
      "qualifying_teams": [
       "AS Roma"
      ],
@@ -124,9 +126,10 @@
       "home": "12/15"
      },
      "rule": "club82_tt15",
+     "settled": "2026-11-25T23:00:33.646125+00:00",
      "side": "yes",
      "start": "2026-11-25T20:00Z",
-     "status": "open",
+     "status": "won",
      "team": "AS Roma",
      "team_side": "away",
      "ticker": "KXUCLTEAMTOTAL-26NOV25PSGROM-ROM2"
@@ -843,16 +846,19 @@
      "logged": "2026-11-25T19:15:31.576529+00:00",
      "match": "Club Brugge v Liverpool",
      "opponent": "Liverpool",
+     "payout": 0.0,
      "price": 0.44,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "11/15",
       "home": "4/4"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-25T23:00:33.646125+00:00",
      "side": "yes",
      "start": "2026-11-25T20:00Z",
-     "status": "open",
+     "status": "lost",
      "team": "Club Brugge",
      "team_side": "home",
      "ticker": "KXUCLTEAMTOTAL-26NOV25BRULFC-BRU2"
@@ -1014,16 +1020,19 @@
      "logged": "2026-11-25T19:15:31.576529+00:00",
      "match": "Paris Saint-Germain v AS Roma",
      "opponent": "AS Roma",
+     "payout": 1.0,
      "price": 0.72,
+     "profit": 36.22,
      "qualifying": false,
      "rates": {
       "away": "14/16",
       "home": "12/15"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-25T23:00:33.646125+00:00",
      "side": "yes",
      "start": "2026-11-25T20:00Z",
-     "status": "open",
+     "status": "won",
      "team": "Paris Saint-Germain",
      "team_side": "home",
      "ticker": "KXUCLTEAMTOTAL-26NOV25PSGROM-PSG2"
@@ -1040,16 +1049,19 @@
      "logged": "2026-11-25T19:15:31.576529+00:00",
      "match": "Paris Saint-Germain v AS Roma",
      "opponent": "Paris Saint-Germain",
+     "payout": 1.0,
      "price": 0.33,
+     "profit": 189.45,
      "qualifying": true,
      "rates": {
       "away": "14/16",
       "home": "12/15"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-25T23:00:33.646125+00:00",
      "side": "yes",
      "start": "2026-11-25T20:00Z",
-     "status": "open",
+     "status": "won",
      "team": "AS Roma",
      "team_side": "away",
      "ticker": "KXUCLTEAMTOTAL-26NOV25PSGROM-ROM2"
@@ -1066,16 +1078,19 @@
      "logged": "2026-11-25T19:15:31.576529+00:00",
      "match": "Shakhtar Donetsk v Fenerbahce",
      "opponent": "Fenerbahce",
+     "payout": 0.0,
      "price": 0.42,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "2/4",
       "home": "1/4"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-25T23:00:33.646125+00:00",
      "side": "yes",
      "start": "2026-11-25T20:00Z",
-     "status": "open",
+     "status": "lost",
      "team": "Shakhtar Donetsk",
      "team_side": "home",
      "ticker": "KXUCLTEAMTOTAL-26NOV25SHAFEN-SHA2"
@@ -1092,16 +1107,19 @@
      "logged": "2026-11-25T19:15:31.576529+00:00",
      "match": "Shakhtar Donetsk v Fenerbahce",
      "opponent": "Shakhtar Donetsk",
+     "payout": 0.0,
      "price": 0.4,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "2/4",
       "home": "1/4"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-25T23:00:33.646125+00:00",
      "side": "yes",
      "start": "2026-11-25T20:00Z",
-     "status": "open",
+     "status": "lost",
      "team": "Fenerbahce",
      "team_side": "away",
      "ticker": "KXUCLTEAMTOTAL-26NOV25SHAFEN-FEN2"
@@ -1118,16 +1136,19 @@
      "logged": "2026-11-25T19:15:31.576529+00:00",
      "match": "Sporting CP v Manchester United",
      "opponent": "Manchester United",
+     "payout": 1.0,
      "price": 0.49,
+     "profit": 97.05,
      "qualifying": false,
      "rates": {
       "away": "5/15",
       "home": "3/4"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-25T23:00:33.646125+00:00",
      "side": "yes",
      "start": "2026-11-25T20:00Z",
-     "status": "open",
+     "status": "won",
      "team": "Sporting CP",
      "team_side": "home",
      "ticker": "KXUCLTEAMTOTAL-26NOV25SPOMUN-SPO2"
@@ -1801,6 +1822,11 @@
   },
   {
    "at": "2026-11-25T22:00:27.891237+00:00",
+   "due": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-25T23:00:33.646125+00:00",
    "due": 0,
    "new": 0
   }
