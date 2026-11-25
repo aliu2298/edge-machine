@@ -1,7 +1,7 @@
 {
  "box_through": "2026-11-25",
  "error": null,
- "last_run": "2026-11-25T23:30:34.011689+00:00",
+ "last_run": "2026-11-25T23:45:28.592459+00:00",
  "looks": {
   "401909305": {
    "at": "2026-11-20T22:45:25.302540+00:00",
@@ -303,6 +303,44 @@
    },
    "spread": -2.5,
    "usable": 159
+  },
+  "401909321": {
+   "at": "2026-11-25T23:45:28.592459+00:00",
+   "batch": 2,
+   "entered": {
+    "spotter_fade": 0,
+    "spotter_hold": 1,
+    "spotter_spike": 0
+   },
+   "game": "LAC @ MEM",
+   "night": "2026-11-25",
+   "out": 56,
+   "skipped": {
+    "no quote": 13,
+    "outside 5-60c": 68,
+    "wide": 36
+   },
+   "spread": -7.5,
+   "usable": 183
+  },
+  "401909322": {
+   "at": "2026-11-25T23:45:28.592459+00:00",
+   "batch": 2,
+   "entered": {
+    "spotter_fade": 0,
+    "spotter_hold": 0,
+    "spotter_spike": 0
+   },
+   "game": "BKN @ MIL",
+   "night": "2026-11-25",
+   "out": 56,
+   "skipped": {
+    "no quote": 2,
+    "outside 5-60c": 92,
+    "wide": 3
+   },
+   "spread": -1.5,
+   "usable": 184
   },
   "401910007": {
    "at": "2026-11-18T23:12:11.631686+00:00",
@@ -1786,7 +1824,7 @@
     ]
    },
    "spotter_hold": {
-    "n": 7,
+    "n": 8,
     "players": [
      [
       "4432822",
@@ -1814,6 +1852,10 @@
      ],
      [
       "3032976",
+      "reb"
+     ],
+     [
+      "4594326",
       "reb"
      ]
     ]
@@ -7057,6 +7099,32 @@
      "ticker": "KXNBAREB-26NOV25MINOKC-MINRGOBERT27-12",
      "unit": "rebounds",
      "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.4,
+     "edge": 0.1041,
+     "entered": "2026-11-25T23:45:28.592459+00:00",
+     "game": "LAC @ MEM",
+     "game_id": "401909321",
+     "id": "spotter_hold:KXNBAREB-26NOV25LACMEM-MEMKMURRAY24-4",
+     "lead_min": 74.5,
+     "night": "2026-11-25",
+     "outs": [
+      "Cameron Boozer"
+     ],
+     "p": 0.5141,
+     "pid": "4594326",
+     "player": "Kris Murray",
+     "price": 0.41,
+     "rule": "spotter_hold",
+     "rung": 4,
+     "start": "2026-11-26T01:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "MEM",
+     "ticker": "KXNBAREB-26NOV25LACMEM-MEMKMURRAY24-4",
+     "unit": "rebounds",
+     "why": "minutes down on last season"
     }
    ]
   },
@@ -8807,6 +8875,32 @@
      "team": "MIN",
      "ticker": "KXNBA3PT-26NOV25MINOKC-MINADOSUNMU13-3",
      "unit": "threes",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.36,
+     "entered": "2026-11-25T23:45:28.592459+00:00",
+     "game": "LAC @ MEM",
+     "game_id": "401909321",
+     "id": "spotter_hold_blind:KXNBAAST-26NOV25LACMEM-MEMTHENDRICKS22-2",
+     "lead_min": 74.5,
+     "matches": "spotter_hold:KXNBAREB-26NOV25LACMEM-MEMKMURRAY24-4",
+     "night": "2026-11-25",
+     "outs": [
+      "Cameron Boozer"
+     ],
+     "p": null,
+     "pid": "4684806",
+     "player": "Taylor Hendricks",
+     "price": 0.39,
+     "rule": "spotter_hold_blind",
+     "rung": 2,
+     "start": "2026-11-26T01:00:00+00:00",
+     "stat": "ast",
+     "status": "open",
+     "team": "MEM",
+     "ticker": "KXNBAAST-26NOV25LACMEM-MEMTHENDRICKS22-2",
+     "unit": "assists",
      "why": "drawn at random from this game's rungs at about the pick's price"
     }
    ]
@@ -12812,12 +12906,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-24T00:00:30.453197+00:00",
-   "box": 0,
-   "due": 0,
-   "new": 0
-  },
-  {
    "at": "2026-11-24T00:15:42.395586+00:00",
    "box": 0,
    "due": 1,
@@ -13116,6 +13204,12 @@
    "box": 0,
    "due": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-25T23:45:28.592459+00:00",
+   "box": 0,
+   "due": 2,
+   "new": 2
   }
  ],
  "schedule": [
