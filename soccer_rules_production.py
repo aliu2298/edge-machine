@@ -32,7 +32,6 @@ MOVED_ON = "2026-10-21"
 HEALTHY_HOURS = 3
 # rule key -> (Production source id, the soccer claim domain it publishes on, display name)
 PAIRS = {
-    "A7": ("sr_a7", "soccer_u35", "UCL either team O+D− · over 3.5"),
     "A6": ("sr_a6", "soccer_o25", "EPL O−D− v an O+ opponent · under 2.5"),
     # Moved by hand 2026-10-28 (Olu), on small samples, with live $1 bets: MLS over 3.5 YES <=50c (2/2),
     # Serie A O+D− v O+D+ over 2.5 YES <=60c (2/2), Serie A O−D− v O+D− over 2.5 YES <=55c (3/4).
@@ -46,7 +45,8 @@ PAIRS = {
 }
 # C1 (sr_c1, MLS O+D− v O+D+ · over 3.5) was a pair from 2026-10-28 to 2026-11-02; it is back in the Sandbox
 # as paper on its whole record (Olu: research it later), still logged by soccer_rules.py.
-PULLED = {"C1": ("2026-10-28", "2026-11-02")}
+PULLED = {"C1": ("2026-10-28", "2026-11-02"), "A7": ("2026-10-21", "2026-11-25")}
+# A7 (sr_a7, UCL either team O+D− · over 3.5) was a pair from 2026-10-21 to 2026-11-25 (Olu: back to the Sandbox, live 7-7, -40.0%); paper still logged by soccer_rules.py.
 # D3 (sr_d3, O−D− v O+D− · both teams to score) was the third pair from 2026-10-21 to 2026-10-28; it
 # is back in the Sandbox as paper on its whole record (Olu), still logged by soccer_rules.py.
 LABELS = {src: name for src, _sport, name in PAIRS.values()}

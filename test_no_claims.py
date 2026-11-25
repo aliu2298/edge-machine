@@ -64,10 +64,9 @@ check("listed 2026-10-18 and removed 2026-10-19; the cup twin was never listed",
        "o25_congestion|soccer_o25_cup" in T.PAIR_OVERRIDES), (False, "2026-10-19", False))
 
 print("\nthe five promotions of 2026-10-16 (btts_form_l10_fade out again 2026-10-17, record kept)")
-check("two of the five are still listed by hand that day (espn_fpi|nfl back in the Sandbox 2026-10-27, team2_form_l10 Clubs 2026-11-02)",
+check("one of the five is still listed by hand that day (espn_fpi|nfl back in the Sandbox 2026-10-27, team2_form_l10 Clubs 2026-11-02, ftts_no_70_80 2026-11-25)",
       sorted(k for k, v in T.PAIR_OVERRIDES.items() if v["moved_on"] == "2026-10-16"),
-      ["ftts_no_70_80|soccer_ftts",
-       "mls_fade_home|soccer_p05"])
+      ["mls_fade_home|soccer_p05"])
 check("btts_form_l10_fade|soccer_btts is off the list and goes back keeping its record",
       ("btts_form_l10_fade|soccer_btts" in T.PAIR_OVERRIDES, T.PAIR_REMOVALS["btts_form_l10_fade|soccer_btts"]["keep_record"]),
       (False, True))
