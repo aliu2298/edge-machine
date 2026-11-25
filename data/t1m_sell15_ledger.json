@@ -75,6 +75,44 @@
    "touched": null,
    "version": "t1m-sell15-v1",
    "won": true
+  },
+  {
+   "day": "2026-11-25",
+   "entry": 0.54,
+   "entry_ts": 1795631540,
+   "hold": -1.0,
+   "id": "T1M:KXUCLTOTAL-26NOV25BRULFC",
+   "ko": 1795636800,
+   "league": "Champions League",
+   "logged": "2026-11-25T23:00:39.909729+00:00",
+   "match": "Club Brugge v Liverpool",
+   "sell": -1.0,
+   "sell_maker": -1.0,
+   "sweeps": 16,
+   "target": 0.81,
+   "ticker": "KXUCLTOTAL-26NOV25BRULFC-4",
+   "touched": false,
+   "version": "t1m-sell15-v1",
+   "won": false
+  },
+  {
+   "day": "2026-11-25",
+   "entry": 0.51,
+   "entry_ts": 1795631540,
+   "hold": 0.8868,
+   "id": "T1M:KXUCLTOTAL-26NOV25PSGROM",
+   "ko": 1795636800,
+   "league": "Champions League",
+   "logged": "2026-11-25T23:00:39.909729+00:00",
+   "match": "Paris Saint-Germain v AS Roma",
+   "sell": 0.4151,
+   "sell_maker": 0.434,
+   "sweeps": 18,
+   "target": 0.77,
+   "ticker": "KXUCLTOTAL-26NOV25PSGROM-4",
+   "touched": true,
+   "version": "t1m-sell15-v1",
+   "won": true
   }
  ],
  "error": null,
@@ -529,7 +567,7 @@
    "KXLIGUE1TOTAL-26OCT26PSGOL": "no settled over 3.5 market"
   }
  },
- "last_run": "2026-11-25T22:02:14.432941+00:00",
+ "last_run": "2026-11-25T23:00:39.909729+00:00",
  "registered": "2026-11-09T00:00:00Z",
  "skips": {
   "T1M:KXBUNDESLIGATOTAL-26NOV07RBLFCA": "kicked off before the readout was registered (in the backfill, not the record)",
