@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-25T22:02:12.455799+00:00",
+ "last_run": "2026-11-25T22:31:51.152056+00:00",
  "rules": {
   "NO": {
    "picks": [
@@ -540,6 +540,23 @@
      "status": "open",
      "ticker": "KXBRASILEIROBTTS-26NOV25ATLCOR-BTTS",
      "why": "Brazil BTTS NO 0.48"
+    },
+    {
+     "ask": 0.58,
+     "bid": 0.57,
+     "event": "KXARGPREMDIVBTTS-26NOV25BOCIRM",
+     "id": "NO:KXARGPREMDIVBTTS-26NOV25BOCIRM",
+     "league": "Liga Profesional",
+     "league_key": "ARG",
+     "logged": "2026-11-25T22:31:51.152056+00:00",
+     "match": "Boca Juniors v Independiente Rivadavia",
+     "price": 0.58,
+     "rule": "NO",
+     "side": "no",
+     "start": "2026-11-26T00:00Z",
+     "status": "open",
+     "ticker": "KXARGPREMDIVBTTS-26NOV25BOCIRM-BTTS",
+     "why": "Argentina BTTS NO 0.58"
     }
    ]
   },
@@ -1081,18 +1098,28 @@
      "status": "open",
      "ticker": "KXBRASILEIROBTTS-26NOV25ATLCOR-BTTS",
      "why": "Brazil BTTS YES 0.54"
+    },
+    {
+     "ask": 0.43,
+     "bid": 0.42,
+     "event": "KXARGPREMDIVBTTS-26NOV25BOCIRM",
+     "id": "YES:KXARGPREMDIVBTTS-26NOV25BOCIRM",
+     "league": "Liga Profesional",
+     "league_key": "ARG",
+     "logged": "2026-11-25T22:31:51.152056+00:00",
+     "match": "Boca Juniors v Independiente Rivadavia",
+     "price": 0.43,
+     "rule": "YES",
+     "side": "yes",
+     "start": "2026-11-26T00:00Z",
+     "status": "open",
+     "ticker": "KXARGPREMDIVBTTS-26NOV25BOCIRM-BTTS",
+     "why": "Argentina BTTS YES 0.43"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-22T23:16:35.481821+00:00",
-   "due": 0,
-   "matched": 0,
-   "new": 0,
-   "quoted": 0
-  },
   {
    "at": "2026-11-22T23:31:36.843671+00:00",
    "due": 1,
@@ -1442,6 +1469,13 @@
    "matched": 1,
    "new": 0,
    "quoted": 1
+  },
+  {
+   "at": "2026-11-25T22:31:51.152056+00:00",
+   "due": 2,
+   "matched": 2,
+   "new": 2,
+   "quoted": 2
   }
  ],
  "schedule": [
