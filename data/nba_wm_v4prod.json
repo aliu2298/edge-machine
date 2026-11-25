@@ -1872,6 +1872,54 @@
    "tip": "2026-11-25T00:00:00+00:00",
    "why": "ceded to wm-yes-v4 (Bucket Priority bp-v3, 6-10)"
   },
+  "no:KXNBAWINMARGIN-26NOV25CHICHA-CHI11TO20": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "11-20",
+   "bucket_priority": "bp-v3",
+   "ceded_to": "wm-yes-v4",
+   "event": "KXNBAWINMARGIN-26NOV25CHICHA",
+   "key": "no:KXNBAWINMARGIN-26NOV25CHICHA-CHI11TO20",
+   "lane": "nba_wm_nofade",
+   "ticker": "KXNBAWINMARGIN-26NOV25CHICHA-CHI11TO20",
+   "tip": "2026-11-26T00:00:00+00:00",
+   "why": "ceded to wm-yes-v4 (Bucket Priority bp-v3, 11-20)"
+  },
+  "no:KXNBAWINMARGIN-26NOV25CLENYK-NYK6TO10": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "6-10",
+   "bucket_priority": "bp-v3",
+   "ceded_to": "wm-yes-v4",
+   "event": "KXNBAWINMARGIN-26NOV25CLENYK",
+   "key": "no:KXNBAWINMARGIN-26NOV25CLENYK-NYK6TO10",
+   "lane": "nba_wm_nofade",
+   "ticker": "KXNBAWINMARGIN-26NOV25CLENYK-NYK6TO10",
+   "tip": "2026-11-26T00:30:00+00:00",
+   "why": "ceded to wm-yes-v4 (Bucket Priority bp-v3, 6-10)"
+  },
+  "no:KXNBAWINMARGIN-26NOV25MIAPHI-PHI11TO20": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "11-20",
+   "bucket_priority": "bp-v3",
+   "ceded_to": "wm-yes-v4",
+   "event": "KXNBAWINMARGIN-26NOV25MIAPHI",
+   "key": "no:KXNBAWINMARGIN-26NOV25MIAPHI-PHI11TO20",
+   "lane": "nba_wm_nofade",
+   "ticker": "KXNBAWINMARGIN-26NOV25MIAPHI-PHI11TO20",
+   "tip": "2026-11-25T22:00:00+00:00",
+   "why": "ceded to wm-yes-v4 (Bucket Priority bp-v3, 11-20)"
+  },
+  "no:KXNBAWINMARGIN-26NOV25MIAPHI-PHI1TO5": {
+   "bot_version": "wm-nofade-v4",
+   "bucket": "1-5",
+   "bucket_priority": "bp-v3",
+   "ceded_to": "wm-yes-v4",
+   "event": "KXNBAWINMARGIN-26NOV25MIAPHI",
+   "key": "no:KXNBAWINMARGIN-26NOV25MIAPHI-PHI1TO5",
+   "lane": "nba_wm_nofade",
+   "ticker": "KXNBAWINMARGIN-26NOV25MIAPHI-PHI1TO5",
+   "tip": "2026-11-25T22:00:00+00:00",
+   "why": "ceded to wm-yes-v4 (Bucket Priority bp-v3, 1-5)"
+  },
   "yes:KXNBAWINMARGIN-26NOV09DENHOU-HOU6TO10": {
    "bot_version": "wm-yes-v4",
    "bucket": "6-10",
@@ -2017,12 +2065,12 @@
    "tip": "2026-11-11T04:00:00+00:00"
   }
  },
- "last_run": "2026-11-25T15:02:07.988821+00:00",
+ "last_run": "2026-11-25T23:49:05.656247+00:00",
  "observations": {
-  "at": "2026-11-25T15:02:07.988821+00:00",
+  "at": "2026-11-25T23:49:05.656247+00:00",
   "errors": [],
-  "new": 3,
-  "waiting": 0
+  "new": 0,
+  "waiting": 24
  },
  "rows": {
   "no:KXNBAWINMARGIN-26NOV08BKNDAL-BKN1TO5": {
