@@ -397,6 +397,34 @@ def run(state, now=None, fetch=D.get, text_fetch=get_text, force=False):
     return state
 
 
+def venue_result(m):
+    """'yes', 'no' or None for one venue market.
+
+    A plain yes/no result is itself. Kalshi also finalizes a weather ladder as result
+    'scalar' with a fair value per bracket (2026-11-24: San Diego Nov 17, no official
+    reading, each bracket paid 0.00, 0.01 or 0.99). The same bands as the Sandbox
+    settler (sandbox_sources.classify_kalshi) apply: at or below 0.01 is 'no', at or
+    above 0.99 is 'yes'. A value between those, or no usable number, stays open.
+    """
+    result = str(m.get("result") or "").strip().lower()
+    if result in ("yes", "no"):
+        return result
+    if result != "scalar" or str(m.get("status") or "").lower() not in ("finalized", "settled"):
+        return None
+    raw = m.get("settlement_value_dollars")
+    try:
+        v = float(raw) if raw not in (None, "") else float(m["settlement_value"]) / 100.0
+    except (KeyError, TypeError, ValueError):
+        return None
+    if not math.isfinite(v) or v < 0.0 or v > 1.0:
+        return None
+    if v <= 0.01:
+        return "no"
+    if v >= 0.99:
+        return "yes"
+    return None
+
+
 def grade(state, now, fetch):
     """Settle every open row whose event has a result for its bracket."""
     errors, events = [], {}
@@ -409,7 +437,7 @@ def grade(state, now, fetch):
         except Exception as exc:                                # noqa: BLE001
             errors.append(f"grade {event}: {str(exc)[:60]}")
             continue
-        res = {m["ticker"]: m.get("result") for m in ms}
+        res = {m["ticker"]: venue_result(m) for m in ms}
         status = {m["ticker"]: m.get("status") for m in ms}
         for r in rows:
             if res.get(r["ticker"]) in ("yes", "no"):
