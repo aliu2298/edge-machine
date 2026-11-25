@@ -6,8 +6,8 @@
   "rule": "LOW under the threshold set on the server"
  },
  "engine": {
-  "beat_age_s": 427,
-  "cycle": 319,
+  "beat_age_s": 381,
+  "cycle": 325,
   "last_error": null,
   "mode": "LIVE",
   "service_active": true,
@@ -22,17 +22,17 @@
  "feeds": {
   "production": {
    "actionable": 1,
-   "age_min": 10,
+   "age_min": 12,
    "leads": 47,
    "problems": 0,
    "status": "HTTP 200"
   },
   "production_challenger": {
    "actionable": 0,
-   "age_min": 21,
+   "age_min": 16,
    "leads": 40,
    "problems": 0,
-   "status": "HTTP 304 (cached)"
+   "status": "HTTP 200"
   },
   "production_econ": {
    "actionable": 0,
@@ -43,10 +43,10 @@
   },
   "production_gas_week": {
    "actionable": 0,
-   "age_min": 21,
+   "age_min": 16,
    "leads": 0,
    "problems": 0,
-   "status": "HTTP 304 (cached)"
+   "status": "HTTP 200"
   },
   "production_nba_value": {
    "actionable": 0,
@@ -81,10 +81,10 @@
   "today": "up",
   "yesterday": "down"
  },
- "published_at": "2026-11-25T00:23:02+00:00",
+ "published_at": "2026-11-25T01:23:03+00:00",
  "schema": 1,
  "server": {
-  "backup_age_h": 17.9,
+  "backup_age_h": 18.9,
   "disk_pct": 35,
   "jobs": {
    "bot-backup": {
@@ -100,6 +100,6 @@
     "timer": "active"
    }
   },
-  "mem_free_mb": 581
+  "mem_free_mb": 559
  }
 }
