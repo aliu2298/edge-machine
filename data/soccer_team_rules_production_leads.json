@@ -9,7 +9,7 @@
    0.97
   ]
  },
- "board_built_at": "2026-11-25T18:26:51+00:00",
+ "board_built_at": "2026-11-25T18:32:20+00:00",
  "collector_error": null,
  "collector_healthy": {
   "st_t1h": true,
@@ -270,6 +270,82 @@
    "source": "st_t1h",
    "sport": "soccer_team2",
    "status": "hit"
+  },
+  "2026-11-25|Club Brugge|Liverpool|Club Brugge to score 2+ \u00b7 T1 matches \u00b7 home team 2+ goals": {
+   "away": "Liverpool",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "Club Brugge"
+   },
+   "date": "2026-11-25",
+   "edge_at_log": null,
+   "first_seen": "2026-11-25",
+   "headline": "Club Brugge to score 2+",
+   "home": "Club Brugge",
+   "id": "2026-11-25|Club Brugge|Liverpool|Club Brugge to score 2+ \u00b7 T1 matches \u00b7 home team 2+ goals",
+   "kickoff": "2026-11-25T20:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-25",
+   "last_seen_at": "2026-11-25T18:32:20+00:00",
+   "league": "Champions League",
+   "match": "Club Brugge v Liverpool",
+   "pair": "st_t1h|soccer_team2",
+   "price_at_log": 0.41,
+   "published_at": "2026-11-25T18:32:20+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 87,
+   "route": {
+    "claim": "Club Brugge to score 2+",
+    "event": "KXUCLTEAMTOTAL-26NOV25BRULFC",
+    "market": "KXUCLTEAMTOTAL-26NOV25BRULFC-BRU2",
+    "outcome": "Club Brugge over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.41,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "st_t1h:KXUCLTEAMTOTAL-26NOV25BRULFC-BRU2",
+   "source": "st_t1h",
+   "sport": "soccer_team2",
+   "status": "pending"
+  },
+  "2026-11-25|Paris Saint-Germain|AS Roma|Paris Saint-Germain to score 2+ \u00b7 T1 matches \u00b7 home team 2+ goals": {
+   "away": "AS Roma",
+   "bet": {
+    "kind": "team_gte",
+    "n": 2,
+    "team": "Paris Saint-Germain"
+   },
+   "date": "2026-11-25",
+   "edge_at_log": null,
+   "first_seen": "2026-11-25",
+   "headline": "Paris Saint-Germain to score 2+",
+   "home": "Paris Saint-Germain",
+   "id": "2026-11-25|Paris Saint-Germain|AS Roma|Paris Saint-Germain to score 2+ \u00b7 T1 matches \u00b7 home team 2+ goals",
+   "kickoff": "2026-11-25T20:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-25",
+   "last_seen_at": "2026-11-25T18:32:20+00:00",
+   "league": "Champions League",
+   "match": "Paris Saint-Germain v AS Roma",
+   "pair": "st_t1h|soccer_team2",
+   "price_at_log": 0.73,
+   "published_at": "2026-11-25T18:32:20+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 87,
+   "route": {
+    "claim": "Paris Saint-Germain to score 2+",
+    "event": "KXUCLTEAMTOTAL-26NOV25PSGROM",
+    "market": "KXUCLTEAMTOTAL-26NOV25PSGROM-PSG2",
+    "outcome": "PSG over 1.5 goals",
+    "outcome_side": "yes",
+    "price_at_log": 0.73,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "st_t1h:KXUCLTEAMTOTAL-26NOV25PSGROM-PSG2",
+   "source": "st_t1h",
+   "sport": "soccer_team2",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -280,9 +356,9 @@
    "ready_at": "2026-11-08T12:00:00+00:00",
    "route": "moved by hand on 2026-11-08",
    "routing": {
-    "leads": 4,
+    "leads": 6,
     "problem": null,
-    "routed": 4,
+    "routed": 6,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -294,7 +370,7 @@
    "sandbox_roi_fee": 0.482,
    "timing": {
     "late": [],
-    "timed": 0,
+    "timed": 2,
     "under_target": 0
    }
   },
@@ -328,5 +404,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-25T18:26:51+00:00"
+ "updated_at": "2026-11-25T18:32:20+00:00"
 }
