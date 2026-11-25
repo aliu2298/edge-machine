@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-25T00:05:40+00:00",
+ "board_built_at": "2026-11-25T00:13:18+00:00",
  "corners_selections": {
   "kalshi:26NOV24RMAPSV": "2026-11-24|Real Madrid|PSV Eindhoven|10+ corners \u00b7 Corners total fade, Champions League",
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
@@ -1380,6 +1380,111 @@
    "sport": "soccer_ftts",
    "status": "hit"
   },
+  "2026-11-24|KXBTCD-26NOV2417-T60499.99|Below $60,500 at the close \u00b7 Crypto favourite band, below": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Below $60,500 at the close",
+   "home": null,
+   "id": "2026-11-24|KXBTCD-26NOV2417-T60499.99|Below $60,500 at the close \u00b7 Crypto favourite band, below",
+   "kickoff": "2026-11-24T22:05Z",
+   "lane": "production",
+   "league": "Crypto \u00b7 Favourite band",
+   "match": "Bitcoin price on Nov 24, 2026",
+   "pair": "crypto_fav_band_below|crypto_fav",
+   "price_at_log": 0.78,
+   "published_at": "2026-11-25T00:13:18+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Below $60,500 at the close",
+    "event": "KXBTCD-26NOV2417",
+    "market": "KXBTCD-26NOV2417-T60499.99",
+    "outcome": "$60,500 or above",
+    "outcome_side": "no",
+    "price_at_log": 0.78,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "crypto_fav_band_below:KXBTCD-26NOV2417-T60499.99",
+   "source": "crypto_fav_band_below",
+   "sport": "crypto_fav",
+   "status": "hit"
+  },
+  "2026-11-24|KXETHD-26NOV2417-T1699.99|Below $1,700 at the close \u00b7 Crypto favourite band, below": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Below $1,700 at the close",
+   "home": null,
+   "id": "2026-11-24|KXETHD-26NOV2417-T1699.99|Below $1,700 at the close \u00b7 Crypto favourite band, below",
+   "kickoff": "2026-11-24T22:05Z",
+   "lane": "production",
+   "league": "Crypto \u00b7 Favourite band",
+   "match": "Ethereum price at Nov 24, 2026 at 5pm EST",
+   "pair": "crypto_fav_band_below|crypto_fav",
+   "price_at_log": 0.74,
+   "published_at": "2026-11-25T00:13:18+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Below $1,700 at the close",
+    "event": "KXETHD-26NOV2417",
+    "market": "KXETHD-26NOV2417-T1699.99",
+    "outcome": "$1,700 or above",
+    "outcome_side": "no",
+    "price_at_log": 0.74,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "crypto_fav_band_below:KXETHD-26NOV2417-T1699.99",
+   "source": "crypto_fav_band_below",
+   "sport": "crypto_fav",
+   "status": "hit"
+  },
+  "2026-11-24|KXSOLD-26NOV2417-T69.9999|Below $70 at the close \u00b7 Crypto favourite band, below": {
+   "away": null,
+   "bet": {
+    "kind": "ladder",
+    "side": "no"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Below $70 at the close",
+   "home": null,
+   "id": "2026-11-24|KXSOLD-26NOV2417-T69.9999|Below $70 at the close \u00b7 Crypto favourite band, below",
+   "kickoff": "2026-11-24T22:05Z",
+   "lane": "production",
+   "league": "Crypto \u00b7 Favourite band",
+   "match": "SOL price on Nov 24, 2026",
+   "pair": "crypto_fav_band_below|crypto_fav",
+   "price_at_log": 0.79,
+   "published_at": "2026-11-25T00:13:18+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Below $70 at the close",
+    "event": "KXSOLD-26NOV2417",
+    "market": "KXSOLD-26NOV2417-T69.9999",
+    "outcome": "$70 or above",
+    "outcome_side": "no",
+    "price_at_log": 0.79,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "crypto_fav_band_below:KXSOLD-26NOV2417-T69.9999",
+   "source": "crypto_fav_band_below",
+   "sport": "crypto_fav",
+   "status": "hit"
+  },
   "2026-11-24|Leipzig|Lens|Lens not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge": {
    "away": "Lens",
    "bet": {
@@ -1570,7 +1675,7 @@
    "kickoff": "2026-11-25T03:00Z",
    "lane": "production",
    "last_seen": "2026-11-25",
-   "last_seen_at": "2026-11-25T00:05:40+00:00",
+   "last_seen_at": "2026-11-25T00:13:18+00:00",
    "league": "MLS",
    "match": "San Jose Earthquakes v Houston Dynamo FC",
    "pair": "mls_fade_home|soccer_p05",
@@ -1626,18 +1731,18 @@
    "ready_at": "2026-10-21T00:47:16+00:00",
    "route": "moved by hand on 2026-10-20",
    "routing": {
-    "leads": 17,
+    "leads": 20,
     "problem": null,
-    "routed": 17,
+    "routed": 20,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": 0.0695,
-   "sandbox_n": 33,
-   "sandbox_roi": 0.1613,
-   "sandbox_roi_fee": 0.1408,
+   "sandbox_clv": 0.0737,
+   "sandbox_n": 34,
+   "sandbox_roi": 0.1653,
+   "sandbox_roi_fee": 0.1448,
    "timing": {
     "late": [],
     "timed": 0,
@@ -1884,5 +1989,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 1,
- "updated_at": "2026-11-25T00:05:40+00:00"
+ "updated_at": "2026-11-25T00:13:18+00:00"
 }
