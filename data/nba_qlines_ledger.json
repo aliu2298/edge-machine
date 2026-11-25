@@ -8,9 +8,9 @@
  },
  "error": null,
  "games_through": "2026-11-24",
- "last_live_read": "2026-11-25T21:30:30.412929+00:00",
- "last_run": "2026-11-25T23:00:32.723647+00:00",
- "last_settle": "2026-11-25T23:00:32.723647+00:00",
+ "last_live_read": "2026-11-25T23:28:21.499409+00:00",
+ "last_run": "2026-11-25T23:28:21.499409+00:00",
+ "last_settle": "2026-11-25T23:28:21.499409+00:00",
  "looks": {
   "401909314": {
    "at": "2026-11-24T23:30:33.063986+00:00",
@@ -106,6 +106,31 @@
    "priced": 11,
    "skipped": {
     "2H over: wide": 1
+   }
+  },
+  "401909318": {
+   "at": "2026-11-25T23:28:21.499409+00:00",
+   "entered": {
+    "1H over": 1,
+    "1H over blind": 1,
+    "1H under blind": 1,
+    "1Q over blind": 1,
+    "1Q under blind": 1,
+    "2Q over blind": 1,
+    "3Q under blind": 1,
+    "4Q under": 1,
+    "4Q under blind": 1
+   },
+   "game": "CHI @ CHA",
+   "lead_min": 31.6,
+   "night": "2026-11-25",
+   "priced": 7,
+   "skipped": {
+    "2H over: wide": 1,
+    "2H under: wide": 1,
+    "2Q under: wide": 1,
+    "3Q over: wide": 1,
+    "4Q over: wide": 1
    }
   },
   "401910036": {
@@ -593,6 +618,35 @@
       "PHI": "15/18"
      },
      "ticker": "KXNBA1HTOTAL-26NOV25MIAPHI-105"
+    },
+    {
+     "ask": 0.52,
+     "bid": 0.51,
+     "direction": "over",
+     "entered": "2026-11-25T23:28:21.499409+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "qlines_1H_over:KXNBA1HTOTAL-26NOV25CHICHA-106",
+     "lead_min": 31.6,
+     "line": 104.5,
+     "matches": "qlines_1H_over_blind:KXNBA1HTOTAL-26NOV25CHICHA-106",
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.52,
+     "qualifying": [
+      "CHI"
+     ],
+     "rule": "qlines_1H_over",
+     "rung": 105.5,
+     "section": "1H",
+     "side": "yes",
+     "start": "2026-11-26T00:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "CHA": "11/16",
+      "CHI": "16/17"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV25CHICHA-106"
     }
    ]
   },
@@ -1032,6 +1086,31 @@
       "PHI": "15/18"
      },
      "ticker": "KXNBA1HTOTAL-26NOV25MIAPHI-105"
+    },
+    {
+     "ask": 0.52,
+     "bid": 0.51,
+     "direction": "over",
+     "entered": "2026-11-25T23:28:21.499409+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "qlines_1H_over_blind:KXNBA1HTOTAL-26NOV25CHICHA-106",
+     "lead_min": 31.6,
+     "line": 104.5,
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.52,
+     "rule": "qlines_1H_over_blind",
+     "rung": 105.5,
+     "section": "1H",
+     "side": "yes",
+     "start": "2026-11-26T00:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "CHA": "11/16",
+      "CHI": "16/17"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV25CHICHA-106"
     }
    ]
   },
@@ -1474,6 +1553,31 @@
       "PHI": "11/18"
      },
      "ticker": "KXNBA1HTOTAL-26NOV25MIAPHI-119"
+    },
+    {
+     "ask": 0.13,
+     "bid": 0.1,
+     "direction": "under",
+     "entered": "2026-11-25T23:28:21.499409+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "qlines_1H_under_blind:KXNBA1HTOTAL-26NOV25CHICHA-120",
+     "lead_min": 31.6,
+     "line": 119.5,
+     "night": "2026-11-25",
+     "offset": 0,
+     "price": 0.9,
+     "rule": "qlines_1H_under_blind",
+     "rung": 119.5,
+     "section": "1H",
+     "side": "no",
+     "start": "2026-11-26T00:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "CHA": "12/16",
+      "CHI": "7/17"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV25CHICHA-120"
     }
    ]
   },
@@ -1916,6 +2020,31 @@
       "PHI": "14/18"
      },
      "ticker": "KXNBA1QTOTAL-26NOV25MIAPHI-53"
+    },
+    {
+     "ask": 0.55,
+     "bid": 0.54,
+     "direction": "over",
+     "entered": "2026-11-25T23:28:21.499409+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "qlines_1Q_over_blind:KXNBA1QTOTAL-26NOV25CHICHA-53",
+     "lead_min": 31.6,
+     "line": 51.5,
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.55,
+     "rule": "qlines_1Q_over_blind",
+     "rung": 52.5,
+     "section": "1Q",
+     "side": "yes",
+     "start": "2026-11-26T00:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "CHA": "8/16",
+      "CHI": "14/17"
+     },
+     "ticker": "KXNBA1QTOTAL-26NOV25CHICHA-53"
     }
    ]
   },
@@ -2395,6 +2524,31 @@
       "PHI": "13/18"
      },
      "ticker": "KXNBA1QTOTAL-26NOV25MIAPHI-59"
+    },
+    {
+     "ask": 0.3,
+     "bid": 0.27,
+     "direction": "under",
+     "entered": "2026-11-25T23:28:21.499409+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "qlines_1Q_under_blind:KXNBA1QTOTAL-26NOV25CHICHA-59",
+     "lead_min": 31.6,
+     "line": 59.5,
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.73,
+     "rule": "qlines_1Q_under_blind",
+     "rung": 58.5,
+     "section": "1Q",
+     "side": "no",
+     "start": "2026-11-26T00:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "CHA": "11/16",
+      "CHI": "10/17"
+     },
+     "ticker": "KXNBA1QTOTAL-26NOV25CHICHA-59"
     }
    ]
   },
@@ -3436,6 +3590,31 @@
       "PHI": "14/18"
      },
      "ticker": "KXNBA2QTOTAL-26NOV25MIAPHI-51"
+    },
+    {
+     "ask": 0.62,
+     "bid": 0.57,
+     "direction": "over",
+     "entered": "2026-11-25T23:28:21.499409+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "qlines_2Q_over_blind:KXNBA2QTOTAL-26NOV25CHICHA-51",
+     "lead_min": 31.6,
+     "line": 50.5,
+     "night": "2026-11-25",
+     "offset": 0,
+     "price": 0.62,
+     "rule": "qlines_2Q_over_blind",
+     "rung": 50.5,
+     "section": "2Q",
+     "side": "yes",
+     "start": "2026-11-26T00:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "CHA": "13/16",
+      "CHI": "15/17"
+     },
+     "ticker": "KXNBA2QTOTAL-26NOV25CHICHA-51"
     }
    ]
   },
@@ -5028,6 +5207,31 @@
       "PHI": "15/18"
      },
      "ticker": "KXNBA3QTOTAL-26NOV25MIAPHI-65"
+    },
+    {
+     "ask": 0.21,
+     "bid": 0.17,
+     "direction": "under",
+     "entered": "2026-11-25T23:28:21.499409+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "qlines_3Q_under_blind:KXNBA3QTOTAL-26NOV25CHICHA-65",
+     "lead_min": 31.6,
+     "line": 64.5,
+     "night": "2026-11-25",
+     "offset": 0,
+     "price": 0.83,
+     "rule": "qlines_3Q_under_blind",
+     "rung": 64.5,
+     "section": "3Q",
+     "side": "no",
+     "start": "2026-11-26T00:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "CHA": "14/16",
+      "CHI": "14/17"
+     },
+     "ticker": "KXNBA3QTOTAL-26NOV25CHICHA-65"
     }
    ]
   },
@@ -5593,6 +5797,35 @@
       "SAC": "16/16"
      },
      "ticker": "KXNBA4QTOTAL-26NOV23SASSAC-62"
+    },
+    {
+     "ask": 0.22,
+     "bid": 0.17,
+     "direction": "under",
+     "entered": "2026-11-25T23:28:21.499409+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "qlines_4Q_under:KXNBA4QTOTAL-26NOV25CHICHA-62",
+     "lead_min": 31.6,
+     "line": 62.5,
+     "matches": "qlines_4Q_under_blind:KXNBA4QTOTAL-26NOV25CHICHA-62",
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.83,
+     "qualifying": [
+      "CHA"
+     ],
+     "rule": "qlines_4Q_under",
+     "rung": 61.5,
+     "section": "4Q",
+     "side": "no",
+     "start": "2026-11-26T00:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "CHA": "15/16",
+      "CHI": "11/17"
+     },
+     "ticker": "KXNBA4QTOTAL-26NOV25CHICHA-62"
     }
    ]
   },
@@ -6002,6 +6235,31 @@
       "PHI": "15/18"
      },
      "ticker": "KXNBA4QTOTAL-26NOV25MIAPHI-63"
+    },
+    {
+     "ask": 0.22,
+     "bid": 0.17,
+     "direction": "under",
+     "entered": "2026-11-25T23:28:21.499409+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "qlines_4Q_under_blind:KXNBA4QTOTAL-26NOV25CHICHA-62",
+     "lead_min": 31.6,
+     "line": 62.5,
+     "night": "2026-11-25",
+     "offset": 1,
+     "price": 0.83,
+     "rule": "qlines_4Q_under_blind",
+     "rung": 61.5,
+     "section": "4Q",
+     "side": "no",
+     "start": "2026-11-26T00:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "CHA": "15/16",
+      "CHI": "11/17"
+     },
+     "ticker": "KXNBA4QTOTAL-26NOV25CHICHA-62"
     }
    ]
   }
@@ -6114,6 +6372,12 @@
    "due": 0,
    "games": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-25T23:28:21.499409+00:00",
+   "due": 1,
+   "games": 0,
+   "new": 9
   }
  ],
  "schedule": [
