@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-25T09:00:34.536821+00:00",
+ "last_run": "2026-11-25T10:00:36.562411+00:00",
  "nights": {
   "2026-11-15": {
    "errors": [],
@@ -9193,15 +9193,15 @@
     ]
    ],
    "rel": -2,
-   "roi": null,
+   "roi": 0.0094,
    "role": "main",
    "series": "KXHIGHTSAN",
+   "settled_logged": "2026-11-25T10:00:36.562411+00:00",
    "station": "SAN",
-   "status": "open",
+   "status": "settled",
    "ticker": "KXHIGHTSAN-26NOV17-B66.5",
-   "venue_status": "finalized",
    "version": "climate-v1",
-   "won": null,
+   "won": true,
    "yes_ask": 0.02,
    "yes_bid": 0.01
   },
@@ -10501,15 +10501,15 @@
     ]
    ],
    "rel": -2,
-   "roi": null,
+   "roi": 0.07,
    "role": "control",
    "series": "KXLOWTSAN",
+   "settled_logged": "2026-11-25T10:00:36.562411+00:00",
    "station": "SAN",
-   "status": "open",
+   "status": "settled",
    "ticker": "KXLOWTSAN-26NOV17-B52.5",
-   "venue_status": "finalized",
    "version": "climate-v1",
-   "won": null,
+   "won": true,
    "yes_ask": 0.12,
    "yes_bid": 0.07
   },
@@ -11233,15 +11233,15 @@
     ]
    ],
    "rel": 2,
-   "roi": null,
+   "roi": 0.07,
    "role": "main",
    "series": "KXLOWTSAN",
+   "settled_logged": "2026-11-25T10:00:36.562411+00:00",
    "station": "SAN",
-   "status": "open",
+   "status": "settled",
    "ticker": "KXLOWTSAN-26NOV17-T59",
-   "venue_status": "finalized",
    "version": "climate-v1",
-   "won": null,
+   "won": true,
    "yes_ask": 0.17,
    "yes_bid": 0.07
   },
