@@ -6,8 +6,8 @@
   "rule": "LOW under the threshold set on the server"
  },
  "engine": {
-  "beat_age_s": 173,
-  "cycle": 355,
+  "beat_age_s": 130,
+  "cycle": 361,
   "last_error": null,
   "mode": "LIVE",
   "service_active": true,
@@ -81,10 +81,10 @@
   "today": "up",
   "yesterday": "down"
  },
- "published_at": "2026-11-25T06:23:02+00:00",
+ "published_at": "2026-11-25T07:23:01+00:00",
  "schema": 1,
  "server": {
-  "backup_age_h": 23.9,
+  "backup_age_h": 0.9,
   "disk_pct": 34,
   "jobs": {
    "bot-backup": {
@@ -100,6 +100,6 @@
     "timer": "active"
    }
   },
-  "mem_free_mb": 563
+  "mem_free_mb": 578
  }
 }
