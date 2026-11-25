@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-25T17:02:34+00:00",
+ "board_built_at": "2026-11-25T17:09:15+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -1379,6 +1379,41 @@
    "sport": "tennis",
    "status": "miss"
   },
+  "2026-11-24|Thiago Cigarran|Paulo Andre Saraiva Dos Santos|Thiago Cigarran to win \u00b7 Challenger underdog who has won here": {
+   "away": "Paulo Andre Saraiva Dos Santos",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-24",
+   "edge_at_log": null,
+   "first_seen": "2026-11-24",
+   "headline": "Thiago Cigarran to win",
+   "home": "Thiago Cigarran",
+   "id": "2026-11-24|Thiago Cigarran|Paulo Andre Saraiva Dos Santos|Thiago Cigarran to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-24T18:20Z",
+   "lane": "production",
+   "league": "Tennis",
+   "match": "Thiago Cigarran v Paulo Andre Saraiva Dos Santos",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.47,
+   "published_at": "2026-11-25T17:09:15+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Thiago Cigarran to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV24SARCIG",
+    "market": "KXATPCHALLENGERMATCH-26NOV24SARCIG-CIG",
+    "outcome": "Thiago Cigarran",
+    "outcome_side": "yes",
+    "price_at_log": 0.47,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV24SARCIG-CIG",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "hit"
+  },
   "2026-11-24|Wojciech Marek|Kimmer Coppejans|Wojciech Marek to win \u00b7 Challenger underdog who has won here": {
    "away": "Kimmer Coppejans",
    "bet": {
@@ -1534,11 +1569,11 @@
    "kickoff": "2026-11-25T17:40Z",
    "lane": "production",
    "last_seen": "2026-11-25",
-   "last_seen_at": "2026-11-25T17:02:34+00:00",
+   "last_seen_at": "2026-11-25T17:09:15+00:00",
    "league": "Tennis",
    "match": "Nicolas Zanellato v Leonardo Storck Franca",
    "pair": "challenger_won_here|tennis",
-   "price_at_log": 0.82,
+   "price_at_log": 0.75,
    "published_at": "2026-11-25T15:43:48+00:00",
    "published_late": false,
    "published_min_before_kickoff": 116,
@@ -1548,7 +1583,7 @@
     "market": "KXATPCHALLENGERMATCH-26NOV25ZANSTO-ZAN",
     "outcome": "Nicolas Zanellato",
     "outcome_side": "yes",
-    "price_at_log": 0.82,
+    "price_at_log": 0.75,
     "venue": "kalshi"
    },
    "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV25ZANSTO-ZAN",
@@ -1565,18 +1600,18 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 44,
+    "leads": 45,
     "problem": null,
-    "routed": 44,
+    "routed": 45,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
    "sandbox_clv": null,
-   "sandbox_n": 43,
-   "sandbox_roi": -0.4029,
-   "sandbox_roi_fee": -0.4212,
+   "sandbox_n": 44,
+   "sandbox_roi": -0.3681,
+   "sandbox_roi_fee": -0.3877,
    "timing": {
     "late": [],
     "timed": 27,
@@ -1588,5 +1623,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-25T17:02:34+00:00"
+ "updated_at": "2026-11-25T17:09:15+00:00"
 }
