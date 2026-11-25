@@ -8,8 +8,9 @@
  },
  "error": null,
  "games_through": "2026-11-23",
- "last_run": "2026-11-25T00:00:41.940254+00:00",
- "last_settle": "2026-11-25T00:00:41.940254+00:00",
+ "last_live_read": "2026-11-25T00:30:31.661487+00:00",
+ "last_run": "2026-11-25T00:30:31.661487+00:00",
+ "last_settle": "2026-11-25T00:30:31.661487+00:00",
  "looks": {
   "401909314": {
    "at": "2026-11-24T23:30:33.063986+00:00",
@@ -32,6 +33,30 @@
     "3Q under: wide": 1,
     "4Q over: wide": 1,
     "4Q under: wide": 1
+   }
+  },
+  "401909315": {
+   "at": "2026-11-25T00:30:31.661487+00:00",
+   "entered": {
+    "1H over blind": 1,
+    "1H under blind": 1,
+    "1Q over blind": 1,
+    "1Q under blind": 1,
+    "2H over blind": 1,
+    "2Q over blind": 1,
+    "2Q under": 1,
+    "2Q under blind": 1,
+    "3Q over blind": 1,
+    "3Q under blind": 1,
+    "4Q over blind": 1,
+    "4Q under blind": 1
+   },
+   "game": "BOS @ WSH",
+   "lead_min": 29.5,
+   "night": "2026-11-24",
+   "priced": 11,
+   "skipped": {
+    "2H under: wide": 1
    }
   },
   "401910036": {
@@ -839,6 +864,31 @@
       "ORL": "11/16"
      },
      "ticker": "KXNBA1HTOTAL-26NOV24DETORL-106"
+    },
+    {
+     "ask": 0.75,
+     "bid": 0.72,
+     "direction": "over",
+     "entered": "2026-11-25T00:30:31.661487+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "qlines_1H_over_blind:KXNBA1HTOTAL-26NOV24BOSWAS-105",
+     "lead_min": 29.5,
+     "line": 104.5,
+     "night": "2026-11-24",
+     "offset": 0,
+     "price": 0.75,
+     "rule": "qlines_1H_over_blind",
+     "rung": 104.5,
+     "section": "1H",
+     "side": "yes",
+     "start": "2026-11-25T01:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "BOS": "9/17",
+      "WSH": "14/18"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV24BOSWAS-105"
     }
    ]
   },
@@ -1191,6 +1241,31 @@
       "ORL": "11/16"
      },
      "ticker": "KXNBA1HTOTAL-26NOV24DETORL-120"
+    },
+    {
+     "ask": 0.33,
+     "bid": 0.3,
+     "direction": "under",
+     "entered": "2026-11-25T00:30:31.661487+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "qlines_1H_under_blind:KXNBA1HTOTAL-26NOV24BOSWAS-119",
+     "lead_min": 29.5,
+     "line": 119.5,
+     "night": "2026-11-24",
+     "offset": 1,
+     "price": 0.7,
+     "rule": "qlines_1H_under_blind",
+     "rung": 118.5,
+     "section": "1H",
+     "side": "no",
+     "start": "2026-11-25T01:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "BOS": "15/17",
+      "WSH": "11/18"
+     },
+     "ticker": "KXNBA1HTOTAL-26NOV24BOSWAS-119"
     }
    ]
   },
@@ -1543,6 +1618,31 @@
       "ORL": "10/16"
      },
      "ticker": "KXNBA1QTOTAL-26NOV24DETORL-52"
+    },
+    {
+     "ask": 0.69,
+     "bid": 0.68,
+     "direction": "over",
+     "entered": "2026-11-25T00:30:31.661487+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "qlines_1Q_over_blind:KXNBA1QTOTAL-26NOV24BOSWAS-53",
+     "lead_min": 29.5,
+     "line": 51.5,
+     "night": "2026-11-24",
+     "offset": 1,
+     "price": 0.69,
+     "rule": "qlines_1Q_over_blind",
+     "rung": 52.5,
+     "section": "1Q",
+     "side": "yes",
+     "start": "2026-11-25T01:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "BOS": "12/17",
+      "WSH": "12/18"
+     },
+     "ticker": "KXNBA1QTOTAL-26NOV24BOSWAS-53"
     }
    ]
   },
@@ -1932,6 +2032,31 @@
       "ORL": "10/16"
      },
      "ticker": "KXNBA1QTOTAL-26NOV24DETORL-60"
+    },
+    {
+     "ask": 0.42,
+     "bid": 0.41,
+     "direction": "under",
+     "entered": "2026-11-25T00:30:31.661487+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "qlines_1Q_under_blind:KXNBA1QTOTAL-26NOV24BOSWAS-59",
+     "lead_min": 29.5,
+     "line": 59.5,
+     "night": "2026-11-24",
+     "offset": 1,
+     "price": 0.59,
+     "rule": "qlines_1Q_under_blind",
+     "rung": 58.5,
+     "section": "1Q",
+     "side": "no",
+     "start": "2026-11-25T01:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "BOS": "14/17",
+      "WSH": "10/18"
+     },
+     "ticker": "KXNBA1QTOTAL-26NOV24BOSWAS-59"
     }
    ]
   },
@@ -2178,6 +2303,31 @@
       "SAC": "11/16"
      },
      "ticker": "KXNBA2HTOTAL-26NOV23SASSAC-101"
+    },
+    {
+     "ask": 0.66,
+     "bid": 0.61,
+     "direction": "over",
+     "entered": "2026-11-25T00:30:31.661487+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "qlines_2H_over_blind:KXNBA2HTOTAL-26NOV24BOSWAS-102",
+     "lead_min": 29.5,
+     "line": 100.5,
+     "night": "2026-11-24",
+     "offset": 1,
+     "price": 0.66,
+     "rule": "qlines_2H_over_blind",
+     "rung": 101.5,
+     "section": "2H",
+     "side": "yes",
+     "start": "2026-11-25T01:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "BOS": "10/17",
+      "WSH": "12/18"
+     },
+     "ticker": "KXNBA2HTOTAL-26NOV24BOSWAS-102"
     }
    ]
   },
@@ -2739,6 +2889,31 @@
       "ORL": "14/16"
      },
      "ticker": "KXNBA2QTOTAL-26NOV24DETORL-51"
+    },
+    {
+     "ask": 0.69,
+     "bid": 0.66,
+     "direction": "over",
+     "entered": "2026-11-25T00:30:31.661487+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "qlines_2Q_over_blind:KXNBA2QTOTAL-26NOV24BOSWAS-52",
+     "lead_min": 29.5,
+     "line": 50.5,
+     "night": "2026-11-24",
+     "offset": 1,
+     "price": 0.69,
+     "rule": "qlines_2Q_over_blind",
+     "rung": 51.5,
+     "section": "2Q",
+     "side": "yes",
+     "start": "2026-11-25T01:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "BOS": "10/17",
+      "WSH": "15/18"
+     },
+     "ticker": "KXNBA2QTOTAL-26NOV24BOSWAS-52"
     }
    ]
   },
@@ -2887,6 +3062,35 @@
       "LAC": "10/15"
      },
      "ticker": "KXNBA2QTOTAL-26NOV23LACHOU-64"
+    },
+    {
+     "ask": 0.19,
+     "bid": 0.14,
+     "direction": "under",
+     "entered": "2026-11-25T00:30:31.661487+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "qlines_2Q_under:KXNBA2QTOTAL-26NOV24BOSWAS-64",
+     "lead_min": 29.5,
+     "line": 63.5,
+     "matches": "qlines_2Q_under_blind:KXNBA2QTOTAL-26NOV24BOSWAS-64",
+     "night": "2026-11-24",
+     "offset": 0,
+     "price": 0.86,
+     "qualifying": [
+      "BOS"
+     ],
+     "rule": "qlines_2Q_under",
+     "rung": 63.5,
+     "section": "2Q",
+     "side": "no",
+     "start": "2026-11-25T01:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "BOS": "16/17",
+      "WSH": "16/18"
+     },
+     "ticker": "KXNBA2QTOTAL-26NOV24BOSWAS-64"
     }
    ]
   },
@@ -3236,6 +3440,31 @@
       "ORL": "13/16"
      },
      "ticker": "KXNBA2QTOTAL-26NOV24DETORL-63"
+    },
+    {
+     "ask": 0.19,
+     "bid": 0.14,
+     "direction": "under",
+     "entered": "2026-11-25T00:30:31.661487+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "qlines_2Q_under_blind:KXNBA2QTOTAL-26NOV24BOSWAS-64",
+     "lead_min": 29.5,
+     "line": 63.5,
+     "night": "2026-11-24",
+     "offset": 0,
+     "price": 0.86,
+     "rule": "qlines_2Q_under_blind",
+     "rung": 63.5,
+     "section": "2Q",
+     "side": "no",
+     "start": "2026-11-25T01:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "BOS": "16/17",
+      "WSH": "16/18"
+     },
+     "ticker": "KXNBA2QTOTAL-26NOV24BOSWAS-64"
     }
    ]
   },
@@ -3697,6 +3926,31 @@
       "ORL": "10/16"
      },
      "ticker": "KXNBA3QTOTAL-26NOV24DETORL-54"
+    },
+    {
+     "ask": 0.52,
+     "bid": 0.48,
+     "direction": "over",
+     "entered": "2026-11-25T00:30:31.661487+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "qlines_3Q_over_blind:KXNBA3QTOTAL-26NOV24BOSWAS-54",
+     "lead_min": 29.5,
+     "line": 53.5,
+     "night": "2026-11-24",
+     "offset": 0,
+     "price": 0.52,
+     "rule": "qlines_3Q_over_blind",
+     "rung": 53.5,
+     "section": "3Q",
+     "side": "yes",
+     "start": "2026-11-25T01:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "BOS": "9/17",
+      "WSH": "11/18"
+     },
+     "ticker": "KXNBA3QTOTAL-26NOV24BOSWAS-54"
     }
    ]
   },
@@ -4062,6 +4316,31 @@
       "SAC": "13/16"
      },
      "ticker": "KXNBA3QTOTAL-26NOV23SASSAC-64"
+    },
+    {
+     "ask": 0.13,
+     "bid": 0.08,
+     "direction": "under",
+     "entered": "2026-11-25T00:30:31.661487+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "qlines_3Q_under_blind:KXNBA3QTOTAL-26NOV24BOSWAS-64",
+     "lead_min": 29.5,
+     "line": 64.5,
+     "night": "2026-11-24",
+     "offset": 1,
+     "price": 0.92,
+     "rule": "qlines_3Q_under_blind",
+     "rung": 63.5,
+     "section": "3Q",
+     "side": "no",
+     "start": "2026-11-25T01:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "BOS": "15/17",
+      "WSH": "15/18"
+     },
+     "ticker": "KXNBA3QTOTAL-26NOV24BOSWAS-64"
     }
    ]
   },
@@ -4363,6 +4642,31 @@
       "SAC": "13/16"
      },
      "ticker": "KXNBA4QTOTAL-26NOV23SASSAC-50"
+    },
+    {
+     "ask": 0.64,
+     "bid": 0.59,
+     "direction": "over",
+     "entered": "2026-11-25T00:30:31.661487+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "qlines_4Q_over_blind:KXNBA4QTOTAL-26NOV24BOSWAS-50",
+     "lead_min": 29.5,
+     "line": 48.5,
+     "night": "2026-11-24",
+     "offset": 1,
+     "price": 0.64,
+     "rule": "qlines_4Q_over_blind",
+     "rung": 49.5,
+     "section": "4Q",
+     "side": "yes",
+     "start": "2026-11-25T01:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "BOS": "11/17",
+      "WSH": "10/18"
+     },
+     "ticker": "KXNBA4QTOTAL-26NOV24BOSWAS-50"
     }
    ]
   },
@@ -4837,6 +5141,31 @@
       "SAC": "16/16"
      },
      "ticker": "KXNBA4QTOTAL-26NOV23SASSAC-62"
+    },
+    {
+     "ask": 0.15,
+     "bid": 0.1,
+     "direction": "under",
+     "entered": "2026-11-25T00:30:31.661487+00:00",
+     "game": "BOS @ WSH",
+     "game_id": "401909315",
+     "id": "qlines_4Q_under_blind:KXNBA4QTOTAL-26NOV24BOSWAS-62",
+     "lead_min": 29.5,
+     "line": 62.5,
+     "night": "2026-11-24",
+     "offset": 1,
+     "price": 0.9,
+     "rule": "qlines_4Q_under_blind",
+     "rung": 61.5,
+     "section": "4Q",
+     "side": "no",
+     "start": "2026-11-25T01:00:00+00:00",
+     "status": "open",
+     "teams": {
+      "BOS": "13/17",
+      "WSH": "14/18"
+     },
+     "ticker": "KXNBA4QTOTAL-26NOV24BOSWAS-62"
     }
    ]
   }
@@ -4883,10 +5212,15 @@
    "due": 0,
    "games": 0,
    "new": 0
+  },
+  {
+   "at": "2026-11-25T00:30:31.661487+00:00",
+   "due": 1,
+   "games": 0,
+   "new": 12
   }
  ],
  "schedule": [
-  "2026-11-25T00:00:00+00:00",
   "2026-11-25T01:00:00+00:00",
   "2026-11-25T03:00:00+00:00",
   "2026-11-25T22:00:00+00:00",
