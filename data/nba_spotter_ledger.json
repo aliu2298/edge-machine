@@ -1,7 +1,7 @@
 {
  "box_through": "2026-11-25",
  "error": null,
- "last_run": "2026-11-25T03:00:32.198479+00:00",
+ "last_run": "2026-11-25T03:10:12.875241+00:00",
  "looks": {
   "401909305": {
    "at": "2026-11-20T22:45:25.302540+00:00",
@@ -4521,6 +4521,7 @@
     {
      "bid": 0.53,
      "entered": "2026-11-24T23:45:29.161399+00:00",
+     "fee_in": 0.0175,
      "game": "BOS @ WSH",
      "game_id": "401909315",
      "id": "spotter_fade_blind:KXNBAPRA-26NOV24BOSWAS-WASADYBANTSA4-25",
@@ -4528,15 +4529,20 @@
      "matches": "spotter_fade:KXNBA3PT-26NOV24BOSWAS-WASBCOULIBALY0-1",
      "night": "2026-11-24",
      "p": null,
+     "payout": 0.0,
      "pid": "5142718",
      "player": "AJ Dybantsa",
      "price": 0.47,
+     "profit": -0.4875,
+     "ret": -1.0,
      "rule": "spotter_fade_blind",
      "rung": 25,
+     "settled": "2026-11-25T03:10:12.875241+00:00",
      "side": "no",
+     "sold": false,
      "start": "2026-11-25T01:00:00+00:00",
      "stat": "pra",
-     "status": "open",
+     "status": "lost",
      "team": "WSH",
      "ticker": "KXNBAPRA-26NOV24BOSWAS-WASADYBANTSA4-25",
      "unit": "points+rebounds+assists",
@@ -11365,12 +11371,6 @@
  },
  "runs": [
   {
-   "at": "2026-11-23T03:00:26.118638+00:00",
-   "box": 1,
-   "due": 0,
-   "new": 0
-  },
-  {
    "at": "2026-11-23T03:30:26.961383+00:00",
    "box": 0,
    "due": 0,
@@ -11666,6 +11666,12 @@
   },
   {
    "at": "2026-11-25T03:00:32.198479+00:00",
+   "box": 0,
+   "due": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-25T03:10:12.875241+00:00",
    "box": 0,
    "due": 0,
    "new": 0
