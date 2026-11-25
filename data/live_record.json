@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-25T21:07Z",
+ "generated": "2026-11-25T22:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -6635,17 +6635,17 @@
     {
      "id": "crypto_fav_band_below:KXBTCD-26NOV2517-T59999.99",
      "ko": "2026-11-25T22:05",
-     "r": null,
+     "r": -1.0,
      "side": "no",
-     "st": "open",
+     "st": "lost",
      "w": 1.0
     },
     {
      "id": "crypto_fav_band_below:KXHYPED-26NOV2517-T60.9999",
      "ko": "2026-11-25T22:05",
-     "r": null,
+     "r": -1.0,
      "side": "no",
-     "st": "open",
+     "st": "lost",
      "w": 0.99
     }
    ],
@@ -6818,8 +6818,7 @@
     }
    ],
    "refused": {
-    "finance_spx_nc_no:KXINXU-26NOV23H1600-T7299.9999": "price outside the band at the follower's read",
-    "finance_spx_nc_no:KXINXU-26NOV25H1600-T7184.9999": "price outside the band at the follower's read"
+    "finance_spx_nc_no:KXINXU-26NOV23H1600-T7299.9999": "price outside the band at the follower's read"
    }
   },
   "ftts_no_70_80|soccer_ftts": {
@@ -6956,9 +6955,9 @@
     {
      "id": "ftts_no_70_80:KXUCLFTTS-26NOV25INTVFB-VFB",
      "ko": "2026-11-25T20:00",
-     "r": null,
+     "r": 0.3444,
      "side": "no",
-     "st": "open",
+     "st": "won",
      "w": 0.99
     },
     {
@@ -7461,33 +7460,33 @@
     {
      "id": "sr_a7:KXUCLTOTAL-26NOV25BRULFC-4",
      "ko": "2026-11-25T20:00",
-     "r": null,
+     "r": -1.0,
      "side": "yes",
-     "st": "open",
+     "st": "lost",
      "w": 9.52
     },
     {
      "id": "sr_a7:KXUCLTOTAL-26NOV25INTVFB-4",
      "ko": "2026-11-25T20:00",
-     "r": null,
+     "r": -1.0,
      "side": "yes",
-     "st": "open",
+     "st": "lost",
      "w": 9.52
     },
     {
      "id": "sr_a7:KXUCLTOTAL-26NOV25LILBMU-4",
      "ko": "2026-11-25T20:00",
-     "r": null,
+     "r": -1.0,
      "side": "yes",
-     "st": "open",
+     "st": "lost",
      "w": 9.72
     },
     {
      "id": "sr_a7:KXUCLTOTAL-26NOV25PSGROM-4",
      "ko": "2026-11-25T20:00",
-     "r": null,
+     "r": 0.8958,
      "side": "yes",
-     "st": "open",
+     "st": "won",
      "w": 9.54
     }
    ],
@@ -7583,17 +7582,17 @@
     {
      "id": "st_t1h:KXUCLTEAMTOTAL-26NOV25BRULFC-BRU2",
      "ko": "2026-11-25T20:00",
-     "r": null,
+     "r": -1.0,
      "side": "yes",
-     "st": "open",
+     "st": "lost",
      "w": 1.02
     },
     {
      "id": "st_t1h:KXUCLTEAMTOTAL-26NOV25PSGROM-PSG2",
      "ko": "2026-11-25T20:00",
-     "r": null,
+     "r": 0.3444,
      "side": "yes",
-     "st": "open",
+     "st": "won",
      "w": 1.0
     }
    ],

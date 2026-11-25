@@ -46,11 +46,14 @@
    "kind": "2h",
    "lane": "A7",
    "match": "Club Brugge v Liverpool",
+   "payout": 0.0,
    "price": 0.42,
+   "profit": -100.0,
    "quote": true,
    "recorded": "2026-11-25T18:31:39.991727+00:00",
+   "settled": "2026-11-25T22:02:13.188279+00:00",
    "start": "2026-11-25T20:00Z",
-   "status": "open",
+   "status": "lost",
    "ticker": "KXUCL2HBTTS-26NOV25BRULFC-BTTS"
   },
   "A7:KXUCLTOTAL-26NOV25INTVFB": {
@@ -59,11 +62,14 @@
    "kind": "2h",
    "lane": "A7",
    "match": "Internazionale v VfB Stuttgart",
+   "payout": 0.0,
    "price": 0.38,
+   "profit": -100.0,
    "quote": true,
    "recorded": "2026-11-25T18:31:39.991727+00:00",
+   "settled": "2026-11-25T22:02:13.188279+00:00",
    "start": "2026-11-25T20:00Z",
-   "status": "open",
+   "status": "lost",
    "ticker": "KXUCL2HBTTS-26NOV25INTVFB-BTTS"
   },
   "A7:KXUCLTOTAL-26NOV25LILBMU": {
@@ -72,11 +78,14 @@
    "kind": "2h",
    "lane": "A7",
    "match": "Lille v Bayern Munich",
+   "payout": 0.0,
    "price": 0.29,
+   "profit": -100.0,
    "quote": true,
    "recorded": "2026-11-25T18:31:39.991727+00:00",
+   "settled": "2026-11-25T22:02:13.188279+00:00",
    "start": "2026-11-25T20:00Z",
-   "status": "open",
+   "status": "lost",
    "ticker": "KXUCL2HBTTS-26NOV25LILBMU-BTTS"
   },
   "A7:KXUCLTOTAL-26NOV25PSGROM": {
@@ -85,11 +94,14 @@
    "kind": "2h",
    "lane": "A7",
    "match": "Paris Saint-Germain v AS Roma",
+   "payout": 1.0,
    "price": 0.4,
+   "profit": 139.92,
    "quote": true,
    "recorded": "2026-11-25T18:31:39.991727+00:00",
+   "settled": "2026-11-25T22:02:13.188279+00:00",
    "start": "2026-11-25T20:00Z",
-   "status": "open",
+   "status": "won",
    "ticker": "KXUCL2HBTTS-26NOV25PSGROM-BTTS"
   }
  },
@@ -153,46 +165,65 @@
    "status": "done"
   },
   "A7:KXUCLTOTAL-26NOV25BRULFC": {
+   "action": "hold",
+   "ht_ts": 1795639868,
    "lane": "A7",
    "match": "Club Brugge v Liverpool",
    "pick": "A7:KXUCLTOTAL-26NOV25BRULFC",
    "price": 0.54,
+   "profit": -100.0,
+   "score": "0-1",
+   "scoreless": false,
+   "settled": true,
    "start": "2026-11-25T20:00Z",
-   "status": "pending"
+   "status": "done"
   },
   "A7:KXUCLTOTAL-26NOV25INTVFB": {
+   "action": "sell",
+   "bid": 0.15,
+   "ht_ts": 1795639640,
    "lane": "A7",
    "match": "Internazionale v VfB Stuttgart",
    "pick": "A7:KXUCLTOTAL-26NOV25INTVFB",
    "price": 0.54,
+   "profit": -74.69,
+   "score": "0-0",
+   "scoreless": true,
    "start": "2026-11-25T20:00Z",
-   "status": "pending"
+   "status": "done"
   },
   "A7:KXUCLTOTAL-26NOV25LILBMU": {
+   "action": "hold",
+   "ht_ts": 1795639569,
    "lane": "A7",
    "match": "Lille v Bayern Munich",
    "pick": "A7:KXUCLTOTAL-26NOV25LILBMU",
    "price": 0.33,
+   "profit": -100.0,
+   "score": "0-1",
+   "scoreless": false,
+   "settled": true,
    "start": "2026-11-25T20:00Z",
-   "status": "pending"
+   "status": "done"
   },
   "A7:KXUCLTOTAL-26NOV25PSGROM": {
+   "action": "hold",
+   "ht_ts": 1795639659,
    "lane": "A7",
    "match": "Paris Saint-Germain v AS Roma",
    "pick": "A7:KXUCLTOTAL-26NOV25PSGROM",
    "price": 0.51,
+   "profit": 89.58,
+   "score": "1-1",
+   "scoreless": false,
+   "settled": true,
    "start": "2026-11-25T20:00Z",
-   "status": "pending"
+   "status": "done"
   }
  },
- "last_run": "2026-11-25T21:31:41.482227+00:00",
+ "last_run": "2026-11-25T22:02:13.188279+00:00",
  "registered": "2026-11-21",
  "runs": [
-  {
-   "at": "2026-11-22T22:31:52.485360+00:00",
-   "btts": 0,
-   "ht": 0
-  },
   {
    "at": "2026-11-22T23:16:36.511515+00:00",
    "btts": 0,
@@ -440,6 +471,11 @@
   },
   {
    "at": "2026-11-25T21:31:41.482227+00:00",
+   "btts": 8,
+   "ht": 8
+  },
+  {
+   "at": "2026-11-25T22:02:13.188279+00:00",
    "btts": 8,
    "ht": 8
   }

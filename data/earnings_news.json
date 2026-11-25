@@ -232,7 +232,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-25T21:00:43Z",
+ "calendar_at": "2026-11-25T22:00:32Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -6567,9 +6567,19 @@
     "width": 685185.185185194
    },
    "sym": "COST"
+  },
+  {
+   "at": "2026-11-25T22:01:20Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 685185.185185194
+   },
+   "sym": "COST"
   }
  ],
- "last_run": "2026-11-25T21:01:49Z",
+ "last_run": "2026-11-25T22:01:25Z",
  "predictions": [
   {
    "call": {
@@ -7277,16 +7287,47 @@
    "sym": "WMT"
   },
   {
+   "baselines": {
+    "random": {
+     "entry": 3.0053,
+     "entry_ts": 1795032120,
+     "exit": 2.9898,
+     "exit_ts": 1795640400,
+     "net": 0.002758,
+     "status": "settled"
+    },
+    "spy": {
+     "entry": 14.6219,
+     "entry_ts": 1795032720,
+     "exit": 14.3357,
+     "exit_ts": 1795640400,
+     "net": -0.021973,
+     "status": "settled"
+    },
+    "up": {
+     "entry": 3.0062,
+     "entry_ts": 1795032120,
+     "exit": 2.9859,
+     "exit_ts": 1795640400,
+     "net": -0.009153,
+     "status": "settled"
+    }
+   },
    "call": {
     "entry": 3.0053,
     "entry_ts": 1795032120,
-    "status": "open"
+    "exit": 2.9898,
+    "exit_ts": 1795640400,
+    "net": 0.002758,
+    "status": "settled"
    },
    "entry_due": "2026-11-18T20:01:30Z",
    "exit_due": "2026-11-25T21:00:00Z",
    "family": "post_drift",
+   "graded_at": "2026-11-25T22:01:21Z",
    "id": "post_drift:NVDA:2026-11-17",
    "logged_at": "2026-11-18T20:01:30Z",
+   "net": 0.002758,
    "perp": "KXNVDAPERP",
    "random_side": -1,
    "reaction": -0.03709,
@@ -7294,7 +7335,7 @@
    "report": "2026-11-17",
    "report_time": "after-hours",
    "side": -1,
-   "status": "open",
+   "status": "settled",
    "sym": "NVDA"
   },
   {
