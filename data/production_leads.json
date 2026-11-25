@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-25T05:12:11+00:00",
+ "board_built_at": "2026-11-25T05:35:26+00:00",
  "corners_selections": {
   "kalshi:26NOV24RMAPSV": "2026-11-24|Real Madrid|PSV Eindhoven|10+ corners \u00b7 Corners total fade, Champions League",
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
@@ -1659,6 +1659,41 @@
    "source": "mls_fade_home",
    "sport": "soccer_p05",
    "status": "miss"
+  },
+  "2026-11-25|San Jose Earthquakes|Houston Dynamo FC|Houston Dynamo FC +0.5 (San Jose Earthquakes not to win) \u00b7 MLS: fade the home side priced 0.40-0.45": {
+   "away": "Houston Dynamo FC",
+   "bet": {
+    "kind": "win_no",
+    "team": "San Jose Earthquakes"
+   },
+   "date": "2026-11-25",
+   "edge_at_log": null,
+   "first_seen": "2026-11-21",
+   "headline": "Houston Dynamo FC +0.5 (San Jose Earthquakes not to win)",
+   "home": "San Jose Earthquakes",
+   "id": "2026-11-25|San Jose Earthquakes|Houston Dynamo FC|Houston Dynamo FC +0.5 (San Jose Earthquakes not to win) \u00b7 MLS: fade the home side priced 0.40-0.45",
+   "kickoff": "2026-11-25T03:00Z",
+   "lane": "production",
+   "league": "MLS",
+   "match": "San Jose Earthquakes v Houston Dynamo FC",
+   "pair": "mls_fade_home|soccer_p05",
+   "price_at_log": 0.55,
+   "published_at": "2026-11-25T05:35:26+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": null,
+   "route": {
+    "claim": "Houston Dynamo FC +0.5 (San Jose Earthquakes not to win)",
+    "event": "KXMLSGAME-26NOV24SJHOU",
+    "market": "KXMLSGAME-26NOV24SJHOU-SJ",
+    "outcome": "San Jose",
+    "outcome_side": "no",
+    "price_at_log": 0.55,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "mls_fade_home:KXMLSGAME-26NOV24SJHOU-SJ",
+   "source": "mls_fade_home",
+   "sport": "soccer_p05",
+   "status": "miss"
   }
  },
  "pairs": {
@@ -1769,18 +1804,18 @@
    "ready_at": "2026-10-16T17:17:38+00:00",
    "route": "moved by hand on 2026-10-16",
    "routing": {
-    "leads": 2,
+    "leads": 3,
     "problem": null,
-    "routed": 2,
+    "routed": 3,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
     "why": []
    },
-   "sandbox_clv": -0.001,
-   "sandbox_n": 20,
-   "sandbox_roi": 0.1368,
-   "sandbox_roi_fee": 0.1038,
+   "sandbox_clv": -0.0033,
+   "sandbox_n": 21,
+   "sandbox_roi": 0.0827,
+   "sandbox_roi_fee": 0.0512,
    "timing": {
     "late": [],
     "timed": 0,
@@ -1952,5 +1987,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 1,
- "updated_at": "2026-11-25T05:12:11+00:00"
+ "updated_at": "2026-11-25T05:35:26+00:00"
 }
