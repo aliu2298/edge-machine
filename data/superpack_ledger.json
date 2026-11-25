@@ -104,6 +104,10 @@
    "at": "2026-11-24T19:40:12.920347+00:00",
    "pool": "opposite"
   },
+  "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXBRASILEIROBTTS-26NOV25ATLCOR\", \"no\"]]": {
+   "at": "2026-11-25T22:05:51.499556+00:00",
+   "pool": "opposite"
+  },
   "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXARGPREMDIVBTTS-26NOV20VELCAB\", \"yes\"]]": {
    "at": "2026-11-20T21:37:27.429116+00:00",
    "pool": "opposite"
@@ -206,6 +210,10 @@
   },
   "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV24CHAPAL\", \"yes\"]]": {
    "at": "2026-11-24T19:40:12.920347+00:00",
+   "pool": "opposite"
+  },
+  "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV25ATLCOR\", \"yes\"]]": {
+   "at": "2026-11-25T22:05:51.499556+00:00",
    "pool": "opposite"
   },
   "[\"contract\", \"album_cheap_no_ledger.json\", [\"KXALBUMEQUIV-EVE26NOV05-17K\", \"no\"]]": {
@@ -6971,7 +6979,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-25T21:35:05.671675+00:00",
+ "last_run": "2026-11-25T22:05:51.499556+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -9435,9 +9443,9 @@
    ],
    "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV25BRULFC-12\", \"b\"]]",
    "price": 0.73,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_corners",
-   "settled": null,
+   "settled": "2026-11-25T22:05:45+00:00",
    "side": "b",
    "snapshot": {
     "as_of": "2026-11-25T16:03:52+00:00",
@@ -9506,7 +9514,7 @@
    },
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXUCLTOTAL-26NOV25BRULFC-4",
@@ -20333,14 +20341,14 @@
    ],
    "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV25INTVFB-VFB\", \"b\"]]",
    "price": 0.73,
-   "profit": null,
+   "profit": 0.3699,
    "scope": "soccer_ftts",
-   "settled": null,
+   "settled": "2026-11-25T22:05:38+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXUCLFTTS-26NOV25LILBMU-LIL",
@@ -20356,14 +20364,14 @@
    ],
    "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV25LILBMU-LIL\", \"b\"]]",
    "price": 0.72,
-   "profit": null,
+   "profit": 0.3889,
    "scope": "soccer_ftts",
-   "settled": null,
+   "settled": "2026-11-25T22:05:38+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXUCLFTTS-26NOV25PSGROM-ROM",
@@ -20379,14 +20387,14 @@
    ],
    "pid": "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXUCLFTTS-26NOV25PSGROM-ROM\", \"b\"]]",
    "price": 0.7,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_ftts",
-   "settled": null,
+   "settled": "2026-11-25T22:05:45+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXUCLCORNERS-26NOV25ATMVIK-12",
@@ -20404,14 +20412,14 @@
    ],
    "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV25ATMVIK-12\", \"b\"]]",
    "price": 0.67,
-   "profit": null,
+   "profit": 0.4925,
    "scope": "soccer_corners",
-   "settled": null,
+   "settled": "2026-11-25T22:05:45+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXUCLCORNERS-26NOV25BRULFC-12",
@@ -20429,14 +20437,14 @@
    ],
    "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV25BRULFC-12\", \"b\"]]",
    "price": 0.73,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_corners",
-   "settled": null,
+   "settled": "2026-11-25T22:05:45+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXUCLCORNERS-26NOV25INTVFB-11",
@@ -20454,14 +20462,14 @@
    ],
    "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV25INTVFB-11\", \"b\"]]",
    "price": 0.62,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_corners",
-   "settled": null,
+   "settled": "2026-11-25T22:05:45+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXUCLCORNERS-26NOV25LILBMU-11",
@@ -20479,14 +20487,14 @@
    ],
    "pid": "[\"sandbox\", \"corners_fav_no\", [\"corners_fav_no:KXUCLCORNERS-26NOV25LILBMU-11\", \"b\"]]",
    "price": 0.65,
-   "profit": null,
+   "profit": 0.5385,
    "scope": "soccer_corners",
-   "settled": null,
+   "settled": "2026-11-25T22:05:45+00:00",
    "side": "b",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "won"
   },
   {
    "contract": "KXEREDIVISIETOTAL-26NOV28EXCTEL-2",
@@ -20552,14 +20560,14 @@
    ],
    "pid": "[\"sandbox\", \"corners_ucl_fade\", [\"corners_ucl_fade:KXUCLCORNERS-26NOV25SPOMUN-7\", \"a\"]]",
    "price": 0.85,
-   "profit": null,
+   "profit": -1.0,
    "scope": "soccer_corners",
-   "settled": null,
+   "settled": "2026-11-25T22:05:46+00:00",
    "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
-   "status": "open"
+   "status": "lost"
   },
   {
    "contract": "KXBTCD-26NOV2517-T59999.99",
@@ -21936,6 +21944,24 @@
    "list": "pool",
    "logged": "2026-11-24T19:32:01.232734+00:00",
    "pid": "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV24CHAPAL\", \"yes\"]]",
+   "side": "yes",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-25T22:05:51.499556+00:00",
+   "contract": "KXBRASILEIROBTTS-26NOV25ATLCOR-BTTS",
+   "list": "pool",
+   "logged": "2026-11-25T21:31:40.718824+00:00",
+   "pid": "[\"btts_sa_ledger.json\", \"NO\", [\"NO:KXBRASILEIROBTTS-26NOV25ATLCOR\", \"no\"]]",
+   "side": "no",
+   "why": "active lanes are on both sides of this contract"
+  },
+  {
+   "at": "2026-11-25T22:05:51.499556+00:00",
+   "contract": "KXBRASILEIROBTTS-26NOV25ATLCOR-BTTS",
+   "list": "pool",
+   "logged": "2026-11-25T21:31:40.718824+00:00",
+   "pid": "[\"btts_sa_ledger.json\", \"YES\", [\"YES:KXBRASILEIROBTTS-26NOV25ATLCOR\", \"yes\"]]",
    "side": "yes",
    "why": "active lanes are on both sides of this contract"
   }
