@@ -268,5 +268,20 @@ check("a run with no game due settles but is not a live read", (sr.get("last_set
 check("the backfill is not a live read either", "last_live_read" in stb, False)
 check("a read in the window stamps the last live read", "last_live_read" in (lambda s: (Q.run(s, bdoc, BTIP - dt.timedelta(minutes=30), get=lambda u: {"events": [dict(id="900", date=BTIP.strftime("%Y-%m-%dT%H:%MZ"), season={"type": 2}, competitions=[dict(status={"type": {"name": "STATUS_SCHEDULED"}}, competitors=[dict(homeAway="home", team={"abbreviation": "AAA"}), dict(homeAway="away", team={"abbreviation": "BBB"})])])]} if "scoreboard" in u else {}, fetch=bfetch), s)[1])(Q.empty()), True)
 
+# ---- the last live read comes from the looks (2026-11-24)
+print("\nlast live read")
+ll = Q.empty()
+ll["looks"] = {"1": dict(at="2026-11-24T23:30:33+00:00", game="DET @ ORL", priced=7, skipped={"2H over: wide": 1}, entered={}, lead_min=29.4),
+               "2": dict(at="2026-11-23T23:30:00+00:00", game="MEM @ CHA", priced=12, skipped={}, entered={}, lead_min=30.0, backfilled=True, source="candles@tip-30"),
+               "3": dict(at="2026-11-24T20:00:00+00:00", game="X @ Y", priced=1, skipped={}, entered={}, lead_min=20.0)}
+check("a look with only controls and skips (no lane entry) counts; the newest live look wins", B.last_live_read(ll), "2026-11-24T23:30:33+00:00")
+ll["looks"]["4"] = dict(at="2026-11-25T05:00:00+00:00", game="Z @ W", priced=3, skipped={}, entered={}, lead_min=30.0, backfilled=True)
+check("a backfilled look never counts, however late its stamp", B.last_live_read(ll), "2026-11-24T23:30:33+00:00")
+check("with no live look it falls back to the stored stamp, else None", (B.last_live_read(dict(looks={"4": ll["looks"]["4"]}, last_live_read="2026-11-24T21:00:00+00:00")),
+      B.last_live_read(dict(looks={"4": ll["looks"]["4"]}))), ("2026-11-24T21:00:00+00:00", None))
+check("the page shows it as the last live read, not 'none yet'", ("Last live read none yet" in B.section(ll, bdoc), "Last live read none yet" in B.section(Q.empty(), {"games": []})), (False, True))
+import fmt
+check("and shows the 23:30Z read's own time", fmt.when("2026-11-24T23:30:33+00:00") in B.section(ll, bdoc), True)
+
 print("\nALL PASS" if not FAILS else f"\n{len(FAILS)} FAILED: {FAILS}")
 sys.exit(1 if FAILS else 0)
