@@ -8,10 +8,10 @@
   },
   "commodities": {
    "cmd_market": {
-    "offered": 380,
-    "picked": 380
+    "offered": 305,
+    "picked": 305
    },
-   "kalshi_venue": 380
+   "kalshi_venue": 305
   },
   "commodities_fav": {
    "kalshi_venue": 450
@@ -33,7 +33,7 @@
    "kalshi_venue": 525
   },
   "economics": {
-   "kalshi_venue": 40
+   "kalshi_venue": 38
   },
   "finance": {
    "kalshi_venue": 30
@@ -61,19 +61,19 @@
     "offered": 9,
     "picked": 0
    },
-   "kalshi_venue": 271,
+   "kalshi_venue": 239,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
   },
   "soccer_btts": {
    "btts_market": {
-    "offered": 84,
-    "picked": 84
+    "offered": 85,
+    "picked": 85
    },
-   "kalshi_venue": 84,
+   "kalshi_venue": 85,
    "liga_btts_even": {
-    "offered": 7,
+    "offered": 8,
     "picked": 1
    }
   },
@@ -93,33 +93,33 @@
   },
   "soccer_corners": {
    "corners_fav_no": {
-    "offered": 175,
-    "picked": 0
+    "offered": 182,
+    "picked": 4
    },
    "corners_market": {
-    "offered": 175,
-    "picked": 175
+    "offered": 182,
+    "picked": 182
    },
    "corners_ucl_fade": {
-    "offered": 175,
+    "offered": 182,
     "picked": 0
    },
-   "kalshi_venue": 175
+   "kalshi_venue": 182
   },
   "soccer_ftts": {
    "ftts_lineup_lag": {
-    "offered": 36,
+    "offered": 54,
     "picked": 0
    },
    "ftts_market": {
-    "offered": 36,
-    "picked": 36
+    "offered": 54,
+    "picked": 54
    },
    "ftts_no_70_80": {
-    "offered": 36,
-    "picked": 0
+    "offered": 54,
+    "picked": 3
    },
-   "kalshi_venue": 36
+   "kalshi_venue": 54
   },
   "soccer_o05": {
    "kalshi_venue": 0,
@@ -145,12 +145,12 @@
     "picked": 1
    },
    "goals_market": {
-    "offered": 84,
-    "picked": 84
+    "offered": 85,
+    "picked": 85
    },
-   "kalshi_venue": 84,
+   "kalshi_venue": 85,
    "liga_u15_dog_24h": {
-    "offered": 7,
+    "offered": 8,
     "picked": 0
    }
   },
@@ -174,10 +174,10 @@
   },
   "soccer_o25": {
    "goals_market": {
-    "offered": 84,
-    "picked": 84
+    "offered": 85,
+    "picked": 85
    },
-   "kalshi_venue": 84
+   "kalshi_venue": 85
   },
   "soccer_o25_cup": {
    "goals_market": {
@@ -195,10 +195,10 @@
   },
   "soccer_p05": {
    "goals_market": {
-    "offered": 202,
-    "picked": 202
+    "offered": 204,
+    "picked": 204
    },
-   "kalshi_venue": 202,
+   "kalshi_venue": 204,
    "mls_fade_home": {
     "offered": 16,
     "picked": 1
@@ -292,10 +292,10 @@
   },
   "soccer_u35": {
    "goals_market": {
-    "offered": 84,
-    "picked": 84
+    "offered": 85,
+    "picked": 85
    },
-   "kalshi_venue": 84
+   "kalshi_venue": 85
   },
   "soccer_u35_cup": {
    "goals_market": {
@@ -322,8 +322,8 @@
   "tennis": {
    "kalshi_venue": 9,
    "polymarket_us": 40,
-   "polymarket_us_listed": 317,
-   "polymarket_us_priced": 97
+   "polymarket_us_listed": 319,
+   "polymarket_us_priced": 98
   },
   "tennis_combo": {
    "combo": 0,
@@ -338,43 +338,43 @@
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-25T17:30:27+00:00",
-   "commodities": "2026-11-25T17:30:27+00:00",
-   "commodities_fav": "2026-11-25T17:30:27+00:00",
-   "cricket": "2026-11-25T17:30:27+00:00",
-   "crypto": "2026-11-25T17:30:27+00:00",
-   "crypto_fav": "2026-11-25T17:30:27+00:00",
-   "economics": "2026-11-25T17:30:27+00:00",
-   "finance": "2026-11-25T17:30:27+00:00",
+   "boxing": "2026-11-25T17:37:06+00:00",
+   "commodities": "2026-11-25T17:37:06+00:00",
+   "commodities_fav": "2026-11-25T17:37:06+00:00",
+   "cricket": "2026-11-25T17:37:06+00:00",
+   "crypto": "2026-11-25T17:37:06+00:00",
+   "crypto_fav": "2026-11-25T17:37:06+00:00",
+   "economics": "2026-11-25T17:37:06+00:00",
+   "finance": "2026-11-25T17:37:06+00:00",
    "mma": "2026-11-21T20:10:14+00:00",
-   "nfl": "2026-11-25T17:30:27+00:00",
-   "nhl_pl": "2026-11-25T17:30:27+00:00",
-   "nhl_rest": "2026-11-25T17:30:27+00:00",
-   "soccer": "2026-11-25T17:30:27+00:00",
-   "soccer_btts": "2026-11-25T17:30:27+00:00",
-   "soccer_btts_cup": "2026-11-25T17:30:27+00:00",
+   "nfl": "2026-11-25T17:37:06+00:00",
+   "nhl_pl": "2026-11-25T17:37:06+00:00",
+   "nhl_rest": "2026-11-25T17:37:06+00:00",
+   "soccer": "2026-11-25T17:37:06+00:00",
+   "soccer_btts": "2026-11-25T17:37:06+00:00",
+   "soccer_btts_cup": "2026-11-25T17:37:06+00:00",
    "soccer_btts_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_corners": "2026-11-25T17:30:27+00:00",
-   "soccer_ftts": "2026-11-25T17:30:27+00:00",
-   "soccer_o15": "2026-11-25T17:30:27+00:00",
-   "soccer_o15_cup": "2026-11-25T17:30:27+00:00",
+   "soccer_corners": "2026-11-25T17:37:06+00:00",
+   "soccer_ftts": "2026-11-25T17:37:06+00:00",
+   "soccer_o15": "2026-11-25T17:37:06+00:00",
+   "soccer_o15_cup": "2026-11-25T17:37:06+00:00",
    "soccer_o15_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_o25": "2026-11-25T17:30:27+00:00",
-   "soccer_o25_cup": "2026-11-25T17:30:27+00:00",
+   "soccer_o25": "2026-11-25T17:37:06+00:00",
+   "soccer_o25_cup": "2026-11-25T17:37:06+00:00",
    "soccer_o25_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_p05": "2026-11-25T17:30:27+00:00",
-   "soccer_p05_cup": "2026-11-25T17:30:27+00:00",
+   "soccer_p05": "2026-11-25T17:37:06+00:00",
+   "soccer_p05_cup": "2026-11-25T17:37:06+00:00",
    "soccer_p05_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_team1": "2026-11-25T17:30:27+00:00",
-   "soccer_team1_cup": "2026-11-25T17:30:27+00:00",
+   "soccer_team1": "2026-11-25T17:37:06+00:00",
+   "soccer_team1_cup": "2026-11-25T17:37:06+00:00",
    "soccer_team1_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_team2": "2026-11-25T17:30:27+00:00",
-   "soccer_team2_cup": "2026-11-25T17:30:27+00:00",
+   "soccer_team2": "2026-11-25T17:37:06+00:00",
+   "soccer_team2_cup": "2026-11-25T17:37:06+00:00",
    "soccer_team2_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_u35": "2026-11-25T17:30:27+00:00",
-   "soccer_u35_cup": "2026-11-25T17:30:27+00:00",
+   "soccer_u35": "2026-11-25T17:37:06+00:00",
+   "soccer_u35_cup": "2026-11-25T17:37:06+00:00",
    "soccer_u35_intl": "2026-11-17T23:27:07+00:00",
-   "tennis": "2026-11-25T17:30:27+00:00",
+   "tennis": "2026-11-25T17:37:06+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -667,37 +667,37 @@
      "start": "2026-11-25T20:00:00+00:00"
     },
     "kalshi:26NOV25PSGROM": {
-     "at": "2026-11-25T17:30:26.723541+00:00",
+     "at": "2026-11-25T17:37:05.896580+00:00",
      "label": "Paris Saint-Germain v AS Roma",
      "league": "Champions League",
-     "reason": "no Kalshi 1X2 board for the match",
+     "reason": "no rung with a No ask of 0.60 or more and a No book 5c or tighter",
      "start": "2026-11-25T20:00:00+00:00"
     },
     "kalshi:26NOV25SHAFEN": {
-     "at": "2026-11-25T17:30:26.723541+00:00",
+     "at": "2026-11-25T17:37:05.896580+00:00",
      "label": "Shakhtar Donetsk v Fenerbahce",
      "league": "Champions League",
-     "reason": "no Kalshi 1X2 board for the match",
+     "reason": "no clear favourite: 0.36 de-vigged, under 0.55",
      "start": "2026-11-25T20:00:00+00:00"
     },
     "kalshi:26NOV25SLAVIL": {
-     "at": "2026-11-25T17:30:26.723541+00:00",
+     "at": "2026-11-25T17:37:05.896580+00:00",
      "label": "Slavia Prague v Villarreal",
      "league": "Champions League",
-     "reason": "no Kalshi 1X2 board for the match",
+     "reason": "no clear favourite: 0.40 de-vigged, under 0.55",
      "start": "2026-11-25T17:45:00+00:00"
     },
     "kalshi:26NOV25SPOMUN": {
-     "at": "2026-11-25T17:30:26.723541+00:00",
+     "at": "2026-11-25T17:37:05.896580+00:00",
      "label": "Sporting CP v Manchester United",
      "league": "Champions League",
-     "reason": "no Kalshi 1X2 board for the match",
+     "reason": "no clear favourite: 0.38 de-vigged, under 0.55",
      "start": "2026-11-25T20:00:00+00:00"
     }
    }
   },
   "odds_api": {
-   "at": "2026-11-25T17:30:27+00:00",
+   "at": "2026-11-25T17:37:06+00:00",
    "remaining": 175,
    "used": 325
   },
@@ -718,7 +718,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 2877,
+  "runs": 2878,
   "tennis_shortlist": {
    "audit": [
     {
@@ -730,7 +730,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-25T17:31:14+00:00"
+  "updated": "2026-11-25T17:37:50+00:00"
  },
  "quotes": [
   {
@@ -432276,7 +432276,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-25T17:30:27+00:00",
+   "close_at": "2026-11-25T17:37:06+00:00",
    "close_price": 0.54,
    "date": "2026-11-28",
    "edge": null,
@@ -467356,7 +467356,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-25T17:30:27+00:00",
+   "close_at": "2026-11-25T17:37:06+00:00",
    "close_price": 0.56,
    "date": "2026-11-29",
    "edge": null,
@@ -472376,7 +472376,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-25T17:04:19+00:00",
+   "close_at": "2026-11-25T17:37:06+00:00",
    "close_price": 0.72,
    "date": "2026-11-25",
    "edge": null,
@@ -472418,7 +472418,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-25T17:04:19+00:00",
+   "close_at": "2026-11-25T17:37:06+00:00",
    "close_price": 0.73,
    "date": "2026-11-25",
    "edge": null,
@@ -473601,7 +473601,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-25T17:04:19+00:00",
+   "close_at": "2026-11-25T17:37:06+00:00",
    "close_price": 0.7,
    "date": "2026-11-25",
    "edge": null,
@@ -474189,7 +474189,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-25T17:30:27+00:00",
+   "close_at": "2026-11-25T17:37:06+00:00",
    "close_price": 0.67,
    "date": "2026-11-25",
    "edge": null,
@@ -474229,7 +474229,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-25T17:30:27+00:00",
+   "close_at": "2026-11-25T17:37:06+00:00",
    "close_price": 0.7,
    "date": "2026-11-25",
    "edge": null,
@@ -474269,8 +474269,8 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-25T17:30:27+00:00",
-   "close_price": 0.6,
+   "close_at": "2026-11-25T17:37:06+00:00",
+   "close_price": 0.61,
    "date": "2026-11-25",
    "edge": null,
    "espn_away": "VfB Stuttgart",
@@ -474309,7 +474309,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-25T17:30:27+00:00",
+   "close_at": "2026-11-25T17:37:06+00:00",
    "close_price": 0.65,
    "date": "2026-11-25",
    "edge": null,
@@ -479088,7 +479088,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-25T17:30:27+00:00",
+   "close_at": "2026-11-25T17:37:06+00:00",
    "close_price": 0.81,
    "date": "2026-11-28",
    "edge": null,
@@ -479947,6 +479947,427 @@
    "uncovered": null,
    "untraded": false,
    "url": "https://kalshi.com/markets/kxwti",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-29",
+   "edge": -0.01,
+   "espn_away": "Villarreal",
+   "espn_home": "Celta Vigo",
+   "event": "KXLALIGABTTS-26NOV29RCCVIL",
+   "id": "btts_market:KXLALIGABTTS-26NOV29RCCVIL-BTTS",
+   "kalshi_title": "Both Teams To Score",
+   "label": "Celta Vigo v Villarreal: both teams to score",
+   "league": "La Liga",
+   "liquidity": null,
+   "logged": "2026-11-25T17:37:05+00:00",
+   "market_id": "KXLALIGABTTS-26NOV29RCCVIL-BTTS",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.6,
+   "price_b": 0.42,
+   "price_draw": null,
+   "prob_a": 0.59,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "btts_market",
+   "sport": "soccer_btts",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-29T17:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxlaligabtts",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-29",
+   "edge": -0.015,
+   "espn_away": "Villarreal",
+   "espn_home": "Celta Vigo",
+   "event": "KXLALIGATOTAL-26NOV29RCCVIL",
+   "id": "goals_market:KXLALIGATOTAL-26NOV29RCCVIL-2",
+   "kalshi_title": "Over 1.5 goals scored",
+   "label": "Celta Vigo v Villarreal: over 1.5 goals",
+   "league": "La Liga",
+   "liquidity": null,
+   "logged": "2026-11-25T17:37:05+00:00",
+   "market_id": "KXLALIGATOTAL-26NOV29RCCVIL-2",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.79,
+   "price_b": 0.24,
+   "price_draw": null,
+   "prob_a": 0.775,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_o15",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-29T17:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxlaligatotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-29",
+   "edge": -0.015,
+   "espn_away": "Villarreal",
+   "espn_home": "Celta Vigo",
+   "event": "KXLALIGATOTAL-26NOV29RCCVIL",
+   "id": "goals_market:KXLALIGATOTAL-26NOV29RCCVIL-3",
+   "kalshi_title": "Over 2.5 goals scored",
+   "label": "Celta Vigo v Villarreal: over 2.5 goals",
+   "league": "La Liga",
+   "liquidity": null,
+   "logged": "2026-11-25T17:37:05+00:00",
+   "market_id": "KXLALIGATOTAL-26NOV29RCCVIL-3",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.56,
+   "price_b": 0.47,
+   "price_draw": null,
+   "prob_a": 0.545,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_o25",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-29T17:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxlaligatotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-29",
+   "edge": -0.02,
+   "espn_away": "Villarreal",
+   "espn_home": "Celta Vigo",
+   "event": "KXLALIGATOTAL-26NOV29RCCVIL",
+   "id": "goals_market:KXLALIGATOTAL-26NOV29RCCVIL-4",
+   "kalshi_title": "Over 3.5 goals scored",
+   "label": "Celta Vigo v Villarreal: over 3.5 goals",
+   "league": "La Liga",
+   "liquidity": null,
+   "logged": "2026-11-25T17:37:05+00:00",
+   "market_id": "KXLALIGATOTAL-26NOV29RCCVIL-4",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.34,
+   "price_b": 0.7,
+   "price_draw": null,
+   "prob_a": 0.32,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_u35",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-29T17:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxlaligatotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-29",
+   "edge": -0.005,
+   "espn_away": "Villarreal",
+   "espn_home": "Celta Vigo",
+   "event": "KXLALIGAGAME-26NOV29RCCVIL",
+   "id": "goals_market:KXLALIGAGAME-26NOV29RCCVIL-RCC",
+   "kalshi_title": "Celta Vigo",
+   "label": "Celta Vigo v Villarreal: Celta Vigo to win (No = Villarreal +0.5)",
+   "league": "La Liga",
+   "liquidity": null,
+   "logged": "2026-11-25T17:37:05+00:00",
+   "market_id": "KXLALIGAGAME-26NOV29RCCVIL-RCC",
+   "opponent": "Celta Vigo",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.36,
+   "price_b": 0.65,
+   "price_draw": null,
+   "prob_a": 0.355,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_p05",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-29T17:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "Villarreal",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxlaligagame",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-29",
+   "edge": -0.005,
+   "espn_away": "Villarreal",
+   "espn_home": "Celta Vigo",
+   "event": "KXLALIGAGAME-26NOV29RCCVIL",
+   "id": "goals_market:KXLALIGAGAME-26NOV29RCCVIL-VIL",
+   "kalshi_title": "Villarreal",
+   "label": "Celta Vigo v Villarreal: Villarreal to win (No = Celta Vigo +0.5)",
+   "league": "La Liga",
+   "liquidity": null,
+   "logged": "2026-11-25T17:37:05+00:00",
+   "market_id": "KXLALIGAGAME-26NOV29RCCVIL-VIL",
+   "opponent": "Villarreal",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.39,
+   "price_b": 0.62,
+   "price_draw": null,
+   "prob_a": 0.385,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_p05",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-29T17:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "Celta Vigo",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxlaligagame",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-29",
+   "edge": -0.04,
+   "espn_away": "Villarreal",
+   "espn_home": "Celta Vigo",
+   "event": "KXLALIGACORNERS-26NOV29RCCVIL",
+   "id": "corners_market:KXLALIGACORNERS-26NOV29RCCVIL-9",
+   "kalshi_title": "9+ corners",
+   "label": "Celta Vigo v Villarreal: 9+ corners",
+   "league": "La Liga",
+   "liquidity": null,
+   "logged": "2026-11-25T17:37:05+00:00",
+   "market_id": "KXLALIGACORNERS-26NOV29RCCVIL-9",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.57,
+   "price_b": 0.51,
+   "price_draw": null,
+   "prob_a": 0.53,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "corners_market",
+   "sport": "soccer_corners",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-29T17:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxlaligacorners",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-29",
+   "edge": -0.04,
+   "espn_away": "Villarreal",
+   "espn_home": "Celta Vigo",
+   "event": "KXLALIGACORNERS-26NOV29RCCVIL",
+   "id": "corners_market:KXLALIGACORNERS-26NOV29RCCVIL-10",
+   "kalshi_title": "10+ corners",
+   "label": "Celta Vigo v Villarreal: 10+ corners",
+   "league": "La Liga",
+   "liquidity": null,
+   "logged": "2026-11-25T17:37:05+00:00",
+   "market_id": "KXLALIGACORNERS-26NOV29RCCVIL-10",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.45,
+   "price_b": 0.63,
+   "price_draw": null,
+   "prob_a": 0.41,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "corners_market",
+   "sport": "soccer_corners",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-29T17:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxlaligacorners",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-29",
+   "edge": -0.025,
+   "espn_away": "Villarreal",
+   "espn_home": "Celta Vigo",
+   "event": "KXLALIGATCORNERS-26NOV29RCCVIL",
+   "id": "corners_market:KXLALIGATCORNERS-26NOV29RCCVIL-RCC5",
+   "kalshi_title": "Celta Vigo: 5+",
+   "label": "Celta Vigo v Villarreal: Celta Vigo 5+ corners",
+   "league": "La Liga",
+   "liquidity": null,
+   "logged": "2026-11-25T17:37:05+00:00",
+   "market_id": "KXLALIGATCORNERS-26NOV29RCCVIL-RCC5",
+   "opponent": "Villarreal",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.49,
+   "price_b": 0.56,
+   "price_draw": null,
+   "prob_a": 0.465,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "corners_market",
+   "sport": "soccer_corners",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-29T17:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "Celta Vigo",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxlaligatcorners",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-29",
+   "edge": -0.025,
+   "espn_away": "Villarreal",
+   "espn_home": "Celta Vigo",
+   "event": "KXLALIGATCORNERS-26NOV29RCCVIL",
+   "id": "corners_market:KXLALIGATCORNERS-26NOV29RCCVIL-VIL5",
+   "kalshi_title": "Villarreal: 5+",
+   "label": "Celta Vigo v Villarreal: Villarreal 5+ corners",
+   "league": "La Liga",
+   "liquidity": null,
+   "logged": "2026-11-25T17:37:05+00:00",
+   "market_id": "KXLALIGATCORNERS-26NOV29RCCVIL-VIL5",
+   "opponent": "Celta Vigo",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.5,
+   "price_b": 0.55,
+   "price_draw": null,
+   "prob_a": 0.475,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "corners_market",
+   "sport": "soccer_corners",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-29T17:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "Villarreal",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxlaligatcorners",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-26",
+   "edge": 0.0,
+   "id": "cmd_market:KXAAAGASCDHI-26NOV26-SI",
+   "label": "Will gas prices show a small increase?",
+   "liquidity": null,
+   "logged": "2026-11-25T17:37:06+00:00",
+   "market_id": "KXAAAGASCDHI-26NOV26-SI",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.04,
+   "price_b": 0.98,
+   "price_draw": null,
+   "prob_a": 0.04,
+   "result": null,
+   "settled": null,
+   "side_a": "Small increase",
+   "side_b": "No",
+   "source": "cmd_market",
+   "sport": "commodities",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-26T15:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxaaagascdhi",
    "venue": "kalshi_binary",
    "venue_start": null
   }
