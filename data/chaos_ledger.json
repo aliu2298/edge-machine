@@ -195667,7 +195667,8 @@
     "KXATPCHALLENGERMATCH-26NOV24UCHLEO": 0,
     "KXATPCHALLENGERMATCH-26NOV24URSCHE": 1,
     "KXATPCHALLENGERMATCH-26NOV24WILALV": 0,
-    "KXATPCHALLENGERMATCH-26NOV24XILFOM": 0
+    "KXATPCHALLENGERMATCH-26NOV24XILFOM": 0,
+    "KXATPCHALLENGERMATCH-26NOV25MAZHEN": 0
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -232084,7 +232085,8 @@
     "KXATPCHALLENGERMATCH-26NOV24UCHLEO": 0,
     "KXATPCHALLENGERMATCH-26NOV24URSCHE": 0,
     "KXATPCHALLENGERMATCH-26NOV24WILALV": 0,
-    "KXATPCHALLENGERMATCH-26NOV24XILFOM": 0
+    "KXATPCHALLENGERMATCH-26NOV24XILFOM": 0,
+    "KXATPCHALLENGERMATCH-26NOV25MAZHEN": 0
    },
    "series": [
     "KXATPCHALLENGERMATCH"
@@ -407883,12 +407885,8 @@
    "watch": false
   }
  },
- "last_run": "2026-11-25T09:00:46.475102+00:00",
+ "last_run": "2026-11-25T09:30:48.013276+00:00",
  "runs": [
-  {
-   "at": "2026-11-12T10:00:29.249182+00:00",
-   "new": {}
-  },
   {
    "at": "2026-11-12T17:37:54.572388+00:00",
    "new": {
@@ -408208,6 +408206,13 @@
     "challenger_cheap_hold_base": 4,
     "challenger_won_here_hold": 0,
     "nba_winmargin_live": 22
+   }
+  },
+  {
+   "at": "2026-11-25T09:30:48.013276+00:00",
+   "new": {
+    "challenger_cheap_hold_base": 0,
+    "challenger_won_here_hold": 0
    }
   }
  ],
