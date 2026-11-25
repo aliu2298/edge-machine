@@ -1,6 +1,6 @@
 {
  "error": null,
- "last_run": "2026-11-25T19:00:38.311179+00:00",
+ "last_run": "2026-11-25T20:00:35.952561+00:00",
  "matches": [
   {
    "day": "2026-11-19",
@@ -3084,6 +3084,68 @@
    "logged": "2026-11-25T06:00:33.446524+00:00",
    "timed": 1,
    "title": "San Jose Earthquakes v Houston Dynamo FC",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-25",
+   "entries": [],
+   "espn_id": "401915378",
+   "event": "KXUCLGAME-26NOV25SBHBAR",
+   "goals": 5,
+   "ht": 1795631992,
+   "ko": 1795628700,
+   "labels": {
+    "away": null,
+    "home": null
+   },
+   "league": "UCL",
+   "logged": "2026-11-25T20:00:35.952561+00:00",
+   "timed": 4,
+   "title": "Sabah FK v Barcelona",
+   "version": "soccerp4-v1"
+  },
+  {
+   "day": "2026-11-25",
+   "entries": [
+    {
+     "ask": 0.58,
+     "bid": 0.57,
+     "kind": "GAME",
+     "maker": {
+      "cost": 0.58,
+      "filled": false,
+      "roi": null
+     },
+     "mom": "pre",
+     "name": "Villarreal",
+     "score": "0-0",
+     "side": "no",
+     "taker": {
+      "cost": 0.6,
+      "depth": 4743.96,
+      "filled": true,
+      "roi": -1.0
+     },
+     "team": "away",
+     "ticker": "KXUCLGAME-26NOV25SLAVIL-VIL",
+     "ts": 1795625100,
+     "v2": true,
+     "won": false
+    }
+   ],
+   "espn_id": "401915293",
+   "event": "KXUCLGAME-26NOV25SLAVIL",
+   "goals": 1,
+   "ht": 1795631992,
+   "ko": 1795628700,
+   "labels": {
+    "away": "O-D-",
+    "home": null
+   },
+   "league": "UCL",
+   "logged": "2026-11-25T20:00:35.952561+00:00",
+   "timed": 1,
+   "title": "Slavia Prague v Villarreal",
    "version": "soccerp4-v1"
   }
  ],
