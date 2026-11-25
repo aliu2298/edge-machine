@@ -1451,6 +1451,10 @@
    "at": "2026-11-18T21:05:54.890191+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"ere_o15\", [\"ere_o15:KXEREDIVISIETOTAL-26NOV28EXCTEL-2\", \"a\"]]": {
+   "at": "2026-11-25T17:05:33.757949+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"ftts_no_70_80\", [\"ftts_no_70_80:KXBUNDESLIGAFTTS-26NOV22SVWHSV-HSV\", \"b\"]]": {
    "at": "2026-11-22T15:04:21.859972+00:00",
    "pool": "entered"
@@ -6721,7 +6725,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-25T16:49:13.226656+00:00",
+ "last_run": "2026-11-25T17:05:33.757949+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -20058,6 +20062,31 @@
    "scope": "soccer_corners",
    "settled": null,
    "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
+   "status": "open"
+  },
+  {
+   "contract": "KXEREDIVISIETOTAL-26NOV28EXCTEL-2",
+   "entered_at": "2026-11-25T17:05:33.757949+00:00",
+   "entities": [
+    "Excelsior",
+    "Telstar"
+   ],
+   "id": "superpack:[\"sandbox\", \"ere_o15\", [\"ere_o15:KXEREDIVISIETOTAL-26NOV28EXCTEL-2\", \"a\"]]",
+   "lane": "ere_o15",
+   "logged": "2026-11-25T17:04:18+00:00",
+   "matched": [
+    "Excelsior",
+    "Telstar"
+   ],
+   "pid": "[\"sandbox\", \"ere_o15\", [\"ere_o15:KXEREDIVISIETOTAL-26NOV28EXCTEL-2\", \"a\"]]",
+   "price": 0.81,
+   "profit": null,
+   "scope": "soccer_o15",
+   "settled": null,
+   "side": "a",
    "snapshot": null,
    "sport": "Soccer",
    "src": "sandbox",
