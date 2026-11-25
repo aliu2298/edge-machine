@@ -6642,9 +6642,9 @@
   ]
  },
  "lane": "arg_goalless_dip",
- "last_run": "2026-11-24T16:30:03.037759+00:00",
+ "last_run": "2026-11-25T01:08:06.389392+00:00",
  "observations": {
-  "at": "2026-11-24T16:30:03.037759+00:00",
+  "at": "2026-11-25T01:08:06.389392+00:00",
   "errors": [],
   "new": 0,
   "skipped": 0,
@@ -6662,6 +6662,12 @@
   "KXARGPREMDIVTOTAL-26OCT31RIECAT": "pregame ask unverified: 0 contracts traded at or through the ask within 60 minutes (under 10)",
   "KXARGPREMDIVTOTAL-26OCT31VELSLA": "pregame ask unverified: 9.09 contracts traded at or through the ask within 60 minutes (under 10)"
  },
- "upcoming": [],
+ "upcoming": [
+  {
+   "event": "KXARGPREMDIVTOTAL-26NOV25BOCIRM",
+   "kickoff": 1795651200,
+   "title": "Boca Juniors vs Rivadavia: Regulation Time Total Goals"
+  }
+ ],
  "version": "argdip-v1"
 }
