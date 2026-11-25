@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-25T15:12:39+00:00",
+ "board_built_at": "2026-11-25T15:33:28+00:00",
  "corners_selections": {
   "kalshi:26NOV24RMAPSV": "2026-11-24|Real Madrid|PSV Eindhoven|10+ corners \u00b7 Corners total fade, Champions League",
   "kalshi:26OCT12COVNEW": "2026-10-12|Coventry City|Newcastle United|Under 10 corners \u00b7 Corners under form rule",
@@ -1675,7 +1675,7 @@
    "kickoff": "2026-11-25T20:00Z",
    "lane": "production",
    "last_seen": "2026-11-25",
-   "last_seen_at": "2026-11-25T15:12:39+00:00",
+   "last_seen_at": "2026-11-25T15:33:28+00:00",
    "league": "Champions League",
    "match": "Inter v Stuttgart",
    "pair": "ftts_no_70_80|soccer_ftts",
@@ -1712,7 +1712,7 @@
    "kickoff": "2026-11-25T20:00Z",
    "lane": "production",
    "last_seen": "2026-11-25",
-   "last_seen_at": "2026-11-25T15:12:39+00:00",
+   "last_seen_at": "2026-11-25T15:33:28+00:00",
    "league": "Champions League",
    "match": "Lille v Bayern Munich",
    "pair": "ftts_no_70_80|soccer_ftts",
@@ -1730,6 +1730,43 @@
     "venue": "kalshi"
    },
    "sandbox_quote": "ftts_no_70_80:KXUCLFTTS-26NOV25LILBMU-LIL",
+   "source": "ftts_no_70_80",
+   "sport": "soccer_ftts",
+   "status": "pending"
+  },
+  "2026-11-25|PSG|Roma|Roma not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge": {
+   "away": "Roma",
+   "bet": {
+    "kind": "ftts_no",
+    "team": "Roma"
+   },
+   "date": "2026-11-25",
+   "edge_at_log": null,
+   "first_seen": "2026-11-25",
+   "headline": "Roma not to score first",
+   "home": "PSG",
+   "id": "2026-11-25|PSG|Roma|Roma not to score first \u00b7 First to score, NO at 0.70-0.80, best 5 a day by model edge",
+   "kickoff": "2026-11-25T20:00Z",
+   "lane": "production",
+   "last_seen": "2026-11-25",
+   "last_seen_at": "2026-11-25T15:33:28+00:00",
+   "league": "Champions League",
+   "match": "PSG v Roma",
+   "pair": "ftts_no_70_80|soccer_ftts",
+   "price_at_log": 0.7,
+   "published_at": "2026-11-25T15:33:28+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 266,
+   "route": {
+    "claim": "Roma not to score first",
+    "event": "KXUCLFTTS-26NOV25PSGROM",
+    "market": "KXUCLFTTS-26NOV25PSGROM-ROM",
+    "outcome": "AS Roma",
+    "outcome_side": "no",
+    "price_at_log": 0.7,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "ftts_no_70_80:KXUCLFTTS-26NOV25PSGROM-ROM",
    "source": "ftts_no_70_80",
    "sport": "soccer_ftts",
    "status": "pending"
@@ -1784,7 +1821,7 @@
    "kickoff": "2026-11-29T03:30Z",
    "lane": "production",
    "last_seen": "2026-11-25",
-   "last_seen_at": "2026-11-25T15:12:39+00:00",
+   "last_seen_at": "2026-11-25T15:33:28+00:00",
    "league": "MLS",
    "match": "Portland Timbers v FC Dallas",
    "pair": "mls_fade_home|soccer_p05",
@@ -1890,9 +1927,9 @@
    "ready_at": "2026-10-16T17:17:38+00:00",
    "route": "moved by hand on 2026-10-16",
    "routing": {
-    "leads": 16,
+    "leads": 17,
     "problem": null,
-    "routed": 16,
+    "routed": 17,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 1,
@@ -1904,7 +1941,7 @@
    "sandbox_roi_fee": -0.0631,
    "timing": {
     "late": [],
-    "timed": 2,
+    "timed": 3,
     "under_target": 0
    }
   },
@@ -2098,5 +2135,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 1,
- "updated_at": "2026-11-25T15:12:39+00:00"
+ "updated_at": "2026-11-25T15:33:28+00:00"
 }
