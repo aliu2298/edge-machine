@@ -67,7 +67,7 @@ stage = L.lane_stages(now)
 mk = lambda **kw: dict(dict(uid=("x", "a"), lane="?", sport="Soccer", entities=["X"], day="2026-11-01", profit=0.1,  # noqa: E731
                             won=True, kind="team", src=None, scope=None), **kw)
 cases = [
-    ("a Production pair", mk(src="sandbox", lane="team2_ranked", scope="soccer_team2"), "Production"),
+    ("a Production pair", mk(src="sandbox", lane="team2_form_l10", scope="soccer_team2_intl"), "Production"),
     ("its Cups scope: retired 2026-11-16, so no active lane", mk(src="sandbox", lane="team2_ranked", scope="soccer_team2_cup"), None),
     ("a Sandbox lane", mk(src="sandbox", lane="team2_form_l10", scope="soccer_team2_cup"), "Sandbox"),
     ("a retired scope (team +0.5 unbeaten, tagged RETIRED in the stamp table)", mk(src="sandbox", lane="p05_unbeaten", scope="soccer_p05_cup"), None),

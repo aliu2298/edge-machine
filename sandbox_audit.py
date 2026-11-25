@@ -331,9 +331,14 @@ def check_production(d, st, rep):
     if listed - prod:
         rep.warn("production", f"on the hand-kept list, not in Production: {sorted(listed - prod)} — "
                                f"awaiting the next tracker run, or demoted by the net")
-    if published != prod:
+    # A pair PAIR_REMOVALS takes off the list reads as Sandbox at once (load_stages), while the committed feed still names it until the next
+    # tracker run prunes it (production.prune_feed runs first): waiting, not a fault. Same for its open leads below.
+    pruned = {k for k in published if k in T.PAIR_REMOVALS and k not in T.PAIR_OVERRIDES and k not in prod}
+    if pruned:
+        rep.warn("production", f"removed pairs still in the committed feed, awaiting the next tracker run: {sorted(pruned)}")
+    if published - pruned != prod:
         rep.error("production", f"the feed and the stages file disagree: only in the feed "
-                                f"{sorted(published - prod)}, only in stages {sorted(prod - published)}")
+                                f"{sorted(published - pruned - prod)}, only in stages {sorted(prod - (published - pruned))}")
     for k in prod:
         s, sp = k.split("|")
         if (s, sp) in S.ELIMINATED:
@@ -342,7 +347,7 @@ def check_production(d, st, rep):
         if not m.get("connected") or sp not in (m.get("sports") or []):
             rep.error("production", f"{k} is in Production but not connected for {sp}")
     stray = [l for l in (feed.get("leads") or {}).values()
-             if l.get("status") == "pending" and l.get("pair") not in prod]
+             if l.get("status") == "pending" and l.get("pair") not in prod and l.get("pair") not in pruned]
     for l in stray:
         rep.error("production", f"an open lead belongs to {l.get('pair')}, which is not in Production: "
                                 f"{l.get('headline')} {str(l.get('kickoff'))[:16]}")
