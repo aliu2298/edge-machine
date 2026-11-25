@@ -1,7 +1,7 @@
 {
  "error": null,
- "games_through": "2026-11-24",
- "last_run": "2026-11-25T19:15:31.576529+00:00",
+ "games_through": "2026-11-25",
+ "last_run": "2026-11-25T19:58:31.499068+00:00",
  "registered": "2026-11-23",
  "rules": {
   "club82_tt15": {
@@ -666,16 +666,19 @@
      "logged": "2026-11-25T17:00:35.977302+00:00",
      "match": "Sabah FK v Barcelona",
      "opponent": "Barcelona",
+     "payout": 0.0,
      "price": 0.19,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "16/17",
       "home": "1/4"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-25T19:58:31.499068+00:00",
      "side": "yes",
      "start": "2026-11-25T17:45Z",
-     "status": "open",
+     "status": "lost",
      "team": "Sabah FK",
      "team_side": "home",
      "ticker": "KXUCLTEAMTOTAL-26NOV25SBHBAR-SBH2"
@@ -721,16 +724,19 @@
      "logged": "2026-11-25T17:00:35.977302+00:00",
      "match": "Slavia Prague v Villarreal",
      "opponent": "Villarreal",
+     "payout": 0.0,
      "price": 0.41,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "11/17",
       "home": "2/4"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-25T19:58:31.499068+00:00",
      "side": "yes",
      "start": "2026-11-25T17:45Z",
-     "status": "open",
+     "status": "lost",
      "team": "Slavia Prague",
      "team_side": "home",
      "ticker": "KXUCLTEAMTOTAL-26NOV25SLAVIL-SLA2"
@@ -747,16 +753,19 @@
      "logged": "2026-11-25T17:00:35.977302+00:00",
      "match": "Slavia Prague v Villarreal",
      "opponent": "Slavia Prague",
+     "payout": 0.0,
      "price": 0.5,
+     "profit": -100.0,
      "qualifying": false,
      "rates": {
       "away": "11/17",
       "home": "2/4"
      },
      "rule": "club82_tt15_blind",
+     "settled": "2026-11-25T19:58:31.499068+00:00",
      "side": "yes",
      "start": "2026-11-25T17:45Z",
-     "status": "open",
+     "status": "lost",
      "team": "Villarreal",
      "team_side": "away",
      "ticker": "KXUCLTEAMTOTAL-26NOV25SLAVIL-VIL2"
@@ -1459,16 +1468,19 @@
      "line": 3.5,
      "logged": "2026-11-25T17:00:35.977302+00:00",
      "match": "Slavia Prague v Villarreal",
+     "payout": 1.0,
      "price": 0.64,
+     "profit": 52.41,
      "qualifying": false,
      "rates": {
       "away": "7/17",
       "home": "2/4"
      },
      "rule": "club82_u35_blind",
+     "settled": "2026-11-25T19:58:31.499068+00:00",
      "side": "no",
      "start": "2026-11-25T17:45Z",
-     "status": "open",
+     "status": "won",
      "ticker": "KXUCLTOTAL-26NOV25SLAVIL-4"
     },
     {
@@ -1720,6 +1732,11 @@
    "at": "2026-11-25T19:15:31.576529+00:00",
    "due": 7,
    "new": 24
+  },
+  {
+   "at": "2026-11-25T19:58:31.499068+00:00",
+   "due": 0,
+   "new": 0
   }
  ],
  "schedule": [
@@ -1770,10 +1787,10 @@
    },
    {
     "hits": 11,
-    "n": 17,
+    "n": 18,
     "name": "Villarreal",
     "qualifies": false,
-    "rate": 0.6470588235294118,
+    "rate": 0.6111111111111112,
     "since": null
    },
    {
@@ -2289,11 +2306,11 @@
     "since": "2026-11-08"
    },
    {
-    "hits": 16,
-    "n": 17,
+    "hits": 17,
+    "n": 18,
     "name": "Barcelona",
     "qualifies": true,
-    "rate": 0.9411764705882353,
+    "rate": 0.9444444444444444,
     "since": "2026-09-19"
    },
    {
@@ -2602,18 +2619,18 @@
    },
    {
     "hits": 1,
-    "n": 4,
+    "n": 5,
     "name": "Sabah FK",
     "qualifies": false,
-    "rate": 0.25,
+    "rate": 0.2,
     "since": null
    },
    {
     "hits": 2,
-    "n": 4,
+    "n": 5,
     "name": "Slavia Prague",
     "qualifies": false,
-    "rate": 0.5,
+    "rate": 0.4,
     "since": null
    }
   ],
@@ -2659,11 +2676,11 @@
     "since": null
    },
    {
-    "hits": 7,
-    "n": 17,
+    "hits": 8,
+    "n": 18,
     "name": "Villarreal",
     "qualifies": false,
-    "rate": 0.4117647058823529,
+    "rate": 0.4444444444444444,
     "since": null
    },
    {
@@ -3180,10 +3197,10 @@
    },
    {
     "hits": 5,
-    "n": 17,
+    "n": 18,
     "name": "Barcelona",
     "qualifies": false,
-    "rate": 0.29411764705882354,
+    "rate": 0.2777777777777778,
     "since": null
    },
    {
@@ -3492,18 +3509,18 @@
    },
    {
     "hits": 2,
-    "n": 4,
+    "n": 5,
     "name": "Sabah FK",
     "qualifies": false,
-    "rate": 0.5,
+    "rate": 0.4,
     "since": null
    },
    {
-    "hits": 2,
-    "n": 4,
+    "hits": 3,
+    "n": 5,
     "name": "Slavia Prague",
     "qualifies": false,
-    "rate": 0.5,
+    "rate": 0.6,
     "since": null
    }
   ]
