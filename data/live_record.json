@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-25T22:07Z",
+ "generated": "2026-11-25T23:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -5561,6 +5561,78 @@
     "src": "fills",
     "st": "open",
     "w": 1.04
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25CHICHA-CHA11TO20",
+    "ko": "2026-11-26T00:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.0
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25CHICHA-CHA1TO5",
+    "ko": "2026-11-26T00:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.9
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25CHICHA-CHA6TO10",
+    "ko": "2026-11-26T00:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.01
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25CHICHA-CHI11TO20",
+    "ko": "2026-11-26T00:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.05
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25CHICHA-CHI1TO5",
+    "ko": "2026-11-26T00:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.96
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25CHICHA-CHI6TO10",
+    "ko": "2026-11-26T00:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.05
    }
   ],
   "o35_cheap_no": [
@@ -6371,7 +6443,9 @@
      "w": 1.0
     }
    ],
-   "refused": {}
+   "refused": {
+    "corners_ucl_fade:KXUCLCORNERS-26NOV25SPOMUN-7": "price above the cap"
+   }
   },
   "crypto_fav_band_below|crypto_fav": {
    "entered": "2026-10-21T00:47:16+00:00",
@@ -6656,14 +6730,10 @@
     "crypto_fav_band_below:KXETHD-26NOV1917-T1799.99": "outside the price band",
     "crypto_fav_band_below:KXETHD-26NOV2017-T1619.99": "outside the price band",
     "crypto_fav_band_below:KXETHD-26NOV2217-T1719.99": "outside the price band",
-    "crypto_fav_band_below:KXETHD-26NOV2517-T1689.99": "outside the price band",
-    "crypto_fav_band_below:KXHYPED-26NOV1817-T67.9999": "published inside 30 min of kickoff",
     "crypto_fav_band_below:KXHYPED-26NOV2317-T65.9999": "wide spread",
     "crypto_fav_band_below:KXSOLD-26NOV1917-T73.9999": "no seller at the price",
     "crypto_fav_band_below:KXSOLD-26NOV2117-T70.9999": "already held by another lane",
-    "crypto_fav_band_below:KXSOLD-26NOV2417-T69.9999": "outside the price band",
-    "crypto_fav_band_below:KXSOLD-26NOV2517-T69.9999": "outside the price band",
-    "crypto_fav_band_below:KXXRPD-26NOV2517-T0.9399": "thin book"
+    "crypto_fav_band_below:KXSOLD-26NOV2417-T69.9999": "outside the price band"
    }
   },
   "econ_nc_yes|econ_daily": {
