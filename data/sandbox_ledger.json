@@ -33,10 +33,10 @@
    "kalshi_venue": 525
   },
   "economics": {
-   "kalshi_venue": 30
+   "kalshi_venue": 33
   },
   "finance": {
-   "kalshi_venue": 32
+   "kalshi_venue": 30
   },
   "mma": {
    "kalshi_venue": 0,
@@ -61,17 +61,17 @@
     "offered": 9,
     "picked": 0
    },
-   "kalshi_venue": 234,
+   "kalshi_venue": 288,
    "polymarket_us": 0,
    "polymarket_us_listed": 0,
    "polymarket_us_priced": 0
   },
   "soccer_btts": {
    "btts_market": {
-    "offered": 61,
-    "picked": 61
+    "offered": 62,
+    "picked": 62
    },
-   "kalshi_venue": 61,
+   "kalshi_venue": 62,
    "liga_btts_even": {
     "offered": 5,
     "picked": 1
@@ -108,18 +108,18 @@
   },
   "soccer_ftts": {
    "ftts_lineup_lag": {
-    "offered": 18,
+    "offered": 54,
     "picked": 0
    },
    "ftts_market": {
-    "offered": 18,
-    "picked": 18
+    "offered": 54,
+    "picked": 54
    },
    "ftts_no_70_80": {
-    "offered": 18,
+    "offered": 54,
     "picked": 0
    },
-   "kalshi_venue": 18
+   "kalshi_venue": 54
   },
   "soccer_o05": {
    "kalshi_venue": 0,
@@ -145,10 +145,10 @@
     "picked": 0
    },
    "goals_market": {
-    "offered": 61,
-    "picked": 61
+    "offered": 62,
+    "picked": 62
    },
-   "kalshi_venue": 61,
+   "kalshi_venue": 62,
    "liga_u15_dog_24h": {
     "offered": 5,
     "picked": 0
@@ -174,10 +174,10 @@
   },
   "soccer_o25": {
    "goals_market": {
-    "offered": 61,
-    "picked": 61
+    "offered": 62,
+    "picked": 62
    },
-   "kalshi_venue": 61
+   "kalshi_venue": 62
   },
   "soccer_o25_cup": {
    "goals_market": {
@@ -195,12 +195,12 @@
   },
   "soccer_p05": {
    "goals_market": {
-    "offered": 156,
-    "picked": 156
+    "offered": 158,
+    "picked": 158
    },
-   "kalshi_venue": 156,
+   "kalshi_venue": 158,
    "mls_fade_home": {
-    "offered": 14,
+    "offered": 16,
     "picked": 0
    }
   },
@@ -292,10 +292,10 @@
   },
   "soccer_u35": {
    "goals_market": {
-    "offered": 61,
-    "picked": 61
+    "offered": 62,
+    "picked": 62
    },
-   "kalshi_venue": 61
+   "kalshi_venue": 62
   },
   "soccer_u35_cup": {
    "goals_market": {
@@ -322,59 +322,59 @@
   "tennis": {
    "kalshi_venue": 14,
    "polymarket_us": 40,
-   "polymarket_us_listed": 391,
-   "polymarket_us_priced": 244
+   "polymarket_us_listed": 393,
+   "polymarket_us_priced": 250
   },
   "tennis_combo": {
    "combo": 0,
    "legs": 0
   },
   "tennis_pmcombo": {
-   "combo": 6,
-   "legs": 6
+   "combo": 4,
+   "legs": 5
   }
  },
  "feed_status": {},
  "meta": {
   "created": "2026-09-10T04:42:15+00:00",
   "lane_reads": {
-   "boxing": "2026-11-25T03:17:38+00:00",
-   "commodities": "2026-11-25T03:17:38+00:00",
-   "commodities_fav": "2026-11-25T03:17:38+00:00",
-   "cricket": "2026-11-25T03:17:38+00:00",
-   "crypto": "2026-11-25T03:17:38+00:00",
-   "crypto_fav": "2026-11-25T03:17:38+00:00",
-   "economics": "2026-11-25T03:17:38+00:00",
-   "finance": "2026-11-25T03:17:38+00:00",
+   "boxing": "2026-11-25T03:33:19+00:00",
+   "commodities": "2026-11-25T03:33:19+00:00",
+   "commodities_fav": "2026-11-25T03:33:19+00:00",
+   "cricket": "2026-11-25T03:33:19+00:00",
+   "crypto": "2026-11-25T03:33:19+00:00",
+   "crypto_fav": "2026-11-25T03:33:19+00:00",
+   "economics": "2026-11-25T03:33:19+00:00",
+   "finance": "2026-11-25T03:33:19+00:00",
    "mma": "2026-11-21T20:10:14+00:00",
-   "nfl": "2026-11-25T03:17:38+00:00",
-   "nhl_pl": "2026-11-25T03:17:38+00:00",
-   "nhl_rest": "2026-11-25T03:17:38+00:00",
-   "soccer": "2026-11-25T03:17:38+00:00",
-   "soccer_btts": "2026-11-25T03:17:38+00:00",
-   "soccer_btts_cup": "2026-11-25T03:17:38+00:00",
+   "nfl": "2026-11-25T03:33:19+00:00",
+   "nhl_pl": "2026-11-25T03:33:19+00:00",
+   "nhl_rest": "2026-11-25T03:33:19+00:00",
+   "soccer": "2026-11-25T03:33:19+00:00",
+   "soccer_btts": "2026-11-25T03:33:19+00:00",
+   "soccer_btts_cup": "2026-11-25T03:33:19+00:00",
    "soccer_btts_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_corners": "2026-11-25T03:17:38+00:00",
-   "soccer_ftts": "2026-11-25T03:17:38+00:00",
-   "soccer_o15": "2026-11-25T03:17:38+00:00",
-   "soccer_o15_cup": "2026-11-25T03:17:38+00:00",
+   "soccer_corners": "2026-11-25T03:33:19+00:00",
+   "soccer_ftts": "2026-11-25T03:33:19+00:00",
+   "soccer_o15": "2026-11-25T03:33:19+00:00",
+   "soccer_o15_cup": "2026-11-25T03:33:19+00:00",
    "soccer_o15_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_o25": "2026-11-25T03:17:38+00:00",
-   "soccer_o25_cup": "2026-11-25T03:17:38+00:00",
+   "soccer_o25": "2026-11-25T03:33:19+00:00",
+   "soccer_o25_cup": "2026-11-25T03:33:19+00:00",
    "soccer_o25_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_p05": "2026-11-25T03:17:38+00:00",
-   "soccer_p05_cup": "2026-11-25T03:17:38+00:00",
+   "soccer_p05": "2026-11-25T03:33:19+00:00",
+   "soccer_p05_cup": "2026-11-25T03:33:19+00:00",
    "soccer_p05_intl": "2026-11-17T23:27:07+00:00",
-   "soccer_team1": "2026-11-25T03:17:38+00:00",
-   "soccer_team1_cup": "2026-11-25T03:17:38+00:00",
+   "soccer_team1": "2026-11-25T03:33:19+00:00",
+   "soccer_team1_cup": "2026-11-25T03:33:19+00:00",
    "soccer_team1_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_team2": "2026-11-25T03:17:38+00:00",
-   "soccer_team2_cup": "2026-11-25T03:17:38+00:00",
+   "soccer_team2": "2026-11-25T03:33:19+00:00",
+   "soccer_team2_cup": "2026-11-25T03:33:19+00:00",
    "soccer_team2_intl": "2026-11-17T19:33:51+00:00",
-   "soccer_u35": "2026-11-25T03:17:38+00:00",
-   "soccer_u35_cup": "2026-11-25T03:17:38+00:00",
+   "soccer_u35": "2026-11-25T03:33:19+00:00",
+   "soccer_u35_cup": "2026-11-25T03:33:19+00:00",
    "soccer_u35_intl": "2026-11-17T23:27:07+00:00",
-   "tennis": "2026-11-25T03:17:38+00:00",
+   "tennis": "2026-11-25T03:33:19+00:00",
    "tennis_pmcombo": "2026-10-13T22:45:29+00:00"
   },
   "lane_skips": {
@@ -641,7 +641,7 @@
    }
   },
   "odds_api": {
-   "at": "2026-11-25T03:17:38+00:00",
+   "at": "2026-11-25T03:33:19+00:00",
    "remaining": 175,
    "used": 325
   },
@@ -662,7 +662,7 @@
     "start": "2026-09-28T22:15:10Z"
    }
   ],
-  "runs": 2825,
+  "runs": 2826,
   "tennis_shortlist": {
    "audit": [
     {
@@ -674,7 +674,7 @@
    "daily_limit": 3,
    "day": "2026-11-02"
   },
-  "updated": "2026-11-25T03:18:16+00:00"
+  "updated": "2026-11-25T03:34:00+00:00"
  },
  "quotes": [
   {
@@ -447270,7 +447270,7 @@
   },
   {
    "bet": true,
-   "close_at": "2026-11-25T03:17:38+00:00",
+   "close_at": "2026-11-25T03:33:19+00:00",
    "close_price": 0.53,
    "date": "2026-11-28",
    "edge": null,
@@ -462212,8 +462212,8 @@
    "price_b": 0.49,
    "price_draw": null,
    "prob_a": 0.515,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-25T03:33:51+00:00",
    "side_a": "Tran, Emma",
    "side_b": "Zylberman, Amelia",
    "source": "polymarket_us",
@@ -462222,7 +462222,7 @@
    "stake": 0.0,
    "start": "2026-11-25T00:10:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "utr",
    "uncovered": null,
    "untraded": false,
@@ -462246,8 +462246,8 @@
    "price_b": 0.32,
    "price_draw": null,
    "prob_a": 0.685,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-25T03:33:52+00:00",
    "side_a": "Collins, Olivia",
    "side_b": "Khan, Ameerah",
    "source": "polymarket_us",
@@ -462256,7 +462256,7 @@
    "stake": 0.0,
    "start": "2026-11-25T00:10:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "utr",
    "uncovered": null,
    "untraded": false,
@@ -462348,8 +462348,8 @@
    "price_b": 0.64,
    "price_draw": null,
    "prob_a": 0.365,
-   "result": null,
-   "settled": null,
+   "result": "b",
+   "settled": "2026-11-25T03:33:53+00:00",
    "side_a": "Merel Hoedt",
    "side_b": "Lizette Cabrera",
    "source": "polymarket_us",
@@ -462358,7 +462358,7 @@
    "stake": 0.0,
    "start": "2026-11-25T00:30:00+00:00",
    "start_source": null,
-   "status": "open",
+   "status": "graded",
    "tier": "itfwo",
    "uncovered": null,
    "untraded": false,
@@ -469679,6 +469679,272 @@
    "uncovered": null,
    "untraded": false,
    "url": "https://polymarket.us/event/itfme-leodef-alejon-2026-11-25",
+   "venue": "polymarket_us",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-29",
+   "edge": -0.02,
+   "espn_away": "FC Dallas",
+   "espn_home": "Portland Timbers",
+   "event": "KXMLSBTTS-26NOV28PORDAL",
+   "id": "btts_market:KXMLSBTTS-26NOV28PORDAL-BTTS",
+   "kalshi_title": "Both Teams To Score",
+   "label": "Portland Timbers v FC Dallas: both teams to score",
+   "league": "MLS",
+   "liquidity": null,
+   "logged": "2026-11-25T03:33:19+00:00",
+   "market_id": "KXMLSBTTS-26NOV28PORDAL-BTTS",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.72,
+   "price_b": 0.32,
+   "price_draw": null,
+   "prob_a": 0.7,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "btts_market",
+   "sport": "soccer_btts",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-29T03:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxmlsbtts",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-29",
+   "edge": -0.035,
+   "espn_away": "FC Dallas",
+   "espn_home": "Portland Timbers",
+   "event": "KXMLSTOTAL-26NOV28PORDAL",
+   "id": "goals_market:KXMLSTOTAL-26NOV28PORDAL-2",
+   "kalshi_title": "Over 1.5 goals scored",
+   "label": "Portland Timbers v FC Dallas: over 1.5 goals",
+   "league": "MLS",
+   "liquidity": null,
+   "logged": "2026-11-25T03:33:19+00:00",
+   "market_id": "KXMLSTOTAL-26NOV28PORDAL-2",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.9,
+   "price_b": 0.17,
+   "price_draw": null,
+   "prob_a": 0.865,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_o15",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-29T03:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxmlstotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-29",
+   "edge": -0.04,
+   "espn_away": "FC Dallas",
+   "espn_home": "Portland Timbers",
+   "event": "KXMLSTOTAL-26NOV28PORDAL",
+   "id": "goals_market:KXMLSTOTAL-26NOV28PORDAL-3",
+   "kalshi_title": "Over 2.5 goals scored",
+   "label": "Portland Timbers v FC Dallas: over 2.5 goals",
+   "league": "MLS",
+   "liquidity": null,
+   "logged": "2026-11-25T03:33:19+00:00",
+   "market_id": "KXMLSTOTAL-26NOV28PORDAL-3",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.72,
+   "price_b": 0.36,
+   "price_draw": null,
+   "prob_a": 0.68,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_o25",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-29T03:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxmlstotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-29",
+   "edge": -0.02,
+   "espn_away": "FC Dallas",
+   "espn_home": "Portland Timbers",
+   "event": "KXMLSTOTAL-26NOV28PORDAL",
+   "id": "goals_market:KXMLSTOTAL-26NOV28PORDAL-4",
+   "kalshi_title": "Over 3.5 goals scored",
+   "label": "Portland Timbers v FC Dallas: over 3.5 goals",
+   "league": "MLS",
+   "liquidity": null,
+   "logged": "2026-11-25T03:33:19+00:00",
+   "market_id": "KXMLSTOTAL-26NOV28PORDAL-4",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.48,
+   "price_b": 0.56,
+   "price_draw": null,
+   "prob_a": 0.46,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_u35",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-29T03:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxmlstotal",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-29",
+   "edge": -0.01,
+   "espn_away": "FC Dallas",
+   "espn_home": "Portland Timbers",
+   "event": "KXMLSGAME-26NOV28PORDAL",
+   "id": "goals_market:KXMLSGAME-26NOV28PORDAL-POR",
+   "kalshi_title": "Portland",
+   "label": "Portland Timbers v FC Dallas: Portland Timbers to win (No = FC Dallas +0.5)",
+   "league": "MLS",
+   "liquidity": null,
+   "logged": "2026-11-25T03:33:19+00:00",
+   "market_id": "KXMLSGAME-26NOV28PORDAL-POR",
+   "opponent": "Portland Timbers",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.46,
+   "price_b": 0.56,
+   "price_draw": null,
+   "prob_a": 0.45,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_p05",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-29T03:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "FC Dallas",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxmlsgame",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-29",
+   "edge": -0.005,
+   "espn_away": "FC Dallas",
+   "espn_home": "Portland Timbers",
+   "event": "KXMLSGAME-26NOV28PORDAL",
+   "id": "goals_market:KXMLSGAME-26NOV28PORDAL-DAL",
+   "kalshi_title": "Dallas",
+   "label": "Portland Timbers v FC Dallas: FC Dallas to win (No = Portland Timbers +0.5)",
+   "league": "MLS",
+   "liquidity": null,
+   "logged": "2026-11-25T03:33:19+00:00",
+   "market_id": "KXMLSGAME-26NOV28PORDAL-DAL",
+   "opponent": "FC Dallas",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.32,
+   "price_b": 0.69,
+   "price_draw": null,
+   "prob_a": 0.315,
+   "result": null,
+   "settled": null,
+   "side_a": "Yes",
+   "side_b": "No",
+   "source": "goals_market",
+   "sport": "soccer_p05",
+   "spread": null,
+   "stake": 0.0,
+   "start": "2026-11-29T03:30:00+00:00",
+   "start_source": "espn",
+   "status": "open",
+   "team": "Portland Timbers",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://kalshi.com/markets/kxmlsgame",
+   "venue": "kalshi_binary",
+   "venue_start": null
+  },
+  {
+   "bet": false,
+   "date": "2026-11-25",
+   "edge": -0.005,
+   "id": "polymarket_us:aec-itfme-liadel-michop-2026-11-25",
+   "label": "Liam Delicata vs Michel Hopp",
+   "liquidity": null,
+   "logged": "2026-11-25T03:33:19+00:00",
+   "market_id": "aec-itfme-liadel-michop-2026-11-25",
+   "pick": null,
+   "pnl": 0.0,
+   "price": null,
+   "price_a": 0.3,
+   "price_b": 0.71,
+   "price_draw": null,
+   "prob_a": 0.295,
+   "result": null,
+   "settled": null,
+   "side_a": "Liam Delicata",
+   "side_b": "Michel Hopp",
+   "source": "polymarket_us",
+   "sport": "tennis",
+   "spread": 0.01,
+   "stake": 0.0,
+   "start": "2026-11-25T07:00:00+00:00",
+   "start_source": null,
+   "status": "open",
+   "tier": "itfme",
+   "uncovered": null,
+   "untraded": false,
+   "url": "https://polymarket.us/event/itfme-liadel-michop-2026-11-25",
    "venue": "polymarket_us",
    "venue_start": null
   }
