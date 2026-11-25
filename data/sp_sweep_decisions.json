@@ -2239,7 +2239,7 @@
   "KXINX15M-26NOV251400-00": {
    "bot_version": "spsweep-live-v1",
    "day": "2026-11-25",
-   "decided_at": "2026-11-25T18:49:36+00:00",
+   "decided_at": "2026-11-25T19:00:37+00:00",
    "fill_price": 0.1,
    "fill_s": 275.3,
    "fill_side": "no",
@@ -2247,10 +2247,12 @@
    "limit": 0.1,
    "open": "2026-11-25T18:45:00+00:00",
    "outcome": "entered",
-   "qty": 5.45,
+   "qty": 6.19,
    "rest_s": 1.85,
+   "result": "no",
    "rule_ok": true,
-   "sold": 0,
+   "sold": 6.19,
+   "sold_price": 0.3,
    "target": 0.3,
    "ticker": "KXINX15M-26NOV251400-00",
    "why": null
@@ -2270,6 +2272,6 @@
    "why": null
   }
  },
- "updated_at": "2026-11-25T19:00:01+00:00",
+ "updated_at": "2026-11-25T19:00:37+00:00",
  "version": 1
 }
