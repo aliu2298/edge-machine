@@ -232,7 +232,7 @@
    "time": "after-hours"
   }
  ],
- "calendar_at": "2026-11-25T20:00:30Z",
+ "calendar_at": "2026-11-25T21:00:43Z",
  "kpi_reads": [
   {
    "at": "2026-11-07T03:49:31Z",
@@ -6557,9 +6557,19 @@
     "width": 685185.185185194
    },
    "sym": "COST"
+  },
+  {
+   "at": "2026-11-25T21:01:39Z",
+   "event": "KXCOST-26DECCARDS",
+   "read": {
+    "median": 151356250.0,
+    "rungs": 10,
+    "width": 685185.185185194
+   },
+   "sym": "COST"
   }
  ],
- "last_run": "2026-11-25T20:02:13Z",
+ "last_run": "2026-11-25T21:01:49Z",
  "predictions": [
   {
    "call": {
@@ -7531,23 +7541,44 @@
    "sym": "BLK"
   },
   {
+   "baselines": {
+    "random": {
+     "status": "no_fill"
+    },
+    "spy": {
+     "entry": 14.3128,
+     "entry_ts": 1795550520,
+     "exit": 14.3294,
+     "exit_ts": 1795637160,
+     "net": -0.00124,
+     "status": "settled"
+    },
+    "up": {
+     "status": "no_fill"
+    }
+   },
    "call": {
     "entry": 4.6826,
     "entry_ts": 1795551420,
-    "status": "open"
+    "exit": 4.8761,
+    "exit_ts": 1795637460,
+    "net": -0.043723,
+    "status": "settled"
    },
    "crowd_up": 0.264,
    "day": "2026-11-24",
    "entry_due": "2026-11-24T20:01:30Z",
    "exit_due": "2026-11-25T20:01:00Z",
    "family": "sentiment",
+   "graded_at": "2026-11-25T21:01:40Z",
    "id": "sentiment:IBM:2026-11-24",
    "logged_at": "2026-11-24T20:01:30Z",
+   "net": -0.043723,
    "perp": "KXIBMPERP",
    "random_side": 1,
    "reason": "Kalshi traders 26% Up on 24h taker volume.",
    "side": -1,
-   "status": "open",
+   "status": "settled",
    "sym": "IBM"
   },
   {
@@ -7588,7 +7619,9 @@
   },
   {
    "call": {
-    "status": "pending"
+    "entry": 5.8492,
+    "entry_ts": 1795636920,
+    "status": "open"
    },
    "entry_due": "2026-11-25T20:01:22Z",
    "exit_due": "2026-12-03T21:00:00Z",
@@ -7602,12 +7635,14 @@
    "report": "2026-11-24",
    "report_time": "after-hours",
    "side": -1,
-   "status": "pending",
+   "status": "open",
    "sym": "DELL"
   },
   {
    "call": {
-    "status": "pending"
+    "entry": 12.8354,
+    "entry_ts": 1795637220,
+    "status": "open"
    },
    "entry_due": "2026-11-25T20:01:22Z",
    "exit_due": "2026-12-03T21:00:00Z",
@@ -7621,12 +7656,12 @@
    "report": "2026-11-25",
    "report_time": "pre-market",
    "side": 1,
-   "status": "pending",
+   "status": "open",
    "sym": "DE"
   },
   {
    "call": {
-    "status": "pending"
+    "status": "no_fill"
    },
    "crowd_up": 0.201,
    "day": "2026-11-25",
@@ -7639,7 +7674,7 @@
    "random_side": -1,
    "reason": "Kalshi traders 20% Up on 24h taker volume.",
    "side": -1,
-   "status": "pending",
+   "status": "no_fill",
    "sym": "UNH"
   }
  ],
