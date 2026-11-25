@@ -250,6 +250,19 @@ try:
     check("a row the venue has not finalized records what the venue shows, and is listed once its day is 2+ days old",
           (bool(_w["rows"][0].get("venue_status")), len(L.awaiting_venue(_w, EST + dt.timedelta(days=4))), len(L.awaiting_venue(_w, EST + dt.timedelta(hours=3)))),
           (True, len(_w["rows"]), 0))
+    # Kalshi can finalize a ladder as result "scalar" with a fair value per bracket (San Diego, Nov 17 2026).
+    sc = ladder(L.event_ticker(hi, day), Q)
+    for i, m in enumerate(sc["markets"]):
+        m.update(status="finalized", result="scalar", settlement_value_dollars=("0.9900" if i == 2 else "0.0000"))
+    sc_books = dict(g_books)
+    sc_books[L.event_ticker(hi, day)] = sc
+    st = L.run(L.run(L.empty(), EST, fetch=fetcher(books), text_fetch=text_fetch), EST + dt.timedelta(days=2), fetch=fetcher(sc_books), text_fetch=text_fetch)
+    w = {r["id"]: r for r in st["rows"]}[f"c1v2|main|{L.event_ticker(hi, day)}"]
+    check("a scalar settlement at 0.00 on a NO bet's bracket settles it as a win", (w["status"], w["won"]), ("settled", True))
+    check("scalar bands: 0.01 is no, 0.99 is yes, 0.50 and a blank stay open, an unfinalized scalar stays open",
+          [L.venue_result(dict(status="finalized", result="scalar", settlement_value_dollars=v)) for v in ("0.0100", "0.9900", "0.5000", "")]
+          + [L.venue_result(dict(status="active", result="scalar", settlement_value_dollars="0.0000"))],
+          ["no", "yes", None, None, None])
     import stuck_picks as SP
     check("stuck_picks names the venue status next to a stuck row", any("[venue " in t for t, _h in SP.scan(_w, EST + dt.timedelta(days=4), 12.0)[0]), True)
 finally:

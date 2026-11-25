@@ -1537,6 +1537,10 @@
    "at": "2026-11-21T08:51:26.434342+00:00",
    "pool": "entered"
   },
+  "[\"sandbox\", \"mls_fade_home\", [\"mls_fade_home:KXMLSGAME-26NOV28PORDAL-POR\", \"b\"]]": {
+   "at": "2026-11-25T13:42:13.947111+00:00",
+   "pool": "entered"
+  },
   "[\"sandbox\", \"o15_ranked\", [\"o15_ranked:KXINTLFRIENDLYTOTAL-26NOV13COLCHI-2\", \"a\"]]": {
    "at": "2026-11-12T09:00:03.051242+00:00",
    "pool": "entered"
@@ -6688,7 +6692,7 @@
  ],
  "first_run": "2026-11-05T03:09:04.962721+00:00",
  "lane": "superpack",
- "last_run": "2026-11-25T08:13:13.206978+00:00",
+ "last_run": "2026-11-25T13:42:13.947111+00:00",
  "mirror": [
   {
    "contract": "KXAAAGASD-26NOV06-4.0700",
@@ -19748,6 +19752,29 @@
    "snapshot": null,
    "sport": "Culture",
    "src": "culture",
+   "status": "open"
+  },
+  {
+   "contract": "KXMLSGAME-26NOV28PORDAL-POR",
+   "entered_at": "2026-11-25T13:42:13.947111+00:00",
+   "entities": [
+    "FC Dallas"
+   ],
+   "id": "superpack:[\"sandbox\", \"mls_fade_home\", [\"mls_fade_home:KXMLSGAME-26NOV28PORDAL-POR\", \"b\"]]",
+   "lane": "mls_fade_home",
+   "logged": "2026-11-25T13:41:03+00:00",
+   "matched": [
+    "FC Dallas"
+   ],
+   "pid": "[\"sandbox\", \"mls_fade_home\", [\"mls_fade_home:KXMLSGAME-26NOV28PORDAL-POR\", \"b\"]]",
+   "price": 0.56,
+   "profit": null,
+   "scope": "soccer_p05",
+   "settled": null,
+   "side": "b",
+   "snapshot": null,
+   "sport": "Soccer",
+   "src": "sandbox",
    "status": "open"
   }
  ],

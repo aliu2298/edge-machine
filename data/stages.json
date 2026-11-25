@@ -2124,18 +2124,6 @@
    "pair": "ere_o15|soccer_o15",
    "reason": "moved by hand \u2014 ready from this run",
    "to": "ready"
-  },
-  {
-   "at": "2026-11-25T08:23:27+00:00",
-   "pair": "team2_ranked|soccer_team2",
-   "reason": "taken off the Production list by hand, record kept",
-   "to": "sandbox"
-  },
-  {
-   "at": "2026-11-25T08:23:27+00:00",
-   "pair": "ftts_no_70_80|soccer_ftts",
-   "reason": "taken off the Production list by hand, record kept",
-   "to": "sandbox"
   }
  ],
  "pairs": {
@@ -2265,9 +2253,24 @@
    "stage": "sandbox"
   },
   "ftts_no_70_80|soccer_ftts": {
-   "demoted_at": "2026-11-25T08:23:27+00:00",
-   "since": null,
-   "stage": "sandbox"
+   "by_hand": "2026-10-16",
+   "entry": {
+    "base_roi": -0.039,
+    "clv": 0.0017,
+    "clv_n": 6,
+    "n": 6,
+    "own_roi": 0.1218,
+    "roi": 0.1218,
+    "roi_fee": 0.1019,
+    "span_days": 1.0938,
+    "weeks": 0,
+    "z": 0.4642
+   },
+   "entry_since": null,
+   "promoted_at": "2026-10-16T17:17:38+00:00",
+   "ready_at": "2026-10-16T17:17:38+00:00",
+   "ready_since": "2026-10-16T17:17:38+00:00",
+   "stage": "production"
   },
   "liga_btts_even|soccer_btts": {
    "demoted_at": "2026-11-02T12:00:00+00:00",
@@ -2420,9 +2423,24 @@
    "stage": "production"
   },
   "team2_ranked|soccer_team2": {
-   "demoted_at": "2026-11-25T08:23:27+00:00",
-   "since": null,
-   "stage": "sandbox"
+   "by_hand": "2026-10-11",
+   "entry": {
+    "base_roi": 0.0559,
+    "clv": -0.05,
+    "clv_n": 1,
+    "n": 1,
+    "own_roi": 1.1277,
+    "roi": 1.1277,
+    "roi_fee": 1.0515,
+    "span_days": 0.0,
+    "weeks": 0,
+    "z": 1.0619
+   },
+   "entry_since": null,
+   "promoted_at": "2026-10-11T19:34:45+00:00",
+   "ready_at": "2026-10-11T19:34:45+00:00",
+   "ready_since": "2026-10-11T19:34:45+00:00",
+   "stage": "production"
   },
   "tennis_combo2|tennis_combo": {
    "by_hand": "2026-10-08",
@@ -2524,5 +2542,5 @@
    "stage": "production"
   }
  },
- "updated": "2026-11-25T08:23:27+00:00"
+ "updated": "2026-11-25T13:42:12+00:00"
 }

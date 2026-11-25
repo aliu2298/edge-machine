@@ -44,7 +44,9 @@ def start_of(row):
     for k in START_KEYS:
         t = _when(row[k]) if row.get(k) else None
         if t:
-            return t
+            # A weekly market (gas_week_production: start is the offer time) cannot settle before it closes: count from the close.
+            c = _when(row["closes"]) if row.get("closes") else None
+            return max(t, c) if c else t
     d = _when(row["day"]) if row.get("day") else None
     return d + dt.timedelta(days=1) if d else None
 
