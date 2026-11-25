@@ -5,7 +5,7 @@
    0.3
   ]
  },
- "board_built_at": "2026-11-25T15:36:36+00:00",
+ "board_built_at": "2026-11-25T15:43:48+00:00",
  "collector_error": null,
  "collector_healthy": {
   "challenger_won_here": true
@@ -1518,6 +1518,43 @@
    "source": "challenger_won_here",
    "sport": "tennis",
    "status": "miss"
+  },
+  "2026-11-25|Nicolas Zanellato|Leonardo Storck Franca|Nicolas Zanellato to win \u00b7 Challenger underdog who has won here": {
+   "away": "Leonardo Storck Franca",
+   "bet": {
+    "kind": "match_result",
+    "side": "home"
+   },
+   "date": "2026-11-25",
+   "edge_at_log": null,
+   "first_seen": "2026-11-25",
+   "headline": "Nicolas Zanellato to win",
+   "home": "Nicolas Zanellato",
+   "id": "2026-11-25|Nicolas Zanellato|Leonardo Storck Franca|Nicolas Zanellato to win \u00b7 Challenger underdog who has won here",
+   "kickoff": "2026-11-25T17:40Z",
+   "lane": "production",
+   "last_seen": "2026-11-25",
+   "last_seen_at": "2026-11-25T15:43:48+00:00",
+   "league": "Tennis",
+   "match": "Nicolas Zanellato v Leonardo Storck Franca",
+   "pair": "challenger_won_here|tennis",
+   "price_at_log": 0.79,
+   "published_at": "2026-11-25T15:43:48+00:00",
+   "published_late": false,
+   "published_min_before_kickoff": 116,
+   "route": {
+    "claim": "Nicolas Zanellato to win",
+    "event": "KXATPCHALLENGERMATCH-26NOV25ZANSTO",
+    "market": "KXATPCHALLENGERMATCH-26NOV25ZANSTO-ZAN",
+    "outcome": "Nicolas Zanellato",
+    "outcome_side": "yes",
+    "price_at_log": 0.79,
+    "venue": "kalshi"
+   },
+   "sandbox_quote": "challenger_won_here:KXATPCHALLENGERMATCH-26NOV25ZANSTO-ZAN",
+   "source": "challenger_won_here",
+   "sport": "tennis",
+   "status": "pending"
   }
  },
  "pairs": {
@@ -1528,9 +1565,9 @@
    "ready_at": "2026-11-21T00:00:00+00:00",
    "route": "moved by hand on 2026-11-20",
    "routing": {
-    "leads": 43,
+    "leads": 44,
     "problem": null,
-    "routed": 43,
+    "routed": 44,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -1542,7 +1579,7 @@
    "sandbox_roi_fee": -0.4212,
    "timing": {
     "late": [],
-    "timed": 26,
+    "timed": 27,
     "under_target": 0
    }
   }
@@ -1551,5 +1588,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-25T15:36:36+00:00"
+ "updated_at": "2026-11-25T15:43:48+00:00"
 }
