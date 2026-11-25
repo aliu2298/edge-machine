@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-25T20:07Z",
+ "generated": "2026-11-25T21:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -5489,6 +5489,78 @@
     "src": "fills",
     "st": "lost",
     "w": 1.04
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25MIAPHI-MIA11TO20",
+    "ko": "2026-11-25T22:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.9
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25MIAPHI-MIA1TO5",
+    "ko": "2026-11-25T22:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.04
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25MIAPHI-MIA6TO10",
+    "ko": "2026-11-25T22:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.95
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25MIAPHI-PHI11TO20",
+    "ko": "2026-11-25T22:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.04
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25MIAPHI-PHI1TO5",
+    "ko": "2026-11-25T22:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 0.95
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV25MIAPHI-PHI6TO10",
+    "ko": "2026-11-25T22:00",
+    "legs": "",
+    "r": null,
+    "side": "yes",
+    "src": "fills",
+    "st": "open",
+    "w": 1.04
    }
   ],
   "o35_cheap_no": [
@@ -6299,9 +6371,7 @@
      "w": 1.0
     }
    ],
-   "refused": {
-    "corners_ucl_fade:KXUCLCORNERS-26NOV25SPOMUN-7": "price above the cap"
-   }
+   "refused": {}
   },
   "crypto_fav_band_below|crypto_fav": {
    "entered": "2026-10-21T00:47:16+00:00",
@@ -6894,17 +6964,17 @@
     {
      "id": "ftts_no_70_80:KXUCLFTTS-26NOV25LILBMU-LIL",
      "ko": "2026-11-25T20:00",
-     "r": null,
+     "r": 0.362,
      "side": "no",
-     "st": "open",
+     "st": "won",
      "w": 0.97
     },
     {
      "id": "ftts_no_70_80:KXUCLFTTS-26NOV25PSGROM-ROM",
      "ko": "2026-11-25T20:00",
-     "r": null,
+     "r": -1.0,
      "side": "no",
-     "st": "open",
+     "st": "lost",
      "w": 0.95
     }
    ],
