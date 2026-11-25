@@ -4,12 +4,14 @@ two qualifying teams, the blind control, drop and re-enter, settlement, the page
 import datetime as dt
 import json
 import os
+import re
 import sys
 
 import nba_qlines as Q
 import nba_qlines_build as B
 import sandbox_audit
 import sandbox_build
+from fmt import when as fmt_when
 
 FAILS = []
 UTC = dt.timezone.utc
@@ -167,14 +169,19 @@ if len(live) >= 200:
 # ---- the page
 print("\npage")
 html = B.section(st, doc)
-check("six collapsed folds, none open", (html.count('class="fold nba-qline"'), " open" in html.replace("section-disclosure", "")), (6, False))
+check("six collapsed folds, none open", (html.count('class="fold nba-qline"'), bool(re.search(r"<details[^>]*\bopen\b", html))), (6, False))
 check("the sections in order", [s for s in ("1q", "2q", "3q", "4q", "1h", "2h") if f'id="qlines-{s}"' in html], ["1q", "2q", "3q", "4q", "1h", "2h"])
-check("the lane record sits beside its blind control", "Blind control" in html and "Qualifying now" in html, True)
+check("one line a version (v1, v2 cushion, v2 value, control), each with the read rule", [x for x in ("v1", "v2 cushion", "v2 value", "control") if f"<b>{x}</b> · " in html] == ["v1", "v2 cushion", "v2 value", "control"]
+      and "read at 10, then 30" in html, True)
+check("the category table: a row per category and line, columns v1 | v2 cushion | v2 value | control", (html.count('class="club-cats"'), "<th>Category</th>" in html and all(f'<th class="num">{x}</th>' in html for x in ("v1", "v2 cushion", "v2 value", "control")),
+      html[html.index('class="club-cats"'):].split("</table>")[0].count("<tr>") - 1), (1, True, 12))
+check("the qualifying line stays", "Qualifying now" in html, True)
+check("a collapsed team cushion table per direction: hit rate, median cushion, safe line, last v2 value rung", ("Team cushions · over" in html, "Median cushion" in html, "Safe line" in html), (True, True, True))
 check("the 3Q table lists the qualifying teams with hits/games", "10/10" in html and "AAA" in html, True)
 check("header: entries and the tracker's last day, not games read", ("0 entries" in html or "1 entry" in html or "entries" in html, "games read" in html, "tracker through" in html), (True, False, True))
 check("the tables carry no thead (sandbox_build.label_cells names their cells for the phone cards)", "<thead" in html, False)
 labelled = sandbox_build.label_cells(html)
-check("after labelling: the record cells carry their column names", all(f'data-l="{c}"' in labelled for c in ("Won-lost", "Return after fees", "Blind control", "Open", "Read")), True)
+check("after labelling: the record cells carry their column names", all(f'data-l="{c}"' in labelled for c in ("Category", "v1", "v2 cushion", "v2 value", "control", "Cleared by", "Actual")), True)
 check("the open team table lists only teams at 85%+ (a 40% team is in All teams only)", ('<td><b>CCC</b></td>' in B.teams_table(doc["games"], "3Q", "over"), '<td><b>CCC</b></td>' in B.teams_table(doc["games"], "3Q", "over", True)), (False, True))
 check("team codes follow Kalshi's (ESPN NY, SA, GS, NO, UTAH, WSH)", [B.code(x) for x in ("NY", "SA", "GS", "NO", "UTAH", "WSH", "MIL")], ["NYK", "SAS", "GSW", "NOP", "UTA", "WAS", "MIL"])
 check("every one of the 30 teams maps to a code the leaderboard uses", sorted(B.code(t) for t in {x for g in live for x in (g["home"], g["away"])}) == sorted(
@@ -242,7 +249,7 @@ except ValueError:
     refused = True
 check("the date is hard-coded: any other day is refused", refused, True)
 page = B.section(stb, bdoc)
-check("the page marks backfilled rows and keeps the count visible", ("· backfilled</span>" in page, "(1 backfilled)" in page, "1 of 1 entries backfilled" in page), (True, True, True))
+check("backfilled rows sit under their own toggle and the count stays visible", ("Backfilled entries" in page, "(1 backfilled)" in page, "1 of 1 entries backfilled" in page), (True, True, True))
 check("a ledger with no backfill shows no marker", ("backfilled" in B.section(Q.empty(), {"games": []})), False)
 check("the backfill copy passes the public guard", [m.group(0) for m in sandbox_audit.COPY_RE.finditer(page)], [])
 
@@ -282,6 +289,63 @@ check("with no live look it falls back to the stored stamp, else None", (B.last_
 check("the page shows it as the last live read, not 'none yet'", ("Last live read none yet" in B.section(ll, bdoc), "Last live read none yet" in B.section(Q.empty(), {"games": []})), (False, True))
 import fmt
 check("and shows the 23:30Z read's own time", fmt.when("2026-11-24T23:30:33+00:00") in B.section(ll, bdoc), True)
+
+# ---- v2: cushion and value rungs (2026-11-25)
+print("\nv2")
+V = [30] * 10 + [31] * 10                                     # 20 prior games' 3Q totals for team AAA: 18 over 53.5 by a lot
+v2games = [game(i, ds[i % 14], "AAA", f"Z{i}", 35, 35) for i in range(10)]       # total 70 each: over 53.5/56.5/60.5/64.5 all hit, 70.5 miss
+for g in v2games:
+    g["ls"] = {"AAA": [35, 35, 35, 35], g["away"]: [35, 35, 35, 35]}
+v2doc = {"games": v2games}
+evv = "KXNBA3QTOTAL-26NOV25BBBAAA"
+ladder_v2 = {s: [] for s in Q.SECTIONS}
+mkv = lambda f, b, a: dict(ticker=f"{evv}-{int(f + .5)}", event_ticker=evv, floor_strike=f, yes_bid_dollars=str(b), yes_ask_dollars=str(a))   # noqa: E731
+ladder_v2["3Q"] = [mkv(53.5, .90, .92), mkv(56.5, .84, .86), mkv(60.5, .70, .72), mkv(64.5, .50, .52), mkv(70.5, .10, .12)]
+g2 = dict(id="777", tip=dt.datetime(2026, 11, 26, 0, 0, tzinfo=UTC), home="AAA", away="BBB")
+st2 = Q.empty()
+Q.look_many(st2, v2doc, [g2], ladder_v2, dt.datetime(2026, 11, 25, 23, 30, tzinfo=UTC))
+cu, va = st2["rules"]["nba_qlines_v2_3Q_over_cushion"]["picks"], st2["rules"]["nba_qlines_v2_3Q_over_value"]["picks"]
+check("v2_cushion: the hardest rung AAA still clears at 90% over 10 games: 64.5 (the 70.5 rung has a 0% record)", [(p["rung"], p["offset"], p["team"], p["price"]) for p in cu], [(64.5, 11.0, "AAA", 0.52)])
+check("v2_value: the biggest hit rate minus cost among cleared rungs: the cheap 64.5 (100% at 0.52 + fee)", [(p["rung"], round(p["value"], 3)) for p in va], [(64.5, round(1 - Q.cost(0.52), 3))])
+check("v2 rows carry the v1 line, the team's record and the lane id", (cu[0]["v1_line"], cu[0]["rate"], cu[0]["games"], cu[0]["rule"], cu[0]["id"].startswith("nba_qlines_v2_3Q_over_cushion:")), (53.5, 1.0, 10, "nba_qlines_v2_3Q_over_cushion", True))
+check("v1 is unchanged beside it: its lane row is at the v1 line", [p["rung"] for p in st2["rules"]["qlines_3Q_over"]["picks"]], [53.5])
+st9 = Q.empty()
+Q.look_many(st9, {"games": v2games[:9]}, [g2], ladder_v2, dt.datetime(2026, 11, 25, 23, 30, tzinfo=UTC))
+check("v2 shares v1's gate: a team under the floor (9 games) gets no v2 row", sum(len(st9["rules"][n]["picks"]) for n in Q.V2_LANES), 0)
+ch, vl = Q.v2_choose(Q.usable_rungs(ladder_v2, g2, "3Q", "over"), {"AAA": [70] * 10}, 53.5, "over")
+check("v2_choose directly: cushion 64.5 and value 64.5 on a 70-point team", (ch["rung"]["rung"], vl["rung"]["rung"]), (64.5, 64.5))
+ch, vl = Q.v2_choose(Q.usable_rungs(ladder_v2, g2, "3Q", "over"), {"AAA": [70] * 9}, 53.5, "over")
+check("fewer than 10 games: no v2 pick", (ch, vl), (None, None))
+ch, vl = Q.v2_choose(Q.usable_rungs(ladder_v2, g2, "3Q", "over"), {"AAA": [70] * 10, "BBB": [58] * 10}, 53.5, "over")
+check("both teams qualifying: the harder rung (the team that clears more)", ch["team"], "AAA")
+under_l = {s: [] for s in Q.SECTIONS}
+under_l["3Q"] = [dict(ticker="U-60", event_ticker=evv, floor_strike=60.5, yes_bid_dollars="0.10", yes_ask_dollars="0.12"), dict(ticker="U-64", event_ticker=evv, floor_strike=64.5, yes_bid_dollars="0.30", yes_ask_dollars="0.32"),
+                 dict(ticker="U-70", event_ticker=evv, floor_strike=70.5, yes_bid_dollars="0.80", yes_ask_dollars="0.82")]
+ch, vl = Q.v2_choose(Q.usable_rungs(under_l, g2, "3Q", "under"), {"AAA": [50] * 10}, 64.5, "under")
+check("an under: harder means LOWER (60.5 over 64.5), priced as NO at 1 - bid", (ch["rung"]["rung"], ch["rung"]["price"], ch["rung"]["side"]), (60.5, 0.9, "no"))
+check("a wide quote is not a v2 rung", [r["rung"] for r in Q.usable_rungs({"3Q": [mkv(53.5, .50, .70)]}, g2, "3Q", "over")], [])
+# actual and cleared by
+cu0 = cu[0]
+sx = Q.empty()
+sx["rules"]["nba_qlines_v2_3Q_over_cushion"]["picks"] = [dict(cu0, status="won", game_id="900")]
+Q.fill_actuals(sx, bdoc)
+check("a settled v2 row stores the actual total and 'cleared by' (actual - rung, signed for the direction)", (sx["rules"]["nba_qlines_v2_3Q_over_cushion"]["picks"][0]["actual"],
+      sx["rules"]["nba_qlines_v2_3Q_over_cushion"]["picks"][0]["cleared"]), (70, 5.5))
+check("24 v2 lanes with their own ids; v1 lane list unchanged", (len(Q.V2_LANES), len(Q.ALL_LANES)), (24, 24))
+
+# ---- the bets list (2026-11-25)
+print("\nbets list")
+bs = Q.empty()
+mkp = lambda i, start, rule, status, cleared, backfilled=False, **kw: dict(id=i, rule=rule, section="3Q", direction="over", game="NY @ GS", start=start, line=53.5, rung=54.5, price=0.6, status=status,   # noqa: E731
+                                                                          cleared=cleared, actual=None if cleared is None else 54.5 + cleared, ret=0.5 if status == "won" else -1.0, backfilled=backfilled, **kw)
+bs["rules"]["qlines_3Q_over"]["picks"] = [mkp("a", "2026-11-24T23:00:00+00:00", "qlines_3Q_over", "won", 3.5), mkp("b", "2026-11-25T23:00:00+00:00", "qlines_3Q_over", "open", None),
+                                         mkp("c", "2026-11-23T23:00:00+00:00", "qlines_3Q_over", "lost", -2.5, backfilled=True)]
+bs["rules"]["nba_qlines_v2_3Q_over_cushion"]["picks"] = [mkp("d", "2026-11-25T01:00:00+00:00", "nba_qlines_v2_3Q_over_cushion", "won", 9.5)]
+bh = B.bets_html(bs)
+live_part = bh.split("Backfilled entries")[0]
+check("newest first: the Nov 25 open bet, then the Nov 25 01:00 v2 bet, then the Nov 24 one", [x for x in re.findall(r"<tr><td>([^<]*)</td>", live_part)][:3], [fmt_when("2026-11-25T23:00:00+00:00"), fmt_when("2026-11-25T01:00:00+00:00"), fmt_when("2026-11-24T23:00:00+00:00")])
+check("each bet names its version, category and rung; the actual and 'cleared by' show, green for a win and red for a miss", ("v2 cushion · 3Q over 54.5" in bh, '<span class="pos">+9.5</span>' in bh, '<span class="neg">−2.5</span>' in bh, "<td class=\"num\">64</td>" in bh), (True, True, True, True))
+check("the backfilled bet is under the toggle, not in the live list", ("−2.5" in bh.split("Backfilled entries")[1], "−2.5" in live_part), (True, False))
 
 print("\nALL PASS" if not FAILS else f"\n{len(FAILS)} FAILED: {FAILS}")
 sys.exit(1 if FAILS else 0)

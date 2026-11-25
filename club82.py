@@ -38,6 +38,16 @@ NAMES = {"u35": "Under 3.5 (either team at 82%+)", "tt15": "Team 2+ goals (that 
 HITS = {"u35": "under 3.5", "tt15": "scored 2+"}
 LANES = ("club82_u35", "club82_u35_blind", "club82_tt15", "club82_tt15_blind")
 LINE = {"u35": 3.5, "tt15": 1.5}
+# v2 (2026-11-25, docs/club_v2_2026-11-25.md): the same gate and read as v1, the rung chosen by the cushion (the hardest rung at or past the v1 line the team still clears at
+# the club rate over V2_MIN_GAMES+ games) or by value (the biggest hit rate minus cost among cleared rungs, 5 points or more). v1's controls are v2's controls.
+V2_KINDS = ("cushion", "value")
+V2_MIN_GAMES = 10
+V2_VALUE_MIN = 0.05
+V2_LANES = tuple(f"club82_v2_{k}_{v}" for k in KINDS for v in V2_KINDS)
+
+
+def lane_v2(kind, v):
+    return f"club82_v2_{kind}_{v}"
 
 
 def lane(kind, blind=False):
@@ -53,14 +63,14 @@ def cost(p):
 
 
 def empty():
-    return {"version": VERSION, "registered": REGISTERED, "rules": {k: {"picks": []} for k in LANES}, "skips": {}, "runs": [], "last_run": None, "error": None}
+    return {"version": VERSION, "registered": REGISTERED, "rules": {k: {"picks": []} for k in LANES + V2_LANES}, "skips": {}, "runs": [], "last_run": None, "error": None}
 
 
 def load(path=PATH):
     if os.path.exists(path):
         with open(path) as f:
             st = json.load(f)
-        for k in LANES:
+        for k in LANES + V2_LANES:
             st.setdefault("rules", {}).setdefault(k, {"picks": []})
         st.setdefault("skips", {})
         return st
@@ -171,7 +181,105 @@ def _quoted(m):
     return q, None
 
 
-def read_game(state, f, events, rows_by_kind, now, seen):
+def team_values(fixtures, kind, before):
+    """{team key: [value]} of the games before `before`: the match total goals (u35) or the team's own goals (tt15)."""
+    out = collections.defaultdict(list)
+    for f in season_games(fixtures, before):
+        for side in ("home", "away"):
+            out[_team_key(f, side)].append((f["home_goals"] + f["away_goals"]) if kind == "u35" else f[f"{side}_goals"])
+    return out
+
+
+def cushion_rows(fixtures):
+    """{kind: [dict(name, n, rate, median, safe)]}: each team's hit rate at the v1 line, its median cushion over it (positive clears it) and its safe line (the hardest line still
+    hit at the club rate over V2_MIN_GAMES+ games; lower is harder for the under, higher for the team over). The page reads these from the ledger."""
+    names = {}
+    for f in season_games(fixtures):
+        names[_team_key(f, "home")], names[_team_key(f, "away")] = f["home"], f["away"]
+    out = {}
+    for kind in KINDS:
+        L = LINE[kind]
+        rows = []
+        for k, vals in team_values(fixtures, kind, None).items():
+            margins = sorted((L - v) if kind == "u35" else (v - L) for v in vals)
+            n = len(margins)
+            median = margins[n // 2] if n % 2 else (margins[n // 2 - 1] + margins[n // 2]) / 2
+            safe = None
+            for x in range(0, 9):
+                line = x + 0.5
+                hit = sum(1 for v in vals if (v < line if kind == "u35" else v > line)) / n
+                if n >= V2_MIN_GAMES and hit >= THRESHOLD - EPS and (safe is None or (line < safe if kind == "u35" else line > safe)):
+                    safe = line
+            rows.append(dict(name=names[k], n=n, rate=round(sum(1 for m in margins if m > 0) / n, 4), median=median, safe=safe))
+        out[kind] = sorted(rows, key=lambda r: (-r["median"], r["name"]))
+    return out
+
+
+def v2_rungs(ev, kind, team):
+    """The event's quotable rungs for one lane: [dict(rung, ticker, bid, ask, price, side)] (match total: NO at 1 - bid; team total: YES at the ask)."""
+    out = []
+    for m in ev.get("markets") or []:
+        if m.get("status") not in ("active", "open"):
+            continue
+        if kind == "tt15":
+            if STR.side_of(m.get("ticker")) != team:
+                continue
+            line = STR.line_of(m)
+        else:
+            line = SR.line_of(m)
+        q = SR.quote(m)
+        if line is None or not q:
+            continue
+        b, a = q
+        px = round(1 - b, 4) if kind == "u35" else a
+        if PRICE_LO - EPS <= px <= PRICE_HI + EPS:
+            out.append(dict(rung=float(line), ticker=m["ticker"], bid=b, ask=a, price=px, side="no" if kind == "u35" else "yes"))
+    return sorted(out, key=lambda r: r["rung"])
+
+
+def v2_entries(state, f, ev, kind, team, qual_sides, values, now, seen):
+    """The two v2 rows of one match (u35) or one team (tt15) whose qualifier passed: the cushion rung and the value rung. Returns the new row ids."""
+    import nba_qlines as NQ
+    d = "under" if kind == "u35" else "over"
+    rungs = v2_rungs(ev, kind, team)
+    if not rungs:
+        return []
+    per_team = {s: values.get(_team_key(f, s), []) for s in qual_sides}
+    cush, val = NQ.v2_choose(rungs, per_team, LINE[kind], d, bar=THRESHOLD, min_games=V2_MIN_GAMES, value_min=V2_VALUE_MIN)
+    new = []
+    for v, pick in (("cushion", cush), ("value", val)):
+        if not pick:
+            continue
+        r = pick["rung"]
+        ident = f"{lane_v2(kind, v)}:{r['ticker']}"
+        if ident in seen:
+            continue
+        row = _row(kind, False, f, ev, dict(ticker=r["ticker"]), team, r["price"], r["bid"], r["ask"], now,
+                   dict(kind_v2=v, rung=r["rung"], v1_line=LINE[kind], qualifying_teams=[f[s] for s in qual_sides], rate=round(pick["rate"], 4), games=pick["games"],
+                        value=round(pick["value"], 4), rated_team=f[pick["team"]]))
+        row.update(id=ident, rule=lane_v2(kind, v), line=LINE[kind])
+        state["rules"][lane_v2(kind, v)]["picks"].append(row)
+        seen.add(ident)
+        new.append(ident)
+    return new
+
+
+def fill_actuals(state, fixtures):
+    """The v2 rows' actual (match total goals, or the team's goals) and 'cleared by' (positive is a win), from the played games."""
+    res = {(f["kickoff"], f"{f['home']} v {f['away']}"): f for f in fixtures if f.get("played") and f.get("home_goals") is not None}
+    for ln in V2_LANES:
+        for p in state["rules"].get(ln, {}).get("picks", []):
+            if p.get("actual") is not None or p.get("status") not in ("won", "lost"):
+                continue
+            f = res.get((p["start"], p["match"]))
+            if not f:
+                continue
+            act = (f["home_goals"] + f["away_goals"]) if p["kind"] == "u35" else f[f"{p['team_side']}_goals"]
+            p["actual"] = act
+            p["cleared"] = round((p["rung"] - act) if p["kind"] == "u35" else (act - p["rung"]), 1)
+
+
+def read_game(state, f, events, rows_by_kind, now, seen, values_by_kind=None):
     """One game's read: for each lane's market, the control row and (when the qualifier says so) the lane row. Returns the new row ids."""
     new = []
     for kind in KINDS:
@@ -209,6 +317,8 @@ def read_game(state, f, events, rows_by_kind, now, seen):
                 pk = _row(kind, False, f, ev, m, team, px, b, a, now, dict(rates=info, qualifying_teams=[f[s] for s in qside], matches=ctl["id"]))
                 state["rules"][lane(kind)]["picks"].append(pk)
                 new.append(pk["id"])
+                if values_by_kind is not None:
+                    new += v2_entries(state, f, ev, kind, team, qside, values_by_kind[kind], now, seen)
             state["skips"].pop(skey, None)
     return new
 
@@ -220,7 +330,7 @@ def settle(state, now, fetch):
 
 def run(state, fixtures, now=None, fetch=D.get):
     now = now or dt.datetime.now(dt.timezone.utc)
-    for k in LANES:
+    for k in LANES + V2_LANES:
         state["rules"].setdefault(k, {"picks": []})
     seen = {p["id"] for ln in state["rules"].values() for p in ln["picks"]}
     new, errs, cache = [], [], {}
@@ -237,7 +347,8 @@ def run(state, fixtures, now=None, fetch=D.get):
                     cache[series] = SR.series_events(series, fetch)
                 ev_by_kind[kind] = cache[series]
             rows_by_kind = {k: team_rows(fixtures, k, before=f["kickoff"]) for k in KINDS}
-            new += read_game(state, f, ev_by_kind, rows_by_kind, now, seen)
+            values_by_kind = {k: team_values(fixtures, k, f["kickoff"]) for k in KINDS}
+            new += read_game(state, f, ev_by_kind, rows_by_kind, now, seen, values_by_kind)
         except Exception as e:                                       # noqa: BLE001
             errs.append(f"{f['home']} v {f['away']}: {str(e)[:80]}")
     errs += settle(state, now, fetch)
@@ -245,7 +356,8 @@ def run(state, fixtures, now=None, fetch=D.get):
                                 and now - dt.timedelta(hours=2) <= (D.instant(f["kickoff"]) or now - dt.timedelta(days=9)) <= now + dt.timedelta(hours=27)})
     state["last_run"] = now.isoformat()
     state["games_through"] = max((f["kickoff"][:10] for f in season_games(fixtures)), default=None)
-    state["tracker"] = {k: list(team_rows(fixtures, k).values()) for k in KINDS}      # the page reads these (the fixtures file is not committed)
+    state["tracker"] = {k: list(team_rows(fixtures, k).values()) for k in KINDS}
+    state["cushions"] = cushion_rows(fixtures)      # the page reads these (the fixtures file is not committed)
     state["error"] = "; ".join(errs)[:1000] or None
     state["runs"] = (state.get("runs") or [])[-50:] + [dict(at=now.isoformat(), new=len(new), due=len(todo))]
     return new

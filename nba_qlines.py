@@ -58,6 +58,19 @@ def lane(sec, d, blind=False):
 
 ALL_LANES = tuple(lane(s, d, b) for s in SECTIONS for d in DIRS for b in (False, True))
 
+# ---- v2 (2026-11-25, pre-registration docs/club_v2_2026-11-25.md): the same gate and read as v1, but the rung is chosen by how much the team clears the line by.
+#   v2_cushion  the hardest listed, quotable rung at or past the v1 line that a qualifying team still clears at the club rate (THRESHOLD) over V2_MIN_GAMES+ games.
+#   v2_value    among the rungs a qualifying team clears at the club rate (V2_MIN_GAMES+ games), the one with the biggest (hit rate - cost), only if V2_VALUE_MIN+.
+# v1 keeps running unchanged; its blind control is also v2's control. Rule ids nba_qlines_v2_<section>_<direction>_<cushion|value>.
+V2_KINDS = ("cushion", "value")
+V2_MIN_GAMES = 10
+V2_VALUE_MIN = 0.05
+V2_LANES = tuple(f"nba_qlines_v2_{s}_{d}_{k}" for s in SECTIONS for d in DIRS for k in V2_KINDS)
+
+
+def lane_v2(sec, d, kind):
+    return f"nba_qlines_v2_{sec}_{d}_{kind}"
+
 
 def fee(p):
     return F.fee(p)
@@ -73,7 +86,7 @@ def lane_label(sec, d, blind=False):
 
 # ---------------------------------------------------------------- state
 def empty():
-    return {"version": VERSION, "registered": REGISTERED, "rules": {k: {"picks": []} for k in ALL_LANES}, "looks": {}, "runs": [], "schedule": [],
+    return {"version": VERSION, "registered": REGISTERED, "rules": {k: {"picks": []} for k in ALL_LANES + V2_LANES}, "looks": {}, "runs": [], "schedule": [],
             "last_run": None, "error": None}
 
 
@@ -81,7 +94,7 @@ def load(path=PATH):
     if os.path.exists(path):
         with open(path) as f:
             st = json.load(f)
-        for k in ALL_LANES:
+        for k in ALL_LANES + V2_LANES:
             st.setdefault("rules", {}).setdefault(k, {"picks": []})
         return st
     return empty()
@@ -305,10 +318,116 @@ def look_many(state, games_doc, due_games, markets, now, tag=None):
                     state["rules"][lane(sec, d)]["picks"].append(pk)
                     new.append(pk["id"])
                     entered[f"{sec} {d}"] += 1
+        new += v2_entries(state, games_doc, g, night, markets, now, tag)
         if seen or now >= g["tip"] - dt.timedelta(minutes=WINDOW_MIN[0] + 1):
             state["looks"][g["id"]] = dict(at=now.isoformat(), game=f"{g['away']} @ {g['home']}", night=night, priced=seen, skipped=dict(skips),
                                            entered=dict(entered), lead_min=round((g["tip"] - now).total_seconds() / 60, 1), **tag)
     return new
+
+
+# ---------------------------------------------------------------- v2 entries
+def team_totals(games, sec, before):
+    """{team: [combined totals]} of the games played before the night `before` (ISO date)."""
+    cfg = LINES[sec]
+    out = collections.defaultdict(list)
+    for g in games:
+        if g["day"] >= before:
+            continue
+        t = total(g, cfg["periods"], cfg.get("ot", False))
+        if t is None:
+            continue
+        out[g["home"]].append(t)
+        out[g["away"]].append(t)
+    return out
+
+
+def team_rate(totals, line, d):
+    """(hit rate, games) of a team's prior totals at `line`: above it for an over, below it for an under."""
+    n = len(totals)
+    if not n:
+        return None, 0
+    return sum(1 for t in totals if (t > line if d == "over" else t < line)) / n, n
+
+
+def usable_rungs(markets, g, sec, d):
+    """The game's quotable rungs for one direction: [dict(rung, ticker, bid, ask, price, side)], spread 5c or less, any line."""
+    out = []
+    for m in markets.get(sec, []):
+        if event_teams(m) != (g["away"], g["home"]) or m.get("floor_strike") is None:
+            continue
+        bid, ask = D.number(m.get("yes_bid_dollars")), D.number(m.get("yes_ask_dollars"))
+        if bid is None or ask is None or not 0 < ask < 1 or not 0 <= bid <= ask or ask - bid > MAX_SPREAD + EPS:
+            continue
+        price = ask if d == "over" else round(1 - bid, 4)
+        if not 0 < price < 1:
+            continue
+        out.append(dict(rung=float(m["floor_strike"]), ticker=m["ticker"], bid=bid, ask=ask, price=price, side="yes" if d == "over" else "no"))
+    return sorted(out, key=lambda r: r["rung"])
+
+
+def v2_choose(rungs, per_team, line, d, bar=THRESHOLD, min_games=V2_MIN_GAMES, value_min=V2_VALUE_MIN):
+    """(cushion pick, value pick) over the qualifying teams' own records. per_team: {team: [prior totals]}. A pick is dict(rung (the rung dict), team, rate, games, value).
+    Cushion: the hardest rung at or past `line` the team still clears at `bar`; the harder of the teams'. Value: the biggest (hit rate - cost) among cleared rungs, at least value_min."""
+    sign = 1 if d == "over" else -1
+    cush, val = None, None
+    for team, totals in per_team.items():
+        for r in rungs:
+            rate, n = team_rate(totals, r["rung"], d)
+            if n < min_games or rate is None or rate < bar - EPS:
+                continue
+            if (r["rung"] - line) * sign >= -EPS and (cush is None or (r["rung"] - cush["rung"]["rung"]) * sign > EPS):
+                cush = dict(rung=r, team=team, rate=rate, games=n, value=rate - cost(r["price"]))
+            v = rate - cost(r["price"])
+            if v >= value_min - EPS and (val is None or v > val["value"] + EPS):
+                val = dict(rung=r, team=team, rate=rate, games=n, value=v)
+    return cush, val
+
+
+def v2_entries(state, games_doc, g, night, markets, now, tag=None):
+    """The v2 rows of one game read: for every section and direction with a qualifying team (v1's gate), the cushion and the value rung."""
+    tag = tag or {}
+    new = []
+    for sec in SECTIONS:
+        history = None
+        for d in DIRS:
+            rows = team_rows(games_doc["games"], sec, d, before=night)
+            qual = [t for t in (g["home"], g["away"]) if (rows.get(t) or {}).get("qualifies")]
+            if not qual:
+                continue
+            rungs = usable_rungs(markets, g, sec, d)
+            if not rungs:
+                continue
+            if history is None:
+                history = team_totals(games_doc["games"], sec, night)
+            cush, val = v2_choose(rungs, {t: history.get(t, []) for t in qual}, LINES[sec][d], d)
+            for kind, pick in (("cushion", cush), ("value", val)):
+                if not pick:
+                    continue
+                r = pick["rung"]
+                sign = 1 if d == "over" else -1
+                rung = dict(ticker=r["ticker"], rung=r["rung"], offset=round((r["rung"] - LINES[sec][d]) * sign, 2), bid=r["bid"], ask=r["ask"], price=r["price"], side=r["side"])
+                ln = lane_v2(sec, d, kind)
+                row = _row(sec, d, False, g, night, rung, now, dict(kind=kind, team=pick["team"], rate=round(pick["rate"], 4), games=pick["games"], value=round(pick["value"], 4),
+                                                                  v1_line=LINES[sec][d], **tag))
+                row.update(id=f"{ln}:{r['ticker']}", rule=ln)
+                state["rules"][ln]["picks"].append(row)
+                new.append(row["id"])
+    return new
+
+
+def fill_actuals(state, games_doc):
+    """The v2 rows' actual total and 'cleared by' (actual minus the rung, signed for the direction: positive is a win), from the played games."""
+    byid = {g["id"]: g for g in games_doc["games"]}
+    for ln in V2_LANES:
+        for p in state["rules"].get(ln, {}).get("picks", []):
+            if p.get("actual") is not None or p.get("status") not in ("won", "lost"):
+                continue
+            g = byid.get(p["game_id"])
+            cfg = LINES[p["section"]]
+            t = total(g, cfg["periods"], cfg.get("ot", False)) if g else None
+            if t is not None:
+                p["actual"] = t
+                p["cleared"] = round((t - p["rung"]) * (1 if p["direction"] == "over" else -1), 1)
 
 
 # ---------------------------------------------------------------- settle
@@ -474,7 +593,7 @@ def slate(now, get=S.espn_get):
 def run(state, games_doc, now=None, get=S.espn_get, fetch=D.get):
     """One pass: new finals into the played games, entries for games 15-40 minutes from tip, then settle. Returns (new row ids, errors)."""
     now = now or dt.datetime.now(dt.timezone.utc)
-    for k in ALL_LANES:
+    for k in ALL_LANES + V2_LANES:
         state["rules"].setdefault(k, {"picks": []})
     errs, new, nnew = [], [], 0
     try:
@@ -497,6 +616,7 @@ def run(state, games_doc, now=None, get=S.espn_get, fetch=D.get):
         except Exception as e:                                       # noqa: BLE001
             errs.append(f"entries: {str(e)[:100]}")
     errs += settle(state, now, fetch)
+    fill_actuals(state, games_doc)
     state["last_settle"] = now.isoformat()
     state["last_run"] = now.isoformat()
     state["games_through"] = max((g["day"] for g in games_doc["games"]), default=None)
