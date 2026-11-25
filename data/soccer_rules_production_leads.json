@@ -1,5 +1,5 @@
 {
- "board_built_at": "2026-11-25T19:39:03+00:00",
+ "board_built_at": "2026-11-25T20:01:47+00:00",
  "collector_error": null,
  "collector_healthy": {
   "sr_a2": true,
@@ -257,154 +257,6 @@
    "source": "sr_a7",
    "sport": "soccer_u35",
    "status": "hit"
-  },
-  "2026-11-25|Club Brugge|Liverpool|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5": {
-   "away": "Liverpool",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-11-25",
-   "edge_at_log": null,
-   "first_seen": "2026-11-25",
-   "headline": "Over 3.5 goals",
-   "home": "Club Brugge",
-   "id": "2026-11-25|Club Brugge|Liverpool|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5",
-   "kickoff": "2026-11-25T20:00Z",
-   "lane": "production",
-   "last_seen": "2026-11-25",
-   "last_seen_at": "2026-11-25T19:39:03+00:00",
-   "league": "Champions League",
-   "match": "Club Brugge v Liverpool",
-   "pair": "sr_a7|soccer_u35",
-   "price_at_log": 0.54,
-   "published_at": "2026-11-25T18:31:39+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 88,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXUCLTOTAL-26NOV25BRULFC",
-    "market": "KXUCLTOTAL-26NOV25BRULFC-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.54,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "sr_a7:KXUCLTOTAL-26NOV25BRULFC-4",
-   "source": "sr_a7",
-   "sport": "soccer_u35",
-   "status": "pending"
-  },
-  "2026-11-25|Internazionale|VfB Stuttgart|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5": {
-   "away": "VfB Stuttgart",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-11-25",
-   "edge_at_log": null,
-   "first_seen": "2026-11-25",
-   "headline": "Over 3.5 goals",
-   "home": "Internazionale",
-   "id": "2026-11-25|Internazionale|VfB Stuttgart|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5",
-   "kickoff": "2026-11-25T20:00Z",
-   "lane": "production",
-   "last_seen": "2026-11-25",
-   "last_seen_at": "2026-11-25T19:39:03+00:00",
-   "league": "Champions League",
-   "match": "Internazionale v VfB Stuttgart",
-   "pair": "sr_a7|soccer_u35",
-   "price_at_log": 0.54,
-   "published_at": "2026-11-25T18:31:39+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 88,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXUCLTOTAL-26NOV25INTVFB",
-    "market": "KXUCLTOTAL-26NOV25INTVFB-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.54,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "sr_a7:KXUCLTOTAL-26NOV25INTVFB-4",
-   "source": "sr_a7",
-   "sport": "soccer_u35",
-   "status": "pending"
-  },
-  "2026-11-25|Lille|Bayern Munich|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5": {
-   "away": "Bayern Munich",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-11-25",
-   "edge_at_log": null,
-   "first_seen": "2026-11-25",
-   "headline": "Over 3.5 goals",
-   "home": "Lille",
-   "id": "2026-11-25|Lille|Bayern Munich|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5",
-   "kickoff": "2026-11-25T20:00Z",
-   "lane": "production",
-   "last_seen": "2026-11-25",
-   "last_seen_at": "2026-11-25T19:39:03+00:00",
-   "league": "Champions League",
-   "match": "Lille v Bayern Munich",
-   "pair": "sr_a7|soccer_u35",
-   "price_at_log": 0.33,
-   "published_at": "2026-11-25T18:31:39+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 88,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXUCLTOTAL-26NOV25LILBMU",
-    "market": "KXUCLTOTAL-26NOV25LILBMU-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.33,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "sr_a7:KXUCLTOTAL-26NOV25LILBMU-4",
-   "source": "sr_a7",
-   "sport": "soccer_u35",
-   "status": "pending"
-  },
-  "2026-11-25|Paris Saint-Germain|AS Roma|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5": {
-   "away": "AS Roma",
-   "bet": {
-    "kind": "total_gte",
-    "n": 4
-   },
-   "date": "2026-11-25",
-   "edge_at_log": null,
-   "first_seen": "2026-11-25",
-   "headline": "Over 3.5 goals",
-   "home": "Paris Saint-Germain",
-   "id": "2026-11-25|Paris Saint-Germain|AS Roma|Over 3.5 goals \u00b7 UCL either team O+D\u2212 \u00b7 over 3.5",
-   "kickoff": "2026-11-25T20:00Z",
-   "lane": "production",
-   "last_seen": "2026-11-25",
-   "last_seen_at": "2026-11-25T19:39:03+00:00",
-   "league": "Champions League",
-   "match": "Paris Saint-Germain v AS Roma",
-   "pair": "sr_a7|soccer_u35",
-   "price_at_log": 0.51,
-   "published_at": "2026-11-25T18:31:39+00:00",
-   "published_late": false,
-   "published_min_before_kickoff": 88,
-   "route": {
-    "claim": "Over 3.5 goals",
-    "event": "KXUCLTOTAL-26NOV25PSGROM",
-    "market": "KXUCLTOTAL-26NOV25PSGROM-4",
-    "outcome": "Over 3.5 goals scored",
-    "outcome_side": "yes",
-    "price_at_log": 0.51,
-    "venue": "kalshi"
-   },
-   "sandbox_quote": "sr_a7:KXUCLTOTAL-26NOV25PSGROM-4",
-   "source": "sr_a7",
-   "sport": "soccer_u35",
-   "status": "pending"
   }
  },
  "pairs": {
@@ -490,9 +342,9 @@
    "ready_at": "2026-10-21T23:00:00+00:00",
    "route": "moved by hand on 2026-10-21",
    "routing": {
-    "leads": 8,
+    "leads": 4,
     "problem": null,
-    "routed": 8,
+    "routed": 4,
     "unlisted": 0,
     "unrouted": 0,
     "unverified": 0,
@@ -504,7 +356,7 @@
    "sandbox_roi_fee": 0.0845,
    "timing": {
     "late": [],
-    "timed": 4,
+    "timed": 0,
     "under_target": 0
    }
   },
@@ -563,5 +415,5 @@
  "stage": "production",
  "unlisted_skipped": 0,
  "unverified_kickoff_skipped": 0,
- "updated_at": "2026-11-25T19:39:03+00:00"
+ "updated_at": "2026-11-25T20:01:47+00:00"
 }
