@@ -1,7 +1,7 @@
 {
  "box_through": "2026-11-25",
  "error": null,
- "last_run": "2026-11-25T20:45:25.830584+00:00",
+ "last_run": "2026-11-25T22:45:29.783375+00:00",
  "looks": {
   "401909305": {
    "at": "2026-11-20T22:45:25.302540+00:00",
@@ -246,6 +246,25 @@
    },
    "spread": 1.5,
    "usable": 137
+  },
+  "401909318": {
+   "at": "2026-11-25T22:43:57.642213+00:00",
+   "batch": 1,
+   "entered": {
+    "spotter_fade": 4,
+    "spotter_hold": 4,
+    "spotter_spike": 4
+   },
+   "game": "CHI @ CHA",
+   "night": "2026-11-25",
+   "out": 54,
+   "skipped": {
+    "no quote": 4,
+    "outside 5-60c": 69,
+    "wide": 4
+   },
+   "spread": -3.5,
+   "usable": 144
   },
   "401910007": {
    "at": "2026-11-18T23:12:11.631686+00:00",
@@ -1692,7 +1711,7 @@
   },
   "2026-11-25": {
    "spotter_fade": {
-    "n": 4,
+    "n": 8,
     "players": [
      [
       "3912848",
@@ -1709,15 +1728,48 @@
      [
       "3912848",
       "pra"
+     ],
+     [
+      "5060701",
+      "pra"
+     ],
+     [
+      "2583632",
+      "pra"
+     ],
+     [
+      "4602025",
+      "pra"
+     ],
+     [
+      "4433249",
+      "pra"
      ]
     ]
    },
    "spotter_hold": {
-    "n": 0,
-    "players": []
+    "n": 4,
+    "players": [
+     [
+      "4432822",
+      "reb"
+     ],
+     [
+      "4711294",
+      "reb"
+     ],
+     [
+      "4871145",
+      "reb"
+     ],
+     [
+      "2990984",
+      "reb"
+     ]
+    ]
    },
    "spotter_spike": {
-    "n": 4,
+    "n": 8,
     "players": [
      [
       "4278053",
@@ -1734,6 +1786,22 @@
      [
       "1966",
       "pts"
+     ],
+     [
+      "4395651",
+      "pts"
+     ],
+     [
+      "2990984",
+      "pts"
+     ],
+     [
+      "4711294",
+      "m3"
+     ],
+     [
+      "4432822",
+      "m3"
      ]
     ]
    }
@@ -3329,6 +3397,106 @@
      "unit": "points+rebounds+assists",
      "why": "minutes up on last season",
      "yes_ask": 0.3
+    },
+    {
+     "bid": 0.44,
+     "edge": 0.0832,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_fade:KXNBAPRA-26NOV25CHICHA-CHACANDERSON5-15",
+     "lead_min": 76.0,
+     "night": "2026-11-25",
+     "p": 0.6132,
+     "pid": "5060701",
+     "player": "Christian Anderson Jr.",
+     "price": 0.56,
+     "rule": "spotter_fade",
+     "rung": 15,
+     "side": "no",
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "CHA",
+     "ticker": "KXNBAPRA-26NOV25CHICHA-CHACANDERSON5-15",
+     "unit": "points+rebounds+assists",
+     "why": "opponent gives up a lot of this",
+     "yes_ask": 0.47
+    },
+    {
+     "bid": 0.5,
+     "edge": 0.0716,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_fade:KXNBAPRA-26NOV25CHICHA-CHARONEALE00-10",
+     "lead_min": 76.0,
+     "night": "2026-11-25",
+     "p": 0.5316,
+     "pid": "2583632",
+     "player": "Royce O'Neale",
+     "price": 0.5,
+     "rule": "spotter_fade",
+     "rung": 10,
+     "side": "no",
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "CHA",
+     "ticker": "KXNBAPRA-26NOV25CHICHA-CHARONEALE00-10",
+     "unit": "points+rebounds+assists",
+     "why": "opponent gives up a lot of this",
+     "yes_ask": 0.54
+    },
+    {
+     "bid": 0.48,
+     "edge": 0.0635,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_fade:KXNBAPRA-26NOV25CHICHA-CHASJAMES4-15",
+     "lead_min": 76.0,
+     "night": "2026-11-25",
+     "p": 0.5635,
+     "pid": "4602025",
+     "player": "Sion James",
+     "price": 0.52,
+     "rule": "spotter_fade",
+     "rung": 15,
+     "side": "no",
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "CHA",
+     "ticker": "KXNBAPRA-26NOV25CHICHA-CHASJAMES4-15",
+     "unit": "points+rebounds+assists",
+     "why": "opponent gives up a lot of this",
+     "yes_ask": 0.5
+    },
+    {
+     "bid": 0.37,
+     "edge": 0.0615,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_fade:KXNBAPRA-26NOV25CHICHA-CHAMDIABATE14-25",
+     "lead_min": 76.0,
+     "night": "2026-11-25",
+     "p": 0.6615,
+     "pid": "4433249",
+     "player": "Moussa Diabat\u00e9",
+     "price": 0.63,
+     "rule": "spotter_fade",
+     "rung": 25,
+     "side": "no",
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "CHA",
+     "ticker": "KXNBAPRA-26NOV25CHICHA-CHAMDIABATE14-25",
+     "unit": "points+rebounds+assists",
+     "why": "opponent gives up a lot of this",
+     "yes_ask": 0.4
     }
    ]
   },
@@ -4936,6 +5104,118 @@
      "unit": "threes",
      "why": "drawn at random from this game's rungs at about the pick's price, NO side",
      "yes_ask": 0.33
+    },
+    {
+     "bid": 0.46,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_fade_blind:KXNBA3PT-26NOV25CHICHA-CHARONEALE00-2",
+     "lead_min": 76.0,
+     "matches": "spotter_fade:KXNBAPRA-26NOV25CHICHA-CHACANDERSON5-15",
+     "night": "2026-11-25",
+     "p": null,
+     "pid": "2583632",
+     "player": "Royce O'Neale",
+     "price": 0.54,
+     "rule": "spotter_fade_blind",
+     "rung": 2,
+     "side": "no",
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "team": "CHA",
+     "ticker": "KXNBA3PT-26NOV25CHICHA-CHARONEALE00-2",
+     "unit": "threes",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.49
+    },
+    {
+     "bid": 0.51,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_fade_blind:KXNBAPTS-26NOV25CHICHA-CHIIOKORO35-10",
+     "lead_min": 76.0,
+     "matches": "spotter_fade:KXNBAPRA-26NOV25CHICHA-CHARONEALE00-10",
+     "night": "2026-11-25",
+     "outs": [
+      "Norman Powell",
+      "Caleb Wilson"
+     ],
+     "p": null,
+     "pid": "4432822",
+     "player": "Isaac Okoro",
+     "price": 0.49,
+     "rule": "spotter_fade_blind",
+     "rung": 10,
+     "side": "no",
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "team": "CHI",
+     "ticker": "KXNBAPTS-26NOV25CHICHA-CHIIOKORO35-10",
+     "unit": "points",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.52
+    },
+    {
+     "bid": 0.51,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_fade_blind:KXNBAPTS-26NOV25CHICHA-CHIIOKORO35-10",
+     "lead_min": 76.0,
+     "matches": "spotter_fade:KXNBAPRA-26NOV25CHICHA-CHASJAMES4-15",
+     "night": "2026-11-25",
+     "outs": [
+      "Norman Powell",
+      "Caleb Wilson"
+     ],
+     "p": null,
+     "pid": "4432822",
+     "player": "Isaac Okoro",
+     "price": 0.49,
+     "rule": "spotter_fade_blind",
+     "rung": 10,
+     "side": "no",
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "team": "CHI",
+     "ticker": "KXNBAPTS-26NOV25CHICHA-CHIIOKORO35-10",
+     "unit": "points",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.52
+    },
+    {
+     "bid": 0.38,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_fade_blind:KXNBAPTS-26NOV25CHICHA-CHIJGIDDEY3-15",
+     "lead_min": 76.0,
+     "matches": "spotter_fade:KXNBAPRA-26NOV25CHICHA-CHAMDIABATE14-25",
+     "night": "2026-11-25",
+     "outs": [
+      "Norman Powell",
+      "Caleb Wilson"
+     ],
+     "p": null,
+     "pid": "4871145",
+     "player": "Josh Giddey",
+     "price": 0.62,
+     "rule": "spotter_fade_blind",
+     "rung": 15,
+     "side": "no",
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "team": "CHI",
+     "ticker": "KXNBAPTS-26NOV25CHICHA-CHIJGIDDEY3-15",
+     "unit": "points",
+     "why": "drawn at random from this game's rungs at about the pick's price, NO side",
+     "yes_ask": 0.41
     }
    ]
   },
@@ -6544,6 +6824,114 @@
      "ticker": "KXNBAREB-26NOV24DETORL-DETATHOMPSON9-8",
      "unit": "rebounds",
      "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.36,
+     "edge": 0.0897,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_hold:KXNBAREB-26NOV25CHICHA-CHIIOKORO35-4",
+     "lead_min": 76.0,
+     "night": "2026-11-25",
+     "outs": [
+      "Norman Powell",
+      "Caleb Wilson"
+     ],
+     "p": 0.4597,
+     "pid": "4432822",
+     "player": "Isaac Okoro",
+     "price": 0.37,
+     "rule": "spotter_hold",
+     "rung": 4,
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "CHI",
+     "ticker": "KXNBAREB-26NOV25CHICHA-CHIIOKORO35-4",
+     "unit": "rebounds",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.4,
+     "edge": 0.0896,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_hold:KXNBAREB-26NOV25CHICHA-CHIMBUZELIS14-6",
+     "lead_min": 76.0,
+     "night": "2026-11-25",
+     "outs": [
+      "Norman Powell",
+      "Caleb Wilson"
+     ],
+     "p": 0.5096,
+     "pid": "4711294",
+     "player": "Matas Buzelis",
+     "price": 0.42,
+     "rule": "spotter_hold",
+     "rung": 6,
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "CHI",
+     "ticker": "KXNBAREB-26NOV25CHICHA-CHIMBUZELIS14-6",
+     "unit": "rebounds",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.55,
+     "edge": 0.0848,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_hold:KXNBAREB-26NOV25CHICHA-CHIJGIDDEY3-6",
+     "lead_min": 76.0,
+     "night": "2026-11-25",
+     "outs": [
+      "Norman Powell",
+      "Caleb Wilson"
+     ],
+     "p": 0.6448,
+     "pid": "4871145",
+     "player": "Josh Giddey",
+     "price": 0.56,
+     "rule": "spotter_hold",
+     "rung": 6,
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "CHI",
+     "ticker": "KXNBAREB-26NOV25CHICHA-CHIJGIDDEY3-6",
+     "unit": "rebounds",
+     "why": "a top scorer on his team is out"
+    },
+    {
+     "bid": 0.48,
+     "edge": 0.0841,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_hold:KXNBAREB-26NOV25CHICHA-CHIBHIELD8-4",
+     "lead_min": 76.0,
+     "night": "2026-11-25",
+     "outs": [
+      "Norman Powell",
+      "Caleb Wilson"
+     ],
+     "p": 0.5741,
+     "pid": "2990984",
+     "player": "Buddy Hield",
+     "price": 0.49,
+     "rule": "spotter_hold",
+     "rung": 4,
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "CHI",
+     "ticker": "KXNBAREB-26NOV25CHICHA-CHIBHIELD8-4",
+     "unit": "rebounds",
+     "why": "a top scorer on his team is out"
     }
    ]
   },
@@ -8119,6 +8507,106 @@
      "team": "DET",
      "ticker": "KXNBAAST-26NOV24DETORL-DETCCUNNINGHAM2-8",
      "unit": "assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.34,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_hold_blind:KXNBAREB-26NOV25CHICHA-CHABMILLER24-6",
+     "lead_min": 76.0,
+     "matches": "spotter_hold:KXNBAREB-26NOV25CHICHA-CHIIOKORO35-4",
+     "night": "2026-11-25",
+     "p": null,
+     "pid": "4433287",
+     "player": "Brandon Miller",
+     "price": 0.38,
+     "rule": "spotter_hold_blind",
+     "rung": 6,
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "CHA",
+     "ticker": "KXNBAREB-26NOV25CHICHA-CHABMILLER24-6",
+     "unit": "rebounds",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.4,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_hold_blind:KXNBAREB-26NOV25CHICHA-CHAMDIABATE14-12",
+     "lead_min": 76.0,
+     "matches": "spotter_hold:KXNBAREB-26NOV25CHICHA-CHIMBUZELIS14-6",
+     "night": "2026-11-25",
+     "p": null,
+     "pid": "4433249",
+     "player": "Moussa Diabat\u00e9",
+     "price": 0.41,
+     "rule": "spotter_hold_blind",
+     "rung": 12,
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "team": "CHA",
+     "ticker": "KXNBAREB-26NOV25CHICHA-CHAMDIABATE14-12",
+     "unit": "rebounds",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.52,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_hold_blind:KXNBAPRA-26NOV25CHICHA-CHIIOKORO35-15",
+     "lead_min": 76.0,
+     "matches": "spotter_hold:KXNBAREB-26NOV25CHICHA-CHIJGIDDEY3-6",
+     "night": "2026-11-25",
+     "outs": [
+      "Norman Powell",
+      "Caleb Wilson"
+     ],
+     "p": null,
+     "pid": "4432822",
+     "player": "Isaac Okoro",
+     "price": 0.53,
+     "rule": "spotter_hold_blind",
+     "rung": 15,
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "team": "CHI",
+     "ticker": "KXNBAPRA-26NOV25CHICHA-CHIIOKORO35-15",
+     "unit": "points+rebounds+assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.51,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_hold_blind:KXNBAPTS-26NOV25CHICHA-CHIIOKORO35-10",
+     "lead_min": 76.0,
+     "matches": "spotter_hold:KXNBAREB-26NOV25CHICHA-CHIBHIELD8-4",
+     "night": "2026-11-25",
+     "outs": [
+      "Norman Powell",
+      "Caleb Wilson"
+     ],
+     "p": null,
+     "pid": "4432822",
+     "player": "Isaac Okoro",
+     "price": 0.52,
+     "rule": "spotter_hold_blind",
+     "rung": 10,
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "team": "CHI",
+     "ticker": "KXNBAPTS-26NOV25CHICHA-CHIIOKORO35-10",
+     "unit": "points",
      "why": "drawn at random from this game's rungs at about the pick's price"
     }
    ]
@@ -10015,6 +10503,114 @@
      "ticker": "KXNBAPTS-26NOV25MIAPHI-PHILJAMES23-20",
      "unit": "points",
      "why": "a steady player in this stat"
+    },
+    {
+     "bid": 0.48,
+     "edge": 0.1276,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_spike:KXNBAPTS-26NOV25CHICHA-CHACWHITE3-20",
+     "lead_min": 76.0,
+     "night": "2026-11-25",
+     "p": 0.6276,
+     "pid": "4395651",
+     "player": "Coby White",
+     "price": 0.49,
+     "rule": "spotter_spike",
+     "rung": 20,
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.98,
+     "team": "CHA",
+     "ticker": "KXNBAPTS-26NOV25CHICHA-CHACWHITE3-20",
+     "unit": "points",
+     "why": "his projection is below the price"
+    },
+    {
+     "bid": 0.42,
+     "edge": 0.0704,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_spike:KXNBAPTS-26NOV25CHICHA-CHIBHIELD8-15",
+     "lead_min": 76.0,
+     "night": "2026-11-25",
+     "outs": [
+      "Norman Powell",
+      "Caleb Wilson"
+     ],
+     "p": 0.5704,
+     "pid": "2990984",
+     "player": "Buddy Hield",
+     "price": 0.43,
+     "rule": "spotter_spike",
+     "rung": 15,
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "pts",
+     "status": "open",
+     "target": 0.86,
+     "team": "CHI",
+     "ticker": "KXNBAPTS-26NOV25CHICHA-CHIBHIELD8-15",
+     "unit": "points",
+     "why": "a hot run the price has followed up"
+    },
+    {
+     "bid": 0.43,
+     "edge": 0.0686,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_spike:KXNBA3PT-26NOV25CHICHA-CHIMBUZELIS14-3",
+     "lead_min": 76.0,
+     "night": "2026-11-25",
+     "outs": [
+      "Norman Powell",
+      "Caleb Wilson"
+     ],
+     "p": 0.5686,
+     "pid": "4711294",
+     "player": "Matas Buzelis",
+     "price": 0.45,
+     "rule": "spotter_spike",
+     "rung": 3,
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "target": 0.9,
+     "team": "CHI",
+     "ticker": "KXNBA3PT-26NOV25CHICHA-CHIMBUZELIS14-3",
+     "unit": "threes",
+     "why": "a hot run the price has followed up"
+    },
+    {
+     "bid": 0.42,
+     "edge": 0.0602,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_spike:KXNBA3PT-26NOV25CHICHA-CHIIOKORO35-2",
+     "lead_min": 76.0,
+     "night": "2026-11-25",
+     "outs": [
+      "Norman Powell",
+      "Caleb Wilson"
+     ],
+     "p": 0.5602,
+     "pid": "4432822",
+     "player": "Isaac Okoro",
+     "price": 0.43,
+     "rule": "spotter_spike",
+     "rung": 2,
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "target": 0.86,
+     "team": "CHI",
+     "ticker": "KXNBA3PT-26NOV25CHICHA-CHIIOKORO35-2",
+     "unit": "threes",
+     "why": "a hot run the price has followed up"
     }
    ]
   },
@@ -11910,29 +12506,111 @@
      "ticker": "KXNBAREB-26NOV25MIAPHI-PHIJWALKER33-6",
      "unit": "rebounds",
      "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.46,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_spike_blind:KXNBA3PT-26NOV25CHICHA-CHARONEALE00-2",
+     "lead_min": 76.0,
+     "matches": "spotter_spike:KXNBAPTS-26NOV25CHICHA-CHACWHITE3-20",
+     "night": "2026-11-25",
+     "p": null,
+     "pid": "2583632",
+     "player": "Royce O'Neale",
+     "price": 0.49,
+     "rule": "spotter_spike_blind",
+     "rung": 2,
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "target": 0.98,
+     "team": "CHA",
+     "ticker": "KXNBA3PT-26NOV25CHICHA-CHARONEALE00-2",
+     "unit": "threes",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.42,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_spike_blind:KXNBA3PT-26NOV25CHICHA-CHACWHITE3-3",
+     "lead_min": 76.0,
+     "matches": "spotter_spike:KXNBAPTS-26NOV25CHICHA-CHIBHIELD8-15",
+     "night": "2026-11-25",
+     "p": null,
+     "pid": "4395651",
+     "player": "Coby White",
+     "price": 0.44,
+     "rule": "spotter_spike_blind",
+     "rung": 3,
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "m3",
+     "status": "open",
+     "target": 0.88,
+     "team": "CHA",
+     "ticker": "KXNBA3PT-26NOV25CHICHA-CHACWHITE3-3",
+     "unit": "threes",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.45,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_spike_blind:KXNBAPRA-26NOV25CHICHA-CHIMBUZELIS14-25",
+     "lead_min": 76.0,
+     "matches": "spotter_spike:KXNBA3PT-26NOV25CHICHA-CHIMBUZELIS14-3",
+     "night": "2026-11-25",
+     "outs": [
+      "Norman Powell",
+      "Caleb Wilson"
+     ],
+     "p": null,
+     "pid": "4711294",
+     "player": "Matas Buzelis",
+     "price": 0.46,
+     "rule": "spotter_spike_blind",
+     "rung": 25,
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "pra",
+     "status": "open",
+     "target": 0.92,
+     "team": "CHI",
+     "ticker": "KXNBAPRA-26NOV25CHICHA-CHIMBUZELIS14-25",
+     "unit": "points+rebounds+assists",
+     "why": "drawn at random from this game's rungs at about the pick's price"
+    },
+    {
+     "bid": 0.4,
+     "entered": "2026-11-25T22:43:57.642213+00:00",
+     "game": "CHI @ CHA",
+     "game_id": "401909318",
+     "id": "spotter_spike_blind:KXNBAREB-26NOV25CHICHA-CHAMDIABATE14-12",
+     "lead_min": 76.0,
+     "matches": "spotter_spike:KXNBA3PT-26NOV25CHICHA-CHIIOKORO35-2",
+     "night": "2026-11-25",
+     "p": null,
+     "pid": "4433249",
+     "player": "Moussa Diabat\u00e9",
+     "price": 0.41,
+     "rule": "spotter_spike_blind",
+     "rung": 12,
+     "start": "2026-11-26T00:00:00+00:00",
+     "stat": "reb",
+     "status": "open",
+     "target": 0.82,
+     "team": "CHA",
+     "ticker": "KXNBAREB-26NOV25CHICHA-CHAMDIABATE14-12",
+     "unit": "rebounds",
+     "why": "drawn at random from this game's rungs at about the pick's price"
     }
    ]
   }
  },
  "runs": [
-  {
-   "at": "2026-11-23T22:45:28.333885+00:00",
-   "box": 0,
-   "due": 2,
-   "new": 34
-  },
-  {
-   "at": "2026-11-23T22:54:50.223484+00:00",
-   "box": 0,
-   "due": 0,
-   "new": 0
-  },
-  {
-   "at": "2026-11-23T23:00:31.249651+00:00",
-   "box": 0,
-   "due": 0,
-   "new": 0
-  },
   {
    "at": "2026-11-23T23:15:24.804185+00:00",
    "box": 0,
@@ -12220,10 +12898,27 @@
    "box": 0,
    "due": 1,
    "new": 16
+  },
+  {
+   "at": "2026-11-25T22:30:30.250072+00:00",
+   "box": 0,
+   "due": 0,
+   "new": 0
+  },
+  {
+   "at": "2026-11-25T22:43:57.642213+00:00",
+   "box": 0,
+   "due": 1,
+   "new": 24
+  },
+  {
+   "at": "2026-11-25T22:45:29.783375+00:00",
+   "box": 0,
+   "due": 0,
+   "new": 0
   }
  ],
  "schedule": [
-  "2026-11-25T22:00:00+00:00",
   "2026-11-26T00:00:00+00:00",
   "2026-11-26T00:30:00+00:00",
   "2026-11-26T00:30:00+00:00",
