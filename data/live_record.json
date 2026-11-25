@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-25T01:07Z",
+ "generated": "2026-11-25T02:07Z",
  "lane_note": "own-state lanes: each entry as a trade after fees (the lane's own fill, the sells it logged, the unsold remainder at the market's settled result); a bet is flat when exited at cost (within +-2% before or after fees), won above +2% after fees, else lost. Entries with a tip before 2026-11-06 18:07Z are reconstructed from the exchange order list; later ones use the sell fills the follower logged",
  "lanes": {
   "arg_dip": [],
@@ -1791,6 +1791,18 @@
     "src": "fills",
     "st": "won",
     "w": 0.91
+   },
+   {
+    "g": null,
+    "hold_r": null,
+    "id": "KXNBAWINMARGIN-26NOV24BOSWAS-BOS26PLUS",
+    "ko": "2026-11-25T01:00",
+    "legs": "",
+    "r": null,
+    "side": "no",
+    "src": "fills",
+    "st": "open",
+    "w": 0.98
    }
   ],
   "nba_wm_yes": [
@@ -5371,15 +5383,15 @@
     "w": 0.95
    },
    {
-    "g": null,
+    "g": 1.3176,
     "hold_r": null,
     "id": "KXNBAWINMARGIN-26NOV24DETORL-DET11TO20",
     "ko": "2026-11-25T00:00",
-    "legs": "",
-    "r": null,
+    "legs": "2x+2.5x",
+    "r": 1.1901,
     "side": "yes",
     "src": "fills",
-    "st": "open",
+    "st": "won",
     "w": 0.9
    },
    {
@@ -6174,6 +6186,7 @@
     }
    ],
    "refused": {
+    "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23BITTAK-TAK": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23GHEKOU-GHE": "outside the price band",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23HONDEV-DEV": "price above the cap",
     "challenger_won_here:KXATPCHALLENGERMATCH-26NOV23KUMJOR-KUM": "outside the price band",
